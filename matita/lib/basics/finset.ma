@@ -102,6 +102,8 @@ definition FinSum ≝ λA,B:FinSet.
    (enum_sum A B (enum A) (enum B)) 
    (enumAB_unique … (enum_unique A) (enum_unique B)).
 
+include alias "basics/types.ma".
+
 unification hint  0 ≔ C1,C2; 
     T1 ≟ FinSetcarr C1,
     T2 ≟ FinSetcarr C2,

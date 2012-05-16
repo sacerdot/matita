@@ -31,8 +31,7 @@ let rec memb (S:DeqSet) (x:S) (l: list S) on l  ≝
   | cons a tl ⇒ (x == a) ∨ memb S x tl
   ].
 
-notation < "\memb x l" non associative with precedence 90 for @{'memb $x $l}.
-interpretation "boolean membership" 'memb a l = (memb ? a l).
+interpretation "boolean membership" 'mem a l = (memb ? a l).
 
 lemma memb_hd: ∀S,a,l. memb S a (a::l) = true.
 #S #a #l normalize >(proj2 … (eqb_true S …) (refl S a)) //

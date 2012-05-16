@@ -92,8 +92,7 @@ theorem move_ok:
    (* rhs = a::w1∈\sem{i1}\sem{|i2|} ∨ a::w∈\sem{i2} *)
    @iff_trans[||@(iff_or_l … (HI2 w))] 
    (* rhs = a::w1∈\sem{i1}\sem{|i2|} ∨ w∈\sem{move S a i2} *)
-   @iff_or_r 
-   check deriv_middot 
+   @iff_or_r
    (* we are left to prove that 
      w∈\sem{move S a i1}·\sem{|i2|} ↔ a::w∈\sem{i1}\sem{|i2|}
      we use deriv_middot on the rhs *)
@@ -145,7 +144,6 @@ theorem decidable_sem: ∀S:DeqSet.∀w: word S. ∀e:pre S.
 #S #w elim w 
  [* #i #b >moves_empty cases b % /2/
  |#a #w1 #Hind #e >moves_cons
- check not_epsilon_sem
   @iff_trans [||@iff_sym @not_epsilon_sem]
   @iff_trans [||@move_ok] @Hind
  ]
