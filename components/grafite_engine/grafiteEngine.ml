@@ -275,25 +275,47 @@ let index_obj_for_auto status (uri, height, _, _, kind) =
    NCicLibrary.dump_obj status (record_index_obj data)
 ;; 
 
-let index_eq uri status =
+(*
+module EmptyC = 
+  struct
+    let metasenv = []
+    let subst = []
+    let context = []
+  end
+*)
+
+let index_eq print uri (status:#NCic.status) =
   let eq_status = status#eq_cache in
-  let eq_status = NCicParamod.index_obj status eq_status uri in
-    status#set_eq_cache eq_status
+  let eq_status,clause = NCicParamod.index_obj status eq_status uri in
+  if print then
+   ((*let module NCicBlob =
+    struct
+     include NCicBlob.NCicBlob(EmptyC)
+     let pp t = status#ppterm ~metasenv:[] ~subst:[] ~context:[] t
+    end in
+   let module Pp = Pp.Pp(NCicBlob) in*)
+   (match clause with
+     | Some (*clause*) (_,Terms.Equation (_,_,_,o),_,_) ->
+        HLog.debug ("Indexed with orientation: " ^ Pp.string_of_comparison o);
+        (*HLog.debug ("Indexed as:" ^ Pp.pp_unit_clause clause)*)
+     | _ -> HLog.debug "Not indexed (i.e. pruned)")) ;
+  status#set_eq_cache eq_status
 ;;
 
 let record_index_eq =
  let basic_index_eq uri
    ~refresh_uri_in_universe ~refresh_uri_in_term ~refresh_uri_in_reference 
    ~alias_only status
-   = if not alias_only then index_eq (NCicLibrary.refresh_uri uri) status else
-     status
+   = if not alias_only then index_eq false (NCicLibrary.refresh_uri uri) status 
+     else
+      status
  in
   GrafiteTypes.Serializer.register#run "index_eq" basic_index_eq
 ;;
 
 let index_eq_for_auto status uri =
  if NnAuto.is_a_fact_obj status uri then
-   let newstatus = index_eq uri status in
+   let newstatus = index_eq true uri status in
      if newstatus#eq_cache == status#eq_cache then status 
      else
        ((*prerr_endline ("recording " ^ (NUri.string_of_uri uri));*)

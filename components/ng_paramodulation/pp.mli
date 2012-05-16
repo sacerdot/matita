@@ -11,6 +11,8 @@
 
 (* $Id: nCic.ml 9058 2008-10-13 17:42:30Z tassi $ *)
 
+val string_of_comparison: Terms.comparison -> string
+
 module Pp (B : Terms.Blob) : 
   sig
 

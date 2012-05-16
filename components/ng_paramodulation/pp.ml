@@ -11,6 +11,13 @@
 
 (* $Id: nCic.ml 9058 2008-10-13 17:42:30Z tassi $ *)
 
+let string_of_comparison = function
+  | Terms.Lt -> "=<="
+  | Terms.Gt -> "=>="
+  | Terms.Eq -> "==="
+  | Terms.Incomparable -> "=?="
+  | Terms.Invertible -> "=<->="
+
 module Pp (B : Terms.Blob) = struct
 
 (* Main pretty printing functions *)
@@ -79,13 +86,6 @@ let pp_proof bag ~formatter:f p =
     aux 0 p;
     Format.fprintf f "@]"
 ;;
-
-let string_of_comparison = function
-  | Terms.Lt -> "=<="
-  | Terms.Gt -> "=>="
-  | Terms.Eq -> "==="
-  | Terms.Incomparable -> "=?="
-  | Terms.Invertible -> "=<->="
 
 let pp_unit_clause ~formatter:f c =
   let (id, l, vars, proof) = c in
