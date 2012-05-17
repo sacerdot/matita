@@ -10,7 +10,7 @@ stats.cmi: terms.cmi orderings.cmi
 paramod.cmi: terms.cmi orderings.cmi
 nCicBlob.cmi: terms.cmi
 nCicProof.cmi: terms.cmi
-nCicParamod.cmi:
+nCicParamod.cmi: terms.cmi
 terms.cmo: terms.cmi
 terms.cmx: terms.cmi
 pp.cmo: terms.cmi pp.cmi
