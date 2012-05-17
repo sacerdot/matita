@@ -19,6 +19,7 @@ val baseuri_of_uri: uri -> string
 val uri_of_string: string -> uri
 val eq: uri -> uri -> bool
 val compare: uri -> uri -> int
+val hash: uri -> int
 
 module UriHash: Hashtbl.S with type key = uri
 module UriMap: Map.S with type key = uri

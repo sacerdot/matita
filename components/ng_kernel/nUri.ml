@@ -48,12 +48,13 @@ fun s ->
 
 let eq = (==);;
 let compare (n1,_) (n2,_) = n2 - n1;;
+let hash (n,_) = n;;
 
 module HT = struct
         type t = uri
         let equal = eq
         let compare = compare
-        let hash (n,_) = n;;
+        let hash = hash;;
 end;;
 
 module UriHash = Hashtbl.Make(HT);;

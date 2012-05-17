@@ -27,6 +27,7 @@ val reference_of_spec: NUri.uri -> spec -> reference
 
 val eq: reference -> reference -> bool
 val compare: reference -> reference -> int
+val hash: reference -> int
 val string_of_reference: reference -> string 
 val reference_of_string: string -> reference
 

@@ -30,6 +30,10 @@ let compare (Ref (u1,s1)) (Ref (u2,s2)) =
   if res = 0 then compare s1 s2 else res
 ;;
 
+let hash (Ref (uri,spec)) =
+ Hashtbl.hash spec + NUri.hash uri
+;;
+
 module OrderedStrings =
  struct
   type t = string
