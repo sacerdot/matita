@@ -225,6 +225,27 @@ qed.
 
 (********************* filtering *****************)
 
+lemma memb_filter_memb: ∀S,f,a,l. 
+  memb S a (filter S f l) = true → memb S a l = true.
+#S #f #a #l elim l [normalize //]
+#b #tl #Hind normalize (cases (f b)) normalize 
+cases (a==b) normalize // @Hind
+qed.
+  
+lemma uniqueb_filter : ∀S,l,f.
+ uniqueb S l = true → uniqueb S (filter S f l) = true.
+#S #l #f elim l //
+#a #tl #Hind #Hunique cases (andb_true … Hunique)
+#memba #uniquetl cases (true_or_false … (f a)) #Hfa
+  [>filter_true // @true_to_andb_true
+    [@sym_eq @noteq_to_eqnot @(not_to_not … (eqnot_to_noteq … (sym_eq … memba)))
+     #H @sym_eq @(memb_filter_memb … f) <H // 
+    |/2/
+    ]
+  |>filter_false /2/
+  ]
+qed.
+  
 lemma filter_true: ∀S,f,a,l. 
   memb S a (filter S f l) = true → f a = true.
 #S #f #a #l elim l [normalize #H @False_ind /2/]
@@ -233,13 +254,6 @@ normalize >H normalize [2:@Hind]
 cases (true_or_false (a==b)) #eqab
   [#_ >(\P eqab) // | >eqab normalize @Hind]
 qed. 
-  
-lemma memb_filter_memb: ∀S,f,a,l. 
-  memb S a (filter S f l) = true → memb S a l = true.
-#S #f #a #l elim l [normalize //]
-#b #tl #Hind normalize (cases (f b)) normalize 
-cases (a==b) normalize // @Hind
-qed.
   
 lemma memb_filter: ∀S,f,l,x. memb S x (filter ? f l) = true → 
 memb S x l = true ∧ (f x = true).
