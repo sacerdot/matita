@@ -364,13 +364,13 @@ module LPO (B : Terms.Blob) = struct
   let compute_goal_weight = compute_goal_weight;;
 
   (*CSC: beware! Imperative cache! *)
-  let cache = ref [];;
+  let cache = Hashtbl.create 101
 
   let rec lpo_le s t = 
     eq_foterm s t || lpo_lt s t 
   
   and lpo_lt s t =
-    try List.assoc (s,t) !cache
+    try Hashtbl.find cache (s,t)
     with
     Not_found -> let res =
     match s,t with
@@ -406,7 +406,7 @@ module LPO (B : Terms.Blob) = struct
             | _ -> assert false
            end
    in
-    cache := ((s,t),res)::!cache; res
+    Hashtbl.add cache (s,t) res; res
   ;;
 
   let lpo s t =
@@ -416,7 +416,7 @@ module LPO (B : Terms.Blob) = struct
     else if lpo_lt t s then XGT
     else XINCOMPARABLE
     in
-     cache := []; res
+     Hashtbl.clear cache; res
   ;;
     
 
