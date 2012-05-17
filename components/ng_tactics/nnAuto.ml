@@ -26,9 +26,9 @@ let app_counter = ref 0
 
 module RHT = struct
   type t = NReference.reference
-  let equal = (==)
-  let compare = Pervasives.compare
-  let hash = Hashtbl.hash
+  let equal = NReference.eq
+  let compare = NReference.compare
+  let hash = NReferece.hash
 end;;
 
 module RefHash = Hashtbl.Make(RHT);;
