@@ -678,7 +678,8 @@ definition comp_step ≝
   ifTM ? (test_char ? (is_marked ?))
   (single_finalTM … (comp_step_subcase FSUnialpha 〈bit false,true〉
     (comp_step_subcase FSUnialpha 〈bit true,true〉
-      (clear_mark …))))
+      (comp_step_subcase FSUnialpha 〈null,true〉
+        (clear_mark …)))))
   (nop ?)
   tc_true.
   
@@ -686,7 +687,7 @@ definition R_comp_step_true ≝
   λt1,t2.
     ∀l0,c,rs.t1 = midtape (FinProd … FSUnialpha FinBool) l0 c rs → 
     ∃c'. c = 〈c',true〉 ∧
-    ((is_bit c' = true ∧
+    ((bit_or_null c' = true ∧
      ∀a,l1,c0,a0,l2.
       rs = 〈a,false〉::l1@〈c0,true〉::〈a0,false〉::l2 → 
       (∀c.memb ? c l1 = true → is_marked ? c = false) → 
@@ -695,7 +696,7 @@ definition R_comp_step_true ≝
       (c0 ≠ c' ∧
        t2 = midtape (FinProd … FSUnialpha FinBool) 
         (reverse ? l1@〈a,false〉::〈c',true〉::l0) 〈c0,false〉 (〈a0,false〉::l2))) ∨
-     (is_bit c' = false ∧ t2 = midtape ? l0 〈c',false〉 rs)).
+     (bit_or_null c' = false ∧ t2 = midtape ? l0 〈c',false〉 rs)).
 
 definition R_comp_step_false ≝ 
   λt1,t2.
@@ -709,7 +710,8 @@ lemma sem_comp_step :
 cases (acc_sem_if … (sem_test_char ? (is_marked ?))
         (sem_comp_step_subcase FSUnialpha 〈bit false,true〉 ??
           (sem_comp_step_subcase FSUnialpha 〈bit true,true〉 ?? 
-            (sem_clear_mark …)))
+            (sem_comp_step_subcase FSUnialpha 〈null,true〉 ?? 
+              (sem_clear_mark …))))
         (sem_nop …) intape)
 #k * #outc * * #Hloop #H1 #H2
 @(ex_intro ?? k) @(ex_intro ?? outc) %
@@ -737,13 +739,24 @@ cases (acc_sem_if … (sem_test_char ? (is_marked ?))
         [ @sym_not_eq //
         | @Houtc ]
       ]
-    | * #Hc' whd in ⊢ (%→?); #Helse2 %2 %
-      [ generalize in match Hc'; generalize in match Hc;
-        cases c'
-        [ * [ #_ #Hfalse @False_ind @(absurd ?? Hfalse) %
-            | #Hfalse @False_ind @(absurd ?? Hfalse) % ]
-        |*: #_ #_ % ]
-      | @(Helse2 … Hta)
+    | * #Hc' #Helse2 cases (Helse2 … Hta)
+      [ * #Hc'' #H1 % % [destruct (Hc'') % ]
+        #a #l1 #c0 #a0 #l2 #Hrs >Hrs in Hintape; #Hintape #Hl1
+        cases (H1 … Hl1 Hrs)
+        [ * #Htmp >Htmp -Htmp #Houtc % % // @Houtc
+        | * #Hneq #Houtc %2 %
+          [ @sym_not_eq //
+          | @Houtc ]
+        ]
+      | * #Hc'' whd in ⊢ (%→?); #Helse3 %2 %
+        [ generalize in match Hc''; generalize in match Hc'; generalize in match Hc;
+          cases c'
+          [ * [ #_ #Hfalse @False_ind @(absurd ?? Hfalse) %
+              | #Hfalse @False_ind @(absurd ?? Hfalse) % ]
+          | #_ #_ #Hfalse @False_ind @(absurd ?? Hfalse) %
+          |*: #_ #_ #_ % ]
+        | @(Helse3 … Hta)
+        ]
       ]
     ]
   ]
@@ -807,16 +820,16 @@ RIFIUTO: c ≠ d
 definition R_compare :=
   λt1,t2.
   ∀ls,c,rs.t1 = midtape (FinProd … FSUnialpha FinBool) ls c rs → 
-  (∀c'.is_bit c' = false → c = 〈c',true〉 → t2 = midtape ? ls 〈c',false〉 rs) ∧
+  (∀c'.bit_or_null c' = false → c = 〈c',true〉 → t2 = midtape ? ls 〈c',false〉 rs) ∧
   (∀c'. c = 〈c',false〉 → t2 = t1) ∧
   ∀b,b0,bs,b0s,l1,l2.
   |bs| = |b0s| → 
-  (∀c.memb (FinProd … FSUnialpha FinBool) c bs = true → is_bit (\fst c) = true) → 
-  (∀c.memb (FinProd … FSUnialpha FinBool) c b0s = true → is_bit (\fst c) = true) → 
+  (∀c.memb (FinProd … FSUnialpha FinBool) c bs = true → bit_or_null (\fst c) = true) → 
+  (∀c.memb (FinProd … FSUnialpha FinBool) c b0s = true → bit_or_null (\fst c) = true) → 
   (∀c.memb ? c bs = true → is_marked ? c = false) → 
   (∀c.memb ? c b0s = true → is_marked ? c = false) → 
   (∀c.memb ? c l1 = true → is_marked ? c = false) → 
-  c = 〈b,true〉 → is_bit b = true → 
+  c = 〈b,true〉 → bit_or_null b = true → 
   rs = bs@〈grid,false〉::l1@〈b0,true〉::b0s@〈comma,false〉::l2 → 
   (〈b,true〉::bs = 〈b0,true〉::b0s ∧
    t2 = midtape ? (reverse ? bs@〈b,false〉::ls)
@@ -873,7 +886,7 @@ lapply (sem_while ?????? sem_comp_step t i outc Hloop) [%]
   ]
 | #tapea #tapeb #tapec #Hleft #Hright #IH #Htapec lapply (IH Htapec) -Htapec -IH #IH
   whd in Hleft; #ls #c #rs #Htapea cases (Hleft … Htapea) -Hleft
-  #c' * #Hc >Hc cases (true_or_false (is_bit c')) #Hc'
+  #c' * #Hc >Hc cases (true_or_false (bit_or_null c')) #Hc'
   [2: * 
     [ * >Hc' #H @False_ind destruct (H)
     | * #_ #Htapeb cases (IH … Htapeb) * #_ #H #_ %
@@ -912,7 +925,7 @@ lapply (sem_while ?????? sem_comp_step t i outc Hloop) [%]
          | @Hl1 ]
       | * #b' #bitb' * #b0' #bitb0' #bs' #b0s' #Hbs #Hb0s 
         generalize in match Hrs; >Hbs in ⊢ (%→?); >Hb0s in ⊢ (%→?);
-        cut (is_bit b' = true ∧ is_bit b0' = true ∧ 
+        cut (bit_or_null b' = true ∧ bit_or_null b0' = true ∧ 
              bitb' = false ∧ bitb0' = false)
         [ % [ % [ % [ >Hbs in Hbs1; #Hbs1 @(Hbs1 〈b',bitb'〉) @memb_hd
             | >Hb0s in Hb0s1; #Hb0s1 @(Hb0s1 〈b0',bitb0'〉) @memb_hd ]

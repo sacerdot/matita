@@ -62,7 +62,7 @@ definition mcl_step ≝
   〈0,sep〉
   (λq.let 〈q',a〉 ≝ q in q' == 3 ∨ q' == 4).
 
-lemma mcc_q0_q1 : 
+lemma mcl_q0_q1 : 
   ∀alpha:FinSet.∀sep,a,ls,a0,rs.
   a0 == sep = false → 
   step alpha (mcl_step alpha sep)
@@ -145,12 +145,13 @@ lemma sem_mcl_step :
   | @(ex_intro ?? 4) cases rt
     [ @ex_intro
       [|% [ %
-            [ >loop_S_false // >mcc_q0_q1 //
+            [ >loop_S_false // >mcl_q0_q1 //
             | normalize in ⊢ (%→?); #Hfalse destruct (Hfalse) ]
           | normalize in ⊢ (%→?); #_ #H1 @False_ind @(absurd ?? H1) % ] ]
-    | #r0 #rt0 @ex_intro
+ 
+   | #r0 #rt0 @ex_intro
       [| % [ %
-             [ >loop_S_false // >mcc_q0_q1 //
+             [ >loop_S_false // >mcl_q0_q1 //
              | #_ #a #b #ls #rs #Hb destruct (Hb) % 
                [ @(\Pf Hc)
                | >mcl_q1_q2 >mcl_q2_q3 cases ls normalize // ] ]

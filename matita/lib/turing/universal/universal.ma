@@ -17,18 +17,31 @@
 include "turing/universal/copy.ma".
 
 (*
+moves:
+0_ = N
+10 = L
+11 = R
+*)
+
+(*
 
 step :
 
-init_current;
-init_table;
-match_tuple;
-if is_marked(current) = false (* match *)
-   then init_current; (* preconditions? *)
-        adv_to_mark_r;
-        adv_mark_r;
-        copy;
-        ...move...
+if is_true(current) (* current state is final *)
+   then nop
+   else
+   match_tuple;
+   if is_marked(current) = false (* match *)
+      then adv_mark_r;
+           move_l;
+           init_current;
+           move_r;
+           adv_to_mark_r;
+           copy;
+           ...move...
+           reset;
+      else sink;
         
+MANCANO MOVE E RESET
 
 *)
