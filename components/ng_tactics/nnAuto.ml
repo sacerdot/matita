@@ -28,7 +28,7 @@ module RHT = struct
   type t = NReference.reference
   let equal = NReference.eq
   let compare = NReference.compare
-  let hash = NReferece.hash
+  let hash = NReferecne.hash
 end;;
 
 module RefHash = Hashtbl.Make(RHT);;
