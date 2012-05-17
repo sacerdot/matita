@@ -1,4 +1,119 @@
 (*
+
+Macchina A:
+postcondizione
+PA(in,out) ≝ 
+  ∀ls,cs,d,rs.
+    left (tape in) = cs@'#'::ls → 
+    right (tape in) = d::rs → 
+    state in = q0 → 
+  left (tape out) = ls ∧
+  right (tape out) = d::'#'::rev cs@rs ∧
+  state out = qfinal
+  
+Macchina A0:
+postcondizione:
+PA0(in,out) ≝ 
+  ∀ls,c,rs.
+    left (tape in) = c::ls → 
+    right (tape in) = d::rs → 
+    state in = q0 → 
+  left (tape out) = ls ∧
+  right (tape out) = d::c::rs
+  state out = qfinal
+
+Macchina A1
+postcondizione true:
+PA1t(in,out) ≝ 
+  ∀c,rs.
+    right (tape in) = c::rs → 
+    tape in = tape out ∧
+    (c ≠ '#' → state out = qtrue)
+    
+postcondizione false:
+PA1f(in,out) ≝ 
+  ∀c,rs.
+    right (tape in) = c::rs → 
+    tape in = tape out ∧
+    (c = '#' → state out = qfalse) ∧
+
+
+A = do A0 while A1 inv PA0 var |right (tape in)|;
+
+     posso assumere le precondizioni di A
+     H1 : left (tape in) = c::cs@'#'::ls
+     H2 : right (tape in) = d::rs
+
+     in particolare H2 → precondizioni di A1
+     
+     eseguiamo dunque if A1 then (A0; A) else skip
+     
+  
+          
+by induction on left (tape in)
+     
+     per casi su d =?= '#'
+     
+     Hcase: d ≠ '#' ⇒ 
+     eseguo (A1; A0; A)
+     devo allora provare che PA1°PA0°PA(in,out) → PA(in,out)
+     ∃s1,s2: PA1t(in,s1) ∧ PA0(s1,s2) ∧ PA(s2,out)
+     
+     usando anche Hcase, ottengo che tape in = tape s1
+     soddisfo allora le precondizioni di PA0(s1,s2) ottenendo che
+     left (tape s2) = cs@'#'::ls
+     right (tape s2) = d::c::rs
+     
+     soddisfo allora le precondizioni di PA e per ipotesi induttiva
+     
+       
+     left (tape s) = d::cs@'#'::ls
+     right (tape s) = 
+     
+    
+
+
+
+
+
+
+∀inc.
+  (∃ls,cs,d,rs. left inc = ... ∧ right inc = ... ∧ state inc = q0) → 
+∃i,outc. loop i step inc = Some ? outc  
+  ∧(∀ls,cs,d,rs.left inc = ... → right inc = ... →
+    ∧ left outc = ls
+    ∧ right outc = d::"#"::rev cs::rs
+    ∧ state outc = qfinal)
+
+ϕ1 M1 ψ1 → ϕ2 M2 ψ2 → 
+(ψ1(in1,out1) → ϕ2(out1)) → (ψ2(out1,out2) → ψ3(in1,out2)) →
+ϕ1 (M1;M2) ψ3
+
+
+
+-----------------------------------------------------
+{} (tmp ≝ x; x ≝ y; y ≝ tmp) {x = old(x), y = old(y)}
+  
+
+∀inc.
+  ∀ls:list sig.
+  ∀cs:list (sig\#).
+  ∀d.sig.
+  ∀rs:list sig.
+  left inc = cs@"#"::ls → 
+  right inc = d::rs → 
+  state inc = q0 → 
+∃i,outc. loop i step inc = Some outc 
+  ∧
+  (∀ls,cs,d,rs.left inc = ... → right inc = ... →
+  ∧ left outc = ls
+  ∧ right outc = d::"#"::rev cs::rs
+  ∧ state outc = qfinal
+
+*)
+
+
+(*
     ||M||  This file is part of HELM, an Hypertextual, Electronic   
     ||A||  Library of Mathematics, developed at the Computer Science 
     ||T||  Department of the University of Bologna, Italy.           
