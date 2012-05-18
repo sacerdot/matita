@@ -301,11 +301,58 @@ lapply (sem_while … sem_copy_step intape k outc Hloop) [%] -Hloop
           (* by IH, we proceed by cases, whether a = comma 
              (consequently several lists = []) or not *)          
           *
-          [ * #Ha #Houtc1 >Hl1cons in Hl1; >Hla
+          [ * #Ha #Houtc1
+(*           cut (l1 = [〈a,false〉])
+           [ cases l1'' in Hl1cons; // #y #ly #Hly
+             >Hly in Hl1; cases l1' in Hl1bits;
+             [ #_ normalize #Hfalse destruct (Hfalse)
+             | #p #lp #Hl1bits normalize #Heq destruct (Heq)
+               @False_ind lapply (Hl1bits 〈a,false〉 ?)
+               [ cases lp in e0;
+                 [ normalize #Hfalse destruct (Hfalse)
+                 | #p0 #lp0 normalize in ⊢ (%→?); #Heq destruct (Heq)
+                   @memb_cons @memb_hd ]
+               | >Ha normalize #Hfalse destruct (Hfalse) ]
+             ]
+           ] #Hl1a
+           cut (l4 = [〈a0,false〉])
+           [ generalize in match Hl4bits; cases l4' in Hl4;
+             [ >Hl4cons #Hfalse #_ 
+               lapply (inj_append_singleton_l1 ?? [] ?? Hfalse)
+               cases (reverse ? l4'') normalize
+               [ #Hfalse1 | #p0 #lp0 #Hfalse1 ] destruct (Hfalse1)
+             | #p #lp 
+           
+             cases l4'' in Hl4cons; // #y #ly #Hly
+             >Hly in Hl4; cases l4' in Hl4bits;
+             [ #_ >reverse_cons #Hfalse
+               lapply (inj_append_singleton_l1 ?? [] ?? Hfalse)
+               -Hfalse cases ly normalize
+               [ #Hfalse | #p #Hp #Hfalse ] destruct (Hfalse)
+                
+             | #p #lp #Hl1bits normalize #Heq destruct (Heq)
+               @False_ind lapply (Hl1bits 〈a,false〉 ?)
+               [ cases lp in e0;
+                 [ normalize #Hfalse destruct (Hfalse)
+                 | #p0 #lp0 normalize in ⊢ (%→?); #Heq destruct (Heq)
+                   @memb_cons @memb_hd ]
+               | >Ha normalize #Hfalse destruct (Hfalse) ]
+             ]
+           ] #Hl1a
+             
+              >Hla normalize #Hl1 destruct (Hl1) lapply (inj_append_ @False_ind
+             
+           cut (l1'' = [] ∧ l4'' = [])
+           [ % [ >Hla in Hl1; normalize #Hl1 destruct (Hl1)
+           
+            cases l1'' in Hl1bits;
+                
+                 [ #_ normalize #H *)
+           cut (la = [] ∧ lb = [] ∧ l1'' = [] ∧ l4'' = [])
+           [ @daemon ] * * * #Hla1 #Hlb1 #Hl1nil #Hl4nil
+           >Hl1cons in Hl1; >Hla
            >Houtc1 >Htc #Hl1
            >Hl4cons in Hl4; >Hlb #Hl4
-           cut (la = [] ∧ lb = [] ∧ l1'' = [] ∧ l4'' = []) 
-           [@daemon] * * * #Hla1 #Hlb1 #Hl1nil #Hl4nil
            >Hla1 >Hlb1 >Hl1nil >Hl4nil >Hx
            cut (a0 = grid) [ @daemon ] #Ha0 <Ha <Ha0
            normalize in ⊢ (??(??%?%)(??%?%)); >associative_append %
@@ -363,7 +410,7 @@ definition R_copy ≝ λt1,t2.
   ∀ls,c,c0,rs,l1,l3,l4.
   t1 = midtape STape (l3@〈grid,false〉::l4@〈c0,true〉::ls) 〈c,true〉 (l1@〈comma,false〉::rs) → 
   no_marks l1 → no_marks l3 → no_marks l4 → |l1| = |l4| → 
-  only_bits_or_nulls (〈c0,true〉::l4) → only_bits_or_nulls (〈c,true〉::l1) → 
+  only_bits_or_nulls (l4@[〈c0,true〉]) → only_bits_or_nulls (〈c,true〉::l1) → 
   t2 = midtape STape (reverse ? l1@l3@〈grid,false〉::
           merge_config (l4@[〈c0,false〉]) (reverse ? (〈c,false〉::l1))@ls) 
      〈comma,false〉 rs.

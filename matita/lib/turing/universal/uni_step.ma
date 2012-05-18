@@ -170,5 +170,93 @@ cases HR -HR
     ]
   ]
 qed.
-    ]-Htf
-qed.
+
+include "turing/universal/move_tape.ma".
+
+definition exec_move ≝ 
+  seq ? (adv_to_mark_r … (is_marked ?))
+    (seq ? init_copy
+      (seq ? copy
+        (seq ? (move_r …)
+          (seq ? move_tape (move_r …))))).
+
+definition lift_tape ≝ λls,c,rs.
+  let 〈c0,b〉 ≝ c in
+  let c' ≝ match c0 with
+  [ null ⇒ None ?
+  | _ ⇒ Some ? c ]
+  in
+  mk_tape STape ls c' rs.
+  
+definition sim_current_of_tape ≝ λt.
+  match current STape t with
+  [ None ⇒ 〈null,false〉
+  | Some c0 ⇒ c0 ].
+
+(*
+ t1 =  ls # cs c # table # rs  
+ 
+ let simt ≝ lift_tape ls c rs in
+ let simt' ≝ move_left simt' in
+ 
+ t2 = left simt'# cs (sim_current_of_tape simt') # table # right simt'
+*)
+          
+(*
+definition R_move
+
+definition R_exec_move ≝ λt1,t2.
+  ∀ls,current,table1,newcurrent,table2,rs.
+  t1 = midtape STape (current@〈grid,false〉::ls) 〈grid,false〉
+       (table1@〈comma,true〉::newcurrent@〈comma,false〉::move::table2@
+        〈grid,false〉::rs) → 
+  table_TM (table1@〈comma,false〉::newcurrent@〈comma,false〉::move::table2) →
+  t2 = midtape
+*)
+
+(*
+
+step :
+
+if is_true(current) (* current state is final *)
+   then nop
+   else 
+   init_match;
+   match_tuple;
+   if is_marked(current) = false (* match ok *)
+      then exec_move; 
+      else sink;
+        
+*)
+
+definition mk_tuple ≝ λc,newc,mv.
+  c @ 〈comma,false〉:: newc @ 〈comma,false〉 :: [〈mv,false〉].
+
+inductive match_in_table (c,newc:list STape) (mv:unialpha) : list STape → Prop ≝ 
+| mit_hd : 
+   ∀tb.
+   match_in_table c newc mv (mk_tuple c newc mv@〈bar,false〉::tb)
+| mit_tl :
+   ∀c0,newc0,mv0,tb.
+   match_in_table c newc mv tb → 
+   match_in_table c newc mv (mk_tuple c0 newc0 mv0@〈bar,false〉::tb).
+
+definition move_of_unialpha ≝ 
+  λc.match c with
+  [ bit x ⇒ match x with [ true ⇒ R | false ⇒ L ]
+  | _ ⇒ N ].
+
+definition R_uni_step ≝ λt1,t2.
+  ∀n,table,c,c1,ls,rs,curs,curc,news,newc,mv.
+  table_TM n table → 
+  match_in_table (〈c,false〉::curs@[〈curc,false〉]) 
+    (〈c1,false〉::news@[〈newc,false〉]) mv table → 
+  t1 = midtape STape (〈grid,false〉::ls) 〈c,false〉 
+    (curs@〈curc,false〉::〈grid,false〉::table@〈grid,false〉::rs) → 
+  ∀t1',ls1,rs1.t1' = lift_tape ls 〈curc,false〉 rs → 
+  (t2 = midtape STape (〈grid,false〉::ls1) 〈c1,false〉 
+    (news@〈newc,false〉::〈grid,false〉::table@〈grid,false〉::rs1) ∧
+   lift_tape ls1 〈newc,false〉 rs1 = 
+   tape_move STape t1' (Some ? 〈〈newc,false〉,move_of_unialpha mv〉)).
+  
+  

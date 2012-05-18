@@ -653,7 +653,7 @@ definition match_tuple ≝  whileTM ? match_tuple_step (inr … (inl … (inr �
 definition R_match_tuple ≝ λt1,t2.
   ∀ls,c,l1,c1,l2,rs,n.
   is_bit c = true → only_bits_or_nulls l1 → is_bit c1 = true → n = |l1| →
-  table_TM (S n) (〈c1,true〉::l2) → 
+  table_TM (S n) (〈c1,false〉::l2) → 
   t1 = midtape STape (〈grid,false〉::ls) 〈c,true〉 
          (l1@〈grid,false〉::〈c1,true〉::l2@〈grid,false〉::rs) → 
   (* facciamo match *)
