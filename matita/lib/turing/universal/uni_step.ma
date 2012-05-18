@@ -258,5 +258,47 @@ definition R_uni_step ≝ λt1,t2.
     (news@〈newc,false〉::〈grid,false〉::table@〈grid,false〉::rs1) ∧
    lift_tape ls1 〈newc,false〉 rs1 = 
    tape_move STape t1' (Some ? 〈〈newc,false〉,move_of_unialpha mv〉)).
-  
-  
+
+definition no_nulls ≝ 
+ λl:list STape.∀x.memb ? x l = true → is_null (\fst x) = false.
+ 
+definition R_move_tape_r_abstract ≝ λt1,t2.
+  ∀rs,n,table,curc,curconfig,ls.
+  bit_or_null curc = true → only_bits_or_nulls curconfig → table_TM n table → 
+  t1 = midtape STape (table@〈grid,false〉::〈curc,false〉::curconfig@〈grid,false〉::ls) 
+         〈grid,false〉 rs →
+  no_nulls rs → 
+  ∀t1'.t1' = lift_tape ls 〈curc,false〉 rs → 
+  ∃ls1,rs1,newc.
+  (t2 = midtape STape ls1 〈grid,false〉 (reverse ? curconfig@newc::
+    〈grid,false〉::reverse ? table@〈grid,false〉::rs1) ∧
+   lift_tape ls1 newc rs1 = 
+   tape_move_right STape ls 〈curc,false〉 rs).
+   
+lemma lift_tape_not_null :
+  ∀ls,c,rs. is_null (\fst c) = false → 
+  lift_tape ls c rs = mk_tape STape ls (Some ? c) rs.
+#ls * #c0 #bc0 #rs cases c0
+[|normalize in ⊢ (%→?); #Hfalse destruct (Hfalse) ]
+//
+qed.
+ 
+lemma mtr_concrete_to_abstract :
+  ∀t1,t2.R_move_tape_r t1 t2 → R_move_tape_r_abstract t1 t2.
+#t1 #t2 whd in ⊢(%→?); #Hconcrete
+#rs #n #table #curc #curconfig #ls #Hcurc #Hcurconfig #Htable #Ht1
+#Hrsnonulls #t1' #Ht1'
+cases (Hconcrete … Htable Ht1) //
+[ * #Hrs #Ht2
+  @(ex_intro ?? (〈curc,false〉::ls)) @(ex_intro ?? [])
+  @(ex_intro ?? 〈null,false〉) %
+  [ >Ht2 %
+  | >Hrs % ]
+| * #r0 * #rs0 * #Hrs #Ht2 
+  @(ex_intro ?? (〈curc,false〉::ls)) @(ex_intro ?? rs0)
+  @(ex_intro ?? r0) %
+  [ >Ht2 %
+  | >Hrs >lift_tape_not_null
+    [ %
+    | @Hrsnonulls >Hrs @memb_hd ] ]
+qed.
