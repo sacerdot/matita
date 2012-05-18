@@ -224,6 +224,116 @@ lapply (sem_seq ? (adv_to_mark_r ? bar_or_grid)
 ]]]]
 qed.
 
+definition init_current_on_match ≝ 
+  seq ? (adv_to_mark_l ? (λc:STape.is_grid (\fst c)))
+    (seq ? (move_l ?)
+       (seq ? (adv_to_mark_l ? (λc:STape.is_grid (\fst c)))
+          (seq ? (move_r ?) (mark ?)))).
+          
+definition R_init_current_on_match ≝ λt1,t2.
+  ∀l1,l2,c,l3,d,rs. no_grids l1 → no_grids l2 → is_grid c = false → is_grid (\fst d) = false → 
+  t1 = midtape STape (l1@〈grid,false〉::l2@〈c,false〉::〈grid,false〉::l3) d rs → 
+  t2 = midtape STape (〈grid,false〉::l3) 〈c,true〉 
+           ((reverse ? (l1@〈grid,false〉::l2)@d::rs)).
+
+lemma sem_init_current_on_match : 
+  Realize ? init_current_on_match R_init_current_on_match.
+#intape 
+cases (sem_seq ????? (sem_adv_to_mark_l ? (λc:STape.is_grid (\fst c)))
+        (sem_seq ????? (sem_move_l ?)
+          (sem_seq ????? (sem_adv_to_mark_l ? (λc:STape.is_grid (\fst c)))
+             (sem_seq ????? (sem_move_r ?) (sem_mark ?)))) intape)
+#k * #outc * #Hloop #HR 
+@(ex_intro ?? k) @(ex_intro ?? outc) % [@Hloop] -Hloop
+#l1 #l2 #c #l3 #d #rs #Hl1 #Hl2 #Hc #Hd #Hintape
+cases HR -HR #ta * whd in ⊢ (%→?); #Hta cases (Hta … Hintape) -Hta -Hintape
+  [ * >Hd #Hfalse normalize in Hfalse; destruct (Hfalse) ]
+* #_ #Hta lapply (Hta l1 〈grid,false〉 ? (refl ??) (refl …) Hl1) -Hta #Hta
+* #tb * whd in ⊢ (%→?); #Htb lapply (Htb … Hta) -Htb -Hta 
+generalize in match Hl2; cases l2
+  [#Hl2 whd in ⊢ ((???(??%%%))→?); #Htb
+   * #tc * whd in ⊢ (%→?); #Htc cases (Htc … Htb) -Htb
+    [* >Hc #Htemp destruct (Htemp) ]
+   * #_ #Htc lapply (Htc [ ] 〈grid,false〉 ? (refl ??) (refl …) Hl2) 
+   whd in ⊢ ((???(??%%%))→?); -Htc #Htc
+   * #td * whd in ⊢ (%→?); #Htd lapply (Htd … Htc) -Htc -Htd 
+   whd in ⊢ ((???(??%%%))→?); #Htd
+   whd in ⊢ (%→?); #Houtc lapply (Houtc … Htd) -Houtc #Houtc
+   >Houtc >reverse_append %
+  |#d #tl #Htl whd in ⊢ ((???(??%%%))→?); #Htb
+   * #tc * whd in ⊢ (%→?); #Htc cases (Htc … Htb) -Htc
+    [* >(Htl … (memb_hd …)) #Htemp destruct (Htemp)]    
+   * #Hd >append_cons #Htc lapply (Htc … (refl ??) (refl …) ?)
+    [#x #membx cases (memb_append … membx) -membx #membx
+      [@Htl @memb_cons @membx | >(memb_single … membx) @Hc]] #Htc
+   * #td * whd in ⊢ (%→?); #Htd lapply (Htd … Htc) -Htc -Htd 
+   >reverse_append >associative_append whd in ⊢ ((???(??%%%))→?); #Htd
+   whd in ⊢ (%→?); #Houtc lapply (Houtc … Htd) -Houtc #Houtc 
+   >Houtc >reverse_append >reverse_cons >reverse_cons 
+   >associative_append >associative_append >associative_append %
+  ]
+qed.   
+
+(*
+definition init_current_gen ≝ 
+  seq ? (adv_to_mark_l ? (is_marked ?))
+    (seq ? (clear_mark ?)
+       (seq ? (move_l ?)
+         (seq ? (adv_to_mark_l ? (λc:STape.is_grid (\fst c)))
+            (seq ? (move_r ?) (mark ?))))).
+          
+definition R_init_current_gen ≝ λt1,t2.
+  ∀l1,c,l2,b,l3,c1,rs,c0,b0. no_marks l1 → no_grids l2 →
+  Some ? 〈c0,b0〉 = option_hd ? (reverse ? (〈c,true〉::l2)) → 
+  t1 = midtape STape (l1@〈c,true〉::l2@〈grid,b〉::l3) 〈c1,false〉 rs → 
+  t2 = midtape STape (〈grid,b〉::l3) 〈c0,true〉
+        ((tail ? (reverse ? (l1@〈c,false〉::l2))@〈c1,false〉::rs)).
+
+lemma sem_init_current_gen : Realize ? init_current_gen R_init_current_gen.
+#intape 
+cases (sem_seq ????? (sem_adv_to_mark_l ? (is_marked ?))
+        (sem_seq ????? (sem_clear_mark ?)
+          (sem_seq ????? (sem_move_l ?)
+            (sem_seq ????? (sem_adv_to_mark_l ? (λc:STape.is_grid (\fst c)))
+              (sem_seq ????? (sem_move_r ?) (sem_mark ?))))) intape)
+#k * #outc * #Hloop #HR 
+@(ex_intro ?? k) @(ex_intro ?? outc) % [@Hloop] -Hloop
+#l1 #c #l2 #b #l3 #c1 #rs #c0 #b0 #Hl1 #Hl2 #Hc #Hintape
+cases HR -HR #ta * whd in ⊢ (%→?); #Hta cases (Hta … Hintape) -Hta -Hintape
+  [ * #Hfalse normalize in Hfalse; destruct (Hfalse) ]
+* #_ #Hta lapply (Hta l1 〈c,true〉 ? (refl ??) ??) [@Hl1|%] -Hta #Hta
+* #tb * whd in ⊢ (%→?); #Htb lapply (Htb … Hta) -Htb -Hta #Htb 
+* #tc * whd in ⊢ (%→?); #Htc lapply (Htc … Htb) -Htc -Htb 
+generalize in match Hc; generalize in match Hl2; cases l2
+  [#_ whd in ⊢ ((???%)→?); #Htemp destruct (Htemp) 
+   whd in ⊢ ((???(??%%%))→?); #Htc
+   * #td * whd in ⊢ (%→?); #Htd cases (Htd … Htc) -Htd
+    [2: * whd in ⊢ (??%?→?); #Htemp destruct (Htemp) ]
+   * #_ #Htd >Htd in Htc; -Htd #Htd
+   * #te * whd in ⊢ (%→?); #Hte lapply (Hte … Htd) -Htd
+   >reverse_append >reverse_cons 
+   whd in ⊢ ((???(??%%%))→?); #Hte
+   whd in ⊢ (%→?); #Houtc lapply (Houtc … Hte) -Houtc -Hte #Houtc
+   >Houtc %
+  |#d #tl #Htl #Hc0 whd in ⊢ ((???(??%%%))→?); #Htc
+   * #td * whd in ⊢ (%→?); #Htd cases (Htd … Htc) -Htd
+    [* >(Htl … (memb_hd …)) whd in ⊢ (??%?→?); #Htemp destruct (Htemp)]    
+   * #Hd #Htd lapply (Htd … (refl ??) (refl ??) ?)
+    [#x #membx @Htl @memb_cons @membx] -Htd #Htd
+   * #te * whd in ⊢ (%→?); #Hte lapply (Hte … Htd) -Htd
+   >reverse_append >reverse_cons >reverse_cons
+   >reverse_cons in Hc0; >reverse_cons cases (reverse ? tl)
+     [normalize in ⊢ (%→?); #Hc0 destruct (Hc0) #Hte 
+      whd in ⊢ (%→?); #Houtc lapply (Houtc … Hte) -Houtc -Hte #Houtc
+      >Houtc %
+     |* #c2 #b2 #tl2 normalize in ⊢ (%→?); #Hc0 destruct (Hc0)  
+      whd in ⊢ ((???(??%%%))→?); #Hte 
+      whd in ⊢ (%→?); #Houtc lapply (Houtc … Hte) -Houtc -Hte #Houtc
+      >Houtc >associative_append >associative_append >associative_append %
+     ]
+   ]
+qed.
+*)
 definition init_current ≝ 
   seq ? (adv_to_mark_l ? (is_marked ?))
     (seq ? (clear_mark ?)
