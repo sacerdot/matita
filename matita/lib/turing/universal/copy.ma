@@ -165,8 +165,16 @@ let rec merge_config (l1,l2:list STape) ≝
     | cons p2 l2' ⇒ 
            let 〈c1,b1〉 ≝ p1 in let 〈c2,b2〉 ≝ p2 in
            match c2 with
-           [ null ⇒ p1 :: merge_config l1' l2'
-           | _ ⇒ p2 :: merge_config l1' l2' ] ] ].
+           [ null ⇒ p1
+           | _ ⇒ p2 ] :: merge_config l1' l2' ] ].
+           
+lemma merge_config_append :
+ ∀l1,l2,l3,l4.|l1| = |l2| → 
+ merge_config (l1@l3) (l2@l4) = merge_config l1 l2@merge_config l3 l4.
+#l1 #l2 #l3 #l4 #Hlen @(list_ind2 … Hlen)
+[normalize //
+| #t1 #t2 * #c1 #b1 * #c2 #b2 #IH whd in ⊢ (??%%); >IH % ]
+qed.
 
 definition R_copy0 ≝ λt1,t2.
   ∀ls,c,c0,rs,l1,l3,l4.
@@ -179,6 +187,24 @@ definition R_copy0 ≝ λt1,t2.
     t2 = midtape ? (reverse ? l1'@l3@〈grid,true〉::
                   merge_config l4' (reverse ? l1')@ls) 
      〈comma,true〉 rs).
+     
+lemma inj_append_singleton_l1 :
+  ∀A.∀l1,l2:list A.∀a1,a2.l1@[a1] = l2@[a2] → l1 = l2.
+#A #l1 #l2 #a1 #a2 #H lapply (eq_f … (reverse ?) … H)
+>reverse_append >reverse_append normalize #H1 destruct
+lapply (eq_f … (reverse ?) … e0) >reverse_reverse >reverse_reverse //
+qed.
+
+lemma inj_append_singleton_l2 :
+  ∀A.∀l1,l2:list A.∀a1,a2.l1@[a1] = l2@[a2] → a1 = a2.
+#A #l1 #l2 #a1 #a2 #H lapply (eq_f … (reverse ?) … H)
+>reverse_append >reverse_append normalize #H1 destruct %
+qed.
+
+lemma length_reverse : ∀A,l.|reverse A l| = |l|.
+#A #l elim l //
+#a0 #l0 #IH normalize >rev_append_def >length_append >IH normalize //
+qed.
 
 lemma wsem_copy0 : WRealize ? copy0 R_copy0.
 #intape #k #outc #Hloop 
@@ -200,24 +226,59 @@ lapply (sem_while … sem_copy_step intape k outc Hloop) [%] -Hloop
   #Hl1 #Hl1bits #l4' #bg #Hl4 #Hl4bits %2
   cases (Htc … Htb) -Htc #Hcbitnull #Htc
   % [ % #Hc' >Hc' in Hcbitnull; normalize #Hfalse destruct (Hfalse) ]
-  cut (|l1| = |reverse ? l4|) [@daemon] #Hlen1
+  cut (|l1| = |reverse ? l4|) [//] #Hlen1
   @(list_cases_2 … Hlen1)
-  [ #Hl1nil @False_ind >Hl1nil in Hl1; cases l1' normalize
+  [ (* case l1 = [] is discriminated because l1 contains at least comma *)
+    #Hl1nil @False_ind >Hl1nil in Hl1; cases l1' normalize
     [ #Hl1 destruct normalize in Hcbitnull; destruct (Hcbitnull)
     | #p0 #l0 normalize #Hfalse destruct (Hfalse) cases l0 in e0;
       [ normalize #Hfalse1 destruct (Hfalse1)
       | #p0' #l0' normalize #Hfalse1 destruct (Hfalse1) ] ]
-  | * #a #ba * #a0 #ba0 #l1'' #l4'' #Hl1cons #Hl4cons
+  | (* case c::l1 = c::a::l1'' *)
+    * #a #ba * #a0 #ba0 #l1'' #l4'' #Hl1cons #Hl4cons
     lapply (eq_f ?? (reverse ?) ?? Hl4cons) >reverse_reverse >reverse_cons -Hl4cons #Hl4cons
-    cut (ba = false) [ @daemon ] #Hba
-    cut (ba0 = false) [ @daemon ] #Hba0
+    cut (ba = false) 
+    [ >Hl1cons in Hl1nomarks; #Hl1nomarks lapply (Hl1nomarks 〈a,ba〉 ?)
+      [ @memb_hd | normalize // ] ] #Hba
+    cut (ba0 = false) 
+    [ >Hl4cons in Hl3l4nomarks; #Hl3l4nomarks lapply (Hl3l4nomarks 〈a0,ba0〉 ?)
+      [ @memb_append_l2 @memb_append_l2 @memb_hd | normalize // ] ] #Hba0
     >Hba0 in Hl4cons; >Hba in Hl1cons; -Hba0 -Hba #Hl1cons #Hl4cons
     >Hl4cons in Htc; >Hl1cons #Htc
     lapply (Htc a (l3@reverse ? l4'') c0 a0 ls (l1''@rs) ? (refl ??) ?)
     [ #x #Hx @Hl3l4nomarks >Hl4cons <associative_append
       @memb_append_l1 @Hx
     | >associative_append >associative_append %
-    | -Htc *
+    | -Htc
+      cut (∃la.l1' = 〈c,false〉::la)
+      [ >Hl1cons in Hl1; cases l1'
+        [normalize #Hfalse destruct (Hfalse)
+        | #p #la normalize #Hla destruct (Hla) @(ex_intro ?? la) % ] ]
+      * #la #Hla
+      cut (∃lb.l4' = lb@[〈c0,false〉])
+      [ >Hl4cons in Hl4;
+        @(list_elim_left … l4')
+        [ #Heq lapply (eq_f … (length ?) … Heq)
+          >length_append >length_append 
+          >commutative_plus normalize >commutative_plus normalize
+          #Hfalse destruct
+        | #a1 #tl #_ #Heq 
+          >(inj_append_singleton_l2 ? (reverse ? l4''@[〈a0,false〉]) (〈grid,bg〉::tl) 〈c0,false〉 a1 Heq)
+          @ex_intro //
+      ] ] * #lb #Hlb
+      cut (|lb| = |reverse ? la|) 
+      [ >Hla in Hl1; >Hlb in Hl4; #Hl4 #Hl1
+        >(?:l1 = la@[〈comma,bv〉]) in Hlen;
+        [|normalize in Hl1; destruct (Hl1) %]
+        >(?:l4 = 〈grid,bg〉::lb)
+        [|@(inj_append_singleton_l1 ?? (〈grid,bg〉::lb) ?? Hl4) ]
+        >length_append >commutative_plus >length_reverse 
+        normalize #Hlalb destruct (Hlalb) //
+      ] #Hlen2
+      *
+      (* by hyp on the first iteration step, 
+         we consider whether c = bit x or c = null *)
+      (* c = bit x *)
       [ * #x * #Hx #Htc 
         lapply (Hind (〈bit x,false〉::ls) a a0 rs l1'' 
                 (〈bit x,false〉::l3) (reverse ? l4'') ????) 
@@ -230,23 +291,68 @@ lapply (sem_while … sem_copy_step intape k outc Hloop) [%] -Hloop
         | #x0 #Hx0 @Hl1nomarks >Hl1cons @memb_cons //
         | >Htc >associative_append % 
         | -Hind 
-          cut (∃la.l1' = 〈c,false〉::la)
-          [ >Hl1cons in Hl1; cases l1'
-            [normalize #Hfalse destruct (Hfalse)
-            | #p #la normalize #Hla destruct (Hla) @(ex_intro ?? la) % ] ]
-          * #la #Hla
-          cut (∃lb.l4' = lb@[〈c0,false〉])
-            [ >Hl4cons in Hl4;
-              @(list_elim_left … l4')
-              (* si usa l'iniettività del "cons destro" 
-              [ normalize 
-              | #p #lb
-             cases l4'
-              [normalize
-              | #p #lb *)
-            
-            @(list_elim_left … l4')
-           <Hl1cons <Hl4cons #Hind lapply (Hind ?? Hl1 ??? Hl4 ?)
+          <Hl1cons <Hl4cons #Hind lapply (Hind la bv ?? lb bg ??)
+          [ #x0 #Hx0 @Hl4bits >Hlb @memb_append_l1 //
+          | >Hlb in Hl4; normalize in ⊢ (%→?); #Hl4
+            @(inj_append_singleton_l1 ? l4 (〈grid,bg〉::lb) … Hl4)
+          | #x0 #Hx0 @Hl1bits >Hla @memb_cons //
+          | >Hla in Hl1; normalize in ⊢ (%→?); #Hl1
+            destruct (Hl1) // ] -Hind
+          (* by IH, we proceed by cases, whether a = comma 
+             (consequently several lists = []) or not *)          
+          *
+          [ * #Ha #Houtc1 >Hl1cons in Hl1; >Hla
+           >Houtc1 >Htc #Hl1
+           >Hl4cons in Hl4; >Hlb #Hl4
+           cut (la = [] ∧ lb = [] ∧ l1'' = [] ∧ l4'' = []) 
+           [@daemon] * * * #Hla1 #Hlb1 #Hl1nil #Hl4nil
+           >Hla1 >Hlb1 >Hl1nil >Hl4nil >Hx
+           cut (a0 = grid) [ @daemon ] #Ha0 <Ha <Ha0
+           normalize in ⊢ (??(??%?%)(??%?%)); >associative_append %
+          | * #Ha #Houtc1 >Houtc1 @eq_f3 //
+            >Hla >reverse_cons >associative_append @eq_f
+            >Hx whd in ⊢ (??%?); @eq_f whd in ⊢ (???%); @eq_f @eq_f
+            >Hlb >append_cons @eq_f2 // >(merge_config_append … Hlen2) %            
+          ]
+       ]
+    | (* c = null *)
+      * #Hc #Htc 
+      lapply (Hind (〈c0,false〉::ls) a a0 rs l1'' (〈null,false〉::l3) (reverse ? l4'') ????)
+      [  >Hl1cons in Hlen; >Hl4cons >length_append >commutative_plus normalize
+         #Hlen destruct (Hlen) @e0
+      | #x0 #Hx0 cases (memb_append STape ? [〈null,false〉] (l3@reverse ? l4'') … Hx0) -Hx0 #Hx0
+        [ >(memb_single … Hx0) %
+        | @Hl3l4nomarks cases (memb_append … Hx0) -Hx0 #Hx0
+          [ @memb_append_l1 //
+          | @memb_append_l2 >Hl4cons @memb_append_l1 // ]
+        ]
+      | >Hl1cons #x' #Hx0 @Hl1nomarks >Hl1cons @memb_cons //
+      | >Htc @eq_f3 // >associative_append % ] -Hind <Hl1cons <Hl4cons #Hind
+        lapply (Hind la bv ?? lb bg ??)
+          [ #x0 #Hx0 @Hl4bits >Hlb @memb_append_l1 //
+          | >Hlb in Hl4; normalize in ⊢ (%→?); #Hl4
+            @(inj_append_singleton_l1 ? l4 (〈grid,bg〉::lb) … Hl4)
+          | #x0 #Hx0 @Hl1bits >Hla @memb_cons //
+          | >Hla in Hl1; normalize in ⊢ (%→?); #Hl1
+            destruct (Hl1) // ] -Hind *
+          (* by IH, we proceed by cases, whether a = comma 
+             (consequently several lists = []) or not *)          
+          [ * #Ha #Houtc1 >Hl1cons in Hl1; >Hla
+           >Houtc1 >Htc #Hl1
+           >Hl4cons in Hl4; >Hlb #Hl4
+           cut (la = [] ∧ lb = [] ∧ l1'' = [] ∧ l4'' = []) 
+           [@daemon] * * * #Hla1 #Hlb1 #Hl1nil #Hl4nil
+           >Hla1 >Hlb1 >Hl1nil >Hl4nil >Hc
+           cut (a0 = grid) [ @daemon ] #Ha0 <Ha <Ha0
+           normalize in ⊢ (??(??%?%)(??%?%)); >associative_append %
+          | * #Ha #Houtc1 >Houtc1 @eq_f3 //
+            >Hla >reverse_cons >associative_append @eq_f
+            >Hc whd in ⊢ (??%?); @eq_f whd in ⊢ (???%); @eq_f @eq_f
+            >Hlb >append_cons @eq_f2 // >(merge_config_append … Hlen2) %
+          ]
+       ]
+]]]
+qed.      
 
 definition copy
 ≝ 
