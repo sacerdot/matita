@@ -243,66 +243,20 @@ definition exec_move ≝
         (seq ? (move_r …)
           (seq ? move_tape (move_r …))))).
 
-definition lift_tape ≝ λls,c,rs.
-  let 〈c0,b〉 ≝ c in
-  let c' ≝ match c0 with
-  [ null ⇒ None ?
-  | _ ⇒ Some ? c ]
-  in
-  mk_tape STape ls c' rs.
-  
-definition sim_current_of_tape ≝ λt.
-  match current STape t with
-  [ None ⇒ 〈null,false〉
-  | Some c0 ⇒ c0 ].
-
-(*
- t1 =  ls # cs c # table # rs  
- 
- let simt ≝ lift_tape ls c rs in
- let simt' ≝ move_left simt' in
- 
- t2 = left simt'# cs (sim_current_of_tape simt') # table # right simt'
-*)
-          
-(*
-definition R_move
-
 definition R_exec_move ≝ λt1,t2.
-  ∀ls,current,table1,newcurrent,table2,rs.
-  t1 = midtape STape (current@〈grid,false〉::ls) 〈grid,false〉
-       (table1@〈comma,true〉::newcurrent@〈comma,false〉::move::table2@
-        〈grid,false〉::rs) → 
-  table_TM (table1@〈comma,false〉::newcurrent@〈comma,false〉::move::table2) →
-  t2 = midtape
-*)
+  ∀n,curconfig,ls,rs,curc,table1,newconfig,mv,table2.
+  table_TM n (table1@〈comma,true〉::newconfig@〈comma,false〉::〈mv,false〉::table2) → 
+  no_marks curconfig → only_bits_or_nulls curconfig → 
+  no_nulls ls → no_nulls rs → 
+  t1 = midtape STape (〈curc,false〉::curconfig@〈grid,false〉::ls) 〈grid,false〉 
+    (table1@〈comma,true〉::newconfig@〈comma,false〉::〈mv,false〉::table2@〈grid,false〉::rs) → 
+  ∀t1'.t1' = lift_tape ls 〈curc,false〉 rs → 
+  ∃ls1,rs1,newc.
+  t2 = midtape STape (〈newc,false〉::reverse ? (merge_config (reverse ? curconfig) newconfig)@〈grid,false〉::ls1)
+    〈grid,false〉 (table1@〈comma,true〉::newconfig@〈comma,false〉::〈mv,false〉::table2@〈grid,false〉::rs1) ∧   
+  lift_tape ls1 〈newc,false〉 rs1 = 
+  tape_move STape t1' (Some ? 〈〈newc,false〉,move_of_unialpha mv〉).
 
-(*
-
-step :
-
-if is_true(current) (* current state is final *)
-   then nop
-   else 
-   init_match;
-   match_tuple;
-   if is_marked(current) = false (* match ok *)
-      then exec_move; 
-      else sink;
-        
-*)
-
-definition mk_tuple ≝ λc,newc,mv.
-  c @ 〈comma,false〉:: newc @ 〈comma,false〉 :: [〈mv,false〉].
-
-inductive match_in_table (c,newc:list STape) (mv:unialpha) : list STape → Prop ≝ 
-| mit_hd : 
-   ∀tb.
-   match_in_table c newc mv (mk_tuple c newc mv@〈bar,false〉::tb)
-| mit_tl :
-   ∀c0,newc0,mv0,tb.
-   match_in_table c newc mv tb → 
-   match_in_table c newc mv (mk_tuple c0 newc0 mv0@〈bar,false〉::tb).
 
 definition move_of_unialpha ≝ 
   λc.match c with
@@ -325,43 +279,3 @@ definition R_uni_step ≝ λt1,t2.
 definition no_nulls ≝ 
  λl:list STape.∀x.memb ? x l = true → is_null (\fst x) = false.
  
-definition R_move_tape_r_abstract ≝ λt1,t2.
-  ∀rs,n,table,curc,curconfig,ls.
-  bit_or_null curc = true → only_bits_or_nulls curconfig → table_TM n table → 
-  t1 = midtape STape (table@〈grid,false〉::〈curc,false〉::curconfig@〈grid,false〉::ls) 
-         〈grid,false〉 rs →
-  no_nulls rs → 
-  ∀t1'.t1' = lift_tape ls 〈curc,false〉 rs → 
-  ∃ls1,rs1,newc.
-  (t2 = midtape STape ls1 〈grid,false〉 (reverse ? curconfig@newc::
-    〈grid,false〉::reverse ? table@〈grid,false〉::rs1) ∧
-   lift_tape ls1 newc rs1 = 
-   tape_move_right STape ls 〈curc,false〉 rs).
-   
-lemma lift_tape_not_null :
-  ∀ls,c,rs. is_null (\fst c) = false → 
-  lift_tape ls c rs = mk_tape STape ls (Some ? c) rs.
-#ls * #c0 #bc0 #rs cases c0
-[|normalize in ⊢ (%→?); #Hfalse destruct (Hfalse) ]
-//
-qed.
- 
-lemma mtr_concrete_to_abstract :
-  ∀t1,t2.R_move_tape_r t1 t2 → R_move_tape_r_abstract t1 t2.
-#t1 #t2 whd in ⊢(%→?); #Hconcrete
-#rs #n #table #curc #curconfig #ls #Hcurc #Hcurconfig #Htable #Ht1
-#Hrsnonulls #t1' #Ht1'
-cases (Hconcrete … Htable Ht1) //
-[ * #Hrs #Ht2
-  @(ex_intro ?? (〈curc,false〉::ls)) @(ex_intro ?? [])
-  @(ex_intro ?? 〈null,false〉) %
-  [ >Ht2 %
-  | >Hrs % ]
-| * #r0 * #rs0 * #Hrs #Ht2 
-  @(ex_intro ?? (〈curc,false〉::ls)) @(ex_intro ?? rs0)
-  @(ex_intro ?? r0) %
-  [ >Ht2 %
-  | >Hrs >lift_tape_not_null
-    [ %
-    | @Hrsnonulls >Hrs @memb_hd ] ]
-qed.
