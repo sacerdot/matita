@@ -18,6 +18,9 @@ include "turing/universal/marks.ma".
 
 definition STape ≝ FinProd … FSUnialpha FinBool.
 
+definition only_bits ≝ λl.
+  ∀c.memb STape c l = true → is_bit (\fst c) = true.
+
 definition only_bits_or_nulls ≝ λl.
   ∀c.memb STape c l = true → bit_or_null (\fst c) = true.
   

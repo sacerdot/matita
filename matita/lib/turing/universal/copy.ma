@@ -399,20 +399,54 @@ lapply (sem_while … sem_copy_step intape k outc Hloop) [%] -Hloop
           ]
        ]
 ]]]
-qed.      
+qed.
+
+definition merge_char ≝ λc1,c2.
+  match c2 with
+  [ null ⇒ c1
+  | _ ⇒ c2 ].
+  
+lemma merge_cons : 
+  ∀c1,c2,conf1,conf2.
+  merge_config (〈c1,false〉::conf1) (〈c2,false〉::conf2) = 
+    〈merge_char c1 c2,false〉::merge_config conf1 conf2.
+#c1 #c2 #conf1 #conf2 normalize @eq_f2 //
+cases c2 /2/
+qed.
+
+lemma merge_config_c_nil : 
+  ∀c.merge_config c [] = [].
+#c cases c normalize //
+qed.
+
+axiom reverse_merge_config :
+  ∀c1,c2.|c1| = |c2| → reverse ? (merge_config c1 c2) = 
+    merge_config (reverse ? c1) (reverse ? c2).        
 
 definition copy
 ≝ 
   seq STape (move_l …) (seq ? (adv_to_mark_l … (is_marked ?))
    (seq ? (clear_mark …) (seq ? (adv_to_mark_r … (is_marked ?)) (clear_mark …)))).
 
+(*
+   s0, s1 = caratteri di testa dello stato
+   c0 = carattere corrente del nastro oggetto
+   c1 = carattere in scrittura sul nastro oggetto
+   
+   questa dimostrazione sfrutta il fatto che 
+   merge_config (l0@[c0]) (l1@[c1]) = l1@[merge_char c0 c1] 
+   se l0 e l1 non contengono null
+*)
+
 definition R_copy ≝ λt1,t2.
-  ∀ls,c,c0,rs,l1,l3,l4.
-  t1 = midtape STape (l3@〈grid,false〉::l4@〈c0,true〉::ls) 〈c,true〉 (l1@〈comma,false〉::rs) → 
+  ∀ls,s0,s1,c0,c1,rs,l1,l3,l4.
+  t1 = midtape STape (l3@〈grid,false〉::〈c0,false〉::l4@〈s0,true〉::ls) 〈s1,true〉 (l1@〈c1,false〉::〈comma,false〉::rs) → 
   no_marks l1 → no_marks l3 → no_marks l4 → |l1| = |l4| → 
-  only_bits_or_nulls (l4@[〈c0,true〉]) → only_bits_or_nulls (〈c,true〉::l1) → 
-  t2 = midtape STape (reverse ? l1@l3@〈grid,false〉::
-          merge_config (l4@[〈c0,false〉]) (reverse ? (〈c,false〉::l1))@ls) 
-     〈comma,false〉 rs.
-     
+  only_bits (l4@[〈s0,true〉]) → only_bits (〈s1,true〉::l1) → 
+  bit_or_null c0 = true → bit_or_null c1 = true → 
+  t2 = midtape STape (〈c1,false〉::reverse ? l1@〈s1,false〉::l3@〈grid,false〉::
+                      〈merge_char c0 c1,false〉::reverse ? l1@〈s1,false〉::ls)
+       〈comma,false〉 rs.
+
 axiom sem_copy : Realize ? copy R_copy.
+i

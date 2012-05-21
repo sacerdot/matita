@@ -237,26 +237,91 @@ qed. *)
 include "turing/universal/move_tape.ma".
 
 definition exec_move ≝ 
-  seq ? (adv_to_mark_r … (is_marked ?))
-    (seq ? init_copy
-      (seq ? copy
-        (seq ? (move_r …)
-          (seq ? move_tape (move_r …))))).
+  seq ? init_copy
+    (seq ? copy
+      (seq ? (move_r …) move_tape)).
 
 definition R_exec_move ≝ λt1,t2.
-  ∀n,curconfig,ls,rs,curc,table1,newconfig,mv,table2.
-  table_TM n (table1@〈comma,true〉::newconfig@〈comma,false〉::〈mv,false〉::table2) → 
-  no_marks curconfig → only_bits_or_nulls curconfig → 
+  ∀n,curconfig,ls,rs,c0,c1,s0,s1,table1,newconfig,mv,table2.
+  table_TM n (table1@〈comma,false〉::〈s1,false〉::newconfig@〈c1,false〉::〈comma,false〉::〈mv,false〉::table2) → 
+  no_marks curconfig → only_bits (curconfig@[〈s0,false〉]) → only_bits (〈s1,false〉::newconfig) → 
   no_nulls ls → no_nulls rs → 
-  t1 = midtape STape (〈curc,false〉::curconfig@〈grid,false〉::ls) 〈grid,false〉 
-    (table1@〈comma,true〉::newconfig@〈comma,false〉::〈mv,false〉::table2@〈grid,false〉::rs) → 
-  ∀t1'.t1' = lift_tape ls 〈curc,false〉 rs → 
-  ∃ls1,rs1,newc.
-  t2 = midtape STape (〈newc,false〉::reverse ? (merge_config (reverse ? curconfig) newconfig)@〈grid,false〉::ls1)
-    〈grid,false〉 (table1@〈comma,true〉::newconfig@〈comma,false〉::〈mv,false〉::table2@〈grid,false〉::rs1) ∧   
-  lift_tape ls1 〈newc,false〉 rs1 = 
-  tape_move STape t1' (Some ? 〈〈newc,false〉,move_of_unialpha mv〉).
+  t1 = midtape STape (〈c0,false〉::curconfig@〈s0,false〉::〈grid,false〉::ls) 〈grid,false〉 
+    (table1@〈comma,true〉::〈s1,false〉::newconfig@〈c1,false〉::〈comma,false〉::〈mv,false〉::table2@〈grid,false〉::rs) → 
+  ∀t1'.t1' = lift_tape ls 〈c0,false〉 rs → 
+  ∃ls1,rs1,c2.
+  t2 = midtape STape ls1 〈grid,false〉 
+    (〈s1,false〉::newconfig@〈c2,false〉::〈grid,false〉::
+     table1@〈comma,false〉::〈s1,false〉::newconfig@〈c1,false〉::〈comma,false〉::〈mv,false〉::table2@〈grid,false〉::rs1) ∧   
+  lift_tape ls1 〈c2,false〉 rs1 = 
+  tape_move STape t1' (Some ? 〈〈c2,false〉,move_of_unialpha mv〉).
+  
+lemma sem_exec_move : Realize ? exec_move R_exec_move.
+#intape
+cases (sem_seq … sem_init_copy
+        (sem_seq … sem_copy
+          (sem_seq … (sem_move_r …) sem_move_tape )) intape)
+#k * #outc * #Hloop #HR
+@(ex_intro ?? k) @(ex_intro ?? outc) % [ @Hloop ] -Hloop
+#n #curconfig #ls #rs #c0 #c1 #s0 #s1 #table1 #newconfig #mv #table2
+#Htable #Hcurconfig1 #Hcurconfig2 #Hnewconfig #Hls #Hrs #Hintape #t1' #Ht1'
+cases HR -HR #ta * whd in ⊢ (%→?); #Hta
+lapply (Hta (〈c0,false〉::curconfig) table1 s0 ls s1
+        (newconfig@〈c1,false〉::〈comma,false〉::〈mv,false〉::table2@〈grid,false〉::rs) … Hintape) -Hta
+[ (*Hcurconfig2*) @daemon
+| (*Htable*) @daemon
+| (*FIXME*) @daemon
+| (*FIXME*) @daemon
+| #Hta * #tb * whd in ⊢ (%→?); #Htb
+  lapply (Htb (〈grid,false〉::ls) s0 s1 c0 c1 (〈mv,false〉::table2@〈grid,false〉::rs) newconfig (〈comma,false〉::reverse ? table1) curconfig Hta ????????) -Htb
+  [9:|*:(* rivedere le precondizioni *) @daemon ]
+  #Htb * #tc * whd in ⊢ (%→?); #Htc lapply (Htc … Htb) -Htc whd in ⊢(???(??%%%)→?);#Htc
+  whd in ⊢ (%→?); #Houtc whd in Htc:(???%); whd in Htc:(???(??%%%));
+  lapply (Houtc rs n 
+    (〈comma,false〉::〈s1,false〉::reverse ? newconfig@@〈comma,false〉::reverse ? table1)
+    mv table2 (merge_char curc d1) (merge_config curconfig (reverse ? newconfig1)) ls ????? 
+    Hls Hrs ??)
+  [3: >Htc @(eq_f3 … (midtape ?))
+    [ @eq_f >associative_append >Hnewconfig
+      >reverse_cons >associative_append @eq_f
+      whd in ⊢ (???%); @eq_f whd in ⊢ (???%); @eq_f
+      <Heqcurconfig <reverse_cons >Hnewconfig1 >reverse_append
+      >merge_cons %
+    | %
+    | % ]
+  | %
+  || >reverse_cons >reverse_append >reverse_reverse >reverse_cons
+     >reverse_reverse 
+     >associative_append >associative_append >associative_append
+     normalize @Htable
+  | (* only bits or nulls c1,c2 → only bits or nulls (merge c1 c2) *) @daemon
+  | (* add to hyps? *) @daemon
+  | (* bit_or_null c1,c2 → bit_or_null (merge_char c1 c2) *) @daemon
+  | -Houtc * #ls1 * #rs1 * #newc * #Houtc *
+    [ *
+      [ * #Hmv #Htapemove
+        @(ex_intro ?? ls1) @(ex_intro ?? rs1) @(ex_intro ?? (\fst newc))
+        %
+        [ >Houtc >reverse_merge_config [| @daemon ]
+          >reverse_reverse @eq_f
+          >reverse_cons >reverse_append >reverse_cons
+          >reverse_reverse >reverse_reverse
+          @daemon
+        | >Hmv >Ht1' whd in Htapemove:(???%); whd in ⊢ (???%);
+          whd in match (lift_tape ???) in ⊢ (???%);
+          >Htapemove
+    
+    
+  
+   >Heqcurconfig
+>append_cons in Hintape; >associative_append
+cases (Hta 
 
+ cases (Hta … Hintape) -Hta
+[ * normalize in ⊢ (%→?); #Hfalse destruct (Hfalse) ]
+* #_ #Hta lapply (Hta ? 〈comma,true〉 … (refl ??) (refl ??) ?)
+[ @daemon ] -Hta #Hta
+* #tb * whd in ⊢ (%→?); #Htb lapply (Htb … Hta)
 
 definition move_of_unialpha ≝ 
   λc.match c with
