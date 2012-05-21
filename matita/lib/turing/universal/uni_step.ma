@@ -94,14 +94,77 @@ whd in ⊢ (%→?); #Htf cases (Htf … Hte) -Htf -Hte
   [#x #membl @Hnomarks @daemon] -Htf #Htf >Htf >reverse_reverse %
 qed.
 
+
 (* init_copy 
 
-           adv_mark_r;
            init_current_on_match; (* no marks in current *)
            move_r;
            adv_to_mark_r;
+           adv_mark_r;
+
 *)
-     
+
+definition init_copy ≝ 
+  seq ? init_current_on_match
+    (seq ? (move_r ?) 
+      (seq ? (adv_to_mark_r ? (is_marked ?))
+        (adv_mark_r ?))).
+
+definition R_init_copy ≝ λt1,t2.
+  ∀l1,l2,c,ls,d,rs. 
+  no_marks l1 → no_grids l1 → 
+  no_marks l2 → is_grid c = false → 
+  t1 = midtape STape (l1@〈c,false〉::〈grid,false〉::ls) 〈grid,false〉 (l2@〈comma,true〉::〈d,false〉::rs) → 
+  t2 = midtape STape (〈comma,false〉::(reverse ? l2)@〈grid,false〉::l1@〈c,true〉::〈grid,false〉::ls) 〈d,true〉 rs.
+
+lemma list_last: ∀A.∀l:list A.
+  l = [ ] ∨ ∃a,l1. l = l1@[a].
+#A #l <(reverse_reverse ? l) cases (reverse A l)
+  [%1 //
+  |#a #l1 %2 @(ex_intro ?? a) @(ex_intro ?? (reverse ? l1)) //
+  ]
+qed.
+   
+lemma sem_init_copy : Realize ? init_copy R_init_copy.
+#intape 
+cases (sem_seq ????? sem_init_current_on_match
+        (sem_seq ????? (sem_move_r ?)
+          (sem_seq ????? (sem_adv_to_mark_r ? (is_marked ?))
+            (sem_adv_mark_r ?))) intape)
+#k * #outc * #Hloop #HR 
+@(ex_intro ?? k) @(ex_intro ?? outc) % [@Hloop] -Hloop
+#l1 #l2 #c #ls #d #rs #Hl1marks #Hl1grids #Hl2marks #Hc #Hintape
+cases HR -HR
+#ta * whd in ⊢ (%→?); #Hta lapply (Hta … Hl1grids Hc Hintape) -Hta -Hintape #Hta
+* #tb * whd in ⊢ (%→?); #Htb lapply (Htb  … Hta) -Htb -Hta
+generalize in match Hl1marks; -Hl1marks cases (list_last ? l1) 
+  [#eql1 >eql1 #Hl1marks whd in ⊢ ((???%)→?); whd in ⊢ ((???(????%))→?); #Htb
+   * #tc * whd in ⊢ (%→?); #Htc lapply (Htc  … Htb) -Htc -Htb *
+    [* whd in ⊢ ((??%?)→?); #Htemp destruct (Htemp)]
+   * #_ #Htc lapply (Htc … (refl …) (refl …) ?)
+    [#x #membx @Hl2marks @membx]
+   #Htc whd in ⊢ (%→?); #Houtc lapply (Houtc … Htc) -Houtc -Htc #Houtc
+   >Houtc %
+  |* #c1 * #tl #eql1 >eql1 #Hl1marks >reverse_append >reverse_single 
+   whd in ⊢ ((???%)→?); whd in ⊢ ((???(????%))→?);
+   >associative_append whd in ⊢ ((???(????%))→?); #Htb
+   * #tc * whd in ⊢ (%→?); #Htc lapply (Htc  … Htb) -Htc -Htb *
+    [* >Hl1marks [#Htemp destruct (Htemp)] @memb_append_l2 @memb_hd]
+   * #_ >append_cons <associative_append #Htc lapply (Htc … (refl …) (refl …) ?)
+    [#x #membx cases (memb_append … membx) -membx #membx
+      [cases (memb_append … membx) -membx #membx
+        [@Hl1marks @memb_append_l1 @daemon
+        |>(memb_single … membx) %
+        ]
+      |@Hl2marks @membx
+      ]]
+  #Htc whd in ⊢ (%→?); #Houtc lapply (Houtc … Htc) -Houtc -Htc #Houtc
+  >Houtc >reverse_append >reverse_append >reverse_single 
+  >reverse_reverse >associative_append >associative_append 
+  >associative_append %
+qed.
+  
+(* OLD 
 definition init_copy ≝ 
   seq ? (adv_mark_r ?) 
     (seq ? init_current_on_match
@@ -169,7 +232,7 @@ cases HR -HR
       >associative_append % 
     ]
   ]
-qed.
+qed. *)
 
 include "turing/universal/move_tape.ma".
 
