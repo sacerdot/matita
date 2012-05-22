@@ -421,19 +421,117 @@ lapply (Hta (〈c0,false〉::curconfig) table1 s0 ls s1
 ]
 qed.
 
-definition R_uni_step ≝ λt1,t2.
-  ∀n,table,c,c1,ls,rs,curs,curc,news,newc,mv.
-  table_TM n table → 
-  match_in_table (〈c,false〉::curs@[〈curc,false〉]) 
-    (〈c1,false〉::news@[〈newc,false〉]) mv table → 
-  t1 = midtape STape (〈grid,false〉::ls) 〈c,false〉 
-    (curs@〈curc,false〉::〈grid,false〉::table@〈grid,false〉::rs) → 
-  ∀t1',ls1,rs1.t1' = lift_tape ls 〈curc,false〉 rs → 
-  (t2 = midtape STape (〈grid,false〉::ls1) 〈c1,false〉 
-    (news@〈newc,false〉::〈grid,false〉::table@〈grid,false〉::rs1) ∧
-   lift_tape ls1 〈newc,false〉 rs1 = 
-   tape_move STape t1' (Some ? 〈〈newc,false〉,move_of_unialpha mv〉)).
+(*
+if is_false(current) (* current state is not final *)
+   then init_match;
+    match_tuple;
+    if is_marked(current) = false (* match ok *)
+      then 
+           exec_move
+           move_r;
+      else sink;
+   else nop;
+*)
 
-definition no_nulls ≝ 
- λl:list STape.∀x.memb ? x l = true → is_null (\fst x) = false.
- 
+definition uni_step ≝ 
+  ifTM ? (test_char STape (λc.\fst c == bit false))
+    (single_finalTM ? (seq ? init_match
+      (seq ? match_tuple
+        (ifTM ? (test_char ? (λc.¬is_marked ? c))
+          (seq ? exec_move (move_r …))
+          (nop ?) (* sink *)
+          tc_true))))
+    (nop ?)
+    tc_true.
+
+definition R_uni_step_true ≝ λt1,t2.
+  ∀n,t0,table,s0,s1,c0,c1,ls,rs,curconfig,newconfig,mv.
+  table_TM (S n) (〈t0,false〉::table) → 
+  match_in_table (〈s0,false〉::curconfig@[〈c0,false〉]) 
+    (〈s1,false〉::newconfig@[〈c1,false〉]) mv (〈t0,false〉::table) → 
+  legal_tape ls 〈c0,false〉 rs → 
+  t1 = midtape STape (〈grid,false〉::ls) 〈s0,false〉 
+    (curconfig@〈c0,false〉::〈grid,false〉::〈t0,false〉::table@〈grid,false〉::rs) → 
+  ∀t1'.t1' = lift_tape ls 〈c0,false〉 rs → 
+  s0 = bit false ∧
+  ∃ls1,rs1,c2.
+  (t2 = midtape STape (〈grid,false〉::ls1) 〈s1,false〉 
+    (newconfig@〈c2,false〉::〈grid,false〉::〈t0,false〉::table@〈grid,false〉::rs1) ∧
+   lift_tape ls1 〈c2,false〉 rs1 = 
+   tape_move STape t1' (map_move c1 mv) ∧ legal_tape ls1 〈c2,false〉 rs1).
+   
+definition R_uni_step_false ≝ λt1,t2.
+  ∀b. current STape t1 = Some ? 〈bit b,false〉 → b = true ∧ t2 = t1.
+  
+axiom sem_match_tuple : Realize ? match_tuple R_match_tuple.
+
+lemma sem_uni_step :
+  accRealize ? uni_step (inr … (inl … (inr … 0)))
+     R_uni_step_true R_uni_step_false. 
+@(acc_sem_if_app … (sem_test_char ? (λc:STape.\fst c == bit false))
+   (sem_seq … sem_init_match
+     (sem_seq … sem_match_tuple
+       (sem_if … (sem_test_char ? (λc.¬is_marked ? c))
+          (sem_seq … sem_exec_move (sem_move_r …))
+          (sem_nop …))))
+   (sem_nop …)
+   …)
+[ #intape #outtape 
+  #ta whd in ⊢ (%→?); #Hta #HR
+  #n #t0 #table #s0 #s1 #c0 #c1 #ls #rs #curconfig #newconfig #mv
+  #Htable #Hmatch #Htape #Hintape #t1' #Ht1'
+  >Hintape in Hta; #Hta cases (Hta ? (refl ??)) -Hta 
+  #Hs0 lapply (\P Hs0) -Hs0 #Hs0 #Hta % //
+  cases HR -HR 
+  #tb * whd in ⊢ (%→?); #Htb 
+  lapply (Htb (〈grid,false〉::ls) (curconfig@[〈c0,false〉]) (table@〈grid,false〉::rs) s0 t0 ???)
+  [ >Hta >associative_append %
+  | (* da decidere se aggiungere un'assunzione o utilizzare Hmatch *) @daemon
+  | (* idem *) @daemon
+  | -Hta -Htb #Htb * 
+    #tc * whd in ⊢ (%→?); #Htc cases (Htc … Htable … Htb) -Htb -Htc
+    [| * #Hcurrent #Hfalse @False_ind
+      (* absurd by Hmatch *) @daemon
+    | >Hs0 %
+    | (* da decidere se aggiungere un'assunzione o utilizzare Hmatch *) @daemon
+    | (* Htable *) @daemon
+    | (* Htable, Hmatch → |config| = n *) @daemon ]
+   * #table1 * #newc * #mv1 * #table2 * #Htableeq #Htc *
+   [ * #td * whd in ⊢ (%→?); >Htc -Htc #Htd
+     cases (Htd ? (refl ??)) #_ -Htd
+     cut (newc = 〈s1,false〉::newconfig@[〈c1,false〉]) [@daemon] #Hnewc
+     >Hnewc #Htd 
+     * #te * whd in ⊢ (%→?); #Hte
+     (* mv1 ha tipo lista ma dovrebbe avere tipo unialpha *)
+     cut (td = midtape STape (〈c0,false〉::reverse STape curconfig@〈s0,false〉::〈grid,false〉::ls) 
+              〈grid,false〉
+              ((table1@〈s0,false〉::curconfig@[〈c0,false〉])@〈comma,true〉::〈s1,false〉::
+               newconfig@〈c1,false〉::〈comma,false〉::〈\fst mv1,false〉::table2@〈grid,false〉::rs))
+     lapply (Hte … Htd)
+     
+     (* univocità delle tuple in table *)
+     cut (newc = 〈s1,false〉::newconfig@[〈c1,false〉]) [@daemon] #Hnewc
+   c00 ≝ c0
+   curconfig0 ≝ curconfig
+   s00 ≝ s0
+   ls0 ≝ ls
+   table10 ≝ (table1@〈s0,false〉::curconfig@〈c0,false〉)
+   s10 ≝ s1
+   newconfig0 ≝ newconfig
+   c10 ≝ c1
+   mv0 ≝ mv1
+   table20 ≝ table2
+   rs0 ≝ rs
+               
+     lapply (Hte … Htd)
+   | * #td * whd in ⊢ (%→%→?); >Htc #Htd
+     cases (Htd ? (refl ??)) normalize in ⊢ (%→?);
+     #Hfalse destruct (Hfalse)
+   ]
+    
+  
+| #t1 #t2 #t3 whd in ⊢ (%→%→?); #Ht1 #Ht2
+  #b #Hb cases (Ht1 ? Hb) #Hb' #Ht3 >Ht2 % //
+  cases b in Hb'; normalize #H1 //
+]
+qed.
