@@ -241,11 +241,36 @@ definition exec_move ≝
     (seq ? copy
       (seq ? (move_r …) move_tape)).
 
+definition map_move ≝ 
+  λc,mv.match c with [ null ⇒ None ? | _ ⇒ Some ? 〈c,false,move_of_unialpha mv〉 ].
+
+definition current_of_alpha ≝ λc:STape.
+  match \fst c with [ null ⇒ None ? | _ ⇒ Some ? c ].
+
+definition legal_tape ≝ λls,c,rs.
+ let t ≝ mk_tape STape ls (current_of_alpha c) rs in
+ left ? t = ls ∧ right ? t = rs ∧ current ? t = current_of_alpha c.
+ 
+lemma legal_tape_cases : 
+  ∀ls,c,rs.legal_tape ls c rs → 
+  \fst c ≠ null ∨ (\fst c = null ∧ ls = []) ∨ (\fst c = null ∧ rs = []).
+#ls #c #rs cases c #c0 #bc0 cases c0
+[ #c1 normalize #_ % % % #Hfalse destruct (Hfalse)
+| cases ls
+  [ #_ % %2 % %
+  | #l0 #ls0 cases rs
+    [ #_ %2 % %
+    | #r0 #rs0 normalize * * #Hls #Hrs destruct (Hrs) ]
+  ]
+|*: #_ % % % #Hfalse destruct (Hfalse) ]
+qed.
+
 definition R_exec_move ≝ λt1,t2.
   ∀n,curconfig,ls,rs,c0,c1,s0,s1,table1,newconfig,mv,table2.
   table_TM n (table1@〈comma,false〉::〈s1,false〉::newconfig@〈c1,false〉::〈comma,false〉::〈mv,false〉::table2) → 
   no_marks curconfig → only_bits (curconfig@[〈s0,false〉]) → only_bits (〈s1,false〉::newconfig) → 
-  no_nulls ls → no_nulls rs → 
+  no_nulls ls → no_nulls rs → no_marks ls → no_marks rs → 
+  legal_tape ls 〈c0,false〉 rs →
   t1 = midtape STape (〈c0,false〉::curconfig@〈s0,false〉::〈grid,false〉::ls) 〈grid,false〉 
     (table1@〈comma,true〉::〈s1,false〉::newconfig@〈c1,false〉::〈comma,false〉::〈mv,false〉::table2@〈grid,false〉::rs) → 
   ∀t1'.t1' = lift_tape ls 〈c0,false〉 rs → 
@@ -254,8 +279,23 @@ definition R_exec_move ≝ λt1,t2.
     (〈s1,false〉::newconfig@〈c2,false〉::〈grid,false〉::
      table1@〈comma,false〉::〈s1,false〉::newconfig@〈c1,false〉::〈comma,false〉::〈mv,false〉::table2@〈grid,false〉::rs1) ∧   
   lift_tape ls1 〈c2,false〉 rs1 = 
-  tape_move STape t1' (Some ? 〈〈c2,false〉,move_of_unialpha mv〉).
+  tape_move STape t1' (map_move c1 mv).
   
+(* move the following 2 lemmata to mono.ma *)
+lemma tape_move_left_eq :
+  ∀A.∀t:tape A.∀c.
+  tape_move ? t (Some ? 〈c,L〉) = 
+  tape_move_left ? (left ? t) c (right ? t).
+//
+qed.
+
+lemma tape_move_right_eq :
+  ∀A.∀t:tape A.∀c.
+  tape_move ? t (Some ? 〈c,R〉) = 
+  tape_move_right ? (left ? t) c (right ? t).
+//
+qed.
+
 lemma sem_exec_move : Realize ? exec_move R_exec_move.
 #intape
 cases (sem_seq … sem_init_copy
@@ -264,7 +304,7 @@ cases (sem_seq … sem_init_copy
 #k * #outc * #Hloop #HR
 @(ex_intro ?? k) @(ex_intro ?? outc) % [ @Hloop ] -Hloop
 #n #curconfig #ls #rs #c0 #c1 #s0 #s1 #table1 #newconfig #mv #table2
-#Htable #Hcurconfig1 #Hcurconfig2 #Hnewconfig #Hls #Hrs #Hintape #t1' #Ht1'
+#Htable #Hcurconfig1 #Hcurconfig2 #Hnewconfig #Hls #Hrs #Hls1 #Hrs1 #Htape #Hintape #t1' #Ht1'
 cases HR -HR #ta * whd in ⊢ (%→?); #Hta
 lapply (Hta (〈c0,false〉::curconfig) table1 s0 ls s1
         (newconfig@〈c1,false〉::〈comma,false〉::〈mv,false〉::table2@〈grid,false〉::rs) … Hintape) -Hta
@@ -278,38 +318,66 @@ lapply (Hta (〈c0,false〉::curconfig) table1 s0 ls s1
   #Htb * #tc * whd in ⊢ (%→?); #Htc lapply (Htc … Htb) -Htc whd in ⊢(???(??%%%)→?);#Htc
   whd in ⊢ (%→?); #Houtc whd in Htc:(???%); whd in Htc:(???(??%%%));
   lapply (Houtc rs n 
-    (〈comma,false〉::〈s1,false〉::reverse ? newconfig@@〈comma,false〉::reverse ? table1)
-    mv table2 (merge_char curc d1) (merge_config curconfig (reverse ? newconfig1)) ls ????? 
-    Hls Hrs ??)
+    (〈comma,false〉::〈c1,false〉::reverse ? newconfig@〈s1,false〉::〈comma,false〉::reverse ? table1)
+    mv table2 (merge_char c0 c1) (reverse ? newconfig@[〈s1,false〉]) ls ????? 
+    Hls Hrs Hls1 Hrs1 ??)
   [3: >Htc @(eq_f3 … (midtape ?))
-    [ @eq_f >associative_append >Hnewconfig
-      >reverse_cons >associative_append @eq_f
-      whd in ⊢ (???%); @eq_f whd in ⊢ (???%); @eq_f
-      <Heqcurconfig <reverse_cons >Hnewconfig1 >reverse_append
-      >merge_cons %
+    [ @eq_f @eq_f >associative_append >associative_append %
     | %
     | % ]
   | %
-  || >reverse_cons >reverse_append >reverse_reverse >reverse_cons
-     >reverse_reverse 
+  || >reverse_cons >reverse_cons >reverse_append >reverse_reverse 
+     >reverse_cons >reverse_cons >reverse_reverse
      >associative_append >associative_append >associative_append
-     normalize @Htable
+     >associative_append >associative_append
+     @Htable
   | (* only bits or nulls c1,c2 → only bits or nulls (merge c1 c2) *) @daemon
   | (* add to hyps? *) @daemon
   | (* bit_or_null c1,c2 → bit_or_null (merge_char c1 c2) *) @daemon
   | -Houtc * #ls1 * #rs1 * #newc * #Houtc *
     [ *
       [ * #Hmv #Htapemove
-        @(ex_intro ?? ls1) @(ex_intro ?? rs1) @(ex_intro ?? (\fst newc))
+        @(ex_intro ?? ls1) @(ex_intro ?? rs1) @(ex_intro ?? newc)
         %
-        [ >Houtc >reverse_merge_config [| @daemon ]
-          >reverse_reverse @eq_f
-          >reverse_cons >reverse_append >reverse_cons
-          >reverse_reverse >reverse_reverse
-          @daemon
-        | >Hmv >Ht1' whd in Htapemove:(???%); whd in ⊢ (???%);
+        [ >Houtc -Houtc >reverse_append
+          >reverse_reverse >reverse_single @eq_f
+          >reverse_cons >reverse_cons >reverse_append >reverse_cons
+          >reverse_cons >reverse_reverse >reverse_reverse
+          >associative_append >associative_append
+          >associative_append >associative_append
+          >associative_append >associative_append %
+        | >Hmv >Ht1' >Htapemove 
+          (* mv = bit false -→ c1 = bit ?        
+          whd in Htapemove:(???%); whd in ⊢ (???%);
           whd in match (lift_tape ???) in ⊢ (???%);
-          >Htapemove
+          >Htapemove *)
+          cut (∃c1'.c1 = bit c1') [ @daemon ] * #c1' #Hc1
+          >Hc1 >tape_move_left_eq cases c0
+          [ #c0' %
+          | cases ls
+            [ cases rs 
+              [ %
+              | #r0 #rs0 % ]
+            | #l0 #ls0 cases rs
+              [ %
+              | #r0 #rs0 
+              
+              ls #... null # ... # rs
+              ls #... c # ... # rs
+              
+              ∃t.left ? t = ls, right ? t = rs, current t = [[ c ]]
+              
+              % ]
+            
+          
+           @eq_f3
+          [
+          
+           whd in match (merge_char ??);
+          whd in match (map_move ??);
+          
+        ]
+      |
     
     
   

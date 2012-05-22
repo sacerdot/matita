@@ -359,12 +359,12 @@ definition R_move_tape_r_abstract ≝ λt1,t2.
   bit_or_null curc = true → only_bits_or_nulls curconfig → table_TM n (reverse ? table) → 
   t1 = midtape STape (table@〈grid,false〉::〈curc,false〉::curconfig@〈grid,false〉::ls) 
          〈grid,false〉 rs →
-  no_nulls rs → 
+  no_nulls rs → no_marks rs → 
   ∀t1'.t1' = lift_tape ls 〈curc,false〉 rs → 
   ∃ls1,rs1,newc.
-  (t2 = midtape STape ls1 〈grid,false〉 (reverse ? curconfig@newc::
+  (t2 = midtape STape ls1 〈grid,false〉 (reverse ? curconfig@〈newc,false〉::
     〈grid,false〉::reverse ? table@〈grid,false〉::rs1) ∧
-   lift_tape ls1 newc rs1 = 
+   lift_tape ls1 〈newc,false〉 rs1 = 
    tape_move_right STape ls 〈curc,false〉 rs).
    
 lemma lift_tape_not_null :
@@ -379,20 +379,22 @@ lemma mtr_concrete_to_abstract :
   ∀t1,t2.R_move_tape_r t1 t2 → R_move_tape_r_abstract t1 t2.
 #t1 #t2 whd in ⊢(%→?); #Hconcrete
 #rs #n #table #curc #curconfig #ls #Hcurc #Hcurconfig #Htable #Ht1
-#Hrsnonulls #t1' #Ht1'
+#Hrsnonulls #Hrsnomarks #t1' #Ht1'
 cases (Hconcrete … Htable Ht1) //
 [ * #Hrs #Ht2
   @(ex_intro ?? (〈curc,false〉::ls)) @(ex_intro ?? [])
-  @(ex_intro ?? 〈null,false〉) %
+  @(ex_intro ?? null) %
   [ >Ht2 %
   | >Hrs % ]
-| * #r0 * #rs0 * #Hrs #Ht2 
+| * * #r0 #br0 * #rs0 * #Hrs 
+  cut (br0 = false) [@(Hrsnomarks 〈r0,br0〉) >Hrs @memb_hd]
+  #Hbr0 >Hbr0 in Hrs; #Hrs #Ht2
   @(ex_intro ?? (〈curc,false〉::ls)) @(ex_intro ?? rs0)
   @(ex_intro ?? r0) %
-  [ >Ht2 %
+  [ >Ht2  //
   | >Hrs >lift_tape_not_null
     [ %
-    | @Hrsnonulls >Hrs @memb_hd ] ]
+    | @(Hrsnonulls 〈r0,false〉) >Hrs @memb_hd ] ]
 qed.
 
 definition R_move_tape_l_abstract ≝ λt1,t2.
@@ -400,34 +402,36 @@ definition R_move_tape_l_abstract ≝ λt1,t2.
   bit_or_null curc = true → only_bits_or_nulls curconfig → table_TM n (reverse ? table) → 
   t1 = midtape STape (table@〈grid,false〉::〈curc,false〉::curconfig@〈grid,false〉::ls) 
          〈grid,false〉 rs →
-  no_nulls ls → 
+  no_nulls ls → no_marks ls → 
   ∀t1'.t1' = lift_tape ls 〈curc,false〉 rs → 
   ∃ls1,rs1,newc.
-  (t2 = midtape STape ls1 〈grid,false〉 (reverse ? curconfig@newc::
+  (t2 = midtape STape ls1 〈grid,false〉 (reverse ? curconfig@〈newc,false〉::
     〈grid,false〉::reverse ? table@〈grid,false〉::rs1) ∧
-   lift_tape ls1 newc rs1 = 
+   lift_tape ls1 〈newc,false〉 rs1 = 
    tape_move_left STape ls 〈curc,false〉 rs).
 
 lemma mtl_concrete_to_abstract :
   ∀t1,t2.R_move_tape_l t1 t2 → R_move_tape_l_abstract t1 t2.
 #t1 #t2 whd in ⊢(%→?); #Hconcrete
 #rs #n #table #curc #curconfig #ls #Hcurc #Hcurconfig #Htable #Ht1
-#Hlsnonulls #t1' #Ht1'
+#Hlsnonulls #Hlsnomarks #t1' #Ht1'
 cases (Hconcrete … Htable Ht1) //
 [ * #Hls #Ht2
   @(ex_intro ?? [])
   @(ex_intro ?? (〈curc,false〉::rs)) 
-  @(ex_intro ?? 〈null,false〉) %
+  @(ex_intro ?? null) %
   [ >Ht2 %
   | >Hls % ]
-| * #l0 * #ls0 * #Hls #Ht2 
+| * * #l0 #bl0 * #ls0 * #Hls
+  cut (bl0 = false) [@(Hlsnomarks 〈l0,bl0〉) >Hls @memb_hd]
+  #Hbl0 >Hbl0 in Hls; #Hls #Ht2
   @(ex_intro ?? ls0)
   @(ex_intro ?? (〈curc,false〉::rs)) 
   @(ex_intro ?? l0) %
   [ >Ht2 %
   | >Hls >lift_tape_not_null
     [ %
-    | @Hlsnonulls >Hls @memb_hd ] ]
+    | @(Hlsnonulls 〈l0,false〉) >Hls @memb_hd ] ]
 qed.
 
 lemma Realize_to_Realize : 
@@ -499,14 +503,14 @@ definition R_move_tape ≝ λt1,t2.
   table_TM n (reverse ? table1@〈c,false〉::table2) → 
   t1 = midtape STape (table1@〈grid,false〉::〈curc,false〉::curconfig@〈grid,false〉::ls) 
          〈c,false〉 (table2@〈grid,false〉::rs) →
-  no_nulls ls → no_nulls rs → 
+  no_nulls ls → no_nulls rs → no_marks ls → no_marks rs → 
   ∀t1'.t1' = lift_tape ls 〈curc,false〉 rs → 
   ∃ls1,rs1,newc.
-  (t2 = midtape STape ls1 〈grid,false〉 (reverse ? curconfig@newc::
+  (t2 = midtape STape ls1 〈grid,false〉 (reverse ? curconfig@〈newc,false〉::
     〈grid,false〉::reverse ? table1@〈c,false〉::table2@〈grid,false〉::rs1) ∧
-   ((c = bit false ∧ lift_tape ls1 newc rs1 = tape_move_left STape ls 〈curc,false〉 rs) ∨
-    (c = bit true ∧ lift_tape ls1 newc rs1 = tape_move_right STape ls 〈curc,false〉 rs) ∨
-    (c = null ∧ ls1 = ls ∧ rs1 = rs ∧ 〈curc,false〉 = newc))).
+   ((c = bit false ∧ lift_tape ls1 〈newc,false〉 rs1 = tape_move_left STape ls 〈curc,false〉 rs) ∨
+    (c = bit true ∧ lift_tape ls1 〈newc,false〉 rs1 = tape_move_right STape ls 〈curc,false〉 rs) ∨
+    (c = null ∧ ls1 = ls ∧ rs1 = rs ∧ curc = newc))).
      
 lemma sem_move_tape : Realize ? move_tape R_move_tape.
 #intape 
@@ -519,7 +523,7 @@ cases (sem_if ? (test_char ??) … tc_true (sem_test_char ? (λc:STape.c == 〈b
 #k * #outc * #Hloop #HR
 @(ex_intro ?? k) @(ex_intro ?? outc) % [@Hloop] -Hloop
 #rs #n #table1 #c #table2 #curc #curconfig #ls
-#Hcurc #Hc #Hcurconfig #Htable #Hintape #Hls #Hrs #t1' #Ht1'
+#Hcurc #Hc #Hcurconfig #Htable #Hintape #Hls #Hrs #Hls1 #Hrs1 #t1' #Ht1'
 generalize in match HR; -HR *
 [ * #ta * whd in ⊢ (%→?); #Hta cases (Hta 〈c,false〉 ?)
   [| >Hintape % ] -Hta #Hceq #Hta lapply (\P Hceq) -Hceq #Hceq destruct (Hta Hceq)
@@ -561,7 +565,7 @@ generalize in match HR; -HR *
     whd in ⊢ (???%→?); #Htd whd in ⊢ (%→?); #Houtc lapply (Houtc … Htd) -Houtc *
     [ * >(bit_or_null_not_grid … Hcurc) #Hfalse destruct (Hfalse) ]
     * #_ #Houtc lapply (Houtc … (refl ??) (refl ??) ?) [@daemon] -Houtc #Houtc
-    @(ex_intro ?? ls) @(ex_intro ?? rs) @(ex_intro ?? 〈curc,false〉) %
+    @(ex_intro ?? ls) @(ex_intro ?? rs) @(ex_intro ?? curc) %
     [ @Houtc
     | %2 % // % // % // 
       generalize in match Hcneq; generalize in match Hcneq'; 

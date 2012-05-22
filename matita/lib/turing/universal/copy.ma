@@ -449,4 +449,3 @@ definition R_copy ≝ λt1,t2.
        〈comma,false〉 rs.
 
 axiom sem_copy : Realize ? copy R_copy.
-i
