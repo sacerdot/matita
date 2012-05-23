@@ -49,17 +49,66 @@ lemma bit_or_null_not_bar: ∀d. bit_or_null d = true → is_bar d = false.
 * // normalize #H destruct
 qed.
 
+definition mk_tuple ≝ λqin,cin,qout,cout,mv.
+  qin @ cin :: 〈comma,false〉:: qout @ cout :: 〈comma,false〉 :: [mv].
+  
 (* by definition, a tuple is not marked *)
 definition tuple_TM : nat → list STape → Prop ≝ 
- λn,t.∃qin,qout,mv.
- no_marks t ∧
- only_bits_or_nulls qin ∧ only_bits_or_nulls qout ∧ bit_or_null mv = true ∧
- |qin| = n ∧ |qout| = n (* ∧ |mv| = ? *) ∧ 
- t = qin@〈comma,false〉::qout@〈comma,false〉::[〈mv,false〉].
+ λn,t.∃qin,cin,qout,cout,mv.
+ no_marks qin ∧ no_marks qout ∧
+ only_bits qin ∧ only_bits qout ∧ 
+ bit_or_null cin = true ∧ bit_or_null cout = true ∧ bit_or_null mv = true ∧
+ (cout = null → mv = null) ∧
+ |qin| = n ∧ |qout| = n ∧
+ t = mk_tuple qin 〈cin,false〉 qout 〈cout,false〉 〈mv,false〉.
  
-inductive table_TM : nat → list STape → Prop ≝ 
-| ttm_nil  : ∀n.table_TM n [] 
-| ttm_cons : ∀n,t1,T.tuple_TM n t1 → table_TM n T → table_TM n (t1@〈bar,false〉::T).
+inductive table_TM (n:nat) : list STape → Prop ≝ 
+| ttm_nil  : table_TM n [] 
+| ttm_cons : ∀t1,T.tuple_TM n t1 → table_TM n T → table_TM n (t1@〈bar,false〉::T).
+
+inductive match_in_table (qin:list STape) (cin: STape) 
+                         (qout:list STape) (cout:STape) (mv:STape) 
+: list STape → Prop ≝ 
+| mit_hd : 
+   ∀tb.
+   match_in_table qin cin qout cout mv 
+     (mk_tuple qin cin qout cout mv @〈bar,false〉::tb)
+| mit_tl :
+   ∀qin0,cin0,qout0,cout0,mv0,tb.
+   match_in_table qin cin qout cout mv tb → 
+   match_in_table qin cin qout cout mv  
+     (mk_tuple qin0 cin0 qout0 cout0 mv0@〈bar,false〉::tb).
+     
+axiom append_l1_injective : 
+  ∀A.∀l1,l2,l3,l4:list A. |l1| = |l2| → l1@l3 = l2@l4 → l1 = l2.
+axiom append_l2_injective : 
+  ∀A.∀l1,l2,l3,l4:list A. |l1| = |l2| → l1@l3 = l2@l4 → l3 = l4.
+
+     
+lemma generic_match_to_match_in_table :
+  ∀n,T.table_TM n T → 
+  ∀qin,cin,qout,cout,mv.|qin| = n → |qout| = n → 
+  ∀t1,t2.
+  T = t1@qin@cin::〈comma,false〉::qout@cout::〈comma,false〉::mv::t2 → 
+  match_in_table qin cin qout cout mv T.
+#n #T #Htable #qin #cin #qout #cout #mv #Hlenqin #Hlenqout
+elim Htable
+[ #t1 #t2 <associative_append cases (t1@qin) normalize
+  [ #Hfalse destruct (Hfalse) | #c0 #t0 #Hfalse destruct (Hfalse) ]
+| #tuple #T0 * #qin0 * #cin0 * #qout0 * #cout0 * #mv0
+  * * * * * * * * * *
+  #Hqin0marks #Hqout0marks #Hqinbits #Hqoutbits #Hcin0 #Hcout0 #Hmv0 #Hcout0mv0
+  #Hlenqin0 #Hlenqout0 #Htuple #Htable0 #IH #t1 #t2 #HT
+  cases t1 in HT;
+  [ >Htuple normalize in ⊢ (??%%→?);
+    >associative_append #HT
+    cut (qin0 = qin ∧ (〈cin0,false〉 = cin ∧ (qout0 = qout ∧ 
+         (〈cout0,false〉 = cout ∧ (〈mv0,false〉 = mv ∧ 〈bar,false〉::T0 = t2)))))
+    [ lapply (append_l1_injective … HT) [ >Hlenqin @Hlenqin0 ]
+    #Hqin % [ @Hqin ] -Hqin
+    lapply (append_l2_injective … HT) [ >Hlenqin @Hlenqin0 ] -HT #HT
+    destruct (HT)
+  
 
 lemma no_grids_in_table: ∀n.∀l.table_TM n l → no_grids l.
 #n #l #t elim t   
