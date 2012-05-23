@@ -654,13 +654,13 @@ definition R_match_tuple ≝ λt1,t2.
          (l1@〈grid,false〉::〈c1,true〉::l2@〈grid,false〉::rs) → 
   (* facciamo match *)
   (∃l3,newc,mv,l4.
-   〈c1,false〉::l2 = l3@〈c,false〉::l1@〈comma,false〉::newc@〈comma,false〉::mv@l4 ∧
+   〈c1,false〉::l2 = l3@〈c,false〉::l1@〈comma,false〉::newc@〈comma,false〉::mv::l4 ∧
    t2 = midtape ? (reverse ? l1@〈c,false〉::〈grid,false〉::ls) 〈grid,false〉
-        (l3@〈c,false〉::l1@〈comma,true〉::newc@〈comma,false〉::mv@l4@〈grid,false〉::rs))
+        (l3@〈c,false〉::l1@〈comma,true〉::newc@〈comma,false〉::mv::l4@〈grid,false〉::rs))
   ∨
   (* non facciamo match su nessuna tupla;
      non specifichiamo condizioni sul nastro di output, perché
      non eseguiremo altre operazioni, quindi il suo formato non ci interessa *)
   (current ? t2 = Some ? 〈grid,true〉 ∧
    ∀l3,newc,mv,l4.
-   〈c1,false〉::l2 ≠ l3@〈c,false〉::l1@〈comma,false〉::newc@〈comma,false〉::mv@l4).  
+   〈c1,false〉::l2 ≠ l3@〈c,false〉::l1@〈comma,false〉::newc@〈comma,false〉::mv::l4).  

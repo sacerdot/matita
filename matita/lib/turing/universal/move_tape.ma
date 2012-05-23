@@ -357,10 +357,40 @@ definition no_nulls ≝
 definition current_of_alpha ≝ λc:STape.
   match \fst c with [ null ⇒ None ? | _ ⇒ Some ? c ].
 
+(* 
+   no_marks (c::ls@rs) 
+   only_bits (ls@rs)
+   bit_or_null c
+   
+*)
 definition legal_tape ≝ λls,c,rs.
- let t ≝ mk_tape STape ls (current_of_alpha c) rs in
- left ? t = ls ∧ right ? t = rs ∧ current ? t = current_of_alpha c.
+ no_marks (c::ls@rs) ∧ only_bits (ls@rs) ∧ bit_or_null (\fst c) = true ∧
+ (\fst c ≠ null ∨ ls = [] ∨ rs = []).
  
+lemma legal_tape_left :
+  ∀ls,c,rs.legal_tape ls c rs → 
+  left ? (mk_tape STape ls (current_of_alpha c) rs) = ls.
+#ls * #c #bc #rs * * * #_ #_ #_ *
+[ *
+  [ cases c
+    [ #c' #_ %
+    | * #Hfalse @False_ind /2/
+    |*: #_ % ]
+  | #Hls >Hls cases c // cases rs //
+  ]
+| #Hrs >Hrs cases c // cases ls //
+]
+qed.
+
+axiom legal_tape_current :
+  ∀ls,c,rs.legal_tape ls c rs → 
+  current ? (mk_tape STape ls (current_of_alpha c) rs) = current_of_alpha c.
+
+axiom legal_tape_right :
+  ∀ls,c,rs.legal_tape ls c rs → 
+  right ? (mk_tape STape ls (current_of_alpha c) rs) = rs.
+
+(*
 lemma legal_tape_cases : 
   ∀ls,c,rs.legal_tape ls c rs → 
   \fst c ≠ null ∨ (\fst c = null ∧ (ls = [] ∨ rs = [])).
@@ -389,13 +419,13 @@ axiom legal_tape_conditions :
   
   #Hc
 *)
+*)
  
 definition R_move_tape_r_abstract ≝ λt1,t2.
   ∀rs,n,table,curc,curconfig,ls.
-  bit_or_null curc = true → only_bits_or_nulls curconfig → table_TM n (reverse ? table) → 
+  is_bit curc = true → only_bits_or_nulls curconfig → table_TM n (reverse ? table) → 
   t1 = midtape STape (table@〈grid,false〉::〈curc,false〉::curconfig@〈grid,false〉::ls) 
          〈grid,false〉 rs →
-  no_nulls rs → no_marks rs → 
   legal_tape ls 〈curc,false〉 rs → 
   ∀t1'.t1' = lift_tape ls 〈curc,false〉 rs → 
   ∃ls1,rs1,newc.
@@ -411,12 +441,14 @@ lemma lift_tape_not_null :
 [|normalize in ⊢ (%→?); #Hfalse destruct (Hfalse) ]
 //
 qed.
+
+axiom bit_not_null :  ∀d.is_bit d = true → is_null d = false.
  
 lemma mtr_concrete_to_abstract :
   ∀t1,t2.R_move_tape_r t1 t2 → R_move_tape_r_abstract t1 t2.
 #t1 #t2 whd in ⊢(%→?); #Hconcrete
-#rs #n #table #curc #curconfig #ls #Hcurc #Hcurconfig #Htable #Ht1
-#Hrsnonulls #Hrsnomarks #Htape #t1' #Ht1'
+#rs #n #table #curc #curconfig #ls #Hbitcurc #Hcurconfig #Htable #Ht1
+* * * #Hnomarks #Hbits #Hcurc #Hlegal #t1' #Ht1'
 cases (Hconcrete … Htable Ht1) //
 [ * #Hrs #Ht2
   @(ex_intro ?? (〈curc,false〉::ls)) @(ex_intro ?? [])
@@ -424,9 +456,19 @@ cases (Hconcrete … Htable Ht1) //
   [ %
     [ >Ht2 %
     | >Hrs % ]
-  | % % % ]
+  | % [ % [ %
+    [ >append_nil #x #Hx cases (orb_true_l … Hx) #Hx'
+      [ >(\P Hx') % 
+      | @Hnomarks @(memb_append_l1 … Hx') ]
+    | >append_nil #x #Hx cases (orb_true_l … Hx) #Hx'
+      [ >(\P Hx') //
+      | @Hbits @(memb_append_l1 … Hx') ]]
+    | % ]
+    | %2 % ]
+  ]
 | * * #r0 #br0 * #rs0 * #Hrs 
-  cut (br0 = false) [@(Hrsnomarks 〈r0,br0〉) >Hrs @memb_hd]
+  cut (br0 = false) 
+  [ @(Hnomarks 〈r0,br0〉) @memb_cons @memb_append_l2 >Hrs @memb_hd]
   #Hbr0 >Hbr0 in Hrs; #Hrs #Ht2
   @(ex_intro ?? (〈curc,false〉::ls)) @(ex_intro ?? rs0)
   @(ex_intro ?? r0) %
@@ -434,12 +476,25 @@ cases (Hconcrete … Htable Ht1) //
     [ >Ht2  //
     | >Hrs >lift_tape_not_null
       [ %
-      | @(Hrsnonulls 〈r0,false〉) >Hrs @memb_hd ] ]
-  | @legal_tape_conditions % % % #Hr0 >Hr0 in Hrs; #Hrs
-    lapply (Hrsnonulls 〈null,false〉 ?)
-    [ >Hrs @memb_hd | normalize #H destruct (H) ]
-  ]
-]
+      | @bit_not_null @(Hbits 〈r0,false〉) >Hrs @memb_append_l2 @memb_hd ] ]
+  | % [ % [ %
+    [ #x #Hx cases (orb_true_l … Hx) #Hx'
+      [ >(\P Hx') % 
+      | cases (memb_append … Hx') #Hx'' @Hnomarks 
+        [ @(memb_append_l1 … Hx'') 
+        | >Hrs @memb_cons @memb_append_l2 @(memb_cons … Hx'') ]
+      ]
+    | whd in ⊢ (?%); #x #Hx cases (orb_true_l … Hx) #Hx'
+      [ >(\P Hx') //
+      | cases (memb_append … Hx') #Hx'' @Hbits
+        [ @(memb_append_l1 … Hx'') | >Hrs @memb_append_l2 @(memb_cons … Hx'') ]
+      ]]
+    | whd in ⊢ (??%?); >(Hbits 〈r0,false〉) //
+      @memb_append_l2 >Hrs @memb_hd ]
+    | % % % #Hr0 lapply (Hbits 〈r0,false〉?) 
+      [ @memb_append_l2 >Hrs @memb_hd
+      | >Hr0 normalize #Hfalse destruct (Hfalse)
+      ] ] ] ]
 qed.
 
 definition R_move_tape_l_abstract ≝ λt1,t2.

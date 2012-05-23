@@ -496,40 +496,58 @@ lemma sem_uni_step :
     | (* da decidere se aggiungere un'assunzione o utilizzare Hmatch *) @daemon
     | (* Htable *) @daemon
     | (* Htable, Hmatch → |config| = n *) @daemon ]
-   * #table1 * #newc * #mv1 * #table2 * #Htableeq #Htc *
-   [ * #td * whd in ⊢ (%→?); >Htc -Htc #Htd
-     cases (Htd ? (refl ??)) #_ -Htd
-     cut (newc = 〈s1,false〉::newconfig@[〈c1,false〉]) [@daemon] #Hnewc
-     >Hnewc #Htd 
-     * #te * whd in ⊢ (%→?); #Hte
-     (* mv1 ha tipo lista ma dovrebbe avere tipo unialpha *)
-     cut (td = midtape STape (〈c0,false〉::reverse STape curconfig@〈s0,false〉::〈grid,false〉::ls) 
+    * #table1 * #newc * #mv1 * #table2 * #Htableeq #Htc *
+    [ * #td * whd in ⊢ (%→?); >Htc -Htc #Htd
+      cases (Htd ? (refl ??)) #_ -Htd
+      cut (newc = 〈s1,false〉::newconfig@[〈c1,false〉]) [@daemon] #Hnewc
+      >Hnewc #Htd 
+      cut (mv1 = 〈\fst mv1,false〉)
+      [ >(eq_pair_fst_snd … mv1) @eq_f (*Htable, Htableeq*) @daemon ] #Hmv1
+      * #te * whd in ⊢ (%→?); #Hte
+      (* mv1 ha tipo lista ma dovrebbe avere tipo unialpha *)
+      cut (td = midtape STape (〈c0,false〉::reverse STape curconfig@〈s0,false〉::〈grid,false〉::ls) 
               〈grid,false〉
               ((table1@〈s0,false〉::curconfig@[〈c0,false〉])@〈comma,true〉::〈s1,false〉::
                newconfig@〈c1,false〉::〈comma,false〉::〈\fst mv1,false〉::table2@〈grid,false〉::rs))
-     lapply (Hte … Htd)
-     
-     (* univocità delle tuple in table *)
-     cut (newc = 〈s1,false〉::newconfig@[〈c1,false〉]) [@daemon] #Hnewc
-   c00 ≝ c0
-   curconfig0 ≝ curconfig
-   s00 ≝ s0
-   ls0 ≝ ls
-   table10 ≝ (table1@〈s0,false〉::curconfig@〈c0,false〉)
-   s10 ≝ s1
-   newconfig0 ≝ newconfig
-   c10 ≝ c1
-   mv0 ≝ mv1
-   table20 ≝ table2
-   rs0 ≝ rs
-               
-     lapply (Hte … Htd)
-   | * #td * whd in ⊢ (%→%→?); >Htc #Htd
-     cases (Htd ? (refl ??)) normalize in ⊢ (%→?);
-     #Hfalse destruct (Hfalse)
-   ]
-    
-  
+      [ >Htd @eq_f3 //
+        [ >reverse_append >reverse_single %
+        | >associative_append >associative_append normalize
+          >associative_append >associative_append <Hmv1 %
+        ]
+      ]
+      -Htd #Htd lapply (Hte … (S n) … Htd … Ht1') -Htd -Hte
+      [ //
+      |2,3,4,5: (* dovrebbe scomparire (lo metteremo nel legal_tape) *) @daemon
+      | (*|curconfig| = |newconfig|*) @daemon
+      | (* only_bits (〈s1,false〉::newconfig) *) @daemon
+      | (* only_bits (curconfig@[〈s0,false〉]) *) @daemon
+      | (* no_marks (reverse ? curconfig) *) @daemon
+      | <Hmv1 >Hnewc in Htableeq; 
+        >associative_append >associative_append normalize
+        >associative_append >associative_append
+        #Htableeq <Htableeq // ]
+      * #ls1 * #rs1 * #c2 * * #Hte #Hliftte #Hlegalte
+      whd in ⊢ (%→?); #Houttape lapply (Houttape … Hte) -Houttape #Houttape
+      whd in Houttape:(???%); whd in Houttape:(???(??%%%));
+      @ex_intro [| @(ex_intro ?? rs1) @ex_intro [| % [ % 
+      [ >Houttape @eq_f @eq_f @eq_f @eq_f
+        change with ((〈t0,false〉::table)@?) in ⊢ (???%);
+        >Htableeq >associative_append >associative_append 
+        >associative_append normalize >associative_append
+        >associative_append normalize >Hnewc <Hmv1
+        >associative_append normalize >associative_append % 
+      | >(?: mv = \fst mv1) [| (*Hmatch, Htableeq*) @daemon ]
+        @Hliftte
+      ]
+     | //
+     ]
+    ]
+   ] 
+  | * #td * whd in ⊢ (%→%→?); >Htc #Htd
+    cases (Htd ? (refl ??)) normalize in ⊢ (%→?);
+    #Hfalse destruct (Hfalse)
+  ]
+ ]
 | #t1 #t2 #t3 whd in ⊢ (%→%→?); #Ht1 #Ht2
   #b #Hb cases (Ht1 ? Hb) #Hb' #Ht3 >Ht2 % //
   cases b in Hb'; normalize #H1 //
