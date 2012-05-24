@@ -463,12 +463,12 @@ definition uni_step ≝
           tc_true))))
     (nop ?)
     tc_true.
-
+    
 definition R_uni_step_true ≝ λt1,t2.
   ∀n,t0,table,s0,s1,c0,c1,ls,rs,curconfig,newconfig,mv.
   table_TM (S n) (〈t0,false〉::table) → 
-  match_in_table (〈s0,false〉::curconfig@[〈c0,false〉]) 
-    (〈s1,false〉::newconfig@[〈c1,false〉]) mv (〈t0,false〉::table) → 
+  match_in_table (S n) (〈s0,false〉::curconfig) 〈c0,false〉
+    (〈s1,false〉::newconfig) 〈c1,false〉 〈mv,false〉 (〈t0,false〉::table) → 
   legal_tape ls 〈c0,false〉 rs → 
   t1 = midtape STape (〈grid,false〉::ls) 〈s0,false〉 
     (curconfig@〈c0,false〉::〈grid,false〉::〈t0,false〉::table@〈grid,false〉::rs) → 
@@ -506,7 +506,10 @@ lemma sem_uni_step :
   #tb * whd in ⊢ (%→?); #Htb 
   lapply (Htb (〈grid,false〉::ls) (curconfig@[〈c0,false〉]) (table@〈grid,false〉::rs) s0 t0 ???)
   [ >Hta >associative_append %
-  | (* da decidere se aggiungere un'assunzione o utilizzare Hmatch *) @daemon
+  | (* utilizzare Hmatch
+         cases (match_in_table_to_tuple … Hmatch Htable)
+       ma serve l'iniettività di mk_tuple...
+     *) @daemon
   | (* idem *) @daemon
   | -Hta -Htb #Htb * 
     #tc * whd in ⊢ (%→?); #Htc cases (Htc … Htable … Htb) -Htb -Htc
@@ -515,7 +518,9 @@ lemma sem_uni_step :
     | >Hs0 %
     | (* da decidere se aggiungere un'assunzione o utilizzare Hmatch *) @daemon
     | (* Htable *) @daemon
-    | (* Htable, Hmatch → |config| = n *) @daemon ]
+    | (* Htable, Hmatch → |config| = n 
+       necessaria modifica in R_match_tuple, le dimensioni non corrispondono
+      *) @daemon ]
     * #table1 * #newc * #mv1 * #table2 * #Htableeq #Htc *
     [ * #td * whd in ⊢ (%→?); >Htc -Htc #Htd
       cases (Htd ? (refl ??)) #_ -Htd

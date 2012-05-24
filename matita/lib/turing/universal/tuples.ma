@@ -66,17 +66,19 @@ inductive table_TM (n:nat) : list STape → Prop ≝
 | ttm_nil  : table_TM n [] 
 | ttm_cons : ∀t1,T.tuple_TM n t1 → table_TM n T → table_TM n (t1@〈bar,false〉::T).
 
-inductive match_in_table (qin:list STape) (cin: STape) 
+inductive match_in_table (n:nat) (qin:list STape) (cin: STape) 
                          (qout:list STape) (cout:STape) (mv:STape) 
 : list STape → Prop ≝ 
 | mit_hd : 
    ∀tb.
-   match_in_table qin cin qout cout mv 
+   tuple_TM n (mk_tuple qin cin qout cout mv) → 
+   match_in_table n qin cin qout cout mv 
      (mk_tuple qin cin qout cout mv @〈bar,false〉::tb)
 | mit_tl :
    ∀qin0,cin0,qout0,cout0,mv0,tb.
-   match_in_table qin cin qout cout mv tb → 
-   match_in_table qin cin qout cout mv  
+   tuple_TM n (mk_tuple qin0 cin0 qout0 cout0 mv0) → 
+   match_in_table n qin cin qout cout mv tb → 
+   match_in_table n qin cin qout cout mv  
      (mk_tuple qin0 cin0 qout0 cout0 mv0@〈bar,false〉::tb).
      
 axiom append_l1_injective : 
@@ -101,6 +103,26 @@ axiom list_decompose_r :
 axiom list_decompose_memb :
   ∀A,l1,l2,l3,l4,a.l1@a::l2 = l3@l4 → |l1| < |l3| → memb A a l3 = true.*)
 
+lemma table_invert_r : ∀n,t,T.
+  tuple_TM n t → table_TM n (t@〈bar,false〉::T) → table_TM n T.
+#n #t #T #Htuple #Htable inversion Htable
+[ cases t normalize [ #Hfalse | #p #t0 #Hfalse ] destruct (Hfalse)
+| #t0 #T0 #Htuple0 #Htable0 #_ #Heq lapply (append_l2_injective ?????? Heq)
+  [ >(tuple_len … Htuple) >(tuple_len … Htuple0) % ]
+  -Heq #Heq destruct (Heq) // ]
+qed.
+
+lemma match_in_table_to_tuple :
+  ∀n,T,qin,cin,qout,cout,mv.
+  match_in_table n qin cin qout cout mv T → table_TM n T → 
+  tuple_TM n (mk_tuple qin cin qout cout mv).
+#n #T #qin #cin #qout #cout #mv #Hmatch elim Hmatch
+[ //
+| #qin0 #cin0 #qout0 #cout0 #mv0 #tb #Htuple #Hmatch #IH #Htable
+  @IH @(table_invert_r ???? Htable) @Htuple
+]
+qed.
+
 lemma generic_match_to_match_in_table :
   ∀n,T.table_TM n T → 
   ∀qin,cin,qout,cout,mv.|qin| = n → |qout| = n → 
@@ -109,16 +131,17 @@ lemma generic_match_to_match_in_table :
   bit_or_null (\fst mv) = true →  
   ∀t1,t2.
   T = (t1@qin@cin::〈comma,false〉::qout@cout::〈comma,false〉::[mv])@t2 → 
-  match_in_table qin cin qout cout mv T.
+  match_in_table n qin cin qout cout mv T.
 #n #T #Htable #qin #cin #qout #cout #mv #Hlenqin #Hlenqout
 #Hqinbits #Hqoutbits #Hcin #Hcout #Hmv
 elim Htable
-[ #t1 #t2 <associative_append cases (t1@qin) normalize
-  [ #Hfalse destruct (Hfalse) | #c0 #t0 #Hfalse destruct (Hfalse) ]
-| #tuple #T0 * #qin0 * #cin0 * #qout0 * #cout0 * #mv0
+[ #t1 #t2 <associative_append cases (t1@qin) normalize in ⊢ (%→?);
+  [ #Hfalse destruct (Hfalse) | #c0 #t0 #Hfalse whd in Hfalse:(???%); destruct (Hfalse) ]
+| #tuple #T0 #H1 #Htable0#IH #t1 #t2 #HT cases H1 #qin0 * #cin0 * #qout0 * #cout0 * #mv0
   * * * * * * * * * *
   #Hqin0marks #Hqout0marks #Hqin0bits #Hqout0bits #Hcin0 #Hcout0 #Hmv0 #Hcout0mv0
-  #Hlenqin0 #Hlenqout0 #Htuple #Htable0 #IH #t1 #t2 #HT
+  #Hlenqin0 #Hlenqout0 #Htuple >Htuple in H1; #H1 
+  lapply (ttm_cons … T0 H1 Htable0) #Htable
   cases t1 in HT;
   [ >Htuple normalize in ⊢ (??%%→?);
     >associative_append >associative_append #HT
@@ -144,7 +167,8 @@ elim Htable
         = mk_tuple qin cin qout cout mv@〈bar,false〉::T0)
     [|>Hqin >Hqout >Hcin >Hcout >Hmv normalize >associative_append >associative_append
        normalize >associative_append % ]
-    %
+    % %{qin0} %{cin0} %{qout0} %{cout0} %{mv0} % // % [|@Hlenqout0] % // % 
+        [ | @Hcout0mv0 ] % // % // % // % // % // % // %
   | #c0 #cs0 #HT cut (∃cs1.c0::cs0 = tuple@〈bar,false〉::cs1)
     [ cases (append_eq_tech1 ?????? HT ?)
       [ -HT #ta #Hta cases (append_eq_tech2 … Hta ?)
@@ -158,10 +182,23 @@ elim Htable
     * #cs1 #Hcs1 >Hcs1 in HT; >associative_append >associative_append #HT
     lapply (append_l2_injective … HT) // -HT #HT
     lapply (cons_injective_r ????? HT) -HT
-    <associative_append #HT >Htuple %2 @(IH ?? HT)
+    <associative_append #HT >Htuple %2 // @(IH … HT)
   ]
 ]
 qed.
+
+(*
+lemma table_invert_l : ∀n,T0,qin,cin,qout,cout,mv.
+  table_TM n (mk_tuple qin cin qout cout mv@〈bar,false〉::T0) → 
+  tuple_TM n (mk_tuple qin cin qout cout mv).
+#n #T #qin #cin #qout #cout #mv #HT inversion HT
+[ change with (append ???) in ⊢ (??(??%?)?→?);cases qin [ #Hfalse | #t0 #ts0 #Hfalse] normalize in Hfalse; destruct (Hfalse)
+| #t0 #T0 #Ht0 #HT0 #_
+
+  
+lemma table_invert_r : ∀n,T0,qin,cin,qout,cout,mv.
+  table n (mk_tuple qin cin qout cout mv@〈bar,false〉::T0) → table n T0. 
+*)
 
 lemma no_grids_in_tuple : ∀n,l.tuple_TM n l → no_grids l.
 #n #l * #qin * #cin * #qout * #cout * #mv * * * * * * * * * *
@@ -196,6 +233,7 @@ lemma no_marks_in_tuple : ∀n,l.tuple_TM n l → no_marks l.
 | cases (orb_true_l … Hc) -Hc #Hc 
 [ change with (c == 〈cout,false〉 = true) in Hc; >(\P Hc) %
 | cases (orb_true_l … Hc) -Hc #Hc 
+
 [ change with (c == 〈comma,false〉 = true) in Hc; >(\P Hc) %
 | >(memb_single … Hc) %
 ]]]]]]

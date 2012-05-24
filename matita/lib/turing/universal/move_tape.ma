@@ -330,8 +330,8 @@ definition move_of_unialpha ≝
 definition R_uni_step ≝ λt1,t2.
   ∀n,table,c,c1,ls,rs,curs,curc,news,newc,mv.
   table_TM n table → 
-  match_in_table (〈c,false〉::curs@[〈curc,false〉]) 
-    (〈c1,false〉::news@[〈newc,false〉]) mv table → 
+  match_in_table n (〈c,false〉::curs) 〈curc,false〉 
+    (〈c1,false〉::news) 〈newc,false〉 〈mv,false〉 table → 
   t1 = midtape STape (〈grid,false〉::ls) 〈c,false〉 
     (curs@〈curc,false〉::〈grid,false〉::table@〈grid,false〉::rs) → 
   ∀t1',ls1,rs1.t1' = lift_tape ls 〈curc,false〉 rs → 
