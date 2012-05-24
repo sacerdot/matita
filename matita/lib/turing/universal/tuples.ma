@@ -83,74 +83,144 @@ axiom append_l1_injective :
   ∀A.∀l1,l2,l3,l4:list A. |l1| = |l2| → l1@l3 = l2@l4 → l1 = l2.
 axiom append_l2_injective : 
   ∀A.∀l1,l2,l3,l4:list A. |l1| = |l2| → l1@l3 = l2@l4 → l3 = l4.
+axiom cons_injective_l : ∀A.∀a1,a2:A.∀l1,l2.a1::l1 = a2::l2 → a1 = a2.
+axiom cons_injective_r : ∀A.∀a1,a2:A.∀l1,l2.a1::l1 = a2::l2 → l1 = l2.
+axiom tuple_len : ∀n,t.tuple_TM n t → |t| = 2*n+5.
+axiom append_eq_tech1 :
+  ∀A,l1,l2,l3,l4,a.l1@a::l2 = l3@l4 → |l1| < |l3| → ∃la:list A.l1@a::la = l3.
+axiom append_eq_tech2 :
+  ∀A,l1,l2,l3,l4,a.l1@a::l2 = l3@l4 → memb A a l4 = false → ∃la:list A.l3 = l1@a::la.
+(*axiom list_decompose_cases : 
+  ∀A,l1,l2,l3,l4,a.l1@a::l2 = l3@l4 → ∃la,lb:list A.l3 = la@a::lb ∨ l4 = la@a::lb.
+axiom list_decompose_l :
+  ∀A,l1,l2,l3,l4,a.l1@a::l2 = l3@l4 → memb A a l4 = false → 
+  ∃la,lb.l2 = la@lb ∧ l3 = l1@a::la.
+axiom list_decompose_r :
+  ∀A,l1,l2,l3,l4,a.l1@a::l2 = l3@l4 → memb A a l3 = false → 
+  ∃la,lb.l1 = la@lb ∧ l4 = lb@a::l2.
+axiom list_decompose_memb :
+  ∀A,l1,l2,l3,l4,a.l1@a::l2 = l3@l4 → |l1| < |l3| → memb A a l3 = true.*)
 
-     
 lemma generic_match_to_match_in_table :
   ∀n,T.table_TM n T → 
   ∀qin,cin,qout,cout,mv.|qin| = n → |qout| = n → 
+  only_bits qin → only_bits qout → 
+  bit_or_null (\fst cin) = true → bit_or_null (\fst cout) = true → 
+  bit_or_null (\fst mv) = true →  
   ∀t1,t2.
-  T = t1@qin@cin::〈comma,false〉::qout@cout::〈comma,false〉::mv::t2 → 
+  T = (t1@qin@cin::〈comma,false〉::qout@cout::〈comma,false〉::[mv])@t2 → 
   match_in_table qin cin qout cout mv T.
 #n #T #Htable #qin #cin #qout #cout #mv #Hlenqin #Hlenqout
+#Hqinbits #Hqoutbits #Hcin #Hcout #Hmv
 elim Htable
 [ #t1 #t2 <associative_append cases (t1@qin) normalize
   [ #Hfalse destruct (Hfalse) | #c0 #t0 #Hfalse destruct (Hfalse) ]
 | #tuple #T0 * #qin0 * #cin0 * #qout0 * #cout0 * #mv0
   * * * * * * * * * *
-  #Hqin0marks #Hqout0marks #Hqinbits #Hqoutbits #Hcin0 #Hcout0 #Hmv0 #Hcout0mv0
+  #Hqin0marks #Hqout0marks #Hqin0bits #Hqout0bits #Hcin0 #Hcout0 #Hmv0 #Hcout0mv0
   #Hlenqin0 #Hlenqout0 #Htuple #Htable0 #IH #t1 #t2 #HT
   cases t1 in HT;
   [ >Htuple normalize in ⊢ (??%%→?);
-    >associative_append #HT
+    >associative_append >associative_append #HT
     cut (qin0 = qin ∧ (〈cin0,false〉 = cin ∧ (qout0 = qout ∧ 
          (〈cout0,false〉 = cout ∧ (〈mv0,false〉 = mv ∧ 〈bar,false〉::T0 = t2)))))
     [ lapply (append_l1_injective … HT) [ >Hlenqin @Hlenqin0 ]
-    #Hqin % [ @Hqin ] -Hqin
-    lapply (append_l2_injective … HT) [ >Hlenqin @Hlenqin0 ] -HT #HT
-    destruct (HT)
-  
+      #Hqin % [ @Hqin ] -Hqin
+      lapply (append_l2_injective … HT) [ >Hlenqin @Hlenqin0 ] -HT #HT
+      lapply (cons_injective_l ????? HT) #Hcin % [ @Hcin ] -Hcin
+      lapply (cons_injective_r ????? HT) -HT #HT 
+      lapply (cons_injective_r ????? HT) -HT
+      >associative_append >associative_append #HT
+      lapply (append_l1_injective … HT) [ >Hlenqout @Hlenqout0 ]
+      #Hqout % [ @Hqout ] -Hqout
+      lapply (append_l2_injective … HT) [ >Hlenqout @Hlenqout0 ] -HT normalize #HT
+      lapply (cons_injective_l ????? HT) #Hcout % [ @Hcout ] -Hcout
+      lapply (cons_injective_r ????? HT) -HT #HT 
+      lapply (cons_injective_r ????? HT) -HT #HT
+      lapply (cons_injective_l ????? HT) #Hmv % [ @Hmv ] -Hmv
+      @(cons_injective_r ????? HT) ]
+    -HT * #Hqin * #Hcin * #Hqout * #Hcout * #Hmv #HT0
+    >(?:qin0@(〈cin0,false〉::〈comma,false〉::qout0@[〈cout0,false〉;〈comma,false〉;〈mv0,false〉])@〈bar,false〉::T0
+        = mk_tuple qin cin qout cout mv@〈bar,false〉::T0)
+    [|>Hqin >Hqout >Hcin >Hcout >Hmv normalize >associative_append >associative_append
+       normalize >associative_append % ]
+    %
+  | #c0 #cs0 #HT cut (∃cs1.c0::cs0 = tuple@〈bar,false〉::cs1)
+    [ cases (append_eq_tech1 ?????? HT ?)
+      [ -HT #ta #Hta cases (append_eq_tech2 … Hta ?)
+        [ -Hta #tb #Htb %{tb} @Htb 
+        | @daemon ]
+      | @le_S_S >length_append >(plus_n_O (|tuple|)) >commutative_plus @le_plus
+        [ @le_O_n
+        | >Htuple normalize >length_append >length_append @le_plus [ >Hlenqin >Hlenqin0 % ]
+          @le_S_S @le_S_S >length_append >length_append @le_plus [ >Hlenqout >Hlenqout0 % ] %] ] 
+    ]
+    * #cs1 #Hcs1 >Hcs1 in HT; >associative_append >associative_append #HT
+    lapply (append_l2_injective … HT) // -HT #HT
+    lapply (cons_injective_r ????? HT) -HT
+    <associative_append #HT >Htuple %2 @(IH ?? HT)
+  ]
+]
+qed.
+
+lemma no_grids_in_tuple : ∀n,l.tuple_TM n l → no_grids l.
+#n #l * #qin * #cin * #qout * #cout * #mv * * * * * * * * * *
+#_ #_ #Hqin #Hqout #Hcin #Hcout #Hmv #_ #_ #_ #Hl >Hl
+#c #Hc normalize in Hc; cases (memb_append … Hc) -Hc #Hc
+[ @bit_not_grid @(Hqin … Hc)
+| cases (orb_true_l … Hc) -Hc #Hc 
+[ change with (c == 〈cin,false〉 = true) in Hc; >(\P Hc) @bit_or_null_not_grid //
+| cases (orb_true_l … Hc) -Hc #Hc 
+[ change with (c == 〈comma,false〉 = true) in Hc; >(\P Hc) %
+| cases (memb_append …Hc) -Hc #Hc
+[ @bit_not_grid @(Hqout … Hc)
+| cases (orb_true_l … Hc) -Hc #Hc 
+[ change with (c == 〈cout,false〉 = true) in Hc; >(\P Hc) @bit_or_null_not_grid //
+| cases (orb_true_l … Hc) -Hc #Hc 
+[ change with (c == 〈comma,false〉 = true) in Hc; >(\P Hc) %
+| >(memb_single … Hc) @bit_or_null_not_grid @Hmv
+]]]]]]
+qed.
+
+lemma no_marks_in_tuple : ∀n,l.tuple_TM n l → no_marks l.
+#n #l * #qin * #cin * #qout * #cout * #mv * * * * * * * * * *
+#Hqin #Hqout #_ #_ #_ #_ #_ #_ #_ #_ #Hl >Hl
+#c #Hc normalize in Hc; cases (memb_append … Hc) -Hc #Hc
+[ @(Hqin … Hc)
+| cases (orb_true_l … Hc) -Hc #Hc 
+[ change with (c == 〈cin,false〉 = true) in Hc; >(\P Hc) %
+| cases (orb_true_l … Hc) -Hc #Hc 
+[ change with (c == 〈comma,false〉 = true) in Hc; >(\P Hc) %
+| cases (memb_append … Hc) -Hc #Hc
+[ @(Hqout … Hc)
+| cases (orb_true_l … Hc) -Hc #Hc 
+[ change with (c == 〈cout,false〉 = true) in Hc; >(\P Hc) %
+| cases (orb_true_l … Hc) -Hc #Hc 
+[ change with (c == 〈comma,false〉 = true) in Hc; >(\P Hc) %
+| >(memb_single … Hc) %
+]]]]]]
+qed.
 
 lemma no_grids_in_table: ∀n.∀l.table_TM n l → no_grids l.
 #n #l #t elim t   
-  [normalize #n #x #H destruct
-  |#m #t1 #t2 * #qin * #qout * #mv * * * * * * 
-   #Hmarks #Hqin #Hqout #Hmv  #_ #_ #Heq #Ht2 #Hind
-   whd >Heq #x #membx 
-   cases (memb_append … membx) -membx #membx
-    [cases (memb_append … membx) -membx #membx
-      [@bit_or_null_not_grid @Hqin // 
-      |cases (orb_true_l … membx) -membx #membx
-        [>(\P membx) //
-        |cases (memb_append … membx) -membx #membx
-          [@bit_or_null_not_grid @Hqout //
-          |cases (orb_true_l … membx) -membx #membx
-            [>(\P membx) //
-            |@bit_or_null_not_grid >(memb_single … membx) @Hmv
-            ]
-          ]
-        ]
-      ]
-    |cases (orb_true_l … membx) -membx #membx
-      [>(\P membx) //
-      |@Hind //
-      ]
-    ]
-  ]
+  [normalize #c #H destruct
+  |#t1 #t2 #Ht1 #Ht2 #IH lapply (no_grids_in_tuple … Ht1) -Ht1 #Ht1 #x #Hx
+   cases (memb_append … Hx) -Hx #Hx
+   [ @(Ht1 … Hx)
+   | cases (orb_true_l … Hx) -Hx #Hx
+     [ >(\P Hx) %
+     | @(IH … Hx) ] ] ]
 qed.
 
 lemma no_marks_in_table: ∀n.∀l.table_TM n l → no_marks l.
 #n #l #t elim t   
-  [normalize #n #x #H destruct
-  |#m #t1 #t2 * #qin * #qout * #mv * * * * * * 
-   #Hmarks #_ #_ #_ #_ #_ #_ #Ht2 #Hind
-   #x #Hx cases (memb_append … Hx) -Hx #Hx
-    [@Hmarks //
-    |cases (orb_true_l … Hx) -Hx #Hx
-      [>(\P Hx) //
-      |@Hind //
-      ]
-    ]
-  ]
+  [normalize #c #H destruct
+  |#t1 #t2 #Ht1 #Ht2 #IH lapply (no_marks_in_tuple … Ht1) -Ht1 #Ht1 #x #Hx
+   cases (memb_append … Hx) -Hx #Hx
+   [ @(Ht1 … Hx)
+   | cases (orb_true_l … Hx) -Hx #Hx
+     [ >(\P Hx) %
+     | @(IH … Hx) ] ] ]
 qed.      
           
 axiom last_of_table: ∀n,l,b.¬ table_TM n (l@[〈bar,b〉]).
