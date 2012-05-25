@@ -79,6 +79,9 @@ lemma sub_pi2 : ∀A.∀P,P':A → Prop. (∀x.P x → P' x) → ∀x:Σx:A.P x.
 #A #P #P' #H1 * #x #H2 @H1 @H2
 qed.
 
+lemma inj_mk_Sig: ∀A,P.∀x. x = mk_Sig A P (pi1 A P x) (pi2 A P x).
+#A #P #x cases x //
+qed-. 
 (* Prod *)
 
 record Prod (A,B:Type[0]) : Type[0] ≝ {

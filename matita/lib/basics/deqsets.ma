@@ -149,3 +149,34 @@ unification hint  0 ≔ T1,T2,p1,p2;
 (* ---------------------------------------- *) ⊢ 
     eq_sum T1 T2 p1 p2 ≡ eqb X p1 p2.
 
+(* sigma *)
+definition eq_sigma ≝ 
+  λA:DeqSet.λP:A→Prop.λp1,p2:Σx:A.P x.
+  match p1 with 
+  [mk_Sig a1 h1 ⇒ 
+    match p2 with 
+    [mk_Sig a2 h2 ⇒ a1==a2]].
+ 
+(* uses proof irrelevance *)
+lemma eq_sigma_true: ∀A:DeqSet.∀P.∀p1,p2:Σx.P x.
+  eq_sigma A P p1 p2 = true ↔ p1 = p2.
+#A #P * #a1 #Ha1 * #a2 #Ha2 %
+  [normalize #eqa generalize in match Ha1; >(\P eqa) // 
+  |#H >H @(\b ?) //
+  ]
+qed.
+
+definition DeqSig ≝ λA:DeqSet.λP:A→Prop.
+  mk_DeqSet (Σx:A.P x) (eq_sigma A P) (eq_sigma_true A P).
+  
+unification hint  0 ≔ C,P; 
+    T ≟ carr C,
+    X ≟ DeqSig C P
+(* ---------------------------------------- *) ⊢ 
+    Σx:T.P x ≡ carr X.
+
+unification hint  0 ≔ T,P,p1,p2; 
+    X ≟ DeqSig T P
+(* ---------------------------------------- *) ⊢ 
+    eq_sigma T P p1 p2 ≡ eqb X p1 p2.
+
