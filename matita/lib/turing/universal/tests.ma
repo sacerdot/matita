@@ -22,19 +22,21 @@ include "turing/if_machine.ma".
 
 definition tc_states ≝ initN 3.
 
-definition tc_true ≝ 1.
+definition tc_start : tc_states ≝ mk_Sig ?? 0 (leb_true_to_le 1 3 (refl …)).
+definition tc_true : tc_states ≝ mk_Sig ?? 1 (leb_true_to_le 2 3 (refl …)).
+definition tc_false : tc_states ≝ mk_Sig ?? 2 (leb_true_to_le 3 3 (refl …)).
 
 definition test_char ≝ 
   λalpha:FinSet.λtest:alpha→bool.
   mk_TM alpha tc_states
   (λp.let 〈q,a〉 ≝ p in
    match a with
-   [ None ⇒ 〈1, None ?〉
+   [ None ⇒ 〈tc_true, None ?〉
    | Some a' ⇒ 
      match test a' with
-     [ true ⇒ 〈1,None ?〉
-     | false ⇒ 〈2,None ?〉 ]])
-  O (λx.notb (x == 0)).
+     [ true ⇒ 〈tc_true,None ?〉
+     | false ⇒ 〈tc_false,None ?〉 ]])
+  tc_start (λx.notb (x == tc_start)).
 
 definition Rtc_true ≝ 
   λalpha,test,t1,t2.
@@ -49,47 +51,49 @@ definition Rtc_false ≝
 lemma tc_q0_q1 :
   ∀alpha,test,ls,a0,rs. test a0 = true → 
   step alpha (test_char alpha test)
-    (mk_config ?? 0 (midtape … ls a0 rs)) =
-  mk_config alpha (states ? (test_char alpha test)) 1
+    (mk_config ?? tc_start (midtape … ls a0 rs)) =
+  mk_config alpha (states ? (test_char alpha test)) tc_true
     (midtape … ls a0 rs).
-#alpha #test #ls #a0 #ts #Htest normalize >Htest %
+#alpha #test #ls #a0 #ts #Htest whd in ⊢ (??%?); 
+whd in match (trans … 〈?,?〉); >Htest %
 qed.
      
 lemma tc_q0_q2 :
   ∀alpha,test,ls,a0,rs. test a0 = false → 
   step alpha (test_char alpha test)
-    (mk_config ?? 0 (midtape … ls a0 rs)) =
-  mk_config alpha (states ? (test_char alpha test)) 2
+    (mk_config ?? tc_start (midtape … ls a0 rs)) =
+  mk_config alpha (states ? (test_char alpha test)) tc_false
     (midtape … ls a0 rs).
-#alpha #test #ls #a0 #ts #Htest normalize >Htest %
+#alpha #test #ls #a0 #ts #Htest whd in ⊢ (??%?); 
+whd in match (trans … 〈?,?〉); >Htest %
 qed.
 
 lemma sem_test_char :
   ∀alpha,test.
   accRealize alpha (test_char alpha test) 
-    1 (Rtc_true alpha test) (Rtc_false alpha test).
+    tc_true (Rtc_true alpha test) (Rtc_false alpha test).
 #alpha #test *
 [ @(ex_intro ?? 2)
-  @(ex_intro ?? (mk_config ?? 1 (niltape ?))) %
+  @(ex_intro ?? (mk_config ?? tc_true (niltape ?))) %
   [ % // #_ #c normalize #Hfalse destruct | #_ #c normalize #Hfalse destruct (Hfalse) ]
-| #a #al @(ex_intro ?? 2) @(ex_intro ?? (mk_config ?? 1 (leftof ? a al)))
+| #a #al @(ex_intro ?? 2) @(ex_intro ?? (mk_config ?? tc_true (leftof ? a al)))
   % [ % // #_ #c normalize #Hfalse destruct | #_ #c normalize #Hfalse destruct (Hfalse) ]
-| #a #al @(ex_intro ?? 2) @(ex_intro ?? (mk_config ?? 1 (rightof ? a al)))
+| #a #al @(ex_intro ?? 2) @(ex_intro ?? (mk_config ?? tc_true (rightof ? a al)))
   % [ % // #_ #c normalize #Hfalse destruct | #_ #c normalize #Hfalse destruct (Hfalse) ]
 | #ls #c #rs @(ex_intro ?? 2)
   cases (true_or_false (test c)) #Htest
-  [ @(ex_intro ?? (mk_config ?? 1 ?))
+  [ @(ex_intro ?? (mk_config ?? tc_true ?))
     [| % 
       [ % 
         [ whd in ⊢ (??%?); >tc_q0_q1 //
         | #_ #c0 #Hc0 % // normalize in Hc0; destruct // ]
       | * #Hfalse @False_ind @Hfalse % ]
     ]
-  | @(ex_intro ?? (mk_config ?? 2 (midtape ? ls c rs)))
+  | @(ex_intro ?? (mk_config ?? tc_false (midtape ? ls c rs)))
     % 
     [ %
       [ whd in ⊢ (??%?); >tc_q0_q2 //
-      | #Hfalse destruct (Hfalse) ]
+      | whd in ⊢ ((??%%)→?); #Hfalse destruct (Hfalse) ]
     | #_ #c0 #Hc0 % // normalize in Hc0; destruct (Hc0) //
     ]
   ]

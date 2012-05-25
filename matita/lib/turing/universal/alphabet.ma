@@ -39,10 +39,18 @@ definition DeqUnialpha ≝ mk_DeqSet unialpha unialpha_eq ?.
   |*: * [1,6,11,16: #y ] normalize % #H1 destruct % ]
 qed.
 
-axiom unialpha_unique : uniqueb DeqUnialpha [bit true;bit false;comma;bar;grid] = true.
+lemma unialpha_unique : 
+  uniqueb DeqUnialpha [bit true;bit false;null;comma;bar;grid] = true.
+// qed.
+
+lemma unialpha_complete :∀x:DeqUnialpha. 
+  memb ? x [bit true;bit false;null;comma;bar;grid] = true.
+* // * //
+qed.
 
 definition FSUnialpha ≝ 
-  mk_FinSet DeqUnialpha [bit true;bit false;null;comma;bar;grid] unialpha_unique.
+  mk_FinSet DeqUnialpha [bit true;bit false;null;comma;bar;grid] 
+  unialpha_unique unialpha_complete.
 
 definition is_bit ≝ λc.match c with [ bit _ ⇒ true | _ ⇒ false ].
 

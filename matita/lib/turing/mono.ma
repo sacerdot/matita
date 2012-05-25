@@ -290,17 +290,19 @@ definition accRealize ≝ λsig.λM:TM sig.λacc:states sig M.λRtrue,Rfalse:rel
   *)
   
 definition nop_states ≝ initN 1.
+definition start_nop : initN 1 ≝ mk_Sig ?? 0 (le_n … (S 0)).
 
 definition nop ≝ 
   λalpha:FinSet.mk_TM alpha nop_states
   (λp.let 〈q,a〉 ≝ p in 〈q,None ?〉)
-  O (λ_.true).
+  start_nop (λ_.true).
   
 definition R_nop ≝ λalpha.λt1,t2:tape alpha.t2 = t1.
 
 lemma sem_nop :
   ∀alpha.Realize alpha (nop alpha) (R_nop alpha).
-#alpha #intape @(ex_intro ?? 1) @ex_intro [| % normalize % ]
+#alpha #intape @(ex_intro ?? 1) 
+@(ex_intro … (mk_config ?? start_nop intape)) % % 
 qed.
 
 (* Compositions *)

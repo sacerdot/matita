@@ -51,7 +51,33 @@ qed.
 
 definition mk_tuple ≝ λqin,cin,qout,cout,mv.
   qin @ cin :: 〈comma,false〉:: qout @ cout :: 〈comma,false〉 :: [mv].
+
+axiom num_of_state : ∀state:FinSet. state → list (unialpha × bool).
+
+definition tuple_of_pair ≝ λstates: FinSet.
+  λhalt:states →bool. 
+  λp: (states × (option FinBool)) × (states × (option (FinBool × move))).
+  let 〈inp,outp〉 ≝ p in
+  let 〈q,a〉 ≝ inp in
+  let cin ≝ match a with [ None ⇒ null | Some b ⇒ bit b ] in
+  let 〈qn,action〉 ≝ outp in
+  let 〈cout,mv〉 ≝ 
+    match action with 
+    [ None ⇒ 〈null,null〉
+    | Some act ⇒ let 〈na,m〉 ≝ act in 
+      match m with 
+      [ R ⇒ 〈bit na,bit true〉
+      | L ⇒ 〈bit na,bit false〉
+      | N ⇒ 〈bit na,null〉]
+    ] in
+  let qin ≝ num_of_state states q in
+  let qout ≝ num_of_state states qn in
+  mk_tuple qin 〈cin,false〉 qout 〈cout,false〉 〈mv,false〉.
+
+
   
+  
+
 (* by definition, a tuple is not marked *)
 definition tuple_TM : nat → list STape → Prop ≝ 
  λn,t.∃qin,cin,qout,cout,mv.
@@ -487,6 +513,7 @@ generalize in match Hc; generalize in match Hl2; cases l2
    ]
 qed.
 *)
+
 definition init_current ≝ 
   seq ? (adv_to_mark_l ? (is_marked ?))
     (seq ? (clear_mark ?)
