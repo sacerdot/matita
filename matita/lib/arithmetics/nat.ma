@@ -402,14 +402,14 @@ theorem not_le_to_lt: ∀n,m. n ≰ m → m < n.
 @nat_elim2 #n
  [#abs @False_ind /2/
  |/2/
- |#m #Hind #HnotleSS @le_S_S /3/
+ |#m #Hind #HnotleSS @le_S_S @Hind /2/ 
  ]
 qed.
 
 (* not lt, le *)
 
 theorem not_lt_to_le: ∀n,m:nat. n ≮ m → m ≤ n.
-/4/ qed.
+#n #m #H @le_S_S_to_le @not_le_to_lt /2/ qed.
 
 theorem le_to_not_lt: ∀n,m:nat. n ≤ m → m ≮ n.
 #n #m #H @lt_to_not_le /2/ (* /3/ *) qed.
@@ -441,24 +441,24 @@ theorem increasing_to_le2: ∀f:nat → nat. increasing f →
 qed.
 
 lemma le_inv_plus_l: ∀x,y,z. x + y ≤ z → x ≤ z - y ∧ y ≤ z.
-/3 width=2/ qed-.
+/3/ qed-.
 
 lemma lt_inv_plus_l: ∀x,y,z. x + y < z → x < z ∧ y < z - x.
-/3 width=2/ qed-.
+/3/ qed-.
 
 lemma lt_or_ge: ∀m,n. m < n ∨ n ≤ m.
-#m #n elim (decidable_lt m n) /2 width=1/ /3 width=1/
+#m #n elim (decidable_lt m n) /2/ /3/
 qed-.
 
 lemma le_or_ge: ∀m,n. m ≤ n ∨ n ≤ m.
-#m #n elim (decidable_le m n) /2 width=1/ /4 width=2/
+#m #n elim (decidable_le m n) /2/ /4/
 qed-.
 
 (* More general conclusion **************************************************)
 
 theorem nat_ind_plus: ∀R:predicate nat.
                       R 0 → (∀n. R n → R (n + 1)) → ∀n. R n.
-/3 width=1 by nat_ind/ qed-.
+/3 by nat_ind/ qed-.
 
 theorem lt_O_n_elim: ∀n:nat. 0 < n → 
   ∀P:nat → Prop.(∀m:nat.P (S m)) → P n.
@@ -496,7 +496,7 @@ theorem le_n_O_to_eq : ∀n:nat. n ≤ 0 → 0=n.
 #n (cases n) // #a  #abs @False_ind /2/ qed.
 
 theorem le_to_le_to_eq: ∀n,m. n ≤ m → m ≤ n → n = m.
-@nat_elim2 /4/
+@nat_elim2 /4 by le_n_O_to_eq, monotonic_pred, eq_f, sym_eq/
 qed. 
 
 theorem increasing_to_injective: ∀f:nat → nat.
@@ -602,7 +602,7 @@ lemma le_plus_compatible: ∀x1,x2,y1,y2. x1 ≤ y1 → x2 ≤ y2 → x1 + x2 �
 
 theorem not_eq_to_le_to_lt: ∀n,m. n≠m → n≤m → n<m.
 #n #m #Hneq #Hle cases (le_to_or_lt_eq ?? Hle) //
-#Heq /3/ qed-.
+#Heq @not_le_to_lt /2/ qed-.
 
 theorem lt_times_n_to_lt_l: 
 ∀n,p,q:nat. p*n < q*n → p < q.
@@ -644,7 +644,7 @@ qed.
 theorem distributive_times_minus: distributive ? times minus.
 #a #b #c
 (cases (decidable_lt b c)) #Hbc
- [> eq_minus_O /2/ >eq_minus_O // 
+ [> eq_minus_O [2:/2/] >eq_minus_O // 
   @monotonic_le_times_r /2/
  |@sym_eq (applyS plus_to_minus) <distributive_times_plus 
   @eq_f (applyS plus_minus_m_m) /2/
@@ -794,3 +794,4 @@ lemma le_maxr: ∀i,n,m. max n m ≤ i → m ≤ i.
 lemma to_max: ∀i,n,m. n ≤ i → m ≤ i → max n m ≤ i.
 #i #n #m #leni #lemi normalize (cases (leb n m)) 
 normalize // qed.
+
