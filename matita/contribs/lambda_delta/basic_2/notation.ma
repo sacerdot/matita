@@ -316,19 +316,19 @@ notation "hvbox( ⬇ * term 46 T  )"
    non associative with precedence 45
    for @{ 'SN $T }.
 
-notation "hvbox( L ⊢ ⬇ * term 46 T )"
+notation "hvbox( L ⊢ break ⬇ * term 46 T )"
    non associative with precedence 45
    for @{ 'SN $L $T }.
 
-notation "hvbox( L ⊢ ⬇ ⬇ * term 46 T )"
+notation "hvbox( L ⊢ break ⬇ ⬇ * term 46 T )"
    non associative with precedence 45
    for @{ 'SNAlt $L $T }.
 
-notation "hvbox( ⦃ L, break T ⦄ break [ R ] ϵ break 〚 A 〛 )"
+notation "hvbox( ⦃ L, break T ⦄ ϵ break [ R ] break 〚 A 〛 )"
    non associative with precedence 45
    for @{ 'InEInt $R $L $T $A }.
 
-notation "hvbox( T1 break [ R ] ⊑ break term 46 T2 )"
+notation "hvbox( T1 ⊑ break [ R ] break term 46 T2 )"
    non associative with precedence 45
    for @{ 'CrSubEq $T1 $R $T2 }.
 

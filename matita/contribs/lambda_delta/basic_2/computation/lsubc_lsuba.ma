@@ -20,7 +20,7 @@ include "basic_2/computation/acp_aaa.ma".
 (* properties concerning lenv refinement for atomic arity assignment ********)
 
 lemma lsubc_lsuba: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
-                   ∀L1,L2. L1 ⁝⊑ L2 → L1 [RP] ⊑ L2.
+                   ∀L1,L2. L1 ⁝⊑ L2 → L1 ⊑[RP] L2.
 #RR #RS #RP #H1RP #H2RP #L1 #L2 #H elim H -L1 -L2
 // /2 width=1/ /3 width=4/
 qed.

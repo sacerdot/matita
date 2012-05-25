@@ -122,6 +122,29 @@ lemma tps_split_up: ∀L,T1,T2,d,e. L ⊢ T1 ▶ [d, e] T2 → ∀i. d ≤ i →
 ]
 qed.
 
+lemma tps_split_down: ∀L,T1,T2,d,e. L ⊢ T1 ▶ [d, e] T2 →
+                      ∀i. d ≤ i → i ≤ d + e →
+                      ∃∃T. L ⊢ T1 ▶ [i, d + e - i] T &
+                           L ⊢ T ▶ [d, i - d] T2.
+#L #T1 #T2 #d #e #H elim H -L -T1 -T2 -d -e
+[ /2 width=3/
+| #L #K #V #W #i #d #e #Hdi #Hide #HLK #HVW #j #Hdj #Hjde
+  elim (lt_or_ge i j)
+  [ -Hide -Hjde >(plus_minus_m_m j d) in ⊢ (% → ?); // -Hdj /4 width=4/
+  | -Hdi -Hdj
+    >(plus_minus_m_m (d+e) j) in Hide; // -Hjde /3 width=4/
+  ]
+| #L #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #i #Hdi #Hide
+  elim (IHV12 i ? ?) -IHV12 // #V #HV1 #HV2
+  elim (IHT12 (i + 1) ? ?) -IHT12 /2 width=1/
+  -Hdi -Hide >arith_c1x #T #HT1 #HT2
+  lapply (tps_lsubs_conf … HT1 (L. ⓑ{I} V) ?) -HT1 /3 width=5/
+| #L #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #i #Hdi #Hide
+  elim (IHV12 i ? ?) -IHV12 // elim (IHT12 i ? ?) -IHT12 //
+  -Hdi -Hide /3 width=5/
+]
+qed.
+
 (* Basic inversion lemmas ***************************************************)
 
 fact tps_inv_atom1_aux: ∀L,T1,T2,d,e. L ⊢ T1 ▶ [d, e] T2 → ∀I. T1 = ⓪{I} →

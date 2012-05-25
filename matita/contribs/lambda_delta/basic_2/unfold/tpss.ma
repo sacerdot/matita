@@ -27,7 +27,15 @@ interpretation "partial unfold (term)"
 lemma tpss_ind: ∀d,e,L,T1. ∀R:predicate term. R T1 →
                 (∀T,T2. L ⊢ T1 ▶* [d, e] T → L ⊢ T ▶ [d, e] T2 → R T → R T2) →
                 ∀T2. L ⊢ T1 ▶* [d, e] T2 → R T2.
-#d #e #L #T1 #R #HT1 #IHT1 #T2 #HT12 @(TC_star_ind … HT1 IHT1 … HT12) //
+#d #e #L #T1 #R #HT1 #IHT1 #T2 #HT12
+@(TC_star_ind … HT1 IHT1 … HT12) //
+qed-.
+
+lemma tpss_ind_dx: ∀d,e,L,T2. ∀R:predicate term. R T2 →
+                   (∀T1,T. L ⊢ T1 ▶ [d, e] T → L ⊢ T ▶* [d, e] T2 → R T → R T1) →
+                   ∀T1. L ⊢ T1 ▶* [d, e] T2 → R T1.
+#d #e #L #T2 #R #HT2 #IHT2 #T1 #HT12
+@(TC_star_ind_dx … HT2 IHT2 … HT12) //
 qed-.
 
 (* Basic properties *********************************************************)

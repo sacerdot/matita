@@ -201,9 +201,9 @@ qed.
 
 (* Advanced properties ******************************************************)
 
-lemma lift_conf_le: ∀T,T1,d. ⇧[O, d] T ≡ T1 → ∀T2,e. ⇧[O, d + e] T ≡ T2 →
-                    ⇧[d, e] T1 ≡ T2.
-#T #T1 #d #HT1 #T2 #e #HT2
-elim (lift_split … HT2 d d ? ? ?) -HT2 // #X #H
+lemma lift_conf_be: ∀T,T1,d,e1. ⇧[d, e1] T ≡ T1 → ∀T2,e2. ⇧[d, e2] T ≡ T2 →
+                    e1 ≤ e2 → ⇧[d + e1, e2 - e1] T1 ≡ T2.
+#T #T1 #d #e1 #HT1 #T2 #e2 #HT2 #He12
+elim (lift_split … HT2 (d+e1) e1 ? ? ?) -HT2 // #X #H
 >(lift_mono … H … HT1) -T //
 qed.

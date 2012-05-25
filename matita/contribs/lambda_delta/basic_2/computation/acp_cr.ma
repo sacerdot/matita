@@ -158,9 +158,9 @@ qed.
 lemma aacr_abst: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
                  ∀L,W,T,A,B. RP L W → (
                     ∀L0,V0,T0,des. ⇩*[des] L0 ≡ L → ⇧*[des + 1] T ≡ T0 →
-                                   ⦃L0, V0⦄ [RP] ϵ 〚B〛 → ⦃L0. ⓓV0, T0⦄ [RP] ϵ 〚A〛
+                                   ⦃L0, V0⦄ ϵ[RP] 〚B〛 → ⦃L0. ⓓV0, T0⦄ ϵ[RP] 〚A〛
                  ) →
-                 ⦃L, ⓛW. T⦄ [RP] ϵ 〚②B. A〛.
+                 ⦃L, ⓛW. T⦄ ϵ[RP] 〚②B. A〛.
 #RR #RS #RP #H1RP #H2RP #L #W #T #A #B #HW #HA #L0 #V0 #X #des #HB #HL0 #H
 lapply (aacr_acr … H1RP H2RP A) #HCA
 lapply (aacr_acr … H1RP H2RP B) #HCB

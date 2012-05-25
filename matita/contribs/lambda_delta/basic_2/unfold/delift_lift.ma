@@ -24,8 +24,9 @@ lemma delift_lref_be: ∀L,K,V1,V2,U2,i,d,e. d ≤ i → i < d + e →
                       ⇧[0, d] V2 ≡ U2 → L ⊢ #i [d, e] ≡ U2.
 #L #K #V1 #V2 #U2 #i #d #e #Hdi #Hide #HLK * #V #HV1 #HV2 #HVU2
 elim (lift_total V 0 (i+1)) #U #HVU
-lapply (lift_trans_be … HV2 … HVU ? ?) -HV2 // >minus_plus <plus_minus_m_m
-/2 width=1/ /3 width=6/
+lapply (lift_trans_be … HV2 … HVU ? ?) -HV2 // >minus_plus <plus_minus_m_m /2 width=1/ #HV2U 
+lapply (lift_conf_be … HVU2 … HV2U ?) //
+>commutative_plus in ⊢ (??%??→?); <minus_plus_m_m /3 width=6/ 
 qed.
  
 (* Advanced inversion lemmas ************************************************)
@@ -114,4 +115,14 @@ elim (lift_total T d e) #U #HTU
 lapply (tpss_lift_ge … HT1 … HLK HTU1 … HTU) -T1 -HLK // #HU1
 elim (lift_trans_le … HT2 … HTU ?) -T // -Hddt #T #HT2 #HTU
 >(lift_mono … HTU2 … HT2) -T2 /2 width=3/
+qed.
+
+lemma delift_lift_div_be: ∀L,T1,T,d,e,i. L ⊢ T1 [i, d + e - i] ≡ T →
+                          ∀T2. ⇧[d, i - d] T2 ≡ T → d ≤ i → i ≤ d + e →
+                          L ⊢ T1 [d, e] ≡ T2.
+#L #T1 #T #d #e #i * #T0 #HT10 #HT0 #T2 #HT2 #Hdi #Hide
+lapply (tpss_weak … HT10 d e ? ?) -HT10 // [ >commutative_plus /2 width=1/ ] #HT10
+lapply (lift_trans_be … HT2 … HT0 ? ?) -T //
+>commutative_plus >commutative_plus in ⊢ (? ? (? % ?) ? ? → ?);
+<minus_le_minus_minus_comm // <plus_minus_m_m [ /2 width=3/ | /2 width=1/ ]
 qed.
