@@ -183,13 +183,13 @@ lemma length_map: ∀A,B,l.∀f:A→B. length ? (map ?? f l) = length ? l.
 #A #B #l #f elim l // #a #tl #Hind normalize //
 qed.
 
-lemma lenght_rev_append: ∀A.∀l,acc:list A. 
+lemma length_rev_append: ∀A.∀l,acc:list A. 
   |rev_append ? l acc| = |l|+|acc|.
 #A #l elim l // #a #tl #Hind normalize 
 #acc >Hind normalize // 
 qed.
 
-lemma lenght_reverse: ∀A.∀l:list A. 
+lemma length_reverse: ∀A.∀l:list A. 
   |reverse A l| = |l|.
 // qed.
 
