@@ -233,3 +233,26 @@ unification hint  0 ≔ C1,C2;
 (* ---------------------------------------- *) ⊢ 
     T1×T2 ≡ FinSetcarr X.
 
+(* graph of a function *)
+
+definition graph_of ≝ λA,B.λf:A→B. 
+  Σp:A×B.f (\fst p) = \snd p.
+
+definition graph_enum ≝ λA,B:FinSet.λf:A→B. 
+  filter ? (λp.f (\fst p) == \snd p) (enum (FinProd A B)).
+  
+lemma graph_enum_unique : ∀A,B,f.
+  uniqueb ? (graph_enum A B f) = true.
+#A #B #f @uniqueb_filter @(enum_unique (FinProd A B))
+qed.
+
+lemma graph_enum_correct: ∀A,B:FinSet.∀f:A→B. ∀a,b.
+memb ? 〈a,b〉 (graph_enum A B f) = true → f a = b.
+#A #B #f #a #b #membp @(\P ?) @(filter_true … membp)
+qed.
+
+lemma graph_enum_complete: ∀A,B:FinSet.∀f:A→B. ∀a,b.
+f a = b → memb ? 〈a,b〉 (graph_enum A B f) = true.
+#A #B #f #a #b #eqf @memb_filter_l [@(\b eqf)]
+@enum_prod_complete //
+qed.
