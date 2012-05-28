@@ -225,7 +225,7 @@ qed.
 lemma split_len: ∀A,n,l. n ≤ |l| →
   |\fst (split A l n)| = n.
 #A #n #l #Hlen normalize >(eq_pair_fst_snd ?? (split_rev …))
-normalize >lenght_reverse  >(split_rev_len … [ ] Hlen) normalize //
+normalize >length_reverse  >(split_rev_len … [ ] Hlen) normalize //
 qed.
   
 lemma split_rev_eq: ∀A,n,l,acc. n ≤ |l| → 
