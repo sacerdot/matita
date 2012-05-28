@@ -10,21 +10,20 @@
       V_____________________________________________________________*)
 
 
-(* COMPARE BIT
-
-*)
-
 include "turing/universal/tuples.ma".
 
 definition write_states ≝ initN 2.
 
+definition wr0 : write_states ≝ mk_Sig ?? 0 (leb_true_to_le 1 2 (refl …)).
+definition wr1 : write_states ≝ mk_Sig ?? 1 (leb_true_to_le 2 2 (refl …)).
+
 definition write ≝ λalpha,c.
   mk_TM alpha write_states
   (λp.let 〈q,a〉 ≝ p in
-    match q with 
-    [ O ⇒ 〈1,Some ? 〈c,N〉〉
-    | S _ ⇒ 〈1,None ?〉 ])
-  O (λx.x == 1).
+    match pi1 … q with 
+    [ O ⇒ 〈wr1,Some ? 〈c,N〉〉
+    | S _ ⇒ 〈wr1,None ?〉 ])
+  wr0 (λx.x == wr1).
   
 definition R_write ≝ λalpha,c,t1,t2.
   ∀ls,x,rs.t1 = midtape alpha ls x rs → t2 = midtape alpha ls c rs.
@@ -147,7 +146,7 @@ definition R_copy_step_false ≝
    bit_or_null (\fst c) = false ∧ t2 = t1.
 
 axiom sem_copy_step : 
-  accRealize ? copy_step (inr … (inl … (inr … 0))) R_copy_step_true R_copy_step_false.
+  accRealize ? copy_step (inr … (inl … (inr … start_nop))) R_copy_step_true R_copy_step_false.
 
 (*
 1) il primo carattere è marcato
@@ -155,7 +154,7 @@ axiom sem_copy_step :
 3) il terminatore non è né bit, né null
 *)
    
-definition copy0 ≝ whileTM ? copy_step (inr … (inl … (inr … 0))).
+definition copy0 ≝ whileTM ? copy_step (inr … (inl … (inr … start_nop))).
 
 let rec merge_config (l1,l2:list STape) ≝ 
   match l1 with
@@ -199,11 +198,6 @@ lemma inj_append_singleton_l2 :
   ∀A.∀l1,l2:list A.∀a1,a2.l1@[a1] = l2@[a2] → a1 = a2.
 #A #l1 #l2 #a1 #a2 #H lapply (eq_f … (reverse ?) … H)
 >reverse_append >reverse_append normalize #H1 destruct %
-qed.
-
-lemma length_reverse : ∀A,l.|reverse A l| = |l|.
-#A #l elim l //
-#a0 #l0 #IH normalize >rev_append_def >length_append >IH normalize //
 qed.
 
 lemma wsem_copy0 : WRealize ? copy0 R_copy0.
@@ -272,7 +266,7 @@ lapply (sem_while … sem_copy_step intape k outc Hloop) [%] -Hloop
         [|normalize in Hl1; destruct (Hl1) %]
         >(?:l4 = 〈grid,bg〉::lb)
         [|@(inj_append_singleton_l1 ?? (〈grid,bg〉::lb) ?? Hl4) ]
-        >length_append >commutative_plus >length_reverse 
+        >length_append >commutative_plus >length_reverse
         normalize #Hlalb destruct (Hlalb) //
       ] #Hlen2
       *

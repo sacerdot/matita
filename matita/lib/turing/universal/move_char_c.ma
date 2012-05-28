@@ -35,39 +35,46 @@ include "turing/while_machine.ma".
 
 definition mcc_states : FinSet → FinSet ≝ λalpha:FinSet.FinProd (initN 5) alpha.
 
+definition mcc0 : initN 5 ≝ mk_Sig ?? 0 (leb_true_to_le 1 5 (refl …)).
+definition mcc1 : initN 5 ≝ mk_Sig ?? 1 (leb_true_to_le 2 5 (refl …)).
+definition mcc2 : initN 5 ≝ mk_Sig ?? 2 (leb_true_to_le 3 5 (refl …)).
+definition mcc3 : initN 5 ≝ mk_Sig ?? 3 (leb_true_to_le 4 5 (refl …)).
+definition mcc4 : initN 5 ≝ mk_Sig ?? 4 (leb_true_to_le 5 5 (refl …)).
+
 definition mcc_step ≝ 
  λalpha:FinSet.λsep:alpha.
  mk_TM alpha (mcc_states alpha)
  (λp.let 〈q,a〉 ≝ p in
   let 〈q',b〉 ≝ q in
+  let q' ≝ pi1 nat (λi.i<5) q' in (* perche' devo passare il predicato ??? *)
   match a with 
-  [ None ⇒ 〈〈4,sep〉,None ?〉 
-  | Some a' ⇒ 
+  [ None ⇒ 〈〈mcc4,sep〉,None ?〉 
+  | Some a' ⇒  
   match q' with
   [ O ⇒ (* qinit *)
     match a' == sep with
-    [ true ⇒ 〈〈4,sep〉,None ?〉
-    | false ⇒ 〈〈1,a'〉,Some ? 〈a',L〉〉 ]
-  | S q' ⇒ match q' with
+    [ true ⇒ 〈〈mcc4,sep〉,None ?〉
+    | false ⇒ 〈〈mcc1,a'〉,Some ? 〈a',L〉〉 ]
+  | S q' ⇒  match q' with
     [ O ⇒ (* q1 *)
-      〈〈2,a'〉,Some ? 〈b,R〉〉
+      〈〈mcc2,a'〉,Some ? 〈b,R〉〉
     | S q' ⇒ match q' with
       [ O ⇒ (* q2 *)
-        〈〈3,sep〉,Some ? 〈b,R〉〉
+        〈〈mcc3,sep〉,Some ? 〈b,R〉〉
       | S q' ⇒ match q' with
         [ O ⇒ (* qacc *)
-          〈〈3,sep〉,None ?〉
+          〈〈mcc3,sep〉,None ?〉
         | S q' ⇒ (* qfail *)
-          〈〈4,sep〉,None ?〉 ] ] ] ] ])
-  〈0,sep〉
-  (λq.let 〈q',a〉 ≝ q in q' == 3 ∨ q' == 4).
+          〈〈mcc4,sep〉,None ?〉 ] ] ] ] ])
+  〈mcc0,sep〉
+  (λq.let 〈q',a〉 ≝ q in q' == mcc3 ∨ q' == mcc4).
 
 lemma mcc_q0_q1 : 
   ∀alpha:FinSet.∀sep,a,ls,a0,rs.
   a0 == sep = false → 
   step alpha (mcc_step alpha sep)
-    (mk_config ?? 〈0,a〉 (mk_tape … ls (Some ? a0) rs)) =
-  mk_config alpha (states ? (mcc_step alpha sep)) 〈1,a0〉
+    (mk_config ?? 〈mcc0,a〉 (mk_tape … ls (Some ? a0) rs)) =
+  mk_config alpha (states ? (mcc_step alpha sep)) 〈mcc1,a0〉
     (tape_move_left alpha ls a0 rs).
 #alpha #sep #a *
 [ #a0 #rs #Ha0 whd in ⊢ (??%?); 
@@ -80,8 +87,8 @@ qed.
 lemma mcc_q1_q2 :
   ∀alpha:FinSet.∀sep,a,ls,a0,rs.
   step alpha (mcc_step alpha sep) 
-    (mk_config ?? 〈1,a〉 (mk_tape … ls (Some ? a0) rs)) = 
-  mk_config alpha (states ? (mcc_step alpha sep)) 〈2,a0〉 
+    (mk_config ?? 〈mcc1,a〉 (mk_tape … ls (Some ? a0) rs)) = 
+  mk_config alpha (states ? (mcc_step alpha sep)) 〈mcc2,a0〉 
     (tape_move_right alpha ls a rs).
 #alpha #sep #a #ls #a0 * //
 qed.
@@ -89,8 +96,8 @@ qed.
 lemma mcc_q2_q3 :
   ∀alpha:FinSet.∀sep,a,ls,a0,rs.
   step alpha (mcc_step alpha sep) 
-    (mk_config ?? 〈2,a〉 (mk_tape … ls (Some ? a0) rs)) = 
-  mk_config alpha (states ? (mcc_step alpha sep)) 〈3,sep〉 
+    (mk_config ?? 〈mcc2,a〉 (mk_tape … ls (Some ? a0) rs)) = 
+  mk_config alpha (states ? (mcc_step alpha sep)) 〈mcc3,sep〉 
     (tape_move_right alpha ls a rs).
 #alpha #sep #a #ls #a0 * //
 qed.
@@ -109,38 +116,44 @@ definition Rmcc_step_false ≝
     
 lemma mcc_trans_init_sep: 
   ∀alpha,sep,x.
-  trans ? (mcc_step alpha sep) 〈〈0,x〉,Some ? sep〉 = 〈〈4,sep〉,None ?〉.
+  trans ? (mcc_step alpha sep) 〈〈mcc0,x〉,Some ? sep〉 = 〈〈mcc4,sep〉,None ?〉.
 #alpha #sep #x normalize >(\b ?) //
 qed.
  
 lemma mcc_trans_init_not_sep: 
   ∀alpha,sep,x,y.y == sep = false → 
-  trans ? (mcc_step alpha sep) 〈〈0,x〉,Some ? y〉 = 〈〈1,y〉,Some ? 〈y,L〉〉.
+  trans ? (mcc_step alpha sep) 〈〈mcc0,x〉,Some ? y〉 = 〈〈mcc1,y〉,Some ? 〈y,L〉〉.
 #alpha #sep #x #y #H1 normalize >H1 //
 qed.
 
 lemma sem_mcc_step :
   ∀alpha,sep.
   accRealize alpha (mcc_step alpha sep) 
-    〈3,sep〉 (Rmcc_step_true alpha sep) (Rmcc_step_false alpha sep).
-#alpha #sep *
+    〈mcc3,sep〉 (Rmcc_step_true alpha sep) (Rmcc_step_false alpha sep).
+#alpha #sep 
+cut (∀P:Prop.〈mcc4,sep〉=〈mcc3,sep〉→P)
+  [#P whd in ⊢ ((??(???%?)(???%?))→?); #Hfalse destruct] #Hfalse
+*
 [@(ex_intro ?? 2)  
-  @(ex_intro … (mk_config ?? 〈4,sep〉 (niltape ?)))
-  % [% [whd in ⊢ (??%?);% |#Hfalse destruct ] |#H1 #H2 @False_ind @(absurd ?? H2) %]
+  @(ex_intro … (mk_config ?? 〈mcc4,sep〉 (niltape ?))) % 
+  [% [whd in ⊢ (??%?); % | @Hfalse]
+  |#H1 #H2 @False_ind @(absurd ?? H2) %]
 |#l0 #lt0 @(ex_intro ?? 2)  
-  @(ex_intro … (mk_config ?? 〈4,sep〉 (leftof ? l0 lt0)))
-  % [% [whd in ⊢ (??%?);% |#Hfalse destruct ] |#H1 #H2 @False_ind @(absurd ?? H2) %]
+  @(ex_intro … (mk_config ?? 〈mcc4,sep〉 (leftof ? l0 lt0)))% 
+  [% [whd in ⊢ (??%?);% |@Hfalse]
+  |#H1 #H2 @False_ind @(absurd ?? H2) %]
 |#r0 #rt0 @(ex_intro ?? 2)  
-  @(ex_intro … (mk_config ?? 〈4,sep〉 (rightof ? r0 rt0)))
-  % [% [whd in ⊢ (??%?);% |#Hfalse destruct ] |#H1 #H2 #H3 @False_ind @(absurd ?? H3) %]
+  @(ex_intro … (mk_config ?? 〈mcc4,sep〉 (rightof ? r0 rt0))) % 
+  [% [whd in ⊢ (??%?);% |@Hfalse] 
+  |#H1 #H2 #H3 @False_ind @(absurd ?? H3) %]
 | #lt #c #rt cases (true_or_false (c == sep)) #Hc
   [ @(ex_intro ?? 2) 
-    @(ex_intro ?? (mk_config ?? 〈4,sep〉 (midtape ? lt c rt)))
+    @(ex_intro ?? (mk_config ?? 〈mcc4,sep〉 (midtape ? lt c rt)))
     % [ % 
         [ >(\P Hc) >loop_S_false // >loop_S_true 
          [ @eq_f whd in ⊢ (??%?); >mcc_trans_init_sep %
          |>(\P Hc) whd in ⊢(??(???(???%))?); >mcc_trans_init_sep % ]
-        |   #Hfalse destruct ]
+        |@Hfalse]
       |#_ #H1 #H2 % // normalize >(\P Hc) % ]
   | @(ex_intro ?? 4) cases lt
     [ @ex_intro
@@ -164,7 +177,7 @@ qed.
 
 (* the move_char (variant c) machine *)
 definition move_char_c ≝ 
-  λalpha,sep.whileTM alpha (mcc_step alpha sep) 〈3,sep〉.
+  λalpha,sep.whileTM alpha (mcc_step alpha sep) 〈mcc3,sep〉.
 
 definition R_move_char_c ≝ 
   λalpha,sep,t1,t2.
@@ -182,15 +195,12 @@ lapply (sem_while … (sem_mcc_step alpha sep) inc i outc Hloop) [%]
 -Hloop * #t1 * #Hstar @(star_ind_l ??????? Hstar)
 [ #tapea whd in ⊢ (% → ?); #H1 #b #a #ls #rs #Htapea
   %
-  [ #Hb >Htapea in H1; >Hb normalize in ⊢ (%→?); #H1
-   cases (H1 ??)
-   [#_ #H2 >H2 %
-   |*: % #H2 destruct (H2) ]
+  [ #Hb >Htapea in H1; >Hb #H1 cases (H1 ??)
+    [#_ #H2 >H2 % |*: % #H2 normalize in H2; destruct (H2)]
   | #rs1 #rs2 #Hrs #Hb #Hrs1 
-    >Htapea in H1; normalize in ⊢ (% → ?); #H1
-    cases (H1 ??)
-    [ #Hfalse @False_ind @(absurd ?? Hb) destruct %
-    |*:% #H2 destruct (H2) ]
+    >Htapea in H1; #H1 cases (H1 ??)
+    [#Hfalse @False_ind @(absurd ?? Hb) normalize in Hfalse; destruct %
+    |*:% #H2 normalize in H2; destruct (H2) ]
   ]
 | #tapea #tapeb #tapec #Hstar1 #HRtrue #IH #HRfalse
   lapply (IH HRfalse) -IH whd in ⊢ (%→%); #IH
@@ -198,10 +208,9 @@ lapply (sem_while … (sem_mcc_step alpha sep) inc i outc Hloop) [%]
   #Ha0 #Htapeb %
   [ #Hfalse @False_ind @(absurd ?? Ha0) //
   | *
-    [ #rs2 whd in ⊢ (???%→?); #Hrs #_ #_ normalize
-      >Hrs in Htapeb; normalize #Htapeb
-      cases (IH … Htapeb)
-      #Houtc #_ >Houtc //
+    [ #rs2 whd in ⊢ (???%→?); #Hrs #_ #_ (* normalize *)
+      >Hrs in Htapeb; #Htapeb normalize in Htapeb;
+      cases (IH … Htapeb) #Houtc #_ >Houtc normalize // 
     | #r0 #rs0 #rs2 #Hrs #_ #Hrs0
       cut (r0 ≠ sep ∧ memb … sep rs0 = false)
       [ %

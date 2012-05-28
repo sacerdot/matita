@@ -15,15 +15,19 @@ include "turing/universal/tuples.ma".
 
 definition init_cell_states ≝ initN 2.
 
+definition ics0 : init_cell_states ≝ mk_Sig ?? 0 (leb_true_to_le 1 2 (refl …)).
+definition ics1 : init_cell_states ≝ mk_Sig ?? 1 (leb_true_to_le 2 2 (refl …)).
+
+d
 definition init_cell ≝ 
  mk_TM STape init_cell_states
  (λp.let 〈q,a〉 ≝ p in
-  match q with
+  match pi1 … q with
   [ O ⇒ match a with
-    [ None ⇒ 〈1, Some ? 〈〈null,false〉,N〉〉
+    [ None ⇒ 〈ics1, Some ? 〈〈null,false〉,N〉〉
     | Some _ ⇒ 〈1, None ?〉 ]
-  | S _ ⇒ 〈1,None ?〉 ])
- O (λq.q == 1).
+  | S _ ⇒ 〈ics1,None ?〉 ])
+ ics0 (λq.q == ics1).
  
 definition R_init_cell ≝ λt1,t2.
  (∃c.current STape t1 = Some ? c ∧ t2 = t1) ∨

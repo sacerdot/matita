@@ -39,7 +39,6 @@ definition right ≝
  | rightof _ _ ⇒ []
  | midtape _ _ r ⇒ r ].
  
- 
 definition current ≝ 
  λsig.λt:tape sig.match t with
  [ midtape _ c _ ⇒ Some ? c
