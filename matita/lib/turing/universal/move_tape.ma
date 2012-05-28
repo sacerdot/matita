@@ -18,14 +18,13 @@ definition init_cell_states ≝ initN 2.
 definition ics0 : init_cell_states ≝ mk_Sig ?? 0 (leb_true_to_le 1 2 (refl …)).
 definition ics1 : init_cell_states ≝ mk_Sig ?? 1 (leb_true_to_le 2 2 (refl …)).
 
-d
 definition init_cell ≝ 
  mk_TM STape init_cell_states
  (λp.let 〈q,a〉 ≝ p in
   match pi1 … q with
   [ O ⇒ match a with
     [ None ⇒ 〈ics1, Some ? 〈〈null,false〉,N〉〉
-    | Some _ ⇒ 〈1, None ?〉 ]
+    | Some _ ⇒ 〈ics1, None ?〉 ]
   | S _ ⇒ 〈ics1,None ?〉 ])
  ics0 (λq.q == ics1).
  
@@ -37,27 +36,33 @@ axiom sem_init_cell : Realize ? init_cell R_init_cell.
 
 definition swap_states : FinSet → FinSet ≝ λalpha:FinSet.FinProd (initN 4) alpha.
 
+definition swap0 : initN 4 ≝ mk_Sig ?? 0 (leb_true_to_le 1 4 (refl …)).
+definition swap1 : initN 4 ≝ mk_Sig ?? 1 (leb_true_to_le 2 4 (refl …)).
+definition swap2 : initN 4 ≝ mk_Sig ?? 2 (leb_true_to_le 3 4 (refl …)).
+definition swap3 : initN 4 ≝ mk_Sig ?? 3 (leb_true_to_le 4 4 (refl …)).
+
 definition swap ≝ 
  λalpha:FinSet.λd:alpha.
- mk_TM alpha (mcl_states alpha)
+ mk_TM alpha (swap_states alpha)
  (λp.let 〈q,a〉 ≝ p in
   let 〈q',b〉 ≝ q in
+  let q' ≝ pi1 nat (λi.i<4) q' in (* perche' devo passare il predicato ??? *)
   match a with 
-  [ None ⇒ 〈〈3,d〉,None ?〉 
+  [ None ⇒ 〈〈swap3,d〉,None ?〉 
   | Some a' ⇒ 
   match q' with
   [ O ⇒ (* qinit *)
-     〈〈1,a'〉,Some ? 〈a',R〉〉
+     〈〈swap1,a'〉,Some ? 〈a',R〉〉
   | S q' ⇒ match q' with
     [ O ⇒ (* q1 *)
-      〈〈2,a'〉,Some ? 〈b,L〉〉
+      〈〈swap2,a'〉,Some ? 〈b,L〉〉
     | S q' ⇒ match q' with
       [ O ⇒ (* q2 *)
-        〈〈3,d〉,Some ? 〈b,N〉〉
+        〈〈swap3,d〉,Some ? 〈b,N〉〉
       | S _⇒ (* qacc *)
-          〈〈3,d〉,None ?〉 ] ] ] ])
-  〈0,d〉
-  (λq.let 〈q',a〉 ≝ q in q' == 3).
+          〈〈swap3,d〉,None ?〉 ] ] ] ])
+  〈swap0,d〉
+  (λq.let 〈q',a〉 ≝ q in q' == swap3).
   
 definition R_swap ≝ 
   λalpha,t1,t2.
