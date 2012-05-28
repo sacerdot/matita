@@ -35,39 +35,46 @@ include "turing/while_machine.ma".
 
 definition mcl_states : FinSet → FinSet ≝ λalpha:FinSet.FinProd (initN 5) alpha.
 
+definition mcl0 : initN 5 ≝ mk_Sig ?? 0 (leb_true_to_le 1 5 (refl …)).
+definition mcl1 : initN 5 ≝ mk_Sig ?? 1 (leb_true_to_le 2 5 (refl …)).
+definition mcl2 : initN 5 ≝ mk_Sig ?? 2 (leb_true_to_le 3 5 (refl …)).
+definition mcl3 : initN 5 ≝ mk_Sig ?? 3 (leb_true_to_le 4 5 (refl …)).
+definition mcl4 : initN 5 ≝ mk_Sig ?? 4 (leb_true_to_le 5 5 (refl …)).
+
 definition mcl_step ≝ 
  λalpha:FinSet.λsep:alpha.
  mk_TM alpha (mcl_states alpha)
  (λp.let 〈q,a〉 ≝ p in
   let 〈q',b〉 ≝ q in
+  let q' ≝ pi1 nat (λi.i<5) q' in (* perche' devo passare il predicato ??? *)
   match a with 
-  [ None ⇒ 〈〈4,sep〉,None ?〉 
+  [ None ⇒ 〈〈mcl4,sep〉,None ?〉 
   | Some a' ⇒ 
   match q' with
   [ O ⇒ (* qinit *)
     match a' == sep with
-    [ true ⇒ 〈〈4,sep〉,None ?〉
-    | false ⇒ 〈〈1,a'〉,Some ? 〈a',R〉〉 ]
+    [ true ⇒ 〈〈mcl4,sep〉,None ?〉
+    | false ⇒ 〈〈mcl1,a'〉,Some ? 〈a',R〉〉 ]
   | S q' ⇒ match q' with
     [ O ⇒ (* q1 *)
-      〈〈2,a'〉,Some ? 〈b,L〉〉
+      〈〈mcl2,a'〉,Some ? 〈b,L〉〉
     | S q' ⇒ match q' with
       [ O ⇒ (* q2 *)
-        〈〈3,sep〉,Some ? 〈b,L〉〉
+        〈〈mcl3,sep〉,Some ? 〈b,L〉〉
       | S q' ⇒ match q' with
         [ O ⇒ (* qacc *)
-          〈〈3,sep〉,None ?〉
+          〈〈mcl3,sep〉,None ?〉
         | S q' ⇒ (* qfail *)
-          〈〈4,sep〉,None ?〉 ] ] ] ] ])
-  〈0,sep〉
-  (λq.let 〈q',a〉 ≝ q in q' == 3 ∨ q' == 4).
+          〈〈mcl4,sep〉,None ?〉 ] ] ] ] ])
+  〈mcl0,sep〉
+  (λq.let 〈q',a〉 ≝ q in q' == mcl3 ∨ q' == mcl4).
 
 lemma mcl_q0_q1 : 
   ∀alpha:FinSet.∀sep,a,ls,a0,rs.
   a0 == sep = false → 
   step alpha (mcl_step alpha sep)
-    (mk_config ?? 〈0,a〉 (mk_tape … ls (Some ? a0) rs)) =
-  mk_config alpha (states ? (mcl_step alpha sep)) 〈1,a0〉
+    (mk_config ?? 〈mcl0,a〉 (mk_tape … ls (Some ? a0) rs)) =
+  mk_config alpha (states ? (mcl_step alpha sep)) 〈mcl1,a0〉
     (tape_move_right alpha ls a0 rs).
 #alpha #sep #a *
 [ #a0 #rs #Ha0 whd in ⊢ (??%?); 
@@ -80,8 +87,8 @@ qed.
 lemma mcl_q1_q2 :
   ∀alpha:FinSet.∀sep,a,ls,a0,rs.
   step alpha (mcl_step alpha sep) 
-    (mk_config ?? 〈1,a〉 (mk_tape … ls (Some ? a0) rs)) = 
-  mk_config alpha (states ? (mcl_step alpha sep)) 〈2,a0〉 
+    (mk_config ?? 〈mcl1,a〉 (mk_tape … ls (Some ? a0) rs)) = 
+  mk_config alpha (states ? (mcl_step alpha sep)) 〈mcl2,a0〉 
     (tape_move_left alpha ls a rs).
 #alpha #sep #a #ls #a0 * //
 qed.
@@ -89,8 +96,8 @@ qed.
 lemma mcl_q2_q3 :
   ∀alpha:FinSet.∀sep,a,ls,a0,rs.
   step alpha (mcl_step alpha sep) 
-    (mk_config ?? 〈2,a〉 (mk_tape … ls (Some ? a0) rs)) = 
-  mk_config alpha (states ? (mcl_step alpha sep)) 〈3,sep〉 
+    (mk_config ?? 〈mcl2,a〉 (mk_tape … ls (Some ? a0) rs)) = 
+  mk_config alpha (states ? (mcl_step alpha sep)) 〈mcl3,sep〉 
     (tape_move_left alpha ls a rs).
 #alpha #sep #a #ls #a0 * //
 qed.
@@ -109,46 +116,47 @@ definition Rmcl_step_false ≝
     
 lemma mcl_trans_init_sep: 
   ∀alpha,sep,x.
-  trans ? (mcl_step alpha sep) 〈〈0,x〉,Some ? sep〉 = 〈〈4,sep〉,None ?〉.
+  trans ? (mcl_step alpha sep) 〈〈mcl0,x〉,Some ? sep〉 = 〈〈mcl4,sep〉,None ?〉.
 #alpha #sep #x normalize >(\b ?) //
 qed.
  
 lemma mcl_trans_init_not_sep: 
   ∀alpha,sep,x,y.y == sep = false → 
-  trans ? (mcl_step alpha sep) 〈〈0,x〉,Some ? y〉 = 〈〈1,y〉,Some ? 〈y,R〉〉.
+  trans ? (mcl_step alpha sep) 〈〈mcl0,x〉,Some ? y〉 = 〈〈mcl1,y〉,Some ? 〈y,R〉〉.
 #alpha #sep #x #y #H1 normalize >H1 //
 qed.
 
 lemma sem_mcl_step :
   ∀alpha,sep.
   accRealize alpha (mcl_step alpha sep) 
-    〈3,sep〉 (Rmcl_step_true alpha sep) (Rmcl_step_false alpha sep).
-#alpha #sep *
+    〈mcl3,sep〉 (Rmcl_step_true alpha sep) (Rmcl_step_false alpha sep).
+#alpha #sep cut (∀P:Prop.〈mcl4,sep〉=〈mcl3,sep〉→P)
+  [#P whd in ⊢ ((??(???%?)(???%?))→?); #Hfalse destruct] #Hfalse
+*
 [@(ex_intro ?? 2)  
-  @(ex_intro … (mk_config ?? 〈4,sep〉 (niltape ?)))
-  % [% [whd in ⊢ (??%?);% |#Hfalse destruct ] |#H1 #H2 @False_ind @(absurd ?? H2) %]
+  @(ex_intro … (mk_config ?? 〈mcl4,sep〉 (niltape ?)))
+  % [% [whd in ⊢ (??%?);% |@Hfalse] |#H1 #H2 @False_ind @(absurd ?? H2) %]
 |#l0 #lt0 @(ex_intro ?? 2)  
-  @(ex_intro … (mk_config ?? 〈4,sep〉 (leftof ? l0 lt0)))
-  % [% [whd in ⊢ (??%?);% |#Hfalse destruct ] |#H1 #H2 #H3 @False_ind @(absurd ?? H3) %]
+  @(ex_intro … (mk_config ?? 〈mcl4,sep〉 (leftof ? l0 lt0)))
+  % [% [whd in ⊢ (??%?);% |@Hfalse] |#H1 #H2 #H3 @False_ind @(absurd ?? H3) %]
 |#r0 #rt0 @(ex_intro ?? 2)  
-  @(ex_intro … (mk_config ?? 〈4,sep〉 (rightof ? r0 rt0)))
-  % [% [whd in ⊢ (??%?);% |#Hfalse destruct ] |#H1 #H2 #H3 @False_ind @(absurd ?? H3) %]
+  @(ex_intro … (mk_config ?? 〈mcl4,sep〉 (rightof ? r0 rt0)))
+  % [% [whd in ⊢ (??%?);% |@Hfalse] |#H1 #H2 #H3 @False_ind @(absurd ?? H3) %]
 | #lt #c #rt cases (true_or_false (c == sep)) #Hc
   [ @(ex_intro ?? 2) 
-    @(ex_intro ?? (mk_config ?? 〈4,sep〉 (midtape ? lt c rt)))
+    @(ex_intro ?? (mk_config ?? 〈mcl4,sep〉 (midtape ? lt c rt)))
     % [ % 
         [ >(\P Hc) >loop_S_false // >loop_S_true 
-         [ @eq_f whd in ⊢ (??%?); >mcl_trans_init_sep %
-         |>(\P Hc) whd in ⊢(??(???(???%))?); >mcl_trans_init_sep % ]
-        |   #Hfalse destruct ]
+          [ @eq_f whd in ⊢ (??%?); >mcl_trans_init_sep %
+          |>(\P Hc) whd in ⊢(??(???(???%))?); >mcl_trans_init_sep % ]
+        |@Hfalse]
       |#_ #H1 #H2 % // normalize >(\P Hc) % ]
-  | @(ex_intro ?? 4) cases rt
+  |@(ex_intro ?? 4) cases rt
     [ @ex_intro
       [|% [ %
             [ >loop_S_false // >mcl_q0_q1 //
-            | normalize in ⊢ (%→?); #Hfalse destruct (Hfalse) ]
+            | normalize in ⊢ (%→?); @Hfalse]
           | normalize in ⊢ (%→?); #_ #H1 @False_ind @(absurd ?? H1) % ] ]
- 
    | #r0 #rt0 @ex_intro
       [| % [ %
              [ >loop_S_false // >mcl_q0_q1 //
@@ -165,7 +173,7 @@ qed.
 
 (* the move_char (variant c) machine *)
 definition move_char_l ≝ 
-  λalpha,sep.whileTM alpha (mcl_step alpha sep) 〈3,sep〉.
+  λalpha,sep.whileTM alpha (mcl_step alpha sep) 〈mcl3,sep〉.
 
 definition R_move_char_l ≝ 
   λalpha,sep,t1,t2.
@@ -183,15 +191,12 @@ lapply (sem_while … (sem_mcl_step alpha sep) inc i outc Hloop) [%]
 -Hloop * #t1 * #Hstar @(star_ind_l ??????? Hstar)
 [ #tapea whd in ⊢ (% → ?); #H1 #b #a #ls #rs #Htapea
   %
-  [ #Hb >Htapea in H1; >Hb normalize in ⊢ (%→?); #H1
-   cases (H1 ??)
-   [#_ #H2 >H2 %
-   |*: % #H2 destruct (H2) ]
+  [ #Hb >Htapea in H1; >Hb #H1 cases (H1 ??)
+   [#_ #H2 >H2 % |*: % #H2 normalize in H2; destruct (H2) ]
   | #rs1 #rs2 #Hrs #Hb #Hrs1 
-    >Htapea in H1; normalize in ⊢ (% → ?); #H1
-    cases (H1 ??)
-    [ #Hfalse @False_ind @(absurd ?? Hb) destruct %
-    |*:% #H2 destruct (H2) ]
+    >Htapea in H1; (* normalize in ⊢ (% → ?); *) #H1 cases (H1 ??)
+    [ #Hfalse normalize in Hfalse; @False_ind @(absurd ?? Hb) destruct %
+    |*:% normalize #H2 destruct (H2) ]
   ]
 | #tapea #tapeb #tapec #Hstar1 #HRtrue #IH #HRfalse
   lapply (IH HRfalse) -IH whd in ⊢ (%→%); #IH
@@ -199,10 +204,9 @@ lapply (sem_while … (sem_mcl_step alpha sep) inc i outc Hloop) [%]
   #Ha0 #Htapeb %
   [ #Hfalse @False_ind @(absurd ?? Ha0) //
   | *
-    [ #ls2 whd in ⊢ (???%→?); #Hls #_ #_ normalize
-      >Hls in Htapeb; normalize #Htapeb
-      cases (IH … Htapeb)
-      #Houtc #_ >Houtc //
+    [ #ls2 whd in ⊢ (???%→?); #Hls #_ #_
+      >Hls in Htapeb; #Htapeb normalize in Htapeb;
+      cases (IH … Htapeb) #Houtc #_ >Houtc normalize // 
     | #l0 #ls0 #ls2 #Hls #_ #Hls0
       cut (l0 ≠ sep ∧ memb … sep ls0 = false)
       [ %
