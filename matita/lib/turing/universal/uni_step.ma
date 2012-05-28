@@ -463,7 +463,7 @@ definition uni_step ≝
           tc_true))))
     (nop ?)
     tc_true.
-    
+
 definition R_uni_step_true ≝ λt1,t2.
   ∀n,t0,table,s0,s1,c0,c1,ls,rs,curconfig,newconfig,mv.
   table_TM (S n) (〈t0,false〉::table) → 
@@ -486,16 +486,17 @@ definition R_uni_step_false ≝ λt1,t2.
 axiom sem_match_tuple : Realize ? match_tuple R_match_tuple.
 
 lemma sem_uni_step :
-  accRealize ? uni_step (inr … (inl … (inr … 0)))
+  accRealize ? uni_step (inr … (inl … (inr … start_nop)))
      R_uni_step_true R_uni_step_false. 
-@(acc_sem_if_app … (sem_test_char ? (λc:STape.\fst c == bit false))
-   (sem_seq … sem_init_match
-     (sem_seq … sem_match_tuple
-       (sem_if … (sem_test_char ? (λc.¬is_marked ? c))
+@(acc_sem_if_app STape … (sem_test_char ? (λc:STape.\fst c == bit false))
+   (sem_seq … sem_init_match      
+     (sem_seq … sem_match_tuple        
+       (sem_if … (* ????????? (sem_test_char …  (λc.¬is_marked FSUnialpha c)) *)
           (sem_seq … sem_exec_move (sem_move_r …))
           (sem_nop …))))
    (sem_nop …)
    …)
+[@sem_test_char||]
 [ #intape #outtape 
   #ta whd in ⊢ (%→?); #Hta #HR
   #n #t0 #table #s0 #s1 #c0 #c1 #ls #rs #curconfig #newconfig #mv

@@ -27,17 +27,22 @@ include "turing/while_machine.ma".
 
 definition atm_states ≝ initN 3.
 
+definition atm0 : initN 3 ≝ mk_Sig ?? 0 (leb_true_to_le 1 3 (refl …)).
+definition atm1 : initN 3 ≝ mk_Sig ?? 1 (leb_true_to_le 2 3 (refl …)).
+definition atm2 : initN 3 ≝ mk_Sig ?? 2 (leb_true_to_le 3 3 (refl …)).
+
+
 definition atmr_step ≝ 
   λalpha:FinSet.λtest:alpha→bool.
   mk_TM alpha atm_states
   (λp.let 〈q,a〉 ≝ p in
    match a with
-   [ None ⇒ 〈1, None ?〉
+   [ None ⇒ 〈atm1, None ?〉
    | Some a' ⇒ 
      match test a' with
-     [ true ⇒ 〈1,None ?〉
-     | false ⇒ 〈2,Some ? 〈a',R〉〉 ]])
-  O (λx.notb (x == 0)).
+     [ true ⇒ 〈atm1,None ?〉
+     | false ⇒ 〈atm2,Some ? 〈a',R〉〉 ]])
+  atm0 (λx.notb (x == atm0)).
 
 definition Ratmr_step_true ≝ 
   λalpha,test,t1,t2.
@@ -54,43 +59,46 @@ definition Ratmr_step_false ≝
 lemma atmr_q0_q1 :
   ∀alpha,test,ls,a0,rs. test a0 = true → 
   step alpha (atmr_step alpha test)
-    (mk_config ?? 0 (midtape … ls a0 rs)) =
-  mk_config alpha (states ? (atmr_step alpha test)) 1
+    (mk_config ?? atm0 (midtape … ls a0 rs)) =
+  mk_config alpha (states ? (atmr_step alpha test)) atm1
     (midtape … ls a0 rs).
-#alpha #test #ls #a0 #ts #Htest normalize >Htest %
+#alpha #test #ls #a0 #ts #Htest whd in ⊢ (??%?); 
+whd in match (trans … 〈?,?〉); >Htest %
 qed.
      
 lemma atmr_q0_q2 :
   ∀alpha,test,ls,a0,rs. test a0 = false → 
   step alpha (atmr_step alpha test)
-    (mk_config ?? 0 (midtape … ls a0 rs)) =
-  mk_config alpha (states ? (atmr_step alpha test)) 2
+    (mk_config ?? atm0 (midtape … ls a0 rs)) =
+  mk_config alpha (states ? (atmr_step alpha test)) atm2
     (mk_tape … (a0::ls) (option_hd ? rs) (tail ? rs)).
-#alpha #test #ls #a0 #ts #Htest normalize >Htest cases ts //
+#alpha #test #ls #a0 #ts #Htest whd in ⊢ (??%?); 
+whd in match (trans … 〈?,?〉); >Htest cases ts //
 qed.
 
 lemma sem_atmr_step :
   ∀alpha,test.
   accRealize alpha (atmr_step alpha test) 
-    2 (Ratmr_step_true alpha test) (Ratmr_step_false alpha test).
-#alpha #test *
+    atm2 (Ratmr_step_true alpha test) (Ratmr_step_false alpha test).
+#alpha #test cut (∀P:Prop.atm1 = atm2 →P) [#P normalize #Hfalse destruct] #Hfalse
+*
 [ @(ex_intro ?? 2)
-  @(ex_intro ?? (mk_config ?? 1 (niltape ?))) %
-  [ % // #Hfalse destruct | #_ % // % % ]
-| #a #al @(ex_intro ?? 2) @(ex_intro ?? (mk_config ?? 1 (leftof ? a al)))
-  % [ % // #Hfalse destruct | #_ % // % % ]
-| #a #al @(ex_intro ?? 2) @(ex_intro ?? (mk_config ?? 1 (rightof ? a al)))
-  % [ % // #Hfalse destruct | #_ % // % % ]
+  @(ex_intro ?? (mk_config ?? atm1 (niltape ?))) %
+  [ % // @Hfalse | #_ % // % % ]
+| #a #al @(ex_intro ?? 2) @(ex_intro ?? (mk_config ?? atm1 (leftof ? a al)))
+  % [ % // @Hfalse | #_ % // % % ]
+| #a #al @(ex_intro ?? 2) @(ex_intro ?? (mk_config ?? atm1 (rightof ? a al)))
+  % [ % // @Hfalse | #_ % // % % ]
 | #ls #c #rs @(ex_intro ?? 2)
   cases (true_or_false (test c)) #Htest
-  [ @(ex_intro ?? (mk_config ?? 1 ?))
+  [ @(ex_intro ?? (mk_config ?? atm1 ?))
     [| % 
       [ % 
         [ whd in ⊢ (??%?); >atmr_q0_q1 //
-        | #Hfalse destruct ]
+        | @Hfalse]
       | #_ % // %2 @(ex_intro ?? c) % // ]
     ]
-  | @(ex_intro ?? (mk_config ?? 2 (mk_tape ? (c::ls) (option_hd ? rs) (tail ? rs))))
+  | @(ex_intro ?? (mk_config ?? atm2 (mk_tape ? (c::ls) (option_hd ? rs) (tail ? rs))))
     % 
     [ %
       [ whd in ⊢ (??%?); >atmr_q0_q2 //
@@ -192,7 +200,7 @@ definition R_adv_to_mark_r ≝ λalpha,test,t1,t2.
      t2 = midtape ? (reverse ? rs1@c::ls) b rs2))).
      
 definition adv_to_mark_r ≝ 
-  λalpha,test.whileTM alpha (atmr_step alpha test) 2.
+  λalpha,test.whileTM alpha (atmr_step alpha test) atm2.
 
 lemma wsem_adv_to_mark_r :
   ∀alpha,test.
@@ -257,25 +265,6 @@ lemma sem_adv_to_mark_r :
 /2/
 qed.
 
-(* NO OPERATION
-
-  t1 = t2
-  *)
-  
-definition nop_states ≝ initN 1.
-
-definition nop ≝ 
-  λalpha:FinSet.mk_TM alpha nop_states
-  (λp.let 〈q,a〉 ≝ p in 〈q,None ?〉)
-  O (λ_.true).
-  
-definition R_nop ≝ λalpha.λt1,t2:tape alpha.t2 = t1.
-
-lemma sem_nop :
-  ∀alpha.Realize alpha (nop alpha) (R_nop alpha).
-#alpha #intape @(ex_intro ?? 1) @ex_intro [| % normalize % ]
-qed.
-
 (*
    q0 _ → q1, R
    q1 〈a,false〉 → qF, 〈a,true〉, N
@@ -285,18 +274,22 @@ qed.
  
 definition mark_states ≝ initN 3.
 
+definition mark0 : initN 3 ≝ mk_Sig ?? 0 (leb_true_to_le 1 3 (refl …)).
+definition mark1 : initN 3 ≝ mk_Sig ?? 1 (leb_true_to_le 2 3 (refl …)).
+definition mark2 : initN 3 ≝ mk_Sig ?? 2 (leb_true_to_le 3 3 (refl …)).
+
 definition mark ≝ 
   λalpha:FinSet.mk_TM (FinProd … alpha FinBool) mark_states
   (λp.let 〈q,a〉 ≝ p in
     match a with
-    [ None ⇒ 〈2,None ?〉
-    | Some a' ⇒ match q with
-      [ O ⇒ 〈1,Some ? 〈a',R〉〉
+    [ None ⇒ 〈mark2,None ?〉
+    | Some a' ⇒ match pi1 … q with
+      [ O ⇒ 〈mark1,Some ? 〈a',R〉〉
       | S q ⇒ match q with
         [ O ⇒ let 〈a'',b〉 ≝ a' in
-              〈2,Some ? 〈〈a'',true〉,N〉〉
-        | S _ ⇒ 〈2,None ?〉 ] ] ])
-  O (λq.q == 2).
+              〈mark2,Some ? 〈〈a'',true〉,N〉〉
+        | S _ ⇒ 〈mark2,None ?〉 ] ] ])
+  mark0 (λq.q == mark2).
   
 definition R_mark ≝ λalpha,t1,t2.
   ∀ls,c,d,b,rs.
@@ -337,6 +330,10 @@ include "turing/if_machine.ma".
 *)
 
 definition tc_states ≝ initN 3.
+
+definition tc0 : initN 3 ≝ mk_Sig ?? 0 (leb_true_to_le 1 3 (refl …)).
+definition tc1 : initN 3 ≝ mk_Sig ?? 1 (leb_true_to_le 2 3 (refl …)).
+definition atm2 : initN 3 ≝ mk_Sig ?? 2 (leb_true_to_le 3 3 (refl …)).
 
 definition test_char ≝ 
   λalpha:FinSet.λtest:alpha→bool.
