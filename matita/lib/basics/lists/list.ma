@@ -183,6 +183,75 @@ lemma length_map: ∀A,B,l.∀f:A→B. length ? (map ?? f l) = length ? l.
 #A #B #l #f elim l // #a #tl #Hind normalize //
 qed.
 
+lemma lenght_rev_append: ∀A.∀l,acc:list A. 
+  |rev_append ? l acc| = |l|+|acc|.
+#A #l elim l // #a #tl #Hind normalize 
+#acc >Hind normalize // 
+qed.
+
+lemma lenght_reverse: ∀A.∀l:list A. 
+  |reverse A l| = |l|.
+// qed.
+
+(****************************** mem ********************************)
+let rec mem A (a:A) (l:list A) on l ≝
+  match l with
+  [ nil ⇒ False
+  | cons hd tl ⇒ a=hd ∨ mem A a tl
+  ]. 
+
+(***************************** split *******************************)
+let rec split_rev A (l:list A) acc n on n ≝ 
+  match n with 
+  [O ⇒ 〈acc,l〉
+  |S m ⇒ match l with 
+    [nil ⇒ 〈acc,[]〉
+    |cons a tl ⇒ split_rev A tl (a::acc) m
+    ]
+  ].
+  
+definition split ≝ λA,l,n.
+  let 〈l1,l2〉 ≝ split_rev A l [] n in 〈reverse ? l1,l2〉.
+
+lemma split_rev_len: ∀A,n,l,acc. n ≤ |l| →
+  |\fst (split_rev A l acc n)| = n+|acc|.
+#A #n elim n // #m #Hind *
+  [normalize #acc #Hfalse @False_ind /2/
+  |#a #tl #acc #Hlen normalize >Hind 
+    [normalize // |@le_S_S_to_le //]
+  ]
+qed.
+
+lemma split_len: ∀A,n,l. n ≤ |l| →
+  |\fst (split A l n)| = n.
+#A #n #l #Hlen normalize >(eq_pair_fst_snd ?? (split_rev …))
+normalize >lenght_reverse  >(split_rev_len … [ ] Hlen) normalize //
+qed.
+  
+lemma split_rev_eq: ∀A,n,l,acc. n ≤ |l| → 
+  reverse ? acc@ l = 
+    reverse ? (\fst (split_rev A l acc n))@(\snd (split_rev A l acc n)).
+ #A #n elim n //
+ #m #Hind * 
+   [#acc whd in ⊢ ((??%)→?); #False_ind /2/ 
+   |#a #tl #acc #Hlen >append_cons <reverse_single <reverse_append 
+    @(Hind tl) @le_S_S_to_le @Hlen
+   ]
+qed.
+ 
+lemma split_eq: ∀A,n,l. n ≤ |l| → 
+  l = (\fst (split A l n))@(\snd (split A l n)).
+#A #n #l #Hlen change with ((reverse ? [ ])@l) in ⊢ (??%?);
+>(split_rev_eq … Hlen) normalize 
+>(eq_pair_fst_snd ?? (split_rev A l [] n)) %
+qed.
+
+lemma split_exists: ∀A,n.∀l:list A. n ≤ |l| → 
+  ∃l1,l2. l = l1@l2 ∧ |l1| = n.
+#A #n #l #Hlen @(ex_intro … (\fst (split A l n)))
+@(ex_intro … (\snd (split A l n))) % /2/
+qed.
+  
 (****************************** nth ********************************)
 let rec nth n (A:Type[0]) (l:list A) (d:A)  ≝  
   match n with
@@ -370,7 +439,7 @@ lemma lhd_cons_ltl: ∀A,n,l. lhd A l n @ ltl A l n = l.
 qed.
 
 lemma length_ltl: ∀A,n,l. |ltl A l n| = |l| - n.
-#A #n elim n -n /2/
+#A #n elim n -n // 
 #n #IHn *; normalize /2/
 qed.
 

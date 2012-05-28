@@ -76,6 +76,44 @@ example exhint: ∀b:bool. (b == false) = true → b = false.
 #b #H @(\P H).
 qed.
 
+(* option *)
+
+definition eq_option ≝
+  λA:DeqSet.λa1,a2:option A.
+    match a1 with 
+    [ None ⇒ match a2 with [None ⇒ true | _ ⇒ false]
+    | Some a1' ⇒ match a2 with [None ⇒ false | Some a2' ⇒ a1'==a2']].
+
+lemma eq_option_true: ∀A:DeqSet.∀a1,a2:option A.
+  eq_option A a1 a2 = true ↔ a1 = a2.
+#A *
+  [* 
+    [% //
+    |#a1 % normalize #H destruct 
+    ]
+  |#a1 *  
+    [normalize % #H destruct
+    |#a2 normalize %
+      [#Heq >(\P Heq) //
+      |#H destruct @(\b ?) //
+      ]
+  ]
+qed.
+
+definition DeqOption ≝ λA:DeqSet.
+  mk_DeqSet (option A) (eq_option A) (eq_option_true A).
+  
+unification hint  0 ≔ C; 
+    T ≟ carr C,
+    X ≟ DeqOption C
+(* ---------------------------------------- *) ⊢ 
+    option T ≡ carr X.
+
+unification hint  0 ≔ T,a1,a2; 
+    X ≟ DeqOption T
+(* ---------------------------------------- *) ⊢ 
+    eq_option T a1 a2 ≡ eqb X a1 a2.
+
 (* pairs *)
 definition eq_pairs ≝
   λA,B:DeqSet.λp1,p2:A×B.(\fst p1 == \fst p2) ∧ (\snd p1 == \snd p2).
