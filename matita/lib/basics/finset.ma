@@ -109,6 +109,46 @@ definition initN ≝ λn.
 example tipa: ∀n.∃x: initN (S n). pi1 … x = n.
 #n @ex_intro [whd @mk_Sig [@n | @le_n] | //] qed.
 
+(* option *)
+definition enum_option ≝ λA:DeqSet.λl.
+  None A::(map ?? (Some A) l).
+  
+lemma enum_option_def : ∀A:FinSet.∀l. 
+  enum_option A l = None A :: (map ?? (Some A) l).
+// qed.
+
+lemma enum_option_unique: ∀A:DeqSet.∀l. 
+  uniqueb A l = true → 
+    uniqueb ? (enum_option A l) = true.
+#A #l #uA @true_to_andb_true
+  [generalize in match uA; -uA #_ elim l [%]
+   #a #tl #Hind @sym_eq @noteq_to_eqnot % #H 
+   cases (orb_true_l … (sym_eq … H))
+    [#H1 @(absurd (None A = Some A a)) [@(\P H1) | % #H2 destruct]
+    |-H #H >H in Hind; normalize /2/
+    ]
+  |@unique_map_inj // #a #a1 #H destruct %
+  ]
+qed.
+
+lemma enum_option_complete: ∀A:DeqSet.∀l. 
+  (∀x:A. memb A x l = true) →
+    ∀x:DeqOption A. memb ? x (enum_option A l) = true.
+#A #l #Hl * // #a @memb_cons @memb_map @Hl
+qed.
+    
+definition FinOption ≝ λA:FinSet.
+  mk_FinSet (DeqOption A) 
+   (enum_option A (enum A)) 
+   (enum_option_unique … (enum_unique A))
+   (enum_option_complete … (enum_complete A)).
+
+unification hint  0 ≔ C; 
+    T ≟ FinSetcarr C,
+    X ≟ FinOption C
+(* ---------------------------------------- *) ⊢ 
+    option T ≡ FinSetcarr X.
+
 (* sum *)
 definition enum_sum ≝ λA,B:DeqSet.λl1.λl2.
   (map ?? (inl A B) l1) @ (map ?? (inr A B) l2).

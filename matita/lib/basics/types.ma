@@ -67,7 +67,7 @@ interpretation "mk_DPair" 'mk_DPair x y = (mk_DPair ?? x y).
 
 (* sigma *)
 record Sig (A:Type[0]) (f:A→Prop) : Type[0] ≝ {
-    pi1: A
+    pi1:> A
   ; pi2: f pi1
   }.
   

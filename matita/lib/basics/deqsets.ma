@@ -114,6 +114,7 @@ unification hint  0 ≔ T,a1,a2;
 (* ---------------------------------------- *) ⊢ 
     eq_option T a1 a2 ≡ eqb X a1 a2.
 
+
 (* pairs *)
 definition eq_pairs ≝
   λA,B:DeqSet.λp1,p2:A×B.(\fst p1 == \fst p2) ∧ (\snd p1 == \snd p2).

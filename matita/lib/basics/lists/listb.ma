@@ -103,6 +103,15 @@ lemma memb_compose: ∀S1,S2,S3,op,a1,a2,l1,l2.
   ]
 qed.
 
+lemma mem_to_memb: ∀S:DeqSet.∀a,l. mem S a l → memb S a l = true.
+#S #a #l elim l normalize
+  [@False_ind
+  |#hd #tl #Hind *
+    [#eqa >(\b eqa) %
+    |#Hmem cases (a==hd) // normalize /2/
+    ]
+  ]
+qed.
 (**************** unicity test *****************)
 
 let rec uniqueb (S:DeqSet) l on l : bool ≝
