@@ -10,38 +10,135 @@
       V_____________________________________________________________*)
 
 
-(* COMPARE BIT
+include "turing/universal/trans_to_tuples.ma".
 
-*)
+(* definition zero : ∀n.initN n ≝ λn.mk_Sig ?? 0 (le_O_n n). *)
 
-include "turing/universal/copy.ma".
+record normalTM : Type[0] ≝ 
+{ no_states : nat;
+  pos_no_states : (0 < no_states); 
+  ntrans : trans_source no_states → trans_target no_states;
+  nhalt : initN no_states → bool
+}.
+
+definition normalTM_to_TM ≝ λM:normalTM.
+  mk_TM FinBool (initN (no_states M)) 
+   (ntrans M) (mk_Sig ?? 0 (pos_no_states M)) (nhalt M).
+
+coercion normalTM_to_TM.
+
+definition nconfig ≝ λn. config FinBool (initN n).
+
+(* 
+definition normalTM ≝ λn,t,h. 
+  λk:0<n.mk_TM FinBool (initN n) t (mk_Sig ?? 0 k) h. *)
+
+definition low_config: ∀M:normalTM.nconfig (no_states M) → tape STape ≝ 
+λM:normalTM.λc.
+  let n ≝ no_states M in
+  let h ≝ nhalt M in
+  let t ≝ntrans M in 
+  let q ≝ cstate … c in
+  let q_low ≝  m_bits_of_state n h q in 
+  let current_low ≝
+    match current … (ctape … c) with
+    [ None ⇒ 〈null,false〉
+    | Some b ⇒ 〈bit b,false〉] in
+  let low_left ≝ map … (λb.〈bit b,false〉) (left … (ctape …c)) in
+  let low_right ≝ map … (λb.〈bit b,false〉) (right … (ctape …c)) in
+  let table ≝ flatten ? (tuples_of_pairs n h (graph_enum ?? t)) in
+  mk_tape STape low_left (Some ? 〈grid,false〉) 
+    (q_low@current_low::〈grid,false〉::table@〈grid,false〉::low_right).
+
+definition low_step_R_true ≝ λt1,t2.
+  ∀M:normalTM.
+  ∀c: nconfig (no_states M). 
+    t1 = low_config M c →
+    halt ? M (cstate … c) = false ∧
+      t2 = low_config M (step ? M c).
+    
+definition low_step_R_false ≝ λt1,t2.
+  ∀M:normalTM.
+  ∀c: nconfig (no_states M).  
+    t1 = low_config M c → halt ? M (cstate … c) = true  ∧ t1 = t2.
+
+definition low_R ≝ λM,qstart,R,t1,t2.
+    ∀tape1. t1 = low_config M (mk_config ?? qstart tape1) → 
+    ∃q,tape2.R tape1 tape2 ∧
+    halt ? M q = true ∧ t2 = low_config M (mk_config ?? q tape2).
+
+definition R_TM ≝ λsig.λM:TM sig.λq.λt1,t2.
+∃i,outc.
+  loop ? i (step sig M) (λc.halt sig M (cstate ?? c)) (mk_config ?? q t1) = Some ? outc ∧ 
+  t2 = (ctape ?? outc).
 
 (*
-moves:
-0_ = N
-10 = L
-11 = R
-*)
+definition universal_R ≝ λM,R,t1,t2. 
+    Realize ? M R →    
+    ∀tape1,tape2.
+    R tape1 tape 2 ∧
+    t1 = low_config M (initc ? M tape1) ∧
+    ∃q.halt ? M q = true → t2 = low_config M (mk_config ?? q tape2).*)
 
-(*
+axiom uni_step: TM STape.
+axiom us_acc: states ? uni_step.
 
-step :
+axiom sem_uni_step: accRealize ? uni_step us_acc low_step_R_true low_step_R_false.
 
-if is_true(current) (* current state is final *)
-   then nop
-   else
-   match_tuple;
-   if is_marked(current) = false (* match *)
-      then adv_mark_r;
-           move_l;
-           init_current;
-           move_r;
-           adv_to_mark_r;
-           copy;
-           ...move...
-           reset;
-      else sink;
-        
-MANCANO MOVE E RESET
+definition universalTM ≝ whileTM ? uni_step us_acc.
 
-*)
+theorem sem_universal: ∀M:normalTM. ∀qstart.
+  WRealize ? universalTM (low_R M qstart (R_TM FinBool M qstart)).
+#M #q #intape #i #outc #Hloop
+lapply (sem_while … sem_uni_step intape i outc Hloop)
+  [@daemon] -Hloop 
+* #ta * #Hstar generalize in match q; -q 
+@(star_ind_l ??????? Hstar)
+  [#tb #q0 whd in ⊢ (%→?); #Htb #tape1 #Htb1
+   cases (Htb … Htb1) -Htb #Hhalt #Htb
+   <Htb >Htb1 @ex_intro 
+   [|%{tape1} %
+     [ % 
+       [ whd @(ex_intro … 1) @(ex_intro … (mk_config … q0 tape1))
+        % [|%] whd in ⊢ (??%?); >Hhalt % 
+       | @Hhalt ]
+     | % ]
+   ]
+  |#tb #tc #td whd in ⊢ (%→?); #Htc #Hstar1 #IH 
+   #q #Htd #tape1 #Htb 
+   lapply (IH (\fst (trans ? M 〈q,current ? tape1〉)) Htd) -IH 
+   #IH cases (Htc … Htb); -Htc #Hhaltq 
+   whd in match (step ???); >(eq_pair_fst_snd ?? (trans ???)) 
+   #Htc change with (mk_config ????) in Htc:(???(??%)); 
+   cases (IH ? Htc) #q1 * #tape2 * * #HRTM #Hhaltq1 #Houtc
+   @(ex_intro … q1) @(ex_intro … tape2) % 
+    [%
+      [cases HRTM #k * #outc1 * #Hloop #Houtc1
+       @(ex_intro … (S k)) @(ex_intro … outc1) % 
+        [>loop_S_false [2://] whd in match (step ???); 
+         >(eq_pair_fst_snd ?? (trans ???)) @Hloop
+        |@Houtc1
+        ]
+      |@Hhaltq1]
+    |@Houtc
+    ]
+  ]
+qed.
+
+lemma R_TM_to_R: ∀sig,M,R. ∀t1,t2. 
+  WRealize sig M R → R_TM ? M (start ? M) t1 t2 → R t1 t2.
+#sig #M #R #t1 #t2 whd in ⊢ (%→?); #HMR * #i * #outc *
+#Hloop #Ht2 >Ht2 @(HMR … Hloop)
+qed.
+
+axiom WRealize_to_WRealize: ∀sig,M,R1,R2.
+  (∀t1,t2.R1 t1 t2 → R2 t1 t2) → WRealize sig M R1 → WRealize ? M R2.
+
+theorem sem_universal2: ∀M:normalTM. ∀R.
+  WRealize ? M R → WRealize ? universalTM (low_R M (start ? M) R).
+#M #R #HMR lapply (sem_universal … M (start ? M)) @WRealize_to_WRealize
+#t1 #t2 whd in ⊢ (%→%); #H #tape1 #Htape1 cases (H ? Htape1)
+#q * #tape2 * * #HRTM #Hhalt #Ht2 @(ex_intro … q) @(ex_intro … tape2)
+% [% [@(R_TM_to_R … HRTM) @HMR | //] | //]
+qed.
+ 
