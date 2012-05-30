@@ -465,18 +465,18 @@ definition uni_step ≝
     tc_true.
 
 definition R_uni_step_true ≝ λt1,t2.
-  ∀n,t0,table,s0,s1,c0,c1,ls,rs,curconfig,newconfig,mv.
-  table_TM (S n) (〈t0,false〉::table) → 
+  ∀n,table,s0,s1,c0,c1,ls,rs,curconfig,newconfig,mv.
+  0 < |table| → table_TM (S n) table → 
   match_in_table (S n) (〈s0,false〉::curconfig) 〈c0,false〉
-    (〈s1,false〉::newconfig) 〈c1,false〉 〈mv,false〉 (〈t0,false〉::table) → 
+    (〈s1,false〉::newconfig) 〈c1,false〉 〈mv,false〉 table → 
   legal_tape ls 〈c0,false〉 rs → 
   t1 = midtape STape (〈grid,false〉::ls) 〈s0,false〉 
-    (curconfig@〈c0,false〉::〈grid,false〉::〈t0,false〉::table@〈grid,false〉::rs) → 
+    (curconfig@〈c0,false〉::〈grid,false〉::table@〈grid,false〉::rs) → 
   ∀t1'.t1' = lift_tape ls 〈c0,false〉 rs → 
   s0 = bit false ∧
   ∃ls1,rs1,c2.
   (t2 = midtape STape (〈grid,false〉::ls1) 〈s1,false〉 
-    (newconfig@〈c2,false〉::〈grid,false〉::〈t0,false〉::table@〈grid,false〉::rs1) ∧
+    (newconfig@〈c2,false〉::〈grid,false〉::table@〈grid,false〉::rs1) ∧
    lift_tape ls1 〈c2,false〉 rs1 = 
    tape_move STape t1' (map_move c1 mv) ∧ legal_tape ls1 〈c2,false〉 rs1).
    
@@ -499,12 +499,14 @@ lemma sem_uni_step :
 [@sem_test_char||]
 [ #intape #outtape 
   #ta whd in ⊢ (%→?); #Hta #HR
-  #n #t0 #table #s0 #s1 #c0 #c1 #ls #rs #curconfig #newconfig #mv
+  #n #fulltable #s0 #s1 #c0 #c1 #ls #rs #curconfig #newconfig #mv
+  #Htable_len cut (∃t0,table. fulltable =〈t0,false〉::table) [(* 0 < |table| *) @daemon]
+  * #t0 * #table #Hfulltable >Hfulltable -fulltable 
   #Htable #Hmatch #Htape #Hintape #t1' #Ht1'
   >Hintape in Hta; #Hta cases (Hta ? (refl ??)) -Hta 
   #Hs0 lapply (\P Hs0) -Hs0 #Hs0 #Hta % //
   cases HR -HR 
-  #tb * whd in ⊢ (%→?); #Htb 
+  #tb * whd in ⊢ (%→?); #Htb
   lapply (Htb (〈grid,false〉::ls) (curconfig@[〈c0,false〉]) (table@〈grid,false〉::rs) s0 t0 ???)
   [ >Hta >associative_append %
   | @daemon
@@ -576,3 +578,4 @@ lemma sem_uni_step :
   cases b in Hb'; normalize #H1 //
 ]
 qed.
+

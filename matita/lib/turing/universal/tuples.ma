@@ -818,6 +818,29 @@ definition R_match_tuple ≝ λt1,t2.
    ∀l3,newc,mv,l4.
    〈c1,false〉::l2 ≠ l3@〈c,false〉::l1@〈comma,false〉::newc@〈comma,false〉::mv@l4). 
 
+(* possible variante ? 
+definition weakR_match_tuple ≝ λt1,t2.
+  (∀ls,cur,rs,b. t1 = midtape STape ls 〈grid,b〉 rs → t2 = t1) ∧
+  (∀c,l1,c1,l2,l3,ls0,rs0,n.
+  t1 = midtape STape (〈grid,false〉::ls0) 〈bit c,true〉 rs 
+    (l1@〈grid,false〉::l2@〈bit c1,true〉::l3@〈grid,false〉::rs0) → 
+  only_bits_or_nulls l1 → no_marks l1 → S n = |l1| →
+  table_TM (S n) (l2@〈c1,false〉::l3) → 
+  (* facciamo match *)
+  (∃l4,newc,mv,l5.
+   〈c1,false〉::l3 = l4@〈c,false〉::l1@〈comma,false〉::newc@〈comma,false〉::mv::l5 ∧
+   t2 = midtape ? (reverse ? l1@〈c,false〉::〈grid,false〉::ls0) 〈grid,false〉
+        (l2@l4@〈c,false〉::l1@〈comma,true〉::newc@〈comma,false〉::mv::l5@
+        〈grid,false〉::rs0))
+  ∨
+  (* non facciamo match su nessuna tupla;
+     non specifichiamo condizioni sul nastro di output, perché
+     non eseguiremo altre operazioni, quindi il suo formato non ci interessa *)
+  (current ? t2 = Some ? 〈grid,true〉 ∧
+   ∀l4,newc,mv,l5.
+   〈c1,false〉::l3 ≠ l4@〈c,false〉::l1@〈comma,false〉::newc@〈comma,false〉::mv::l5)).  
+*) 
+
 definition weakR_match_tuple ≝ λt1,t2.
   ∀ls,cur,rs.
   t1 = midtape STape ls cur rs → 

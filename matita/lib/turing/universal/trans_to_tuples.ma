@@ -158,10 +158,15 @@ letin mv ≝ match action with
  ]
 qed. 
 
-definition tuple_length ≝ λn.2*n+3.
+definition tuple_length ≝ λn.2*n+6.
 
-axiom length_of_tuple: ∀n,t. tuple_TM n t → 
+lemma length_of_tuple: ∀n,t. tuple_TM n t → 
   |t| = tuple_length n.
+#n #t * #qin * #cin * #qout * #cout * #mv *** #_
+#Hqin #Hqout #eqt >eqt whd in match (mk_tuple ?????); 
+normalize >length_append >Hqin -Hqin normalize 
+>length_append normalize >Hqout -Hqout //
+qed.
 
 definition move_eq ≝ λm1,m2:move.
   match m1 with
@@ -169,14 +174,14 @@ definition move_eq ≝ λm1,m2:move.
   |L ⇒ match m2 with [L ⇒ true | _ ⇒ false]
   |N ⇒ match m2 with [N ⇒ true | _ ⇒ false]].
   
-definition tuples_of_pairs ≝ λn.λh.map … (λp.(tuple_of_pair n h p)@[〈bar,false〉]).
+definition tuples_of_pairs ≝ λn.λh.map … (λp.tuple_of_pair n h p).
 
 definition flatten ≝ λA.foldr (list A) (list A) (append A) [].
 
 lemma wftable: ∀n,h,l.table_TM (S n) (flatten ? (tuples_of_pairs n h l)).
 #n #h #l elim l // -l #a #tl #Hind 
 whd in match (flatten … (tuples_of_pairs …));
->associative_append @ttm_cons //
+@ttm_cons //
 qed.
 
 lemma flatten_to_mem: ∀A,n,l,l1,l2.∀a:list A. 0 < n →
@@ -206,8 +211,8 @@ qed.
 
 axiom match_decomp: ∀n,l,qin,cin,qout,cout,mv.
   match_in_table (S n) qin cin qout cout mv l →
-  ∃l1,l2. l = l1@((mk_tuple qin cin qout cout mv)@[〈bar,false〉])@l2 ∧
-    (∃q.|l1| = (S (tuple_length (S n)))*q) ∧ tuple_TM (S n) (mk_tuple qin cin qout cout mv).
+  ∃l1,l2. l = l1@(mk_tuple qin cin qout cout mv)@l2 ∧
+    (∃q.|l1| = (tuple_length (S n))*q) ∧ tuple_TM (S n) (mk_tuple qin cin qout cout mv).
 (*
 lemma match_tech: ∀n,l,qin,cin,qout,cout,mv.
   (∀t. mem ? t l → |t| = |mk_tuple qin cin qout cout mv|) →
@@ -219,14 +224,14 @@ lemma match_tech: ∀n,l,qin,cin,qout,cout,mv.
 
 lemma match_to_tuple: ∀n,h,l,qin,cin,qout,cout,mv.
   match_in_table (S n) qin cin qout cout mv (flatten ? (tuples_of_pairs n h l)) → 
-    ∃p. p = mk_tuple qin cin qout cout mv ∧ mem ? (p@[〈bar,false〉]) (tuples_of_pairs n h l).
+    ∃p. p = mk_tuple qin cin qout cout mv ∧ mem ? p (tuples_of_pairs n h l).
 #n #h #l #qin #cin #qout #cout #mv #Hmatch 
 @(ex_intro … (mk_tuple qin cin qout cout mv)) % //
 cases (match_decomp … Hmatch) #l1 * #l2 * * #Hflat #Hlen #Htuple
 @(flatten_to_mem … Hflat … Hlen)  
   [// 
   |@daemon
-  |>length_append >(length_of_tuple … Htuple) normalize //
+  |@(length_of_tuple … Htuple) 
   ]
 qed.
 
@@ -248,7 +253,7 @@ lemma match_to_pair: ∀n,h,l,qin,cin,qout,cout,mv.
 #n #h #l #qin #cin #qout #cout #mv #Hmatch 
 cases (match_to_tuple … Hmatch)
 #p * #eqp #memb 
-cases(mem_map … (λp.(tuple_of_pair n h p)@[〈bar,false〉]) … memb)
+cases(mem_map … (λp.tuple_of_pair n h p) … memb)
 #p1 * #Hmem #H @(ex_intro … p1) % /2/
 qed.
 

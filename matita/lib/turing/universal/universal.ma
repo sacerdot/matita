@@ -11,6 +11,7 @@
 
 
 include "turing/universal/trans_to_tuples.ma".
+include "turing/universal/uni_step.ma".
 
 (* definition zero : ∀n.initN n ≝ λn.mk_Sig ?? 0 (le_O_n n). *)
 
@@ -40,15 +41,30 @@ definition low_config: ∀M:normalTM.nconfig (no_states M) → tape STape ≝
   let t ≝ntrans M in 
   let q ≝ cstate … c in
   let q_low ≝  m_bits_of_state n h q in 
-  let current_low ≝
-    match current … (ctape … c) with
-    [ None ⇒ 〈null,false〉
-    | Some b ⇒ 〈bit b,false〉] in
+  let current_low ≝ match current … (ctape … c) with [ None ⇒ null | Some b ⇒ bit b] in
   let low_left ≝ map … (λb.〈bit b,false〉) (left … (ctape …c)) in
   let low_right ≝ map … (λb.〈bit b,false〉) (right … (ctape …c)) in
   let table ≝ flatten ? (tuples_of_pairs n h (graph_enum ?? t)) in
-  mk_tape STape low_left (Some ? 〈grid,false〉) 
-    (q_low@current_low::〈grid,false〉::table@〈grid,false〉::low_right).
+  let right ≝ q_low@〈current_low,false〉::〈grid,false〉::table@〈grid,false〉::low_right in
+  mk_tape STape (〈grid,false〉::low_left) (option_hd … right) (tail … right).
+  
+lemma low_config_eq: ∀t,M,c. t = low_config M c → 
+  ∃low_left,low_right,table,q_low_hd,q_low_tl,c_low.
+  low_left = map … (λb.〈bit b,false〉) (left … (ctape …c)) ∧
+  low_right = map … (λb.〈bit b,false〉) (right … (ctape …c)) ∧
+  table = flatten ? (tuples_of_pairs (no_states M) (nhalt M) (graph_enum ?? (ntrans M))) ∧
+  〈q_low_hd,false〉::q_low_tl = m_bits_of_state (no_states M) (nhalt M) (cstate … c) ∧
+  c_low =  match current … (ctape … c) with [ None ⇒ null| Some b ⇒ bit b] ∧
+  t = midtape STape (〈grid,false〉::low_left) 〈q_low_hd,false〉 (q_low_tl@〈c_low,false〉::〈grid,false〉::table@〈grid,false〉::low_right).
+#t #M #c #eqt
+  @(ex_intro … (map … (λb.〈bit b,false〉) (left … (ctape …c))))
+  @(ex_intro … (map … (λb.〈bit b,false〉) (right … (ctape …c))))
+  @(ex_intro … (flatten ? (tuples_of_pairs (no_states M) (nhalt M) (graph_enum ?? (ntrans M)))))
+  @(ex_intro … (\fst (hd ? (m_bits_of_state (no_states M) (nhalt M) (cstate … c)) 〈bit true,false〉)))
+  @(ex_intro … (tail ? (m_bits_of_state (no_states M) (nhalt M) (cstate … c))))
+  @(ex_intro … (match current … (ctape … c) with [ None ⇒ null| Some b ⇒ bit b]))
+% [% [% [% [% // | // ] | // ] | // ] | >eqt //]
+qed.
 
 definition low_step_R_true ≝ λt1,t2.
   ∀M:normalTM.
@@ -56,6 +72,32 @@ definition low_step_R_true ≝ λt1,t2.
     t1 = low_config M c →
     halt ? M (cstate … c) = false ∧
       t2 = low_config M (step ? M c).
+
+lemma unistep_to_low_step: ∀t1,t2.
+  R_uni_step_true t1 t2 → low_step_R_true t1 t2.
+#t1 #t2 (* whd in ⊢ (%→%); *) #Huni_step #M #c #eqt1
+cases (low_config_eq … eqt1) 
+#low_left * #low_right * #table * #q_low_hd * #q_low_tl * #current_low
+***** #Hlow_left #Hlow_right #Htable #Hq_low #Hcurrent_low #Ht1
+lapply (Huni_step ??????????????? Ht1)
+whd in match (low_config M c);
+
+definition R_uni_step_true ≝ λt1,t2.
+  ∀n,t0,table,s0,s1,c0,c1,ls,rs,curconfig,newconfig,mv.
+  table_TM (S n) (〈t0,false〉::table) → 
+  match_in_table (S n) (〈s0,false〉::curconfig) 〈c0,false〉
+    (〈s1,false〉::newconfig) 〈c1,false〉 〈mv,false〉 (〈t0,false〉::table) → 
+  legal_tape ls 〈c0,false〉 rs → 
+  t1 = midtape STape (〈grid,false〉::ls) 〈s0,false〉 
+    (curconfig@〈c0,false〉::〈grid,false〉::〈t0,false〉::table@〈grid,false〉::rs) → 
+  ∀t1'.t1' = lift_tape ls 〈c0,false〉 rs → 
+  s0 = bit false ∧
+  ∃ls1,rs1,c2.
+  (t2 = midtape STape (〈grid,false〉::ls1) 〈s1,false〉 
+    (newconfig@〈c2,false〉::〈grid,false〉::〈t0,false〉::table@〈grid,false〉::rs1) ∧
+   lift_tape ls1 〈c2,false〉 rs1 = 
+   tape_move STape t1' (map_move c1 mv) ∧ legal_tape ls1 〈c2,false〉 rs1).
+   
     
 definition low_step_R_false ≝ λt1,t2.
   ∀M:normalTM.
