@@ -507,11 +507,8 @@ lemma sem_uni_step :
   #tb * whd in ⊢ (%→?); #Htb 
   lapply (Htb (〈grid,false〉::ls) (curconfig@[〈c0,false〉]) (table@〈grid,false〉::rs) s0 t0 ???)
   [ >Hta >associative_append %
-  | (* utilizzare Hmatch
-         cases (match_in_table_to_tuple … Hmatch Htable)
-       ma serve l'iniettività di mk_tuple...
-     *) @daemon
-  | (* idem *) @daemon
+  | @daemon
+  | @daemon
   | -Hta -Htb #Htb * 
     #tc * whd in ⊢ (%→?); #Htc cases (Htc … Htable … Htb) -Htb -Htc
     [| * #Hcurrent #Hfalse @False_ind
@@ -527,17 +524,17 @@ lemma sem_uni_step :
       cases (Htd ? (refl ??)) #_ -Htd
       cut (newc = 〈s1,false〉::newconfig@[〈c1,false〉]) [@daemon] #Hnewc
       >Hnewc #Htd 
-      cut (mv1 = 〈\fst mv1,false〉)
-      [ >(eq_pair_fst_snd … mv1) @eq_f (*Htable, Htableeq*) @daemon ] #Hmv1
+      cut (∃mv2. mv1 = [〈mv2,false〉])
+      [@daemon] * #mv2 #Hmv1
       * #te * whd in ⊢ (%→?); #Hte
       cut (td = midtape STape (〈c0,false〉::reverse STape curconfig@〈s0,false〉::〈grid,false〉::ls) 
               〈grid,false〉
               ((table1@〈s0,false〉::curconfig@[〈c0,false〉])@〈comma,true〉::〈s1,false〉::
-               newconfig@〈c1,false〉::〈comma,false〉::〈\fst mv1,false〉::table2@〈grid,false〉::rs))
+               newconfig@〈c1,false〉::〈comma,false〉::〈mv2,false〉::table2@〈grid,false〉::rs))
       [ >Htd @eq_f3 //
         [ >reverse_append >reverse_single %
         | >associative_append >associative_append normalize
-          >associative_append >associative_append <Hmv1 %
+          >associative_append >associative_append >Hmv1 %
         ]
       ]
       -Htd #Htd lapply (Hte … (S n) … Htd … Ht1') -Htd -Hte
@@ -547,7 +544,7 @@ lemma sem_uni_step :
       | (* only_bits (〈s1,false〉::newconfig) *) @daemon
       | (* only_bits (curconfig@[〈s0,false〉]) *) @daemon
       | (* no_marks (reverse ? curconfig) *) @daemon
-      | <Hmv1 >Hnewc in Htableeq; 
+      | >Hmv1 in Htableeq; >Hnewc 
         >associative_append >associative_append normalize
         >associative_append >associative_append
         #Htableeq <Htableeq // ]
@@ -560,8 +557,9 @@ lemma sem_uni_step :
         >Htableeq >associative_append >associative_append 
         >associative_append normalize >associative_append
         >associative_append normalize >Hnewc <Hmv1
-        >associative_append normalize >associative_append % 
-      | >(?: mv = \fst mv1) [| (*Hmatch, Htableeq*) @daemon ]
+        >associative_append normalize >associative_append
+        >Hmv1 % 
+      | >(?: mv = mv2) [| (*Hmatch, Htableeq*) @daemon ]
         @Hliftte
       ]
      | //
