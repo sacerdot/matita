@@ -200,6 +200,8 @@ lemma inj_append_singleton_l2 :
 >reverse_append >reverse_append normalize #H1 destruct %
 qed.
 
+axiom length_reverse : ∀A,l.|reverse A l| = |l|.
+
 lemma wsem_copy0 : WRealize ? copy0 R_copy0.
 #intape #k #outc #Hloop 
 lapply (sem_while … sem_copy_step intape k outc Hloop) [%] -Hloop
@@ -220,7 +222,7 @@ lapply (sem_while … sem_copy_step intape k outc Hloop) [%] -Hloop
   #Hl1 #Hl1bits #l4' #bg #Hl4 #Hl4bits %2
   cases (Htc … Htb) -Htc #Hcbitnull #Htc
   % [ % #Hc' >Hc' in Hcbitnull; normalize #Hfalse destruct (Hfalse) ]
-  cut (|l1| = |reverse ? l4|) [//] #Hlen1
+  cut (|l1| = |reverse ? l4|) [@daemon] #Hlen1
   @(list_cases_2 … Hlen1)
   [ (* case l1 = [] is discriminated because l1 contains at least comma *)
     #Hl1nil @False_ind >Hl1nil in Hl1; cases l1' normalize
