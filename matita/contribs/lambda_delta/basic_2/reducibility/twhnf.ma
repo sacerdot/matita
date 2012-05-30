@@ -25,7 +25,7 @@ interpretation
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma twhnf_inv_tshf: ∀T. 𝐖𝐇𝐍[T] → T ≈ T.
+lemma twhnf_inv_tshf: ∀T. 𝐖𝐇𝐍⦃T⦄ → T ≈ T.
 normalize /2 width=1/
 qed-.
 
@@ -52,5 +52,5 @@ lemma tpr_tshf: ∀T1,T2. T1 ➡ T2 → T1 ≈ T1 → T1 ≈ T2.
 ]
 qed.
 
-lemma twhnf_tshf: ∀T. T ≈ T → 𝐖𝐇𝐍[T].
+lemma twhnf_tshf: ∀T. T ≈ T → 𝐖𝐇𝐍⦃T⦄.
 /3 width=1/ qed.

@@ -97,11 +97,11 @@ lemma tstc_dec: ∀T1,T2. Decidable (T1 ≃ T2).
 ]
 qed.
 
-lemma simple_tstc_repl_dx: ∀T1,T2. T1 ≃ T2 → 𝐒[T1] → 𝐒[T2].
+lemma simple_tstc_repl_dx: ∀T1,T2. T1 ≃ T2 → 𝐒⦃T1⦄ → 𝐒⦃T2⦄.
 #T1 #T2 * -T1 -T2 //
 #I #V1 #V2 #T1 #T2 #H
 elim (simple_inv_pair … H) -H #J #H destruct //
 qed. (**) (* remove from index *)
 
-lemma simple_tstc_repl_sn: ∀T1,T2. T1 ≃ T2 → 𝐒[T2] → 𝐒[T1].
+lemma simple_tstc_repl_sn: ∀T1,T2. T1 ≃ T2 → 𝐒⦃T2⦄ → 𝐒⦃T1⦄.
 /3 width=3/ qed-.

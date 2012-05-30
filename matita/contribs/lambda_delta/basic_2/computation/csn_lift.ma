@@ -71,7 +71,7 @@ qed.
 
 lemma csn_appl_simple: ∀L,V. L ⊢ ⬇* V → ∀T1.
                        (∀T2. L ⊢ T1 ➡ T2 → (T1 = T2 → ⊥) → L ⊢ ⬇* ⓐV. T2) →
-                       𝐒[T1] → L ⊢ ⬇* ⓐV. T1.
+                       𝐒⦃T1⦄ → L ⊢ ⬇* ⓐV. T1.
 #L #V #H @(csn_ind … H) -V #V #_ #IHV #T1 #IHT1 #HT1
 @csn_intro #X #H1 #H2
 elim (cpr_inv_appl1_simple … H1 ?) // -H1

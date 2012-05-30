@@ -101,4 +101,6 @@ lemma lsubc_refl: ∀RP,L. L ⊑[RP] L.
 #RP #L elim L -L // /2 width=1/
 qed.
 
-(* Basic_1: removed theorems 2: csubc_clear_conf csubc_getl_conf *)
+(* Basic_1: removed theorems 3:
+            csubc_clear_conf csubc_getl_conf csubc_csuba
+*)

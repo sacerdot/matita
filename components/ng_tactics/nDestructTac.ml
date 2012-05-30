@@ -712,7 +712,9 @@ let rec destruct_tac0 tags acc domain skip status goal =
     let has_cleared = 
      try 
        let _ = NTactics.find_in_context eq_name (get_ctx status' newgoal) in false
-     with _ -> true in
+     with 
+      | Sys.Break as e -> raise e
+      |_ -> true in
     let rm_eq b l = if b then List.filter (fun x -> x <> eq_name) l else l in
     let acc = rm_eq has_cleared acc in
     let skip = rm_eq has_cleared skip in
@@ -728,7 +730,9 @@ let rec destruct_tac0 tags acc domain skip status goal =
       let has_cleared = 
        try 
          let _ = NTactics.find_in_context eq_name (get_ctx status' newgoal) in false
-       with _ -> true in
+       with 
+         | Sys.Break as e -> raise e         
+	 | _ -> true in
       let rm_eq b l = if b then List.filter (fun x -> x <> eq_name) l else l in
       let acc = rm_eq has_cleared acc in
       let skip = rm_eq has_cleared skip in

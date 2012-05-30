@@ -121,7 +121,7 @@ lemma csn_appl_theta: ∀V1,V2. ⇧[0, 1] V1 ≡ V2 →
 lemma csn_appl_simple_tstc: ∀L,V. L ⊢ ⬇* V → ∀T1.
                             L ⊢ ⬇* T1 →
                             (∀T2. L ⊢ T1 ➡* T2 → (T1 ≃ T2 → ⊥) → L ⊢ ⬇* ⓐV. T2) →
-                            𝐒[T1] → L ⊢ ⬇* ⓐV. T1.
+                            𝐒⦃T1⦄ → L ⊢ ⬇* ⓐV. T1.
 #L #V #H @(csn_ind … H) -V #V #_ #IHV #T1 #H @(csn_ind … H) -T1 #T1 #H1T1 #IHT1 #H2T1 #H3T1
 @csn_intro #X #HL #H
 elim (cpr_inv_appl1_simple … HL ?) -HL //

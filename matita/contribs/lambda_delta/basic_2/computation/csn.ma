@@ -43,7 +43,7 @@ lemma csn_intro: ∀L,T1.
 /4 width=1/ qed.
 
 (* Basic_1: was: sn3_nf2 *)
-lemma csn_cnf: ∀L,T. L ⊢ 𝐍[T] → L ⊢ ⬇* T.
+lemma csn_cnf: ∀L,T. L ⊢ 𝐍⦃T⦄ → L ⊢ ⬇* T.
 /2 width=1/ qed.
 
 lemma csn_cpr_trans: ∀L,T1. L ⊢ ⬇* T1 → ∀T2. L ⊢ T1 ➡ T2 → L ⊢ ⬇* T2.

@@ -28,6 +28,6 @@ interpretation "application o vevtor (term)"
 
 (* properties concerning simple terms ***************************************)
 
-lemma applv_simple: ∀T,Vs.  𝐒[T] -> 𝐒[ⒶVs.T].
+lemma applv_simple: ∀T,Vs.  𝐒⦃T⦄ -> 𝐒⦃ⒶVs.T⦄.
 #T * //
 qed.

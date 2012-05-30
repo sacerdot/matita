@@ -47,6 +47,7 @@ asucc/fwd asucc_gen_head
 cnt/props cnt_lift
 C/props clt_wf__q_ind
 C/props clt_wf_ind
+
 csuba/arity csuba_arity
 csuba/arity csuba_arity_rev
 csuba/arity arity_appls_appl
@@ -71,11 +72,12 @@ csuba/getl csuba_getl_abst
 csuba/getl csuba_getl_abst_rev
 csuba/getl csuba_getl_abbr_rev
 csuba/props csuba_refl
+
 csubc/arity csubc_arity_conf
 csubc/arity csubc_arity_trans
-csubc/csuba csubc_csuba
 csubc/drop1 drop1_csubc_trans
 csubc/drop drop_csubc_trans
+
 csubt/clear csubt_clear_conf
 csubt/csuba csubt_csuba
 csubt/drop csubt_drop_flat
@@ -110,7 +112,6 @@ ex1/props ex1_arity
 ex1/props ex1_ty3
 ex2/props ex2_nf2
 ex2/props ex2_arity
-fsubst0/fwd fsubst0_gen_base
 leq/asucc asucc_repl
 leq/asucc asucc_inj
 leq/asucc leq_asucc
@@ -167,22 +168,15 @@ pc1/props pc1_head
 
 pc3/dec pc3_dec
 pc3/dec pc3_abst_dec
-pc3/fsubst0 pc3_pr2_fsubst0
-pc3/fsubst0 pc3_pr2_fsubst0_back
-pc3/fsubst0 pc3_fsubst0
 pc3/fwd pc3_gen_not_abst
 pc3/fwd pc3_gen_lift_abst
 pc3/nf2 pc3_nf2
 pc3/nf2 pc3_nf2_unfold
 pc3/pc1 pc3_pc1
-pc3/props pc3_pr0_pr2_t
 pc3/props pc3_pr2_pr2_t
 pc3/props pc3_pr2_pr3_t
 pc3/props pc3_pr3_pc3_t
 pc3/props pc3_eta
-pc3/wcpr0 pc3_wcpr0__pc3_wcpr0_t_aux
-pc3/wcpr0 pc3_wcpr0_t
-pc3/wcpr0 pc3_wcpr0
 
 pr0/fwd pr0_gen_void
 pr0/dec nf0_dec
@@ -229,9 +223,6 @@ ty3/arity_props ty3_repellent
 ty3/arity_props ty3_acyclic
 ty3/arity_props ty3_sn3
 ty3/dec ty3_inference
-ty3/fsubst0 ty3_fsubst0
-ty3/fsubst0 ty3_csubst0
-ty3/fsubst0 ty3_subst0
 ty3/fwd ty3_gen_appl
 ty3/fwd tys3_gen_nil
 ty3/fwd tys3_gen_cons
@@ -259,8 +250,8 @@ ty3/pr3_props ty3_sred_back
 ty3/pr3_props ty3_sconv
 ty3/props ty3_gen_abst_abst
 ty3/sty0 ty3_sty0
-ty3/subst1 ty3_gen_cabbr
 ty3/subst1 ty3_gen_cvoid
+
 wf3/clear wf3_clear_conf
 wf3/clear clear_wf3_trans
 wf3/fwd wf3_gen_sort1

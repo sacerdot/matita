@@ -108,6 +108,9 @@ lemma cpcs_abbr_sn: ∀L,V1,V2,T. L ⊢ V1 ⬌* V2 → L ⊢ ⓓV1. T ⬌* ⓓV2
 elim (cpcs_inv_cprs … HV12) -HV12 /3 width=5 by cprs_div, cprs_abbr1/ (**) (* /3 width=5/ is a bit slow *)
 qed.
 
+lemma cpcs_bind_sn: ∀I,L,V1,V2,T. L ⊢ V1 ⬌* V2 → L ⊢ ⓑ{I}V1. T ⬌* ⓑ{I}V2. T.
+* /2 width=1/ /2 width=2/ qed.
+
 (* Basic_1: was: pc3_lift *)
 lemma cpcs_lift: ∀L,K,d,e. ⇩[d, e] L ≡ K →
                  ∀T1,U1. ⇧[d, e] T1 ≡ U1 → ∀T2,U2. ⇧[d, e] T2 ≡ U2 →

@@ -219,7 +219,7 @@ lemma ltpss_inv_tpss12: ∀L1,K2,I,V2,d,e. L1 ▶* [d, e] K2. ⓑ{I} V2 → 0 < 
                                  L1 = K1. ⓑ{I} V1.
 /2 width=3/ qed-.
 
-(* Basic_1: removed theorems 27:
+(* Basic_1: removed theorems 28:
             csubst0_clear_O csubst0_drop_lt csubst0_drop_gt csubst0_drop_eq
             csubst0_clear_O_back csubst0_clear_S csubst0_clear_trans
             csubst0_drop_gt_back csubst0_drop_eq_back csubst0_drop_lt_back
@@ -228,5 +228,5 @@ lemma ltpss_inv_tpss12: ∀L1,K2,I,V2,d,e. L1 ▶* [d, e] K2. ⓑ{I} V2 → 0 < 
             csubst0_snd_bind csubst0_fst_bind csubst0_both_bind
             csubst1_head csubst1_flat csubst1_gen_head
             csubst1_getl_ge csubst1_getl_lt csubst1_getl_ge_back getl_csubst1
-
+            fsubst0_gen_base
 *)

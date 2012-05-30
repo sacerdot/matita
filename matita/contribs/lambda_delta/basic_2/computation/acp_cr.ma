@@ -27,7 +27,7 @@ definition S1 ≝ λRP,C:lenv→predicate term.
 (* Note: this is Tait's iii, or Girard's CR4 *)
 definition S2 ≝ λRR:lenv→relation term. λRS:relation term. λRP,C:lenv→predicate term.
                 ∀L,Vs. all … (RP L) Vs →
-                ∀T. 𝐒[T] → NF … (RR L) RS T → C L (ⒶVs.T).
+                ∀T. 𝐒⦃T⦄ → NF … (RR L) RS T → C L (ⒶVs.T).
 
 (* Note: this is Tait's ii *)
 definition S3 ≝ λRP,C:lenv→predicate term.

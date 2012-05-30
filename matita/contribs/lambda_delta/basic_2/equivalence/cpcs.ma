@@ -79,9 +79,11 @@ lemma cprs_comm: ∀L,T1,T2. L ⊢ T1 ⬌* T2 → L ⊢ T2 ⬌* T1.
 #L #T1 #T2 #H @(cpcs_ind … H) -T2 // /3 width=3/
 qed.
 
-(* Basic_1: removed theorems 6:
+(* Basic_1: removed theorems 9:
             clear_pc3_trans pc3_ind_left
             pc3_head_1 pc3_head_2 pc3_head_12 pc3_head_21
-   Basic_1: removed local theorems 5:
+            pc3_pr2_fsubst0 pc3_pr2_fsubst0_back pc3_fsubst0
+   Basic_1: removed local theorems 6:
             pc3_left_pr3 pc3_left_trans pc3_left_sym pc3_left_pc3 pc3_pc3_left
+            pc3_wcpr0_t_aux
 *)

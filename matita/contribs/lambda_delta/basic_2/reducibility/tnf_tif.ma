@@ -20,7 +20,7 @@ include "basic_2/reducibility/tnf.ma".
 
 (* Main properties properties ***********************************************)
 
-lemma tpr_tif_eq: ∀T1,T2. T1 ➡ T2 →  𝐈[T1] → T1 = T2.
+lemma tpr_tif_eq: ∀T1,T2. T1 ➡ T2 →  𝐈⦃T1⦄ → T1 = T2.
 #T1 #T2 #H elim H -T1 -T2
 [ //
 | * #V1 #V2 #T1 #T2 #_ #_ #IHV1 #IHT1 #H
@@ -47,11 +47,11 @@ lemma tpr_tif_eq: ∀T1,T2. T1 ➡ T2 →  𝐈[T1] → T1 = T2.
 ]
 qed.
 
-theorem tif_tnf: ∀T1.  𝐈[T1] → 𝐍[T1].
+theorem tif_tnf: ∀T1.  𝐈⦃T1⦄ → 𝐍⦃T1⦄.
 /3 width=1/ qed.
 
 (* Note: this property is unusual *)
-lemma tnf_trf_false: ∀T1. 𝐑[T1] → 𝐍[T1] → ⊥.
+lemma tnf_trf_false: ∀T1. 𝐑⦃T1⦄ → 𝐍⦃T1⦄ → ⊥.
 #T1 #H elim H -T1
 [ #V #T #_ #IHV #H elim (tnf_inv_abst … H) -H /2 width=1/
 | #V #T #_ #IHT #H elim (tnf_inv_abst … H) -H /2 width=1/
@@ -64,11 +64,11 @@ lemma tnf_trf_false: ∀T1. 𝐑[T1] → 𝐍[T1] → ⊥.
 ]
 qed.
 
-theorem tnf_tif: ∀T1. 𝐍[T1] → 𝐈[T1].
+theorem tnf_tif: ∀T1. 𝐍⦃T1⦄ → 𝐈⦃T1⦄.
 /2 width=3/ qed.
 
-lemma tnf_abst: ∀V,T. 𝐍[V] → 𝐍[T] → 𝐍[ⓛV.T].
+lemma tnf_abst: ∀V,T. 𝐍⦃V⦄ → 𝐍⦃T⦄ → 𝐍⦃ⓛV.T⦄.
 /4 width=1/ qed.
 
-lemma tnf_appl: ∀V,T. 𝐍[V] → 𝐍[T] → 𝐒[T] → 𝐍[ⓐV.T].
+lemma tnf_appl: ∀V,T. 𝐍⦃V⦄ → 𝐍⦃T⦄ → 𝐒⦃T⦄ → 𝐍⦃ⓐV.T⦄.
 /4 width=1/ qed.

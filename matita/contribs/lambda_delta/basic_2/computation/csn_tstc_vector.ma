@@ -22,7 +22,7 @@ include "basic_2/computation/csn_vector.ma".
 (* Advanced properties ******************************************************)
 
 (* Basic_1: was only: sn3_appls_lref *)
-lemma csn_applv_cnf: ∀L,T. 𝐒[T] → L ⊢ 𝐍[T] → 
+lemma csn_applv_cnf: ∀L,T. 𝐒⦃T⦄ → L ⊢ 𝐍⦃T⦄ → 
                      ∀Vs. L ⊢ ⬇* Vs → L ⊢ ⬇* ⒶVs.T.
 #L #T #H1T #H2T #Vs elim Vs -Vs [ #_ @(csn_cnf … H2T) ] (**) (* /2 width=1/ does not work *)
 #V #Vs #IHV #H

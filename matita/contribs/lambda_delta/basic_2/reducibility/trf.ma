@@ -33,7 +33,7 @@ interpretation
 
 (* Basic inversion lemmas ***************************************************)
 
-fact trf_inv_atom_aux: ∀I,T. 𝐑[T] → T =  ⓪{I} → ⊥.
+fact trf_inv_atom_aux: ∀I,T. 𝐑⦃T⦄ → T =  ⓪{I} → ⊥.
 #I #T * -T
 [ #V #T #_ #H destruct
 | #V #T #_ #H destruct
@@ -45,10 +45,10 @@ fact trf_inv_atom_aux: ∀I,T. 𝐑[T] → T =  ⓪{I} → ⊥.
 ]
 qed.
 
-lemma trf_inv_atom: ∀I. 𝐑[⓪{I}] → ⊥.
+lemma trf_inv_atom: ∀I. 𝐑⦃⓪{I}⦄ → ⊥.
 /2 width=4/ qed-.
 
-fact trf_inv_abst_aux: ∀W,U,T. 𝐑[T] → T =  ⓛW. U → 𝐑[W] ∨ 𝐑[U].
+fact trf_inv_abst_aux: ∀W,U,T. 𝐑⦃T⦄ → T =  ⓛW. U → 𝐑⦃W⦄ ∨ 𝐑⦃U⦄.
 #W #U #T * -T
 [ #V #T #HV #H destruct /2 width=1/
 | #V #T #HT #H destruct /2 width=1/
@@ -60,11 +60,11 @@ fact trf_inv_abst_aux: ∀W,U,T. 𝐑[T] → T =  ⓛW. U → 𝐑[W] ∨ 𝐑[U
 ]
 qed.
 
-lemma trf_inv_abst: ∀V,T. 𝐑[ⓛV.T] → 𝐑[V] ∨ 𝐑[T].
+lemma trf_inv_abst: ∀V,T. 𝐑⦃ⓛV.T⦄ → 𝐑⦃V⦄ ∨ 𝐑⦃T⦄.
 /2 width=3/ qed-.
 
-fact trf_inv_appl_aux: ∀W,U,T. 𝐑[T] → T =  ⓐW. U →
-                       ∨∨ 𝐑[W] | 𝐑[U] | (𝐒[U] → ⊥).
+fact trf_inv_appl_aux: ∀W,U,T. 𝐑⦃T⦄ → T =  ⓐW. U →
+                       ∨∨ 𝐑⦃W⦄ | 𝐑⦃U⦄ | (𝐒⦃U⦄ → ⊥).
 #W #U #T * -T
 [ #V #T #_ #H destruct
 | #V #T #_ #H destruct
@@ -77,5 +77,5 @@ fact trf_inv_appl_aux: ∀W,U,T. 𝐑[T] → T =  ⓐW. U →
 ]
 qed.
 
-lemma trf_inv_appl: ∀W,U. 𝐑[ⓐW.U] → ∨∨ 𝐑[W] | 𝐑[U] | (𝐒[U] → ⊥).
+lemma trf_inv_appl: ∀W,U. 𝐑⦃ⓐW.U⦄ → ∨∨ 𝐑⦃W⦄ | 𝐑⦃U⦄ | (𝐒⦃U⦄ → ⊥).
 /2 width=3/ qed-.

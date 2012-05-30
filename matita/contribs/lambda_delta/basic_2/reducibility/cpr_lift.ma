@@ -88,7 +88,7 @@ elim (tpr_inv_appl1 … H1) -H1 *
 qed-.
 
 (* Note: the main property of simple terms *)
-lemma cpr_inv_appl1_simple: ∀L,V1,T1,U. L ⊢ ⓐV1. T1 ➡ U → 𝐒[T1] →
+lemma cpr_inv_appl1_simple: ∀L,V1,T1,U. L ⊢ ⓐV1. T1 ➡ U → 𝐒⦃T1⦄ →
                             ∃∃V2,T2. L ⊢ V1 ➡ V2 & L ⊢ T1 ➡ T2 &
                                      U = ⓐV2. T2.
 #L #V1 #T1 #U #H #HT1

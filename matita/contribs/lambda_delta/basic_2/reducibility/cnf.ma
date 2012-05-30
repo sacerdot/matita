@@ -25,13 +25,13 @@ interpretation
 (* Basic properties *********************************************************)
 
 (* Basic_1: was: nf2_sort *)
-lemma cnf_sort: ∀L,k. L ⊢ 𝐍[⋆k].
+lemma cnf_sort: ∀L,k. L ⊢ 𝐍⦃⋆k⦄.
 #L #k #X #H
 >(cpr_inv_sort1 … H) //
 qed.
 
 (* Basic_1: was: nf2_dec *)
-axiom cnf_dec: ∀L,T1. L ⊢ 𝐍[T1] ∨
+axiom cnf_dec: ∀L,T1. L ⊢ 𝐍⦃T1⦄ ∨
                ∃∃T2. L ⊢ T1 ➡ T2 & (T1 = T2 → ⊥).
 
 (* Basic_1: removed theorems 1: nf2_abst_shift *)

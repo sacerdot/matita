@@ -104,7 +104,7 @@ notation "hvbox( # [ x , break y ] )"
  non associative with precedence 90
  for @{ 'Weight $x $y }.
 
-notation "hvbox( 𝐒  [ T ] )"
+notation "hvbox( 𝐒  ⦃ T ⦄ )"
    non associative with precedence 45
    for @{ 'Simple $T }.
 
@@ -234,51 +234,51 @@ notation "hvbox( ⦃ h , break L ⦄ ⊢ break term 46 T1 •* break term 46 T2 
 
 (* Reducibility *************************************************************)
 
-notation "hvbox( 𝐑  [ T ] )"
+notation "hvbox( 𝐑  ⦃ T ⦄ )"
    non associative with precedence 45
    for @{ 'Reducible $T }.
 
-notation "hvbox( L ⊢ break 𝐑 [ T ] )"
+notation "hvbox( L ⊢ break 𝐑 ⦃ T ⦄ )"
    non associative with precedence 45
    for @{ 'Reducible $L $T }.
 
-notation "hvbox( 𝐈  [ T ] )"
+notation "hvbox( 𝐈  ⦃ T ⦄ )"
    non associative with precedence 45
    for @{ 'NotReducible $T }.
 
-notation "hvbox( L ⊢ break 𝐈 [ T ] )"
+notation "hvbox( L ⊢ break 𝐈 ⦃ T ⦄ )"
    non associative with precedence 45
    for @{ 'NotReducible $L $T }.
 
-notation "hvbox( 𝐍  [ T ] )"
+notation "hvbox( 𝐍  ⦃ T ⦄ )"
    non associative with precedence 45
    for @{ 'Normal $T }.
 
-notation "hvbox( L ⊢ break 𝐍 [ T ] )"
+notation "hvbox( L ⊢ break 𝐍 ⦃ T ⦄ )"
    non associative with precedence 45
    for @{ 'Normal $L $T }.
 
-notation "hvbox( 𝐖𝐇𝐑 [ T ] )"
+notation "hvbox( 𝐖𝐇𝐑 ⦃ T ⦄ )"
    non associative with precedence 45
    for @{ 'WHdReducible $T }.
 
-notation "hvbox( L ⊢ break 𝐖𝐇𝐑  [ T ] )"
+notation "hvbox( L ⊢ break 𝐖𝐇𝐑  ⦃ T ⦄ )"
    non associative with precedence 45
    for @{ 'WHdReducible $L $T }.
 
-notation "hvbox( 𝐖𝐇𝐈  [ T ] )"
+notation "hvbox( 𝐖𝐇𝐈  ⦃ T ⦄ )"
    non associative with precedence 45
    for @{ 'NotWHdReducible $T }.
 
-notation "hvbox( L ⊢ break 𝐖𝐇𝐈 [ T ] )"
+notation "hvbox( L ⊢ break 𝐖𝐇𝐈 ⦃ T ⦄ )"
    non associative with precedence 45
    for @{ 'NotWHdReducible $L $T }.
 
-notation "hvbox( 𝐖𝐇𝐍 [ T ] )"
+notation "hvbox( 𝐖𝐇𝐍 ⦃ T ⦄ )"
    non associative with precedence 45
    for @{ 'WHdNormal $T }.
 
-notation "hvbox( L ⊢ break 𝐖𝐇𝐍 [ T ] )"
+notation "hvbox( L ⊢ break 𝐖𝐇𝐍 ⦃ T ⦄ )"
    non associative with precedence 45
    for @{ 'WHdNormal $L $T }.
 
@@ -308,7 +308,7 @@ notation "hvbox( L1 ⊢ ➡* break term 46 L2 )"
    non associative with precedence 45
    for @{ 'CPRedStar $L1 $L2 }.
 
-notation "hvbox( L ⊢ break term 46 T1 ➡* break 𝐍 [ T2 ] )"
+notation "hvbox( L ⊢ break term 46 T1 ➡* break 𝐍 ⦃ T2 ⦄ )"
    non associative with precedence 45
    for @{ 'PEval $L $T1 $T2 }.
 

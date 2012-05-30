@@ -20,7 +20,7 @@ include "basic_2/computation/cprs_lcprs.ma".
 
 (* Forward lemmas involving same top term constructor ***********************)
 
-lemma cprs_fwd_cnf: ∀L,T. L ⊢ 𝐍[T] → ∀U. L ⊢ T ➡* U → T ≃ U.
+lemma cprs_fwd_cnf: ∀L,T. L ⊢ 𝐍⦃T⦄ → ∀U. L ⊢ T ➡* U → T ≃ U.
 #L #T #HT #U #H
 >(cprs_inv_cnf1 … H HT) -L -T //
 qed-.

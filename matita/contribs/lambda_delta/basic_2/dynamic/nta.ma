@@ -48,4 +48,6 @@ lemma nta_cast_old: ∀h,L,W,T,U.
 lemma nta_typecheck: ∀h,L,T,U. ⦃h, L⦄ ⊢ T : U → ∃T0. ⦃h, L⦄ ⊢ ⓣU.T : T0.
 /3 width=2/ qed.
 
-(* Basic_1: removed theorems 1: ty3_getl_subst0 *)
+(* Basic_1: removed theorems 4:
+            ty3_getl_subst0 ty3_fsubst0 ty3_csubst0 ty3_subst0
+*)

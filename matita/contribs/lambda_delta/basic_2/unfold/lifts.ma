@@ -112,11 +112,11 @@ qed-.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma lifts_simple_dx: ∀T1,T2,des. ⇧*[des] T1 ≡ T2 → 𝐒[T1] → 𝐒[T2].
+lemma lifts_simple_dx: ∀T1,T2,des. ⇧*[des] T1 ≡ T2 → 𝐒⦃T1⦄ → 𝐒⦃T2⦄.
 #T1 #T2 #des #H elim H -T1 -T2 -des // /3 width=5 by lift_simple_dx/
 qed-.
 
-lemma lifts_simple_sn: ∀T1,T2,des. ⇧*[des] T1 ≡ T2 → 𝐒[T2] → 𝐒[T1].
+lemma lifts_simple_sn: ∀T1,T2,des. ⇧*[des] T1 ≡ T2 → 𝐒⦃T2⦄ → 𝐒⦃T1⦄.
 #T1 #T2 #des #H elim H -T1 -T2 -des // /3 width=5 by lift_simple_sn/
 qed-.
 

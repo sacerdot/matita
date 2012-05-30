@@ -155,7 +155,7 @@ elim (tpr_inv_flat1 … H) -H * /3 width=12/ #_ #H destruct
 qed-.
 
 (* Note: the main property of simple terms *)
-lemma tpr_inv_appl1_simple: ∀V1,T1,U. ⓐV1. T1 ➡ U → 𝐒[T1] →
+lemma tpr_inv_appl1_simple: ∀V1,T1,U. ⓐV1. T1 ➡ U → 𝐒⦃T1⦄ →
                             ∃∃V2,T2. V1 ➡ V2 & T1 ➡ T2 &
                                      U = ⓐV2. T2.
 #V1 #T1 #U #H #HT1
