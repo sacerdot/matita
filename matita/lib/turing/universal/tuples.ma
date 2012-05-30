@@ -725,7 +725,7 @@ lemma sem_match_tuple_step:
                 [ >Hrs3 in Heq1; @daemon ] #Hl4
                 @(ex_intro … rs32) @(ex_intro … rs3') % [@Hl4]
                 >Htapeout @eq_f2
-                   [@daemon
+                   [(* by Hoption, H2 *) @daemon
                    |(*>Hrs3 *)>append_cons
                     > (?:l1@〈grid,false〉::l2@〈c1,false〉::l3@〈comma,false〉::rs32@〈bar,false〉::〈d2,true〉::rs3'@〈grid,false〉::rs
                         = (l1@〈grid,false〉::l2@〈c1,false〉::l3@〈comma,false〉::rs32@[〈bar,false〉])@〈d2,true〉::rs3'@〈grid,false〉::rs)
@@ -799,25 +799,6 @@ lemma is_grid_true : ∀c.is_grid c = true → c = grid.
 * normalize [ #b ] #H // destruct (H)
 qed.
 
-definition R_match_tuple ≝ λt1,t2.
-  ∀ls,c,l1,c1,l2,rs,n.
-  is_bit c = true → only_bits l1 → is_bit c1 = true → n = |l1| →
-  table_TM (S n) (〈c1,false〉::l2) → 
-  t1 = midtape STape (〈grid,false〉::ls) 〈c,true〉 
-         (l1@〈grid,false〉::〈c1,true〉::l2@〈grid,false〉::rs) → 
-  (* facciamo match *)
-  (∃l3,newc,mv,l4.
-   〈c1,false〉::l2 = l3@〈c,false〉::l1@〈comma,false〉::newc@〈comma,false〉::mv@l4 ∧
-   t2 = midtape ? (reverse ? l1@〈c,false〉::〈grid,false〉::ls) 〈grid,false〉
-        (l3@〈c,false〉::l1@〈comma,true〉::newc@〈comma,false〉::mv@l4@〈grid,false〉::rs))
-  ∨
-  (* non facciamo match su nessuna tupla;
-     non specifichiamo condizioni sul nastro di output, perché
-     non eseguiremo altre operazioni, quindi il suo formato non ci interessa *)
-  (current ? t2 = Some ? 〈grid,true〉 ∧
-   ∀l3,newc,mv,l4.
-   〈c1,false〉::l2 ≠ l3@〈c,false〉::l1@〈comma,false〉::newc@〈comma,false〉::mv@l4). 
-
 (* possible variante ? 
 definition weakR_match_tuple ≝ λt1,t2.
   (∀ls,cur,rs,b. t1 = midtape STape ls 〈grid,b〉 rs → t2 = t1) ∧
@@ -841,7 +822,7 @@ definition weakR_match_tuple ≝ λt1,t2.
    〈c1,false〉::l3 ≠ l4@〈c,false〉::l1@〈comma,false〉::newc@〈comma,false〉::mv::l5)).  
 *) 
 
-definition weakR_match_tuple ≝ λt1,t2.
+definition R_match_tuple0 ≝ λt1,t2.
   ∀ls,cur,rs.
   t1 = midtape STape ls cur rs → 
   (is_grid (\fst cur) = true → t2 = t1) ∧
@@ -869,7 +850,7 @@ definition weakR_match_tuple ≝ λt1,t2.
 axiom table_bit_after_bar : 
   ∀n,l1,c,l2.table_TM n (l1@〈bar,false〉::〈c,false〉::l2) → is_bit c = true.
 
-lemma wsem_match_tuple : WRealize ? match_tuple weakR_match_tuple.
+lemma wsem_match_tuple : WRealize ? match_tuple R_match_tuple0.
 #intape #k #outc #Hloop 
 lapply (sem_while … sem_match_tuple_step intape k outc Hloop) [%] -Hloop
 * #ta * #Hstar @(star_ind_l ??????? Hstar)
@@ -880,12 +861,17 @@ lapply (sem_while … sem_match_tuple_step intape k outc Hloop) [%] -Hloop
     >Hcur in Hgrid; #Hgrid >(is_grid_true … Hgrid) normalize in ⊢ (%→?);
     #Hc destruct (Hc)
   ]
-| #tb #tc #td whd in ⊢ (%→?); #Htc
+| (* in the interesting case, we execute a true iteration, then we restart the
+     while cycle, finally we end with a false iteration *)
+  #tb #tc #td whd in ⊢ (%→?); #Htc
   #Hstar1 #IH whd in ⊢ (%→?); #Hright lapply (IH Hright) -IH whd in ⊢ (%→?); #IH
   #ls #cur #rs #Htb %
-  [ #Hcur cases (Htc … Htb) * #Hfalse @False_ind @Hfalse @(is_grid_true … Hcur)
-  |#c #l1 #c1 #l2 #l3 #ls0 #rs0 #n #Hls #Hcur #Hrs #Hc #Hc1 #Hl1bitnull #Hl1marks 
+  [ (* cur can't be true because we assume at least one iteration *)
+    #Hcur cases (Htc … Htb) * #Hfalse @False_ind @Hfalse @(is_grid_true … Hcur)
+  | (* current and a tuple are marked *)
+   #c #l1 #c1 #l2 #l3 #ls0 #rs0 #n #Hls #Hcur #Hrs #Hc #Hc1 #Hl1bitnull #Hl1marks 
    #Hl1len #Htable cases (Htc … Htb) -Htc -Htb * #_ #Htc
+   (* expose the marked tuple in table *)
    cut (∃la,lb,mv,lc.l3 = la@〈comma,false〉::lb@〈comma,false〉::mv::lc ∧
          S n = |la| ∧ only_bits_or_nulls la)
    [@daemon] * #la * #lb * #mv * #lc * * #Hl3 #Hlalen #Hlabitnull
@@ -900,14 +886,17 @@ lapply (sem_while … sem_match_tuple_step intape k outc Hloop) [%] -Hloop
    |4: whd in ⊢ (??%?); >Hc1 %
    |3: whd in ⊢ (??%?); >Hc %
    |-Htc *
-     [ * #Heq #Htc % %{[]} %{lb} %{mv} %{lc} destruct (Heq) %
+     [ (* case 1: match successful *)
+       * #Heq #Htc % %{[]} %{lb} %{mv} %{lc} destruct (Heq) %
        [%
        | cases (IH … Htc) -IH #Houtc #_ >(Houtc (refl ??)) 
          >Htc @eq_f normalize >associative_append normalize
          >associative_append normalize %
        ]     
-     | * #Hdiff * #c2 * #l5 * #l6 * #Heqlblc #Htc
+     | (* case 2: tuples don't match, we still have other tuples to try *)
+       * #Hdiff * #c2 * #l5 * #l6 * #Heqlblc #Htc
        cases (IH ??? … Htc) -IH #_ #IH 
+       (* by induction hypothesis *)
        lapply (IH ? l1 c2 (l2@〈bar,false〉::〈c1,false〉::la@〈comma,false〉::l5) l6 ? rs0 n (refl ??) (refl ??) ???????)
        [ generalize in match Htable;
          >associative_append normalize 
@@ -922,7 +911,8 @@ lapply (sem_while … sem_match_tuple_step intape k outc Hloop) [%] -Hloop
          >associative_append normalize
          >associative_append %
        |-IH * 
-         [ * #l7 * #newc * #mv0 * #l8 * #Hl7l8 #Houtc %
+         [ (* the while finally matches a tuple *)
+           * #l7 * #newc * #mv0 * #l8 * #Hl7l8 #Houtc %
            >Heqlblc @(ex_intro ?? (〈bar,false〉::〈c1,false〉::la@〈comma,false〉::l5@l7))
            %{newc} %{mv0} %{l8} %
            [ normalize >Hl7l8 >associative_append normalize 
@@ -931,7 +921,8 @@ lapply (sem_while … sem_match_tuple_step intape k outc Hloop) [%] -Hloop
              >associative_append normalize >associative_append 
              normalize >associative_append %
            ]
-         | * #Houtc #Hdiff %2 %
+         | (* the while fails finding a tuple: there are no matches in the whole table *)
+           * #Houtc #Hdiff1 %2 %
            [ @Houtc
            | #l50 #newc #mv0 #l51 >Heqlblc 
              @daemon
@@ -939,20 +930,53 @@ lapply (sem_while … sem_match_tuple_step intape k outc Hloop) [%] -Hloop
          ]
        ]
      ]
-   | * * #Hdiff #Hnobars generalize in match (refl ? tc);
+   | (* match failed and there is no next tuple: the next while cycle will just exit *)
+     * * #Hdiff #Hnobars generalize in match (refl ? tc);
      cases tc in ⊢ (???% → %);
      [ #_ normalize in ⊢ (??%?→?); #Hfalse destruct (Hfalse)
      |2,3: #x #xs #_ normalize in ⊢ (??%?→?); #Hfalse destruct (Hfalse) ]
      #ls1 #cur1 #rs1 #Htc normalize in ⊢ (??%?→?); #Hcur1
      cases (IH … Htc) -IH #IH #_ %2 %
      [ destruct (Hcur1) >IH [ >Htc % | % ]
-     | #l4 #newc #mv0 #l5 (* difficile (sempre che sia dimostrabile) 
-          dobbiamo veramente considerare di fare la table in modo più 
-          strutturato
-        *)
+     | #l4 #newc #mv0 #l5
+       (* no_bars except the first one, where the tuple does not match ⇒ 
+          no match *)
         @daemon
      ]
    ]
  ]
 qed.
 
+definition R_match_tuple ≝ λt1,t2.
+  ∀ls,c,l1,c1,l2,rs,n.
+  is_bit c = true → is_bit c1 = true →
+  only_bits_or_nulls l1 → no_marks l1 → S n = |l1| → 
+  table_TM (S n) (〈bar,false〉::〈c1,false〉::l2) → 
+  t1 = midtape STape (〈grid,false〉::ls) 〈c,true〉 
+         (l1@〈grid,false〉::〈bar,false〉::〈c1,true〉::l2@〈grid,false〉::rs) → 
+  (* facciamo match *)
+  (∃l3,newc,mv,l4.
+   〈bar,false〉::〈c1,false〉::l2 = l3@〈bar,false〉::〈c,false〉::l1@〈comma,false〉::newc@〈comma,false〉::mv::l4 ∧
+   t2 = midtape ? (reverse ? l1@〈c,false〉::〈grid,false〉::ls) 〈grid,false〉
+        (l3@〈bar,false〉::〈c,false〉::l1@〈comma,true〉::newc@〈comma,false〉::mv::l4@〈grid,false〉::rs))
+  ∨
+  (* non facciamo match su nessuna tupla;
+     non specifichiamo condizioni sul nastro di output, perché
+     non eseguiremo altre operazioni, quindi il suo formato non ci interessa *)
+  (current ? t2 = Some ? 〈grid,true〉 ∧
+   ∀l3,newc,mv,l4.
+   〈bar,false〉::〈c1,false〉::l2 ≠ l3@〈bar,false〉::〈c,false〉::l1@〈comma,false〉::newc@〈comma,false〉::mv::l4). 
+
+(* we still haven't proved termination *)
+axiom sem_match_tuple0 : Realize ? match_tuple R_match_tuple0.
+
+axiom Realize_to_Realize : 
+  ∀alpha,M,R1,R2.(∀t1,t2.R1 t1 t2 → R2 t1 t2) → Realize alpha M R1 → Realize alpha M R2.
+
+lemma sem_match_tuple : Realize ? match_tuple R_match_tuple.
+generalize in match sem_match_tuple0; @Realize_to_Realize
+#t1 #t2 #HR #ls #c #l1 #c1 #l2 #rs #n #Hc #Hc1 #Hl1bitsnulls #Hl1marks #Hl1len #Htable #Ht1
+cases (HR … Ht1) -HR #_ #HR
+@(HR ??? [] … (refl ??) (refl ??) (refl ??) Hc Hc1 Hl1bitsnulls Hl1marks
+          Hl1len  Htable)
+qed.

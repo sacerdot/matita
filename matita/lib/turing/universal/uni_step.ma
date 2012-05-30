@@ -15,6 +15,7 @@
 *)
 
 include "turing/universal/copy.ma".
+include "turing/universal/move_tape.ma".
 
 (*
 
@@ -58,23 +59,25 @@ definition init_match ≝
   seq ? (mark ?) 
     (seq ? (adv_to_mark_r ? (λc:STape.is_grid (\fst c)))
       (seq ? (move_r ?) 
-        (seq ? (mark ?)
-          (seq ? (move_l ?) 
-            (adv_to_mark_l ? (is_marked ?)))))).
-            
+        (seq ? (move_r ?)
+          (seq ? (mark ?)
+            (seq ? (move_l ?) 
+              (adv_to_mark_l ? (is_marked ?))))))).
+             
 definition R_init_match ≝ λt1,t2.
   ∀ls,l,rs,c,d. no_grids (〈c,false〉::l) → no_marks l → 
-  t1 = midtape STape ls 〈c,false〉 (l@〈grid,false〉::〈d,false〉::rs) →
-  t2 = midtape STape ls 〈c,true〉 (l@〈grid,false〉::〈d,true〉::rs).
+  t1 = midtape STape ls 〈c,false〉 (l@〈grid,false〉::〈bar,false〉::〈d,false〉::rs) →
+  t2 = midtape STape ls 〈c,true〉 (l@〈grid,false〉::〈bar,false〉::〈d,true〉::rs).
   
 lemma sem_init_match : Realize ? init_match R_init_match.
 #intape 
 cases (sem_seq ????? (sem_mark ?)
        (sem_seq ????? (sem_adv_to_mark_r ? (λc:STape.is_grid (\fst c)))
         (sem_seq ????? (sem_move_r ?)
-         (sem_seq ????? (sem_mark ?)
-          (sem_seq ????? (sem_move_l ?)
-           (sem_adv_to_mark_l ? (is_marked ?)))))) intape)
+         (sem_seq ????? (sem_move_r ?)
+          (sem_seq ????? (sem_mark ?)
+           (sem_seq ????? (sem_move_l ?)
+            (sem_adv_to_mark_l ? (is_marked ?))))))) intape)
 #k * #outc * #Hloop #HR 
 @(ex_intro ?? k) @(ex_intro ?? outc) % [@Hloop] -Hloop
 #ls #l #rs #c #d #Hnogrids #Hnomarks #Hintape
@@ -83,15 +86,17 @@ cases HR -HR
 * #tb * whd in ⊢ (%→?); #Htb cases (Htb … Hta) -Htb -Hta 
   [* #Hgridc @False_ind @(absurd … Hgridc) @eqnot_to_noteq 
    @(Hnogrids 〈c,false〉) @memb_hd ]
-* #Hgrdic #Htb lapply (Htb l 〈grid,false〉 (〈d,false〉::rs) (refl …) (refl …) ?) 
+* #Hgrdic #Htb lapply (Htb l 〈grid,false〉 (〈bar,false〉::〈d,false〉::rs) (refl …) (refl …) ?) 
   [#x #membl @Hnogrids @memb_cons @membl] -Htb #Htb
 * #tc * whd in ⊢ (%→?); #Htc lapply (Htc … Htb) -Htc -Htb #Htc
 * #td * whd in ⊢ (%→?); #Htd lapply (Htd … Htc) -Htd -Htc #Htd
 * #te * whd in ⊢ (%→?); #Hte lapply (Hte … Htd) -Hte -Htd #Hte
-whd in ⊢ (%→?); #Htf cases (Htf … Hte) -Htf -Hte 
+* #tf * whd in ⊢ (%→?); #Htf lapply (Htf … Hte) -Htf -Hte #Htf
+whd in ⊢ (%→?); #Htg cases (Htg … Htf) -Htg -Htf
   [* whd in ⊢ ((??%?)→?); #Habs destruct (Habs)]
-* #_ #Htf lapply (Htf (reverse ? l) 〈c,true〉 ls (refl …) (refl …) ?) 
-  [#x #membl @Hnomarks @daemon] -Htf #Htf >Htf >reverse_reverse %
+* #_ #Htg lapply (Htg (〈grid,false〉::reverse ? l) 〈c,true〉 ls (refl …) (refl …) ?) 
+  [#x #membl @Hnomarks @daemon] -Htg #Htg >Htg >reverse_cons >reverse_reverse
+   >associative_append %
 qed.
 
 
@@ -233,8 +238,6 @@ cases HR -HR
     ]
   ]
 qed. *)
-
-include "turing/universal/move_tape.ma".
 
 definition exec_move ≝ 
   seq ? init_copy
@@ -500,7 +503,7 @@ lemma sem_uni_step :
 [ #intape #outtape 
   #ta whd in ⊢ (%→?); #Hta #HR
   #n #fulltable #s0 #s1 #c0 #c1 #ls #rs #curconfig #newconfig #mv
-  #Htable_len cut (∃t0,table. fulltable =〈t0,false〉::table) [(* 0 < |table| *) @daemon]
+  #Htable_len cut (∃t0,table. fulltable =〈bar,false〉::〈t0,false〉::table) [(* 0 < |table| *) @daemon]
   * #t0 * #table #Hfulltable >Hfulltable -fulltable 
   #Htable #Hmatch #Htape #Hintape #t1' #Ht1'
   >Hintape in Hta; #Hta cases (Hta ? (refl ??)) -Hta 
@@ -516,27 +519,28 @@ lemma sem_uni_step :
     [| * #Hcurrent #Hfalse @False_ind
       (* absurd by Hmatch *) @daemon
     | >Hs0 %
-    | (* da decidere se aggiungere un'assunzione o utilizzare Hmatch *) @daemon
+    | (* Htable (con lemma) *) @daemon
+    | (* Hmatch *) @daemon
     | (* Htable *) @daemon
     | (* Htable, Hmatch → |config| = n 
        necessaria modifica in R_match_tuple, le dimensioni non corrispondono
-      *) @daemon ]
+      *) @daemon
+    ]
     * #table1 * #newc * #mv1 * #table2 * #Htableeq #Htc *
     [ * #td * whd in ⊢ (%→?); >Htc -Htc #Htd
       cases (Htd ? (refl ??)) #_ -Htd
       cut (newc = 〈s1,false〉::newconfig@[〈c1,false〉]) [@daemon] #Hnewc
-      >Hnewc #Htd 
-      cut (∃mv2. mv1 = [〈mv2,false〉])
-      [@daemon] * #mv2 #Hmv1
+      >Hnewc #Htd cut (mv1 = 〈mv,false〉)
+      [@daemon] #Hmv1
       * #te * whd in ⊢ (%→?); #Hte
       cut (td = midtape STape (〈c0,false〉::reverse STape curconfig@〈s0,false〉::〈grid,false〉::ls) 
               〈grid,false〉
-              ((table1@〈s0,false〉::curconfig@[〈c0,false〉])@〈comma,true〉::〈s1,false〉::
-               newconfig@〈c1,false〉::〈comma,false〉::〈mv2,false〉::table2@〈grid,false〉::rs))
+              ((table1@〈bar,false〉::〈s0,false〉::curconfig@[〈c0,false〉])@〈comma,true〉::〈s1,false〉::
+               newconfig@〈c1,false〉::〈comma,false〉::〈mv,false〉::table2@〈grid,false〉::rs))
       [ >Htd @eq_f3 //
         [ >reverse_append >reverse_single %
         | >associative_append >associative_append normalize
-          >associative_append >associative_append >Hmv1 %
+          >associative_append >associative_append >Hmv1 % 
         ]
       ]
       -Htd #Htd lapply (Hte … (S n) … Htd … Ht1') -Htd -Hte
@@ -555,14 +559,13 @@ lemma sem_uni_step :
       whd in Houttape:(???%); whd in Houttape:(???(??%%%));
       @ex_intro [| @(ex_intro ?? rs1) @ex_intro [| % [ % 
       [ >Houttape @eq_f @eq_f @eq_f @eq_f
-        change with ((〈t0,false〉::table)@?) in ⊢ (???%);
+        change with ((〈bar,false〉::〈t0,false〉::table)@?) in ⊢ (???%);
         >Htableeq >associative_append >associative_append 
         >associative_append normalize >associative_append
         >associative_append normalize >Hnewc <Hmv1
         >associative_append normalize >associative_append
         >Hmv1 % 
-      | >(?: mv = mv2) [| (*Hmatch, Htableeq*) @daemon ]
-        @Hliftte
+      | @Hliftte
       ]
      | //
      ]
@@ -578,4 +581,3 @@ lemma sem_uni_step :
   cases b in Hb'; normalize #H1 //
 ]
 qed.
-
