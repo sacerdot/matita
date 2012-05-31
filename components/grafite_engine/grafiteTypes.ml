@@ -51,9 +51,4 @@ class virtual status = fun (b : string) ->
    method set_ng_mode v = {< ng_mode = v >}
  end
 
-module Serializer =
- NCicLibrary.Serializer(struct
-  type dumpable_s = status
-  let get status = (status : #status :> NCicLibrary.dumpable_status)
-  let set (status : dumpable_s) dump_status = status#set_dumpable_status dump_status
- end)
+module Serializer = NCicLibrary.Serializer(struct type dumpable_s = status end)

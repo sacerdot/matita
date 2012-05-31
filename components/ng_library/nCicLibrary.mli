@@ -77,7 +77,7 @@ module type SerializerType =
   val dependencies_of: baseuri:NUri.uri -> string list
  end
 
-module Serializer(D: sig type dumpable_s val get: dumpable_s -> dumpable_status  val set: dumpable_s -> dumpable_status -> dumpable_s end) :
+module Serializer(D: sig type dumpable_s = private #dumpable_status end) :
   SerializerType with type dumpable_status = D.dumpable_s
 
 val refresh_uri: NUri.uri -> NUri.uri

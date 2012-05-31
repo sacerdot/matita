@@ -215,7 +215,7 @@ module type SerializerType =
   val dependencies_of: baseuri:NUri.uri -> string list
  end
 
-module Serializer(D: sig type dumpable_s val get: dumpable_s -> dumpable_status  val set: dumpable_s -> dumpable_status -> dumpable_s end) =
+module Serializer(D: sig type dumpable_s = private #dumpable_status end) =
  struct
   type dumpable_status = D.dumpable_s
   type 'a register_type =
@@ -247,7 +247,6 @@ module Serializer(D: sig type dumpable_s val get: dumpable_s -> dumpable_status 
    end
 
   let serialize ~baseuri status =
-   let status = D.get status in
    let ch = open_out (ng_path_of_baseuri baseuri) in
    Marshal.to_channel ch (magic,(status#dump.dependencies,status#dump.objs)) [];
    close_out ch;
@@ -265,12 +264,10 @@ module Serializer(D: sig type dumpable_s val get: dumpable_s -> dumpable_status 
 
   let require2 ~baseuri ~alias_only status =
    try
-    let s = D.get status in
     let status =
-     D.set status
-      (s#set_dump
-        {s#dump with
-        includes = baseuri::List.filter ((<>) baseuri) s#dump.includes}) in
+     status#set_dump
+      {status#dump with
+        includes = baseuri::List.filter ((<>) baseuri) status#dump.includes} in
     let _dependencies,dump = require0 ~baseuri in
      List.fold_right (!require1 ~alias_only) dump status
    with
@@ -283,7 +280,7 @@ module Serializer(D: sig type dumpable_s val get: dumpable_s -> dumpable_status 
    let aux (baseuri,fname) ~refresh_uri_in_universe:_ ~refresh_uri_in_term:_
    ~refresh_uri_in_reference:_ ~alias_only status =
      let baseuri = refresh_uri baseuri in
-     if not alias_only && List.mem baseuri (get_transitively_included (D.get status)) then status
+     if not alias_only && List.mem baseuri (get_transitively_included status) then status
      else
       (HLog.warn ("include " ^ (if alias_only then "alias " else "") ^ fname);
       let status = require2 ~baseuri ~alias_only status in
@@ -293,21 +290,18 @@ module Serializer(D: sig type dumpable_s val get: dumpable_s -> dumpable_status 
     register#run "include" aux
 
   let require ~baseuri ~fname ~alias_only status =
-   if not alias_only && List.mem baseuri (get_transitively_included (D.get status)) then status
+   if not alias_only && List.mem baseuri (get_transitively_included status) then status
    else
     (let status =
      if not alias_only then
-      let s = D.get status in
-       D.set status
-        (s#set_dump {s#dump with dependencies = fname::s#dump.dependencies})
+      status#set_dump
+       {status#dump with dependencies = fname::status#dump.dependencies}
      else
       status in
     let status = require2 ~baseuri ~alias_only status in
-    let s = D.get status in
-     D.set status
-      (s#set_dump
-        {s#dump with
-          objs = record_include (baseuri,fname)::s#dump.objs }))
+      status#set_dump
+       {status#dump with
+         objs = record_include (baseuri,fname)::status#dump.objs })
 end
 
 let fetch_obj status uri =
