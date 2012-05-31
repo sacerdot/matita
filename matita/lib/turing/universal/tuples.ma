@@ -85,22 +85,26 @@ axiom append_l1_injective :
   ∀A.∀l1,l2,l3,l4:list A. |l1| = |l2| → l1@l3 = l2@l4 → l1 = l2.
 axiom append_l2_injective : 
   ∀A.∀l1,l2,l3,l4:list A. |l1| = |l2| → l1@l3 = l2@l4 → l3 = l4.
+axiom append_l1_injective_r :
+  ∀A.∀l1,l2,l3,l4:list A. |l3| = |l4| → l1@l3 = l2@l4 → l1 = l2.
+axiom append_l2_injective_r : 
+  ∀A.∀l1,l2,l3,l4:list A. |l3| = |l4| → l1@l3 = l2@l4 → l3 = l4.
 axiom cons_injective_l : ∀A.∀a1,a2:A.∀l1,l2.a1::l1 = a2::l2 → a1 = a2.
 axiom cons_injective_r : ∀A.∀a1,a2:A.∀l1,l2.a1::l1 = a2::l2 → l1 = l2.
 axiom tuple_len : ∀n,t.tuple_TM n t → |t| = 2*n+6.
 axiom append_eq_tech1 :
-  ∀A,l1,l2,l3,l4,a.l1@a::l2 = l3@l4 → |l1| < |l3| → ∃la:list A.l1@a::la = l3.
+  ∀A,l1,l2,l3,l4.l1@l2 = l3@l4 → |l1| < |l3| → ∃la:list A.l1@la = l3.
 axiom append_eq_tech2 :
   ∀A,l1,l2,l3,l4,a.l1@a::l2 = l3@l4 → memb A a l4 = false → ∃la:list A.l3 = l1@a::la.
 (*axiom list_decompose_cases : 
   ∀A,l1,l2,l3,l4,a.l1@a::l2 = l3@l4 → ∃la,lb:list A.l3 = la@a::lb ∨ l4 = la@a::lb.
 axiom list_decompose_l :
   ∀A,l1,l2,l3,l4,a.l1@a::l2 = l3@l4 → memb A a l4 = false → 
-  ∃la,lb.l2 = la@lb ∧ l3 = l1@a::la.
+  ∃la,lb.l2 = la@lb ∧ l3 = l1@a::la.*)
 axiom list_decompose_r :
   ∀A,l1,l2,l3,l4,a.l1@a::l2 = l3@l4 → memb A a l3 = false → 
   ∃la,lb.l1 = la@lb ∧ l4 = lb@a::l2.
-axiom list_decompose_memb :
+(*axiom list_decompose_memb :
   ∀A,l1,l2,l3,l4,a.l1@a::l2 = l3@l4 → |l1| < |l3| → memb A a l3 = true.*)
 
 lemma table_invert_r : ∀n,t,T.
@@ -125,7 +129,36 @@ lemma match_in_table_to_tuple :
 ]
 qed.
 
-axiom generic_match_to_match_in_table :
+lemma match_in_table_append :
+  ∀n,T,qin,cin,qout,cout,mv,t.
+  tuple_TM n t → 
+  match_in_table n qin cin qout cout mv (t@T) → 
+  t = mk_tuple qin cin qout cout mv ∨ match_in_table n qin cin qout cout mv T.
+#n #T #qin #cin #qout #cout #mv #t #Ht #Hmatch inversion Hmatch
+[ #T0 #H #H1 % >(append_l1_injective … H1) //
+  >(tuple_len … Ht) >(tuple_len … H) %
+| #qin0 #cin0 #qout0 #cout0 #mv0 #T0 #H #H1 #_ #H2 %2
+  >(append_l2_injective … H2) // >(tuple_len … Ht) >(tuple_len … H) %
+]
+qed.
+
+lemma generic_match_to_match_in_table_tech : 
+  ∀n,t,T0,T1,T2.tuple_TM n t → table_TM n (T1@〈bar,false〉::T2) → 
+   t@T0 = T1@〈bar,false〉::T2 → T1 = [] ∨ ∃T3.T1 = t@T3.
+#n #t #T0 #T1 #T2 #Ht cases T1
+[ #_ #_ % %
+| normalize #c #T1c #Htable #Heq %2
+  cases Ht in Heq; #qin * #cin * #qout * #cout * #mv **********
+  #Hqin1 #Hqout1 #Hqin2 #Hqout2 #Hcin #Hcout #Hmv #Hcoutmv #Hqinlen #Hqoutlen
+  #Heqt >Heqt whd in ⊢ (??%%→?); #Ht lapply (cons_injective_r ????? Ht)
+  #Ht' cases (list_decompose_r STape … (sym_eq … Ht') ?)
+  [ #la * #lb * #HT1c #HT0 %{lb} >HT1c @(eq_f2 ??? (append ?) (c::la)) //
+    >HT0 in Ht'; >HT1c >associative_append in ⊢ (???%→?); #Ht'
+    <(append_l1_injective_r … Ht') // <(cons_injective_l ????? Ht) %
+  |@daemon ]
+qed.
+    
+lemma generic_match_to_match_in_table :
   ∀n,T.table_TM n T → 
   ∀qin,cin,qout,cout,mv.|qin| = n → |qout| = n → 
   only_bits qin → only_bits qout → 
@@ -134,7 +167,7 @@ axiom generic_match_to_match_in_table :
   ∀t1,t2.
   T = (t1@〈bar,false〉::qin@cin::〈comma,false〉::qout@cout::〈comma,false〉::[mv])@t2 → 
   match_in_table n qin cin qout cout mv T.
-(*#n #T #Htable #qin #cin #qout #cout #mv #Hlenqin #Hlenqout
+#n #T #Htable #qin #cin #qout #cout #mv #Hlenqin #Hlenqout
 #Hqinbits #Hqoutbits #Hcin #Hcout #Hmv
 elim Htable
 [ * [ #t2 normalize in ⊢ (%→?); #Hfalse destruct (Hfalse)
@@ -142,14 +175,19 @@ elim Htable
 | #tuple #T0 #H1 #Htable0#IH #t1 #t2 #HT cases H1 #qin0 * #cin0 * #qout0 * #cout0 * #mv0
   * * * * * * * * * *
   #Hqin0marks #Hqout0marks #Hqin0bits #Hqout0bits #Hcin0 #Hcout0 #Hmv0 #Hcout0mv0
-  #Hlenqin0 #Hlenqout0 #Htuple >Htuple in H1; #H1 
-  lapply (ttm_cons … T0 H1 Htable0) #Htable
-  cases t1 in HT;
-  [ >Htuple normalize in ⊢ (??%%→?);
+  #Hlenqin0 #Hlenqout0 #Htuple 
+  lapply (generic_match_to_match_in_table_tech n ? T0 t1 
+           (qin@cin::〈comma,false〉::qout@[cout;〈comma,false〉;mv]@t2) H1) #Htmp
+  >Htuple in H1; #H1 
+  lapply (ttm_cons … T0 H1 Htable0) <Htuple in ⊢ (%→?); >HT
+  >associative_append normalize >associative_append normalize
+  >associative_append #Htable cases (Htmp Htable ?)
+  [ #Ht1 >Htuple in HT; >Ht1 normalize in ⊢ (??%%→?);
     >associative_append >associative_append #HT
     cut (qin0 = qin ∧ (〈cin0,false〉 = cin ∧ (qout0 = qout ∧ 
-         (〈cout0,false〉 = cout ∧ (〈mv0,false〉 = mv ∧ 〈bar,false〉::T0 = t2)))))
-    [ lapply (append_l1_injective … HT) [ >Hlenqin @Hlenqin0 ]
+         (〈cout0,false〉 = cout ∧ (〈mv0,false〉 = mv ∧ T0 = t2)))))
+    [ lapply (cons_injective_r ????? HT) -HT #HT 
+      lapply (append_l1_injective … HT) [ >Hlenqin @Hlenqin0 ]
       #Hqin % [ @Hqin ] -Hqin
       lapply (append_l2_injective … HT) [ >Hlenqin @Hlenqin0 ] -HT #HT
       lapply (cons_injective_l ????? HT) #Hcin % [ @Hcin ] -Hcin
@@ -165,29 +203,18 @@ elim Htable
       lapply (cons_injective_l ????? HT) #Hmv % [ @Hmv ] -Hmv
       @(cons_injective_r ????? HT) ]
     -HT * #Hqin * #Hcin * #Hqout * #Hcout * #Hmv #HT0
-    >(?:qin0@(〈cin0,false〉::〈comma,false〉::qout0@[〈cout0,false〉;〈comma,false〉;〈mv0,false〉])@〈bar,false〉::T0
-        = mk_tuple qin cin qout cout mv@〈bar,false〉::T0)
-    [|>Hqin >Hqout >Hcin >Hcout >Hmv normalize >associative_append >associative_append
-       normalize >associative_append % ]
-    % %{qin0} %{cin0} %{qout0} %{cout0} %{mv0} % // % [|@Hlenqout0] % // % 
-        [ | @Hcout0mv0 ] % // % // % // % // % // % // %
-  | #c0 #cs0 #HT cut (∃cs1.c0::cs0 = tuple@〈bar,false〉::cs1)
-    [ cases (append_eq_tech1 ?????? HT ?)
-      [ -HT #ta #Hta cases (append_eq_tech2 … Hta ?)
-        [ -Hta #tb #Htb %{tb} @Htb 
-        | @daemon ]
-      | @le_S_S >length_append >(plus_n_O (|tuple|)) >commutative_plus @le_plus
-        [ @le_O_n
-        | >Htuple normalize >length_append >length_append @le_plus [ >Hlenqin >Hlenqin0 % ]
-          @le_S_S @le_S_S >length_append >length_append @le_plus [ >Hlenqout >Hlenqout0 % ] %] ] 
-    ]
-    * #cs1 #Hcs1 >Hcs1 in HT; >associative_append >associative_append #HT
-    lapply (append_l2_injective … HT) // -HT #HT
-    lapply (cons_injective_r ????? HT) -HT
-    <associative_append #HT >Htuple %2 // @(IH … HT)
-  ]
+    >(?:〈bar,false〉::qin0@(〈cin0,false〉::〈comma,false〉::qout0@
+        [〈cout0,false〉;〈comma,false〉;〈mv0,false〉])@T0 = tuple@T0)
+    [ >Htuple >Hqin >Hqout >Hcin >Hcout >Hmv % //
+    | >Htuple normalize >associative_append normalize >associative_append
+      normalize >associative_append % ]
+  | * #T3 #HT3 >HT3 in HT; >associative_append; >associative_append #HT
+    lapply (append_l2_injective … HT) // -HT #HT %2 //
+    @(IH T3 t2) >HT >associative_append %
+  |>HT >associative_append normalize >associative_append normalize
+   >associative_append % ]
 ]
-qed.*)
+qed.
 
 (*
 lemma table_invert_l : ∀n,T0,qin,cin,qout,cout,mv.
