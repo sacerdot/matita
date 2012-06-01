@@ -68,7 +68,7 @@ notation "hvbox( ⓐ  term 55 T1 . break term 55 T2 )"
  non associative with precedence 55
  for @{ 'SnAppl $T1 $T2 }.
 
-notation "hvbox( ⓣ  term 55 T1 . break term 55 T2 )"
+notation "hvbox( ⓝ  term 55 T1 . break term 55 T2 )"
  non associative with precedence 55
  for @{ 'SnCast $T1 $T2 }.
 
@@ -188,19 +188,19 @@ notation "hvbox( L ⊢ break term 46 T1 break ▶▶* [ d , break e ] break term
    non associative with precedence 45
    for @{ 'PSubstStarAlt $L $T1 $d $e $T2 }.
 
-notation "hvbox( T1 break [ d , break e ] ≡ break term 46 T2 )"
+notation "hvbox( T1 break ▼* [ d , break e ] ≡ break term 46 T2 )"
    non associative with precedence 45
    for @{ 'TSubst $T1 $d $e $T2 }.
 
-notation "hvbox( L ⊢ break term 46 T1 break [ d , break e ] ≡ break term 46 T2 )"
+notation "hvbox( L ⊢ break term 46 T1 break ▼* [ d , break e ] ≡ break term 46 T2 )"
    non associative with precedence 45
    for @{ 'TSubst $L $T1 $d $e $T2 }.
 
-notation "hvbox( T1 break [ d , break e ] ≡ ≡ break term 46 T2 )"
+notation "hvbox( T1 break ▼▼* [ d , break e ] ≡ break term 46 T2 )"
    non associative with precedence 45
    for @{ 'TSubstAlt $T1 $d $e $T2 }.
 
-notation "hvbox( L ⊢ break term 46 T1 break [ d , break e ] ≡ ≡ break term 46 T2 )"
+notation "hvbox( L ⊢ break term 46 T1 break ▼▼* [ d , break e ] ≡ break term 46 T2 )"
    non associative with precedence 45
    for @{ 'TSubstAlt $L $T1 $d $e $T2 }.
 

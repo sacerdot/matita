@@ -49,7 +49,7 @@ lemma cpr_flat: ∀I,L,V1,V2,T1,T2.
 qed.
 
 lemma cpr_cast: ∀L,V,T1,T2.
-                L ⊢ T1 ➡ T2 → L ⊢ ⓣV. T1 ➡ T2.
+                L ⊢ T1 ➡ T2 → L ⊢ ⓝV. T1 ➡ T2.
 #L #V #T1 #T2 * /3 width=3/
 qed.
 
@@ -97,9 +97,9 @@ elim (tpr_inv_abbr1 … H1) -H1 *
 qed-.
 
 (* Basic_1: was: pr2_gen_cast *)
-lemma cpr_inv_cast1: ∀L,V1,T1,U2. L ⊢ ⓣV1. T1 ➡ U2 → (
+lemma cpr_inv_cast1: ∀L,V1,T1,U2. L ⊢ ⓝV1. T1 ➡ U2 → (
                         ∃∃V2,T2. L ⊢ V1 ➡ V2 & L ⊢ T1 ➡ T2 &
-                                 U2 = ⓣV2. T2
+                                 U2 = ⓝV2. T2
                      ) ∨ L ⊢ T1 ➡ U2.
 #L #V1 #T1 #U2 * #X #H #HU2
 elim (tpr_inv_cast1 … H) -H /3 width=3/

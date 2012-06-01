@@ -97,7 +97,7 @@ fact tpr_conf_flat_cast:
       ∃∃X. X1 ➡ X & X2 ➡ X
    ) →
    V0 ➡ V1 → T0 ➡ T1 → T0 ➡ X2 →
-   ∃∃X. ⓣV1. T1 ➡ X & X2 ➡ X.
+   ∃∃X. ⓝV1. T1 ➡ X & X2 ➡ X.
 #X2 #V0 #V1 #T0 #T1 #IH #_ #HT01 #HT02
 elim (IH … HT01 … HT02) -HT01 -HT02 -IH // /3 width=3/
 qed.

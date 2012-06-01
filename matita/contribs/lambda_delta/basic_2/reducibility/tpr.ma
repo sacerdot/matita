@@ -30,7 +30,7 @@ inductive tpr: relation term ≝
              tpr V1 V2 → ⇧[0,1] V2 ≡ V → tpr W1 W2 → tpr T1 T2 →
              tpr (ⓐV1. ⓓW1. T1) (ⓓW2. ⓐV. T2)
 | tpr_zeta : ∀V,T,T1,T2. ⇧[0,1] T1 ≡ T → tpr T1 T2 → tpr (ⓓV. T) T2
-| tpr_tau  : ∀V,T1,T2. tpr T1 T2 → tpr (ⓣV. T1) T2
+| tpr_tau  : ∀V,T1,T2. tpr T1 T2 → tpr (ⓝV. T1) T2
 .
 
 interpretation
@@ -169,8 +169,8 @@ elim (tpr_inv_appl1 … H) -H *
 qed-.
 
 (* Basic_1: was: pr0_gen_cast *)
-lemma tpr_inv_cast1: ∀V1,T1,U2. ⓣV1. T1 ➡ U2 →
-                       (∃∃V2,T2. V1 ➡ V2 & T1 ➡ T2 & U2 = ⓣV2. T2)
+lemma tpr_inv_cast1: ∀V1,T1,U2. ⓝV1. T1 ➡ U2 →
+                       (∃∃V2,T2. V1 ➡ V2 & T1 ➡ T2 & U2 = ⓝV2. T2)
                      ∨ T1 ➡ U2.
 #V1 #T1 #U2 #H
 elim (tpr_inv_flat1 … H) -H * /3 width=5/
@@ -183,7 +183,7 @@ fact tpr_inv_lref2_aux: ∀T1,T2. T1 ➡ T2 → ∀i. T2 = #i →
                         ∨∨           T1 = #i
                          | ∃∃V,T,T0. ⇧[O,1] T0 ≡ T & T0 ➡ #i &
                                      T1 = ⓓV. T
-                         | ∃∃V,T.    T ➡ #i & T1 = ⓣV. T.
+                         | ∃∃V,T.    T ➡ #i & T1 = ⓝV. T.
 #T1 #T2 * -T1 -T2
 [ #I #i #H destruct /2 width=1/
 | #I #V1 #V2 #T1 #T2 #_ #_ #i #H destruct
@@ -199,7 +199,7 @@ lemma tpr_inv_lref2: ∀T1,i. T1 ➡ #i →
                      ∨∨           T1 = #i
                       | ∃∃V,T,T0. ⇧[O,1] T0 ≡ T & T0 ➡ #i &
                                   T1 = ⓓV. T
-                      | ∃∃V,T.    T ➡ #i & T1 = ⓣV. T.
+                      | ∃∃V,T.    T ➡ #i & T1 = ⓝV. T.
 /2 width=3/ qed-.
 
 (* Basic_1: removed theorems 3:

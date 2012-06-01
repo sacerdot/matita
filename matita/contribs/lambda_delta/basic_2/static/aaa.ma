@@ -25,7 +25,7 @@ inductive aaa: lenv → term → predicate aarity ≝
 | aaa_abst: ∀L,V,T,B,A.
             aaa L V B → aaa (L. ⓛV) T A → aaa L (ⓛV. T) (②B. A)
 | aaa_appl: ∀L,V,T,B,A. aaa L V B → aaa L T (②B. A) → aaa L (ⓐV. T) A
-| aaa_cast: ∀L,V,T,A. aaa L V A → aaa L T A → aaa L (ⓣV. T) A
+| aaa_cast: ∀L,V,T,A. aaa L V A → aaa L T A → aaa L (ⓝV. T) A
 .
 
 interpretation "atomic arity assignment (term)"
@@ -111,7 +111,7 @@ lemma aaa_inv_appl: ∀L,V,T,A. L ⊢ ⓐV. T ⁝ A →
                     ∃∃B. L ⊢ V ⁝ B & L ⊢ T ⁝ ②B. A.
 /2 width=3/ qed-.
 
-fact aaa_inv_cast_aux: ∀L,T,A. L ⊢ T ⁝ A → ∀W,U. T = ⓣW. U →
+fact aaa_inv_cast_aux: ∀L,T,A. L ⊢ T ⁝ A → ∀W,U. T = ⓝW. U →
                        L ⊢ W ⁝ A ∧ L ⊢ U ⁝ A.
 #L #T #A * -L -T -A
 [ #L #k #W #U #H destruct
@@ -123,6 +123,6 @@ fact aaa_inv_cast_aux: ∀L,T,A. L ⊢ T ⁝ A → ∀W,U. T = ⓣW. U →
 ]
 qed.
 
-lemma aaa_inv_cast: ∀L,W,T,A. L ⊢ ⓣW. T ⁝ A →
+lemma aaa_inv_cast: ∀L,W,T,A. L ⊢ ⓝW. T ⁝ A →
                     L ⊢ W ⁝ A ∧ L ⊢ T ⁝ A.
 /2 width=3/ qed-.

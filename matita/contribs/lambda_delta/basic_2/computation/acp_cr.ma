@@ -42,7 +42,7 @@ definition S5 ≝ λRP,C:lenv→predicate term.
                 ∀V,T. C (L. ⓓV) (ⒶV2s. T) → RP L V → C L (ⒶV1s. ⓓV. T).
 
 definition S6 ≝ λRP,C:lenv→predicate term.
-                ∀L,Vs,T,W. C L (ⒶVs. T) → RP L W → C L (ⒶVs. ⓣW. T).
+                ∀L,Vs,T,W. C L (ⒶVs. T) → RP L W → C L (ⒶVs. ⓝW. T).
 
 definition S7 ≝ λC:lenv→predicate term. ∀L2,L1,T1,d,e.
                 C L1 T1 → ∀T2. ⇩[d, e] L2 ≡ L1 → ⇧[d, e] T1 ≡ T2 → C L2 T2.

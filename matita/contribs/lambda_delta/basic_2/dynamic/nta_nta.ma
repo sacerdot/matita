@@ -52,7 +52,7 @@ qed-.
 (* Advanced properties ******************************************************)
 
 lemma nta_cast_alt: ∀h,L,T,W,U. ⦃h, L⦄ ⊢ T : W → ⦃h, L⦄ ⊢ T : U →
-             ⦃h, L⦄ ⊢ ⓣW.T : U.
+             ⦃h, L⦄ ⊢ ⓝW.T : U.
 #h #L #T #W #U #HTW #HTU
 lapply (nta_mono … HTW … HTU) #HWU
 elim (nta_fwd_correct … HTU) -HTU /3 width=3/

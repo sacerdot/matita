@@ -30,7 +30,7 @@ inductive ntaa (h:sh): lenv → relation term ≝
              ntaa h L (ⓐV.ⓛW.T) (ⓐV.ⓛW.U)
 | ntaa_pure: ∀L,V,W,T,U. ntaa h L T U → ntaa h L (ⓐV.U) W →
              ntaa h L (ⓐV.T) (ⓐV.U)
-| ntaa_cast: ∀L,T,U,W. ntaa h L T U → ntaa h L U W → ntaa h L (ⓣU. T) U
+| ntaa_cast: ∀L,T,U,W. ntaa h L T U → ntaa h L U W → ntaa h L (ⓝU. T) U
 | ntaa_conv: ∀L,T,U1,U2,V2. ntaa h L T U1 → L ⊢ U1 ⬌* U2 → ntaa h L U2 V2 →
              ntaa h L T U2
 .
@@ -177,7 +177,7 @@ lemma nta_ind_alt: ∀h. ∀R:lenv→relation term.
    ) →
    (∀L,T,U,W.
       ⦃h, L⦄ ⊢ T : U → ⦃h, L⦄ ⊢ U : W →
-      R L T U → R L U W → R L (ⓣU.T) U
+      R L T U → R L U W → R L (ⓝU.T) U
    ) →
    (∀L,T,U1,U2,V2.
       ⦃h, L⦄ ⊢ T : U1 → L ⊢ U1 ⬌* U2 → ⦃h, L⦄ ⊢ U2 : V2 →

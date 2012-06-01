@@ -24,13 +24,13 @@ interpretation "basic thinning (local environment)"
 
 (* Basic properties *********************************************************)
 
-lemma ldrop_thin: ∀L1,L2,d,e. ⇩[d, e] L1 ≡ L2 → L1 [d, e] ≡ L2.
+lemma ldrop_thin: ∀L1,L2,d,e. ⇩[d, e] L1 ≡ L2 → L1 ▼*[d, e] ≡ L2.
 /2 width=3/ qed.
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma thin_inv_thin1: ∀I,K1,V1,L2,e. K1. ⓑ{I} V1 [0, e] ≡ L2 → 0 < e →
-                      K1 [0, e - 1] ≡ L2.
+lemma thin_inv_thin1: ∀I,K1,V1,L2,e. K1. ⓑ{I} V1 ▼*[0, e] ≡ L2 → 0 < e →
+                      K1 ▼*[0, e - 1] ≡ L2.
 #I #K1 #V1 #L2 #e * #X #HK1 #HL2 #e
 elim (ltpss_inv_tpss21 … HK1 ?) -HK1 // #K #V #HK1 #_ #H destruct
 lapply (ldrop_inv_ldrop1 … HL2 ?) -HL2 // /2 width=3/

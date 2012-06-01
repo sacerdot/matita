@@ -1,0 +1,100 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/dynamic/nta.ma".
+
+(* LOCAL ENVIRONMENT REFINEMENT FOR NATIVE TYPE ASSIGNMENT ******************)
+
+(* Note: may not be transitive *)
+inductive lsubn (h:sh): relation lenv ≝
+| lsubn_atom: lsubn h (⋆) (⋆)
+| lsubn_pair: ∀I,L1,L2,W. lsubn h L1 L2 → lsubn h (L1. ⓑ{I} W) (L2. ⓑ{I} W)
+| lsubn_abbr: ∀L1,L2,V,W. ⦃h, L1⦄ ⊢ V : W → ⦃h, L2⦄ ⊢ V : W →
+              lsubn h L1 L2 → lsubn h (L1. ⓓV) (L2. ⓛW)
+.
+
+interpretation
+  "local environment refinement (native type assigment)"
+  'CrSubEqN h L1 L2 = (lsubn h L1 L2).
+
+(* Basic inversion lemmas ***************************************************)
+
+fact lsubn_inv_atom1_aux: ∀h,L1,L2. h ⊢ L1 :⊑ L2 → L1 = ⋆ → L2 = ⋆.
+#h #L1 #L2 * -L1 -L2
+[ //
+| #I #L1 #L2 #V #_ #H destruct
+| #L1 #L2 #V #W #_ #_ #_ #H destruct
+]
+qed.
+
+lemma lsubn_inv_atom1: ∀h,L2. h ⊢ ⋆ :⊑ L2 → L2 = ⋆.
+/2 width=4/ qed-.
+
+fact lsubn_inv_pair1_aux: ∀h,L1,L2. h ⊢ L1 :⊑ L2 → ∀I,K1,V. L1 = K1. ⓑ{I} V →
+                          (∃∃K2. h ⊢ K1 :⊑ K2 & L2 = K2. ⓑ{I} V) ∨
+                          ∃∃K2,W. ⦃h, K1⦄ ⊢ V : W & ⦃h, K2⦄ ⊢ V : W &
+                                  h ⊢ K1 :⊑ K2 & L2 = K2. ⓛW & I = Abbr.
+#h #L1 #L2 * -L1 -L2
+[ #I #K1 #V #H destruct
+| #J #L1 #L2 #V #HL12 #I #K1 #W #H destruct /3 width=3/
+| #L1 #L2 #V #W #H1VW #H2VW #HL12 #I #K1 #V1 #H destruct /3 width=7/
+]
+qed.
+
+lemma lsubn_inv_pair1: ∀h,I,K1,L2,V. h ⊢ K1. ⓑ{I} V :⊑ L2 →
+                       (∃∃K2. h ⊢ K1 :⊑ K2 & L2 = K2. ⓑ{I} V) ∨
+                       ∃∃K2,W. ⦃h, K1⦄ ⊢ V : W & ⦃h, K2⦄ ⊢ V : W &
+                               h ⊢ K1 :⊑ K2 & L2 = K2. ⓛW & I = Abbr.
+/2 width=3/ qed-.
+
+fact lsubn_inv_atom2_aux: ∀h,L1,L2. h ⊢ L1 :⊑ L2 → L2 = ⋆ → L1 = ⋆.
+#h #L1 #L2 * -L1 -L2
+[ //
+| #I #L1 #L2 #V #_ #H destruct
+| #L1 #L2 #V #W #_ #_ #_ #H destruct
+]
+qed.
+
+lemma lsubc_inv_atom2: ∀h,L1. h ⊢ L1 :⊑ ⋆ → L1 = ⋆.
+/2 width=4/ qed-.
+
+fact lsubn_inv_pair2_aux: ∀h,L1,L2. h ⊢ L1 :⊑ L2 → ∀I,K2,W. L2 = K2. ⓑ{I} W →
+                          (∃∃K1. h ⊢ K1 :⊑ K2 & L1 = K1. ⓑ{I} W) ∨
+                          ∃∃K1,V. ⦃h, K1⦄ ⊢ V : W & ⦃h, K2⦄ ⊢ V : W &
+                                  h ⊢ K1 :⊑ K2 & L1 = K1. ⓓV & I = Abst.
+#h #L1 #L2 * -L1 -L2
+[ #I #K2 #W #H destruct
+| #J #L1 #L2 #V #HL12 #I #K2 #W #H destruct /3 width=3/
+| #L1 #L2 #V #W #H1VW #H2VW #HL12 #I #K2 #W2 #H destruct /3 width=7/
+]
+qed.
+
+(* Basic_1: was: csubt_gen_bind *)
+lemma lsubn_inv_pair2: ∀h,I,L1,K2,W. h ⊢ L1 :⊑ K2. ⓑ{I} W →
+                       (∃∃K1. h ⊢ K1 :⊑ K2 & L1 = K1. ⓑ{I} W) ∨
+                       ∃∃K1,V. ⦃h, K1⦄ ⊢ V : W & ⦃h, K2⦄ ⊢ V : W &
+                               h ⊢ K1 :⊑ K2 & L1 = K1. ⓓV & I = Abst.
+/2 width=3/ qed-.
+
+(* Basic properties *********************************************************)
+
+(* Basic_1: was: csubt_refl *)
+lemma lsubn_refl: ∀h,L. h ⊢ L :⊑ L.
+#h #L elim L -L // /2 width=1/
+qed.
+
+(* Basic_1: removed theorems 6:
+            csubt_gen_flat csubt_drop_flat csubt_clear_conf
+            csubt_getl_abbr csubt_getl_abst csubt_ty3_ld
+*)

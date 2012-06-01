@@ -21,7 +21,7 @@ include "basic_2/unfold/delift.ma".
 (* Main properties **********************************************************)
 
 theorem delift_mono: ∀L,T,T1,T2,d,e.
-                     L ⊢ T [d, e] ≡ T1 → L ⊢ T [d, e] ≡ T2 → T1 = T2.
+                     L ⊢ T ▼*[d, e] ≡ T1 → L ⊢ T ▼*[d, e] ≡ T2 → T1 = T2.
 #L #T #T1 #T2 #d #e * #U1 #H1TU1 #H2TU1 * #U2 #H1TU2 #H2TU2
 elim (tpss_conf_eq … H1TU1 … H1TU2) -T #U #HU1 #HU2
 lapply (tpss_inv_lift1_eq … HU1 … H2TU1) -HU1 #H destruct

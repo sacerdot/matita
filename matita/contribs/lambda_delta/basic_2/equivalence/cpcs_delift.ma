@@ -22,8 +22,8 @@ include "basic_2/equivalence/cpcs_cpcs.ma".
 
 (* Basic_1: was only: pc3_gen_cabbr *)
 lemma thin_cpcs_delift_mono: ∀L,U1,U2. L ⊢ U1 ⬌* U2 →
-                             ∀K,d,e. L [d, e] ≡ K → ∀T1. L ⊢ U1 [d, e] ≡ T1 →
-                             ∀T2. L ⊢ U2 [d, e] ≡ T2 → K ⊢ T1 ⬌* T2.
+                             ∀K,d,e. L ▼*[d, e] ≡ K → ∀T1. L ⊢ U1 ▼*[d, e] ≡ T1 →
+                             ∀T2. L ⊢ U2 ▼*[d, e] ≡ T2 → K ⊢ T1 ⬌* T2.
 #L #U1 #U2 #H #K #d #e #HLK #T1 #HTU1 #T2 #HTU2
 elim (cpcs_inv_cprs … H) -H #U #HU1 #HU2
 elim (thin_cprs_delift_conf … HU1 … HLK … HTU1) -U1 #T #HT1 #HUT

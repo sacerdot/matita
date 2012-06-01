@@ -77,7 +77,7 @@ lemma nta_inv_bind1: ∀h,I,L,Y,X,U. ⦃h, L⦄ ⊢ ⓑ{I}Y.X : U →
 elim (ntaa_inv_bind1 … (nta_ntaa … H)) -H /3 width=3 by ntaa_nta, ex3_2_intro/
 qed-.
 
-fact nta_inv_cast1_aux: ∀h,L,T,U. ⦃h, L⦄ ⊢ T : U → ∀X,Y. T = ⓣY.X →
+fact nta_inv_cast1_aux: ∀h,L,T,U. ⦃h, L⦄ ⊢ T : U → ∀X,Y. T = ⓝY.X →
                      ⦃h, L⦄ ⊢ X : Y ∧ L ⊢ Y ⬌* U.
 #h #L #T #U #H elim H -L -T -U
 [ #L #k #X #Y #H destruct
@@ -94,7 +94,7 @@ fact nta_inv_cast1_aux: ∀h,L,T,U. ⦃h, L⦄ ⊢ T : U → ∀X,Y. T = ⓣY.X 
 qed.
 
 (* Basic_1: was: ty3_gen_cast *)
-lemma nta_inv_cast1: ∀h,L,X,Y,U. ⦃h, L⦄ ⊢ ⓣY.X : U →  ⦃h, L⦄ ⊢ X : Y ∧ L ⊢ Y ⬌* U.
+lemma nta_inv_cast1: ∀h,L,X,Y,U. ⦃h, L⦄ ⊢ ⓝY.X : U →  ⦃h, L⦄ ⊢ X : Y ∧ L ⊢ Y ⬌* U.
 /2 width=3/ qed-.
 
 (* Advanced forvard lemmas **************************************************)

@@ -49,9 +49,9 @@ fact ltpss_tpss_trans_eq_aux: ∀Y1,X2,L1,T2,U2,d,e.
 #Y1 #X2 @(cw_wf_ind … Y1 X2) -Y1 -X2 #Y1 #X2 #IH
 #L1 #T2 #U2 #d #e #H @(tpss_ind_alt … H) -L1 -T2 -U2 -d -e
 [ //
-| #L1 #K1 #V1 #V2 #W2 #i #d #e #Hdi #Hide #HLK1 #HV12 #HVW2 #_ #L0 #HL10 #H1 #H2 destruct
+| #L1 #K1 #V1 #V2 #W2 #i #d #e #Hdi #Hide #HLK1 #HV12 #HVW2 #_ #L0 #HL01 #H1 #H2 destruct
   lapply (ldrop_fwd_lw … HLK1) #H1 normalize in H1;
-  elim (ltpss_ldrop_trans_be … HL10 … HLK1 ? ?) -HL10 -HLK1 // /2 width=2/ #X #H #HLK0
+  elim (ltpss_ldrop_trans_be … HL01 … HLK1 ? ?) -HL01 -HLK1 // /2 width=2/ #X #H #HLK0
   elim (ltpss_inv_tpss22 … H ?) -H /2 width=1/ #K0 #V0 #HK01 #HV01 #H destruct
   lapply (tpss_fwd_tw … HV01) #H2
   lapply (transitive_le (#[K1] + #[V0]) … H1) -H1 /2 width=1/ -H2 #H

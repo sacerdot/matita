@@ -12,19 +12,25 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reducibility/cpr_delift.ma".
-include "basic_2/computation/cprs.ma".
+include "basic_2/dynamic/lsubn_nta.ma".
 
-(* CONTEXT-SENSITIVE PARALLEL COMPUTATION ON TERMS **************************)
+(* LOCAL ENVIRONMENT REFINEMENT FOR NATIVE TYPE ASSIGNMENT ******************)
 
-(* Properties on inverse basic term relocation ******************************)
+(* Main properties **********************************************************)
 
-(* Basic_1: was only: pr3_gen_cabbr *)
-lemma thin_cprs_delift_conf: ∀L,U1,U2. L ⊢ U1 ➡* U2 →
-                             ∀K,d,e. L ▼*[d, e] ≡ K → ∀T1. L ⊢ U1 ▼*[d, e] ≡ T1 →
-                             ∃∃T2. K ⊢ T1 ➡* T2 & L ⊢ U2 ▼*[d, e] ≡ T2.
-#L #U1 #U2 #H @(cprs_ind … H) -U2 /2 width=3/
-#U #U2 #_ #HU2 #IHU1 #K #d #e #HLK #T1 #HTU1
-elim (IHU1 … HLK … HTU1) -U1 #T #HT1 #HUT
-elim (thin_cpr_delift_conf … HU2 … HLK … HUT) -U -HLK /3 width=3/
+(* Note: new property *)
+theorem lsubn_trans: ∀h,L1,L. h ⊢ L1 :⊑ L → ∀L2. h ⊢ L :⊑ L2 → h ⊢ L1 :⊑ L2.
+#h #L1 #L #H elim H -L1 -L
+[ #X #H >(lsubn_inv_atom1 … H) -H //
+| #I #L1 #L #V #HL1 #H1W #IHL1 #X #H
+  elim (lsubn_inv_pair1 … H) -H * #L2
+  [ #HL2 #H #H2W destruct /4 width=1/
+  | #W #H1VW #H2VW #HL2 #H1 #H2 destruct /3 width=3/
+  ]
+| #L1 #L #V1 #W1 #H1VW1 #H2VW1 #HL1 #IHL1 #X #H
+  elim (lsubn_inv_pair1 … H) -H * #L2
+  [ #HL2 #H #HW destruct /3 width=1/
+  | #V #_ #_ #_ #_ #H destruct
+  ]
+]
 qed.

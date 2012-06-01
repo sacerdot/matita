@@ -25,9 +25,9 @@ include "basic_2/dynamic/nta_lift.ma".
 (* Note: this is known as the substitution lemma *)
 (* Basic_1: was only: ty3_gen_cabbr *)
 lemma nta_thin_conf: ∀h,L1,T1,U1. ⦃h, L1⦄ ⊢ T1 : U1 →
-                     ∀L2,d,e. ≼ [d, e] L1 → L1 [d, e] ≡ L2 →
+                     ∀L2,d,e. ≼ [d, e] L1 → L1 ▼*[d, e] ≡ L2 →
                      ∃∃T2,U2. ⦃h, L2⦄ ⊢ T2 : U2 &
-                              L1 ⊢ T1 [d, e] ≡ T2 & L1 ⊢ U1 [d, e] ≡ U2.
+                              L1 ⊢ T1 ▼*[d, e] ≡ T2 & L1 ⊢ U1 ▼*[d, e] ≡ U2.
 #h #L1 #T1 #U1 #H elim H -L1 -T1 -U1
 [ /2 width=5/
 | #L1 #K1 #V1 #W1 #U1 #i #HLK1 #HVW1 #HWU1 #IHVW1 #L2 #d #e #HL1 #HL12
@@ -114,5 +114,5 @@ qed.
 lemma nta_ldrop_conf: ∀h,L1,T1,U1. ⦃h, L1⦄ ⊢ T1 : U1 →
                       ∀L2,d,e. ≼ [d, e] L1 → ⇩[d, e] L1 ≡ L2 →
                       ∃∃T2,U2. ⦃h, L2⦄ ⊢ T2 : U2 &
-                               L1 ⊢ T1 [d, e] ≡ T2 & L1 ⊢ U1 [d, e] ≡ U2.
+                               L1 ⊢ T1 ▼*[d, e] ≡ T2 & L1 ⊢ U1 ▼*[d, e] ≡ U2.
 /3 width=1/ qed.

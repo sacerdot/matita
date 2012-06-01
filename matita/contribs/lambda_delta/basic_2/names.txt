@@ -37,4 +37,4 @@ b: binder
 d: abbreviation
 f: flat
 l: abstraction
-t: native type annotation
+n: native type annotation

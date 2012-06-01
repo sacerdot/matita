@@ -78,8 +78,8 @@ lemma cprs_inv_sort1: ∀L,U2,k. L ⊢ ⋆k ➡* U2 → U2 = ⋆k.
 qed-.
 
 (* Basic_1: was: pr3_gen_cast *)
-lemma cprs_inv_cast1: ∀L,W1,T1,U2. L ⊢ ⓣW1.T1 ➡* U2 → L ⊢ T1 ➡* U2 ∨
-                      ∃∃W2,T2. L ⊢ W1 ➡* W2 & L ⊢ T1 ➡* T2 & U2 = ⓣW2.T2.
+lemma cprs_inv_cast1: ∀L,W1,T1,U2. L ⊢ ⓝW1.T1 ➡* U2 → L ⊢ T1 ➡* U2 ∨
+                      ∃∃W2,T2. L ⊢ W1 ➡* W2 & L ⊢ T1 ➡* T2 & U2 = ⓝW2.T2.
 #L #W1 #T1 #U2 #H @(cprs_ind … H) -U2 /3 width=5/
 #U2 #U #_ #HU2 * /3 width=3/ *
 #W #T #HW1 #HT1 #H destruct

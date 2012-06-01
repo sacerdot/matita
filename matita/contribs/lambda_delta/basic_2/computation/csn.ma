@@ -55,7 +55,7 @@ elim (term_eq_dec T1 T2) #HT12
 qed.
 
 (* Basic_1: was: sn3_cast *)
-lemma csn_cast: ∀L,W. L ⊢ ⬇* W → ∀T. L ⊢ ⬇* T → L ⊢ ⬇* ⓣW. T.
+lemma csn_cast: ∀L,W. L ⊢ ⬇* W → ∀T. L ⊢ ⬇* T → L ⊢ ⬇* ⓝW. T.
 #L #W #HW elim HW -W #W #_ #IHW #T #HT @(csn_ind … HT) -T #T #HT #IHT
 @csn_intro #X #H1 #H2
 elim (cpr_inv_cast1 … H1) -H1

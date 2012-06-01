@@ -78,22 +78,12 @@ csubc/arity csubc_arity_trans
 csubc/drop1 drop1_csubc_trans
 csubc/drop drop_csubc_trans
 
-csubt/clear csubt_clear_conf
 csubt/csuba csubt_csuba
-csubt/drop csubt_drop_flat
-csubt/drop csubt_drop_abbr
-csubt/drop csubt_drop_abst
 csubt/fwd csubt_gen_abbr
 csubt/fwd csubt_gen_abst
-csubt/fwd csubt_gen_flat
-csubt/fwd csubt_gen_bind
-csubt/getl csubt_getl_abbr
-csubt/getl csubt_getl_abst
 csubt/pc3 csubt_pr2
 csubt/pc3 csubt_pc3
-csubt/props csubt_refl
-csubt/ty3 csubt_ty3
-csubt/ty3 csubt_ty3_ld
+
 csubv/clear csubv_clear_conf
 csubv/clear csubv_clear_conf_void
 csubv/drop csubv_drop_conf

@@ -23,7 +23,7 @@ inductive trf: predicate term ≝
 | trf_appl_sn: ∀V,T.   trf V → trf (ⓐV. T)
 | trf_appl_dx: ∀V,T.   trf T → trf (ⓐV. T)
 | trf_abbr   : ∀V,T.           trf (ⓓV. T)
-| trf_cast   : ∀V,T.           trf (ⓣV. T)
+| trf_cast   : ∀V,T.           trf (ⓝV. T)
 | trf_beta   : ∀V,W,T. trf (ⓐV. ⓛW. T)
 .
 

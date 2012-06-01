@@ -134,8 +134,8 @@ elim (cprs_inv_appl1 … H) -H *
 qed-.
 
 (* Basic_1: was: pr3_iso_appls_cast *)
-lemma cprs_fwd_tau_vector: ∀L,Vs,W,T,U. L ⊢ ⒶVs. ⓣW. T ➡* U →
-                           ⒶVs. ⓣW. T ≃ U ∨ L ⊢ ⒶVs. T ➡* U.
+lemma cprs_fwd_tau_vector: ∀L,Vs,W,T,U. L ⊢ ⒶVs. ⓝW. T ➡* U →
+                           ⒶVs. ⓝW. T ≃ U ∨ L ⊢ ⒶVs. T ➡* U.
 #L #Vs elim Vs -Vs /2 width=1 by cprs_fwd_tau/
 #V #Vs #IHVs #W #T #U #H
 elim (cprs_inv_appl1 … H) -H *

@@ -22,8 +22,8 @@ include "basic_2/reducibility/cpr.ma".
 
 (* Basic_1: was only: pr2_gen_cabbr *)
 lemma thin_cpr_delift_conf: ∀L,U1,U2. L ⊢ U1 ➡ U2 →
-                            ∀K,d,e. L [d, e] ≡ K → ∀T1. L ⊢ U1 [d, e] ≡ T1 →
-                            ∃∃T2. K ⊢ T1 ➡ T2 & L ⊢ U2 [d, e] ≡ T2.
+                            ∀K,d,e. L ▼*[d, e] ≡ K → ∀T1. L ⊢ U1 ▼*[d, e] ≡ T1 →
+                            ∃∃T2. K ⊢ T1 ➡ T2 & L ⊢ U2 ▼*[d, e] ≡ T2.
 #L #U1 #U2 * #U #HU1 #HU2 #K #d #e #HLK #T1 #HTU1
 elim (tpr_delift_conf … HU1 … HTU1) -U1 #T #HT1 #HUT
 elim (le_or_ge (|L|) d) #Hd

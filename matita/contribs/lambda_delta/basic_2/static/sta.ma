@@ -27,7 +27,7 @@ inductive sta (h:sh): lenv → relation term ≝
             sta h L (ⓑ{I}V.T) (ⓑ{I}V.U)
 | sta_appl: ∀L,V,T,U. sta h L T U →
             sta h L (ⓐV.T) (ⓐV.U)
-| sta_cast: ∀L,W,T,U. sta h L T U → sta h L (ⓣW. T) U
+| sta_cast: ∀L,W,T,U. sta h L T U → sta h L (ⓝW. T) U
 .
 
 interpretation "static type assignment (term)"
@@ -111,7 +111,7 @@ lemma sta_inv_appl1: ∀h,L,Y,X,U. ⦃h, L⦄ ⊢ ⓐY.X • U →
                      ∃∃Z. ⦃h, L⦄ ⊢ X • Z & U = ⓐY.Z.
 /2 width=3/ qed-.
 
-fact sta_inv_cast1_aux: ∀h,L,T,U. ⦃h, L⦄ ⊢ T • U → ∀X,Y. T = ⓣY.X →
+fact sta_inv_cast1_aux: ∀h,L,T,U. ⦃h, L⦄ ⊢ T • U → ∀X,Y. T = ⓝY.X →
                      ⦃h, L⦄ ⊢ X • U.
 #h #L #T #U * -L -T -U
 [ #L #k #X #Y #H destruct
@@ -124,5 +124,5 @@ fact sta_inv_cast1_aux: ∀h,L,T,U. ⦃h, L⦄ ⊢ T • U → ∀X,Y. T = ⓣY.
 qed.
 
 (* Basic_1: was: sty0_gen_cast *)
-lemma sta_inv_cast1: ∀h,L,X,Y,U. ⦃h, L⦄ ⊢ ⓣY.X • U →  ⦃h, L⦄ ⊢ X • U.
+lemma sta_inv_cast1: ∀h,L,X,Y,U. ⦃h, L⦄ ⊢ ⓝY.X • U →  ⦃h, L⦄ ⊢ X • U.
 /2 width=4/ qed-.

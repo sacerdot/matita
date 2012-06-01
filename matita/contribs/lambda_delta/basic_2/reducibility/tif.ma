@@ -35,7 +35,7 @@ generalize in match HVT; -HVT elim T -T //
 * // * #U #T #_ #_ #H elim (H ?) -H /2 width=1/
 qed-.
 
-lemma tif_inv_cast: ∀V,T. 𝐈⦃ⓣV.T⦄ → ⊥.
+lemma tif_inv_cast: ∀V,T. 𝐈⦃ⓝV.T⦄ → ⊥.
 /2 width=1/ qed-.
 
 (* Basic properties *********************************************************)

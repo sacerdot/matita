@@ -53,7 +53,7 @@ lemma tnf_inv_abbr: ∀V,T. 𝐍⦃ⓓV.T⦄ → ⊥.
 ]
 qed.
 
-lemma tnf_inv_cast: ∀V,T. 𝐍⦃ⓣV.T⦄ → ⊥.
+lemma tnf_inv_cast: ∀V,T. 𝐍⦃ⓝV.T⦄ → ⊥.
 #V #T #H lapply (H T ?) -H /2 width=1/ #H
 @discr_tpair_xy_y //
 qed-.

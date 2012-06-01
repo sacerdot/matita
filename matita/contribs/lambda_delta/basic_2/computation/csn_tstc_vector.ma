@@ -90,7 +90,7 @@ qed.
 (* Basic_1: was: sn3_appls_cast *)
 lemma csn_applv_tau: ∀L,W. L ⊢ ⬇* W →
                      ∀Vs,T. L ⊢ ⬇* ⒶVs. T →
-                     L ⊢ ⬇* ⒶVs. ⓣW. T.
+                     L ⊢ ⬇* ⒶVs. ⓝW. T.
 #L #W #HW #Vs elim Vs -Vs /2 width=1/ -HW
 #V #Vs #IHV #T #H1T
 lapply (csn_fwd_pair_sn … H1T) #HV

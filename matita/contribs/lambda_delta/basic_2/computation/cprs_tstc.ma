@@ -84,8 +84,8 @@ elim (cprs_inv_appl1 … H) -H *
 ]
 qed-.
 
-lemma cprs_fwd_tau: ∀L,W,T,U. L ⊢ ⓣW. T ➡* U →
-                    ⓣW. T ≃ U ∨ L ⊢ T ➡* U.
+lemma cprs_fwd_tau: ∀L,W,T,U. L ⊢ ⓝW. T ➡* U →
+                    ⓝW. T ≃ U ∨ L ⊢ T ➡* U.
 #L #W #T #U #H
 elim (cprs_inv_cast1 … H) -H /2 width=1/ *
 #W0 #T0 #_ #_ #H destruct /2 width=1/
