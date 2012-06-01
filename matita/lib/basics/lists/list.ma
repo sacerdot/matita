@@ -84,6 +84,14 @@ theorem nil_to_nil:  ∀A.∀l1,l2:list A.
 #A #l1 #l2 #isnil @(nil_append_elim A l1 l2) /2/
 qed.
 
+lemma cons_injective_l : ∀A.∀a1,a2:A.∀l1,l2.a1::l1 = a2::l2 → a1 = a2.
+#A #a1 #a2 #l1 #l2 #Heq destruct //
+qed.
+
+lemma cons_injective_r : ∀A.∀a1,a2:A.∀l1,l2.a1::l1 = a2::l2 → l1 = l2.
+#A #a1 #a2 #l1 #l2 #Heq destruct //
+qed.
+
 (**************************** iterators ******************************)
 
 let rec map (A,B:Type[0]) (f: A → B) (l:list A) on l: list B ≝
@@ -183,15 +191,72 @@ lemma length_map: ∀A,B,l.∀f:A→B. length ? (map ?? f l) = length ? l.
 #A #B #l #f elim l // #a #tl #Hind normalize //
 qed.
 
+lemma length_reverse: ∀A.∀l:list A. 
+  |reverse A l| = |l|.
+#A #l elim l // #a #l0 #IH >reverse_cons >length_append normalize //
+qed.
+
+(****************** traversing two lists in parallel *****************)
+lemma list_ind2 : 
+  ∀T1,T2:Type[0].∀l1:list T1.∀l2:list T2.∀P:list T1 → list T2 → Prop.
+  length ? l1 = length ? l2 →
+  (P [] []) → 
+  (∀tl1,tl2,hd1,hd2. P tl1 tl2 → P (hd1::tl1) (hd2::tl2)) → 
+  P l1 l2.
+#T1 #T2 #l1 #l2 #P #Hl #Pnil #Pcons
+generalize in match Hl; generalize in match l2;
+elim l1
+[#l2 cases l2 // normalize #t2 #tl2 #H destruct
+|#t1 #tl1 #IH #l2 cases l2
+   [normalize #H destruct
+   |#t2 #tl2 #H @Pcons @IH normalize in H; destruct // ]
+]
+qed.
+
+lemma list_cases2 : 
+  ∀T1,T2:Type[0].∀l1:list T1.∀l2:list T2.∀P:Prop.
+  length ? l1 = length ? l2 →
+  (l1 = [] → l2 = [] → P) → 
+  (∀hd1,hd2,tl1,tl2.l1 = hd1::tl1 → l2 = hd2::tl2 → P) → P.
+#T1 #T2 #l1 #l2 #P #Hl @(list_ind2 … Hl)
+[ #Pnil #Pcons @Pnil //
+| #tl1 #tl2 #hd1 #hd2 #IH1 #IH2 #Hp @Hp // ]
+qed.
+
+(*********************** properties of append ***********************)
+lemma append_l1_injective : 
+  ∀A.∀l1,l2,l3,l4:list A. |l1| = |l2| → l1@l3 = l2@l4 → l1 = l2.
+#a #l1 #l2 #l3 #l4 #Hlen @(list_ind2 … Hlen) //
+#tl1 #tl2 #hd1 #hd2 #IH normalize #Heq destruct @eq_f /2/
+qed.
+  
+lemma append_l2_injective : 
+  ∀A.∀l1,l2,l3,l4:list A. |l1| = |l2| → l1@l3 = l2@l4 → l3 = l4.
+#a #l1 #l2 #l3 #l4 #Hlen @(list_ind2 … Hlen) normalize //
+#tl1 #tl2 #hd1 #hd2 #IH normalize #Heq destruct /2/
+qed.
+
+lemma append_l1_injective_r :
+  ∀A.∀l1,l2,l3,l4:list A. |l3| = |l4| → l1@l3 = l2@l4 → l1 = l2.
+#a #l1 #l2 #l3 #l4 #Hlen #Heq lapply (eq_f … (reverse ?) … Heq)
+>reverse_append >reverse_append #Heq1
+lapply (append_l2_injective … Heq1) [ // ] #Heq2
+lapply (eq_f … (reverse ?) … Heq2) //
+qed.
+  
+lemma append_l2_injective_r : 
+  ∀A.∀l1,l2,l3,l4:list A. |l3| = |l4| → l1@l3 = l2@l4 → l3 = l4.
+#a #l1 #l2 #l3 #l4 #Hlen #Heq lapply (eq_f … (reverse ?) … Heq)
+>reverse_append >reverse_append #Heq1
+lapply (append_l1_injective … Heq1) [ // ] #Heq2
+lapply (eq_f … (reverse ?) … Heq2) //
+qed.
+
 lemma length_rev_append: ∀A.∀l,acc:list A. 
   |rev_append ? l acc| = |l|+|acc|.
 #A #l elim l // #a #tl #Hind normalize 
 #acc >Hind normalize // 
 qed.
-
-lemma length_reverse: ∀A.∀l:list A. 
-  |reverse A l| = |l|.
-// qed.
 
 (****************************** mem ********************************)
 let rec mem A (a:A) (l:list A) on l ≝

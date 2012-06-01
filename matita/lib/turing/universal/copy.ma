@@ -50,9 +50,49 @@ definition R_copy_step_subcase ≝
     (x = c ∧ t2 = midtape ? (〈x,false〉::l1@〈a0,true〉::〈x,false〉::l2) 〈a,true〉 l3) ∨
     (x ≠ c ∧ RelseM t1 t2).
     
-axiom sem_copy_step_subcase : 
-  ∀alpha,c,elseM,RelseM.
+lemma sem_copy_step_subcase : 
+  ∀alpha,c,elseM,RelseM. Realize ? elseM RelseM → 
   Realize ? (copy_step_subcase alpha c elseM) (R_copy_step_subcase alpha c RelseM).
+#alpha #c #elseM #RelseM #HelseM #intape
+cases (sem_if ? (test_char ? (λx. x == 〈c,true〉)) ?????? tc_true (sem_test_char ? (λx.x == 〈c,true〉))
+        (sem_seq ????? (sem_adv_mark_r alpha)
+          (sem_seq ????? (sem_move_l …)
+            (sem_seq ????? (sem_adv_to_mark_l … (is_marked alpha))
+              (sem_seq ????? (sem_write ? 〈c,false〉)
+                (sem_seq ????? (sem_move_r …)
+                  (sem_seq ????? (sem_mark …)
+                    (sem_seq ????? (sem_move_r …) (sem_adv_to_mark_r … (is_marked alpha)))))))))
+        HelseM intape)
+#k * #outc * #Hloop #HR %{k} %{outc} % [@Hloop] -Hloop
+#a #l1 #x0 #a0 #l2 #x #l3 #Hintape #Hl1marks cases HR -HR
+[ * #ta * whd in ⊢ (%→?); >Hintape #Hta cases (Hta … (refl ??)) -Hta #Hx #Hta
+  * #tb * whd in ⊢ (%→?); #Htb lapply (Htb … Hta) -Hta -Htb #Htb
+  * #tc * whd in ⊢ (%→?); #Htc lapply (Htc … Htb) -Htb -Htc #Htc
+  * #td * whd in ⊢ (%→?); #Htd cases (Htd … Htc) -Htd
+  [ >Htc * normalize in ⊢ (%→?); #Hfalse destruct (Hfalse) ]
+  * #_ #Htd lapply (Htd (l1@[〈a0,false〉]) 〈x0,true〉 l2 ? (refl ??) ?) -Htd
+  [ #x1 #Hx1 cases (memb_append … Hx1) -Hx1 #Hx1 [@(Hl1marks ? Hx1)|>(memb_single … Hx1) %]
+  | normalize >associative_append % ] #Htd
+  * #te * whd in ⊢ (%→?); #Hte lapply (Hte … Htd) -Hte -Htd -Htc #Hte
+  * #tf * whd in ⊢ (%→?); #Htf lapply (Htf … Hte) -Hte -Htf >reverse_append #Htf
+  * #tg * whd in ⊢ (%→?); #Htg lapply (Htg … Htf) -Htf -Htg >reverse_single #Htg
+  * #th * whd in ⊢ (%→?); #Hth lapply (Hth … Htg) -Htg -Hth
+  generalize in match Hl1marks; -Hl1marks @(list_elim_left … l1)
+  [ #Hl1marks #Hth whd in ⊢ (%→?); #Houtc cases (Houtc … Hth) -Houtc
+    [ * normalize in ⊢ (%→?); #Hfalse destruct (Hfalse) ]
+    * #_ #Houtc lapply (Houtc [] ?? (refl ??) (refl ??) Hl1marks) -Houtc
+    #Houtc lapply (\P Hx) -Hx #Hx destruct (Hx) % % [%] @Houtc
+  | -l1 #c1 #l1 #_ #Hl1marks >reverse_append >reverse_single
+    #Hth whd in ⊢ (%→?); #Houtc cases (Houtc … Hth) -Houtc
+    [ * >Hl1marks [ #Hfalse destruct (Hfalse) ] @memb_append_l2 @memb_hd ]
+    * #_ #Houtc lapply (Houtc (reverse ? l1@[〈x,false〉]) 〈a,true〉 l3 ? (refl ??) ?) -Houtc
+    [ #x1 #Hx1 cases (memb_append … Hx1) -Hx1 #Hx1 [ @Hl1marks @memb_append_l1 @daemon | >(memb_single … Hx1) % ]
+    | normalize >associative_append % ] 
+    #Houtc lapply (\P Hx) -Hx #Hx destruct (Hx) % % [%] >Houtc
+    >reverse_append >reverse_reverse >associative_append >associative_append % ]
+| * #ta * whd in ⊢ (%→?); >Hintape #Hta cases (Hta ? (refl ??)) -Hta 
+  #Hxc #Hta >Hta #Houtc %2 % // lapply (\Pf Hxc) @not_to_not #Heq >Heq % ]
+qed.
     
 (*
 if current = 0,tt
@@ -101,27 +141,49 @@ definition R_nocopy_subcase ≝
      t2 = midtape ? (〈x,false〉::l1@〈a0,true〉::〈x0,false〉::l2) 〈a,true〉 l3) ∨
     (x ≠ null ∧ t2 = t1).
     
-axiom sem_nocopy_subcase : Realize ? nocopy_subcase R_nocopy_subcase.
-(* #intape
+lemma sem_nocopy_subcase : Realize ? nocopy_subcase R_nocopy_subcase.
+#intape
 cases (sem_if ? (test_char ? (λx:STape.x == 〈null,true〉)) ?????? tc_true
- (sem_test_char ? (λx:STape.x == 〈null,true〉))
-        (sem_seq … (sem_adv_mark_r …)
-           (sem_seq … (sem_move_l …)
-             (sem_seq … (sem_adv_to_mark_l … (is_marked ?))
-               (sem_seq … (sem_adv_mark_r …)
-                 (sem_seq … (sem_move_r …) (sem_adv_to_mark_r … (is_marked ?))
-                 ))))) (sem_nop ?) intape)
+        (sem_test_char ? (λx:STape.x == 〈null,true〉))
+          (sem_seq … (sem_adv_mark_r …)
+            (sem_seq … (sem_move_l …)
+              (sem_seq … (sem_adv_to_mark_l … (is_marked ?))
+                (sem_seq … (sem_adv_mark_r …)
+                  (sem_seq … (sem_move_r …) 
+                    (sem_adv_to_mark_r … (is_marked ?))))))) (sem_nop ?) intape)
 #k * #outc * #Hloop #HR @(ex_intro ?? k) @(ex_intro ?? outc)  % [@Hloop] -Hloop
-cases HR -HR
-[| * #ta * whd in ⊢ (%→%→?); #Hta #Houtc
-   #ls #x #rs #Hintape %2  >Hintape in Hta; #Hta cases (Hta ? (refl ??)) -Hta #Hx #Hta %
-   [ lapply (\Pf Hx) @not_to_not #Hx' >Hx' %
-   | <Hta @Houtc ] ]
-@daemon
-qed. *)
+#a #l1 #x0 #a0 #l2 #x #l3 #Hintape #Hl1marks cases HR -HR
+[ * #ta * whd in ⊢ (%→?); >Hintape #Hta cases (Hta … (refl ??)) -Hta #Hx #Hta
+  * #tb * whd in ⊢ (%→?); #Htb lapply (Htb … Hta) -Hta -Htb #Htb
+  * #tc * whd in ⊢ (%→?); #Htc lapply (Htc … Htb) -Htb -Htc #Htc
+  * #td * whd in ⊢ (%→?); #Htd cases (Htd … Htc) -Htd
+  [ >Htc * normalize in ⊢ (%→?); #Hfalse destruct (Hfalse) ]
+  * #_ #Htd lapply (Htd (l1@[〈a0,false〉]) 〈x0,true〉 l2 ? (refl ??) ?) -Htd
+  [ #x1 #Hx1 cases (memb_append … Hx1) -Hx1 #Hx1 [@(Hl1marks ? Hx1)|>(memb_single … Hx1) %]
+  | normalize >associative_append % ] >reverse_append #Htd
+  * #te * whd in ⊢ (%→?); #Hte lapply (Hte … Htd) -Hte -Htd -Htc #Hte
+  * #tf * whd in ⊢ (%→?); #Htf lapply (Htf … Hte) -Hte -Htf
+  generalize in match Hl1marks; -Hl1marks @(list_elim_left … l1)
+  [ #Hl1marks #Hth whd in ⊢ (%→?); #Houtc cases (Houtc … Hth) -Houtc
+    [ * normalize in ⊢ (%→?); #Hfalse destruct (Hfalse) ]
+    * #_ #Houtc lapply (Houtc [] ?? (refl ??) (refl ??) Hl1marks) -Houtc
+    #Houtc lapply (\P Hx) -Hx #Hx destruct (Hx) % % [%] @Houtc
+  | -l1 #c1 #l1 #_ #Hl1marks >reverse_append >reverse_single
+    #Hth whd in ⊢ (%→?); #Houtc cases (Houtc … Hth) -Houtc
+    [ * >Hl1marks [ #Hfalse destruct (Hfalse) ] @memb_append_l2 @memb_hd ]
+    * #_ #Houtc lapply (Houtc (reverse ? l1@[〈x,false〉]) 〈a,true〉 l3 ? (refl ??) ?) -Houtc
+    [ #x1 #Hx1 cases (memb_append … Hx1) -Hx1 #Hx1 [ @Hl1marks @memb_append_l1 @daemon | >(memb_single … Hx1) % ]
+    | normalize >associative_append % ] 
+    #Houtc lapply (\P Hx) -Hx #Hx destruct (Hx) % % [%] >Houtc
+    >reverse_append >reverse_reverse >associative_append >associative_append % ]
+| * #ta * whd in ⊢ (%→?); >Hintape #Hta cases (Hta ? (refl ??)) -Hta 
+  #Hxc #Hta >Hta whd in ⊢ (%→?); #Houtc %2 %
+  [ lapply (\Pf Hxc) @not_to_not #Heq >Heq %
+  | @Houtc ]
+qed.
 
 definition copy_step ≝
-  ifTM ? (test_char STape (λc.is_bit (\fst c)))
+  ifTM ? (test_char STape (λc.bit_or_null (\fst c)))
   (single_finalTM ? (copy_step_subcase FSUnialpha (bit false)
     (copy_step_subcase FSUnialpha (bit true) nocopy_subcase)))
   (nop ?)
@@ -144,9 +206,37 @@ definition R_copy_step_false ≝
   λt1,t2.
    ∀ls,c,rs.t1 = midtape (FinProd … FSUnialpha FinBool) ls c rs → 
    bit_or_null (\fst c) = false ∧ t2 = t1.
-
-axiom sem_copy_step : 
+   
+lemma sem_copy_step : 
   accRealize ? copy_step (inr … (inl … (inr … start_nop))) R_copy_step_true R_copy_step_false.
+#intape
+@(acc_sem_if_app … (sem_test_char ? (λc:STape.bit_or_null (\fst c)))  …
+    (sem_copy_step_subcase FSUnialpha (bit false) …
+       (sem_copy_step_subcase FSUnialpha (bit true) … (sem_nocopy_subcase …)))
+          (sem_nop …))
+[ #t1 #t2 #t3 whd in ⊢ (%→%→?); #H1 #H2 #ls #c #rs #Ht1 >Ht1 in H1; #H1
+  cases (H1 … (refl ??)) #Hc #Ht3 % [ @Hc ]
+  #a #l1 #x0 #a0 #l2 #l3 #Hls #Hrs #Hl1marks >Hls in Ht3; >Hrs #Ht3
+  cases (H2 … Ht3 ?)
+  [ * #Hc' #Ht2 % %{false} % // <Hc' @Ht2
+  | * #Hnotfalse whd in ⊢ (%→?); #Ht2 cases (Ht2 … Ht3 ?) -Ht2
+    [ * #Hc' #Ht2 % %{true} % // <Hc' @Ht2
+    |  * #Hnottrue whd in ⊢ (%→?); #Ht2 cases (Ht2 … Ht3 ?) -Ht2
+      [ * #Hc' #Ht2 %2 <Hc' % // @Ht2
+      | * #Hnotnull @False_ind
+        generalize in match Hnotnull;generalize in match Hnottrue;generalize in match Hnotfalse;
+        cases c in Hc; normalize
+        [ * [ #_ #_ * #Hfalse #_ | #_ * #Hfalse #_ #_ ]
+        | #_ #_ #_ * #Hfalse
+        |*: #Hfalse destruct (Hfalse) ] @Hfalse %
+      | @Hl1marks ]
+    | @Hl1marks ]
+  | @Hl1marks ]
+| #t1 #t2 #t3 whd in ⊢ (%→%→?); #H1 #H2 #ls #c #rs #Ht1
+  >Ht1 in H1; #H1 cases (H1 … (refl ??)) #_ #Ht3 cases (H1 ? (refl ??)) -H1
+  #Hc #Ht3 % //
+]
+qed.
 
 (*
 1) il primo carattere è marcato
@@ -200,8 +290,6 @@ lemma inj_append_singleton_l2 :
 >reverse_append >reverse_append normalize #H1 destruct %
 qed.
 
-axiom length_reverse : ∀A,l.|reverse A l| = |l|.
-
 lemma wsem_copy0 : WRealize ? copy0 R_copy0.
 #intape #k #outc #Hloop 
 lapply (sem_while … sem_copy_step intape k outc Hloop) [%] -Hloop
@@ -223,7 +311,7 @@ lapply (sem_while … sem_copy_step intape k outc Hloop) [%] -Hloop
   cases (Htc … Htb) -Htc #Hcbitnull #Htc
   % [ % #Hc' >Hc' in Hcbitnull; normalize #Hfalse destruct (Hfalse) ]
   cut (|l1| = |reverse ? l4|) [@daemon] #Hlen1
-  @(list_cases_2 … Hlen1)
+  @(list_cases2 … Hlen1)
   [ (* case l1 = [] is discriminated because l1 contains at least comma *)
     #Hl1nil @False_ind >Hl1nil in Hl1; cases l1' normalize
     [ #Hl1 destruct normalize in Hcbitnull; destruct (Hcbitnull)
@@ -410,19 +498,39 @@ lemma merge_cons :
 cases c2 /2/
 qed.
 
+lemma merge_bits : ∀l1,l2.|l1| = |l2| → only_bits l2 → merge_config l1 l2 = l2.
+#l1 #l2 #Hlen @(list_ind2 … Hlen) //
+#tl1 #tl2 #hd1 #hd2 #IH
+>(eq_pair_fst_snd … hd1) >(eq_pair_fst_snd … hd2) #Hbits
+change with (cons ???) in ⊢ (??%?); @eq_f2
+[ cases (\fst hd2) in Hbits; 
+  [ #b #_ %
+  |*: #Hfalse lapply (Hfalse … (memb_hd …)) normalize #Hfalse1 destruct (Hfalse1) ]
+| @IH #x #Hx @Hbits @memb_cons // ]
+qed.
+
 lemma merge_config_c_nil : 
   ∀c.merge_config c [] = [].
 #c cases c normalize //
 qed.
 
-axiom reverse_merge_config :
+lemma reverse_merge_config :
   ∀c1,c2.|c1| = |c2| → reverse ? (merge_config c1 c2) = 
     merge_config (reverse ? c1) (reverse ? c2).        
+#c1 #c2 <(length_reverse ? c1) <(length_reverse ? c2) #Hlen
+<(reverse_reverse ? c1) in ⊢ (??%?); <(reverse_reverse ? c2) in ⊢ (??%?);
+generalize in match Hlen; @(list_ind2 … Hlen) -Hlen //
+#tl1 #tl2 #hd1 #hd2 #IH whd in ⊢ (??%%→?); #Hlen destruct (Hlen) -Hlen
+<(length_reverse ? tl1) in e0; <(length_reverse ? tl2) #Hlen
+>reverse_cons >reverse_cons >(merge_config_append ???? Hlen)
+>reverse_append >(eq_pair_fst_snd ?? hd1) >(eq_pair_fst_snd ?? hd2)
+whd in ⊢ (??%%); @eq_f2 // @IH //
+qed.
 
 definition copy
 ≝ 
-  seq STape (move_l …) (seq ? (adv_to_mark_l … (is_marked ?))
-   (seq ? (clear_mark …) (seq ? (adv_to_mark_r … (is_marked ?)) (clear_mark …)))).
+  seq STape copy0 (seq ? (move_l …) (seq ? (adv_to_mark_l … (is_marked ?))
+   (seq ? (clear_mark …) (seq ? (adv_to_mark_r … (is_marked ?)) (clear_mark …))))).
 
 (*
    s0, s1 = caratteri di testa dello stato
@@ -438,10 +546,93 @@ definition R_copy ≝ λt1,t2.
   ∀ls,s0,s1,c0,c1,rs,l1,l3,l4.
   t1 = midtape STape (l3@〈grid,false〉::〈c0,false〉::l4@〈s0,true〉::ls) 〈s1,true〉 (l1@〈c1,false〉::〈comma,false〉::rs) → 
   no_marks l1 → no_marks l3 → no_marks l4 → |l1| = |l4| → 
-  only_bits (l4@[〈s0,true〉]) → only_bits (〈s1,true〉::l1) → 
+  only_bits (l4@[〈s0,false〉]) → only_bits (〈s1,false〉::l1) → 
   bit_or_null c0 = true → bit_or_null c1 = true → 
   t2 = midtape STape (〈c1,false〉::reverse ? l1@〈s1,false〉::l3@〈grid,false〉::
                       〈merge_char c0 c1,false〉::reverse ? l1@〈s1,false〉::ls)
        〈comma,false〉 rs.
+       
+axiom sem_copy0 : Realize ? copy0 R_copy0.
 
-axiom sem_copy : Realize ? copy R_copy.
+definition option_cons ≝ λA.λa:option A.λl.
+  match a with
+  [ None ⇒ l
+  | Some a' ⇒ a'::l ].
+
+lemma sem_copy : Realize ? copy R_copy.
+#intape 
+cases (sem_seq … (sem_copy0 …)
+        (sem_seq … (sem_move_l …)
+          (sem_seq … (sem_adv_to_mark_l … (is_marked ?))
+            (sem_seq … (sem_clear_mark …)
+              (sem_seq … (sem_adv_to_mark_r … (is_marked ?)) (sem_clear_mark …))))) intape)
+#k * #outc * #Hloop #HR %{k} %{outc} % [@Hloop] -Hloop
+#ls #s0 #s1 #c0 #c1 #rs #l1 #l2 #l3 #Hintape #Hl1marks #Hl2marks #Hl3marks #Hlen
+#Hbits1 #Hbits2 #Hc0bits #Hc1bits
+cases HR -HR #ta * whd in ⊢ (%→?); #Hta 
+cut (ta = midtape STape (〈c1,false〉::reverse ? l1@〈s1,false〉::l2@〈grid,true〉::
+                      〈merge_char c0 c1,false〉::reverse ? l1@〈s1,false〉::ls)
+       〈comma,true〉 rs)
+[lapply (Hta ls s1 s0 rs (l1@[〈c1,false〉;〈comma,false〉]) l2 (〈grid,false〉::〈c0,false〉::l3) ?)
+  [>associative_append in ⊢ (???(????%)); normalize in ⊢ (???(??%%%)); @Hintape ]
+ -Hta #Hta cases (Hta ??? (〈s1,false〉::l1@[〈c1,false〉]) false ? ? ?? (refl ??) ?)
+  [3: #x #Hx cases (memb_append … Hx) -Hx #Hx
+    [ @Hl1marks //
+    | cases (orb_true_l … Hx) -Hx #Hx [ >(\P Hx) % | >(memb_single … Hx) % ]] 
+  |4: #x #Hx cases (memb_append … Hx) -Hx #Hx
+    [ @Hl2marks //
+    | cases (orb_true_l … Hx) -Hx #Hx [ >(\P Hx) % | cases (orb_true_l … Hx) [-Hx #Hx >(\P Hx) % | @Hl3marks ] ] ]
+  |5: >length_append normalize >Hlen >commutative_plus %
+  |6: normalize >associative_append %
+  |7: #x #Hx cases (memb_append ?? (〈s1,false〉::l1) … Hx) -Hx #Hx
+    [ whd in ⊢ (??%?); >(Hbits2 … Hx) %
+    | >(memb_single … Hx) // ]
+  |8: #x #Hx cases (memb_append … Hx) -Hx #Hx
+    [ cases (orb_true_l … Hx) -Hx #Hx [ >(\P Hx) // | whd in ⊢ (??%?); >Hbits1 // @memb_append_l1 // ]
+    | >(memb_single … Hx) whd in ⊢ (??%?); >(Hbits1 〈s0,false〉) // @memb_append_l2 @memb_hd ]
+  | * #Hs1 @False_ind >Hs1 in Hbits2; #Hbits2 lapply (Hbits2 〈comma,false〉 ?) //
+    normalize #Hfalse destruct (Hfalse)
+  | * #Hs1 #Ht2 >Ht2 >reverse_cons >reverse_append >reverse_single @eq_f3 //
+    >merge_cons >merge_bits
+    [2: #x #Hx @Hbits2 cases (memb_append STape ? (reverse ? l1) ? Hx) -Hx #Hx
+      [@daemon | >(memb_single … Hx) @memb_hd ]
+    |3: >length_append >length_append >length_reverse >Hlen % ]
+    normalize >associative_append normalize >associative_append %
+  ]
+] -Hta #Hta * #tb * whd in ⊢ (%→?); #Htb
+lapply (Htb … Hta) -Htb #Htb change with (midtape ????) in Htb:(???%);
+* #tc * whd in ⊢ (%→?); #Htc 
+cases (Htc … Htb)
+[ * #Hfalse normalize in Hfalse; destruct (Hfalse) ]
+* #_ #Htc 
+lapply (Htc (reverse ? l1@〈s1,false〉::l2) 〈grid,true〉 
+          (〈merge_char c0 c1,false〉::reverse ? l1@〈s1,false〉::ls)???)
+[ #x #Hx cases (memb_append … Hx) -Hx #Hx
+  [ @Hl1marks @daemon
+  | cases (orb_true_l … Hx) -Hx #Hx
+    [ >(\P Hx) % | @(Hl2marks … Hx) ] ]
+| %
+| whd in ⊢ (??%?); >associative_append % ] -Htc #Htc
+* #td * whd in ⊢ (%→?); #Htd lapply (Htd … Htc) -Htd #Htd
+* #te * whd in ⊢ (%→?); #Hte cases (Hte … Htd) -Hte -Htd
+[ * #Hfalse normalize in Hfalse; destruct (Hfalse) ]
+* #_ #Hte 
+lapply (Hte (reverse ? (reverse ? l1@〈s1,false〉::l2)@[〈c1,false〉])
+         〈comma,true〉 rs ? (refl ??) ?) -Hte
+[ >reverse_append >reverse_cons >reverse_reverse #x #Hx
+  cases (memb_append … Hx) -Hx #Hx
+  [ cases (memb_append … Hx) -Hx #Hx
+    [ cases (memb_append … Hx) -Hx #Hx
+      [ @daemon 
+      | lapply (memb_single … Hx) -Hx #Hx >Hx % ]
+    | @(Hl1marks … Hx) ]
+  | lapply (memb_single … Hx) -Hx #Hx >Hx % ]
+| >reverse_append >reverse_reverse >reverse_cons
+  >associative_append >associative_append >associative_append
+  >associative_append >associative_append % ]
+#Hte whd in ⊢ (%→?); #Houtc lapply (Houtc … Hte) -Houtc #Houtc >Houtc
+@eq_f3 //
+>reverse_append >reverse_append >reverse_single >reverse_cons
+>reverse_append >reverse_append >reverse_reverse >reverse_reverse
+>reverse_single >associative_append >associative_append %
+qed.

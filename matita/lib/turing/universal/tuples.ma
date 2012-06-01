@@ -19,7 +19,8 @@ include "turing/universal/marks.ma".
 definition STape ≝ FinProd … FSUnialpha FinBool.
 
 definition only_bits ≝ λl.
-  ∀c.memb STape c l = true → is_bit (\fst c) = true.
+  ∀c.memb STape c l
+   = true → is_bit (\fst c) = true.
 
 definition only_bits_or_nulls ≝ λl.
   ∀c.memb STape c l = true → bit_or_null (\fst c) = true.
@@ -81,16 +82,6 @@ inductive match_in_table (n:nat) (qin:list STape) (cin: STape)
    match_in_table n qin cin qout cout mv  
      (mk_tuple qin0 cin0 qout0 cout0 mv0@tb).
      
-axiom append_l1_injective : 
-  ∀A.∀l1,l2,l3,l4:list A. |l1| = |l2| → l1@l3 = l2@l4 → l1 = l2.
-axiom append_l2_injective : 
-  ∀A.∀l1,l2,l3,l4:list A. |l1| = |l2| → l1@l3 = l2@l4 → l3 = l4.
-axiom append_l1_injective_r :
-  ∀A.∀l1,l2,l3,l4:list A. |l3| = |l4| → l1@l3 = l2@l4 → l1 = l2.
-axiom append_l2_injective_r : 
-  ∀A.∀l1,l2,l3,l4:list A. |l3| = |l4| → l1@l3 = l2@l4 → l3 = l4.
-axiom cons_injective_l : ∀A.∀a1,a2:A.∀l1,l2.a1::l1 = a2::l2 → a1 = a2.
-axiom cons_injective_r : ∀A.∀a1,a2:A.∀l1,l2.a1::l1 = a2::l2 → l1 = l2.
 axiom tuple_len : ∀n,t.tuple_TM n t → |t| = 2*n+6.
 axiom append_eq_tech1 :
   ∀A,l1,l2,l3,l4.l1@l2 = l3@l4 → |l1| < |l3| → ∃la:list A.l1@la = l3.

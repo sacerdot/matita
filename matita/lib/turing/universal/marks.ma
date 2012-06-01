@@ -864,32 +864,6 @@ definition R_compare :=
                     reverse ? la@ls)
                     〈d',false〉 (lc@〈comma,false〉::l2)).
                     
-lemma list_ind2 : 
-  ∀T1,T2:Type[0].∀l1:list T1.∀l2:list T2.∀P:list T1 → list T2 → Prop.
-  length ? l1 = length ? l2 →
-  (P [] []) → 
-  (∀tl1,tl2,hd1,hd2. P tl1 tl2 → P (hd1::tl1) (hd2::tl2)) → 
-  P l1 l2.
-#T1 #T2 #l1 #l2 #P #Hl #Pnil #Pcons
-generalize in match Hl; generalize in match l2;
-elim l1
-[#l2 cases l2 // normalize #t2 #tl2 #H destruct
-|#t1 #tl1 #IH #l2 cases l2
-   [normalize #H destruct
-   |#t2 #tl2 #H @Pcons @IH normalize in H; destruct // ]
-]
-qed.
-
-lemma list_cases_2 : 
-  ∀T1,T2:Type[0].∀l1:list T1.∀l2:list T2.∀P:Prop.
-  length ? l1 = length ? l2 →
-  (l1 = [] → l2 = [] → P) → 
-  (∀hd1,hd2,tl1,tl2.l1 = hd1::tl1 → l2 = hd2::tl2 → P) → P.
-#T1 #T2 #l1 #l2 #P #Hl @(list_ind2 … Hl)
-[ #Pnil #Pcons @Pnil //
-| #tl1 #tl2 #hd1 #hd2 #IH1 #IH2 #Hp @Hp // ]
-qed.
-
 lemma wsem_compare : WRealize ? compare R_compare.
 #t #i #outc #Hloop
 lapply (sem_while ?????? sem_comp_step t i outc Hloop) [%]
@@ -925,7 +899,7 @@ lapply (sem_while ?????? sem_comp_step t i outc Hloop) [%]
     |#b #b0 #bs #b0s #l1 #l2 #Hlen #Hbs1 #Hb0s1 #Hbs2 #Hb0s2 #Hl1
      #Heq destruct (Heq) #_ #Hrs cases Hleft -Hleft
       [2: * >Hc' #Hfalse @False_ind destruct ] * #_
-       @(list_cases_2 … Hlen)
+       @(list_cases2 … Hlen)
        [ #Hbs #Hb0s generalize in match Hrs; >Hbs in ⊢ (%→?); >Hb0s in ⊢ (%→?);
        -Hrs #Hrs normalize in Hrs; #Hleft cases (Hleft ????? Hrs ?) -Hleft
          [ * #Heqb #Htapeb cases (IH … Htapeb) -IH * #IH #_ #_
@@ -1002,5 +976,5 @@ lapply (sem_while ?????? sem_comp_step t i outc Hloop) [%]
          ]
 ]]]]]
 qed.       
-           
+
 axiom sem_compare : Realize ? compare R_compare.
