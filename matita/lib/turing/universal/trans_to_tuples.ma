@@ -12,7 +12,6 @@
 
 
 include "turing/universal/tuples.ma".
-include "basics/fun_graph.ma".
 
 (* p < n is represented with a list of bits of lenght n with the
  p-th bit from left set to 1 *)
@@ -92,21 +91,23 @@ qed.
 definition tuple_type ≝ λn.
  (Nat_to n × (option FinBool)) × (Nat_to n × (option (FinBool × move))).  
 
-definition tuple_of_pair ≝ λn.λh:Nat_to n→bool. 
-  λp:tuple_type n.
-  let 〈inp,outp〉 ≝ p in
-  let 〈q,a〉 ≝ inp in
-  let cin ≝ match a with [ None ⇒ null | Some b ⇒ bit b ] in
-  let 〈qn,action〉 ≝ outp in
-  let 〈cout,mv〉 ≝ 
-    match action with 
+definition low_action ≝ λaction. 
+  match action with 
     [ None ⇒ 〈null,null〉
     | Some act ⇒ let 〈na,m〉 ≝ act in 
       match m with 
       [ R ⇒ 〈bit na,bit true〉
       | L ⇒ 〈bit na,bit false〉
       | N ⇒ 〈bit na,null〉]
-    ] in
+    ].
+
+definition tuple_of_pair ≝ λn.λh:Nat_to n→bool. 
+  λp:tuple_type n.
+  let 〈inp,outp〉 ≝ p in
+  let 〈q,a〉 ≝ inp in
+  let cin ≝ match a with [ None ⇒ null | Some b ⇒ bit b ] in
+  let 〈qn,action〉 ≝ outp in
+  let 〈cout,mv〉 ≝ low_action action in
   let qin ≝ m_bits_of_state n h q in
   let qout ≝ m_bits_of_state n h qn in
   mk_tuple qin 〈cin,false〉 qout 〈cout,false〉 〈mv,false〉.
@@ -205,6 +206,23 @@ lemma flatten_to_mem: ∀A,n,l,l1,l2.∀a:list A. 0 < n →
       |@(ex_intro …q1) @(injective_plus_r n) 
        <Hlenl11 in ⊢ (??%?); <length_append <Heql1 >Hl1 //
       ]
+    ]
+  ]
+qed.
+
+lemma tuple_to_match:  ∀n,h,l,qin,cin,qout,cout,mv,p.
+  p = mk_tuple qin cin qout cout mv 
+  → mem ? p (tuples_of_pairs n h l) →
+  match_in_table (S n) qin cin qout cout mv (flatten ? (tuples_of_pairs n h l)).
+#n #h #l #qin #cin #qout #cout #mv #p
+#Hp elim l 
+  [whd in ⊢ (%→?); @False_ind
+  |#p1 #tl #Hind *
+    [#H whd in match (tuples_of_pairs ???);
+     <H >Hp @mit_hd //
+    |#H whd in match (tuples_of_pairs ???); 
+     cases (is_tuple n h p1) #qin1 * #cin1 * #qout1 * #cout1 * #mv1
+     * #_ #Htuplep1 >Htuplep1 @mit_tl // @Hind //
     ]
   ]
 qed.
@@ -310,3 +328,62 @@ cases (match_to_pair … Hmatch) -Hmatch * #s #t * #Heq #Hmem
 @mem_to_memb @Hmem 
 qed.
 
+(* da spistare *)
+lemma mem_map_forward: ∀A,B.∀f:A→B.∀a,l. 
+  mem A a l → mem B (f a) (map ?? f l).
+ #A #B #f #a #l elim l
+  [normalize @False_ind
+  |#b #tl #Hind * 
+    [#eqab <eqab normalize %1 % |#memtl normalize %2 @Hind @memtl]
+  ]
+qed.
+
+lemma memb_to_mem: ∀S:DeqSet.∀l,a. memb S a l =true → mem S a l.
+#S #l #a elim l 
+  [normalize #H destruct
+  |#b #tl #Hind #mema cases (orb_true_l … mema) 
+    [#eqab >(\P eqab) %1 % |#memtl %2 @Hind @memtl]
+  ]
+qed.
+
+lemma trans_to_match:
+  ∀n.∀h.∀trans: trans_source n → trans_target n.
+  ∀inp,outp,qin,cin,qout,cout,mv. trans inp = outp →
+  tuple_of_pair n h 〈inp,outp〉 = mk_tuple qin cin qout cout mv →
+  match_in_table (S n) qin cin qout cout mv (flatten ? (tuples_of_pairs n h (graph_enum ?? trans))).
+#n #h #trans #inp #outp #qin #cin #qout #cout #mv #Htrans #Htuple 
+@(tuple_to_match … (refl…)) <Htuple @mem_map_forward 
+@(memb_to_mem (FinProd (trans_source n) (trans_target n)))
+@graph_enum_complete //
+qed.
+
+(*
+lemma trans_to_match:
+  ∀n.∀h.∀trans: trans_source n → trans_target n.
+  ∀inp,outp,qin,cin,qout,cout,mv. trans inp = outp →
+  tuple_of_pair n h 〈inp,outp〉 = mk_tuple qin cin qout cout mv →
+  match_in_table (S n) qin cin qout cout mv (flatten ? (tuples_of_pairs n h (graph_enum ?? trans))).
+#n #h #trans #inp #outp #qin #cin #qout #cout #mv #Htrans #Htuple 
+@(tuple_to_match … (refl…)) <Htuple @mem_map_forward 
+@(memb_to_mem (FinProd (trans_source n) (trans_target n)))
+@graph_enum_complete //
+qed. *)
+
+
+(*
+lemma trans_to_match:
+  ∀n.∀h.∀trans: trans_source n → trans_target n.
+  ∀q,a,qn,action,qin,cin. trans 〈q,a〉 = 〈qn,action〉 →
+  qin = m_bits_of_state n h q →
+  cin = match a with [ None ⇒ null | Some b ⇒ bit b ] →
+  ∃qout,cout,mv. 
+  qout = m_bits_of_state n h qn ∧
+  (〈cout,mv〉 = match action with 
+    [ None ⇒ 〈null,null〉
+    | Some act ⇒ let 〈na,m〉 ≝ act in 
+      match m with [ R ⇒ 〈bit na,bit true〉 | L ⇒ 〈bit na,bit false〉 | N ⇒ 〈bit na,null〉] ]) ∧ 
+  match_in_table (S n) qin 〈cin,false〉 qout 〈cout,false〉 〈mv,false〉 (flatten ? (tuples_of_pairs n h (graph_enum ?? trans))).
+#n #h #trans #q #a #qn #action #qin #cin #Htrans #Hqin #Hcin
+@(ex_intro … (m_bits_of_state n h qn))
+@(ex_intro … ?) [|@(ex_intro ?) [| % [ % [% | //]]
+@(tuple_to_match … (refl…)) *)
