@@ -99,7 +99,7 @@ qed.
 lemma cprs_abst: ∀L,V1,V2. L ⊢ V1 ➡* V2 → ∀V,T1,T2.
                  L.ⓛV ⊢ T1 ➡* T2 → L ⊢ ⓛV1. T1 ➡* ⓛV2. T2.
 #L #V1 #V2 #HV12 #V #T1 #T2 #HT12 @(cprs_ind … HV12) -V2
-[ lapply (cprs_lsubs_conf … HT12 (L.ⓛV1) ?) -HT12 /2 width=2/
+[ lapply (cprs_lsubs_trans … HT12 (L.ⓛV1) ?) -HT12 /2 width=2/
 | #V0 #V2 #_ #HV02 #IHV01
   @(cprs_trans … IHV01) -V1 /2 width=2/
 ]

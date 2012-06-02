@@ -55,10 +55,10 @@ qed.
 
 (* Note: it does not hold replacing |L1| with |L2| *)
 (* Basic_1: was only: pr2_change *)
-lemma cpr_lsubs_conf: ∀L1,T1,T2. L1 ⊢ T1 ➡ T2 →
-                      ∀L2. L1 ≼ [0, |L1|] L2 → L2 ⊢ T1 ➡ T2.
+lemma cpr_lsubs_trans: ∀L1,T1,T2. L1 ⊢ T1 ➡ T2 →
+                       ∀L2. L2 ≼ [0, |L1|] L1 → L2 ⊢ T1 ➡ T2.
 #L1 #T1 #T2 * #T #HT1 #HT2 #L2 #HL12 
-lapply (tpss_lsubs_conf … HT2 … HL12) -HT2 -HL12 /3 width=4/
+lapply (tpss_lsubs_trans … HT2 … HL12) -HT2 -HL12 /3 width=4/
 qed.
 
 (* Basic inversion lemmas ***************************************************)
@@ -87,9 +87,9 @@ lemma cpr_inv_abbr1: ∀L,V1,T1,U2. L ⊢ ⓓV1. T1 ➡ U2 →
 elim (tpr_inv_abbr1 … H1) -H1 *
 [ #V #T0 #T #HV1 #HT10 #HT0 #H destruct
   elim (tpss_inv_bind1 … H2) -H2 #V2 #T2 #HV2 #HT2 #H destruct
-  lapply (tps_lsubs_conf … HT0 (L. ⓓV) ?) -HT0 /2 width=1/ #HT0
+  lapply (tps_lsubs_trans … HT0 (L. ⓓV) ?) -HT0 /2 width=1/ #HT0
   lapply (tps_weak_all … HT0) -HT0 #HT0
-  lapply (tpss_lsubs_conf … HT2 (L. ⓓV) ?) -HT2 /2 width=1/ #HT2
+  lapply (tpss_lsubs_trans … HT2 (L. ⓓV) ?) -HT2 /2 width=1/ #HT2
   lapply (tpss_weak_all … HT2) -HT2 #HT2
   lapply (tpss_strap … HT0 HT2) -T /4 width=7/
 | /4 width=5/

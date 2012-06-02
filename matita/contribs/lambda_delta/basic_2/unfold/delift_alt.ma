@@ -38,11 +38,11 @@ interpretation "inverse basic relocation (term) alternative"
 
 (* Basic properties *********************************************************)
 
-lemma delifta_lsubs_conf: ∀L1,T1,T2,d,e. L1 ⊢ T1 ▼▼*[d, e] ≡ T2 →
-                          ∀L2. L1 ≼ [d, e] L2 → L2 ⊢ T1 ▼▼*[d, e] ≡ T2.
+lemma delifta_lsubs_trans: ∀L1,T1,T2,d,e. L1 ⊢ T1 ▼▼*[d, e] ≡ T2 →
+                           ∀L2. L2 ≼ [d, e] L1 → L2 ⊢ T1 ▼▼*[d, e] ≡ T2.
 #L1 #T1 #T2 #d #e #H elim H -L1 -T1 -T2 -d -e // /2 width=1/
 [ #L1 #K1 #V1 #V2 #W2 #i #d #e #Hdi #Hide #HLK1 #_ #HVW2 #IHV12 #L2 #HL12
-  elim (ldrop_lsubs_ldrop1_abbr … HL12 … HLK1 ? ?) -HL12 -HLK1 // /3 width=6/
+  elim (ldrop_lsubs_ldrop2_abbr … HL12 … HLK1 ? ?) -HL12 -HLK1 // /3 width=6/
 | /4 width=1/
 | /3 width=1/
 ]
@@ -60,10 +60,10 @@ lemma delift_delifta: ∀L,T1,T2,d,e. L ⊢ T1 ▼*[d, e] ≡ T2 → L ⊢ T1 �
   ]
 | * #I #V1 #T1 #_ #_ #IH #X #d #e #H
   [ elim (delift_inv_bind1 … H) -H #V2 #T2 #HV12 #HT12 #H destruct
-    lapply (delift_lsubs_conf … HT12 (L.ⓑ{I}V1) ?) -HT12 /2 width=1/ #HT12
+    lapply (delift_lsubs_trans … HT12 (L.ⓑ{I}V1) ?) -HT12 /2 width=1/ #HT12
     lapply (IH … HV12) -HV12 // #HV12
     lapply (IH … HT12) -IH -HT12 /2 width=1/ #HT12
-    lapply (delifta_lsubs_conf … HT12 (L.ⓑ{I}V2) ?) -HT12 /2 width=1/
+    lapply (delifta_lsubs_trans … HT12 (L.ⓑ{I}V2) ?) -HT12 /2 width=1/
   | elim (delift_inv_flat1 … H) -H #V2 #T2 #HV12 #HT12 #H destruct
     lapply (IH … HV12) -HV12 //
     lapply (IH … HT12) -IH -HT12 // /2 width=1/

@@ -111,6 +111,15 @@ qed.
 lemma cpcs_bind_sn: ∀I,L,V1,V2,T. L ⊢ V1 ⬌* V2 → L ⊢ ⓑ{I}V1. T ⬌* ⓑ{I}V2. T.
 * /2 width=1/ /2 width=2/ qed.
 
+(* Note: it does not hold replacing |L1| with |L2| *)
+lemma cpcs_lsubs_trans: ∀L1,T1,T2. L1 ⊢ T1 ⬌* T2 →
+                        ∀L2. L2 ≼ [0, |L1|] L1 → L2 ⊢ T1 ⬌* T2.
+#L1 #T1 #T2 #HT12
+elim (cpcs_inv_cprs … HT12) -HT12
+/3 width=5 by cprs_div, cprs_lsubs_trans/ (**) (* /3 width=5/ is a bit slow *)
+qed.
+
+
 (* Basic_1: was: pc3_lift *)
 lemma cpcs_lift: ∀L,K,d,e. ⇩[d, e] L ≡ K →
                  ∀T1,U1. ⇧[d, e] T1 ≡ U1 → ∀T2,U2. ⇧[d, e] T2 ≡ U2 →

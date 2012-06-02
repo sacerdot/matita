@@ -35,7 +35,7 @@ fact aaa_ltpr_tpr_conf_aux: ∀L,T,L1,T1,A. L1 ⊢ T1 ⁝ A → L = L1 → T = T
 | #L1 #V1 #T1 #B #A #HB #HA #H1 #H2 #L2 #HL12 #X #H destruct
   elim (tpr_inv_abbr1 … H) -H *
   [ #V2 #T0 #T2 #HV12 #HT10 #HT02 #H destruct
-    lapply (tps_lsubs_conf … HT02 (L2.ⓓV2) ?) -HT02 /2 width=1/ #HT02
+    lapply (tps_lsubs_trans … HT02 (L2.ⓓV2) ?) -HT02 /2 width=1/ #HT02
     lapply (IH … HB … HL12 … HV12) -HB /width=5/ #HB
     lapply (IH … HA … (L2.ⓓV2) … HT10) -IH -HA -HT10 /width=5/ -T1 /2 width=1/ -L1 -V1 /3 width=5/
   | -B #T #HT1 #HTX

@@ -34,7 +34,7 @@ lemma cpr_abst: ∀L,V1,V2. L ⊢ V1 ➡ V2 → ∀V,T1,T2.
 lapply (tpss_inv_S2 … HT02 L V ?) -HT02 // #HT02
 @(ex2_1_intro … (ⓛV0.T0)) /2 width=1/ -V1 -T1 (**) (* explicit constructors *)
 @tpss_bind // -V0
-@(tpss_lsubs_conf (L.ⓛV)) // -T0 -T2 /2 width=1/
+@(tpss_lsubs_trans (L.ⓛV)) // -T0 -T2 /2 width=1/
 qed.
 
 (* Advanced inversion lemmas ************************************************)
@@ -58,7 +58,7 @@ lemma cpr_inv_abst1: ∀L,V1,T1,U2. L ⊢ ⓛV1. T1 ➡ U2 → ∀I,W.
 #L #V1 #T1 #Y * #X #H1 #H2 #I #W
 elim (tpr_inv_abst1 … H1) -H1 #V #T #HV1 #HT1 #H destruct
 elim (tpss_inv_bind1 … H2) -H2 #V2 #T2 #HV2 #HT2 #H destruct
-lapply (tpss_lsubs_conf … HT2 (L. ⓑ{I} W) ?) -HT2 /2 width=1/ /4 width=5/
+lapply (tpss_lsubs_trans … HT2 (L. ⓑ{I} W) ?) -HT2 /2 width=1/ /4 width=5/
 qed-.
 
 (* Basic_1: was pr2_gen_appl *)

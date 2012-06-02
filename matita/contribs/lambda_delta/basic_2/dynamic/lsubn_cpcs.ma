@@ -12,36 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/dynamic/nta_nta.ma".
-include "basic_2/dynamic/lsubn_ldrop.ma".
-include "basic_2/dynamic/lsubn_cpcs.ma".
+include "basic_2/equivalence/cpcs_cpcs.ma".
+include "basic_2/dynamic/lsubn.ma".
 
 (* LOCAL ENVIRONMENT REFINEMENT FOR NATIVE TYPE ASSIGNMENT ******************)
 
-(* Properties concerning atomic arity assignment ****************************)
+(* Properties on context-sensitive parallel equivalence for terms ***********)
 
-(* Note: the corresponding confluence property does not hold *)
-(* Basic_1: was: csubt_ty3 *)
-lemma lsubn_nta_trans: ∀h,L2,T,U. ⦃h, L2⦄ ⊢ T : U → ∀L1. h ⊢ L1 :⊑ L2 →
-                       ⦃h, L1⦄ ⊢ T : U.
-#h #L2 #T #U #H elim H -L2 -T -U
-[ //
-| #L2 #K2 #V2 #W2 #U2 #i #HLK2 #_ #WU2 #IHVW2 #L1 #HL12
-  elim (lsubn_ldrop_O1_trans … HL12 … HLK2) -L2 #X #H #HLK1
-  elim (lsubn_inv_pair2 … H) -H * #K1
-  [ #HK12 #H destruct /3 width=6/
-  | #V1 #_ #_ #_ #_ #H destruct
-  ]
-| #L2 #K2 #W2 #V2 #U2 #i #HLK2 #_ #HWU2 #IHWV2 #L1 #HL12
-  elim (lsubn_ldrop_O1_trans … HL12 … HLK2) -L2 #X #H #HLK1
-  elim (lsubn_inv_pair2 … H) -H * #K1 [ | -IHWV2 ]
-  [ #HK12 #H destruct /3 width=6/
-  | #V1 #H1V1W2 #_ #_ #H #_ destruct /2 width=6/
-  ]
-| /4 width=2/
-| /3 width=1/
-| /3 width=2/
-| /3 width=1/
-| /4 width=6/
-]
-qed.
+(* Basic_1: was: csubt_pr2 *)
+lemma cpr_lsubn_trans: ∀h,L1,L2. h ⊢ L1 :⊑ L2 →
+                       ∀T1,T2. L2 ⊢ T1 ➡ T2 → L1 ⊢ T1 ➡ T2.
+/3 width=4 by lsubn_fwd_lsubs2, cpr_lsubs_trans/ qed.
+
+lemma cprs_lsubn_trans: ∀h,L1,L2. h ⊢ L1 :⊑ L2 →
+                        ∀T1,T2. L2 ⊢ T1 ➡* T2 → L1 ⊢ T1 ➡* T2.
+/3 width=4 by lsubn_fwd_lsubs2, cprs_lsubs_trans/ qed.
+
+(* Basic_1: was: csubt_pc3 *)
+lemma cpcs_lsubn_trans: ∀h,L1,L2. h ⊢ L1 :⊑ L2 →
+                        ∀T1,T2. L2 ⊢ T1 ⬌* T2 → L1 ⊢ T1 ⬌* T2.
+/3 width=4 by lsubn_fwd_lsubs2, cpcs_lsubs_trans/ qed.

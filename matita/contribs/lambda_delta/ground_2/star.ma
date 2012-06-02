@@ -110,3 +110,16 @@ lemma NF_to_SN: ∀A,R,S,a. NF A R S a → SN A R S a.
 @SN_intro #a2 #HRa12 #HSa12
 elim (HSa12 ?) -HSa12 /2 width=1/
 qed.
+
+definition NF_sn: ∀A. relation A → relation A → predicate A ≝
+   λA,R,S,a2. ∀a1. R a1 a2 → S a2 a1.
+
+inductive SN_sn (A) (R,S:relation A): predicate A ≝
+| SN_sn_intro: ∀a2. (∀a1. R a1 a2 → (S a2 a1 → ⊥) → SN_sn A R S a1) → SN_sn A R S a2
+.
+
+lemma NF_to_SN_sn: ∀A,R,S,a. NF_sn A R S a → SN_sn A R S a.
+#A #R #S #a2 #Ha2
+@SN_sn_intro #a1 #HRa12 #HSa12
+elim (HSa12 ?) -HSa12 /2 width=1/
+qed.

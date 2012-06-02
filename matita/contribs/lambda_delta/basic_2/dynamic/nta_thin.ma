@@ -25,7 +25,7 @@ include "basic_2/dynamic/nta_lift.ma".
 (* Note: this is known as the substitution lemma *)
 (* Basic_1: was only: ty3_gen_cabbr *)
 lemma nta_thin_conf: ∀h,L1,T1,U1. ⦃h, L1⦄ ⊢ T1 : U1 →
-                     ∀L2,d,e. ≼ [d, e] L1 → L1 ▼*[d, e] ≡ L2 →
+                     ∀L2,d,e. ≽ [d, e] L1 → L1 ▼*[d, e] ≡ L2 →
                      ∃∃T2,U2. ⦃h, L2⦄ ⊢ T2 : U2 &
                               L1 ⊢ T1 ▼*[d, e] ≡ T2 & L1 ⊢ U1 ▼*[d, e] ≡ U2.
 #h #L1 #T1 #U1 #H elim H -L1 -T1 -U1
@@ -87,8 +87,8 @@ lemma nta_thin_conf: ∀h,L1,T1,U1. ⦃h, L1⦄ ⊢ T1 : U1 →
 | #I #L1 #V1 #W1 #T1 #U1 #_ #_ #IHVW1 #IHTU1 #L2 #d #e #HL1 #HL12
   elim (IHVW1 … HL1 HL12) -IHVW1 #V2 #W2 #HVW2 #HV12 #_
   elim (IHTU1 (L2.ⓑ{I}V2) (d+1) e ? ?) -IHTU1 /2 width=1/ -HL1 -HL12 #T2 #U2 #HTU2 #HT12 #HU12
-  lapply (delift_lsubs_conf … HT12 (L1.ⓑ{I}V2) ?) -HT12 /2 width=1/
-  lapply (delift_lsubs_conf … HU12 (L1.ⓑ{I}V2) ?) -HU12 /2 width=1/ /3 width=7/
+  lapply (delift_lsubs_trans … HT12 (L1.ⓑ{I}V2) ?) -HT12 /2 width=1/
+  lapply (delift_lsubs_trans … HU12 (L1.ⓑ{I}V2) ?) -HU12 /2 width=1/ /3 width=7/
 | #L1 #V1 #W1 #T1 #U1 #_ #_ #IHVW1 #IHTU1 #L2 #d #e #HL1 #HL12
   elim (IHVW1 … HL1 HL12) -IHVW1 #V2 #W2 #HVW2 #HV12 #HW12
   elim (IHTU1 … HL1 HL12) -IHTU1 -HL1 -HL12 #X2 #Y2 #HXY2 #HX2 #HY2
@@ -112,7 +112,7 @@ lemma nta_thin_conf: ∀h,L1,T1,U1. ⦃h, L1⦄ ⊢ T1 : U1 →
 qed.
 
 lemma nta_ldrop_conf: ∀h,L1,T1,U1. ⦃h, L1⦄ ⊢ T1 : U1 →
-                      ∀L2,d,e. ≼ [d, e] L1 → ⇩[d, e] L1 ≡ L2 →
+                      ∀L2,d,e. ≽ [d, e] L1 → ⇩[d, e] L1 ≡ L2 →
                       ∃∃T2,U2. ⦃h, L2⦄ ⊢ T2 : U2 &
                                L1 ⊢ T1 ▼*[d, e] ≡ T2 & L1 ⊢ U1 ▼*[d, e] ≡ U2.
 /3 width=1/ qed.

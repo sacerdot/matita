@@ -19,7 +19,7 @@ include "basic_2/static/aaa.ma".
 inductive lsuba: relation lenv ≝
 | lsuba_atom: lsuba (⋆) (⋆)
 | lsuba_pair: ∀I,L1,L2,V. lsuba L1 L2 → lsuba (L1. ⓑ{I} V) (L2. ⓑ{I} V)
-| lsuba_abbr: ∀L1,L2,V,W,A. L1 ⊢ V ⁝ A → L2 ⊢ W ⁝ A → 
+| lsuba_abbr: ∀L1,L2,V,W,A. L1 ⊢ V ⁝ A → L2 ⊢ W ⁝ A →
               lsuba L1 L2 → lsuba (L1. ⓓV) (L2. ⓛW)
 .
 

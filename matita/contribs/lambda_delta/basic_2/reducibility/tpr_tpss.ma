@@ -44,16 +44,16 @@ lemma tpr_tps_ltpr: ∀T1,T2. T1 ➡ T2 →
   elim (tps_inv_bind1 … HY) -HY #WW #TT1 #_ #HTT1 #H destruct
   elim (IHV12 … HVV1 … HL12) -V1 #VV2 #HVV12 #HVV2
   elim (IHT12 … HTT1 (L2. ⓛWW) ?) -T1 /2 width=1/ -HL12 #TT2 #HTT12 #HTT2
-  lapply (tpss_lsubs_conf … HTT2 (L2. ⓓVV2) ?) -HTT2 /3 width=5/
+  lapply (tpss_lsubs_trans … HTT2 (L2. ⓓVV2) ?) -HTT2 /3 width=5/
 | #I #V1 #V2 #T1 #T2 #U2 #HV12 #_ #HTU2 #IHV12 #IHT12 #L1 #d #e #X #H #L2 #HL12
   elim (tps_inv_bind1 … H) -H #VV1 #TT1 #HVV1 #HTT1 #H destruct
   elim (IHV12 … HVV1 … HL12) -V1 #VV2 #HVV12 #HVV2
   elim (IHT12 … HTT1 (L2. ⓑ{I} VV2) ?) -T1 /2 width=1/ -HL12 #TT2 #HTT12 #HTT2
   elim (tpss_strip_neq … HTT2 … HTU2 ?) -T2 /2 width=1/ #T2 #HTT2 #HUT2
-  lapply (tps_lsubs_conf … HTT2 (L2. ⓑ{I} V2) ?) -HTT2 /2 width=1/ #HTT2
+  lapply (tps_lsubs_trans … HTT2 (L2. ⓑ{I} V2) ?) -HTT2 /2 width=1/ #HTT2
   elim (ltpss_tps_conf … HTT2 (L2. ⓑ{I} VV2) (d + 1) e ?) -HTT2 /2 width=1/ #W2 #HTTW2 #HTW2
-  lapply (tps_lsubs_conf … HTTW2 (⋆. ⓑ{I} VV2) ?) -HTTW2 /2 width=1/ #HTTW2
-  lapply (tpss_lsubs_conf … HTW2 (L2. ⓑ{I} VV2) ?) -HTW2 /2 width=1/ #HTW2
+  lapply (tps_lsubs_trans … HTTW2 (⋆. ⓑ{I} VV2) ?) -HTTW2 /2 width=1/ #HTTW2
+  lapply (tpss_lsubs_trans … HTW2 (L2. ⓑ{I} VV2) ?) -HTW2 /2 width=1/ #HTW2
   lapply (tpss_trans_eq … HUT2 … HTW2) -T2 /3 width=5/
 | #V #V1 #V2 #W1 #W2 #T1 #T2 #_ #HV2 #_ #_ #IHV12 #IHW12 #IHT12 #L1 #d #e #X #H #L2 #HL12
   elim (tps_inv_flat1 … H) -H #VV1 #Y #HVV1 #HY #HX destruct

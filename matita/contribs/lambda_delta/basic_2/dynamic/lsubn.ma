@@ -87,6 +87,16 @@ lemma lsubn_inv_pair2: ∀h,I,L1,K2,W. h ⊢ L1 :⊑ K2. ⓑ{I} W →
                                h ⊢ K1 :⊑ K2 & L1 = K1. ⓓV & I = Abst.
 /2 width=3/ qed-.
 
+(* Basic_forward lemmas *****************************************************)
+
+lemma lsubn_fwd_lsubs1: ∀h,L1,L2. h ⊢ L1 :⊑ L2 → L1 ≼[0, |L1|] L2.
+#h #L1 #L2 #H elim H -L1 -L2 // /2 width=1/
+qed-.
+
+lemma lsubn_fwd_lsubs2: ∀h,L1,L2. h ⊢ L1 :⊑ L2 → L1 ≼[0, |L2|] L2.
+#h #L1 #L2 #H elim H -L1 -L2 // /2 width=1/
+qed-.
+
 (* Basic properties *********************************************************)
 
 (* Basic_1: was: csubt_refl *)

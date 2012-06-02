@@ -33,11 +33,11 @@ theorem tps_conf_eq: ∀L,T0,T1,d1,e1. L ⊢ T0 ▶ [d1, e1] T1 →
   ]
 | #L #I #V0 #V1 #T0 #T1 #d1 #e1 #_ #_ #IHV01 #IHT01 #X #d2 #e2 #HX
   elim (tps_inv_bind1 … HX) -HX #V2 #T2 #HV02 #HT02 #HX destruct
-  lapply (tps_lsubs_conf … HT02 (L. ⓑ{I} V1) ?) -HT02 /2 width=1/ #HT02
+  lapply (tps_lsubs_trans … HT02 (L. ⓑ{I} V1) ?) -HT02 /2 width=1/ #HT02
   elim (IHV01 … HV02) -V0 #V #HV1 #HV2
   elim (IHT01 … HT02) -T0 #T #HT1 #HT2
-  lapply (tps_lsubs_conf … HT1 (L. ⓑ{I} V) ?) -HT1 /2 width=1/
-  lapply (tps_lsubs_conf … HT2 (L. ⓑ{I} V) ?) -HT2 /3 width=5/
+  lapply (tps_lsubs_trans … HT1 (L. ⓑ{I} V) ?) -HT1 /2 width=1/
+  lapply (tps_lsubs_trans … HT2 (L. ⓑ{I} V) ?) -HT2 /3 width=5/
 | #L #I #V0 #V1 #T0 #T1 #d1 #e1 #_ #_ #IHV01 #IHT01 #X #d2 #e2 #HX
   elim (tps_inv_flat1 … HX) -HX #V2 #T2 #HV02 #HT02 #HX destruct
   elim (IHV01 … HV02) -V0
@@ -71,8 +71,8 @@ theorem tps_conf_neq: ∀L1,T0,T1,d1,e1. L1 ⊢ T0 ▶ [d1, e1] T1 →
   elim (IHV01 … HV02 H) -V0 #V #HV1 #HV2
   elim (IHT01 … HT02 ?) -T0
   [ -H #T #HT1 #HT2
-    lapply (tps_lsubs_conf … HT1 (L2. ⓑ{I} V) ?) -HT1 /2 width=1/
-    lapply (tps_lsubs_conf … HT2 (L1. ⓑ{I} V) ?) -HT2 /2 width=1/ /3 width=5/
+    lapply (tps_lsubs_trans … HT1 (L2. ⓑ{I} V) ?) -HT1 /2 width=1/
+    lapply (tps_lsubs_trans … HT2 (L1. ⓑ{I} V) ?) -HT2 /2 width=1/ /3 width=5/
   | -HV1 -HV2 >plus_plus_comm_23 >plus_plus_comm_23 in ⊢ (? ? %); elim H -H #H
     [ @or_introl | @or_intror ] /2 by monotonic_le_plus_l/ (**) (* /3 / is too slow *)
   ]
@@ -100,9 +100,9 @@ theorem tps_trans_ge: ∀L,T1,T0,d,e. L ⊢ T1 ▶ [d, e] T0 →
   <(tps_inv_lift1_eq … HVT2 … HVW) -HVT2 /2 width=4/
 | #L #I #V1 #V0 #T1 #T0 #d #e #_ #_ #IHV10 #IHT10 #X #H #He
   elim (tps_inv_bind1 … H) -H #V2 #T2 #HV02 #HT02 #H destruct
-  lapply (tps_lsubs_conf … HT02 (L. ⓑ{I} V0) ?) -HT02 /2 width=1/ #HT02
+  lapply (tps_lsubs_trans … HT02 (L. ⓑ{I} V0) ?) -HT02 /2 width=1/ #HT02
   lapply (IHT10 … HT02 He) -T0 #HT12
-  lapply (tps_lsubs_conf … HT12 (L. ⓑ{I} V2) ?) -HT12 /2 width=1/ /3 width=1/
+  lapply (tps_lsubs_trans … HT12 (L. ⓑ{I} V2) ?) -HT12 /2 width=1/ /3 width=1/
 | #L #I #V1 #V0 #T1 #T0 #d #e #_ #_ #IHV10 #IHT10 #X #H #He
   elim (tps_inv_flat1 … H) -H #V2 #T2 #HV02 #HT02 #H destruct /3 width=1/
 ]
@@ -119,11 +119,11 @@ theorem tps_trans_down: ∀L,T1,T0,d1,e1. L ⊢ T1 ▶ [d1, e1] T0 →
   <(tps_inv_lift1_eq … HWT2 … HVW) -HWT2 /4 width=4/
 | #L #I #V1 #V0 #T1 #T0 #d1 #e1 #_ #_ #IHV10 #IHT10 #X #d2 #e2 #HX #de2d1
   elim (tps_inv_bind1 … HX) -HX #V2 #T2 #HV02 #HT02 #HX destruct
-  lapply (tps_lsubs_conf … HT02 (L. ⓑ{I} V0) ?) -HT02 /2 width=1/ #HT02
+  lapply (tps_lsubs_trans … HT02 (L. ⓑ{I} V0) ?) -HT02 /2 width=1/ #HT02
   elim (IHV10 … HV02 ?) -IHV10 -HV02 // #V
   elim (IHT10 … HT02 ?) -T0 /2 width=1/ #T #HT1 #HT2
-  lapply (tps_lsubs_conf … HT1 (L. ⓑ{I} V) ?) -HT1 /2 width=1/
-  lapply (tps_lsubs_conf … HT2 (L. ⓑ{I} V2) ?) -HT2 /2 width=1/ /3 width=6/
+  lapply (tps_lsubs_trans … HT1 (L. ⓑ{I} V) ?) -HT1 /2 width=1/
+  lapply (tps_lsubs_trans … HT2 (L. ⓑ{I} V2) ?) -HT2 /2 width=1/ /3 width=6/
 | #L #I #V1 #V0 #T1 #T0 #d1 #e1 #_ #_ #IHV10 #IHT10 #X #d2 #e2 #HX #de2d1
   elim (tps_inv_flat1 … HX) -HX #V2 #T2 #HV02 #HT02 #HX destruct
   elim (IHV10 … HV02 ?) -V0 //

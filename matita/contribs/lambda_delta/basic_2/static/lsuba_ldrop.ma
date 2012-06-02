@@ -19,7 +19,6 @@ include "basic_2/static/lsuba.ma".
 (* Properties concerning basic local environment slicing ********************)
 
 (* Note: the constant 0 cannot be generalized *)
-
 lemma lsuba_ldrop_O1_conf: ∀L1,L2. L1 ⁝⊑ L2 → ∀K1,e. ⇩[0, e] L1 ≡ K1 →
                            ∃∃K2. K1 ⁝⊑ K2 & ⇩[0, e] L2 ≡ K2.
 #L1 #L2 #H elim H -L1 -L2
@@ -41,6 +40,7 @@ lemma lsuba_ldrop_O1_conf: ∀L1,L2. L1 ⁝⊑ L2 → ∀K1,e. ⇩[0, e] L1 ≡ 
 ]
 qed-.
 
+(* Note: the constant 0 cannot be generalized *)
 lemma lsuba_ldrop_O1_trans: ∀L1,L2. L1 ⁝⊑ L2 → ∀K2,e. ⇩[0, e] L2 ≡ K2 →
                             ∃∃K1. K1 ⁝⊑ K2 & ⇩[0, e] L1 ≡ K1.
 #L1 #L2 #H elim H -L1 -L2

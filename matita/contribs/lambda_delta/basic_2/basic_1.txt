@@ -81,8 +81,6 @@ csubc/drop drop_csubc_trans
 csubt/csuba csubt_csuba
 csubt/fwd csubt_gen_abbr
 csubt/fwd csubt_gen_abst
-csubt/pc3 csubt_pr2
-csubt/pc3 csubt_pc3
 
 csubv/clear csubv_clear_conf
 csubv/clear csubv_clear_conf_void

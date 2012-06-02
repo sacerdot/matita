@@ -148,13 +148,13 @@ lemma ldrop_O1: ∀L,i. i < |L| → ∃∃I,K,V. ⇩[0, i] L ≡ K.ⓑ{I}V.
   lapply (lt_plus_to_lt_l … H) -H #Hi
   elim (IHL i ?) // /3 width=4/
 ]
-qed.   
+qed.
 
-lemma ldrop_lsubs_ldrop1_abbr: ∀L1,L2,d,e. L1 ≼ [d, e] L2 →
-                               ∀K1,V,i. ⇩[0, i] L1 ≡ K1. ⓓV →
+lemma ldrop_lsubs_ldrop2_abbr: ∀L1,L2,d,e. L1 ≼ [d, e] L2 →
+                               ∀K2,V,i. ⇩[0, i] L2 ≡ K2. ⓓV →
                                d ≤ i → i < d + e →
-                               ∃∃K2. K1 ≼ [0, d + e - i - 1] K2 &
-                                     ⇩[0, i] L2 ≡ K2. ⓓV.
+                               ∃∃K1. K1 ≼ [0, d + e - i - 1] K2 &
+                                     ⇩[0, i] L1 ≡ K1. ⓓV.
 #L1 #L2 #d #e #H elim H -L1 -L2 -d -e
 [ #d #e #K1 #V #i #H
   lapply (ldrop_inv_atom1 … H) -H #H destruct

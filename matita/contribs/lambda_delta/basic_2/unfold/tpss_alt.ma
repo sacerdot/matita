@@ -35,12 +35,12 @@ interpretation "parallel unfold (term) alternative"
 
 (* Basic properties *********************************************************)
 
-lemma tpssa_lsubs_conf: ∀L1,T1,T2,d,e. L1 ⊢ T1 ▶▶* [d, e] T2 →
-                        ∀L2. L1 ≼ [d, e] L2 → L2 ⊢ T1 ▶▶* [d, e] T2.
+lemma tpssa_lsubs_trans: ∀L1,T1,T2,d,e. L1 ⊢ T1 ▶▶* [d, e] T2 →
+                         ∀L2. L2 ≼ [d, e] L1 → L2 ⊢ T1 ▶▶* [d, e] T2.
 #L1 #T1 #T2 #d #e #H elim H -L1 -T1 -T2 -d -e
 [ //
 | #L1 #K1 #V1 #V2 #W2 #i #d #e #Hdi #Hide #HLK1 #_ #HVW2 #IHV12 #L2 #HL12
-  elim (ldrop_lsubs_ldrop1_abbr … HL12 … HLK1 ? ?) -HL12 -HLK1 // /3 width=6/
+  elim (ldrop_lsubs_ldrop2_abbr … HL12 … HLK1 ? ?) -HL12 -HLK1 // /3 width=6/
 | /4 width=1/
 | /3 width=1/
 ]
@@ -62,10 +62,10 @@ lemma tpssa_tps_trans: ∀L,T1,T,d,e. L ⊢ T1 ▶▶* [d, e] T →
   elim (tps_inv_lift1_be … H … H0LK … HVW2 ? ?) -H -H0LK -HVW2 // /3 width=6/
 | #L #I #V1 #V #T1 #T #d #e #_ #_ #IHV1 #IHT1 #X #H
   elim (tps_inv_bind1 … H) -H #V2 #T2 #HV2 #HT2 #H destruct
-  lapply (tps_lsubs_conf … HT2 (L.ⓑ{I}V) ?) -HT2 /2 width=1/ #HT2
+  lapply (tps_lsubs_trans … HT2 (L.ⓑ{I}V) ?) -HT2 /2 width=1/ #HT2
   lapply (IHV1 … HV2) -IHV1 -HV2 #HV12
   lapply (IHT1 … HT2) -IHT1 -HT2 #HT12
-  lapply (tpssa_lsubs_conf … HT12 (L.ⓑ{I}V2) ?) -HT12 /2 width=1/
+  lapply (tpssa_lsubs_trans … HT12 (L.ⓑ{I}V2) ?) -HT12 /2 width=1/
 | #L #I #V1 #V #T1 #T #d #e #_ #_ #IHV1 #IHT1 #X #H
   elim (tps_inv_flat1 … H) -H #V2 #T2 #HV2 #HT2 #H destruct /3 width=1/
 ]
