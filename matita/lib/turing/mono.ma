@@ -12,12 +12,12 @@
 include "basics/vectors.ma".
 (* include "basics/relations.ma". *)
 
-(*
-record tape (sig:FinSet): Type[0] ≝ 
-{ left : list (option sig);
-  right: list (option sig)
-}.
-*)
+(******************************** tape ****************************************)
+
+(* A tape is essentially a triple 〈left,current,right〉 where however the current 
+symbol could be missing. This may happen for three different reasons: both tapes 
+are empty; we are on the left extremity of a non-empty tape (left overflow), or 
+we are on the right extremity of a non-empty tape (right overflow). *)
 
 inductive tape (sig:FinSet) : Type[0] ≝ 
 | niltape : tape sig
@@ -27,22 +27,15 @@ inductive tape (sig:FinSet) : Type[0] ≝
 
 definition left ≝ 
  λsig.λt:tape sig.match t with
- [ niltape ⇒ [] 
- | leftof _ _ ⇒ [] 
- | rightof s l ⇒ s::l
- | midtape l _ _ ⇒ l ].
+ [ niltape ⇒ [] | leftof _ _ ⇒ [] | rightof s l ⇒ s::l | midtape l _ _ ⇒ l ].
 
 definition right ≝ 
  λsig.λt:tape sig.match t with
- [ niltape ⇒ [] 
- | leftof s r ⇒ s::r 
- | rightof _ _ ⇒ []
- | midtape _ _ r ⇒ r ].
+ [ niltape ⇒ [] | leftof s r ⇒ s::r | rightof _ _ ⇒ []| midtape _ _ r ⇒ r ].
  
 definition current ≝ 
  λsig.λt:tape sig.match t with
- [ midtape _ c _ ⇒ Some ? c
- | _ ⇒ None ? ].
+ [ midtape _ c _ ⇒ Some ? c | _ ⇒ None ? ].
  
 definition mk_tape : 
   ∀sig:FinSet.list sig → option sig → list sig → tape sig ≝ 
@@ -55,12 +48,9 @@ definition mk_tape :
     | cons l0 ls0 ⇒ rightof ? l0 ls0 ] ].
 
 inductive move : Type[0] ≝
-| L : move 
-| R : move
-| N : move
-.
+  | L : move | R : move | N : move.
 
-(* We do not distinuish an input tape *)
+(********************************** machine ***********************************)
 
 record TM (sig:FinSet): Type[1] ≝ 
 { states : FinSet;
@@ -69,23 +59,6 @@ record TM (sig:FinSet): Type[1] ≝
   halt : states → bool
 }.
 
-record config (sig,states:FinSet): Type[0] ≝ 
-{ cstate : states;
-  ctape: tape sig
-}.
-
-(* definition option_hd ≝ λA.λl:list (option A).
-  match l with
-  [nil ⇒ None ?
-  |cons a _ ⇒ a
-  ].
-  *)
-
-(*definition tape_write ≝ λsig.λt:tape sig.λs:sig.
-  <left ? t) s (right ? t).
-  [ None ⇒ t
-  | Some s' ⇒ midtape ? (left ? t) s' (right ? t) ].*)
-  
 definition tape_move_left ≝ λsig:FinSet.λlt:list sig.λc:sig.λrt:list sig.
   match lt with
   [ nil ⇒ leftof sig c rt
@@ -106,49 +79,18 @@ definition tape_move ≝ λsig.λt: tape sig.λm:option (sig × move).
       | L ⇒ tape_move_left ? (left ? t) s (right ? t)
       | N ⇒ midtape ? (left ? t) s (right ? t)
       ] ].
-(*
-  (None,[]) → □
-  (None,a::[]) → □
-  (None,a::b::rs) → None::b::rs
-  (Some a,[]) → [Some a]
-  (Some a,b::rs) → Some a::rs
-  *)
-(*
-definition option_cons ≝ λA.λa:option A.λl.
-  match a with
-  [ None ⇒ match l with
-    [ nil ⇒ []
-    | cons _ _ ⇒ a::l ]
-  | Some _ ⇒ a::l ].
-  
-(* definition tape_update := λsig.λt: tape sig.λs:option sig.
-  let newright ≝ 
-    match right ? t with
-    [ nil ⇒ match s with
-      [ None ⇒ [] 
-      | Some a ⇒ [Some ? a] ]
-    | cons b rs ⇒ match s with
-      [ None ⇒ match rs with
-        [ nil ⇒ [] 
-        | cons _ _ ⇒ None ?::rs ]
-      | Some a ⇒ Some ? a::rs ] ]
-  in mk_tape ? (left ? t) newright. *)
-  
-definition tape_move ≝ λsig.λt:tape sig.λm:option sig × move.
-  let 〈s,m1〉 ≝ m in match m1 with
-    [ R ⇒ mk_tape sig (option_cons ? s (left ? t)) (tail ? (right ? t))
-    | L ⇒ mk_tape sig (tail ? (left ? t)) 
-           (option_cons ? (option_hd ? (left ? t))
-             (option_cons ? s (tail ? (right ? t))))
-    | N ⇒ mk_tape sig (left ? t) (option_cons ? s (tail ? (right ? t)))
-    ].
-*)
+
+record config (sig,states:FinSet): Type[0] ≝ 
+{ cstate : states;
+  ctape: tape sig
+}.
   
 definition step ≝ λsig.λM:TM sig.λc:config sig (states sig M).
   let current_char ≝ current ? (ctape ?? c) in
   let 〈news,mv〉 ≝ trans sig M 〈cstate ?? c,current_char〉 in
   mk_config ?? news (tape_move sig (ctape ?? c) mv).
-  
+
+(******************************** loop ****************************************)
 let rec loop (A:Type[0]) n (f:A→A) p a on n ≝
   match n with 
   [ O ⇒ None ?
@@ -156,14 +98,14 @@ let rec loop (A:Type[0]) n (f:A→A) p a on n ≝
   ].
   
 lemma loop_S_true : 
-  ∀A,n,f,p,a.  p a = true → 
-  loop A (S n) f p a = Some ? a.
+  ∀A,n,f,p,a. p a = true → 
+    loop A (S n) f p a = Some ? a.
 #A #n #f #p #a #pa normalize >pa //
 qed.
 
 lemma loop_S_false : 
   ∀A,n,f,p,a.  p a = false → 
-  loop A (S n) f p a = loop A n f p (f a).
+    loop A (S n) f p a = loop A n f p (f a).
 normalize #A #n #f #p #a #Hpa >Hpa %
 qed.  
   
@@ -190,8 +132,7 @@ lemma loop_merge : ∀A,f,p,q.(∀b. p b = false → q b = false) →
    [#eqa1a2 destruct #eqa2a3 #Hqa2 #H
     whd in ⊢ (??(??%???)?); >plus_n_Sm @loop_incr
     whd in ⊢ (??%?); >Hqa2 >eqa2a3 @H
-   |normalize >(Hpq … pa1) normalize 
-    #H1 #H2 #H3 @(Hind … H2) //
+   |normalize >(Hpq … pa1) normalize #H1 #H2 #H3 @(Hind … H2) //
    ]
  ]
 qed.
@@ -220,46 +161,6 @@ lemma loop_split : ∀A,f,p,q.(∀b. q b = true → p b = true) →
   ]
 qed.
 
-(*
-lemma loop_split : ∀A,f,p,q.(∀b. p b = false → q b = false) →
- ∀k1,k2,a1,a2,a3.
-   loop A k1 f p a1 = Some ? a2 → 
-     loop A k2 f q a2 = Some ? a3 →
-       loop A (k1+k2) f q a1 = Some ? a3.
-#Sig #f #p #q #Hpq #k1 elim k1 
-  [normalize #k2 #a1 #a2 #a3 #H destruct
-  |#k1' #Hind #k2 #a1 #a2 #a3 normalize in ⊢ (%→?→?);
-   cases (true_or_false (p a1)) #pa1 >pa1 normalize in ⊢ (%→?);
-   [#eqa1a2 destruct #H @loop_incr //
-   |normalize >(Hpq … pa1) normalize 
-    #H1 #H2 @(Hind … H2) //
-   ]
- ]
-qed.
-*)
-
-definition initc ≝ λsig.λM:TM sig.λt.
-  mk_config sig (states sig M) (start sig M) t.
-
-definition Realize ≝ λsig.λM:TM sig.λR:relation (tape sig).
-∀t.∃i.∃outc.
-  loop ? i (step sig M) (λc.halt sig M (cstate ?? c)) (initc sig M t) = Some ? outc ∧
-  R t (ctape ?? outc).
-
-definition WRealize ≝ λsig.λM:TM sig.λR:relation (tape sig).
-∀t,i,outc.
-  loop ? i (step sig M) (λc.halt sig M (cstate ?? c)) (initc sig M t) = Some ? outc → 
-  R t (ctape ?? outc).
-
-definition Terminate ≝ λsig.λM:TM sig.λt. ∃i,outc.
-  loop ? i (step sig M) (λc.halt sig M (cstate ?? c)) (initc sig M t) = Some ? outc.
-
-lemma WRealize_to_Realize : ∀sig.∀M: TM sig.∀R.
-  (∀t.Terminate sig M t) → WRealize sig M R → Realize sig M R.
-#sig #M #R #HT #HW #t cases (HT … t) #i * #outc #Hloop 
-@(ex_intro … i) @(ex_intro … outc) % // @(HW … i) //
-qed.
-
 lemma loop_eq : ∀sig,f,q,i,j,a,x,y. 
   loop sig i f q a = Some ? x → loop sig j f q a = Some ? y → x = y.
 #sig #f #q #i #j @(nat_elim2 … i j)
@@ -271,25 +172,49 @@ lemma loop_eq : ∀sig,f,q,i,j,a,x,y.
 ]
 qed.
 
-theorem Realize_to_WRealize : ∀sig,M,R.Realize sig M R → WRealize sig M R.
-#sig #M #R #H1 #inc #i #outc #Hloop
-cases (H1 inc) #k * #outc1 * #Hloop1 #HR
->(loop_eq … Hloop Hloop1) //
+(************************** Realizability *************************************)
+definition loopM ≝ λsig,M,i,cin.
+  loop ? i (step sig M) (λc.halt sig M (cstate ?? c)) cin.
+
+definition initc ≝ λsig.λM:TM sig.λt.
+  mk_config sig (states sig M) (start sig M) t.
+
+definition Realize ≝ λsig.λM:TM sig.λR:relation (tape sig).
+∀t.∃i.∃outc.
+  loopM sig M i (initc sig M t) = Some ? outc ∧ R t (ctape ?? outc).
+
+definition WRealize ≝ λsig.λM:TM sig.λR:relation (tape sig).
+∀t,i,outc.
+  loopM sig M i (initc sig M t) = Some ? outc → R t (ctape ?? outc).
+
+definition Terminate ≝ λsig.λM:TM sig.λt. ∃i,outc.
+  loopM sig M i (initc sig M t) = Some ? outc.
+
+lemma WRealize_to_Realize : ∀sig.∀M: TM sig.∀R.
+  (∀t.Terminate sig M t) → WRealize sig M R → Realize sig M R.
+#sig #M #R #HT #HW #t cases (HT … t) #i * #outc #Hloop 
+@(ex_intro … i) @(ex_intro … outc) % // @(HW … i) //
 qed.
 
-definition accRealize ≝ λsig.λM:TM sig.λacc:states sig M.λRtrue,Rfalse:relation (tape sig).
+theorem Realize_to_WRealize : ∀sig,M,R.
+  Realize sig M R → WRealize sig M R.
+#sig #M #R #H1 #inc #i #outc #Hloop 
+cases (H1 inc) #k * #outc1 * #Hloop1 #HR >(loop_eq … Hloop Hloop1) //
+qed.
+
+definition accRealize ≝ λsig.λM:TM sig.λacc:states sig M.λRtrue,Rfalse.
 ∀t.∃i.∃outc.
-  loop ? i (step sig M) (λc.halt sig M (cstate ?? c)) (initc sig M t) = Some ? outc ∧
-  (cstate ?? outc = acc → Rtrue t (ctape ?? outc)) ∧ 
-  (cstate ?? outc ≠ acc → Rfalse t (ctape ?? outc)).
+  loopM sig M i (initc sig M t) = Some ? outc ∧
+    (cstate ?? outc = acc → Rtrue t (ctape ?? outc)) ∧ 
+    (cstate ?? outc ≠ acc → Rfalse t (ctape ?? outc)).
+
+(******************************** NOP Machine *********************************)
 
 (* NO OPERATION
-
-  t1 = t2
-  *)
+   t1 = t2 *)
   
 definition nop_states ≝ initN 1.
-definition start_nop : initN 1 ≝ mk_Sig ?? 0 (le_n … (S 0)).
+definition start_nop : initN 1 ≝ mk_Sig ?? 0 (le_n … 1).
 
 definition nop ≝ 
   λalpha:FinSet.mk_TM alpha nop_states
@@ -304,7 +229,7 @@ lemma sem_nop :
 @(ex_intro … (mk_config ?? start_nop intape)) % % 
 qed.
 
-(* Compositions *)
+(************************** Sequential Composition ****************************)
 
 definition seq_trans ≝ λsig. λM1,M2 : TM sig. 
 λp. let 〈s,a〉 ≝ p in
@@ -329,28 +254,6 @@ definition seq ≝ λsig. λM1,M2 : TM sig.
 
 definition Rcomp ≝ λA.λR1,R2:relation A.λa1,a2.
   ∃am.R1 a1 am ∧ R2 am a2.
-
-(*
-definition injectRl ≝ λsig.λM1.λM2.λR.
-   λc1,c2. ∃c11,c12. 
-     inl … (cstate sig M1 c11) = cstate sig (seq sig M1 M2) c1 ∧ 
-     inl … (cstate sig M1 c12) = cstate sig (seq sig M1 M2) c2 ∧
-     ctape sig M1 c11 = ctape sig (seq sig M1 M2) c1 ∧ 
-     ctape sig M1 c12 = ctape sig (seq sig M1 M2) c2 ∧ 
-     R c11 c12.
-
-definition injectRr ≝ λsig.λM1.λM2.λR.
-   λc1,c2. ∃c21,c22. 
-     inr … (cstate sig M2 c21) = cstate sig (seq sig M1 M2) c1 ∧ 
-     inr … (cstate sig M2 c22) = cstate sig (seq sig M1 M2) c2 ∧
-     ctape sig M2 c21 = ctape sig (seq sig M1 M2) c1 ∧ 
-     ctape sig M2 c22 = ctape sig (seq sig M1 M2) c2 ∧ 
-     R c21 c22.
-     
-definition Rlink ≝ λsig.λM1,M2.λc1,c2.
-  ctape sig (seq sig M1 M2) c1 = ctape sig (seq sig M1 M2) c2 ∧
-  cstate sig (seq sig M1 M2) c1 = inl … (halt sig M1) ∧
-  cstate sig (seq sig M1 M2) c2 = inr … (start sig M2). *)
   
 interpretation "relation composition" 'compose R1 R2 = (Rcomp ? R1 R2).
 
