@@ -45,7 +45,19 @@ definition tight_apart: ∀A.∀eq,ap:relation A.Prop
 definition antisymmetric: ∀A.∀R:relation A.Prop
 ≝ λA.λR.∀x,y:A. R x y → ¬(R y x).
 
-(********** functions **********)
+(********** operations **********)
+definition Runion ≝ λA.λR1,R2:relation A.λa,b. R1 a b ∨ R2 a b.
+interpretation "union of relations" 'union R1 R2 = (Runion ? R1 R2).
+    
+definition Rintersection ≝ λA.λR1,R2:relation A.λa,b.R1 a b ∧ R2 a b.
+interpretation "interesecion of relations" 'intersects R1 R2 = (Rintersection ? R1 R2).
+
+definition inv ≝ λA.λR:relation A.λa,b.R b a.
+
+definition subR ≝ λA.λR,S:relation A.(∀a,b. R a b → S a b).
+interpretation "relation inclusion" 'subseteq R S = (subR ? R S).
+
+(**********P functions **********)
 
 definition compose ≝
   λA,B,C:Type[0].λf:B→C.λg:A→B.λx:A.f (g x).

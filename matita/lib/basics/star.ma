@@ -11,12 +11,6 @@
 
 include "basics/relations.ma".
 
-(********** relations **********)
-
-definition subR ≝ λA.λR,S:relation A.(∀a,b. R a b → S a b).
-
-definition inv ≝ λA.λR:relation A.λa,b.R b a.
-
 (* transitive closcure (plus) *)
 
 inductive TC (A:Type[0]) (R:relation A) (a:A): A → Prop ≝
