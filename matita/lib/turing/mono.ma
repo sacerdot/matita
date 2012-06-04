@@ -189,15 +189,23 @@ definition WRealize ≝ λsig.λM:TM sig.λR:relation (tape sig).
 
 definition Terminate ≝ λsig.λM:TM sig.λt. ∃i,outc.
   loopM sig M i (initc sig M t) = Some ? outc.
+  
+notation "M \vDash R" non associative with precedence 45 for @{ 'models $M $R}.
+interpretation "realizability" 'models M R = (Realize ? M R).
+
+notation "M \VDash R" non associative with precedence 45 for @{ 'wmodels $M $R}.
+interpretation "weak realizability" 'wmodels M R = (WRealize ? M R).
+
+interpretation "termination" 'fintersects M t = (Terminate ? M t).
 
 lemma WRealize_to_Realize : ∀sig.∀M: TM sig.∀R.
-  (∀t.Terminate sig M t) → WRealize sig M R → Realize sig M R.
+  (∀t.M ↓ t) → M ⊫ R → M ⊨ R.
 #sig #M #R #HT #HW #t cases (HT … t) #i * #outc #Hloop 
 @(ex_intro … i) @(ex_intro … outc) % // @(HW … i) //
 qed.
 
-theorem Realize_to_WRealize : ∀sig,M,R.
-  Realize sig M R → WRealize sig M R.
+theorem Realize_to_WRealize : ∀sig.∀M:TM sig.∀R.
+  M ⊨ R → M ⊫ R.
 #sig #M #R #H1 #inc #i #outc #Hloop 
 cases (H1 inc) #k * #outc1 * #Hloop1 #HR >(loop_eq … Hloop Hloop1) //
 qed.
@@ -224,7 +232,7 @@ definition nop ≝
 definition R_nop ≝ λalpha.λt1,t2:tape alpha.t2 = t1.
 
 lemma sem_nop :
-  ∀alpha.Realize alpha (nop alpha) (R_nop alpha).
+  ∀alpha.nop alpha ⊨ R_nop alpha.
 #alpha #intape @(ex_intro ?? 1) 
 @(ex_intro … (mk_config ?? start_nop intape)) % % 
 qed.
@@ -236,12 +244,8 @@ definition seq_trans ≝ λsig. λM1,M2 : TM sig.
   match s with 
   [ inl s1 ⇒ 
       if halt sig M1 s1 then 〈inr … (start sig M2), None ?〉
-      else 
-      let 〈news1,m〉 ≝ trans sig M1 〈s1,a〉 in
-      〈inl … news1,m〉
-  | inr s2 ⇒ 
-      let 〈news2,m〉 ≝ trans sig M2 〈s2,a〉 in
-      〈inr … news2,m〉
+      else let 〈news1,m〉 ≝ trans sig M1 〈s1,a〉 in 〈inl … news1,m〉
+  | inr s2 ⇒ let 〈news2,m〉 ≝ trans sig M2 〈s2,a〉 in 〈inr … news2,m〉
   ].
  
 definition seq ≝ λsig. λM1,M2 : TM sig. 
@@ -249,8 +253,11 @@ definition seq ≝ λsig. λM1,M2 : TM sig.
     (FinSum (states sig M1) (states sig M2))
     (seq_trans sig M1 M2) 
     (inl … (start sig M1))
-    (λs.match s with
+    (λs.match s with 
       [ inl _ ⇒ false | inr s2 ⇒ halt sig M2 s2]). 
+
+notation "a · b" non associative with precedence 65 for @{ 'middot $a $b}.
+interpretation "sequential composition" 'middot a b = (seq ? a b).
 
 definition Rcomp ≝ λA.λR1,R2:relation A.λa1,a2.
   ∃am.R1 a1 am ∧ R2 am a2.
@@ -317,10 +324,8 @@ lemma step_lift_confR : ∀sig,M1,M2,c0.
   [ #Heq #Hhalt
   | 2,3: #s1 #l1 #Heq #Hhalt 
   |#ls #s1 #rs #Heq #Hhalt ]
-  whd in ⊢ (???(????%)); >Heq
-  whd in ⊢ (???%);
-  whd in ⊢ (??(???%)?); whd in ⊢ (??%?);
-  >(trans_liftR … Heq) //
+  whd in ⊢ (???(????%)); >Heq whd in ⊢ (???%);
+  whd in ⊢ (??(???%)?); whd in ⊢ (??%?); >(trans_liftR … Heq) //
 qed.
 
 lemma step_lift_confL : ∀sig,M1,M2,c0.
@@ -334,10 +339,8 @@ lemma step_lift_confL : ∀sig,M1,M2,c0.
   [ #Heq #Hhalt
   | 2,3: #s1 #l1 #Heq #Hhalt 
   |#ls #s1 #rs #Heq #Hhalt ]
-  whd in ⊢ (???(????%)); >Heq
-  whd in ⊢ (???%);
-  whd in ⊢ (??(???%)?); whd in ⊢ (??%?);
-  >(trans_liftL … Heq) //
+  whd in ⊢ (???(????%)); >Heq whd in ⊢ (???%);
+  whd in ⊢ (??(???%)?); whd in ⊢ (??%?); >(trans_liftL … Heq) //
 qed.
 
 lemma loop_lift : ∀A,B,k,lift,f,g,h,hlift,c1,c2.
@@ -349,69 +352,23 @@ lemma loop_lift : ∀A,B,k,lift,f,g,h,hlift,c1,c2.
 generalize in match c1; elim k
 [#c0 normalize in ⊢ (??%? → ?); #Hfalse destruct (Hfalse)
 |#k0 #IH #c0 whd in ⊢ (??%? → ??%?);
- cases (true_or_false (h c0)) #Hc0 >Hfg >Hc0
- [ normalize #Heq destruct (Heq) %
- | normalize <Hhlift // @IH ]
+ cases (true_or_false (h c0)) #Hc0 >Hfg >Hc0 normalize
+ [ #Heq destruct (Heq) % | <Hhlift // @IH ]
 qed.
 
-(* 
-lemma loop_liftL : ∀sig,k,M1,M2,c1,c2.
-  loop ? k (step sig M1) (λc.halt sig M1 (cstate ?? c)) c1 = Some ? c2 →
-    loop ? k (step sig (seq sig M1 M2)) 
-      (λc.halt_liftL ?? (halt sig M1) (cstate ?? c)) (lift_confL … c1) = 
-    Some ? (lift_confL … c2).
-#sig #k #M1 #M2 #c1 #c2 generalize in match c1;
-elim k
-[#c0 normalize in ⊢ (??%? → ?); #Hfalse destruct (Hfalse)
-|#k0 #IH #c0 whd in ⊢ (??%? → ??%?);
- cases (true_or_false (halt ?? (cstate sig (states ? M1) c0))) #Hc0 >Hc0
- [ >(?: halt_liftL ?? (halt sig M1) (cstate sig ? (lift_confL … c0)) = true)
-   [ whd in ⊢ (??%? → ??%?); #Hc2 destruct (Hc2) %
-   | <Hc0 cases c0 // ]
- | >(?: halt_liftL ?? (halt sig M1) (cstate ?? (lift_confL … c0)) = false)
-   [whd in ⊢ (??%? → ??%?); #Hc2 <(IH ? Hc2) @eq_f
-    @step_lift_confL //
-   | <Hc0 cases c0 // ]
-qed.
-
-lemma loop_liftR : ∀sig,k,M1,M2,c1,c2.
-  loop ? k (step sig M2) (λc.halt sig M2 (cstate ?? c)) c1 = Some ? c2 →
-    loop ? k (step sig (seq sig M1 M2)) 
-      (λc.halt sig (seq sig M1 M2) (cstate ?? c)) (lift_confR … c1) = 
-    Some ? (lift_confR … c2).
-#sig #k #M1 #M2 #c1 #c2 generalize in match c1;
-elim k
-[#c0 normalize in ⊢ (??%? → ?); #Hfalse destruct (Hfalse)
-|#k0 #IH #c0 whd in ⊢ (??%? → ??%?);
- cases (true_or_false (halt ?? (cstate sig ? c0))) #Hc0 >Hc0
- [ >(?: halt ? (seq sig M1 M2) (cstate sig ? (lift_confR … c0)) = true)
-   [ whd in ⊢ (??%? → ??%?); #Hc2 destruct (Hc2) %
-   | <Hc0 cases c0 // ]
- | >(?: halt ? (seq sig M1 M2) (cstate sig ? (lift_confR … c0)) = false)
-   [whd in ⊢ (??%? → ??%?); #Hc2 <(IH ? Hc2) @eq_f
-    @step_lift_confR //
-   | <Hc0 cases c0 // ]
- ]
-qed.  
-
-*)
-    
 lemma loop_Some : 
   ∀A,k,f,p,a,b.loop A k f p a = Some ? b → p b = true.
 #A #k #f #p elim k 
-[#a #b normalize #Hfalse destruct
-|#k0 #IH #a #b whd in ⊢ (??%? → ?); cases (true_or_false (p a)) #Hpa
- [ >Hpa normalize #H1 destruct //
- | >Hpa normalize @IH
- ]
-]
+  [#a #b normalize #Hfalse destruct
+  |#k0 #IH #a #b whd in ⊢ (??%? → ?); cases (true_or_false (p a)) #Hpa
+    [ >Hpa normalize #H1 destruct // | >Hpa normalize @IH ]
+  ]
 qed. 
 
 lemma trans_liftL_true : ∀sig,M1,M2,s,a.
   halt ? M1 s = true → 
   trans sig (seq sig M1 M2) 〈inl … s,a〉 = 〈inr … (start ? M2),None ?〉.
-#sig #M1 #M2 #s #a
-#Hhalt whd in ⊢ (??%?); >Hhalt %
+#sig #M1 #M2 #s #a #Hhalt whd in ⊢ (??%?); >Hhalt %
 qed.
 
 lemma eq_ctape_lift_conf_L : ∀sig,S1,S2,outc.
@@ -424,9 +381,8 @@ lemma eq_ctape_lift_conf_R : ∀sig,S1,S2,outc.
 #sig #S1 #S2 #outc cases outc #s #t %
 qed.
 
-theorem sem_seq: ∀sig,M1,M2,R1,R2.
-  Realize sig M1 R1 → Realize sig M2 R2 → 
-    Realize sig (seq sig M1 M2) (R1 ∘ R2).
+theorem sem_seq: ∀sig.∀M1,M2:TM sig.∀R1,R2.
+  M1 ⊨ R1 → M2 ⊨ R2 → M1 · M2 ⊨ R1 ∘ R2.
 #sig #M1 #M2 #R1 #R2 #HR1 #HR2 #t 
 cases (HR1 t) #k1 * #outc1 * #Hloop1 #HM1
 cases (HR2 (ctape sig (states ? M1) outc1)) #k2 * #outc2 * #Hloop2 #HM2
