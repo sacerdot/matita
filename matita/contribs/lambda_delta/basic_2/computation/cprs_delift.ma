@@ -13,11 +13,17 @@
 (**************************************************************************)
 
 include "basic_2/reducibility/cpr_delift.ma".
+include "basic_2/reducibility/cpr_cpr.ma".
 include "basic_2/computation/cprs.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL COMPUTATION ON TERMS **************************)
 
 (* Properties on inverse basic term relocation ******************************)
+
+lemma cprs_zeta_delift: ∀L,V,T1,T2. L.ⓓV ⊢ T1 ▼*[O, 1] ≡ T2 → L ⊢ ⓓV.T1 ➡* T2.
+#L #V #T1 #T2 * #T #HT1 #HT2
+@(cprs_strap2 … (ⓓV.T)) [ /3 width=3/ | @inj /3 width=3/ ] (**) (* explicit constructor, /5 width=3/ is too slow *)
+qed.
 
 (* Basic_1: was only: pr3_gen_cabbr *)
 lemma thin_cprs_delift_conf: ∀L,U1,U2. L ⊢ U1 ➡* U2 →

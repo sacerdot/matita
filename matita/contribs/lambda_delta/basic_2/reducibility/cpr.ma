@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/cl_shift.ma".
 include "basic_2/unfold/tpss.ma".
 include "basic_2/reducibility/tpr.ma".
 

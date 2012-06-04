@@ -117,6 +117,13 @@ elim (lift_trans_le … HT2 … HTU ?) -T // -Hddt #T #HT2 #HTU
 >(lift_mono … HTU2 … HT2) -T2 /2 width=3/
 qed.
 
+lemma delift_inv_lift1_eq: ∀L,U1,T2,d,e. L ⊢ U1 ▼*[d, e] ≡ T2 →
+                           ∀K. ⇩[d, e] L ≡ K → ∀T1. ⇧[d, e] T1 ≡ U1 → T1 = T2.
+#L #U1 #T2 #d #e * #U2 #HU12 #HTU2 #K #HLK #T1 #HTU1
+lapply (tpss_inv_lift1_eq … HU12 … HTU1) -L -K #H destruct
+lapply (lift_inj … HTU1 … HTU2) -U2 //
+qed-.
+
 lemma delift_lift_div_be: ∀L,T1,T,d,e,i. L ⊢ T1 ▼*[i, d + e - i] ≡ T →
                           ∀T2. ⇧[d, i - d] T2 ≡ T → d ≤ i → i ≤ d + e →
                           L ⊢ T1 ▼*[d, e] ≡ T2.

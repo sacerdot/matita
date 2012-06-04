@@ -20,6 +20,10 @@ include "basic_2/equivalence/cpcs_cpcs.ma".
 
 (* Properties on inverse basic term relocation ******************************)
 
+lemma cpcs_zeta_delift_comm: ∀L,V,T1,T2. L.ⓓV ⊢ T1 ▼*[O, 1] ≡ T2 →
+                             L ⊢ T2 ⬌* ⓓV.T1.
+/3 width=1/ qed.
+
 (* Basic_1: was only: pc3_gen_cabbr *)
 lemma thin_cpcs_delift_mono: ∀L,U1,U2. L ⊢ U1 ⬌* U2 →
                              ∀K,d,e. L ▼*[d, e] ≡ K → ∀T1. L ⊢ U1 ▼*[d, e] ≡ T1 →

@@ -1,6 +1,8 @@
 H        = @
 XOA_DIR  = ../../../components/binaries/xoa
 XOA      = xoa.native
+DEP_DIR  = ../../../components/binaries/matitadep
+DEP      = matitadep.native
 
 CONF     = ground_2/xoa.conf.xml
 TARGETS  = ground_2/xoa_natation.ma ground_2/xoa.ma
@@ -26,6 +28,14 @@ $(TARGETS): $(CONF)
 orig: $(ORIGS)
 	@echo "  ORIG basic_2"
 	$(H)$(ORIG) basic_2 < $(ORIGS)
+
+# dep ########################################################################
+
+deps: MAS = $(shell find $* -name "*.ma")
+
+deps: $(DEP_DIR)/$(DEP)
+	@echo "  MATITADEP"
+	$(H)grep "include \"" $(MAS) | $<
 
 # stats ######################################################################
 

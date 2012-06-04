@@ -1,0 +1,6 @@
+EXEC = matitadep
+VERSION=0.1.0
+
+REQUIRES =
+
+include ../Makefile.common

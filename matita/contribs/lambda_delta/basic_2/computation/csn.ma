@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reducibility/cpr.ma".
 include "basic_2/reducibility/cnf.ma".
 
 (* CONTEXT-SENSITIVE STRONGLY NORMALIZING TERMS *****************************)

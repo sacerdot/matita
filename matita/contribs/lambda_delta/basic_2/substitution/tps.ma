@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/cl_weight.ma".
 include "basic_2/substitution/ldrop.ma".
 
 (* PARALLEL SUBSTITUTION ON TERMS *******************************************)

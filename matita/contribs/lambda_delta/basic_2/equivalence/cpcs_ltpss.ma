@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unfold/ltpss_ltpss.ma".
 include "basic_2/equivalence/cpcs_cpcs.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL EQUIVALENCE ON TERMS **************************)

@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unfold/ltpss_ltpss.ma".
 include "basic_2/reducibility/ltpr_ltpss.ma".
 include "basic_2/reducibility/ltpr_ltpr.ma".
 include "basic_2/reducibility/lcpr.ma".
