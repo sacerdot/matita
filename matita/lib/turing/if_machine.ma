@@ -11,6 +11,8 @@
 
 include "turing/mono.ma".
 
+(**************************** single final machine ****************************)
+
 definition single_finalTM ≝ 
   λsig.λM:TM sig.seq ? M (nop ?).
 
@@ -21,6 +23,20 @@ cases (sem_seq ????? HR (sem_nop …) intape)
 #k * #outc * #Hloop * #ta * #Hta whd in ⊢ (%→?); #Houtc
 @(ex_intro ?? k) @(ex_intro ?? outc) %  [ @Hloop | >Houtc // ]
 qed.
+
+lemma single_final: ∀sig.∀M: TM sig.∀q1,q2.
+  halt ? (single_finalTM sig M) q1 = true 
+    →  halt ? (single_finalTM sig M) q2 = true → q1=q2.
+#sig #M * 
+  [#q1M #q2 whd in match (halt ???); #H destruct
+  |#q1nop *
+    [#q2M #_ whd in match (halt ???); #H destruct
+    |#q2nop #_ #_ @eq_f normalize @nop_single_state
+    ]
+  ]
+qed.
+  
+(******************************** if machine **********************************)
 
 definition if_trans ≝ λsig. λM1,M2,M3 : TM sig. λq:states sig M1.
 λp. let 〈s,a〉 ≝ p in
@@ -51,9 +67,6 @@ definition ifTM ≝ λsig. λcondM,thenM,elseM : TM sig.
       | inr s' ⇒ match s' with 
         [ inl s2 ⇒ halt sig thenM s2
         | inr s3 ⇒ halt sig elseM s3 ]]).
-        
-axiom daemon : ∀X:Prop.X.
-axiom tdaemon : ∀X:Type[0].X.
 
 (****************************** lifting lemmas ********************************)
 lemma trans_if_liftM1 : ∀sig,M1,M2,M3,acc,s,a,news,move.
@@ -137,7 +150,7 @@ lemma trans_if_M1true_notacc : ∀sig,M1,M2,M3,acc,s,a.
 #sig #M1 #M2 #M3 #acc #s #a #Hhalt #Hacc whd in ⊢ (??%?); >Hhalt >Hacc %
 qed.
 
-(* semantics *)
+(******************************** semantics ***********************************)
 lemma sem_if: ∀sig.∀M1,M2,M3:TM sig.∀Rtrue,Rfalse,R2,R3,acc.
   accRealize sig M1 acc Rtrue Rfalse → M2 ⊨ R2 → M3 ⊨ R3 → 
     ifTM sig M1 M2 M3 acc ⊨ (Rtrue ∘ R2) ∪ (Rfalse ∘ R3).
@@ -222,15 +235,93 @@ lemma sem_if_app: ∀sig,M1,M2,M3,Rtrue,Rfalse,R2,R3,R4,acc.
   |* #t3 * #Hleft #Hright @(Hsub … t3) %2 /2/ ]
 qed.
  
-(* e ancora usato ??? *)
-axiom acc_sem_if: ∀sig,M1,M2,M3,Rtrue,Rfalse,R2,R3,acc.
+(* we can probably use acc_sem_if to prove sem_if *)
+lemma acc_sem_if: ∀sig,M1,M2,M3,Rtrue,Rfalse,R2,R3,acc.
   accRealize sig M1 acc Rtrue Rfalse → M2 ⊨ R2 → M3 ⊨ R3 → 
     accRealize sig 
      (ifTM sig M1 (single_finalTM … M2) M3 acc) 
      (inr … (inl … (inr … start_nop)))
      (Rtrue ∘ R2) 
      (Rfalse ∘ R3).
-     
+#sig #M1 #M2 #M3 #Rtrue #Rfalse #R2 #R3 #acc #HaccR #HR2 #HR3 #t 
+cases (HaccR t) #k1 * #outc1 * * #Hloop1 #HMtrue #HMfalse 
+cases (true_or_false (cstate ?? outc1 == acc)) #Hacc
+  [lapply (sem_single_final … HR2) -HR2 #HR2
+   cases (HR2 (ctape sig ? outc1)) #k2 * #outc2 * #Hloop2 #HM2
+   @(ex_intro … (k1+k2)) 
+   @(ex_intro … (lift_confR … (lift_confL … outc2))) %
+    [%
+      [@(loop_merge ?????????
+         (mk_config ? (states sig (ifTM sig M1 (single_finalTM … M2) M3 acc))
+          (inr (states sig M1) ? (inl ? (states sig M3) (start sig (single_finalTM sig M2)))) (ctape ?? outc1) )
+         ? 
+         (loop_lift ??? 
+          (lift_confL sig (states ? M1) (FinSum (states ? (single_finalTM … M2)) (states ? M3)))
+          (step sig M1) (step sig (ifTM sig M1 (single_finalTM ? M2) M3 acc)) 
+          (λc.halt sig M1 (cstate … c)) 
+          (λc.halt_liftL ?? (halt sig M1) (cstate … c)) 
+          … Hloop1))
+        [* *
+          [ #sl #tl whd in ⊢ (??%? → ?); #Hl %
+          | #sr #tr whd in ⊢ (??%? → ?); #Hr destruct (Hr) ]
+        |#c0 #Hhalt >(step_if_liftM1 … Hhalt) // 
+        |#x <p_halt_liftL %
+        |whd in ⊢ (??%?); >(config_expand ?? outc1);
+         whd in match (lift_confL ????);
+         >(trans_if_M1true_acc … Hacc) 
+          [% | @(loop_Some ?????? Hloop1)]
+        |cases outc1 #s1 #t1 %
+        |@(loop_lift ??? 
+           (λc.(lift_confR … (lift_confL sig (states ? (single_finalTM ? M2)) (states ? M3) c)))
+           … Hloop2) 
+          [ * #s2 #t2 %
+          | #c0 #Hhalt >(step_if_liftM2 … Hhalt) // ]
+        ]
+      |#_ @(ex_intro … (ctape ?? outc1)) % 
+        [@HMtrue @(\P Hacc) | >(config_expand ?? outc2) @HM2 ]
+      ]
+    |>(config_expand ?? outc2) whd in match (lift_confR ????);
+     * #H @False_ind @H @eq_f @eq_f >(config_expand ?? outc2)
+     @single_final // @(loop_Some ?????? Hloop2)
+    ]
+  |cases (HR3 (ctape sig ? outc1)) #k2 * #outc2 * #Hloop2 #HM3
+   @(ex_intro … (k1+k2)) @(ex_intro … (lift_confR … (lift_confR … outc2))) %
+    [%
+      [@(loop_merge ?????????
+         (mk_config ? (states sig (ifTM sig M1 (single_finalTM … M2) M3 acc))
+          (inr (states sig M1) ? (inr (states sig (single_finalTM ? M2)) ? (start sig M3))) (ctape ?? outc1) )
+         ? 
+         (loop_lift ??? 
+          (lift_confL sig (states ? M1) (FinSum (states ? (single_finalTM … M2)) (states ? M3)))
+          (step sig M1) (step sig (ifTM sig M1 (single_finalTM ? M2) M3 acc)) 
+          (λc.halt sig M1 (cstate … c)) 
+          (λc.halt_liftL ?? (halt sig M1) (cstate … c)) 
+          … Hloop1))
+        [* *
+          [ #sl #tl whd in ⊢ (??%? → ?); #Hl %
+          | #sr #tr whd in ⊢ (??%? → ?); #Hr destruct (Hr) ]
+        |#c0 #Hhalt >(step_if_liftM1 … Hhalt) // 
+        |#x <p_halt_liftL %
+        |whd in ⊢ (??%?); >(config_expand ?? outc1);
+         whd in match (lift_confL ????);
+         >(trans_if_M1true_notacc … Hacc) 
+          [% | @(loop_Some ?????? Hloop1)]
+        |cases outc1 #s1 #t1 %
+        |@(loop_lift ??? 
+           (λc.(lift_confR … (lift_confR sig (states ? (single_finalTM ? M2)) (states ? M3) c)))
+           … Hloop2) 
+          [ * #s2 #t2 %
+          | #c0 #Hhalt >(step_if_liftM3 … Hhalt) // ]
+        ]
+      |>(config_expand ?? outc2) whd in match (lift_confR ????);
+       #H destruct (H) 
+      ]
+    |#_ @(ex_intro … (ctape ?? outc1)) % 
+      [@HMfalse @(\Pf Hacc) | >(config_expand ?? outc2) @HM3 ]
+    ]
+  ]
+qed.
+    
 lemma acc_sem_if_app: ∀sig,M1,M2,M3,Rtrue,Rfalse,R2,R3,R4,R5,acc.
   accRealize sig M1 acc Rtrue Rfalse → Realize sig M2 R2 → Realize sig M3 R3 → 
     (∀t1,t2,t3. Rtrue t1 t3 → R2 t3 t2 → R4 t1 t2) → 

@@ -270,6 +270,12 @@ lemma sem_nop :
 @(ex_intro … (mk_config ?? start_nop intape)) % % 
 qed.
 
+lemma nop_single_state: ∀sig.∀q1,q2:states ? (nop sig). q1 = q2.
+normalize #sig * #n #ltn1 * #m #ltm1 
+generalize in match ltn1; generalize in match ltm1;
+<(le_n_O_to_eq … (le_S_S_to_le … ltn1)) <(le_n_O_to_eq … (le_S_S_to_le … ltm1)) 
+// qed.
+
 (************************** Sequential Composition ****************************)
 
 definition seq_trans ≝ λsig. λM1,M2 : TM sig. 
