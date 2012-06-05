@@ -183,6 +183,11 @@ lemma loop_eq : ∀sig,f,q,i,j,a,x,y.
 ]
 qed.
 
+lemma loop_p_true : 
+  ∀A,k,f,p,a.p a = true → loop A (S k) f p a = Some ? a.
+#A #k #f #p #a #Ha normalize >Ha %
+qed.
+
 lemma loop_Some : 
   ∀A,k,f,p,a,b.loop A k f p a = Some ? b → p b = true.
 #A #k #f #p elim k 
@@ -248,6 +253,9 @@ definition accRealize ≝ λsig.λM:TM sig.λacc:states sig M.λRtrue,Rfalse.
   loopM sig M i (initc sig M t) = Some ? outc ∧
     (cstate ?? outc = acc → Rtrue t (ctape ?? outc)) ∧ 
     (cstate ?? outc ≠ acc → Rfalse t (ctape ?? outc)).
+    
+notation "M ⊨ [q: R1,R2]" non associative with precedence 45 for @{ 'cmodels $M $q $R1 $R2}.
+interpretation "conditional realizability" 'cmodels M q R1 R2 = (accRealize ? M q R1 R2).
 
 (******************************** NOP Machine *********************************)
 
@@ -297,11 +305,6 @@ definition seq ≝ λsig. λM1,M2 : TM sig.
 
 notation "a · b" non associative with precedence 65 for @{ 'middot $a $b}.
 interpretation "sequential composition" 'middot a b = (seq ? a b).
-
-definition Rcomp ≝ λA.λR1,R2:relation A.λa1,a2.
-  ∃am.R1 a1 am ∧ R2 am a2.
-  
-interpretation "relation composition" 'compose R1 R2 = (Rcomp ? R1 R2).
 
 definition lift_confL ≝ 
   λsig,S1,S2,c.match c with 

@@ -152,7 +152,7 @@ qed.
 
 (******************************** semantics ***********************************)
 lemma sem_if: ∀sig.∀M1,M2,M3:TM sig.∀Rtrue,Rfalse,R2,R3,acc.
-  accRealize sig M1 acc Rtrue Rfalse → M2 ⊨ R2 → M3 ⊨ R3 → 
+  M1 ⊧ [acc: Rtrue,Rfalse] → M2 ⊨ R2 → M3 ⊨ R3 → 
     ifTM sig M1 M2 M3 acc ⊨ (Rtrue ∘ R2) ∪ (Rfalse ∘ R3).
 #sig #M1 #M2 #M3 #Rtrue #Rfalse #R2 #R3 #acc #HaccR #HR2 #HR3 #t 
 cases (HaccR t) #k1 * #outc1 * * #Hloop1 #HMtrue #HMfalse 
@@ -237,12 +237,9 @@ qed.
  
 (* we can probably use acc_sem_if to prove sem_if *)
 lemma acc_sem_if: ∀sig,M1,M2,M3,Rtrue,Rfalse,R2,R3,acc.
-  accRealize sig M1 acc Rtrue Rfalse → M2 ⊨ R2 → M3 ⊨ R3 → 
-    accRealize sig 
-     (ifTM sig M1 (single_finalTM … M2) M3 acc) 
-     (inr … (inl … (inr … start_nop)))
-     (Rtrue ∘ R2) 
-     (Rfalse ∘ R3).
+  M1 ⊨ [acc: Rtrue, Rfalse]  → M2 ⊨ R2 → M3 ⊨ R3 → 
+  ifTM sig M1 (single_finalTM … M2) M3 acc ⊨
+     [inr … (inl … (inr … start_nop)): Rtrue ∘ R2, Rfalse ∘ R3].
 #sig #M1 #M2 #M3 #Rtrue #Rfalse #R2 #R3 #acc #HaccR #HR2 #HR3 #t 
 cases (HaccR t) #k1 * #outc1 * * #Hloop1 #HMtrue #HMfalse 
 cases (true_or_false (cstate ?? outc1 == acc)) #Hacc
@@ -323,13 +320,11 @@ cases (true_or_false (cstate ?? outc1 == acc)) #Hacc
 qed.
     
 lemma acc_sem_if_app: ∀sig,M1,M2,M3,Rtrue,Rfalse,R2,R3,R4,R5,acc.
-  accRealize sig M1 acc Rtrue Rfalse → Realize sig M2 R2 → Realize sig M3 R3 → 
+  M1 ⊨ [acc: Rtrue, Rfalse] → M2 ⊨ R2 → M3 ⊨ R3 → 
     (∀t1,t2,t3. Rtrue t1 t3 → R2 t3 t2 → R4 t1 t2) → 
     (∀t1,t2,t3. Rfalse t1 t3 → R3 t3 t2 → R5 t1 t2) → 
-    accRealize sig 
-     (ifTM sig M1 (single_finalTM … M2) M3 acc) 
-     (inr … (inl … (inr … start_nop)))
-     R4 R5.    
+     ifTM sig M1 (single_finalTM … M2) M3 acc ⊨ 
+       [inr … (inl … (inr … start_nop)): R4, R5].    
 #sig #M1 #M2 #M3 #Rtrue #Rfalse #R2 #R3 #R4 #R5 #acc
 #HRacc #HRtrue #HRfalse #Hsub1 #Hsub2 
 #t cases (acc_sem_if … HRacc HRtrue HRfalse t)

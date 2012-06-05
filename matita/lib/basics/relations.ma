@@ -46,6 +46,10 @@ definition antisymmetric: ∀A.∀R:relation A.Prop
 ≝ λA.λR.∀x,y:A. R x y → ¬(R y x).
 
 (********** operations **********)
+definition Rcomp ≝ λA.λR1,R2:relation A.λa1,a2.
+  ∃am.R1 a1 am ∧ R2 am a2.
+interpretation "relation composition" 'compose R1 R2 = (Rcomp ? R1 R2).
+
 definition Runion ≝ λA.λR1,R2:relation A.λa,b. R1 a b ∨ R2 a b.
 interpretation "union of relations" 'union R1 R2 = (Runion ? R1 R2).
     
@@ -54,10 +58,31 @@ interpretation "interesecion of relations" 'intersects R1 R2 = (Rintersection ? 
 
 definition inv ≝ λA.λR:relation A.λa,b.R b a.
 
+(*********** sub relation ***********)
 definition subR ≝ λA.λR,S:relation A.(∀a,b. R a b → S a b).
 interpretation "relation inclusion" 'subseteq R S = (subR ? R S).
 
-(**********P functions **********)
+lemma sub_comp_l:  ∀A.∀R,R1,R2:relation A.
+  R1 ⊆ R2 → R1 ∘ R ⊆ R2 ∘ R.
+#A #R #R1 #R2 #Hsub #a #b * #c * /4/
+qed.
+
+lemma sub_comp_r:  ∀A.∀R,R1,R2:relation A.
+  R1 ⊆ R2 → R ∘ R1 ⊆ R ∘ R2.
+#A #R #R1 #R2 #Hsub #a #b * #c * /4/
+qed.
+
+lemma sub_assoc_l: ∀A.∀R1,R2,R3:relation A.
+  R1 ∘ (R2 ∘ R3) ⊆ (R1 ∘ R2) ∘ R3.
+#A #R1 #R2 #R3 #a #b * #c * #Hac * #d * /5/
+qed.
+
+lemma sub_assoc_r: ∀A.∀R1,R2,R3:relation A.
+  (R1 ∘ R2) ∘ R3 ⊆ R1 ∘ (R2 ∘ R3).
+#A #R1 #R2 #R3 #a #b * #c * * #d * /5 width=5/ 
+qed.
+
+(************* functions ************)
 
 definition compose ≝
   λA,B,C:Type[0].λf:B→C.λg:A→B.λx:A.f (g x).
