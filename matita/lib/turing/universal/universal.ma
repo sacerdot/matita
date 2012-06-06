@@ -331,7 +331,7 @@ lapply (Huni_step n table q_low_hd (\fst qout_low_hd)
   [whd in ⊢ (??%?); >q_low_head_false in Hq_low; 
    whd in ⊢ ((???%)→?); generalize in match (h qin);
    #x #H destruct (H) %
-  |>Ht2 whd in match (step ???); 
+  |>Ht2 whd in match (step FinBool ??); 
    whd in match (trans ???); 
    >(eq_pair_fst_snd … (t ?))
    @is_low_config // >Hlift
@@ -396,14 +396,14 @@ lapply (sem_while … sem_uni_step intape i outc Hloop)
    #q #Htd #tape1 #Htb 
    lapply (IH (\fst (trans ? M 〈q,current ? tape1〉)) Htd) -IH 
    #IH cases (Htc … Htb); -Htc #Hhaltq 
-   whd in match (step ???); >(eq_pair_fst_snd ?? (trans ???)) 
+   whd in match (step FinBool ??); >(eq_pair_fst_snd ?? (trans ???)) 
    #Htc change with (mk_config ????) in Htc:(???(??%)); 
    cases (IH ? Htc) #q1 * #tape2 * * #HRTM #Hhaltq1 #Houtc
    @(ex_intro … q1) @(ex_intro … tape2) % 
     [%
       [cases HRTM #k * #outc1 * #Hloop #Houtc1
        @(ex_intro … (S k)) @(ex_intro … outc1) % 
-        [>loop_S_false [2://] whd in match (step ???); 
+        [>loop_S_false [2://] whd in match (step FinBool ??); 
          >(eq_pair_fst_snd ?? (trans ???)) @Hloop
         |@Houtc1
         ]

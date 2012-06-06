@@ -14,10 +14,9 @@
 
 *)
 
-include "turing/while_machine.ma".
 include "turing/if_machine.ma".
+include "turing/basic_machines.ma".
 include "turing/universal/alphabet.ma".
-include "turing/universal/tests.ma".
 
 (* ADVANCE TO MARK (right)
 
@@ -225,79 +224,6 @@ lemma sem_mark :
   @ex_intro [| % [ % | #ls0 #c0 #b0 #rs0 #H1 destruct (H1) % ] ] ]
 qed.
 
-(* MOVE RIGHT 
-
-   moves the head one step to the right
-
-*)
-
-definition move_states ≝ initN 2.
-definition move0 : move_states ≝ mk_Sig ?? 0 (leb_true_to_le 1 2 (refl …)).
-definition move1 : move_states ≝ mk_Sig ?? 1 (leb_true_to_le 2 2 (refl …)).
-
-definition move_r ≝ 
-  λalpha:FinSet.mk_TM alpha move_states
-  (λp.let 〈q,a〉 ≝ p in
-    match a with
-    [ None ⇒ 〈move1,None ?〉
-    | Some a' ⇒ match (pi1 … q) with
-      [ O ⇒ 〈move1,Some ? 〈a',R〉〉
-      | S q ⇒ 〈move1,None ?〉 ] ])
-  move0 (λq.q == move1).
-  
-definition R_move_r ≝ λalpha,t1,t2.
-  ∀ls,c,rs.
-  t1 = midtape alpha ls c rs → 
-  t2 = mk_tape ? (c::ls) (option_hd ? rs) (tail ? rs).
-    
-lemma sem_move_r :
-  ∀alpha.Realize ? (move_r alpha) (R_move_r alpha).
-#alpha #intape @(ex_intro ?? 2) cases intape
-[ @ex_intro
-  [| % [ % | #ls #c #rs #Hfalse destruct ] ]
-|#a #al @ex_intro
-  [| % [ % | #ls #c #rs #Hfalse destruct ] ]
-|#a #al @ex_intro
-  [| % [ % | #ls #c #rs #Hfalse destruct ] ]
-| #ls #c #rs
-  @ex_intro [| % [ % | #ls0 #c0 #rs0 #H1 destruct (H1)
-  cases rs0 // ] ] ]
-qed.
-
-(* MOVE LEFT
-
-   moves the head one step to the right
-
-*)
-
-definition move_l ≝ 
-  λalpha:FinSet.mk_TM alpha move_states
-  (λp.let 〈q,a〉 ≝ p in
-    match a with
-    [ None ⇒ 〈move1,None ?〉
-    | Some a' ⇒ match pi1 … q with
-      [ O ⇒ 〈move1,Some ? 〈a',L〉〉
-      | S q ⇒ 〈move1,None ?〉 ] ])
-  move0 (λq.q == move1).
-  
-definition R_move_l ≝ λalpha,t1,t2.
-  ∀ls,c,rs.
-  t1 = midtape alpha ls c rs → 
-  t2 = mk_tape ? (tail ? ls) (option_hd ? ls) (c::rs).
-    
-lemma sem_move_l :
-  ∀alpha.Realize ? (move_l alpha) (R_move_l alpha).
-#alpha #intape @(ex_intro ?? 2) cases intape
-[ @ex_intro
-  [| % [ % | #ls #c #rs #Hfalse destruct ] ]
-|#a #al @ex_intro
-  [| % [ % | #ls #c #rs #Hfalse destruct ] ]
-|#a #al @ex_intro
-  [| % [ % | #ls #c #rs #Hfalse destruct ] ]
-| #ls #c #rs
-  @ex_intro [| % [ % | #ls0 #c0 #rs0 #H1 destruct (H1)
-  cases ls0 // ] ] ]
-qed.
 
 (* MOVE RIGHT AND MARK machine
 
@@ -669,7 +595,7 @@ cases (sem_if ? (test_char ? (λx.x == c)) … tc_true
     | * #Hx0 #Houtc %2
       % [ <(\P Hx) in Hx0; #Hx0 lapply (\Pf Hx0) @not_to_not #Hx' >Hx' %
         | >Houtc % ]
-    | (* members of lists are invariant under reverse *) @daemon ]
+    | #x #membx @Hl1 <(reverse_reverse …l1) @memb_reverse @membx ]
   | %2 % [ @(\Pf Hc) ]
     >Hintape in Hta; #Hta cases (Hta ? (refl ??)) -Hta #Hx #Hta
     >Hx in Hc;#Hc destruct (Hc) ]

@@ -12,24 +12,6 @@
 
 include "turing/universal/tuples.ma".
 
-definition write_states ≝ initN 2.
-
-definition wr0 : write_states ≝ mk_Sig ?? 0 (leb_true_to_le 1 2 (refl …)).
-definition wr1 : write_states ≝ mk_Sig ?? 1 (leb_true_to_le 2 2 (refl …)).
-
-definition write ≝ λalpha,c.
-  mk_TM alpha write_states
-  (λp.let 〈q,a〉 ≝ p in
-    match pi1 … q with 
-    [ O ⇒ 〈wr1,Some ? 〈c,N〉〉
-    | S _ ⇒ 〈wr1,None ?〉 ])
-  wr0 (λx.x == wr1).
-  
-definition R_write ≝ λalpha,c,t1,t2.
-  ∀ls,x,rs.t1 = midtape alpha ls x rs → t2 = midtape alpha ls c rs.
-  
-axiom sem_write : ∀alpha,c.Realize ? (write alpha c) (R_write alpha c).
-
 definition copy_step_subcase ≝
   λalpha,c,elseM.ifTM ? (test_char ? (λx.x == 〈c,true〉))
     (seq (FinProd alpha FinBool) (adv_mark_r …)
@@ -386,52 +368,6 @@ lapply (sem_while … sem_copy_step intape k outc Hloop) [%] -Hloop
              (consequently several lists = []) or not *)          
           *
           [ * #Ha #Houtc1
-(*           cut (l1 = [〈a,false〉])
-           [ cases l1'' in Hl1cons; // #y #ly #Hly
-             >Hly in Hl1; cases l1' in Hl1bits;
-             [ #_ normalize #Hfalse destruct (Hfalse)
-             | #p #lp #Hl1bits normalize #Heq destruct (Heq)
-               @False_ind lapply (Hl1bits 〈a,false〉 ?)
-               [ cases lp in e0;
-                 [ normalize #Hfalse destruct (Hfalse)
-                 | #p0 #lp0 normalize in ⊢ (%→?); #Heq destruct (Heq)
-                   @memb_cons @memb_hd ]
-               | >Ha normalize #Hfalse destruct (Hfalse) ]
-             ]
-           ] #Hl1a
-           cut (l4 = [〈a0,false〉])
-           [ generalize in match Hl4bits; cases l4' in Hl4;
-             [ >Hl4cons #Hfalse #_ 
-               lapply (inj_append_singleton_l1 ?? [] ?? Hfalse)
-               cases (reverse ? l4'') normalize
-               [ #Hfalse1 | #p0 #lp0 #Hfalse1 ] destruct (Hfalse1)
-             | #p #lp 
-           
-             cases l4'' in Hl4cons; // #y #ly #Hly
-             >Hly in Hl4; cases l4' in Hl4bits;
-             [ #_ >reverse_cons #Hfalse
-               lapply (inj_append_singleton_l1 ?? [] ?? Hfalse)
-               -Hfalse cases ly normalize
-               [ #Hfalse | #p #Hp #Hfalse ] destruct (Hfalse)
-                
-             | #p #lp #Hl1bits normalize #Heq destruct (Heq)
-               @False_ind lapply (Hl1bits 〈a,false〉 ?)
-               [ cases lp in e0;
-                 [ normalize #Hfalse destruct (Hfalse)
-                 | #p0 #lp0 normalize in ⊢ (%→?); #Heq destruct (Heq)
-                   @memb_cons @memb_hd ]
-               | >Ha normalize #Hfalse destruct (Hfalse) ]
-             ]
-           ] #Hl1a
-             
-              >Hla normalize #Hl1 destruct (Hl1) lapply (inj_append_ @False_ind
-             
-           cut (l1'' = [] ∧ l4'' = [])
-           [ % [ >Hla in Hl1; normalize #Hl1 destruct (Hl1)
-           
-            cases l1'' in Hl1bits;
-                
-                 [ #_ normalize #H *)
            cut (la = [] ∧ lb = [] ∧ l1'' = [] ∧ l4'' = [])
            [ @daemon ] * * * #Hla1 #Hlb1 #Hl1nil #Hl4nil
            >Hl1cons in Hl1; >Hla

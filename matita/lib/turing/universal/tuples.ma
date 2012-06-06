@@ -146,7 +146,24 @@ lemma generic_match_to_match_in_table_tech :
   [ #la * #lb * #HT1c #HT0 %{lb} >HT1c @(eq_f2 ??? (append ?) (c::la)) //
     >HT0 in Ht'; >HT1c >associative_append in ⊢ (???%→?); #Ht'
     <(append_l1_injective_r … Ht') // <(cons_injective_l ????? Ht) %
-  |@daemon ]
+  |@(noteq_to_eqnot ? true) @(not_to_not … not_eq_true_false) #Hbar @sym_eq 
+   cases (memb_append … Hbar) -Hbar #Hbar
+    [@(Hqin2 … Hbar) 
+    |cases (orb_true_l … Hbar) -Hbar
+      [#Hbar lapply (\P Hbar) -Hbar #Hbar destruct (Hbar) @Hcin
+      |whd in ⊢ ((??%?)→?); #Hbar cases (memb_append … Hbar) -Hbar #Hbar
+        [@(Hqout2 … Hbar)
+        |cases (orb_true_l … Hbar) -Hbar
+          [#Hbar lapply (\P Hbar) -Hbar #Hbar destruct (Hbar) @Hcout
+          |#Hbar cases (orb_true_l … Hbar) -Hbar 
+            [whd in ⊢ ((??%?)→?); #Hbar @Hbar
+            |#Hbar lapply (memb_single … Hbar) -Hbar #Hbar destruct (Hbar) @Hmv
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
 qed.
     
 lemma generic_match_to_match_in_table :
@@ -328,6 +345,8 @@ definition R_mark_next_tuple ≝
     ∨
     (no_bars rs1 ∧ t2 = midtape ? (reverse ? rs1@c::ls) 〈grid,false〉 rs2).
      
+axiom daemon :∀P:Prop.P.
+
 axiom tech_split :
   ∀A:DeqSet.∀f,l.
    (∀x.memb A x l = true → f x = false) ∨

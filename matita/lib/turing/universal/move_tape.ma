@@ -9,7 +9,7 @@
      \ /   GNU General Public License Version 2   
       V_____________________________________________________________*)
 
-include "turing/universal/move_char_c.ma".
+(* include "turing/universal/move_char_c.ma". *)
 include "turing/universal/move_char_l.ma".
 include "turing/universal/tuples.ma".
 

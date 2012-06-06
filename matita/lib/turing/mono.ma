@@ -214,6 +214,10 @@ qed.
 definition loopM ≝ λsig,M,i,cin.
   loop ? i (step sig M) (λc.halt sig M (cstate ?? c)) cin.
 
+lemma loopM_unfold : ∀sig,M,i,cin.
+  loopM sig M i cin = loop ? i (step sig M) (λc.halt sig M (cstate ?? c)) cin.
+// qed.
+
 definition initc ≝ λsig.λM:TM sig.λt.
   mk_config sig (states sig M) (start sig M) t.
 

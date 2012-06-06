@@ -146,7 +146,7 @@ lemma sem_mcl_step :
   [ @(ex_intro ?? 2) 
     @(ex_intro ?? (mk_config ?? 〈mcl4,sep〉 (midtape ? lt c rt)))
     % [ % 
-        [ >(\P Hc) >loop_S_false // >loop_S_true 
+        [ >(\P Hc) >loopM_unfold >loop_S_false // >loop_S_true 
           [ @eq_f whd in ⊢ (??%?); >mcl_trans_init_sep %
           |>(\P Hc) whd in ⊢(??(???(???%))?); >mcl_trans_init_sep % ]
         |@Hfalse]
@@ -154,12 +154,12 @@ lemma sem_mcl_step :
   |@(ex_intro ?? 4) cases rt
     [ @ex_intro
       [|% [ %
-            [ >loop_S_false // >mcl_q0_q1 //
+            [ >loopM_unfold >loop_S_false // >mcl_q0_q1 //
             | normalize in ⊢ (%→?); @Hfalse]
           | normalize in ⊢ (%→?); #_ #H1 @False_ind @(absurd ?? H1) % ] ]
    | #r0 #rt0 @ex_intro
       [| % [ %
-             [ >loop_S_false // >mcl_q0_q1 //
+             [ >loopM_unfold >loop_S_false // >mcl_q0_q1 //
              | #_ #a #b #ls #rs #Hb destruct (Hb) % 
                [ @(\Pf Hc)
                | >mcl_q1_q2 >mcl_q2_q3 cases ls normalize // ] ]

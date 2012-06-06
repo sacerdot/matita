@@ -103,6 +103,16 @@ lemma memb_compose: ∀S1,S2,S3,op,a1,a2,l1,l2.
   ]
 qed.
 
+lemma memb_reverse: ∀S:DeqSet.∀a:S.∀l.
+  memb ? a l = true → memb ? a (reverse ? l) = true.
+#S #a #l elim l [normalize //]
+#b #tl #Hind #memba change with ([b]@tl) in match (b::tl);
+>reverse_append cases (orb_true_l … memba) #Hcase
+  [@memb_append_l2 >(\P Hcase) whd in match (reverse ??); @memb_hd
+  |@memb_append_l1 /2/
+  ]
+qed.
+
 lemma mem_to_memb: ∀S:DeqSet.∀a,l. mem S a l → memb S a l = true.
 #S #a #l elim l normalize
   [@False_ind
