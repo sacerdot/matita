@@ -12,7 +12,8 @@
 
 (* MOVE_CHAR (left) MACHINE
 
-Sposta il carattere binario su cui si trova la testina appena prima del primo # alla sua destra.
+Sposta il carattere binario su cui si trova la testina appena prima del primo # 
+alla sua sinistra.
 
 Input:
 (ls,cs,rs can be empty; # is a parameter)
@@ -31,7 +32,8 @@ Final state = 〈4,#〉
 
 *)
 
-include "turing/while_machine.ma".
+include "turing/basic_machines.ma".
+include "turing/if_machine.ma".
 
 definition mcl_states : FinSet → FinSet ≝ λalpha:FinSet.FinProd (initN 5) alpha.
 
@@ -41,6 +43,12 @@ definition mcl2 : initN 5 ≝ mk_Sig ?? 2 (leb_true_to_le 3 5 (refl …)).
 definition mcl3 : initN 5 ≝ mk_Sig ?? 3 (leb_true_to_le 4 5 (refl …)).
 definition mcl4 : initN 5 ≝ mk_Sig ?? 4 (leb_true_to_le 5 5 (refl …)).
 
+definition mcl_step ≝ λalpha:FinSet.λsep:alpha.
+  ifTM alpha (test_char ? (λc.¬c==sep))
+     (single_finalTM … (seq … (swap alpha sep) (move_l ?))) (nop ?) tc_true.
+     
+
+(*
 definition mcl_step ≝ 
  λalpha:FinSet.λsep:alpha.
  mk_TM alpha (mcl_states alpha)
@@ -101,6 +109,7 @@ lemma mcl_q2_q3 :
     (tape_move_left alpha ls a rs).
 #alpha #sep #a #ls #a0 * //
 qed.
+*)
 
 definition Rmcl_step_true ≝ 
   λalpha,sep,t1,t2.
@@ -113,7 +122,7 @@ definition Rmcl_step_false ≝
   λalpha,sep,t1,t2.
     right ? t1 ≠ [] →  current alpha t1 ≠ None alpha → 
       current alpha t1 = Some alpha sep ∧ t2 = t1.
-    
+(*      
 lemma mcl_trans_init_sep: 
   ∀alpha,sep,x.
   trans ? (mcl_step alpha sep) 〈〈mcl0,x〉,Some ? sep〉 = 〈〈mcl4,sep〉,None ?〉.
@@ -125,7 +134,29 @@ lemma mcl_trans_init_not_sep:
   trans ? (mcl_step alpha sep) 〈〈mcl0,x〉,Some ? y〉 = 〈〈mcl1,y〉,Some ? 〈y,R〉〉.
 #alpha #sep #x #y #H1 normalize >H1 //
 qed.
+*)
 
+lemma sem_mcl_step :
+  ∀alpha,sep.
+  mcl_step alpha sep ⊨ 
+    [inr … (inl … (inr … start_nop)): Rmcl_step_true alpha sep, Rmcl_step_false alpha sep].
+#alpha #sep 
+  @(acc_sem_if_app … 
+     (sem_test_char …) (sem_seq …(sem_swap …) (sem_move_l …)) (sem_nop …))
+  [#intape #outtape #tapea whd in ⊢ (%→%→%);
+   #Htapea * #tapeb * whd in ⊢ (%→%→?);
+   #Htapeb #Houttape #a #b #ls #rs #Hintape
+   >Hintape in Htapea; #Htapea cases (Htapea ? (refl …)) -Htapea
+   #Hbsep #Htapea % [@(\Pf (injective_notb ? false Hbsep))]
+   @Houttape
+  |#intape #outtape #tapea whd in ⊢ (%→%→%);
+   cases (current alpha intape) 
+    [#_ #_ #_ * #Hfalse @False_ind @Hfalse %
+    |#c #H #Htapea #_ #_ cases (H c (refl …)) #csep #Hintape % //
+     lapply (injective_notb ? true csep) -csep #csep >(\P csep) 
+    ]
+  
+    
 lemma sem_mcl_step :
   ∀alpha,sep.
   accRealize alpha (mcl_step alpha sep) 
