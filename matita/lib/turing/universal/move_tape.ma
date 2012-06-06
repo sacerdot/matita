@@ -34,94 +34,6 @@ definition R_init_cell ≝ λt1,t2.
  
 axiom sem_init_cell : Realize ? init_cell R_init_cell.
 
-definition swap_states : FinSet → FinSet ≝ λalpha:FinSet.FinProd (initN 4) alpha.
-
-definition swap0 : initN 4 ≝ mk_Sig ?? 0 (leb_true_to_le 1 4 (refl …)).
-definition swap1 : initN 4 ≝ mk_Sig ?? 1 (leb_true_to_le 2 4 (refl …)).
-definition swap2 : initN 4 ≝ mk_Sig ?? 2 (leb_true_to_le 3 4 (refl …)).
-definition swap3 : initN 4 ≝ mk_Sig ?? 3 (leb_true_to_le 4 4 (refl …)).
-
-definition swap ≝ 
- λalpha:FinSet.λd:alpha.
- mk_TM alpha (swap_states alpha)
- (λp.let 〈q,a〉 ≝ p in
-  let 〈q',b〉 ≝ q in
-  let q' ≝ pi1 nat (λi.i<4) q' in (* perche' devo passare il predicato ??? *)
-  match a with 
-  [ None ⇒ 〈〈swap3,d〉,None ?〉 
-  | Some a' ⇒ 
-  match q' with
-  [ O ⇒ (* qinit *)
-     〈〈swap1,a'〉,Some ? 〈a',R〉〉
-  | S q' ⇒ match q' with
-    [ O ⇒ (* q1 *)
-      〈〈swap2,a'〉,Some ? 〈b,L〉〉
-    | S q' ⇒ match q' with
-      [ O ⇒ (* q2 *)
-        〈〈swap3,d〉,Some ? 〈b,N〉〉
-      | S _⇒ (* qacc *)
-          〈〈swap3,d〉,None ?〉 ] ] ] ])
-  〈swap0,d〉
-  (λq.let 〈q',a〉 ≝ q in q' == swap3).
-  
-definition R_swap ≝ 
-  λalpha,t1,t2.
-   ∀a,b,ls,rs.  
-    t1 = midtape alpha ls b (a::rs) → 
-    t2 = midtape alpha ls a (b::rs).
-
-(*
-lemma swap_q0_q1 : 
-  ∀alpha:FinSet.∀d,a,ls,a0,rs.
-  step alpha (swap alpha d)
-    (mk_config ?? 〈0,a〉 (mk_tape … ls (Some ? a0) rs)) =
-  mk_config alpha (states ? (swap alpha d)) 〈1,a0〉
-    (tape_move_right alpha ls a0 rs).
-#alpha #d #a *
-[ #a0 #rs %
-| #a1 #ls #a0 #rs %
-]
-qed.
-    
-lemma swap_q1_q2 :
-  ∀alpha:FinSet.∀d,a,ls,a0,rs.
-  step alpha (swap alpha d) 
-    (mk_config ?? 〈1,a〉 (mk_tape … ls (Some ? a0) rs)) = 
-  mk_config alpha (states ? (swap alpha d)) 〈2,a0〉 
-    (tape_move_left alpha ls a rs).
-#alpha #sep #a #ls #a0 * //
-qed.
-
-lemma swap_q2_q3 :
-  ∀alpha:FinSet.∀d,a,ls,a0,rs.
-  step alpha (swap alpha d) 
-    (mk_config ?? 〈2,a〉 (mk_tape … ls (Some ? a0) rs)) = 
-  mk_config alpha (states ? (swap alpha d)) 〈3,d〉 
-    (tape_move_left alpha ls a rs).
-#alpha #sep #a #ls #a0 * //
-qed.
-*)
-
-lemma sem_swap :
-  ∀alpha,d.
-  Realize alpha (swap alpha d) (R_swap alpha).
-#alpha #d #tapein @(ex_intro ?? 4) cases tapein
-[ @ex_intro [| % [ % | #a #b #ls #rs #Hfalse destruct (Hfalse) ] ]
-| #a #al @ex_intro [| % [ % | #a #b #ls #rs #Hfalse destruct (Hfalse) ] ]
-| #a #al @ex_intro [| % [ % | #a #b #ls #rs #Hfalse destruct (Hfalse) ] ]
-| #ls #c #rs cases rs
-  [ @ex_intro [| % [ % | #a #b #ls0 #rs0 #Hfalse destruct (Hfalse) ] ]
-  | -rs #r #rs @ex_intro 
-    [|% 
-     [%
-     | #r0 #c0 #ls0 #rs0 #Htape destruct (Htape) normalize cases ls0 
-       [% | #l1 #ls1 %] ] ] ] ]
-qed.
-
-axiom ssem_move_char_l :
-  ∀alpha,sep.
-  Realize alpha (move_char_l alpha sep) (R_move_char_l alpha sep).
-
 (*
 MOVE TAPE RIGHT:
 
@@ -260,45 +172,106 @@ qed.
 (*
 MOVE TAPE LEFT:
 
-  ls # current c # table # d rs
-                     ^
-  ls # current c # table # d rs
-                         ^
-  ls # current c # table d # rs
-                       ^
-  ls # current c # d table # rs
-                   ^
-  ls # current c # d table # rs
-                 ^
+  ls d? # current c # table # rs
+                            ^     move_l; adv_to_mark_l
+  ls d? # current c # table # rs
+                    ^             move_l; adv_to_mark_l
+  ls d? # current c # table # rs
+        ^                         move_l
+  ls d? # current c # table # rs
+     ^                            init_cell
+  ls d # current c # table # rs
+     ^                            mtl_aux
   ls # current c d # table # rs
-               ^
-  ls # current c d # table # rs
-             ^
-  ls # c current c # table # rs
-       ^
-  ls # c current c # table # rs
+                 ^                swap_r
+  ls # current d c # table # rs
+                 ^                mtl_aux
+  ls # current d # table c # rs
+                         ^        swap
+  ls # current d # table # c rs
+                         ^        move_l; adv_to_mark_l
+  ls # current d # table # c rs
+                 ^                move_l; adv_to_mark_l
+  ls # current d # table # c rs
      ^
-  ls c # current c # table # rs
-     ^
-
-move_to_grid_r;
-swap;
-move_char_l;
-move_l;
-swap;
-move_l;
-move_char_l;
-move_l;
-swap
 *)
-axiom move_tape_l : TM STape.
+definition mtl_aux ≝ 
+  seq ? (swap STape 〈grid,false〉)
+   (seq ? (move_r …) (seq ? (move_r …) (seq ? (move_char_c STape 〈grid,false〉) (move_l …)))).
+definition R_mtl_aux ≝ λt1,t2.
+  ∀l1,l2,l3,r. t1 = midtape STape l1 r (〈grid,false〉::l2@〈grid,false〉::l3) → no_grids l2 → 
+  t2 = midtape STape (reverse ? l2@〈grid,false〉::l1) r (〈grid,false〉::l3).
+
+lemma sem_mtl_aux : Realize ? mtl_aux R_mtl_aux.
+#intape 
+cases (sem_seq … (sem_swap STape 〈grid,false〉) (sem_seq … (sem_move_r …)
+        (sem_seq … (sem_move_r …) (sem_seq … (ssem_move_char_c STape 〈grid,false〉) 
+          (sem_move_l …)))) intape)
+#k * #outc * #Hloop #HR @(ex_intro ?? k) @(ex_intro ?? outc) % [@Hloop] -Hloop
+#l1 #l2 #l3  #r #Hintape #Hl2
+cases HR -HR #ta * whd in ⊢ (%→?); #Hta lapply (Hta … Hintape) -Hta #Hta
+* #tb * whd in ⊢(%→?); #Htb lapply (Htb … Hta) -Htb -Hta whd in ⊢ (???%→?); #Htb
+* #tc * whd in ⊢(%→?); #Htc lapply (Htc … Htb) -Htc -Htb cases l2 in Hl2;
+[ #_ #Htc * #td * whd in ⊢(%→?); #Htd lapply (Htd … Htc) -Htd >Htc -Htc * #Htd #_
+  whd in ⊢ (%→?); #Houtc lapply (Htd (refl ??)) -Htd @Houtc
+| #c0 #l0 #Hnogrids #Htc * 
+  #td * whd in ⊢(%→?); #Htd lapply (Htd … Htc) -Htd -Htc * #_ #Htd
+  lapply (Htd … (refl ??) ??)
+  [ cases (true_or_false (memb STape 〈grid,false〉 l0)) #Hmemb
+    [ @False_ind lapply (Hnogrids 〈grid,false〉 ?)
+      [ @memb_cons // | normalize #Hfalse destruct (Hfalse) ]
+    | @Hmemb ]
+  | % #Hc0 lapply (Hnogrids c0 ?)
+    [ @memb_hd | >Hc0 normalize #Hfalse destruct (Hfalse) ]
+  | #Htd whd in ⊢(%→?); >Htd #Houtc lapply (Houtc … (refl ??)) -Houtc #Houtc
+    >reverse_cons >associative_append @Houtc
+]]
+qed.
+
+definition R_ml_atml ≝ λt1,t2.
+  ∀ls1,ls2,rs.no_grids ls1 → 
+  t1 = midtape STape (ls1@〈grid,false〉::ls2) 〈grid,false〉 rs → 
+  t2 = midtape STape ls2 〈grid,false〉 (reverse ? ls1@〈grid,false〉::rs).
+
+lemma sem_ml_atml : 
+  Realize ? ((move_l …) · (adv_to_mark_l … (λc:STape.is_grid (\fst c)))) R_ml_atml.
+#intape 
+cases (sem_seq … (sem_move_l …) (sem_adv_to_mark_l … (λc:STape.is_grid (\fst c))) intape)
+#k * #outc * #Hloop #HR %{k} %{outc} % [@Hloop] -Hloop
+#ls1 #ls2 #rs #Hnogrids #Hintape cases HR -HR
+#ta * whd in ⊢ (%→?); #Hta lapply (Hta … Hintape) -Hta
+cases ls1 in Hnogrids;
+[ #_ #Hta whd in ⊢ (%→?); #Houtc cases (Houtc … Hta) -Houtc
+  [ * #_ >Hta #Houtc @Houtc
+  | * normalize in ⊢ (%→?); #Hfalse destruct (Hfalse) ]
+| #c0 #l0 #Hnogrids #Hta whd in ⊢ (%→?); #Houtc cases (Houtc … Hta) -Houtc
+  [ * #Hc0 lapply (Hnogrids c0 (memb_hd …)) >Hc0 #Hfalse destruct (Hfalse)
+  | * #_ #Htb >reverse_cons >associative_append @Htb //
+    #x #Hx @Hnogrids @memb_cons //
+  ]
+]
+qed.
+
+definition move_tape_l : TM STape ≝ 
+  seq ? (seq ? (move_l …) (adv_to_mark_l … (λc:STape.is_grid (\fst c))))
+  (seq ? (seq ? (move_l …) (adv_to_mark_l … (λc:STape.is_grid (\fst c))))
+   (seq ? (move_l …)
+    (seq ? init_cell
+     (seq ? mtl_aux
+      (seq ? (swap_r STape 〈grid,false〉)
+       (seq ? mtl_aux
+        (seq ? (swap STape 〈grid,false〉)
+         (seq ? (seq ? (move_l …) (adv_to_mark_l … (λc:STape.is_grid (\fst c))))
+          (seq ? (move_l …) (adv_to_mark_l … (λc:STape.is_grid (\fst c)))))))))))).
+        
 (*  seq ? (move_r …) (seq ? init_cell (seq ? (move_l …) 
    (seq ? (swap STape 〈grid,false〉) 
      (seq ? mtr_aux (seq ? (move_l …) mtr_aux))))). *)
 
 definition R_move_tape_l ≝ λt1,t2.
   ∀rs,n,table,c0,bc0,curconfig,ls0.
-  bit_or_null c0 = true → only_bits_or_nulls curconfig → table_TM n (reverse ? table) → 
+  bit_or_null c0 = true → only_bits_or_nulls curconfig →
+  table_TM n (reverse ? table) → only_bits ls0 → 
   t1 = midtape STape (table@〈grid,false〉::〈c0,bc0〉::curconfig@〈grid,false〉::ls0) 
          〈grid,false〉 rs →
   (ls0 = [] ∧
@@ -308,7 +281,94 @@ definition R_move_tape_l ≝ λt1,t2.
    t2 = midtape STape ls1 〈grid,false〉
          (reverse ? curconfig@l1::〈grid,false〉::reverse ? table@〈grid,false〉::〈c0,bc0〉::rs)).
    
-axiom sem_move_tape_l : Realize ? move_tape_l R_move_tape_l.
+lemma sem_move_tape_l : Realize ? move_tape_l R_move_tape_l.
+#tapein 
+cases (sem_seq … sem_ml_atml
+  (sem_seq … sem_ml_atml
+   (sem_seq … (sem_move_l …)
+    (sem_seq … sem_init_cell
+     (sem_seq … sem_mtl_aux 
+      (sem_seq … (sem_swap_r STape 〈grid,false〉)
+       (sem_seq … sem_mtl_aux
+        (sem_seq … (sem_swap STape 〈grid,false〉)
+         (sem_seq … sem_ml_atml sem_ml_atml)))))))) tapein)
+#k * #outc * #Hloop #HR @(ex_intro ?? k) @(ex_intro ?? outc) % [@Hloop] -Hloop
+#rs #n #table #c0 #bc0 #curconfig #ls0 #Hbitnullc0 #Hbitnullcc #Htable #Hls0 #Htapein
+cases HR -HR #ta * whd in ⊢ (%→?); #Hta lapply (Hta … Htapein) 
+[ @daemon (* by no_grids_in_table, manca un lemma sulla reverse *) ]
+-Hta #Hta * #tb * whd in ⊢ (%→?); #Htb lapply (Htb (〈c0,bc0〉::curconfig) … Hta)
+[ @daemon ] -Hta -Htb #Htb
+* #tc * whd in ⊢ (%→?); #Htc lapply (Htc … Htb) -Htb -Htc #Htc
+* #td * whd in ⊢ (%→?); *
+[ * #c1 * generalize in match Htc; generalize in match Htapein; -Htapein -Htc
+  cases ls0 in Hls0;
+  [ #_ #_ #Htc >Htc normalize in ⊢ (%→?); #Hfalse destruct (Hfalse) ]
+  #l1 #ls1 #Hls0 #Htapein #Htc change with (midtape ? ls1 l1 ?) in Htc:(???%); >Htc
+  #Hl1 whd in Hl1:(??%?); #Htd 
+  * #te * whd in ⊢ (%→?); #Hte lapply (Hte … Htd ?)
+  [ (* memb_reverse *) @daemon ] -Hte -Htd >reverse_reverse #Hte
+  * #tf * whd in ⊢ (%→?); #Htf lapply (Htf … Hte) -Htf -Hte #Htf
+  * #tg * whd in ⊢ (%→?); #Htg lapply (Htg … Htf ?)
+  [ @(no_grids_in_table … Htable) ] -Htg -Htf >reverse_reverse #Htg
+  * #th * whd in ⊢ (%→?); #Hth lapply (Hth … Htg) -Hth -Htg #Hth
+  * #ti * whd in ⊢ (%→?); #Hti lapply (Hti … Hth)
+  [ (* memb_reverse *) @daemon ] -Hti -Hth #Hti
+  whd in ⊢ (%→?); #Houtc lapply (Houtc (l1::curconfig) … Hti)
+  [ #x #Hx cases (orb_true_l … Hx) -Hx #Hx
+    [ >(\P Hx) lapply (Hls0 l1 (memb_hd …)) @bit_not_grid
+    | lapply (Hbitnullcc ? Hx) @bit_or_null_not_grid ] ] 
+  -Houtc >reverse_cons >associative_append #Houtc %2 %{l1} %{ls1} % [%] @Houtc
+| * generalize in match Htc; generalize in match Htapein; -Htapein -Htc
+  cases ls0
+  [| #l1 #ls1 #_ #Htc >Htc normalize in ⊢ (%→?); #Hfalse destruct (Hfalse) ]
+  #Htapein #Htc change with (leftof ???) in Htc:(???%); >Htc #_ #Htd 
+  * #te * whd in ⊢ (%→?); #Hte lapply (Hte … Htd ?)
+  [ (*memb_reverse*) @daemon ] -Hte -Htd >reverse_reverse #Hte
+  * #tf * whd in ⊢ (%→?); #Htf lapply (Htf … Hte) -Htf -Hte #Htf
+  * #tg * whd in ⊢ (%→?); #Htg lapply (Htg … Htf ?)
+  [ @(no_grids_in_table … Htable) ] -Htg -Htf >reverse_reverse #Htg
+  * #th * whd in ⊢ (%→?); #Hth lapply (Hth … Htg) -Hth -Htg #Hth
+  * #ti * whd in ⊢ (%→?); #Hti lapply (Hti … Hth)
+  [ (*memb_reverse*) @daemon ] -Hti -Hth #Hti
+  whd in ⊢ (%→?); #Houtc lapply (Houtc (〈null,false〉::curconfig) … Hti)
+  [ #x #Hx cases (orb_true_l … Hx) -Hx #Hx
+    [ >(\P Hx) %
+    | lapply (Hbitnullcc ? Hx) @bit_or_null_not_grid ] ] 
+  -Houtc >reverse_cons >associative_append
+  >reverse_cons >associative_append #Houtc % % [%] @Houtc
+]
+qed.
+
+(*definition mtl_aux ≝ 
+  seq ? (move_r …) (seq ? (move_char_c STape 〈grid,false〉) (move_l …)).
+definition R_mtl_aux ≝ λt1,t2.
+  ∀l1,l2,l3,r. t1 = midtape STape l1 r (l2@〈grid,false〉::l3) → no_grids l2 → 
+  t2 = midtape STape (reverse ? l2@l1) r (〈grid,false〉::l3).
+
+lemma sem_mtl_aux : Realize ? mtl_aux R_mtl_aux.
+#intape 
+cases (sem_seq … (sem_move_r …) (sem_seq … (ssem_move_char_c STape 〈grid,false〉) (sem_move_l …)) intape)
+#k * #outc * #Hloop #HR @(ex_intro ?? k) @(ex_intro ?? outc) % [@Hloop] -Hloop
+#l1 #l2 #l3  #r #Hintape #Hl2
+cases HR -HR #ta * whd in ⊢ (%→?); #Hta lapply (Hta … Hintape) -Hta #Hta
+* #tb * whd in ⊢(%→?); generalize in match Hta; -Hta cases l2 in Hl2;
+[ #_ #Hta #Htb lapply (Htb … Hta) -Htb * #Htb #_ whd in ⊢ (%→?); #Houtc
+  lapply (Htb (refl ??)) -Htb >Hta @Houtc
+| #c0 #l0 #Hnogrids #Hta #Htb lapply (Htb … Hta) -Htb * #_ #Htb
+    lapply (Htb … (refl ??) ??)
+    [ cases (true_or_false (memb STape 〈grid,false〉 l0)) #Hmemb
+      [ @False_ind lapply (Hnogrids 〈grid,false〉 ?)
+        [ @memb_cons // | normalize #Hfalse destruct (Hfalse) ]
+      | @Hmemb ]
+    | % #Hc0 lapply (Hnogrids c0 ?)
+      [ @memb_hd | >Hc0 normalize #Hfalse destruct (Hfalse) ]
+    | #Htb whd in ⊢(%→?); >Htb #Houtc lapply (Houtc … (refl ??)) -Houtc #Houtc
+      >reverse_cons >associative_append @Houtc
+]]
+qed.
+
+check swap*)
+
 
 (*
            by cases on current: 
@@ -513,7 +573,7 @@ lemma mtl_concrete_to_abstract :
 #t1 #t2 whd in ⊢(%→?); #Hconcrete
 #rs #n #table #curc #curconfig #ls #Hcurc #Hcurconfig #Htable #Ht1
 * * * #Hnomarks #Hbits #Hcurc #Hlegal #t1' #Ht1'
-cases (Hconcrete … Htable Ht1) //
+cases (Hconcrete … Htable ? Ht1) //
 [ * #Hls #Ht2
   @(ex_intro ?? [])
   @(ex_intro ?? (〈curc,false〉::rs)) 
@@ -563,7 +623,8 @@ cases (Hconcrete … Htable Ht1) //
     | % % % #Hl0 lapply (Hbits 〈l0,false〉?) 
       [ @memb_append_l1 >Hls @memb_hd
       | >Hl0 normalize #Hfalse destruct (Hfalse)
-      ] ] ] ]
+      ] ] ] 
+| #x #Hx @Hbits @memb_append_l1 @Hx ]
 qed. 
   
 lemma Realize_to_Realize : 

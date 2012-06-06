@@ -73,9 +73,9 @@ lemma sem_mcl_step :
   ]
 qed.
     
-(* the move_char (variant c) machine *)
+(* the move_char (variant left) machine *)
 definition move_char_l ≝ 
-  λalpha,sep.whileTM alpha (mcl_step alpha sep) 〈mcl3,sep〉.
+  λalpha,sep.whileTM alpha (mcl_step alpha sep) (inr … (inl … (inr … start_nop))).
 
 definition R_move_char_l ≝ 
   λalpha,sep,t1,t2.
@@ -151,3 +151,16 @@ lemma terminate_move_char_l :
         [#eqsep %1 >(\P eqsep) // | #H %2 //]
   ]
 qed.
+
+(* NO GOOD: we must stop if current = None too!!! 
+lemma ssem_move_char_l :
+  ∀alpha,sep.
+  Realize alpha (move_char_l alpha sep) (R_move_char_l alpha sep).
+#alpha #sep *
+[ %{5} % [| % [whd in ⊢ (??%?);
+ @WRealize_to_Realize // @terminate_move_char_l
+*)
+
+axiom ssem_move_char_l :
+  ∀alpha,sep.
+  Realize alpha (move_char_l alpha sep) (R_move_char_l alpha sep).

@@ -237,3 +237,47 @@ lemma sem_swap : ∀alpha,foo.
     ]
   ]
 qed.
+
+definition swap_r ≝ 
+ λalpha:FinSet.λfoo:alpha.
+ mk_TM alpha (swap_states alpha)
+ (λp.let 〈q,a〉 ≝ p in
+  let 〈q',b〉 ≝ q in
+  let q' ≝ pi1 nat (λi.i<4) q' in (* perche' devo passare il predicato ??? *)
+  match a with 
+  [ None ⇒ 〈〈swap3,foo〉,None ?〉 (* if tape is empty then stop *)
+  | Some a' ⇒ 
+  match q' with
+  [ O ⇒ (* q0 *) 〈〈swap1,a'〉,Some ? 〈a',L〉〉  (* save in register and move L *)
+  | S q' ⇒ match q' with
+    [ O ⇒ (* q1 *) 〈〈swap2,a'〉,Some ? 〈b,R〉〉 (* swap with register and move R *)
+    | S q' ⇒ match q' with
+      [ O ⇒ (* q2 *) 〈〈swap3,foo〉,Some ? 〈b,N〉〉 (* copy from register and stay *)
+      | S q' ⇒ (* q3 *) 〈〈swap3,foo〉,None ?〉 (* final state *)
+      ]
+    ]
+  ]])
+  〈swap0,foo〉
+  (λq.\fst q == swap3).
+
+definition Rswap_r ≝ 
+  λalpha,t1,t2.
+   ∀a,b,ls,rs.  
+    t1 = midtape alpha (a::ls) b rs → 
+    t2 = midtape alpha (b::ls) a rs.
+
+lemma sem_swap_r : ∀alpha,foo.
+  swap_r alpha foo ⊨ Rswap_r alpha. 
+#alpha #foo *
+  [@(ex_intro ?? 2) @(ex_intro … (mk_config ?? 〈swap3,foo〉 (niltape ?)))
+   % [% |#a #b #ls #rs #H destruct]
+  |#l0 #lt0 @(ex_intro ?? 2) @(ex_intro … (mk_config ?? 〈swap3,foo〉 (leftof ? l0 lt0)))
+   % [% |#a #b #ls #rs #H destruct] 
+  |#r0 #rt0 @(ex_intro ?? 2) @(ex_intro … (mk_config ?? 〈swap3,foo〉 (rightof ? r0 rt0)))
+   % [% |#a #b #ls #rs #H destruct] 
+  | #lt #c #rt @(ex_intro ?? 4) cases lt
+    [@ex_intro [|% [ % | #a #b #ls #rs #H destruct]]
+    |#l0 #lt0 @ex_intro [| % [ % | #a #b #ls #rs #H destruct //
+    ]
+  ]
+qed.
