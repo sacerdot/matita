@@ -654,7 +654,9 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
                                     ("",0,GrafiteAst.NQed (Stdpp.dummy_loc,false))
                            | _ -> status))
                        (* XXX *)
-                      with _ -> (*HLog.warn "error in generating inversion principle"; *)
+                      with
+                         Sys.Break as exn -> raise exn
+                       | _ -> (*HLog.warn "error in generating inversion principle"; *)
                                 let status = status#set_ng_mode `CommandMode in status)
                   status
                   (NCic.Prop::
@@ -707,7 +709,9 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
                                     ("",0,GrafiteAst.NQed(Stdpp.dummy_loc,false))
                            | _ -> status))
                        (* XXX *)
-                      with _ -> (*HLog.warn "error in generating discrimination principle"; *)
+                      with
+                         Sys.Break as exn -> raise exn
+                       | _ -> (*HLog.warn "error in generating discrimination principle"; *)
                                 let status = status#set_ng_mode `CommandMode in
                                 status)
                   status' itl
