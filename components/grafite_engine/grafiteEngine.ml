@@ -634,7 +634,16 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
                   (*HLog.warn "error in generating projection/eliminator";*)
                   status
              ) status boxml in             
-           let _,_,_,_,nobj = obj in 
+           let _,_,_,_,nobj = obj in
+           (* attempting to generate an inversion principle on the maximum
+            * universe can take a long time to fail: this code removes maximal
+            * sorts from the universe list *)
+           let universes = NCicEnvironment.get_universes () in
+           let max_univ = List.fold_left max [] universes in
+           let universes = 
+             List.filter (fun x -> NCicEnvironment.universe_lt x max_univ)
+               universes
+           in
            let status = match nobj with
                NCic.Inductive (is_ind,leftno,itl,_) ->
                  List.fold_left (fun status it ->      
@@ -660,8 +669,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
                                 let status = status#set_ng_mode `CommandMode in status)
                   status
                   (NCic.Prop::
-                    List.map (fun s -> NCic.Type s)
-                    (NCicEnvironment.get_universes ())))) status itl
+                    List.map (fun s -> NCic.Type s) universes))) status itl
               | _ -> status
            in
            let status = match nobj with
