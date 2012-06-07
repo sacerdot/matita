@@ -18,8 +18,8 @@ open DisambiguateTypes
 module Ast = NotationPt
 module NRef = NReference 
 
-let debug_print s = prerr_endline (Lazy.force s);;
-let debug_print _ = ();;
+let debug = ref false;;
+let debug_print s = if !debug then prerr_endline (Lazy.force s);;
 
 let cic_name_of_name = function
   | Ast.Ident (n, None) ->  n

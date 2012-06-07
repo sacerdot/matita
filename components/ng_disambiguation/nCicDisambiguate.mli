@@ -11,6 +11,8 @@
 
 (* $Id: nCic.ml 9058 2008-10-13 17:42:30Z tassi $ *)
 
+val debug : bool ref
+
 val disambiguate_term :
   #NCicCoercion.status ->
   context:NCic.context ->

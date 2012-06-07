@@ -93,9 +93,11 @@ let init_debugging_menu gui =
     addDebugSeparator ();
     addDebugCheckbox "tactics logging" 
       (fun mi () -> NTacStatus.debug := mi#active);
+    addDebugCheckbox "disambiguation logging"
+      (fun mi () -> MultiPassDisambiguator.debug := mi#active; NCicDisambiguate.debug := mi#active);
     addDebugCheckbox "disambiguation/refiner/unification/metasubst logging"
       (fun mi () -> NCicRefiner.debug := mi#active; NCicUnification.debug :=
-              mi#active; MultiPassDisambiguator.debug := mi#active; NCicMetaSubst.debug := mi#active);
+              mi#active; MultiPassDisambiguator.debug := mi#active; NCicDisambiguate.debug := mi#active; NCicMetaSubst.debug := mi#active);
     addDebugCheckbox "reduction logging"
       (fun mi () -> NCicReduction.debug := mi#active);
     addDebugSeparator ();
