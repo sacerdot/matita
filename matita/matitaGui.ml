@@ -774,7 +774,7 @@ class gui () =
       main#unicodeAsTexMenuItem#set_active
         (Helm_registry.get_bool "matita.paste_unicode_as_tex");
         (* log *)
-      HLog.set_log_callback self#console#log_callback;
+      HLog.set_log_callback (fun tag msg -> GtkThread.async (self#console#log_callback tag) msg);
       GtkSignal.user_handler :=
         (function 
         | MatitaScript.ActionCancelled s -> HLog.error s
