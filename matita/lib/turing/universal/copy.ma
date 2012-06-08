@@ -10,7 +10,7 @@
       V_____________________________________________________________*)
 
 
-include "turing/universal/tuples.ma".
+include "turing/universal/marks.ma".
 
 definition copy_step_subcase ≝
   λalpha,c,elseM.ifTM ? (test_char ? (λx.x == 〈c,true〉))
@@ -68,7 +68,9 @@ cases (sem_if ? (test_char ? (λx. x == 〈c,true〉)) ?????? tc_true (sem_test_
     #Hth whd in ⊢ (%→?); #Houtc cases (Houtc … Hth) -Houtc
     [ * >Hl1marks [ #Hfalse destruct (Hfalse) ] @memb_append_l2 @memb_hd ]
     * #_ #Houtc lapply (Houtc (reverse ? l1@[〈x,false〉]) 〈a,true〉 l3 ? (refl ??) ?) -Houtc
-    [ #x1 #Hx1 cases (memb_append … Hx1) -Hx1 #Hx1 [ @Hl1marks @memb_append_l1 @daemon | >(memb_single … Hx1) % ]
+    [ #x1 #Hx1 cases (memb_append … Hx1) -Hx1 #Hx1   
+      [@Hl1marks @memb_append_l1 <(reverse_reverse … l1) @memb_reverse @Hx1 
+      |>(memb_single … Hx1) % ]
     | normalize >associative_append % ] 
     #Houtc lapply (\P Hx) -Hx #Hx destruct (Hx) % % [%] >Houtc
     >reverse_append >reverse_reverse >associative_append >associative_append % ]
@@ -154,7 +156,9 @@ cases (sem_if ? (test_char ? (λx:STape.x == 〈null,true〉)) ?????? tc_true
     #Hth whd in ⊢ (%→?); #Houtc cases (Houtc … Hth) -Houtc
     [ * >Hl1marks [ #Hfalse destruct (Hfalse) ] @memb_append_l2 @memb_hd ]
     * #_ #Houtc lapply (Houtc (reverse ? l1@[〈x,false〉]) 〈a,true〉 l3 ? (refl ??) ?) -Houtc
-    [ #x1 #Hx1 cases (memb_append … Hx1) -Hx1 #Hx1 [ @Hl1marks @memb_append_l1 @daemon | >(memb_single … Hx1) % ]
+    [ #x1 #Hx1 cases (memb_append … Hx1) -Hx1 #Hx1
+      [@Hl1marks @memb_append_l1 <(reverse_reverse … l1) @memb_reverse @Hx1 
+      |>(memb_single … Hx1) % ]
     | normalize >associative_append % ] 
     #Houtc lapply (\P Hx) -Hx #Hx destruct (Hx) % % [%] >Houtc
     >reverse_append >reverse_reverse >associative_append >associative_append % ]
@@ -272,6 +276,8 @@ lemma inj_append_singleton_l2 :
 >reverse_append >reverse_append normalize #H1 destruct %
 qed.
 
+axiom daemon : ∀P:Prop.P.
+
 lemma wsem_copy0 : WRealize ? copy0 R_copy0.
 #intape #k #outc #Hloop 
 lapply (sem_while … sem_copy_step intape k outc Hloop) [%] -Hloop
@@ -292,7 +298,7 @@ lapply (sem_while … sem_copy_step intape k outc Hloop) [%] -Hloop
   #Hl1 #Hl1bits #l4' #bg #Hl4 #Hl4bits %2
   cases (Htc … Htb) -Htc #Hcbitnull #Htc
   % [ % #Hc' >Hc' in Hcbitnull; normalize #Hfalse destruct (Hfalse) ]
-  cut (|l1| = |reverse ? l4|) [@daemon] #Hlen1
+  cut (|l1| = |reverse ? l4|) [>length_reverse @Hlen] #Hlen1
   @(list_cases2 … Hlen1)
   [ (* case l1 = [] is discriminated because l1 contains at least comma *)
     #Hl1nil @False_ind >Hl1nil in Hl1; cases l1' normalize

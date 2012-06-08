@@ -9,8 +9,8 @@
      \ /   GNU General Public License Version 2   
       V_____________________________________________________________*)
 
-include "turing/universal/move_char_c.ma".
-include "turing/universal/move_char_l.ma".
+include "turing/move_char.ma".
+include "turing/universal/marks.ma".
 include "turing/universal/tuples.ma".
 
 definition init_cell_states ≝ initN 2.
@@ -197,7 +197,7 @@ MOVE TAPE LEFT:
 *)
 definition mtl_aux ≝ 
   seq ? (swap STape 〈grid,false〉)
-   (seq ? (move_r …) (seq ? (move_r …) (seq ? (move_char_c STape 〈grid,false〉) (move_l …)))).
+   (seq ? (move_r …) (seq ? (move_r …) (seq ? (move_char_r STape 〈grid,false〉) (move_l …)))).
 definition R_mtl_aux ≝ λt1,t2.
   ∀l1,l2,l3,r. t1 = midtape STape l1 r (〈grid,false〉::l2@〈grid,false〉::l3) → no_grids l2 → 
   t2 = midtape STape (reverse ? l2@〈grid,false〉::l1) r (〈grid,false〉::l3).
@@ -205,7 +205,7 @@ definition R_mtl_aux ≝ λt1,t2.
 lemma sem_mtl_aux : Realize ? mtl_aux R_mtl_aux.
 #intape 
 cases (sem_seq … (sem_swap STape 〈grid,false〉) (sem_seq … (sem_move_r …)
-        (sem_seq … (sem_move_r …) (sem_seq … (ssem_move_char_c STape 〈grid,false〉) 
+        (sem_seq … (sem_move_r …) (sem_seq … (ssem_move_char_r STape 〈grid,false〉) 
           (sem_move_l …)))) intape)
 #k * #outc * #Hloop #HR @(ex_intro ?? k) @(ex_intro ?? outc) % [@Hloop] -Hloop
 #l1 #l2 #l3  #r #Hintape #Hl2
@@ -340,14 +340,14 @@ cases HR -HR #ta * whd in ⊢ (%→?); #Hta lapply (Hta … Htapein)
 qed.
 
 (*definition mtl_aux ≝ 
-  seq ? (move_r …) (seq ? (move_char_c STape 〈grid,false〉) (move_l …)).
+  seq ? (move_r …) (seq ? (move_char_r STape 〈grid,false〉) (move_l …)).
 definition R_mtl_aux ≝ λt1,t2.
   ∀l1,l2,l3,r. t1 = midtape STape l1 r (l2@〈grid,false〉::l3) → no_grids l2 → 
   t2 = midtape STape (reverse ? l2@l1) r (〈grid,false〉::l3).
 
 lemma sem_mtl_aux : Realize ? mtl_aux R_mtl_aux.
 #intape 
-cases (sem_seq … (sem_move_r …) (sem_seq … (ssem_move_char_c STape 〈grid,false〉) (sem_move_l …)) intape)
+cases (sem_seq … (sem_move_r …) (sem_seq … (ssem_move_char_r STape 〈grid,false〉) (sem_move_l …)) intape)
 #k * #outc * #Hloop #HR @(ex_intro ?? k) @(ex_intro ?? outc) % [@Hloop] -Hloop
 #l1 #l2 #l3  #r #Hintape #Hl2
 cases HR -HR #ta * whd in ⊢ (%→?); #Hta lapply (Hta … Hintape) -Hta #Hta

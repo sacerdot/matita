@@ -16,6 +16,7 @@
 
 include "turing/universal/copy.ma".
 include "turing/universal/move_tape.ma".
+include "turing/universal/match_machines.ma".
 
 (*
 
