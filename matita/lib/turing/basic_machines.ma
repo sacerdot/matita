@@ -199,7 +199,7 @@ definition swap ≝
  mk_TM alpha (swap_states alpha)
  (λp.let 〈q,a〉 ≝ p in
   let 〈q',b〉 ≝ q in
-  let q' ≝ pi1 nat (λi.i<4) q' in (* perche' devo passare il predicato ??? *)
+  let q' ≝ pi1 nat (λi.i<4) q' in
   match a with 
   [ None ⇒ 〈〈swap3,foo〉,None ?〉 (* if tape is empty then stop *)
   | Some a' ⇒ 

@@ -443,10 +443,6 @@ qed.
         ^
 *)
 
-definition is_marked ≝ 
-  λalpha.λp:FinProd … alpha FinBool.
-  let 〈x,b〉 ≝ p in b.
-
 definition adv_both_marks ≝ 
   λalpha.seq ? (adv_mark_r alpha)
     (seq ? (move_l ?)
