@@ -122,6 +122,15 @@ lemma mem_to_memb: ∀S:DeqSet.∀a,l. mem S a l → memb S a l = true.
     ]
   ]
 qed.
+
+lemma memb_to_mem: ∀S:DeqSet.∀l,a. memb S a l =true → mem S a l.
+#S #l #a elim l 
+  [normalize #H destruct
+  |#b #tl #Hind #mema cases (orb_true_l … mema) 
+    [#eqab >(\P eqab) %1 % |#memtl %2 @Hind @memtl]
+  ]
+qed.
+
 (**************** unicity test *****************)
 
 let rec uniqueb (S:DeqSet) l on l : bool ≝

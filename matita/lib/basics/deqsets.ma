@@ -207,7 +207,8 @@ qed.
 
 definition DeqSig ≝ λA:DeqSet.λP:A→Prop.
   mk_DeqSet (Σx:A.P x) (eq_sigma A P) (eq_sigma_true A P).
-  
+
+(*
 unification hint  0 ≔ C,P; 
     T ≟ carr C,
     X ≟ DeqSig C P
@@ -218,4 +219,4 @@ unification hint  0 ≔ T,P,p1,p2;
     X ≟ DeqSig T P
 (* ---------------------------------------- *) ⊢ 
     eq_sigma T P p1 p2 ≡ eqb X p1 p2.
-
+*)

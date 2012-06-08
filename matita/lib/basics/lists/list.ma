@@ -196,6 +196,11 @@ lemma length_reverse: ∀A.∀l:list A.
 #A #l elim l // #a #l0 #IH >reverse_cons >length_append normalize //
 qed.
 
+lemma lenght_to_nil: ∀A.∀l:list A.
+  |l| = 0 → l = [ ].
+#A * // #a #tl normalize #H destruct
+qed.
+ 
 (****************** traversing two lists in parallel *****************)
 lemma list_ind2 : 
   ∀T1,T2:Type[0].∀l1:list T1.∀l2:list T2.∀P:list T1 → list T2 → Prop.
@@ -265,6 +270,27 @@ let rec mem A (a:A) (l:list A) on l ≝
   | cons hd tl ⇒ a=hd ∨ mem A a tl
   ]. 
 
+lemma mem_map: ∀A,B.∀f:A→B.∀l,b. 
+  mem ? b (map … f l) → ∃a. mem ? a l ∧ f a = b.
+#A #B #f #l elim l 
+  [#b normalize @False_ind
+  |#a #tl #Hind #b normalize *
+    [#eqb @(ex_intro … a) /3/
+    |#memb cases (Hind … memb) #a * #mema #eqb
+     @(ex_intro … a) /3/
+    ]
+  ]
+qed.
+
+lemma mem_map_forward: ∀A,B.∀f:A→B.∀a,l. 
+  mem A a l → mem B (f a) (map ?? f l).
+ #A #B #f #a #l elim l
+  [normalize @False_ind
+  |#b #tl #Hind * 
+    [#eqab <eqab normalize %1 % |#memtl normalize %2 @Hind @memtl]
+  ]
+qed.
+
 (***************************** split *******************************)
 let rec split_rev A (l:list A) acc n on n ≝ 
   match n with 
@@ -317,6 +343,38 @@ lemma split_exists: ∀A,n.∀l:list A. n ≤ |l| →
 @(ex_intro … (\snd (split A l n))) % /2/
 qed.
   
+(****************************** flatten ******************************)
+definition flatten ≝ λA.foldr (list A) (list A) (append A) [].
+
+lemma flatten_to_mem: ∀A,n,l,l1,l2.∀a:list A. 0 < n →
+  (∀x. mem ? x l → |x| = n) → |a| = n → flatten ? l = l1@a@l2  →
+    (∃q.|l1| = n*q)  → mem ? a l.
+#A #n #l elim l
+  [normalize #l1 #l2 #a #posn #Hlen #Ha #Hnil @False_ind
+   cut (|a|=0) [@sym_eq @le_n_O_to_eq 
+   @(transitive_le ? (|nil A|)) // >Hnil >length_append >length_append //] /2/
+  |#hd #tl #Hind #l1 #l2 #a #posn #Hlen #Ha 
+   whd in match (flatten ??); #Hflat * #q cases q
+    [<times_n_O #Hl1 
+     cut (a = hd) [>(lenght_to_nil… Hl1) in Hflat; 
+     whd in ⊢ ((???%)→?); #Hflat @sym_eq @(append_l1_injective … Hflat)
+     >Ha >Hlen // %1 //   
+     ] /2/
+    |#q1 #Hl1 lapply (split_exists … n l1 ?) //
+     * #l11 * #l12 * #Heql1 #Hlenl11 %2
+     @(Hind l12 l2 … posn ? Ha) 
+      [#x #memx @Hlen %2 //
+      |@(append_l2_injective ? hd l11) 
+        [>Hlenl11 @Hlen %1 %
+        |>Hflat >Heql1 >associative_append %
+        ]
+      |@(ex_intro …q1) @(injective_plus_r n) 
+       <Hlenl11 in ⊢ (??%?); <length_append <Heql1 >Hl1 //
+      ]
+    ]
+  ]
+qed.
+
 (****************************** nth ********************************)
 let rec nth n (A:Type[0]) (l:list A) (d:A)  ≝  
   match n with
