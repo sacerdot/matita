@@ -318,6 +318,44 @@ let index_local_equations eq_cache status =
     eq_cache ctx
 ;;
 
+let index_local_equations2 eq_cache status open_goal lemmas nohyps =
+  noprint (lazy "indexing equations");
+  let eq_cache,lemmas =
+   match lemmas with
+      None -> eq_cache,[]
+    | Some l -> NCicParamod.empty_state,l
+  in
+  let ngty = get_goalty status open_goal in
+  let _,_,metasenv,subst,_ = status#obj in
+  let ctx = apply_subst_context ~fix_projections:true status (ctx_of ngty) in
+  let status,lemmas =
+   List.fold_left
+    (fun (status,lemmas) l ->
+      let status,l = NTacStatus.disambiguate status ctx l None in
+      let status,l = NTacStatus.term_of_cic_term status l ctx in
+       status,l::lemmas)
+    (status,[]) lemmas in
+  let local_equations =
+   if nohyps then [] else
+    List.map (fun i -> NCic.Rel (i + 1))
+     (HExtlib.list_seq 1 (List.length ctx)) in
+  let lemmas = lemmas @ local_equations in
+  List.fold_left 
+    (fun eq_cache t ->
+         try
+           let ty = NCicTypeChecker.typeof status subst metasenv ctx t in
+           if is_a_fact status (mk_cic_term ctx ty) then
+             (debug_print(lazy("eq indexing " ^ (status#ppterm ctx subst metasenv ty)));
+              NCicParamod.forward_infer_step status metasenv subst ctx eq_cache t ty)
+           else 
+             (noprint (lazy ("not a fact: " ^ (status#ppterm ctx subst metasenv ty)));
+              eq_cache)
+         with 
+           | NCicTypeChecker.TypeCheckerFailure _
+           | NCicTypeChecker.AssertFailure _ -> eq_cache)
+    eq_cache lemmas
+;;
+
 let fast_eq_check_tac ~params s = 
   let unit_eq = index_local_equations s#eq_cache s in   
   dist_fast_eq_check unit_eq s
@@ -341,8 +379,11 @@ let demod eq_cache status goal =
 ;;
 
 let demod_tac ~params s = 
-  let unit_eq = index_local_equations s#eq_cache s in   
-  NTactics.distribute_tac (demod unit_eq) s
+  let unit_eq s i =
+   index_local_equations2 s#eq_cache s i (fst params)
+    (List.mem_assoc "nohyps" (snd params))
+  in   
+   NTactics.distribute_tac (fun s i -> demod (unit_eq s i) s i) s
 ;;
 
 (*
