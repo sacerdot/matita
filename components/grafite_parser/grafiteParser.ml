@@ -253,6 +253,7 @@ EXTEND
    | IDENT "paramod"
    | IDENT "width"
    | IDENT "size"
+   | IDENT "nohyps"
    ]
 ];
   auto_params: [
