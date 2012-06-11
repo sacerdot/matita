@@ -1131,7 +1131,7 @@ and get_relevance status ~metasenv ~subst context t args =
               | C.Sort C.Prop ->
                   false::(aux context new_ty tl)
               | C.Sort _
-                   | C.Meta _ -> true::(aux context new_ty tl)
+              | C.Meta _ -> true::(aux context new_ty tl)
               | _ -> raise (TypeCheckerFailure (lazy (Printf.sprintf
                      "Prod: the type %s of the source of %s is not a sort" 
                       (status#ppterm ~subst ~metasenv ~context sort)
