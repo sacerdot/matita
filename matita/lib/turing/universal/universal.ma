@@ -344,7 +344,7 @@ qed.
 definition universalTM ≝ whileTM ? uni_step us_acc.
 
 theorem sem_universal: ∀M:normalTM. ∀qstart.
-  WRealize ? universalTM (low_R M qstart (R_TM FinBool M qstart)).
+  universalTM ⊫ (low_R M qstart (R_TM FinBool M qstart)).
 #M #q #intape #i #outc #Hloop
 lapply (sem_while … sem_uni_step1 intape i outc Hloop)
   [@daemon] -Hloop 
@@ -371,7 +371,7 @@ lapply (sem_while … sem_uni_step1 intape i outc Hloop)
     [%
       [cases HRTM #k * #outc1 * #Hloop #Houtc1
        @(ex_intro … (S k)) @(ex_intro … outc1) % 
-        [>loop_S_false [2://] whd in match (step FinBool ??); 
+        [>loopM_unfold >loop_S_false [2://] whd in match (step FinBool ??); 
          >(eq_pair_fst_snd ?? (trans ???)) @Hloop
         |@Houtc1
         ]
@@ -382,10 +382,13 @@ lapply (sem_while … sem_uni_step1 intape i outc Hloop)
 qed.
 
 theorem sem_universal2: ∀M:normalTM. ∀R.
-  WRealize ? M R → WRealize ? universalTM (low_R M (start ? M) R).
+  M ⊫ R → universalTM ⊫ (low_R M (start ? M) R).
 #M #R #HMR lapply (sem_universal … M (start ? M)) @WRealize_to_WRealize
 #t1 #t2 whd in ⊢ (%→%); #H #tape1 #Htape1 cases (H ? Htape1)
 #q * #tape2 * * #HRTM #Hhalt #Ht2 @(ex_intro … q) @(ex_intro … tape2)
 % [% [@(R_TM_to_R … HRTM) @HMR | //] | //]
 qed.
+ 
+axiom terminate_UTM: ∀M:normalTM.∀t. 
+  M ↓ t → universalTM ↓ (low_config M (mk_config ?? (start ? M) t)).
  
