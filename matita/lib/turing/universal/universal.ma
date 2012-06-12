@@ -121,17 +121,8 @@ definition high_move ≝ λc,mv.
   | _ ⇒ None ?
   ].
 
-(* lemma high_of_lift ≝ ∀ls,c,rs.
-  high_tape ls c rs = *)
-
 definition map_move ≝ 
   λc,mv.match c with [ null ⇒ None ? | _ ⇒ Some ? 〈c,false,move_of_unialpha mv〉 ].
-
-(* axiom high_tape_move : ∀t1,ls,c,rs, c1,mv.
-  legal_tape ls c rs →
-  t1 = lift_tape ls c rs →
-  high_tape_from_tape (tape_move STape t1 (map_move c1 mv)) =
-    tape_move FinBool (high_tape_from_tape t1) (high_move c1 mv). *)
 
 definition low_step_R_true ≝ λt1,t2.
   ∀M:normalTM.
@@ -281,7 +272,7 @@ midtape STape (〈grid,false〉::ls)
   ]
 qed.
 
-lemma unistep_to_low_step: ∀t1,t2.
+lemma unistep_true_to_low_step: ∀t1,t2.
   R_uni_step_true t1 t2 → low_step_R_true t1 t2.
 #t1 #t2 (* whd in ⊢ (%→%); *) #Huni_step * #n #posn #t #h * #qin #tape #eqt1
 cases (low_config_eq … eqt1) 
@@ -324,41 +315,38 @@ lapply (Huni_step n table q_low_hd (\fst qout_low_hd)
     ]
   ]
 qed.
-    
+
 definition low_step_R_false ≝ λt1,t2.
   ∀M:normalTM.
   ∀c: nconfig (no_states M).  
     t1 = low_config M c → halt ? M (cstate … c) = true  ∧ t1 = t2.
+
+lemma unistep_false_to_low_step: ∀t1,t2.
+  R_uni_step_false t1 t2 → low_step_R_false t1 t2.
+#t1 #t2 (* whd in ⊢ (%→%); *) #Huni_step * #n #posn #t #h * #qin #tape #eqt1
+cases (low_config_eq … eqt1) #low_left * #low_right * #table * #q_low_hd * #q_low_tl * #current_low
+***** #_ #_ #_ #Hqin #_ #Ht1 whd in match (halt ???);
+cases (Huni_step (h qin) ?) [/2/] >Ht1 whd in ⊢ (??%?); @eq_f
+normalize in Hqin; destruct (Hqin) %
+qed.
 
 definition low_R ≝ λM,qstart,R,t1,t2.
     ∀tape1. t1 = low_config M (mk_config ?? qstart tape1) → 
     ∃q,tape2.R tape1 tape2 ∧
     halt ? M q = true ∧ t2 = low_config M (mk_config ?? q tape2).
 
-definition R_TM ≝ λsig.λM:TM sig.λq.λt1,t2.
-∃i,outc.
-  loop ? i (step sig M) (λc.halt sig M (cstate ?? c)) (mk_config ?? q t1) = Some ? outc ∧ 
-  t2 = (ctape ?? outc).
-
-(*
-definition universal_R ≝ λM,R,t1,t2. 
-    Realize ? M R →    
-    ∀tape1,tape2.
-    R tape1 tape 2 ∧
-    t1 = low_config M (initc ? M tape1) ∧
-    ∃q.halt ? M q = true → t2 = low_config M (mk_config ?? q tape2).*)
-
-axiom uni_step: TM STape.
-axiom us_acc: states ? uni_step.
-
-axiom sem_uni_step: accRealize ? uni_step us_acc low_step_R_true low_step_R_false.
+lemma sem_uni_step1: 
+  uni_step ⊨ [us_acc: low_step_R_true, low_step_R_false].
+@(acc_Realize_to_acc_Realize … sem_uni_step) 
+  [@unistep_true_to_low_step | @unistep_false_to_low_step ]
+qed. 
 
 definition universalTM ≝ whileTM ? uni_step us_acc.
 
 theorem sem_universal: ∀M:normalTM. ∀qstart.
   WRealize ? universalTM (low_R M qstart (R_TM FinBool M qstart)).
 #M #q #intape #i #outc #Hloop
-lapply (sem_while … sem_uni_step intape i outc Hloop)
+lapply (sem_while … sem_uni_step1 intape i outc Hloop)
   [@daemon] -Hloop 
 * #ta * #Hstar generalize in match q; -q 
 @(star_ind_l ??????? Hstar)
@@ -392,15 +380,6 @@ lapply (sem_while … sem_uni_step intape i outc Hloop)
     ]
   ]
 qed.
-
-lemma R_TM_to_R: ∀sig,M,R. ∀t1,t2. 
-  WRealize sig M R → R_TM ? M (start ? M) t1 t2 → R t1 t2.
-#sig #M #R #t1 #t2 whd in ⊢ (%→?); #HMR * #i * #outc *
-#Hloop #Ht2 >Ht2 @(HMR … Hloop)
-qed.
-
-axiom WRealize_to_WRealize: ∀sig,M,R1,R2.
-  (∀t1,t2.R1 t1 t2 → R2 t1 t2) → WRealize sig M R1 → WRealize ? M R2.
 
 theorem sem_universal2: ∀M:normalTM. ∀R.
   WRealize ? M R → WRealize ? universalTM (low_R M (start ? M) R).

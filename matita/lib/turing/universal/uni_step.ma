@@ -240,7 +240,7 @@ cases HR -HR
   ]
 qed. *)
 
-definition exec_move ≝ 
+definition exec_action ≝ 
   seq ? init_copy
     (seq ? copy
       (seq ? (move_r …) move_tape)).
@@ -255,7 +255,7 @@ definition map_move ≝
        mv ≠ null → c1 ≠ null
      dal fatto che c1 e mv sono contenuti nella table
  *)
-definition R_exec_move ≝ λt1,t2.
+definition R_exec_action ≝ λt1,t2.
   ∀n,curconfig,ls,rs,c0,c1,s0,s1,table1,newconfig,mv,table2.
   table_TM n (table1@〈comma,false〉::〈s1,false〉::newconfig@〈c1,false〉::〈comma,false〉::〈mv,false〉::table2) → 
   no_marks curconfig → only_bits (curconfig@[〈s0,false〉]) → 
@@ -329,7 +329,7 @@ qed.
 
 *)
 
-lemma sem_exec_move : Realize ? exec_move R_exec_move.
+lemma sem_exec_action : Realize ? exec_action R_exec_action.
 #intape
 cases (sem_seq … sem_init_copy
         (sem_seq … sem_copy
@@ -451,7 +451,7 @@ if is_false(current) (* current state is not final *)
     match_tuple;
     if is_marked(current) = false (* match ok *)
       then 
-           exec_move
+           exec_action
            move_r;
       else sink;
    else nop;
@@ -462,7 +462,7 @@ definition uni_step ≝
     (single_finalTM ? (seq ? init_match
       (seq ? match_tuple
         (ifTM ? (test_char ? (λc.¬is_marked ? c))
-          (seq ? exec_move (move_r …))
+          (seq ? exec_action (move_r …))
           (nop ?) (* sink *)
           tc_true))))
     (nop ?)
@@ -489,14 +489,16 @@ definition R_uni_step_false ≝ λt1,t2.
   
 axiom sem_match_tuple : Realize ? match_tuple R_match_tuple.
 
+definition us_acc : states ? uni_step ≝ (inr … (inl … (inr … start_nop))).
+
 lemma sem_uni_step :
-  accRealize ? uni_step (inr … (inl … (inr … start_nop)))
+  accRealize ? uni_step us_acc
      R_uni_step_true R_uni_step_false. 
 @(acc_sem_if_app STape … (sem_test_char ? (λc:STape.\fst c == bit false))
    (sem_seq … sem_init_match      
      (sem_seq … sem_match_tuple        
        (sem_if … (* ????????? (sem_test_char …  (λc.¬is_marked FSUnialpha c)) *)
-          (sem_seq … sem_exec_move (sem_move_r …))
+          (sem_seq … sem_exec_action (sem_move_r …))
           (sem_nop …))))
    (sem_nop …)
    …)

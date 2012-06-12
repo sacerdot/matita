@@ -89,21 +89,21 @@ definition nconfig ≝ λn. config FinBool (initN n).
 
 (******************************** tuples **************************************)
 
-(* By general results on FinSets we know that there is every function f between
-two finite sets A and B can be described by means of a finite graph of pairs
+(* By general results on FinSets we know that every function f between two 
+finite sets A and B can be described by means of a finite graph of pairs
 〈a,f a〉. Hence, the transition function of a normal turing machine can be
 described by a finite set of tuples 〈i,c〉,〈j,action〉〉 of the following type:
   (Nat_to n × (option FinBool)) × (Nat_to n × (option (FinBool × move))).  
-Unfortunately this description is not suitable for an Universal Machine, since
+Unfortunately this description is not suitable for a Universal Machine, since
 such a machine must work with a fixed alphabet, while the size on n is unknown.
 Hence, we must pass from natural numbers to a representation for them on a 
 finitary, e.g. binary, alphabet. In general, we shall associate
-to a pair 〈〈i,c〉,〈j,action〉〉 a tuples with the following syntactical structure
+to a pair 〈〈i,c〉,〈j,action〉〉 a tuple with the following syntactical structure
            |w_ix,w_jy,z
 where 
 1. "|" and "," are special characters used as delimiters;
 2. w_i and w_j are list of booleans representing the states $i$ and $j$; 
-3. x is special symbol null if C=None and is a if c=Some a
+3. x is special symbol null if c=None and is a if c=Some a
 4. y and z are both null if action = None, and are equal to b,m' if 
    action = Some b,m; 
 5. finally, m' = 0 if m = L, m' = 1 if m=R and m' = null if m = N

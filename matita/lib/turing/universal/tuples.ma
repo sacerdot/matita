@@ -124,8 +124,8 @@ qed.
 
 lemma trans_to_match:
   ∀n.∀h.∀trans: trans_source n → trans_target n.
-  ∀inp,outp,qin,cin,qout,cout,mv. trans inp = outp →
-  tuple_encoding n h 〈inp,outp〉 = mk_tuple qin cin qout cout mv →
+  ∀s,t,qin,cin,qout,cout,mv. trans s = t →
+  tuple_encoding n h 〈s,t〉 = mk_tuple qin cin qout cout mv →
   match_in_table (S n) qin cin qout cout mv (flatten ? (tuples_list n h (graph_enum ?? trans))).
 #n #h #trans #inp #outp #qin #cin #qout #cout #mv #Htrans #Htuple 
 @(tuple_to_match … (refl…)) <Htuple @mem_map_forward 

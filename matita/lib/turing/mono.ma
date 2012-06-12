@@ -261,6 +261,41 @@ definition accRealize ≝ λsig.λM:TM sig.λacc:states sig M.λRtrue,Rfalse.
 notation "M ⊨ [q: R1,R2]" non associative with precedence 45 for @{ 'cmodels $M $q $R1 $R2}.
 interpretation "conditional realizability" 'cmodels M q R1 R2 = (accRealize ? M q R1 R2).
 
+(******************************** monotonicity ********************************)
+lemma Realize_to_Realize : ∀alpha,M,R1,R2.
+  R1 ⊆ R2 → Realize alpha M R1 → Realize alpha M R2.
+#alpha #M #R1 #R2 #Himpl #HR1 #intape
+cases (HR1 intape) -HR1 #k * #outc * #Hloop #HR1
+@(ex_intro ?? k) @(ex_intro ?? outc) % /2/
+qed.
+
+lemma WRealize_to_WRealize: ∀sig,M,R1,R2.
+  R1 ⊆ R2 → WRealize sig M R1 → WRealize ? M R2.
+#alpha #M #R1 #R2 #Hsub #HR1 #intape #i #outc #Hloop
+@Hsub @(HR1 … i) @Hloop
+qed.
+
+lemma acc_Realize_to_acc_Realize: ∀sig,M.∀q:states sig M.∀R1,R2,R3,R4. 
+  R1 ⊆ R3 → R2 ⊆ R4 → M ⊨ [q:R1,R2] → M ⊨ [q:R3,R4].
+#alpha #M #q #R1 #R2 #R3 #R4 #Hsub13 #Hsub24 #HRa #intape
+cases (HRa intape) -HRa #k * #outc * * #Hloop #HRtrue #HRfalse 
+@(ex_intro ?? k) @(ex_intro ?? outc) % 
+  [ % [@Hloop] #Hq @Hsub13 @HRtrue // | #Hq @Hsub24 @HRfalse //]
+qed.
+
+(**************************** A canonical relation ****************************)
+
+definition R_TM ≝ λsig.λM:TM sig.λq.λt1,t2.
+∃i,outc.
+  loopM ? M i (mk_config ?? q t1) = Some ? outc ∧ 
+  t2 = (ctape ?? outc).
+  
+lemma R_TM_to_R: ∀sig,M,R. ∀t1,t2. 
+  M ⊫ R → R_TM ? M (start sig M) t1 t2 → R t1 t2.
+#sig #M #R #t1 #t2 whd in ⊢ (%→?); #HMR * #i * #outc *
+#Hloop #Ht2 >Ht2 @(HMR … Hloop)
+qed.
+
 (******************************** NOP Machine *********************************)
 
 (* NO OPERATION

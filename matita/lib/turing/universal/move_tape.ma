@@ -626,13 +626,6 @@ cases (Hconcrete … Htable ? Ht1) //
       ] ] ] 
 | #x #Hx @Hbits @memb_append_l1 @Hx ]
 qed. 
-  
-lemma Realize_to_Realize : 
-  ∀alpha,M,R1,R2.(∀t1,t2.R1 t1 t2 → R2 t1 t2) → Realize alpha M R1 → Realize alpha M R2.
-#alpha #M #R1 #R2 #Himpl #HR1 #intape
-cases (HR1 intape) -HR1 #k * #outc * #Hloop #HR1
-@(ex_intro ?? k) @(ex_intro ?? outc) % /2/
-qed.
 
 lemma sem_move_tape_l_abstract : Realize … move_tape_l R_move_tape_l_abstract.
 @(Realize_to_Realize … mtl_concrete_to_abstract) //
