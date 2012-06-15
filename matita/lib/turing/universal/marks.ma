@@ -319,8 +319,7 @@ qed.
 
 definition adv_mark_r ≝ 
   λalpha:FinSet.
-    seq ? (clear_mark alpha)
-      (seq ? (move_r ?) (mark alpha)).
+    clear_mark alpha · move_r ? · mark alpha.
       
 definition R_adv_mark_r ≝ λalpha,t1,t2.
   ∀ls,c,d,b,rs.
@@ -443,11 +442,10 @@ qed.
         ^
 *)
 
-definition adv_both_marks ≝ 
-  λalpha.seq ? (adv_mark_r alpha)
-    (seq ? (move_l ?)
-     (seq ? (adv_to_mark_l (FinProd alpha FinBool) (is_marked alpha))
-       (adv_mark_r alpha))).
+definition adv_both_marks ≝ λalpha.
+  adv_mark_r alpha · move_l ? ·
+    adv_to_mark_l (FinProd alpha FinBool) (is_marked alpha) · 
+      adv_mark_r alpha.
 
 definition R_adv_both_marks ≝ 
   λalpha,t1,t2.
@@ -542,11 +540,9 @@ qed.
       else M
 *)
 
-definition comp_step_subcase ≝ 
-  λalpha,c,elseM.ifTM ? (test_char ? (λx.x == c))
-    (seq ? (move_r …)
-      (seq ? (adv_to_mark_r ? (is_marked alpha)) 
-      (match_and_adv ? (λx.x == c))))
+definition comp_step_subcase ≝ λalpha,c,elseM.
+  ifTM ? (test_char ? (λx.x == c))
+    (move_r … · adv_to_mark_r ? (is_marked alpha) · match_and_adv ? (λx.x == c))
     elseM tc_true.
 
 definition R_comp_step_subcase ≝ 

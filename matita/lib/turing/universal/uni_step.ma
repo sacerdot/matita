@@ -57,13 +57,8 @@ if is_true(current) (* current state is final *)
 *)
 
 definition init_match ≝ 
-  seq ? (mark ?) 
-    (seq ? (adv_to_mark_r ? (λc:STape.is_grid (\fst c)))
-      (seq ? (move_r ?) 
-        (seq ? (move_r ?)
-          (seq ? (mark ?)
-            (seq ? (move_l ?) 
-              (adv_to_mark_l ? (is_marked ?))))))).
+  mark ? · adv_to_mark_r ? (λc:STape.is_grid (\fst c)) · move_r ? · 
+    move_r ? · mark ? · move_l ? · adv_to_mark_l ? (is_marked ?).
              
 definition R_init_match ≝ λt1,t2.
   ∀ls,l,rs,c,d. no_grids (〈c,false〉::l) → no_marks l → 
@@ -100,7 +95,6 @@ whd in ⊢ (%→?); #Htg cases (Htg … Htf) -Htg -Htf
    >associative_append %
 qed.
 
-
 (* init_copy 
 
            init_current_on_match; (* no marks in current *)
@@ -111,10 +105,8 @@ qed.
 *)
 
 definition init_copy ≝ 
-  seq ? init_current_on_match
-    (seq ? (move_r ?) 
-      (seq ? (adv_to_mark_r ? (is_marked ?))
-        (adv_mark_r ?))).
+  init_current_on_match · move_r ? · 
+    adv_to_mark_r ? (is_marked ?) · adv_mark_r ?.
 
 definition R_init_copy ≝ λt1,t2.
   ∀l1,l2,c,ls,d,rs. 
@@ -241,9 +233,7 @@ cases HR -HR
 qed. *)
 
 definition exec_action ≝ 
-  seq ? init_copy
-    (seq ? copy
-      (seq ? (move_r …) move_tape)).
+  init_copy · copy · move_r … · move_tape.
 
 definition map_move ≝ 
   λc,mv.match c with [ null ⇒ None ? | _ ⇒ Some ? 〈c,false,move_of_unialpha mv〉 ].
@@ -459,14 +449,12 @@ if is_false(current) (* current state is not final *)
 
 definition uni_step ≝ 
   ifTM ? (test_char STape (λc.\fst c == bit false))
-    (single_finalTM ? (seq ? init_match
-      (seq ? match_tuple
+    (single_finalTM ? 
+      (init_match · match_tuple ·
         (ifTM ? (test_char ? (λc.¬is_marked ? c))
-          (seq ? exec_action (move_r …))
-          (nop ?) (* sink *)
-          tc_true))))
-    (nop ?)
-    tc_true.
+          (exec_action · move_r …)
+          (nop ?) tc_true)))
+    (nop ?) tc_true.
 
 definition R_uni_step_true ≝ λt1,t2.
   ∀n,table,s0,s1,c0,c1,ls,rs,curconfig,newconfig,mv.

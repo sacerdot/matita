@@ -194,7 +194,7 @@ definition swap1 : initN 4 ≝ mk_Sig ?? 1 (leb_true_to_le 2 4 (refl …)).
 definition swap2 : initN 4 ≝ mk_Sig ?? 2 (leb_true_to_le 3 4 (refl …)).
 definition swap3 : initN 4 ≝ mk_Sig ?? 3 (leb_true_to_le 4 4 (refl …)).
 
-definition swap ≝ 
+definition swap_r ≝ 
  λalpha:FinSet.λfoo:alpha.
  mk_TM alpha (swap_states alpha)
  (λp.let 〈q,a〉 ≝ p in
@@ -222,8 +222,8 @@ definition Rswap ≝
     t1 = midtape alpha ls b (a::rs) → 
     t2 = midtape alpha ls a (b::rs).
 
-lemma sem_swap : ∀alpha,foo.
-  swap alpha foo ⊨ Rswap alpha. 
+lemma sem_swap_r : ∀alpha,foo.
+  swap_r alpha foo ⊨ Rswap alpha. 
 #alpha #foo *
   [@(ex_intro ?? 2) @(ex_intro … (mk_config ?? 〈swap3,foo〉 (niltape ?)))
    % [% |#a #b #ls #rs #H destruct]
@@ -238,12 +238,12 @@ lemma sem_swap : ∀alpha,foo.
   ]
 qed.
 
-definition swap_r ≝ 
+definition swap_l ≝ 
  λalpha:FinSet.λfoo:alpha.
  mk_TM alpha (swap_states alpha)
  (λp.let 〈q,a〉 ≝ p in
   let 〈q',b〉 ≝ q in
-  let q' ≝ pi1 nat (λi.i<4) q' in (* perche' devo passare il predicato ??? *)
+  let q' ≝ pi1 nat (λi.i<4) q' in
   match a with 
   [ None ⇒ 〈〈swap3,foo〉,None ?〉 (* if tape is empty then stop *)
   | Some a' ⇒ 
@@ -260,14 +260,14 @@ definition swap_r ≝
   〈swap0,foo〉
   (λq.\fst q == swap3).
 
-definition Rswap_r ≝ 
+definition Rswap_l ≝ 
   λalpha,t1,t2.
    ∀a,b,ls,rs.  
     t1 = midtape alpha (a::ls) b rs → 
     t2 = midtape alpha (b::ls) a rs.
 
-lemma sem_swap_r : ∀alpha,foo.
-  swap_r alpha foo ⊨ Rswap_r alpha. 
+lemma sem_swap_l : ∀alpha,foo.
+  swap_l alpha foo ⊨ Rswap_l alpha. 
 #alpha #foo *
   [@(ex_intro ?? 2) @(ex_intro … (mk_config ?? 〈swap3,foo〉 (niltape ?)))
    % [% |#a #b #ls #rs #H destruct]

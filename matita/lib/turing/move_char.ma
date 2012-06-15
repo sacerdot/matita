@@ -30,29 +30,29 @@ Final state = 〈4,#〉
 include "turing/basic_machines.ma".
 include "turing/if_machine.ma".
 
-definition mcc_step ≝ λalpha:FinSet.λsep:alpha.
+definition mcr_step ≝ λalpha:FinSet.λsep:alpha.
   ifTM alpha (test_char ? (λc.¬c==sep))
-     (single_finalTM … (seq … (swap_r alpha sep) (move_r ?))) (nop ?) tc_true.
+     (single_finalTM … (swap_l alpha sep · move_r ?)) (nop ?) tc_true.
 
-definition Rmcc_step_true ≝ 
+definition Rmcr_step_true ≝ 
   λalpha,sep,t1,t2.
    ∀a,b,ls,rs.  
     t1 = midtape alpha (a::ls) b rs → 
     b ≠ sep ∧
     t2 = mk_tape alpha (a::b::ls) (option_hd ? rs) (tail ? rs).
 
-definition Rmcc_step_false ≝ 
+definition Rmcr_step_false ≝ 
   λalpha,sep,t1,t2.
     left ? t1 ≠ [] →  current alpha t1 ≠ None alpha → 
       current alpha t1 = Some alpha sep ∧ t2 = t1.
     
-lemma sem_mcc_step :
+lemma sem_mcr_step :
   ∀alpha,sep.
-  mcc_step alpha sep ⊨ 
-    [inr … (inl … (inr … start_nop)): Rmcc_step_true alpha sep, Rmcc_step_false alpha sep].  
+  mcr_step alpha sep ⊨ 
+    [inr … (inl … (inr … start_nop)): Rmcr_step_true alpha sep, Rmcr_step_false alpha sep].  
 #alpha #sep 
   @(acc_sem_if_app … 
-     (sem_test_char …) (sem_seq …(sem_swap_r …) (sem_move_r …)) (sem_nop …))
+     (sem_test_char …) (sem_seq …(sem_swap_l …) (sem_move_r …)) (sem_nop …))
   [#intape #outtape #tapea whd in ⊢ (%→%→%);
    #Htapea * #tapeb * whd in ⊢ (%→%→?);
    #Htapeb #Houttape #a #b #ls #rs #Hintape
@@ -70,7 +70,7 @@ qed.
 
 (* the move_char (variant c) machine *)
 definition move_char_r ≝ 
-  λalpha,sep.whileTM alpha (mcc_step alpha sep) (inr … (inl … (inr … start_nop))).
+  λalpha,sep.whileTM alpha (mcr_step alpha sep) (inr … (inl … (inr … start_nop))).
 
 definition R_move_char_r ≝ 
   λalpha,sep,t1,t2.
@@ -84,7 +84,7 @@ lemma sem_move_char_r :
   ∀alpha,sep.
   WRealize alpha (move_char_r alpha sep) (R_move_char_r alpha sep).
 #alpha #sep #inc #i #outc #Hloop
-lapply (sem_while … (sem_mcc_step alpha sep) inc i outc Hloop) [%]
+lapply (sem_while … (sem_mcr_step alpha sep) inc i outc Hloop) [%]
 -Hloop * #t1 * #Hstar @(star_ind_l ??????? Hstar)
 [ #tapea whd in ⊢ (% → ?); #H1 #b #a #ls #rs #Htapea
   %
@@ -125,7 +125,7 @@ lemma terminate_move_char_r :
   ∀alpha,sep.∀t,b,a,ls,rs. t = midtape alpha (a::ls) b rs →  
   (b = sep ∨ memb ? sep rs = true) → Terminate alpha (move_char_r alpha sep) t.
 #alpha #sep #t #b #a #ls #rs #Ht #Hsep
-@(terminate_while … (sem_mcc_step alpha sep))
+@(terminate_while … (sem_mcr_step alpha sep))
   [%
   |generalize in match Hsep; -Hsep
    generalize in match Ht; -Ht
@@ -178,7 +178,7 @@ include "turing/if_machine.ma".
 
 definition mcl_step ≝ λalpha:FinSet.λsep:alpha.
   ifTM alpha (test_char ? (λc.¬c==sep))
-     (single_finalTM … (seq … (swap alpha sep) (move_l ?))) (nop ?) tc_true.
+     (single_finalTM … (swap_r alpha sep · move_l ?)) (nop ?) tc_true.
      
 definition Rmcl_step_true ≝ 
   λalpha,sep,t1,t2.
@@ -201,7 +201,7 @@ lemma sem_mcl_step :
     [mcls_acc alpha sep: Rmcl_step_true alpha sep, Rmcl_step_false alpha sep].
 #alpha #sep 
 @(acc_sem_if_app … 
-  (sem_test_char …) (sem_seq …(sem_swap …) (sem_move_l …)) (sem_nop …))
+  (sem_test_char …) (sem_seq …(sem_swap_r …) (sem_move_l …)) (sem_nop …))
   [#intape #outtape #tapea whd in ⊢ (%→%→%);
    #Htapea * #tapeb * whd in ⊢ (%→%→?);
    #Htapeb #Houttape #a #b #ls #rs #Hintape

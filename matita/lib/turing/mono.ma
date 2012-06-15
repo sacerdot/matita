@@ -342,7 +342,7 @@ definition seq ≝ λsig. λM1,M2 : TM sig.
     (λs.match s with 
       [ inl _ ⇒ false | inr s2 ⇒ halt sig M2 s2]). 
 
-notation "a · b" non associative with precedence 65 for @{ 'middot $a $b}.
+notation "a · b" right associative with precedence 65 for @{ 'middot $a $b}.
 interpretation "sequential composition" 'middot a b = (seq ? a b).
 
 definition lift_confL ≝ 

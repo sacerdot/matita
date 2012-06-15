@@ -40,7 +40,7 @@ if current (* x *) = #
  *)
  
 definition mark_next_tuple ≝ 
-  seq ? (adv_to_mark_r ? bar_or_grid)
+  adv_to_mark_r ? bar_or_grid ·
      (ifTM ? (test_char ? (λc:STape.is_bar (\fst c)))
        (move_right_and_mark ?) (nop ?) tc_true).
 
@@ -135,9 +135,7 @@ lapply (sem_seq ? (adv_to_mark_r ? bar_or_grid)
 qed.
 
 definition init_current_on_match ≝ 
-  (seq ? (move_l ?)
-    (seq ? (adv_to_mark_l ? (λc:STape.is_grid (\fst c)))
-      (seq ? (move_r ?) (mark ?)))).
+  move_l ? · adv_to_mark_l ? (λc:STape.is_grid (\fst c)) · move_r ? · mark ?.
           
 definition R_init_current_on_match ≝ λt1,t2.
   ∀l1,l2,c,rs. no_grids l1 → is_grid c = false → 
@@ -239,10 +237,8 @@ qed.
 *)
 
 definition init_current ≝ 
-  seq ? (adv_to_mark_l ? (is_marked ?))
-    (seq ? (clear_mark ?)
-       (seq ? (adv_to_mark_l ? (λc:STape.is_grid (\fst c)))
-          (seq ? (move_r ?) (mark ?)))).
+  adv_to_mark_l ? (is_marked ?) ·clear_mark ? ·
+    adv_to_mark_l ? (λc:STape.is_grid (\fst c)) · move_r ? · mark ?.
           
 definition R_init_current ≝ λt1,t2.
   ∀l1,c,l2,b,l3,c1,rs,c0,b0. no_marks l1 → no_grids l2 → is_grid c = false → 
@@ -283,12 +279,12 @@ qed.
 definition match_tuple_step ≝ 
   ifTM ? (test_char ? (λc:STape.¬ is_grid (\fst c))) 
    (single_finalTM ? 
-     (seq ? compare
+     (compare ·
       (ifTM ? (test_char ? (λc:STape.is_grid (\fst c)))
         (nop ?)
-        (seq ? mark_next_tuple 
+        (mark_next_tuple ·
            (ifTM ? (test_char ? (λc:STape.is_grid (\fst c)))
-             (mark ?) (seq ? (move_l ?) init_current) tc_true)) tc_true)))
+             (mark ?) (move_l ? · init_current) tc_true)) tc_true)))
     (nop ?) tc_true.
 
 definition R_match_tuple_step_true ≝ λt1,t2.

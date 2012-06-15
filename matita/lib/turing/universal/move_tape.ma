@@ -90,17 +90,17 @@ swap
 (* l1 # l2 r  ---> l1 r # l2 
            ^          ^
  *)
-definition mtr_aux ≝ 
-  seq ? (move_l …) (seq ? (move_char_l STape 〈grid,false〉)
-   (swap STape 〈grid,false〉)).
-definition R_mtr_aux ≝ λt1,t2.
+definition move_after_left_bar ≝ 
+  move_l … · move_char_l STape 〈grid,false〉 · swap_r STape 〈grid,false〉.
+  
+definition R_move_after_left_bar ≝ λt1,t2.
   ∀l1,l2,l3,r. t1 = midtape STape (l2@〈grid,false〉::l1) r l3 → no_grids l2 → 
   t2 = midtape STape l1 r (〈grid,false〉::reverse ? l2@l3).
 
-lemma sem_mtr_aux : Realize ? mtr_aux R_mtr_aux.
+lemma sem_move_after_left_bar : Realize ? move_after_left_bar R_move_after_left_bar.
 #intape 
 cases (sem_seq … (sem_move_l …) (sem_seq … (ssem_move_char_l STape 〈grid,false〉)
-        (sem_swap STape 〈grid,false〉)) intape)
+        (sem_swap_r STape 〈grid,false〉)) intape)
 #k * #outc * #Hloop #HR @(ex_intro ?? k) @(ex_intro ?? outc)  % [@Hloop] -Hloop
 #l1 #l2 #l3  #r #Hintape #Hl2
 cases HR -HR #ta * whd in ⊢ (%→?); #Hta lapply (Hta … Hintape) -Hta #Hta
@@ -121,9 +121,8 @@ cases HR -HR #ta * whd in ⊢ (%→?); #Hta lapply (Hta … Hintape) -Hta #Hta
 qed.
 
 definition move_tape_r ≝ 
-  seq ? (move_r …) (seq ? init_cell (seq ? (move_l …) 
-   (seq ? (swap STape 〈grid,false〉) 
-     (seq ? mtr_aux (seq ? (move_l …) (seq ? mtr_aux (move_r …))))))).
+  move_r … · init_cell · move_l … · swap_r STape 〈grid,false〉 ·
+    move_after_left_bar · move_l … · move_after_left_bar · move_r ….
 
 definition R_move_tape_r ≝ λt1,t2.
   ∀rs,n,table,c0,bc0,curconfig,ls0.
@@ -140,8 +139,8 @@ definition R_move_tape_r ≝ λt1,t2.
 lemma sem_move_tape_r : Realize ? move_tape_r R_move_tape_r.
 #tapein 
 cases (sem_seq …(sem_move_r …) (sem_seq … sem_init_cell (sem_seq … (sem_move_l …)
-   (sem_seq … (sem_swap STape 〈grid,false〉) (sem_seq … sem_mtr_aux
-     (sem_seq … (sem_move_l …) (sem_seq … sem_mtr_aux (sem_move_r …))))))) tapein)
+   (sem_seq … (sem_swap_r STape 〈grid,false〉) (sem_seq … sem_move_after_left_bar
+     (sem_seq … (sem_move_l …) (sem_seq … sem_move_after_left_bar (sem_move_r …))))))) tapein)
 #k * #outc * #Hloop #HR @(ex_intro ?? k) @(ex_intro ?? outc) % [@Hloop] -Hloop
 #rs #n #table #c0 #bc0 #curconfig #ls0 #Hbitnullc0 #Hbitnullcc #Htable #Htapein
 cases HR -HR #ta * whd in ⊢ (%→?); #Hta lapply (Hta … Htapein) -Hta #Hta
@@ -196,15 +195,15 @@ MOVE TAPE LEFT:
      ^
 *)
 definition mtl_aux ≝ 
-  seq ? (swap STape 〈grid,false〉)
-   (seq ? (move_r …) (seq ? (move_r …) (seq ? (move_char_r STape 〈grid,false〉) (move_l …)))).
+  swap_r STape 〈grid,false〉 · move_r … · move_r … · 
+    move_char_r STape 〈grid,false〉 · move_l ….
 definition R_mtl_aux ≝ λt1,t2.
   ∀l1,l2,l3,r. t1 = midtape STape l1 r (〈grid,false〉::l2@〈grid,false〉::l3) → no_grids l2 → 
   t2 = midtape STape (reverse ? l2@〈grid,false〉::l1) r (〈grid,false〉::l3).
 
 lemma sem_mtl_aux : Realize ? mtl_aux R_mtl_aux.
 #intape 
-cases (sem_seq … (sem_swap STape 〈grid,false〉) (sem_seq … (sem_move_r …)
+cases (sem_seq … (sem_swap_r STape 〈grid,false〉) (sem_seq … (sem_move_r …)
         (sem_seq … (sem_move_r …) (sem_seq … (ssem_move_char_r STape 〈grid,false〉) 
           (sem_move_l …)))) intape)
 #k * #outc * #Hloop #HR @(ex_intro ?? k) @(ex_intro ?? outc) % [@Hloop] -Hloop
@@ -253,20 +252,16 @@ cases ls1 in Hnogrids;
 qed.
 
 definition move_tape_l : TM STape ≝ 
-  seq ? (seq ? (move_l …) (adv_to_mark_l … (λc:STape.is_grid (\fst c))))
-  (seq ? (seq ? (move_l …) (adv_to_mark_l … (λc:STape.is_grid (\fst c))))
-   (seq ? (move_l …)
-    (seq ? init_cell
-     (seq ? mtl_aux
-      (seq ? (swap_r STape 〈grid,false〉)
-       (seq ? mtl_aux
-        (seq ? (swap STape 〈grid,false〉)
-         (seq ? (seq ? (move_l …) (adv_to_mark_l … (λc:STape.is_grid (\fst c))))
-          (seq ? (move_l …) (adv_to_mark_l … (λc:STape.is_grid (\fst c)))))))))))).
+  (move_l … · adv_to_mark_l … (λc:STape.is_grid (\fst c))) ·
+    (move_l … · adv_to_mark_l … (λc:STape.is_grid (\fst c))) ·
+     move_l … · init_cell · mtl_aux · swap_l STape 〈grid,false〉 ·
+       mtl_aux ·swap_r STape 〈grid,false〉 ·
+         (move_l … · adv_to_mark_l … (λc:STape.is_grid (\fst c))) ·
+           (move_l … · adv_to_mark_l … (λc:STape.is_grid (\fst c))).
         
 (*  seq ? (move_r …) (seq ? init_cell (seq ? (move_l …) 
    (seq ? (swap STape 〈grid,false〉) 
-     (seq ? mtr_aux (seq ? (move_l …) mtr_aux))))). *)
+     (seq ? move_after_left_bar (seq ? (move_l …) move_after_left_bar))))). *)
 
 definition R_move_tape_l ≝ λt1,t2.
   ∀rs,n,table,c0,bc0,curconfig,ls0.
@@ -288,9 +283,9 @@ cases (sem_seq … sem_ml_atml
    (sem_seq … (sem_move_l …)
     (sem_seq … sem_init_cell
      (sem_seq … sem_mtl_aux 
-      (sem_seq … (sem_swap_r STape 〈grid,false〉)
+      (sem_seq … (sem_swap_l STape 〈grid,false〉)
        (sem_seq … sem_mtl_aux
-        (sem_seq … (sem_swap STape 〈grid,false〉)
+        (sem_seq … (sem_swap_r STape 〈grid,false〉)
          (sem_seq … sem_ml_atml sem_ml_atml)))))))) tapein)
 #k * #outc * #Hloop #HR @(ex_intro ?? k) @(ex_intro ?? outc) % [@Hloop] -Hloop
 #rs #n #table #c0 #bc0 #curconfig #ls0 #Hbitnullc0 #Hbitnullcc #Htable #Hls0 #Htapein
@@ -395,19 +390,6 @@ definition move_of_unialpha ≝
   λc.match c with
   [ bit x ⇒ match x with [ true ⇒ R | false ⇒ L ]
   | _ ⇒ N ].
-
-definition R_uni_step ≝ λt1,t2.
-  ∀n,table,c,c1,ls,rs,curs,curc,news,newc,mv.
-  table_TM n table → 
-  match_in_table n (〈c,false〉::curs) 〈curc,false〉 
-    (〈c1,false〉::news) 〈newc,false〉 〈mv,false〉 table → 
-  t1 = midtape STape (〈grid,false〉::ls) 〈c,false〉 
-    (curs@〈curc,false〉::〈grid,false〉::table@〈grid,false〉::rs) → 
-  ∀t1',ls1,rs1.t1' = lift_tape ls 〈curc,false〉 rs → 
-  (t2 = midtape STape (〈grid,false〉::ls1) 〈c1,false〉 
-    (news@〈newc,false〉::〈grid,false〉::table@〈grid,false〉::rs1) ∧
-   lift_tape ls1 〈newc,false〉 rs1 = 
-   tape_move STape t1' (Some ? 〈〈newc,false〉,move_of_unialpha mv〉)).
 
 definition no_nulls ≝ 
  λl:list STape.∀x.memb ? x l = true → is_null (\fst x) = false.
@@ -676,11 +658,11 @@ definition move_tape ≝
   ifTM ? (test_char ? (λc:STape.c == 〈bit false,false〉)) 
     (* spostamento a sinistra: verificare se per caso non conviene spostarsi 
        sulla prima grid invece dell'ultima *)
-    (seq ? (adv_to_mark_r ? (λc:STape.is_grid (\fst c))) move_tape_l)
+    (adv_to_mark_r ? (λc:STape.is_grid (\fst c)) · move_tape_l)
     (ifTM ? (test_char ? (λc:STape.c == 〈bit true,false〉)) 
-       (seq ? (adv_to_mark_r ? (λc:STape.is_grid (\fst c))) move_tape_r)
-       (seq ? (adv_to_mark_l ? (λc:STape.is_grid (\fst c)))
-          (seq ? (move_l …) (adv_to_mark_l ? (λc:STape.is_grid (\fst c))))) 
+       (adv_to_mark_r ? (λc:STape.is_grid (\fst c)) · move_tape_r)
+       (adv_to_mark_l ? (λc:STape.is_grid (\fst c)) ·
+          move_l … · adv_to_mark_l ? (λc:STape.is_grid (\fst c)))
        tc_true) tc_true.
            
 definition R_move_tape ≝ λt1,t2.
