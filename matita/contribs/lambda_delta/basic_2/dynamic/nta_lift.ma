@@ -99,7 +99,7 @@ lemma nta_inv_cast1: ∀h,L,X,Y,U. ⦃h, L⦄ ⊢ ⓝY.X : U →  ⦃h, L⦄ ⊢
 
 (* Advanced forvard lemmas **************************************************)
 
-fact nta_fwd_appl1_aux: ∀h,L,T,U. ⦃h, L⦄ ⊢ T : U → ∀X,Y. T = ⓐY.X →
+fact nta_fwd_pure1_aux: ∀h,L,T,U. ⦃h, L⦄ ⊢ T : U → ∀X,Y. T = ⓐY.X →
                         ∃∃V,W. ⦃h, L⦄ ⊢ Y : W & ⦃h, L⦄ ⊢ X : V & L ⊢ ⓐY.V ⬌* U.
 #h #L #T #U #H elim H -L -T -U
 [ #L #k #X #Y #H destruct
@@ -116,7 +116,7 @@ fact nta_fwd_appl1_aux: ∀h,L,T,U. ⦃h, L⦄ ⊢ T : U → ∀X,Y. T = ⓐY.X 
 ]
 qed.
 
-lemma nta_fwd_appl1: ∀h,L,X,Y,U. ⦃h, L⦄ ⊢ ⓐY.X : U →
+lemma nta_fwd_pure1: ∀h,L,X,Y,U. ⦃h, L⦄ ⊢ ⓐY.X : U →
                      ∃∃V,W. ⦃h, L⦄ ⊢ Y : W & ⦃h, L⦄ ⊢ X : V & L ⊢ ⓐY.V ⬌* U.
 /2 width=3/ qed-.
 

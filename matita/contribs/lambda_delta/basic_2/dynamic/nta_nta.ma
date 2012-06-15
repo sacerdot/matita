@@ -37,10 +37,10 @@ theorem nta_mono: ∀h,L,T,U1. ⦃h, L⦄ ⊢ T : U1 → ∀U2. ⦃h, L⦄ ⊢ T
   elim (nta_inv_bind1 … H) -H #W2 #U2 #_ #HTU2 #H
   @(cpcs_trans … H) -X /3 width=1/
 | #L #V #W1 #T #U1 #_ #_ #_ #IHTU1 #X #H
-  elim (nta_fwd_appl1 … H) -H #U2 #W2 #_ #HTU2 #H
+  elim (nta_fwd_pure1 … H) -H #U2 #W2 #_ #HTU2 #H
   @(cpcs_trans … H) -X /3 width=1/
 | #L #V #W1 #T #U1 #_ #_ #IHTU1 #_ #X #H
-  elim (nta_fwd_appl1 … H) -H #U2 #W2 #_ #HTU2 #H
+  elim (nta_fwd_pure1 … H) -H #U2 #W2 #_ #HTU2 #H
   @(cpcs_trans … H) -X /3 width=1/
 | #L #T #U1 #_ #_ #X #H
   elim (nta_inv_cast1 … H) -H //

@@ -130,6 +130,16 @@ lapply (IHV1 T1 T1 ?) -IHV1 // #HV1
 @(cprs_trans … HV1) -HV1 /2 width=1/
 qed.
 
+lemma cprs_beta_dx: ∀L,V1,V2,W,T1,T2.
+                    L ⊢ V1 ➡ V2 → L.ⓛW ⊢ T1 ➡* T2 → L ⊢ ⓐV1.ⓛW.T1 ➡* ⓓV2.T2.
+#L #V1 #V2 #W #T1 #T2 #HV12 #HT12 @(cprs_ind … HT12) -T2
+[ /3 width=1/
+| -HV12 #T #T2 #_ #HT2 #IHT1
+  lapply (cpr_lsubs_trans … HT2 (L.ⓓV2) ?) -HT2 /2 width=1/ #HT2
+  @(cprs_trans … IHT1) -V1 -W -T1 /3 width=1/
+]
+qed.
+
 (* Basic_1: was only: pr3_pr2_pr3_t pr3_wcpr0_t *)
 lemma lcpr_cprs_trans: ∀L1,L2. L1 ⊢ ➡ L2 →
                        ∀T1,T2. L2 ⊢ T1 ➡* T2 → L1 ⊢ T1 ➡* T2.

@@ -365,3 +365,9 @@ notation "hvbox( ⦃ h , break L ⦄ ⊢ break term 46 T1 :: break term 46 T2 )"
 notation "hvbox( h ⊢ break term 46 L1 : ⊑ break term 46 L2 )"
    non associative with precedence 45
    for @{ 'CrSubEqN $h $L1 $L2 }.
+
+(* Higher order dynamic typing **********************************************)
+
+notation "hvbox( ⦃ h , break L ⦄ ⊢ break term 46 T1 :* break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'NativeTypeStar $h $L $T1 $T2 }.

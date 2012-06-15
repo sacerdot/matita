@@ -209,9 +209,7 @@ ty3/arity ty3_arity
 ty3/arity_props ty3_predicative
 ty3/arity_props ty3_repellent
 ty3/arity_props ty3_acyclic
-ty3/arity_props ty3_sn3
 ty3/dec ty3_inference
-ty3/fwd ty3_gen_appl
 ty3/fwd tys3_gen_nil
 ty3/fwd tys3_gen_cons
 ty3/fwd_nf2 ty3_gen_appl_nf2

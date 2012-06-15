@@ -32,10 +32,21 @@ lemma cpr_abst: ∀L,V1,V2. L ⊢ V1 ➡ V2 → ∀V,T1,T2.
                 L.ⓛV ⊢ T1 ➡ T2 → L ⊢ ⓛV1. T1 ➡ ⓛV2. T2.
 #L #V1 #V2 * #V0 #HV10 #HV02 #V #T1 #T2 * #T0 #HT10 #HT02
 lapply (tpss_inv_S2 … HT02 L V ?) -HT02 // #HT02
-@(ex2_1_intro … (ⓛV0.T0)) /2 width=1/ -V1 -T1 (**) (* explicit constructors *)
-@tpss_bind // -V0
-@(tpss_lsubs_trans (L.ⓛV)) // -T0 -T2 /2 width=1/
+lapply (tpss_lsubs_trans … HT02 (L.ⓛV2) ?) -HT02 /2 width=1/ #HT02
+@(ex2_1_intro … (ⓛV0.T0)) /2 width=1/ (* explicit constructors *)
 qed.
+
+lemma cpr_beta: ∀L,V1,V2,W,T1,T2.
+                L ⊢ V1 ➡ V2 → L.ⓛW ⊢ T1 ➡ T2 → L ⊢ ⓐV1.ⓛW.T1 ➡ ⓓV2.T2.
+#L #V1 #V2 #W #T1 #T2 * #V #HV1 #HV2 * #T #HT1 #HT2
+lapply (tpss_inv_S2 … HT2 L W ?) -HT2 // #HT2
+lapply (tpss_lsubs_trans … HT2 (L.ⓓV2) ?) -HT2 /2 width=1/ #HT2
+@(ex2_1_intro … (ⓓV.T)) /2 width=1/ (**) (* explicit constructor, /3/ is too slow *)
+qed.
+
+lemma cpr_beta_dx: ∀L,V1,V2,W,T1,T2.
+                   V1 ➡ V2 → L.ⓛW ⊢ T1 ➡ T2 → L ⊢ ⓐV1.ⓛW.T1 ➡ ⓓV2.T2.
+/3 width=1/ qed.
 
 (* Advanced inversion lemmas ************************************************)
 

@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/ldrop_sfr.ma".
 include "basic_2/unfold/delift_lift.ma".
 include "basic_2/unfold/thin_ldrop.ma".
 include "basic_2/equivalence/cpcs_delift.ma".
