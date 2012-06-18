@@ -85,8 +85,6 @@ axiom match_decomp: ∀n,l,qin,cin,qout,cout,mv.
     (∃q.|l1| = (tuple_length (S n))*q) ∧ 
       tuple_TM (S n) (mk_tuple qin cin qout cout mv).
 
-axiom daemon: ∀P:Prop. P.
-
 lemma match_to_tuples_list: ∀n,h,l,qin,cin,qout,cout,mv.
   match_in_table (S n) qin cin qout cout mv (flatten ? (tuples_list n h l)) → 
     ∃p. p = mk_tuple qin cin qout cout mv ∧ mem ? p (tuples_list n h l).
@@ -95,7 +93,8 @@ lemma match_to_tuples_list: ∀n,h,l,qin,cin,qout,cout,mv.
 cases (match_decomp … Hmatch) #l1 * #l2 * * #Hflat #Hlen #Htuple
 @(flatten_to_mem … Hflat … Hlen)  
   [// 
-  |@daemon
+  |#x #memx @length_of_tuple 
+   cases (mem_map ????? memx) #t * #memt #Ht <Ht // 
   |@(length_of_tuple … Htuple) 
   ]
 qed.
@@ -133,18 +132,37 @@ lemma trans_to_match:
 @graph_enum_complete //
 qed.
 
+(*
 axiom append_eq_tech1 :
   ∀A,l1,l2,l3,l4.l1@l2 = l3@l4 → |l1| < |l3| → ∃la:list A.l1@la = l3.
 axiom append_eq_tech2 :
   ∀A,l1,l2,l3,l4,a.l1@a::l2 = l3@l4 → memb A a l4 = false → ∃la:list A.l3 = l1@a::la.
-(*axiom list_decompose_cases : 
+axiom list_decompose_cases : 
   ∀A,l1,l2,l3,l4,a.l1@a::l2 = l3@l4 → ∃la,lb:list A.l3 = la@a::lb ∨ l4 = la@a::lb.
 axiom list_decompose_l :
   ∀A,l1,l2,l3,l4,a.l1@a::l2 = l3@l4 → memb A a l4 = false → 
   ∃la,lb.l2 = la@lb ∧ l3 = l1@a::la.*)
-axiom list_decompose_r :
+  
+lemma list_decompose_r :
   ∀A,l1,l2,l3,l4,a.l1@a::l2 = l3@l4 → memb A a l3 = false → 
   ∃la,lb.l1 = la@lb ∧ l4 = lb@a::l2.
+#A #l1 #l2 #l3 generalize in match l1; generalize in match l2; elim l3
+  [normalize #l1 #l2 #l4 #a #H #_ @(ex_intro … []) @(ex_intro … l2) /2/
+  |#b #tl #Hind #l1 #l2 #l4 #a cases l2 
+    [normalize #Heq destruct >(\b (refl … b)) normalize #Hfalse destruct
+    |#c #tl2 whd in ⊢ ((??%%)→?); #Heq destruct #Hmema 
+     cases (Hind l1 tl2 l4 a ??)
+      [#l5 * #l6 * #eql #eql4 
+       @(ex_intro … (b::l5)) @(ex_intro … l6) % /2/
+      |@e0
+      |cases (true_or_false (memb ? a tl)) [2://]
+       #H @False_ind @(absurd ?? not_eq_true_false)
+       <Hmema @sym_eq @memb_cons //
+      ]
+    ]
+  ]
+qed. 
+         
 (*axiom list_decompose_memb :
   ∀A,l1,l2,l3,l4,a.l1@a::l2 = l3@l4 → |l1| < |l3| → memb A a l3 = true.*)
 
@@ -273,4 +291,3 @@ elim Htable
    >associative_append % ]
 ]
 qed.
-
