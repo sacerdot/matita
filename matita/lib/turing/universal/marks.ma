@@ -346,6 +346,83 @@ qed.
 axiomatized
 
 *)
+definition atml_step ≝ 
+  λalpha:FinSet.λtest:alpha→bool.
+  mk_TM alpha atm_states
+  (λp.let 〈q,a〉 ≝ p in
+   match a with
+   [ None ⇒ 〈atm1, None ?〉
+   | Some a' ⇒ 
+     match test a' with
+     [ true ⇒ 〈atm1,None ?〉
+     | false ⇒ 〈atm2,Some ? 〈a',L〉〉 ]])
+  atm0 (λx.notb (x == atm0)).
+
+definition Ratml_step_true ≝ 
+  λalpha,test,t1,t2.
+   ∃ls,a,rs.
+   t1 = midtape alpha ls a rs ∧ test a = false ∧ 
+   t2 = mk_tape alpha (tail ? ls) (option_hd ? ls) (a :: rs).
+   
+definition Ratml_step_false ≝ 
+  λalpha,test,t1,t2.
+    t1 = t2 ∧
+    (current alpha t1 = None ? ∨
+     (∃a.current ? t1 = Some ? a ∧ test a = true)).
+     
+lemma atml_q0_q1 :
+  ∀alpha,test,ls,a0,rs. test a0 = true → 
+  step alpha (atml_step alpha test)
+    (mk_config ?? atm0 (midtape … ls a0 rs)) =
+  mk_config alpha (states ? (atml_step alpha test)) atm1
+    (midtape … ls a0 rs).
+#alpha #test #ls #a0 #ts #Htest whd in ⊢ (??%?);
+whd in match (trans … 〈?,?〉); >Htest %
+qed.
+     
+lemma atml_q0_q2 :
+  ∀alpha,test,ls,a0,rs. test a0 = false → 
+  step alpha (atml_step alpha test)
+    (mk_config ?? atm0 (midtape … ls a0 rs)) =
+  mk_config alpha (states ? (atml_step alpha test)) atm2
+    (mk_tape … (tail ? ls) (option_hd ? ls) (a0 :: rs)).
+#alpha #test #ls #a0 #rs #Htest whd in ⊢ (??%?);
+whd in match (trans … 〈?,?〉); >Htest cases ls //
+qed.
+
+lemma sem_atml_step :
+  ∀alpha,test.
+  accRealize alpha (atml_step alpha test) 
+    atm2 (Ratml_step_true alpha test) (Ratml_step_false alpha test).
+#alpha #test *
+[ @(ex_intro ?? 2)
+  @(ex_intro ?? (mk_config ?? atm1 (niltape ?))) %
+  [ % // whd in ⊢ ((??%%)→?); #Hfalse destruct | #_ % // % % ]
+| #a #al @(ex_intro ?? 2) @(ex_intro ?? (mk_config ?? atm1 (leftof ? a al)))
+  % [ % // whd in ⊢ ((??%%)→?); #Hfalse destruct | #_ % // % % ]
+| #a #al @(ex_intro ?? 2) @(ex_intro ?? (mk_config ?? atm1 (rightof ? a al)))
+  % [ % // whd in ⊢ ((??%%)→?); #Hfalse destruct | #_ % // % % ]
+| #ls #c #rs @(ex_intro ?? 2)
+  cases (true_or_false (test c)) #Htest
+  [ @(ex_intro ?? (mk_config ?? atm1 ?))
+    [| % 
+      [ % 
+        [ whd in ⊢ (??%?); >atml_q0_q1 //
+        | whd in ⊢ ((??%%)→?); #Hfalse destruct ]
+      | #_ % // %2 @(ex_intro ?? c) % // ]
+    ]
+  | @(ex_intro ?? (mk_config ?? atm2 (mk_tape ? (tail ? ls) (option_hd ? ls) (c::rs))))
+    % 
+    [ %
+      [ whd in ⊢ (??%?); >atml_q0_q2 //
+      | #_ @(ex_intro ?? ls) @(ex_intro ?? c) @(ex_intro ?? rs)
+        % // % //
+      ]
+    | #Hfalse @False_ind @(absurd ?? Hfalse) %
+    ]
+  ]
+]
+qed.
 
 definition R_adv_to_mark_l ≝ λalpha,test,t1,t2.
   ∀ls,c,rs.
@@ -356,16 +433,14 @@ definition R_adv_to_mark_l ≝ λalpha,test,t1,t2.
      test b = true → (∀x.memb ? x ls1 = true → test x = false) → 
      t2 = midtape ? ls2 b (reverse ? ls1@c::rs)))).
 
-axiom adv_to_mark_l : ∀alpha:FinSet.(alpha → bool) → TM alpha.
-(* definition adv_to_mark_l ≝ 
-  λalpha,test.whileTM alpha (atml_step alpha test) 2. *)
+definition adv_to_mark_l ≝ 
+  λalpha,test.whileTM alpha (atml_step alpha test) atm2.
 
-axiom wsem_adv_to_mark_l :
+lemma wsem_adv_to_mark_l :
   ∀alpha,test.
   WRealize alpha (adv_to_mark_l alpha test) (R_adv_to_mark_l alpha test).
-(*
 #alpha #test #t #i #outc #Hloop
-lapply (sem_while … (sem_atmr_step alpha test) t i outc Hloop) [%]
+lapply (sem_while … (sem_atml_step alpha test) t i outc Hloop) [%]
 -Hloop * #t1 * #Hstar @(star_ind_l ??????? Hstar)
 [ #tapea * #Htapea *
   [ #H1 #ls #c #rs #H2 >H2 in H1; whd in ⊢ (??%? → ?);
@@ -377,8 +452,7 @@ lapply (sem_while … (sem_atmr_step alpha test) t i outc Hloop) [%]
 | #tapea #tapeb #tapec #Hleft #Hright #IH #HRfalse
   lapply (IH HRfalse) -IH #IH
   #ls #c #rs #Htapea %2
-  cases Hleft #ls0 * #a0 * #rs0 * * #Htapea' #Htest #Htapeb
-  
+  cases Hleft #ls0 * #a0 * #rs0 * * #Htapea' #Htest #Htapeb  
   >Htapea' in Htapea; #Htapea destruct (Htapea) % // *
   [ #b #rs2 #Hrs >Hrs in Htapeb; #Htapeb #Htestb #_
     cases (IH … Htapeb)
@@ -394,32 +468,28 @@ lapply (sem_while … (sem_atmr_step alpha test) t i outc Hloop) [%]
     ]
   ]
 qed.
-*)
 
-axiom terminate_adv_to_mark_l :
+lemma terminate_adv_to_mark_l :
   ∀alpha,test.
   ∀t.Terminate alpha (adv_to_mark_l alpha test) t.
-(*
 #alpha #test #t
-@(terminate_while … (sem_atmr_step alpha test))
+@(terminate_while … (sem_atml_step alpha test))
   [ %
   | cases t
     [ % #t1 * #ls0 * #c0 * #rs0 * * #Hfalse destruct (Hfalse) 
     |2,3: #a0 #al0 % #t1 * #ls0 * #c0 * #rs0 * * #Hfalse destruct (Hfalse) 
-    | #ls #c #rs generalize in match c; -c generalize in match ls; -ls
-      elim rs
-      [#ls #c % #t1 * #ls0 * #c0 * #rs0 * *
+    | #ls elim ls 
+      [#c #rs % #t1 * #ls0 * #c0 * #rs0 * *
        #H1 destruct (H1) #Hc0 #Ht1 normalize in Ht1; 
        % #t2 * #ls1 * #c1 * #rs1 * * >Ht1
        normalize in ⊢ (%→?); #Hfalse destruct (Hfalse)
-      | #r0 #rs0 #IH #ls #c % #t1 * #ls0 * #c0 * #rs0 * *
+      | #rs0 #r0 #IH #ls #c % #t1 * #ls0 * #c0 * #rs0 * *
         #H1 destruct (H1) #Hc0 #Ht1 normalize in Ht1;
         >Ht1 @IH
       ]
     ]
   ]
 qed.
-*)
 
 lemma sem_adv_to_mark_l :
   ∀alpha,test.
