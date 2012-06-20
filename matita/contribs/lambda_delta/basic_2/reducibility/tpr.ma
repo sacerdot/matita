@@ -23,13 +23,13 @@ inductive tpr: relation term ≝
              tpr (ⓕ{I} V1. T1) (ⓕ{I} V2. T2)
 | tpr_beta : ∀V1,V2,W,T1,T2.
              tpr V1 V2 → tpr T1 T2 → tpr (ⓐV1. ⓛW. T1) (ⓓV2. T2)
-| tpr_delta: ∀I,V1,V2,T1,T2,T.
-             tpr V1 V2 → tpr T1 T2 → ⋆. ⓑ{I} V2 ⊢ T2 ▶ [0, 1] T →
-             tpr (ⓑ{I} V1. T1) (ⓑ{I} V2. T)
+| tpr_delta: ∀I,V1,V2,T1,T,T2.
+             tpr V1 V2 → tpr T1 T → ⋆. ⓑ{I} V2 ⊢ T ▶ [0, 1] T2 →
+             tpr (ⓑ{I} V1. T1) (ⓑ{I} V2. T2)
 | tpr_theta: ∀V,V1,V2,W1,W2,T1,T2.
              tpr V1 V2 → ⇧[0,1] V2 ≡ V → tpr W1 W2 → tpr T1 T2 →
              tpr (ⓐV1. ⓓW1. T1) (ⓓW2. ⓐV. T2)
-| tpr_zeta : ∀V,T,T1,T2. ⇧[0,1] T1 ≡ T → tpr T1 T2 → tpr (ⓓV. T) T2
+| tpr_zeta : ∀V,T1,T,T2. tpr T1 T → ⇧[0, 1] T2 ≡ T → tpr (ⓓV. T1) T2
 | tpr_tau  : ∀V,T1,T2. tpr T1 T2 → tpr (ⓝV. T1) T2
 .
 
@@ -55,9 +55,9 @@ fact tpr_inv_atom1_aux: ∀U1,U2. U1 ➡ U2 → ∀I. U1 = ⓪{I} → U2 = ⓪{I
 [ //
 | #I #V1 #V2 #T1 #T2 #_ #_ #k #H destruct
 | #V1 #V2 #W #T1 #T2 #_ #_ #k #H destruct
-| #I #V1 #V2 #T1 #T2 #T #_ #_ #_ #k #H destruct
+| #I #V1 #V2 #T1 #T #T2 #_ #_ #_ #k #H destruct
 | #V #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #_ #k #H destruct
-| #V #T #T1 #T2 #_ #_ #k #H destruct
+| #V #T1 #T #T2 #_ #_ #k #H destruct
 | #V #T1 #T2 #_ #k #H destruct
 ]
 qed.
@@ -67,37 +67,37 @@ lemma tpr_inv_atom1: ∀I,U2. ⓪{I} ➡ U2 → U2 = ⓪{I}.
 /2 width=3/ qed-.
 
 fact tpr_inv_bind1_aux: ∀U1,U2. U1 ➡ U2 → ∀I,V1,T1. U1 = ⓑ{I} V1. T1 →
-                        (∃∃V2,T2,T. V1 ➡ V2 & T1 ➡ T2 &
-                                    ⋆.  ⓑ{I} V2 ⊢ T2 ▶ [0, 1] T &
-                                    U2 = ⓑ{I} V2. T
+                        (∃∃V2,T,T2. V1 ➡ V2 & T1 ➡ T &
+                                    ⋆.  ⓑ{I} V2 ⊢ T ▶ [0, 1] T2 &
+                                    U2 = ⓑ{I} V2. T2
                         ) ∨
-                        ∃∃T. ⇧[0,1] T ≡ T1 & T ➡ U2 & I = Abbr.
+                        ∃∃T. T1 ➡ T & ⇧[0, 1] U2 ≡ T & I = Abbr.
 #U1 #U2 * -U1 -U2
 [ #J #I #V #T #H destruct
 | #I1 #V1 #V2 #T1 #T2 #_ #_ #I #V #T #H destruct
 | #V1 #V2 #W #T1 #T2 #_ #_ #I #V #T #H destruct
-| #I1 #V1 #V2 #T1 #T2 #T #HV12 #HT12 #HT2 #I0 #V0 #T0 #H destruct /3 width=7/
+| #I1 #V1 #V2 #T1 #T #T2 #HV12 #HT1 #HT2 #I0 #V0 #T0 #H destruct /3 width=7/
 | #V #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #_ #I0 #V0 #T0 #H destruct
-| #V #T #T1 #T2 #HT1 #HT12 #I0 #V0 #T0 #H destruct /3 width=3/
+| #V #T1 #T #T2 #HT1 #HT2 #I0 #V0 #T0 #H destruct /3 width=3/
 | #V #T1 #T2 #_ #I0 #V0 #T0 #H destruct
 ]
 qed.
 
 lemma tpr_inv_bind1: ∀V1,T1,U2,I. ⓑ{I} V1. T1 ➡ U2 →
-                     (∃∃V2,T2,T. V1 ➡ V2 & T1 ➡ T2 &
-                                 ⋆.  ⓑ{I} V2 ⊢ T2 ▶ [0, 1] T &
-                                 U2 = ⓑ{I} V2. T
+                     (∃∃V2,T,T2. V1 ➡ V2 & T1 ➡ T &
+                                 ⋆.  ⓑ{I} V2 ⊢ T ▶ [0, 1] T2 &
+                                 U2 = ⓑ{I} V2. T2
                      ) ∨
-                     ∃∃T. ⇧[0,1] T ≡ T1 & T ➡ U2 & I = Abbr.
+                     ∃∃T. T1 ➡ T & ⇧[0,1] U2 ≡ T & I = Abbr.
 /2 width=3/ qed-.
 
 (* Basic_1: was pr0_gen_abbr *)
 lemma tpr_inv_abbr1: ∀V1,T1,U2. ⓓV1. T1 ➡ U2 →
-                     (∃∃V2,T2,T. V1 ➡ V2 & T1 ➡ T2 &
-                                 ⋆.  ⓓV2 ⊢ T2 ▶ [0, 1] T &
-                                 U2 = ⓓV2. T
+                     (∃∃V2,T,T2. V1 ➡ V2 & T1 ➡ T &
+                                 ⋆.  ⓓV2 ⊢ T ▶ [0, 1] T2 &
+                                 U2 = ⓓV2. T2
                       ) ∨
-                      ∃∃T. ⇧[0,1] T ≡ T1 & T ➡ U2.
+                      ∃∃T. T1 ➡ T & ⇧[0, 1] U2 ≡ T.
 #V1 #T1 #U2 #H
 elim (tpr_inv_bind1 … H) -H * /3 width=7/
 qed-.
@@ -118,9 +118,9 @@ fact tpr_inv_flat1_aux: ∀U1,U2. U1 ➡ U2 → ∀I,V1,U0. U1 = ⓕ{I} V1. U0 �
 [ #I #J #V #T #H destruct
 | #I #V1 #V2 #T1 #T2 #HV12 #HT12 #J #V #T #H destruct /3 width=5/
 | #V1 #V2 #W #T1 #T2 #HV12 #HT12 #J #V #T #H destruct /3 width=8/
-| #I #V1 #V2 #T1 #T2 #T #_ #_ #_ #J #V0 #T0 #H destruct
+| #I #V1 #V2 #T1 #T #T2 #_ #_ #_ #J #V0 #T0 #H destruct
 | #V #V1 #V2 #W1 #W2 #T1 #T2 #HV12 #HV2 #HW12 #HT12 #J #V0 #T0 #H destruct /3 width=12/
-| #V #T #T1 #T2 #_ #_ #J #V0 #T0 #H destruct
+| #V #T1 #T #T2 #_ #_ #J #V0 #T0 #H destruct
 | #V #T1 #T2 #HT12 #J #V0 #T0 #H destruct /3 width=1/
 ]
 qed.
@@ -180,26 +180,25 @@ elim (tpr_inv_flat1 … H) -H * /3 width=5/
 qed-.
 
 fact tpr_inv_lref2_aux: ∀T1,T2. T1 ➡ T2 → ∀i. T2 = #i →
-                        ∨∨           T1 = #i
-                         | ∃∃V,T,T0. ⇧[O,1] T0 ≡ T & T0 ➡ #i &
-                                     T1 = ⓓV. T
-                         | ∃∃V,T.    T ➡ #i & T1 = ⓝV. T.
+                        ∨∨        T1 = #i
+                         | ∃∃V,T. T ➡ #(i+1) & T1 = ⓓV. T
+                         | ∃∃V,T. T ➡ #i & T1 = ⓝV. T.
 #T1 #T2 * -T1 -T2
 [ #I #i #H destruct /2 width=1/
 | #I #V1 #V2 #T1 #T2 #_ #_ #i #H destruct
 | #V1 #V2 #W #T1 #T2 #_ #_ #i #H destruct
-| #I #V1 #V2 #T1 #T2 #T #_ #_ #_ #i #H destruct
+| #I #V1 #V2 #T1 #T #T2 #_ #_ #_ #i #H destruct
 | #V #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #_ #i #H destruct
-| #V #T #T1 #T2 #HT1 #HT12 #i #H destruct /3 width=6/
+| #V #T1 #T #T2 #HT1 #HT2 #i #H destruct
+  lapply (lift_inv_lref1_ge … HT2 ?) -HT2 // #H destruct /3 width=4/
 | #V #T1 #T2 #HT12 #i #H destruct /3 width=4/
 ]
 qed.
 
 lemma tpr_inv_lref2: ∀T1,i. T1 ➡ #i →
-                     ∨∨           T1 = #i
-                      | ∃∃V,T,T0. ⇧[O,1] T0 ≡ T & T0 ➡ #i &
-                                  T1 = ⓓV. T
-                      | ∃∃V,T.    T ➡ #i & T1 = ⓝV. T.
+                     ∨∨        T1 = #i
+                      | ∃∃V,T. T ➡ #(i+1) & T1 = ⓓV. T
+                      | ∃∃V,T. T ➡ #i & T1 = ⓝV. T.
 /2 width=3/ qed-.
 
 (* Basic_1: removed theorems 3:

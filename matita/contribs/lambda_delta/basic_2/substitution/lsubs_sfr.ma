@@ -43,6 +43,11 @@ elim (lsubs_inv_abbr2 … H ?) -H // <minus_plus_m_m #X #HLX #H destruct
 lapply (HL … HLX) -HL -HLX /2 width=1/
 qed.
 
+lemma sfr_abbr_O: ∀L,V. ≽[0,1] L.ⓓV.
+#L #V
+@(sfr_abbr … 0) //
+qed.
+
 lemma sfr_skip: ∀I,L,V,d,e. ≽ [d, e] L → ≽ [d + 1, e] L.ⓑ{I}V.
 #I #L #V #d #e #HL #K #H
 elim (lsubs_inv_skip2 … H ?) -H // <minus_plus_m_m #J #X #W #HLX #H destruct

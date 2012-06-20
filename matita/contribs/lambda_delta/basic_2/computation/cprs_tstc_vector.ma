@@ -105,10 +105,10 @@ elim (cprs_inv_appl1 … H) -H *
     @(cprs_trans … HU) -U
     elim (cprs_inv_abbr1 … HT0) -HT0 *
     [ -HV12a -HV12b -HV10a #V1 #T1 #_ #_ #H destruct
-    | -V1b #X #H #HT1
+    | -V1b #X #HT1 #H
       elim (lift_inv_bind1 … H) -H #W1 #T1 #HW01 #HT01 #H destruct
       @(cprs_trans … (ⓓV.ⓐV2a.ⓛW1.T1)) [ /3 width=1/ ] -T -V2b -V2s
-      @(cprs_strap2 … (ⓐV1a.ⓛW0.T0)) [ /5 width=3/ ] -V -V2a -W1 -T1
+      @(cprs_strap2 … (ⓐV1a.ⓛW0.T0)) [ /5 width=7/ ] -V -V2a -W1 -T1
       @(cprs_strap2 … (ⓓV1a.T0)) [ /3 width=1/ ] -W0 /2 width=1/
     ]
   ]
@@ -122,11 +122,11 @@ elim (cprs_inv_appl1 … H) -H *
     [ #V1 #T1 #HV1 #HT1 #H destruct
       lapply (cprs_lift (L.ⓓV) … HV12a … HV10a … HV0a) -V1a -V0a [ /2 width=1/ ] #HV2a
       @(cprs_trans … (ⓓV.ⓐV2a.T1)) [ /3 width=1/ ] -T -V2b -V2s /3 width=1/
-    | #X #H #HT1
+    | #X #HT1 #H
       elim (lift_inv_bind1 … H) -H #V1 #T1 #HW01 #HT01 #H destruct
       lapply (cprs_lift (L.ⓓV0) … HV12a … HV10a … HV0a) -V0a [ /2 width=1/ ] #HV2a
       @(cprs_trans … (ⓓV.ⓐV2a.ⓓV1.T1)) [ /3 width=1/ ] -T -V2b -V2s
-      @(cprs_strap2 … (ⓐV1a.ⓓV0.T0)) [ /5 width=3/ ] -V -V1 -T1
+      @(cprs_strap2 … (ⓐV1a.ⓓV0.T0)) [ /5 width=7/ ] -V -V1 -T1
       @(cprs_strap2 … (ⓓV0.ⓐV2a.T0)) [ /3 width=3/ ] -V1a /3 width=1/
     ]
   ]

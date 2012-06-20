@@ -59,9 +59,9 @@ lemma sta_lift: ∀h,L1,T1,U1. ⦃h, L1⦄ ⊢ T1 • U1 → ∀L2,d,e. ⇩[d, e
 qed.
 
 (* Note: apparently this was missing in basic_1 *)
-lemma sta_inv_lift: ∀h,L2,T2,U2. ⦃h, L2⦄ ⊢ T2 • U2 → ∀L1,d,e. ⇩[d, e] L2 ≡ L1 →
-                    ∀T1. ⇧[d, e] T1 ≡ T2 →
-                    ∃∃U1. ⦃h, L1⦄ ⊢ T1 • U1 & ⇧[d, e] U1 ≡ U2.
+lemma sta_inv_lift1: ∀h,L2,T2,U2. ⦃h, L2⦄ ⊢ T2 • U2 → ∀L1,d,e. ⇩[d, e] L2 ≡ L1 →
+                     ∀T1. ⇧[d, e] T1 ≡ T2 →
+                     ∃∃U1. ⦃h, L1⦄ ⊢ T1 • U1 & ⇧[d, e] U1 ≡ U2.
 #h #L2 #T2 #U2 #H elim H -L2 -T2 -U2
 [ #L2 #k #L1 #d #e #_ #X #H
   >(lift_inv_sort2 … H) -X /2 width=3/

@@ -40,8 +40,9 @@ elim (cpr_inv_abbr1 … H1) -H1 *
     @(csn_lcpr_conf (L. ⓓV)) /2 width=1/ -HLV1 /2 width=3/
   | -IHV -HLV1 * #H destruct /3 width=1/
   ]
-| -IHV -IHT -H2 #T0 #HT0 #HLT0
-  lapply (csn_inv_lift … HT … HT0) -HT /2 width=3/
+| -IHV -IHT -H2 #T0 #HLT0 #HT0
+  lapply (csn_cpr_trans … HT … HLT0) -T #HLT0
+  lapply (csn_inv_lift … HLT0 … HT0) -T0 /2 width=3/
 ]
 qed.
 
@@ -99,9 +100,10 @@ elim (cpr_inv_appl1 … HL) -HL *
       lapply (ltpr_cpr_trans (L. ⓓV) … HLT3) /2 width=1/ -HLT3 #HLT3
       @(IHVT … H … HV05) -IHVT // -H -HV05 /3 width=1/
     ]
-  | -H -IHVT #T0 #HT0 #HLT0
-    @(csn_cpr_trans … (ⓐV1.T0)) /2 width=1/ -V0 -Y
-    @(csn_inv_lift … 0 1 HVT) /2 width=1/
+  | -H -IHVT #T0 #HLT0 #HT0
+    lapply (csn_cpr_trans … HVT (ⓐV2.T0) ?) /2 width=1/ -T #HVT0
+    lapply (csn_inv_lift L … 1 HVT0 ? ? ?) -HVT0 [ /2 width=4/ |2,3: skip | /2 width=1/ ] -V2 -T0 #HVY
+    @(csn_cpr_trans … HVY) /2 width=1/
   ]
 | -HV -HV12 -HVT -IHVT -H #V0 #W0 #T0 #T1 #_ #_ #H destruct
 | -IHVT -H #V0 #V3 #W0 #W1 #T0 #T1 #HLV10 #HLW01 #HLT01 #HV03 #H1 #H2 destruct

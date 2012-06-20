@@ -49,7 +49,7 @@ elim (IH … HV01 … HV02) -HV01 -HV02 /2 width=1/ #V #HV1 #HV2
 elim (IH … HT02 … HU01) -HT02 -HU01 -IH /2 width=1/ /3 width=5/
 qed.
 
-(* basic-1: was:
+(* Basic-1: was:
             pr0_cong_upsilon_refl pr0_cong_upsilon_zeta
             pr0_cong_upsilon_cong pr0_cong_upsilon_delta
 *)
@@ -78,15 +78,10 @@ elim (tpr_inv_abbr1 … H) -H *
   |3: @tpr_delta [3: @tpr_flat |1: skip ] /2 width=5/
   ] (**) (* /5 width=14/ is too slow *)
 (* case 3: zeta *)
-| -HW02 -HVV -HVVV #UU1 #HUU10 #HUUT1
-  elim (tpr_inv_lift … HU02 … HUU10) -HU02 #UU #HUU2 #HUU1
-  lapply (tw_lift … HUU10) -HUU10 #HUU10
-  elim (IH … HUUT1 … HUU1) -HUUT1 -HUU1 -IH /2 width=1/ -HUU10 #U #HU2 #HUUU2
-  @ex2_1_intro
-  [2: @tpr_flat
-  |1: skip 
-  |3: @tpr_zeta [2: @lift_flat |1: skip |3: @tpr_flat ]
-  ] /2 width=5/ (**) (* /5 width=5/ is too slow *)
+| -HV2 -HW02 -HVV2 #U1 #HU01 #HTU1
+  elim (IH … HU01 … HU02) -HU01 -HU02 -IH // -U0 #U #HU1 #HU2
+  elim (tpr_inv_lift1 … HU1 … HTU1) -U1 #UU #HUU #HT1UU
+  @(ex2_1_intro … (ⓐVV.UU)) /2 width=1/ /3 width=5/ (**) (* /4 width=9/ is too slow *)
 ]
 qed.
 
@@ -142,13 +137,13 @@ fact tpr_conf_delta_zeta:
       ∃∃X. X1 ➡ X & X2 ➡ X
    ) →
    V0 ➡ V1 → T0 ➡ T1 → ⋆. ⓓV1 ⊢ T1 ▶ [O,1] TT1 →
-   T2 ➡ X2 → ⇧[O, 1] T2 ≡ T0 →
+   T0 ➡ T2 → ⇧[O, 1] X2 ≡ T2 →
    ∃∃X. ⓓV1. TT1 ➡ X & X2 ➡ X.
-#X2 #V0 #V1 #T0 #T1 #TT1 #T2 #IH #_ #HT01 #HTT1 #HTX2 #HTT20
-elim (tpr_inv_lift … HT01 … HTT20) -HT01 #TT2 #HTT21 #HTT2
-lapply (tps_inv_lift1_eq … HTT1 … HTT21) -HTT1 #HTT1 destruct
-lapply (tw_lift … HTT20) -HTT20 #HTT20
-elim (IH … HTX2 … HTT2) -HTX2 -HTT2 -IH // /3 width=3/
+#X2 #V0 #V1 #T0 #T1 #TT1 #T2 #IH #_ #HT01 #HTT1 #HT02 #HXT2
+elim (IH … HT01 … HT02) -IH -HT01 -HT02 // -V0 -T0 #T #HT1 #HT2
+elim (tpr_tps_bind ? ? V1 … HT1 HTT1) -T1 // #TT #HTT1 #HTT
+elim (tpr_inv_lift1 … HT2 … HXT2) -T2 #X #HXT #HX2
+lapply (tps_inv_lift1_eq … HTT … HXT) -HTT #H destruct /3 width=3/
 qed.
 
 (* Basic_1: was: pr0_upsilon_upsilon *)
@@ -172,18 +167,19 @@ lapply (tpr_lift … HV2 … HVV2 … HVV) -V2 -HVV #HVV2
 qed.
 
 fact tpr_conf_zeta_zeta:
-   ∀V0:term. ∀X2,TT0,T0,T1,T2. (
+   ∀V0:term. ∀X2,TT0,T0,T1,TT2. (
       ∀X0:term. #[X0] < #[V0] + #[TT0] + 1 →
       ∀X1,X2. X0 ➡ X1 → X0 ➡ X2 →
       ∃∃X. X1 ➡ X & X2 ➡ X
    ) →
-   T0 ➡ T1 → T2 ➡ X2 →
-   ⇧[O, 1] T0 ≡ TT0 → ⇧[O, 1] T2 ≡ TT0 →
+   TT0 ➡ T0 → ⇧[O, 1] T1 ≡ T0 →
+   TT0 ➡ TT2 → ⇧[O, 1] X2 ≡ TT2 →
    ∃∃X. T1 ➡ X & X2 ➡ X.
-#V0 #X2 #TT0 #T0 #T1 #T2 #IH #HT01 #HTX2 #HTT0 #HTT20
-lapply (lift_inj … HTT0 … HTT20) -HTT0 #H destruct
-lapply (tw_lift … HTT20) -HTT20 #HTT20
-elim (IH … HT01 … HTX2) -HT01 -HTX2 -IH // /2 width=3/
+#V0 #X2 #TT0 #T0 #T1 #TT2 #IH #HTT0 #HT10 #HTT02 #HXTT2
+elim (IH … HTT0 … HTT02) -IH -HTT0 -HTT02 // -V0 -TT0 #T #HT0 #HTT2
+elim (tpr_inv_lift1 … HT0 … HT10) -T0 #T0 #HT0 #HT10
+elim (tpr_inv_lift1 … HTT2 … HXTT2) -TT2 #TT2 #HTT2 #HXTT2
+lapply (lift_inj … HTT2 … HT0) -HTT2 #H destruct /2 width=3/
 qed.
 
 fact tpr_conf_tau_tau:
@@ -244,7 +240,7 @@ fact tpr_conf_aux:
 (* case 9: delta, delta *)
   [ #V2 #T2 #TT2 #HV02 #HT02 #HTT2 #H destruct
     /3 width=11 by tpr_conf_delta_delta/ (**) (* /3 width=11/ is too slow *)
-(* case 10: delta, zata *)
+(* case 10: delta, zeta *)
   | #T2 #HT20 #HTX2 #H destruct
     /3 width=10 by tpr_conf_delta_zeta/ (**) (* /3 width=10/ is too slow *)
   ]
@@ -262,10 +258,10 @@ fact tpr_conf_aux:
 | #V0 #TT0 #T0 #T1 #HTT0 #HT01 #H1 #H2 destruct
   elim (tpr_inv_abbr1 … H1) -H1 *
 (* case 14: zeta, delta (repeated) *)
-  [ #V2 #T2 #TT2 #HV02 #HT02 #HTT2 #H destruct
+  [ #V2 #TT2 #T2 #HV02 #HTT02 #HTT2 #H destruct
     @ex2_1_comm /3 width=10 by tpr_conf_delta_zeta/
 (* case 15: zeta, zeta *)
-  | #T2 #HTT20 #HTX2
+  | #TT2 #HTT02 #HXTT2
     /3 width=9 by tpr_conf_zeta_zeta/ (**) (* /3 width=9/ is too slow *)
   ] 
 | #V0 #T0 #T1 #HT01 #H1 #H2 destruct

@@ -12,14 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unfold/delift_lift.ma".
 include "basic_2/unfold/thin_ldrop.ma".
 include "basic_2/equivalence/cpcs_delift.ma".
 include "basic_2/dynamic/nta_lift.ma".
 
 (* NATIVE TYPE ASSIGNMENT ON TERMS ******************************************)
 
-(* Properties on basic local environment thibbing ***************************)
+(* Properties on basic local environment thinning ***************************)
 
 (* Note: this is known as the substitution lemma *)
 (* Basic_1: was only: ty3_gen_cabbr *)

@@ -46,7 +46,7 @@ qed.
   
 (* star *)
 inductive star (A:Type[0]) (R:relation A) (a:A): A → Prop ≝
-  |inj: ∀b,c.star A R a b → R b c → star A R a c
+  |sstep: ∀b,c.star A R a b → R b c → star A R a c
   |refl: star A R a a.
 
 lemma R_to_star: ∀A,R,a,b. R a b → star A R a b.
@@ -93,22 +93,22 @@ qed.
 
 (* right associative version of star *)
 inductive starl (A:Type[0]) (R:relation A) : A → A → Prop ≝
-  |injl: ∀a,b,c.R a b → starl A R b c → starl A R a c
+  |sstepl: ∀a,b,c.R a b → starl A R b c → starl A R a c
   |refll: ∀a.starl A R a a.
  
 lemma starl_comp : ∀A,R,a,b,c.
   starl A R a b → R b c → starl A R a c.
 #A #R #a #b #c #Hstar elim Hstar 
-  [#a1 #b1 #c1 #Rab #sbc #Hind #a1 @(injl … Rab) @Hind //
-  |#a1 #Rac @(injl … Rac) //
+  [#a1 #b1 #c1 #Rab #sbc #Hind #a1 @(sstepl … Rab) @Hind //
+  |#a1 #Rac @(sstepl … Rac) //
   ]
 qed.
 
 lemma star_compl : ∀A,R,a,b,c.
   R a b → star A R b c → star A R a c.
 #A #R #a #b #c #Rab #Hstar elim Hstar 
-  [#b1 #c1 #sbb1 #Rb1c1 #Hind @(inj … Rb1c1) @Hind
-  |@(inj … Rab) //
+  [#b1 #c1 #sbb1 #Rb1c1 #Hind @(sstep … Rb1c1) @Hind
+  |@(sstep … Rab) //
   ]
 qed.
 

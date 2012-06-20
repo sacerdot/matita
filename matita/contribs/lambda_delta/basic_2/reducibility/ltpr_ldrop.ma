@@ -29,7 +29,7 @@ lemma ltpr_ldrop_conf: ∀L1,K1,d,e. ⇩[d, e] L1 ≡ K1 → ∀L2. L1 ➡ L2 �
   elim (IHLK1 … HL12) -L1 /3 width=3/
 | #L1 #K1 #I #V1 #W1 #d #e #_ #HWV1 #IHLK1 #X #H
   elim (ltpr_inv_pair1 … H) -H #L2 #V2 #HL12 #HV12 #H destruct
-  elim (tpr_inv_lift … HV12 … HWV1) -V1
+  elim (tpr_inv_lift1 … HV12 … HWV1) -V1
   elim (IHLK1 … HL12) -L1 /3 width=5/
 ]
 qed.

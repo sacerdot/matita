@@ -73,6 +73,10 @@ elim (cprs_inv_abst1 Abst W1 … H1) -H1 #W2 #T2 #HW12 #HT12 #H destruct
 @(ex2_2_intro … H2) -H2 /2 width=2/ (**) (* explicit constructor, /3 width=6/ is slow *)
 qed-.
 
+lemma cpcs_inv_abst2: ∀L,W1,T1,T. L ⊢ T ⬌* ⓛW1.T1 →
+                      ∃∃W2,T2. L ⊢ T ➡* ⓛW2.T2 & L ⊢ ⓛW1.T1 ➡* ⓛW2.T2.
+/3 width=1 by cpcs_inv_abst1, cpcs_sym/ qed-.
+
 (* Basic_1: was: pc3_gen_lift *)
 lemma cpcs_inv_lift: ∀L,K,d,e. ⇩[d, e] L ≡ K →
                      ∀T1,U1. ⇧[d, e] T1 ≡ U1 → ∀T2,U2. ⇧[d, e] T2 ≡ U2 →

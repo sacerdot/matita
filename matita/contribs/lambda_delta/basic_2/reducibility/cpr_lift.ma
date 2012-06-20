@@ -63,6 +63,29 @@ elim (tpss_inv_lref1 … H) -H /2 width=1/
 * /3 width=6/
 qed-.
 
+(* Basic_1: was pr2_gen_abbr *)
+lemma cpr_inv_abbr1: ∀L,V1,T1,U2. L ⊢ ⓓV1. T1 ➡ U2 →
+                     (∃∃V,V2,T2. V1 ➡ V & L ⊢ V ▶* [O, |L|] V2 &
+                                 L. ⓓV ⊢ T1 ➡ T2 &
+                                 U2 = ⓓV2. T2
+                      ) ∨
+                      ∃∃T2. L.ⓓV1 ⊢ T1 ➡ T2 & ⇧[0,1] U2 ≡ T2.
+#L #V1 #T1 #Y * #X #H1 #H2
+elim (tpr_inv_abbr1 … H1) -H1 *
+[ #V #T #T0 #HV1 #HT1 #HT0 #H destruct
+  elim (tpss_inv_bind1 … H2) -H2 #V2 #T2 #HV2 #HT02 #H destruct
+  lapply (tps_lsubs_trans … HT0 (L. ⓓV) ?) -HT0 /2 width=1/ #HT0
+  lapply (tps_weak_all … HT0) -HT0 #HT0
+  lapply (tpss_lsubs_trans … HT02 (L. ⓓV) ?) -HT02 /2 width=1/ #HT02
+  lapply (tpss_weak_all … HT02) -HT02 #HT02
+  lapply (tpss_strap … HT0 HT02) -T0 /4 width=7/
+| #T2 #HT12 #HXT2
+  elim (lift_total Y 0 1) #Z #HYZ
+  lapply (tpss_lift_ge … H2 (L.ⓓV1) … HXT2 … HYZ) -X // /2 width=1/ #H
+  lapply (cpr_intro … HT12 … H) -T2 /3 width=3/
+]
+qed-.
+
 (* Basic_1: was: pr2_gen_abst *)
 lemma cpr_inv_abst1: ∀L,V1,T1,U2. L ⊢ ⓛV1. T1 ➡ U2 → ∀I,W.
                      ∃∃V2,T2. L ⊢ V1 ➡ V2 & L. ⓑ{I} W ⊢ T1 ➡ T2 & U2 = ⓛV2. T2.
@@ -132,7 +155,7 @@ lemma cpr_inv_lift: ∀L,K,d,e. ⇩[d, e] L ≡ K →
                     ∀T1,U1. ⇧[d, e] T1 ≡ U1 → ∀U2. L ⊢ U1 ➡ U2 →
                     ∃∃T2. ⇧[d, e] T2 ≡ U2 & K ⊢ T1 ➡ T2.
 #L #K #d #e #HLK #T1 #U1 #HTU1 #U2 * #U #HU1 #HU2
-elim (tpr_inv_lift … HU1 … HTU1) -U1 #T #HTU #T1
+elim (tpr_inv_lift1 … HU1 … HTU1) -U1 #T #HTU #T1
 elim (lt_or_ge (|L|) d) #HLd
 [ elim (tpss_inv_lift1_le … HU2 … HLK … HTU ?) -U -HLK [ /5 width=4/ | /2 width=2/ ]
 | elim (lt_or_ge (|L|) (d + e)) #HLde

@@ -40,9 +40,9 @@ lemma tpr_tif_eq: ∀T1,T2. T1 ➡ T2 →  𝐈⦃T1⦄ → T1 = T2.
 | #V #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #_ #_ #_ #_ #H
   elim (tif_inv_appl … H) -H #_ #_ #H
   elim (simple_inv_bind … H)
-| #V1 #T1 #T2 #T #_ #_ #_ #H
+| #V1 #T1 #T #T2 #_ #_ #_ #H
   elim (tif_inv_abbr … H)
-| #V1 #T1 #T #_ #_ #H
+| #V1 #T1 #T2 #_ #_ #H
   elim (tif_inv_cast … H)
 ]
 qed.

@@ -12,93 +12,37 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* FRAGMENT 0 
-include "basic_2/unfold/delift_lift.ma".
-
-  
-include "basic_2/equivalence/cpcs_cpcs.ma".
-include "basic_2/unfold/delift_delift.ma".
-
-
-
-axiom pippo1: ∀T1,V. ∃∃T2. ⓓV.T1 ➡ T2 & ⋆.ⓓV ⊢ T1 ▼*[0, 1] ≡ T2.
-(*
-#T1 #V elim (pippo0 (⋆.ⓓV) 0 1 ? T1)
-[ #T2 #HT12 @(ex2_1_intro … HT12)
-  @tpr
-*)
-
-axiom pippo: ∀L,V,T1. ∃∃T2. L ⊢ ⓓV.T1 ➡ T2 & L.ⓓV ⊢ T1 ▼*[0, 1] ≡ T2.
-
-axiom cprs_inv_appl1_cpcs: ∀L,V1,T1,U2. L ⊢ ⓐV1. T1 ➡* U2 → (
-                           ∃∃V2,T2.  L ⊢ V1 ➡* V2 & L ⊢ T1 ➡* T2 &
-                                     L ⊢ U2 ➡* ⓐV2. T2
-                           ) ∨
-                           ∃∃V2,W,T. L ⊢ V1 ➡* V2 &
-                                     L ⊢ T1 ➡* ⓛW. T & L ⊢ ⓓV2. T ⬌* U2.
-#L #V1 #T1 #U2 #H @(cprs_ind … H) -U2 /3 width=5/
-#U #U2 #_ #HU2 * *
-[ #V0 #T0 #HV10 #HT10 #HUT0
-  elim (cprs_strip … HUT0 … HU2) -U #U #H #HU2
-  elim (cpr_inv_appl1 … H) -H *
-  [ #V2 #T2 #HV02 #HT02 #H destruct /4 width=5/
-  | #V2 #W2 #T #T2 #HV02 #HT2 #H1 #H2 destruct
-    lapply (cprs_strap1 … HV10 HV02) -V0 #HV12
-    lapply (cprs_div ? (ⓓV2.T) ? ? ? HU2) -HU2 /2 width=1/ /3 width=6/
-  | #V #V2 #W0 #W2 #T #T2 #HV0 #HW02 #HT2 #HV2 #H1 #H2 destruct
-    lapply (cprs_strap1 … HV10 HV0) -V0 #HV1
-    lapply (cprs_trans … HT10 (ⓓW2.T2) ?) -HT10 /2 width=1/ -W0 -T #HT1
-    elim (pippo L W2 T2) #T3 #H1T3 #H2T3
-    elim (pippo L W2 (ⓐV2.T2)) #X #H1X #H
-    elim (delift_inv_flat1 … H) -H #V3 #Y #HV23 #HY #H destruct
-      
-  
-    @or_introl @(ex3_2_intro … HV1 HT1) -HV1 -HT1  
-      
-  ]
-| /4 width=8/
-]
-qed-.
-
-
-include "basic_2/computation/cprs_lcprs.ma".
+include "basic_2/equivalence/cpcs_delift.ma".
 include "basic_2/dynamic/nta.ma".
-
-axiom cprs_inv_appl_abst: ∀L,V,T,W,U. L ⊢ ⓐV.T ➡* ⓛW.U →
-                          ∃∃V0,W0,T0,W1,U1. ⇧[O, 1] W ≡ W1 &
-                                            ⇧[O + 1, 1] U ≡ U1 &
-                                            L ⊢ V ➡* V0 & L ⊢ T ➡* ⓛW0.T0 &
-                                            L.ⓓV0 ⊢ T0 ➡* ⓛW1.U1.
-#L #V #T #W #U #H
-elim (cprs_inv_appl1 … H) -H *
-[ #V0 #T0 #_ #_ #H destruct
-| #V0 #W0 #T0 #HV0 #HT0 #H
-  elim (cprs_inv_abbr1 … H) -H *
-  [ #V1 #T1 #_ #_ #H destruct
-  | #X #H #HT01
-    elim (lift_inv_bind1 … H) -H #W1 #U1 #HW1 #HU1 #H destruct /2 width=10/ 
-  ]
-| #V0 #V1 #V2 #T0 #HV0 #HV01 #HT0 #H
-  elim (cprs_inv_abbr1 … H) -H *
-  [ #V3 #T3 #_ #_ #H destruct
-  | #X #H #HT3
-    elim (lift_inv_bind1 … H) -H #W3 #U3 #HW3 #HU3 #H destruct /2 width=10/ 
-
-axiom pippo: ∀h,L,T,U. ⦃h, L⦄ ⊢ T : U → ∀X,Y. L ⊢ T ➡* ⓛX.Y →
+(*
+lemma pippo: ∀h,L,T,U. ⦃h, L⦄ ⊢ T : U → ∀X,Y. L ⊢ T ➡* ⓛX.Y →
              ∃Z. L ⊢ U ➡* ⓛX.Z.
 #h #L #T #U #H elim H -L -T -U
 [
 |
 |
 |
-|
-| #L #V #W #T #U #HTU #HUW #IHTU #IHUW #X #Y #HTY
-  elim (cprs_inv_appl1 … HTY) -HTY *
+| #L #V #W #T #U #_ #_ #IHVW #IHTU #X #Y #H  
+| #L #V #W #T #U #_ #HUW #IHTU #IHUW #X #Y #HTY
+  elim (cprs_inv_appl_abst … HTY) -HTY #W1 #T1 #W2 #T2 #HT1 #HT12 #HYT2
+  elim (IHTU … HT1) -IHTU -HT1 #U1 #HU1 
+ 
+  
+  
+   *
   [ #V0 #T0 #_ #_ #H destruct
   | #V0 #W0 #T0 #HV0 #HT0 #HTY
     elim (IHTU … HT0) -IHTU -HT0 #Z #HUZ
     elim (cprs_inv_abbr1 … HTY) -HTY *
     [ #V1 #T1 #_ #_ #H destruct #X0  
+
+*)
+
+(*
+
+include "basic_2/computation/cprs_lcprs.ma".
+
+
 
 
 include "basic_2/dynamic/nta_ltpss.ma".

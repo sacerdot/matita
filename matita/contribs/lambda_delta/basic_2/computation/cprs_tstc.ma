@@ -61,11 +61,11 @@ elim (cprs_inv_appl1 … H) -H *
 | #V0 #W #T0 #HV10 #HT0 #HU
   elim (cprs_inv_abbr1 … HT0) -HT0 *
   [ #V3 #T3 #_ #_ #H destruct
-  | #X #H #HT2
+  | #X #HT2 #H 
     elim (lift_inv_bind1 … H) -H #W2 #T2 #HW2 #HT02 #H destruct
     @or_intror @(cprs_trans … HU) -U (**) (* explicit constructor *)
     @(cprs_trans … (ⓓV.ⓐV2.ⓛW2.T2)) [ /3 width=1/ ] -T
-    @(cprs_strap2 … (ⓐV1.ⓛW.T0)) [ /5 width=3/ ] -V -V2 -W2 -T2
+    @(cprs_strap2 … (ⓐV1.ⓛW.T0)) [ /5 width=7/ ] -V -V2 -W2 -T2
     @(cprs_strap2 … (ⓓV1.T0)) [ /3 width=1/ ] -W /2 width=1/
   ]
 | #V3 #V4 #V0 #T0 #HV13 #HV34 #HT0 #HU
@@ -74,12 +74,12 @@ elim (cprs_inv_appl1 … H) -H *
   [ #V5 #T5 #HV5 #HT5 #H destruct
     lapply (cprs_lift (L.ⓓV) … HV12 … HV13 … HV34) -V1 -V3 /2 width=1/
     /3 width=1/
-  | #X #H #HT1
+  | #X #HT1 #H
     elim (lift_inv_bind1 … H) -H #V5 #T5 #HV05 #HT05 #H destruct
     lapply (cprs_lift (L.ⓓV0) … HV12 … HV13 … HV34) -V3 /2 width=1/ #HV24
     @(cprs_trans … (ⓓV.ⓐV2.ⓓV5.T5)) [ /3 width=1/ ] -T
-    @(cprs_strap2 … (ⓐV1.ⓓV0.T0)) [ /5 width=3/ ] -V -V5 -T5
-    @(cprs_strap2 … (ⓓV0.ⓐV2.T0)) [ /3 width=3/ ] -V1 /3 width=9/
+    @(cprs_strap2 … (ⓐV1.ⓓV0.T0)) [ /5 width=7/ ] -V -V5 -T5
+    @(cprs_strap2 … (ⓓV0.ⓐV2.T0)) [ /3 width=3/ ] -V1 /3 width=1/
   ]
 ]
 qed-.
