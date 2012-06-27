@@ -242,7 +242,7 @@ theorem monotonic_le_plus_l:
 theorem le_plus: ∀n1,n2,m1,m2:nat. n1 ≤ n2  → m1 ≤ m2 
 → n1 + m1 ≤ n2 + m2.
 #n1 #n2 #m1 #m2 #len #lem @(transitive_le ? (n1+m2))
-/2/ qed-.
+/2/ qed.
 
 theorem le_plus_n :∀n,m:nat. m ≤ n + m.
 /2/ qed. 
@@ -595,8 +595,10 @@ theorem increasing_to_le: ∀f:nat → nat.
 @(ex_intro ?? (S a)) /2/
 qed.
 
+(* thus is le_plus
 lemma le_plus_compatible: ∀x1,x2,y1,y2. x1 ≤ y1 → x2 ≤ y2 → x1 + x2 ≤ y1 + y2.
-/3 by le_minus_to_plus, monotonic_le_plus_r, transitive_le/ qed.
+#x1 #y1 #x2 #y2 #H1 #H2 /2/ @le_plus // /2/ /3 by le_minus_to_plus, monotonic_le_plus_r, transitive_le/ qed.
+*)
 
 (* lt *)
 
