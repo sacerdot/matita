@@ -50,22 +50,28 @@ definition move_r ≝
   move0 (λq.q == move1).
   
 definition R_move_r ≝ λalpha,t1,t2.
+  (current ? t1 = None ? → t1 = t2) ∧  
   ∀ls,c,rs.
-  t1 = midtape alpha ls c rs → 
-  t2 = mk_tape ? (c::ls) (option_hd ? rs) (tail ? rs).
+    t1 = midtape alpha ls c rs → 
+    t2 = mk_tape ? (c::ls) (option_hd ? rs) (tail ? rs).
+(*
+  (current ? t1 = None ? ∧ t1 = t2) ∨ 
+  ∃ls,c,rs.
+  t1 = midtape alpha ls c rs ∧ 
+  t2 = mk_tape ? (c::ls) (option_hd ? rs) (tail ? rs).*)
     
 lemma sem_move_r :
   ∀alpha.Realize ? (move_r alpha) (R_move_r alpha).
 #alpha #intape @(ex_intro ?? 2) cases intape
 [ @ex_intro
-  [| % [ % | #ls #c #rs #Hfalse destruct ] ]
+  [| % [ % | % // #ls #c #rs #H destruct ] ]
 |#a #al @ex_intro
-  [| % [ % | #ls #c #rs #Hfalse destruct ] ]
+  [| % [ % | % // #ls #c #rs #H destruct ] ]
 |#a #al @ex_intro
-  [| % [ % | #ls #c #rs #Hfalse destruct ] ]
+  [| % [ % | % // #ls #c #rs #H destruct ] ]
 | #ls #c #rs
-  @ex_intro [| % [ % | #ls0 #c0 #rs0 #H1 destruct (H1)
-  cases rs0 // ] ] ]
+  @ex_intro [| % [ % | % [whd in ⊢ ((??%?)→?); #H destruct]
+  #ls1 #c1 #rs1 #H destruct cases rs1 // ] ] ]
 qed.
 
 (******************** moves the head one step to the left *********************)
@@ -79,24 +85,25 @@ definition move_l ≝
       [ O ⇒ 〈move1,Some ? 〈a',L〉〉
       | S q ⇒ 〈move1,None ?〉 ] ])
   move0 (λq.q == move1).
-  
+
 definition R_move_l ≝ λalpha,t1,t2.
+  (current ? t1 = None ? → t1 = t2) ∧  
   ∀ls,c,rs.
-  t1 = midtape alpha ls c rs → 
-  t2 = mk_tape ? (tail ? ls) (option_hd ? ls) (c::rs).
+    t1 = midtape alpha ls c rs → 
+    t2 = mk_tape ? (tail ? ls) (option_hd ? ls) (c::rs).
     
 lemma sem_move_l :
   ∀alpha.Realize ? (move_l alpha) (R_move_l alpha).
 #alpha #intape @(ex_intro ?? 2) cases intape
 [ @ex_intro
-  [| % [ % | #ls #c #rs #Hfalse destruct ] ]
+  [| % [ % | % // #ls #c #rs #H destruct ] ]
 |#a #al @ex_intro
-  [| % [ % | #ls #c #rs #Hfalse destruct ] ]
+  [| % [ % | % // #ls #c #rs #H destruct ] ]
 |#a #al @ex_intro
-  [| % [ % | #ls #c #rs #Hfalse destruct ] ]
+  [| % [ % | % // #ls #c #rs #H destruct ] ]
 | #ls #c #rs
-  @ex_intro [| % [ % | #ls0 #c0 #rs0 #H1 destruct (H1)
-  cases ls0 // ] ] ]
+  @ex_intro [| % [ % | % [whd in ⊢ ((??%?)→?); #H destruct]
+  #ls1 #c1 #rs1 #H destruct cases ls1 // ] ] ]
 qed.
 
 (********************************* test char **********************************)
@@ -118,7 +125,7 @@ definition test_char ≝
   mk_TM alpha tc_states
   (λp.let 〈q,a〉 ≝ p in
    match a with
-   [ None ⇒ 〈tc_true, None ?〉
+   [ None ⇒ 〈tc_false, None ?〉
    | Some a' ⇒ 
      match test a' with
      [ true ⇒ 〈tc_true,None ?〉
@@ -127,11 +134,11 @@ definition test_char ≝
 
 definition Rtc_true ≝ 
   λalpha,test,t1,t2.
-   ∀c. current alpha t1 = Some ? c → test c = true ∧ t2 = t1.
+   (∃c. current alpha t1 = Some ? c ∧ test c = true) ∧ t2 = t1.
    
 definition Rtc_false ≝ 
   λalpha,test,t1,t2.
-    ∀c. current alpha t1 = Some ? c → test c = false ∧ t2 = t1.
+    (∀c. current alpha t1 = Some ? c → test c = false) ∧ t2 = t1.
      
 lemma tc_q0_q1 :
   ∀alpha,test,ls,a0,rs. test a0 = true → 
@@ -159,19 +166,19 @@ lemma sem_test_char :
     tc_true (Rtc_true alpha test) (Rtc_false alpha test).
 #alpha #test *
 [ @(ex_intro ?? 2)
-  @(ex_intro ?? (mk_config ?? tc_true (niltape ?))) %
-  [ % // #_ #c normalize #Hfalse destruct | #_ #c normalize #Hfalse destruct (Hfalse) ]
-| #a #al @(ex_intro ?? 2) @(ex_intro ?? (mk_config ?? tc_true (leftof ? a al)))
-  % [ % // #_ #c normalize #Hfalse destruct | #_ #c normalize #Hfalse destruct (Hfalse) ]
-| #a #al @(ex_intro ?? 2) @(ex_intro ?? (mk_config ?? tc_true (rightof ? a al)))
-  % [ % // #_ #c normalize #Hfalse destruct | #_ #c normalize #Hfalse destruct (Hfalse) ]
+  @(ex_intro ?? (mk_config ?? tc_false (niltape ?))) %
+  [ % // normalize #Hfalse destruct | #_ normalize % // #c #Hfalse destruct (Hfalse) ]
+| #a #al @(ex_intro ?? 2) @(ex_intro ?? (mk_config ?? tc_false (leftof ? a al)))
+  % [ % // normalize #Hfalse destruct | #_ normalize % // #c #Hfalse destruct (Hfalse) ]
+| #a #al @(ex_intro ?? 2) @(ex_intro ?? (mk_config ?? tc_false (rightof ? a al)))
+  % [ % // normalize #Hfalse destruct | #_ normalize % // #c #Hfalse destruct (Hfalse) ]
 | #ls #c #rs @(ex_intro ?? 2)
   cases (true_or_false (test c)) #Htest
   [ @(ex_intro ?? (mk_config ?? tc_true ?))
     [| % 
       [ % 
         [ whd in ⊢ (??%?); >tc_q0_q1 //
-        | #_ #c0 #Hc0 % // normalize in Hc0; destruct // ]
+        | #_ % // @(ex_intro … c) /2/]
       | * #Hfalse @False_ind @Hfalse % ]
     ]
   | @(ex_intro ?? (mk_config ?? tc_false (midtape ? ls c rs)))
@@ -179,7 +186,7 @@ lemma sem_test_char :
     [ %
       [ whd in ⊢ (??%?); >tc_q0_q2 //
       | whd in ⊢ ((??%%)→?); #Hfalse destruct (Hfalse) ]
-    | #_ #c0 #Hc0 % // normalize in Hc0; destruct (Hc0) //
+    | #_ % // #c0 whd in ⊢ ((??%?)→?); #Hc0 destruct (Hc0) //
     ]
   ]
 ]
@@ -215,25 +222,30 @@ definition swap_r ≝
   ]])
   〈swap0,foo〉
   (λq.\fst q == swap3).
-
-definition Rswap ≝ 
+  
+definition Rswap_r ≝ 
   λalpha,t1,t2.
-   ∀a,b,ls,rs.  
-    t1 = midtape alpha ls b (a::rs) → 
-    t2 = midtape alpha ls a (b::rs).
+    (∀b,ls.
+      t1 = midtape alpha ls b [ ] → 
+      t2 = rightof ? b ls) ∧
+    (∀a,b,ls,rs. 
+      t1 = midtape alpha ls b (a::rs) → 
+      t2 = midtape alpha ls a (b::rs)).
 
 lemma sem_swap_r : ∀alpha,foo.
-  swap_r alpha foo ⊨ Rswap alpha. 
+  swap_r alpha foo ⊨ Rswap_r alpha. 
 #alpha #foo *
   [@(ex_intro ?? 2) @(ex_intro … (mk_config ?? 〈swap3,foo〉 (niltape ?)))
-   % [% |#a #b #ls #rs #H destruct]
+   % [% |% [#b #ls | #a #b #ls #rs] #H destruct]
   |#l0 #lt0 @(ex_intro ?? 2) @(ex_intro … (mk_config ?? 〈swap3,foo〉 (leftof ? l0 lt0)))
-   % [% |#a #b #ls #rs #H destruct] 
+   % [% | % [#b #ls | #a #b #ls #rs] #H destruct]
   |#r0 #rt0 @(ex_intro ?? 2) @(ex_intro … (mk_config ?? 〈swap3,foo〉 (rightof ? r0 rt0)))
-   % [% |#a #b #ls #rs #H destruct] 
+   % [% |% [#b #ls | #a #b #ls #rs] #H destruct] 
   | #lt #c #rt @(ex_intro ?? 4) cases rt
-    [@ex_intro [|% [ % | #a #b #ls #rs #H destruct]]
-    |#r0 #rt0 @ex_intro [| % [ % | #a #b #ls #rs #H destruct //
+    [@ex_intro [|% [ % | %
+      [#b #ls #H destruct normalize // |#a #b #ls #rs #H destruct]]]
+    |#r0 #rt0 @ex_intro [| % [ % | %
+      [#b #ls #H destruct | #a #b #ls #rs #H destruct normalize //
     ]
   ]
 qed.
@@ -262,22 +274,27 @@ definition swap_l ≝
 
 definition Rswap_l ≝ 
   λalpha,t1,t2.
-   ∀a,b,ls,rs.  
-    t1 = midtape alpha (a::ls) b rs → 
-    t2 = midtape alpha (b::ls) a rs.
+   (∀b,rs.  
+     t1 = midtape alpha [ ] b rs → 
+     t2 = leftof ? b rs) ∧
+   (∀a,b,ls,rs.  
+      t1 = midtape alpha (a::ls) b rs → 
+      t2 = midtape alpha (b::ls) a rs).
 
 lemma sem_swap_l : ∀alpha,foo.
   swap_l alpha foo ⊨ Rswap_l alpha. 
 #alpha #foo *
   [@(ex_intro ?? 2) @(ex_intro … (mk_config ?? 〈swap3,foo〉 (niltape ?)))
-   % [% |#a #b #ls #rs #H destruct]
+   % [% |% [#b #rs | #a #b #ls #rs] #H destruct]
   |#l0 #lt0 @(ex_intro ?? 2) @(ex_intro … (mk_config ?? 〈swap3,foo〉 (leftof ? l0 lt0)))
-   % [% |#a #b #ls #rs #H destruct] 
+   % [% | % [#b #rs | #a #b #ls #rs] #H destruct]
   |#r0 #rt0 @(ex_intro ?? 2) @(ex_intro … (mk_config ?? 〈swap3,foo〉 (rightof ? r0 rt0)))
-   % [% |#a #b #ls #rs #H destruct] 
+   % [% |% [#b #rs | #a #b #ls #rs] #H destruct] 
   | #lt #c #rt @(ex_intro ?? 4) cases lt
-    [@ex_intro [|% [ % | #a #b #ls #rs #H destruct]]
-    |#l0 #lt0 @ex_intro [| % [ % | #a #b #ls #rs #H destruct //
+    [@ex_intro [|% [ % | %
+      [#b #rs #H destruct normalize // |#a #b #ls #rs #H destruct]]]
+    |#r0 #rt0 @ex_intro [| % [ % | %
+      [#b #rs #H destruct | #a #b #ls #rs #H destruct normalize //
     ]
   ]
 qed.

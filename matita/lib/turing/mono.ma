@@ -47,6 +47,19 @@ definition mk_tape :
       | cons r0 rs0 ⇒ leftof ? r0 rs0 ]
     | cons l0 ls0 ⇒ rightof ? l0 ls0 ] ].
 
+lemma current_to_midtape: ∀sig,t,c. current sig t = Some ? c →
+  ∃ls,rs. t = midtape ? ls c rs.
+#sig *
+  [#c whd in ⊢ ((??%?)→?); #Hfalse destruct
+  |#a #l #c whd in ⊢ ((??%?)→?); #Hfalse destruct
+  |#a #l #c whd in ⊢ ((??%?)→?); #Hfalse destruct
+  |#ls #a #rs #c whd in ⊢ ((??%?)→?); #H destruct 
+   @(ex_intro … ls) @(ex_intro … rs) //
+  ]
+qed.
+
+(*********************************** moves ************************************)
+
 inductive move : Type[0] ≝
   | L : move | R : move | N : move.
 
