@@ -304,6 +304,7 @@ definition clear_mark ≝
   clear0 (λq.q == clear1).
   
 definition R_clear_mark ≝ λalpha,t1,t2.
+  (current ? t1 = None ? → t1 = t2) ∧
   ∀ls,c,b,rs.
   t1 = midtape (FinProd … alpha FinBool) ls 〈c,b〉 rs → 
   t2 = midtape ? ls 〈c,false〉 rs.
@@ -312,13 +313,14 @@ lemma sem_clear_mark :
   ∀alpha.Realize ? (clear_mark alpha) (R_clear_mark alpha).
 #alpha #intape @(ex_intro ?? 2) cases intape
 [ @ex_intro
-  [| % [ % | #ls #c #b #rs #Hfalse destruct ] ]
+  [| % [ % | % [#_ %|#ls #c #b #rs #Hfalse destruct ]]]
 |#a #al @ex_intro
-  [| % [ % | #ls #c #b #rs #Hfalse destruct ] ]
+  [| % [ % | % [#_ %|#ls #c #b #rs #Hfalse destruct ]]]
 |#a #al @ex_intro
-  [| % [ % | #ls #c #b #rs #Hfalse destruct ] ]
+  [| % [ % | % [#_ %|#ls #c #b #rs #Hfalse destruct ]]]
 | #ls * #c #b #rs
-  @ex_intro [| % [ % | #ls0 #c0 #b0 #rs0 #H1 destruct (H1) % ] ] ]
+  @ex_intro [| % [ % | % 
+  [whd in ⊢ (??%?→?); #H destruct| #ls0 #c0 #b0 #rs0 #H1 destruct (H1) % ]]]]
 qed.
 
 (* ADVANCE MARK RIGHT machine
@@ -333,12 +335,13 @@ definition adv_mark_r ≝
     clear_mark alpha · move_r ? · mark alpha.
       
 definition R_adv_mark_r ≝ λalpha,t1,t2.
-  ∀ls,c.
+  (∀ls,c.
     (∀d,b,rs.
      t1 = midtape (FinProd … alpha FinBool) ls 〈c,true〉 (〈d,b〉::rs) → 
      t2 = midtape ? (〈c,false〉::ls) 〈d,true〉 rs) ∧
     (t1 = midtape (FinProd … alpha FinBool) ls 〈c,true〉 [ ] → 
-     t2 = rightof ? 〈c,false〉 ls).
+     t2 = rightof ? 〈c,false〉 ls)) ∧
+  (current ? t1 = None ? → t1 = t2).
   
 lemma sem_adv_mark_r : 
   ∀alpha.Realize ? (adv_mark_r alpha) (R_adv_mark_r alpha).
@@ -346,13 +349,17 @@ lemma sem_adv_mark_r :
 @(sem_seq_app … (sem_clear_mark …) 
          (sem_seq ????? (sem_move_r ?) (sem_mark alpha)) …)
 #intape #outtape whd in ⊢ (%→?); * #ta * 
-whd in ⊢ (%→?); #Hs1 whd in ⊢ (%→?); * #tb * #Hs2 whd in ⊢ (%→?); #Hs3 
-#ls #c %
-  [#d #b #rs #Hintape @(proj1 … Hs3 ?? b ?)
-   @(proj2 … Hs2 ls 〈c,false〉 (〈d,b〉::rs))
-   @(Hs1 … Hintape)
-  |#Hintape lapply (Hs1 … Hintape) #Hta lapply (proj2 … Hs2 … Hta) 
-   whd in ⊢ ((???%)→?); #Htb <Htb @(proj2 … Hs3) >Htb //
+whd in ⊢ (%→?); #Hs1 whd in ⊢ (%→?); * #tb * #Hs2 whd in ⊢ (%→?); #Hs3 %
+  [#ls #c % 
+    [#d #b #rs #Hintape @(proj1 … Hs3 ?? b ?)
+     @(proj2 … Hs2 ls 〈c,false〉 (〈d,b〉::rs))
+     @(proj2 ?? Hs1 … Hintape)
+    |#Hintape lapply (proj2 ?? Hs1 … Hintape) #Hta lapply (proj2 … Hs2 … Hta) 
+     whd in ⊢ ((???%)→?); #Htb <Htb @(proj2 … Hs3) >Htb //
+    ]
+  |#Hcur lapply(proj1 ?? Hs1 … Hcur) #Hta >Hta >Hta in Hcur; #Hcur
+   lapply (proj1 ?? Hs2 … Hcur) #Htb >Htb >Htb in Hcur; #Hcur
+   @sym_eq @(proj2 ?? Hs3) @Hcur
   ]
 qed.
 
@@ -564,37 +571,21 @@ lemma sem_adv_both_marks :
         (sem_adv_mark_r alpha))) …)
 #intape #outtape * #tapea * #Hta * #tb * #Htb * #tc * #Htc #Hout 
 #l0 #x #a #l1 #x0 #Hmarks %
-  [#l1' #a0 #l2 #Hintape #Hrev @(proj1 … (Hout … ) ? false) -Hout
-   lapply (proj1 … (Hta ??) … Hintape) #Htapea
+  [#l1' #a0 #l2 #Hintape #Hrev @(proj1 ?? (proj1 ?? Hout … ) ? false) -Hout
+   lapply (proj1 … (proj1 … Hta …) … Hintape) #Htapea
    lapply (proj2 … Htb  … Htapea) -Htb
    whd in match (mk_tape ????) ; #Htapeb 
    lapply (proj2 ?? (proj2 ?? Htc … Htapeb) (refl …) … (refl …)) -Htc #Htc
    change with ((?::?)@?) in match (cons ???); <Hrev >reverse_cons
    >associative_append @Htc [%|@Hmarks] 
-  |#Hintape lapply (proj2 ?? (Hta … ) … Hintape) -Hta #Hta
+  |#Hintape lapply (proj2 ?? (proj1 ?? Hta … ) … Hintape) -Hta #Hta
    lapply (proj1 … Htb) >Hta -Htb #Htb lapply (Htb (refl …)) -Htb #Htb 
    lapply (proj1 ?? Htc) <Htb -Htc #Htc lapply (Htc (refl …)) -Htc #Htc
-whd in ⊢ (%→?); * #ta whd #Hs1 * #tb * whd in ⊢ (%→?); #Hs2
-* #tc * whd in ⊢ (%→%→?); #Hs3 #Hs4
-@(ex_intro ?? k) @(ex_intro ?? outc) %
-[ @Hloop
-| -Hloop #l0 #x #a #l1 #x0 #a0 #l2 #Hl1 #Hintape
-  @(Hs4 … false) -Hs4
-  lapply (Hs1 … Hintape) #Hta
-  lapply (proj2 … Hs2 … Hta) #Htb
-  cases (Hs3 … Htb)
-  [ * #Hfalse normalize in Hfalse; destruct (Hfalse)
-  | * #_ -Hs3 #Hs3 
-    lapply (Hs3 (l1@[〈a,false〉]) 〈x,true〉 l0 ???)
-    [ #x1 #Hx1 cases (memb_append … Hx1)
-      [ @Hl1
-      | #Hx1' >(memb_single … Hx1') % ]
-    | % 
-    | >associative_append %
-    | >reverse_append #Htc @Htc ]
+   @sym_eq >Htc @(proj2 ?? Hout …) <Htc % 
   ]
 qed.
 
+(*
 definition R_adv_both_marks ≝ 
   λalpha,t1,t2.
     ∀l0,x,a,l1,x0,a0,l2. (∀c.memb ? c l1 = true → is_marked ? c = false) → 
@@ -632,7 +623,7 @@ cases (sem_seq ????? (sem_adv_mark_r …)
     | >associative_append %
     | >reverse_append #Htc @Htc ]
   ]
-qed.
+qed. *)
 
 (* 
    MATCH AND ADVANCE(f)
@@ -671,10 +662,13 @@ cases Hif
 [ * #ta * whd in ⊢ (%→%→?); #Hta #Houtc
   #l0 #x #a #l1 #x0 #a0 #l2 #Hl1 #Hintape >Hintape in Hta; 
   * * #x1 * whd in ⊢ ((??%?)→?); #H destruct (H) #Hf #Hta % % 
-  [ @Hf | @Houtc [ @Hl1 | @Hta ] ]
+  [ @Hf | >append_cons >append_cons in Hta; #Hta @(proj1 ?? (Houtc …) …Hta) 
+    [ #x #memx cases (memb_append …memx) 
+      [@Hl1 | -memx #memx >(memb_single … memx) %]
+    |>reverse_cons >reverse_append % ] ]
 | * #ta * whd in ⊢ (%→%→?); #Hta #Houtc
   #l0 #x #a #l1 #x0 #a0 #l2 #Hl1 #Hintape >Hintape in Hta; 
-  * #Hf #Hta %2 % [ @Hf % | >(Houtc … Hta) % ]
+  * #Hf #Hta %2 % [ @Hf % | >(proj2 ?? Houtc … Hta) % ]
 ]
 qed.
 
