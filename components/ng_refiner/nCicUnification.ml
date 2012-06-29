@@ -141,7 +141,9 @@ let rec could_reduce status ~subst context =
      when List.length args > recno ->
       let t = NCicReduction.whd status ~subst context (List.nth args recno) in
         could_reduce status subst context t
-  | C.Match (_,_,arg,_) -> could_reduce status ~subst context arg
+  | C.Match (_,_,he,_) ->
+     let he = NCicReduction.whd status ~subst context he in
+      could_reduce status ~subst context he
   | C.Appl (he::_) -> could_reduce status ~subst context he
   | C.Sort _ | C.Rel _ | C.Prod _ | C.Lambda _ | C.Const _ -> false
   | C.Appl [] | C.LetIn _ | C.Implicit _ -> assert false
@@ -412,6 +414,8 @@ and unify_for_delift status metasenv subst context t1 t2 =
    try Some
     (fo_unif_w_hints true status false true(*test_eq_only*) metasenv subst
       context (false,t1) (false,t2))
+    (*(unify status true(*test_eq_only*) metasenv subst
+      context t1 t2 false)*)
    with UnificationFailure _ | Uncertain _ | KeepReducingThis _ -> None
  in
  indent := ind; res
