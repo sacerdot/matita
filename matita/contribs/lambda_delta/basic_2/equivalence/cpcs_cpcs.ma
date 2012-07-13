@@ -90,6 +90,21 @@ qed-.
 
 (* Advanced properties ******************************************************)
 
+lemma cpr_cprs_conf: ∀L,T,T1,T2. L ⊢ T ➡* T1 → L ⊢ T ➡ T2 → L ⊢ T1 ⬌* T2.
+#L #T #T1 #T2 #HT1 #HT2
+elim (cprs_strip … HT1 … HT2) /2 width=3 by cpr_cprs_div/
+qed-.
+
+lemma cprs_cpr_conf: ∀L,T,T1,T2. L ⊢ T ➡* T1 → L ⊢ T ➡ T2 → L ⊢ T2 ⬌* T1.
+#L #T #T1 #T2 #HT1 #HT2
+elim (cprs_strip … HT1 … HT2) /2 width=3 by cprs_cpr_div/
+qed-.
+
+lemma cprs_conf: ∀L,T,T1,T2. L ⊢ T ➡* T1 → L ⊢ T ➡* T2 → L ⊢ T1 ⬌* T2.
+#L #T #T1 #T2 #HT1 #HT2
+elim (cprs_conf … HT1 … HT2) /2 width=3/
+qed-.
+
 (* Basic_1: was only: pc3_thin_dx *)
 lemma cpcs_flat: ∀L,V1,V2. L ⊢ V1 ⬌* V2 → ∀T1,T2. L ⊢ T1 ⬌* T2 →
                  ∀I. L ⊢ ⓕ{I}V1. T1 ⬌* ⓕ{I}V2. T2.

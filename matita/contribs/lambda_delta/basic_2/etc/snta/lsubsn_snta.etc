@@ -1,0 +1,49 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/dynamic/snta_snta.ma".
+include "basic_2/dynamic/lsubsn_ldrop.ma".
+include "basic_2/dynamic/lsubsn_cpcs.ma".
+
+(* LOCAL ENVIRONMENT REFINEMENT FOR STRATIFIED NATIVE TYPE ASSIGNMENT *******)
+
+(* Properties concerning stratified native type assignment ******************)
+
+(* Note: the corresponding confluence property does not hold *)
+lemma lsubsn_snta_trans: ∀h,L2,T,U,l. ⦃h, L2⦄ ⊢ T :[l] U →
+                         ∀L1. h ⊢ L1 :⊑[] L2 → ⦃h, L1⦄ ⊢ T :[l] U.
+#h #L2 #T #U #l #H elim H -L2 -T -U -l
+[ //
+| #L2 #K2 #V2 #W2 #U2 #i #l #HLK2 #_ #WU2 #IHVW2 #L1 #HL12
+  elim (lsubsn_ldrop_O1_trans … HL12 … HLK2) -L2 #X #H #HLK1
+  elim (lsubsn_inv_pair2 … H) -H * #K1
+  [ #HK12 #H destruct /3 width=6/
+  | #V1 #l0 #_ #_ #_ #_ #H destruct
+  ]
+| #L2 #K2 #W2 #V2 #U2 #i #l #HLK2 #HWV2 #HWU2 #IHWV2 #L1 #HL12
+  elim (lsubsn_ldrop_O1_trans … HL12 … HLK2) -L2 #X #H #HLK1
+  elim (lsubsn_inv_pair2 … H) -H * #K1 [ -HWV2 | -IHWV2 ]
+  [ #HK12 #H destruct /3 width=6/
+  | #V1 #l0 #H1 #H2 #_ #H #_ destruct
+    elim (snta_fwd_correct … H2) -H2 #V #H
+    elim (snta_mono … HWV2 … H) -HWV2 -H /2 width=6/
+  ]
+| /4 width=3/
+| /3 width=2/
+| /3 width=2/
+| /3 width=1/
+| #L2 #T #U1 #U2 #V2 #l #_ #HU12 #_ #IHTU1 #IHUV2 #L1 #HL12
+  lapply (cpcs_lsubsn_trans … HL12 … HU12) -HU12 /3 width=3/
+]
+qed.

@@ -1,0 +1,48 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+notation "hvbox( ⦃ h , break L ⦄ ⊢ break term 46 T1 : * break [ l ] break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'NativeTypeStar $h $l $L $T1 $T2 }.
+
+notation "hvbox( ⦃ h , break L ⦄ ⊢ break term 46 T1 : break [ l ] break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'StratifiedNativeType $h $l $L $T1 $T2 }.
+
+include "basic_2/static/sh.ma".
+include "basic_2/equivalence/cpcs.ma".
+
+(* STRATIFIED NATIVE TYPE ASSIGNMENT ON TERMS *******************************)
+
+inductive snta (h:sh): nat → lenv → relation term ≝
+| snta_sort: ∀L,k. snta h 0 L (⋆k) (⋆(next h k))
+| snta_ldef: ∀L,K,V,W,U,i,l. ⇩[0, i] L ≡ K. ⓓV → snta h l K V W →
+             ⇧[0, i + 1] W ≡ U → snta h l L (#i) U
+| snta_ldec: ∀L,K,W,V,U,i,l. ⇩[0, i] L ≡ K. ⓛW → snta h l K W V →
+             ⇧[0, i + 1] W ≡ U → snta h (l+1) L (#i) U
+| snta_bind: ∀I,L,V,W,T,U,l1,l2. snta h l1 L V W → snta h l2 (L. ⓑ{I} V) T U →
+             snta h l2 L (ⓑ{I}V.T) (ⓑ{I}V.U)
+| snta_appl: ∀L,V,W1,W2,T,U,l1,l2. snta h (l1+1) L V W2 →
+             snta h l2 L (ⓛW1.T) (ⓛW2.U) →
+             snta h l2 L (ⓐV.ⓛW1.T) (ⓐV.ⓛW2.U)
+| snta_pure: ∀L,V,T,U,W,l. snta h (l+1) L T U → snta h l L (ⓐV.U) W →
+             snta h (l+1) L (ⓐV.T) (ⓐV.U)
+| snta_cast: ∀L,T,U,W,l1,l2. snta h l2 L T U → snta h l1 L U W →
+             snta h l2 L (ⓝU.T) U
+| snta_conv: ∀L,T,U1,U2,V2,l. snta h l L T U1 → L ⊢ U1 ⬌* U2 →
+             snta h (l-1) L U2 V2 → snta h l L T U2
+.
+
+interpretation "stratified native type assignment (term)"
+   'StratifiedNativeType h l L T U = (snta h l L T U).

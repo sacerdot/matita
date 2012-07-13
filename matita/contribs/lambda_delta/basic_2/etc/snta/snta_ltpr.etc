@@ -1,0 +1,278 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/dynamic/snta_ltpss.ma".
+include "basic_2/dynamic/snta_thin.ma".
+include "basic_2/dynamic/lsubsn_snta.ma".
+
+(* STRATIFIED NATIVE TYPE ASSIGNMENT ON TERMS *******************************)
+(*
+lemma snta_fwd_abst: ∀h,L,W1,W2,T,U,l2. ⦃h, L⦄ ⊢ ⓛW1.T :[l2] ⓛW2.U →
+                     ∃∃V1,V2,l1. ⦃h, L⦄ ⊢ W1 :[l1] V1 & ⦃h, L⦄ ⊢ W2 :[l1] V2 &
+                                 L ⊢ W1 ⬌* W2.
+#h #L #W1 #W2 #T #U #l2 #HTU
+elim (snta_fwd_correct … HTU) #X #H
+elim (snta_inv_bind1 … H) -H #W #T0 #l #HW2 #_ #_ -X
+elim (snta_inv_bind1 … HTU) -HTU #V1 #U0 #l0 #HWV1 #_ #H
+elim (cpcs_inv_abst … H Abst W1) -H
+#HW12 #_ -U0
+@(ex3_3_intro … HWV1 … HW12)
+[3: @(snta_conv … HTU0 HU0) 
+
+ /3 width=3/
+
+*)
+(*
+#h #L #V #T #U #l2 #HTU
+elim (snta_fwd_correct … HTU) #X #H
+elim (snta_inv_bind1 … H) -H #W #T0 #l1 #HVW #HUT0 #_ -X
+elim (snta_inv_bind1 … HTU) -HTU #W0 #U0 #l0 #_ #HTU0 #H -l0
+elim (cpcs_inv_abst … H Abst V) -H /3 width=3/
+qed-.
+*)
+(*
+lemma snta_fwd_appl1_sound_aux: ∀h,l0. (∀L1,L2,T1,T2,U,l.
+                                        l < l0 → ⦃h, L1⦄ ⊢ T1 :[l] U →
+                                        L1 ➡ L2 → L2 ⊢ T1 ➡* T2 → ⦃h, L2⦄ ⊢ T2 :[l] U
+                                       ) →
+                                ∀L,T,U,l2. ⦃h, L⦄ ⊢ T :[l2] U →
+                                ∀Z,Y,X1. T = ⓐZ.ⓛY.X1 → l0 = l2 →
+                                ∃l1. ⦃h, L⦄ ⊢ Z :[l1+1] Y.
+#h #l0 #IH #L #T #U #l2 #H elim H -L -T -U -l2
+[
+|
+|
+|
+| #L #V #W1 #W2 #T #U #l1 #l2 #HVW2 #HTU #_ #_ #Z #Y #X1 #H1 #H2 destruct -IH
+  elim (snta_fwd_abst … HTU) -X1 -U -l2 #Y0 #W0 #l0 #HY0 #H1 #HYW2
+  elim (snta_fwd_correct … HVW2) #W #H2
+  elim (snta_mono … H1 … H2) -H1 -H2 #H #_ destruct -W0 -W /4 width=6/
+| #L #V #T #U #W #l #HTU #HUW #Z #Y #X1 #X2 #H1 #H2 #H3 destruct
+  elim (snta_inv_abst_sn … HTU) -HTU #Y0 #l0 #HY0 #HX12
+|
+| #L #T #U1 #U2 #V2 #l #HTU1 #HU12 #HUV2 #Z #Y #X1 #X2 #H1 #H2 #H3 destruct
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+lemma snta_inv_appl_aux: ∀h,l0. (∀L1,L2,T1,T2,U,l.
+                                 l < l0 + 1 → ⦃h, L1⦄ ⊢ T1 :[l] U →
+                                 L1 ➡ L2 → L2 ⊢ T1 ➡* T2 → ⦃h, L2⦄ ⊢ T2 :[l] U
+                                ) →
+                         ∀L,T,U,l2. ⦃h, L⦄ ⊢ T :[l2] U →
+                         ∀Z,Y,X1,X2. T = ⓐZ.ⓛY.X1 → U = ⓐZ.ⓛY.X2 → l0 = l2 →
+                         ∃∃l1. ⦃h, L⦄ ⊢ Z :[l1+1] Y & ⦃h, L.ⓛY⦄ ⊢ X1 :[l2] X2.
+#h #l0 #IH #L #T #U #l2 * -L -T -U -l2
+[
+|
+|
+|
+| #L #V #W1 #W2 #T #U #l1 #l2 #HVW2 #HTU #Z #Y #X1 #X2 #H1 #H2 #H3 destruct -IH
+  elim (snta_inv_abst … HTU) -HTU /2 width=2/
+| #L #V #T #U #W #l #HTU #HUW #Z #Y #X1 #X2 #H1 #H2 #H3 destruct
+  elim (snta_inv_abst … HTU) -HTU #Y0 #l0 #HY0 #HX12
+|
+| #L #T #U1 #U2 #V2 #l #HTU1 #HU12 #HUV2 #Z #Y #X1 #X2 #H1 #H2 #H3 destruct
+  
+   /2 width=2/
+
+
+axiom pippo: ∀h,l0. (∀L1,L2,T1,T2,U,l.
+                l < l0 + 1 → ⦃h, L1⦄ ⊢ T1 :[l] U →
+                L1 ➡ L2 → L2 ⊢ T1 ➡* T2 → ⦃h, L2⦄ ⊢ T2 :[l] U
+             ) →
+             ∀L,T1,U1,l. ⦃h, L⦄ ⊢ T1 :[l] U1 →
+             ∀V2,W2,T2. L ⊢ T1 ➡* ⓐV2.ⓛW2.T2 → l0 = l →
+             ∃l0. ⦃h, L2⦄ ⊢ V2 :[l0+1] W2.
+(*
+#h #l #IH #L1 #T1 #U1 #l1 * -L1 -T1 -U1 -l1
+[
+|
+|
+|
+| #L1 #V1 #W1 #T1 #U1 #l1 #HVW1 #HTU1 #Y1 #X1 #H1 #L2 #Y2 #HL12 #HY12 #Z2 #X2 #HX12 #H2 destruct
+  elim (IH ??? Y2 … HVW1 HL12 ?) -HVW1 // [2: /3 width=1/ ] -HY12 #l21 #HY2W1 #H1l21 #H2l21
+  elim (IH … HTU1 HL12 HX12) -IH -HTU1 -HL12 -HX12 // #l22 #H #_ #H2l22
+  elim (snta_inv_bind1 … H) -H #Z #X #HZ2 #_ #H
+  elim (cpcs_inv_abst … H Abst W1) -H #H #_
+  lapply (transitive_le … (l21+l22) … H1l21 ?) -H1l21 // #Hl21
+  @(ex3_1_intro … Hl21) [2: /3 width=1/ ]
+  @(snta_conv … W1) /2 width=2/ (**) (* explicit constructors *)
+| #L1 #V1 #T1 #U1 #W1 #l1 #HTU1 #HUW1 #Y1 #X1 #H1 #L2 #Y2 #HL12 #HY12 #Z2 #X2 #HX12 #H2 destruct
+
+*)
+(* Properties on context-free parallel reduction for local environments *****)
+*)
+fact snta_ltpr_tpr_conf_aux: ∀h,l0. (∀L1,L2,T1,T2,U,l.
+                                l < l0 → ⦃h, L1⦄ ⊢ T1 :[l] U →
+                                L1 ➡ L2 → L2 ⊢ T1 ➡* T2 → ⦃h, L2⦄ ⊢ T2 :[l] U
+                             ) →
+                             ∀L1,T1,U,l. ⦃h, L1⦄ ⊢ T1 :[l] U → ∀L2. L1 ➡ L2 →
+                             ∀T2. T1 ➡ T2 → l0 = l → ⦃h, L2⦄ ⊢ T2 :[l] U.
+#h #l0 #IH #L1 #T1 #U #l #H elim H -L1 -T1 -U -l
+[ #L1 #k1 #L2 #_ #T2 #H #_ -l0
+  >(tpr_inv_atom1 … H) -H //
+| #L1 #K1 #V1 #W #U #i1 #l #HLK1 #_ #HWU #IHV1 #L2 #HL12 #T2 #H #Hl -IH
+  >(tpr_inv_atom1 … H) -T2
+  elim (ltpr_ldrop_conf … HLK1 … HL12) -HLK1 -HL12 #X #HLK2 #H
+  elim (ltpr_inv_pair1 … H) -H #K2 #V2 #HK12 #HV12 #H destruct /3 width=6/
+| #L1 #K1 #W1 #V1 #U1 #i1 #l #HLK1 #HWV1 #HWU1 #IHWV1 #L2 #HL12 #T2 #H #Hl -IH
+(*  
+  >(tpr_inv_atom1 … H) -T2
+  elim (ltpr_ldrop_conf … HLK1 … HL12) -HLK1 -HL12 #X #HLK2 #H
+  elim (ltpr_inv_pair1 … H) -H #K2 #W2 #HK12 #HW12 #H destruct
+  lapply (ldrop_fwd_ldrop2 … HLK2) #HLK
+  elim (lift_total V1 0 (i+1)) #W #HW
+  lapply (snta_lift h … HLK … HWU1 … HW) /2 width=1/ -HLK -HW
+  elim (lift_total W2 0 (i+1)) #U2 #HWU2
+  lapply (tpr_lift … HW12 … HWU1 … HWU2) -HWU1 #HU12
+  @(snta_conv … U2) /2 width=1/ /3 width=6/ (**) (* explicit constructor, /3 width=6/ is too slow *)
+*)
+| #I #L1 #V1 #W1 #T1 #U1 #l1 #l2 #_ #_ #IHVW1 #IHTU1 #L2 #HL12 #X #H #Hl -IH
+(*  
+  elim (tpr_inv_bind1 … H) -H *
+  [ #V2 #T #T2 #HV12 #HT1 #HT2 #H destruct
+    lapply (IHVW1 … HL12 … HV12) #HV2W1
+    lapply (IHVW1 L2 … V1 ?) // -IHVW1 #HWV1
+    lapply (IHTU1 (L2.ⓑ{I}V2) … HT1) -HT1 /2 width=1/ #HTU1
+    lapply (IHTU1 (L2.ⓑ{I}V1) ? T1 ?) -IHTU1 // /2 width=1/ -HL12 #H
+    lapply (tps_lsubs_trans … HT2 (L2.ⓑ{I}V2) ?) -HT2 /2 width=1/ #HT2
+    lapply (snta_tps_conf … HTU1 … HT2) -T #HT2U1
+    elim (snta_fwd_correct … H) -H #U2 #HU12
+    @(snta_conv … (ⓑ{I}V2.U1)) /2 width=2/ /3 width=1/ (**) (* explicit constructor, /4 width=6/ is too slow *)
+  | #T #HT1 #HTX #H destruct
+    lapply (IHVW1 … HL12 V1 ?) -IHVW1 // #HVW1
+    lapply (IHTU1 (L2.ⓓV1) … HT1) -T1 /2 width=1/ -L1 #H
+    elim (snta_fwd_correct … H) #T1 #HUT1
+    elim (snta_ldrop_conf … H L2 0 1 ? ?) -H // /2 width=1/ #T0 #U0 #HTU0 #H #HU10
+    lapply (delift_inv_lift1_eq … H L2 … HTX) -H -HTX /2 width=1/ #H destruct
+    @(snta_conv … HTU0) /2 width=2/
+  ]
+*)
+| #L1 #V1 #W11 #W2 #T1 #U1 #l1 #l2 #_ #_ #IHVW1 #IHTU1 #L2 #HL12 #X #H #Hl -IH
+(*
+  elim (tpr_inv_appl1 … H) -H *
+  [ #V2 #Y #HV12 #HY #H destruct
+    elim (tpr_inv_abst1 … HY) -HY #W2 #T2 #HW12 #HT12 #H destruct
+    lapply (IHTU1 L2 ? (ⓛW1.T1) ?) // #H
+    elim (snta_fwd_correct … H) -H #X #H
+    elim (snta_inv_bind1 … H) -H #W #U #HW #HU #_
+    @(snta_conv … (ⓐV2.ⓛW1.U1)) /4 width=2/ (**) (* explicit constructor, /5 width=5/ is too slow *)
+  | #V2 #W2 #T0 #T2 #HV12 #HT02 #H1 #H2 destruct
+    lapply (IHVW1 … HL12 … HV12) #HVW2
+    lapply (IHVW1 … HL12 V1 ?) -IHVW1 // #HV1W2
+    lapply (IHTU1 … HL12 (ⓛW2.T2) ?) -IHTU1 -HL12 /2 width=1/ -HT02 #H1
+    elim (snta_fwd_correct … H1) #T #H2
+    elim (snta_inv_bind1 … H1) -H1 #W #U2 #HW2 #HTU2 #H
+    elim (cpcs_inv_abst … H Abst W2) -H #_ #HU21
+    elim (snta_inv_bind1 … H2) -H2 #W0 #U0 #_ #H #_ -T -W0
+    lapply (lsubsn_snta_trans … HTU2 (L2.ⓓV2) ?) -HTU2 /2 width=1/ #HTU2
+    @(snta_conv … (ⓓV2.U2)) /2 width=2/ /3 width=2/ (**) (* explicit constructor, /4 width=5/ is too slow *)
+  | #V0 #V2 #W0 #W2 #T0 #T2 #_ #_ #_ #_ #H destruct
+  ]
+*)
+| #L1 #V1 #T1 #U1 #W1 #l #_ #HUW1 #IHTU1 #_ #L2 #HL12 #X #H #Hl
+  elim (tpr_inv_appl1 … H) -H *
+  [ #V2 #T2 #HV12 #HT12 #H destruct
+    lapply (cpr_tpr … HV12 L2) #HV
+    elim (snta_fwd_correct h L2 (ⓐV1.T1) (ⓐV1.U1) (l+1) ?) [2: /3 width=6/ ] #U
+    @(snta_conv … (ⓐV2.U1)) /2 width=1/ -HV12 /4 width=8 by snta_pure, cprs_flat_dx/ (**) (* explicit constructor, /4 width=8/ is too slow without trace *)
+  | #V2 #W0 #T0 #T2 #HV12 #HT02 #H1 #H2 destruct
+    lapply (IHTU1 … HL12 (ⓛW0.T2) ? ?) -IHTU1 // /2 width=1/ -T0 #H1
+    lapply (IH … (ⓐV2.U1) … HUW1 HL12 ?) // /3 width=1/ #H2
+    lapply (snta_pure … H1 H2) -H2 #H
+    elim (snta_inv_bind1 … H1) -H1 #V0 #U2 #l1 #HWV0 #HTU2 #HU21
+    @(snta_conv … (ⓓV2.U2)) (**) (* explicit constructor *)
+    [2:
+(*
+        @snta_bind /3 width=2/ /3 width=6/ (**) (* /4 width=6/ is a bit slow *)
+*)
+    |3: @(cpcs_cpr_conf … (ⓐV1.ⓛW0.U2)) /2 width=1/
+    |4: /2 width=5/
+    | skip
+    ]
+(*
+    elim (snta_fwd_pure1 … H) -H #T1 #W2 #HVW2 #HUT1 #HTW1
+
+    elim (cpcs_inv_abst1 … HU21) #W3 #U3 #HU13 #H
+    elim (cprs_inv_abst … H Abst W0) -H #HW03 #_
+    elim (pippo … IH … HUW1 ? V2 W3 U3 HL12 ? ?) -IH -HUW1 -HL12 // /3 width=1/ -HU13 #l2 #HV2W3
+    lapply (snta_conv h L2 V2 W3 W0 V0 (l1+1) ? ? ?) /2 width=1/ -HV2W3 -HW03 -HWV0 #HV2W0    
+*)    
+(* SEGMENT 1.5
+    lapply (IH … HV1 … HL12 … HV12) -HV1 -HV12 /width=5/ #HB
+    lapply (IH … HB0  … HL12 W2 ?) -HB0 /width=5/ #HB0
+    lapply (IH … HA0 … (L2.ⓛW2) … HT02) -IH -HA0 -HT02 /width=5/ -T0 /2 width=1/ -L1 -V1 /4 width=7/
+    
+axiom pippo: ⦃h, L⦄ ⊢ ⓐV.X : Y →
+             ∃∃W,T. L ⊢ X ➡* ⓛW.T & ⦃h, L⦄ ⊢ ⓐV : W.
+
+*)
+(* SEGMENT 2
+| #L1 #T1 #U1 #W1 #_ #_ #IHTU1 #IHUW1 #L2 #d #e #HL12 #X #H
+  elim (tpss_inv_flat1 … H) -H #U2 #T2 #HU12 #HT12 #H destruct
+  lapply (cpr_tpss … HU12) /4 width=4/
+| #L1 #T1 #U11 #U12 #U #_ #HU112 #_ #IHTU11 #IHU12 #L2 #d #e #HL12 #T2 #HT12
+  @(snta_conv … U11) /2 width=5/ (**) (* explicot constructor, /3 width=7/ is too slow *)
+]
+qed.
+*)
+
+(* SEGMENT 3
+fact snta_ltpr_tpr_conf_aux: ∀h,L,T,L1,T1,U. ⦃h, L1⦄ ⊢ T1 : U → L = L1 → T = T1 →
+                            ∀L2. L1 ➡ L2 → ∀T2. T1 ➡ T2 → ⦃h, L2⦄ ⊢ T2 : U.
+  
+  
+  | #V0 #V2 #W0 #W2 #T0 #T2 #HV10 #HW02 #HT02 #HV02 #H1 #H2 destruct
+    elim (snta_inv_abbr … HT1) -HT1 #B0 #HW0 #HT0
+    lapply (IH … HW0  … HL12 … HW02) -HW0 /width=5/ #HW2
+    lapply (IH … HV1 … HL12 … HV10) -HV1 -HV10 /width=5/ #HV0
+    lapply (IH … HT0 … (L2.ⓓW2) … HT02) -IH -HT0 -HT02 /width=5/ -V1 -T0 /2 width=1/ -L1 -W0 #HT2
+    @(snta_abbr … HW2) -HW2
+    @(snta_appl … HT2) -HT2 /3 width=7/ (**) (* explict constructors, /5 width=7/ is too slow *)
+  ]
+| #L1 #V1 #T1 #A #HV1 #HT1 #H1 #H2 #L2 #HL12 #X #H destruct
+  elim (tpr_inv_cast1 … H) -H
+  [ * #V2 #T2 #HV12 #HT12 #H destruct
+    lapply (IH … HV1 … HL12 … HV12) -HV1 -HV12 /width=5/ #HV2
+    lapply (IH … HT1 … HL12 … HT12) -IH -HT1 -HL12 -HT12 /width=5/ -L1 -V1 -T1 /2 width=1/
+  | -HV1 #HT1X
+     lapply (IH … HT1 … HL12 … HT1X) -IH -HT1 -HL12 -HT1X /width=5/
+  ]
+]
+qed.
+
+lemma snta_ltpr_tpr_conf: ∀h,L1,T1,U. ⦃h, L1⦄ ⊢ T1 : U → ∀L2. L1 ➡ L2 →
+                         ∀T2. T1 ➡ T2 → ⦃h, L2⦄ ⊢ T2 : U.
+
+/2 width=9/ qed.
+
+axiom snta_ltpr_conf: ∀L1,T,A. L1 ⊢ T : A → ∀L2. L1 ➡ L2 → L2 ⊢ T : A.
+/2 width=5/ qed.
+
+axiom snta_tpr_conf: ∀L,T1,A. L ⊢ T1 : A → ∀T2. T1 ➡ T2 → L ⊢ T2 : A.
+/2 width=5/ qed.
+*)
+*)*)

@@ -99,3 +99,10 @@ lemma delift_inv_refl_O2: ∀L,T1,T2,d. L ⊢ T1 ▼*[d, 0] ≡ T2 → T1 = T2.
 >(tpss_inv_refl_O2 … HT1) -HT1 #HT2
 >(lift_inv_refl_O2 … HT2) -HT2 //
 qed-.
+
+(* Basic forward lemmas *****************************************************)
+
+lemma delift_fwd_tw: ∀L,T1,T2,d,e. L ⊢ T1 ▼*[d, e] ≡ T2 → #[T1] ≤ #[T2].
+#L #T1 #T2 #d #e * #T #HT1 #HT2
+>(tw_lift … HT2) -T2 /2 width=4 by tpss_fwd_tw /
+qed-.

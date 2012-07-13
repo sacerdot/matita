@@ -184,13 +184,6 @@ pr3/pr1 pr3_pr1
 pr3/props pr3_eta
 sn3/props sns3_lifts
 sty1/cnt sty1_cnt
-sty1/props sty1_trans
-sty1/props sty1_bind
-sty1/props sty1_appl
-sty1/props sty1_lift
-sty1/props sty1_correct
-sty1/props sty1_abbr
-sty1/props sty1_cast2
 subst/fwd subst_sort
 subst/fwd subst_lref_lt
 subst/fwd subst_lref_eq

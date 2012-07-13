@@ -40,8 +40,8 @@ qed-.
 
 (* Basic properties *********************************************************)
 
-lemma tpss_strap: ∀L,T1,T,T2,d,e.
-                  L ⊢ T1 ▶ [d, e] T → L ⊢ T ▶* [d, e] T2 → L ⊢ T1 ▶* [d, e] T2. 
+lemma tpss_strap2: ∀L,T1,T,T2,d,e.
+                   L ⊢ T1 ▶ [d, e] T → L ⊢ T ▶* [d, e] T2 → L ⊢ T1 ▶* [d, e] T2. 
 /2 width=3/ qed.
 
 lemma tpss_lsubs_trans: ∀L1,T1,T2,d,e. L1 ⊢ T1 ▶* [d, e] T2 →

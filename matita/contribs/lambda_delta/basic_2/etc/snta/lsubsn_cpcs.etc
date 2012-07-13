@@ -12,25 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/arith.ma".
+include "basic_2/equivalence/cpcs_cpcs.ma".
+include "basic_2/dynamic/lsubsn.ma".
 
-(* SORT HIERARCHY ***********************************************************)
+(* LOCAL ENVIRONMENT REFINEMENT FOR STRATIFIED NATIVE TYPE ASSIGNMENT *******)
 
-(* sort hierarchy specification *)
-record sh: Type[0] ≝ {
-   next   : nat → nat;     (* next sort in the hierarchy *)
-   next_lt: ∀k. k < next k (* strict monotonicity condition *)
-}.
+(* Properties on context-sensitive parallel equivalence for terms ***********)
 
-(* Basic properties *********************************************************)
+lemma cpr_lsubsn_trans: ∀h,L1,L2. h ⊢ L1 :⊑[] L2 →
+                        ∀T1,T2. L2 ⊢ T1 ➡ T2 → L1 ⊢ T1 ➡ T2.
+/3 width=5 by lsubsn_fwd_lsubs2, cpr_lsubs_trans/ qed-.
 
-lemma nexts_le: ∀h,k,l. k ≤ (next h)^l k.
-#h #k #l elim l -l // normalize #l #IHl
-lapply (next_lt h ((next h)^l k)) #H
-lapply (le_to_lt_to_lt … IHl H) -IHl -H /2 width=2/
-qed.
+lemma cprs_lsubsn_trans: ∀h,L1,L2. h ⊢ L1 :⊑[] L2 →
+                         ∀T1,T2. L2 ⊢ T1 ➡* T2 → L1 ⊢ T1 ➡* T2.
+/3 width=5 by lsubsn_fwd_lsubs2, cprs_lsubs_trans/ qed-.
 
-axiom nexts_dec: ∀h,k1,k2. Decidable (∃l. (next h)^l k1 = k2).
-
-axiom nexts_inj: ∀h,k,l1,l2. (next h)^l1 k = (next h)^l2 k → l1 = l2.
-
+lemma cpcs_lsubsn_trans: ∀h,L1,L2. h ⊢ L1 :⊑[] L2 →
+                         ∀T1,T2. L2 ⊢ T1 ⬌* T2 → L1 ⊢ T1 ⬌* T2.
+/3 width=5 by lsubsn_fwd_lsubs2, cpcs_lsubs_trans/ qed-.

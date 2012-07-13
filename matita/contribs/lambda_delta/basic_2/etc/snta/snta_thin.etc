@@ -1,0 +1,116 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/unfold/thin_ldrop.ma".
+include "basic_2/equivalence/cpcs_delift.ma".
+include "basic_2/dynamic/snta_lift.ma".
+
+(* STRATIFIED NATIVE TYPE ASSIGNMENT ON TERMS *******************************)
+
+(* Properties on basic local environment thinning ***************************)
+
+(* Note: this is known as the substitution lemma *)
+lemma snta_thin_conf: ∀h,L1,T1,U1,l. ⦃h, L1⦄ ⊢ T1 :[l] U1 →
+                      ∀L2,d,e. ≽ [d, e] L1 → L1 ▼*[d, e] ≡ L2 →
+                      ∃∃T2,U2. ⦃h, L2⦄ ⊢ T2 :[l] U2 &
+                               L1 ⊢ T1 ▼*[d, e] ≡ T2 & L1 ⊢ U1 ▼*[d, e] ≡ U2.
+#h #L1 #T1 #U1 #l #H elim H -L1 -T1 -U1 -l
+[ /2 width=5/
+| #L1 #K1 #V1 #W1 #U1 #i #l #HLK1 #HVW1 #HWU1 #IHVW1 #L2 #d #e #HL1 #HL12
+  elim (lt_or_ge i d) #Hdi [ -HVW1 ]
+  [ lapply (sfr_ldrop_trans_ge … HLK1 … HL1 ?) -HL1 /2 width=2/ #H
+    lapply (sfr_inv_skip … H ?) -H /2 width=1/ #HK1
+    elim (thin_ldrop_conf_le … HL12 … HLK1 ?) -HL12 /2 width=2/ #X #H #HLK2
+    elim (thin_inv_delift1 … H ?) -H /2 width=1/ #K2 #V2 #HK12 #HV12 #H destruct
+    elim (IHVW1 … HK1 HK12) -IHVW1 -HK1 -HK12 #X2 #W2 #HVW2 #H #HW12
+    lapply (delift_mono … H … HV12) -H -HV12 #H destruct
+    elim (lift_total W2 0 (i+1)) #U2 #HWU2
+    lapply (ldrop_fwd_ldrop2 … HLK1) -V1 #HLK1
+    lapply (delift_lift_ge … HW12 … HLK1 HWU1 … HWU2) -HW12 -HLK1 -HWU1 //
+    >minus_plus <plus_minus_m_m // /3 width=6/
+  | elim (lt_or_ge i (d+e)) #Hide [ -HVW1 | -Hdi -IHVW1 -HL1 ]
+    [ lapply (sfr_ldrop_trans_be_up … HLK1 … HL1 ? ?) -HL1 // /2 width=2/ <minus_n_O #H
+      elim (sfr_inv_bind … H ?) -H /2 width=1/ #HK1 #_
+      elim (thin_ldrop_conf_be … HL12 … HLK1 ? ?) -HL12 /2 width=2/ #K2 #H #HLK2
+      lapply (thin_inv_thin1 … H ?) -H /2 width=1/ #HK12
+      elim (IHVW1 … HK1 HK12) -IHVW1 -HK1 -HK12 #V2 #W2 #HVW2 #HV12 #HW12
+      elim (lift_total V2 0 d) #T2 #HVT2
+      elim (lift_total W2 0 d) #U2 #HWU2
+      elim (lift_total W2 0 (i+1)) #U #HW2U
+      lapply (snta_lift … HVW2 … HLK2 … HVT2 … HWU2) -HVW2 -HLK2 #HTU2
+      lapply (ldrop_fwd_ldrop2 … HLK1) #HLK0
+      lapply (delift_lift_ge … HW12 … HLK0 HWU1 … HW2U) -HW12 -HLK0 -HWU1 // >minus_plus #HU1
+      lapply (lift_conf_be … HWU2 … HW2U ?) -W2 /2 width=1/ #HU2
+      lapply (delift_lift_div_be … HU1 … HU2 ? ?) -U // /2 width=1/ /3 width=8/
+    | lapply (transitive_le … (i+1) Hide ?) /2 width=1/ #Hdei
+      lapply (thin_ldrop_conf_ge … HL12 … HLK1 ?) -HL12 -HLK1 // #HL2K1
+      elim (lift_split … HWU1 d (i+1-e) ? ? ?) -HWU1 // /2 width=1/ #W
+      <plus_minus in ⊢ (??%??→?); /2 width=2/ #HW1
+      <minus_minus // /2 width=2/ -Hdei >commutative_plus <minus_n_n /3 width=6/
+    ]
+  ]
+| #L1 #K1 #W1 #V1 #U1 #i #l #HLK1 #HWV1 #HWU1 #IHWV1 #L2 #d #e #HL1 #HL12
+  elim (lt_or_ge i d) #Hdi [ -HWV1 | -IHWV1 ]
+  [ lapply (sfr_ldrop_trans_ge … HLK1 … HL1 ?) -HL1 /2 width=2/ #H
+    lapply (sfr_inv_skip … H ?) -H /2 width=1/ #HK1
+    elim (thin_ldrop_conf_le … HL12 … HLK1 ?) -HL12 /2 width=2/ #X #H #HLK2
+    elim (thin_inv_delift1 … H ?) -H /2 width=1/ #K2 #W2 #HK12 #HW12 #H destruct
+    elim (IHWV1 … HK1 HK12) -IHWV1 -HK1 -HK12 #X2 #V2 #HWV2 #H #_
+    lapply (delift_mono … H … HW12) -H #H destruct
+    elim (lift_total W2 0 (i+1)) #U2 #HWU2
+    lapply (ldrop_fwd_ldrop2 … HLK1) -HLK1 #HLK1
+    lapply (delift_lift_ge … HW12 … HLK1 HWU1 … HWU2) -HW12 -HLK1 -HWU1 //
+    >minus_plus <plus_minus_m_m // /3 width=6/
+  | elim (lt_or_ge i (d+e)) #Hide [ -HWV1 -HWU1 -HL12 | -Hdi -HL1 ]
+    [ lapply (sfr_inv_ldrop … HLK1 … HL1 ? ?) -HLK1 -HL1 // -Hdi -Hide #H destruct 
+    | lapply (transitive_le … (i+1) Hide ?) /2 width=1/ #Hdei
+      lapply (thin_ldrop_conf_ge … HL12 … HLK1 ?) -HL12 -HLK1 // #HL2K1
+      elim (lift_split … HWU1 d (i+1-e) ? ? ?) -HWU1 // /2 width=1/ #W
+      <plus_minus in ⊢ (??%??→?); /2 width=2/ #HW1
+      <minus_minus // /2 width=2/ -Hdei >commutative_plus <minus_n_n /3 width=6/
+    ]
+  ]
+| #I #L1 #V1 #W1 #T1 #U1 #l1 #l2 #_ #_ #IHVW1 #IHTU1 #L2 #d #e #HL1 #HL12
+  elim (IHVW1 … HL1 HL12) -IHVW1 #V2 #W2 #HVW2 #HV12 #_
+  elim (IHTU1 (L2.ⓑ{I}V2) (d+1) e ? ?) -IHTU1 /2 width=1/ -HL1 -HL12 #T2 #U2 #HTU2 #HT12 #HU12
+  lapply (delift_lsubs_trans … HT12 (L1.ⓑ{I}V2) ?) -HT12 /2 width=1/
+  lapply (delift_lsubs_trans … HU12 (L1.ⓑ{I}V2) ?) -HU12 /2 width=1/ /3 width=7/
+| #L1 #V1 #W11 #W12 #T1 #U1 #l1 #l2 #_ #_ #IHVW1 #IHTU1 #L2 #d #e #HL1 #HL12
+  elim (IHVW1 … HL1 HL12) -IHVW1 #V2 #W22 #HVW2 #HV12 #HW122
+  elim (IHTU1 … HL1 HL12) -IHTU1 -HL1 -HL12 #X2 #Y2 #HXY2 #HX2 #HY2
+  elim (delift_inv_bind1 … HX2) -HX2 #W21 #T2 #W121 #HT12 #H destruct
+  elim (delift_inv_bind1 … HY2) -HY2 #X #U2 #HX #HU12 #H destruct
+  lapply (delift_mono … HX … HW122) -HX #H destruct
+  @(ex3_2_intro … (ⓐV2.ⓛW21.T2) (ⓐV2.ⓛW22.U2)) [ /2 width=2/ | 2,3: /3 width=1/ ] (**) (* explict constructor, /4 depth=?/ is too slow *)
+| #L1 #V1 #T1 #U1 #W1 #l #_ #_ #IHTU1 #IHUW1 #L2 #d #e #HL1 #HL12
+  elim (IHTU1 … HL1 HL12) -IHTU1 #T2 #U2 #HTU2 #HT12 #HU12
+  elim (IHUW1 … HL1 HL12) -IHUW1 -HL1 -HL12 #X2 #W2 #HXW2 #H #HW12
+  elim (delift_inv_flat1 … H) -H #V2 #Y2 #HV12 #HY2 #H destruct
+  lapply (delift_mono … HY2 … HU12) -HY2 #H destruct /3 width=7/
+| #L1 #T1 #U1 #W1 #l1 #l2 #_ #_ #IHTU1 #IHUW1 #L2 #d #e #HL1 #HL12
+  elim (IHTU1 … HL1 HL12) -IHTU1 #T2 #U2 #HTU2 #HT12 #HU12
+  elim (IHUW1 … HL1 HL12) -IHUW1 -HL1 -HL12 #Y2 #W2 #HUW2 #HY2 #HW12
+  lapply (delift_mono … HY2 … HU12) -HY2 #H destruct /3 width=5/
+| #L1 #T1 #U11 #U12 #V1 #l #_ #HU112 #_ #IHT1 #IHU12 #L2 #d #e #HL1 #HL12
+  elim (IHT1 … HL1 HL12) -IHT1 #T2 #U21 #HT2 #HT12 #HU121
+  elim (IHU12 … HL1 HL12) -IHU12 -HL1 #U22 #V2 #HU22 #HU122 #_
+  lapply (thin_cpcs_delift_mono … HU112 … HL12 … HU121 … HU122) -HU112 -HL12 -HU121 /3 width=5/
+]
+qed.
+
+lemma snta_ldrop_conf: ∀h,L1,T1,U1,l. ⦃h, L1⦄ ⊢ T1 :[l] U1 →
+                       ∀L2,d,e. ≽ [d, e] L1 → ⇩[d, e] L1 ≡ L2 →
+                       ∃∃T2,U2. ⦃h, L2⦄ ⊢ T2 :[l] U2 &
+                                L1 ⊢ T1 ▼*[d, e] ≡ T2 & L1 ⊢ U1 ▼*[d, e] ≡ U2.
+/3 width=1/ qed.

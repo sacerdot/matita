@@ -78,7 +78,7 @@ elim (tpr_inv_abbr1 … H1) -H1 *
   lapply (tps_weak_all … HT0) -HT0 #HT0
   lapply (tpss_lsubs_trans … HT02 (L. ⓓV) ?) -HT02 /2 width=1/ #HT02
   lapply (tpss_weak_all … HT02) -HT02 #HT02
-  lapply (tpss_strap … HT0 HT02) -T0 /4 width=7/
+  lapply (tpss_strap2 … HT0 HT02) -T0 /4 width=7/
 | #T2 #HT12 #HXT2
   elim (lift_total Y 0 1) #Z #HYZ
   lapply (tpss_lift_ge … H2 (L.ⓓV1) … HXT2 … HYZ) -X // /2 width=1/ #H

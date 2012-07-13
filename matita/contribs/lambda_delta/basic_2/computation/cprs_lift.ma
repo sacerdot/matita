@@ -47,6 +47,12 @@ lemma cprs_inv_abst1: ∀I,W,L,V1,T1,U2. L ⊢ ⓛV1. T1 ➡* U2 →
 elim (cpr_inv_abst1 … HU2 I W) -HU2 #V2 #T2 #HV2 #HT2 #H destruct  /3 width=5/
 qed-.
 
+lemma cprs_inv_abst: ∀L,V1,V2,T1,T2. L ⊢ ⓛV1. T1 ➡* ⓛV2. T2 → ∀I,W.
+                     L ⊢ V1 ➡* V2 ∧ L. ⓑ{I} W ⊢ T1 ➡* T2.
+#L #V1 #V2 #T1 #T2 #H #I #W
+elim (cprs_inv_abst1 I W … H) -H #V #T #HV1 #HT1 #H destruct /2 width=1/
+qed-.
+
 (* Relocation properties ****************************************************)
 
 (* Basic_1: was: pr3_lift *)

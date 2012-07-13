@@ -39,3 +39,8 @@ lemma simple_inv_pair: ∀I,V,T.  𝐒⦃②{I}V.T⦄ → ∃J. I = Flat2 J.
 * /2 width=2/ #I #V #T #H
 elim (simple_inv_bind … H)
 qed-.
+
+(*
+lemma mt: ∀R1,R2:Prop. (R1 → R2) → (R2 → ⊥) → R1 → ⊥.
+/3 width=1/ qed-.
+*)

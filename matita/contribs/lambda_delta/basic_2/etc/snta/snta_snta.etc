@@ -1,0 +1,65 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/dynamic/snta_lift.ma".
+
+(* STRATIFIED NATIVE TYPE ASSIGNMENT ON TERMS *******************************)
+
+(* Main properties **********************************************************)
+
+theorem snta_mono: ∀h,L,T,U1,l1. ⦃h, L⦄ ⊢ T :[l1] U1 →
+                   ∀U2,l2. ⦃h, L⦄ ⊢ T :[l2] U2 → l1 = l2 ∧ L ⊢ U1 ⬌* U2.
+#h #L #T #U1 #l1 #H elim H -L -T -U1 -l1
+[ #L #k #X #l2 #H
+  lapply (snta_inv_sort1 … H) -H * /2 width=1/
+| #L #K #V #W11 #W12 #i #l1 #HLK #_ #HW112 #IHVW11 #X #l2 #H
+  elim (snta_inv_lref1 … H) -H * #K0 #V0 #W21 #W22 #HLK0 #HVW21 #HW212 #HX
+  lapply (ldrop_mono … HLK0 … HLK) -HLK0 #H destruct
+  lapply (ldrop_fwd_ldrop2 … HLK) -HLK #HLK
+  elim (IHVW11 … HVW21) -IHVW11 -HVW21 #Hl12 #HW121
+  lapply (cpcs_lift … HLK … HW112 … HW212 ?) // -K -W11 -W21 /3 width=3/
+| #L #K #W #V1 #V #i #l1 #HLK #_ #HWV #IHWV1 #X #l2 #H
+  elim (snta_inv_lref1 … H) -H * #K0 #W0 #V2 #V0 #HLK0 #HW0V2 #HWV0 [2: #HL2 ] #HX
+  lapply (ldrop_mono … HLK0 … HLK) -HLK0 -HLK #H destruct
+  lapply (lift_mono … HWV0 … HWV) -HWV0 -HWV #H destruct
+  elim (IHWV1 … HW0V2) -IHWV1 -HW0V2 /3 width=1/
+| #I #L #V #W1 #T #U1 #l10 #l1 #_ #_ #_ #IHTU1 #X #l2 #H
+  elim (snta_inv_bind1 … H) -H #W2 #U2 #l20 #_ #HTU2 #H
+  elim (IHTU1 … HTU2) -IHTU1 -HTU2 #Hl12 #HU12
+  lapply (cpcs_trans … (ⓑ{I}V.U1) … H) -H /2 width=1/
+| #L #V #W #W1 #T #U1 #l10 #l1 #_ #_ #_ #IHTU1 #X #l2 #H
+  elim (snta_fwd_pure1 … H) -H #U2 #W2 #l20 #_ #HTU2 #H
+  elim (IHTU1 … HTU2) -IHTU1 -HTU2 #Hl12 #HU12
+  lapply (cpcs_trans … (ⓐV.ⓛW1.U1) … H) -H /2 width=1/
+| #L #V #T #U1 #W1 #l1 #_ #_ #IHTU1 #_ #X #l2 #H
+  elim (snta_fwd_pure1 … H) -H #U2 #W2 #l20 #_ #HTU2 #H
+  elim (IHTU1 … HTU2) -IHTU1 -HTU2 #Hl12 #HU12
+  lapply (cpcs_trans … (ⓐV.U1) … H) -H /2 width=1/
+| #L #T #U1 #W1 #l10 #l1 #_ #_ #IHTU1 #_ #X #l2 #H
+  elim (snta_inv_cast1 … H) -H #HTU1
+  elim (IHTU1 … HTU1) -IHTU1 -HTU1 /2 width=1/
+| #L #T #U11 #U12 #V12 #l1 #_ #HU112 #_ #IHTU11 #_ #U2 #l2 #HTU2
+  elim (IHTU11 … HTU2) -IHTU11 -HTU2 #Hl12 #H
+  lapply (cpcs_canc_sn … HU112 … H) -U11 /2 width=1/
+]
+qed-.
+
+(* Advanced properties ******************************************************)
+
+lemma snta_cast_alt: ∀h,L,T,W,U,l. ⦃h, L⦄ ⊢ T :[l] W → ⦃h, L⦄ ⊢ T :[l] U →
+             ⦃h, L⦄ ⊢ ⓝW.T :[l] U.
+#h #L #T #W #U #l #HTW #HTU
+elim (snta_mono … HTW … HTU) #_ #HWU
+elim (snta_fwd_correct … HTU) -HTU /3 width=3/
+qed.

@@ -81,7 +81,7 @@ lemma thin_delift_tps_conf_le_up: ∀L,U1,U2,d,e. L ⊢ U1 ▶ [d, e] U2 →
                                   d ≤ dd → dd ≤ d + e → d + e ≤ dd + ee →
                                   ∃∃T2. K ⊢ T1 ▶* [d, dd - d] T2 &
                                         L ⊢ U2 ▼*[dd, ee] ≡ T2.
-/3 width=6 by thin_delift_tpss_conf_le_up, tpss_strap/ qed. (**) (* too slow without trace *)
+/3 width=6 by thin_delift_tpss_conf_le_up, tpss_strap2/ qed. (**) (* too slow without trace *)
 
 lemma thin_delift_tpss_conf_be: ∀L,U1,U2,d,e. L ⊢ U1 ▶* [d, e] U2 →
                                 ∀T1,dd,ee. L ⊢ U1 ▼*[dd, ee] ≡ T1 →

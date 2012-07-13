@@ -10,19 +10,28 @@ I,J    : item
 K,L    : local environment
 M,N    : reserved: future use
 O      : 
-P,Q    : reserved: future use
+P,Q    : reserved: future use (lambda_delta 4)
 R      : generic predicate (relation)
 S      : RTM stack
 T,U,V,W: term
 X,Y,Z  : reserved: transient objet denoted by a capital letter
 
+a,b    : reserved: future use (lambda_delta 4)
+c      : reserved: future use (lambda_delta 3)
 d      : relocation depth
 e      : relocation height
+f      :
+g      : sort degree parameter
 h      : sort hierarchy parameter
 i,j    : local reference position index (de Bruijn's)
 k      : sort index
+l      : term degree
+m,n    : reserved: future use
+o      :
 p,q    : global reference position
+r,s    :
 t,u    : local reference position level (de Bruijn's)
+v,w    :
 x,y,z  : reserved: transient objet denoted by a small letter
 
 NAMING CONVENTIONS FOR CONSTRUCTORS

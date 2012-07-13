@@ -19,6 +19,9 @@ include "ground_2/star.ma".
 
 (* Equations ****************************************************************)
 
+lemma plus_n_2: ∀n. n + 2 = n + 1 + 1.
+// qed.
+
 lemma le_plus_minus: ∀m,n,p. p ≤ n → m + n - p = m + (n - p).
 /2 by plus_minus/ qed.
 
@@ -66,11 +69,21 @@ lemma false_lt_to_le: ∀x,y. (x < y → ⊥) → y ≤ x.
 #Hxy elim (H Hxy)
 qed-.
 
-(*
-lemma pippo: ∀x,y,z. x < z → y < z - x → x + y < z.
-/3 width=2/
+(* iterators ****************************************************************)
 
-lemma le_or_ge: ∀m,n. m ≤ n ∨ n ≤ m.
-#m #n elim (lt_or_ge m n) /2 width=1/ /3 width=2/
-qed-.
-*)
+(* Note: see also: lib/arithemetcs/bigops.ma *)
+let rec iter (n:nat) (B:Type[0]) (op: B → B) (nil: B) ≝
+  match n with
+   [ O   ⇒ nil
+   | S k ⇒ op (iter k B op nil)
+   ].
+
+interpretation "iterated function" 'exp op n = (iter n ? op).
+
+lemma iter_SO: ∀B:Type[0]. ∀f:B→B. ∀b,l. f^(l+1) b = f (f^l b).
+#B #f #b #l >commutative_plus //
+qed.
+
+lemma iter_n_Sm: ∀B:Type[0]. ∀f:B→B. ∀b,l. f^l (f b) = f (f^l b).
+#B #f #b #l elim l -l normalize //
+qed.

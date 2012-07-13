@@ -222,15 +222,15 @@ notation "hvbox( T1 ÷ ⊑ break term 46 T2 )"
    non associative with precedence 45
    for @{ 'CrSubEqB $T1 $T2 }.
 
-notation "hvbox( ⦃ h , break L ⦄ ⊢ break term 46 T1 • break term 46 T2 )"
+notation "hvbox( ⦃ h , break L ⦄ ⊢ break term 46 T1 • break [ g , break l ] break term 46 T2 )"
    non associative with precedence 45
-   for @{ 'StaticType $h $L $T1 $T2 }.
+   for @{ 'StaticType $h $g $l $L $T1 $T2 }.
 
 (* Unwind *******************************************************************)
 
-notation "hvbox( ⦃ h , break L ⦄ ⊢ break term 46 T1 •* break term 46 T2 )"
+notation "hvbox( ⦃ h , break L ⦄ ⊢ break term 46 T1 •* break [ g ] break term 46 T2 )"
    non associative with precedence 45
-   for @{ 'StaticTypeStar $h $L $T1 $T2 }.
+   for @{ 'StaticTypeStar $h $g $L $T1 $T2 }.
 
 (* Reducibility *************************************************************)
 
@@ -294,6 +294,10 @@ notation "hvbox( L1 ⊢ ➡ break term 46 L2 )"
    non associative with precedence 45
    for @{ 'CPRed $L1 $L2 }.
 
+notation "hvbox( ⦃ h , break L ⦄ ⊢ break term 46 T1 ➸ break [ g ] break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'XRed $h $g $L $T1 $T2 }.
+
 (* Computation **************************************************************)
 
 notation "hvbox( T1 ➡* break term 46 T2 )"
@@ -316,11 +320,11 @@ notation "hvbox( ⬇ * term 46 T  )"
    non associative with precedence 45
    for @{ 'SN $T }.
 
-notation "hvbox( L ⊢ break ⬇ * term 46 T )"
+notation "hvbox( L ⊢ ⬇ * break term 46 T )"
    non associative with precedence 45
    for @{ 'SN $L $T }.
 
-notation "hvbox( L ⊢ break ⬇ ⬇ * term 46 T )"
+notation "hvbox( L ⊢ ⬇ ⬇ * break term 46 T )"
    non associative with precedence 45
    for @{ 'SNAlt $L $T }.
 
@@ -331,6 +335,14 @@ notation "hvbox( ⦃ L, break T ⦄ ϵ break [ R ] break 〚 A 〛 )"
 notation "hvbox( T1 ⊑ break [ R ] break term 46 T2 )"
    non associative with precedence 45
    for @{ 'CrSubEq $T1 $R $T2 }.
+
+notation "hvbox( ⦃ h , break L ⦄ ⊢ break term 46 T1 ➸ * break [ g ] break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'XRedStar $h $g $L $T1 $T2 }.
+
+notation "hvbox( ⦃ h , break L ⦄ ⊢ ➷ * break [ g ] break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'XSN $h $g $L $T }.
 
 (* Conversion ***************************************************************)
 
@@ -354,20 +366,20 @@ notation "hvbox( T1 ⊢ ⬌* break term 46 T2 )"
 
 (* Dynamic typing ***********************************************************)
 
+notation "hvbox( ⦃ h , break L ⦄ ⊩ break term 46 T : break [ g ] )"
+   non associative with precedence 45
+   for @{ 'NativeValid $h $g $L $T }.
+
 notation "hvbox( ⦃ h , break L ⦄ ⊢ break term 46 T1 : break term 46 T2 )"
    non associative with precedence 45
    for @{ 'NativeType $h $L $T1 $T2 }.
 
-notation "hvbox( ⦃ h , break L ⦄ ⊢ break term 46 T1 :: break term 46 T2 )"
+notation "hvbox( ⦃ h , break L ⦄ ⊢ break term 46 T1 : : break term 46 T2 )"
    non associative with precedence 45
    for @{ 'NativeTypeAlt $h $L $T1 $T2 }.
 
-notation "hvbox( h ⊢ break term 46 L1 : ⊑ break term 46 L2 )"
-   non associative with precedence 45
-   for @{ 'CrSubEqN $h $L1 $L2 }.
-
 (* Higher order dynamic typing **********************************************)
 
-notation "hvbox( ⦃ h , break L ⦄ ⊢ break term 46 T1 :* break term 46 T2 )"
+notation "hvbox( ⦃ h , break L ⦄ ⊢ break term 46 T1 : * break term 46 T2 )"
    non associative with precedence 45
    for @{ 'NativeTypeStar $h $L $T1 $T2 }.

@@ -1,0 +1,110 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+notation "hvbox( h ⊢ break term 46 L1 : ⊑ [ ] break term 46 L2 )"
+   non associative with precedence 45
+   for @{ 'StratifiedCrSubEqN $h $L1 $L2 }.
+
+include "basic_2/dynamic/snta.ma".
+
+(* LOCAL ENVIRONMENT REFINEMENT FOR STRATIFIED NATIVE TYPE ASSIGNMENT *******)
+
+(* Note: may not be transitive *)
+inductive lsubsn (h:sh): relation lenv ≝
+| lsubsn_atom: lsubsn h (⋆) (⋆)
+| lsubsn_pair: ∀I,L1,L2,W. lsubsn h L1 L2 →
+               lsubsn h (L1. ⓑ{I} W) (L2. ⓑ{I} W)
+| lsubsn_abbr: ∀L1,L2,V,W,l. ⦃h, L1⦄ ⊢ V :[l+1] W → ⦃h, L2⦄ ⊢ V :[l+1] W →
+               lsubsn h L1 L2 → lsubsn h (L1. ⓓV) (L2. ⓛW)
+.
+
+interpretation
+  "local environment refinement (stratified native type assigment)"
+  'StratifiedCrSubEqN h L1 L2 = (lsubsn h L1 L2).
+
+(* Basic inversion lemmas ***************************************************)
+
+fact lsubsn_inv_atom1_aux: ∀h,L1,L2. h ⊢ L1 :⊑[] L2 → L1 = ⋆ → L2 = ⋆.
+#h #L1 #L2 * -L1 -L2
+[ //
+| #I #L1 #L2 #V #_ #H destruct
+| #L1 #L2 #V #W #l #_ #_ #_ #H destruct
+]
+qed.
+
+lemma lsubsn_inv_atom1: ∀h,L2. h ⊢ ⋆ :⊑[] L2 → L2 = ⋆.
+/2 width=5/ qed-.
+
+fact lsubsn_inv_pair1_aux: ∀h,L1,L2. h ⊢ L1 :⊑[] L2 →
+                           ∀I,K1,V. L1 = K1. ⓑ{I} V →
+                           (∃∃K2. h ⊢ K1 :⊑[] K2 & L2 = K2. ⓑ{I} V) ∨
+                           ∃∃K2,W,l. ⦃h, K1⦄ ⊢ V :[l+1] W & ⦃h, K2⦄ ⊢ V :[l+1] W &
+                                     h ⊢ K1 :⊑[] K2 & L2 = K2. ⓛW & I = Abbr.
+#h #L1 #L2 * -L1 -L2
+[ #I #K1 #V #H destruct
+| #J #L1 #L2 #V #HL12 #I #K1 #W #H destruct /3 width=3/
+| #L1 #L2 #V #W #l #H1VW #H2VW #HL12 #I #K1 #V1 #H destruct /3 width=7/
+]
+qed.
+
+lemma lsubsn_inv_pair1: ∀h,I,K1,L2,V. h ⊢ K1. ⓑ{I} V :⊑[] L2 →
+                        (∃∃K2. h ⊢ K1 :⊑[] K2 & L2 = K2. ⓑ{I} V) ∨
+                        ∃∃K2,W,l. ⦃h, K1⦄ ⊢ V :[l+1] W & ⦃h, K2⦄ ⊢ V :[l+1] W &
+                                  h ⊢ K1 :⊑[] K2 & L2 = K2. ⓛW & I = Abbr.
+/2 width=3/ qed-.
+
+fact lsubsn_inv_atom2_aux: ∀h,L1,L2. h ⊢ L1 :⊑[] L2 → L2 = ⋆ → L1 = ⋆.
+#h #L1 #L2 * -L1 -L2
+[ //
+| #I #L1 #L2 #V #_ #H destruct
+| #L1 #L2 #V #W #l #_ #_ #_ #H destruct
+]
+qed.
+
+lemma lsubsn_inv_atom2: ∀h,L1. h ⊢ L1 :⊑[] ⋆ → L1 = ⋆.
+/2 width=5/ qed-.
+
+fact lsubsn_inv_pair2_aux: ∀h,L1,L2. h ⊢ L1 :⊑[] L2 →
+                           ∀I,K2,W. L2 = K2. ⓑ{I} W →
+                           (∃∃K1. h ⊢ K1 :⊑[] K2 & L1 = K1. ⓑ{I} W) ∨
+                           ∃∃K1,V,l. ⦃h, K1⦄ ⊢ V :[l+1] W & ⦃h, K2⦄ ⊢ V :[l+1] W &
+                                     h ⊢ K1 :⊑[] K2 & L1 = K1. ⓓV & I = Abst.
+#h #L1 #L2 * -L1 -L2
+[ #I #K2 #W #H destruct
+| #J #L1 #L2 #V #HL12 #I #K2 #W #H destruct /3 width=3/
+| #L1 #L2 #V #W #l #H1VW #H2VW #HL12 #I #K2 #W2 #H destruct /3 width=7/
+]
+qed.
+
+lemma lsubsn_inv_pair2: ∀h,I,L1,K2,W. h ⊢ L1 :⊑[] K2. ⓑ{I} W →
+                        (∃∃K1. h ⊢ K1 :⊑[] K2 & L1 = K1. ⓑ{I} W) ∨
+                        ∃∃K1,V,l. ⦃h, K1⦄ ⊢ V :[l+1] W & ⦃h, K2⦄ ⊢ V :[l+1] W &
+                                  h ⊢ K1 :⊑[] K2 & L1 = K1. ⓓV & I = Abst.
+/2 width=3/ qed-.
+
+(* Basic_forward lemmas *****************************************************)
+
+lemma lsubsn_fwd_lsubs1: ∀h,L1,L2. h ⊢ L1 :⊑[] L2 → L1 ≼[0, |L1|] L2.
+#h #L1 #L2 #H elim H -L1 -L2 // /2 width=1/
+qed-.
+
+lemma lsubsn_fwd_lsubs2: ∀h,L1,L2. h ⊢ L1 :⊑[] L2 → L1 ≼[0, |L2|] L2.
+#h #L1 #L2 #H elim H -L1 -L2 // /2 width=1/
+qed-.
+
+(* Basic properties *********************************************************)
+
+lemma lsubsn_refl: ∀h,L. h ⊢ L :⊑[] L.
+#h #L elim L -L // /2 width=1/
+qed.

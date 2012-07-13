@@ -12,6 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
+notation "hvbox( h ⊢ break term 46 L1 : ⊑ break term 46 L2 )"
+   non associative with precedence 45
+   for @{ 'CrSubEqN $h $L1 $L2 }.
+
+notation "hvbox( h ⊢ break term 46 L1 : : ⊑ break term 46 L2 )"
+   non associative with precedence 45
+   for @{ 'CrSubEqNAlt $h $L1 $L2 }.
+
 include "basic_2/dynamic/nta.ma".
 
 (* LOCAL ENVIRONMENT REFINEMENT FOR NATIVE TYPE ASSIGNMENT ******************)
