@@ -140,7 +140,7 @@ let rec could_reduce status ~subst context =
   | C.Appl (C.Const (Ref.Ref (_,Ref.Fix (_,recno,_)))::args)
      when List.length args > recno ->
       let t = NCicReduction.whd status ~subst context (List.nth args recno) in
-        could_reduce status subst context t
+        could_reduce status ~subst context t
   | C.Match (_,_,he,_) ->
      let he = NCicReduction.whd status ~subst context he in
       could_reduce status ~subst context he
