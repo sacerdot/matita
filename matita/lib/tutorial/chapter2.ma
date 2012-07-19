@@ -230,27 +230,20 @@ the remainder for a). The reader is strongly invited to check all remaining deta
 Let us now prove that our div2 function has the expected behaviour.
 *)
 
-lemma surjective_pairing: ∀A,B.∀p:A×B. p = 〈fst … p,\snd … p〉.
-#A #B * // qed.
-
 lemma div2SO: ∀n,q. div2 n = 〈q,ff〉 → div2 (S n) = 〈q,tt〉.
 #n #q #H normalize >H normalize // qed.
 
 lemma div2S1: ∀n,q. div2 n = 〈q,tt〉 → div2 (S n) = 〈S q,ff〉.
 #n #q #H normalize >H normalize // qed.
 
-lemma div2_ok: ∀n,q,r. div2 n = 〈q,r〉 → n = add (twice q) (nat_of_bool r).
+lemma div2_ok: ∀n,q,r. div2 n = 〈q,r〉 → n = add (nat_of_bool r) (twice q).
 #n elim n
-  [#q #r normalize #H destruct //
-  |#a #Hind #q #r 
+  [#q #r #H normalize in H; destruct //
+  |#a #Hind #q #r
    cut (div2 a = 〈fst … (div2 a), snd … (div2 a)〉) [//] 
    cases (snd … (div2 a))
-    [#H >(div2S1 … H) #H1 destruct 
-     >add_0 normalize @eq_f 
-     cut (∀n.add (twice n) (S O) = add n (S n))
-     [|#Hcut <Hcut @(Hind … H)] #m normalize >add_S //
-     (* >add_S whd in ⊢ (???%); <add_S @(Hind … H) *)
-    |#H >(div2SO … H) #H1 destruct >add_S @eq_f @(Hind … H) 
+    [#H >(div2S1 … H) #H1 destruct normalize @eq_f >add_S @(Hind … H)
+    |#H >(div2SO … H) #H1 destruct normalize @eq_f @(Hind … H) 
     ]
 qed.
 
@@ -278,7 +271,7 @@ record Sub (A:Type[0]) (P:A → Prop) : Type[0] ≝
   {witness: A; 
    proof: P witness}.
 
-definition qr_spec ≝ λn.λp.∀q,r. p = 〈q,r〉 → n = add (twice q) (nat_of_bool r).
+definition qr_spec ≝ λn.λp.∀q,r. p = 〈q,r〉 → n = add (nat_of_bool r) (twice q).
   
 (* We can now construct a function from n to {p|qr_spec n p} by composing the objects
 we already have *)
@@ -294,9 +287,8 @@ definition div2Pagain : ∀n.Sub (nat×bool) (qr_spec n).
   |#a * #p #qrspec 
    cut (p = 〈fst … p, snd … p〉) [//] 
    cases (snd … p)
-    [#H @(mk_Sub … 〈S (fst … p),ff〉) whd #q #r #H1 destruct @eq_f >add_S
-     whd in ⊢ (???%); <add_S @(qrspec … H)
-    |#H @(mk_Sub … 〈fst … p,tt〉) whd #q #r #H1 destruct >add_S @eq_f @(qrspec … H) 
+    [#H @(mk_Sub … 〈S (fst … p),ff〉) #q #r #H1 destruct @eq_f >add_S @(qrspec … H)
+    |#H @(mk_Sub … 〈fst … p,tt〉) #q #r #H1 destruct @eq_f @(qrspec … H) 
   ]
 qed.
 
@@ -305,7 +297,6 @@ example full7: (div2Pagain (S(S(S(S(S(S(S O)))))))) = ?.
 // qed.
 
 example quotient7: witness … (div2Pagain (S(S(S(S(S(S(S O)))))))) = ?.
-normalize 〈S(S(S O)),tt〉.
 normalize // qed.
 
 example quotient8: witness … (div2Pagain (twice (twice (twice (twice (S O)))))) 
