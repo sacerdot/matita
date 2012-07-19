@@ -160,43 +160,34 @@ let clean_or_fix_dependent_abstrations status ctx t =
     aux (List.map fst ctx) t
 ;;
 
-let rec fire_projection_redex status on_args = function
+let rec fire_projection_redex status () = function
   | C.Meta _ as t -> t
-  | C.Appl(C.Const(Ref.Ref(_,Ref.Fix(fno,rno,_)) as r)::args as ol)as ot->
-      let l= if on_args then List.map (fire_projection_redex status true) ol else ol in
-      let t = if l == ol then ot else C.Appl l in
+  | C.Appl((C.Const(Ref.Ref(_,Ref.Fix(fno,rno,_)) as r) as hd)::args) as ot->
+      let args'= HExtlib.sharing_map (fire_projection_redex status ()) args in
+      let t = if args == args' then ot else C.Appl (hd::args') in
       let ifl,(_,_,pragma),_ = NCicEnvironment.get_checked_fixes_or_cofixes status r in
-      let conclude () =
-        if on_args then 
-          let l' = HExtlib.sharing_map (fire_projection_redex status true) l in
-          if l == l' then t else C.Appl l'
-        else
-          t (* ot is the same *) 
-      in
-      if pragma <> `Projection || List.length args <= rno then conclude ()
+      if pragma <> `Projection || List.length args <= rno then t
       else
-        (match List.nth l (rno+1) with
+        (match List.nth args' rno with
         | C.Appl (C.Const(Ref.Ref(_,Ref.Con _))::_) ->
             let _, _, _, _, fbody = List.nth ifl fno in (* fbody is closed! *)
-            let t = C.Appl (fbody::List.tl l) in
+            let t = C.Appl (fbody::args') in
             (match NCicReduction.head_beta_reduce status ~delta:max_int t with
              | C.Match (_,_, C.Appl(C.Const(Ref.Ref(_,Ref.Con (_,_,leftno)))
                 ::kargs),[pat])->
                   let _,kargs = HExtlib.split_nth leftno kargs in
-                   fire_projection_redex status false 
-                    (NCicReduction.head_beta_reduce status
-                      ~delta:max_int (C.Appl (pat :: kargs)))
+                   NCicReduction.head_beta_reduce status
+                    ~delta:max_int (C.Appl (pat :: kargs))
             | C.Appl(C.Match(_,_,C.Appl(C.Const(Ref.Ref(_,Ref.Con (_,_,leftno)))
                ::kargs),[pat]) :: args) ->
                   let _,kargs = HExtlib.split_nth leftno kargs in
-                   fire_projection_redex status false 
+                   fire_projection_redex status ()
                     (NCicReduction.head_beta_reduce status 
                       ~delta:max_int (C.Appl (pat :: kargs @ args)))
-            | _ -> conclude ()) 
-        | _ -> conclude ())
-  | t when on_args ->
-     NCicUtils.map status (fun _ x -> x) true (fire_projection_redex status) t
-  | t -> t
+            | _ -> assert false) 
+        | _ -> t)
+  | t ->
+     NCicUtils.map status (fun _ x -> x) () (fire_projection_redex status) t
 ;;
 
 let apply_subst status ?(fix_projections=false) subst context t = 
@@ -218,7 +209,7 @@ let apply_subst status ?(fix_projections=false) subst context t =
                    apply_subst subst () (NCicSubstitution.lift status n t)) l))))
   | t -> NCicUtils.map status (fun _ () -> ()) () (apply_subst subst) t
  in
- (if fix_projections then fire_projection_redex status true else fun x -> x)
+ (if fix_projections then fire_projection_redex status () else fun x -> x)
     (clean_or_fix_dependent_abstrations status context (apply_subst subst () t))
 ;;
 
