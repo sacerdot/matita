@@ -17,7 +17,7 @@ include "basic_2/computation/csn_vector.ma".
 
 (* Advanced forward lemmas **************************************************)
 
-lemma csn_fwd_applv: ∀L,T,Vs. L ⊢ ⬇* Ⓐ Vs. T → L ⊢ ⬇* Vs ∧ L ⊢ ⬇* T.
+lemma csn_fwd_applv: ∀L,T,Vs. L ⊢ ⬊* Ⓐ Vs. T → L ⊢ ⬊* Vs ∧ L ⊢ ⬊* T.
 #L #T #Vs elim Vs -Vs /2 width=1/
 #V #Vs #IHVs #HVs
 lapply (csn_fwd_pair_sn … HVs) #HV

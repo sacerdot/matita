@@ -26,7 +26,7 @@ interpretation "context-sensitive parallel evaluation (term)"
 (* Basic_properties *********************************************************)
 
 (* Basic_1: was: nf2_sn3 *)
-lemma cpe_csn: ∀L,T1. L ⊢ ⬇* T1 → ∃T2. L ⊢ T1 ➡* 𝐍⦃T2⦄.
+lemma cpe_csn: ∀L,T1. L ⊢ ⬊* T1 → ∃T2. L ⊢ T1 ➡* 𝐍⦃T2⦄.
 #L #T1 #H @(csn_ind … H) -T1
 #T1 #_ #IHT1
 elim (cnf_dec L T1) /3 width=3/

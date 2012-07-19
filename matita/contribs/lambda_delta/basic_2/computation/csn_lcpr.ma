@@ -22,13 +22,13 @@ include "basic_2/computation/csn_alt.ma".
 
 (* Advanced properties ******************************************************)
 
-lemma csn_lcpr_conf: ∀L1,L2. L1 ⊢ ➡ L2 → ∀T. L1 ⊢ ⬇* T → L2 ⊢ ⬇* T.
+lemma csn_lcpr_conf: ∀L1,L2. L1 ⊢ ➡ L2 → ∀T. L1 ⊢ ⬊* T → L2 ⊢ ⬊* T.
 #L1 #L2 #HL12 #T #H @(csn_ind_alt … H) -T #T #_ #IHT
 @csn_intro #T0 #HLT0 #HT0
 @IHT /2 width=2/ -IHT -HT0 /2 width=3/
 qed.
 
-lemma csn_abbr: ∀L,V. L ⊢ ⬇* V → ∀T. L. ⓓV ⊢ ⬇* T → L ⊢ ⬇* ⓓV. T.
+lemma csn_abbr: ∀L,V. L ⊢ ⬊* V → ∀T. L. ⓓV ⊢ ⬊* T → L ⊢ ⬊* ⓓV. T.
 #L #V #HV elim HV -V #V #_ #IHV #T #HT @(csn_ind_alt … HT) -T #T #HT #IHT
 @csn_intro #X #H1 #H2
 elim (cpr_inv_abbr1 … H1) -H1 *
@@ -46,8 +46,8 @@ elim (cpr_inv_abbr1 … H1) -H1 *
 ]
 qed.
 
-fact csn_appl_beta_aux: ∀L,W. L ⊢ ⬇* W → ∀U. L ⊢ ⬇* U →
-                        ∀V,T. U = ⓓV. T → L ⊢ ⬇* ⓐV. ⓛW. T.
+fact csn_appl_beta_aux: ∀L,W. L ⊢ ⬊* W → ∀U. L ⊢ ⬊* U →
+                        ∀V,T. U = ⓓV. T → L ⊢ ⬊* ⓐV. ⓛW. T.
 #L #W #H elim H -W #W #_ #IHW #X #H @(csn_ind_alt … H) -X #X #HVT #IHVT #V #T #H destruct
 lapply (csn_fwd_pair_sn … HVT) #HV
 lapply (csn_fwd_bind_dx … HVT) #HT -HVT
@@ -71,12 +71,12 @@ elim (cpr_inv_appl1 … H) -H *
 qed.
 
 (* Basic_1: was: sn3_beta *)
-lemma csn_appl_beta: ∀L,W. L ⊢ ⬇* W → ∀V,T. L ⊢ ⬇* ⓓV. T →
-                     L ⊢ ⬇* ⓐV. ⓛW. T.
+lemma csn_appl_beta: ∀L,W. L ⊢ ⬊* W → ∀V,T. L ⊢ ⬊* ⓓV. T →
+                     L ⊢ ⬊* ⓐV. ⓛW. T.
 /2 width=3/ qed.
 
-fact csn_appl_theta_aux: ∀L,U. L ⊢ ⬇* U → ∀V1,V2. ⇧[0, 1] V1 ≡ V2 →
-                         ∀V,T. U = ⓓV. ⓐV2. T → L ⊢ ⬇* ⓐV1. ⓓV. T.
+fact csn_appl_theta_aux: ∀L,U. L ⊢ ⬊* U → ∀V1,V2. ⇧[0, 1] V1 ≡ V2 →
+                         ∀V,T. U = ⓓV. ⓐV2. T → L ⊢ ⬊* ⓐV1. ⓓV. T.
 #L #X #H @(csn_ind_alt … H) -X #X #HVT #IHVT #V1 #V2 #HV12 #V #T #H destruct
 lapply (csn_fwd_pair_sn … HVT) #HV
 lapply (csn_fwd_bind_dx … HVT) -HVT #HVT
@@ -116,14 +116,14 @@ elim (cpr_inv_appl1 … HL) -HL *
 qed.
 
 lemma csn_appl_theta: ∀V1,V2. ⇧[0, 1] V1 ≡ V2 →
-                      ∀L,V,T. L ⊢ ⬇* ⓓV. ⓐV2. T → L ⊢ ⬇* ⓐV1. ⓓV. T.
+                      ∀L,V,T. L ⊢ ⬊* ⓓV. ⓐV2. T → L ⊢ ⬊* ⓐV1. ⓓV. T.
 /2 width=5/ qed.
 
 (* Basic_1: was only: sn3_appl_appl *)
-lemma csn_appl_simple_tstc: ∀L,V. L ⊢ ⬇* V → ∀T1.
-                            L ⊢ ⬇* T1 →
-                            (∀T2. L ⊢ T1 ➡* T2 → (T1 ≃ T2 → ⊥) → L ⊢ ⬇* ⓐV. T2) →
-                            𝐒⦃T1⦄ → L ⊢ ⬇* ⓐV. T1.
+lemma csn_appl_simple_tstc: ∀L,V. L ⊢ ⬊* V → ∀T1.
+                            L ⊢ ⬊* T1 →
+                            (∀T2. L ⊢ T1 ➡* T2 → (T1 ≃ T2 → ⊥) → L ⊢ ⬊* ⓐV. T2) →
+                            𝐒⦃T1⦄ → L ⊢ ⬊* ⓐV. T1.
 #L #V #H @(csn_ind … H) -V #V #_ #IHV #T1 #H @(csn_ind … H) -T1 #T1 #H1T1 #IHT1 #H2T1 #H3T1
 @csn_intro #X #HL #H
 elim (cpr_inv_appl1_simple … HL ?) -HL //

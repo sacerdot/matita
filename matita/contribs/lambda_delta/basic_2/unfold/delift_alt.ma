@@ -38,8 +38,8 @@ interpretation "inverse basic relocation (term) alternative"
 
 (* Basic properties *********************************************************)
 
-lemma delifta_lsubs_trans: ∀L1,T1,T2,d,e. L1 ⊢ T1 ▼▼*[d, e] ≡ T2 →
-                           ∀L2. L2 ≼ [d, e] L1 → L2 ⊢ T1 ▼▼*[d, e] ≡ T2.
+lemma delifta_lsubs_trans: ∀L1,T1,T2,d,e. L1 ⊢ ▼▼*[d, e] T1 ≡ T2 →
+                           ∀L2. L2 ≼ [d, e] L1 → L2 ⊢ ▼▼*[d, e] T1 ≡ T2.
 #L1 #T1 #T2 #d #e #H elim H -L1 -T1 -T2 -d -e // /2 width=1/
 [ #L1 #K1 #V1 #V2 #W2 #i #d #e #Hdi #Hide #HLK1 #_ #HVW2 #IHV12 #L2 #HL12
   elim (ldrop_lsubs_ldrop2_abbr … HL12 … HLK1 ? ?) -HL12 -HLK1 // /3 width=6/
@@ -48,7 +48,7 @@ lemma delifta_lsubs_trans: ∀L1,T1,T2,d,e. L1 ⊢ T1 ▼▼*[d, e] ≡ T2 →
 ]
 qed.
 
-lemma delift_delifta: ∀L,T1,T2,d,e. L ⊢ T1 ▼*[d, e] ≡ T2 → L ⊢ T1 ▼▼*[d, e] ≡ T2.
+lemma delift_delifta: ∀L,T1,T2,d,e. L ⊢ ▼*[d, e] T1 ≡ T2 → L ⊢ ▼▼*[d, e] T1 ≡ T2.
 #L #T1 @(cw_wf_ind … L T1) -L -T1 #L #T1 elim T1 -T1
 [ * #i #IH #T2 #d #e #H
   [ >(delift_inv_sort1 … H) -H //
@@ -73,7 +73,7 @@ qed.
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma delifta_delift: ∀L,T1,T2,d,e. L ⊢ T1 ▼▼*[d, e] ≡ T2 → L ⊢ T1 ▼*[d, e] ≡ T2.
+lemma delifta_delift: ∀L,T1,T2,d,e. L ⊢ ▼▼*[d, e] T1 ≡ T2 → L ⊢ ▼*[d, e] T1 ≡ T2.
 #L #T1 #T2 #d #e #H elim H -L -T1 -T2 -d -e // /2 width=1/ /2 width=6/
 qed-. 
 
@@ -81,20 +81,20 @@ lemma delift_ind_alt: ∀R:ℕ→ℕ→lenv→relation term.
                       (∀L,d,e,k. R d e L (⋆k) (⋆k)) →
                       (∀L,d,e,i. i < d → R d e L (#i) (#i)) →
                       (∀L,K,V1,V2,W2,i,d,e. d ≤ i → i < d + e →
-                       ⇩[O, i] L ≡ K.ⓓV1 → K ⊢ V1 ▼*[O, d + e - i - 1] ≡ V2 →
+                       ⇩[O, i] L ≡ K.ⓓV1 → K ⊢ ▼*[O, d + e - i - 1] V1 ≡ V2 →
                        ⇧[O, d] V2 ≡ W2 → R O (d+e-i-1) K V1 V2 → R d e L #i W2
                       ) →
                       (∀L,d,e,i. d + e ≤ i → R d e L (#i) (#(i - e))) →
                       (∀L,d,e,p. R d e L (§p) (§p)) →
-                      (∀L,I,V1,V2,T1,T2,d,e. L ⊢ V1 ▼*[d, e] ≡ V2 →
-                       L.ⓑ{I}V2 ⊢ T1 ▼*[d + 1, e] ≡ T2 → R d e L V1 V2 →
+                      (∀L,I,V1,V2,T1,T2,d,e. L ⊢ ▼*[d, e] V1 ≡ V2 →
+                       L.ⓑ{I}V2 ⊢ ▼*[d + 1, e] T1 ≡ T2 → R d e L V1 V2 →
                        R (d+1) e (L.ⓑ{I}V2) T1 T2 → R d e L (ⓑ{I}V1.T1) (ⓑ{I}V2.T2)
                       ) →
-                      (∀L,I,V1,V2,T1,T2,d,e. L ⊢ V1 ▼*[d, e] ≡ V2 →
-                       L⊢ T1 ▼*[d, e] ≡ T2 → R d e L V1 V2 →
+                      (∀L,I,V1,V2,T1,T2,d,e. L ⊢ ▼*[d, e] V1 ≡ V2 →
+                       L⊢ ▼*[d, e] T1 ≡ T2 → R d e L V1 V2 →
                        R d e L T1 T2 → R d e L (ⓕ{I}V1.T1) (ⓕ{I}V2.T2)
                       ) →
-                      ∀d,e,L,T1,T2. L ⊢ T1 ▼*[d, e] ≡ T2 → R d e L T1 T2.
+                      ∀d,e,L,T1,T2. L ⊢ ▼*[d, e] T1 ≡ T2 → R d e L T1 T2.
 #R #H1 #H2 #H3 #H4 #H5 #H6 #H7 #d #e #L #T1 #T2 #H elim (delift_delifta … H) -L -T1 -T2 -d -e
 // /2 width=1 by delifta_delift/ /3 width=1 by delifta_delift/ /3 width=7 by delifta_delift/
 qed-.

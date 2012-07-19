@@ -151,9 +151,9 @@ elim (lt_or_ge (|K|) d) #HKd
 qed.
 
 (* Basic_1: was: pr2_gen_lift *)
-lemma cpr_inv_lift: ∀L,K,d,e. ⇩[d, e] L ≡ K →
-                    ∀T1,U1. ⇧[d, e] T1 ≡ U1 → ∀U2. L ⊢ U1 ➡ U2 →
-                    ∃∃T2. ⇧[d, e] T2 ≡ U2 & K ⊢ T1 ➡ T2.
+lemma cpr_inv_lift1: ∀L,K,d,e. ⇩[d, e] L ≡ K →
+                     ∀T1,U1. ⇧[d, e] T1 ≡ U1 → ∀U2. L ⊢ U1 ➡ U2 →
+                     ∃∃T2. ⇧[d, e] T2 ≡ U2 & K ⊢ T1 ➡ T2.
 #L #K #d #e #HLK #T1 #U1 #HTU1 #U2 * #U #HU1 #HU2
 elim (tpr_inv_lift1 … HU1 … HTU1) -U1 #T #HTU #T1
 elim (lt_or_ge (|L|) d) #HLd

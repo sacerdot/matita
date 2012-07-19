@@ -12,26 +12,25 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unfold/thin_delift.ma".
-include "basic_2/reducibility/tpr_delift.ma".
-include "basic_2/reducibility/cpr.ma".
+include "basic_2/static/lsubss_ssta.ma".
 
-(* CONTEXT-SENSITIVE PARALLEL REDUCTION ON TERMS ****************************)
+(* LOCAL ENVIRONMENT REFINEMENT FOR STATIC TYPE ASSIGNMENT ******************)
 
-(* Properties on inverse basic term relocation ******************************)
+(* Main properties **********************************************************)
 
-(* Basic_1: was only: pr2_gen_cabbr *)
-lemma thin_cpr_delift_conf: ∀L,U1,U2. L ⊢ U1 ➡ U2 →
-                            ∀K,d,e. ▼*[d, e] L ≡ K → ∀T1. L ⊢ ▼*[d, e] U1 ≡ T1 →
-                            ∃∃T2. K ⊢ T1 ➡ T2 & L ⊢ ▼*[d, e] U2 ≡ T2.
-#L #U1 #U2 * #U #HU1 #HU2 #K #d #e #HLK #T1 #HTU1
-elim (tpr_delift_conf … HU1 … HTU1) -U1 #T #HT1 #HUT
-elim (le_or_ge (|L|) d) #Hd
-[ elim (thin_delift_tpss_conf_le … HU2 … HUT … HLK ?)
-| elim (le_or_ge (|L|) (d+e)) #Hde
-  [ elim (thin_delift_tpss_conf_le_up … HU2 … HUT … HLK ? ? ?)
-  | elim (thin_delift_tpss_conf_be … HU2 … HUT … HLK ? ?)
+theorem lsubss_trans: ∀h,g,L1,L. h ⊢ L1 •⊑[g] L → ∀L2. h ⊢ L •⊑[g] L2 →
+                      h ⊢ L1 •⊑[g] L2.
+#h #g #L1 #L #H elim H -L1 -L
+[ #X #H >(lsubss_inv_atom1 … H) -H //
+| #I #L1 #L #W #HL1 #IHL1 #X #H
+  elim (lsubss_inv_pair1 … H) -H * #L2
+  [ #HL2 #H destruct /3 width=1/
+  | #V #l #H1WV #H2WV #HL2 #H1 #H2 destruct /3 width=3/
   ]
-] -U -HLK // -Hd [2,3: -Hde] #T2 #HT2
-lapply (cpr_intro … HT1 HT2) -T /2 width=3/
+| #L1 #L #V1 #W1 #l #H1VW1 #H2VW1 #HL1 #IHL1 #X #H
+  elim (lsubss_inv_pair1 … H) -H * #L2
+  [ #HL2 #H destruct /3 width=5/
+  | #V #l0 #_ #_ #_ #_ #H destruct
+  ]
+]
 qed.

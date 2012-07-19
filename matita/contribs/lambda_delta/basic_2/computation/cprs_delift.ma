@@ -21,15 +21,15 @@ include "basic_2/computation/cprs.ma".
 (* Properties on inverse basic term relocation ******************************)
 
 (* Note: this should be stated with tprs *)
-lemma cprs_zeta_delift: ∀L,V,T1,T2. L.ⓓV ⊢ T1 ▼*[O, 1] ≡ T2 → L ⊢ ⓓV.T1 ➡* T2.
+lemma cprs_zeta_delift: ∀L,V,T1,T2. L.ⓓV ⊢ ▼*[O, 1] T1 ≡ T2 → L ⊢ ⓓV.T1 ➡* T2.
 #L #V #T1 #T2 * #T #HT1 #HT2
 @(cprs_strap2 … (ⓓV.T)) [ /3 width=3/ | @inj /3 width=3/ ] (**) (* explicit constructor, /5 width=3/ is too slow *)
 qed.
 
 (* Basic_1: was only: pr3_gen_cabbr *)
 lemma thin_cprs_delift_conf: ∀L,U1,U2. L ⊢ U1 ➡* U2 →
-                             ∀K,d,e. L ▼*[d, e] ≡ K → ∀T1. L ⊢ U1 ▼*[d, e] ≡ T1 →
-                             ∃∃T2. K ⊢ T1 ➡* T2 & L ⊢ U2 ▼*[d, e] ≡ T2.
+                             ∀K,d,e. ▼*[d, e] L ≡ K → ∀T1. L ⊢ ▼*[d, e] U1 ≡ T1 →
+                             ∃∃T2. K ⊢ T1 ➡* T2 & L ⊢ ▼*[d, e] U2 ≡ T2.
 #L #U1 #U2 #H @(cprs_ind … H) -U2 /2 width=3/
 #U #U2 #_ #HU2 #IHU1 #K #d #e #HLK #T1 #HTU1
 elim (IHU1 … HLK … HTU1) -U1 #T #HT1 #HUT

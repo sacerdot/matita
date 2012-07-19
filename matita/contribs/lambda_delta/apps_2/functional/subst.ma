@@ -34,7 +34,7 @@ interpretation "functional core substitution" 'Subst V d T = (fsubst V d T).
 (* Main properties **********************************************************)
 
 theorem fsubst_delift: ∀K,V,T,L,d.
-                       ⇩[0, d] L ≡ K. ⓓV → L ⊢ T ▼*[d, 1] ≡ [d ← V] T.
+                       ⇩[0, d] L ≡ K. ⓓV → L ⊢ ▼*[d, 1] T ≡ [d ← V] T.
 #K #V #T elim T -T
 [ * #i #L #d #HLK normalize in ⊢ (? ? ? ? ? %); /2 width=3/
   elim (lt_or_eq_or_gt i d) #Hid
@@ -49,7 +49,7 @@ qed.
 (* Main inversion properties ************************************************)
 
 theorem fsubst_inv_delift: ∀K,V,T1,L,T2,d. ⇩[0, d] L ≡ K. ⓓV →
-                           L ⊢ T1 ▼*[d, 1] ≡ T2 → [d ← V] T1 = T2.
+                           L ⊢ ▼*[d, 1] T1 ≡ T2 → [d ← V] T1 = T2.
 #K #V #T1 elim T1 -T1
 [ * #i #L #T2 #d #HLK #H
   [ -HLK >(delift_inv_sort1 … H) -H //

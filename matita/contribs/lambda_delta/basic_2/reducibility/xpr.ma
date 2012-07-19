@@ -12,26 +12,25 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unfold/thin_delift.ma".
-include "basic_2/reducibility/tpr_delift.ma".
+include "basic_2/static/ssta.ma".
 include "basic_2/reducibility/cpr.ma".
 
-(* CONTEXT-SENSITIVE PARALLEL REDUCTION ON TERMS ****************************)
+(* EXTENDED PARALLEL REDUCTION ON TERMS *************************************)
 
-(* Properties on inverse basic term relocation ******************************)
+definition xpr: ∀h. sd h → lenv → relation term ≝
+   λh,g,L,T1,T2. L ⊢ T1 ➡ T2 ∨ ∃l. ⦃h, L⦄ ⊢ T1 •[g, l + 1] T2.
 
-(* Basic_1: was only: pr2_gen_cabbr *)
-lemma thin_cpr_delift_conf: ∀L,U1,U2. L ⊢ U1 ➡ U2 →
-                            ∀K,d,e. ▼*[d, e] L ≡ K → ∀T1. L ⊢ ▼*[d, e] U1 ≡ T1 →
-                            ∃∃T2. K ⊢ T1 ➡ T2 & L ⊢ ▼*[d, e] U2 ≡ T2.
-#L #U1 #U2 * #U #HU1 #HU2 #K #d #e #HLK #T1 #HTU1
-elim (tpr_delift_conf … HU1 … HTU1) -U1 #T #HT1 #HUT
-elim (le_or_ge (|L|) d) #Hd
-[ elim (thin_delift_tpss_conf_le … HU2 … HUT … HLK ?)
-| elim (le_or_ge (|L|) (d+e)) #Hde
-  [ elim (thin_delift_tpss_conf_le_up … HU2 … HUT … HLK ? ? ?)
-  | elim (thin_delift_tpss_conf_be … HU2 … HUT … HLK ? ?)
-  ]
-] -U -HLK // -Hd [2,3: -Hde] #T2 #HT2
-lapply (cpr_intro … HT1 HT2) -T /2 width=3/
-qed.
+interpretation
+   "extended parallel reduction (term)"
+   'XPRed h g L T1 T2 = (xpr h g L T1 T2).
+
+(* Basic properties *********************************************************)
+
+lemma cpr_xpr: ∀h,g,L,T1,T2. L ⊢ T1 ➡ T2 → ⦃h, L⦄ ⊢ T1 ➸[g] T2.
+/2 width=1/ qed.
+
+lemma ssta_xpr: ∀h,g,L,T1,T2,l. ⦃h, L⦄ ⊢ T1 •[g, l + 1] T2 → ⦃h, L⦄ ⊢ T1 ➸[g] T2.
+/3 width=2/ qed.
+
+lemma xpr_refl: ∀h,g,L,T. ⦃h, L⦄ ⊢ T ➸[g] T.
+/2 width=1/ qed.

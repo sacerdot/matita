@@ -27,10 +27,10 @@ interpretation
 (* Basic eliminators ********************************************************)
 
 lemma csna_ind: ∀L. ∀R:predicate term.
-                (∀T1. L ⊢ ⬇⬇* T1 →
+                (∀T1. L ⊢ ⬊⬊* T1 →
                       (∀T2. L ⊢ T1 ➡* T2 → (T1 = T2 → ⊥) → R T2) → R T1
                 ) →
-                ∀T. L ⊢ ⬇⬇* T → R T.
+                ∀T. L ⊢ ⬊⬊* T → R T.
 #L #R #H0 #T1 #H elim H -T1 #T1 #HT1 #IHT1
 @H0 -H0 /3 width=1/ -IHT1 /4 width=1/
 qed-.
@@ -39,15 +39,15 @@ qed-.
 
 (* Basic_1: was: sn3_intro *)
 lemma csna_intro: ∀L,T1.
-                  (∀T2. L ⊢ T1 ➡* T2 → (T1 = T2 → ⊥) → L ⊢ ⬇⬇* T2) → L ⊢ ⬇⬇* T1.
+                  (∀T2. L ⊢ T1 ➡* T2 → (T1 = T2 → ⊥) → L ⊢ ⬊⬊* T2) → L ⊢ ⬊⬊* T1.
 /4 width=1/ qed.
 
 fact csna_intro_aux: ∀L,T1.
-                     (∀T,T2. L ⊢ T ➡* T2 → T1 = T → (T1 = T2 → ⊥) → L ⊢ ⬇⬇* T2) → L ⊢ ⬇⬇* T1.
+                     (∀T,T2. L ⊢ T ➡* T2 → T1 = T → (T1 = T2 → ⊥) → L ⊢ ⬊⬊* T2) → L ⊢ ⬊⬊* T1.
 /4 width=3/ qed-.
 
 (* Basic_1: was: sn3_pr3_trans (old version) *)
-lemma csna_cprs_trans: ∀L,T1. L ⊢ ⬇⬇* T1 → ∀T2. L ⊢ T1 ➡* T2 → L ⊢ ⬇⬇* T2.
+lemma csna_cprs_trans: ∀L,T1. L ⊢ ⬊⬊* T1 → ∀T2. L ⊢ T1 ➡* T2 → L ⊢ ⬊⬊* T2.
 #L #T1 #H elim H -T1 #T1 #HT1 #IHT1 #T2 #HLT12
 @csna_intro #T #HLT2 #HT2
 elim (term_eq_dec T1 T2) #HT12
@@ -57,8 +57,8 @@ qed.
 
 (* Basic_1: was: sn3_pr2_intro (old version) *)
 lemma csna_intro_cpr: ∀L,T1.
-                      (∀T2. L ⊢ T1 ➡ T2 → (T1 = T2 → ⊥) → L ⊢ ⬇⬇* T2) →
-                      L ⊢ ⬇⬇* T1.
+                      (∀T2. L ⊢ T1 ➡ T2 → (T1 = T2 → ⊥) → L ⊢ ⬊⬊* T2) →
+                      L ⊢ ⬊⬊* T1.
 #L #T1 #H
 @csna_intro_aux #T #T2 #H @(cprs_ind_dx … H) -T
 [ -H #H destruct #H
@@ -73,25 +73,25 @@ qed.
 
 (* Main properties **********************************************************)
 
-theorem csn_csna: ∀L,T. L ⊢ ⬇* T → L ⊢ ⬇⬇* T.
+theorem csn_csna: ∀L,T. L ⊢ ⬊* T → L ⊢ ⬊⬊* T.
 #L #T #H @(csn_ind … H) -T /4 width=1/
 qed.
 
-theorem csna_csn: ∀L,T. L ⊢ ⬇⬇* T → L ⊢ ⬇* T.
+theorem csna_csn: ∀L,T. L ⊢ ⬊⬊* T → L ⊢ ⬊* T.
 #L #T #H @(csna_ind … H) -T /4 width=1/
 qed.
 
 (* Basic_1: was: sn3_pr3_trans *)
-lemma csn_cprs_trans: ∀L,T1. L ⊢ ⬇* T1 → ∀T2. L ⊢ T1 ➡* T2 → L ⊢ ⬇* T2.
+lemma csn_cprs_trans: ∀L,T1. L ⊢ ⬊* T1 → ∀T2. L ⊢ T1 ➡* T2 → L ⊢ ⬊* T2.
 /4 width=3/ qed.
 
 (* Main eliminators *********************************************************)
 
 lemma csn_ind_alt: ∀L. ∀R:predicate term.
-                   (∀T1. L ⊢ ⬇* T1 →
+                   (∀T1. L ⊢ ⬊* T1 →
                          (∀T2. L ⊢ T1 ➡* T2 → (T1 = T2 → ⊥) → R T2) → R T1
                    ) →
-                   ∀T. L ⊢ ⬇* T → R T.
+                   ∀T. L ⊢ ⬊* T → R T.
 #L #R #H0 #T1 #H @(csna_ind … (csn_csna … H)) -T1 #T1 #HT1 #IHT1
 @H0 -H0 /2 width=1/ -HT1 /3 width=1/
 qed-.

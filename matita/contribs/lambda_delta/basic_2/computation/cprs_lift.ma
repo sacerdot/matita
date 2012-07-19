@@ -34,7 +34,7 @@ lemma cprs_inv_lref1: ∀L,T2,i. L ⊢ #i ➡* T2 →
   @or_intror @(ex4_3_intro … HLK … HT12) // /3 width=3/ (**) (* explicit constructors *)
 | * #K #V1 #T1 #HLK #HVT1 #HT1 #Hi
   lapply (ldrop_fwd_ldrop2 … HLK) #H0LK
-  elim (cpr_inv_lift … H0LK … HT1 … HT2) -H0LK -T /4 width=6/
+  elim (cpr_inv_lift1 … H0LK … HT1 … HT2) -H0LK -T /4 width=6/
 ]
 qed-.
 
@@ -69,10 +69,10 @@ lemma cprs_lift: ∀L,K,d,e. ⇩[d, e] L ≡ K → ∀T1,U1. ⇧[d, e] T1 ≡ U1
 qed.
 
 (* Basic_1: was: pr3_gen_lift *)
-lemma cprs_inv_lift: ∀L,K,d,e. ⇩[d, e] L ≡ K →
-                     ∀T1,U1. ⇧[d, e] T1 ≡ U1 → ∀U2. L ⊢ U1 ➡* U2 →
-                     ∃∃T2. ⇧[d, e] T2 ≡ U2 & K ⊢ T1 ➡* T2.
+lemma cprs_inv_lift1: ∀L,K,d,e. ⇩[d, e] L ≡ K →
+                      ∀T1,U1. ⇧[d, e] T1 ≡ U1 → ∀U2. L ⊢ U1 ➡* U2 →
+                      ∃∃T2. ⇧[d, e] T2 ≡ U2 & K ⊢ T1 ➡* T2.
 #L #K #d #e #HLK #T1 #U1 #HTU1 #U2 #HU12 @(cprs_ind … HU12) -U2 /2 width=3/
 -HTU1 #U #U2 #_ #HU2 * #T #HTU #HT1
-elim (cpr_inv_lift … HLK … HTU … HU2) -U -HLK /3 width=5/
+elim (cpr_inv_lift1 … HLK … HTU … HU2) -U -HLK /3 width=5/
 qed.

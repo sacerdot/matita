@@ -83,8 +83,8 @@ lemma cpcs_inv_lift: ∀L,K,d,e. ⇩[d, e] L ≡ K →
                      L ⊢ U1 ⬌* U2 → K ⊢ T1 ⬌* T2.
 #L #K #d #e #HLK #T1 #U1 #HTU1 #T2 #U2 #HTU2 #HU12
 elim (cpcs_inv_cprs … HU12) -HU12 #U #HU1 #HU2
-elim (cprs_inv_lift … HLK … HTU1 … HU1) -U1 #T #HTU #HT1
-elim (cprs_inv_lift … HLK … HTU2 … HU2) -L -U2 #X #HXU
+elim (cprs_inv_lift1 … HLK … HTU1 … HU1) -U1 #T #HTU #HT1
+elim (cprs_inv_lift1 … HLK … HTU2 … HU2) -L -U2 #X #HXU
 >(lift_inj … HXU … HTU) -X -U -d -e /2 width=3/
 qed-.
 

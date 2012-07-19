@@ -21,18 +21,18 @@ include "basic_2/computation/csn.ma".
 (* Relocation properties ****************************************************)
 
 (* Basic_1: was: sn3_lift *)
-lemma csn_lift: ∀L2,L1,T1,d,e. L1 ⊢ ⬇* T1 →
-                ∀T2. ⇩[d, e] L2 ≡ L1 → ⇧[d, e] T1 ≡ T2 → L2 ⊢ ⬇* T2.
+lemma csn_lift: ∀L2,L1,T1,d,e. L1 ⊢ ⬊* T1 →
+                ∀T2. ⇩[d, e] L2 ≡ L1 → ⇧[d, e] T1 ≡ T2 → L2 ⊢ ⬊* T2.
 #L2 #L1 #T1 #d #e #H elim H -T1 #T1 #_ #IHT1 #T2 #HL21 #HT12
 @csn_intro #T #HLT2 #HT2
-elim (cpr_inv_lift … HL21 … HT12 … HLT2) -HLT2 #T0 #HT0 #HLT10
+elim (cpr_inv_lift1 … HL21 … HT12 … HLT2) -HLT2 #T0 #HT0 #HLT10
 @(IHT1 … HLT10) // -L1 -L2 #H destruct
 >(lift_mono … HT0 … HT12) in HT2; -T1 /2 width=1/
 qed.
 
 (* Basic_1: was: sn3_gen_lift *)
-lemma csn_inv_lift: ∀L2,L1,T1,d,e. L1 ⊢ ⬇* T1 →
-                    ∀T2. ⇩[d, e] L1 ≡ L2 → ⇧[d, e] T2 ≡ T1 → L2 ⊢ ⬇* T2.
+lemma csn_inv_lift: ∀L2,L1,T1,d,e. L1 ⊢ ⬊* T1 →
+                    ∀T2. ⇩[d, e] L1 ≡ L2 → ⇧[d, e] T2 ≡ T1 → L2 ⊢ ⬊* T2.
 #L2 #L1 #T1 #d #e #H elim H -T1 #T1 #_ #IHT1 #T2 #HL12 #HT21
 @csn_intro #T #HLT2 #HT2
 elim (lift_total T d e) #T0 #HT0
@@ -44,7 +44,7 @@ qed.
 (* Advanced properties ******************************************************)
 
 (* Basic_1: was: sn3_abbr *)
-lemma csn_lref_abbr: ∀L,K,V,i. ⇩[0, i] L ≡ K. ⓓV → K ⊢ ⬇* V → L ⊢ ⬇* #i.
+lemma csn_lref_abbr: ∀L,K,V,i. ⇩[0, i] L ≡ K. ⓓV → K ⊢ ⬊* V → L ⊢ ⬊* #i.
 #L #K #V #i #HLK #HV
 @csn_intro #X #H #Hi
 elim (cpr_inv_lref1 … H) -H
@@ -58,7 +58,7 @@ elim (cpr_inv_lref1 … H) -H
 ]
 qed.
 
-lemma csn_abst: ∀L,W. L ⊢ ⬇* W → ∀I,V,T. L. ⓑ{I} V ⊢ ⬇* T → L ⊢ ⬇* ⓛW. T.
+lemma csn_abst: ∀L,W. L ⊢ ⬊* W → ∀I,V,T. L. ⓑ{I} V ⊢ ⬊* T → L ⊢ ⬊* ⓛW. T.
 #L #W #HW elim HW -W #W #_ #IHW #I #V #T #HT @(csn_ind … HT) -T #T #HT #IHT
 @csn_intro #X #H1 #H2
 elim (cpr_inv_abst1 … H1 I V) -H1
@@ -69,9 +69,9 @@ elim (eq_false_inv_tpair_sn … H2) -H2
 ]
 qed.
 
-lemma csn_appl_simple: ∀L,V. L ⊢ ⬇* V → ∀T1.
-                       (∀T2. L ⊢ T1 ➡ T2 → (T1 = T2 → ⊥) → L ⊢ ⬇* ⓐV. T2) →
-                       𝐒⦃T1⦄ → L ⊢ ⬇* ⓐV. T1.
+lemma csn_appl_simple: ∀L,V. L ⊢ ⬊* V → ∀T1.
+                       (∀T2. L ⊢ T1 ➡ T2 → (T1 = T2 → ⊥) → L ⊢ ⬊* ⓐV. T2) →
+                       𝐒⦃T1⦄ → L ⊢ ⬊* ⓐV. T1.
 #L #V #H @(csn_ind … H) -V #V #_ #IHV #T1 #IHT1 #HT1
 @csn_intro #X #H1 #H2
 elim (cpr_inv_appl1_simple … H1 ?) // -H1
@@ -91,7 +91,7 @@ qed.
 (* Advanced inversion lemmas ************************************************)
 
 (* Basic_1: was: sn3_gen_def *)
-lemma csn_inv_lref_abbr: ∀L,K,V,i. ⇩[0, i] L ≡ K. ⓓV → L ⊢ ⬇* #i → K ⊢ ⬇* V.
+lemma csn_inv_lref_abbr: ∀L,K,V,i. ⇩[0, i] L ≡ K. ⓓV → L ⊢ ⬊* #i → K ⊢ ⬊* V.
 #L #K #V #i #HLK #Hi
 elim (lift_total V 0 (i+1)) #V0 #HV0
 lapply (ldrop_fwd_ldrop2 … HLK) #H0LK

@@ -53,7 +53,7 @@ qed-.
 
 fact sstas_inv_lref1_aux: ∀h,g,L,T,U. ⦃h, L⦄ ⊢ T •*[g] U → ∀j. T = #j →
                           ∃∃I,K,V,W. ⇩[0, j] L ≡ K. ⓑ{I}V & ⦃h, K⦄ ⊢ V •*[g] W &
-                                     L ⊢ U ▼*[0, j + 1] ≡ W.
+                                     L ⊢ ▼*[0, j + 1] U ≡ W.
 #h #g #L #T #U #H @(sstas_ind_alt … H) -T
 [ #T #HUT #j #H destruct
   elim (ssta_inv_lref1 … HUT) -HUT * #K #V #W [2: #l] #HLK #HVW #HVT

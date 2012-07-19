@@ -55,7 +55,7 @@ qed.
 lemma cnf_lift: ∀L0,L,T,T0,d,e.
                 L ⊢ 𝐍⦃T⦄ → ⇩[d, e] L0 ≡ L → ⇧[d, e] T ≡ T0 → L0 ⊢ 𝐍⦃T0⦄.
 #L0 #L #T #T0 #d #e #HLT #HL0 #HT0 #X #H
-elim (cpr_inv_lift … HL0 … HT0 … H) -L0 #T1 #HT10 #HT1
+elim (cpr_inv_lift1 … HL0 … HT0 … H) -L0 #T1 #HT10 #HT1
 <(HLT … HT1) in HT0; -L #HT0
 >(lift_mono … HT10 … HT0) -T1 -X //
 qed.

@@ -1,0 +1,64 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/reducibility/xpr.ma".
+(*
+include "basic_2/reducibility/cnf.ma".
+*)
+(* EXTENDED PARALLEL COMPUTATION ON TERMS ***********************************)
+
+definition xprs: ∀h. sd h → lenv → relation term ≝
+                 λh,g,L. TC … (xpr h g L).
+
+interpretation "extended parallel computation (term)"
+   'XPRedStar h g L T1 T2 = (xprs h g L T1 T2).
+
+(* Basic eliminators ********************************************************)
+
+lemma xprs_ind: ∀h,g,L,T1. ∀R:predicate term. R T1 →
+                (∀T,T2. ⦃h, L⦄ ⊢ T1 ➸*[g] T → ⦃h, L⦄ ⊢ T ➸[g] T2 → R T → R T2) →
+                ∀T2. ⦃h, L⦄ ⊢ T1 ➸*[g] T2 → R T2.
+#h #g #L #T1 #R #HT1 #IHT1 #T2 #HT12
+@(TC_star_ind … HT1 IHT1 … HT12) //
+qed-.
+
+lemma xprs_ind_dx: ∀h,g,L,T2. ∀R:predicate term. R T2 →
+                   (∀T1,T. ⦃h, L⦄ ⊢ T1 ➸[g] T → ⦃h, L⦄ ⊢ T ➸*[g] T2 → R T → R T1) →
+                   ∀T1. ⦃h, L⦄ ⊢ T1 ➸*[g] T2 → R T1.
+#h #g #L #T2 #R #HT2 #IHT2 #T1 #HT12
+@(TC_star_ind_dx … HT2 IHT2 … HT12) //
+qed-.
+
+(* Basic properties *********************************************************)
+
+lemma xprs_refl: ∀h,g,L,T. ⦃h, L⦄ ⊢ T ➸*[g] T.
+/2 width=1/ qed.
+
+lemma xprs_strap1: ∀h,g,L,T1,T,T2.
+                   ⦃h, L⦄ ⊢ T1 ➸*[g] T → ⦃h, L⦄ ⊢ T ➸[g] T2 → ⦃h, L⦄ ⊢ T1 ➸*[g] T2.
+/2 width=3/ qed.
+
+lemma xprs_strap2: ∀h,g,L,T1,T,T2.
+                   ⦃h, L⦄ ⊢ T1 ➸[g] T → ⦃h, L⦄ ⊢ T ➸*[g] T2 → ⦃h, L⦄ ⊢ T1 ➸*[g] T2.
+/2 width=3/ qed.
+
+(* Basic inversion lemmas ***************************************************)
+(*
+axiom xprs_inv_cnf1: ∀L,T,U. L ⊢ T ➡* U → L ⊢ 𝐍⦃T⦄ → T = U.
+(*
+#L #T #U #H @(xprs_ind_dx … H) -T //
+#T0 #T #H1T0 #_ #IHT #H2T0
+lapply (H2T0 … H1T0) -H1T0 #H destruct /2 width=1/
+qed-.
+*)*)
