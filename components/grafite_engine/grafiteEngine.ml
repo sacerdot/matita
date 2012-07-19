@@ -915,8 +915,13 @@ let rec eval_executable ~include_paths opts status (text,prefix_len,ex) =
        let status =
         List.fold_left 
           (fun status tac ->
+            let time0 = Unix.gettimeofday () in
             let status = eval_ng_tac (text,prefix_len,tac) status in
-            subst_metasenv_and_fix_names status)
+            let time3 = Unix.gettimeofday () in
+            HLog.debug ("... eval_ng_tac done in " ^ string_of_float (time3 -. time0) ^ "s");
+            let status = subst_metasenv_and_fix_names status in
+            let time3 = Unix.gettimeofday () in
+            HLog.debug ("... subst_metasenv_and_fix_names done in " ^ string_of_float (time3 -. time0) ^ "s"); status)
           status tacl
        in
         status
