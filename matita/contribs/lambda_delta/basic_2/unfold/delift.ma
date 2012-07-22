@@ -48,10 +48,10 @@ lemma delift_lref_ge: ∀L,d,e,i. d + e ≤ i → L ⊢ ▼*[d, e] #i ≡ #(i - 
 lemma delift_gref: ∀L,d,e,p. L ⊢ ▼*[d, e] §p ≡ §p.
 /2 width=3/ qed.
 
-lemma delift_bind: ∀I,L,V1,V2,T1,T2,d,e.
+lemma delift_bind: ∀a,I,L,V1,V2,T1,T2,d,e.
                    L ⊢ ▼*[d, e] V1 ≡ V2 → L. ⓑ{I} V2 ⊢ ▼*[d+1, e] T1 ≡ T2 →
-                   L ⊢ ▼*[d, e] ⓑ{I} V1. T1 ≡ ⓑ{I} V2. T2.
-#I #L #V1 #V2 #T1 #T2 #d #e * #V #HV1 #HV2 * #T #HT1 #HT2
+                   L ⊢ ▼*[d, e] ⓑ{a,I} V1. T1 ≡ ⓑ{a,I} V2. T2.
+#a #I #L #V1 #V2 #T1 #T2 #d #e * #V #HV1 #HV2 * #T #HT1 #HT2
 lapply (tpss_lsubs_trans … HT1 (L. ⓑ{I} V) ?) -HT1 /2 width=1/ /3 width=5/
 qed.
 
@@ -75,11 +75,11 @@ lemma delift_inv_gref1: ∀L,U2,d,e,p. L ⊢ ▼*[d, e] §p ≡ U2 → U2 = §p.
 >(lift_inv_gref2 … HU2) -HU2 //
 qed-.
 
-lemma delift_inv_bind1: ∀I,L,V1,T1,U2,d,e. L ⊢ ▼*[d, e] ⓑ{I} V1. T1 ≡ U2 →
+lemma delift_inv_bind1: ∀a,I,L,V1,T1,U2,d,e. L ⊢ ▼*[d, e] ⓑ{a,I} V1. T1 ≡ U2 →
                         ∃∃V2,T2. L ⊢ ▼*[d, e] V1 ≡ V2 &
                                  L. ⓑ{I} V2 ⊢ ▼*[d+1, e] T1 ≡ T2 &
-                                 U2 = ⓑ{I} V2. T2.
-#I #L #V1 #T1 #U2 #d #e * #U #HU #HU2
+                                 U2 = ⓑ{a,I} V2. T2.
+#a #I #L #V1 #T1 #U2 #d #e * #U #HU #HU2
 elim (tpss_inv_bind1 … HU) -HU #V #T #HV1 #HT1 #X destruct
 elim (lift_inv_bind2 … HU2) -HU2 #V2 #T2 #HV2 #HT2
 lapply (tpss_lsubs_trans … HT1 (L. ⓑ{I} V2) ?) -HT1 /2 width=1/ /3 width=5/

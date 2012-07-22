@@ -31,7 +31,7 @@ theorem tps_conf_eq: ∀L,T0,T1,d1,e1. L ⊢ T0 ▶ [d1, e1] T1 →
     lapply (ldrop_mono … HLK1 … HLK2) -HLK1 -HLK2 #H destruct
     >(lift_mono … HVT1 … HVT2) -HVT1 -HVT2 /2 width=3/
   ]
-| #L #I #V0 #V1 #T0 #T1 #d1 #e1 #_ #_ #IHV01 #IHT01 #X #d2 #e2 #HX
+| #L #a #I #V0 #V1 #T0 #T1 #d1 #e1 #_ #_ #IHV01 #IHT01 #X #d2 #e2 #HX
   elim (tps_inv_bind1 … HX) -HX #V2 #T2 #HV02 #HT02 #HX destruct
   lapply (tps_lsubs_trans … HT02 (L. ⓑ{I} V1) ?) -HT02 /2 width=1/ #HT02
   elim (IHV01 … HV02) -V0 #V #HV1 #HV2
@@ -66,7 +66,7 @@ theorem tps_conf_neq: ∀L1,T0,T1,d1,e1. L1 ⊢ T0 ▶ [d1, e1] T1 →
       elim (lt_refl_false … H)
     ]
   ]
-| #L1 #I #V0 #V1 #T0 #T1 #d1 #e1 #_ #_ #IHV01 #IHT01 #L2 #X #d2 #e2 #HX #H
+| #L1 #a #I #V0 #V1 #T0 #T1 #d1 #e1 #_ #_ #IHV01 #IHT01 #L2 #X #d2 #e2 #HX #H
   elim (tps_inv_bind1 … HX) -HX #V2 #T2 #HV02 #HT02 #HX destruct
   elim (IHV01 … HV02 H) -V0 #V #HV1 #HV2
   elim (IHT01 … HT02 ?) -T0
@@ -98,7 +98,7 @@ theorem tps_trans_ge: ∀L,T1,T0,d,e. L ⊢ T1 ▶ [d, e] T0 →
 | #L #K #V #V2 #i #d #e #Hdi #Hide #HLK #HVW #T2 #HVT2 #He
   lapply (tps_weak … HVT2 0 (i +1) ? ?) -HVT2 /2 width=1/ #HVT2
   <(tps_inv_lift1_eq … HVT2 … HVW) -HVT2 /2 width=4/
-| #L #I #V1 #V0 #T1 #T0 #d #e #_ #_ #IHV10 #IHT10 #X #H #He
+| #L #a #I #V1 #V0 #T1 #T0 #d #e #_ #_ #IHV10 #IHT10 #X #H #He
   elim (tps_inv_bind1 … H) -H #V2 #T2 #HV02 #HT02 #H destruct
   lapply (tps_lsubs_trans … HT02 (L. ⓑ{I} V0) ?) -HT02 /2 width=1/ #HT02
   lapply (IHT10 … HT02 He) -T0 #HT12
@@ -117,7 +117,7 @@ theorem tps_trans_down: ∀L,T1,T0,d1,e1. L ⊢ T1 ▶ [d1, e1] T0 →
   lapply (transitive_le … Hde2d1 Hdi1) -Hde2d1 #Hde2i1
   lapply (tps_weak … HWT2 0 (i1 + 1) ? ?) -HWT2 normalize /2 width=1/ -Hde2i1 #HWT2
   <(tps_inv_lift1_eq … HWT2 … HVW) -HWT2 /4 width=4/
-| #L #I #V1 #V0 #T1 #T0 #d1 #e1 #_ #_ #IHV10 #IHT10 #X #d2 #e2 #HX #de2d1
+| #L #a #I #V1 #V0 #T1 #T0 #d1 #e1 #_ #_ #IHV10 #IHT10 #X #d2 #e2 #HX #de2d1
   elim (tps_inv_bind1 … HX) -HX #V2 #T2 #HV02 #HT02 #HX destruct
   lapply (tps_lsubs_trans … HT02 (L. ⓑ{I} V0) ?) -HT02 /2 width=1/ #HT02
   elim (IHV10 … HV02 ?) -IHV10 -HV02 // #V

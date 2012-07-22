@@ -48,21 +48,45 @@ notation "hvbox( ② { I } break term 55 T1 . break term 55 T )"
  non associative with precedence 55
  for @{ 'SnItem2 $I $T1 $T }.
 
-notation "hvbox( ⓑ { I } break term 55 T1 . break term 55 T )"
+notation "hvbox( ⓑ { a , I } break term 55 T1 . break term 55 T )"
  non associative with precedence 55
- for @{ 'SnBind2 $I $T1 $T }.
+ for @{ 'SnBind2 $a $I $T1 $T }.
+
+notation "hvbox( + ⓑ { I } break term 55 T1 . break term 55 T )"
+ non associative with precedence 55
+ for @{ 'SnBind2Pos $I $T1 $T }.
+
+notation "hvbox( - ⓑ { I } break term 55 T1 . break term 55 T )"
+ non associative with precedence 55
+ for @{ 'SnBind2Neg $I $T1 $T }.
 
 notation "hvbox( ⓕ { I } break term 55 T1 . break term 55 T )"
  non associative with precedence 55
  for @{ 'SnFlat2 $I $T1 $T }.
 
-notation "hvbox( ⓓ  term 55 T1 . break term 55 T2 )"
+notation "hvbox( ⓓ { a } term 55 T1 . break term 55 T2 )"
  non associative with precedence 55
- for @{ 'SnAbbr $T1 $T2 }.
+ for @{ 'SnAbbr $a $T1 $T2 }.
 
-notation "hvbox( ⓛ  term 55 T1 . break term 55 T2 )"
+notation "hvbox( + ⓓ term 55 T1 . break term 55 T2 )"
  non associative with precedence 55
- for @{ 'SnAbst $T1 $T2 }.
+ for @{ 'SnAbbrPos $T1 $T2 }.
+
+notation "hvbox( - ⓓ term 55 T1 . break term 55 T2 )"
+ non associative with precedence 55
+ for @{ 'SnAbbrNeg $T1 $T2 }.
+
+notation "hvbox( ⓛ { a } term 55 T1 . break term 55 T2 )"
+ non associative with precedence 55
+ for @{ 'SnAbst $a $T1 $T2 }.
+
+notation "hvbox( + ⓛ term 55 T1 . break term 55 T2 )"
+ non associative with precedence 55
+ for @{ 'SnAbstPos $T1 $T2 }.
+
+notation "hvbox( - ⓛ term 55 T1 . break term 55 T2 )"
+ non associative with precedence 55
+ for @{ 'SnAbstNeg $T1 $T2 }.
 
 notation "hvbox( ⓐ  term 55 T1 . break term 55 T2 )"
  non associative with precedence 55
@@ -232,9 +256,9 @@ notation "hvbox( h ⊢ break term 46 L1 • ⊑ [ g ] break term 46 L2 )"
 
 (* Unwind *******************************************************************)
 
-notation "hvbox( ⦃ h , break L ⦄ ⊢ break term 46 T1 •* break [ g ] break term 46 T2 )"
+notation "hvbox( L1 ⊢ ⧫* break term 46 T ≡ break term 46 L2 )"
    non associative with precedence 45
-   for @{ 'StaticTypeStar $h $g $L $T1 $T2 }.
+   for @{ 'Unwind $L1 $T $L2 }.
 
 (* Reducibility *************************************************************)
 
@@ -297,6 +321,14 @@ notation "hvbox( L ⊢ break term 46 T1 ➡ break term 46 T2 )"
 notation "hvbox( L1 ⊢ ➡ break term 46 L2 )"
    non associative with precedence 45
    for @{ 'CPRed $L1 $L2 }.
+
+notation "hvbox( ⦃ L1 ⦄ ➡ break ⦃ L2 ⦄ )"
+   non associative with precedence 45
+   for @{ 'FocalizedPRed $L1 $L2 }.
+
+notation "hvbox( ⦃ L1, break T1 ⦄ ➡ break ⦃ L2 , break T2 ⦄ )"
+   non associative with precedence 45
+   for @{ 'FocalizedPRed $L1 $T1 $L2 $T2 }.
 
 notation "hvbox( ⦃ h , break L ⦄ ⊢ break term 46 T1 ➸ break [ g ] break term 46 T2 )"
    non associative with precedence 45

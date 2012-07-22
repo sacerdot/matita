@@ -47,7 +47,7 @@ fact sfr_delift_aux: ∀L,T,T1,d,e. d + e ≤ |L| → ≽ [d, e] L → T = T1 �
   elim (IH … HKL … HK ?) -IH -HKL -HK
   [3: // |2: skip |4: >H -H /2 width=1/ ] -Hde -H #V2 #V12 (**) (* H erased two times *)
   elim (lift_total V2 0 d) /3 width=7/
-| #I #V1 #T1 #d #e #Hde #HL #H destruct
+| #a #I #V1 #T1 #d #e #Hde #HL #H destruct
   elim (IH … V1 … Hde HL ?) [2,4: // |3: skip ] #V2 #HV12
   elim (IH (L.ⓑ{I}V1) T1 ? ? (d+1) e ? ? ?) -IH [3,6: // |2: skip |4,5: /2 width=1/ ] -Hde -HL #T2 #HT12
   lapply (delift_lsubs_trans … HT12 (L.ⓑ{I}V2) ?) -HT12 /2 width=1/ /3 width=4/

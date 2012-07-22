@@ -20,9 +20,9 @@ inductive tps: nat → nat → lenv → relation term ≝
 | tps_atom : ∀L,I,d,e. tps d e L (⓪{I}) (⓪{I})
 | tps_subst: ∀L,K,V,W,i,d,e. d ≤ i → i < d + e →
              ⇩[0, i] L ≡ K. ⓓV → ⇧[0, i + 1] V ≡ W → tps d e L (#i) W
-| tps_bind : ∀L,I,V1,V2,T1,T2,d,e.
+| tps_bind : ∀L,a,I,V1,V2,T1,T2,d,e.
              tps d e L V1 V2 → tps (d + 1) e (L. ⓑ{I} V2) T1 T2 →
-             tps d e L (ⓑ{I} V1. T1) (ⓑ{I} V2. T2)
+             tps d e L (ⓑ{a,I} V1. T1) (ⓑ{a,I} V2. T2)
 | tps_flat : ∀L,I,V1,V2,T1,T2,d,e.
              tps d e L V1 V2 → tps d e L T1 T2 →
              tps d e L (ⓕ{I} V1. T1) (ⓕ{I} V2. T2)
@@ -58,9 +58,9 @@ lemma tps_full: ∀K,V,T1,L,d. ⇩[0, d] L ≡ (K. ⓓV) →
   destruct
   elim (lift_total V 0 (i+1)) #W #HVW
   elim (lift_split … HVW i i ? ? ?) // /3 width=4/
-| * #I #W1 #U1 #IHW1 #IHU1 #L #d #HLK
+| * [ #a ] #I #W1 #U1 #IHW1 #IHU1 #L #d #HLK
   elim (IHW1 … HLK) -IHW1 #W2 #W #HW12 #HW2
-  [ elim (IHU1 (L. ⓑ{I} W2) (d+1) ?) -IHU1 /2 width=1/ -HLK /3 width=8/
+  [ elim (IHU1 (L. ⓑ{I} W2) (d+1) ?) -IHU1 /2 width=1/ -HLK /3 width=9/
   | elim (IHU1 … HLK) -IHU1 -HLK /3 width=8/
   ]
 ]
@@ -110,7 +110,7 @@ lemma tps_split_up: ∀L,T1,T2,d,e. L ⊢ T1 ▶ [d, e] T2 → ∀i. d ≤ i →
     generalize in match Hide; -Hide (**) (* rewriting in the premises, rewrites in the goal too *)
     >(plus_minus_m_m … Hjde) in ⊢ (% → ?); -Hjde /4 width=4/
   ]
-| #L #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #i #Hdi #Hide
+| #L #a #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #i #Hdi #Hide
   elim (IHV12 i ? ?) -IHV12 // #V #HV1 #HV2
   elim (IHT12 (i + 1) ? ?) -IHT12 /2 width=1/
   -Hdi -Hide >arith_c1x #T #HT1 #HT2
@@ -133,7 +133,7 @@ lemma tps_split_down: ∀L,T1,T2,d,e. L ⊢ T1 ▶ [d, e] T2 →
   | -Hdi -Hdj
     >(plus_minus_m_m (d+e) j) in Hide; // -Hjde /3 width=4/
   ]
-| #L #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #i #Hdi #Hide
+| #L #a #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #i #Hdi #Hide
   elim (IHV12 i ? ?) -IHV12 // #V #HV1 #HV2
   elim (IHT12 (i + 1) ? ?) -IHT12 /2 width=1/
   -Hdi -Hide >arith_c1x #T #HT1 #HT2
@@ -155,7 +155,7 @@ fact tps_inv_atom1_aux: ∀L,T1,T2,d,e. L ⊢ T1 ▶ [d, e] T2 → ∀I. T1 = �
 #L #T1 #T2 #d #e * -L -T1 -T2 -d -e
 [ #L #I #d #e #J #H destruct /2 width=1/
 | #L #K #V #T2 #i #d #e #Hdi #Hide #HLK #HVT2 #I #H destruct /3 width=8/
-| #L #I #V1 #V2 #T1 #T2 #d #e #_ #_ #J #H destruct
+| #L #a #I #V1 #V2 #T1 #T2 #d #e #_ #_ #J #H destruct
 | #L #I #V1 #V2 #T1 #T2 #d #e #_ #_ #J #H destruct
 ]
 qed.
@@ -194,22 +194,22 @@ elim (tps_inv_atom1 … H) -H //
 qed-.
 
 fact tps_inv_bind1_aux: ∀d,e,L,U1,U2. L ⊢ U1 ▶ [d, e] U2 →
-                        ∀I,V1,T1. U1 = ⓑ{I} V1. T1 →
+                        ∀a,I,V1,T1. U1 = ⓑ{a,I} V1. T1 →
                         ∃∃V2,T2. L ⊢ V1 ▶ [d, e] V2 & 
                                  L. ⓑ{I} V2 ⊢ T1 ▶ [d + 1, e] T2 &
-                                 U2 =  ⓑ{I} V2. T2.
+                                 U2 = ⓑ{a,I} V2. T2.
 #d #e #L #U1 #U2 * -d -e -L -U1 -U2
-[ #L #k #d #e #I #V1 #T1 #H destruct
-| #L #K #V #W #i #d #e #_ #_ #_ #_ #I #V1 #T1 #H destruct
-| #L #J #V1 #V2 #T1 #T2 #d #e #HV12 #HT12 #I #V #T #H destruct /2 width=5/
-| #L #J #V1 #V2 #T1 #T2 #d #e #_ #_ #I #V #T #H destruct
+[ #L #k #d #e #a #I #V1 #T1 #H destruct
+| #L #K #V #W #i #d #e #_ #_ #_ #_ #a #I #V1 #T1 #H destruct
+| #L #b #J #V1 #V2 #T1 #T2 #d #e #HV12 #HT12 #a #I #V #T #H destruct /2 width=5/
+| #L #J #V1 #V2 #T1 #T2 #d #e #_ #_ #a #I #V #T #H destruct
 ]
 qed.
 
-lemma tps_inv_bind1: ∀d,e,L,I,V1,T1,U2. L ⊢ ⓑ{I} V1. T1 ▶ [d, e] U2 →
+lemma tps_inv_bind1: ∀d,e,L,a,I,V1,T1,U2. L ⊢ ⓑ{a,I} V1. T1 ▶ [d, e] U2 →
                      ∃∃V2,T2. L ⊢ V1 ▶ [d, e] V2 & 
                               L. ⓑ{I} V2 ⊢ T1 ▶ [d + 1, e] T2 &
-                              U2 =  ⓑ{I} V2. T2.
+                              U2 = ⓑ{a,I} V2. T2.
 /2 width=3/ qed-.
 
 fact tps_inv_flat1_aux: ∀d,e,L,U1,U2. L ⊢ U1 ▶ [d, e] U2 →
@@ -219,7 +219,7 @@ fact tps_inv_flat1_aux: ∀d,e,L,U1,U2. L ⊢ U1 ▶ [d, e] U2 →
 #d #e #L #U1 #U2 * -d -e -L -U1 -U2
 [ #L #k #d #e #I #V1 #T1 #H destruct
 | #L #K #V #W #i #d #e #_ #_ #_ #_ #I #V1 #T1 #H destruct
-| #L #J #V1 #V2 #T1 #T2 #d #e #_ #_ #I #V #T #H destruct
+| #L #a #J #V1 #V2 #T1 #T2 #d #e #_ #_ #I #V #T #H destruct
 | #L #J #V1 #V2 #T1 #T2 #d #e #HV12 #HT12 #I #V #T #H destruct /2 width=5/
 ]
 qed.

@@ -34,10 +34,10 @@ elim (H0 ?) -H0 //
 qed.
 
 (* Basic_1: was: sn3_appls_beta *)
-lemma csn_applv_beta: ∀L,W. L ⊢ ⬊* W →
-                      ∀Vs,V,T. L ⊢ ⬊* ⒶVs.ⓓV.T →
-                      L ⊢ ⬊* ⒶVs. ⓐV.ⓛW. T.
-#L #W #HW #Vs elim Vs -Vs /2 width=1/ -HW
+lemma csn_applv_beta: ∀a,L,W. L ⊢ ⬊* W →
+                      ∀Vs,V,T. L ⊢ ⬊* ⒶVs.ⓓ{a}V.T →
+                      L ⊢ ⬊* ⒶVs. ⓐV.ⓛ{a}W. T.
+#a #L #W #HW #Vs elim Vs -Vs /2 width=1/ -HW
 #V0 #Vs #IHV #V #T #H1T
 lapply (csn_fwd_pair_sn … H1T) #HV0
 lapply (csn_fwd_flat_dx … H1T) #H2T
@@ -69,10 +69,10 @@ lemma csn_applv_delta: ∀L,K,V1,i. ⇩[0, i] L ≡ K. ⓓV1 →
 qed.
 
 (* Basic_1: was: sn3_appls_abbr *) 
-lemma csn_applv_theta: ∀L,V1s,V2s. ⇧[0, 1] V1s ≡ V2s →
-                       ∀V,T. L ⊢ ⬊* ⓓV. ⒶV2s. T → L ⊢ ⬊* V →
-                       L ⊢ ⬊* ⒶV1s. ⓓV. T.
-#L #V1s #V2s * -V1s -V2s /2 width=1/
+lemma csn_applv_theta: ∀a,L,V1s,V2s. ⇧[0, 1] V1s ≡ V2s →
+                       ∀V,T. L ⊢ ⬊* ⓓ{a}V. ⒶV2s. T → L ⊢ ⬊* V →
+                       L ⊢ ⬊* ⒶV1s. ⓓ{a}V. T.
+#a #L #V1s #V2s * -V1s -V2s /2 width=1/
 #V1s #V2s #V1 #V2 #HV12 #H 
 generalize in match HV12; -HV12 generalize in match V2; -V2 generalize in match V1; -V1
 elim H -V1s -V2s /2 width=3/
@@ -108,7 +108,7 @@ theorem csn_acr: acr cpr (eq …) (csn …) (λL,T. L ⊢ ⬊* T).
 [ /3 width=1/
 | /2 width=1/
 | /2 width=6/
-| #L #V1 #V2 #HV12 #V #T #H #HVT
+| #L #V1 #V2 #HV12 #a #V #T #H #HVT
   @(csn_applv_theta … HV12) -HV12 //
   @(csn_abbr) //
 | /2 width=1/

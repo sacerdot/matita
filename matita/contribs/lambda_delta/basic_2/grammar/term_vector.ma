@@ -20,7 +20,7 @@ include "basic_2/grammar/term_simple.ma".
 let rec applv Vs T on Vs ≝
   match Vs with
   [ nil        ⇒ T
-  | cons hd tl ⇒  ⓐhd. (applv tl T)
+  | cons hd tl ⇒ ⓐhd. (applv tl T)
   ].
 
 interpretation "application o vevtor (term)"
@@ -28,6 +28,6 @@ interpretation "application o vevtor (term)"
 
 (* properties concerning simple terms ***************************************)
 
-lemma applv_simple: ∀T,Vs.  𝐒⦃T⦄ -> 𝐒⦃ⒶVs.T⦄.
+lemma applv_simple: ∀T,Vs.  𝐒⦃T⦄ → 𝐒⦃ⒶVs.T⦄.
 #T * //
 qed.

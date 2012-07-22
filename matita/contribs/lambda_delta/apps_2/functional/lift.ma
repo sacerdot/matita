@@ -25,8 +25,8 @@ let rec flift d e U on U ≝ match U with
   | GRef _ ⇒ U
   ]
 | TPair I V T ⇒ match I with
-  [ Bind2 I ⇒ ⓑ{I} (flift d e V). (flift (d+1) e T)
-  | Flat2 I ⇒ ⓕ{I} (flift d e V). (flift d e T)
+  [ Bind2 a I ⇒ ⓑ{a,I} (flift d e V). (flift (d+1) e T)
+  | Flat2 I   ⇒ ⓕ{I} (flift d e V). (flift d e T)
   ]
 ].
 
@@ -37,7 +37,7 @@ interpretation "functional relocation" 'Lift d e T = (flift d e T).
 theorem flift_lift: ∀T,d,e. ⇧[d, e] T ≡ ↑[d, e] T.
 #T elim T -T
 [ * #i #d #e //
-  elim (lt_or_eq_or_gt i d) #Hid normalize 
+  elim (lt_or_eq_or_gt i d) #Hid normalize
   [ >(tri_lt ?????? Hid) /2 width=1/
   | /2 width=1/
   | >(tri_gt ?????? Hid) /3 width=2/

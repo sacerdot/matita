@@ -30,12 +30,12 @@ lemma csn_fwd_pair_sn: ∀I,L,V,T. L ⊢ ⬊* ②{I} V. T → L ⊢ ⬊* V.
 /2 width=5/ qed.
 
 fact csn_fwd_bind_dx_aux: ∀L,U. L ⊢ ⬊* U →
-                          ∀I,V,T. U = ⓑ{I} V. T → L. ⓑ{I} V ⊢ ⬊* T.
-#L #U #H elim H -H #U0 #_ #IH #I #V #T #H destruct
+                          ∀a,I,V,T. U = ⓑ{a,I} V. T → L. ⓑ{I} V ⊢ ⬊* T.
+#L #U #H elim H -H #U0 #_ #IH #a #I #V #T #H destruct
 @csn_intro #T2 #HLT2 #HT2
-@(IH (ⓑ{I} V. T2)) -IH // /2 width=1/ -HLT2 #H destruct /2 width=1/
+@(IH (ⓑ{a,I} V. T2)) -IH // /2 width=1/ -HLT2 #H destruct /2 width=1/
 qed.
 
 (* Basic_1: was: sn3_gen_bind *)
-lemma csn_fwd_bind_dx: ∀I,L,V,T. L ⊢ ⬊* ⓑ{I} V. T → L. ⓑ{I} V ⊢ ⬊* T.
-/2 width=3/ qed.
+lemma csn_fwd_bind_dx: ∀a,I,L,V,T. L ⊢ ⬊* ⓑ{a,I} V. T → L. ⓑ{I} V ⊢ ⬊* T.
+/2 width=4/ qed.

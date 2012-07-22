@@ -90,7 +90,7 @@ lemma ssta_ltpss_tpss_conf: ∀h,g,L1,T1,U1,l. ⦃h, L1⦄ ⊢ T1 •[g, l] U1 �
     elim (ltpss_inv_tpss21 … H ?) -H /2 width=1/ -Hdi -Hide #K0 #V0 #_ #_ #H destruct
     lapply (ldrop_mono … HL2K0 … HLK2) -HL2K0 -HLK2 #H destruct
   ]
-| #I #L1 #V1 #T1 #U1 #l #_ #IHTU1 #L2 #d #e #HL12 #X #H
+| #a #I #L1 #V1 #T1 #U1 #l #_ #IHTU1 #L2 #d #e #HL12 #X #H
   elim (tpss_inv_bind1 … H) -H #V2 #T2 #HV12 #HT12 #H destruct
   elim (IHTU1 … HT12) -IHTU1 -HT12 /2 width=1/ -HL12 /3 width=5/
 | #L1 #V1 #T1 #U1 #l #_ #IHTU1 #L2 #d #e #HL12 #X #H

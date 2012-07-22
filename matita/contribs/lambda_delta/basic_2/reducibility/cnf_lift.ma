@@ -36,8 +36,8 @@ lapply (ldrop_mono … HLK … HLK0) -L #H destruct
 qed.
 
 (* Basic_1: was: nf2_abst *)
-lemma cnf_abst: ∀I,L,V,W,T. L ⊢ 𝐍⦃W⦄ → L. ⓑ{I} V ⊢ 𝐍⦃T⦄ → L ⊢ 𝐍⦃ⓛW.T⦄.
-#I #L #V #W #T #HW #HT #X #H
+lemma cnf_abst: ∀a,I,L,V,W,T. L ⊢ 𝐍⦃W⦄ → L. ⓑ{I} V ⊢ 𝐍⦃T⦄ → L ⊢ 𝐍⦃ⓛ{a}W.T⦄.
+#a #I #L #V #W #T #HW #HT #X #H
 elim (cpr_inv_abst1 … H I V) -H #W0 #T0 #HW0 #HT0 #H destruct
 >(HW … HW0) -W0 >(HT … HT0) -T0 //
 qed.

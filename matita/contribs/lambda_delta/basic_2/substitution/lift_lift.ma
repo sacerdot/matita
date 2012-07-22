@@ -29,7 +29,7 @@ theorem lift_inj: ∀d,e,T1,U. ⇧[d,e] T1 ≡ U → ∀T2. ⇧[d,e] T2 ≡ U �
   lapply (lift_inv_lref2_ge … HX ?) -HX // /2 width=1/
 | #p #d #e #X #HX
   lapply (lift_inv_gref2 … HX) -HX //
-| #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #X #HX
+| #a #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #X #HX
   elim (lift_inv_bind2 … HX) -HX #V #T #HV1 #HT1 #HX destruct /3 width=1/
 | #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #X #HX
   elim (lift_inv_flat2 … HX) -HX #V #T #HV1 #HT1 #HX destruct /3 width=1/
@@ -58,7 +58,7 @@ theorem lift_div_le: ∀d1,e1,T1,T. ⇧[d1, e1] T1 ≡ T →
   ]
 | #p #d1 #e1 #d2 #e2 #T2 #Hk #Hd12
   lapply (lift_inv_gref2 … Hk) -Hk #Hk destruct /3 width=3/
-| #I #W1 #W #U1 #U #d1 #e1 #_ #_ #IHW #IHU #d2 #e2 #T2 #H #Hd12
+| #a #I #W1 #W #U1 #U #d1 #e1 #_ #_ #IHW #IHU #d2 #e2 #T2 #H #Hd12
   lapply (lift_inv_bind2 … H) -H * #W2 #U2 #HW2 #HU2 #H destruct
   elim (IHW … HW2 ?) // -IHW -HW2 #W0 #HW2 #HW1
   >plus_plus_comm_23 in HU2; #HU2 elim (IHU … HU2 ?) /2 width=1/ /3 width=5/
@@ -88,7 +88,7 @@ theorem lift_div_be: ∀d1,e1,T1,T. ⇧[d1, e1] T1 ≡ T →
     @lift_lref_ge_minus_eq [ >plus_minus_commutative // | /2 width=1/ ]
   ]
 | #p #d1 #e1 #e #e2 #T2 #H >(lift_inv_gref2 … H) -H /2 width=3/
-| #I #V1 #V #T1 #T #d1 #e1 #_ #_ #IHV1 #IHT1 #e #e2 #X #H #He1 #He1e2
+| #a #I #V1 #V #T1 #T #d1 #e1 #_ #_ #IHV1 #IHT1 #e #e2 #X #H #He1 #He1e2
   elim (lift_inv_bind2 … H) -H #V2 #T2 #HV2 #HT2 #H destruct
   elim (IHV1 … HV2 ? ?) -V // >plus_plus_comm_23 in HT2; #HT2
   elim (IHT1 … HT2 ? ?) -T // -He1 -He1e2 /3 width=5/
@@ -109,7 +109,7 @@ theorem lift_mono: ∀d,e,T,U1. ⇧[d,e] T ≡ U1 → ∀U2. ⇧[d,e] T ≡ U2 �
   lapply (lift_inv_lref1_ge … HX ?) -HX //
 | #p #d #e #X #HX
   lapply (lift_inv_gref1 … HX) -HX //
-| #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #X #HX
+| #a #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #X #HX
   elim (lift_inv_bind1 … HX) -HX #V #T #HV1 #HT1 #HX destruct /3 width=1/
 | #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #X #HX
   elim (lift_inv_flat1 … HX) -HX #V #T #HV1 #HT1 #HX destruct /3 width=1/
@@ -133,7 +133,7 @@ theorem lift_trans_be: ∀d1,e1,T1,T. ⇧[d1, e1] T1 ≡ T →
   ]
 | #p #d1 #e1 #d2 #e2 #T2 #HT2 #_ #_
   >(lift_inv_gref1 … HT2) -HT2 //
-| #I #V1 #V2 #T1 #T2 #d1 #e1 #_ #_ #IHV12 #IHT12 #d2 #e2 #X #HX #Hd12 #Hd21
+| #a #I #V1 #V2 #T1 #T2 #d1 #e1 #_ #_ #IHV12 #IHT12 #d2 #e2 #X #HX #Hd12 #Hd21
   elim (lift_inv_bind1 … HX) -HX #V0 #T0 #HV20 #HT20 #HX destruct
   lapply (IHV12 … HV20 ? ?) // -IHV12 -HV20 #HV10
   lapply (IHT12 … HT20 ? ?) /2 width=1/
@@ -160,7 +160,7 @@ theorem lift_trans_le: ∀d1,e1,T1,T. ⇧[d1, e1] T1 ≡ T →
   >plus_plus_comm_23 /4 width=3/
 | #p #d1 #e1 #d2 #e2 #X #HX #_
   >(lift_inv_gref1 … HX) -HX /2 width=3/
-| #I #V1 #V2 #T1 #T2 #d1 #e1 #_ #_ #IHV12 #IHT12 #d2 #e2 #X #HX #Hd21
+| #a #I #V1 #V2 #T1 #T2 #d1 #e1 #_ #_ #IHV12 #IHT12 #d2 #e2 #X #HX #Hd21
   elim (lift_inv_bind1 … HX) -HX #V0 #T0 #HV20 #HT20 #HX destruct
   elim (IHV12 … HV20 ?) -IHV12 -HV20 //
   elim (IHT12 … HT20 ?) -IHT12 -HT20 /2 width=1/ /3 width=5/
@@ -187,7 +187,7 @@ theorem lift_trans_ge: ∀d1,e1,T1,T. ⇧[d1, e1] T1 ≡ T →
   elim (lift_inv_lref1 … HX) -HX * #Hied #HX destruct /4 width=3/
 | #p #d1 #e1 #d2 #e2 #X #HX #_
   >(lift_inv_gref1 … HX) -HX /2 width=3/
-| #I #V1 #V2 #T1 #T2 #d1 #e1 #_ #_ #IHV12 #IHT12 #d2 #e2 #X #HX #Hded
+| #a #I #V1 #V2 #T1 #T2 #d1 #e1 #_ #_ #IHV12 #IHT12 #d2 #e2 #X #HX #Hded
   elim (lift_inv_bind1 … HX) -HX #V0 #T0 #HV20 #HT20 #HX destruct
   elim (IHV12 … HV20 ?) -IHV12 -HV20 //
   elim (IHT12 … HT20 ?) -IHT12 -HT20 /2 width=1/ #T

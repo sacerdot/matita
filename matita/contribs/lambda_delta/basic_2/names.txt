@@ -9,14 +9,13 @@ IH     : reserved: inductive premise
 I,J    : item
 K,L    : local environment
 M,N    : reserved: future use
-O      : 
-P,Q    : reserved: future use (lambda_delta 4)
+O,P,Q  :
 R      : generic predicate (relation)
 S      : RTM stack
 T,U,V,W: term
 X,Y,Z  : reserved: transient objet denoted by a capital letter
 
-a,b    : reserved: future use (lambda_delta 4)
+a,b    : binder polarity
 c      : reserved: future use (lambda_delta 3)
 d      : relocation depth
 e      : relocation height

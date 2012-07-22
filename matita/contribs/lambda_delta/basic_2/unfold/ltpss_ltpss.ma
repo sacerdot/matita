@@ -58,7 +58,7 @@ fact ltpss_tpss_trans_eq_aux: ∀Y1,X2,L1,T2,U2,d,e.
   lapply (tpss_trans_eq … HV01 HV12) -V1 #HV02
   lapply (IH … HV02 … HK01 ? ?) -IH -HV02 -HK01
   [1,3: // |2,4: skip | normalize /2 width=1/ | /2 width=6/ ]
-| #L #I #V1 #V2 #T1 #T2 #d #e #HV12 #HT12 #_ #_ #L0 #HL0 #H1 #H2 destruct
+| #L #a #I #V1 #V2 #T1 #T2 #d #e #HV12 #HT12 #_ #_ #L0 #HL0 #H1 #H2 destruct
   lapply (tpss_lsubs_trans … HT12 (L. ⓑ{I} V1) ?) -HT12 /2 width=1/ #HT12
   lapply (IH … HV12 … HL0 ? ?) -HV12 [1,3: // |2,4: skip |5: /2 width=2/ ] #HV12
   lapply (IH … HT12 (L0. ⓑ{I} V1) ? ? ?) -IH -HT12 [1,3,5: /2 width=2/ |2,4: skip | normalize // ] -HL0 #HT12

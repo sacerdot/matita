@@ -22,9 +22,9 @@ inductive tpssa: nat → nat → lenv → relation term ≝
 | tpssa_subst: ∀L,K,V1,V2,W2,i,d,e. d ≤ i → i < d + e →
                ⇩[0, i] L ≡ K. ⓓV1 → tpssa 0 (d + e - i - 1) K V1 V2 →
                ⇧[0, i + 1] V2 ≡ W2 → tpssa d e L (#i) W2
-| tpssa_bind : ∀L,I,V1,V2,T1,T2,d,e.
+| tpssa_bind : ∀L,a,I,V1,V2,T1,T2,d,e.
                tpssa d e L V1 V2 → tpssa (d + 1) e (L. ⓑ{I} V2) T1 T2 →
-               tpssa d e L (ⓑ{I} V1. T1) (ⓑ{I} V2. T2)
+               tpssa d e L (ⓑ{a,I} V1. T1) (ⓑ{a,I} V2. T2)
 | tpssa_flat : ∀L,I,V1,V2,T1,T2,d,e.
                tpssa d e L V1 V2 → tpssa d e L T1 T2 →
                tpssa d e L (ⓕ{I} V1. T1) (ⓕ{I} V2. T2)
@@ -60,7 +60,7 @@ lemma tpssa_tps_trans: ∀L,T1,T,d,e. L ⊢ T1 ▶▶* [d, e] T →
   lapply (ldrop_fwd_ldrop2 … HLK) #H0LK
   lapply (tps_weak … H 0 (d+e) ? ?) -H // #H
   elim (tps_inv_lift1_be … H … H0LK … HVW2 ? ?) -H -H0LK -HVW2 // /3 width=6/
-| #L #I #V1 #V #T1 #T #d #e #_ #_ #IHV1 #IHT1 #X #H
+| #L #a #I #V1 #V #T1 #T #d #e #_ #_ #IHV1 #IHT1 #X #H
   elim (tps_inv_bind1 … H) -H #V2 #T2 #HV2 #HT2 #H destruct
   lapply (tps_lsubs_trans … HT2 (L.ⓑ{I}V) ?) -HT2 /2 width=1/ #HT2
   lapply (IHV1 … HV2) -IHV1 -HV2 #HV12
@@ -87,9 +87,9 @@ lemma tpss_ind_alt: ∀R:ℕ→ℕ→lenv→relation term.
                      ⇩[O, i] L ≡ K.ⓓV1 → K ⊢ V1 ▶* [O, d + e - i - 1] V2 →
                      ⇧[O, i + 1] V2 ≡ W2 → R O (d+e-i-1) K V1 V2 → R d e L #i W2
                     ) →
-                    (∀L,I,V1,V2,T1,T2,d,e. L ⊢ V1 ▶* [d, e] V2 →
+                    (∀L,a,I,V1,V2,T1,T2,d,e. L ⊢ V1 ▶* [d, e] V2 →
                      L.ⓑ{I}V2 ⊢ T1 ▶* [d + 1, e] T2 → R d e L V1 V2 →
-                     R (d+1) e (L.ⓑ{I}V2) T1 T2 → R d e L (ⓑ{I}V1.T1) (ⓑ{I}V2.T2)
+                     R (d+1) e (L.ⓑ{I}V2) T1 T2 → R d e L (ⓑ{a,I}V1.T1) (ⓑ{a,I}V2.T2)
                     ) →
                     (∀L,I,V1,V2,T1,T2,d,e. L ⊢ V1 ▶* [d, e] V2 →
                      L ⊢ T1 ▶* [d, e] T2 → R d e L V1 V2 →

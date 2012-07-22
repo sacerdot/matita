@@ -58,8 +58,8 @@ elim (cpr_inv_lref1 … H) -H
 ]
 qed.
 
-lemma csn_abst: ∀L,W. L ⊢ ⬊* W → ∀I,V,T. L. ⓑ{I} V ⊢ ⬊* T → L ⊢ ⬊* ⓛW. T.
-#L #W #HW elim HW -W #W #_ #IHW #I #V #T #HT @(csn_ind … HT) -T #T #HT #IHT
+lemma csn_abst: ∀a,L,W. L ⊢ ⬊* W → ∀I,V,T. L. ⓑ{I} V ⊢ ⬊* T → L ⊢ ⬊* ⓛ{a}W. T.
+#a #L #W #HW elim HW -W #W #_ #IHW #I #V #T #HT @(csn_ind … HT) -T #T #HT #IHT
 @csn_intro #X #H1 #H2
 elim (cpr_inv_abst1 … H1 I V) -H1
 #W0 #T0 #HLW0 #HLT0 #H destruct

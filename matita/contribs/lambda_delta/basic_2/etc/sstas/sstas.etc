@@ -12,9 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
+notation "hvbox( ⦃ h , break L ⦄ ⊢ break term 46 T1 •* break [ g ] break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'StaticTypeStar $h $g $L $T1 $T2 }.
+
 include "basic_2/static/ssta.ma".
 
-(* STRATIFIED UNWIND ON TERMS ***********************************************)
+(* ITERATED STRATIFIED STATIC TYPE ASSIGNMENTON TERMS ***********************)
 
 inductive sstas (h:sh) (g:sd h) (L:lenv): relation term ≝
 | sstas_refl: ∀T,U. ⦃h, L⦄ ⊢ T •[g, 0] U → sstas h g L T T

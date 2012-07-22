@@ -38,13 +38,9 @@ inductive flat2: Type[0] ≝
 
 (* binary items *)
 inductive item2: Type[0] ≝
-  | Bind2: bind2 → item2 (* binding item *)
-  | Flat2: flat2 → item2 (* non-binding item *)
+  | Bind2: bool → bind2 → item2 (* polarized binding item *)
+  | Flat2: flat2 → item2        (* non-binding item *)
 .
-
-coercion Bind2.
-
-coercion Flat2.
 
 (* Basic properties *********************************************************)
 

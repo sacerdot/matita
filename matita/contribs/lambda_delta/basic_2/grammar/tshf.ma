@@ -18,7 +18,8 @@ include "basic_2/grammar/term_simple.ma".
 
 inductive tshf: relation term ≝
    | tshf_atom: ∀I. tshf (⓪{I}) (⓪{I})
-   | tshf_abst: ∀V1,V2,T1,T2. tshf (ⓛV1. T1) (ⓛV2. T2)
+   | tshf_abbr: ∀V1,V2,T1,T2. tshf (-ⓓV1. T1) (-ⓓV2. T2)
+   | tshf_abst: ∀a,V1,V2,T1,T2. tshf (ⓛ{a}V1. T1) (ⓛ{a}V2. T2)
    | tshf_appl: ∀V1,V2,T1,T2. tshf T1 T2 → 𝐒⦃T1⦄ → 𝐒⦃T2⦄ →
                 tshf (ⓐV1. T1) (ⓐV2. T2)
 .
@@ -40,8 +41,11 @@ lemma tshf_refl1: ∀T1,T2. T1 ≈ T2 → T1 ≈ T1.
 
 lemma simple_tshf_repl_dx: ∀T1,T2. T1 ≈ T2 → 𝐒⦃T1⦄ → 𝐒⦃T2⦄.
 #T1 #T2 #H elim H -T1 -T2 //
-#V1 #V2 #T1 #T2 #H
-elim (simple_inv_bind … H)
+[ #V1 #V2 #T1 #T2 #H
+  elim (simple_inv_bind … H)
+| #a #V1 #V2 #T1 #T2 #H
+  elim (simple_inv_bind … H)
+]
 qed. (**) (* remove from index *)
 
 lemma simple_tshf_repl_sn: ∀T1,T2. T1 ≈ T2 → 𝐒⦃T2⦄ → 𝐒⦃T1⦄.
@@ -49,17 +53,20 @@ lemma simple_tshf_repl_sn: ∀T1,T2. T1 ≈ T2 → 𝐒⦃T2⦄ → 𝐒⦃T1⦄
 
 (* Basic inversion lemmas ***************************************************)
 
-fact tshf_inv_bind1_aux: ∀T1,T2. T1 ≈ T2 → ∀I,W1,U1. T1 = ⓑ{I}W1.U1 →
-                         ∃∃W2,U2. I = Abst & T2 = ⓛW2. U2.
+fact tshf_inv_bind1_aux: ∀T1,T2. T1 ≈ T2 → ∀a,I,W1,U1. T1 = ⓑ{a,I}W1.U1 →
+                         ∃∃W2,U2. T2 = ⓑ{a,I}W2. U2 &
+                                  (Bind2 a I = Bind2 false Abbr ∨ I = Abst).
 #T1 #T2 * -T1 -T2
-[ #J #I #W1 #U1 #H destruct
-| #V1 #V2 #T1 #T2 #I #W1 #U1 #H destruct /2 width=3/
-| #V1 #V2 #T1 #T2 #H_ #_ #_ #I #W1 #U1 #H destruct
+[ #J #a #I #W1 #U1 #H destruct
+| #V1 #V2 #T1 #T2 #a #I #W1 #U1 #H destruct /3 width=3/
+| #b #V1 #V2 #T1 #T2 #a #I #W1 #U1 #H destruct /3 width=3/
+| #V1 #V2 #T1 #T2 #_ #_ #_ #a #I #W1 #U1 #H destruct
 ]
 qed.
 
-lemma tshf_inv_bind1: ∀I,W1,U1,T2. ⓑ{I}W1.U1 ≈ T2 →
-                      ∃∃W2,U2. I = Abst & T2 = ⓛW2. U2.
+lemma tshf_inv_bind1: ∀a,I,W1,U1,T2. ⓑ{a,I}W1.U1 ≈ T2 →
+                      ∃∃W2,U2. T2 = ⓑ{a,I}W2. U2 &
+                               (Bind2 a I = Bind2 false Abbr ∨ I = Abst).
 /2 width=5/ qed-.
 
 fact tshf_inv_flat1_aux: ∀T1,T2. T1 ≈ T2 → ∀I,W1,U1. T1 = ⓕ{I}W1.U1 →
@@ -68,6 +75,7 @@ fact tshf_inv_flat1_aux: ∀T1,T2. T1 ≈ T2 → ∀I,W1,U1. T1 = ⓕ{I}W1.U1 �
 #T1 #T2 * -T1 -T2
 [ #J #I #W1 #U1 #H destruct
 | #V1 #V2 #T1 #T2 #I #W1 #U1 #H destruct
+| #a #V1 #V2 #T1 #T2 #I #W1 #U1 #H destruct
 | #V1 #V2 #T1 #T2 #HT12 #HT1 #HT2 #I #W1 #U1 #H destruct /2 width=5/
 ]
 qed.

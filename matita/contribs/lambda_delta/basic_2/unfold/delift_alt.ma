@@ -25,9 +25,9 @@ inductive delifta: nat → nat → lenv → relation term ≝
                    ⇧[0, d] V2 ≡ W2 → delifta d e L (#i) W2
 | delifta_lref_ge: ∀L,d,e,i. d + e ≤ i → delifta d e L (#i) (#(i - e))
 | delifta_gref   : ∀L,d,e,p. delifta d e L (§p) (§p)
-| delifta_bind   : ∀L,I,V1,V2,T1,T2,d,e.
+| delifta_bind   : ∀L,a,I,V1,V2,T1,T2,d,e.
                    delifta d e L V1 V2 → delifta (d + 1) e (L. ⓑ{I} V2) T1 T2 →
-                   delifta d e L (ⓑ{I} V1. T1) (ⓑ{I} V2. T2)
+                   delifta d e L (ⓑ{a,I} V1. T1) (ⓑ{a,I} V2. T2)
 | delifta_flat   : ∀L,I,V1,V2,T1,T2,d,e.
                    delifta d e L V1 V2 → delifta d e L T1 T2 →
                    delifta d e L (ⓕ{I} V1. T1) (ⓕ{I} V2. T2)
@@ -58,7 +58,7 @@ lemma delift_delifta: ∀L,T1,T2,d,e. L ⊢ ▼*[d, e] T1 ≡ T2 → L ⊢ ▼�
     lapply (IH … HV12) // -H /2 width=6/
   | >(delift_inv_gref1 … H) -H //
   ]
-| * #I #V1 #T1 #_ #_ #IH #X #d #e #H
+| * [ #a ] #I #V1 #T1 #_ #_ #IH #X #d #e #H
   [ elim (delift_inv_bind1 … H) -H #V2 #T2 #HV12 #HT12 #H destruct
     lapply (delift_lsubs_trans … HT12 (L.ⓑ{I}V1) ?) -HT12 /2 width=1/ #HT12
     lapply (IH … HV12) -HV12 // #HV12
@@ -86,9 +86,9 @@ lemma delift_ind_alt: ∀R:ℕ→ℕ→lenv→relation term.
                       ) →
                       (∀L,d,e,i. d + e ≤ i → R d e L (#i) (#(i - e))) →
                       (∀L,d,e,p. R d e L (§p) (§p)) →
-                      (∀L,I,V1,V2,T1,T2,d,e. L ⊢ ▼*[d, e] V1 ≡ V2 →
+                      (∀L,a,I,V1,V2,T1,T2,d,e. L ⊢ ▼*[d, e] V1 ≡ V2 →
                        L.ⓑ{I}V2 ⊢ ▼*[d + 1, e] T1 ≡ T2 → R d e L V1 V2 →
-                       R (d+1) e (L.ⓑ{I}V2) T1 T2 → R d e L (ⓑ{I}V1.T1) (ⓑ{I}V2.T2)
+                       R (d+1) e (L.ⓑ{I}V2) T1 T2 → R d e L (ⓑ{a,I}V1.T1) (ⓑ{a,I}V2.T2)
                       ) →
                       (∀L,I,V1,V2,T1,T2,d,e. L ⊢ ▼*[d, e] V1 ≡ V2 →
                        L⊢ ▼*[d, e] T1 ≡ T2 → R d e L V1 V2 →

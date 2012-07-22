@@ -20,9 +20,9 @@ include "basic_2/computation/xprs.ma".
 
 (* Advanced forward lemmas **************************************************)
 
-lemma xprs_fwd_abst1: ∀h,g,L,V1,T1,U2. ⦃h, L⦄ ⊢ ⓛV1. T1 ➸*[g] U2 →
-                      ∃∃V2,T2. L ⊢ V1 ➡* V2 & U2 = ⓛV2. T2.
-#h #g #L #V1 #T1 #U2 #H @(xprs_ind … H) -U2 /2 width=4/
+lemma xprs_fwd_abst1: ∀h,g,a,L,V1,T1,U2. ⦃h, L⦄ ⊢ ⓛ{a}V1. T1 ➸*[g] U2 →
+                      ∃∃V2,T2. L ⊢ V1 ➡* V2 & U2 = ⓛ{a}V2. T2.
+#h #g #a #L #V1 #T1 #U2 #H @(xprs_ind … H) -U2 /2 width=4/
 #U #U2 #_ #HU2 * #V #T #HV1 #H destruct
 elim (xpr_inv_abst1 … HU2) -HU2 #V2 #T2 #HV2 #_ #H destruct /3 width=4/
 qed-.

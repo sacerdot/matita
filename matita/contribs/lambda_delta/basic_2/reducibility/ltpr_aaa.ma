@@ -32,17 +32,17 @@ fact aaa_ltpr_tpr_conf_aux: ∀L,T,L1,T1,A. L1 ⊢ T1 ⁝ A → L = L1 → T = T
   elim (ltpr_ldrop_conf … HLK1 … HL12) -HLK1 -HL12 #X #HLK2 #H
   elim (ltpr_inv_pair1 … H) -H #K2 #V2 #HK12 #HV12 #H destruct
   lapply (IH … HKV1 … HK1 … HK12 … HV12) // -L1 -K1 -V1 /2 width=5/
-| #L1 #V1 #T1 #B #A #HB #HA #H1 #H2 #L2 #HL12 #X #H destruct
+| #a #L1 #V1 #T1 #B #A #HB #HA #H1 #H2 #L2 #HL12 #X #H destruct
   elim (tpr_inv_abbr1 … H) -H *
   [ #V2 #T #T2 #HV12 #HT1 #HT2 #H destruct
     lapply (tps_lsubs_trans … HT2 (L2.ⓓV2) ?) -HT2 /2 width=1/ #HT2
     lapply (IH … HB … HL12 … HV12) -HB /width=5/ #HB
     lapply (IH … HA … (L2.ⓓV2) … HT1) -IH -HA -HT1 /width=5/ -T1 /2 width=1/ -L1 -V1 /3 width=5/
-  | -B #T #HT1 #HXT
+  | -B #T #HT1 #HXT #H destruct
     lapply (IH … HA … (L2.ⓓV1) … HT1) /width=5/ -T1 /2 width=1/ -L1 #HA
     @(aaa_inv_lift … HA … HXT) /2 width=1/
   ]
-| #L1 #V1 #T1 #B #A #HB #HA #H1 #H2 #L2 #HL12 #X #H destruct
+| #a #L1 #V1 #T1 #B #A #HB #HA #H1 #H2 #L2 #HL12 #X #H destruct
   elim (tpr_inv_abst1 … H) -H #V2 #T2 #HV12 #HT12 #H destruct
   lapply (IH … HB … HL12 … HV12) -HB /width=5/ #HB
   lapply (IH … HA … (L2.ⓛV2) … HT12) -IH -HA -HT12 /width=5/ -T1 /2 width=1/
@@ -51,12 +51,12 @@ fact aaa_ltpr_tpr_conf_aux: ∀L,T,L1,T1,A. L1 ⊢ T1 ⁝ A → L = L1 → T = T
   [ #V2 #T2 #HV12 #HT12 #H destruct
     lapply (IH … HV1 … HL12 … HV12) -HV1 -HV12 /width=5/ #HB
     lapply (IH … HT1 … HL12 … HT12) -IH -HT1 -HL12 -HT12 /width=5/ /2 width=3/
-  | #V2 #W2 #T0 #T2 #HV12 #HT02 #H1 #H2 destruct
+  | #a #V2 #W2 #T0 #T2 #HV12 #HT02 #H1 #H2 destruct
     elim (aaa_inv_abst … HT1) -HT1 #B0 #A0 #HB0 #HA0 #H destruct
     lapply (IH … HV1 … HL12 … HV12) -HV1 -HV12 /width=5/ #HB
     lapply (IH … HB0  … HL12 W2 ?) -HB0 /width=5/ #HB0
     lapply (IH … HA0 … (L2.ⓛW2) … HT02) -IH -HA0 -HT02 /width=5/ -T0 /2 width=1/ -L1 -V1 /4 width=7/
-  | #V0 #V2 #W0 #W2 #T0 #T2 #HV10 #HW02 #HT02 #HV02 #H1 #H2 destruct
+  | #a #V0 #V2 #W0 #W2 #T0 #T2 #HV10 #HW02 #HT02 #HV02 #H1 #H2 destruct
     elim (aaa_inv_abbr … HT1) -HT1 #B0 #HW0 #HT0
     lapply (IH … HW0  … HL12 … HW02) -HW0 /width=5/ #HW2
     lapply (IH … HV1 … HL12 … HV10) -HV1 -HV10 /width=5/ #HV0

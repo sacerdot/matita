@@ -42,39 +42,39 @@ lapply (cprs_inv_sort1 … H2) -L #H destruct //
 qed-.
 
 (* Basic_1: was: pc3_gen_sort_abst *)
-lemma cpcs_inv_sort_abst: ∀L,W,T,k. L ⊢ ⋆k ⬌* ⓛW.T → ⊥.
-#L #W #T #k #H
+lemma cpcs_inv_sort_abst: ∀a,L,W,T,k. L ⊢ ⋆k ⬌* ⓛ{a}W.T → ⊥.
+#a #L #W #T #k #H
 elim (cpcs_inv_cprs … H) -H #X #H1
 >(cprs_inv_sort1 … H1) -X #H2
 elim (cprs_inv_abst1 Abst W … H2) -H2 #W0 #T0 #_ #_ #H destruct
 qed-.
 
 (* Basic_1: was: pc3_gen_abst *)
-lemma cpcs_inv_abst: ∀L,W1,W2,T1,T2. L ⊢ ⓛW1.T1 ⬌* ⓛW2.T2 → ∀I,V.
-                     L ⊢ W1 ⬌* W2 ∧ L. ②{I}V ⊢ T1 ⬌* T2.
-#L #W1 #W2 #T1 #T2 #H #I #V
+lemma cpcs_inv_abst: ∀a1,a2,L,W1,W2,T1,T2. L ⊢ ⓛ{a1}W1.T1 ⬌* ⓛ{a2}W2.T2 → ∀I,V.
+                     ∧∧ L ⊢ W1 ⬌* W2 & L. ②{I}V ⊢ T1 ⬌* T2 & a1 = a2.
+#a1 #a2 #L #W1 #W2 #T1 #T2 #H #I #V
 elim (cpcs_inv_cprs … H) -H #T #H1 #H2
 elim (cprs_inv_abst1 I V … H1) -H1 #W0 #T0 #HW10 #HT10 #H destruct
 elim (cprs_inv_abst1 I V … H2) -H2 #W #T #HW2 #HT2 #H destruct /3 width=3/
 qed-.
 
 (* Basic_1: was: pc3_gen_abst_shift *)
-lemma cpcs_inv_abst_shift: ∀L,W1,W2,T1,T2. L ⊢ ⓛW1.T1 ⬌* ⓛW2.T2 → ∀W.
-                           L ⊢ W1 ⬌* W2 ∧ L. ⓛW ⊢ T1 ⬌* T2.
-#L #W1 #W2 #T1 #T2 #H #W
+lemma cpcs_inv_abst_shift: ∀a1,a2,L,W1,W2,T1,T2. L ⊢ ⓛ{a1}W1.T1 ⬌* ⓛ{a2}W2.T2 → ∀W.
+                           ∧∧ L ⊢ W1 ⬌* W2 & L. ⓛW ⊢ T1 ⬌* T2 & a1 = a2.
+#a1 #a2 #L #W1 #W2 #T1 #T2 #H #W
 lapply (cpcs_inv_abst … H Abst W) -H //
 qed.
 
-lemma cpcs_inv_abst1: ∀L,W1,T1,T. L ⊢ ⓛW1.T1 ⬌* T →
-                      ∃∃W2,T2. L ⊢ T ➡* ⓛW2.T2 & L ⊢ ⓛW1.T1 ➡* ⓛW2.T2.
-#L #W1 #T1 #T #H
+lemma cpcs_inv_abst1: ∀a,L,W1,T1,T. L ⊢ ⓛ{a}W1.T1 ⬌* T →
+                      ∃∃W2,T2. L ⊢ T ➡* ⓛ{a}W2.T2 & L ⊢ ⓛ{a}W1.T1 ➡* ⓛ{a}W2.T2.
+#a #L #W1 #T1 #T #H
 elim (cpcs_inv_cprs … H) -H #X #H1 #H2
 elim (cprs_inv_abst1 Abst W1 … H1) -H1 #W2 #T2 #HW12 #HT12 #H destruct
 @(ex2_2_intro … H2) -H2 /2 width=2/ (**) (* explicit constructor, /3 width=6/ is slow *)
 qed-.
 
-lemma cpcs_inv_abst2: ∀L,W1,T1,T. L ⊢ T ⬌* ⓛW1.T1 →
-                      ∃∃W2,T2. L ⊢ T ➡* ⓛW2.T2 & L ⊢ ⓛW1.T1 ➡* ⓛW2.T2.
+lemma cpcs_inv_abst2: ∀a,L,W1,T1,T. L ⊢ T ⬌* ⓛ{a}W1.T1 →
+                      ∃∃W2,T2. L ⊢ T ➡* ⓛ{a}W2.T2 & L ⊢ ⓛ{a}W1.T1 ➡* ⓛ{a}W2.T2.
 /3 width=1 by cpcs_inv_abst1, cpcs_sym/ qed-.
 
 (* Basic_1: was: pc3_gen_lift *)
@@ -117,43 +117,43 @@ lemma cpcs_flat_dx_tpr_rev: ∀L,V1,V2. V2 ➡ V1 → ∀T1,T2. L ⊢ T1 ⬌* T2
                             ∀I. L ⊢ ⓕ{I}V1. T1 ⬌* ⓕ{I}V2. T2.
 /3 width=1/ qed.
 
-lemma cpcs_abst: ∀L,V1,V2. L ⊢ V1 ⬌* V2 →
-                 ∀V,T1,T2. L.ⓛV ⊢ T1 ⬌* T2 → L ⊢ ⓛV1. T1 ⬌* ⓛV2. T2.
-#L #V1 #V2 #HV12 #V #T1 #T2 #HT12
+lemma cpcs_abst: ∀a,L,V1,V2. L ⊢ V1 ⬌* V2 →
+                 ∀V,T1,T2. L.ⓛV ⊢ T1 ⬌* T2 → L ⊢ ⓛ{a}V1. T1 ⬌* ⓛ{a}V2. T2.
+#a #L #V1 #V2 #HV12 #V #T1 #T2 #HT12
 elim (cpcs_inv_cprs … HV12) -HV12
 elim (cpcs_inv_cprs … HT12) -HT12
 /3 width=6 by cprs_div, cprs_abst/ (**) (* /3 width=6/ is a bit slow *)
 qed.
 
-lemma cpcs_abbr_dx: ∀L,V,T1,T2. L.ⓓV ⊢ T1 ⬌* T2 → L ⊢ ⓓV. T1 ⬌* ⓓV. T2.
-#L #V #T1 #T2 #HT12
+lemma cpcs_abbr_dx: ∀a,L,V,T1,T2. L.ⓓV ⊢ T1 ⬌* T2 → L ⊢ ⓓ{a}V. T1 ⬌* ⓓ{a}V. T2.
+#a #L #V #T1 #T2 #HT12
 elim (cpcs_inv_cprs … HT12) -HT12 /3 width=5 by cprs_div, cprs_abbr1/ (**) (* /3 width=5/ is a bit slow *)
 qed.
 
-lemma cpcs_bind_dx: ∀I,L,V,T1,T2. L.ⓑ{I}V ⊢ T1 ⬌* T2 →
-                    L ⊢ ⓑ{I}V. T1 ⬌* ⓑ{I}V. T2.
-* /2 width=1/ /2 width=2/ qed.
+lemma cpcs_bind_dx: ∀a,I,L,V,T1,T2. L.ⓑ{I}V ⊢ T1 ⬌* T2 →
+                    L ⊢ ⓑ{a,I}V. T1 ⬌* ⓑ{a,I}V. T2.
+#a * /2 width=1/ /2 width=2/ qed.
 
-lemma cpcs_abbr_sn: ∀L,V1,V2,T. L ⊢ V1 ⬌* V2 → L ⊢ ⓓV1. T ⬌* ⓓV2. T.
-#L #V1 #V2 #T #HV12
+lemma cpcs_abbr_sn: ∀a,L,V1,V2,T. L ⊢ V1 ⬌* V2 → L ⊢ ⓓ{a}V1. T ⬌* ⓓ{a}V2. T.
+#a #L #V1 #V2 #T #HV12
 elim (cpcs_inv_cprs … HV12) -HV12 /3 width=5 by cprs_div, cprs_abbr1/ (**) (* /3 width=5/ is a bit slow *)
 qed.
 
-lemma cpcs_bind_sn: ∀I,L,V1,V2,T. L ⊢ V1 ⬌* V2 → L ⊢ ⓑ{I}V1. T ⬌* ⓑ{I}V2. T.
-* /2 width=1/ /2 width=2/ qed.
+lemma cpcs_bind_sn: ∀a,I,L,V1,V2,T. L ⊢ V1 ⬌* V2 → L ⊢ ⓑ{a,I}V1. T ⬌* ⓑ{a,I}V2. T.
+#a * /2 width=1/ /2 width=2/ qed.
 
-lemma cpcs_beta_dx: ∀L,V1,V2,W,T1,T2.
-                    L ⊢ V1 ➡ V2 → L.ⓛW ⊢ T1 ⬌* T2 → L ⊢ ⓐV1.ⓛW.T1 ⬌* ⓓV2.T2.
-#L #V1 #V2 #W #T1 #T2 #HV12 #HT12
+lemma cpcs_beta_dx: ∀a,L,V1,V2,W,T1,T2.
+                    L ⊢ V1 ➡ V2 → L.ⓛW ⊢ T1 ⬌* T2 → L ⊢ ⓐV1.ⓛ{a}W.T1 ⬌* ⓓ{a}V2.T2.
+#a #L #V1 #V2 #W #T1 #T2 #HV12 #HT12
 elim (cpcs_inv_cprs … HT12) -HT12 #T #HT1 #HT2
-lapply (cprs_beta_dx … HV12 HT1) -HV12 -HT1 #HT1
+lapply (cprs_beta_dx … HV12 HT1 a) -HV12 -HT1 #HT1
 lapply (cprs_lsubs_trans … HT2 (L.ⓓV2) ?) -HT2 /2 width=1/ #HT2
 @(cprs_div … HT1) /2 width=1/
 qed.
 
-lemma cpcs_beta_dx_tpr_rev: ∀L,V1,V2,W,T1,T2.
+lemma cpcs_beta_dx_tpr_rev: ∀a,L,V1,V2,W,T1,T2.
                             V1 ➡ V2 → L.ⓛW ⊢ T2 ⬌* T1 →
-                            L ⊢ ⓓV2.T2 ⬌* ⓐV1.ⓛW.T1.
+                            L ⊢ ⓓ{a}V2.T2 ⬌* ⓐV1.ⓛ{a}W.T1.
 /4 width=1/ qed.
 
 (* Note: it does not hold replacing |L1| with |L2| *)
@@ -192,14 +192,14 @@ theorem cpcs_canc_sn: ∀L,T,T1,T2. L ⊢ T ⬌* T1 → L ⊢ T ⬌* T2 → L �
 theorem cpcs_canc_dx: ∀L,T,T1,T2. L ⊢ T1 ⬌* T → L ⊢ T2 ⬌* T → L ⊢ T1 ⬌* T2.
 /3 width=3 by cpcs_trans, cprs_comm/ qed. (**) (* /3 width=3/ is too slow *)
 
-lemma cpcs_abbr1: ∀L,V1,V2. L ⊢ V1 ⬌* V2 → ∀T1,T2. L.ⓓV1 ⊢ T1 ⬌* T2 →
-                  L ⊢ ⓓV1. T1 ⬌* ⓓV2. T2.
-#L #V1 #V2 #HV12 #T1 #T2 #HT12
-@(cpcs_trans … (ⓓV1.T2)) /2 width=1/
+lemma cpcs_abbr1: ∀a,L,V1,V2. L ⊢ V1 ⬌* V2 → ∀T1,T2. L.ⓓV1 ⊢ T1 ⬌* T2 →
+                  L ⊢ ⓓ{a}V1. T1 ⬌* ⓓ{a}V2. T2.
+#a #L #V1 #V2 #HV12 #T1 #T2 #HT12
+@(cpcs_trans … (ⓓ{a}V1.T2)) /2 width=1/
 qed.
 
-lemma cpcs_abbr2: ∀L,V1,V2. L ⊢ V1 ⬌* V2 → ∀T1,T2. L.ⓓV2 ⊢ T1 ⬌* T2 →
-                  L ⊢ ⓓV1. T1 ⬌* ⓓV2. T2.
-#L #V1 #V2 #HV12 #T1 #T2 #HT12
-@(cpcs_trans … (ⓓV2.T1)) /2 width=1/
+lemma cpcs_abbr2: ∀a,L,V1,V2. L ⊢ V1 ⬌* V2 → ∀T1,T2. L.ⓓV2 ⊢ T1 ⬌* T2 →
+                  L ⊢ ⓓ{a}V1. T1 ⬌* ⓓ{a}V2. T2.
+#a #L #V1 #V2 #HV12 #T1 #T2 #HT12
+@(cpcs_trans … (ⓓ{a}V2.T1)) /2 width=1/
 qed.

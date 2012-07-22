@@ -64,7 +64,7 @@ lemma tps_lift_le: ∀K,T1,T2,dt,et. K ⊢ T1 ▶ [dt, et] T2 →
   elim (ldrop_trans_le … HLK … HKV ?) -K /2 width=2/ #X #HLK #H
   elim (ldrop_inv_skip2 … H ?) -H /2 width=1/ -Hid #K #Y #_ #HVY
   >(lift_mono … HVY … HVW) -Y -HVW #H destruct /2 width=4/
-| #K #I #V1 #V2 #T1 #T2 #dt #et #_ #_ #IHV12 #IHT12 #L #U1 #U2 #d #e #HLK #H1 #H2 #Hdetd
+| #K #a #I #V1 #V2 #T1 #T2 #dt #et #_ #_ #IHV12 #IHT12 #L #U1 #U2 #d #e #HLK #H1 #H2 #Hdetd
   elim (lift_inv_bind1 … H1) -H1 #VV1 #TT1 #HVV1 #HTT1 #H1
   elim (lift_inv_bind1 … H2) -H2 #VV2 #TT2 #HVV2 #HTT2 #H2 destruct
   @tps_bind [ /2 width=6/ | @IHT12 /2 width=6/ ] (**) (* /3 width=6/ is too slow, arith3 needed to avoid crash *)
@@ -95,7 +95,7 @@ lemma tps_lift_be: ∀K,T1,T2,dt,et. K ⊢ T1 ▶ [dt, et] T2 →
     lapply (lift_trans_be … HVW … HWU2 ? ?) -W // /2 width=1/ >plus_plus_comm_23 #HVU2
     lapply (ldrop_trans_ge_comm … HLK … HKV ?) -K // -Hid /3 width=4/
   ]
-| #K #I #V1 #V2 #T1 #T2 #dt #et #_ #_ #IHV12 #IHT12 #L #U1 #U2 #d #e #HLK #H1 #H2 #Hdtd #Hddet
+| #K #a #I #V1 #V2 #T1 #T2 #dt #et #_ #_ #IHV12 #IHT12 #L #U1 #U2 #d #e #HLK #H1 #H2 #Hdtd #Hddet
   elim (lift_inv_bind1 … H1) -H1 #VV1 #TT1 #HVV1 #HTT1 #H1
   elim (lift_inv_bind1 … H2) -H2 #VV2 #TT2 #HVV2 #HTT2 #H2 destruct
   @tps_bind [ /2 width=6/ | @IHT12 [3,4: // | skip |5,6: /2 width=1/ | /2 width=1/ ] 
@@ -120,7 +120,7 @@ lemma tps_lift_ge: ∀K,T1,T2,dt,et. K ⊢ T1 ▶ [dt, et] T2 →
   lapply (lift_inv_lref1_ge … H … Hid) -H #H destruct
   lapply (lift_trans_be … HVW … HWU2 ? ?) -W // /2 width=1/ >plus_plus_comm_23 #HVU2
   lapply (ldrop_trans_ge_comm … HLK … HKV ?) -K // -Hid /3 width=4/
-| #K #I #V1 #V2 #T1 #T2 #dt #et #_ #_ #IHV12 #IHT12 #L #U1 #U2 #d #e #HLK #H1 #H2 #Hddt
+| #K #a #I #V1 #V2 #T1 #T2 #dt #et #_ #_ #IHV12 #IHT12 #L #U1 #U2 #d #e #HLK #H1 #H2 #Hddt
   elim (lift_inv_bind1 … H1) -H1 #VV1 #TT1 #HVV1 #HTT1 #H1
   elim (lift_inv_bind1 … H2) -H2 #VV2 #TT2 #HVV2 #HTT2 #H2 destruct
   @tps_bind [ /2 width=5/ | /3 width=5/ ] (**) (* explicit constructor *)
@@ -146,7 +146,7 @@ lemma tps_inv_lift1_le: ∀L,U1,U2,dt,et. L ⊢ U1 ▶ [dt, et] U2 →
   lapply (lift_inv_lref2_lt … H … Hid) -H #H destruct
   elim (ldrop_conf_lt … HLK … HLKV ?) -L // #L #U #HKL #_ #HUV
   elim (lift_trans_le … HUV … HVW ?) -V // >minus_plus <plus_minus_m_m // -Hid /3 width=4/
-| #L #I #V1 #V2 #U1 #U2 #dt #et #_ #_ #IHV12 #IHU12 #K #d #e #HLK #X #H #Hdetd
+| #L #a #I #V1 #V2 #U1 #U2 #dt #et #_ #_ #IHV12 #IHU12 #K #d #e #HLK #X #H #Hdetd
   elim (lift_inv_bind2 … H) -H #W1 #T1 #HWV1 #HTU1 #H destruct
   elim (IHV12 … HLK … HWV1 ?) -V1 // #W2 #HW12 #HWV2
   elim (IHU12 … HTU1 ?) -IHU12 -HTU1 [3: /2 width=1/ |4: @ldrop_skip // |2: skip ] -HLK -Hdetd (**) (* /3 width=5/ is too slow *)
@@ -183,7 +183,7 @@ lemma tps_inv_lift1_be: ∀L,U1,U2,dt,et. L ⊢ U1 ▶ [dt, et] U2 →
     #V1 #HV1 >plus_minus // <minus_minus // /2 width=1/ <minus_n_n <plus_n_O #H
     @ex2_1_intro [3: @H | skip | @tps_subst [3,5,6: // |1,2: skip | >commutative_plus >plus_minus // /2 width=1/ ] ] (**) (* explicit constructor, uses monotonic_lt_minus_l *)
   ]
-| #L #I #V1 #V2 #U1 #U2 #dt #et #_ #_ #IHV12 #IHU12 #K #d #e #HLK #X #H #Hdtd #Hdedet
+| #L #a #I #V1 #V2 #U1 #U2 #dt #et #_ #_ #IHV12 #IHU12 #K #d #e #HLK #X #H #Hdtd #Hdedet
   elim (lift_inv_bind2 … H) -H #W1 #T1 #HWV1 #HTU1 #H destruct
   elim (IHV12 … HLK … HWV1 ? ?) -V1 // #W2 #HW12 #HWV2
   elim (IHU12 … HTU1 ? ?) -U1 [5: @ldrop_skip // |2: skip |3: >plus_plus_comm_23 >(plus_plus_comm_23 dt) /2 width=1/ |4: /2 width=1/ ] (**) (* 29s without the rewrites *)
@@ -215,7 +215,7 @@ lemma tps_inv_lift1_ge: ∀L,U1,U2,dt,et. L ⊢ U1 ▶ [dt, et] U2 →
   elim (lift_split … HVW d (i - e + 1) ? ? ?) -HVW [4: // |3: /2 width=1/ |2: /3 width=1/ ] -Hdei -Hdie 
   #V0 #HV10 >plus_minus // <minus_minus // /2 width=1/ <minus_n_n <plus_n_O #H
   @ex2_1_intro [3: @H | skip | @tps_subst [5,6: // |1,2: skip | /2 width=1/ | >plus_minus // /2 width=1/ ] ] (**) (* explicit constructor, uses monotonic_lt_minus_l *)
-| #L #I #V1 #V2 #U1 #U2 #dt #et #_ #_ #IHV12 #IHU12 #K #d #e #HLK #X #H #Hdetd
+| #L #a #I #V1 #V2 #U1 #U2 #dt #et #_ #_ #IHV12 #IHU12 #K #d #e #HLK #X #H #Hdetd
   elim (lift_inv_bind2 … H) -H #W1 #T1 #HWV1 #HTU1 #H destruct
   elim (le_inv_plus_l … Hdetd) #_ #Hedt
   elim (IHV12 … HLK … HWV1 ?) -V1 // #W2 #HW12 #HWV2
@@ -240,7 +240,7 @@ lemma tps_inv_lift1_eq: ∀L,U1,U2,d,e.
   | lapply (lt_to_le_to_lt … Hide … H) -Hide -H #H
     elim (lt_refl_false … H)
   ]
-| #L #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #X #HX
+| #L #a #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #X #HX
   elim (lift_inv_bind2 … HX) -HX #V #T #HV1 #HT1 #H destruct
   >IHV12 // >IHT12 //
 | #L #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #X #HX

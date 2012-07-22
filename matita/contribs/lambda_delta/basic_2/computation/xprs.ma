@@ -45,14 +45,16 @@ qed-.
 lemma xprs_refl: ∀h,g,L,T. ⦃h, L⦄ ⊢ T ➸*[g] T.
 /2 width=1/ qed.
 
-lemma xprs_strap1: ∀h,g,L,T1,T,T2.
+axiom xprs_strap1: ∀h,g,L,T1,T,T2.
                    ⦃h, L⦄ ⊢ T1 ➸*[g] T → ⦃h, L⦄ ⊢ T ➸[g] T2 → ⦃h, L⦄ ⊢ T1 ➸*[g] T2.
+(**) (* NTypeChecker failure
 /2 width=3/ qed.
-
-lemma xprs_strap2: ∀h,g,L,T1,T,T2.
+*)
+axiom xprs_strap2: ∀h,g,L,T1,T,T2.
                    ⦃h, L⦄ ⊢ T1 ➸[g] T → ⦃h, L⦄ ⊢ T ➸*[g] T2 → ⦃h, L⦄ ⊢ T1 ➸*[g] T2.
+(**) (* NTypeChecker failure
 /2 width=3/ qed.
-
+*)
 (* Basic inversion lemmas ***************************************************)
 (*
 axiom xprs_inv_cnf1: ∀L,T,U. L ⊢ T ➡* U → L ⊢ 𝐍⦃T⦄ → T = U.

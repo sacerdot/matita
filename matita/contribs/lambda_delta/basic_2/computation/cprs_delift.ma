@@ -21,9 +21,9 @@ include "basic_2/computation/cprs.ma".
 (* Properties on inverse basic term relocation ******************************)
 
 (* Note: this should be stated with tprs *)
-lemma cprs_zeta_delift: ∀L,V,T1,T2. L.ⓓV ⊢ ▼*[O, 1] T1 ≡ T2 → L ⊢ ⓓV.T1 ➡* T2.
+lemma cprs_zeta_delift: ∀L,V,T1,T2. L.ⓓV ⊢ ▼*[O, 1] T1 ≡ T2 → L ⊢ +ⓓV.T1 ➡* T2.
 #L #V #T1 #T2 * #T #HT1 #HT2
-@(cprs_strap2 … (ⓓV.T)) [ /3 width=3/ | @inj /3 width=3/ ] (**) (* explicit constructor, /5 width=3/ is too slow *)
+@(cprs_strap2 … (+ⓓV.T)) [ /3 width=3/ | @inj /3 width=3/ ] (**) (* explicit constructor, /5 width=3/ is too slow *)
 qed.
 
 (* Basic_1: was only: pr3_gen_cabbr *)

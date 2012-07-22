@@ -12,22 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/term_vector.ma".
-include "basic_2/grammar/tstc.ma".
+include "basic_2/reducibility/xpr_aaa.ma".
+include "basic_2/computation/xprs.ma".
 
-(* SAME TOP TERM CONSTRUCTOR ************************************************)
+(* EXTENDED PARALLEL COMPUTATION ON TERMS ***********************************)
 
-(* Advanced inversion lemmas ************************************************)
+(* Properties on atomic arity assignment for terms **************************)
 
-(* Basic_1: was only: iso_flats_lref_bind_false iso_flats_flat_bind_false *)
-lemma tstc_inv_bind_appls_simple: ∀a,I,Vs,V2,T1,T2. ⒶVs.T1 ≃ ⓑ{a,I} V2. T2 →
-                                  𝐒⦃T1⦄ → ⊥.
-#a #I #Vs #V2 #T1 #T2 #H
-elim (tstc_inv_pair2 … H) -H #V0 #T0
-elim Vs -Vs normalize
-[ #H destruct #H
-  @(simple_inv_bind … H)
-| #V #Vs #_ #H destruct
-]
+lemma xprs_aaa: ∀h,g,L,T,A. L ⊢ T ⁝ A → ∀U. ⦃h, L⦄ ⊢ T ➸*[g] U → L ⊢ U ⁝ A.
+#h #g #L #T #A #HT #U #H @(xprs_ind … H) -U // /2 width=5/
 qed.
-

@@ -35,15 +35,15 @@ elim (IH … HT01 … HT02) -HT01 -HT02 -IH // /3 width=5/
 qed.
 
 fact tpr_conf_flat_beta:
-   ∀V0,V1,T1,V2,W0,U0,T2. (
+   ∀a,V0,V1,T1,V2,W0,U0,T2. (
       ∀X0:term. #[X0] < #[V0] + (#[W0] + #[U0] + 1) + 1 →
       ∀X1,X2. X0 ➡ X1 → X0 ➡ X2 →
       ∃∃X. X1 ➡ X & X2 ➡ X
    ) →
    V0 ➡ V1 → V0 ➡ V2 →
-   U0 ➡ T2 → ⓛW0. U0 ➡ T1 →
-   ∃∃X. ⓐV1. T1 ➡ X & ⓓV2. T2 ➡ X.
-#V0 #V1 #T1 #V2 #W0 #U0 #T2 #IH #HV01 #HV02 #HT02 #H
+   U0 ➡ T2 → ⓛ{a}W0. U0 ➡ T1 →
+   ∃∃X. ⓐV1. T1 ➡ X & ⓓ{a}V2. T2 ➡ X.
+#a #V0 #V1 #T1 #V2 #W0 #U0 #T2 #IH #HV01 #HV02 #HT02 #H
 elim (tpr_inv_abst1 … H) -H #W1 #U1 #HW01 #HU01 #H destruct
 elim (IH … HV01 … HV02) -HV01 -HV02 /2 width=1/ #V #HV1 #HV2
 elim (IH … HT02 … HU01) -HT02 -HU01 -IH /2 width=1/ /3 width=5/
@@ -54,15 +54,15 @@ qed.
             pr0_cong_upsilon_cong pr0_cong_upsilon_delta
 *)
 fact tpr_conf_flat_theta:
-   ∀V0,V1,T1,V2,V,W0,W2,U0,U2. (
+   ∀a,V0,V1,T1,V2,V,W0,W2,U0,U2. (
       ∀X0:term. #[X0] < #[V0] + (#[W0] + #[U0] + 1) + 1 →
       ∀X1,X2. X0 ➡ X1 → X0 ➡ X2 →
       ∃∃X. X1 ➡ X & X2 ➡ X
    ) →
    V0 ➡ V1 → V0 ➡ V2 → ⇧[O,1] V2 ≡ V →
-   W0 ➡ W2 → U0 ➡ U2 →  ⓓW0. U0 ➡ T1 →
-   ∃∃X. ⓐV1. T1 ➡ X & ⓓW2. ⓐV. U2 ➡ X.
-#V0 #V1 #T1 #V2 #V #W0 #W2 #U0 #U2 #IH #HV01 #HV02 #HV2 #HW02 #HU02 #H
+   W0 ➡ W2 → U0 ➡ U2 →  ⓓ{a}W0. U0 ➡ T1 →
+   ∃∃X. ⓐV1. T1 ➡ X & ⓓ{a}W2. ⓐV. U2 ➡ X.
+#a #V0 #V1 #T1 #V2 #V #W0 #W2 #U0 #U2 #IH #HV01 #HV02 #HV2 #HW02 #HU02 #H
 elim (IH … HV01 … HV02) -HV01 -HV02 /2 width=1/ #VV #HVV1 #HVV2
 elim (lift_total VV 0 1) #VVV #HVV
 lapply (tpr_lift … HVV2 … HV2 … HVV) #HVVV
@@ -80,7 +80,7 @@ elim (tpr_inv_abbr1 … H) -H *
 (* case 3: zeta *)
 | -HV2 -HW02 -HVV2 #U1 #HU01 #HTU1
   elim (IH … HU01 … HU02) -HU01 -HU02 -IH // -U0 #U #HU1 #HU2
-  elim (tpr_inv_lift1 … HU1 … HTU1) -U1 #UU #HUU #HT1UU
+  elim (tpr_inv_lift1 … HU1 … HTU1) -U1 #UU #HUU #HT1UU #H destruct
   @(ex2_1_intro … (ⓐVV.UU)) /2 width=1/ /3 width=5/ (**) (* /4 width=9/ is too slow *)
 ]
 qed.
@@ -98,21 +98,21 @@ elim (IH … HT01 … HT02) -HT01 -HT02 -IH // /3 width=3/
 qed.
 
 fact tpr_conf_beta_beta:
-   ∀W0:term. ∀V0,V1,T0,T1,V2,T2. (
+   ∀a. ∀W0:term. ∀V0,V1,T0,T1,V2,T2. (
       ∀X0:term. #[X0] < #[V0] + (#[W0] + #[T0] + 1) + 1 →
       ∀X1,X2. X0 ➡ X1 → X0 ➡ X2 →
       ∃∃X. X1 ➡ X & X2 ➡ X
    ) →
    V0 ➡ V1 → V0 ➡ V2 → T0 ➡ T1 → T0 ➡ T2 →
-   ∃∃X. ⓓV1. T1 ➡X & ⓓV2. T2 ➡ X.
-#W0 #V0 #V1 #T0 #T1 #V2 #T2 #IH #HV01 #HV02 #HT01 #HT02
+   ∃∃X. ⓓ{a}V1. T1 ➡X & ⓓ{a}V2. T2 ➡ X.
+#a #W0 #V0 #V1 #T0 #T1 #V2 #T2 #IH #HV01 #HV02 #HT01 #HT02
 elim (IH … HV01 … HV02) -HV01 -HV02 /2 width=1/
 elim (IH … HT01 … HT02) -HT01 -HT02 -IH /2 width=1/ /3 width=5/
 qed.
 
 (* Basic_1: was: pr0_cong_delta pr0_delta_delta *)
 fact tpr_conf_delta_delta:
-   ∀I1,V0,V1,T0,T1,TT1,V2,T2,TT2. (
+   ∀a,I1,V0,V1,T0,T1,TT1,V2,T2,TT2. (
       ∀X0:term. #[X0] < #[V0] + #[T0] + 1 →
       ∀X1,X2. X0 ➡ X1 → X0 ➡ X2 →
       ∃∃X. X1 ➡ X & X2 ➡ X
@@ -120,8 +120,8 @@ fact tpr_conf_delta_delta:
    V0 ➡ V1 → V0 ➡ V2 → T0 ➡ T1 → T0 ➡ T2 →
    ⋆. ⓑ{I1} V1 ⊢ T1 ▶ [O, 1] TT1 →
    ⋆. ⓑ{I1} V2 ⊢ T2 ▶ [O, 1] TT2 →
-   ∃∃X. ⓑ{I1} V1. TT1 ➡ X & ⓑ{I1} V2. TT2 ➡ X.
-#I1 #V0 #V1 #T0 #T1 #TT1 #V2 #T2 #TT2 #IH #HV01 #HV02 #HT01 #HT02 #HTT1 #HTT2
+   ∃∃X. ⓑ{a,I1} V1. TT1 ➡ X & ⓑ{a,I1} V2. TT2 ➡ X.
+#a #I1 #V0 #V1 #T0 #T1 #TT1 #V2 #T2 #TT2 #IH #HV01 #HV02 #HT01 #HT02 #HTT1 #HTT2
 elim (IH … HV01 … HV02) -HV01 -HV02 // #V #HV1 #HV2
 elim (IH … HT01 … HT02) -HT01 -HT02 -IH // #T #HT1 #HT2
 elim (tpr_tps_bind … HV1 HT1 … HTT1) -T1 #U1 #TTU1 #HTU1
@@ -138,7 +138,7 @@ fact tpr_conf_delta_zeta:
    ) →
    V0 ➡ V1 → T0 ➡ T1 → ⋆. ⓓV1 ⊢ T1 ▶ [O,1] TT1 →
    T0 ➡ T2 → ⇧[O, 1] X2 ≡ T2 →
-   ∃∃X. ⓓV1. TT1 ➡ X & X2 ➡ X.
+   ∃∃X. +ⓓV1. TT1 ➡ X & X2 ➡ X.
 #X2 #V0 #V1 #T0 #T1 #TT1 #T2 #IH #_ #HT01 #HTT1 #HT02 #HXT2
 elim (IH … HT01 … HT02) -IH -HT01 -HT02 // -V0 -T0 #T #HT1 #HT2
 elim (tpr_tps_bind ? ? V1 … HT1 HTT1) -T1 // #TT #HTT1 #HTT
@@ -148,15 +148,15 @@ qed.
 
 (* Basic_1: was: pr0_upsilon_upsilon *)
 fact tpr_conf_theta_theta:
-   ∀VV1,V0,V1,W0,W1,T0,T1,V2,VV2,W2,T2. (
+   ∀a,VV1,V0,V1,W0,W1,T0,T1,V2,VV2,W2,T2. (
       ∀X0:term. #[X0] < #[V0] + (#[W0] + #[T0] + 1) + 1 →
       ∀X1,X2. X0 ➡ X1 → X0 ➡ X2 →
       ∃∃X. X1 ➡ X & X2 ➡ X
    ) →
    V0 ➡ V1 → V0 ➡ V2 → W0 ➡ W1 → W0 ➡ W2 → T0 ➡ T1 → T0 ➡ T2 →
    ⇧[O, 1] V1 ≡ VV1 → ⇧[O, 1] V2 ≡ VV2 →
-   ∃∃X. ⓓW1. ⓐVV1. T1 ➡ X & ⓓW2. ⓐVV2. T2 ➡ X.
-#VV1 #V0 #V1 #W0 #W1 #T0 #T1 #V2 #VV2 #W2 #T2 #IH #HV01 #HV02 #HW01 #HW02 #HT01 #HT02 #HVV1 #HVV2
+   ∃∃X. ⓓ{a}W1. ⓐVV1. T1 ➡ X & ⓓ{a}W2. ⓐVV2. T2 ➡ X.
+#a #VV1 #V0 #V1 #W0 #W1 #T0 #T1 #V2 #VV2 #W2 #T2 #IH #HV01 #HV02 #HW01 #HW02 #HT01 #HT02 #HVV1 #HVV2
 elim (IH … HV01 … HV02) -HV01 -HV02 /2 width=1/ #V #HV1 #HV2
 elim (IH … HW01 … HW02) -HW01 -HW02 /2 width=1/ #W #HW1 #HW2
 elim (IH … HT01 … HT02) -HT01 -HT02 -IH /2 width=1/ #T #HT1 #HT2
@@ -215,44 +215,44 @@ fact tpr_conf_aux:
   [ #V2 #T2 #HV02 #HT02 #H destruct
     /3 width=7 by tpr_conf_flat_flat/ (**) (* /3 width=7/ is too slow *)
 (* case 3: flat, beta *)
-  | #V2 #W #U0 #T2 #HV02 #HT02 #H1 #H2 #H3 destruct
+  | #b #V2 #W #U0 #T2 #HV02 #HT02 #H1 #H2 #H3 destruct
     /3 width=8 by tpr_conf_flat_beta/ (**) (* /3 width=8/ is too slow *)
 (* case 4: flat, theta *)
-  | #V2 #V #W0 #W2 #U0 #U2 #HV02 #HW02 #HT02 #HV2 #H1 #H2 #H3 destruct
+  | #b #V2 #V #W0 #W2 #U0 #U2 #HV02 #HW02 #HT02 #HV2 #H1 #H2 #H3 destruct
     /3 width=11 by tpr_conf_flat_theta/ (**) (* /3 width=11/ is too slow *)
 (* case 5: flat, tau *)
   | #HT02 #H destruct
     /3 width=6 by tpr_conf_flat_cast/ (**) (* /3 width=6/ is too slow *)
   ]
-| #V0 #V1 #W0 #T0 #T1 #HV01 #HT01 #H1 #H2 destruct
+| #a #V0 #V1 #W0 #T0 #T1 #HV01 #HT01 #H1 #H2 destruct
   elim (tpr_inv_appl1 … H1) -H1 *
 (* case 6: beta, flat (repeated) *)
   [ #V2 #T2 #HV02 #HT02 #H destruct
     @ex2_1_comm /3 width=8 by tpr_conf_flat_beta/
 (* case 7: beta, beta *)
-  | #V2 #WW0 #TT0 #T2 #HV02 #HT02 #H1 #H2 destruct
+  | #b #V2 #WW0 #TT0 #T2 #HV02 #HT02 #H1 #H2 destruct
     /3 width=8 by tpr_conf_beta_beta/ (**) (* /3 width=8/ is too slow *)
 (* case 8, beta, theta (excluded) *)
-  | #V2 #VV2 #WW0 #W2 #TT0 #T2 #_ #_ #_ #_ #H destruct
+  | #b #V2 #VV2 #WW0 #W2 #TT0 #T2 #_ #_ #_ #_ #H destruct
   ]
-| #I1 #V0 #V1 #T0 #T1 #TT1 #HV01 #HT01 #HTT1 #H1 #H2 destruct
+| #a #I1 #V0 #V1 #T0 #T1 #TT1 #HV01 #HT01 #HTT1 #H1 #H2 destruct
   elim (tpr_inv_bind1 … H1) -H1 *
 (* case 9: delta, delta *)
   [ #V2 #T2 #TT2 #HV02 #HT02 #HTT2 #H destruct
     /3 width=11 by tpr_conf_delta_delta/ (**) (* /3 width=11/ is too slow *)
 (* case 10: delta, zeta *)
-  | #T2 #HT20 #HTX2 #H destruct
+  | #T2 #HT20 #HTX2 #H1 #H2 destruct
     /3 width=10 by tpr_conf_delta_zeta/ (**) (* /3 width=10/ is too slow *)
   ]
-| #VV1 #V0 #V1 #W0 #W1 #T0 #T1 #HV01 #HVV1 #HW01 #HT01 #H1 #H2 destruct
+| #a #VV1 #V0 #V1 #W0 #W1 #T0 #T1 #HV01 #HVV1 #HW01 #HT01 #H1 #H2 destruct
   elim (tpr_inv_appl1 … H1) -H1 *
 (* case 11: theta, flat (repeated) *)
   [ #V2 #T2 #HV02 #HT02 #H destruct
     @ex2_1_comm /3 width=11 by tpr_conf_flat_theta/
 (* case 12: theta, beta (repeated) *)
-  | #V2 #WW0 #TT0 #T2 #_ #_ #H destruct
+  | #b #V2 #WW0 #TT0 #T2 #_ #_ #H destruct
 (* case 13: theta, theta *)
-  | #V2 #VV2 #WW0 #W2 #TT0 #T2 #V02 #HW02 #HT02 #HVV2 #H1 #H2 destruct
+  | #b #V2 #VV2 #WW0 #W2 #TT0 #T2 #V02 #HW02 #HT02 #HVV2 #H1 #H2 destruct
     /3 width=14 by tpr_conf_theta_theta/ (**) (* /3 width=14/ is too slow *)
   ]
 | #V0 #TT0 #T0 #T1 #HTT0 #HT01 #H1 #H2 destruct
@@ -263,7 +263,7 @@ fact tpr_conf_aux:
 (* case 15: zeta, zeta *)
   | #TT2 #HTT02 #HXTT2
     /3 width=9 by tpr_conf_zeta_zeta/ (**) (* /3 width=9/ is too slow *)
-  ] 
+  ]
 | #V0 #T0 #T1 #HT01 #H1 #H2 destruct
   elim (tpr_inv_cast1 … H1) -H1
 (* case 16: tau, flat (repeated) *)

@@ -28,8 +28,8 @@ lemma csn_lcpr_conf: ∀L1,L2. L1 ⊢ ➡ L2 → ∀T. L1 ⊢ ⬊* T → L2 ⊢ 
 @IHT /2 width=2/ -IHT -HT0 /2 width=3/
 qed.
 
-lemma csn_abbr: ∀L,V. L ⊢ ⬊* V → ∀T. L. ⓓV ⊢ ⬊* T → L ⊢ ⬊* ⓓV. T.
-#L #V #HV elim HV -V #V #_ #IHV #T #HT @(csn_ind_alt … HT) -T #T #HT #IHT
+lemma csn_abbr: ∀a,L,V. L ⊢ ⬊* V → ∀T. L. ⓓV ⊢ ⬊* T → L ⊢ ⬊* ⓓ{a}V. T.
+#a #L #V #HV elim HV -V #V #_ #IHV #T #HT @(csn_ind_alt … HT) -T #T #HT #IHT
 @csn_intro #X #H1 #H2
 elim (cpr_inv_abbr1 … H1) -H1 *
 [ #V0 #V1 #T1 #HLV0 #HLV01 #HLT1 #H destruct
@@ -46,9 +46,9 @@ elim (cpr_inv_abbr1 … H1) -H1 *
 ]
 qed.
 
-fact csn_appl_beta_aux: ∀L,W. L ⊢ ⬊* W → ∀U. L ⊢ ⬊* U →
-                        ∀V,T. U = ⓓV. T → L ⊢ ⬊* ⓐV. ⓛW. T.
-#L #W #H elim H -W #W #_ #IHW #X #H @(csn_ind_alt … H) -X #X #HVT #IHVT #V #T #H destruct
+fact csn_appl_beta_aux: ∀a,L,W. L ⊢ ⬊* W → ∀U. L ⊢ ⬊* U →
+                        ∀V,T. U = ⓓ{a}V. T → L ⊢ ⬊* ⓐV. ⓛ{a}W. T.
+#a #L #W #H elim H -W #W #_ #IHW #X #H @(csn_ind_alt … H) -X #X #HVT #IHVT #V #T #H destruct
 lapply (csn_fwd_pair_sn … HVT) #HV
 lapply (csn_fwd_bind_dx … HVT) #HT -HVT
 @csn_intro #X #H #H2
@@ -62,22 +62,22 @@ elim (cpr_inv_appl1 … H) -H *
   | -IHW -HLW0 -HV -HT * #H #HVT0 destruct
     @(IHVT … HVT0) -IHVT -HVT0 // /2 width=1/
   ]
-| -IHW -IHVT -H2 #V0 #W0 #T0 #T1 #HLV0 #HLT01 #H1 #H2 destruct
+| -IHW -IHVT -H2 #b #V0 #W0 #T0 #T1 #HLV0 #HLT01 #H1 #H2 destruct
   lapply (lcpr_cpr_trans (L. ⓓV) … HLT01) -HLT01 /2 width=1/ #HLT01
   @csn_abbr /2 width=3/ -HV
   @(csn_lcpr_conf (L. ⓓV)) /2 width=1/ -V0 /2 width=3/
-| -IHW -IHVT -HV -HT -H2 #V0 #V1 #W0 #W1 #T0 #T1 #_ #_ #_ #_ #H destruct
+| -IHW -IHVT -HV -HT -H2 #b #V0 #V1 #W0 #W1 #T0 #T1 #_ #_ #_ #_ #H destruct
 ]
 qed.
 
 (* Basic_1: was: sn3_beta *)
-lemma csn_appl_beta: ∀L,W. L ⊢ ⬊* W → ∀V,T. L ⊢ ⬊* ⓓV. T →
-                     L ⊢ ⬊* ⓐV. ⓛW. T.
+lemma csn_appl_beta: ∀a,L,W. L ⊢ ⬊* W → ∀V,T. L ⊢ ⬊* ⓓ{a}V. T →
+                     L ⊢ ⬊* ⓐV. ⓛ{a}W. T.
 /2 width=3/ qed.
 
-fact csn_appl_theta_aux: ∀L,U. L ⊢ ⬊* U → ∀V1,V2. ⇧[0, 1] V1 ≡ V2 →
-                         ∀V,T. U = ⓓV. ⓐV2. T → L ⊢ ⬊* ⓐV1. ⓓV. T.
-#L #X #H @(csn_ind_alt … H) -X #X #HVT #IHVT #V1 #V2 #HV12 #V #T #H destruct
+fact csn_appl_theta_aux: ∀a,L,U. L ⊢ ⬊* U → ∀V1,V2. ⇧[0, 1] V1 ≡ V2 →
+                         ∀V,T. U = ⓓ{a}V. ⓐV2. T → L ⊢ ⬊* ⓐV1. ⓓ{a}V. T.
+#a #L #X #H @(csn_ind_alt … H) -X #X #HVT #IHVT #V1 #V2 #HV12 #V #T #H destruct
 lapply (csn_fwd_pair_sn … HVT) #HV
 lapply (csn_fwd_bind_dx … HVT) -HVT #HVT
 @csn_intro #X #HL #H
@@ -87,7 +87,7 @@ elim (cpr_inv_appl1 … HL) -HL *
   [ #V3 #V4 #T3 #HV3 #HLV34 #HLT3 #H0 destruct
     lapply (cpr_intro … HV3 HLV34) -HLV34 #HLV34
     elim (lift_total V0 0 1) #V5 #HV05
-    elim (term_eq_dec (ⓓV.ⓐV2.T) (ⓓV4.ⓐV5.T3))
+    elim (term_eq_dec (ⓓ{a}V.ⓐV2.T) (ⓓ{a}V4.ⓐV5.T3))
     [ -IHVT #H0 destruct
       elim (eq_false_inv_tpair_sn … H) -H
       [ -HLV10 -HLV34 -HV3 -HLT3 -HVT
@@ -100,13 +100,13 @@ elim (cpr_inv_appl1 … HL) -HL *
       lapply (ltpr_cpr_trans (L. ⓓV) … HLT3) /2 width=1/ -HLT3 #HLT3
       @(IHVT … H … HV05) -IHVT // -H -HV05 /3 width=1/
     ]
-  | -H -IHVT #T0 #HLT0 #HT0
+  | -H -IHVT #T0 #HLT0 #HT0 #H0 destruct
     lapply (csn_cpr_trans … HVT (ⓐV2.T0) ?) /2 width=1/ -T #HVT0
     lapply (csn_inv_lift L … 1 HVT0 ? ? ?) -HVT0 [ /2 width=4/ |2,3: skip | /2 width=1/ ] -V2 -T0 #HVY
     @(csn_cpr_trans … HVY) /2 width=1/
   ]
-| -HV -HV12 -HVT -IHVT -H #V0 #W0 #T0 #T1 #_ #_ #H destruct
-| -IHVT -H #V0 #V3 #W0 #W1 #T0 #T1 #HLV10 #HLW01 #HLT01 #HV03 #H1 #H2 destruct
+| -HV -HV12 -HVT -IHVT -H #b #V0 #W0 #T0 #T1 #_ #_ #H destruct
+| -IHVT -H #b #V0 #V3 #W0 #W1 #T0 #T1 #HLV10 #HLW01 #HLT01 #HV03 #H1 #H2 destruct
   lapply (cpr_lift (L. ⓓW0) … HV12 … HV03 HLV10) -HLV10 -HV12 -HV03 /2 width=1/ #HLV23
   lapply (lcpr_cpr_trans (L. ⓓW0) … HLT01) -HLT01 /2 width=1/ #HLT01
   @csn_abbr /2 width=3/ -HV
@@ -115,8 +115,8 @@ elim (cpr_inv_appl1 … HL) -HL *
 ]
 qed.
 
-lemma csn_appl_theta: ∀V1,V2. ⇧[0, 1] V1 ≡ V2 →
-                      ∀L,V,T. L ⊢ ⬊* ⓓV. ⓐV2. T → L ⊢ ⬊* ⓐV1. ⓓV. T.
+lemma csn_appl_theta: ∀a,V1,V2. ⇧[0, 1] V1 ≡ V2 →
+                      ∀L,V,T. L ⊢ ⬊* ⓓ{a}V. ⓐV2. T → L ⊢ ⬊* ⓐV1. ⓓ{a}V. T.
 /2 width=5/ qed.
 
 (* Basic_1: was only: sn3_appl_appl *)

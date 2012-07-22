@@ -19,16 +19,16 @@ include "basic_2/reducibility/cpr.ma".
 
 (* Advanced properties ******************************************************)
 
-lemma cpr_bind_sn: ∀I,L,V1,V2,T1,T2. L ⊢ V1 ➡ V2 → T1 ➡ T2 →
-                   L ⊢ ⓑ{I} V1. T1 ➡ ⓑ{I} V2. T2.
-#I #L #V1 #V2 #T1 #T2 * #V #HV1 #HV2 #HT12
+lemma cpr_bind_sn: ∀a,I,L,V1,V2,T1,T2. L ⊢ V1 ➡ V2 → T1 ➡ T2 →
+                   L ⊢ ⓑ{a,I} V1. T1 ➡ ⓑ{a,I} V2. T2.
+#a #I #L #V1 #V2 #T1 #T2 * #V #HV1 #HV2 #HT12
 @ex2_1_intro [2: @(tpr_delta … HV1 HT12) | skip ] /2 width=3/ (* /3 width=5/ is too slow *)
 qed.
 
 (* Basic_1: was only: pr2_gen_cbind *)
-lemma cpr_bind_dx: ∀I,L,V1,V2,T1,T2. V1 ➡ V2 → L. ⓑ{I} V2 ⊢ T1 ➡ T2 →
-                   L ⊢ ⓑ{I} V1. T1 ➡ ⓑ{I} V2. T2.
-#I #L #V1 #V2 #T1 #T2 #HV12 * #T #HT1 normalize #HT2
+lemma cpr_bind_dx: ∀a,I,L,V1,V2,T1,T2. V1 ➡ V2 → L. ⓑ{I} V2 ⊢ T1 ➡ T2 →
+                   L ⊢ ⓑ{a,I} V1. T1 ➡ ⓑ{a,I} V2. T2.
+#a #I #L #V1 #V2 #T1 #T2 #HV12 * #T #HT1 normalize #HT2
 elim (tpss_split_up … HT2 1 ? ?) -HT2 // #T0 <minus_n_O #HT0 normalize <minus_plus_m_m #HT02
 lapply (tpss_lsubs_trans … HT0 (⋆. ⓑ{I} V2) ?) -HT0 /2 width=1/ #HT0
 lapply (tpss_inv_SO2 … HT0) -HT0 #HT0

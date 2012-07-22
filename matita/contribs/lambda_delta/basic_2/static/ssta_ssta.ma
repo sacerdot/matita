@@ -36,7 +36,7 @@ theorem ssta_mono: ∀h,g,L,T,U1,l1. ⦃h, L⦄ ⊢ T •[g, l1] U1 →
   lapply (ldrop_mono … HLK0 … HLK) -HLK -HLK0 #H destruct
   lapply (IHWV … HWV0) -IHWV -HWV0 * #H1 #H2 destruct
   >(lift_mono … HWU1 … HV0U2) -W -U1 /2 width=1/
-| #I #L #V #T #U1 #l1 #_ #IHTU1 #X #l2 #H
+| #a #I #L #V #T #U1 #l1 #_ #IHTU1 #X #l2 #H
   elim (ssta_inv_bind1 … H) -H #U2 #HTU2 #H destruct
   elim (IHTU1 … HTU2) -T /3 width=1/
 | #L #V #T #U1 #l1 #_ #IHTU1 #X #l2 #H

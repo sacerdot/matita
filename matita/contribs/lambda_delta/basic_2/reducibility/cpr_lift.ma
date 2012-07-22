@@ -29,23 +29,23 @@ lapply (ldrop_fwd_ldrop2_length … HLK) #Hi
 qed.
 
 lemma cpr_abst: ∀L,V1,V2. L ⊢ V1 ➡ V2 → ∀V,T1,T2.
-                L.ⓛV ⊢ T1 ➡ T2 → L ⊢ ⓛV1. T1 ➡ ⓛV2. T2.
-#L #V1 #V2 * #V0 #HV10 #HV02 #V #T1 #T2 * #T0 #HT10 #HT02
+                L.ⓛV ⊢ T1 ➡ T2 → ∀a. L ⊢ ⓛ{a}V1. T1 ➡ ⓛ{a}V2. T2.
+#L #V1 #V2 * #V0 #HV10 #HV02 #V #T1 #T2 * #T0 #HT10 #HT02 #a
 lapply (tpss_inv_S2 … HT02 L V ?) -HT02 // #HT02
 lapply (tpss_lsubs_trans … HT02 (L.ⓛV2) ?) -HT02 /2 width=1/ #HT02
-@(ex2_1_intro … (ⓛV0.T0)) /2 width=1/ (* explicit constructors *)
+@(ex2_1_intro … (ⓛ{a}V0.T0)) /2 width=1/ (* explicit constructors *)
 qed.
 
-lemma cpr_beta: ∀L,V1,V2,W,T1,T2.
-                L ⊢ V1 ➡ V2 → L.ⓛW ⊢ T1 ➡ T2 → L ⊢ ⓐV1.ⓛW.T1 ➡ ⓓV2.T2.
-#L #V1 #V2 #W #T1 #T2 * #V #HV1 #HV2 * #T #HT1 #HT2
+lemma cpr_beta: ∀a,L,V1,V2,W,T1,T2.
+                L ⊢ V1 ➡ V2 → L.ⓛW ⊢ T1 ➡ T2 → L ⊢ ⓐV1.ⓛ{a}W.T1 ➡ ⓓ{a}V2.T2.
+#a #L #V1 #V2 #W #T1 #T2 * #V #HV1 #HV2 * #T #HT1 #HT2
 lapply (tpss_inv_S2 … HT2 L W ?) -HT2 // #HT2
 lapply (tpss_lsubs_trans … HT2 (L.ⓓV2) ?) -HT2 /2 width=1/ #HT2
-@(ex2_1_intro … (ⓓV.T)) /2 width=1/ (**) (* explicit constructor, /3/ is too slow *)
+@(ex2_1_intro … (ⓓ{a}V.T)) /2 width=1/ (**) (* explicit constructor, /3/ is too slow *)
 qed.
 
-lemma cpr_beta_dx: ∀L,V1,V2,W,T1,T2.
-                   V1 ➡ V2 → L.ⓛW ⊢ T1 ➡ T2 → L ⊢ ⓐV1.ⓛW.T1 ➡ ⓓV2.T2.
+lemma cpr_beta_dx: ∀a,L,V1,V2,W,T1,T2.
+                   V1 ➡ V2 → L.ⓛW ⊢ T1 ➡ T2 → L ⊢ ⓐV1.ⓛ{a}W.T1 ➡ ⓓ{a}V2.T2.
 /3 width=1/ qed.
 
 (* Advanced inversion lemmas ************************************************)
@@ -64,13 +64,13 @@ elim (tpss_inv_lref1 … H) -H /2 width=1/
 qed-.
 
 (* Basic_1: was pr2_gen_abbr *)
-lemma cpr_inv_abbr1: ∀L,V1,T1,U2. L ⊢ ⓓV1. T1 ➡ U2 →
+lemma cpr_inv_abbr1: ∀a,L,V1,T1,U2. L ⊢ ⓓ{a}V1. T1 ➡ U2 →
                      (∃∃V,V2,T2. V1 ➡ V & L ⊢ V ▶* [O, |L|] V2 &
                                  L. ⓓV ⊢ T1 ➡ T2 &
-                                 U2 = ⓓV2. T2
+                                 U2 = ⓓ{a}V2. T2
                       ) ∨
-                      ∃∃T2. L.ⓓV1 ⊢ T1 ➡ T2 & ⇧[0,1] U2 ≡ T2.
-#L #V1 #T1 #Y * #X #H1 #H2
+                      ∃∃T2. L.ⓓV1 ⊢ T1 ➡ T2 & ⇧[0,1] U2 ≡ T2 & a = true.
+#a #L #V1 #T1 #Y * #X #H1 #H2
 elim (tpr_inv_abbr1 … H1) -H1 *
 [ #V #T #T0 #HV1 #HT1 #HT0 #H destruct
   elim (tpss_inv_bind1 … H2) -H2 #V2 #T2 #HV2 #HT02 #H destruct
@@ -79,7 +79,7 @@ elim (tpr_inv_abbr1 … H1) -H1 *
   lapply (tpss_lsubs_trans … HT02 (L. ⓓV) ?) -HT02 /2 width=1/ #HT02
   lapply (tpss_weak_all … HT02) -HT02 #HT02
   lapply (tpss_strap2 … HT0 HT02) -T0 /4 width=7/
-| #T2 #HT12 #HXT2
+| #T2 #HT12 #HXT2 #H destruct
   elim (lift_total Y 0 1) #Z #HYZ
   lapply (tpss_lift_ge … H2 (L.ⓓV1) … HXT2 … HYZ) -X // /2 width=1/ #H
   lapply (cpr_intro … HT12 … H) -T2 /3 width=3/
@@ -87,9 +87,9 @@ elim (tpr_inv_abbr1 … H1) -H1 *
 qed-.
 
 (* Basic_1: was: pr2_gen_abst *)
-lemma cpr_inv_abst1: ∀L,V1,T1,U2. L ⊢ ⓛV1. T1 ➡ U2 → ∀I,W.
-                     ∃∃V2,T2. L ⊢ V1 ➡ V2 & L. ⓑ{I} W ⊢ T1 ➡ T2 & U2 = ⓛV2. T2.
-#L #V1 #T1 #Y * #X #H1 #H2 #I #W
+lemma cpr_inv_abst1: ∀a,L,V1,T1,U2. L ⊢ ⓛ{a}V1. T1 ➡ U2 → ∀I,W.
+                     ∃∃V2,T2. L ⊢ V1 ➡ V2 & L. ⓑ{I} W ⊢ T1 ➡ T2 & U2 = ⓛ{a}V2. T2.
+#a #L #V1 #T1 #Y * #X #H1 #H2 #I #W
 elim (tpr_inv_abst1 … H1) -H1 #V #T #HV1 #HT1 #H destruct
 elim (tpss_inv_bind1 … H2) -H2 #V2 #T2 #HV2 #HT2 #H destruct
 lapply (tpss_lsubs_trans … HT2 (L. ⓑ{I} W) ?) -HT2 /2 width=1/ /4 width=5/
@@ -97,27 +97,27 @@ qed-.
 
 (* Basic_1: was pr2_gen_appl *)
 lemma cpr_inv_appl1: ∀L,V1,U0,U2. L ⊢ ⓐV1. U0 ➡ U2 →
-                     ∨∨ ∃∃V2,T2.            L ⊢ V1 ➡ V2 & L ⊢ U0 ➡ T2 &
-                                            U2 = ⓐV2. T2
-                      | ∃∃V2,W,T1,T2.       L ⊢ V1 ➡ V2 & L. ⓓV2 ⊢ T1 ➡ T2 &
-                                            U0 = ⓛW. T1 &
-                                            U2 = ⓓV2. T2
-                      | ∃∃V2,V,W1,W2,T1,T2. L ⊢ V1 ➡ V2 & L ⊢ W1 ➡ W2 & L. ⓓW2 ⊢ T1 ➡ T2 &
-                                            ⇧[0,1] V2 ≡ V &
-                                            U0 = ⓓW1. T1 &
-                                            U2 = ⓓW2. ⓐV. T2.
+                     ∨∨ ∃∃V2,T2.              L ⊢ V1 ➡ V2 & L ⊢ U0 ➡ T2 &
+                                              U2 = ⓐV2. T2
+                      | ∃∃a,V2,W,T1,T2.       L ⊢ V1 ➡ V2 & L. ⓓV2 ⊢ T1 ➡ T2 &
+                                              U0 = ⓛ{a}W. T1 &
+                                              U2 = ⓓ{a}V2. T2
+                      | ∃∃a,V2,V,W1,W2,T1,T2. L ⊢ V1 ➡ V2 & L ⊢ W1 ➡ W2 & L. ⓓW2 ⊢ T1 ➡ T2 &
+                                              ⇧[0,1] V2 ≡ V &
+                                              U0 = ⓓ{a}W1. T1 &
+                                              U2 = ⓓ{a}W2. ⓐV. T2.
 #L #V1 #U0 #Y * #X #H1 #H2
 elim (tpr_inv_appl1 … H1) -H1 *
 [ #V #U #HV1 #HU0 #H destruct
   elim (tpss_inv_flat1 … H2) -H2 #V2 #U2 #HV2 #HU2 #H destruct /4 width=5/
-| #V #W #T0 #T #HV1 #HT0 #H #H1 destruct
+| #a #V #W #T0 #T #HV1 #HT0 #H #H1 destruct
   elim (tpss_inv_bind1 … H2) -H2 #V2 #T2 #HV2 #HT2 #H destruct
-  lapply (tpss_weak … HT2 0 (|L|+1) ? ?) -HT2 // /4 width=8/
-| #V0 #V #W #W0 #T #T0 #HV10 #HW0 #HT0 #HV0 #H #H1 destruct
+  lapply (tpss_weak … HT2 0 (|L|+1) ? ?) -HT2 // /4 width=9/
+| #a #V0 #V #W #W0 #T #T0 #HV10 #HW0 #HT0 #HV0 #H #H1 destruct
   elim (tpss_inv_bind1 … H2) -H2 #W2 #X #HW02 #HX #HY destruct
   elim (tpss_inv_flat1 … HX) -HX #V2 #T2 #HV2 #HT2 #H destruct
   elim (tpss_inv_lift1_ge … HV2 … HV0 ?) -V // [3: /2 width=1/ |2: skip ] #V <minus_plus_m_m
-  lapply (tpss_weak … HT2 0 (|L|+1) ? ?) -HT2 // /4 width=12/
+  lapply (tpss_weak … HT2 0 (|L|+1) ? ?) -HT2 // /4 width=13/
 ]
 qed-.
 
@@ -128,9 +128,9 @@ lemma cpr_inv_appl1_simple: ∀L,V1,T1,U. L ⊢ ⓐV1. T1 ➡ U → 𝐒⦃T1⦄
 #L #V1 #T1 #U #H #HT1
 elim (cpr_inv_appl1 … H) -H *
 [ /2 width=5/
-| #V2 #W #W1 #W2 #_ #_ #H #_ destruct
+| #a #V2 #W #W1 #W2 #_ #_ #H #_ destruct
   elim (simple_inv_bind … HT1)
-| #V2 #V #W1 #W2 #U1 #U2 #_ #_ #_ #_ #H #_ destruct
+| #a #V2 #V #W1 #W2 #U1 #U2 #_ #_ #_ #_ #H #_ destruct
   elim (simple_inv_bind … HT1)
 ]
 qed-.
@@ -142,7 +142,7 @@ lemma cpr_lift: ∀L,K,d,e. ⇩[d, e] L ≡ K →
                 ∀T1,U1. ⇧[d, e] T1 ≡ U1 → ∀T2,U2. ⇧[d, e] T2 ≡ U2 →
                 K ⊢ T1 ➡ T2 → L ⊢ U1 ➡ U2.
 #L #K #d #e #HLK #T1 #U1 #HTU1 #T2 #U2 #HTU2 * #T #HT1 #HT2
-elim (lift_total T d e) #U #HTU 
+elim (lift_total T d e) #U #HTU
 lapply (tpr_lift … HT1 … HTU1 … HTU) -T1 #HU1
 elim (lt_or_ge (|K|) d) #HKd
 [ lapply (tpss_lift_le … HT2 … HLK HTU … HTU2) -T2 -T -HLK [ /2 width=2/ | /3 width=4/ ]

@@ -16,7 +16,7 @@ include "basic_2/unfold/delift_lift.ma".
 include "basic_2/static/ssta_ssta.ma".
 include "basic_2/unwind/sstas_lift.ma".
 
-(* STRATIFIED UNWIND ON TERMS ***********************************************)
+(* ITERATED STRATIFIED STATIC TYPE ASSIGNMENTON TERMS ***********************)
 
 (* Advanced inversion lemmas ************************************************)
 

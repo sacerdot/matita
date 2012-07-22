@@ -20,10 +20,10 @@ include "basic_2/reducibility/xpr.ma".
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma xpr_inv_abst1: ∀h,g,L,V1,T1,U2. ⦃h, L⦄ ⊢ ⓛV1.T1 ➸[g] U2 →
+lemma xpr_inv_abst1: ∀h,g,a,L,V1,T1,U2. ⦃h, L⦄ ⊢ ⓛ{a}V1.T1 ➸[g] U2 →
                      ∃∃V2,T2. L ⊢ V1 ➡ V2 & ⦃h, L. ⓛV1⦄ ⊢ T1 ➸[g] T2 &
-                              U2 = ⓛV2. T2.
-#h #g #L #V1 #T1 #U2 *
+                              U2 = ⓛ{a}V2. T2.
+#h #g #a #L #V1 #T1 #U2 *
 [ #H elim (cpr_inv_abst1 … H Abst V1) /3 width=5/
 | * #l #H elim (ssta_inv_bind1 … H) /3 width=5/
 ]

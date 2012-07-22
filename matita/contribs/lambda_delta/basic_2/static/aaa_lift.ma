@@ -31,10 +31,10 @@ lemma aaa_lift: ∀L1,T1,A. L1 ⊢ T1 ⁝ A → ∀L2,d,e. ⇩[d, e] L2 ≡ L1 �
     /3 width=8/
   | lapply (ldrop_trans_ge … HL21 … HLK1 ?) -L1 // -Hid /3 width=8/
   ]
-| #L1 #V1 #T1 #B #A #_ #_ #IHB #IHA #L2 #d #e #HL21 #X #H
+| #a #L1 #V1 #T1 #B #A #_ #_ #IHB #IHA #L2 #d #e #HL21 #X #H
   elim (lift_inv_bind1 … H) -H #V2 #T2 #HV12 #HT12 #H destruct
   /4 width=4/
-| #L1 #V1 #T1 #B #A #_ #_ #IHB #IHA #L2 #d #e #HL21 #X #H
+| #a #L1 #V1 #T1 #B #A #_ #_ #IHB #IHA #L2 #d #e #HL21 #X #H
   elim (lift_inv_bind1 … H) -H #V2 #T2 #HV12 #HT12 #H destruct
   /4 width=4/
 | #L1 #V1 #T1 #B #A #_ #_ #IHB #IHA #L2 #d #e #HL21 #X #H
@@ -56,10 +56,10 @@ lemma aaa_inv_lift: ∀L2,T2,A. L2 ⊢ T2 ⁝ A → ∀L1,d,e. ⇩[d, e] L2 ≡ 
   [ elim (ldrop_conf_lt … HL21 … HLK2 ?) -L2 // -Hid /3 width=8/
   | lapply (ldrop_conf_ge … HL21 … HLK2 ?) -L2 // -Hid /3 width=8/
   ]
-| #L2 #V2 #T2 #B #A #_ #_ #IHB #IHA #L1 #d #e #HL21 #X #H
+| #a #L2 #V2 #T2 #B #A #_ #_ #IHB #IHA #L1 #d #e #HL21 #X #H
   elim (lift_inv_bind2 … H) -H #V1 #T1 #HV12 #HT12 #H destruct
   /4 width=4/
-| #L2 #V2 #T2 #B #A #_ #_ #IHB #IHA #L1 #d #e #HL21 #X #H
+| #a #L2 #V2 #T2 #B #A #_ #_ #IHB #IHA #L1 #d #e #HL21 #X #H
   elim (lift_inv_bind2 … H) -H #V1 #T1 #HV12 #HT12 #H destruct
   /4 width=4/
 | #L2 #V2 #T2 #B #A #_ #_ #IHB #IHA #L1 #d #e #HL21 #X #H

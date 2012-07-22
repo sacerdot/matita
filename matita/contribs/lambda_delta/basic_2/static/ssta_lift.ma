@@ -46,7 +46,7 @@ lemma ssta_lift: ∀h,g,L1,T1,U1,l. ⦃h, L1⦄ ⊢ T1 •[g, l] U1 →
   | lapply (lift_trans_be … HW1 … HWU2 ? ?) -W // /2 width=1/ #HW1U2
     lapply (ldrop_trans_ge … HL21 … HLK1 ?) -L1 // -Hid /3 width=8/
   ]
-| #I #L1 #V1 #T1 #U1 #l #_ #IHTU1 #L2 #d #e #HL21 #X1 #H1 #X2 #H2
+| #a #I #L1 #V1 #T1 #U1 #l #_ #IHTU1 #L2 #d #e #HL21 #X1 #H1 #X2 #H2
   elim (lift_inv_bind1 … H1) -H1 #V2 #T2 #HV12 #HT12 #H destruct
   elim (lift_inv_bind1 … H2) -H2 #X #U2 #H1 #HU12 #H2 destruct
   lapply (lift_mono … H1 … HV12) -H1 #H destruct /4 width=5/
@@ -91,7 +91,7 @@ lemma ssta_inv_lift1: ∀h,g,L2,T2,U2,l. ⦃h, L2⦄ ⊢ T2 •[g, l] U2 →
     | <le_plus_minus_comm // /2 width=1/
     ]
   ]
-| #I #L2 #V2 #T2 #U2 #l #_ #IHTU2 #L1 #d #e #HL21 #X #H
+| #a #I #L2 #V2 #T2 #U2 #l #_ #IHTU2 #L1 #d #e #HL21 #X #H
   elim (lift_inv_bind2 … H) -H #V1 #T1 #HV12 #HT12 #H destruct
   elim (IHTU2 (L1.ⓑ{I}V1) … HT12) -IHTU2 -HT12 /2 width=1/ -HL21 /3 width=5/
 | #L2 #V2 #T2 #U2 #l #_ #IHTU2 #L1 #d #e #HL21 #X #H
@@ -117,7 +117,7 @@ lemma ssta_fwd_correct: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g, l] U →
 | #L #K #W #V #V0 #i #l #HLK #HWV #HWV0 #_
   lapply (ldrop_fwd_ldrop2 … HLK) -HLK #HLK
   elim (lift_total V 0 (i+1)) /3 width=10/
-| #I #L #V #T #U #l #_ * /3 width=2/
+| #a #I #L #V #T #U #l #_ * /3 width=2/
 | #L #V #T #U #l #_ * #T0 #HUT0 /3 width=2/
 | #L #V #W #T #U #l #_ #_ * #W0 #HW0  * /3 width=2/
 ]

@@ -31,7 +31,7 @@ axiom cw_wf_ind: ∀R:lenv→predicate term.
                  ∀L,T. R L T.
 
 (* Basic_1: was: flt_shift *)
-lemma cw_shift: ∀K,I,V,T. #[K. ⓑ{I} V, T] < #[K, ②{I} V. T].
+lemma cw_shift: ∀a,K,I,V,T. #[K. ⓑ{I} V, T] < #[K, ⓑ{a,I} V. T].
 normalize //
 qed.
 
@@ -53,8 +53,8 @@ lemma cw_tpair_dx_sn: ∀I1,I2,L,V1,V2,T. #[L, V2] < #[L, ②{I1}V1.②{I2}V2.T]
 #I1 #I2 #L #V1 #V2 #T normalize in ⊢ (? % %); /2 width=1/
 qed.
 
-lemma cw_tpair_dx_sn_shift: ∀I1,I2,L,V1,V2,T. #[L.ⓑ{I2}V2, T] < #[L, ②{I1}V1.②{I2}V2.T].
-#I1 #I2 #L #V1 #V2 #T normalize in ⊢ (? % %); /2 width=1/
+lemma cw_tpair_dx_sn_shift: ∀a2,I1,I2,L,V1,V2,T. #[L.ⓑ{I2}V2, T] < #[L, ②{I1}V1.ⓑ{a2,I2}V2.T].
+#a2 #I1 #I2 #L #V1 #V2 #T normalize in ⊢ (? % %); /2 width=1/
 qed.
 
 (* Basic_1: removed theorems 6:

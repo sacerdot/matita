@@ -29,7 +29,13 @@ interpretation "term construction (binary)"
    'SnItem2 I T1 T2 = (TPair I T1 T2).
 
 interpretation "term binding construction (binary)"
-   'SnBind2 I T1 T2 = (TPair (Bind2 I) T1 T2).
+   'SnBind2 a I T1 T2 = (TPair (Bind2 a I) T1 T2).
+
+interpretation "term positive binding construction (binary)"
+   'SnBind2Pos I T1 T2 = (TPair (Bind2 true I) T1 T2).
+
+interpretation "term negative binding construction (binary)"
+   'SnBind2Neg I T1 T2 = (TPair (Bind2 false I) T1 T2).
 
 interpretation "term flat construction (binary)"
    'SnFlat2 I T1 T2 = (TPair (Flat2 I) T1 T2).
@@ -44,10 +50,22 @@ interpretation "global reference (term)"
    'GRef p = (TAtom (GRef p)).
 
 interpretation "abbreviation (term)"
-   'SnAbbr T1 T2 = (TPair (Bind2 Abbr) T1 T2).
+   'SnAbbr a T1 T2 = (TPair (Bind2 a Abbr) T1 T2).
+
+interpretation "positive abbreviation (term)"
+   'SnAbbrPos T1 T2 = (TPair (Bind2 true Abbr) T1 T2).
+
+interpretation "negative abbreviation (term)"
+   'SnAbbrNeg T1 T2 = (TPair (Bind2 false Abbr) T1 T2).
 
 interpretation "abstraction (term)"
-   'SnAbst T1 T2 = (TPair (Bind2 Abst) T1 T2).
+   'SnAbst a T1 T2 = (TPair (Bind2 a Abst) T1 T2).
+
+interpretation "positive abstraction (term)"
+   'SnAbstPos T1 T2 = (TPair (Bind2 true Abst) T1 T2).
+
+interpretation "negative abstraction (term)"
+   'SnAbstNeg T1 T2 = (TPair (Bind2 false Abst) T1 T2).
 
 interpretation "application (term)"
    'SnAppl T1 T2 = (TPair (Flat2 Appl) T1 T2).
@@ -97,11 +115,11 @@ elim (term_eq_dec T1 T2) /3 width=1/ #HT12 destruct
 @or_intror @conj // #HT12 destruct /2 width=1/
 qed-.
 
-lemma eq_false_inv_beta: ∀V1,V2,W1,W2,T1,T2.
-                         (ⓐV1. ⓛW1. T1 = ⓐV2. ⓛW2 .T2 →⊥) →
+lemma eq_false_inv_beta: ∀a,V1,V2,W1,W2,T1,T2.
+                         (ⓐV1. ⓛ{a}W1. T1 = ⓐV2. ⓛ{a}W2 .T2 → ⊥) →
                          (W1 = W2 → ⊥) ∨
-                         (W1 = W2 ∧ (ⓓV1. T1 = ⓓV2. T2 → ⊥)).
-#V1 #V2 #W1 #W2 #T1 #T2 #H
+                         (W1 = W2 ∧ (ⓓ{a}V1. T1 = ⓓ{a}V2. T2 → ⊥)).
+#a #V1 #V2 #W1 #W2 #T1 #T2 #H
 elim (eq_false_inv_tpair_sn … H) -H
 [ #HV12 elim (term_eq_dec W1 W2) /3 width=1/
   #H destruct @or_intror @conj // #H destruct /2 width=1/

@@ -58,13 +58,13 @@ theorem aacr_aaa_csubc_lifts: ∀RR,RS,RP.
     @(s4 … HB … ◊ … HV2 HLK2)
     @(s7 … HB … HKV2B) //
   ]
-| #L #V #T #B #A #_ #_ #IHB #IHA #L0 #des #HL0 #X #H #L2 #HL20
+| #a #L #V #T #B #A #_ #_ #IHB #IHA #L0 #des #HL0 #X #H #L2 #HL20
   elim (lifts_inv_bind1 … H) -H #V0 #T0 #HV0 #HT0 #H destruct
   lapply (aacr_acr … H1RP H2RP A) #HA
   lapply (aacr_acr … H1RP H2RP B) #HB
   lapply (s1 … HB) -HB #HB
   @(s5 … HA … ◊ ◊) // /3 width=5/
-| #L #W #T #B #A #HLWB #_ #IHB #IHA #L0 #des #HL0 #X #H #L2 #HL02
+| #a #L #W #T #B #A #HLWB #_ #IHB #IHA #L0 #des #HL0 #X #H #L2 #HL02
   elim (lifts_inv_bind1 … H) -H #W0 #T0 #HW0 #HT0 #H destruct
   @(aacr_abst  … H1RP H2RP)
   [ lapply (aacr_acr … H1RP H2RP B) #HB

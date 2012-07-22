@@ -24,23 +24,21 @@ inductive simple: predicate term ≝
 interpretation "simple (term)" 'Simple T = (simple T).
 
 (* Basic inversion lemmas ***************************************************)
-
-fact simple_inv_bind_aux: ∀T. 𝐒⦃T⦄ → ∀J,W,U. T = ⓑ{J} W. U → ⊥.
+(*
+lemma mt: ∀R1,R2:Prop. (R1 → R2) → (R2 → ⊥) → R1 → ⊥.
+/3 width=1/ qed.
+*)
+fact simple_inv_bind_aux: ∀T. 𝐒⦃T⦄ → ∀a,J,W,U. T = ⓑ{a,J} W. U → ⊥.
 #T * -T
-[ #I #J #W #U #H destruct
-| #I #V #T #J #W #U #H destruct
+[ #I #a #J #W #U #H destruct
+| #I #V #T #a #J #W #U #H destruct
 ]
 qed.
 
-lemma simple_inv_bind: ∀I,V,T. 𝐒⦃ⓑ{I} V. T⦄ → ⊥.
-/2 width=6/ qed-.
+lemma simple_inv_bind: ∀a,I,V,T. 𝐒⦃ⓑ{a,I} V. T⦄ → ⊥.
+/2 width=7/ qed-. (**) (* auto fails if mt is enabled *)
 
 lemma simple_inv_pair: ∀I,V,T.  𝐒⦃②{I}V.T⦄ → ∃J. I = Flat2 J.
-* /2 width=2/ #I #V #T #H
+* /2 width=2/ #a #I #V #T #H
 elim (simple_inv_bind … H)
 qed-.
-
-(*
-lemma mt: ∀R1,R2:Prop. (R1 → R2) → (R2 → ⊥) → R1 → ⊥.
-/3 width=1/ qed-.
-*)

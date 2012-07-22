@@ -39,17 +39,17 @@ lemma cprs_inv_lref1: ∀L,T2,i. L ⊢ #i ➡* T2 →
 qed-.
 
 (* Basic_1: was: pr3_gen_abst *)
-lemma cprs_inv_abst1: ∀I,W,L,V1,T1,U2. L ⊢ ⓛV1. T1 ➡* U2 →
+lemma cprs_inv_abst1: ∀I,W,a,L,V1,T1,U2. L ⊢ ⓛ{a}V1. T1 ➡* U2 →
                       ∃∃V2,T2. L ⊢ V1 ➡* V2 & L. ⓑ{I} W ⊢ T1 ➡* T2 &
-                               U2 = ⓛV2. T2.
-#I #W #L #V1 #T1 #U2 #H @(cprs_ind … H) -U2 /2 width=5/
+                               U2 = ⓛ{a}V2. T2.
+#I #W #a #L #V1 #T1 #U2 #H @(cprs_ind … H) -U2 /2 width=5/
 #U #U2 #_ #HU2 * #V #T #HV1 #HT1 #H destruct
 elim (cpr_inv_abst1 … HU2 I W) -HU2 #V2 #T2 #HV2 #HT2 #H destruct  /3 width=5/
 qed-.
 
-lemma cprs_inv_abst: ∀L,V1,V2,T1,T2. L ⊢ ⓛV1. T1 ➡* ⓛV2. T2 → ∀I,W.
+lemma cprs_inv_abst: ∀a,L,V1,V2,T1,T2. L ⊢ ⓛ{a}V1. T1 ➡* ⓛ{a}V2. T2 → ∀I,W.
                      L ⊢ V1 ➡* V2 ∧ L. ⓑ{I} W ⊢ T1 ➡* T2.
-#L #V1 #V2 #T1 #T2 #H #I #W
+#a #L #V1 #V2 #T1 #T2 #H #I #W
 elim (cprs_inv_abst1 I W … H) -H #V #T #HV1 #HT1 #H destruct /2 width=1/
 qed-.
 

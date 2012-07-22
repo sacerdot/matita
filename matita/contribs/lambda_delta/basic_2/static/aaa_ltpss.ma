@@ -32,13 +32,14 @@ lemma aaa_ltpss_tpss_conf: ∀L1,T1,A. L1 ⊢ T1 ⁝ A → ∀L2,d,e. L1 ▶* [d
     elim (lt_or_ge i d) #Hdi
     [ elim (ltpss_ldrop_conf_le … HL12 … HLK1 ?) -L1 /2 width=2/ #X #H #HLK2
       elim (ltpss_inv_tpss11 … H ?) -H /2 width=1/ -Hdi #K2 #V2 #HK12 #HV12 #H destruct
-      /3 width=8/
+      /3 width=8 by aaa_lref/ (**) (* too slow without trace *)
     | elim (lt_or_ge i (d + e)) #Hide
       [ elim (ltpss_ldrop_conf_be … HL12 … HLK1 ? ?) -L1 // /2 width=2/ #X #H #HLK2
         elim (ltpss_inv_tpss21 … H ?) -H /2 width=1/ -Hdi -Hide #K2 #V2 #HK12 #HV12 #H destruct
-        /3 width=8/
+        /3 width=8 by aaa_lref/ (**) (* too slow without trace *)
       | -Hdi
-        lapply (ltpss_ldrop_conf_ge … HL12 … HLK1 ?) -L1 // -Hide /3 width=8/
+        lapply (ltpss_ldrop_conf_ge … HL12 … HLK1 ?) -L1 // -Hide
+        /3 width=8 by aaa_lref/ (**) (* too slow without trace *)
       ]
     ]
   | * #K2 #V2 #W2 #Hdi #Hide #HLK2 #HVW2 #HWT2
@@ -48,9 +49,9 @@ lemma aaa_ltpss_tpss_conf: ∀L1,T1,A. L1 ⊢ T1 ⁝ A → ∀L2,d,e. L1 ▶* [d
     lapply (ldrop_fwd_ldrop2 … HLK2) -HLK2 #HLK2
     lapply (tpss_trans_eq … HV12 HVW2) -V2 /3 width=7/
   ]
-| #L1 #V1 #T1 #B #A #_ #_ #IHV1 #IHT1 #L2 #d #e #HL12 #X #H
+| #a #L1 #V1 #T1 #B #A #_ #_ #IHV1 #IHT1 #L2 #d #e #HL12 #X #H
   elim (tpss_inv_bind1 … H) -H #V2 #T2 #HV12 #HT12 #H destruct /4 width=4/
-| #L1 #V1 #T1 #B #A #_ #_ #IHV1 #IHT1 #L2 #d #e #HL12 #X #H
+| #a #L1 #V1 #T1 #B #A #_ #_ #IHV1 #IHT1 #L2 #d #e #HL12 #X #H
   elim (tpss_inv_bind1 … H) -H #V2 #T2 #HV12 #HT12 #H destruct /4 width=4/
 | #L1 #V1 #T1 #B #A #_ #_ #IHV1 #IHT1 #L2 #d #e #HL12 #X #H
   elim (tpss_inv_flat1 … H) -H #V2 #T2 #HV12 #HT12 #H destruct /3 width=4/

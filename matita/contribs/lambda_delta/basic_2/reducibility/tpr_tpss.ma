@@ -39,13 +39,13 @@ lemma tpr_tps_ltpr: ∀T1,T2. T1 ➡ T2 →
   elim (tps_inv_flat1 … H) -H #W1 #U1 #HVW1 #HTU1 #H destruct
   elim (IHV12 … HVW1 … HL12) -V1
   elim (IHT12 … HTU1 … HL12) -T1 -HL12 /3 width=5/
-| #V1 #V2 #W #T1 #T2 #_ #_ #IHV12 #IHT12 #L1 #d #e #X #H #L2 #HL12
+| #a #V1 #V2 #W #T1 #T2 #_ #_ #IHV12 #IHT12 #L1 #d #e #X #H #L2 #HL12
   elim (tps_inv_flat1 … H) -H #VV1 #Y #HVV1 #HY #HX destruct
   elim (tps_inv_bind1 … HY) -HY #WW #TT1 #_ #HTT1 #H destruct
   elim (IHV12 … HVV1 … HL12) -V1 #VV2 #HVV12 #HVV2
   elim (IHT12 … HTT1 (L2. ⓛWW) ?) -T1 /2 width=1/ -HL12 #TT2 #HTT12 #HTT2
   lapply (tpss_lsubs_trans … HTT2 (L2. ⓓVV2) ?) -HTT2 /3 width=5/
-| #I #V1 #V2 #T1 #T #T2 #HV12 #_ #HT2 #IHV12 #IHT1 #L1 #d #e #X #H #L2 #HL12
+| #a #I #V1 #V2 #T1 #T #T2 #HV12 #_ #HT2 #IHV12 #IHT1 #L1 #d #e #X #H #L2 #HL12
   elim (tps_inv_bind1 … H) -H #W1 #U1 #HVW1 #HTU1 #H destruct
   elim (IHV12 … HVW1 … HL12) -V1 #W2 #HW12 #HVW2
   elim (IHT1 … HTU1 (L2. ⓑ{I} W2) ?) -T1 /2 width=1/ -HL12 #U #HU1 #HTU
@@ -55,7 +55,7 @@ lemma tpr_tps_ltpr: ∀T1,T2. T1 ➡ T2 →
   lapply (tps_lsubs_trans … HU3 (⋆. ⓑ{I} W2) ?) -HU3 /2 width=1/ #HU3
   lapply (tpss_lsubs_trans … HU23 (L2. ⓑ{I} W2) ?) -HU23 /2 width=1/ #HU23
   lapply (tpss_trans_eq … HTU2 … HU23) -U2 /3 width=5/
-| #V #V1 #V2 #W1 #W2 #T1 #T2 #_ #HV2 #_ #_ #IHV12 #IHW12 #IHT12 #L1 #d #e #X #H #L2 #HL12
+| #a #V #V1 #V2 #W1 #W2 #T1 #T2 #_ #HV2 #_ #_ #IHV12 #IHW12 #IHT12 #L1 #d #e #X #H #L2 #HL12
   elim (tps_inv_flat1 … H) -H #VV1 #Y #HVV1 #HY #HX destruct
   elim (tps_inv_bind1 … HY) -HY #WW1 #TT1 #HWW1 #HTT1 #H destruct
   elim (IHV12 … HVV1 … HL12) -V1 #VV2 #HVV12 #HVV2

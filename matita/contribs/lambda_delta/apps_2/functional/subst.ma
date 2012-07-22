@@ -24,8 +24,8 @@ let rec fsubst W d U on U ≝ match U with
   | GRef _ ⇒ U
   ]
 | TPair I V T ⇒ match I with
-  [ Bind2 I ⇒ ⓑ{I} (fsubst W d V). (fsubst W (d+1) T)
-  | Flat2 I ⇒ ⓕ{I} (fsubst W d V). (fsubst W d T)
+  [ Bind2 a I ⇒ ⓑ{a,I} (fsubst W d V). (fsubst W (d+1) T)
+  | Flat2 I   ⇒ ⓕ{I} (fsubst W d V). (fsubst W d T)
   ]
 ].
 
@@ -63,7 +63,7 @@ theorem fsubst_inv_delift: ∀K,V,T1,L,T2,d. ⇩[0, d] L ≡ K. ⓓV →
     ]
   | -HLK >(delift_inv_gref1 … H) -H //
   ]
-| * #I #V1 #T1 #IHV1 #IHT1 #L #X #d #HLK #H
+| * [ #a ] #I #V1 #T1 #IHV1 #IHT1 #L #X #d #HLK #H
   [ elim (delift_inv_bind1 … H) -H #V2 #T2 #HV12 #HT12 #H destruct
     <(IHV1 … HV12) -IHV1 -HV12 // <(IHT1 … HT12) -IHT1 -HT12 // /2 width=1/
   | elim (delift_inv_flat1 … H) -H #V2 #T2 #HV12 #HT12 #H destruct

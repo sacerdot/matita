@@ -24,10 +24,10 @@ interpretation
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma tnf_inv_abst: ∀V,T. 𝐍⦃ⓛV.T⦄ → 𝐍⦃V⦄ ∧ 𝐍⦃T⦄.
-#V1 #T1 #HVT1 @conj
-[ #V2 #HV2 lapply (HVT1 (ⓛV2.T1) ?) -HVT1 /2 width=1/ -HV2 #H destruct //
-| #T2 #HT2 lapply (HVT1 (ⓛV1.T2) ?) -HVT1 /2 width=1/ -HT2 #H destruct //
+lemma tnf_inv_abst: ∀a,V,T. 𝐍⦃ⓛ{a}V.T⦄ → 𝐍⦃V⦄ ∧ 𝐍⦃T⦄.
+#a #V1 #T1 #HVT1 @conj
+[ #V2 #HV2 lapply (HVT1 (ⓛ{a}V2.T1) ?) -HVT1 /2 width=1/ -HV2 #H destruct //
+| #T2 #HT2 lapply (HVT1 (ⓛ{a}V1.T2) ?) -HVT1 /2 width=1/ -HT2 #H destruct //
 ]
 qed-.
 
@@ -35,21 +35,21 @@ lemma tnf_inv_appl: ∀V,T. 𝐍⦃ⓐV.T⦄ → ∧∧ 𝐍⦃V⦄ & 𝐍⦃T�
 #V1 #T1 #HVT1 @and3_intro
 [ #V2 #HV2 lapply (HVT1 (ⓐV2.T1) ?) -HVT1 /2 width=1/ -HV2 #H destruct //
 | #T2 #HT2 lapply (HVT1 (ⓐV1.T2) ?) -HVT1 /2 width=1/ -HT2 #H destruct //
-| generalize in match HVT1; -HVT1 elim T1 -T1 * // * #W1 #U1 #_ #_ #H
+| generalize in match HVT1; -HVT1 elim T1 -T1 * // #a * #W1 #U1 #_ #_ #H
   [ elim (lift_total V1 0 1) #V2 #HV12
-    lapply (H (ⓓW1.ⓐV2.U1) ?) -H /2 width=3/ -HV12 #H destruct
-  | lapply (H (ⓓV1.U1) ?) -H /2 width=1/ #H destruct
+    lapply (H (ⓓ{a}W1.ⓐV2.U1) ?) -H /2 width=3/ -HV12 #H destruct
+  | lapply (H (ⓓ{a}V1.U1) ?) -H /2 width=1/ #H destruct
 ]
 qed-.
 
-lemma tnf_inv_abbr: ∀V,T. 𝐍⦃ⓓV.T⦄ → ⊥.
+lemma tnf_inv_abbr: ∀V,T. 𝐍⦃+ⓓV.T⦄ → ⊥.
 #V #T #H elim (is_lift_dec T 0 1)
 [ * #U #HTU
   lapply (H U ?) -H /2 width=3/ #H destruct
   elim (lift_inv_pair_xy_y … HTU)
 | #HT
   elim (tps_full (⋆) V T (⋆. ⓓV) 0 ?) // #T2 #T1 #HT2 #HT12
-  lapply (H (ⓓV.T2) ?) -H /2 width=3/ -HT2 #H destruct /3 width=2/
+  lapply (H (+ⓓV.T2) ?) -H /2 width=3/ -HT2 #H destruct /3 width=2/
 ]
 qed.
 

@@ -27,7 +27,7 @@ lemma ltpr_tps_trans: ∀L2,T1,T2,d,e. L2 ⊢ T1 ▶ [d, e] T2 → ∀L1. L1 ➡
   elim (ltpr_inv_pair2 … H) -H #K1 #V1 #HK12 #HV12 #H destruct -K2
   elim (lift_total V1 0 (i+1)) #W1 #HVW1
   lapply (tpr_lift … HV12 … HVW1 … HVW2) -V2 /3 width=4/
-| #L2 #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #L1 #HL12
+| #L2 #a #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #L1 #HL12
   elim (IHV12 … HL12) -IHV12 #V #HV1 #HV2
   elim (IHT12 (L1.ⓑ{I}V) ?) /2 width=1/ -L2 /3 width=5/
 | #L2 #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #L1 #HL12
@@ -45,7 +45,7 @@ lemma ltpr_tps_conf: ∀L1,T1,T2,d,e. L1 ⊢ T1 ▶ [d, e] T2 → ∀L2. L1 ➡ 
   elim (ltpr_inv_pair1 … H) -H #K2 #V2 #HK12 #HV12 #H destruct -K1
   elim (lift_total V2 0 (i+1)) #W2 #HVW2
   lapply (tpr_lift … HV12 … HVW1 … HVW2) -V1 /3 width=4/
-| #L1 #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #L2 #HL12
+| #L1 #a #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #L2 #HL12
   elim (IHV12 … HL12) -IHV12 #V #HV1 #HV2
   elim (IHT12 (L2.ⓑ{I}V) ?) /2 width=1/ -L1 /3 width=5/
 | #L1 #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #L2 #HL12

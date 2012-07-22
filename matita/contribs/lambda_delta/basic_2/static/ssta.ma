@@ -23,8 +23,8 @@ inductive ssta (h:sh) (g:sd h): nat → lenv → relation term ≝
              ⇧[0, i + 1] W ≡ U → ssta h g l L (#i) U
 | ssta_ldec: ∀L,K,W,V,U,i,l. ⇩[0, i] L ≡ K. ⓛW → ssta h g l K W V →
              ⇧[0, i + 1] W ≡ U → ssta h g (l+1) L (#i) U
-| ssta_bind: ∀I,L,V,T,U,l. ssta h g l (L. ⓑ{I} V) T U →
-             ssta h g l L (ⓑ{I}V.T) (ⓑ{I}V.U)
+| ssta_bind: ∀a,I,L,V,T,U,l. ssta h g l (L. ⓑ{I} V) T U →
+             ssta h g l L (ⓑ{a,I}V.T) (ⓑ{a,I}V.U)
 | ssta_appl: ∀L,V,T,U,l. ssta h g l L T U →
              ssta h g l L (ⓐV.T) (ⓐV.U)
 | ssta_cast: ∀L,V,W,T,U,l. ssta h g (l - 1) L V W → ssta h g l L T U →
@@ -42,7 +42,7 @@ fact ssta_inv_sort1_aux: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g, l] U → ∀k0.
 [ #L #k #l #Hkl #k0 #H destruct /2 width=1/
 | #L #K #V #W #U #i #l #_ #_ #_ #k0 #H destruct
 | #L #K #W #V #U #i #l #_ #_ #_ #k0 #H destruct
-| #I #L #V #T #U #l #_ #k0 #H destruct
+| #a #I #L #V #T #U #l #_ #k0 #H destruct
 | #L #V #T #U #l #_ #k0 #H destruct
 | #L #V #W #T #U #l #_ #_ #k0 #H destruct
 qed.
@@ -63,7 +63,7 @@ fact ssta_inv_lref1_aux: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g, l] U → ∀j. 
 [ #L #k #l #_ #j #H destruct
 | #L #K #V #W #U #i #l #HLK #HVW #HWU #j #H destruct /3 width=6/
 | #L #K #W #V #U #i #l #HLK #HWV #HWU #j #H destruct /3 width=8/
-| #I #L #V #T #U #l #_ #j #H destruct
+| #a #I #L #V #T #U #l #_ #j #H destruct
 | #L #V #T #U #l #_ #j #H destruct
 | #L #V #W #T #U #l #_ #_ #j #H destruct
 ]
@@ -80,21 +80,21 @@ lemma ssta_inv_lref1: ∀h,g,L,U,i,l. ⦃h, L⦄ ⊢ #i •[g, l] U →
 /2 width=3/ qed-.
 
 fact ssta_inv_bind1_aux: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g, l] U →
-                         ∀J,X,Y. T = ⓑ{J}Y.X →
-                         ∃∃Z. ⦃h, L.ⓑ{J}Y⦄ ⊢ X •[g, l] Z & U = ⓑ{J}Y.Z.
+                         ∀a,I,X,Y. T = ⓑ{a,I}Y.X →
+                         ∃∃Z. ⦃h, L.ⓑ{I}Y⦄ ⊢ X •[g, l] Z & U = ⓑ{a,I}Y.Z.
 #h #g #L #T #U #l * -L -T -U -l
-[ #L #k #l #_ #J #X #Y #H destruct
-| #L #K #V #W #U #i #l #_ #_ #_ #J #X #Y #H destruct
-| #L #K #W #V #U #i #l #_ #_ #_ #J #X #Y #H destruct
-| #I #L #V #T #U #l #HTU #J #X #Y #H destruct /2 width=3/
-| #L #V #T #U #l #_ #J #X #Y #H destruct
-| #L #V #W #T #U #l #_ #_ #J #X #Y #H destruct
+[ #L #k #l #_ #a #I #X #Y #H destruct
+| #L #K #V #W #U #i #l #_ #_ #_ #a #I #X #Y #H destruct
+| #L #K #W #V #U #i #l #_ #_ #_ #a #I #X #Y #H destruct
+| #b #J #L #V #T #U #l #HTU #a #I #X #Y #H destruct /2 width=3/
+| #L #V #T #U #l #_ #a #I #X #Y #H destruct
+| #L #V #W #T #U #l #_ #_ #a #I #X #Y #H destruct
 ]
 qed.
 
 (* Basic_1: was just: sty0_gen_bind *)
-lemma ssta_inv_bind1: ∀h,g,J,L,Y,X,U,l. ⦃h, L⦄ ⊢ ⓑ{J}Y.X •[g, l] U →
-                      ∃∃Z. ⦃h, L.ⓑ{J}Y⦄ ⊢ X •[g, l] Z & U = ⓑ{J}Y.Z.
+lemma ssta_inv_bind1: ∀h,g,a,I,L,Y,X,U,l. ⦃h, L⦄ ⊢ ⓑ{a,I}Y.X •[g, l] U →
+                      ∃∃Z. ⦃h, L.ⓑ{I}Y⦄ ⊢ X •[g, l] Z & U = ⓑ{a,I}Y.Z.
 /2 width=3/ qed-.
 
 fact ssta_inv_appl1_aux: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g, l] U → ∀X,Y. T = ⓐY.X →
@@ -103,7 +103,7 @@ fact ssta_inv_appl1_aux: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g, l] U → ∀X,Y
 [ #L #k #l #_ #X #Y #H destruct
 | #L #K #V #W #U #i #l #_ #_ #_ #X #Y #H destruct
 | #L #K #W #V #U #i #l #_ #_ #_ #X #Y #H destruct
-| #I #L #V #T #U #l #_ #X #Y #H destruct
+| #a #I #L #V #T #U #l #_ #X #Y #H destruct
 | #L #V #T #U #l #HTU #X #Y #H destruct /2 width=3/
 | #L #V #W #T #U #l #_ #_ #X #Y #H destruct
 ]
@@ -121,7 +121,7 @@ fact ssta_inv_cast1_aux: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g, l] U → ∀X,Y
 [ #L #k #l #_ #X #Y #H destruct
 | #L #K #V #W #U #l #i #_ #_ #_ #X #Y #H destruct
 | #L #K #W #V #U #l #i #_ #_ #_ #X #Y #H destruct
-| #I #L #V #T #U #l #_ #X #Y #H destruct
+| #a #I #L #V #T #U #l #_ #X #Y #H destruct
 | #L #V #T #U #l #_ #X #Y #H destruct
 | #L #V #W #T #U #l #HVW #HTU #X #Y #H destruct /2 width=5/
 ]

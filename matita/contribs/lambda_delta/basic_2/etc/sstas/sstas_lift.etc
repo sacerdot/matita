@@ -15,7 +15,7 @@
 include "basic_2/static/ssta_lift.ma".
 include "basic_2/unwind/sstas.ma".
 
-(* STRATIFIED UNWIND ON TERMS ***********************************************)
+(* ITERATED STRATIFIED STATIC TYPE ASSIGNMENTON TERMS ***********************)
 
 (* Advanced properties ******************************************************)
 

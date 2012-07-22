@@ -51,7 +51,7 @@ lemma ltpss_tps_conf: ∀L0,T2,U2,d2,e2. L0 ⊢ T2 ▶ [d2, e2] U2 →
     | lapply (ltpss_ldrop_conf_ge … HL01 … HLK0 ?) -L0 // /3 width=4/
     ]
   ]
-| #L0 #I #V2 #W2 #T2 #U2 #d2 #e2 #_ #_ #IHVW2 #IHTU2 #L1 #d1 #e1 #HL01
+| #L0 #a #I #V2 #W2 #T2 #U2 #d2 #e2 #_ #_ #IHVW2 #IHTU2 #L1 #d1 #e1 #HL01
   elim (IHVW2 … HL01) -IHVW2 #V #HV2 #HVW2
   elim (IHTU2 (L1. ⓑ{I} V) (d1 + 1) e1 ?) -IHTU2 /2 width=1/ -HL01 /3 width=5/
 | #L0 #I #V2 #W2 #T2 #U2 #d2 #e2 #_ #_ #IHVW2 #IHTU2 #L1 #d1 #e1 #HL01
@@ -92,7 +92,7 @@ lemma ltpss_tps_trans: ∀L0,T2,U2,d2,e2. L0 ⊢ T2 ▶ [d2, e2] U2 →
     | lapply (ltpss_ldrop_trans_ge … HL10 … HLK0 ?) -HL10 -HLK0 // /3 width=4/
     ]
   ]
-| #L0 #I #V2 #W2 #T2 #U2 #d2 #e2 #_ #_ #IHVW2 #IHTU2 #L1 #d1 #e1 #HL10
+| #L0 #a #I #V2 #W2 #T2 #U2 #d2 #e2 #_ #_ #IHVW2 #IHTU2 #L1 #d1 #e1 #HL10
   elim (IHVW2 … HL10) -IHVW2 #V #HV2 #HVW2
   elim (IHTU2 (L1. ⓑ{I} V) (d1 + 1) e1 ?) -IHTU2 /2 width=1/ -HL10 /3 width=5/
 | #L0 #I #V2 #W2 #T2 #U2 #d2 #e2 #_ #_ #IHVW2 #IHTU2 #L1 #d1 #e1 #HL10

@@ -12,22 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/term_vector.ma".
-include "basic_2/grammar/tstc.ma".
+include "basic_2/computation/cprs.ma".
+include "basic_2/computation/xprs.ma".
 
-(* SAME TOP TERM CONSTRUCTOR ************************************************)
+(* EXTENDED PARALLEL COMPUTATION ON TERMS ***********************************)
 
-(* Advanced inversion lemmas ************************************************)
+(* properties on context sensitive parallel computation for terms ***********)
 
-(* Basic_1: was only: iso_flats_lref_bind_false iso_flats_flat_bind_false *)
-lemma tstc_inv_bind_appls_simple: ∀a,I,Vs,V2,T1,T2. ⒶVs.T1 ≃ ⓑ{a,I} V2. T2 →
-                                  𝐒⦃T1⦄ → ⊥.
-#a #I #Vs #V2 #T1 #T2 #H
-elim (tstc_inv_pair2 … H) -H #V0 #T0
-elim Vs -Vs normalize
-[ #H destruct #H
-  @(simple_inv_bind … H)
-| #V #Vs #_ #H destruct
-]
+lemma cprs_xprs: ∀h,g,L,T1,T2. L ⊢ T1 ➡* T2 → ⦃h, L⦄ ⊢ T1 ➸*[g] T2.
+#h #g #L #T1 #T2 #H @(cprs_ind … H) -T2 //
+/3 width=3 by xprs_strap1, cpr_xpr/ (**) (* NTypeChecker failure without trace *)
 qed.
-

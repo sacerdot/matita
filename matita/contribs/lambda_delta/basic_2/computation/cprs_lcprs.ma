@@ -32,12 +32,12 @@ lemma lcprs_cpr_trans: ∀L1,L2. L1 ⊢ ➡* L2 →
 (* Advanced inversion lemmas ************************************************)
 
 (* Basic_1: was pr3_gen_abbr *)
-lemma cprs_inv_abbr1: ∀L,V1,T1,U2. L ⊢ ⓓV1. T1 ➡* U2 →
+lemma cprs_inv_abbr1: ∀a,L,V1,T1,U2. L ⊢ ⓓ{a}V1. T1 ➡* U2 →
                       (∃∃V2,T2. L ⊢ V1 ➡* V2 & L. ⓓV1 ⊢ T1 ➡* T2 &
-                                U2 = ⓓV2. T2
+                                U2 = ⓓ{a}V2. T2
                       ) ∨
-                      ∃∃T2. L. ⓓV1 ⊢ T1 ➡* T2 & ⇧[0, 1] U2 ≡ T2.
-#L #V1 #T1 #U2 #H @(cprs_ind … H) -U2 /3 width=5/
+                      ∃∃T2. L. ⓓV1 ⊢ T1 ➡* T2 & ⇧[0, 1] U2 ≡ T2 & a = true.
+#a #L #V1 #T1 #U2 #H @(cprs_ind … H) -U2 /3 width=5/
 #U0 #U2 #_ #HU02 * *
 [ #V0 #T0 #HV10 #HT10 #H destruct
   elim (cpr_inv_abbr1 … HU02) -HU02 *
