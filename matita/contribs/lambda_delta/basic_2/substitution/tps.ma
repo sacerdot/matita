@@ -245,7 +245,7 @@ lemma tps_inv_refl_O2: ∀L,T1,T2,d. L ⊢ T1 ▶ [d, 0] T2 → T1 = T2.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma tps_fwd_tw: ∀L,T1,T2,d,e. L ⊢ T1 ▶ [d, e] T2 → #[T1] ≤ #[T2].
+lemma tps_fwd_tw: ∀L,T1,T2,d,e. L ⊢ T1 ▶ [d, e] T2 → #{T1} ≤ #{T2}.
 #L #T1 #T2 #d #e #H elim H -L -T1 -T2 -d -e normalize
 /3 by monotonic_le_plus_l, le_plus/ (**) (* just /3 width=1/ is too slow *)
 qed-.

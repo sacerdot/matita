@@ -102,7 +102,7 @@ qed-.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma delift_fwd_tw: ∀L,T1,T2,d,e. L ⊢ ▼*[d, e] T1 ≡ T2 → #[T1] ≤ #[T2].
+lemma delift_fwd_tw: ∀L,T1,T2,d,e. L ⊢ ▼*[d, e] T1 ≡ T2 → #{T1} ≤ #{T2}.
 #L #T1 #T2 #d #e * #T #HT1 #HT2
 >(tw_lift … HT2) -T2 /2 width=4 by tpss_fwd_tw /
 qed-.

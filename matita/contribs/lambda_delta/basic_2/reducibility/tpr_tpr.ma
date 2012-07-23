@@ -23,7 +23,7 @@ fact tpr_conf_atom_atom: ∀I. ∃∃X. ⓪{I} ➡ X & ⓪{I} ➡ X.
 
 fact tpr_conf_flat_flat:
    ∀I,V0,V1,T0,T1,V2,T2. (
-      ∀X0:term. #[X0] < #[V0] + #[T0] + 1 →
+      ∀X0:term. #{X0} < #{V0} + #{T0} + 1 →
       ∀X1,X2. X0 ➡ X1 → X0 ➡ X2 →
       ∃∃X. X1 ➡ X & X2 ➡ X
    ) →
@@ -36,7 +36,7 @@ qed.
 
 fact tpr_conf_flat_beta:
    ∀a,V0,V1,T1,V2,W0,U0,T2. (
-      ∀X0:term. #[X0] < #[V0] + (#[W0] + #[U0] + 1) + 1 →
+      ∀X0:term. #{X0} < #{V0} + (#{W0} + #{U0} + 1) + 1 →
       ∀X1,X2. X0 ➡ X1 → X0 ➡ X2 →
       ∃∃X. X1 ➡ X & X2 ➡ X
    ) →
@@ -55,7 +55,7 @@ qed.
 *)
 fact tpr_conf_flat_theta:
    ∀a,V0,V1,T1,V2,V,W0,W2,U0,U2. (
-      ∀X0:term. #[X0] < #[V0] + (#[W0] + #[U0] + 1) + 1 →
+      ∀X0:term. #{X0} < #{V0} + (#{W0} + #{U0} + 1) + 1 →
       ∀X1,X2. X0 ➡ X1 → X0 ➡ X2 →
       ∃∃X. X1 ➡ X & X2 ➡ X
    ) →
@@ -87,7 +87,7 @@ qed.
 
 fact tpr_conf_flat_cast:
    ∀X2,V0,V1,T0,T1. (
-      ∀X0:term. #[X0] < #[V0] + #[T0] + 1 →
+      ∀X0:term. #{X0} < #{V0} + #{T0} + 1 →
       ∀X1,X2. X0 ➡ X1 → X0 ➡ X2 →
       ∃∃X. X1 ➡ X & X2 ➡ X
    ) →
@@ -99,7 +99,7 @@ qed.
 
 fact tpr_conf_beta_beta:
    ∀a. ∀W0:term. ∀V0,V1,T0,T1,V2,T2. (
-      ∀X0:term. #[X0] < #[V0] + (#[W0] + #[T0] + 1) + 1 →
+      ∀X0:term. #{X0} < #{V0} + (#{W0} + #{T0} + 1) + 1 →
       ∀X1,X2. X0 ➡ X1 → X0 ➡ X2 →
       ∃∃X. X1 ➡ X & X2 ➡ X
    ) →
@@ -113,7 +113,7 @@ qed.
 (* Basic_1: was: pr0_cong_delta pr0_delta_delta *)
 fact tpr_conf_delta_delta:
    ∀a,I1,V0,V1,T0,T1,TT1,V2,T2,TT2. (
-      ∀X0:term. #[X0] < #[V0] + #[T0] + 1 →
+      ∀X0:term. #{X0} < #{V0} + #{T0} + 1 →
       ∀X1,X2. X0 ➡ X1 → X0 ➡ X2 →
       ∃∃X. X1 ➡ X & X2 ➡ X
    ) →
@@ -132,7 +132,7 @@ qed.
 
 fact tpr_conf_delta_zeta:
    ∀X2,V0,V1,T0,T1,TT1,T2. (
-      ∀X0:term. #[X0] < #[V0] + #[T0] + 1 →
+      ∀X0:term. #{X0} < #{V0} + #{T0} + 1 →
       ∀X1,X2. X0 ➡ X1 → X0 ➡ X2 →
       ∃∃X. X1 ➡ X & X2 ➡ X
    ) →
@@ -149,7 +149,7 @@ qed.
 (* Basic_1: was: pr0_upsilon_upsilon *)
 fact tpr_conf_theta_theta:
    ∀a,VV1,V0,V1,W0,W1,T0,T1,V2,VV2,W2,T2. (
-      ∀X0:term. #[X0] < #[V0] + (#[W0] + #[T0] + 1) + 1 →
+      ∀X0:term. #{X0} < #{V0} + (#{W0} + #{T0} + 1) + 1 →
       ∀X1,X2. X0 ➡ X1 → X0 ➡ X2 →
       ∃∃X. X1 ➡ X & X2 ➡ X
    ) →
@@ -168,7 +168,7 @@ qed.
 
 fact tpr_conf_zeta_zeta:
    ∀V0:term. ∀X2,TT0,T0,T1,TT2. (
-      ∀X0:term. #[X0] < #[V0] + #[TT0] + 1 →
+      ∀X0:term. #{X0} < #{V0} + #{TT0} + 1 →
       ∀X1,X2. X0 ➡ X1 → X0 ➡ X2 →
       ∃∃X. X1 ➡ X & X2 ➡ X
    ) →
@@ -184,7 +184,7 @@ qed.
 
 fact tpr_conf_tau_tau:
    ∀V0,T0:term. ∀X2,T1. (
-      ∀X0:term. #[X0] < #[V0] + #[T0] + 1 →
+      ∀X0:term. #{X0} < #{V0} + #{T0} + 1 →
       ∀X1,X2. X0 ➡ X1 → X0 ➡ X2 →
       ∃∃X. X1 ➡ X & X2 ➡ X
    ) →
@@ -198,7 +198,7 @@ qed.
 
 fact tpr_conf_aux:
    ∀Y0:term. (
-      ∀X0:term. #[X0] < #[Y0] →
+      ∀X0:term. #{X0} < #{Y0} →
       ∀X1,X2. X0 ➡ X1 → X0 ➡ X2 →
       ∃∃X. X1 ➡ X & X2 ➡ X
          ) →

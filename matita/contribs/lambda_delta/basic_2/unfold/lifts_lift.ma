@@ -32,7 +32,7 @@ lemma lifts_lift_trans_le: ∀T1,T,des. ⇧*[des] T1 ≡ T → ∀T2. ⇧[0, 1] 
 qed-.
 
 (* Basic_1: was: lift1_free (right to left) *)
-lemma lifts_lift_trans: ∀des,i,i0. @[i] des ≡ i0 → 
+lemma lifts_lift_trans: ∀des,i,i0. @⦃i, des⦄ ≡ i0 → 
                         ∀des0. des + 1 ▭ i + 1 ≡ des0 + 1 →
                         ∀T1,T0. ⇧*[des0] T1 ≡ T0 →
                         ∀T2. ⇧[O, i0 + 1] T0 ≡ T2 →

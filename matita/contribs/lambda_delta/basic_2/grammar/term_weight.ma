@@ -26,14 +26,14 @@ interpretation "weight (term)" 'Weight T = (tw T).
 (* Basic properties *********************************************************)
 
 (* Basic_1: was: tweight_lt *)
-lemma tw_pos: ∀T. 1 ≤ #[T].
+lemma tw_pos: ∀T. 1 ≤ #{T}.
 #T elim T -T //
 qed.
 
 (* Basic eliminators ********************************************************)
 
 axiom tw_wf_ind: ∀R:predicate term.
-                 (∀T2. (∀T1. #[T1] < #[T2] → R T1) → R T2) →
+                 (∀T2. (∀T1. #{T1} < #{T2} → R T1) → R T2) →
                  ∀T. R T.
 
 (* Basic_1: removed theorems 11:

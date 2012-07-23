@@ -18,7 +18,7 @@ include "basic_2/unfold/gr2.ma".
 
 (* Main properties **********************************************************)
 
-theorem at_mono: ∀des,i,i1. @[i] des ≡ i1 → ∀i2. @[i] des ≡ i2 → i1 = i2.
+theorem at_mono: ∀des,i,i1. @⦃i, des⦄ ≡ i1 → ∀i2. @⦃i, des⦄ ≡ i2 → i1 = i2.
 #des #i #i1 #H elim H -des -i -i1
 [ #i #x #H <(at_inv_nil … H) -x //
 | #des #d #e #i #i1 #Hid #_ #IHi1 #x #H

@@ -61,7 +61,7 @@ qed-.
 
 (* Basic_1: was: lift1_lref *)
 lemma lifts_inv_lref1: ∀T2,des,i1. ⇧*[des] #i1 ≡ T2 →
-                       ∃∃i2. @[i1] des ≡ i2 & T2 = #i2.
+                       ∃∃i2. @⦃i1, des⦄ ≡ i2 & T2 = #i2.
 #T2 #des elim des -des
 [ #i1 #H <(lifts_inv_nil … H) -H /2 width=3/
 | #d #e #des #IH #i1 #H

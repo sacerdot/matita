@@ -29,7 +29,7 @@ interpretation "application (generic relocation with pairs)"
 
 (* Basic inversion lemmas ***************************************************)
 
-fact at_inv_nil_aux: ∀des,i1,i2. @[i1] des ≡ i2 → des = ⟠ → i1 = i2.
+fact at_inv_nil_aux: ∀des,i1,i2. @⦃i1, des⦄ ≡ i2 → des = ⟠ → i1 = i2.
 #des #i1 #i2 * -des -i1 -i2
 [ //
 | #des #d #e #i1 #i2 #_ #_ #H destruct
@@ -37,13 +37,13 @@ fact at_inv_nil_aux: ∀des,i1,i2. @[i1] des ≡ i2 → des = ⟠ → i1 = i2.
 ]
 qed.
 
-lemma at_inv_nil: ∀i1,i2. @[i1] ⟠ ≡ i2 → i1 = i2.
+lemma at_inv_nil: ∀i1,i2. @⦃i1, ⟠⦄ ≡ i2 → i1 = i2.
 /2 width=3/ qed-.
 
-fact at_inv_cons_aux: ∀des,i1,i2. @[i1] des ≡ i2 →
+fact at_inv_cons_aux: ∀des,i1,i2. @⦃i1, des⦄ ≡ i2 →
                       ∀d,e,des0. des = {d, e} @ des0 →
-                      i1 < d ∧ @[i1] des0 ≡ i2 ∨
-                      d ≤ i1 ∧ @[i1 + e] des0 ≡ i2.
+                      i1 < d ∧ @⦃i1, des0⦄ ≡ i2 ∨
+                      d ≤ i1 ∧ @⦃i1 + e, des0⦄ ≡ i2.
 #des #i1 #i2 * -des -i1 -i2
 [ #i #d #e #des #H destruct
 | #des1 #d1 #e1 #i1 #i2 #Hid1 #Hi12 #d2 #e2 #des2 #H destruct /3 width=1/
@@ -51,21 +51,21 @@ fact at_inv_cons_aux: ∀des,i1,i2. @[i1] des ≡ i2 →
 ]
 qed.
 
-lemma at_inv_cons: ∀des,d,e,i1,i2. @[i1] {d, e} @ des ≡ i2 →
-                   i1 < d ∧ @[i1] des ≡ i2 ∨
-                   d ≤ i1 ∧ @[i1 + e] des ≡ i2.
+lemma at_inv_cons: ∀des,d,e,i1,i2. @⦃i1, {d, e} @ des⦄ ≡ i2 →
+                   i1 < d ∧ @⦃i1, des⦄ ≡ i2 ∨
+                   d ≤ i1 ∧ @⦃i1 + e, des⦄ ≡ i2.
 /2 width=3/ qed-.
 
-lemma at_inv_cons_lt: ∀des,d,e,i1,i2. @[i1] {d, e} @ des ≡ i2 →
-                      i1 < d → @[i1] des ≡ i2.
+lemma at_inv_cons_lt: ∀des,d,e,i1,i2. @⦃i1, {d, e} @ des⦄ ≡ i2 →
+                      i1 < d → @⦃i1, des⦄ ≡ i2.
 #des #d #e #i1 #e2 #H
 elim (at_inv_cons … H) -H * // #Hdi1 #_ #Hi1d
 lapply (le_to_lt_to_lt … Hdi1 Hi1d) -Hdi1 -Hi1d #Hd
 elim (lt_refl_false … Hd)
 qed-.
 
-lemma at_inv_cons_ge: ∀des,d,e,i1,i2. @[i1] {d, e} @ des ≡ i2 →
-                      d ≤ i1 → @[i1 + e] des ≡ i2.
+lemma at_inv_cons_ge: ∀des,d,e,i1,i2. @⦃i1, {d, e} @ des⦄ ≡ i2 →
+                      d ≤ i1 → @⦃i1 + e, des⦄ ≡ i2.
 #des #d #e #i1 #e2 #H
 elim (at_inv_cons … H) -H * // #Hi1d #_ #Hdi1
 lapply (le_to_lt_to_lt … Hdi1 Hi1d) -Hdi1 -Hi1d #Hd

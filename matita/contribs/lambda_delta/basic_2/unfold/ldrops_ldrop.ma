@@ -21,7 +21,7 @@ include "basic_2/unfold/ldrops.ma".
 
 lemma ldrops_ldrop_trans: ∀L1,L,des. ⇩*[des] L1 ≡ L → ∀L2,i. ⇩[0, i] L ≡ L2 →
                           ∃∃L0,des0,i0. ⇩[0, i0] L1 ≡ L0 & ⇩*[des0] L0 ≡ L2 &
-                                        @[i] des ≡ i0 & des ▭ i ≡ des0.
+                                        @⦃i, des⦄ ≡ i0 & des ▭ i ≡ des0.
 #L1 #L #des #H elim H -L1 -L -des
 [ /2 width=7/
 | #L1 #L3 #L #des3 #d #e #_ #HL3 #IHL13 #L2 #i #HL2

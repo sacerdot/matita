@@ -54,7 +54,7 @@ fact ltpss_tpss_trans_eq_aux: ∀Y1,X2,L1,T2,U2,d,e.
   elim (ltpss_ldrop_trans_be … HL01 … HLK1 ? ?) -HL01 -HLK1 // /2 width=2/ #X #H #HLK0
   elim (ltpss_inv_tpss22 … H ?) -H /2 width=1/ #K0 #V0 #HK01 #HV01 #H destruct
   lapply (tpss_fwd_tw … HV01) #H2
-  lapply (transitive_le (#[K1] + #[V0]) … H1) -H1 /2 width=1/ -H2 #H
+  lapply (transitive_le (#{K1} + #{V0}) … H1) -H1 /2 width=1/ -H2 #H
   lapply (tpss_trans_eq … HV01 HV12) -V1 #HV02
   lapply (IH … HV02 … HK01 ? ?) -IH -HV02 -HK01
   [1,3: // |2,4: skip | normalize /2 width=1/ | /2 width=6/ ]

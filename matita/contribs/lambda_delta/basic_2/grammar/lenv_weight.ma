@@ -19,20 +19,20 @@ include "basic_2/grammar/lenv.ma".
 
 let rec lw L ≝ match L with
 [ LAtom       ⇒ 0
-| LPair L _ V ⇒ lw L + #[V]
+| LPair L _ V ⇒ lw L + #{V}
 ].
 
 interpretation "weight (local environment)" 'Weight L = (lw L).
 
 (* Basic properties *********************************************************)
 
-lemma lw_pair: ∀I,L,V. #[L] < #[(L.ⓑ{I}V)].
+lemma lw_pair: ∀I,L,V. #{L} < #{(L.ⓑ{I}V)}.
 /3 width=1/ qed.
 
 (* Basic eliminators ********************************************************)
 
 axiom lw_wf_ind: ∀R:predicate lenv.
-                 (∀L2. (∀L1. #[L1] < #[L2] → R L1) → R L2) →
+                 (∀L2. (∀L1. #{L1} < #{L2} → R L1) → R L2) →
                  ∀L. R L.
 
 (* Basic_1: removed theorems 2: clt_cong clt_head clt_thead *)

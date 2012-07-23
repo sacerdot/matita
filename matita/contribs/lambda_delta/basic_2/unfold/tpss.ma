@@ -155,7 +155,7 @@ qed-.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma tpss_fwd_tw: ∀L,T1,T2,d,e. L ⊢ T1 ▶* [d, e] T2 → #[T1] ≤ #[T2].
+lemma tpss_fwd_tw: ∀L,T1,T2,d,e. L ⊢ T1 ▶* [d, e] T2 → #{T1} ≤ #{T2}.
 #L #T1 #T2 #d #e #H @(tpss_ind … H) -T2 //
 #T #T2 #_ #HT2 #IHT1
 lapply (tps_fwd_tw … HT2) -HT2 #HT2

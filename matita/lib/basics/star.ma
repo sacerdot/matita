@@ -47,7 +47,7 @@ qed.
 (* star *)
 inductive star (A:Type[0]) (R:relation A) (a:A): A → Prop ≝
   |sstep: ∀b,c.star A R a b → R b c → star A R a c
-  |refl: star A R a a.
+  |srefl: star A R a a.
 
 lemma R_to_star: ∀A,R,a,b. R a b → star A R a b.
 #A #R #a #b /2/
