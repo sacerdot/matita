@@ -147,12 +147,21 @@ lemma ldrop_skip_lt: ∀L1,L2,I,V1,V2,d,e.
 #L1 #L2 #I #V1 #V2 #d #e #HL12 #HV21 #Hd >(plus_minus_m_m d 1) // /2 width=1/
 qed.
 
-lemma ldrop_O1: ∀L,i. i < |L| → ∃∃I,K,V. ⇩[0, i] L ≡ K.ⓑ{I}V.
+lemma ldrop_O1_le: ∀i,L. i ≤ |L| → ∃K. ⇩[0, i] L ≡ K.
+#i @(nat_ind_plus … i) -i /2 width=2/
+#i #IHi *
+[ #H lapply (le_n_O_to_eq … H) -H >commutative_plus normalize #H destruct 
+| #L #I #V normalize #H
+  elim (IHi L ?) -IHi /2 width=1/ -H /3 width=2/
+]
+qed.
+
+lemma ldrop_O1_lt: ∀L,i. i < |L| → ∃∃I,K,V. ⇩[0, i] L ≡ K.ⓑ{I}V.
 #L elim L -L
 [ #i #H elim (lt_zero_false … H)
-| #L #I #V #IHL #i @(nat_ind_plus … i) -i /2 width=4/ #i #_ #H
-  lapply (lt_plus_to_lt_l … H) -H #Hi
-  elim (IHL i ?) // /3 width=4/
+| #L #I #V #IHL #i @(nat_ind_plus … i) -i /2 width=4/
+  #i #_ normalize #H
+  elim (IHL i ? ) -IHL /2 width=1/ -H /3 width=4/
 ]
 qed.
 

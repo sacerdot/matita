@@ -37,7 +37,7 @@ fact sfr_delift_aux: ∀L,T,T1,d,e. d + e ≤ |L| → ≽ [d, e] L → T = T1 �
   elim (lt_or_ge i d) #Hdi [ /3 width=2/ ]
   elim (lt_or_ge i (d+e)) #Hide [2: /3 width=2/ ]
   lapply (lt_to_le_to_lt … Hide Hde) #Hi
-  elim (ldrop_O1 … Hi) -Hi #I #K #V1 #HLK
+  elim (ldrop_O1_lt … Hi) -Hi #I #K #V1 #HLK
   lapply (sfr_inv_ldrop … HLK … HL ? ?) // #H destruct
   lapply (ldrop_pair2_fwd_cw … HLK (#i)) #HKL
   lapply (ldrop_fwd_ldrop2 … HLK) #HLK0

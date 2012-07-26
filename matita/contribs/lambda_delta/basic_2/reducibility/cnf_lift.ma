@@ -13,11 +13,35 @@
 (**************************************************************************)
 
 include "basic_2/reducibility/cpr_lift.ma".
+include "basic_2/reducibility/cpr_cpr.ma".
 include "basic_2/reducibility/cnf.ma".
 
 (* CONTEXT-SENSITIVE NORMAL TERMS *******************************************)
 
 (* Advanced inversion lemmas ************************************************)
+
+lemma cnf_inv_delta: ∀L,K,V,i. ⇩[0, i] L ≡ K.ⓓV → L ⊢ 𝐍⦃#i⦄ → ⊥.
+#L #K #V #i #HLK #H
+elim (lift_total V 0 (i+1)) #W #HVW
+lapply (H W ?) -H [ /3 width=6/ ] -HLK #H destruct
+elim (lift_inv_lref2_be … HVW ? ?) -HVW //
+qed-.
+
+lemma cnf_inv_abst: ∀a,L,V,T. L ⊢ 𝐍⦃ⓛ{a}V.T⦄ → L ⊢ 𝐍⦃V⦄ ∧ L.ⓛV ⊢ 𝐍⦃T⦄.
+#a #L #V1 #T1 #HVT1 @conj
+[ #V2 #HV2 lapply (HVT1 (ⓛ{a}V2.T1) ?) -HVT1 /2 width=2/ -HV2 #H destruct //
+| #T2 #HT2 lapply (HVT1 (ⓛ{a}V1.T2) ?) -HVT1 /2 width=2/ -HT2 #H destruct //
+]
+qed-.
+
+lemma cnf_inv_abbr: ∀L,V,T. L ⊢ 𝐍⦃-ⓓV.T⦄ → L ⊢ 𝐍⦃V⦄ ∧ L.ⓓV ⊢ 𝐍⦃T⦄.
+#L #V1 #T1 #HVT1 @conj
+[ #V2 #HV2 lapply (HVT1 (-ⓓV2.T1) ?) -HVT1 /2 width=2/ -HV2 #H destruct //
+| #T2 #HT2 lapply (HVT1 (-ⓓV1.T2) ?) -HVT1 /2 width=2/ -HT2 #H destruct //
+]
+qed-.
+
+(* Advanced properties ******************************************************)
 
 (* Basic_1: was only: nf2_csort_lref *)
 lemma cnf_lref_atom: ∀L,i. ⇩[0, i] L ≡ ⋆ → L  ⊢ 𝐍⦃#i⦄.

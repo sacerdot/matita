@@ -221,3 +221,11 @@ inductive and3 (P0,P1,P2:Prop) : Prop ≝
 
 interpretation "multiple conjunction connective (3)" 'And P0 P1 P2 = (and3 P0 P1 P2).
 
+(* multiple conjunction connective (4) *)
+
+inductive and4 (P0,P1,P2,P3:Prop) : Prop ≝
+   | and4_intro: P0 → P1 → P2 → P3 → and4 ? ? ? ?
+.
+
+interpretation "multiple conjunction connective (4)" 'And P0 P1 P2 P3 = (and4 P0 P1 P2 P3).
+

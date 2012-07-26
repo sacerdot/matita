@@ -43,7 +43,7 @@ interpretation
 
 (* Basic inversion lemmas ***************************************************)
 
-fact trf_inv_atom_aux: ∀I,L,T. L ⊢ 𝐑⦃T⦄ → L = ⋆ → T =  ⓪{I} → ⊥.
+fact trf_inv_atom_aux: ∀I,L,T. L ⊢ 𝐑⦃T⦄ → L = ⋆ → T = ⓪{I} → ⊥.
 #I #L #T * -L -T
 [ #L #K #V #i #HLK #H1 #H2 destruct
   lapply (ldrop_inv_atom1 … HLK) -HLK #H destruct
@@ -60,14 +60,31 @@ qed.
 lemma trf_inv_atom: ∀I. ⋆ ⊢ 𝐑⦃⓪{I}⦄ → ⊥.
 /2 width=6/ qed-.
 
-fact crf_inv_abst_aux: ∀a,L,W,U,T. L ⊢ 𝐑⦃T⦄ → T = ⓛ{a}W. U →
-                       L ⊢ 𝐑⦃W⦄ ∨ L.ⓛW ⊢ 𝐑⦃U⦄.
-#a #L #W #U #T * -T
+fact trf_inv_lref_aux: ∀L,T. L ⊢ 𝐑⦃T⦄ → ∀i. T = #i → ∃∃K,V. ⇩[0, i] L ≡ K.ⓓV.
+#L #T * -L -T
+[ #L #K #V #j #HLK #i #H destruct /2 width=3/
+| #L #V #T #_ #i #H destruct
+| #L #V #T #_ #i #H destruct
+| #J #L #V #T #_ #i #H destruct
+| #a #J #L #V #T #_ #_ #i #H destruct
+| #a #J #L #V #T #_ #_ #i #H destruct
+| #a #L #V #W #T #i #H destruct
+| #a #L #V #W #T #i #H destruct
+]
+qed.
+
+lemma trf_inv_lref: ∀L,i. L ⊢ 𝐑⦃#i⦄ → ∃∃K,V. ⇩[0, i] L ≡ K.ⓓV.
+/2 width=3/ qed-.
+
+fact crf_inv_ib2_aux: ∀a,I,L,W,U,T. ib2 a I → L ⊢ 𝐑⦃T⦄ → T = ⓑ{a,I}W. U →
+                      L ⊢ 𝐑⦃W⦄ ∨ L.ⓑ{I}W ⊢ 𝐑⦃U⦄.
+#a #I #L #W #U #T #HI * -T
 [ #L #K #V #i #_ #H destruct
 | #L #V #T #_ #H destruct
 | #L #V #T #_ #H destruct
 | #J #L #V #T #H1 #H2 destruct
   elim H1 -H1 #H destruct
+  elim HI -HI #H destruct
 | #b #J #L #V #T #_ #HV #H destruct /2 width=1/
 | #b #J #L #V #T #_ #HT #H destruct /2 width=1/
 | #b #L #V #W #T #H destruct
@@ -75,8 +92,9 @@ fact crf_inv_abst_aux: ∀a,L,W,U,T. L ⊢ 𝐑⦃T⦄ → T = ⓛ{a}W. U →
 ]
 qed.
 
-lemma crf_inv_abst: ∀a,L,W,T. L ⊢ 𝐑⦃ⓛ{a}W.T⦄ → L ⊢ 𝐑⦃W⦄ ∨ L.ⓛW ⊢ 𝐑⦃T⦄.
-/2 width=4/ qed-.
+lemma crf_inv_ib2: ∀a,I,L,W,T. ib2 a I → L ⊢ 𝐑⦃ⓑ{a,I}W.T⦄ →
+                   L ⊢ 𝐑⦃W⦄ ∨ L.ⓑ{I}W ⊢ 𝐑⦃T⦄.
+/2 width=5/ qed-.
 
 fact crf_inv_appl_aux: ∀L,W,U,T. L ⊢ 𝐑⦃T⦄ → T = ⓐW. U →
                        ∨∨ L ⊢ 𝐑⦃W⦄ | L ⊢ 𝐑⦃U⦄ | (𝐒⦃U⦄ → ⊥).
@@ -97,4 +115,3 @@ qed.
 
 lemma crf_inv_appl: ∀L,V,T. L ⊢ 𝐑⦃ⓐV.T⦄ → ∨∨ L ⊢ 𝐑⦃V⦄ | L ⊢ 𝐑⦃T⦄ | (𝐒⦃T⦄ → ⊥).
 /2 width=3/ qed-.
-   

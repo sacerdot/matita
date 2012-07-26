@@ -39,5 +39,6 @@
     <key name="or">3</key>
     <key name="or">4</key>
     <key name="and">3</key>
+    <key name="and">4</key>
   </section>
 </helm_registry>

@@ -12,34 +12,45 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/ldrop_ldrop.ma".
+include "basic_2/substitution/ldrop_append.ma".
 include "basic_2/reducibility/crf.ma".
 
 (* CONTEXT-SENSITIVE REDUCIBLE TERMS ****************************************)
 
-(* advanced inversion lemmas ************************************************)
-(*
-lemma crf_inv_labst_last: ∀L1,T,W. L1 ⊢ 𝐑⦃T⦄ → ⇩[0, |L1|-1] L1 ≡ ⋆.ⓛW →
-                          ∀L2. ⇩[|L1|-1, 1] L1 ≡ L2 → L2 ⊢ 𝐑⦃T⦄.
+(* Advanved properties ******************************************************)
+
+lemma crf_labst_last: ∀L,T,W. L ⊢ 𝐑⦃T⦄  → ⋆.ⓛW @@ L ⊢ 𝐑⦃T⦄.
+#L #T #W #H elim H -L -T /2 width=1/
+#L #K #V #i #HLK
+lapply (ldrop_fwd_ldrop2_length … HLK) #Hi
+lapply (ldrop_O1_append_sn_le … HLK … (⋆.ⓛW)) -HLK /2 width=2/ -Hi /2 width=3/
+qed.
+
+lemma crf_trf: ∀T,W. ⋆ ⊢ 𝐑⦃T⦄ → ⋆.ⓛW ⊢ 𝐑⦃T⦄.
+#T #W #H lapply (crf_labst_last … W H) //
+qed.
+
+(* Advanced inversion lemmas ************************************************)
+
+fact crf_inv_labst_last_aux: ∀L1,T,W. L1 ⊢ 𝐑⦃T⦄  →
+                             ∀L2. L1 = ⋆.ⓛW @@ L2 → L2 ⊢ 𝐑⦃T⦄.
 #L1 #T #W #H elim H -L1 -T /2 width=1/ /3 width=1/
-[ #L1 #K1 #V1 #i #HLK1 #HL1 #L2 #HL12 destruct
-  lapply (ldrop_fwd_ldrop2_length … HLK1) #H
-  elim (le_to_or_lt_eq i (|L1|-1) ?) /2 width=1/ -H #Hi destruct [ -HL1 | - HL12 ]
-  [ elim (ldrop_conf_lt … HL12 … HLK1 ?) -HLK1 -HL12 // -Hi /2 width=3/
-  | lapply (ldrop_mono … HL1 … HLK1) -HL1 -HLK1 #H destruct
+[ #L1 #K1 #V1 #i #HLK1 #L2 #H destruct
+  lapply (ldrop_fwd_ldrop2_length … HLK1)
+  >append_length >commutative_plus normalize in ⊢ (??% → ?); #H
+  elim (le_to_or_lt_eq i (|L2|) ?) /2 width=1/ -H #Hi destruct
+  [ elim (ldrop_O1_lt … Hi) #I2 #K2 #V2 #HLK2
+    lapply (ldrop_O1_inv_append1_le … HLK1 … HLK2) -HLK1 /2 width=2/ -Hi
+    normalize #H destruct /2 width=3/
+  | lapply (ldrop_O1_inv_append1_ge … HLK1 ?) -HLK1 // <minus_n_n #H
+    lapply (ldrop_inv_refl … H) -H #H destruct
   ]
-| #a #I #L1 #V #T #HI #_
-  normalize <minus_plus_m_m #IHT #HL1 #L2 #HL12
-  lapply (ldrop_fwd_ldrop2_length … HL1) #H
-  lapply (ltn_to_ltO … H) -H #H
-  @(crf_ib2_dx … HI) @IHT
-  [ @ldrop_ldrop_lt //
-  | @ldrop_skip_lt //
+| #a #I #L1 #V #T #HI #_ #IHT #L2 #H destruct /3 width=1/
 ]
 qed.
 
-
 lemma crf_inv_labst_last: ∀L,T,W. ⋆.ⓛW @@ L ⊢ 𝐑⦃T⦄  → L ⊢ 𝐑⦃T⦄.
-#L2 #T #H elim H -L2 -T
-[ #L2 #K2 #V2 #i #HLK2 #L1 #HL12
-*)
+/2 width=4/ qed-.
+
+lemma crf_inv_trf: ∀T,W. ⋆.ⓛW ⊢ 𝐑⦃T⦄  → ⋆ ⊢ 𝐑⦃T⦄.
+/2 width=4/ qed-.

@@ -37,7 +37,8 @@ let _ =
     ["-tptppath",Arg.String 
       (fun s -> Helm_registry.set_string "matita.tptppath" s),
       "Where to find the Axioms/ and Problems/ directory"];
-  MatitaInit.initialize_all ()
+  MatitaInit.initialize_all ();
+  MatitaMisc.reset_font_size ()
 ;;
 
 let _ =

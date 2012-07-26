@@ -46,6 +46,7 @@ lemma append_inv_sn: ∀L1,L2,L. L1 @@ L = L2 @@ L → L1 = L2.
 #L #I #V #IHL #HL12 destruct /2 width=1/ (**) (* destruct does not simplify well *)
 qed.
 
+(* Note: lemma 750 *)
 lemma append_inv_dx: ∀L1,L2,L. L @@ L1 = L @@ L2 → L1 = L2.
 #L1 elim L1 -L1
 [ * normalize //
