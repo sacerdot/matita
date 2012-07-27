@@ -47,23 +47,24 @@ cases (sem_if ? (test_char ? (λx. x == 〈c,true〉)) ?????? tc_true (sem_test_
         HelseM intape)
 #k * #outc * #Hloop #HR %{k} %{outc} % [@Hloop] -Hloop
 #a #l1 #x0 #a0 #l2 #x #l3 #Hintape #Hl1marks cases HR -HR
-[ * #ta * whd in ⊢ (%→?); >Hintape #Hta cases (Hta … (refl ??)) -Hta #Hx #Hta
-  * #tb * whd in ⊢ (%→?); #Htb lapply (Htb … Hta) -Hta -Htb #Htb
-  * #tc * whd in ⊢ (%→?); #Htc lapply (Htc … Htb) -Htb -Htc #Htc
-  * #td * whd in ⊢ (%→?); #Htd cases (Htd … Htc) -Htd
-  [ >Htc * normalize in ⊢ (%→?); #Hfalse destruct (Hfalse) ]
-  * #_ #Htd lapply (Htd (l1@[〈a0,false〉]) 〈x0,true〉 l2 ? (refl ??) ?) -Htd
-  [ #x1 #Hx1 cases (memb_append … Hx1) -Hx1 #Hx1 [@(Hl1marks ? Hx1)|>(memb_single … Hx1) %]
-  | normalize >associative_append % ] #Htd
+[ * #ta * whd in ⊢ (%→?); >Hintape * * #c0 * whd in ⊢ (??%?→?); #Hx #Hc #Hta
+  * #tb * whd in ⊢ (%→?); * #Htb cases (Htb (l1@〈a0,false〉::〈x0,true〉::l2) x) -Htb
+  #Htb lapply (Htb … Hta) -Htb #Htb #_ #_
+  * #tc * whd in ⊢ (%→?); * #_ #Htc lapply (Htc … Htb) -Htb -Htc #Htc
+  * #td * whd in ⊢ (%→?); * #_ #Htd cases (Htd … Htc) -Htd #_ #Htd cases (Htd (refl ??))
+  -Htd #Htd lapply (Htd (l1@[〈a0,false〉]) 〈x0,true〉 l2 ???) //
+  [#x1 #Hx1 cases (memb_append … Hx1) [ @Hl1marks | #Hsingle >(memb_single … Hsingle) % ]
+  |whd in ⊢ (??%?); // ]
+  -Htd #Htd #_
   * #te * whd in ⊢ (%→?); #Hte lapply (Hte … Htd) -Hte -Htd -Htc #Hte
-  * #tf * whd in ⊢ (%→?); #Htf lapply (Htf … Hte) -Hte -Htf >reverse_append #Htf
-  * #tg * whd in ⊢ (%→?); #Htg lapply (Htg … Htf) -Htf -Htg >reverse_single #Htg
-  * #th * whd in ⊢ (%→?); #Hth lapply (Hth … Htg) -Htg -Hth
+  * #tf * whd in ⊢ (%→?); * #_ #Htf lapply (Htf … Hte) -Hte -Htf >reverse_append #Htf
+  * #tg * whd in ⊢ (%→?); * #Htg #_ lapply (Htg … Htf) -Htf -Htg >reverse_single #Htg
+  * #th * whd in ⊢ (%→?); * #_ #Hth lapply (Hth … Htg) -Htg -Hth
   generalize in match Hl1marks; -Hl1marks @(list_elim_left … l1)
-  [ #Hl1marks #Hth whd in ⊢ (%→?); #Houtc cases (Houtc … Hth) -Houtc
+  [ #Hl1marks #Hth whd in ⊢ (%→?); * #_ #Houtc cases (Houtc … Hth) -Houtc
     [ * normalize in ⊢ (%→?); #Hfalse destruct (Hfalse) ]
-    * #_ #Houtc lapply (Houtc [] ?? (refl ??) (refl ??) Hl1marks) -Houtc
-    #Houtc lapply (\P Hx) -Hx #Hx destruct (Hx) % % [%] @Houtc
+    * * #_ #Houtc #_ lapply (Houtc [] ?? (refl ??) (refl ??) Hl1marks) -Houtc
+    #Houtc % >(\P Hc) in Hx; #Hx destruct (Hx) % // @Houtc
   | -l1 #c1 #l1 #_ #Hl1marks >reverse_append >reverse_single
     #Hth whd in ⊢ (%→?); #Houtc cases (Houtc … Hth) -Houtc
     [ * >Hl1marks [ #Hfalse destruct (Hfalse) ] @memb_append_l2 @memb_hd ]
