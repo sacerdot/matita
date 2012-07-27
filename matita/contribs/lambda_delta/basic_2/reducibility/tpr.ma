@@ -43,7 +43,7 @@ lemma tpr_bind: ∀a,I,V1,V2,T1,T2. V1 ➡ V2 → T1 ➡ T2 → ⓑ{a,I} V1. T1 
 /2 width=3/ qed.
 
 (* Basic_1: was by definition: pr0_refl *)
-lemma tpr_refl: ∀T. T ➡ T.
+lemma tpr_refl: reflexive … tpr.
 #T elim T -T //
 #I elim I -I /2 width=1/
 qed.

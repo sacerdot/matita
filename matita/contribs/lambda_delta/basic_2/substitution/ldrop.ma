@@ -30,6 +30,27 @@ inductive ldrop: nat → nat → relation lenv ≝
 
 interpretation "local slicing" 'RDrop d e L1 L2 = (ldrop d e L1 L2).
 
+definition l_liftable: (lenv → relation term) → Prop ≝
+                       λR. ∀K,T1,T2. R K T1 T2 → ∀L,d,e. ⇩[d, e] L ≡ K →
+                       ∀U1. ⇧[d, e] T1 ≡ U1 → ∀U2. ⇧[d, e] T2 ≡ U2 → R L U1 U2.
+
+definition l_deliftable_sn: (lenv → relation term) → Prop ≝
+                            λR. ∀L,U1,U2. R L U1 U2 → ∀K,d,e. ⇩[d, e] L ≡ K →
+                            ∀T1. ⇧[d, e] T1 ≡ U1 →
+                            ∃∃T2. ⇧[d, e] T2 ≡ U2 & R K T1 T2.
+
+definition dropable_sn: relation lenv → Prop ≝
+                        λR. ∀L1,K1,d,e. ⇩[d, e] L1 ≡ K1 → ∀L2. R L1 L2 →
+                        ∃∃K2. R K1 K2 & ⇩[d, e] L2 ≡ K2.
+
+definition dedropable_sn: relation lenv → Prop ≝
+                          λR. ∀L1,K1,d,e. ⇩[d, e] L1 ≡ K1 → ∀K2. R K1 K2 →
+                          ∃∃L2. R L1 L2 & ⇩[d, e] L2 ≡ K2.
+
+definition dropable_dx: relation lenv → Prop ≝
+                        λR. ∀L1,L2. R L1 L2 → ∀K2,e. ⇩[0, e] L2 ≡ K2 →
+                        ∃∃K1. ⇩[0, e] L1 ≡ K1 & R K1 K2.
+
 (* Basic inversion lemmas ***************************************************)
 
 fact ldrop_inv_refl_aux: ∀d,e,L1,L2. ⇩[d, e] L1 ≡ L2 → d = 0 → e = 0 → L1 = L2.

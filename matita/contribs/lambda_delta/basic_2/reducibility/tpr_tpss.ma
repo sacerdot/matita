@@ -29,7 +29,7 @@ lemma tpr_tps_ltpr: ∀T1,T2. T1 ➡ T2 →
   elim (tps_inv_atom1 … H) -H
   [ #H destruct /2 width=3/
   | * #K1 #V1 #i #Hdi #Hide #HLK1 #HVU1 #H #L2 #HL12 destruct
-    elim (ltpr_ldrop_conf … HLK1 … HL12) -L1 #X #HLK2 #H
+    elim (ltpr_ldrop_conf … HLK1 … HL12) -L1 #X #H #HLK2
     elim (ltpr_inv_pair1 … H) -H #K2 #V2 #_ #HV12 #H destruct
     elim (lift_total V2 0 (i+1)) #U2 #HVU2
     lapply (tpr_lift … HV12 … HVU1 … HVU2) -V1 #HU12

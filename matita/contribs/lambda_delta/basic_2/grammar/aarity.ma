@@ -15,6 +15,8 @@
 (* THE FORMAL SYSTEM λδ: MATITA SOURCE FILES
  * Suggested invocation to start formal specifications with:
  *   - Patience on me to gain peace and perfection! -
+ * 2012 July 26:
+ *   term binders polarized to control ζ reduction.
  * 2012 April 16 (anniversary milestone):
  *   context-sensitive subject equivalence for atomic arity assignment.
  * 2012 March 15:
