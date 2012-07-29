@@ -215,6 +215,34 @@ lemma ldrop_lsubs_ldrop2_abbr: ∀L1,L2,d,e. L1 ≼ [d, e] L2 →
 ]
 qed.
 
+lemma dropable_sn_TC: ∀R. dropable_sn R → dropable_sn (TC … R).
+#R #HR #L1 #K1 #d #e #HLK1 #L2 #H elim H -L2
+[ #L2 #HL12
+  elim (HR … HLK1 … HL12) -HR -L1 /3 width=3/
+| #L #L2 #_ #HL2 * #K #HK1 #HLK
+  elim (HR … HLK … HL2) -HR -L /3 width=3/
+]
+qed.
+
+lemma dedropable_sn_TC: ∀R. dedropable_sn R → dedropable_sn (TC … R).
+#R #HR #L1 #K1 #d #e #HLK1 #K2 #H elim H -K2
+[ #K2 #HK12
+  elim (HR … HLK1 … HK12) -HR -K1 /3 width=3/
+| #K #K2 #_ #HK2 * #L #HL1 #HLK
+  elim (HR … HLK … HK2) -HR -K /3 width=3/
+]
+qed.
+
+lemma dropable_dx_TC: ∀R. dropable_dx R → dropable_dx (TC … R).
+#R #HR #L1 #L2 #H elim H -L2
+[ #L2 #HL12 #K2 #e #HLK2
+  elim (HR … HL12 … HLK2) -HR -L2 /3 width=3/
+| #L #L2 #_ #HL2 #IHL1 #K2 #e #HLK2
+  elim (HR … HL2 … HLK2) -HR -L2 #K #HLK #HK2
+  elim (IHL1 … HLK) -L /3 width=5/
+]
+qed.
+
 (* Basic forvard lemmas *****************************************************)
 
 (* Basic_1: was: drop_S *)

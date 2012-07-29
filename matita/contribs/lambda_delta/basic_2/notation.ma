@@ -326,6 +326,10 @@ notation "hvbox( L ⊢ break term 46 T1 ➡* break term 46 T2 )"
    non associative with precedence 45
    for @{ 'PRedStar $L $T1 $T2 }.
 
+notation "hvbox( T1 ➡➡* break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'PRedStarAlt $T1 $T2 }.
+
 notation "hvbox( L1 ⊢ ➡* break term 46 L2 )"
    non associative with precedence 45
    for @{ 'CPRedStar $L1 $L2 }.

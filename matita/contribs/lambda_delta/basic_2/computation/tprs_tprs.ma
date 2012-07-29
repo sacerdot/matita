@@ -13,17 +13,31 @@
 (**************************************************************************)
 
 include "basic_2/reducibility/tpr_tpr.ma".
-include "basic_2/reducibility/ltpr.ma".
+include "basic_2/computation/tprs.ma".
 
-(* CONTEXT-FREE PARALLEL REDUCTION ON LOCAL ENVIRONMENTS ********************)
+(* CONTEXT-FREE PARALLEL COMPUTATION ON TERMS *******************************)
 
-(* Main properties **********************************************************)
+(* Advanced properties ******************************************************)
 
-theorem ltpr_conf: ∀L0:lenv. ∀L1. L0 ➡ L1 → ∀L2. L0 ➡ L2 →
-                   ∃∃L. L1 ➡ L & L2 ➡ L.
-#L0 #L1 #H elim H -L0 -L1 /2 width=3/
-#I #K0 #K1 #V0 #V1 #_ #HV01 #IHK01 #L2 #H
-elim (ltpr_inv_pair1 … H) -H #K2 #V2 #HK02 #HV02 #H destruct
-elim (IHK01 … HK02) -K0 #K #HK1 #HK2
-elim (tpr_conf … HV01 HV02) -V0 /3 width=5/
+(* Basic_1: was: pr1_strip *)
+lemma tprs_strip: ∀T1,T. T ➡* T1 → ∀T2. T ➡ T2 →
+                  ∃∃T0. T1 ➡ T0 & T2 ➡* T0.
+/3 width=3/ qed.
+
+(* Main propertis ***********************************************************)
+
+(* Basic_1: was: pr1_confluence *)
+theorem tprs_conf: Confluent … tprs.
+/3 width=3/ qed.
+
+(* Basic_1: was: pr1_t *)
+theorem tprs_trans: Transitive … tprs.
+/2 width=3/ qed.
+
+(* Basic_1: was: pr1_comp *)
+lemma tprs_pair: ∀I,V1,V2. V1 ➡* V2 → ∀T1,T2. T1 ➡* T2 →
+                 ②{I} V1. T1 ➡* ②{I} V2. T2.
+#I #V1 #V2 #H @(tprs_ind … H) -V2 /2 width=1/
+#V #V2 #_ #HV2 #IHV1 #T1 #T2 #HT12
+@(tprs_trans … (②{I}V.T2)) /2 width=1/
 qed.

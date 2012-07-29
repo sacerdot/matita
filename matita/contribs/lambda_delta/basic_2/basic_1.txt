@@ -170,17 +170,11 @@ pr0/fwd pr0_gen_void
 pr0/dec nf0_dec
 pr0/subst1 pr0_subst1_back
 pr0/subst1 pr0_subst1_fwd
-pr1/pr1 pr1_strip
-pr1/pr1 pr1_confluence
-pr1/props pr1_pr0
-pr1/props pr1_t
-pr1/props pr1_head_1
-pr1/props pr1_head_2
-pr1/props pr1_comp
+
 pr1/props pr1_eta
+
 pr2/fwd pr2_gen_void
 pr3/fwd pr3_gen_void
-pr3/pr1 pr3_pr1
 pr3/props pr3_eta
 sn3/props sns3_lifts
 sty1/cnt sty1_cnt

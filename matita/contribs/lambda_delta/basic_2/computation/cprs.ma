@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/reducibility/cnf.ma".
+include "basic_2/computation/tprs.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL COMPUTATION ON TERMS **************************)
 
@@ -68,6 +69,11 @@ lemma cprs_flat_dx: ∀I,L,V1,V2. L ⊢ V1 ➡ V2 → ∀T1,T2. L ⊢ T1 ➡* T2
 @(cprs_strap1 … IHT2) -IHT2 /2 width=1/
 qed.
 
+(* Basic_1: was: pr3_pr1 *)
+lemma tprs_cprs: ∀T1,T2. T1 ➡* T2 → ∀L. L ⊢ T1 ➡* T2.
+#T1 #T2 #H @(tprs_ind … H) -T2 /2 width=1/ /3 width=3/
+qed.
+
 (* Basic inversion lemmas ***************************************************)
 
 (* Basic_1: was: pr3_gen_sort *)
@@ -93,6 +99,9 @@ lemma cprs_inv_cnf1: ∀L,T,U. L ⊢ T ➡* U → L ⊢ 𝐍⦃T⦄ → T = U.
 #T0 #T #H1T0 #_ #IHT #H2T0
 lapply (H2T0 … H1T0) -H1T0 #H destruct /2 width=1/
 qed-.
+
+lemma tprs_inv_cnf1: ∀T,U. T ➡* U → ⋆ ⊢ 𝐍⦃T⦄ → T = U.
+/3 width=3 by tprs_cprs, cprs_inv_cnf1/ qed-.
 
 (* Basic_1: removed theorems 10:
    clear_pr3_trans pr3_cflat pr3_gen_bind

@@ -20,6 +20,13 @@ include "ground_2/notation.ma".
 
 definition Decidable: Prop → Prop ≝ λR. R ∨ (R → ⊥).
 
+definition Confluent: ∀A. ∀R: relation A. Prop ≝ λA,R.
+                      ∀a0,a1. R a0 a1 → ∀a2. R a0 a2 →
+                      ∃∃a. R a1 a & R a2 a.
+
+definition Transitive: ∀A. ∀R: relation A. Prop ≝ λA,R.
+                       ∀a1,a0. R a1 a0 → ∀a2. R a0 a2 → R a1 a2.
+
 definition confluent2: ∀A. ∀R1,R2: relation A. Prop ≝ λA,R1,R2.
                        ∀a0,a1. R1 a0 a1 → ∀a2. R2 a0 a2 →
                        ∃∃a. R2 a1 a & R1 a2 a.
