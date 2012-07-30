@@ -996,27 +996,27 @@ let rec split_on A (l:list A) f acc on l ≝
     if f a then 〈acc,a::tl〉 else split_on A tl f (a::acc) 
   ].
   
-lemma split_on_spec: ∀A,l,f,acc,res1,res2.
+lemma split_on_spec: ∀A:DeqSet.∀l,f,acc,res1,res2.
   split_on A l f acc = 〈res1,res2〉 → 
     (∃l1. res1 = l1@acc ∧
     reverse ? l1@res2 = l ∧ 
-    ∀x. mem ? x l1 → f x = false) ∧ 
+    ∀x. memb ? x l1 =true → f x = false) ∧ 
     ∀a,tl. res2 = a::tl → f a = true.
 #A #l #f elim l
   [#acc #res1 #res2 normalize in ⊢ (%→?); #H destruct % 
-    [@(ex_intro … []) % normalize [% % | #x @False_ind]
+    [@(ex_intro … []) % normalize [% % | #x #H destruct]
     |#a #tl #H destruct
     ]
   |#a #tl #Hind #acc #res1 #res2 normalize in ⊢ (%→?);
    cases (true_or_false (f a)) #Hfa >Hfa normalize in ⊢ (%→?);
    #H destruct
-   [% [@(ex_intro … []) % normalize [% % | #x @False_ind]
+   [% [@(ex_intro … []) % normalize [% % | #x #H destruct]
       |#a1 #tl1 #H destruct (H) //]
    |cases (Hind (a::acc) res1 res2 H) * #l1 * *
     #Hres1 #Htl #Hfalse #Htrue % [2:@Htrue] @(ex_intro … (l1@[a])) % 
      [% [>associative_append @Hres1 | >reverse_append <Htl % ]
-     |#x #Hmemx cases (mem_append ???? Hmemx) 
-        [@Hfalse | normalize * [#H >H //| @False_ind]
+     |#x #Hmemx cases (memb_append ???? Hmemx) 
+        [@Hfalse | #H >(memb_single … H) //] 
      ]
    ]
   ]
@@ -1024,14 +1024,14 @@ qed.
 
 axiom mem_reverse: ∀A,l,x. mem A x (reverse ? l) → mem A x l.
 
-lemma split_on_spec_ex: ∀A,l,f.∃l1,l2.
-    l1@l2 = l ∧ (∀x:A. mem ? x l1 → f x = false) ∧ 
+lemma split_on_spec_ex: ∀A:DeqSet.∀l,f.∃l1,l2.
+    l1@l2 = l ∧ (∀x:A. memb ? x l1 = true → f x = false) ∧ 
     ∀a,tl. l2 = a::tl → f a = true.
 #A #l #f @(ex_intro … (reverse … (\fst (split_on A l f [])))) 
 @(ex_intro … (\snd (split_on A l f []))) 
 cases (split_on_spec A l f [ ] ?? (eq_pair_fst_snd …)) * #l1 * *
 >append_nil #Hl1 >Hl1 #Hl #Hfalse #Htrue % 
-  [% [@Hl|#x #memx @Hfalse @mem_reverse //] | @Htrue]
+  [% [@Hl|#x #memx @Hfalse <(reverse_reverse … l1) @memb_reverse //] | @Htrue]
 qed.
 
 (* versione esistenziale *)
@@ -1455,124 +1455,131 @@ lapply (sem_while ?????? sem_comp_step t i outc Hloop) [%]
            >reverse_append >reverse_append >associative_append 
            >associative_append %  
           ]
-        |lapply Hbs1 lapply Hbs2 lapply Hrs -Hbs1 -Hbs2 -Hrs 
+        |lapply Hbs1 lapply Hb0s1 lapply Hbs2 lapply Hb0s2 lapply Hrs 
+         -Hbs1 -Hb0s1 -Hbs2 -Hb0s2 -Hrs 
          @(list_cases2 … Hlen)
-          [#Hrs #_ #_ >associative_append >associative_append #Htapeb #_
+          [#Hrs #_ #_ #_ #_ >associative_append >associative_append #Htapeb #_
            lapply (Htapeb … (\P eqbb0) … (refl …) (refl …)) -Htapeb #Htapeb
            cases (IH … Htapeb) -IH * #Hout #_ #_ %1 %
             [>(\P eqbb0) % 
             |>(Hout grid (refl …) (refl …)) @eq_f 
              normalize >associative_append %
             ]
-          |* #a1 #ba1 * #a2 #ba2 #tl1 #tl2 #HlenS #Hrs #Hbs1 #Hbs2 
-           cut (ba1 = false) [@(Hbs1 〈a1,ba1〉) @memb_hd] #Hba1 >Hba1
+          |* #a1 #ba1 * #a2 #ba2 #tl1 #tl2 #HlenS #Hrs #Hb0s2 #Hbs2 #Hb0s1 #Hbs1 
+           cut (ba1 = false) [@(Hbs2 〈a1,ba1〉) @memb_hd] #Hba1 >Hba1
            >associative_append >associative_append #Htapeb #_
            lapply (Htapeb … (\P eqbb0) … (refl …) (refl …)) -Htapeb #Htapeb
            cases (IH … Htapeb) -IH * #_ #_
+           cut (ba2=false) [@(Hb0s2 〈a2,ba2〉) @memb_hd] #Hba2 >Hba2  
            #IH cases(IH a1 a2 ?? (l1@[〈b0,false〉]) l2 HlenS ????? (refl …) ??)
-            [
-           
-         
-(*
-         cut (∃a,l1'.〈a,false〉::l1'=((bs@[〈grid,false〉])@l1)@[〈b0,false〉])
-          [generalize in match Hbs2; cases bs
-            [#_ @(ex_intro … grid) @(ex_intro … (l1@[〈b0,false〉]))
-             >associative_append %
-            |* #bsc #bsb #bstl #Hbs2 @(ex_intro … bsc) 
-             @(ex_intro … (((bstl@[〈grid,false〉])@l1)@[〈b0,false〉]))
-             normalize @eq_f2 [2:%] @eq_f @sym_eq @(Hbs2 〈bsc,bsb〉) @memb_hd
-            ]
-          ]  
-         * #a * #l1' #H2
-         cut (∃a0,b1,l2'.b0s@〈comma,false〉::l2=〈a0,b1〉::l2')
-          [cases b0s
-            [@(ex_intro … comma) @(ex_intro … false) @(ex_intro … l2) %
-            |* #bsc #bsb #bstl @(ex_intro … bsc) @(ex_intro … bsb) 
-             @(ex_intro … (bstl@〈comma,false〉::l2)) %
-            ]
-          ] *)
-         * #a0 * #b1 * #l2' #H3   
-         lapply (Htapeb … (\P eqbb0) a a0 b1 l1' l2' H2 H3) -Htapeb #Htapeb
-         cases (IH … Htapeb) -IH *
-         
-      
-      [2: * >Hc' #Hfalse @False_ind destruct ] * #_
-       @(list_cases2 … Hlen)
-       [ #Hbs #Hb0s generalize in match Hrs; >Hbs in ⊢ (%→?); >Hb0s in ⊢ (%→?);
-       -Hrs #Hrs normalize in Hrs; #Hleft cases (Hleft ????? Hrs ?) -Hleft
-         [ * #Heqb #Htapeb cases (IH … Htapeb) -IH * #IH #_ #_
-          % %
-            [ >Heqb >Hbs >Hb0s %
-            | >Hbs >Hb0s @IH %
-            ] 
-         |* #Hneqb #Htapeb %2
-          @(ex_intro … [ ]) @(ex_intro … b)
-          @(ex_intro … b0) @(ex_intro … [ ]) 
-          @(ex_intro … [ ]) %
-            [ % [ % [@sym_not_eq //| >Hbs %] | >Hb0s %]
-            | cases (IH … Htapeb) -IH * #_ #IH #_ >(IH ? (refl ??))
-              @Htapeb
-            ]
-         | @Hl1 ]
-      | * #b' #bitb' * #b0' #bitb0' #bs' #b0s' #Hbs #Hb0s 
-        generalize in match Hrs; >Hbs in ⊢ (%→?); >Hb0s in ⊢ (%→?);
-        cut (bit_or_null b' = true ∧ bit_or_null b0' = true ∧ 
-             bitb' = false ∧ bitb0' = false)
-        [ % [ % [ % [ >Hbs in Hbs1; #Hbs1 @(Hbs1 〈b',bitb'〉) @memb_hd
-            | >Hb0s in Hb0s1; #Hb0s1 @(Hb0s1 〈b0',bitb0'〉) @memb_hd ]
-            | >Hbs in Hbs2; #Hbs2 @(Hbs2 〈b',bitb'〉) @memb_hd ]
-            | >Hb0s in Hb0s2; #Hb0s2 @(Hb0s2 〈b0',bitb0'〉) @memb_hd ]
-        | * * * #Ha #Hb #Hc #Hd >Hc >Hd
-          #Hrs #Hleft 
-          cases (Hleft b' (bs'@〈grid,false〉::l1) b0 b0' 
-                         (b0s'@〈comma,false〉::l2) ??) -Hleft
-          [ 3: >Hrs normalize @eq_f >associative_append %
-          | * #Hb0 #Htapeb cases (IH …Htapeb) -IH * #_ #_ #IH
-            cases (IH b' b0' bs' b0s' (l1@[〈b0,false〉]) l2 ??????? Ha ?) -IH
-            [ * #Heq #Houtc % %
-              [ >Hb0 @eq_f >Hbs in Heq; >Hb0s in ⊢ (%→?); #Heq
-                destruct (Heq) >Hb0s >Hc >Hd %
-              | >Houtc >Hbs >Hb0s >Hc >Hd >reverse_cons >associative_append
-                >associative_append %
-              ]
-            | * #la * #c' * #d' * #lb * #lc * * * #H1 #H2 #H3 #H4 %2
-              @(ex_intro … (〈b,false〉::la)) @(ex_intro … c') @(ex_intro … d')
-              @(ex_intro … lb) @(ex_intro … lc)
-              % [ % [ % // >Hbs >Hc >H2 % | >Hb0s >Hd >H3 >Hb0 % ] 
-                | >H4 >Hbs >Hb0s >Hc >Hd >Hb0 >reverse_append
-                  >reverse_cons >reverse_cons
-                  >associative_append >associative_append
-                  >associative_append >associative_append %
+            [3:#x #memx @Hbs1 @memb_cons @memx
+            |4:#x #memx @Hb0s1 @memb_cons @memx
+            |5:#x #memx @Hbs2 @memb_cons @memx
+            |6:#x #memx @Hb0s2 @memb_cons @memx
+            |7:#x #memx cases (memb_append …memx) -memx #memx
+              [@Hl1 @memx | >(memb_single … memx) %]
+            |8:@(Hbs1 〈a1,ba1〉) @memb_hd
+            |9: >associative_append >associative_append %
+            |-IH -Hbs1 -Hb0s1 -Hbs2 -Hrs *
+             #Ha1a2 #Houtc %1 %
+              [>(\P eqbb0) @eq_f destruct (Ha1a2) %
+              |>Houtc @eq_f3 
+                [>reverse_cons >associative_append %
+                |%
+                |>associative_append % 
                 ]
-            | generalize in match Hlen; >Hbs >Hb0s
-              normalize #Hlen destruct (Hlen) @e0
-            | #c0 #Hc0 @Hbs1 >Hbs @memb_cons // 
-            | #c0 #Hc0 @Hb0s1 >Hb0s @memb_cons // 
-            | #c0 #Hc0 @Hbs2 >Hbs @memb_cons // 
-            | #c0 #Hc0 @Hb0s2 >Hb0s @memb_cons // 
-            | #c0 #Hc0 cases (memb_append … Hc0) 
-              [ @Hl1 | #Hc0' >(memb_single … Hc0') % ]
-            | %
-            | >associative_append >associative_append % ]
-         | * #Hneq #Htapeb %2
-            @(ex_intro … []) @(ex_intro … b) @(ex_intro … b0)
-            @(ex_intro … bs) @(ex_intro … b0s) %
-           [ % // % // @sym_not_eq // 
-           | >Hbs >Hb0s >Hc >Hd >reverse_cons >associative_append
-             >reverse_append in Htapeb; >reverse_cons
-             >associative_append >associative_append
-             #Htapeb <Htapeb
-             cases (IH … Htapeb) -Htapeb -IH * #_ #IH #_ @(IH ? (refl ??))
-           ]
-         | #c1 #Hc1 cases (memb_append … Hc1) #Hyp
-           [ @Hbs2 >Hbs @memb_cons @Hyp
-           | cases (orb_true_l … Hyp)
-             [ #Hyp2 >(\P Hyp2) %
-             | @Hl1
-             ]
-           ]
-         ]
-]]]]]
-qed.       
+              ]
+            |-IH -Hbs1 -Hb0s1 -Hbs2 -Hrs *
+             #la * #c' * #d' * #lb * #lc * * * 
+             #Hcd #H1 #H2 #Houtc %2
+             @(ex_intro … (〈b,false〉::la)) @(ex_intro … c') @(ex_intro … d') 
+             @(ex_intro … lb) @(ex_intro … lc) %
+              [%[%[@Hcd | >H1 %] |>(\P eqbb0) >Hba2 >H2 %]
+              |>Houtc @eq_f3 
+                [>(\P eqbb0) >reverse_append >reverse_cons 
+                 >reverse_cons >associative_append >associative_append
+                 >associative_append >associative_append %
+                |%
+                |%
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+]
+qed.
+              
+lemma WF_cst_niltape:
+  WF ? (inv ? R_comp_step_true) (niltape (FinProd FSUnialpha FinBool)).
+@wf #t1 whd in ⊢ (%→?); * #ls * #c * #rs * #H destruct 
+qed.
+
+lemma WF_cst_rightof:
+  ∀a,ls. WF ? (inv ? R_comp_step_true) (rightof (FinProd FSUnialpha FinBool) a ls).
+#a #ls @wf #t1 whd in ⊢ (%→?); * #ls * #c * #rs * #H destruct 
+qed.
+
+lemma WF_cst_leftof:
+  ∀a,ls. WF ? (inv ? R_comp_step_true) (leftof (FinProd FSUnialpha FinBool) a ls).
+#a #ls @wf #t1 whd in ⊢ (%→?); * #ls * #c * #rs * #H destruct 
+qed.
+
+lemma WF_cst_midtape_false:
+  ∀ls,c,rs. WF ? (inv ? R_comp_step_true) 
+    (midtape (FinProd … FSUnialpha FinBool) ls 〈c,false〉 rs).
+#ls #c #rs @wf #t1 whd in ⊢ (%→?); * #ls' * #c' * #rs' * #H destruct 
+qed.
+
+(* da spostare *)
+lemma not_nil_to_exists:∀A.∀l: list A. l ≠ [ ] →
+ ∃a,tl. a::tl = l.
+ #A * [* #H @False_ind @H // | #a #tl #_ @(ex_intro … a) @(ex_intro … tl) //]
+ qed.
+
+axiom daemon : ∀P:Prop.P.
+
+lemma terminate_compare: 
+  ∀t. Terminate ? compare t.
+#t @(terminate_while … sem_comp_step) [%]
+cases t // #ls * #c * // 
+#rs lapply ls; lapply c; -ls -c 
+(* we cannot proceed by structural induction on the right tape, 
+   since compare moves the marks! *)
+elim rs 
+  [#c #ls @wf #t1 whd in ⊢ (%→?); * #ls0 * #c0 * #rs0 * #Hmid destruct (Hmid)
+   * * #H1 #H2 #_ cases (true_or_false (bit_or_null c0)) #Hc0
+    [>(H2 Hc0 … (refl …)) // #x whd in ⊢ ((??%?)→?); #Hdes destruct  
+    |>(H1 Hc0) //
+    ]
+  |#a #rs' #Hind #c #ls @wf #t1 whd in ⊢ (%→?); * #ls0 * #c0 * #rs0 * #Hmid destruct (Hmid) 
+   * * #H1 #H2 #H3 cases (true_or_false (bit_or_null c0)) #Hc0
+    [-H1 cases (split_on_spec_ex ? (a::rs') (is_marked ?)) #rs1 * #rs2
+     cases rs2
+      [(* no marks in right tape *)
+       * * >append_nil #H >H -H #Hmarks #_
+       cases (not_nil_to_exists ? (reverse (FSUnialpha×bool) (〈c0,true〉::a::rs')) ?)
+        [2: % >reverse_cons #H cases (nil_to_nil  … H) #_ #H1 destruct]
+       #a0 * #tl #H4 >(H2 Hc0 Hmarks a0 tl H4) // 
+      |(* the first marked element is a0 *)
+       * #a0 #a0b #rs3 * * #H4 #H5 #H6 lapply (H3 ? a0 rs3 … Hc0 H5 ?)
+        [<H4 @eq_f @eq_f2 [@eq_f @(H6 〈a0,a0b〉 … (refl …)) | %]
+        |cases (true_or_false (c0==a0)) #eqc0a0 (* comparing a0 with c0 *)
+          [* * (* we check if we have elements at the right of a0 *) cases rs3
+            [#Ht1 #_ #_ >(Ht1 (\P eqc0a0) (refl …)) //
+            |(* a1 will be marked *)
+             cases (not_nil_to_exists ? (rs1@[〈a0,false〉]) ?)
+               [2: % #H cases (nil_to_nil  … H) #_ #H1 destruct]
+             * #a2 #a2b * #tl2 #H7 * #a1 #a1b #rs4 #_ #Ht1 #_ 
+             cut (a2b =false) [@daemon] #Ha2b >Ha2b in H7; #H7   
+             >(Ht1 (\P eqc0a0) … H7 (refl …)) 
+             cut (rs' = tl2@〈a1,true〉::rs4)
+             cut (a0b=false) [@(H6 〈a0,a0b〉)
+       
+    |>(H1 Hc0) //
+    ]
+qed.
 
 axiom sem_compare : Realize ? compare R_compare.
