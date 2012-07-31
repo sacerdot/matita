@@ -78,60 +78,59 @@ lapply (sem_seq ? (adv_to_mark_r ? bar_or_grid)
    @(ex_intro ?? j) @ex_intro [|% [@Hloop] ]
    -Hloop
    #ls #c #rs1 #rs2 #Hrs #Hrs1 #Hrs1' #Hc
-   cases (Hleft … Hrs)
+   cases (proj2 ?? Hleft … Hrs)
    [ * #Hfalse >Hfalse in Hc; #Htf destruct (Htf)
-   | * #_ #Hta cases (tech_split STape (λc.is_bar (\fst c)) rs1)
-     [ #H1 lapply (Hta rs1 〈grid,false〉 rs2 (refl ??) ? ?)
+   | * * #_ #Hta #_ cases (tech_split STape (λc.is_bar (\fst c)) rs1)
+     [ #H1 %2 % [@H1]
+      lapply (Hta rs1 〈grid,false〉 rs2 (refl ??) ? ?)
        [ * #x #b #Hx whd in ⊢ (??%?); >(Hrs1' … Hx) >(H1 … Hx) %
        | %
        | -Hta #Hta cases Hright
-         [ * #tb * whd in ⊢ (%→?); #Hcurrent
-           @False_ind cases (Hcurrent 〈grid,false〉 ?)
-           [ normalize in ⊢ (%→?); #Hfalse destruct (Hfalse)
-           | >Hta % ]
-         | * #tb * whd in ⊢ (%→?); #Hcurrent
-           cases (Hcurrent 〈grid,false〉 ?)
-           [  #_ #Htb whd in ⊢ (%→?); #Houtc
-             %2 %
-             [ @H1
-             | >Houtc >Htb >Hta % ]
-           | >Hta % ]
+         [ * #tb * whd in ⊢ (%→?); * * #c1 * >Hta 
+          whd in ⊢ ((??%?)→?); #H destruct (H) whd in ⊢ ((??%?)→?); #H destruct
+         | * #tb * whd in ⊢ (%→?); * #_ #Htb >Htb >Hta 
+           whd in ⊢ (%→?); #H @H
          ]
        ]
-    | * #rs3 * #c0 * #rs4 * * #Hc0 #Hsplit #Hrs3
-      % @(ex_intro ?? rs3) @(ex_intro ?? rs4)
+    |* #rs3 * #c0 * #rs4 * * #Hc0 #Hsplit #Hrs3
+     % @(ex_intro ?? rs3) @(ex_intro ?? rs4)
      lapply (Hta rs3 c0 (rs4@〈grid,false〉::rs2) ???)
-     [ #x #Hrs3' whd in ⊢ (??%?); >Hsplit in Hrs1;>Hsplit in Hrs3;
+      [#x #Hrs3' whd in ⊢ (??%?); >Hsplit in Hrs1;>Hsplit in Hrs3;
        #Hrs3 #Hrs1 >(Hrs1 …) [| @memb_append_l1 @Hrs3'|]
        >(Hrs3 … Hrs3') @Hrs1' >Hsplit @memb_append_l1 //
-     | whd in ⊢ (??%?); >Hc0 %
-     | >Hsplit >associative_append % ] -Hta #Hta
-       cases Hright
-       [ * #tb * whd in ⊢ (%→?); #Hta'
-         whd in ⊢ (%→?); #Htb
-         cases (Hta' c0 ?)
-         [ #_ #Htb' >Htb' in Htb; #Htb
-           generalize in match Hsplit; -Hsplit
-           cases rs4 in Hta;
-           [ #Hta #Hsplit >(Htb … Hta)
-             >(?:c0 = 〈bar,false〉)
-             [ @(ex_intro ?? grid) @(ex_intro ?? false)
-               % [ % [ % 
-               [(* Hsplit *) @daemon |(*Hrs3*) @daemon ] | % ] | % ] 
-               | (* Hc0 *) @daemon ]
-           | #r5 #rs5 >(eq_pair_fst_snd … r5)
-             #Hta #Hsplit >(Htb … Hta)
-             >(?:c0 = 〈bar,false〉)
-             [ @(ex_intro ?? (\fst r5)) @(ex_intro ?? (\snd r5))
-               % [ % [ % [ (* Hc0, Hsplit *) @daemon | (*Hrs3*) @daemon ] | % ]
-                     | % ] | (* Hc0 *) @daemon ] ] | >Hta % ]
-             | * #tb * whd in ⊢ (%→?); #Hta'
-               whd in ⊢ (%→?); #Htb
-               cases (Hta' c0 ?)
-               [ #Hfalse @False_ind >Hfalse in Hc0;
-                 #Hc0 destruct (Hc0)
-               | >Hta % ]
-]]]]
+      |whd in ⊢ (??%?); >Hc0 %
+      |>Hsplit >associative_append % 
+      ]-Hta #Hta
+     cases Hright -Hright 
+      [* whd in ⊢ (%→?); #tb * * * #c1 * >Hta -Hta 
+       whd in ⊢ (??%?→?); #H destruct (H) #Hc1 #Htb
+       whd in ⊢ (%→?); #Houtc 
+       cut (c1=〈bar,false〉)
+        [lapply Hc1 lapply Hsplit cases c1 #c1l #c1r #Hsplit
+         cases c1l normalize 
+          [#b #H destruct |2,3,5:#H destruct] 
+           #_ @eq_f @(Hrs1 … 〈c1l,c1r〉) >Hsplit @memb_append_l2 @memb_hd]
+       #Hcut lapply Hsplit -Hsplit
+       cases rs4 in Htb;
+        [#Htb lapply(Houtc … Htb) -Houtc #Houtc #Hsplit
+         @(ex_intro ?? grid) @(ex_intro ?? false) % 
+          [% [ % [<Hcut @Hsplit |@Hrs3 ] | % ] 
+          |>Houtc >Hcut % 
+          ]
+        |* #r5l #r5r #rs5 #Htb
+         lapply(Houtc … Htb) -Houtc #Houtc #Hsplit
+         @(ex_intro ?? r5l) @(ex_intro ?? r5r) % 
+          [%[%[<Hcut @Hsplit| @Hrs3] | % ]
+          |>Houtc >Hcut % 
+          ]
+        ]
+      |* whd in ⊢ (%→?); #tb * * 
+       #H @False_ind >Hta in H; #H lapply(H c0 (refl …))
+       >Hc0 #H destruct
+      ]
+    ]
+  ]
+]
 qed.
 
 definition init_current_on_match ≝ 
