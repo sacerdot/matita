@@ -381,17 +381,25 @@ let obj_of status (uri,height,metasenv,subst,obj_kind) =
       (match classify status ~metasenv [] ty with
         | `Kind ->
             let ty = kind_of status ~metasenv [] ty in
-            let ctx0,_ as res = split_kind_prods [] ty in
+            let ctx0,res = split_kind_prods [] ty in
             let ctx,bo =
              split_typ_lambdas status ~metasenv (List.length ctx0) [] bo in
             (match classify status ~metasenv ctx bo with
               | `Type
               | `KindOrType -> (* ?? no kind formers in System F_omega *)
+                  let nicectx =
+                   List.map2
+                    (fun p1 n ->
+                      HExtlib.map_option (fun (_,k) ->
+                       (*CSC: BUG here, clashes*)
+                       String.uncapitalize (fst n),k) p1)
+                    ctx0 ctx
+                  in
                   let ref =
                    NReference.reference_of_spec uri (NReference.Def height) in
                    status#set_extraction_db
                     (ReferenceMap.add ref ctx0 status#extraction_db),
-                   Some (uri,TypeDefinition(res,typ_of status ~metasenv ctx bo))
+                   Some (uri,TypeDefinition((nicectx,res),typ_of status ~metasenv ctx bo))
               | `Kind -> status, None
               | `PropKind
               | `Proposition -> status, None
@@ -436,7 +444,10 @@ let name_of_uri classification uri =
 
 (* cons avoid duplicates *)
 let rec (@::) name l =
- if name.[0] = '_' then "a" @:: l
+ if name <> "" (* propositional things *) && name.[0] = '_' then
+  let name = String.sub name 1 (String.length name - 1) in
+  let name = if name = "" then "a" else name in
+   name @:: l
  else if List.mem name l then (name ^ "'") @:: l
  else name::l
 ;;
@@ -455,6 +466,7 @@ let rec pp_typ status ctx =
  | Arrow (t1,t2) -> "(" ^ pp_typ status ctx t1 ^ ") -> " ^ pp_typ status ("_"::ctx) t2
  | Skip t -> pp_typ status ("_"::ctx) t
  | Forall (name,_,t) ->
+    (*CSC: BUG HERE: avoid clashes due to uncapitalisation*)
     let name = String.uncapitalize name in
     "(forall " ^ name ^ ". " ^ pp_typ status (name@::ctx) t ^")"
  | TAppl tl -> "(" ^ String.concat " " (List.map (pp_typ status ctx) tl) ^ ")"
@@ -486,7 +498,7 @@ let pp_obj status (uri,obj_kind) =
      (HExtlib.filter_map (fun x -> x) ctx) [])) in
  let namectx_of_ctx ctx =
   List.fold_right (@::)
-   (List.map (function None -> "_" | Some (x,_) -> x) ctx) [] in
+   (List.map (function None -> "" | Some (x,_) -> x) ctx) [] in
  match obj_kind with
    TypeDeclaration (ctx,_) ->
     (* data?? unsure semantics: inductive type without constructor, but
