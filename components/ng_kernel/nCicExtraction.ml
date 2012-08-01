@@ -107,7 +107,7 @@ let rec classify_not_term status no_dep_prods context t =
   | NCic.Meta _ -> assert false (* TODO *)
   | NCic.Appl (he::_) -> classify_not_term status no_dep_prods context he
   | NCic.Rel _ -> `KindOrType
-  | NCic.Const (NReference.Ref (_,NReference.Decl _) as ref) ->
+  | NCic.Const (NReference.Ref (_,NReference.Decl) as ref) ->
      let _,_,ty,_,_ = NCicEnvironment.get_checked_decl status ref in
       (match classify_not_term status true [] ty with
         | `Proposition
@@ -126,7 +126,7 @@ let rec classify_not_term status no_dep_prods context t =
         | `PropKind -> `Proposition)
   | NCic.Const (NReference.Ref (_,NReference.Con _))
   | NCic.Const (NReference.Ref (_,NReference.Def _)) ->
-     assert false (* NOT POSSIBLE *)
+     assert false (* IMPOSSIBLE *)
 ;;
 
 type not_term = [`Kind | `KindOrType | `PropKind | `Proposition | `Type];;
@@ -137,7 +137,6 @@ let classify status ~metasenv context t =
      (classify_not_term status true context t : not_term :> [> not_term])
   | ty ->
      let ty = fix_sorts ty in
-prerr_endline ("XXX: " ^ status#ppterm ~metasenv:[] ~subst:[] ~context:[] ty);
       `Term
         (match classify_not_term status true context ty with
           | `Proposition -> `Proof
@@ -225,6 +224,14 @@ let rec split_typ_prods context =
   | _ as t -> context,t
 ;;
 
+let rec glue_ctx_typ ctx typ =
+ match ctx with
+  | [] -> typ
+  | Some (_,`OfType so)::ctx -> Arrow (so,glue_ctx_typ ctx typ)
+  | Some (name,`OfKind so)::ctx -> Forall (name,so,glue_ctx_typ ctx typ)
+  | None::ctx -> Skip (glue_ctx_typ ctx typ)
+;;
+
 let rec split_typ_lambdas status n ~metasenv context typ =
  if n = 0 then context,typ
  else
@@ -247,7 +254,7 @@ let context_of_typformer status ~metasenv context =
  function
     NCic.Const (NReference.Ref (_,NReference.Ind _) as ref)
   | NCic.Const (NReference.Ref (_,NReference.Def _) as ref)
-  | NCic.Const (NReference.Ref (_,NReference.Decl _) as ref)
+  | NCic.Const (NReference.Ref (_,NReference.Decl) as ref)
   | NCic.Const (NReference.Ref (_,NReference.Fix _) as ref) ->
      (try ReferenceMap.find ref status#extraction_db
       with
@@ -332,7 +339,7 @@ let rec term_of status ~metasenv context =
        | `Term `PropFormer
        | `Term `TypeFormer
        | `Term `TypeFormerOrTerm
-       | `Term `Proof -> assert false (* EXPAND IT ??? *))
+       | `Term `Proof -> assert false (* NOT IN PROGRAMMING LANGUAGES? EXPAND IT ??? *))
   | NCic.Rel n -> Rel n
   | NCic.Const ref -> Const ref
   | NCic.Appl (he::args) ->
@@ -406,7 +413,26 @@ let obj_of status (uri,height,metasenv,subst,obj_kind) =
 
 (************************ HASKELL *************************)
 
-let pp_ref status = NCicPp.r2s status false
+(*CSC: code to be changed soon when we implement constructors and
+  we fix the code for term application *)
+let classify_reference status ref =
+ if ReferenceMap.mem ref status#extraction_db then
+  `TypeName
+ else
+  `FunctionName
+
+let capitalize classification name =
+  match classification with
+     `Constructor
+   | `TypeName -> String.capitalize name
+   | `FunctionName -> String.uncapitalize name
+
+let pp_ref status ref =
+ capitalize (classify_reference status ref)
+  (NCicPp.r2s status false ref)
+
+let name_of_uri classification uri =
+ capitalize classification (NUri.name_of_uri uri)
 
 (* cons avoid duplicates *)
 let rec (@::) name l =
@@ -414,7 +440,6 @@ let rec (@::) name l =
  else if List.mem name l then (name ^ "'") @:: l
  else name::l
 ;;
-
 
 let rec pp_kind =
  function
@@ -429,7 +454,9 @@ let rec pp_typ status ctx =
  | TConst ref -> pp_ref status ref
  | Arrow (t1,t2) -> "(" ^ pp_typ status ctx t1 ^ ") -> " ^ pp_typ status ("_"::ctx) t2
  | Skip t -> pp_typ status ("_"::ctx) t
- | Forall (name,_,t) -> "(forall " ^ name ^ ". " ^ pp_typ status (name@::ctx) t ^")"
+ | Forall (name,_,t) ->
+    let name = String.uncapitalize name in
+    "(forall " ^ name ^ ". " ^ pp_typ status (name@::ctx) t ^")"
  | TAppl tl -> "(" ^ String.concat " " (List.map (pp_typ status ctx) tl) ^ ")"
 
 let rec pp_term status ctx =
@@ -453,7 +480,7 @@ type term_former_decl = term_context * typ
 *)
 
 let pp_obj status (uri,obj_kind) =
- let printctx ctx =
+ let pp_ctx ctx =
   String.concat " " (List.rev
    (List.fold_right (fun (x,_) l -> x@::l)
      (HExtlib.filter_map (fun x -> x) ctx) [])) in
@@ -462,23 +489,23 @@ let pp_obj status (uri,obj_kind) =
    (List.map (function None -> "_" | Some (x,_) -> x) ctx) [] in
  match obj_kind with
    TypeDeclaration (ctx,_) ->
-    (* data?? unsure semantics *)
-    "data " ^ NUri.name_of_uri uri ^ " " ^ printctx ctx
+    (* data?? unsure semantics: inductive type without constructor, but
+       not matchable apparently *)
+    "data " ^ name_of_uri `TypeName uri ^ " " ^ pp_ctx ctx
  | TypeDefinition ((ctx,_),ty) ->
     let namectx = namectx_of_ctx ctx in
-    "type " ^ NUri.name_of_uri uri ^ " " ^ printctx ctx ^ " = " ^
+    "type " ^ name_of_uri `TypeName uri ^ " " ^ pp_ctx ctx ^ " = " ^
        pp_typ status namectx ty
  | TermDeclaration (ctx,ty) ->
-    (*CSC: Ask Dominic about the syntax *)
-    let namectx = namectx_of_ctx ctx in
-    "let " ^ NUri.name_of_uri uri ^ " " ^ printctx ctx ^
-    " : " ^ pp_typ status namectx ty
+    (* Implemented with undefined, the best we can do *)
+    let name = name_of_uri `FunctionName uri in
+    name ^ " :: " ^ pp_typ status [] (glue_ctx_typ ctx ty) ^ "\n" ^
+    name ^ " = undefined"
  | TermDefinition ((ctx,ty),bo) ->
-    (*CSC: Ask Dominic about the syntax *)
+    let name = name_of_uri `FunctionName uri in
     let namectx = namectx_of_ctx ctx in
-    "let " ^ NUri.name_of_uri uri ^ " " ^ printctx ctx ^
-    " : " ^ pp_typ status namectx ty ^ " = " ^
-    pp_term status namectx bo
+    name ^ " :: " ^ pp_typ status [] (glue_ctx_typ ctx ty) ^ "\n" ^
+    name ^ " = " ^ pp_term status namectx bo
  | LetRec _ -> assert false (* TODO 
  (* inductive and records missing *)*)
 
@@ -585,14 +612,14 @@ let rec typ_of context =
     | C.Appl li ->
        "(" ^ String.concat " " (clean_args context li) ^ ")"
     | C.Const (uri,exp_named_subst) ->
-       qualified_name_of_uri current_module_uri uri ^
+       qualified_name_of_uri status current_module_uri uri ^
         pp_exp_named_subst exp_named_subst context
     | C.MutInd (uri,n,exp_named_subst) ->
        (try
          match fst(CicEnvironment.get_obj CicUniv.oblivion_ugraph uri) with
             C.InductiveDefinition (dl,_,_,_) ->
              let (name,_,_,_) = get_nth dl (n+1) in
-              qualified_name_of_uri current_module_uri
+              qualified_name_of_uri status current_module_uri
                (UriManager.uri_of_string
                  (UriManager.buri_of_uri uri ^ "/" ^ name ^ ".con")) ^
               pp_exp_named_subst exp_named_subst context
@@ -607,7 +634,7 @@ let rec typ_of context =
             C.InductiveDefinition (dl,_,_,_) ->
              let _,_,_,cons = get_nth dl (n1+1) in
               let id,_ = get_nth cons n2 in
-               qualified_name_of_uri current_module_uri ~capitalize:true
+               qualified_name_of_uri status current_module_uri ~capitalize:true
                 (UriManager.uri_of_string
                   (UriManager.buri_of_uri uri ^ "/" ^ id ^ ".con")) ^
                pp_exp_named_subst exp_named_subst context
@@ -657,7 +684,7 @@ let rec typ_of context =
                           | C.Prod (_,_,bo) -> 1 + count_prods 0 bo
                           | _ -> 0
                         in
-                         qualified_name_of_uri current_module_uri
+                         qualified_name_of_uri status current_module_uri
                           ~capitalize:true
                           (UriManager.uri_of_string
                             (UriManager.buri_of_uri uri ^ "/" ^ id ^ ".con")),
@@ -828,12 +855,12 @@ let rec get_nth l n =
   | (_,_) -> raise NotEnoughElements
 ;;
 
-let qualified_name_of_uri current_module_uri ?(capitalize=false) uri =
+let qualified_name_of_uri status current_module_uri ?(capitalize=false) uri =
  let name =
   if capitalize then
-   String.capitalize (UriManager.name_of_uri uri)
+   String.capitalize (UriManager.name_of_uri status uri)
   else
-   ppid (UriManager.name_of_uri uri) in
+   ppid (UriManager.name_of_uri status uri) in
   let filename =
    let suri = UriManager.buri_of_uri uri in
    let s = String.sub suri 5 (String.length suri - 5) in
@@ -873,7 +900,7 @@ let rec pp ~in_type t context =
          NotEnoughElements -> string_of_int (List.length context - n)
        end
     | C.Var (uri,exp_named_subst) ->
-        qualified_name_of_uri current_module_uri uri ^
+        qualified_name_of_uri status current_module_uri uri ^
          pp_exp_named_subst exp_named_subst context
     | C.Meta (n,l1) ->
        (match metasenv with
@@ -964,14 +991,14 @@ let rec pp ~in_type t context =
     | C.Appl li ->
        "(" ^ String.concat " " (clean_args context li) ^ ")"
     | C.Const (uri,exp_named_subst) ->
-       qualified_name_of_uri current_module_uri uri ^
+       qualified_name_of_uri status current_module_uri uri ^
         pp_exp_named_subst exp_named_subst context
     | C.MutInd (uri,n,exp_named_subst) ->
        (try
          match fst(CicEnvironment.get_obj CicUniv.oblivion_ugraph uri) with
             C.InductiveDefinition (dl,_,_,_) ->
              let (name,_,_,_) = get_nth dl (n+1) in
-              qualified_name_of_uri current_module_uri
+              qualified_name_of_uri status current_module_uri
                (UriManager.uri_of_string
                  (UriManager.buri_of_uri uri ^ "/" ^ name ^ ".con")) ^
               pp_exp_named_subst exp_named_subst context
@@ -986,7 +1013,7 @@ let rec pp ~in_type t context =
             C.InductiveDefinition (dl,_,_,_) ->
              let _,_,_,cons = get_nth dl (n1+1) in
               let id,_ = get_nth cons n2 in
-               qualified_name_of_uri current_module_uri ~capitalize:true
+               qualified_name_of_uri status current_module_uri ~capitalize:true
                 (UriManager.uri_of_string
                   (UriManager.buri_of_uri uri ^ "/" ^ id ^ ".con")) ^
                pp_exp_named_subst exp_named_subst context
@@ -1036,7 +1063,7 @@ let rec pp ~in_type t context =
                           | C.Prod (_,_,bo) -> 1 + count_prods 0 bo
                           | _ -> 0
                         in
-                         qualified_name_of_uri current_module_uri
+                         qualified_name_of_uri status current_module_uri
                           ~capitalize:true
                           (UriManager.uri_of_string
                             (UriManager.buri_of_uri uri ^ "/" ^ id ^ ".con")),
@@ -1138,7 +1165,7 @@ and pp_exp_named_subst exp_named_subst context =
   "\\subst[" ^
    String.concat " ; " (
     List.map
-     (function (uri,t) -> UriManager.name_of_uri uri ^ " \\Assign " ^ pp ~in_type:false t context)
+     (function (uri,t) -> UriManager.name_of_uri status uri ^ " \\Assign " ^ pp ~in_type:false t context)
      exp_named_subst
    ) ^ "]"
 and clean_args_for_constr nparams context =
