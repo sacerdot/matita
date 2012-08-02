@@ -75,7 +75,7 @@ type obj_kind =
  | TypeDefinition of typ_former_def
  | TermDeclaration of term_former_decl
  | TermDefinition of term_former_def
- | LetRec of (string * typ * term) list
+ | LetRec of obj_kind list
  (* inductive and records missing *)
 
 type obj = NUri.uri * obj_kind
@@ -446,6 +446,48 @@ and eat_args status metasenv acc context tyhe =
       | Unit | Var _ | TConst _ | TAppl _ -> assert false (* NOT A PRODUCT *)
 ;;
 
+let obj_of_constant status ~metasenv uri height bo ty =
+  match classify status ~metasenv [] ty with
+    | `Kind ->
+        let ty = kind_of status ~metasenv [] ty in
+        let ctx0,res = split_kind_prods [] ty in
+        let ctx,bo =
+         split_typ_lambdas status ~metasenv (List.length ctx0) [] bo in
+        (match classify status ~metasenv ctx bo with
+          | `Type
+          | `KindOrType -> (* ?? no kind formers in System F_omega *)
+              let nicectx =
+               List.map2
+                (fun p1 n ->
+                  HExtlib.map_option (fun (_,k) ->
+                   (*CSC: BUG here, clashes*)
+                   String.uncapitalize (fst n),k) p1)
+                ctx0 ctx
+              in
+              (* BUG here: for mutual type definitions the spec is not good *)
+              let ref =
+               NReference.reference_of_spec uri (NReference.Def height) in
+              let bo = typ_of status ~metasenv ctx bo in
+               status#set_extraction_db
+                (ReferenceMap.add ref (nicectx,Some bo)
+                  status#extraction_db),
+               Some (uri,TypeDefinition((nicectx,res),bo))
+          | `Kind -> status, None
+          | `PropKind
+          | `Proposition -> status, None
+          | `Term _ -> assert false (* IMPOSSIBLE *))
+    | `PropKind
+    | `Proposition -> status, None
+    | `KindOrType (* ??? *)
+    | `Type ->
+       (* CSC: TO BE FINISHED, REF NON REGISTERED *)
+       let ty = typ_of status ~metasenv [] ty in
+        status,
+        Some (uri, TermDefinition (split_typ_prods [] ty,
+         term_of status ~metasenv [] bo))
+    | `Term _ -> assert false (* IMPOSSIBLE *)
+;;
+
 let obj_of status (uri,height,metasenv,subst,obj_kind) =
  let obj_kind = apply_subst subst obj_kind in
  try
@@ -468,44 +510,19 @@ let obj_of status (uri,height,metasenv,subst,obj_kind) =
              Some (uri, TermDeclaration (split_typ_prods [] ty))
         | `Term _ -> assert false (* IMPOSSIBLE *))
    | NCic.Constant (_,_,Some bo,ty,_) ->
-      (match classify status ~metasenv [] ty with
-        | `Kind ->
-            let ty = kind_of status ~metasenv [] ty in
-            let ctx0,res = split_kind_prods [] ty in
-            let ctx,bo =
-             split_typ_lambdas status ~metasenv (List.length ctx0) [] bo in
-            (match classify status ~metasenv ctx bo with
-              | `Type
-              | `KindOrType -> (* ?? no kind formers in System F_omega *)
-                  let nicectx =
-                   List.map2
-                    (fun p1 n ->
-                      HExtlib.map_option (fun (_,k) ->
-                       (*CSC: BUG here, clashes*)
-                       String.uncapitalize (fst n),k) p1)
-                    ctx0 ctx
-                  in
-                  let ref =
-                   NReference.reference_of_spec uri (NReference.Def height) in
-                  let bo = typ_of status ~metasenv ctx bo in
-                   status#set_extraction_db
-                    (ReferenceMap.add ref (nicectx,Some bo)
-                      status#extraction_db),
-                   Some (uri,TypeDefinition((nicectx,res),bo))
-              | `Kind -> status, None
-              | `PropKind
-              | `Proposition -> status, None
-              | `Term _ -> assert false (* IMPOSSIBLE *))
-        | `PropKind
-        | `Proposition -> status, None
-        | `KindOrType (* ??? *)
-        | `Type ->
-           (* CSC: TO BE FINISHED, REF NON REGISTERED *)
-           let ty = typ_of status ~metasenv [] ty in
-            status,
-            Some (uri, TermDefinition (split_typ_prods [] ty,
-             term_of status ~metasenv [] bo))
-        | `Term _ -> assert false (* IMPOSSIBLE *))
+      obj_of_constant status ~metasenv uri height bo ty
+   | NCic.Fixpoint (_fix_or_cofix,fs,_) ->
+      let status,objs =
+        List.fold_right
+         (fun (_,_name,_,ty,bo) (status,res) ->
+           let status,obj = obj_of_constant ~metasenv status uri height bo ty in
+            match obj with
+               None -> status,res (*CSC: PRETTY PRINT SOMETHING ERASED*)
+             | Some (_uri,obj) -> status,obj::res)
+           fs (status,[])
+      in
+       status, Some (uri,LetRec objs)
+   | NCic.Inductive _ -> status,None (*CSC: TO BE IMPLEMENTED*)
  with
   NotInFOmega ->
    prerr_endline "-- NOT IN F_omega";
@@ -574,7 +591,15 @@ let rec pp_term status ctx =
  | LetIn (name,s,t) ->
     "(let " ^ name ^ " = " ^ pp_term status ctx s ^ " in " ^ pp_term status (name@::ctx) t ^
     ")"
- | Match _ -> assert false (* TODO of reference * term * term list *)
+ | Match (ref,matched,pl) ->
+   "case " ^ pp_term status ctx matched ^ " of\n" ^
+   String.concat "\n"
+    (List.map
+      (fun p ->
+        (*CSC: BUG, TO BE IMPLEMENTED *)
+        let pattern,body = "???", pp_term status ctx p in
+        "  " ^ pattern ^ " -> " ^ body
+     ) pl)
  | TLambda t -> pp_term status ctx t
  | Inst t -> pp_term status ctx t
 
@@ -585,7 +610,7 @@ type term_former_def = term_context * term * typ
 type term_former_decl = term_context * typ
 *)
 
-let pp_obj status (uri,obj_kind) =
+let rec pp_obj status (uri,obj_kind) =
  let pp_ctx ctx =
   String.concat " " (List.rev
    (List.fold_right (fun (x,_) l -> x@::l)
@@ -612,8 +637,10 @@ let pp_obj status (uri,obj_kind) =
     let namectx = namectx_of_ctx ctx in
     name ^ " :: " ^ pp_typ status ["a";"b";"c"] (glue_ctx_typ ctx ty) ^ "\n" ^
     name ^ " = " ^ pp_term status namectx bo
- | LetRec _ -> assert false (* TODO 
- (* inductive and records missing *)*)
+ | LetRec l ->
+    (*CSC: BUG always uses the name of the URI *)
+    String.concat "\n" (List.map (fun obj -> pp_obj status (uri,obj)) l)
+ (* inductive and records missing *)
 
 let haskell_of_obj status obj =
  let status, obj = obj_of status obj in
