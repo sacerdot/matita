@@ -591,15 +591,43 @@ let rec pp_term status ctx =
  | LetIn (name,s,t) ->
     "(let " ^ name ^ " = " ^ pp_term status ctx s ^ " in " ^ pp_term status (name@::ctx) t ^
     ")"
- | Match (ref,matched,pl) ->
+ | Match (r,matched,pl) ->
+    let constructors, leftno =
+     let _,leftno,tys,_,n = NCicEnvironment.get_checked_indtys status r in
+     let _,_,_,cl  = List.nth tys n in
+      cl,leftno
+    in
+    let rec eat_branch n ty pat =
+      match (ty, pat) with
+      | NCic.Prod (_, _, t), _ when n > 0 ->
+         eat_branch (pred n) t pat 
+      | NCic.Prod (_, _, t), Lambda (name, t') ->
+          (*CSC: BUG HERE; WHAT IF SOME ARGUMENTS ARE DELETED?*)
+          let cv, rhs = eat_branch 0 t t' in
+          name :: cv, rhs
+      | _, _ -> [], pat
+    in
+    let j = ref 0 in
+    let patterns =
+      try
+        List.map2
+          (fun (_, name, ty) pat ->
+            incr j;
+            name, eat_branch leftno ty pat
+          ) constructors pl
+      with Invalid_argument _ -> assert false
+    in
    "case " ^ pp_term status ctx matched ^ " of\n" ^
    String.concat "\n"
     (List.map
-      (fun p ->
-        (*CSC: BUG, TO BE IMPLEMENTED *)
-        let pattern,body = "???", pp_term status ctx p in
-        "  " ^ pattern ^ " -> " ^ body
-     ) pl)
+      (fun (name,(bound_names,rhs)) ->
+        let pattern,body =
+         (*CSC: BUG avoid name clashes *)
+         String.concat " " (String.capitalize name::bound_names),
+         pp_term status (bound_names@ctx) rhs
+        in
+         "  " ^ pattern ^ " -> " ^ body
+     ) patterns)
  | TLambda t -> pp_term status ctx t
  | Inst t -> pp_term status ctx t
 
