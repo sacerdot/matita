@@ -146,10 +146,11 @@ let init = load_db;;
 
 class virtual status =
  object
-  inherit NCic.status
+  inherit NCicExtraction.status
   val timestamp = (time0 : timestamp)
   method timestamp = timestamp
   method set_timestamp v = {< timestamp = v >}
+  (*CSC: bug here, we are not copying the NCicExtraction part of the status *)
  end
 
 let time_travel0 (sto,ali) =
@@ -324,10 +325,10 @@ let aliases_of uri =
      if NUri.eq uri' uri then Some nref else None) !local_aliases
 ;;
 
-let add_obj status ((u,_,_,_,_) as obj) =
- NCicEnvironment.check_and_add_obj status obj;
- storage := (`Obj (u,obj))::!storage;
-  let _,height,_,_,obj = obj in
+let add_obj status ((u,_,_,_,_) as orig_obj) =
+ NCicEnvironment.check_and_add_obj status orig_obj;
+ storage := (`Obj (u,orig_obj))::!storage;
+  let _,height,_,_,obj = orig_obj in
   let references =
    match obj with
       NCic.Constant (_,name,None,_,_) ->
@@ -356,7 +357,14 @@ let add_obj status ((u,_,_,_,_) as obj) =
          ) il)
   in
   local_aliases := references @ !local_aliases;
-  status#set_timestamp (!storage,!local_aliases)
+  let status = status#set_timestamp (!storage,!local_aliases) in
+  (* To test extraction *)
+  try
+   ignore (Helm_registry.get "extract_haskell");
+   let status,msg = NCicExtraction.haskell_of_obj status orig_obj in
+    prerr_endline msg; status
+  with
+   Helm_registry.Key_not_found _ -> status
 ;;
 
 let add_constraint status u1 u2 = 

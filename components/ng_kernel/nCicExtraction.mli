@@ -28,4 +28,4 @@ class virtual status :
 
 
 (* Haskell *)
-val haskell_of_obj: (#status as 'status) -> NCic.obj -> 'status * string option
+val haskell_of_obj: (#status as 'status) -> NCic.obj -> 'status * string

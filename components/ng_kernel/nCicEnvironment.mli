@@ -24,6 +24,10 @@ val check_and_add_obj: #NCic.status -> NCic.obj -> unit
 
 val get_relevance: #NCic.status -> NReference.reference -> bool list
 
+val get_checked_decl:
+  #NCic.status -> NReference.reference -> 
+    NCic.relevance * string * NCic.term * NCic.c_attr * int
+
 val get_checked_def:
   #NCic.status -> NReference.reference -> 
     NCic.relevance * string * NCic.term * NCic.term * NCic.c_attr * int

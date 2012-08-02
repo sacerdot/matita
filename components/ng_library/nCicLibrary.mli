@@ -18,9 +18,10 @@ type timestamp
 
 class virtual status :
  object ('self)
-  inherit NCic.status
+  inherit NCicExtraction.status
   method timestamp: timestamp
   method set_timestamp: timestamp -> 'self
+  (*CSC: bug here, we are not copying the NCicExtraction part of the status *)
  end
 
 (* it also checks it and add it to the environment *)
