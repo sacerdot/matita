@@ -6,3 +6,4 @@ all:
 .PHONY: all
 
 # ghci extraction.hs
+# Syntax for datatypes: data Foo = Zero | Succ Foo Foo

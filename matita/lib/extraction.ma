@@ -145,6 +145,22 @@ and g (n:nat) : nat ≝
  [ O ⇒ O
  | S m ⇒ f m ].
 
+(*BUG: pattern matching patterns when arguments have been deleted from
+  the constructor are wrong *)
+
+(*BUG: constructor names in pattern should be capitalised correctly;
+  name clashes must be avoided*)
+
 coinductive stream: Type[0] ≝ scons : nat → stream → stream.
 
 let corec div (n:nat) : stream ≝ scons n (div (S n)).
+
+(*
+let rec mkterm (n:nat) : nat ≝
+ match n with
+ [ O ⇒ O
+ | S m ⇒ mkterm m ]
+and mktyp (n:nat) : Type[0] ≝
+ match n with
+ [ O ⇒ nat
+ | S m ⇒ mktyp m ].*)
