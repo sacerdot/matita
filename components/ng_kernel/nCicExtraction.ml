@@ -624,7 +624,7 @@ let rec pp_term status ctx =
         let pattern,body =
          (*CSC: BUG avoid name clashes *)
          String.concat " " (String.capitalize name::bound_names),
-         pp_term status (bound_names@ctx) rhs
+         pp_term status ((List.rev bound_names)@ctx) rhs
         in
          "  " ^ pattern ^ " -> " ^ body
      ) patterns)
