@@ -120,7 +120,31 @@ definition ttest11_aux ≝ λS:Type[1]. S → Nat.
 
 definition ttest11 ≝ λf:ttest11_aux True. f I.
 
-(*BUG here: requires F_omega eat_args*)
 definition ttest12 ≝ λf:True → Nat. f I.
 
 (*GENERAL BUG: name clashes when binders shadow each other in CIC*)
+
+(*BUG: mutual type definitions not handled correctly: the ref is computed in a
+  wrong way *)
+  
+(*BUG: multiple let-reced things are given the same (wrong) name*)
+
+(*BUG: for OCaml: cofixpoint not distinguished from fixpoints*)
+
+let rec rtest1 (n:nat) : nat ≝
+ match n with
+ [ O ⇒ O
+ | S m ⇒ rtest1 m ].
+
+let rec f (n:nat) : nat ≝
+ match n with
+ [ O ⇒ O
+ | S m ⇒ g m ]
+and g (n:nat) : nat ≝
+ match n with
+ [ O ⇒ O
+ | S m ⇒ f m ].
+
+coinductive stream: Type[0] ≝ scons : nat → stream → stream.
+
+let corec div (n:nat) : stream ≝ scons n (div (S n)).
