@@ -106,7 +106,26 @@ let rec classify_not_term status no_dep_prods context t =
      assert false (* TODO *)
   | NCic.Meta _ -> assert false (* TODO *)
   | NCic.Appl (he::_) -> classify_not_term status no_dep_prods context he
-  | NCic.Rel _ -> `KindOrType
+  | NCic.Rel n ->
+     let rec find_sort typ =
+      match NCicReduction.whd status ~subst:[] context (NCicSubstitution.lift status n typ) with
+        NCic.Sort NCic.Prop -> `Proposition
+      | NCic.Sort (NCic.Type [`CProp,_]) -> `Proposition
+      | NCic.Sort (NCic.Type [`Type,_]) ->
+         (*CSC: we could be more precise distinguishing the user provided
+                minimal elements of the hierarchies and classify these
+                as `Kind *)
+         `KindOrType
+      | NCic.Sort (NCic.Type _) -> assert false (* ALGEBRAIC *)
+      | NCic.Prod (_,_,t) ->
+         (* we skipped arguments of applications, so here we need to skip
+            products *)
+         find_sort t
+      | _ -> assert false (* NOT A SORT *)
+     in
+      (match List.nth context (n-1) with
+          _,NCic.Decl typ -> find_sort typ
+        | _,NCic.Def _ -> assert false (* IMPOSSIBLE *))
   | NCic.Const (NReference.Ref (_,NReference.Decl) as ref) ->
      let _,_,ty,_,_ = NCicEnvironment.get_checked_decl status ref in
       (match classify_not_term status true [] ty with
@@ -149,7 +168,8 @@ let classify status ~metasenv context t =
 
 let rec kind_of status ~metasenv context k =
  match NCicReduction.whd status ~subst:[] context k with
-  | NCic.Sort _ -> Type
+  | NCic.Sort NCic.Type _ -> Type
+  | NCic.Sort _ -> assert false (* NOT A KIND *)
   | NCic.Prod (b,s,t) ->
      (* CSC: non-invariant assumed here about "_" *)
      (match classify status ~metasenv context s with
@@ -227,9 +247,9 @@ let rec split_typ_prods context =
 let rec glue_ctx_typ ctx typ =
  match ctx with
   | [] -> typ
-  | Some (_,`OfType so)::ctx -> Arrow (so,glue_ctx_typ ctx typ)
-  | Some (name,`OfKind so)::ctx -> Forall (name,so,glue_ctx_typ ctx typ)
-  | None::ctx -> Skip (glue_ctx_typ ctx typ)
+  | Some (_,`OfType so)::ctx -> glue_ctx_typ ctx (Arrow (so,typ))
+  | Some (name,`OfKind so)::ctx -> glue_ctx_typ ctx (Forall (name,so,typ))
+  | None::ctx -> glue_ctx_typ ctx (Skip typ)
 ;;
 
 let rec split_typ_lambdas status n ~metasenv context typ =
@@ -369,10 +389,10 @@ let obj_of status (uri,height,metasenv,subst,obj_kind) =
              status#set_extraction_db
               (ReferenceMap.add ref ctx status#extraction_db),
              Some (uri, TypeDeclaration res)
-        | `KindOrType -> assert false (* TODO ??? *)
         | `PropKind
         | `Proposition -> status, None
-        | `Type ->
+        | `Type
+        | `KindOrType (*???*) ->
             let ty = typ_of status ~metasenv [] ty in
              status,
              Some (uri, TermDeclaration (split_typ_prods [] ty))
@@ -412,7 +432,7 @@ let obj_of status (uri,height,metasenv,subst,obj_kind) =
            let ty = typ_of status ~metasenv [] ty in
             status,
             Some (uri, TermDefinition (split_typ_prods [] ty,
-             term_of status ~metasenv [](* BAD! *) bo))
+             term_of status ~metasenv [] bo))
         | `Term _ -> assert false (* IMPOSSIBLE *))
  with
   NotInFOmega ->
@@ -516,7 +536,7 @@ let pp_obj status (uri,obj_kind) =
  | TermDefinition ((ctx,ty),bo) ->
     let name = name_of_uri `FunctionName uri in
     let namectx = namectx_of_ctx ctx in
-    name ^ " :: " ^ pp_typ status [] (glue_ctx_typ ctx ty) ^ "\n" ^
+    name ^ " :: " ^ pp_typ status ["a";"b";"c"] (glue_ctx_typ ctx ty) ^ "\n" ^
     name ^ " = " ^ pp_term status namectx bo
  | LetRec _ -> assert false (* TODO 
  (* inductive and records missing *)*)
