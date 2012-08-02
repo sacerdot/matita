@@ -155,6 +155,9 @@ coinductive stream: Type[0] ≝ scons : nat → stream → stream.
 
 let corec div (n:nat) : stream ≝ scons n (div (S n)).
 
+definition rtest2 : nat → stream → nat ≝
+ λm,s. match s with [ scons n l ⇒ m + n ].
+
 (*
 let rec mkterm (n:nat) : nat ≝
  match n with
