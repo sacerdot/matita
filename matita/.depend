@@ -42,10 +42,12 @@ matitaMathView.cmx: virtuals.cmx matitaTypes.cmx matitaMisc.cmx \
     applyTransformation.cmx matitaMathView.cmi
 matitaMisc.cmo: matitaGuiTypes.cmi buildTimeConf.cmo matitaMisc.cmi
 matitaMisc.cmx: matitaGuiTypes.cmi buildTimeConf.cmx matitaMisc.cmi
-matita.cmo: predefined_virtuals.cmi matitaScript.cmi matitaInit.cmi \
-    matitaGui.cmi matitaGtkMisc.cmi buildTimeConf.cmo applyTransformation.cmi
-matita.cmx: predefined_virtuals.cmx matitaScript.cmx matitaInit.cmx \
-    matitaGui.cmx matitaGtkMisc.cmx buildTimeConf.cmx applyTransformation.cmx
+matita.cmo: predefined_virtuals.cmi matitaScript.cmi matitaMisc.cmi \
+    matitaInit.cmi matitaGui.cmi matitaGtkMisc.cmi buildTimeConf.cmo \
+    applyTransformation.cmi
+matita.cmx: predefined_virtuals.cmx matitaScript.cmx matitaMisc.cmx \
+    matitaInit.cmx matitaGui.cmx matitaGtkMisc.cmx buildTimeConf.cmx \
+    applyTransformation.cmx
 matitaScript.cmo: virtuals.cmi matitaTypes.cmi matitaMisc.cmi \
     matitaMathView.cmi matitaGtkMisc.cmi matitaEngine.cmi cicMathView.cmi \
     buildTimeConf.cmo matitaScript.cmi
