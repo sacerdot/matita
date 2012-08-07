@@ -164,3 +164,45 @@ theorem terminate_while: ∀sig,M,acc,Rtrue,Rfalse,t.
    ]
  ]
 qed.
+
+theorem terminate_while_guarded: ∀sig,M,acc,Pre,Rtrue,Rfalse.
+  halt sig M acc = true →
+  accGRealize sig M acc Pre Rtrue Rfalse → 
+  (∀t1,t2. Pre t1 → Rtrue t1 t2 → Pre t2) → ∀t.
+  WF ? (inv … Rtrue) t → Pre t → whileTM sig M acc ↓ t.
+#sig #M #acc #Pre #Rtrue #Rfalse #Hacctrue #HM #Hinv #t #HWF elim HWF
+#t1 #H #Hind #HPre cases (HM … t1 HPre) #i * #outc * * #Hloop
+#Htrue #Hfalse cases (true_or_false (cstate … outc == acc)) #Hcase
+  [cases (Hind ? (Htrue … (\P Hcase)) ?) 
+    [2: @(Hinv … HPre) @Htrue @(\P Hcase)]
+   #iwhile * #outcfinal
+   #Hloopwhile @(ex_intro … (i+iwhile)) 
+   @(ex_intro … outcfinal) @(loop_merge … outc … Hloopwhile)
+    [@(λc.halt sig M (cstate … c))
+    |* #s0 #t0 normalize cases (s0 == acc) normalize
+     [ cases (halt sig M s0) // 
+     | cases (halt sig M s0) normalize //
+     ]
+    |@(loop_lift ?? i (λc.c) ? 
+                (step ? (whileTM ? M acc)) ? 
+                (λc.halt sig M (cstate ?? c)) ?? 
+                ?? Hloop)
+     [ #x %
+     | * #s #t #Hx whd in ⊢ (??%%); >while_trans_false
+       [%
+       |% #Hfalse <Hfalse in Hacctrue; >Hx #H0 destruct ]
+     ]
+   |@step_while_acc @(\P Hcase)
+   |>(\P Hcase) @halt_while_acc
+   ]
+ |@(ex_intro … i) @(ex_intro … outc)
+  @(loop_lift_acc ?? i (λc.c) ?????? (λc.cstate ?? c == acc) ???? Hloop)
+   [#x #Hx >(\P Hx) //
+   |#x @halt_while_not_acc
+   |#x #H whd in ⊢ (??%%); >while_trans_false [%]
+    % #eqx >eqx in H; >Hacctrue #H destruct
+   |@Hcase
+   ]
+ ]
+qed.
+ 

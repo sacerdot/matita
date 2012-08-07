@@ -43,7 +43,7 @@ definition mark_next_tuple ≝
   adv_to_mark_r ? bar_or_grid ·
      (ifTM ? (test_char ? (λc:STape.is_bar (\fst c)))
        (move_right_and_mark ?) (nop ?) tc_true).
-
+     
 definition R_mark_next_tuple ≝ 
   λt1,t2.
     ∀ls,c,rs1,rs2.
@@ -288,6 +288,7 @@ definition match_tuple_step ≝
              (mark ?) (move_l ? · init_current) tc_true)) tc_true)))
     (nop ?) tc_true.
 
+(* universal version 
 definition R_match_tuple_step_true ≝ λt1,t2.
   ∀ls,cur,rs.t1 = midtape STape ls cur rs → 
   \fst cur ≠ grid ∧ 
@@ -315,7 +316,36 @@ definition R_match_tuple_step_true ≝ λt1,t2.
       non specifichiamo condizioni sul nastro di output, perché
       non eseguiremo altre operazioni, quindi il suo formato non ci interessa *)
    (〈c,false〉::l1 ≠ 〈c1,false〉::l3 ∧ no_bars l4 ∧ current ? t2 = Some ? 〈grid,true〉)).  
-  
+*)
+
+definition R_match_tuple_step_true ≝ λt1,t2.
+  ∃ls,cur,rs.t1 = midtape STape ls cur rs \wedge 
+  \fst cur ≠ grid ∧ 
+  (∀ls0,c,l1,l2,c1,l3,l4,rs0,n.
+   only_bits_or_nulls l1 → no_marks l1 (* → no_grids l2 *) → 
+   bit_or_null c = true → bit_or_null c1 = true →
+   only_bits_or_nulls l3 → S n = |l1| → |l1| = |l3| →
+   table_TM (S n) (l2@〈c1,false〉::l3@〈comma,false〉::l4) → 
+   ls = 〈grid,false〉::ls0 → cur = 〈c,true〉 → 
+   rs = l1@〈grid,false〉::l2@〈c1,true〉::l3@〈comma,false〉::l4@〈grid,false〉::rs0 → 
+   (* facciamo match *)
+   (〈c,false〉::l1 = 〈c1,false〉::l3 ∧
+   t2 = midtape ? (reverse ? l1@〈c,false〉::〈grid,false〉::ls0) 〈grid,false〉
+         (l2@〈c1,false〉::l3@〈comma,true〉::l4@〈grid,false〉::rs0))
+   ∨
+   (* non facciamo match e marchiamo la prossima tupla *)
+   (〈c,false〉::l1 ≠ 〈c1,false〉::l3 ∧
+    ∃c2,l5,l6.l4 = l5@〈bar,false〉::〈c2,false〉::l6 ∧
+    (* condizioni su l5 l6 l7 *)
+    t2 = midtape STape (〈grid,false〉::ls0) 〈c,true〉 
+          (l1@〈grid,false〉::l2@〈c1,false〉::l3@〈comma,false〉::
+           l5@〈bar,false〉::〈c2,true〉::l6@〈grid,false〉::rs0))
+   ∨  
+   (* non facciamo match e non c'è una prossima tupla:
+      non specifichiamo condizioni sul nastro di output, perché
+      non eseguiremo altre operazioni, quindi il suo formato non ci interessa *)
+   (〈c,false〉::l1 ≠ 〈c1,false〉::l3 ∧ no_bars l4 ∧ current ? t2 = Some ? 〈grid,true〉)).  
+
 definition R_match_tuple_step_false ≝ λt1,t2.
   ∀ls,c,rs.t1 = midtape STape ls c rs → is_grid (\fst c) = true ∧ t2 = t1.
   
@@ -355,13 +385,14 @@ lemma sem_match_tuple_step:
   [lapply(Hc c ?) [>Ht1 %] #Hgrid @injective_notb @Hgrid |>H1 @H]
 |#tapea #tapeout #tapeb whd in ⊢ (%→?); #Hcur
  * #tapec * whd in ⊢ (%→?); #Hcompare #Hor 
- #ls #cur #rs #Htapea >Htapea in Hcur; * * #c *
- normalize in ⊢ (%→?); #Hdes destruct (Hdes) #Hcur #Htapeb %
- [ % #Hfalse >Hfalse in Hcur; normalize #Hfalse1 destruct (Hfalse1)]
- #ls0 #c #l1 #l2 #c1 #l3 #l4 #rs0 #n #Hl1bitnull #Hl1marks #Hc #Hc1 #Hl3 #eqn
- #eqlen #Htable #Hls #Hcur #Hrs -Htapea >Hls in Htapeb; >Hcur >Hrs #Htapeb
+ cases Hcur * #c * -Hcur #Hcur #Hgrid #Htapeb cases (current_to_midtape … Hcur)
+ #ls * #rs #Htapea @(ex_intro … ls) @(ex_intro … c) @(ex_intro … rs) %
+  [%[@Htapea | cases (true_or_false (\fst c == grid))
+    [#eqc @False_ind >(\P eqc) in Hgrid; normalize #H destruct |#eqc @(\Pf eqc)]]] 
+ #ls0 #cur #l1 #l2 #c1 #l3 #l4 #rs0 #n #Hl1bitnull #Hl1marks #Hc #Hc1 #Hl3 #eqn
+ #eqlen #Htable #Hls -Hcur #Hcur #Hrs >Htapea in Htapeb; >Hls >Hcur >Hrs #Htapeb
  cases (Hcompare … Htapeb) -Hcompare -Htapeb * #_ #_ #Hcompare
- cases (Hcompare c c1 l1 l3 l2 (l4@〈grid,false〉::rs0) eqlen Hl1bitnull Hl3 Hl1marks … (refl …) Hc ?)  
+ cases (Hcompare cur c1 l1 l3 l2 (l4@〈grid,false〉::rs0) eqlen Hl1bitnull Hl3 Hl1marks … (refl …) Hc ?)  
  -Hcompare 
    [* #Htemp destruct (Htemp) #Htapec %1 % % [%]
     >Htapec in Hor; -Htapec *
@@ -372,9 +403,9 @@ lemma sem_match_tuple_step:
       %
      ]
    |* #la * #c' * #d' * #lb * #lc * * * #H1 #H2 #H3 #Htapec 
-    cut (〈c,false〉::l1 ≠ 〈c1,false〉::l3) 
+    cut (〈cur,false〉::l1 ≠ 〈c1,false〉::l3) 
       [>H2 >H3 elim la
-        [@(not_to_not …H1) normalize #H destruct % 
+        [@(not_to_not …H1) normalize #H destruct (H) % 
         |#x #tl @not_to_not normalize #H destruct // 
         ]
       ] #Hnoteq
@@ -610,10 +641,13 @@ lapply (sem_while … sem_match_tuple_step intape k outc Hloop) [%] -Hloop
   #Hstar1 #IH whd in ⊢ (%→?); #Hright lapply (IH Hright) -IH whd in ⊢ (%→?); #IH
   #ls #cur #rs #Htb %
   [ (* cur can't be true because we assume at least one iteration *)
-    #Hcur cases (Htc … Htb) * #Hfalse @False_ind @Hfalse @(is_grid_true … Hcur)
+    #Hcur cases Htc #ls' * #c' * #rs' * * >Htb #Hdes destruct (Hdes) 
+    #Hfalse @False_ind @(absurd … (is_grid_true … Hcur) Hfalse)
   | (* current and a tuple are marked *)
    #c #l1 #c1 #l2 #l3 #ls0 #rs0 #n #Hls #Hcur #Hrs #Hc #Hc1 #Hl1bitnull #Hl1marks 
-   #Hl1len #Htable cases (Htc … Htb) -Htc -Htb * #_ #Htc
+   #Hl1len #Htable 
+   cases Htc #ls' * #c' * #rs' * * >Htb #Hdes destruct (Hdes)
+   -Htb * #_ #Htc
    (* expose the marked tuple in table *)
    cut (∃la,lb,mv,lc.l3 = la@〈comma,false〉::lb@〈comma,false〉::mv::lc ∧
          S n = |la| ∧ only_bits_or_nulls la)
@@ -690,6 +724,124 @@ lapply (sem_while … sem_match_tuple_step intape k outc Hloop) [%] -Hloop
  ]
 qed.
 
+(* termination *) 
+lemma WF_mts_niltape:
+  WF ? (inv ? R_match_tuple_step_true) (niltape (FinProd FSUnialpha FinBool)).
+@wf #t1 whd in ⊢ (%→?); * #ls * #c * #rs * * #H destruct 
+qed.
+
+lemma WF_mts_rightof:
+  ∀a,ls. WF ? (inv ? R_match_tuple_step_true) (rightof (FinProd FSUnialpha FinBool) a ls).
+#a #ls @wf #t1 whd in ⊢ (%→?); * #ls * #c * #rs * * #H destruct 
+qed.
+
+lemma WF_mts_leftof:
+  ∀a,ls. WF ? (inv ? R_match_tuple_step_true) (leftof (FinProd FSUnialpha FinBool) a ls).
+#a #ls @wf #t1 whd in ⊢ (%→?); * #ls * #c * #rs * * #H destruct 
+qed.
+
+lemma WF_cst_midtape_grid:
+  ∀ls,b,rs. WF ? (inv ? R_match_tuple_step_true) 
+    (midtape (FinProd … FSUnialpha FinBool) ls 〈grid,b〉 rs).
+#ls #b #rs @wf #t1 whd in ⊢ (%→?); * #ls' * #c' * #rs' * * #H destruct
+* #Hfalse @False_ind @Hfalse % 
+qed.
+         
+definition Pre_match_tuple ≝ λt.
+  ∃ls,cur,rs. t = midtape STape ls cur rs ∧
+  (is_grid (\fst cur) = true ∨
+  (∃ls0,c,l1,l2,c1,l3,l4,rs0,n.
+   only_bits_or_nulls l1 ∧ no_marks l1 ∧
+   bit_or_null c = true ∧ bit_or_null c1 = true ∧
+   only_bits_or_nulls l3 ∧ S n = |l1| ∧|l1| = |l3| ∧
+   table_TM (S n) (l2@〈c1,false〉::l3@〈comma,false〉::l4) ∧ 
+   ls = 〈grid,false〉::ls0 ∧ cur = 〈c,true〉 ∧
+   rs = l1@〈grid,false〉::l2@〈c1,true〉::l3@〈comma,false〉::l4@〈grid,false〉::rs0)). 
+
+lemma acc_Realize_to_acc_GRealize: ∀sig,M.∀q:states sig M.∀P,R1,R2. 
+  M ⊨ [q:R1,R2] → accGRealize sig M q P R1 R2.
+#alpha #M #q #Pre #R1 #R2 #HR #t #HPre
+cases (HR t) -HR #k * #outc * * #Hloop #HRtrue #HRfalse 
+@(ex_intro ?? k) @(ex_intro ?? outc) % 
+  [ % [@Hloop] @HRtrue | @HRfalse]
+qed.
+
+
+lemma terminate_match_tuple: 
+  ∀t. Pre_match_tuple t → Terminate ? match_tuple t.
+#t #HPre
+@(terminate_while_guarded ??? 
+   Pre_match_tuple … 
+   (acc_Realize_to_acc_GRealize ??? Pre_match_tuple … sem_match_tuple_step)
+   … HPre) [%] 
+  [-HPre -t #t1 #t2 #HPre cases HPre #ls * * #curl #curr * #rs * #Ht1 * 
+    [(* absurd case *)
+     #Hgrid * #ls1 * #cur1 * #rs1 * * >Ht1 #Hdes destruct (Hdes) 
+     #Habs @False_ind @(absurd ?? Habs) @(is_grid_true … Hgrid)
+    |* #ls0 * #c * #l1 * #l2 * #c1 * #l3 * #l4 * #rs0 * #n
+     * * * * * * * * * *
+     #Hl1 #Hmarksl1 #Hc #Hc1 #Hl3 #lenl1 #eqlen #Htable #Hls #Hcur #Hrs
+     * #ls1 * #cur1 * #rs1 * * >Ht1 #Hdes destruct (Hdes) #Hdes #H
+     lapply (H … Hl1 Hmarksl1 Hc Hc1 Hl3 lenl1 eqlen Htable Hls Hcur Hrs)
+     -H *
+      [* [ * #Hdes #Ht2 >Ht2 
+          @ex_intro [2:@ex_intro [2: @ex_intro [2: % [%]|]|]|]
+          %1 %
+         |* #test * #c2 * #l5 * #l6 * #Hl4 #Ht2 
+          cut (∃l7,l8. l6 = l7@〈comma,false 〉::l8 ∧ |l7| = |l1|) [@daemon]
+          * #l7 * #l8 * #Hl6 #eqlen1 
+          @ex_intro [2:@ex_intro [2: @ex_intro [2: % [@Ht2]|]|]|] %2
+          @(ex_intro … ls0) @(ex_intro … c) @(ex_intro … l1)
+          @(ex_intro … (l2@〈c1,false〉::l3@〈comma,false〉::l5@[〈bar,false〉])) 
+          @(ex_intro … c2) @(ex_intro … l7) @(ex_intro … l8) 
+          @(ex_intro … rs0) @(ex_intro … n) 
+          % [2: >Hl6 >associative_append >associative_append @eq_f @eq_f @eq_f
+           @eq_f >associative_append @eq_f @eq_f >associative_append % ]
+          % [2: %] % [2: %] % [2:@daemon] % [2: @sym_eq @eqlen1]
+          % [2: @lenl1] % [2: #x #memx @daemon] 
+          % [2: @daemon] % [2: @Hc] % [2: @Hmarksl1] @Hl1
+         ]
+     |* * #_ #_ #H cases (current_to_midtape … H) #ls * #rs #Ht1
+      >Ht1  @ex_intro [2:@ex_intro [2: @ex_intro [2: % [%]|]|]|] %1 %
+     ]
+   ]
+  |cases HPre -HPre #ls * * #curl #curr * #rs * #Ht *
+  [#Hgrid >Ht >(is_grid_true … Hgrid) @WF_cst_midtape_grid
+  |* #ls0 * #c * #l1 * #l2 * #c1 * #l3 * #l4
+   cut (∃len. |l4| = len) [/2/] * #lenl4 
+   lapply l4 lapply l3 lapply c1 lapply l2 lapply l1 lapply c lapply ls0 lapply Ht
+   lapply curr lapply curl lapply ls lapply rs lapply t -l4 -l3 -l2 -l1 -c1 -curr -curl -ls -t
+   -c -ls0 -rs
+   (* by induction on the length of l4 *)
+   @(nat_elim1 lenl4)
+   #len #Hind #t #rs #ls #cl #cr #Ht #ls0 #c #l1 #l2 #c1 #l3 #l4 #Hlen
+   * #rs0 * #n * * * * * * * * * *
+   #Hl1 #Hmarksl1 #Hc #Hc1 #Hl3 #lenl1 #eqlen #Htable #Hls #Hcur #Hrs
+   % #t1 >Ht whd in ⊢ (%→?); * #ls1 * #cur *  #rs1 * * #Hdes destruct (Hdes) 
+   #Hgrid #H lapply (H … Hl1 Hmarksl1 Hc Hc1 Hl3 lenl1 eqlen Htable Hls Hcur Hrs)
+   -H *
+    [* [ * #Hdes destruct (Hdes) #Ht1 >Ht1 @WF_cst_midtape_grid
+       | * #_ * #c2 * #l5 * #l6 * #Hl4 #Ht1 
+        cut (∃l7,l8. l6 = l7@〈comma,false 〉::l8 ∧ |l7| = |l1|) [@daemon]
+        * #l7 * #l8 * #Hl6 #eqlen1 
+        @(Hind … Ht1 ls0 c l1 (l2@〈c1,false〉::l3@〈comma,false〉::l5@[〈bar,false〉]) c2 l7 l8 … (refl …))
+         [<Hlen >Hl4 >Hl6 >length_append normalize in match (length … (cons …));
+          >length_append normalize in match (length … (cons …)); <plus_n_Sm
+          @le_S_S @daemon
+         |@(ex_intro … rs0) @(ex_intro … n) % 
+          [2: >Hl6 >associative_append >associative_append @eq_f @eq_f @eq_f
+           @eq_f >associative_append @eq_f @eq_f >associative_append % ]
+          % [2: %] % [2: %] % [2:@daemon] % [2: @sym_eq @eqlen1]
+          % [2: @lenl1] % [2: #x #memx @daemon] 
+          % [2: @daemon] % [2: @Hc] % [2: @Hmarksl1] @Hl1
+         ]
+       ]
+     |* * #_ #_ #H cases (current_to_midtape … H) #ls * #rs #Ht1
+      >Ht1 // 
+     ]
+   ]
+qed.
+     
 definition R_match_tuple ≝ λt1,t2.
   ∀ls,c,l1,c1,l2,rs,n.
   is_bit c = true → is_bit c1 = true →
@@ -710,11 +862,12 @@ definition R_match_tuple ≝ λt1,t2.
    ∀l3,newc,mv,l4.
    〈bar,false〉::〈c1,false〉::l2 ≠ l3@〈bar,false〉::〈c,false〉::l1@〈comma,false〉::newc@〈comma,false〉::mv::l4). 
 
-(* we still haven't proved termination *)
-axiom sem_match_tuple0 : Realize ? match_tuple R_match_tuple0.
+lemma sem_match_tuple0 : GRealize ? match_tuple Pre_match_tuple R_match_tuple0.
+@WRealize_to_GRealize [@terminate_match_tuple | @wsem_match_tuple]
+qed.
 
-lemma sem_match_tuple : Realize ? match_tuple R_match_tuple.
-generalize in match sem_match_tuple0; @Realize_to_Realize
+lemma sem_match_tuple : GRealize ? match_tuple Pre_match_tuple R_match_tuple.
+generalize in match sem_match_tuple0; @GRealize_to_GRealize
 #t1 #t2 #HR #ls #c #l1 #c1 #l2 #rs #n #Hc #Hc1 #Hl1bitsnulls #Hl1marks #Hl1len #Htable #Ht1
 cases (HR … Ht1) -HR #_ #HR
 @(HR ??? [] … (refl ??) (refl ??) (refl ??) Hc Hc1 Hl1bitsnulls Hl1marks

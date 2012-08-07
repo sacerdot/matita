@@ -274,6 +274,25 @@ definition accRealize ≝ λsig.λM:TM sig.λacc:states sig M.λRtrue,Rfalse.
 notation "M ⊨ [q: R1,R2]" non associative with precedence 45 for @{ 'cmodels $M $q $R1 $R2}.
 interpretation "conditional realizability" 'cmodels M q R1 R2 = (accRealize ? M q R1 R2).
 
+(*************************** guarded realizablity *****************************)
+definition GRealize ≝ λsig.λM:TM sig.λPre:tape sig →Prop.λR:relation (tape sig).
+∀t.Pre t → ∃i.∃outc.
+  loopM sig M i (initc sig M t) = Some ? outc ∧ R t (ctape ?? outc).
+  
+definition accGRealize ≝ λsig.λM:TM sig.λacc:states sig M.
+λPre: tape sig → Prop.λRtrue,Rfalse.
+∀t.Pre t → ∃i.∃outc.
+  loopM sig M i (initc sig M t) = Some ? outc ∧
+    (cstate ?? outc = acc → Rtrue t (ctape ?? outc)) ∧ 
+    (cstate ?? outc ≠ acc → Rfalse t (ctape ?? outc)).
+    
+lemma WRealize_to_GRealize : ∀sig.∀M: TM sig.∀Pre,R.
+  (∀t.Pre t → M ↓ t) → M ⊫ R → GRealize sig M Pre R.
+#sig #M #Pre #R #HT #HW #t #HPre cases (HT … t HPre) #i * #outc #Hloop 
+@(ex_intro … i) @(ex_intro … outc) % // @(HW … i) //
+qed.
+
+
 (******************************** monotonicity ********************************)
 lemma Realize_to_Realize : ∀alpha,M,R1,R2.
   R1 ⊆ R2 → Realize alpha M R1 → Realize alpha M R2.
@@ -286,6 +305,13 @@ lemma WRealize_to_WRealize: ∀sig,M,R1,R2.
   R1 ⊆ R2 → WRealize sig M R1 → WRealize ? M R2.
 #alpha #M #R1 #R2 #Hsub #HR1 #intape #i #outc #Hloop
 @Hsub @(HR1 … i) @Hloop
+qed.
+
+lemma GRealize_to_GRealize : ∀alpha,M,P,R1,R2.
+  R1 ⊆ R2 → GRealize alpha M P R1 → GRealize alpha M P R2.
+#alpha #M #P #R1 #R2 #Himpl #HR1 #intape #HP
+cases (HR1 intape HP) -HR1 #k * #outc * #Hloop #HR1
+@(ex_intro ?? k) @(ex_intro ?? outc) % /2/
 qed.
 
 lemma acc_Realize_to_acc_Realize: ∀sig,M.∀q:states sig M.∀R1,R2,R3,R4. 
@@ -483,6 +509,54 @@ theorem sem_seq_app: ∀sig.∀M1,M2:TM sig.∀R1,R2,R3.
   M1 ⊨ R1 → M2 ⊨ R2 → R1 ∘ R2 ⊆ R3 → M1 · M2 ⊨ R3.
 #sig #M1 #M2 #R1 #R2 #R3 #HR1 #HR2 #Hsub
 #t cases (sem_seq … HR1 HR2 t)
+#k * #outc * #Hloop #Houtc @(ex_intro … k) @(ex_intro … outc)
+% [@Hloop |@Hsub @Houtc]
+qed.
+
+(* composition with guards *)
+theorem sem_seq_guarded: ∀sig.∀M1,M2:TM sig.∀Pre1,Pre2,R1,R2.
+  GRealize sig M1 Pre1 R1 → GRealize sig M2 Pre2 R2 → 
+  (∀t1,t2.Pre1 t1 → R1 t1 t2 → Pre2 t2) → 
+  GRealize sig (M1 · M2) Pre1 (R1 ∘ R2).
+#sig #M1 #M2 #Pre1 #Pre2 #R1 #R2 #HGR1 #HGR2 #Hinv #t1 #HPre1
+cases (HGR1 t1 HPre1) #k1 * #outc1 * #Hloop1 #HM1
+cases (HGR2 (ctape sig (states ? M1) outc1) ?) 
+  [2: @(Hinv … HPre1 HM1)]  
+#k2 * #outc2 * #Hloop2 #HM2
+@(ex_intro … (k1+k2)) @(ex_intro … (lift_confR … outc2))
+%
+[@(loop_merge ??????????? 
+   (loop_lift ??? (lift_confL sig (states sig M1) (states sig M2))
+   (step sig M1) (step sig (seq sig M1 M2)) 
+   (λc.halt sig M1 (cstate … c)) 
+   (λc.halt_liftL ?? (halt sig M1) (cstate … c)) … Hloop1))
+  [ * *
+   [ #sl #tl whd in ⊢ (??%? → ?); #Hl %
+   | #sr #tr whd in ⊢ (??%? → ?); #Hr destruct (Hr) ]
+  || #c0 #Hhalt <step_seq_liftL //
+  | #x <p_halt_liftL %
+  |6:cases outc1 #s1 #t1 %
+  |7:@(loop_lift … (initc ?? (ctape … outc1)) … Hloop2) 
+    [ * #s2 #t2 %
+    | #c0 #Hhalt <step_seq_liftR // ]
+  |whd in ⊢ (??(???%)?);whd in ⊢ (??%?);
+   generalize in match Hloop1; cases outc1 #sc1 #tc1 #Hloop10 
+   >(trans_liftL_true sig M1 M2 ??) 
+    [ whd in ⊢ (??%?); whd in ⊢ (???%);
+      @config_eq whd in ⊢ (???%); //
+    | @(loop_Some ?????? Hloop10) ]
+ ]
+| @(ex_intro … (ctape ? (FinSum (states ? M1) (states ? M2)) (lift_confL … outc1)))
+  % // >eq_ctape_lift_conf_L >eq_ctape_lift_conf_R //
+]
+qed.
+
+theorem sem_seq_app_guarded: ∀sig.∀M1,M2:TM sig.∀Pre1,Pre2,R1,R2,R3.
+  GRealize sig M1 Pre1 R1 → GRealize sig M2 Pre2 R2 → 
+  (∀t1,t2.Pre1 t1 → R1 t1 t2 → Pre2 t2) → R1 ∘ R2 ⊆ R3 →
+  GRealize sig (M1 · M2) Pre1 R3.
+#sig #M1 #M2 #Pre1 #Pre2 #R1 #R2 #R3 #HR1 #HR2 #Hinv #Hsub
+#t #HPre1 cases (sem_seq_guarded … HR1 HR2 Hinv t HPre1)
 #k * #outc * #Hloop #Houtc @(ex_intro … k) @(ex_intro … outc)
 % [@Hloop |@Hsub @Houtc]
 qed.
