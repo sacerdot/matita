@@ -192,6 +192,11 @@ lemma sem_test_char :
 ]
 qed.
 
+lemma test_char_inv : 
+  ∀sig.∀P:tape sig → Prop.∀f,t,t0.P t → Rtc_true sig f t t0 → P t0.
+#sig #P #f #t #t0 #HPt * #_ //
+qed.
+
 (************************************* swap ***********************************)
 definition swap_states : FinSet → FinSet ≝ 
   λalpha:FinSet.FinProd (initN 4) alpha.

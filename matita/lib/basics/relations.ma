@@ -62,6 +62,11 @@ definition inv ≝ λA.λR:relation A.λa,b.R b a.
 definition subR ≝ λA.λR,S:relation A.(∀a,b. R a b → S a b).
 interpretation "relation inclusion" 'subseteq R S = (subR ? R S).
 
+lemma sub_reflexive : 
+  ∀T.∀R:relation T.R ⊆ R.
+#T #R #x //
+qed.
+
 lemma sub_comp_l:  ∀A.∀R,R1,R2:relation A.
   R1 ⊆ R2 → R1 ∘ R ⊆ R2 ∘ R.
 #A #R #R1 #R2 #Hsub #a #b * #c * /4/

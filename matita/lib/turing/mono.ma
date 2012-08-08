@@ -292,6 +292,21 @@ lemma WRealize_to_GRealize : ∀sig.∀M: TM sig.∀Pre,R.
 @(ex_intro … i) @(ex_intro … outc) % // @(HW … i) //
 qed.
 
+lemma Realize_to_GRealize : ∀sig,M.∀P,R. 
+  M ⊨ R → GRealize sig M P R.
+#alpha #M #Pre #R #HR #t #HPre
+cases (HR t) -HR #k * #outc * #Hloop #HR 
+@(ex_intro ?? k) @(ex_intro ?? outc) % 
+  [ @Hloop | @HR ]
+qed.
+
+lemma acc_Realize_to_acc_GRealize: ∀sig,M.∀q:states sig M.∀P,R1,R2. 
+  M ⊨ [q:R1,R2] → accGRealize sig M q P R1 R2.
+#alpha #M #q #Pre #R1 #R2 #HR #t #HPre
+cases (HR t) -HR #k * #outc * * #Hloop #HRtrue #HRfalse 
+@(ex_intro ?? k) @(ex_intro ?? outc) % 
+  [ % [@Hloop] @HRtrue | @HRfalse]
+qed.
 
 (******************************** monotonicity ********************************)
 lemma Realize_to_Realize : ∀alpha,M,R1,R2.
