@@ -482,7 +482,28 @@ lemma terminate_copy0 : ∀t.Pre_copy0 t → Terminate ? copy0 t.
       | * * #d2 #bd2 * #l4'' #Hl4'' >Hl4'' in Hl3l4nomarks; #Hl3l4nomarks #_ 
         <(?:bd2 = false) [| @(Hl3l4nomarks 〈d2,bd2〉) @memb_append_l2 @memb_append_l2 @memb_hd ]
         /3/ ] ]
-    * #d2 * #l4'' #Hl4'' >Hl1'' >Hl4'' 
+    * #d2 * #l4'' #Hl4'' >Hl1'' >Hl4''
+    cut (∃l1''',bv0.〈d1,false〉::l1''=l1'''@[〈comma,bv0〉]∧only_bits_or_nulls l1''')
+    [ <Hl1'' cases (list_last ? l1) in Hl1'';
+        [ #Hl1'' >Hl1''#HFalse destruct(HFalse)
+        | * #a * #l1''' #Hl1''' >Hl1''' in Hl1; #Hl1 #_
+          lapply (append_l2_injective_r ? (〈c,false〉::l1''') l1' [a] [〈comma,bv〉] (refl …) Hl1)
+          #Ha destruct (Ha) %{l1'''} %{bv} % //
+          #x #Hx @Hbitsnullsl1'
+          lapply (append_l1_injective_r ? (〈c,false〉::l1''') l1' [〈comma,bv〉] [〈comma,bv〉] (refl …) Hl1)
+          #H <H @memb_cons @Hx ] ]
+    cut (∃l4''',bg0.l4''@[〈d2,false〉]=〈grid,bg0〉::l4'''∧only_bits_or_nulls l4''')
+    [ <Hl4'' cases (list_last ? l4') in Hl4;
+        [ #Hl4' >Hl4' >Hl4'' cases l4''
+          [ normalize in ⊢ (%→?); #Hfalse destruct (Hfalse)
+          | #y #yl normalize in ⊢ (%→?); #H1 destruct (H1) cases yl in e0;
+            [ normalize in ⊢ (%→?); #Hfalse destruct (Hfalse)
+            | #z #zl normalize in ⊢ (%→?); #Hfalse destruct (Hfalse) ] ]
+        | * #a * #l4''' #Hl4''' >Hl4''' #Hl4
+          lapply (append_l1_injective_r ? l4 (〈grid,bg〉::l4''') [〈c0,false〉] [a] (refl …) Hl4)
+          -Hl4 #Hl4 >Hl4 %{l4'''} %{bg} % //
+          #x #Hx @Hbitsnullsl4' >Hl4''' @memb_append_l1 @Hx ] ]
+    #Hl4''' #Hl1'''
     #HR cases (HR d1 (l3@l4'') c0 d2 ls (l1''@rs) ? ? ?)
     [3: >associative_append >associative_append %
     |4: %
@@ -501,24 +522,8 @@ lemma terminate_copy0 : ∀t.Pre_copy0 t → Terminate ? copy0 t.
           | -Hx #Hx >Hl4'' @memb_append_l2 @memb_append_l1 @Hx ] ] ]
       | >Hl1'' in Hlen; >Hl4'' >length_append >commutative_plus
         normalize in ⊢ (%→?); #Hlen destruct (Hlen) @e0 ]
-      | <Hl1'' cases (list_last ? l1) in Hl1'';
-        [ #Hl1'' >Hl1''#HFalse destruct(HFalse)
-        | * #a * #l1''' #Hl1''' >Hl1''' in Hl1; #Hl1 #_
-          lapply (append_l2_injective_r ? (〈c,false〉::l1''') l1' [a] [〈comma,bv〉] (refl …) Hl1)
-          #Ha destruct (Ha) %{l1'''} %{bv} % //
-          #x #Hx @Hbitsnullsl1'
-          lapply (append_l1_injective_r ? (〈c,false〉::l1''') l1' [〈comma,bv〉] [〈comma,bv〉] (refl …) Hl1)
-          #H <H @memb_cons @Hx ] ]
-      | <Hl4'' cases (list_last ? l4') in Hl4;
-        [ #Hl4' >Hl4' >Hl4'' cases l4''
-          [ normalize in ⊢ (%→?); #Hfalse destruct (Hfalse)
-          | #y #yl normalize in ⊢ (%→?); #H1 destruct (H1) cases yl in e0;
-            [ normalize in ⊢ (%→?); #Hfalse destruct (Hfalse)
-            | #z #zl normalize in ⊢ (%→?); #Hfalse destruct (Hfalse) ] ]
-        | * #a * #l4''' #Hl4''' >Hl4''' #Hl4
-          lapply (append_l1_injective_r ? l4 (〈grid,bg〉::l4''') [〈c0,false〉] [a] (refl …) Hl4)
-          -Hl4 #Hl4 >Hl4 %{l4'''} %{bg} % //
-          #x #Hx @Hbitsnullsl4' >Hl4''' @memb_append_l1 @Hx ] ]
+      | @Hl1''' ]
+      | @Hl4''' ]
    | * #Hc #Ht2 whd >Ht2
       %{(〈c0,false〉::ls)} %{d1} %{d2} %{rs} %{l1''} %{(〈null,false〉::l3)} %{l4''}
       % [ % [ % [ % [ % 
@@ -531,117 +536,78 @@ lemma terminate_copy0 : ∀t.Pre_copy0 t → Terminate ? copy0 t.
           | -Hx #Hx >Hl4'' @memb_append_l2 @memb_append_l1 @Hx ] ] ]
       | >Hl1'' in Hlen; >Hl4'' >length_append >commutative_plus
         normalize in ⊢ (%→?); #Hlen destruct (Hlen) @e0 ]
-      | <Hl1'' cases (list_last ? l1) in Hl1'';
-        [ #Hl1'' >Hl1''#HFalse destruct(HFalse)
-        | * #a * #l1''' #Hl1''' >Hl1''' in Hl1; #Hl1 #_
-          lapply (append_l2_injective_r ? (〈c,false〉::l1''') l1' [a] [〈comma,bv〉] (refl …) Hl1)
-          #Ha destruct (Ha) %{l1'''} %{bv} % //
-          #x #Hx @Hbitsnullsl1'
-          lapply (append_l1_injective_r ? (〈c,false〉::l1''') l1' [〈comma,bv〉] [〈comma,bv〉] (refl …) Hl1)
-          #H <H @memb_cons @Hx ] ]
-      | <Hl4'' cases (list_last ? l4') in Hl4;
-        [ #Hl4' >Hl4' >Hl4'' cases l4''
-          [ normalize in ⊢ (%→?); #Hfalse destruct (Hfalse)
-          | #y #yl normalize in ⊢ (%→?); #H1 destruct (H1) cases yl in e0;
-            [ normalize in ⊢ (%→?); #Hfalse destruct (Hfalse)
-            | #z #zl normalize in ⊢ (%→?); #Hfalse destruct (Hfalse) ] ]
-        | * #a * #l4''' #Hl4''' >Hl4''' #Hl4
-          lapply (append_l1_injective_r ? l4 (〈grid,bg〉::l4''') [〈c0,false〉] [a] (refl …) Hl4)
-          -Hl4 #Hl4 >Hl4 %{l4'''} %{bg} % //
-          #x #Hx @Hbitsnullsl4' >Hl4''' @memb_append_l1 @Hx ] ]
+      | @Hl1''' ] 
+      | @Hl4''' ]
     ]
- |@daemon (* WIP *)
- ]
+ |cases HPre -HPre #ls * #c * #c0 * #rs * #l1 * #l3 * #l4
+  * * * * * #Ht #Hl1nomarks #Hl3l4nomarks #Hlen
+  * #l1' * #bv * #Hl1 #Hbitsnullsl1'
+  * #l4' * #bg * #Hl4 #Hbitsnullsl4'
+  >Ht lapply Hbitsnullsl1' lapply Hl1 lapply l1' lapply Hl3l4nomarks 
+  lapply Hl1nomarks lapply l3 lapply c0 lapply c lapply ls 
+  -Hbitsnullsl1' -Hl1 -l1' -Hl3l4nomarks -Hl1nomarks -l3 -Hl4 -c0 -c -ls
+  <(reverse_reverse ? l4) <(length_reverse ? l4) in Hlen; #Hlen
+  @(list_ind2 … Hlen)
+  [ #ls #c #c0 #l3 #_ #_ #l1' #Hl1 #Hbitsnullsl1' cases l1' in Hl1;
+    [| #x * [| #x0 #xs ] normalize in ⊢ (%→?); #Hfalse destruct (Hfalse) ]
+    normalize in ⊢ (%→?); #Hl1' destruct (Hl1') % #t1 whd in ⊢ (%→?);
+    #HR cases (HR … (refl …)) whd in ⊢ (??%?→?); #Hfalse destruct (Hfalse)
+  | #xs #ys * #x #bx * #y #by #IH
+    #ls #c #c0 #l3 #Hl1nomarks #Hl3l4nomarks #l1' #Hl1 
+    #Hbitsnullsl1' %
+    #t1 whd in ⊢ (%→?); #HR cases (HR … (refl …)) -HR
+    #Hbitnullc #HR
+    lapply (Hl1nomarks 〈x,bx〉 (memb_hd …)) normalize in ⊢ (%→?); #Hbx destruct (Hbx)
+    (*cut (∃d2,l4''.〈y,by〉::ys = l4''@[〈d2,false〉])
+    [ cases (list_last ? ys) in Hl3l4nomarks;
+      [ #Hl4' #Hl3l4nomarks >Hl4' >(?:by = false) [%{y} %{([])} %]
+        @(Hl3l4nomarks 〈y,by〉) @memb_append_l2 @memb_hd
+      | * * #d2 #bd2 * #l4'' #Hl4'' >Hl4'' #Hl3l4nomarks 
+        <(?:bd2 = false) [| @(Hl3l4nomarks 〈d2,bd2〉) @memb_append_l2 @memb_cons @memb_append_l2 @memb_hd ]
+        %{d2} %{(〈y,by〉::l4'')} % ] ]
+    * #a0 * #l4'' #Hl4'' >Hl4'' in HR; #HR *)
+    cases (HR x (l3@reverse ? ys) c0 y ls (xs@rs) ? (refl …) ?)
+    [3: >reverse_cons >associative_append >associative_append
+        >(?:by = false) [|@(Hl3l4nomarks 〈y,by〉) @memb_append_l2 >reverse_cons @memb_append_l2 @memb_hd ] %
+    |4: #x #Hx @Hl3l4nomarks >reverse_cons <associative_append @memb_append_l1 @Hx
+    | * #x1 * #Hc #Ht1 >Ht1 
+      <(?: (〈bit x1,false〉::l3)@reverse (FSUnialpha×bool) ys@〈y,true〉::〈bit x1,false〉::ls =
+            〈bit x1,false〉::(l3@reverse (FSUnialpha×bool) ys)@〈y,true〉::〈bit x1,false〉::ls)
+     [cut (∃l1''.〈x,false〉::xs = l1''@[〈comma,bv〉] ∧ only_bits_or_nulls l1'')
+      [lapply Hbitsnullsl1' lapply Hl1 -Hl1 -Hbitsnullsl1' cases l1'
+       [normalize in ⊢(%→?); #Hfalse destruct (Hfalse)
+       |#x2 #l1'' normalize in ⊢ (%→?); #Heq #Hbitsnullsl1' destruct (Heq)
+        %{l1''} % [@e0]
+        #x #Hx @Hbitsnullsl1' @memb_cons @Hx ] ]
+      * #l1'' * #Hl1'' #Hbitsnullsl1''
+      @(IH (〈bit x1,false〉::ls) x y (〈bit x1,false〉::l3) ?? l1'' Hl1'' Hbitsnullsl1'')
+      [#x #Hx @Hl1nomarks @memb_cons @Hx
+      |#x #Hx cases (orb_true_l … Hx) -Hx #Hx
+       [>(\P Hx) %
+       |cases (memb_append … Hx) -Hx #Hx @Hl3l4nomarks
+        [@memb_append_l1 @Hx
+        |@memb_append_l2 >reverse_cons @memb_append_l1 @Hx ] ] ]
+     |>associative_append % ]
+    | * #Hc #Ht1 >Ht1 
+      <(?: (〈null,false〉::l3)@reverse (FSUnialpha×bool) ys@〈y,true〉::〈c0,false〉::ls =
+            〈null,false〉::(l3@reverse (FSUnialpha×bool) ys)@〈y,true〉::〈c0,false〉::ls)
+     [cut (∃l1''.〈x,false〉::xs = l1''@[〈comma,bv〉] ∧ only_bits_or_nulls l1'')
+      [lapply Hbitsnullsl1' lapply Hl1 -Hl1 -Hbitsnullsl1' cases l1'
+       [normalize in ⊢(%→?); #Hfalse destruct (Hfalse)
+       |#x2 #l1'' normalize in ⊢ (%→?); #Heq #Hbitsnullsl1' destruct (Heq)
+        %{l1''} % [@e0]
+        #x #Hx @Hbitsnullsl1' @memb_cons @Hx ] ]
+      * #l1'' * #Hl1'' #Hbitsnullsl1''
+      @(IH (〈c0,false〉::ls) x y (〈null,false〉::l3) ?? l1'' Hl1'' Hbitsnullsl1'')
+      [#x #Hx @Hl1nomarks @memb_cons @Hx
+      |#x #Hx cases (orb_true_l … Hx) -Hx #Hx
+       [>(\P Hx) %
+       |cases (memb_append … Hx) -Hx #Hx @Hl3l4nomarks
+        [@memb_append_l1 @Hx
+        |@memb_append_l2 >reverse_cons @memb_append_l1 @Hx ] ] ]
+    |>associative_append % ]
+]]]
 qed.
-    
-   
-(*
-  [ -HPre -t #t1 #t2 * #ls * #s0 * #s1 * #c0 * #c1 * #rs * #l1 * #l3 * #l4
-    * * * * * * * * #Ht1 #Hl1nomarks #Hl3nomarks #Hl4nomarks #Hlen #Hbits1 #Hbits2
-    #Hbitcnullc0 #Hbitnullc1 #HPre cases (HPre … Ht1) -HPre
-    #Hbitnulls1 #HPre 
-    check terminate_while_guarded
-    whd 
-    cut (∃a0,l4'.〈c0,false〉::l4 = l4'@[〈a0,false〉])
-    [ cases (list_last ? (〈c0,false〉::l4))
-      [ #Hfalse destruct (Hfalse) 
-      | * * #a0 #ba0 * #l4' #Hl4' >Hl4' >(?:ba0 = false) [/3/]
-        cases l4' in Hl4';
-        [ whd in ⊢ (???%→?); #Hl4' destruct (Hl4') %
-        | #a1 #l4'' whd in ⊢ (???%→?); #Hl4''
-          destruct (Hl4'') @(Hl4nomarks 〈a0,ba0〉) @memb_append_l2 @memb_hd ] ] ]
-    * #a0 * #l4' #Hl4 
-    cut (∃a,l1'.〈a,false〉::l1' = l1@[〈c1,false〉])
-    [ cases l1 in Hl1nomarks;
-      [ #_ %{c1} %{([])} %
-      | * #a #ba #l1' #Hl1nomarks;
-        %{a} %{(l1'@[〈c1,false〉])} @eq_f2 // @eq_f2 //
-        @sym_eq @(Hl1nomarks 〈a,ba〉) @memb_hd ] ]
-    * #a * #l1' #Hl1
-    cases (HPre a (l3@〈grid,false〉::l4') s0 a0 ls (l1'@〈comma,false〉::rs) ???)
-    [3: >associative_append @eq_f @eq_f
-        change with ((〈c0,false〉::l4)@?) in ⊢ (??%?); >Hl4
-        >associative_append %
-    |4: change with ((〈a,false〉::l1')@?) in ⊢ (???%); >Hl1
-        >associative_append %
-    |5: #x #Hx cases (memb_append … Hx) -Hx
-        [ @Hl3nomarks
-        | #Hx cases (orb_true_l … Hx) -Hx
-          [ #Hx >(\P Hx) %
-          | cases l4' in Hl4;  
-            [ #_ normalize in ⊢ (%→?); #Hfalse destruct (Hfalse)
-            | #c0' #l4'' whd in ⊢ (???%→?); #Hl4 destruct (Hl4) #Hx
-              cases (orb_true_l … Hx) -Hx #Hx
-              [ >(\P Hx) %
-              | @(Hl4nomarks x) @memb_append_l1 // ] ] ] ]
-    | * #x * #Hs1 #Ht2
-      %{(〈bit x,false〉::ls)} %{a0} %{a} %{c0} %{c1} %{rs} 
-      %{...} %{(〈bit x,false〉::l3)} %{...}
-              
-              @(Hl4nomarks x) ]
-    
-          lapply (append_l2_injective_r ? [] l4' [〈c0,false〉] [〈a0,ba0〉] (refl …) Hl4')
-          #Hc0 destruct (Hc0) %
-        |
-        @Hl4nomarks
-        [ #Hl4'
-          lapply (append_l2_injective_r ? [] l4' [〈c0,false〉] [〈a0,ba0〉] (refl …) Hl4')
-          lapply (append_l1_injective_r ? [] l4' [〈c0,false〉] [〈a0,ba0〉] (refl …) Hl4')
-          -Hl4' #Hl4' #Hc0 destruct (Hl4' Hc0) /3/
-        | * 
-  #HPre whd in ⊢ (%→?); #HR #ls * * #curl #curr * #rs * #Ht1 * 
-    [(* absurd case *)
-     #Hgrid * #ls1 * #cur1 * #rs1 * * >Ht1 #Hdes destruct (Hdes) 
-     #Habs @False_ind @(absurd ?? Habs) @(is_grid_true … Hgrid)
-    |* #ls0 * #c * #l1 * #l2 * #c1 * #l3 * #l4 * #rs0 * #n
-     * * * * * * * * * *
-     #Hl1 #Hmarksl1 #Hc #Hc1 #Hl3 #lenl1 #eqlen #Htable #Hls #Hcur #Hrs
-     * #ls1 * #cur1 * #rs1 * * >Ht1 #Hdes destruct (Hdes) #Hdes #H
-     lapply (H … Hl1 Hmarksl1 Hc Hc1 Hl3 lenl1 eqlen Htable Hls Hcur Hrs)
-     -H *
-      [* [ * #Hdes #Ht2 >Ht2 
-          @ex_intro [2:@ex_intro [2: @ex_intro [2: % [%]|]|]|]
-          %1 %
-         |* #test * #c2 * #l5 * #l6 * #Hl4 #Ht2 
-          cut (∃l7,l8. l6 = l7@〈comma,false 〉::l8 ∧ |l7| = |l1|) [@daemon]
-          * #l7 * #l8 * #Hl6 #eqlen1 
-          @ex_intro [2:@ex_intro [2: @ex_intro [2: % [@Ht2]|]|]|] %2
-          @(ex_intro … ls0) @(ex_intro … c) @(ex_intro … l1)
-          @(ex_intro … (l2@〈c1,false〉::l3@〈comma,false〉::l5@[〈bar,false〉])) 
-          @(ex_intro … c2) @(ex_intro … l7) @(ex_intro … l8) 
-          @(ex_intro … rs0) @(ex_intro … n) 
-          % [2: >Hl6 >associative_append >associative_append @eq_f @eq_f @eq_f
-           @eq_f >associative_append @eq_f @eq_f >associative_append % ]
-          % [2: %] % [2: %] % [2:@daemon] % [2: @sym_eq @eqlen1]
-          % [2: @lenl1] % [2: #x #memx @daemon] 
-          % [2: @daemon] % [2: @Hc] % [2: @Hmarksl1] @Hl1
-         ]
-     |* * #_ #_ #H cases (current_to_midtape … H) #ls * #rs #Ht1
-      >Ht1  @ex_intro [2:@ex_intro [2: @ex_intro [2: % [%]|]|]|] %1 %
-     ]
-   ]
-*) 
-
 
 definition merge_char ≝ λc1,c2.
   match c2 with
@@ -710,15 +676,19 @@ definition R_copy ≝ λt1,t2.
                       〈merge_char c0 c1,false〉::reverse ? l1@〈s1,false〉::ls)
        〈comma,false〉 rs.
        
-axiom sem_copy0 : Realize ? copy0 R_copy0.
+lemma sem_copy0 : GRealize ? copy0 Pre_copy0 R_copy0.
+@WRealize_to_GRealize
+[ @terminate_copy0
+| @wsem_copy0 ]
+qed.
 
 definition option_cons ≝ λA.λa:option A.λl.
   match a with
   [ None ⇒ l
   | Some a' ⇒ a'::l ].
 
-
-axiom sem_copy : Realize ? copy R_copy.
+axiom sem_copy : GRealize ? copy Pre_copy R_copy.
+(* TODO port to GRealize *)
 (*
 #intape 
 cases (sem_seq … (sem_copy0 …)
