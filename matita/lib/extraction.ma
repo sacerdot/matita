@@ -167,3 +167,19 @@ and mktyp (n:nat) : Type[0] ≝
  match n with
  [ O ⇒ nat
  | S m ⇒ mktyp m ].*)
+
+inductive mynat : Type[0] ≝ myzero: mynat | mysucc: mynat → mynat.
+
+(*FEATURE: print kind signatures*)
+inductive T1 : (Type[0] → Type[0]) → ∀B:Type[0]. mynat → Type[0] → Type[0] ≝ .
+
+(*Not in F_omega *)
+inductive T2 : (Type[0] → Type[0]) → ∀B:Type[0]. B → Type[0] → Type[0] ≝ .
+
+(* no content *)
+inductive T3 : (Type[0] → Type[0]) → CProp[2] ≝ .
+
+(*BUG: elimination principles not extracted *)
+inductive myvect (A: Type[0]) (b:nat) : nat → Type[0] ≝
+   myemptyv : myvect A b 0
+ | mycons: ∀n. n < b → A → myvect A b n → myvect A b (S n).

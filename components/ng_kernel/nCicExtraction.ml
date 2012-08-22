@@ -76,7 +76,7 @@ type obj_kind =
  | TermDeclaration of term_former_decl
  | TermDefinition of term_former_def
  | LetRec of obj_kind list
- (* inductive and records missing *)
+ | Algebraic of (string * typ_context * (string * typ list) list) list
 
 type obj = NUri.uri * obj_kind
 
@@ -488,6 +488,26 @@ let obj_of_constant status ~metasenv uri height bo ty =
     | `Term _ -> assert false (* IMPOSSIBLE *)
 ;;
 
+let obj_of_inductive status ~metasenv uri ind leftno il =
+ let tyl =
+  HExtlib.filter_map
+   (fun _,name,arity,cl ->
+     match classify_not_term status true [] arity with
+      | `Proposition
+      | `KindOrType
+      | `Type -> assert false (* IMPOSSIBLE *)
+      | `PropKind -> None
+      | `Kind ->
+          let arity = kind_of status ~metasenv [] arity in
+          let ctx,_ as res = split_kind_prods [] arity in
+           Some (name,ctx,[])
+   ) il
+ in
+  match tyl with
+     [] -> status,None
+   | _ -> status, Some (uri, Algebraic tyl)
+;;
+
 let obj_of status (uri,height,metasenv,subst,obj_kind) =
  let obj_kind = apply_subst subst obj_kind in
  try
@@ -522,7 +542,8 @@ let obj_of status (uri,height,metasenv,subst,obj_kind) =
            fs (status,[])
       in
        status, Some (uri,LetRec objs)
-   | NCic.Inductive _ -> status,None (*CSC: TO BE IMPLEMENTED*)
+   | NCic.Inductive (ind,leftno,il,_) ->
+      obj_of_inductive status ~metasenv uri ind leftno il
  with
   NotInFOmega ->
    prerr_endline "-- NOT IN F_omega";
@@ -663,11 +684,24 @@ let rec pp_obj status (uri,obj_kind) =
  | TermDefinition ((ctx,ty),bo) ->
     let name = name_of_uri `FunctionName uri in
     let namectx = namectx_of_ctx ctx in
+    (*CSC: BUG here *)
     name ^ " :: " ^ pp_typ status ["a";"b";"c"] (glue_ctx_typ ctx ty) ^ "\n" ^
     name ^ " = " ^ pp_term status namectx bo
  | LetRec l ->
     (*CSC: BUG always uses the name of the URI *)
     String.concat "\n" (List.map (fun obj -> pp_obj status (uri,obj)) l)
+ | Algebraic il ->
+    String.concat "\n"
+     (List.map
+      (fun _name,ctx,cl ->
+        (*CSC: BUG always uses the name of the URI *)
+        "data " ^ name_of_uri `TypeName uri ^ " " ^ pp_ctx ctx ^ " = " ^
+        String.concat " | " (List.map
+         (fun name,tys ->
+          capitalize `Constructor name ^
+           String.concat " " (List.map (pp_typ status []) tys)
+         ) cl
+      )) il)
  (* inductive and records missing *)
 
 let haskell_of_obj status obj =
