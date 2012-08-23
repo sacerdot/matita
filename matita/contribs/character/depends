@@ -1,5 +1,0 @@
-preamble.ma nat/exp.ma nat/relevant_equations.ma
-classes/defs.ma preamble.ma
-classes/props_pt.ma classes/defs.ma
-nat/exp.ma 
-nat/relevant_equations.ma 

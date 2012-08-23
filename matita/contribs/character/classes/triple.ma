@@ -12,22 +12,31 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "preamble.ma".
+include "classes/class_pt.ma".
 
-(* NOTE: OEIS sequence identifiers 
-   P(n): A016777 "3n+1"
-   T(n): A155504 "(3h+1)*3^(k+1)"
-*)
+(* TRIPLES OF CHARACTER CLASSES *********************************************)
 
-inductive P: nat → Prop ≝
-   | p1: P 1
-   | p2: ∀i,j. T i → P j → P (i + j)
-with T: nat → Prop ≝
-   | t1: ∀i. P i → T (i * 3)
-   | t2: ∀i. T i → T (i * 3)
-.
+lemma not_p_pS: ∀i. P i → P (i + 1) → False.
+#i #Hi #HSi
+elim (p_inv_gen … Hi) -Hi #hi #Hi
+elim (p_inv_gen … HSi) -HSi #hSi #HSi destruct
+lapply (injective_plus_l … HSi) -HSi #H
+elim (not_b_divides_nbr … H) -H //
+qed-.
 
-inductive S: nat → Prop ≝
-   | s1: ∀i. P i → S (i * 2)
-   | s2: ∀i. T i → S (i * 2)
-.
+lemma not_p_pSS: ∀i. P i → P (i + 2) → False.
+#i #Hi #HSi
+elim (p_inv_gen … Hi) -Hi #hi #Hi
+elim (p_inv_gen … HSi) -HSi #hSi #HSi destruct
+>plus_plus_comm_23 in HSi; #H
+lapply (injective_plus_l … H) -H #H
+elim (not_b_divides_nbr … H) -H //
+qed-.
+
+lemma not_p_tS: ∀i. P i → T (i + 1) → False.
+#i #Hp #Ht
+elim (p_inv_gen … Hp) -Hp #hp #Hp
+elim (t_inv_gen … Ht) -Ht #ht #kt #Ht destruct
+>exp_n_m_plus_1 in Ht; <associative_times >associative_plus #H
+elim (not_b_divides_nbr … H) -H //
+qed-.
