@@ -12,65 +12,46 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "nat/exp.ma".
-include "nat/relevant_equations.ma".
+include "arithmetics/exp.ma".
+include "../lambda_delta/ground_2/arith.ma".
 
-alias num (instance 0) = "natural number".
+lemma plus_inv_O3: ∀m,n. n + m = 0 → n = 0 ∧ m = 0.
+#m * /2 width=1/ normalize
+#n #H destruct
+qed-.
 
-theorem plus_inv_O3: ∀m,n. 0 = n + m → 0 = n ∧ 0 = m.
- intros 2; elim n names 0; clear n; simplify; intros;
- [ autobatch | destruct ].
-qed. 
+lemma times_inv_S2_O3: ∀m,n. n * (S m) = 0 → n = 0.
+#m #n <times_n_Sm #H
+elim (plus_inv_O3 … H) -H //
+qed-. 
 
-theorem times_inv_O3_S: ∀x,y. 0 = x * (S y) → x = 0.
- intros; rewrite < times_n_Sm in H;
- lapply linear plus_inv_O3 to H; decompose;autobatch.
-qed. 
+lemma exp_n_m_plus_1: ∀n,m. n ^ (m + 1) = (n ^ m) * n.
+// qed.
 
-theorem not_3_divides_1: ∀n. 1 = n * 3 → False.
- intros 1; rewrite > sym_times; simplify;
- elim n names 0; simplify; intros; destruct;
- rewrite > sym_plus in Hcut; simplify in Hcut; destruct Hcut.
+lemma times_n_plus_1_m: ∀n,m. (n + 1) * m = m + n * m.
+#n #m >distributive_times_plus_r //
 qed.
 
-variant le_inv_S_S: ∀m,n. S m ≤ S n → m ≤ n 
-≝ le_S_S_to_le.
+lemma lt_plus_nmn_false: ∀m,n. n + m < n → False. 
+#m #n elim n -n
+[ #H elim (lt_zero_false … H)
+| /3 width=1/
+]
+qed-.
 
-theorem plus_inv_S_S_S: ∀x,y,z. S x = S y + S z → S y ≤ x ∧ S z ≤ x.
- simplify; intros; destruct;autobatch.
-qed.
-
-theorem times_inv_S_m_SS: ∀k,n,m. S n = m * (S (S k)) → m ≤ n.
- intros 3; elim m names 0; clear m; simplify; intros; destruct;
- clear H; autobatch by le_S_S, transitive_le, le_plus_n, le_plus_n_r. 
-qed.
-
-theorem plus_3_S3n: ∀n. S (S n * 3) = 3 + S (n * 3).
- intros; autobatch depth = 1.
-qed. 
-
-theorem times_exp_x_y_Sz: ∀x,y,z. x * y \sup (S z) = (x * y \sup z) * y.
- intros; autobatch depth = 1.
-qed.
-
-definition acc_nat: (nat → Prop) → nat →Prop ≝
-   λP:nat→Prop. λn. ∀m. m ≤ n → P m.
-
-theorem wf_le: ∀P. P 0 → (∀n. acc_nat P n → P (S n)) → ∀n. acc_nat P n.
- unfold acc_nat; intros 4; elim n names 0; clear n;
- [ intros; autobatch by (eq_ind ? ? P), H, H2, le_n_O_to_eq.
-   (* lapply linear le_n_O_to_eq to H2; destruct; autobatch *)
- | intros 3; elim m; clear m; intros; clear H3;
-   [ clear H H1; autobatch depth = 2
-   | clear H; lapply linear le_inv_S_S to H4;
-     apply H1; clear H1; intros;
-     apply H2; clear H2; autobatch depth = 2
-   ]
- ].
-qed.
-
-theorem wf_nat_ind: 
-   ∀P:nat→Prop. P O → (∀n. (∀m. m ≤ n → P m) → P (S n)) → ∀n. P n.
- intros; lapply linear depth=2 wf_le to H, H1 as H0; 
-  autobatch. 
-qed.
+lemma not_b_divides_nbr: ∀b,r. 0 < r → r < b → 
+                         ∀n,m. n * b + r = m * b → False.
+#b #r #Hr #Hrb #n elim n -n
+[ * normalize
+  [ -Hrb #H destruct elim (lt_refl_false … Hr)
+  | -Hr #m #H destruct
+    elim (lt_plus_nmn_false … Hrb)
+  ]
+| #n #IHn * normalize
+  [ -IHn -Hrb #H destruct
+    elim (plus_inv_O3 … H) -H #_ #H destruct
+    elim (lt_refl_false … Hr)
+  | -Hr -Hrb /3 width=3/
+  ]
+]
+qed-.
