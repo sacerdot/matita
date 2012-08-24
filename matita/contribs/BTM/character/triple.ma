@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "classes/class_pt.ma".
+include "character/class_pt.ma".
 
 (* TRIPLES OF CHARACTER CLASSES *********************************************)
 

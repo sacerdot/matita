@@ -12,14 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* ?: MATITA SOURCE FILES
+(* BTM: MATITA SOURCE FILES
  * Suggested invocation to start formal specifications with:
  *   - Patience on me to gain peace and perfection! -
  * 2008 September 22:
  *   specification starts.
  *)
 
-include "preamble.ma".
+include "arith.ma".
 
 (* CHARACTER CLASSES ********************************************************)
 
