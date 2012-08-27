@@ -87,9 +87,11 @@ type term =
   | Appl of term list
   | LetIn of string * (* typ **) term * term
   | Match of reference * term * term list
+  | BottomElim
   | TLambda of (* string **) term
   | Inst of (*typ_former **) term
   | Skip of term
+  | UnsafeCoerce of term
 ;;
 
 let rec size_of_term =
@@ -101,9 +103,11 @@ let rec size_of_term =
     | Appl l -> List.length l
     | LetIn (name, def, body) -> 1 + size_of_term def + size_of_term body
     | Match (name, case, pats) -> 1 + size_of_term case + List.length pats
+    | BottomElim -> 1
     | TLambda t -> size_of_term t
     | Inst t -> size_of_term t
     | Skip t -> size_of_term t
+    | UnsafeCoerce t -> 1 + size_of_term t
 ;;
 let unitty =
  NCic.Const (NReference.reference_of_spec (NUri.uri_of_string "cic:/matita/basics/types/unit.ind") (NReference.Ind (true,0,0)));;
@@ -461,8 +465,22 @@ let rec term_of status ~metasenv context =
                                    otherwise NOT A TYPE *)
   | NCic.Meta _ -> assert false (* TODO *)
   | NCic.Match (ref,_,t,pl) ->
-     Match (ref,term_of status ~metasenv context t,
-      List.map (term_of status ~metasenv context) pl)
+     (match classify_not_term status [] (NCic.Const ref) with
+      | `PropKind
+      | `KindOrType
+      | `Kind -> assert false (* IMPOSSIBLE *)
+      | `Proposition ->
+          (match pl with
+              [] -> BottomElim
+            | [p] ->
+                (* UnsafeCoerce not always required *)
+                UnsafeCoerce
+                 (term_of status ~metasenv context p (* Lambdas will be skipped *))
+            | _ -> assert false)
+      | `Type ->
+          Match (ref,term_of status ~metasenv context t,
+           (* UnsafeCoerce not always required *)
+           List.map (fun p -> UnsafeCoerce (term_of status ~metasenv context p))            pl))
 and eat_args status metasenv acc context tyhe =
  function
     [] -> acc
@@ -694,13 +712,19 @@ let classify_reference status ref =
   if ReferenceMap.mem ref status#extraction_db then
     `TypeName
   else
-    `FunctionName
+   let NReference.Ref (_,ref) = ref in
+    match ref with
+       NReference.Con _ -> `Constructor
+     | NReference.Ind _ -> assert false
+     | _ -> `FunctionName
 ;;
 
 let capitalize classification name =
   match classification with
     | `Constructor
     | `TypeName -> idiomatic_haskell_type_name_of_string name
+    | `TypeVariable
+    | `BoundVariable
     | `FunctionName -> idiomatic_haskell_term_name_of_string name
 ;;
 
@@ -735,11 +759,12 @@ let rec pretty_print_type status ctxt =
     | TSkip t -> pretty_print_type status ("_"::ctxt) t
     | Forall (name, kind, t) ->
       (*CSC: BUG HERE: avoid clashes due to uncapitalisation*)
-      let name = String.uncapitalize name in
+      let name = capitalize `TypeVariable name in
+      let name,ctxt = name@:::ctxt in
         if size_of_kind kind > 1 then
-          "forall (" ^ name ^ " :: " ^ pretty_print_kind kind ^ "). " ^ pretty_print_type status (name@::ctxt) t
+          "forall (" ^ name ^ " :: " ^ pretty_print_kind kind ^ "). " ^ pretty_print_type status (name::ctxt) t
         else
-          "forall " ^ name ^ ". " ^ pretty_print_type status (name@::ctxt) t
+          "forall " ^ name ^ ". " ^ pretty_print_type status (name::ctxt) t
    | TAppl tl -> String.concat " " (List.map (pretty_print_type status ctxt) tl)
 
 let rec pretty_print_term status ctxt =
@@ -747,10 +772,20 @@ let rec pretty_print_term status ctxt =
     | Rel n -> List.nth ctxt (n-1)
     | UnitTerm -> "()"
     | Const ref -> pp_ref status ref
-    | Lambda (name,t) -> "\\" ^ name ^ " -> " ^ pretty_print_term status (name@::ctxt) t
+    | Lambda (name,t) ->
+       let name = capitalize `BoundVariable name in
+       let name,ctxt = name@:::ctxt in
+        "\\" ^ name ^ " -> " ^ pretty_print_term status (name::ctxt) t
     | Appl tl -> String.concat " " (List.map (bracket size_of_term (pretty_print_term status ctxt)) tl)
     | LetIn (name,s,t) ->
-      "let " ^ name ^ " = " ^ pretty_print_term status ctxt s ^ " in " ^ pretty_print_term status (name@::ctxt) t
+       let name = capitalize `BoundVariable name in
+       let name,ctxt = name@:::ctxt in
+        "let " ^ name ^ " = " ^ pretty_print_term status ctxt s ^ " in " ^
+         pretty_print_term status (name::ctxt) t
+    | BottomElim ->
+       "error \"Unreachable code\""
+    | UnsafeCoerce t ->
+       "unsafeCoerce " ^ bracket size_of_term (pretty_print_term status ctxt) t
     | Match (r,matched,pl) ->
       if pl = [] then
        "error \"Case analysis over empty type\""
