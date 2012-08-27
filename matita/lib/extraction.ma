@@ -14,8 +14,6 @@
 
 include "basics/pts.ma".
 
-(*FEATURE: kind signatures in type declarations*)
-
 inductive nat : Type[0] ≝ O: nat | S: nat → nat.
 
 axiom test1: Type[1].
@@ -73,7 +71,6 @@ definition dtest13 ≝ dtest3 nat → dtest3 True → dtest3 Prop → nat.
 
 definition dtest14 ≝ λX:Type[2]. X → X.
 
-(*FEATURE: type the forall bound variables*)
 definition dtest15 ≝ ∀T:Type[1] → Type[1]. T nat → T nat.
 
 definition dtest16 ≝ ∀T:Type[1]. T → nat.
@@ -123,11 +120,6 @@ definition ttest12 ≝ λf:True → nat. f I.
 
 (*GENERAL BUG: name clashes when binders shadow each other in CIC*)
 
-(*BUG: mutual type definitions not handled correctly: the ref is computed in a
-  wrong way *)
-  
-(*BUG: multiple let-reced things are given the same (wrong) name*)
-
 (*BUG: for OCaml: cofixpoint not distinguished from fixpoints*)
 
 let rec rtest1 (n:nat) : nat ≝
@@ -146,9 +138,6 @@ and g (n:nat) : nat ≝
 
 (*BUG: pattern matching patterns when arguments have been deleted from
   the constructor are wrong *)
-
-(*BUG: constructor names in pattern should be capitalised correctly;
-  name clashes must be avoided*)
 
 coinductive stream: Type[0] ≝ scons : nat → stream → stream.
 
@@ -176,14 +165,12 @@ inductive T1 : (Type[0] → Type[0]) → ∀B:Type[0]. nat → Type[0] → Type[
 inductive T2 : (Type[0] → Type[0]) → ∀B:Type[0]. B → Type[0] → Type[0] ≝ .
 
 (* no content *)
-(*BUG: eliminators extracted anyway???*)
 inductive T3 : (Type[0] → Type[0]) → CProp[2] ≝ .
 
 definition erase ≝ λX:Type[0].Type[0].
 
 axiom lt: nat → nat → Prop.
 
-(*BUG: elimination principles not extracted *)
 inductive myvect (A: Type[0]) (b:nat) : nat → Type[0] ≝
    myemptyv : myvect A b O
  | mycons: ∀n. lt n b → A → myvect A b n → myvect A b (S n).
@@ -196,11 +183,11 @@ inductive bool: Type[0] ≝ true: bool | false:bool.
 
 inductive eq (A:Type[1]) (a:A) : A → Prop ≝ refl: eq A a a.
 
-(* BUG: requires coercion *)
+(* requires coercion *)
 definition cast_bug1 ≝
  λH:eq Type[0] bool nat. S (match H return λA:Type[0].λ_.A with [ refl ⇒ true ]).
 
-(* BUG: requires top type *)
+(* requires coercion in all branches *)
 definition cast_bug2 ≝
  λb.
   match true return λb.match b with [ true ⇒ nat → nat | false ⇒ bool ] with
