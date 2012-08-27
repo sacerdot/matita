@@ -796,15 +796,15 @@ type term_former_decl = term_context * typ
 
 let rec pp_obj status (uri,obj_kind) =
   let pretty_print_context ctx =
-    String.concat " " (List.rev
+    String.concat " " (List.rev (snd
       (List.fold_right
-       (fun (x,kind) l ->
+       (fun (x,kind) (l,res) ->
          let x,l = x @:::l in
          if size_of_kind kind > 1 then
-          ("(" ^ x ^ " :: " ^ pretty_print_kind kind ^ ")")::l
+          x::l,("(" ^ x ^ " :: " ^ pretty_print_kind kind ^ ")")::res
          else
-          x::l)
-       (HExtlib.filter_map (fun x -> x) ctx) []))
+          x::l,x::res)
+       (HExtlib.filter_map (fun x -> x) ctx) ([],[]))))
   in
  let namectx_of_ctx ctx =
   List.fold_right (@::)
