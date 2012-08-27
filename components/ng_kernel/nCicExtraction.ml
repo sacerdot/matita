@@ -122,7 +122,7 @@ type obj_kind =
  | TermDeclaration of term_former_decl
  | TermDefinition of term_former_def
  | LetRec of obj_kind list
- | Algebraic of (string * typ_context * (string * typ list) list) list
+ | Algebraic of (string * typ_context * (string * typ) list) list
 
 type obj = NUri.uri * obj_kind
 
@@ -545,7 +545,16 @@ let object_of_inductive status ~metasenv uri ind leftno il =
       | `Kind ->
           let arity = kind_of status ~metasenv [] arity in
           let ctx,_ as res = split_kind_prods [] arity in
-           Some (name,ctx,[])
+          let cl =
+           List.map
+            (fun (_,name,ty) ->
+              let ctx,ty =
+               NCicReduction.split_prods status ~subst:[] [] leftno ty in
+              let ty = typ_of status ~metasenv ctx ty in
+               name,ty
+            ) cl
+          in
+           Some (name,ctx,cl)
    ) il
  in
   match tyl with
@@ -827,20 +836,21 @@ let rec pp_obj status (uri,obj_kind) =
      (List.map
       (fun _name,ctx,cl ->
         (*CSC: BUG always uses the name of the URI *)
-        "data " ^ name_of_uri `TypeName uri ^ " " ^ pretty_print_context ctx ^ " = " ^
-        String.concat " | " (List.map
+        "data " ^ name_of_uri `TypeName uri ^ " " ^ pretty_print_context ctx ^ " where\n  " ^
+        String.concat "\n  " (List.map
          (fun name,tys ->
-          capitalize `Constructor name ^
-           String.concat " " (List.map (pretty_print_type status []) tys)
+           let namectx = namectx_of_ctx ctx in
+            capitalize `Constructor name ^ " :: " ^
+             pretty_print_type status namectx tys
          ) cl
       )) il)
  (* inductive and records missing *)
 
-let haskell_of_obj status obj =
+let haskell_of_obj status (uri,_,_,_,_ as obj) =
  let status, obj = object_of status obj in
   status,
    match obj with
-      Erased -> "-- [?] Erased due to term being propositionally irrelevant.\n"
-    | OutsideTheory -> "-- [?] Erased due to image of term under extraction residing outside Fω.\n"
-    | Failure msg -> "-- [!] FAILURE: " ^ msg ^ "\n"
+      Erased -> "-- [?] " ^ NUri.name_of_uri uri ^ " erased due to term being propositionally irrelevant.\n"
+    | OutsideTheory -> "-- [?] " ^ NUri.name_of_uri uri ^ " erased due to image of term under extraction residing outside Fω.\n"
+    | Failure msg -> "-- [?] " ^ NUri.name_of_uri uri ^ " FAILURE: " ^ msg ^ "\n"
     | Success o -> pp_obj status o ^ "\n"
