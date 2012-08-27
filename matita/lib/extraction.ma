@@ -187,3 +187,22 @@ axiom lt: nat → nat → Prop.
 inductive myvect (A: Type[0]) (b:nat) : nat → Type[0] ≝
    myemptyv : myvect A b O
  | mycons: ∀n. lt n b → A → myvect A b n → myvect A b (S n).
+ 
+inductive False: Prop ≝ .
+
+inductive Empty: Type[0] ≝ .
+
+inductive bool: Type[0] ≝ true: bool | false:bool.
+
+inductive eq (A:Type[1]) (a:A) : A → Prop ≝ refl: eq A a a.
+
+(* BUG: requires coercion *)
+definition cast_bug1 ≝
+ λH:eq Type[0] bool nat. S (match H return λA:Type[0].λ_.A with [ refl ⇒ true ]).
+
+(* BUG: requires top type *)
+definition cast_bug2 ≝
+ λb.
+  match true return λb.match b with [ true ⇒ nat → nat | false ⇒ bool ] with
+   [ true ⇒ S | false ⇒ false ]
+  O. 
