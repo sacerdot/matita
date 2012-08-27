@@ -205,4 +205,7 @@ definition cast_bug2 ≝
  λb.
   match true return λb.match b with [ true ⇒ nat → nat | false ⇒ bool ] with
    [ true ⇒ S | false ⇒ false ]
-  O. 
+  O.
+  
+(*BUG: try singleton elimination with constructor arguments to show bug in
+ DeBrujin indexes *)
