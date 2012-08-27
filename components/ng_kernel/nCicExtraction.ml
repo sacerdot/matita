@@ -63,7 +63,7 @@ type typ =
   | Top
   | TConst of typformerreference
   | Arrow of typ * typ
-  | Skip of typ
+  | TSkip of typ
   | Forall of string * kind * typ
   | TAppl of typ list
 
@@ -74,7 +74,7 @@ let rec size_of_type =
     | Top -> 1
     | TConst c -> 1
     | Arrow _ -> 2
-    | Skip t -> size_of_type t
+    | TSkip t -> size_of_type t
     | Forall _ -> 2
     | TAppl l -> 1
 ;;
@@ -89,6 +89,7 @@ type term =
   | Match of reference * term * term list
   | TLambda of (* string **) term
   | Inst of (*typ_former **) term
+  | Skip of term
 ;;
 
 let rec size_of_term =
@@ -102,6 +103,7 @@ let rec size_of_term =
     | Match (name, case, pats) -> 1 + size_of_term case + List.length pats
     | TLambda t -> size_of_term t
     | Inst t -> size_of_term t
+    | Skip t -> size_of_term t
 ;;
 let unitty =
  NCic.Const (NReference.reference_of_spec (NUri.uri_of_string "cic:/matita/basics/types/unit.ind") (NReference.Ind (true,0,0)));;
@@ -283,7 +285,7 @@ let rec split_typ_prods context =
  function
   | Arrow (so,ta)-> split_typ_prods (Some ("_",`OfType so)::context) ta
   | Forall (name,so,ta)-> split_typ_prods (Some (name,`OfKind so)::context) ta
-  | Skip ta -> split_typ_prods (None::context) ta
+  | TSkip ta -> split_typ_prods (None::context) ta
   | _ as t -> context,t
 ;;
 
@@ -292,7 +294,7 @@ let rec glue_ctx_typ ctx typ =
   | [] -> typ
   | Some (_,`OfType so)::ctx -> glue_ctx_typ ctx (Arrow (so,typ))
   | Some (name,`OfKind so)::ctx -> glue_ctx_typ ctx (Forall (name,so,typ))
-  | None::ctx -> glue_ctx_typ ctx (Skip typ)
+  | None::ctx -> glue_ctx_typ ctx (TSkip typ)
 ;;
 
 let rec split_typ_lambdas status n ~metasenv context typ =
@@ -352,7 +354,7 @@ let rec typ_of status ~metasenv context k =
             typ_of status ~metasenv ((b,NCic.Decl s)::context) t)
        | `PropKind
        | `Proposition ->
-           Skip (typ_of status ~metasenv ((b,NCic.Decl s)::context) t)
+           TSkip (typ_of status ~metasenv ((b,NCic.Decl s)::context) t)
        | `Term _ -> assert false (* IMPOSSIBLE *))
   | NCic.Sort _
   | NCic.Implicit _
@@ -382,7 +384,7 @@ let rec fomega_subst k t1 =
   | TConst ref -> TConst ref
   | Unit -> Unit
   | Arrow (ty1,ty2) -> Arrow (fomega_subst k t1 ty1, fomega_subst (k+1) t1 ty2)
-  | Skip t -> Skip (fomega_subst (k+1) t1 t)
+  | TSkip t -> TSkip (fomega_subst (k+1) t1 t)
   | Forall (n,kind,t) -> Forall (n,kind,fomega_subst (k+1) t1 t)
   | TAppl args -> TAppl (List.map (fomega_subst k t1) args)
 
@@ -416,7 +418,7 @@ let rec term_of status ~metasenv context =
        | `PropKind
        | `Proposition ->
            (* CSC: LAZY ??? *)
-           term_of status ~metasenv ((b,NCic.Decl ty)::context) bo
+           Skip (term_of status ~metasenv ((b,NCic.Decl ty)::context) bo)
        | `Term _ -> assert false (* IMPOSSIBLE *))
   | NCic.LetIn (b,ty,t,bo) ->
      (match classify status ~metasenv context t with
@@ -480,7 +482,7 @@ and eat_args status metasenv acc context tyhe =
       | Forall (_,_,t) ->
          eat_args status metasenv (Inst acc)
           context (fomega_subst 1 (typ_of status ~metasenv context arg) t) tl
-      | Skip t ->
+      | TSkip t ->
          eat_args status metasenv acc context t tl
       | Top -> assert false (*TODO: HOW??*)
       | Unit | Var _ | TConst _ | TAppl _ -> assert false (* NOT A PRODUCT *)
@@ -716,7 +718,7 @@ let rec (@:::) name l =
   let name = if name = "" then "a" else name in
    name @::: l
  else if List.mem name l then (name ^ "'") @::: l
- else if name="" then "[erased]",l else name,l
+ else name,l
 ;;
 
 let (@::) x l = let x,l = x @::: l in x::l;;
@@ -730,7 +732,7 @@ let rec pretty_print_type status ctxt =
     | Arrow (t1,t2) ->
         bracket size_of_type (pretty_print_type status ctxt) t1 ^ " -> " ^
          pretty_print_type status ("_"::ctxt) t2
-    | Skip t -> pretty_print_type status ("_"::ctxt) t
+    | TSkip t -> pretty_print_type status ("_"::ctxt) t
     | Forall (name, kind, t) ->
       (*CSC: BUG HERE: avoid clashes due to uncapitalisation*)
       let name = String.uncapitalize name in
@@ -785,7 +787,8 @@ let rec pretty_print_term status ctxt =
                     in
                       "  " ^ pattern ^ " -> " ^ body
                   ) patterns)
-    | TLambda t -> pretty_print_term status ctxt t
+    | Skip t
+    | TLambda t -> pretty_print_term status (""@::ctxt) t
     | Inst t -> pretty_print_term status ctxt t
 ;;
 
