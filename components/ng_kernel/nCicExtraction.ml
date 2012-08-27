@@ -127,11 +127,15 @@ type obj_kind =
  | TypeDefinition of typ_former_def
  | TermDeclaration of term_former_decl
  | TermDefinition of term_former_def
- | LetRec of obj_kind list
-   (* name, left, right, constructors *)
- | Algebraic of (string * typ_context * typ_context * (string * typ) list) list
+ | LetRec of (NReference.reference * obj_kind) list
+   (* reference, left, right, constructors *)
+ | Algebraic of (NReference.reference * typ_context * typ_context * (NReference.reference * typ) list) list
 
-type obj = NUri.uri * obj_kind
+type obj = NReference.reference * obj_kind
+
+(* For LetRec and Algebraic blocks *)
+let dummyref =
+ NReference.reference_of_string "cic:/matita/dummy/dummy.ind(1,1,1)"
 
 let rec classify_not_term status context t =
  match NCicReduction.whd status ~subst:[] context t with
@@ -513,7 +517,7 @@ type 'a result =
   | Success of 'a
 ;;
 
-let object_of_constant status ~metasenv uri height bo ty =
+let object_of_constant status ~metasenv ref bo ty =
   match classify status ~metasenv [] ty with
     | `Kind ->
         let ty = kind_of status ~metasenv [] ty in
@@ -531,14 +535,11 @@ let object_of_constant status ~metasenv uri height bo ty =
                    String.uncapitalize (fst n),k) p1)
                 ctx0 ctx
               in
-              (* BUG here: for mutual type definitions the spec is not good *)
-              let ref =
-               NReference.reference_of_spec uri (NReference.Def height) in
               let bo = typ_of status ~metasenv ctx bo in
                status#set_extraction_db
                 (ReferenceMap.add ref (nicectx,Some bo)
                   status#extraction_db),
-               Success (uri,TypeDefinition((nicectx,res),bo))
+               Success (ref,TypeDefinition((nicectx,res),bo))
           | `Kind -> status, Erased (* DPM: but not really, more a failure! *)
           | `PropKind
           | `Proposition -> status, Erased
@@ -550,14 +551,14 @@ let object_of_constant status ~metasenv uri height bo ty =
        (* CSC: TO BE FINISHED, REF NON REGISTERED *)
        let ty = typ_of status ~metasenv [] ty in
         status,
-        Success (uri, TermDefinition (split_typ_prods [] ty, term_of status ~metasenv [] bo))
+        Success (ref, TermDefinition (split_typ_prods [] ty, term_of status ~metasenv [] bo))
     | `Term _ -> status, Failure "Non-term classified as a term.  This is a bug."
 ;;
 
 let object_of_inductive status ~metasenv uri ind leftno il =
  let status,_,rev_tyl =
   List.fold_left
-   (fun (status,i,res) (_,name,arity,cl) ->
+   (fun (status,i,res) (_,_,arity,cl) ->
      match classify_not_term status [] arity with
       | `Proposition
       | `KindOrType
@@ -573,52 +574,61 @@ let object_of_inductive status ~metasenv uri ind leftno il =
            status#set_extraction_db
             (ReferenceMap.add ref (ctx,None) status#extraction_db) in
           let cl =
-           List.map
-            (fun (_,name,ty) ->
+           HExtlib.list_mapi
+            (fun (_,_,ty) j ->
               let ctx,ty =
                NCicReduction.split_prods status ~subst:[] [] leftno ty in
               let ty = typ_of status ~metasenv ctx ty in
-               name,ty
+               NReference.mk_constructor (j+1) ref,ty
             ) cl
           in
-           status,i+1,(name,left,right,cl)::res
+           status,i+1,(ref,left,right,cl)::res
    ) (status,0,[]) il
  in
   match rev_tyl with
      [] -> status,Erased
-   | _ -> status, Success (uri, Algebraic (List.rev rev_tyl))
+   | _ -> status, Success (dummyref, Algebraic (List.rev rev_tyl))
 ;;
 
 let object_of status (uri,height,metasenv,subst,obj_kind) =
   let obj_kind = apply_subst subst obj_kind in
       match obj_kind with
         | NCic.Constant (_,_,None,ty,_) ->
+          let ref = NReference.reference_of_spec uri NReference.Decl in
           (match classify status ~metasenv [] ty with
             | `Kind ->
               let ty = kind_of status ~metasenv [] ty in
               let ctx,_ as res = split_kind_prods [] ty in
-              let ref = NReference.reference_of_spec uri NReference.Decl in
                 status#set_extraction_db
-                  (ReferenceMap.add ref (ctx,None) status#extraction_db), Success (uri, TypeDeclaration res)
+                  (ReferenceMap.add ref (ctx,None) status#extraction_db),
+                    Success (ref, TypeDeclaration res)
             | `PropKind
             | `Proposition -> status, Erased
             | `Type
             | `KindOrType (*???*) ->
               let ty = typ_of status ~metasenv [] ty in
-                status, Success (uri, TermDeclaration (split_typ_prods [] ty))
+                status, Success (ref, TermDeclaration (split_typ_prods [] ty))
             | `Term _ -> status, Failure "Type classified as a term.  This is a bug.")
         | NCic.Constant (_,_,Some bo,ty,_) ->
-          object_of_constant status ~metasenv uri height bo ty
-        | NCic.Fixpoint (_fix_or_cofix,fs,_) ->
-          let status,objs =
+           let ref = NReference.reference_of_spec uri (NReference.Def height) in
+            object_of_constant status ~metasenv ref bo ty
+        | NCic.Fixpoint (fix_or_cofix,fs,_) ->
+          let _,status,objs =
             List.fold_right
-            (fun (_,_name,_,ty,bo) (status,res) ->
-              let status,obj = object_of_constant ~metasenv status uri height bo ty in
+            (fun (_,_name,recno,ty,bo) (i,status,res) ->
+              let ref =
+               if fix_or_cofix then
+                NReference.reference_of_spec
+                 uri (NReference.Fix (i,recno,height))
+               else
+                NReference.reference_of_spec uri (NReference.CoFix i)
+              in
+              let status,obj = object_of_constant ~metasenv status ref bo ty in
                 match obj with
-                  | Success (_uri,obj) -> status, obj::res
-                  | _ -> status, res) fs (status,[])
+                  | Success (ref,obj) -> i+1,status, (ref,obj)::res
+                  | _ -> i+1,status, res) fs (0,status,[])
           in
-            status, Success (uri,LetRec objs)
+            status, Success (dummyref,LetRec objs)
         | NCic.Inductive (ind,leftno,il,_) ->
            object_of_inductive status ~metasenv uri ind leftno il
 
@@ -730,10 +740,7 @@ let capitalize classification name =
 
 let pp_ref status ref =
  capitalize (classify_reference status ref)
-  (NCicPp.r2s status false ref)
-
-let name_of_uri classification uri =
- capitalize classification (NUri.name_of_uri uri)
+  (NCicPp.r2s status true ref)
 
 (* cons avoid duplicates *)
 let rec (@:::) name l =
@@ -834,7 +841,7 @@ type term_former_def = term_context * term * typ
 type term_former_decl = term_context * typ
 *)
 
-let rec pp_obj status (uri,obj_kind) =
+let rec pp_obj status (ref,obj_kind) =
   let pretty_print_context ctx =
     String.concat " " (List.rev (snd
       (List.fold_right
@@ -854,39 +861,37 @@ let rec pp_obj status (uri,obj_kind) =
     (* data?? unsure semantics: inductive type without constructor, but
        not matchable apparently *)
     if List.length ctx = 0 then
-      "data " ^ name_of_uri `TypeName uri
+      "data " ^ pp_ref status ref
     else
-      "data " ^ name_of_uri `TypeName uri ^ " " ^ pretty_print_context ctx
+      "data " ^ pp_ref status ref ^ " " ^ pretty_print_context ctx
  | TypeDefinition ((ctx, _),ty) ->
     let namectx = namectx_of_ctx ctx in
     if List.length ctx = 0 then
-      "type " ^ name_of_uri `TypeName uri ^ " = " ^ pretty_print_type status namectx ty
+      "type " ^ pp_ref status ref ^ " = " ^ pretty_print_type status namectx ty
     else
-      "type " ^ name_of_uri `TypeName uri ^ " " ^ pretty_print_context ctx ^ " = " ^ pretty_print_type status namectx ty
+      "type " ^ pp_ref status ref ^ " " ^ pretty_print_context ctx ^ " = " ^ pretty_print_type status namectx ty
  | TermDeclaration (ctx,ty) ->
-    let name = name_of_uri `FunctionName uri in
+    let name = pp_ref status ref in
       name ^ " :: " ^ pretty_print_type status [] (glue_ctx_typ ctx ty) ^ "\n" ^
       name ^ " = error \"The declaration `" ^ name ^ "' has yet to be defined.\""
  | TermDefinition ((ctx,ty),bo) ->
-    let name = name_of_uri `FunctionName uri in
+    let name = pp_ref status ref in
     let namectx = namectx_of_ctx ctx in
     (*CSC: BUG here *)
     name ^ " :: " ^ pretty_print_type status namectx (glue_ctx_typ ctx ty) ^ "\n" ^
     name ^ " = " ^ pretty_print_term status namectx bo
  | LetRec l ->
-    (*CSC: BUG always uses the name of the URI *)
-    String.concat "\n" (List.map (fun obj -> pp_obj status (uri,obj)) l)
+    String.concat "\n" (List.map (pp_obj status) l)
  | Algebraic il ->
     String.concat "\n"
      (List.map
-      (fun _name,left,right,cl ->
-        (*CSC: BUG always uses the name of the URI *)
-        "data " ^ name_of_uri `TypeName uri ^ " " ^
+      (fun ref,left,right,cl ->
+        "data " ^ pp_ref status ref ^ " " ^
         pretty_print_context (right@left) ^ " where\n  " ^
         String.concat "\n  " (List.map
-         (fun name,tys ->
+         (fun ref,tys ->
            let namectx = namectx_of_ctx left in
-            capitalize `Constructor name ^ " :: " ^
+            pp_ref status ref ^ " :: " ^
              pretty_print_type status namectx tys
          ) cl
       )) il)
