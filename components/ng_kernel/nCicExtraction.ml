@@ -697,14 +697,16 @@ let name_of_uri classification uri =
  capitalize classification (NUri.name_of_uri uri)
 
 (* cons avoid duplicates *)
-let rec (@::) name l =
+let rec (@:::) name l =
  if name <> "" (* propositional things *) && name.[0] = '_' then
   let name = String.sub name 1 (String.length name - 1) in
   let name = if name = "" then "a" else name in
-   name @:: l
- else if List.mem name l then (name ^ "'") @:: l
- else name::l
+   name @::: l
+ else if List.mem name l then (name ^ "'") @::: l
+ else name,l
 ;;
+
+let (@::) x l = let x,l = x @::: l in x::l;;
 
 let rec pretty_print_type status ctxt =
   function
@@ -781,8 +783,14 @@ type term_former_decl = term_context * typ
 let rec pp_obj status (uri,obj_kind) =
   let pretty_print_context ctx =
     String.concat " " (List.rev
-      (List.fold_right (fun (x,kind) l -> x @:: l)
-        (HExtlib.filter_map (fun x -> x) ctx) []))
+      (List.fold_right
+       (fun (x,kind) l ->
+         let x,l = x @:::l in
+         if size_of_kind kind > 1 then
+          ("(" ^ x ^ " :: " ^ pretty_print_kind kind ^ ")")::l
+         else
+          x::l)
+       (HExtlib.filter_map (fun x -> x) ctx) []))
   in
  let namectx_of_ctx ctx =
   List.fold_right (@::)
