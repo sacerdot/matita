@@ -122,7 +122,8 @@ type obj_kind =
  | TermDeclaration of term_former_decl
  | TermDefinition of term_former_def
  | LetRec of obj_kind list
- | Algebraic of (string * typ_context * (string * typ) list) list
+   (* name, left, right, constructors *)
+ | Algebraic of (string * typ_context * typ_context * (string * typ) list) list
 
 type obj = NUri.uri * obj_kind
 
@@ -545,6 +546,7 @@ let object_of_inductive status ~metasenv uri ind leftno il =
       | `Kind ->
           let arity = kind_of status ~metasenv [] arity in
           let ctx,_ = split_kind_prods [] arity in
+          let right,left = HExtlib.split_nth (List.length ctx - leftno) ctx in
           let ref =
            NReference.reference_of_spec uri (NReference.Ind (ind,i,leftno)) in
           let status =
@@ -559,7 +561,7 @@ let object_of_inductive status ~metasenv uri ind leftno il =
                name,ty
             ) cl
           in
-           status,i+1,(name,ctx,cl)::res
+           status,i+1,(name,left,right,cl)::res
    ) (status,0,[]) il
  in
   match rev_tyl with
@@ -714,7 +716,7 @@ let rec (@:::) name l =
   let name = if name = "" then "a" else name in
    name @::: l
  else if List.mem name l then (name ^ "'") @::: l
- else name,l
+ else if name="" then "[erased]",l else name,l
 ;;
 
 let (@::) x l = let x,l = x @::: l in x::l;;
@@ -839,12 +841,13 @@ let rec pp_obj status (uri,obj_kind) =
  | Algebraic il ->
     String.concat "\n"
      (List.map
-      (fun _name,ctx,cl ->
+      (fun _name,left,right,cl ->
         (*CSC: BUG always uses the name of the URI *)
-        "data " ^ name_of_uri `TypeName uri ^ " " ^ pretty_print_context ctx ^ " where\n  " ^
+        "data " ^ name_of_uri `TypeName uri ^ " " ^
+        pretty_print_context (right@left) ^ " where\n  " ^
         String.concat "\n  " (List.map
          (fun name,tys ->
-           let namectx = namectx_of_ctx ctx in
+           let namectx = namectx_of_ctx left in
             capitalize `Constructor name ^ " :: " ^
              pretty_print_type status namectx tys
          ) cl
