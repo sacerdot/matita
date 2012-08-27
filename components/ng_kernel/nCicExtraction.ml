@@ -534,17 +534,22 @@ let object_of_constant status ~metasenv uri height bo ty =
 ;;
 
 let object_of_inductive status ~metasenv uri ind leftno il =
- let tyl =
-  HExtlib.filter_map
-   (fun _,name,arity,cl ->
+ let status,_,rev_tyl =
+  List.fold_left
+   (fun (status,i,res) (_,name,arity,cl) ->
      match classify_not_term status [] arity with
       | `Proposition
       | `KindOrType
       | `Type -> assert false (* IMPOSSIBLE *)
-      | `PropKind -> None
+      | `PropKind -> status,i+1,res
       | `Kind ->
           let arity = kind_of status ~metasenv [] arity in
-          let ctx,_ as res = split_kind_prods [] arity in
+          let ctx,_ = split_kind_prods [] arity in
+          let ref =
+           NReference.reference_of_spec uri (NReference.Ind (ind,i,leftno)) in
+          let status =
+           status#set_extraction_db
+            (ReferenceMap.add ref (ctx,None) status#extraction_db) in
           let cl =
            List.map
             (fun (_,name,ty) ->
@@ -554,12 +559,12 @@ let object_of_inductive status ~metasenv uri ind leftno il =
                name,ty
             ) cl
           in
-           Some (name,ctx,cl)
-   ) il
+           status,i+1,(name,ctx,cl)::res
+   ) (status,0,[]) il
  in
-  match tyl with
-     [] -> status,None
-   | _ -> status, Some (uri, Algebraic tyl)
+  match rev_tyl with
+     [] -> status,Erased
+   | _ -> status, Success (uri, Algebraic (List.rev rev_tyl))
 ;;
 
 let object_of status (uri,height,metasenv,subst,obj_kind) =
@@ -593,10 +598,7 @@ let object_of status (uri,height,metasenv,subst,obj_kind) =
           in
             status, Success (uri,LetRec objs)
         | NCic.Inductive (ind,leftno,il,_) ->
-          let status, obj_of_inductive = object_of_inductive status ~metasenv uri ind leftno il in
-            match obj_of_inductive with
-              | None -> status, Failure "Could not extract an inductive type."
-              | Some s -> status, Success s
+           object_of_inductive status ~metasenv uri ind leftno il
 
 (************************ HASKELL *************************)
 
