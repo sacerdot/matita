@@ -79,6 +79,13 @@ let rec size_of_type =
     | TAppl l -> 1
 ;;
 
+(* None = dropped abstraction *)
+type typ_context = (string * kind) option list
+type term_context = (string * [`OfKind of kind | `OfType of typ]) option list
+
+type typ_former_decl = typ_context * kind
+type typ_former_def = typ_former_decl * typ
+
 type term =
   | Rel of int
   | UnitTerm
@@ -86,13 +93,16 @@ type term =
   | Lambda of string * (* typ **) term
   | Appl of term list
   | LetIn of string * (* typ **) term * term
-  | Match of reference * term * term list
+  | Match of reference * term * (term_context * term) list
   | BottomElim
   | TLambda of (* string **) term
   | Inst of (*typ_former **) term
   | Skip of term
   | UnsafeCoerce of term
 ;;
+
+type term_former_decl = term_context * typ
+type term_former_def = term_former_decl * term
 
 let rec size_of_term =
   function
@@ -111,16 +121,6 @@ let rec size_of_term =
 ;;
 let unitty =
  NCic.Const (NReference.reference_of_spec (NUri.uri_of_string "cic:/matita/basics/types/unit.ind") (NReference.Ind (true,0,0)));;
-
-(* None = dropped abstraction *)
-type typ_context = (string * kind) option list
-type term_context = (string * [`OfKind of kind | `OfType of typ]) option list
-
-type typ_former_decl = typ_context * kind
-type typ_former_def = typ_former_decl * typ
-
-type term_former_decl = term_context * typ
-type term_former_def = term_former_decl * term
 
 type obj_kind =
    TypeDeclaration of typ_former_decl
@@ -469,22 +469,48 @@ let rec term_of status ~metasenv context =
                                    otherwise NOT A TYPE *)
   | NCic.Meta _ -> assert false (* TODO *)
   | NCic.Match (ref,_,t,pl) ->
+     let patterns_of pl =
+      let constructors, leftno =
+       let _,leftno,tys,_,n = NCicEnvironment.get_checked_indtys status ref in
+       let _,_,_,cl  = List.nth tys n in
+         cl,leftno
+      in
+       let rec eat_branch n ty context ctx pat =
+         match (ty, pat) with
+         | NCic.Prod (_, _, t), _ when n > 0 ->
+            eat_branch (pred n) t context ctx pat 
+         | NCic.Prod (_, _, t), NCic.Lambda (name, ty, t') ->
+           let ctx =
+            (*BUG: we should classify according to the constructor type*)
+            (Some (name,`OfType (*(typ_of status ~metasenv context ty)*)Unit))::ctx in
+           let context = (name,NCic.Decl ty)::context in
+            eat_branch 0 t context ctx t'
+         (*BUG here, eta-expand!*)
+         | _, _ -> context,ctx, pat
+       in
+        try
+         List.map2
+          (fun (_, name, ty) pat ->
+            let context,lhs,rhs = eat_branch leftno ty context [] pat in
+            let rhs =
+             (* UnsafeCoerce not always required *)
+             UnsafeCoerce (term_of status ~metasenv context rhs)
+            in
+             lhs,rhs
+          ) constructors pl
+        with Invalid_argument _ -> assert false
+     in
      (match classify_not_term status [] (NCic.Const ref) with
       | `PropKind
       | `KindOrType
       | `Kind -> assert false (* IMPOSSIBLE *)
       | `Proposition ->
-          (match pl with
+          (match patterns_of pl with
               [] -> BottomElim
-            | [p] ->
-                (* UnsafeCoerce not always required *)
-                UnsafeCoerce
-                 (term_of status ~metasenv context p (* Lambdas will be skipped *))
+            | [_lhs,rhs] -> rhs (*BUG HERE: Rels are not ok, bound in the _lhs*)
             | _ -> assert false)
       | `Type ->
-          Match (ref,term_of status ~metasenv context t,
-           (* UnsafeCoerce not always required *)
-           List.map (fun p -> UnsafeCoerce (term_of status ~metasenv context p))            pl))
+          Match (ref,term_of status ~metasenv context t, patterns_of pl))
 and eat_args status metasenv acc context tyhe =
  function
     [] -> acc
@@ -774,6 +800,20 @@ let rec pretty_print_type status ctxt =
           "forall " ^ name ^ ". " ^ pretty_print_type status (name::ctxt) t
    | TAppl tl -> String.concat " " (List.map (pretty_print_type status ctxt) tl)
 
+let pretty_print_term_context status ctx1 ctx2 =
+ let name_context, res =
+  List.fold_right
+    (fun el (ctx1,res) ->
+      match el with
+         None -> ""@::ctx1,res
+       | Some (name,`OfKind _) -> name@::ctx1,res
+       | Some (name,`OfType typ) ->
+          let name,ctx1 = name@:::ctx1 in
+           name::ctx1,
+            ("(" ^ name ^ " :: " ^ pretty_print_type status ctx1 typ ^ ")")::res
+    ) ctx2 (ctx1,[]) in
+  name_context, String.concat " " res
+
 let rec pretty_print_term status ctxt =
   function
     | Rel n -> List.nth ctxt (n-1)
@@ -797,49 +837,23 @@ let rec pretty_print_term status ctxt =
       if pl = [] then
        "error \"Case analysis over empty type\""
       else
-      let constructors, leftno =
-      let _,leftno,tys,_,n = NCicEnvironment.get_checked_indtys status r in
-      let _,_,_,cl  = List.nth tys n in
-        cl,leftno
-      in
-        let rec eat_branch n ty pat =
-          match (ty, pat) with
-          | NCic.Prod (_, _, t), _ when n > 0 -> eat_branch (pred n) t pat 
-          | NCic.Prod (_, _, t), Lambda (name, t') ->
-            (*CSC: BUG HERE; WHAT IF SOME ARGUMENTS ARE DELETED?*)
-            let cv, rhs = eat_branch 0 t t' in
-              name :: cv, rhs
-          | _, _ -> [], pat
-        in
-          let j = ref 0 in
-          let patterns =
-            try
-              List.map2
-                (fun (_, name, ty) pat -> incr j; name, eat_branch leftno ty pat) constructors pl
-            with Invalid_argument _ -> assert false
-          in
-            "case " ^ pretty_print_term status ctxt matched ^ " of\n" ^
-              String.concat "\n"
-                (List.map
-                  (fun (name,(bound_names,rhs)) ->
-                    let pattern,body =
-                    (*CSC: BUG avoid name clashes *)
-                    String.concat " " (String.capitalize name::bound_names),
-                      pretty_print_term status ((List.rev bound_names)@ctxt) rhs
-                    in
-                      "  " ^ pattern ^ " -> " ^ body
-                  ) patterns)
+       "case " ^ pretty_print_term status ctxt matched ^ " of\n" ^
+         String.concat "\n"
+           (HExtlib.list_mapi
+             (fun (bound_names,rhs) i ->
+               let ref = NReference.mk_constructor (i+1) r in
+               let name = pp_ref status ref in
+               let names,bound_names =
+                pretty_print_term_context status ctxt bound_names in
+               let body =
+                pretty_print_term status ((List.rev names)@ctxt) rhs
+               in
+                 "  " ^ name ^ " " ^ bound_names ^ " -> " ^ body
+             ) pl)
     | Skip t
     | TLambda t -> pretty_print_term status (""@::ctxt) t
     | Inst t -> pretty_print_term status ctxt t
 ;;
-
-(*
-type term_context = (string * [`OfKind of kind | `OfType of typ]) option list
-
-type term_former_def = term_context * term * typ
-type term_former_decl = term_context * typ
-*)
 
 let rec pp_obj status (ref,obj_kind) =
   let pretty_print_context ctx =
