@@ -748,6 +748,9 @@ let rec pretty_print_term status ctxt =
     | LetIn (name,s,t) ->
       "let " ^ name ^ " = " ^ pretty_print_term status ctxt s ^ " in " ^ pretty_print_term status (name@::ctxt) t
     | Match (r,matched,pl) ->
+      if pl = [] then
+       "error \"Case analysis over empty type\""
+      else
       let constructors, leftno =
       let _,leftno,tys,_,n = NCicEnvironment.get_checked_indtys status r in
       let _,_,_,cl  = List.nth tys n in
