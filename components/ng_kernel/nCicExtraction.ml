@@ -73,10 +73,10 @@ let rec size_of_type =
     | Unit -> 1
     | Top -> 1
     | TConst c -> 1
-    | Arrow (l, r) -> 1 + size_of_type l + size_of_type r
+    | Arrow _ -> 2
     | Skip t -> size_of_type t
-    | Forall (name, kind, typ) -> 1 + size_of_type typ
-    | TAppl l -> List.fold_right (+) (List.map size_of_type l) 0
+    | Forall _ -> 2
+    | TAppl l -> 1
 ;;
 
 type term =
