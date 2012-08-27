@@ -329,6 +329,13 @@ cases (HR1 intape HP) -HR1 #k * #outc * #Hloop #HR1
 @(ex_intro ?? k) @(ex_intro ?? outc) % /2/
 qed.
 
+lemma GRealize_to_GRealize_2 : ∀alpha,M,P1,P2,R1,R2.
+  P2 ⊆ P1 → R1 ⊆ R2 → GRealize alpha M P1 R1 → GRealize alpha M P2 R2.
+#alpha #M #P1 #P2 #R1 #R2 #Himpl1 #Himpl2 #H1 #intape #HP
+cases (H1 intape (Himpl1 … HP)) -H1 #k * #outc * #Hloop #H1
+@(ex_intro ?? k) @(ex_intro ?? outc) % /2/
+qed.
+
 lemma acc_Realize_to_acc_Realize: ∀sig,M.∀q:states sig M.∀R1,R2,R3,R4. 
   R1 ⊆ R3 → R2 ⊆ R4 → M ⊨ [q:R1,R2] → M ⊨ [q:R3,R4].
 #alpha #M #q #R1 #R2 #R3 #R4 #Hsub13 #Hsub24 #HRa #intape

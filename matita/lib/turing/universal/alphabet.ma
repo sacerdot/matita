@@ -80,6 +80,12 @@ qed.
 lemma bit_or_null_not_bar: ∀d. bit_or_null d = true → is_bar d = false.
 * // normalize #H destruct
 qed.
+
+lemma is_bit_to_bit_or_null : 
+  ∀x.is_bit x = true → bit_or_null x = true.
+* // normalize #H destruct
+qed.
+
 (**************************** testing strings *********************************)
 definition is_marked ≝ λalpha.λp:FinProd … alpha FinBool.
   let 〈x,b〉 ≝ p in b.

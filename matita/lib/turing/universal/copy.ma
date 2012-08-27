@@ -686,17 +686,71 @@ definition option_cons ≝ λA.λa:option A.λl.
   match a with
   [ None ⇒ l
   | Some a' ⇒ a'::l ].
-
-axiom sem_copy : GRealize ? copy Pre_copy R_copy.
-(* TODO port to GRealize *)
-(*
-#intape 
-cases (sem_seq … (sem_copy0 …)
-        (sem_seq … (sem_move_l …)
-          (sem_seq … (sem_adv_to_mark_l … (is_marked ?))
-            (sem_seq … (sem_clear_mark …)
-              (sem_seq … (sem_adv_to_mark_r … (is_marked ?)) (sem_clear_mark …))))) intape)
-#k * #outc * #Hloop #HR %{k} %{outc} % [@Hloop] -Hloop
+  
+lemma sem_copy : GRealize ? copy Pre_copy R_copy.
+@(GRealize_to_GRealize_2 ?? Pre_copy0 ? R_copy) //
+(* preamble: Pre_copy0 implies Pre_copy *)
+[ #t1 * #ls * #s0 * #s1 * #c0 * #c1 * #rs * #l1 * #l3 * #l4 * * * * * * * *
+  #Ht1 #Hl1nomarks #Hl3nomarks #Hl4nomarks #Hlen #Hbitsl4 #Hbitsl1 
+  #Hbitnullc0 #Hbitnullc1 whd
+  %{ls} %{s1} %{s0} %{rs} %{(l1@[〈c1,false〉;〈comma,false〉])}
+  %{l3} %{(〈grid,false〉::〈c0,false〉::l4)}
+  % [ % [ % [ % [ % 
+  [ >Ht1 -Ht1 @eq_f >associative_append %
+  | #x #Hx cases (memb_append … Hx) -Hx #Hx
+    [ @(Hl1nomarks ? Hx)
+    | cases (orb_true_l … Hx) -Hx #Hx 
+      [ >(\P Hx) %
+      | >(memb_single … Hx) % ] ] ]
+  | #x #Hx cases (memb_append … Hx) -Hx #Hx
+    [ @(Hl3nomarks ? Hx)
+    | cases (orb_true_l … Hx) -Hx #Hx
+      [ >(\P Hx) %
+      | cases (orb_true_l … Hx) -Hx #Hx
+        [ >(\P Hx) %
+        | @(Hl4nomarks ? Hx) ]]]]
+  |>length_append >Hlen >commutative_plus % ]
+  | %{(〈s1,false〉::l1@[〈c1,false〉])} %{false} %
+    [ @eq_f >associative_append %
+    | #x #Hx cases (orb_true_l … Hx) -Hx #Hx
+      [ >(\P Hx) @is_bit_to_bit_or_null @(Hbitsl1 〈s1,false〉) @memb_hd
+      | cases (memb_append … Hx) -Hx #Hx
+        [ @is_bit_to_bit_or_null @(Hbitsl1 〈\fst x,\snd x〉) @memb_cons <eq_pair_fst_snd @Hx
+        | >(memb_single… Hx) // ]
+      ]
+    ] ]
+  | %{(〈c0,false〉::l4@[〈s0,false〉])} %{false} %
+    [ %
+    | #x #Hx cases (orb_true_l … Hx) -Hx #Hx
+      [ >(\P Hx) //
+      | cases (memb_append … Hx) -Hx #Hx
+        [ @is_bit_to_bit_or_null @(Hbitsl4 〈\fst x,\snd x〉) @memb_append_l1 <eq_pair_fst_snd @Hx
+        | >(memb_single… Hx) @is_bit_to_bit_or_null @(Hbitsl4 〈s0,false〉) @memb_append_l2 @memb_hd ]
+      ]
+] ] ]
+(*whd in ⊢ (%→%)
+change with (?·?) in match copy;*)
+@(sem_seq_app_guarded ???? (λx.True) ??? sem_copy0)
+[2:@(sem_seq_app_guarded ???????? (Realize_to_GRealize … (sem_move_l (FinProd FSUnialpha FinBool))))
+  [@(λx.True)
+  |4://
+  |5:@sub_reflexive
+  |3:@(sem_seq_app_guarded ???????? (Realize_to_GRealize … (sem_adv_to_mark_l … (is_marked FSUnialpha))))
+    [@(λx.True)
+    |4://
+    |5:@sub_reflexive
+    |3:@(sem_seq_app_guarded ???????? (Realize_to_GRealize … (sem_clear_mark ?)))
+      [@(λx.True)
+      |4://
+      |5:@sub_reflexive
+      |3:@(sem_seq_app_guarded ???????? (Realize_to_GRealize … (sem_adv_to_mark_r ? (is_marked ?))))
+        [@(λx.True)
+        |4://
+        |5:@sub_reflexive
+        |3:@(Realize_to_GRealize … (sem_clear_mark ?)) ] ] ] ]
+|3: //
+|1:skip]
+#intape #outtape #HR
 #ls #s0 #s1 #c0 #c1 #rs #l1 #l2 #l3 #Hintape #Hl1marks #Hl2marks #Hl3marks #Hlen
 #Hbits1 #Hbits2 #Hc0bits #Hc1bits
 cases HR -HR #ta * whd in ⊢ (%→?); #Hta 
@@ -729,13 +783,13 @@ cut (ta = midtape STape (〈c1,false〉::reverse ? l1@〈s1,false〉::l2@〈grid
     |3: >length_append >length_append >length_reverse >Hlen % ]
     normalize >associative_append normalize >associative_append %
   ]
-] -Hta #Hta * #tb * whd in ⊢ (%→?); #Htb
+] -Hta #Hta * #tb * * #_ #Htb
 lapply (Htb … Hta) -Htb #Htb change with (midtape ????) in Htb:(???%);
-* #tc * whd in ⊢ (%→?); #Htc 
+* #tc * * #_ #Htc 
 cases (Htc … Htb)
-[ * #Hfalse normalize in Hfalse; destruct (Hfalse) ]
-* #_ #Htc 
-lapply (Htc (reverse ? l1@〈s1,false〉::l2) 〈grid,true〉 
+(* [ * #Hfalse normalize in Hfalse; destruct (Hfalse) ] *)
+#_ #Htc cases (Htc (refl ??)) -Htc #Htc #_
+lapply (Htc (reverse ? l1@〈s1,false〉::l2) 〈grid,true〉
           (〈merge_char c0 c1,false〉::reverse ? l1@〈s1,false〉::ls)???)
 [ #x #Hx cases (memb_append … Hx) -Hx #Hx
   [ @Hl1marks @daemon
@@ -743,10 +797,10 @@ lapply (Htc (reverse ? l1@〈s1,false〉::l2) 〈grid,true〉
     [ >(\P Hx) % | @(Hl2marks … Hx) ] ]
 | %
 | whd in ⊢ (??%?); >associative_append % ] -Htc #Htc
-* #td * whd in ⊢ (%→?); #Htd lapply (Htd … Htc) -Htd #Htd
-* #te * whd in ⊢ (%→?); #Hte cases (Hte … Htd) -Hte -Htd
+* #td * whd in ⊢ (%→?); * #_ #Htd lapply (Htd … Htc) -Htd #Htd
+* #te * whd in ⊢ (%→?); * #_ #Hte cases (Hte … Htd) -Hte -Htd
 [ * #Hfalse normalize in Hfalse; destruct (Hfalse) ]
-* #_ #Hte 
+* * #_ #Hte #_ 
 lapply (Hte (reverse ? (reverse ? l1@〈s1,false〉::l2)@[〈c1,false〉])
          〈comma,true〉 rs ? (refl ??) ?) -Hte
 [ >reverse_append >reverse_cons >reverse_reverse #x #Hx
@@ -760,10 +814,9 @@ lapply (Hte (reverse ? (reverse ? l1@〈s1,false〉::l2)@[〈c1,false〉])
 | >reverse_append >reverse_reverse >reverse_cons
   >associative_append >associative_append >associative_append
   >associative_append >associative_append % ]
-#Hte whd in ⊢ (%→?); #Houtc lapply (Houtc … Hte) -Houtc #Houtc >Houtc
+#Hte * #_ #Houtc lapply (Houtc … Hte) -Houtc #Houtc >Houtc
 @eq_f3 //
 >reverse_append >reverse_append >reverse_single >reverse_cons
 >reverse_append >reverse_append >reverse_reverse >reverse_reverse
 >reverse_single >associative_append >associative_append %
 qed.
-*)
