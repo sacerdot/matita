@@ -12,13 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "arithmetics/nat.ma".
+include "basics/pts.ma".
 
 (*FEATURE: kind signatures in type declarations*)
 
-axiom Nat: Type[0].
-axiom S: Nat → Nat.
-axiom O: Nat.
+inductive nat : Type[0] ≝ O: nat | S: nat → nat.
 
 axiom test1: Type[1].
 
@@ -26,23 +24,22 @@ axiom test2: Type[1] → Type[1].
 
 axiom test3: Prop → Type[1] → CProp[1] → Type[1] → Type[2].
 
-(* not in F_omega ? *)
 axiom test4: ∀A:Type[1]. A → ∀B:Type[1]. B → ∀C:Prop. C → Type[1].
 
 axiom test4': ∀C:Prop. C → C.
 
-axiom test4'': ∀C:Prop. C → Nat.
+axiom test4'': ∀C:Prop. C → nat.
 
 axiom test4''': ∀C:Type[1]. C.
 
-axiom test4_5: (∀A:Type[0].A) → Nat.
+axiom test4_5: (∀A:Type[0].A) → nat.
 
 axiom test5: (Type[1] → Type[1]) → Type[1].
 
 (* no content *)
 axiom test6: Type[1] → Prop.
 
-definition dtest1: Type[1] ≝ Nat → Nat.
+definition dtest1: Type[1] ≝ nat → nat.
 
 definition dtest2: Type[2] ≝ ∀A:Type[1]. A → A.
 
@@ -52,7 +49,9 @@ definition dtest4: Type[1] → Type[1] ≝ λA:Type[1].dtest3 A.
 
 definition dtest5: Type[1] → Type[1] ≝ dtest3.
 
-definition dtest6: Type[1] ≝ dtest3 Nat.
+definition dtest6: Type[1] ≝ dtest3 nat.
+
+inductive True : Prop ≝ I: True.
 
 (* no content *)
 definition dtest7: Prop ≝ True → True.
@@ -65,36 +64,36 @@ definition dtest9: Type[1] ≝ dtest3 Prop.
 
 definition dtest10: Type[1] → Type[1] → Type[1] ≝ λX,Y.X.
 
-definition dtest11: Type[1] → Nat → Type[1] → Type[1] ≝ λ_:Type[1].λ_:Nat.λX:Type[1]. X → Nat → test1.
+definition dtest11: Type[1] → nat → Type[1] → Type[1] ≝ λ_:Type[1].λ_:nat.λX:Type[1]. X → nat → test1.
 
 
-definition dtest12 ≝ λ_:Type[1].λ_:Nat.λX:Type[1]. X → Nat → test1.
+definition dtest12 ≝ λ_:Type[1].λ_:nat.λX:Type[1]. X → nat → test1.
 
-definition dtest13 ≝ dtest3 Nat → dtest3 True → dtest3 Prop → Nat.
+definition dtest13 ≝ dtest3 nat → dtest3 True → dtest3 Prop → nat.
 
 definition dtest14 ≝ λX:Type[2]. X → X.
 
 (*FEATURE: type the forall bound variables*)
-definition dtest15 ≝ ∀T:Type[1] → Type[1]. T Nat → T Nat.
+definition dtest15 ≝ ∀T:Type[1] → Type[1]. T nat → T nat.
 
-definition dtest16 ≝ ∀T:Type[1]. T → Nat.
+definition dtest16 ≝ ∀T:Type[1]. T → nat.
 
-definition dtest17 ≝ ∀T:dtest14 Type[1]. T Nat → dtest14 Nat → dtest14 Nat.
+definition dtest17 ≝ ∀T:dtest14 Type[1]. T nat → dtest14 nat → dtest14 nat.
 
-definition dtest18 ≝ λA,B:Type[0].λn:Nat.λC:Type[0].A.
+definition dtest18 ≝ λA,B:Type[0].λn:nat.λC:Type[0].A.
 
-definition dtest19 ≝ dtest18 Nat True O Nat → dtest18 Nat Nat O Nat.
+definition dtest19 ≝ dtest18 nat True O nat → dtest18 nat nat O nat.
 
 definition dtest20 ≝ test5 test2.
 
 (*BUG: lambda-lift the inner declaration;
-  to be traced, raises NotInFOmega; why? *)
-definition dtest21 ≝ test5 (λX:Type[1].X).
+  to be traced, raises NotInFOmega; why?
+definition dtest21 ≝ test5 (λX:Type[1].X).*)
 
-definition ttest1 ≝ λx:Nat.x.
+definition ttest1 ≝ λx:nat.x.
 
 (*BUG: clash of name due to capitalisation*)
-(*definition Ttest1 ≝ λx:Nat.x.*)
+(*definition Ttest1 ≝ λx:nat.x.*)
 
 (*FEATURE: print binders in the l.h.s. without using lambda abstraction*)
 definition ttest2 ≝ λT:Type[1].λx:T.x.
@@ -106,21 +105,21 @@ definition ttest4 ≝ λT:Type[1].let y ≝ T in λx:y.x.
 (*BUG IN HASKELL PRETTY PRINTING: all lets are let rec*)
 (*definition ttest5 ≝ λT:Type[1].λy:T.let y ≝ y in y.*)
 
-definition ttest6 ≝ ttest4 Nat.
+definition ttest6 ≝ ttest4 nat.
 
-definition ttest7 ≝ λf:∀X:Type[1].X. f (Nat → Nat) O.
+definition ttest7 ≝ λf:∀X:Type[1].X. f (nat → nat) O.
 
 definition ttest8 ≝ λf:∀X:Type[1].X. f (True → True) I.
 
-definition ttest9 ≝ λf:∀X:Type[1].X. f (True → Nat) I.
+definition ttest9 ≝ λf:∀X:Type[1].X. f (True → nat) I.
 
-definition ttest10 ≝ λf:∀X:Type[1].X. f (True → Nat → Nat) I O.
+definition ttest10 ≝ λf:∀X:Type[1].X. f (True → nat → nat) I O.
 
-definition ttest11_aux ≝ λS:Type[1]. S → Nat.
+definition ttest11_aux ≝ λS:Type[1]. S → nat.
 
 definition ttest11 ≝ λf:ttest11_aux True. f I.
 
-definition ttest12 ≝ λf:True → Nat. f I.
+definition ttest12 ≝ λf:True → nat. f I.
 
 (*GENERAL BUG: name clashes when binders shadow each other in CIC*)
 
@@ -155,8 +154,10 @@ coinductive stream: Type[0] ≝ scons : nat → stream → stream.
 
 let corec div (n:nat) : stream ≝ scons n (div (S n)).
 
+axiom plus: nat → nat → nat.
+
 definition rtest2 : nat → stream → nat ≝
- λm,s. match s with [ scons n l ⇒ m + n ].
+ λm,s. match s with [ scons n l ⇒ plus m n ].
 
 (*
 let rec mkterm (n:nat) : nat ≝
@@ -168,18 +169,21 @@ and mktyp (n:nat) : Type[0] ≝
  [ O ⇒ nat
  | S m ⇒ mktyp m ].*)
 
-inductive mynat : Type[0] ≝ myzero: mynat | mysucc: mynat → mynat.
+inductive meee: Type[0] → Type[0] ≝ .
 
-(*FEATURE: print kind signatures*)
-inductive T1 : (Type[0] → Type[0]) → ∀B:Type[0]. mynat → Type[0] → Type[0] ≝ .
+inductive T1 : (Type[0] → Type[0]) → ∀B:Type[0]. nat → Type[0] → Type[0] ≝ .
 
-(*Not in F_omega *)
 inductive T2 : (Type[0] → Type[0]) → ∀B:Type[0]. B → Type[0] → Type[0] ≝ .
 
 (* no content *)
+(*BUG: eliminators extracted anyway???*)
 inductive T3 : (Type[0] → Type[0]) → CProp[2] ≝ .
+
+definition erase ≝ λX:Type[0].Type[0].
+
+axiom lt: nat → nat → Prop.
 
 (*BUG: elimination principles not extracted *)
 inductive myvect (A: Type[0]) (b:nat) : nat → Type[0] ≝
-   myemptyv : myvect A b 0
- | mycons: ∀n. n < b → A → myvect A b n → myvect A b (S n).
+   myemptyv : myvect A b O
+ | mycons: ∀n. lt n b → A → myvect A b n → myvect A b (S n).
