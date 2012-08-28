@@ -142,6 +142,22 @@ type obj = NReference.reference * obj_kind
 let dummyref =
  NReference.reference_of_string "cic:/matita/dummy/dummy.ind(1,1,1)"
 
+type not_term = [`Kind | `KindOrType | `PropKind | `Proposition | `Type];;
+
+let max_not_term t1 t2 =
+ match t1,t2 with
+    `KindOrType,_
+  | _,`KindOrType -> `KindOrType
+  | `Kind,_
+  | _,`Kind -> `Kind
+  | `Type,_
+  | _,`Type -> `Type
+  | `PropKind,_
+  | _,`PropKind -> `PropKind
+  | `Proposition,`Proposition -> `Proposition
+
+let sup = List.fold_left max_not_term `Proposition
+
 let rec classify_not_term status context t =
  match NCicReduction.whd status ~subst:[] context t with
   | NCic.Sort s ->
@@ -155,11 +171,16 @@ let rec classify_not_term status context t =
      classify_not_term status ((b,NCic.Decl s)::context) t
   | NCic.Implicit _
   | NCic.LetIn _
-  | NCic.Lambda _
   | NCic.Const (NReference.Ref (_,NReference.CoFix _))
   | NCic.Appl [] ->
      assert false (* NOT POSSIBLE *)
-  | NCic.Match _
+  | NCic.Lambda (n,s,t) ->
+     (* Lambdas can me met in branches of matches, expecially when the
+        output type is a product *)
+     classify_not_term status ((n,NCic.Decl s)::context) t
+  | NCic.Match (r,_,_,pl) ->
+     let classified_pl = List.map (classify_not_term status context) pl in
+      sup classified_pl
   | NCic.Const (NReference.Ref (_,NReference.Fix _)) ->
      (* be aware: we can be the head of an application *)
      assert false (* TODO *)
@@ -206,8 +227,6 @@ let rec classify_not_term status context t =
   | NCic.Const (NReference.Ref (_,NReference.Def _)) ->
      assert false (* IMPOSSIBLE *)
 ;;
-
-type not_term = [`Kind | `KindOrType | `PropKind | `Proposition | `Type];;
 
 let classify status ~metasenv context t =
  match NCicTypeChecker.typeof status ~metasenv ~subst:[] context t with
