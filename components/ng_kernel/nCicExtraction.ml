@@ -843,10 +843,10 @@ let rec pretty_print_term status ctxt =
              (fun (bound_names,rhs) i ->
                let ref = NReference.mk_constructor (i+1) r in
                let name = pp_ref status ref in
-               let names,bound_names =
+               let ctxt,bound_names =
                 pretty_print_term_context status ctxt bound_names in
                let body =
-                pretty_print_term status ((List.rev names)@ctxt) rhs
+                pretty_print_term status ctxt rhs
                in
                  "  " ^ name ^ " " ^ bound_names ^ " -> " ^ body
              ) pl)
