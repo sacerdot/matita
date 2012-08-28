@@ -124,8 +124,6 @@ let rec size_of_term =
     | Skip t -> size_of_term t
     | UnsafeCoerce t -> 1 + size_of_term t
 ;;
-let unitty =
- NCic.Const (NReference.reference_of_spec (NUri.uri_of_string "cic:/matita/basics/types/unit.ind") (NReference.Ind (true,0,0)));;
 
 type obj_kind =
    TypeDeclaration of typ_former_decl
