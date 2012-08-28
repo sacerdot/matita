@@ -157,7 +157,8 @@ let rec classify_not_term status context t =
   | NCic.LetIn _
   | NCic.Lambda _
   | NCic.Const (NReference.Ref (_,NReference.CoFix _))
-  | NCic.Appl [] -> assert false (* NOT POSSIBLE *)
+  | NCic.Appl [] ->
+     assert false (* NOT POSSIBLE *)
   | NCic.Match _
   | NCic.Const (NReference.Ref (_,NReference.Fix _)) ->
      (* be aware: we can be the head of an application *)
@@ -538,8 +539,19 @@ and eat_args status metasenv acc context tyhe =
            | _ -> term_of status ~metasenv context arg in
          eat_args status metasenv (mk_appl acc arg) context t tl
       | Forall (_,_,t) ->
-         eat_args status metasenv (Inst acc)
-          context (fomega_subst 1 (typ_of status ~metasenv context arg) t) tl
+         (match classify status ~metasenv context arg with
+           | `PropKind -> assert false (*TODO: same as below, coercion needed???*)
+           | `Proposition
+           | `Term `TypeFormer
+           | `Kind ->
+               eat_args status metasenv (UnsafeCoerce (Inst acc))
+                context (fomega_subst 1 Unit t) tl
+           | `Term _ -> assert false (*TODO: ????*)
+           | `KindOrType
+           | `Type ->
+               eat_args status metasenv (Inst acc)
+                context (fomega_subst 1 (typ_of status ~metasenv context arg) t)
+                 tl)
       | TSkip t ->
          eat_args status metasenv acc context t tl
       | Top -> assert false (*TODO: HOW??*)
