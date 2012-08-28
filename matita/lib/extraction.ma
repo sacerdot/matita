@@ -118,6 +118,11 @@ definition ttest11 ≝ λf:ttest11_aux True. f I.
 
 definition ttest12 ≝ λf:True → nat. f I.
 
+(*BUG: assertion failure here! difficult case for head application
+axiom ttest13_a: ∀T:Type[1]. T → nat.
+definition ttest13_b ≝ ttest13_a nat O.
+definition ttest13_c ≝ ttest13_a Prop True.*)
+
 (*GENERAL BUG: name clashes when binders shadow each other in CIC*)
 
 (*BUG: for OCaml: cofixpoint not distinguished from fixpoints*)
@@ -187,9 +192,15 @@ inductive eq (A:Type[1]) (a:A) : A → Prop ≝ refl: eq A a a.
 definition cast_bug1 ≝
  λH:eq Type[0] bool nat. S (match H return λA:Type[0].λ_.A with [ refl ⇒ true ]).
 
+(*
+(*BUG: Here we use eq_rect_Type0 in its poly-kinded form, but we only extracted
+   the one-kinded form. Require coercions *)
+definition cast_bug1' ≝
+ λH:eq Type[0] bool nat. S (eq_rect_Type0 Type[0] bool (λA:Type[0].λ_.A) true nat H).
+*)
+
 (* requires coercion in all branches *)
 definition cast_bug2 ≝
- λb.
   match true return λb.match b with [ true ⇒ nat → nat | false ⇒ bool ] with
    [ true ⇒ S | false ⇒ false ]
   O.
