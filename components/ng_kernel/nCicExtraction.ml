@@ -104,6 +104,11 @@ type term =
 type term_former_decl = term_context * typ
 type term_former_def = term_former_decl * term
 
+let mk_appl f x =
+ match f with
+    Appl args -> Appl (args@[x])
+  | _ -> Appl [f;x]
+
 let rec size_of_term =
   function
     | Rel r -> 1
@@ -331,7 +336,9 @@ let context_of_typformer status ~metasenv context =
   | NCic.Const (NReference.Ref (_,NReference.Fix _) as ref) ->
      (try fst (ReferenceMap.find ref status#extraction_db)
       with
-       Not_found -> assert false (* IMPOSSIBLE *))
+       Not_found ->
+        prerr_endline ("REF NOT FOUND: " ^ NReference.string_of_reference ref);
+        assert false (* IMPOSSIBLE *))
   | NCic.Match _ -> assert false (* TODO ???? *)
   | NCic.Rel n ->
      let typ =
@@ -450,21 +457,10 @@ let rec term_of status ~metasenv context =
   | NCic.Appl (he::args) ->
      eat_args status metasenv
       (term_of status ~metasenv context he) context
+      (*BUG: recomputing every time the type of the head*)
       (typ_of status ~metasenv context
         (NCicTypeChecker.typeof status ~metasenv ~subst:[] context he))
       args
-(*
-     let he_context = context_of_typformer status ~metasenv context he in
-     let process_args he =
-      function
-         `Empty -> he
-       | `Inst tl -> Inst (process_args he tl)
-       | `Appl (arg,tl) -> process_args (Appl (he,... arg)) tl
-     in
-     Appl (typ_of status ~metasenv context he ::
-      process_args (typ_of status ~metasenv context he)
-       (skip_term_args status ~metasenv context (List.rev he_context,args))
-*)
   | NCic.Appl _ -> assert false (* TODO: when head is a match/let rec;
                                    otherwise NOT A TYPE *)
   | NCic.Meta _ -> assert false (* TODO *)
@@ -477,20 +473,35 @@ let rec term_of status ~metasenv context =
       in
        let rec eat_branch n ty context ctx pat =
          match (ty, pat) with
-         | NCic.Prod (_, _, t), _ when n > 0 ->
+         | TSkip t,_
+         | Forall (_,_,t),_
+         | Arrow (_, t), _ when n > 0 ->
             eat_branch (pred n) t context ctx pat 
-         | NCic.Prod (_, _, t), NCic.Lambda (name, ty, t') ->
+         | _, _ when n > 0 -> assert false (*BUG: is Top possible here?*)
+         (*CSC: unify the three cases below? *)
+         | Arrow (_, t), NCic.Lambda (name, ty, t') ->
            let ctx =
-            (*BUG: we should classify according to the constructor type*)
-            (Some (name,`OfType (*(typ_of status ~metasenv context ty)*)Unit))::ctx in
+            (Some (name,`OfType Unit(*(typ_of status ~metasenv context ty)*)))::ctx in
            let context = (name,NCic.Decl ty)::context in
             eat_branch 0 t context ctx t'
+         | Forall (_,_,t),NCic.Lambda (name, ty, t') ->
+           let ctx =
+            (Some (name,`OfKind Type(*(kind_of status ~metasenv context ty)*)))::ctx in
+           let context = (name,NCic.Decl ty)::context in
+            eat_branch 0 t context ctx t'
+         | TSkip t,NCic.Lambda (name, ty, t') ->
+            let ctx = None::ctx in
+            let context = (name,NCic.Decl ty)::context in
+             eat_branch 0 t context ctx t'
+         | Top,_ -> assert false (*TODO: HOW??*)
          (*BUG here, eta-expand!*)
          | _, _ -> context,ctx, pat
        in
         try
          List.map2
           (fun (_, name, ty) pat ->
+            (*BUG: recomputing every time the type of the constructor*)
+            let ty = typ_of status ~metasenv context ty in
             let context,lhs,rhs = eat_branch leftno ty context [] pat in
             let rhs =
              (* UnsafeCoerce not always required *)
@@ -515,11 +526,6 @@ and eat_args status metasenv acc context tyhe =
  function
     [] -> acc
   | arg::tl ->
-     let mk_appl f x =
-      match f with
-         Appl args -> Appl (args@[x])
-       | _ -> Appl [f;x]
-     in
      match fomega_whd status tyhe with
         Arrow (s,t) ->
          let arg =
