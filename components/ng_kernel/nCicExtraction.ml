@@ -801,18 +801,18 @@ let rec pretty_print_type status ctxt =
    | TAppl tl -> String.concat " " (List.map (pretty_print_type status ctxt) tl)
 
 let pretty_print_term_context status ctx1 ctx2 =
- let name_context, res =
+ let name_context, rev_res =
   List.fold_right
-    (fun el (ctx1,res) ->
+    (fun el (ctx1,rev_res) ->
       match el with
-         None -> ""@::ctx1,res
-       | Some (name,`OfKind _) -> name@::ctx1,res
+         None -> ""@::ctx1,rev_res
+       | Some (name,`OfKind _) -> name@::ctx1,rev_res
        | Some (name,`OfType typ) ->
           let name,ctx1 = name@:::ctx1 in
            name::ctx1,
-            ("(" ^ name ^ " :: " ^ pretty_print_type status ctx1 typ ^ ")")::res
+            ("(" ^ name ^ " :: " ^ pretty_print_type status ctx1 typ ^ ")")::rev_res
     ) ctx2 (ctx1,[]) in
-  name_context, String.concat " " res
+  name_context, String.concat " " (List.rev rev_res)
 
 let rec pretty_print_term status ctxt =
   function
