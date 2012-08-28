@@ -394,10 +394,60 @@ let rec typ_of status ~metasenv context k =
   | NCic.Match (_,_,_,_) -> assert false (* TODO *)
 ;;
 
+let rec fomega_lift_type_from n k =
+ function
+  | Var m as t -> if m < k then t else Var (m + n)
+  | Top -> Top
+  | TConst _ as t -> t
+  | Unit -> Unit
+  | Arrow (ty1,ty2) -> Arrow (fomega_lift_type_from n k ty1,fomega_lift_type_from n (k+1) ty2)
+  | TSkip t -> TSkip (fomega_lift_type_from n (k+1) t)
+  | Forall (name,kind,t) -> Forall (name,kind,fomega_lift_type_from n (k+1) t)
+  | TAppl args -> TAppl (List.map (fomega_lift_type_from n k) args)
+
+let fomega_lift_type n t =
+ if n = 0 then t else fomega_lift_type_from n 0 t
+
+let fomega_lift_term n t =
+ let rec fomega_lift_term n k =
+  function
+   | Rel m as t -> if m < k then t else Rel (m + n)
+   | BottomElim
+   | UnitTerm
+   | Const _ as t -> t
+   | Lambda (name,t) -> Lambda (name,fomega_lift_term n (k+1) t)
+   | TLambda (name,t) -> TLambda (name,fomega_lift_term n (k+1) t)
+   | Appl args -> Appl (List.map (fomega_lift_term n k) args)
+   | LetIn (name,m,bo) ->
+      LetIn (name, fomega_lift_term n k m, fomega_lift_term n (k+1) bo)
+   | Match (ref,t,pl) ->
+      let lift_p (ctx,t) =
+       let lift_context ctx =
+        let len = List.length ctx in
+         HExtlib.list_mapi
+          (fun el i ->
+            let j = len - i - 1 in
+            match el with
+               None
+             | Some (_,`OfKind  _) as el -> el
+             | Some (name,`OfType t) ->
+                Some (name,`OfType (fomega_lift_type_from n (k+j) t))
+          ) ctx
+       in
+        lift_context ctx, fomega_lift_term n (k + List.length ctx) t
+      in
+      Match (ref,fomega_lift_term n k t,List.map lift_p pl)
+   | Inst t -> Inst (fomega_lift_term n k t)
+   | Skip t -> Skip (fomega_lift_term n (k+1) t)
+   | UnsafeCoerce t -> UnsafeCoerce (fomega_lift_term n k t)
+ in
+  if n = 0 then t else fomega_lift_term n 0 t
+;;
+
 let rec fomega_subst k t1 =
  function
   | Var n ->
-     if k=n then t1
+     if k=n then fomega_lift_type k t1
      else if n < k then Var n
      else Var (n-1)
   | Top -> Top
@@ -499,7 +549,9 @@ let rec term_of status ~metasenv context =
             let context = (name,NCic.Decl ty)::context in
              eat_branch 0 t context ctx t'
          | Top,_ -> assert false (*TODO: HOW??*)
-         (*BUG here, eta-expand!*)
+         | TSkip _, _
+         | Forall _,_
+         | Arrow _,_ -> assert false (*BUG here, eta-expand!*)
          | _, _ -> context,ctx, pat
        in
         try
@@ -523,7 +575,7 @@ let rec term_of status ~metasenv context =
       | `Proposition ->
           (match patterns_of pl with
               [] -> BottomElim
-            | [_lhs,rhs] -> rhs (*BUG HERE: Rels are not ok, bound in the _lhs*)
+            | [lhs,rhs] -> fomega_lift_term (- List.length lhs) rhs
             | _ -> assert false)
       | `Type ->
           Match (ref,term_of status ~metasenv context t, patterns_of pl))
