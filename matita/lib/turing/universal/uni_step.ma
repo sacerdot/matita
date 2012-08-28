@@ -248,6 +248,17 @@ definition map_move ≝
        mv ≠ null → c1 ≠ null
      dal fatto che c1 e mv sono contenuti nella table
  *)
+
+definition Pre_exec_action ≝ λt1.
+  ∃n,curconfig,ls,rs,c0,c1,s0,s1,table1,newconfig,mv,table2.
+  table_TM n (table1@〈comma,false〉::〈s1,false〉::newconfig@〈c1,false〉::〈comma,false〉::〈mv,false〉::table2) ∧
+  no_marks curconfig ∧ only_bits (curconfig@[〈s0,false〉]) ∧
+  only_bits (〈s1,false〉::newconfig) ∧ bit_or_null c1 = true ∧
+  |curconfig| = |newconfig| ∧
+  legal_tape ls 〈c0,false〉 rs ∧
+  t1 = midtape STape (〈c0,false〉::curconfig@〈s0,false〉::〈grid,false〉::ls) 〈grid,false〉 
+    (table1@〈comma,true〉::〈s1,false〉::newconfig@〈c1,false〉::〈comma,false〉::〈mv,false〉::table2@〈grid,false〉::rs).
+
 definition R_exec_action ≝ λt1,t2.
   ∀n,curconfig,ls,rs,c0,c1,s0,s1,table1,newconfig,mv,table2.
   table_TM n (table1@〈comma,false〉::〈s1,false〉::newconfig@〈c1,false〉::〈comma,false〉::〈mv,false〉::table2) → 
@@ -322,96 +333,114 @@ qed.
 
 *)
 
-lemma sem_exec_action : Realize ? exec_action R_exec_action.
-#intape
-cases (sem_seq … sem_init_copy
-        (sem_seq … sem_copy
-          (sem_seq … (sem_move_r …) sem_move_tape )) intape)
-#k * #outc * #Hloop #HR
-@(ex_intro ?? k) @(ex_intro ?? outc) % [ @Hloop ] -Hloop
-#n #curconfig #ls #rs #c0 #c1 #s0 #s1 #table1 #newconfig #mv #table2
-#Htable #Hcurconfig1 #Hcurconfig2 #Hnewconfig #Hc1 #Hlen #Htape #Hintape #t1' #Ht1'
-cases HR -HR #ta * whd in ⊢ (%→?); #Hta
-lapply (Hta (〈c0,false〉::curconfig) table1 s0 ls s1
-        (newconfig@〈c1,false〉::〈comma,false〉::〈mv,false〉::table2@〈grid,false〉::rs) … Hintape) -Hta
+(*lemma GRealize_to_Realize : 
+  ∀sig,M,R.GRealize sig M (λx.True) R → Realize sig M R.
+#sig #M #R #HR #t @HR //
+qed.*)
+
+lemma sem_exec_action : GRealize ? exec_action Pre_exec_action R_exec_action.
+@(sem_seq_app_guarded … (Realize_to_GRealize … sem_init_copy) ???)
+[3:@(sem_seq_app_guarded … sem_copy)
+ [3:@(sem_seq_app_guarded … (Realize_to_GRealize … (sem_move_r STape)))
+  [3:@(Realize_to_GRealize … (sem_move_tape …))
+  |@(λt.True)
+  |4://
+  |5:@sub_reflexive]
+ |@(λt.True)
+ |4://
+ |5:@sub_reflexive]
+|4:#t1 #t2 
+   * #n * #curconfig * #ls * #rs * #c0 * #c1 * #s0 * #s1 * #table1 * #newconfig 
+   * #mv * #table2 * * * * * * *
+   #Htable #Hcurconfig1 #Hcurconfig2 #Hnewconfig #Hc1 #Hlen #Htape #Ht1
+   whd in ⊢ (%→?); >Ht1 #HR
+   lapply (HR (〈c0,false〉::curconfig) table1 s0 ls s1 
+              (newconfig@〈c1,false〉::〈comma,false〉::〈mv,false〉::table2@〈grid,false〉::rs) ???? (refl ??))
+   [(*Hcurconfig2*) @daemon
+   |(*by Htable *) @daemon
+   |(*Hcurconfig2*) @daemon
+   |(*Hcurconfig1*) @daemon ]
+   -HR #Ht2 whd
+   %{(〈grid,false〉::ls)} %{s0} %{s1} %{c0} %{c1} %{(〈mv,false〉::table2@〈grid,false〉::rs)}
+   %{newconfig} %{(〈comma,false〉::reverse ? table1)} %{curconfig} >Ht2
+   % [ % [ % [ % [ % [ % [ % [ % 
+   [ %
+   |(*by Htabel*) @daemon ]
+   |(*by Htable*) @daemon ]
+   |// ]
+   |>Hlen % ]
+   |@Hcurconfig2 ]
+   |@Hnewconfig ]
+   |cases Htape * * // ]
+   | // ] 
+   |1,2:skip]
+#ta #outtape #HR #n #curconfig #ls #rs #c0 #c1 #s0 #s1 #table1 #newconfig #mv
+#table2 #Htable #Hcurconfig1 #Hcurconfig2 #Hnewconfig #Hbitnullc1 #Hlen #Htape
+#Hta #ta' #Hta'
+cases HR -HR #tb * whd in ⊢ (%→?); #Htb 
+lapply (Htb (〈c0,false〉::curconfig) table1 s0 ls s1 
+            (newconfig@〈c1,false〉::〈comma,false〉::〈mv,false〉::table2@〈grid,false〉::rs)
+            ???? Hta) -Htb
 [ (*Hcurconfig2*) @daemon
 | (*Htable*) @daemon
-| (*bit_or_null c0 = true *) @daemon
-| (*Hcurconfig1*) @daemon
-| #Hta * #tb * whd in ⊢ (%→?); #Htb
-  lapply (Htb (〈grid,false〉::ls) s0 s1 c0 c1 (〈mv,false〉::table2@〈grid,false〉::rs) newconfig (〈comma,false〉::reverse ? table1) curconfig Hta ????????) -Htb
-  [9:|*:(* bit_or_null c0,c1; |curconfig| = |newconfig|*) @daemon ]
-  #Htb * #tc * whd in ⊢ (%→?); * #_ #Htc lapply (Htc … Htb) -Htc whd in ⊢(???(??%%%)→?);#Htc
-  whd in ⊢ (%→?); #Houtc whd in Htc:(???%); whd in Htc:(???(??%%%));
-  lapply (Houtc rs n 
-    (〈comma,false〉::〈c1,false〉::reverse ? newconfig@〈s1,false〉::〈comma,false〉::reverse ? table1)
-    mv table2 (merge_char c0 c1) (reverse ? newconfig@[〈s1,false〉]) ls ????????)
-  [3: cases Htape -Htape * * #Hnomarks #Hbits #Hc0 #Hlsrs % [ % [ %
-    [ #x #Hx cases (orb_true_l … Hx) #Hx'
-      [ >(\P Hx') %
-      | @Hnomarks @memb_cons // ]
-    | @Hbits ]
-    | cases (merge_char_cases c0 c1) #Hmerge >Hmerge // ]
-    | cases (true_or_false (c0 == null)) #Hc0'
-      [ cases Hlsrs -Hlsrs 
-        [ *
-          [ >(\P Hc0') * #Hfalse @False_ind /2/
-          | #Hlsnil % %2 // ]
-        | #Hrsnil %2 // ] 
-      | % % @merge_char_not_null @(\Pf Hc0') ] ]
-  |4:>Htc @(eq_f3 … (midtape ?))
-    [ @eq_f @eq_f >associative_append >associative_append %
-    | %
-    | % ]
+| (* by Htape bit_or_null c0 = true, moreover Hcurconfig2 *) @daemon
+| (*Hcurconfig1*) @daemon ]
+#Htb * #tc * whd in ⊢ (%→?); #Htc
+lapply (Htc (〈grid,false〉::ls) s0 s1 c0 c1 (〈mv,false〉::table2@〈grid,false〉::rs) newconfig (〈comma,false〉::reverse ? table1) curconfig Htb ????????) -Htc
+[9:|*:(* bit_or_null c0,c1; |curconfig| = |newconfig|*) @daemon ]
+#Htc * #td * whd in ⊢ (%→?); * #_ #Htd lapply (Htd … Htc) -Htd whd in ⊢(???(??%%%)→?);#Htd
+whd in ⊢ (%→?); #Houtc whd in Htd:(???%); whd in Htd:(???(??%%%));
+lapply (Houtc rs n 
+  (〈comma,false〉::〈c1,false〉::reverse ? newconfig@〈s1,false〉::〈comma,false〉::reverse ? table1)
+  mv table2 (merge_char c0 c1) (reverse ? newconfig@[〈s1,false〉]) ls ????????)
+[3: cases Htape -Htape * * #Hnomarks #Hbits #Hc0 #Hlsrs % [ % [ %
+  [ #x #Hx cases (orb_true_l … Hx) #Hx'
+    [ >(\P Hx') %
+    | @Hnomarks @memb_cons // ]
+  | @Hbits ]
+  | cases (merge_char_cases c0 c1) #Hmerge >Hmerge // ]
+  | cases (true_or_false (c0 == null)) #Hc0'
+    [ cases Hlsrs -Hlsrs 
+      [ *
+        [ >(\P Hc0') * #Hfalse @False_ind /2/
+        | #Hlsnil % %2 // ]
+      | #Hrsnil %2 // ] 
+    | % % @merge_char_not_null @(\Pf Hc0') ] ]
+|4:>Htd @(eq_f3 … (midtape ?))
+  [ @eq_f @eq_f >associative_append >associative_append %
   | %
-  || >reverse_cons >reverse_cons >reverse_append >reverse_reverse 
-     >reverse_cons >reverse_cons >reverse_reverse
-     >associative_append >associative_append >associative_append
-     >associative_append >associative_append
-     @Htable
-  | (* well formedness of table *) @daemon
-  | (* Hnewconfig *) @daemon
-  | (* bit_or_null mv = true (well formedness of table) *) @daemon
-  | -Houtc * #ls1 * #rs1 * #newc * #Hnewtapelegal * #Houtc *
-    [ *
-      [ * #Hmv #Htapemove
-        @(ex_intro ?? ls1) @(ex_intro ?? rs1) @(ex_intro ?? newc)
-        %
-        [ %
-          [ >Houtc -Houtc >reverse_append
-            >reverse_reverse >reverse_single @eq_f
-            >reverse_cons >reverse_cons >reverse_append >reverse_cons
-            >reverse_cons >reverse_reverse >reverse_reverse
-            >associative_append >associative_append
-            >associative_append >associative_append
-            >associative_append >associative_append %
-          | >Hmv >Ht1' >Htapemove 
-            (* mv = bit false -→ c1 = bit ? *)
-            cut (∃c1'.c1 = bit c1') [ @daemon ] * #c1' #Hc1
-            >Hc1 >tape_move_left_eq >(legal_tape_left … Htape) 
-            >(legal_tape_right … Htape) %
-          ]
-        | //
+  | % ]
+| %
+|| >reverse_cons >reverse_cons >reverse_append >reverse_reverse 
+   >reverse_cons >reverse_cons >reverse_reverse
+   >associative_append >associative_append >associative_append
+   >associative_append >associative_append
+   @Htable
+| (* well formedness of table *) @daemon
+| (* Hnewconfig *) @daemon
+| (* bit_or_null mv = true (well formedness of table) *) @daemon
+| -Houtc * #ls1 * #rs1 * #newc * #Hnewtapelegal * #Houtc *
+  [ *
+    [ * #Hmv #Htapemove
+      @(ex_intro ?? ls1) @(ex_intro ?? rs1) @(ex_intro ?? newc)
+      %
+      [ %
+        [ >Houtc -Houtc >reverse_append
+          >reverse_reverse >reverse_single @eq_f
+          >reverse_cons >reverse_cons >reverse_append >reverse_cons
+          >reverse_cons >reverse_reverse >reverse_reverse
+          >associative_append >associative_append
+          >associative_append >associative_append
+          >associative_append >associative_append %
+        | >Hmv >Hta' >Htapemove 
+          (* mv = bit false -→ c1 = bit ? *)
+          cut (∃c1'.c1 = bit c1') [ @daemon ] * #c1' #Hc1
+          >Hc1 >tape_move_left_eq >(legal_tape_left … Htape) 
+          >(legal_tape_right … Htape) %
         ]
-      | * #Hmv #Htapemove 
-        @(ex_intro ?? ls1) @(ex_intro ?? rs1) @(ex_intro ?? newc) %
-        [ %
-          [ >Houtc -Houtc >reverse_append
-            >reverse_reverse >reverse_single @eq_f
-            >reverse_cons >reverse_cons >reverse_append >reverse_cons
-            >reverse_cons >reverse_reverse >reverse_reverse
-            >associative_append >associative_append
-            >associative_append >associative_append
-            >associative_append >associative_append %
-          |>Hmv >Ht1' >Htapemove 
-            cut (∃c1'.c1 = bit c1') [ @daemon ] * #c1' #Hc1
-            >Hc1 >tape_move_right_eq >(legal_tape_left … Htape) 
-            >(legal_tape_right … Htape) %
-          ]
-        | //
-        ]
+      | //
       ]
-    | * * * #Hmv #Hlseq #Hrseq #Hnewc 
+    | * #Hmv #Htapemove 
       @(ex_intro ?? ls1) @(ex_intro ?? rs1) @(ex_intro ?? newc) %
       [ %
         [ >Houtc -Houtc >reverse_append
@@ -421,18 +450,35 @@ lapply (Hta (〈c0,false〉::curconfig) table1 s0 ls s1
           >associative_append >associative_append
           >associative_append >associative_append
           >associative_append >associative_append %
-        |>Hmv >Ht1' cases c1 in Hnewc;
-          [ #c1' whd in ⊢ (??%?→?);#Hnewc <Hnewc
-            >Hlseq >Hrseq whd in ⊢ (??%%);
-            >(legal_tape_left … Htape) >(legal_tape_right … Htape) %
-          | whd in ⊢ (??%?→?); #Hnewc >Hnewc >Hlseq >Hrseq %
-          |*: whd in ⊢ (??%?→?);#Hnewc <Hnewc
-            >Hlseq >Hrseq whd in ⊢ (??%%);
-            >(legal_tape_left … Htape) >(legal_tape_right … Htape) %
-          ]
+        |>Hmv >Hta' >Htapemove 
+          cut (∃c1'.c1 = bit c1') [ @daemon ] * #c1' #Hc1
+          >Hc1 >tape_move_right_eq >(legal_tape_left … Htape) 
+          >(legal_tape_right … Htape) %
         ]
       | //
       ]
+    ]
+  | * * * #Hmv #Hlseq #Hrseq #Hnewc 
+    @(ex_intro ?? ls1) @(ex_intro ?? rs1) @(ex_intro ?? newc) %
+    [ %
+      [ >Houtc -Houtc >reverse_append
+        >reverse_reverse >reverse_single @eq_f
+        >reverse_cons >reverse_cons >reverse_append >reverse_cons
+        >reverse_cons >reverse_reverse >reverse_reverse
+        >associative_append >associative_append
+        >associative_append >associative_append
+        >associative_append >associative_append %
+      |>Hmv >Hta' cases c1 in Hnewc;
+        [ #c1' whd in ⊢ (??%?→?);#Hnewc <Hnewc
+          >Hlseq >Hrseq whd in ⊢ (??%%);
+          >(legal_tape_left … Htape) >(legal_tape_right … Htape) %
+        | whd in ⊢ (??%?→?); #Hnewc >Hnewc >Hlseq >Hrseq %
+        |*: whd in ⊢ (??%?→?);#Hnewc <Hnewc
+          >Hlseq >Hrseq whd in ⊢ (??%%);
+          >(legal_tape_left … Htape) >(legal_tape_right … Htape) %
+        ]
+      ]
+    | //
     ]
   ]
 ]
