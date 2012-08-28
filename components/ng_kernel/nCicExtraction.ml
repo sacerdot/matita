@@ -95,7 +95,7 @@ type term =
   | LetIn of string * (* typ **) term * term
   | Match of reference * term * (term_context * term) list
   | BottomElim
-  | TLambda of (* string **) term
+  | TLambda of string * term
   | Inst of (*typ_former **) term
   | Skip of term
   | UnsafeCoerce of term
@@ -114,12 +114,12 @@ let rec size_of_term =
     | Rel r -> 1
     | UnitTerm -> 1
     | Const c -> 1
-    | Lambda (name, body) -> 1 + size_of_term body
+    | Lambda (_, body) -> 1 + size_of_term body
     | Appl l -> List.length l
-    | LetIn (name, def, body) -> 1 + size_of_term def + size_of_term body
-    | Match (name, case, pats) -> 1 + size_of_term case + List.length pats
+    | LetIn (_, def, body) -> 1 + size_of_term def + size_of_term body
+    | Match (_, case, pats) -> 1 + size_of_term case + List.length pats
     | BottomElim -> 1
-    | TLambda t -> size_of_term t
+    | TLambda (_,t) -> size_of_term t
     | Inst t -> size_of_term t
     | Skip t -> size_of_term t
     | UnsafeCoerce t -> 1 + size_of_term t
@@ -426,7 +426,7 @@ let rec term_of status ~metasenv context =
      (* CSC: non-invariant assumed here about "_" *)
      (match classify status ~metasenv context ty with
        | `Kind ->
-           TLambda (term_of status ~metasenv ((b,NCic.Decl ty)::context) bo)
+           TLambda (b,term_of status ~metasenv ((b,NCic.Decl ty)::context) bo)
        | `KindOrType (* ??? *)
        | `Type ->
            Lambda (b, term_of status ~metasenv ((b,NCic.Decl ty)::context) bo)
@@ -481,12 +481,12 @@ let rec term_of status ~metasenv context =
          (*CSC: unify the three cases below? *)
          | Arrow (_, t), NCic.Lambda (name, ty, t') ->
            let ctx =
-            (Some (name,`OfType Unit(*(typ_of status ~metasenv context ty)*)))::ctx in
+            (Some (name,`OfType (typ_of status ~metasenv context ty)))::ctx in
            let context = (name,NCic.Decl ty)::context in
             eat_branch 0 t context ctx t'
          | Forall (_,_,t),NCic.Lambda (name, ty, t') ->
            let ctx =
-            (Some (name,`OfKind Type(*(kind_of status ~metasenv context ty)*)))::ctx in
+            (Some (name,`OfKind (kind_of status ~metasenv context ty)))::ctx in
            let context = (name,NCic.Decl ty)::context in
             eat_branch 0 t context ctx t'
          | TSkip t,NCic.Lambda (name, ty, t') ->
@@ -856,8 +856,10 @@ let rec pretty_print_term status ctxt =
                in
                  "  " ^ name ^ " " ^ bound_names ^ " -> " ^ body
              ) pl)
-    | Skip t
-    | TLambda t -> pretty_print_term status (""@::ctxt) t
+    | Skip t -> pretty_print_term status ("[[skipped]]"@::ctxt) t
+    | TLambda (name,t) ->
+       let name = capitalize `TypeVariable name in
+        pretty_print_term status (name@::ctxt) t
     | Inst t -> pretty_print_term status ctxt t
 ;;
 
