@@ -328,17 +328,21 @@ let rec split_typ_lambdas status n ~metasenv context typ =
 ;;
 
 
-let context_of_typformer status ~metasenv context =
+let rev_context_of_typformer status ~metasenv context =
  function
     NCic.Const (NReference.Ref (_,NReference.Ind _) as ref)
   | NCic.Const (NReference.Ref (_,NReference.Def _) as ref)
   | NCic.Const (NReference.Ref (_,NReference.Decl) as ref)
   | NCic.Const (NReference.Ref (_,NReference.Fix _) as ref) ->
-     (try fst (ReferenceMap.find ref status#extraction_db)
+     (try List.rev (fst (ReferenceMap.find ref status#extraction_db))
       with
        Not_found ->
-        prerr_endline ("REF NOT FOUND: " ^ NReference.string_of_reference ref);
-        assert false (* IMPOSSIBLE *))
+        (* This can happen only when we are processing the type of
+           the constructor of a small singleton type. In this case
+           we are not interested in all the type, but only in its
+           backbone. That is why we can safely return the dummy context here *)
+        let rec dummy = None::dummy in
+        dummy)
   | NCic.Match _ -> assert false (* TODO ???? *)
   | NCic.Rel n ->
      let typ =
@@ -347,7 +351,7 @@ let context_of_typformer status ~metasenv context =
        | _,NCic.Def _ -> assert false (* IMPOSSIBLE *) in
      let typ_ctx = snd (HExtlib.split_nth n context) in
      let typ = kind_of status ~metasenv typ_ctx typ in
-      fst (split_kind_prods [] typ)
+      List.rev (fst (split_kind_prods [] typ))
   | NCic.Meta _ -> assert false (* TODO *)
   | NCic.Const (NReference.Ref (_,NReference.Con _))
   | NCic.Const (NReference.Ref (_,NReference.CoFix _))
@@ -378,11 +382,11 @@ let rec typ_of status ~metasenv context k =
   | NCic.Rel n -> Var n
   | NCic.Const ref -> TConst ref
   | NCic.Appl (he::args) ->
-     let he_context = context_of_typformer status ~metasenv context he in
+     let rev_he_context= rev_context_of_typformer status ~metasenv context he in
      TAppl (typ_of status ~metasenv context he ::
       List.map
        (function None -> Unit | Some ty -> typ_of status ~metasenv context ty)
-       (skip_args status ~metasenv context (List.rev he_context,args)))
+       (skip_args status ~metasenv context (rev_he_context,args)))
   | NCic.Appl _ -> assert false (* TODO: when head is a match/let rec;
                                    otherwise NOT A TYPE *)
   | NCic.Meta _
