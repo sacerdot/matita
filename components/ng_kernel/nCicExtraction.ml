@@ -1031,8 +1031,8 @@ let rec pp_obj status (_,ref,obj_kind) =
            let namectx = namectx_of_ctx left in
             pp_ref status ref ^ " :: " ^
              pretty_print_type status namectx tys
-         ) cl
-      )) il)
+         ) cl) ^ "\n    deriving (Prelude.Show)"
+      ) il)
  (* inductive and records missing *)
 
 let rec infos_of (info,_,obj_kind) =
