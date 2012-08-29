@@ -127,15 +127,14 @@ let rec size_of_term =
 
 module ReferenceMap = Map.Make(struct type t = NReference.reference let compare = NReference.compare end)
 
-type info_el = typ_context * typ option
+module GlobalNames = Set.Make(String)
+
+type info_el =
+ string * [`Type of typ_context * typ option | `Constructor | `Function ]
 type info = (NReference.reference * info_el) list
-type db = info_el ReferenceMap.t
+type db = info_el ReferenceMap.t * GlobalNames.t
 
 let empty_info = []
-
-let register_info db (ref,info) = ReferenceMap.add ref info db
-
-let register_infos = List.fold_left register_info
 
 type obj_kind =
    TypeDeclaration of typ_former_decl
@@ -308,7 +307,7 @@ class type g_status =
 class virtual status =
  object
   inherit NCic.status
-  val extraction_db = ReferenceMap.empty
+  val extraction_db = ReferenceMap.empty, GlobalNames.empty
   method extraction_db = extraction_db
   method set_extraction_db v = {< extraction_db = v >}
   method set_extraction_status
@@ -363,13 +362,18 @@ let rev_context_of_typformer status ~metasenv context =
   | NCic.Const (NReference.Ref (_,NReference.Def _) as ref)
   | NCic.Const (NReference.Ref (_,NReference.Decl) as ref)
   | NCic.Const (NReference.Ref (_,NReference.Fix _) as ref) ->
-     (try List.rev (fst (ReferenceMap.find ref status#extraction_db))
+     (try
+       match snd (ReferenceMap.find ref (fst status#extraction_db)) with
+          `Type (ctx,_) -> List.rev ctx
+        | `Constructor
+        | `Function -> assert false
       with
        Not_found ->
         (* This can happen only when we are processing the type of
            the constructor of a small singleton type. In this case
            we are not interested in all the type, but only in its
-           backbone. That is why we can safely return the dummy context here *)
+           backbone. That is why we can safely return the dummy context
+           here *)
         let rec dummy = None::dummy in
         dummy)
   | NCic.Match _ -> assert false (* TODO ???? *)
@@ -488,7 +492,15 @@ let rec fomega_subst k t1 =
   | Forall (n,kind,t) -> Forall (n,kind,fomega_subst (k+1) t1 t)
   | TAppl args -> TAppl (List.map (fomega_subst k t1) args)
 
-let fomega_lookup status ref = snd (ReferenceMap.find ref status#extraction_db)
+let fomega_lookup status ref =
+ try
+  match snd (ReferenceMap.find ref (fst status#extraction_db)) with
+     `Type (_,bo) -> bo
+   | `Constructor
+   | `Function -> assert false
+ with
+  Not_found ->
+prerr_endline ("BUG, THIS SHOULD NEVER HAPPEN " ^ NReference.string_of_reference ref); None
 
 let rec fomega_whd status ty =
  match ty with
@@ -663,6 +675,27 @@ type 'a result =
   | Success of 'a
 ;;
 
+let fresh_name_of_ref status ref =
+ let candidate = NCicPp.r2s status true ref in
+ let rec freshen candidate =
+  if GlobalNames.mem candidate (snd status#extraction_db) then
+   freshen (candidate ^ "'")
+  else
+   candidate
+ in
+  freshen candidate
+
+let register_info (db,names) (ref,(name,_ as info_el)) =
+ ReferenceMap.add ref info_el db,GlobalNames.add name names
+
+let register_name_and_info status (ref,info_el) =
+ let name = fresh_name_of_ref status ref in
+ let info = ref,(name,info_el) in
+ let infos,names = status#extraction_db in
+  status#set_extraction_db (register_info (infos,names) info), info
+
+let register_infos = List.fold_left register_info
+
 let object_of_constant status ~metasenv ref bo ty =
   match classify status ~metasenv [] ty with
     | `Kind ->
@@ -682,10 +715,9 @@ let object_of_constant status ~metasenv ref bo ty =
                 ctx0 ctx
               in
               let bo = typ_of status ~metasenv ctx bo in
-              let info = ref,(nicectx,Some bo) in
-               status#set_extraction_db
-                (register_info status#extraction_db info),
-               Success ([info],ref,TypeDefinition((nicectx,res),bo))
+              let info = ref,`Type (nicectx,Some bo) in
+              let status,info = register_name_and_info status info in
+               status,Success ([info],ref,TypeDefinition((nicectx,res),bo))
           | `Kind -> status, Erased (* DPM: but not really, more a failure! *)
           | `PropKind
           | `Proposition -> status, Erased
@@ -694,10 +726,12 @@ let object_of_constant status ~metasenv ref bo ty =
     | `Proposition -> status, Erased
     | `KindOrType (* ??? *)
     | `Type ->
-       (* CSC: TO BE FINISHED, REF NON REGISTERED *)
        let ty = typ_of status ~metasenv [] ty in
+       let info = ref,`Function in
+       let status,info = register_name_and_info status info in
         status,
-        Success ([],ref, TermDefinition (split_typ_prods [] ty, term_of status ~metasenv [] bo))
+         Success ([info],ref, TermDefinition (split_typ_prods [] ty,
+         term_of status ~metasenv [] bo))
     | `Term _ -> status, Failure "Non-term classified as a term.  This is a bug."
 ;;
 
@@ -716,20 +750,21 @@ let object_of_inductive status ~metasenv uri ind leftno il =
           let right,left = HExtlib.split_nth (List.length ctx - leftno) ctx in
           let ref =
            NReference.reference_of_spec uri (NReference.Ind (ind,i,leftno)) in
-          let info = ref,(ctx,None) in
-          let status =
-           status#set_extraction_db
-            (register_info status#extraction_db info) in
-          let cl =
-           HExtlib.list_mapi
-            (fun (_,_,ty) j ->
+          let info = ref,`Type (ctx,None) in
+          let status,info = register_name_and_info status info in
+          let _,status,cl_rev,infos =
+           List.fold_left
+            (fun (j,status,res,infos) (_,_,ty) ->
               let ctx,ty =
                NCicReduction.split_prods status ~subst:[] [] leftno ty in
               let ty = typ_of status ~metasenv ctx ty in
-               NReference.mk_constructor (j+1) ref,ty
-            ) cl
+              let ref = NReference.mk_constructor j ref in
+              let info = ref,`Constructor in
+              let status,info = register_name_and_info status info in
+               j+1,status,((ref,ty)::res),info::infos
+            ) (1,status,[],[]) cl
           in
-           status,i+1,([info],ref,left,right,cl)::res
+           status,i+1,(info::infos,ref,left,right,List.rev cl_rev)::res
    ) (status,0,[]) il
  in
   match rev_tyl with
@@ -746,16 +781,18 @@ let object_of status (uri,height,metasenv,subst,obj_kind) =
             | `Kind ->
               let ty = kind_of status ~metasenv [] ty in
               let ctx,_ as res = split_kind_prods [] ty in
-              let info = ref,(ctx,None) in
-                status#set_extraction_db
-                  (register_info status#extraction_db info),
-                    Success ([info],ref, TypeDeclaration res)
+              let info = ref,`Type (ctx,None) in
+              let status,info = register_name_and_info status info in
+               status, Success ([info],ref, TypeDeclaration res)
             | `PropKind
             | `Proposition -> status, Erased
             | `Type
             | `KindOrType (*???*) ->
               let ty = typ_of status ~metasenv [] ty in
-                status, Success ([],ref, TermDeclaration (split_typ_prods [] ty))
+              let info = ref,`Function in
+              let status,info = register_name_and_info status info in
+               status,Success ([info],ref,
+                TermDeclaration (split_typ_prods [] ty))
             | `Term _ -> status, Failure "Type classified as a term.  This is a bug.")
         | NCic.Constant (_,_,Some bo,ty,_) ->
            let ref = NReference.reference_of_spec uri (NReference.Def height) in
@@ -823,7 +860,7 @@ let string_of_char_list s =
  * ----------------------------------------------------------------------------
  *)
 
-let remove_underscores_and_mark =
+let remove_underscores_and_mark l =
   let rec aux char_list_buffer positions_buffer position =
     function
       | []    -> (string_of_char_list char_list_buffer, positions_buffer)
@@ -833,7 +870,7 @@ let remove_underscores_and_mark =
         else
           aux (x::char_list_buffer) positions_buffer (position + 1) xs
   in
-    aux [] [] 0
+   if l = ['_'] then "_",[] else aux [] [] 0 l
 ;;
 
 let rec capitalize_marked_positions s =
@@ -864,17 +901,15 @@ let idiomatic_haskell_term_name_of_string =
   String.uncapitalize
 ;;
 
-(*CSC: code to be changed soon when we implement constructors and
-  we fix the code for term application *)
 let classify_reference status ref =
-  if ReferenceMap.mem ref status#extraction_db then
-    `TypeName
-  else
-   let NReference.Ref (_,r) = ref in
-    match r with
-       NReference.Con _ -> `Constructor
-     | NReference.Ind _ -> assert false
-     | _ -> `FunctionName
+ try
+  match snd (ReferenceMap.find ref (fst status#extraction_db)) with
+     `Type _ -> `TypeName
+   | `Constructor -> `Constructor
+   | `Function -> `FunctionName
+ with
+  Not_found ->
+prerr_endline ("BUG, THIS SHOULD NEVER HAPPEN " ^ NReference.string_of_reference ref); `FunctionName
 ;;
 
 let capitalize classification name =
@@ -888,7 +923,12 @@ let capitalize classification name =
 
 let pp_ref status ref =
  capitalize (classify_reference status ref)
-  (NCicPp.r2s status true ref)
+  (try fst (ReferenceMap.find ref (fst status#extraction_db))
+   with Not_found ->
+prerr_endline ("BUG with coercions: " ^ NReference.string_of_reference ref);
+(*assert false*)
+ NCicPp.r2s status true ref (* BUG: this should never happen *)
+)
 
 (* cons avoid duplicates *)
 let rec (@:::) name l =
@@ -1070,11 +1110,15 @@ let refresh_uri_in_typ ~refresh_uri_in_reference =
 
 let refresh_uri_in_info ~refresh_uri_in_reference infos =
  List.map
-  (function (ref,(ctx,typ)) ->
-    let typ =
-     match typ with
-        None -> None
-      | Some t -> Some (refresh_uri_in_typ ~refresh_uri_in_reference t)
-    in
-     refresh_uri_in_reference ref,(ctx,typ))
+  (function (ref,el) ->
+    match el with
+       _,`Constructor
+     | _,`Function -> refresh_uri_in_reference ref,el
+     | name,`Type (ctx,typ) ->
+         let typ =
+          match typ with
+             None -> None
+           | Some t -> Some (refresh_uri_in_typ ~refresh_uri_in_reference t)
+         in
+          refresh_uri_in_reference ref, (name,`Type (ctx,typ)))
   infos
