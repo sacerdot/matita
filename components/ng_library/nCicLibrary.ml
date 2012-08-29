@@ -146,11 +146,10 @@ let init = load_db;;
 
 class virtual status =
  object
-  inherit NCicExtraction.status
+  inherit NCic.status
   val timestamp = (time0 : timestamp)
   method timestamp = timestamp
   method set_timestamp v = {< timestamp = v >}
-  (*CSC: bug here, we are not copying the NCicExtraction part of the status *)
  end
 
 let time_travel0 (sto,ali) =
@@ -357,14 +356,7 @@ let add_obj status ((u,_,_,_,_) as orig_obj) =
          ) il)
   in
   local_aliases := references @ !local_aliases;
-  let status = status#set_timestamp (!storage,!local_aliases) in
-  (* To test extraction *)
-  try
-   ignore (Helm_registry.get "extract_haskell");
-   let status,msg = NCicExtraction.haskell_of_obj status orig_obj in
-    prerr_endline msg; status
-  with
-   Helm_registry.Key_not_found _ -> status
+  status#set_timestamp (!storage,!local_aliases)
 ;;
 
 let add_constraint status u1 u2 = 
