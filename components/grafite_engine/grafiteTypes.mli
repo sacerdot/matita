@@ -38,6 +38,7 @@ class virtual status :
    inherit NTacStatus.tac_status
    inherit NCicLibrary.dumpable_status
    inherit NCicLibrary.status
+   inherit NCicExtraction.status
    inherit GrafiteParser.status
    inherit TermContentPres.status
    method baseuri: string

@@ -41,6 +41,7 @@ class virtual status = fun (b : string) ->
    inherit ([Continuationals.Stack.t] NTacStatus.status fake_obj (Continuationals.Stack.empty))
    inherit NCicLibrary.dumpable_status
    inherit NCicLibrary.status
+   inherit NCicExtraction.status
    inherit GrafiteParser.status
    inherit TermContentPres.status
    val baseuri = b
