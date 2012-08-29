@@ -275,6 +275,34 @@ let index_obj_for_auto status (uri, height, _, _, kind) =
    NCicLibrary.dump_obj status (record_index_obj data)
 ;; 
 
+let basic_extract_obj obj status =
+ try
+  ignore (Helm_registry.get "extract_haskell");
+  let status,(msg,infos) = NCicExtraction.haskell_of_obj status obj in
+   prerr_endline msg;
+   status,infos
+ with
+    Helm_registry.Key_not_found _ -> status,NCicExtraction.empty_info
+  | exn -> prerr_endline ("EXTRACTION FAILURE: " ^ Printexc.to_string exn); assert false
+;;
+
+let inject_extract_obj =
+ let basic_extract_obj info
+   ~refresh_uri_in_universe ~refresh_uri_in_term ~refresh_uri_in_reference
+   ~alias_only status
+ =
+  let info= NCicExtraction.refresh_uri_in_info ~refresh_uri_in_reference info in
+   status#set_extraction_db
+    (NCicExtraction.register_infos status#extraction_db info)
+ in
+  GrafiteTypes.Serializer.register#run "extraction" basic_extract_obj
+;;
+
+let eval_extract_obj status obj = 
+ let status,infos = basic_extract_obj obj status in
+  NCicLibrary.dump_obj status (inject_extract_obj infos)
+;;
+
 (*
 module EmptyC = 
   struct
@@ -582,6 +610,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
         let obj = uri,height,[],[],obj_kind in
         let old_status = status in
         let status = NCicLibrary.add_obj status obj in
+        let status = eval_extract_obj status obj in
        (try
         let index_obj = index &&
          match obj_kind with

@@ -11,6 +11,7 @@
 
 (* $Id: nCicEnvironment.mli 11172 2011-01-11 21:06:37Z sacerdot $ *)
 
+type info
 type db
 
 class type g_status =
@@ -26,6 +27,14 @@ class virtual status :
   method set_extraction_status: #g_status -> 'self
  end
 
+val empty_info: info
+
+val refresh_uri_in_info:
+ refresh_uri_in_reference:(NReference.reference -> NReference.reference) ->
+  info -> info
+
+val register_infos: db -> info -> db
 
 (* Haskell *)
-val haskell_of_obj: (#status as 'status) -> NCic.obj -> 'status * string
+val haskell_of_obj: (#status as 'status) -> NCic.obj ->
+ 'status * (string * info)

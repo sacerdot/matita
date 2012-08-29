@@ -69,14 +69,14 @@ type typ =
 
 let rec size_of_type =
   function
-    | Var v -> 1
+    | Var _ -> 1
     | Unit -> 1
     | Top -> 1
-    | TConst c -> 1
+    | TConst _ -> 1
     | Arrow _ -> 2
     | TSkip t -> size_of_type t
     | Forall _ -> 2
-    | TAppl l -> 1
+    | TAppl _ -> 1
 ;;
 
 (* None = dropped abstraction *)
@@ -111,9 +111,9 @@ let mk_appl f x =
 
 let rec size_of_term =
   function
-    | Rel r -> 1
+    | Rel _ -> 1
     | UnitTerm -> 1
-    | Const c -> 1
+    | Const _ -> 1
     | Lambda (_, body) -> 1 + size_of_term body
     | Appl l -> List.length l
     | LetIn (_, def, body) -> 1 + size_of_term def + size_of_term body
@@ -125,16 +125,28 @@ let rec size_of_term =
     | UnsafeCoerce t -> 1 + size_of_term t
 ;;
 
+module ReferenceMap = Map.Make(struct type t = NReference.reference let compare = NReference.compare end)
+
+type info_el = typ_context * typ option
+type info = (NReference.reference * info_el) list
+type db = info_el ReferenceMap.t
+
+let empty_info = []
+
+let register_info db (ref,info) = ReferenceMap.add ref info db
+
+let register_infos = List.fold_left register_info
+
 type obj_kind =
    TypeDeclaration of typ_former_decl
  | TypeDefinition of typ_former_def
  | TermDeclaration of term_former_decl
  | TermDefinition of term_former_def
- | LetRec of (NReference.reference * obj_kind) list
+ | LetRec of (info * NReference.reference * obj_kind) list
    (* reference, left, right, constructors *)
- | Algebraic of (NReference.reference * typ_context * typ_context * (NReference.reference * typ) list) list
+ | Algebraic of (info * NReference.reference * typ_context * typ_context * (NReference.reference * typ) list) list
 
-type obj = NReference.reference * obj_kind
+type obj = info * NReference.reference * obj_kind
 
 (* For LetRec and Algebraic blocks *)
 let dummyref =
@@ -176,7 +188,7 @@ let rec classify_not_term status context t =
      (* Lambdas can me met in branches of matches, expecially when the
         output type is a product *)
      classify_not_term status ((n,NCic.Decl s)::context) t
-  | NCic.Match (r,_,_,pl) ->
+  | NCic.Match (_,_,_,pl) ->
      let classified_pl = List.map (classify_not_term status context) pl in
       sup classified_pl
   | NCic.Const (NReference.Ref (_,NReference.Fix _)) ->
@@ -287,10 +299,6 @@ let rec skip_args status ~metasenv context =
       | `PropKind -> None::skip_args status ~metasenv context (tl1,tl2)
       | `Term _ -> assert false (* IMPOSSIBLE *)
 ;;
-
-module ReferenceMap = Map.Make(struct type t = NReference.reference let compare = NReference.compare end)
-
-type db = (typ_context * typ option) ReferenceMap.t
 
 class type g_status =
  object
@@ -578,7 +586,7 @@ let rec term_of status ~metasenv context =
        in
         try
          List.map2
-          (fun (_, name, ty) pat ->
+          (fun (_, _name, ty) pat ->
             (*BUG: recomputing every time the type of the constructor*)
             let ty = typ_of status ~metasenv context ty in
             let context,lhs,rhs = eat_branch leftno ty context [] pat in
@@ -674,10 +682,10 @@ let object_of_constant status ~metasenv ref bo ty =
                 ctx0 ctx
               in
               let bo = typ_of status ~metasenv ctx bo in
+              let info = ref,(nicectx,Some bo) in
                status#set_extraction_db
-                (ReferenceMap.add ref (nicectx,Some bo)
-                  status#extraction_db),
-               Success (ref,TypeDefinition((nicectx,res),bo))
+                (register_info status#extraction_db info),
+               Success ([info],ref,TypeDefinition((nicectx,res),bo))
           | `Kind -> status, Erased (* DPM: but not really, more a failure! *)
           | `PropKind
           | `Proposition -> status, Erased
@@ -689,7 +697,7 @@ let object_of_constant status ~metasenv ref bo ty =
        (* CSC: TO BE FINISHED, REF NON REGISTERED *)
        let ty = typ_of status ~metasenv [] ty in
         status,
-        Success (ref, TermDefinition (split_typ_prods [] ty, term_of status ~metasenv [] bo))
+        Success ([],ref, TermDefinition (split_typ_prods [] ty, term_of status ~metasenv [] bo))
     | `Term _ -> status, Failure "Non-term classified as a term.  This is a bug."
 ;;
 
@@ -708,9 +716,11 @@ let object_of_inductive status ~metasenv uri ind leftno il =
           let right,left = HExtlib.split_nth (List.length ctx - leftno) ctx in
           let ref =
            NReference.reference_of_spec uri (NReference.Ind (ind,i,leftno)) in
+prerr_endline ("AGGIUNGO" ^ NReference.string_of_reference ref);
+          let info = ref,(ctx,None) in
           let status =
            status#set_extraction_db
-            (ReferenceMap.add ref (ctx,None) status#extraction_db) in
+            (register_info status#extraction_db info) in
           let cl =
            HExtlib.list_mapi
             (fun (_,_,ty) j ->
@@ -720,12 +730,12 @@ let object_of_inductive status ~metasenv uri ind leftno il =
                NReference.mk_constructor (j+1) ref,ty
             ) cl
           in
-           status,i+1,(ref,left,right,cl)::res
+           status,i+1,([info],ref,left,right,cl)::res
    ) (status,0,[]) il
  in
   match rev_tyl with
      [] -> status,Erased
-   | _ -> status, Success (dummyref, Algebraic (List.rev rev_tyl))
+   | _ -> status, Success ([], dummyref, Algebraic (List.rev rev_tyl))
 ;;
 
 let object_of status (uri,height,metasenv,subst,obj_kind) =
@@ -737,15 +747,16 @@ let object_of status (uri,height,metasenv,subst,obj_kind) =
             | `Kind ->
               let ty = kind_of status ~metasenv [] ty in
               let ctx,_ as res = split_kind_prods [] ty in
+              let info = ref,(ctx,None) in
                 status#set_extraction_db
-                  (ReferenceMap.add ref (ctx,None) status#extraction_db),
-                    Success (ref, TypeDeclaration res)
+                  (register_info status#extraction_db info),
+                    Success ([info],ref, TypeDeclaration res)
             | `PropKind
             | `Proposition -> status, Erased
             | `Type
             | `KindOrType (*???*) ->
               let ty = typ_of status ~metasenv [] ty in
-                status, Success (ref, TermDeclaration (split_typ_prods [] ty))
+                status, Success ([],ref, TermDeclaration (split_typ_prods [] ty))
             | `Term _ -> status, Failure "Type classified as a term.  This is a bug.")
         | NCic.Constant (_,_,Some bo,ty,_) ->
            let ref = NReference.reference_of_spec uri (NReference.Def height) in
@@ -763,10 +774,10 @@ let object_of status (uri,height,metasenv,subst,obj_kind) =
               in
               let status,obj = object_of_constant ~metasenv status ref bo ty in
                 match obj with
-                  | Success (ref,obj) -> i+1,status, (ref,obj)::res
+                  | Success (info,ref,obj) -> i+1,status, (info,ref,obj)::res
                   | _ -> i+1,status, res) fs (0,status,[])
           in
-            status, Success (dummyref,LetRec objs)
+            status, Success ([],dummyref,LetRec objs)
         | NCic.Inductive (ind,leftno,il,_) ->
            object_of_inductive status ~metasenv uri ind leftno il
 
@@ -969,7 +980,7 @@ let rec pretty_print_term status ctxt =
     | Inst t -> pretty_print_term status ctxt t
 ;;
 
-let rec pp_obj status (ref,obj_kind) =
+let rec pp_obj status (_,ref,obj_kind) =
   let pretty_print_context ctx =
     String.concat " " (List.rev (snd
       (List.fold_right
@@ -1013,7 +1024,7 @@ let rec pp_obj status (ref,obj_kind) =
  | Algebraic il ->
     String.concat "\n"
      (List.map
-      (fun ref,left,right,cl ->
+      (fun _,ref,left,right,cl ->
         "data " ^ pp_ref status ref ^ " " ^
         pretty_print_context (right@left) ^ " where\n  " ^
         String.concat "\n  " (List.map
@@ -1025,11 +1036,43 @@ let rec pp_obj status (ref,obj_kind) =
       )) il)
  (* inductive and records missing *)
 
+let rec infos_of (info,_,obj_kind) =
+ info @
+  match obj_kind with
+     LetRec l -> List.concat (List.map (fun (infos,_,_) -> infos) l)
+   | Algebraic l -> List.concat (List.map (fun (infos,_,_,_,_) -> infos) l)
+   | _ -> []
+
 let haskell_of_obj status (uri,_,_,_,_ as obj) =
  let status, obj = object_of status obj in
   status,
    match obj with
-      Erased -> "-- [?] " ^ NUri.name_of_uri uri ^ " erased due to term being propositionally irrelevant.\n"
-    | OutsideTheory -> "-- [?] " ^ NUri.name_of_uri uri ^ " erased due to image of term under extraction residing outside Fω.\n"
-    | Failure msg -> "-- [?] " ^ NUri.name_of_uri uri ^ " FAILURE: " ^ msg ^ "\n"
-    | Success o -> pp_obj status o ^ "\n"
+      Erased -> "-- [?] " ^ NUri.name_of_uri uri ^ " erased due to term being propositionally irrelevant.\n",[]
+    | OutsideTheory -> "-- [?] " ^ NUri.name_of_uri uri ^ " erased due to image of term under extraction residing outside Fω.\n",[]
+    | Failure msg -> "-- [?] " ^ NUri.name_of_uri uri ^ " FAILURE: " ^ msg ^ "\n",[]
+    | Success o -> pp_obj status o ^ "\n", infos_of o
+
+let refresh_uri_in_typ ~refresh_uri_in_reference =
+ let rec refresh_uri_in_typ =
+  function
+   | Var _
+   | Unit
+   | Top as t -> t
+   | TConst r -> TConst (refresh_uri_in_reference r)
+   | Arrow (t1,t2) -> Arrow (refresh_uri_in_typ t1, refresh_uri_in_typ t2)
+   | TSkip t -> TSkip (refresh_uri_in_typ t)
+   | Forall (n,k,t) -> Forall (n,k,refresh_uri_in_typ t)
+   | TAppl tl -> TAppl (List.map refresh_uri_in_typ tl)
+ in
+  refresh_uri_in_typ
+
+let refresh_uri_in_info ~refresh_uri_in_reference infos =
+ List.map
+  (function (ref,(ctx,typ)) ->
+    let typ =
+     match typ with
+        None -> None
+      | Some t -> Some (refresh_uri_in_typ ~refresh_uri_in_reference t)
+    in
+     refresh_uri_in_reference ref,(ctx,typ))
+  infos
