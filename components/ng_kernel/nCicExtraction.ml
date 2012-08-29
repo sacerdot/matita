@@ -408,7 +408,7 @@ let rec typ_of status ~metasenv context k =
   | NCic.Appl _ -> assert false (* TODO: when head is a match/let rec;
                                    otherwise NOT A TYPE *)
   | NCic.Meta _
-  | NCic.Match (_,_,_,_) -> assert false (* TODO *)
+  | NCic.Match (_,_,_,_) -> Top
 ;;
 
 let rec fomega_lift_type_from n k =
@@ -565,7 +565,7 @@ let rec term_of status ~metasenv context =
             let ctx = None::ctx in
             let context = (name,NCic.Decl ty)::context in
              eat_branch 0 t context ctx t'
-         | Top,_ -> assert false (*TODO: HOW??*)
+         | Top,_ -> assert false (* IMPOSSIBLE *)
          | TSkip _, _
          | Forall _,_
          | Arrow _,_ -> assert false (*BUG here, eta-expand!*)
@@ -607,6 +607,22 @@ and eat_args status metasenv acc context tyhe =
              Unit -> UnitTerm
            | _ -> term_of status ~metasenv context arg in
          eat_args status metasenv (mk_appl acc arg) context t tl
+      | Top ->
+         let arg =
+          match classify status ~metasenv context arg with
+           | `PropKind
+           | `Proposition
+           | `Term `TypeFormer
+           | `Term `PropFormer
+           | `Term `Proof
+           | `Type
+           | `KindOrType
+           | `Kind -> UnitTerm
+           | `Term `TypeFormerOrTerm
+           | `Term `Term -> term_of status ~metasenv context arg
+         in
+          eat_args status metasenv (UnsafeCoerce (mk_appl acc arg))
+           context Top tl
       | Forall (_,_,t) ->
          (match classify status ~metasenv context arg with
            | `PropKind -> assert false (*TODO: same as below, coercion needed???*)
@@ -623,7 +639,6 @@ and eat_args status metasenv acc context tyhe =
                  tl)
       | TSkip t ->
          eat_args status metasenv acc context t tl
-      | Top -> assert false (*TODO: HOW??*)
       | Unit | Var _ | TConst _ | TAppl _ -> assert false (* NOT A PRODUCT *)
 ;;
 
@@ -875,7 +890,7 @@ let rec pretty_print_type status ctxt =
   function
     | Var n -> List.nth ctxt (n-1)
     | Unit -> "()"
-    | Top -> assert false (* ??? *)
+    | Top -> "Top"
     | TConst ref -> pp_ref status ref
     | Arrow (t1,t2) ->
         bracket size_of_type (pretty_print_type status ctxt) t1 ^ " -> " ^
