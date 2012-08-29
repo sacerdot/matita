@@ -180,9 +180,12 @@ let rec classify_not_term status context t =
      let classified_pl = List.map (classify_not_term status context) pl in
       sup classified_pl
   | NCic.Const (NReference.Ref (_,NReference.Fix _)) ->
-     (* be aware: we can be the head of an application *)
-     assert false (* TODO *)
+     assert false (* IMPOSSIBLE *)
   | NCic.Meta _ -> assert false (* TODO *)
+  | NCic.Appl (NCic.Const (NReference.Ref (_,NReference.Fix (i,_,_)) as r)::_)->
+     let l,_,_ = NCicEnvironment.get_checked_fixes_or_cofixes status r in
+     let _,_,_,_,bo = List.nth l i in
+      classify_not_term status [] bo
   | NCic.Appl (he::_) -> classify_not_term status context he
   | NCic.Rel n ->
      let rec find_sort typ =
@@ -399,6 +402,9 @@ let rec typ_of status ~metasenv context k =
   | NCic.Lambda _ -> assert false (* LAMBDA-LIFT INNER DECLARATION *)
   | NCic.Rel n -> Var n
   | NCic.Const ref -> TConst ref
+  | NCic.Match (_,_,_,_)
+  | NCic.Appl (NCic.Const (NReference.Ref (_,NReference.Fix _))::_) ->
+     Top
   | NCic.Appl (he::args) ->
      let rev_he_context= rev_context_of_typformer status ~metasenv context he in
      TAppl (typ_of status ~metasenv context he ::
@@ -407,8 +413,7 @@ let rec typ_of status ~metasenv context k =
        (skip_args status ~metasenv context (rev_he_context,args)))
   | NCic.Appl _ -> assert false (* TODO: when head is a match/let rec;
                                    otherwise NOT A TYPE *)
-  | NCic.Meta _
-  | NCic.Match (_,_,_,_) -> Top
+  | NCic.Meta _ -> assert false (*TODO*)
 ;;
 
 let rec fomega_lift_type_from n k =
@@ -621,7 +626,8 @@ and eat_args status metasenv acc context tyhe =
            | `Term `TypeFormerOrTerm
            | `Term `Term -> term_of status ~metasenv context arg
          in
-          eat_args status metasenv (UnsafeCoerce (mk_appl acc arg))
+          eat_args status metasenv
+           (UnsafeCoerce (mk_appl acc (UnsafeCoerce arg)))
            context Top tl
       | Forall (_,_,t) ->
          (match classify status ~metasenv context arg with
@@ -854,8 +860,8 @@ let classify_reference status ref =
   if ReferenceMap.mem ref status#extraction_db then
     `TypeName
   else
-   let NReference.Ref (_,ref) = ref in
-    match ref with
+   let NReference.Ref (_,r) = ref in
+    match r with
        NReference.Con _ -> `Constructor
      | NReference.Ind _ -> assert false
      | _ -> `FunctionName
