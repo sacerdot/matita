@@ -928,8 +928,11 @@ let pretty_print_term_context status ctx1 ctx2 =
     (fun el (ctx1,rev_res) ->
       match el with
          None -> ""@::ctx1,rev_res
-       | Some (name,`OfKind _) -> name@::ctx1,rev_res
+       | Some (name,`OfKind _) ->
+          let name = capitalize `TypeVariable name in
+           name@::ctx1,rev_res
        | Some (name,`OfType typ) ->
+          let name = capitalize `TypeVariable name in
           let name,ctx1 = name@:::ctx1 in
            name::ctx1,
             ("(" ^ name ^ " :: " ^ pretty_print_type status ctx1 typ ^ ")")::rev_res
