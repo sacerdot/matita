@@ -716,7 +716,6 @@ let object_of_inductive status ~metasenv uri ind leftno il =
           let right,left = HExtlib.split_nth (List.length ctx - leftno) ctx in
           let ref =
            NReference.reference_of_spec uri (NReference.Ind (ind,i,leftno)) in
-prerr_endline ("AGGIUNGO" ^ NReference.string_of_reference ref);
           let info = ref,(ctx,None) in
           let status =
            status#set_extraction_db
@@ -960,8 +959,8 @@ let rec pretty_print_term status ctxt =
       if pl = [] then
        "error \"Case analysis over empty type\""
       else
-       "case " ^ pretty_print_term status ctxt matched ^ " of\n" ^
-         String.concat "\n"
+       "case " ^ pretty_print_term status ctxt matched ^ " of {\n" ^
+         String.concat " ;\n"
            (HExtlib.list_mapi
              (fun (bound_names,rhs) i ->
                let ref = NReference.mk_constructor (i+1) r in
@@ -972,7 +971,7 @@ let rec pretty_print_term status ctxt =
                 pretty_print_term status ctxt rhs
                in
                  "  " ^ name ^ " " ^ bound_names ^ " -> " ^ body
-             ) pl)
+             ) pl) ^ "}\n  "
     | Skip t -> pretty_print_term status ("[[skipped]]"@::ctxt) t
     | TLambda (name,t) ->
        let name = capitalize `TypeVariable name in
