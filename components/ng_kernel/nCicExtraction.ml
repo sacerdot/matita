@@ -676,7 +676,15 @@ type 'a result =
 ;;
 
 let fresh_name_of_ref status ref =
- let candidate = NCicPp.r2s status true ref in
+ (*CSC: Patch while we wait for separate compilation *)
+ let candidate =
+  let name = NCicPp.r2s status true ref in
+  let NReference.Ref (uri,_) = ref in
+  let path = NUri.baseuri_of_uri uri in
+  let path = String.sub path 5 (String.length path - 5) in
+  let path = Str.global_replace (Str.regexp "/") "_" path in
+   path ^ "_" ^ name
+ in
  let rec freshen candidate =
   if GlobalNames.mem candidate (snd status#extraction_db) then
    freshen (candidate ^ "'")
