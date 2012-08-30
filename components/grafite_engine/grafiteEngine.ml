@@ -776,6 +776,13 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
                      basic_eval_and_record_ncoercion_from_t_cpos_arity 
                       status (name,true,t,cpos,arity) in
                  let aliases = GrafiteDisambiguate.aliases_for_objs status nuris in
+                 let status =
+                  List.fold_left
+                   (fun status uri ->
+                     let obj = NCicEnvironment.get_checked_obj status uri in
+                      eval_extract_obj status obj
+                   ) status nuris
+                 in
                   eval_alias status (mode,aliases)
                with MultiPassDisambiguator.DisambiguationError _-> 
                  HLog.warn ("error in generating coercion: "^name);
