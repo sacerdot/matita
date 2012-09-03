@@ -312,6 +312,10 @@ notation "hvbox( ⦃ L1, break T1 ⦄ ➡ break ⦃ L2 , break T2 ⦄ )"
    non associative with precedence 45
    for @{ 'FocalizedPRed $L1 $T1 $L2 $T2 }.
 
+notation "hvbox( ⦃ L1 ⦄ ➡ ➡ break ⦃ L2 ⦄ )"
+   non associative with precedence 45
+   for @{ 'FocalizedPRedAlt $L1 $L2 }.
+
 notation "hvbox( ⦃ h , break L ⦄ ⊢ break term 46 T1 ➸ break [ g ] break term 46 T2 )"
    non associative with precedence 45
    for @{ 'XPRed $h $g $L $T1 $T2 }.

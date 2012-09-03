@@ -156,3 +156,10 @@ for @{'eqF ? ? f g}.
 interpretation "functional extentional equality" 
 'eqF A B f g = (exteqF A B f g).
 
+(********** relations on unboxed pairs **********)
+
+definition bi_relation: Type[0] → Type[0] → Type[0]
+≝ λA,B.A→B→A→B→Prop.
+
+definition bi_reflexive: ∀A,B. ∀R :bi_relation A B. Prop
+≝ λA,B,R. ∀x,y. R x y x y.

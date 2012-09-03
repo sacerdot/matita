@@ -35,27 +35,64 @@ qed.
 
 (* Basic inversion lemmas ***************************************************)
 
-axiom discr_lpair_append_xy_x: ∀I,L,K,V. (L @@ K).ⓑ{I}V = L → ⊥.
-(*
-#I #L #K #V #H
-lapply (refl … (|L|)) <H in ⊢ (? ? % ? → ?); -H
-normalize >append_length -I -V #H
-*)
-lemma append_inv_sn: ∀L1,L2,L. L1 @@ L = L2 @@ L → L1 = L2.
-#L1 #L2 #L elim L -L normalize //
-#L #I #V #IHL #HL12 destruct /2 width=1/ (**) (* destruct does not simplify well *)
-qed.
-
-(* Note: lemma 750 *)
-lemma append_inv_dx: ∀L1,L2,L. L @@ L1 = L @@ L2 → L1 = L2.
-#L1 elim L1 -L1
-[ * normalize //
-  #L2 #I2 #V2 #L #H
-  elim (discr_lpair_append_xy_x I2 L L2 V2 ?) //
-| #L1 #I1 #V1 #IHL1 * normalize
-  [ #L #H -IHL1 elim (discr_lpair_append_xy_x … H)
-  | #L2 #I2 #V2 #L normalize #H destruct (**) (* destruct does not simplify well *)
-    -H >e0 /3 width=2/
+lemma append_inj_sn: ∀K1,K2,L1,L2. L1 @@ K1 = L2 @@ K2 → |K1| = |K2| →
+                     L1 = L2 ∧ K1 = K2.
+#K1 elim K1 -K1
+[ * normalize /2 width=1/
+  #K2 #I2 #V2 #L1 #L2 #_ <plus_n_Sm #H destruct
+| #K1 #I1 #V1 #IH * normalize
+  [ #L1 #L2 #_ <plus_n_Sm #H destruct
+  | #K2 #I2 #V2 #L1 #L2 #H1 #H2 destruct (**) (* destruct does not simplify well *)
+    elim (IH … e0 ?) -IH -H1 /2 width=1/ -H2 #H1 #H2 destruct /2 width=1/
   ]
 ]
-qed.
+qed-.
+
+(* Note: lemma 750 *)
+lemma append_inj_dx: ∀K1,K2,L1,L2. L1 @@ K1 = L2 @@ K2 → |L1| = |L2| →
+                     L1 = L2 ∧ K1 = K2.
+#K1 elim K1 -K1
+[ * normalize /2 width=1/
+  #K2 #I2 #V2 #L1 #L2 #H1 #H2 destruct
+  normalize in H2; >append_length in H2; #H
+  elim (plus_xySz_x_false … H)
+| #K1 #I1 #V1 #IH * normalize
+  [ #L1 #L2 #H1 #H2 destruct
+    normalize in H2; >append_length in H2; #H
+    elim (plus_xySz_x_false … (sym_eq … H))
+  | #K2 #I2 #V2 #L1 #L2 #H1 #H2 destruct (**) (* destruct does not simplify well *)
+    elim (IH … e0 ?) -IH -H1 /2 width=1/ -H2 #H1 #H2 destruct /2 width=1/
+  ]
+]
+qed-.
+
+lemma length_inv_pos_dx_append: ∀d,L. |L| = d + 1 →
+                                ∃∃I,K,V. |K| = d & L = ⋆.ⓑ{I}V @@ K.
+#d @(nat_ind_plus … d) -d
+[ #L #H 
+  elim (length_inv_pos_dx … H) -H #I #K #V #H
+  >(length_inv_zero_dx … H) -H #H destruct
+  @ex2_3_intro [4: /2 width=2/ |5: // |1,2,3: skip ] (* /3/ does not work *)
+| #d #IHd #L #H
+  elim (length_inv_pos_dx … H) -H #I #K #V #H
+  elim (IHd … H) -IHd -H #I0 #K0 #V0 #H1 #H2 #H3 destruct
+  @(ex2_3_intro … (K0.ⓑ{I}V)) //
+]
+qed-.
+
+(* Basic_eliminators ********************************************************)
+
+fact lenv_ind_dx_aux: ∀R:predicate lenv. R ⋆ →
+                      (∀I,L,V. R L → R (⋆.ⓑ{I}V @@ L)) →
+                      ∀d,L. |L| = d → R L.
+#R #Hatom #Hpair #d @(nat_ind_plus … d) -d
+[ #L #H >(length_inv_zero_dx … H) -H //
+| #d #IH #L #H
+  elim (length_inv_pos_dx_append … H) -H #I #K #V #H1 #H2 destruct /3 width=1/
+]
+qed-.
+
+lemma lenv_ind_dx: ∀R:predicate lenv. R ⋆ →
+                   (∀I,L,V. R L → R (⋆.ⓑ{I}V @@ L)) →
+                   ∀L. R L.
+/3 width=2 by lenv_ind_dx_aux/ qed-.

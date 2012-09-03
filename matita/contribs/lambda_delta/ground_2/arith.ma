@@ -69,6 +69,13 @@ lemma false_lt_to_le: ∀x,y. (x < y → ⊥) → y ≤ x.
 #Hxy elim (H Hxy)
 qed-.
 
+lemma plus_xySz_x_false: ∀z,x,y. x + y + S z = x → ⊥.
+#z #x elim x -x normalize
+[ #y <plus_n_Sm #H destruct
+| /3 width=2/
+]
+qed-.
+
 (* iterators ****************************************************************)
 
 (* Note: see also: lib/arithemetcs/bigops.ma *)

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/lenv_length.ma".
+include "basic_2/grammar/lenv_append.ma".
 
 (* POINTWISE EXTENSION OF A CONTEXT-FREE REALTION FOR TERMS *****************)
 
@@ -80,6 +80,10 @@ lemma lpx_refl: ∀R. reflexive ? R → reflexive … (lpx R).
 #R #HR #L elim L -L // /2 width=1/
 qed.
 
+lemma lpx_sym: ∀R. symmetric ? R → symmetric … (lpx R).
+#R #HR #L1 #L2 #H elim H -H // /3 width=1/
+qed.
+
 lemma lpx_trans: ∀R. Transitive ? R → Transitive … (lpx R).
 #R #HR #L1 #L #H elim H -L //
 #I #K1 #K #V1 #V #_ #HV1 #IHK1 #X #H
@@ -128,4 +132,9 @@ qed.
 lemma lpx_inv_TC: ∀R. reflexive ? R →
                   ∀L1,L2. lpx (TC … R) L1 L2 → TC … (lpx R) L1 L2.
 #R #HR #L1 #L2 #H elim H -L1 -L2 /2 width=1/ /3 width=3/
+qed.
+
+lemma lpx_append: ∀R,K1,K2. lpx R K1 K2 → ∀L1,L2. lpx R L1 L2 →
+                  lpx R (L1 @@ K1) (L2 @@ K2).
+#R #K1 #K2 #H elim H -K1 -K2 // /3 width=1/
 qed.
