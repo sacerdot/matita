@@ -43,8 +43,8 @@ let rec size_of_kind =
     | KSkip k -> size_of_kind k
 ;;
 
-let bracket size_of pp o =
-  if size_of o > 1 then
+let bracket ?(prec=1) size_of pp o =
+  if size_of o > prec then
     "(" ^ pp o ^ ")"
   else
     pp o
@@ -69,10 +69,10 @@ type typ =
 
 let rec size_of_type =
   function
-    | Var _ -> 1
-    | Unit -> 1
-    | Top -> 1
-    | TConst _ -> 1
+    | Var _ -> 0
+    | Unit -> 0
+    | Top -> 0
+    | TConst _ -> 0
     | Arrow _ -> 2
     | TSkip t -> size_of_type t
     | Forall _ -> 2
@@ -954,7 +954,7 @@ let rec pretty_print_type status ctxt =
   function
     | Var n -> List.nth ctxt (n-1)
     | Unit -> "()"
-    | Top -> "Top"
+    | Top -> "GHC.Prim.Any"
     | TConst ref -> pp_ref status ref
     | Arrow (t1,t2) ->
         bracket size_of_type (pretty_print_type status ctxt) t1 ^ " -> " ^
@@ -968,7 +968,11 @@ let rec pretty_print_type status ctxt =
           "forall (" ^ name ^ " :: " ^ pretty_print_kind kind ^ "). " ^ pretty_print_type status (name::ctxt) t
         else
           "forall " ^ name ^ ". " ^ pretty_print_type status (name::ctxt) t
-   | TAppl tl -> String.concat " " (List.map (pretty_print_type status ctxt) tl)
+   | TAppl tl ->
+      String.concat " "
+       (List.map
+         (fun t -> bracket ~prec:0 size_of_type
+          (pretty_print_type status ctxt) t) tl)
 
 let pretty_print_term_context status ctx1 ctx2 =
  let name_context, rev_res =
@@ -1082,7 +1086,7 @@ let rec pp_obj status (_,ref,obj_kind) =
            let namectx = namectx_of_ctx left in
             pp_ref status ref ^ " :: " ^
              pretty_print_type status namectx tys
-         ) cl) ^ "\n    deriving (Prelude.Show)"
+         ) cl) (*^ "\n    deriving (Prelude.Show)"*)
       ) il)
  (* inductive and records missing *)
 
