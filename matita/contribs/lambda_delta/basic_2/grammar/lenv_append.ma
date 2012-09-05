@@ -29,6 +29,10 @@ lemma append_atom_sn: ∀L. ⋆ @@ L = L.
 #L elim L -L normalize //
 qed.
 
+lemma append_assoc: associative … append.
+#L1 #L2 #L3 elim L3 -L3 normalize //
+qed.
+
 lemma append_length: ∀L1,L2. |L1 @@ L2| = |L1| + |L2|.
 #L1 #L2 elim L2 -L2 normalize //
 qed.

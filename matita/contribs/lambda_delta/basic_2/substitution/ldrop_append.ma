@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/lenv_append.ma".
 include "basic_2/substitution/ldrop.ma".
 
 (* DROPPING *****************************************************************)
@@ -30,6 +29,8 @@ qed-.
 lemma ldrop_O1_append_sn_le: ∀L1,L2,e. ⇩[0, e] L1 ≡ L2 → e ≤ |L1| →
                              ∀L. ⇩[0, e] L @@ L1 ≡ L @@ L2.
 /2 width=3 by ldrop_O1_append_sn_le_aux/ qed.
+
+(* Inversion lemmas on append for local environments ************************)
 
 lemma ldrop_O1_inv_append1_ge: ∀K,L1,L2,e. ⇩[0, e] L1 @@ L2 ≡ K →
                                |L2| ≤ e → ⇩[0, e - |L2|] L1 ≡ K.

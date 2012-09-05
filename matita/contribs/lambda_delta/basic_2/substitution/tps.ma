@@ -12,8 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/lenv_top.ma".
-include "basic_2/substitution/ldrop.ma".
+include "basic_2/substitution/ldrop_append.ma".
 
 (* PARALLEL SUBSTITUTION ON TERMS *******************************************)
 
@@ -145,6 +144,15 @@ lemma tps_split_down: ∀L,T1,T2,d,e. L ⊢ T1 ▶ [d, e] T2 →
 ]
 qed.
 
+lemma tps_append: ∀K,T1,T2,d,e. K ⊢ T1 ▶ [d, e] T2 →
+                  ∀L. L @@ K ⊢ T1 ▶ [d, e] T2.
+#K #T1 #T2 #d #e #H elim H -K -T1 -T2 -d -e // /2 width=1/
+#K #K0 #V #W #i #d #e #Hdi #Hide #HK0 #HVW #L
+lapply (ldrop_fwd_ldrop2_length … HK0) #H
+@(tps_subst … (L@@K0) … HVW) // (**) (* /3/ does not work *)
+@(ldrop_O1_append_sn_le … HK0) /2 width=2/
+qed.
+
 (* Basic inversion lemmas ***************************************************)
 
 fact tps_inv_atom1_aux: ∀L,T1,T2,d,e. L ⊢ T1 ▶ [d, e] T2 → ∀I. T1 = ⓪{I} →
@@ -249,17 +257,6 @@ lemma tps_inv_refl_O2: ∀L,T1,T2,d. L ⊢ T1 ▶ [d, 0] T2 → T1 = T2.
 lemma tps_fwd_tw: ∀L,T1,T2,d,e. L ⊢ T1 ▶ [d, e] T2 → #{T1} ≤ #{T2}.
 #L #T1 #T2 #d #e #H elim H -L -T1 -T2 -d -e normalize
 /3 by monotonic_le_plus_l, le_plus/ (**) (* just /3 width=1/ is too slow *)
-qed-.
-
-lemma tps_fwd_shift1: ∀L1,L,T1,T,d,e. L ⊢ L1 @@ T1 ▶ [d, e] T →
-                      ∃∃L2,T2. L1 𝟙 L2 & T = L2 @@ T2.
-#L1 @(lenv_ind_dx … L1) -L1
-[ #L #T1 #T #d #e #_ @ex2_2_intro [3: // |4: // |1,2: skip ] (**) (* /2 width=4/ does not work *)
-| #I #L1 #V1 #IH #L #T1 #T #d #e >shift_append_assoc #H
-  elim (tps_inv_bind1 … H) -H #V2 #T2 #_ #HT12 #H destruct
-  elim (IH … HT12) -IH -L -T1 -d -e #L2 #T #HL12 #H destruct
-  @(ex2_2_intro … (⋆.ⓑ{I}V2@@L2)) /2 width=4/ /3 width=2/
-]
 qed-.
 
 (* Basic_1: removed theorems 25:

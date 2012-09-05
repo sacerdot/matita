@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/term_simple.ma".
 include "basic_2/substitution/ldrop.ma".
 
 (* CONTEXT-SENSITIVE REDUCIBLE TERMS ****************************************)

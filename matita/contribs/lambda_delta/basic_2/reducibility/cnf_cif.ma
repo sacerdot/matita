@@ -12,8 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/tps_lift.ma".
-include "basic_2/unfold/tpss.ma".
 include "basic_2/reducibility/cif.ma".
 include "basic_2/reducibility/cnf_lift.ma".
 

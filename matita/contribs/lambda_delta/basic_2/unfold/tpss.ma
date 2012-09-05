@@ -104,6 +104,11 @@ lapply (tpss_weak … HT12 0 (d + e) ? ?) -HT12 // #HT12
 lapply (tpss_weak_top … HT12) //
 qed.
 
+lemma tpss_append: ∀K,T1,T2,d,e. K ⊢ T1 ▶* [d, e] T2 →
+                   ∀L. L @@ K ⊢ T1 ▶* [d, e] T2.
+#K #T1 #T2 #d #e #H @(tpss_ind … H) -T2 // /3 width=3/
+qed.
+
 (* Basic inversion lemmas ***************************************************)
 
 (* Note: this can be derived from tpss_inv_atom1 *)

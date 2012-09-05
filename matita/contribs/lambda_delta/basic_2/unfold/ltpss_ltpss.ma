@@ -133,3 +133,14 @@ lemma ltpss_conf: ∀L0,L1,d1,e1. L0 ▶* [d1, e1] L1 →
                   ∀L2,d2,e2. L0 ▶* [d2, e2] L2 →
                   ∃∃L. L1 ▶* [d2, e2] L & L2 ▶* [d1, e1] L.
 /2 width=7/ qed.
+
+theorem ltpss_trans_eq: ∀L1,L,d,e. L1 ▶* [d, e] L →
+                        ∀L2. L ▶* [d, e] L2 → L1 ▶* [d, e] L2.
+#L1 #L #d #e #H elim H -L1 -L -d -e //
+[ #L1 #L #I #V1 #V #e #_ #HV1 #IHL1 #X #H
+  elim (ltpss_inv_tpss21 … H ?) -H // <minus_plus_m_m #L2 #V2 #HL2 #HV2 #H destruct
+  elim (ltpss_tpss_conf … HV1 … HL2) -HV1 #V0 #HV10 #HV0
+  elim (tpss_conf_eq … HV2 … HV0) -V #V #HV2 #HV0
+  lapply (tpss_trans_eq … HV10 … HV0) -V0 #HV1
+  @ltpss_tpss2 /2 width=1/
+        
