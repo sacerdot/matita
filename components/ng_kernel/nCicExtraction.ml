@@ -109,6 +109,11 @@ let mk_appl f x =
     Appl args -> Appl (args@[x])
   | _ -> Appl [f;x]
 
+let mk_tappl f l =
+ match f with
+    TAppl args -> TAppl (args@l)
+  | _ -> TAppl (f::l)
+
 let rec size_of_term =
   function
     | Rel _ -> 1
@@ -130,7 +135,7 @@ module ReferenceMap = Map.Make(struct type t = NReference.reference let compare 
 module GlobalNames = Set.Make(String)
 
 type info_el =
- string * [`Type of typ_context * typ option | `Constructor | `Function ]
+ string * [`Type of typ_context * typ option | `Constructor of typ | `Function of typ ]
 type info = (NReference.reference * info_el) list
 type db = info_el ReferenceMap.t * GlobalNames.t
 
@@ -315,6 +320,20 @@ class virtual status =
    = fun o -> {< extraction_db = o#extraction_db >}
  end
 
+let xdo_pretty_print_type = ref (fun _ _ -> assert false)
+let do_pretty_print_type status ctx t =
+ !xdo_pretty_print_type (status : #status :> status) ctx t
+
+let xdo_pretty_print_term = ref (fun _ _ -> assert false)
+let do_pretty_print_term status ctx t =
+ !xdo_pretty_print_term (status : #status :> status) ctx t
+
+let term_ctx_of_type_ctx =
+ List.map
+  (function
+      None -> None
+    | Some (name,k) -> Some (name,`OfKind k))
+
 let rec split_kind_prods context =
  function
   | KArrow (so,ta)-> split_kind_prods (Some ("_",so)::context) ta
@@ -365,8 +384,8 @@ let rev_context_of_typformer status ~metasenv context =
      (try
        match snd (ReferenceMap.find ref (fst status#extraction_db)) with
           `Type (ctx,_) -> List.rev ctx
-        | `Constructor
-        | `Function -> assert false
+        | `Constructor _
+        | `Function _ -> assert false
       with
        Not_found ->
         (* This can happen only when we are processing the type of
@@ -411,7 +430,7 @@ let rec typ_of status ~metasenv context k =
   | NCic.Sort _
   | NCic.Implicit _
   | NCic.LetIn _ -> assert false (* IMPOSSIBLE *)
-  | NCic.Lambda _ -> assert false (* LAMBDA-LIFT INNER DECLARATION *)
+  | NCic.Lambda _ -> Top (*assert false (* LAMBDA-LIFT INNER DECLARATION *)*)
   | NCic.Rel n -> Var n
   | NCic.Const ref -> TConst ref
   | NCic.Match (_,_,_,_)
@@ -481,7 +500,7 @@ let fomega_lift_term n t =
 let rec fomega_subst k t1 =
  function
   | Var n ->
-     if k=n then fomega_lift_type k t1
+     if k=n then fomega_lift_type (k-1) t1
      else if n < k then Var n
      else Var (n-1)
   | Top -> Top
@@ -490,14 +509,16 @@ let rec fomega_subst k t1 =
   | Arrow (ty1,ty2) -> Arrow (fomega_subst k t1 ty1, fomega_subst (k+1) t1 ty2)
   | TSkip t -> TSkip (fomega_subst (k+1) t1 t)
   | Forall (n,kind,t) -> Forall (n,kind,fomega_subst (k+1) t1 t)
-  | TAppl args -> TAppl (List.map (fomega_subst k t1) args)
+  | TAppl (he::args) ->
+     mk_tappl (fomega_subst k t1 he) (List.map (fomega_subst k t1) args)
+  | TAppl [] -> assert false
 
 let fomega_lookup status ref =
  try
   match snd (ReferenceMap.find ref (fst status#extraction_db)) with
      `Type (_,bo) -> bo
-   | `Constructor
-   | `Function -> assert false
+   | `Constructor _
+   | `Function _ -> assert false
  with
   Not_found ->
 prerr_endline ("BUG, THIS SHOULD NEVER HAPPEN " ^ NReference.string_of_reference ref); None
@@ -513,6 +534,78 @@ let rec fomega_whd status ty =
         None -> ty
       | Some ty -> fomega_whd status (List.fold_right (fomega_subst 1) args ty))
  | _ -> ty
+
+let rec fomega_conv_kind k1 k2 =
+ match k1,k2 with
+    Type,Type -> true
+  | KArrow (s1,t1), KArrow (s2,t2) ->
+     fomega_conv_kind s1 s2 && fomega_conv_kind t1 t2
+  | KSkip k1, KSkip k2 -> fomega_conv_kind k1 k2
+  | _,_ -> false
+
+let rec fomega_conv status t1 t2 =
+ match fomega_whd status t1, fomega_whd status t2 with
+    Var n, Var m -> n=m
+  | Unit, Unit -> true
+  | Top, Top -> true
+  | TConst r1, TConst r2 -> NReference.eq r1 r2
+  | Arrow (s1,t1), Arrow (s2,t2) ->
+     fomega_conv status s1 s2 && fomega_conv status t1 t2
+  | TSkip t1, TSkip t2 -> fomega_conv status t1 t2
+  | Forall (_,k1,t1), Forall (_,k2,t2) ->
+     fomega_conv_kind k1 k2 && fomega_conv status t1 t2
+  | TAppl tl1, TAppl tl2 ->
+     (try
+       List.fold_left2 (fun b t1 t2 -> b && fomega_conv status t1 t2)
+        true tl1 tl2
+      with
+       Invalid_argument _ -> false)
+  | _,_ -> false
+
+exception PatchMe (* BUG: constructor of singleton type :-( *)
+
+let type_of_constructor status ref =
+ try
+  match snd (ReferenceMap.find ref (fst status#extraction_db)) with
+     `Constructor ty -> ty
+   | _ -> assert false
+ with
+  Not_found -> raise PatchMe (* BUG: constructor of singleton type :-( *)
+
+let type_of_appl_he status ~metasenv context =
+ function
+    NCic.Const (NReference.Ref (_,NReference.Con _) as ref)
+  | NCic.Const (NReference.Ref (_,NReference.Def _) as ref)
+  | NCic.Const (NReference.Ref (_,NReference.Decl) as ref)
+  | NCic.Const (NReference.Ref (_,NReference.Fix _) as ref)
+  | NCic.Const (NReference.Ref (_,NReference.CoFix _) as ref) ->
+     (try
+       match snd (ReferenceMap.find ref (fst status#extraction_db)) with
+          `Type _ -> assert false
+        | `Constructor ty
+        | `Function ty -> ty
+      with
+       Not_found -> assert false)
+  | NCic.Const (NReference.Ref (_,NReference.Ind _)) ->
+     assert false (* IMPOSSIBLE *)
+  | NCic.Rel n ->
+     (match List.nth context (n-1) with
+         _,NCic.Decl typ
+       | _,NCic.Def (_,typ) ->
+           (* recomputed every time *)
+           typ_of status ~metasenv context
+            (NCicSubstitution.lift status n typ))
+  | (NCic.Lambda _
+  | NCic.LetIn _
+  | NCic.Match _) as t ->
+     (* BUG: here we should implement a real type-checker since we are
+        trusting the translation of the Cic one that could be wrong
+        (e.g. pruned abstractions, etc.) *)
+     (typ_of status ~metasenv context
+      (NCicTypeChecker.typeof status ~metasenv ~subst:[] context t))
+  | NCic.Meta _ -> assert false (* TODO *)
+  | NCic.Sort _ | NCic.Implicit _ | NCic.Appl _ | NCic.Prod _ ->
+     assert false (* IMPOSSIBLE *)
 
 let rec term_of status ~metasenv context =
  function
@@ -552,22 +645,15 @@ let rec term_of status ~metasenv context =
   | NCic.Rel n -> Rel n
   | NCic.Const ref -> Const ref
   | NCic.Appl (he::args) ->
-     eat_args status metasenv
-      (term_of status ~metasenv context he) context
-      (*BUG: recomputing every time the type of the head*)
-      (typ_of status ~metasenv context
-        (NCicTypeChecker.typeof status ~metasenv ~subst:[] context he))
-      args
+     let hety = type_of_appl_he status ~metasenv context he in
+      eat_args status metasenv (term_of status ~metasenv context he) context
+       hety args
   | NCic.Appl _ -> assert false (* TODO: when head is a match/let rec;
                                    otherwise NOT A TYPE *)
   | NCic.Meta _ -> assert false (* TODO *)
   | NCic.Match (ref,_,t,pl) ->
      let patterns_of pl =
-      let constructors, leftno =
-       let _,leftno,tys,_,n = NCicEnvironment.get_checked_indtys status ref in
-       let _,_,_,cl  = List.nth tys n in
-         cl,leftno
-      in
+      let _,leftno,_,_,_ = NCicEnvironment.get_checked_indtys status ref in
        let rec eat_branch n ty context ctx pat =
          match (ty, pat) with
          | TSkip t,_
@@ -597,17 +683,26 @@ let rec term_of status ~metasenv context =
          | _, _ -> context,ctx, pat
        in
         try
-         List.map2
-          (fun (_, _name, ty) pat ->
-            (*BUG: recomputing every time the type of the constructor*)
-            let ty = typ_of status ~metasenv context ty in
+         HExtlib.list_mapi
+          (fun pat i ->
+            let ref = NReference.mk_constructor (i+1) ref in
+            let ty = 
+             (* BUG HERE, QUICK BUG WRONG PATCH IN PLACE *)
+             try
+              type_of_constructor status ref
+             with
+              PatchMe ->
+               typ_of status ~metasenv context
+                (NCicTypeChecker.typeof status ~metasenv ~subst:[] context
+                 (NCic.Const ref))
+            in
             let context,lhs,rhs = eat_branch leftno ty context [] pat in
             let rhs =
              (* UnsafeCoerce not always required *)
              UnsafeCoerce (term_of status ~metasenv context rhs)
             in
              lhs,rhs
-          ) constructors pl
+          ) pl
         with Invalid_argument _ -> assert false
      in
      (match classify_not_term status [] (NCic.Const ref) with
@@ -627,11 +722,29 @@ and eat_args status metasenv acc context tyhe =
   | arg::tl ->
      match fomega_whd status tyhe with
         Arrow (s,t) ->
-         let arg =
+         let acc =
           match s with
-             Unit -> UnitTerm
-           | _ -> term_of status ~metasenv context arg in
-         eat_args status metasenv (mk_appl acc arg) context t tl
+             Unit -> mk_appl acc UnitTerm
+           | _ ->
+             let foarg = term_of status ~metasenv context arg in
+              (* BUG HERE, we should implement a real type-checker instead of
+                 trusting the Cic type *)
+             let inferredty =
+              typ_of status ~metasenv context
+               (NCicTypeChecker.typeof status ~metasenv ~subst:[] context arg)in
+              if fomega_conv status inferredty s then
+               mk_appl acc foarg
+              else
+(
+prerr_endline ("ARG = " ^ status#ppterm ~metasenv ~subst:[] ~context arg);
+let context = List.map fst context in
+prerr_endline ("HE = " ^ do_pretty_print_term status context acc);
+prerr_endline ("CONTEXT= " ^ String.concat " " context);
+prerr_endline ("NOT CONV: " ^ do_pretty_print_type status context inferredty ^ " vs " ^ do_pretty_print_type status context s);
+               mk_appl acc (UnsafeCoerce foarg)
+)
+         in
+          eat_args status metasenv acc context (fomega_subst 1 Unit t) tl
       | Top ->
          let arg =
           match classify status ~metasenv context arg with
@@ -646,23 +759,32 @@ and eat_args status metasenv acc context tyhe =
            | `Term `TypeFormerOrTerm
            | `Term `Term -> term_of status ~metasenv context arg
          in
+          (* BUG: what if an argument of Top has been erased??? *)
           eat_args status metasenv
            (UnsafeCoerce (mk_appl acc (UnsafeCoerce arg)))
            context Top tl
       | Forall (_,_,t) ->
+(*
+prerr_endline "FORALL";
+let xcontext = List.map fst context in
+prerr_endline ("TYPE: " ^ do_pretty_print_type status xcontext (fomega_whd status tyhe));
+prerr_endline ("fARG = " ^ status#ppterm ~metasenv ~subst:[] ~context arg);
+prerr_endline ("fHE = " ^ do_pretty_print_term status xcontext acc);
+prerr_endline ("fCONTEXT= " ^ String.concat " " xcontext);
+*)
          (match classify status ~metasenv context arg with
            | `PropKind -> assert false (*TODO: same as below, coercion needed???*)
            | `Proposition
-           | `Term `TypeFormer
            | `Kind ->
                eat_args status metasenv (UnsafeCoerce (Inst acc))
                 context (fomega_subst 1 Unit t) tl
-           | `Term _ -> assert false (*TODO: ????*)
            | `KindOrType
+           | `Term `TypeFormer
            | `Type ->
                eat_args status metasenv (Inst acc)
                 context (fomega_subst 1 (typ_of status ~metasenv context arg) t)
-                 tl)
+                 tl
+           | `Term _ -> assert false (*TODO: ????*))
       | TSkip t ->
          eat_args status metasenv acc context t tl
       | Unit | Var _ | TConst _ | TAppl _ -> assert false (* NOT A PRODUCT *)
@@ -735,7 +857,7 @@ let object_of_constant status ~metasenv ref bo ty =
     | `KindOrType (* ??? *)
     | `Type ->
        let ty = typ_of status ~metasenv [] ty in
-       let info = ref,`Function in
+       let info = ref,`Function ty in
        let status,info = register_name_and_info status info in
         status,
          Success ([info],ref, TermDefinition (split_typ_prods [] ty,
@@ -766,8 +888,10 @@ let object_of_inductive status ~metasenv uri ind leftno il =
               let ctx,ty =
                NCicReduction.split_prods status ~subst:[] [] leftno ty in
               let ty = typ_of status ~metasenv ctx ty in
+              let left = term_ctx_of_type_ctx left in
+              let full_ty = glue_ctx_typ left ty in
               let ref = NReference.mk_constructor j ref in
-              let info = ref,`Constructor in
+              let info = ref,`Constructor full_ty in
               let status,info = register_name_and_info status info in
                j+1,status,((ref,ty)::res),info::infos
             ) (1,status,[],[]) cl
@@ -797,7 +921,7 @@ let object_of status (uri,height,metasenv,subst,obj_kind) =
             | `Type
             | `KindOrType (*???*) ->
               let ty = typ_of status ~metasenv [] ty in
-              let info = ref,`Function in
+              let info = ref,`Function ty in
               let status,info = register_name_and_info status info in
                status,Success ([info],ref,
                 TermDeclaration (split_typ_prods [] ty))
@@ -913,8 +1037,8 @@ let classify_reference status ref =
  try
   match snd (ReferenceMap.find ref (fst status#extraction_db)) with
      `Type _ -> `TypeName
-   | `Constructor -> `Constructor
-   | `Function -> `FunctionName
+   | `Constructor _ -> `Constructor
+   | `Function _ -> `FunctionName
  with
   Not_found ->
 prerr_endline ("BUG, THIS SHOULD NEVER HAPPEN " ^ NReference.string_of_reference ref); `FunctionName
@@ -973,6 +1097,10 @@ let rec pretty_print_type status ctxt =
        (List.map
          (fun t -> bracket ~prec:0 size_of_type
           (pretty_print_type status ctxt) t) tl)
+;;
+
+xdo_pretty_print_type := pretty_print_type;;
+
 
 let pretty_print_term_context status ctx1 ctx2 =
  let name_context, rev_res =
@@ -1033,6 +1161,8 @@ let rec pretty_print_term status ctxt =
         pretty_print_term status (name@::ctxt) t
     | Inst t -> pretty_print_term status ctxt t
 ;;
+
+xdo_pretty_print_term := pretty_print_term;;
 
 let rec pp_obj status (_,ref,obj_kind) =
   let pretty_print_context ctx =
@@ -1124,8 +1254,12 @@ let refresh_uri_in_info ~refresh_uri_in_reference infos =
  List.map
   (function (ref,el) ->
     match el with
-       _,`Constructor
-     | _,`Function -> refresh_uri_in_reference ref,el
+       name,`Constructor typ ->
+        let typ = refresh_uri_in_typ ~refresh_uri_in_reference typ in
+         refresh_uri_in_reference ref, (name,`Constructor typ)
+     | name,`Function typ ->
+        let typ = refresh_uri_in_typ ~refresh_uri_in_reference typ in
+         refresh_uri_in_reference ref, (name,`Function typ)
      | name,`Type (ctx,typ) ->
          let typ =
           match typ with
