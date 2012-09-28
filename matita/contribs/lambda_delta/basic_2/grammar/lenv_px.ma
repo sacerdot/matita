@@ -131,7 +131,7 @@ qed.
 
 lemma lpx_inv_TC: ∀R. reflexive ? R →
                   ∀L1,L2. lpx (TC … R) L1 L2 → TC … (lpx R) L1 L2.
-#R #HR #L1 #L2 #H elim H -L1 -L2 /2 width=1/ /3 width=3/
+#R #HR #L1 #L2 #H elim H -L1 -L2 /3 width=1/ /3 width=3/
 qed.
 
 lemma lpx_append: ∀R,K1,K2. lpx R K1 K2 → ∀L1,L2. lpx R L1 L2 →

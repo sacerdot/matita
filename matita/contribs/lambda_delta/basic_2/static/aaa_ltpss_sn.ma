@@ -12,23 +12,26 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unfold/ltpsss.ma".
-include "basic_2/static/aaa_ltpss.ma".
+include "basic_2/unfold/ltpss_sn_alt.ma".
+include "basic_2/static/aaa_ltpss_dx.ma".
 
 (* ATONIC ARITY ASSIGNMENT ON TERMS *****************************************)
 
-(* Properties about iterated parallel unfold ********************************)
+(* Properties about sn parallel unfold **************************************)
 
-lemma aaa_ltpsss_conf: ∀L1,T,A. L1 ⊢ T ÷ A →
-                       ∀L2,d,e. L1 [d, e] ▶** L2 → L2 ⊢ T ÷ A.
+lemma aaa_ltpss_sn_conf: ∀L1,T,A. L1 ⊢ T ⁝ A →
+                         ∀L2,d,e. L1 ⊢ ▶* [d, e] L2 → L2 ⊢ T ⁝ A.
 #L1 #T #A #HT #L2 #d #e #HL12
-@(TC_Conf3 … (λL,A. L ⊢ T ÷ A) … HT ? HL12) /2 width=5/
+lapply (ltpss_sn_ltpssa … HL12) -HL12 #HL12
+@(TC_Conf3 … (λL,A. L ⊢ T ⁝ A) … HT ? HL12) /2 width=5/
 qed.
 
-lemma aaa_ltpsss_tpss_conf: ∀L1,T1,A. L1 ⊢ T1 ÷ A → ∀L2,d,e. L1 [d, e] ▶** L2 →
-                            ∀T2. L2 ⊢ T1 [d, e] ▶* T2 → L2 ⊢ T2 ÷ A.
+lemma aaa_ltpss_sn_tpss_conf: ∀L1,T1,A. L1 ⊢ T1 ⁝ A →
+                              ∀L2,d,e. L1 ⊢ ▶* [d, e] L2 →
+                              ∀T2. L2 ⊢ T1 ▶* [d, e] T2 → L2 ⊢ T2 ⁝ A.
 /3 width=5/ qed.
 
-lemma aaa_ltpsss_tps_conf: ∀L1,T1,A. L1 ⊢ T1 ÷ A → ∀L2,d,e. L1 [d, e] ▶** L2 →
-                           ∀T2. L2 ⊢ T1 [d, e] ▶ T2 → L2 ⊢ T2 ÷ A.
+lemma aaa_ltpss_sn_tps_conf: ∀L1,T1,A. L1 ⊢ T1 ⁝ A →
+                             ∀L2,d,e. L1 ⊢ ▶* [d, e] L2 →
+                             ∀T2. L2 ⊢ T1 ▶ [d, e] T2 → L2 ⊢ T2 ⁝ A.
 /3 width=5/ qed.
