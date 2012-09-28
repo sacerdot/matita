@@ -200,6 +200,14 @@ notation "hvbox( L ⊢ break term 46 T1 break ▶ ▶ * [ d , break e ] break te
    non associative with precedence 45
    for @{ 'PSubstStarAlt $L $T1 $d $e $T2 }.
 
+notation "hvbox( T1 break ⊢ ▶ * [ d , break e ] break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'PSubstStarSn $T1 $d $e $T2 }.
+
+notation "hvbox( T1 break ⊢ ▶ ▶ * [ d , break e ] break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'PSubstStarSnAlt $T1 $d $e $T2 }.
+
 notation "hvbox( ▼ * [ d , break e ] break term 46 T1 ≡ break term 46 T2 )"
    non associative with precedence 45
    for @{ 'TSubst $T1 $d $e $T2 }.
