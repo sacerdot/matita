@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/aaa_ltpss.ma".
+include "basic_2/static/aaa_ltpss_dx.ma".
 include "basic_2/static/lsuba_aaa.ma".
 include "basic_2/reducibility/ltpr_ldrop.ma".
 

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unfold/ltpss_ltpss.ma".
+include "basic_2/unfold/ltpss_dx_ltpss_dx.ma".
 include "basic_2/reducibility/ltpr_ldrop.ma".
 
 (* CONTEXT-FREE PARALLEL REDUCTION ON TERMS *********************************)
@@ -51,7 +51,7 @@ lemma tpr_tps_ltpr: ∀T1,T2. T1 ➡ T2 →
   elim (IHT1 … HTU1 (L2. ⓑ{I} W2) ?) -T1 /2 width=1/ -HL12 #U #HU1 #HTU
   elim (tpss_strip_neq … HTU … HT2 ?) -T /2 width=1/ #U2 #HU2 #HTU2
   lapply (tps_lsubs_trans … HU2 (L2. ⓑ{I} V2) ?) -HU2 /2 width=1/ #HU2
-  elim (ltpss_tps_conf … HU2 (L2. ⓑ{I} W2) (d + 1) e ?) -HU2 /2 width=1/ #U3 #HU3 #HU23
+  elim (ltpss_dx_tps_conf … HU2 (L2. ⓑ{I} W2) (d + 1) e ?) -HU2 /2 width=1/ #U3 #HU3 #HU23
   lapply (tps_lsubs_trans … HU3 (⋆. ⓑ{I} W2) ?) -HU3 /2 width=1/ #HU3
   lapply (tpss_lsubs_trans … HU23 (L2. ⓑ{I} W2) ?) -HU23 /2 width=1/ #HU23
   lapply (tpss_trans_eq … HTU2 … HU23) -U2 /3 width=5/

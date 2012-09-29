@@ -204,7 +204,7 @@ lemma tpr_inv_lref2: ∀T1,i. T1 ➡ #i →
 /2 width=3/ qed-.
 
 (* Basic forward lemmas *****************************************************)
-
+(*
 lemma tpr_fwd_shift1: ∀L1,T1,T. L1 @@ T1 ➡ T →
                       ∃∃L2,T2. L1 𝟙 L2 & T = L2 @@ T2.
 #L1 @(lenv_ind_dx … L1) -L1
@@ -232,7 +232,7 @@ elim (shift_inj (L2.ⓑ{I2}V2) … HX ?) -HX
 | lapply (ltop_fwd_length … HL1) -HL1 normalize // 
 ]
 qed-.
-
+*)
 (* Basic_1: removed theorems 3:
             pr0_subst0_back pr0_subst0_fwd pr0_subst0
    Basic_1: removed local theorems: 1: pr0_delta_tau

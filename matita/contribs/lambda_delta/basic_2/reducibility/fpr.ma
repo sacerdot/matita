@@ -34,7 +34,7 @@ lemma fpr_inv_atom1: ∀L2,T1,T2. ⦃⋆, T1⦄ ➡ ⦃L2, T2⦄ → T1 ➡ T2 �
 #L2 #T1 #T2 * #H
 lapply (length_inv_zero_sn … H) -H #H destruct /2 width=1/
 qed-.
-
+(*
 lemma fpr_inv_pair1: ∀I,K1,L2,V1,T1,T2. ⦃K1.ⓑ{I}V1, T1⦄ ➡ ⦃L2, T2⦄ →
                      ∃∃K2,V2. ⦃K1, -ⓑ{I}V1.T1⦄ ➡ ⦃K2, -ⓑ{I}V2.T2⦄  &
                               L2 = K2.ⓑ{I}V2.
@@ -42,12 +42,12 @@ lemma fpr_inv_pair1: ∀I,K1,L2,V1,T1,T2. ⦃K1.ⓑ{I}V1, T1⦄ ➡ ⦃L2, T2⦄
 elim (length_inv_pos_sn … H) -H #I2 #K2 #V2 #HK12 #H destruct #H
 elim (tpr_fwd_shift_bind_minus … H) // #_ #H0 destruct /3 width=4/
 qed-.
-
+*)
 lemma fpr_inv_atom3: ∀L1,T1,T2. ⦃L1,T1⦄ ➡ ⦃⋆,T2⦄ → T1 ➡ T2 ∧ L1 = ⋆.
 #L1 #T1 #T2 * #H
 lapply (length_inv_zero_dx … H) -H #H destruct /2 width=1/
 qed-.
-
+(*
 lemma fpr_inv_pair3: ∀I,L1,K2,V2,T1,T2. ⦃L1, T1⦄ ➡ ⦃K2.ⓑ{I}V2, T2⦄ →
                      ∃∃K1,V1. ⦃K1, -ⓑ{I}V1.T1⦄ ➡ ⦃K2, -ⓑ{I}V2.T2⦄  &
                               L1 = K1.ⓑ{I}V1.
@@ -55,3 +55,4 @@ lemma fpr_inv_pair3: ∀I,L1,K2,V2,T1,T2. ⦃L1, T1⦄ ➡ ⦃K2.ⓑ{I}V2, T2⦄
 elim (length_inv_pos_dx … H) -H #I1 #K1 #V1 #HK12 #H destruct #H
 elim (tpr_fwd_shift_bind_minus … H) // #_ #H0 destruct /3 width=4/
 qed-.
+*)

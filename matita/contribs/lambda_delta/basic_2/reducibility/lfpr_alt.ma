@@ -53,7 +53,7 @@ lemma lfpra_fwd_length: ∀L1,L2. ⦃L1⦄ ➡➡ ⦃L2⦄ → |L1| = |L2|.
 /2 width=2 by lpx_bi_fwd_length/ qed-.
 
 (****************************************************************************)
-
+(*
 lemma fpr_lfpra: ∀L1,T1,L2,T2. ⦃L1, T1⦄ ➡ ⦃L2, T2⦄ → ⦃L1⦄ ➡➡ ⦃L2⦄.
 #L1 #T1 @(cw_wf_ind … L1 T1) -L1 -T1 *
 [ #T1 #_ #L2 #T2 #H
@@ -89,5 +89,6 @@ lemma lcpr_pair2: ∀L1,L2. L1 ⊢ ➡ L2 → ∀V1,V2. ⦃L1, V1⦄ ➡ ⦃L2, 
 (*
 <(ltpss_fwd_length … HL2) /4 width=5/
 qed.
+*)
 *)
 *)
