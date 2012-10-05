@@ -28,7 +28,7 @@
 open NTacStatus
 open Continuationals.Stack
 
-let debug = true
+let debug = false
 let pp = 
   if debug then (fun x -> prerr_endline (Lazy.force x)) else (fun _ -> ())
 
@@ -326,8 +326,6 @@ let mk_discriminator ~use_jmeq ?(force=false) name it leftno status baseuri =
                            let t_deps = List.map fst (List.filter (fun (name,rev_deps) -> List.mem t rev_deps) deps) in
                            (t,t_deps)::acc) [] deps
                       in 
-                      prerr_endline ("deps dump!");
-                      List.iter (fun (x,xs) -> prerr_endline (x ^ ": " ^ (String.concat ", " xs))) deps;
 		      let deps = List.map (fun (x,xs) -> mk_id x, (List.map mk_id) xs) deps in
                       let max_dep = List.fold_left max 0 (List.map (fun (_,xs) -> List.length xs) deps) in
                       if (max_dep > 4 && not use_jmeq && not force) then raise (ConstructorTooBig (kname i)); 
