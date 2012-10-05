@@ -856,7 +856,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
           | _ -> prerr_endline ("engine: indty expected... (fix this error message)"); assert false in
         let (_,ind_name,_,_ as it) = List.nth tys indtyno in
         let status,obj =  
-          NDestructTac.mk_discriminator ~use_jmeq:true (ind_name ^ "_jmdiscr")
+          NDestructTac.mk_discriminator ~use_jmeq:true ~force:true (ind_name ^ "_jmdiscr")
            it leftno status status#baseuri in
         let _,_,menv,_,_ = obj in
           (match menv with
