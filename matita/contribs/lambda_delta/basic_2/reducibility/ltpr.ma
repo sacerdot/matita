@@ -28,6 +28,9 @@ interpretation
 lemma ltpr_refl: reflexive … ltpr.
 /2 width=1/ qed.
 
+lemma ltpr_append: ∀K1,K2. K1 ➡ K2 → ∀L1,L2:lenv. L1 ➡ L2 → K1 @@ L1 ➡ K2 @@ L2.
+/2 width=1/ qed.
+
 (* Basic inversion lemmas ***************************************************)
 
 (* Basic_1: was: wcpr0_gen_sort *)
@@ -50,5 +53,15 @@ lemma ltpr_inv_pair2: ∀L1,K2,I,V2. L1 ➡ K2. ⓑ{I} V2 →
 
 lemma ltpr_fwd_length: ∀L1,L2. L1 ➡ L2 → |L1| = |L2|.
 /2 width=2 by lpx_fwd_length/ qed-.
+
+(* Advanced inversion lemmas ************************************************)
+
+lemma ltpr_inv_append1: ∀K1,L1. ∀L:lenv. K1 @@ L1 ➡ L →
+                        ∃∃K2,L2. K1 ➡ K2 & L1 ➡ L2 & L = K2 @@ L2.
+/2 width=1 by lpx_inv_append1/ qed-.
+
+lemma ltpr_inv_append2: ∀L:lenv. ∀K2,L2. L ➡ K2 @@ L2 →
+                        ∃∃K1,L1. K1 ➡ K2 & L1 ➡ L2 & L = K1 @@ L1.
+/2 width=1 by lpx_inv_append2/ qed-.
 
 (* Basic_1: removed theorems 2: wcpr0_getl wcpr0_getl_back *)

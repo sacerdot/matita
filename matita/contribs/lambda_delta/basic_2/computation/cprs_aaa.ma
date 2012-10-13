@@ -12,35 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/lenv_append.ma".
+include "basic_2/reducibility/cpr_aaa.ma".
+include "basic_2/computation/cprs.ma".
 
-(* SHIFT OF A CLOSURE *******************************************************)
+(* CONTEXT-SENSITIVE PARALLEL COMPUTATION ON TERMS **************************)
 
-let rec shift L T on L ≝ match L with
-[ LAtom       ⇒ T
-| LPair L I V ⇒ shift L (-ⓑ{I} V. T)
-].
+(* Properties about atomic arity assignment on terms ************************)
 
-interpretation "shift (closure)" 'Append L T = (shift L T).
-
-(* Basic properties *********************************************************)
-
-lemma shift_append_assoc: ∀L,K. ∀T:term. (L @@ K) @@ T = L @@ K @@ T.
-#L #K elim K -K // normalize //
+lemma aaa_cprs_conf: ∀L,T1,A. L ⊢ T1 ⁝ A → ∀T2. L ⊢ T1 ➡* T2 → L ⊢ T2 ⁝ A.
+#L #T1 #A #HT1 #T2 #HT12
+@(TC_Conf3 … HT1 ? HT12) /2 width=3/
 qed.
-
-(* Basic inversion lemmas ***************************************************)
-
-lemma shift_inj: ∀L1,L2. ∀T1,T2:term. L1 @@ T1 = L2 @@ T2 → |L1| = |L2| →
-                 L1 = L2 ∧ T1 = T2.
-#L1 elim L1 -L1
-[ * normalize /2 width=1/
-  #L2 #I2 #V2 #T1 #T2 #_ <plus_n_Sm #H destruct
-| #L1 #H1 #V1 #IH * normalize
-  [ #T1 #T2 #_ <plus_n_Sm #H destruct
-  | #L2 #I2 #V2 #T1 #T2 #H1 #H2
-    elim (IH … H1 ?) -IH -H1 /2 width=1/ -H2 #H1 #H2 destruct /2 width=1/
-  ]
-]
-qed-.
-  

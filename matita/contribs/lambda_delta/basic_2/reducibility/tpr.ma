@@ -220,11 +220,25 @@ lemma tpr_fwd_shift1: ∀L1,T1,T. L1 @@ T1 ➡ T →
   ]
 ]
 qed-.
+*)
+  
+  
+(*  
+  >shift_append_assoc >shift_append_assoc >shift_append_assoc >shift_append_assoc normalize #H
+  elim (tpr_inv_bind1 … H) -H *
+  [ #V #T #T0 #HV1 #HT1 #HT0 #H destruct /2 width=1/
+  | #T #_ #_ #H destruct
+  ]
+  
+  lapply (IH … HT12)
+  
+  
+   >shift_append_assoc >shift_append_assoc >shift_append_assoc #HT12
+  lapply (shift_inj … HT12) -HT12
+  
+   
 
-lemma tpr_fwd_shift_bind_minus: ∀L1,L2. |L1| = |L2| → ∀I1,I2,V1,V2,T1,T2.
-                                L1 @@ -ⓑ{I1}V1.T1 ➡ L2 @@ -ⓑ{I2}V2.T2 →
-                                L1 𝟙 L2 ∧ I1 = I2.
-#L1 #L2 #HL12 #I1 #I2 #V1 #V2 #T1 #T2 #H
+ #L2 #HL12 #I1 #I2 #V1 #V2 #T1 #T2 #H
 elim (tpr_fwd_shift1 (L1.ⓑ{I1}V1) … H) -H #Y #X #HY #HX
 elim (ltop_inv_pair1 … HY) -HY #L #V #HL1 #H destruct
 elim (shift_inj (L2.ⓑ{I2}V2) … HX ?) -HX

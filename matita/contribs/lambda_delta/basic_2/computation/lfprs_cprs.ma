@@ -12,35 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/lenv_append.ma".
+include "basic_2/reducibility/lfpr_cpr.ma".
+include "basic_2/computation/cprs.ma".
+include "basic_2/computation/lfprs.ma".
 
-(* SHIFT OF A CLOSURE *******************************************************)
+(* FOCALIZED PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS *********************)
 
-let rec shift L T on L ≝ match L with
-[ LAtom       ⇒ T
-| LPair L I V ⇒ shift L (-ⓑ{I} V. T)
-].
+(* Advanced properties ******************************************************)
 
-interpretation "shift (closure)" 'Append L T = (shift L T).
-
-(* Basic properties *********************************************************)
-
-lemma shift_append_assoc: ∀L,K. ∀T:term. (L @@ K) @@ T = L @@ K @@ T.
-#L #K elim K -K // normalize //
+lemma lfprs_pair_dx: ∀I,L1,L2. ⦃L1⦄ ➡ ⦃L2⦄ → ∀V1,V2. L2 ⊢ V1 ➡* V2 →
+                     ⦃L1. ⓑ{I} V1⦄ ➡* ⦃L2. ⓑ{I} V2⦄.
+#I #L1 #L2 #HL12 #V1 #V2 #H @(cprs_ind … H) -V2
+/3 width=1/ /3 width=5/
 qed.
-
-(* Basic inversion lemmas ***************************************************)
-
-lemma shift_inj: ∀L1,L2. ∀T1,T2:term. L1 @@ T1 = L2 @@ T2 → |L1| = |L2| →
-                 L1 = L2 ∧ T1 = T2.
-#L1 elim L1 -L1
-[ * normalize /2 width=1/
-  #L2 #I2 #V2 #T1 #T2 #_ <plus_n_Sm #H destruct
-| #L1 #H1 #V1 #IH * normalize
-  [ #T1 #T2 #_ <plus_n_Sm #H destruct
-  | #L2 #I2 #V2 #T1 #T2 #H1 #H2
-    elim (IH … H1 ?) -IH -H1 /2 width=1/ -H2 #H1 #H2 destruct /2 width=1/
-  ]
-]
-qed-.
-  

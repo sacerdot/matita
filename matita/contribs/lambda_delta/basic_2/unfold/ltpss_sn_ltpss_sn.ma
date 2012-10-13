@@ -70,14 +70,17 @@ qed.
 (* Advanced forward lemmas **************************************************)
 
 lemma tps_fwd_shift1: ∀L1,L,T1,T,d,e. L ⊢ L1 @@ T1 ▶ [d, e] T →
-                      ∃∃L2,T2. L @@ L1 ⊢ ▶* [d + |L1|, e] L @@ L2 & T = L2 @@ T2.
+                      ∃∃L2,T2. L @@ L1 ⊢ ▶* [d + |L1|, e] L @@ L2 &
+                               L @@ L2 ⊢ T1 ▶ [d + |L1|, e] T2 &
+                               T = L2 @@ T2.
 #L1 @(lenv_ind_dx … L1) -L1
-[ #L #T1 #T #d #e #_ @ex2_2_intro [3: // |4: // |1,2: skip ] (**) (* /2 width=4/ does not work *)
+[ #L #T1 #T #d #e #HT1
+  @ex3_2_intro [3: // |5: // |4: normalize /2 width=1/ |1,2: skip ] (**) (* /2 width=4/ does not work *)
 | #I #L1 #V1 #IH #L #T1 #T #d #e >shift_append_assoc #H
   elim (tps_inv_bind1 … H) -H #V2 #T2 #HV12 #HT12 #H destruct
-  elim (IH … HT12) -IH -T1 #L2 #T #HL12 #H destruct
+  elim (IH … HT12) -IH -HT12 #L2 #T #HL12 #HT1 #H destruct
   <append_assoc >append_length <associative_plus
   lapply (ltpss_sn_trans_eq (L.ⓑ{I}V1@@L1) … HL12) -HL12 /3 width=1/ #HL12
-  @(ex2_2_intro … (⋆.ⓑ{I}V2@@L2)) /2 width=4/ <append_assoc // (**) (* explicit constructor *)
+  @(ex3_2_intro … (⋆.ⓑ{I}V2@@L2)) [4: /2 width=3/ | skip ] <append_assoc // (**) (* explicit constructor *)
 ]
 qed-.

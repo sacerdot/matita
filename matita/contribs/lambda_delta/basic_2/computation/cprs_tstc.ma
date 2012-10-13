@@ -14,7 +14,7 @@
 
 include "basic_2/grammar/tstc.ma".
 include "basic_2/computation/cprs_lift.ma".
-include "basic_2/computation/cprs_lcprs.ma".
+include "basic_2/computation/cprs_lfprs.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL COMPUTATION ON TERMS **************************)
 

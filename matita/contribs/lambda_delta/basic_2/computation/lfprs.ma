@@ -12,41 +12,39 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reducibility/lcpr.ma".
+include "basic_2/reducibility/lfpr.ma".
 
-(* CONTEXT-SENSITIVE PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS *************)
+(* FOCALIZED PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS *********************)
 
-definition lcprs: relation lenv ≝ TC … lcpr.
+definition lfprs: relation lenv ≝ TC … lfpr.
 
 interpretation
-  "context-sensitive parallel computation (environment)"
-  'CPRedStar L1 L2 = (lcprs L1 L2).
+  "focalized parallel computation (environment)"
+  'FocalizedPRedStar L1 L2 = (lfprs L1 L2).
 
 (* Basic eliminators ********************************************************)
 
-lemma lcprs_ind: ∀L1. ∀R:predicate lenv. R L1 →
-                 (∀L,L2. L1 ⊢ ➡* L → L ⊢ ➡ L2 → R L → R L2) →
-                 ∀L2. L1 ⊢ ➡* L2 → R L2.
+lemma lfprs_ind: ∀L1. ∀R:predicate lenv. R L1 →
+                 (∀L,L2. ⦃L1⦄ ➡* ⦃L⦄ → ⦃L⦄ ➡ ⦃L2⦄ → R L → R L2) →
+                 ∀L2. ⦃L1⦄ ➡* ⦃L2⦄ → R L2.
 #L1 #R #HL1 #IHL1 #L2 #HL12
 @(TC_star_ind … HL1 IHL1 … HL12) //
 qed-.
 
-lemma lcprs_ind_dx: ∀L2. ∀R:predicate lenv. R L2 →
-                    (∀L1,L. L1 ⊢ ➡ L → L ⊢ ➡* L2 → R L → R L1) →
-                    ∀L1. L1 ⊢ ➡* L2 → R L1.
+lemma lfprs_ind_dx: ∀L2. ∀R:predicate lenv. R L2 →
+                    (∀L1,L. ⦃L1⦄ ➡ ⦃L⦄ → ⦃L⦄ ➡* ⦃L2⦄ → R L → R L1) →
+                    ∀L1. ⦃L1⦄ ➡* ⦃L2⦄ → R L1.
 #L2 #R #HL2 #IHL2 #L1 #HL12
 @(TC_star_ind_dx … HL2 IHL2 … HL12) //
 qed-.
 
 (* Basic properties *********************************************************)
 
-lemma lcprs_refl: ∀L. L ⊢ ➡* L.
+lemma lfprs_refl: ∀L. ⦃L⦄ ➡* ⦃L⦄.
 /2 width=1/ qed.
 
-lemma lcprs_strap1: ∀L1,L,L2.
-                    L1 ⊢ ➡* L → L ⊢ ➡ L2 → L1 ⊢ ➡* L2.
+lemma lfprs_strap1: ∀L1,L,L2. ⦃L1⦄ ➡* ⦃L⦄ → ⦃L⦄ ➡ ⦃L2⦄ → ⦃L1⦄ ➡* ⦃L2⦄.
 /2 width=3/ qed.
 
-lemma lcprs_strap2: ∀L1,L,L2.
-                    L1 ⊢ ➡ L → L ⊢ ➡* L2 → L1 ⊢ ➡* L2.
+lemma lfprs_strap2: ∀L1,L,L2. ⦃L1⦄ ➡ ⦃L⦄ → ⦃L⦄ ➡* ⦃L2⦄ → ⦃L1⦄ ➡* ⦃L2⦄.
 /2 width=3/ qed.

@@ -134,7 +134,7 @@ elim (cpr_inv_appl1 … H) -H *
   elim (simple_inv_bind … HT1)
 ]
 qed-.
-
+     
 (* Relocation properties ****************************************************)
 
 (* Basic_1: was: pr2_lift *)

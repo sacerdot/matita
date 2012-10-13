@@ -308,10 +308,6 @@ notation "hvbox( L ⊢ break term 46 T1 ➡ break term 46 T2 )"
    non associative with precedence 45
    for @{ 'PRed $L $T1 $T2 }.
 
-notation "hvbox( L1 ⊢ ➡ break term 46 L2 )"
-   non associative with precedence 45
-   for @{ 'CPRed $L1 $L2 }.
-
 notation "hvbox( ⦃ L1 ⦄ ➡ break ⦃ L2 ⦄ )"
    non associative with precedence 45
    for @{ 'FocalizedPRed $L1 $L2 }.
@@ -319,6 +315,10 @@ notation "hvbox( ⦃ L1 ⦄ ➡ break ⦃ L2 ⦄ )"
 notation "hvbox( ⦃ L1, break T1 ⦄ ➡ break ⦃ L2 , break T2 ⦄ )"
    non associative with precedence 45
    for @{ 'FocalizedPRed $L1 $T1 $L2 $T2 }.
+
+notation "hvbox( L ⊢ break ⦃ L1, break T1 ⦄ ➡ break ⦃ L2 , break T2 ⦄ )"
+   non associative with precedence 45
+   for @{ 'FocalizedPRed $L $L1 $T1 $L2 $T2 }.
 
 notation "hvbox( ⦃ L1 ⦄ ➡ ➡ break ⦃ L2 ⦄ )"
    non associative with precedence 45
@@ -330,27 +330,27 @@ notation "hvbox( ⦃ h , break L ⦄ ⊢ break term 46 T1 ➸ break [ g ] break 
 
 (* Computation **************************************************************)
 
-notation "hvbox( T1 ➡* break term 46 T2 )"
+notation "hvbox( T1 ➡ * break term 46 T2 )"
    non associative with precedence 45
    for @{ 'PRedStar $T1 $T2 }.
 
-notation "hvbox( L ⊢ break term 46 T1 ➡* break term 46 T2 )"
+notation "hvbox( L ⊢ break term 46 T1 ➡ * break term 46 T2 )"
    non associative with precedence 45
    for @{ 'PRedStar $L $T1 $T2 }.
 
-notation "hvbox( T1 ➡➡* break term 46 T2 )"
+notation "hvbox( T1 ➡ ➡ * break term 46 T2 )"
    non associative with precedence 45
    for @{ 'PRedStarAlt $T1 $T2 }.
 
-notation "hvbox( L1 ⊢ ➡* break term 46 L2 )"
+notation "hvbox( ⦃ L1 ⦄ ➡ * ⦃ L2 ⦄ )"
    non associative with precedence 45
-   for @{ 'CPRedStar $L1 $L2 }.
+   for @{ 'FocalizedPRedStar $L1 $L2 }.
 
-notation "hvbox( L ⊢ break term 46 T1 ➡* break 𝐍 ⦃ T2 ⦄ )"
+notation "hvbox( L ⊢ break term 46 T1 ➡ * break 𝐍 ⦃ T2 ⦄ )"
    non associative with precedence 45
    for @{ 'PEval $L $T1 $T2 }.
 
-notation "hvbox( ⬊ * term 46 T  )"
+notation "hvbox( ⬊ * term 46 T )"
    non associative with precedence 45
    for @{ 'SN $T }.
 
@@ -384,9 +384,9 @@ notation "hvbox( L ⊢ break term 46 T1 ⬌ break term 46 T2 )"
    non associative with precedence 45
    for @{ 'PConv $L $T1 $T2 }.
 
-notation "hvbox( T1 ⊢ ⬌ break term 46 T2 )"
+notation "hvbox( ⦃ L1 ⦄ ⬌ ⦃ L2 ⦄ )"
    non associative with precedence 45
-   for @{ 'CPConv $T1 $T2 }.
+   for @{ 'FocalizedPConv $L1 $L2 }.
 
 (* Equivalence **************************************************************)
 
@@ -394,9 +394,9 @@ notation "hvbox( L ⊢ break term 46 T1 ⬌* break term 46 T2 )"
    non associative with precedence 45
    for @{ 'PConvStar $L $T1 $T2 }.
 
-notation "hvbox( T1 ⊢ ⬌* break term 46 T2 )"
+notation "hvbox( ⦃ L1 ⦄ ⬌ * ⦃ L2 ⦄ )"
    non associative with precedence 45
-   for @{ 'CPConvStar $T1 $T2 }.
+   for @{ 'FocalizedPConvStar $L1 $L2 }.
 
 (* Dynamic typing ***********************************************************)
 

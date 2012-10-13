@@ -12,29 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unfold/ltpss_sn.ma".
-include "basic_2/reducibility/ltpr.ma".
+include "basic_2/reducibility/lfpr_aaa.ma".
+include "basic_2/computation/lfprs.ma".
 
-(* CONTEXT-SENSITIVE PARALLEL REDUCTION ON LOCAL ENVIRONMENTS *************)
+(* FOCALIZED PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS *********************)
 
-definition lcpr: relation lenv ≝
-   λL1,L2. ∃∃L. L1 ➡ L & L ⊢ ▶* [0, |L|] L2
-.
+(* Properties about atomic arity assignment on terms ************************)
 
-interpretation
-  "context-sensitive parallel reduction (environment)"
-  'CPRed L1 L2 = (lcpr L1 L2).
-
-(* Basic properties *********************************************************)
-
-lemma lcpr_refl: ∀L. L ⊢ ➡ L.
-/2 width=3/ qed.
-
-lemma ltpss_sn_lcpr: ∀L1,L2,d,e. L1 ⊢ ▶* [d, e] L2 → L1 ⊢ ➡ L2.
-/3 width=5/ qed.
-
-(* Basic inversion lemmas ***************************************************)
-
-lemma lcpr_inv_atom1: ∀L2. ⋆ ⊢ ➡ L2 → L2 = ⋆.
-#L2 * #L #HL >(ltpr_inv_atom1 … HL) -HL #HL2 >(ltpss_sn_inv_atom1 … HL2) -HL2 //
-qed-.
+lemma aaa_lfprs_conf: ∀L1,T,A. L1 ⊢ T ⁝ A → ∀L2. ⦃L1⦄ ➡* ⦃L2⦄ → L2 ⊢ T ⁝ A.
+#L1 #T #A #HT #L2 #HL12
+@(TC_Conf3 … (λL,A. L ⊢ T ⁝ A) … HT ? HL12) /2 width=3/
+qed.
+(*
+(* Note: this should be rephrased in terms of fprs *)
+lemma aaa_lfprs_cprs_conf: ∀L1,T1,A. L1 ⊢ T1 ⁝ A → ∀L2. ⦃L1⦄ ➡* ⦃L2⦄ →
+                           ∀T2. L2 ⊢ T1 ➡* T2 → L2 ⊢ T2 ⁝ A.
+/3 width=3/ qed.
+*)

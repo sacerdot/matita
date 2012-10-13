@@ -22,7 +22,7 @@ include "basic_2/computation/csn_alt.ma".
 
 (* Advanced properties ******************************************************)
 
-lemma csn_lcpr_conf: ∀L1,L2. L1 ⊢ ➡ L2 → ∀T. L1 ⊢ ⬊* T → L2 ⊢ ⬊* T.
+lemma csn_lfpr_conf: ∀L1,L2. ⦃L1⦄ ➡ ⦃L2⦄ → ∀T. L1 ⊢ ⬊* T → L2 ⊢ ⬊* T.
 #L1 #L2 #HL12 #T #H @(csn_ind_alt … H) -T #T #_ #IHT
 @csn_intro #T0 #HLT0 #HT0
 @IHT /2 width=2/ -IHT -HT0 /2 width=3/
@@ -37,7 +37,7 @@ elim (cpr_inv_abbr1 … H1) -H1 *
   lapply (ltpr_cpr_trans (L. ⓓV) … HLT1) /2 width=1/ -V0 #HLT1
   elim (eq_false_inv_tpair_sn … H2) -H2
   [ #HV1 @IHV // /2 width=1/ -HV1
-    @(csn_lcpr_conf (L. ⓓV)) /2 width=1/ -HLV1 /2 width=3/
+    @(csn_lfpr_conf (L. ⓓV)) /2 width=1/ -HLV1 /2 width=3/
   | -IHV -HLV1 * #H destruct /3 width=1/
   ]
 | -IHV -IHT -H2 #T0 #HLT0 #HT0
@@ -58,14 +58,14 @@ elim (cpr_inv_appl1 … H) -H *
   elim (eq_false_inv_beta … H2) -H2
   [ -IHVT #HW0 @IHW -IHW [1,5: // |3: skip ] -HLW0 /2 width=1/ -HW0
     @csn_abbr /2 width=3/ -HV
-    @(csn_lcpr_conf (L. ⓓV)) /2 width=1/ -V0 /2 width=3/
+    @(csn_lfpr_conf (L. ⓓV)) /2 width=1/ -V0 /2 width=3/
   | -IHW -HLW0 -HV -HT * #H #HVT0 destruct
     @(IHVT … HVT0) -IHVT -HVT0 // /2 width=1/
   ]
 | -IHW -IHVT -H2 #b #V0 #W0 #T0 #T1 #HLV0 #HLT01 #H1 #H2 destruct
-  lapply (lcpr_cpr_trans (L. ⓓV) … HLT01) -HLT01 /2 width=1/ #HLT01
+  lapply (lfpr_cpr_trans (L. ⓓV) … HLT01) -HLT01 /2 width=1/ #HLT01
   @csn_abbr /2 width=3/ -HV
-  @(csn_lcpr_conf (L. ⓓV)) /2 width=1/ -V0 /2 width=3/
+  @(csn_lfpr_conf (L. ⓓV)) /2 width=1/ -V0 /2 width=3/
 | -IHW -IHVT -HV -HT -H2 #b #V0 #V1 #W0 #W1 #T0 #T1 #_ #_ #_ #_ #H destruct
 ]
 qed.
@@ -108,9 +108,9 @@ elim (cpr_inv_appl1 … HL) -HL *
 | -HV -HV12 -HVT -IHVT -H #b #V0 #W0 #T0 #T1 #_ #_ #H destruct
 | -IHVT -H #b #V0 #V3 #W0 #W1 #T0 #T1 #HLV10 #HLW01 #HLT01 #HV03 #H1 #H2 destruct
   lapply (cpr_lift (L. ⓓW0) … HV12 … HV03 HLV10) -HLV10 -HV12 -HV03 /2 width=1/ #HLV23
-  lapply (lcpr_cpr_trans (L. ⓓW0) … HLT01) -HLT01 /2 width=1/ #HLT01
+  lapply (lfpr_cpr_trans (L. ⓓW0) … HLT01) -HLT01 /2 width=1/ #HLT01
   @csn_abbr /2 width=3/ -HV
-  @(csn_lcpr_conf (L. ⓓW0)) /2 width=1/ -W1
+  @(csn_lfpr_conf (L. ⓓW0)) /2 width=1/ -W1
   @(csn_cprs_trans … HVT) -HVT /2 width=1/
 ]
 qed.

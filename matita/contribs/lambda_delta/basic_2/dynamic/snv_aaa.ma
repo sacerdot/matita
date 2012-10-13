@@ -15,7 +15,7 @@
 include "basic_2/computation/csn_aaa.ma".
 include "basic_2/computation/xprs_aaa.ma".
 include "basic_2/computation/xprs_cprs.ma".
-include "basic_2/equivalence/lcpcs_aaa.ma".
+include "basic_2/equivalence/cpcs_aaa.ma".
 include "basic_2/dynamic/snv.ma".
 
 (* STRATIFIED NATIVE VALIDITY FOR TERMS *************************************)

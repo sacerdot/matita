@@ -12,26 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reducibility/lcpr.ma".
+include "basic_2/computation/cprs_aaa.ma".
+include "basic_2/equivalence/cpcs_cpcs.ma".
 
-(* CONTEXT-SENSITIVE PARALLEL CONVERSION ON LOCAL ENVIRONMENTS **************)
+(* CONTEXT-SENSITIVE PARALLEL EQUIVALENCE ON TERMS **************************)
 
-definition lcpc: relation lenv ≝
-   λL1,L2. L1 ⊢ ➡ L2 ∨ L2 ⊢ ➡ L1.
+(* Main properties about atomic arity assignment on terms *******************)
 
-interpretation
-   "context-sensitive parallel conversion (local environment)"
-   'CPConv L1 L2 = (lcpc L1 L2).
-
-(* Basic properties *********************************************************)
-
-lemma lcpc_refl: ∀L. L ⊢ ⬌ L.
-/2 width=1/ qed.
-
-lemma lcpc_sym: ∀L1,L2. L1 ⊢ ⬌ L2 → L2 ⊢ ⬌ L1.
-#L1 #L2 * /2 width=1/
-qed.
-
-lemma lcpc_lcpr: ∀L1,L2. L1 ⊢ ⬌ L2 → ∃∃L. L1 ⊢ ➡ L & L2 ⊢ ➡ L.
-#L1 #L2 * /2 width=3/
-qed.
+theorem aaa_cpcs_mono: ∀L,T1,T2. L ⊢ T1 ⬌* T2 →
+                       ∀A1. L ⊢ T1 ⁝ A1 → ∀A2. L ⊢ T2 ⁝ A2 →
+                       A1 = A2.
+#L #T1 #T2 #HT12 #A1 #HA1 #A2 #HA2
+elim (cpcs_inv_cprs … HT12) -HT12 #T #HT1 #HT2
+lapply (aaa_cprs_conf … HA1 … HT1) -T1 #HA1
+lapply (aaa_cprs_conf … HA2 … HT2) -T2 #HA2
+lapply (aaa_mono … HA1 … HA2) -L -T //
+qed-.

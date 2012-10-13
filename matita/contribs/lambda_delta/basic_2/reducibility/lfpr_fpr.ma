@@ -12,12 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/conversion/lcpc.ma".
+include "basic_2/reducibility/lfpr.ma".
+include "basic_2/reducibility/cfpr_cpr.ma".
 
-(* CONTEXT-SENSITIVE PARALLEL CONVERSION ON LOCAL ENVIRONMENTS **************)
+(* FOCALIZED PARALLEL REDUCTION ON LOCAL ENVIRONMENTS ***********************)
 
-(* Main properties **********************************************************)
+(* Inversion lemmas on context-free parallel reduction for closures *********)
 
-theorem lcpc_conf: ∀L0,L1,L2. L0 ⊢ ⬌ L1 → L0 ⊢ ⬌ L2 →
-                   ∃∃L. L1 ⊢ ⬌ L & L2 ⊢ ⬌ L.
-/3 width=3/ qed.
+lemma fpr_lfpr: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ➡ ⦃L2, T2⦄ → ⦃L1⦄ ➡ ⦃L2⦄.
+#L1 #L2 #T1 #T2 #H
+elim (fpr_inv_all … H) -H /2 width=3/
+qed. 
+
+(* Inversion lemmas on context-free parallel reduction for closures *********)
+
+lemma lfpr_inv_fpr: ∀L1,L2. ⦃L1⦄ ➡ ⦃L2⦄ → ∀T. ⦃L1, T⦄ ➡ ⦃L2, T⦄.
+#L1 #L2 * /2 width=4/
+qed-.

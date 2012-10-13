@@ -12,24 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reducibility/lcpr_aaa.ma".
-include "basic_2/computation/cprs.ma".
-include "basic_2/computation/lcprs.ma".
+include "basic_2/static/aaa_ltpss_sn.ma".
+include "basic_2/reducibility/ltpr_aaa.ma".
+include "basic_2/reducibility/lfpr.ma".
 
-(* CONTEXT-SENSITIVE PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS *************)
+(* FOCALIZED PARALLEL REDUCTION FOR LOCAL ENVIRONMENTS **********************)
 
 (* Properties about atomic arity assignment on terms ************************)
 
-lemma aaa_lcprs_conf: ∀L1,T,A. L1 ⊢ T ⁝ A → ∀L2. L1 ⊢ ➡* L2 → L2 ⊢ T ⁝ A.
-#L1 #T #A #HT #L2 #HL12
-@(TC_Conf3 … (λL,A. L ⊢ T ⁝ A) … HT ? HL12) /2 width=3/
+lemma aaa_lfpr_conf: ∀L1,T,A. L1 ⊢ T ⁝ A → ∀L2. ⦃L1⦄ ➡ ⦃L2⦄ → L2 ⊢ T ⁝ A.
+#L1 #T #A #HT #L2 * /3 width=5/
 qed.
-
-lemma aaa_cprs_conf: ∀L,T1,A. L ⊢ T1 ⁝ A → ∀T2. L ⊢ T1 ➡* T2 → L ⊢ T2 ⁝ A.
-#L #T1 #A #HT1 #T2 #HT12
-@(TC_Conf3 … HT1 ? HT12) /2 width=3/
-qed.
-
-lemma aaa_lcprs_cprs_conf: ∀L1,T1,A. L1 ⊢ T1 ⁝ A → ∀L2. L1 ⊢ ➡* L2 →
-                           ∀T2. L2 ⊢ T1 ➡* T2 → L2 ⊢ T2 ⁝ A.
-/3 width=3/ qed.

@@ -12,35 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/lenv_append.ma".
+include "basic_2/static/aaa_ltpss_sn.ma".
+include "basic_2/reducibility/ltpr_aaa.ma".
+include "basic_2/reducibility/cpr_aaa.ma".
+include "basic_2/reducibility/cfpr_cpr.ma".
 
-(* SHIFT OF A CLOSURE *******************************************************)
+(* CONTEXT-SENSITIVE PARALLEL REDUCTION ON CLOSURES *************************)
 
-let rec shift L T on L ≝ match L with
-[ LAtom       ⇒ T
-| LPair L I V ⇒ shift L (-ⓑ{I} V. T)
-].
+(* Properties about atomic arity assignment on terms ************************)
 
-interpretation "shift (closure)" 'Append L T = (shift L T).
-
-(* Basic properties *********************************************************)
-
-lemma shift_append_assoc: ∀L,K. ∀T:term. (L @@ K) @@ T = L @@ K @@ T.
-#L #K elim K -K // normalize //
+lemma aaa_fpr_conf: ∀L1,T1,A. L1 ⊢ T1 ⁝ A →
+                    ∀L2,T2. ⦃L1, T1⦄ ➡ ⦃L2, T2⦄ → L2 ⊢ T2 ⁝ A.
+#L1 #T1 #A #HT1 #L2 #T2 #H
+elim (fpr_inv_all … H) -H 
+/4 width=5 by aaa_cpr_conf, aaa_ltpr_conf, aaa_ltpss_sn_conf/
 qed.
-
-(* Basic inversion lemmas ***************************************************)
-
-lemma shift_inj: ∀L1,L2. ∀T1,T2:term. L1 @@ T1 = L2 @@ T2 → |L1| = |L2| →
-                 L1 = L2 ∧ T1 = T2.
-#L1 elim L1 -L1
-[ * normalize /2 width=1/
-  #L2 #I2 #V2 #T1 #T2 #_ <plus_n_Sm #H destruct
-| #L1 #H1 #V1 #IH * normalize
-  [ #T1 #T2 #_ <plus_n_Sm #H destruct
-  | #L2 #I2 #V2 #T1 #T2 #H1 #H2
-    elim (IH … H1 ?) -IH -H1 /2 width=1/ -H2 #H1 #H2 destruct /2 width=1/
-  ]
-]
-qed-.
-  

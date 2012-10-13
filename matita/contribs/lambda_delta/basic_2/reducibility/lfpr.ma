@@ -12,35 +12,29 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/lenv_append.ma".
+include "basic_2/unfold/ltpss_sn.ma".
+include "basic_2/reducibility/ltpr.ma".
 
-(* SHIFT OF A CLOSURE *******************************************************)
+(* FOCALIZED PARALLEL REDUCTION ON LOCAL ENVIRONMENTS ***********************)
 
-let rec shift L T on L ≝ match L with
-[ LAtom       ⇒ T
-| LPair L I V ⇒ shift L (-ⓑ{I} V. T)
-].
+definition lfpr: relation lenv ≝
+   λL1,L2. ∃∃L. L1 ➡ L & L ⊢ ▶* [0, |L|] L2
+.
 
-interpretation "shift (closure)" 'Append L T = (shift L T).
+interpretation
+  "focalized parallel reduction (environment)"
+  'FocalizedPRed L1 L2 = (lfpr L1 L2).
 
 (* Basic properties *********************************************************)
 
-lemma shift_append_assoc: ∀L,K. ∀T:term. (L @@ K) @@ T = L @@ K @@ T.
-#L #K elim K -K // normalize //
-qed.
+lemma lfpr_refl: ∀L. ⦃L⦄ ➡ ⦃L⦄.
+/2 width=3/ qed.
+
+lemma ltpss_sn_lfpr: ∀L1,L2,d,e. L1 ⊢ ▶* [d, e] L2 → ⦃L1⦄ ➡ ⦃L2⦄.
+/3 width=5/ qed.
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma shift_inj: ∀L1,L2. ∀T1,T2:term. L1 @@ T1 = L2 @@ T2 → |L1| = |L2| →
-                 L1 = L2 ∧ T1 = T2.
-#L1 elim L1 -L1
-[ * normalize /2 width=1/
-  #L2 #I2 #V2 #T1 #T2 #_ <plus_n_Sm #H destruct
-| #L1 #H1 #V1 #IH * normalize
-  [ #T1 #T2 #_ <plus_n_Sm #H destruct
-  | #L2 #I2 #V2 #T1 #T2 #H1 #H2
-    elim (IH … H1 ?) -IH -H1 /2 width=1/ -H2 #H1 #H2 destruct /2 width=1/
-  ]
-]
+lemma lfpr_inv_atom1: ∀L2. ⦃⋆⦄ ➡ ⦃L2⦄ → L2 = ⋆.
+#L2 * #L #HL >(ltpr_inv_atom1 … HL) -HL #HL2 >(ltpss_sn_inv_atom1 … HL2) -HL2 //
 qed-.
-  

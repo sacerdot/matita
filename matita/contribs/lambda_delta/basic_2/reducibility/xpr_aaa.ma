@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/static/ssta_aaa.ma".
-include "basic_2/reducibility/lcpr_aaa.ma".
+include "basic_2/reducibility/cpr_aaa.ma".
 include "basic_2/reducibility/xpr.ma".
 
 (* EXTENDED PARALLEL REDUCTION ON TERMS *************************************)

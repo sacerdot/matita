@@ -14,12 +14,12 @@
 
 include "basic_2/reducibility/ltpr_tps.ma".
 include "basic_2/reducibility/cpr_ltpss.ma".
-include "basic_2/reducibility/lcpr.ma".
+include "basic_2/reducibility/lfpr.ma".
 include "basic_2/computation/cprs.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL COMPUTATION ON TERMS **************************)
 
-(* Properties concerning context-sensitive parallel reduction on lenv's *****)
+(* Properties concerning focalized parallel reduction on local environments *)
 
 lemma ltpr_tpss_trans: ∀L1,L2. L1 ➡ L2 → ∀T1,T2,d,e. L2 ⊢ T1 ▶* [d, e] T2 →
                        ∃∃T. L1 ⊢ T1 ▶* [d, e] T & L1 ⊢ T ➡* T2.
@@ -41,6 +41,6 @@ elim (ltpr_tpss_trans … HL12 … HT2) -L2 /3 width=3/
 qed.
 
 (* Basic_1: was just: pr3_pr2_pr2_t *)
-lemma lcpr_cpr_trans: ∀L1,L2. L1 ⊢ ➡ L2 → ∀T1,T2. L2 ⊢ T1 ➡ T2 → L1 ⊢ T1 ➡* T2.
+lemma lfpr_cpr_trans: ∀L1,L2. ⦃L1⦄ ➡ ⦃L2⦄ → ∀T1,T2. L2 ⊢ T1 ➡ T2 → L1 ⊢ T1 ➡* T2.
 #L1 #L2 * /3 width=7/
 qed.

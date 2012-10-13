@@ -47,7 +47,8 @@ lemma append_inj_sn: ∀K1,K2,L1,L2. L1 @@ K1 = L2 @@ K2 → |K1| = |K2| →
 | #K1 #I1 #V1 #IH * normalize
   [ #L1 #L2 #_ <plus_n_Sm #H destruct
   | #K2 #I2 #V2 #L1 #L2 #H1 #H2 destruct (**) (* destruct does not simplify well *)
-    elim (IH … e0 ?) -IH -H1 /2 width=1/ -H2 #H1 #H2 destruct /2 width=1/
+    -H1 (**) (* destruct: the destucted equality is not erased *)
+    elim (IH … e0 ?) -IH /2 width=1/ -H2 #H1 #H2 destruct /2 width=1/
   ]
 ]
 qed-.
@@ -65,7 +66,8 @@ lemma append_inj_dx: ∀K1,K2,L1,L2. L1 @@ K1 = L2 @@ K2 → |L1| = |L2| →
     normalize in H2; >append_length in H2; #H
     elim (plus_xySz_x_false … (sym_eq … H))
   | #K2 #I2 #V2 #L1 #L2 #H1 #H2 destruct (**) (* destruct does not simplify well *)
-    elim (IH … e0 ?) -IH -H1 /2 width=1/ -H2 #H1 #H2 destruct /2 width=1/
+    -H1 (**) (* destruct: the destucted equality is not erased *)
+    elim (IH … e0 ?) -IH // -H2 #H1 #H2 destruct /2 width=1/
   ]
 ]
 qed-.
@@ -100,3 +102,19 @@ lemma lenv_ind_dx: ∀R:predicate lenv. R ⋆ →
                    (∀I,L,V. R L → R (⋆.ⓑ{I}V @@ L)) →
                    ∀L. R L.
 /3 width=2 by lenv_ind_dx_aux/ qed-.
+
+(* Advanced inversion lemmas ************************************************)
+
+lemma length_inv_pos_sn_append: ∀d,L. 1 + d = |L| →
+                                ∃∃I,K,V. d = |K| & L = ⋆. ⓑ{I}V @@ K.
+#d >commutative_plus @(nat_ind_plus … d) -d
+[ #L #H elim (length_inv_pos_sn … H) -H #I #K #V #H1 #H2 destruct
+  >(length_inv_zero_sn … H1) -K
+  @(ex2_3_intro … (⋆)) // (**) (* explicit constructor *)
+| #d #IHd #L #H elim (length_inv_pos_sn … H) -H #I #K #V #H1 #H2 destruct
+  >H1 in IHd; -H1 #IHd
+  elim (IHd K ?) -IHd // #J #L #W #H1 #H2 destruct
+  @(ex2_3_intro … (L.ⓑ{I}V)) // (**) (* explicit constructor *)
+  >append_length /2 width=1/
+]
+qed-.

@@ -12,18 +12,26 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unfold/ltpss_sn_ltpss_sn.ma".
-include "basic_2/reducibility/cpr.ma".
-include "basic_2/reducibility/lcpr.ma".
+include "basic_2/reducibility/lfpr.ma".
 
-(* CONTEXT-SENSITIVE PARALLEL REDUCTION ON LOCAL ENVIRONMENTS *************)
+(* FOCALIZED PARALLEL CONVERSION ON LOCAL ENVIRONMENTS **********************)
 
-(* Advanced properties ****************************************************)
+definition lfpc: relation lenv ≝
+   λL1,L2. ⦃L1⦄ ➡ ⦃L2⦄ ∨ ⦃L2⦄ ➡ ⦃L1⦄.
 
-lemma lcpr_pair: ∀L1,L2. L1 ⊢ ➡ L2 → ∀V1,V2. L2 ⊢ V1 ➡ V2 →
-                 ∀I. L1. ⓑ{I} V1 ⊢ ➡ L2. ⓑ{I} V2.
-#L1 #L2 * #L #HL1 #HL2 #V1 #V2 *
-<(ltpss_sn_fwd_length … HL2) #V #HV1 #HV2 #I
-lapply (ltpss_sn_tpss_trans_eq … HV2 … HL2) -HV2 #V2
-@(ex2_1_intro … (L.ⓑ{I}V)) /2 width=1/ (**) (* explicit constructor *)
+interpretation
+   "focalized parallel conversion (local environment)"
+   'FocalizedPConv L1 L2 = (lfpc L1 L2).
+
+(* Basic properties *********************************************************)
+
+lemma lfpc_refl: ∀L. ⦃L⦄ ⬌ ⦃L⦄.
+/2 width=1/ qed.
+
+lemma lfpc_sym: ∀L1,L2. ⦃L1⦄ ⬌ ⦃L2⦄ → ⦃L2⦄ ⬌ ⦃L1⦄.
+#L1 #L2 * /2 width=1/
+qed.
+
+lemma lfpc_lfpr: ∀L1,L2. ⦃L1⦄ ⬌ ⦃L2⦄ → ∃∃L. ⦃L1⦄ ➡ ⦃L⦄ & ⦃L2⦄ ➡ ⦃L⦄.
+#L1 #L2 * /2 width=3/
 qed.

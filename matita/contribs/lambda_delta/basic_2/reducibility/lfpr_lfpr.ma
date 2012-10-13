@@ -14,14 +14,14 @@
 
 include "basic_2/reducibility/ltpr_ltpss_sn.ma".
 include "basic_2/reducibility/ltpr_ltpr.ma".
-include "basic_2/reducibility/lcpr.ma".
+include "basic_2/reducibility/lfpr.ma".
 
-(* CONTEXT-SENSITIVE PARALLEL REDUCTION ON LOCAL ENVIRONMENTS ***************)
+(* FOCALIZED PARALLEL REDUCTION ON LOCAL ENVIRONMENTS ***********************)
 
 (* Main properties **********************************************************)
 
-theorem lcpr_conf: ∀L0,L1,L2. L0 ⊢ ➡ L1 → L0 ⊢ ➡ L2 →
-                   ∃∃L. L1 ⊢ ➡ L & L2 ⊢ ➡ L.
+theorem lfpr_conf: ∀L0,L1,L2. ⦃L0⦄ ➡ ⦃L1⦄ → ⦃L0⦄ ➡ ⦃L2⦄ →
+                   ∃∃L. ⦃L1⦄ ➡ ⦃L⦄ & ⦃L2⦄ ➡ ⦃L⦄.
 #K0 #L1 #L2 * #K1 #HK01 #HKL1 * #K2 #HK02 #HKL2
 lapply (ltpr_fwd_length … HK01) #H
 >(ltpr_fwd_length … HK02) in H; #H

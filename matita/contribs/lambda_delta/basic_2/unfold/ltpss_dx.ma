@@ -233,6 +233,11 @@ lemma ltpss_dx_append_le: ∀K1,K2,d. K1 ▶* [d, |K1| - d] K2 →
                           L1 @@ K1 ▶* [d, |K1| - d + e] L2 @@ K2.
 /2 width=1 by ltpss_dx_append_le_aux/ qed.
 
+lemma ltpss_dx_append_zero: ∀K1,K2. K1 ▶* [0, |K1|] K2 →
+                            ∀L1,L2,e. L1 ▶* [0, e] L2 →
+                            L1 @@ K1 ▶* [0, |K1| + e] L2 @@ K2.
+/2 width=1/ qed.
+
 lemma ltpss_dx_append_ge: ∀K1,K2,d,e. K1 ▶* [d, e] K2 →
                           ∀L1,L2. L1 ▶* [d - |K1|, e] L2 → |K1| ≤ d →
                           L1 @@ K1 ▶* [d, e] L2 @@ K2.

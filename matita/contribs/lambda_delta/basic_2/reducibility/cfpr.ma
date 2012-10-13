@@ -1,0 +1,55 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/reducibility/cpr.ma".
+include "basic_2/reducibility/fpr.ma".
+
+(* CONTEXT-SENSITIVE PARALLEL REDUCTION ON CLOSURES *************************)
+
+definition cfpr: lenv → bi_relation lenv term ≝
+                 λL,L1,T1,L2,T2. |L1| = |L2| ∧ L ⊢ L1 @@ T1 ➡ L2 @@ T2.
+
+interpretation
+   "context-sensitive parallel reduction (closure)"
+   'FocalizedPRed L L1 T1 L2 T2 = (cfpr L L1 T1 L2 T2).
+
+(* Basic properties *********************************************************)
+
+lemma cfpr_refl: ∀L. bi_reflexive … (cfpr L).
+/2 width=1/ qed.
+
+lemma fpr_cfpr: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ➡ ⦃L2, T2⦄ → ⋆ ⊢ ⦃L1, T1⦄ ➡ ⦃L2, T2⦄.
+#L1 #L2 #T1 #T2 * /3 width=1/ 
+qed.
+
+(* Basic inversion lemmas ***************************************************)
+
+lemma cfpr_inv_atom1: ∀L,L2,T1,T2. L ⊢ ⦃⋆, T1⦄ ➡ ⦃L2, T2⦄ → L ⊢ T1 ➡ T2 ∧ L2 = ⋆.
+#L #L2 #T1 #T2 * #H >(length_inv_zero_sn … H) /2 width=1/
+qed-.
+
+(* Advanced inversion lemmas ************************************************)
+
+lemma fpr_inv_pair1_sn: ∀I,K1,L2,V1,T1,T2. ⦃⋆.ⓑ{I}V1@@K1, T1⦄ ➡ ⦃L2, T2⦄ →
+                        ∃∃K2,V2. V1 ➡ V2 &
+                                 ⋆.ⓑ{I}V2 ⊢ ⦃K1, T1⦄ ➡ ⦃K2, T2⦄  &
+                                 L2 = ⋆.ⓑ{I}V2@@K2.
+#I1 #K1 #L2 #V1 #T1 #T2 * >append_length #H
+elim (length_inv_pos_sn_append … H) -H #I2 #K2 #V2 #HK12 #H destruct
+>shift_append_assoc >shift_append_assoc normalize in ⊢ (%→?); #H 
+elim (tpr_inv_bind1 … H) -H *
+[ #V0 #T #T0 #HV10 #HT1 #HT0 #H destruct /5 width=5/
+| #T0 #_ #_ #H destruct
+]
+qed-.

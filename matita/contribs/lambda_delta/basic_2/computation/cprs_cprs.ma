@@ -14,8 +14,8 @@
 
 include "basic_2/reducibility/cpr_lift.ma".
 include "basic_2/reducibility/cpr_cpr.ma".
-include "basic_2/reducibility/lcpr_cpr.ma".
-include "basic_2/computation/cprs_lcpr.ma".
+include "basic_2/reducibility/lfpr_cpr.ma".
+include "basic_2/computation/cprs_lfpr.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL COMPUTATION ON TERMS **************************)
 
@@ -45,7 +45,7 @@ lemma cpr_abbr1: ∀L,V1,V2. L ⊢ V1 ➡ V2 → ∀T1,T2. L. ⓓV1 ⊢ T1 ➡ T
 lemma cpr_abbr2: ∀L,V1,V2. L ⊢ V1 ➡ V2 → ∀T1,T2. L. ⓓV2 ⊢ T1 ➡ T2 →
                  ∀a. L ⊢ ⓓ{a}V1. T1 ➡* ⓓ{a}V2. T2.
 #L #V1 #V2 #HV12 #T1 #T2 #HT12
-lapply (lcpr_cpr_trans (L. ⓓV1) … HT12) /2 width=1/
+lapply (lfpr_cpr_trans (L. ⓓV1) … HT12) /2 width=1/
 qed.
 
 (* Basic_1: was: pr3_strip *)
@@ -117,7 +117,7 @@ lemma cprs_abbr2_dx: ∀L,V1,V2. L ⊢ V1 ➡ V2 → ∀T1,T2. L. ⓓV2 ⊢ T1 �
 #L #V1 #V2 #HV12 #T1 #T2 #HT12 #a @(cprs_ind_dx … HT12) -T1
 [ /2 width=1/
 | #T1 #T #HT1 #_ #IHT1
-  lapply (lcpr_cpr_trans (L. ⓓV1) … HT1) -HT1 /2 width=1/ #HT1
+  lapply (lfpr_cpr_trans (L. ⓓV1) … HT1) -HT1 /2 width=1/ #HT1
   @(cprs_trans … IHT1) -IHT1 /2 width=1/
 ]
 qed.
@@ -142,7 +142,7 @@ lemma cprs_beta_dx: ∀L,V1,V2,W,T1,T2.
 qed.
 
 (* Basic_1: was only: pr3_pr2_pr3_t pr3_wcpr0_t *)
-lemma lcpr_cprs_trans: ∀L1,L2. L1 ⊢ ➡ L2 →
+lemma lcpr_cprs_trans: ∀L1,L2. ⦃L1⦄ ➡ ⦃L2⦄ →
                        ∀T1,T2. L2 ⊢ T1 ➡* T2 → L1 ⊢ T1 ➡* T2.
 #L1 #L2 #HL12 #T1 #T2 #H @(cprs_ind … H) -T2 //
 #T #T2 #_ #HT2 #IHT2
