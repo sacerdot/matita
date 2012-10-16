@@ -398,6 +398,10 @@ notation "hvbox( ⦃ L1 ⦄ ⬌ * ⦃ L2 ⦄ )"
    non associative with precedence 45
    for @{ 'FocalizedPConvStar $L1 $L2 }.
 
+notation "hvbox( L1 ⊢ ⬌* break term 46 L2 )"
+   non associative with precedence 45
+   for @{ 'CPConvStar $L1 $L2 }.
+
 (* Dynamic typing ***********************************************************)
 
 notation "hvbox( ⦃ h , break L ⦄ ⊩ break term 46 T : break [ g ] )"

@@ -35,6 +35,10 @@ definition transitive2: ∀A. ∀R1,R2: relation A. Prop ≝ λA,R1,R2.
                         ∀a1,a0. R1 a1 a0 → ∀a2. R2 a0 a2 →
                         ∃∃a. R2 a1 a & R1 a a2.
 
+definition bi_confluent:  ∀A,B. ∀R: bi_relation A B. Prop ≝ λA,B,R.
+                          ∀a0,a1,b0,b1. R a0 b0 a1 b1 → ∀a2,b2. R a0 b0 a2 b2 →
+                          ∃∃a,b. R a1 b1 a b & R a2 b2 a b.
+
 lemma TC_strip1: ∀A,R1,R2. confluent2 A R1 R2 →
                  ∀a0,a1. TC … R1 a0 a1 → ∀a2. R2 a0 a2 →
                  ∃∃a. R2 a1 a & TC … R1 a2 a.

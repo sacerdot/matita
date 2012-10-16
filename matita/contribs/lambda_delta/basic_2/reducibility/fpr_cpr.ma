@@ -14,7 +14,7 @@
 
 include "basic_2/reducibility/cfpr_cpr.ma".
 
-(* FOCALIZED PARALLEL REDUCTION ON CLOSURES *********************************)
+(* CONTEXT-FREE PARALLEL REDUCTION ON CLOSURES ******************************)
 
 (* Advanced propertis *******************************************************)
 

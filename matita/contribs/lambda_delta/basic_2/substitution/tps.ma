@@ -259,6 +259,21 @@ lemma tps_fwd_tw: ∀L,T1,T2,d,e. L ⊢ T1 ▶ [d, e] T2 → #{T1} ≤ #{T2}.
 /3 by monotonic_le_plus_l, le_plus/ (**) (* just /3 width=1/ is too slow *)
 qed-.
 
+lemma tps_fwd_shift1: ∀L1,L,T1,T,d,e. L ⊢ L1 @@ T1 ▶[d, e] T →
+                      ∃∃L2,T2. |L1| = |L2| & T = L2 @@ T2.
+#L1 @(lenv_ind_dx … L1) -L1 normalize
+[ #L #T1 #T #d #e #HT1
+  @(ex2_2_intro … (⋆)) // (**) (* explicit constructor *)
+| #I #L1 #V1 #IH #L #T1 #X #d #e
+  >shift_append_assoc normalize #H
+  elim (tps_inv_bind1 … H) -H
+  #V0 #T0 #_ #HT10 #H destruct
+  elim (IH … HT10) -IH -HT10 #L2 #T2 #HL12 #H destruct
+  >append_length >HL12 -HL12
+  @(ex2_2_intro … (⋆.ⓑ{I}V0@@L2) T2) [ >append_length ] // /2 width=3/ (**) (* explicit constructor *)
+]
+qed-.
+
 (* Basic_1: removed theorems 25:
             subst0_gen_sort subst0_gen_lref subst0_gen_head subst0_gen_lift_lt
             subst0_gen_lift_false subst0_gen_lift_ge subst0_refl subst0_trans

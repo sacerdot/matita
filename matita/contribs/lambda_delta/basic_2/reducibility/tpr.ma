@@ -204,49 +204,25 @@ lemma tpr_inv_lref2: ∀T1,i. T1 ➡ #i →
 /2 width=3/ qed-.
 
 (* Basic forward lemmas *****************************************************)
-(*
+
 lemma tpr_fwd_shift1: ∀L1,T1,T. L1 @@ T1 ➡ T →
-                      ∃∃L2,T2. L1 𝟙 L2 & T = L2 @@ T2.
-#L1 @(lenv_ind_dx … L1) -L1
-[ #T1 #T #_ @ex2_2_intro [3: // |4: // |1,2: skip ] (**) (* /2 width=4/ does not work *)
-| #I #L1 #V1 #IH #T1 #T >shift_append_assoc #H
+                      ∃∃L2,T2. |L1| = |L2| & T = L2 @@ T2.
+#L1 @(lenv_ind_dx … L1) -L1 normalize
+[ #T1 #T #HT1
+  @(ex2_2_intro … (⋆)) // (**) (* explicit constructor *)
+| #I #L1 #V1 #IH #T1 #X
+  >shift_append_assoc normalize #H
   elim (tpr_inv_bind1 … H) -H *
-  [ #V0 #T0 #X0 #_ #HT10 #HTX0 #H destruct
-    elim (IH … HT10) -IH -T1 #L2 #V2 #HL12 #H destruct
-    elim (tps_fwd_shift1 … HTX0) -V2 #L3 #X3 #HL23 #H destruct
-    lapply (ltop_trans … HL12 HL23) -L2 #HL13
-    @(ex2_2_intro … (⋆.ⓑ{I}V0@@L3)) /2 width=4/ /3 width=1/
-  | #T0 #_ #_ #H destruct
-  ]
-]
-qed-.
-*)
-  
-  
-(*  
-  >shift_append_assoc >shift_append_assoc >shift_append_assoc >shift_append_assoc normalize #H
-  elim (tpr_inv_bind1 … H) -H *
-  [ #V #T #T0 #HV1 #HT1 #HT0 #H destruct /2 width=1/
+  [ #V0 #T0 #X0 #_ #HT10 #H0 #H destruct
+    elim (IH … HT10) -IH -T1 #L #T #HL1 #H destruct
+    elim (tps_fwd_shift1 … H0) -T #L2 #T2 #HL2 #H destruct
+    >append_length >HL1 >HL2 -L1 -L
+    @(ex2_2_intro … (⋆.ⓑ{I}V0@@L2) T2) [ >append_length ] // /2 width=3/ (**) (* explicit constructor *)
   | #T #_ #_ #H destruct
   ]
-  
-  lapply (IH … HT12)
-  
-  
-   >shift_append_assoc >shift_append_assoc >shift_append_assoc #HT12
-  lapply (shift_inj … HT12) -HT12
-  
-   
-
- #L2 #HL12 #I1 #I2 #V1 #V2 #T1 #T2 #H
-elim (tpr_fwd_shift1 (L1.ⓑ{I1}V1) … H) -H #Y #X #HY #HX
-elim (ltop_inv_pair1 … HY) -HY #L #V #HL1 #H destruct
-elim (shift_inj (L2.ⓑ{I2}V2) … HX ?) -HX
-[ #H1 #_ destruct /2 width=1/
-| lapply (ltop_fwd_length … HL1) -HL1 normalize // 
 ]
 qed-.
-*)
+
 (* Basic_1: removed theorems 3:
             pr0_subst0_back pr0_subst0_fwd pr0_subst0
    Basic_1: removed local theorems: 1: pr0_delta_tau
