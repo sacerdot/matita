@@ -168,8 +168,6 @@ pc3/props pc3_eta
 
 pr0/fwd pr0_gen_void
 pr0/dec nf0_dec
-pr0/subst1 pr0_subst1_back
-pr0/subst1 pr0_subst1_fwd
 
 pr1/props pr1_eta
 

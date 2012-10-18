@@ -86,6 +86,15 @@ elim (tpr_inv_cast1 … H) -H /3 width=3/
 elim (tpss_inv_flat1 … HU2) -HU2 #V2 #T2 #HV2 #HT2 #H destruct /4 width=5/
 qed-.
 
+(* Basic forward lemmas *****************************************************)
+
+lemma cpr_fwd_shift1: ∀L,L1,T1,T. L ⊢ L1 @@ T1 ➡ T →
+                      ∃∃L2,T2. |L1| = |L2| & T = L2 @@ T2.
+#L #L1 #T1 #T * #X #H1 #H2
+elim (tpr_fwd_shift1 … H1) -H1 #L0 #T0 #HL10 #H destruct
+elim (tpss_fwd_shift1 … H2) -H2 #L2 #T2 #HL02 #H destruct /2 width=4/
+qed-.
+
 (* Basic_1: removed theorems 6: 
             pr2_head_2 pr2_cflat pr2_gen_cflat clear_pr2_trans
             pr2_gen_ctail pr2_ctail

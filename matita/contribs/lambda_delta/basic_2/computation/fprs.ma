@@ -12,14 +12,24 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reducibility/lfpr_aaa.ma".
-include "basic_2/computation/lfprs.ma".
+include "basic_2/reducibility/fpr.ma".
 
-(* FOCALIZED PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS *********************)
+(* CONTEXT-FREE PARALLEL COMPUTATION ON CLOSURES ****************************)
 
-(* Properties about atomic arity assignment on terms ************************)
+definition fprs: bi_relation lenv term ≝ bi_TC … fpr.
 
-lemma aaa_lfprs_conf: ∀L1,T,A. L1 ⊢ T ⁝ A → ∀L2. ⦃L1⦄ ➡* ⦃L2⦄ → L2 ⊢ T ⁝ A.
-#L1 #T #A #HT #L2 #HL12
-@(TC_Conf3 … (λL,A. L ⊢ T ⁝ A) … HT ? HL12) /2 width=3/
-qed.
+interpretation "context-free parallel computation (closure)"
+   'FocalizedPRedStar L1 T1 L2 T2 = (fprs L1 T1 L2 T2).
+
+(* Basic properties *********************************************************)
+
+lemma fprs_refl: bi_reflexive … fprs.
+/2 width=1/ qed.
+
+lemma fprs_strap1: ∀L1,L,L2,T1,T,T2. ⦃L1, T1⦄ ➡* ⦃L, T⦄ → ⦃L, T⦄ ➡ ⦃L2, T2⦄ →
+                   ⦃L1, T1⦄ ➡* ⦃L2, T2⦄.
+/2 width=4/ qed.
+
+lemma fprs_strap2: ∀L1,L,L2,T1,T,T2. ⦃L1, T1⦄ ➡ ⦃L, T⦄ → ⦃L, T⦄ ➡* ⦃L2, T2⦄ →
+                   ⦃L1, T1⦄ ➡* ⦃L2, T2⦄.
+/2 width=4/ qed.

@@ -170,3 +170,13 @@ lemma tpss_fwd_tw: ∀L,T1,T2,d,e. L ⊢ T1 ▶* [d, e] T2 → #{T1} ≤ #{T2}.
 lapply (tps_fwd_tw … HT2) -HT2 #HT2
 @(transitive_le … IHT1) //
 qed-.
+
+lemma tpss_fwd_shift1: ∀L,L1,T1,T,d,e. L ⊢ L1 @@ T1 ▶*[d, e] T →
+                       ∃∃L2,T2. |L1| = |L2| & T = L2 @@ T2.
+#L #L1 #T1 #T #d #e #H @(tpss_ind … H) -T
+[ /2 width=4/
+| #T #X #_ #H0 * #L0 #T0 #HL10 #H destruct
+  elim (tps_fwd_shift1 … H0) -H0 #L2 #T2 #HL02 #H destruct /2 width=4/
+]
+qed-.
+  

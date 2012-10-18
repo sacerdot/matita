@@ -27,6 +27,7 @@ interpretation
 
 (* Basic properties *********************************************************)
 
+(* Note: lemma 250 *)
 lemma lfpr_refl: ∀L. ⦃L⦄ ➡ ⦃L⦄.
 /2 width=3/ qed.
 

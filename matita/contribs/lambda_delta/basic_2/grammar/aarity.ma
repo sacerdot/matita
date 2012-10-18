@@ -15,20 +15,6 @@
 (* THE FORMAL SYSTEM λδ: MATITA SOURCE FILES
  * Suggested invocation to start formal specifications with:
  *   - Patience on me to gain peace and perfection! -
- * 2012 July 26:
- *   term binders polarized to control ζ reduction.
- * 2012 April 16 (anniversary milestone):
- *   context-sensitive subject equivalence for atomic arity assignment.
- * 2012 March 15:
- *   context-sensitive strong normalization for simply typed terms.
- * 2012 January 27:
- *   support for abstract candidates of reducibility.
- * 2011 September 21:
- *   confluence for context-sensitive parallel reduction. 
- * 2011 September 6:
- *   confluence for context-free parallel reduction.
- * 2011 April 17:
- *   specification starts.
  *)
 
 include "ground_2/star.ma".

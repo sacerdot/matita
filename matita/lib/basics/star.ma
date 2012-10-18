@@ -254,3 +254,27 @@ definition Conf3: ∀A,B. relation2 A B → relation A → Prop ≝ λA,B,S,R.
 lemma TC_Conf3: ∀A,B,S,R. Conf3 A B S R → Conf3 A B S (TC … R).
 #A #B #S #R #HSR #b #a1 #Ha1 #a2 #H elim H -a2 /2 width=3/
 qed.
+
+inductive bi_TC (A,B:Type[0]) (R:bi_relation A B) (a:A) (b:B): A → B → Prop ≝
+  |bi_inj : ∀c,d. R a b c d → bi_TC A B R a b c d
+  |bi_step: ∀c,d,e,f. bi_TC A B R a b c d → R c d e f → bi_TC A B R a b e f.
+
+lemma bi_TC_reflexive: ∀A,B,R. bi_reflexive A B R →
+                       bi_reflexive A B (bi_TC … R).
+/2 width=1/ qed.
+
+lemma bi_TC_strap: ∀A,B. ∀R:bi_relation A B. ∀a1,a,a2,b1,b,b2.
+                   R a1 b1 a b → bi_TC … R a b a2 b2 → bi_TC … R a1 b1 a2 b2.
+#A #B #R #a1 #a #a2 #b1 #b #b2 #HR #H elim H -a2 -b2 /2 width=4/ /3 width=4/
+qed.
+
+lemma bi_TC_transitive: ∀A,B,R. bi_transitive A B (bi_TC … R).
+#A #B #R #a1 #a #b1 #b #H elim H -a -b /2 width=4/ /3 width=4/
+qed.
+
+definition bi_Conf3: ∀A,B,C. relation3 A B C → bi_relation A B → Prop ≝ λA,B,C,S,R.
+                     ∀c,a1,b1. S a1 b1 c → ∀a2,b2. R a1 b1 a2 b2 → S a2 b2 c.
+
+lemma bi_TC_Conf3: ∀A,B,C,S,R. bi_Conf3 A B C S R → bi_Conf3 A B C S (bi_TC … R).
+#A #B #C #S #R #HSR #c #a1 #b1 #Hab1 #a2 #b2 #H elim H -a2 -b2 /2 width=4/
+qed.

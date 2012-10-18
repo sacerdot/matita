@@ -134,3 +134,25 @@ lemma NF_to_SN_sn: ∀A,R,S,a. NF_sn A R S a → SN_sn A R S a.
 @SN_sn_intro #a1 #HRa12 #HSa12
 elim (HSa12 ?) -HSa12 /2 width=1/
 qed.
+
+lemma bi_TC_strip: ∀A,B,R. bi_confluent A B R →
+                   ∀a0,a1,b0,b1. R a0 b0 a1 b1 → ∀a2,b2. bi_TC … R a0 b0 a2 b2 →
+                   ∃∃a,b. bi_TC … R a1 b1 a b & R a2 b2 a b.
+#A #B #R #HR #a0 #a1 #b0 #b1 #H01 #a2 #b2 #H elim H -a2 -b2
+[ #a2 #b2 #H02
+  elim (HR … H01 … H02) -HR -a0 -b0 /3 width=4/
+| #a2 #b2 #a3 #b3 #_ #H23 * #a #b #H1 #H2
+  elim (HR … H23 … H2) -HR -a0 -b0 -a2 -b2 /3 width=4/
+]
+qed.
+
+lemma bi_TC_confluent: ∀A,B,R. bi_confluent A B R →
+                       bi_confluent A B (bi_TC … R).
+#A #B #R #HR #a0 #a1 #b0 #b1 #H elim H -a1 -b1
+[ #a1 #b1 #H01 #a2 #b2 #H02
+  elim (bi_TC_strip … HR … H01 … H02) -a0 -b0 /3 width=4/
+| #a1 #b1 #a3 #b3 #_ #H13 #IH #a2 #b2 #H02
+  elim (IH … H02) -a0 -b0 #a0 #b0 #H10 #H20
+  elim (bi_TC_strip … HR … H13 … H10) -a1 -b1 /3 width=7/
+]
+qed.

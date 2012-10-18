@@ -19,53 +19,6 @@ include "basic_2/equivalence/cpcs_cpcs.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL EQUIVALENCE ON TERMS **************************)
 
-(* Advanced inversion lemmas ************************************************)
-(* does not holds
-axiom cprs_inv_appl1_cpcs: ∀L,V1,T1,U2. L ⊢ ⓐV1. T1 ➡* U2 → (
-                           ∃∃V2,T2.    L ⊢ V1 ➡* V2 & L ⊢ T1 ➡* T2 &
-                                       L ⊢ U2 ➡* ⓐV2. T2
-                           ) ∨
-                           ∃∃a,V2,W,T. L ⊢ V1 ➡* V2 &
-                                       L ⊢ T1 ➡* ⓛ{a}W. T & L ⊢ ⓓ{a}V2. T ⬌* U2.
-#L #V1 #T1 #U2 #H @(cprs_ind … H) -U2 /3 width=5/
-#U #U2 #_ #HU2 * *
-[ #V0 #T0 #HV10 #HT10 #HUT0
-  elim (cprs_strip … HUT0 … HU2) -U #U #H #HU2
-  elim (cpr_inv_appl1 … H) -H *
-  [ #V2 #T2 #HV02 #HT02 #H destruct /4 width=5/
-  | #b #V2 #W2 #T #T2 #HV02 #HT2 #H1 #H2 destruct
-    lapply (cprs_strap1 … HV10 HV02) -V0 #HV12
-    lapply (cprs_div ? (ⓓ{b}V2.T) ? ? ? HU2) -HU2 /2 width=1/ /3 width=7/
-  | #b #V #V2 #W0 #W2 #T #T2 #HV0 #HW02 #HT2 #HV2 #H1 #H2 destruct
-    lapply (cprs_strap1 … HV10 HV0) -V0 #HV1
-    lapply (cprs_trans … HT10 (ⓓ{b}W2.T2) ?) -HT10 /2 width=1/ -W0 -T #HT1
-    elim (sfr_delift (L.ⓓW2) (ⓐV2.T2) 0 1 ? ?) // #X #H1
-    lapply (cprs_zeta_delift … H1) #H2
-    lapply (cprs_trans … HU2 … H2) -HU2 -H2 #HU2T3
-    elim (delift_inv_flat1 … H1) -H1 #V3 #T3 #HV23 #HT23 #H destruct
-    lapply (delift_inv_lift1_eq … HV23 … HV2) -V2 [ /2 width=1/ | skip ] #H destruct
-    lapply (cprs_zeta_delift … HT23) -HT23 #H
-    lapply (cprs_trans … HT1 … H) -W2 -T2 /3 width=5/
-  ]
-| /4 width=8/
-]
-qed-.
-*)
-(* maybe holds
-axiom cprs_inv_appl_abst: ∀L,V,T,W,U. L ⊢ ⓐV.T ➡* ⓛW.U →
-                          ∃∃W0,T0,V1,T1. L ⊢ T ➡* ⓛW0.T0 &
-                                         L ⊢ ⓓV.T0 ➡* ⓛV1.T1 &
-                                         L ⊢ ⓛW.U ➡* ⓛV1.T1.
-#L #V #T #W #U #H
-elim (cprs_inv_appl1_cpcs … H) -H *
-[ #V0 #T0 #HV0 #HT0 #H
-  elim (cprs_inv_abst1 Abst W … H) -H #W0 #U0 #_ #_ #H destruct
-| #V0 #W0 #T0 #HV0 #HT0 #H
-  elim (cpcs_inv_abst2 … H) -H #V1 #T1 #H1 #H2
-  lapply (cprs_trans … (ⓓV.T0) … H1) -H1 /2 width=1/ -V0 /2 width=7/
-]
-qed-.
-*)
 (* Properties on inverse basic term relocation ******************************)
 
 lemma cpcs_zeta_delift_comm: ∀L,V,T1,T2. L.ⓓV ⊢ ▼*[O, 1] T1 ≡ T2 →

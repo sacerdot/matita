@@ -342,9 +342,21 @@ notation "hvbox( T1 ➡ ➡ * break term 46 T2 )"
    non associative with precedence 45
    for @{ 'PRedStarAlt $T1 $T2 }.
 
-notation "hvbox( ⦃ L1 ⦄ ➡ * ⦃ L2 ⦄ )"
+notation "hvbox( ⦃ L1 ⦄ ➡ * break ⦃ L2 ⦄ )"
    non associative with precedence 45
    for @{ 'FocalizedPRedStar $L1 $L2 }.
+
+notation "hvbox( ⦃ L1 , T1 ⦄ ➡ * break ⦃ L2 , T2 ⦄ )"
+   non associative with precedence 45
+   for @{ 'FocalizedPRedStar $L1 $T1 $L2 $T2 }.
+
+notation "hvbox( ⦃ L1 ⦄ ➡ ➡ * break ⦃ L2 ⦄ )"
+   non associative with precedence 45
+   for @{ 'FocalizedPRedStarAlt $L1 $L2 }.
+
+notation "hvbox( ⦃ L1 , T1 ⦄ ➡ ➡ * break ⦃ L2 , T2 ⦄ )"
+   non associative with precedence 45
+   for @{ 'FocalizedPRedStarAlt $L1 $T1 $L2 $T2 }.
 
 notation "hvbox( L ⊢ break term 46 T1 ➡ * break 𝐍 ⦃ T2 ⦄ )"
    non associative with precedence 45

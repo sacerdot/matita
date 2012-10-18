@@ -23,6 +23,9 @@ definition relation : Type[0] → Type[0]
 definition relation2 : Type[0] → Type[0] → Type[0]
 ≝ λA,B.A→B→Prop.
 
+definition relation3 : Type[0] → Type[0] → Type[0] → Type[0]
+≝ λA,B,C.A→B→C→Prop.
+
 definition reflexive: ∀A.∀R :relation A.Prop
 ≝ λA.λR.∀x:A.R x x.
 
@@ -163,3 +166,7 @@ definition bi_relation: Type[0] → Type[0] → Type[0]
 
 definition bi_reflexive: ∀A,B. ∀R:bi_relation A B. Prop
 ≝ λA,B,R. ∀x,y. R x y x y.
+
+definition bi_transitive: ∀A,B. ∀R: bi_relation A B. Prop ≝ λA,B,R.
+                          ∀a1,a,b1,b. R a1 b1 a b →
+                          ∀a2,b2. R a b a2 b2 → R a1 b1 a2 b2.

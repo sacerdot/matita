@@ -12,14 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reducibility/lfpr_aaa.ma".
-include "basic_2/computation/lfprs.ma".
+include "basic_2/reducibility/fpr_fpr.ma".
+include "basic_2/computation/fprs.ma".
 
-(* FOCALIZED PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS *********************)
+(* CONTEXT-FREE PARALLEL COMPUTATION ON CLOSURES ****************************)
 
-(* Properties about atomic arity assignment on terms ************************)
+(* Advanced properties ******************************************************)
 
-lemma aaa_lfprs_conf: ∀L1,T,A. L1 ⊢ T ⁝ A → ∀L2. ⦃L1⦄ ➡* ⦃L2⦄ → L2 ⊢ T ⁝ A.
-#L1 #T #A #HT #L2 #HL12
-@(TC_Conf3 … (λL,A. L ⊢ T ⁝ A) … HT ? HL12) /2 width=3/
-qed.
+lemma fprs_strip: ∀L0,L1,T0,T1. ⦃L0, T0⦄ ➡ ⦃L1, T1⦄ →
+                  ∀L2,T2. ⦃L0, T0⦄ ➡* ⦃L2, T2⦄ →
+                  ∃∃L,T. ⦃L1, T1⦄ ➡* ⦃L, T⦄ & ⦃L2, T2⦄ ➡ ⦃L, T⦄.
+#H1 #H2 #H3 #H4 #H5 #H6 #H7 #H8
+/2 width=4/ qed.
+
+(* Main propertis ***********************************************************)
+
+theorem fprs_conf: bi_confluent … fprs.
+/2 width=4/ qed.
+
+theorem fprs_trans: bi_transitive … fprs.
+/2 width=4/ qed.
