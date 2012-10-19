@@ -50,7 +50,7 @@ let parsable_statement status buf =
 
 let parse_statement grafite_parser parsable =
   exc_located_wrapper
-    (fun () -> (Grammar.Entry.parse_parsable (Obj.magic grafite_parser) (fst parsable)))
+    (fun () -> (Grammar.Entry.parse_parsable grafite_parser (fst parsable)))
 
 let strm_of_parsable (_,buf) = buf
 
