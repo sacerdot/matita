@@ -25,13 +25,15 @@ interpretation
 
 (* Basic properties *********************************************************)
 
-lemma cpc_refl: ∀L,T. L ⊢ T ⬌ T.
+lemma cpc_refl: ∀L. reflexive … (cpc L).
 /2 width=1/ qed.
 
-lemma cpc_sym: ∀L,T1,T2. L ⊢ T1 ⬌ T2 → L ⊢ T2 ⬌ T1.
+lemma cpc_sym: ∀L. symmetric … (cpc L).
 #L #T1 #T2 * /2 width=1/
 qed.
 
-lemma cpc_cpr: ∀L,T1,T2. L ⊢ T1 ⬌ T2 → ∃∃T. L ⊢ T1 ➡ T & L ⊢ T2 ➡ T.
+(* Basic forward lemmas *****************************************************)
+
+lemma cpc_fwd_cpr: ∀L,T1,T2. L ⊢ T1 ⬌ T2 → ∃∃T. L ⊢ T1 ➡ T & L ⊢ T2 ➡ T.
 #L #T1 #T2 * /2 width=3/
 qed.

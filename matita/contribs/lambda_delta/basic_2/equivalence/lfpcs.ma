@@ -38,8 +38,11 @@ qed-.
 
 (* Basic properties *********************************************************)
 
-lemma lfpcs_refl: ∀L. ⦃L⦄ ⬌* ⦃L⦄.
+lemma lfpcs_refl: reflexive … lfpcs.
 /2 width=1/ qed.
+
+lemma lfprs_sym: symmetric … lfpcs.
+/3 width=1/ qed.
 
 lemma lfpcs_strap1: ∀L1,L,L2. ⦃L1⦄ ⬌* ⦃L⦄ → ⦃L⦄ ⬌ ⦃L2⦄ → ⦃L1⦄ ⬌* ⦃L2⦄.
 /2 width=3/ qed.
@@ -64,7 +67,3 @@ lemma lfpcs_lfpr_div: ∀L1,L. ⦃L1⦄ ⬌* ⦃L⦄ → ∀L2. ⦃L2⦄ ➡ ⦃
 
 lemma lfpcs_lfpr_conf: ∀L1,L. ⦃L⦄ ➡ ⦃L1⦄ → ∀L2. ⦃L⦄ ⬌* ⦃L2⦄ → ⦃L1⦄ ⬌* ⦃L2⦄.
 /3 width=3/ qed.
-
-lemma lfprs_comm: ∀L1,L2. ⦃L1⦄ ⬌* ⦃L2⦄ → ⦃L2⦄ ⬌* ⦃L1⦄.
-#L1 #L2 #H @(lfpcs_ind … H) -L2 // /3 width=3/
-qed.

@@ -187,10 +187,10 @@ theorem cpcs_trans: ∀L,T1,T. L ⊢ T1 ⬌* T → ∀T2. L ⊢ T ⬌* T2 → L 
 /2 width=3/ qed.
 
 theorem cpcs_canc_sn: ∀L,T,T1,T2. L ⊢ T ⬌* T1 → L ⊢ T ⬌* T2 → L ⊢ T1 ⬌* T2.
-/3 width=3 by cpcs_trans, cprs_comm/ qed. (**) (* /3 width=3/ is too slow *)
+/3 width=3 by cpcs_trans, cpcs_sym/ qed. (**) (* /3 width=3/ is too slow *)
 
 theorem cpcs_canc_dx: ∀L,T,T1,T2. L ⊢ T1 ⬌* T → L ⊢ T2 ⬌* T → L ⊢ T1 ⬌* T2.
-/3 width=3 by cpcs_trans, cprs_comm/ qed. (**) (* /3 width=3/ is too slow *)
+/3 width=3 by cpcs_trans, cpcs_sym/ qed. (**) (* /3 width=3/ is too slow *)
 
 lemma cpcs_abbr1: ∀a,L,V1,V2. L ⊢ V1 ⬌* V2 → ∀T1,T2. L.ⓓV1 ⊢ T1 ⬌* T2 →
                   L ⊢ ⓓ{a}V1. T1 ⬌* ⓓ{a}V2. T2.

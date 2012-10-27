@@ -12,16 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reducibility/cpr_aaa.ma".
-include "basic_2/reducibility/cfpr_cpr.ma".
+include "basic_2/reducibility/ltpr.ma".
+include "basic_2/equivalence/lcpcs.ma".
 
-(* CONTEXT-SENSITIVE PARALLEL REDUCTION ON CLOSURES *************************)
+(* CONTEXT-SENSITIVE PARALLEL EQUIVALENCE ON LOCAL ENVIRONMENTS *************)
 
-(* Properties about atomic arity assignment on terms ************************)
+(* Properties on context-free parallel reduction for local environments *****)
 
-lemma aaa_fpr_conf: ∀L1,T1,A. L1 ⊢ T1 ⁝ A →
-                    ∀L2,T2. ⦃L1, T1⦄ ➡ ⦃L2, T2⦄ → L2 ⊢ T2 ⁝ A.
-#L1 #T1 #A #HT1 #L2 #T2 #H
-elim (fpr_inv_all … H) -H 
-/4 width=5 by aaa_cpr_conf, aaa_ltpr_conf, aaa_ltpss_sn_conf/
+lemma ltpr_lcpcs: ∀L1,L2. L1 ➡ L2 → L1 ⊢ ⬌* L2.
+#L1 #L2 #H elim H -L1 -L2 // /4 width=1/
 qed.

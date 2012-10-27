@@ -167,6 +167,9 @@ definition bi_relation: Type[0] → Type[0] → Type[0]
 definition bi_reflexive: ∀A,B. ∀R:bi_relation A B. Prop
 ≝ λA,B,R. ∀x,y. R x y x y.
 
+definition bi_symmetric: ∀A,B. ∀R: bi_relation A B. Prop ≝ λA,B,R.
+                         ∀a1,a2,b1,b2. R a2 b2 a1 b1 → R a1 b1 a2 b2.
+
 definition bi_transitive: ∀A,B. ∀R: bi_relation A B. Prop ≝ λA,B,R.
                           ∀a1,a,b1,b. R a1 b1 a b →
                           ∀a2,b2. R a b a2 b2 → R a1 b1 a2 b2.

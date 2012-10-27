@@ -15,7 +15,7 @@
 include "basic_2/unfold/ltpss_sn_alt.ma".
 include "basic_2/static/ssta_ltpss_dx.ma".
 
-(* ATONIC ARITY ASSIGNMENT ON TERMS *****************************************)
+(* STRATIFIED STATIC TYPE ASSIGNMENT ON TERMS *******************************)
 
 (* Properties about sn parallel unfold **************************************)
 

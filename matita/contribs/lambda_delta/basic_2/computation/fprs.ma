@@ -21,6 +21,18 @@ definition fprs: bi_relation lenv term ≝ bi_TC … fpr.
 interpretation "context-free parallel computation (closure)"
    'FocalizedPRedStar L1 T1 L2 T2 = (fprs L1 T1 L2 T2).
 
+(* Basic eliminators ********************************************************)
+
+lemma fprs_ind: ∀L1,T1. ∀R:relation2 lenv term. R L1 T1 →
+                (∀L,L2,T,T2. ⦃L1, T1⦄ ➡* ⦃L, T⦄ → ⦃L, T⦄ ➡ ⦃L2, T2⦄ → R L T → R L2 T2) →
+                ∀L2,T2. ⦃L1, T1⦄ ➡* ⦃L2, T2⦄ → R L2 T2.
+/3 width=7 by bi_TC_star_ind/ qed-.
+
+lemma fprs_ind_dx: ∀L2,T2. ∀R:relation2 lenv term. R L2 T2 →
+                   (∀L1,L,T1,T. ⦃L1, T1⦄ ➡ ⦃L, T⦄ → ⦃L, T⦄ ➡* ⦃L2, T2⦄ → R L T → R L1 T1) →
+                   ∀L1,T1. ⦃L1, T1⦄ ➡* ⦃L2, T2⦄ → R L1 T1.
+/3 width=7 by bi_TC_star_ind_dx/ qed-.
+
 (* Basic properties *********************************************************)
 
 lemma fprs_refl: bi_reflexive … fprs.

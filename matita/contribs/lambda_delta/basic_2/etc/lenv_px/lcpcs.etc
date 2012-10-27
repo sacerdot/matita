@@ -1,0 +1,48 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+notation "hvbox( L1 ⊢ ⬌* break term 46 L2 )"
+   non associative with precedence 45
+   for @{ 'CPConvStar $L1 $L2 }.
+
+include "basic_2/grammar/lenv_px_sn.ma".
+include "basic_2/equivalence/cpcs.ma".
+
+(* CONTEXT-SENSITIVE PARALLEL EQUIVALENCE ON LOCAL ENVIRONMENTS *************)
+
+definition lcpcs: relation lenv ≝ lpx_sn … cpcs.
+
+interpretation "context-sensitive parallel equivalence (local environment)"
+   'CPConvStar L1 L2 = (lcpcs L1 L2).
+
+(* Basic inversion lemmas ***************************************************)
+
+lemma lcpcs_inv_atom1: ∀L2. ⋆ ⊢ ⬌* L2 → L2 = ⋆.
+/2 width=2 by lpx_sn_inv_atom1/ qed-.
+
+lemma lcpcs_inv_pair1: ∀I,K1,V1,L2. K1. ⓑ{I} V1 ⊢ ⬌* L2 →
+                       ∃∃K2,V2. K1 ⊢ ⬌* K2 & K1 ⊢ V1 ⬌* V2 & L2 = K2. ⓑ{I} V2.
+/2 width=1 by lpx_sn_inv_pair1/ qed-.
+
+lemma lcpcs_inv_atom2: ∀L1. L1 ⊢ ⬌* ⋆ → L1 = ⋆.
+/2 width=2 by lpx_sn_inv_atom2/ qed-.
+
+lemma lcpcs_inv_pair2: ∀I,L1,K2,V2. L1 ⊢ ⬌* K2. ⓑ{I} V2 →
+                       ∃∃K1,V1. K1 ⊢ ⬌* K2 & K1 ⊢ V1 ⬌* V2 & L1 = K1. ⓑ{I} V1.
+/2 width=1 by lpx_sn_inv_pair2/ qed-.
+
+(* Basic forward lemmas *****************************************************)
+
+lemma lcpcs_fwd_length: ∀L1,L2. L1 ⊢ ⬌* L2 → |L1| = |L2|.
+/2 width=2 by lpx_sn_fwd_length/ qed-.

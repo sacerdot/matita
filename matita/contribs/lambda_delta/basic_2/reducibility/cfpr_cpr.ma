@@ -13,7 +13,6 @@
 (**************************************************************************)
 
 include "basic_2/unfold/ltpss_sn_alt.ma".
-include "basic_2/reducibility/ltpr.ma".
 include "basic_2/reducibility/cpr_tpss.ma".
 include "basic_2/reducibility/cpr_cpr.ma".
 include "basic_2/reducibility/cfpr_ltpss.ma".

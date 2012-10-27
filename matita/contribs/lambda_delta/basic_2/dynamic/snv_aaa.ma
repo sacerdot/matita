@@ -33,8 +33,8 @@ lemma snv_aaa: ∀h,g,L,T. ⦃h, L⦄ ⊩ T :[g] → ∃A. L ⊢ T ⁝ A.
   lapply (xprs_aaa … HT … HTU) -HTU #H
   elim (aaa_inv_abst … H) -H #B0 #A #H1 #HU #H2 destruct
   lapply (aaa_mono … H1 … HW0) -W0 #H destruct /3 width=4/
-| #L #W #T #U #l #_ #_ #HTU #HUW * #B #HW * #A #HT
-  lapply (aaa_cpcs_mono … HUW A … HW) -HUW /2 width=7/ -HTU #H destruct /3 width=3/
+| #L #W #T #U #l #_ #_ #HTU #HWU * #B #HW * #A #HT
+  lapply (aaa_cpcs_mono … HWU … HW A ?) -HWU /2 width=7/ -HTU #H destruct /3 width=3/
 ]
 qed-.
 

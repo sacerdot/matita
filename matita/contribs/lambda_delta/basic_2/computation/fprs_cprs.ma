@@ -12,18 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reducibility/cfpr_cpr.ma".
+include "basic_2/reducibility/fpr_cpr.ma".
+include "basic_2/computation/cprs.ma".
+include "basic_2/computation/fprs.ma".
 
-(* CONTEXT-FREE PARALLEL REDUCTION ON CLOSURES ******************************)
+(* CONTEXT-FREE PARALLEL COMPUTATION ON CLOSURES ****************************)
 
-(* Properties on context-sensitive parallel reduction for terms *************)
+(* Properties on context-sensitive parallel computation for terms ***********)
 
-lemma cpr_fpr: ∀L,T1,T2. L ⊢ T1 ➡ T2 → ⦃L, T1⦄ ➡ ⦃L, T2⦄.
-/2 width=4/ qed.
-
+lemma cprs_fprs: ∀L,T1,T2. L ⊢ T1 ➡* T2 → ⦃L, T1⦄ ➡* ⦃L, T2⦄.
+#L #T1 #T2 #H @(cprs_ind … H) -T2 // /3 width=4/
+qed.
+(*
 (* Advanced propertis *******************************************************)
 
-lemma fpr_bind_sn: ∀L1,L2,V1,V2. ⦃L1, V1⦄ ➡ ⦃L2, V2⦄ → ∀T1,T2. T1 ➡ T2 →
+lamma fpr_bind_sn: ∀L1,L2,V1,V2. ⦃L1, V1⦄ ➡ ⦃L2, V2⦄ → ∀T1,T2. T1 ➡ T2 →
                    ∀a,I. ⦃L1, ⓑ{a,I}V1.T1⦄ ➡ ⦃L2, ⓑ{a,I}V2.T2⦄.
 #L1 #L2 #V1 #V2 #H #T1 #T2 #HT12 #a #I
 elim (fpr_inv_all … H) /3 width=4/
@@ -31,7 +34,7 @@ qed.
 
 (* Advanced forward lemmas **************************************************)
 
-lemma fpr_fwd_shift_bind_minus: ∀I1,I2,L1,L2,V1,V2,T1,T2.
+lamma fpr_fwd_shift_bind_minus: ∀I1,I2,L1,L2,V1,V2,T1,T2.
                                 ⦃L1, -ⓑ{I1}V1.T1⦄ ➡ ⦃L2, -ⓑ{I2}V2.T2⦄ →
                                 ⦃L1, V1⦄ ➡ ⦃L2, V2⦄ ∧ I1 = I2.
 * #I2 #L1 #L2 #V1 #V2 #T1 #T2 #H
@@ -47,7 +50,7 @@ qed-.
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma fpr_inv_pair1: ∀I,K1,L2,V1,T1,T2. ⦃K1.ⓑ{I}V1, T1⦄ ➡ ⦃L2, T2⦄ →
+lamma fpr_inv_pair1: ∀I,K1,L2,V1,T1,T2. ⦃K1.ⓑ{I}V1, T1⦄ ➡ ⦃L2, T2⦄ →
                      ∃∃K2,V2. ⦃K1, V1⦄  ➡ ⦃K2, V2⦄ &
                               ⦃K1, -ⓑ{I}V1.T1⦄ ➡ ⦃K2, -ⓑ{I}V2.T2⦄  &
                               L2 = K2.ⓑ{I}V2.
@@ -56,7 +59,7 @@ elim (fpr_fwd_pair1 … H) -H #I2 #K2 #V2 #HT12 #H destruct
 elim (fpr_fwd_shift_bind_minus … HT12) #HV12 #H destruct /2 width=5/
 qed-.
 
-lemma fpr_inv_pair3: ∀I,L1,K2,V2,T1,T2. ⦃L1, T1⦄ ➡ ⦃K2.ⓑ{I}V2, T2⦄ →
+lamma fpr_inv_pair3: ∀I,L1,K2,V2,T1,T2. ⦃L1, T1⦄ ➡ ⦃K2.ⓑ{I}V2, T2⦄ →
                      ∃∃K1,V1. ⦃K1, V1⦄  ➡ ⦃K2, V2⦄ &
                               ⦃K1, -ⓑ{I}V1.T1⦄ ➡ ⦃K2, -ⓑ{I}V2.T2⦄  &
                               L1 = K1.ⓑ{I}V1.
@@ -64,3 +67,4 @@ lemma fpr_inv_pair3: ∀I,L1,K2,V2,T1,T2. ⦃L1, T1⦄ ➡ ⦃K2.ⓑ{I}V2, T2⦄
 elim (fpr_fwd_pair3 … H) -H #I1 #K1 #V1 #HT12 #H destruct
 elim (fpr_fwd_shift_bind_minus … HT12) #HV12 #H destruct /2 width=5/
 qed-.
+*)

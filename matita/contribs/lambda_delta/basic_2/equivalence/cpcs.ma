@@ -40,10 +40,11 @@ qed-.
 (* Basic properties *********************************************************)
 
 (* Basic_1: was: pc3_refl *)
-lemma cpcs_refl: ∀L,T. L ⊢ T ⬌* T.
+lemma cpcs_refl: ∀L. reflexive … (cpcs L).
 /2 width=1/ qed.
 
-lemma cpcs_sym: ∀L,T1,T2. L ⊢ T1 ⬌* T2 → L ⊢ T2 ⬌* T1.
+(* Basic_1: was: pc3_s *)
+lemma cpcs_sym: ∀L. symmetric … (cpcs L).
 /3 width=1/ qed.
 
 lemma cpcs_strap1: ∀L,T1,T,T2. L ⊢ T1 ⬌* T → L ⊢ T ⬌ T2 → L ⊢ T1 ⬌* T2.
@@ -56,8 +57,14 @@ lemma cpcs_strap2: ∀L,T1,T,T2. L ⊢ T1 ⬌ T → L ⊢ T ⬌* T2 → L ⊢ T1
 lemma cpcs_cpr_dx: ∀L,T1,T2. L ⊢ T1 ➡ T2 → L ⊢ T1 ⬌* T2.
 /3 width=1/ qed.
 
+lemma cpcs_tpr_dx: ∀L,T1,T2. T1 ➡ T2 → L ⊢ T1 ⬌* T2.
+/3 width=1/ qed.
+
 (* Basic_1: was: pc3_pr2_x *)
 lemma cpcs_cpr_sn: ∀L,T1,T2. L ⊢ T2 ➡ T1 → L ⊢ T1 ⬌* T2.
+/3 width=1/ qed.
+
+lemma cpcs_tpr_sn: ∀L,T1,T2. T2 ➡ T1 → L ⊢ T1 ⬌* T2.
 /3 width=1/ qed.
 
 lemma cpcs_cpr_strap1: ∀L,T1,T. L ⊢ T1 ⬌* T → ∀T2. L ⊢ T ➡ T2 → L ⊢ T1 ⬌* T2.
@@ -70,14 +77,12 @@ lemma cpcs_cpr_strap2: ∀L,T1,T. L ⊢ T1 ➡ T → ∀T2. L ⊢ T ⬌* T2 → 
 lemma cpcs_cpr_div: ∀L,T1,T. L ⊢ T1 ⬌* T → ∀T2. L ⊢ T2 ➡ T → L ⊢ T1 ⬌* T2.
 /3 width=3/ qed.
 
+lemma cpr_div: ∀L,T1,T. L ⊢ T1 ➡ T → ∀T2. L ⊢ T2 ➡ T → L ⊢ T1 ⬌* T2.
+/3 width=3/ qed-.
+
 (* Basic_1: was: pc3_pr2_u2 *)
 lemma cpcs_cpr_conf: ∀L,T1,T. L ⊢ T ➡ T1 → ∀T2. L ⊢ T ⬌* T2 → L ⊢ T1 ⬌* T2.
 /3 width=3/ qed.
-
-(* Basic_1: was: pc3_s *)
-lemma cprs_comm: ∀L,T1,T2. L ⊢ T1 ⬌* T2 → L ⊢ T2 ⬌* T1.
-#L #T1 #T2 #H @(cpcs_ind … H) -T2 // /3 width=3/
-qed.
 
 (* Basic_1: removed theorems 9:
             clear_pc3_trans pc3_ind_left

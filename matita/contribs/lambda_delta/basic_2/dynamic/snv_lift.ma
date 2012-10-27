@@ -74,6 +74,6 @@ lemma snv_inv_lift: ∀h,g,L,U. ⦃h, L⦄ ⊩ U :[g] → ∀K,d,e. ⇩[d, e] L 
 | #L #W0 #U #W #l #_ #_ #HUW #HW0 #IHW0 #IHU #K #d #e #HLK #X #H
   elim (lift_inv_flat2 … H) -H #V0 #T #HVW0 #HTU #H destruct
   elim (ssta_inv_lift1 … HUW … HLK … HTU) -HUW #V #HTV #HVW
-  lapply (cpcs_inv_lift … HLK … HVW … HVW0 ?) // -W /3 width=4/
+  lapply (cpcs_inv_lift … HLK … HVW0 … HVW ?) // -W /3 width=4/
 ]
 qed-.
