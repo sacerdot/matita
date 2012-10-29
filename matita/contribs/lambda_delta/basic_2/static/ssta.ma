@@ -132,3 +132,23 @@ lemma ssta_inv_cast1: ∀h,g,L,X,Y,U,l. ⦃h, L⦄ ⊢ ⓝY.X •[g, l] U →
                       ∃∃Z1,Z2. ⦃h, L⦄ ⊢ Y •[g, l-1] Z1 & ⦃h, L⦄ ⊢ X •[g, l] Z2 &
                                U = ⓝZ1.Z2.
 /2 width=4/ qed-.
+
+(* Advanced inversion lemmas ************************************************)
+
+fact ssta_inv_refl_aux: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g, l] U → T = U → ⊥.
+#h #g #L #T #U #l #H elim H -L -T -U -l
+[ #L #k #l #_ #H
+  lapply (next_lt h k) destruct -H -e0 (**) (* these premises are not erased *)
+  <e1 -e1 #H elim (lt_refl_false … H)
+| #L #K #V #W #U #i #l #_ #_ #HWU #_ #H destruct
+  elim (lift_inv_lref2_be … HWU ? ?) -HWU //
+| #L #K #W #V #U #i #l #_ #_ #HWU #_ #H destruct
+  elim (lift_inv_lref2_be … HWU ? ?) -HWU //
+| #a #I #L #V #T #U #l #_ #IHTU #H destruct /2 width=1/
+| #L #V #T #U #l #_ #IHTU #H destruct /2 width=1/
+| #L #V #W #T #U #l #_ #_ #_ #IHTU #H destruct /2 width=1/
+]
+qed.
+
+lemma ssta_inv_refl: ∀h,g,L,T,l. ⦃h, L⦄ ⊢ T •[g, l] T → ⊥.
+/2 width=8/ qed-.

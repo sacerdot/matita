@@ -24,7 +24,7 @@ inductive snv (h:sh) (g:sd h): lenv → predicate term ≝
 | snv_bind: ∀a,I,L,V,T. snv h g L V → snv h g (L.ⓑ{I}V) T → snv h g L (ⓑ{a,I}V.T)
 | snv_appl: ∀a,L,V,W,W0,T,U,l. snv h g L V → snv h g L T →
             ⦃h, L⦄ ⊢ V •[g, l + 1] W → L ⊢ W ➡* W0 →
-            ⦃h, L⦄ ⊢ T ➸*[g] ⓛ{a}W0.U → snv h g L (ⓐV.T)
+            ⦃h, L⦄ ⊢ T •➡*[g] ⓛ{a}W0.U → snv h g L (ⓐV.T)
 | snv_cast: ∀L,W,T,U,l. snv h g L W → snv h g L T →
             ⦃h, L⦄ ⊢ T •[g, l + 1] U → L ⊢ W ⬌* U → snv h g L (ⓝW.T)
 .
@@ -67,7 +67,7 @@ lemma snv_inv_bind: ∀h,g,a,I,L,V,T. ⦃h, L⦄ ⊩ ⓑ{a,I}V.T :[g] →
 fact snv_inv_appl_aux: ∀h,g,L,X. ⦃h, L⦄ ⊩ X :[g] → ∀V,T. X = ⓐV.T →
                        ∃∃a,W,W0,U,l. ⦃h, L⦄ ⊩ V :[g] & ⦃h, L⦄ ⊩ T :[g] &
                                    ⦃h, L⦄ ⊢ V •[g, l + 1] W & L ⊢ W ➡* W0 &
-                                   ⦃h, L⦄ ⊢ T ➸*[g] ⓛ{a}W0.U.
+                                   ⦃h, L⦄ ⊢ T •➡*[g] ⓛ{a}W0.U.
 #h #g #L #X * -L -X
 [ #L #k #V #T #H destruct
 | #I #L #K #V0 #i #_ #_ #V #T #H destruct
@@ -80,7 +80,7 @@ qed.
 lemma snv_inv_appl: ∀h,g,L,V,T. ⦃h, L⦄ ⊩ ⓐV.T :[g] →
                     ∃∃a,W,W0,U,l. ⦃h, L⦄ ⊩ V :[g] & ⦃h, L⦄ ⊩ T :[g] &
                                 ⦃h, L⦄ ⊢ V •[g, l + 1] W & L ⊢ W ➡* W0 &
-                                ⦃h, L⦄ ⊢ T ➸*[g] ⓛ{a}W0.U.
+                                ⦃h, L⦄ ⊢ T •➡*[g] ⓛ{a}W0.U.
 /2 width=3/ qed-.
 
 fact snv_inv_cast_aux: ∀h,g,L,X. ⦃h, L⦄ ⊩ X :[g] → ∀W,T. X = ⓝW.T →

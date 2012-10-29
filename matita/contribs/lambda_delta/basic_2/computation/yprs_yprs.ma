@@ -12,13 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/cprs.ma".
-include "basic_2/computation/xprs.ma".
+include "basic_2/computation/yprs.ma".
 
-(* EXTENDED PARALLEL COMPUTATION ON TERMS ***********************************)
+(* HYPER PARALLEL COMPUTATION ON TERMS **************************************)
 
-(* properties on context sensitive parallel computation for terms ***********)
-
-lemma cprs_xprs: ∀h,g,L,T1,T2. L ⊢ T1 ➡* T2 → ⦃h, L⦄ ⊢ T1 •➡*[g] T2.
-#h #g #L #T1 #T2 #H @(cprs_ind … H) -T2 // /3 width=3/
-qed.
+theorem yprs_trans: ∀h,g. bi_transitive … (yprs h g).
+/2 width=4/ qed-.

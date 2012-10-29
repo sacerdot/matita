@@ -19,6 +19,6 @@ include "basic_2/computation/xprs.ma".
 
 (* Properties on atomic arity assignment for terms **************************)
 
-lemma xprs_aaa: ∀h,g,L,T,A. L ⊢ T ⁝ A → ∀U. ⦃h, L⦄ ⊢ T ➸*[g] U → L ⊢ U ⁝ A.
+lemma xprs_aaa: ∀h,g,L,T,A. L ⊢ T ⁝ A → ∀U. ⦃h, L⦄ ⊢ T •➡*[g] U → L ⊢ U ⁝ A.
 #h #g #L #T #A #HT #U #H @(xprs_ind … H) -U // /2 width=5/
 qed.

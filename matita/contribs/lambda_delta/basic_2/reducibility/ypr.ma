@@ -12,13 +12,26 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/cprs.ma".
-include "basic_2/computation/xprs.ma".
+include "basic_2/substitution/csup.ma".
+include "basic_2/reducibility/xpr.ma".
 
-(* EXTENDED PARALLEL COMPUTATION ON TERMS ***********************************)
+(* HYPER PARALLEL REDUCTION ON CLOSURES *************************************)
 
-(* properties on context sensitive parallel computation for terms ***********)
+inductive ypr (h) (g) (L1) (T1): relation2 lenv term ≝
+| ypr_cpr : ∀T2. L1 ⊢ T1 ➡ T2 → ypr h g L1 T1 L1 T2
+| ypr_ssta: ∀T2,l. ⦃h, L1⦄ ⊢ T1 •[g, l + 1] T2 → ypr h g L1 T1 L1 T2
+| ypr_csup: ∀L2,T2. ⦃L1, T1⦄ > ⦃L2, T2⦄ → ypr h g L1 T1 L2 T2
+. 
 
-lemma cprs_xprs: ∀h,g,L,T1,T2. L ⊢ T1 ➡* T2 → ⦃h, L⦄ ⊢ T1 •➡*[g] T2.
-#h #g #L #T1 #T2 #H @(cprs_ind … H) -T2 // /3 width=3/
+interpretation
+   "hyper parallel reduction (closure)"
+   'YPRed h g L1 T1 L2 T2 = (ypr h g L1 T1 L2 T2).
+
+(* Basic properties *********************************************************)
+
+lemma ypr_refl: ∀h,g. bi_reflexive … (ypr h g).
+/2 width=1/ qed.
+
+lemma xpr_ypr: ∀h,g,L,T1,T2. ⦃h, L⦄ ⊢ T1 •➡[g] T2 → h ⊢ ⦃L, T1⦄ •⥸[g] ⦃L, T2⦄.
+#h #g #L #T1 #T2 * /2 width=1/ /2 width=2/
 qed.

@@ -12,13 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/cprs.ma".
-include "basic_2/computation/xprs.ma".
+include "basic_2/unfold/csups.ma".
 
-(* EXTENDED PARALLEL COMPUTATION ON TERMS ***********************************)
+(* ITERATED SUPCLOSURE ******************************************************)
 
-(* properties on context sensitive parallel computation for terms ***********)
+(* Main propertis ***********************************************************)
 
-lemma cprs_xprs: ∀h,g,L,T1,T2. L ⊢ T1 ➡* T2 → ⦃h, L⦄ ⊢ T1 •➡*[g] T2.
-#h #g #L #T1 #T2 #H @(cprs_ind … H) -T2 // /3 width=3/
-qed.
+theorem csups_trans: bi_transitive … csups.
+/2 width=4/ qed.

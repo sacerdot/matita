@@ -20,6 +20,6 @@ include "basic_2/reducibility/xpr.ma".
 
 (* Properties on atomic arity assignment for terms **************************)
 
-lemma xpr_aaa: ∀h,g,L,T,A. L ⊢ T ⁝ A → ∀U. ⦃h, L⦄ ⊢ T ➸[g] U → L ⊢ U ⁝ A.
-#h #g #L #T #A #HT #U * [2: * ] /2 width=3/ /2 width=6/
+lemma xpr_aaa: ∀h,g,L,T,A. L ⊢ T ⁝ A → ∀U. ⦃h, L⦄ ⊢ T •➡[g] U → L ⊢ U ⁝ A.
+#h #g #L #T #A #HT #U * /2 width=3/ /2 width=6/
 qed.
