@@ -279,5 +279,5 @@ qed.
 (* Basic_1: was: pr0_confluence *)
 theorem tpr_conf: ∀T0:term. ∀T1,T2. T0 ➡ T1 → T0 ➡ T2 →
                   ∃∃T. T1 ➡ T & T2 ➡ T.
-#T @(tw_wf_ind … T) -T /3 width=6 by tpr_conf_aux/
+#T @(tw_ind … T) -T /3 width=6 by tpr_conf_aux/
 qed.

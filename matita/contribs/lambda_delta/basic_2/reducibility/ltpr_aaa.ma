@@ -22,13 +22,13 @@ include "basic_2/reducibility/ltpr_ldrop.ma".
 
 fact aaa_ltpr_tpr_conf_aux: ∀L,T,L1,T1,A. L1 ⊢ T1 ⁝ A → L = L1 → T = T1 →
                             ∀L2. L1 ➡ L2 → ∀T2. T1 ➡ T2 → L2 ⊢ T2 ⁝ A.
-#L #T @(cw_wf_ind … L T) -L -T #L #T #IH
+#L #T @(fw_ind … L T) -L -T #L #T #IH
 #L1 #T1 #A * -L1 -T1 -A
 [ -IH #L1 #k #H1 #H2 #L2 #_ #T2 #H destruct
   >(tpr_inv_atom1 … H) -H //
 | #I #L1 #K1 #V1 #B #i #HLK1 #HK1 #H1 #H2 #L2 #HL12 #T2 #H destruct
   >(tpr_inv_atom1 … H) -T2
-  lapply (ldrop_pair2_fwd_cw … HLK1 (#i)) #HKV1
+  lapply (ldrop_pair2_fwd_fw … HLK1 (#i)) #HKV1
   elim (ltpr_ldrop_conf … HLK1 … HL12) -HLK1 -HL12 #X #H #HLK2
   elim (ltpr_inv_pair1 … H) -H #K2 #V2 #HK12 #HV12 #H destruct
   lapply (IH … HKV1 … HK1 … HK12 … HV12) // -L1 -K1 -V1 /2 width=5/
