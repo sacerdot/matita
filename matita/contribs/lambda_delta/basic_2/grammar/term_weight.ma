@@ -32,9 +32,9 @@ qed.
 
 (* Basic eliminators ********************************************************)
 
-axiom tw_wf_ind: ∀R:predicate term.
-                 (∀T2. (∀T1. #{T1} < #{T2} → R T1) → R T2) →
-                 ∀T. R T.
+axiom tw_ind: ∀R:predicate term.
+              (∀T2. (∀T1. #{T1} < #{T2} → R T1) → R T2) →
+              ∀T. R T.
 
 (* Basic_1: removed theorems 11:
             wadd_le wadd_lt wadd_O weight_le weight_eq weight_add_O

@@ -135,9 +135,6 @@ theorem injective_plus_r: ∀n:nat.injective nat nat (λm.n+m).
 theorem injective_plus_l: ∀n:nat.injective nat nat (λm.m+n). 
 /2/ qed.
 
-theorem not_eq_S: ∀n,m:nat. n ≠ m → S n ≠ S m.
-/2/ qed.
-
 theorem times_Sn_m: ∀n,m:nat. m+n*m = S n*m.
 // qed.
 
@@ -191,6 +188,9 @@ lemma plus_plus_comm_23: ∀x,y,z. x + y + z = x + z + y.
 // qed.
 
 (* Negated equalities *******************************************************)
+
+theorem not_eq_S: ∀n,m:nat. n ≠ m → S n ≠ S m.
+/2/ qed.
 
 theorem not_eq_O_S : ∀n:nat. 0 ≠ S n.
 #n @nmk #eqOS (change with (not_zero O)) >eqOS // qed.
@@ -298,6 +298,12 @@ qed.
 theorem le_plus_to_minus_r: ∀a,b,c. a + b ≤ c → a ≤ c -b.
 #a #b #c #H @(le_plus_to_le_r … b) /2/
 qed.
+
+lemma lt_to_le: ∀x,y. x < y → x ≤ y.
+/2 width=2/ qed.
+
+lemma inv_eq_minus_O: ∀x,y. x - y = 0 → x ≤ y.
+// qed-.
 
 (* lt *)
 
@@ -600,6 +606,9 @@ lemma le_plus_compatible: ∀x1,x2,y1,y2. x1 ≤ y1 → x2 ≤ y2 → x1 + x2 �
 #x1 #y1 #x2 #y2 #H1 #H2 /2/ @le_plus // /2/ /3 by le_minus_to_plus, monotonic_le_plus_r, transitive_le/ qed.
 *)
 
+lemma minus_le: ∀x,y. x - y ≤ x.
+/2 width=1/ qed.
+
 (* lt *)
 
 theorem not_eq_to_le_to_lt: ∀n,m. n≠m → n≤m → n<m.
@@ -678,6 +687,12 @@ qed.
 
 lemma minus_minus_m_m: ∀m,n. n ≤ m → m - (m - n) = n.
 /2 width=1/ qed.
+
+lemma discr_minus_x_xy: ∀x,y. x = x - y → x = 0 ∨ y = 0.
+* /2 width=1/ #x * /2 width=1/ #y normalize #H 
+lapply (minus_le x y) <H -H #H
+elim (not_le_Sn_n x) #H0 elim (H0 ?) //
+qed-.
 
 (* Stilll more atomic conclusion ********************************************)
 
@@ -796,4 +811,3 @@ lemma le_maxr: ∀i,n,m. max n m ≤ i → m ≤ i.
 lemma to_max: ∀i,n,m. n ≤ i → m ≤ i → max n m ≤ i.
 #i #n #m #leni #lemi normalize (cases (leb n m)) 
 normalize // qed.
-

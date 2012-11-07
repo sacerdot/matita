@@ -340,3 +340,74 @@ lemma bi_TC_star_ind_dx: ∀A,B,R. bi_reflexive A B R →
 #A #B #R #HR #a2 #b2 #P #H2 #IH #a1 #b1 #H12
 @(bi_TC_ind_dx … P ? IH … H12) /3 width=5/
 qed-.
+
+definition bi_star: ∀A,B,R. bi_relation A B ≝ λA,B,R,a1,b1,a2,b2.
+                    (a1 = a2 ∧ b1 = b2) ∨ bi_TC A B R a1 b1 a2 b2.
+
+lemma bi_star_bi_reflexive: ∀A,B,R. bi_reflexive A B (bi_star … R).
+/3 width=1/ qed.
+
+lemma bi_TC_to_bi_star: ∀A,B,R,a1,b1,a2,b2.
+                        bi_TC A B R a1 b1 a2 b2 → bi_star A B R a1 b1 a2 b2.
+/2 width=1/ qed.
+
+lemma bi_R_to_bi_star: ∀A,B,R,a1,b1,a2,b2.
+                       R a1 b1 a2 b2 → bi_star A B R a1 b1 a2 b2.
+/3 width=1/ qed.
+
+lemma bi_star_strap1: ∀A,B,R,a1,a,a2,b1,b,b2. bi_star A B R a1 b1 a b →
+                      R a b a2 b2 → bi_star A B R a1 b1 a2 b2.
+#A #B #R #a1 #a #a2 #b1 #b #b2 *
+[ * #H1 #H2 destruct /2 width=1/
+| /3 width=4/
+]
+qed.
+
+lemma bi_star_strap2: ∀A,B,R,a1,a,a2,b1,b,b2. R a1 b1 a b →
+                      bi_star A B R a b a2 b2 → bi_star A B R a1 b1 a2 b2.
+#A #B #R #a1 #a #a2 #b1 #b #b2 #H *
+[ * #H1 #H2 destruct /2 width=1/
+| /3 width=4/
+]
+qed.
+
+lemma bi_star_to_bi_TC_to_bi_TC: ∀A,B,R,a1,a,a2,b1,b,b2. bi_star A B R a1 b1 a b →
+                                 bi_TC A B R a b a2 b2 → bi_TC A B R a1 b1 a2 b2.
+#A #B #R #a1 #a #a2 #b1 #b #b2 *
+[ * #H1 #H2 destruct /2 width=1/
+| /2 width=4/
+]
+qed.
+
+lemma bi_TC_to_bi_star_to_bi_TC: ∀A,B,R,a1,a,a2,b1,b,b2. bi_TC A B R a1 b1 a b →
+                                 bi_star A B R a b a2 b2 → bi_TC A B R a1 b1 a2 b2.
+#A #B #R #a1 #a #a2 #b1 #b #b2 #H *
+[ * #H1 #H2 destruct /2 width=1/
+| /2 width=4/
+]
+qed.
+
+lemma bi_tansitive_bi_star: ∀A,B,R. bi_transitive A B (bi_star … R).
+#A #B #R #a1 #a #b1 #b #H #a2 #b2 *
+[ * #H1 #H2 destruct /2 width=1/
+| /3 width=4/
+]
+qed.
+
+lemma bi_star_ind: ∀A,B,R,a1,b1. ∀P:relation2 A B. P a1 b1 →
+                   (∀a,a2,b,b2. bi_star … R a1 b1 a b → R a b a2 b2 → P a b → P a2 b2) →
+                   ∀a2,b2. bi_star … R a1 b1 a2 b2 → P a2 b2.
+#A #B #R #a1 #b1 #P #H #IH #a2 #b2 *
+[ * #H1 #H2 destruct //
+| #H12 elim H12 -a2 -b2 /2 width=5/ -H /3 width=5/
+]
+qed-.
+
+lemma bi_star_ind_dx: ∀A,B,R,a2,b2. ∀P:relation2 A B. P a2 b2 →
+                      (∀a1,a,b1,b. R a1 b1 a b → bi_star … R a b a2 b2 → P a b → P a1 b1) →
+                      ∀a1,b1. bi_star … R a1 b1 a2 b2 → P a1 b1.
+#A #B #R #a2 #b2 #P #H #IH #a1 #b1 *
+[ * #H1 #H2 destruct //
+| #H12 @(bi_TC_ind_dx ?????????? H12) -a1 -b1 /2 width=5/ -H /3 width=5/
+]
+qed-.

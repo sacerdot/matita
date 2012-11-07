@@ -12,28 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/term_weight.ma".
-include "basic_2/grammar/lenv.ma".
+include "basic_2/computation/xprs_cprs.ma".
+include "basic_2/computation/yprs.ma".
 
-(* WEIGHT OF A LOCAL ENVIRONMENT ********************************************)
+(* HYPER PARALLEL COMPUTATION ON CLOSURES ***********************************)
 
-let rec lw L ≝ match L with
-[ LAtom       ⇒ 0
-| LPair L _ V ⇒ lw L + #{V}
-].
+(* Properties on extended parallel computation for terms ********************)
 
-interpretation "weight (local environment)" 'Weight L = (lw L).
+lemma xprs_yprs: ∀h,g,L,T1,T2. ⦃h, L⦄ ⊢ T1 •➡*[g] T2 →
+                 h ⊢ ⦃L, T1⦄ •⥸*[g] ⦃L, T2⦄.
+#h #g #L #T1 #T2 #H @(xprs_ind … H) -T2 // /3 width=4/
+qed.
 
-(* Basic properties *********************************************************)
-
-lemma lw_pair: ∀I,L,V. #{L} < #{(L.ⓑ{I}V)}.
+lemma cprs_yprs: ∀h,g,L,T1,T2. L ⊢ T1 ➡* T2 → h ⊢ ⦃L, T1⦄ •⥸*[g] ⦃L, T2⦄.
 /3 width=1/ qed.
-
-(* Basic eliminators ********************************************************)
-
-axiom lw_ind: ∀R:predicate lenv.
-              (∀L2. (∀L1. #{L1} < #{L2} → R L1) → R L2) →
-              ∀L. R L.
-
-(* Basic_1: removed theorems 2: clt_cong clt_head clt_thead *)
-(* Basic_1: note: clt_thead should be renamed clt_ctail *)

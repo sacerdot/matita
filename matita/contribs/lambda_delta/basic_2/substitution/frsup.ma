@@ -1,0 +1,119 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/grammar/cl_weight.ma".
+include "basic_2/substitution/lift.ma".
+
+(* RESTRICTED SUPCLOSURE ****************************************************)
+
+inductive frsup: bi_relation lenv term ≝
+| frsup_bind_sn: ∀a,I,L,V,T. frsup L (ⓑ{a,I}V.T) L V
+| frsup_bind_dx: ∀a,I,L,V,T. frsup L (ⓑ{a,I}V.T) (L.ⓑ{I}V) T
+| frsup_flat_sn: ∀I,L,V,T.   frsup L (ⓕ{I}V.T) L V
+| frsup_flat_dx: ∀I,L,V,T.   frsup L (ⓕ{I}V.T) L T
+.
+
+interpretation
+   "restricted structural predecessor (closure)"
+   'RestSupTerm L1 T1 L2 T2 = (frsup L1 T1 L2 T2).
+
+(* Basic inversion lemmas ***************************************************)
+
+fact frsup_inv_atom1_aux: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁ ⦃L2, T2⦄ →
+                          ∀J. T1 = ⓪{J} → ⊥.
+#L1 #L2 #T1 #T2 * -L1 -L2 -T1 -T2
+[ #a #I #L #V #T #J #H destruct
+| #a #I #L #V #T #J #H destruct
+| #I #L #V #T #J #H destruct
+| #I #L #V #T #J #H destruct
+]
+qed-.
+
+lemma frsup_inv_atom1: ∀J,L1,L2,T2. ⦃L1, ⓪{J}⦄ ⧁ ⦃L2, T2⦄ → ⊥.
+/2 width=7 by frsup_inv_atom1_aux/ qed-.
+
+fact frsup_inv_bind1_aux: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁ ⦃L2, T2⦄ →
+                          ∀b,J,W,U. T1 = ⓑ{b,J}W.U →
+                          (L2 = L1 ∧ T2 = W) ∨
+                          (L2 = L1.ⓑ{J}W ∧ T2 = U).
+#L1 #L2 #T1 #T2 * -L1 -L2 -T1 -T2
+[ #a #I #L #V #T #b #J #W #U #H destruct /3 width=1/
+| #a #I #L #V #T #b #J #W #U #H destruct /3 width=1/
+| #I #L #V #T #b #J #W #U #H destruct
+| #I #L #V #T #b #J #W #U #H destruct
+]
+qed-.
+
+lemma frsup_inv_bind1: ∀b,J,L1,L2,W,U,T2. ⦃L1, ⓑ{b,J}W.U⦄ ⧁ ⦃L2, T2⦄ →
+                       (L2 = L1 ∧ T2 = W) ∨
+                       (L2 = L1.ⓑ{J}W ∧ T2 = U).
+/2 width=4 by frsup_inv_bind1_aux/ qed-.
+
+fact frsup_inv_flat1_aux: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁ ⦃L2, T2⦄ →
+                          ∀J,W,U. T1 = ⓕ{J}W.U →
+                          L2 = L1 ∧ (T2 = W ∨ T2 = U).
+#L1 #L2 #T1 #T2 * -L1 -L2 -T1 -T2
+[ #a #I #L #V #T #J #W #U #H destruct
+| #a #I #L #V #T #J #W #U #H destruct
+| #I #L #V #T #J #W #U #H destruct /3 width=1/
+| #I #L #V #T #J #W #U #H destruct /3 width=1/
+]
+qed-.
+
+lemma frsup_inv_flat1: ∀J,L1,L2,W,U,T2. ⦃L1, ⓕ{J}W.U⦄ ⧁ ⦃L2, T2⦄ →
+                       L2 = L1 ∧ (T2 = W ∨ T2 = U).
+/2 width=4 by frsup_inv_flat1_aux/ qed-.
+
+(* Basic forward lemmas *****************************************************)
+
+lemma frsup_fwd_fw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁ ⦃L2, T2⦄ → #{L2, T2} < #{L1, T1}.
+#L1 #L2 #T1 #T2 * -L1 -L2 -T1 -T2 /width=1/
+qed-.
+
+lemma frsup_fwd_lw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁ ⦃L2, T2⦄ → #{L1} ≤ #{L2}.
+#L1 #L2 #T1 #T2 * -L1 -L2 -T1 -T2 /width=1/
+qed-.
+
+lemma frsup_fwd_tw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁ ⦃L2, T2⦄ → #{T2} < #{T1}.
+#L1 #L2 #T1 #T2 * -L1 -L2 -T1 -T2 /width=1/ /2 width=1 by le_minus_to_plus/
+qed-.
+
+lemma frsup_fwd_append: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁ ⦃L2, T2⦄ → ∃L. L2 = L1 @@ L.
+#L1 #L2 #T1 #T2 * -L1 -L2 -T1 -T2
+[ #a
+| #a #I #L #V #_ @(ex_intro … (⋆.ⓑ{I}V)) //
+]
+#I #L #V #T @(ex_intro … (⋆)) //
+qed-.
+
+(* Advanced forward lemmas **************************************************)
+
+lemma lift_frsup_trans: ∀T1,U1,d,e. ⇧[d, e] T1 ≡ U1 →
+                        ∀L,K,U2. ⦃L, U1⦄ ⧁ ⦃L @@ K, U2⦄ →
+                        ∃T2. ⇧[d + |K|, e] T2 ≡ U2.
+#T1 #U1 #d #e * -T1 -U1 -d -e
+[5: #a #I #V1 #W1 #T1 #U1 #d #e #HVW1 #HTU1 #L #K #X #H
+    elim (frsup_inv_bind1 … H) -H *
+    [ -HTU1 #H1 #H2 destruct
+      >(append_inv_refl_dx … H1) -L -K normalize /2 width=2/
+    | -HVW1 #H1 #H2 destruct
+      >(append_inv_pair_dx … H1) -L -K normalize /2 width=2/
+    ]
+|6: #I #V1 #W1 #T1 #U1 #d #e #HVW1 #HUT1 #L #K #X #H
+    elim (frsup_inv_flat1 … H) -H #H1 * #H2 destruct
+    >(append_inv_refl_dx … H1) -L -K normalize /2 width=2/
+]
+#i #d #e [2,3: #_ ] #L #K #X #H
+elim (frsup_inv_atom1 … H)
+qed-.

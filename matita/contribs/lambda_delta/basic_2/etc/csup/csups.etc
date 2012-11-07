@@ -1,0 +1,107 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+notation "hvbox( ⦃ L1, break T1 ⦄ > * break ⦃ L2 , break T2 ⦄ )"
+   non associative with precedence 45
+   for @{ 'SupTermStar $L1 $T1 $L2 $T2 }.
+
+include "basic_2/substitution/csup.ma".
+include "basic_2/unfold/csupp.ma".
+
+(* STAR-ITERATED SUPCLOSURE *************************************************)
+
+definition csups: bi_relation lenv term ≝ bi_star … csup.
+
+interpretation "star-iterated structural predecessor (closure)"
+   'SupTermStar L1 T1 L2 T2 = (csups L1 T1 L2 T2).
+
+(* Basic eliminators ********************************************************)
+
+lemma csups_ind: ∀L1,T1. ∀R:relation2 lenv term. R L1 T1 →
+                 (∀L,L2,T,T2. ⦃L1, T1⦄ >* ⦃L, T⦄ → ⦃L, T⦄ > ⦃L2, T2⦄ → R L T → R L2 T2) →
+                 ∀L2,T2. ⦃L1, T1⦄ >* ⦃L2, T2⦄ → R L2 T2.
+#L1 #T1 #R #IH1 #IH2 #L2 #T2 #H
+@(bi_star_ind … IH1 IH2 ? ? H)
+qed-.
+
+lemma csups_ind_dx: ∀L2,T2. ∀R:relation2 lenv term. R L2 T2 →
+                    (∀L1,L,T1,T. ⦃L1, T1⦄ > ⦃L, T⦄ → ⦃L, T⦄ >* ⦃L2, T2⦄ → R L T → R L1 T1) →
+                    ∀L1,T1. ⦃L1, T1⦄ >* ⦃L2, T2⦄ → R L1 T1.
+#L2 #T2 #R #IH1 #IH2 #L1 #T1 #H
+@(bi_star_ind_dx … IH1 IH2 ? ? H)
+qed-.
+
+(* Basic properties *********************************************************)
+
+lemma csups_refl: bi_reflexive … csups.
+/2 width=1/ qed.
+
+lemma csupp_csups: ∀L1,L2,T1,T2. ⦃L1, T1⦄ >+ ⦃L2, T2⦄ → ⦃L1, T1⦄ >* ⦃L2, T2⦄.
+/2 width=1/ qed.
+
+lemma csup_csups: ∀L1,L2,T1,T2. ⦃L1, T1⦄ > ⦃L2, T2⦄ → ⦃L1, T1⦄ >* ⦃L2, T2⦄.
+/2 width=1/ qed.
+
+lemma csups_strap1: ∀L1,L,L2,T1,T,T2. ⦃L1, T1⦄ >* ⦃L, T⦄ → ⦃L, T⦄ > ⦃L2, T2⦄ →
+                    ⦃L1, T1⦄ >* ⦃L2, T2⦄.
+/2 width=4/ qed.
+
+lemma csups_strap2: ∀L1,L,L2,T1,T,T2. ⦃L1, T1⦄ > ⦃L, T⦄ → ⦃L, T⦄ >* ⦃L2, T2⦄ →
+                    ⦃L1, T1⦄ >* ⦃L2, T2⦄.
+/2 width=4/ qed.
+
+lemma csups_csupp_csupp: ∀L1,L,L2,T1,T,T2. ⦃L1, T1⦄ >* ⦃L, T⦄ →
+                         ⦃L, T⦄ >+ ⦃L2, T2⦄ → ⦃L1, T1⦄ >+ ⦃L2, T2⦄.
+/2 width=4/ qed.
+
+lemma csupp_csups_csupp: ∀L1,L,L2,T1,T,T2. ⦃L1, T1⦄ >+ ⦃L, T⦄ →
+                          ⦃L, T⦄ >* ⦃L2, T2⦄ → ⦃L1, T1⦄ >+ ⦃L2, T2⦄.
+/2 width=4/ qed.
+
+(* Basic forward lemmas *****************************************************)
+
+lemma csups_fwd_cw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ >* ⦃L2, T2⦄ → #{L2, T2} ≤ #{L1, T1}.
+#L1 #L2 #T1 #T2 #H @(csups_ind … H) -L2 -T2 //
+/4 width=3 by csup_fwd_cw, lt_to_le_to_lt, lt_to_le/ (**) (* slow even with trace *)
+qed-.
+
+(* Advanced inversion lemmas for csupp **************************************)
+
+lemma csupp_inv_atom1_csups: ∀J,L1,L2,T2. ⦃L1, ⓪{J}⦄ >+ ⦃L2, T2⦄ →
+                             ∃∃I,K,V,i. ⇩[0, i] L1 ≡ K.ⓑ{I}V &
+                             ⦃K, V⦄ >* ⦃L2, T2⦄ & J = LRef i.
+#J #L1 #L2 #T2 #H @(csupp_ind … H) -L2 -T2
+[ #L2 #T2 #H
+  elim (csup_inv_atom1 … H) -H * #i #HL12 #H destruct /2 width=7/
+| #L #T #L2 #T2 #_ #HT2 * #I #K #V #i #HLK #HVT #H destruct /3 width=8/
+]
+qed-.
+
+lemma csupp_inv_bind1_csups: ∀b,J,L1,L2,W,U,T2. ⦃L1, ⓑ{b,J}W.U⦄ >+ ⦃L2, T2⦄ →
+                             ⦃L1, W⦄ >* ⦃L2, T2⦄ ∨ ⦃L1.ⓑ{J}W, U⦄ >* ⦃L2, T2⦄.
+#b #J #L1 #L2 #W #U #T2 #H @(csupp_ind … H) -L2 -T2
+[ #L2 #T2 #H
+  elim (csup_inv_bind1 … H) -H * #H1 #H2 destruct /2 width=1/
+| #L #T #L2 #T2 #_ #HT2 * /3 width=4/
+]
+qed-.
+
+lemma csupp_inv_flat1_csups: ∀J,L1,L2,W,U,T2. ⦃L1, ⓕ{J}W.U⦄ >+ ⦃L2, T2⦄ →
+                             ⦃L1, W⦄ >* ⦃L2, T2⦄ ∨ ⦃L1, U⦄ >* ⦃L2, T2⦄.
+#J #L1 #L2 #W #U #T2 #H @(csupp_ind … H) -L2 -T2
+[ #L2 #T2 #H
+  elim (csup_inv_flat1 … H) -H #H1 * #H2 destruct /2 width=1/
+| #L #T #L2 #T2 #_ #HT2 * /3 width=4/
+]
+qed-.

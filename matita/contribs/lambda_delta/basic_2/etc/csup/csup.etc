@@ -1,0 +1,157 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+notation "hvbox( ⦃ L1, break T1 ⦄ > break ⦃ L2 , break T2 ⦄ )"
+   non associative with precedence 45
+   for @{ 'SupTerm $L1 $T1 $L2 $T2 }.
+
+include "basic_2/substitution/ldrop.ma".
+
+(* SUPCLOSURE ***************************************************************)
+
+inductive csup: bi_relation lenv term ≝
+| csup_lref   : ∀I,L,K,V,i. ⇩[0, i] L ≡ K.ⓑ{I}V → csup L (#i) K V
+| csup_bind_sn: ∀a,I,L,V,T. csup L (ⓑ{a,I}V.T) L V
+| csup_bind_dx: ∀a,I,L,V,T. csup L (ⓑ{a,I}V.T) (L.ⓑ{I}V) T
+| csup_flat_sn: ∀I,L,V,T.   csup L (ⓕ{I}V.T) L V
+| csup_flat_dx: ∀I,L,V,T.   csup L (ⓕ{I}V.T) L T
+.
+
+interpretation
+   "structural predecessor (closure)"
+   'SupTerm L1 T1 L2 T2 = (csup L1 T1 L2 T2).
+
+(* Basic inversion lemmas ***************************************************)
+
+fact csup_inv_atom1_aux: ∀L1,L2,T1,T2. ⦃L1, T1⦄ > ⦃L2, T2⦄ → ∀J. T1 = ⓪{J} →
+                         ∃∃I,i. ⇩[0, i] L1 ≡ L2.ⓑ{I}T2 & J = LRef i.
+#L1 #L2 #T1 #T2 * -L1 -L2 -T1 -T2
+[ #I #L #K #V #i #HLK #J #H destruct /2 width=4/
+| #a #I #L #V #T #J #H destruct
+| #a #I #L #V #T #J #H destruct
+| #I #L #V #T #J #H destruct
+| #I #L #V #T #J #H destruct
+]
+qed-.
+
+lemma csup_inv_atom1: ∀J,L1,L2,T2. ⦃L1, ⓪{J}⦄ > ⦃L2, T2⦄ →
+                      ∃∃I,i. ⇩[0, i] L1 ≡ L2.ⓑ{I}T2 & J = LRef i.
+/2 width=3 by csup_inv_atom1_aux/ qed-.
+
+fact csup_inv_bind1_aux: ∀L1,L2,T1,T2. ⦃L1, T1⦄ > ⦃L2, T2⦄ →
+                         ∀b,J,W,U. T1 = ⓑ{b,J}W.U →
+                         (L2 = L1 ∧ T2 = W) ∨
+                         (L2 = L1.ⓑ{J}W ∧ T2 = U).
+#L1 #L2 #T1 #T2 * -L1 -L2 -T1 -T2
+[ #I #L #K #V #i #_ #b #J #W #U #H destruct
+| #a #I #L #V #T #b #J #W #U #H destruct /3 width=1/
+| #a #I #L #V #T #b #J #W #U #H destruct /3 width=1/
+| #I #L #V #T #b #J #W #U #H destruct
+| #I #L #V #T #b #J #W #U #H destruct
+]
+qed-.
+
+lemma csup_inv_bind1: ∀b,J,L1,L2,W,U,T2. ⦃L1, ⓑ{b,J}W.U⦄ > ⦃L2, T2⦄ →
+                      (L2 = L1 ∧ T2 = W) ∨
+                      (L2 = L1.ⓑ{J}W ∧ T2 = U).
+/2 width=4 by csup_inv_bind1_aux/ qed-.
+
+fact csup_inv_flat1_aux: ∀L1,L2,T1,T2. ⦃L1, T1⦄ > ⦃L2, T2⦄ →
+                         ∀J,W,U. T1 = ⓕ{J}W.U →
+                         L2 = L1 ∧ (T2 = W ∨ T2 = U).
+#L1 #L2 #T1 #T2 * -L1 -L2 -T1 -T2
+[ #I #L #K #V #i #_ #J #W #U #H destruct
+| #a #I #L #V #T #J #W #U #H destruct
+| #a #I #L #V #T #J #W #U #H destruct
+| #I #L #V #T #J #W #U #H destruct /3 width=1/
+| #I #L #V #T #J #W #U #H destruct /3 width=1/
+]
+qed-.
+
+lemma csup_inv_flat1: ∀J,L1,L2,W,U,T2. ⦃L1, ⓕ{J}W.U⦄ > ⦃L2, T2⦄ →
+                      L2 = L1 ∧ (T2 = W ∨ T2 = U).
+/2 width=4 by csup_inv_flat1_aux/ qed-.
+
+(* Basic forward lemmas *****************************************************)
+
+lemma csup_fwd_cw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ > ⦃L2, T2⦄ → #{L2, T2} < #{L1, T1}.
+#L1 #L2 #T1 #T2 * -L1 -L2 -T1 -T2 /width=1/ /2 width=4 by ldrop_pair2_fwd_cw/
+qed-.
+
+lemma csup_fwd_ldrop: ∀L1,L2,T1,T2. ⦃L1, T1⦄ > ⦃L2, T2⦄ →
+                      ∃i. ⇩[0, i] L1 ≡ L2 ∨ ⇩[0, i] L2 ≡ L1.
+#L1 #L2 #T1 #T2 * -L1 -L2 -T1 -T2 /3 width=2/ /4 width=2/
+#I #L1 #K1 #V1 #i #HLK1
+lapply (ldrop_fwd_ldrop2 … HLK1) -HLK1 /3 width=2/
+qed-. 
+
+(* Advanced forward lemmas **************************************************)
+
+lemma lift_csup_trans_eq: ∀T1,U1,d,e. ⇧[d, e] T1 ≡ U1 →
+                          ∀L,U2. ⦃L, U1⦄ > ⦃L, U2⦄ → 
+                          ∃T2. ⇧[d, e] T2 ≡ U2.
+#T1 #U1 #d #e * -T1 -U1 -d -e
+[5: #a #I #V1 #W1 #T1 #U1 #d #e #HVW1 #_ #L #X #H
+    elim (csup_inv_bind1 … H) -H *
+    [ #_ #H destruct /2 width=2/
+    | #H elim (discr_lpair_x_xy … H)
+    ]
+|6: #I #V1 #W1 #T1 #U1 #d #e #HVW1 #HUT1 #L #X #H
+    elim (csup_inv_flat1 … H) -H #_ * #H destruct /2 width=2/
+]
+#i #d #e [2,3: #_ ] #L #X #H
+elim (csup_inv_atom1 … H) -H #I #j #HL #H destruct
+lapply (ldrop_pair2_fwd_cw … HL X) -HL #H
+elim (lt_refl_false … H)
+qed-.
+(*
+lemma lift_csup_trans_gt: ∀L1,L2,U1,U2. ⦃L1, U1⦄ > ⦃L2, U2⦄ →
+                          ⇩[0, 1] L2 ≡ L1 → ∀T1,d,e. ⇧[d, e] T1 ≡ U1 →
+                          ∃T2. ⇧[d + 1, e] T2 ≡ U2.
+#L1 #L2 #U1 #U2 * -L1 -L2 -U1 -U2
+[ #I #L1 #K1 #V #i #HLK1 #HKL1
+  lapply (ldrop_fwd_lw … HLK1) -HLK1 #HLK1
+  lapply (ldrop_fwd_lw … HKL1) -HKL1 #HKL1
+  lapply (transitive_le … HLK1 HKL1) -L1 normalize #H
+  
+  
+| #a
+| #a
+]
+#I #L1 #W1 #U1 #HL1
+  
+
+
+ #X #d #e #H
+  lapply (ldrop_inv_refl … HL1) -HL1
+| #a #I #L1 #W1 #U1 #j #HL1 #X #d #e #H
+  lapply (ldrop_inv_ldrop1 … HL1)
+
+  elim (lift_inv_bind2 … H) -H #W2 #U2 #HW21 #HU21 #H destruct 
+   
+
+ /3 width=2/ /4 width=2/
+
+*)
+
+
+
+(* Advanced inversion lemmas ************************************************)
+
+lemma csup_inv_lref2_be: ∀L,U,i. ⦃L, U⦄ > ⦃L, #i⦄ →
+                         ∀T,d,e. ⇧[d, e] T ≡ U → d ≤ i → i < d + e → ⊥.
+#L #U #i #H #T #d #e #HTU #Hdi #Hide
+elim (lift_csup_trans_eq … HTU … H) -H -T #T #H
+elim (lift_inv_lref2_be … H ? ?) //
+qed-.

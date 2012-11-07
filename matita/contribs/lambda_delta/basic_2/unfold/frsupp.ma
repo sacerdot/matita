@@ -1,0 +1,107 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/substitution/frsup.ma".
+
+(* PLUS-ITERATED RESTRICTED SUPCLOSURE **************************************)
+
+definition frsupp: bi_relation lenv term ≝ bi_TC … frsup.
+
+interpretation "plus-iterated restricted structural predecessor (closure)"
+   'RestSupTermPlus L1 T1 L2 T2 = (frsupp L1 T1 L2 T2).
+
+(* Basic eliminators ********************************************************)
+
+lemma frsupp_ind: ∀L1,T1. ∀R:relation2 lenv term.
+                  (∀L2,T2. ⦃L1, T1⦄ ⧁ ⦃L2, T2⦄ → R L2 T2) →
+                  (∀L,T,L2,T2. ⦃L1, T1⦄ ⧁+ ⦃L, T⦄ → ⦃L, T⦄ ⧁ ⦃L2, T2⦄ → R L T → R L2 T2) →
+                  ∀L2,T2. ⦃L1, T1⦄ ⧁+ ⦃L2, T2⦄ → R L2 T2.
+#L1 #T1 #R #IH1 #IH2 #L2 #T2 #H
+@(bi_TC_ind … IH1 IH2 ? ? H)
+qed-.
+
+lemma frsupp_ind_dx: ∀L2,T2. ∀R:relation2 lenv term.
+                     (∀L1,T1. ⦃L1, T1⦄ ⧁ ⦃L2, T2⦄ → R L1 T1) →
+                     (∀L1,L,T1,T. ⦃L1, T1⦄ ⧁ ⦃L, T⦄ → ⦃L, T⦄ ⧁+ ⦃L2, T2⦄ → R L T → R L1 T1) →
+                     ∀L1,T1. ⦃L1, T1⦄ ⧁+ ⦃L2, T2⦄ → R L1 T1.
+#L2 #T2 #R #IH1 #IH2 #L1 #T1 #H
+@(bi_TC_ind_dx … IH1 IH2 ? ? H)
+qed-.
+
+(* Basic properties *********************************************************)
+
+lemma frsup_frsupp: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁ ⦃L2, T2⦄ → ⦃L1, T1⦄ ⧁+ ⦃L2, T2⦄.
+/2 width=1/ qed.
+
+lemma frsupp_strap1: ∀L1,L,L2,T1,T,T2. ⦃L1, T1⦄ ⧁+ ⦃L, T⦄ → ⦃L, T⦄ ⧁ ⦃L2, T2⦄ →
+                     ⦃L1, T1⦄ ⧁+ ⦃L2, T2⦄.
+/2 width=4/ qed.
+
+lemma frsupp_strap2: ∀L1,L,L2,T1,T,T2. ⦃L1, T1⦄ ⧁ ⦃L, T⦄ → ⦃L, T⦄ ⧁+ ⦃L2, T2⦄ →
+                     ⦃L1, T1⦄ ⧁+ ⦃L2, T2⦄.
+/2 width=4/ qed.
+
+(* Basic forward lemmas *****************************************************)
+
+lemma frsupp_fwd_fw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁+ ⦃L2, T2⦄ → #{L2, T2} < #{L1, T1}.
+#L1 #L2 #T1 #T2 #H @(frsupp_ind … H) -L2 -T2
+/3 width=3 by frsup_fwd_fw, transitive_lt/
+qed-.
+
+lemma frsupp_fwd_lw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁+ ⦃L2, T2⦄ → #{L1} ≤ #{L2}.
+#L1 #L2 #T1 #T2 #H @(frsupp_ind … H) -L2 -T2
+/2 width=3 by frsup_fwd_lw/ (**) (* /3 width=5 by frsup_fwd_lw, transitive_le/ is too slow *)
+#L #T #L2 #T2 #_ #HL2 #HL1
+lapply (frsup_fwd_lw … HL2) -HL2 /2 width=3 by transitive_le/
+qed-.
+
+lemma frsupp_fwd_tw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁+ ⦃L2, T2⦄ → #{T2} < #{T1}.
+#L1 #L2 #T1 #T2 #H @(frsupp_ind … H) -L2 -T2
+/3 width=3 by frsup_fwd_tw, transitive_lt/
+qed-.
+
+lemma frsupp_fwd_append: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁+ ⦃L2, T2⦄ → ∃L. L2 = L1 @@ L.
+#L1 #L2 #T1 #T2 #H @(frsupp_ind … H) -L2 -T2 /2 width=3 by frsup_fwd_append/
+#L #T #L2 #T2 #_ #HL2 * #K1 #H destruct
+elim (frsup_fwd_append … HL2) -HL2 #K2 #H destruct /2 width=2/
+qed-.
+
+(* Advanced forward lemmas **************************************************)
+
+fact lift_frsupp_trans_aux: ∀L2,U0. (
+                               ∀L,K,U1,U2. ⦃L, U1⦄ ⧁+ ⦃L @@ K, U2⦄ →
+                               ∀T1,d,e. ⇧[d, e] T1 ≡ U1 →
+                               #{L, U1} < #{L2, U0} → 
+                               ∃T2. ⇧[d + |K|, e] T2 ≡ U2
+                            ) →
+                            ∀L1,K,U1,U2. ⦃L1, U1⦄ ⧁+ ⦃L2 @@ K, U2⦄ →
+                            ∀T1,d,e. ⇧[d, e] T1 ≡ U1 →
+                            L2 = L1 → U0 = U1 →
+                            ∃T2. ⇧[d + |K|, e] T2 ≡ U2.
+#L2 #U0 #IH #L1 #X #U1 #U2 #H @(frsupp_ind_dx … H) -L1 -U1 /2 width=5 by lift_frsup_trans/
+#L1 #L #U1 #U #HL1 #HL2 #_ #T1 #d #e #HTU1 #H1 #H2 destruct
+elim (frsup_fwd_append … HL1) #K1 #H destruct
+elim (frsupp_fwd_append … HL2) #K >append_assoc #H
+elim (append_inj_dx … H ?) -H // #_ #H destruct
+<append_assoc in HL2; #HL2
+elim (lift_frsup_trans … HTU1 … HL1) -T1 #T #HTU
+lapply (frsup_fwd_fw … HL1) -HL1 #HL1
+elim (IH … HL2 … HTU ?) -IH -HL2 -T // -L1 -U1 -U /2 width=2/
+qed-.
+
+lemma lift_frsupp_trans: ∀L,U1,K,U2. ⦃L, U1⦄ ⧁+ ⦃L @@ K, U2⦄ →
+                         ∀T1,d,e. ⇧[d, e] T1 ≡ U1 →
+                         ∃T2. ⇧[d + |K|, e] T2 ≡ U2.
+#L #U1 @(fw_ind … L U1) -L -U1 /3 width=10 by lift_frsupp_trans_aux/
+qed-.

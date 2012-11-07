@@ -69,12 +69,16 @@ lemma false_lt_to_le: ∀x,y. (x < y → ⊥) → y ≤ x.
 #Hxy elim (H Hxy)
 qed-.
 
-lemma plus_xySz_x_false: ∀z,x,y. x + y + S z = x → ⊥.
-#z #x elim x -x normalize
-[ #y <plus_n_Sm #H destruct
-| /3 width=2/
+lemma le_plus_xySz_x_false: ∀y,z,x. x + y + S z ≤ x → ⊥.
+#y #z #x elim x -x
+[ #H lapply (le_n_O_to_eq … H) -H
+  <plus_n_Sm #H destruct
+| /3 width=1 by le_S_S_to_le/
 ]
 qed-.
+
+lemma plus_xySz_x_false: ∀z,x,y. x + y + S z = x → ⊥.
+/2 width=4 by le_plus_xySz_x_false/ qed-.
 
 (* iterators ****************************************************************)
 

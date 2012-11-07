@@ -158,3 +158,19 @@ lemma ldrop_trans_ge_comm: ∀d1,e1,e2,L1,L2,L.
                            ⇩[0, e2 + e1] L1 ≡ L2.
 #e1 #e1 #e2 >commutative_plus /2 width=5/
 qed.
+
+lemma ldrop_conf_div: ∀I1,L,K,V1,e1. ⇩[0, e1] L ≡ K. ⓑ{I1} V1 →
+                      ∀I2,V2,e2. ⇩[0, e2] L ≡ K. ⓑ{I2} V2 →
+                      ∧∧ e1 = e2 & I1 = I2 & V1 = V2.
+#I1 #L #K #V1 #e1 #HLK1 #I2 #V2 #e2 #HLK2
+elim (le_or_ge e1 e2) #He
+[ lapply (ldrop_conf_ge … HLK1 … HLK2 ?)
+| lapply (ldrop_conf_ge … HLK2 … HLK1 ?)
+] -HLK1 -HLK2 // #HK
+lapply (ldrop_fwd_O1_length … HK) #H
+elim (discr_minus_x_xy … H) -H
+[1,3: normalize <plus_n_Sm #H destruct ]
+#H >H in HK; #HK
+lapply (ldrop_inv_refl … HK) -HK #H destruct
+lapply (inv_eq_minus_O … H) -H /3 width=1/
+qed-.

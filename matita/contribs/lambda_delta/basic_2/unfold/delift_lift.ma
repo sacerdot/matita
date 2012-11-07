@@ -32,14 +32,14 @@ qed.
 
 fact sfr_delift_aux: ∀L,T,T1,d,e. d + e ≤ |L| → ≽ [d, e] L → T = T1 →
                      ∃T2. L ⊢ ▼*[d, e] T1 ≡ T2.
-#L #T @(cw_wf_ind … L T) -L -T #L #T #IH * * /2 width=2/
+#L #T @(fw_ind … L T) -L -T #L #T #IH * * /2 width=2/
 [ #i #d #e #Hde #HL #H destruct
   elim (lt_or_ge i d) #Hdi [ /3 width=2/ ]
   elim (lt_or_ge i (d+e)) #Hide [2: /3 width=2/ ]
   lapply (lt_to_le_to_lt … Hide Hde) #Hi
   elim (ldrop_O1_lt … Hi) -Hi #I #K #V1 #HLK
   lapply (sfr_inv_ldrop … HLK … HL ? ?) // #H destruct
-  lapply (ldrop_pair2_fwd_cw … HLK (#i)) #HKL
+  lapply (ldrop_pair2_fwd_fw … HLK (#i)) #HKL
   lapply (ldrop_fwd_ldrop2 … HLK) #HLK0
   lapply (ldrop_fwd_O1_length … HLK0) #H
   lapply (sfr_ldrop_trans_be_up … HLK0 … HL ? ?) -HLK0 -HL

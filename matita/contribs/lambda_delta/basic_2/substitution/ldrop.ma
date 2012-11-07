@@ -266,7 +266,7 @@ lemma ldrop_fwd_lw: ∀L1,L2,d,e. ⇩[d, e] L1 ≡ L2 → #{L2} ≤ #{L1}.
 ]
 qed-. 
 
-lemma ldrop_pair2_fwd_cw: ∀I,L,K,V,d,e. ⇩[d, e] L ≡ K. ⓑ{I} V →
+lemma ldrop_pair2_fwd_fw: ∀I,L,K,V,d,e. ⇩[d, e] L ≡ K. ⓑ{I} V →
                           ∀T. #{K, V} < #{L, T}.
 #I #L #K #V #d #e #H #T
 lapply (ldrop_fwd_lw … H) -H #H

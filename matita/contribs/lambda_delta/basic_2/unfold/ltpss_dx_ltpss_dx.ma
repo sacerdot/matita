@@ -46,7 +46,7 @@ qed.
 fact ltpss_dx_tpss_trans_eq_aux: ∀Y1,X2,L1,T2,U2,d,e.
                                  L1 ⊢ T2 ▶* [d, e] U2 → ∀L0. L0 ▶* [d, e] L1 →
                                  Y1 = L1 → X2 = T2 → L0 ⊢ T2 ▶* [d, e] U2.
-#Y1 #X2 @(cw_wf_ind … Y1 X2) -Y1 -X2 #Y1 #X2 #IH
+#Y1 #X2 @(fw_ind … Y1 X2) -Y1 -X2 #Y1 #X2 #IH
 #L1 #T2 #U2 #d #e #H @(tpss_ind_alt … H) -L1 -T2 -U2 -d -e
 [ //
 | #L1 #K1 #V1 #V2 #W2 #i #d #e #Hdi #Hide #HLK1 #HV12 #HVW2 #_ #L0 #HL01 #H1 #H2 destruct
@@ -82,7 +82,7 @@ lemma ltpss_dx_tps_trans_eq: ∀L0,L1,T2,U2,d,e. L0 ▶* [d, e] L1 →
 fact ltpss_dx_conf_aux: ∀K,K1,L1,d1,e1. K1 ▶* [d1, e1] L1 →
                         ∀K2,L2,d2,e2. K2 ▶* [d2, e2] L2 → K1 = K → K2 = K →
                         ∃∃L. L1 ▶* [d2, e2] L & L2 ▶* [d1, e1] L.
-#K @(lw_wf_ind … K) -K #K #IH #K1 #L1 #d1 #e1 * -K1 -L1 -d1 -e1
+#K @(lw_ind … K) -K #K #IH #K1 #L1 #d1 #e1 * -K1 -L1 -d1 -e1
 [ -IH /2 width=3/
 | -IH #K1 #I1 #V1 #K2 #L2 #d2 #e2 * -K2 -L2 -d2 -e2
   [ /2 width=3/

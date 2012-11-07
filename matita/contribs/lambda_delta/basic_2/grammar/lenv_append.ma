@@ -46,9 +46,9 @@ lemma append_inj_sn: ∀K1,K2,L1,L2. L1 @@ K1 = L2 @@ K2 → |K1| = |K2| →
   #K2 #I2 #V2 #L1 #L2 #_ <plus_n_Sm #H destruct
 | #K1 #I1 #V1 #IH * normalize
   [ #L1 #L2 #_ <plus_n_Sm #H destruct
-  | #K2 #I2 #V2 #L1 #L2 #H1 #H2 destruct (**) (* destruct does not simplify well *)
-    -H1 (**) (* destruct: the destucted equality is not erased *)
-    elim (IH … e0 ?) -IH /2 width=1/ -H2 #H1 #H2 destruct /2 width=1/
+  | #K2 #I2 #V2 #L1 #L2 #H1 #H2
+    elim (destruct_lpair_lpair … H1) -H1 #H1 #H3 #H4 destruct (**) (* destruct lemma needed *)
+    elim (IH … H1 ?) -IH -H1 // -H2 /2 width=1/
   ]
 ]
 qed-.
@@ -65,11 +65,21 @@ lemma append_inj_dx: ∀K1,K2,L1,L2. L1 @@ K1 = L2 @@ K2 → |L1| = |L2| →
   [ #L1 #L2 #H1 #H2 destruct
     normalize in H2; >append_length in H2; #H
     elim (plus_xySz_x_false … (sym_eq … H))
-  | #K2 #I2 #V2 #L1 #L2 #H1 #H2 destruct (**) (* destruct does not simplify well *)
-    -H1 (**) (* destruct: the destucted equality is not erased *)
-    elim (IH … e0 ?) -IH // -H2 #H1 #H2 destruct /2 width=1/
+  | #K2 #I2 #V2 #L1 #L2 #H1 #H2
+    elim (destruct_lpair_lpair … H1) -H1 #H1 #H3 #H4 destruct (**) (* destruct lemma needed *)
+    elim (IH … H1 ?) -IH -H1 // -H2 /2 width=1/
   ]
 ]
+qed-.
+
+lemma append_inv_refl_dx: ∀L,K. L @@ K = L → K = ⋆.
+#L #K #H
+elim (append_inj_dx … (⋆) … H ?) //
+qed-.
+
+lemma append_inv_pair_dx: ∀I,L,K,V. L @@ K = L.ⓑ{I}V → K = ⋆.ⓑ{I}V.
+#I #L #K #V #H
+elim (append_inj_dx … (⋆.ⓑ{I}V) … H ?) //
 qed-.
 
 lemma length_inv_pos_dx_append: ∀d,L. |L| = d + 1 →
@@ -78,7 +88,7 @@ lemma length_inv_pos_dx_append: ∀d,L. |L| = d + 1 →
 [ #L #H 
   elim (length_inv_pos_dx … H) -H #I #K #V #H
   >(length_inv_zero_dx … H) -H #H destruct
-  @ex2_3_intro [4: /2 width=2/ |5: // |1,2,3: skip ] (* /3/ does not work *)
+  @ex2_3_intro [4: /2 width=2/ |5: // |1,2,3: skip ] (**) (* /3/ does not work *)
 | #d #IHd #L #H
   elim (length_inv_pos_dx … H) -H #I #K #V #H
   elim (IHd … H) -IHd -H #I0 #K0 #V0 #H1 #H2 #H3 destruct

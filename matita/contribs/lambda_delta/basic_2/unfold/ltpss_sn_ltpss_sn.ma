@@ -23,7 +23,7 @@ include "basic_2/unfold/ltpss_sn_tpss.ma".
 fact ltpss_sn_tpss_trans_eq_aux: ∀Y1,X2,L1,T2,U2,d,e.
                                  L1 ⊢ T2 ▶* [d, e] U2 → ∀L0. L0 ⊢ ▶* [d, e] L1 →
                                  Y1 = L1 → X2 = T2 → L0 ⊢ T2 ▶* [d, e] U2.
-#Y1 #X2 @(cw_wf_ind … Y1 X2) -Y1 -X2 #Y1 #X2 #IH
+#Y1 #X2 @(fw_ind … Y1 X2) -Y1 -X2 #Y1 #X2 #IH
 #L1 #T2 #U2 #d #e #H @(tpss_ind_alt … H) -L1 -T2 -U2 -d -e
 [ //
 | #L1 #K1 #V1 #V2 #W2 #i #d #e #Hdi #Hide #HLK1 #HV12 #HVW2 #_ #L0 #HL01 #H1 #H2 destruct

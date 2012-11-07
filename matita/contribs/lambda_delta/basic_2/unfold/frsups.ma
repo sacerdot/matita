@@ -1,0 +1,134 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/substitution/frsup.ma".
+include "basic_2/unfold/frsupp.ma".
+
+(* STAR-ITERATED RESTRICTED SUPCLOSURE **************************************)
+
+definition frsups: bi_relation lenv term ≝ bi_star … frsup.
+
+interpretation "star-iterated restricted structural predecessor (closure)"
+   'RestSupTermStar L1 T1 L2 T2 = (frsups L1 T1 L2 T2).
+
+(* Basic eliminators ********************************************************)
+
+lemma frsups_ind: ∀L1,T1. ∀R:relation2 lenv term. R L1 T1 →
+                  (∀L,L2,T,T2. ⦃L1, T1⦄ ⧁* ⦃L, T⦄ → ⦃L, T⦄ ⧁ ⦃L2, T2⦄ → R L T → R L2 T2) →
+                  ∀L2,T2. ⦃L1, T1⦄ ⧁* ⦃L2, T2⦄ → R L2 T2.
+#L1 #T1 #R #IH1 #IH2 #L2 #T2 #H
+@(bi_star_ind … IH1 IH2 ? ? H)
+qed-.
+
+lemma frsups_ind_dx: ∀L2,T2. ∀R:relation2 lenv term. R L2 T2 →
+                     (∀L1,L,T1,T. ⦃L1, T1⦄ ⧁ ⦃L, T⦄ → ⦃L, T⦄ ⧁* ⦃L2, T2⦄ → R L T → R L1 T1) →
+                     ∀L1,T1. ⦃L1, T1⦄ ⧁* ⦃L2, T2⦄ → R L1 T1.
+#L2 #T2 #R #IH1 #IH2 #L1 #T1 #H
+@(bi_star_ind_dx … IH1 IH2 ? ? H)
+qed-.
+
+(* Basic properties *********************************************************)
+
+lemma frsups_refl: bi_reflexive … frsups.
+/2 width=1/ qed.
+
+lemma frsupp_frsups: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁+ ⦃L2, T2⦄ → ⦃L1, T1⦄ ⧁* ⦃L2, T2⦄.
+/2 width=1/ qed.
+
+lemma frsup_frsups: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁ ⦃L2, T2⦄ → ⦃L1, T1⦄ ⧁* ⦃L2, T2⦄.
+/2 width=1/ qed.
+
+lemma frsups_strap1: ∀L1,L,L2,T1,T,T2. ⦃L1, T1⦄ ⧁* ⦃L, T⦄ → ⦃L, T⦄ ⧁ ⦃L2, T2⦄ →
+                     ⦃L1, T1⦄ ⧁* ⦃L2, T2⦄.
+/2 width=4/ qed.
+
+lemma frsups_strap2: ∀L1,L,L2,T1,T,T2. ⦃L1, T1⦄ ⧁ ⦃L, T⦄ → ⦃L, T⦄ ⧁* ⦃L2, T2⦄ →
+                     ⦃L1, T1⦄ ⧁* ⦃L2, T2⦄.
+/2 width=4/ qed.
+
+lemma frsups_frsupp_frsupp: ∀L1,L,L2,T1,T,T2. ⦃L1, T1⦄ ⧁* ⦃L, T⦄ →
+                            ⦃L, T⦄ ⧁+ ⦃L2, T2⦄ → ⦃L1, T1⦄ ⧁+ ⦃L2, T2⦄.
+/2 width=4/ qed.
+
+lemma frsupp_frsups_frsupp: ∀L1,L,L2,T1,T,T2. ⦃L1, T1⦄ ⧁+ ⦃L, T⦄ →
+                            ⦃L, T⦄ ⧁* ⦃L2, T2⦄ → ⦃L1, T1⦄ ⧁+ ⦃L2, T2⦄.
+/2 width=4/ qed.
+
+(* Basic inversion lemmas ***************************************************)
+
+lemma frsups_inv_all: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁* ⦃L2, T2⦄ →
+                      (L1 = L2 ∧ T1 = T2) ∨ ⦃L1, T1⦄ ⧁+ ⦃L2, T2⦄.
+#L1 #L2 #T1 #T2 * /2 width=1/
+qed-.
+
+(* Basic forward lemmas *****************************************************)
+
+lemma frsups_fwd_fw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁* ⦃L2, T2⦄ → #{L2, T2} ≤ #{L1, T1}.
+#L1 #L2 #T1 #T2 #H elim (frsups_inv_all … H) -H [ * // ]
+/3 width=1 by frsupp_fwd_fw, lt_to_le/
+qed-.
+
+lemma frsups_fwd_lw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁* ⦃L2, T2⦄ → #{L1} ≤ #{L2}.
+#L1 #L2 #T1 #T2 #H elim (frsups_inv_all … H) -H [ * // ]
+/2 width=3 by frsupp_fwd_lw/
+qed-.
+
+lemma frsups_fwd_tw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁* ⦃L2, T2⦄ → #{T2} ≤ #{T1}.
+#L1 #L2 #T1 #T2 #H elim (frsups_inv_all … H) -H [ * // ]
+/3 width=3 by frsupp_fwd_tw, lt_to_le/
+qed-.
+
+lemma frsups_fwd_append: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁* ⦃L2, T2⦄ → ∃L. L2 = L1 @@ L.
+#L1 #L2 #T1 #T2 #H elim (frsups_inv_all … H) -H
+[ * #H1 #H2 destruct
+  @(ex_intro … (⋆)) //
+| /2 width=3 by frsupp_fwd_append/
+qed-.
+
+(* Advanced forward lemmas ***************************************************)
+
+lemma lift_frsups_trans: ∀T1,U1,d,e. ⇧[d, e] T1 ≡ U1 →
+                         ∀L,K,U2. ⦃L, U1⦄ ⧁* ⦃L @@ K, U2⦄ →
+                         ∃T2. ⇧[d + |K|, e] T2 ≡ U2.
+#T1 #U1 #d #e #HTU1 #L #K #U2 #H elim (frsups_inv_all … H) -H
+[ * #H1 #H2 destruct
+  >(append_inv_refl_dx … (sym_eq … H1)) -H1 normalize /2 width=2/
+| /2 width=5 by lift_frsupp_trans/
+]
+qed-.
+
+(* Advanced inversion lemmas for frsupp **************************************)
+
+lemma frsupp_inv_atom1_frsups: ∀J,L1,L2,T2. ⦃L1, ⓪{J}⦄ ⧁+ ⦃L2, T2⦄ → ⊥.
+#J #L1 #L2 #T2 #H @(frsupp_ind … H) -L2 -T2 //
+#L2 #T2 #H elim (frsup_inv_atom1 … H)
+qed-.
+
+lemma frsupp_inv_bind1_frsups: ∀b,J,L1,L2,W,U,T2. ⦃L1, ⓑ{b,J}W.U⦄ ⧁+ ⦃L2, T2⦄ →
+                               ⦃L1, W⦄ ⧁* ⦃L2, T2⦄ ∨ ⦃L1.ⓑ{J}W, U⦄ ⧁* ⦃L2, T2⦄.
+#b #J #L1 #L2 #W #U #T2 #H @(frsupp_ind … H) -L2 -T2
+[ #L2 #T2 #H
+  elim (frsup_inv_bind1 … H) -H * #H1 #H2 destruct /2 width=1/
+| #L #T #L2 #T2 #_ #HT2 * /3 width=4/
+]
+qed-.
+
+lemma frsupp_inv_flat1_frsups: ∀J,L1,L2,W,U,T2. ⦃L1, ⓕ{J}W.U⦄ ⧁+ ⦃L2, T2⦄ →
+                               ⦃L1, W⦄ ⧁* ⦃L2, T2⦄ ∨ ⦃L1, U⦄ ⧁* ⦃L2, T2⦄.
+#J #L1 #L2 #W #U #T2 #H @(frsupp_ind … H) -L2 -T2
+[ #L2 #T2 #H
+  elim (frsup_inv_flat1 … H) -H #H1 * #H2 destruct /2 width=1/
+| #L #T #L2 #T2 #_ #HT2 * /3 width=4/
+]
+qed-.
