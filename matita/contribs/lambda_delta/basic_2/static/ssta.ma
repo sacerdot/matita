@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/substitution/ldrop.ma".
+include "basic_2/unfold/frsups.ma".
 include "basic_2/static/sd.ma".
 
 (* STRATIFIED STATIC TYPE ASSIGNMENT ON TERMS *******************************)
@@ -27,8 +28,7 @@ inductive ssta (h:sh) (g:sd h): nat → lenv → relation term ≝
              ssta h g l L (ⓑ{a,I}V.T) (ⓑ{a,I}V.U)
 | ssta_appl: ∀L,V,T,U,l. ssta h g l L T U →
              ssta h g l L (ⓐV.T) (ⓐV.U)
-| ssta_cast: ∀L,V,W,T,U,l. ssta h g (l - 1) L V W → ssta h g l L T U →
-                           ssta h g l L (ⓝV. T) (ⓝW. U)
+| ssta_cast: ∀L,W,T,U,l. ssta h g l L T U → ssta h g l L (ⓝW. T) U
 .
 
 interpretation "stratified static type assignment (term)"
@@ -44,7 +44,7 @@ fact ssta_inv_sort1_aux: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g, l] U → ∀k0.
 | #L #K #W #V #U #i #l #_ #_ #_ #k0 #H destruct
 | #a #I #L #V #T #U #l #_ #k0 #H destruct
 | #L #V #T #U #l #_ #k0 #H destruct
-| #L #V #W #T #U #l #_ #_ #k0 #H destruct
+| #L #W #T #U #l #_ #k0 #H destruct
 qed.
 
 (* Basic_1: was just: sty0_gen_sort *)
@@ -65,7 +65,7 @@ fact ssta_inv_lref1_aux: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g, l] U → ∀j. 
 | #L #K #W #V #U #i #l #HLK #HWV #HWU #j #H destruct /3 width=8/
 | #a #I #L #V #T #U #l #_ #j #H destruct
 | #L #V #T #U #l #_ #j #H destruct
-| #L #V #W #T #U #l #_ #_ #j #H destruct
+| #L #W #T #U #l #_ #j #H destruct
 ]
 qed.
 
@@ -88,7 +88,7 @@ fact ssta_inv_bind1_aux: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g, l] U →
 | #L #K #W #V #U #i #l #_ #_ #_ #a #I #X #Y #H destruct
 | #b #J #L #V #T #U #l #HTU #a #I #X #Y #H destruct /2 width=3/
 | #L #V #T #U #l #_ #a #I #X #Y #H destruct
-| #L #V #W #T #U #l #_ #_ #a #I #X #Y #H destruct
+| #L #W #T #U #l #_ #a #I #X #Y #H destruct
 ]
 qed.
 
@@ -105,7 +105,7 @@ fact ssta_inv_appl1_aux: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g, l] U → ∀X,Y
 | #L #K #W #V #U #i #l #_ #_ #_ #X #Y #H destruct
 | #a #I #L #V #T #U #l #_ #X #Y #H destruct
 | #L #V #T #U #l #HTU #X #Y #H destruct /2 width=3/
-| #L #V #W #T #U #l #_ #_ #X #Y #H destruct
+| #L #W #T #U #l #_ #X #Y #H destruct
 ]
 qed.
 
@@ -114,31 +114,53 @@ lemma ssta_inv_appl1: ∀h,g,L,Y,X,U,l. ⦃h, L⦄ ⊢ ⓐY.X •[g, l] U →
                       ∃∃Z. ⦃h, L⦄ ⊢ X •[g, l] Z & U = ⓐY.Z.
 /2 width=3/ qed-.
 
-fact ssta_inv_cast1_aux: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g, l] U → ∀X,Y. T = ⓝY.X →
-                         ∃∃Z1,Z2. ⦃h, L⦄ ⊢ Y •[g, l-1] Z1 & ⦃h, L⦄ ⊢ X •[g, l] Z2 &
-                                  U = ⓝZ1.Z2.
+fact ssta_inv_cast1_aux: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g, l] U →
+                         ∀X,Y. T = ⓝY.X → ⦃h, L⦄ ⊢ X •[g, l] U.
 #h #g #L #T #U #l * -L -T -U -l
 [ #L #k #l #_ #X #Y #H destruct
 | #L #K #V #W #U #l #i #_ #_ #_ #X #Y #H destruct
 | #L #K #W #V #U #l #i #_ #_ #_ #X #Y #H destruct
 | #a #I #L #V #T #U #l #_ #X #Y #H destruct
 | #L #V #T #U #l #_ #X #Y #H destruct
-| #L #V #W #T #U #l #HVW #HTU #X #Y #H destruct /2 width=5/
+| #L #W #T #U #l #HTU #X #Y #H destruct //
 ]
 qed.
 
 (* Basic_1: was just: sty0_gen_cast *)
 lemma ssta_inv_cast1: ∀h,g,L,X,Y,U,l. ⦃h, L⦄ ⊢ ⓝY.X •[g, l] U →
-                      ∃∃Z1,Z2. ⦃h, L⦄ ⊢ Y •[g, l-1] Z1 & ⦃h, L⦄ ⊢ X •[g, l] Z2 &
-                               U = ⓝZ1.Z2.
+                      ⦃h, L⦄ ⊢ X •[g, l] U.
 /2 width=4/ qed-.
 
 (* Advanced inversion lemmas ************************************************)
 
+lemma ssta_inv_frsupp: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g, l] U → ⦃L, U⦄ ⧁+ ⦃L, T⦄ → ⊥.
+#h #g #L #T #U #l #H elim H -L -T -U -l
+[ #L #k #l #_ #H
+  elim (frsupp_inv_atom1_frsups … H)
+| #L #K #V #W #U #i #l #_ #_ #HWU #_ #H
+  elim (lift_frsupp_trans … (⋆) … H … HWU) -U #X #H
+  elim (lift_inv_lref2_be … H ? ?) -H //
+| #L #K #W #V #U #i #l #_ #_ #HWU #_ #H
+  elim (lift_frsupp_trans … (⋆) … H … HWU) -U #X #H
+  elim (lift_inv_lref2_be … H ? ?) -H //
+| #a #I #L #V #T #U #l #_ #IHTU #H
+  elim (frsupp_inv_bind1_frsups … H) -H #H [2: /4 width=4/ ] -IHTU
+  lapply (frsups_fwd_fw … H) -H normalize
+  <associative_plus <associative_plus #H
+  elim (le_plus_xySz_x_false … H)
+| #L #V #T #U #l #_ #IHTU #H
+  elim (frsupp_inv_flat1_frsups … H) -H #H [2: /4 width=4/ ] -IHTU
+  lapply (frsups_fwd_fw … H) -H normalize
+  <associative_plus <associative_plus #H
+  elim (le_plus_xySz_x_false … H)
+| /3 width=4/
+]
+qed-.
+
 fact ssta_inv_refl_aux: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g, l] U → T = U → ⊥.
 #h #g #L #T #U #l #H elim H -L -T -U -l
 [ #L #k #l #_ #H
-  lapply (next_lt h k) destruct -H -e0 (**) (* these premises are not erased *)
+  lapply (next_lt h k) destruct -H -e0 (**) (* destruct: these premises are not erased *)
   <e1 -e1 #H elim (lt_refl_false … H)
 | #L #K #V #W #U #i #l #_ #_ #HWU #_ #H destruct
   elim (lift_inv_lref2_be … HWU ? ?) -HWU //
@@ -146,9 +168,17 @@ fact ssta_inv_refl_aux: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g, l] U → T = U �
   elim (lift_inv_lref2_be … HWU ? ?) -HWU //
 | #a #I #L #V #T #U #l #_ #IHTU #H destruct /2 width=1/
 | #L #V #T #U #l #_ #IHTU #H destruct /2 width=1/
-| #L #V #W #T #U #l #_ #_ #_ #IHTU #H destruct /2 width=1/
+| #L #W #T #U #l #HTU #_ #H destruct
+  elim (ssta_inv_frsupp … HTU ?) -HTU /2 width=1/
 ]
-qed.
+qed-.
 
-lemma ssta_inv_refl: ∀h,g,L,T,l. ⦃h, L⦄ ⊢ T •[g, l] T → ⊥.
-/2 width=8/ qed-.
+lemma ssta_inv_refl: ∀h,g,T,L,l. ⦃h, L⦄ ⊢ T •[g, l] T → ⊥.
+/2 width=8 by ssta_inv_refl_aux/ qed-.
+
+lemma ssta_inv_frsups: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g, l] U → ⦃L, U⦄ ⧁* ⦃L, T⦄ → ⊥.
+#h #g #L #T #U #L #HTU #H elim (frsups_inv_all … H) -H
+[ * #_ #H destruct /2 width=6 by ssta_inv_refl/
+| /2 width=8 by ssta_inv_frsupp/
+]
+qed-.

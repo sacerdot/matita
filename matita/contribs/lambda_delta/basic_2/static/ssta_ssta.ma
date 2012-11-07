@@ -42,9 +42,8 @@ theorem ssta_mono: ∀h,g,L,T,U1,l1. ⦃h, L⦄ ⊢ T •[g, l1] U1 →
 | #L #V #T #U1 #l1 #_ #IHTU1 #X #l2 #H
   elim (ssta_inv_appl1 … H) -H #U2 #HTU2 #H destruct
   elim (IHTU1 … HTU2) -T /3 width=1/
-| #L #V #W1 #T #U1 #l1 #_ #_ #IHVW1 #IHTU1 #U2 #l2 #H
-  elim (ssta_inv_cast1 … H) -H #W2 #T2 #HVW2 #HTU2 #H destruct
-  elim (IHVW1 … HVW2) -V
+| #L #W1 #T #U1 #l1 #_ #IHTU1 #U2 #l2 #H
+  lapply (ssta_inv_cast1 … H) -H #HTU2
   elim (IHTU1 … HTU2) -T /2 width=1/
 ]
 qed-.

@@ -54,9 +54,8 @@ lemma ssta_lift: ∀h,g,L1,T1,U1,l. ⦃h, L1⦄ ⊢ T1 •[g, l] U1 →
   elim (lift_inv_flat1 … H1) -H1 #V2 #T2 #HV12 #HT12 #H destruct
   elim (lift_inv_flat1 … H2) -H2 #X #U2 #H1 #HU12 #H2 destruct
   lapply (lift_mono … H1 … HV12) -H1 #H destruct /4 width=5/
-| #L1 #V1 #W1 #T1 #U1 #l #_ #_ #IHVW1 #IHTU1 #L2 #d #e #HL21 #X1 #H1 #X2 #H2
-  elim (lift_inv_flat1 … H1) -H1 #V2 #W2 #HV12 #HW12 #H destruct
-  elim (lift_inv_flat1 … H2) -H2 #T2 #U2 #HT12 #HU12 #H destruct /3 width=5/
+| #L1 #W1 #T1 #U1 #l #_ #IHTU1 #L2 #d #e #HL21 #X #H #U2 #HU12
+  elim (lift_inv_flat1 … H) -H #W2 #T2 #HW12 #HT12 #H destruct /3 width=5/
 ]
 qed.
 
@@ -76,7 +75,7 @@ lemma ssta_inv_lift1: ∀h,g,L2,T2,U2,l. ⦃h, L2⦄ ⊢ T2 •[g, l] U2 →
     elim (le_inv_plus_l … Hid) -Hid #Hdie #ei
     elim (lift_split … HW2 d (i-e+1) ? ? ?) -HW2 // [3: /2 width=1/ ]
     [ #W0 #HW20 <le_plus_minus_comm // >minus_minus_m_m /2 width=1/ /3 width=6/
-    | <le_plus_minus_comm // /2 width=1/
+    | <le_plus_minus_comm //
     ]
   ]
 | #L2 #K2 #W2 #V2 #W #i #l #HLK2 #HWV2 #HW2 #IHWV2 #L1 #d #e #HL21 #X #H
@@ -88,7 +87,7 @@ lemma ssta_inv_lift1: ∀h,g,L2,T2,U2,l. ⦃h, L2⦄ ⊢ T2 •[g, l] U2 →
     elim (le_inv_plus_l … Hid) -Hid #Hdie #ei
     elim (lift_split … HW2 d (i-e+1) ? ? ?) -HW2 // [3: /2 width=1/ ]
     [ #W0 #HW20 <le_plus_minus_comm // >minus_minus_m_m /2 width=1/ /3 width=6/
-    | <le_plus_minus_comm // /2 width=1/
+    | <le_plus_minus_comm //
     ]
   ]
 | #a #I #L2 #V2 #T2 #U2 #l #_ #IHTU2 #L1 #d #e #HL21 #X #H
@@ -97,10 +96,9 @@ lemma ssta_inv_lift1: ∀h,g,L2,T2,U2,l. ⦃h, L2⦄ ⊢ T2 •[g, l] U2 →
 | #L2 #V2 #T2 #U2 #l #_ #IHTU2 #L1 #d #e #HL21 #X #H
   elim (lift_inv_flat2 … H) -H #V1 #T1 #HV12 #HT12 #H destruct
   elim (IHTU2 … HL21 … HT12) -L2 -HT12 /3 width=5/
-| #L2 #V2 #W2 #T2 #U2 #l #_ #_ #IHVW2 #IHTU2 #L1 #d #e #HL21 #X #H
-  elim (lift_inv_flat2 … H) -H #V1 #T1 #HV12 #HT12 #H destruct
-  elim (IHVW2 … HL21 … HV12) -IHVW2
-  elim (IHTU2 … HL21 … HT12) -L2 -HT12 /3 width=5/
+| #L2 #W2 #T2 #U2 #l #_ #IHTU2 #L1 #d #e #HL21 #X #H
+  elim (lift_inv_flat2 … H) -H #W1 #T1 #HW12 #HT12 #H destruct
+  elim (IHTU2 … HL21 … HT12) -L2 -HT12 /3 width=3/
 ]
 qed.
 
@@ -119,6 +117,6 @@ lemma ssta_fwd_correct: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g, l] U →
   elim (lift_total V 0 (i+1)) /3 width=10/
 | #a #I #L #V #T #U #l #_ * /3 width=2/
 | #L #V #T #U #l #_ * #T0 #HUT0 /3 width=2/
-| #L #V #W #T #U #l #_ #_ * #W0 #HW0  * /3 width=2/
+| #L #W #T #U #l #_ * /2 width=2/
 ]
 qed-.

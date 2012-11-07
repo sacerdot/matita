@@ -96,10 +96,9 @@ lemma ssta_ltpss_dx_tpss_conf: ∀h,g,L1,T1,U1,l. ⦃h, L1⦄ ⊢ T1 •[g, l] U
 | #L1 #V1 #T1 #U1 #l #_ #IHTU1 #L2 #d #e #HL12 #X #H
   elim (tpss_inv_flat1 … H) -H #V2 #T2 #HV12 #HT12 #H destruct
   elim (IHTU1 … HT12) -IHTU1 -HT12 // -HL12 /3 width=5/
-| #L1 #V1 #W1 #T1 #U1 #l #_ #_ #IHVW1 #IHTU1 #L2 #d #e #HL12 #X #H
-  elim (tpss_inv_flat1 … H) -H #V2 #T2 #HV12 #HT12 #H destruct
-  elim (IHVW1 … HV12) -IHVW1 -HV12 //
-  elim (IHTU1 … HT12) -IHTU1 -HT12 // -HL12 /3 width=5/
+| #L1 #W1 #T1 #U1 #l #_ #IHTU1 #L2 #d #e #HL12 #X #H
+  elim (tpss_inv_flat1 … H) -H #W2 #T2 #HW12 #HT12 #H destruct
+  elim (IHTU1 … HT12) -IHTU1 -HT12 // -HL12 /3 width=3/
 ]
 qed.
 

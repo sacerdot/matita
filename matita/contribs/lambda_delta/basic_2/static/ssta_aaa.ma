@@ -35,7 +35,7 @@ lemma ssta_aaa: ∀h,g,L,T,A. L ⊢ T ⁝ A → ∀U,l. ⦃h, L⦄ ⊢ T •[g, 
 | #L #V #T #B #A #HV #_ #_ #IHT #X #l #H
   elim (ssta_inv_appl1 … H) -H #U #HTU #H destruct /3 width=3/
 | #L #V #T #A #_ #_ #IHV #IHT #X #l #H
-  elim (ssta_inv_cast1 … H) -H #W #U #HVW #HTU #H destruct /3 width=2/
+  lapply (ssta_inv_cast1 … H) -H /2 width=2/
 ]
 qed.
 
