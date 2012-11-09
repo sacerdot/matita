@@ -3,9 +3,11 @@ XOA_DIR  = ../../../components/binaries/xoa
 XOA      = xoa.native
 DEP_DIR  = ../../../components/binaries/matitadep
 DEP      = matitadep.native
+MAC_DIR  = ../../../components/binaries/mac
+MAC      = mac.native
 
-CONF     = ground_2/xoa.conf.xml
-TARGETS  = ground_2/xoa_natation.ma ground_2/xoa.ma
+XOA_CONF    = ground_2/xoa.conf.xml
+XOA_TARGETS = ground_2/xoa_natation.ma ground_2/xoa.ma
 
 ORIG     = . ./orig.sh 
 
@@ -19,9 +21,9 @@ all:
 
 xoa: $(TARGETS)
 
-$(TARGETS): $(CONF)
-	@echo "  EXEC $(XOA) $(CONF)"
-	$(H)MATITA_RT_BASE_DIR=../.. $(XOA_DIR)/$(XOA) $(CONF)
+$(XOA_TARGETS): $(XOA_CONF)
+	@echo "  EXEC $(XOA) $(XOA_CONF)"
+	$(H)MATITA_RT_BASE_DIR=../.. $(XOA_DIR)/$(XOA) $(XOA_CONF)
 
 # orig #######################################################################
 
@@ -43,39 +45,39 @@ stats: $(PACKAGES:%=%.stats)
 
 %.stats: MAS = $(shell find $* -name "*.ma")
 
-%.stats: CHARS = $(shell cat $(MAS) | wc -c)
+%.stats: CHARS = $(shell $(MAC_DIR)/$(MAC) $(MAS))
 
 %.stats:
 	@printf '\x1B[1;40;37m'
-	@printf '%-15s %-43s' 'Statistics for:' $*	
+	@printf '%-15s %-40s' 'Statistics for:' $*	
 	@printf '\x1B[0m\n'	
 	@printf '\x1B[1;40;35m'
 	@printf '%-8s %6i' Chars $(CHARS)
-	@printf '   %-8s %5i' Lines `cat $(MAS) | wc -l`
-	@printf '   %-6s %3i' Pages `echo $$(($(CHARS) / 5120))`
-	@printf '   %-11s' ''
+	@printf '   %-8s %3i' Pages `echo $$(($(CHARS) / 5120))`
+	@printf '   %-23s' ''
 	@printf '\x1B[0m\n'
 	@printf '\x1B[1;40;36m'
 	@printf '%-8s %6i' Sources `ls $(MAS) | wc -l`
-	@printf '   %-41s' ''
+	@printf '   %-38s' ''
 #	@printf '   %-8s %5i' Objs `ls *.vo | wc -l`
 #	@printf '   %-6s %3i' Files `ls *.v | wc -l`
 	@printf '\x1B[0m\n'	
 	@printf '\x1B[1;40;32m'
 	@printf '%-8s %6i' Theorems `grep "theorem " $(MAS) | wc -l`
-	@printf '   %-8s %5i' Lemmas `grep "lemma " $(MAS) | wc -l`
-	@printf '   %-6s %3i' Facts `grep "fact " $(MAS) | wc -l`
+	@printf '   %-8s %3i' Lemmas `grep "lemma " $(MAS) | wc -l`
+	@printf '   %-5s %3i' Facts `grep "fact " $(MAS) | wc -l`
 	@printf '   %-6s %4i' Proofs `grep qed $(MAS) | wc -l`
 	@printf '\x1B[0m\n'	
 	@printf '\x1B[1;40;33m'
-	@printf '%-8s %6i' Defs `grep "definition\|let rec\|inductive\|record" $(MAS) | wc -l` 
-	@printf '   %-41s' ''
+	@printf '%-8s %6i' Declared `grep "inductive \|record " $(MAS) | wc -l` 
+	@printf '   %-8s %3i' Defined `grep "definition \|let rec " $(MAS) | wc -l`	
+	@printf '   %-23s' ''
 #	@printf '   %-8s %5i' Local `grep "Local" *.v | wc -l`
 	@printf '\x1B[0m\n'
 	@printf '\x1B[1;40;31m'
 	@printf '%-8s %6i' Axioms `grep axiom $(MAS) | wc -l`
-	@printf '   %-8s %5i' Comments `grep "(\*[^*:]*$$" $(MAS) | wc -l`
-	@printf '   %-6s %3i' Marks `grep "(\*\*)" $(MAS) | wc -l`
+	@printf '   %-8s %3i' Comments `grep "(\*[^*:]*$$" $(MAS) | wc -l`
+	@printf '   %-5s %3i' Marks `grep "(\*\*)" $(MAS) | wc -l`
 	@printf '   %-11s' ''
 	@printf '\x1B[0m\n'
 
@@ -87,7 +89,7 @@ define SUMMARY_TEMPLATE
   TBLS     += $$(TBL_$(1))
 
   $$(TBL_$(1)): V1 := $$(shell ls $$(MAS_$(1)) | wc -l)
-  $$(TBL_$(1)): V2 := $$(shell cat $$(MAS_$(1)) | wc -c)
+  $$(TBL_$(1)): V2 := $$(shell $$(MAC_DIR)/$$(MAC) $$(MAS_$(1)))
   $$(TBL_$(1)): C1 := $$(shell grep "inductive \|record " $$(MAS_$(1)) | wc -l)
   $$(TBL_$(1)): C2 := $$(shell grep "definition \|let rec " $$(MAS_$(1)) | wc -l)
   $$(TBL_$(1)): C3 := $$(shell grep "inductive \|record \|definition \|let rec " $$(MAS_$(1)) | wc -l)
