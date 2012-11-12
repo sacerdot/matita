@@ -16,6 +16,12 @@ record Vector (A:Type[0]) (n:nat): Type[0] ≝
   len: length ? vec = n
 }.
 
+lemma Vector_eq : ∀A,n,v1,v2.
+  vec A n v1 = vec A n v2 → v1 = v2.
+#A #n * #l1 #H1 * #l2 #H2 #eql1l2 generalize in match H1; 
+-H1 >eql1l2 //
+qed.
+
 definition vec_tail ≝ λA.λn.λv:Vector A n.
 mk_Vector A (pred n) (tail A v) ?.
 >length_tail >(len A n v) //
@@ -32,7 +38,36 @@ mk_Vector A (n1+n2) (v1@v2).
 definition vec_map ≝ λA,B.λf:A→B.λn.λv:Vector A n.
 mk_Vector B n (map ?? f v) 
   (trans_eq … (length_map …) (len A n v)).
+
+(* mapi: map with index to move in list.ma *)
+let rec mapi (A,B:Type[0]) (f: nat → A → B) (l:list A) (i:nat) on l: list B ≝
+ match l with 
+ [ nil ⇒ nil ? 
+ | cons x tl ⇒ f i x :: (mapi A B f tl (S i))].
  
+lemma length_mapi: ∀A,B,l.∀f:nat→A→B.∀i. 
+  |mapi ?? f l i| = |l|.
+#A #B #l #f elim l // #a #tl #Hind normalize //
+qed.
+
+let rec make_listi (A:Type[0]) (a:nat→A) (n,i:nat) on n : list A ≝
+match n with
+[ O ⇒ [ ]
+| S m ⇒ a i::(make_listi A a m (S i))
+].
+
+lemma length_make_listi: ∀A,a,n,i. 
+  |make_listi A a n i| = n.
+#A #a #n elim n // #m #Hind normalize //
+qed.
+
+definition vec_mapi ≝ λA,B.λf:nat→A→B.λn.λv:Vector A n.λi.
+mk_Vector B n (mapi ?? f v i) 
+  (trans_eq … (length_mapi …) (len A n v)).
+  
+definition make_veci ≝ λA.λa:nat→A.λn,i.
+mk_Vector A n (make_listi A a n i) (length_make_listi A a n i).
+
 let rec pmap A B C (f:A→B→C) l1 l2 on l1 ≝
    match l1 with
    [ nil ⇒ nil C
