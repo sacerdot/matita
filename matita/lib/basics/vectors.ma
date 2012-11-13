@@ -41,12 +41,43 @@ lemma vec_expand: ∀A,n,v.
 #A #n * #l cases l [normalize in ⊢ (%→?); #H destruct  |//]
 qed.
 
+lemma vector_nil: ∀A.∀v:Vector A 0. 
+  v = mk_Vector A 0 (nil A) (refl ??).
+#A * * // #a #tl normalize #H destruct
+qed. 
+
 definition vec_append ≝ λA.λn1,n2.λv1:Vector A n1.λv2: Vector A n2.
 mk_Vector A (n1+n2) (v1@v2).
 
 definition vec_map ≝ λA,B.λf:A→B.λn.λv:Vector A n.
 mk_Vector B n (map ?? f v) 
   (trans_eq … (length_map …) (len A n v)).
+  
+lemma nth_default : ∀A,i,n.∀v:Vector A n.∀d1,d2. i < n →
+  nth i ? v d1 = nth i ? v d2.
+#A #i elim i -i
+  [#n #v #d1 #d2 #ltOn lapply v @(lt_O_n_elim … ltOn)
+   -v #m #v >(vec_expand … v) //
+  |#i #Hind #n #v #d1 #d2 #ltn lapply ltn lapply v @(lt_O_n_elim … (ltn_to_ltO … ltn))
+   -v -ltn #m #v #ltim >(vec_expand … v) @(Hind m (vec_tail A (S m) v) d1 d2 ?) 
+   @le_S_S_to_le //
+  ]
+qed.
+  
+lemma eq_vec: ∀A,n.∀v1,v2:Vector A n.∀d. 
+  (∀i. i < n → nth i A v1 d = nth i A v2 d) → v1 = v2.
+#A #n elim n -n 
+  [#v1 #v2 #H >(vector_nil A v1) >(vector_nil A v2) //
+  |#n #Hind #v1 #v2 #d #H >(vec_expand … v1) >(vec_expand … v2)
+   >(Hind (vec_tail … v1) (vec_tail … v2) d)
+    [cut (vec_hd A n v1 = vec_hd A n v2) //
+     cut (∀i,d1,d2. i < S n → nth i A v1 d1 = nth i A v2 d2)
+       [#i #d1 #d2 #Hi >(nth_default ????? d) // >(nth_default ???? d2 d) // @H //]
+     -H #H @(H 0) //  
+    |#i #ltin @(H (S i)) @le_S_S //
+    ]
+  ]
+qed.
 
 (* mapi: map with index to move in list.ma *)
 let rec change_vec (A:Type[0]) (n:nat) on n ≝
@@ -82,41 +113,19 @@ lemma nth_change_vec_neq : ∀A,j,i,n,v,a,d. i ≠ j →
   ]
 qed.
 
+lemma change_vec_same : ∀sig,n,v,i,d.
+  change_vec sig n v (nth i ? v d) i = v.
+#sig #n #v #i #d @(eq_vec … d)
+#i0 #Hi0 cases (decidable_eq_nat i i0) #Hi0
+[ >Hi0 >nth_change_vec //
+| >nth_change_vec_neq //
+]
+qed.
+
 lemma change_vec_cons_tail :∀A,n,vA,a,b,i.
   change_vec A (S n) (vec_cons ? a n vA) b (S i) =
   vec_cons ? a n (change_vec A n vA b i).
 #A #n #vA cases vA //
-qed.
-
-lemma vector_nil: ∀A.∀v:Vector A 0. 
-  v = mk_Vector A 0 (nil A) (refl ??).
-#A * * // #a #tl normalize #H destruct
-qed. 
-
-lemma nth_default : ∀A,i,n.∀v:Vector A n.∀d1,d2. i < n →
-  nth i ? v d1 = nth i ? v d2.
-#A #i elim i -i
-  [#n #v #d1 #d2 #ltOn lapply v @(lt_O_n_elim … ltOn)
-   -v #m #v >(vec_expand … v) //
-  |#i #Hind #n #v #d1 #d2 #ltn lapply ltn lapply v @(lt_O_n_elim … (ltn_to_ltO … ltn))
-   -v -ltn #m #v #ltim >(vec_expand … v) @(Hind m (vec_tail A (S m) v) d1 d2 ?) 
-   @le_S_S_to_le //
-  ]
-qed.
-  
-lemma eq_vec: ∀A,n.∀v1,v2:Vector A n.∀d. 
-  (∀i. i < n → nth i A v1 d = nth i A v2 d) → v1 = v2.
-#A #n elim n -n 
-  [#v1 #v2 #H >(vector_nil A v1) >(vector_nil A v2) //
-  |#n #Hind #v1 #v2 #d #H >(vec_expand … v1) >(vec_expand … v2)
-   >(Hind (vec_tail … v1) (vec_tail … v2) d)
-    [cut (vec_hd A n v1 = vec_hd A n v2) //
-     cut (∀i,d1,d2. i < S n → nth i A v1 d1 = nth i A v2 d2)
-       [#i #d1 #d2 #Hi >(nth_default ????? d) // >(nth_default ???? d2 d) // @H //]
-     -H #H @(H 0) //  
-    |#i #ltin @(H (S i)) @le_S_S //
-    ]
-  ]
 qed.
 
 (*

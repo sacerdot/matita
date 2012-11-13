@@ -125,36 +125,11 @@ theorem sem_inject: ∀sig.∀M:TM sig.∀R.∀n,i.
  i≤n → M ⊨ R → inject_TM sig M n i ⊨ inject_R sig R n i. 
 #sig #M #R #n #i #lein #HR #vt cases (HR (nth i ? vt (niltape ?)))
 #k * * #outs #outt * #Hloop #HRout @(ex_intro ?? k) 
-@(ex_intro ?? (mk_mconfig ?? n outs (change_vec ? (S n) vt outt i))) % 
-  [elim k in Hloop;
-    [normalize in ⊢ (%\to ?); #H destruct
-    |#k0 #Hind whd in ⊢ (??%?→??%?);
-     >halt_inject whd in match (cstate ????);
-     whd in match (cstate sig (states sig M)
-       (initc sig M (nth i (tape sig) vt (niltape sig)))); 
-     cases (true_or_false (halt sig M (start sig M))) #Hhalt >Hhalt 
-     whd in ⊢ (??%?→??%?);
-      [#H @eq_f whd in ⊢ (??%?); lapply (de_option ??? H) -H 
-       whd  in ⊢ (??%?→?); #H @eq_f2  
-        [whd in ⊢ (??%?); destruct (H) //
-        |@(eq_vec … (niltape ?)) #j #lejn
-         cases (true_or_false (eqb i j)) #eqij
-          [>(eqb_true_to_eq … eqij) >nth_change_vec //
-           <(eqb_true_to_eq … eqij) destruct (H) //
-          |>nth_change_vec_neq // @(eqb_false_to_not_eq … eqij)
-          ]
-        ]
-      |#H <Hind STOP
-        [(* whd in ⊢ (???(?????%)); >loop_inject // *)
-        | <H whd in ⊢ (??%?);
+@(ex_intro ?? (mk_mconfig ?? n outs (change_vec ? (S n) vt outt i))) %
+  [whd in ⊢ (??(?????%)?); <(change_vec_same ?? vt i (niltape ?)) in ⊢ (??%?);
+   @loop_inject /2 by refl, trans_eq, le_S_S/
   |%[>nth_change_vec // @le_S_S //
     |#j #i >nth_change_vec_neq //
     ]
   ]
-          
-  
-  
-
-  
-
-
+qed.
