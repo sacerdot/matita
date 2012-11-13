@@ -258,10 +258,6 @@ notation "hvbox( ⦃ h , break L ⦄ ⊢ break term 46 T1 • break [ g , break 
    non associative with precedence 45
    for @{ 'StaticType $h $g $l $L $T1 $T2 }.
 
-notation "hvbox( h ⊢ break term 46 L1 • ≃ [ g ] break term 46 L2 )"
-   non associative with precedence 45
-   for @{ 'CCongS $h $g $L1 $L2 }.
-
 notation "hvbox( h ⊢ break term 46 L1 • ⊑ [ g ] break term 46 L2 )"
    non associative with precedence 45
    for @{ 'CrSubEqS $h $g $L1 $L2 }.
@@ -455,6 +451,10 @@ notation "hvbox( ⦃ L1 , break T1 ⦄ ⬌ ⬌ * break ⦃ L2 , break T2 ⦄ )"
 notation "hvbox( ⦃ h , break L ⦄ ⊩ break term 46 T : break [ g ] )"
    non associative with precedence 45
    for @{ 'NativeValid $h $g $L $T }.
+
+notation "hvbox( h ⊢ break term 46 L1 ⊩ : ⊑ [ g ] break term 46 L2 )"
+   non associative with precedence 45
+   for @{ 'CrSubEqV $h $g $L1 $L2 }.
 
 notation "hvbox( ⦃ h , break L ⦄ ⊢ break term 46 T1 : break term 46 T2 )"
    non associative with precedence 45

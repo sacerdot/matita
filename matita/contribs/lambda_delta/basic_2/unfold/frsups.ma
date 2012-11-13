@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/frsup.ma".
 include "basic_2/unfold/frsupp.ma".
 
 (* STAR-ITERATED RESTRICTED SUPCLOSURE **************************************)

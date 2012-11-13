@@ -18,11 +18,10 @@ include "basic_2/static/sh.ma".
 
 (* sort degree specification *)
 record sd (h:sh): Type[0] ≝ {
-   deg      : relation nat;                                 (* degree of the sort *)
-   deg_total: ∀k. ∃l. deg k l;                              (* functional relation axioms *)
+   deg      : relation nat;                            (* degree of the sort *)
+   deg_total: ∀k. ∃l. deg k l;                         (* functional relation axioms *)
    deg_mono : ∀k,l1,l2. deg k l1 → deg k l2 → l1 = l2;
-   deg_next : ∀k,l. deg k l → deg (next h k) (l - 1);       (* compatibility condition *)
-   deg_prev : ∀k,l. deg (next h k) (l + 1) → deg k (l + 2)
+   deg_next : ∀k,l. deg k l → deg (next h k) (l - 1)   (* compatibility condition *)
 }.
 
 (* Notable specifications ***************************************************)
@@ -79,9 +78,6 @@ definition sd_SO: ∀h. nat → sd h ≝ λh,k. mk_sd h (deg_SO h k) ….
   | #H1 @deg_SO_zero * #l #H2 destruct
     @H1 -H1 @(ex_intro … (S l)) /2 width=1/ (**) (* explicit constructor *)
   ]
-| #K0 #l0 #H
-  <(deg_SO_inv_pos … H) -H >plus_n_2
-  @deg_SO_pos >iter_SO /2 width=1/ (**) (* explicit constructor: iter_SO is needed *)
 ]
 qed.
 
@@ -95,6 +91,14 @@ let rec sd_l (h:sh) (k:nat) (l:nat) on l : sd h ≝
    ].
 
 (* Basic properties *********************************************************)
+
+lemma deg_pred: ∀h,g,k,l. deg h g (next h k) (l + 1) → deg h g k (l + 2).
+#h #g #k #l #H1
+elim (deg_total h g k) #l0 #H0
+lapply (deg_next … H0) #H2
+lapply (deg_mono … H1 H2) -H1 -H2 #H
+<(associative_plus l 1 1) >H <plus_minus_m_m // /2 width=3 by transitive_le/
+qed.
 
 lemma sd_l_SS: ∀h,k,l. sd_l h k (l + 2) = sd_l h (next h k) (l + 1).
 #h #k #l <plus_n_Sm <plus_n_Sm //

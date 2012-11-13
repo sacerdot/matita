@@ -19,7 +19,7 @@ all:
 
 # xoa ########################################################################
 
-xoa: $(TARGETS)
+xoa: $(XOA_TARGETS)
 
 $(XOA_TARGETS): $(XOA_CONF)
 	@echo "  EXEC $(XOA) $(XOA_CONF)"
@@ -106,7 +106,7 @@ define SUMMARY_TEMPLATE
 	@printf '   ]\n'                               >> $$@
 	@printf '   class "cyan" [ "sizes"\n'          >> $$@
 	@printf '      [ "files" "$$(V1)" ]\n'         >> $$@
-	@printf '      [ "bytes" "$$(V2)" ]\n'         >> $$@
+	@printf '      [ "characters" "$$(V2)" ]\n'    >> $$@
 	@printf '      [ * ]\n'                        >> $$@
 	@printf '   ]\n'                               >> $$@	
 	@printf '   class "green" [ "propositions"\n'  >> $$@

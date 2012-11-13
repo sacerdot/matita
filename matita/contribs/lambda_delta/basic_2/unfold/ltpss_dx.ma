@@ -202,7 +202,8 @@ lemma ltpss_dx_weak: ∀L1,L2,d1,e1. L1 ▶* [d1, e1] L2 →
     lapply (le_plus_to_minus … Hd21) -Hd21 #Hd21 /3 width=5/
   | -Hd21 normalize in Hde12;
     lapply (lt_to_le_to_lt 0 … Hde12) // #He2
-    lapply (le_plus_to_minus_r … Hde12) -Hde12 /3 width=5/
+    lapply (le_plus_to_minus_r … Hde12) -Hde12
+    /3 width=5 by ltpss_dx_tpss2_lt, tpss_weak/ (**) (* /3 width=5/ used to work *)
   ]
 ]
 qed.

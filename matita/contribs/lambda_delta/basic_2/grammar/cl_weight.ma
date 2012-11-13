@@ -42,20 +42,25 @@ lemma tw_shift: ∀L,T. #{L, T} ≤ #{L @@ T}.
 qed.
 
 lemma fw_tpair_sn: ∀I,L,V,T. #{L, V} < #{L, ②{I}V.T}.
-#I #L #V #T normalize in ⊢ (? % %); //
+normalize in ⊢ (?→?→?→?→?%%); //
 qed.
 
 lemma fw_tpair_dx: ∀I,L,V,T. #{L, T} < #{L, ②{I}V.T}.
-#I #L #V #T normalize in ⊢ (? % %); //
+normalize in ⊢ (?→?→?→?→?%%); //
 qed.
 
 lemma fw_tpair_dx_sn: ∀I1,I2,L,V1,V2,T. #{L, V2} < #{L, ②{I1}V1.②{I2}V2.T}.
-#I1 #I2 #L #V1 #V2 #T normalize in ⊢ (? % %); /2 width=1/
+normalize in ⊢ (?→?→?→?→?→?→?%%); /2 width=1/
 qed.
 
-lemma fw_tpair_dx_sn_shift: ∀a2,I1,I2,L,V1,V2,T.
-                            #{L.ⓑ{I2}V2, T} < #{L, ②{I1}V1.ⓑ{a2,I2}V2.T}.
-#a2 #I1 #I2 #L #V1 #V2 #T normalize in ⊢ (? % %); /2 width=1/
+lemma fw_tpair_sn_sn_shift: ∀I,I1,I2,L,V1,V2,T.
+                            #{L.ⓑ{I}V1, T} < #{L, ②{I1}V1.②{I2}V2.T}.
+normalize in ⊢ (?→?→?→?→?→?→?→?%%); /3 width=1/ 
+qed.
+
+lemma fw_tpair_sn_dx_shift: ∀I,I1,I2,L,V1,V2,T.
+                            #{L.ⓑ{I}V2, T} < #{L, ②{I1}V1.②{I2}V2.T}.
+normalize in ⊢ (?→?→?→?→?→?→?→?%%); /2 width=1/
 qed.
 
 (* Basic_1: removed theorems 6:

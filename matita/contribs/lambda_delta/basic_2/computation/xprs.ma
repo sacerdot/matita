@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/static/lsubss.ma".
 include "basic_2/reducibility/xpr.ma".
 (*
 include "basic_2/reducibility/cnf.ma".

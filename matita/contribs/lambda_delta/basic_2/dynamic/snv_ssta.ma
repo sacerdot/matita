@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/ssta.ma".
 include "basic_2/dynamic/snv.ma".
 
 (* STRATIFIED NATIVE VALIDITY FOR TERMS *************************************)
@@ -31,23 +30,16 @@ lemma snv_ssta: ∀h,g,L,T. ⦃h, L⦄ ⊩ T :[g] → ∃∃U,l. ⦃h, L⦄ ⊢ 
 | #L #W #T #U #l #_ #_ #HTU #_ #_ #_ /3 width=3/ (**) (* auto fails without the last #_ *) 
 ]
 qed-.
-(*
+
 fact snv_ssta_conf_aux: ∀h,g,L,T. (
-                           ∀L0,T1,U1,l1. ⦃h, L0⦄ ⊢ T1 •[g, l1] U1 →
-                           ∀T2,U2,l2. ⦃h, L0⦄ ⊢ T2 •[g, l2] U2 →
-                           L0 ⊢ T1 ⬌* T2 → ⦃h, L0⦄ ⊩ T1 :[g] →  ⦃h, L0⦄ ⊩ T2 :[g] →
-                           #{L0, T1} < #{L ,T} →
-                           l1 = l2 ∧ L0 ⊢ U1 ⬌* U2
-                        ) → (
                            ∀L0,T0. ⦃h, L0⦄ ⊩ T0 :[g] →
                            ∀U0. ⦃h, L0⦄ ⊢ T0 •➡*[g] U0 →
-                           #{L0, T0} < #{L ,T} →
-                           ⦃h, L0⦄ ⊩ U0 :[g]
+                           #{L0, T0} < #{L ,T} → ⦃h, L0⦄ ⊩ U0 :[g]
                         ) →
                         ∀L0,T0. ⦃h, L0⦄ ⊩ T0 :[g] →
-                        ∀U0,l. ⦃h, L⦄ ⊢ T0 •[g, l + 1] U0 →
+                        ∀U0,l. ⦃h, L0⦄ ⊢ T0 •[g, l + 1] U0 →
                         L0 = L → T0 = T → ⦃h, L0⦄ ⊩ U0 :[g].
-#h #g #L #T #IH2 #IH1 #L0 #T0 * -L0 -T0
+#h #g #L #T #IH1 #L0 #T0 * -L0 -T0
 [
 |
 |
@@ -55,13 +47,6 @@ fact snv_ssta_conf_aux: ∀h,g,L,T. (
   elim (ssta_inv_appl1 … H) -H #U0 #HTU0 #H destruct
   lapply (IH1 … HT0 U0 ? ?) // [ /3 width=2/ ] -HTU0 #HU0
   @(snv_appl … HV HU0 HVW HW0) -HV -HU0 -HVW -HW0
-| #L0 #W #T0 #W0 #l0 #HW #HT0 #HTW0 #HW0 #X #l #H #H1 #H2 destruct
-  elim (ssta_inv_cast1 … H) -H <minus_plus_m_m #V #U0 #HWV #HTU0 #H destruct
-  elim (ssta_mono … HTU0 … HTW0) -HTU0 #H1 #H2
-  lapply (injective_plus_l … H1) -H1 #H1 destruct
-(*  elim (ssta_fwd_correct … HTW0) <minus_plus_m_m #X0 #HWX0 *)
-  lapply (IH1 … HT0 W0 ? ?) -IH1 -HT0 // [ /3 width=2/ ] -HTW0 #HW0
-  @(snv_cast … HV HW0) 
-  
-  HVW HW0) -HV -HU0 -HVW -HW0  
-*)
+| #L0 #W #T0 #W0 #l0 #_ #HT0 #_ #_ #U0 #l #H #H1 #H2 destruct -W0
+  lapply (ssta_inv_cast1 … H) -H #HTU0
+  lapply (IH1 … HT0 U0 ? ?) -IH1 -HT0 // -W /3 width=2/
