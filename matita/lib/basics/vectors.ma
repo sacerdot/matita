@@ -32,6 +32,15 @@ mk_Vector A (S n) (cons A a v) ?.
 normalize >(len A n v) //
 qed.
 
+definition vec_hd ≝ λA.λn.λv:Vector A (S n).
+hd A v ?. elim v * [normalize #H destruct | #a #H #eq @a] 
+qed.
+
+lemma vec_expand: ∀A,n,v. 
+ v = vec_cons A (vec_hd A n v) n (vec_tail A (S n) v).
+#A #n * #l cases l [normalize in ⊢ (%→?); #H destruct  |//]
+qed.
+
 definition vec_append ≝ λA.λn1,n2.λv1:Vector A n1.λv2: Vector A n2.
 mk_Vector A (n1+n2) (v1@v2).
 
@@ -40,6 +49,84 @@ mk_Vector B n (map ?? f v)
   (trans_eq … (length_map …) (len A n v)).
 
 (* mapi: map with index to move in list.ma *)
+let rec change_vec (A:Type[0]) (n:nat) on n ≝
+match n return λn0.∀v:Vector A n0.A→nat→Vector A n0 with
+[ O ⇒ λv,a,i.v
+| S m ⇒ λv,a,i.
+  match i with
+  [ O ⇒ vec_cons A a m (vec_tail … v) 
+  | S j ⇒ vec_cons A (vec_hd A m v) m (change_vec A m (vec_tail … v) a j)
+  ]
+].
+
+lemma nth_change_vec : ∀A,i,n,v,a,d. i < n →
+  nth i ? (change_vec A n v a i) d = a.
+#A #i elim i
+  [#n #v #a #d #ltOn lapply v -v @(lt_O_n_elim n ltOn ??) //
+  |#m #Hind #n #v #a #d #Hlt 
+   lapply Hlt lapply v @(lt_O_n_elim … (ltn_to_ltO … Hlt)) 
+   #p #v #ltmp @Hind @le_S_S_to_le // 
+  ]
+qed.
+
+lemma nth_change_vec_neq : ∀A,j,i,n,v,a,d. i ≠ j →
+  nth j ? (change_vec A n v a i) d = nth j ? v d.
+#A #j elim j
+  [#i * // #n #v #a #d cases i
+    [#H @False_ind @(absurd ?? H) //
+    |#i0 #_ >(vec_expand ?? v) in ⊢ (???%); //
+    ] 
+  |#m #Hind #i * // cases i // #i0 #n #v #a #d #neqim 
+   whd in ⊢(??%?); whd in match (tail ??); >Hind
+    [>(vec_expand ??v) in ⊢ (???%); // |@(not_to_not … neqim) // ]
+  ]
+qed.
+
+lemma change_vec_cons_tail :∀A,n,vA,a,b,i.
+  change_vec A (S n) (vec_cons ? a n vA) b (S i) =
+  vec_cons ? a n (change_vec A n vA b i).
+#A #n #vA cases vA //
+qed.
+
+lemma vector_nil: ∀A.∀v:Vector A 0. 
+  v = mk_Vector A 0 (nil A) (refl ??).
+#A * * // #a #tl normalize #H destruct
+qed. 
+
+lemma nth_default : ∀A,i,n.∀v:Vector A n.∀d1,d2. i < n →
+  nth i ? v d1 = nth i ? v d2.
+#A #i elim i -i
+  [#n #v #d1 #d2 #ltOn lapply v @(lt_O_n_elim … ltOn)
+   -v #m #v >(vec_expand … v) //
+  |#i #Hind #n #v #d1 #d2 #ltn lapply ltn lapply v @(lt_O_n_elim … (ltn_to_ltO … ltn))
+   -v -ltn #m #v #ltim >(vec_expand … v) @(Hind m (vec_tail A (S m) v) d1 d2 ?) 
+   @le_S_S_to_le //
+  ]
+qed.
+  
+lemma eq_vec: ∀A,n.∀v1,v2:Vector A n.∀d. 
+  (∀i. i < n → nth i A v1 d = nth i A v2 d) → v1 = v2.
+#A #n elim n -n 
+  [#v1 #v2 #H >(vector_nil A v1) >(vector_nil A v2) //
+  |#n #Hind #v1 #v2 #d #H >(vec_expand … v1) >(vec_expand … v2)
+   >(Hind (vec_tail … v1) (vec_tail … v2) d)
+    [cut (vec_hd A n v1 = vec_hd A n v2) //
+     cut (∀i,d1,d2. i < S n → nth i A v1 d1 = nth i A v2 d2)
+       [#i #d1 #d2 #Hi >(nth_default ????? d) // >(nth_default ???? d2 d) // @H //]
+     -H #H @(H 0) //  
+    |#i #ltin @(H (S i)) @le_S_S //
+    ]
+  ]
+qed.
+
+(*
+lemma length_make_listi: ∀A,a,n,i. 
+  |make_listi A a n i| = n.
+#A #a #n elim n // #m #Hind normalize //
+qed.
+definition change_vec ≝ λA,n,v,a,i.
+  make_veci A (λj.if (eqb i j) then a else (nth j A v a)) n 0.
+
 let rec mapi (A,B:Type[0]) (f: nat → A → B) (l:list A) (i:nat) on l: list B ≝
  match l with 
  [ nil ⇒ nil ? 
@@ -67,6 +154,7 @@ mk_Vector B n (mapi ?? f v i)
   
 definition make_veci ≝ λA.λa:nat→A.λn,i.
 mk_Vector A n (make_listi A a n i) (length_make_listi A a n i).
+*)
 
 let rec pmap A B C (f:A→B→C) l1 l2 on l1 ≝
    match l1 with
@@ -93,3 +181,15 @@ mk_Vector C n (pmap A B C f vA vB) ?.
 >(le_to_leb_true … (le_n n)) //
 qed.
 
+lemma pmap_vec_cons :∀A,B,C,f,n,vA,vB,a,b.
+  pmap_vec A B C f (S n) (vec_cons ? a n vA) (vec_cons ? b n vB) =
+  vec_cons ? (f a b) n (pmap_vec A B C f n vA vB).
+// qed.
+
+lemma pmap_change : ∀A,B,C,f,n,vA,vB,a,b,i.
+  pmap_vec A B C f n (change_vec ? n vA a i) (change_vec ? n vB b i) =
+  change_vec ? n (pmap_vec A B C f n vA vB) (f a b) i.
+#A #B #C #f #n elim n //
+#m #Hind #vA #vB #a #b >(vec_expand … vA) >(vec_expand … vB) * //
+#i >pmap_vec_cons >pmap_vec_cons >change_vec_cons_tail @eq_f @Hind 
+qed.
