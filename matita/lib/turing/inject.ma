@@ -49,11 +49,13 @@ whd in match (step ????); >(current_chars_change_vec … lein)
 >(eq_pair_fst_snd … (trans sig M ?)) whd in ⊢ (??%?→?); #H
 >(inject_trans_def sig n i lein M … (eq_pair_fst_snd … ))
 whd in ⊢ (??%?); @eq_f2 [destruct (H) // ]
-@(eq_vec … (niltape ?)) #i0 #lei0n 
->nth_change_vec_neq >nth_change_vec_neq 
- … (tr
-// qed.
-
+@(eq_vec … (niltape ?)) #i0 #lei0n
+cases (decidable_eq_nat … i i0) #Hii0
+[ >Hii0 >nth_change_vec // >pmap_change >nth_change_vec // destruct (H) //
+| >nth_change_vec_neq // >pmap_change >nth_change_vec_neq 
+  >tape_move_null_action //
+]
+qed.
 
 lemma halt_inject: ∀sig,n,M,i,x.
   cic:/matita/turing/turing/halt.fix(0,2,9) sig n (inject_TM sig M n i) x
@@ -64,13 +66,13 @@ lemma de_option: ∀A,a,b. Some A a = Some A b → a = b.
 #A #a #b #H destruct //
 qed. 
 
-lemma loop_inject: ∀sig,n,M,i,k,ins,int,outs,outt,vt.
+lemma loop_inject: ∀sig,n,M,i,k,ins,int,outs,outt,vt.i < S n → 
  loopM sig M k (mk_config ?? ins int) = Some ? (mk_config ?? outs outt) → 
  cic:/matita/turing/turing/loopM.def(11) sig n (inject_TM sig M n i) k (mk_mconfig ?? n ins (change_vec ?? vt int i))
   =Some ? (mk_mconfig sig ? n outs (change_vec ?? vt outt i)).
 #sig #n #M #i #k elim k -k
-  [#ins #int #outs #outt #vt normalize in ⊢ (%→?); #H destruct
-  |#k #Hind #ins #int #outs #outt #vt whd in ⊢ (??%?→??%?);
+  [#ins #int #outs #outt #vt #Hin normalize in ⊢ (%→?); #H destruct
+  |#k #Hind #ins #int #outs #outt #vt #Hin whd in ⊢ (??%?→??%?);
    >halt_inject whd in match (cstate ????);
    cases (true_or_false (halt sig M ins)) #Hhalt >Hhalt 
    whd in ⊢ (??%?→??%?);
@@ -84,17 +86,14 @@ lemma loop_inject: ∀sig,n,M,i,k,ins,int,outs,outt,vt.
         |destruct (H) //
         ]
       ]
-    |>(config_expand … (step ???)) #H <(Hind … H) 
-     >loopM_unfold @eq_f >(mconfig_expand … (step ????)) 
-     @eq_f2 [ normalize in ⊢ (???%);
-  |%[>nth_change_vec // @le_S_S //
-    |#j #i >nth_change_vec_neq //
+    |>(config_expand … (step ???)) #H <(Hind … H) // 
+     >loopM_unfold @eq_f >inject_step //
     ]
   ]
+qed.
 
 (*
 lemma cstate_inject: ∀sig,n,M,i,x. *)
-  
 
 definition inject_R ≝ λsig.λR:relation (tape sig).λn,i:nat.
   λv1,v2: (Vector (tape sig) (S n)).
@@ -145,7 +144,9 @@ theorem sem_inject: ∀sig.∀M:TM sig.∀R.∀n,i.
           |>nth_change_vec_neq // @(eqb_false_to_not_eq … eqij)
           ]
         ]
-      |#H <Hind //
+      |#H <Hind STOP
+        [(* whd in ⊢ (???(?????%)); >loop_inject // *)
+        | <H whd in ⊢ (??%?);
   |%[>nth_change_vec // @le_S_S //
     |#j #i >nth_change_vec_neq //
     ]
