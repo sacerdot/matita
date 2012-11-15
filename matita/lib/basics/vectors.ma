@@ -79,6 +79,20 @@ lemma eq_vec: ∀A,n.∀v1,v2:Vector A n.∀d.
   ]
 qed.
 
+lemma nth_vec_map :
+  ∀A,B,f,i,n.∀v:Vector A n.∀d.
+  f (nth i ? v d) = nth i ? (vec_map A B f n v) (f d).
+#A #B #f #i elim i
+[ *
+  [ #v #d >(vector_nil … v) %
+  | #n0 #v #d >(vec_expand … v) % ]
+| #i0 #IH *
+  [ #v #d >(vector_nil … v) normalize cases i0 // 
+  | #n #v #d >(vec_expand … v) whd in ⊢ (??(?%)%);
+    >(IH n (vec_tail A (S n) v) d) % ] ]
+qed.
+
+
 (* mapi: map with index to move in list.ma *)
 let rec change_vec (A:Type[0]) (n:nat) on n ≝
 match n return λn0.∀v:Vector A n0.A→nat→Vector A n0 with
@@ -127,6 +141,33 @@ lemma change_vec_cons_tail :∀A,n,vA,a,b,i.
   vec_cons ? a n (change_vec A n vA b i).
 #A #n #vA cases vA //
 qed.
+
+lemma change_vec_commute : ∀A,n,v,a,b,i,j. i ≠ j → 
+  change_vec A n (change_vec A n v a i) b j
+  = change_vec A n (change_vec A n v b j) a i.
+#A #n #v #a #b #i #j #Hij @(eq_vec … a)
+#k #Hk cases (decidable_eq_nat k i) #Hki
+[ >Hki >nth_change_vec // >(nth_change_vec_neq ??????? (sym_not_eq … Hij))
+  >nth_change_vec //
+| cases (decidable_eq_nat k j) #Hkj
+  [ >Hkj >nth_change_vec // >(nth_change_vec_neq ??????? Hij) >nth_change_vec //
+  | >(nth_change_vec_neq ??????? (sym_not_eq … Hki))
+    >(nth_change_vec_neq ??????? (sym_not_eq … Hkj))
+    >(nth_change_vec_neq ??????? (sym_not_eq … Hki))
+    >(nth_change_vec_neq ??????? (sym_not_eq … Hkj)) //
+  ]
+]
+qed.
+
+lemma change_vec_change_vec : ∀A,n,v,a,b,i. 
+  change_vec A n (change_vec A n v a i) b i = change_vec A n v b i.
+#A #n #v #a #b #i @(eq_vec … a) #i0 #Hi0
+cases (decidable_eq_nat i i0) #Hii0
+[ >Hii0 >nth_change_vec // >nth_change_vec //
+| >nth_change_vec_neq // >nth_change_vec_neq //
+  >nth_change_vec_neq // ]
+qed.
+
 
 (*
 lemma length_make_listi: ∀A,a,n,i. 
