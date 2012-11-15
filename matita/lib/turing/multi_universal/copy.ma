@@ -107,23 +107,6 @@ whd in ⊢ (??%?); >(eq_pair_fst_snd … (trans ????)) whd in ⊢ (??%?); @eq_f2
 ]
 qed.
 
-lemma change_vec_commute : ∀A,n,v,a,b,i,j. i ≠ j → 
-  change_vec A n (change_vec A n v a i) b j
-  = change_vec A n (change_vec A n v b j) a i.
-#A #n #v #a #b #i #j #Hij @(eq_vec … a)
-#k #Hk cases (decidable_eq_nat k i) #Hki
-[ >Hki >nth_change_vec // >(nth_change_vec_neq ??????? (sym_not_eq … Hij))
-  >nth_change_vec //
-| cases (decidable_eq_nat k j) #Hkj
-  [ >Hkj >nth_change_vec // >(nth_change_vec_neq ??????? Hij) >nth_change_vec //
-  | >(nth_change_vec_neq ??????? (sym_not_eq … Hki))
-    >(nth_change_vec_neq ??????? (sym_not_eq … Hkj))
-    >(nth_change_vec_neq ??????? (sym_not_eq … Hki))
-    >(nth_change_vec_neq ??????? (sym_not_eq … Hkj)) //
-  ]
-]
-qed.
-
 lemma copy_q0_q1 :
   ∀src,dst,sig,n,is_sep,v,t.src ≠ dst → src < S n → dst < S n → 
   ∀s.current ? t = Some ? s → is_sep s = false → 
@@ -191,15 +174,6 @@ definition R_copy ≝
    outt = int) ∧
   (current ? (nth src ? int (niltape ?)) = None ? → outt = int).
   
-lemma change_vec_change_vec : ∀A,n,v,a,b,i. 
-  change_vec A n (change_vec A n v a i) b i = change_vec A n v b i.
-#A #n #v #a #b #i @(eq_vec … a) #i0 #Hi0
-cases (decidable_eq_nat i i0) #Hii0
-[ >Hii0 >nth_change_vec // >nth_change_vec //
-| >nth_change_vec_neq // >nth_change_vec_neq //
-  >nth_change_vec_neq // ]
-qed.
-
 lemma wsem_copy : ∀src,dst,sig,n,is_sep.src ≠ dst → src < S n → dst < S n → 
   copy src dst sig n is_sep ⊫ R_copy src dst sig n is_sep.
 #src #dst #sig #n #is_sep #Hneq #Hsrc #Hdst #ta #k #outc #Hloop
@@ -283,4 +257,10 @@ cases (nth src (tape sig) t (niltape ?))
    >change_vec_change_vec >change_vec_commute // #Ht1 >Ht1 @IH
   ]
 ]
+qed.
+
+lemma sem_copy : ∀src,dst,sig,n,is_sep.
+  src ≠ dst → src < S n → dst < S n → 
+  copy src dst sig n is_sep ⊨ R_copy src dst sig n is_sep.
+#src #dst #sig #n #is_sep #Hneq #Hsrc #Hdst @WRealize_to_Realize /2/
 qed.
