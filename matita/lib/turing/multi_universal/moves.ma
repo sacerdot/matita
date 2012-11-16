@@ -273,29 +273,29 @@ lapply (sem_while … (sem_parmove_step src dst sig n L is_sep Hneq Hsrc Hdst) �
 ] ]
 qed.
  
-lemma terminate_copy :  ∀src,dst,sig,n,is_sep,t.
+lemma terminate_parmoveL :  ∀src,dst,sig,n,is_sep,t.
   src ≠ dst → src < S n → dst < S n → 
-  copy src dst sig n is_sep ↓ t.
+  parmove src dst sig n L is_sep ↓ t.
 #src #dst #sig #n #is_sep #t #Hneq #Hsrc #Hdst
-@(terminate_while … (sem_copy_step …)) //
+@(terminate_while … (sem_parmove_step …)) //
 <(change_vec_same … t src (niltape ?))
 cases (nth src (tape sig) t (niltape ?))
-[ % #t1 * #x * * >nth_change_vec // normalize in ⊢ (%→?); #Hx destruct 
-|2,3: #a0 #al0 % #t1 * #x * * >nth_change_vec // normalize in ⊢ (%→?); #Hx destruct
-| #ls #c #rs lapply c -c lapply ls -ls lapply t -t elim rs
-  [#t #ls #c % #t1 * #x * * >nth_change_vec // normalize in ⊢ (%→?);
-   #H1 destruct (H1) #Hxsep >change_vec_change_vec #Ht1 % 
-   #t2 * #x0 * * >Ht1 >nth_change_vec_neq [|@sym_not_eq //]
+[ % #t1 * #x1 * #x2 * * * >nth_change_vec // normalize in ⊢ (%→?); #Hx destruct 
+|2,3: #a0 #al0 % #t1 * #x1 * #x2 * * * >nth_change_vec // normalize in ⊢ (%→?); #Hx destruct
+| #ls lapply t -t elim ls
+  [#t #c #rs % #t1 * #x1 * #x2 * * * >nth_change_vec // normalize in ⊢ (%→?);
+   #H1 destruct (H1) #Hcurdst #Hxsep >change_vec_change_vec #Ht1 % 
+   #t2 * #y1 * #y2 * * * >Ht1 >nth_change_vec_neq [|@sym_not_eq //]
    >nth_change_vec // normalize in ⊢ (%→?); #H destruct (H)
-  |#r0 #rs0 #IH #t #ls #c % #t1 * #x * * >nth_change_vec //
-   normalize in ⊢ (%→?); #H destruct (H) #Hxsep
+  |#l0 #ls0 #IH #t #c #rs % #t1 * #x1 * #x2 * * * >nth_change_vec //
+   normalize in ⊢ (%→?); #H destruct (H) #Hcurdst #Hxsep
    >change_vec_change_vec >change_vec_commute // #Ht1 >Ht1 @IH
   ]
 ]
 qed.
 
-lemma sem_copy : ∀src,dst,sig,n,is_sep.
+lemma sem_parmoveL : ∀src,dst,sig,n,is_sep.
   src ≠ dst → src < S n → dst < S n → 
-  copy src dst sig n is_sep ⊨ R_copy src dst sig n is_sep.
+  parmove src dst sig n L is_sep ⊨ R_parmoveL src dst sig n is_sep.
 #src #dst #sig #n #is_sep #Hneq #Hsrc #Hdst @WRealize_to_Realize /2/
 qed.
