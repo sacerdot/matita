@@ -133,3 +133,21 @@ theorem sem_inject: ∀sig.∀M:TM sig.∀R.∀n,i.
     ]
   ]
 qed.
+
+theorem acc_sem_inject: ∀sig.∀M:TM sig.∀Rtrue,Rfalse,acc.∀n,i.
+ i≤n → M ⊨ [ acc : Rtrue, Rfalse ] → 
+ inject_TM sig M n i ⊨ [ acc : inject_R sig Rtrue n i, inject_R sig Rfalse n i ]. 
+#sig #M #Rtrue #Rfalse #acc #n #i #lein #HR #vt cases (HR (nth i ? vt (niltape ?)))
+#k * * #outs #outt * * #Hloop #HRtrue #HRfalse @(ex_intro ?? k) 
+@(ex_intro ?? (mk_mconfig ?? n outs (change_vec ? (S n) vt outt i))) % [ %
+  [whd in ⊢ (??(?????%)?); <(change_vec_same ?? vt i (niltape ?)) in ⊢ (??%?);
+   @loop_inject /2 by refl, trans_eq, le_S_S/
+  |#Hqtrue %
+    [>nth_change_vec /2 by le_S_S/
+    |#j #Hneq >nth_change_vec_neq //
+    ] ]
+  |#Hqfalse %
+    [>nth_change_vec /2 by le_S_S/ @HRfalse @Hqfalse
+    |#j #Hneq >nth_change_vec_neq //
+    ] ]
+qed.

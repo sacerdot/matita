@@ -12,9 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "turing/turing.ma".
+include "turing/multi_universal/moves.ma".
+include "turing/if_multi.ma".
 include "turing/inject.ma".
-include "turing/while_multi.ma".
+include "turing/basic_machines.ma".
 
 definition compare_states ≝ initN 3.
 
@@ -266,3 +267,99 @@ lemma sem_compare : ∀i,j,sig,n.
 #i #j #sig #n #Hneq #Hi #Hj @WRealize_to_Realize /2/
 qed.
 
+(*
+   |conf1   $
+   |confin 0/1 confout move
+
+  match machine step ≝
+    compare;
+    if (cur(src) != $)
+      then
+        parmoveL;
+        moveR(dst);
+      else nop
+ *)
+
+definition match_step ≝ λsrc,dst,sig,n,is_startc,is_endc.
+  compare src dst sig n ·
+    (ifTM ?? (inject_TM ? (test_char ? is_endc) n src) 
+      (single_finalTM ??
+        (parmove src dst sig n L is_startc · (inject_TM ? (move_r ?) n dst)))
+      (nop ? n)
+      tc_false).
+
+definition R_match_step_false ≝ 
+  λsrc,dst,sig,n,is_endc.λint,outt: Vector (tape sig) (S n).
+    ∃ls,ls0,rs,rs0,x,xs,end,c.
+    is_endc end = true ∧
+    nth src ? int (niltape ?) = midtape sig ls x (xs@end::rs) ∧
+    nth dst ? int (niltape ?) = midtape sig ls0 x (xs@c::rs0) ∧
+    outt = change_vec ??
+           (change_vec ?? int (midtape sig (reverse ? xs@x::ls) end rs) src)
+           (midtape sig (reverse ? xs@x::ls0) c rs0) dst.
+
+(*
+  src : | 
+*)
+
+definition R_match_step_true ≝ 
+  λsrc,dst,sig,n,is_startc,is_endc.λint,outt: Vector (tape sig) (S n).
+  ∀s.current sig (nth src (tape sig) int (niltape sig)) = Some ? s → 
+  is_startc s = true →
+  (∀s1.current sig (nth dst (tape sig) int (niltape sig)) = Some ? s1 →
+   s ≠ s1 →  
+   outt = change_vec ?? int 
+          (tape_move … (nth dst ? int (niltape ?)) (Some ? 〈s1,R〉)) dst ∧ is_endc s = false) ∧  
+  (∀ls,x,xs,ci,rs,ls0,cj,rs0. 
+    nth src ? int (niltape ?) = midtape sig ls x (xs@ci::rs) →
+    nth dst ? int (niltape ?) = midtape sig ls0 x (xs@cj::rs0) → ci ≠ cj → 
+    outt = change_vec ?? int 
+           (tape_move … (nth dst ? int (niltape ?)) (Some ? 〈x,R〉)) dst ∧ is_endc ci = false).
+
+definition Rtc_multi_true ≝ 
+  λalpha,test,n,i.λt1,t2:Vector ? (S n).
+   (∃c. current alpha (nth i ? t1 (niltape ?)) = Some ? c ∧ test c = true) ∧ t2 = t1.
+   
+definition Rtc_multi_false ≝ 
+  λalpha,test,n,i.λt1,t2:Vector ? (S n).
+    (∀c. current alpha (nth i ? t1 (niltape ?)) = Some ? c → test c = false) ∧ t2 = t1.
+    
+lemma sem_test_char_multi :
+  ∀alpha,test,n,i.i ≤ n → 
+  inject_TM ? (test_char ? test) n i ⊨ 
+  [ tc_true : Rtc_multi_true alpha test n i, Rtc_multi_false alpha test n i ].
+#alpha #test #n #i #Hin #int
+cases (acc_sem_inject … Hin (sem_test_char alpha test) int)
+#k * #outc * * #Hloop #Htrue #Hfalse %{k} %{outc} % [ %
+[ @Hloop
+| #Hqtrue lapply (Htrue Hqtrue) * * * #c *
+  #Hcur #Htestc #Hnth_i #Hnth_j %
+  [ %{c} % //
+  | @(eq_vec … (niltape ?)) #i0 #Hi0
+    cases (decidable_eq_nat i0 i) #Hi0i
+    [ >Hi0i @Hnth_i
+    | @sym_eq @Hnth_j @sym_not_eq // ] ] ]
+| #Hqfalse lapply (Hfalse Hqfalse) * * #Htestc #Hnth_i #Hnth_j %
+  [ @Htestc
+  | @(eq_vec … (niltape ?)) #i0 #Hi0
+    cases (decidable_eq_nat i0 i) #Hi0i
+    [ >Hi0i @Hnth_i
+    | @sym_eq @Hnth_j @sym_not_eq // ] ] ]
+qed.
+
+lemma sem_match_step :
+  ∀src,dst,sig,n,is_startc,is_endc.src ≠ dst → src < S n → dst < S n → 
+  match_step src dst sig n is_startc is_endc ⊨ 
+    [ inr … (inr … (inr … start_nop)) : 
+      R_match_step_true src dst sig n is_startc is_endc, 
+      R_match_step_false src dst sig n is_endc ].
+#src #dst #sig #n #is_startc #is_endc #Hneq #Hsrc #Hdst
+@(acc_sem_seq_app … (sem_compare … Hneq Hsrc Hdst)
+    (acc_sem_if … (sem_test_char_multi ? ()
+      (sem_nop …)
+        (sem_seq … sem_mark_next_tuple 
+           (sem_if … (sem_test_char ? (λc:STape.is_grid (\fst c)))
+             (sem_mark ?) (sem_seq … (sem_move_l …) (sem_init_current …))))))
+  (sem_nop ?) …)
+
+ #int
