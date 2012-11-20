@@ -351,6 +351,8 @@ qed.
 axiom comp_list: ∀S:DeqSet. ∀l1,l2:list S. ∃l,tl1,tl2. 
   l1 = l@tl1 ∧ l2 = l@tl2 ∧ ∀a,b,tla,tlb. tl1 = a::tla → tl2 = b::tlb → a≠b.
   
+axiom daemon : ∀X:Prop.X.
+  
 lemma sem_match_step :
   ∀src,dst,sig,n,is_startc,is_endc.src ≠ dst → src < S n → dst < S n → 
   match_step src dst sig n is_startc is_endc ⊨ 
@@ -364,7 +366,42 @@ lemma sem_match_step :
         (sem_parmoveL ???? is_startc Hneq Hsrc Hdst) 
         (sem_inject … dst (le_S_S_to_le … Hdst) (sem_move_r ? )))
       (sem_nop …)))
-[2: #intape #outtape #ta * #Hcomp1 #Hcomp2 * #tb * * #Hc #Htb 
+[#ta #tb #tc * #Hcomp1 #Hcomp2 * #td * * * #c * #Hcurtc #Hcend #Htd >Htd -Htd
+ #Htb #s #Hcurta_src #Hstart %
+ [ #s1 #Hcurta_dst #Hneqss1
+   lapply Htb lapply Hcurtc -Htb -Hcurtc >(?:tc=ta) 
+   [|@Hcomp1 % % >Hcurta_src >Hcurta_dst @(not_to_not … Hneqss1) #H destruct (H) % ]
+   #Hcurtc * #te * * #_ #Hte >Hte // whd in ⊢ (%→?); * * #_ #Htbdst #Htbelse %
+   [ @(eq_vec … (niltape ?)) #i #Hi cases (decidable_eq_nat i dst) #Hidst
+     [ >Hidst >nth_change_vec // cases (current_to_midtape … Hcurta_dst)
+       #ls * #rs #Hta_mid >(Htbdst … Hta_mid) >Hta_mid cases rs //
+     | >nth_change_vec_neq [|@sym_not_eq //] @sym_eq @Htbelse @sym_not_eq // ]
+   | >Hcurtc in Hcurta_src; #H destruct (H) cases (is_endc s) in Hcend;
+     normalize #H destruct (H) // ]
+ |#ls #x #xs #ci #rs #ls0 #cj #rs0 #Htasrc_mid #Htadst_mid #Hcicj
+  lapply (Hcomp2 … Htasrc_mid Htadst_mid Hcicj) -Hcomp2 #Hcomp2
+  cases Htb #td * * #Htd #_ >Htasrc_mid in Hcurta_src; normalize in ⊢ (%→?);
+  #H destruct (H)
+  >(Htd ls ci (reverse ? xs) rs s ??? ls0 cj (reverse ? xs) s rs0 (refl ??)) //
+  [| >Hcomp2 >nth_change_vec //
+   | @daemon
+   | >Hcomp2 >nth_change_vec_neq [|@sym_not_eq // ] @nth_change_vec // ]
+  * * #_ #Htbdst #Htbelse %
+  [ @(eq_vec … (niltape ?)) #i #Hi cases (decidable_eq_nat i dst) #Hidst
+     [ >Hidst >nth_change_vec // >Htadst_mid >(Htbdst ls0 s (xs@cj::rs0))
+       [ cases xs //
+       | >nth_change_vec // ]
+     | >nth_change_vec_neq [|@sym_not_eq //]
+       <Htbelse [|@sym_not_eq // ]
+       >nth_change_vec_neq [|@sym_not_eq //]
+       STOP.
+       
+       >nth_change_vec in Htbdst; // #Htbdst >(Htbdst
+     … Htadst_mid) >Hta_mid cases rs //
+     | >nth_change_vec_neq [|@sym_not_eq //] @sym_eq @Htbelse @sym_not_eq // ]
+   | >Hcurtc in Hcurta_src; #H destruct (H) cases (is_endc s) in Hcend;
+     normalize #H destruct (H) // ]
+|#intape #outtape #ta * #Hcomp1 #Hcomp2 * #tb * * #Hc #Htb 
  whd in ⊢ (%→?); #Hout >Hout >Htb whd
  lapply (current_to_midtape sig (nth src ? intape (niltape ?)))
  cases (current … (nth src ? intape (niltape ?))) in Hcomp1; 
