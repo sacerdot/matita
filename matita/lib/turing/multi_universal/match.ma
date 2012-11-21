@@ -394,13 +394,20 @@ lemma sem_match_step :
      | >nth_change_vec_neq [|@sym_not_eq //]
        <Htbelse [|@sym_not_eq // ]
        >nth_change_vec_neq [|@sym_not_eq //]
-       STOP.
-       
-       >nth_change_vec in Htbdst; // #Htbdst >(Htbdst
-     … Htadst_mid) >Hta_mid cases rs //
-     | >nth_change_vec_neq [|@sym_not_eq //] @sym_eq @Htbelse @sym_not_eq // ]
-   | >Hcurtc in Hcurta_src; #H destruct (H) cases (is_endc s) in Hcend;
+        (* STOP. *)
+       cases (decidable_eq_nat i src) #Hisrc
+       [ >Hisrc >nth_change_vec // >Htasrc_mid //
+       | >nth_change_vec_neq [|@sym_not_eq //]
+         <(Htbelse i) [|@sym_not_eq // ]
+         >Hcomp2 >nth_change_vec_neq [|@sym_not_eq // ]
+         >nth_change_vec_neq [|@sym_not_eq // ] //
+       ]
+     ]
+  | >Hcomp2 in Hcurtc; >nth_change_vec_neq [|@sym_not_eq //] 
+     >nth_change_vec // whd in ⊢ (??%?→?); 
+     #H destruct (H) cases (is_endc c) in Hcend;
      normalize #H destruct (H) // ]
+  ]
 |#intape #outtape #ta * #Hcomp1 #Hcomp2 * #tb * * #Hc #Htb 
  whd in ⊢ (%→?); #Hout >Hout >Htb whd
  lapply (current_to_midtape sig (nth src ? intape (niltape ?)))
@@ -436,11 +443,8 @@ lemma sem_match_step :
       ]
     ]
   ] 
+qed.
 
-
-2:#t1 #t2 #t3 whd in ⊢ (%→?); * #Hc #H #H1 whd #ls #c #rs #Ht1 %
-  [lapply(Hc c ?) [>Ht1 %] #Hgrid @injective_notb @Hgrid |>H1 @H]
- 
 
 
 
