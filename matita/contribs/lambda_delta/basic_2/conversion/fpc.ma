@@ -1,0 +1,40 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/reducibility/fpr.ma".
+
+(* CONTEXT-FREE PARALLEL CONVERSION ON CLOSURES *****************************)
+
+definition fpc: bi_relation lenv term ≝
+   λL1,T1,L2,T2. ⦃L1, T1⦄ ➡ ⦃L2, T2⦄ ∨ ⦃L2, T2⦄ ➡ ⦃L1, T1⦄.
+
+interpretation
+   "context-free parallel conversion (closure)"
+   'FocalizedPConv L1 T1 L2 T2 = (fpc L1 T1 L2 T2).
+
+(* Basic properties *********************************************************)
+
+lemma fpc_refl: bi_reflexive … fpc.
+/2 width=1/ qed.
+
+lemma fpc_sym: bi_symmetric … fpc.
+#L1 #L2 #T1 #T2 * /2 width=1/
+qed.
+
+(* Basic forward lemmas *****************************************************)
+
+lemma fpc_fwd_fpr: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⬌ ⦃L2, T2⦄ →
+                   ∃∃L,T. ⦃L1, T1⦄ ➡ ⦃L, T⦄ & ⦃L2, T2⦄ ➡ ⦃L, T⦄.
+#L1 #L2 #T1 #T2 * /2 width=4/
+qed.

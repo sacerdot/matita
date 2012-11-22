@@ -1,0 +1,55 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/computation/fprs.ma".
+include "basic_2/equivalence/fpcs.ma".
+
+(* CONTEXT-FREE PARALLEL EQUIVALENCE ON CLOSURES ****************************)
+
+(* Properties on context-free parallel computation for closures *************)
+
+(* Note: lemma 1000 *)
+lemma fpcs_fprs_dx: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ➡* ⦃L2, T2⦄ → ⦃L1, T1⦄ ⬌* ⦃L2, T2⦄.
+#L1 #L2 #T1 #T2 #H @(fprs_ind … H) -L2 -T2 /width=1/ /3 width=4/
+qed.
+
+lemma fpcs_fprs_sn: ∀L1,L2,T1,T2. ⦃L2, T2⦄ ➡* ⦃L1, T1⦄ → ⦃L1, T1⦄ ⬌* ⦃L2, T2⦄.
+#L1 #L2 #T1 #T2 #H @(fprs_ind_dx … H) -L2 -T2 /width=1/ /3 width=4/
+qed.
+
+lemma fpcs_fprs_strap1: ∀L1,L,T1,T. ⦃L1, T1⦄ ⬌* ⦃L, T⦄ → ∀L2,T2. ⦃L, T⦄ ➡* ⦃L2, T2⦄ → ⦃L1, T1⦄ ⬌* ⦃L2, T2⦄.
+#L1 #L #T1 #T #HT1 #L2 #T2 #H @(fprs_ind … H) -L2 -T2 /width=1/ /2 width=4/
+qed.
+
+lemma fpcs_fprs_strap2: ∀L1,L,T1,T. ⦃L1, T1⦄ ➡* ⦃L, T⦄ → ∀L2,T2. ⦃L, T⦄ ⬌* ⦃L2, T2⦄ → ⦃L1, T1⦄ ⬌* ⦃L2, T2⦄.
+#L1 #L #T1 #T #H #L2 #T2 #HT2 @(fprs_ind_dx … H) -L1 -T1 /width=1/ /2 width=4/
+qed.
+
+lemma fpcs_fprs_div: ∀L1,L,T1,T. ⦃L1, T1⦄ ⬌* ⦃L, T⦄ → ∀L2,T2. ⦃L2, T2⦄ ➡* ⦃L, T⦄ → ⦃L1, T1⦄ ⬌* ⦃L2, T2⦄.
+#L1 #L #T1 #T #HT1 #L2 #T2 #H @(fprs_ind_dx … H) -L2 -T2 /width=1/ /2 width=4/
+qed.
+
+lemma fpcs_fprs_conf: ∀L1,L,T1,T. ⦃L, T⦄ ➡* ⦃L1, T1⦄ → ∀L2,T2. ⦃L, T⦄ ⬌* ⦃L2, T2⦄ → ⦃L1, T1⦄ ⬌* ⦃L2, T2⦄.
+#L1 #L #T1 #T #H #T2 #HT2 @(fprs_ind … H) -L1 -T1 /width=1/ /3 width=4 by fpcs_fpr_conf/ (**) (* /2 width=4/ does not work *)
+qed.
+
+lemma fprs_div: ∀L1,L,T1,T. ⦃L1, T1⦄ ➡* ⦃L, T⦄ → ∀L2,T2. ⦃L2, T2⦄ ➡* ⦃L, T⦄ → ⦃L1, T1⦄ ⬌* ⦃L2, T2⦄.
+#L1 #L #T1 #T #HT1 #T2 #L2 #H @(fprs_ind_dx … H) -L2 -T2 /2 width=1/ /2 width=4/
+qed.
+
+lemma fprs_fpr_div: ∀L1,L,T1,T. ⦃L1, T1⦄ ➡* ⦃L, T⦄ → ∀L2,T2. ⦃L2, T2⦄ ➡ ⦃L, T⦄ → ⦃L1, T1⦄ ⬌* ⦃L2, T2⦄.
+/3 width=7 by bi_step, fprs_div/ qed-.
+
+lemma fpr_fprs_div: ∀L1,L,T1,T. ⦃L1, T1⦄ ➡ ⦃L, T⦄ → ∀L2,T2. ⦃L2, T2⦄ ➡* ⦃L, T⦄ → ⦃L1, T1⦄ ⬌* ⦃L2, T2⦄.
+/3 width=4 by bi_step, fprs_div/ qed-.

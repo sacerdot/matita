@@ -430,6 +430,10 @@ notation "hvbox( L ⊢ break term 46 T1 ⬌* break term 46 T2 )"
    non associative with precedence 45
    for @{ 'PConvStar $L $T1 $T2 }.
 
+notation "hvbox( h ⊢ break term 46 L1 ⊢ • ⊑ [ g ] break term 46 L2 )"
+   non associative with precedence 45
+   for @{ 'CrSubEqSE $h $g $L1 $L2 }.
+
 notation "hvbox( ⦃ L1 ⦄ ⬌ * break ⦃ L2 ⦄ )"
    non associative with precedence 45
    for @{ 'FocalizedPConvStar $L1 $L2 }.

@@ -1,0 +1,73 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/conversion/fpc.ma".
+
+(* CONTEXT-FREE PARALLEL EQUIVALENCE ON CLOSURES ****************************)
+
+definition fpcs: bi_relation lenv term ≝ bi_TC … fpc.
+
+interpretation "context-free parallel equivalence (closure)"
+   'FocalizedPConvStar L1 T1 L2 T2 = (fpcs L1 T1 L2 T2).
+
+(* Basic eliminators ********************************************************)
+
+lemma fpcs_ind: ∀L1,T1. ∀R:relation2 lenv term. R L1 T1 →
+                (∀L,L2,T,T2. ⦃L1, T1⦄ ⬌* ⦃L, T⦄ → ⦃L, T⦄ ⬌ ⦃L2, T2⦄ → R L T → R L2 T2) →
+                ∀L2,T2. ⦃L1, T1⦄ ⬌* ⦃L2, T2⦄ → R L2 T2.
+/3 width=7 by bi_TC_star_ind/ qed-.
+
+lemma fpcs_ind_dx: ∀L2,T2. ∀R:relation2 lenv term. R L2 T2 →
+                   (∀L1,L,T1,T. ⦃L1, T1⦄ ⬌ ⦃L, T⦄ → ⦃L, T⦄ ⬌* ⦃L2, T2⦄ → R L T → R L1 T1) →
+                   ∀L1,T1. ⦃L1, T1⦄ ⬌* ⦃L2, T2⦄ → R L1 T1.
+/3 width=7 by bi_TC_star_ind_dx/ qed-.
+
+(* Basic properties *********************************************************)
+
+lemma fpcs_refl: bi_reflexive … fpcs.
+/2 width=1/ qed.
+
+lemma fpcs_sym: bi_symmetric … fpcs.
+/3 width=1/ qed.
+
+lemma fpcs_strap1: ∀L1,L,L2,T1,T,T2. ⦃L1, T1⦄ ⬌* ⦃L, T⦄ → ⦃L, T⦄ ⬌ ⦃L2, T2⦄ → ⦃L1, T1⦄ ⬌* ⦃L2, T2⦄.
+/2 width=4/ qed.
+
+lemma fpcs_strap2: ∀L1,L,L2,T1,T,T2. ⦃L1, T1⦄ ⬌ ⦃L, T⦄ → ⦃L, T⦄ ⬌* ⦃L2, T2⦄ → ⦃L1, T1⦄ ⬌* ⦃L2, T2⦄.
+/2 width=4/ qed.
+
+lemma fpcs_fpr_dx: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ➡ ⦃L2, T2⦄ → ⦃L1, T1⦄ ⬌* ⦃L2, T2⦄.
+/3 width=1/ qed.
+
+lemma fpcs_fpr_sn: ∀L1,L2,T1,T2. ⦃L2, T2⦄ ➡ ⦃L1, T1⦄ → ⦃L1, T1⦄ ⬌* ⦃L2, T2⦄.
+/3 width=1/ qed.
+
+lemma fpcs_fpr_strap1: ∀L1,L,T1,T. ⦃L1, T1⦄ ⬌* ⦃L, T⦄ →
+                       ∀L2,T2. ⦃L, T⦄ ➡ ⦃L2, T2⦄ → ⦃L1, T1⦄ ⬌* ⦃L2, T2⦄.
+/3 width=4/ qed.
+
+lemma fpcs_fpr_strap2: ∀L1,L,T1,T. ⦃L1, T1⦄ ➡ ⦃L, T⦄ →
+                       ∀L2,T2. ⦃L, T⦄ ⬌* ⦃L2, T2⦄ → ⦃L1, T1⦄ ⬌* ⦃L2, T2⦄.
+/3 width=4/ qed.
+
+lemma fpcs_fpr_div: ∀L1,L,T1,T. ⦃L1, T1⦄ ⬌* ⦃L, T⦄ →
+                    ∀L2,T2. ⦃L2, T2⦄ ➡ ⦃L, T⦄ → ⦃L1, T1⦄ ⬌* ⦃L2, T2⦄.
+/3 width=4/ qed.
+
+lemma fpr_div: ∀L1,L,T1,T. ⦃L1, T1⦄ ➡ ⦃L, T⦄ → ∀L2,T2. ⦃L2, T2⦄ ➡ ⦃L, T⦄ → ⦃L1, T1⦄ ⬌* ⦃L2, T2⦄.
+/3 width=4/ qed-.
+
+lemma fpcs_fpr_conf: ∀L1,L,T1,T. ⦃L, T⦄ ➡ ⦃L1, T1⦄ →
+                     ∀L2,T2. ⦃L, T⦄ ⬌* ⦃L2, T2⦄ → ⦃L1, T1⦄ ⬌* ⦃L2, T2⦄.
+/3 width=4/ qed.

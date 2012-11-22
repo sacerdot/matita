@@ -164,7 +164,6 @@ elim (cpcs_inv_cprs … HT12) -HT12
 /3 width=5 by cprs_div, cprs_lsubs_trans/ (**) (* /3 width=5/ is a bit slow *)
 qed.
 
-
 (* Basic_1: was: pc3_lift *)
 lemma cpcs_lift: ∀L,K,d,e. ⇩[d, e] L ≡ K →
                  ∀T1,U1. ⇧[d, e] T1 ≡ U1 → ∀T2,U2. ⇧[d, e] T2 ≡ U2 →
