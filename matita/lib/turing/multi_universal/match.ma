@@ -381,7 +381,7 @@ definition R_match_step_false ≝
    ((current sig (nth dst (tape sig) int (niltape sig)) = None ? ) ∧ outt = int) ∨
    (∃ls0,rs0. 
     nth dst ? int (niltape ?) = midtape sig ls0 x (xs@rs0) ∧
-    ∀rsj,end,c. 
+    ∀rsj,c. 
     rs0 = c::rsj →
     outt = change_vec ??
            (change_vec ?? int (midtape sig (reverse ? xs@x::ls) end rs) src)
@@ -474,36 +474,36 @@ lemma sem_match_step :
    | >Hcurtc in Hcurta_src; #H destruct (H) cases (is_endc s) in Hcend;
      normalize #H destruct (H) // ]
  |#ls #x #xs #ci #rs #ls0 #cj #rs0 #Htasrc_mid #Htadst_mid #Hcicj #Hnotendc
-  lapply (Hcomp2 … Htasrc_mid Htadst_mid Hnotendc (or_intror ?? Hcicj))
-  -Hcomp2 #Hcomp2
+  cases (Hcomp2 … Htasrc_mid Htadst_mid Hnotendc) [ * #H destruct (H) ]
+  * #cj' * #rs0' * #Hcjrs0 destruct (Hcjrs0) -Hcomp2 #Hcomp2
+  lapply (Hcomp2 (or_intror ?? Hcicj)) -Hcomp2 #Htc
   cases Htb #td * * #Htd #_ >Htasrc_mid in Hcurta_src; normalize in ⊢ (%→?);
   #H destruct (H)
-  >(Htd ls ci (reverse ? xs) rs s ??? ls0 cj (reverse ? xs) s rs0 (refl ??)) //
-  [| >Hcomp2 >nth_change_vec //
+  >(Htd ls ci (reverse ? xs) rs s ??? ls0 cj' (reverse ? xs) s rs0' (refl ??)) //
+  [| >Htc >nth_change_vec //
    | #c0 #Hc0 @(Hnotstart c0) >Htasrc_mid 
      cases (orb_true_l … Hc0) -Hc0 #Hc0
     [@memb_append_l2 >(\P Hc0) @memb_hd
     |@memb_append_l1 <(reverse_reverse …xs) @memb_reverse //
     ]
-   | >Hcomp2 >nth_change_vec_neq [|@sym_not_eq // ] @nth_change_vec // ]
+   | >Htc >nth_change_vec_neq [|@sym_not_eq // ] @nth_change_vec // ]
   * * #_ #Htbdst #Htbelse %
   [ @(eq_vec … (niltape ?)) #i #Hi cases (decidable_eq_nat i dst) #Hidst
-     [ >Hidst >nth_change_vec // >Htadst_mid >(Htbdst ls0 s (xs@cj::rs0))
+     [ >Hidst >nth_change_vec // >Htadst_mid >(Htbdst ls0 s (xs@cj'::rs0'))
        [ cases xs //
        | >nth_change_vec // ]
      | >nth_change_vec_neq [|@sym_not_eq //]
        <Htbelse [|@sym_not_eq // ]
        >nth_change_vec_neq [|@sym_not_eq //]
-        (* STOP. *)
        cases (decidable_eq_nat i src) #Hisrc
        [ >Hisrc >nth_change_vec // >Htasrc_mid //
        | >nth_change_vec_neq [|@sym_not_eq //]
          <(Htbelse i) [|@sym_not_eq // ]
-         >Hcomp2 >nth_change_vec_neq [|@sym_not_eq // ]
+         >Htc >nth_change_vec_neq [|@sym_not_eq // ]
          >nth_change_vec_neq [|@sym_not_eq // ] //
        ]
      ]
-  | >Hcomp2 in Hcurtc; >nth_change_vec_neq [|@sym_not_eq //] 
+  | >Htc in Hcurtc; >nth_change_vec_neq [|@sym_not_eq //] 
      >nth_change_vec // whd in ⊢ (??%?→?); 
      #H destruct (H) cases (is_endc c) in Hcend;
      normalize #H destruct (H) // ]
@@ -518,39 +518,78 @@ lemma sem_match_step :
     [#_ #Hmid_dst cases (Hmid_dst c_dst (refl …)) -Hmid_dst
      #ls_dst * #rs_dst #Hmid_dst %2
      cases (comp_list … (xs@end::rs) rs_dst is_endc) #xs1 * #rsi * #rsj * * * 
-     #Hrs_src #Hrs_dst #Hnotendc #Hneq    
-     %{ls_dst} %{rsj} % 
-      [<Hrs_dst >(\P Hceq) // ]]     
-         #rsi0 #rsj0 #end #c #Hend #Hc_dst
-         >Hrs_src in Hmid_src; >Hend #Hmid_src
-         >Hrs_dst in Hmid_dst; >Hc_dst <(\P Hceq) #Hmid_dst
-         cut (is_endc end = true ∨ end ≠ c)
-         [cases (Hneq … Hend) /2/ -Hneq #Hneq %2 @(Hneq … Hc_dst) ] #Hneq
-         lapply (Hcomp2 … Hmid_src Hmid_dst ? Hneq)
-          [#c0 #Hc0 cases (orb_true_l … Hc0) -Hc0 #Hc0
-            [ >(\P Hc0) //
-            | @Hnotendc // ] 
-          ]
-         -Hcomp2 #Hcomp2 <Hcomp2
-         % // % [ 
-           >Hcomp2 in Hc; >nth_change_vec_neq [|@sym_not_eq //]
-            >nth_change_vec // #H lapply (H ? (refl …)) 
-            cases (is_endc end) [|normalize #H destruct (H) ]
-            #_ % // #c0 #Hc0 cases (orb_true_l … Hc0) -Hc0 #Hc0
-              [ >(\P Hc0) // | @Hnotendc // ]
-         |@Hmid_dst] 
-         ]
-      |#_ #Hcomp1 #Hsrc cases (Hsrc ? (refl ??)) -Hsrc #ls * #rs #Hsrc
-       %1 % 
-        [% % %{c_src} % // lapply (Hc c_src) -Hc >Hcomp1
-         [| %2 % % @(not_to_not ??? (\Pf Hceq)) #H destruct (H) // ]
-         cases (is_endc c_src) //
-         >Hsrc #Hc lapply (Hc (refl ??)) normalize #H destruct (H)
-        |@Hcomp1 %2 %1 %1 @(not_to_not ??? (\Pf Hceq)) #H destruct (H) //
-        ]
+     #Hrs_src #Hrs_dst #Hnotendxs1 #Hneq %{ls_dst} %{rsj} >Hrs_dst in Hmid_dst; #Hmid_dst
+     cut (∃r1,rs1.rsi = r1::rs1) [@daemon] * #r1 * #rs1 #Hrs1 >Hrs1 in Hrs_src;
+     #Hrs_src >Hrs_src in Hmid_src; #Hmid_src <(\P Hceq) in Hmid_dst; #Hmid_dst
+     lapply (Hcomp2 ??????? Hmid_src Hmid_dst ?) 
+     [ #c0 #Hc0 cases (orb_true_l … Hc0) -Hc0 #Hc0
+       [ >(\P Hc0) @Hnotend @memb_hd | @Hnotendxs1 //]
+     | *
+       [ * #Hrsj #Hta %
+         [ >Hta in Hc; >nth_change_vec_neq [|@sym_not_eq //] >nth_change_vec //
+           #Hc lapply (Hc ? (refl ??)) #Hendr1
+           cut (xs = xs1)
+           [ lapply Hnotendxs1 lapply Hnotend lapply Hrs_src lapply xs1
+             -Hnotendxs1 -Hnotend -Hrs_src -xs1 elim xs
+             [ * normalize in ⊢ (%→?); //
+               #x2 #xs2 normalize in ⊢ (%→?); #Heq destruct (Heq) #_ #Hnotendxs1
+               lapply (Hnotendxs1 ? (memb_hd …)) >Hend #H destruct (H)
+             | #x2 #xs2 #IH *
+               [ normalize in ⊢ (%→?); #Heq destruct (Heq) #Hnotendc
+                 >Hnotendc in Hendr1; [| @memb_cons @memb_hd ]
+                 normalize in ⊢ (%→?); #H destruct (H)
+               | #x3 #xs3 normalize in ⊢ (%→?); #Heq destruct (Heq)
+                 #Hnotendc #Hnotendcxs1 @eq_f @IH
+                 [ @(cons_injective_r … Heq)
+                 | #c0 #Hc0 @Hnotendc cases (orb_true_l … Hc0) -Hc0 #Hc0
+                   [ >(\P Hc0) @memb_hd
+                   | @memb_cons @memb_cons // ]
+                 | #c #Hc @Hnotendcxs1 @memb_cons // ]
+               ]
+             ]
+           | #Hxsxs1 >Hmid_dst >Hxsxs1 % ]
+         | #rsj0 #c >Hrsj #Hrsj0 destruct (Hrsj0) ]
+       | * #cj * #rs2 * #Hrs2 #Hta lapply (Hta ?) 
+         [ cases (Hneq … Hrs1) /2/ #H %2 @(H ?? Hrs2) ]
+         -Hta #Hta >Hta in Hc; >nth_change_vec_neq [|@sym_not_eq //] 
+         >nth_change_vec // #Hc lapply (Hc ? (refl ??)) #Hendr1
+         (* lemmatize this proof *) cut (xs = xs1)
+         [ lapply Hnotendxs1 lapply Hnotend lapply Hrs_src lapply xs1
+           -Hnotendxs1 -Hnotend -Hrs_src -xs1 elim xs
+           [ * normalize in ⊢ (%→?); //
+             #x2 #xs2 normalize in ⊢ (%→?); #Heq destruct (Heq) #_ #Hnotendxs1
+             lapply (Hnotendxs1 ? (memb_hd …)) >Hend #H destruct (H)
+           | #x2 #xs2 #IH *
+             [ normalize in ⊢ (%→?); #Heq destruct (Heq) #Hnotendc
+               >Hnotendc in Hendr1; [| @memb_cons @memb_hd ]
+               normalize in ⊢ (%→?); #H destruct (H)
+             | #x3 #xs3 normalize in ⊢ (%→?); #Heq destruct (Heq)
+               #Hnotendc #Hnotendcxs1 @eq_f @IH
+               [ @(cons_injective_r … Heq)
+               | #c0 #Hc0 @Hnotendc cases (orb_true_l … Hc0) -Hc0 #Hc0
+                 [ >(\P Hc0) @memb_hd
+                 | @memb_cons @memb_cons // ]
+               | #c #Hc @Hnotendcxs1 @memb_cons // ]
+             ]
+           ]
+         | #Hxsxs1 >Hmid_dst >Hxsxs1 % //
+           #rsj0 #c #Hcrsj destruct (Hxsxs1 Hrs2 Hcrsj) @eq_f3 //
+           @eq_f3 // lapply (append_l2_injective ?????? Hrs_src) //
+           #Hendr1 destruct (Hendr1) % ]
+       ]
+     ]
+   (* STOP *)
+   | #Hcomp1 #Hsrc cases (Hsrc ? (refl ??)) -Hsrc #ls0 * #rs0 #Hsrc %2
+     %1 % 
+      [% % %{c_src} % // lapply (Hc c_src) -Hc >Hcomp1
+       [| %2 % % @(not_to_not ??? (\Pf Hceq)) #H destruct (H) // ]
+       cases (is_endc c_src) //
+       >Hsrc #Hc lapply (Hc (refl ??)) normalize #H destruct (H)
+      |@Hcomp1 %2 %1 %1 @(not_to_not ??? (\Pf Hceq)) #H destruct (H) //
       ]
     ]
-  ] 
+  ]
+] 
 qed.
 
 #intape #outtape #ta * #Hcomp1 #Hcomp2 * #tb * * #Hc #Htb 
