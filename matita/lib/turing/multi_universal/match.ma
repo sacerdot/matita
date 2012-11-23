@@ -215,10 +215,15 @@ definition R_compare ≝
    (current ? (nth i ? int (niltape ?)) ≠ current ? (nth j ? int (niltape ?)) ∨
     current ? (nth i ? int (niltape ?)) = None ? ∨
     current ? (nth j ? int (niltape ?)) = None ?) → outt = int) ∧
-  (∀ls,x,xs,ci,rs,ls0,cj,rs0. 
+  (∀ls,x,xs,ci,rs,ls0,rs0. 
     nth i ? int (niltape ?) = midtape sig ls x (xs@ci::rs) →
-    nth j ? int (niltape ?) = midtape sig ls0 x (xs@cj::rs0) →
+    nth j ? int (niltape ?) = midtape sig ls0 x (xs@rs0) →
     (∀c0. memb ? c0 (x::xs) = true → is_endc c0 = false) → 
+    (rs0 = [ ] → 
+     outt = change_vec ?? 
+           (change_vec ?? int (midtape sig (reverse ? xs@x::ls) ci rs) i)
+           (mk_tape sig (reverse ? xs@x::ls0) (None ?) []) j) ∨
+    ∀cj,rs1.rs0 = cj::rs1 →
     (is_endc ci = true ∨ ci ≠ cj) → 
     outt = change_vec ?? 
            (change_vec ?? int (midtape sig (reverse ? xs@x::ls) ci rs) i)
@@ -336,7 +341,21 @@ definition Rtc_multi_true ≝
 definition Rtc_multi_false ≝ 
   λalpha,test,n,i.λt1,t2:Vector ? (S n).
     (∀c. current alpha (nth i ? t1 (niltape ?)) = Some ? c → test c = false) ∧ t2 = t1.
-   
+
+definition R_match_step_false ≝ 
+  λsrc,dst,sig,n,is_endc.λint,outt: Vector (tape sig) (S n).
+  ∀ls,x,xs,end,rs.
+  nth src ? int (niltape ?) = midtape sig ls x (xs@end::rs) →
+  (∀c0. memb ? c0 (x::xs) = true → is_endc c0 = false) → is_endc end = true →
+   ((current sig (nth dst (tape sig) int (niltape sig)) = None ? ) ∧ outt = int) ∨
+   (∃ls0,rs0. 
+    nth dst ? int (niltape ?) = midtape sig ls0 x (xs@rs0) ∧
+    ∀rsj,end,c. 
+    rs0 = c::rsj →
+    outt = change_vec ??
+           (change_vec ?? int (midtape sig (reverse ? xs@x::ls) end rs) src)
+           (midtape sig (reverse ? xs@x::ls0) c rsj) dst).
+(*  
 definition R_match_step_false ≝  
   λsrc,dst,sig,n,is_endc.λint,outt: Vector (tape sig) (S n).
    (((∃x.current ? (nth src ? int (niltape ?)) = Some ? x ∧ is_endc x = true) ∨
@@ -352,6 +371,7 @@ definition R_match_step_false ≝
     outt = change_vec ??
            (change_vec ?? int (midtape sig (reverse ? xs@x::ls) end rsi) src)
            (midtape sig (reverse ? xs@x::ls0) c rsj) dst).
+*)
 
 definition R_match_step_true ≝ 
   λsrc,dst,sig,n,is_startc,is_endc.λint,outt: Vector (tape sig) (S n).
@@ -459,6 +479,51 @@ lemma sem_match_step :
   ]
 |#intape #outtape #ta * #Hcomp1 #Hcomp2 * #tb * * #Hc #Htb 
  whd in ⊢ (%→?); #Hout >Hout >Htb whd
+ #ls #c_src #xs #end #rs #Hmid_src #Hnotend #Hend
+ lapply (current_to_midtape sig (nth dst ? intape (niltape ?)))
+ cases (current … (nth dst ? intape (niltape ?))) in Hcomp1;
+  [#Hcomp1 #_ %1 % [% | @Hcomp1 %2 %2 % ]
+  |#c_dst cases (true_or_false (c_src == c_dst)) #Hceq
+    [#_ #Hmid_dst cases (Hmid_dst c_dst (refl …)) -Hmid_dst
+     #ls_dst * #rs_dst #Hmid_dst %2
+     cases (comp_list … (xs@end::rs) rs_dst is_endc) #xs1 * #rsi * #rsj * * * 
+     #Hrs_src #Hrs_dst #Hnotendc #Hneq    
+     %{ls_dst} %{rsj} % 
+      [<Hrs_dst >(\P Hceq) // ]]     
+         #rsi0 #rsj0 #end #c #Hend #Hc_dst
+         >Hrs_src in Hmid_src; >Hend #Hmid_src
+         >Hrs_dst in Hmid_dst; >Hc_dst <(\P Hceq) #Hmid_dst
+         cut (is_endc end = true ∨ end ≠ c)
+         [cases (Hneq … Hend) /2/ -Hneq #Hneq %2 @(Hneq … Hc_dst) ] #Hneq
+         lapply (Hcomp2 … Hmid_src Hmid_dst ? Hneq)
+          [#c0 #Hc0 cases (orb_true_l … Hc0) -Hc0 #Hc0
+            [ >(\P Hc0) //
+            | @Hnotendc // ] 
+          ]
+         -Hcomp2 #Hcomp2 <Hcomp2
+         % // % [ 
+           >Hcomp2 in Hc; >nth_change_vec_neq [|@sym_not_eq //]
+            >nth_change_vec // #H lapply (H ? (refl …)) 
+            cases (is_endc end) [|normalize #H destruct (H) ]
+            #_ % // #c0 #Hc0 cases (orb_true_l … Hc0) -Hc0 #Hc0
+              [ >(\P Hc0) // | @Hnotendc // ]
+         |@Hmid_dst] 
+         ]
+      |#_ #Hcomp1 #Hsrc cases (Hsrc ? (refl ??)) -Hsrc #ls * #rs #Hsrc
+       %1 % 
+        [% % %{c_src} % // lapply (Hc c_src) -Hc >Hcomp1
+         [| %2 % % @(not_to_not ??? (\Pf Hceq)) #H destruct (H) // ]
+         cases (is_endc c_src) //
+         >Hsrc #Hc lapply (Hc (refl ??)) normalize #H destruct (H)
+        |@Hcomp1 %2 %1 %1 @(not_to_not ??? (\Pf Hceq)) #H destruct (H) //
+        ]
+      ]
+    ]
+  ] 
+qed.
+
+#intape #outtape #ta * #Hcomp1 #Hcomp2 * #tb * * #Hc #Htb 
+ whd in ⊢ (%→?); #Hout >Hout >Htb whd
  lapply (current_to_midtape sig (nth src ? intape (niltape ?)))
  cases (current … (nth src ? intape (niltape ?))) in Hcomp1; 
   [#Hcomp1 #_ %1 % [%1 %2 // | @Hcomp1 %2 %1 %2 %]
@@ -523,15 +588,17 @@ definition R_match_m ≝
     (∀z. memb ? z (x::xs) = true → is_endc x = false) →
     nth i ? int (niltape ?) = midtape sig ls x (xs@ci::rs) →
     nth j ? int (niltape ?) = midtape sig ls0 x0 rs0 →
-    (∃l,l1.x0::rs0 = l@x::xs@l1 → 
+    (∃l,l1.x0::rs0 = l@x::xs@l1 ∧
      ∀cj,l2.l1=cj::l2 →
      outt = change_vec ?? 
             (change_vec ?? int (midtape sig (reverse ? xs@x::ls) ci rs) i)
             (midtape sig ((reverse ? (l@x::xs))@ls0) cj l2) j) ∨
     ∀l,l1.x0::rs0 ≠ l@x::xs@l1).
 
+(*
 axiom sub_list_dec: ∀A.∀l,ls:list A. 
   ∃l1,l2. l = l1@ls@l2 ∨ ∀l1,l2. l ≠ l1@ls@l2.
+*)
 
 lemma wsem_match_m : ∀src,dst,sig,n,is_startc,is_endc.
 src ≠ dst → src < S n → dst < S n → 
@@ -577,7 +644,8 @@ lapply (sem_while … (sem_match_step src dst sig n is_startc is_endc Hneq Hsrc 
       ] 
     ]
   ]
-| 
+|#tc #td #te #Hd #Hstar #IH #He lapply (IH He) -IH *
+    #IH1 #IH2 % [@IH1]
     
     
      cases (comp_list ? (x1::xs1@ci::rsi) (x2::rs2) is_endc)
