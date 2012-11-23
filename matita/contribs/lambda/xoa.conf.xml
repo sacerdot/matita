@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<helm_registry>
+  <section name="matita">
+    <key name="rt_base_dir">$(MATITA_RT_BASE_DIR)</key>
+  </section>
+  <section name="xoa">
+    <key name="output_dir">contribs/lambda/</key>
+    <key name="objects">xoa</key>
+    <key name="notations">xoa_notation</key>
+    <key name="include">basics/pts.ma</key>
+    <key name="ex">2 1</key>
+    <key name="ex">3 2</key>
+  </section>
+</helm_registry>
