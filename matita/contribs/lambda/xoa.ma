@@ -32,3 +32,13 @@ inductive ex3_2 (A0,A1:Type[0]) (P0,P1,P2:A0→A1→Prop) : Prop ≝
 
 interpretation "multiple existental quantifier (3, 2)" 'Ex P0 P1 P2 = (ex3_2 ? ? P0 P1 P2).
 
+(* multiple disjunction connective (3) *)
+
+inductive or3 (P0,P1,P2:Prop) : Prop ≝
+   | or3_intro0: P0 → or3 ? ? ?
+   | or3_intro1: P1 → or3 ? ? ?
+   | or3_intro2: P2 → or3 ? ? ?
+.
+
+interpretation "multiple disjunction connective (3)" 'Or P0 P1 P2 = (or3 P0 P1 P2).
+

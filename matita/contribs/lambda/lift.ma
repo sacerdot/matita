@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "trichotomy.ma".
 include "term.ma".
 
 (* RELOCATION ***************************************************************)
@@ -48,6 +47,21 @@ qed.
 lemma lift_vref_ge: ∀d,h,i. d ≤ i → ↑[d, h] #i = #(i+h).
 #d #h #i #H elim (le_to_or_lt_eq … H) -H
 normalize // /3 width=1/
+qed.
+
+lemma lift_inv_vref_lt: ∀j,d. j < d → ∀h,M. ↑[d, h] M = #j → M = #j.
+#j #d #Hjd #h * normalize
+[ #i elim (lt_or_eq_or_gt i d) #Hid
+  [ >(tri_lt ???? … Hid) -Hid -Hjd //
+  | #H destruct >tri_eq in Hjd; #H
+    elim (plus_lt_false … H)
+  | >(tri_gt ???? … Hid)
+    lapply (transitive_lt … Hjd Hid) -Hjd -Hid #H #H0 destruct
+    elim (plus_lt_false … H)
+  ]
+| #A #H destruct
+| #B #A #H destruct
+]
 qed.
 
 lemma lift_inv_abst: ∀C,d,h,M. ↑[d, h] M = 𝛌.C →

@@ -18,7 +18,7 @@ include "preamble.ma".
 
 (* TERM STRUCTURE ***********************************************************)
 
-(* Policy: term metavariables: A, B, C, D
+(* Policy: term metavariables: A, B, C, D, M, N
            de Bruijn indexes : i, j
 *)
 inductive term: Type[0] ≝

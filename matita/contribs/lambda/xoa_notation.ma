@@ -34,3 +34,9 @@ notation < "hvbox(∃∃ ident x0 , ident x1 break . term 19 P0 break & term 19 
  non associative with precedence 20
  for @{ 'Ex (λ${ident x0}:$T0.λ${ident x1}:$T1.$P0) (λ${ident x0}:$T0.λ${ident x1}:$T1.$P1) (λ${ident x0}:$T0.λ${ident x1}:$T1.$P2) }.
 
+(* multiple disjunction connective (3) *)
+
+notation "hvbox(∨∨ term 29 P0 break | term 29 P1 break | term 29 P2)"
+ non associative with precedence 30
+ for @{ 'Or $P0 $P1 $P2 }.
+
