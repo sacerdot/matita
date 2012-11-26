@@ -20,25 +20,25 @@ include "term.ma".
            height metavariables       : h, k
 *)
 (* Note: indexes start at zero *)
-let rec lift d h M on M ≝ match M with
+let rec lift h d M on M ≝ match M with
 [ VRef i   ⇒ #(tri … i d i (i + h) (i + h))
-| Abst A   ⇒ 𝛌. (lift (d+1) h A)
-| Appl B A ⇒ @(lift d h B). (lift d h A)
+| Abst A   ⇒ 𝛌. (lift h (d+1) A)
+| Appl B A ⇒ @(lift h d B). (lift h d A)
 ].
 
-interpretation "relocation" 'Lift d h M = (lift d h M).
+interpretation "relocation" 'Lift h d M = (lift h d M).
 
 notation "hvbox( ↑ [ d , break h ] break term 55 M )"
    non associative with precedence 55
-   for @{ 'Lift $d $h $M }.
+   for @{ 'Lift $h $d $M }.
 
 notation > "hvbox( ↑ [ h ] break term 55 M )"
    non associative with precedence 55
-   for @{ 'Lift 0 $h $M }.
+   for @{ 'Lift $h 0 $M }.
 
 notation > "hvbox( ↑ term 55 M )"
    non associative with precedence 55
-   for @{ 'Lift 0 1 $M }.
+   for @{ 'Lift 1 0 $M }.
 
 lemma lift_vref_lt: ∀d,h,i. i < d → ↑[d, h] #i = #i.
 normalize /3 width=1/
@@ -49,6 +49,19 @@ lemma lift_vref_ge: ∀d,h,i. d ≤ i → ↑[d, h] #i = #(i+h).
 normalize // /3 width=1/
 qed.
 
+lemma lift_vref_pred: ∀d,i. d < i → ↑[d, 1] #(i-1) = #i.
+#d #i #Hdi >lift_vref_ge /2 width=1/
+<plus_minus_m_m // /2 width=2/ 
+qed.
+
+lemma lift_id: ∀M,d. ↑[d, 0] M = M.
+#M elim M -M
+[ #i #d elim (lt_or_ge i d) /2 width=1/
+| /3 width=1/
+| /3 width=1/
+]
+qed.
+
 lemma lift_inv_vref_lt: ∀j,d. j < d → ∀h,M. ↑[d, h] M = #j → M = #j.
 #j #d #Hjd #h * normalize
 [ #i elim (lt_or_eq_or_gt i d) #Hid
@@ -56,12 +69,38 @@ lemma lift_inv_vref_lt: ∀j,d. j < d → ∀h,M. ↑[d, h] M = #j → M = #j.
   | #H destruct >tri_eq in Hjd; #H
     elim (plus_lt_false … H)
   | >(tri_gt ???? … Hid)
-    lapply (transitive_lt … Hjd Hid) -Hjd -Hid #H #H0 destruct
+    lapply (transitive_lt … Hjd Hid) -d #H #H0 destruct
     elim (plus_lt_false … H)
   ]
 | #A #H destruct
 | #B #A #H destruct
 ]
+qed.
+
+lemma lift_inv_vref_ge: ∀j,d. d ≤ j → ∀h,M. ↑[d, h] M = #j →
+                        d + h ≤ j ∧ M = #(j-h).
+#j #d #Hdj #h * normalize
+[ #i elim (lt_or_eq_or_gt i d) #Hid
+  [ >(tri_lt ???? … Hid) #H destruct
+    lapply (le_to_lt_to_lt … Hdj Hid) -Hdj -Hid #H
+    elim (lt_refl_false … H)
+  | #H -Hdj destruct /2 width=1/
+  | >(tri_gt ???? … Hid) #H -Hdj destruct /4 width=1/
+  ]
+| #A #H destruct
+| #B #A #H destruct
+]
+qed-.
+
+lemma lift_inv_vref_be: ∀j,d,h. d ≤ j → j < d + h → ∀M. ↑[d, h] M = #j → ⊥.
+#j #d #h #Hdj #Hjdh #M #H elim (lift_inv_vref_ge … H) -H // -Hdj #Hdhj #_ -M
+lapply (lt_to_le_to_lt … Hjdh Hdhj) -d -h #H
+elim (lt_refl_false … H)
+qed-.
+
+lemma lift_inv_vref_ge_plus: ∀j,d,h. d + h ≤ j →
+                             ∀M. ↑[d, h] M = #j → M = #(j-h).
+#j #d #h #Hdhj #M #H elim (lift_inv_vref_ge … H) -H // -M /2 width=2/
 qed.
 
 lemma lift_inv_abst: ∀C,d,h,M. ↑[d, h] M = 𝛌.C →
@@ -80,4 +119,123 @@ lemma lift_inv_appl: ∀D,C,d,h,M. ↑[d, h] M = @D.C →
 | #A #H destruct
 | #B #A #H destruct /2 width=5/
 ]
+qed-.
+
+theorem lift_lift_le: ∀h1,h2,M,d1,d2. d2 ≤ d1 →
+                      ↑[d2, h2] ↑[d1, h1] M = ↑[d1 + h2, h1] ↑[d2, h2] M.
+#h1 #h2 #M elim M -M
+[ #i #d1 #d2 #Hd21 elim (lt_or_ge i d2) #Hid2
+  [ lapply (lt_to_le_to_lt … Hid2 Hd21) -Hd21 #Hid1
+    >(lift_vref_lt … Hid1) >(lift_vref_lt … Hid2)
+    >lift_vref_lt // /2 width=1/
+  | >(lift_vref_ge … Hid2) elim (lt_or_ge i d1) #Hid1
+    [ >(lift_vref_lt … Hid1) >(lift_vref_ge … Hid2)
+      >lift_vref_lt // -d2 /2 width=1/
+    | >(lift_vref_ge … Hid1) >lift_vref_ge /2 width=1/
+      >lift_vref_ge // /2 width=1/
+    ]
+  ]
+| normalize #A #IHA #d1 #d2 #Hd21 >IHA // /2 width=1/
+| normalize #B #A #IHB #IHA #d1 #d2 #Hd21 >IHB >IHA //
+]
+qed.
+
+theorem lift_lift_be: ∀h1,h2,M,d1,d2. d1 ≤ d2 → d2 ≤ d1 + h1 →
+                      ↑[d2, h2] ↑[d1, h1] M = ↑[d1, h1 + h2] M.
+#h1 #h2 #M elim M -M
+[ #i #d1 #d2 #Hd12 #Hd21 elim (lt_or_ge i d1) #Hid1
+  [ lapply (lt_to_le_to_lt … Hid1 Hd12) -Hd12 -Hd21 #Hid2
+    >(lift_vref_lt … Hid1) >(lift_vref_lt … Hid1) /2 width=1/
+  | lapply (transitive_le … (i+h1) Hd21 ?) -Hd21 -Hd12 /2 width=1/ #Hd2
+    >(lift_vref_ge … Hid1) >(lift_vref_ge … Hid1) /2 width=1/
+  ]
+| normalize #A #IHA #d1 #d2 #Hd12 #Hd21 >IHA // /2 width=1/
+| normalize #B #A #IHB #IHA #d1 #d2 #Hd12 #Hd21 >IHB >IHA //
+]
+qed.
+
+theorem lift_lift_ge: ∀h1,h2,M,d1,d2. d1 + h1 ≤ d2 →
+                      ↑[d2, h2] ↑[d1, h1] M = ↑[d1, h1] ↑[d2 - h1, h2] M.
+#h1 #h2 #M #d1 #d2 #Hd12
+>(lift_lift_le h2 h1) /2 width=1/ <plus_minus_m_m // /2 width=2/
+qed.
+
+(* Note: this is "∀h,d. injective … (lift h d)" *)
+theorem lift_inj: ∀h,M1,M2,d. ↑[d, h] M2 = ↑[d, h] M1 → M2 = M1.
+#h #M1 elim M1 -M1
+[ #i #M2 #d #H elim (lt_or_ge i d) #Hid
+  [ >(lift_vref_lt … Hid) in H; #H
+    >(lift_inv_vref_lt … Hid … H) -M2 -d -h //
+  | >(lift_vref_ge … Hid) in H; #H
+    >(lift_inv_vref_ge_plus … H) -M2 // /2 width=1/
+  ]
+| normalize #A1 #IHA1 #M2 #d #H
+  elim (lift_inv_abst … H) -H #A2 #HA12 #H destruct
+  >(IHA1 … HA12) -IHA1 -A2 //
+| normalize #B1 #A1 #IHB1 #IHA1 #M2 #d #H
+  elim (lift_inv_appl … H) -H #B2 #A2 #HB12 #HA12 #H destruct
+  >(IHB1 … HB12) -IHB1 -B2 >(IHA1 … HA12) -IHA1 -A2 //
+]
+qed-.
+
+theorem lift_inv_lift_le: ∀h1,h2,M1,M2,d1,d2. d2 ≤ d1 →
+                          ↑[d2, h2] M2 = ↑[d1 + h2, h1] M1 →
+                          ∃∃M. ↑[d1, h1] M = M2 & ↑[d2, h2] M = M1.
+#h1 #h2 #M1 elim M1 -M1
+[ #i #M2 #d1 #d2 #Hd21 elim (lt_or_ge i (d1+h2)) #Hid1
+  [ >(lift_vref_lt … Hid1) elim (lt_or_ge i d2) #Hid2 #H
+    [ lapply (lt_to_le_to_lt … Hid2 Hd21) -Hd21 -Hid1 #Hid1
+      >(lift_inv_vref_lt … Hid2 … H) -M2 /3 width=3/
+    | elim (lift_inv_vref_ge … H) -H -Hd21 // -Hid2 #Hdh2i #H destruct
+      elim (le_inv_plus_l … Hdh2i) -Hdh2i #Hd2i #Hh2i
+      @(ex2_1_intro … (#(i-h2))) [ /4 width=1/ ] -Hid1
+      >lift_vref_ge // -Hd2i /3 width=1/ (**) (* auto: needs some help here *)
+    ]
+  | elim (le_inv_plus_l … Hid1) #Hd1i #Hh2i
+    lapply (transitive_le (d2+h2) … Hid1) /2 width=1/ -Hd21 #Hdh2i
+    elim (le_inv_plus_l … Hdh2i) #Hd2i #_
+    >(lift_vref_ge … Hid1) #H -Hid1
+    >(lift_inv_vref_ge_plus … H) -H /2 width=3/ -Hdh2i
+    @(ex2_1_intro … (#(i-h2))) (**) (* auto: needs some help here *)
+    [ >lift_vref_ge // -Hd1i /3 width=1/
+    | >lift_vref_ge // -Hd2i -Hd1i /3 width=1/
+    ]
+  ]
+| normalize #A1 #IHA1 #M2 #d1 #d2 #Hd21 #H
+  elim (lift_inv_abst … H) -H >plus_plus_comm_23 #A2 #HA12 #H destruct
+  elim (IHA1 … HA12) -IHA1 -HA12 /2 width=1/ -Hd21 #A #HA2 #HA1
+  @(ex2_1_intro … (𝛌.A)) normalize //
+| normalize #B1 #A1 #IHB1 #IHA1 #M2 #d1 #d2 #Hd21 #H
+  elim (lift_inv_appl … H) -H #B2 #A2 #HB12 #HA12 #H destruct
+  elim (IHB1 … HB12) -IHB1 -HB12 // #B #HB2 #HB1
+  elim (IHA1 … HA12) -IHA1 -HA12 // -Hd21 #A #HA2 #HA1
+  @(ex2_1_intro … (@B.A)) normalize //
+]
+qed-.
+
+theorem lift_inv_lift_be: ∀h1,h2,M1,M2,d1,d2. d1 ≤ d2 → d2 ≤ d1 + h1 →
+                          ↑[d2, h2] M2 = ↑[d1, h1 + h2] M1 → ↑[d1, h1] M1 = M2.
+#h1 #h2 #M1 elim M1 -M1
+[ #i #M2 #d1 #d2 #Hd12 #Hd21 elim (lt_or_ge i d1) #Hid1
+  [ lapply (lt_to_le_to_lt … Hid1 Hd12) -Hd12 -Hd21 #Hid2
+    >(lift_vref_lt … Hid1) #H >(lift_inv_vref_lt … Hid2 … H) -h2 -M2 -d2 /2 width=1/
+  | lapply (transitive_le … (i+h1) Hd21 ?) -Hd12 -Hd21 /2 width=1/ #Hd2
+    >(lift_vref_ge … Hid1) #H >(lift_inv_vref_ge_plus … H) -M2 /2 width=1/
+  ]
+| normalize #A1 #IHA1 #M2 #d1 #d2 #Hd12 #Hd21 #H
+  elim (lift_inv_abst … H) -H #A #HA12 #H destruct
+  >(IHA1 … HA12) -IHA1 -HA12 // /2 width=1/
+| normalize #B1 #A1 #IHB1 #IHA1 #M2 #d1 #d2 #Hd12 #Hd21 #H
+  elim (lift_inv_appl … H) -H #B #A #HB12 #HA12 #H destruct
+  >(IHB1 … HB12) -IHB1 -HB12 // >(IHA1 … HA12) -IHA1 -HA12 //
+]
+qed-.
+
+theorem lift_inv_lift_ge: ∀h1,h2,M1,M2,d1,d2. d1 + h1 ≤ d2 →
+                          ↑[d2, h2] M2 = ↑[d1, h1] M1 →
+                          ∃∃M. ↑[d1, h1] M = M2 & ↑[d2 - h1, h2] M = M1.
+#h1 #h2 #M1 #M2 #d1 #d2 #Hd12 #H
+elim (le_inv_plus_l … Hd12) -Hd12 #Hd12 #Hh1d2
+lapply (sym_eq term … H) -H >(plus_minus_m_m … Hh1d2) in ⊢ (???%→?); -Hh1d2 #H
+elim (lift_inv_lift_le … Hd12 … H) -H -Hd12 /2 width=3/
 qed-.
