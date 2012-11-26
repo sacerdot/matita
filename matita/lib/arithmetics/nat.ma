@@ -645,6 +645,14 @@ theorem monotonic_lt_minus_l: ∀p,q,n. n ≤ q → q < p → q - n < p - n.
 @lt_plus_to_minus_r <plus_minus_m_m //
 qed.
 
+(* More compound conclusion *************************************************)
+
+lemma discr_minus_x_xy: ∀x,y. x = x - y → x = 0 ∨ y = 0.
+* /2 width=1/ #x * /2 width=1/ #y normalize #H 
+lapply (minus_le x y) <H -H #H
+elim (not_le_Sn_n x) #H0 elim (H0 ?) //
+qed-.
+
 (* Still more equalities ****************************************************)
 
 theorem eq_minus_O: ∀n,m:nat.
@@ -688,11 +696,8 @@ qed.
 lemma minus_minus_m_m: ∀m,n. n ≤ m → m - (m - n) = n.
 /2 width=1/ qed.
 
-lemma discr_minus_x_xy: ∀x,y. x = x - y → x = 0 ∨ y = 0.
-* /2 width=1/ #x * /2 width=1/ #y normalize #H 
-lapply (minus_le x y) <H -H #H
-elim (not_le_Sn_n x) #H0 elim (H0 ?) //
-qed-.
+lemma minus_plus_plus_l: ∀x,y,h. (x + h) - (y + h) = x - y.
+// qed.
 
 (* Stilll more atomic conclusion ********************************************)
 
