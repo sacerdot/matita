@@ -197,6 +197,27 @@ lemma test_char_inv :
 #sig #P #f #t #t0 #HPt * #_ //
 qed.
 
+definition test_null ≝ λalpha.test_char alpha (λ_.true).
+
+definition R_test_null_true ≝ λalpha,t1,t2.
+  current alpha t1 ≠ None ? ∧ t1 = t2.
+  
+definition R_test_null_false ≝ λalpha,t1,t2.
+  current alpha t1 = None ? ∧ t1 = t2.
+  
+lemma sem_test_null : ∀alpha.
+  test_null alpha ⊨ [ tc_true : R_test_null_true alpha, R_test_null_false alpha].
+#alpha #t1 cases (sem_test_char alpha (λ_.true) t1) #k * #outc * * #Hloop #Htrue
+#Hfalse %{k} %{outc} % [ %
+[ @Hloop
+| #Houtc cases (Htrue ?) [| @Houtc] * #c * #Hcurt1 #_ #Houtc1 %
+  [ >Hcurt1 % #H destruct (H) | <Houtc1 % ] ]
+| #Houtc cases (Hfalse ?) [| @Houtc] #Habsurd #Houtc %
+  [ cases (current alpha t1) in Habsurd; // #c1 #Habsurd 
+    lapply (Habsurd ? (refl ??)) #H destruct (H)
+  | <Houtc % ] ]
+qed.
+
 (************************************* swap ***********************************)
 definition swap_states : FinSet → FinSet ≝ 
   λalpha:FinSet.FinProd (initN 4) alpha.
