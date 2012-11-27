@@ -37,17 +37,17 @@ interpretation "term construction (application)"
    'Application C A = (Appl C A).
 
 notation "hvbox( # term 90 i )"
- non associative with precedence 55
+ non associative with precedence 90
  for @{ 'VariableReferenceByIndex $i }.
 
-notation "hvbox( 𝛌  . term 55 A )"
-   non associative with precedence 55
+notation "hvbox( 𝛌  . term 46 A )"
+   non associative with precedence 46
    for @{ 'Abstraction $A }.
 
-notation > "hvbox( 𝛌 term 55 A )"
-   non associative with precedence 55
+notation > "hvbox( 𝛌 term 46 A )"
+   non associative with precedence 46
    for @{ 'Abstraction $A }.
 
-notation "hvbox( @ term 55 C . break term 55 A )"
-   non associative with precedence 55
+notation "hvbox( @ term 46 C . break term 46 A )"
+   non associative with precedence 46
    for @{ 'Application $C $A }.

@@ -28,16 +28,16 @@ let rec lift h d M on M ≝ match M with
 
 interpretation "relocation" 'Lift h d M = (lift h d M).
 
-notation "hvbox( ↑ [ d , break h ] break term 55 M )"
-   non associative with precedence 55
+notation "hvbox( ↑ [ term 46 d , break term 46 h ] break term 46 M )"
+   non associative with precedence 46
    for @{ 'Lift $h $d $M }.
 
-notation > "hvbox( ↑ [ h ] break term 55 M )"
-   non associative with precedence 55
+notation > "hvbox( ↑ [ term 46 h ] break term 46 M )"
+   non associative with precedence 46
    for @{ 'Lift $h 0 $M }.
 
-notation > "hvbox( ↑ term 55 M )"
-   non associative with precedence 55
+notation > "hvbox( ↑ term 46 M )"
+   non associative with precedence 46
    for @{ 'Lift 1 0 $M }.
 
 lemma lift_vref_lt: ∀d,h,i. i < d → ↑[d, h] #i = #i.

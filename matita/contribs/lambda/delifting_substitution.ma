@@ -27,12 +27,12 @@ interpretation "delifting substitution"
    'DSubst C d M = (dsubst C d M).
 
 (* Note: the notation with "/" does not work *)
-notation "hvbox( [ d ⬐ break C ] break term 55 M )"
-   non associative with precedence 55
+notation "hvbox( [ term 46 d ⬐ break term 46 C ] break term 46 M )"
+   non associative with precedence 46
    for @{ 'DSubst $C $d $M }.
 
-notation > "hvbox( [ ⬐ C ] break term 55 M )"
-   non associative with precedence 55
+notation > "hvbox( [ ⬐ term 46 C ] break term 46 M )"
+   non associative with precedence 46
    for @{ 'DSubst $C 0 $M }.
 
 lemma dsubst_vref_lt: ∀i,d,C. i < d → [d ⬐ C] #i = #i.

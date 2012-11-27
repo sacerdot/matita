@@ -26,8 +26,8 @@ let rec mult M on M ≝ match M with
 interpretation "multiplicity"
    'Multiplicity M = (mult M).
 
-notation "hvbox( #{M} )"
-   non associative with precedence 55
+notation "hvbox( #{ term 46 M } )"
+   non associative with precedence 90
    for @{ 'Multiplicity $M }.
 
 lemma mult_positive: ∀M. 0 < #{M}.
