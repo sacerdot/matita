@@ -48,6 +48,14 @@ definition tight_apart: ∀A.∀eq,ap:relation A.Prop
 definition antisymmetric: ∀A.∀R:relation A.Prop
 ≝ λA.λR.∀x,y:A. R x y → ¬(R y x).
 
+(* Reflexive closure ************)
+
+definition RC: ∀A:Type[0]. relation A → relation A ≝
+               λA,R,x,y. R … x y ∨ x = y.
+
+lemma RC_reflexive: ∀A,R. reflexive A (RC … R).
+/2 width=1/ qed.
+
 (********** operations **********)
 definition Rcomp ≝ λA.λR1,R2:relation A.λa1,a2.
   ∃am.R1 a1 am ∧ R2 am a2.

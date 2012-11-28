@@ -17,39 +17,39 @@ include "lift.ma".
 (* DELIFTING SUBSTITUTION ***************************************************)
 
 (* Policy: depth (level) metavariables: d, e (as for lift) *)
-let rec dsubst C d M on M ≝ match M with
-[ VRef i   ⇒ tri … i d (#i) (↑[i] C) (#(i-1))
-| Abst A   ⇒ 𝛌. (dsubst C (d+1) A)
-| Appl B A ⇒ @ (dsubst C d B). (dsubst C d A)
+let rec dsubst D d M on M ≝ match M with
+[ VRef i   ⇒ tri … i d (#i) (↑[i] D) (#(i-1))
+| Abst A   ⇒ 𝛌. (dsubst D (d+1) A)
+| Appl B A ⇒ @ (dsubst D d B). (dsubst D d A)
 ].
 
 interpretation "delifting substitution"
-   'DSubst C d M = (dsubst C d M).
+   'DSubst D d M = (dsubst D d M).
 
 (* Note: the notation with "/" does not work *)
-notation "hvbox( [ term 46 d ⬐ break term 46 C ] break term 46 M )"
+notation "hvbox( [ term 46 d ⬐ break term 46 D ] break term 46 M )"
    non associative with precedence 46
-   for @{ 'DSubst $C $d $M }.
+   for @{ 'DSubst $D $d $M }.
 
-notation > "hvbox( [ ⬐ term 46 C ] break term 46 M )"
+notation > "hvbox( [ ⬐ term 46 D ] break term 46 M )"
    non associative with precedence 46
-   for @{ 'DSubst $C 0 $M }.
+   for @{ 'DSubst $D 0 $M }.
 
-lemma dsubst_vref_lt: ∀i,d,C. i < d → [d ⬐ C] #i = #i.
+lemma dsubst_vref_lt: ∀i,d,D. i < d → [d ⬐ D] #i = #i.
 normalize /2 width=1/
 qed.
 
-lemma dsubst_vref_eq: ∀d,C. [d ⬐ C] #d = ↑[d]C.
+lemma dsubst_vref_eq: ∀d,D. [d ⬐ D] #d = ↑[d]D.
 normalize //
 qed.
 
-lemma dsubst_vref_gt: ∀i,d,C. d < i → [d ⬐ C] #i = #(i-1).
+lemma dsubst_vref_gt: ∀i,d,D. d < i → [d ⬐ D] #i = #(i-1).
 normalize /2 width=1/
 qed.
 
-theorem dsubst_lift_le: ∀h,C,M,d1,d2. d2 ≤ d1 →
-                        [d2 ⬐ ↑[d1 - d2, h] C] ↑[d1 + 1, h] M = ↑[d1, h] [d2 ⬐ C] M.
-#h #C #M elim M -M
+theorem dsubst_lift_le: ∀h,D,M,d1,d2. d2 ≤ d1 →
+                        [d2 ⬐ ↑[d1 - d2, h] D] ↑[d1 + 1, h] M = ↑[d1, h] [d2 ⬐ D] M.
+#h #D #M elim M -M
 [ #i #d1 #d2 #Hd21 elim (lt_or_eq_or_gt i d2) #Hid2
   [ lapply (lt_to_le_to_lt … Hid2 Hd21) -Hd21 #Hid1
     >(dsubst_vref_lt … Hid2) >(lift_vref_lt … Hid1) >lift_vref_lt /2 width=1/
@@ -67,9 +67,9 @@ theorem dsubst_lift_le: ∀h,C,M,d1,d2. d2 ≤ d1 →
 ]
 qed.
 
-theorem dsubst_lift_be: ∀h,C,M,d1,d2. d1 ≤ d2 → d2 ≤ d1 + h →
-                        [d2 ⬐ C] ↑[d1, h + 1] M = ↑[d1, h] M.
-#h #C #M elim M -M
+theorem dsubst_lift_be: ∀h,D,M,d1,d2. d1 ≤ d2 → d2 ≤ d1 + h →
+                        [d2 ⬐ D] ↑[d1, h + 1] M = ↑[d1, h] M.
+#h #D #M elim M -M
 [ #i #d1 #d2 #Hd12 #Hd21 elim (lt_or_ge i d1) #Hid1
   [ lapply (lt_to_le_to_lt … Hid1 Hd12) -Hd12 -Hd21 #Hid2
     >(lift_vref_lt … Hid1) >(lift_vref_lt … Hid1) /2 width=1/
@@ -84,9 +84,9 @@ theorem dsubst_lift_be: ∀h,C,M,d1,d2. d1 ≤ d2 → d2 ≤ d1 + h →
 ]
 qed.
 
-theorem dsubst_lift_ge: ∀h,C,M,d1,d2. d1 + h ≤ d2 →
-                        [d2 ⬐ C] ↑[d1, h] M = ↑[d1, h] [d2 - h ⬐ C] M.
-#h #C #M elim M -M
+theorem dsubst_lift_ge: ∀h,D,M,d1,d2. d1 + h ≤ d2 →
+                        [d2 ⬐ D] ↑[d1, h] M = ↑[d1, h] [d2 - h ⬐ D] M.
+#h #D #M elim M -M
 [ #i #d1 #d2 #Hd12 elim (lt_or_eq_or_gt i (d2-h)) #Hid2h
   [ >(dsubst_vref_lt … Hid2h) elim (lt_or_ge i d1) #Hid1
     [ lapply (lt_to_le_to_lt … (d1+h) Hid1 ?) -Hid2h // #Hid1h
@@ -111,9 +111,9 @@ theorem dsubst_lift_ge: ∀h,C,M,d1,d2. d1 + h ≤ d2 →
 ]
 qed.
 
-theorem subst_subst_ge: ∀C1,C2,M,d1,d2. d1 ≤ d2 →
-                        [d2 ⬐ C2] [d1 ⬐ C1] M = [d1 ⬐ [d2 - d1 ⬐ C2] C1] [d2 + 1 ⬐ C2] M.
-#C1 #C2 #M elim M -M
+theorem subst_subst_ge: ∀D1,D2,M,d1,d2. d1 ≤ d2 →
+                        [d2 ⬐ D2] [d1 ⬐ D1] M = [d1 ⬐ [d2 - d1 ⬐ D2] D1] [d2 + 1 ⬐ D2] M.
+#D1 #D2 #M elim M -M
 [ #i #d1 #d2 #Hd12 elim (lt_or_eq_or_gt i d1) #Hid1
   [ lapply (lt_to_le_to_lt … Hid1 Hd12) -Hd12 #Hid2
     >(dsubst_vref_lt … Hid1) >(dsubst_vref_lt … Hid2) >dsubst_vref_lt /2 width=1/
@@ -134,9 +134,9 @@ theorem subst_subst_ge: ∀C1,C2,M,d1,d2. d1 ≤ d2 →
 ]
 qed.
 
-theorem subst_subst_lt: ∀C1,C2,M,d1,d2. d2 < d1 →
-                        [d2 ⬐ [d1 - d2 -1 ⬐ C1] C2] [d1 ⬐ C1] M = [d1 - 1 ⬐ C1] [d2 ⬐ C2] M.
-#C1 #C2 #M #d1 #d2 #Hd21
+theorem subst_subst_lt: ∀D1,D2,M,d1,d2. d2 < d1 →
+                        [d2 ⬐ [d1 - d2 -1 ⬐ D1] D2] [d1 ⬐ D1] M = [d1 - 1 ⬐ D1] [d2 ⬐ D2] M.
+#D1 #D2 #M #d1 #d2 #Hd21
 lapply (ltn_to_ltO … Hd21) #Hd1
 >subst_subst_ge in ⊢ (???%); /2 width=1/ <plus_minus_m_m //
 qed.

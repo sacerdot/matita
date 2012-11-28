@@ -12,6 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basics/star.ma".
+include "basics/lists/list.ma".
 include "arithmetics/nat.ma".
 
 include "xoa_notation.ma".
