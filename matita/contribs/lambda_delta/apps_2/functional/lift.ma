@@ -12,11 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/tri.ma".
 include "basic_2/substitution/lift.ma".
 include "apps_2/functional/notation.ma".
 
-(* RELOCATION ***************************************************************)
+(* FUNCTIONAL RELOCATION ****************************************************)
 
 let rec flift d e U on U ≝ match U with
 [ TAtom I     ⇒ match I with

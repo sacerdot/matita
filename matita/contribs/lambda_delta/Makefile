@@ -7,7 +7,7 @@ MAC_DIR  = ../../../components/binaries/mac
 MAC      = mac.native
 
 XOA_CONF    = ground_2/xoa.conf.xml
-XOA_TARGETS = ground_2/xoa_natation.ma ground_2/xoa.ma
+XOA_TARGETS = ground_2/xoa_notation.ma ground_2/xoa.ma
 
 ORIG     = . ./orig.sh 
 
