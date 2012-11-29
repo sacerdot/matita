@@ -19,6 +19,11 @@ include "arithmetics/nat.ma".
 include "xoa_notation.ma".
 include "xoa.ma".
 
+(* Note: notation for nil not involving brackets *)
+notation > "◊"
+  non associative with precedence 90
+  for @{'nil}.
+
 (* Note: For some reason this cannot be in the standard library *) 
 interpretation "logical false" 'false = False.
 

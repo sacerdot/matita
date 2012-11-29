@@ -305,6 +305,10 @@ lemma lt_to_le: ∀x,y. x < y → x ≤ y.
 lemma inv_eq_minus_O: ∀x,y. x - y = 0 → x ≤ y.
 // qed-.
 
+lemma le_x_times_x: ∀x. x ≤ x * x.
+#x elim x -x //
+qed.
+
 (* lt *)
 
 theorem transitive_lt: transitive nat lt.

@@ -21,17 +21,18 @@ include "term.ma".
 *)
 (* Note: this is a path in the tree representation of a term
          in which abstraction nodes are omitted;
-         on application nodes, "false" means "proceed left"
-         and "true" means "proceed right"
+         on application nodes, "false" means "proceed right"
+         and "true" means "proceed left"
 *)
 definition rpointer: Type[0] ≝ list bool.
 
 (* Note: precedence relation on redex pointers: p ≺ q
          to serve as base for the order relations: p < q and p ≤ q *)
 inductive rpprec: relation rpointer ≝
-| rpprec_nil : ∀b,q.   rpprec ([]) (b::q)
+| rpprec_nil : ∀b,q.   rpprec (◊) (b::q)
 | rppprc_cons: ∀p,q.   rpprec (false::p) (true::q)
 | rpprec_comp: ∀b,p,q. rpprec p q → rpprec (b::p) (b::q)
+| rpprec_skip: ∀p,q.   rpprec (false::p) q → rpprec p q
 .
 
 interpretation "'precedes' on redex pointers"
