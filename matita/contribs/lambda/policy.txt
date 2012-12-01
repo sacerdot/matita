@@ -1,0 +1,14 @@
+NAMING CONVENTIONS FOR METAVARIABLES
+
+A, B, C, D: term
+H         : transient premise
+IH        : inductive premise
+M, N      : term
+
+a, b      : boolean
+d, e      : variable reference depth 
+h         : relocation height
+i, j      : de Bruijn index
+k         : relocation height
+p, q      : redex pointer
+r, s      : redex pointer sequence

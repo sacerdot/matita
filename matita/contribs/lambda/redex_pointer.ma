@@ -47,6 +47,6 @@ notation "hvbox(a break ≺ b)"
 interpretation "'less than' on redex pointers"
    'lt p q = (TC rpointer rpprec p q).
 
-(* Note: this is p ≤ q, that *really* is p < q ∨ p = q *)
+(* Note: this is p ≤ q *)
 interpretation "'less or equal to' on redex pointers"
-   'leq x y = (RC rpointer (TC rpointer rpprec) x y).
+   'leq x y = (star rpointer x y).

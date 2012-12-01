@@ -14,7 +14,7 @@
 
 include "basics/star.ma".
 include "basics/lists/list.ma".
-include "arithmetics/nat.ma".
+include "arithmetics/exp.ma".
 
 include "xoa_notation.ma".
 include "xoa.ma".

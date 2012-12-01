@@ -175,8 +175,7 @@ let rec length (A:Type[0]) (l:list A) on l ≝
     [ nil ⇒ 0
     | cons a tl ⇒ S (length A tl)].
 
-notation "|M|" non associative with precedence 65 for @{'norm $M}.
-interpretation "norm" 'norm l = (length ? l).
+interpretation "list length" 'card l = (length ? l).
 
 lemma length_tail: ∀A,l. length ? (tail A l) = pred (length ? l).
 #A #l elim l // 

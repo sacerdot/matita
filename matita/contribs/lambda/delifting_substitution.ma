@@ -111,8 +111,8 @@ theorem dsubst_lift_ge: ∀h,D,M,d1,d2. d1 + h ≤ d2 →
 ]
 qed.
 
-theorem subst_subst_ge: ∀D1,D2,M,d1,d2. d1 ≤ d2 →
-                        [d2 ⬐ D2] [d1 ⬐ D1] M = [d1 ⬐ [d2 - d1 ⬐ D2] D1] [d2 + 1 ⬐ D2] M.
+theorem dsubst_dsubst_ge: ∀D1,D2,M,d1,d2. d1 ≤ d2 →
+                          [d2 ⬐ D2] [d1 ⬐ D1] M = [d1 ⬐ [d2 - d1 ⬐ D2] D1] [d2 + 1 ⬐ D2] M.
 #D1 #D2 #M elim M -M
 [ #i #d1 #d2 #Hd12 elim (lt_or_eq_or_gt i d1) #Hid1
   [ lapply (lt_to_le_to_lt … Hid1 Hd12) -Hd12 #Hid2
@@ -134,9 +134,12 @@ theorem subst_subst_ge: ∀D1,D2,M,d1,d2. d1 ≤ d2 →
 ]
 qed.
 
-theorem subst_subst_lt: ∀D1,D2,M,d1,d2. d2 < d1 →
-                        [d2 ⬐ [d1 - d2 -1 ⬐ D1] D2] [d1 ⬐ D1] M = [d1 - 1 ⬐ D1] [d2 ⬐ D2] M.
+theorem dsubst_dsubst_lt: ∀D1,D2,M,d1,d2. d2 < d1 →
+                          [d2 ⬐ [d1 - d2 -1 ⬐ D1] D2] [d1 ⬐ D1] M = [d1 - 1 ⬐ D1] [d2 ⬐ D2] M.
 #D1 #D2 #M #d1 #d2 #Hd21
 lapply (ltn_to_ltO … Hd21) #Hd1
->subst_subst_ge in ⊢ (???%); /2 width=1/ <plus_minus_m_m //
+>dsubst_dsubst_ge in ⊢ (???%); /2 width=1/ <plus_minus_m_m //
 qed.
+
+definition dsubstable_dx: predicate (relation term) ≝ λR.
+                          ∀D,M1,M2. R M1 M2 → ∀d. R ([d ⬐ D] M1) ([d ⬐ D] M2).

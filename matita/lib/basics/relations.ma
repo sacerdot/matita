@@ -48,6 +48,9 @@ definition tight_apart: ∀A.∀eq,ap:relation A.Prop
 definition antisymmetric: ∀A.∀R:relation A.Prop
 ≝ λA.λR.∀x,y:A. R x y → ¬(R y x).
 
+definition singlevalued: ∀A,B. predicate (relation2 A B) ≝ λA,B,R.
+                         ∀a,b1. R a b1 → ∀b2. R a b2 → b1 = b2.
+
 (* Reflexive closure ************)
 
 definition RC: ∀A:Type[0]. relation A → relation A ≝

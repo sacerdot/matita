@@ -239,3 +239,10 @@ elim (le_inv_plus_l … Hd12) -Hd12 #Hd12 #Hh1d2
 lapply (sym_eq term … H) -H >(plus_minus_m_m … Hh1d2) in ⊢ (???%→?); -Hh1d2 #H
 elim (lift_inv_lift_le … Hd12 … H) -H -Hd12 /2 width=3/
 qed-.
+
+definition liftable: predicate (relation term) ≝ λR.
+                     ∀h,M1,M2. R M1 M2 → ∀d. R (↑[d, h] M1) (↑[d, h] M2).
+
+definition deliftable: predicate (relation term) ≝ λR.
+                       ∀h,N1,N2. R N1 N2 → ∀d,M1. ↑[d, h] M1 = N1 →
+                       ∃∃M2. R M1 M2 & ↑[d, h] M2 = N2.
