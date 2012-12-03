@@ -44,10 +44,6 @@ notation "hvbox( 𝛌  . term 46 A )"
    non associative with precedence 46
    for @{ 'Abstraction $A }.
 
-notation > "hvbox( 𝛌 term 46 A )"
-   non associative with precedence 46
-   for @{ 'Abstraction $A }.
-
 notation "hvbox( @ term 46 C . break term 46 A )"
    non associative with precedence 46
    for @{ 'Application $C $A }.

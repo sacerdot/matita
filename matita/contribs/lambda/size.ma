@@ -12,41 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delifting_substitution.ma".
+include "lift.ma".
 
-(* MULTIPLICITY *************************************************************)
+(* SIZE *********************************************************************)
 
-(* Note: this gives the number of variable references in M *)
-let rec mult M on M ≝ match M with
-[ VRef i   ⇒ 1
-| Abst A   ⇒ mult A
-| Appl B A ⇒ (mult B) + (mult A)
+(* Note: this gives the number of abstractions and applications in M *)
+let rec size M on M ≝ match M with
+[ VRef i   ⇒ 0
+| Abst A   ⇒ size A + 1
+| Appl B A ⇒ (size B) + (size A) + 1
 ].
 
-interpretation "term multiplicity"
-   'Multiplicity M = (mult M).
+interpretation "term size"
+   'card M = (size M).
 
-notation "hvbox( #{ term 46 M } )"
-   non associative with precedence 90
-   for @{ 'Multiplicity $M }.
-
-lemma mult_positive: ∀M. 0 < #{M}.
-#M elim M -M // /2 width=1/
-qed.
-
-lemma mult_lift: ∀h,M,d. #{↑[d, h] M} = #{M}.
+lemma size_lift: ∀h,M,d. |↑[d, h] M| = |M|.
 #h #M elim M -M normalize //
-qed.
-
-theorem mult_dsubst: ∀D,M,d. #{[d ⬐ D] M} ≤ #{M} * #{D}.
-#D #M elim M -M
-[ #i #d elim (lt_or_eq_or_gt i d) #Hid
-  [ >(dsubst_vref_lt … Hid) normalize //
-  | destruct >dsubst_vref_eq normalize //
-  | >(dsubst_vref_gt … Hid) normalize //
-  ]
-| normalize //
-| normalize #B #A #IHB #IHA #d
-  >distributive_times_plus_r /2 width=1/
-]
 qed.

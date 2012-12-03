@@ -495,6 +495,13 @@ cut (∀q:nat. q ≤ n → P q) /2/
  ]
 qed.
 
+lemma f_ind: ∀A. ∀f:A→ℕ. ∀P:predicate A.
+             (∀n. (∀a. f a < n → P a) → ∀a. f a = n → P a) → ∀a. P a.
+#A #f #P #H #a
+cut (∀n,a. f a = n → P a) /2 width=3/ -a
+#n @(nat_elim1 … n) -n #n /3 width=3/ (**) (* auto very slow (274s) without #n *)
+qed-.
+
 (* More negated equalities **************************************************)
 
 theorem lt_to_not_eq : ∀n,m:nat. n < m → n ≠ m.

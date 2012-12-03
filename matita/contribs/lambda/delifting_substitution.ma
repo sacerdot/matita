@@ -143,3 +143,9 @@ qed.
 
 definition dsubstable_dx: predicate (relation term) ≝ λR.
                           ∀D,M1,M2. R M1 M2 → ∀d. R ([d ⬐ D] M1) ([d ⬐ D] M2).
+
+definition dsubstable_sn: predicate (relation term) ≝ λR.
+                          ∀D1,D2. R D1 D2 → ∀M,d. R ([d ⬐ D1] M) ([d ⬐ D2] M).
+
+definition dsubstable: predicate (relation term) ≝ λR.
+                       ∀D1,D2. R D1 D2 → ∀M1,M2. R M1 M2 → ∀d. R ([d ⬐ D1] M1) ([d ⬐ D2] M2).

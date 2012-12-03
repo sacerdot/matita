@@ -19,10 +19,7 @@ include "arithmetics/exp.ma".
 include "xoa_notation.ma".
 include "xoa.ma".
 
-(* Note: notation for nil not involving brackets *)
-notation > "◊"
-  non associative with precedence 90
-  for @{'nil}.
+(* logic *)
 
 (* Note: For some reason this cannot be in the standard library *) 
 interpretation "logical false" 'false = False.
@@ -30,6 +27,22 @@ interpretation "logical false" 'false = False.
 notation "⊥"
   non associative with precedence 90
   for @{'false}.
+
+lemma ex2_1_commute: ∀A0. ∀P0,P1:A0→Prop. (∃∃x0. P0 x0 & P1 x0) → ∃∃x0. P1 x0 & P0 x0.
+#A0 #P0 #P1 * /2 width=3/
+qed.
+
+(* relations *)
+
+definition confluent1: ∀A. relation A → predicate A ≝ λA,R,a0.
+                       ∀a1. R a0 a1 → ∀a2. R a0 a2 →
+                       ∃∃a. R a1 a & R a2 a. 
+
+(* Note: confluent1 would be redundant if \Pi-reduction where enabled *)                       
+definition confluent: ∀A. predicate (relation A) ≝ λA,R.
+                      ∀a0. confluent1 … R a0.
+
+(* arithmetics *)
 
 lemma lt_refl_false: ∀n. n < n → ⊥.
 #n #H elim (lt_to_not_eq … H) -H /2 width=1/
@@ -75,3 +88,10 @@ lemma tri_gt: ∀A,a1,a2,a3,n1,n2. n2 < n1 → tri A n1 n2 a1 a2 a3 = a3.
 | #n1 #IH #n2 elim n2 -n2 // /3 width=1/
 ]
 qed.
+
+(* lists *)
+
+(* Note: notation for nil not involving brackets *)
+notation > "◊"
+  non associative with precedence 90
+  for @{'nil}.
