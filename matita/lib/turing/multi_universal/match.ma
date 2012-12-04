@@ -434,7 +434,8 @@ lapply (sem_while … (sem_match_step src dst sig n is_startc is_endc Hneq Hsrc 
        lapply (Hnotendx1 end ?) [ @memb_append_l2 @memb_hd ]
        >Hend #H destruct (H) ]
       #ci -tl1 #tl1 #Hxs #H cases (H … (refl … ))
-      [(* this is absurd, since Htrue conlcudes is_endc ci =false *)
+      [ #Hendci % cases (IH ????? Hmid_src Hnotend Hend Hnotstart)
+      (* this is absurd, since Htrue conlcudes is_endc ci =false *)
        (* no, è più complicato
        #Hend_ci lapply (Htrue ls c xi
        *)
@@ -509,14 +510,32 @@ lapply (sem_while … (sem_match_step src dst sig n is_startc is_endc Hneq Hsrc 
                 >reverse_cons >associative_append %
               | -IH #IH %2 #l #l1 >(?:l@c::xs@l1 = l@(c::xs)@l1) [|%] 
                 @not_sub_list_merge_2 [| @IH]
-                cut (∃l2.xs = x2::xs2@ci::l2)
-                [lapply Hnotend -Hnotend lapply Hxs  elim xs in Hxs;
-                  [ normalize #H1 #_ destruct (H1)
-                    >(Hnotendxs2 ? (memb_hd …)) in Hend; #H1 destruct (H1)
-                  | #x3 #xs3 #IH normalize in ⊢ (%→?); #Hxs3 destruct (Hxs3)
-                    #Hnotend 
-                
-                 @daemon] * #l2 #Hxs'
+                cut (∃l2.xs = (x2::xs2)@ci::l2)
+                [lapply Hnotendxs2
+                 lapply Hnotend -Hnotend lapply Hxs
+                 >(?:x2::xs2@ci::tl1 = (x2::xs2)@ci::tl1) [|%]
+                 lapply (x2::xs2) elim xs
+                  [ *
+                    [ normalize in ⊢ (%→?); #H1 destruct (H1) 
+                      >Hendci in Hend; #Hend destruct (Hend)
+                    | #x3 #xs3 normalize in ⊢ (%→?); #H1 destruct (H1)
+                      #_ #Hnotendx3 >(Hnotendx3 ? (memb_hd …)) in Hend;
+                      #Hend destruct (Hend)
+                    ]
+                  | #x3 #xs3 #IHin *
+                    [ normalize in ⊢ (%→?); #Hxs3 destruct (Hxs3) #_ #_
+                      %{xs3} %
+                    | #x4 #xs4 normalize in ⊢ (%→?); #Hxs3xs4 #Hnotend
+                      #Hnotendxs4 destruct (Hxs3xs4) cases (IHin ? e0 ??)
+                      [ #l0 #Hxs3 >Hxs3 %{l0} %
+                      | #c0 #Hc0 @Hnotend cases (orb_true_l … Hc0) -Hc0 #Hc0
+                        [ >(\P Hc0) @memb_hd
+                        | @memb_cons @memb_cons @Hc0 ]
+                      | #c0 #Hc0 @Hnotendxs4 @memb_cons //
+                      ]
+                    ]
+                  ]
+                ] * #l2 #Hxs'
                 >Hxs' #l3 normalize >associative_append normalize % #H
                 destruct (H) lapply (append_l2_injective ?????? e1) //
                 #H1 destruct (H1) cases (Hcomp ?? (refl ??)) /2/
