@@ -71,9 +71,42 @@ cases (acc_sem_inject … Hin (sem_test_null alpha) int)
     #Hi0i @sym_eq @Hnth_j @sym_not_eq // ] ] 
 qed.
 
-axiom comp_list: ∀S:DeqSet. ∀l1,l2:list S.∀is_endc. ∃l,tl1,tl2. 
+lemma comp_list: ∀S:DeqSet. ∀l1,l2:list S.∀is_endc. ∃l,tl1,tl2. 
   l1 = l@tl1 ∧ l2 = l@tl2 ∧ (∀c.c ∈ l = true → is_endc c = false) ∧
-  ∀a,tla. tl1 = a::tla → is_endc a = true ∨ (∀b,tlb.tl2 = b::tlb → a≠b).
+  ∀a,tla. tl1 = a::tla → 
+  is_endc a = true ∨ (is_endc a = false ∧∀b,tlb.tl2 = b::tlb → a≠b).
+#S #l1 #l2 #is_endc elim l1 in l2;
+[ #l2 %{[ ]} %{[ ]} %{l2} normalize %
+  [ % [ % // | #c #H destruct (H) ] | #a #tla #H destruct (H) ]
+| #x #l3 #IH cases (true_or_false (is_endc x)) #Hendcx
+  [ #l %{[ ]} %{(x::l3)} %{l} normalize
+    % [ % [ % // | #c #H destruct (H) ] | #a #tla #H destruct (H) >Hendcx % % ]
+  | *
+    [ %{[ ]} %{(x::l3)} %{[ ]} normalize %
+      [ % [ % // | #c #H destruct (H) ]
+      | #a #tla #H destruct (H) cases (is_endc a)
+        [ % % | %2 % // #b #tlb #H destruct (H) ]
+      ]
+    | #y #l4 cases (true_or_false (x==y)) #Hxy
+      [ lapply (\P Hxy) -Hxy #Hxy destruct (Hxy)  
+        cases (IH l4) -IH #l * #tl1 * #tl2 * * * #Hl3 #Hl4 #Hl #IH
+        %{(y::l)} %{tl1} %{tl2} normalize
+        % [ % [ % // 
+              | #c cases (true_or_false (c==y)) #Hcy >Hcy normalize
+                [ >(\P Hcy) //
+                | @Hl ]
+              ]
+          | #a #tla #Htl1 @(IH … Htl1) ]
+      | %{[ ]} %{(x::l3)} %{(y::l4)} normalize %
+        [ % [ % // | #c #H destruct (H) ]
+        | #a #tla #H destruct (H) cases (is_endc a)
+          [ % % | %2 % // #b #tlb #H destruct (H) @(\Pf Hxy) ]
+        ]
+      ]
+    ]
+  ]
+]
+qed.        
   
 axiom daemon : ∀X:Prop.X.
 
@@ -233,7 +266,7 @@ lemma sem_match_step :
        | @Hxs0 ]
        | cases (reverse ? xs1) // ]
      | * #cj * #rs2 * #Hrsj #Hta lapply (Hta ?)
-       [ cases (Hneq ?? Hrs1) /2/ #Hr1 %2 @(Hr1 ?? Hrsj) ] -Hta #Hta
+       [ cases (Hneq ?? Hrs1) /2/ * #_ #Hr1 %2 @(Hr1 ?? Hrsj) ] -Hta #Hta
        %2 >Hta in Hc; whd in ⊢ (??%?→?);
        change with (current ? (niltape ?)) in match (None ?);
        <nth_vec_map >nth_change_vec_neq [|@sym_not_eq //] >nth_change_vec //
@@ -289,6 +322,7 @@ definition R_match_m ≝
   ∀ls,x,xs,end,rs.
   nth src ? int (niltape ?) = midtape sig ls x (xs@end::rs) →
   (∀c0. memb ? c0 (x::xs) = true → is_endc c0 = false) → is_endc end = true →
+  (∀c0. memb ? c0 (xs@end::rs) = true → is_startc c0 = false) → 
   (current sig (nth dst (tape sig) int (niltape sig)) = None ? → outt = int) ∧
   (is_startc x = true →
    (∀ls0,x0,rs0.
@@ -325,13 +359,27 @@ axiom sub_list_dec: ∀A.∀l,ls:list A.
   ∃l1,l2. l = l1@ls@l2 ∨ ∀l1,l2. l ≠ l1@ls@l2.
 *)
 
+lemma not_sub_list_merge : 
+  ∀T.∀a,b:list T. (∀l1.a ≠ b@l1) → (∀t,l,l1.a ≠ t::l@b@l1) → ∀l,l1.a ≠ l@b@l1.
+#T #a #b #H1 #H2 #l elim l normalize //
+qed.
+
+lemma not_sub_list_merge_2 : 
+  ∀T:DeqSet.∀a,b:list T.∀t. (∀l1.t::a ≠ b@l1) → (∀l,l1.a ≠ l@b@l1) → ∀l,l1.t::a ≠ l@b@l1.
+#T #a #b #t #H1 #H2 #l elim l //
+#t0 #l1 #IH #l2 cases (true_or_false (t == t0)) #Htt0
+[ >(\P Htt0) % normalize #H destruct (H) cases (H2 l1 l2) /2/
+| normalize % #H destruct (H) cases (\Pf Htt0) /2/ ]
+qed.
+
+
 lemma wsem_match_m : ∀src,dst,sig,n,is_startc,is_endc.
 src ≠ dst → src < S n → dst < S n → 
   match_m src dst sig n is_startc is_endc ⊫ R_match_m src dst sig n is_startc is_endc.
 #src #dst #sig #n #is_startc #is_endc #Hneq #Hsrc #Hdst #ta #k #outc #Hloop
 lapply (sem_while … (sem_match_step src dst sig n is_startc is_endc Hneq Hsrc Hdst) … Hloop) //
 -Hloop * #tb * #Hstar @(star_ind_l ??????? Hstar) -Hstar
-[ #tc #Hfalse #ls #x #xs #end #rs #Hmid_src #Hnotend #Hend
+[ #tc #Hfalse #ls #x #xs #end #rs #Hmid_src #Hnotend #Hend #Hnotstart
   cases (Hfalse … Hmid_src Hnotend Hend) -Hfalse 
   [(* current dest = None *) *
     [ * #Hcur_dst #Houtc %
@@ -363,7 +411,7 @@ lapply (sem_while … (sem_match_step src dst sig n is_startc is_endc Hneq Hsrc 
     ]
   ]
 |#ta #tb #tc #Htrue #Hstar #IH #Hout lapply (IH Hout) -IH -Hout #IH whd
- #ls #x #xs #end #rs #Hmid_src #Hnotend #Hend 
+ #ls #x #xs #end #rs #Hmid_src #Hnotend #Hend #Hnotstart 
  lapply (refl ? (current ? (nth dst ? ta (niltape ?))))
  cases (current ? (nth dst ? ta (niltape ?))) in ⊢ (???%→?); 
   [#Hmid_dst % 
@@ -376,42 +424,130 @@ lapply (sem_while … (sem_match_step src dst sig n is_startc is_endc Hneq Hsrc 
   | #c #Hcurta_dst % [ >Hcurta_dst #H destruct (H) ]
     #Hstart #ls0 #x0 #rs0 #Hmid_dst >Hmid_dst in Hcurta_dst; normalize in ⊢ (%→?);
     #H destruct (H) whd in Htrue; >Hmid_src in Htrue; #Htrue
-    cases (Htrue x (refl …)) -Htrue #_ #Htrue cases (Htrue Hstart ?) -Htrue
-    [2: #z #membz @daemon (*aggiungere l'ipotesi*)]
+    cases (Htrue x (refl …)) -Htrue #_ #Htrue cases (Htrue Hstart Hnotstart) -Htrue
     cases (true_or_false (x==c)) #eqx
-    [ #_ #Htrue cases (comp_list ? (xs@end::rs) rs0 is_endc)
+    [ lapply (\P eqx) -eqx #eqx destruct (eqx)
+      #_ #Htrue cases (comp_list ? (xs@end::rs) rs0 is_endc)
       #x1 * #tl1 * #tl2 * * * #Hxs #Hrs0 #Hnotendx1
       cases tl1 in Hxs; 
-      [>append_nil #Hx1 @daemon (* absurd by Hx1 e notendx1 *)]
+      [>append_nil #Hx1 <Hx1 in Hnotendx1; #Hnotendx1
+       lapply (Hnotendx1 end ?) [ @memb_append_l2 @memb_hd ]
+       >Hend #H destruct (H) ]
       #ci -tl1 #tl1 #Hxs #H cases (H … (refl … ))
       [(* this is absurd, since Htrue conlcudes is_endc ci =false *)
-       #Hend_ci @daemon (* lapply(Htrue … (refl …)) -Htrue *)
+       (* no, è più complicato
+       #Hend_ci lapply (Htrue ls c xi
+       *)
+        @daemon (* lapply(Htrue … (refl …)) -Htrue *)
       |cases tl2 in Hrs0;
-        [
-        | #cj #tl2' #Hrs0 #Hcomp lapply (Htrue ls x x1 ci cj tl1 ls0 tl2' ????)
+        [ >append_nil #Hrs0 destruct (Hrs0) * #Hcifalse#_ %2
+          cut (∃l.xs = x1@ci::l) 
+          [lapply Hxs lapply Hnotendx1 lapply Hnotend lapply xs 
+           -Hxs -xs -Hnotendx1 elim x1
+            [ *
+              [ #_ #_ normalize #H1 destruct (H1) >Hend in Hcifalse;
+                #H1 destruct (H1)
+              | #x2 #xs2 #_ #_ normalize #H >(cons_injective_l ????? H) %{xs2} % ]
+            | #x2 #xs2 #IHin *
+              [ #_ #Hnotendxs2 normalize #H destruct (H) 
+                >(Hnotendxs2 ? (memb_hd …)) in Hend; #H destruct (H)
+              | #x3 #xs3 #Hnotendxs3 #Hnotendxs2 normalize #H destruct (H)
+                cases (IHin ??? e0)
+                [ #xs4 #Hxs4 >Hxs4 %{xs4} %
+                | #c0 #Hc0 cases (orb_true_l … Hc0) -Hc0 #Hc0
+                  [ >(\P Hc0) @Hnotendxs3 @memb_hd
+                  | @Hnotendxs3 @memb_cons @memb_cons @Hc0 ]
+                | #c0 #Hc0 @Hnotendxs2 @memb_cons @Hc0 ]
+              ]
+            ]
+          ] * #l #Hxs' >Hxs'
+          #l0 #l1 % #H lapply (eq_f ?? (length ?) ?? H) -H
+          >length_append normalize >length_append >length_append
+          normalize >commutative_plus normalize #H destruct (H) -H
+          >associative_plus in e0; >associative_plus
+          >(plus_n_O (|x1|)) in ⊢(??%?→?); #H lapply (injective_plus_r … H)
+          -H normalize #H destruct (H)
+        | #cj #tl2' #Hrs0 * #Hcifalse #Hcomp lapply (Htrue ls c x1 ci cj tl1 ls0 tl2' ????)
           [ @(Hcomp ?? (refl ??))
           | #c0 #Hc0 cases (orb_true_l … Hc0) #Hc0
             [ @Hnotend >(\P Hc0) @memb_hd
             | @Hnotendx1 // ]
-          | >Hmid_dst >Hrs0 >(\P eqx) %
+          | >Hmid_dst >Hrs0 %
           | >Hxs %
-          | * #Htb >Htb #Hendci %2 >Hrs0 >Hxs
-            cases (IH ls x xs end rs ? Hnotend Hend) [|
-            STOP
-    
-
-          
-           >nth_change_vec_neq [|@sym_not_eq //] >nth_change_vec //
-          
-        >Hrs0 in Hmid_dst; #Hmid_dst
-       cases(Htrue ???????? Hmid_dst) -Htrue #Htb #Hendx
-       whd in IH;
-       cases(IH ls x xs end rs ? Hstart Hnotend Hend)
-       [* #H1 #H2 >Htb in H1; >nth_change_vec // 
-        >Hmid_dst cases rs0 [2: #a #tl normalize in ⊢ (%→?); #H destruct (H)] 
-        #_ %2 @daemon (* si dimostra *)
-       |@daemon
-       |>Htb >nth_change_vec_neq [|@sym_not_eq //] @Hmid_src
+          | * #Htb >Htb #Hendci >Hrs0 >Hxs
+            cases (IH ls c xs end rs ? Hnotend Hend Hnotstart) -IH 
+            [| >Htb >nth_change_vec_neq [|@sym_not_eq //] @Hmid_src ]
+            #_ #IH lapply Hxs lapply Hnotendx1 -Hxs -Hnotendx1 cases x1 in Hrs0;
+            [ #Hrs0 #_ whd in ⊢ (???%→?); #Hxs
+              cases (IH Hstart (c::ls0) cj tl2' ?)
+              [ -IH * #l * #l1 * #Hll1 #IH % %{(c::l)} %{l1} 
+                % [ @eq_f @Hll1 ]
+                #cj0 #l2 #Hcj0 >(IH … Hcj0) >Htb
+                >change_vec_commute // >change_vec_change_vec
+                >change_vec_commute [|@sym_not_eq // ] @eq_f3 //
+                >reverse_cons >associative_append %
+              | #IH %2 #l #l1 >(?:l@c::xs@l1 = l@(c::xs)@l1) [|%]
+                @not_sub_list_merge
+                [ #l2 cut (∃xs'.xs = ci::xs')
+                  [ cases xs in Hxs;
+                    [ normalize #H destruct (H) >Hend in Hendci; #H destruct (H)
+                    | #ci' #xs' normalize #H lapply (cons_injective_l ????? H)
+                      #H1 >H1 %{xs'} % ]
+                  ]
+                  * #xs' #Hxs' >Hxs' normalize % #H destruct (H)
+                  lapply (Hcomp … (refl ??)) * /2/
+                |#t #l2 #l3 % normalize #H lapply (cons_injective_r ????? H)
+                 -H #H >H in IH; #IH cases (IH l2 l3) -IH #IH @IH % ] 
+              | >Htb >nth_change_vec // >Hmid_dst >Hrs0 % ]
+            | #x2 #xs2 normalize in ⊢ (%→?); #Hrs0 #Hnotendxs2 normalize in ⊢ (%→?);
+              #Hxs cases (IH Hstart (c::ls0) x2 (xs2@cj::tl2') ?)
+              [ -IH * #l * #l1 * #Hll1 #IH % %{(c::l)} %{l1} 
+                % [ @eq_f @Hll1 ]
+                #cj0 #l2 #Hcj0 >(IH … Hcj0) >Htb
+                >change_vec_commute // >change_vec_change_vec
+                >change_vec_commute [|@sym_not_eq // ] @eq_f3 //
+                >reverse_cons >associative_append %
+              | -IH #IH %2 #l #l1 >(?:l@c::xs@l1 = l@(c::xs)@l1) [|%] 
+                @not_sub_list_merge_2 [| @IH]
+                cut (∃l2.xs = x2::xs2@ci::l2)
+                [lapply Hnotend -Hnotend lapply Hxs  elim xs in Hxs;
+                  [ normalize #H1 #_ destruct (H1)
+                    >(Hnotendxs2 ? (memb_hd …)) in Hend; #H1 destruct (H1)
+                  | #x3 #xs3 #IH normalize in ⊢ (%→?); #Hxs3 destruct (Hxs3)
+                    #Hnotend 
+                
+                 @daemon] * #l2 #Hxs'
+                >Hxs' #l3 normalize >associative_append normalize % #H
+                destruct (H) lapply (append_l2_injective ?????? e1) //
+                #H1 destruct (H1) cases (Hcomp ?? (refl ??)) /2/
+              | >Htb >nth_change_vec // >Hmid_dst >Hrs0 % ]
+            ]
+          ]
+        ]
+      ]
+    |lapply (\Pf eqx) -eqx #eqx >Hmid_dst #Htrue 
+     cases (Htrue ? (refl ??) eqx) -Htrue #Htb #Hendcx #_
+     cases rs0 in Htb;
+     [ #_ %2 #l #l1 cases l
+       [ normalize cases xs
+         [ cases l1
+           [ normalize % #H destruct (H) cases eqx /2/
+           | #tmp1 #l2 normalize % #H destruct (H) ]
+         | #tmp1 #l2 normalize % #H destruct (H) ]
+       | #tmp1 #l2 normalize % #H destruct (H)cases l2 in e0;
+         [ normalize #H1 destruct (H1)
+         | #tmp2 #l3 normalize #H1 destruct (H1) ]
+       ]
+     | #r1 #rs1 normalize in ⊢ (???(????%?)→?); #Htb >Htb in IH; #IH
+       cases (IH ls x xs end rs ? Hnotend Hend Hnotstart) 
+       [| >Htb >nth_change_vec_neq [|@sym_not_eq //] @Hmid_src ] -IH
+       #_ #IH cases (IH Hstart (c::ls0) r1 rs1 ?)
+       [|| >nth_change_vec // ] -IH
+       [ * #l * #l1 * #Hll1 #Hout % %{(c::l)} %{l1} % >Hll1 //
+         >reverse_cons >associative_append #cj0 #ls #Hl1 >(Hout ?? Hl1)
+         >change_vec_commute in ⊢ (??(???%??)?); // @sym_not_eq //
+       | #IH %2 @(not_sub_list_merge_2 ?? (x::xs)) normalize [|@IH]
+         #l1 % #H destruct (H) cases eqx /2/
        ] 
     ]
   ]
