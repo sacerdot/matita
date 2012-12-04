@@ -42,6 +42,11 @@ definition confluent1: ∀A. relation A → predicate A ≝ λA,R,a0.
 definition confluent: ∀A. predicate (relation A) ≝ λA,R.
                       ∀a0. confluent1 … R a0.
 
+(* booleans *)
+
+definition is_false: predicate bool ≝ λb.
+                     false = b.
+
 (* arithmetics *)
 
 lemma lt_refl_false: ∀n. n < n → ⊥.
@@ -95,3 +100,9 @@ qed.
 notation > "◊"
   non associative with precedence 90
   for @{'nil}.
+
+let rec Allr (A:Type[0]) (R:relation A) (l:list A) on l : Prop ≝
+match l with
+[ nil       ⇒ True
+| cons a1 l ⇒ match l with [ nil ⇒ True | cons a2 _ ⇒ R a1 a2 ∧ Allr A R l ]
+].

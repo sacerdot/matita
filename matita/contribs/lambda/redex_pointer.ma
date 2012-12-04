@@ -24,11 +24,15 @@ include "term.ma".
          on application nodes, "false" means "proceed right"
          and "true" means "proceed left"
 *)
-definition rpointer: Type[0] ≝ list bool.
+definition rptr: Type[0] ≝ list bool.
+
+(* Note: a redex is "in the spine" when is not in the argument of an application *)
+definition in_spine: predicate rptr ≝ λp.
+                     All … is_false p.
 
 (* Note: precedence relation on redex pointers: p ≺ q
          to serve as base for the order relations: p < q and p ≤ q *)
-inductive rpprec: relation rpointer ≝
+inductive rpprec: relation rptr ≝
 | rpprec_nil : ∀b,q.   rpprec (◊) (b::q)
 | rppprc_cons: ∀p,q.   rpprec (false::p) (true::q)
 | rpprec_comp: ∀b,p,q. rpprec p q → rpprec (b::p) (b::q)
@@ -44,9 +48,13 @@ notation "hvbox(a break ≺ b)"
    for @{ 'prec $a $b }.
 
 (* Note: this is p < q *)
+definition rplt: relation rptr ≝ TC … rpprec.
+
 interpretation "'less than' on redex pointers"
-   'lt p q = (TC rpointer rpprec p q).
+   'lt p q = (rplt p q).
 
 (* Note: this is p ≤ q *)
+definition rple: relation rptr ≝ star … rpprec.
+
 interpretation "'less or equal to' on redex pointers"
-   'leq x y = (star rpointer x y).
+   'leq p q = (rple p q).

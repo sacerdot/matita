@@ -10,5 +10,6 @@ d, e      : variable reference depth
 h         : relocation height
 i, j      : de Bruijn index
 k         : relocation height
+m, n      : measures on terms
 p, q      : redex pointer
 r, s      : redex pointer sequence

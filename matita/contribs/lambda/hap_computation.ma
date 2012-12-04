@@ -12,18 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "redex_pointer.ma".
+include "hap_reduction.ma".
 
-(* REDEX POINTER SEQUENCE ***************************************************)
+(* KASHIMA'S "HAP" COMPUTATION **********************************************)
 
-(* Policy: pointer sequence metavariables: r, s *)
+(* Note: this is the "head in application" computation of:
+         R. Kashima: "A proof of the Standization Theorem in λ-Calculus". Typescript note, (2000).
+*)
+definition hap: relation term ≝ star … hap1.
 
-definition rpseq: Type[0] \def list rptr.
-
-(* Note: a "spine" computation contracts just redexes in the spine *)
-definition is_spine: predicate rpseq ≝ λs.
-                     All … in_spine s.
-
-(* Note: to us, a "normal" computation contracts redexes in non-decreasing positions *)
-definition is_le: predicate rpseq ≝ λs.
-                  Allr … rple s.
