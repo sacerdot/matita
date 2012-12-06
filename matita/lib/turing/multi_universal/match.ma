@@ -401,7 +401,7 @@ lapply (sem_while … (sem_match_step src dst sig n is_startc is_endc Hneq Hsrc 
      >reverse_cons >associative_append @(HFalse ?? Hnotnil)
     ]
   ]
-|#ta #tb #tc #Htrue #Hstar #IH #Hout lapply (IH Hout) -IH -Hout #IH whd
+|-ta -tb #ta #tb #tc #Htrue #Hstar #IH #Hout lapply (IH Hout) -IH -Hout #IH whd
  #ls #x #xs #end #rs #Hmid_src #Hnotend #Hend #Hnotstart 
  lapply (refl ? (current ? (nth dst ? ta (niltape ?))))
  cases (current ? (nth dst ? ta (niltape ?))) in ⊢ (???%→?); 
