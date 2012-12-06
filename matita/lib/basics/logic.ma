@@ -147,7 +147,13 @@ inductive ex (A:Type[0]) (P:A → Prop) : Prop ≝
 interpretation "exists" 'exists x = (ex ? x).
 
 inductive ex2 (A:Type[0]) (P,Q:A →Prop) : Prop ≝
-    ex_intro2: ∀ x:A. P x → Q x → ex2 A P Q.
+    ex2_intro: ∀ x:A. P x → Q x → ex2 A P Q.
+
+interpretation "exists on two predicates" 'exists2 x1 x2 = (ex2 ? x1 x2).
+
+lemma ex2_commute: ∀A0. ∀P0,P1:A0→Prop. (∃∃x0. P0 x0 & P1 x0) → ∃∃x0. P1 x0 & P0 x0.
+#A0 #P0 #P1 * /2 width=3/
+qed.
 
 (* iff *)
 definition iff :=

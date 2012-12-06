@@ -178,8 +178,8 @@ lemma wsem_copy : ∀src,dst,sig,n,is_sep.src ≠ dst → src < S n → dst < S 
   copy src dst sig n is_sep ⊫ R_copy src dst sig n is_sep.
 #src #dst #sig #n #is_sep #Hneq #Hsrc #Hdst #ta #k #outc #Hloop
 lapply (sem_while … (sem_copy_step src dst sig n is_sep Hneq Hsrc Hdst) … Hloop) //
--Hloop * #tb * #Hstar @(star_ind_l ??????? Hstar) -Hstar
-[ #tc whd in ⊢ (%→?); *
+-Hloop * #tb * #Hstar @(star_ind_l ??????? Hstar) -Hstar -ta
+[ whd in ⊢ (%→?); *
   [ * #x * * #Hx #Hsep #Houtc % [ %
     [ #ls #x0 #xs #rs #sep #Hsrctc #Hnosep >Hsrctc in Hx; normalize in ⊢ (%→?);
       #Hx0 destruct (Hx0) lapply (Hnosep ? (memb_hd …)) >Hsep
@@ -192,15 +192,15 @@ lapply (sem_while … (sem_copy_step src dst sig n is_sep Hneq Hsrc Hdst) … Hl
     | #c #Hc #Hsepc @Houtc ]
     | #_ @Houtc ]
   ]
-| #tc #td #te * #c0 * * #Hc0 #Hc0nosep #Hd #Hstar #IH #He 
+| #td #te * #c0 * * #Hc0 #Hc0nosep #Hd #Hstar #IH #He 
   lapply (IH He) -IH * * #IH1 #IH2 #IH3 % [ %
   [ #ls #x #xs #rs #sep #Hsrc_tc #Hnosep #Hsep #ls0 #x0 #target
     #c #rs0 #Hlen #Hdst_tc
     >Hsrc_tc in Hc0; normalize in ⊢ (%→?); #Hc0 destruct (Hc0)
-    <(change_vec_same … tc src (niltape ?)) in Hd:(???(???(???%??)??));
-    <(change_vec_same … tc dst (niltape ?)) in ⊢(???(???(???%??)??)→?);
-    >Hdst_tc >Hsrc_tc >change_vec_change_vec >change_vec_change_vec
-    >(change_vec_commute ?? tc ?? dst src) [|@(sym_not_eq … Hneq)]
+    <(change_vec_same … td src (niltape ?)) in Hd:(???(???(???%??)??));
+    <(change_vec_same … td dst (niltape ?)) in ⊢(???(???(???%??)??)→?);
+    >Hdst_tc >Hsrc_tc >(change_vec_change_vec ?) >change_vec_change_vec
+    >(change_vec_commute ?? td ?? dst src) [|@(sym_not_eq … Hneq)]
     >change_vec_change_vec @(list_cases2 … Hlen)
     [ #Hxsnil #Htargetnil #Hd>(IH2 … Hsep)
       [ >Hd -Hd >Hxsnil >Htargetnil @(eq_vec … (niltape ?))
@@ -221,9 +221,9 @@ lapply (sem_while … (sem_copy_step src dst sig n is_sep Hneq Hsrc Hdst) … Hl
         >nth_change_vec // >nth_change_vec // >Hxsnil % ]
     |#hd1 #hd2 #tl1 #tl2 #Hxs #Htarget >Hxs >Htarget #Hd
      >(IH1 (c0::ls) hd1 tl1 rs sep ?? Hsep (c0::ls0) hd2 tl2 c rs0)
-     [ >Hd >(change_vec_commute … ?? tc ?? src dst) //
+     [ >Hd >(change_vec_commute … ?? td ?? src dst) //
        >change_vec_change_vec
-       >(change_vec_commute … ?? tc ?? dst src) [|@sym_not_eq //]
+       >(change_vec_commute … ?? td ?? dst src) [|@sym_not_eq //]
        >change_vec_change_vec
        >reverse_cons >associative_append >associative_append % 
      | >Hd >nth_change_vec // >nth_change_vec_neq // >Hdst_tc >Htarget //

@@ -149,3 +149,16 @@ definition dsubstable_sn: predicate (relation term) ≝ λR.
 
 definition dsubstable: predicate (relation term) ≝ λR.
                        ∀D1,D2. R D1 D2 → ∀M1,M2. R M1 M2 → ∀d. R ([d ⬐ D1] M1) ([d ⬐ D2] M2).
+
+lemma star_dsubstable_dx: ∀R. dsubstable_dx R → dsubstable_dx (star … R).
+#R #HR #D #M1 #M2 #H elim H -M2 // /3 width=3/
+qed.
+
+lemma star_dsubstable_sn: ∀R. dsubstable_sn R → dsubstable_sn (star … R).
+#R #HR #D1 #D2 #H elim H -D2 // /3 width=3/
+qed.
+
+lemma lstar_dsubstable_dx: ∀T,R. (∀t. dsubstable_dx (R t)) →
+                           ∀l. dsubstable_dx (lstar T … R l).
+#T #R #HR #l #D #M1 #M2 #H elim H -l -M1 -M2 // /3 width=3/
+qed.

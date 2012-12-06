@@ -36,7 +36,7 @@ inductive rpprec: relation rptr ≝
 | rpprec_nil : ∀b,q.   rpprec (◊) (b::q)
 | rppprc_cons: ∀p,q.   rpprec (false::p) (true::q)
 | rpprec_comp: ∀b,p,q. rpprec p q → rpprec (b::p) (b::q)
-| rpprec_skip: ∀p,q.   rpprec (false::p) q → rpprec p q
+| rpprec_skip:         rpprec (false::◊) ◊
 .
 
 interpretation "'precedes' on redex pointers"
@@ -58,3 +58,19 @@ definition rple: relation rptr ≝ star … rpprec.
 
 interpretation "'less or equal to' on redex pointers"
    'leq p q = (rple p q).
+
+lemma rpprec_rple: ∀p,q. p ≺ q → p ≤ q.
+/2 width=1/
+qed.
+
+lemma rple_false: false::◊ ≤ ◊.
+/2 width=1/
+qed.
+
+lemma rple_nil: ∀p. ◊ ≤ p.
+* // /2 width=1/
+qed.
+
+lemma rple_comp: ∀p1,p2. p1 ≤ p2 → ∀b. (b::p1) ≤ (b::p2).
+#p1 #p2 #H elim H -p2 // /3 width=3/
+qed.

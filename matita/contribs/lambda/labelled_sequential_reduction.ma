@@ -104,23 +104,23 @@ lemma lsred_lift: ∀p. liftable (lsred p).
 #B #A #d <dsubst_lift_le //
 qed.
 
-lemma lsred_inv_lift: ∀p. deliftable (lsred p).
+lemma lsred_inv_lift: ∀p. deliftable_sn (lsred p).
 #p #h #N1 #N2 #H elim H -p -N1 -N2
 [ #D #C #d #M1 #H
   elim (lift_inv_appl … H) -H #B #M #H0 #HM #H destruct
   elim (lift_inv_abst … HM) -HM #A #H0 #H destruct /3 width=3/
 | #p #C1 #C2 #_ #IHC12 #d #M1 #H
-  elim (lift_inv_abst … H) -H #A1 #H0 #H destruct
-  elim (IHC12 ???) -IHC12 [4: // |2,3: skip ] #A2 #HA12 #H destruct (**) (* simplify line *)
-  @(ex2_1_intro … (𝛌.A2)) // /2 width=1/
+  elim (lift_inv_abst … H) -H #A1 #HAC1 #H
+  elim (IHC12 … HAC1) -C1 #A2 #HA12 #HAC2 destruct
+  @(ex2_intro … (𝛌.A2)) // /2 width=1/
 | #p #D1 #D2 #C1 #_ #IHD12 #d #M1 #H
-  elim (lift_inv_appl … H) -H #B1 #A #H1 #H2 #H destruct
-  elim (IHD12 ???) -IHD12 [4: // |2,3: skip ] #B2 #HB12 #H destruct (**) (* simplify line *)
-  @(ex2_1_intro … (@B2.A)) // /2 width=1/
+  elim (lift_inv_appl … H) -H #B1 #A #HBD1 #H1 #H2
+  elim (IHD12 … HBD1) -D1 #B2 #HB12 #HBD2 destruct
+  @(ex2_intro … (@B2.A)) // /2 width=1/
 | #p #D1 #C1 #C2 #_ #IHC12 #d #M1 #H
-  elim (lift_inv_appl … H) -H #B #A1 #H1 #H2 #H destruct
-  elim (IHC12 ???) -IHC12 [4: // |2,3: skip ] #A2 #HA12 #H destruct (**) (* simplify line *)
-  @(ex2_1_intro … (@B.A2)) // /2 width=1/
+  elim (lift_inv_appl … H) -H #B #A1 #H1 #HAC1 #H2
+  elim (IHC12 … HAC1) -C1 #A2 #HA12 #HAC2 destruct
+  @(ex2_intro … (@B.A2)) // /2 width=1/
 ]
 qed-.
 

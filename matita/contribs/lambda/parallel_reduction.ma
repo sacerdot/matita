@@ -72,23 +72,23 @@ lemma pred_lift: liftable pred.
 #D #D #A #C #_ #_ #IHBD #IHAC #d <dsubst_lift_le // /2 width=1/
 qed.
 
-lemma pred_inv_lift: deliftable pred.
+lemma pred_inv_lift: deliftable_sn pred.
 #h #N1 #N2 #H elim H -N1 -N2 /2 width=3/
 [ #C1 #C2 #_ #IHC12 #d #M1 #H
   elim (lift_inv_abst … H) -H #A1 #HAC1 #H
   elim (IHC12 … HAC1) -C1 #A2 #HA12 #HAC2 destruct
-  @(ex2_1_intro … (𝛌.A2)) // /2 width=1/
+  @(ex2_intro … (𝛌.A2)) // /2 width=1/
 | #D1 #D2 #C1 #C2 #_ #_ #IHD12 #IHC12 #d #M1 #H
   elim (lift_inv_appl … H) -H #B1 #A1 #HBD1 #HAC1 #H
   elim (IHD12 … HBD1) -D1 #B2 #HB12 #HBD2
   elim (IHC12 … HAC1) -C1 #A2 #HA12 #HAC2 destruct
-  @(ex2_1_intro … (@B2.A2)) // /2 width=1/
+  @(ex2_intro … (@B2.A2)) // /2 width=1/
 | #D1 #D2 #C1 #C2 #_ #_ #IHD12 #IHC12 #d #M1 #H
   elim (lift_inv_appl … H) -H #B1 #M #HBD1 #HM #H1
   elim (lift_inv_abst … HM) -HM #A1 #HAC1 #H
   elim (IHD12 … HBD1) -D1 #B2 #HB12 #HBD2
   elim (IHC12 … HAC1) -C1 #A2 #HA12 #HAC2 destruct
-  @(ex2_1_intro … ([⬐B2]A2)) /2 width=1/
+  @(ex2_intro … ([⬐B2]A2)) /2 width=1/
 ]
 qed-.
 
@@ -143,7 +143,7 @@ theorem pred_conf: confluent … pred.
   | #C #B2 #C2 #HB2 #HC2 #H2 #HM2 #B1 #N #HB1 #H #HM1 destruct
     @(pred_conf1_appl_beta … IH) // (**) (* /2 width=7 by pred_conf1_appl_beta/ does not work *)
   | #B2 #N #B2 #H #HM2 #C #B1 #C1 #HB1 #HC1 #H1 #HM1 destruct
-    @ex2_1_commute @(pred_conf1_appl_beta … IH) //
+    @ex2_commute @(pred_conf1_appl_beta … IH) //
   | #C #B2 #C2 #HB2 #HC2 #H2 #HM2 #C0 #B1 #C1 #HB1 #HC1 #H1 #HM1 destruct
     elim (IH B … HB1 … HB2) -HB1 -HB2 //
     elim (IH C … HC1 … HC2) normalize // -B -C /3 width=5/

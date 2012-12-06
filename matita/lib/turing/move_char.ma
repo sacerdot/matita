@@ -96,7 +96,7 @@ lemma sem_move_char_r :
 #alpha #sep #inc #i #outc #Hloop
 lapply (sem_while … (sem_mcr_step alpha sep) inc i outc Hloop) [%]
 -Hloop * #t1 * #Hstar @(star_ind_l ??????? Hstar)
-[ #tapea whd in ⊢ (% → ?); #H1 #b #a #ls #rs #Htapea
+[ whd in ⊢ (% → ?); #H1 #b #a #ls #rs #Htapea
   %
   [ #Hb >Htapea in H1; >Hb #H1 cases (H1 ??)
     [#_ #H2 >H2 % |*: % #H2 normalize in H2; destruct (H2)]
@@ -105,7 +105,7 @@ lapply (sem_while … (sem_mcr_step alpha sep) inc i outc Hloop) [%]
     [#Hfalse @False_ind @(absurd ?? Hb) normalize in Hfalse; destruct %
     |*:% #H2 normalize in H2; destruct (H2) ]
   ]
-| #tapea #tapeb #tapec #Hstar1 #HRtrue #IH #HRfalse
+| #tapeb #tapec #Hstar1 #HRtrue #IH #HRfalse
   lapply (IH HRfalse) -IH -HRfalse whd in ⊢ (%→%); #IH
   #b0 #a0 #ls #rs #Htapea cases Hstar1 #b * #bsep *
   [* #a * #ls1 * #rs1 * >Htapea #H destruct (H) #Htapeb %
@@ -256,7 +256,7 @@ lemma sem_move_char_l :
 #alpha #sep #inc #i #outc #Hloop
 lapply (sem_while … (sem_mcl_step alpha sep) inc i outc Hloop) [%]
 -Hloop * #t1 * #Hstar @(star_ind_l ??????? Hstar)
-[ #tapea whd in ⊢ (% → ?); #H1 #b #a #ls #rs #Htapea
+[ whd in ⊢ (% → ?); #H1 #b #a #ls #rs #Htapea
   %
   [ #Hb >Htapea in H1; >Hb #H1 cases (H1 ??)
     [#_ #H2 >H2 % |*: % #H2 normalize in H2; destruct (H2)]
@@ -265,7 +265,7 @@ lapply (sem_while … (sem_mcl_step alpha sep) inc i outc Hloop) [%]
     [#Hfalse @False_ind @(absurd ?? Hb) normalize in Hfalse; destruct %
     |*:% #H2 normalize in H2; destruct (H2) ]
   ]
-| #tapea #tapeb #tapec #Hstar1 #HRtrue #IH #HRfalse
+| #tapeb #tapec #Hstar1 #HRtrue #IH #HRfalse
   lapply (IH HRfalse) -IH -HRfalse whd in ⊢ (%→%); #IH
   #b0 #a0 #ls #rs #Htapea cases Hstar1 #b * #bsep *
   [* #a * #ls1 * #rs1 * >Htapea #H destruct (H) #Htapeb %

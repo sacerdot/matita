@@ -28,10 +28,6 @@ notation "⊥"
   non associative with precedence 90
   for @{'false}.
 
-lemma ex2_1_commute: ∀A0. ∀P0,P1:A0→Prop. (∃∃x0. P0 x0 & P1 x0) → ∃∃x0. P1 x0 & P0 x0.
-#A0 #P0 #P1 * /2 width=3/
-qed.
-
 (* relations *)
 
 definition confluent1: ∀A. relation A → predicate A ≝ λA,R,a0.
@@ -100,9 +96,3 @@ qed.
 notation > "◊"
   non associative with precedence 90
   for @{'nil}.
-
-let rec Allr (A:Type[0]) (R:relation A) (l:list A) on l : Prop ≝
-match l with
-[ nil       ⇒ True
-| cons a1 l ⇒ match l with [ nil ⇒ True | cons a2 _ ⇒ R a1 a2 ∧ Allr A R l ]
-].

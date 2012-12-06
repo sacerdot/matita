@@ -4,12 +4,16 @@ A, B, C, D: term
 H         : transient premise
 IH        : inductive premise
 M, N      : term
+R         : arbitrary relation
+T, U      : arbitrary small type
 
 a, b      : boolean
 d, e      : variable reference depth 
 h         : relocation height
 i, j      : de Bruijn index
 k         : relocation height
+l         : arbitrary list
 m, n      : measures on terms
 p, q      : redex pointer
 r, s      : redex pointer sequence
+t, u      : arbitrary element

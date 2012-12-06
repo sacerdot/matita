@@ -628,7 +628,7 @@ lemma wsem_match_tuple : WRealize ? match_tuple R_match_tuple0.
 #intape #k #outc #Hloop 
 lapply (sem_while … sem_match_tuple_step intape k outc Hloop) [%] -Hloop
 * #ta * #Hstar @(star_ind_l ??????? Hstar)
-[ #tb whd in ⊢ (%→?); #Hleft
+[ whd in ⊢ (%→?); #Hleft
   #ls #cur #rs #Htb cases (Hleft … Htb) #Hgrid #Houtc %
   [ #_ @Houtc 
   | #c #l1 #c1 #l2 #l3 #ls0 #rs0 #n #Hls #Hcur #Hrs 
@@ -637,7 +637,7 @@ lapply (sem_while … sem_match_tuple_step intape k outc Hloop) [%] -Hloop
   ]
 | (* in the interesting case, we execute a true iteration, then we restart the
      while cycle, finally we end with a false iteration *)
-  #tb #tc #td whd in ⊢ (%→?); #Htc
+  #tc #td whd in ⊢ (%→?); #Htc
   #Hstar1 #IH whd in ⊢ (%→?); #Hright lapply (IH Hright) -IH whd in ⊢ (%→?); #IH
   #ls #cur #rs #Htb %
   [ (* cur can't be true because we assume at least one iteration *)
@@ -710,16 +710,20 @@ lapply (sem_while … sem_match_tuple_step intape k outc Hloop) [%] -Hloop
    | (* match failed and there is no next tuple: the next while cycle will just exit *)
      * * #Hdiff #Hnobars generalize in match (refl ? tc);
      cases tc in ⊢ (???% → %);
-     [ #_ normalize in ⊢ (??%?→?); #Hfalse destruct (Hfalse)
-     |2,3: #x #xs #_ normalize in ⊢ (??%?→?); #Hfalse destruct (Hfalse) ]
-     #ls1 #cur1 #rs1 #Htc normalize in ⊢ (??%?→?); #Hcur1
+     [ #_ @daemon (* long normalize *) (* 
+          normalize in ⊢ (??%?→?); #Hfalse destruct (Hfalse)
+     *)
+     |2,3: #x #xs #_ @daemon (* long normalize *) (* 
+                     normalize in ⊢ (??%?→?); #Hfalse destruct (Hfalse) *) ]
+     #ls1 #cur1 #rs1 #Htc @daemon (* long normalize *) (* 
+                          normalize in ⊢ (??%?→?); #Hcur1
      cases (IH … Htc) -IH #IH #_ %2 %
      [ destruct (Hcur1) >IH [ >Htc % | % ]
      | #l4 #newc #mv0 #l5
        (* no_bars except the first one, where the tuple does not match ⇒ 
           no match *)
         @daemon
-     ]
+     ] *)
    ]
  ]
 qed.

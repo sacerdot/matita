@@ -47,3 +47,11 @@ notation "hvbox( 𝛌  . term 46 A )"
 notation "hvbox( @ term 46 C . break term 46 A )"
    non associative with precedence 46
    for @{ 'Application $C $A }.
+
+definition appl_compatible_dx: predicate (relation term) ≝ λR.
+                               ∀B,A1,A2. R A1 A2 → R (@B.A1) (@B.A2).
+
+lemma star_appl_compatible_dx: ∀R. appl_compatible_dx R →
+                               appl_compatible_dx (star … R).
+#R #HR #B #A1 #A2 #H elim H -A2 // /3 width=3/
+qed.

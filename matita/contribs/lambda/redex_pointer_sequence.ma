@@ -27,3 +27,7 @@ definition is_spine: predicate rpseq ≝ λs.
 (* Note: to us, a "normal" computation contracts redexes in non-decreasing positions *)
 definition is_le: predicate rpseq ≝ λs.
                   Allr … rple s.
+
+(* Note: a normal spine computation *)
+definition is_spine_le: predicate rpseq ≝ λs.
+                        is_spine s ∧ is_le s.

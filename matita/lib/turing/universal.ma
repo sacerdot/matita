@@ -184,6 +184,7 @@ STATO 8:
 STATO 9:
   stato finale
 *)
+(* TODO
 match s with
  [ q0 ⇒ match c with
    [ bit x ⇒ 〈q1,〈mark x,L〉〉
@@ -229,7 +230,7 @@ match s with
    | mark D ⇒ 〈q9,〈bit D,L〉〉 ]
  | q9 ⇒ ? (* successo *)
  ].
-
+*)
 (*
 ==================================
 MACCHINE PER SPOSTARE LA "TESTINA"
@@ -290,7 +291,7 @@ STATO 3:
 STATO 4:
   stato finale
 *)
-
+(* TODO
 match s with
  [ q0 ⇒ match c with
    [ bit x ⇒ 〈q1 x,〈c,L〉〉
@@ -301,7 +302,7 @@ match s with
  | q2 d ⇒ 〈q0,〈d,L〉〉
  | q3 ⇒ 〈q4,〈grid,L〉〉
  | q4 ⇒ (* finale *) ].
-
+*)
 (*
 MACCHINA B
 ----------
@@ -334,7 +335,7 @@ STATO 3:
 STATO 4:
   stato finale
 *)
-
+(* TODO
 match s with
 [ q0 ⇒ match c with
   [ bit x ⇒ 〈q1 x,〈c,R〉〉
@@ -345,7 +346,7 @@ match s with
 | q2 d ⇒ 〈q0,〈d,R〉〉
 | q3 ⇒ 〈q4,〈grid,L〉〉 
 | q4 ⇒ (* finale *) ].
-
+*)
 (*
 MACCHINA C
 ----------
@@ -375,7 +376,7 @@ STATO 3:
   stato finale
 
 *)
-
+(* TODO
 match s with 
 [ q0 ⇒ match c with
   [ bit x ⇒ 〈q1 x,〈c,R〉〉
@@ -385,3 +386,4 @@ match s with
   | _ ⇒ 〈q2 c,〈bit x,L〉〉
 | q2 d ⇒ 〈q0,〈c,R〉〉
 | q3 ⇒ (* finale *) ].
+*)

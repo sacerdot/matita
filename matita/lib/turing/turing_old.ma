@@ -49,7 +49,7 @@ normalize >(len A n v) //
 qed.
 
 lemma length_map: ∀A,B,l.∀f:A→B. length ? (map ?? f l) = length ? l.
-#A #B #l #f elim l // #a #tl #Hind normalize //
+#A #B #l #f elim l //
 qed.
 
 definition vec_map ≝ λA,B.λf:A→B.λn.λv:Vector A n.

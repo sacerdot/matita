@@ -146,7 +146,7 @@ lemma wsem_adv_to_mark_r :
 #alpha #test #t #i #outc #Hloop
 lapply (sem_while … (sem_atmr_step alpha test) t i outc Hloop) [%]
 -Hloop * #t1 * #Hstar @(star_ind_l ??????? Hstar)
-[ #tapea * #Htapea *
+[ * #Htapea *
   [ #H1 %
     [#_ @Htapea 
     |#ls #c #rs #H2 >H2 in H1; whd in ⊢ (??%? → ?);
@@ -159,7 +159,7 @@ lapply (sem_while … (sem_atmr_step alpha test) t i outc Hloop) [%]
      <Htapea //
     ]
   ]
-| #tapea #tapeb #tapec #Hleft #Hright #IH #HRfalse
+| #tapeb #tapec #Hleft #Hright #IH #HRfalse
   lapply (IH HRfalse) -IH #IH %
   [cases Hleft #ls * #a * #rs * * #Htapea #_ #_ >Htapea
    whd in ⊢((??%?)→?); #H destruct (H);
@@ -501,7 +501,7 @@ lemma wsem_adv_to_mark_l :
 #alpha #test #t #i #outc #Hloop
 lapply (sem_while … (sem_atml_step alpha test) t i outc Hloop) [%]
 -Hloop * #t1 * #Hstar @(star_ind_l ??????? Hstar)
-[ #tapea * #Htapea *
+[ * #Htapea *
   [ #H1 %
     [#_ @Htapea
     |#ls #c #rs #H2 >H2 in H1; whd in ⊢ (??%? → ?);
@@ -516,7 +516,7 @@ lapply (sem_while … (sem_atml_step alpha test) t i outc Hloop) [%]
       ]
     ]
   ]
-| #tapea #tapeb #tapec #Hleft #Hright #IH #HRfalse
+| #tapeb #tapec #Hleft #Hright #IH #HRfalse
   lapply (IH HRfalse) -IH #IH %
   [cases Hleft #ls0 * #a0 * #rs0 * * #Htapea #_ #_ >Htapea
    whd in ⊢ ((??%?)→?); #H destruct (H)
@@ -1200,7 +1200,7 @@ lemma wsem_compare : WRealize ? compare R_compare.
 #t #i #outc #Hloop
 lapply (sem_while ?????? sem_comp_step t i outc Hloop) [%]
 -Hloop * #t1 * #Hstar @(star_ind_l ??????? Hstar)
-[ #tapea whd in ⊢ (%→?); #Rfalse #ls #c #rs #Htapea %
+[ whd in ⊢ (%→?); #Rfalse #ls #c #rs #Htapea %
   [ %
     [ #c' #Hc' #Hc lapply (Rfalse … Htapea) -Rfalse * >Hc
       whd in ⊢ (??%?→?); #Hfalse destruct (Hfalse)
@@ -1209,7 +1209,7 @@ lapply (sem_while ?????? sem_comp_step t i outc Hloop) [%]
   | #b #b0 #bs #b0s #l1 #l2 #Hlen #Hbs1 #Hb0s1 #Hbs2 #Hb0s2 #Hl1 #Hc
     cases (Rfalse … Htapea) -Rfalse >Hc whd in ⊢ (??%?→?);#Hfalse destruct (Hfalse)
   ]
-| #tapea #tapeb #tapec #Hleft #Hright #IH #Htapec lapply (IH Htapec) -Htapec -IH #IH
+| #tapeb #tapec #Hleft #Hright #IH #Htapec lapply (IH Htapec) -Htapec -IH #IH
   whd in Hleft; #ls #c #rs #Htapea cases Hleft -Hleft
   #ls0 * #c' * #rs0 * >Htapea #Hdes destruct (Hdes) * * 
   cases (true_or_false (bit_or_null c')) #Hc'

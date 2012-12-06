@@ -122,15 +122,25 @@ lemma starl_to_star: ∀A,R,a,b.starl A R a b → star A R a b.
 #a #b #c #Rab #sbc #sbc @(star_compl … Rab) //
 qed.
 
-lemma star_ind_l : 
-  ∀A:Type[0].∀R:relation A.∀Q:A → A → Prop.
-  (∀a.Q a a) → 
-  (∀a,b,c.R a b → star A R b c → Q b c → Q a c) → 
-  ∀a,b.star A R a b → Q a b.
-#A #R #Q #H1 #H2 #a #b #H0 
-elim (star_to_starl ???? H0) // -H0 -b -a 
-#a #b #c #Rab #slbc @H2 // @starl_to_star //
-qed.  
+fact star_ind_l_aux: ∀A,R,a2. ∀P:predicate A.
+                     P a2 →
+                     (∀a1,a. R a1 a → star … R a a2 → P a → P a1) →
+                     ∀a1,a. star … R a1 a → a = a2 → P a1.
+#A #R #a2 #P #H1 #H2 #a1 #a #Ha1
+elim (star_to_starl ???? Ha1) -a1 -a
+[ #a #b #c #Hab #Hbc #IH #H destruct /3 width=4/
+| #a #H destruct /2 width=1/
+]
+qed-.
+
+(* imporeved version of star_ind_l with "left_parameter" *)
+lemma star_ind_l: ∀A,R,a2. ∀P:predicate A.
+                  P a2 →
+                  (∀a1,a. R a1 a → star … R a a2 → P a → P a1) →
+                  ∀a1. star … R a1 a2 → P a1.
+#A #R #a2 #P #H1 #H2 #a1 #Ha12
+@(star_ind_l_aux … H1 H2 … Ha12) //
+qed.
 
 (* RC and star *)
 

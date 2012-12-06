@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "hap_computation.ma".
+include "labelled_hap_computation.ma".
 
 (* KASHIMA'S "ST" COMPUTATION ***********************************************)
 
@@ -20,8 +20,8 @@ include "hap_computation.ma".
          R. Kashima: "A proof of the Standization Theorem in λ-Calculus". Typescript note, (2000).
 *)
 inductive st: relation term ≝
-| st_vref: ∀M,i. hap M (#i) → st M (#i)
-| st_abst: ∀M,A,C. hap M (𝛌.A) → st A C → st M (𝛌.C)
-| st_appl: ∀M,B,D,A,C. hap M (@B.A) → st B D → st A C → st M (@D.C) 
+| st_vref: ∀s,M,i. lhap s M (#i) → st M (#i)
+| st_abst: ∀s,M,A,C. lhap s M (𝛌.A) → st A C → st M (𝛌.C)
+| st_appl: ∀s,M,B,D,A,C. lhap s M (@B.A) → st B D → st A C → st M (@D.C) 
 .
 

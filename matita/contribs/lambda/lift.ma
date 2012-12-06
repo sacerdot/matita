@@ -188,7 +188,7 @@ theorem lift_inv_lift_le: ∀h1,h2,M1,M2,d1,d2. d2 ≤ d1 →
       >(lift_inv_vref_lt … Hid2 … H) -M2 /3 width=3/
     | elim (lift_inv_vref_ge … H) -H -Hd21 // -Hid2 #Hdh2i #H destruct
       elim (le_inv_plus_l … Hdh2i) -Hdh2i #Hd2i #Hh2i
-      @(ex2_1_intro … (#(i-h2))) [ /4 width=1/ ] -Hid1
+      @(ex2_intro … (#(i-h2))) [ /4 width=1/ ] -Hid1
       >lift_vref_ge // -Hd2i /3 width=1/ (**) (* auto: needs some help here *)
     ]
   | elim (le_inv_plus_l … Hid1) #Hd1i #Hh2i
@@ -196,7 +196,7 @@ theorem lift_inv_lift_le: ∀h1,h2,M1,M2,d1,d2. d2 ≤ d1 →
     elim (le_inv_plus_l … Hdh2i) #Hd2i #_
     >(lift_vref_ge … Hid1) #H -Hid1
     >(lift_inv_vref_ge_plus … H) -H /2 width=3/ -Hdh2i
-    @(ex2_1_intro … (#(i-h2))) (**) (* auto: needs some help here *)
+    @(ex2_intro … (#(i-h2))) (**) (* auto: needs some help here *)
     [ >lift_vref_ge // -Hd1i /3 width=1/
     | >lift_vref_ge // -Hd2i -Hd1i /3 width=1/
     ]
@@ -204,12 +204,12 @@ theorem lift_inv_lift_le: ∀h1,h2,M1,M2,d1,d2. d2 ≤ d1 →
 | normalize #A1 #IHA1 #M2 #d1 #d2 #Hd21 #H
   elim (lift_inv_abst … H) -H >plus_plus_comm_23 #A2 #HA12 #H destruct
   elim (IHA1 … HA12) -IHA1 -HA12 /2 width=1/ -Hd21 #A #HA2 #HA1
-  @(ex2_1_intro … (𝛌.A)) normalize //
+  @(ex2_intro … (𝛌.A)) normalize //
 | normalize #B1 #A1 #IHB1 #IHA1 #M2 #d1 #d2 #Hd21 #H
   elim (lift_inv_appl … H) -H #B2 #A2 #HB12 #HA12 #H destruct
   elim (IHB1 … HB12) -IHB1 -HB12 // #B #HB2 #HB1
   elim (IHA1 … HA12) -IHA1 -HA12 // -Hd21 #A #HA2 #HA1
-  @(ex2_1_intro … (@B.A)) normalize //
+  @(ex2_intro … (@B.A)) normalize //
 ]
 qed-.
 
@@ -243,6 +243,30 @@ qed-.
 definition liftable: predicate (relation term) ≝ λR.
                      ∀h,M1,M2. R M1 M2 → ∀d. R (↑[d, h] M1) (↑[d, h] M2).
 
-definition deliftable: predicate (relation term) ≝ λR.
-                       ∀h,N1,N2. R N1 N2 → ∀d,M1. ↑[d, h] M1 = N1 →
-                       ∃∃M2. R M1 M2 & ↑[d, h] M2 = N2.
+definition deliftable_sn: predicate (relation term) ≝ λR.
+                          ∀h,N1,N2. R N1 N2 → ∀d,M1. ↑[d, h] M1 = N1 →
+                          ∃∃M2. R M1 M2 & ↑[d, h] M2 = N2.
+
+lemma star_liftable: ∀R. liftable R → liftable (star … R).
+#R #HR #h #M1 #M2 #H elim H -M2 // /3 width=3/
+qed.
+
+lemma star_deliftable_sn: ∀R. deliftable_sn R → deliftable_sn (star … R).
+#R #HR #h #N1 #N2 #H elim H -N2 /2 width=3/
+#N #N2 #_ #HN2 #IHN1 #d #M1 #HMN1
+elim (IHN1 … HMN1) -N1 #M #HM1 #HMN
+elim (HR … HN2 … HMN) -N /3 width=3/
+qed-.
+
+lemma lstar_liftable: ∀T,R. (∀t. liftable (R t)) →
+                      ∀l. liftable (lstar T … R l).
+#T #R #HR #l #h #M1 #M2 #H elim H -l -M1 -M2 // /3 width=3/
+qed.
+
+lemma lstar_deliftable_sn: ∀T,R. (∀t. deliftable_sn (R t)) →
+                           ∀l. deliftable_sn (lstar T … R l).
+#T #R #HR #l #h #N1 #N2 #H elim H -l -N1 -N2 /2 width=3/
+#t #N1 #N #HN1 #l #N2 #_ #IHN2 #d #M1 #HMN1
+elim (HR … HN1 … HMN1) -N1 #M #HM1 #HMN
+elim (IHN2 … HMN) -N /3 width=3/
+qed-.

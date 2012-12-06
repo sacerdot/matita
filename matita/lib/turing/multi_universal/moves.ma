@@ -211,7 +211,7 @@ lemma wsem_parmoveL : ∀src,dst,sig,n,is_sep.src ≠ dst → src < S n → dst 
 #src #dst #sig #n #is_sep #Hneq #Hsrc #Hdst #ta #k #outc #Hloop
 lapply (sem_while … (sem_parmove_step src dst sig n L is_sep Hneq Hsrc Hdst) … Hloop) //
 -Hloop * #tb * #Hstar @(star_ind_l ??????? Hstar) -Hstar
-[ #tc whd in ⊢ (%→?); * #H #Houtc % [2: #_ @Houtc ] cases H
+[ whd in ⊢ (%→?); * #H #Houtc % [2: #_ @Houtc ] cases H
   [ * [ * #x * #Hx #Hsep #ls #x0 #xs #rs #sep #Hsrctc #Hnosep >Hsrctc in Hx; normalize in ⊢ (%→?);
     #Hx0 destruct (Hx0) lapply (Hnosep ? (memb_hd …)) >Hsep
     #Hfalse destruct (Hfalse)
@@ -220,7 +220,7 @@ lapply (sem_while … (sem_parmove_step src dst sig n L is_sep Hneq Hsrc Hdst) �
   |#Hcur_dst  #ls #x0 #xs #rs #sep #Hsrctc #Hnosep #Hsep #ls0 #x1 #target 
    #c #rs0 #Hlen #Hdsttc >Hdsttc in Hcur_dst; normalize in ⊢ (%→?); #H destruct (H)
   ]  
-| #tc #td #te * #c0 * #c1 * * * #Hc0 #Hc1 #Hc0nosep #Hd #Hstar #IH #He 
+| #td #te * #c0 * #c1 * * * #Hc0 #Hc1 #Hc0nosep #Hd #Hstar #IH #He 
   lapply (IH He) -IH * #IH1 #IH2 %
   [ #ls #x #xs #rs #sep #Hsrc_tc #Hnosep #Hsep #ls0 #x0 #target
     #c #rs0 #Hlen #Hdst_tc
@@ -247,9 +247,9 @@ lapply (sem_while … (sem_parmove_step src dst sig n L is_sep Hneq Hsrc Hdst) �
       ]
     | #hd1 #hd2 #tl1 #tl2 #Hxs #Htarget >Hxs >Htarget #Hd
       >(IH1 ls hd1 tl1 (c0::rs) sep ?? Hsep ls0 hd2 tl2 c (x0::rs0))
-      [ >Hd >(change_vec_commute … ?? tc ?? src dst) //
+      [ >Hd >(change_vec_commute … ?? td ?? src dst) //
        >change_vec_change_vec
-       >(change_vec_commute … ?? tc ?? dst src) [|@sym_not_eq //]
+       >(change_vec_commute … ?? td ?? dst src) [|@sym_not_eq //]
        >change_vec_change_vec
        >reverse_cons >associative_append
        >reverse_cons >associative_append % 

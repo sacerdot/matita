@@ -234,7 +234,7 @@ lemma wsem_compare : ∀i,j,sig,n,is_endc.i ≠ j → i < S n → j < S n →
 #i #j #sig #n #is_endc #Hneq #Hi #Hj #ta #k #outc #Hloop
 lapply (sem_while … (sem_comp_step i j sig n is_endc Hneq Hi Hj) … Hloop) //
 -Hloop * #tb * #Hstar @(star_ind_l ??????? Hstar) -Hstar
-[ #tc whd in ⊢ (%→?); * * [ * [ *
+[ whd in ⊢ (%→?); * * [ * [ *
   [* #curi * #Hcuri #Hendi #Houtc %
     [ #_ @Houtc  
     | #ls #x #xs #ci #rs #ls0 #rs0 #Hnthi #Hnthj #Hnotendc 
@@ -255,7 +255,7 @@ lapply (sem_while … (sem_comp_step i j sig n is_endc Hneq Hi Hj) … Hloop) //
     [ #_ @Houtc
     | #ls #x #xs #ci #rs #ls0 #rs0 #_ #Hnthj >Hnthj in Hcj;
       normalize in ⊢ (%→?); #H destruct (H) ] ]
-  | #tc #td #te * #x * * * #Hendcx #Hci #Hcj #Hd #Hstar #IH #He lapply (IH He) -IH *
+  | #td #te * #x * * * #Hendcx #Hci #Hcj #Hd #Hstar #IH #He lapply (IH He) -IH *
     #IH1 #IH2 %
     [ >Hci >Hcj * [* #x0 * #H destruct (H) >Hendcx #H destruct (H) 
     |* [* #H @False_ind [cases H -H #H @H % | destruct (H)] | #H destruct (H)]] 

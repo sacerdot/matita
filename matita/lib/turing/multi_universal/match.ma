@@ -370,7 +370,7 @@ src ≠ dst → src < S n → dst < S n →
 #src #dst #sig #n #is_startc #is_endc #Hneq #Hsrc #Hdst #ta #k #outc #Hloop
 lapply (sem_while … (sem_match_step src dst sig n is_startc is_endc Hneq Hsrc Hdst) … Hloop) //
 -Hloop * #tb * #Hstar @(star_ind_l ??????? Hstar) -Hstar
-[ #tc #Hfalse #ls #x #xs #end #rs #Hmid_src #Hnotend #Hend #Hnotstart
+[ #Hfalse #ls #x #xs #end #rs #Hmid_src #Hnotend #Hend #Hnotstart
   cases (Hfalse … Hmid_src Hnotend Hend) -Hfalse 
   [(* current dest = None *) *
     [ * #Hcur_dst #Houtc %
@@ -401,7 +401,7 @@ lapply (sem_while … (sem_match_step src dst sig n is_startc is_endc Hneq Hsrc 
      >reverse_cons >associative_append @(HFalse ?? Hnotnil)
     ]
   ]
-|-ta -tb #ta #tb #tc #Htrue #Hstar #IH #Hout lapply (IH Hout) -IH -Hout #IH whd
+|-ta #ta #tc #Htrue #Hstar #IH #Hout lapply (IH Hout) -IH -Hout #IH whd
  #ls #x #xs #end #rs #Hmid_src #Hnotend #Hend #Hnotstart 
  lapply (refl ? (current ? (nth dst ? ta (niltape ?))))
  cases (current ? (nth dst ? ta (niltape ?))) in ⊢ (???%→?); 

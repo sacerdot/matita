@@ -27,6 +27,14 @@ notation > "\exists list1 ident x sep , opt (: T). term 19 Px"
           @{ ${ fold right @{$Px} rec acc @{'exists (λ${ident x}.$acc)} } }
        }.
 
+notation > "hvbox(∃∃ ident x0 break . term 19 P0 break & term 19 P1)"
+ non associative with precedence 20
+ for @{ 'exists2 (λ${ident x0}.$P0) (λ${ident x0}.$P1) }.
+
+notation < "hvbox(∃∃ ident x0 break . term 19 P0 break & term 19 P1)"
+ non associative with precedence 20
+ for @{ 'exists2 (λ${ident x0}:$T0.$P0) (λ${ident x0}:$T0.$P1) }.
+
 (* sigma ********************************************************************)
 
 notation < "hvbox(\Sigma ident i : ty break . p)"

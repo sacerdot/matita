@@ -292,7 +292,7 @@ lemma wsem_copy0 : WRealize ? copy0 R_copy0.
 #intape #k #outc #Hloop 
 lapply (sem_while … sem_copy_step intape k outc Hloop) [%] -Hloop
 * #ta * #Hstar @(star_ind_l ??????? Hstar)
-[ #tb whd in ⊢ (%→?); #Hleft
+[ whd in ⊢ (%→?); #Hleft
   #ls #c #c0 #rs #l1 #l3 #l4 #Htb #Hl1nomarks #Hl3l4nomarks #Hlen #l1' #bv
   #Hl1 #Hl1bits #l4' #bg #Hl4 #Hl4bits
   cases (Hleft … Htb) -Hleft #Hc #Houtc % %
@@ -302,7 +302,7 @@ lapply (sem_while … sem_copy_step intape k outc Hloop) [%] -Hloop
       #Hl1bits lapply (Hl1bits 〈c',false〉 ?) [ @memb_hd ] 
       >Hc #Hfalse destruct ]
   | @Houtc ]
-| #tb #tc #td whd in ⊢ (%→?→(?→%)→%→?); #Htc #Hstar1 #Hind #Htd
+| #tc #td whd in ⊢ (%→?→(?→%)→%→?); #Htc #Hstar1 #Hind #Htd
   lapply (Hind Htd) -Hind #Hind
   #ls #c #c0 #rs #l1 #l3 #l4 #Htb #Hl1nomarks #Hl3l4nomarks #Hlen #l1' #bv
   #Hl1 #Hl1bits #l4' #bg #Hl4 #Hl4bits %2

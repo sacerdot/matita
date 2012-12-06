@@ -122,7 +122,7 @@ let rec mem A (a:A) (l:list A) on l ≝
   [ nil ⇒ False
   | cons hd tl ⇒ a=hd ∨ mem A a tl
   ]. 
-
+(* this no longer works: TODO 
 definition reach ≝ λsig.λM:NTM sig.λc,c1:config sig M.
   ∃q,l,q1,mvs. 
     state ?? c = q ∧ 
@@ -131,14 +131,14 @@ definition reach ≝ λsig.λM:NTM sig.λc,c1:config sig M.
     mem ? 〈〈q,l〉,〈q1,mvs〉〉 (trans ? M)  ∧ 
     state ?? c1 = q1 ∧
     tapes ?? c1 = (compose_vec ??? (tape_move sig) ? (tapes ?? c) mvs).
-
+*)
 (*
 definition empty_tapes ≝ λsig.λn.
 mk_Vector ? n (make_list (tape sig) (mk_tape sig [] []) n) ?.
 elim n // normalize //
 qed.
 *)
-
+(* this no longer works: TODO
 definition init ≝ λsig.λM:NTM sig.λi:(list sig).
   mk_config ??
     (start sig M)
@@ -147,4 +147,4 @@ definition init ≝ λsig.λM:NTM sig.λi:(list sig).
 definition accepted ≝ λsig.λM:NTM sig.λw:(list sig).
 ∃c. star ? (reach sig M) (init sig M w) c ∧
   accept ?? (state ?? c) = true.
-
+*)
