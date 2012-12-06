@@ -624,9 +624,9 @@ let case1_tac name =
 ;;
 
 let constructor_tac ?(num=1) ~args = distribute_tac (fun status goal ->
-  if num < 1 then fail (lazy "constructor numbers begin with 1");
   let gty = get_goalty status goal in
-  let status, (r,_,_,_) = analyse_indty status gty in
+  let status, (r,consno,_,_) = analyse_indty status gty in
+  if num < 1 || num > consno then fail (lazy "Non existant constructor");
   let ref = NReference.mk_constructor num r in
   let t = 
     if args = [] then Ast.NRef ref else
