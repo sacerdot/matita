@@ -236,7 +236,7 @@ let pp (status: #NCic.status) =
   | NCic.Lambda (n,s,t) ->
      let n = mk_id n in
       NotationPt.Binder (`Lambda, (n,Some (pp rels s)), pp (n::rels) t)
-  | NCic.LetIn (n,s,ty,t) ->
+  | NCic.LetIn (n,ty,s,t) ->
      let n = mk_id n in
       NotationPt.LetIn ((n, Some (pp rels ty)), pp rels s, pp (n::rels) t)
   | NCic.Match (NReference.Ref (uri,_) as r,outty,te,patterns) ->
