@@ -30,9 +30,6 @@ definition cat : ∀S,l1,l2,w.Prop ≝
 notation "a · b" non associative with precedence 65 for @{ 'middot $a $b}.
 interpretation "cat lang" 'middot a b = (cat ? a b).
 
-let rec flatten (S : DeqSet) (l : list (word S)) on l : word S ≝ 
-match l with [ nil ⇒ [ ] | cons w tl ⇒ w @ flatten ? tl ].
-
 let rec conjunct (S : DeqSet) (l : list (word S)) (r : word S → Prop) on l: Prop ≝
 match l with [ nil ⇒ True | cons w tl ⇒ r w ∧ conjunct ? tl r ]. 
 
@@ -89,7 +86,7 @@ qed.
 lemma cat_to_star:∀S.∀A:word S → Prop.
   ∀w1,w2. A w1 → A^* w2 → A^* (w1@w2).
 #S #A #w1 #w2 #Aw * #l * #H #H1 @(ex_intro … (w1::l)) 
-% normalize /2/
+% normalize destruct /2/
 qed.
 
 lemma fix_star: ∀S.∀A:word S → Prop. 
@@ -98,7 +95,7 @@ lemma fix_star: ∀S.∀A:word S → Prop.
   [* #l generalize in match w; -w cases l [normalize #w * /2/]
    #w1 #tl #w * whd in ⊢ ((??%?)→?); #eqw whd in ⊢ (%→?); *
    #w1A #cw1 %1 @(ex_intro … w1) @(ex_intro … (flatten S tl))
-   % /2/ whd @(ex_intro … tl) /2/
+   % destruct /2/ whd @(ex_intro … tl) /2/
   |* [2: whd in ⊢ (%→?); #eqw <eqw //]
    * #w1 * #w2 * * #eqw <eqw @cat_to_star 
   ]

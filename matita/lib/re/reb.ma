@@ -86,6 +86,8 @@ definition cat : ∀S,l1,l2,w.Prop ≝
   λS.λl1,l2.λw:word S.∃w1,w2.w1 @ w2 = w ∧ l1 w1 ∧ l2 w2.
 interpretation "cat lang" 'pc a b = (cat ? a b).
 
+(* BEGIN HERE 
+
 definition star ≝ λS.λl.λw:word S.∃lw.flatten ? lw = w ∧ conjunct ? lw l. 
 interpretation "star lang" 'pk l = (star ? l).
 
@@ -776,3 +778,4 @@ ntheorem der1: ∀S,a,e,e',w. der S a e e' → in_l S w e' → in_l S (a::w) e.
      | #x; #y; #z; #w; #a; #b; #c; #d; #K; ncases (?:False); /2/ ]
 ##| #r1; #r2; #r1'; #r2'; #H1; #H2; #H3; #H4; #H5; #H6;
 
+*)
