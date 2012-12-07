@@ -14,7 +14,7 @@
 
 include "formal_topology/relations.ma".
 include "formal_topology/notation.ma".
-
+(*
 record basic_pair: Type[1] ≝ { 
    concr: REL; form: REL; rel: concr ⇒_\r1 form
 }.
@@ -221,4 +221,5 @@ qed.
 
 interpretation "basic pair relation for subsets" 'Vdash2 x y c = (fun21 (concr ?) ?? (relS c) x y).
 interpretation "basic pair relation for subsets (non applied)" 'Vdash c = (fun21 ??? (relS c)).
+*)
 *)

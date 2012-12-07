@@ -11,10 +11,11 @@
 (*        v         GNU General Public License Version 2                  *)
 (*                                                                        *)
 (**************************************************************************)
-
+(*
 notation "hvbox (r \sub \c)"  with precedence 90 for @{'concr_rel $r}.
 notation "hvbox (r \sub \f)"  with precedence 90 for @{'form_rel $r}.
 
 definition hide ≝ λA:Type.λx:A.x.
 
 interpretation "hide" 'hide x = (hide ? x). 
+*)

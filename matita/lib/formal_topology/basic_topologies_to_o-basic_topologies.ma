@@ -15,7 +15,7 @@
 include "formal_topology/basic_topologies.ma".
 include "formal_topology/o-basic_topologies.ma".
 include "formal_topology/relations_to_o-algebra.ma".
-
+(*
 definition o_basic_topology_of_basic_topology: basic_topology → Obasic_topology.
  intros (b); constructor 1;
   [ apply (POW' b) | apply (A b) | apply (J b);
@@ -89,3 +89,4 @@ theorem BTop_to_OBTop_full: full2 ?? BTop_to_OBTop.
    unfold image_coercion; cases Hg; whd; simplify; intro; simplify;
 qed.
 *)
+

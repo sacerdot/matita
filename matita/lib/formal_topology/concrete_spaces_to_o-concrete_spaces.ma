@@ -15,7 +15,7 @@
 include "formal_topology/concrete_spaces.ma".
 include "formal_topology/o-concrete_spaces.ma".
 include "formal_topology/basic_pairs_to_o-basic_pairs.ma".
-
+(*
 (*
 (* Qui, per fare le cose per bene, ci serve la nozione di funtore categorico *)
 definition o_concrete_space_of_concrete_space: cic:/matita/formal_topology/concrete_spaces/concrete_space.ind#xpointer(1/1) → concrete_space.
@@ -49,4 +49,5 @@ definition o_convergent_relation_pair_of_convergent_relation_pair:
     apply (orelation_of_relation_preserves_composition ?? (form BP2)  (rel BP1) ?); ]
 qed.
 
+*)
 *)

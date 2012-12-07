@@ -363,7 +363,7 @@ record functor2 (C1: category2) (C2: category2) : Type[3] ≝
 notation > "F⎽⇒ x" left associative with precedence 65 for @{'map_arrows2 $F $x}.
 notation "F\sub⇒ x" left associative with precedence 65 for @{'map_arrows2 $F $x}.
 interpretation "map_arrows2" 'map_arrows2 F x = (fun12 ?? (map_arrows2 ?? F ??) x).
-
+(* BEGIN HERE
 definition functor2_setoid: category2 → category2 → setoid3.
  #C1 #C2
  @mk_setoid3
@@ -525,3 +525,4 @@ notation > "r⎻*" non associative with precedence 90 for @{'OR_f_minus_star $r}
 
 notation "r \sup ⎻" non associative with precedence 90 for @{'OR_f_minus $r}.
 notation > "r⎻" non associative with precedence 90 for @{'OR_f_minus $r}.
+*)

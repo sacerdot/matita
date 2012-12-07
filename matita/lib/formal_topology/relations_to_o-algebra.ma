@@ -14,7 +14,7 @@
 
 include "formal_topology/relations.ma".
 include "formal_topology/o-algebra.ma".
-
+(*
 definition POW': objs1 SET → OAlgebra.
  intro A; constructor 1;
   [ apply (Ω^A);
@@ -239,3 +239,4 @@ change with (∀a1.(∃x:carr S. a1 ∈ f {(x):S} ∧ x ∈ a) → a1 ∈ f a);
              apply (. f3^-1‡#); assumption;
            | assumption ]]]
 qed.
+*)

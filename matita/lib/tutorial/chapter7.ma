@@ -121,8 +121,7 @@ let rec forget (S: DeqSet) (l : pitem S) on l: re S ≝
   | po E1 E2 ⇒ (forget ? E1) + (forget ? E2)
   | pk E ⇒ (forget ? E)^* ].
  
-(* notation < "|term 19 e|" non associative with precedence 70 for @{'forget $e}.*)
-interpretation "forget" 'norm a = (forget ? a).
+interpretation "forget" 'card a = (forget ? a).
 
 lemma erase_dot : ∀S.∀e1,e2:pitem S. |e1 · e2| = c ? (|e1|) (|e2|).
 // qed.

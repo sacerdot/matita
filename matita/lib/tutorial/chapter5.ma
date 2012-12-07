@@ -7,7 +7,7 @@ effectively searching an element of that set inside a data structure. In this
 section we shall define several boolean functions acting on lists of elements in 
 a DeqSet, and prove some of their properties.*)
 
-include "basics/list.ma". 
+include "basics/lists/list.ma". 
 include "tutorial/chapter4.ma".
 
 (* The first function we define is an effective version of the membership relation,

@@ -14,7 +14,7 @@
 
 include "formal_topology/o-basic_pairs.ma".
 include "formal_topology/o-saturations.ma".
-
+(*
 definition A : ∀b:OBP. unary_morphism1 (Oform b) (Oform b).
 intros; constructor 1;
  [ apply (λx.□⎽b (Ext⎽b x));
@@ -132,3 +132,4 @@ definition Oconvergent_relation_space_setoid_of_arrows2_OCSPA :
  ∀P,Q. arrows2 OCSPA P Q → Oconvergent_relation_space_setoid P Q ≝ λP,Q,x.x.
 coercion Oconvergent_relation_space_setoid_of_arrows2_OCSPA.
 
+*)

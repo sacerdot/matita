@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "formal_topology/categories.ma".
-
+(*
 record powerset_carrier (A: objs1 SET) : Type[1] ≝ { mem_operator: A ⇒_1 CPROP }.
 interpretation "powerset low" 'powerset A = (powerset_carrier A).
 notation "hvbox(a break ∈. b)" non associative with precedence 45 for @{ 'mem_low $a $b }.
@@ -179,3 +179,4 @@ interpretation "bigcup" 'bigcup f = (fun12 ?? (big_union ??) f).
 interpretation "bigcap" 'bigcap f = (fun12 ?? (big_intersects ??) f).
 interpretation "bigcup mk" 'bigcup_mk f = (fun12 ?? (big_union ??) (mk_unary_morphism2 ?? f ?)).
 interpretation "bigcap mk" 'bigcap_mk f = (fun12 ?? (big_intersects ??) (mk_unary_morphism2 ?? f ?)).
+*)

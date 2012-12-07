@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "formal_topology/subsets.ma".
-
+(*
 record binary_relation (A,B: SET) : Type[1] ≝
  { satisfy:> binary_morphism1 A B CPROP }.
 
@@ -324,3 +324,4 @@ theorem extS_singleton:
  split; intros 2; simplify; simplify in f; 
  [ cases f; cases e; cases x1; change in f2 with (x =_1 w); apply (. #‡f2); assumption;
  | split; try apply I; exists [apply x] split; try assumption; change with (x = x); apply rule #;] qed.
+*)

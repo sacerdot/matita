@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "formal_topology/o-algebra.ma".
-
+(*
 definition is_o_saturation: ∀C:OA. C ⇒_1 C → CProp[1] ≝
  λC:OA.λA:C ⇒_1 C.∀U,V. (U ≤ A V) =_1 (A U ≤ A V).
 
@@ -35,3 +35,4 @@ theorem o_saturation_idempotent: ∀C:OA.∀A:C ⇒_1 C. is_o_saturation C A →
   [ apply (if ?? (i (A U) U)); apply (oa_leq_refl C).
   | apply o_saturation_expansive; assumption]
 qed.
+*)

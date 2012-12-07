@@ -14,7 +14,7 @@
 
 include "formal_topology/o-algebra.ma".
 include "formal_topology/notation.ma".
-
+(*
 record Obasic_pair: Type[2] ≝ { 
    Oconcr: OA; Oform: OA; Orel: arrows2 ? Oconcr Oform
 }.
@@ -249,3 +249,4 @@ interpretation "Universal pre-image ⊩*" 'rest x = (fun12 ? ? (or_f_star ? ?) (
 notation "'Ext' \sub b" non associative with precedence 90 for @{'ext $b}.
 notation > "'Ext'⎽term 90 b" non associative with precedence 90 for @{'ext $b}.
 interpretation "Existential pre-image ⊩⎻" 'ext x = (fun12 ? ? (or_f_minus ? ?) (Orel x)).
+*)

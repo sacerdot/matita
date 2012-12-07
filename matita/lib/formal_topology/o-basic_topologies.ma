@@ -14,7 +14,7 @@
 
 include "formal_topology/o-algebra.ma".
 include "formal_topology/o-saturations.ma".
-
+(*
 record Obasic_topology: Type[2] ≝ { 
    Ocarrbt:> OA;
    oA: Ocarrbt ⇒_2 Ocarrbt; oJ: Ocarrbt ⇒_2 Ocarrbt;
@@ -187,4 +187,5 @@ theorem continuous_relation_eqS:
   [2,4: intros; apply saturation_monotone; try (apply A_is_saturation); apply Hcut;]
  apply Hcut2; assumption.
 qed.
+*)
 *)

@@ -14,7 +14,7 @@
 
 include "formal_topology/categories.ma".
 include "formal_topology/notation.ma".
-
+(*
 record Fo (C1,C2:CAT2) (F:arrows3 CAT2 C1 C2) : Type[2] ≝ {
   F2: C2;
   F1: C1;
@@ -120,3 +120,4 @@ qed.
 
 
 
+*)

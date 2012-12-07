@@ -15,7 +15,7 @@
 include "formal_topology/notation.ma".
 include "formal_topology/o-basic_pairs.ma".
 include "formal_topology/o-basic_topologies.ma".
-
+(*
 alias symbol "eq" = "setoid1 eq".
 
 (* Qui, per fare le cose per bene, ci serve la nozione di funtore categorico *)
@@ -117,3 +117,4 @@ constructor 1;
 | intros 6; apply refl1;]
 qed.
 
+*)

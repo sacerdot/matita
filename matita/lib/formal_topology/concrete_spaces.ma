@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "formal_topology/basic_pairs.ma".
-
+(*
 (* carr1 e' necessario perche' ci sega via la coercion per gli oggetti di REL!
    (confondendola con la coercion per gli oggetti di SET
 record concrete_space : Type[1] ≝
@@ -106,4 +106,5 @@ definition CSPA: category1.
     apply (.= id_neutral_left1 ????);
     apply refl1]
 qed.
+*)
 *)

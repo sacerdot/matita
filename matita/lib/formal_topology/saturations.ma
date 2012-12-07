@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "formal_topology/relations.ma".
-
+(*
 definition is_saturation: ∀C:REL. Ω^C ⇒_1 Ω^C → CProp[1] ≝
  λC:REL.λA:Ω^C ⇒_1 Ω^C. ∀U,V. (U ⊆ A V) =_1 (A U ⊆ A V).
 
@@ -36,3 +36,4 @@ theorem saturation_idempotent: ∀C,A. is_saturation C A → ∀U. A (A U) = A U
   [ apply (if ?? (i ??)); apply subseteq_refl
   | apply saturation_expansive; assumption]
 qed.
+*)

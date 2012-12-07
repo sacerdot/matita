@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "formal_topology/o-basic_topologies.ma".
-
+(*
 (*
 (*
 definition downarrow: ∀S:BTop. unary_morphism (Ω \sup S) (Ω \sup S).
@@ -96,4 +96,5 @@ definition formal_map_composition:
     change with (comp1 BTop ??? a b = comp1 BTop ??? a' b');
     apply prop1; assumption]
 qed.
+*)
 *)

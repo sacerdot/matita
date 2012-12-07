@@ -14,7 +14,7 @@
 
 include "formal_topology/basic_pairs_to_o-basic_pairs.ma".
 include "formal_topology/apply_functor.ma".
-
+(*
 definition rOBP ≝ Apply (category2_of_category1 BP) OBP BP_to_OBP.
 
 include "formal_topology/o-basic_pairs_to_o-basic_topologies.ma".
@@ -252,4 +252,5 @@ STOP;
 
 *)
 
+*)
 *)

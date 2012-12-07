@@ -280,6 +280,8 @@ To make an example, in the previous case, the unification problem is bool = carr
 and the hint is to take X= mk_DeqSet bool beqb true. The hint is correct, since 
 bool is convertible with (carr (mk_DeqSet bool beb true)). *)
 
+alias symbol "hint_decl" (instance 1) = "hint_decl_Type1".
+
 unification hint  0 ≔ ; 
     X ≟ mk_DeqSet bool beqb beqb_true
 (* ---------------------------------------- *) ⊢ 
@@ -335,3 +337,4 @@ unification hint  0 ≔ T1,T2,p1,p2;
 example hint2: ∀b1,b2. 
   〈b1,true〉==〈false,b2〉=true → 〈b1,true〉=〈false,b2〉.
 #b1 #b2 #H @(\P H).
+qed-.

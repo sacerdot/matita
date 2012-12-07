@@ -14,7 +14,7 @@
 
 include "formal_topology/relations.ma".
 include "formal_topology/saturations.ma".
-
+(*
 record basic_topology: Type[1] ≝
  { carrbt:> REL;
    A: Ω^carrbt ⇒_1 Ω^carrbt;
@@ -208,4 +208,5 @@ theorem continuous_relation_eqS:
   [2,4: intros; apply saturation_monotone; try (apply A_is_saturation); apply Hcut;]
  apply Hcut2; assumption.
 qed.
+*)
 *)

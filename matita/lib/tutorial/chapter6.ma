@@ -35,8 +35,9 @@ derivative of a language A w.r.t. a given character a. *)
 
 definition cat : ∀S,l1,l2,w.Prop ≝ 
   λS.λl1,l2.λw:word S.∃w1,w2.w1 @ w2 = w ∧ l1 w1 ∧ l2 w2.
-
+(*
 notation "a · b" non associative with precedence 60 for @{ 'middot $a $b}.
+*)
 interpretation "cat lang" 'middot a b = (cat ? a b).
 
 
@@ -47,8 +48,13 @@ w1,w2,...wk all belonging to l, such that l = w1w2...wk.
 We need to define the latter operations. The following flatten function takes in 
 input a list of words and concatenates them together. *)
 
+(* FG: flatten in list.ma gets in the way:
+alias id "flatten" = "cic:/matita/tutorial/chapter6/flatten.fix(0,1,4)".
+does not work, so we use flatten in lists for now
+
 let rec flatten (S : DeqSet) (l : list (word S)) on l : word S ≝ 
 match l with [ nil ⇒ [ ] | cons w tl ⇒ w @ flatten ? tl ].
+*)
 
 (* Given a list of words l and a language r, (conjunct l r) is true if and only if
 all words in l are in r, that is for every w in l, r w holds. *)
@@ -59,6 +65,7 @@ match l with [ nil ⇒ True | cons w tl ⇒ r w ∧ conjunct ? tl r ].
 (* We are ready to give the formal definition of the Kleene's star of l:
 a word w belongs to l* is and only if there exists a list of strings 
 lw such that (conjunct lw l) and  l = flatten lw. *)
+
 
 definition star ≝ λS.λl.λw:word S.∃lw.flatten ? lw = w ∧ conjunct ? lw l. 
 notation "a ^ *" non associative with precedence 90 for @{ 'star $a}.
@@ -154,7 +161,7 @@ qed.
 lemma cat_to_star:∀S.∀A:word S → Prop.
   ∀w1,w2. A w1 → A^* w2 → A^* (w1@w2).
 #S #A #w1 #w2 #Aw * #l * #H #H1 @(ex_intro … (w1::l)) 
-% normalize /2/
+% destruct // normalize /2/
 qed.
 
 lemma fix_star: ∀S.∀A:word S → Prop. 
@@ -163,7 +170,7 @@ lemma fix_star: ∀S.∀A:word S → Prop.
   [* #l generalize in match w; -w cases l [normalize #w * /2/]
    #w1 #tl #w * whd in ⊢ ((??%?)→?); #eqw whd in ⊢ (%→?); *
    #w1A #cw1 %1 @(ex_intro … w1) @(ex_intro … (flatten S tl))
-   % /2/ whd @(ex_intro … tl) /2/
+   % destruct /2/ whd @(ex_intro … tl) /2/
   |* [2: whd in ⊢ (%→?); #eqw <eqw //]
    * #w1 * #w2 * * #eqw <eqw @cat_to_star 
   ]

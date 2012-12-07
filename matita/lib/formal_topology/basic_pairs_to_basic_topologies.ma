@@ -16,7 +16,7 @@ include "formal_topology/basic_pairs_to_o-basic_pairs.ma".
 include "formal_topology/o-basic_pairs_to_o-basic_topologies.ma".
 include "formal_topology/basic_pairs.ma".
 include "formal_topology/basic_topologies.ma".
-
+(*
 definition basic_topology_of_basic_pair: basic_pair → basic_topology.
  intro bp;
  letin obt ≝ (OR (BP_to_OBP bp));
@@ -61,4 +61,5 @@ qed.
 
 lemma BBBB_faithful : failthful2 ?? VVV
 FIXME
+*)
 *)

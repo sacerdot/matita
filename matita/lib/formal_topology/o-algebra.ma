@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "formal_topology/categories.ma".
-
+(*
 inductive bool : Type[0] := true : bool | false : bool.
 
 lemma BOOL : objs1 SET.
@@ -440,3 +440,4 @@ qed.
 lemma oa_overlap_sym': ∀o:OA.∀U,V:o. (U >< V) = (V >< U).
  intros; split; intro; apply oa_overlap_sym; assumption.
 qed.
+*)

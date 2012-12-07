@@ -15,7 +15,7 @@
 include "formal_topology/basic_pairs.ma".
 include "formal_topology/o-basic_pairs.ma".
 include "formal_topology/relations_to_o-algebra.ma".
-
+(*
 definition o_basic_pair_of_basic_pair: basic_pair → Obasic_pair.
  intro b;
  constructor 1;
@@ -142,3 +142,4 @@ theorem BP_to_OBP_full: full2 ?? BP_to_OBP.
   | change in match or_f_star_ with (λq,w,x.fun12 ?? (or_f_star q w) x);]
  simplify; apply (†(Hgc‡#));
 qed.   
+*)
