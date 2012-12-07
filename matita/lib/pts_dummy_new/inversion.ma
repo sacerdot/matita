@@ -9,7 +9,7 @@
      \ /      
       V_______________________________________________________________ *)
 
-include "lambdaN/thinning.ma".
+include "pts_dummy_new/thinning.ma".
 
 (*
 inductive TJ (p: pts): list T → T → T → Prop ≝

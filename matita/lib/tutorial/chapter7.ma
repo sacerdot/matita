@@ -120,7 +120,10 @@ let rec forget (S: DeqSet) (l : pitem S) on l: re S ≝
   | pc E1 E2 ⇒ (forget ? E1) · (forget ? E2)
   | po E1 E2 ⇒ (forget ? E1) + (forget ? E2)
   | pk E ⇒ (forget ? E)^* ].
- 
+
+(* Already in the library
+notation "| term 19 C |" with precedence 70 for @{ 'card $C }.
+*)
 interpretation "forget" 'card a = (forget ? a).
 
 lemma erase_dot : ∀S.∀e1,e2:pitem S. |e1 · e2| = c ? (|e1|) (|e2|).

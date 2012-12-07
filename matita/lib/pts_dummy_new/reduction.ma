@@ -9,7 +9,7 @@
      \ /      
       V_______________________________________________________________ *)
 
-include "lambdaN/par_reduction.ma".
+include "pts_dummy_new/par_reduction.ma".
 include "basics/star.ma".
 
 (*
@@ -93,9 +93,9 @@ qed.
 
 definition reduct ≝ λn,m. red m n.
 
-definition SN ≝ WF ? reduct.
+definition SN : T → Prop ≝ WF ? reduct.
 
-definition NF ≝ λM. ∀N. ¬ (reduct N M).
+definition NF : T → Prop ≝ λM. ∀N. ¬ (reduct N M).
 
 theorem NF_to_SN: ∀M. NF M → SN M.
 #M #nfM % #a #red @False_ind /2/
@@ -149,13 +149,13 @@ qed.
 lemma star_appl: ∀M,M1,N. star … red M M1 → 
   star … red (App M N) (App M1 N).
 #M #M1 #N #star1 (elim star1) //
-#B #C #starMB #redBC #H @(inj … H) /2/ 
+#B #C #starMB #redBC #H /3 width=3/ 
 qed.
   
 lemma star_appr: ∀M,N,N1. star … red N N1 →
   star … red (App M N) (App M N1).
 #M #N #N1 #star1 (elim star1) // 
-#B #C #starMB #redBC #H @(inj … H) /2/
+#B #C #starMB #redBC #H /3 width=3/
 qed.
  
 lemma star_app: ∀M,M1,N,N1. star … red M M1 → star … red N N1 → 
@@ -166,13 +166,13 @@ qed.
 lemma star_laml: ∀M,M1,N. star … red M M1 → 
   star … red (Lambda M N) (Lambda M1 N).
 #M #M1 #N #star1 (elim star1) //
-#B #C #starMB #redBC #H @(inj … H) /2/ 
+#B #C #starMB #redBC #H /3 width=3/ 
 qed.
   
 lemma star_lamr: ∀M,N,N1. star … red N N1 →
   star … red (Lambda M N) (Lambda M N1).
 #M #N #N1 #star1 (elim star1) //
-#B #C #starMB #redBC #H @(inj … H) /2/
+#B #C #starMB #redBC #H /3 width=3/
 qed.
  
 lemma star_lam: ∀M,M1,N,N1. star … red M M1 → star … red N N1 → 
@@ -183,13 +183,13 @@ qed.
 lemma star_prodl: ∀M,M1,N. star … red M M1 → 
   star … red (Prod M N) (Prod M1 N).
 #M #M1 #N #star1 (elim star1) //
-#B #C #starMB #redBC #H @(inj … H) /2/ 
+#B #C #starMB #redBC #H /3 width=3/
 qed.
   
 lemma star_prodr: ∀M,N,N1. star … red N N1 →
   star … red (Prod M N) (Prod M N1).
 #M #N #N1 #star1 (elim star1) //
-#B #C #starMB #redBC #H @(inj … H) /2/
+#B #C #starMB #redBC #H /3 width=3/
 qed.
  
 lemma star_prod: ∀M,M1,N,N1. star … red M M1 → star … red N N1 → 
@@ -200,13 +200,13 @@ qed.
 lemma star_dl: ∀M,M1,N. star … red M M1 → 
   star … red (D M N) (D M1 N).
 #M #M1 #N #star1 (elim star1) //
-#B #C #starMB #redBC #H @(inj … H) /2/ 
+#B #C #starMB #redBC #H /3 width=3/
 qed.
   
 lemma star_dr: ∀M,N,N1. star … red N N1 →
   star … red (D M N) (D M N1).
 #M #N #N1 #star1 (elim star1) //
-#B #C #starMB #redBC #H @(inj … H) /2/
+#B #C #starMB #redBC #H /3 width=3/
 qed.
 
 lemma star_d: ∀M,M1,N,N1. star … red M M1 → star … red N N1 → 
@@ -357,8 +357,8 @@ lemma  SN_APP: ∀P.SN P → ∀N. SN N → ∀M.
 #P #snP (elim snP) #A #snA #HindA
 #N #snN (elim snN) #B #snB #HindB
 #M #snM1 (cut (SH M)) [@SN_to_SH @(SN_subst … snM1)] #shM 
-(generalize in match snM1) (elim shM)
-#C #shC #HindC #snC1 % #Q #redQ (cases (red_app … redQ))
+generalize in match snM1; elim shM
+#C #shC #HindC #snC1 % #Q #redQ cases (red_app … redQ);
   [*
     [* #M2 * #N2 * #eqlam destruct #eqQ //
     |* #M2 * #eqQ #redlam >eqQ (cases (red_lambda …redlam))

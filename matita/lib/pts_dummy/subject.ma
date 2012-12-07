@@ -9,9 +9,9 @@
      \ /      
       V_______________________________________________________________ *)
 
-include "lambda/reduction.ma".
-include "lambda/inversion.ma". 
-
+include "pts_dummy/reduction.ma".
+include "pts_dummy/inversion.ma". 
+(*
 (*
 inductive T : Type[0] ≝
   | Sort: nat → T
@@ -223,3 +223,4 @@ theorem subject_reduction: ∀P,G,M,N. G ⊢_{P} M:N →
   ]
 qed.
 
+*)

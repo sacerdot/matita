@@ -9,8 +9,8 @@
      \ /      
       V_______________________________________________________________ *)
 
-include "lambda/subterms.ma".
-
+include "pts_dummy/subterms.ma".
+(*
 (*
 inductive T : Type[0] ≝
   | Sort: nat → T
@@ -305,3 +305,4 @@ pr Q S ∧ pr P S.
 #P #Q #R #pr1 #pr2 @(ex_intro … (full P)) /3/
 qed.
 
+*)

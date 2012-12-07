@@ -9,7 +9,7 @@
      \ /      
       V_______________________________________________________________ *)
 
-include "lambdaN/types.ma".
+include "pts_dummy_new/types.ma".
 
 (*
 inductive TJ (p: pts): list T → T → T → Prop ≝
@@ -82,14 +82,14 @@ lemma weak_gen: ∀P,E,M,N. E ⊢_{P} M : N →
      #Heq1 <Heq1 @(Hind2 ? (P::D)) normalize //
     ]
   |#G #P #Q #R #S #tjP #tjS #Hind1 #Hind2
-   #G1 #D #A #l #Heq #tjA (normalize in Hind1 ⊢ %)
+   #G1 #D #A #l #Heq #tjA normalize in Hind1 ⊢ %;
    >(lift_subst_up R S 1 0 (length ? D)) @(app … (lift Q (length ? D) 1));
     [@Hind1 // |@Hind2 //]
   |#G #P #Q #R #i #tjR #tjProd #Hind1 #Hind2
    #G1 #D #A #l #Heq #tjA normalize @(abs … i); 
     [cut (∀n. S n = n +1); [//] #H <H 
      @(Hind1 G1 (P::D) … tjA) normalize //
-    |(normalize in Hind2) @(Hind2 …tjA) //
+    | normalize in Hind2; @(Hind2 …tjA) //
     ]
   |#G #P #Q #R #i #convQR #tjP #tjQ #Hind1 #Hind2
    #G1 #D #A #l #Heq #tjA

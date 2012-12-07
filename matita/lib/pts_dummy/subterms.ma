@@ -9,8 +9,8 @@
      \ /      
       V_______________________________________________________________ *)
 
-include "lambda/subst.ma".
-
+include "pts_dummy/subst.ma".
+(*
 inductive subterm : T → T → Prop ≝
   | appl : ∀M,N. subterm M (App M N)
   | appr : ∀M,N. subterm N (App M N)
@@ -154,3 +154,4 @@ lemma size_subterm : ∀N,M. subterm N M → size N < size M.
 #N #M #subH (elim subH) normalize //
 #M1 #N1 #P #sub1 #sub2 #size1 #size2 @(transitive_lt … size1 size2)
 qed.
+*)

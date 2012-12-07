@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "lambda/sn.ma".
-
+include "pts_dummy/sn.ma".
+(*
 (* REDUCIBILITY CANDIDATES ****************************************************)
 
 (* The reducibility candidate (r.c.) ******************************************)
@@ -179,3 +179,4 @@ qed.
 
 definition lorRC: RC → RC → RC ≝ λB,C. mk_RC (lor_mem B C) ….
 /2/ qed.
+*)

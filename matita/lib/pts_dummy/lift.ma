@@ -9,7 +9,10 @@
      \ /      
       V_______________________________________________________________ *)
 
-include "lambda/terms.ma".
+include "pts_dummy/terms.ma".
+
+(* to be put elsewhere *)
+definition if_then_else ≝ λT:Type[0].λe,t,f.match e return λ_.T with [ true ⇒ t | false ⇒ f].
 
 (* arguments: k is the depth (starts from 0), p is the height (starts from 0) *)
 let rec lift t k p ≝
@@ -32,7 +35,7 @@ notation "↑ _ k ^ n ( M )" non associative with precedence 40 for @{'Lift $n $
 interpretation "Lift" 'Lift n k M = (lift M k n). 
 
 (*** properties of lift ***)
-
+(* BEGIN HERE 
 lemma lift_0: ∀t:T.∀k. lift t k 0 = t.
 #t (elim t) normalize // #n #k cases (leb (S n) k) normalize // 
 qed.
@@ -132,3 +135,4 @@ qed.
 lemma Lift_length: ∀p,G. |Lift G p| = |G|.
 #p #G elim G -G; normalize //
 qed. 
+*)

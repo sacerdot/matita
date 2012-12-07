@@ -9,8 +9,8 @@
      \ /      
       V_______________________________________________________________ *)
 
-include "lambda/types.ma".
-
+include "pts_dummy/types.ma".
+(*
 (*
 inductive TJ (p: pts): list T → T → T → Prop ≝
   | ax : ∀i,j. Ax p i j → TJ p (nil T) (Sort i) (Sort j)
@@ -98,3 +98,4 @@ theorem abs_inv: ∀P,G,M,N. G ⊢ _{P} M : N → ∀A,b.M = Lambda A b →
   ]
 qed.
    
+*)

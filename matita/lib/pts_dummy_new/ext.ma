@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basics/list.ma".
+include "basics/lists/list.ma".
 
 (* MATTER CONCERNING STRONG NORMALIZATION TO BE PUT ELSEWHERE *****************)
 

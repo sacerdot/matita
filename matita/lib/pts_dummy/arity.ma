@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "lambda/ext.ma".
-
+include "pts_dummy/ext.ma".
+(*
 (* ARITIES ********************************************************************)
 
 (* An arity is a normal term representing the functional structure of a term.
@@ -218,3 +218,4 @@ lemma nth_sort_comp: ∀E1,E2. E1 ≅ E2 →
                      ∀i. nth i ? E1 sort ≅ nth i ? E2 sort.
 #E1 #E2 #H #i @(all2_nth … aeq) //
 qed.
+*)

@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "lambda/rc_sat.ma".
-
+include "pts_dummy/rc_sat.ma".
+(*
 (* HIGHER ORDER REDUCIBILITY CANDIDATES ***************************************)
 
 (* An arity is a type of λ→ to be used as carrier for a h.o. r.c. *)
@@ -61,3 +61,4 @@ qed.
 lemma reflexive_defHRC: ∀P. defHRC P ≅^P defHRC P.
 #P (elim P) -P (normalize) /2/
 qed.
+*)

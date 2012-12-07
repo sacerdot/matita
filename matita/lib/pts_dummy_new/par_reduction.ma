@@ -9,7 +9,7 @@
      \ /      
       V_______________________________________________________________ *)
 
-include "lambdaN/subterms.ma".
+include "pts_dummy_new/subterms.ma".
 
 (*
 inductive T : Type[0] ≝
@@ -88,7 +88,7 @@ lemma prD: ∀M,N,P. pr (D M N) P →
    @(ex_intro … M2) @(ex_intro … N2) /3/
   ]
 qed.
-
+(* BEGIN HERE
 lemma prApp_not_lambda: 
 ∀M,N,P. pr (App M N) P → is_lambda M = false →
   ∃M1,N1. (P = App M1 N1 ∧ pr M M1 ∧ pr N N1).
@@ -292,4 +292,4 @@ theorem diamond: ∀P,Q,R. pr P Q → pr P R → ∃S.
 pr Q S ∧ pr P S.
 #P #Q #R #pr1 #pr2 @(ex_intro … (full P)) /3/
 qed.
-
+*)

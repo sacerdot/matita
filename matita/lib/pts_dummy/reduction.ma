@@ -9,9 +9,9 @@
      \ /      
       V_______________________________________________________________ *)
 
-include "lambda/par_reduction.ma".
+include "pts_dummy/par_reduction.ma".
 include "basics/star.ma".
-
+(*
 (*
 inductive T : Type[0] ≝
   | Sort: nat → T
@@ -353,7 +353,4 @@ lemma  SN_APP: ∀P.SN P → ∀N. SN N → ∀M.
    @red_subst1 //
   ]
 qed.
-
-
-
-
+*)

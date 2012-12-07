@@ -9,7 +9,10 @@
      \ /      
       V_______________________________________________________________ *)
 
-include "lambdaN/terms.ma".
+include "pts_dummy_new/terms.ma".
+
+(* to be put elsewhere *)
+definition if_then_else ≝ λT:Type[0].λe,t,f.match e return λ_.T with [ true ⇒ t | false ⇒ f].
 
 (* arguments: k is the depth (starts from 0), p is the height (starts from 0) *)
 let rec lift t k p ≝
@@ -129,7 +132,7 @@ nnormalize; //; nqed. *)
 lemma subst_lift_k: ∀A,B.∀k. (lift B k 1)[k ≝ A] = B.
 #A #B (elim B) normalize /2/ #n #k
 @(leb_elim k n) normalize #Hnk
-  [cut (k ≤ n+1) [@transitive_le //] #H
+  [cut (k ≤ n+1); [@transitive_le //] #H
    >(le_to_leb_true … H) normalize 
    >(not_eq_to_eqb_false k (n+1)) normalize /2/
   |>(lt_to_leb_false … (not_le_to_lt … Hnk)) normalize //
@@ -237,7 +240,7 @@ theorem delift : ∀A,B.∀i,j,k. i ≤ j → j ≤ i + k →
   [2,3,4,5: #T #T0 #Hind1 #Hind2 #i #j #k #leij #lejk
    @eq_f2 /2/ @Hind2 (applyS (monotonic_le_plus_l 1)) //
   |#n #i #j #k #leij #ltjk @(leb_elim i n) normalize #len
-    [cut (j < n + S k)
+    [cut (j < n + S k);
       [<plus_n_Sm @le_S_S @(transitive_le … ltjk) /2/] #H
      >(le_to_leb_true j (n+S k));
       [normalize >(not_eq_to_eqb_false j (n+S k)) normalize /2/ 
@@ -267,7 +270,7 @@ lemma subst_lemma: ∀A,B,C.∀k,i.
         [cut (k+i+1 = n); [/2/] #H1
          >(le_to_leb_true (k+i+1) n) /2/
          >(eq_to_eqb_true … H1) normalize 
-         (generalize in match ltin)
+         generalize in match ltin;
          @(lt_O_n_elim … posn) #m #leim >delift // /2/ 
         |(cut (k+i < n-1)) [@not_eq_to_le_to_lt; //] #Hlt 
          >(le_to_leb_true (k+i+1) n); 

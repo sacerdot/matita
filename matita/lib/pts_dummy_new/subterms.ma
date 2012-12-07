@@ -9,7 +9,7 @@
      \ /      
       V_______________________________________________________________ *)
 
-include "lambdaN/subst.ma".
+include "pts_dummy_new/subst.ma".
 
 inductive subterm : T → T → Prop ≝
   | appl : ∀M,N. subterm M (App M N)

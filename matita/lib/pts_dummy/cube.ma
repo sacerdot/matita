@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "convertibility.ma".
-include "types.ma".
-
+include "pts_dummy/convertibility.ma".
+include "pts_dummy/types.ma".
+(*
 (* PURE TYPE SYSTEMS OF THE λ-CUBE ********************************************)
 
 inductive Cube_Ax: nat → nat → Prop ≝
@@ -41,3 +41,4 @@ inductive FO_Re: nat → nat → nat → Prop ≝
 .
 
 definition FO: pts ≝ mk_pts Cube_Ax FO_Re conv.
+*)

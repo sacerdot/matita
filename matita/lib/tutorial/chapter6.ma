@@ -48,10 +48,7 @@ w1,w2,...wk all belonging to l, such that l = w1w2...wk.
 We need to define the latter operations. The following flatten function takes in 
 input a list of words and concatenates them together. *)
 
-(* FG: flatten in list.ma gets in the way:
-alias id "flatten" = "cic:/matita/tutorial/chapter6/flatten.fix(0,1,4)".
-does not work, so we use flatten in lists for now
-
+(* Already in the library
 let rec flatten (S : DeqSet) (l : list (word S)) on l : word S ≝ 
 match l with [ nil ⇒ [ ] | cons w tl ⇒ w @ flatten ? tl ].
 *)
@@ -161,7 +158,7 @@ qed.
 lemma cat_to_star:∀S.∀A:word S → Prop.
   ∀w1,w2. A w1 → A^* w2 → A^* (w1@w2).
 #S #A #w1 #w2 #Aw * #l * #H #H1 @(ex_intro … (w1::l)) 
-% destruct // normalize /2/
+% normalize destruct /2/ (* destruct added *)
 qed.
 
 lemma fix_star: ∀S.∀A:word S → Prop. 
@@ -170,7 +167,7 @@ lemma fix_star: ∀S.∀A:word S → Prop.
   [* #l generalize in match w; -w cases l [normalize #w * /2/]
    #w1 #tl #w * whd in ⊢ ((??%?)→?); #eqw whd in ⊢ (%→?); *
    #w1A #cw1 %1 @(ex_intro … w1) @(ex_intro … (flatten S tl))
-   % destruct /2/ whd @(ex_intro … tl) /2/
+   % destruct /2/ whd @(ex_intro … tl) /2/ (* destruct added *)
   |* [2: whd in ⊢ (%→?); #eqw <eqw //]
    * #w1 * #w2 * * #eqw <eqw @cat_to_star 
   ]

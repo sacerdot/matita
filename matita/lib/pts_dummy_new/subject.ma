@@ -9,8 +9,8 @@
      \ /      
       V_______________________________________________________________ *)
 
-include "lambdaN/reduction.ma".
-include "lambdaN/inversion.ma". 
+include "pts_dummy_new/reduction.ma".
+include "pts_dummy_new/inversion.ma". 
 
 (*
 inductive T : Type[0] ≝
@@ -51,7 +51,7 @@ theorem type_of_type: ∀P,G,A,B. G ⊢_{P} A : B → (∀i. B ≠ Sort i) →
   |#G1 #A #i #t1 #_ #P @(ex_intro … i) @(weak … t1 t1)
   |#G1 #A #B #C #i #t1 #t2 #H1 #H2 #H3 (cases (H1 ?) )
     [#i #Bi @(ex_intro … i) @(weak … Bi t2)
-    |#i @(not_to_not … (H3 i)) //
+    |#i @(not_to_not … (H3 i)) /2 width=2/
     ]
   |#G1 #A #B #i #j #k #h #t1 #t2 #_ #_ #H3 @False_ind /2/
   |#G1 #A #B #C #D #t1 #t2 #H1 #H2 #H3 cases (H1 ?);

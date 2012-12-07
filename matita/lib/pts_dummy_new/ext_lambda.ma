@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "lambda/ext.ma".
-include "lambda/subst.ma".
-
+include "pts_dummy/ext.ma".
+include "pts_dummy/subst.ma".
+(*
 (* MATTER CONCERNING STRONG NORMALIZATION TO BE PUT ELSEWHERE *****************)
 
 (* substitution ***************************************************************)
@@ -79,3 +79,4 @@ qed.
 
 lemma tsubst_sort: ∀n,l. (Sort n)[/l] = Sort n.
 // qed.
+*)

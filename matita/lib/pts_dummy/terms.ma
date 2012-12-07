@@ -9,8 +9,8 @@
      \ /      
       V_______________________________________________________________ *)
 
-include "basics/list.ma".
-include "lambda/lambda_notation.ma".
+include "basics/lists/list.ma".
+include "pts_dummy/lambda_notation.ma".
 
 inductive T : Type[0] ≝
   | Sort: nat → T     (* starts from 0 *)
@@ -30,7 +30,7 @@ let rec Appl F l on l ≝ match l with
    ].
 
 lemma appl_append: ∀N,l,M. Appl M (l @ [N]) = App (Appl M l) N.
-#N #l elim l -l // #hd #tl #IHl #M >IHl //
+#N #l elim l -l // #hd #tl #IHl #M >IHl normalize //
 qed.
 
 (*

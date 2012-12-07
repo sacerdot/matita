@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "degree.ma".
-
+include "pts_dummy/degree.ma".
+(*
 (* TO BE PUT ELSEWERE *)
 lemma cons_append_assoc: ∀A,a. ∀l1,l2:list A. (a::l1) @ l2 = a :: (l1 @ l2).
 // qed.
@@ -149,3 +149,4 @@ let rec KI G ≝ match G with
 ].
 
 interpretation "CC2FO: K interpretation (context)" 'IK G = (KI G).
+*)

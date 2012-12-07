@@ -9,8 +9,8 @@
      \ /      
       V_______________________________________________________________ *)
 
-include "lambda/reduction.ma".
-
+include "pts_dummy/reduction.ma".
+(*
 (*
 inductive T : Type[0] ≝
   | Sort: nat → T
@@ -70,4 +70,5 @@ theorem main1: ∀M,N. conv M N →
     [
   |@(ex_intro … M) @(ex_intro … M) % // % //
   ]
+*)
 *)

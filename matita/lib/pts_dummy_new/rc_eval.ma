@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "lambda/rc_hsat.ma".
-
+include "pts_dummy/rc_hsat.ma".
+(*
 (* THE EVALUATION *************************************************************)
 
 (* The arity of a term t in an environment E *)

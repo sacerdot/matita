@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "lambda/rc_hsat.ma".
-
+include "pts_dummy/rc_hsat.ma".
+(*
 (* THE EVALUATION *************************************************************)
 
 (* The arity of a term t in an environment E *)
@@ -161,3 +161,4 @@ theorem append_cons: ∀(A:Type[0]). ∀(l1,l2:list A). ∀a.
                      (a :: l1) @ l2 = a :: (l1 @ l2).
 // qed.
 *)
+

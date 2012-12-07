@@ -9,8 +9,8 @@
      \ /      
       V_______________________________________________________________ *)
 
-include "lambdaN/subst.ma".
-include "basics/list.ma".
+include "pts_dummy_new/subst.ma".
+include "basics/lists/list.ma".
 
 
 (*************************** substl *****************************)
@@ -147,8 +147,8 @@ theorem substitution_tj:
     ]
   |#G #A1 #i #tjA #Hind #G1 #D (cases D) 
     [#N #Heq #tjN >(delift (lift N O O) A1 O O O ??) //
-     (normalize in Heq) destruct /2/
-    |#H #L #N1 #Heq (normalize in Heq)
+     normalize in Heq; destruct normalize /2/
+    |#H #L #N1 #Heq normalize in Heq;
      #tjN1 normalize destruct; (applyS start) /2/
     ]
   |#G #P #Q #R #i #tjP #tjR #Hind1 #Hind2 #G1 #D #N
@@ -166,16 +166,16 @@ theorem substitution_tj:
      #Heq1 <Heq1 @(Hind2 ? (P::D)) normalize //
     ]
   |#G #P #Q #R #S #tjP #tjS #Hind1 #Hind2
-   #G1 #D #N #Heq #tjN (normalize in Hind1 ⊢ %)
-   >(plus_n_O (length ? D)) in ⊢ (? ? ? ? (? ? % ?))
-   >(subst_lemma R S N ? 0) (applyS app) /2/
+   #G1 #D #N #Heq #tjN normalize in Hind1 ⊢ %;
+   >(plus_n_O (length ? D)) in ⊢ (? ? ? ? (? ? % ?));
+   >(subst_lemma R S N ? 0) applyS app /2/
   |#G #P #Q #R #i #tjR #tjProd #Hind1 #Hind2
    #G1 #D #N #Heq #tjN normalize
    (applyS abs) 
-    [normalize in Hind2 /2/
+    [normalize in Hind2; /2/
     |(* napplyS (Hind1 G1 (P::D) N ? tjN); sistemare *)
      generalize in match (Hind1 G1 (P::D) N ? tjN);
-      [#H (normalize in H) (applyS H) | normalize // ]
+      [#H normalize in H; applyS H | normalize // ]
     ]
   |#G #P #Q #R #i #convQR #tjP #tjQ #Hind1 #Hind2
    #G1 #D #N #Heq #tjN

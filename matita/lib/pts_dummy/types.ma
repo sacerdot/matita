@@ -9,10 +9,10 @@
      \ /      
       V_______________________________________________________________ *)
 
-include "lambda/subst.ma".
-include "basics/list.ma".
+include "pts_dummy/subst.ma".
+include "basics/lists/list.ma".
 
-
+(*
 (*************************** substl *****************************)
 
 let rec substl (G:list T) (N:T) : list T ≝  
@@ -190,3 +190,4 @@ lemma tj_subst_0: ∀P,G,v,w. G ⊢_{P} v : w → ∀t,u. w :: G ⊢_{P} t : u �
 #P #G #v #w #Hv #t #u #Ht 
 lapply (substitution_tj … Ht ? ([]) … Hv) normalize //
 qed.
+*)

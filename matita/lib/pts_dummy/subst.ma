@@ -9,8 +9,8 @@
      \ /      
       V_______________________________________________________________ *)
 
-include "lambda/lift.ma".
-
+include "pts_dummy/lift.ma".
+(*
 let rec subst t k a ≝ 
   match t with 
     [ Sort n ⇒ Sort n
@@ -210,3 +210,4 @@ lemma subst_lemma_comm: ∀A,B,C.∀k,i.
   (A [i ≝ B]) [i+k ≝ C] = (A [i+k+1 := C]) [i ≝ B [k ≝ C]].
 #A #B #C #k #i >commutative_plus >subst_lemma //
 qed. 
+*)

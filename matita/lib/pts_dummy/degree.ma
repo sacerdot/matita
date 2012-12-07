@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "lambda/ext_lambda.ma".
-
+include "pts_dummy/ext_lambda.ma".
+(*
 (* DEGREE ASSIGNMENT **********************************************************)
 
 (* The degree of a term *******************************************************)
@@ -158,3 +158,4 @@ lemma Deg_lift_subst: ∀v,w,G. [║v║_[║G║]] = ║[w]║*_[║G║] →
 >append_Deg >append_Deg <Hvw -Hvw >DegHd_Lift; [2: //]
 >deg_lift; [2,3: >HGk /2/] <(deg_subst … k) // >HGk /2/
 qed.
+*)

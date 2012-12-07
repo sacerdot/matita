@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "lambda/ext_lambda.ma".
-
+include "pts_dummy/ext_lambda.ma".
+(*
 (* STRONGLY NORMALIZING TERMS *************************************************)
 
 (* SN(t) holds when t is strongly normalizing *)
@@ -68,3 +68,4 @@ axiom sn_lambda: ∀N,M. SN N → SN M → SN (Lambda N M).
 axiom sn_prod: ∀N,M. SN N → SN M → SN (Prod N M).
 
 axiom sn_inv_app_1: ∀M,N. SN (App M N) → SN M.
+*)
