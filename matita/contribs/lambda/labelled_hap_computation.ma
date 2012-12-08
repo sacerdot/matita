@@ -29,7 +29,7 @@ notation "hvbox( M break ⓗ⇀* [ term 46 p ] break term 46 N )"
    non associative with precedence 45
    for @{ 'HApStar $M $p $N }.
 
-lemma lhap1_lhap: ∀p,M1,M2. M1 ⓗ⇀[p] M2 → M1 ⓗ⇀*[p::◊] M2.
+lemma lhap_step_rc: ∀p,M1,M2. M1 ⓗ⇀[p] M2 → M1 ⓗ⇀*[p::◊] M2.
 /2 width=1/
 qed.
 
@@ -42,7 +42,7 @@ lemma lhap_inv_cons: ∀s,M1,M2. M1 ⓗ⇀*[s] M2 → ∀q,r. q::r = s →
 /2 width=3 by lstar_inv_cons/
 qed-.
 
-lemma lhap_inv_lhap1: ∀p,M1,M2. M1 ⓗ⇀*[p::◊] M2 → M1 ⓗ⇀[p] M2.
+lemma lhap_inv_step_rc: ∀p,M1,M2. M1 ⓗ⇀*[p::◊] M2 → M1 ⓗ⇀[p] M2.
 /2 width=1 by lstar_inv_step/
 qed-.
 
@@ -86,13 +86,4 @@ lemma lhap_inv_lsreds: ∀s,M1,M2. M1 ⓗ⇀*[s] M2 → M1 ⇀*[s] M2.
 #s #M1 #M2 #H @(lstar_ind_l ????????? H) -s -M1 //
 #p #s #M1 #M #HM1 #_ #IHM2
 lapply (lhap1_inv_lsred … HM1) -HM1 /2 width=3/
-qed-.
-
-lemma lhap_fwd_le: ∀s,M1,M2. M1 ⓗ⇀*[s] M2 → is_le s.
-#s #M1 #M2 #H @(lstar_ind_l ????????? H) -s -M1 /3 width=3/
-#a1 #s #M1 #M #HM1 #IHM1
-generalize in match HM1; -HM1
-cases IHM1 -s -M -M2 //
-#a #M0 #M #HM0 #s #M2 #_ #HM10 #H -M2
-lapply (lhap1_fwd_le … HM10 … HM0) -M -M0 -M1 /2 width=1/
 qed-.

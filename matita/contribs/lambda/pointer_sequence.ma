@@ -24,3 +24,9 @@ definition is_head: predicate pseq ≝ All … in_head.
 
 (* Note: to us, a "normal" computation contracts redexes in non-decreasing positions *)
 definition is_le: predicate pseq ≝ Allr … ple.
+
+theorem is_head_is_le: ∀s. is_head s → is_le s.
+#s elim s -s //
+#p #s elim s -s //
+#q #s #_ #IHs * #Hp * /4 width=1/
+qed.

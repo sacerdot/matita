@@ -20,7 +20,7 @@ notation "hvbox(hd break :: tl)"
   right associative with precedence 47
   for @{'cons $hd $tl}.
 
-notation "[ list0 x sep ; ]"
+notation "[ list0 term 19 x sep ; ]"
   non associative with precedence 90
   for ${fold right @'nil rec acc @{'cons $x $acc}}.
 

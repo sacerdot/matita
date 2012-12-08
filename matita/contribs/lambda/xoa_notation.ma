@@ -24,16 +24,6 @@ notation < "hvbox(∃∃ ident x0 , ident x1 break . term 19 P0 break & term 19 
  non associative with precedence 20
  for @{ 'Ex (λ${ident x0}:$T0.λ${ident x1}:$T1.$P0) (λ${ident x0}:$T0.λ${ident x1}:$T1.$P1) }.
 
-(* multiple existental quantifier (3, 1) *)
-
-notation > "hvbox(∃∃ ident x0 break . term 19 P0 break & term 19 P1 break & term 19 P2)"
- non associative with precedence 20
- for @{ 'Ex (λ${ident x0}.$P0) (λ${ident x0}.$P1) (λ${ident x0}.$P2) }.
-
-notation < "hvbox(∃∃ ident x0 break . term 19 P0 break & term 19 P1 break & term 19 P2)"
- non associative with precedence 20
- for @{ 'Ex (λ${ident x0}:$T0.$P0) (λ${ident x0}:$T0.$P1) (λ${ident x0}:$T0.$P2) }.
-
 (* multiple existental quantifier (3, 2) *)
 
 notation > "hvbox(∃∃ ident x0 , ident x1 break . term 19 P0 break & term 19 P1 break & term 19 P2)"

@@ -24,14 +24,6 @@ inductive ex2_2 (A0,A1:Type[0]) (P0,P1:A0→A1→Prop) : Prop ≝
 
 interpretation "multiple existental quantifier (2, 2)" 'Ex P0 P1 = (ex2_2 ? ? P0 P1).
 
-(* multiple existental quantifier (3, 1) *)
-
-inductive ex3_1 (A0:Type[0]) (P0,P1,P2:A0→Prop) : Prop ≝
-   | ex3_1_intro: ∀x0. P0 x0 → P1 x0 → P2 x0 → ex3_1 ? ? ? ?
-.
-
-interpretation "multiple existental quantifier (3, 1)" 'Ex P0 P1 P2 = (ex3_1 ? P0 P1 P2).
-
 (* multiple existental quantifier (3, 2) *)
 
 inductive ex3_2 (A0,A1:Type[0]) (P0,P1,P2:A0→A1→Prop) : Prop ≝

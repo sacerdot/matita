@@ -30,7 +30,7 @@ inductive pred: relation term ≝
 interpretation "parallel reduction"
     'ParRed M N = (pred M N).
 
-notation "hvbox( M break ⥤ break term 46 N )"
+notation "hvbox( M ⥤ break term 46 N )"
    non associative with precedence 45
    for @{ 'ParRed $M $N }.
 

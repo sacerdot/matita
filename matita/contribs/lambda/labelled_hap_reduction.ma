@@ -48,30 +48,6 @@ lemma lhap1_inv_cons: ∀p,M,N. M ⓗ⇀[p] N → ∀c,q. c::q = p →
 ]
 qed-.
 
-lemma lhap1_inv_abst_sn: ∀p,M,N. M ⓗ⇀[p] N → ∀A. 𝛌.A = M → ⊥.
-#p #M #N * -p -M -N
-[ #B #A #A0 #H destruct
-| #p #B #A1 #A2 #_ #A0 #H destruct
-]
-qed-.
-
-lemma lhap1_inv_appl_sn: ∀p,M,N. M ⓗ⇀[p] N → ∀B,A. @B.A = M →
-                         (∃∃C. ◊ = p & 𝛌.C = A & [⬐B]C = N) ∨
-                         ∃∃q,C. A ⓗ⇀[q] C & dx::q = p & @B.C = N.
-#p #M #N * -p -M -N
-[ #B #A #B0 #A0 #H destruct /3 width=3/
-| #p #B #A1 #A2 #HA12 #B0 #A0 #H destruct /3 width=5/
-]
-qed-.
-
-lemma lhap1_inv_abst_dx: ∀p,M,N. M ⓗ⇀[p] N → ∀C. 𝛌.C = N →
-                         ∃∃B,A. ◊ = p & @B.𝛌.A = M & 𝛌.C = [⬐B]A.
-#p #M #N * -p -M -N
-[ #B #A #C #H /2 width=4/
-| #p #B #A1 #A2 #_ #C #H destruct
-]
-qed-.
-
 lemma lhap1_lift: ∀p. liftable (lhap1 p).
 #p #h #M1 #M2 #H elim H -p -M1 -M2 normalize /2 width=1/
 #B #A #d <dsubst_lift_le //
@@ -100,7 +76,7 @@ lemma head_lsred_lhap1: ∀p. in_head p → ∀M,N. M ⇀[p] N → M ⓗ⇀[p] N
 | #p #_ #IHp #M #N #H
   elim (lsred_inv_dx … H ??) -H [3: // |2: skip ] /3 width=1/ (**) (* simplify line *)
 ]
-qed.  
+qed.
 
 lemma lhap1_inv_head: ∀p,M,N. M ⓗ⇀[p] N → in_head p.
 #p #M #N #H elim H -p -M -N // /2 width=1/
@@ -108,16 +84,6 @@ qed-.
 
 lemma lhap1_inv_lsred: ∀p,M,N. M ⓗ⇀[p] N → M ⇀[p] N.
 #p #M #N #H elim H -p -M -N // /2 width=1/
-qed-.
-
-lemma lhap1_fwd_le: ∀p1,M1,M. M1 ⓗ⇀[p1] M → ∀p2,M2. M ⓗ⇀[p2] M2 → p1 ≤ p2.
-#p1 #M1 #M #H elim H -p1 -M1 -M //
-#p1 #B #A1 #A2 #HA12 #IHA12 #p2 #M2 #H
-elim (lhap1_inv_appl_sn … H ???) -H [5: // |2,3: skip ] * (**) (* simplify line *)
-[ -IHA12 #C2 #Hp2 #HAC2 #_
-  elim (lhap1_inv_abst_dx … HA12 … HAC2) -A2 #B1 #C1 #Hp1 #_ #_ //
-| -HA12 /3 width=2/
-]
 qed-.
 
 theorem lhap1_mono: ∀p. singlevalued … (lhap1 p).

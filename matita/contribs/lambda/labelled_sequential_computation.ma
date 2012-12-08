@@ -26,7 +26,7 @@ notation "hvbox( M break ⇀* [ term 46 s ] break term 46 N )"
    non associative with precedence 45
    for @{ 'SeqRedStar $M $s $N }.
 
-lemma lsred_lsreds: ∀p,M1,M2. M1 ⇀[p] M2 → M1 ⇀*[p::◊] M2.
+lemma lsreds_step_rc: ∀p,M1,M2. M1 ⇀[p] M2 → M1 ⇀*[p::◊] M2.
 /2 width=1/
 qed.
 
@@ -39,7 +39,7 @@ lemma lsreds_inv_cons: ∀s,M1,M2. M1 ⇀*[s] M2 → ∀q,r. q::r = s →
 /2 width=3 by lstar_inv_cons/
 qed-.
 
-lemma lsreds_inv_lsred: ∀p,M1,M2. M1 ⇀*[p::◊] M2 → M1 ⇀[p] M2.
+lemma lsreds_inv_step_rc: ∀p,M1,M2. M1 ⇀*[p::◊] M2 → M1 ⇀[p] M2.
 /2 width=1 by lstar_inv_step/
 qed-.
 
