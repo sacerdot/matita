@@ -20,7 +20,7 @@ include "labelled_hap_reduction.ma".
 (* Note: this is the "head in application" computation of:
          R. Kashima: "A proof of the Standization Theorem in λ-Calculus". Typescript note, (2000).
 *)
-definition lhap: rpseq → relation term ≝ lstar … lhap1.
+definition lhap: pseq → relation term ≝ lstar … lhap1.
 
 interpretation "labelled 'hap' computation"
    'HApStar M p N = (lhap p M N).
@@ -57,38 +57,42 @@ qed-.
 lemma lhap_dsubst: ∀s. dsubstable_dx (lhap s).
 /2 width=1/
 qed.
-(*
+
 theorem lhap_mono: ∀s. singlevalued … (lhap s).
 /3 width=7 by lstar_singlevalued, lhap1_mono/
 qed-.
-*)
+
 theorem lhap_trans: ∀s1,M1,M. M1 ⓗ⇀*[s1] M →
                     ∀s2,M2. M ⓗ⇀*[s2] M2 → M1 ⓗ⇀*[s1@s2] M2.
 /2 width=3 by lstar_trans/
 qed-.
-(*
-lemma hap_appl: appl_compatible_dx hap.
-/3 width=1/
+
+lemma lhap_appl: ∀s,B,A1,A2. A1 ⓗ⇀*[s] A2 → @B.A1 ⓗ⇀*[dx:::s] @B.A2.
+#s #B #A1 #A2 #H @(lstar_ind_l ????????? H) -s -A1 // /3 width=3/
 qed.
-*)
-lemma lhap_spine_fwd: ∀s,M1,M2. M1 ⓗ⇀*[s] M2 → is_spine s.
-#s #M1 #M2 #H elim H -s -M1 -M2 //
-#p #M1 #M #HM1 #s #M2 #_ #IHM2
-lapply (lhap1_spine_fwd … HM1) -HM1 /2 width=1/ 
+
+lemma head_lsreds_lhap: ∀s,M1,M2. M1 ⇀*[s] M2 → is_head s → M1 ⓗ⇀*[s] M2.
+#s #M1 #M2 #H @(lstar_ind_l ????????? H) -s -M1 //
+#a #s #M1 #M #HM1 #_ #IHM2 * /3 width=3/
+qed.
+
+lemma lhap_inv_head: ∀s,M1,M2. M1 ⓗ⇀*[s] M2 → is_head s.
+#s #M1 #M2 #H @(lstar_ind_l ????????? H) -s -M1 //
+#p #s #M1 #M #HM1 #_ #IHM2
+lapply (lhap1_inv_head … HM1) -HM1 /2 width=1/
 qed-.
 
-lemma lhap_lsreds_fwd: ∀s,M1,M2. M1 ⓗ⇀*[s] M2 → M1 ⇀*[s] M2.
-#s #M1 #M2 #H elim H -s -M1 -M2 //
-#p #M1 #M #HM1 #s #M2 #_ #IHM2
-lapply (lhap1_lsred_fwd … HM1) -HM1 /2 width=3/ 
+lemma lhap_inv_lsreds: ∀s,M1,M2. M1 ⓗ⇀*[s] M2 → M1 ⇀*[s] M2.
+#s #M1 #M2 #H @(lstar_ind_l ????????? H) -s -M1 //
+#p #s #M1 #M #HM1 #_ #IHM2
+lapply (lhap1_inv_lsred … HM1) -HM1 /2 width=3/
 qed-.
 
-lemma lhap_le_fwd: ∀s,M1,M2. M1 ⓗ⇀*[s] M2 → is_le s.
-(*
-#M1 #M2 #H @(star_ind_l ??????? H) -M1 /3 width=3/
-#M1 #M #HM1 #H * #s * #H1s #H2s
-generalize in match HM1; -HM1 generalize in match M1; -M1
-@(star_ind_l ??????? H) -M
-[ #M1 #HM12 elim (hap1_lsred … HM12) -HM12 /4 width=3/
-| #M0 #M1 #HM01 #HM12 #_ #M #HM0 #HM02
-*)
+lemma lhap_fwd_le: ∀s,M1,M2. M1 ⓗ⇀*[s] M2 → is_le s.
+#s #M1 #M2 #H @(lstar_ind_l ????????? H) -s -M1 /3 width=3/
+#a1 #s #M1 #M #HM1 #IHM1
+generalize in match HM1; -HM1
+cases IHM1 -s -M -M2 //
+#a #M0 #M #HM0 #s #M2 #_ #HM10 #H -M2
+lapply (lhap1_fwd_le … HM10 … HM0) -M -M0 -M1 /2 width=1/
+qed-.

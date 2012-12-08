@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basics/star.ma".
-include "basics/lists/list.ma".
+include "basics/lists/lstar.ma".
 include "arithmetics/exp.ma".
 
 include "xoa_notation.ma".
@@ -37,11 +37,6 @@ definition confluent1: ∀A. relation A → predicate A ≝ λA,R,a0.
 (* Note: confluent1 would be redundant if \Pi-reduction where enabled *)                       
 definition confluent: ∀A. predicate (relation A) ≝ λA,R.
                       ∀a0. confluent1 … R a0.
-
-(* booleans *)
-
-definition is_false: predicate bool ≝ λb.
-                     false = b.
 
 (* arithmetics *)
 
@@ -96,3 +91,12 @@ qed.
 notation > "◊"
   non associative with precedence 90
   for @{'nil}.
+
+definition map_cons: ∀A. A → list (list A) → list (list A) ≝ λA,a.
+                     map … (cons … a).
+
+interpretation "map_cons" 'ho_cons a l = (map_cons ? a l).
+
+notation "hvbox(a ::: break l)"
+  right associative with precedence 47
+  for @{'ho_cons $a $l}.

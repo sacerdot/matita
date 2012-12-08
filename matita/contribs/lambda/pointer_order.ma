@@ -12,35 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "term.ma".
+include "pointer.ma".
 
-(* REDEX POINTER ************************************************************)
-
-(* Policy: boolean metavariables: a, b
-           pointer metavariables: p, q
-*)
-(* Note: this is a path in the tree representation of a term
-         in which abstraction nodes are omitted;
-         on application nodes, "false" means "proceed right"
-         and "true" means "proceed left"
-*)
-definition rptr: Type[0] ≝ list bool.
-
-(* Note: a redex is "in the spine" when is not in the argument of an application *)
-definition in_spine: predicate rptr ≝ λp.
-                     All … is_false p.
+(* POINTER ORDER ************************************************************)
 
 (* Note: precedence relation on redex pointers: p ≺ q
          to serve as base for the order relations: p < q and p ≤ q *)
-inductive rpprec: relation rptr ≝
-| rpprec_nil : ∀b,q.   rpprec (◊) (b::q)
-| rppprc_cons: ∀p,q.   rpprec (false::p) (true::q)
-| rpprec_comp: ∀b,p,q. rpprec p q → rpprec (b::p) (b::q)
-| rpprec_skip:         rpprec (false::◊) ◊
+inductive pprec: relation ptr ≝
+| pprec_nil : ∀c,q.   pprec (◊) (c::q)
+| ppprc_cons: ∀p,q.   pprec (dx::p) (sn::q)
+| pprec_comp: ∀c,p,q. pprec p q → pprec (c::p) (c::q)
+| pprec_skip:         pprec (dx::◊) ◊
 .
 
-interpretation "'precedes' on redex pointers"
-   'prec p q = (rpprec p q).
+interpretation "'precedes' on pointers"
+   'prec p q = (pprec p q).
 
 (* Note: this should go to core_notation *)
 notation "hvbox(a break ≺ b)"
@@ -48,29 +34,29 @@ notation "hvbox(a break ≺ b)"
    for @{ 'prec $a $b }.
 
 (* Note: this is p < q *)
-definition rplt: relation rptr ≝ TC … rpprec.
+definition plt: relation ptr ≝ TC … pprec.
 
 interpretation "'less than' on redex pointers"
-   'lt p q = (rplt p q).
+   'lt p q = (plt p q).
 
 (* Note: this is p ≤ q *)
-definition rple: relation rptr ≝ star … rpprec.
+definition ple: relation ptr ≝ star … pprec.
 
 interpretation "'less or equal to' on redex pointers"
-   'leq p q = (rple p q).
+   'leq p q = (ple p q).
 
-lemma rpprec_rple: ∀p,q. p ≺ q → p ≤ q.
+lemma pprec_ple: ∀p,q. p ≺ q → p ≤ q.
 /2 width=1/
 qed.
 
-lemma rple_false: false::◊ ≤ ◊.
+lemma ple_dx: dx::◊ ≤ ◊.
 /2 width=1/
 qed.
 
-lemma rple_nil: ∀p. ◊ ≤ p.
+lemma ple_nil: ∀p. ◊ ≤ p.
 * // /2 width=1/
 qed.
 
-lemma rple_comp: ∀p1,p2. p1 ≤ p2 → ∀b. (b::p1) ≤ (b::p2).
+lemma ple_comp: ∀p1,p2. p1 ≤ p2 → ∀c. (c::p1) ≤ (c::p2).
 #p1 #p2 #H elim H -p2 // /3 width=3/
 qed.

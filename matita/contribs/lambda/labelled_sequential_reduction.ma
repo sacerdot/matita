@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "redex_pointer.ma".
+include "pointer.ma".
 include "multiplicity.ma".
 
 (* LABELLED SEQUENTIAL REDUCTION (SINGLE STEP) ******************************)
@@ -21,11 +21,11 @@ include "multiplicity.ma".
          F. Kamareddine and R.P. Nederpelt: "A useful λ-notation".
          Theoretical Computer Science 155(1), Elsevier (1996), pp. 85-109.
 *)
-inductive lsred: rptr → relation term ≝
+inductive lsred: ptr → relation term ≝
 | lsred_beta   : ∀B,A. lsred (◊) (@B.𝛌.A) ([⬐B]A)
-| lsred_abst   : ∀p,A,C. lsred p A C → lsred p (𝛌.A) (𝛌.C) 
-| lsred_appl_sn: ∀p,B,D,A. lsred p B D → lsred (true::p) (@B.A) (@D.A)
-| lsred_appl_dx: ∀p,B,A,C. lsred p A C → lsred (false::p) (@B.A) (@B.C)
+| lsred_abst   : ∀p,A1,A2. lsred p A1 A2 → lsred (rc::p) (𝛌.A1) (𝛌.A2) 
+| lsred_appl_sn: ∀p,B1,B2,A. lsred p B1 B2 → lsred (sn::p) (@B1.A) (@B2.A)
+| lsred_appl_dx: ∀p,B,A1,A2. lsred p A1 A2 → lsred (dx::p) (@B.A1) (@B.A2)
 .
 
 interpretation "labelled sequential reduction"
@@ -39,49 +39,49 @@ notation "hvbox( M break ⇀ [ term 46 p ] break term 46 N )"
 lemma lsred_inv_vref: ∀p,M,N. M ⇀[p] N → ∀i. #i = M → ⊥.
 #p #M #N * -p -M -N
 [ #B #A #i #H destruct
-| #p #A #C #_ #i #H destruct
-| #p #B #D #A #_ #i #H destruct
-| #p #B #A #C #_ #i #H destruct
+| #p #A1 #A2 #_ #i #H destruct
+| #p #B1 #B2 #A #_ #i #H destruct
+| #p #B #A1 #A2 #_ #i #H destruct
 ]
 qed-.
 
-lemma lsred_inv_beta: ∀p,M,N. M ⇀[p] N → ∀D,C. @D.C = M → ◊ = p →
-                      ∃∃A. 𝛌.A = C & [⬐D] A = N.
+lemma lsred_inv_nil: ∀p,M,N. M ⇀[p] N → ◊ = p →
+                     ∃∃B,A. @B. 𝛌.A = M & [⬐B] A = N.
 #p #M #N * -p -M -N
-[ #B #A #D0 #C0 #H #_ destruct /2 width=3/
-| #p #A #C #_ #D0 #C0 #H destruct
-| #p #B #D #A #_ #D0 #C0 #_ #H destruct
-| #p #B #A #C #_ #D0 #C0 #_ #H destruct
+[ #B #A #_ destruct /2 width=4/
+| #p #A1 #A2 #_ #H destruct
+| #p #B1 #B2 #A #_ #H destruct
+| #p #B #A1 #A2 #_ #H destruct
 ]
 qed-.
 
-lemma lsred_inv_abst: ∀p,M,N. M ⇀[p] N → ∀A. 𝛌.A = M →
-                      ∃∃C. A ⇀[p] C & 𝛌.C = N.
+lemma lsred_inv_rc: ∀p,M,N. M ⇀[p] N → ∀q. rc::q = p →
+                    ∃∃A1,A2. A1 ⇀[q] A2 & 𝛌.A1 = M & 𝛌.A2 = N.
 #p #M #N * -p -M -N
-[ #B #A #A0 #H destruct
-| #p #A #C #HAC #A0 #H destruct /2 width=3/
-| #p #B #D #A #_ #A0 #H destruct
-| #p #B #A #C #_ #A0 #H destruct
+[ #B #A #q #H destruct
+| #p #A1 #A2 #HA12 #q #H destruct /2 width=5/
+| #p #B1 #B2 #A #_ #q #H destruct
+| #p #B #A1 #A2 #_ #q #H destruct
 ]
 qed-.
 
-lemma lsred_inv_appl_sn: ∀p,M,N. M ⇀[p] N → ∀B,A,q. @B.A = M → true::q = p →
-                         ∃∃D. B ⇀[q] D & @D.A = N.
+lemma lsred_inv_sn: ∀p,M,N. M ⇀[p] N → ∀q. sn::q = p →
+                    ∃∃B1,B2,A. B1 ⇀[q] B2 & @B1.A = M & @B2.A = N.
 #p #M #N * -p -M -N
-[ #B #A #B0 #A0 #p0 #_ #H destruct
-| #p #A #C #_ #B0 #D0 #p0 #H destruct
-| #p #B #D #A #HBD #B0 #A0 #p0 #H1 #H2 destruct /2 width=3/
-| #p #B #A #C #_ #B0 #A0 #p0 #_ #H destruct
+[ #B #A #q #H destruct
+| #p #A1 #A2 #_ #q #H destruct
+| #p #B1 #B2 #A #HB12 #q #H destruct /2 width=6/
+| #p #B #A1 #A2 #_ #q #H destruct
 ]
 qed-.
 
-lemma lsred_inv_appl_dx: ∀p,M,N. M ⇀[p] N → ∀B,A,q. @B.A = M → false::q = p →
-                         ∃∃C. A ⇀[q] C & @B.C = N.
+lemma lsred_inv_dx: ∀p,M,N. M ⇀[p] N → ∀q. dx::q = p →
+                    ∃∃B,A1,A2. A1 ⇀[q] A2 & @B.A1 = M & @B.A2 = N.
 #p #M #N * -p -M -N
-[ #B #A #B0 #A0 #p0 #_ #H destruct
-| #p #A #C #_ #B0 #D0 #p0 #H destruct
-| #p #B #D #A #_ #B0 #A0 #p0 #_ #H destruct
-| #p #B #A #C #HAC #B0 #A0 #p0 #H1 #H2 destruct /2 width=3/
+[ #B #A #q #H destruct
+| #p #A1 #A2 #_ #q #H destruct
+| #p #B1 #B2 #A #_ #q #H destruct
+| #p #B #A1 #A2 #HA12 #q #H destruct /2 width=6/
 ]
 qed-.
 
@@ -131,9 +131,9 @@ qed.
 
 theorem lsred_mono: ∀p. singlevalued … (lsred p).
 #p #M #N1 #H elim H -p -M -N1
-[ #B #A #N2 #H elim (lsred_inv_beta … H ????) -H [4,5: // |2,3: skip ] #A0 #H1 #H2 destruct // (**) (* simplify line *)
-| #p #A #C #_ #IHAC #N2 #H elim (lsred_inv_abst … H ??) -H [3: // |2: skip ] #C0 #HAC #H destruct /3 width=1/ (**) (* simplify line *)
-| #p #B #D #A #_ #IHBD #N2 #H elim (lsred_inv_appl_sn … H ?????) -H [5,6: // |2,3,4: skip ] #D0 #HBD #H destruct /3 width=1/ (**) (* simplify line *)
-| #p #B #A #C #_ #IHAC #N2 #H elim (lsred_inv_appl_dx … H ?????) -H [5,6: // |2,3,4: skip ] #C0 #HAC #H destruct /3 width=1/ (**) (* simplify line *)
+[ #B #A #N2 #H elim (lsred_inv_nil … H ?) -H // #D #C #H #HN2 destruct //
+| #p #A1 #A2 #_ #IHA12 #N2 #H elim (lsred_inv_rc … H ??) -H [3: // |2: skip ] #C1 #C2 #HC12 #H #HN2 destruct /3 width=1/ (**) (* simplify line *)
+| #p #B1 #B2 #A #_ #IHB12 #N2 #H elim (lsred_inv_sn … H ??) -H [3: // |2: skip ] #D1 #D2 #C #HD12 #H #HN2 destruct /3 width=1/ (**) (* simplify line *)
+| #p #B #A1 #A2 #_ #IHA12 #N2 #H elim (lsred_inv_dx … H ??) -H [3: // |2: skip ] #D #C1 #C2 #HC12 #H #HN2 destruct /3 width=1/ (**) (* simplify line *)
 ]
 qed-.

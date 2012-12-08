@@ -12,22 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "redex_pointer.ma".
+include "pointer_order.ma".
 
-(* REDEX POINTER SEQUENCE ***************************************************)
+(* POINTER SEQUENCE *********************************************************)
 
 (* Policy: pointer sequence metavariables: r, s *)
+definition pseq: Type[0] ≝ list ptr.
 
-definition rpseq: Type[0] \def list rptr.
-
-(* Note: a "spine" computation contracts just redexes in the spine *)
-definition is_spine: predicate rpseq ≝ λs.
-                     All … in_spine s.
+(* Note: a "head" computation contracts just redexes in the head *)
+definition is_head: predicate pseq ≝ All … in_head.
 
 (* Note: to us, a "normal" computation contracts redexes in non-decreasing positions *)
-definition is_le: predicate rpseq ≝ λs.
-                  Allr … rple s.
-
-(* Note: a normal spine computation *)
-definition is_spine_le: predicate rpseq ≝ λs.
-                        is_spine s ∧ is_le s.
+definition is_le: predicate pseq ≝ Allr … ple.

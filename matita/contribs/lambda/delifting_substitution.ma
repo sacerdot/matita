@@ -160,5 +160,6 @@ qed.
 
 lemma lstar_dsubstable_dx: ∀T,R. (∀t. dsubstable_dx (R t)) →
                            ∀l. dsubstable_dx (lstar T … R l).
-#T #R #HR #l #D #M1 #M2 #H elim H -l -M1 -M2 // /3 width=3/
+#T #R #HR #l #D #M1 #M2 #H
+@(lstar_ind_l ????????? H) -l -M1 // /3 width=3/
 qed.

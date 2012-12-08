@@ -7,13 +7,13 @@ M, N      : term
 R         : arbitrary relation
 T, U      : arbitrary small type
 
-a, b      : boolean
+c         : pointer step
 d, e      : variable reference depth 
 h         : relocation height
 i, j      : de Bruijn index
 k         : relocation height
 l         : arbitrary list
 m, n      : measures on terms
-p, q      : redex pointer
-r, s      : redex pointer sequence
+p, q      : pointer
+r, s      : pointer sequence
 t, u      : arbitrary element

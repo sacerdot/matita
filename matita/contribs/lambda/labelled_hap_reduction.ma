@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "pointer_order.ma".
 include "labelled_sequential_reduction.ma".
 
 (* KASHIMA'S "HAP" COMPUTATION (LABELLED SINGLE STEP) ***********************)
@@ -19,9 +20,9 @@ include "labelled_sequential_reduction.ma".
 (* Note: this is one step of the "head in application" computation of:
          R. Kashima: "A proof of the Standization Theorem in λ-Calculus". Typescript note, (2000).
 *)
-inductive lhap1: rptr → relation term ≝
+inductive lhap1: ptr → relation term ≝
 | hap1_beta: ∀B,A. lhap1 (◊) (@B.𝛌.A) ([⬐B]A)
-| hap1_appl: ∀p,B,A1,A2. lhap1 p A1 A2 → lhap1 (false::p) (@B.A1) (@B.A2)
+| hap1_appl: ∀p,B,A1,A2. lhap1 p A1 A2 → lhap1 (dx::p) (@B.A1) (@B.A2)
 .
 
 interpretation "labelled 'hap' reduction"
@@ -30,6 +31,22 @@ interpretation "labelled 'hap' reduction"
 notation "hvbox( M break ⓗ⇀ [ term 46 p ] break term 46 N )"
    non associative with precedence 45
    for @{ 'HAp $M $p $N }.
+
+lemma lhap1_inv_nil: ∀p,M,N. M ⓗ⇀[p] N → ◊ = p →
+                     ∃∃B,A. @B.𝛌.A = M & [⬐B]A = N.
+#p #M #N * -p -M -N
+[ #B #A #_ /2 width=4/
+| #p #B #A1 #A2 #_ #H destruct
+]
+qed-.
+
+lemma lhap1_inv_cons: ∀p,M,N. M ⓗ⇀[p] N → ∀c,q. c::q = p →
+                      ∃∃B,A1,A2. dx = c & A1 ⓗ⇀[q] A2 & @B.A1 = M & @B.A2 = N.
+#p #M #N * -p -M -N
+[ #B #A #c #q #H destruct
+| #p #B #A1 #A2 #HA12 #c #q #H destruct /2 width=6/
+]
+qed-.
 
 lemma lhap1_inv_abst_sn: ∀p,M,N. M ⓗ⇀[p] N → ∀A. 𝛌.A = M → ⊥.
 #p #M #N * -p -M -N
@@ -40,7 +57,7 @@ qed-.
 
 lemma lhap1_inv_appl_sn: ∀p,M,N. M ⓗ⇀[p] N → ∀B,A. @B.A = M →
                          (∃∃C. ◊ = p & 𝛌.C = A & [⬐B]C = N) ∨
-                         ∃∃q,C. A ⓗ⇀[q] C & false::q = p & @B.C = N.
+                         ∃∃q,C. A ⓗ⇀[q] C & dx::q = p & @B.C = N.
 #p #M #N * -p -M -N
 [ #B #A #B0 #A0 #H destruct /3 width=3/
 | #p #B #A1 #A2 #HA12 #B0 #A0 #H destruct /3 width=5/
@@ -77,20 +94,38 @@ lemma lhap1_dsubst: ∀p. dsubstable_dx (lhap1 p).
 #D2 #A #d >dsubst_dsubst_ge //
 qed.
 
-lemma lhap1_spine_fwd: ∀p,M,N. M ⓗ⇀[p] N → in_spine p.
-#p #M #N #H elim H -p -M -N // /2 width=1/ 
-qed-.
+lemma head_lsred_lhap1: ∀p. in_head p → ∀M,N. M ⇀[p] N → M ⓗ⇀[p] N.
+#p #H @(in_head_ind … H) -p
+[ #M #N #H elim (lsred_inv_nil … H ?) -H //
+| #p #_ #IHp #M #N #H
+  elim (lsred_inv_dx … H ??) -H [3: // |2: skip ] /3 width=1/ (**) (* simplify line *)
+]
+qed.  
 
-lemma lhap1_lsred_fwd: ∀p,M,N. M ⓗ⇀[p] N → M ⇀[p] N.
+lemma lhap1_inv_head: ∀p,M,N. M ⓗ⇀[p] N → in_head p.
 #p #M #N #H elim H -p -M -N // /2 width=1/
 qed-.
 
-lemma lhap1_le_fwd: ∀p1,M1,M. M1 ⓗ⇀[p1] M → ∀p2,M2. M ⓗ⇀[p2] M2 → p1 ≤ p2.
+lemma lhap1_inv_lsred: ∀p,M,N. M ⓗ⇀[p] N → M ⇀[p] N.
+#p #M #N #H elim H -p -M -N // /2 width=1/
+qed-.
+
+lemma lhap1_fwd_le: ∀p1,M1,M. M1 ⓗ⇀[p1] M → ∀p2,M2. M ⓗ⇀[p2] M2 → p1 ≤ p2.
 #p1 #M1 #M #H elim H -p1 -M1 -M //
 #p1 #B #A1 #A2 #HA12 #IHA12 #p2 #M2 #H
 elim (lhap1_inv_appl_sn … H ???) -H [5: // |2,3: skip ] * (**) (* simplify line *)
 [ -IHA12 #C2 #Hp2 #HAC2 #_
   elim (lhap1_inv_abst_dx … HA12 … HAC2) -A2 #B1 #C1 #Hp1 #_ #_ //
 | -HA12 /3 width=2/
+]
+qed-.
+
+theorem lhap1_mono: ∀p. singlevalued … (lhap1 p).
+#p #M #N1 #H elim H -p -M -N1
+[ #B #A #N2 #H
+  elim (lhap1_inv_nil … H ?) -H // #D #C #H #HN2 destruct //
+| #p #B #A1 #A2 #_ #IHA12 #N2 #H
+  elim (lhap1_inv_cons … H ???) -H [4: // |2,3: skip ] (**) (* simplify line *)
+  #D #C1 #C2 #_ #HC12 #H #HN2 destruct /3 width=1/
 ]
 qed-.

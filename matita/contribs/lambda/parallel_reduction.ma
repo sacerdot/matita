@@ -22,9 +22,9 @@ include "labelled_sequential_reduction.ma".
 *)
 inductive pred: relation term ≝
 | pred_vref: ∀i. pred (#i) (#i)
-| pred_abst: ∀A,C. pred A C → pred (𝛌.A) (𝛌.C) 
-| pred_appl: ∀B,D,A,C. pred B D → pred A C → pred (@B.A) (@D.C)
-| pred_beta: ∀B,D,A,C. pred B D → pred A C → pred (@B.𝛌.A) ([⬐D]C)
+| pred_abst: ∀A1,A2. pred A1 A2 → pred (𝛌.A1) (𝛌.A2) 
+| pred_appl: ∀B1,B2,A1,A2. pred B1 B2 → pred A1 A2 → pred (@B1.A1) (@B2.A2)
+| pred_beta: ∀B1,B2,A1,A2. pred B1 B2 → pred A1 A2 → pred (@B1.𝛌.A1) ([⬐B2]A2)
 .
 
 interpretation "parallel reduction"
@@ -40,9 +40,9 @@ qed.
 
 lemma pred_inv_vref: ∀M,N. M ⥤ N → ∀i. #i = M → #i = N.
 #M #N * -M -N //
-[ #A #C #_ #i #H destruct
-| #B #D #A #C #_ #_ #i #H destruct
-| #B #D #A #C #_ #_ #i #H destruct
+[ #A1 #A2 #_ #i #H destruct
+| #B1 #B2 #A1 #A2 #_ #_ #i #H destruct
+| #B1 #B2 #A1 #A2 #_ #_ #i #H destruct
 ]
 qed-.
 
@@ -50,9 +50,9 @@ lemma pred_inv_abst: ∀M,N. M ⥤ N → ∀A. 𝛌.A = M →
                      ∃∃C. A ⥤ C & 𝛌.C = N.
 #M #N * -M -N
 [ #i #A0 #H destruct
-| #A #C #HAC #A0 #H destruct /2 width=3/
-| #B #D #A #C #_ #_ #A0 #H destruct
-| #B #D #A #C #_ #_ #A0 #H destruct
+| #A1 #A2 #HA12 #A0 #H destruct /2 width=3/
+| #B1 #B2 #A1 #A2 #_ #_ #A0 #H destruct
+| #B1 #B2 #A1 #A2 #_ #_ #A0 #H destruct
 ]
 qed-.
 
@@ -61,15 +61,15 @@ lemma pred_inv_appl: ∀M,N. M ⥤ N → ∀B,A. @B.A = M →
                      ∃∃A0,D,C0. B ⥤ D & A0 ⥤ C0 & 𝛌.A0 = A & [⬐D]C0 = N.
 #M #N * -M -N
 [ #i #B0 #A0 #H destruct
-| #A #C #_ #B0 #A0 #H destruct
-| #B #D #A #C #HBD #HAC #B0 #A0 #H destruct /3 width=5/
-| #B #D #A #C #HBD #HAC #B0 #A0 #H destruct /3 width=7/
+| #A1 #A2 #_ #B0 #A0 #H destruct
+| #B1 #B2 #A1 #A2 #HB12 #HA12 #B0 #A0 #H destruct /3 width=5/
+| #B1 #B2 #A1 #A2 #HB12 #HA12 #B0 #A0 #H destruct /3 width=7/
 ]
 qed-.
 
 lemma pred_lift: liftable pred.
 #h #M1 #M2 #H elim H -M1 -M2 normalize // /2 width=1/
-#D #D #A #C #_ #_ #IHBD #IHAC #d <dsubst_lift_le // /2 width=1/
+#B1 #B2 #A1 #A2 #_ #_ #IHB12 #IHC12 #d <dsubst_lift_le // /2 width=1/
 qed.
 
 lemma pred_inv_lift: deliftable_sn pred.
@@ -101,7 +101,7 @@ lemma pred_dsubst: dsubstable pred.
   ]
 | normalize /2 width=1/
 | normalize /2 width=1/
-| normalize #B #D #A #C #_ #_ #IHBD #IHAC #d
+| normalize #B1 #B2 #A1 #A2 #_ #_ #IHB12 #IHC12 #d
   >dsubst_dsubst_ge // /2 width=1/
 ]
 qed.

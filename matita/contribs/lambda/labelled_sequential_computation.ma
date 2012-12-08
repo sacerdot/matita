@@ -12,12 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "redex_pointer_sequence.ma".
+include "pointer_sequence.ma".
 include "labelled_sequential_reduction.ma".
 
 (* LABELLED SEQUENTIAL COMPUTATION (MULTISTEP) ******************************)
 
-definition lsreds: rpseq → relation term ≝ lstar … lsred.
+definition lsreds: pseq → relation term ≝ lstar … lsred.
 
 interpretation "labelled sequential computation"
    'SeqRedStar M s N = (lsreds s M N).
@@ -66,8 +66,8 @@ qed-.
 
 (* Note: "|s|" should be unparetesized *)
 lemma lsreds_fwd_mult: ∀s,M1,M2. M1 ⇀*[s] M2 → #{M2} ≤ #{M1} ^ (2 ^ (|s|)).
-#s #M1 #M2 #H elim H -s -M1 -M2 normalize //
-#p #M1 #M #HM1 #s #M2 #_ #IHM2
+#s #M1 #M2 #H @(lstar_ind_l ????????? H) -s -M1 normalize //
+#p #s #M1 #M #HM1 #_ #IHM2
 lapply (lsred_fwd_mult … HM1) -p #HM1
 @(transitive_le … IHM2) -M2
 /3 width=1 by le_exp1, lt_O_exp, lt_to_le/ (**) (* auto: slow without trace *)

@@ -21,7 +21,7 @@ include "labelled_hap_computation.ma".
 *)
 inductive st: relation term ≝
 | st_vref: ∀s,M,i. lhap s M (#i) → st M (#i)
-| st_abst: ∀s,M,A,C. lhap s M (𝛌.A) → st A C → st M (𝛌.C)
-| st_appl: ∀s,M,B,D,A,C. lhap s M (@B.A) → st B D → st A C → st M (@D.C) 
+| st_abst: ∀s,M,A1,A2. lhap s M (𝛌.A1) → st A1 A2 → st M (𝛌.A2)
+| st_appl: ∀s,M,B1,B2,A1,A2. lhap s M (@B1.A1) → st B1 B2 → st A1 A2 → st M (@B2.A2)
 .
 
