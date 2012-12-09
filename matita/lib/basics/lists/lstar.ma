@@ -13,6 +13,9 @@ include "basics/lists/list.ma".
 
 (* labelled reflexive and transitive closure ********************************)
 
+definition ltransitive: ∀A,B:Type[0]. predicate (list A → relation B) ≝ λA,B,R.
+                        ∀l1,b1,b. R l1 b1 b → ∀l2,b2. R l2 b b2 → R (l1@l2) b1 b2. 
+
 inductive lstar (A:Type[0]) (B:Type[0]) (R: A→relation B): list A → relation B ≝
 | lstar_nil : ∀b. lstar A B R ([]) b b
 | lstar_cons: ∀a,b1,b. R a b1 b →
@@ -72,7 +75,6 @@ theorem lstar_singlevalued: ∀A,B,R. (∀a. singlevalued ?? (R a)) →
 ]
 qed-.
 
-theorem lstar_trans: ∀A,B,R,l1,b1,b. lstar A B R l1 b1 b →
-                     ∀l2,b2. lstar A B R l2 b b2 → lstar A B R (l1@l2) b1 b2.
+theorem lstar_ltransitive: ∀A,B,R. ltransitive … (lstar A B R).
 #A #B #R #l1 #b1 #b #H @(lstar_ind_l ????????? H) -l1 -b1 normalize // /3 width=3/
 qed-.

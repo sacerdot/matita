@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "pointer_order.ma".
 include "labelled_sequential_reduction.ma".
 
 (* KASHIMA'S "HAP" COMPUTATION (LABELLED SINGLE STEP) ***********************)

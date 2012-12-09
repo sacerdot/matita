@@ -46,6 +46,10 @@ lemma lhap_inv_step_rc: ∀p,M1,M2. M1 ⓗ⇀*[p::◊] M2 → M1 ⓗ⇀[p] M2.
 /2 width=1 by lstar_inv_step/
 qed-.
 
+lemma lhap_compatible_dx: ho_compatible_dx lhap.
+/3 width=1/
+qed.
+
 lemma lhap_lift: ∀s. liftable (lhap s).
 /2 width=1/
 qed.
@@ -62,14 +66,9 @@ theorem lhap_mono: ∀s. singlevalued … (lhap s).
 /3 width=7 by lstar_singlevalued, lhap1_mono/
 qed-.
 
-theorem lhap_trans: ∀s1,M1,M. M1 ⓗ⇀*[s1] M →
-                    ∀s2,M2. M ⓗ⇀*[s2] M2 → M1 ⓗ⇀*[s1@s2] M2.
-/2 width=3 by lstar_trans/
+theorem lhap_trans: ltransitive … lhap.
+/2 width=3 by lstar_ltransitive/
 qed-.
-
-lemma lhap_appl: ∀s,B,A1,A2. A1 ⓗ⇀*[s] A2 → @B.A1 ⓗ⇀*[dx:::s] @B.A2.
-#s #B #A1 #A2 #H @(lstar_ind_l ????????? H) -s -A1 // /3 width=3/
-qed.
 
 lemma head_lsreds_lhap: ∀s,M1,M2. M1 ⇀*[s] M2 → is_head s → M1 ⓗ⇀*[s] M2.
 #s #M1 #M2 #H @(lstar_ind_l ????????? H) -s -M1 //

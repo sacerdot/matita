@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "preamble.ma".
+include "term.ma".
 
 (* POINTER ******************************************************************)
 
@@ -43,3 +43,12 @@ lemma in_head_ind: ∀R:predicate ptr. R (◊) →
 #R #H #IH #p elim p -p // -H *
 #p #IHp * #H1 #H2 destruct /3 width=1/
 qed-.
+
+definition compatible_rc: predicate (ptr→relation term) ≝ λR.
+                          ∀p,A1,A2. R p A1 A2 → R (rc::p) (𝛌.A1) (𝛌.A2).
+
+definition compatible_sn: predicate (ptr→relation term) ≝ λR.
+                          ∀p,B1,B2,A. R p B1 B2 → R (sn::p) (@B1.A) (@B2.A).
+
+definition compatible_dx: predicate (ptr→relation term) ≝ λR.
+                          ∀p,B,A1,A2. R p A1 A2 → R (dx::p) (@B.A1) (@B.A2).

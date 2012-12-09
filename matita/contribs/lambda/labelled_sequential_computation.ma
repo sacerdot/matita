@@ -43,6 +43,18 @@ lemma lsreds_inv_step_rc: ∀p,M1,M2. M1 ⇀*[p::◊] M2 → M1 ⇀[p] M2.
 /2 width=1 by lstar_inv_step/
 qed-.
 
+lemma lsred_compatible_rc: ho_compatible_rc lsreds.
+/3 width=1/
+qed.
+
+lemma lsred_compatible_sn: ho_compatible_sn lsreds.
+/3 width=1/
+qed.
+
+lemma lsred_compatible_dx: ho_compatible_dx lsreds.
+/3 width=1/
+qed.
+
 lemma lsreds_lift: ∀s. liftable (lsreds s).
 /2 width=1/
 qed.
@@ -59,9 +71,8 @@ theorem lsreds_mono: ∀s. singlevalued … (lsreds s).
 /3 width=7 by lstar_singlevalued, lsred_mono/
 qed-.
 
-theorem lsreds_trans: ∀s1,M1,M. M1 ⇀*[s1] M →
-                      ∀s2,M2. M ⇀*[s2] M2 → M1 ⇀*[s1@s2] M2.
-/2 width=3 by lstar_trans/
+theorem lsreds_trans: ltransitive … lsreds.
+/2 width=3 by lstar_ltransitive/
 qed-.
 
 (* Note: "|s|" should be unparetesized *)
