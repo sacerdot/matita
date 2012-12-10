@@ -4,6 +4,7 @@ A, B, C, D: term
 H         : transient premise
 IH        : inductive premise
 M, N      : term
+P, Q      : pointer tree
 R         : arbitrary relation
 T, U      : arbitrary small type
 

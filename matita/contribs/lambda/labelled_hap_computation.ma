@@ -70,6 +70,12 @@ theorem lhap_trans: ltransitive … lhap.
 /2 width=3 by lstar_ltransitive/
 qed-.
 
+lemma lhap_step_dx: ∀s,M1,M. M1 ⓗ⇀*[s] M →
+                    ∀p,M2. M ⓗ⇀[p] M2 → M1 ⓗ⇀*[s@p::◊] M2.
+#s #M1 #M #HM1 #p #M2 #HM2
+@(lhap_trans … HM1) /2 width=1/
+qed-.
+
 lemma head_lsreds_lhap: ∀s,M1,M2. M1 ⇀*[s] M2 → is_head s → M1 ⓗ⇀*[s] M2.
 #s #M1 #M2 #H @(lstar_ind_l ????????? H) -s -M1 //
 #a #s #M1 #M #HM1 #_ #IHM2 * /3 width=3/

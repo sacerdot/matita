@@ -78,3 +78,48 @@ qed-.
 theorem lstar_ltransitive: ∀A,B,R. ltransitive … (lstar A B R).
 #A #B #R #l1 #b1 #b #H @(lstar_ind_l ????????? H) -l1 -b1 normalize // /3 width=3/
 qed-.
+
+lemma lstar_app: ∀A,B,R,l,b1,b. lstar A B R l b1 b → ∀a,b2. R a b b2 →
+                 lstar A B R (l@[a]) b1 b2.
+#A #B #R #l #b1 #b #H @(lstar_ind_l ????????? H) -l -b1 /2 width=1/
+normalize /3 width=3/
+qed.
+
+inductive lstar_r (A:Type[0]) (B:Type[0]) (R: A→relation B): list A → relation B ≝
+| lstar_r_nil: ∀b. lstar_r A B R ([]) b b
+| lstar_r_app: ∀l,b1,b. lstar_r A B R l b1 b → ∀a,b2. R a b b2 →
+               lstar_r A B R (l@[a]) b1 b2
+.
+
+lemma lstar_r_cons: ∀A,B,R,l,b,b2. lstar_r A B R l b b2 → ∀a,b1. R a b1 b →
+                    lstar_r A B R (a::l) b1 b2.
+#A #B #R #l #b #b2 #H elim H -l -b2 /2 width=3/
+#l #b1 #b #_ #a #b2 #Hb2 #IHb1 #a0 #b0 #Hb01
+@(lstar_r_app … (a0::l) … Hb2) -b2 /2 width=1/
+qed.
+
+lemma lstar_lstar_r: ∀A,B,R,l,b1,b2. lstar A B R l b1 b2 → lstar_r A B R l b1 b2.
+#A #B #R #l #b1 #b2 #H @(lstar_ind_l ????????? H) -l -b1 // /2 width=3/
+qed.
+
+lemma lstar_r_inv_lstar: ∀A,B,R,l,b1,b2. lstar_r A B R l b1 b2 → lstar A B R l b1 b2.
+#A #B #R #l #b1 #b2 #H elim H -l -b1 -b2 // /2 width=3/
+qed-.
+
+fact lstar_ind_r_aux: ∀A,B,R,b1. ∀P:relation2 (list A) B.
+                      P ([]) b1 →
+                      (∀a,l,b,b2. lstar … R l b1 b → R a b b2 → P l b → P (l@[a]) b2) →
+                      ∀l,b,b2. lstar … R l b b2 → b = b1 → P l b2.
+#A #B #R #b1 #P #H1 #H2 #l #b #b2 #H elim (lstar_lstar_r ?????? H) -l -b -b2
+[ #b #H destruct //
+| #l #b #b0 #Hb0 #a #b2 #Hb02 #IH #H destruct /3 width=4 by lstar_r_inv_lstar/
+]
+qed-.
+
+lemma lstar_ind_r: ∀A,B,R,b1. ∀P:relation2 (list A) B.
+                   P ([]) b1 →
+                   (∀a,l,b,b2. lstar … R l b1 b → R a b b2 → P l b → P (l@[a]) b2) →
+                   ∀l,b2. lstar … R l b1 b2 → P l b2.
+#A #B #R #b1 #P #H1 #H2 #l #b2 #Hb12
+@(lstar_ind_r_aux … H1 H2 … Hb12) //
+qed-.
