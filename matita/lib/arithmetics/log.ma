@@ -1,474 +1,226 @@
-(**************************************************************************)
-(*       ___	                                                            *)
-(*      ||M||                                                             *)
-(*      ||A||       A project by Andrea Asperti                           *)
-(*      ||T||                                                             *)
-(*      ||I||       Developers:                                           *)
-(*      ||T||       A.Asperti, C.Sacerdoti Coen,                          *)
-(*      ||A||       E.Tassi, S.Zacchiroli                                 *)
-(*      \   /                                                             *)
-(*       \ /        Matita is distributed under the terms of the          *)
-(*        v         GNU Lesser General Public License Version 2.1         *)
-(*                                                                        *)
-(**************************************************************************)
-
 (*
-include "datatypes/constructors.ma".
-include "nat/minimization.ma".
-include "nat/relevant_equations.ma".
-include "nat/primes.ma".
-include "nat/iteration2.ma".
-include "nat/div_and_mod_diseq.ma".
+    ||M||  This file is part of HELM, an Hypertextual, Electronic        
+    ||A||  Library of Mathematics, developed at the Computer Science     
+    ||T||  Department of the University of Bologna, Italy.                     
+    ||I||                                                                 
+    ||T||  
+    ||A||  This file is distributed under the terms of the 
+    \   /  GNU General Public License Version 2        
+     \ /      
+      V_______________________________________________________________ *)
 
-definition log \def \lambda p,n.
-max n (\lambda x.leb (exp p x) n).
+include "arithmetics/exp.ma".
+include "arithmetics/minimization.ma".
+include "arithmetics/div_and_mod.ma".
 
-theorem le_exp_log: \forall p,n. O < n \to
-exp p (log p n) \le n.
-intros.
-apply leb_true_to_le.
-unfold log.
-apply (f_max_true (\lambda x.leb (exp p x) n)).
-apply (ex_intro ? ? O).
-split
-  [apply le_O_n
-  |apply le_to_leb_true.simplify.assumption
+definition log ≝ λp,n.
+  max n (λx.leb (exp p x) n).
+
+lemma tech_log : ∀p,n. 1<p → 0 < n →
+  log p n = max (S n) (λx.leb (exp p x) n).
+#p #n #lt1p #posn whd in ⊢ (???%); 
+cut (leb (exp p n) n = false) 
+  [@not_le_to_leb_false @lt_to_not_le /2/
+  |#Hleb >Hleb % 
+  ]
+qed. 
+   
+theorem le_exp_log: ∀p,n. O < n →
+  exp p (log p n) ≤ n.
+#a #n #posn @leb_true_to_le
+(* whd in match (log ??); *)
+@(f_max_true (λx.leb (exp a x) n)) %{0} % //
+@le_to_leb_true // 
+qed.
+
+theorem log_SO: ∀n. 1 < n → log n 1 = O.
+#n #lt1n @sym_eq @le_n_O_to_eq @(le_exp_to_le n) //
+qed.
+
+theorem lt_to_log_O: ∀n,m. O < m → m < n → log n m = O.
+#n #m #posm #ltnm @sym_eq @le_n_O_to_eq @le_S_S_to_le @(lt_exp_to_lt n) 
+  [@(le_to_lt_to_lt ? m) //
+  |normalize in ⊢ (??%); <plus_n_O @(le_to_lt_to_lt ? m) //
+   @le_exp_log //
   ]
 qed.
 
-theorem log_SO: \forall n. S O < n \to log n (S O) = O.
-intros.
-apply sym_eq.apply le_n_O_to_eq.
-apply (le_exp_to_le n)
-  [assumption
-  |simplify in ⊢ (? ? %).
-   apply le_exp_log.
-   apply le_n
-  ]
-qed.
-
-theorem lt_to_log_O: \forall n,m. O < m \to m < n \to log n m = O.
-intros.
-apply sym_eq.apply le_n_O_to_eq.
-apply le_S_S_to_le.
-apply (lt_exp_to_lt n)
-  [apply (le_to_lt_to_lt ? m);assumption
-  |simplify in ⊢ (? ? %).
-   rewrite < times_n_SO.
-   apply (le_to_lt_to_lt ? m)
-    [apply le_exp_log.assumption
-    |assumption
+theorem lt_log_n_n: ∀p, n. 1 < p → O < n → log p n < n.
+#p #n #lt1p #posn
+cut (log p n ≤ n)
+  [whd in match (log ??); @le_max_n
+  |#Hcut elim (le_to_or_lt_eq ? ? Hcut) // 
+   #Hn @False_ind @(absurd … (exp p n ≤ n))
+    [<Hn in ⊢ (?(??%)?); @le_exp_log //
+    |@lt_to_not_le @lt_m_exp_nm //
     ]
   ]
 qed.
 
-theorem lt_log_n_n: \forall p, n. S O < p \to O < n \to log p n < n.
-intros.
-cut (log p n \le n)
-  [elim (le_to_or_lt_eq ? ? Hcut)
-    [assumption
-    |absurd (exp p n \le n)
-      [rewrite < H2 in ⊢ (? (? ? %) ?).
-       apply le_exp_log.
-       assumption
-      |apply lt_to_not_le.
-       apply lt_m_exp_nm.
-       assumption
-      ]
+theorem lt_O_log: ∀p, n. 1 < n → p ≤ n → O < log p n.
+#p #n #lt1p #lepn whd in match (log ??);
+@not_lt_to_le % #H lapply (lt_max_to_false ??? lt1p H) 
+<exp_n_1 >(le_to_leb_true … lepn) #H destruct
+qed.
+
+theorem le_log_n_n: ∀p,n. 1 < p → log p n ≤ n.
+#p #n #lt1p cases n [@le_n |#m @lt_to_le @lt_log_n_n //]
+qed.
+
+axiom daemon : ∀P:Prop.P.
+
+theorem lt_exp_log: ∀p,n. 1 < p → n < exp p (S (log p n)).
+#p #n #lt1p cases n
+  [normalize <plus_n_O @lt_to_le // 
+  |#m @not_le_to_lt @leb_false_to_not_le
+   @(lt_max_to_false ? (S(S m)) (S (log p (S m))))
+    [@le_S_S @lt_log_n_n //
+    |<tech_log //
+    ] 
+  ] 
+qed. 
+
+theorem log_times1: ∀p,n,m. 1 < p → O < n → O < m →
+  log p (n*m) ≤ S(log p n+log p m). 
+#p #n #m #lt1p #posn #posm  
+whd in ⊢ (?(%??)?); @f_false_to_le_max
+  [%{O} % 
+    [>(times_n_O 0) in ⊢ (?%%); @lt_times // 
+    |@le_to_leb_true normalize >(times_n_O 0) in ⊢ (?%%); @lt_times //
     ]
-  |unfold log.apply le_max_n
-  ]
-qed.
-
-theorem lt_O_log: \forall p,n. O < n \to p \le n \to O < log p n.
-intros.
-unfold log.
-apply not_lt_to_le.
-intro.
-apply (leb_false_to_not_le ? ? ? H1).
-rewrite > (exp_n_SO p).
-apply (lt_max_to_false ? ? ? H2).
-assumption.
-qed.
-
-theorem le_log_n_n: \forall p,n. S O < p \to log p n \le n.
-intros.
-cases n
-  [apply le_n
-  |apply lt_to_le.
-   apply lt_log_n_n
-    [assumption|apply lt_O_S]
-  ]
-qed.
-
-theorem lt_exp_log: \forall p,n. S O < p \to n < exp p (S (log p n)).
-intros.cases n
-  [simplify.rewrite < times_n_SO.apply lt_to_le.assumption
-  |apply not_le_to_lt.
-   apply leb_false_to_not_le.
-   apply (lt_max_to_false ? (S n1) (S (log p (S n1))))
-    [apply le_S_S.apply le_n
-    |apply lt_log_n_n
-      [assumption|apply lt_O_S]
-    ]
-  ]
-qed.
-
-theorem log_times1: \forall p,n,m. S O < p \to O < n \to O < m \to
-log p (n*m) \le S(log p n+log p m).
-intros.
-unfold in ⊢ (? (% ? ?) ?).
-apply f_false_to_le_max
-  [apply (ex_intro ? ? O).
-   split
-    [apply le_O_n
-    |apply le_to_leb_true.
-     simplify.
-     rewrite > times_n_SO.
-     apply le_times;assumption
-    ]
-  |intros.
-   apply lt_to_leb_false.
-   apply (lt_to_le_to_lt ? ((exp p (S(log p n)))*(exp p (S(log p m)))))
-    [apply lt_times;apply lt_exp_log;assumption
-    |rewrite < exp_plus_times.
-     apply le_exp
-      [apply lt_to_le.assumption
-      |simplify.
-       rewrite < plus_n_Sm.
-       assumption
-      ]
+  |#i #Hm @lt_to_leb_false
+   @(lt_to_le_to_lt ? ((exp p (S(log p n)))*(exp p (S(log p m)))))
+    [@lt_times @lt_exp_log //
+    |<exp_plus_times @le_exp [@lt_to_le //]
+     normalize <plus_n_Sm //
     ]
   ]
 qed.
   
-theorem log_times: \forall p,n,m.S O < p \to log p (n*m) \le S(log p n+log p m).
-intros.
-cases n
-  [apply le_O_n
-  |cases m
-    [rewrite < times_n_O.
-     apply le_O_n
-    |apply log_times1
-      [assumption
-      |apply lt_O_S
-      |apply lt_O_S
-      ]
-    ]
-  ]
+theorem log_times: ∀p,n,m. 1 < p → 
+  log p (n*m) ≤ S(log p n+log p m).
+#p #n #m #lt1p cases n // -n #n cases m 
+  [<times_n_O @le_O_n |-m #m @log_times1 //]
 qed.
 
-theorem log_times_l: \forall p,n,m.O < n \to O < m \to S O < p \to 
-log p n+log p m \le log p (n*m) .
-intros.
-unfold log in ⊢ (? ? (% ? ?)).
-apply f_m_to_le_max
-  [elim H
-    [rewrite > log_SO
-      [simplify.
-       rewrite < plus_n_O.
-       apply le_log_n_n.
-       assumption
-      |assumption
-      ]
-    |elim H1
-      [rewrite > log_SO
-        [rewrite < plus_n_O.
-         rewrite < times_n_SO.
-         apply le_log_n_n.
-         assumption
-        |assumption
-        ]
-      |apply (trans_le ? (S n1 + S n2))
-        [apply le_plus;apply le_log_n_n;assumption
-        |simplify.
-         apply le_S_S.
-         rewrite < plus_n_Sm.
-         change in ⊢ (? % ?) with ((S n1)+n2).
-         rewrite > sym_plus.
-         apply le_plus_r.
-         change with (n1 < n1*S n2).
-         rewrite > times_n_SO in ⊢ (? % ?).
-         apply lt_times_r1
-          [assumption
-          |apply le_S_S.assumption
-          ]
+theorem log_times_l: ∀p,n,m.O < n → O < m → 1 < p → 
+  log p n+log p m ≤ log p (n*m).
+#p #n #m #posn #posm #lt1p whd in ⊢ (??(%??));
+@true_to_le_max
+  [cases posn
+    [>(log_SO … lt1p) >commutative_times <times_n_1 @lt_log_n_n //
+    |-n #n #posn cases posm
+      [>(log_SO … lt1p) < plus_n_O <times_n_1 @lt_log_n_n //
+      |#m1 #lem1 @(transitive_le ? (S n + S m1))
+        [@le_S_S @le_plus // @le_S_S_to_le @lt_log_n_n // 
+        |@le_S_S >commutative_plus normalize >plus_n_Sm
+         @monotonic_le_plus_r >(times_n_1 n) in ⊢ (?%?); 
+         @monotonic_lt_times_r // @le_S_S //
         ]
       ]
     ]
-  |apply le_to_leb_true.
-   rewrite > exp_plus_times.
-   apply le_times;apply le_exp_log;assumption
+  |@le_to_leb_true >exp_plus_times @le_times @le_exp_log //
   ]
 qed.
 
-theorem log_exp: \forall p,n,m.S O < p \to O < m \to
-log p ((exp p n)*m)=n+log p m.
-intros.
-unfold log in ⊢ (? ? (% ? ?) ?).
-apply max_spec_to_max.
-unfold max_spec.
-split
-  [split
-    [elim n
-      [simplify.
-       rewrite < plus_n_O.
-       apply le_log_n_n.
-       assumption
-      |simplify.
-       rewrite > assoc_times.
-       apply (trans_le ? ((S(S O))*(p\sup n1*m)))
-        [apply le_S_times_SSO
-          [rewrite > (times_n_O O) in ⊢ (? % ?).
-           apply lt_times
-            [apply lt_O_exp.
-             apply lt_to_le.
-             assumption
-            |assumption
-            ]
-          |assumption
-          ]
-        |apply le_times
-          [assumption
-          |apply le_n
-          ]
-        ]
-      ]
-    |simplify.
-     apply le_to_leb_true.
-     rewrite > exp_plus_times.
-     apply le_times_r.
-     apply le_exp_log.
-     assumption
+theorem log_exp: ∀p,n,m. 1 < p → O < m →
+  log p ((exp p n)*m)=n+log p m.
+#p #n #m #lt1p #posm whd in ⊢ (??(%??)?);
+@max_spec_to_max %
+  [elim n
+    [<(exp_n_O p) >commutative_times <times_n_1
+     @lt_log_n_n //
+    |#a #Hind whd in ⊢ (?%?); 
+     @(lt_to_le_to_lt ? (S((p^a) *m))) [@le_S_S @Hind]
+     whd in match (exp ? (S a)); >(commutative_times ? p)
+     >associative_times >(times_n_1 (p^a * m)) in ⊢ (?%?);
+     >commutative_times in ⊢ (?%?); @monotonic_lt_times_l //
+     >(times_n_O 0) @lt_times // @lt_O_exp @lt_to_le //
     ]
-  |intros.
-   simplify.
-   apply lt_to_leb_false.
-   apply (lt_to_le_to_lt ? ((exp p n)*(exp p (S(log p m)))))
-    [apply lt_times_r1
-      [apply lt_O_exp.apply lt_to_le.assumption
-      |apply lt_exp_log.assumption
-      ]
-    |rewrite < exp_plus_times.
-     apply le_exp
-      [apply lt_to_le.assumption
-      |rewrite < plus_n_Sm.
-       assumption
-      ]
+  |@le_to_leb_true >exp_plus_times
+   @monotonic_le_times_r @le_exp_log //
+  |#i #Hi #Hm @lt_to_leb_false
+   @(lt_to_le_to_lt ? ((exp p n)*(exp p (S(log p m)))))
+    [@monotonic_lt_times_r [@lt_O_exp @lt_to_le // |@lt_exp_log //]
+    |<exp_plus_times @le_exp [@lt_to_le // |<plus_n_Sm //]
     ]
   ]
 qed.
 
-theorem eq_log_exp: \forall p,n.S O < p \to
-log p (exp p n)=n.
-intros.
-rewrite > times_n_SO in ⊢ (? ? (? ? %) ?).
-rewrite > log_exp
-  [rewrite > log_SO
-    [rewrite < plus_n_O.reflexivity
-    |assumption
-    ]
-  |assumption
-  |apply le_n
-  ]
+theorem eq_log_exp: ∀p,n. 1< p →
+  log p (exp p n)=n.
+#p #n #lt1p  >(times_n_1 (p^n)) in ⊢ (??(??%)?); >log_exp // >log_SO //
 qed.
 
-theorem log_exp1: \forall p,n,m.S O < p \to
-log p (exp n m) \le m*S(log p n).
-intros.elim m
-  [simplify in ⊢ (? (? ? %) ?).
-   rewrite > log_SO
-    [apply le_O_n
-    |assumption
-    ]
-  |simplify.
-   apply (trans_le ? (S (log p n+log p (n\sup n1))))
-    [apply log_times.assumption
-    |apply le_S_S.
-     apply le_plus_r.
-     assumption
-    ]
+theorem log_exp1: ∀p,n,m. 1 < p →
+  log p (exp n m) ≤ m*S(log p n).
+#p #n #m #lt1p elim m // -m #m #Hind
+@(transitive_le ? (S (log p n+log p (n\sup m))))
+  [whd in match (exp ??); >commutative_times @log_times //
+  |@le_S_S @monotonic_le_plus_r //
   ]
 qed.
     
-theorem log_exp2: \forall p,n,m.S O < p \to O < n \to
-m*(log p n) \le log p (exp n m).
-intros.
-apply le_S_S_to_le.
-apply (lt_exp_to_lt p)
-  [assumption
-  |rewrite > sym_times.
-   rewrite < exp_exp_times.
-   apply (le_to_lt_to_lt ? (exp n m))
-    [elim m
-      [simplify.apply le_n
-      |simplify.apply le_times
-        [apply le_exp_log.
-         assumption
-        |assumption
-        ]
-      ]
-    |apply lt_exp_log.
-     assumption
+theorem log_exp2: ∀p,n,m. 1 < p → 0 < n →
+  m*(log p n) ≤ log p (exp n m).
+#p #n #m #ltp1 #posn @le_S_S_to_le @(lt_exp_to_lt p)
+  [@lt_to_le //
+  |>commutative_times <exp_exp_times @(le_to_lt_to_lt ? (exp n m))
+    [elim m // -m #m #Hind whd in match (exp ??); @le_times // @le_exp_log //
+    |@lt_exp_log //
     ]
   ]
 qed.
 
-lemma le_log_plus: \forall p,n.S O < p \to log p n \leq log p (S n).
-intros;apply (bool_elim ? (leb (p*(exp p n)) (S n)))
-  [simplify;intro;rewrite > H1;simplify;apply (trans_le ? n)
-    [apply le_log_n_n;assumption
-    |apply le_n_Sn]
-  |intro;unfold log;simplify;rewrite > H1;simplify;apply le_max_f_max_g;
-   intros;apply le_to_leb_true;constructor 2;apply leb_true_to_le;assumption]
+lemma le_log_S: ∀p,n.1 < p → 
+  log p n ≤ log p (S n).
+#p #n #lt1p normalize cases (leb (exp p n) (S n)) normalize //
+@le_max_f_max_g #i #ltin #H @le_to_leb_true @le_S @leb_true_to_le //
 qed.
 
-theorem le_log: \forall p,n,m. S O < p \to n \le m \to 
-log p n \le log p m.
-intros.elim H1
-  [constructor 1
-  |apply (trans_le ? ? ? H3);apply le_log_plus;assumption]
+theorem le_log: ∀p,n,m. 1 < p → n ≤ m → 
+  log p n ≤ log p m.
+#p #n #m #lt1p #lenm elim lenm // -m #m #lenm #Hind
+@(transitive_le … Hind) @le_log_S // 
 qed.
          
-theorem log_div: \forall p,n,m. S O < p \to O < m \to m \le n \to
-log p (n/m) \le log p n -log p m.
-intros.
-apply le_plus_to_minus_r.
-apply (trans_le ? (log p ((n/m)*m)))
-  [apply log_times_l
-    [apply le_times_to_le_div
-      [assumption
-      |rewrite < times_n_SO.
-       assumption
+theorem log_div: ∀p,n,m. 1 < p → O < m → m ≤ n →
+  log p (n/m) ≤ log p n -log p m.
+#p #n #m #lt1p #posn #lemn
+@le_plus_to_minus_r @(transitive_le ? (log p ((n/m)*m)))
+  [@log_times_l // @le_times_to_le_div //
+  |@le_log //
+  ]
+qed.
+
+theorem log_n_n: ∀n. 1 < n → log n n = 1.
+#n #lt1n >(exp_n_1 n) in ⊢ (??(??%)?);
+>(times_n_1 (n^1)) in ⊢ (??(??%)?); >log_exp //
+qed.
+
+theorem log_i_2n: ∀n,i. 1 < n → n < i → i ≤ 2*n →
+  log i (2*n) = 1.
+#n #i #lt1n #ltni #lei
+cut (∀a,b. a≤b → b≤a → a=b)
+  [#a #b #leab #leba cases (le_to_or_lt_eq … leab)
+    [#ltab @False_ind @(absurd ? ltab) @le_to_not_lt // | //]] #Hcut
+@Hcut  
+  [@not_lt_to_le % #H
+   @(absurd ?? (lt_to_not_le (2 * n) (exp i 2) ?)) 
+    [@(transitive_le ? (exp i (log i (2*n))))
+      [@le_exp // @(ltn_to_ltO ? ? ltni)
+      |@le_exp_log >(times_n_O O) in ⊢ (?%?); @lt_times // @lt_to_le //
       ]
-    |assumption
-    |assumption
+    |>exp_2 @lt_times @(le_to_lt_to_lt ? n) // 
     ]
-  |apply le_log
-    [assumption
-    |rewrite > (div_mod n m) in ⊢ (? ? %)
-      [apply le_plus_n_r
-      |assumption
-      ]
+  |@(transitive_le ? (log i i))
+    [<(log_n_n i) in ⊢ (?%?); // @(transitive_lt … lt1n) //  
+    |@le_log // @(transitive_lt … lt1n) // 
     ]
   ]
 qed.
 
-theorem log_n_n: \forall n. S O < n \to log n n = S O.
-intros.
-rewrite > exp_n_SO in ⊢ (? ? (? ? %) ?).
-rewrite > times_n_SO in ⊢ (? ? (? ? %) ?).
-rewrite > log_exp
-  [rewrite > log_SO
-    [reflexivity
-    |assumption
-    ]
-  |assumption
-  |apply le_n
-  ]
+theorem exp_n_O: ∀n. O < n → exp O n = O.
+#n #posn @(lt_O_n_elim ? posn) normalize // 
 qed.
 
-theorem log_i_SSOn: \forall n,i. S O < n \to n < i \to i \le ((S(S O))*n) \to
-log i ((S(S O))*n) = S O.
-intros.
-apply antisymmetric_le
-  [apply not_lt_to_le.intro.
-   apply (lt_to_not_le ((S(S O)) * n) (exp i (S(S O))))
-    [rewrite > exp_SSO.
-     apply lt_times
-      [apply (le_to_lt_to_lt ? n);assumption
-      |assumption
-      ]
-    |apply (trans_le ? (exp i (log i ((S(S O))*n))))
-      [apply le_exp
-        [apply (ltn_to_ltO ? ? H1)
-        |assumption
-        ]
-      |apply le_exp_log.
-       rewrite > (times_n_O O) in ⊢ (? % ?).
-       apply lt_times
-        [apply lt_O_S
-        |apply lt_to_le.assumption
-        ]
-      ]
-    ]
-  |apply (trans_le ? (log i i))
-    [rewrite < (log_n_n i) in ⊢ (? % ?)
-      [apply le_log
-        [apply (trans_lt ? n);assumption
-        |apply le_n
-        ]
-      |apply (trans_lt ? n);assumption
-      ]
-    |apply le_log
-      [apply (trans_lt ? n);assumption
-      |assumption
-      ]
-    ]
-  ]
-qed.
-
-theorem exp_n_O: \forall n. O < n \to exp O n = O.
-intros.apply (lt_O_n_elim ? H).intros.
-simplify.reflexivity.
-qed.
-
-(*
-theorem tech1: \forall n,i.O < n \to
-(exp (S n) (S(S i)))/(exp n (S i)) \le ((exp n i) + (exp (S n) (S i)))/(exp n i).
-intros.
-simplify in ⊢ (? (? ? %) ?).
-rewrite < eq_div_div_div_times
-  [apply monotonic_div
-    [apply lt_O_exp.assumption
-    |apply le_S_S_to_le.
-     apply lt_times_to_lt_div.
-     change in ⊢ (? % ?) with ((exp (S n) (S i)) + n*(exp (S n) (S i))).
-      
-      
-  |apply (trans_le ? ((n)\sup(i)*(S n)\sup(S i)/(n)\sup(S i)))
-    [apply le_times_div_div_times.
-     apply lt_O_exp.assumption
-    |apply le_times_to_le_div2
-      [apply lt_O_exp.assumption
-      |simplify.
-
-theorem tech1: \forall a,b,n,m.O < m \to
-n/m \le b \to (a*n)/m \le a*b.
-intros.
-apply le_times_to_le_div2
-  [assumption
-  |
-
-theorem tech2: \forall n,m. O < n \to 
-(exp (S n) m) / (exp n m) \le (n + m)/n.
-intros.
-elim m
-  [rewrite < plus_n_O.simplify.
-   rewrite > div_n_n.apply le_n
-  |apply le_times_to_le_div
-    [assumption
-    |apply (trans_le ? (n*(S n)\sup(S n1)/(n)\sup(S n1)))
-      [apply le_times_div_div_times.
-       apply lt_O_exp
-      |simplify in ⊢ (? (? ? %) ?).
-       rewrite > sym_times in ⊢ (? (? ? %) ?). 
-       rewrite < eq_div_div_div_times
-        [apply le_times_to_le_div2
-          [assumption
-          |
-      
-      
-theorem le_log_sigma_p:\forall n,m,p. O < m \to S O < p \to
-log p (exp n m) \le sigma_p n (\lambda i.true) (\lambda i. (m / i)).
-intros.
-elim n
-  [rewrite > exp_n_O
-    [simplify.apply le_n
-    |assumption
-    ]
-  |rewrite > true_to_sigma_p_Sn
-    [apply (trans_le ? (m/n1+(log p (exp n1 m))))
-      [
-*)
-*)

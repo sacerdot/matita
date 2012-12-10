@@ -314,46 +314,45 @@ theorem bigop_distr: ∀n,p,B,nil.∀R:Dop B nil.∀f,a.
   ]
 qed.
   
-(* Sigma e Pi 
+(* Sigma e Pi *)
 
-
-notation "Σ_{ ident i < n | p } f"
+notation "∑_{ ident i < n | p } f"
   with precedence 80
-for @{'bigop $n plus 0 (λ${ident i}.p) (λ${ident i}. $f)}.
+for @{'bigop $n plus 0 (λ${ident i}. $p) (λ${ident i}. $f)}.
 
-notation "Σ_{ ident i < n } f"
+notation "∑_{ ident i < n } f"
   with precedence 80
 for @{'bigop $n plus 0 (λ${ident i}.true) (λ${ident i}. $f)}.
 
-notation "Σ_{ ident j ∈ [a,b[ } f"
+notation "∑_{ ident j ∈ [a,b[ } f"
   with precedence 80
 for @{'bigop ($b-$a) plus 0 (λ${ident j}.((λ${ident j}.true) (${ident j}+$a)))
   (λ${ident j}.((λ${ident j}.$f)(${ident j}+$a)))}.
   
-notation "Σ_{ ident j ∈ [a,b[ | p } f"
+notation "∑_{ ident j ∈ [a,b[ | p } f"
   with precedence 80
 for @{'bigop ($b-$a) plus 0 (λ${ident j}.((λ${ident j}.$p) (${ident j}+$a)))
   (λ${ident j}.((λ${ident j}.$f)(${ident j}+$a)))}.
  
-notation "Π_{ ident i < n | p} f"
+notation "∏_{ ident i < n | p} f"
   with precedence 80
 for @{'bigop $n times 1 (λ${ident i}.$p) (λ${ident i}. $f)}.
  
-notation "Π_{ ident i < n } f"
+notation "∏_{ ident i < n } f"
   with precedence 80
 for @{'bigop $n times 1 (λ${ident i}.true) (λ${ident i}. $f)}.
 
-notation "Π_{ ident j ∈ [a,b[ } f"
+notation "∏_{ ident j ∈ [a,b[ } f"
   with precedence 80
 for @{'bigop ($b-$a) times 1 (λ${ident j}.((λ${ident j}.true) (${ident j}+$a)))
   (λ${ident j}.((λ${ident j}.$f)(${ident j}+$a)))}.
   
-notation "Π_{ ident j ∈ [a,b[ | p } f"
+notation "∏_{ ident j ∈ [a,b[ | p } f"
   with precedence 80
 for @{'bigop ($b-$a) times 1 (λ${ident j}.((λ${ident j}.$p) (${ident j}+$a)))
   (λ${ident j}.((λ${ident j}.$f)(${ident j}+$a)))}.
 
-*)
+
 (*
     
 definition p_ord_times \def

@@ -140,6 +140,13 @@ theorem f_max_true : ∀ f.∀n.
 #Hall * #x * #ltx #fx @False_ind @(absurd … fx) >Hall /2/
 qed.
 
+theorem f_false_to_le_max: ∀f,n,p. (∃i:nat.i<n∧f i=true) →
+  (∀m. p < m → f m = false) → max n f ≤ p.
+#f #n #p #H1 #H2 @not_lt_to_le % #H3
+@(absurd ?? not_eq_true_false) <(H2 ? H3) @sym_eq
+@(f_max_true ? n H1)
+qed.
+
 (* minimization *)
  
 (* min k b f is the minimun i, b ≤ i < b + k s.t. f i;  
@@ -295,6 +302,7 @@ min n b g ≤ min n b f.
   [>ext //
   |(cases (g b)) normalize /2/ @Hind #i #ltb #ltim #fi
     @ext /2/
+  ]
 qed.
 
 theorem f_min_true : ∀ f.∀n,b.
