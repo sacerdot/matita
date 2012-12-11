@@ -18,12 +18,17 @@ include "term.ma".
 
 (* Policy: pointer step metavariables: c *)
 (* Note: this is a step of a path in the tree representation of a term:
-         rc (rectus)  : proceed on the argument of an abstraction
+         rc (rectus)  : not needed (we use sn instead)
          sn (sinister): proceed on the left argument of an application
+                        or on the argument of an abstraction (this would be rc)
          dx (dexter)  : proceed on the right argument of an application
 *)
+(* Remark: the following breaks destruct because of δ-expansions
+           definition ptr_step: Type[0] ≝ bool.
+           definition sn: bool ≝ true.
+           definition dx: bool ≝ false.
+*)
 inductive ptr_step: Type[0] ≝
-| rc: ptr_step
 | sn: ptr_step
 | dx: ptr_step
 .
@@ -45,7 +50,7 @@ lemma in_head_ind: ∀R:predicate ptr. R (◊) →
 qed-.
 
 definition compatible_rc: predicate (ptr→relation term) ≝ λR.
-                          ∀p,A1,A2. R p A1 A2 → R (rc::p) (𝛌.A1) (𝛌.A2).
+                          ∀p,A1,A2. R p A1 A2 → R (sn::p) (𝛌.A1) (𝛌.A2).
 
 definition compatible_sn: predicate (ptr→relation term) ≝ λR.
                           ∀p,B1,B2,A. R p B1 B2 → R (sn::p) (@B1.A) (@B2.A).

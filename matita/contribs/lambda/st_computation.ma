@@ -133,7 +133,7 @@ lemma st_inv_lsreds_is_le: ∀M,N. M ⓢ⥤* N →
 | #s #M #A1 #A2 #H #_ * #r #HA12 #Hr
   lapply (lhap_inv_lsreds … H) #HM
   lapply (lhap_inv_head … H) -H #Hs
-  lapply (lsreds_trans … HM (rc:::r) (𝛌.A2) ?) /2 width=1/ -A1 #HM
+  lapply (lsreds_trans … HM (sn:::r) (𝛌.A2) ?) /2 width=1/ -A1 #HM
   @(ex2_intro … HM) -M -A2 /3 width=1/
 | #s #M #B1 #B2 #A1 #A2 #H #_ #_ * #rb #HB12 #Hrb * #ra #HA12 #Hra
   lapply (lhap_inv_lsreds … H) #HM
@@ -149,15 +149,39 @@ lemma st_step_dx: ∀p,M,M2. M ⇀[p] M2 → ∀M1. M1 ⓢ⥤* M → M1 ⓢ⥤* 
 [ #B #A #M1 #H
   elim (st_inv_appl … H ???) -H [4: // |2,3: skip ] #s #B1 #M #HM1 #HB1 #H (**) (* simplify line *)
   elim (st_inv_abst … H ??) -H [3: // |2: skip ] #r #A1 #HM #HA1 (**) (* simplify line *)
-  @(st_step_sn … ([⬐B1]A1) … (s@(dx:::r)@(◊::◊))) /2 width=1/ -B -A
-  @(lhap_trans … HM1) -M1
-  @(lhap_step_dx … (@B1.𝛌.A1)) // -s /2 width=1/
+  lapply (lhap_trans … HM1 … (dx:::r) (@B1.𝛌.A1) ?) /2 width=1/ -M #HM1
+  lapply (lhap_step_dx … HM1 (◊) ([⬐B1]A1) ?) -HM1 // #HM1
+  @(st_step_sn … HM1) /2 width=1/
 | #p #A #A2 #_ #IHA2 #M1 #H
   elim (st_inv_abst … H ??) -H [3: // |2: skip ] /3 width=4/ (**) (* simplify line *)
 | #p #B #B2 #A #_ #IHB2 #M1 #H
   elim (st_inv_appl … H ???) -H [4: // |2,3: skip ] /3 width=6/ (**) (* simplify line *)
 | #p #B #A #A2 #_ #IHA2 #M1 #H
   elim (st_inv_appl … H ???) -H [4: // |2,3: skip ] /3 width=6/ (**) (* simplify line *)
+]
+qed-.
+
+lemma st_lhap1_swap: ∀p,N1,N2. N1 ⓗ⇀[p] N2 → ∀M1. M1 ⓢ⥤* N1 →
+                     ∃∃q,M2. M1 ⓗ⇀[q] M2 & M2 ⓢ⥤* N2.
+#p #N1 #N2 #H elim H -p -N1 -N2
+[ #D #C #M1 #H
+  elim (st_inv_appl … H ???) -H [4: // |2,3: skip ] #s #D1 #N #HM1 #HD1 #H (**) (* simplify line *)
+  elim (st_inv_abst … H ??) -H [3: // |2: skip ] #r #C1 #HN #HC1 (**) (* simplify line *)
+  lapply (lhap_trans … HM1 … (dx:::r) (@D1.𝛌.C1) ?) /2 width=1/ -N #HM1
+  lapply (lhap_step_dx … HM1 (◊) ([⬐D1]C1) ?) -HM1 // #HM1
+  elim (lhap_inv_pos … HM1 ?) -HM1
+  [2: >length_append normalize in ⊢ (??(??%)); // ]
+  #q #r #M #_ #HM1 #HM -s
+  @(ex2_2_intro … HM1) -M1
+  @(st_step_sn … HM) /2 width=1/
+| #p #D #C1 #C2 #_ #IHC12 #M1 #H -p
+  elim (st_inv_appl … H ???) -H [4: // |2,3: skip ] #s #B #A1 #HM1 #HBD #HAC1 (**) (* simplify line *)
+  elim (IHC12 … HAC1) -C1 #p #C1 #HAC1 #HC12
+  lapply (lhap_step_dx … HM1 (dx::p) (@B.C1) ?) -HM1 /2 width=1/ -A1 #HM1
+  elim (lhap_inv_pos … HM1 ?) -HM1
+  [2: >length_append normalize in ⊢ (??(??%)); // ]
+  #q #r #M #_ #HM1 #HM -p -s
+  @(ex2_2_intro … HM1) -M1 /2 width=6/
 ]
 qed-.
 
@@ -176,4 +200,13 @@ theorem lsreds_standard: ∀s,M,N. M ⇀*[s] N →
                          ∃∃r. M ⇀*[r] N & is_le r.
 #s #M #N #H
 @st_inv_lsreds_is_le /2 width=2/
+qed-.
+
+theorem lsreds_lhap1_swap: ∀s,M1,N1. M1 ⇀*[s] N1 → ∀p,N2. N1 ⓗ⇀[p] N2 →
+                           ∃∃q,r,M2. M1 ⓗ⇀[q] M2 & M2 ⇀*[r] N2 & is_le (q::r).
+#s #M1 #N1 #HMN1 #p #N2 #HN12
+lapply (st_lsreds … HMN1) -s #HMN1
+elim (st_lhap1_swap … HN12 … HMN1) -p -N1 #q #M2 #HM12 #HMN2
+elim (st_inv_lsreds_is_le … HMN2) -HMN2 #r #HMN2 #Hr
+lapply (lhap1_inv_head … HM12) /3 width=7/
 qed-.

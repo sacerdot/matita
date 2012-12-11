@@ -46,6 +46,11 @@ lemma lhap_inv_step_rc: ∀p,M1,M2. M1 ⓗ⇀*[p::◊] M2 → M1 ⓗ⇀[p] M2.
 /2 width=1 by lstar_inv_step/
 qed-.
 
+lemma lhap_inv_pos: ∀s,M1,M2. M1 ⓗ⇀*[s] M2 → 0 < |s| →
+                    ∃∃p,r,M. p::r = s & M1 ⓗ⇀[p] M & M ⓗ⇀*[r] M2.
+/2 width=1 by lstar_inv_pos/
+qed-.
+
 lemma lhap_compatible_dx: ho_compatible_dx lhap.
 /3 width=1/
 qed.

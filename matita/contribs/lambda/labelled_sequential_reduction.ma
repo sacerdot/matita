@@ -23,7 +23,7 @@ include "multiplicity.ma".
 *)
 inductive lsred: ptr → relation term ≝
 | lsred_beta   : ∀B,A. lsred (◊) (@B.𝛌.A) ([⬐B]A)
-| lsred_abst   : ∀p,A1,A2. lsred p A1 A2 → lsred (rc::p) (𝛌.A1) (𝛌.A2) 
+| lsred_abst   : ∀p,A1,A2. lsred p A1 A2 → lsred (sn::p) (𝛌.A1) (𝛌.A2) 
 | lsred_appl_sn: ∀p,B1,B2,A. lsred p B1 B2 → lsred (sn::p) (@B1.A) (@B2.A)
 | lsred_appl_dx: ∀p,B,A1,A2. lsred p A1 A2 → lsred (dx::p) (@B.A1) (@B.A2)
 .
@@ -55,22 +55,13 @@ lemma lsred_inv_nil: ∀p,M,N. M ⇀[p] N → ◊ = p →
 ]
 qed-.
 
-lemma lsred_inv_rc: ∀p,M,N. M ⇀[p] N → ∀q. rc::q = p →
-                    ∃∃A1,A2. A1 ⇀[q] A2 & 𝛌.A1 = M & 𝛌.A2 = N.
-#p #M #N * -p -M -N
-[ #B #A #q #H destruct
-| #p #A1 #A2 #HA12 #q #H destruct /2 width=5/
-| #p #B1 #B2 #A #_ #q #H destruct
-| #p #B #A1 #A2 #_ #q #H destruct
-]
-qed-.
-
 lemma lsred_inv_sn: ∀p,M,N. M ⇀[p] N → ∀q. sn::q = p →
+                    (∃∃A1,A2. A1 ⇀[q] A2 & 𝛌.A1 = M & 𝛌.A2 = N) ∨
                     ∃∃B1,B2,A. B1 ⇀[q] B2 & @B1.A = M & @B2.A = N.
 #p #M #N * -p -M -N
 [ #B #A #q #H destruct
-| #p #A1 #A2 #_ #q #H destruct
-| #p #B1 #B2 #A #HB12 #q #H destruct /2 width=6/
+| #p #A1 #A2 #HA12 #q #H destruct /3 width=5/
+| #p #B1 #B2 #A #HB12 #q #H destruct /3 width=6/
 | #p #B #A1 #A2 #_ #q #H destruct
 ]
 qed-.
@@ -132,8 +123,14 @@ qed.
 theorem lsred_mono: ∀p. singlevalued … (lsred p).
 #p #M #N1 #H elim H -p -M -N1
 [ #B #A #N2 #H elim (lsred_inv_nil … H ?) -H // #D #C #H #HN2 destruct //
-| #p #A1 #A2 #_ #IHA12 #N2 #H elim (lsred_inv_rc … H ??) -H [3: // |2: skip ] #C1 #C2 #HC12 #H #HN2 destruct /3 width=1/ (**) (* simplify line *)
-| #p #B1 #B2 #A #_ #IHB12 #N2 #H elim (lsred_inv_sn … H ??) -H [3: // |2: skip ] #D1 #D2 #C #HD12 #H #HN2 destruct /3 width=1/ (**) (* simplify line *)
+| #p #A1 #A2 #_ #IHA12 #N2 #H elim (lsred_inv_sn … H ??) -H [4: // |2: skip ] * (**) (* simplify line *)
+  [ #C1 #C2 #HC12 #H #HN2 destruct /3 width=1/
+  | #D1 #D2 #C #_ #H destruct
+  ]
+| #p #B1 #B2 #A #_ #IHB12 #N2 #H elim (lsred_inv_sn … H ??) -H [4: // |2: skip ] * (**) (* simplify line *)
+  [ #C1 #C2 #_ #H destruct
+  | #D1 #D2 #C #HD12 #H #HN2 destruct /3 width=1/
+  ]
 | #p #B #A1 #A2 #_ #IHA12 #N2 #H elim (lsred_inv_dx … H ??) -H [3: // |2: skip ] #D #C1 #C2 #HC12 #H #HN2 destruct /3 width=1/ (**) (* simplify line *)
 ]
 qed-.

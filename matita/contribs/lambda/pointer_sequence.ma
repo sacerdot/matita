@@ -57,7 +57,7 @@ theorem is_head_is_le_trans: ∀r. is_head r → ∀s. is_le s → is_le (r@s).
 qed.
 
 definition ho_compatible_rc: predicate (pseq→relation term) ≝ λR.
-                             ∀s,A1,A2. R s A1 A2 → R (rc:::s) (𝛌.A1) (𝛌.A2).
+                             ∀s,A1,A2. R s A1 A2 → R (sn:::s) (𝛌.A1) (𝛌.A2).
 
 definition ho_compatible_sn: predicate (pseq→relation term) ≝ λR.
                              ∀s,B1,B2,A. R s B1 B2 → R (sn:::s) (@B1.A) (@B2.A).
