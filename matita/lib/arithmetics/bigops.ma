@@ -20,12 +20,12 @@ definition sameF_p: nat → (nat → bool) →∀A.relation(nat→A)  ≝
 
 lemma sameF_upto_le: ∀A,f,g,n,m. 
  n ≤m → sameF_upto m A f g → sameF_upto n A f g.
-#A #f #g #n #m #lenm #samef #i #ltin @samef /2/
+#A #f #g #n #m #lenm #samef #i #ltin @samef /2 by lt_to_le_to_lt/
 qed.
 
 lemma sameF_p_le: ∀A,p,f,g,n,m. 
  n ≤m → sameF_p m p A f g → sameF_p n p A f g.
-#A #p #f #g #n #m #lenm #samef #i #ltin #pi @samef /2/
+#A #p #f #g #n #m #lenm #samef #i #ltin #pi @samef /2 by lt_to_le_to_lt/
 qed.
 
 (*
@@ -104,6 +104,25 @@ theorem pad_bigop: ∀k,n,p,B,nil,op.∀f:nat→B. n ≤ k →
   [@same_bigop #i #lti // >(not_le_to_leb_false …) /2/
   |#j #leup #Hind >bigop_Sfalse >(le_to_leb_true … leup) // 
   ] qed.
+  
+theorem pad_bigop1: ∀k,n,p,B,nil,op.∀f:nat→B. n ≤ k → 
+  (∀i. n ≤ i → i < k → p i = false) →
+  \big[op,nil]_{i < n | p i}(f i) 
+    = \big[op,nil]_{i < k | p i}(f i).
+#k #n #p #B #nil #op #f #lenk (elim lenk) 
+  [#_ @same_bigop #i #lti // 
+  |#j #leup #Hind #Hfalse >bigop_Sfalse 
+    [@Hind #i #leni #ltij @Hfalse // @le_S //  
+    |@Hfalse // 
+    ] 
+  ] 
+qed.
+  
+theorem bigop_false: ∀n,B,nil,op.∀f:nat→B.
+  \big[op,nil]_{i < n | false }(f i) = nil.  
+#n #B #nil #op #f elim n // #n1 #Hind 
+>bigop_Sfalse // 
+qed.
 
 record Aop (A:Type[0]) (nil:A) : Type[0] ≝
   {op :2> A → A → A; 
@@ -111,6 +130,24 @@ record Aop (A:Type[0]) (nil:A) : Type[0] ≝
    nilr:∀a. op a nil = a;
    assoc: ∀a,b,c.op a (op b c) = op (op a b) c
   }.
+  
+theorem pad_bigop_nil: ∀k,n,p,B,nil.∀op:Aop B nil.∀f:nat→B. n ≤ k → 
+  (∀i. n ≤ i → i < k → p i = false ∨ f i = nil) →
+  \big[op,nil]_{i < n | p i}(f i) 
+    = \big[op,nil]_{i < k | p i}(f i).
+#k #n #p #B #nil #op #f #lenk (elim lenk) 
+  [#_ @same_bigop #i #lti // 
+  |#j #leup #Hind #Hfalse cases (true_or_false (p j)) #Hpj
+    [>bigop_Strue // 
+     cut (f j = nil) 
+      [cases (Hfalse j leup (le_n … )) // >Hpj #H destruct (H)] #Hfj
+     >Hfj >nill @Hind #i #leni #ltij
+     cases (Hfalse i leni (le_S … ltij)) /2/
+    |>bigop_Sfalse // @Hind #i #leni #ltij
+     cases (Hfalse i leni (le_S … ltij)) /2/
+    ]  
+  ]
+qed.
 
 theorem bigop_sum: ∀k1,k2,p1,p2,B.∀nil.∀op:Aop B nil.∀f,g:nat→B.
 op (\big[op,nil]_{i<k1|p1 i}(f i)) \big[op,nil]_{i<k2|p2 i}(g i) =
@@ -167,14 +204,15 @@ qed.
 
 theorem bigop_prod: ∀k1,k2,p1,p2,B.∀nil.∀op:Aop B nil.∀f: nat →nat → B.
 \big[op,nil]_{x<k1|p1 x}(\big[op,nil]_{i<k2|p2 x i}(f x i)) =
-  \big[op,nil]_{i<k1*k2|andb (p1 (div i k2)) (p2 (div i k2) (i \mod k2))}
-     (f (div i k2) (i \mod k2)).
+  \big[op,nil]_{i<k1*k2|andb (p1 (i/k2)) (p2 (i/k2) (i \mod k2))}
+     (f (i/k2) (i \mod k2)).
 #k1 #k2 #p1 #p2 #B #nil #op #f (elim k1) //
 #n #Hind cases(true_or_false (p1 n)) #Hp1
   [>bigop_Strue // >Hind >bigop_sum @same_bigop
-   #i #lti @leb_elim // #lei cut (i = n*k2+(i-n*k2)) /2/
+   #i #lti @leb_elim // #lei cut (i = n*k2+(i-n*k2)) /2 by plus_minus/
    #eqi [|#H] >eqi in ⊢ (???%);
-     >div_plus_times /2/ >Hp1 >(mod_plus_times …) /2/
+     >div_plus_times /2 by monotonic_lt_minus_l/ 
+     >Hp1 >(mod_plus_times …) /2 by refl, monotonic_lt_minus_l, eq_f/
   |>bigop_Sfalse // >Hind >(pad_bigop (S n*k2)) // @same_bigop
    #i #lti @leb_elim // #lei cut (i = n*k2+(i-n*k2)) /2/
    #eqi >eqi in ⊢ (???%); >div_plus_times /2/ 
@@ -248,7 +286,7 @@ qed.
 
 lemma sub_lt: ∀A,e,p,n,m. n ≤ m → 
   sub_hk (λx.x) (λx.x) A (mk_range A e n p) (mk_range A e m p).
-#A #e #f #n #m #lenm #i #lti #fi % // % /2/
+#A #e #f #n #m #lenm #i #lti #fi % // % /2 by lt_to_le_to_lt/
 qed. 
 
 theorem transitive_sub: ∀h1,k1,h2,k2,A,I,J,K. 
@@ -293,6 +331,54 @@ theorem bigop_iso: ∀n1,n2,p1,p2,B.∀nil.∀op:ACop B nil.∀f1,f2.
   ]
 qed.
 
+(* lemma div_mod_exchange: ∀i,n,m. i < n*m → i\n = i mod m. *)
+
+(* commutation *)
+theorem bigop_commute: ∀n,m,p11,p12,p21,p22,B.∀nil.∀op:ACop B nil.∀f.
+0 < n → 0 < m →
+(∀i,j. i < n → j < m → (p11 i ∧ p12 i j) = (p21 j ∧ p22 i j)) →
+\big[op,nil]_{i<n|p11 i}(\big[op,nil]_{j<m|p12 i j}(f i j)) =
+   \big[op,nil]_{j<m|p21 j}(\big[op,nil]_{i<n|p22 i j}(f i j)).
+#n #m #p11 #p12 #p21 #p22 #B #nil #op #f #posn #posm #Heq
+>bigop_prod >bigop_prod @bigop_iso 
+%{(λi.(i\mod m)*n + i/m)} %{(λi.(i\mod n)*m + i/n)} % 
+  [% 
+    [#i #lti #Heq (* whd in ⊢ (???(?(?%?)?)); *) @eq_f2
+      [@sym_eq @mod_plus_times /2 by lt_times_to_lt_div/
+      |@sym_eq @div_plus_times /2 by lt_times_to_lt_div/
+      ]
+    |#i #lti #Hi 
+     cut ((i\mod m*n+i/m)\mod n=i/m)
+      [@mod_plus_times @lt_times_to_lt_div //] #H1
+     cut ((i\mod m*n+i/m)/n=i \mod m)
+      [@div_plus_times @lt_times_to_lt_div //] #H2
+     %[%[@(lt_to_le_to_lt ? (i\mod m*n+n))
+          [whd >plus_n_Sm @monotonic_le_plus_r @lt_times_to_lt_div //
+          |>commutative_plus @(le_times (S(i \mod m)) m n n) // @lt_mod_m_m //
+          ]
+        |lapply (Heq (i/m) (i \mod m) ??)
+          [@lt_mod_m_m // |@lt_times_to_lt_div //|>Hi >H1 >H2 //]
+        ]
+      |>H1 >H2 //
+      ]
+    ]
+  |#i #lti #Hi 
+   cut ((i\mod n*m+i/n)\mod m=i/n)
+    [@mod_plus_times @lt_times_to_lt_div //] #H1
+   cut ((i\mod n*m+i/n)/m=i \mod n)
+    [@div_plus_times @lt_times_to_lt_div //] #H2
+   %[%[@(lt_to_le_to_lt ? (i\mod n*m+m))
+        [whd >plus_n_Sm @monotonic_le_plus_r @lt_times_to_lt_div //
+        |>commutative_plus @(le_times (S(i \mod n)) n m m) // @lt_mod_m_m //
+        ]
+      |lapply (Heq (i \mod n) (i/n) ??)
+        [@lt_times_to_lt_div // |@lt_mod_m_m // |>Hi >H1 >H2 //]
+      ]
+    |>H1 >H2 //
+    ]
+  ]
+qed.
+   
 (* distributivity *)
 
 record Dop (A:Type[0]) (nil:A): Type[0] ≝
@@ -313,7 +399,7 @@ theorem bigop_distr: ∀n,p,B,nil.∀R:Dop B nil.∀f,a.
   |>bigop_Sfalse // >bigop_Sfalse //
   ]
 qed.
-  
+
 (* Sigma e Pi *)
 
 notation "∑_{ ident i < n | p } f"

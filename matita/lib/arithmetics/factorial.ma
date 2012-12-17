@@ -15,11 +15,14 @@ let rec fact n ≝
   match n with 
   [ O ⇒ 1
   | S m ⇒ fact m * S m].
-
+  
 interpretation "factorial" 'fact n = (fact n).
 
+lemma factS: ∀n. (S n)! = (S n)*n!.
+#n >commutative_times // qed.
+
 theorem le_1_fact : ∀n. 1 ≤ n!.
-#n (elim n) normalize /2/ 
+#n (elim n) normalize /2 by lt_minus_to_plus/ 
 qed.
 
 theorem le_2_fact : ∀n. 1 < n → 2 ≤ n!.
@@ -38,7 +41,7 @@ theorem lt_n_fact_n: ∀n. 2 < n → n < n!.
 #n (cases n) 
   [#H @False_ind /2/ 
   |#m #lt2 normalize @(lt_to_le_to_lt ? (2*(S m))) //
-   @le_times // @le_2_fact /2/ 
+   @le_times // @le_2_fact /2 by lt_plus_to_lt_l/ 
 qed.
 
 (* approximations *)
@@ -79,118 +82,64 @@ cut (2^(2*(S n)) = 2^(2*n)*2*2) [>H //] #H1 >H1
      [@lt_to_le_to_lt_times //|>H // | //]
   ]
 qed.
-     
-(* a slightly better result 
-theorem fact3: \forall n.O < n \to
-(exp 2 (2*n))*(exp (fact n) 2) \le 2*n*fact (2*n).
-intros.
-elim H
-  [simplify.apply le_n
-  |rewrite > times_SSO.
-   rewrite > factS.
-   rewrite < times_exp.
-   change in ⊢ (? (? % ?) ?) with ((S(S O))*((S(S O))*(exp (S(S O)) ((S(S O))*n1)))).
-   rewrite > assoc_times.
-   rewrite > assoc_times in ⊢ (? (? ? %) ?).
-   rewrite < assoc_times in ⊢ (? (? ? (? ? %)) ?).
-   rewrite < sym_times in ⊢ (? (? ? (? ? (? % ?))) ?).
-   rewrite > assoc_times in ⊢ (? (? ? (? ? %)) ?).
-   apply (trans_le ? (((S(S O))*((S(S O))*((S n1)\sup((S(S O)))*((S(S O))*n1*((S(S O))*n1)!))))))
-    [apply le_times_r.
-     apply le_times_r.
-     apply le_times_r.
-     assumption
-    |rewrite > factS.
-     rewrite > factS.
-     rewrite < times_SSO.
-     rewrite > assoc_times in ⊢ (? ? %). 
-     apply le_times_r.
-     rewrite < assoc_times.
-     change in ⊢ (? (? (? ? %) ?) ?) with ((S n1)*((S n1)*(S O))).
-     rewrite < assoc_times in ⊢ (? (? % ?) ?).
-     rewrite < times_n_SO.
-     rewrite > sym_times in ⊢ (? (? (? % ?) ?) ?).
-     rewrite < assoc_times in ⊢ (? ? %).
-     rewrite < assoc_times in ⊢ (? ? (? % ?)).
-     apply le_times_r.
-     apply le_times_l.
-     apply le_S.apply le_n
+
+(* a sligtly better result *)
+theorem exp_to_fact2: ∀n.O < n →
+  (exp 2 (2*n))*(exp (fact n) 2) \le 2*n*fact (2*n).
+#n #posn elim posn
+  [@le_n
+  |#m #le1m #Hind 
+   cut (2*(S m) = S(S (2*m))) [normalize //] #H2 >H2 in ⊢ (?%?);
+   >factS <times_exp 
+   whd in match (exp 2 (S(S ?))); >(commutative_times ? 2) >associative_times
+   >associative_times in ⊢ (??%); @monotonic_le_times_r 
+   whd in match (exp 2 (S ?)); >(commutative_times ? 2) >associative_times
+   @(transitive_le ? (2*((2*m*(2*m)!)*(S m)^2)))
+    [@le_times [//] >commutative_times in ⊢ (?(??%)?); <associative_times
+     @le_times [@Hind |@le_n] 
+    |>exp_2 <associative_times <associative_times >commutative_times in ⊢ (??%);
+     @le_times [2:@le_n] >H2 >factS >commutative_times <associative_times 
+     @le_times //
     ]
   ]
 qed.
 
-theorem le_fact_10: fact (2*5) \le (exp 2 ((2*5)-2))*(fact 5)*(fact 5).
-simplify in \vdash (? (? %) ?).
-rewrite > factS in \vdash (? % ?).
-rewrite > factS in \vdash (? % ?).rewrite < assoc_times in \vdash(? % ?).
-rewrite > factS in \vdash (? % ?).rewrite < assoc_times in \vdash (? % ?).
-rewrite > factS in \vdash (? % ?).rewrite < assoc_times in \vdash (? % ?).
-rewrite > factS in \vdash (? % ?).rewrite < assoc_times in \vdash (? % ?).
-apply le_times_l.
-apply leb_true_to_le.reflexivity.
-qed.
+theorem le_fact_10: fact (2*5) ≤ (exp 2 ((2*5)-2))*(fact 5)*(fact 5).
+>factS in ⊢ (?%?); >factS in ⊢ (?%?); <associative_times in ⊢ (?%?);
+>factS in ⊢ (?%?); <associative_times in ⊢ (?%?);
+>factS in ⊢ (?%?); <associative_times in ⊢ (?%?);
+>factS in ⊢ (?%?); <associative_times in ⊢ (?%?);
+@le_times [2:%] @leb_true_to_le % 
+qed-.
 
-theorem ab_times_cd: \forall a,b,c,d.(a*b)*(c*d)=(a*c)*(b*d).
-intros.
-rewrite > assoc_times.
-rewrite > assoc_times.
-apply eq_f.
-rewrite < assoc_times.
-rewrite < assoc_times.
-rewrite > sym_times in \vdash (? ? (? % ?) ?).
-reflexivity.
+theorem ab_times_cd: ∀a,b,c,d.(a*b)*(c*d)=(a*c)*(b*d). 
+//
 qed.
 
 (* an even better result *)
-theorem lt_SSSSO_to_fact: \forall n.4<n \to
-fact (2*n) \le (exp 2 ((2*n)-2))*(fact n)*(fact n).
-intros.elim H
-  [apply le_fact_10
-  |rewrite > times_SSO.
-   change in \vdash (? ? (? (? (? ? %) ?) ?)) with (2*n1 - O);
-   rewrite < minus_n_O.
-   rewrite > factS.
-   rewrite > factS.
-   rewrite < assoc_times.
-   rewrite > factS.
-   apply (trans_le ? ((2*(S n1))*(2*(S n1))*(fact (2*n1))))
-    [apply le_times_l.
-     rewrite > times_SSO.
-     apply le_times_r.
-     apply le_n_Sn
-    |apply (trans_le ? (2*S n1*(2*S n1)*(2\sup(2*n1-2)*n1!*n1!)))
-      [apply le_times_r.assumption
-      |rewrite > assoc_times.
-       rewrite > ab_times_cd in \vdash (? (? ? %) ?).
-       rewrite < assoc_times.
-       apply le_times_l.
-       rewrite < assoc_times in \vdash (? (? ? %) ?).
-       rewrite > ab_times_cd.
-       apply le_times_l.
-       rewrite < exp_S.
-       rewrite < exp_S.
-       apply le_exp
-        [apply lt_O_S
-        |rewrite > eq_minus_S_pred.
-         rewrite < S_pred
-          [rewrite > eq_minus_S_pred.
-           rewrite < S_pred
-            [rewrite < minus_n_O.
-             apply le_n
-            |elim H1;simplify
-              [apply lt_O_S
-              |apply lt_O_S
-              ]
-            ]
-          |elim H1;simplify
-            [apply lt_O_S
-            |rewrite < plus_n_Sm.
-             rewrite < minus_n_O.
-             apply lt_O_S
-            ]
-          ]
+theorem lt_4_to_fact: ∀n.4<n →
+  fact (2*n) ≤ (exp 2 ((2*n)-2))*(fact n)*(fact n).
+#n #ltn elim ltn
+  [@le_fact_10
+  |#m #lem #Hind 
+   cut (2*(S m) = S(S (2*m))) [normalize //] #H2 >H2 
+   whd in match (minus (S(S ?)) 2); <minus_n_O
+   >factS >factS <associative_times >factS
+   @(transitive_le ? ((2*(S m))*(2*(S m))*(fact (2*m))))
+    [@le_times [2:@le_n] >H2 @le_times //
+    |@(transitive_le ? (2*S m*(2*S m)*(2\sup(2*m-2)*m!*m!)))
+      [@monotonic_le_times_r //
+      |>associative_times >ab_times_cd in ⊢ (?(??%)?);
+       <associative_times @le_times [2:@le_n] 
+       <associative_times in ⊢ (?(??%)?);
+       >ab_times_cd @le_times [2:@le_n] >commutative_times
+       >(commutative_times 2) @(le_exp (S(S ((2*m)-2)))) [//]
+       >eq_minus_S_pred >S_pred 
+        [>eq_minus_S_pred >S_pred [<minus_n_O @le_n |elim lem //]
+        |elim lem [//] #m0 #le5m0 #Hind 
+         normalize <plus_n_Sm //
         ]
       ]
     ]
   ]
-qed. *)
+qed. 

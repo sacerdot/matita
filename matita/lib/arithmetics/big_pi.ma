@@ -48,6 +48,20 @@ theorem times_pi: ∀n,p,f,g.
   ]
 qed.
 
+theorem pi_1: ∀n,p. 
+  ∏_{i < n | p i} 1 = 1.
+#n #p elim n // #n1 #Hind cases (true_or_false (p n1)) #Hc 
+  [>bigop_Strue >Hind // |>bigop_Sfalse // ]
+qed.
+
+theorem exp_pi: ∀n,m,p,f. 
+  ∏_{i < n | p i}(exp (f i) m) = exp (∏_{i < n | p i}(f i)) m.
+#n #m #p #f elim m
+  [@pi_1
+  |#m1 #Hind >times_pi >Hind %
+  ]
+qed.
+
 (*
 theorem true_to_pi_p_Sn: ∀n,p,g.
   p n = true \to pi_p (S n) p g = (g n)*(pi_p n p g).
@@ -304,28 +318,6 @@ elim n
   ]
 qed.
 
-theorem pi_p_SO: \forall n,p. 
-pi_p n p (\lambda i.S O) = S O.
-intros.elim n
-  [reflexivity
-  |simplify.elim (p n1)
-    [simplify.rewrite < plus_n_O.assumption
-    |simplify.assumption
-    ]
-  ]
-qed.
-
-theorem exp_pi_p: \forall n,m,p,f. 
-pi_p n p (\lambda x.exp (f x) m) = exp (pi_p n p f) m.
-intros.
-elim m
-  [simplify.apply pi_p_SO
-  |simplify.
-   rewrite > times_pi_p.
-   rewrite < H.
-   reflexivity
-  ]
-qed.
 
 theorem exp_times_pi_p: \forall n,m,k,p,f. 
 pi_p n p (\lambda x.exp k (m*(f x))) = 

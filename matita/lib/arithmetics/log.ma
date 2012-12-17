@@ -67,8 +67,6 @@ theorem le_log_n_n: ∀p,n. 1 < p → log p n ≤ n.
 #p #n #lt1p cases n [@le_n |#m @lt_to_le @lt_log_n_n //]
 qed.
 
-axiom daemon : ∀P:Prop.P.
-
 theorem lt_exp_log: ∀p,n. 1 < p → n < exp p (S (log p n)).
 #p #n #lt1p cases n
   [normalize <plus_n_O @lt_to_le // 

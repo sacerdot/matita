@@ -147,6 +147,32 @@ theorem f_false_to_le_max: ∀f,n,p. (∃i:nat.i<n∧f i=true) →
 @(f_max_true ? n H1)
 qed.
 
+theorem exists_forall_lt:∀f,n. 
+(∃i. i < n ∧ f i = true) ∨ (∀i. i < n → f i = false).
+#f #n elim n
+  [%2 #i #lti0 @False_ind @(absurd ? lti0) @le_to_not_lt // 
+  |#n1 *
+    [* #a * #Ha1 #Ha2 %1 %{a} % // @le_S //
+    |#H cases (true_or_false (f n1)) #HfS >HfS
+      [%1 %{n1} /2/
+      |%2 #i #lei 
+       cases (le_to_or_lt_eq ?? lei) #Hi 
+        [@H @le_S_S_to_le @Hi | destruct (Hi) //] 
+      ]
+    ]
+  ]
+qed.
+     
+theorem exists_max_forall_false:∀f,n. 
+((∃i. i < n ∧ f i = true) ∧ (f (max n f) = true))∨
+((∀i. i < n → f i = false) ∧ (max n f) = O).
+#f #n
+cases (exists_forall_lt f n)
+  [#H %1 % // @(f_max_true f n) @H
+  |#H %2 % [@H | @max_not_exists @H 
+  ]
+qed.
+
 (* minimization *)
  
 (* min k b f is the minimun i, b ≤ i < b + k s.t. f i;  
@@ -237,7 +263,7 @@ lemma min_exists: ∀f.∀t,m. m < t → f m = true →
   [#b #lebm #ismin #eqtb @False_ind @(absurd … lebm) <eqtb
    @lt_to_not_le //
   |#d #Hind #b #lebm #ismin #eqt cases(le_to_or_lt_eq …lebm)
-    [#ltbm >false_min /2/ @Hind //
+    [#ltbm >false_min /2 by le_n/ @Hind //
       [#i #H #H1 @ismin /2/ | >eqt normalize //] 
     |#eqbm >true_min //
     ]
