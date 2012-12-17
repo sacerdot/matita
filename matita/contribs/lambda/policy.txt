@@ -9,9 +9,9 @@ R         : arbitrary relation
 T, U      : arbitrary small type
 
 c         : pointer step
-d, e      : variable reference depth 
+d, e      : variable reference level
 h         : relocation height
-i, j      : de Bruijn index
+i, j      : variable reference depth (de Bruijn index)
 k         : relocation height
 l         : arbitrary list
 m, n      : measures on terms

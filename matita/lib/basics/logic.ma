@@ -153,7 +153,7 @@ interpretation "exists on two predicates" 'exists2 x1 x2 = (ex2 ? x1 x2).
 
 lemma ex2_commute: ∀A0. ∀P0,P1:A0→Prop. (∃∃x0. P0 x0 & P1 x0) → ∃∃x0. P1 x0 & P0 x0.
 #A0 #P0 #P1 * /2 width=3/
-qed.
+qed-.
 
 (* iff *)
 definition iff :=

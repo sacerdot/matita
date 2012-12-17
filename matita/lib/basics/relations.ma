@@ -51,6 +51,13 @@ definition antisymmetric: ∀A.∀R:relation A.Prop
 definition singlevalued: ∀A,B. predicate (relation2 A B) ≝ λA,B,R.
                          ∀a,b1. R a b1 → ∀b2. R a b2 → b1 = b2.
 
+definition confluent1: ∀A. relation A → predicate A ≝ λA,R,a0.
+                       ∀a1. R a0 a1 → ∀a2. R a0 a2 →
+                       ∃∃a. R a1 a & R a2 a. 
+
+definition confluent: ∀A. predicate (relation A) ≝ λA,R.
+                      ∀a0. confluent1 … R a0.
+
 (* Reflexive closure ************)
 
 definition RC: ∀A:Type[0]. relation A → relation A ≝

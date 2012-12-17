@@ -27,28 +27,28 @@ interpretation "delifting substitution"
    'DSubst D d M = (dsubst D d M).
 
 (* Note: the notation with "/" does not work *)
-notation "hvbox( [ term 46 d ⬐ break term 46 D ] break term 46 M )"
+notation "hvbox( [ term 46 d ↙ break term 46 D ] break term 46 M )"
    non associative with precedence 46
    for @{ 'DSubst $D $d $M }.
 
-notation > "hvbox( [ ⬐ term 46 D ] break term 46 M )"
+notation > "hvbox( [ ↙ term 46 D ] break term 46 M )"
    non associative with precedence 46
    for @{ 'DSubst $D 0 $M }.
 
-lemma dsubst_vref_lt: ∀i,d,D. i < d → [d ⬐ D] #i = #i.
+lemma dsubst_vref_lt: ∀i,d,D. i < d → [d ↙ D] #i = #i.
 normalize /2 width=1/
 qed.
 
-lemma dsubst_vref_eq: ∀d,D. [d ⬐ D] #d = ↑[d]D.
+lemma dsubst_vref_eq: ∀i,D. [i ↙ D] #i = ↑[i]D.
 normalize //
 qed.
 
-lemma dsubst_vref_gt: ∀i,d,D. d < i → [d ⬐ D] #i = #(i-1).
+lemma dsubst_vref_gt: ∀i,d,D. d < i → [d ↙ D] #i = #(i-1).
 normalize /2 width=1/
 qed.
 
 theorem dsubst_lift_le: ∀h,D,M,d1,d2. d2 ≤ d1 →
-                        [d2 ⬐ ↑[d1 - d2, h] D] ↑[d1 + 1, h] M = ↑[d1, h] [d2 ⬐ D] M.
+                        [d2 ↙ ↑[d1 - d2, h] D] ↑[d1 + 1, h] M = ↑[d1, h] [d2 ↙ D] M.
 #h #D #M elim M -M
 [ #i #d1 #d2 #Hd21 elim (lt_or_eq_or_gt i d2) #Hid2
   [ lapply (lt_to_le_to_lt … Hid2 Hd21) -Hd21 #Hid1
@@ -68,7 +68,7 @@ theorem dsubst_lift_le: ∀h,D,M,d1,d2. d2 ≤ d1 →
 qed.
 
 theorem dsubst_lift_be: ∀h,D,M,d1,d2. d1 ≤ d2 → d2 ≤ d1 + h →
-                        [d2 ⬐ D] ↑[d1, h + 1] M = ↑[d1, h] M.
+                        [d2 ↙ D] ↑[d1, h + 1] M = ↑[d1, h] M.
 #h #D #M elim M -M
 [ #i #d1 #d2 #Hd12 #Hd21 elim (lt_or_ge i d1) #Hid1
   [ lapply (lt_to_le_to_lt … Hid1 Hd12) -Hd12 -Hd21 #Hid2
@@ -85,7 +85,7 @@ theorem dsubst_lift_be: ∀h,D,M,d1,d2. d1 ≤ d2 → d2 ≤ d1 + h →
 qed.
 
 theorem dsubst_lift_ge: ∀h,D,M,d1,d2. d1 + h ≤ d2 →
-                        [d2 ⬐ D] ↑[d1, h] M = ↑[d1, h] [d2 - h ⬐ D] M.
+                        [d2 ↙ D] ↑[d1, h] M = ↑[d1, h] [d2 - h ↙ D] M.
 #h #D #M elim M -M
 [ #i #d1 #d2 #Hd12 elim (lt_or_eq_or_gt i (d2-h)) #Hid2h
   [ >(dsubst_vref_lt … Hid2h) elim (lt_or_ge i d1) #Hid1
@@ -112,7 +112,7 @@ theorem dsubst_lift_ge: ∀h,D,M,d1,d2. d1 + h ≤ d2 →
 qed.
 
 theorem dsubst_dsubst_ge: ∀D1,D2,M,d1,d2. d1 ≤ d2 →
-                          [d2 ⬐ D2] [d1 ⬐ D1] M = [d1 ⬐ [d2 - d1 ⬐ D2] D1] [d2 + 1 ⬐ D2] M.
+                          [d2 ↙ D2] [d1 ↙ D1] M = [d1 ↙ [d2 - d1 ↙ D2] D1] [d2 + 1 ↙ D2] M.
 #D1 #D2 #M elim M -M
 [ #i #d1 #d2 #Hd12 elim (lt_or_eq_or_gt i d1) #Hid1
   [ lapply (lt_to_le_to_lt … Hid1 Hd12) -Hd12 #Hid2
@@ -135,29 +135,29 @@ theorem dsubst_dsubst_ge: ∀D1,D2,M,d1,d2. d1 ≤ d2 →
 qed.
 
 theorem dsubst_dsubst_lt: ∀D1,D2,M,d1,d2. d2 < d1 →
-                          [d2 ⬐ [d1 - d2 -1 ⬐ D1] D2] [d1 ⬐ D1] M = [d1 - 1 ⬐ D1] [d2 ⬐ D2] M.
+                          [d2 ↙ [d1 - d2 -1 ↙ D1] D2] [d1 ↙ D1] M = [d1 - 1 ↙ D1] [d2 ↙ D2] M.
 #D1 #D2 #M #d1 #d2 #Hd21
 lapply (ltn_to_ltO … Hd21) #Hd1
 >dsubst_dsubst_ge in ⊢ (???%); /2 width=1/ <plus_minus_m_m //
 qed.
 
 definition dsubstable_dx: predicate (relation term) ≝ λR.
-                          ∀D,M1,M2. R M1 M2 → ∀d. R ([d ⬐ D] M1) ([d ⬐ D] M2).
-
+                          ∀D,M1,M2. R M1 M2 → ∀d. R ([d ↙ D] M1) ([d ↙ D] M2).
+(*
 definition dsubstable_sn: predicate (relation term) ≝ λR.
-                          ∀D1,D2. R D1 D2 → ∀M,d. R ([d ⬐ D1] M) ([d ⬐ D2] M).
-
+                          ∀D1,D2. R D1 D2 → ∀M,d. R ([d ↙ D1] M) ([d ↙ D2] M).
+*)
 definition dsubstable: predicate (relation term) ≝ λR.
-                       ∀D1,D2. R D1 D2 → ∀M1,M2. R M1 M2 → ∀d. R ([d ⬐ D1] M1) ([d ⬐ D2] M2).
+                       ∀D1,D2. R D1 D2 → ∀M1,M2. R M1 M2 → ∀d. R ([d ↙ D1] M1) ([d ↙ D2] M2).
 
 lemma star_dsubstable_dx: ∀R. dsubstable_dx R → dsubstable_dx (star … R).
 #R #HR #D #M1 #M2 #H elim H -M2 // /3 width=3/
 qed.
-
+(*
 lemma star_dsubstable_sn: ∀R. dsubstable_sn R → dsubstable_sn (star … R).
 #R #HR #D1 #D2 #H elim H -D2 // /3 width=3/
 qed.
-
+*)
 lemma lstar_dsubstable_dx: ∀T,R. (∀t. dsubstable_dx (R t)) →
                            ∀l. dsubstable_dx (lstar T … R l).
 #T #R #HR #l #D #M1 #M2 #H

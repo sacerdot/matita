@@ -16,8 +16,8 @@ include "term.ma".
 
 (* RELOCATION ***************************************************************)
 
-(* Policy: depth (level) metavariables: d, e
-           height metavariables       : h, k
+(* Policy: level metavariables : d, e
+           height metavariables: h, k
 *)
 (* Note: indexes start at zero *)
 let rec lift h d M on M ≝ match M with
@@ -48,12 +48,12 @@ lemma lift_vref_ge: ∀d,h,i. d ≤ i → ↑[d, h] #i = #(i+h).
 #d #h #i #H elim (le_to_or_lt_eq … H) -H
 normalize // /3 width=1/
 qed.
-
+(*
 lemma lift_vref_pred: ∀d,i. d < i → ↑[d, 1] #(i-1) = #i.
 #d #i #Hdi >lift_vref_ge /2 width=1/
 <plus_minus_m_m // /2 width=2/ 
 qed.
-
+*)
 lemma lift_id: ∀M,d. ↑[d, 0] M = M.
 #M elim M -M
 [ #i #d elim (lt_or_ge i d) /2 width=1/

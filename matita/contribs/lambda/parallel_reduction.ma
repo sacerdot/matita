@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "size.ma".
+include "length.ma".
 include "labelled_sequential_reduction.ma".
 
 (* PARALLEL REDUCTION (SINGLE STEP) *****************************************)
@@ -24,13 +24,13 @@ inductive pred: relation term ≝
 | pred_vref: ∀i. pred (#i) (#i)
 | pred_abst: ∀A1,A2. pred A1 A2 → pred (𝛌.A1) (𝛌.A2) 
 | pred_appl: ∀B1,B2,A1,A2. pred B1 B2 → pred A1 A2 → pred (@B1.A1) (@B2.A2)
-| pred_beta: ∀B1,B2,A1,A2. pred B1 B2 → pred A1 A2 → pred (@B1.𝛌.A1) ([⬐B2]A2)
+| pred_beta: ∀B1,B2,A1,A2. pred B1 B2 → pred A1 A2 → pred (@B1.𝛌.A1) ([↙B2]A2)
 .
 
 interpretation "parallel reduction"
     'ParRed M N = (pred M N).
 
-notation "hvbox( M ⥤ break term 46 N )"
+notation "hvbox( M ⤇ break term 46 N )"
    non associative with precedence 45
    for @{ 'ParRed $M $N }.
 
@@ -38,7 +38,7 @@ lemma pred_refl: reflexive … pred.
 #M elim M -M // /2 width=1/
 qed.
 
-lemma pred_inv_vref: ∀M,N. M ⥤ N → ∀i. #i = M → #i = N.
+lemma pred_inv_vref: ∀M,N. M ⤇ N → ∀i. #i = M → #i = N.
 #M #N * -M -N //
 [ #A1 #A2 #_ #i #H destruct
 | #B1 #B2 #A1 #A2 #_ #_ #i #H destruct
@@ -46,8 +46,8 @@ lemma pred_inv_vref: ∀M,N. M ⥤ N → ∀i. #i = M → #i = N.
 ]
 qed-.
 
-lemma pred_inv_abst: ∀M,N. M ⥤ N → ∀A. 𝛌.A = M →
-                     ∃∃C. A ⥤ C & 𝛌.C = N.
+lemma pred_inv_abst: ∀M,N. M ⤇ N → ∀A. 𝛌.A = M →
+                     ∃∃C. A ⤇ C & 𝛌.C = N.
 #M #N * -M -N
 [ #i #A0 #H destruct
 | #A1 #A2 #HA12 #A0 #H destruct /2 width=3/
@@ -56,9 +56,9 @@ lemma pred_inv_abst: ∀M,N. M ⥤ N → ∀A. 𝛌.A = M →
 ]
 qed-.
 
-lemma pred_inv_appl: ∀M,N. M ⥤ N → ∀B,A. @B.A = M →
-                     (∃∃D,C. B ⥤ D & A ⥤ C & @D.C = N) ∨
-                     ∃∃A0,D,C0. B ⥤ D & A0 ⥤ C0 & 𝛌.A0 = A & [⬐D]C0 = N.
+lemma pred_inv_appl: ∀M,N. M ⤇ N → ∀B,A. @B.A = M →
+                     (∃∃D,C. B ⤇ D & A ⤇ C & @D.C = N) ∨
+                     ∃∃A0,D,C0. B ⤇ D & A0 ⤇ C0 & 𝛌.A0 = A & [↙D]C0 = N.
 #M #N * -M -N
 [ #i #B0 #A0 #H destruct
 | #A1 #A2 #_ #B0 #A0 #H destruct
@@ -88,7 +88,7 @@ lemma pred_inv_lift: deliftable_sn pred.
   elim (lift_inv_abst … HM) -HM #A1 #HAC1 #H
   elim (IHD12 … HBD1) -D1 #B2 #HB12 #HBD2
   elim (IHC12 … HAC1) -C1 #A2 #HA12 #HAC2 destruct
-  @(ex2_intro … ([⬐B2]A2)) /2 width=1/
+  @(ex2_intro … ([↙B2]A2)) /2 width=1/
 ]
 qed-.
 
@@ -122,8 +122,8 @@ qed-.
 
 lemma pred_conf1_appl_beta: ∀B,B1,B2,C,C2,M1.
                             (∀M0. |M0| < |B|+|𝛌.C|+1 → confluent1 ? pred M0) → (**) (* ? needed in place of … *)
-                            B ⥤ B1 → B ⥤ B2 → 𝛌.C ⥤ M1 → C ⥤ C2 →
-                            ∃∃M. @B1.M1 ⥤ M & [⬐B2]C2 ⥤ M.
+                            B ⤇ B1 → B ⤇ B2 → 𝛌.C ⤇ M1 → C ⤇ C2 →
+                            ∃∃M. @B1.M1 ⤇ M & [↙B2]C2 ⤇ M.
 #B #B1 #B2 #C #C2 #M1 #IH #HB1 #HB2 #H1 #HC2
 elim (pred_inv_abst … H1 ??) -H1 [3: // |2: skip ] #C1 #HC1 #H destruct (**) (* simplify line *)
 elim (IH B … HB1 … HB2) -HB1 -HB2 //
@@ -131,7 +131,7 @@ elim (IH C … HC1 … HC2) normalize // -B -C /3 width=5/
 qed-.
 
 theorem pred_conf: confluent … pred.
-#M @(f_ind … size … M) -M #n #IH * normalize
+#M @(f_ind … length … M) -M #n #IH * normalize
 [ /2 width=3 by pred_conf1_vref/
 | /3 width=4 by pred_conf1_abst/
 | #B #A #H #M1 #H1 #M2 #H2 destruct
@@ -151,6 +151,6 @@ theorem pred_conf: confluent … pred.
 ]
 qed-.
 
-lemma lsred_pred: ∀p,M,N. M ⇀[p] N → M ⥤ N.
+lemma lsred_pred: ∀p,M,N. M ↦[p] N → M ⤇ N.
 #p #M #N #H elim H -p -M -N /2 width=1/
 qed.

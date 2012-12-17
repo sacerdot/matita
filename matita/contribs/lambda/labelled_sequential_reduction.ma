@@ -22,7 +22,7 @@ include "multiplicity.ma".
          Theoretical Computer Science 155(1), Elsevier (1996), pp. 85-109.
 *)
 inductive lsred: ptr → relation term ≝
-| lsred_beta   : ∀B,A. lsred (◊) (@B.𝛌.A) ([⬐B]A)
+| lsred_beta   : ∀B,A. lsred (◊) (@B.𝛌.A) ([↙B]A)
 | lsred_abst   : ∀p,A1,A2. lsred p A1 A2 → lsred (sn::p) (𝛌.A1) (𝛌.A2) 
 | lsred_appl_sn: ∀p,B1,B2,A. lsred p B1 B2 → lsred (sn::p) (@B1.A) (@B2.A)
 | lsred_appl_dx: ∀p,B,A1,A2. lsred p A1 A2 → lsred (dx::p) (@B.A1) (@B.A2)
@@ -32,11 +32,11 @@ interpretation "labelled sequential reduction"
    'SeqRed M p N = (lsred p M N).
 
 (* Note: we do not use → since it is reserved by CIC *)
-notation "hvbox( M break ⇀ [ term 46 p ] break term 46 N )"
+notation "hvbox( M break ↦ [ term 46 p ] break term 46 N )"
    non associative with precedence 45
    for @{ 'SeqRed $M $p $N }.
 
-lemma lsred_inv_vref: ∀p,M,N. M ⇀[p] N → ∀i. #i = M → ⊥.
+lemma lsred_inv_vref: ∀p,M,N. M ↦[p] N → ∀i. #i = M → ⊥.
 #p #M #N * -p -M -N
 [ #B #A #i #H destruct
 | #p #A1 #A2 #_ #i #H destruct
@@ -45,8 +45,8 @@ lemma lsred_inv_vref: ∀p,M,N. M ⇀[p] N → ∀i. #i = M → ⊥.
 ]
 qed-.
 
-lemma lsred_inv_nil: ∀p,M,N. M ⇀[p] N → ◊ = p →
-                     ∃∃B,A. @B. 𝛌.A = M & [⬐B] A = N.
+lemma lsred_inv_nil: ∀p,M,N. M ↦[p] N → ◊ = p →
+                     ∃∃B,A. @B. 𝛌.A = M & [↙B] A = N.
 #p #M #N * -p -M -N
 [ #B #A #_ destruct /2 width=4/
 | #p #A1 #A2 #_ #H destruct
@@ -55,9 +55,9 @@ lemma lsred_inv_nil: ∀p,M,N. M ⇀[p] N → ◊ = p →
 ]
 qed-.
 
-lemma lsred_inv_sn: ∀p,M,N. M ⇀[p] N → ∀q. sn::q = p →
-                    (∃∃A1,A2. A1 ⇀[q] A2 & 𝛌.A1 = M & 𝛌.A2 = N) ∨
-                    ∃∃B1,B2,A. B1 ⇀[q] B2 & @B1.A = M & @B2.A = N.
+lemma lsred_inv_sn: ∀p,M,N. M ↦[p] N → ∀q. sn::q = p →
+                    (∃∃A1,A2. A1 ↦[q] A2 & 𝛌.A1 = M & 𝛌.A2 = N) ∨
+                    ∃∃B1,B2,A. B1 ↦[q] B2 & @B1.A = M & @B2.A = N.
 #p #M #N * -p -M -N
 [ #B #A #q #H destruct
 | #p #A1 #A2 #HA12 #q #H destruct /3 width=5/
@@ -66,8 +66,8 @@ lemma lsred_inv_sn: ∀p,M,N. M ⇀[p] N → ∀q. sn::q = p →
 ]
 qed-.
 
-lemma lsred_inv_dx: ∀p,M,N. M ⇀[p] N → ∀q. dx::q = p →
-                    ∃∃B,A1,A2. A1 ⇀[q] A2 & @B.A1 = M & @B.A2 = N.
+lemma lsred_inv_dx: ∀p,M,N. M ↦[p] N → ∀q. dx::q = p →
+                    ∃∃B,A1,A2. A1 ↦[q] A2 & @B.A1 = M & @B.A2 = N.
 #p #M #N * -p -M -N
 [ #B #A #q #H destruct
 | #p #A1 #A2 #_ #q #H destruct
@@ -76,7 +76,7 @@ lemma lsred_inv_dx: ∀p,M,N. M ⇀[p] N → ∀q. dx::q = p →
 ]
 qed-.
 
-lemma lsred_fwd_mult: ∀p,M,N. M ⇀[p] N → #{N} < #{M} * #{M}.
+lemma lsred_fwd_mult: ∀p,M,N. M ↦[p] N → #{N} < #{M} * #{M}.
 #p #M #N #H elim H -p -M -N
 [ #B #A @(le_to_lt_to_lt … (#{A}*#{B})) //
   normalize /3 width=1 by lt_minus_to_plus_r, lt_times/ (**) (* auto: too slow without trace *) 

@@ -20,27 +20,27 @@ include "labelled_sequential_reduction.ma".
          R. Kashima: "A proof of the Standization Theorem in λ-Calculus". Typescript note, (2000).
 *)
 inductive lhap1: ptr → relation term ≝
-| hap1_beta: ∀B,A. lhap1 (◊) (@B.𝛌.A) ([⬐B]A)
+| hap1_beta: ∀B,A. lhap1 (◊) (@B.𝛌.A) ([↙B]A)
 | hap1_appl: ∀p,B,A1,A2. lhap1 p A1 A2 → lhap1 (dx::p) (@B.A1) (@B.A2)
 .
 
 interpretation "labelled 'hap' reduction"
    'HAp M p N = (lhap1 p M N).
 
-notation "hvbox( M break ⓗ⇀ [ term 46 p ] break term 46 N )"
+notation "hvbox( M break ⓗ↦ [ term 46 p ] break term 46 N )"
    non associative with precedence 45
    for @{ 'HAp $M $p $N }.
 
-lemma lhap1_inv_nil: ∀p,M,N. M ⓗ⇀[p] N → ◊ = p →
-                     ∃∃B,A. @B.𝛌.A = M & [⬐B]A = N.
+lemma lhap1_inv_nil: ∀p,M,N. M ⓗ↦[p] N → ◊ = p →
+                     ∃∃B,A. @B.𝛌.A = M & [↙B]A = N.
 #p #M #N * -p -M -N
 [ #B #A #_ /2 width=4/
 | #p #B #A1 #A2 #_ #H destruct
 ]
 qed-.
 
-lemma lhap1_inv_cons: ∀p,M,N. M ⓗ⇀[p] N → ∀c,q. c::q = p →
-                      ∃∃B,A1,A2. dx = c & A1 ⓗ⇀[q] A2 & @B.A1 = M & @B.A2 = N.
+lemma lhap1_inv_cons: ∀p,M,N. M ⓗ↦[p] N → ∀c,q. c::q = p →
+                      ∃∃B,A1,A2. dx = c & A1 ⓗ↦[q] A2 & @B.A1 = M & @B.A2 = N.
 #p #M #N * -p -M -N
 [ #B #A #c #q #H destruct
 | #p #B #A1 #A2 #HA12 #c #q #H destruct /2 width=6/
@@ -69,7 +69,7 @@ lemma lhap1_dsubst: ∀p. dsubstable_dx (lhap1 p).
 #D2 #A #d >dsubst_dsubst_ge //
 qed.
 
-lemma head_lsred_lhap1: ∀p. in_head p → ∀M,N. M ⇀[p] N → M ⓗ⇀[p] N.
+lemma head_lsred_lhap1: ∀p. in_head p → ∀M,N. M ↦[p] N → M ⓗ↦[p] N.
 #p #H @(in_head_ind … H) -p
 [ #M #N #H elim (lsred_inv_nil … H ?) -H //
 | #p #_ #IHp #M #N #H
@@ -77,11 +77,11 @@ lemma head_lsred_lhap1: ∀p. in_head p → ∀M,N. M ⇀[p] N → M ⓗ⇀[p] N
 ]
 qed.
 
-lemma lhap1_inv_head: ∀p,M,N. M ⓗ⇀[p] N → in_head p.
+lemma lhap1_inv_head: ∀p,M,N. M ⓗ↦[p] N → in_head p.
 #p #M #N #H elim H -p -M -N // /2 width=1/
 qed-.
 
-lemma lhap1_inv_lsred: ∀p,M,N. M ⓗ⇀[p] N → M ⇀[p] N.
+lemma lhap1_inv_lsred: ∀p,M,N. M ⓗ↦[p] N → M ↦[p] N.
 #p #M #N #H elim H -p -M -N // /2 width=1/
 qed-.
 

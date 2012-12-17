@@ -28,16 +28,6 @@ notation "⊥"
   non associative with precedence 90
   for @{'false}.
 
-(* relations *)
-
-definition confluent1: ∀A. relation A → predicate A ≝ λA,R,a0.
-                       ∀a1. R a0 a1 → ∀a2. R a0 a2 →
-                       ∃∃a. R a1 a & R a2 a. 
-
-(* Note: confluent1 would be redundant if \Pi-reduction where enabled *)                       
-definition confluent: ∀A. predicate (relation A) ≝ λA,R.
-                      ∀a0. confluent1 … R a0.
-
 (* arithmetics *)
 
 lemma lt_refl_false: ∀n. n < n → ⊥.

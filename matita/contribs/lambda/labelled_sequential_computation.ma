@@ -22,29 +22,29 @@ definition lsreds: pseq → relation term ≝ lstar … lsred.
 interpretation "labelled sequential computation"
    'SeqRedStar M s N = (lsreds s M N).
 
-notation "hvbox( M break ⇀* [ term 46 s ] break term 46 N )"
+notation "hvbox( M break ↦* [ term 46 s ] break term 46 N )"
    non associative with precedence 45
    for @{ 'SeqRedStar $M $s $N }.
 
-lemma lsreds_step_rc: ∀p,M1,M2. M1 ⇀[p] M2 → M1 ⇀*[p::◊] M2.
+lemma lsreds_step_rc: ∀p,M1,M2. M1 ↦[p] M2 → M1 ↦*[p::◊] M2.
 /2 width=1/
 qed.
 
-lemma lsreds_inv_nil: ∀s,M1,M2. M1 ⇀*[s] M2 → ◊ = s → M1 = M2.
+lemma lsreds_inv_nil: ∀s,M1,M2. M1 ↦*[s] M2 → ◊ = s → M1 = M2.
 /2 width=5 by lstar_inv_nil/
 qed-.
 
-lemma lsreds_inv_cons: ∀s,M1,M2. M1 ⇀*[s] M2 → ∀q,r. q::r = s →
-                       ∃∃M. M1 ⇀[q] M & M ⇀*[r] M2.
+lemma lsreds_inv_cons: ∀s,M1,M2. M1 ↦*[s] M2 → ∀q,r. q::r = s →
+                       ∃∃M. M1 ↦[q] M & M ↦*[r] M2.
 /2 width=3 by lstar_inv_cons/
 qed-.
 
-lemma lsreds_inv_step_rc: ∀p,M1,M2. M1 ⇀*[p::◊] M2 → M1 ⇀[p] M2.
+lemma lsreds_inv_step_rc: ∀p,M1,M2. M1 ↦*[p::◊] M2 → M1 ↦[p] M2.
 /2 width=1 by lstar_inv_step/
 qed-.
 
-lemma lsreds_inv_pos: ∀s,M1,M2. M1 ⇀*[s] M2 → 0 < |s| →
-                      ∃∃p,r,M. p::r = s & M1 ⇀[p] M & M ⇀*[r] M2.
+lemma lsreds_inv_pos: ∀s,M1,M2. M1 ↦*[s] M2 → 0 < |s| →
+                      ∃∃p,r,M. p::r = s & M1 ↦[p] M & M ↦*[r] M2.
 /2 width=1 by lstar_inv_pos/
 qed-.
 
@@ -81,7 +81,7 @@ theorem lsreds_trans: ltransitive … lsreds.
 qed-.
 
 (* Note: "|s|" should be unparetesized *)
-lemma lsreds_fwd_mult: ∀s,M1,M2. M1 ⇀*[s] M2 → #{M2} ≤ #{M1} ^ (2 ^ (|s|)).
+lemma lsreds_fwd_mult: ∀s,M1,M2. M1 ↦*[s] M2 → #{M2} ≤ #{M1} ^ (2 ^ (|s|)).
 #s #M1 #M2 #H @(lstar_ind_l ????????? H) -s -M1 normalize //
 #p #s #M1 #M #HM1 #_ #IHM2
 lapply (lsred_fwd_mult … HM1) -p #HM1

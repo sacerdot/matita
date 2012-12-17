@@ -25,29 +25,29 @@ definition lhap: pseq → relation term ≝ lstar … lhap1.
 interpretation "labelled 'hap' computation"
    'HApStar M p N = (lhap p M N).
 
-notation "hvbox( M break ⓗ⇀* [ term 46 p ] break term 46 N )"
+notation "hvbox( M break ⓗ↦* [ term 46 p ] break term 46 N )"
    non associative with precedence 45
    for @{ 'HApStar $M $p $N }.
 
-lemma lhap_step_rc: ∀p,M1,M2. M1 ⓗ⇀[p] M2 → M1 ⓗ⇀*[p::◊] M2.
+lemma lhap_step_rc: ∀p,M1,M2. M1 ⓗ↦[p] M2 → M1 ⓗ↦*[p::◊] M2.
 /2 width=1/
 qed.
 
-lemma lhap_inv_nil: ∀s,M1,M2. M1 ⓗ⇀*[s] M2 → ◊ = s → M1 = M2.
+lemma lhap_inv_nil: ∀s,M1,M2. M1 ⓗ↦*[s] M2 → ◊ = s → M1 = M2.
 /2 width=5 by lstar_inv_nil/
 qed-.
 
-lemma lhap_inv_cons: ∀s,M1,M2. M1 ⓗ⇀*[s] M2 → ∀q,r. q::r = s →
-                     ∃∃M. M1 ⓗ⇀[q] M & M ⓗ⇀*[r] M2.
+lemma lhap_inv_cons: ∀s,M1,M2. M1 ⓗ↦*[s] M2 → ∀q,r. q::r = s →
+                     ∃∃M. M1 ⓗ↦[q] M & M ⓗ↦*[r] M2.
 /2 width=3 by lstar_inv_cons/
 qed-.
 
-lemma lhap_inv_step_rc: ∀p,M1,M2. M1 ⓗ⇀*[p::◊] M2 → M1 ⓗ⇀[p] M2.
+lemma lhap_inv_step_rc: ∀p,M1,M2. M1 ⓗ↦*[p::◊] M2 → M1 ⓗ↦[p] M2.
 /2 width=1 by lstar_inv_step/
 qed-.
 
-lemma lhap_inv_pos: ∀s,M1,M2. M1 ⓗ⇀*[s] M2 → 0 < |s| →
-                    ∃∃p,r,M. p::r = s & M1 ⓗ⇀[p] M & M ⓗ⇀*[r] M2.
+lemma lhap_inv_pos: ∀s,M1,M2. M1 ⓗ↦*[s] M2 → 0 < |s| →
+                    ∃∃p,r,M. p::r = s & M1 ⓗ↦[p] M & M ⓗ↦*[r] M2.
 /2 width=1 by lstar_inv_pos/
 qed-.
 
@@ -75,24 +75,24 @@ theorem lhap_trans: ltransitive … lhap.
 /2 width=3 by lstar_ltransitive/
 qed-.
 
-lemma lhap_step_dx: ∀s,M1,M. M1 ⓗ⇀*[s] M →
-                    ∀p,M2. M ⓗ⇀[p] M2 → M1 ⓗ⇀*[s@p::◊] M2.
+lemma lhap_step_dx: ∀s,M1,M. M1 ⓗ↦*[s] M →
+                    ∀p,M2. M ⓗ↦[p] M2 → M1 ⓗ↦*[s@p::◊] M2.
 #s #M1 #M #HM1 #p #M2 #HM2
 @(lhap_trans … HM1) /2 width=1/
 qed-.
 
-lemma head_lsreds_lhap: ∀s,M1,M2. M1 ⇀*[s] M2 → is_head s → M1 ⓗ⇀*[s] M2.
+lemma head_lsreds_lhap: ∀s,M1,M2. M1 ↦*[s] M2 → is_head s → M1 ⓗ↦*[s] M2.
 #s #M1 #M2 #H @(lstar_ind_l ????????? H) -s -M1 //
 #a #s #M1 #M #HM1 #_ #IHM2 * /3 width=3/
 qed.
 
-lemma lhap_inv_head: ∀s,M1,M2. M1 ⓗ⇀*[s] M2 → is_head s.
+lemma lhap_inv_head: ∀s,M1,M2. M1 ⓗ↦*[s] M2 → is_head s.
 #s #M1 #M2 #H @(lstar_ind_l ????????? H) -s -M1 //
 #p #s #M1 #M #HM1 #_ #IHM2
 lapply (lhap1_inv_head … HM1) -HM1 /2 width=1/
 qed-.
 
-lemma lhap_inv_lsreds: ∀s,M1,M2. M1 ⓗ⇀*[s] M2 → M1 ⇀*[s] M2.
+lemma lhap_inv_lsreds: ∀s,M1,M2. M1 ⓗ↦*[s] M2 → M1 ↦*[s] M2.
 #s #M1 #M2 #H @(lstar_ind_l ????????? H) -s -M1 //
 #p #s #M1 #M #HM1 #_ #IHM2
 lapply (lhap1_inv_lsred … HM1) -HM1 /2 width=3/

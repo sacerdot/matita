@@ -38,7 +38,7 @@ lemma mult_lift: ∀h,M,d. #{↑[d, h] M} = #{M}.
 #h #M elim M -M normalize //
 qed.
 
-theorem mult_dsubst: ∀D,M,d. #{[d ⬐ D] M} ≤ #{M} * #{D}.
+theorem mult_dsubst: ∀D,M,d. #{[d ↙ D] M} ≤ #{M} * #{D}.
 #D #M elim M -M
 [ #i #d elim (lt_or_eq_or_gt i d) #Hid
   [ >(dsubst_vref_lt … Hid) normalize //

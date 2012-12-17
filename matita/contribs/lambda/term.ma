@@ -18,11 +18,11 @@ include "preamble.ma".
 
 (* TERM STRUCTURE ***********************************************************)
 
-(* Policy: term metavariables: A, B, C, D, M, N
-           de Bruijn indexes : i, j
+(* Policy: term metavariables : A, B, C, D, M, N
+           depth metavariables: i, j
 *)
 inductive term: Type[0] ≝
-| VRef: nat → term         (* variable reference by index *)
+| VRef: nat  → term        (* variable reference by depth *)
 | Abst: term → term        (* function formation          *)
 | Appl: term → term → term (* function application        *)
 .
@@ -47,7 +47,7 @@ notation "hvbox( 𝛌  . term 46 A )"
 notation "hvbox( @ term 46 C . break term 46 A )"
    non associative with precedence 46
    for @{ 'Application $C $A }.
-
+(*
 definition appl_compatible_dx: predicate (relation term) ≝ λR.
                                ∀B,A1,A2. R A1 A2 → R (@B.A1) (@B.A2).
 
@@ -55,3 +55,4 @@ lemma star_appl_compatible_dx: ∀R. appl_compatible_dx R →
                                appl_compatible_dx (star … R).
 #R #HR #B #A1 #A2 #H elim H -A2 // /3 width=3/
 qed.
+*)
