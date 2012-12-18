@@ -421,3 +421,21 @@ lemma bi_star_ind_dx: ∀A,B,R,a2,b2. ∀P:relation2 A B. P a2 b2 →
 | #H12 @(bi_TC_ind_dx ?????????? H12) -a1 -b1 /2 width=5/ -H /3 width=5/
 ]
 qed-.
+
+(* ************ confluence of star *****************)
+
+lemma star_strip: ∀A,R. confluent A R →
+                  ∀a0,a1. star … R a0 a1 → ∀a2. R a0 a2 →
+                  ∃∃a. R a1 a & star … R a2 a.
+#A #R #HR #a0 #a1 #H elim H -a1 /2 width=3/
+#a #a1 #_ #Ha1 #IHa0 #a2 #Ha02
+elim (IHa0 … Ha02) -a0 #a0 #Ha0 #Ha20
+elim (HR … Ha1 … Ha0) -a /3 width=5/
+qed-.
+
+lemma star_confluent: ∀A,R. confluent A R → confluent A (star … R).
+#A #R #HR #a0 #a1 #H elim H -a1 /2 width=3/
+#a #a1 #_ #Ha1 #IHa0 #a2 #Ha02
+elim (IHa0 … Ha02) -a0 #a0 #Ha0 #Ha20
+elim (star_strip … HR … Ha0 … Ha1) -a /3 width=5/
+qed-.
