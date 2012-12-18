@@ -178,3 +178,11 @@ theorem exp_pi: ∀n,m,p,f.
   |#m1 #Hind >times_pi >Hind %
   ]
 qed.
+
+theorem exp_sigma_l: ∀n,a,p,f. 
+  ∏_{i < n | p i} (exp a (f i)) = exp a (∑_{i < n | p i}(f i)).
+#n #a #p #f elim n // #i #Hind cases (true_or_false (p i)) #Hc
+  [>bigop_Strue [>bigop_Strue [>Hind >exp_plus_times // |//] |//]
+  |>bigop_Sfalse [>bigop_Sfalse [@Hind|//] | //]
+  ]
+qed.
