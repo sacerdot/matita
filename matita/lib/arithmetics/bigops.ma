@@ -171,7 +171,33 @@ theorem bigop_I: ∀n,p,B.∀nil.∀op:Aop B nil.∀f:nat→B.
 \big[op,nil]_{i∈[0,n[ |p i}(f i) = \big[op,nil]_{i < n|p i}(f i). 
 #n #p #B #nil #op #f <minus_n_O @same_bigop //
 qed.
-          
+     
+theorem bigop_I_gen: ∀a,b,p,B.∀nil.∀op:Aop B nil.∀f:nat→B. a ≤b →
+\big[op,nil]_{i∈[a,b[ |p i}(f i) = \big[op,nil]_{i < b|leb a i ∧ p i}(f i). 
+#a #b elim b // -b #b #Hind #p #B #nil #op #f #lea
+cut (∀a,b. a ≤ b → S b - a = S (b -a)) 
+  [#a #b cases a // #a1 #lta1 normalize >eq_minus_S_pred >S_pred 
+   /2 by lt_plus_to_minus_r/] #Hcut
+cases (le_to_or_lt_eq … lea) #Ha
+  [cases (true_or_false (p b)) #Hcase
+    [>bigop_Strue [2: >Hcase >(le_to_leb_true a b) // @le_S_S_to_le @Ha]
+     >(Hcut … (le_S_S_to_le … Ha))
+     >bigop_Strue 
+      [@eq_f2 
+        [@eq_f <plus_minus_m_m [//|@le_S_S_to_le //] @Hind 
+        |@Hind @le_S_S_to_le //
+        ]
+      |<plus_minus_m_m // @le_S_S_to_le //
+      ]
+   |>bigop_Sfalse [2: >Hcase cases (leb a b)//]
+     >(Hcut … (le_S_S_to_le … Ha)) >bigop_Sfalse
+      [@Hind @le_S_S_to_le // | <plus_minus_m_m // @le_S_S_to_le //]
+    ]
+  |<Ha <minus_n_n whd in ⊢ (??%?); <(bigop_false a B nil op f) in ⊢ (??%?);
+   @same_bigop // #i #ltia >(not_le_to_leb_false a i) // @lt_to_not_le //
+  ]
+qed.    
+     
 theorem bigop_sumI: ∀a,b,c,p,B.∀nil.∀op:Aop B nil.∀f:nat→B.
 a ≤ b → b ≤ c →
 \big[op,nil]_{i∈[a,c[ |p i}(f i) = 
@@ -214,8 +240,8 @@ theorem bigop_prod: ∀k1,k2,p1,p2,B.∀nil.∀op:Aop B nil.∀f: nat →nat →
      >div_plus_times /2 by monotonic_lt_minus_l/ 
      >Hp1 >(mod_plus_times …) /2 by refl, monotonic_lt_minus_l, eq_f/
   |>bigop_Sfalse // >Hind >(pad_bigop (S n*k2)) // @same_bigop
-   #i #lti @leb_elim // #lei cut (i = n*k2+(i-n*k2)) /2/
-   #eqi >eqi in ⊢ (???%); >div_plus_times /2/ 
+   #i #lti @leb_elim // #lei cut (i = n*k2+(i-n*k2)) /2 by plus_minus/
+   #eqi >eqi in ⊢ (???%); >div_plus_times /2 by refl, monotonic_lt_minus_l, trans_eq/ 
   ]
 qed.
 
@@ -330,8 +356,6 @@ theorem bigop_iso: ∀n1,n2,p1,p2,B.∀nil.∀op:ACop B nil.∀f1,f2.
     ]
   ]
 qed.
-
-(* lemma div_mod_exchange: ∀i,n,m. i < n*m → i\n = i mod m. *)
 
 (* commutation *)
 theorem bigop_commute: ∀n,m,p11,p12,p21,p22,B.∀nil.∀op:ACop B nil.∀f.

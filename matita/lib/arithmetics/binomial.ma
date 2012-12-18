@@ -10,7 +10,7 @@
       V_______________________________________________________________ *)
 
 include "arithmetics/primes.ma".
-include "arithmetics/bigops.ma".
+include "arithmetics/sigma_pi.ma".
 
 (* binomial coefficient *)
 definition bc ≝ λn,k. n!/(k!*(n-k)!).
@@ -93,111 +93,104 @@ theorem binomial_law:∀a,b,n.
   (a+b)^n = ∑_{k < S n}((bc n k)*(a^(n-k))*(b^k)).
 #a #b #n (elim n) //
 -n #n #Hind normalize in ⊢ (??%?); >commutative_times
->bigop_Strue // >Hind >distributive_times_plus 
-<(minus_n_n (S n)) <commutative_times (* <(commutative_times b) *)
-(* hint??? *)
->(bigop_distr ???? natDop ? a) >(bigop_distr ???? natDop ? b)
->bigop_Strue in ⊢ (??(??%)?) // <associative_plus 
-<commutative_plus in ⊢ (??(? % ?) ?) >associative_plus @eq_f2
+>bigop_Strue // >Hind >distributive_times_plus_r
+<(minus_n_n (S n)) (* <commutative_times <(commutative_times b) *)
+(* da capire *)
+>(bigop_distr ??? 0 (mk_Dop ℕ O plusAC times (λn0:ℕ.sym_eq ℕ O (n0*O) (times_n_O n0))
+    distributive_times_plus) ? a) 
+>(bigop_distr ???? (mk_Dop ℕ O plusAC times (λn0:ℕ.sym_eq ℕ O (n0*O) (times_n_O n0))
+    distributive_times_plus) ? b)
+>bigop_Strue in ⊢ (??(??%)?); // <associative_plus 
+<commutative_plus in ⊢ (??(? % ?) ?); >associative_plus @eq_f2
   [<minus_n_n >bc_n_n >bc_n_n normalize //
-  |>bigop_0 >associative_plus >commutative_plus in ⊢ (??(??%)?) 
-   <associative_plus >bigop_0 // @eq_f2 
-    [>(bigop_op n ??? natACop) @same_bigop //
+  |>bigop_0 >associative_plus >commutative_plus in ⊢ (??(??%)?);
+   <associative_plus >(bigop_0 n ?? plusA) @eq_f2 
+    [cut (∀a,b. plus a b = plusAC a b) [//] #Hplus >Hplus 
+     >(bigop_op n ??? plusAC) @same_bigop //
      #i #ltin #_ <associative_times >(commutative_times b)
-     >(associative_times ?? b) <(distributive_times_plus_r (b^(S i)))
+     >(associative_times ?? b) <Hplus <(distributive_times_plus_r (b^(S i)))
      @eq_f2 // <associative_times >(commutative_times a) 
      >associative_times cut(∀n.a*a^n = a^(S n)) [#n @commutative_times] #H
      >H <minus_Sn_m // <(distributive_times_plus_r (a^(n-i)))
      @eq_f2 // @sym_eq >commutative_plus @bc1 //
-    |>bc_n_O >bc_n_O normalize //
+    |>bc_n_O >bc_n_O normalize // 
     ]
   ]
 qed.
      
 theorem exp_S_sigma_p:∀a,n.
-(S a)^n = Σ_{k < S n}((bc n k)*a^(n-k)).
+  (S a)^n = ∑_{k < S n}((bc n k)*a^(n-k)).
 #a #n cut (S a = a + 1) // #H >H
 >binomial_law @same_bigop //
 qed.
+
+(************ mid value *************)
+lemma eqb_sym: ∀a,b. eqb a b = eqb b a.
+#a #b cases (true_or_false (eqb a b)) #Hab
+  [>(eqb_true_to_eq … Hab) // 
+  |>Hab @sym_eq @not_eq_to_eqb_false 
+   @(not_to_not … (eqb_false_to_not_eq … Hab)) //
+  ] 
+qed-.
+
 definition M ≝ λm.bc (S(2*m)) m.
 
+lemma Mdef : ∀m. M m = bc (S(2*m)) m. 
+// qed.
+
 theorem lt_M: ∀m. O < m → M m < exp 2 (2*m).
-#m #posm  @(lt_times_n_to_lt_l 2) 
-  |change in ⊢ (? ? %) with (exp 2 (S(2*m))).
-   change in ⊢ (? ? (? % ?)) with (1+1).
-   rewrite > exp_plus_sigma_p.
-   apply (le_to_lt_to_lt ? (sigma_p (S (S (2*m))) (λk:nat.orb (eqb k m) (eqb k (S m)))
-            (λk:nat.bc (S (2*m)) k*(1)\sup(S (2*m)-k)*(1)\sup(k))))
-    [rewrite > (sigma_p_gi ? ? m)
-      [rewrite > (sigma_p_gi ? ? (S m))
-        [rewrite > (false_to_eq_sigma_p O (S(S(2*m))))
-          [simplify in ⊢ (? ? (? ? (? ? %))).
-           simplify in ⊢ (? % ?).
-           rewrite < exp_SO_n.rewrite < exp_SO_n.
-           rewrite < exp_SO_n.rewrite < exp_SO_n.
-           rewrite < times_n_SO.rewrite < times_n_SO.
-           rewrite < times_n_SO.rewrite < times_n_SO.
-           apply le_plus
-            [unfold M.apply le_n
-            |apply le_plus_l.unfold M.
-             change in \vdash (? ? %) with (fact (S(2*m))/(fact (S m)*(fact ((2*m)-m)))).
-             simplify in \vdash (? ? (? ? (? ? (? (? % ?))))).
-             rewrite < plus_n_O.rewrite < minus_plus_m_m.
-             rewrite < sym_times in \vdash (? ? (? ? %)).
-             change in \vdash (? % ?) with (fact (S(2*m))/(fact m*(fact (S(2*m)-m)))).
-             simplify in \vdash (? (? ? (? ? (? (? (? %) ?)))) ?).
-             rewrite < plus_n_O.change in \vdash (? (? ? (? ? (? (? % ?)))) ?) with (S m + m).
-             rewrite < minus_plus_m_m.
-             apply le_n
-            ]
-          |apply le_O_n
-          |intros.
-           elim (eqb i m);elim (eqb i (S m));reflexivity
+#m #posm  @(lt_times_n_to_lt_l 2)
+cut (∀a,b. a^(S b) = a^b*a) [//] #expS <expS  
+cut (2 = 1+1) [//] #H2 >H2 in ⊢ (??(?%?));
+>binomial_law 
+@(le_to_lt_to_lt ? 
+  (∑_{k < S (S (2*m)) | orb (eqb k m) (eqb k (S m))}
+         (bc (S (2*m)) k*1^(S (2*m)-k)*1^k)))
+  [>(bigop_diff ??? plusAC … m)
+    [>(bigop_diff ??? plusAC … (S m))
+      [<(pad_bigop1 … (S(S(2*m))) 0)
+        [cut (∀a,b. plus a b = plusAC a b) [//] #Hplus <Hplus <Hplus
+         whd in ⊢ (? ? (? ? (? ? %)));
+         cut (∀a. 2*a = a + a) [//] #H2a >commutative_times >H2a
+         <exp_1_n <exp_1_n <exp_1_n <exp_1_n
+         <times_n_1 <times_n_1 <times_n_1 <times_n_1 
+         @le_plus
+          [@le_n
+          |>Mdef <plus_n_O >bceq >bceq 
+           cut (∀a,b.S a - (S b) = a -b) [//] #Hminus >Hminus 
+           normalize in ⊢ (??(??(??(?(?%?))))); <plus_n_O <minus_plus_m_m
+           <commutative_times in ⊢ (??(??%)); 
+           cut (S (2*m)-m = S m) 
+            [>H2a >plus_n_Sm >commutative_plus <minus_plus_m_m //] 
+           #Hcut >Hcut //
           ]
-        |apply le_S_S.apply le_S_S.
-         apply le_times_n.
-         apply le_n_Sn
-        |rewrite > (eq_to_eqb_true ? ? (refl_eq ? (S m))).
-         rewrite > (not_eq_to_eqb_false (S m) m)
-          [reflexivity
-          |intro.apply (not_eq_n_Sn m).
-           apply sym_eq.assumption
-          ]
+        |#i #_ #_ >(eqb_sym i m) >(eqb_sym i (S m))
+         cases (eqb m i) cases (eqb (S m) i) //
+        |@le_O_n
         ]
-      |apply le_S.apply le_S_S.
-       apply le_times_n.
-       apply le_n_Sn
-      |rewrite > (eq_to_eqb_true ? ? (refl_eq ? (S m))).
-       reflexivity
+      |>(eqb_sym (S m) m) >(eq_to_eqb_true ? ? (refl ? (S m)))
+       >(not_eq_to_eqb_false m (S m)) 
+        [// |@(not_to_not … (not_eq_n_Sn m)) //]
+      |@le_S_S @le_S_S // 
       ]
-    |rewrite > (bool_to_nat_to_eq_sigma_p (S(S(2*m))) ? (\lambda k.true) ? 
-      (\lambda k.bool_to_nat (eqb k m\lor eqb k (S m))*(bc (S (2*m)) k*(1)\sup(S (2*m)-k)*(1)\sup(k))))
-     in \vdash (? % ?)
-      [apply lt_sigma_p
-        [intros.elim (eqb i m\lor eqb i (S m))
-          [rewrite > sym_times.rewrite < times_n_SO.apply le_n
-          |apply le_O_n
-          ]
-        |apply (ex_intro ? ? O).
-         split
-          [split[apply lt_O_S|reflexivity]
-          |rewrite > (not_eq_to_eqb_false ? ? (not_eq_O_S m)).
-           rewrite > (not_eq_to_eqb_false ? ? (lt_to_not_eq ? ? H)).
-           simplify in \vdash (? % ?).
-           rewrite < exp_SO_n.rewrite < exp_SO_n.
-           rewrite > bc_n_O.simplify.
-           apply le_n
-          ]
+    |>(eq_to_eqb_true ?? (refl ? m)) //
+    |@le_S @le_S_S //
+    ]
+  |@lt_sigma_p
+    [//
+    |#i #lti #Hi @le_n
+    |%{0} %
+      [@lt_O_S
+      |%2 % 
+        [% // >(not_eq_to_eqb_false 0 (S m)) //
+         >(not_eq_to_eqb_false 0 m) // @lt_to_not_eq //
+        |>bc_n_O <exp_1_n <exp_1_n @le_n
         ]
-      |intros.rewrite > sym_times in \vdash (? ? ? %).
-       rewrite < times_n_SO.
-       reflexivity
       ]
     ]
   ]
 qed.
       
-
 (*
 theorem exp_Sn_SSO: \forall n. exp (S n) 2 = S((exp n 2) + 2*n).
 intros.simplify.
@@ -208,4 +201,3 @@ rewrite < assoc_plus.
 rewrite < sym_plus.
 reflexivity.
 qed. *)
-*)

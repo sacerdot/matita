@@ -75,6 +75,67 @@ qed.
 (* monotonicity; these roperty should be expressed at a more
 genral level *)
 
+theorem le_sigma: 
+∀n:nat. ∀p1,p2:nat → bool. ∀g1,g2:nat → nat.
+(∀i. i < n → p1 i = true → p2 i = true ) → 
+(∀i. i < n → p1 i = true → g1 i ≤ g2 i ) → 
+ ∑_{i < n | p1 i} (g1 i) ≤ ∑_{i < n | p2 i} (g2 i).
+#n #p1 #p2 #g1 #g2 elim n 
+  [#_ #_ @le_n
+  |#n1 #Hind #H1 #H2 
+   lapply (Hind ??)
+     [#j #ltin1 #Hgj @(H2 … Hgj) @le_S //
+     |#j #ltin1 #Hp1j @(H1 … Hp1j) @le_S //
+     ] -Hind #Hind
+   cases (true_or_false (p2 n1)) #Hp2
+    [>bigop_Strue in ⊢ (??%); [2:@Hp2] 
+     cases (true_or_false (p1 n1)) #Hp1
+      [>bigop_Strue [2:@Hp1] @(le_plus … Hind) @H2 // 
+      |>bigop_Sfalse [2:@Hp1] @le_plus_a // 
+      ]
+    |cut (p1 n1 = false) 
+      [cases (true_or_false (p1 n1)) #Hp1
+        [>(H1 … (le_n ?) Hp1) in Hp2; #H destruct (H) | //]
+      ] #Hp1
+     >bigop_Sfalse [2:@Hp1] >bigop_Sfalse [2:@Hp2] //
+    ]
+  ]
+qed.
+
+theorem lt_sigma_p: 
+∀n:nat. ∀p1,p2:nat → bool. ∀g1,g2:nat → nat.
+(∀i. i < n → p1 i = true → p2 i = true) →
+(∀i. i < n → p1 i = true → g1 i ≤ g2 i ) →
+(∃i. i < n ∧ ((p1 i = true) ∧ (g1 i < g2 i)
+              ∨ (p1 i = false ∧ (p2 i = true) ∧ (0 < g2 i)))) →
+  ∑_{i < n | p1 i} (g1 i) < ∑_{i < n | p2 i} (g2 i).
+#n #p1 #p2 #g1 #g2 #H1 #H2 * #k * #ltk * 
+  [* #p1k #gk 
+   lapply (H1 k ltk p1k) #p2k
+   >(bigop_diff p1 ?? plusAC … ltk p1k)
+   >(bigop_diff p2 ?? plusAC … ltk p2k) whd 
+   cut (∀a,b. S a + b = S(a +b)) [//] #Hplus <Hplus @le_plus
+    [@gk
+    |@le_sigma
+      [#i #ltin #H @true_to_andb_true 
+        [@(andb_true_l … H) | @(H1 i ltin) @(andb_true_r … H)]
+      |#i #ltin #H @(H2 i ltin) @(andb_true_r … H)
+      ]
+    ]
+  |* * #p1k #p2k #posg2
+   >(bigop_diff p2 ?? plusAC … ltk p2k) whd 
+   cut (∀a. S 0 + a = S a) [//] #H0 <(H0 (bigop n ?????)) @le_plus
+    [@posg2   
+    |@le_sigma
+      [#i #ltin #H @true_to_andb_true 
+        [cases (true_or_false (eqb k i)) #Hc >Hc
+          [normalize <H <p1k >(eqb_true_to_eq … Hc) //|//] 
+        |@(H1 i ltin) @H]
+      |#i #ltin #H @(H2 i ltin) @H
+      ]
+    ]
+qed.
+ 
 theorem le_pi: 
 ∀n.∀p:nat → bool.∀g1,g2:nat → nat. 
   (∀i.i<n → p i = true → g1 i ≤ g2 i ) → 
@@ -89,7 +150,7 @@ theorem le_pi:
     ]
   ]
 qed.
-    
+
 theorem exp_sigma: ∀n,a,p. 
   ∏_{i < n | p i} a = exp a (∑_{i < n | p i} 1).
 #n #a #p elim n // #n1 cases (true_or_false (p n1)) #Hcase
