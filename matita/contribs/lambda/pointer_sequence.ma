@@ -22,6 +22,16 @@ definition pseq: Type[0] ≝ list ptr.
 (* Note: a "head" computation contracts just redexes in the head *)
 definition is_head: predicate pseq ≝ All … in_head.
 
+lemma is_head_dx: ∀s. is_head s → is_head (dx:::s).
+#s elim s -s //
+#p #s #IHs * /3 width=1/ 
+qed.
+
+lemma is_head_append: ∀r. is_head r → ∀s. is_head s → is_head (r@s).
+#r elim r -r //
+#q #r #IHr * /3 width=1/
+qed.
+
 (* Note: to us, a "normal" computation contracts redexes in non-decreasing positions *)
 definition is_le: predicate pseq ≝ Allr … ple.
 
