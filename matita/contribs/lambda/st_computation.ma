@@ -123,21 +123,6 @@ lemma st_dsubst: dsubstable st.
 ]
 qed.
 
-lemma st_inv_lsreds_is_le: ∀M,N. M ⓢ⤇* N →
-                           ∃∃r. M ↦*[r] N & is_le r.
-#M #N #H elim H -M -N
-[ #s #M #i #Hs #HM
-  lapply (is_head_is_le … Hs) -Hs /2 width=3/
-| #s #M #A1 #A2 #Hs #HM #_ * #r #HA12 #Hr
-  lapply (lsreds_trans … HM (sn:::r) (𝛌.A2) ?) /2 width=1/ -A1 #HM
-  @(ex2_intro … HM) -M -A2 /3 width=1/
-| #s #M #B1 #B2 #A1 #A2 #Hs #HM #_ #_ * #rb #HB12 #Hrb * #ra #HA12 #Hra
-  lapply (lsreds_trans … HM (dx:::ra) (@B1.A2) ?) /2 width=1/ -A1 #HM
-  lapply (lsreds_trans … HM (sn:::rb) (@B2.A2) ?) /2 width=1/ -B1 #HM
-  @(ex2_intro … HM) -M -B2 -A2 >associative_append /3 width=1/
-]
-qed-.
-
 lemma st_step_dx: ∀p,M,M2. M ↦[p] M2 → ∀M1. M1 ⓢ⤇* M → M1 ⓢ⤇* M2.
 #p #M #M2 #H elim H -p -M -M2
 [ #B #A #M1 #H
@@ -153,6 +138,37 @@ lemma st_step_dx: ∀p,M,M2. M ↦[p] M2 → ∀M1. M1 ⓢ⤇* M → M1 ⓢ⤇* 
 | #p #B #A #A2 #_ #IHA2 #M1 #H
   elim (st_inv_appl … H ???) -H [4: // |2,3: skip ] /3 width=7/ (**) (* simplify line *)
 ]
+qed-.
+
+lemma st_lsreds: ∀s,M1,M2. M1 ↦*[s] M2 → M1 ⓢ⤇* M2.
+#s #M1 #M2 #H @(lstar_ind_r ????????? H) -s -M2 // /2 width=4 by st_step_dx/
+qed.
+
+lemma st_inv_lsreds_is_le: ∀M,N. M ⓢ⤇* N →
+                           ∃∃r. M ↦*[r] N & is_le r.
+#M #N #H elim H -M -N
+[ #s #M #i #Hs #HM
+  lapply (is_head_is_le … Hs) -Hs /2 width=3/
+| #s #M #A1 #A2 #Hs #HM #_ * #r #HA12 #Hr
+  lapply (lsreds_trans … HM (sn:::r) (𝛌.A2) ?) /2 width=1/ -A1 #HM
+  @(ex2_intro … HM) -M -A2 /3 width=1/
+| #s #M #B1 #B2 #A1 #A2 #Hs #HM #_ #_ * #rb #HB12 #Hrb * #ra #HA12 #Hra
+  lapply (lsreds_trans … HM (dx:::ra) (@B1.A2) ?) /2 width=1/ -A1 #HM
+  lapply (lsreds_trans … HM (sn:::rb) (@B2.A2) ?) /2 width=1/ -B1 #HM
+  @(ex2_intro … HM) -M -B2 -A2 >associative_append /3 width=1/
+]
+qed-.
+
+theorem st_trans: transitive … st.
+#M1 #M #M2 #HM1 #HM2
+elim (st_inv_lsreds_is_le … HM1) -HM1 #s1 #HM1 #_
+elim (st_inv_lsreds_is_le … HM2) -HM2 #s2 #HM2 #_
+lapply (lsreds_trans … HM1 … HM2) -M /2 width=2/
+qed-.
+
+theorem lsreds_standard: ∀s,M,N. M ↦*[s] N → ∃∃r. M ↦*[r] N & is_le r.
+#s #M #N #H
+@st_inv_lsreds_is_le /2 width=2/
 qed-.
 
 (* Note: we use "lapply (rewrite_r ?? is_head … Hq)" (procedural)
@@ -186,23 +202,7 @@ lemma st_lsred_swap: ∀p. in_head p → ∀N1,N2. N1 ↦[p] N2 → ∀M1. M1 �
 ]
 qed-.
 
-lemma st_lsreds: ∀s,M1,M2. M1 ↦*[s] M2 → M1 ⓢ⤇* M2.
-#s #M1 #M2 #H @(lstar_ind_r ????????? H) -s -M2 // /2 width=4 by st_step_dx/
-qed.
-
-theorem st_trans: transitive … st.
-#M1 #M #M2 #HM1 #HM2
-elim (st_inv_lsreds_is_le … HM1) -HM1 #s1 #HM1 #_
-elim (st_inv_lsreds_is_le … HM2) -HM2 #s2 #HM2 #_
-lapply (lsreds_trans … HM1 … HM2) -M /2 width=2/
-qed-.
-
-theorem lsreds_standard: ∀s,M,N. M ↦*[s] N → ∃∃r. M ↦*[r] N & is_le r.
-#s #M #N #H
-@st_inv_lsreds_is_le /2 width=2/
-qed-.
-
-theorem lsreds_lhap1_swap: ∀s,M1,N1. M1 ↦*[s] N1 →
+theorem lsreds_lsred_swap: ∀s,M1,N1. M1 ↦*[s] N1 →
                            ∀p,N2. in_head p → N1 ↦[p] N2 →
                            ∃∃q,r,M2. in_head q & M1 ↦[q] M2 & M2 ↦*[r] N2 &
                                      is_le (q::r).
