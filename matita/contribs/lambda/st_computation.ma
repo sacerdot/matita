@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "labelled_sequential_computation.ma".
+include "pointer_list_standard.ma".
 
 (* KASHIMA'S "ST" COMPUTATION ***********************************************)
 
@@ -144,11 +145,11 @@ lemma st_lsreds: ∀s,M1,M2. M1 ↦*[s] M2 → M1 ⓢ⤇* M2.
 #s #M1 #M2 #H @(lstar_ind_r ????????? H) -s -M2 // /2 width=4 by st_step_dx/
 qed.
 
-lemma st_inv_lsreds_is_le: ∀M,N. M ⓢ⤇* N →
-                           ∃∃r. M ↦*[r] N & is_le r.
+lemma st_inv_lsreds_is_standard: ∀M,N. M ⓢ⤇* N →
+                                 ∃∃r. M ↦*[r] N & is_standard r.
 #M #N #H elim H -M -N
 [ #s #M #i #Hs #HM
-  lapply (is_head_is_le … Hs) -Hs /2 width=3/
+  lapply (is_head_is_standard … Hs) -Hs /2 width=3/
 | #s #M #A1 #A2 #Hs #HM #_ * #r #HA12 #Hr
   lapply (lsreds_trans … HM (sn:::r) (𝛌.A2) ?) /2 width=1/ -A1 #HM
   @(ex2_intro … HM) -M -A2 /3 width=1/
@@ -161,14 +162,14 @@ qed-.
 
 theorem st_trans: transitive … st.
 #M1 #M #M2 #HM1 #HM2
-elim (st_inv_lsreds_is_le … HM1) -HM1 #s1 #HM1 #_
-elim (st_inv_lsreds_is_le … HM2) -HM2 #s2 #HM2 #_
+elim (st_inv_lsreds_is_standard … HM1) -HM1 #s1 #HM1 #_
+elim (st_inv_lsreds_is_standard … HM2) -HM2 #s2 #HM2 #_
 lapply (lsreds_trans … HM1 … HM2) -M /2 width=2/
 qed-.
 
-theorem lsreds_standard: ∀s,M,N. M ↦*[s] N → ∃∃r. M ↦*[r] N & is_le r.
+theorem lsreds_standard: ∀s,M,N. M ↦*[s] N → ∃∃r. M ↦*[r] N & is_standard r.
 #s #M #N #H
-@st_inv_lsreds_is_le /2 width=2/
+@st_inv_lsreds_is_standard /2 width=2/
 qed-.
 
 (* Note: we use "lapply (rewrite_r ?? is_head … Hq)" (procedural)
@@ -205,9 +206,9 @@ qed-.
 theorem lsreds_lsred_swap: ∀s,M1,N1. M1 ↦*[s] N1 →
                            ∀p,N2. in_head p → N1 ↦[p] N2 →
                            ∃∃q,r,M2. in_head q & M1 ↦[q] M2 & M2 ↦*[r] N2 &
-                                     is_le (q::r).
+                                     is_standard (q::r).
 #s #M1 #N1 #HMN1 #p #N2 #Hp #HN12
 lapply (st_lsreds … HMN1) -s #HMN1
 elim (st_lsred_swap … Hp … HN12 … HMN1) -p -N1 #q #M2 #Hq #HM12 #HMN2
-elim (st_inv_lsreds_is_le … HMN2) -HMN2 /3 width=8/
+elim (st_inv_lsreds_is_standard … HMN2) -HMN2 /3 width=8/
 qed-.

@@ -12,12 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "pointer_sequence.ma".
+include "pointer_list.ma".
 include "parallel_computation.ma".
 
 (* LABELLED SEQUENTIAL COMPUTATION (MULTISTEP) ******************************)
 
-definition lsreds: pseq → relation term ≝ lstar … lsred.
+definition lsreds: ptrl → relation term ≝ lstar … lsred.
 
 interpretation "labelled sequential computation"
    'SeqRedStar M s N = (lsreds s M N).

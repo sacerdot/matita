@@ -495,12 +495,17 @@ cut (∀q:nat. q ≤ n → P q) /2/
  ]
 qed.
 
+fact f_ind_aux: ∀A. ∀f:A→ℕ. ∀P:predicate A.
+                (∀n. (∀a. f a < n → P a) → ∀a. f a = n → P a) →
+                ∀n,a. f a = n → P a.
+#A #f #P #H #n @(nat_elim1 … n) -n #n /3 width=3/ (**) (* auto slow (34s) without #n *)
+qed-.
+
 lemma f_ind: ∀A. ∀f:A→ℕ. ∀P:predicate A.
              (∀n. (∀a. f a < n → P a) → ∀a. f a = n → P a) → ∀a. P a.
 #A #f #P #H #a
-cut (∀n,a. f a = n → P a) /2 width=3/ -a
-#n @(nat_elim1 … n) -n #n /3 width=3/ (**) (* auto very slow (274s) without #n *)
-qed-.
+@(f_ind_aux … H) -H [2: // | skip ]
+qed-. 
 
 (* More negated equalities **************************************************)
 

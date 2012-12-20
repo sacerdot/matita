@@ -12,20 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "pointer_sequence.ma".
+include "pointer_list.ma".
 
 (* POINTER TREE *************************************************************)
 
 (* Policy: pointer tree metavariables: P, Q *)
 (* Note: this is a binary tree on pointer sequences *)
-inductive ptree: Type[0] ≝
-| tnil : ptree
-| tcons: pseq → ptree → ptree → ptree
+inductive ptrt: Type[0] ≝
+| tnil : ptrt
+| tcons: ptrl → ptrt → ptrt → ptrt
 .
 
-let rec size (P:ptree) on P ≝ match P with
+let rec length (P:ptrt) on P ≝ match P with
 [ tnil          ⇒ 0
-| tcons s Q1 Q2 ⇒ size Q2 + size Q1 + |s|
+| tcons s Q1 Q2 ⇒ length Q2 + length Q1 + |s|
 ].
 
-interpretation "pointer tree size" 'card P = (size P).
+interpretation "pointer tree length" 'card P = (length P).
