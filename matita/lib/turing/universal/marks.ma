@@ -1386,3 +1386,138 @@ qed.
 
 lemma sem_compare : Realize ? compare R_compare.
 /2/ qed.
+
+(* new *)
+definition R_compare_new :=
+  λt1,t2.
+  ∀ls,c,rs.t1 = midtape (FinProd … FSUnialpha FinBool) ls c rs → 
+  (∀c'.bit_or_null c' = false → c = 〈c',true〉 → t2 = midtape ? ls 〈c',false〉 rs) ∧
+  (∀c'. c = 〈c',false〉 → t2 = t1) ∧
+(* forse manca il caso no marks in rs *)
+  ∀b,b0,bs,b0s,comma,l1,l2.
+  |bs| = |b0s| → 
+  (∀c.memb (FinProd … FSUnialpha FinBool) c bs = true → bit_or_null (\fst c) = true) → 
+  (∀c.memb ? c bs = true → is_marked ? c = false) → 
+  (∀c.memb ? c b0s = true → is_marked ? c = false) → 
+  (∀c.memb ? c l1 = true → is_marked ? c = false) → 
+  c = 〈b,true〉 → bit_or_null b = true → 
+  rs = bs@〈grid,false〉::l1@〈b0,true〉::b0s@〈comma,false〉::l2 → 
+  (〈b,true〉::bs = 〈b0,true〉::b0s ∧
+   t2 = midtape ? (reverse ? bs@〈b,false〉::ls)
+          〈grid,false〉 (l1@〈b0,false〉::b0s@〈comma,true〉::l2)) ∨
+  (∃la,c',d',lb,lc.c' ≠ d' ∧
+    〈b,false〉::bs = la@〈c',false〉::lb ∧
+    〈b0,false〉::b0s = la@〈d',false〉::lc ∧
+    t2 = midtape (FinProd … FSUnialpha FinBool) (reverse ? la@
+                    reverse ? l1@
+                    〈grid,false〉::
+                    reverse ? lb@
+                    〈c',true〉::
+                    reverse ? la@ls)
+                    〈d',false〉 (lc@〈comma,false〉::l2)).
+                    
+lemma wsem_compare_new : WRealize ? compare R_compare_new.
+#t #i #outc #Hloop
+lapply (sem_while ?????? sem_comp_step t i outc Hloop) [%]
+-Hloop * #t1 * #Hstar @(star_ind_l ??????? Hstar)
+[ #tapea whd in ⊢ (%→?); #Rfalse #ls #c #rs #Htapea %
+  [ %
+    [ #c' #Hc' #Hc lapply (Rfalse … Htapea) -Rfalse * >Hc
+      whd in ⊢ (??%?→?); #Hfalse destruct (Hfalse)
+    | #c' #Hc lapply (Rfalse … Htapea) -Rfalse * #_
+      #Htrue @Htrue ]
+  | #b #b0 #bs #b0s #l1 #l2 #Hlen #Hbs1 #Hb0s1 #Hbs2 #Hb0s2 #Hl1 #Hc
+    cases (Rfalse … Htapea) -Rfalse >Hc whd in ⊢ (??%?→?);#Hfalse destruct (Hfalse)
+  ]
+| #tapea #tapeb #tapec #Hleft #Hright #IH #Htapec lapply (IH Htapec) -Htapec -IH #IH
+  whd in Hleft; #ls #c #rs #Htapea cases Hleft -Hleft
+  #ls0 * #c' * #rs0 * >Htapea #Hdes destruct (Hdes) * * 
+  cases (true_or_false (bit_or_null c')) #Hc'
+  [2: #Htapeb lapply (Htapeb Hc') -Htapeb #Htapeb #_ #_ %
+    [%[#c1 #Hc1 #Heqc destruct (Heqc) 
+       cases (IH … Htapeb) * #_ #H #_ <Htapeb @(H … (refl…)) 
+      |#c1 #Heqc destruct (Heqc) 
+      ]
+    |#b #b0 #bs #b0s #comma #l1 #l2 #_ #_ #_ #_ #_
+     #Heq destruct (Heq) >Hc' #Hfalse @False_ind destruct (Hfalse)
+    ]
+  |#_ (* no marks in rs ??? *) #_ #Hleft %
+    [ %
+      [ #c'' #Hc'' #Heq destruct (Heq) >Hc'' in Hc'; #H destruct (H) 
+      | #c0 #Hfalse destruct (Hfalse)
+      ]
+    |#b #b0 #bs #b0s #comma #l1 #l2 #Hlen #Hbs1 #Hbs2 #Hb0s2 #Hl1
+     #Heq destruct (Heq) #_ >append_cons; <associative_append #Hrs
+     cases (Hleft …  Hc' … Hrs) -Hleft
+      [2: #c1 #memc1 cases (memb_append … memc1) -memc1 #memc1
+        [cases (memb_append … memc1) -memc1 #memc1
+          [@Hbs2 @memc1 |>(memb_single … memc1) %]
+        |@Hl1 @memc1
+        ]
+      |* (* manca il caso in cui dopo una parte uguale il 
+            secondo nastro finisca ... ???? *)
+       #_ cases (true_or_false (b==b0)) #eqbb0
+        [2: #_ #Htapeb %2 lapply (Htapeb … (\Pf eqbb0)) -Htapeb #Htapeb
+         cases (IH … Htapeb) * #_ #Hout #_
+         @(ex_intro … []) @(ex_intro … b) @(ex_intro … b0) 
+         @(ex_intro … bs) @(ex_intro … b0s) %
+          [%[%[@(\Pf eqbb0) | %] | %] 
+          |>(Hout … (refl …)) -Hout >Htapeb @eq_f3 [2,3:%]
+           >reverse_append >reverse_append >associative_append 
+           >associative_append %  
+          ]
+        |lapply Hbs1 lapply Hbs2 lapply Hb0s2 lapply Hrs 
+         -Hbs1 -Hbs2 -Hb0s2 -Hrs 
+         @(list_cases2 … Hlen)
+          [#Hrs #_ #_ #_ >associative_append >associative_append #Htapeb #_
+           lapply (Htapeb … (\P eqbb0) … (refl …) (refl …)) -Htapeb #Htapeb
+           cases (IH … Htapeb) -IH * #Hout #_ #_ %1 %
+            [>(\P eqbb0) % 
+            |>(Hout grid (refl …) (refl …)) @eq_f 
+             normalize >associative_append %
+            ]
+          |* #a1 #ba1 * #a2 #ba2 #tl1 #tl2 #HlenS #Hrs #Hb0s2 #Hbs2 #Hbs1 
+           cut (ba1 = false) [@(Hbs2 〈a1,ba1〉) @memb_hd] #Hba1 >Hba1
+           >associative_append >associative_append #Htapeb #_
+           lapply (Htapeb … (\P eqbb0) … (refl …) (refl …)) -Htapeb #Htapeb
+           cases (IH … Htapeb) -IH * #_ #_
+           cut (ba2=false) [@(Hb0s2 〈a2,ba2〉) @memb_hd] #Hba2 >Hba2  
+           #IH cases(IH a1 a2 ??? (l1@[〈b0,false〉]) l2 HlenS ???? (refl …) ??)
+            [4:#x #memx @Hbs1 @memb_cons @memx
+            |5:#x #memx @Hbs2 @memb_cons @memx
+            |6:#x #memx @Hb0s2 @memb_cons @memx
+            |7:#x #memx cases (memb_append …memx) -memx #memx
+              [@Hl1 @memx | >(memb_single … memx) %]
+            |8:@(Hbs1 〈a1,ba1〉) @memb_hd
+            |9: >associative_append >associative_append %
+            |-IH -Hbs1 -Hbs2 -Hrs *
+             #Ha1a2 #Houtc %1 %
+              [>(\P eqbb0) @eq_f destruct (Ha1a2) %
+              |>Houtc @eq_f3 
+                [>reverse_cons >associative_append %
+                |%
+                |>associative_append % 
+                ]
+              ]
+            |-IH -Hbs1 -Hbs2 -Hrs *
+             #la * #c' * #d' * #lb * #lc * * * 
+             #Hcd #H1 #H2 #Houtc %2
+             @(ex_intro … (〈b,false〉::la)) @(ex_intro … c') @(ex_intro … d') 
+             @(ex_intro … lb) @(ex_intro … lc) %
+              [%[%[@Hcd | >H1 %] |>(\P eqbb0) >Hba2 >H2 %]
+              |>Houtc @eq_f3 
+                [>(\P eqbb0) >reverse_append >reverse_cons 
+                 >reverse_cons >associative_append >associative_append
+                 >associative_append >associative_append %
+                |%
+                |%
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+]
+qed.

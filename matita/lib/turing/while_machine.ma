@@ -18,7 +18,7 @@ distinguished final state $q$ to the initial state. *)
 
 definition while_trans ≝ λsig. λM : TM sig. λq:states sig M. λp.
   let 〈s,a〉 ≝ p in
-  if s == q then 〈start ? M, None ?〉
+  if s == q then 〈start ? M, None ?,N〉
   else trans ? M p.
   
 definition whileTM ≝ λsig. λM : TM sig. λqacc: states ? M.

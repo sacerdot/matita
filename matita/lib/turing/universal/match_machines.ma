@@ -287,6 +287,34 @@ definition match_tuple_step ≝
            (ifTM ? (test_char ? (λc:STape.is_grid (\fst c)))
              (mark ?) (move_l ? · init_current) tc_true)) tc_true)))
     (nop ?) tc_true.
+    
+definition R_match_tuple_step_true_new ≝ λt1,t2.
+  ∃ls,cur,rs.t1 = midtape STape ls cur rs \wedge 
+  \fst cur ≠ grid ∧ 
+  (∀ls0,c,l1,l2,c1,l3,l4,rs0,n.
+   only_bits_or_nulls l1 → no_marks l1 (* → no_grids l2 *) → 
+   bit_or_null c = true → bit_or_null c1 = true →
+   only_bits_or_nulls l3 → S n = |l1| → |l1| = |l3| →
+   table_TM (S n) (l2@〈c1,false〉::l3@〈comma,false〉::l4) → 
+   ls = 〈grid,false〉::ls0 → cur = 〈c,true〉 → 
+   rs = l1@〈grid,false〉::l2@〈c1,true〉::l3@〈comma,false〉::l4@〈grid,false〉::rs0 → 
+   (* facciamo match *)
+   (〈c,false〉::l1 = 〈c1,false〉::l3 ∧
+   t2 = midtape ? (reverse ? l1@〈c,false〉::〈grid,false〉::ls0) 〈grid,false〉
+         (l2@〈c1,false〉::l3@〈comma,true〉::l4@〈grid,false〉::rs0))
+   ∨
+   (* non facciamo match e marchiamo la prossima tupla *)
+   (〈c,false〉::l1 ≠ 〈c1,false〉::l3 ∧
+    ∃c2,l5,l6.l4 = l5@〈bar,false〉::〈c2,false〉::l6 ∧
+    (* condizioni su l5 l6 l7 *)
+    t2 = midtape STape (〈grid,false〉::ls0) 〈c,true〉 
+          (l1@〈grid,false〉::l2@〈c1,false〉::l3@〈comma,false〉::
+           l5@〈bar,false〉::〈c2,true〉::l6@〈grid,false〉::rs0))
+   ∨  
+   (* non facciamo match e non c'è una prossima tupla:
+      non specifichiamo condizioni sul nastro di output, perché
+      non eseguiremo altre operazioni, quindi il suo formato non ci interessa *)
+   (〈c,false〉::l1 ≠ 〈c1,false〉::l3 ∧ no_bars l4 ∧ current ? t2 = Some ? 〈grid,true〉)).  
 
 (* universal version 
 definition R_match_tuple_step_true ≝ λt1,t2.

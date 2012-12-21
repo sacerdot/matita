@@ -67,31 +67,47 @@ inductive move : Type[0] ≝
 
 record TM (sig:FinSet): Type[1] ≝ 
 { states : FinSet;
-  trans : states × (option sig) → states × (option (sig × move));
+  trans : states × (option sig) → states × (option sig) × move;
   start: states;
   halt : states → bool
 }.
 
-definition tape_move_left ≝ λsig:FinSet.λlt:list sig.λc:sig.λrt:list sig.
-  match lt with
-  [ nil ⇒ leftof sig c rt
-  | cons c0 lt0 ⇒ midtape sig lt0 c0 (c::rt) ].
+definition tape_move_left ≝ λsig:FinSet.λt:tape sig.
+  match t with 
+  [ niltape ⇒ niltape sig
+  | leftof _ _ ⇒ t
+  | rightof a ls ⇒ midtape sig ls a [ ]
+  | midtape ls a rs ⇒ 
+    match ls with 
+    [ nil ⇒ leftof sig a rs
+    | cons a0 ls0 ⇒ midtape sig ls0 a0 (a::rs)
+    ]
+  ]. 
   
-definition tape_move_right ≝ λsig:FinSet.λlt:list sig.λc:sig.λrt:list sig.
-  match rt with
-  [ nil ⇒ rightof sig c lt
-  | cons c0 rt0 ⇒ midtape sig (c::lt) c0 rt0 ].
-
-definition tape_move ≝ λsig.λt: tape sig.λm:option (sig × move).
-  match m with
+definition tape_move_right ≝ λsig:FinSet.λt:tape sig.
+  match t with 
+  [ niltape ⇒ niltape sig
+  | rightof _ _ ⇒ t
+  | leftof a rs ⇒ midtape sig [ ] a rs
+  | midtape ls a rs ⇒ 
+    match rs with 
+    [ nil ⇒ rightof sig a ls
+    | cons a0 rs0 ⇒ midtape sig (a::ls) a0 rs0
+    ]
+  ]. 
+  
+definition tape_write ≝ λsig.λt: tape sig.λs:option sig.
+  match s with 
   [ None ⇒ t
-  | Some m' ⇒ 
-    let 〈s,m1〉 ≝ m' in 
-    match m1 with
-      [ R ⇒ tape_move_right ? (left ? t) s (right ? t)
-      | L ⇒ tape_move_left ? (left ? t) s (right ? t)
-      | N ⇒ midtape ? (left ? t) s (right ? t)
-      ] ].
+  | Some s0 ⇒ midtape ? (left ? t) s0 (right ? t)
+  ].
+
+definition tape_move ≝ λsig.λt: tape sig.λm:move.
+  match m with
+    [ R ⇒ tape_move_right ? t
+    | L ⇒ tape_move_left ? t
+    | N ⇒ t
+    ].
 
 record config (sig,states:FinSet): Type[0] ≝ 
 { cstate : states;
@@ -111,8 +127,8 @@ qed.
 
 definition step ≝ λsig.λM:TM sig.λc:config sig (states sig M).
   let current_char ≝ current ? (ctape ?? c) in
-  let 〈news,mv〉 ≝ trans sig M 〈cstate ?? c,current_char〉 in
-  mk_config ?? news (tape_move sig (ctape ?? c) mv).
+  let 〈news,a,mv〉 ≝ trans sig M 〈cstate ?? c,current_char〉 in
+  mk_config ?? news (tape_move sig (tape_write ? (ctape ?? c) a) mv).
 
 (******************************** loop ****************************************)
 let rec loop (A:Type[0]) n (f:A→A) p a on n ≝
@@ -367,7 +383,7 @@ definition start_nop : initN 1 ≝ mk_Sig ?? 0 (le_n … 1).
 
 definition nop ≝ 
   λalpha:FinSet.mk_TM alpha nop_states
-  (λp.let 〈q,a〉 ≝ p in 〈q,None ?〉)
+  (λp.let 〈q,a〉 ≝ p in 〈q,None ?,N〉)
   start_nop (λ_.true).
   
 definition R_nop ≝ λalpha.λt1,t2:tape alpha.t2 = t1.
@@ -390,9 +406,9 @@ definition seq_trans ≝ λsig. λM1,M2 : TM sig.
 λp. let 〈s,a〉 ≝ p in
   match s with 
   [ inl s1 ⇒ 
-      if halt sig M1 s1 then 〈inr … (start sig M2), None ?〉
-      else let 〈news1,m〉 ≝ trans sig M1 〈s1,a〉 in 〈inl … news1,m〉
-  | inr s2 ⇒ let 〈news2,m〉 ≝ trans sig M2 〈s2,a〉 in 〈inr … news2,m〉
+      if halt sig M1 s1 then 〈inr … (start sig M2), None ?,N〉
+      else let 〈news1,newa,m〉 ≝ trans sig M1 〈s1,a〉 in 〈inl … news1,newa,m〉
+  | inr s2 ⇒ let 〈news2,newa,m〉 ≝ trans sig M2 〈s2,a〉 in 〈inr … news2,newa,m〉
   ].
  
 definition seq ≝ λsig. λM1,M2 : TM sig. 
@@ -432,19 +448,19 @@ lemma p_halt_liftL : ∀sig,S1,S2,halt,c.
 #sig #S1 #S2 #halt #c cases c #s #t %
 qed.
 
-lemma trans_seq_liftL : ∀sig,M1,M2,s,a,news,move.
+lemma trans_seq_liftL : ∀sig,M1,M2,s,a,news,newa,move.
   halt ? M1 s = false → 
-  trans sig M1 〈s,a〉 = 〈news,move〉 → 
-  trans sig (seq sig M1 M2) 〈inl … s,a〉 = 〈inl … news,move〉.
-#sig (*#M1*) * #Q1 #T1 #init1 #halt1 #M2 #s #a #news #move
+  trans sig M1 〈s,a〉 = 〈news,newa,move〉 → 
+  trans sig (seq sig M1 M2) 〈inl … s,a〉 = 〈inl … news,newa,move〉.
+#sig (*#M1*) * #Q1 #T1 #init1 #halt1 #M2 #s #a #news #newa #move
 #Hhalt #Htrans whd in ⊢ (??%?); >Hhalt >Htrans %
 qed.
 
-lemma trans_seq_liftR : ∀sig,M1,M2,s,a,news,move.
+lemma trans_seq_liftR : ∀sig,M1,M2,s,a,news,newa,move.
   halt ? M2 s = false → 
-  trans sig M2 〈s,a〉 = 〈news,move〉 → 
-  trans sig (seq sig M1 M2) 〈inr … s,a〉 = 〈inr … news,move〉.
-#sig #M1 * #Q2 #T2 #init2 #halt2 #s #a #news #move
+  trans sig M2 〈s,a〉 = 〈news,newa,move〉 → 
+  trans sig (seq sig M1 M2) 〈inr … s,a〉 = 〈inr … news,newa,move〉.
+#sig #M1 * #Q2 #T2 #init2 #halt2 #s #a #news #newa #move
 #Hhalt #Htrans whd in ⊢ (??%?); >Hhalt >Htrans %
 qed.
 
@@ -455,7 +471,7 @@ lemma step_seq_liftR : ∀sig,M1,M2,c0.
 #sig #M1 (* * #Q1 #T1 #init1 #halt1 *) #M2 * #s #t
   lapply (refl ? (trans ?? 〈s,current sig t〉))
   cases (trans ?? 〈s,current sig t〉) in ⊢ (???% → %);
-  #s0 #m0 cases t
+  * #s0 #a0 #m0 cases t
   [ #Heq #Hhalt
   | 2,3: #s1 #l1 #Heq #Hhalt 
   |#ls #s1 #rs #Heq #Hhalt ]
@@ -470,7 +486,7 @@ lemma step_seq_liftL : ∀sig,M1,M2,c0.
 #sig #M1 (* * #Q1 #T1 #init1 #halt1 *) #M2 * #s #t
   lapply (refl ? (trans ?? 〈s,current sig t〉))
   cases (trans ?? 〈s,current sig t〉) in ⊢ (???% → %);
-  #s0 #m0 cases t
+  * #s0 #a0 #m0 cases t
   [ #Heq #Hhalt
   | 2,3: #s1 #l1 #Heq #Hhalt 
   |#ls #s1 #rs #Heq #Hhalt ]
@@ -480,7 +496,7 @@ qed.
 
 lemma trans_liftL_true : ∀sig,M1,M2,s,a.
   halt ? M1 s = true → 
-  trans sig (seq sig M1 M2) 〈inl … s,a〉 = 〈inr … (start ? M2),None ?〉.
+  trans sig (seq sig M1 M2) 〈inl … s,a〉 = 〈inr … (start ? M2),None ?,N〉.
 #sig #M1 #M2 #s #a #Hhalt whd in ⊢ (??%?); >Hhalt %
 qed.
 

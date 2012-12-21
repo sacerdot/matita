@@ -21,8 +21,8 @@ definition write ≝ λalpha,c.
   mk_TM alpha write_states
   (λp.let 〈q,a〉 ≝ p in
     match pi1 … q with 
-    [ O ⇒ 〈wr1,Some ? 〈c,N〉〉
-    | S _ ⇒ 〈wr1,None ?〉 ])
+    [ O ⇒ 〈wr1,Some ? c,N〉
+    | S _ ⇒ 〈wr1,None ?,N〉 ])
   wr0 (λx.x == wr1).
   
 definition R_write ≝ λalpha,c,t1,t2.
@@ -43,10 +43,10 @@ definition move_r ≝
   λalpha:FinSet.mk_TM alpha move_states
   (λp.let 〈q,a〉 ≝ p in
     match a with
-    [ None ⇒ 〈move1,None ?〉
+    [ None ⇒ 〈move1,None ?,N〉
     | Some a' ⇒ match (pi1 … q) with
-      [ O ⇒ 〈move1,Some ? 〈a',R〉〉
-      | S q ⇒ 〈move1,None ?〉 ] ])
+      [ O ⇒ 〈move1,Some ? a',R〉
+      | S q ⇒ 〈move1,None ?,N〉 ] ])
   move0 (λq.q == move1).
   
 definition R_move_r ≝ λalpha,t1,t2.
@@ -80,10 +80,10 @@ definition move_l ≝
   λalpha:FinSet.mk_TM alpha move_states
   (λp.let 〈q,a〉 ≝ p in
     match a with
-    [ None ⇒ 〈move1,None ?〉
+    [ None ⇒ 〈move1,None ?,N〉
     | Some a' ⇒ match pi1 … q with
-      [ O ⇒ 〈move1,Some ? 〈a',L〉〉
-      | S q ⇒ 〈move1,None ?〉 ] ])
+      [ O ⇒ 〈move1,Some ? a',L〉
+      | S q ⇒ 〈move1,None ?,N〉 ] ])
   move0 (λq.q == move1).
 
 definition R_move_l ≝ λalpha,t1,t2.
@@ -125,11 +125,11 @@ definition test_char ≝
   mk_TM alpha tc_states
   (λp.let 〈q,a〉 ≝ p in
    match a with
-   [ None ⇒ 〈tc_false, None ?〉
+   [ None ⇒ 〈tc_false, None ?,N〉
    | Some a' ⇒ 
      match test a' with
-     [ true ⇒ 〈tc_true,None ?〉
-     | false ⇒ 〈tc_false,None ?〉 ]])
+     [ true ⇒ 〈tc_true,None ?,N〉
+     | false ⇒ 〈tc_false,None ?,N〉 ]])
   tc_start (λx.notb (x == tc_start)).
 
 definition Rtc_true ≝ 
@@ -234,15 +234,15 @@ definition swap_r ≝
   let 〈q',b〉 ≝ q in
   let q' ≝ pi1 nat (λi.i<4) q' in
   match a with 
-  [ None ⇒ 〈〈swap3,foo〉,None ?〉 (* if tape is empty then stop *)
+  [ None ⇒ 〈〈swap3,foo〉,None ?,N〉 (* if tape is empty then stop *)
   | Some a' ⇒ 
   match q' with
-  [ O ⇒ (* q0 *) 〈〈swap1,a'〉,Some ? 〈a',R〉〉  (* save in register and move R *)
+  [ O ⇒ (* q0 *) 〈〈swap1,a'〉,Some ? a',R〉  (* save in register and move R *)
   | S q' ⇒ match q' with
-    [ O ⇒ (* q1 *) 〈〈swap2,a'〉,Some ? 〈b,L〉〉 (* swap with register and move L *)
+    [ O ⇒ (* q1 *) 〈〈swap2,a'〉,Some ? b,L〉 (* swap with register and move L *)
     | S q' ⇒ match q' with
-      [ O ⇒ (* q2 *) 〈〈swap3,foo〉,Some ? 〈b,N〉〉 (* copy from register and stay *)
-      | S q' ⇒ (* q3 *) 〈〈swap3,foo〉,None ?〉 (* final state *)
+      [ O ⇒ (* q2 *) 〈〈swap3,foo〉,Some ? b,N〉 (* copy from register and stay *)
+      | S q' ⇒ (* q3 *) 〈〈swap3,foo〉,None ?,N〉 (* final state *)
       ]
     ]
   ]])
@@ -283,15 +283,15 @@ definition swap_l ≝
   let 〈q',b〉 ≝ q in
   let q' ≝ pi1 nat (λi.i<4) q' in
   match a with 
-  [ None ⇒ 〈〈swap3,foo〉,None ?〉 (* if tape is empty then stop *)
+  [ None ⇒ 〈〈swap3,foo〉,None ?,N〉 (* if tape is empty then stop *)
   | Some a' ⇒ 
   match q' with
-  [ O ⇒ (* q0 *) 〈〈swap1,a'〉,Some ? 〈a',L〉〉  (* save in register and move L *)
+  [ O ⇒ (* q0 *) 〈〈swap1,a'〉,Some ? a',L〉  (* save in register and move L *)
   | S q' ⇒ match q' with
-    [ O ⇒ (* q1 *) 〈〈swap2,a'〉,Some ? 〈b,R〉〉 (* swap with register and move R *)
+    [ O ⇒ (* q1 *) 〈〈swap2,a'〉,Some ? b,R〉 (* swap with register and move R *)
     | S q' ⇒ match q' with
-      [ O ⇒ (* q2 *) 〈〈swap3,foo〉,Some ? 〈b,N〉〉 (* copy from register and stay *)
-      | S q' ⇒ (* q3 *) 〈〈swap3,foo〉,None ?〉 (* final state *)
+      [ O ⇒ (* q2 *) 〈〈swap3,foo〉,Some ? b,N〉 (* copy from register and stay *)
+      | S q' ⇒ (* q3 *) 〈〈swap3,foo〉,None ?,N〉 (* final state *)
       ]
     ]
   ]])

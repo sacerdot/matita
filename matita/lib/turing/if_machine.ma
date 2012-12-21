@@ -43,16 +43,16 @@ definition if_trans ≝ λsig. λM1,M2,M3 : TM sig. λq:states sig M1.
   match s with 
   [ inl s1 ⇒ 
       if halt sig M1 s1 then
-        if s1==q then 〈inr … (inl … (start sig M2)), None ?〉
-        else 〈inr … (inr … (start sig M3)), None ?〉
-      else let 〈news1,m〉 ≝ trans sig M1 〈s1,a〉 in
-       〈inl … news1,m〉
+        if s1==q then 〈inr … (inl … (start sig M2)), None ?,N〉
+        else 〈inr … (inr … (start sig M3)), None ?,N〉
+      else let 〈news1,newa,m〉 ≝ trans sig M1 〈s1,a〉 in
+       〈inl … news1,newa,m〉
   | inr s' ⇒ 
       match s' with
-      [ inl s2 ⇒ let 〈news2,m〉 ≝ trans sig M2 〈s2,a〉 in
-         〈inr … (inl … news2),m〉
-      | inr s3 ⇒ let 〈news3,m〉 ≝ trans sig M3 〈s3,a〉 in
-         〈inr … (inr … news3),m〉
+      [ inl s2 ⇒ let 〈news2,newa,m〉 ≝ trans sig M2 〈s2,a〉 in
+         〈inr … (inl … news2),newa,m〉
+      | inr s3 ⇒ let 〈news3,newa,m〉 ≝ trans sig M3 〈s3,a〉 in
+         〈inr … (inr … news3),newa,m〉
       ]
   ]. 
  
@@ -69,27 +69,27 @@ definition ifTM ≝ λsig. λcondM,thenM,elseM : TM sig.
         | inr s3 ⇒ halt sig elseM s3 ]]).
 
 (****************************** lifting lemmas ********************************)
-lemma trans_if_liftM1 : ∀sig,M1,M2,M3,acc,s,a,news,move.
+lemma trans_if_liftM1 : ∀sig,M1,M2,M3,acc,s,a,news,newa,move.
   halt ? M1 s = false → 
-  trans sig M1 〈s,a〉 = 〈news,move〉 → 
-  trans sig (ifTM sig M1 M2 M3 acc) 〈inl … s,a〉 = 〈inl … news,move〉.
-#sig * #Q1 #T1 #init1 #halt1 #M2 #M3 #acc #s #a #news #move
+  trans sig M1 〈s,a〉 = 〈news,newa,move〉 → 
+  trans sig (ifTM sig M1 M2 M3 acc) 〈inl … s,a〉 = 〈inl … news,newa,move〉.
+#sig * #Q1 #T1 #init1 #halt1 #M2 #M3 #acc #s #a #news #newa #move
 #Hhalt #Htrans whd in ⊢ (??%?); >Hhalt >Htrans %
 qed.
 
-lemma trans_if_liftM2 : ∀sig,M1,M2,M3,acc,s,a,news,move.
+lemma trans_if_liftM2 : ∀sig,M1,M2,M3,acc,s,a,news,newa,move.
   halt ? M2 s = false → 
-  trans sig M2 〈s,a〉 = 〈news,move〉 → 
-  trans sig (ifTM sig M1 M2 M3 acc) 〈inr … (inl … s),a〉 = 〈inr… (inl … news),move〉.
-#sig #M1 * #Q2 #T2 #init2 #halt2 #M3 #acc #s #a #news #move
+  trans sig M2 〈s,a〉 = 〈news,newa,move〉 → 
+  trans sig (ifTM sig M1 M2 M3 acc) 〈inr … (inl … s),a〉 = 〈inr… (inl … news),newa,move〉.
+#sig #M1 * #Q2 #T2 #init2 #halt2 #M3 #acc #s #a #news #newa #move
 #Hhalt #Htrans whd in ⊢ (??%?); >Hhalt >Htrans %
 qed.
 
-lemma trans_if_liftM3 : ∀sig,M1,M2,M3,acc,s,a,news,move.
+lemma trans_if_liftM3 : ∀sig,M1,M2,M3,acc,s,a,news,newa,move.
   halt ? M3 s = false → 
-  trans sig M3 〈s,a〉 = 〈news,move〉 → 
-  trans sig (ifTM sig M1 M2 M3 acc) 〈inr … (inr … s),a〉 = 〈inr… (inr … news),move〉.
-#sig #M1 * #Q2 #T2 #init2 #halt2 #M3 #acc #s #a #news #move
+  trans sig M3 〈s,a〉 = 〈news,newa,move〉 → 
+  trans sig (ifTM sig M1 M2 M3 acc) 〈inr … (inr … s),a〉 = 〈inr… (inr … news),newa,move〉.
+#sig #M1 * #Q2 #T2 #init2 #halt2 #M3 #acc #s #a #news #newa #move
 #Hhalt #Htrans whd in ⊢ (??%?); >Hhalt >Htrans %
 qed.
 
@@ -100,7 +100,7 @@ lemma step_if_liftM1 : ∀sig,M1,M2,M3,acc,c0.
 #sig #M1 #M2 #M3 #acc * #s #t
   lapply (refl ? (trans ?? 〈s,current sig t〉))
   cases (trans ?? 〈s,current sig t〉) in ⊢ (???% → %);
-  #s0 #m0 cases t
+  * #s0 #a0 #m0 cases t
   [ #Heq #Hhalt
   | 2,3: #s1 #l1 #Heq #Hhalt 
   |#ls #s1 #rs #Heq #Hhalt ]
@@ -115,7 +115,7 @@ lemma step_if_liftM2 : ∀sig,M1,M2,M3,acc,c0.
 #sig #M1 (* * #Q1 #T1 #init1 #halt1 *) #M2 #M3 #acc * #s #t
   lapply (refl ? (trans ?? 〈s,current sig t〉))
   cases (trans ?? 〈s,current sig t〉) in ⊢ (???% → %);
-  #s0 #m0 cases t
+  * #s0 #a0 #m0 cases t
   [ #Heq #Hhalt
   | 2,3: #s1 #l1 #Heq #Hhalt 
   |#ls #s1 #rs #Heq #Hhalt ] 
@@ -130,7 +130,7 @@ lemma step_if_liftM3 : ∀sig,M1,M2,M3,acc,c0.
 #sig #M1 (* * #Q1 #T1 #init1 #halt1 *) #M2 #M3 #acc * #s #t
   lapply (refl ? (trans ?? 〈s,current sig t〉))
   cases (trans ?? 〈s,current sig t〉) in ⊢ (???% → %);
-  #s0 #m0 cases t
+  * #s0 #a0 #m0 cases t
   [ #Heq #Hhalt
   | 2,3: #s1 #l1 #Heq #Hhalt 
   |#ls #s1 #rs #Heq #Hhalt ] 
@@ -140,13 +140,13 @@ qed.
 
 lemma trans_if_M1true_acc : ∀sig,M1,M2,M3,acc,s,a.
   halt ? M1 s = true → s==acc = true →
-  trans sig (ifTM sig M1 M2 M3 acc) 〈inl … s,a〉 = 〈inr … (inl … (start ? M2)),None ?〉.
+  trans sig (ifTM sig M1 M2 M3 acc) 〈inl … s,a〉 = 〈inr … (inl … (start ? M2)),None ?,N〉.
 #sig #M1 #M2 #M3 #acc #s #a #Hhalt #Hacc whd in ⊢ (??%?); >Hhalt >Hacc %
 qed.
 
 lemma trans_if_M1true_notacc : ∀sig,M1,M2,M3,acc,s,a.
   halt ? M1 s = true → s==acc = false →
-  trans sig (ifTM sig M1 M2 M3 acc) 〈inl … s,a〉 = 〈inr … (inr … (start ? M3)),None ?〉.
+  trans sig (ifTM sig M1 M2 M3 acc) 〈inl … s,a〉 = 〈inr … (inr … (start ? M3)),None ?,N〉.
 #sig #M1 #M2 #M3 #acc #s #a #Hhalt #Hacc whd in ⊢ (??%?); >Hhalt >Hacc %
 qed.
 
