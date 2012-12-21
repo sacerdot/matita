@@ -268,6 +268,32 @@ let rec mem A (a:A) (l:list A) on l ≝
   [ nil ⇒ False
   | cons hd tl ⇒ a=hd ∨ mem A a tl
   ]. 
+  
+lemma mem_append: ∀A,a,l1,l2.mem A a (l1@l2) →
+  mem ? a l1 ∨ mem ? a l2.
+#A #a #l1 elim l1 
+  [#l2 #mema %2 @mema
+  |#b #tl #Hind #l2 * 
+    [#eqab %1 %1 @eqab 
+    |#Hmema cases (Hind ? Hmema) -Hmema #Hmema [%1 %2 //|%2 //]
+    ]
+  ]
+qed.
+
+lemma mem_append_l1: ∀A,a,l1,l2.mem A a l1 → mem A a (l1@l2).
+#A #a #l1 #l2 elim l1
+  [whd in ⊢ (%→?); @False_ind
+  |#b #tl #Hind * [#eqab %1 @eqab |#Hmema %2 @Hind //]
+  ]
+qed.
+
+lemma mem_append_l2: ∀A,a,l1,l2.mem A a l2 → mem A a (l1@l2).
+#A #a #l1 #l2 elim l1 [//|#b #tl #Hind #Hmema %2 @Hind //]
+qed.
+
+lemma mem_single: ∀A,a,b. mem A a [b] → a=b.
+#A #a #b * // @False_ind
+qed.
 
 lemma mem_map: ∀A,B.∀f:A→B.∀l,b. 
   mem ? b (map … f l) → ∃a. mem ? a l ∧ f a = b.
