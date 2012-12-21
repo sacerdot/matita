@@ -39,12 +39,12 @@ definition is_dx: predicate ptr_step ≝ λc. dx = c.
 (* Note: this is a path in the tree representation of a term, heading to a redex *)
 definition ptr: Type[0] ≝ list ptr_step.
 
-(* Note: a redex is "in the head" when is not under an abstraction nor in the lefr argument of an application *)
-definition in_head: predicate ptr ≝ All … is_dx.
+(* Note: a redex is "in whd" when is not under an abstraction nor in the lefr argument of an application *)
+definition in_whd: predicate ptr ≝ All … is_dx.
 
-lemma in_head_ind: ∀R:predicate ptr. R (◊) →
-                   (∀p. in_head p → R p → R (dx::p)) →
-                   ∀p. in_head p → R p.
+lemma in_whd_ind: ∀R:predicate ptr. R (◊) →
+                  (∀p. in_whd p → R p → R (dx::p)) →
+                  ∀p. in_whd p → R p.
 #R #H #IH #p elim p -p // -H *
 #p #IHp * #H1 #H2 destruct /3 width=1/
 qed-.

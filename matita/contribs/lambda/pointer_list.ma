@@ -19,15 +19,15 @@ include "pointer.ma".
 (* Policy: pointer list metavariables: r, s *)
 definition ptrl: Type[0] ≝ list ptr.
 
-(* Note: a "head" computation contracts just redexes in the head *)
-definition is_head: predicate ptrl ≝ All … in_head.
+(* Note: a "whd" computation contracts just redexes in the whd *)
+definition is_whd: predicate ptrl ≝ All … in_whd.
 
-lemma is_head_dx: ∀s. is_head s → is_head (dx:::s).
+lemma is_whd_dx: ∀s. is_whd s → is_whd (dx:::s).
 #s elim s -s //
 #p #s #IHs * /3 width=1/ 
 qed.
 
-lemma is_head_append: ∀r. is_head r → ∀s. is_head s → is_head (r@s).
+lemma is_whd_append: ∀r. is_whd r → ∀s. is_whd s → is_whd (r@s).
 #r elim r -r //
 #q #r #IHr * /3 width=1/
 qed.

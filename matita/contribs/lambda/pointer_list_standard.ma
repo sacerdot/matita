@@ -35,16 +35,16 @@ lemma is_standard_append: ∀r. is_standard r → ∀s. is_standard s → is_sta
 #q #r #IHr * /3 width=1/
 qed.
 
-theorem is_head_is_standard: ∀s. is_head s → is_standard s.
+theorem is_whd_is_standard: ∀s. is_whd s → is_standard s.
 #s elim s -s // #p * //
 #q #s #IHs * /3 width=1/
 qed.
 
-lemma is_standard_in_head: ∀p. in_head p → ∀s. is_standard s → is_standard (p::s).
+lemma is_standard_in_whd: ∀p. in_whd p → ∀s. is_standard s → is_standard (p::s).
 #p #Hp * // /3 width=1/
 qed.
 
-theorem is_head_is_standard_trans: ∀r. is_head r → ∀s. is_standard s → is_standard (r@s).
+theorem is_whd_is_standard_trans: ∀r. is_whd r → ∀s. is_standard s → is_standard (r@s).
 #r elim r -r // #p *
 [ #_ * /2 width=1/
 | #q #r #IHr * /3 width=1/

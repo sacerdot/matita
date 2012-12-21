@@ -21,9 +21,9 @@ include "pointer_list_standard.ma".
          R. Kashima: "A proof of the Standization Theorem in λ-Calculus". Typescript note, (2000).
 *)
 inductive st: relation term ≝
-| st_vref: ∀s,M,i. is_head s → M ↦*[s] #i → st M (#i)
-| st_abst: ∀s,M,A1,A2. is_head s → M ↦*[s] 𝛌.A1 → st A1 A2 → st M (𝛌.A2)
-| st_appl: ∀s,M,B1,B2,A1,A2. is_head s → M ↦*[s] @B1.A1 → st B1 B2 → st A1 A2 → st M (@B2.A2)
+| st_vref: ∀s,M,i. is_whd s → M ↦*[s] #i → st M (#i)
+| st_abst: ∀s,M,A1,A2. is_whd s → M ↦*[s] 𝛌.A1 → st A1 A2 → st M (𝛌.A2)
+| st_appl: ∀s,M,B1,B2,A1,A2. is_whd s → M ↦*[s] @B1.A1 → st B1 B2 → st A1 A2 → st M (@B2.A2)
 .
 
 interpretation "'st' computation"
@@ -34,7 +34,7 @@ notation "hvbox( M ⓢ⤇* break term 46 N )"
    for @{ 'Std $M $N }.
 
 lemma st_inv_lref: ∀M,N. M ⓢ⤇* N → ∀j. #j = N →
-                   ∃∃s. is_head s & M ↦*[s] #j.
+                   ∃∃s. is_whd s & M ↦*[s] #j.
 #M #N * -M -N
 [ /2 width=3/
 | #s #M #A1 #A2 #_ #_ #_ #j #H destruct
@@ -43,7 +43,7 @@ lemma st_inv_lref: ∀M,N. M ⓢ⤇* N → ∀j. #j = N →
 qed-.
 
 lemma st_inv_abst: ∀M,N. M ⓢ⤇* N → ∀C2. 𝛌.C2 = N →
-                   ∃∃s,C1. is_head s & M ↦*[s] 𝛌.C1 & C1 ⓢ⤇* C2.
+                   ∃∃s,C1. is_whd s & M ↦*[s] 𝛌.C1 & C1 ⓢ⤇* C2.
 #M #N * -M -N
 [ #s #M #i #_ #_ #C2 #H destruct
 | #s #M #A1 #A2 #Hs #HM #A12 #C2 #H destruct /2 width=5/
@@ -52,7 +52,7 @@ lemma st_inv_abst: ∀M,N. M ⓢ⤇* N → ∀C2. 𝛌.C2 = N →
 qed-.
 
 lemma st_inv_appl: ∀M,N. M ⓢ⤇* N → ∀D2,C2. @D2.C2 = N →
-                   ∃∃s,D1,C1. is_head s & M ↦*[s] @D1.C1 & D1 ⓢ⤇* D2 & C1 ⓢ⤇* C2.
+                   ∃∃s,D1,C1. is_whd s & M ↦*[s] @D1.C1 & D1 ⓢ⤇* D2 & C1 ⓢ⤇* C2.
 #M #N * -M -N
 [ #s #M #i #_ #_ #D2 #C2 #H destruct
 | #s #M #A1 #A2 #_ #_ #_ #D2 #C2 #H destruct
@@ -64,7 +64,7 @@ lemma st_refl: reflexive … st.
 #M elim M -M /2 width=3/ /2 width=5/ /2 width=7/
 qed.
 
-lemma st_step_sn: ∀N1,N2. N1 ⓢ⤇* N2 → ∀s,M. is_head s → M ↦*[s] N1 → M ⓢ⤇* N2.
+lemma st_step_sn: ∀N1,N2. N1 ⓢ⤇* N2 → ∀s,M. is_whd s → M ↦*[s] N1 → M ⓢ⤇* N2.
 #N1 #N2 #H elim H -N1 -N2
 [ #r #N #i #Hr #HN #s #M #Hs #HMN
   lapply (lsreds_trans … HMN … HN) -N /3 width=3/
@@ -75,7 +75,7 @@ lemma st_step_sn: ∀N1,N2. N1 ⓢ⤇* N2 → ∀s,M. is_head s → M ↦*[s] N1
 ]
 qed-.
 
-lemma st_step_rc: ∀s,M1,M2. is_head s → M1 ↦*[s] M2 → M1 ⓢ⤇* M2.
+lemma st_step_rc: ∀s,M1,M2. is_whd s → M1 ↦*[s] M2 → M1 ⓢ⤇* M2.
 /3 width=5 by st_step_sn/
 qed.
 
@@ -149,7 +149,7 @@ lemma st_inv_lsreds_is_standard: ∀M,N. M ⓢ⤇* N →
                                  ∃∃r. M ↦*[r] N & is_standard r.
 #M #N #H elim H -M -N
 [ #s #M #i #Hs #HM
-  lapply (is_head_is_standard … Hs) -Hs /2 width=3/
+  lapply (is_whd_is_standard … Hs) -Hs /2 width=3/
 | #s #M #A1 #A2 #Hs #HM #_ * #r #HA12 #Hr
   lapply (lsreds_trans … HM (sn:::r) (𝛌.A2) ?) /2 width=1/ -A1 #HM
   @(ex2_intro … HM) -M -A2 /3 width=1/
@@ -172,12 +172,12 @@ theorem lsreds_standard: ∀s,M,N. M ↦*[s] N → ∃∃r. M ↦*[r] N & is_sta
 @st_inv_lsreds_is_standard /2 width=2/
 qed-.
 
-(* Note: we use "lapply (rewrite_r ?? is_head … Hq)" (procedural)
-         in place of "cut (is_head (q::r)) [ >Hq ]"  (declarative)
+(* Note: we use "lapply (rewrite_r ?? is_whd … Hq)" (procedural)
+         in place of "cut (is_whd (q::r)) [ >Hq ]"  (declarative)
 *)
-lemma st_lsred_swap: ∀p. in_head p → ∀N1,N2. N1 ↦[p] N2 → ∀M1. M1 ⓢ⤇* N1 →
-                     ∃∃q,M2. in_head q & M1 ↦[q] M2 & M2 ⓢ⤇* N2.
-#p #H @(in_head_ind … H) -p
+lemma st_lsred_swap: ∀p. in_whd p → ∀N1,N2. N1 ↦[p] N2 → ∀M1. M1 ⓢ⤇* N1 →
+                     ∃∃q,M2. in_whd q & M1 ↦[q] M2 & M2 ⓢ⤇* N2.
+#p #H @(in_whd_ind … H) -p
 [ #N1 #N2 #H1 #M1 #H2
   elim (lsred_inv_nil … H1 ?) -H1 // #D #C #HN1 #HN2
   elim (st_inv_appl … H2 … HN1) -N1 #s1 #D1 #N #Hs1 #HM1 #HD1 #H
@@ -187,7 +187,7 @@ lemma st_lsred_swap: ∀p. in_head p → ∀N1,N2. N1 ↦[p] N2 → ∀M1. M1 �
   elim (lsreds_inv_pos … HM1 ?) -HM1
   [2: >length_append normalize in ⊢ (??(??%)); // ]
   #q #r #M #Hq #HM1 #HM
-  lapply (rewrite_r ?? is_head … Hq) -Hq /4 width=1/ -s1 -s2 * #Hq #Hr
+  lapply (rewrite_r ?? is_whd … Hq) -Hq /4 width=1/ -s1 -s2 * #Hq #Hr
   @(ex3_2_intro … HM1) -M1 // -q
   @(st_step_sn … HM) /2 width=1/
 | #p #_ #IHp #N1 #N2 #H1 #M1 #H2
@@ -198,14 +198,14 @@ lemma st_lsred_swap: ∀p. in_head p → ∀N1,N2. N1 ↦[p] N2 → ∀M1. M1 �
   elim (lsreds_inv_pos … HM1 ?) -HM1
   [2: >length_append normalize in ⊢ (??(??%)); // ]
   #q #r #M #Hq #HM1 #HM
-  lapply (rewrite_r ?? is_head … Hq) -Hq /4 width=1/ -p -s * #Hq #Hr
+  lapply (rewrite_r ?? is_whd … Hq) -Hq /4 width=1/ -p -s * #Hq #Hr
   @(ex3_2_intro … HM1) -M1 // -q /2 width=7/
 ]
 qed-.
 
 theorem lsreds_lsred_swap: ∀s,M1,N1. M1 ↦*[s] N1 →
-                           ∀p,N2. in_head p → N1 ↦[p] N2 →
-                           ∃∃q,r,M2. in_head q & M1 ↦[q] M2 & M2 ↦*[r] N2 &
+                           ∀p,N2. in_whd p → N1 ↦[p] N2 →
+                           ∃∃q,r,M2. in_whd q & M1 ↦[q] M2 & M2 ↦*[r] N2 &
                                      is_standard (q::r).
 #s #M1 #N1 #HMN1 #p #N2 #Hp #HN12
 lapply (st_lsreds … HMN1) -s #HMN1

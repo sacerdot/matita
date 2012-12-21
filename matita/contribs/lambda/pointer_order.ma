@@ -33,7 +33,7 @@ notation "hvbox(a break ≺ b)"
    non associative with precedence 45
    for @{ 'prec $a $b }.
 
-lemma pprec_fwd_in_head: ∀p,q. p ≺ q → in_head q → in_head p.
+lemma pprec_fwd_in_whd: ∀p,q. p ≺ q → in_whd q → in_whd p.
 #p #q #H elim H -p -q // /2 width=1/
 [ #p #q * #H destruct
 | #c #p #q #_ #IHpq * #H destruct /3 width=1/
@@ -115,19 +115,19 @@ lemma ple_dichotomy: ∀p1,p2:ptr. p1 ≤ p2 ∨ p2 ≤ p1.
 ]
 qed-.
 
-lemma in_head_ple_nil: ∀p. in_head p → p ≤ ◊.
-#p #H @(in_head_ind … H) -p // /2 width=1/
+lemma in_whd_ple_nil: ∀p. in_whd p → p ≤ ◊.
+#p #H @(in_whd_ind … H) -p // /2 width=1/
 qed.
 
-theorem in_head_ple: ∀p. in_head p → ∀q. p ≤ q.
-#p #H @(in_head_ind … H) -p //
+theorem in_whd_ple: ∀p. in_whd p → ∀q. p ≤ q.
+#p #H @(in_whd_ind … H) -p //
 #p #_ #IHp * /3 width=1/ * #q /2 width=1/
 qed.
 
-lemma ple_nil_inv_in_head: ∀p. p ≤ ◊ → in_head p.
-#p #H @(star_ind_l ??????? H) -p // /2 width=3 by pprec_fwd_in_head/
+lemma ple_nil_inv_in_whd: ∀p. p ≤ ◊ → in_whd p.
+#p #H @(star_ind_l ??????? H) -p // /2 width=3 by pprec_fwd_in_whd/
 qed-.
 
-lemma ple_inv_in_head: ∀p. (∀q. p ≤ q) → in_head p.
-/2 width=1 by ple_nil_inv_in_head/
+lemma ple_inv_in_whd: ∀p. (∀q. p ≤ q) → in_whd p.
+/2 width=1 by ple_nil_inv_in_whd/
 qed-.
