@@ -13,9 +13,9 @@ include "arithmetics/sqrt.ma".
 include "arithmetics/chebyshev/chebyshev_B.ma".
 include "arithmetics/chebyshev/chebyshev_teta.ma".
 
-definition bertrand ≝ λn. ∃p.n < p ∧ p \le 2*n ∧ (prime p).
+definition bertrand ≝ λn. ∃p.n < p ∧ p ≤ 2*n ∧ prime p.
 
-definition not_bertrand ≝ λn.∀p.n < p → p ≤ 2*n → \not (prime p).
+definition not_bertrand ≝ λn.∀p.n < p → p ≤ 2*n → ¬(prime p).
 
 lemma min_prim : ∀n.∃p. n < p ∧ prime p ∧
                  ∀q.prime q → q < p → q ≤ n.
@@ -378,8 +378,6 @@ cut (S(n+(n+n*n)+0)=n*n+(n+(S n))) [//] #Hcut >Hcut >distributive_times_plus_r
 @monotonic_lt_times_l [@(ltn_to_ltO … posn) |@posn]
 qed.
 
-(* axiom daemon : ∀P:Prop.P. *)
-
 lemma sqrt_bound: ∀n. exp 2 8 ≤ n → 2*(S(log 2 (2*n))) ≤ sqrt (2*n).
 #n #len
 cut (8 ≤ log 2 n) [<(eq_log_exp 2 8) [@le_log [@le_n|@len]|@le_n]] #Hlog
@@ -447,15 +445,5 @@ theorem le_to_bertrand2:
   ]
 qed.
 
-(*
-theorem bertrand_n :
-\forall n. O < n \to bertrand n.
-intros;elim (decidable_le n 256)
-  [apply le_to_bertrand;assumption
-  |apply le_to_bertrand2;apply lt_to_le;apply not_le_to_lt;apply H1]
-qed. *)
+(* see Bertrand256 for the complete theorem *)
 
-(* test 
-theorem mod_exp: eqb (mod (exp 2 8) 13) O = false.
-reflexivity.
-*)

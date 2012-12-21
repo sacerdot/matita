@@ -9,878 +9,260 @@
      \ /      
       V_______________________________________________________________ *)
 
-include "arithmetics/chebyshev/chebyshev_teta.ma".
+include "arithmetics/chebyshev/bertrand.ma".
+include "basics/lists/list.ma".
 
-(* include "nat/sqrt.ma".
-include "nat/chebyshev_teta.ma".
-include "nat/chebyshev.ma".
-include "list/in.ma".
-include "list/sort.ma".
-include "nat/o.ma".
-include "nat/sieve.ma". *)
-
-(*
-let rec list_divides l n \def
+let rec list_divides l n ≝
   match l with
   [ nil ⇒ false
-  | cons (m:nat) (tl:list nat) ⇒ orb (divides_b m n) (list_divides tl n) ].
-
-definition lprim : nat \to list nat \def
-  \lambda n.let rec aux m acc \def
-     match m with 
-     [ O => acc
-     | S m1 => match (list_divides acc (n-m1)) with
-       [ true => aux m1 acc
-       | false => aux m1 (n-m1::acc)]]
-  in aux (pred n) [].
+  | cons (m:nat) (tl:list nat) ⇒ orb (dividesb m n) (list_divides tl n) ].
   
-let rec checker l \def
-    match l with
-      [ nil => true
-      | cons h1 t1 => match t1 with
-         [ nil => true
-         | cons h2 t2 => (andb (checker t1) (leb h1 (2*h2))) ]].
-
-lemma checker_cons : \forall t,l.checker (t::l) = true \to checker l = true.
-intros 2;simplify;intro;elim l in H ⊢ %
-  [reflexivity
-  |change in H1 with (andb (checker (a::l1)) (leb t (a+(a+O))) = true);
-   apply (andb_true_true ? ? H1)]
-qed.
-
-theorem checker_sound : \forall l1,l2,l,x,y.l = l1@(x::y::l2) \to 
-                        checker l = true \to x \leq 2*y.
-intro;elim l1 0
-  [simplify;intros 5;rewrite > H;simplify;intro;
-   apply leb_true_to_le;apply (andb_true_true_r ? ? H1);
-  |simplify;intros;rewrite > H1 in H2;lapply (checker_cons ? ? H2);
-   apply (H l2 ? ? ? ? Hletin);reflexivity]
-qed.
-*)
-
-definition bertrand ≝ λn. ∃p.n < p ∧ p \le 2*n ∧ (prime p).
-
-definition not_bertrand ≝ λn.∀p.n < p → p ≤ 2*n → \not (prime p).
-
-lemma min_prim : ∀n.∃p. n < p ∧ prime p ∧
-                 ∀q.prime q → q < p → q ≤ n.
-#n cases (le_to_or_lt_eq ?? (le_O_n n)) #Hn
-  [%{(min (S (n!)) (S n) primeb)} %
-    [%[@le_min_l
-      |@primeb_true_to_prime @(f_min_true primeb)
-       cases (ex_prime n Hn) #p * * #ltnp #lep #primep
-       %{p} % 
-        [% [@ltnp | whd >(plus_n_O p) >plus_n_Sm @le_plus //]
-        |@prime_to_primeb_true //
-        ]
-      ]
-    |#p #primep #ltp @not_lt_to_le % #ltnp 
-     lapply (lt_min_to_false … ltnp ltp)
-     >(prime_to_primeb_true ? primep) #H destruct (H)
-    ]
-  |%{2} % 
-    [%[<Hn @lt_O_S | @primeb_true_to_prime //]
-    |#p #primep #lt2 @False_ind @(absurd … lt2)
-     @le_to_not_lt @prime_to_lt_SO //
+lemma list_divides_true: ∀l,n. list_divides l n = true → ∃p. mem ? p l ∧ p ∣ n.
+#l elim l 
+  [#n normalize in ⊢ (%→?); #H destruct (H)
+  |#a #tl #Hind #b cases (true_or_false (dividesb a b)) #Hcase
+    [#_ %{a} % [% // | @dividesb_true_to_divides //]
+    |whd in ⊢ (??%?→?); >Hcase whd in ⊢ (??%?→?); #Htl
+     cases (Hind b Htl) #d * #memd #divd %{d} % [%2 // | //]
     ]
   ]
 qed.
 
-theorem list_of_primes_to_bertrand: \forall n,pn,l.0 < n \to prime pn \to n <pn \to
-list_of_primes pn l  \to
-(\forall p. prime p \to p \le pn \to in_list nat p l) \to 
-(\forall p. in_list nat p l \to 2 < p \to
-\exists pp. in_list nat pp l \land pp < p \land p \le 2*pp) \to bertrand n.
-intros.
-elim (min_prim n).
-apply (ex_intro ? ? a).
-elim H6.clear H6.elim H7.clear H7.
-split
-  [split
-    [assumption
-    |elim (le_to_or_lt_eq ? ? (prime_to_lt_SO ? H9))
-      [elim (H5 a)
-        [elim H10.clear H10.elim H11.clear H11.
-         apply (trans_le ? ? ? H12).
-         apply le_times_r.
-         apply H8
-          [unfold in H3.
-           elim (H3 a1 H10).
-           assumption
-          |assumption
-          ]
-        |apply H4
-          [assumption
-          |apply not_lt_to_le.intro. 
-           apply (lt_to_not_le ? ? H2).
-           apply H8;assumption
-          ]
-        |assumption
-        ]
-      |rewrite < H7.
-       apply O_lt_const_to_le_times_const.
-       assumption
-      ]
-    ]
-  |assumption
-  ]
-qed.
-
-let rec check_list l \def
-  match l with
-  [ nil \Rightarrow true
-  | cons (hd:nat) tl \Rightarrow
-    match tl with
-     [ nil \Rightarrow eqb hd 2
-     | cons hd1 tl1 \Rightarrow 
-      (leb (S hd1) hd \land leb hd (2*hd1) \land check_list tl)
-    ]
-  ]
-.
-
-lemma check_list1: \forall n,m,l.(check_list (n::m::l)) = true \to 
-m < n \land n \le 2*m \land (check_list (m::l)) = true \land ((check_list l) = true).
-intros 3.
-change in ⊢ (? ? % ?→?) with (leb (S m) n \land leb n (2*m) \land check_list (m::l)).
-intro.
-lapply (andb_true_true ? ? H) as H1.
-lapply (andb_true_true_r ? ? H) as H2.clear H.
-lapply (andb_true_true ? ? H1) as H3.
-lapply (andb_true_true_r ? ? H1) as H4.clear H1.
-split
-  [split
-    [split
-      [apply leb_true_to_le.assumption
-      |apply leb_true_to_le.assumption
-      ]
-    |assumption
-    ]
-  |generalize in match H2.
-   cases l
-    [intro.reflexivity
-    |change in ⊢ (? ? % ?→?) with (leb (S n1) m \land leb m (2*n1) \land check_list (n1::l1)).
-     intro.
-     lapply (andb_true_true_r ? ? H) as H2.
-     assumption
-    ]
-  ]
-qed.
-    
-theorem check_list2: \forall l. check_list l = true \to
-\forall p. in_list nat p l \to 2 < p \to
-\exists pp. in_list nat pp l \land pp < p \land p \le 2*pp.
-intro.elim l 2
-  [intros.apply False_ind.apply (not_in_list_nil ? ? H1)
-  |cases l1;intros
-    [lapply (in_list_singleton_to_eq ? ? ? H2) as H4.
-     apply False_ind.
-     apply (lt_to_not_eq ? ? H3).
-     apply sym_eq.apply eqb_true_to_eq.
-     rewrite > H4.apply H1
-    |elim (check_list1 ? ? ? H1).clear H1.
-     elim H4.clear H4.
-     elim H1.clear H1.
-     elim (in_list_cons_case ? ? ? ? H2)
-      [apply (ex_intro ? ? n).
-       split
-        [split
-          [apply in_list_cons.apply in_list_head
-          |rewrite > H1.assumption
-          ]
-        |rewrite > H1.assumption
-        ]
-      |elim (H H6 p H1 H3).clear H.
-       apply (ex_intro ? ? a1). 
-       elim H8.clear H8.
-       elim H.clear H.
-       split
-        [split
-          [apply in_list_cons.assumption
-          |assumption
-          ]
-        |assumption
-        ]
+lemma list_divides_false: ∀l,n. list_divides l n = false → 
+  ∀p. mem ? p l → p \ndivides  n.
+#l elim l 
+  [#n #_ #p normalize in ⊢ (%→?); @False_ind
+  |#a #tl #Hind #b cases (true_or_false (dividesb a b)) #Hcase
+    [whd in ⊢ (??%?→?); >Hcase whd in ⊢ (??%?→?);
+     #H destruct (H)
+    |whd in ⊢ (??%?→?); >Hcase whd in ⊢ (??%?→?); #Htl #d * 
+      [#eqda >eqda @dividesb_false_to_not_divides //
+      |#memd @Hind // 
       ]
     ]
   ]
 qed.
 
-(* qualcosa che non va con gli S *)
-lemma le_to_bertrand : \forall n.O < n \to n \leq exp 2 8 \to bertrand n.
-intros.
-apply (list_of_primes_to_bertrand ? (S(exp 2 8)) (sieve (S(exp 2 8))))
-  [assumption
-  |apply primeb_true_to_prime.reflexivity
-  |apply (le_to_lt_to_lt ? ? ? H1).
-   apply le_n
-  |lapply (sieve_sound1 (S(exp 2 8))) as H
-    [elim H.assumption
-    |apply leb_true_to_le.reflexivity
-    ]
-  |intros.apply (sieve_sound2 ? ? H3 H2)
-  |apply check_list2.
-   reflexivity
+let rec lprim m i acc ≝
+  match m with 
+   [ O ⇒  acc
+   | S m1 ⇒  match (list_divides acc i) with
+     [ true ⇒  lprim m1 (S i) acc
+     | false ⇒ lprim m1 (S i) (acc@[i]) ]].
+     
+definition list_of_primes ≝ λn. lprim n 2 [].
+
+lemma lop_Strue: ∀m,i,acc. list_divides acc i =true → 
+  lprim (S m) i acc = lprim m (S i) acc.
+#m #i #acc #Hdiv normalize >Hdiv //
+qed.
+
+lemma lop_Sfalse: ∀m,i,acc. list_divides acc i = false → 
+  lprim (S m) i acc = lprim m (S i) (acc@[i]).
+#m #i #acc #Hdiv normalize >Hdiv %
+qed.
+
+lemma list_of_primes_def : ∀n. list_of_primes n = lprim n 2 [].
+// qed.
+
+example lprim_ex: lprim 8 2 [ ] = [2; 3; 5; 7]. // qed.
+
+lemma start_lprim: ∀n,m,a,acc.
+  option_hd ? (lprim n m (a::acc)) = Some ? a.
+#n elim n 
+  [#m #a #acc % 
+  |#n1 #Hind #m #a #acc cases (true_or_false (list_divides (a::acc) m)) #Hc
+    [>lop_Strue [@Hind | //] |>lop_Sfalse [@Hind |//]
   ]
 qed.
 
-lemma not_not_bertrand_to_bertrand1: \forall n.
-\lnot (not_bertrand n) \to \forall x. n \le x \to x \le 2*n \to
-(\forall p.x < p \to p \le 2*n \to \not (prime p))
-\to \exists p.n < p \land p \le  x \land (prime p).
-intros 4.elim H1
-  [apply False_ind.apply H.assumption
-  |apply (bool_elim ? (primeb (S n1)));intro
-    [apply (ex_intro ? ? (S n1)).
-     split
-      [split
-        [apply le_S_S.assumption
-        |apply le_n
-        ]
-      |apply primeb_true_to_prime.assumption
-      ]
-    |elim H3
-      [elim H7.clear H7.
-       elim H8.clear H8.
-       apply (ex_intro ? ? a). 
-       split
-        [split
-          [assumption
-          |apply le_S.assumption
-          ]
-        |assumption
-        ]
-      |apply lt_to_le.assumption
-      |elim (le_to_or_lt_eq ? ? H7)
-        [apply H5;assumption
-        |rewrite < H9.
-         apply primeb_false_to_not_prime.
-         assumption
-        ]
-      ]
-    ]
-  ]
+lemma start_lop: ∀n. 1 ≤ n →
+  option_hd ? (list_of_primes n) = Some ? 2.
+#n #posn cases posn //
+  #m #lem >list_of_primes_def normalize in ⊢ (??(??%)?);
+  >start_lprim //
 qed.
-  
-theorem not_not_bertrand_to_bertrand: \forall n.
-\lnot (not_bertrand n) \to bertrand n.
-unfold bertrand.intros.
-apply (not_not_bertrand_to_bertrand1 ? ? (2*n))
-  [assumption
-  |apply le_times_n.apply le_n_Sn
-  |apply le_n
-  |intros.apply False_ind.
-   apply (lt_to_not_le ? ? H1 H2)
-  ]
-qed.
-  
 
-
-definition k \def \lambda n,p. 
-sigma_p (log p n) (λi:nat.true) (λi:nat.((n/(exp p (S i))\mod 2))).
-
-theorem le_k: \forall n,p. k n p \le log p n.
-intros.unfold k.elim (log p n)
-  [apply le_n
-  |rewrite > true_to_sigma_p_Sn 
-    [rewrite > plus_n_SO.
-     rewrite > sym_plus in ⊢ (? ? %).
-     apply le_plus
-      [apply le_S_S_to_le.
-       apply lt_mod_m_m.
-       apply lt_O_S
-      |assumption
-      ]
-    |reflexivity
-    ]
+lemma eq_lop: ∀n. 1 ≤ n → 
+  list_of_primes n = 2::(tail ? (list_of_primes n)).
+#n #posn lapply (start_lop ? posn) cases (list_of_primes n)
+  [whd in ⊢ (??%?→?); #H destruct (H)
+  |normalize #a #l #H destruct (H) //
   ]
 qed.
 
-definition B1 \def
-\lambda n. pi_p (S n) primeb (\lambda p.(exp p (k n p))).
 
-theorem eq_B_B1: \forall n. B n = B1 n.
-intros.unfold B.unfold B1.
-apply eq_pi_p
-  [intros.reflexivity
-  |intros.unfold k.
-   apply exp_sigma_p1
-  ]
+(* properties *)
+
+definition all_primes ≝ λl.∀p. mem nat p l → prime p.
+
+definition all_below ≝ λl,n.∀p. mem nat p l → p < n.
+
+definition primes_all ≝ λl,n. ∀p. prime p → p < n → mem nat p l.
+
+definition primes_below ≝ λl,n.
+  all_primes l ∧ all_below l n ∧ primes_all l n.
+
+lemma ld_to_prime: ∀i,acc. 1 < i →
+  primes_below acc i → list_divides acc i = false → prime i.
+#i #acc #posi * * #Hall #Hbelow #Hcomplete #Hfalse % // 
+#m #mdivi 
+cut (m ≤ i)[@divides_to_le [@lt_to_le //|//]] #lemi
+cases (le_to_or_lt_eq … lemi) [2://] #ltmi
+#lt1m @False_ind
+cut (divides (smallest_factor m) i) 
+  [@(transitive_divides … mdivi) @divides_smallest_factor_n @lt_to_le //]
+#Hcut @(absurd … Hcut) @(list_divides_false … Hfalse) @Hcomplete
+  [@prime_smallest_factor_n // | @(le_to_lt_to_lt … ltmi) //]
 qed.
 
-definition B_split1 \def \lambda n. 
-pi_p (S n) primeb (\lambda p.(exp p (bool_to_nat (leb (k n p) 1)* (k n p)))).
-
-definition B_split2 \def \lambda n. 
-pi_p (S n) primeb (\lambda p.(exp p (bool_to_nat (leb 2 (k n p))* (k n p)))).
-
-theorem eq_B1_times_B_split1_B_split2: \forall n. 
-B1 n = B_split1 n * B_split2 n.
-intro.unfold B1.unfold B_split1.unfold B_split2.
-rewrite < times_pi_p.
-apply eq_pi_p
-  [intros.reflexivity
-  |intros.apply (bool_elim ? (leb (k n x) 1));intro
-    [rewrite > (lt_to_leb_false 2 (k n x))
-      [simplify.rewrite < plus_n_O.
-       rewrite < times_n_SO.reflexivity
-      |apply le_S_S.apply leb_true_to_le.assumption
-      ]
-    |rewrite > (le_to_leb_true 2 (k n x))
-      [simplify.rewrite < plus_n_O.
-       rewrite < plus_n_O.reflexivity
-      |apply not_le_to_lt.apply leb_false_to_not_le.assumption
-      ]
-    ]
-  ]
-qed.
-
-lemma lt_div_to_times: \forall n,m,q. O < q \to n/q < m \to n < q*m.
-intros.
-cut (O < m) as H2
-  [apply not_le_to_lt.
-   intro.apply (lt_to_not_le ? ? H1).
-   apply le_times_to_le_div;assumption
-  |apply (ltn_to_ltO ? ? H1)
-  ]
-qed.
-
-lemma lt_to_div_O:\forall n,m. n < m \to n / m = O.
-intros.
-apply (div_mod_spec_to_eq n m (n/m) (n \mod m) O n)
-  [apply div_mod_spec_div_mod.
-   apply (ltn_to_ltO ? ? H)
-  |apply div_mod_spec_intro
-    [assumption
-    |reflexivity
-    ]
-  ]
-qed.
-
-(* the value of n could be smaller *) 
-lemma k1: \forall n,p. 18 \le n \to p \le n \to 2*n/ 3 < p\to k (2*n) p = O.
-intros.unfold k.
-elim (log p (2*n))
-  [reflexivity
-  |rewrite > true_to_sigma_p_Sn
-    [rewrite > H3.
-     rewrite < plus_n_O.
-     cases n1
-      [rewrite < exp_n_SO.
-       cut (2*n/p = 2) as H4
-        [rewrite > H4.reflexivity
-        |apply lt_to_le_times_to_lt_S_to_div
-          [apply (ltn_to_ltO ? ? H2)
-          |rewrite < sym_times.
-           apply le_times_r.
-           assumption
-          |rewrite > sym_times in ⊢ (? ? %).
-           apply lt_div_to_times
-            [apply lt_O_S
-            |assumption
-            ]
-          ]
-        ]
-      |cut (2*n/(p)\sup(S (S n2)) = O) as H4
-        [rewrite > H4.reflexivity
-        |apply lt_to_div_O.
-         apply (le_to_lt_to_lt ? (exp ((2*n)/3) 2))
-          [apply (le_times_to_le (exp 3 2))
-            [apply leb_true_to_le.reflexivity
-            |rewrite > sym_times in ⊢ (? ? %).
-             rewrite > times_exp.
-             apply (trans_le ? (exp n 2))
-              [rewrite < assoc_times.
-               rewrite > exp_SSO in ⊢ (? ? %).
-               apply le_times_l.
-               assumption
-              |apply monotonic_exp1.
-               apply (le_plus_to_le 3).
-               change in ⊢ (? ? %) with ((S(2*n/3))*3).
-               apply (trans_le ? (2*n))
-                [simplify in ⊢ (? ? %).
-                 rewrite < plus_n_O.
-                 apply le_plus_l.
-                 apply (trans_le ? 18 ? ? H).
-                 apply leb_true_to_le.reflexivity
-                |apply lt_to_le.
-                 apply lt_div_S.
-                 apply lt_O_S
-                ]
-              ]
-            ]
-          |apply (lt_to_le_to_lt ? (exp p 2))
-            [apply lt_exp1
-              [apply lt_O_S
-              |assumption
-              ]
-            |apply le_exp
-              [apply (ltn_to_ltO ? ? H2)
-              |apply le_S_S.apply le_S_S.apply le_O_n
-              ]
-            ]
+lemma lprim_invariant: ∀n,i,acc. 1 < i →
+  primes_below acc i → primes_below (lprim n i acc) (n+i).
+#n elim n
+  [#i #acc #lt1i #H @H 
+  |#m #Hind #i #acc #lt1i * * #Hall #Hbelow #Hcomplete cases (true_or_false (list_divides acc i)) #Hc
+    [>(lop_Strue … Hc) whd in ⊢ (??%); >plus_n_Sm @(Hind … (le_S … lt1i)) %
+      [% [// |#p #memp @le_S @Hbelow //]
+      |#p #primep #lepi cases (le_to_or_lt_eq … (le_S_S_to_le … lepi))
+        [#ltpi @Hcomplete // 
+        |#eqpi @False_ind cases (list_divides_true … Hc) #q * #memq #divqi
+         cases primep #lt1p >eqpi #Hi @(absurd (q=i))
+          [@Hi [@divqi |@prime_to_lt_SO @Hall //]
+          |@lt_to_not_eq @Hbelow //
           ]
         ]
       ]
-    |reflexivity
-    ]
-  ]
-qed.
-        
-theorem le_B_split1_teta:\forall n.18 \le n \to not_bertrand n \to
-B_split1 (2*n) \le teta (2 * n / 3).
-intros. unfold B_split1.unfold teta.
-apply (trans_le ? (pi_p (S (2*n)) primeb (λp:nat.(p)\sup(bool_to_nat (eqb (k (2*n) p) 1)))))
-  [apply le_pi_p.intros.
-   apply le_exp
-    [apply prime_to_lt_O.apply primeb_true_to_prime.assumption
-    |apply (bool_elim ? (leb (k (2*n) i) 1));intro
-      [elim (le_to_or_lt_eq ? ? (leb_true_to_le ? ? H4))
-        [lapply (le_S_S_to_le ? ? H5) as H6.
-         apply (le_n_O_elim ? H6).
-         rewrite < times_n_O.
-         apply le_n
-        |rewrite > (eq_to_eqb_true ? ? H5).
-         rewrite > H5.apply le_n
-        ]
-      |apply le_O_n
-      ]
-    ]
-  |apply (trans_le ? (pi_p (S (2*n/3)) primeb (λp:nat.(p)\sup(bool_to_nat (eqb (k (2*n) p) 1)))))
-    [apply (eq_ind ? ? ? (le_n ?)).
-     apply or_false_eq_SO_to_eq_pi_p
-      [apply le_S_S.
-       apply le_times_to_le_div2
-        [apply lt_O_S
-        |rewrite > sym_times in ⊢ (? ? %).
-         apply le_times_n.
-         apply leb_true_to_le.reflexivity
-        ]
-      |intros.
-       unfold not_bertrand in H1.
-       elim (decidable_le (S n) i)
-        [left.
-         apply not_prime_to_primeb_false.
-         apply H1
-          [assumption
-          |apply le_S_S_to_le.assumption
-          ]
-        |right.
-         rewrite > k1
-          [reflexivity
-          |assumption
-          |apply le_S_S_to_le.
-           apply not_le_to_lt.assumption
-          |assumption
-          ]
-        ]
-      ]
-    |apply le_pi_p.intros.
-     elim (eqb (k (2*n) i) 1)
-      [rewrite < exp_n_SO.apply le_n
-      |simplify.apply prime_to_lt_O.
-       apply primeb_true_to_prime.
-       assumption
-      ]
-    ]
-  ]
-qed.
-
-theorem le_B_split2_exp: \forall n. exp 2 7 \le n \to
-B_split2 (2*n) \le exp (2*n) (pred(sqrt(2*n)/2)).
-intros.unfold B_split2.
-cut (O < n)
-  [apply (trans_le ? (pi_p (S (sqrt (2*n))) primeb
-        (λp:nat.(p)\sup(bool_to_nat (leb 2 (k (2*n) p))*k (2*n) p))))
-    [apply (eq_ind ? ? ? (le_n ?)).
-     apply or_false_eq_SO_to_eq_pi_p
-      [apply le_S_S.
-       apply le_sqrt_n_n
-      |intros.
-       apply (bool_elim ? (leb 2 (k (2*n) i)));intro
-        [apply False_ind.
-         apply (lt_to_not_le ? ? H1).unfold sqrt.
-         apply f_m_to_le_max
-          [apply le_S_S_to_le.assumption
-          |apply le_to_leb_true.
-           rewrite < exp_SSO.
-           apply not_lt_to_le.intro.
-           apply (le_to_not_lt 2 (log i (2*n)))
-            [apply (trans_le ? (k (2*n) i))
-              [apply leb_true_to_le.assumption
-              |apply le_k
-              ]
-            |apply le_S_S.unfold log.apply f_false_to_le_max
-              [apply (ex_intro ? ? O).split
-                [apply le_O_n
-                |apply le_to_leb_true.simplify.
-                 apply (trans_le ? n)
-                  [assumption.
-                  |apply le_plus_n_r
-                  ]
-                ]
-              |intros.apply lt_to_leb_false.
-               apply (lt_to_le_to_lt ? (exp i 2))
-                [assumption
-                |apply le_exp
-                  [apply (ltn_to_ltO ? ? H1)
-                  |assumption
-                  ]
-                ]
-              ]
-            ]
-          ]
-        |right.reflexivity
-        ]
-      ]
-    |apply (trans_le ? (pi_p (S (sqrt (2*n))) primeb (λp:nat.2*n)))
-      [apply le_pi_p.intros.
-       apply (trans_le ? (exp i (log i (2*n))))
-        [apply le_exp
-          [apply prime_to_lt_O.
-           apply primeb_true_to_prime.
-           assumption
-          |apply (bool_elim ? (leb 2 (k (2*n) i)));intro
-            [simplify in ⊢ (? (? % ?) ?).
-             rewrite > sym_times.
-             rewrite < times_n_SO.
-             apply le_k
-            |apply le_O_n
-            ]
-          ]
-        |apply le_exp_log.    
-         rewrite > (times_n_O O) in ⊢ (? % ?).
-         apply lt_times
-          [apply lt_O_S
-          |assumption
-          ]
-        ]
-      |apply (trans_le ? (exp (2*n) (prim(sqrt (2*n)))))
-        [unfold prim.
-         apply (eq_ind ? ? ? (le_n ?)).
-         apply exp_sigma_p
-        |apply le_exp
-          [rewrite > (times_n_O O) in ⊢ (? % ?).
-           apply lt_times
-            [apply lt_O_S
-            |assumption
-            ]
-          |apply le_prim_n3.
-           unfold sqrt.
-           apply f_m_to_le_max
-            [apply (trans_le ? (2*(exp 2 7)))
-              [apply leb_true_to_le.reflexivity
-              |apply le_times_r.assumption
-              ]
-            |apply le_to_leb_true.
-             apply (trans_le ? (2*(exp 2 7)))
-              [apply leb_true_to_le.reflexivity
-              |apply le_times_r.assumption
-              ]
-            ]
-          ]
-        ]
-      ]
-    ]
-  |apply (lt_to_le_to_lt ? ? ? ? H).
-   apply leb_true_to_le.reflexivity
-  ]
-qed.
-   
-theorem not_bertrand_to_le_B: 
-\forall n.exp 2 7 \le n \to not_bertrand n \to
-B (2*n) \le (exp 2 (2*(2 * n / 3)))*(exp (2*n) (pred(sqrt(2*n)/2))).
-intros.
-rewrite > eq_B_B1.
-rewrite > eq_B1_times_B_split1_B_split2.
-apply le_times
-  [apply (trans_le ? (teta ((2*n)/3)))
-    [apply le_B_split1_teta
-      [apply (trans_le ? ? ? ? H).
-       apply leb_true_to_le.reflexivity
-      |assumption
-      ]
-    |apply le_teta
-    ]
-  |apply le_B_split2_exp.
-   assumption
-  ]
-qed.
-
-(* 
-theorem not_bertrand_to_le1: 
-\forall n.18 \le n \to not_bertrand n \to
-exp 2 (2*n) \le (exp 2 (2*(2 * n / 3)))*(exp (2*n) (S(sqrt(2*n)))).
-*)
-
-theorem le_times_div_m_m: \forall n,m. O < m \to n/m*m \le n.
-intros.
-rewrite > (div_mod n m) in ⊢ (? ? %)
-  [apply le_plus_n_r
-  |assumption
-  ]
-qed.
-
-theorem not_bertrand_to_le1: 
-\forall n.exp 2 7 \le n \to not_bertrand n \to
-(exp 2 (2*n / 3)) \le (exp (2*n) (sqrt(2*n)/2)).
-intros.
-apply (le_times_to_le (exp 2 (2*(2 * n / 3))))
-  [apply lt_O_exp.apply lt_O_S
-  |rewrite < exp_plus_times.
-   apply (trans_le ? (exp 2 (2*n)))
-    [apply le_exp
-      [apply lt_O_S
-      |rewrite < sym_plus.
-       change in ⊢ (? % ?) with (3*(2*n/3)).
-       rewrite > sym_times.
-       apply le_times_div_m_m.
-       apply lt_O_S
-      ]
-    |apply (trans_le ? (2*n*B(2*n)))
-      [apply le_exp_B.
-       apply (trans_le ? ? ? ? H).
-       apply leb_true_to_le.reflexivity
-      |rewrite > S_pred in ⊢ (? ? (? ? (? ? %)))
-        [rewrite > exp_S.
-         rewrite < assoc_times.
-         rewrite < sym_times in ⊢ (? ? (? % ?)).
-         rewrite > assoc_times in ⊢ (? ? %).
-         apply le_times_r.
-         apply not_bertrand_to_le_B;assumption
-        |apply le_times_to_le_div
-          [apply lt_O_S
-          |apply (trans_le ? (sqrt (exp 2 8)))
-            [apply leb_true_to_le.reflexivity
-            |apply monotonic_sqrt.
-             change in ⊢ (? % ?) with (2*(exp 2 7)).
-             apply le_times_r.
-             assumption
-            ]
-          ]
-        ]
+    |>(lop_Sfalse … Hc) whd in ⊢ (??%); >plus_n_Sm @(Hind … (le_S … lt1i)) %
+      [% [#p #memp cases (mem_append ???? memp) -memp #memp
+           [@Hall //|>(mem_single ??? memp) @(ld_to_prime … Hc) // % [% // |//]]
+      |#p #memp cases (mem_append ???? memp) -memp #memp
+         [@le_S @Hbelow // |<(mem_single ??? memp) @le_n]]
+      |#p #memp #ltp cases (le_to_or_lt_eq … (le_S_S_to_le … ltp))
+         [#ltpi @mem_append_l1 @Hcomplete //|#eqpi @mem_append_l2 <eqpi % //]
       ]
     ]
   ]
 qed.
        
-theorem not_bertrand_to_le2: 
-\forall n.exp 2 7 \le n \to not_bertrand n \to
-2*n / 3 \le (sqrt(2*n)/2)*S(log 2 (2*n)).
-intros.
-rewrite < (eq_log_exp 2)
-  [apply (trans_le ? (log 2 ((exp (2*n) (sqrt(2*n)/2)))))
-    [apply le_log
-      [apply le_n
-      |apply not_bertrand_to_le1;assumption
-      ]
-    |apply log_exp1.
-     apply le_n
+lemma primes_below2: primes_below [] 2.
+  %[%[#p @False_ind|#p @False_ind] 
+   |#p #primep #ltp2 @False_ind @(absurd … ltp2) @le_to_not_lt
+    @prime_to_lt_SO //
+   ]
+qed.
+
+lemma primes_below_lop: ∀n. primes_below (list_of_primes n) (n+2).
+#n @lprim_invariant //
+qed.
+
+let rec checker l ≝
+  match l with
+    [ nil ⇒  true
+    | cons h1 t1 => match t1 with
+      [ nil ⇒  true
+      | cons h2 t2 ⇒ (andb (checker t1) (leb h1 (2*h2))) ]].
+
+lemma checker_ab: ∀a,b,l. 
+  checker (a::b::l) = (andb (checker (b::l)) (leb a (2*b))).
+// qed.
+
+lemma checker_cons : ∀a,l.checker (a::l) = true → checker l = true.
+#a #l cases l [//|#b #tl >checker_ab #H @(andb_true_l ?? H)]
+qed.
+
+theorem list_of_primes_to_bertrand: 
+∀n,pn,l.0 < n → prime pn → n < pn → all_primes l  →
+(∀p. prime p → p ≤ pn → mem ? p l) → 
+(∀p. mem ? p l → 2 < p →
+  ∃pp. mem ? pp l ∧ pp < p ∧ p \le 2*pp) → bertrand n.
+#n #pn #l #posn #primepn #ltnp #allprimes #H1 #H2 
+cases (min_prim n) #p1 * * #ltnp1 #primep1 #Hmin
+%{p1} % // % [//] 
+cases(le_to_or_lt_eq ? ? (prime_to_lt_SO ? primep1)) #Hp1
+  [cases (H2 … Hp1)
+    [#x * * #memxl #ltxp1 #H @(transitive_le … H) @monotonic_le_times_r 
+     @Hmin [@allprimes //|//]
+    |@H1 [//] @not_lt_to_le % #ltpn @(absurd ? ltnp)
+     @le_to_not_lt @Hmin //
     ]
-  |apply le_n
+  |<Hp1 >(times_n_1 2) in ⊢ (?%?); @monotonic_le_times_r //
   ]
 qed.
 
-theorem tech1: \forall a,b,c,d.O < b \to O < d \to
-(a/b)*(c/d) \le (a*c)/(b*d).
-intros.
-apply le_times_to_le_div
-  [rewrite > (times_n_O O).
-   apply lt_times;assumption
-  |rewrite > assoc_times.
-   rewrite < assoc_times in ⊢ (? (? ? %) ?).
-   rewrite < sym_times in ⊢ (? (? ? (? % ?)) ?).
-   rewrite > assoc_times.
-   rewrite < assoc_times.
-   apply le_times;
-   rewrite > sym_times;apply le_times_div_m_m;assumption
-  ]
-qed.
-
-theorem tech: \forall n. 2*(S(log 2 (2*n))) \le sqrt (2*n) \to
-(sqrt(2*n)/2)*S(log 2 (2*n)) \le 2*n / 4.
-intros.
-cut (4*(S(log 2 (2*n))) \le 2* sqrt(2*n))
-  [rewrite > sym_times.
-   apply le_times_to_le_div
-    [apply lt_O_S
-    |rewrite < assoc_times.
-     apply (trans_le ? (2*sqrt(2*n)*(sqrt (2*n)/2)))
-      [apply le_times_l.assumption
-      |apply (trans_le ? ((2*sqrt(2*n)*(sqrt(2*n))/2)))
-        [apply le_times_div_div_times.
-         apply lt_O_S
-        |rewrite > assoc_times.
-         rewrite > sym_times.
-         rewrite > lt_O_to_div_times.
-         apply leq_sqrt_n.
-         apply lt_O_S
-        ]
-      ]
+let rec check_list l ≝
+  match l with
+  [ nil ⇒ true
+  | cons (hd:nat) tl ⇒
+    match tl with
+     [ nil ⇒ true
+     | cons hd1 tl1 ⇒ 
+      (leb (S hd) hd1 ∧ leb hd1 (2*hd) ∧ check_list tl)
     ]
-  |change in ⊢ (? (? % ?) ?) with (2*2).
-   rewrite > assoc_times.
-   apply le_times_r.
-   assumption
+  ]
+.
+
+lemma check_list_ab: ∀a,b,l.check_list (a::b::l) =
+  (leb (S a) b ∧ leb b (2*a) ∧ check_list (b::l)).
+// qed.
+
+lemma check_list_abl: ∀a,b,l.check_list (a::b::l) = true →
+  a < b ∧ 
+  b ≤ 2*a ∧ 
+  check_list (b::l) = true ∧ 
+  check_list l = true.
+#a #b #l >check_list_ab #H 
+lapply (andb_true_r ?? H) #H1
+lapply (andb_true_l ?? H) -H #H2 
+lapply (andb_true_r ?? H2) #H3 
+lapply (andb_true_l ?? H2) -H2 #H4
+% [% [% [@(leb_true_to_le … H4) |@(leb_true_to_le … H3)]|@H1]
+  |lapply H1 cases l
+    [//
+    |#c #d >check_list_ab #H @(andb_true_r … H)
+    ]
   ]
 qed.
-
-theorem lt_div_S_div: \forall n,m. O < m \to exp m 2 \le n \to 
-n/(S m) < n/m.
-intros.
-apply lt_times_to_lt_div.
-apply (lt_to_le_to_lt ? (S(n/m)*m))
-  [apply lt_div_S.assumption
-  |rewrite > sym_times in ⊢ (? ? %). simplify.
-   rewrite > sym_times in ⊢ (? ? (? ? %)).
-   apply le_plus_l.
-   apply le_times_to_le_div
-    [assumption
-    |rewrite < exp_SSO.
-     assumption
+    
+theorem check_list_spec: ∀tl,a,l. check_list l = true → l = a::tl →
+  ∀p. mem ? p tl → ∃pp. mem nat pp l ∧ pp < p ∧ p ≤ 2*pp.
+#tl elim tl
+  [#a #l #_ #_ #p whd in ⊢ (%→?); @False_ind 
+  |#b #tl #Hind #a #l #Hc #Hl #p #Hmem >Hl in Hc;
+   #Hc cases(check_list_abl … Hc) * * 
+   #ltab #leb #Hc2 #Hc3 cases Hmem #Hc
+    [>Hc -Hc %{a} % [ % [ % % |//]|//]
+    |cases(Hind b (b::tl) Hc2 (refl …) ? Hc) #pp * * #Hmemnp #ltpp #lepp
+     %{pp} % [ % [ %2 //|//]|//]
     ]
   ]
 qed.
 
-theorem exp_plus_SSO: \forall a,b. exp (a+b) 2 = (exp a 2) + 2*a*b + (exp b 2).
-intros.
-rewrite > exp_SSO.
-rewrite > distr_times_plus.
-rewrite > times_plus_l.
-rewrite < exp_SSO.
-rewrite > assoc_plus.
-rewrite > assoc_plus.
-apply eq_f.
-rewrite > times_plus_l.
-rewrite < exp_SSO.
-rewrite < assoc_plus.
-rewrite < sym_times.
-rewrite > plus_n_O in ⊢ (? ? (? (? ? %) ?) ?).
-rewrite > assoc_times.
-apply eq_f2;reflexivity.
-qed.
-
-theorem tech3: \forall n. (exp 2 8) \le n \to 2*(S(log 2 (2*n))) \le sqrt (2*n).
-intros.
-lapply (le_log 2 ? ? (le_n ?) H) as H1.
-rewrite > exp_n_SO in ⊢ (? (? ? (? (? ? (? % ?)))) ?).
-rewrite > log_exp
-  [rewrite > sym_plus.
-   rewrite > plus_n_Sm.
-   unfold sqrt.
-   apply f_m_to_le_max
-    [apply le_times_r.
-     apply (trans_le ? (2*log 2 n))
-      [rewrite < times_SSO_n.
-       apply le_plus_r.
-       apply (trans_le ? 8)
-        [apply leb_true_to_le.reflexivity
-        |rewrite < (eq_log_exp 2)
-          [assumption
-          |apply le_n
-          ]
-        ]
-      |apply (trans_le ? ? ? ? (le_exp_log 2 ? ? )).
-       apply le_times_SSO_n_exp_SSO_n.
-       apply (lt_to_le_to_lt ? ? ? ? H).
-       apply leb_true_to_le.reflexivity
-      ]
-    |apply le_to_leb_true.
-     rewrite > assoc_times.
-     apply le_times_r.
-     rewrite > sym_times.
-     rewrite > assoc_times.
-     rewrite < exp_SSO.
-     rewrite > exp_plus_SSO.
-     rewrite > distr_times_plus.
-     rewrite > distr_times_plus.
-     rewrite > assoc_plus.
-     apply (trans_le ? (4*exp (log 2 n) 2))
-      [change in ⊢ (? ? (? % ?)) with (2*2).
-       rewrite > assoc_times in ⊢ (? ? %).
-       rewrite < times_SSO_n in ⊢ (? ? %).
-       apply le_plus_r.
-       rewrite < times_SSO_n in ⊢ (? ? %).
-       apply le_plus
-        [rewrite > sym_times in ⊢ (? (? ? %) ?).
-         rewrite < assoc_times.
-         rewrite < assoc_times.
-         change in ⊢ (? (? % ?) ?) with 8.
-         rewrite > exp_SSO.
-         apply le_times_l.
-         (* strange things here *)
-         rewrite < (eq_log_exp 2)
-          [assumption
-          |apply le_n
-          ]
-        |apply (trans_le ? (log 2 n))
-          [change in ⊢ (? % ?) with 8.
-           rewrite < (eq_log_exp 2)
-            [assumption
-            |apply le_n
-            ]
-          |rewrite > exp_n_SO in ⊢ (? % ?).
-           apply le_exp
-            [apply lt_O_log
-              [apply (lt_to_le_to_lt ? ? ? ? H).
-               apply leb_true_to_le.reflexivity
-              |apply (lt_to_le_to_lt ? ? ? ? H).
-               apply leb_true_to_le.reflexivity
-              ]
-            |apply le_n_Sn
-            ]
-          ]
-        ]
-      |change in ⊢ (? (? % ?) ?) with (exp 2 2).
-       apply (trans_le ? ? ? ? (le_exp_log 2 ? ?))
-        [apply le_times_exp_n_SSO_exp_SSO_n
-          [apply le_n
-          |change in ⊢ (? % ?) with 8.
-           rewrite < (eq_log_exp 2)
-            [assumption
-            |apply le_n
-            ]
-          ]
-        |apply (lt_to_le_to_lt ? ? ? ? H).
-         apply leb_true_to_le.reflexivity
-        ]
-      ]
-    ]
-  |apply le_n
-  |apply (lt_to_le_to_lt ? ? ? ? H).
-   apply leb_true_to_le.reflexivity
-  ]
-qed.
-      
-theorem le_to_bertrand2:
-\forall n. (exp 2 8) \le n \to bertrand n.
-intros.
-apply not_not_bertrand_to_bertrand.unfold.intro.
-absurd (2*n / 3 \le (sqrt(2*n)/2)*S(log 2 (2*n)))
-  [apply not_bertrand_to_le2
-    [apply (trans_le ? ? ? ? H). 
-     apply le_exp
-      [apply lt_O_S
-      |apply le_n_Sn
-      ]
-    |assumption
-    ]
-  |apply lt_to_not_le.
-   apply (le_to_lt_to_lt ? ? ? ? (lt_div_S_div ? ? ? ?))
-    [apply tech.apply tech3.assumption
-    |apply lt_O_S
-    |apply (trans_le ? (2*exp 2 8))
-      [apply leb_true_to_le.reflexivity
-      |apply le_times_r.assumption
+lemma le_to_bertrand : ∀n.O < n → n ≤ 2^8 → bertrand n.
+#n #posn #len
+cut (∃it.it=2^8) [%{(2^8)} %] * #it #itdef
+lapply(primes_below_lop … it) * * #Hall #Hbelow #Hcomplete
+@(list_of_primes_to_bertrand ? (S it) (list_of_primes it) posn)
+  [@primeb_true_to_prime >itdef %
+  |@le_S_S >itdef @len
+  |@Hall
+  |#p #primep #lep @Hcomplete 
+    [@primep |<plus_n_Sm @le_S_S <plus_n_Sm <plus_n_O @lep]
+  |#p #memp #lt2p @(check_list_spec (tail ? (list_of_primes it)) 2 (list_of_primes it))
+    [>itdef %
+    |>itdef @eq_lop @lt_O_S 
+    |>eq_lop in memp; [2:>itdef @lt_O_S] * 
+      [#eqp2 @False_ind @(absurd ? lt2p) @le_to_not_lt >eqp2 @le_n
+      |#H @H
       ]
     ]
   ]
 qed.
 
 theorem bertrand_n :
-\forall n. O < n \to bertrand n.
-intros;elim (decidable_le n 256)
-  [apply le_to_bertrand;assumption
-  |apply le_to_bertrand2;apply lt_to_le;apply not_le_to_lt;apply H1]
+∀n. O < n → bertrand n.
+#n #posn elim (decidable_le n 256)
+  [@le_to_bertrand //
+  |#len @le_to_bertrand2 @lt_to_le @not_le_to_lt @len]
 qed.
 
 (* test 
