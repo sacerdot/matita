@@ -15,7 +15,7 @@
 include "pointer_list.ma".
 include "parallel_computation.ma".
 
-(* LABELLED SEQUENTIAL COMPUTATION (MULTISTEP) ******************************)
+(* LABELED SEQUENTIAL COMPUTATION (MULTISTEP) *******************************)
 
 definition lsreds: ptrl → relation term ≝ lstar … lsred.
 
@@ -99,7 +99,7 @@ lemma lsreds_compatible_appl: ∀r,B1,B2. B1 ↦*[r] B2 → ∀s,A1,A2. A1 ↦*[
 qed.
 
 lemma lsreds_compatible_beta: ∀r,B1,B2. B1 ↦*[r] B2 → ∀s,A1,A2. A1 ↦*[s] A2 →
-                              @B1.𝛌.A1 ↦*[(sn:::r)@(dx:::sn:::s)@◊::◊] [↙B2] A2.
+                              @B1.𝛌.A1 ↦*[(sn:::r)@(dx:::rc:::s)@◊::◊] [↙B2] A2.
 #r #B1 #B2 #HB12 #s #A1 #A2 #HA12
 @(lsreds_trans … (@B2.𝛌.A1)) /2 width=1/ -r -B1
 @(lsreds_step_dx … (@B2.𝛌.A2)) // /3 width=1/

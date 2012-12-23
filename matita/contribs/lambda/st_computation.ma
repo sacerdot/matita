@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "labelled_sequential_computation.ma".
+include "labeled_sequential_computation.ma".
 include "pointer_list_standard.ma".
 
 (* KASHIMA'S "ST" COMPUTATION ***********************************************)
@@ -151,7 +151,7 @@ lemma st_inv_lsreds_is_standard: ∀M,N. M ⓢ⤇* N →
 [ #s #M #i #Hs #HM
   lapply (is_whd_is_standard … Hs) -Hs /2 width=3/
 | #s #M #A1 #A2 #Hs #HM #_ * #r #HA12 #Hr
-  lapply (lsreds_trans … HM (sn:::r) (𝛌.A2) ?) /2 width=1/ -A1 #HM
+  lapply (lsreds_trans … HM (rc:::r) (𝛌.A2) ?) /2 width=1/ -A1 #HM
   @(ex2_intro … HM) -M -A2 /3 width=1/
 | #s #M #B1 #B2 #A1 #A2 #Hs #HM #_ #_ * #rb #HB12 #Hrb * #ra #HA12 #Hra
   lapply (lsreds_trans … HM (dx:::ra) (@B1.A2) ?) /2 width=1/ -A1 #HM

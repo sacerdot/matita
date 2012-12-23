@@ -20,7 +20,8 @@ include "pointer.ma".
          to serve as base for the order relations: p < q and p ≤ q *)
 inductive pprec: relation ptr ≝
 | pprec_nil : ∀c,q.   pprec (◊) (c::q)
-| ppprc_cons: ∀p,q.   pprec (dx::p) (sn::q)
+| ppprc_rc  : ∀p,q.   pprec (dx::p) (rc::q)
+| ppprc_sn  : ∀p,q.   pprec (rc::p) (sn::q)
 | pprec_comp: ∀c,p,q. pprec p q → pprec (c::p) (c::q)
 | pprec_skip:         pprec (dx::◊) ◊
 .
@@ -36,6 +37,7 @@ notation "hvbox(a break ≺ b)"
 lemma pprec_fwd_in_whd: ∀p,q. p ≺ q → in_whd q → in_whd p.
 #p #q #H elim H -p -q // /2 width=1/
 [ #p #q * #H destruct
+| #p #q * #H destruct
 | #c #p #q #_ #IHpq * #H destruct /3 width=1/
 ]
 qed-.
@@ -85,7 +87,11 @@ lemma ple_step_sn: ∀p1,p,p2. p1 ≺ p → p ≤ p2 → p1 ≤ p2.
 /2 width=3/
 qed-.
 
-lemma ple_cons: ∀p,q. dx::p ≤ sn::q.
+lemma ple_rc: ∀p,q. dx::p ≤ rc::q.
+/2 width=1/
+qed.
+
+lemma ple_sn: ∀p,q. rc::p ≤ sn::q.
 /2 width=1/
 qed.
 
@@ -104,6 +110,15 @@ qed.
 lemma ple_skip_ple: ∀p. p ≤ ◊ → dx::p ≤ ◊.
 #p #H @(star_ind_l ??????? H) -p //
 #p #q #Hpq #_ #H @(ple_step_sn … H) -H /2 width=1/
+qed.
+
+theorem ple_trans: transitive … ple.
+/2 width=3/
+qed-.
+
+lemma ple_cons: ∀p,q. dx::p ≤ sn::q.
+#p #q
+@(ple_trans … (rc::q)) /2 width=1/
 qed.
 
 lemma ple_dichotomy: ∀p1,p2:ptr. p1 ≤ p2 ∨ p2 ≤ p1.

@@ -33,7 +33,7 @@ lemma is_whd_append: ∀r. is_whd r → ∀s. is_whd s → is_whd (r@s).
 qed.
 
 definition ho_compatible_rc: predicate (ptrl→relation term) ≝ λR.
-                             ∀s,A1,A2. R s A1 A2 → R (sn:::s) (𝛌.A1) (𝛌.A2).
+                             ∀s,A1,A2. R s A1 A2 → R (rc:::s) (𝛌.A1) (𝛌.A2).
 
 definition ho_compatible_sn: predicate (ptrl→relation term) ≝ λR.
                              ∀s,B1,B2,A. R s B1 B2 → R (sn:::s) (@B1.A) (@B2.A).

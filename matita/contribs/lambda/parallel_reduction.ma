@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "length.ma".
-include "labelled_sequential_reduction.ma".
+include "labeled_sequential_reduction.ma".
 
 (* PARALLEL REDUCTION (SINGLE STEP) *****************************************)
 
