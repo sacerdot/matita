@@ -505,6 +505,19 @@ lemma f_ind: ∀A. ∀f:A→ℕ. ∀P:predicate A.
              (∀n. (∀a. f a < n → P a) → ∀a. f a = n → P a) → ∀a. P a.
 #A #f #P #H #a
 @(f_ind_aux … H) -H [2: // | skip ]
+qed-.
+
+fact f2_ind_aux: ∀A1,A2. ∀f:A1→A2→ℕ. ∀P:relation2 A1 A2.
+                 (∀n. (∀a1,a2. f a1 a2 < n → P a1 a2) → ∀a1,a2. f a1 a2 = n → P a1 a2) →
+                 ∀n,a1,a2. f a1 a2 = n → P a1 a2.
+#A1 #A2 #f #P #H #n @(nat_elim1 … n) -n #n /3 width=3/ (**) (* auto slow (34s) without #n *)
+qed-.
+
+lemma f2_ind: ∀A1,A2. ∀f:A1→A2→ℕ. ∀P:relation2 A1 A2.
+              (∀n. (∀a1,a2. f a1 a2 < n → P a1 a2) → ∀a1,a2. f a1 a2 = n → P a1 a2) →
+              ∀a1,a2. P a1 a2.
+#A1 #A2 #f #P #H #a1 #a2
+@(f2_ind_aux … H) -H [2: // | skip ]
 qed-. 
 
 (* More negated equalities **************************************************)
