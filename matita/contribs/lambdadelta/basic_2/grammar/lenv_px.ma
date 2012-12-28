@@ -116,7 +116,7 @@ lemma lpx_trans: ∀R. Transitive ? R → Transitive … (lpx R).
 elim (lpx_inv_pair1 … H) -H #K2 #V2 #HK2 #HV2 #H destruct /3 width=3/
 qed.
 
-lemma lpx_conf: ∀R. Confluent ? R → Confluent … (lpx R).
+lemma lpx_conf: ∀R. confluent ? R → confluent … (lpx R).
 #R #HR #L0 #L1 #H elim H -L1
 [ #X #H >(lpx_inv_atom1 … H) -X /2 width=3/
 | #I #K0 #K1 #V0 #V1 #_ #HV01 #IHK01 #X #H

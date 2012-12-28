@@ -72,7 +72,7 @@ elim (tpr_inv_abbr1 … H) -H *
   elim (IH … HW02 … HWW2) -HW02 -HWW2 /2 width=1/ #W #HW02 #HWW2
   elim (IH … HU02 … HUU02) -HU02 -HUU02 -IH /2 width=1/ #U #HU2 #HUUU2
   elim (tpr_tps_bind … HWW2 HUUU2 … HUU2) -UU2 #UUU #HUUU2 #HUUU1
-  @ex2_1_intro
+  @ex2_intro
   [2: @tpr_theta [6: @HVV |7: @HWW2 |8: @HUUU2 |1,2,3,4: skip | // ]
   |1:skip
   |3: @tpr_delta [3: @tpr_flat |1: skip ] /2 width=5/
@@ -81,7 +81,7 @@ elim (tpr_inv_abbr1 … H) -H *
 | -HV2 -HW02 -HVV2 #U1 #HU01 #HTU1
   elim (IH … HU01 … HU02) -HU01 -HU02 -IH // -U0 #U #HU1 #HU2
   elim (tpr_inv_lift1 … HU1 … HTU1) -U1 #UU #HUU #HT1UU #H destruct
-  @(ex2_1_intro … (ⓐVV.UU)) /2 width=1/ /3 width=5/ (**) (* /4 width=9/ is too slow *)
+  @(ex2_intro … (ⓐVV.UU)) /2 width=1/ /3 width=5/ (**) (* /4 width=9/ is too slow *)
 ]
 qed.
 
@@ -127,7 +127,7 @@ elim (IH … HT01 … HT02) -HT01 -HT02 -IH // #T #HT1 #HT2
 elim (tpr_tps_bind … HV1 HT1 … HTT1) -T1 #U1 #TTU1 #HTU1
 elim (tpr_tps_bind … HV2 HT2 … HTT2) -T2 #U2 #TTU2 #HTU2
 elim (tps_conf_eq … HTU1 … HTU2) -T #U #HU1 #HU2
-@ex2_1_intro [2,3: @tpr_delta |1: skip ] /width=10/ (**) (* /3 width=10/ is too slow *)
+@ex2_intro [2,3: @tpr_delta |1: skip ] /width=10/ (**) (* /3 width=10/ is too slow *)
 qed.
 
 fact tpr_conf_delta_zeta:
@@ -163,7 +163,7 @@ elim (IH … HT01 … HT02) -HT01 -HT02 -IH /2 width=1/ #T #HT1 #HT2
 elim (lift_total V 0 1) #VV #HVV
 lapply (tpr_lift … HV1 … HVV1 … HVV) -V1 #HVV1
 lapply (tpr_lift … HV2 … HVV2 … HVV) -V2 -HVV #HVV2
-@ex2_1_intro [2,3: @tpr_bind |1:skip ] /2 width=5/ (**) (* /4 width=5/ is too slow *)
+@ex2_intro [2,3: @tpr_bind |1:skip ] /2 width=5/ (**) (* /4 width=5/ is too slow *)
 qed.
 
 fact tpr_conf_zeta_zeta:

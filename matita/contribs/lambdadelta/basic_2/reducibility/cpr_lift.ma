@@ -25,7 +25,7 @@ lemma cpr_cdelta: ∀L,K,V1,W1,W2,i.
                   ⇧[0, i + 1] W1 ≡ W2 → L ⊢ #i ➡ W2.
 #L #K #V1 #W1 #W2 #i #HLK #HVW1 #HW12
 lapply (ldrop_fwd_ldrop2_length … HLK) #Hi
-@ex2_1_intro [2: // | skip | @tpss_subst /width=6/ ] (**) (* /3 width=6/ is too slow *)
+@ex2_intro [2: // | skip | @tpss_subst /width=6/ ] (**) (* /3 width=6/ is too slow *)
 qed.
 
 lemma cpr_abst: ∀L,V1,V2. L ⊢ V1 ➡ V2 → ∀V,T1,T2.
@@ -33,7 +33,7 @@ lemma cpr_abst: ∀L,V1,V2. L ⊢ V1 ➡ V2 → ∀V,T1,T2.
 #L #V1 #V2 * #V0 #HV10 #HV02 #V #T1 #T2 * #T0 #HT10 #HT02 #a
 lapply (tpss_inv_S2 … HT02 L V ?) -HT02 // #HT02
 lapply (tpss_lsubs_trans … HT02 (L.ⓛV2) ?) -HT02 /2 width=1/ #HT02
-@(ex2_1_intro … (ⓛ{a}V0.T0)) /2 width=1/ (* explicit constructors *)
+@(ex2_intro … (ⓛ{a}V0.T0)) /2 width=1/ (* explicit constructors *)
 qed.
 
 lemma cpr_beta: ∀a,L,V1,V2,W,T1,T2.
@@ -41,7 +41,7 @@ lemma cpr_beta: ∀a,L,V1,V2,W,T1,T2.
 #a #L #V1 #V2 #W #T1 #T2 * #V #HV1 #HV2 * #T #HT1 #HT2
 lapply (tpss_inv_S2 … HT2 L W ?) -HT2 // #HT2
 lapply (tpss_lsubs_trans … HT2 (L.ⓓV2) ?) -HT2 /2 width=1/ #HT2
-@(ex2_1_intro … (ⓓ{a}V.T)) /2 width=1/ (**) (* explicit constructor, /3/ is too slow *)
+@(ex2_intro … (ⓓ{a}V.T)) /2 width=1/ (**) (* explicit constructor, /3/ is too slow *)
 qed.
 
 lemma cpr_beta_dx: ∀a,L,V1,V2,W,T1,T2.

@@ -55,7 +55,7 @@ lemma tpr_tps_ltpr: ∀T1,T2. T1 ➡ T2 →
   elim (IHT12 … HTT1 (L2. ⓓWW2) ?) -T1 /2 width=1/ -HL12 #TT2 #HTT12 #HTT2
   elim (lift_total VV2 0 1) #VV #H2VV
   lapply (tpss_lift_ge … HVV2 (L2. ⓓWW2) … HV2 … H2VV) -V2 /2 width=1/ #HVV
-  @ex2_1_intro [2: @tpr_theta |1: skip |3: @tpss_bind [2: @tpss_flat ] ] /width=11/ (**) (* /4 width=11/ is too slow *)
+  @ex2_intro [2: @tpr_theta |1: skip |3: @tpss_bind [2: @tpss_flat ] ] /width=11/ (**) (* /4 width=11/ is too slow *)
 | #V #T1 #T #T2 #_ #HT2 #IHT1 #L1 #d #e #X #H #L2 #HL12
   elim (tps_inv_bind1 … H) -H #W #U1 #_ #HTU1 #H destruct -V
   elim (IHT1 … HTU1 (L2.ⓓW) ?) -T1 /2 width=1/ -HL12 #U #HU1 #HTU

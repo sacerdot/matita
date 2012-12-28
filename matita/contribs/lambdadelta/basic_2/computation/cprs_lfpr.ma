@@ -27,7 +27,7 @@ lemma ltpr_tpss_trans: ∀L1,L2. L1 ➡ L2 → ∀T1,T2,d,e. L2 ⊢ T1 ▶* [d, 
 [ /2 width=3/
 | #T #T2 #_ #HT2 * #T0 #HT10 #HT0
   elim (ltpr_tps_trans … HT2 … HL12) -L2 #T3 #HT3 #HT32
-  @(ex2_1_intro … HT10) -T1 (**) (* explicit constructors *)
+  @(ex2_intro … HT10) -T1 (**) (* explicit constructors *)
   @(cprs_strap1 … T3 …) /2 width=1/ -HT32
   @(cprs_strap1 … HT0) -HT0 /3 width=3/
 ]

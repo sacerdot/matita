@@ -39,6 +39,16 @@ lemma frsupp_ind_dx: ∀L2,T2. ∀R:relation2 lenv term.
 @(bi_TC_ind_dx … IH1 IH2 ? ? H)
 qed-.
 
+(* Baic inversion lemmas ****************************************************)
+
+lemma frsupp_inv_dx: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁+ ⦃L2, T2⦄ → ⦃L1, T1⦄ ⧁ ⦃L2, T2⦄ ∨
+                     ∃∃L,T. ⦃L1, T1⦄ ⧁+ ⦃L, T⦄ & ⦃L, T⦄ ⧁ ⦃L2, T2⦄.
+/2 width=1 by bi_TC_decomp_r/ qed-.
+
+lemma frsupp_inv_sn: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁+ ⦃L2, T2⦄ → ⦃L1, T1⦄ ⧁ ⦃L2, T2⦄ ∨
+                     ∃∃L,T. ⦃L1, T1⦄ ⧁ ⦃L, T⦄ & ⦃L, T⦄ ⧁+ ⦃L2, T2⦄.
+/2 width=1 by bi_TC_decomp_l/ qed-.
+
 (* Basic properties *********************************************************)
 
 lemma frsup_frsupp: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁ ⦃L2, T2⦄ → ⦃L1, T1⦄ ⧁+ ⦃L2, T2⦄.
@@ -79,29 +89,18 @@ qed-.
 
 (* Advanced forward lemmas **************************************************)
 
-fact lift_frsupp_trans_aux: ∀L2,U0. (
-                               ∀L,K,U1,U2. ⦃L, U1⦄ ⧁+ ⦃L @@ K, U2⦄ →
-                               ∀T1,d,e. ⇧[d, e] T1 ≡ U1 →
-                               #{L, U1} < #{L2, U0} → 
-                               ∃T2. ⇧[d + |K|, e] T2 ≡ U2
-                            ) →
-                            ∀L1,K,U1,U2. ⦃L1, U1⦄ ⧁+ ⦃L2 @@ K, U2⦄ →
-                            ∀T1,d,e. ⇧[d, e] T1 ≡ U1 →
-                            L2 = L1 → U0 = U1 →
-                            ∃T2. ⇧[d + |K|, e] T2 ≡ U2.
-#L2 #U0 #IH #L1 #X #U1 #U2 #H @(frsupp_ind_dx … H) -L1 -U1 /2 width=5 by lift_frsup_trans/
-#L1 #L #U1 #U #HL1 #HL2 #_ #T1 #d #e #HTU1 #H1 #H2 destruct
-elim (frsup_fwd_append … HL1) #K1 #H destruct
-elim (frsupp_fwd_append … HL2) #K >append_assoc #H
-elim (append_inj_dx … H ?) -H // #_ #H destruct
-<append_assoc in HL2; #HL2
-elim (lift_frsup_trans … HTU1 … HL1) -T1 #T #HTU
-lapply (frsup_fwd_fw … HL1) -HL1 #HL1
-elim (IH … HL2 … HTU ?) -IH -HL2 -T // -L1 -U1 -U /2 width=2/
-qed-.
-
 lemma lift_frsupp_trans: ∀L,U1,K,U2. ⦃L, U1⦄ ⧁+ ⦃L @@ K, U2⦄ →
                          ∀T1,d,e. ⇧[d, e] T1 ≡ U1 →
                          ∃T2. ⇧[d + |K|, e] T2 ≡ U2.
-#L #U1 @(fw_ind … L U1) -L -U1 /3 width=10 by lift_frsupp_trans_aux/
+#L #U1 @(f2_ind … fw … L U1) -L -U1 #n #IH
+#L #U1 #Hn #K #U2 #H #T1 #d #e #HTU1 destruct
+elim (frsupp_inv_sn … H) -H /2 width=5 by lift_frsup_trans/ *
+#L0 #U0 #HL0 #HL
+elim (frsup_fwd_append … HL0) #K0 #H destruct
+elim (frsupp_fwd_append … HL) #L0 >append_assoc #H
+elim (append_inj_dx … H ?) -H // #_ #H destruct
+<append_assoc in HL; #HL
+elim (lift_frsup_trans … HTU1 … HL0) -T1 #T #HTU
+lapply (frsup_fwd_fw … HL0) -HL0 #HL0
+elim (IH … HL … HTU) -IH -HL -T // -L -U1 -U0 /2 width=2/
 qed-.

@@ -31,7 +31,9 @@ let void_iter f n =
 let mk_exists ooch noch c v =
    let description = "multiple existental quantifier" in
    let prec = "non associative with precedence 20\n" in
-   let name s = P.sprintf "%s%u_%u" s c v in
+   let name s = 
+      if v = 1 then P.sprintf "%s%u" s c else P.sprintf "%s%u_%u" s c v
+   in
    let o_name = name "ex" in
    let i_name = "'Ex" in
 

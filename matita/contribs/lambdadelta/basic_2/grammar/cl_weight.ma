@@ -23,13 +23,6 @@ interpretation "weight (closure)" 'Weight L T = (fw L T).
 
 (* Basic properties *********************************************************)
 
-(* Basic_1: was: flt_wf__q_ind *)
-
-(* Basic_1: was: flt_wf_ind *)
-axiom fw_ind: ∀R:relation2 lenv term.
-              (∀L2,T2. (∀L1,T1. #{L1,T1} < #{L2,T2} → R L1 T1) → R L2 T2) →
-              ∀L,T. R L T.
-
 (* Basic_1: was: flt_shift *)
 lemma fw_shift: ∀a,K,I,V,T. #{K. ⓑ{I} V, T} < #{K, ⓑ{a,I} V. T}.
 normalize //
@@ -63,6 +56,8 @@ lemma fw_tpair_sn_dx_shift: ∀I,I1,I2,L,V1,V2,T.
 normalize in ⊢ (?→?→?→?→?→?→?→?%%); /2 width=1/
 qed.
 
-(* Basic_1: removed theorems 6:
+(* Basic_1: removed theorems 7:
             flt_thead_sx flt_thead_dx flt_arith0 flt_arith1 flt_arith2 flt_trans
+            flt_wf_ind
 *)
+(* Basic_1: removed local theorems 1: q_ind *)

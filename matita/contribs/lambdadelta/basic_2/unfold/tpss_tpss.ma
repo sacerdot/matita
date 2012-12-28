@@ -56,7 +56,7 @@ lemma tpss_split_up: ∀L,T1,T2,d,e. L ⊢ T1 ▶* [d, e] T2 →
 | #T #T2 #_ #HT12 * #T3 #HT13 #HT3
   elim (tps_split_up … HT12 … Hdi Hide) -HT12 -Hide #T0 #HT0 #HT02
   elim (tpss_strap1_down … HT3 … HT0 ?) -T [2: >commutative_plus /2 width=1/ ]
-  /3 width=7 by ex2_1_intro, step/ (**) (* just /3 width=7/ is too slow *)
+  /3 width=7 by ex2_intro, step/ (**) (* just /3 width=7/ is too slow *)
 ]
 qed.
 

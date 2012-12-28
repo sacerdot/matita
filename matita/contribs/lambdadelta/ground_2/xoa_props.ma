@@ -19,7 +19,3 @@ include "ground_2/xoa.ma".
 interpretation "logical false" 'false = False.
 
 interpretation "logical true" 'true = True.
-
-lemma ex2_1_comm: ∀A0. ∀P0,P1:A0→Prop. (∃∃x0. P0 x0 & P1 x0) → ∃∃x0. P1 x0 & P0 x0.
-#A0 #P0 #P1 * /2 width=3/
-qed.

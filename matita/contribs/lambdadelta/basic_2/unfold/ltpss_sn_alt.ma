@@ -106,7 +106,7 @@ lemma ltpss_sn_strip: ∀L0,L1,d1,e1. L0 ⊢ ▶* [d1, e1] L1 →
 #L0 #L1 #d1 #e1 #H #L2 #d2 #e2 #HL02
 lapply (ltpss_sn_ltpssa … H) -H #HL01
 elim (ltpssa_strip … HL01 … HL02) -L0
-/3 width=3 by ltpssa_ltpss_sn, ex2_1_intro/
+/3 width=3 by ltpssa_ltpss_sn, ex2_intro/
 qed.
 
 (* Note: this should go in ltpss_sn_ltpss_sn.ma *)
@@ -152,5 +152,5 @@ theorem ltpss_sn_conf: ∀L0,L1,d1,e1. L0 ⊢ ▶* [d1, e1] L1 →
 lapply (ltpss_sn_ltpssa … H1) -H1 #HL01
 lapply (ltpss_sn_ltpssa … H2) -H2 #HL02
 elim (ltpssa_conf … HL01 … HL02) -L0
-/3 width=3 by ltpssa_ltpss_sn, ex2_1_intro/
+/3 width=3 by ltpssa_ltpss_sn, ex2_intro/
 qed.

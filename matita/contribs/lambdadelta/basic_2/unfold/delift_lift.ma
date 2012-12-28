@@ -27,13 +27,14 @@ lemma delift_lref_be: ∀L,K,V1,V2,U2,i,d,e. d ≤ i → i < d + e →
 elim (lift_total V 0 (i+1)) #U #HVU
 lapply (lift_trans_be … HV2 … HVU ? ?) -HV2 // >minus_plus <plus_minus_m_m /2 width=1/ #HV2U 
 lapply (lift_conf_be … HVU2 … HV2U ?) //
->commutative_plus in ⊢ (??%??→?); <minus_plus_m_m /3 width=6/ 
+>commutative_plus in ⊢ (??%??→?); <minus_plus_m_m /3 width=6/
 qed.
 
-fact sfr_delift_aux: ∀L,T,T1,d,e. d + e ≤ |L| → ≽ [d, e] L → T = T1 →
-                     ∃T2. L ⊢ ▼*[d, e] T1 ≡ T2.
-#L #T @(fw_ind … L T) -L -T #L #T #IH * * /2 width=2/
-[ #i #d #e #Hde #HL #H destruct
+lemma sfr_delift: ∀L,T1,d,e. d + e ≤ |L| → ≽ [d, e] L →
+                  ∃T2. L ⊢ ▼*[d, e] T1 ≡ T2.
+#L #T1 @(f2_ind … fw … L T1) -L -T1
+#n #IH #L * * /2 width=2/
+[ #i #H #d #e #Hde #HL destruct
   elim (lt_or_ge i d) #Hdi [ /3 width=2/ ]
   elim (lt_or_ge i (d+e)) #Hide [2: /3 width=2/ ]
   lapply (lt_to_le_to_lt … Hide Hde) #Hi
@@ -44,22 +45,18 @@ fact sfr_delift_aux: ∀L,T,T1,d,e. d + e ≤ |L| → ≽ [d, e] L → T = T1 �
   lapply (ldrop_fwd_O1_length … HLK0) #H
   lapply (sfr_ldrop_trans_be_up … HLK0 … HL ? ?) -HLK0 -HL
   [1,2: /2 width=1/ | <minus_n_O <minus_plus ] #HK
-  elim (IH … HKL … HK ?) -IH -HKL -HK
-  [3: // |2: skip |4: >H -H /2 width=1/ ] -Hde -H #V2 #V12 (**) (* H erased two times *)
+  elim (IH … HKL … HK) -IH -HKL -HK
+  [2: >H -H /2 width=1/ ] -Hde -H #V2 #V12 (**) (* H erased two times *)
   elim (lift_total V2 0 d) /3 width=7/
-| #a #I #V1 #T1 #d #e #Hde #HL #H destruct
-  elim (IH … V1 … Hde HL ?) [2,4: // |3: skip ] #V2 #HV12
-  elim (IH (L.ⓑ{I}V1) T1 ? ? (d+1) e ? ? ?) -IH [3,6: // |2: skip |4,5: /2 width=1/ ] -Hde -HL #T2 #HT12
+| #a #I #V1 #T1 #H #d #e #Hde #HL destruct
+  elim (IH … V1 … Hde HL) // #V2 #HV12
+  elim (IH (L.ⓑ{I}V1) T1 … (d+1) e ??) -IH // [2,3: /2 width=1/ ] -Hde -HL #T2 #HT12
   lapply (delift_lsubs_trans … HT12 (L.ⓑ{I}V2) ?) -HT12 /2 width=1/ /3 width=4/
-| #I #V1 #T1 #d #e #Hde #HL #H destruct
-  elim (IH … V1 … Hde HL ?) [2,4: // |3: skip ] #V2 #HV12
-  elim (IH … T1 … Hde HL ?) -IH -Hde -HL [3,4: // |2: skip ] /3 width=2/
+| #I #V1 #T1 #H #d #e #Hde #HL destruct
+  elim (IH … V1 … Hde HL) // #V2 #HV12
+  elim (IH … T1 … Hde HL) -IH -Hde -HL // /3 width=2/
 ]
-qed.
-
-lemma sfr_delift: ∀L,T1,d,e. d + e ≤ |L| → ≽ [d, e] L →
-                  ∃T2. L ⊢ ▼*[d, e] T1 ≡ T2.
-/2 width=2/ qed-.
+qed-.
 
 (* Advanced inversion lemmas ************************************************)
 

@@ -439,6 +439,10 @@ theorem decidable_lt: ∀n,m. decidable (n < m).
 theorem le_to_or_lt_eq: ∀n,m:nat. n ≤ m → n < m ∨ n = m.
 #n #m #lenm (elim lenm) /3/ qed.
 
+theorem eq_or_gt: ∀n. 0 = n ∨ 0 < n.
+#n elim (le_to_or_lt_eq 0 n ?) // /2 width=1/
+qed-.
+
 theorem increasing_to_le2: ∀f:nat → nat. increasing f → 
   ∀m:nat. f 0 ≤ m → ∃i. f i ≤ m ∧ m < f (S i).
 #f #incr #m #lem (elim lem)

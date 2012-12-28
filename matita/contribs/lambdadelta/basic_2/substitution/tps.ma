@@ -106,9 +106,8 @@ lemma tps_split_up: ∀L,T1,T2,d,e. L ⊢ T1 ▶ [d, e] T2 → ∀i. d ≤ i →
   elim (lt_or_ge i j)
   [ -Hide -Hjde
     >(plus_minus_m_m j d) in ⊢ (% → ?); // -Hdj /3 width=4/
-  | -Hdi -Hdj #Hid
-    generalize in match Hide; -Hide (**) (* rewriting in the premises, rewrites in the goal too *)
-    >(plus_minus_m_m … Hjde) in ⊢ (% → ?); -Hjde /4 width=4/
+  | -Hdi -Hdj #Hij
+    lapply (plus_minus_m_m … Hjde) -Hjde /3 width=8/
   ]
 | #L #a #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #i #Hdi #Hide
   elim (IHV12 i ? ?) -IHV12 // #V #HV1 #HV2
@@ -129,7 +128,7 @@ lemma tps_split_down: ∀L,T1,T2,d,e. L ⊢ T1 ▶ [d, e] T2 →
 [ /2 width=3/
 | #L #K #V #W #i #d #e #Hdi #Hide #HLK #HVW #j #Hdj #Hjde
   elim (lt_or_ge i j)
-  [ -Hide -Hjde >(plus_minus_m_m j d) in ⊢ (% → ?); // -Hdj /4 width=4/
+  [ -Hide -Hjde >(plus_minus_m_m j d) in ⊢ (% → ?); // -Hdj /3 width=8/
   | -Hdi -Hdj
     >(plus_minus_m_m (d+e) j) in Hide; // -Hjde /3 width=4/
   ]

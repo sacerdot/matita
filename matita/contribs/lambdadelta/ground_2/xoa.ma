@@ -32,14 +32,6 @@ inductive ex1_3 (A0,A1,A2:Type[0]) (P0:A0→A1→A2→Prop) : Prop ≝
 
 interpretation "multiple existental quantifier (1, 3)" 'Ex P0 = (ex1_3 ? ? ? P0).
 
-(* multiple existental quantifier (2, 1) *)
-
-inductive ex2_1 (A0:Type[0]) (P0,P1:A0→Prop) : Prop ≝
-   | ex2_1_intro: ∀x0. P0 x0 → P1 x0 → ex2_1 ? ? ?
-.
-
-interpretation "multiple existental quantifier (2, 1)" 'Ex P0 P1 = (ex2_1 ? P0 P1).
-
 (* multiple existental quantifier (2, 2) *)
 
 inductive ex2_2 (A0,A1:Type[0]) (P0,P1:A0→A1→Prop) : Prop ≝
@@ -58,11 +50,11 @@ interpretation "multiple existental quantifier (2, 3)" 'Ex P0 P1 = (ex2_3 ? ? ? 
 
 (* multiple existental quantifier (3, 1) *)
 
-inductive ex3_1 (A0:Type[0]) (P0,P1,P2:A0→Prop) : Prop ≝
-   | ex3_1_intro: ∀x0. P0 x0 → P1 x0 → P2 x0 → ex3_1 ? ? ? ?
+inductive ex3 (A0:Type[0]) (P0,P1,P2:A0→Prop) : Prop ≝
+   | ex3_intro: ∀x0. P0 x0 → P1 x0 → P2 x0 → ex3 ? ? ? ?
 .
 
-interpretation "multiple existental quantifier (3, 1)" 'Ex P0 P1 P2 = (ex3_1 ? P0 P1 P2).
+interpretation "multiple existental quantifier (3, 1)" 'Ex P0 P1 P2 = (ex3 ? P0 P1 P2).
 
 (* multiple existental quantifier (3, 2) *)
 
@@ -90,11 +82,11 @@ interpretation "multiple existental quantifier (3, 4)" 'Ex P0 P1 P2 = (ex3_4 ? ?
 
 (* multiple existental quantifier (4, 1) *)
 
-inductive ex4_1 (A0:Type[0]) (P0,P1,P2,P3:A0→Prop) : Prop ≝
-   | ex4_1_intro: ∀x0. P0 x0 → P1 x0 → P2 x0 → P3 x0 → ex4_1 ? ? ? ? ?
+inductive ex4 (A0:Type[0]) (P0,P1,P2,P3:A0→Prop) : Prop ≝
+   | ex4_intro: ∀x0. P0 x0 → P1 x0 → P2 x0 → P3 x0 → ex4 ? ? ? ? ?
 .
 
-interpretation "multiple existental quantifier (4, 1)" 'Ex P0 P1 P2 P3 = (ex4_1 ? P0 P1 P2 P3).
+interpretation "multiple existental quantifier (4, 1)" 'Ex P0 P1 P2 P3 = (ex4 ? P0 P1 P2 P3).
 
 (* multiple existental quantifier (4, 2) *)
 

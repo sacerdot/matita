@@ -52,13 +52,15 @@ lemma sfr_ldrop: ∀L,d,e.
 #L elim L -L //
 #L #I #V #IHL #d @(nat_ind_plus … d) -d
 [ #e @(nat_ind_plus … e) -e //
-  #e #_ #HH
-  >(HH I L V 0 ? ? ?) // /5 width=6/
-| /5 width=6/
+  #e #_ #H0
+  >(H0 I L V 0 ? ? ?) //
+  /5 width=6 by sfr_abbr, ldrop_ldrop, lt_minus_to_plus_r/ (**) (* auto now too slow without trace *)
+| #d #_ #e #H0 
+  /5 width=6 by sfr_skip, ldrop_ldrop, le_S_S, lt_minus_to_plus_r/ (**) (* auto now too slow without trace *)
 ]
 qed.
 
-lemma sfr_ldrop_trans_le: ∀L1,L2,d,e. ⇩[d, e] L1 ≡ L2 → ∀dd,ee. ≽ [dd, ee] L1 → 
+lemma sfr_ldrop_trans_le: ∀L1,L2,d,e. ⇩[d, e] L1 ≡ L2 → ∀dd,ee. ≽ [dd, ee] L1 →
                           dd + ee ≤ d → ≽ [dd, ee] L2.
 #L1 #L2 #d #e #HL12 #dd #ee #HL1 #Hddee
 @sfr_ldrop #I #K2 #V2 #i #Hddi #Hiddee #HLK2
@@ -80,7 +82,7 @@ lapply (ldrop_trans_ge … HL12 … HLK2 ?) -L2 // -Hdi  #HL1K2
 @(sfr_inv_ldrop … HL1K2 … HL1) -L1 >commutative_plus // -Hddie /2 width=1/
 qed.
 
-lemma sfr_ldrop_trans_ge: ∀L1,L2,d,e. ⇩[d, e] L1 ≡ L2 → ∀dd,ee. ≽ [dd, ee] L1 → 
+lemma sfr_ldrop_trans_ge: ∀L1,L2,d,e. ⇩[d, e] L1 ≡ L2 → ∀dd,ee. ≽ [dd, ee] L1 →
                           d + e ≤ dd → ≽ [dd - e, ee] L2.
 #L1 #L2 #d #e #HL12 #dd #ee #HL1 #Hddee
 @sfr_ldrop #I #K2 #V2 #i #Hddi #Hiddee #HLK2

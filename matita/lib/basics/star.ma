@@ -273,7 +273,7 @@ lemma bi_TC_strap: ∀A,B. ∀R:bi_relation A B. ∀a1,a,a2,b1,b,b2.
                    R a1 b1 a b → bi_TC … R a b a2 b2 → bi_TC … R a1 b1 a2 b2.
 #A #B #R #a1 #a #a2 #b1 #b #b2 #HR #H elim H -a2 -b2 /2 width=4/ /3 width=4/
 qed.
-
+                       
 lemma bi_TC_reflexive: ∀A,B,R. bi_reflexive A B R →
                        bi_reflexive A B (bi_TC … R).
 /2 width=1/ qed.

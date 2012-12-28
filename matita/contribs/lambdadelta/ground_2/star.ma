@@ -20,10 +20,6 @@ include "ground_2/notation.ma".
 
 definition Decidable: Prop → Prop ≝ λR. R ∨ (R → ⊥).
 
-definition Confluent: ∀A. ∀R: relation A. Prop ≝ λA,R.
-                      ∀a0,a1. R a0 a1 → ∀a2. R a0 a2 →
-                      ∃∃a. R a1 a & R a2 a.
-
 definition Transitive: ∀A. ∀R: relation A. Prop ≝ λA,R.
                        ∀a1,a0. R a1 a0 → ∀a2. R a0 a2 → R a1 a2.
 
@@ -47,7 +43,7 @@ lemma TC_strip1: ∀A,R1,R2. confluent2 A R1 R2 →
   elim (HR12 … Ha01 … Ha02) -HR12 -a0 /3 width=3/
 | #a #a1 #_ #Ha1 #IHa0 #a2 #Ha02
   elim (IHa0 … Ha02) -a0 #a0 #Ha0 #Ha20
-  elim (HR12 … Ha1 … Ha0) -HR12 -a /4 width=3/
+  elim (HR12 … Ha1 … Ha0) -HR12 -a /4 width=5/
 ]
 qed.
 
@@ -70,7 +66,7 @@ lemma TC_confluent2: ∀A,R1,R2.
   elim (TC_strip2 … HR12 … Ha02 … Ha01) -HR12 -a0 /3 width=3/
 | #a #a1 #_ #Ha1 #IHa0 #a2 #Ha02
   elim (IHa0 … Ha02) -a0 #a0 #Ha0 #Ha20
-  elim (TC_strip2 … HR12 … Ha0 … Ha1) -HR12 -a /4 width=3/
+  elim (TC_strip2 … HR12 … Ha0 … Ha1) -HR12 -a /4 width=5/
 ]
 qed.
 
@@ -82,7 +78,7 @@ lemma TC_strap1: ∀A,R1,R2. transitive2 A R1 R2 →
   elim (HR12 … Ha10 … Ha02) -HR12 -a0 /3 width=3/
 | #a #a0 #_ #Ha0 #IHa #a2 #Ha02
   elim (HR12 … Ha0 … Ha02) -HR12 -a0 #a0 #Ha0 #Ha02
-  elim (IHa … Ha0) -a /4 width=3/
+  elim (IHa … Ha0) -a /4 width=5/
 ]
 qed.
 
@@ -105,7 +101,7 @@ lemma TC_transitive2: ∀A,R1,R2.
   elim (TC_strap2 … HR12 … Ha02 … Ha10) -HR12 -a0 /3 width=3/
 | #a #a0 #_ #Ha0 #IHa #a2 #Ha02
   elim (TC_strap2 … HR12 … Ha02 … Ha0) -HR12 -a0 #a0 #Ha0 #Ha02
-  elim (IHa … Ha0) -a /4 width=3/
+  elim (IHa … Ha0) -a /4 width=5/
 ]
 qed.
 
@@ -156,3 +152,20 @@ lemma bi_TC_confluent: ∀A,B,R. bi_confluent A B R →
   elim (bi_TC_strip … HR … H13 … H10) -a1 -b1 /3 width=7/
 ]
 qed.
+
+lemma bi_TC_decomp_r: ∀A,B. ∀R:bi_relation A B.
+                      ∀a1,a2,b1,b2. bi_TC … R a1 b1 a2 b2 →
+                      R a1 b1 a2 b2 ∨
+                      ∃∃a,b. bi_TC … R a1 b1 a b & R a b a2 b2.
+#A #B #R #a1 #a2 #b1 #b2 * -a2 -b2 /2 width=1/ /3 width=4/
+qed-.
+
+lemma bi_TC_decomp_l: ∀A,B. ∀R:bi_relation A B.
+                      ∀a1,a2,b1,b2. bi_TC … R a1 b1 a2 b2 →
+                      R a1 b1 a2 b2 ∨
+                      ∃∃a,b. R a1 b1 a b & bi_TC … R a b a2 b2.
+#A #B #R #a1 #a2 #b1 #b2 #H @(bi_TC_ind_dx ?????????? H) -a1 -b1
+[ /2 width=1/
+| #a1 #a #b1 #b #Hab1 #Hab2 #_ /3 width=4/
+]
+qed-.

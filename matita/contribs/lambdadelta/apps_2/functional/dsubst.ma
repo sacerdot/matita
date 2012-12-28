@@ -41,7 +41,7 @@ theorem fdsubst_delift: ∀K,V,T,L,d.
 [ * #i #L #d #HLK normalize in ⊢ (? ? ? ? ? %); /2 width=3/
   elim (lt_or_eq_or_gt i d) #Hid
   [ -HLK >(tri_lt ?????? Hid) /3 width=3/
-  | destruct >tri_eq /4 width=4 by tpss_strap2, tps_subst, le_n, ex2_1_intro/ (**) (* too slow without trace *)   
+  | destruct >tri_eq /4 width=4 by tpss_strap2, tps_subst, le_n, ex2_intro/ (**) (* too slow without trace *)   
   | -HLK >(tri_gt ?????? Hid) /3 width=3/
   ]
 | * /3 width=1/ /4 width=1/

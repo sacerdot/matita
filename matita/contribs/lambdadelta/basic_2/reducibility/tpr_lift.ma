@@ -77,7 +77,7 @@ lemma tpr_inv_lift1: t_deliftable_sn tpr.
   elim (IHV12 … HWV1) -V1 #W2 #HWV2 #HW12
   elim (IHT1 … HUT1) -T1 #U #HUT #HU1
   elim (tps_inv_lift1_le … HT2 … HUT ?) -T // [3: /2 width=5/ |2: skip ] #U2 #HU2 #HUT2
-  @ex2_1_intro  [2: /2 width=2/ |1: skip |3: /2 width=3/ ] (**) (* /3 width=5/ is slow *)
+  @ex2_intro  [2: /2 width=2/ |1: skip |3: /2 width=3/ ] (**) (* /3 width=5/ is slow *)
 | #a #V #V1 #V2 #W1 #W2 #T1 #T2 #_ #HV2 #_ #_ #IHV12 #IHW12 #IHT12 #X #d #e #HX
   elim (lift_inv_flat2 … HX) -HX #V0 #Y #HV01 #HY #HX destruct
   elim (lift_inv_bind2 … HY) -HY #W0 #T0 #HW01 #HT01 #HY destruct
@@ -85,7 +85,7 @@ lemma tpr_inv_lift1: t_deliftable_sn tpr.
   elim (IHW12 … HW01) -W1 #W3 #HW32 #HW03
   elim (IHT12 … HT01) -T1 #T3 #HT32 #HT03
   elim (lift_trans_le … HV32 … HV2 ?) -V2 // #V2 #HV32 #HV2
-  @ex2_1_intro [2: /3 width=2/ |1: skip |3: /2 width=3/ ] (**) (* /4 width=5/ is slow *)
+  @ex2_intro [2: /3 width=2/ |1: skip |3: /2 width=3/ ] (**) (* /4 width=5/ is slow *)
 | #V #T1 #T #T2 #_ #HT2 #IHT1 #X #d #e #HX
   elim (lift_inv_bind2 … HX) -HX #V3 #T3 #_ #HT31 #H destruct
   elim (IHT1 … HT31) -T1 #T1 #HT1 #HT31

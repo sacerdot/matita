@@ -16,6 +16,7 @@ ORIGS    = basic_2/basic_1.orig
 PACKAGES = ground_2 basic_2 apps_2
 
 all:
+	../../matitac.opt
 
 # xoa ########################################################################
 

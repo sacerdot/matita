@@ -84,7 +84,7 @@ theorem lift_div_be: ∀d1,e1,T1,T. ⇧[d1, e1] T1 ≡ T →
   | >(lift_inv_lref2_ge … H ?) -H //
     lapply (le_plus_to_minus … Hie1d1e2) #Hd1e21i
     elim (le_inv_plus_l … Hie1d1e2) -Hie1d1e2 #Hd1e12 #He2ie1
-    @ex2_1_intro [2: /2 width=1/ | skip ] -Hd1e12
+    @ex2_intro [2: /2 width=1/ | skip ] -Hd1e12
     @lift_lref_ge_minus_eq [ >plus_minus_commutative // | /2 width=1/ ]
   ]
 | #p #d1 #e1 #e #e2 #T2 #H >(lift_inv_gref2 … H) -H /2 width=3/

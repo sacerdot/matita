@@ -13,39 +13,34 @@
 (**************************************************************************)
 
 include "basic_2/unfold/tpss_tpss.ma".
-include "basic_2/unfold/tpss_alt.ma".
 include "basic_2/unfold/ltpss_sn_tpss.ma".
 
 (* PARTIAL UNFOLD ON LOCAL ENVIRONMENTS *************************************)
 
 (* Advanced properties ******************************************************)
 
-fact ltpss_sn_tpss_trans_eq_aux: ∀Y1,X2,L1,T2,U2,d,e.
-                                 L1 ⊢ T2 ▶* [d, e] U2 → ∀L0. L0 ⊢ ▶* [d, e] L1 →
-                                 Y1 = L1 → X2 = T2 → L0 ⊢ T2 ▶* [d, e] U2.
-#Y1 #X2 @(fw_ind … Y1 X2) -Y1 -X2 #Y1 #X2 #IH
-#L1 #T2 #U2 #d #e #H @(tpss_ind_alt … H) -L1 -T2 -U2 -d -e
-[ //
-| #L1 #K1 #V1 #V2 #W2 #i #d #e #Hdi #Hide #HLK1 #HV12 #HVW2 #_ #L0 #HL01 #H1 #H2 destruct
+lemma ltpss_sn_tpss_trans_eq: ∀L1,T2,U2,d,e. L1 ⊢ T2 ▶* [d, e] U2 →
+                              ∀L0. L0 ⊢ ▶* [d, e] L1 → L0 ⊢ T2 ▶* [d, e] U2.
+#L1 #T2 @(f2_ind … fw … L1 T2) -L1 -T2 #n #IH #L1 *
+[ #I #Hn #W2 #d #e #H #L0 #HL01 destruct
+  elim (tpss_inv_atom1 … H) -H // *
+  #K1 #V1 #V2 #i #Hdi #Hide #HLK1 #HV12 #HVW2 #H destruct
   lapply (ldrop_fwd_lw … HLK1) #H1 normalize in H1;
   elim (ltpss_sn_ldrop_trans_be … HL01 … HLK1 ? ?) -HL01 -HLK1 // /2 width=2/ #X #H #HLK0
   elim (ltpss_sn_inv_tpss22 … H ?) -H /2 width=1/ #K0 #V0 #HK01 #HV01 #H destruct
-  lapply (IH … HV12 … HK01 ? ?) -IH -HV12 -HK01 [1,3: // |2,4: skip | normalize /2 width=1/ ] #HV12 
+  lapply (IH … HV12 … HK01) -IH -HV12 -HK01 [ normalize /2 width=1/ ] #HV12
   lapply (tpss_trans_eq … HV01 HV12) -V1 /2 width=6/
-| #L #a #I #V1 #V2 #T1 #T2 #d #e #HV12 #HT12 #_ #_ #L0 #HL0 #H1 #H2 destruct
-  lapply (tpss_lsubs_trans … HT12 (L. ⓑ{I} V1) ?) -HT12 /2 width=1/ #HT12
-  lapply (IH … HV12 … HL0 ? ?) -HV12 [1,3: // |2,4: skip |5: /2 width=2/ ] #HV12
-  lapply (IH … HT12 (L0. ⓑ{I} V1) ? ? ?) -IH -HT12 [1,3,5: /2 width=2/ |2,4: skip | normalize // ] -HL0 #HT12
-  lapply (tpss_lsubs_trans … HT12 (L0. ⓑ{I} V2) ?) -HT12 /2 width=1/
-| #L #I #V1 #V2 #T1 #T2 #d #e #HV12 #HT12 #_ #_ #L0 #HL0 #H1 #H2 destruct
-  lapply (IH … HV12 … HL0 ? ?) -HV12 [1,3: // |2,4: skip |5: /2 width=3/ ]
-  lapply (IH … HT12 … HL0 ? ?) -IH -HT12 [1,3,5: normalize // |2,4: skip ] -HL0 /2 width=1/
+| * [ #a ] #I #V2 #T2 #Hn #X #d #e #H #L0 #HL0 destruct
+  [ elim (tpss_inv_bind1 … H) -H #W2 #U2 #HVW2 #HTU2 #H destruct
+    lapply (tpss_lsubs_trans … HTU2 (L1. ⓑ{I} V2) ?) -HTU2 /2 width=1/ #HTU2
+    lapply (IH … HVW2 … HL0) -HVW2 [ /2 width=2/ ] #HVW2
+    lapply (IH … HTU2 (L0. ⓑ{I} V2) ?) -IH -HTU2 // /2 width=2/ -HL0 #HTU2
+    lapply (tpss_lsubs_trans … HTU2 (L0. ⓑ{I} W2) ?) -HTU2 /2 width=1/
+  | elim (tpss_inv_flat1 … H) -H #W2 #U2 #HVW2 #HTU2 #H destruct
+    lapply (IH … HVW2 … HL0) -HVW2 //
+    lapply (IH … HTU2 … HL0) -IH -HTU2 // -HL0 /2 width=1/
 ]
 qed.
-
-lemma ltpss_sn_tpss_trans_eq: ∀L1,T2,U2,d,e. L1 ⊢ T2 ▶* [d, e] U2 →
-                              ∀L0. L0 ⊢ ▶* [d, e] L1 → L0 ⊢ T2 ▶* [d, e] U2.
-/2 width=5/ qed.
 
 lemma ltpss_sn_tps_trans_eq: ∀L0,L1,T2,U2,d,e. L0 ⊢ ▶* [d, e] L1 →
                              L1 ⊢ T2 ▶ [d, e] U2 → L0 ⊢ T2 ▶* [d, e] U2.

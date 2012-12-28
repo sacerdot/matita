@@ -26,7 +26,7 @@ theorem tps_conf_eq: ∀L,T0,T1,d1,e1. L ⊢ T0 ▶ [d1, e1] T1 →
 [ /2 width=3/
 | #L #K1 #V1 #T1 #i0 #d1 #e1 #Hd1 #Hde1 #HLK1 #HVT1 #T2 #d2 #e2 #H
   elim (tps_inv_lref1 … H) -H
-  [ #HX destruct /4 width=4/
+  [ #HX destruct /3 width=6/
   | -Hd1 -Hde1 * #K2 #V2 #_ #_ #HLK2 #HVT2
     lapply (ldrop_mono … HLK1 … HLK2) -HLK1 -HLK2 #H destruct
     >(lift_mono … HVT1 … HVT2) -HVT1 -HVT2 /2 width=3/
@@ -54,7 +54,7 @@ theorem tps_conf_neq: ∀L1,T0,T1,d1,e1. L1 ⊢ T0 ▶ [d1, e1] T1 →
 [ /2 width=3/
 | #L1 #K1 #V1 #T1 #i0 #d1 #e1 #Hd1 #Hde1 #HLK1 #HVT1 #L2 #T2 #d2 #e2 #H1 #H2
   elim (tps_inv_lref1 … H1) -H1
-  [ #H destruct /4 width=4/
+  [ #H destruct /3 width=6/
   | -HLK1 -HVT1 * #K2 #V2 #Hd2 #Hde2 #_ #_ elim H2 -H2 #Hded
     [ -Hd1 -Hde2
       lapply (transitive_le … Hded Hd2) -Hded -Hd2 #H
@@ -116,7 +116,7 @@ theorem tps_trans_down: ∀L,T1,T0,d1,e1. L ⊢ T1 ▶ [d1, e1] T0 →
 | #L #K #V #W #i1 #d1 #e1 #Hdi1 #Hide1 #HLK #HVW #T2 #d2 #e2 #HWT2 #Hde2d1
   lapply (transitive_le … Hde2d1 Hdi1) -Hde2d1 #Hde2i1
   lapply (tps_weak … HWT2 0 (i1 + 1) ? ?) -HWT2 normalize /2 width=1/ -Hde2i1 #HWT2
-  <(tps_inv_lift1_eq … HWT2 … HVW) -HWT2 /4 width=4/
+  <(tps_inv_lift1_eq … HWT2 … HVW) -HWT2 /3 width=8/
 | #L #a #I #V1 #V0 #T1 #T0 #d1 #e1 #_ #_ #IHV10 #IHT10 #X #d2 #e2 #HX #de2d1
   elim (tps_inv_bind1 … HX) -HX #V2 #T2 #HV02 #HT02 #HX destruct
   lapply (tps_lsubs_trans … HT02 (L. ⓑ{I} V0) ?) -HT02 /2 width=1/ #HT02

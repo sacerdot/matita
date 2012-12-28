@@ -49,8 +49,8 @@ lemma delifta_lsubs_trans: ∀L1,T1,T2,d,e. L1 ⊢ ▼▼*[d, e] T1 ≡ T2 →
 qed.
 
 lemma delift_delifta: ∀L,T1,T2,d,e. L ⊢ ▼*[d, e] T1 ≡ T2 → L ⊢ ▼▼*[d, e] T1 ≡ T2.
-#L #T1 @(fw_ind … L T1) -L -T1 #L #T1 elim T1 -T1
-[ * #i #IH #T2 #d #e #H
+#L #T1 @(f2_ind … fw … L T1) -L -T1 #n #IH #L *
+[ * #i #Hn #T2 #d #e #H destruct
   [ >(delift_inv_sort1 … H) -H //
   | elim (delift_inv_lref1 … H) -H * /2 width=1/
     #K #V1 #V2 #Hdi #Hide #HLK #HV12 #HVT2
@@ -58,7 +58,7 @@ lemma delift_delifta: ∀L,T1,T2,d,e. L ⊢ ▼*[d, e] T1 ≡ T2 → L ⊢ ▼�
     lapply (IH … HV12) // -H /2 width=6/
   | >(delift_inv_gref1 … H) -H //
   ]
-| * [ #a ] #I #V1 #T1 #_ #_ #IH #X #d #e #H
+| * [ #a ] #I #V1 #T1 #Hn #X #d #e #H
   [ elim (delift_inv_bind1 … H) -H #V2 #T2 #HV12 #HT12 #H destruct
     lapply (delift_lsubs_trans … HT12 (L.ⓑ{I}V1) ?) -HT12 /2 width=1/ #HT12
     lapply (IH … HV12) -HV12 // #HV12

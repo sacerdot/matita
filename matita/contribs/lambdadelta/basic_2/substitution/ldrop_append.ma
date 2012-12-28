@@ -54,9 +54,11 @@ lemma ldrop_O1_inv_append1_le: ∀K,L1,L2,e. ⇩[0, e] L1 @@ L2 ≡ K → e ≤ 
   [ #H1 #_ #K2 #H2
     lapply (ldrop_inv_refl … H1) -H1 #H1
     lapply (ldrop_inv_refl … H2) -H2 #H2 destruct //
-  | #e #_ #H1 #H1e #K2 #H2
+  | #e #_ #H1 #H #K2 #H2
+    lapply (le_plus_to_le_r … H) -H
     lapply (ldrop_inv_ldrop1 … H1 ?) -H1 //
-    lapply (ldrop_inv_ldrop1 … H2 ?) -H2 // /3 width=4/
+    lapply (ldrop_inv_ldrop1 … H2 ?) -H2 //
+    <minus_plus_m_m /2 width=4/
   ]
 ]
 qed-. 
