@@ -27,7 +27,7 @@ lemma tprs_strip: ∀T1,T. T ➡* T1 → ∀T2. T ➡ T2 →
 (* Main propertis ***********************************************************)
 
 (* Basic_1: was: pr1_confluence *)
-theorem tprs_conf: Confluent … tprs.
+theorem tprs_conf: confluent … tprs.
 /3 width=3/ qed.
 
 (* Basic_1: was: pr1_t *)

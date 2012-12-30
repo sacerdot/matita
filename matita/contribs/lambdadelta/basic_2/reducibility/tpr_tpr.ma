@@ -196,88 +196,66 @@ qed.
 
 (* Confluence ***************************************************************)
 
-fact tpr_conf_aux:
-   ∀Y0:term. (
-      ∀X0:term. #{X0} < #{Y0} →
-      ∀X1,X2. X0 ➡ X1 → X0 ➡ X2 →
-      ∃∃X. X1 ➡ X & X2 ➡ X
-         ) →
-   ∀X0,X1,X2. X0 ➡ X1 → X0 ➡ X2 → X0 = Y0 →
-   ∃∃X. X1 ➡ X & X2 ➡ X.
-#Y0 #IH #X0 #X1 #X2 * -X0 -X1
-[ #I1 #H1 #H2 destruct
-  lapply (tpr_inv_atom1 … H1) -H1
-(* case 1: atom, atom *)
-  #H1 destruct //
-| #I #V0 #V1 #T0 #T1 #HV01 #HT01 #H1 #H2 destruct
-  elim (tpr_inv_flat1 … H1) -H1 *
-(* case 2: flat, flat *)
-  [ #V2 #T2 #HV02 #HT02 #H destruct
-    /3 width=7 by tpr_conf_flat_flat/ (**) (* /3 width=7/ is too slow *)
-(* case 3: flat, beta *)
-  | #b #V2 #W #U0 #T2 #HV02 #HT02 #H1 #H2 #H3 destruct
-    /3 width=8 by tpr_conf_flat_beta/ (**) (* /3 width=8/ is too slow *)
-(* case 4: flat, theta *)
-  | #b #V2 #V #W0 #W2 #U0 #U2 #HV02 #HW02 #HT02 #HV2 #H1 #H2 #H3 destruct
-    /3 width=11 by tpr_conf_flat_theta/ (**) (* /3 width=11/ is too slow *)
-(* case 5: flat, tau *)
-  | #HT02 #H destruct
-    /3 width=6 by tpr_conf_flat_cast/ (**) (* /3 width=6/ is too slow *)
-  ]
-| #a #V0 #V1 #W0 #T0 #T1 #HV01 #HT01 #H1 #H2 destruct
-  elim (tpr_inv_appl1 … H1) -H1 *
-(* case 6: beta, flat (repeated) *)
-  [ #V2 #T2 #HV02 #HT02 #H destruct
-    @ex2_1_comm /3 width=8 by tpr_conf_flat_beta/
-(* case 7: beta, beta *)
-  | #b #V2 #WW0 #TT0 #T2 #HV02 #HT02 #H1 #H2 destruct
-    /3 width=8 by tpr_conf_beta_beta/ (**) (* /3 width=8/ is too slow *)
-(* case 8, beta, theta (excluded) *)
-  | #b #V2 #VV2 #WW0 #W2 #TT0 #T2 #_ #_ #_ #_ #H destruct
-  ]
-| #a #I1 #V0 #V1 #T0 #T1 #TT1 #HV01 #HT01 #HTT1 #H1 #H2 destruct
-  elim (tpr_inv_bind1 … H1) -H1 *
-(* case 9: delta, delta *)
-  [ #V2 #T2 #TT2 #HV02 #HT02 #HTT2 #H destruct
-    /3 width=11 by tpr_conf_delta_delta/ (**) (* /3 width=11/ is too slow *)
-(* case 10: delta, zeta *)
-  | #T2 #HT20 #HTX2 #H1 #H2 destruct
-    /3 width=10 by tpr_conf_delta_zeta/ (**) (* /3 width=10/ is too slow *)
-  ]
-| #a #VV1 #V0 #V1 #W0 #W1 #T0 #T1 #HV01 #HVV1 #HW01 #HT01 #H1 #H2 destruct
-  elim (tpr_inv_appl1 … H1) -H1 *
-(* case 11: theta, flat (repeated) *)
-  [ #V2 #T2 #HV02 #HT02 #H destruct
-    @ex2_1_comm /3 width=11 by tpr_conf_flat_theta/
-(* case 12: theta, beta (repeated) *)
-  | #b #V2 #WW0 #TT0 #T2 #_ #_ #H destruct
-(* case 13: theta, theta *)
-  | #b #V2 #VV2 #WW0 #W2 #TT0 #T2 #V02 #HW02 #HT02 #HVV2 #H1 #H2 destruct
-    /3 width=14 by tpr_conf_theta_theta/ (**) (* /3 width=14/ is too slow *)
-  ]
-| #V0 #TT0 #T0 #T1 #HTT0 #HT01 #H1 #H2 destruct
-  elim (tpr_inv_abbr1 … H1) -H1 *
-(* case 14: zeta, delta (repeated) *)
-  [ #V2 #TT2 #T2 #HV02 #HTT02 #HTT2 #H destruct
-    @ex2_1_comm /3 width=10 by tpr_conf_delta_zeta/
-(* case 15: zeta, zeta *)
-  | #TT2 #HTT02 #HXTT2
-    /3 width=9 by tpr_conf_zeta_zeta/ (**) (* /3 width=9/ is too slow *)
-  ]
-| #V0 #T0 #T1 #HT01 #H1 #H2 destruct
-  elim (tpr_inv_cast1 … H1) -H1
-(* case 16: tau, flat (repeated) *)
-  [ * #V2 #T2 #HV02 #HT02 #H destruct
-    @ex2_1_comm /3 width=6 by tpr_conf_flat_cast/
-(* case 17: tau, tau *)
-  | #HT02
-    /3 width=5 by tpr_conf_tau_tau/
-  ]
-]
-qed.
-
 (* Basic_1: was: pr0_confluence *)
 theorem tpr_conf: ∀T0:term. ∀T1,T2. T0 ➡ T1 → T0 ➡ T2 →
                   ∃∃T. T1 ➡ T & T2 ➡ T.
-#T @(tw_ind … T) -T /3 width=6 by tpr_conf_aux/
+#T0 @(f_ind … tw … T0) -T0 #n #IH * 
+[ #I #_ #X1 #X2 #H1 #H2 -n
+  >(tpr_inv_atom1 … H1) -X1
+  >(tpr_inv_atom1 … H2) -X2
+(* case 1: atom, atom *)
+  //
+| * [ #a ] #I #V0 #T0 #Hn #X1 #X2 #H1 #H2
+  [ elim (tpr_inv_bind1 … H1) -H1 *
+    [ #V1 #T1 #U1 #HV01 #HT01 #HTU1 #H1
+    | #T1 #HT01 #HXT1 #H11 #H12
+    ]
+    elim (tpr_inv_bind1 … H2) -H2 *
+    [1,3: #V2 #T2 #U2 #HV02 #HT02 #HTU2 #H2
+    |2,4: #T2 #HT02 #HXT2 #H21 #H22
+    ] destruct
+(* case 2: delta, delta *)
+    [ /3 width=11 by tpr_conf_delta_delta/ (**) (* /3 width=11/ is too slow *)   
+(* case 3: zeta, delta (repeated) *)
+    | @ex2_commute /3 width=10 by tpr_conf_delta_zeta/
+(* case 4: delta, zeta *)
+    | /3 width=10 by tpr_conf_delta_zeta/ (**) (* /3 width=10/ is too slow *)
+(* case 5: zeta, zeta *)
+    | /3 width=9 by tpr_conf_zeta_zeta/ (**) (* /3 width=9/ is too slow *)    
+    ]
+  | elim (tpr_inv_flat1 … H1) -H1 *
+    [ #V1 #T1 #HV01 #HT01 #H1
+    | #b1 #V1 #W1 #U1 #T1 #HV01 #HUT1 #H11 #H12 #H13
+    | #b1 #V1 #Y1 #W1 #Z1 #U1 #T1 #HV01 #HWZ1 #HUT1 #HVY1 #H11 #H12 #H13
+    | #HX1 #H1
+    ]
+    elim (tpr_inv_flat1 … H2) -H2 *
+    [1,5,9,13: #V2 #T2 #HV02 #HT02 #H2
+    |2,6,10,14: #b2 #V2 #W2 #U2 #T2 #HV02 #HUT2 #H21 #H22 #H23
+    |3,7,11,15: #b2 #V2 #Y2 #W2 #Z2 #U2 #T2 #HV02 #HWZ2 #HUT2 #HVY2 #H21 #H22 #H23
+    |4,8,12,16: #HX2 #H2
+    ] destruct
+(* case 6: flat, flat *)
+    [ /3 width=7 by tpr_conf_flat_flat/ (**) (* /3 width=7/ is too slow *)
+(* case 7: beta, flat (repeated) *)
+    | @ex2_commute /3 width=8 by tpr_conf_flat_beta/
+(* case 8: theta, flat (repeated) *)
+    | @ex2_commute /3 width=11 by tpr_conf_flat_theta/
+(* case 9: tau, flat (repeated) *)
+    | @ex2_commute /3 width=6 by tpr_conf_flat_cast/
+(* case 10: flat, beta *)
+    | /3 width=8 by tpr_conf_flat_beta/ (**) (* /3 width=8/ is too slow *)
+(* case 11: beta, beta *)
+    | /3 width=8 by tpr_conf_beta_beta/ (**) (* /3 width=8/ is too slow *)
+(* case 12: flat, theta *)
+    | /3 width=11 by tpr_conf_flat_theta/ (**) (* /3 width=11/ is too slow *)
+(* case 13: theta, theta *)
+    | /3 width=14 by tpr_conf_theta_theta/ (**) (* /3 width=14/ is too slow *)
+(* case 14: flat, tau *)
+    | /3 width=6 by tpr_conf_flat_cast/ (**) (* /3 width=6/ is too slow *)
+(* case 15: tau, tau *)
+    | /3 width=5 by tpr_conf_tau_tau/
+    ]
+  ]
+]
 qed.

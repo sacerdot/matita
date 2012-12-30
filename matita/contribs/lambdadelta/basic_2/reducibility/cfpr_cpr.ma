@@ -50,7 +50,7 @@ lemma cfpr_inv_all: ∀L1,L2,L0,T1,T2. L0 ⊢ ⦃L1, T1⦄ ➡ ⦃L2, T2⦄ →
   elim (append_inj_dx … H ?) -H // -HX #_ #H destruct -X
   lapply (ltpss_sn_fwd_length … HL2) >append_length >append_length #H
   lapply (injective_plus_r … H) -H #H
-  @(ex3_1_intro … (⋆.ⓑ{I}V@@Y)) <append_assoc // -HT12
+  @(ex3_intro … (⋆.ⓑ{I}V@@Y)) <append_assoc // -HT12
   <append_assoc [ /3 width=1/ ] -HV1 -HY
   >append_length <associative_plus
   @(ltpss_sn_dx_trans_eq … HL2) -HL2 >H -H >commutative_plus /3 width=1/

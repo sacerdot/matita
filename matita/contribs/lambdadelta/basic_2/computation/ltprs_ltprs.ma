@@ -25,7 +25,7 @@ lemma ltprs_strip: ∀L1. ∀L:term. L ➡* L1 → ∀L2. L ➡ L2 →
 
 (* Main properties **********************************************************)
 
-theorem ltprs_conf: Confluent … ltprs.
+theorem ltprs_conf: confluent … ltprs.
 /3 width=3/ qed.
 
 theorem ltprs_trans: Transitive … ltprs.

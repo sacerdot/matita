@@ -157,10 +157,13 @@ lemma cpr_inv_lift1: ∀L,K,d,e. ⇩[d, e] L ≡ K →
 #L #K #d #e #HLK #T1 #U1 #HTU1 #U2 * #U #HU1 #HU2
 elim (tpr_inv_lift1 … HU1 … HTU1) -U1 #T #HTU #T1
 elim (lt_or_ge (|L|) d) #HLd
-[ elim (tpss_inv_lift1_le … HU2 … HLK … HTU ?) -U -HLK [ /5 width=4/ | /2 width=2/ ]
+[ elim (tpss_inv_lift1_le … HU2 … HLK … HTU ?) -U -HLK /2 width=2/
+  /3 width=7 by ex2_intro, cpr_intro/
 | elim (lt_or_ge (|L|) (d + e)) #HLde
-  [ elim (tpss_inv_lift1_be_up … HU2 … HLK … HTU ? ?) -U -HLK // [ /5 width=4/ | /2 width=2/ ] 
-  | elim (tpss_inv_lift1_be … HU2 … HLK … HTU ? ?) -U -HLK // /5 width=4/
+  [ elim (tpss_inv_lift1_be_up … HU2 … HLK … HTU ? ?) -U -HLK // /2 width=2/
+    /3 width=7 by ex2_intro, cpr_intro/
+  | elim (tpss_inv_lift1_be … HU2 … HLK … HTU ? ?) -U -HLK //
+    /3 width=7 by ex2_intro, cpr_intro/
   ]
 ]
 qed.

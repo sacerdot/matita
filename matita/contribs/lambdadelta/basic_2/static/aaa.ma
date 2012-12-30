@@ -63,6 +63,20 @@ lemma aaa_inv_lref: ∀L,A,i. L ⊢ #i ⁝ A →
                     ∃∃I,K,V. ⇩[0, i] L ≡ K. ⓑ{I} V & K ⊢ V ⁝ A.
 /2 width=3/ qed-.
 
+fact aaa_inv_gref_aux: ∀L,T,A. L ⊢ T ⁝ A → ∀p. T = §p → ⊥.
+#L #T #A * -L -T -A
+[ #L #k #q #H destruct
+| #I #L #K #V #B #i #HLK #HB #q #H destruct
+| #a #L #V #T #B #A #_ #_ #q #H destruct
+| #a #L #V #T #B #A #_ #_ #q #H destruct
+| #L #V #T #B #A #_ #_ #q #H destruct
+| #L #V #T #A #_ #_ #q #H destruct
+]
+qed.
+
+lemma aaa_inv_gref: ∀L,A,p. L ⊢ §p ⁝ A → ⊥.
+/2 width=6/ qed-.
+
 fact aaa_inv_abbr_aux: ∀L,T,A. L ⊢ T ⁝ A → ∀a,W,U. T = ⓓ{a}W. U →
                        ∃∃B. L ⊢ W ⁝ B & L. ⓓW ⊢ U ⁝ A.
 #L #T #A * -L -T -A
