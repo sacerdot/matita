@@ -1,13 +1,17 @@
 NAMING CONVENTIONS FOR METAVARIABLES
 
 A, B, C, D: term
+F,G       : subset of subterms
 H         : transient premise
 IH        : inductive premise
 M, N      : term
 P, Q      : pointer tree
 R         : arbitrary relation
-T, U      : arbitrary small type
+S         : arbitrary small type
+T, U, V, W: subset of subterms
 
+a         : arbitrary element
+b         : boolean mark
 c         : pointer step
 d, e      : variable reference level
 h         : relocation height
@@ -17,4 +21,4 @@ l         : arbitrary list
 m, n      : measures on terms
 p, q      : pointer
 r, s      : pointer sequence
-t, u      : arbitrary element
+

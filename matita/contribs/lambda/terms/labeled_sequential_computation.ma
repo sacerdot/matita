@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "pointer_list.ma".
-include "parallel_computation.ma".
+include "terms/pointer_list.ma".
+include "terms/parallel_computation.ma".
 
 (* LABELED SEQUENTIAL COMPUTATION (MULTISTEP) *******************************)
 
@@ -106,7 +106,7 @@ lemma lsreds_compatible_beta: ∀r,B1,B2. B1 ↦*[r] B2 → ∀s,A1,A2. A1 ↦*[
 qed.
 
 (* Note: "|s|" should be unparetesized *)
-lemma lsreds_fwd_mult: ∀s,M1,M2. M1 ↦*[s] M2 → #{M2} ≤ #{M1} ^ (2 ^ (|s|)).
+lemma lsreds_fwd_mult: ∀s,M1,M2. M1 ↦*[s] M2 → ♯{M2} ≤ ♯{M1} ^ (2 ^ (|s|)).
 #s #M1 #M2 #H @(lstar_ind_l ????????? H) -s -M1 normalize //
 #p #s #M1 #M #HM1 #_ #IHM2
 lapply (lsred_fwd_mult … HM1) -p #HM1

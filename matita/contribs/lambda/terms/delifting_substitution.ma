@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "lift.ma".
+include "terms/lift.ma".
 
 (* DELIFTING SUBSTITUTION ***************************************************)
 
@@ -25,15 +25,6 @@ let rec dsubst D d M on M ≝ match M with
 
 interpretation "delifting substitution"
    'DSubst D d M = (dsubst D d M).
-
-(* Note: the notation with "/" does not work *)
-notation "hvbox( [ term 46 d ↙ break term 46 D ] break term 46 M )"
-   non associative with precedence 46
-   for @{ 'DSubst $D $d $M }.
-
-notation > "hvbox( [ ↙ term 46 D ] break term 46 M )"
-   non associative with precedence 46
-   for @{ 'DSubst $D 0 $M }.
 
 lemma dsubst_vref_lt: ∀i,d,D. i < d → [d ↙ D] #i = #i.
 normalize /2 width=1/
@@ -151,9 +142,9 @@ lemma star_dsubstable_dx: ∀R. dsubstable_dx R → dsubstable_dx (star … R).
 #R #HR #D #M1 #M2 #H elim H -M2 // /3 width=3/
 qed.
 
-lemma lstar_dsubstable_dx: ∀T,R. (∀t. dsubstable_dx (R t)) →
-                           ∀l. dsubstable_dx (lstar T … R l).
-#T #R #HR #l #D #M1 #M2 #H
+lemma lstar_dsubstable_dx: ∀S,R. (∀a. dsubstable_dx (R a)) →
+                           ∀l. dsubstable_dx (lstar S … R l).
+#S #R #HR #l #D #M1 #M2 #H
 @(lstar_ind_l ????????? H) -l -M1 // /3 width=3/
 qed.
 

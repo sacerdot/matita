@@ -12,42 +12,31 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* Initial invocation: - Patience on us to gain peace and perfection! - *)
-
 include "preamble.ma".
+include "notation.ma".
 
-(* TERM STRUCTURE ***********************************************************)
+(* SUBSETS OF SUBTERMS ******************************************************)
 
-(* Policy: term metavariables : A, B, C, D, M, N
-           depth metavariables: i, j
+(* Policy: boolean marks metavariables: b
+           subterms metavariables: F,G,T,U,V,W
 *)
-inductive term: Type[0] ≝
-| VRef: nat  → term        (* variable reference by depth *)
-| Abst: term → term        (* function formation          *)
-| Appl: term → term → term (* function application        *)
+(* Note: each subterm is marked with true if it belongs to the subset *)
+inductive subterms: Type[0] ≝
+| SVRef: bool → nat  → subterms
+| SAbst: bool → subterms → subterms
+| SAppl: bool → subterms → subterms → subterms
 .
 
-interpretation "term construction (variable reference by index)"
-   'VariableReferenceByIndex i = (VRef i).
+interpretation "subterms construction (variable reference by index)"
+   'VariableReferenceByIndex b i = (SVRef b i).
 
-interpretation "term construction (abstraction)"
-   'Abstraction A = (Abst A).
+interpretation "subterms construction (abstraction)"
+   'Abstraction b T = (SAbst b T).
 
-interpretation "term construction (application)"
-   'Application C A = (Appl C A).
+interpretation "subterms construction (application)"
+   'Application b V T = (SAppl b V T).
 
-notation "hvbox( # term 90 i )"
- non associative with precedence 90
- for @{ 'VariableReferenceByIndex $i }.
-
-notation "hvbox( 𝛌  . term 46 A )"
-   non associative with precedence 46
-   for @{ 'Abstraction $A }.
-
-notation "hvbox( @ term 46 C . break term 46 A )"
-   non associative with precedence 46
-   for @{ 'Application $C $A }.
-
+(*
 definition compatible_abst: predicate (relation term) ≝ λR.
                             ∀A1,A2. R A1 A2 → R (𝛌.A1) (𝛌.A2).
 
@@ -77,3 +66,4 @@ lemma star_compatible_appl: ∀R. reflexive ? R →
                             compatible_appl R → compatible_appl (star … R).
 #R #H1R #H2R #B1 #B2 #H elim H -B2 /3 width=1/ /3 width=5/
 qed.
+*)

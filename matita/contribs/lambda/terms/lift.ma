@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "term.ma".
+include "terms/term.ma".
 
 (* RELOCATION ***************************************************************)
 
@@ -28,18 +28,6 @@ let rec lift h d M on M ≝ match M with
 
 interpretation "relocation" 'Lift h d M = (lift h d M).
 
-notation "hvbox( ↑ [ term 46 d , break term 46 h ] break term 46 M )"
-   non associative with precedence 46
-   for @{ 'Lift $h $d $M }.
-
-notation > "hvbox( ↑ [ term 46 h ] break term 46 M )"
-   non associative with precedence 46
-   for @{ 'Lift $h 0 $M }.
-
-notation > "hvbox( ↑ term 46 M )"
-   non associative with precedence 46
-   for @{ 'Lift 1 0 $M }.
-
 lemma lift_vref_lt: ∀d,h,i. i < d → ↑[d, h] #i = #i.
 normalize /3 width=1/
 qed.
@@ -48,12 +36,7 @@ lemma lift_vref_ge: ∀d,h,i. d ≤ i → ↑[d, h] #i = #(i+h).
 #d #h #i #H elim (le_to_or_lt_eq … H) -H
 normalize // /3 width=1/
 qed.
-(*
-lemma lift_vref_pred: ∀d,i. d < i → ↑[d, 1] #(i-1) = #i.
-#d #i #Hdi >lift_vref_ge /2 width=1/
-<plus_minus_m_m // /2 width=2/ 
-qed.
-*)
+
 lemma lift_id: ∀M,d. ↑[d, 0] M = M.
 #M elim M -M
 [ #i #d elim (lt_or_ge i d) /2 width=1/
@@ -258,17 +241,17 @@ elim (IHN1 … HMN1) -N1 #M #HM1 #HMN
 elim (HR … HN2 … HMN) -N /3 width=3/
 qed-.
 
-lemma lstar_liftable: ∀T,R. (∀t. liftable (R t)) →
-                      ∀l. liftable (lstar T … R l).
-#T #R #HR #l #h #M1 #M2 #H
+lemma lstar_liftable: ∀S,R. (∀a. liftable (R a)) →
+                      ∀l. liftable (lstar S … R l).
+#S #R #HR #l #h #M1 #M2 #H
 @(lstar_ind_l ????????? H) -l -M1 // /3 width=3/
 qed.
 
-lemma lstar_deliftable_sn: ∀T,R. (∀t. deliftable_sn (R t)) →
-                           ∀l. deliftable_sn (lstar T … R l).
-#T #R #HR #l #h #N1 #N2 #H
+lemma lstar_deliftable_sn: ∀S,R. (∀a. deliftable_sn (R a)) →
+                           ∀l. deliftable_sn (lstar S … R l).
+#S #R #HR #l #h #N1 #N2 #H
 @(lstar_ind_l ????????? H) -l -N1 /2 width=3/
-#t #l #N1 #N #HN1 #_ #IHN2 #d #M1 #HMN1
+#a #l #N1 #N #HN1 #_ #IHN2 #d #M1 #HMN1
 elim (HR … HN1 … HMN1) -N1 #M #HM1 #HMN
 elim (IHN2 … HMN) -N /3 width=3/
 qed-.

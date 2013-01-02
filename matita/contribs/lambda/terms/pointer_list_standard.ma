@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "pointer_list.ma".
-include "pointer_order.ma".
+include "terms/pointer_list.ma".
+include "terms/pointer_order.ma".
 
 (* STANDARD POINTER LIST ****************************************************)
 

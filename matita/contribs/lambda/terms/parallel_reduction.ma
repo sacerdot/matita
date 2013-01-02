@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "length.ma".
-include "labeled_sequential_reduction.ma".
+include "terms/length.ma".
+include "terms/labeled_sequential_reduction.ma".
 
 (* PARALLEL REDUCTION (SINGLE STEP) *****************************************)
 

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "parallel_reduction.ma".
+include "terms/parallel_reduction.ma".
 
 (* PARALLEL COMPUTATION (MULTISTEP) *****************************************)
 

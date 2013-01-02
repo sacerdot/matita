@@ -257,10 +257,10 @@ for @{ 'subset (\lambda ${ident i} : $nonexistent . $p)}.
 notation > "hvbox({ ident i | term 19 p })" with precedence 90
 for @{ 'subset (\lambda ${ident i}. $p)}.
 
-notation < "hvbox({ ident i ∈ s | term 19 p })" with precedence 90
+notation < "hvbox({ ident i ∈ term 19 s | term 19 p })" with precedence 90
 for @{ 'comprehension $s (\lambda ${ident i} : $nonexistent . $p)}.
 
-notation > "hvbox({ ident i ∈ s | term 19 p })" with precedence 90
+notation > "hvbox({ ident i ∈ term 19 s | term 19 p })" with precedence 90
 for @{ 'comprehension $s (\lambda ${ident i}. $p)}.
 
 notation "hvbox(a break ∈ b)" non associative with precedence 45

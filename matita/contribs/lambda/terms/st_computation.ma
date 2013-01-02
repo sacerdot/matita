@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "labeled_sequential_computation.ma".
-include "pointer_list_standard.ma".
+include "terms/labeled_sequential_computation.ma".
+include "terms/pointer_list_standard.ma".
 
 (* KASHIMA'S "ST" COMPUTATION ***********************************************)
 
