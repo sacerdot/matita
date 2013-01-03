@@ -11,7 +11,7 @@
 
 include "arithmetics/sqrt.ma".
 include "arithmetics/chebyshev/psi_bounds.ma". 
-include "arithmetics/chebyshev/chebyshev_teta.ma". 
+include "arithmetics/chebyshev/chebyshev_theta.ma". 
 
 definition bertrand ≝ λn. ∃p.n < p ∧ p ≤ 2*n ∧ prime p.
 
@@ -189,9 +189,9 @@ elim (log p (2*n))
   ]
 qed.
         
-theorem le_B1_teta:∀n.18 ≤ n → not_bertrand n →
-  B1 (2*n) ≤ teta (2 * n / 3).
-#n #le18 #not_Bn >B1_def >teta_def
+theorem le_B1_theta:∀n.18 ≤ n → not_bertrand n →
+  B1 (2*n) ≤ theta (2 * n / 3).
+#n #le18 #not_Bn >B1_def >theta_def
 @(transitive_le ? (∏_{p < S (2*n) | primeb p} (p\sup(bool_to_nat (eqb (k (2*n) p) 1)))))
   [@le_pi #p #ltp #primebp @le_exp
     [@prime_to_lt_O @primeb_true_to_prime //
@@ -280,9 +280,9 @@ theorem not_bertrand_to_le_B:
   ∀n.exp 2 7 ≤ n → not_bertrand n →
   B (2*n) ≤ (exp 2 (2*(2 * n / 3)))*(exp (2*n) (pred(sqrt(2*n)/2))).
 #n #len #notB >eq_B_Bk >eq_Bk_B1_B2 @le_times
-  [@(transitive_le ? (teta ((2*n)/3)))
-    [@le_B1_teta [@(transitive_le … len) @leb_true_to_le //|//]
-    |@le_teta
+  [@(transitive_le ? (theta ((2*n)/3)))
+    [@le_B1_theta [@(transitive_le … len) @leb_true_to_le //|//]
+    |@le_theta
     ]
   |@le_B2_exp //
   ]
