@@ -236,6 +236,6 @@ theorem bertrand :
 ∀n. O < n → bertrand n.
 #n #posn elim (decidable_le n 256)
   [@bertrand_down //
-  |#len @le_to_bertrand2 @lt_to_le @not_le_to_lt @len]
+  |#len @bertrand_up @lt_to_le @not_le_to_lt @len]
 qed.
 
