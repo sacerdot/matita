@@ -90,24 +90,24 @@ theorem le_prim_n3: ∀n. 15 ≤ n →
 qed. 
 
 (* This is chebishev psi function *)
-definition A: nat → nat ≝
+definition Psi: nat → nat ≝
   λn.∏_{p < S n | primeb p} (exp p (log p n)).
   
 definition psi_def : ∀n. 
-  A n = ∏_{p < S n | primeb p} (exp p (log p n)).
+  Psi n = ∏_{p < S n | primeb p} (exp p (log p n)).
 // qed.
 
-theorem le_Al1: ∀n.
-  A n ≤ ∏_{p < S n | primeb p} n.
+theorem le_Psil1: ∀n.
+  Psi n ≤ ∏_{p < S n | primeb p} n.
 #n cases n [@le_n |#m @le_pi #i #_ #_ @le_exp_log //]
 qed.
 
-theorem le_Al: ∀n. A n ≤ exp n (prim n).
-#n <exp_sigma @le_Al1
+theorem le_Psil: ∀n. Psi n ≤ exp n (prim n).
+#n <exp_sigma @le_Psil1
 qed.
 
-theorem leA_r2: ∀n.
-  exp n (prim n) ≤ A n * A n.
+theorem lePsi_r2: ∀n.
+  exp n (prim n) ≤ Psi n * Psi n.
 #n elim (le_to_or_lt_eq ?? (le_O_n n)) #Hn
   [<(exp_sigma (S n) n primeb) <times_pi
    @le_pi #i #lti #primei 
@@ -129,13 +129,13 @@ theorem leA_r2: ∀n.
 qed.
 
 (* an equivalent formulation for psi *)
-definition A': nat → nat ≝
+definition Psi': nat → nat ≝
 λn. ∏_{p < S n | primeb p} (∏_{i < log p n} p).
 
-lemma Adef: ∀n. A' n = ∏_{p < S n | primeb p} (∏_{i < log p n} p).
+lemma Psidef: ∀n. Psi' n = ∏_{p < S n | primeb p} (∏_{i < log p n} p).
 // qed-.
 
-theorem eq_A_A': ∀n.A n = A' n.
+theorem eq_Psi_Psi': ∀n.Psi n = Psi' n.
 #n @same_bigop // #i #lti #primebi
 @(trans_eq ? ? (exp i (∑_{x < log i n} 1)))
   [@eq_f @sym_eq @sigma_const
@@ -315,6 +315,7 @@ theorem pi_p_primeb: ∀n. O < n →
 #n #posn <eq_pi_p_primeb_divides_b @pi_p_primeb_dividesb //
 qed.
 
+(* more result on order functions *)
 theorem le_ord_log: ∀n,p. O < n → 1 < p →
   ord n p ≤ log p n.
 #n #p #posn #lt1p >(exp_ord p ? lt1p posn) in ⊢ (??(??%)); 

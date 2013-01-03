@@ -155,81 +155,57 @@ lemma primes_below_lop: ∀n. primes_below (list_of_primes n) (n+2).
 #n @lprim_invariant //
 qed.
 
-let rec checker l ≝
-  match l with
-    [ nil ⇒  true
-    | cons h1 t1 => match t1 with
-      [ nil ⇒  true
-      | cons h2 t2 ⇒ (andb (checker t1) (leb h1 (2*h2))) ]].
-
-lemma checker_ab: ∀a,b,l. 
-  checker (a::b::l) = (andb (checker (b::l)) (leb a (2*b))).
-// qed.
-
-lemma checker_cons : ∀a,l.checker (a::l) = true → checker l = true.
-#a #l cases l [//|#b #tl >checker_ab #H @(andb_true_l ?? H)]
-qed.
-
-theorem list_of_primes_to_bertrand: 
-∀n,pn,l.0 < n → prime pn → n < pn → all_primes l  →
-(∀p. prime p → p ≤ pn → mem ? p l) → 
-(∀p. mem ? p l → 2 < p →
-  ∃pp. mem ? pp l ∧ pp < p ∧ p \le 2*pp) → bertrand n.
-#n #pn #l #posn #primepn #ltnp #allprimes #H1 #H2 
+(* check *)
+theorem primes_below_to_bertrand: 
+∀pm,l.prime pm → primes_below l (S pm)  →
+  (∀p. mem ? p l → 2 < p → ∃pp. mem ? pp l ∧ pp < p ∧ p ≤ 2*pp) 
+    → ∀n.0 < n → n < pm → bertrand n.
+#pm #l #primepm * * #Hall #Hbelow #Hcomplete #H #n #posn #ltn  
 cases (min_prim n) #p1 * * #ltnp1 #primep1 #Hmin
 %{p1} % // % [//] 
 cases(le_to_or_lt_eq ? ? (prime_to_lt_SO ? primep1)) #Hp1
-  [cases (H2 … Hp1)
-    [#x * * #memxl #ltxp1 #H @(transitive_le … H) @monotonic_le_times_r 
-     @Hmin [@allprimes //|//]
-    |@H1 [//] @not_lt_to_le % #ltpn @(absurd ? ltnp)
+  [cases (H … Hp1)
+    [#x * * #memxl #ltxp1 #Hp1 @(transitive_le … Hp1) @monotonic_le_times_r 
+     @Hmin [@Hall //|//]
+    |@Hcomplete [//] @le_S_S @not_lt_to_le % #ltpm @(absurd ? ltn)
      @le_to_not_lt @Hmin //
     ]
   |<Hp1 >(times_n_1 2) in ⊢ (?%?); @monotonic_le_times_r //
   ]
 qed.
 
-let rec check_list l ≝
+let rec checker l ≝
   match l with
   [ nil ⇒ true
-  | cons (hd:nat) tl ⇒
+  | cons hd tl ⇒
     match tl with
      [ nil ⇒ true
      | cons hd1 tl1 ⇒ 
-      (leb (S hd) hd1 ∧ leb hd1 (2*hd) ∧ check_list tl)
+       leb (S hd) hd1 ∧ leb hd1 (2*hd) ∧ checker tl
     ]
-  ]
-.
+  ].
 
-lemma check_list_ab: ∀a,b,l.check_list (a::b::l) =
-  (leb (S a) b ∧ leb b (2*a) ∧ check_list (b::l)).
+lemma checker_ab: ∀a,b,l.checker (a::b::l) =
+  (leb (S a) b ∧ leb b (2*a) ∧ checker (b::l)).
 // qed.
 
-lemma check_list_abl: ∀a,b,l.check_list (a::b::l) = true →
-  a < b ∧ 
-  b ≤ 2*a ∧ 
-  check_list (b::l) = true ∧ 
-  check_list l = true.
-#a #b #l >check_list_ab #H 
-lapply (andb_true_r ?? H) #H1
-lapply (andb_true_l ?? H) -H #H2 
-lapply (andb_true_r ?? H2) #H3 
-lapply (andb_true_l ?? H2) -H2 #H4
-% [% [% [@(leb_true_to_le … H4) |@(leb_true_to_le … H3)]|@H1]
-  |lapply H1 cases l
-    [//
-    |#c #d >check_list_ab #H @(andb_true_r … H)
-    ]
+lemma checker_abl: ∀a,b,l.checker (a::b::l) = true →
+  a < b ∧ b ≤ 2*a ∧ checker (b::l) = true.
+#a #b #l >checker_ab #H 
+% [% [@leb_true_to_le @(andb_true_l … (andb_true_l … H))
+     |@leb_true_to_le @(andb_true_r … (andb_true_l … H))
+     ]
+  |@(andb_true_r … H)
   ]
 qed.
     
-theorem check_list_spec: ∀tl,a,l. check_list l = true → l = a::tl →
+theorem checker_spec: ∀tl,a,l. checker l = true → l = a::tl →
   ∀p. mem ? p tl → ∃pp. mem nat pp l ∧ pp < p ∧ p ≤ 2*pp.
 #tl elim tl
   [#a #l #_ #_ #p whd in ⊢ (%→?); @False_ind 
   |#b #tl #Hind #a #l #Hc #Hl #p #Hmem >Hl in Hc;
-   #Hc cases(check_list_abl … Hc) * * 
-   #ltab #leb #Hc2 #Hc3 cases Hmem #Hc
+   #Hc cases(checker_abl … Hc) *  
+   #ltab #leb #Hc2 cases Hmem #Hc
     [>Hc -Hc %{a} % [ % [ % % |//]|//]
     |cases(Hind b (b::tl) Hc2 (refl …) ? Hc) #pp * * #Hmemnp #ltpp #lepp
      %{pp} % [ % [ %2 //|//]|//]
@@ -237,17 +213,14 @@ theorem check_list_spec: ∀tl,a,l. check_list l = true → l = a::tl →
   ]
 qed.
 
-lemma le_to_bertrand : ∀n.O < n → n ≤ 2^8 → bertrand n.
+lemma bertrand_down : ∀n.O < n → n ≤ 2^8 → bertrand n.
 #n #posn #len
 cut (∃it.it=2^8) [%{(2^8)} %] * #it #itdef
 lapply(primes_below_lop … it) * * #Hall #Hbelow #Hcomplete
-@(list_of_primes_to_bertrand ? (S it) (list_of_primes it) posn)
+@(primes_below_to_bertrand (S it) (list_of_primes it) … posn)
   [@primeb_true_to_prime >itdef %
-  |@le_S_S >itdef @len
-  |@Hall
-  |#p #primep #lep @Hcomplete 
-    [@primep |<plus_n_Sm @le_S_S <plus_n_Sm <plus_n_O @lep]
-  |#p #memp #lt2p @(check_list_spec (tail ? (list_of_primes it)) 2 (list_of_primes it))
+  |>(plus_n_O it) in ⊢ (??%); >plus_n_Sm >plus_n_Sm @primes_below_lop
+  |#p #memp #lt2p @(checker_spec (tail ? (list_of_primes it)) 2 (list_of_primes it))
     [>itdef %
     |>itdef @eq_lop @lt_O_S 
     |>eq_lop in memp; [2:>itdef @lt_O_S] * 
@@ -255,17 +228,14 @@ lapply(primes_below_lop … it) * * #Hall #Hbelow #Hcomplete
       |#H @H
       ]
     ]
+  |@le_S_S >itdef @len
   ]
 qed.
 
-theorem bertrand_n :
+theorem bertrand :
 ∀n. O < n → bertrand n.
 #n #posn elim (decidable_le n 256)
-  [@le_to_bertrand //
+  [@bertrand_down //
   |#len @le_to_bertrand2 @lt_to_le @not_le_to_lt @len]
 qed.
 
-(* test 
-theorem mod_exp: eqb (mod (exp 2 8) 13) O = false.
-reflexivity.
-*)

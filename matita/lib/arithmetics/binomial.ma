@@ -191,13 +191,3 @@ cut (2 = 1+1) [//] #H2 >H2 in ⊢ (??(?%?));
   ]
 qed.
       
-(*
-theorem exp_Sn_SSO: \forall n. exp (S n) 2 = S((exp n 2) + 2*n).
-intros.simplify.
-rewrite < times_n_SO.
-rewrite < plus_n_O.
-rewrite < sym_times.simplify.
-rewrite < assoc_plus.
-rewrite < sym_plus.
-reflexivity.
-qed. *)

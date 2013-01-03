@@ -84,7 +84,7 @@ lemma le_sqrt_n1: ∀n. n - 2*sqrt n ≤ exp (sqrt n) 2.
 #n  @le_plus_to_minus @le_S_S_to_le
 cut (S ((sqrt n)\sup 2+2*sqrt n) = (exp (S(sqrt n)) 2))
   [2:#Hcut >Hcut @lt_sqrt]
->exp_2 >exp_2 generalize in match (sqrt n); #a 
+>exp_2 >exp_2 generalize in match (sqrt n); #a  
 normalize // 
 qed.
 
@@ -146,6 +146,70 @@ lemma le_sqrt_log_n : ∀n,b. 2 < b → sqrt n * log b n ≤ n.
 @monotonic_le_times_r @le_sqrt_log //
 qed.
 
+theorem le_square_exp:∀n. 3 < n → exp n 2 ≤ exp 2 n.
+#n #lt3n elim lt3n
+  [@le_n
+  |#m #le4m #Hind normalize <plus_n_O >commutative_times
+   normalize <(commutative_times 2) normalize <associative_plus
+   <plus_n_O >commutative_plus >plus_n_Sm @le_plus 
+     [<exp_2 @Hind
+     |elim le4m [@leb_true_to_le //]
+      #m1 #lem1 #Hind1 normalize >commutative_times normalize 
+      <plus_n_O <plus_n_Sm >(plus_n_O (S(m1+m1))) >plus_n_Sm >plus_n_Sm
+      @le_plus [@Hind1 |>(exp_n_1 2) in ⊢ (?%?); @le_exp 
+       [@lt_O_S |@(transitive_le … lem1) @leb_true_to_le //]
+     ]
+   ]
+ ]
+qed.
+
+lemma le_log2_sqrt: ∀n. 2^4 ≤ n→ log 2 n ≤ sqrt n.
+#n #le_n >sqrt_def 
+@true_to_le_max
+  [@le_S_S @le_log_n_n //
+  |@le_to_leb_true 
+   cut (0<n) [@(transitive_lt … le_n) @lt_O_S] #posn
+   @(transitive_le … (le_exp_log 2 n posn))
+   <exp_2 @le_square_exp @true_to_le_max
+    [@(lt_to_le_to_lt … le_n) @leb_true_to_le // |@le_to_leb_true //]
+  ]
+qed.
+
+lemma square_S: ∀a. (S a)^2 = a^2 + 2*a +1.
+#a normalize >commutative_times normalize //
+qed. 
+
+theorem le_squareS_exp:∀n. 5 < n → exp (S n) 2 ≤ exp 2 n.
+#n #lt4n elim lt4n
+  [@leb_true_to_le //
+  |#m #le4m #Hind >square_S whd in ⊢(??%); >commutative_times in ⊢(??%);
+   normalize in ⊢(??%); <plus_n_O >associative_plus @le_plus [@Hind]
+   elim le4m [@leb_true_to_le //] #a #lea #Hinda
+   @(transitive_le ? (2*(2*(S a)+1)))
+    [@lt_to_le whd >plus_n_Sm >(times_n_1 2) in ⊢ (?(??%)?);
+     <distributive_times_plus @monotonic_le_times_r @le_plus [2://] 
+     normalize // 
+    |whd in ⊢ (??%); >commutative_times in ⊢(??%); @monotonic_le_times_r @Hinda
+    ]
+ ]
+qed.
+ 
+ 
+lemma lt_log2_sqrt: ∀n. 2^6 ≤ n→ log 2 n < sqrt n.
+#n #le_n >sqrt_def
+cut (0<n) [@(transitive_lt … le_n) @lt_O_S] #posn
+@true_to_le_max
+  [@le_S_S @lt_log_n_n //
+  |@le_to_leb_true 
+   cut (0<n) [@(transitive_lt … le_n) @lt_O_S] #posn
+   @(transitive_le … (le_exp_log 2 n posn))
+   <exp_2 @le_squareS_exp @true_to_le_max
+    [@(lt_to_le_to_lt … le_n) @leb_true_to_le //
+    |@le_to_leb_true //
+    ]
+  ]
+qed.
+ 
 (* monotonicity *)
 theorem monotonic_sqrt: monotonic nat le sqrt.
 #n #m #lenm >sqrt_def @true_to_le_max

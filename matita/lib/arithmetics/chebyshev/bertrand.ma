@@ -10,8 +10,8 @@
       V_______________________________________________________________ *)
 
 include "arithmetics/sqrt.ma".
-include "arithmetics/chebyshev/chebyshev_B.ma".
-include "arithmetics/chebyshev/chebyshev_teta.ma".
+include "arithmetics/chebyshev/psi_bounds.ma". 
+include "arithmetics/chebyshev/chebyshev_teta.ma". 
 
 definition bertrand ≝ λn. ∃p.n < p ∧ p ≤ 2*n ∧ prime p.
 
@@ -85,38 +85,38 @@ theorem le_k: ∀n,p. k n p ≤ log p n.
   ]
 qed.
 
-definition B1 ≝ λn. 
+definition Bk ≝ λn. 
   ∏_{p < S n | primeb p}(exp p (k n p)).
   
-lemma B1_def : ∀n. B1 n = ∏_{p < S n | primeb p}(exp p (k n p)).
+lemma Bk_def : ∀n. Bk n = ∏_{p < S n | primeb p}(exp p (k n p)).
 // qed.
 
 definition Dexp ≝ mk_Dop nat 1 timesAC (λa,b.exp b a) ??.
   [// | normalize //]
 qed.
   
-theorem eq_B_B1: ∀n. B n = B1 n.
-#n >Bdef >B1_def @same_bigop
+theorem eq_B_Bk: ∀n. B n = Bk n.
+#n >Bdef >Bk_def @same_bigop
   [// |#i #ltiS #_ >k_def @exp_sigma_l]
 qed.
 
-definition B_split1 ≝ λn. 
+definition B1 ≝ λn. 
   ∏_{p < S n | primeb p}(exp p (bool_to_nat (leb (k n p) 1)* (k n p))).
 
-lemma B_split1_def : ∀n.
-  B_split1 n = ∏_{p < S n | primeb p}(exp p (bool_to_nat (leb (k n p) 1)* (k n p))).
+lemma B1_def : ∀n.
+  B1 n = ∏_{p < S n | primeb p}(exp p (bool_to_nat (leb (k n p) 1)* (k n p))).
 // qed.
 
-definition B_split2 ≝ λn. 
+definition B2 ≝ λn. 
   ∏_{p < S n | primeb p}(exp p (bool_to_nat (leb 2 (k n p))* (k n p))).
 
-lemma B_split2_def : ∀n.
-  B_split2 n = ∏_{p < S n | primeb p}(exp p (bool_to_nat (leb 2 (k n p))* (k n p))).
+lemma B2_def : ∀n.
+  B2 n = ∏_{p < S n | primeb p}(exp p (bool_to_nat (leb 2 (k n p))* (k n p))).
 // qed.
 
-theorem eq_B1_times_B_split1_B_split2: ∀n. 
-  B1 n = B_split1 n * B_split2 n.
-#n >B1_def >B_split1_def >B_split2_def <times_pi
+theorem eq_Bk_B1_B2: ∀n. 
+  Bk n = B1 n * B2 n.
+#n >Bk_def >B1_def >B2_def <times_pi
 @same_bigop
   [//
   |#p #ltp #primebp cases (true_or_false (leb (k n p) 1)) #Hc >Hc
@@ -189,9 +189,9 @@ elim (log p (2*n))
   ]
 qed.
         
-theorem le_B_split1_teta:∀n.18 ≤ n → not_bertrand n →
-  B_split1 (2*n) ≤ teta (2 * n / 3).
-#n #le18 #not_Bn >B_split1_def >teta_def
+theorem le_B1_teta:∀n.18 ≤ n → not_bertrand n →
+  B1 (2*n) ≤ teta (2 * n / 3).
+#n #le18 #not_Bn >B1_def >teta_def
 @(transitive_le ? (∏_{p < S (2*n) | primeb p} (p\sup(bool_to_nat (eqb (k (2*n) p) 1)))))
   [@le_pi #p #ltp #primebp @le_exp
     [@prime_to_lt_O @primeb_true_to_prime //
@@ -224,9 +224,9 @@ theorem le_B_split1_teta:∀n.18 ≤ n → not_bertrand n →
   ]
 qed.
 
-theorem le_B_split2_exp: ∀n. exp 2 7 ≤ n →
-  B_split2 (2*n) ≤ exp (2*n) (pred(sqrt(2*n)/2)).
-#n #len >B_split2_def
+theorem le_B2_exp: ∀n. exp 2 7 ≤ n →
+  B2 (2*n) ≤ exp (2*n) (pred(sqrt(2*n)/2)).
+#n #len >B2_def
 cut (O < n) [@(lt_to_le_to_lt … len) @leb_true_to_le //] #posn
 @(transitive_le ? 
    (∏_{p < S (sqrt (2*n)) | primeb p}
@@ -279,12 +279,12 @@ qed.
 theorem not_bertrand_to_le_B: 
   ∀n.exp 2 7 ≤ n → not_bertrand n →
   B (2*n) ≤ (exp 2 (2*(2 * n / 3)))*(exp (2*n) (pred(sqrt(2*n)/2))).
-#n #len #notB >eq_B_B1 >eq_B1_times_B_split1_B_split2 @le_times
+#n #len #notB >eq_B_Bk >eq_Bk_B1_B2 @le_times
   [@(transitive_le ? (teta ((2*n)/3)))
-    [@le_B_split1_teta [@(transitive_le … len) @leb_true_to_le //|//]
+    [@le_B1_teta [@(transitive_le … len) @leb_true_to_le //|//]
     |@le_teta
     ]
-  |@le_B_split2_exp //
+  |@le_B2_exp //
   ]
 qed.
 
@@ -429,7 +429,7 @@ cut (0<n) [@(lt_to_le_to_lt … len) @lt_O_S] #posn
   ]
 qed.
 
-theorem le_to_bertrand2:
+theorem bertrand_up:
    ∀n. 2^8 ≤ n → bertrand n.
 #n #len @not_not_bertrand_to_bertrand % #notBn
 @(absurd (2*n / 3 \le (sqrt(2*n)/2)*S(log 2 (2*n))))

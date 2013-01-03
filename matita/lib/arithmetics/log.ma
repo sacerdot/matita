@@ -140,7 +140,7 @@ theorem log_exp: ∀p,n,m. 1 < p → O < m →
   |#i #Hi #Hm @lt_to_leb_false
    @(lt_to_le_to_lt ? ((exp p n)*(exp p (S(log p m)))))
     [@monotonic_lt_times_r [@lt_O_exp @lt_to_le // |@lt_exp_log //]
-    |<exp_plus_times @le_exp [@lt_to_le // |<plus_n_Sm //]
+    |<exp_plus_times @le_exp [@lt_to_le // | //]
     ]
   ]
 qed.

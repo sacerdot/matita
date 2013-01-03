@@ -13,10 +13,6 @@ include "arithmetics/exp.ma".
 include "basics/types.ma".
 include "arithmetics/primes.ma".
 include "arithmetics/gcd.ma". 
-(*
-include "arithmetics/nth_prime.ma".
-(* for some properties of divides *)
-*)
 
 let rec p_ord_aux p n m ≝
   match n \mod m with
@@ -54,8 +50,7 @@ qed.
 lemma p_ord_degenerate: ∀p,n. p_ord_aux p n 1 = 〈p,n〉.
 #p elim p // #p1 #Hind #n
 cut (mod n 1 = 0) [@divides_to_mod_O //] #Hmod
->(p_ord_aux_Strue … (Hind … ) ) // >(div_mod n 1) in ⊢ (???%);
->Hmod <plus_n_O <times_n_1 //
+>(p_ord_aux_Strue … (Hind … ) ) // >(div_mod n 1) in ⊢ (???%); //
 qed.
 
 theorem p_ord_aux_to_exp: ∀p,n,m,q,r. O < m →
@@ -170,7 +165,7 @@ elim (p_ord_to_exp1 ???? Hp1 posb pordb) -posb -pordb #Hdivb #Hb
   [@lt_to_le //
   |% #Hdiv cases (divides_times_to_divides ? ? ? Hprime Hdiv)
    #Habs @absurd /2/
-  |>Ha >Hb -Ha -Hb <associative_times <associative_times // 
+  |>Ha >Hb -Ha -Hb // 
   ]
 qed.
 
@@ -221,7 +216,7 @@ cases (p_ord_to_exp1 ? ? ? ? Hposp posm ordm) #divm #eqm %
          >commutative_gcd @eq_gcd_times_1
           [@lt_O_exp @lt_to_le // 
           |@lt_to_le //
-          |>commutative_gcd //
+          |/2/ 
           |>commutative_gcd @prime_to_gcd_1 //
           ]
         ]

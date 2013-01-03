@@ -123,7 +123,7 @@ theorem max_f_g: ∀f,g,n.(∀i. i < n → f i = g i) →
   max n f = max n g.
 #f #g #n (elim n) //
 #m #Hind #ext normalize >ext normalize in Hind; >Hind //
-#i #ltim @ext /2/
+#i #ltim @ext @le_S //
 qed.
 
 theorem le_max_f_max_g: ∀f,g,n. (∀i. i < n → f i = true → g i =true) →
@@ -131,7 +131,7 @@ max n f ≤ max n g.
 #f #g #n (elim n) //
 #m #Hind #ext normalize (cases (true_or_false (f m))) #Heq >Heq 
   [>ext //
-  |(cases (g m)) normalize [@le_max_n] @Hind #i #ltim @ext /2/
+  |(cases (g m)) normalize [@le_max_n] @Hind #i #ltim @ext @le_S //
 qed.
 
 theorem f_max_true : ∀ f.∀n.
@@ -173,6 +173,17 @@ cases (exists_forall_lt f n)
   ]
 qed.
 
+
+theorem false_to_lt_max: ∀f,n,m.O < n →
+  f n = false → max m f ≤ n → max m f < n.
+#f #n #m #posn #Hfn #Hmax cases (le_to_or_lt_eq ?? Hmax) -Hmax #Hmax 
+  [//
+  |cases (exists_max_forall_false f m)
+    [* #_ #Hfmax @False_ind @(absurd ?? not_eq_true_false) //
+    |* //
+    ]
+  ]
+qed.
 (* minimization *)
  
 (* min k b f is the minimun i, b ≤ i < b + k s.t. f i;  
@@ -318,7 +329,7 @@ theorem min_f_g: ∀f,g,n,b.(∀i. b ≤ i → i < n + b → f i = g i) →
   min n b f = min n b g.
 #f #g #n (elim n) //
 #m #Hind #b #ext normalize >(ext b (le_n b) ?) // >Hind //
-#i #ltib #ltim @ext /2/
+#i #ltib #ltim @ext // @lt_to_le //
 qed.
 
 theorem le_min_f_min_g: ∀f,g,n,b. (∀i. b ≤ i → i < n +b → f i = true → g i =true) →
@@ -326,7 +337,7 @@ min n b g ≤ min n b f.
 #f #g #n (elim n) //
 #m #Hind #b #ext normalize (cases (true_or_false (f b))) #Heq >Heq 
   [>ext //
-  |(cases (g b)) normalize /2/ @Hind #i #ltb #ltim #fi
+  |(cases (g b)) normalize /2 by lt_to_le/ @Hind #i #ltb #ltim #fi
     @ext /2/
   ]
 qed.

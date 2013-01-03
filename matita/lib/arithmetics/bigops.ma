@@ -163,7 +163,7 @@ op (\big[op,nil]_{i<k1|p1 i}(f i)) \big[op,nil]_{i<k2|p2 i}(g i) =
 qed.
 
 lemma plus_minus1: ∀a,b,c. c ≤ b → a + (b -c) = a + b -c.
-#a #b #c #lecb @sym_eq @plus_to_minus >(commutative_plus c)
+#a #b #c #lecb @sym_eq @plus_to_minus >(commutative_plus c) 
 >associative_plus <plus_minus_m_m //
 qed.
 
