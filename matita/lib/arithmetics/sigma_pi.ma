@@ -186,3 +186,14 @@ theorem exp_sigma_l: ∀n,a,p,f.
   |>bigop_Sfalse [>bigop_Sfalse [@Hind|//] | //]
   ]
 qed.
+
+theorem exp_pi_l: ∀n,a,f. 
+  exp a n*(∏_{i < n}(f i)) = ∏_{i < n} (a*(f i)).
+#n #a #f elim n // #i #Hind >bigop_Strue // >bigop_Strue //
+<Hind <associative_times <associative_times @eq_f2 // normalize // 
+qed.
+
+theorem exp_pi_bc: ∀a,b,c,f. 
+  exp a (c-b)*(∏_{i ∈ [b,c[ }(f i)) = ∏_{i ∈ [b,c[ } (a*(f i)).
+#a #b #c #f @exp_pi_l 
+qed.
