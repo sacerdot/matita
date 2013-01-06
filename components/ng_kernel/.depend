@@ -7,7 +7,7 @@ nCicReduction.cmi: nCic.cmo
 nCicTypeChecker.cmi: nUri.cmi nReference.cmi nCic.cmo
 nCicUntrusted.cmi: nCic.cmo
 nCicPp.cmi: nReference.cmi nCic.cmo
-nCicExtraction.cmi: nCic.cmo
+nCicExtraction.cmi: nReference.cmi nCic.cmo
 nCic.cmo: nUri.cmi nReference.cmi
 nCic.cmx: nUri.cmx nReference.cmx
 nUri.cmo: nUri.cmi
