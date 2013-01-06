@@ -7,7 +7,7 @@ MAC_DIR  = ../../../components/binaries/mac
 MAC      = mac.native
 
 XOA_CONF    = xoa.conf.xml
-XOA_TARGETS = xoa_notation.ma xoa.ma
+XOA_TARGETS = background/xoa_notation.ma background/xoa.ma
 
 all: xoa
 	$(H)../../matitac.opt

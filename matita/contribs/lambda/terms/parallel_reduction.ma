@@ -12,13 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "terms/length.ma".
-include "terms/labeled_sequential_reduction.ma".
+include "terms/size.ma".
+include "terms/sequential_reduction.ma".
 
 (* PARALLEL REDUCTION (SINGLE STEP) *****************************************)
 
 (* Note: the application "(A B)" is represented by "@B.A"
-         as for labelled sequential reduction
+         as for sequential reduction
 *)
 inductive pred: relation term ≝
 | pred_vref: ∀i. pred (#i) (#i)
@@ -29,10 +29,6 @@ inductive pred: relation term ≝
 
 interpretation "parallel reduction"
     'ParRed M N = (pred M N).
-
-notation "hvbox( M ⤇ break term 46 N )"
-   non associative with precedence 45
-   for @{ 'ParRed $M $N }.
 
 lemma pred_refl: reflexive … pred.
 #M elim M -M // /2 width=1/
@@ -131,7 +127,7 @@ elim (IH C … HC1 … HC2) normalize // -B -C /3 width=5/
 qed-.
 
 theorem pred_conf: confluent … pred.
-#M @(f_ind … length … M) -M #n #IH * normalize
+#M @(f_ind … size … M) -M #n #IH * normalize
 [ /2 width=3 by pred_conf1_vref/
 | /3 width=4 by pred_conf1_abst/
 | #B #A #H #M1 #H1 #M2 #H2 destruct
@@ -151,6 +147,6 @@ theorem pred_conf: confluent … pred.
 ]
 qed-.
 
-lemma lsred_pred: ∀p,M,N. M ↦[p] N → M ⤇ N.
-#p #M #N #H elim H -p -M -N /2 width=1/
+lemma sred_pred: ∀M,N. M ↦ N → M ⤇ N.
+#M #N #H elim H -M -N /2 width=1/
 qed.

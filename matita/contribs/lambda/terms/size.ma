@@ -12,20 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "terms/pointer_list.ma".
+include "terms/lift.ma".
 
-(* POINTER TREE *************************************************************)
+(* SIZE *********************************************************************)
 
-(* Policy: pointer tree metavariables: P, Q *)
-(* Note: this is a binary tree on pointer sequences *)
-inductive ptrt: Type[0] ≝
-| tnil : ptrt
-| tcons: ptrl → ptrt → ptrt → ptrt
-.
-
-let rec length (P:ptrt) on P ≝ match P with
-[ tnil          ⇒ 0
-| tcons s Q1 Q2 ⇒ length Q2 + length Q1 + |s|
+(* Note: this gives the number of abstractions and applications in M *)
+let rec size M on M ≝ match M with
+[ VRef i   ⇒ 0
+| Abst A   ⇒ size A + 1
+| Appl B A ⇒ (size B) + (size A) + 1
 ].
 
-interpretation "pointer tree length" 'card P = (length P).
+interpretation "term size"
+   'card M = (size M).
+
+lemma size_lift: ∀h,M,d. |↑[d, h] M| = |M|.
+#h #M elim M -M normalize //
+qed.

@@ -12,13 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "terms/pointer_list.ma".
-include "terms/pointer_order.ma".
+include "paths/trace.ma".
+include "paths/standard_order.ma".
 
-(* STANDARD POINTER LIST ****************************************************)
+(* STANDARD TRACE ***********************************************************)
 
-(* Note: to us, a "normal" computation contracts redexes in non-decreasing positions *)
-definition is_standard: predicate ptrl ≝ Allr … ple.
+(* Note: to us, a "standard" computation contracts redexes in non-decreasing positions *)
+definition is_standard: predicate trace ≝ Allr … sle.
 
 lemma is_standard_compatible: ∀c,s. is_standard s → is_standard (c:::s).
 #c #s elim s -s // #p * //

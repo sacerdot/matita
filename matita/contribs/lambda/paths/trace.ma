@@ -12,15 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "terms/pointer.ma".
+include "paths/path.ma".
 
-(* POINTER LIST *************************************************************)
+(* TRACE ********************************************************************)
 
-(* Policy: pointer list metavariables: r, s *)
-definition ptrl: Type[0] ≝ list ptr.
+(* Policy: trace metavariables: r, s *)
+definition trace: Type[0] ≝ list path.
 
 (* Note: a "whd" computation contracts just redexes in the whd *)
-definition is_whd: predicate ptrl ≝ All … in_whd.
+definition is_whd: predicate trace ≝ All … in_whd.
 
 lemma is_whd_dx: ∀s. is_whd s → is_whd (dx:::s).
 #s elim s -s //
@@ -32,13 +32,13 @@ lemma is_whd_append: ∀r. is_whd r → ∀s. is_whd s → is_whd (r@s).
 #q #r #IHr * /3 width=1/
 qed.
 
-definition ho_compatible_rc: predicate (ptrl→relation term) ≝ λR.
+definition ho_compatible_rc: predicate (trace→relation term) ≝ λR.
                              ∀s,A1,A2. R s A1 A2 → R (rc:::s) (𝛌.A1) (𝛌.A2).
 
-definition ho_compatible_sn: predicate (ptrl→relation term) ≝ λR.
+definition ho_compatible_sn: predicate (trace→relation term) ≝ λR.
                              ∀s,B1,B2,A. R s B1 B2 → R (sn:::s) (@B1.A) (@B2.A).
 
-definition ho_compatible_dx: predicate (ptrl→relation term) ≝ λR.
+definition ho_compatible_dx: predicate (trace→relation term) ≝ λR.
                              ∀s,B,A1,A2. R s A1 A2 → R (dx:::s) (@B.A1) (@B.A2).
 
 lemma lstar_compatible_rc: ∀R. compatible_rc R → ho_compatible_rc (lstar … R).

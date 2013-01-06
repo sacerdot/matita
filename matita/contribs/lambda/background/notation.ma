@@ -14,6 +14,11 @@
 
 (* GENERIC NOTATION *********************************************************)
 
+(* Note: this should go to core_notation *)
+notation "hvbox(a break ≺ b)"
+   non associative with precedence 45
+   for @{ 'prec $a $b }.
+
 notation "hvbox( # term 90 i )"
  non associative with precedence 46
  for @{ 'VariableReferenceByIndex $i }.
@@ -51,11 +56,35 @@ notation > "hvbox( ↑ term 46 M )"
    for @{ 'Lift 1 0 $M }.
 
 (* Note: the notation with "/" does not work *)
-notation "hvbox( [ term 46 d ↙ break term 46 N ] break term 46 M )"
+notation "hvbox( [ term 46 d break ↙ term 46 N ] break term 46 M )"
    non associative with precedence 46
    for @{ 'DSubst $N $d $M }.
 
 notation > "hvbox( [ ↙ term 46 N ] break term 46 M )"
    non associative with precedence 46
    for @{ 'DSubst $N 0 $M }.
- 
+
+(* Note: we do not use → since it is reserved by CIC *)
+notation "hvbox( M break ↦ term 46 N )"
+   non associative with precedence 45
+   for @{ 'SeqRed $M $N }.
+
+notation "hvbox( M break ↦ [ term 46 p ] break term 46 N )"
+   non associative with precedence 45
+   for @{ 'SeqRed $M $p $N }.
+
+notation "hvbox( M break ↦* term 46 N )"
+   non associative with precedence 45
+   for @{ 'SeqRedStar $M $N }.
+
+notation "hvbox( M break ↦* [ term 46 s ] break term 46 N )"
+   non associative with precedence 45
+   for @{ 'SeqRedStar $M $s $N }.
+
+notation "hvbox( M break ⤇ term 46 N )"
+   non associative with precedence 45
+   for @{ 'ParRed $M $N }.
+
+notation "hvbox( M break ⤇* term 46 N )"
+   non associative with precedence 45
+   for @{ 'ParRedStar $M $N }.

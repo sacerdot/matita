@@ -16,8 +16,8 @@ include "basics/star.ma".
 include "basics/lists/lstar.ma".
 include "arithmetics/exp.ma".
 
-include "xoa_notation.ma".
-include "xoa.ma".
+include "background/xoa_notation.ma".
+include "background/xoa.ma".
 
 (* logic *)
 

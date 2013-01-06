@@ -21,10 +21,6 @@ definition preds: relation term ≝ star … pred.
 interpretation "parallel computation"
    'ParRedStar M N = (preds M N).
 
-notation "hvbox( M ⤇* break term 46 N )"
-   non associative with precedence 45
-   for @{ 'ParRedStar $M $N }.
-
 lemma preds_refl: reflexive … preds.
 //
 qed.

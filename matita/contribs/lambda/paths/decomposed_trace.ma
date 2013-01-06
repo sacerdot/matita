@@ -12,20 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "terms/lift.ma".
+include "paths/trace.ma".
 
-(* LENGTH *******************************************************************)
+(* DECOMPOSED TRACE *********************************************************)
 
-(* Note: this gives the number of abstractions and applications in M *)
-let rec length M on M ≝ match M with
-[ VRef i   ⇒ 0
-| Abst A   ⇒ length A + 1
-| Appl B A ⇒ (length B) + (length A) + 1
+(* Policy: decomposed trace metavariables: P, Q *)
+(* Note: this is a binary tree on traces *)
+inductive dtrace: Type[0] ≝
+| tree_nil : dtrace
+| tree_cons: trace → dtrace → dtrace → dtrace
+.
+
+let rec size (P:dtrace) on P ≝ match P with
+[ tree_nil          ⇒ 0
+| tree_cons s Q1 Q2 ⇒ size Q2 + size Q1 + |s|
 ].
 
-interpretation "term length"
-   'card M = (length M).
-
-lemma length_lift: ∀h,M,d. |↑[d, h] M| = |M|.
-#h #M elim M -M normalize //
-qed.
+interpretation "decomposed trace size" 'card P = (size P).

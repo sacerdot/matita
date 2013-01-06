@@ -14,8 +14,8 @@
 
 (* Initial invocation: - Patience on us to gain peace and perfection! - *)
 
-include "preamble.ma".
-include "notation.ma".
+include "background/preamble.ma".
+include "background/notation.ma".
 
 (* TERM STRUCTURE ***********************************************************)
 

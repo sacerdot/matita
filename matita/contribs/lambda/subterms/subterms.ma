@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "preamble.ma".
-include "notation.ma".
+include "background/preamble.ma".
+include "background/notation.ma".
 
 (* SUBSETS OF SUBTERMS ******************************************************)
 
