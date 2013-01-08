@@ -109,6 +109,10 @@ definition tape_move ≝ λsig.λt: tape sig.λm:move.
     | N ⇒ t
     ].
 
+definition tape_move_mono ≝ 
+  λsig,t,mv.
+  tape_move sig (tape_write sig t (\fst mv)) (\snd mv).
+
 record config (sig,states:FinSet): Type[0] ≝ 
 { cstate : states;
   ctape: tape sig

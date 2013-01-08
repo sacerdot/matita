@@ -8,7 +8,7 @@ include "basics/vectors.ma".
 record mTM (sig:FinSet) (tapes_no:nat) : Type[1] ≝ 
 { states : FinSet;
   trans : states × (Vector (option sig) (S tapes_no)) → 
-    states  × (Vector (option (sig × move))(S tapes_no));
+    states  × (Vector ((option sig) × move) (S tapes_no));
   start: states;
   halt : states → bool
 }.
@@ -32,11 +32,15 @@ qed.
 definition current_chars ≝ λsig.λn.λtapes.
   vec_map ?? (current sig) (S n) tapes.
 
+definition tape_move_multi ≝ 
+  λsig,n,ts,mvs.
+  pmap_vec ??? (tape_move sig) ? 
+    (pmap_vec ??? (tape_write sig) n ts (vec_map ?? (λx.\fst x) ? mvs))
+        (vec_map ?? (λx.\snd x) ? mvs).
+
 definition step ≝ λsig.λn.λM:mTM sig n.λc:mconfig sig (states ?? M) n.
   let 〈news,mvs〉 ≝ trans sig n M 〈cstate ??? c,current_chars ?? (ctapes ??? c)〉 in
-  mk_mconfig ??? 
-    news 
-    (pmap_vec ??? (tape_move sig) ? (ctapes ??? c) mvs).
+  mk_mconfig ??? news (tape_move_multi sig ? (ctapes ??? c) mvs).
 
 definition empty_tapes ≝ λsig.λn.
 mk_Vector ? n (make_list (tape sig) (niltape sig) n) ?.
@@ -189,7 +193,7 @@ definition start_nop : initN 1 ≝ mk_Sig ?? 0 (le_n … 1). *)
 
 definition nop ≝ 
   λalpha:FinSet.λn.mk_mTM alpha n nop_states
-  (λp.let 〈q,a〉 ≝ p in 〈q,mk_Vector ? (S n) (make_list ? (None ?) (S n)) ?〉)
+  (λp.let 〈q,a〉 ≝ p in 〈q,mk_Vector ? (S n) (make_list ? (〈None ?,N〉) (S n)) ?〉)
   start_nop (λ_.true).
 elim n normalize //
 qed.
@@ -210,12 +214,12 @@ generalize in match ltn1; generalize in match ltm1;
 
 (************************** Sequential Composition ****************************)
 definition null_action ≝ λsig.λn.
-mk_Vector ? (S n) (make_list (option (sig × move)) (None ?) (S n)) ?.
+mk_Vector ? (S n) (make_list (option sig × move) (〈None ?,N〉) (S n)) ?.
 elim (S n) // normalize //
 qed.
 
 lemma tape_move_null_action: ∀sig,n,tapes.
-  pmap_vec ??? (tape_move sig) (S n) tapes (null_action sig n) = tapes.
+  tape_move_multi sig (S n) tapes (null_action sig n) = tapes.
 #sig #n #tapes cases tapes -tapes #tapes whd in match (null_action ??);
 #Heq @Vector_eq <Heq -Heq elim tapes //
 #a #tl #Hind whd in ⊢ (??%?); @eq_f2 // @Hind

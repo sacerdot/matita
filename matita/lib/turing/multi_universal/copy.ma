@@ -47,8 +47,8 @@ definition trans_copy_step ≝
    | Some a0 ⇒ if is_sep a0 then 〈copy2,null_action ? n〉
                   else 〈copy1,change_vec ? (S n)
                           (change_vec ?(S n)
-                           (null_action ? n) (Some ? 〈a0,R〉) src)
-                          (Some ? 〈a0,R〉) dst〉 ]
+                           (null_action ? n) (〈Some ? a0,R〉) src)
+                          (〈Some ? a0,R〉) dst〉 ]
  | S q ⇒ match q with 
    [ O ⇒ (* 1 *) 〈copy1,null_action ? n〉
    | S _ ⇒ (* 2 *) 〈copy2,null_action ? n〉 ] ].
@@ -65,8 +65,8 @@ definition R_copy_step_true ≝
    is_sep x1 = false ∧
    outt = change_vec ?? 
             (change_vec ?? int
-              (tape_move ? (nth src ? int (niltape ?)) (Some ? 〈x1,R〉)) src)
-            (tape_move ? (nth dst ? int (niltape ?)) (Some ? 〈x1,R〉)) dst.
+              (tape_move_mono ? (nth src ? int (niltape ?)) (〈Some ? x1,R〉)) src)
+            (tape_move_mono ? (nth dst ? int (niltape ?)) (〈Some ? x1,R〉)) dst.
 
 definition R_copy_step_false ≝ 
   λsrc,dst:nat.λsig,n,is_sep.λint,outt: Vector (tape sig) (S n).
@@ -102,12 +102,12 @@ whd in ⊢ (??%?); >(eq_pair_fst_snd … (trans ????)) whd in ⊢ (??%?); @eq_f2
 [ >current_chars_change_vec // whd in match (trans ????);
   >nth_change_vec // >Hcurrent whd in ⊢ (??(???%)?); >Hsep %
 | >current_chars_change_vec // whd in match (trans ????);
-  >nth_change_vec // >Hcurrent whd in ⊢ (??(???????(???%))?);
+  >nth_change_vec // >Hcurrent whd in ⊢ (??(????(???%))?);
   >Hsep @tape_move_null_action
 ]
 qed.
 
-lemma copy_q0_q1 :
+axiom copy_q0_q1 :
   ∀src,dst,sig,n,is_sep,v,t.src ≠ dst → src < S n → dst < S n → 
   ∀s.current ? t = Some ? s → is_sep s = false → 
   step sig n (copy_step src dst sig n is_sep)
@@ -115,20 +115,21 @@ lemma copy_q0_q1 :
     mk_mconfig ??? copy1 
      (change_vec ? (S n) 
        (change_vec ?? v
-         (tape_move ? t (Some ? 〈s,R〉)) src)
-       (tape_move ? (nth dst ? v (niltape ?)) (Some ? 〈s,R〉)) dst).
+         (tape_move_mono ? t (〈Some ? s,R〉)) src)
+       (tape_move_mono ? (nth dst ? v (niltape ?)) (〈Some ? s,R〉)) dst).
+(*       
 #src #dst #sig #n #is_sep #v #t #Hneq #Hsrc #Hdst #s #Hcurrent #Hsep
 whd in ⊢ (??%?); >(eq_pair_fst_snd … (trans ????)) whd in ⊢ (??%?); @eq_f2
 [ >current_chars_change_vec // whd in match (trans ????);
   >nth_change_vec // >Hcurrent whd in ⊢ (??(???%)?); >Hsep %
 | >current_chars_change_vec // whd in match (trans ????);
-  >nth_change_vec // >Hcurrent whd in ⊢ (??(???????(???%))?);
-  >Hsep whd in ⊢ (??(???????(???%))?); >change_vec_commute // >pmap_change
+  >nth_change_vec // >Hcurrent whd in ⊢ (??(????(???%))?);
+  >Hsep whd in ⊢ (??(????(???%))?); >change_vec_commute // >pmap_change
   >change_vec_commute // @eq_f3 //
   <(change_vec_same ?? v dst (niltape ?)) in ⊢(??%?);
   >pmap_change @eq_f3 //
 ]
-qed.
+qed.*)
 
 lemma sem_copy_step :
   ∀src,dst,sig,n,is_sep.src ≠ dst → src < S n → dst < S n → 
