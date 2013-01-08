@@ -43,15 +43,18 @@ lemma inject_trans_def :∀sig:FinSet.∀n,i:nat.i < S n →
 whd in ⊢ (??%?); >nth_change_vec // >Htrans //
 qed.
 
+lemma inj_ter: ∀A,B,C.∀p:A×B×C. 
+  p = 〈\fst (\fst p), \snd (\fst p), \snd p〉.
+// qed.
 
-axiom inject_step : ∀sig,n,M,i,q,t,nq,nt,v. i < S n →
+lemma inject_step : ∀sig,n,M,i,q,t,nq,nt,v. i < S n →
   step sig M (mk_config ?? q t) = mk_config ?? nq nt → 
-  cic:/matita/turing/turing/step.def(11) sig n (inject_TM sig M n i) 
+  cic:/matita/turing/turing/step.def(12) sig n (inject_TM sig M n i) 
     (mk_mconfig ?? n q (change_vec ? (S n) v t i)) 
   = mk_mconfig ?? n nq (change_vec ? (S n) v nt i).
-(*#sig #n #M #i #q #t #nq #nt #v #lein whd in ⊢ (??%?→?);
+#sig #n #M #i #q #t #nq #nt #v #lein whd in ⊢ (??%?→?);
 whd in match (step ????); >(current_chars_change_vec … lein)
->(eq_pair_fst_snd … (trans sig M ?)) whd in ⊢ (??%?→?); #H
+>(inj_ter … (trans sig M ?)) whd in ⊢ (??%?→?); #H
 >(inject_trans_def sig n i lein M …) 
 [|>(eq_pair_fst_snd ?? (trans sig M 〈q,current sig t〉))
   >(eq_pair_fst_snd ?? (\fst (trans sig M 〈q,current sig t〉))) %
@@ -59,11 +62,11 @@ whd in match (step ????); >(current_chars_change_vec … lein)
 whd in ⊢ (??%?); @eq_f2 [destruct (H) // ]
 @(eq_vec … (niltape ?)) #i0 #lei0n
 cases (decidable_eq_nat … i i0) #Hii0
-[ >Hii0 >nth_change_vec // >pmap_change >nth_change_vec // destruct (H) //
-| >nth_change_vec_neq // >pmap_change >nth_change_vec_neq 
-  >tape_move_null_action //
+[ >Hii0 >nth_change_vec // >tape_move_multi_def >pmap_change >nth_change_vec // destruct (H) //
+| >nth_change_vec_neq // >tape_move_multi_def  >pmap_change >nth_change_vec_neq //
+  <tape_move_multi_def >tape_move_null_action //
 ]
-qed. *)
+qed. 
 
 lemma halt_inject: ∀sig,n,M,i,x.
   cic:/matita/turing/turing/halt.fix(0,2,9) sig n (inject_TM sig M n i) x
@@ -76,7 +79,7 @@ qed.
 
 lemma loop_inject: ∀sig,n,M,i,k,ins,int,outs,outt,vt.i < S n → 
  loopM sig M k (mk_config ?? ins int) = Some ? (mk_config ?? outs outt) → 
- cic:/matita/turing/turing/loopM.def(12) sig n (inject_TM sig M n i) k (mk_mconfig ?? n ins (change_vec ?? vt int i))
+ cic:/matita/turing/turing/loopM.def(13) sig n (inject_TM sig M n i) k (mk_mconfig ?? n ins (change_vec ?? vt int i))
   =Some ? (mk_mconfig sig ? n outs (change_vec ?? vt outt i)).
 #sig #n #M #i #k elim k -k
   [#ins #int #outs #outt #vt #Hin normalize in ⊢ (%→?); #H destruct

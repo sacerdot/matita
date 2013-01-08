@@ -31,12 +31,14 @@ qed.
 
 definition current_chars ≝ λsig.λn.λtapes.
   vec_map ?? (current sig) (S n) tapes.
-
+  
 definition tape_move_multi ≝ 
   λsig,n,ts,mvs.
-  pmap_vec ??? (tape_move sig) ? 
-    (pmap_vec ??? (tape_write sig) n ts (vec_map ?? (λx.\fst x) ? mvs))
-        (vec_map ?? (λx.\snd x) ? mvs).
+  pmap_vec ??? (tape_move_mono sig) n ts mvs.
+  
+lemma tape_move_multi_def : ∀sig,n,ts,mvs.
+  tape_move_multi sig n ts mvs = pmap_vec ??? (tape_move_mono sig) n ts mvs.
+// qed.
 
 definition step ≝ λsig.λn.λM:mTM sig n.λc:mconfig sig (states ?? M) n.
   let 〈news,mvs〉 ≝ trans sig n M 〈cstate ??? c,current_chars ?? (ctapes ??? c)〉 in

@@ -100,7 +100,7 @@ whd in ⊢ (??%?); >(eq_pair_fst_snd … (trans ????)) whd in ⊢ (??%?);
   whd in ⊢ (??(????(???%))?); >Hcurdst @tape_move_null_action ]
 qed.
 
-axiom parmove_q0_q1 :
+lemma parmove_q0_q1 :
   ∀src,dst,sig,n,D,v.src ≠ dst → src < S n → dst < S n → 
   ∀a1,a2.
   nth src ? (current_chars ?? v) (None ?) = Some ? a1 →
@@ -112,21 +112,19 @@ axiom parmove_q0_q1 :
        (change_vec ?? v
          (tape_move ? (nth src ? v (niltape ?)) D) src)
        (tape_move ? (nth dst ? v (niltape ?)) D) dst).
-(*
-#src #dst #sig #n #D #is_sep #v #Hneq #Hsrc #Hdst
-#a1 #a2 #Hcursrc #Hcurdst #Hsep
+#src #dst #sig #n #D #v #Hneq #Hsrc #Hdst
+#a1 #a2 #Hcursrc #Hcurdst
 whd in ⊢ (??%?); >(eq_pair_fst_snd … (trans ????)) whd in ⊢ (??%?); @eq_f2
 [ whd in match (trans ????);
-  >Hcursrc >Hcurdst whd in ⊢ (??(???%)?); >Hsep //
+  >Hcursrc >Hcurdst %
 | whd in match (trans ????);
-  >Hcursrc >Hcurdst whd in ⊢ (??(????(???%))?); >Hsep whd in ⊢ (??(????(???%))?);
-  change with (pmap_vec ???????) in ⊢ (??%?);
-  whd in match (vec_map ?????);
-  >pmap_change >pmap_change >tape_move_null_action
-  @eq_f2 // @eq_f2 // >nth_change_vec_neq //
+  >Hcursrc >Hcurdst whd in ⊢ (??(????(???%))?); 
+  >tape_move_multi_def <(change_vec_same ?? v dst (niltape ?)) in ⊢ (??%?);
+  >pmap_change <(change_vec_same ?? v src (niltape ?)) in ⊢(??%?);
+  >pmap_change <tape_move_multi_def >tape_move_null_action
+  @eq_f2 // >nth_change_vec_neq //
 ]
 qed.
-*)
 
 lemma sem_parmove_step :
   ∀src,dst,sig,n,D.src ≠ dst → src < S n → dst < S n → 

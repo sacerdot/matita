@@ -75,8 +75,42 @@ definition match_test ≝ λsrc,dst.λsig:DeqSet.λn.λv:Vector ? n.
   match (nth src (option sig) v (None ?)) with 
   [ None ⇒  false 
   | Some x ⇒  notb (nth dst (DeqOption sig) v (None ?) == None ?) ].
+
+definition mmove_states ≝ initN 2.
+
+definition mmove0 : mmove_states ≝ mk_Sig ?? 0 (leb_true_to_le 1 2 (refl …)).
+definition mmove1 : mmove_states ≝ mk_Sig ?? 1 (leb_true_to_le 2 2 (refl …)).
+
+definition trans_mmove ≝ 
+ λi,sig,n,D.
+ λp:mmove_states × (Vector (option sig) (S n)).
+ let 〈q,a〉 ≝ p in match (pi1 … q) with
+ [ O ⇒ 〈mmove1,change_vec ? (S n) (null_action ? n) (〈None ?,D〉) i〉
+ | S _ ⇒ 〈mmove1,null_action sig n〉 ].
+
+definition mmove ≝ 
+  λi,sig,n,D.
+  mk_mTM sig n mmove_states (trans_mmove i sig n D) 
+    mmove0 (λq.q == mmove1).
+    
+definition Rm_multi ≝ 
+  λalpha,n,i,D.λt1,t2:Vector ? (S n).
+  t2 = change_vec ? (S n) t1 (tape_move alpha (nth i ? t1 (niltape ?)) D) i.
+   
+lemma sem_move_multi :
+  ∀alpha,n,i,D.i ≤ n → 
+  mmove i alpha n D ⊨ Rm_multi alpha n i D.
+#alpha #n #i #D #Hin #int %{2}
+%{(mk_mconfig ? mmove_states n mmove1 ?)} 
+[| %
+ [ whd in ⊢ (??%?); @eq_f whd in ⊢ (??%?); @eq_f %
+ | whd >tape_move_multi_def
+   <(change_vec_same … (ctapes …) i (niltape ?))
+   >pmap_change <tape_move_multi_def >tape_move_null_action % ] ]
+ qed.
   
-definition rewind ≝ λsrc,dst,sig,n.parmove src dst sig n L · parmove_step src dst sig n R.
+definition rewind ≝ λsrc,dst,sig,n.
+  parmove src dst sig n L · mmove src sig n R · mmove dst sig n R.
 
 definition R_rewind ≝ λsrc,dst,sig,n.λint,outt: Vector (tape sig) (S n).
   (∀x,x0,xs,rs.
@@ -101,14 +135,14 @@ lemma sem_rewind : ∀src,dst,sig,n.
   src ≠ dst → src < S n → dst < S n → 
   rewind src dst sig n ⊨ R_rewind src dst sig n.
 #src #dst #sig #n #Hneq #Hsrc #Hdst
-check acc_sem_seq_app
-@(sem_seq_app sig n ????? (sem_parmoveL src dst sig n Hneq Hsrc Hdst)
-  (accRealize_to_Realize … (sem_parmove_step src dst sig n R Hneq Hsrc Hdst)))
-#ta #tb * #tc * * #HR1 #_ #HR2
+@(sem_seq_app sig n ????? (sem_parmoveL src dst sig n Hneq Hsrc Hdst) ?)
+[| @(sem_seq_app sig n ????? (sem_move_r_multi …) (sem_move_r_multi …)) //
+ @le_S_S_to_le // ]
+#ta #tb * #tc * * #Htc #_ * #td * whd in ⊢ (%→%→?); #Htd #Htb
 #x #x0 #xs #rs #Hmidta_src #ls0 #y #y0 #target #rs0 #Hlen #Hmidta_dst
->(HR1 ??? Hmidta_src ls0 y (target@[y0]) rs0 ??) in HR2;
+>(Htc ??? Hmidta_src ls0 y (target@[y0]) rs0 ??) in Htd;
 [|>Hmidta_dst //
-|>length_append >length_append >Hlen % ] *
+|>length_append >length_append >Hlen % ] * #_
 [ whd in ⊢ (%→?); * #x1 * #x2 * *
   >change_vec_commute in ⊢ (%→?); // >nth_change_vec //
   cases (reverse sig (xs@[x0])@x::rs)

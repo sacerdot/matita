@@ -47,8 +47,8 @@ definition trans_parmove_step ≝
      [ None ⇒ 〈parmove2,null_action ? n〉
      | Some a1 ⇒ 〈parmove1,change_vec ? (S n)
                           (change_vec ?(S n)
-                           (null_action ? n) (〈Some ? a0,D〉) src)
-                          (〈Some ? a1,D〉) dst〉 ] ]
+                           (null_action ? n) (〈None sig,D〉) src)
+                          (〈None ?,D〉) dst〉 ] ]
  | S q ⇒ match q with 
    [ O ⇒ (* 1 *) 〈parmove1,null_action ? n〉
    | S _ ⇒ (* 2 *) 〈parmove2,null_action ? n〉 ] ].
@@ -66,8 +66,8 @@ definition R_parmove_step_true ≝
    is_sep x1 = false ∧
    outt = change_vec ?? 
             (change_vec ?? int
-              (tape_move ? (tape_write ? (nth src ? int (niltape ?)) (Some ? x1)) D) src)
-            (tape_move ? (tape_write ? (nth dst ? int (niltape ?)) (Some ? x2)) D) dst.
+              (tape_move_mono ? (nth src ? int (niltape ?)) (〈None ?,D〉)) src)
+            (tape_move_mono ? (nth dst ? int (niltape ?)) (〈None ?,D〉)) dst.
 
 definition R_parmove_step_false ≝ 
   λsrc,dst:nat.λsig,n,is_sep.λint,outt: Vector (tape sig) (S n).
@@ -120,7 +120,7 @@ whd in ⊢ (??%?); >(eq_pair_fst_snd … (trans ????)) whd in ⊢ (??%?);
   whd in ⊢ (??(????(???%))?); >Hsep >Hcurdst @tape_move_null_action ]
 qed.
 
-axiom parmove_q0_q1 :
+lemma parmove_q0_q1 :
   ∀src,dst,sig,n,D,is_sep,v.src ≠ dst → src < S n → dst < S n → 
   ∀a1,a2.
   nth src ? (current_chars ?? v) (None ?) = Some ? a1 →
@@ -131,9 +131,8 @@ axiom parmove_q0_q1 :
     mk_mconfig ??? parmove1 
      (change_vec ? (S n) 
        (change_vec ?? v
-         (tape_move ? (tape_write ? (nth src ? v (niltape ?)) (Some ? a1)) D) src)
-       (tape_move ? (tape_write ? (nth dst ? v (niltape ?)) (Some ? a2)) D) dst).
-(*
+         (tape_move_mono ? (nth src ? v (niltape ?)) (〈None ?, D〉)) src)
+       (tape_move_mono ? (nth dst ? v (niltape ?)) (〈None ?, D〉)) dst).
 #src #dst #sig #n #D #is_sep #v #Hneq #Hsrc #Hdst
 #a1 #a2 #Hcursrc #Hcurdst #Hsep
 whd in ⊢ (??%?); >(eq_pair_fst_snd … (trans ????)) whd in ⊢ (??%?); @eq_f2
@@ -141,13 +140,13 @@ whd in ⊢ (??%?); >(eq_pair_fst_snd … (trans ????)) whd in ⊢ (??%?); @eq_f2
   >Hcursrc >Hcurdst whd in ⊢ (??(???%)?); >Hsep //
 | whd in match (trans ????);
   >Hcursrc >Hcurdst whd in ⊢ (??(????(???%))?); >Hsep whd in ⊢ (??(????(???%))?);
-  change with (pmap_vec ???????) in ⊢ (??%?);
-  whd in match (vec_map ?????);
-  >pmap_change >pmap_change >tape_move_null_action
+  <(change_vec_same ?? v dst (niltape ?)) in ⊢ (??%?);
+  >tape_move_multi_def >pmap_change
+  <(change_vec_same ?? v src (niltape ?)) in ⊢ (??%?);
+  >pmap_change <tape_move_multi_def >tape_move_null_action
   @eq_f2 // @eq_f2 // >nth_change_vec_neq //
 ]
 qed.
-*)
 
 lemma sem_parmove_step :
   ∀src,dst,sig,n,D,is_sep.src ≠ dst → src < S n → dst < S n → 
@@ -234,15 +233,9 @@ lapply (sem_while … (sem_parmove_step src dst sig n L is_sep Hneq Hsrc Hdst) �
       #i #Hi cases (decidable_eq_nat i src) #Hisrc
       [ >Hisrc >(nth_change_vec_neq … src dst) [|@(sym_not_eq … Hneq)]
         >nth_change_vec //
-        >(nth_change_vec_neq … src dst) [|@(sym_not_eq … Hneq)]
-        >nth_change_vec //
       | cases (decidable_eq_nat i dst) #Hidst
-        [ >Hidst >nth_change_vec // >nth_change_vec //
-          >Hdst_tc in Hc1; >Htargetnil
-          normalize in ⊢ (%→?); #Hc1 destruct (Hc1) %
+        [ >Hidst >nth_change_vec // 
         | >nth_change_vec_neq [|@(sym_not_eq … Hidst)]
-          >nth_change_vec_neq [|@(sym_not_eq … Hisrc)]
-          >nth_change_vec_neq [|@(sym_not_eq … Hidst)]
           >nth_change_vec_neq [|@(sym_not_eq … Hisrc)] % 
         ]
       ]
@@ -254,8 +247,7 @@ lapply (sem_while … (sem_parmove_step src dst sig n L is_sep Hneq Hsrc Hdst) �
        >change_vec_change_vec
        >reverse_cons >associative_append
        >reverse_cons >associative_append % 
-     | >Hd >nth_change_vec // >Hdst_tc >Htarget >Hdst_tc in Hc1;
-       normalize in ⊢ (%→?); #H destruct (H) //
+     | >Hd >nth_change_vec //
      | >Hxs in Hlen; >Htarget normalize #Hlen destruct (Hlen) //
      | <Hxs #c1 #Hc1 @Hnosep @memb_cons //
      | >Hd >nth_change_vec_neq [|@sym_not_eq //]

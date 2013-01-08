@@ -119,7 +119,7 @@ cases (nth i ?? (None ?)) in ⊢ (???%→?);
 ]
 qed.
 
-axiom comp_q0_q1 :
+lemma comp_q0_q1 :
   ∀i,j,sig,n,v,a.i ≠ j → i < S n → j < S n → 
   nth i ? (current_chars ?? v) (None ?) = Some ? a →
   nth j ? (current_chars ?? v) (None ?) = Some ? a → 
@@ -129,7 +129,6 @@ axiom comp_q0_q1 :
        (change_vec ?? v
          (tape_move_right ? (nth i ? v (niltape ?))) i)
        (tape_move_right ? (nth j ? v (niltape ?))) j).
-(*
 #i #j #sig #n #v #a #Heq #Hi #Hj #Ha1 #Ha2
 whd in ⊢ (??%?); >(eq_pair_fst_snd … (trans ????)) whd in ⊢ (??%?); @eq_f2
 [ whd in match (trans ????);
@@ -139,11 +138,12 @@ whd in ⊢ (??%?); >(eq_pair_fst_snd … (trans ????)) whd in ⊢ (??%?); @eq_f2
   change with (change_vec ?????) in ⊢ (??(????%)?);
   <(change_vec_same … v j (niltape ?)) in ⊢ (??%?);
   <(change_vec_same … v i (niltape ?)) in ⊢ (??%?);
-  >pmap_change >pmap_change >tape_move_null_action
-  @eq_f2 // @eq_f2 // >nth_change_vec_neq //
+  >tape_move_multi_def 
+  >pmap_change >pmap_change <tape_move_multi_def
+  >tape_move_null_action
+  @eq_f2 // >nth_change_vec_neq //
 ]
 qed.
-*)
 
 lemma sem_comp_step :
   ∀i,j,sig,n.i ≠ j → i < S n → j < S n → 
