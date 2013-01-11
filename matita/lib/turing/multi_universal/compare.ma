@@ -197,18 +197,21 @@ definition R_compare ≝
   ((current ? (nth i ? int (niltape ?)) ≠ current ? (nth j ? int (niltape ?)) ∨
     current ? (nth i ? int (niltape ?)) = None ? ∨
     current ? (nth j ? int (niltape ?)) = None ?) → outt = int) ∧
-  (∀ls,x,xs,ci,rs,ls0,rs0. 
-    nth i ? int (niltape ?) = midtape sig ls x (xs@ci::rs) →
-    nth j ? int (niltape ?) = midtape sig ls0 x (xs@rs0) →
-    (rs0 = [ ] ∧
+  (∀ls,x,rs,ls0,rs0. 
+(*    nth i ? int (niltape ?) = midtape sig ls x (xs@ci::rs) → *)
+    nth i ? int (niltape ?) = midtape sig ls x rs →
+    nth j ? int (niltape ?) = midtape sig ls0 x rs0 →
+    (∃rs'.rs = rs0@rs' ∧ current ? (nth j ? outt (niltape ?)) = None ?) ∨
+    (∃rs0'.rs0 = rs@rs0' ∧ 
      outt = change_vec ?? 
-           (change_vec ?? int (midtape sig (reverse ? xs@x::ls) ci rs) i)
-           (mk_tape sig (reverse ? xs@x::ls0) (None ?) []) j) ∨
-    ∃cj,rs1.rs0 = cj::rs1 ∧
-    (ci ≠ cj → 
-    outt = change_vec ?? 
-           (change_vec ?? int (midtape sig (reverse ? xs@x::ls) ci rs) i)
-           (midtape sig (reverse ? xs@x::ls0) cj rs1) j)).
+            (change_vec ?? int  
+              (mk_tape sig (reverse sig rs@x::ls) (None sig) []) i)
+            (mk_tape sig (reverse sig rs@x::ls0) (option_hd sig rs0')
+            (tail sig rs0')) j) ∨
+    (∃xs,ci,cj,rs',rs0'.ci ≠ cj ∧ rs = xs@ci::rs' ∧ rs0 = xs@cj::rs0' ∧
+     outt = change_vec ?? 
+            (change_vec ?? int (midtape sig (reverse ? xs@x::ls) ci rs') i)
+            (midtape sig (reverse ? xs@x::ls0) cj rs0') j)).
           
 lemma wsem_compare : ∀i,j,sig,n.i ≠ j → i < S n → j < S n → 
   compare i j sig n ⊫ R_compare i j sig n.
@@ -218,61 +221,53 @@ lapply (sem_while … (sem_comp_step i j sig n Hneq Hi Hj) … Hloop) //
 [ whd in ⊢ (%→?); * * [ *
  [ #Hcicj #Houtc % 
    [ #_ @Houtc
-   | #ls #x #xs #ci #rs #ls0 #rs0 #Hnthi #Hnthj
+   | #ls #x #rs #ls0 #rs0 #Hnthi #Hnthj
      >Hnthi in Hcicj; >Hnthj normalize in ⊢ (%→?); * #H @False_ind @H %
    ]
  | #Hci #Houtc %
    [ #_ @Houtc
-   | #ls #x #xs #ci #rs #ls0 #rs0 #Hnthi >Hnthi in Hci;
+   | #ls #x #rs #ls0 #rs0 #Hnthi >Hnthi in Hci;
      normalize in ⊢ (%→?); #H destruct (H) ] ]
  | #Hcj #Houtc %
   [ #_ @Houtc
-  | #ls #x #xs #ci #rs #ls0 #rs0 #_ #Hnthj >Hnthj in Hcj;
+  | #ls #x #rs #ls0 #rs0 #_ #Hnthj >Hnthj in Hcj;
     normalize in ⊢ (%→?); #H destruct (H) ] ]
 | #td #te * #x * * #Hci #Hcj #Hd #Hstar #IH #He lapply (IH He) -IH *
   #IH1 #IH2 %
   [ >Hci >Hcj * [ * 
     [ * #H @False_ind @H % | #H destruct (H)] | #H destruct (H)] 
-  | #ls #c0 #xs #ci #rs #ls0 #rs0 cases xs
-    [ #Hnthi #Hnthj cases rs0 in Hnthj;
-      [ #Hnthj % % // >IH1
-        [ >Hd @eq_f3 //
-          [ @eq_f3 // >Hnthi %
-          | >Hnthj % ]
-        | >Hd %2 >nth_change_vec // >Hnthj % ]
-      | #r1 #rs1 #Hnthj %2 %{r1} %{rs1} % // #Hcir1 >IH1
-        [ >Hd @eq_f3 // 
-          [ @eq_f3 // >Hnthi %
-          | >Hnthj % ]
-        | >Hd >nth_change_vec // >nth_change_vec_neq [|@sym_not_eq //]
-          >nth_change_vec // >Hnthi >Hnthj normalize % %
-          @(not_to_not … Hcir1) #H destruct (H) %
-        ]
-      ]
-    | #x0 #xs0 #Hnthi #Hnthj 
-      cut (c0 = x) [ >Hnthi in Hci; normalize #H destruct (H) // ]
-      #Hcut destruct (Hcut) cases rs0 in Hnthj;
-      [ #Hnthj % % // 
-        cases (IH2 (x::ls) x0 xs0 ci rs (x::ls0) [ ] ??) -IH2
-        [ * #_ #IH2 >IH2 >Hd >change_vec_commute in ⊢ (??%?); //
-          >change_vec_change_vec >change_vec_commute in ⊢ (??%?); //
-          @sym_not_eq //
-        | * #cj * #rs1 * #H destruct (H)
-        | >Hd >nth_change_vec_neq [|@sym_not_eq //] >nth_change_vec //
-          >Hnthi %
-        | >Hd >nth_change_vec // >Hnthj % ]
-      | #r1 #rs1 #Hnthj %2 %{r1} %{rs1} % // #Hcir1
-        cases(IH2 (x::ls) x0 xs0 ci rs (x::ls0) (r1::rs1) ??)
-        [ * #H destruct (H)
-        | * #r1' * #rs1' * #H destruct (H) #Hc1r1 >Hc1r1 //
-          >Hd >change_vec_commute in ⊢ (??%?); //
-          >change_vec_change_vec >change_vec_commute in ⊢ (??%?); //
-            @sym_not_eq //
-        | >Hd >nth_change_vec_neq [|@sym_not_eq //] >nth_change_vec //
-          >Hnthi //
-        | >Hd >nth_change_vec // >Hnthi >Hnthj %
-]]]]]
-qed.     
+  | #ls #c0 #rs #ls0 #rs0 cases rs
+    [ -IH2 #Hnthi #Hnthj % %2 %{rs0} % [%]
+      >Hnthi in Hd; #Hd >Hd in IH1; #IH1 >IH1
+      [| % %2 >nth_change_vec_neq [|@sym_not_eq //] >nth_change_vec // % ]
+      >Hnthj cases rs0 [| #r1 #rs1 ] %
+    | #r1 #rs1 #Hnthi cases rs0
+      [ -IH2 #Hnthj % % %{(r1::rs1)} % [%]
+        >Hnthj in Hd; #Hd >Hd in IH1; #IH1 >IH1
+        [| %2 >nth_change_vec // ]
+        >nth_change_vec //
+      | #r2 #rs2 #Hnthj lapply IH2; >Hd in IH1; >Hnthi >Hnthj
+        >nth_change_vec //
+        >nth_change_vec_neq [| @sym_not_eq // ] >nth_change_vec //
+        cases (true_or_false (r1 == r2)) #Hr1r2
+        [ >(\P Hr1r2) #_ #IH2 cases (IH2 … (refl ??) (refl ??)) [ *
+          [ * #rs' * #Hrs1 #Hcurout_j % % %{rs'}
+            >Hrs1 >Hcurout_j normalize % //
+          | * #rs0' * #Hrs2 #Hcurout_i % %2 %{rs0'}
+            >Hrs2 >Hcurout_i % //
+            >change_vec_commute // >change_vec_change_vec
+            >change_vec_commute [|@sym_not_eq//] >change_vec_change_vec
+            >reverse_cons >associative_append >associative_append % ]
+          | * #xs * #ci * #cj * #rs' * #rs0' * * * #Hcicj #Hrs1 #Hrs2 
+            >change_vec_commute // >change_vec_change_vec 
+            >change_vec_commute [| @sym_not_eq ] // >change_vec_change_vec 
+            #Houtc %2 %{(r2::xs)} %{ci} %{cj} %{rs'} %{rs0'}
+            % [ % [ % [ // | >Hrs1 // ] | >Hrs2 // ] 
+              | >reverse_cons >associative_append >associative_append >Houtc % ] ]
+        | lapply (\Pf Hr1r2) -Hr1r2 #Hr1r2 #IH1 #_ %2
+          >IH1 [| % % normalize @(not_to_not … Hr1r2) #H destruct (H) % ]
+          %{[]} %{r1} %{r2} %{rs1} %{rs2} % [ % [ % /2/ | % ] | % ] ]]]]]
+qed.
  
 lemma terminate_compare :  ∀i,j,sig,n,t.
   i ≠ j → i < S n → j < S n → 
