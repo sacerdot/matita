@@ -42,7 +42,7 @@ qed-.
 lemma sred_inv_abst: ∀M,N. M ↦ N → ∀C1. 𝛌.C1 = M →
                      ∃∃C2. C1 ↦ C2 & 𝛌.C2 = N.
 #M #N * -M -N
-[ #B #A #C #H destruct
+[ #B #A #C1 #H destruct
 | #A1 #A2 #HA12 #C1 #H destruct /2 width=3/
 | #B1 #B2 #A #_ #C1 #H destruct
 | #B #A1 #A2 #_ #C1 #H destruct

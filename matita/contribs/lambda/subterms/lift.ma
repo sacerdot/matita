@@ -218,37 +218,37 @@ elim (le_inv_plus_l … Hd12) -Hd12 #Hd12 #Hh1d2
 lapply (sym_eq subterms … H) -H >(plus_minus_m_m … Hh1d2) in ⊢ (???%→?); -Hh1d2 #H
 elim (slift_inv_slift_le … Hd12 … H) -H -Hd12 /2 width=3/
 qed-.
+
+definition sliftable: predicate (relation subterms) ≝ λR.
+                      ∀h,F1,F2. R F1 F2 → ∀d. R (↑[d, h] F1) (↑[d, h] F2).
+
+definition sdeliftable_sn: predicate (relation subterms) ≝ λR.
+                           ∀h,G1,G2. R G1 G2 → ∀d,F1. ↑[d, h] F1 = G1 →
+                           ∃∃F2. R F1 F2 & ↑[d, h] F2 = G2.
 (*
-definition liftable: predicate (relation term) ≝ λR.
-                     ∀h,M1,M2. R M1 M2 → ∀d. R (↑[d, h] M1) (↑[d, h] M2).
-
-definition deliftable_sn: predicate (relation term) ≝ λR.
-                          ∀h,N1,N2. R N1 N2 → ∀d,M1. ↑[d, h] M1 = N1 →
-                          ∃∃M2. R M1 M2 & ↑[d, h] M2 = N2.
-
-lemma star_liftable: ∀R. liftable R → liftable (star … R).
-#R #HR #h #M1 #M2 #H elim H -M2 // /3 width=3/
+lemma star_sliftable: ∀R. sliftable R → sliftable (star … R).
+#R #HR #h #F1 #F2 #H elim H -F2 // /3 width=3/
 qed.
 
-lemma star_deliftable_sn: ∀R. deliftable_sn R → deliftable_sn (star … R).
-#R #HR #h #N1 #N2 #H elim H -N2 /2 width=3/
-#N #N2 #_ #HN2 #IHN1 #d #M1 #HMN1
-elim (IHN1 … HMN1) -N1 #M #HM1 #HMN
-elim (HR … HN2 … HMN) -N /3 width=3/
+lemma star_deliftable_sn: ∀R. sdeliftable_sn R → sdeliftable_sn (star … R).
+#R #HR #h #G1 #G2 #H elim H -G2 /2 width=3/
+#G #G2 #_ #HG2 #IHG1 #d #F1 #HFG1
+elim (IHG1 … HFG1) -G1 #F #HF1 #HFG
+elim (HR … HG2 … HFG) -G /3 width=3/
 qed-.
 
-lemma lstar_liftable: ∀S,R. (∀a. liftable (R a)) →
-                      ∀l. liftable (lstar S … R l).
-#S #R #HR #l #h #M1 #M2 #H
-@(lstar_ind_l ????????? H) -l -M1 // /3 width=3/
+lemma lstar_sliftable: ∀S,R. (∀a. sliftable (R a)) →
+                       ∀l. sliftable (lstar S … R l).
+#S #R #HR #l #h #F1 #F2 #H
+@(lstar_ind_l ????????? H) -l -F1 // /3 width=3/
 qed.
 
-lemma lstar_deliftable_sn: ∀S,R. (∀a. deliftable_sn (R a)) →
-                           ∀l. deliftable_sn (lstar S … R l).
-#S #R #HR #l #h #N1 #N2 #H
-@(lstar_ind_l ????????? H) -l -N1 /2 width=3/
-#a #l #N1 #N #HN1 #_ #IHN2 #d #M1 #HMN1
-elim (HR … HN1 … HMN1) -N1 #M #HM1 #HMN
-elim (IHN2 … HMN) -N /3 width=3/
+lemma lstar_sdeliftable_sn: ∀S,R. (∀a. sdeliftable_sn (R a)) →
+                            ∀l. sdeliftable_sn (lstar S … R l).
+#S #R #HR #l #h #G1 #G2 #H
+@(lstar_ind_l ????????? H) -l -G1 /2 width=3/
+#a #l #G1 #G #HG1 #_ #IHG2 #d #F1 #HFG1
+elim (HR … HG1 … HFG1) -G1 #F #HF1 #HFG
+elim (IHG2 … HFG) -G /3 width=3/
 qed-.
 *)

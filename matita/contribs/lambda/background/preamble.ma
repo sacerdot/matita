@@ -18,15 +18,20 @@ include "arithmetics/exp.ma".
 
 include "background/xoa_notation.ma".
 include "background/xoa.ma".
+include "background/notation.ma".
 
 (* logic *)
 
 (* Note: For some reason this cannot be in the standard library *) 
 interpretation "logical false" 'false = False.
 
-notation "⊥"
-  non associative with precedence 90
-  for @{'false}.
+(* booleans *)
+
+(* Note: For some reason this cannot be in the standard library *) 
+interpretation "boolean false" 'false = false.
+
+(* Note: For some reason this cannot be in the standard library *) 
+interpretation "boolean true" 'true = true.
 
 (* arithmetics *)
 

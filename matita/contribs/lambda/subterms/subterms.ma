@@ -13,7 +13,6 @@
 (**************************************************************************)
 
 include "background/preamble.ma".
-include "background/notation.ma".
 
 (* SUBSETS OF SUBTERMS ******************************************************)
 

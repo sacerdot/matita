@@ -27,11 +27,11 @@ inductive dst: relation term ≝
 .
 
 interpretation "decomposed standard computation"
-    'Std M N = (dst M N).
+    'DecomposedStd M N = (dst M N).
 
 notation "hvbox( M break ⓢ↦* term 46 N )"
    non associative with precedence 45
-   for @{ 'Std $M $N }.
+   for @{ 'DecomposedStd $M $N }.
 
 lemma dst_inv_lref: ∀M,N. M ⓢ↦* N → ∀j. #j = N →
                     ∃∃s. is_whd s & M ↦*[s] #j.

@@ -15,6 +15,16 @@
 (* GENERIC NOTATION *********************************************************)
 
 (* Note: this should go to core_notation *)
+notation "⊥"
+  non associative with precedence 90
+  for @{'false}.
+
+(* Note: this should go to core_notation *)
+notation "⊤"
+  non associative with precedence 90
+  for @{'true}.
+
+(* Note: this should go to core_notation *)
 notation "hvbox(a break ≺ b)"
    non associative with precedence 45
    for @{ 'prec $a $b }.
