@@ -124,6 +124,7 @@ definition R_rewind ≝ λsrc,dst,sig,n.λint,outt: Vector (tape sig) (S n).
    ∀ls0,y,rs0.nth dst ? int (niltape ?) = midtape sig ls0 y rs0 → 
    outt = int).
 
+(*
 theorem accRealize_to_Realize :
   ∀sig,n.∀M:mTM sig n.∀Rtrue,Rfalse,acc.
   M ⊨ [ acc: Rtrue, Rfalse ] →  M ⊨ Rtrue ∪ Rfalse.
@@ -133,6 +134,7 @@ cases (HR t) #k * #outc * * #Hloop
 cases (true_or_false (cstate sig (states sig n M) n outc == acc)) #Hcase
 [ % @Htrue @(\P Hcase) | %2 @Hfalse @(\Pf Hcase) ]
 qed.
+*)
 
 lemma sem_rewind : ∀src,dst,sig,n.
   src ≠ dst → src < S n → dst < S n → 
@@ -239,16 +241,13 @@ lemma sem_match_step :
 [ #ta #tb #tc * lapply (refl ? (current ? (nth src ? ta (niltape ?))))
   cases (current ? (nth src ? ta (niltape ?))) in ⊢ (???%→%);
   [ #Hcurta_src #Hcomp #_ * #td * >Hcomp [| % %2 %]
-    whd in ⊢ (%→?); * whd in ⊢ (??%?→?);
-    >(?:nth src ? (current_chars ?? ta) (None ?) = None ?)
-    [ normalize in ⊢ (%→?); #H destruct (H)
-    | @daemon ]
+    whd in ⊢ (%→?); * whd in ⊢ (??%?→?); 
+    >nth_current_chars >Hcurta_src normalize in ⊢ (%→?); #H destruct (H)
   | #s #Hs lapply (refl ? (current ? (nth dst ? ta (niltape ?))))
     cases (current ? (nth dst ? ta (niltape ?))) in ⊢ (???%→%);
     [ #Hcurta_dst #Hcomp #_ * #td * >Hcomp [| %2 %]
-      whd in ⊢ (%→?); * whd in ⊢ (??%?→?);
-      >(?:nth src ? (current_chars ?? ta) (None ?) = Some ? s) [|@daemon]
-      >(?:nth dst ? (current_chars ?? ta) (None ?) = None ?) [|@daemon]
+      whd in ⊢ (%→?); * whd in ⊢ (??%?→?); 
+      >nth_current_chars >nth_current_chars >Hs >Hcurta_dst 
       normalize in ⊢ (%→?); #H destruct (H)
     | #s0 #Hs0
       cases (current_to_midtape … Hs) #ls * #rs #Hmidta_src >Hmidta_src
@@ -257,11 +256,15 @@ lemma sem_match_step :
       [ lapply (\P Hss0) -Hss0 #Hss0 destruct (Hss0) 
         #_ #Hcomp cases (Hcomp ????? (refl ??) (refl ??)) -Hcomp [ *
         [ * #rs' * #_ #Hcurtc_dst * #td * whd in ⊢ (%→?); * whd in ⊢ (??%?→?);
-          >(?:nth dst ? (current_chars ?? tc) (None ?) = None ?) [|@daemon]
-          cases (nth src ? (current_chars ?? tc) (None ?))
-          [| #x ] normalize in ⊢ (%→?); #H destruct (H)
+          >nth_current_chars >nth_current_chars >Hcurtc_dst 
+          cases (current ? (nth src …)) [| #x ] 
+          normalize in ⊢ (%→?); #H destruct (H) 
         | * #rs0' * #_ #Hcurtc_src * #td * whd in ⊢ (%→?); * whd in ⊢ (??%?→?);
-          >(?:nth src ? (current_chars ?? tc) (None ?) = None ?) [|@daemon]
+          >(?:nth src ? (current_chars ?? tc) (None ?) = None ?) 
+          [|>nth_current_chars >Hcurtc_src >nth_change_vec_neq 
+            [>nth_change_vec [cases (append ???) // | @Hsrc] 
+            |@(not_to_not … Hneq) //
+            ]]
           normalize in ⊢ (%→?); #H destruct (H) ]
         | * #xs * #ci * #cj * #rs'' * #rs0' * * * #Hcicj #Hrs #Hrs0
           #Htc * #td * * #Hmatch #Htd destruct (Htd) * #te * *
@@ -310,18 +313,20 @@ lemma sem_match_step :
     | >(?:tc=ta) in Htest; 
       [|@Hcomp1 % % >Hta_src >Hta_dst @(not_to_not ??? (\Pf Hxx0)) normalize
         #Hxx0' destruct (Hxx0') % ]
-      whd in ⊢ (??%?→?); >(?:nth src ? (current_chars ?? ta) (None ?) = Some ? x)
-      [| @daemon ]
-      >(?:nth dst ? (current_chars ?? ta) (None ?) = Some ? x0) [|@daemon]
+      whd in ⊢ (??%?→?); 
+      >nth_current_chars >Hta_src >nth_current_chars >Hta_dst 
       whd in ⊢ (??%?→?); #Hfalse destruct (Hfalse) ] -Hcomp1
       cases (Hcomp2 … Hta_src Hta_dst) [ *
       [ * #rs' * #Hxs #Hcurtc % %2 %{ls0} %{rs0} %{rs'} % // % //
       | * #rs0' * #Hxs #Htc %2 >Htc %{ls0} %{rs0'} % // ]
       | * #xs0 * #ci * #cj * #rs' * #rs0' * * *
         #Hci #Hxs #Hrs0 #Htc @False_ind
-        whd in Htest:(??%?);
-        >(?:nth src ? (current_chars ?? tc) (None ?) = Some ? ci) in Htest; [|@daemon]
-        >(?:nth dst ? (current_chars ?? tc) (None ?) = Some ? cj) [|@daemon]
+        whd in Htest:(??%?); 
+        >(?:nth src ? (current_chars ?? tc) (None ?) = Some ? ci) in Htest; 
+        [|>nth_current_chars >Htc >nth_change_vec_neq [|@(not_to_not … Hneq) //]
+          >nth_change_vec //]
+        >(?:nth dst ? (current_chars ?? tc) (None ?) = Some ? cj) 
+        [|>nth_current_chars >Htc >nth_change_vec //]
         normalize #H destruct (H) ] ] ]
 qed.
 

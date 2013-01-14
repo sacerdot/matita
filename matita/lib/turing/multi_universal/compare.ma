@@ -155,24 +155,21 @@ lapply (refl ? (current ? (nth i ? int (niltape ?))))
 cases (current ? (nth i ? int (niltape ?))) in ⊢ (???%→?);
 [ #Hcuri %{2} %
   [| % [ %
-    [ whd in ⊢ (??%?); >comp_q0_q2_null /2/ % <Hcuri in ⊢ (???%); 
-      @sym_eq @nth_vec_map
+    [ whd in ⊢ (??%?); >comp_q0_q2_null /2/ 
     | normalize in ⊢ (%→?); #H destruct (H) ]
   | #_ % // % %2 // ] ]
 | #a #Ha lapply (refl ? (current ? (nth j ? int (niltape ?))))
   cases (current ? (nth j ? int (niltape ?))) in ⊢ (???%→?);
   [ #Hcurj %{2} %
     [| % [ %
-       [ whd in ⊢ (??%?); >comp_q0_q2_null /2/ %2 <Hcurj in ⊢ (???%); 
-         @sym_eq @nth_vec_map
+       [ whd in ⊢ (??%?); >comp_q0_q2_null /2/ %2
        | normalize in ⊢ (%→?); #H destruct (H) ]
        | #_ % // >Ha >Hcurj % % % #H destruct (H) ] ]
   | #b #Hb %{2} cases (true_or_false (a == b)) #Hab
     [ %
       [| % [ % 
         [whd in ⊢  (??%?);  >(comp_q0_q1 … a Hneq Hi Hj) //
-          [>(\P Hab) <Hb @sym_eq @nth_vec_map
-          |<Ha @sym_eq @nth_vec_map ]
+         >(\P Hab) <Hb @sym_eq @nth_vec_map
         | #_ whd >(\P Hab) %{b} % // % // <(\P Hab) // ]
         | * #H @False_ind @H %
       ] ]
@@ -293,5 +290,6 @@ qed.
 lemma sem_compare : ∀i,j,sig,n.
   i ≠ j → i < S n → j < S n → 
   compare i j sig n ⊨ R_compare i j sig n.
-#i #j #sig #n #Hneq #Hi #Hj @WRealize_to_Realize /2/
+#i #j #sig #n #Hneq #Hi #Hj @WRealize_to_Realize 
+  [/2/| @wsem_compare // ]
 qed.

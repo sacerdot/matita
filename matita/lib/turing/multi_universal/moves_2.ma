@@ -137,7 +137,6 @@ cases (current ? (nth src ? int (niltape ?))) in ⊢ (???%→?);
 [ #Hcursrc %{2} %
   [| % [ %
     [ whd in ⊢ (??%?); >parmove_q0_q2_null_src /2/
-      <(nth_vec_map ?? (current …) src ? int (niltape ?)) //
     | normalize in ⊢ (%→?); #H destruct (H) ]
     | #_ % // % // ] ]
 | #a #Ha lapply (refl ? (current ? (nth dst ? int (niltape ?))))
@@ -145,8 +144,6 @@ cases (current ? (nth src ? int (niltape ?))) in ⊢ (???%→?);
   [ #Hcurdst %{2} %
     [| % [ %
       [ whd in ⊢ (??%?); >(parmove_q0_q2_null_dst …) /2/ 
-        [ <(nth_vec_map ?? (current …) dst ? int (niltape ?)) //
-        | <(nth_vec_map ?? (current …) src ? int (niltape ?)) // ]
       | normalize in ⊢ (%→?); #H destruct (H) ]
       | #_ % // %2 // ] ]
   | #b #Hb %{2} %
