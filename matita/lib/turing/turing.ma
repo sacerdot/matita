@@ -31,7 +31,13 @@ qed.
 
 definition current_chars ≝ λsig.λn.λtapes.
   vec_map ?? (current sig) (S n) tapes.
-  
+
+lemma nth_current_chars : ∀sig,n,tapes,i.
+  nth i ? (current_chars sig n tapes) (None ?) 
+   = current sig (nth i ? tapes (niltape sig)).
+#sig #n #tapes #i >(nth_vec_map … (current sig) i (S n)) %
+qed.
+
 definition tape_move_multi ≝ 
   λsig,n,ts,mvs.
   pmap_vec ??? (tape_move_mono sig) n ts mvs.
