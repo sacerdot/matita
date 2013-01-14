@@ -448,34 +448,27 @@ lapply (sem_while … (sem_match_step src dst sig n Hneq Hsrc Hdst) … Hloop) /
          -H1 #H1 cases (H l2 l3) #H2 @H2 @H1
         ]
       ]
-    | (* in match_step_true manca il caso di fallimento immediato
-         (con i due current diversi) *)
-      @daemon
-      (*
-       #_ lapply (\Pf eqx) -eqx #eqx >Hmidta_dst
-       cases (Htrue ? (refl ??) eqx) -Htrue #Htb #Hendcx #_
-       cases rs0 in Htb;
-       [ #_ %2 #l #l1 cases l
+    | #_ cases (IH x xs ?) -IH
+      [| >Htc >nth_change_vec_neq [|@sym_not_eq //] @Hmidta_src ]
+      >Htc >nth_change_vec // cases rs0
+      [ #_ #_ %2 #l #l1 cases l
        [ normalize cases xs
          [ cases l1
-           [ normalize % #H destruct (H) cases eqx /2/
+           [ normalize % #H destruct (H) cases (\Pf eqx) /2/
            | #tmp1 #l2 normalize % #H destruct (H) ]
          | #tmp1 #l2 normalize % #H destruct (H) ]
        | #tmp1 #l2 normalize % #H destruct (H)cases l2 in e0;
          [ normalize #H1 destruct (H1)
-         | #tmp2 #l3 normalize #H1 destruct (H1) ]
-       ]
-     | #r1 #rs1 normalize in ⊢ (???(????%?)→?); #Htb >Htb in IH; #IH
-       cases (IH ls x xs end rs ? Hnotend Hend Hnotstart) 
-       [| >Htb >nth_change_vec_neq [|@sym_not_eq //] @Hmid_src ] -IH
-       #_ #IH cases (IH Hstart (c::ls0) r1 rs1 ?)
-       [|| >nth_change_vec // ] -IH
-       [ * #l * #l1 * #Hll1 #Hout % %{(c::l)} %{l1} % >Hll1 //
-         >reverse_cons >associative_append #cj0 #ls #Hl1 >(Hout ?? Hl1)
-         >change_vec_commute in ⊢ (??(???%??)?); // @sym_not_eq //
-       | #IH %2 @(not_sub_list_merge_2 ?? (x::xs)) normalize [|@IH]
-         #l1 % #H destruct (H) cases eqx /2/
-       ] *)
+         | #tmp2 #l3 normalize #H1 destruct (H1) ] ]
+      | #r1 #rs1 #_ #IH cases (IH … (refl ??)) -IH
+        [ * #l * #l1 * #Hll1 #Houtc % %{(c::l)} %{l1} % [ >Hll1 % ]
+          >Houtc >change_vec_commute // >change_vec_change_vec 
+          >change_vec_commute [|@sym_not_eq //]
+          >reverse_cons >associative_append %
+        | #Hll1 %2 @(not_sub_list_merge_2 ?? (x::xs)) normalize [|@Hll1]
+         #l1 % #H destruct (H) cases (\Pf eqx) /2/
+        ]
+      ]
     ]
   ]
 ]
