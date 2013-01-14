@@ -226,8 +226,6 @@ definition R_match_step_true ≝
    nth dst ? int (niltape ?) = midtape sig ls0 s (xs@cj::rs0) ∧
    ci ≠ cj)).
   
-axiom daemon : ∀X:Prop.X.
-      
 lemma sem_match_step :
   ∀src,dst,sig,n.src ≠ dst → src < S n → dst < S n → 
   match_step src dst sig n ⊨ 
@@ -345,7 +343,8 @@ definition R_match_m ≝
   λsrc,dst,sig,n.λint,outt: Vector (tape sig) (S n).
   ∀x,rs.
   nth src ? int (niltape ?) = midtape sig [ ] x rs →
-  (current sig (nth dst (tape sig) int (niltape sig)) = None ? → outt = int) ∧
+  (current sig (nth dst (tape sig) int (niltape sig)) = None ? → 
+   right ? (nth dst (tape sig) int (niltape sig)) = [ ] → outt = int) ∧
   (∀ls0,x0,rs0.
    nth dst ? int (niltape ?) = midtape sig ls0 x0 rs0 →
    (∃l,l1.x0::rs0 = l@x::rs@l1 ∧
@@ -414,10 +413,18 @@ lapply (sem_while … (sem_match_step src dst sig n Hneq Hsrc Hdst) … Hloop) /
  lapply (refl ? (current ? (nth dst ? ta (niltape ?))))
  cases (current ? (nth dst ? ta (niltape ?))) in ⊢ (???%→?); 
   [#Hcurta_dst % 
-    [#_ whd in Htrue; >Hmidta_src in Htrue; #Htrue
-     cases (Htrue ?? (refl ??)) -Htrue >Hcurta_dst
-     (* dovremmo sapere che ta.dst è sul margine destro, da cui la move non 
-        ha effetto *) #_ cut (tc = ta) [@daemon] #Htc destruct (Htc) #_
+    [#Hcurta_dst #Hrightta_dst whd in Htrue; >Hmidta_src in Htrue; #Htrue
+     cases (Htrue ?? (refl ??)) -Htrue #Htc
+     cut (tc = ta)
+     [ >Htc whd in match (tape_move_mono ???); whd in match (tape_write ???);
+       <(change_vec_same … ta dst (niltape ?)) in ⊢ (???%);
+       lapply Hrightta_dst lapply Hcurta_dst -Hrightta_dst -Hcurta_dst 
+       cases (nth dst ? ta (niltape ?))
+       [ #_ #_ %
+       | #r0 #rs0 #_ normalize in ⊢ (%→?); #H destruct (H)
+       | #l0 #ls0 #_ #_ %
+       | #ls #x0 #rs normalize in ⊢ (%→?); #H destruct (H) ] ]
+     -Htc #Htc destruct (Htc) #_
      cases (IH … Hmidta_src) #Houtc #_ @Houtc //
     |#ls0 #x0 #rs0 #Hmidta_dst >Hmidta_dst in Hcurta_dst;
      normalize in ⊢ (%→?); #H destruct (H)
