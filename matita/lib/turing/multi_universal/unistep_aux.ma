@@ -10,6 +10,8 @@
       V_____________________________________________________________*)
 
 include "turing/multi_universal/moves_2.ma".
+include "turing/multi_universal/match.ma".
+include "turing/multi_universal/copy.ma".
 
 (*
 
@@ -48,158 +50,110 @@ include "turing/multi_universal/moves_2.ma".
   cfg_to_obj
 *)
 
-definition obj_to_cfg ≝ 
-  mmove cfg unialpha 3 L ·
-  mmove cfg unialpha 3 L ·
-  if_TM ?? (inject_TM ? (test_null ?) 3 obj)
-    (
+inductive unialpha : Type[0] ≝ 
+| bit : bool → unialpha
+| bar : unialpha.
 
-
-
-
-definition o2c_states ≝ initN 3.
-
-definition copy0 : copy_states ≝ mk_Sig ?? 0 (leb_true_to_le 1 3 (refl …)).
-definition copy1 : copy_states ≝ mk_Sig ?? 1 (leb_true_to_le 2 3 (refl …)).
-definition copy2 : copy_states ≝ mk_Sig ?? 2 (leb_true_to_le 3 3 (refl …)).
-
-
-definition trans_copy_step ≝ 
- λsrc,dst.λsig:FinSet.λn.
- λp:copy_states × (Vector (option sig) (S n)).
- let 〈q,a〉 ≝ p in
- match pi1 … q with
- [ O ⇒ match nth src ? a (None ?) with
-   [ None ⇒ 〈copy2,null_action sig n〉
-   | Some ai ⇒ match nth dst ? a (None ?) with 
-     [ None ⇒ 〈copy2,null_action ? n〉
-     | Some aj ⇒ 
-         〈copy1,change_vec ? (S n) 
-           (change_vec ? (S n) (null_action ? n) (〈None ?,R〉) src)
-           (〈Some ? ai,R〉) dst〉
-     ]
-   ]
- | S q ⇒ match q with 
-   [ O ⇒ (* 1 *) 〈copy1,null_action ? n〉
-   | S _ ⇒ (* 2 *) 〈copy2,null_action ? n〉 ] ].
-
-definition copy_step ≝ 
-  λsrc,dst,sig,n.
-  mk_mTM sig n copy_states (trans_copy_step src dst sig n) 
-    copy0 (λq.q == copy1 ∨ q == copy2).
-
-definition R_comp_step_true ≝ 
-  λsrc,dst,sig,n.λint,outt: Vector (tape sig) (S n).
-  ∃x,y.
-   current ? (nth src ? int (niltape ?)) = Some ? x ∧
-   current ? (nth dst ? int (niltape ?)) = Some ? y ∧
-   outt = change_vec ?? 
-            (change_vec ?? int
-              (tape_move_mono ? (nth src ? int (niltape ?)) 〈None ?, R〉) src)
-            (tape_move_mono ? (nth dst ? int (niltape ?)) 〈Some ? x, R〉) dst.
-
-definition R_comp_step_false ≝ 
-  λsrc,dst:nat.λsig,n.λint,outt: Vector (tape sig) (S n).
-    (current ? (nth src ? int (niltape ?)) = None ? ∨
-     current ? (nth dst ? int (niltape ?)) = None ?) ∧ outt = int.
-
-lemma copy_q0_q2_null :
-  ∀src,dst,sig,n,v.src < S n → dst < S n → 
-  (nth src ? (current_chars ?? v) (None ?) = None ? ∨
-   nth dst ? (current_chars ?? v) (None ?) = None ?) → 
-  step sig n (copy_step src dst sig n) (mk_mconfig ??? copy0 v) 
-  = mk_mconfig ??? copy2 v.
-#src #dst #sig #n #v #Hi #Hj
-whd in ⊢ (? → ??%?); >(eq_pair_fst_snd … (trans ????)) whd in ⊢ (?→??%?);
-* #Hcurrent
-[ @eq_f2
-  [ whd in ⊢ (??(???%)?); >Hcurrent %
-  | whd in ⊢ (??(????(???%))?); >Hcurrent @tape_move_null_action ]
-| @eq_f2
-  [ whd in ⊢ (??(???%)?); >Hcurrent cases (nth src ?? (None sig)) //
-  | whd in ⊢ (??(????(???%))?); >Hcurrent
-    cases (nth src ?? (None sig)) [|#x] @tape_move_null_action ] ]
+definition unialpha_eq ≝ 
+  λa1,a2.match a1 with
+  [ bit x ⇒ match a2 with [ bit y ⇒ ¬ xorb x y | _ ⇒ false ]
+  | bar ⇒ match a2 with [ bar ⇒ true | _ ⇒ false ] ].
+  
+definition DeqUnialpha ≝ mk_DeqSet unialpha unialpha_eq ?.
+* [ #x * [ #y cases x cases y normalize % // #Hfalse destruct
+         | *: normalize % #Hfalse destruct ]
+  | * [ #y ] normalize % #H1 destruct % ]
 qed.
 
-lemma copy_q0_q1 :
-  ∀src,dst,sig,n,v,a,b.src ≠ dst → src < S n → dst < S n → 
-  nth src ? (current_chars ?? v) (None ?) = Some ? a →
-  nth dst ? (current_chars ?? v) (None ?) = Some ? b → 
-  step sig n (copy_step src dst sig n) (mk_mconfig ??? copy0 v) =
-    mk_mconfig ??? copy1 
-     (change_vec ? (S n) 
-       (change_vec ?? v
-         (tape_move_mono ? (nth src ? v (niltape ?)) 〈None ?, R〉) src)
-            (tape_move_mono ? (nth dst ? v (niltape ?)) 〈Some ? a, R〉) dst).
-#src #dst #sig #n #v #a #b #Heq #Hsrc #Hdst #Ha1 #Ha2
-whd in ⊢ (??%?); >(eq_pair_fst_snd … (trans ????)) whd in ⊢ (??%?); @eq_f2
-[ whd in match (trans ????);
-  >Ha1 >Ha2 whd in ⊢ (??(???%)?); >(\b ?) //
-| whd in match (trans ????);
-  >Ha1 >Ha2 whd in ⊢ (??(????(???%))?); >(\b ?) //
-  change with (change_vec ?????) in ⊢ (??(????%)?);
-  <(change_vec_same … v dst (niltape ?)) in ⊢ (??%?);
-  <(change_vec_same … v src (niltape ?)) in ⊢ (??%?);
-  >tape_move_multi_def 
-  >pmap_change >pmap_change <tape_move_multi_def
-  >tape_move_null_action
-  @eq_f2 // >nth_change_vec_neq //
-]
+lemma unialpha_unique : 
+  uniqueb DeqUnialpha [bit true;bit false;bar] = true.
+// qed.
+
+lemma unialpha_complete :∀x:DeqUnialpha. 
+  memb ? x [bit true;bit false;bar] = true.
+* // * //
 qed.
 
-lemma sem_copy_step :
-  ∀src,dst,sig,n.src ≠ dst → src < S n → dst < S n → 
-  copy_step src dst sig n ⊨ 
-    [ copy1: R_comp_step_true src dst sig n, 
-            R_comp_step_false src dst sig n ].
-#src #dst #sig #n #Hneq #Hsrc #Hdst #int
-lapply (refl ? (current ? (nth src ? int (niltape ?))))
-cases (current ? (nth src ? int (niltape ?))) in ⊢ (???%→?);
-[ #Hcur_src %{2} %
-  [| % [ %
-    [ whd in ⊢ (??%?); >copy_q0_q2_null /2/ 
-    | normalize in ⊢ (%→?); #H destruct (H) ]
-  | #_ % // % // ] ]
-| #a #Ha lapply (refl ? (current ? (nth dst ? int (niltape ?))))
-  cases (current ? (nth dst ? int (niltape ?))) in ⊢ (???%→?);
-  [ #Hcur_dst %{2} %
-    [| % [ %
-       [ whd in ⊢ (??%?); >copy_q0_q2_null /2/ 
-       | normalize in ⊢ (%→?); #H destruct (H) ]
-       | #_ % // %2 >Hcur_dst % ] ]
-  | #b #Hb %{2} %
-    [| % [ % 
-      [whd in ⊢  (??%?);  >(copy_q0_q1 … a b Hneq Hsrc Hdst) //
-      | #_ %{a} %{b} % // % //]
-      | * #H @False_ind @H %
-      ]
-    ]
-  ]
-]
-qed.
+definition FSUnialpha ≝ 
+  mk_FinSet DeqUnialpha [bit true;bit false;bar] 
+  unialpha_unique unialpha_complete.
 
-definition copy ≝ λsrc,dst,sig,n.
-  whileTM … (copy_step src dst sig n) copy1.
+(*************************** testing characters *******************************)
+definition is_bit ≝ λc.match c with [ bit _ ⇒ true | _ ⇒ false ].
+definition is_bar ≝ λc.match c with [ bar ⇒ true | _ ⇒ false ].
 
-definition R_copy ≝ 
-  λsrc,dst,sig,n.λint,outt: Vector (tape sig) (S n).
-  ((current ? (nth src ? int (niltape ?)) = None ? ∨
-    current ? (nth dst ? int (niltape ?)) = None ?) → outt = int) ∧
-  (∀ls,x,x0,rs,ls0,rs0. 
-    nth src ? int (niltape ?) = midtape sig ls x rs →
-    nth dst ? int (niltape ?) = midtape sig ls0 x0 rs0 →
-    (∃rs01,rs02.rs0 = rs01@rs02 ∧ |rs01| = |rs| ∧
-     outt = change_vec ?? 
-            (change_vec ?? int  
-              (mk_tape sig (reverse sig rs@x::ls) (None sig) []) src)
-            (mk_tape sig (reverse sig rs@x::ls0) (option_hd sig rs02)
-            (tail sig rs02)) dst) ∨
-    (∃rs1,rs2.rs = rs1@rs2 ∧ |rs1| = |rs0| ∧
-     outt = change_vec ?? 
-            (change_vec ?? int  
-              (mk_tape sig (reverse sig rs1@x::ls) (option_hd sig rs2)
-            (tail sig rs2)) src)
-            (mk_tape sig (reverse sig rs1@x::ls0) (None sig) []) dst)).
+definition obj ≝ 0.
+definition cfg ≝ 1.
+definition prg ≝ 2.
+
+definition obj_to_cfg ≝
+  mmove cfg FSUnialpha 2 L ·
+  mmove cfg FSUnialpha 2 L ·
+  (ifTM ?? (inject_TM ? (test_null ?) 2 obj)
+    (inject_TM ? (write FSUnialpha (bit false)) 2 cfg ·
+     inject_TM ? (move_r FSUnialpha) 2 cfg ·
+     inject_TM ? (write FSUnialpha (bit false)) 2 cfg)
+    (inject_TM ? (write FSUnialpha (bit true)) 2 cfg ·
+     inject_TM ? (move_r FSUnialpha) 2 cfg ·
+     copy_step obj cfg FSUnialpha 2) tc_true ·
+     inject_TM ? (move_l FSUnialpha) 2 cfg) ·
+  inject_TM ? (move_to_end FSUnialpha L) 2 cfg ·
+  inject_TM ? (move_r FSUnialpha) 2 cfg.
+  
+definition R_obj_to_cfg ≝ λt1,t2:Vector (tape FSUnialpha) 3.
+  ∀c,opt,ls.
+  nth cfg ? t1 (niltape ?) = mk_tape FSUnialpha (c::opt::ls) (None ?) [ ] → 
+  (∀lso,x,rso.nth obj ? t1 (niltape ?) = midtape FSUnialpha lso x rso → 
+   t2 = change_vec ?? t1 
+         (mk_tape ? [ ] (option_hd ? (reverse ? (c::opt::ls))) (tail ? (reverse ? (c::opt::ls)))) cfg) ∧
+  (current ? (nth obj ? t1 (niltape ?)) = None ? → 
+   t2 = change_vec ?? t1
+         (mk_tape ? [ ] (option_hd FSUnialpha (reverse ? (bit false::bit false::ls))) 
+           (tail ? (reverse ? (bit false :: bit false::ls)))) cfg).
+           
+axiom sem_move_to_end_l : ∀sig. move_to_end sig L ⊨ R_move_to_end_l sig.
+
+lemma sem_obj_to_cfg : obj_to_cfg ⊨  R_obj_to_cfg.
+@(sem_seq_app FSUnialpha 2 ????? (sem_move_multi ? 2 cfg L ?)
+  (sem_seq_app ?? ????? (sem_move_multi ? 2 cfg L ?)
+   (sem_seq_app ???????    
+    (sem_seq_app ???????
+     (sem_if ? 2 ????????
+      (sem_test_null_multi ?? obj ?)
+      (sem_seq_app ??????? (sem_inject ???? cfg ? (sem_write FSUnialpha (bit false)))
+       (sem_seq_app ??????? (sem_inject ???? cfg ? (sem_move_r ?)) 
+        (sem_inject ???? cfg ? (sem_write FSUnialpha (bit false))) ?) ?)
+      ?)
+     ??) ??) ?) ?)
+[|||||||||||||||| @     
+        
+        ??) ??) ??) ?) ?)
+       ?) ?) ?) ?)
+
+
+@(sem_seq_app FSUnialpha 2 ????? (sem_move_multi ? 2 cfg L ?) ??)
+[||
+@(sem_seq_app ?? ????? (sem_move_multi ? 2 cfg L ?) ??)
+[|| @sem_seq_app
+[|| @sem_seq_app
+[|| @(sem_if ? 2 ???????? (sem_test_null_multi ?? obj ?))
+[|||@(sem_seq_app ??????? (sem_inject ???? cfg ? (sem_write FSUnialpha (bit false))) ?)
+[||@(sem_seq_app ??????? (sem_inject ???? cfg ? (sem_move_r ?)) 
+       (sem_inject ???? cfg ? (sem_write FSUnialpha (bit false))) ?)
+[||      
+
+@(sem_seq_app FSUnialpha 2 ????? (sem_move_multi ? 2 cfg L ?)
+  (sem_seq_app ?? ????? (sem_move_multi ? 2 cfg L ?)
+   (sem_seq_app ???????
+    (sem_if ? 2 ????????
+     (sem_test_null_multi ?? obj ?)
+     (sem_seq_app ??????? (sem_inject ???? cfg ? (sem_write FSUnialpha (bit false)))     
+      (sem_seq_app ??????? (sem_inject ???? cfg ? (sem_move_r ?)) 
+       (sem_inject ???? cfg ? (sem_write FSUnialpha (bit false))) ?) ?)
+       ?)
+    (sem_seq_app ??????? (sem_inject ???? cfg ? (sem_move_to_end_l ?))
+     (sem_inject ???? cfg ? (sem_move_r ?)) ?) ?) ?) ?)
+      
 
 lemma wsem_copy : ∀src,dst,sig,n.src ≠ dst → src < S n → dst < S n → 
   copy src dst sig n ⊫ R_copy src dst sig n.
