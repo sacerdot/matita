@@ -12,6 +12,7 @@
 include "turing/turing.ma".
 include "turing/inject.ma".
 include "turing/while_multi.ma".
+include "turing/while_machine.ma".
 
 definition parmove_states ≝ initN 3.
 
@@ -252,4 +253,91 @@ lemma sem_parmoveL : ∀src,dst,sig,n.
   parmove src dst sig n L ⊨ R_parmoveL src dst sig n.
 #src #dst #sig #n #Hneq #Hsrc #Hdst @WRealize_to_Realize 
 [/2/ | @wsem_parmoveL //]
+qed.
+
+(* while {
+     if current != null 
+        then move_r
+        else nop
+     }
+ *)
+ 
+definition mte_states ≝ initN 3.
+definition mte0 : mte_states ≝ mk_Sig ?? 0 (leb_true_to_le 1 3 (refl …)).
+definition mte1 : mte_states ≝ mk_Sig ?? 1 (leb_true_to_le 2 3 (refl …)).
+definition mte2 : mte_states ≝ mk_Sig ?? 2 (leb_true_to_le 3 3 (refl …)).
+
+definition mte_step ≝ 
+  λalpha:FinSet.λD.mk_TM alpha mte_states
+  (λp.let 〈q,a〉 ≝ p in
+    match a with
+    [ None ⇒ 〈mte1,None ?,N〉
+    | Some a' ⇒ match (pi1 … q) with
+      [ O ⇒ 〈mte2,Some ? a',D〉
+      | S q ⇒ 〈mte2,None ?,N〉 ] ])
+  mte0 (λq.q == mte1 ∨ q == mte2).
+  
+definition R_mte_step_true ≝ λalpha,D,t1,t2.
+  ∃ls,c,rs.
+    t1 = midtape alpha ls c rs ∧ t2 = tape_move ? t1 D.
+
+definition R_mte_step_false ≝ λalpha.λt1,t2:tape alpha.
+  current ? t1 = None ? ∧ t1 = t2.
+
+lemma sem_mte_step :
+  ∀alpha,D.mte_step alpha D ⊨ [ mte2 : R_mte_step_true alpha D, R_mte_step_false alpha ] .
+#alpha #D #intape @(ex_intro ?? 2) cases intape
+[ @ex_intro
+  [| % [ % [ % | normalize #H destruct ] | #_ % // ] ]
+|#a #al @ex_intro
+  [| % [ % [ % | normalize #H destruct ] | #_ % // ] ]
+|#a #al @ex_intro
+  [| % [ % [ % | normalize #H destruct ] | #_ % // ] ]
+| #ls #c #rs
+  @ex_intro [| % [ % [ % | #_ %{ls} %{c} %{rs} % // ]
+                     | normalize in ⊢ (?(??%?)→?); * #H @False_ind /2/ ] ] ]
+qed.
+
+definition move_to_end ≝ λsig,D.whileTM sig (mte_step sig D) mte2.
+
+definition R_move_to_end_r ≝ 
+  λsig,int,outt.
+  (current ? int = None ? → outt = int) ∧
+  ∀ls,c,rs.int = midtape sig ls c rs → outt = mk_tape ? (reverse ? rs@c::ls) (None ?) [ ].
+  
+lemma wsem_move_to_end_r : ∀sig. move_to_end sig R ⊫ R_move_to_end_r sig.
+#sig #ta #k #outc #Hloop
+lapply (sem_while … (sem_mte_step sig R) … Hloop) //
+-Hloop * #tb * #Hstar @(star_ind_l ??????? Hstar) -Hstar
+[ * #Hcurtb #Houtc % /2/ #ls #c #rs #Htb >Htb in Hcurtb; normalize in ⊢ (%→?); #H destruct (H)
+| #tc #td * #ls * #c * #rs * #Htc >Htc cases rs
+  [ normalize in ⊢ (%→?); #Htd >Htd #Hstar #IH whd in ⊢ (%→?); #Hfalse
+    lapply (IH Hfalse) -IH * #Htd1 #_ %
+    [ normalize in ⊢ (%→?); #H destruct (H)
+    | #ls0 #c0 #rs0 #H destruct (H) >Htd1 // ]
+  | #r0 #rs0 whd in ⊢ (???%→?); #Htd >Htd #Hstar #IH whd in ⊢ (%→?); #Hfalse
+    lapply (IH Hfalse) -IH * #_ #IH %
+    [ normalize in ⊢ (%→?); #H destruct (H)
+    | #ls1 #c1 #rs1 #H destruct (H) >reverse_cons >associative_append @IH % ] ] ]
+qed.
+
+definition R_move_to_end_l ≝ 
+  λsig,int,outt.
+  (current ? int = None ? → outt = int) ∧
+  ∀ls,c,rs.int = midtape sig ls c rs → outt = mk_tape ? [ ] (None ?) (reverse ? ls@c::rs).
+  
+lemma wsem_move_to_end_l : ∀sig. move_to_end sig L ⊫ R_move_to_end_l sig.
+#sig #ta #k #outc #Hloop
+lapply (sem_while … (sem_mte_step sig L) … Hloop) //
+-Hloop * #tb * #Hstar @(star_ind_l ??????? Hstar) -Hstar
+[ * #Hcurtb #Houtc % /2/ #ls #c #rs #Htb >Htb in Hcurtb; normalize in ⊢ (%→?); #H destruct (H)
+| #tc #td * #ls * #c * #rs * #Htc >Htc cases ls
+  [ normalize in ⊢ (%→?); #Htd >Htd #Hstar #IH whd in ⊢ (%→?); #Hfalse
+    lapply (IH Hfalse) -IH * #Htd1 #_ %
+    [ normalize in ⊢ (%→?); #H destruct (H)
+    | #ls0 #c0 #rs0 #H destruct (H) >Htd1 // ]
+  | #l0 #ls0 whd in ⊢ (???%→?); #Htd >Htd #Hstar #IH whd in ⊢ (%→?); #Hfalse
+    lapply (IH Hfalse) -IH * #_ #IH %
+    [ normalize in ⊢ (%→?); #H destruct (H)
+    | #ls1 #c1 #rs1 #H destruct (H) >reverse_cons >associative_append @IH % ] ] ]
 qed.
