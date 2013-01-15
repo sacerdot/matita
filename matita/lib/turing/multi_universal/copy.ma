@@ -157,8 +157,6 @@ definition R_copy ≝
               (mk_tape sig (reverse sig rs1@x::ls) (option_hd sig rs2)
             (tail sig rs2)) src)
             (mk_tape sig (reverse sig rs1@x::ls0) (None sig) []) dst)).
-          
-axiom daemon : ∀P:Prop.P.
 
 lemma wsem_copy : ∀src,dst,sig,n.src ≠ dst → src < S n → dst < S n → 
   copy src dst sig n ⊫ R_copy src dst sig n.
@@ -179,84 +177,68 @@ lapply (sem_while … (sem_copy_step src dst sig n Hneq Hsrc Hdst) … Hloop) //
    >Hnth_src in Htd; >Hnth_dst -Hnth_src -Hnth_dst
    cases rs
     [(* the source tape is empty after the move *)
-     lapply (IH1 ?) [@daemon]
-     #Hout (* whd in match (tape_move ???); *) #Htemp %1 %{([])} %{rs0} % 
+     #Htd lapply (IH1 ?) 
+      [%1 >Htd >nth_change_vec_neq [2:@(not_to_not … Hneq) //] >nth_change_vec //]
+     #Hout (* whd in match (tape_move ???); *) %1 %{([])} %{rs0} % 
       [% [// | // ] 
       |whd in match (reverse ??); whd in match (reverse ??);
-       >Hout >Htemp @eq_f2 // cases rs0 //
+       >Hout >Htd @eq_f2 // cases rs0 //
       ]
     |#c1 #tl1 cases rs0
       [(* the dst tape is empty after the move *)
-       lapply (IH1 ?) [@daemon]
-       #Hout (* whd in match (tape_move ???); *) #Htemp %2 %{[ ]} %{(c1::tl1)} % 
+       #Htd lapply (IH1 ?) [%2 >Htd >nth_change_vec //] 
+       #Hout (* whd in match (tape_move ???); *) %2 %{[ ]} %{(c1::tl1)} % 
         [% [// | // ] 
         |whd in match (reverse ??); whd in match (reverse ??);
-         >Hout >Htemp @eq_f2 // 
+         >Hout >Htd @eq_f2 // 
         ]
       |#c2 #tl2 whd in match (tape_move_mono ???); whd in match (tape_move_mono ???);
        #Htd
-    
-
-  
-  [ >Hci >Hcj * [ * 
-    [ * #H @False_ind @H % | #H destruct (H)] | #H destruct (H)] 
-  | #ls #c0 #rs #ls0 #rs0 cases rs
-    [ -IH2 #Hnthi #Hnthj % %2 %{rs0} % [%]
-      >Hnthi in Hd; #Hd >Hd in IH1; #IH1 >IH1
-      [| % %2 >nth_change_vec_neq [|@sym_not_eq //] >nth_change_vec // % ]
-      >Hnthj cases rs0 [| #r1 #rs1 ] %
-    | #r1 #rs1 #Hnthi cases rs0
-      [ -IH2 #Hnthj % % %{(r1::rs1)} % [%]
-        >Hnthj in Hd; #Hd >Hd in IH1; #IH1 >IH1
-        [| %2 >nth_change_vec // ]
-        >nth_change_vec //
-      | #r2 #rs2 #Hnthj lapply IH2; >Hd in IH1; >Hnthi >Hnthj
-        >nth_change_vec //
-        >nth_change_vec_neq [| @sym_not_eq // ] >nth_change_vec //
-        cases (true_or_false (r1 == r2)) #Hr1r2
-        [ >(\P Hr1r2) #_ #IH2 cases (IH2 … (refl ??) (refl ??)) [ *
-          [ * #rs' * #Hrs1 #Hcurout_j % % %{rs'}
-            >Hrs1 >Hcurout_j normalize % //
-          | * #rs0' * #Hrs2 #Hcurout_i % %2 %{rs0'}
-            >Hrs2 >Hcurout_i % //
-            >change_vec_commute // >change_vec_change_vec
-            >change_vec_commute [|@sym_not_eq//] >change_vec_change_vec
-            >reverse_cons >associative_append >associative_append % ]
-          | * #xs * #ci * #cj * #rs' * #rs0' * * * #Hcicj #Hrs1 #Hrs2 
-            >change_vec_commute // >change_vec_change_vec 
-            >change_vec_commute [| @sym_not_eq ] // >change_vec_change_vec 
-            #Houtc %2 %{(r2::xs)} %{ci} %{cj} %{rs'} %{rs0'}
-            % [ % [ % [ // | >Hrs1 // ] | >Hrs2 // ] 
-              | >reverse_cons >associative_append >associative_append >Houtc % ] ]
-        | lapply (\Pf Hr1r2) -Hr1r2 #Hr1r2 #IH1 #_ %2
-          >IH1 [| % % normalize @(not_to_not … Hr1r2) #H destruct (H) % ]
-          %{[]} %{r1} %{r2} %{rs1} %{rs2} % [ % [ % /2/ | % ] | % ] ]]]]]
+       cut (nth src (tape sig) td (niltape sig)=midtape sig (x::ls) c1 tl1)
+         [>Htd >nth_change_vec_neq [2:@(not_to_not … Hneq) //] @nth_change_vec //]
+       #Hsrc_td
+       cut (nth dst (tape sig) td (niltape sig)=midtape sig (x::ls0) c2 tl2)
+         [>Htd @nth_change_vec //]
+       #Hdst_td cases (IH2 … Hsrc_td Hdst_td) -Hsrc_td -Hdst_td
+        [* #rs01 * #rs02 * * #H1 #H2 #H3 %1
+         %{(c2::rs01)} %{rs02} % [% [@eq_f //|normalize @eq_f @H2]]
+         >Htd in H3; >change_vec_commute // >change_vec_change_vec
+         >change_vec_commute [2:@(not_to_not … Hneq) //] >change_vec_change_vec 
+         #H >reverse_cons >associative_append >associative_append @H 
+        |* #rs11 * #rs12 * * #H1 #H2 #H3 %2
+         %{(c1::rs11)} %{rs12} % [% [@eq_f //|normalize @eq_f @H2]]
+         >Htd in H3; >change_vec_commute // >change_vec_change_vec
+         >change_vec_commute [2:@(not_to_not … Hneq) //] >change_vec_change_vec 
+         #H >reverse_cons >associative_append >associative_append @H 
+        ]
+      ]
+    ]
+  ]
 qed.
+     
  
-lemma terminate_compare :  ∀i,j,sig,n,t.
-  i ≠ j → i < S n → j < S n → 
-  compare i j sig n ↓ t.
-#i #j #sig #n #t #Hneq #Hi #Hj
-@(terminate_while … (sem_comp_step …)) //
-<(change_vec_same … t i (niltape ?))
-cases (nth i (tape sig) t (niltape ?))
-[ % #t1 * #x * * >nth_change_vec // normalize in ⊢ (%→?); #Hx destruct
-|2,3: #a0 #al0 % #t1 * #x * * >nth_change_vec // normalize in ⊢ (%→?); #Hx destruct
+lemma terminate_copy :  ∀src,dst,sig,n,t.
+  src ≠ dst → src < S n → dst < S n → copy src dst sig n ↓ t.
+#src #dst #sig #n #t #Hneq #Hsrc #Hdts
+@(terminate_while … (sem_copy_step …)) //
+<(change_vec_same … t src (niltape ?))
+cases (nth src (tape sig) t (niltape ?))
+[ % #t1 * #x * #y * * >nth_change_vec // normalize in ⊢ (%→?); #Hx destruct
+|2,3: #a0 #al0 % #t1 * #x * #y * * >nth_change_vec // normalize in ⊢ (%→?); #Hx destruct
 | #ls #c #rs lapply c -c lapply ls -ls lapply t -t elim rs
-  [#t #ls #c % #t1 * #x * * >nth_change_vec // normalize in ⊢ (%→?);
+  [#t #ls #c % #t1 * #x * #y * * >nth_change_vec // normalize in ⊢ (%→?);
    #H1 destruct (H1) #_ >change_vec_change_vec #Ht1 % 
-   #t2 * #x0 * * >Ht1 >nth_change_vec_neq [|@sym_not_eq //]
+   #t2 * #x0 * #y0 * * >Ht1 >nth_change_vec_neq [|@sym_not_eq //]
    >nth_change_vec // normalize in ⊢ (%→?); #H destruct (H)
-  |#r0 #rs0 #IH #t #ls #c % #t1 * #x * * >nth_change_vec //
+  |#r0 #rs0 #IH #t #ls #c % #t1 * #x * #y * * >nth_change_vec //
    normalize in ⊢ (%→?); #H destruct (H) #Hcur
    >change_vec_change_vec >change_vec_commute // #Ht1 >Ht1 @IH
   ]
 ]
 qed.
 
-lemma sem_compare : ∀i,j,sig,n.
-  i ≠ j → i < S n → j < S n → 
-  compare i j sig n ⊨ R_compare i j sig n.
-#i #j #sig #n #Hneq #Hi #Hj @WRealize_to_Realize 
-  [/2/| @wsem_compare // ]
+lemma sem_copy : ∀src,dst,sig,n.
+  src ≠ dst → src < S n → dst < S n → 
+  copy src dst sig n ⊨ R_copy src dst sig n.
+#i #j #sig #n #Hneq #Hi #Hj @WRealize_to_Realize [/2/| @wsem_copy // ]
 qed.
