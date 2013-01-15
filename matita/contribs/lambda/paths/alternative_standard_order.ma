@@ -12,20 +12,37 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "terms/relocation.ma".
+include "paths/standard_precedence.ma".
 
-(* SIZE *********************************************************************)
+(* ALTERNATIVE STANDARD ORDER ***********************************************)
 
-(* Note: this gives the number of abstractions and applications in M *)
-let rec size M on M ≝ match M with
-[ VRef i   ⇒ 0
-| Abst A   ⇒ size A + 1
-| Appl B A ⇒ (size B) + (size A) + 1
-].
+(* Note: this is p < q *)
+definition slt: relation path ≝ TC … sprec.
 
-interpretation "term size"
-   'card M = (size M).
+interpretation "standard 'less than' on paths"
+   'lt p q = (slt p q).
 
-lemma size_lift: ∀h,M,d. |↑[d, h] M| = |M|.
-#h #M elim M -M normalize //
+lemma slt_step_rc: ∀p,q. p ≺ q → p < q.
+/2 width=1/
+qed.
+
+lemma slt_nil: ∀c,p. ◊ < c::p.
+/2 width=1/
+qed.
+
+lemma slt_skip: dx::◊ < ◊.
+/2 width=1/
+qed.
+
+lemma slt_comp: ∀c,p,q. p < q → c::p < c::q.
+#c #p #q #H elim H -q /3 width=1/ /3 width=3/
+qed.
+
+theorem slt_trans: transitive … slt.
+/2 width=3/
+qed-.
+
+lemma slt_refl: ∀p. p < p.
+#p elim p -p /2 width=1/
+@(slt_trans … (dx::◊)) //
 qed.

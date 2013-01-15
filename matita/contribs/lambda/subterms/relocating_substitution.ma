@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "subterms/lift.ma".
+include "subterms/relocation.ma".
 
-(* DELIFTING SUBSTITUTION ***************************************************)
+(* RELOCATING SUBSTITUTION **************************************************)
 
 (* Policy: depth (level) metavariables: d, e (as for lift) *)
 let rec sdsubst G d F on F ≝ match F with
@@ -23,7 +23,7 @@ let rec sdsubst G d F on F ≝ match F with
 | SAppl b V T ⇒ {b}@ (sdsubst G d V). (sdsubst G d T)
 ].
 
-interpretation "delifting substitution for subterms"
+interpretation "relocating substitution for subterms"
    'DSubst G d F = (sdsubst G d F).
 
 lemma sdsubst_vref_lt: ∀b,i,d,G. i < d → [d ↙ G] {b}#i = {b}#i.
@@ -141,13 +141,13 @@ definition sdsubstable: predicate (relation subterms) ≝ λR.
 lemma star_sdsubstable_dx: ∀R. sdsubstable_dx R → sdsubstable_dx (star … R).
 #R #HR #G #F1 #F2 #H elim H -F2 // /3 width=3/
 qed.
-
+*)
 lemma lstar_sdsubstable_dx: ∀S,R. (∀a. sdsubstable_dx (R a)) →
                             ∀l. sdsubstable_dx (lstar S … R l).
 #S #R #HR #l #G #F1 #F2 #H
 @(lstar_ind_l ????????? H) -l -F1 // /3 width=3/
 qed.
-
+(*
 lemma star_sdsubstable: ∀R. reflexive ? R →
                         sdsubstable R → sdsubstable (star … R).
 #R #H1R #H2 #G1 #G2 #H elim H -G2 /3 width=1/ /3 width=5/

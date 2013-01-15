@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "terms/lift.ma".
+include "terms/relocation.ma".
 
-(* DELIFTING SUBSTITUTION ***************************************************)
+(* RELOCATING SUBSTITUTION **************************************************)
 
 (* Policy: depth (level) metavariables: d, e (as for lift) *)
 let rec dsubst N d M on M ≝ match M with
@@ -23,7 +23,7 @@ let rec dsubst N d M on M ≝ match M with
 | Appl B A ⇒ @ (dsubst N d B). (dsubst N d A)
 ].
 
-interpretation "delifting substitution"
+interpretation "relocating substitution"
    'DSubst N d M = (dsubst N d M).
 
 lemma dsubst_vref_lt: ∀i,d,N. i < d → [d ↙ N] #i = #i.

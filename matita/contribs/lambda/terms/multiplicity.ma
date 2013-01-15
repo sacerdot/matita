@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "terms/delifting_substitution.ma".
+include "terms/relocating_substitution.ma".
 
 (* MULTIPLICITY *************************************************************)
 

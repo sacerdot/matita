@@ -236,7 +236,7 @@ lemma star_deliftable_sn: ∀R. sdeliftable_sn R → sdeliftable_sn (star … R)
 elim (IHG1 … HFG1) -G1 #F #HF1 #HFG
 elim (HR … HG2 … HFG) -G /3 width=3/
 qed-.
-
+*)
 lemma lstar_sliftable: ∀S,R. (∀a. sliftable (R a)) →
                        ∀l. sliftable (lstar S … R l).
 #S #R #HR #l #h #F1 #F2 #H
@@ -251,4 +251,3 @@ lemma lstar_sdeliftable_sn: ∀S,R. (∀a. sdeliftable_sn (R a)) →
 elim (HR … HG1 … HFG1) -G1 #F #HF1 #HFG
 elim (IHG2 … HFG) -G /3 width=3/
 qed-.
-*)

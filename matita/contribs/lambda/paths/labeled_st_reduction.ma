@@ -12,8 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "subterms/delifting_substitution.ma".
-include "subterms/projections.ma".
+include "subterms/booleanize.ma".
 include "paths/standard_order.ma".
 
 (* PATH-LABELED STANDARD REDUCTION ON SUBTERMS (SINGLE STEP) ****************)
