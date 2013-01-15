@@ -11,14 +11,14 @@ S         : arbitrary small type
 T, U, V, W: subset of subterms
 
 a         : arbitrary element
-b         : boolean mark
-c         : pointer step
+b,c       : boolean mark
 d, e      : variable reference level
+f         : arbitrary function
 h         : relocation height
 i, j      : variable reference depth (de Bruijn index)
 k         : relocation height
 l         : arbitrary list
 m, n      : measures on terms
+o         : pointer step
 p, q      : pointer
 r, s      : pointer sequence
-

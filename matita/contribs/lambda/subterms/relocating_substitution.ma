@@ -132,22 +132,31 @@ lapply (ltn_to_ltO … Hd21) #Hd1
 >sdsubst_sdsubst_ge in ⊢ (???%); /2 width=1/ <plus_minus_m_m //
 qed.
 
+definition sdsubstable_f_dx: ∀S:Type[0]. (S → ?) → predicate (relation subterms) ≝ λS,f,R.
+                             ∀G,F1,F2. R F1 F2 → ∀d. R ([d ↙ (f G)] F1) ([d ↙ (f G)] F2).
+
+lemma lstar_sdsubstable_f_dx: ∀S1,f,S2,R. (∀a. sdsubstable_f_dx S1 f (R a)) →
+                              ∀l. sdsubstable_f_dx S1 f (lstar S2 … R l).
+#S1 #f #S2 #R #HR #l #G #F1 #F2 #H
+@(lstar_ind_l ????????? H) -l -F1 // /3 width=3/
+qed.
+(*
 definition sdsubstable_dx: predicate (relation subterms) ≝ λR.
                            ∀G,F1,F2. R F1 F2 → ∀d. R ([d ↙ G] F1) ([d ↙ G] F2).
-(*
+
 definition sdsubstable: predicate (relation subterms) ≝ λR.
                         ∀G1,G2. R G1 G2 → ∀F1,F2. R F1 F2 → ∀d. R ([d ↙ G1] F1) ([d ↙ G2] F2).
 
 lemma star_sdsubstable_dx: ∀R. sdsubstable_dx R → sdsubstable_dx (star … R).
 #R #HR #G #F1 #F2 #H elim H -F2 // /3 width=3/
 qed.
-*)
+
 lemma lstar_sdsubstable_dx: ∀S,R. (∀a. sdsubstable_dx (R a)) →
                             ∀l. sdsubstable_dx (lstar S … R l).
 #S #R #HR #l #G #F1 #F2 #H
 @(lstar_ind_l ????????? H) -l -F1 // /3 width=3/
 qed.
-(*
+
 lemma star_sdsubstable: ∀R. reflexive ? R →
                         sdsubstable R → sdsubstable (star … R).
 #R #H1R #H2 #G1 #G2 #H elim H -G2 /3 width=1/ /3 width=5/

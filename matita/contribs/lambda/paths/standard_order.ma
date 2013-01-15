@@ -46,7 +46,7 @@ lemma sle_nil: ∀p. ◊ ≤ p.
 * // /2 width=1/
 qed.
 
-lemma sle_comp: ∀p1,p2. p1 ≤ p2 → ∀c. (c::p1) ≤ (c::p2).
+lemma sle_comp: ∀p1,p2. p1 ≤ p2 → ∀o. (o::p1) ≤ (o::p2).
 #p1 #p2 #H elim H -p2 // /3 width=3/
 qed.
 
@@ -67,8 +67,8 @@ qed.
 lemma sle_dichotomy: ∀p1,p2:path. p1 ≤ p2 ∨ p2 ≤ p1.
 #p1 elim p1 -p1
 [ * /2 width=1/
-| #c1 #p1 #IHp1 * /2 width=1/
-  * #p2 cases c1 -c1 /2 width=1/
+| #o1 #p1 #IHp1 * /2 width=1/
+  * #p2 cases o1 -o1 /2 width=1/
   elim (IHp1 p2) -IHp1 /3 width=1/
 ]
 qed-.

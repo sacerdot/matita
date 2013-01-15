@@ -20,8 +20,8 @@ include "paths/standard_order.ma".
 (* Note: to us, a "standard" computation contracts redexes in non-decreasing positions *)
 definition is_standard: predicate trace ≝ Allr … sle.
 
-lemma is_standard_compatible: ∀c,s. is_standard s → is_standard (c:::s).
-#c #s elim s -s // #p * //
+lemma is_standard_compatible: ∀o,s. is_standard s → is_standard (o:::s).
+#o #s elim s -s // #p * //
 #q #s #IHs * /3 width=1/
 qed.
 
@@ -50,3 +50,7 @@ theorem is_whd_is_standard_trans: ∀r. is_whd r → ∀s. is_standard s → is_
 | #q #r #IHr * /3 width=1/
 ]
 qed.
+
+lemma is_standard_fwd_append_sn: ∀s,r. is_standard (s@r) → is_standard s.
+/2 width=2 by Allr_fwd_append_sn/
+qed-.

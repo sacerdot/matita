@@ -15,43 +15,47 @@
 include "subterms/carrier.ma".
 include "subterms/boolean.ma".
 
-(* BOOLEANIZE (EMPTY OR FILL)  **********************************************)
+(* BOOLEANIZED SUBSET (EMPTY OR FULL)  **************************************)
 
-definition booleanize: bool → subterms → subterms ≝
+definition booleanized: bool → subterms → subterms ≝
    λb,F. {b}⇑⇓F.
 
 interpretation "make boolean (subterms)"
-   'ProjectSame b F = (booleanize b F).
+   'ProjectSame b F = (booleanized b F).
 
 notation "hvbox( { term 46 b } ⇕ break term 46 F)"
    non associative with precedence 46
    for @{ 'ProjectSame $b $F }.
 
-lemma booleanize_inv_vref: ∀j,b0,b,F. {b}⇕ F = {b0}#j →
-                           ∃∃b1. b = b0 & F = {b1}#j.
-#j #b0 #b #F #H
+lemma booleanized_inv_vref: ∀j,c,b,F. {b}⇕ F = {c}#j →
+                            ∃∃b1. b = c & F = {b1}#j.
+#j #c #b #F #H
 elim (boolean_inv_vref … H) -H #H0 #H
 elim (carrier_inv_vref … H) -H /2 width=2/
 qed-.
 
-lemma booleanize_inv_abst: ∀U,b0,b,F. {b}⇕ F = {b0}𝛌.U →
-                           ∃∃b1,T. b = b0 & {b}⇕T = U & F = {b1}𝛌.T.
-#U #b0 #b #F #H
+lemma booleanized_inv_abst: ∀U,c,b,F. {b}⇕ F = {c}𝛌.U →
+                            ∃∃b1,T. b = c & {b}⇕T = U & F = {b1}𝛌.T.
+#U #c #b #F #H
 elim (boolean_inv_abst … H) -H #C #H0 #H1 #H
 elim (carrier_inv_abst … H) -H #b1 #U1 #H3 destruct /2 width=4/
 qed-.
 
-lemma booleanize_inv_appl: ∀W,U,b0,b,F. {b}⇕ F = {b0}@W.U →
-                           ∃∃b1,V,T. b = b0 & {b}⇕V = W & {b}⇕T = U & F = {b1}@V.T.
-#W #U #b0 #b #F #H
+lemma booleanized_inv_appl: ∀W,U,c,b,F. {b}⇕ F = {c}@W.U →
+                            ∃∃b1,V,T. b = c & {b}⇕V = W & {b}⇕T = U & F = {b1}@V.T.
+#W #U #c #b #F #H
 elim (boolean_inv_appl … H) -H #D #C #H0 #H1 #H2 #H
 elim (carrier_inv_appl … H) -H #b1 #W1 #U1 #H3 #H4 destruct /2 width=6/
 qed-.
-(*
-lemma booleanize_lift: ∀b,h,F,d. {b}⇕ ↑[d, h] F = ↑[d, h] {b}⇕ F.
-#b #h #M elim M -M normalize //
+
+lemma booleanized_booleanized: ∀c,b,F. {b}⇕ {c}⇕ F = {b}⇕ F.
+normalize //
 qed.
 
-lemma booleanize_dsubst: ∀b,G,F,d. {b}⇕ [d ↙ G] F = [d ↙ {b}⇕ G] {b}⇕ F.
-#b #N #M elim M -M [2,3: normalize // ]
-*)
+lemma booleanized_lift: ∀b,h,F,d. {b}⇕ ↑[d, h] F = ↑[d, h] {b}⇕ F.
+normalize //
+qed.
+
+lemma booleanized_dsubst: ∀b,G,F,d. {b}⇕ [d ↙ G] F = [d ↙ {b}⇕ G] {b}⇕ F.
+normalize //
+qed.

@@ -16,7 +16,7 @@ include "terms/term.ma".
 
 (* PATH *********************************************************************)
 
-(* Policy: path step metavariables: c *)
+(* Policy: path step metavariables: o *)
 (* Note: this is a step of a path in the tree representation of a term:
          rc (rectus)  : proceed on the argument of an abstraction
          sn (sinister): proceed on the left argument of an application
@@ -28,7 +28,7 @@ inductive step: Type[0] ≝
 | dx: step
 .
 
-definition is_dx: predicate step ≝ λc. dx = c.
+definition is_dx: predicate step ≝ λo. dx = o.
 
 (* Policy: path metavariables: p, q *)
 (* Note: this is a path in the tree representation of a term, heading to a redex *)

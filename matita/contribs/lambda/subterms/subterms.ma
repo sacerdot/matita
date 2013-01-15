@@ -16,7 +16,7 @@ include "background/preamble.ma".
 
 (* SUBSETS OF SUBTERMS ******************************************************)
 
-(* Policy: boolean marks metavariables: b
+(* Policy: boolean marks metavariables: b,c
            subterms metavariables: F,G,T,U,V,W
 *)
 (* Note: each subterm is marked with true if it belongs to the subset *)

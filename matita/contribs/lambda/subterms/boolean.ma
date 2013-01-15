@@ -12,8 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "terms/relocating_substitution.ma".
-include "subterms/relocating_substitution.ma".
+include "subterms/carrier.ma".
 
 (* BOOLEAN (EMPTY OR FULL) SUBSET *******************************************)
 
@@ -30,26 +29,26 @@ notation "hvbox( { term 46 b } ⇑ break term 46 M)"
    non associative with precedence 46
    for @{ 'ProjectUp $b $M }.
 
-lemma boolean_inv_vref: ∀j,b0,b,M. {b}⇑ M = {b0}#j → b = b0 ∧ M = #j.
-#j #b0 #b * normalize
+lemma boolean_inv_vref: ∀j,c,b,M. {b}⇑ M = {c}#j → b = c ∧ M = #j.
+#j #c #b * normalize
 [ #i #H destruct /2 width=1/
 | #A #H destruct
 | #B #A #H destruct
 ]
 qed-.
 
-lemma boolean_inv_abst: ∀U,b0,b,M. {b}⇑ M = {b0}𝛌.U →
-                        ∃∃C. b = b0 & {b}⇑C = U & M = 𝛌.C.
-#U #b0 #b * normalize
+lemma boolean_inv_abst: ∀U,c,b,M. {b}⇑ M = {c}𝛌.U →
+                        ∃∃C. b = c & {b}⇑C = U & M = 𝛌.C.
+#U #c #b * normalize
 [ #i #H destruct
 | #A #H destruct /2 width=3/
 | #B #A #H destruct
 ]
 qed-.
 
-lemma boolean_inv_appl: ∀W,U,b0,b,M. {b}⇑ M = {b0}@W.U →
-                        ∃∃D,C. b = b0 & {b}⇑D = W & {b}⇑C = U & M = @D.C.
-#W #U #b0 #b * normalize
+lemma boolean_inv_appl: ∀W,U,c,b,M. {b}⇑ M = {c}@W.U →
+                        ∃∃D,C. b = c & {b}⇑D = W & {b}⇑C = U & M = @D.C.
+#W #U #c #b * normalize
 [ #i #H destruct
 | #A #H destruct
 | #B #A #H destruct /2 width=5/
@@ -67,4 +66,8 @@ lemma boolean_dsubst: ∀b,N,M,d. {b}⇑ [d ↙ N] M = [d ↙ {b}⇑ N] {b}⇑ M
 | destruct normalize //
 | >(sdsubst_vref_gt … Hid) >(dsubst_vref_gt … Hid) //
 ]
+qed.
+
+lemma carrier_boolean: ∀b,M. ⇓ {b}⇑ M = M.
+#b #M elim M -M normalize //
 qed.

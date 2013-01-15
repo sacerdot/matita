@@ -26,7 +26,7 @@ lemma slt_step_rc: ∀p,q. p ≺ q → p < q.
 /2 width=1/
 qed.
 
-lemma slt_nil: ∀c,p. ◊ < c::p.
+lemma slt_nil: ∀o,p. ◊ < o::p.
 /2 width=1/
 qed.
 
@@ -34,8 +34,8 @@ lemma slt_skip: dx::◊ < ◊.
 /2 width=1/
 qed.
 
-lemma slt_comp: ∀c,p,q. p < q → c::p < c::q.
-#c #p #q #H elim H -q /3 width=1/ /3 width=3/
+lemma slt_comp: ∀o,p,q. p < q → o::p < o::q.
+#o #p #q #H elim H -q /3 width=1/ /3 width=3/
 qed.
 
 theorem slt_trans: transitive … slt.

@@ -41,8 +41,8 @@ lemma slift_id: ∀E,d. ↑[d, 0] E = E.
 ]
 qed.
 
-lemma slift_inv_vref_lt: ∀b0,j,d. j < d → ∀h,E. ↑[d, h] E = {b0}#j → E = {b0}#j.
-#b0 #j #d #Hjd #h * normalize
+lemma slift_inv_vref_lt: ∀c,j,d. j < d → ∀h,E. ↑[d, h] E = {c}#j → E = {c}#j.
+#c #j #d #Hjd #h * normalize
 [ #b #i elim (lt_or_eq_or_gt i d) #Hid
   [ >(tri_lt ???? … Hid) -Hid -Hjd //
   | #H destruct >tri_eq in Hjd; #H
@@ -56,9 +56,9 @@ lemma slift_inv_vref_lt: ∀b0,j,d. j < d → ∀h,E. ↑[d, h] E = {b0}#j → E
 ]
 qed.
 
-lemma slift_inv_vref_ge: ∀b0,j,d. d ≤ j → ∀h,E. ↑[d, h] E = {b0}#j →
-                         d + h ≤ j ∧ E = {b0}#(j-h).
-#b0 #j #d #Hdj #h * normalize
+lemma slift_inv_vref_ge: ∀c,j,d. d ≤ j → ∀h,E. ↑[d, h] E = {c}#j →
+                         d + h ≤ j ∧ E = {c}#(j-h).
+#c #j #d #Hdj #h * normalize
 [ #b #i elim (lt_or_eq_or_gt i d) #Hid
   [ >(tri_lt ???? … Hid) #H destruct
     lapply (le_to_lt_to_lt … Hdj Hid) -Hdj -Hid #H
@@ -71,29 +71,29 @@ lemma slift_inv_vref_ge: ∀b0,j,d. d ≤ j → ∀h,E. ↑[d, h] E = {b0}#j →
 ]
 qed-.
 
-lemma slift_inv_vref_be: ∀b0,j,d,h. d ≤ j → j < d + h → ∀E. ↑[d, h] E = {b0}#j → ⊥.
-#b0 #j #d #h #Hdj #Hjdh #E #H elim (slift_inv_vref_ge … H) -H // -Hdj #Hdhj #_ -E
+lemma slift_inv_vref_be: ∀c,j,d,h. d ≤ j → j < d + h → ∀E. ↑[d, h] E = {c}#j → ⊥.
+#c #j #d #h #Hdj #Hjdh #E #H elim (slift_inv_vref_ge … H) -H // -Hdj #Hdhj #_ -E
 lapply (lt_to_le_to_lt … Hjdh Hdhj) -d -h #H
 elim (lt_refl_false … H)
 qed-.
 
-lemma slift_inv_vref_ge_plus: ∀b0,j,d,h. d + h ≤ j →
-                              ∀E. ↑[d, h] E = {b0}#j → E = {b0}#(j-h).
-#b0 #j #d #h #Hdhj #E #H elim (slift_inv_vref_ge … H) -H // -E /2 width=2/
+lemma slift_inv_vref_ge_plus: ∀c,j,d,h. d + h ≤ j →
+                              ∀E. ↑[d, h] E = {c}#j → E = {c}#(j-h).
+#c #j #d #h #Hdhj #E #H elim (slift_inv_vref_ge … H) -H // -E /2 width=2/
 qed.
 
-lemma slift_inv_abst: ∀b0,U,d,h,E. ↑[d, h] E = {b0}𝛌.U →
-                      ∃∃T. ↑[d+1, h] T = U & E = {b0}𝛌.T.
-#b0 #U #d #h * normalize
+lemma slift_inv_abst: ∀c,U,d,h,E. ↑[d, h] E = {c}𝛌.U →
+                      ∃∃T. ↑[d+1, h] T = U & E = {c}𝛌.T.
+#c #U #d #h * normalize
 [ #b #i #H destruct
 | #b #T #H destruct /2 width=3/
 | #b #V #T #H destruct
 ]
 qed-.
 
-lemma slift_inv_appl: ∀b0,W,U,d,h,E. ↑[d, h] E = {b0}@W.U →
-                      ∃∃V,T. ↑[d, h] V = W & ↑[d, h] T = U & E = {b0}@V.T.
-#b0 #W #U #d #h * normalize
+lemma slift_inv_appl: ∀c,W,U,d,h,E. ↑[d, h] E = {c}@W.U →
+                      ∃∃V,T. ↑[d, h] V = W & ↑[d, h] T = U & E = {c}@V.T.
+#c #W #U #d #h * normalize
 [ #b #i #H destruct
 | #b #T #H destruct
 | #b #V #T #H destruct /2 width=5/

@@ -445,11 +445,17 @@ lemma All_nth : ∀A,P,n,l.
   ]
 ] qed.
 
+(**************************** Allr ******************************)
+
 let rec Allr (A:Type[0]) (R:relation A) (l:list A) on l : Prop ≝
 match l with
 [ nil       ⇒ True
 | cons a1 l ⇒ match l with [ nil ⇒ True | cons a2 _ ⇒ R a1 a2 ∧ Allr A R l ]
 ].
+
+lemma Allr_fwd_append_sn: ∀A,R,l1,l2. Allr A R (l1@l2) → Allr A R l1.
+#A #R #l1 elim l1 -l1 // #a1 * // #a2 #l1 #IHl1 #l2 * /3 width=2/
+qed-.
 
 (**************************** Exists *******************************)
 
