@@ -64,8 +64,8 @@ definition obj_to_cfg ≝
      inject_TM ? (write FSUnialpha (bit false)) 2 cfg)
     (inject_TM ? (write FSUnialpha (bit true)) 2 cfg ·
      inject_TM ? (move_r FSUnialpha) 2 cfg ·
-     copy_step obj cfg FSUnialpha 2) tc_true ·
-     inject_TM ? (move_l FSUnialpha) 2 cfg) ·
+     copy_step obj cfg FSUnialpha 2) tc_true) ·
+  inject_TM ? (move_l FSUnialpha) 2 cfg ·
   inject_TM ? (move_to_end FSUnialpha L) 2 cfg ·
   inject_TM ? (move_r FSUnialpha) 2 cfg.
   
@@ -81,49 +81,48 @@ definition R_obj_to_cfg ≝ λt1,t2:Vector (tape FSUnialpha) 3.
            (tail ? (reverse ? (bit false :: bit false::ls)))) cfg).
            
 axiom sem_move_to_end_l : ∀sig. move_to_end sig L ⊨ R_move_to_end_l sig.
+axiom accRealize_to_Realize :
+  ∀sig,n.∀M:mTM sig n.∀Rtrue,Rfalse,acc.
+  M ⊨ [ acc: Rtrue, Rfalse ] →  M ⊨ Rtrue ∪ Rfalse.
+  
+lemma eq_mk_tape_rightof :
+ ∀alpha,a,al.mk_tape alpha (a::al) (None ?) [ ] = rightof ? a al.
+#alpha #a #al %
+qed.
 
 lemma sem_obj_to_cfg : obj_to_cfg ⊨  R_obj_to_cfg.
 @(sem_seq_app FSUnialpha 2 ????? (sem_move_multi ? 2 cfg L ?)
-  (sem_seq_app ?? ????? (sem_move_multi ? 2 cfg L ?)
-   (sem_seq_app ???????    
-    (sem_seq_app ???????
-     (sem_if ? 2 ????????
-      (sem_test_null_multi ?? obj ?)
-      (sem_seq_app ??????? (sem_inject ???? cfg ? (sem_write FSUnialpha (bit false)))
-       (sem_seq_app ??????? (sem_inject ???? cfg ? (sem_move_r ?)) 
-        (sem_inject ???? cfg ? (sem_write FSUnialpha (bit false))) ?) ?)
-      ?)
-     ??) ??) ?) ?)
-[|||||||||||||||| @     
-        
-        ??) ??) ??) ?) ?)
-       ?) ?) ?) ?)
-
-
-@(sem_seq_app FSUnialpha 2 ????? (sem_move_multi ? 2 cfg L ?) ??)
-[||
-@(sem_seq_app ?? ????? (sem_move_multi ? 2 cfg L ?) ??)
-[|| @sem_seq_app
-[|| @sem_seq_app
-[|| @(sem_if ? 2 ???????? (sem_test_null_multi ?? obj ?))
-[|||@(sem_seq_app ??????? (sem_inject ???? cfg ? (sem_write FSUnialpha (bit false))) ?)
-[||@(sem_seq_app ??????? (sem_inject ???? cfg ? (sem_move_r ?)) 
-       (sem_inject ???? cfg ? (sem_write FSUnialpha (bit false))) ?)
-[||      
-
-@(sem_seq_app FSUnialpha 2 ????? (sem_move_multi ? 2 cfg L ?)
-  (sem_seq_app ?? ????? (sem_move_multi ? 2 cfg L ?)
-   (sem_seq_app ???????
-    (sem_if ? 2 ????????
+  (sem_seq ?????? (sem_move_multi ? 2 cfg L ?)
+   (sem_seq ??????
+    (sem_if ??????????
      (sem_test_null_multi ?? obj ?)
-     (sem_seq_app ??????? (sem_inject ???? cfg ? (sem_write FSUnialpha (bit false)))     
-      (sem_seq_app ??????? (sem_inject ???? cfg ? (sem_move_r ?)) 
-       (sem_inject ???? cfg ? (sem_write FSUnialpha (bit false))) ?) ?)
-       ?)
-    (sem_seq_app ??????? (sem_inject ???? cfg ? (sem_move_to_end_l ?))
-     (sem_inject ???? cfg ? (sem_move_r ?)) ?) ?) ?) ?)
-      
+     (sem_seq ?????? (sem_inject ???? cfg ? (sem_write FSUnialpha (bit false)))
+      (sem_seq ?????? (sem_inject ???? cfg ? (sem_move_r ?)) 
+       (sem_inject ???? cfg ? (sem_write FSUnialpha (bit false)))))
+      (sem_seq ?????? (sem_inject ???? cfg ? (sem_write FSUnialpha (bit true)))
+       (sem_seq ?????? (sem_inject ???? cfg ? (sem_move_r ?)) (accRealize_to_Realize … (sem_copy_step …)))))
+     (sem_seq ?????? (sem_inject ???? cfg ? (sem_move_l ?))
+      (sem_seq ?????? (sem_inject ???? cfg ? (sem_move_to_end_l ?))
+       (sem_inject ???? cfg ? (sem_move_r ?))))))) //
+#ta #tb *
+#tc * whd in ⊢ (%→?); #Htc *
+#td * whd in ⊢ (%→?); #Htd *
+#te * *
+[ * #tf * * #Hcurtd #Htf *
+  #tg * * whd in ⊢ (%→?); #Htg1 #Htg2 *
+  #th * * * whd in ⊢ (%→%→?); #Hth1 #Hth2 #Hth3 * whd in ⊢ (%→?);
+  #Hte1 #Hte2 *
+  #tj * * * #Htj1 #Htj2 #Htj3 *
+  #tk * * * #Htk1 #Htk2 #Htk3 * whd in ⊢ (%→?);
+  #Htb1 #Htb2 #c #opt_mark #ls #Hta1 %
+  [ #lso #x #rso #Hta2 >Hta1 in Htc; >eq_mk_tape_rightof whd in match (tape_move ???); #Htc
+    >Htc in Htd; >nth_change_vec // >change_vec_change_vec
+    change with (midtape ????) in match (tape_move ???); #Htd >Htd in Htf; #Htf
+    destruct (Htf)
 
+
+       
+       
 lemma wsem_copy : ∀src,dst,sig,n.src ≠ dst → src < S n → dst < S n → 
   copy src dst sig n ⊫ R_copy src dst sig n.
 #src #dst #sig #n #Hneq #Hsrc #Hdst #ta #k #outc #Hloop
