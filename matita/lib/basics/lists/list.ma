@@ -445,6 +445,17 @@ lemma All_nth : ∀A,P,n,l.
   ]
 ] qed.
 
+lemma All_append: ∀A,P,l1,l2. All A P l1 → All A P l2 → All A P (l1@l2).
+#A #P #l1 elim l1 -l1 //
+#a #l1 #IHl1 #l2 * /3 width=1/
+qed.
+
+lemma All_inv_append: ∀A,P,l1,l2. All A P (l1@l2) → All A P l1 ∧ All A P l2.
+#A #P #l1 elim l1 -l1 /2 width=1/
+#a #l1 #IHl1 #l2 * #Ha #Hl12
+elim (IHl1 … Hl12) -IHl1 -Hl12 /3 width=1/
+qed-.
+
 (**************************** Allr ******************************)
 
 let rec Allr (A:Type[0]) (R:relation A) (l:list A) on l : Prop ≝
@@ -455,6 +466,10 @@ match l with
 
 lemma Allr_fwd_append_sn: ∀A,R,l1,l2. Allr A R (l1@l2) → Allr A R l1.
 #A #R #l1 elim l1 -l1 // #a1 * // #a2 #l1 #IHl1 #l2 * /3 width=2/
+qed-.
+
+lemma Allr_fwd_cons: ∀A,R,a,l. Allr A R (a::l) → Allr A R l.
+#A #R #a * // #a0 #l * //
 qed-.
 
 (**************************** Exists *******************************)

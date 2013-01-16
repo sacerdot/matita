@@ -118,6 +118,21 @@ lemma pl_st_inv_dx: ∀p,F,G. F Ⓡ↦[p] G → ∀q. dx::q = p →
 ]
 qed-.
 
+lemma pl_st_inv_pl_sred: ∀p. in_whd p → ∀M1,F2. {⊤}⇑M1 Ⓡ↦[p] F2 →
+                         ∃∃M2. M1 ↦[p] M2 & {⊤}⇑M2 = F2.
+#p @(in_whd_ind … p) -p
+[ #M1 #F2 #H
+  elim (pl_st_inv_nil … H ?) -H // #V #T #HM1 #H
+  elim (boolean_inv_appl … (sym_eq … HM1)) -HM1 #B #N #_ #HB #HN #HM1
+  elim (boolean_inv_abst … HN) -HN #A #_ #HA #HN destruct /2 width=3/
+| #p #_ #IHp #M1 #F2 #H
+  elim (pl_st_inv_dx … H ??) -H [3: // |2:skip ] #b #V #T1 #T2 #HT12 #HM1 #H (**) (* simplify line *)
+  elim (boolean_inv_appl … (sym_eq … HM1)) -HM1 #B #A #Hb #HB #HA #HM1 destruct
+  elim (IHp … HT12) -IHp -HT12 #C #HAC #H destruct
+  @(ex2_intro … (@B.C)) // /2 width=1/ (**) (* auto needs some help here *)
+]
+qed-.
+
 lemma pl_st_lift: ∀p. sliftable (pl_st p).
 #p #h #F1 #F2 #H elim H -p -F1 -F2 /2 width=1/
 [ #V #T #d normalize <sdsubst_slift_le //

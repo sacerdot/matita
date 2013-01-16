@@ -29,9 +29,19 @@ notation "hvbox( F break Ⓡ ↦* [ term 46 p ] break term 46 G )"
    for @{ 'StdStar $F $p $G }.
 
 lemma pl_sts_fwd_pl_sreds: ∀s,F1,F2. F1 Ⓡ↦*[s] F2 → ⇓F1 ↦*[s] ⇓F2.
-#s #F1 #F2 #H @(lstar_ind_r ????????? H) -s -F2 //
+#s #F1 #F2 #H @(lstar_ind_r … s F2 H) -s -F2 //
 #p #s #F #F2 #_ #HF2 #IHF1
 lapply (pl_st_fwd_pl_sred … HF2) -HF2 /2 width=3/
+qed-.
+
+lemma pl_sts_inv_pl_sreds: ∀s,M1,F2. {⊤}⇑M1 Ⓡ↦*[s] F2 → is_whd s →
+                           ∃∃M2. M1 ↦*[s] M2 & {⊤}⇑M2 = F2.
+#s #M1 #F2 #H @(lstar_ind_r … s F2 H) -s -F2 /2 width=3/
+#p #s #F #F2 #_ #HF2 #IHF #H
+elim (is_whd_inv_append … H) -H #Hs * #Hp #_
+elim (IHF Hs) -IHF -Hs #M #HM #H destruct
+elim (pl_st_inv_pl_sred … HF2) -HF2 // -Hp #M2 #HM2 #H
+lapply (pl_sreds_step_dx … HM … HM2) -M /2 width=3/
 qed-.
 
 lemma pl_sts_refl: reflexive … (pl_sts (◊)).
@@ -100,10 +110,21 @@ axiom pl_sred_is_standard_pl_st: ∀p,M,M2. M ↦[p] M2 → ∀F. ⇓F = M →
                                  ∀s,M1.{⊤}⇑ M1 Ⓡ↦*[s] F →
                                  is_standard (s@(p::◊)) →
                                  ∃∃F2. F Ⓡ↦[p] F2 & ⇓F2 = M2.
-
+(*
+#p #M #M2 #H elim H -p -M -M2
+[ #B #A #F #HF #s #M1 #HM1 #Hs
+  lapply (is_standard_fwd_is_whd … Hs) -Hs // #Hs
+  elim (pl_sts_inv_pl_sreds … HM1 Hs) -HM1 -Hs #M #_ #H -s -M1 destruct
+  >carrier_boolean in HF; #H destruct normalize /2 width=3/
+| #p #A1 #A2 #_ #IHA12 #F #HF #s #M1 #HM1 #Hs
+  elim (carrier_inv_abst … HF) -HF #b #T #HT #HF destruct
+(*  
+  elim (carrier_inv_appl … HF) -HF #b1 #V #G #HV #HG #HF
+*)  
+*)
 theorem pl_sreds_is_standard_pl_sts: ∀s,M1,M2. M1 ↦*[s] M2 → is_standard s →
                                      ∃∃F2. {⊤}⇑ M1 Ⓡ↦*[s] F2 & ⇓F2 = M2.
-#s #M1 #M2 #H @(lstar_ind_r ????????? H) -s -M2 /2 width=3/
+#s #M1 #M2 #H @(lstar_ind_r … s M2 H) -s -M2 /2 width=3/
 #p #s #M #M2 #_ #HM2 #IHM1 #Hsp
 lapply (is_standard_fwd_append_sn … Hsp) #Hs
 elim (IHM1 Hs) -IHM1 -Hs #F #HM1 #H

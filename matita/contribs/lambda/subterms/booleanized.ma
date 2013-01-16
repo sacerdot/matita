@@ -12,15 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "subterms/carrier.ma".
 include "subterms/boolean.ma".
 
-(* BOOLEANIZED SUBSET (EMPTY OR FULL)  **************************************)
+(* BOOLEANIZED SUBSET (EMPTY OR FULL) ***************************************)
 
 definition booleanized: bool → subterms → subterms ≝
    λb,F. {b}⇑⇓F.
 
-interpretation "make boolean (subterms)"
+interpretation "booleanized (subterms)"
    'ProjectSame b F = (booleanized b F).
 
 notation "hvbox( { term 46 b } ⇕ break term 46 F)"

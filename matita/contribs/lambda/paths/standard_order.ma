@@ -51,7 +51,7 @@ lemma sle_comp: ∀p1,p2. p1 ≤ p2 → ∀o. (o::p1) ≤ (o::p2).
 qed.
 
 lemma sle_skip_sle: ∀p. p ≤ ◊ → dx::p ≤ ◊.
-#p #H @(star_ind_l ??????? H) -p //
+#p #H @(star_ind_l … p H) -p //
 #p #q #Hpq #_ #H @(sle_step_sn … H) -H /2 width=1/
 qed.
 
@@ -91,9 +91,13 @@ theorem in_whd_sle: ∀p. in_whd p → ∀q. p ≤ q.
 qed.
 
 lemma sle_nil_inv_in_whd: ∀p. p ≤ ◊ → in_whd p.
-#p #H @(star_ind_l ??????? H) -p // /2 width=3 by sprec_fwd_in_whd/
+#p #H @(star_ind_l … p H) -p // /2 width=3 by sprec_fwd_in_whd/
 qed-.
 
 lemma sle_inv_in_whd: ∀p. (∀q. p ≤ q) → in_whd p.
 /2 width=1 by sle_nil_inv_in_whd/
+qed-.
+
+lemma sle_fwd_in_whd: ∀p,q. p ≤ q → in_whd q → in_whd p.
+#p #q #H @(star_ind_l … p H) -p // /3 width=3 by sprec_fwd_in_whd/
 qed-.
