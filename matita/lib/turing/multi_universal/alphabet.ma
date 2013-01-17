@@ -1,18 +1,16 @@
-(**************************************************************************)
-(*       ___                                                              *)
-(*      ||M||                                                             *)
-(*      ||A||       A project by Andrea Asperti                           *)
-(*      ||T||                                                             *)
-(*      ||I||       Developers:                                           *)
-(*      ||T||         The HELM team.                                      *)
-(*      ||A||         http://helm.cs.unibo.it                             *)
-(*      \   /                                                             *)
-(*       \ /        This file is distributed under the terms of the       *)
-(*        v         GNU General Public License Version 2                  *)
-(*                                                                        *)
-(**************************************************************************)
+(*
+    ||M||  This file is part of HELM, an Hypertextual, Electronic   
+    ||A||  Library of Mathematics, developed at the Computer Science 
+    ||T||  Department of the University of Bologna, Italy.           
+    ||I||                                                            
+    ||T||  
+    ||A||  
+    \   /  This file is distributed under the terms of the       
+     \ /   GNU General Public License Version 2   
+      V_____________________________________________________________*)
 
 include "basics/finset.ma".
+include "basics/lists/list.ma".
 
 inductive unialpha : Type[0] ≝ 
 | bit  : bool → unialpha
@@ -46,5 +44,11 @@ definition FSUnialpha ≝
 
 (*************************** testing characters *******************************)
 definition is_bit ≝ λc.match c with [ bit _ ⇒ true | _ ⇒ false ].
-definition is_bar ≝ λc.match c with [ bar ⇒ true | _ ⇒ false ].
-definition is_null ≝ λc.match c with [ null ⇒ true | _ ⇒ false ].
+definition is_bar ≝ λc:DeqUnialpha. c == bar.
+definition is_null ≝ λc:DeqUnialpha. c == null.
+
+definition only_bits ≝ λl.
+  ∀c.mem ? c l → is_bit c = true.
+
+definition no_bars ≝ λl.
+  ∀c.mem ? c l → is_bar c = false.
