@@ -194,7 +194,8 @@ definition cfg_to_obj ≝
   (ifTM ?? (inject_TM ? test_null_char 2 cfg)
     (nop ? 2)
     (copy_step cfg obj FSUnialpha 2 ·
-     mmove cfg FSUnialpha 2 L) 
+     mmove cfg FSUnialpha 2 L ·
+     mmove obj FSUnialpha 2 L) 
      tc_true) ·
   inject_TM ? (move_to_end FSUnialpha L) 2 cfg ·
   mmove cfg FSUnialpha 2 R.
@@ -212,7 +213,7 @@ definition R_cfg_to_obj ≝ λt1,t2:Vector (tape FSUnialpha) 3.
              (midtape ? (left ? (nth obj ? t1 (niltape ?))) c (right ? (nth obj ? t1 (niltape ?)))) obj)
           (mk_tape ? [ ] (option_hd ? (reverse ? (c::ls))) (tail ? (reverse ? (c::ls)))) cfg).
 
-axiom sem_cfg_to_obj : obj_to_cfg ⊨  R_obj_to_cfg.
+axiom sem_cfg_to_obj : cfg_to_obj ⊨  R_cfg_to_obj.
 (*@(sem_seq_app FSUnialpha 2 ????? (sem_move_multi ? 2 cfg L ?)
    (sem_seq ??????
     (sem_if ??????????
@@ -266,8 +267,17 @@ qed.
 
 (* macchina che muove il nastro obj a destra o sinistra a seconda del valore
    del current di prg, che codifica la direzione in cui ci muoviamo *)
-
-axiom tape_move_obj : mTM FSUnialpha 2.
+   
+definition tape_move_obj : mTM FSUnialpha 2 ≝ 
+  ifTM ?? 
+   (inject_TM ? (test_char ? (λc:FSUnialpha.c == bit false)) 2 prg)
+   (mmove obj FSUnialpha 2 L)
+   (ifTM ?? 
+    (inject_TM ? (test_char ? (λc:FSUnialpha.c == bit true)) 2 prg)
+    (mmove obj FSUnialpha 2 R)
+    (nop ??)
+    tc_true)
+   tc_true.
 
 definition unistep ≝ 
   obj_to_cfg · match_m cfg prg FSUnialpha 2 · copy prg cfg FSUnialpha 2 ·
