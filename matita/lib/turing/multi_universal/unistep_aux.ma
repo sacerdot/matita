@@ -280,5 +280,7 @@ definition tape_move_obj : mTM FSUnialpha 2 ≝
    tc_true.
 
 definition unistep ≝ 
-  obj_to_cfg · match_m cfg prg FSUnialpha 2 · copy prg cfg FSUnialpha 2 ·
-   cfg_to_obj · tape_move_obj.
+  obj_to_cfg · match_m cfg prg FSUnialpha 2 · 
+  inject_TM ? (move_to_end FSUnialpha L) 2 cfg ·
+  mmove cfg FSUnialpha 2 R · copy prg cfg FSUnialpha 2 ·
+  cfg_to_obj · tape_move_obj.
