@@ -310,7 +310,7 @@ qed.
 
 theorem prime_smallest_factor_n : ∀n. 1 < n → 
   prime (smallest_factor n).
-#n #lt1n (cut (0<n)) [/2/] #posn % /2/ #m #divmmin #lt1m
+#n #lt1n (cut (0<n)) [/2/] #posn % (* bug? *) [/2/] #m #divmmin #lt1m
 @le_to_le_to_eq
   [@divides_to_le // @lt_O_smallest_factor //
   |>smallest_factor_to_min // @true_to_le_min //

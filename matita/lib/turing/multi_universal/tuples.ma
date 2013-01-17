@@ -39,23 +39,6 @@ definition is_config : nat → list unialpha → Prop ≝
  λn,t.∃qin,cin.
  only_bits qin ∧ cin ≠ bar ∧ |qin| = S n ∧ t = bar::qin@[cin].
 
-lemma compare_append : ∀A,l1,l2,l3,l4. l1@l2 = l3@l4 → 
-∃l:list A.(l1 = l3@l ∧ l4=l@l2) ∨ (l3 = l1@l ∧ l2=l@l4).
-#A #l1 elim l1
-  [#l2 #l3 #l4 #Heq %{l3} %2 % // @Heq
-  |#a1 #tl1 #Hind #l2 #l3 cases l3
-    [#l4 #Heq %{(a1::tl1)} %1 % // @sym_eq @Heq 
-    |#a3 #tl3 #l4 normalize in ⊢ (%→?); #Heq cases (Hind l2 tl3 l4 ?)
-      [#l * * #Heq1 #Heq2 %{l}
-        [%1 % // >Heq1 >(cons_injective_l ????? Heq) //
-        |%2 % // >Heq1 >(cons_injective_l ????? Heq) //
-        ]
-      |@(cons_injective_r ????? Heq) 
-      ]
-    ]
-  ]
-qed.
-
 lemma table_to_list: ∀n,l,h,c. is_config n c → 
   (∃ll,lr.table_TM n l h = ll@c@lr) → 
     ∃out,t. tuple_encoding n h t = (c@out) ∧ mem ? t l.

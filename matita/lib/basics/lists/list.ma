@@ -92,6 +92,24 @@ lemma cons_injective_r : ∀A.∀a1,a2:A.∀l1,l2.a1::l1 = a2::l2 → l1 = l2.
 #A #a1 #a2 #l1 #l2 #Heq destruct //
 qed.
 
+(* comparing lists *)
+
+lemma compare_append : ∀A,l1,l2,l3,l4. l1@l2 = l3@l4 → 
+∃l:list A.(l1 = l3@l ∧ l4=l@l2) ∨ (l3 = l1@l ∧ l2=l@l4).
+#A #l1 elim l1
+  [#l2 #l3 #l4 #Heq %{l3} %2 % // @Heq
+  |#a1 #tl1 #Hind #l2 #l3 cases l3
+    [#l4 #Heq %{(a1::tl1)} %1 % // @sym_eq @Heq 
+    |#a3 #tl3 #l4 normalize in ⊢ (%→?); #Heq cases (Hind l2 tl3 l4 ?)
+      [#l * * #Heq1 #Heq2 %{l}
+        [%1 % // >Heq1 >(cons_injective_l ????? Heq) //
+        |%2 % // >Heq1 >(cons_injective_l ????? Heq) //
+        ]
+      |@(cons_injective_r ????? Heq) 
+      ]
+    ]
+  ]
+qed.
 (**************************** iterators ******************************)
 
 let rec map (A,B:Type[0]) (f: A → B) (l:list A) on l: list B ≝
