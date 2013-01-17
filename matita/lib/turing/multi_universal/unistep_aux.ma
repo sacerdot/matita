@@ -59,7 +59,8 @@ definition obj_to_cfg ≝
   mmove cfg FSUnialpha 2 L ·
   (ifTM ?? (inject_TM ? (test_null ?) 2 obj)
     (copy_step obj cfg FSUnialpha 2 ·
-     mmove cfg FSUnialpha 2 L) 
+     mmove cfg FSUnialpha 2 L ·
+     mmove obj FSUnialpha 2 L) 
     (inject_TM ? (write FSUnialpha null) 2 cfg)
      tc_true) ·
   inject_TM ? (move_to_end FSUnialpha L) 2 cfg ·
@@ -70,7 +71,7 @@ definition R_obj_to_cfg ≝ λt1,t2:Vector (tape FSUnialpha) 3.
   nth cfg ? t1 (niltape ?) = mk_tape FSUnialpha (c::ls) (None ?) [ ] → 
   (∀lso,x,rso.nth obj ? t1 (niltape ?) = midtape FSUnialpha lso x rso → 
    t2 = change_vec ?? t1 
-         (mk_tape ? [ ] (option_hd ? (reverse ? (c::ls))) (tail ? (reverse ? (c::ls)))) cfg) ∧
+         (mk_tape ? [ ] (option_hd ? (reverse ? (x::ls))) (tail ? (reverse ? (x::ls)))) cfg) ∧
   (current ? (nth obj ? t1 (niltape ?)) = None ? → 
    t2 = change_vec ?? t1
          (mk_tape ? [ ] (option_hd FSUnialpha (reverse ? (null::ls))) 
@@ -107,7 +108,8 @@ lemma sem_obj_to_cfg : obj_to_cfg ⊨  R_obj_to_cfg.
     (sem_if ??????????
      (sem_test_null_multi ?? obj ?)
       (sem_seq ?????? (accRealize_to_Realize … (sem_copy_step …))
-       (sem_move_multi ? 2 cfg L ?))
+       (sem_seq ?????? (sem_move_multi ? 2 cfg L ?)
+        (sem_move_multi ? 2 obj L ?)))
       (sem_inject ???? cfg ? (sem_write FSUnialpha null)))
      (sem_seq ?????? (sem_inject ???? cfg ? (sem_move_to_end_l ?))
        (sem_move_multi ? 2 cfg R ?)))) //
@@ -116,16 +118,28 @@ lemma sem_obj_to_cfg : obj_to_cfg ⊨  R_obj_to_cfg.
 #td * *
 [ * #te * * #Hcurtc #Hte
   * destruct (Hte) #te * *
-  [ whd in ⊢ (%→%→?); * #x * #y * * -Hcurtc #Hcurtc1 #Hcurtc2 #Hte #Htd
-    * #tf * * * whd in ⊢ (%→%→%→%→?); #Htf1 #Htf2 #Htf3 #Htb
+  [ whd in ⊢ (%→%→?); * #x * #y * * -Hcurtc #Hcurtc1 #Hcurtc2 #Hte
+    * #tf * whd in ⊢ (%→%→?); #Htf #Htd
+    * #tg * * * whd in ⊢ (%→%→%→%→?); #Htg1 #Htg2 #Htg3 #Htb
     #c #ls #Hta1 %
     [ #lso #x0 #rso #Hta2 >Hta1 in Htc; >eq_mk_tape_rightof 
       whd in match (tape_move ???); #Htc
-      cut (tf = change_vec ?? tc (mk_tape ? [ ] (None ?) (reverse ? ls@[x])) cfg)
-      [@daemon] -Htf1 -Htf2 -Htf3 #Htf destruct (Htf Hte Htd Htc Htb)
-      >change_vec_change_vec >change_vec_change_vec >change_vec_change_vec
-      >nth_change_vec // >tape_move_mk_tape_R
-      @daemon
+      cut (tg = change_vec ?? td (mk_tape ? [ ] (None ?) (reverse ? ls@[x])) cfg)
+      [@daemon] -Htg1 -Htg2 -Htg3 #Htg destruct (Htg Htf Hte Htd Htc Htb)
+      >change_vec_change_vec >change_vec_change_vec
+      >change_vec_commute // >change_vec_change_vec
+      >change_vec_commute [|@sym_not_eq //] >change_vec_change_vec
+      >change_vec_commute // >change_vec_change_vec
+      >nth_change_vec // >nth_change_vec_neq [|@sym_not_eq //] 
+      >nth_change_vec // >nth_change_vec_neq [|@sym_not_eq //]
+      >change_vec_commute [|@sym_not_eq //] @eq_f3 //
+      [ >Hta2 cases rso in Hta2; whd in match (tape_move_mono ???);
+        [ #Hta2 whd in match (tape_move ???); <Hta2 @change_vec_same
+        | #r1 #rs1 #Hta2 whd in match (tape_move ???); <Hta2 @change_vec_same ]
+      | >tape_move_mk_tape_R [| #_ % %] >reverse_cons
+        >nth_change_vec_neq in Hcurtc1; [|@sym_not_eq //] >Hta2
+        normalize in ⊢ (%→?); #H destruct (H) %
+      ]
     | #Hta2 >Htc in Hcurtc1; >nth_change_vec_neq [| @sym_not_eq //]
       >Hta2 #H destruct (H)
     ]
