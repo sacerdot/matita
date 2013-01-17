@@ -45,7 +45,7 @@ definition copy_step ≝
   mk_mTM sig n copy_states (trans_copy_step src dst sig n) 
     copy0 (λq.q == copy1 ∨ q == copy2).
 
-definition R_comp_step_true ≝ 
+definition R_copy_step_true ≝ 
   λsrc,dst,sig,n.λint,outt: Vector (tape sig) (S n).
   ∃x,y.
    current ? (nth src ? int (niltape ?)) = Some ? x ∧
@@ -55,7 +55,7 @@ definition R_comp_step_true ≝
               (tape_move_mono ? (nth src ? int (niltape ?)) 〈None ?, R〉) src)
             (tape_move_mono ? (nth dst ? int (niltape ?)) 〈Some ? x, R〉) dst.
 
-definition R_comp_step_false ≝ 
+definition R_copy_step_false ≝ 
   λsrc,dst:nat.λsig,n.λint,outt: Vector (tape sig) (S n).
     (current ? (nth src ? int (niltape ?)) = None ? ∨
      current ? (nth dst ? int (niltape ?)) = None ?) ∧ outt = int.
@@ -107,8 +107,8 @@ qed.
 lemma sem_copy_step :
   ∀src,dst,sig,n.src ≠ dst → src < S n → dst < S n → 
   copy_step src dst sig n ⊨ 
-    [ copy1: R_comp_step_true src dst sig n, 
-            R_comp_step_false src dst sig n ].
+    [ copy1: R_copy_step_true src dst sig n, 
+            R_copy_step_false src dst sig n ].
 #src #dst #sig #n #Hneq #Hsrc #Hdst #int
 lapply (refl ? (current ? (nth src ? int (niltape ?))))
 cases (current ? (nth src ? int (niltape ?))) in ⊢ (???%→?);
