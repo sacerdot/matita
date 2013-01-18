@@ -73,6 +73,18 @@ lemma sle_dichotomy: ∀p1,p2:path. p1 ≤ p2 ∨ p2 ≤ p1.
 ]
 qed-.
 
+lemma sle_inv_rc: ∀p,q. p ≤ q → ∀p0. rc::p0 = p →
+                  (∃∃q0. p0 ≤ q0 & rc::q0 = q) ∨
+                  ∃q0. sn::q0 = q.
+#p #q #H elim H -q /3 width=3/
+#q #q0 #_ #Hq0 #IHpq #p0 #H destruct
+elim (IHpq p0 ?) -IHpq // *
+[ #p1 #Hp01 #H
+  elim (sprec_inv_rc … Hq0 … H) -q * /3 width=3/ /4 width=3/
+| #p1 #H elim (sprec_inv_sn … Hq0 … H) -q /3 width=2/
+]
+qed-.
+
 lemma sle_inv_sn: ∀p,q. p ≤ q → ∀p0. sn::p0 = p →
                   ∃∃q0. p0 ≤ q0 & sn::q0 = q.
 #p #q #H elim H -q /2 width=3/

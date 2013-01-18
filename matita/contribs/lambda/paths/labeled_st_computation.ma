@@ -78,6 +78,19 @@ lemma pl_sts_inv_pos: ∀s,F1,F2. F1 Ⓡ↦*[s] F2 → 0 < |s| →
 /2 width=1 by lstar_inv_pos/
 qed-.
 
+lemma pl_sts_inv_rc_abst_dx: ∀b2,s,F1,T2. F1 Ⓡ↦*[s] {b2}𝛌.T2 → ∀r. rc:::r = s →
+                             ∃∃b1,T1. T1 Ⓡ↦*[r] T2 & {b1}𝛌.T1 = F1.
+#b2 #s #F1 #T2 #H @(lstar_ind_l … s F1 H) -s -F1
+[ #r #H lapply (map_cons_inv_nil … r H) -H #H destruct /2 width=4/
+| #p #s #F1 #F #HF1 #_ #IHF2 #r #H -b2
+  elim (map_cons_inv_cons … r H) -H #q #r0 #Hp #Hs #Hr
+  elim (pl_st_inv_rc … HF1 … Hp) -HF1 -p #b1 #T1 #T #HT1 #HF1 #HF destruct
+  elim (IHF2 ??) -IHF2 [3: // |2: skip ] (**) (* simplify line *)
+  #b0 #T0 #HT02 #H destruct
+  lapply (pl_sts_step_sn … HT1 … HT02) -T /2 width=4/
+]
+qed-.
+
 lemma pl_sts_lift: ∀s. sliftable (pl_sts s).
 /2 width=1/
 qed.
@@ -98,12 +111,71 @@ theorem pl_sts_trans: ltransitive … pl_sts.
 /2 width=3 by lstar_ltransitive/
 qed-.
 
+theorem pl_sts_inv_trans: inv_ltransitive … pl_sts.
+/2 width=3 by lstar_inv_ltransitive/
+qed-.
+
 theorem pl_sts_fwd_is_standard: ∀s,F1,F2. F1 Ⓡ↦*[s] F2 → is_standard s.
 #s elim s -s // #p1 * //
 #p2 #s #IHs #F1 #F2 #H
 elim (pl_sts_inv_cons … H ???) -H [4: // |2,3: skip ] #F3 #HF13 #H (**) (* simplify line *)
 elim (pl_sts_inv_cons … H ???) [2: // |3,4: skip ] #F4 #HF34 #_ (**) (* simplify line *)
 lapply (pl_st_fwd_sle … HF13 … HF34) -F1 -F4 /3 width=3/
+qed-.
+
+lemma pl_sts_fwd_abst_dx: ∀b2,s,F1,T2. F1 Ⓡ↦*[s] {b2}𝛌.T2 →
+                          (∃r2. rc:::r2 = s) ∨ ∃∃r1,r2. r1@◊::rc:::r2 = s.
+#b2 #s #F1 #T2 #H
+lapply (pl_sts_fwd_is_standard … H)
+@(lstar_ind_l … s F1 H) -s -F1
+[ #_ @or_introl @(ex_intro … ◊) // (**) (* auto needs some help here *)
+| * [ | * #p ] #s #F1 #F #HF1 #HF #IHF #Hs
+  lapply (is_standard_fwd_cons … Hs) #H
+  elim (IHF H) -IHF -H * [2,4,6,8: #r1 ] #r2 #H destruct
+(* case 1: ◊, @ *)
+  [ -Hs -F1 -F -T2 -b2
+    @or_intror @(ex1_2_intro … (◊::r1) r2) // (**) (* auto needs some help here *)
+(* case 2: rc, @ *)
+  | -F1 -F -T2 -b2
+    lapply (is_standard_fwd_sle … Hs) -Hs #H
+    lapply (sle_nil_inv_in_whd … H) -H * #H #_ destruct
+(* case 3: sn, @ *)
+  | -F1 -F -T2 -b2
+    lapply (is_standard_fwd_sle … Hs) -Hs #H
+    lapply (sle_nil_inv_in_whd … H) -H * #H #_ destruct
+(* case 4: dx, @ *)
+  | -Hs -F1 -F -T2 -b2
+    @or_intror @(ex1_2_intro … ((dx::p)::r1) r2) // (**) (* auto needs some help here *)
+(* case 5: ◊, no @ *)
+  | -Hs -F1 -F -T2 -b2
+    @or_intror @(ex1_2_intro … ◊ r2) // (**) (* auto needs some help here *)
+(* case 6, rc, no @ *)
+  | -Hs -F1 -F -T2 -b2
+    @or_introl @(ex_intro … (p::r2)) // (**) (* auto needs some help here *)
+(* case 7: sn, no @ *)
+  | elim (pl_sts_inv_rc_abst_dx … HF ??) -b2 [3: // |2: skip ] (**) (* simplify line *)
+    #b #T #_ #HT -Hs -T2
+    elim (pl_st_inv_sn … HF1 ??) -HF1 [3: // |2: skip ] (**) (* simplify line *)
+    #c #V1 #V #T0 #_ #_ #HT0 -c -V1 -F1 destruct
+(* case 8: dx, no @ *)
+  | elim (pl_sts_inv_rc_abst_dx … HF ??) -b2 [3: // |2: skip ] (**) (* simplify line *)
+    #b #T #_ #HT -Hs -T2
+    elim (pl_st_inv_dx … HF1 ??) -HF1 [3: // |2: skip ] (**) (* simplify line *)
+    #c #V #T1 #T0 #_ #_ #HT0 -T1 -F1 destruct
+  ]
+]
+qed-.
+
+lemma pl_sts_fwd_abst_dx_is_whd: ∀b2,s,F1,T2. F1 Ⓡ↦*[s] {b2}𝛌.T2 →
+                                 ∃∃r1,r2. is_whd r1 & r1@rc:::r2 = s.
+#b2 #s #F1 #T2 #H
+lapply (pl_sts_fwd_is_standard … H)
+elim (pl_sts_fwd_abst_dx … H) -b2 -F1 -T2 * [ | #r1 ] #r2 #Hs destruct
+[ #_ @(ex2_2_intro … ◊ r2) //
+| <(associative_append … r1 (◊::◊) (rc:::r2)) #Hs
+  lapply (is_standard_fwd_append_sn … Hs) -Hs #H
+  lapply (is_standard_fwd_is_whd … H) -H // /4 width=4/
+]
 qed-.
 
 axiom pl_sred_is_standard_pl_st: ∀p,M,M2. M ↦[p] M2 → ∀F. ⇓F = M →
@@ -118,6 +190,17 @@ axiom pl_sred_is_standard_pl_st: ∀p,M,M2. M ↦[p] M2 → ∀F. ⇓F = M →
   >carrier_boolean in HF; #H destruct normalize /2 width=3/
 | #p #A1 #A2 #_ #IHA12 #F #HF #s #M1 #HM1 #Hs
   elim (carrier_inv_abst … HF) -HF #b #T #HT #HF destruct
+  elim (pl_sts_fwd_abst_dx_is_whd … HM1) #r1 #r2 #Hr1 #H destruct
+  elim (pl_sts_inv_trans … HM1) -HM1 #F0 #HM1 #HT
+  elim (pl_sts_inv_pl_sreds … HM1 ?) // #M0 #_ #H -M1 -Hr1 destruct
+  elim (pl_sts_inv_rc_abst_dx … HT ??) -HT [3: // |2: skip ] #b0 #T0 #HT02 #H (**) (* simplify line *)
+  elim (boolean_inv_abst … (sym_eq … H)) -H #A0 #_ #H #_ -b0 -M0 destruct
+  >associative_append in Hs; #Hs
+  lapply (is_standard_fwd_append_dx … Hs) -r1
+  <(map_cons_append … r2 (p::◊)) #H
+  lapply (is_standard_inv_compatible_rc … H) -H #H
+  elim (IHA12 … HT02 ?) // -r2 -A0 -IHA12 #F2 #HF2 #H
+  @(ex2_intro … ({⊥}𝛌.F2)) normalize // /2 width=1/ (**) (* auto needs some help here *)  
 (*  
   elim (carrier_inv_appl … HF) -HF #b1 #V #G #HV #HG #HF
 *)  

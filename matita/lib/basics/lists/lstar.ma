@@ -11,10 +11,14 @@
 
 include "basics/lists/list.ma".
 
-(* labelled reflexive and transitive closure ********************************)
+(* labeled reflexive and transitive closure *********************************)
 
 definition ltransitive: ∀A,B:Type[0]. predicate (list A → relation B) ≝ λA,B,R.
                         ∀l1,b1,b. R l1 b1 b → ∀l2,b2. R l2 b b2 → R (l1@l2) b1 b2. 
+
+definition inv_ltransitive: ∀A,B:Type[0]. predicate (list A → relation B) ≝
+                            λA,B,R. ∀l1,l2,b1,b2. R (l1@l2) b1 b2 →
+                            ∃∃b. R l1 b1 b & R l2 b b2.
 
 inductive lstar (A:Type[0]) (B:Type[0]) (R: A→relation B): list A → relation B ≝
 | lstar_nil : ∀b. lstar A B R ([]) b b
@@ -77,6 +81,13 @@ qed-.
 
 theorem lstar_ltransitive: ∀A,B,R. ltransitive … (lstar A B R).
 #A #B #R #l1 #b1 #b #H @(lstar_ind_l ????????? H) -l1 -b1 normalize // /3 width=3/
+qed-.
+
+lemma lstar_inv_ltransitive: ∀A,B,R. inv_ltransitive … (lstar A B R).
+#A #B #R #l1 elim l1 -l1 normalize /2 width=3/
+#a #l1 #IHl1 #l2 #b1 #b2 #H
+elim (lstar_inv_cons … b2 H ???) -H [4: // |2,3: skip ] #b #Hb1 #Hb2 (**) (* simplify line *)
+elim (IHl1 … Hb2) -IHl1 -Hb2 /3 width=3/
 qed-.
 
 lemma lstar_app: ∀A,B,R,l,b1,b. lstar A B R l b1 b → ∀a,b2. R a b b2 →

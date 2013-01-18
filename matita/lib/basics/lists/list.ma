@@ -490,6 +490,11 @@ lemma Allr_fwd_cons: ∀A,R,a,l. Allr A R (a::l) → Allr A R l.
 #A #R #a * // #a0 #l * //
 qed-.
 
+lemma Allr_fwd_append_dx: ∀A,R,l1,l2. Allr A R (l1@l2) → Allr A R l2.
+#A #R #l1 elim l1 -l1 // #a1 #l1 #IHl1 #l2 #H
+lapply (Allr_fwd_cons … (l1@l2) H) -H /2 width=1/
+qed-.  
+
 (**************************** Exists *******************************)
 
 let rec Exists (A:Type[0]) (P:A → Prop) (l:list A) on l : Prop ≝

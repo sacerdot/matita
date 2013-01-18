@@ -96,13 +96,30 @@ notation "hvbox(a ::: break l)"
   right associative with precedence 47
   for @{'ho_cons $a $l}.
 
+lemma map_cons_inv_nil: ∀A,a,l1. map_cons A a l1 = ◊ → ◊ = l1.
+#A #a * // normalize #a1 #l1 #H destruct
+qed-.
+
+lemma map_cons_inv_cons: ∀A,a,a2,l2,l1. map_cons A a l1 = a2::l2 →
+                         ∃∃a1,l. a::a1 = a2 & a:::l = l2 & a1::l = l1.
+#A #a #a2 #l2 * normalize
+[ #H destruct
+| #a1 #l1 #H destruct /2 width=5/
+]
+qed-.
+
+lemma map_cons_append: ∀A,a,l1,l2. map_cons A a (l1@l2) =
+                       map_cons A a l1 @ map_cons A a l2.
+#A #a #l1 elim l1 -l1 // normalize /2 width=1/
+qed.
+
 (* lstar *)
 
 (* Note: this cannot be in lib because of the missing xoa quantifier *)
 lemma lstar_inv_pos: ∀A,B,R,l,b1,b2. lstar A B R l b1 b2 → 0 < |l| →
                      ∃∃a,ll,b. a::ll = l & R a b1 b & lstar A B R ll b b2.
 #A #B #R #l #b1 #b2 #H @(lstar_ind_l ????????? H) -b1
-[ #H elim (lt_refl_false … H) 
+[ #H elim (lt_refl_false … H)
 | #a #ll #b1 #b #Hb1 #Hb2 #_ #_ /2 width=6/ (**) (* auto fail if we do not remove the inductive premise *)
 ]
 qed-.

@@ -28,6 +28,10 @@ lemma is_standard_fwd_cons: ∀p,s. is_standard (p::s) → is_standard s.
 /2 width=2 by Allr_fwd_cons/
 qed-.
 
+lemma is_standard_fwd_append_dx: ∀s,r. is_standard (s@r) → is_standard r.
+/2 width=2 by Allr_fwd_append_dx/
+qed-.
+
 lemma is_standard_compatible: ∀o,s. is_standard s → is_standard (o:::s).
 #o #s elim s -s // #p * //
 #q #s #IHs * /3 width=1/
@@ -42,6 +46,20 @@ lemma is_standard_append: ∀r. is_standard r → ∀s. is_standard s → is_sta
 #r elim r -r /3 width=1/ #p * /2 width=1/
 #q #r #IHr * /3 width=1/
 qed.
+
+lemma is_standard_inv_compatible_sn: ∀s. is_standard (sn:::s) → is_standard s.
+#s elim s -s // #a1 * // #a2 #s #IHs * #H
+elim (sle_inv_sn … H ??) -H [3: // |2: skip ] (**) (* simplify line *)
+#a #Ha1 #H destruct /3 width=1/
+qed-.
+
+lemma is_standard_inv_compatible_rc: ∀s. is_standard (rc:::s) → is_standard s.
+#s elim s -s // #a1 * // #a2 #s #IHs * #H
+elim (sle_inv_rc … H ??) -H [4: // |2: skip ] * (**) (* simplify line *)
+[ #a #Ha1 #H destruct /3 width=1/
+| #a #H destruct
+]
+qed-.
 
 lemma is_standard_fwd_sle: ∀s2,p2,s1,p1. is_standard ((p1::s1)@(p2::s2)) → p1 ≤ p2.
 #s2 #p2 #s1 elim s1 -s1

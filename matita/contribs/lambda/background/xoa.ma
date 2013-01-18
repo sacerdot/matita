@@ -16,6 +16,14 @@
 
 include "basics/pts.ma".
 
+(* multiple existental quantifier (1, 2) *)
+
+inductive ex1_2 (A0,A1:Type[0]) (P0:A0→A1→Prop) : Prop ≝
+   | ex1_2_intro: ∀x0,x1. P0 x0 x1 → ex1_2 ? ? ?
+.
+
+interpretation "multiple existental quantifier (1, 2)" 'Ex P0 = (ex1_2 ? ? P0).
+
 (* multiple existental quantifier (2, 2) *)
 
 inductive ex2_2 (A0,A1:Type[0]) (P0,P1:A0→A1→Prop) : Prop ≝

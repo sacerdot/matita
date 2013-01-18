@@ -40,6 +40,29 @@ lemma sprec_inv_sn: ∀p,q. p ≺ q → ∀p0. sn::p0 = p →
 ]
 qed-.
 
+lemma sprec_inv_rc: ∀p,q. p ≺ q → ∀p0. rc::p0 = p →
+                    (∃∃q0. p0 ≺ q0 & rc::q0 = q) ∨
+                    ∃q0. sn::q0 = q.
+#p #q * -p -q
+[ #o #q #p0 #H destruct
+| #p #q #p0 #H destruct
+| #p #q #p0 #H destruct /3 width=2/
+| #o #p #q #Hpq #p0 #H destruct /3 width=3/
+| #p0 #H destruct
+]
+qed-.
+
+lemma sprec_inv_comp: ∀p1,p2. p1 ≺ p2 →
+                      ∀o,q1,q2. o::q1 = p1 → o::q2 = p2 → q1 ≺ q2.
+#p1 #p2 * -p1 -p2
+[ #o #q #o0 #q1 #q2 #H destruct
+| #p #q #o0 #q1 #q2 #H1 #H2 destruct
+| #p #q #o0 #q1 #q2 #H1 #H2 destruct
+| #o #p #q #Hpq #o0 #q1 #q2 #H1 #H2 destruct //
+| #o0 #q1 #q2 #_ #H destruct
+]
+qed-.
+
 lemma sprec_fwd_in_whd: ∀p,q. p ≺ q → in_whd q → in_whd p.
 #p #q #H elim H -p -q // /2 width=1/
 [ #p #q * #H destruct
