@@ -42,6 +42,11 @@ definition FSUnialpha ≝
   mk_FinSet DeqUnialpha [bit true;bit false;null;bar] 
   unialpha_unique unialpha_complete.
 
+unification hint  0 ≔ ; 
+    X ≟ FSUnialpha
+(* ---------------------------------------- *) ⊢ 
+    unialpha ≡ FinSetcarr X.
+    
 (*************************** testing characters *******************************)
 definition is_bit ≝ λc.match c with [ bit _ ⇒ true | _ ⇒ false ].
 definition is_bar ≝ λc:DeqUnialpha. c == bar.

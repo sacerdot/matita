@@ -13,6 +13,7 @@ include "turing/multi_universal/moves_2.ma".
 include "turing/multi_universal/match.ma".
 include "turing/multi_universal/copy.ma".
 include "turing/multi_universal/alphabet.ma".
+include "turing/multi_universal/tuples.ma".
 
 (*
 
@@ -267,7 +268,11 @@ qed.
 
 (* macchina che muove il nastro obj a destra o sinistra a seconda del valore
    del current di prg, che codifica la direzione in cui ci muoviamo *)
-   
+
+definition char_to_move ≝ λc.match c with
+  [ bit b ⇒ if b then R else L
+  | _ ⇒ N].
+  
 definition tape_move_obj : mTM FSUnialpha 2 ≝ 
   ifTM ?? 
    (inject_TM ? (test_char ? (λc:FSUnialpha.c == bit false)) 2 prg)
@@ -279,8 +284,54 @@ definition tape_move_obj : mTM FSUnialpha 2 ≝
     tc_true)
    tc_true.
 
+definition restart_tape ≝ λi. 
+  inject_TM ? (move_to_end FSUnialpha L) 2 i ·
+  mmove i FSUnialpha 2 R. 
+
 definition unistep ≝ 
   obj_to_cfg · match_m cfg prg FSUnialpha 2 · 
-  inject_TM ? (move_to_end FSUnialpha L) 2 cfg ·
-  mmove cfg FSUnialpha 2 R · copy prg cfg FSUnialpha 2 ·
-  cfg_to_obj · tape_move_obj.
+  restart_tape cfg · copy prg cfg FSUnialpha 2 ·
+  cfg_to_obj · tape_move_obj · restart_tape prg.
+
+(*
+definition legal_tape ≝ λn,l,h,t.
+  ∃state,char,table.
+  nth cfg ? t1 (niltape ?) = midtape ? [ ] bar (state@[char]) →
+  is_config n (bar::state@[char]) →  
+  nth prg ? t1 (niltape ?) = midtape ? [ ] bar table →
+  bar::table = table_TM n l h → *)
+
+definition list_of_tape ≝ λsig,t. 
+  left sig t@option_cons ? (current ? t) (right ? t).
+
+definition low_char' ≝ λc.
+  match c with
+  [ None ⇒ null 
+  | Some b ⇒ if (is_bit b) then b else null
+  ].
+  
+definition R_unistep ≝ λn,l,h.λt1,t2: Vector ? 3.
+  ∀state,oldc,table.
+  (* cfg *)
+  nth cfg ? t1 (niltape ?) = midtape ? [ ] bar (state@[oldc]) →
+  is_config n (bar::state@[oldc]) →  
+  (* prg *)
+  nth prg ? t1 (niltape ?) = midtape ? [ ] bar table →
+  bar::table = table_TM n l h →
+  (* obj *)
+  only_bits (list_of_tape ? (nth obj ? t1 (niltape ?))) →
+  let char ≝ low_char' (current ? (nth obj ? t1 (niltape ?))) in
+  let conf ≝ (bar::state@[char]) in
+  (∃ll,lr.bar::table = ll@conf@lr) → 
+    ∃nstate,nchar,m,t. tuple_encoding n h t = (conf@nstate@[nchar;m]) ∧ 
+    mem ? t l ∧
+    t2 = 
+      change_vec ??
+        (change_vec ?? t1 (midtape ? [ ] bar (nstate@[nchar])) cfg)
+        (tape_move_mono ? (nth obj ? t1 (niltape ?)) 〈Some ? nchar,char_to_move m〉) obj.
+    
+  
+  
+  
+  
+  
