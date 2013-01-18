@@ -16,6 +16,9 @@ record Vector (A:Type[0]) (n:nat): Type[0] ≝
   len: length ? vec = n
 }.
 
+lemma Vector_of_list ≝ λA,l. 
+  mk_Vector A (|l|) l (refl ??).
+
 lemma Vector_eq : ∀A,n,v1,v2.
   vec A n v1 = vec A n v2 → v1 = v2.
 #A #n * #l1 #H1 * #l2 #H2 #eql1l2 generalize in match H1; 

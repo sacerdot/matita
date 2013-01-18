@@ -329,9 +329,18 @@ definition R_unistep ≝ λn,l,h.λt1,t2: Vector ? 3.
       change_vec ??
         (change_vec ?? t1 (midtape ? [ ] bar (nstate@[nchar])) cfg)
         (tape_move_mono ? (nth obj ? t1 (niltape ?)) 〈Some ? nchar,char_to_move m〉) obj.
-    
+
+definition tape_map ≝ λA,B:FinSet.λf:A→B.λt.
+  mk_tape B (map ?? f (left ? t)) 
+    (option_map ?? f (current ? t)) 
+    (map ?? f (right ? t)).
+
+definition low ≝ λM:normalTM.λc:nconfig (no_states M).Vector_of_list ?
+  [tape_map ?? bit (ctape ?? c);
+   midtape ? [ ] bar (bits_of_state ? (nhalt M) (cstate ?? c));
+   ?].
+
   
   
   
-  
-  
+  .
