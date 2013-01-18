@@ -289,9 +289,9 @@ definition restart_tape ≝ λi.
   mmove i FSUnialpha 2 R. 
 
 definition unistep ≝ 
-  obj_to_cfg · match_m cfg prg FSUnialpha 2 · 
+  match_m cfg prg FSUnialpha 2 · 
   restart_tape cfg · copy prg cfg FSUnialpha 2 ·
-  cfg_to_obj · tape_move_obj · restart_tape prg.
+  cfg_to_obj · tape_move_obj · restart_tape prg · obj_to_cfg.
 
 (*
 definition legal_tape ≝ λn,l,h,t.
@@ -311,37 +311,43 @@ definition low_char' ≝ λc.
   ].
   
 definition R_unistep ≝ λn,l,h.λt1,t2: Vector ? 3.
-  ∀state,oldc,table.
+  ∀state,char,table.
   (* cfg *)
-  nth cfg ? t1 (niltape ?) = midtape ? [ ] bar (state@[oldc]) →
-  is_config n (bar::state@[oldc]) →  
+  nth cfg ? t1 (niltape ?) = midtape ? [ ] bar (state@[char]) →
+  is_config n (bar::state@[char]) →  
   (* prg *)
   nth prg ? t1 (niltape ?) = midtape ? [ ] bar table →
   bar::table = table_TM n l h →
   (* obj *)
   only_bits (list_of_tape ? (nth obj ? t1 (niltape ?))) →
-  let char ≝ low_char' (current ? (nth obj ? t1 (niltape ?))) in
   let conf ≝ (bar::state@[char]) in
   (∃ll,lr.bar::table = ll@conf@lr) → 
     ∃nstate,nchar,m,t. tuple_encoding n h t = (conf@nstate@[nchar;m]) ∧ 
     mem ? t l ∧
+    let new_obj ≝ 
+     tape_move_mono ? (nth obj ? t1 (niltape ?)) 
+       〈Some ? nchar,char_to_move m〉 in
+    let next_char ≝ low_char' (current ? new_obj) in
     t2 = 
       change_vec ??
-        (change_vec ?? t1 (midtape ? [ ] bar (nstate@[nchar])) cfg)
-        (tape_move_mono ? (nth obj ? t1 (niltape ?)) 〈Some ? nchar,char_to_move m〉) obj.
+        (change_vec ?? t1 (midtape ? [ ] bar (nstate@[next_char])) cfg)
+        new_obj obj.
 
 definition tape_map ≝ λA,B:FinSet.λf:A→B.λt.
   mk_tape B (map ?? f (left ? t)) 
     (option_map ?? f (current ? t)) 
     (map ?? f (right ? t)).
 
-definition low ≝ λM:normalTM.λc:nconfig (no_states M).Vector_of_list ?
+definition low_tapes ≝ λM:normalTM.λc:nconfig (no_states M).Vector_of_list ?
   [tape_map ?? bit (ctape ?? c);
    midtape ? [ ] bar (bits_of_state ? (nhalt M) (cstate ?? c));
    midtape ? [ ] bar (table_TM ? (graph_enum ?? (ntrans M)) (nhalt M))
   ].
 
-  
+definition R_unistep_high ≝ λM:normalTM.λc:nconfig (no_states M).λt1,t2.
+  t1 = low_tapes M c → 
+  t2 = low_tapes M (step ? M c). 
+
   
   
  
