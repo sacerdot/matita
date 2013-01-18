@@ -338,9 +338,10 @@ definition tape_map ≝ λA,B:FinSet.λf:A→B.λt.
 definition low ≝ λM:normalTM.λc:nconfig (no_states M).Vector_of_list ?
   [tape_map ?? bit (ctape ?? c);
    midtape ? [ ] bar (bits_of_state ? (nhalt M) (cstate ?? c));
-   ?].
+   midtape ? [ ] bar (table_TM ? (graph_enum ?? (ntrans M)) (nhalt M))
+  ].
 
   
   
   
-  .
+ 
