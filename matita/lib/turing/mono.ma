@@ -134,6 +134,16 @@ definition step ≝ λsig.λM:TM sig.λc:config sig (states sig M).
   let 〈news,a,mv〉 ≝ trans sig M 〈cstate ?? c,current_char〉 in
   mk_config ?? news (tape_move sig (tape_write ? (ctape ?? c) a) mv).
 
+(*
+lemma step_eq : ∀sig,M,c. 
+  let current_char ≝ current ? (ctape ?? c) in
+  let 〈news,a,mv〉 ≝ trans sig M 〈cstate ?? c,current_char〉 in
+  step sig M c = 
+    mk_config ?? news (tape_move sig (tape_write ? (ctape ?? c) a) mv).
+#sig #M #c  
+ whd in match (tape_move_mono sig ??);
+*)
+  
 (******************************** loop ****************************************)
 let rec loop (A:Type[0]) n (f:A→A) p a on n ≝
   match n with 

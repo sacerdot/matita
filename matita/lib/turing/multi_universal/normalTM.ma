@@ -80,15 +80,33 @@ record normalTM : Type[0] ≝
   nhalt : initN no_states → bool
 }.
 
+lemma decomp_target : ∀n.∀tg: trans_target n. 
+  ∃qout,cout,m. tg = 〈qout,cout,m〉.
+#n * * #q #c #m %{q} %{c} %{m} //
+qed.
+
 (* A normal machine is just a special case of Turing Machine. *)
+
+definition nstart_state ≝ λM.mk_Sig ?? 0 (pos_no_states M).
 
 definition normalTM_to_TM ≝ λM:normalTM.
   mk_TM FinBool (initN (no_states M)) 
-   (ntrans M) (mk_Sig ?? 0 (pos_no_states M)) (nhalt M).
+   (ntrans M) (nstart_state M) (nhalt M).
 
 coercion normalTM_to_TM.
 
 definition nconfig ≝ λn. config FinBool (initN n).
+
+(* A normal machine has a non empty graph *)
+
+definition sample_input: ∀M.trans_source (no_states M).
+#M % [@(nstart_state M) | %]
+qed.
+
+lemma nTM_nog: ∀M. graph_enum ?? (ntrans M) ≠ [ ].
+#M % #H lapply(graph_enum_complete ?? (ntrans M) (sample_input M) ? (refl ??))
+>H normalize #Hd destruct
+qed.
 
 (******************************** tuples **************************************)
 

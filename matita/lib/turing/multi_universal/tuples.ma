@@ -21,8 +21,30 @@ lemma table_TM_cons: ∀n,h,t,o.
   table_TM n (t::o) h = (tuple_encoding n h t)@(table_TM n o h).
 // qed.
 
+lemma initial_bar: ∀n,h,l. l ≠ [ ] →
+  table_TM n l h = bar :: tail ? (table_TM n l h).
+#n #h * 
+  [* #H @False_ind @H // 
+  |#a #tl #_ >table_TM_cons lapply (is_tuple n h a) 
+   * #qin * #cin * #qout * #cout * #mv * #_ #Htup >Htup %
+  ]
+qed. 
+
 (************************** matching in a table *******************************)
-lemma list_to_table: ∀n,l,h,tup. mem ? tup (tuples_list n h l) →
+lemma list_to_table: ∀n,l,h,t. mem ? t l →
+  ∃ll,lr.table_TM n l h = ll@(tuple_encoding n h t)@lr.
+#n #l #h #t elim l 
+  [@False_ind
+  |#hd #tl #Hind *
+    [#Htup %{[]} %{(table_TM n tl h)} >Htup %
+    |#H cases (Hind H) #ll * #lr #H1
+     %{((tuple_encoding n h hd)@ll)} %{lr} 
+     >associative_append <H1 %
+    ]
+  ]
+qed.
+
+lemma list_to_table1: ∀n,l,h,tup. mem ? tup (tuples_list n h l) →
   ∃ll,lr.table_TM n l h = ll@tup@lr.
 #n #l #h #tup elim l 
   [@False_ind
