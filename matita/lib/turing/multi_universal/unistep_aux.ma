@@ -88,8 +88,6 @@ lemma eq_mk_tape_rightof :
 #alpha #a #al %
 qed.
 
-axiom daemon : ∀P:Prop.P.
-
 definition option_cons ≝ λsig.λc:option sig.λl.
   match c with [ None ⇒ l | Some c0 ⇒ c0::l ].
 
@@ -101,6 +99,16 @@ lemma tape_move_mk_tape_R :
 #sig * [ * [ * | #c * ] | #l0 #ls0 * [ *
 [| #r0 #rs0 #H @False_ind cases (H (refl ??)) #H1 destruct (H1) ] | #c * ] ] 
 normalize //
+qed.
+
+lemma eq_vec_change_vec : ∀sig,n.∀v1,v2:Vector sig n.∀i,t,d.
+  nth i ? v2 d = t → 
+  (∀j.i ≠ j → nth j ? v1 d = nth j ? v2 d) → 
+  v2 = change_vec ?? v1 t i.
+#sig #n #v1 #v2 #i #t #d #H1 #H2 @(eq_vec … d)
+#i0 #Hlt cases (decidable_eq_nat i0 i) #Hii0
+[ >Hii0 >nth_change_vec //
+| >nth_change_vec_neq [|@sym_not_eq //] @sym_eq @H2 @sym_not_eq // ]
 qed.
 
 lemma sem_obj_to_cfg : obj_to_cfg ⊨  R_obj_to_cfg.
@@ -126,7 +134,10 @@ lemma sem_obj_to_cfg : obj_to_cfg ⊨  R_obj_to_cfg.
     [ #lso #x0 #rso #Hta2 >Hta1 in Htc; >eq_mk_tape_rightof 
       whd in match (tape_move ???); #Htc
       cut (tg = change_vec ?? td (mk_tape ? [ ] (None ?) (reverse ? ls@[x])) cfg)
-      [@daemon] -Htg1 -Htg2 -Htg3 #Htg destruct (Htg Htf Hte Htd Htc Htb)
+      [ lapply (eq_vec_change_vec ??????? (Htg2 ls x [ ] ?) Htg3) //
+        >Htd >nth_change_vec_neq // >Htf >nth_change_vec //
+        >Hte >nth_change_vec // >Htc >nth_change_vec // ] -Htg1 -Htg2 -Htg3 #Htg
+      destruct 
       >change_vec_change_vec >change_vec_change_vec
       >change_vec_commute // >change_vec_change_vec
       >change_vec_commute [|@sym_not_eq //] >change_vec_change_vec
@@ -158,9 +169,11 @@ lemma sem_obj_to_cfg : obj_to_cfg ⊨  R_obj_to_cfg.
     >Hta2 normalize in ⊢ (%→?); #H destruct (H)
   | #_ >Hta1 in Htc; >eq_mk_tape_rightof whd in match (tape_move ???); #Htc
     destruct (Hte) cut (td = change_vec ?? tc (midtape ? ls null []) cfg)
-    [@daemon] -Htd1 -Htd2 #Htd
+    [ lapply (eq_vec_change_vec ??????? (Htd1 ls c [ ] ?) Htd2) // 
+      >Htc >nth_change_vec // ] -Htd1 -Htd2 #Htd
     -Htf1 cut (tf = change_vec ?? td (mk_tape ? [ ] (None ?) (reverse ? ls@[null])) cfg)
-    [@daemon] -Htf2 -Htf3 #Htf destruct (Htf Htd Htc Htb)
+    [ lapply (eq_vec_change_vec ??????? (Htf2 ls null [ ] ?) Htf3) //
+      >Htd >nth_change_vec // ] -Htf2 -Htf3 #Htf destruct (Htf Htd Htc Htb)
     >change_vec_change_vec >change_vec_change_vec >change_vec_change_vec
     >change_vec_change_vec >change_vec_change_vec >nth_change_vec //
     >reverse_cons >tape_move_mk_tape_R /2/ ]
@@ -296,9 +309,12 @@ lemma sem_cfg_to_obj : cfg_to_obj ⊨  R_cfg_to_obj.
   whd in ⊢ (%→?); #Htb
   #c #ls #Hta %
   [ #Hc >Hta in Htc; >eq_mk_tape_rightof whd in match (tape_move ???); #Htc
-    cut (te = tc) [@daemon] -Hte1 -Hte2 #Hte
+    cut (te = tc)
+    [ lapply (eq_vec_change_vec ??????? (sym_eq … Hte1) Hte2) >change_vec_same // ]
+    -Hte1 -Hte2 #Hte
     cut (tf = change_vec ? 3 te (mk_tape ? [ ] (None ?) (reverse ? ls@[c])) cfg)
-    [@daemon] -Htf1 -Htf2 -Htf3 #Htf
+    [ lapply (eq_vec_change_vec ??????? (Htf2 ls c [ ] ?) Htf3) //
+      >Hte >Htc >nth_change_vec // ] -Htf1 -Htf2 -Htf3 #Htf
     destruct (Htf Hte Htc Htb)
     >change_vec_change_vec >change_vec_change_vec >change_vec_change_vec
     >nth_change_vec // >tape_move_mk_tape_R [| #_ % % ] 
@@ -315,9 +331,14 @@ lemma sem_cfg_to_obj : cfg_to_obj ⊨  R_cfg_to_obj.
   #c #ls #Hta % #Hc
   [ >Htc in Hcurtc; >Hta >nth_change_vec // >tape_move_mk_tape_L //
     >Hc normalize in ⊢ (%→?); * #H @False_ind /2/
-  | cut (te = tc) [ @daemon ] -Hte1 -Hte2 #Hte
+  | cut (te = tc)
+    [ lapply (eq_vec_change_vec ??????? (sym_eq … Hte1) Hte2)
+      >change_vec_same // ] -Hte1 -Hte2 #Hte
     cut (th = change_vec ?? td (mk_tape ? [ ] (None ?) (reverse ? ls@[c])) cfg)
-    [@daemon] -Hth1 -Hth2 -Hth3 #Hth
+    [ lapply (eq_vec_change_vec ??????? (Hth2 ls c [ ] ?) Hth3) //
+      >Htd >nth_change_vec_neq // >Htg >nth_change_vec //
+      >Htf >nth_change_vec_neq // >nth_change_vec // 
+      >Hte >Htc >nth_change_vec // >Hta // ] -Hth1 -Hth2 -Hth3 #Hth
     destruct (Hth Hte Hta Htb Htd Htg Htc Htf) 
     >change_vec_change_vec >change_vec_change_vec
     >change_vec_commute // >change_vec_change_vec
@@ -379,17 +400,24 @@ lemma sem_tape_move_obj' : tape_move_obj ⊨ R_tape_move_obj'.
 cases HR -HR
 [ * #tb * * * * #c * #Hcurta_prg #Hc lapply (\P Hc) -Hc #Hc #Htb1 #Htb2
   whd in ⊢ (%→%); #Houtc >Houtc -Houtc % [ %
-  [ >Hcurta_prg #H destruct (H) >(?:tb = ta) [|@daemon] %
+  [ >Hcurta_prg #H destruct (H) >(?:tb = ta) 
+    [| lapply (eq_vec_change_vec ??????? Htb1 Htb2)
+       >change_vec_same // ] %
   | >Hcurta_prg #H destruct (H) destruct (Hc) ]
   | >Hcurta_prg >Hc * #H @False_ind /2/ ]
-| * #tb * * * #Hnotfalse #Htb1 #Htb2 cut (tb = ta) [@daemon] -Htb1 -Htb2
-  #Htb destruct (Htb) *
+| * #tb * * * #Hnotfalse #Htb1 #Htb2 cut (tb = ta) 
+  [ lapply (eq_vec_change_vec ??????? Htb1 Htb2)
+     >change_vec_same // ] -Htb1 -Htb2 #Htb destruct (Htb) *
   [ * #tc * * * * #c * #Hcurta_prg #Hc lapply (\P Hc) -Hc #Hc #Htc1 #Htc2
     whd in ⊢ (%→%); #Houtc >Houtc -Houtc % [ %
     [ >Hcurta_prg #H destruct (H) destruct (Hc)
-    | >Hcurta_prg #H destruct (H) >(?:tc = ta) [|@daemon] % ]
+    | >Hcurta_prg #H destruct (H) >(?:tc = ta) 
+      [| lapply (eq_vec_change_vec ??????? Htc1 Htc2)
+        >change_vec_same // ] % ]
     | >Hcurta_prg >Hc #_ * #H @False_ind /2/ ]
-  | * #tc * * * #Hnottrue #Htc1 #Htc2 cut (tc = ta) [@daemon] -Htc1 -Htc2 
+  | * #tc * * * #Hnottrue #Htc1 #Htc2 cut (tc = ta) 
+    [ lapply (eq_vec_change_vec ??????? Htc1 Htc2)
+      >change_vec_same // ] -Htc1 -Htc2 
     #Htc destruct (Htc) whd in ⊢ (%→?); #Houtc % [ %
     [ #Hcurta_prg lapply (\Pf (Hnotfalse ? Hcurta_prg)) * #H @False_ind /2/
     | #Hcurta_prg lapply (\Pf (Hnottrue ? Hcurta_prg)) * #H @False_ind /2/ ]
@@ -610,7 +638,3 @@ cases (le_to_or_lt_eq … (le_S_S_to_le … Hi)) -Hi #Hi
    >Ht1 >prg_low_tapes //
   ]
 qed. 
-  
-
-    
-         
