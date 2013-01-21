@@ -190,11 +190,65 @@ lemma sem_test_null_char :
   | <Houtc % ] ]
 qed.
 
+definition copy_char_states ≝ initN 3.
+
+definition cc0 : copy_states ≝ mk_Sig ?? 0 (leb_true_to_le 1 3 (refl …)).
+definition cc1 : copy_states ≝ mk_Sig ?? 1 (leb_true_to_le 2 3 (refl …)).
+
+definition trans_copy_char ≝ 
+ λsrc,dst.λsig:FinSet.λn.
+ λp:copy_char_states × (Vector (option sig) (S n)).
+ let 〈q,a〉 ≝ p in
+ match pi1 … q with
+ [ O ⇒ 〈cc1,change_vec ? (S n) 
+           (change_vec ? (S n) (null_action ? n) (〈None ?,R〉) src)
+           (〈nth src ? a (None ?),R〉) dst〉
+ | S _ ⇒ 〈cc1,null_action ? n〉 ].
+
+definition copy_char ≝ 
+  λsrc,dst,sig,n.
+  mk_mTM sig n copy_char_states (trans_copy_char src dst sig n) 
+    cc0 (λq.q == cc1).
+
+definition R_copy_char ≝ 
+  λsrc,dst,sig,n.λint,outt: Vector (tape sig) (S n).
+  outt = change_vec ?? 
+         (change_vec ?? int
+          (tape_move_mono ? (nth src ? int (niltape ?)) 〈None ?, R〉) src)
+          (tape_move_mono ? (nth dst ? int (niltape ?)) 
+           〈current ? (nth src ? int (niltape ?)), R〉) dst.
+
+lemma copy_char_q0_q1 :
+  ∀src,dst,sig,n,v.src ≠ dst → src < S n → dst < S n → 
+  step sig n (copy_char src dst sig n) (mk_mconfig ??? cc0 v) =
+    mk_mconfig ??? cc1 
+     (change_vec ? (S n) 
+       (change_vec ?? v
+         (tape_move_mono ? (nth src ? v (niltape ?)) 〈None ?, R〉) src)
+            (tape_move_mono ? (nth dst ? v (niltape ?)) 〈current ? (nth src ? v (niltape ?)), R〉) dst).
+#src #dst #sig #n #v #Heq #Hsrc #Hdst
+whd in ⊢ (??%?);
+<(change_vec_same … v dst (niltape ?)) in ⊢ (??%?);
+<(change_vec_same … v src (niltape ?)) in ⊢ (??%?);
+>tape_move_multi_def @eq_f2 //
+>pmap_change >pmap_change <tape_move_multi_def
+>tape_move_null_action @eq_f2 // @eq_f2
+[ >change_vec_same %
+| >change_vec_same >change_vec_same // ]
+qed.
+
+lemma sem_copy_char:
+  ∀src,dst,sig,n.src ≠ dst → src < S n → dst < S n → 
+  copy_char src dst sig n ⊨ R_copy_char src dst sig n.
+#src #dst #sig #n #Hneq #Hsrc #Hdst #int
+%{2} % [| % [ % | whd >copy_char_q0_q1 // ]]
+qed.
+
 definition cfg_to_obj ≝
   mmove cfg FSUnialpha 2 L ·
   (ifTM ?? (inject_TM ? test_null_char 2 cfg)
     (nop ? 2)
-    (copy_step cfg obj FSUnialpha 2 ·
+    (copy_char cfg obj FSUnialpha 2 ·
      mmove cfg FSUnialpha 2 L ·
      mmove obj FSUnialpha 2 L) 
      tc_true) ·
@@ -220,7 +274,7 @@ lemma sem_cfg_to_obj : cfg_to_obj ⊨  R_cfg_to_obj.
    (sem_if ??????????
     (acc_sem_inject ?????? cfg ? sem_test_null_char)
     (sem_nop …)
-    (sem_seq ?????? (accRealize_to_Realize … (sem_copy_step …))
+    (sem_seq ?????? (sem_copy_char …)
      (sem_seq ?????? (sem_move_multi ? 2 cfg L ?) (sem_move_multi ? 2 obj L ?))))
    (sem_seq ?????? (sem_inject ???? cfg ? (sem_move_to_end_l ?))
     (sem_move_multi ? 2 cfg R ?)))) // [@sym_not_eq //]
@@ -242,16 +296,35 @@ lemma sem_cfg_to_obj : cfg_to_obj ⊨  R_cfg_to_obj.
   | #Hc >Hta in Htc; >eq_mk_tape_rightof whd in match (tape_move ???); #Htc
     >Htc in Hcurtc; >nth_change_vec // normalize in ⊢ (%→?); 
     #H destruct (H) @False_ind cases Hc /2/ ]
-| * #te * * * #Hcurtc #Hte1 #Hte2
   * #tf * *
-  [ (* purtroppo copy_step assume che la destinazione sia Some (almeno come semantica) *)
-    STOP
-    * #x * #y * * #Hcurte_cfg #Hcurte_obj #Htf
-    * #tg * whd in ⊢ (%→%→?); #Htg #Htd
-    * #th * * * #Hth1 #Hth2 #Hth3 
-    whd in ⊢ (%→%); #Htb
-    #c #ls #Hta % #Hc
-    [ >Hta in Htc; >eq_mk_tape_rightof whd in match (tape_move ???); #Htc
+| * #te * * * #Hcurtc #Hte1 #Hte2
+  * #tf * whd in ⊢ (%→?); #Htf
+  * #tg * whd in ⊢ (%→%→?); #Htg #Htd
+  * #th * * * #Hth1 #Hth2 #Hth3
+  whd in ⊢ (%→?); #Htb 
+  #c #ls #Hta % #Hc
+  [ cut (te = tc) [ @daemon ] -Hte1 -Hte2 #Hte
+    cut (th = change_vec ?? td (mk_tape ? [ ] (None ?) (reverse ? ls@[c])) cfg)
+    [@daemon] -Hth1 -Hth2 -Hth3 #Hth
+    destruct (Hth Hte Hta Htb Htd Htg Htc Htf)
+    >change_vec_change_vec >change_vec_change_vec
+    >change_vec_commute // >change_vec_change_vec
+    >change_vec_commute [|@sym_not_eq //] >change_vec_change_vec
+    >change_vec_commute // >change_vec_change_vec    
+    >nth_change_vec // >nth_change_vec_neq [|@sym_not_eq //] 
+    >nth_change_vec // >nth_change_vec_neq [|@sym_not_eq //]
+    >change_vec_commute [|@sym_not_eq //]
+    @eq_f3 //
+    [ >Hta2 cases rso in Hta2; whd in match (tape_move_mono ???);
+      [ #Hta2 whd in match (tape_move ???); <Hta2 @change_vec_same
+      | #r1 #rs1 #Hta2 whd in match (tape_move ???); <Hta2 @change_vec_same ]
+    | >tape_move_mk_tape_R [| #_ % %] >reverse_cons
+      >nth_change_vec_neq in Hcurtc1; [|@sym_not_eq //] >Hta2
+      normalize in ⊢ (%→?); #H destruct (H) %
+    ]
+    
+  #c #ls #Hta % #Hc
+  [ >Hta in Htc; >eq_mk_tape_rightof whd in match (tape_move ???); #Htc
       >Htc in Hcurtc; >nth_change_vec // normalize in ⊢ (%→?); >Hc
       * #H @False_ind /2/
     | >Hta in Htc; >eq_mk_tape_rightof whd in match (tape_move ???); #Htc
