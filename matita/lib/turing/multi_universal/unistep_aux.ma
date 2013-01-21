@@ -267,6 +267,16 @@ definition R_cfg_to_obj ≝ λt1,t2:Vector (tape FSUnialpha) 3.
           (change_vec ?? t1
              (midtape ? (left ? (nth obj ? t1 (niltape ?))) c (right ? (nth obj ? t1 (niltape ?)))) obj)
           (mk_tape ? [ ] (option_hd ? (reverse ? (c::ls))) (tail ? (reverse ? (c::ls)))) cfg).
+          
+lemma tape_move_mk_tape_L :
+  ∀sig,ls,c,rs.
+  (c = None ? → ls = [ ] ∨ rs = [ ]) → 
+  tape_move ? (mk_tape sig ls c rs) L =
+  mk_tape ? (tail ? ls) (option_hd ? ls) (option_cons ? c rs).
+#sig * [ * [ * | #c * ] | #l0 #ls0 * [ *
+[| #r0 #rs0 #H @False_ind cases (H (refl ??)) #H1 destruct (H1) ] | #c * ] ] 
+normalize //
+qed.
 
 lemma sem_cfg_to_obj : cfg_to_obj ⊨  R_cfg_to_obj.
 @(sem_seq_app FSUnialpha 2 ????? (sem_move_multi ? 2 cfg L ?)
@@ -303,10 +313,12 @@ lemma sem_cfg_to_obj : cfg_to_obj ⊨  R_cfg_to_obj.
   * #th * * * #Hth1 #Hth2 #Hth3
   whd in ⊢ (%→?); #Htb 
   #c #ls #Hta % #Hc
-  [ cut (te = tc) [ @daemon ] -Hte1 -Hte2 #Hte
+  [ >Htc in Hcurtc; >Hta >nth_change_vec // >tape_move_mk_tape_L //
+    >Hc normalize in ⊢ (%→?); * #H @False_ind /2/
+  | cut (te = tc) [ @daemon ] -Hte1 -Hte2 #Hte
     cut (th = change_vec ?? td (mk_tape ? [ ] (None ?) (reverse ? ls@[c])) cfg)
     [@daemon] -Hth1 -Hth2 -Hth3 #Hth
-    destruct (Hth Hte Hta Htb Htd Htg Htc Htf)
+    destruct (Hth Hte Hta Htb Htd Htg Htc Htf) 
     >change_vec_change_vec >change_vec_change_vec
     >change_vec_commute // >change_vec_change_vec
     >change_vec_commute [|@sym_not_eq //] >change_vec_change_vec
@@ -315,22 +327,14 @@ lemma sem_cfg_to_obj : cfg_to_obj ⊨  R_cfg_to_obj.
     >nth_change_vec // >nth_change_vec_neq [|@sym_not_eq //]
     >change_vec_commute [|@sym_not_eq //]
     @eq_f3 //
-    [ >Hta2 cases rso in Hta2; whd in match (tape_move_mono ???);
-      [ #Hta2 whd in match (tape_move ???); <Hta2 @change_vec_same
-      | #r1 #rs1 #Hta2 whd in match (tape_move ???); <Hta2 @change_vec_same ]
-    | >tape_move_mk_tape_R [| #_ % %] >reverse_cons
-      >nth_change_vec_neq in Hcurtc1; [|@sym_not_eq //] >Hta2
-      normalize in ⊢ (%→?); #H destruct (H) %
-    ]
-    
-  #c #ls #Hta % #Hc
-  [ >Hta in Htc; >eq_mk_tape_rightof whd in match (tape_move ???); #Htc
-      >Htc in Hcurtc; >nth_change_vec // normalize in ⊢ (%→?); >Hc
-      * #H @False_ind /2/
-    | >Hta in Htc; >eq_mk_tape_rightof whd in match (tape_move ???); #Htc
-      cut (te = tc) [@daemon] -Hte1 -Hte2 #Hte
+    [ >Hta >tape_move_mk_tape_L // >nth_change_vec // whd in match (current ??);
+      @eq_f2 // cases (nth obj ? ta (niltape ?))
+      [| #r0 #rs0 | #l0 #ls0 | #ls0 #c0 #rs0 ] try %
+      cases rs0 //
+    | >reverse_cons >tape_move_mk_tape_R // #_ % % ]
+  ]
+]
 qed.
-*)
 
 (* macchina che muove il nastro obj a destra o sinistra a seconda del valore
    del current di prg, che codifica la direzione in cui ci muoviamo *)
