@@ -358,6 +358,61 @@ definition tape_move_obj : mTM FSUnialpha 2 ≝
     tc_true)
    tc_true.
 
+definition R_tape_move_obj' ≝ λt1,t2:Vector (tape FSUnialpha) 3.
+  (current ? (nth prg ? t1 (niltape ?)) = Some ? (bit false) → 
+   t2 = change_vec ?? t1 (tape_move ? (nth obj ? t1 (niltape ?)) L) obj) ∧
+  (current ? (nth prg ? t1 (niltape ?)) = Some ? (bit true) → 
+   t2 = change_vec ?? t1 (tape_move ? (nth obj ? t1 (niltape ?)) R) obj) ∧
+  (current ? (nth prg ? t1 (niltape ?)) ≠ Some ? (bit false) →
+   current ? (nth prg ? t1 (niltape ?)) ≠ Some ? (bit true) →  
+   t2 = t1).
+   
+lemma sem_tape_move_obj' : tape_move_obj ⊨ R_tape_move_obj'.
+#ta cases (sem_if ??????????
+  (acc_sem_inject ?????? prg ? (sem_test_char ? (λc:FSUnialpha.c == bit false)))
+  (sem_move_multi ? 2 obj L ?)
+  (sem_if ??????????
+   (acc_sem_inject ?????? prg ? (sem_test_char ? (λc:FSUnialpha.c == bit true)))
+   (sem_move_multi ? 2 obj R ?)
+   (sem_nop …)) ta) //
+#i * #outc * #Hloop #HR %{i} %{outc} % [@Hloop] -i
+cases HR -HR
+[ * #tb * * * * #c * #Hcurta_prg #Hc lapply (\P Hc) -Hc #Hc #Htb1 #Htb2
+  whd in ⊢ (%→%); #Houtc >Houtc -Houtc % [ %
+  [ >Hcurta_prg #H destruct (H) >(?:tb = ta) [|@daemon] %
+  | >Hcurta_prg #H destruct (H) destruct (Hc) ]
+  | >Hcurta_prg >Hc * #H @False_ind /2/ ]
+| * #tb * * * #Hnotfalse #Htb1 #Htb2 cut (tb = ta) [@daemon] -Htb1 -Htb2
+  #Htb destruct (Htb) *
+  [ * #tc * * * * #c * #Hcurta_prg #Hc lapply (\P Hc) -Hc #Hc #Htc1 #Htc2
+    whd in ⊢ (%→%); #Houtc >Houtc -Houtc % [ %
+    [ >Hcurta_prg #H destruct (H) destruct (Hc)
+    | >Hcurta_prg #H destruct (H) >(?:tc = ta) [|@daemon] % ]
+    | >Hcurta_prg >Hc #_ * #H @False_ind /2/ ]
+  | * #tc * * * #Hnottrue #Htc1 #Htc2 cut (tc = ta) [@daemon] -Htc1 -Htc2 
+    #Htc destruct (Htc) whd in ⊢ (%→?); #Houtc % [ %
+    [ #Hcurta_prg lapply (\Pf (Hnotfalse ? Hcurta_prg)) * #H @False_ind /2/
+    | #Hcurta_prg lapply (\Pf (Hnottrue ? Hcurta_prg)) * #H @False_ind /2/ ]
+    | #_ #_ @Houtc ]
+  ]
+]
+qed.
+
+definition R_tape_move_obj ≝ λt1,t2:Vector (tape FSUnialpha) 3.
+  ∀c. current ? (nth prg ? t1 (niltape ?)) = Some ? c → 
+  t2 = change_vec ?? t1 (tape_move ? (nth obj ? t1 (niltape ?)) (char_to_move c)) obj.
+
+lemma sem_tape_move_obj : tape_move_obj ⊨ R_tape_move_obj.
+@(Realize_to_Realize … sem_tape_move_obj')
+#ta #tb * * #Htb1 #Htb2 #Htb3 * [ *
+[ @Htb2 | @Htb1 ] 
+| #Hcurta_prg change with (nth obj ? ta (niltape ?)) in match (tape_move ???);
+  >change_vec_same @Htb3 >Hcurta_prg % #H destruct (H)
+| #Hcurta_prg change with (nth obj ? ta (niltape ?)) in match (tape_move ???);
+  >change_vec_same @Htb3 >Hcurta_prg % #H destruct (H)
+]
+qed.
+
 definition restart_tape ≝ λi. 
   inject_TM ? (move_to_end FSUnialpha L) 2 i ·
   mmove i FSUnialpha 2 R. 
