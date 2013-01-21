@@ -486,13 +486,14 @@ lemma low_char_current : ∀t.
   = low_char (current FinBool t).
 * // qed.
 
-definition low_tapes ≝ λM:normalTM.λc:nconfig (no_states M).Vector_of_list ?
+definition low_tapes: ∀M:normalTM.∀c:nconfig (no_states M).Vector ? 3 ≝ 
+λM:normalTM.λc:nconfig (no_states M).Vector_of_list ?
   [tape_map ?? bit (ctape ?? c);
    midtape ? [ ] bar 
     ((bits_of_state ? (nhalt M) (cstate ?? c))@[low_char (current ? (ctape ?? c))]);
    midtape ? [ ] bar (tail ? (table_TM ? (graph_enum ?? (ntrans M)) (nhalt M)))
   ].
-  
+
 lemma obj_low_tapes: ∀M,c.
   nth obj ? (low_tapes M c) (niltape ?) = tape_map ?? bit (ctape ?? c).
 // qed.
@@ -539,14 +540,15 @@ lemma map_move_mono: ∀t,cout,m.
 @map_action
 qed. 
 
-definition R_unistep_high ≝ λM:normalTM.λc:nconfig (no_states M).λt1,t2.
+definition R_unistep_high ≝ λM:normalTM.λt1,t2.
+∀c:nconfig (no_states M).
   t1 = low_tapes M c → 
   t2 = low_tapes M (step ? M c). 
 
-lemma R_unistep_equiv : ∀M,c,t1,t2. 
+lemma R_unistep_equiv : ∀M,t1,t2. 
   R_unistep (no_states M) (graph_enum ?? (ntrans M)) (nhalt M) t1 t2 →
-  R_unistep_high M c t1 t2.
-#M #c #t1 #t2 #H #Ht1
+  R_unistep_high M t1 t2.
+#M #t1 #t2 #H whd whd in match (nconfig ?); #c #Ht1
 lapply (initial_bar ? (nhalt M) (graph_enum ?? (ntrans M)) (nTM_nog ?)) #Htable
 (* tup = current tuple *)
 cut (∃t.t = 〈〈cstate … c,current ? (ctape … c)〉, 
@@ -588,7 +590,7 @@ lapply(H (bits_of_state ? (nhalt M) (cstate ?? c))
 lapply(H (bits_of_state … (nhalt M) qout) (low_char … cout) 
          (low_mv … m) tup ? Hingraph)
   [>Htup whd in ⊢ (??%?); @eq_f >associative_append %] -H
-#Ht2 >Ht2 @(eq_vec ? 3 … (niltape ?)) #i #Hi 
+#Ht2 @(eq_vec ? 3 ?? (niltape ?) ?) >Ht2 #i #Hi 
 cases (le_to_or_lt_eq … (le_S_S_to_le … Hi)) -Hi #Hi
   [cases (le_to_or_lt_eq … (le_S_S_to_le … Hi)) -Hi #Hi
     [cases (le_to_or_lt_eq … (le_S_S_to_le … Hi)) -Hi #Hi
@@ -608,7 +610,7 @@ cases (le_to_or_lt_eq … (le_S_S_to_le … Hi)) -Hi #Hi
    >Ht1 >prg_low_tapes //
   ]
 qed. 
-   
+  
 
     
          
