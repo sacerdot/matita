@@ -321,6 +321,23 @@ lapply (sem_while … (sem_mte_step sig R) … Hloop) //
     | #ls1 #c1 #rs1 #H destruct (H) >reverse_cons >associative_append @IH % ] ] ]
 qed.
 
+lemma terminate_move_to_end_r :  ∀sig,t.move_to_end sig R ↓ t.
+#sig #t @(terminate_while … (sem_mte_step sig R …)) //
+cases t
+[ % #t1 * #ls * #c * #rs * #H destruct
+|2,3: #a0 #al0 % #t1 * #ls * #c * #rs * #H destruct
+| #ls #c #rs lapply c -c lapply ls -ls elim rs
+  [ #ls #c % #t1 * #ls0 * #c0 * #rs0 * #Hmid #Ht1 destruct %
+    #t2 * #ls1 * #c1 * #rs1 * normalize in ⊢ (%→?); #H destruct
+  | #r0 #rs0 #IH #ls #c % #t1 * #ls1 * #c1 * #rs1 * #Hmid #Ht1 destruct @IH
+  ]
+]
+qed.
+
+lemma sem_move_to_end_r : ∀sig. move_to_end sig R ⊨ R_move_to_end_r sig.
+#sig @WRealize_to_Realize //
+qed.
+
 definition R_move_to_end_l ≝ 
   λsig,int,outt.
   (current ? int = None ? → outt = int) ∧
@@ -340,4 +357,21 @@ lapply (sem_while … (sem_mte_step sig L) … Hloop) //
     lapply (IH Hfalse) -IH * #_ #IH %
     [ normalize in ⊢ (%→?); #H destruct (H)
     | #ls1 #c1 #rs1 #H destruct (H) >reverse_cons >associative_append @IH % ] ] ]
+qed.
+
+lemma terminate_move_to_end_l :  ∀sig,t.move_to_end sig L ↓ t.
+#sig #t @(terminate_while … (sem_mte_step sig L …)) //
+cases t
+[ % #t1 * #ls * #c * #rs * #H destruct
+|2,3: #a0 #al0 % #t1 * #ls * #c * #rs * #H destruct
+| #ls elim ls
+  [ #c #rs % #t1 * #ls0 * #c0 * #rs0 * #Hmid #Ht1 destruct %
+    #t2 * #ls1 * #c1 * #rs1 * normalize in ⊢ (%→?); #H destruct
+  | #l0 #ls0 #IH #c #rs % #t1 * #ls1 * #c1 * #rs1 * #Hmid #Ht1 destruct @IH
+  ]
+]
+qed.
+
+lemma sem_move_to_end_l : ∀sig. move_to_end sig L ⊨ R_move_to_end_l sig.
+#sig @WRealize_to_Realize //
 qed.
