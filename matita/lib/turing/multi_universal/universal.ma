@@ -9,86 +9,92 @@
      \ /   GNU General Public License Version 2   
       V_____________________________________________________________*)
 
-
+include "turing/simple_machines.ma".
 include "turing/multi_universal/unistep_aux.ma".
 
-axiom sem_unistep: ∀M,cf. unistep ⊨ R_unistep_high M cf.
+axiom sem_unistep: ∀M. unistep ⊨ R_unistep_high M.
 
-definition loop_uni ≝ 
-  ifTM ?? (inject_TM ? (test_char ? (λc.c == bit false)) 2 cfg)
+definition stop ≝ λc.
+  match c with [ bit b ⇒ notb b | _ ⇒ true].
+  
+definition uni_body ≝ 
+  ifTM ?? (mtestR ? cfg 2 stop)
     (single_finalTM ?? unistep)
-    (nop …) tc_true.
+    (nop …) (mtestR_acc ? cfg 2 stop).
 
-definition lu_acc : states ?? loop_uni ≝ (inr … (inl … (inr … start_nop))).
+definition acc_body : states ?? uni_body ≝ (inr … (inl … (inr … start_nop))).
 
-lemma sem_loop_uni: ∀M,cf.
-  loop_uni ⊨ [lu_acc: R_unistep_high M cf, λt1,t2.t1=t2].
+definition ub_R_true ≝ λM,t1,t2.
+  ∀c: nconfig (no_states M). 
+  t1=low_tapes M c→
+    t2=low_tapes M (step FinBool M c) ∧ halt ? M (cstate … c) = false.
+  
+definition ub_R_false ≝ λM,t1,t2.
+  ∀c: nconfig (no_states M).  
+  t1 = low_tapes M c → t1 = t2 ∧ halt ? M (cstate … c) = true.
+
+lemma sem_uni_body: ∀M.
+  uni_body ⊨ [acc_body: ub_R_true M, ub_R_false M].
 #M #cf 
 @(acc_sem_if_app ????????????
-   (sem_test_char_multi ? (λc.c == bit false) 2 cfg (le_S ?? (le_n 1)))
-   (sem_unistep M cf)
+   (sem_mtestR ? cfg 2 stop (le_S ?? (le_n 1)))
+   (sem_unistep M)
    (sem_nop …))
-[#t1 #t2 #t3 * #_ #Ht3 >Ht3 // |#t1 #t2 #t3 * #_ #Ht3 whd in ⊢ (%→?); //]
+[#t1 #t2 #t3 whd in ⊢ (%→?); #Htest #Ht2 * #q #Mt #Ht1
+ >Ht1 in Htest; >cfg_low_tapes whd in match (bits_of_state ???);
+ #Htest lapply (Htest … (refl ??)) * <Ht1 #Ht3 #Hstop >Ht3 in Ht2;
+ #Ht2 % [@Ht2 //] lapply Hstop  whd in match (nhalt ??); 
+ cases (nhalt M q) whd in match (stop ?); * /2/
+|#t1 #t2 #t3 whd in ⊢ (%→?); #Htest #Hnop >Hnop -Hnop * #q #Mt #Ht1 >Ht1 in Htest;
+ >cfg_low_tapes whd in match (bits_of_state ???); 
+ #Htest lapply (Htest … (refl ??)) whd in match (nhalt ??); 
+ cases (nhalt M q) whd in match (stop ?); * /2/ 
+]
 qed.
 
-definition universalTM ≝ whileTM ?? loop_uni lu_acc.
+definition universalTM ≝ whileTM ?? uni_body acc_body.
 
-definition low_R ≝ λM,R.λt1,t2:Vector (tape FSUnialpha) 3.
-    ∀cin. t1 = low_tapes M cin  → 
-    ∃cout. R (ctape … cin) (ctape … cout) ∧
+definition low_R ≝ λM,q,R.λt1,t2:Vector (tape FSUnialpha) 3.
+    ∀Mt. t1 = low_tapes M (mk_config ?? q Mt) → 
+    ∃cout. R Mt (ctape … cout) ∧
     halt ? M (cstate … cout) = true ∧ t2 = low_tapes M cout.
 
-theorem sem_universal: ∀M:normalTM. ∀startc.
-  universalTM ⊫ (low_R M (R_TM FinBool M startc)).
-#M #cin #intape #i #outc #Hloop
-lapply (sem_while … (sem_loop_uni intape i outc Hloop)
-  [@daemon] -Hloop 
-* #ta * #Hstar generalize in match q; -q 
-@(star_ind_l ??????? Hstar)
-  [#tb #q0 whd in ⊢ (%→?); #Htb #tape1 #Htb1
-   cases (Htb … Htb1) -Htb #Hhalt #Htb
-   <Htb >Htb1 @ex_intro 
-   [|%{tape1} %
-     [ % 
-       [ whd @(ex_intro … 1) @(ex_intro … (mk_config … q0 tape1))
-        % [|%] whd in ⊢ (??%?); >Hhalt % 
-       | @Hhalt ]
-     | % ]
-   ]
-  |#tb #tc #td whd in ⊢ (%→?); #Htc #Hstar1 #IH 
-   #q #Htd #tape1 #Htb 
-   lapply (IH (\fst (trans ? M 〈q,current ? tape1〉)) Htd) -IH 
-   #IH cases (Htc … Htb); -Htc #Hhaltq 
-   whd in match (step FinBool ??); >(eq_pair_fst_snd ?? (trans ???)) 
-   #Htc change with (mk_config ????) in Htc:(???(??%)); 
-   cases (IH ? Htc) #q1 * #tape2 * * #HRTM #Hhaltq1 #Houtc
-   @(ex_intro … q1) @(ex_intro … tape2) % 
-    [%
-      [cases HRTM #k * #outc1 * #Hloop #Houtc1
-       @(ex_intro … (S k)) @(ex_intro … outc1) % 
-        [>loopM_unfold >loop_S_false [2://] whd in match (step FinBool ??); 
-         >(eq_pair_fst_snd ?? (trans ???)) @Hloop
+theorem sem_universal: ∀M:normalTM. ∀q.
+  universalTM ⊫ low_R M q (R_TM FinBool M q).
+#M #q #intape #i #outc #Hloop
+lapply (sem_while … (sem_uni_body M … ) intape i outc Hloop) [%] -Hloop 
+* #ta * #Hstar lapply q -q @(star_ind_l ??????? Hstar) -Hstar
+  [#q whd in ⊢ (%→?); #HFalse whd #Mt #Hta 
+   lapply (HFalse … Hta) * #Hta1 #Hhalt %{(mk_config ?? q Mt)} %
+    [%[%{1} %{(mk_config ?? q Mt)} % // whd in ⊢ (??%?); >Hhalt % |@Hhalt]
+    |<Hta1 @Hta  
+    ]
+  |#t1 #t2 whd in ⊢ (%→?); #Hstep #Hstar #IH #q #Hta whd #Mt #Ht1
+   lapply (Hstep … Ht1) * -Hstep #Ht2 #Hhalt
+   lapply(IH (cstate … (step FinBool M (mk_config ?? q Mt))) Hta ??) [@Ht2|skip] -IH 
+   * #cout * * #HRTM #Hhalt1 #Houtc
+   %{cout} 
+   %[%[cases HRTM #k * #outc1 * <config_expand #Hloop #Houtc1
+       %{(S k)} %{outc1} % 
+        [whd in ⊢ (??%?); >Hhalt whd in ⊢ (??%?); @Hloop 
         |@Houtc1
         ]
-      |@Hhaltq1]
+      |@Hhalt1]
     |@Houtc
     ]
-  ]
-*)  
+  ] 
 qed.
   
-qed.
-
 theorem sem_universal2: ∀M:normalTM. ∀R.
   M ⊫ R → universalTM ⊫ (low_R M (start ? M) R).
 #M #R #HMR lapply (sem_universal … M (start ? M)) @WRealize_to_WRealize
 #t1 #t2 whd in ⊢ (%→%); #H #tape1 #Htape1 cases (H ? Htape1)
-#q * #tape2 * * #HRTM #Hhalt #Ht2 @(ex_intro … q) @(ex_intro … tape2)
+#c * * #HRTM #Hhalt #Ht2 %{c}
 % [% [@(R_TM_to_R … HRTM) @HMR | //] | //]
 qed.
  
 axiom terminate_UTM: ∀M:normalTM.∀t. 
-  M ↓ t → universalTM ↓ (low_config M (mk_config ?? (start ? M) t)).
+  M ↓ t → universalTM ↓ (low_tapes M (mk_config ?? (start ? M) t)).
  
 
 
