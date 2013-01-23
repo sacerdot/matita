@@ -170,16 +170,16 @@ lemma pl_st_dsubst: ∀p. sdsubstable_f_dx … (booleanized ⊥) (pl_st p).
 ]
 qed.
 
-lemma pl_st_inv_empty: ∀p,G1,G2. G1 Ⓡ↦[p] G2 → ∀F1. {⊥}⇕F1 = G1 → ⊥.
+lemma pl_st_inv_empty: ∀p,F1,F2. F1 Ⓡ↦[p] F2 → ∀M1. {⊥}⇑M1 = F1 → ⊥.
 #p #F1 #F2 #H elim H -p -F1 -F2
-[ #V #T #F1 #H
-  elim (booleanized_inv_appl … H) -H #c #W #U #H destruct
-| #b #p #T1 #T2 #_ #IHT12 #F1 #H
-  elim (booleanized_inv_abst … H) -H /2 width=2/
-| #b #p #V1 #V2 #T #_ #IHV12 #F1 #H
-  elim (booleanized_inv_appl … H) -H /2 width=2/
-| #b #p #V #T1 #T2 #_ #IHT12 #F1 #H
-  elim (booleanized_inv_appl … H) -H /2 width=2/
+[ #V #T #M1 #H
+  elim (boolean_inv_appl … H) -H #B #A #H destruct
+| #b #p #T1 #T2 #_ #IHT12 #M1 #H
+  elim (boolean_inv_abst … H) -H /2 width=2/
+| #b #p #V1 #V2 #T #_ #IHV12 #M1 #H
+  elim (boolean_inv_appl … H) -H /2 width=2/
+| #b #p #V #T1 #T2 #_ #IHT12 #M1 #H
+  elim (boolean_inv_appl … H) -H /2 width=2/
 ]
 qed-.
 

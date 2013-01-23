@@ -73,6 +73,19 @@ lemma sle_dichotomy: ∀p1,p2:path. p1 ≤ p2 ∨ p2 ≤ p1.
 ]
 qed-.
 
+lemma sle_inv_dx: ∀p,q. p ≤ q → ∀q0. dx::q0 = q →
+                  in_whd p ∨ ∃∃p0. p0 ≤ q0 & dx::p0 = p.
+#p #q #H @(star_ind_l … p H) -p [ /3 width=3/ ]
+#p0 #p #Hp0 #_ #IHpq #q1 #H destruct
+elim (IHpq ??) -IHpq [4: // |3: skip ] (**) (* simplify line *)
+[ lapply (sprec_fwd_in_whd … Hp0) -Hp0 /3 width=1/
+| * #p1 #Hpq1 #H elim (sprec_inv_dx … Hp0 … H) -p
+  [ #H destruct /2 width=1/
+  | * /4 width=3/
+  ]
+]
+qed-.
+
 lemma sle_inv_rc: ∀p,q. p ≤ q → ∀p0. rc::p0 = p →
                   (∃∃q0. p0 ≤ q0 & rc::q0 = q) ∨
                   ∃q0. sn::q0 = q.
@@ -112,4 +125,8 @@ qed-.
 
 lemma sle_fwd_in_whd: ∀p,q. p ≤ q → in_whd q → in_whd p.
 #p #q #H @(star_ind_l … p H) -p // /3 width=3 by sprec_fwd_in_whd/
+qed-.
+
+lemma sle_fwd_in_inner: ∀p,q. p ≤ q → in_inner p → in_inner q.
+/3 width=3 by sle_fwd_in_whd/
 qed-.

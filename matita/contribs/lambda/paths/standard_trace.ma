@@ -61,6 +61,15 @@ elim (sle_inv_rc … H ??) -H [4: // |2: skip ] * (**) (* simplify line *)
 ]
 qed-.
 
+lemma is_standard_inv_compatible_dx: ∀s. is_standard (dx:::s) →
+                                     is_inner s → is_standard s.
+#s elim s -s // #a1 * // #a2 #s #IHs * #H
+elim (sle_inv_dx … H ??) -H [4: // |3: skip ] (**) (* simplify line *)
+[ * #_ #H1a1 #_ * #H2a1 #_ -IHs
+  elim (H2a1 ?) -H2a1 -a2 -s //
+| * #a #Ha2 #H destruct #H * #_ /3 width=1/
+qed-.
+
 lemma is_standard_fwd_sle: ∀s2,p2,s1,p1. is_standard ((p1::s1)@(p2::s2)) → p1 ≤ p2.
 #s2 #p2 #s1 elim s1 -s1
 [ #p1 * //
@@ -90,3 +99,8 @@ lapply (is_standard_fwd_cons … H)
 lapply (is_standard_fwd_sle … H) #Hqp
 lapply (sle_fwd_in_whd … Hqp Hp) /3 width=1/
 qed-.
+
+lemma is_standard_fwd_in_inner: ∀s,p. is_standard (p::s) → in_inner p → is_inner s.
+#s elim s -s // #q #s #IHs #p * #Hpq #Hs #Hp
+lapply (sle_fwd_in_inner … Hpq ?) // -p /3 width=3/
+qed.
