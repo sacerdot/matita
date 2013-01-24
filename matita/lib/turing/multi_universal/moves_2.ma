@@ -170,6 +170,13 @@ definition R_parmoveL ≝
     outt = change_vec ?? 
            (change_vec ?? int (mk_tape sig [] (None ?) (reverse ? xs@x::rs)) src)
            (mk_tape sig (tail ? ls0) (option_hd ? ls0) (reverse ? target@x0::rs0)) dst) ∧
+  (∀x,xs,rs.
+    nth dst ? int (niltape ?) = midtape sig xs x rs → 
+    ∀ls0,x0,target,rs0.|xs| = |target| → 
+    nth src ? int (niltape ?) = midtape sig (target@ls0) x0 rs0 → 
+    outt = change_vec ?? 
+           (change_vec ?? int (mk_tape sig [] (None ?) (reverse ? xs@x::rs)) dst)
+           (mk_tape sig (tail ? ls0) (option_hd ? ls0) (reverse ? target@x0::rs0)) src) ∧
   ((current ? (nth src ? int (niltape ?)) = None ? ∨
     current ? (nth dst ? int (niltape ?)) = None ?) →
     outt = int).
@@ -179,14 +186,22 @@ lemma wsem_parmoveL : ∀src,dst,sig,n.src ≠ dst → src < S n → dst < S n �
 #src #dst #sig #n #Hneq #Hsrc #Hdst #ta #k #outc #Hloop
 lapply (sem_while … (sem_parmove_step src dst sig n L Hneq Hsrc Hdst) … Hloop) //
 -Hloop * #tb * #Hstar @(star_ind_l ??????? Hstar) -Hstar
-[ whd in ⊢ (%→?); * #H #Houtc % [2: #_ @Houtc ] cases H
-  [ #Hcurtb #x #xs #rs #Hsrctb >Hsrctb in Hcurtb; normalize in ⊢ (%→?);
-    #Hfalse destruct (Hfalse)
-  | #Hcur_dst #x #xs #rs #Hsrctb #ls0 #x0 #target 
-    #rs0 #Hlen #Hdsttb >Hdsttb in Hcur_dst; normalize in ⊢ (%→?); #H destruct (H)
+[ whd in ⊢ (%→?); * #H #Houtc % [2: #_ @Houtc ] cases H #Hcurtb
+  [ % 
+    [ #x #xs #rs #Hsrctb >Hsrctb in Hcurtb; normalize in ⊢ (%→?);
+      #Hfalse destruct (Hfalse)
+    | #x #xs #rs #Hdsttb #ls0 #x0 #target #rs0 #Hlen #Hsrctb >Hsrctb in Hcurtb;
+      normalize in ⊢ (%→?); #H destruct (H)
+    ]
+  | %
+    [ #x #xs #rs #Hsrctb #ls0 #x0 #target 
+      #rs0 #Hlen #Hdsttb >Hdsttb in Hcurtb; normalize in ⊢ (%→?); #H destruct (H)
+    | #x #xs #rs #Hdsttb >Hdsttb in Hcurtb; normalize in ⊢ (%→?);
+      #Hfalse destruct (Hfalse)
+    ]
   ]  
 | #td #te * #c0 * #c1 * * #Hc0 #Hc1 #Hd #Hstar #IH #He 
-  lapply (IH He) -IH * #IH1 #IH2 %
+  lapply (IH He) -IH * * #IH1a #IH1b #IH2 % [ %
   [ #x #xs #rs #Hsrc_td #ls0 #x0 #target
     #rs0 #Hlen #Hdst_td
     >Hsrc_td in Hc0; normalize in ⊢ (%→?); #Hc0 destruct (Hc0)
@@ -211,20 +226,55 @@ lapply (sem_while … (sem_parmove_step src dst sig n L Hneq Hsrc Hdst) … Hloo
         ]
       ]
     | #hd1 #hd2 #tl1 #tl2 #Hxs #Htarget >Hxs >Htarget #Hd
-      >(IH1 hd1 tl1 (c0::rs) ? ls0 hd2 tl2 (x0::rs0))
+      >(IH1a hd1 tl1 (c0::rs) ? ls0 hd2 tl2 (x0::rs0))
       [ >Hd >(change_vec_commute … ?? td ?? src dst) //
-       >change_vec_change_vec
-       >(change_vec_commute … ?? td ?? dst src) [|@sym_not_eq //]
-       >change_vec_change_vec
-       >reverse_cons >associative_append
-       >reverse_cons >associative_append % 
-     | >Hd >nth_change_vec //
-     | >Hxs in Hlen; >Htarget normalize #Hlen destruct (Hlen) //
-     | >Hd >nth_change_vec_neq [|@sym_not_eq //]
-       >nth_change_vec // ]
-   ]
- | >Hc0 >Hc1 * [ #Hc0 destruct (Hc0) | #Hc1 destruct (Hc1) ]
- ] ]
+        >change_vec_change_vec
+        >(change_vec_commute … ?? td ?? dst src) [|@sym_not_eq //]
+        >change_vec_change_vec
+        >reverse_cons >associative_append
+        >reverse_cons >associative_append % 
+      | >Hd >nth_change_vec //
+      | >Hxs in Hlen; >Htarget normalize #Hlen destruct (Hlen) //
+      | >Hd >nth_change_vec_neq [|@sym_not_eq //]
+        >nth_change_vec // ]
+    ]
+  | #x #xs #rs #Hdst_td #ls0 #x0 #target
+    #rs0 #Hlen #Hsrc_td
+    >Hdst_td in Hc0; normalize in ⊢ (%→?); #Hc0 destruct (Hc0)
+    >Hsrc_td in Hd; >Hdst_td @(list_cases2 … Hlen)
+    [ #Hxsnil #Htargetnil >Hxsnil >Htargetnil #Hd >IH2 
+      [2: %2 >Hd >nth_change_vec //]
+      >Hd -Hd @(eq_vec … (niltape ?))
+      #i #Hi cases (decidable_eq_nat i dst) #Hidst
+      [ >Hidst >(nth_change_vec_neq … dst src) //
+        >nth_change_vec // >nth_change_vec //
+      | cases (decidable_eq_nat i src) #Hisrc
+        [ >Hisrc >nth_change_vec // >(nth_change_vec_neq …) [|@sym_not_eq //]
+          >Hsrc_td in Hc1; >Htargetnil
+          normalize in ⊢ (%→?); #Hc1 destruct (Hc1) >nth_change_vec //
+          cases ls0 //
+        | >nth_change_vec_neq [|@(sym_not_eq … Hidst)]
+          >nth_change_vec_neq [|@(sym_not_eq … Hisrc)]
+          >nth_change_vec_neq [|@(sym_not_eq … Hisrc)]
+          >nth_change_vec_neq [|@(sym_not_eq … Hidst)] % 
+        ]
+      ]
+    | #hd1 #hd2 #tl1 #tl2 #Hxs #Htarget >Hxs >Htarget #Hd
+      >(IH1b hd1 tl1 (x::rs) ? ls0 hd2 tl2 (x0::rs0))
+      [ >Hd >(change_vec_commute … ?? td ?? dst src) [|@sym_not_eq //]
+        >change_vec_change_vec
+        >(change_vec_commute … ?? td ?? src dst) //
+        >change_vec_change_vec
+        >reverse_cons >associative_append
+        >reverse_cons >associative_append
+        >change_vec_commute [|@sym_not_eq //] %
+      | >Hd >nth_change_vec_neq [|@sym_not_eq //] >nth_change_vec //
+      | >Hxs in Hlen; >Htarget normalize #Hlen destruct (Hlen) //
+      | >Hd >nth_change_vec // ]
+    ]
+  ]
+| >Hc0 >Hc1 * [ #Hc0 destruct (Hc0) | #Hc1 destruct (Hc1) ]
+] ]
 qed.
  
 lemma terminate_parmoveL :  ∀src,dst,sig,n,t.
