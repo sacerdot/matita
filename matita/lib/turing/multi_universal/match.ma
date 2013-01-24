@@ -522,18 +522,24 @@ qed.
 
 axiom daemon : ∀P:Prop.P.
 
+(* XXX: move to turing (or mono) *)
+definition option_cons ≝ λsig.λc:option sig.λl.
+  match c with [ None ⇒ l | Some c0 ⇒ c0::l ].
+
 definition R_match_step_true_naive ≝ 
   λsrc,dst,sig,n.λint,outt: Vector (tape sig) (S n).
   |left ? (nth src ? outt (niltape ?))| +
-  |right ? (nth dst ? outt (niltape ?))| <
+  |option_cons ? (current ? (nth dst ? outt (niltape ?))) (right ? (nth dst ? outt (niltape ?)))| <
   |left ? (nth src ? int (niltape ?))| +
-  |right ? (nth dst ? int (niltape ?))|.
+  |option_cons ? (current ? (nth dst ? int (niltape ?))) (right ? (nth dst ? int (niltape ?)))|.
 
 axiom right_mk_tape : ∀sig,ls,c,rs.right ? (mk_tape sig ls c rs) = rs.
 axiom left_mk_tape : ∀sig,ls,c,rs.left ? (mk_tape sig ls c rs) = ls.
+axiom current_mk_tape : ∀sig,ls,c,rs.current ? (mk_tape sig ls c rs) = c.
 axiom length_tail : ∀A,l.0 < |l| → |tail A l| < |l|.
 axiom lists_length_split : 
  ∀A.∀l1,l2:list A.(∃la,lb.(|la| = |l1| ∧ l2 = la@lb) ∨ (|la| = |l2| ∧ l1 = la@lb)).
+axiom opt_cons_tail_expand : ∀A,l.l = option_cons A (option_hd ? l) (tail ? l).
   
 lemma sem_match_step_termination :
   ∀src,dst,sig,n.src ≠ dst → src < S n → dst < S n → 
@@ -598,8 +604,9 @@ lemma sem_match_step_termination :
               [@daemon] -Htb1 -Htb2 #Htb >Htb whd >nth_change_vec //
               >nth_change_vec_neq [|@sym_not_eq //] >nth_change_vec //
               >right_mk_tape normalize in match (left ??);
-              >Hmidta_src >Hmidta_dst >length_tail >Hrs0 >length_append 
-              normalize in ⊢ (?(?%)(?%?)); >commutative_plus //
+              >Hmidta_src >Hmidta_dst >current_mk_tape <opt_cons_tail_expand
+              whd in match (option_cons ???); >Hrs0
+              normalize in ⊢ (?(?%)%); //
             | #hda #hdb #tla #tlb #H1 #H2 >H1 >H2
               >reverse_cons >reverse_cons #Hte
               lapply (Hte ci hdb (reverse ? xs@s0::reverse ? tlb) rs'' ?
@@ -617,11 +624,96 @@ lemma sem_match_step_termination :
               >nth_change_vec // >nth_change_vec_neq // >nth_change_vec //
               >right_mk_tape >Hmidta_src >Hmidta_dst 
               whd in match (left ??); whd in match (left ??); whd in match (right ??);
-              >length_tail >Hrs0 >length_append >length_append >length_reverse
+              >current_mk_tape <opt_cons_tail_expand whd in match (option_cons ???);
+              >Hrs0 >length_append whd in ⊢ (??(??%)); >length_append >length_reverse
               >length_append >commutative_plus in match (|reverse ??| + ?);
               whd in match (|?::?|); >length_reverse >length_reverse
               <(length_reverse ? ls) <Hlen' >H1 normalize // ]
          | #_ #Hte #_ <(reverse_reverse … ls0) in Hte; <(reverse_reverse … lsa)
+            cut (|reverse ? lsa| = |reverse ? ls0|) [ // ] #Hlen' 
+            @(list_cases2 … Hlen')
+            [ #H1 #H2 >H1 >H2 normalize in match (reverse ? [ ]); #Hte
+              lapply (Hte … (refl ??) … (refl ??) (refl ??)) -Hte
+              >change_vec_change_vec >change_vec_commute [|@sym_not_eq //] 
+              >change_vec_change_vec #Hte
+              >Hte * * #_ >nth_change_vec // >reverse_reverse 
+              #H lapply (H … (refl ??)) -H #Htb1 #Htb2
+              cut (tb = change_vec ?? (change_vec (tape sig) (S n) ta (mk_tape ? [s0] (option_hd ? (xs@cj::rs0')) (tail ? (xs@cj::rs0'))) dst)
+                           (midtape ? lsb s0 (xs@ci::rs'')) src)
+              [@daemon] -Htb1 -Htb2 #Htb >Htb whd >nth_change_vec //
+              >nth_change_vec_neq // >nth_change_vec //
+              >right_mk_tape normalize in match (left ??);
+              >Hmidta_src >Hmidta_dst >current_mk_tape <opt_cons_tail_expand >Hrs0
+              >length_append normalize >length_append >length_append
+              <(reverse_reverse ? lsa) >H1 normalize //
+            | #hda #hdb #tla #tlb #H1 #H2 >H1 >H2
+              >reverse_cons >reverse_cons #Hte
+              lapply (Hte cj hdb (reverse ? xs@s0::reverse ? tlb) rs0' ?
+                       lsb ci hda (reverse ? xs@s0::reverse ? tla) rs'' ??)
+              [ /2 by cons_injective_l, nil/
+              | >length_append >length_append @eq_f @(eq_f ?? S)
+                >H1 in Hlen'; >H2 whd in ⊢ (??%%→?); #Hlen' 
+                >length_reverse >length_reverse destruct (Hlen') //
+              | /2 by refl, trans_eq/ ] -Hte
+              #Hte * * #_ >Hte >nth_change_vec_neq // >nth_change_vec // #Htb1 #Htb2
+              cut (tb = change_vec ?? (change_vec (tape sig) (S n) ta               
+                        (mk_tape sig [hdb] (option_hd ? (reverse sig (reverse sig xs@s0::reverse sig tlb)@cj::rs0')) (tail ? (reverse sig (reverse sig xs@s0::reverse sig tlb)@cj::rs0'))) dst) 
+                        (midtape ? lsb hda (reverse sig (reverse sig xs@s0::reverse sig tla)@ci::rs'')) src)
+              [@daemon] -Htb1 -Htb2 #Htb >Htb whd 
+              >nth_change_vec // >nth_change_vec_neq // >nth_change_vec //
+              >right_mk_tape >Hmidta_src >Hmidta_dst 
+              whd in match (left ??); whd in match (left ??); whd in match (right ??);
+              >current_mk_tape <opt_cons_tail_expand
+              whd in match (option_cons ???);
+              >Hrs0 >length_append whd in ⊢ (??(??%)); >length_append >length_reverse
+              >length_append >commutative_plus in match (|reverse ??| + ?);
+              whd in match (|?::?|); >length_reverse >length_reverse
+              <(length_reverse ? lsa) >Hlen' >H2 >length_append
+              normalize //
+            ]
+          ]
+        ]
+      | lapply (\Pf Hss0) -Hss0 #Hss0 #Htc cut (tc = ta) 
+        [@Htc % % @(not_to_not ??? Hss0) #H destruct (H) %]
+        -Htc #Htc destruct (Htc) #_ * #td * whd in ⊢ (%→?); * #_ 
+        #Htd destruct (Htd) * #te * * * >Hmidta_src >Hmidta_dst 
+        cases (lists_length_split ? ls ls0) #lsa * #lsb * * #Hlen #Hlsalsb
+        destruct (Hlsalsb)
+        [ <(reverse_reverse … ls) <(reverse_reverse … lsa)
+          cut (|reverse ? lsa| = |reverse ? ls|) [ // ] #Hlen'
+          @(list_cases2 … Hlen')
+          [ #H1 #H2 >H1 >H2 -H1 -H2 #_ #_ normalize in match (reverse ? [ ]); #Hte
+            lapply (Hte … (refl ??) … (refl ??)) -Hte #Hte destruct (Hte) * * #_
+            >Hmidta_dst #Htb1 lapply (Htb1 … (refl ??)) -Htb1 #Htb1 #Htb2
+            cut (tb = change_vec ?? ta (mk_tape ? (s0::lsa@lsb) (option_hd ? rs0) (tail ? rs0)) dst)
+            [@daemon] -Htb1 -Htb2 #Htb >Htb whd >nth_change_vec //
+            >nth_change_vec_neq [|@sym_not_eq //] >Hmidta_src >Hmidta_dst
+            >right_mk_tape normalize in match (left ??); normalize in match (right ??);
+            >Hmidta_src >Hmidta_dst >current_mk_tape <opt_cons_tail_expand
+            normalize //
+          | #hda #hdb #tla #tlb #H1 #H2 >H1 >H2
+            >reverse_cons >reverse_cons >associative_append #Hte
+            lapply (Hte ???? (refl ??) ? s0 ? (reverse ? tla) ?? (refl ??))
+            [ lapply 
+                     lsb cj hda (reverse ? xs@s0::reverse ? tla) rs0' ??)
+            [ /2 by cons_injective_l, nil/
+            | >length_append >length_append @eq_f @(eq_f ?? S)
+              >H1 in Hlen'; >H2 whd in ⊢ (??%%→?); #Hlen' 
+              >length_reverse >length_reverse destruct (Hlen') //
+            | /2 by refl, trans_eq/ ] -Hte
+            #Hte * * #_ >Hte >nth_change_vec // #Htb1 #Htb2
+            cut (tb = change_vec ?? (change_vec (tape sig) (S n) ta               
+                      (mk_tape sig (hda::lsb) (option_hd ? (reverse sig (reverse sig xs@s0::reverse sig tla)@cj::rs0')) (tail ? (reverse sig (reverse sig xs@s0::reverse sig tla)@cj::rs0'))) dst) 
+                      (midtape ? [ ] hdb (reverse sig (reverse sig xs@s0::reverse sig tlb)@ci::rs'')) src)
+            [@daemon] -Htb1 -Htb2 #Htb >Htb whd 
+            >nth_change_vec // >nth_change_vec_neq // >nth_change_vec //
+            >right_mk_tape >Hmidta_src >Hmidta_dst 
+            whd in match (left ??); whd in match (left ??); whd in match (right ??);
+            >length_tail >Hrs0 >length_append >length_append >length_reverse
+            >length_append >commutative_plus in match (|reverse ??| + ?);
+            whd in match (|?::?|); >length_reverse >length_reverse
+            <(length_reverse ? ls) <Hlen' >H1 normalize // ]
+       | #_ #Hte #_ <(reverse_reverse … ls0) in Hte; <(reverse_reverse … lsa)
             cut (|reverse ? lsa| = |reverse ? ls0|) [ // ] #Hlen' 
             @(list_cases2 … Hlen')
             [ #H1 #H2 >H1 >H2 normalize in match (reverse ? [ ]); #Hte
@@ -664,12 +756,8 @@ lemma sem_match_step_termination :
               >length_append normalize //
             ]
           ]
-        ]
-      | FIXME
-       (* lapply (\Pf Hss0) -Hss0 #Hss0 #Htc cut (tc = ta) 
-        [@Htc % % @(not_to_not ??? Hss0) #H destruct (H) %]
-        -Htc #Htc destruct (Htc) #_ * #td * whd in ⊢ (%→?); * #_ 
-        #Htd destruct (Htd) * #te * * * # #_ >Hmidta_src >Hmidta_dst #Hte
+        
+        #Hte1 #H2 #H3 #H4 >Hmidta_src >Hmidta_dst #Hte
         lapply (Hte … (refl ??) … (refl ??)) * * #_ #Htb1 #Htb2
         #s1 #rs1 >Hmidta_src #H destruct (H)
         lapply (Hte … Hmidta_src … Hmidta_dst) -Hte #Hte destruct (Hte) %
