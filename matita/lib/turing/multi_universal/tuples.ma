@@ -118,3 +118,6 @@ lemma table_to_list: ∀n,l,h,c. is_config n c →
   ]
 qed.
 
+axiom cfg_in_table_to_tuple: ∀n,l,h,c. is_config n c → 
+  ∀ll,lr.table_TM n l h = ll@c@lr → 
+    ∃out,m,lr0. lr = out@m::lr0 ∧ is_config n (bar::out) ∧ m ≠ bar.

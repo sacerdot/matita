@@ -141,9 +141,6 @@ lemma eq_mk_tape_rightof :
 #alpha #a #al %
 qed.
 
-definition option_cons ≝ λsig.λc:option sig.λl.
-  match c with [ None ⇒ l | Some c0 ⇒ c0::l ].
-
 lemma tape_move_mk_tape_R :
   ∀sig,ls,c,rs.
   (c = None ? → ls = [ ] ∨ rs = [ ]) → 
@@ -437,14 +434,78 @@ lemma sem_tape_move_obj : tape_move_obj ⊨ R_tape_move_obj.
 ]
 qed.
 
-definition restart_tape ≝ λi. 
-  inject_TM ? (move_to_end FSUnialpha L) 2 i ·
-  mmove i FSUnialpha 2 R. 
+definition list_of_tape ≝ λsig.λt:tape sig.
+  reverse ? (left ? t)@option_cons ? (current ? t) (right ? t).
+
+definition restart_tape ≝ λi,n. 
+  mmove i FSUnialpha n L ·
+  inject_TM ? (move_to_end FSUnialpha L) n i ·
+  mmove i FSUnialpha n R.
+  
+definition R_restart_tape ≝ λi,n.λint,outt:Vector (tape FSUnialpha) (S n).
+   ∀t.t = nth i ? int (niltape ?) → 
+   outt = change_vec ?? int 
+    (mk_tape ? [ ] (option_hd ? (list_of_tape ? t)) (tail ? (list_of_tape ? t))) i.
+
+lemma sem_restart_tape : ∀i,n.i < S n → restart_tape i n ⊨ R_restart_tape i n.
+#i #n #Hleq
+@(sem_seq_app ??????? (sem_move_multi ? n i L ?)
+  (sem_seq ?????? (sem_inject ???? i ? (sem_move_to_end_l ?))
+   (sem_move_multi ? n i R ?))) [1,2,3:@le_S_S_to_le //]
+#ta #tb * #tc * whd in ⊢ (%→?); #Htc
+* #td * * * #Htd1 #Htd2 #Htd3 
+whd in ⊢ (%→?); #Htb *
+[ #Hta_i <Hta_i in Htc; whd in ⊢ (???(????%?)→?); #Htc
+  cut (td = tc) [@daemon] 
+  (* >Htc in Htd1; >nth_change_vec // *) -Htd1 -Htd2 -Htd3
+  #Htd >Htd in Htb; >Htc >change_vec_change_vec >nth_change_vec //
+  #Htb >Htb %
+| #r0 #rs0 #Hta_i <Hta_i in Htc; whd in ⊢ (???(????%?)→?); #Htc
+  cut (td = tc) [@daemon] 
+  (* >Htc in Htd1; >nth_change_vec // *) -Htd1 -Htd2 -Htd3
+  #Htd >Htd in Htb; >Htc >change_vec_change_vec >nth_change_vec //
+  #Htb >Htb %
+| #l0 #ls0 #Hta_i <Hta_i in Htc; whd in ⊢ (???(????%?)→?); #Htc
+  cut (td = change_vec ?? tc (mk_tape ? [ ] (None ?) (reverse ? ls0@[l0])) i)
+  [@daemon]
+  #Htd >Htd in Htb; >Htc >change_vec_change_vec >change_vec_change_vec
+  >nth_change_vec // #Htb >Htb <(reverse_reverse ? ls0) in ⊢ (???%);
+  cases (reverse ? ls0)
+  [ %
+  | #l1 #ls1 >reverse_cons
+     >(?: list_of_tape ? (rightof ? l0 (reverse ? ls1@[l1])) =
+          l1::ls1@[l0])
+     [|change with (reverse ??@?) in ⊢ (??%?);
+       whd in match (left ??); >reverse_cons >reverse_append 
+       whd in ⊢ (??%?); @eq_f >reverse_reverse normalize >append_nil % ] % ]
+| * 
+  [ #c #rs #Hta_i <Hta_i in Htc; whd in ⊢ (???(????%?)→?); #Htc
+    cut (td = tc) [@daemon] 
+    (* >Htc in Htd1; >nth_change_vec // *) -Htd1 -Htd2 -Htd3
+    #Htd >Htd in Htb; >Htc >change_vec_change_vec >nth_change_vec //
+    #Htb >Htb %
+  | #l0 #ls0 #c #rs #Hta_i <Hta_i in Htc; whd in ⊢ (???(????%?)→?); #Htc
+    cut (td = change_vec ?? tc (mk_tape ? [ ] (None ?) (reverse ? ls0@l0::c::rs)) i)
+    [@daemon]
+    #Htd >Htd in Htb; >Htc >change_vec_change_vec >change_vec_change_vec
+    >nth_change_vec // #Htb >Htb <(reverse_reverse ? ls0) in ⊢ (???%);
+    cases (reverse ? ls0)
+    [ %
+    | #l1 #ls1 >reverse_cons
+      >(?: list_of_tape ? (midtape ? (l0::reverse ? ls1@[l1]) c rs) =
+            l1::ls1@l0::c::rs)
+      [|change with (reverse ??@?) in ⊢ (??%?);
+        whd in match (left ??); >reverse_cons >reverse_append 
+        whd in ⊢ (??%?); @eq_f >reverse_reverse normalize
+        >associative_append % ] % ]
+  ]
+]
+qed.
 
 definition unistep ≝ 
   match_m cfg prg FSUnialpha 2 · 
-  restart_tape cfg · copy prg cfg FSUnialpha 2 ·
-  cfg_to_obj · tape_move_obj · restart_tape prg · obj_to_cfg.
+  restart_tape cfg 2 · mmove cfg ? 2 R · copy prg cfg FSUnialpha 2 ·
+  cfg_to_obj · tape_move_obj · restart_tape prg 2 · obj_to_cfg.
 
 (*
 definition legal_tape ≝ λn,l,h,t.
@@ -453,9 +514,6 @@ definition legal_tape ≝ λn,l,h,t.
   is_config n (bar::state@[char]) →  
   nth prg ? t1 (niltape ?) = midtape ? [ ] bar table →
   bar::table = table_TM n l h → *)
-
-definition list_of_tape ≝ λsig,t. 
-  left sig t@option_cons ? (current ? t) (right ? t).
 
 definition low_char' ≝ λc.
   match c with
@@ -494,6 +552,100 @@ definition R_unistep ≝ λn,l,h.λt1,t2: Vector ? 3.
       change_vec ??
         (change_vec ?? t1 (midtape ? [ ] bar (nstate@[next_char])) cfg)
         new_obj obj.
+        
+lemma lt_obj : obj < 3. // qed.
+lemma lt_cfg : cfg < 3. // qed.
+lemma lt_prg : prg < 3. // qed.
+
+definition R_copy_strict ≝ 
+  λsrc,dst,sig,n.λint,outt: Vector (tape sig) (S n).
+  ((current ? (nth src ? int (niltape ?)) = None ? ∨
+    current ? (nth dst ? int (niltape ?)) = None ?) → outt = int) ∧
+  (∀ls,x,x0,rs,ls0,rs0. 
+    nth src ? int (niltape ?) = midtape sig ls x rs →
+    nth dst ? int (niltape ?) = midtape sig ls0 x0 rs0 →
+    |rs0| ≤ |rs| → 
+    (∃rs1,rs2.rs = rs1@rs2 ∧ |rs1| = |rs0| ∧
+     outt = change_vec ?? 
+            (change_vec ?? int  
+              (mk_tape sig (reverse sig rs1@x::ls) (option_hd sig rs2)
+            (tail sig rs2)) src)
+            (mk_tape sig (reverse sig rs1@x::ls0) (None sig) []) dst)).
+
+axiom sem_copy_strict : ∀src,dst,sig,n. src ≠ dst → src < S n → dst < S n → 
+  copy src dst sig n ⊨ R_copy_strict src dst sig n.
+
+lemma sem_unistep : ∀n,l,h.unistep ⊨ R_unistep n l h.
+#n #l #h
+@(sem_seq_app ??????? (sem_match_m cfg prg FSUnialpha 2 ???)
+  (sem_seq ?????? (sem_restart_tape ???)
+   (sem_seq ?????? (sem_move_multi ? 2 cfg R ?)
+    (sem_seq ?????? (sem_copy_strict prg cfg FSUnialpha 2 ???)
+     (sem_seq ?????? sem_cfg_to_obj
+      (sem_seq ?????? sem_tape_move_obj
+       (sem_seq ?????? (sem_restart_tape ???) sem_obj_to_cfg)))))))
+  /2 by le_n,sym_not_eq/
+#ta #tb #HR #state #char #table #Hta_cfg #Hcfg #Hta_prg #Htable
+#Hbits_obj #Htotaltable
+#nstate #nchar #m #t #Htuple #Hmatch
+cases HR -HR #tc * whd in ⊢ (%→?); 
+>Hta_cfg #H cases (H ?? (refl ??)) -H 
+(* prg starts with a bar, so it's not empty *) #_
+>Hta_prg #H lapply (H ??? (refl ??)) -H *
+[| cases Htotaltable #ll * #lr #H >H 
+   #Hfalse @False_ind cases (Hfalse ll lr) #H1 @H1 //]
+* #ll * #lr * #Hintable -Htotaltable #Htc
+* #td * whd in ⊢ (%→?); >Htc
+>nth_change_vec_neq [|@sym_not_eq //] >(nth_change_vec ?????? lt_cfg)
+#Htd lapply (Htd ? (refl ??)) -Htd
+>change_vec_commute [|@sym_not_eq //] >change_vec_change_vec
+>(?: list_of_tape ? (mk_tape ? (reverse ? (state@[char])@[bar]) (None ?) [ ]) =
+     bar::state@[char]) 
+[|whd in ⊢ (??%?); >left_mk_tape >reverse_append >reverse_reverse
+  >current_mk_tape >right_mk_tape normalize >append_nil % ]
+whd in ⊢ (???(???(????%?)??)→?); whd in match (tail ??); #Htd
+(* move cfg to R *)
+* #te * whd in ⊢ (%→?); >Htd
+>change_vec_commute [|@sym_not_eq //] >change_vec_change_vec
+>nth_change_vec_neq [|@sym_not_eq //] >nth_change_vec //
+>Htable in Hintable; #Hintable #Hte
+(* copy *)
+cases (cfg_in_table_to_tuple ???? Hcfg ?? Hintable)
+#newstate * #m0 * #lr0 * * #Hlr destruct (Hlr) #Hnewcfg #Hm0
+cut (∃fo,so,co.state = fo::so@[co] ∧ |so| = n)
+[ @daemon ] * #fo * #so * #co * #Hstate_exp #Hsolen
+cut (∃fn,sn,cn.newstate = fn::sn@[cn] ∧ |sn| = n)
+[ @daemon ] * #fn * #sn * #cn * #Hnewstate_exp #Hsnlen
+* #tf * * #_ >Hte >(nth_change_vec ?????? lt_prg)
+>nth_change_vec_neq [|@sym_not_eq //] >(nth_change_vec ?????? lt_cfg)
+>Hstate_exp >Hnewstate_exp
+whd in match (mk_tape ????); whd in match (tape_move ???);
+#Htf cases (Htf ?????? (refl ??) (refl ??) ?)
+[| whd in match (tail ??); >length_append >length_append 
+   >Hsolen >length_append >length_append >Hsnlen 
+   <plus_n_Sm <plus_n_Sm <plus_n_Sm <plus_n_O <plus_n_O normalize // ]
+#rs1 * #rs2 whd in match (tail ??); * *
+>append_cons #Hrs1rs2 #Hrs1len
+>change_vec_change_vec >change_vec_commute [|@sym_not_eq //]
+>change_vec_change_vec #Htf 
+(* cfg to obj *)
+* #tg * whd in ⊢ (%→?); >Htf
+>nth_change_vec_neq [|@sym_not_eq //]
+>(nth_change_vec ?????? lt_cfg)
+lapply (append_l1_injective ?????? Hrs1rs2)
+[ >Hsnlen >Hrs1len >length_append >length_append >length_append >length_append
+  normalize >Hsolen >Hsnlen % ]
+#Hrs1 <Hrs1 >reverse_append #Htg cases (Htg ?? (refl ??)) -Htg #Htg1 #Htg2
+
+   
+      
+      
+
+[ * 
+ 
+  match_m cfg prg FSUnialpha 2 ·
+  restart_tape cfg · copy prg cfg FSUnialpha 2 ·
+  cfg_to_obj · tape_move_obj · restart_tape prg · obj_to_cfg.
 
 definition tape_map ≝ λA,B:FinSet.λf:A→B.λt.
   mk_tape B (map ?? f (left ? t)) 
