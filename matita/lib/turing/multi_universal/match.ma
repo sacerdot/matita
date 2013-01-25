@@ -788,21 +788,28 @@ lemma sem_match_step_termination :
         normalize #H destruct (H) ] ] ]
 qed.
 
-
-definition Pre_match_m ≝ 
-  λsrc,sig,n.λt: Vector (tape sig) (S n).
-  ∃x,xs.
-  nth src (tape sig) t (niltape sig) = midtape ? [] x xs.
-  
-lemma terminate_match_m :
+axiom terminate_match_m :
   ∀src,dst,sig,n,t.
   src ≠ dst → src < S n → dst < S n → 
-  Pre_match_m src sig n t → 
   match_m src dst sig n ↓ t.
-#src #dst #sig #n #t #Hneq #Hsrc #Hdst * #start * #xs
-#Hmid_src
-@(terminate_while … (sem_match_step src dst sig n Hneq Hsrc Hdst)) //
+(*#src #dst #sig #n #ta #Hneq #Hsrc #Hdst
+@(terminate_while … (sem_match_step_termination src dst sig n Hneq Hsrc Hdst)) // % #tb
+letin f ≝ (λt0:Vector (tape sig) (S n).|left ? (nth src (tape ?) t0 (niltape ?))|
+    +|option_cons ? (current ? (nth dst (tape ?) t0 (niltape ?)))
+      (right ? (nth dst (tape ?) t0 (niltape ?)))|)
+change with (f tb < f ta) in ⊢ (%→?); @(nat_elim1 (f tb)) 
+#x lapply (refl ? x) cases x in ⊢ (???%→%);
+[ #Hx 
+*
+#x #IH #Hx cases 
+
+ @IH % #tc change with (f tc < f tb) in ⊢ (%→?);
+      
+       )(|left @(nat_elim1 (|left ? (nth ? (tape ?) t (niltape ?))|
+    +|option_cons sig (current ? (nth dst (tape ?) t (niltape ?)))
+      (right ? (nth dst (tape ?) t (niltape ?)))|))
 <(change_vec_same … t dst (niltape ?))
+<(change_vec_same … t src (niltape ?)) in ⊢ (???(???%??));
 lapply (refl ? (nth dst (tape sig) t (niltape ?))) 
 cases (nth dst (tape sig) t (niltape ?)) in ⊢ (???%→?);
 [ #Htape_dst % #t1 whd in ⊢ (%→?); >nth_change_vec_neq [|@sym_not_eq //]
@@ -834,4 +841,10 @@ cases (nth dst (tape sig) t (niltape ?)) in ⊢ (???%→?);
    | >Ht1 >nth_change_vec // ]
  ]
 ]
+qed. *)
+
+lemma sem_match_m : ∀src,dst,sig,n.
+src ≠ dst → src < S n → dst < S n → 
+  match_m src dst sig n \vDash R_match_m src dst sig n.
+#src #dst #sig #n #Hneq #Hsrc #Hdst @WRealize_to_Realize [/2/| @wsem_match_m // ]
 qed.
