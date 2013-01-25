@@ -87,6 +87,10 @@ notation > "◊"
   non associative with precedence 90
   for @{'nil}.
 
+lemma list_inv: ∀A. ∀l:list A. ◊ = l ∨ ∃∃a0,l0. a0 :: l0 = l.
+#A * /2 width=1/ /3 width=3/
+qed-.
+
 definition map_cons: ∀A. A → list (list A) → list (list A) ≝ λA,a.
                      map … (cons … a).
 

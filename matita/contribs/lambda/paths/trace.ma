@@ -52,12 +52,21 @@ lemma is_whd_append: ∀r. is_whd r → ∀s. is_whd s → is_whd (r@s).
 /2 width=1 by All_append/
 qed.
 
+lemma is_whd_inv_dx: ∀s. is_whd (dx:::s) → is_whd s.
+#s elim s -s //
+#p #s #IHs * * #_ /3 width=1/
+qed-.
+
 lemma is_whd_inv_append: ∀r,s. is_whd (r@s) → is_whd r ∧ is_whd s.
 /2 width=1 by All_inv_append/
 qed-.
 
 (* Note: an "inner" computation contracts just redexes not in the whd *)
 definition is_inner: predicate trace ≝ All … in_inner.
+
+lemma is_inner_append: ∀r. is_inner r → ∀s. is_inner s → is_inner (r@s).
+/2 width=1 by All_append/
+qed.
 
 lemma is_whd_is_inner_inv: ∀s. is_whd s → is_inner s → ◊ = s.
 * // #p #s * #H1p #_ * #H2p #_ elim (H2p ?) -H2p //

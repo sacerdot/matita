@@ -234,11 +234,10 @@ lapply (pl_sts_fwd_is_standard … H)
 ]
 qed-.
 
-axiom pl_sred_is_standard_pl_st: ∀p,M,M2. M ↦[p] M2 → ∀F. ⇓F = M →
+lemma pl_sred_is_standard_pl_st: ∀p,M,M2. M ↦[p] M2 → ∀F. ⇓F = M →
                                  ∀s,M1.{⊤}⇑ M1 Ⓡ↦*[s] F →
                                  is_standard (s@(p::◊)) →
                                  ∃∃F2. F Ⓡ↦[p] F2 & ⇓F2 = M2.
-(*
 #p #M #M2 #H elim H -p -M -M2
 [ #B #A #F #HF #s #M1 #HM1 #Hs
   lapply (is_standard_fwd_is_whd … Hs) -Hs // #Hs
@@ -249,12 +248,12 @@ axiom pl_sred_is_standard_pl_st: ∀p,M,M2. M ↦[p] M2 → ∀F. ⇓F = M →
   elim (pl_sts_fwd_abst_dx … HM1) #r1 #r2 #Hr1 #H destruct
   elim (pl_sts_inv_trans … HM1) -HM1 #F0 #HM1 #HT
   elim (pl_sts_inv_pl_sreds … HM1 ?) // #M0 #_ #H -M1 -Hr1 destruct
-  elim (pl_sts_inv_rc_abst_dx … HT ??) -HT [3: // |2: skip ] #b0 #T0 #HT02 #H (**) (* simplify line *)
-  elim (boolean_inv_abst … (sym_eq … H)) -H #A0 #_ #H #_ -b0 -M0 destruct
   >associative_append in Hs; #Hs
   lapply (is_standard_fwd_append_dx … Hs) -r1
   <(map_cons_append … r2 (p::◊)) #H
-  lapply (is_standard_inv_compatible_rc … H) -H #H
+  lapply (is_standard_inv_compatible_rc … H) -H #Hp
+  elim (pl_sts_inv_rc_abst_dx … HT ??) -HT [3: // |2: skip ] #b0 #T0 #HT02 #H (**) (* simplify line *)
+  elim (boolean_inv_abst … (sym_eq … H)) -H #A0 #_ #H #_ -b0 -M0 destruct
   elim (IHA12 … HT02 ?) // -r2 -A0 -IHA12 #F2 #HF2 #H
   @(ex2_intro … ({⊥}𝛌.F2)) normalize // /2 width=1/ (**) (* auto needs some help here *)
 | #p #B1 #B2 #A #_ #IHB12 #F #HF #s #M1 #HM1 #Hs
@@ -262,17 +261,53 @@ axiom pl_sred_is_standard_pl_st: ∀p,M,M2. M ↦[p] M2 → ∀F. ⇓F = M →
   elim (pl_sts_fwd_appl_dx … HM1) #r1 #r2 #r3 #Hr1 #_ #H destruct
   elim (pl_sts_inv_trans … HM1) -HM1 #F0 #HM1 #HT
   elim (pl_sts_inv_pl_sreds … HM1 ?) // #M0 #_ #H -M1 -Hr1 destruct
-  elim (pl_sts_fwd_dx_sn_appl_dx … HT) -HT #b0 #V0 #T0 #T1 #HV0 #_ #H -T1
-  elim (boolean_inv_appl … (sym_eq … H)) -H #B0 #A0 #_ #H #_ #_ -b0 -M0 -T0 destruct
   >associative_append in Hs; #Hs
-  lapply (is_standard_fwd_append_dx … Hs) -r1 #Hs
-  >associative_append in Hs; #Hs
-  lapply (is_standard_fwd_append_dx … Hs) -r2
+  lapply (is_standard_fwd_append_dx … Hs) -r1
+  >associative_append #Hs
+  lapply (is_standard_fwd_append_dx … Hs) -Hs
   <(map_cons_append … r3 (p::◊)) #H
-  lapply (is_standard_inv_compatible_sn … H) -H #H
-  elim (IHB12 … HV0 ?) // -r3 -B0 -IHB12 #F2 #HF2 #H
-  @(ex2_intro … ({⊥}@F2.{⊥}⇕T)) normalize // /2 width=1/ (**) (* auto needs some help here *)
-*)
+  lapply (is_standard_inv_compatible_sn … H) -H #Hp
+  elim (pl_sts_fwd_dx_sn_appl_dx … HT) -HT #b0 #V0 #T0 #T1 #HV0 #_ #H -T1 -r2
+  elim (boolean_inv_appl … (sym_eq … H)) -H #B0 #A0 #_ #H #_ #_ -b0 -M0 -T0 destruct
+  elim (IHB12 … HV0 ?) // -r3 -B0 -IHB12 #G2 #HG2 #H
+  @(ex2_intro … ({⊥}@G2.{⊥}⇕T)) normalize // /2 width=1/ (**) (* auto needs some help here *)
+| #p #B #A1 #A2 #_ #IHA12 #F #HF #s #M1 #HM1 #Hs
+  elim (carrier_inv_appl … HF) -HF #b #V #T #HV #HT #HF destruct
+  elim (pl_sts_fwd_appl_dx … HM1) #r1 #r2 #r3 #Hr1 #Hr2 #H destruct
+  elim (pl_sts_inv_trans … HM1) -HM1 #F0 #HM1 #HT
+  elim (pl_sts_inv_pl_sreds … HM1 ?) // #M0 #_ #H -M1 -Hr1 destruct
+  >associative_append in Hs; #Hs
+  lapply (is_standard_fwd_append_dx … Hs) -r1
+  >associative_append #Hs
+  elim (list_inv … r3)
+  [ #H destruct
+    elim (in_whd_or_in_inner p) #Hp
+    [ lapply (is_standard_fwd_is_whd … Hs) -Hs /2 width=1/ -Hp #Hs
+      lapply (is_whd_inv_dx … Hs) -Hs #H
+      lapply (is_whd_is_inner_inv … Hr2) -Hr2 // -H #H destruct
+      lapply (pl_sts_inv_nil … HT ?) -HT // #H
+      elim (boolean_inv_appl … H) -H #B0 #A0 #_ #_ #H #_ -M0 -B0 destruct
+      elim (IHA12 … A0 ??) -IHA12 [3,5,6: // |2,4: skip ] (* simplify line *)
+      #F2 #HF2 #H
+      @(ex2_intro … ({b}@V.F2)) normalize // /2 width=1/ (**) (* auto needs some help here *)
+    | <(map_cons_append … r2 (p::◊)) in Hs; #H
+      lapply (is_standard_inv_compatible_dx … H ?) -H /3 width=1/ -Hp #Hp
+      >append_nil in HT; #HT
+      elim (pl_sts_inv_dx_appl_dx … HT ??) -HT [3: // |2: skip ] (* simplify line *) 
+      #T0 #HT0 #H
+      elim (boolean_inv_appl … (sym_eq … H)) -H #B0 #A0 #_ #_ #H #_ -M0 -B0 destruct
+      elim (IHA12 … HT0 ?) // -r2 -A0 -IHA12 #F2 #HF2 #H
+      @(ex2_intro … ({b}@V.F2)) normalize // /2 width=1/ (**) (* auto needs some help here *)
+    ]
+  | -IHA12 -Hr2 -M0 * #q #r #H destruct
+    lapply (is_standard_fwd_append_dx … Hs) -r2 #Hs
+    lapply (is_standard_fwd_sle … Hs) -r #H
+    elim (sle_inv_sn … H ??) -H [3: // |2: skip ] (**) (* simplify line *)
+    #q0 #_ #H destruct
+  ]
+]
+qed-.
+
 theorem pl_sreds_is_standard_pl_sts: ∀s,M1,M2. M1 ↦*[s] M2 → is_standard s →
                                      ∃∃F2. {⊤}⇑ M1 Ⓡ↦*[s] F2 & ⇓F2 = M2.
 #s #M1 #M2 #H @(lstar_ind_r … s M2 H) -s -M2 /2 width=3/
