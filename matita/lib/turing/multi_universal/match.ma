@@ -12,102 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "turing/simple_machines.ma".
 include "turing/multi_universal/compare.ma".
 include "turing/multi_universal/par_test.ma".
 include "turing/multi_universal/moves_2.ma".
-
-definition Rtc_multi_true ≝ 
-  λalpha,test,n,i.λt1,t2:Vector ? (S n).
-   (∃c. current alpha (nth i ? t1 (niltape ?)) = Some ? c ∧ test c = true) ∧ t2 = t1.
-   
-definition Rtc_multi_false ≝ 
-  λalpha,test,n,i.λt1,t2:Vector ? (S n).
-    (∀c. current alpha (nth i ? t1 (niltape ?)) = Some ? c → test c = false) ∧ t2 = t1.
-
-lemma sem_test_char_multi :
-  ∀alpha,test,n,i.i ≤ n → 
-  inject_TM ? (test_char ? test) n i ⊨ 
-  [ tc_true : Rtc_multi_true alpha test n i, Rtc_multi_false alpha test n i ].
-#alpha #test #n #i #Hin #int
-cases (acc_sem_inject … Hin (sem_test_char alpha test) int)
-#k * #outc * * #Hloop #Htrue #Hfalse %{k} %{outc} % [ %
-[ @Hloop
-| #Hqtrue lapply (Htrue Hqtrue) * * * #c *
-  #Hcur #Htestc #Hnth_i #Hnth_j %
-  [ %{c} % //
-  | @(eq_vec … (niltape ?)) #i0 #Hi0
-    cases (decidable_eq_nat i0 i) #Hi0i
-    [ >Hi0i @Hnth_i
-    | @sym_eq @Hnth_j @sym_not_eq // ] ] ]
-| #Hqfalse lapply (Hfalse Hqfalse) * * #Htestc #Hnth_i #Hnth_j %
-  [ @Htestc
-  | @(eq_vec … (niltape ?)) #i0 #Hi0
-    cases (decidable_eq_nat i0 i) #Hi0i
-    [ >Hi0i @Hnth_i
-    | @sym_eq @Hnth_j @sym_not_eq // ] ] ]
-qed.
-
-definition Rm_test_null_true ≝ 
-  λalpha,n,i.λt1,t2:Vector ? (S n).
-   current alpha (nth i ? t1 (niltape ?)) ≠ None ? ∧ t2 = t1.
-   
-definition Rm_test_null_false ≝ 
-  λalpha,n,i.λt1,t2:Vector ? (S n).
-    current alpha (nth i ? t1 (niltape ?)) = None ? ∧ t2 = t1.
-
-lemma sem_test_null_multi : ∀alpha,n,i.i ≤ n → 
-  inject_TM ? (test_null ?) n i ⊨ 
-    [ tc_true : Rm_test_null_true alpha n i, Rm_test_null_false alpha n i ].
-#alpha #n #i #Hin #int
-cases (acc_sem_inject … Hin (sem_test_null alpha) int)
-#k * #outc * * #Hloop #Htrue #Hfalse %{k} %{outc} % [ %
-[ @Hloop
-| #Hqtrue lapply (Htrue Hqtrue) * * #Hcur #Hnth_i #Hnth_j % //
-  @(eq_vec … (niltape ?)) #i0 #Hi0 cases (decidable_eq_nat i0 i) #Hi0i
-  [ >Hi0i @sym_eq @Hnth_i | @sym_eq @Hnth_j @sym_not_eq // ] ] 
-| #Hqfalse lapply (Hfalse Hqfalse) * * #Hcur #Hnth_i #Hnth_j %
-  [ @Hcur
-  | @(eq_vec … (niltape ?)) #i0 #Hi0 cases (decidable_eq_nat i0 i) // 
-    #Hi0i @sym_eq @Hnth_j @sym_not_eq // ] ] 
-qed.
 
 definition match_test ≝ λsrc,dst.λsig:DeqSet.λn.λv:Vector ? n.
   match (nth src (option sig) v (None ?)) with 
   [ None ⇒  false 
   | Some x ⇒  notb (nth dst (DeqOption sig) v (None ?) == None ?) ].
-
-definition mmove_states ≝ initN 2.
-
-definition mmove0 : mmove_states ≝ mk_Sig ?? 0 (leb_true_to_le 1 2 (refl …)).
-definition mmove1 : mmove_states ≝ mk_Sig ?? 1 (leb_true_to_le 2 2 (refl …)).
-
-definition trans_mmove ≝ 
- λi,sig,n,D.
- λp:mmove_states × (Vector (option sig) (S n)).
- let 〈q,a〉 ≝ p in match (pi1 … q) with
- [ O ⇒ 〈mmove1,change_vec ? (S n) (null_action ? n) (〈None ?,D〉) i〉
- | S _ ⇒ 〈mmove1,null_action sig n〉 ].
-
-definition mmove ≝ 
-  λi,sig,n,D.
-  mk_mTM sig n mmove_states (trans_mmove i sig n D) 
-    mmove0 (λq.q == mmove1).
-    
-definition Rm_multi ≝ 
-  λalpha,n,i,D.λt1,t2:Vector ? (S n).
-  t2 = change_vec ? (S n) t1 (tape_move alpha (nth i ? t1 (niltape ?)) D) i.
-   
-lemma sem_move_multi :
-  ∀alpha,n,i,D.i ≤ n → 
-  mmove i alpha n D ⊨ Rm_multi alpha n i D.
-#alpha #n #i #D #Hin #int %{2}
-%{(mk_mconfig ? mmove_states n mmove1 ?)} 
-[| %
- [ whd in ⊢ (??%?); @eq_f whd in ⊢ (??%?); @eq_f %
- | whd >tape_move_multi_def
-   <(change_vec_same … (ctapes …) i (niltape ?))
-   >pmap_change <tape_move_multi_def >tape_move_null_action % ] ]
- qed.
   
 definition rewind ≝ λsrc,dst,sig,n.
   parmove src dst sig n L · mmove src sig n R · mmove dst sig n R.
@@ -224,7 +137,7 @@ lemma sem_rewind : ∀src,dst,sig,n.
   src ≠ dst → src < S n → dst < S n → 
   rewind src dst sig n ⊨ R_rewind src dst sig n.
 #src #dst #sig #n #Hneq #Hsrc #Hdst @(Realize_to_Realize … (sem_rewind_strong …)) //
-#ta #tb * * * #H1 #H2 #H3 #H4 % /2/
+#ta #tb * * * #H1 #H2 #H3 #H4 % /2 by /
 qed.
 
 definition match_step ≝ λsrc,dst,sig,n.

@@ -12,6 +12,57 @@
 
 include "turing/multi_universal/unistep_aux.ma".
 
+definition exec_move ≝ 
+  cfg_to_obj · tape_move_obj · restart_tape prg 2 · obj_to_cfg.
+
+definition low_char' ≝ λc.
+  match c with
+  [ None ⇒ null 
+  | Some b ⇒ if (is_bit b) then b else null
+  ].
+  
+lemma low_char_option : ∀s.
+  low_char' (option_map FinBool FSUnialpha bit s) = low_char s.
+* //
+qed.
+
+definition R_exec_move ≝ λt1,t2:Vector (tape FSUnialpha) 3.
+∀c,m,ls1,ls2,rs2.
+  nth cfg ? t1 (niltape ?) = mk_tape FSUnialpha (c::ls1@[bar]) (None ?) [ ] → 
+  nth prg ? t1 (niltape ?) = midtape FSUnialpha (ls2@[bar]) m rs2 →
+  c ≠ bar → m ≠ bar →
+  let new_obj ≝ 
+      tape_move_mono ? (nth obj ? t1 (niltape ?)) 
+        〈char_to_bit_option c, char_to_move m〉 in
+  let next_c ≝ low_char' (current ? new_obj) in 
+  let new_cfg ≝ midtape ? [ ] bar ((reverse ? ls1)@[next_c]) in 
+  let new_prg ≝ midtape FSUnialpha [ ] bar ((reverse ? ls2)@m::rs2) in
+  t2 = Vector_of_list ? [new_obj;new_cfg;new_prg].
+
+
+lemma sem_exec_move: exec_move ⊨ R_exec_move.
+@(sem_seq_app ??????? sem_cfg_to_obj1
+  (sem_seq ?????? sem_tape_move_obj
+   (sem_seq ?????? (sem_restart_tape ???) sem_obj_to_cfg))) //
+#ta #tout * #t1 * #semM1 * #t2 * #semM2 * #t3 * #semM3 #semM4 
+#c #m #ls1 #ls2 #rs2 #Hcfg #Hprg #Hc #Hm 
+(* M1 = cfg_to_obj *)
+lapply (semM1 … Hcfg Hc) #Ht1 
+(* M2 = tape_move *)
+whd in semM2; >Ht1 in semM2; -Ht1
+>nth_change_vec_neq [2:@eqb_false_to_not_eq %] 
+>nth_change_vec_neq [2:@eqb_false_to_not_eq %] 
+>Hprg #Ht2 lapply (Ht2 … (refl ??)) -Ht2
+>nth_change_vec_neq [2:@eqb_false_to_not_eq %]
+>nth_change_vec // >change_vec_commute [2:@eqb_false_to_not_eq %]
+>change_vec_change_vec #Ht2 
+(* M3 = restart prg *) 
+whd in semM3; >Ht2 in semM3; #semM3 lapply (semM3 … (refl ??)); -semM3
+>nth_change_vec_neq [2:@eqb_false_to_not_eq %] 
+>nth_change_vec_neq [2:@eqb_false_to_not_eq %] #Ht3
+(* M4 = obj_to_cfg *) 
+
+
 definition unistep ≝ 
   match_m cfg prg FSUnialpha 2 · 
   restart_tape cfg 2 · mmove cfg ? 2 R · copy prg cfg FSUnialpha 2 ·
@@ -24,17 +75,6 @@ definition legal_tape ≝ λn,l,h,t.
   is_config n (bar::state@[char]) →  
   nth prg ? t1 (niltape ?) = midtape ? [ ] bar table →
   bar::table = table_TM n l h → *)
-
-definition low_char' ≝ λc.
-  match c with
-  [ None ⇒ null 
-  | Some b ⇒ if (is_bit b) then b else null
-  ].
-  
-lemma low_char_option : ∀s.
-  low_char' (option_map FinBool FSUnialpha bit s) = low_char s.
-* //
-qed.
 
 definition R_unistep ≝ λn,l,h.λt1,t2: Vector ? 3.
   ∀state,char,table.
@@ -91,7 +131,7 @@ lemma sem_unistep : ∀n,l,h.unistep ⊨ R_unistep n l h.
   (sem_seq ?????? (sem_restart_tape ???)
    (sem_seq ?????? (sem_move_multi ? 2 cfg R ?)
     (sem_seq ?????? (sem_copy_strict prg cfg FSUnialpha 2 ???)
-     (sem_seq ?????? sem_cfg_to_obj
+     (sem_seq ?????? sem_cfg_to_obj1
       (sem_seq ?????? sem_tape_move_obj
        (sem_seq ?????? (sem_restart_tape ???) sem_obj_to_cfg)))))))
   /2 by le_n,sym_not_eq/
@@ -141,6 +181,35 @@ whd in match (mk_tape ????); whd in match (tape_move ???);
 (* cfg to obj *)
 * #tg * whd in ⊢ (%→?); >Htf
 >nth_change_vec_neq [|@sym_not_eq //] >(nth_change_vec ?????? lt_cfg)
+lapply (append_l1_injective ?????? Hrs1rs2)
+[ >Hsnlen >Hrs1len >length_append >length_append >length_append >length_append
+  normalize >Hsolen >Hsnlen % ] #Hrs1 <Hrs1 >reverse_append >reverse_single
+  >associative_append #Htg lapply (Htg … (refl ??) Hm0) -Htg
+  (* simplifying tg *)
+  >nth_change_vec_neq [2:@eqb_false_to_not_eq %]
+  >nth_change_vec_neq [2:@eqb_false_to_not_eq %]
+
+
+
+
+
+  cut ((mk_tape FSUnialpha []
+     (option_hd FSUnialpha
+      (reverse FSUnialpha (m0::[]@reverse FSUnialpha (sn@[cn])@[fn; bar])))
+     (tail FSUnialpha
+      (reverse FSUnialpha (m0::[]@reverse FSUnialpha (sn@[cn])@[fn; bar])))) =
+      midtape ? [ ] bar (fn::sn@[cn;m0]))
+  [cut (reverse FSUnialpha (m0::[]@reverse FSUnialpha (sn@[cn])@[fn; bar]) =
+          bar::fn::sn@[cn;m0])
+    [>reverse_cons whd in ⊢ (??(??(??%)?)?); >reverse_append >reverse_reverse
+     >append_cons in ⊢ (???%); % ] #Hrev >Hrev % ] #Hmk_tape >Hmk_tape -Hmk_tape
+   >change_vec_commute
+
+  >reverse_append >reverse_append
+  check reverse_cons
+  <reverse_cons >reverse_cons
+   -Htg #Htg 
+
 >(change_vec_commute ????? cfg prg) [2:@eqb_false_to_not_eq %]
 >nth_change_vec_neq [2:@eqb_false_to_not_eq %]
 >nth_change_vec_neq [2:@eqb_false_to_not_eq %]
