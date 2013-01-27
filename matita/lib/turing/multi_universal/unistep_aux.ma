@@ -58,16 +58,6 @@ lemma tape_move_mk_tape_R :
 normalize //
 qed.
 
-lemma eq_vec_change_vec : ∀sig,n.∀v1,v2:Vector sig n.∀i,t,d.
-  nth i ? v2 d = t → 
-  (∀j.i ≠ j → nth j ? v1 d = nth j ? v2 d) → 
-  v2 = change_vec ?? v1 t i.
-#sig #n #v1 #v2 #i #t #d #H1 #H2 @(eq_vec … d)
-#i0 #Hlt cases (decidable_eq_nat i0 i) #Hii0
-[ >Hii0 >nth_change_vec //
-| >nth_change_vec_neq [|@sym_not_eq //] @sym_eq @H2 @sym_not_eq // ]
-qed.
-
 lemma None_or_Some: ∀A.∀a. a =None A ∨ ∃b. a = Some ? b.
 #A * /2/ #a %2 %{a} %
 qed.
@@ -466,18 +456,29 @@ lemma sem_restart_tape : ∀i,n.i < S n → restart_tape i n ⊨ R_restart_tape 
 * #td * * * #Htd1 #Htd2 #Htd3 
 whd in ⊢ (%→?); #Htb *
 [ #Hta_i <Hta_i in Htc; whd in ⊢ (???(????%?)→?); #Htc
-  cut (td = tc) [@daemon] 
+  cut (td = tc) 
+  [ <(change_vec_same … tc … i … (niltape ?))
+    @(eq_vec_change_vec … (niltape ?))
+    [ @Htd1 >Htc >nth_change_vec //
+    | @Htd3 ] ]
   (* >Htc in Htd1; >nth_change_vec // *) -Htd1 -Htd2 -Htd3
   #Htd >Htd in Htb; >Htc >change_vec_change_vec >nth_change_vec //
   #Htb >Htb %
 | #r0 #rs0 #Hta_i <Hta_i in Htc; whd in ⊢ (???(????%?)→?); #Htc
-  cut (td = tc) [@daemon] 
+  cut (td = tc)
+  [ <(change_vec_same … tc … i … (niltape ?))
+    @(eq_vec_change_vec … (niltape ?))
+    [ @Htd1 >Htc >nth_change_vec //
+    | @Htd3 ] ]
   (* >Htc in Htd1; >nth_change_vec // *) -Htd1 -Htd2 -Htd3
   #Htd >Htd in Htb; >Htc >change_vec_change_vec >nth_change_vec //
   #Htb >Htb %
 | #l0 #ls0 #Hta_i <Hta_i in Htc; whd in ⊢ (???(????%?)→?); #Htc
   cut (td = change_vec ?? tc (mk_tape ? [ ] (None ?) (reverse ? ls0@[l0])) i)
-  [@daemon]
+  [ <(change_vec_same … tc … i … (niltape ?))
+    @(eq_vec_change_vec … (niltape ?))
+    [ @Htd2 >Htc >nth_change_vec //
+    | #j #Hij >nth_change_vec_neq // @Htd3 // ]]
   #Htd >Htd in Htb; >Htc >change_vec_change_vec >change_vec_change_vec
   >nth_change_vec // #Htb >Htb <(reverse_reverse ? ls0) in ⊢ (???%);
   cases (reverse ? ls0)
@@ -490,13 +491,19 @@ whd in ⊢ (%→?); #Htb *
        whd in ⊢ (??%?); @eq_f >reverse_reverse normalize >append_nil % ] % ]
 | * 
   [ #c #rs #Hta_i <Hta_i in Htc; whd in ⊢ (???(????%?)→?); #Htc
-    cut (td = tc) [@daemon] 
+    cut (td = tc) 
+    [ <(change_vec_same … tc … i … (niltape ?))
+    @(eq_vec_change_vec … (niltape ?))
+    [ @Htd1 >Htc >nth_change_vec //
+    | @Htd3 ] ]
     (* >Htc in Htd1; >nth_change_vec // *) -Htd1 -Htd2 -Htd3
     #Htd >Htd in Htb; >Htc >change_vec_change_vec >nth_change_vec //
     #Htb >Htb %
   | #l0 #ls0 #c #rs #Hta_i <Hta_i in Htc; whd in ⊢ (???(????%?)→?); #Htc
     cut (td = change_vec ?? tc (mk_tape ? [ ] (None ?) (reverse ? ls0@l0::c::rs)) i)
-    [@daemon]
+    [ @(eq_vec_change_vec … (niltape ?))
+      [ @Htd2 >Htc >nth_change_vec //
+      | @Htd3 ] ]
     #Htd >Htd in Htb; >Htc >change_vec_change_vec >change_vec_change_vec
     >nth_change_vec // #Htb >Htb <(reverse_reverse ? ls0) in ⊢ (???%);
     cases (reverse ? ls0)

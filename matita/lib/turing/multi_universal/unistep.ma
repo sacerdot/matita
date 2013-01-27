@@ -1,4 +1,4 @@
-#(*
+(*
     ||M||  This file is part of HELM, an Hypertextual, Electronic   
     ||A||  Library of Mathematics, developed at the Computer Science 
     ||T||  Department of the University of Bologna, Italy.           
@@ -151,6 +151,8 @@ definition R_copy_strict ≝
 axiom sem_copy_strict : ∀src,dst,sig,n. src ≠ dst → src < S n → dst < S n → 
   copy src dst sig n ⊨ R_copy_strict src dst sig n.
 
+axiom daemon : ∀P:Prop.P.
+
 lemma sem_unistep : ∀n,l,h.unistep ⊨ R_unistep n l h.
 #n #l #h
 @(sem_seq_app ??????? (sem_match_m cfg prg FSUnialpha 2 ???)
@@ -176,7 +178,7 @@ cases HR -HR #tc * whd in ⊢ (%→?);
 >(?: list_of_tape ? (mk_tape ? (reverse ? (state@[char])@[bar]) (None ?) [ ]) =
      bar::state@[char]) 
 [|whd in ⊢ (??%?); >left_mk_tape >reverse_append >reverse_reverse
-  >current_mk_tape >right_mk_tape normalize >append_nil % ]
+  >current_mk_tape >right_mk_tape [| #_ %2 % ] normalize >append_nil % ]
 whd in ⊢ (???(???(????%?)??)→?); whd in match (tail ??); #Htd
 (* move cfg to R *)
 * #te * whd in ⊢ (%→?); >Htd
