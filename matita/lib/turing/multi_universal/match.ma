@@ -701,60 +701,28 @@ lemma sem_match_step_termination :
         normalize #H destruct (H) ] ] ]
 qed.
 
-axiom terminate_match_m :
+(* lemma WF_to_WF_f : ∀A,B,R,f,b. WF A R (f b) → WF B (λx,y.R (f x) (f y)) b. *)
+let rec WF_to_WF_f A B R f b (Hwf: WF A R (f b)) on Hwf: WF B (λx,y.R (f x) (f y)) b ≝ 
+  match Hwf return (λa0,r.f b = a0 → WF B (λx,y:B. R (f x) (f y)) b) with
+  [ wf a Hwfa ⇒ λHeq.? ] (refl ??).
+% #b1 #HRb @WF_to_WF_f @Hwfa <Heq @HRb
+qed.
+
+lemma lt_WF : ∀n.WF ? lt n.
+#n @(nat_elim1 n) -n #n #IH % @IH
+qed.
+
+lemma terminate_match_m :
   ∀src,dst,sig,n,t.
   src ≠ dst → src < S n → dst < S n → 
   match_m src dst sig n ↓ t.
-(*#src #dst #sig #n #ta #Hneq #Hsrc #Hdst
-@(terminate_while … (sem_match_step_termination src dst sig n Hneq Hsrc Hdst)) // % #tb
+#src #dst #sig #n #ta #Hneq #Hsrc #Hdst
+@(terminate_while … (sem_match_step_termination src dst sig n Hneq Hsrc Hdst)) //
 letin f ≝ (λt0:Vector (tape sig) (S n).|left ? (nth src (tape ?) t0 (niltape ?))|
     +|option_cons ? (current ? (nth dst (tape ?) t0 (niltape ?)))
       (right ? (nth dst (tape ?) t0 (niltape ?)))|)
-change with (f tb < f ta) in ⊢ (%→?); @(nat_elim1 (f tb)) 
-#x lapply (refl ? x) cases x in ⊢ (???%→%);
-[ #Hx 
-*
-#x #IH #Hx cases 
-
- @IH % #tc change with (f tc < f tb) in ⊢ (%→?);
-      
-       )(|left @(nat_elim1 (|left ? (nth ? (tape ?) t (niltape ?))|
-    +|option_cons sig (current ? (nth dst (tape ?) t (niltape ?)))
-      (right ? (nth dst (tape ?) t (niltape ?)))|))
-<(change_vec_same … t dst (niltape ?))
-<(change_vec_same … t src (niltape ?)) in ⊢ (???(???%??));
-lapply (refl ? (nth dst (tape sig) t (niltape ?))) 
-cases (nth dst (tape sig) t (niltape ?)) in ⊢ (???%→?);
-[ #Htape_dst % #t1 whd in ⊢ (%→?); >nth_change_vec_neq [|@sym_not_eq //]
-  >Hmid_src #HR cases (HR ?? (refl ??)) -HR
-  >nth_change_vec // >Htape_dst #_ * #s0 * normalize in ⊢ (%→?); #H destruct (H)
-| #x0 #xs0 #Htape_dst % #t1 whd in ⊢ (%→?); >nth_change_vec_neq [|@sym_not_eq //]
-  >Hmid_src #HR cases (HR ?? (refl ??)) -HR
-  >nth_change_vec // >Htape_dst #_ normalize in ⊢ (%→?);
-  * #s0 * #H destruct (H)
-| #x0 #xs0 #Htape_dst % #t1 whd in ⊢ (%→?); >nth_change_vec_neq [|@sym_not_eq //]
-  >Hmid_src #HR cases (HR ?? (refl ??)) -HR
-  >nth_change_vec // >Htape_dst #_ normalize in ⊢ (%→?);
-  * #s0 * #H destruct (H)
-| #ls #s #rs lapply s -s lapply ls -ls lapply Hmid_src lapply t -t elim rs
-  [#t #Hmid_src #ls #s #Hmid_dst % #t1 whd in ⊢ (%→?); >nth_change_vec_neq [|@sym_not_eq //]
-   >Hmid_src >nth_change_vec // >Hmid_dst #HR cases (HR ?? (refl ??)) -HR 
-   >change_vec_change_vec #Ht1 #_ % #t2 whd in ⊢ (%→?);
-   >Ht1 >nth_change_vec_neq [|@sym_not_eq //] >Hmid_src #HR
-   cases (HR ?? (refl ??)) -HR #_
-   >nth_change_vec // * #s1 * normalize in ⊢ (%→?); #H destruct (H)
-  |#r0 #rs0 #IH #t #Hmid_src #ls #s #Hmid_dst % #t1 whd in ⊢ (%→?);
-   >nth_change_vec_neq [|@sym_not_eq //] >Hmid_src
-   #Htrue cases (Htrue ?? (refl ??)) -Htrue >change_vec_change_vec
-   >nth_change_vec // >Hmid_dst whd in match (tape_move_mono ???); #Ht1
-   * #s0 * whd in ⊢ (??%?→?); #H destruct (H) #_ >Ht1
-   lapply (IH t1 ? (s0::ls) r0 ?) 
-   [ >Ht1 >nth_change_vec //
-   | >Ht1 >nth_change_vec_neq [|@sym_not_eq //] @Hmid_src
-   | >Ht1 >nth_change_vec // ]
- ]
-]
-qed. *)
+change with (λx,y.f x < f y) in ⊢ (??%?); @WF_to_WF_f @lt_WF
+qed.
 
 lemma sem_match_m : ∀src,dst,sig,n.
 src ≠ dst → src < S n → dst < S n → 
