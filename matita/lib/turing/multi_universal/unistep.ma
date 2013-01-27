@@ -92,7 +92,7 @@ qed.
 definition unistep ≝ 
   match_m cfg prg FSUnialpha 2 · 
   restart_tape cfg 2 · mmove cfg ? 2 R · copy prg cfg FSUnialpha 2 ·
-  cfg_to_obj · tape_move_obj · restart_tape prg 2 · obj_to_cfg.
+  exec_move.
 
 (*
 definition legal_tape ≝ λn,l,h,t.
@@ -157,9 +157,7 @@ lemma sem_unistep : ∀n,l,h.unistep ⊨ R_unistep n l h.
   (sem_seq ?????? (sem_restart_tape ???)
    (sem_seq ?????? (sem_move_multi ? 2 cfg R ?)
     (sem_seq ?????? (sem_copy_strict prg cfg FSUnialpha 2 ???)
-     (sem_seq ?????? sem_cfg_to_obj1
-      (sem_seq ?????? sem_tape_move_obj
-       (sem_seq ?????? (sem_restart_tape ???) sem_obj_to_cfg)))))))
+     (sem_exec_move …)))))
   /2 by le_n,sym_not_eq/
 #ta #tb #HR #state #char #table #Hta_cfg #Hcfg #Hta_prg #Htable
 #Hbits_obj #Htotaltable
@@ -186,11 +184,11 @@ whd in ⊢ (???(???(????%?)??)→?); whd in match (tail ??); #Htd
 >nth_change_vec_neq [|@sym_not_eq //] >nth_change_vec //
 >Htable in Hintable; #Hintable #Hte
 (* copy *)
-cases (cfg_in_table_to_tuple ???? Hcfg ?? Hintable)
-#newstate * #m0 * #lr0 * * #Hlr destruct (Hlr) #Hnewcfg #Hm0
-cut (∃fo,so,co.state = fo::so@[co] ∧ |so| = n)
-[ @daemon ] * #fo * #so * #co * #Hstate_exp #Hsolen
-cut (∃fn,sn,cn.newstate = fn::sn@[cn] ∧ |sn| = n)
+lapply (cfg_in_table_to_tuple ???? Hcfg ?? Hintable)
+* #newconfig * #m0 * #lr0 * * #Hlr destruct (Hlr) #Hnewcfg #Hm0
+cut (∃fo,so.state = fo::so ∧ |so| = n)
+[ @daemon ] * #fo * #so * #Hstate_exp #Hsolen
+cut (∃fn,sn,cn.newconfig = fn::sn@[cn] ∧ |sn| = n)
 [ @daemon ] * #fn * #sn * #cn * #Hnewstate_exp #Hsnlen
 * #tf * * #_ >Hte >(nth_change_vec ?????? lt_prg)
 >nth_change_vec_neq [|@sym_not_eq //] >(nth_change_vec ?????? lt_cfg)
@@ -198,24 +196,62 @@ cut (∃fn,sn,cn.newstate = fn::sn@[cn] ∧ |sn| = n)
 whd in match (mk_tape ????); whd in match (tape_move ???);
 #Htf cases (Htf ?????? (refl ??) (refl ??) ?) -Htf
 [| whd in match (tail ??); >length_append >length_append 
-   >Hsolen >length_append >length_append >Hsnlen 
-   <plus_n_Sm <plus_n_Sm <plus_n_Sm <plus_n_O <plus_n_O normalize // ]
+   >Hsolen >length_append >Hsnlen //]
 #rs1 * #rs2 whd in match (tail ??); * *
->append_cons #Hrs1rs2 #Hrs1len
+#Hrs1rs2 #Hrs1len
 >change_vec_change_vec >change_vec_commute [|@sym_not_eq //]
->change_vec_change_vec #Htf 
-(* cfg to obj *)
-* #tg * whd in ⊢ (%→?); >Htf
->nth_change_vec_neq [|@sym_not_eq //] >(nth_change_vec ?????? lt_cfg)
-lapply (append_l1_injective ?????? Hrs1rs2)
-[ >Hsnlen >Hrs1len >length_append >length_append >length_append >length_append
-  normalize >Hsolen >Hsnlen % ] #Hrs1 <Hrs1 >reverse_append >reverse_single
-  >associative_append #Htg lapply (Htg … (refl ??) Hm0) -Htg
-  (* simplifying tg *)
-  >nth_change_vec_neq [2:@eqb_false_to_not_eq %]
-  >nth_change_vec_neq [2:@eqb_false_to_not_eq %]
-
-
+>change_vec_change_vec >append_nil #Htf 
+(* exec_move *)
+cut ((sn@[cn])=rs1)
+  [@(append_l1_injective ?????? Hrs1rs2) >Hrs1len 
+   >length_append >length_append normalize >Hsolen >Hsnlen % ] #Hrs1  
+cut (m0::lr0=rs2) [@(append_l2_injective ?????? Hrs1rs2) >Hrs1 % ] #Hrs2 
+cut (∃ll1. ll@[bar] = bar::ll1) 
+  [@daemon (* ll is at the begininng of a table *)] * #ll1 #Hll
+whd in ⊢ (%→?); >Htf >nth_change_vec_neq [2:@eqb_false_to_not_eq %]
+>nth_change_vec [2:@leb_true_to_le %] 
+>nth_change_vec [2:@leb_true_to_le %]
+>nth_change_vec_neq [2:@eqb_false_to_not_eq %]
+>nth_change_vec_neq [2:@eqb_false_to_not_eq %]
+>append_cons <Hrs1 >reverse_append >reverse_single 
+<Hrs2 >(append_cons … bar ll) >Hll >reverse_cons
+#sem_exec_move 
+lapply
+  (sem_exec_move ? m0 ?
+    (([cn]@reverse FSUnialpha sn)
+          @fn::reverse FSUnialpha (ll1@(fo::so)@[char])) lr0 … (refl ??) ????) 
+  [@Hm0 
+  |@daemon (* OK *)
+  |@Hbits_obj
+  |whd in ⊢ (??%?); >associative_append >associative_append 
+   >associative_append %
+  |#Htb >Htb @(eq_vec … (niltape ?)) (* tape by tape *) #i #lei2 
+   cases (le_to_or_lt_eq … (le_S_S_to_le …lei2))
+    [#lei1 cases (le_to_or_lt_eq … (le_S_S_to_le …lei1))
+      [#lei0 lapply(le_n_O_to_eq … (le_S_S_to_le …lei0)) #eqi <eqi
+       (* obj tape *)
+       >nth_change_vec [2:@leb_true_to_le %] 
+       (* dimostrare che la tabella e' univoca
+          da cui m = m0 e nchar = cn *)
+      |(* cfg tape *) #eqi >eqi
+       >nth_change_vec_neq [2:@eqb_false_to_not_eq %]
+       >nth_change_vec [2:@leb_true_to_le %] 
+       (* idem *)
+      ]
+    |(* prg tape *) #eqi >eqi
+      >nth_change_vec_neq [2:@eqb_false_to_not_eq %]
+      >nth_change_vec_neq [2:@eqb_false_to_not_eq %]
+      >Hta_prg whd in ⊢ (??%?); @eq_f @(cons_injective_r ? bar bar)
+      >Htable >Hintable >reverse_append >reverse_cons
+      >reverse_reverse >reverse_cons >reverse_reverse
+      >associative_append >associative_append >associative_append
+      >(append_cons ? bar ll) >Hll @eq_f @eq_f <Hstate_exp @eq_f
+      >Hnewstate_exp %
+    ]
+  ]
+  
+  
+qed.
 
 
 
