@@ -1,4 +1,4 @@
-(*
+#(*
     ||M||  This file is part of HELM, an Hypertextual, Electronic   
     ||A||  Library of Mathematics, developed at the Computer Science 
     ||T||  Department of the University of Bologna, Italy.           
@@ -78,7 +78,16 @@ whd in semM4; >Ht3 in semM4;
      >Hprg whd in match (list_of_tape ??); >reverse_append
      >reverse_single % 
     ]
-  |
+  |#b #Hcurrent @(list_of_tape_write ? is_bit … (char_to_bit_option c) ? Honlybits)
+    [#b0 cases c
+      [#b1 whd in ⊢ (??%?→?); #Hbit destruct (Hbit) %
+      |whd in ⊢ (??%?→?); #Hbit destruct (Hbit)
+      |whd in ⊢ (??%?→?); #Hbit destruct (Hbit)
+      ]
+    |>(list_of_tape_move … (char_to_move m)) @current_in_list @Hcurrent
+    ]
+  ]
+qed.
        
 definition unistep ≝ 
   match_m cfg prg FSUnialpha 2 · 
