@@ -15,21 +15,11 @@ include "turing/multi_universal/unistep_aux.ma".
 definition exec_move ≝ 
   cfg_to_obj · tape_move_obj · restart_tape prg 2 · obj_to_cfg.
 
-definition low_char' ≝ λc.
-  match c with
-  [ None ⇒ null 
-  | Some b ⇒ if (is_bit b) then b else null
-  ].
-  
-lemma low_char_option : ∀s.
-  low_char' (option_map FinBool FSUnialpha bit s) = low_char s.
-* //
-qed.
-
 definition R_exec_move ≝ λt1,t2:Vector (tape FSUnialpha) 3.
 ∀c,m,ls1,ls2,rs2.
   nth cfg ? t1 (niltape ?) = mk_tape FSUnialpha (c::ls1@[bar]) (None ?) [ ] → 
   nth prg ? t1 (niltape ?) = midtape FSUnialpha (ls2@[bar]) m rs2 →
+  only_bits (list_of_tape ? (nth obj ? t1 (niltape ?))) →
   c ≠ bar → m ≠ bar →
   let new_obj ≝ 
       tape_move_mono ? (nth obj ? t1 (niltape ?)) 
@@ -43,9 +33,9 @@ definition R_exec_move ≝ λt1,t2:Vector (tape FSUnialpha) 3.
 lemma sem_exec_move: exec_move ⊨ R_exec_move.
 @(sem_seq_app ??????? sem_cfg_to_obj1
   (sem_seq ?????? sem_tape_move_obj
-   (sem_seq ?????? (sem_restart_tape ???) sem_obj_to_cfg))) //
+   (sem_seq ?????? (sem_restart_tape ???) sem_obj_to_cfg1))) //
 #ta #tout * #t1 * #semM1 * #t2 * #semM2 * #t3 * #semM3 #semM4 
-#c #m #ls1 #ls2 #rs2 #Hcfg #Hprg #Hc #Hm 
+#c #m #ls1 #ls2 #rs2 #Hcfg #Hprg #Honlybits #Hc #Hm 
 (* M1 = cfg_to_obj *)
 lapply (semM1 … Hcfg Hc) #Ht1 
 (* M2 = tape_move *)
@@ -61,8 +51,35 @@ whd in semM3; >Ht2 in semM3; #semM3 lapply (semM3 … (refl ??)); -semM3
 >nth_change_vec_neq [2:@eqb_false_to_not_eq %] 
 >nth_change_vec_neq [2:@eqb_false_to_not_eq %] #Ht3
 (* M4 = obj_to_cfg *) 
-
-
+whd in semM4; >Ht3 in semM4; 
+>nth_change_vec_neq [2:@eqb_false_to_not_eq %]
+>nth_change_vec [2:@leb_true_to_le %] #semM4 lapply (semM4 … (refl ??)) -semM4
+>nth_change_vec_neq [2:@eqb_false_to_not_eq %]
+>nth_change_vec_neq [2:@eqb_false_to_not_eq %]
+>nth_change_vec [2:@leb_true_to_le %] #semM4 >(semM4 ?)
+  [(* tape by tape *)
+   @(eq_vec … (niltape ?)) #i #lei2 
+   cases (le_to_or_lt_eq … (le_S_S_to_le …lei2))
+    [#lei1 cases (le_to_or_lt_eq … (le_S_S_to_le …lei1))
+      [#lei0 lapply(le_n_O_to_eq … (le_S_S_to_le …lei0)) #eqi <eqi
+       >nth_change_vec_neq [2:@eqb_false_to_not_eq %]
+       >nth_change_vec_neq [2:@eqb_false_to_not_eq %]
+       >nth_change_vec_neq [2:@eqb_false_to_not_eq %]
+       >nth_change_vec [2:@leb_true_to_le %] %
+      |#Hi >Hi (* obj tape *)
+       >nth_change_vec [2:@leb_true_to_le %] whd in ⊢ (???%);
+       >reverse_cons >reverse_append >reverse_single 
+       whd in match (option_hd ??); whd in match (tail ??);
+       whd in ⊢ (??%?); %
+      ]
+    |#Hi >Hi (* prg tape *)
+     >nth_change_vec_neq [2:@eqb_false_to_not_eq %]
+     >nth_change_vec [2:@leb_true_to_le %] whd in ⊢ (???%);
+     >Hprg whd in match (list_of_tape ??); >reverse_append
+     >reverse_single % 
+    ]
+  |
+       
 definition unistep ≝ 
   match_m cfg prg FSUnialpha 2 · 
   restart_tape cfg 2 · mmove cfg ? 2 R · copy prg cfg FSUnialpha 2 ·

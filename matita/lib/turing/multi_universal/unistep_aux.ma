@@ -15,42 +15,6 @@ include "turing/multi_universal/copy.ma".
 include "turing/multi_universal/alphabet.ma".
 include "turing/multi_universal/tuples.ma".
 
-(*
-
-  in.obj : ...  x ...
-                ^
-  in.cfg : ...  ? ? ...
-                    ^
-                
-  out.cfg : ... 1 x ...
-                  ^
-                  
-  ---------------------
-  current (in.obj) = None
-  
-  in.cfg : ...  ? ? ...
-                    ^
-
-  out.cfg : ... 0 0 ...
-                  ^
-                  
-  obj_to_cfg ≝ 
-    move_l(cfg);
-    move_l(cfg);
-    (if (current(in.obj)) == None
-       then write(0,cfg);
-            move_r(cfg);
-            write(0,cfg);
-       else write(1,cfg);
-            move_r(cfg);
-            copy_step(obj,cfg);
-            move_l(obj);)
-    move_to_end_l(cfg);
-    move_r(cfg);
-       
-  
-  cfg_to_obj
-*)
 
 definition obj ≝ (0:DeqNat).
 definition cfg ≝ (1:DeqNat).
@@ -102,6 +66,10 @@ lemma eq_vec_change_vec : ∀sig,n.∀v1,v2:Vector sig n.∀i,t,d.
 #i0 #Hlt cases (decidable_eq_nat i0 i) #Hii0
 [ >Hii0 >nth_change_vec //
 | >nth_change_vec_neq [|@sym_not_eq //] @sym_eq @H2 @sym_not_eq // ]
+qed.
+
+lemma None_or_Some: ∀A.∀a. a =None A ∨ ∃b. a = Some ? b.
+#A * /2/ #a %2 %{a} %
 qed.
 
 lemma not_None_to_Some: ∀A.∀a. a ≠ None A → ∃b. a = Some ? b.
@@ -170,6 +138,40 @@ cases Hif -Hif
 ]
 qed.
 
+(* another semantics for obj_to_cfg *)
+definition low_char' ≝ λc.
+  match c with
+  [ None ⇒ null 
+  | Some b ⇒ if (is_bit b) then b else null
+  ].
+  
+lemma low_char_option : ∀s.
+  low_char' (option_map FinBool FSUnialpha bit s) = low_char s.
+* //
+qed.
+
+definition R_obj_to_cfg1 ≝ λt1,t2:Vector (tape FSUnialpha) 3.
+  ∀c,ls.
+  nth cfg ? t1 (niltape ?) = midtape ? ls c [ ] → 
+  let x ≝ current ? (nth obj ? t1 (niltape ?)) in
+  (∀b. x= Some ? b → is_bit b = true) →
+  t2 = change_vec ?? t1
+         (mk_tape ? [ ] (option_hd FSUnialpha (reverse ? (low_char' x::ls))) 
+           (tail ? (reverse ? (low_char' x::ls)))) cfg.
+
+lemma sem_obj_to_cfg1: obj_to_cfg ⊨ R_obj_to_cfg1.
+@(Realize_to_Realize … sem_obj_to_cfg) #t1 #t2 #Hsem
+#c #ls #Hcfg lapply(Hsem c ls Hcfg) * #HSome #HNone #Hb 
+cases (None_or_Some ? (current ? (nth obj ? t1 (niltape ?)))) 
+  [#Hcur >Hcur @HNone @Hcur
+  |* #b #Hb1 >Hb1
+   cut (low_char' (Some ? b) = b)  [whd in ⊢ (??%?); >(Hb b Hb1) %] #Hlow >Hlow
+   lapply(current_to_midtape … Hb1) * #lsobj * #rsobj #Hmid
+   @(HSome … Hmid)
+  ]
+qed.
+    
+(* test_null_char *)
 definition test_null_char ≝ test_char FSUnialpha (λc.c == null).
 
 definition R_test_null_char_true ≝ λt1,t2.
@@ -388,9 +390,63 @@ lemma sem_tape_move_obj : tape_move_obj ⊨ R_tape_move_obj.
 ]
 qed.
 
+(************** list of tape ******************)
 definition list_of_tape ≝ λsig.λt:tape sig.
   reverse ? (left ? t)@option_cons ? (current ? t) (right ? t).
 
+lemma list_of_midtape: ∀sig,ls,c,rs.
+  list_of_tape sig (midtape ? ls c rs) = reverse ? ls@c::rs.
+// qed-.
+
+lemma list_of_rightof: ∀sig,ls,c.
+  list_of_tape sig (rightof ? c ls) = reverse ? (c::ls).
+#sig #ls #c <(append_nil ? (reverse ? (c::ls)))
+// qed-.
+
+lemma list_of_tape_move: ∀sig,t,m.
+  list_of_tape sig t = list_of_tape sig (tape_move ? t m).
+#sig #t * // cases t //
+ [(* rightof, move L *) #a #l >list_of_midtape 
+  >append_cons <reverse_single <reverse_append %
+ |(* midtape, move L *) * // 
+  #a #ls #c #rs >list_of_midtape >list_of_midtape
+  >reverse_cons >associative_append %
+ |(* midtape, move R *) #ls #c * 
+   [>list_of_midtape >list_of_rightof >reverse_cons %
+   |#a #rs >list_of_midtape >list_of_midtape >reverse_cons 
+    >associative_append %
+   ]
+ ]
+qed.
+
+lemma list_of_tape_write: ∀sig,cond,t,c. 
+(∀b. c = Some ? b → cond b =true) →
+(∀x. mem ? x (list_of_tape ? t) → cond x =true ) →
+∀x. mem ? x (list_of_tape sig (tape_write ? t c)) → cond x =true.
+#sig #cond #t #c #Hc #Htape #x lapply Hc cases c 
+  [(* c is None *) #_ whd in match (tape_write ???); @Htape
+  |#b #Hb lapply (Hb … (refl ??)) -Hb #Hb
+   whd in match (tape_write ???); >list_of_midtape
+   #Hx cases(mem_append ???? Hx) -Hx
+    [#Hx @Htape @mem_append_l1 @Hx
+    |* [//] 
+     #Hx @Htape @mem_append_l2 cases (current sig t)
+      [@Hx | #c1 %2 @Hx]
+    ]
+  ]
+qed.
+   
+lemma current_in_list: ∀sig,t,b. 
+  current sig t = Some ? b → mem ? b (list_of_tape sig t).
+#sig #t #b cases t
+  [whd in ⊢ (??%?→?); #Htmp destruct
+  |#l #b whd in ⊢ (??%?→?); #Htmp destruct
+  |#l #b whd in ⊢ (??%?→?); #Htmp destruct
+  |#ls #c #rs whd in ⊢ (??%?→?); #Htmp destruct
+   >list_of_midtape @mem_append_l2 % %
+  ]
+qed.
+  
 definition restart_tape ≝ λi,n. 
   mmove i FSUnialpha n L ·
   inject_TM ? (move_to_end FSUnialpha L) n i ·
@@ -455,4 +511,3 @@ whd in ⊢ (%→?); #Htb *
   ]
 ]
 qed.
-
