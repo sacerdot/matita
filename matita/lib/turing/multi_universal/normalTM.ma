@@ -205,6 +205,18 @@ definition low_mv ≝ λm.
   | N ⇒ null
   ].
 
+lemma injective_low_char: injective … low_char.
+#c1 #c2 cases c1 cases c2 normalize //
+  [#b1 #H destruct
+  |#b1 #H destruct
+  |#b1 #b2 #H destruct //
+  ]
+qed.   
+
+lemma injective_low_mv: injective … low_mv.
+#m1 #m2 cases m1 cases m2 // normalize #H destruct
+qed.
+   
 (******************************** tuple encoding ******************************)
 definition tuple_type ≝ λn.
  (Nat_to n × (option FinBool)) × (Nat_to n × (option FinBool) × move).  

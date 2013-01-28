@@ -62,10 +62,10 @@ definition is_config : nat → list unialpha → Prop ≝
  only_bits qin ∧ cin ≠ bar ∧ |qin| = S n ∧ t = bar::qin@[cin].
 
 lemma table_to_list: ∀n,l,h,c. is_config n c → 
-  (∃ll,lr.table_TM n l h = ll@c@lr) → 
-    ∃out,t. tuple_encoding n h t = (c@out) ∧ mem ? t l.
+  ∀ll,lr.table_TM n l h = ll@c@lr → 
+    ∃out,lr0,t. lr = out@lr0 ∧ tuple_encoding n h t = (c@out) ∧ mem ? t l.
 #n #l #h #c * #qin * #cin * * * #H1 #H2 #H3 #H4  
- * #ll * #lr lapply ll -ll elim l
+#ll #lr lapply ll -ll elim l
   [>H4 #ll cases ll normalize [|#hd #tl ] #Habs destruct
   |#t1 #othert #Hind #ll >table_TM_cons #Htuple
    cut (S n < |ll@c@lr|)
@@ -85,8 +85,8 @@ lemma table_to_list: ∀n,l,h,c. is_config n c →
      normalize in ⊢ (???%→?); whd in ⊢ (??%?→?); #Htemp 
      lapply (cons_injective_l ????? Htemp) #Hc1
      lapply (cons_injective_r ????? Htemp) -Htemp #Heq2
-     %{(q2@[c2;m])} %{t1} % 
-      [>Ht1 >Heq1 >Hc1 @eq_f >associative_append % 
+     %{(q2@[c2;m])} %{(table_TM n othert h)} %{t1} % 
+      [ %[ // |>Ht1 >Heq1 >Hc1 @eq_f >associative_append % ]
       |%1 %
       ]
     |(* ll not nil *)
@@ -94,8 +94,9 @@ lemma table_to_list: ∀n,l,h,c. is_config n c →
      whd in ⊢ (??%?→?); #Heq destruct (Heq) 
      cases (compare_append … e0) #l *
       [* cases l 
-        [#_ #Htab cases (Hind [ ] (sym_eq … Htab)) #out * #t * #Ht #Hmemt
-         %{out} %{t} % // %2 //
+        [#_ #Htab cases (Hind [ ] (sym_eq … Htab)) 
+         #out * #lr0  * #t * * #Hlr #Ht #Hmemt
+         %{out} %{lr0} %{t} % [% //| %2 //]
         |(* this case is absurd *) 
          #al #tll #Heq1 >H4 #Heq2 @False_ind 
          lapply (cons_injective_l ? bar … Heq2) #Hbar <Hbar in Heq1; #Heq1
@@ -111,8 +112,8 @@ lemma table_to_list: ∀n,l,h,c. is_config n c →
             ]
           ]
         ]
-      |* #Htl #Htab cases (Hind … Htab) #out * #t * #Ht #Hmemt
-       %{out} %{t} % // %2 //
+      |* #Htl #Htab cases (Hind … Htab) #out * #lr0 * #t * * #Hlr #Ht #Hmemt
+       %{out} %{lr0} %{t} % [% // | %2 //]
       ] 
     ]
   ]

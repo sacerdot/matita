@@ -101,6 +101,13 @@ definition legal_tape ≝ λn,l,h,t.
   is_config n (bar::state@[char]) →  
   nth prg ? t1 (niltape ?) = midtape ? [ ] bar table →
   bar::table = table_TM n l h → *)
+  
+definition deterministic_tuples ≝ λn,h,l.
+ ∀t1,t2,conf,out1,out2.
+  is_config n conf →
+  mem ? t1 l → mem ? t2 l →
+  tuple_encoding n h t1 = conf@out1 →
+    tuple_encoding n h t2 = conf@out2 → out1 = out2.
 
 definition R_unistep ≝ λn,l,h.λt1,t2: Vector ? 3.
   ∀state,char,table.
@@ -112,6 +119,8 @@ definition R_unistep ≝ λn,l,h.λt1,t2: Vector ? 3.
   bar::table = table_TM n l h →
   (* obj *)
   only_bits (list_of_tape ? (nth obj ? t1 (niltape ?))) →
+  (* deterministic tuples *)
+  deterministic_tuples n h l →
   let conf ≝ (bar::state@[char]) in
   (∃ll,lr.bar::table = ll@conf@lr) →
 (*
@@ -174,15 +183,15 @@ lemma sem_unistep : ∀n,l,h.unistep ⊨ R_unistep n l h.
      (sem_exec_move …)))))
   /2 by le_n,sym_not_eq/
 #ta #tb #HR #state #char #table #Hta_cfg #Hcfg #Hta_prg #Htable
-#Hbits_obj #Htotaltable
+#Hbits_obj #Hdeterm #Hmatching
 #nstate #nchar #m #t #Htuple #Hmatch
 cases HR -HR #tc * whd in ⊢ (%→?); 
 >Hta_cfg #H cases (H ?? (refl ??)) -H 
 (* prg starts with a bar, so it's not empty *) #_
 >Hta_prg #H lapply (H ??? (refl ??)) -H *
-[| cases Htotaltable #ll * #lr #H >H 
+[| cases Hmatching #ll * #lr #H >H 
    #Hfalse @False_ind cases (Hfalse ll lr) #H1 @H1 //]
-* #ll * #lr * #Hintable -Htotaltable #Htc
+* #ll * #lr * #Hintable  #Htc
 * #td * whd in ⊢ (%→?); >Htc
 >nth_change_vec_neq [|@sym_not_eq //] >(nth_change_vec ?????? lt_cfg)
 #Htd lapply (Htd ? (refl ??)) -Htd
@@ -195,31 +204,37 @@ whd in ⊢ (???(???(????%?)??)→?); whd in match (tail ??); #Htd
 (* move cfg to R *)
 * #te * whd in ⊢ (%→?); >Htd
 >change_vec_commute [|@sym_not_eq //] >change_vec_change_vec
->nth_change_vec_neq [|@sym_not_eq //] >nth_change_vec //
+>nth_change_vec_neq [|@sym_not_eq //] >nth_change_vec [2:@leb_true_to_le %]
 >Htable in Hintable; #Hintable #Hte
 (* copy *)
-lapply (cfg_in_table_to_tuple ???? Hcfg ?? Hintable)
-* #newconfig * #m0 * #lr0 * * #Hlr destruct (Hlr) #Hnewcfg #Hm0
+lapply (table_to_list ???? Hcfg ?? Hintable) * #out * #lr0 * #t0
+* * #Hlr #Htuple_t0 #mem_t0 
+cut (out = nstate@[nchar;m])
+  [@(Hdeterm … Hcfg mem_t0 Hmatch Htuple_t0 Htuple)] #Hout
+>(append_cons ? nchar) in Htuple; #Htuple
+lapply (tuple_to_config ?????? Hcfg … Htuple) #newconfig
 cut (∃fo,so.state = fo::so ∧ |so| = n)
-[ @daemon ] * #fo * #so * #Hstate_exp #Hsolen
-cut (∃fn,sn,cn.newconfig = fn::sn@[cn] ∧ |sn| = n)
-[ @daemon ] * #fn * #sn * #cn * #Hnewstate_exp #Hsnlen
+  [ @daemon ] * #fo * #so * #Hstate_exp #Hsolen
+cut (∃fn,sn.nstate = fn::sn  ∧ |sn| = n)
+  [ @daemon ] * #fn * #sn * #Hnewstate_exp #Hsnlen
+>Hstate_exp >Hout in Hlr; >Hnewstate_exp whd in ⊢ (???%→?); #Hlr
 * #tf * * #_ >Hte >(nth_change_vec ?????? lt_prg)
 >nth_change_vec_neq [|@sym_not_eq //] >(nth_change_vec ?????? lt_cfg)
->Hstate_exp >Hnewstate_exp
+>Hstate_exp >Hnewstate_exp >Hlr
 whd in match (mk_tape ????); whd in match (tape_move ???);
 #Htf cases (Htf ?????? (refl ??) (refl ??) ?) -Htf
 [| whd in match (tail ??); >length_append >length_append 
-   >Hsolen >length_append >Hsnlen //]
+   >Hsolen >length_append >Hsnlen normalize //]
 #rs1 * #rs2 whd in match (tail ??); * *
 #Hrs1rs2 #Hrs1len
 >change_vec_change_vec >change_vec_commute [|@sym_not_eq //]
 >change_vec_change_vec >append_nil #Htf 
 (* exec_move *)
-cut ((sn@[cn])=rs1)
+>append_cons in Hrs1rs2; >associative_append #Hrs1rs2
+cut ((sn@[nchar])=rs1)
   [@(append_l1_injective ?????? Hrs1rs2) >Hrs1len 
    >length_append >length_append normalize >Hsolen >Hsnlen % ] #Hrs1  
-cut (m0::lr0=rs2) [@(append_l2_injective ?????? Hrs1rs2) >Hrs1 % ] #Hrs2 
+cut (m::lr0=rs2) [@(append_l2_injective ?????? Hrs1rs2) >Hrs1 % ] #Hrs2 
 cut (∃ll1. ll@[bar] = bar::ll1) 
   [@daemon (* ll is at the begininng of a table *)] * #ll1 #Hll
 whd in ⊢ (%→?); >Htf >nth_change_vec_neq [2:@eqb_false_to_not_eq %]
@@ -231,25 +246,25 @@ whd in ⊢ (%→?); >Htf >nth_change_vec_neq [2:@eqb_false_to_not_eq %]
 <Hrs2 >(append_cons … bar ll) >Hll >reverse_cons
 #sem_exec_move 
 lapply
-  (sem_exec_move ? m0 ?
-    (([cn]@reverse FSUnialpha sn)
+  (sem_exec_move ? m ?
+    (([nchar]@reverse FSUnialpha sn)
           @fn::reverse FSUnialpha (ll1@(fo::so)@[char])) lr0 … (refl ??) ????) 
-  [@Hm0 
+  [@daemon
   |@daemon (* OK *)
   |@Hbits_obj
   |whd in ⊢ (??%?); >associative_append >associative_append 
-   >associative_append %
+   >associative_append  %
   |#Htb >Htb @(eq_vec … (niltape ?)) (* tape by tape *) #i #lei2 
    cases (le_to_or_lt_eq … (le_S_S_to_le …lei2))
     [#lei1 cases (le_to_or_lt_eq … (le_S_S_to_le …lei1))
       [#lei0 lapply(le_n_O_to_eq … (le_S_S_to_le …lei0)) #eqi <eqi
        (* obj tape *)
-       >nth_change_vec [2:@leb_true_to_le %] 
-       (* dimostrare che la tabella e' univoca
-          da cui m = m0 e nchar = cn *)
+       >nth_change_vec [2:@leb_true_to_le %] % 
       |(* cfg tape *) #eqi >eqi
        >nth_change_vec_neq [2:@eqb_false_to_not_eq %]
-       >nth_change_vec [2:@leb_true_to_le %] 
+       >nth_change_vec [2:@leb_true_to_le %]  
+       whd in ⊢ (??%?); cut (∀A.∀l:list A.[]@l = l) [//] #Hnil >Hnil
+       >reverse_append >reverse_single >reverse_reverse %
        (* idem *)
       ]
     |(* prg tape *) #eqi >eqi
@@ -260,60 +275,32 @@ lapply
       >reverse_reverse >reverse_cons >reverse_reverse
       >associative_append >associative_append >associative_append
       >(append_cons ? bar ll) >Hll @eq_f @eq_f <Hstate_exp @eq_f
-      >Hnewstate_exp %
+      >Hnewstate_exp >Hlr normalize >associative_append >associative_append %
     ]
   ]
-  
-  
 qed.
-
-
-
-  cut ((mk_tape FSUnialpha []
-     (option_hd FSUnialpha
-      (reverse FSUnialpha (m0::[]@reverse FSUnialpha (sn@[cn])@[fn; bar])))
-     (tail FSUnialpha
-      (reverse FSUnialpha (m0::[]@reverse FSUnialpha (sn@[cn])@[fn; bar])))) =
-      midtape ? [ ] bar (fn::sn@[cn;m0]))
-  [cut (reverse FSUnialpha (m0::[]@reverse FSUnialpha (sn@[cn])@[fn; bar]) =
-          bar::fn::sn@[cn;m0])
-    [>reverse_cons whd in ⊢ (??(??(??%)?)?); >reverse_append >reverse_reverse
-     >append_cons in ⊢ (???%); % ] #Hrev >Hrev % ] #Hmk_tape >Hmk_tape -Hmk_tape
-   >change_vec_commute
-
-  >reverse_append >reverse_append
-  check reverse_cons
-  <reverse_cons >reverse_cons
-   -Htg #Htg 
-
->(change_vec_commute ????? cfg prg) [2:@eqb_false_to_not_eq %]
->nth_change_vec_neq [2:@eqb_false_to_not_eq %]
->nth_change_vec_neq [2:@eqb_false_to_not_eq %]
-lapply (append_l1_injective ?????? Hrs1rs2)
-[ >Hsnlen >Hrs1len >length_append >length_append >length_append >length_append
-  normalize >Hsolen >Hsnlen % ]
-#Hrs1 <Hrs1 >reverse_append #Htg cases (Htg ?? (refl ??)) -Htg
-cases m0
-  [#mv #_ #Htg #_
-
-   
-      
-      
-
-[ * 
- 
-  match_m cfg prg FSUnialpha 2 ·
-  restart_tape cfg · copy prg cfg FSUnialpha 2 ·
-  cfg_to_obj · tape_move_obj · restart_tape prg · obj_to_cfg.
 
 definition tape_map ≝ λA,B:FinSet.λf:A→B.λt.
   mk_tape B (map ?? f (left ? t)) 
     (option_map ?? f (current ? t)) 
     (map ?? f (right ? t)).
-    
+
+(* da spostare *)
+lemma map_reverse: ∀A,B,f,l. 
+  map ?? f (reverse A l) = reverse B (map ?? f l).
+#A #B #f #l elim l //
+#a #l1 #Hind >reverse_cons >reverse_cons <map_append @eq_f2 //
+qed.
+
 lemma map_list_of_tape: ∀A,B,f,t.
   list_of_tape B (tape_map ?? f t) = map ?? f (list_of_tape A t).
-#A #B #f * // normalize // #ls #c #rs <map_append %
+#A #B #f * // 
+  [#a #l normalize >rev_append_def >rev_append_def >append_nil
+   >append_nil <map_append <map_reverse @eq_f2 //
+  |#rs #a #ls normalize >rev_append_def >rev_append_def
+   >append_nil >append_nil <map_append normalize 
+   @eq_f2 //
+  ]
 qed.
 
 lemma low_char_current : ∀t.
@@ -407,12 +394,14 @@ cut (ctape ?? (step FinBool M c) = tape_move ? (tape_write ? (ctape … c) cout)
 lapply(H (bits_of_state ? (nhalt M) (cstate ?? c)) 
          (low_char (current ? (ctape ?? c)))
          (tail ? (table_TM ? (graph_enum ?? (ntrans M)) (nhalt M)))
-         ??????)
+         ???????)        
 [<Htable
  lapply(list_to_table … (nhalt M) …Hingraph) * #ll * #lr #Htable1 %{ll} 
  %{(((bits_of_state ? (nhalt M) qout)@[low_char cout;low_mv m])@lr)} 
  >Htable1 @eq_f <associative_append @eq_f2 // >Htup
  whd in ⊢ (??%?); @eq_f >associative_append %
+|#tx #ty #conf #outx #outy #isconf #memx #memy #tuplex #tupley
+ @(deterministic M … (refl ??) memx memy isconf tuplex tupley)
 |>Ht1 >obj_low_tapes >map_list_of_tape elim (list_of_tape ??) 
   [#b @False_ind | #b #tl #Hind #a * [#Ha >Ha //| @Hind]]
 |@sym_eq @Htable
