@@ -118,6 +118,115 @@ lemma table_to_list: ∀n,l,h,c. is_config n c →
   ]
 qed.
 
+(*
+lemma tuple_to_config: ∀n,h,t,out,c. is_config n c →
+  tuple_encoding n h t = c@out → 
+    ∃outq,outa,m. out = outq@[outa;m] ∧ is_config n (bar::outq@[outa]).
+#n #h * * #q0 #a0 * * #q1 #a1 #m #out #c * #q * #a * * * #Hq #Ha #Hlen #Hc 
+whd in ⊢ (??%?→?); #Heq 
+%{(bits_of_state n h q1)} %{(low_char a1)} %{(low_mv m)} %
+  [% [ %[ // | cases a1 [|#b] normalize % #H destruct (H)]
+     |whd in ⊢ (??%?); @eq_f //]
+  |@eq_f cut (∀A.∀a:A.∀l1,l2. a::l1@l2 = (a::l1)@l2) [//] #Hcut
+   >append_cons in Heq; >Hcut <associative_append
+   >(append_cons ? (low_char a1)) <associative_append #Heq 
+   lapply (append_l1_injective_r ?? (c@out) ??? Heq) [%] -Heq 
+   >associative_append #Heq @sym_eq @(append_l2_injective ?????? Heq)
+   >Hc whd in ⊢ (??%%); @eq_f >length_append >length_append
+   @eq_f2 // >length_map >Hlen whd in ⊢ (??%?); @eq_f //
+  ]
+qed.
+*)
+
+lemma tuple_to_config: ∀n,h,t,out,m,c. is_config n c →
+  tuple_encoding n h t = c@out@[m] → is_config n (bar::out).
+#n #h * * #q0 #a0 * * #q1 #a1 #m #out #lowm #c * #q * #a * * * #Hq #Ha #Hlen #Hc 
+whd in ⊢ (??%?→?); #Heq %{(bits_of_state n h q1)} %{(low_char a1)} %
+  [% [ %[ // | cases a1 [|#b] normalize % #H destruct (H)]
+     |whd in ⊢ (??%?); @eq_f //]
+  |@eq_f cut (∀A.∀a:A.∀l1,l2. a::l1@l2 = (a::l1)@l2) [//] #Hcut
+   >append_cons in Heq; >Hcut <associative_append
+   >(append_cons ? (low_char a1)) <associative_append #Heq 
+   lapply (append_l1_injective_r ?? (c@out) ??? Heq) [%] -Heq 
+   >associative_append #Heq @sym_eq @(append_l2_injective ?????? Heq)
+   >Hc whd in ⊢ (??%%); @eq_f >length_append >length_append
+   @eq_f2 // >length_map >Hlen whd in ⊢ (??%?); @eq_f //
+  ]
+qed.
+
+(* da spostare *)
+lemma injective_nat_of: ∀n. injective … (nat_of n).
+#n * #a0 #Ha0 * #b0 #Hb0 normalize #Heq
+generalize in match Ha0; generalize in match Hb0; >Heq //
+qed.
+
+lemma not_of_lt: ∀n,m. nat_of n m < n.
+#n * #a #lta //
+qed.
+
+(* da spostare *)
+lemma injective_map: ∀A,B,f. injective A B f → injective … (map … f).
+#A #B #f #injf #l1 elim l1 
+  [* // #a2 #l2 normalize #H destruct
+  |#a1 -l1 #l1 #Hind * 
+    [normalize #H destruct
+    |#a2 #l2 normalize #Hmap
+     >(injf … (cons_injective_l ????? Hmap)) 
+     >(Hind … (cons_injective_r ????? Hmap)) % 
+    ]
+  ]
+qed.
+
+lemma deterministic: ∀M:normalTM.∀l,t1,t2,c,out1,out2. 
+  l = graph_enum ?? (ntrans M) → 
+  mem ? t1 l → mem ? t2 l →
+  is_config (no_states M) c → 
+  tuple_encoding ? (nhalt M) t1 = (c@out1) → 
+  tuple_encoding ? (nhalt M) t2 = (c@out2) →
+  out1 = out2.
+#M #l * * #q1 #a1 * * #q11 #a11 #m1 
+* * #q2 #a2 * * #q21 #a21 #m2 #c #out1 #out2 #Hl #memt1 #memt2 * 
+#state * #char * * * #_ #_ #Hlen #Heqc #tuplet1 #tuplet2 
+lapply (mem_to_memb … memt1) >Hl #membt1
+lapply (graph_enum_correct ?? (ntrans M) ?? membt1) #Ht1
+lapply (mem_to_memb … memt2) >Hl #membt2
+lapply (graph_enum_correct ?? (ntrans M) ?? membt2) #Ht2
+cut (bar::bits_of_state (no_states M) (nhalt M) q1@[low_char a1]=c)
+  [whd in tuplet1:(??%?); >(append_cons ? (low_char a1)) in tuplet1; #tuplet1
+   @(append_l1_injective ? (bar::bits_of_state ?? q1@[low_char a1]) ???? tuplet1)
+   >Heqc whd in ⊢ (??%%); @eq_f >length_append >length_append
+   @eq_f2 // >length_map whd in ⊢ (??%?); >Hlen @eq_f
+   >bitlist_length %] #Hcfg1
+cut (bar::bits_of_state (no_states M) (nhalt M) q2@[low_char a2]=c)
+  [whd in tuplet2:(??%?); >(append_cons ? (low_char a2)) in tuplet2; #tuplet2
+   @(append_l1_injective ? (bar::bits_of_state ?? q2@[low_char a2]) ???? tuplet2)
+   >Heqc whd in ⊢ (??%%); @eq_f >length_append >length_append
+   @eq_f2 // >length_map whd in ⊢ (??%?); >Hlen @eq_f
+   >bitlist_length %] #Hcfg2
+cut (a1 = a2)  
+  [@injective_low_char
+   <Hcfg2 in Hcfg1; #H lapply (cons_injective_r ????? H) -H #H
+   lapply (append_l2_injective_r … H) [%] -H #H @(cons_injective_l ????? H)]
+#Heqa
+cut (to_bitlist (no_states M) (nat_of … q1) = 
+     to_bitlist (no_states M)  (nat_of … q2))  
+  [<Hcfg2 in Hcfg1; #H lapply (cons_injective_r ????? H) -H #H
+   lapply (append_l1_injective_r … H) // -H whd in ⊢ (??%%→?); #H 
+   lapply (cons_injective_r ????? H) -H #H 
+   @(injective_map ?? (λx.bit x) ??? H) 
+   (* injective  bit *) * * #H1 destruct (H1) %]
+#Hbits
+cut (q1 = q2)
+  [@injective_nat_of  
+   <(bitlist_inv1 (no_states M) (nat_of … q1)) //
+   <(bitlist_inv1 (no_states M) (nat_of … q2)) //]
+#Heqq
+cut (〈q11,a11,m1〉=〈q21,a21,m2〉)
+  [<Ht1 <Ht2 @eq_f @eq_f2 //]
+#Heqout <Heqout in tuplet2; <Heqq <Heqa >tuplet1
+@append_l2_injective %
+qed.
+ 
 lemma cfg_in_table_to_tuple: ∀n,l,h,c. is_config n c → 
   ∀ll,lr.table_TM n l h = ll@c@lr → 
     ∃out,m,lr0. lr = out@m::lr0 ∧ is_config n (bar::out) ∧ m ≠ bar.
@@ -172,3 +281,4 @@ lemma cfg_in_table_to_tuple: ∀n,l,h,c. is_config n c →
     ]
   ]
 qed.
+
