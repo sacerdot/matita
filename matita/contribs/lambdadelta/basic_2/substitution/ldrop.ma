@@ -258,7 +258,7 @@ lemma ldrop_fwd_ldrop2: ∀L1,I2,K2,V2,e. ⇩[O, e] L1 ≡ K2. ⓑ{I2} V2 →
 ]
 qed-.
 
-lemma ldrop_fwd_lw: ∀L1,L2,d,e. ⇩[d, e] L1 ≡ L2 → #{L2} ≤ #{L1}.
+lemma ldrop_fwd_lw: ∀L1,L2,d,e. ⇩[d, e] L1 ≡ L2 → ♯{L2} ≤ ♯{L1}.
 #L1 #L2 #d #e #H elim H -L1 -L2 -d -e // normalize
 [ /2 width=3/
 | #L1 #L2 #I #V1 #V2 #d #e #_ #HV21 #IHL12
@@ -267,7 +267,7 @@ lemma ldrop_fwd_lw: ∀L1,L2,d,e. ⇩[d, e] L1 ≡ L2 → #{L2} ≤ #{L1}.
 qed-. 
 
 lemma ldrop_pair2_fwd_fw: ∀I,L,K,V,d,e. ⇩[d, e] L ≡ K. ⓑ{I} V →
-                          ∀T. #{K, V} < #{L, T}.
+                          ∀T. ♯{K, V} < ♯{L, T}.
 #I #L #K #V #d #e #H #T
 lapply (ldrop_fwd_lw … H) -H #H
 @(le_to_lt_to_lt … H) -H /3 width=1/

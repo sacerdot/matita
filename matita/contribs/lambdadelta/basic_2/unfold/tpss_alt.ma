@@ -81,11 +81,11 @@ lemma tpssa_tpss: ∀L,T1,T2,d,e. L ⊢ T1 ▶▶* [d, e] T2 → L ⊢ T1 ▶* [
 #L #T1 #T2 #d #e #H elim H -L -T1 -T2 -d -e // /2 width=6/
 qed-. 
 
-lemma tpss_ind_alt: ∀R:ℕ→ℕ→lenv→relation term.
+lemma tpss_ind_alt: ∀R:nat→nat→lenv→relation term.
                     (∀L,I,d,e. R d e L (⓪{I}) (⓪{I})) →
                     (∀L,K,V1,V2,W2,i,d,e. d ≤ i → i < d + e →
                      ⇩[O, i] L ≡ K.ⓓV1 → K ⊢ V1 ▶* [O, d + e - i - 1] V2 →
-                     ⇧[O, i + 1] V2 ≡ W2 → R O (d+e-i-1) K V1 V2 → R d e L #i W2
+                     ⇧[O, i + 1] V2 ≡ W2 → R O (d+e-i-1) K V1 V2 → R d e L (#i) W2
                     ) →
                     (∀L,a,I,V1,V2,T1,T2,d,e. L ⊢ V1 ▶* [d, e] V2 →
                      L.ⓑ{I}V2 ⊢ T1 ▶* [d + 1, e] T2 → R d e L V1 V2 →

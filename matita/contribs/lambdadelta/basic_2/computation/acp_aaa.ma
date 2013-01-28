@@ -31,7 +31,7 @@ theorem aacr_aaa_csubc_lifts: ∀RR,RS,RP.
 #RR #RS #RP #H1RP #H2RP #L1 #T #A #H elim H -L1 -T -A
 [ #L #k #L0 #des #HL0 #X #H #L2 #HL20
   >(lifts_inv_sort1 … H) -H
-  lapply (aacr_acr … H1RP H2RP ⓪) #HAtom
+  lapply (aacr_acr … H1RP H2RP (⓪)) #HAtom
   @(s2 … HAtom … ◊) // /2 width=2/
 | #I #L1 #K1 #V1 #B #i #HLK1 #HKV1B #IHB #L0 #des #HL01 #X #H #L2 #HL20
   lapply (aacr_acr … H1RP H2RP B) #HB

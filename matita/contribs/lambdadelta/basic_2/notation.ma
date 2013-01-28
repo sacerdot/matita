@@ -17,27 +17,27 @@
 (* Grammar ******************************************************************)
 
 notation "⓪"
- non associative with precedence 90
+ non associative with precedence 55
  for @{ 'Item0 }.
 
 notation "hvbox( ⓪ { term 46 I } )"
- non associative with precedence 90
+ non associative with precedence 55
  for @{ 'Item0 $I }.
 
 notation "⋆"
- non associative with precedence 90
+ non associative with precedence 46
  for @{ 'Star }.
 
 notation "hvbox( ⋆ term 90 k )"
- non associative with precedence 90
+ non associative with precedence 55
  for @{ 'Star $k }.
 
 notation "hvbox( # term 90 i )"
- non associative with precedence 90
+ non associative with precedence 55
  for @{ 'LRef $i }.
 
 notation "hvbox( § term 90 p )"
- non associative with precedence 90
+ non associative with precedence 55
  for @{ 'GRef $p }.
 
 notation "hvbox( ② term 55 T1 . break term 55 T )"
@@ -120,11 +120,11 @@ notation "hvbox( T . break ④ { term 46 I } break { term 46 T1 , break term 46 
  non associative with precedence 50
  for @{ 'DxItem4 $T $I $T1 $T2 $T3 }.
 
-notation "hvbox( # { term 46 x } )"
+notation "hvbox( ♯ { term 46 x } )"
  non associative with precedence 90
  for @{ 'Weight $x }.
 
-notation "hvbox( # { term 46 x , break term 46 y } )"
+notation "hvbox( ♯ { term 46 x , break term 46 y } )"
  non associative with precedence 90
  for @{ 'Weight $x $y }.
 

@@ -82,7 +82,7 @@ lemma delift_ind_alt: ∀R:ℕ→ℕ→lenv→relation term.
                       (∀L,d,e,i. i < d → R d e L (#i) (#i)) →
                       (∀L,K,V1,V2,W2,i,d,e. d ≤ i → i < d + e →
                        ⇩[O, i] L ≡ K.ⓓV1 → K ⊢ ▼*[O, d + e - i - 1] V1 ≡ V2 →
-                       ⇧[O, d] V2 ≡ W2 → R O (d+e-i-1) K V1 V2 → R d e L #i W2
+                       ⇧[O, d] V2 ≡ W2 → R O (d+e-i-1) K V1 V2 → R d e L (#i) W2
                       ) →
                       (∀L,d,e,i. d + e ≤ i → R d e L (#i) (#(i - e))) →
                       (∀L,d,e,p. R d e L (§p) (§p)) →

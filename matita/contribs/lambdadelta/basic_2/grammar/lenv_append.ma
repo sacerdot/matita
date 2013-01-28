@@ -98,7 +98,7 @@ qed-.
 
 (* Basic_eliminators ********************************************************)
 
-fact lenv_ind_dx_aux: ∀R:predicate lenv. R ⋆ →
+fact lenv_ind_dx_aux: ∀R:predicate lenv. R (⋆) →
                       (∀I,L,V. R L → R (⋆.ⓑ{I}V @@ L)) →
                       ∀d,L. |L| = d → R L.
 #R #Hatom #Hpair #d @(nat_ind_plus … d) -d
@@ -108,7 +108,7 @@ fact lenv_ind_dx_aux: ∀R:predicate lenv. R ⋆ →
 ]
 qed-.
 
-lemma lenv_ind_dx: ∀R:predicate lenv. R ⋆ →
+lemma lenv_ind_dx: ∀R:predicate lenv. R (⋆) →
                    (∀I,L,V. R L → R (⋆.ⓑ{I}V @@ L)) →
                    ∀L. R L.
 /3 width=2 by lenv_ind_dx_aux/ qed-.

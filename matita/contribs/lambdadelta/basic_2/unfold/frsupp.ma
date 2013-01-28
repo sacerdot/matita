@@ -64,19 +64,19 @@ lemma frsupp_strap2: ∀L1,L,L2,T1,T,T2. ⦃L1, T1⦄ ⧁ ⦃L, T⦄ → ⦃L, T
 
 (* Basic forward lemmas *****************************************************)
 
-lemma frsupp_fwd_fw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁+ ⦃L2, T2⦄ → #{L2, T2} < #{L1, T1}.
+lemma frsupp_fwd_fw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁+ ⦃L2, T2⦄ → ♯{L2, T2} < ♯{L1, T1}.
 #L1 #L2 #T1 #T2 #H @(frsupp_ind … H) -L2 -T2
 /3 width=3 by frsup_fwd_fw, transitive_lt/
 qed-.
 
-lemma frsupp_fwd_lw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁+ ⦃L2, T2⦄ → #{L1} ≤ #{L2}.
+lemma frsupp_fwd_lw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁+ ⦃L2, T2⦄ → ♯{L1} ≤ ♯{L2}.
 #L1 #L2 #T1 #T2 #H @(frsupp_ind … H) -L2 -T2
 /2 width=3 by frsup_fwd_lw/ (**) (* /3 width=5 by frsup_fwd_lw, transitive_le/ is too slow *)
 #L #T #L2 #T2 #_ #HL2 #HL1
 lapply (frsup_fwd_lw … HL2) -HL2 /2 width=3 by transitive_le/
 qed-.
 
-lemma frsupp_fwd_tw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁+ ⦃L2, T2⦄ → #{T2} < #{T1}.
+lemma frsupp_fwd_tw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁+ ⦃L2, T2⦄ → ♯{T2} < ♯{T1}.
 #L1 #L2 #T1 #T2 #H @(frsupp_ind … H) -L2 -T2
 /3 width=3 by frsup_fwd_tw, transitive_lt/
 qed-.

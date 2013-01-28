@@ -18,7 +18,7 @@ include "basic_2/substitution/ldrop.ma".
 (* ATONIC ARITY ASSIGNMENT ON TERMS *****************************************)
 
 inductive aaa: lenv → term → predicate aarity ≝
-| aaa_sort: ∀L,k. aaa L (⋆k) ⓪
+| aaa_sort: ∀L,k. aaa L (⋆k) (⓪)
 | aaa_lref: ∀I,L,K,V,B,i. ⇩[0, i] L ≡ K. ⓑ{I} V → aaa K V B → aaa L (#i) B
 | aaa_abbr: ∀a,L,V,T,B,A.
             aaa L V B → aaa (L. ⓓV) T A → aaa L (ⓓ{a}V. T) A

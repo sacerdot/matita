@@ -275,7 +275,7 @@ qed-.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma tw_lift: ∀d,e,T1,T2. ⇧[d, e] T1 ≡ T2 → #{T1} = #{T2}.
+lemma tw_lift: ∀d,e,T1,T2. ⇧[d, e] T1 ≡ T2 → ♯{T1} = ♯{T2}.
 #d #e #T1 #T2 #H elim H -d -e -T1 -T2 normalize //
 qed-.
 

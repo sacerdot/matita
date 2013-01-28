@@ -73,17 +73,17 @@ qed-.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma frsups_fwd_fw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁* ⦃L2, T2⦄ → #{L2, T2} ≤ #{L1, T1}.
+lemma frsups_fwd_fw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁* ⦃L2, T2⦄ → ♯{L2, T2} ≤ ♯{L1, T1}.
 #L1 #L2 #T1 #T2 #H elim (frsups_inv_all … H) -H [ * // ]
 /3 width=1 by frsupp_fwd_fw, lt_to_le/
 qed-.
 
-lemma frsups_fwd_lw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁* ⦃L2, T2⦄ → #{L1} ≤ #{L2}.
+lemma frsups_fwd_lw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁* ⦃L2, T2⦄ → ♯{L1} ≤ ♯{L2}.
 #L1 #L2 #T1 #T2 #H elim (frsups_inv_all … H) -H [ * // ]
 /2 width=3 by frsupp_fwd_lw/
 qed-.
 
-lemma frsups_fwd_tw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁* ⦃L2, T2⦄ → #{T2} ≤ #{T1}.
+lemma frsups_fwd_tw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁* ⦃L2, T2⦄ → ♯{T2} ≤ ♯{T1}.
 #L1 #L2 #T1 #T2 #H elim (frsups_inv_all … H) -H [ * // ]
 /3 width=3 by frsupp_fwd_tw, lt_to_le/
 qed-.

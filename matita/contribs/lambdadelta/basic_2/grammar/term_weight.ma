@@ -26,7 +26,7 @@ interpretation "weight (term)" 'Weight T = (tw T).
 (* Basic properties *********************************************************)
 
 (* Basic_1: was: tweight_lt *)
-lemma tw_pos: ∀T. 1 ≤ #{T}.
+lemma tw_pos: ∀T. 1 ≤ ♯{T}.
 #T elim T -T //
 qed.
 

@@ -77,15 +77,15 @@ lemma frsup_inv_flat1: ∀J,L1,L2,W,U,T2. ⦃L1, ⓕ{J}W.U⦄ ⧁ ⦃L2, T2⦄ �
 
 (* Basic forward lemmas *****************************************************)
 
-lemma frsup_fwd_fw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁ ⦃L2, T2⦄ → #{L2, T2} < #{L1, T1}.
+lemma frsup_fwd_fw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁ ⦃L2, T2⦄ → ♯{L2, T2} < ♯{L1, T1}.
 #L1 #L2 #T1 #T2 * -L1 -L2 -T1 -T2 /width=1/
 qed-.
 
-lemma frsup_fwd_lw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁ ⦃L2, T2⦄ → #{L1} ≤ #{L2}.
+lemma frsup_fwd_lw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁ ⦃L2, T2⦄ → ♯{L1} ≤ ♯{L2}.
 #L1 #L2 #T1 #T2 * -L1 -L2 -T1 -T2 /width=1/
 qed-.
 
-lemma frsup_fwd_tw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁ ⦃L2, T2⦄ → #{T2} < #{T1}.
+lemma frsup_fwd_tw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⧁ ⦃L2, T2⦄ → ♯{T2} < ♯{T1}.
 #L1 #L2 #T1 #T2 * -L1 -L2 -T1 -T2 /width=1/ /2 width=1 by le_minus_to_plus/
 qed-.
 

@@ -17,42 +17,42 @@ include "basic_2/grammar/cl_shift.ma".
 
 (* WEIGHT OF A CLOSURE ******************************************************)
 
-definition fw: lenv → term → ? ≝ λL,T. #{L} + #{T}.
+definition fw: lenv → term → ? ≝ λL,T. ♯{L} + ♯{T}.
 
 interpretation "weight (closure)" 'Weight L T = (fw L T).
 
 (* Basic properties *********************************************************)
 
 (* Basic_1: was: flt_shift *)
-lemma fw_shift: ∀a,K,I,V,T. #{K. ⓑ{I} V, T} < #{K, ⓑ{a,I} V. T}.
+lemma fw_shift: ∀a,K,I,V,T. ♯{K. ⓑ{I} V, T} < ♯{K, ⓑ{a,I} V. T}.
 normalize //
 qed.
 
-lemma tw_shift: ∀L,T. #{L, T} ≤ #{L @@ T}.
+lemma tw_shift: ∀L,T. ♯{L, T} ≤ ♯{L @@ T}.
 #L elim L //
 #K #I #V #IHL #T
 @transitive_le [3: @IHL |2: /2 width=2/ | skip ]
 qed.
 
-lemma fw_tpair_sn: ∀I,L,V,T. #{L, V} < #{L, ②{I}V.T}.
+lemma fw_tpair_sn: ∀I,L,V,T. ♯{L, V} < ♯{L, ②{I}V.T}.
 normalize in ⊢ (?→?→?→?→?%%); //
 qed.
 
-lemma fw_tpair_dx: ∀I,L,V,T. #{L, T} < #{L, ②{I}V.T}.
+lemma fw_tpair_dx: ∀I,L,V,T. ♯{L, T} < ♯{L, ②{I}V.T}.
 normalize in ⊢ (?→?→?→?→?%%); //
 qed.
 
-lemma fw_tpair_dx_sn: ∀I1,I2,L,V1,V2,T. #{L, V2} < #{L, ②{I1}V1.②{I2}V2.T}.
+lemma fw_tpair_dx_sn: ∀I1,I2,L,V1,V2,T. ♯{L, V2} < ♯{L, ②{I1}V1.②{I2}V2.T}.
 normalize in ⊢ (?→?→?→?→?→?→?%%); /2 width=1/
 qed.
 
 lemma fw_tpair_sn_sn_shift: ∀I,I1,I2,L,V1,V2,T.
-                            #{L.ⓑ{I}V1, T} < #{L, ②{I1}V1.②{I2}V2.T}.
-normalize in ⊢ (?→?→?→?→?→?→?→?%%); /3 width=1/ 
+                            ♯{L.ⓑ{I}V1, T} < ♯{L, ②{I1}V1.②{I2}V2.T}.
+normalize in ⊢ (?→?→?→?→?→?→?→?%%); /3 width=1/
 qed.
 
 lemma fw_tpair_sn_dx_shift: ∀I,I1,I2,L,V1,V2,T.
-                            #{L.ⓑ{I}V2, T} < #{L, ②{I1}V1.②{I2}V2.T}.
+                            ♯{L.ⓑ{I}V2, T} < ♯{L, ②{I1}V1.②{I2}V2.T}.
 normalize in ⊢ (?→?→?→?→?→?→?→?%%); /2 width=1/
 qed.
 

@@ -34,7 +34,7 @@ qed-.
 fact snv_ssta_conf_aux: ∀h,g,L,T. (
                            ∀L0,T0. ⦃h, L0⦄ ⊩ T0 :[g] →
                            ∀U0,l. ⦃h, L0⦄ ⊢ T0 •[g, l + 1] U0 →
-                           #{L0, T0} < #{L, T} → ⦃h, L0⦄ ⊩ U0 :[g]
+                           ♯{L0, T0} < ♯{L, T} → ⦃h, L0⦄ ⊩ U0 :[g]
                         ) →
                         ∀L0,T0. ⦃h, L0⦄ ⊩ T0 :[g] →
                         ∀U0,l. ⦃h, L0⦄ ⊢ T0 •[g, l + 1] U0 →
