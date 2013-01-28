@@ -148,8 +148,20 @@ definition R_copy_strict ≝
             (tail sig rs2)) src)
             (mk_tape sig (reverse sig rs1@x::ls0) (None sig) []) dst)).
 
-axiom sem_copy_strict : ∀src,dst,sig,n. src ≠ dst → src < S n → dst < S n → 
+lemma sem_copy_strict : ∀src,dst,sig,n. src ≠ dst → src < S n → dst < S n → 
   copy src dst sig n ⊨ R_copy_strict src dst sig n.
+#src #dst #sig #n #Hneq #Hsrc #Hdst @(Realize_to_Realize … (sem_copy …)) //
+#ta #tb * #Htb1 #Htb2 % [ @Htb1 ]
+#ls #x #x0 #rs #ls0 #rs0 #Htamid_src #Htamid_dst #Hlen
+cases (Htb2 … Htamid_src Htamid_dst) -Htb1 -Htb2
+[ * #rs1 * #rs2 * * #Hrs0 #Heq #Htb <Heq in Hlen; >Hrs0 >length_append
+  >(plus_n_O (|rs1|)) #Hlen cut (|rs2| ≤ 0) [ /2 by le_plus_to_le/ ]
+  #Hlenrs2 cut (rs2 = [ ]) 
+  [ cases rs2 in Hlenrs2; // #r3 #rs3 normalize #H @False_ind cases (not_le_Sn_O (|rs3|)) /2/ ]
+  #Hrs2 destruct (Hrs2) >append_nil in Hrs0; #Hrs0 destruct (Hrs0) -Hlenrs2 -Hlen
+  <plus_n_O <plus_n_O %{rs} %{[ ]} >append_nil % [ % // ] @Htb
+| * #rs1 * #rs2 #H %{rs1} %{rs2} @H ]
+qed.
 
 axiom daemon : ∀P:Prop.P.
 
