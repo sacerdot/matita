@@ -172,9 +172,14 @@ cases (Htb2 … Htamid_src Htamid_dst) -Htb1 -Htb2
 | * #rs1 * #rs2 #H %{rs1} %{rs2} @H ]
 qed.
 
-axiom daemon : ∀P:Prop.P.
+lemma config_to_len : ∀n,b,q,c.is_config n (b::q@[c]) → |q| = S n.
+#n #b #q #c * #q0 * #cin * * * #_ #_ #Hq0 #H >(?:q = q0) //
+lapply (cons_injective_r ????? H) #H1 @(append_l1_injective … H1)
+lapply (eq_f … (length ?) … H) normalize >length_append >length_append
+<plus_n_Sm <plus_n_Sm <plus_n_O <plus_n_O #Hlen destruct (Hlen) //
+qed.
 
-lemma sem_unistep : ∀n,l,h.unistep ⊨ R_unistep n l h.
+lemma sem_unistep_low : ∀n,l,h.unistep ⊨ R_unistep n l h.
 #n #l #h
 @(sem_seq_app ??????? (sem_match_m cfg prg FSUnialpha 2 ???)
   (sem_seq ?????? (sem_restart_tape ???)
@@ -205,6 +210,9 @@ whd in ⊢ (???(???(????%?)??)→?); whd in match (tail ??); #Htd
 * #te * whd in ⊢ (%→?); >Htd
 >change_vec_commute [|@sym_not_eq //] >change_vec_change_vec
 >nth_change_vec_neq [|@sym_not_eq //] >nth_change_vec [2:@leb_true_to_le %]
+cut (∃ll1.ll@[bar] = bar::ll1) 
+[ cases ll in Hintable; [ #_ %{[ ]} % ] 
+  #llhd #lltl normalize #H destruct (H) %{(lltl@[bar])} % ] * #ll1 #Hll1
 >Htable in Hintable; #Hintable #Hte
 (* copy *)
 lapply (table_to_list ???? Hcfg ?? Hintable) * #out * #lr0 * #t0
@@ -214,9 +222,13 @@ cut (out = nstate@[nchar;m])
 >(append_cons ? nchar) in Htuple; #Htuple
 lapply (tuple_to_config ?????? Hcfg … Htuple) #newconfig
 cut (∃fo,so.state = fo::so ∧ |so| = n)
-  [ @daemon ] * #fo * #so * #Hstate_exp #Hsolen
+[ lapply (config_to_len … Hcfg) cases state [ normalize #H destruct (H) ]
+  #fo #so normalize #H destruct (H) %{fo} %{so} % // ]
+* #fo * #so * #Hstate_exp #Hsolen
 cut (∃fn,sn.nstate = fn::sn  ∧ |sn| = n)
-  [ @daemon ] * #fn * #sn * #Hnewstate_exp #Hsnlen
+[ lapply (config_to_len … newconfig) cases nstate [ normalize #H destruct (H) ]
+  #fn #sn normalize #H destruct (H) %{fn} %{sn} % // ]
+* #fn * #sn * #Hnewstate_exp #Hsnlen
 >Hstate_exp >Hout in Hlr; >Hnewstate_exp whd in ⊢ (???%→?); #Hlr
 * #tf * * #_ >Hte >(nth_change_vec ?????? lt_prg)
 >nth_change_vec_neq [|@sym_not_eq //] >(nth_change_vec ?????? lt_cfg)
@@ -235,22 +247,27 @@ cut ((sn@[nchar])=rs1)
   [@(append_l1_injective ?????? Hrs1rs2) >Hrs1len 
    >length_append >length_append normalize >Hsolen >Hsnlen % ] #Hrs1  
 cut (m::lr0=rs2) [@(append_l2_injective ?????? Hrs1rs2) >Hrs1 % ] #Hrs2 
-cut (∃ll1. ll@[bar] = bar::ll1) 
-  [@daemon (* ll is at the begininng of a table *)] * #ll1 #Hll
 whd in ⊢ (%→?); >Htf >nth_change_vec_neq [2:@eqb_false_to_not_eq %]
 >nth_change_vec [2:@leb_true_to_le %] 
 >nth_change_vec [2:@leb_true_to_le %]
 >nth_change_vec_neq [2:@eqb_false_to_not_eq %]
 >nth_change_vec_neq [2:@eqb_false_to_not_eq %]
 >append_cons <Hrs1 >reverse_append >reverse_single 
-<Hrs2 >(append_cons … bar ll) >Hll >reverse_cons
+<Hrs2 >(append_cons … bar ll) >Hll1 >reverse_cons
 #sem_exec_move 
 lapply
   (sem_exec_move ? m ?
     (([nchar]@reverse FSUnialpha sn)
           @fn::reverse FSUnialpha (ll1@(fo::so)@[char])) lr0 … (refl ??) ????) 
-  [@daemon
-  |@daemon (* OK *)
+  [ cut (tuple_TM (S n) (tuple_encoding n h t)) // >Htuple
+    * #qin * #cin * #qout * #cout * #mv * * * * #_ #Hmv #_ #_
+    normalize >(?: bar::qin@cin::qout@[cout;mv] = (bar::qin@cin::qout@[cout])@[mv])
+    [| normalize >associative_append normalize >associative_append % ] 
+    >(?: bar::(state@[char])@(nstate@[nchar])@[m] = (bar::(state@[char])@(nstate@[nchar]))@[m]) 
+    [|normalize >associative_append >associative_append >associative_append >associative_append >associative_append % ] 
+    #Heq lapply (append_l2_injective_r ?????? Heq) // #H destruct (H) //
+  | cases newconfig #qout * #cout * * * #_ #Hcout #_ #H destruct (H) -H
+    lapply (append_l2_injective_r ?????? e0) // #H destruct (H) @Hcout 
   |@Hbits_obj
   |whd in ⊢ (??%?); >associative_append >associative_append 
    >associative_append  %
@@ -274,7 +291,7 @@ lapply
       >Htable >Hintable >reverse_append >reverse_cons
       >reverse_reverse >reverse_cons >reverse_reverse
       >associative_append >associative_append >associative_append
-      >(append_cons ? bar ll) >Hll @eq_f @eq_f <Hstate_exp @eq_f
+      >(append_cons ? bar ll) >Hll1 @eq_f @eq_f <Hstate_exp @eq_f
       >Hnewstate_exp >Hlr normalize >associative_append >associative_append %
     ]
   ]
@@ -433,4 +450,8 @@ cases (le_to_or_lt_eq … (le_S_S_to_le … Hi)) -Hi #Hi
    >nth_change_vec_neq [|% whd in ⊢ (??%?→?);  #H destruct (H)]
    >Ht1 >prg_low_tapes //
   ]
-qed. 
+qed.
+
+lemma sem_unistep : ∀M.unistep ⊨ R_unistep_high M.
+#M @(Realize_to_Realize … (R_unistep_equiv …)) //
+qed.

@@ -39,9 +39,11 @@ definition R_obj_to_cfg ≝ λt1,t2:Vector (tape FSUnialpha) 3.
          (mk_tape ? [ ] (option_hd FSUnialpha (reverse ? (null::ls))) 
            (tail ? (reverse ? (null::ls)))) cfg).
 
+(*
 axiom accRealize_to_Realize :
   ∀sig,n.∀M:mTM sig n.∀Rtrue,Rfalse,acc.
   M ⊨ [ acc: Rtrue, Rfalse ] →  M ⊨ Rtrue ∪ Rfalse.
+*)
   
 lemma eq_mk_tape_rightof :
  ∀alpha,a,al.mk_tape alpha (a::al) (None ?) [ ] = rightof ? a al.

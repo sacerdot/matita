@@ -10,9 +10,7 @@
       V_____________________________________________________________*)
 
 include "turing/simple_machines.ma".
-include "turing/multi_universal/unistep_aux.ma".
-
-axiom sem_unistep: ∀M. unistep ⊨ R_unistep_high M.
+include "turing/multi_universal/unistep.ma".
 
 definition stop ≝ λc.
   match c with [ bit b ⇒ notb b | _ ⇒ true].
