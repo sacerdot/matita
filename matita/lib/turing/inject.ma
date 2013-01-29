@@ -30,9 +30,16 @@ lapply (trans sig M)  #trans #x lapply (trans x) * *
 #s #a #m % [ @s | % [ @a | @m ] ]
 qed.
 
-axiom current_chars_change_vec: ∀sig,n,v,a,i. i < S n →
+lemma current_chars_change_vec: ∀sig,n,v,a,i. i < S n →
    current_chars sig ? (change_vec ? (S n) v a i) =
    change_vec ? (S n)(current_chars ?? v) (current ? a) i.
+#sig #n #v #a #i #Hi @(eq_vec … (None ?)) #i0 #Hi0
+change with (vec_map ?????) in match (current_chars ???);
+<(nth_vec_map … (niltape ?))
+cases (decidable_eq_nat i i0) #Hii0
+[ >Hii0 >nth_change_vec // >nth_change_vec //
+| >nth_change_vec_neq // >nth_change_vec_neq // @nth_vec_map ]
+qed.
 
 lemma inject_trans_def :∀sig:FinSet.∀n,i:nat.i < S n → 
   ∀M,v,s,a,sn,an,mn.
