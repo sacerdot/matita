@@ -10,7 +10,7 @@ XOA_CONF    = xoa.conf.xml
 XOA_TARGETS = background/xoa_notation.ma background/xoa.ma
 
 all: xoa
-	$(H)../../matitac.opt
+	$(H)../../matitac.opt */*.ma
 
 # xoa ########################################################################
 
