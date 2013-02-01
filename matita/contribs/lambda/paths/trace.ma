@@ -69,5 +69,5 @@ lemma is_inner_append: ∀r. is_inner r → ∀s. is_inner s → is_inner (r@s).
 qed.
 
 lemma is_whd_is_inner_inv: ∀s. is_whd s → is_inner s → ◊ = s.
-* // #p #s * #H1p #_ * #H2p #_ elim (H2p ?) -H2p //
+* // #p #s * #H1p #_ * #H2p #_ elim (H2p …) -H2p //
 qed-.

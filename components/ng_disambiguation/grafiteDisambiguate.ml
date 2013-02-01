@@ -250,7 +250,7 @@ let disambiguate_nobj status ?baseuri (text,prefix_len,obj) =
      match obj with
      | NotationPt.Inductive (_,(name,_,_,_)::_)
      | NotationPt.Record (_,name,_,_) -> name ^ ".ind"
-     | NotationPt.Theorem (_,name,_,_,_) -> name ^ ".con"
+     | NotationPt.Theorem (name,_,_,_) -> name ^ ".con"
      | NotationPt.Inductive _ -> assert false
    in
      NUri.uri_of_string (baseuri ^ "/" ^ name)

@@ -15,11 +15,16 @@ exception RefineFailure of (Stdpp.location * string) Lazy.t;;
 exception Uncertain of (Stdpp.location * string) Lazy.t;;
 exception AssertFailure of string Lazy.t;;
 
+type 'a expected_type = [ `XTNone       (* unknown *)
+                        | `XTSome of 'a (* the given term *) 
+		        | `XTSort       (* any sort *)
+		        | `XTInd        (* any (co)inductive type *)
+                        ]
 val typeof :
  #NCicCoercion.status ->
  ?localise:(NCic.term -> Stdpp.location) ->
   NCic.metasenv -> NCic.substitution -> NCic.context -> 
-  NCic.term -> NCic.term option -> (* term, expected type *)
+  NCic.term -> NCic.term expected_type -> (* term, expected type *)
     NCic.metasenv * NCic.substitution * NCic.term * NCic.term
     (*  menv, subst,refined term, type *)
 

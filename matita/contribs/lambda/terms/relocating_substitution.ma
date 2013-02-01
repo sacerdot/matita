@@ -145,7 +145,7 @@ qed.
 lemma lstar_dsubstable_dx: ∀S,R. (∀a. dsubstable_dx (R a)) →
                            ∀l. dsubstable_dx (lstar S … R l).
 #S #R #HR #l #N #M1 #M2 #H
-@(lstar_ind_l ????????? H) -l -M1 // /3 width=3/
+@(lstar_ind_l … l M1 H) -l -M1 // /3 width=3/
 qed.
 
 lemma star_dsubstable: ∀R. reflexive ? R →

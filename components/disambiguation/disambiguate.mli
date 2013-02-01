@@ -93,7 +93,7 @@ val disambiguate_thing:
   use_coercions:bool ->
   string_context_of_context:('context -> string option list) ->
   initial_ugraph:'ugraph ->
-  expty: 'refined_thing option ->
+  expty: 'refined_thing DisambiguateTypes.expected_type ->
   mk_implicit:(bool -> 'alias) ->
   description_of_alias:('alias -> string) ->
   fix_instance:(DisambiguateTypes.domain_item -> 'alias list -> 'alias list) ->
@@ -117,10 +117,11 @@ val disambiguate_thing:
       'raw_thing) ->
   refine_thing:(
     'metasenv -> 'subst -> 'context -> 'uri -> use_coercions:bool ->
-    'raw_thing -> 'refined_thing option -> 'ugraph -> localization_tbl:'cichash -> 
+    'raw_thing -> 'refined_thing DisambiguateTypes.expected_type -> 'ugraph -> localization_tbl:'cichash -> 
       ('refined_thing, 'metasenv,'subst,'ugraph) test_result) ->
   mk_localization_tbl:(int -> 'cichash) ->
   'ast_thing disambiguator_input ->
   ((DisambiguateTypes.Environment.key * 'alias) list * 
    'metasenv * 'subst * 'refined_thing * 'ugraph)
   list * bool
+

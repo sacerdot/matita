@@ -122,11 +122,11 @@ lemma pl_st_inv_pl_sred: ∀p. in_whd p → ∀M1,F2. {⊤}⇑M1 Ⓡ↦[p] F2 �
                          ∃∃M2. M1 ↦[p] M2 & {⊤}⇑M2 = F2.
 #p @(in_whd_ind … p) -p
 [ #M1 #F2 #H
-  elim (pl_st_inv_nil … H ?) -H // #V #T #HM1 #H
+  elim (pl_st_inv_nil … H …) -H // #V #T #HM1 #H
   elim (boolean_inv_appl … (sym_eq … HM1)) -HM1 #B #N #_ #HB #HN #HM1
   elim (boolean_inv_abst … HN) -HN #A #_ #HA #HN destruct /2 width=3/
 | #p #_ #IHp #M1 #F2 #H
-  elim (pl_st_inv_dx … H ??) -H [3: // |2:skip ] #b #V #T1 #T2 #HT12 #HM1 #H (**) (* simplify line *)
+  elim (pl_st_inv_dx … H …) -H [3: // |2:skip ] #b #V #T1 #T2 #HT12 #HM1 #H (**) (* simplify line *)
   elim (boolean_inv_appl … (sym_eq … HM1)) -HM1 #B #A #Hb #HB #HA #HM1 destruct
   elim (IHp … HT12) -IHp -HT12 #C #HAC #H destruct
   @(ex2_intro … (@B.C)) // /2 width=1/ (**) (* auto needs some help here *)
@@ -185,13 +185,13 @@ qed-.
 
 theorem pl_st_mono: ∀p. singlevalued … (pl_st p).
 #p #F #G1 #H elim H -p -F -G1
-[ #V #T #G2 #H elim (pl_st_inv_nil … H ?) -H //
+[ #V #T #G2 #H elim (pl_st_inv_nil … H …) -H //
   #W #U #H #HG2 destruct //
-| #b #p #T1 #T2 #_ #IHT12 #G2 #H elim (pl_st_inv_rc … H ??) -H [3: // |2: skip ] (**) (* simplify line *)
+| #b #p #T1 #T2 #_ #IHT12 #G2 #H elim (pl_st_inv_rc … H …) -H [3: // |2: skip ] (**) (* simplify line *)
   #c #U1 #U2 #HU12 #H #HG2 destruct /3 width=1/
-| #b #p #V1 #V2 #T #_ #IHV12 #G2 #H elim (pl_st_inv_sn … H ??) -H [3: // |2: skip ] (**) (* simplify line *)
+| #b #p #V1 #V2 #T #_ #IHV12 #G2 #H elim (pl_st_inv_sn … H …) -H [3: // |2: skip ] (**) (* simplify line *)
   #c #W1 #W2 #U #HW12 #H #HG2 destruct /3 width=1/
-| #b #p #V #T1 #T2 #_ #IHT12 #G2 #H elim (pl_st_inv_dx … H ??) -H [3: // |2: skip ] (**) (* simplify line *)
+| #b #p #V #T1 #T2 #_ #IHT12 #G2 #H elim (pl_st_inv_dx … H …) -H [3: // |2: skip ] (**) (* simplify line *)
   #c #W #U1 #U2 #HU12 #H #HG2 destruct /3 width=1/
 ]
 qed-.
@@ -199,14 +199,14 @@ qed-.
 theorem pl_st_fwd_sle: ∀p1,F1,F. F1 Ⓡ↦[p1] F →
                        ∀p2,F2. F Ⓡ↦[p2] F2 → p1 ≤ p2.
 #p1 #F1 #F #H elim H -p1 -F1 -F //
-[ #b #p #T1 #T #_ #IHT1 #p2 #F2 #H elim (pl_st_inv_abst … H ???) -H [3: // |2,4: skip ] (**) (* simplify line *)
+[ #b #p #T1 #T #_ #IHT1 #p2 #F2 #H elim (pl_st_inv_abst … H …) -H [3: // |2,4: skip ] (**) (* simplify line *)
   #q #T2 #HT2 #H1 #H2 destruct /3 width=2/
-| #b #p #V1 #V #T #_ #IHV1 #p2 #F2 #H elim (pl_st_inv_appl … H ????) -H [7: // |2,3,4: skip ] * (**) (* simplify line *)
+| #b #p #V1 #V #T #_ #IHV1 #p2 #F2 #H elim (pl_st_inv_appl … H …) -H [7: // |2,3,4: skip ] * (**) (* simplify line *)
   [ #U #H destruct
   | #q #V2 #H1 #HV2 #H2 destruct /3 width=2/
-  | #q #U #_ #H elim (pl_st_inv_empty … H ??) [ // | skip ] (**) (* simplify line *)
+  | #q #U #_ #H elim (pl_st_inv_empty … H …) [ // | skip ] (**) (* simplify line *)
   ]
-| #b #p #V #T1 #T #HT1 #IHT1 #p2 #F2 #H elim (pl_st_inv_appl … H ????) -H [7: // |2,3,4: skip ] * (**) (* simplify line *)
+| #b #p #V #T1 #T #HT1 #IHT1 #p2 #F2 #H elim (pl_st_inv_appl … H …) -H [7: // |2,3,4: skip ] * (**) (* simplify line *)
   [ #U #_ #H1 #H2 #_ -b -V -F2 -IHT1
     elim (pl_st_fwd_abst … HT1 … H2) // -H1 * #q #H
     elim (pl_st_inv_rc … HT1 … H) -HT1 -H #b #U1 #U2 #_ #_ #H -b -q -T1 -U1 destruct

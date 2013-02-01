@@ -150,11 +150,11 @@ let mk_inverter ~jmeq name is_ind it leftno ?selection outsort (status: #NCic.st
         mk_prods hyplist (mk_appl (mk_id "P"::id_rs))))))
      in
      let status, theorem =
-      GrafiteDisambiguate.disambiguate_nobj status ~baseuri 
+      let attrs = `Generated, `Theorem, `InversionPrinciple in 
+      GrafiteDisambiguate.disambiguate_nobj status ~baseuri
        (baseuri ^ name ^ ".def",0,
          NotationPt.Theorem
-          (`Theorem,name,theorem,
-            Some (NotationPt.Implicit (`Tagged "inv")),`InversionPrinciple))
+          (name,theorem, Some (NotationPt.Implicit (`Tagged "inv")), attrs))
      in 
      let uri,height,nmenv,nsubst,nobj = theorem in
      let ninitial_stack = Continuationals.Stack.of_nmetasenv nmenv in

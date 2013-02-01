@@ -145,7 +145,7 @@ let is_a_fact_obj s uri =
 let is_a_fact_ast status subst metasenv ctx cand = 
  noprint ~depth:0 
    (lazy ("checking facts " ^ NotationPp.pp_term status cand)); 
- let status, t = disambiguate status ctx ("",0,cand) None in
+ let status, t = disambiguate status ctx ("",0,cand) `XTNone in
  let status,t = term_of_cic_term status t ctx in
  let ty = NCicTypeChecker.typeof status subst metasenv ctx t in
    is_a_fact status (mk_cic_term ctx ty)
@@ -247,7 +247,7 @@ let solve f status eq_cache goal =
             NCicUnification.unify status metasenv subst ctx gty pty *)
         NCicRefiner.typeof 
           (status#set_coerc_db NCicCoercion.empty_db) 
-          metasenv subst ctx pt (Some gty) 
+          metasenv subst ctx pt (`XTSome gty) 
         in 
           noprint (lazy (Printf.sprintf "Refined in %fs"
                      (Unix.gettimeofday() -. stamp))); 
@@ -331,7 +331,7 @@ let index_local_equations2 eq_cache status open_goal lemmas nohyps =
   let status,lemmas =
    List.fold_left
     (fun (status,lemmas) l ->
-      let status,l = NTacStatus.disambiguate status ctx l None in
+      let status,l = NTacStatus.disambiguate status ctx l `XTNone in
       let status,l = NTacStatus.term_of_cic_term status l ctx in
        status,l::lemmas)
     (status,[]) lemmas in
@@ -590,7 +590,7 @@ let smart_apply t unit_eq status g =
   let n,h,metasenv,subst,o = status#obj in
   let gname, ctx, gty = List.assoc g metasenv in
   (* let ggty = mk_cic_term context gty in *)
-  let status, t = disambiguate status ctx t None in
+  let status, t = disambiguate status ctx t `XTNone in
   let status,t = term_of_cic_term status t ctx in
   let _,_,metasenv,subst,_ = status#obj in
   let ty = NCicTypeChecker.typeof status subst metasenv ctx t in
@@ -974,7 +974,7 @@ let openg_no status = List.length (head_goals status#stack)
 let sort_candidates status ctx candidates =
  let _,_,metasenv,subst,_ = status#obj in
   let branch cand =
-    let status,ct = disambiguate status ctx ("",0,cand) None in
+    let status,ct = disambiguate status ctx ("",0,cand) `XTNone in
     let status,t = term_of_cic_term status ct ctx in
     let ty = NCicTypeChecker.typeof status subst metasenv ctx t in
     let res = branch status (mk_cic_term ctx ty) in
@@ -1811,7 +1811,8 @@ let auto_tac ~params:(univ,flags) ?(trace_ref=ref []) status =
       | None -> None 
       | Some l -> 
 	  let to_Ast t =
-	    let status, res = disambiguate status [] t None in 
+(* FG: `XTSort here? *)	  
+	    let status, res = disambiguate status [] t `XTNone in 
 	    let _,res = term_of_cic_term status res (ctx_of res) 
 	    in Ast.NCic res 
           in Some (List.map to_Ast l) 

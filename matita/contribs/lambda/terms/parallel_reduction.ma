@@ -111,8 +111,8 @@ qed-.
 
 lemma pred_conf1_abst: ∀A. confluent1 … pred A → confluent1 … pred (𝛌.A).
 #A #IH #M1 #H1 #M2 #H2
-elim (pred_inv_abst … H1 ??) -H1 [3: // |2: skip ] #A1 #HA1 #H destruct (**) (* simplify line *)
-elim (pred_inv_abst … H2 ??) -H2 [3: // |2: skip ] #A2 #HA2 #H destruct (**) (* simplify line *)
+elim (pred_inv_abst … H1 …) -H1 [3: // |2: skip ] #A1 #HA1 #H destruct (**) (* simplify line *)
+elim (pred_inv_abst … H2 …) -H2 [3: // |2: skip ] #A2 #HA2 #H destruct (**) (* simplify line *)
 elim (IH … HA1 … HA2) -A /3 width=3/
 qed-.
 
@@ -121,7 +121,7 @@ lemma pred_conf1_appl_beta: ∀B,B1,B2,C,C2,M1.
                             B ⤇ B1 → B ⤇ B2 → 𝛌.C ⤇ M1 → C ⤇ C2 →
                             ∃∃M. @B1.M1 ⤇ M & [↙B2]C2 ⤇ M.
 #B #B1 #B2 #C #C2 #M1 #IH #HB1 #HB2 #H1 #HC2
-elim (pred_inv_abst … H1 ??) -H1 [3: // |2: skip ] #C1 #HC1 #H destruct (**) (* simplify line *)
+elim (pred_inv_abst … H1 …) -H1 [3: // |2: skip ] #C1 #HC1 #H destruct (**) (* simplify line *)
 elim (IH B … HB1 … HB2) -HB1 -HB2 //
 elim (IH C … HC1 … HC2) normalize // -B -C /3 width=5/
 qed-.
@@ -131,8 +131,8 @@ theorem pred_conf: confluent … pred.
 [ /2 width=3 by pred_conf1_vref/
 | /3 width=4 by pred_conf1_abst/
 | #B #A #H #M1 #H1 #M2 #H2 destruct
-  elim (pred_inv_appl … H1 ???) -H1 [5: // |2,3: skip ] * (**) (* simplify line *)
-  elim (pred_inv_appl … H2 ???) -H2 [5,10: // |2,3,7,8: skip ] * (**) (* simplify line *) 
+  elim (pred_inv_appl … H1 …) -H1 [5: // |2,3: skip ] * (**) (* simplify line *)
+  elim (pred_inv_appl … H2 …) -H2 [5,10: // |2,3,7,8: skip ] * (**) (* simplify line *) 
   [ #B2 #A2 #HB2 #HA2 #H2 #B1 #A1 #HB1 #HA1 #H1 destruct
     elim (IH A … HA1 … HA2) -HA1 -HA2 //
     elim (IH B … HB1 … HB2) // -A -B /3 width=5/

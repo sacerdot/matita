@@ -78,7 +78,7 @@ lemma sreds_compatible_beta: ∀B1,B2. B1 ↦* B2 → ∀A1,A2. A1 ↦* A2 →
 qed.
 
 theorem sreds_preds: ∀M1,M2. M1 ↦* M2 → M1 ⤇* M2.
-#M1 #M2 #H @(star_ind_l ??????? H) -M1 //
+#M1 #M2 #H @(star_ind_l … M1 H) -M1 //
 #M1 #M #HM1 #_ #IHM2
 @(preds_step_sn … IHM2) -M2 /2 width=2/
 qed.

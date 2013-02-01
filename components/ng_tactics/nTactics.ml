@@ -424,7 +424,7 @@ let generalize_tac ~where =
                _,_,(None,_,_)  -> fail (lazy "No term to generalize")
              | txt,txtlen,(Some what,_,_) ->
                 let status, what =
-                 disambiguate status (ctx_of goalty) (txt,txtlen,what) None
+                 disambiguate status (ctx_of goalty) (txt,txtlen,what) `XTNone
                 in
                  status,what,[]
            )
@@ -466,7 +466,8 @@ let reduce_tac ~reduction ~where =
 
 let change_tac ~where ~with_what =
   let change status t = 
-    let status, ww = disambiguate status (ctx_of t) with_what  None in
+(* FG: `XTSort could be used when we change the whole goal *)    
+    let status, ww = disambiguate status (ctx_of t) with_what `XTNone in
     let status = unify status (ctx_of t) t ww in
     status, ww
   in
@@ -499,7 +500,7 @@ let ref_of_indtyinfo iti = iti.reference;;
 let analyze_indty_tac ~what indtyref =
  distribute_tac (fun (status as orig_status) goal ->
   let goalty = get_goalty status goal in
-  let status, what = disambiguate status (ctx_of goalty) what None in
+  let status, what = disambiguate status (ctx_of goalty) what `XTInd in
   let status, ty_what = typeof status (ctx_of what) what in 
   let status, (r,consno,lefts,rights) = analyse_indty status ty_what in
   let leftno = List.length lefts in
@@ -592,14 +593,14 @@ let intros_tac ?names_ref names s =
 
 let cases ~what status goal =
  let gty = get_goalty status goal in
- let status, what = disambiguate status (ctx_of gty) what None in
+ let status, what = disambiguate status (ctx_of gty) what `XTInd in
  let status, ty = typeof status (ctx_of what) what in
  let status, (ref, consno, _, _) = analyse_indty status ty in
  let status, what = term_of_cic_term status what (ctx_of gty) in
  let t =
   NCic.Match (ref,NCic.Implicit `Term, what,
     HExtlib.mk_list (NCic.Implicit `Term) consno)
- in
+ in 
  instantiate status goal (mk_cic_term (ctx_of gty) t)
 ;;
 
@@ -639,7 +640,7 @@ let constructor_tac ?(num=1) ~args = distribute_tac (fun status goal ->
 let assert0_tac (hyps,concl) = distribute_tac (fun status goal ->
  let gty = get_goalty status goal in
  let eq status ctx t1 t2 =
-  let status,t1 = disambiguate status ctx t1 None in
+  let status,t1 = disambiguate status ctx t1 `XTSort in
   let status,t1 = apply_subst status ctx t1 in
   let status,t1 = term_of_cic_term status t1 ctx in
   let t2 = mk_cic_term ctx t2 in

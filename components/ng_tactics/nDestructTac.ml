@@ -321,11 +321,11 @@ let mk_discriminator ~use_jmeq ?(force=false) name it leftno status baseuri =
   (* PHASE 2: create the object for the proof of the principle: we'll name it
    * "theorem" *)
   let status, theorem =
-   GrafiteDisambiguate.disambiguate_nobj status ~baseuri 
+   let attrs = `Generated, `Theorem, `DiscriminationPrinciple in
+   GrafiteDisambiguate.disambiguate_nobj status ~baseuri
     (baseuri ^ name ^ ".def",0,
       NotationPt.Theorem
-       (`Theorem,name,principle,
-         Some (NotationPt.Implicit (`Tagged "inv")),`DiscriminationPrinciple))
+       (name, principle, Some (NotationPt.Implicit (`Tagged "inv")), attrs))
   in 
   let uri,height,nmenv,nsubst,nobj = theorem in
   let ninitial_stack = Continuationals.Stack.of_nmetasenv nmenv in

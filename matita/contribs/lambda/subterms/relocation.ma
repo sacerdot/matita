@@ -240,13 +240,13 @@ qed-.
 lemma lstar_sliftable: ∀S,R. (∀a. sliftable (R a)) →
                        ∀l. sliftable (lstar S … R l).
 #S #R #HR #l #h #F1 #F2 #H
-@(lstar_ind_l ????????? H) -l -F1 // /3 width=3/
+@(lstar_ind_l … l F1 H) -l -F1 // /3 width=3/
 qed.
 
 lemma lstar_sdeliftable_sn: ∀S,R. (∀a. sdeliftable_sn (R a)) →
                             ∀l. sdeliftable_sn (lstar S … R l).
 #S #R #HR #l #h #G1 #G2 #H
-@(lstar_ind_l ????????? H) -l -G1 /2 width=3/
+@(lstar_ind_l … l G1 H) -l -G1 /2 width=3/
 #a #l #G1 #G #HG1 #_ #IHG2 #d #F1 #HFG1
 elim (HR … HG1 … HFG1) -G1 #F #HF1 #HFG
 elim (IHG2 … HFG) -G /3 width=3/

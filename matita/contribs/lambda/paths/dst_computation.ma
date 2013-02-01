@@ -96,13 +96,13 @@ lemma dst_inv_lift: deliftable_sn dst.
 | #s #N1 #C1 #C2 #Hs  #HN1 #_ #IHC12 #d #M1 #HMN1
   elim (pl_sreds_inv_lift … HN1 … HMN1) -N1 #M2 #HM12 #HM2
   elim (lift_inv_abst … HM2) -HM2 #A1 #HAC1 #HM2 destruct
-  elim (IHC12 ???) -IHC12 [4: // |2,3: skip ] #A2 #HA12 #HAC2 destruct (**) (* simplify line *)
+  elim (IHC12 …) -IHC12 [4: // |2,3: skip ] #A2 #HA12 #HAC2 destruct (**) (* simplify line *)
   @(ex2_intro … (𝛌.A2)) // /2 width=5/
 | #s #N1 #D1 #D2 #C1 #C2 #Hs #HN1 #_ #_ #IHD12 #IHC12 #d #M1 #HMN1
   elim (pl_sreds_inv_lift … HN1 … HMN1) -N1 #M2 #HM12 #HM2
   elim (lift_inv_appl … HM2) -HM2 #B1 #A1 #HBD1 #HAC1 #HM2 destruct
-  elim (IHD12 ???) -IHD12 [4: // |2,3: skip ] #B2 #HB12 #HBD2 destruct (**) (* simplify line *)
-  elim (IHC12 ???) -IHC12 [4: // |2,3: skip ] #A2 #HA12 #HAC2 destruct (**) (* simplify line *)
+  elim (IHD12 …) -IHD12 [4: // |2,3: skip ] #B2 #HB12 #HBD2 destruct (**) (* simplify line *)
+  elim (IHC12 …) -IHC12 [4: // |2,3: skip ] #A2 #HA12 #HAC2 destruct (**) (* simplify line *)
   @(ex2_intro … (@B2.A2)) // /2 width=7/
 ]
 qed-.
@@ -127,22 +127,22 @@ qed.
 lemma dst_step_dx: ∀p,M,M2. M ↦[p] M2 → ∀M1. M1 ⓢ↦* M → M1 ⓢ↦* M2.
 #p #M #M2 #H elim H -p -M -M2
 [ #B #A #M1 #H
-  elim (dst_inv_appl … H ???) -H [4: // |2,3: skip ] #s #B1 #M #Hs #HM1 #HB1 #H (**) (* simplify line *)
-  elim (dst_inv_abst … H ??) -H [3: // |2: skip ] #r #A1 #Hr #HM #HA1 (**) (* simplify line *)
+  elim (dst_inv_appl … H …) -H [4: // |2,3: skip ] #s #B1 #M #Hs #HM1 #HB1 #H (**) (* simplify line *)
+  elim (dst_inv_abst … H …) -H [3: // |2: skip ] #r #A1 #Hr #HM #HA1 (**) (* simplify line *)
   lapply (pl_sreds_trans … HM1 … (dx:::r) (@B1.𝛌.A1) ?) /2 width=1/ -M #HM1
   lapply (pl_sreds_step_dx … HM1 (◊) ([↙B1]A1) ?) -HM1 // #HM1
   @(dst_step_sn … HM1) /2 width=1/ /4 width=1/
 | #p #A #A2 #_ #IHA2 #M1 #H
-  elim (dst_inv_abst … H ??) -H [3: // |2: skip ] /3 width=5/ (**) (* simplify line *)
+  elim (dst_inv_abst … H …) -H [3: // |2: skip ] /3 width=5/ (**) (* simplify line *)
 | #p #B #B2 #A #_ #IHB2 #M1 #H
-  elim (dst_inv_appl … H ???) -H [4: // |2,3: skip ] /3 width=7/ (**) (* simplify line *)
+  elim (dst_inv_appl … H …) -H [4: // |2,3: skip ] /3 width=7/ (**) (* simplify line *)
 | #p #B #A #A2 #_ #IHA2 #M1 #H
-  elim (dst_inv_appl … H ???) -H [4: // |2,3: skip ] /3 width=7/ (**) (* simplify line *)
+  elim (dst_inv_appl … H …) -H [4: // |2,3: skip ] /3 width=7/ (**) (* simplify line *)
 ]
 qed-.
 
 lemma pl_sreds_dst: ∀s,M1,M2. M1 ↦*[s] M2 → M1 ⓢ↦* M2.
-#s #M1 #M2 #H @(lstar_ind_r ????????? H) -s -M2 // /2 width=4 by dst_step_dx/
+#s #M1 #M2 #H @(lstar_ind_r … s M2 H) -s -M2 // /2 width=4 by dst_step_dx/
 qed.
 
 lemma dst_inv_pl_sreds_is_standard: ∀M,N. M ⓢ↦* N →
@@ -179,23 +179,23 @@ lemma dst_in_whd_swap: ∀p. in_whd p → ∀N1,N2. N1 ↦[p] N2 → ∀M1. M1 �
                        ∃∃q,M2. in_whd q & M1 ↦[q] M2 & M2 ⓢ↦* N2.
 #p #H @(in_whd_ind … H) -p
 [ #N1 #N2 #H1 #M1 #H2
-  elim (pl_sred_inv_nil … H1 ?) -H1 // #D #C #HN1 #HN2
+  elim (pl_sred_inv_nil … H1 …) -H1 // #D #C #HN1 #HN2
   elim (dst_inv_appl … H2 … HN1) -N1 #s1 #D1 #N #Hs1 #HM1 #HD1 #H
-  elim (dst_inv_abst … H ??) -H [3: // |2: skip ] #s2 #C1 #Hs2 #HN #HC1 (**) (* simplify line *)
+  elim (dst_inv_abst … H …) -H [3: // |2: skip ] #s2 #C1 #Hs2 #HN #HC1 (**) (* simplify line *)
   lapply (pl_sreds_trans … HM1 … (dx:::s2) (@D1.𝛌.C1) ?) /2 width=1/ -N #HM1
   lapply (pl_sreds_step_dx … HM1 (◊) ([↙D1]C1) ?) -HM1 // #HM1
-  elim (pl_sreds_inv_pos … HM1 ?) -HM1
+  elim (pl_sreds_inv_pos … HM1 …) -HM1
   [2: >length_append normalize in ⊢ (??(??%)); // ]
   #q #r #M #Hq #HM1 #HM
   lapply (rewrite_r ?? is_whd … Hq) -Hq /4 width=1/ -s1 -s2 * #Hq #Hr
   @(ex3_2_intro … HM1) -M1 // -q
   @(dst_step_sn … HM) /2 width=1/
 | #p #_ #IHp #N1 #N2 #H1 #M1 #H2
-  elim (pl_sred_inv_dx … H1 ??) -H1 [3: // |2: skip ] #D #C1 #C2 #HC12 #HN1 #HN2 (**) (* simplify line *)
+  elim (pl_sred_inv_dx … H1 …) -H1 [3: // |2: skip ] #D #C1 #C2 #HC12 #HN1 #HN2 (**) (* simplify line *)
   elim (dst_inv_appl … H2 … HN1) -N1 #s #B #A1 #Hs #HM1 #HBD #HAC1
   elim (IHp … HC12 … HAC1) -p -C1 #p #C1 #Hp #HAC1 #HC12
   lapply (pl_sreds_step_dx … HM1 (dx::p) (@B.C1) ?) -HM1 /2 width=1/ -A1 #HM1
-  elim (pl_sreds_inv_pos … HM1 ?) -HM1
+  elim (pl_sreds_inv_pos … HM1 …) -HM1
   [2: >length_append normalize in ⊢ (??(??%)); // ]
   #q #r #M #Hq #HM1 #HM
   lapply (rewrite_r ?? is_whd … Hq) -Hq /4 width=1/ -p -s * #Hq #Hr

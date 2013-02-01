@@ -55,7 +55,7 @@ let inject_unification_hint =
 
 let eval_unification_hint status t n = 
  let metasenv,subst,status,t =
-  GrafiteDisambiguate.disambiguate_nterm status None [] [] [] ("",0,t) in
+  GrafiteDisambiguate.disambiguate_nterm status `XTSort [] [] [] ("",0,t) in
  assert (metasenv=[]);
  let t = NCicUntrusted.apply_subst status subst [] t in
  let status = basic_eval_unification_hint (t,n) status in
@@ -540,7 +540,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
        let o_t = NotationPt.Ident (name,None) in
        let metasenv,subst, status,t =
          GrafiteDisambiguate.disambiguate_nterm 
-           status None [] [] [] ("",0,o_t) in
+           status `XTNone [] [] [] ("",0,o_t) in
        assert( metasenv = [] && subst = []);
        let ty = NCicTypeChecker.typeof status [] [] [] t in
        let source, target =
@@ -637,7 +637,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
        (*prerr_endline (status#ppobj obj);*)
            let boxml = NCicElim.mk_elims status obj in
            let boxml = boxml @ NCicElim.mk_projections status obj in
-           let status = status#set_ng_mode `CommandMode in
+	   let status = status#set_ng_mode `CommandMode in
            let xxaliases = GrafiteDisambiguate.aliases_for_objs status [uri] in
            let mode = GrafiteAst.WithPreferences in (* MATITA 1.0: fixme *)
            let status = eval_alias status (mode,xxaliases) in
@@ -658,9 +658,11 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
                 else
                   nstatus
                with
-               | MultiPassDisambiguator.DisambiguationError _
+               | MultiPassDisambiguator.DisambiguationError _ as e ->
+                  HLog.warn "error in disambiguating projection/eliminator";
+                  status
                | NCicTypeChecker.TypeCheckerFailure _ ->
-                  (*HLog.warn "error in generating projection/eliminator";*)
+                  HLog.warn "error in typechecking projection/eliminator";
                   status
              ) status boxml in             
            let _,_,_,_,nobj = obj in
@@ -768,7 +770,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
              (fun status (name,cpos,arity) ->
                try
                  let metasenv,subst,status,t =
-                  GrafiteDisambiguate.disambiguate_nterm status None [] [] []
+                  GrafiteDisambiguate.disambiguate_nterm status `XTNone [] [] []
                    ("",0,NotationPt.Ident (name,None)) in
                  assert (metasenv = [] && subst = []);
                  let status, nuris = 
@@ -849,7 +851,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
       else
         let status = status#set_ng_mode `ProofMode in
         let metasenv,subst,status,indty =
-          GrafiteDisambiguate.disambiguate_nterm status None [] [] [] (text,prefix_len,indty) in
+          GrafiteDisambiguate.disambiguate_nterm status `XTSort [] [] [] (text,prefix_len,indty) in
         let indtyno, (_,_,tys,_,_),leftno = match indty with
             NCic.Const ((NReference.Ref (_,NReference.Ind (_,indtyno,leftno))) as r) ->
               indtyno, NCicEnvironment.get_checked_indtys status r, leftno
@@ -870,7 +872,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
       let metasenv,subst,status,sort = match sort with
         | None -> [],[],status,NCic.Sort NCic.Prop
         | Some s ->
-           GrafiteDisambiguate.disambiguate_nterm status None [] [] []
+           GrafiteDisambiguate.disambiguate_nterm status `XTSort [] [] []
             (text,prefix_len,s) 
       in
       assert (metasenv = []);
@@ -884,7 +886,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
              (status#ppterm ~metasenv ~subst ~context:[] sort))) in
       let status = status#set_ng_mode `ProofMode in
       let metasenv,subst,status,indty =
-       GrafiteDisambiguate.disambiguate_nterm status None [] [] subst
+       GrafiteDisambiguate.disambiguate_nterm status `XTNone [] [] subst
         (text,prefix_len,indty) in
       let indtyno,(_,leftno,tys,_,_) =
        match indty with

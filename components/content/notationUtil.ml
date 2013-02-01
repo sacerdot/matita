@@ -386,11 +386,11 @@ let freshen_obj obj =
           indtypes
       in
       NotationPt.Inductive (freshen_capture_variables params, indtypes)
-  | NotationPt.Theorem (flav, n, t, ty_opt,p) ->
+  | NotationPt.Theorem (n, t, ty_opt, attrs) ->
       let ty_opt =
         match ty_opt with None -> None | Some ty -> Some (freshen_term ty)
       in
-      NotationPt.Theorem (flav, n, freshen_term t, ty_opt,p)
+      NotationPt.Theorem (n, freshen_term t, ty_opt, attrs)
   | NotationPt.Record (params, n, ty, fields) ->
       NotationPt.Record (freshen_capture_variables params, n,
         freshen_term ty, freshen_name_ty_b fields)

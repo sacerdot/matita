@@ -187,9 +187,11 @@ let term_of_cic_term s t c =
 let disambiguate status context t ty =
  let status, expty = 
    match ty with 
-   | None -> status, None 
-   | Some ty -> 
-       let status, (_,x) = relocate status context ty in status, Some x 
+   | `XTSome ty -> 
+       let status, (_,x) = relocate status context ty in status, `XTSome x 
+   | `XTNone -> status, `XTNone 
+   | `XTSort -> status, `XTSort
+   | `XTInd  -> status, `XTInd
  in
  let uri,height,metasenv,subst,obj = status#obj in
  let metasenv, subst, status, t = 
@@ -254,9 +256,11 @@ let refine status ctx term expty =
   let status, (_,term) = relocate status ctx term in
   let status, expty = 
     match expty with
-      None -> status, None 
-    | Some e -> 
-        let status, (_, e) = relocate status ctx e in status, Some e
+    | `XTSome e -> 
+        let status, (_, e) = relocate status ctx e in status, `XTSome e
+    | `XTNone -> status, `XTNone 
+    | `XTSort -> status, `XTSort
+    | `XTInd  -> status, `XTInd
   in
   let name,height,metasenv,subst,obj = status#obj in
   let metasenv,subst,t,ty = 
@@ -289,7 +293,7 @@ let instantiate status ?refine:(dorefine=true) i t =
  let _,_,metasenv,_,_ = status#obj in
  let gname, context, gty = List.assoc i metasenv in
   if dorefine then
-   let status, (_,t), (_,ty) = refine status context t (Some (context,gty)) in
+   let status, (_,t), (_,ty) = refine status context t (`XTSome (context,gty)) in
     to_subst status i (gname,context,t,ty)
   else
    let status,(_,ty) = typeof status context t in
@@ -300,7 +304,7 @@ let instantiate_with_ast status i t =
  let _,_,metasenv,_,_ = status#obj in
  let gname, context, gty = List.assoc i metasenv in
  let ggty = mk_cic_term context gty in
- let status, (_,t) = disambiguate status context t (Some ggty) in
+ let status, (_,t) = disambiguate status context t (`XTSome ggty) in
   to_subst status i (gname,context,t,gty)
 ;;
 
@@ -424,7 +428,7 @@ let select_term
     | NCic.Implicit `Hole, t -> 
         (match wanted with
         | Some wanted -> 
-             let status', wanted = disambiguate status ctx wanted None in
+             let status', wanted = disambiguate status ctx wanted `XTNone in
              pp(lazy("wanted: "^ppterm status' wanted));
              let (status',found), t' = match_term status' ctx wanted t in
               if found then status',t' else status,t

@@ -11,10 +11,8 @@
 
 (* $Id: nCic.ml 9058 2008-10-13 17:42:30Z tassi $ *)
 
-open Printf
-
-open DisambiguateTypes
-
+module P = Printf
+module DT =  DisambiguateTypes
 module Ast = NotationPt
 module NRef = NReference 
 
@@ -36,7 +34,7 @@ let refine_term (status: #NCicCoercion.status) metasenv subst context uri ~use_c
  ~localization_tbl
 =
   assert (uri=None);
-  debug_print (lazy (sprintf "TEST_INTERPRETATION: %s" 
+  debug_print (lazy (P.sprintf "TEST_INTERPRETATION: %s" 
     (status#ppterm ~metasenv ~subst ~context term)));
   try
     let localise t = 
@@ -58,7 +56,7 @@ let refine_term (status: #NCicCoercion.status) metasenv subst context uri ~use_c
         status#ppterm ~metasenv ~subst ~context term)) ;
       Disambiguate.Uncertain loc_msg
   | NCicRefiner.RefineFailure loc_msg ->
-      debug_print (lazy (sprintf "PRUNED:\nterm%s\nmessage:%s"
+      debug_print (lazy (P.sprintf "PRUNED:\nterm%s\nmessage:%s"
         (status#ppterm ~metasenv ~subst ~context term) (snd(Lazy.force loc_msg))));
       Disambiguate.Ko loc_msg
 ;;
@@ -66,7 +64,7 @@ let refine_term (status: #NCicCoercion.status) metasenv subst context uri ~use_c
 let refine_obj status metasenv subst _context _uri ~use_coercions obj _ _ugraph
  ~localization_tbl 
 =
-  (*prerr_endline ((sprintf "TEST_INTERPRETATION: %s" (status#ppobj obj)));*)
+  (*prerr_endline ((P.sprintf "TEST_INTERPRETATION: %s" (status#ppobj obj)));*)
   assert (metasenv=[]);
   assert (subst=[]);
   let localise t = 
@@ -89,7 +87,7 @@ let refine_obj status metasenv subst _context _uri ~use_coercions obj _ _ugraph
         status#ppobj obj)) ;
       Disambiguate.Uncertain loc_msg
   | NCicRefiner.RefineFailure loc_msg ->
-      debug_print (lazy (sprintf "PRUNED:\nobj: %s\nmessage: %s"
+      debug_print (lazy (P.sprintf "PRUNED:\nobj: %s\nmessage: %s"
         (status#ppobj obj) (snd(Lazy.force loc_msg))));
       Disambiguate.Ko loc_msg
 ;;
@@ -126,7 +124,7 @@ let interpretate_term_and_interpretate_term_option (status: #NCic.status)
         aux ~localize loc context (NotationPt.Appl (inner @ args))
     | NotationPt.Appl (NotationPt.Symbol (symb, i) :: args) ->
         let cic_args = List.map (aux ~localize loc context) args in
-        Disambiguate.resolve ~mk_choice ~env (Symbol (symb, i)) (`Args cic_args)
+        Disambiguate.resolve ~mk_choice ~env (DT.Symbol (symb, i)) (`Args cic_args)
     | NotationPt.Appl terms ->
        NCic.Appl (List.map (aux ~localize loc context) terms)
     | NotationPt.Binder (binder_kind, (var, typ), body) ->
@@ -138,7 +136,7 @@ let interpretate_term_and_interpretate_term_option (status: #NCic.status)
         | `Pi
         | `Forall -> NCic.Prod (cic_name, cic_type, cic_body)
         | `Exists ->
-            Disambiguate.resolve ~env ~mk_choice (Symbol ("exists", 0))
+            Disambiguate.resolve ~env ~mk_choice (DT.Symbol ("exists", 0))
               (`Args [ cic_type; NCic.Lambda (cic_name, cic_type, cic_body) ]))
     | NotationPt.Case (term, indty_ident, outtype, branches) ->
         let cic_term = aux ~localize loc context term in
@@ -178,7 +176,7 @@ let interpretate_term_and_interpretate_term_option (status: #NCic.status)
           match indty_ident with
           | Some (indty_ident, _) ->
              (match Disambiguate.resolve ~env ~mk_choice 
-                (Id indty_ident) (`Args []) with
+                (DT.Id indty_ident) (`Args []) with
               | NCic.Const (NReference.Ref (_,NReference.Ind _) as r) -> r
               | NCic.Implicit _ ->
                  raise (Disambiguate.Try_again 
@@ -193,7 +191,7 @@ let interpretate_term_and_interpretate_term_option (status: #NCic.status)
                 function
                    (Ast.Pattern (head, _, _), _) :: _ -> head
                  | (Ast.Wildcard, _) :: tl -> fst_constructor tl
-                 | [] -> raise (Invalid_choice (lazy (loc,"The type "^
+                 | [] -> raise (DT.Invalid_choice (lazy (loc,"The type "^
                      "of the term to be matched cannot be determined "^
                      "because it is an inductive type without constructors "^
                      "or because all patterns use wildcards")))
@@ -206,7 +204,7 @@ let interpretate_term_and_interpretate_term_option (status: #NCic.status)
                         description_of_alias v)) env; 
 *)
               (match Disambiguate.resolve ~env ~mk_choice
-                (Id (fst_constructor branches)) (`Args []) with
+                (DT.Id (fst_constructor branches)) (`Args []) with
               | NCic.Const (NReference.Ref (_,NReference.Con _) as r) -> 
                    let b,_,_,_,_= NCicEnvironment.get_checked_indtys status r in
                    NReference.mk_indty b r
@@ -321,7 +319,7 @@ let interpretate_term_and_interpretate_term_option (status: #NCic.status)
        with Not_found -> 
          try NCic.Const (List.assoc name obj_context)
          with Not_found ->
-            Disambiguate.resolve ~env ~mk_choice (Id name) (`Args []))
+            Disambiguate.resolve ~env ~mk_choice (DT.Id name) (`Args []))
     | NotationPt.Uri (uri, subst) ->
        assert (subst = None);
        (try
@@ -335,7 +333,7 @@ let interpretate_term_and_interpretate_term_option (status: #NCic.status)
     | NotationPt.Implicit (`Tagged s) -> NCic.Implicit (`Tagged s)
     | NotationPt.UserInput -> NCic.Implicit `Hole
     | NotationPt.Num (num, i) -> 
-        Disambiguate.resolve ~env ~mk_choice (Num i) (`Num_arg num)
+        Disambiguate.resolve ~env ~mk_choice (DT.Num i) (`Num_arg num)
     | NotationPt.Meta (index, subst) ->
         let cic_subst =
          List.map
@@ -352,7 +350,7 @@ let interpretate_term_and_interpretate_term_option (status: #NCic.status)
        [`CProp,NUri.uri_of_string ("cic:/matita/pts/Type" ^ s ^ ".univ")])
     | NotationPt.Symbol (symbol, instance) ->
         Disambiguate.resolve ~env ~mk_choice 
-         (Symbol (symbol, instance)) (`Args [])
+         (DT.Symbol (symbol, instance)) (`Args [])
     | NotationPt.Variable _
     | NotationPt.Magic _
     | NotationPt.Layout _
@@ -422,7 +420,8 @@ let interpretate_obj status
    interpretate_term_option ~mk_choice ~localization_tbl ~obj_context in
  let uri = match uri with | None -> assert false | Some u -> u in
  match obj with
- | NotationPt.Theorem (flavour, name, ty, bo, pragma) ->
+ | NotationPt.Theorem (name, ty, bo, attrs) ->
+     let _, flavour, _ = attrs in
      let ty' = 
        interpretate_term status
          ~obj_context:[] ~context:[] ~env ~uri:None ~is_path:false ty 
@@ -431,11 +430,9 @@ let interpretate_obj status
      uri, height, [], [], 
      (match bo,flavour with
       | None,`Axiom -> 
-          let attrs = `Provided, flavour, pragma in
           NCic.Constant ([],name,None,ty',attrs)
       | Some _,`Axiom -> assert false
       | None,_ ->
-          let attrs = `Provided, flavour, pragma in
           NCic.Constant ([],name,Some (NCic.Implicit `Term),ty',attrs)
       | Some bo,_ ->
         (match bo with
@@ -472,14 +469,12 @@ let interpretate_obj status
                    ([],ncic_name_of_ident name, decr_idx, cic_type, cic_body))
                  defs
              in
-             let attrs = `Provided, flavour, pragma in
              NCic.Fixpoint (inductive,inductiveFuns,attrs)
          | bo -> 
              let bo = 
                interpretate_term status
                 ~obj_context:[] ~context:[] ~env ~uri:None ~is_path:false bo
              in
-             let attrs = `Provided, flavour, pragma in
              NCic.Constant ([],name,Some bo,ty',attrs)))
  | NotationPt.Inductive (params,tyl) ->
     let context,params =
@@ -633,7 +628,7 @@ let disambiguate_obj (status: #NCicCoercion.status)
      ~interpretate_thing:(interpretate_obj status ~mk_choice)
      ~refine_thing:(refine_obj status) 
      (text,prefix_len,obj)
-     ~mk_localization_tbl ~expty:None
+     ~mk_localization_tbl ~expty:`XTNone
    in
     List.map (function (a,b,c,d,_) -> a,b,c,d) res, b
 ;;

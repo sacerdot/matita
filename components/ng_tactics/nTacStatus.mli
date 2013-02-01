@@ -70,7 +70,7 @@ val term_of_cic_term :
 
 val mk_cic_term : NCic.context -> NCic.term -> cic_term
 val disambiguate:
- #pstatus as 'status -> NCic.context -> tactic_term -> cic_term option ->
+ #pstatus as 'status -> NCic.context -> tactic_term -> cic_term NCicRefiner.expected_type ->
   'status * cic_term (* * cic_term XXX *)
 
 val analyse_indty: 
@@ -90,7 +90,7 @@ val typeof:
 val unify: 
  #pstatus as 'status -> NCic.context -> cic_term -> cic_term -> 'status
 val refine: 
- #pstatus as 'status -> NCic.context -> cic_term -> cic_term option -> 
+ #pstatus as 'status -> NCic.context -> cic_term -> cic_term NCicRefiner.expected_type -> 
   'status * cic_term * cic_term (* status, term, type *)
 val apply_subst:
  #pstatus as 'status -> NCic.context -> cic_term -> 'status * cic_term

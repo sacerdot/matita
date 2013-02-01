@@ -23,6 +23,12 @@
  * http://helm.cs.unibo.it/
  *)
 
+type 'a expected_type = [ `XTNone       (* unknown *)
+                        | `XTSome of 'a (* the given term *) 
+		        | `XTSort       (* any sort *)
+		        | `XTInd        (* any (co)inductive type *)
+                        ]
+
 type domain_item =
  | Id of string               (* literal *)
  | Symbol of string * int     (* literal, instance num *)

@@ -77,7 +77,7 @@ lemma sle_inv_dx: ∀p,q. p ≤ q → ∀q0. dx::q0 = q →
                   in_whd p ∨ ∃∃p0. p0 ≤ q0 & dx::p0 = p.
 #p #q #H @(star_ind_l … p H) -p [ /3 width=3/ ]
 #p0 #p #Hp0 #_ #IHpq #q1 #H destruct
-elim (IHpq ??) -IHpq [4: // |3: skip ] (**) (* simplify line *)
+elim (IHpq …) -IHpq [4: // |3: skip ] (**) (* simplify line *)
 [ lapply (sprec_fwd_in_whd … Hp0) -Hp0 /3 width=1/
 | * #p1 #Hpq1 #H elim (sprec_inv_dx … Hp0 … H) -p
   [ #H destruct /2 width=1/
@@ -91,7 +91,7 @@ lemma sle_inv_rc: ∀p,q. p ≤ q → ∀p0. rc::p0 = p →
                   ∃q0. sn::q0 = q.
 #p #q #H elim H -q /3 width=3/
 #q #q0 #_ #Hq0 #IHpq #p0 #H destruct
-elim (IHpq p0 ?) -IHpq // *
+elim (IHpq p0 …) -IHpq // *
 [ #p1 #Hp01 #H
   elim (sprec_inv_rc … Hq0 … H) -q * /3 width=3/ /4 width=3/
 | #p1 #H elim (sprec_inv_sn … Hq0 … H) -q /3 width=2/
@@ -102,7 +102,7 @@ lemma sle_inv_sn: ∀p,q. p ≤ q → ∀p0. sn::p0 = p →
                   ∃∃q0. p0 ≤ q0 & sn::q0 = q.
 #p #q #H elim H -q /2 width=3/
 #q #q0 #_ #Hq0 #IHpq #p0 #H destruct
-elim (IHpq p0 ?) -IHpq // #p1 #Hp01 #H
+elim (IHpq p0 …) -IHpq // #p1 #Hp01 #H
 elim (sprec_inv_sn … Hq0 … H) -q /3 width=3/
 qed-.
 

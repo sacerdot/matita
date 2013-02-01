@@ -18,7 +18,7 @@ val disambiguate_term :
   context:NCic.context ->
   metasenv:NCic.metasenv -> 
   subst:NCic.substitution ->
-  expty:NCic.term option ->
+  expty:NCic.term NCicRefiner.expected_type ->
   mk_implicit: (bool -> 'alias) ->
   description_of_alias:('alias -> string) ->
   fix_instance:(DisambiguateTypes.domain_item -> 'alias list -> 'alias list) ->

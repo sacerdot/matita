@@ -72,7 +72,8 @@ let mk_rec_corec ind_kind defs loc =
     | _ -> assert false 
   in
   let body = N.Ident (name,None) in
-   (loc, N.Theorem(`Definition, name, ty, Some (N.LetRec (ind_kind, defs, body)), `Regular))
+   let attrs = `Provided, `Definition, `Regular in 
+   (loc, N.Theorem(name, ty, Some (N.LetRec (ind_kind, defs, body)), attrs))
 
 let nmk_rec_corec ind_kind defs loc index = 
  let loc,t = mk_rec_corec ind_kind defs loc in
@@ -508,14 +509,17 @@ EXTEND
       IDENT "qed" ;  i = index -> G.NQed (loc,i)
     | nflavour = ntheorem_flavour; name = IDENT; SYMBOL ":"; typ = term;
       body = OPT [ SYMBOL <:unicode<def>> (* ≝ *); body = term -> body ] ->
-        G.NObj (loc, N.Theorem (nflavour, name, typ, body,`Regular),true)
+        let attrs = `Provided, nflavour, `Regular in
+	G.NObj (loc, N.Theorem (name, typ, body, attrs),true)
     | nflavour = ntheorem_flavour; name = IDENT; SYMBOL <:unicode<def>> (* ≝ *);
       body = term ->
+        let attrs = `Provided, nflavour, `Regular in
         G.NObj (loc, 
-          N.Theorem(nflavour, name, N.Implicit `JustOne, Some body,`Regular),
+          N.Theorem(name, N.Implicit `JustOne, Some body, attrs),
           true)
     | IDENT "axiom"; i = index; name = IDENT; SYMBOL ":"; typ = term ->
-        G.NObj (loc, N.Theorem (`Axiom, name, typ, None, `Regular),i)
+        let attrs = `Provided, `Axiom, `Regular in
+	G.NObj (loc, N.Theorem (name, typ, None, attrs),i)
     | IDENT "discriminator" ; indty = tactic_term -> G.NDiscriminator (loc,indty)
     | IDENT "inverter"; name = IDENT; IDENT "for" ; indty = tactic_term ;
       paramspec = OPT inverter_param_list ; 

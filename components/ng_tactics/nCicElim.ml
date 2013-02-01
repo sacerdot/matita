@@ -166,9 +166,9 @@ let mk_elim status uri leftno it (outsort,suffix) pragma =
      (function x::_ -> x | _ -> assert false) 80 
      (NotationPres.mpres_of_box boxml)));
 *)
+  let attrs = `Generated, `Definition, pragma in
   NotationPt.Theorem
-   (`Definition,srec_name,
-      NotationPt.Implicit `JustOne,Some res,pragma)
+   (srec_name, NotationPt.Implicit `JustOne, Some res, attrs)
 ;;
 
 let ast_of_sort s =
@@ -308,8 +308,9 @@ let mk_projection status leftno tyname consname consty (projname,_,_) i =
      (function x::_ -> x | _ -> assert false)
      80 (NotationPres.render (fun _ -> None)
      (TermContentPres.pp_ast res)));*)
+  let attrs = `Generated, `Definition, `Projection in
   NotationPt.Theorem
-   (`Definition,projname,NotationPt.Implicit `JustOne,Some res,`Projection)
+   (projname, NotationPt.Implicit `JustOne, Some res, attrs)
 ;;
 
 let mk_projections status (_,_,_,_,obj) =

@@ -122,7 +122,7 @@ qed.
 (* Note: this cannot be in lib because of the missing xoa quantifier *)
 lemma lstar_inv_pos: ∀A,B,R,l,b1,b2. lstar A B R l b1 b2 → 0 < |l| →
                      ∃∃a,ll,b. a::ll = l & R a b1 b & lstar A B R ll b b2.
-#A #B #R #l #b1 #b2 #H @(lstar_ind_l ????????? H) -b1
+#A #B #R #l #b1 #b2 #H @(lstar_ind_l … l b1 H) -l -b1
 [ #H elim (lt_refl_false … H)
 | #a #ll #b1 #b #Hb1 #Hb2 #_ #_ /2 width=6/ (**) (* auto fail if we do not remove the inductive premise *)
 ]

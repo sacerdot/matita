@@ -18,6 +18,12 @@ exception AssertFailure of string Lazy.t;;
 module C = NCic
 module Ref = NReference
 
+type 'a expected_type = [ `XTNone       (* unknown *)
+                        | `XTSome of 'a (* the given term *) 
+		        | `XTSort       (* any sort *)
+		        | `XTInd        (* any (co)inductive type *)
+                        ]
+
 let debug = ref false;;
 let indent = ref "";;
 let times = ref [];;
@@ -62,15 +68,17 @@ let exp_implicit status ~localise metasenv subst context with_type t =
   | `Closed ->
       let metasenv,subst,expty =
        match with_type with
-          None -> metasenv,subst,None
-        | Some typ ->
+          `XTSort
+	| `XTInd
+	| `XTNone -> metasenv,subst,None
+        | `XTSome typ ->
            let (metasenv,subst),typ =
             try
              NCicMetaSubst.delift status
               ~unify:(fun m s c t1 t2 ->
                 try Some (NCicUnification.unify status m s c t1 t2)
                 with NCicUnification.UnificationFailure _ | NCicUnification.Uncertain _ -> None)
-              metasenv subst context (-1) (0,NCic.Irl 0) typ
+              metasenv subst context (-1) (0,C.Irl 0) typ
             with
               NCicMetaSubst.MetaSubstFailure _
             | NCicMetaSubst.Uncertain _ ->
@@ -80,9 +88,14 @@ let exp_implicit status ~localise metasenv subst context with_type t =
             metasenv,subst,Some typ
       in
        NCicMetaSubst.mk_meta metasenv [] ?with_type:expty `IsTerm,subst
-  | `Type -> NCicMetaSubst.mk_meta metasenv context ?with_type `IsType,subst
-  | `Term -> NCicMetaSubst.mk_meta metasenv context ?with_type `IsTerm,subst
+  | `Type ->
+      let with_type = match with_type with `XTSome t -> Some t | _ -> None in
+      NCicMetaSubst.mk_meta metasenv context ?with_type `IsType,subst 
+  | `Term ->
+      let with_type = match with_type with `XTSome t -> Some t | _ -> None in
+      NCicMetaSubst.mk_meta metasenv context ?with_type `IsTerm,subst
   | `Tagged s ->
+      let with_type = match with_type with `XTSome t -> Some t | _ -> None in
       NCicMetaSubst.mk_meta 
         ~attrs:[`Name s] metasenv context ?with_type `IsTerm,subst
   | `Vector ->
@@ -172,7 +185,7 @@ let rec typeof (status:#NCicCoercion.status)
   let force_ty skip_lambda skip_appl metasenv subst context orig t infty expty =
     (*D*)inside 'F'; try let rc = 
     match expty with
-    | Some expty ->
+    | `XTSome expty ->
        (match t with
        | C.Implicit _ -> assert false
        | C.Lambda _ when skip_lambda -> metasenv, subst, t, expty
@@ -192,15 +205,30 @@ let rec typeof (status:#NCicCoercion.status)
            | NCicUnification.Uncertain _ 
            | NCicUnification.UnificationFailure _ as exc -> 
              try_coercions status ~localise 
-               metasenv subst context t orig infty (`Type expty) exc)
-    | None -> metasenv, subst, t, infty
+               metasenv subst context t orig infty (`XTSome expty) exc)
+    | `XTNone -> metasenv, subst, t, infty
+    | `XTSort ->
+       (match t with
+       | C.Implicit _ -> assert false
+       | _ ->
+          pp (lazy ("forcing infty=any sort: "^
+          (status#ppterm ~metasenv ~subst ~context infty) ^  " === any sort"));
+	  force_to_sort status metasenv subst context t orig localise infty)
+    | `XTInd ->
+       (match t with
+       | C.Implicit _ -> assert false
+       | _ ->
+          pp (lazy ("forcing infty=any (co)inductive type: "^
+          (status#ppterm ~metasenv ~subst ~context infty) ^  " === any (co)inductive type"));
+          force_to_inductive status metasenv subst context t orig localise infty)           
     (*D*)in outside true; rc with exc -> outside false; raise exc
   in
   let rec typeof_aux metasenv subst context expty = 
     fun t as orig -> 
     (*D*)inside 'R'; try let rc = 
     pp (lazy (status#ppterm ~metasenv ~subst ~context t ^ " ::exp:: " ^
-       match expty with None -> "None" | Some e -> 
+       match expty with `XTSort -> "Any sort" | `XTInd -> "Any (co)inductive type"
+                      | `XTNone -> "None" | `XTSome e -> 
        status#ppterm ~metasenv ~subst ~context e));
     let metasenv, subst, t, infty = 
     match t with
@@ -224,10 +252,9 @@ let rec typeof (status:#NCicCoercion.status)
          let (metasenv,_,t,ty),subst =
            exp_implicit status ~localise metasenv subst context expty t infos
          in
-         if expty = None then
-          typeof_aux metasenv subst context None t
-         else
-          metasenv, subst, t, ty 
+         (match expty with
+	    | `XTSome _ -> metasenv, subst, t, ty
+	    | _         -> typeof_aux metasenv subst context expty t)
     | C.Meta (n,l) as t -> 
        let metasenv, ty =
         try
@@ -239,12 +266,12 @@ let rec typeof (status:#NCicCoercion.status)
     | C.Const _ -> 
        metasenv, subst, t, NCicTypeChecker.typeof status ~subst ~metasenv context t
     | C.Prod (name,(s as orig_s),(t as orig_t)) ->
-       let metasenv, subst, s, s1 = typeof_aux metasenv subst context None s in
+       let metasenv, subst, s, s1 = typeof_aux metasenv subst context `XTSort s in
        let metasenv, subst, s, s1 = 
          force_to_sort status 
            metasenv subst context s orig_s localise s1 in
        let context1 = (name,(C.Decl s))::context in
-       let metasenv, subst, t, s2 = typeof_aux metasenv subst context1 None t in
+       let metasenv, subst, t, s2 = typeof_aux metasenv subst context1 `XTSort t in
        let metasenv, subst, t, s2 = 
          force_to_sort status 
            metasenv subst context1 t orig_t localise s2 in
@@ -252,19 +279,21 @@ let rec typeof (status:#NCicCoercion.status)
          sort_of_prod status localise metasenv subst 
            context orig_s orig_t (name,s) t (s1,s2)
        in
-       metasenv, subst, NCic.Prod(name,s,t), ty
+       metasenv, subst, C.Prod(name,s,t), ty
     | C.Lambda (n,(s as orig_s),t) as orig ->
        let exp_s, exp_ty_t, force_after =
          match expty with
-         | None -> None, None, false
-         | Some expty -> 
+	 | `XTSort
+	 | `XTInd 
+	 | `XTNone -> `XTNone, `XTNone, false
+         | `XTSome expty -> 
              match NCicReduction.whd status ~subst context expty with
-             | C.Prod (_,s,t) -> Some s, Some t, false
-             | _ -> None, None, true 
+             | C.Prod (_,s,t) -> `XTSome s, `XTSome t, false
+             | _ -> `XTNone, `XTNone, true 
        in
        let (metasenv,subst), s = 
          match exp_s with 
-         | Some exp_s ->
+         | `XTSome exp_s ->
              (* optimized case: implicit and implicitly typed meta
               * the optimization prevents proliferation of metas  *)
              (match s with
@@ -281,12 +310,14 @@ let rec typeof (status:#NCicCoercion.status)
                   (try 
                     pp(lazy("Force source to: "^status#ppterm ~metasenv ~subst
                        ~context exp_s));
-                    NCicUnification.unify ~test_eq_only:true status metasenv subst context s exp_s,s
+                    NCicUnification.unify ~test_eq_only:true status metasenv subst context s exp_s, s
                   with exc -> raise (wrap_exc (lazy (localise orig_s, Printf.sprintf
                     "Source type %s was expected to be %s" (status#ppterm ~metasenv
                     ~subst ~context s) (status#ppterm ~metasenv ~subst ~context
                     exp_s))) exc)))
-         | None -> 
+	 | `XTNone
+	 | `XTSort
+	 | `XTInd  -> 
              let metasenv, subst, s = 
                check_type status ~localise metasenv subst context s in
              (metasenv, subst), s
@@ -304,18 +335,18 @@ let rec typeof (status:#NCicCoercion.status)
        let metasenv, subst, ty = 
          check_type status ~localise metasenv subst context ty in
        let metasenv, subst, t, _ = 
-         typeof_aux metasenv subst context (Some ty) t in
+         typeof_aux metasenv subst context (`XTSome ty) t in
        let context1 = (n, C.Def (t,ty)) :: context in
        let metasenv, subst, expty1 = 
          match expty with 
-         | None -> metasenv, subst, None 
-         | Some x -> 
+         | `XTSome x -> 
              let m, s, x = 
                NCicUnification.delift_type_wrt_terms 
                 status metasenv subst context1 (NCicSubstitution.lift status 1 x)
                 [NCicSubstitution.lift status 1 t]
              in
-               m, s, Some x
+               m, s, `XTSome x
+         | _ -> metasenv, subst, expty 
        in
        let metasenv, subst, bo, bo_ty = 
          typeof_aux metasenv subst context1 expty1 bo 
@@ -329,13 +360,13 @@ let rec typeof (status:#NCicCoercion.status)
        in
        let refine_appl metasenv subst args =
          let metasenv, subst, he, ty_he = 
-            typeof_aux metasenv subst context None he in
+            typeof_aux metasenv subst context `XTNone he in
          let metasenv, subst, t, ty = 
            eat_prods status ~localise force_ty metasenv subst context expty t
             orig_he he ty_he args in
          metasenv, subst, hbr t, ty
        in
-       if args = [C.Implicit `Vector] && expty <> None then
+       if args = [C.Implicit `Vector] && expty <> `XTNone then
          (* we try here to expand the vector a 0 implicits, but we use
           * the expected type *)
          try
@@ -347,10 +378,10 @@ let rec typeof (status:#NCicCoercion.status)
         (* CSC: whd can be useful on he too... *)
         (match he with
             C.Const (Ref.Ref (uri1,Ref.Con _)) -> (
-             match
-              HExtlib.map_option (NCicReduction.whd status ~subst context) expty
-             with
-                Some (C.Appl(C.Const(Ref.Ref (uri2,Ref.Ind _) as ref)::expargs))
+             match expty with
+	     | `XTSome expty -> (
+	       match NCicReduction.whd status ~subst context expty with
+                C.Appl (C.Const (Ref.Ref (uri2,Ref.Ind _) as ref)::expargs)
                 when NUri.eq uri1 uri2 ->
                 (try
                  let _,leftno,_,_,_ = NCicEnvironment.get_checked_indtys status ref in
@@ -375,7 +406,7 @@ let rec typeof (status:#NCicCoercion.status)
                               (C.Implicit `Term :: allargs) allexpargs)
                        | arg::args ->
                           let metasenv,subst,arg,_ =
-                           typeof_aux metasenv subst context None arg in
+                           typeof_aux metasenv subst context `XTNone arg in
                           let metasenv,subst =
                            NCicUnification.unify status metasenv subst context
                             arg exparg
@@ -387,7 +418,10 @@ let rec typeof (status:#NCicCoercion.status)
                  | Sys.Break as exn -> raise exn
                  | _ ->
                     refine_appl metasenv subst args (* to try coercions *))
-              | _ -> refine_appl metasenv subst args)
+               | _ -> refine_appl metasenv subst args)
+	     | `XTNone 
+	     | `XTSort
+	     | `XTInd  -> refine_appl metasenv subst args)
           | _ -> refine_appl metasenv subst args)
    | C.Appl _ -> raise (AssertFailure (lazy "Appl of length < 2"))
    | C.Match (Ref.Ref (_,Ref.Ind (_,tyno,_)) as r,
@@ -399,20 +433,20 @@ let rec typeof (status:#NCicCoercion.status)
         NCicMetaSubst.saturate status metasenv subst context arity 0 in
       let ind = if args = [] then C.Const r else C.Appl (C.Const r::args) in
       let metasenv, subst, term, _ = 
-        typeof_aux metasenv subst context (Some ind) term in
+        typeof_aux metasenv subst context (`XTSome ind) term in
       let parameters, arguments = HExtlib.split_nth leftno args in
       let outtype =  
         match outtype with
         | C.Implicit _ as ot -> 
              let rec aux = function
-               | [] -> NCic.Lambda ("_",NCic.Implicit `Type,ot)
-               | _::tl -> NCic.Lambda ("_",NCic.Implicit `Type,aux tl)
+               | [] -> C.Lambda ("_",C.Implicit `Type,ot)
+               | _::tl -> C.Lambda ("_",C.Implicit `Type,aux tl)
              in
                aux arguments
         | _ -> outtype
       in 
       let metasenv, subst, outtype, outsort = 
-        typeof_aux metasenv subst context None outtype in
+        typeof_aux metasenv subst context `XTNone outtype in (* this cannot be `XTSort *)
 
       (* next lines are to do a subst-expansion of the outtype, so
          that when it becomes a beta-abstraction, the beta-redex is
@@ -429,7 +463,7 @@ let rec typeof (status:#NCicCoercion.status)
         if parameters = [] then C.Const r
         else C.Appl ((C.Const r)::parameters) in
       let metasenv, subst, ind, ind_ty = 
-        typeof_aux metasenv subst context None ind in
+        typeof_aux metasenv subst context `XTNone ind in (* FG: this cannot be `XTSort *)
       let metasenv, subst = 
          check_allowed_sort_elimination status localise r orig_term metasenv subst 
            context ind ind_ty outsort 
@@ -455,7 +489,7 @@ let rec typeof (status:#NCicCoercion.status)
                 else C.Appl (C.Const cons::parameters)
               in
               let metasenv, subst, cons, ty_cons = 
-                typeof_aux metasenv subst context None cons in
+                typeof_aux metasenv subst context `XTNone cons in (* FG: this cannot be `XTInd *)
               let ty_branch = 
                 NCicTypeChecker.type_of_branch status
                   ~subst context leftno outtype cons ty_cons in
@@ -463,7 +497,7 @@ let rec typeof (status:#NCicCoercion.status)
                status#ppterm ~metasenv ~subst ~context p ^ " ::inf:: " ^
                status#ppterm ~metasenv ~subst ~context ty_branch ));
               let metasenv, subst, p, _ = 
-                typeof_aux metasenv subst context (Some ty_branch) p in
+                typeof_aux metasenv subst context (`XTSome ty_branch) p in
               j-1, metasenv, subst, p :: branches)
           pl (List.length pl, metasenv, subst, [])
       in
@@ -481,7 +515,7 @@ let rec typeof (status:#NCicCoercion.status)
 
 and check_type status ~localise metasenv subst context (ty as orig_ty) =
   let metasenv, subst, ty, sort = 
-    typeof status ~localise metasenv subst context ty None
+    typeof status ~localise metasenv subst context ty `XTSort
   in
   let metasenv, subst, ty, _ = 
     force_to_sort status metasenv subst context ty orig_ty localise sort
@@ -494,25 +528,26 @@ and try_coercions status
   let cs_subst = NCicSubstitution.subst status ~avoid_beta_redexes:true in
   try 
    (match expty with
-       `Type expty ->
+       `XTSome expty ->
          pp (lazy "WWW: trying coercions -- preliminary unification");
          let metasenv, subst = 
            NCicUnification.unify status metasenv subst context infty expty
          in metasenv, subst, t, expty
-     | _ -> raise (Failure "Special case Prod or Sort"))
+     | _ -> raise (Failure "Special case XTProd, XTSort or XTInd"))
   with
   | exn ->
   (* we try with a coercion *)
   let rec first exc = function
   | [] ->   
-      pp (lazy "WWW: no more coercions!");      
+      pp (lazy "WWW: no more coercions!");
       raise (wrap_exc (lazy
        let expty =
         match expty with
-           `Type expty -> status#ppterm ~metasenv ~subst ~context expty
-         | `Sort -> "[[sort]]"
-         | `Prod -> "[[prod]]" in
-         (localise orig_t, Printf.sprintf
+           `XTSome expty -> status#ppterm ~metasenv ~subst ~context expty
+         | `XTSort -> "[[sort]]"
+         | `XTProd -> "[[prod]]" 
+         | `XTInd  -> "[[ind]]"  in
+	 (localise orig_t, Printf.sprintf
         "The term\n%s\nhas type\n%s\nbut is here used with type\n%s"
         (status#ppterm ~metasenv ~subst ~context t)
         (status#ppterm ~metasenv ~subst ~context infty)
@@ -530,7 +565,7 @@ and try_coercions status
         let metasenv, subst = 
           NCicUnification.unify status metasenv subst context t meta in
         match expty with
-           `Type expty ->
+           `XTSome expty ->
              pp (lazy ( "UNIFICATION in CTX:\n"^ 
                status#ppcontext ~metasenv ~subst context
                ^ "\nMENV: " ^
@@ -542,13 +577,17 @@ and try_coercions status
                NCicUnification.unify status metasenv subst context newtype expty
              in
               metasenv, subst, newterm, newtype
-         | `Sort ->
+         | `XTSort ->
              (match NCicReduction.whd status ~subst context newtype with
-                 NCic.Sort _ -> metasenv,subst,newterm,newtype
+                 C.Sort _ -> metasenv,subst,newterm,newtype
                | _ -> first exc tl)
-         | `Prod ->
+         | `XTInd ->
              (match NCicReduction.whd status ~subst context newtype with
-                 NCic.Prod _ -> metasenv,subst,newterm,newtype
+                 C.Const (Ref.Ref (_, Ref.Ind _)) -> metasenv,subst,newterm,newtype
+               | _ -> first exc tl)
+	 | `XTProd ->
+             (match NCicReduction.whd status ~subst context newtype with
+                 C.Prod _ -> metasenv,subst,newterm,newtype
                | _ -> first exc tl)
       with 
       | NCicUnification.UnificationFailure _ -> first exc tl
@@ -558,8 +597,8 @@ and try_coercions status
   try 
     pp (lazy "WWW: trying coercions -- inner check");
     match infty, expty, t with
-    (* `Sort|`Prod + Match not implemented *) 
-    | _,`Type expty, NCic.Match (Ref.Ref (_,Ref.Ind (_,tyno,leftno)) as r,outty,m,pl) ->
+    (* `XTSort|`XTProd|`XTInd + Match not implemented *) 
+    | _,`XTSome expty, C.Match (Ref.Ref (_,Ref.Ind (_,tyno,leftno)) as r,outty,m,pl) ->
         (*{{{*) pp (lazy "CASE");
         (* {{{ helper functions *)
         let get_cl_and_left_p refit outty =
@@ -571,8 +610,8 @@ and try_coercions status
               let count_pis t =
                 let rec aux ctx t = 
                   match NCicReduction.whd status ~subst ~delta:max_int ctx t with
-                  | NCic.Prod (name,src,tgt) ->
-                      let ctx = (name, (NCic.Decl src)) :: ctx in
+                  | C.Prod (name,src,tgt) ->
+                      let ctx = (name, (C.Decl src)) :: ctx in
                       1 + aux ctx tgt
                   | _ -> 0
                 in
@@ -581,17 +620,17 @@ and try_coercions status
               let rec skip_lambda_delifting t n =
                 match t,n with
                 | _,0 -> t
-                | NCic.Lambda (_,_,t),n ->
+                | C.Lambda (_,_,t),n ->
                     pp (lazy ("WWW: failing term? "^ status#ppterm ~subst:[] ~metasenv:[] ~context:[] t)); 
                     skip_lambda_delifting
                       (* substitute dangling indices with a dummy *)
-                      (NCicSubstitution.subst status (NCic.Sort NCic.Prop) t) (n - 1)
+                      (NCicSubstitution.subst status (C.Sort C.Prop) t) (n - 1)
                 | _ -> assert false
               in
               let get_l_r_p n = function
-                | NCic.Lambda (_,NCic.Const (Ref.Ref (_,Ref.Ind (_,_,_))),_) -> [],[]
-                | NCic.Lambda (_,NCic.Appl 
-                    (NCic.Const (Ref.Ref (_,Ref.Ind (_,_,_))) :: args),_) ->
+                | C.Lambda (_,C.Const (Ref.Ref (_,Ref.Ind (_,_,_))),_) -> [],[]
+                | C.Lambda (_,C.Appl 
+                    (C.Const (Ref.Ref (_,Ref.Ind (_,_,_))) :: args),_) ->
                     HExtlib.split_nth n args
                 | _ -> assert false
               in
@@ -604,7 +643,7 @@ and try_coercions status
                   (fun ty -> 
                     List.fold_left 
                       (fun t p -> match t with
-                        | NCic.Prod (_,_,t) ->
+                        | C.Prod (_,_,t) ->
                             cs_subst p t
                         | _-> assert false)
                       ty left_p) 
@@ -619,7 +658,7 @@ and try_coercions status
           match t,n with
           | _,0 ->
             let rec mkr n = function 
-              | [] -> [] | _::tl -> NCic.Rel n :: mkr (n+1) tl
+              | [] -> [] | _::tl -> C.Rel n :: mkr (n+1) tl
             in
             pp (lazy ("input replace: " ^ status#ppterm ~context:ctx ~metasenv:[] ~subst:[] bo));
             let bo =
@@ -627,37 +666,37 @@ and try_coercions status
               ~equality:(fun _ -> NCicRefineUtil.alpha_equivalence status)
               ~context:ctx
               ~what:(matched::right_p)
-              ~with_what:(NCic.Rel 1::List.rev (mkr 2 right_p))
+              ~with_what:(C.Rel 1::List.rev (mkr 2 right_p))
               ~where:bo
             in
             pp (lazy ("output replace: " ^ status#ppterm ~context:ctx ~metasenv:[] ~subst:[] bo));
             bo
-          | NCic.Lambda (name, src, tgt),_ ->
-              NCic.Lambda (name, src,
+          | C.Lambda (name, src, tgt),_ ->
+              C.Lambda (name, src,
                keep_lambdas_and_put_expty 
-                ((name, NCic.Decl src)::ctx) tgt (NCicSubstitution.lift status 1 bo)
+                ((name, C.Decl src)::ctx) tgt (NCicSubstitution.lift status 1 bo)
                 (List.map (NCicSubstitution.lift status 1) right_p) (NCicSubstitution.lift status 1 matched) (n-1))
           | _ -> assert false
         in
-        (*let eq = NCic.Const (NReference.reference_of_string ("cic:/matita/ng/Plogic/equality/eq.ind(1,0,2)")) in
-        let eq_refl = NCic.Const (NReference.reference_of_string ("cic:/matita/ng/Plogic/equality/eq.con(0,1,2)")) in*)
-        let eq = NCic.Const (NReference.reference_of_string ("cic:/matita/basics/jmeq/jmeq.ind(1,0,2)")) in
-        let eq_refl = NCic.Const (NReference.reference_of_string ("cic:/matita/basics/jmeq/jmeq.con(0,1,2)")) in
+        (*let eq = C.Const (NReference.reference_of_string ("cic:/matita/ng/Plogic/equality/eq.ind(1,0,2)")) in
+        let eq_refl = C.Const (NReference.reference_of_string ("cic:/matita/ng/Plogic/equality/eq.con(0,1,2)")) in*)
+        let eq = C.Const (NReference.reference_of_string ("cic:/matita/basics/jmeq/jmeq.ind(1,0,2)")) in
+        let eq_refl = C.Const (NReference.reference_of_string ("cic:/matita/basics/jmeq/jmeq.con(0,1,2)")) in
         let add_params 
           metasenv subst context cty outty mty m i 
         =
           let rec aux context outty par j mty m = function
-            | NCic.Prod (name, src, tgt) ->
+            | C.Prod (name, src, tgt) ->
                 let t,k = 
                   aux 
-                    ((name, NCic.Decl src) :: context)
-                    (NCicSubstitution.lift status 1 outty) (NCic.Rel j::par) (j+1) 
+                    ((name, C.Decl src) :: context)
+                    (NCicSubstitution.lift status 1 outty) (C.Rel j::par) (j+1) 
                     (NCicSubstitution.lift status 1 mty) (NCicSubstitution.lift status 1 m) tgt
                 in
-                NCic.Prod (name, src, t), k
-            | NCic.Const (Ref.Ref (_,Ref.Ind (_,_,leftno)) as r) ->
+                C.Prod (name, src, t), k
+            | C.Const (Ref.Ref (_,Ref.Ind (_,_,leftno)) as r) ->
                 let k = 
-                  let k = NCic.Const(Ref.mk_constructor i r) in
+                  let k = C.Const(Ref.mk_constructor i r) in
                   NCicUntrusted.mk_appl k par
                 in
                 (* the type has no parameters, so kty = mty
@@ -665,30 +704,30 @@ and try_coercions status
                   try NCicTypechecker.typeof ~subst ~metasenv context k
                   with NCicTypeChecker.TypeCheckerFailure _ -> assert false
                 in *)
-                NCic.Prod ("p", 
-                 NCic.Appl [eq; mty; m; mty; k],
+                C.Prod ("p", 
+                 C.Appl [eq; mty; m; mty; k],
                  (NCicSubstitution.lift status 1
                   (NCicReduction.head_beta_reduce status ~delta:max_int 
                    (NCicUntrusted.mk_appl outty [k])))),[mty,m,mty,k]
-            | NCic.Appl (NCic.Const (Ref.Ref (_,Ref.Ind (_,_,leftno)) as r)::pl) ->
+            | C.Appl (C.Const (Ref.Ref (_,Ref.Ind (_,_,leftno)) as r)::pl) ->
                 let left_p,right_p = HExtlib.split_nth leftno pl in
                 let has_rights = right_p <> [] in
                 let k = 
-                  let k = NCic.Const(Ref.mk_constructor i r) in
+                  let k = C.Const(Ref.mk_constructor i r) in
                   NCicUntrusted.mk_appl k (left_p@par)
                 in
                 let right_p = 
                   try match 
                     NCicTypeChecker.typeof status ~subst ~metasenv context k
                   with
-                  | NCic.Appl (NCic.Const (Ref.Ref (_,Ref.Ind (_,_,_)))::args) ->
+                  | C.Appl (C.Const (Ref.Ref (_,Ref.Ind (_,_,_)))::args) ->
                       snd (HExtlib.split_nth leftno args)
                   | _ -> assert false
                   with NCicTypeChecker.TypeCheckerFailure _-> assert false
                 in
                 let orig_right_p =
                   match mty with
-                  | NCic.Appl (NCic.Const (Ref.Ref (_,Ref.Ind (_,_,_)))::args) ->
+                  | C.Appl (C.Const (Ref.Ref (_,Ref.Ind (_,_,_)))::args) ->
                       snd (HExtlib.split_nth leftno args)
                   | _ -> assert false
                 in
@@ -702,7 +741,7 @@ and try_coercions status
           	    try NCicTypeChecker.typeof status ~subst ~metasenv context y
                       with NCicTypeChecker.TypeCheckerFailure _ -> assert false
                     in
-                    NCic.Prod ("_", NCic.Appl [eq;xty;x;yty;y],
+                    C.Prod ("_", C.Appl [eq;xty;x;yty;y],
                      NCicSubstitution.lift status 1 tacc), (xty,x,yty,y)::pacc) 
                   (orig_right_p @ [m]) (right_p @ [k]) 
                   (NCicReduction.head_beta_reduce status ~delta:max_int
@@ -710,13 +749,13 @@ and try_coercions status
 
   (*              if has_rights then
                   NCicReduction.head_beta_reduce status ~delta:max_int
-                    (NCic.Appl (outty ::right_p @ [k])),k
+                    (C.Appl (outty ::right_p @ [k])),k
                 else
-                  NCic.Prod ("p", 
-                   NCic.Appl [eq; mty; m; k],
+                  C.Prod ("p", 
+                   C.Appl [eq; mty; m; k],
                    (NCicSubstitution.lift status 1
                     (NCicReduction.head_beta_reduce status ~delta:max_int 
-                     (NCic.Appl (outty ::right_p @ [k]))))),k*)
+                     (C.Appl (outty ::right_p @ [k]))))),k*)
             | _ -> assert false
           in
             aux context outty [] 1 mty m cty
@@ -725,32 +764,32 @@ and try_coercions status
           (* k lives in the right context *)
           (* if rno <> 0 then pbo else *)
           let rec aux = function 
-            | NCic.Lambda (name,src,bo), NCic.Prod (_,_,ty) ->
-                NCic.Lambda (name,src,
+            | C.Lambda (name,src,bo), C.Prod (_,_,ty) ->
+                C.Lambda (name,src,
                 (aux (bo,ty)))
             | t,_ -> snd (List.fold_right
-                (fun (xty,x,yty,y) (n,acc) -> n+1, NCic.Lambda ("p" ^ string_of_int n,
-                  NCic.Appl [eq; xty; x; yty; y],
+                (fun (xty,x,yty,y) (n,acc) -> n+1, C.Lambda ("p" ^ string_of_int n,
+                  C.Appl [eq; xty; x; yty; y],
                   NCicSubstitution.lift status 1 acc)) eqs (1,t))
-                (*NCic.Lambda ("p",
-                  NCic.Appl [eq; mty; m; k],NCicSubstitution.lift status 1 t)*)
+                (*C.Lambda ("p",
+                  C.Appl [eq; mty; m; k],NCicSubstitution.lift status 1 t)*)
           in
           aux (pbo,cty)
         in
         let add_pi_for_refl_m context new_outty mty m lno rno =
           (*if rno <> 0 then new_outty else*)
             let rec aux context mty m = function
-              | NCic.Lambda (name, src, tgt) ->
-                  let context = (name, NCic.Decl src)::context in
-                  NCic.Lambda (name, src, aux context (NCicSubstitution.lift status 1 mty) (NCicSubstitution.lift status 1 m) tgt)
+              | C.Lambda (name, src, tgt) ->
+                  let context = (name, C.Decl src)::context in
+                  C.Lambda (name, src, aux context (NCicSubstitution.lift status 1 mty) (NCicSubstitution.lift status 1 m) tgt)
               | t -> 
                   let lhs =
                     match mty with
-                    | NCic.Appl (_::params) -> (snd (HExtlib.split_nth lno params))@[m]
+                    | C.Appl (_::params) -> (snd (HExtlib.split_nth lno params))@[m]
                     | _ -> [m]
                   in
                   let rhs = 
-                    List.map (fun x -> NCic.Rel x) 
+                    List.map (fun x -> C.Rel x) 
                       (List.rev (HExtlib.list_seq 1 (rno+2))) in
                   List.fold_right2
                     (fun x y acc ->
@@ -762,12 +801,12 @@ and try_coercions status
     		    try NCicTypeChecker.typeof status ~subst ~metasenv context y
                         with NCicTypeChecker.TypeCheckerFailure _ -> assert false
                       in
-                      NCic.Prod
-                      ("_", NCic.Appl [eq;xty;x;yty;y],
+                      C.Prod
+                      ("_", C.Appl [eq;xty;x;yty;y],
                        (NCicSubstitution.lift status 1 acc)))
                     lhs rhs t
-  (*                NCic.Prod 
-                    ("_", NCic.Appl [eq;mty;m;NCic.Rel 1],
+  (*                C.Prod 
+                    ("_", C.Appl [eq;mty;m;C.Rel 1],
                     NCicSubstitution.lift status 1 t)*)
             in
               aux context mty m new_outty
@@ -782,8 +821,8 @@ and try_coercions status
             match 
               NCicTypeChecker.typeof status ~subst ~metasenv context m
             with
-            | (NCic.Const (Ref.Ref (_,Ref.Ind (_,_,_))) | NCic.Meta _) as mty -> [], mty
-            | NCic.Appl ((NCic.Const (Ref.Ref (_,Ref.Ind (_,_,_)))|NCic.Meta _)::args) as mty ->
+            | (C.Const (Ref.Ref (_,Ref.Ind (_,_,_))) | C.Meta _) as mty -> [], mty
+            | C.Appl ((C.Const (Ref.Ref (_,Ref.Ind (_,_,_)))|C.Meta _)::args) as mty ->
                 snd (HExtlib.split_nth leftno args), mty
             | _ -> assert false
           with NCicTypeChecker.TypeCheckerFailure _ -> 
@@ -820,7 +859,7 @@ and try_coercions status
                  ~context ~metasenv ~subst pbo));
                let metasenv, subst, pbo, _ =
                  try_coercions status ~localise menv s context pbo 
-          	 orig_t (*??*) infty_pbo (`Type expty_pbo) exc
+          	 orig_t (*??*) infty_pbo (`XTSome expty_pbo) exc
                in
                pp 
                  (lazy ("CASE: pbo2: " ^ status#ppterm 
@@ -840,61 +879,61 @@ and try_coercions status
           List.map 
             (fun t -> NCicTypeChecker.typeof status ~subst ~metasenv context t) right_p in
         let eqs = 
-          List.map2 (fun x y -> NCic.Appl[eq_refl;x;y]) (right_tys@[mty]) 
+          List.map2 (fun x y -> C.Appl[eq_refl;x;y]) (right_tys@[mty]) 
             (right_p@[m]) in
-        let t = NCic.Appl (NCic.Match(r,new_outty,m,pl) :: eqs) 
+        let t = C.Appl (C.Match(r,new_outty,m,pl) :: eqs) 
         in
         metasenv, subst, t, expty (*}}}*)
-    | _,`Type expty,NCic.LetIn(name,ty,t,bo) -> 
+    | _,`XTSome expty,C.LetIn(name,ty,t,bo) -> 
         pp (lazy "LETIN");
         let name' = mk_fresh_name context name in
-        let context_bo = (name', NCic.Def (t,ty)) :: context in
+        let context_bo = (name', C.Def (t,ty)) :: context in
         let metasenv, subst, bo2, _ = 
           try_coercions status ~localise metasenv subst context_bo
            bo orig_t (NCicSubstitution.lift status 1 infty)
-           (`Type (NCicSubstitution.lift status 1 expty)) exc
+           (`XTSome (NCicSubstitution.lift status 1 expty)) exc
         in
-        let coerced = NCic.LetIn (name',ty,t,bo2) in
+        let coerced = C.LetIn (name',ty,t,bo2) in
         pp (lazy ("LETIN: coerced = " ^ status#ppterm ~metasenv ~subst ~context coerced));
         metasenv, subst, coerced, expty
-    | NCic.Prod (nameprod, src, ty),`Type (NCic.Prod (_, src2, ty2) as expty), _ -> 
+    | C.Prod (nameprod, src, ty),`XTSome (C.Prod (_, src2, ty2) as expty), _ -> 
         (*{{{*) pp (lazy "LAM");
         pp (lazy ("LAM: t = " ^ status#ppterm ~metasenv ~subst ~context t));
-        let namename = match t with NCic.Lambda (n,_,_) -> n | _ -> nameprod in
+        let namename = match t with C.Lambda (n,_,_) -> n | _ -> nameprod in
         let name_con = mk_fresh_name context namename in
-        let context_src2 = ((name_con, NCic.Decl src2) :: context) in
+        let context_src2 = ((name_con, C.Decl src2) :: context) in
         (* contravariant part: the argument of f:src->ty *)
         let metasenv, subst, rel1, _ = 
           try_coercions status ~localise metasenv subst context_src2
-           (NCic.Rel 1) orig_t (NCicSubstitution.lift status 1 src2) 
-           (`Type (NCicSubstitution.lift status 1 src)) exc
+           (C.Rel 1) orig_t (NCicSubstitution.lift status 1 src2) 
+           (`XTSome (NCicSubstitution.lift status 1 src)) exc
         in
         (* covariant part: the result of f(c x); x:src2; (c x):src *)
         let name_t, bo = 
           match t with
-          | NCic.Lambda (n,_,bo) -> n, cs_subst rel1 (NCicSubstitution.lift_from status 2 1 bo)
+          | C.Lambda (n,_,bo) -> n, cs_subst rel1 (NCicSubstitution.lift_from status 2 1 bo)
           | _ -> name_con, NCicUntrusted.mk_appl (NCicSubstitution.lift status 1 t) [rel1]
         in
         (* we fix the possible dependency problem in the source ty *)
         let ty = cs_subst rel1 (NCicSubstitution.lift_from status 2 1 ty) in
         let metasenv, subst, bo, _ = 
           try_coercions status ~localise metasenv subst context_src2
-            bo orig_t ty (`Type ty2) exc
+            bo orig_t ty (`XTSome ty2) exc
         in
-        let coerced = NCic.Lambda (name_t,src2, bo) in
+        let coerced = C.Lambda (name_t,src2, bo) in
         pp (lazy ("LAM: coerced = " ^ status#ppterm ~metasenv ~subst ~context coerced));
         metasenv, subst, coerced, expty (*}}}*)
     | _ -> raise exc
   with exc2 ->    
   let expty =
    match expty with
-      `Type expty -> expty
-    | `Sort ->
-        NCic.Sort (NCic.Type 
+      `XTSome expty -> expty
+    | `XTSort ->
+        C.Sort (C.Type 
          (match NCicEnvironment.get_universes () with
            | x::_ -> x 
            | _ -> assert false))
-    | `Prod -> NCic.Prod ("_",NCic.Implicit `Type,NCic.Implicit `Type)
+    | `XTProd -> C.Prod ("_",C.Implicit `Type,C.Implicit `Type)
   in
   pp(lazy("try_coercion " ^ 
     status#ppterm ~metasenv ~subst ~context infty ^ " |---> " ^
@@ -922,7 +961,32 @@ and force_to_sort status metasenv subst context t orig_t localise ty =
           RefineFailure msg
         in
           try_coercions status ~localise metasenv subst context
-            t orig_t ty `Sort exn
+            t orig_t ty `XTSort exn
+
+and force_to_inductive status metasenv subst context t orig_t localise ty =
+  try 
+    let metasenv, subst, ty = 
+      NCicUnification.indfy status (Failure "indfy") metasenv subst context ty in
+      metasenv, subst, t, ty
+  with
+      Failure _ -> 
+        let msg =
+         (lazy (localise orig_t, 
+           "The type of " ^ status#ppterm ~metasenv ~subst ~context t ^
+           " is not a (co)inductive type: " ^ status#ppterm ~metasenv ~subst ~context ty)) in
+        let ty = NCicReduction.whd status ~subst context ty in
+(* prerr_endline ("#### " ^ status#ppterm ~metasenv ~subst ~context ty); *)
+        let exn =
+         if NCicUnification.could_reduce status ~subst context ty then
+          Uncertain msg
+         else
+          RefineFailure msg
+        in
+          raise exn
+(* FG: this should be as follows but the case `XTInd is not imp;emented yet	  
+	  try_coercions status ~localise metasenv subst context
+            t orig_t ty `XTInd exn
+*)
 
 and sort_of_prod status localise metasenv subst context orig_s orig_t (name,s)
  t (t1, t2) 
@@ -970,15 +1034,16 @@ and eat_prods status ~localise force_ty metasenv subst context expty orig_t orig
      pp(lazy("FORCE FINAL APPL: " ^ 
        status#ppterm ~metasenv ~subst ~context res ^
        " of type " ^ status#ppterm ~metasenv ~subst ~context ty_he
-       ^ " to type " ^ match expty with None -> "None" | Some x -> 
+       ^ " to type " ^ match expty with `XTSort -> "Any sort" | `XTInd -> "Any (co)inductive type"
+                                      | `XTNone -> "None" | `XTSome x -> 
        status#ppterm ~metasenv ~subst ~context x));
      (* whatever the term is, we force the type. in case of ((Lambda..) ?...)
       * the application may also be a lambda! *)
      force_ty false false metasenv subst context orig_t res ty_he expty
-  | NCic.Implicit `Vector::tl ->
+  | C.Implicit `Vector::tl ->
       let has_some_more_pis x =
         match NCicReduction.whd status ~subst context x with
-        |  NCic.Meta _ | NCic.Appl (NCic.Meta _::_) -> false
+        |  C.Meta _ | C.Appl (C.Meta _::_) -> false
         | _ -> true
       in
      (try
@@ -988,7 +1053,7 @@ and eat_prods status ~localise force_ty metasenv subst context expty orig_t orig
       | RefineFailure _ as exc when has_some_more_pis ty_he ->
           (try
            aux metasenv subst args_so_far he ty_he
-            (NCic.Implicit `Term :: NCic.Implicit `Vector :: tl)
+            (C.Implicit `Term :: C.Implicit `Vector :: tl)
           with
            Uncertain msg | RefineFailure msg -> raise (wrap_exc msg exc))
      | RefineFailure msg when not (has_some_more_pis ty_he) ->
@@ -998,13 +1063,13 @@ and eat_prods status ~localise force_ty metasenv subst context expty orig_t orig
       match NCicReduction.whd status ~subst context ty_he with 
       | C.Prod (_,s,t) ->
           let metasenv, subst, arg, _ = 
-            typeof status ~localise metasenv subst context arg (Some s) in
+            typeof status ~localise metasenv subst context arg (`XTSome s) in
           let t = NCicSubstitution.subst status ~avoid_beta_redexes:true arg t in
           aux metasenv subst (arg :: args_so_far) he t tl
       | C.Meta _
       | C.Appl (C.Meta _ :: _) as t ->
           let metasenv, subst, arg, ty_arg = 
-            typeof status ~localise metasenv subst context arg None in
+            typeof status ~localise metasenv subst context arg `XTNone in
           let name = guess_name status subst context ty_arg in
           let metasenv, _, meta, _ = 
             NCicMetaSubst.mk_meta metasenv 
@@ -1013,7 +1078,7 @@ and eat_prods status ~localise force_ty metasenv subst context expty orig_t orig
           let flex_prod = C.Prod (name, ty_arg, meta) in
           (* next line grants that ty_args is a type *)
           let metasenv,subst, flex_prod, _ =
-           typeof status ~localise metasenv subst context flex_prod None in
+           typeof status ~localise metasenv subst context flex_prod `XTSort in
 (*
           pp (lazy ( "UNIFICATION in CTX:\n"^ 
             status#ppcontext ~metasenv ~subst context
@@ -1049,7 +1114,7 @@ and eat_prods status ~localise force_ty metasenv subst context expty orig_t orig
           let metasenv, subst, newhead, newheadty = 
             try_coercions status ~localise metasenv subst context
               (NCicUntrusted.mk_appl he (List.rev args_so_far)) orig_he ty
-              `Prod
+              `XTProd
               (RefineFailure (lazy (localise orig_he, Printf.sprintf
                ("The term %s is here applied to %d arguments but expects " ^^
                "only %d arguments") (status#ppterm ~metasenv ~subst ~context he)
@@ -1104,7 +1169,7 @@ let undebruijnate status inductive ref t rev_fl =
    (HExtlib.list_mapi 
       (fun (_,_,rno,_,_,_) i -> 
          let i = len - i - 1 in
-         NCic.Const 
+         C.Const 
            (if inductive then NReference.mk_fix i rno ref
             else NReference.mk_cofix i ref))
       rev_fl)
@@ -1123,7 +1188,7 @@ let typeof_obj
          match bo with
          | Some bo ->
              let metasenv, subst, bo, ty = 
-               typeof status ~localise metasenv subst [] bo (Some ty) in
+               typeof status ~localise metasenv subst [] bo (`XTSome ty) in
              let height = (* XXX recalculate *) height in
                metasenv, subst, Some bo, ty, height
          | None -> metasenv, subst, None, ty, 0
@@ -1147,7 +1212,7 @@ let typeof_obj
         List.fold_left 
           (fun (metasenv,subst,fl) (relevance,name,k,ty,dbo,localise) ->
             let metasenv, subst, dbo, ty = 
-              typeof status ~localise metasenv subst types dbo (Some ty)
+              typeof status ~localise metasenv subst types dbo (`XTSome ty)
             in
             metasenv, subst, (relevance,name,k,ty,dbo)::fl)
           (metasenv, subst, []) rev_fl
@@ -1174,7 +1239,7 @@ let typeof_obj
        (fun (metasenv,subst,res,ctx) (relevance,n,ty,cl) ->
           let metasenv, subst, ty = 
             check_type status ~localise metasenv subst [] ty in
-          metasenv,subst,(relevance,n,ty,cl)::res,(n,NCic.Decl ty)::ctx
+          metasenv,subst,(relevance,n,ty,cl)::res,(n,C.Decl ty)::ctx
        ) (metasenv,subst,[],[]) itl in
      let metasenv,subst,itl,_ =
       List.fold_left
@@ -1238,9 +1303,9 @@ let typeof_obj
               with Invalid_argument "List.fold_left2" -> assert false in
              let metasenv, subst =
                 let rec aux context (metasenv,subst) = function
-                  | NCic.Meta _ -> metasenv, subst
-                  | NCic.Implicit _ -> metasenv, subst
-                  | NCic.Appl (NCic.Rel i :: args) as t
+                  | C.Meta _ -> metasenv, subst
+                  | C.Implicit _ -> metasenv, subst
+                  | C.Appl (C.Rel i :: args) as t
                       when i > List.length context - len ->
                       let lefts, _ = HExtlib.split_nth leftno args in
                       let ctxlen = List.length context in
@@ -1249,7 +1314,7 @@ let typeof_obj
                         (fun ((metasenv, subst),l) arg ->
                           NCicUnification.unify status 
                            ~test_eq_only:true metasenv subst context arg 
-                             (NCic.Rel (ctxlen - len - l)), l+1
+                             (C.Rel (ctxlen - len - l)), l+1
                           )
                         ((metasenv, subst), 0) lefts
                       in
@@ -1297,9 +1362,9 @@ let typeof_obj
                  NCicSubstitution.psubst status
                   (fun i ->
                     if i <= leftno  then
-                     NCic.Rel i
+                     C.Rel i
                     else
-                     NCic.Const (NReference.reference_of_spec uri
+                     C.Const (NReference.reference_of_spec uri
                       (NReference.Ind (ind,relsno - i,leftno))))
                   (HExtlib.list_seq 1 (relsno+1))
                    te in
@@ -1307,8 +1372,8 @@ let typeof_obj
                 List.fold_right
                  (fun (name,decl) te ->
                    match decl with
-                      NCic.Decl ty -> NCic.Prod (name,ty,te)
-                    | NCic.Def (bo,ty) -> NCic.LetIn (name,ty,bo,te)
+                      C.Decl ty -> C.Prod (name,ty,te)
+                    | C.Def (bo,ty) -> C.LetIn (name,ty,bo,te)
                  ) sx_context_te_rev te
                in
                 metasenv,subst,(k_relev,n,te)::res

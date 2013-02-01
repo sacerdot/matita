@@ -639,13 +639,13 @@ let nmap_obj0 status ~idref (_, _, metasenv, subst, kind) =
       n, is_ind, ty, List.map (build_constractor lno context) cl
    in
    match kind with
-      | NCic.Constant (_, n, xbo, ty, (_, flavour, pragma)) ->
+      | NCic.Constant (_, n, xbo, ty, attrs) ->
 	 let ty = nast_of_cic ~context:[] ty in
          let xbo = match xbo with 
 	    | Some bo -> Some (nast_of_cic ~context:[] bo)
 	    | None    -> None
 	 in
-	 N.Theorem (flavour, n, ty, xbo, pragma)
+	 N.Theorem (n, ty, xbo, attrs)
       | NCic.Inductive (is_ind, lno, itl, (_, `Regular)) ->      
          let captures, context = build_captures lno itl in
 	 N.Inductive (captures, List.map (build_inductive is_ind lno context) itl)

@@ -138,7 +138,7 @@ definition sdsubstable_f_dx: ∀S:Type[0]. (S → ?) → predicate (relation sub
 lemma lstar_sdsubstable_f_dx: ∀S1,f,S2,R. (∀a. sdsubstable_f_dx S1 f (R a)) →
                               ∀l. sdsubstable_f_dx S1 f (lstar S2 … R l).
 #S1 #f #S2 #R #HR #l #G #F1 #F2 #H
-@(lstar_ind_l ????????? H) -l -F1 // /3 width=3/
+@(lstar_ind_l … l F1 H) -l -F1 // /3 width=3/
 qed.
 (*
 definition sdsubstable_dx: predicate (relation subterms) ≝ λR.
@@ -154,7 +154,7 @@ qed.
 lemma lstar_sdsubstable_dx: ∀S,R. (∀a. sdsubstable_dx (R a)) →
                             ∀l. sdsubstable_dx (lstar S … R l).
 #S #R #HR #l #G #F1 #F2 #H
-@(lstar_ind_l ????????? H) -l -F1 // /3 width=3/
+@(lstar_ind_l … l F1 H) -l -F1 // /3 width=3/
 qed.
 
 lemma star_sdsubstable: ∀R. reflexive ? R →

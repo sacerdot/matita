@@ -121,7 +121,7 @@ let eval_nmacro include_paths (buffer : GText.buffer) status unparsed_text parse
             ctx in
       let m, s, status, t = 
         GrafiteDisambiguate.disambiguate_nterm 
-          status None ctx menv subst (parsed_text,parsed_text_length,
+          status `XTNone ctx menv subst (parsed_text,parsed_text_length,
             NotationPt.Cast (t,NotationPt.Implicit `JustOne))  
           (* XXX use the metasenv, if possible *)
       in

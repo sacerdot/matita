@@ -46,4 +46,8 @@ val sortfy :#
  NCic.status -> exn -> NCic.metasenv -> NCic.substitution -> NCic.context ->
   NCic.term -> NCic.metasenv * NCic.substitution * NCic.term
 
+val indfy :#
+ NCic.status -> exn -> NCic.metasenv -> NCic.substitution -> NCic.context ->
+  NCic.term -> NCic.metasenv * NCic.substitution * NCic.term
+
 val debug : bool ref

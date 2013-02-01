@@ -317,7 +317,7 @@ let pp_obj pp_term = function
             (pp_term typ) (pp_constructors constructors)
         in
         fst_typ_pp ^ String.concat "" (List.map pp_type tl))
- | Ast.Theorem (flavour, name, typ, body,_) ->
+ | Ast.Theorem (name, typ, body,(_,flavour,_)) ->
     sprintf "%s %s:\n %s\n%s"
       (NCicPp.string_of_flavour flavour)
       name

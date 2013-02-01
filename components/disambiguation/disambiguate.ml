@@ -334,7 +334,7 @@ let domain_of_term ~context term =
 let domain_of_obj ~context ast =
  assert (context = []);
   match ast with
-   | Ast.Theorem (_,_,ty,bo,_) ->
+   | Ast.Theorem (_,ty,bo,_) ->
       domain_of_term [] ty
       @ (match bo with
           None -> []

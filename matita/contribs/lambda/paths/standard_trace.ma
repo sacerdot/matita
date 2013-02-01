@@ -49,13 +49,13 @@ qed.
 
 lemma is_standard_inv_compatible_sn: ∀s. is_standard (sn:::s) → is_standard s.
 #s elim s -s // #a1 * // #a2 #s #IHs * #H
-elim (sle_inv_sn … H ??) -H [3: // |2: skip ] (**) (* simplify line *)
+elim (sle_inv_sn … H …) -H [3: // |2: skip ] (**) (* simplify line *)
 #a #Ha1 #H destruct /3 width=1/
 qed-.
 
 lemma is_standard_inv_compatible_rc: ∀s. is_standard (rc:::s) → is_standard s.
 #s elim s -s // #a1 * // #a2 #s #IHs * #H
-elim (sle_inv_rc … H ??) -H [4: // |2: skip ] * (**) (* simplify line *)
+elim (sle_inv_rc … H …) -H [4: // |2: skip ] * (**) (* simplify line *)
 [ #a #Ha1 #H destruct /3 width=1/
 | #a #H destruct
 ]
@@ -64,9 +64,9 @@ qed-.
 lemma is_standard_inv_compatible_dx: ∀s. is_standard (dx:::s) →
                                      is_inner s → is_standard s.
 #s elim s -s // #a1 * // #a2 #s #IHs * #H
-elim (sle_inv_dx … H ??) -H [4: // |3: skip ] (**) (* simplify line *)
+elim (sle_inv_dx … H …) -H [4: // |3: skip ] (**) (* simplify line *)
 [ * #_ #H1a1 #_ * #H2a1 #_ -IHs
-  elim (H2a1 ?) -H2a1 -a2 -s //
+  elim (H2a1 …) -H2a1 -a2 -s //
 | * #a #Ha2 #H destruct #H * #_ /3 width=1/
 qed-.
 

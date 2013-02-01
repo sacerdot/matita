@@ -81,7 +81,7 @@ lemma in_inner_ind: ∀R:predicate path.
                     (∀p. in_inner p → R p → R (dx::p)) →
                     ∀p. in_inner p → R p.
 #R #H1 #H2 #IH #p elim p -p
-[ #H elim (H ?) -H //
+[ #H elim (H …) -H //
 | * #p #IHp // #H
   lapply (in_inner_inv_dx … H) -H /3 width=1/
 ]

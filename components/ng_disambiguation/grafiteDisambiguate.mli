@@ -60,7 +60,7 @@ exception BaseUriNotSetYet
 
 val disambiguate_nterm :
  #status as 'status ->
- NCic.term option -> NCic.context -> NCic.metasenv -> NCic.substitution ->
+ NCic.term NCicRefiner.expected_type -> NCic.context -> NCic.metasenv -> NCic.substitution ->
  NotationPt.term Disambiguate.disambiguator_input ->
    NCic.metasenv * NCic.substitution * 'status * NCic.term
 

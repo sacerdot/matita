@@ -116,13 +116,13 @@ qed.
 
 theorem pl_sred_mono: ∀p. singlevalued … (pl_sred p).
 #p #M #N1 #H elim H -p -M -N1
-[ #B #A #N2 #H elim (pl_sred_inv_nil … H ?) -H //
+[ #B #A #N2 #H elim (pl_sred_inv_nil … H …) -H //
   #D #C #H #HN2 destruct //
-| #p #A1 #A2 #_ #IHA12 #N2 #H elim (pl_sred_inv_rc … H ??) -H [3: // |2: skip ] (**) (* simplify line *)
+| #p #A1 #A2 #_ #IHA12 #N2 #H elim (pl_sred_inv_rc … H …) -H [3: // |2: skip ] (**) (* simplify line *)
   #C1 #C2 #HC12 #H #HN2 destruct /3 width=1/
-| #p #B1 #B2 #A #_ #IHB12 #N2 #H elim (pl_sred_inv_sn … H ??) -H [3: // |2: skip ] (**) (* simplify line *)
+| #p #B1 #B2 #A #_ #IHB12 #N2 #H elim (pl_sred_inv_sn … H …) -H [3: // |2: skip ] (**) (* simplify line *)
   #D1 #D2 #C #HD12 #H #HN2 destruct /3 width=1/
-| #p #B #A1 #A2 #_ #IHA12 #N2 #H elim (pl_sred_inv_dx … H ??) -H [3: // |2: skip ] (**) (* simplify line *)
+| #p #B #A1 #A2 #_ #IHA12 #N2 #H elim (pl_sred_inv_dx … H …) -H [3: // |2: skip ] (**) (* simplify line *)
   #D #C1 #C2 #HC12 #H #HN2 destruct /3 width=1/
 ]
 qed-.

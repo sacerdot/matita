@@ -133,7 +133,7 @@ let src_tgt_cpos_arity_of_ty_id_src_tgt status ty id src tgt =
            (try 
             let metasenv,subst,status,src =
               GrafiteDisambiguate.disambiguate_nterm 
-                status None ctx [] [] ("",0,src) in
+                status `XTSort ctx [] [] ("",0,src) in
             let src = NCicUntrusted.apply_subst status subst [] src in
             (* CHECK that the declared pattern matches the abstraction *)
             let _ = NCicUnification.unify status metasenv subst ctx ty src in
@@ -154,7 +154,7 @@ disambiguation error")))
   let status, tgt, arity = 
     let metasenv,subst,status,tgt =
       GrafiteDisambiguate.disambiguate_nterm 
-        status None [] [] [] ("",0,tgt) in
+        status `XTSort [] [] [] ("",0,tgt) in
     let tgt = NCicUntrusted.apply_subst status subst [] tgt in
     (* CHECK che sia unificabile mancante *)
     let rec count_prod = function
@@ -321,11 +321,11 @@ let basic_eval_and_record_ncoercion_from_t_cpos_arity
 
 let eval_ncoercion (status: #GrafiteTypes.status) name compose t ty (id,src) tgt = 
  let metasenv,subst,status,ty =
-  GrafiteDisambiguate.disambiguate_nterm status None [] [] [] ("",0,ty) in
+  GrafiteDisambiguate.disambiguate_nterm status `XTSort [] [] [] ("",0,ty) in
  assert (metasenv=[]);
  let ty = NCicUntrusted.apply_subst status subst [] ty in
  let metasenv,subst,status,t =
-  GrafiteDisambiguate.disambiguate_nterm status (Some ty) [] [] [] ("",0,t) in
+  GrafiteDisambiguate.disambiguate_nterm status (`XTSome ty) [] [] [] ("",0,t) in
  assert (metasenv=[]);
  let t = NCicUntrusted.apply_subst status subst [] t in
  let status, src, tgt, cpos, arity = 

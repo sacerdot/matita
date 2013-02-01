@@ -233,6 +233,31 @@ let rec sortfy status exc metasenv subst context t =
  in
   metasenv,subst,t
 
+let indfy status exc metasenv subst context t =
+ let t = NCicReduction.whd status ~subst context t in
+ let metasenv,subst =
+  match t with
+   | NCic.Const (Ref.Ref (_, Ref.Ind _))
+   | NCic.Appl (NCic.Const (Ref.Ref (_, Ref.Ind _))::_) -> metasenv, subst
+(*
+   | NCic.Meta (n,_) -> 
+      let attrs, context, ty = NCicUtils.lookup_meta n metasenv in
+      let kind = NCicUntrusted.kind_of_meta attrs in
+       if kind = `IsSort then
+        metasenv,subst
+       else
+        (match ty with
+          | NCic.Implicit (`Typeof _) ->
+              metasenv_to_subst n (`IsSort,[],ty) metasenv subst
+          | ty ->
+             let metasenv,subst,ty = sortfy status exc metasenv subst context ty in
+              metasenv_to_subst n (`IsSort,[],ty) metasenv subst)
+*)
+   | NCic.Implicit _ -> assert false
+   | _ -> raise exc
+ in
+  metasenv,subst,t
+
 let tipify status exc metasenv subst context t ty =
  let is_type attrs =
   match NCicUntrusted.kind_of_meta attrs with
