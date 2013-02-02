@@ -209,8 +209,12 @@ let apply_subst status ?(fix_projections=false) subst context t =
                    apply_subst subst () (NCicSubstitution.lift status n t)) l))))
   | t -> NCicUtils.map status (fun _ () -> ()) () (apply_subst subst) t
  in
- (if fix_projections then fire_projection_redex status () else fun x -> x)
-    (clean_or_fix_dependent_abstrations status context (apply_subst subst () t))
+  let t = apply_subst subst () t in
+  let t = clean_or_fix_dependent_abstrations status context t in
+  if fix_projections then
+   fire_projection_redex status () t
+  else
+   t
 ;;
 
 let apply_subst_context status ~fix_projections subst context =
