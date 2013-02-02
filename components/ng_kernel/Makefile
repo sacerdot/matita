@@ -10,8 +10,7 @@ INTERFACE_FILES = \
 	nCicReduction.mli \
 	nCicTypeChecker.mli \
 	nCicUntrusted.mli \
-	nCicPp.mli \
-	nCicExtraction.mli
+	nCicPp.mli
 
 IMPLEMENTATION_FILES = \
   nCic.ml $(INTERFACE_FILES:%.mli=%.ml)

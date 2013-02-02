@@ -39,6 +39,7 @@ class virtual status :
    inherit NCicLibrary.dumpable_status
    inherit NCicLibrary.status
    inherit NCicExtraction.status
+   inherit OcamlExtractionTable.status
    inherit GrafiteParser.status
    inherit TermContentPres.status
    method baseuri: string

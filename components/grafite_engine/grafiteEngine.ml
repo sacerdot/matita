@@ -286,6 +286,15 @@ let basic_extract_obj obj status =
   | exn -> prerr_endline ("EXTRACTION FAILURE: " ^ Printexc.to_string exn); assert false
 ;;
 
+let basic_extract_ocaml_obj obj status =
+ try
+  let status  = OcamlExtraction.print_ocaml_of_obj status obj in
+  let infos,status = status#get_info in
+   status,infos
+ with
+  exn -> prerr_endline ("EXTRACTION FAILURE: " ^ Printexc.to_string exn); assert false
+;;
+
 let inject_extract_obj =
  let basic_extract_obj info
    ~refresh_uri_in_universe ~refresh_uri_in_term ~refresh_uri_in_reference
@@ -298,9 +307,26 @@ let inject_extract_obj =
   GrafiteTypes.Serializer.register#run "extraction" basic_extract_obj
 ;;
 
+let inject_extract_ocaml_obj =
+ let basic_extract_ocaml_obj info
+   ~refresh_uri_in_universe ~refresh_uri_in_term ~refresh_uri_in_reference
+   ~alias_only status
+ =
+  let info= OcamlExtractionTable.refresh_uri_in_info ~refresh_uri_in_reference ~refresh_uri:NCicLibrary.refresh_uri info in
+   status#set_ocaml_extraction_db
+    (OcamlExtractionTable.register_infos status#ocaml_extraction_db info)
+ in
+  GrafiteTypes.Serializer.register#run "ocaml_extraction" basic_extract_ocaml_obj
+;;
+
 let eval_extract_obj status obj = 
  let status,infos = basic_extract_obj obj status in
   NCicLibrary.dump_obj status (inject_extract_obj infos)
+;;
+
+let eval_extract_ocaml_obj status obj = 
+ let status,infos = basic_extract_ocaml_obj obj status in
+  NCicLibrary.dump_obj status (inject_extract_ocaml_obj infos)
 ;;
 
 (*
@@ -532,8 +558,11 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
      let baseuri = NUri.uri_of_string baseuri in
      (* MATITA 1.0: keep WithoutPreferences? *)
      let alias_only = (mode = GrafiteAst.OnlyPreferences) in
+     let status =
       GrafiteTypes.Serializer.require
-       ~alias_only ~baseuri ~fname:fullpath status
+       ~alias_only ~baseuri ~fname:fullpath status in
+     OcamlExtraction.print_open status
+      (NCicLibrary.get_transitively_included status)
   | GrafiteAst.UnificationHint (loc, t, n) -> eval_unification_hint status t n
   | GrafiteAst.NCoercion (loc, name, compose, None) ->
      let status, t, ty, source, target =
@@ -611,6 +640,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
         let old_status = status in
         let status = NCicLibrary.add_obj status obj in
         let status = eval_extract_obj status obj in
+        let status = eval_extract_ocaml_obj status obj in
        (try
         let index_obj = index &&
          match obj_kind with
@@ -782,7 +812,8 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
                   List.fold_left
                    (fun status uri ->
                      let obj = NCicEnvironment.get_checked_obj status uri in
-                      eval_extract_obj status obj
+                      let status = eval_extract_obj status obj in
+                       eval_extract_ocaml_obj status obj
                    ) status nuris
                  in
                   eval_alias status (mode,aliases)

@@ -13,6 +13,7 @@ MODULES =			\
 	thread			\
 	logger			\
 	ng_kernel		\
+        ng_extraction           \
 	getter			\
 	library			\
 	content		        \

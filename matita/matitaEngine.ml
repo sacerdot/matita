@@ -112,32 +112,19 @@ let pp_times ss fname rc big_bang big_bang_u big_bang_s =
     HLog.message ("Compilation of "^Filename.basename fname^": "^rc)
 ;;
 
-let activate_extraction baseuri fname =
-  ()
-  (* MATITA 1.0
- if Helm_registry.get_bool "matita.extract" then
-  let mangled_baseuri =
-   let baseuri = String.sub baseuri 5 (String.length baseuri - 5) in
-     let baseuri = Pcre.replace ~pat:"/" ~templ:"_" baseuri in
-      String.uncapitalize baseuri in
-  let f =
-    open_out
-     (Filename.dirname fname ^ "/" ^ mangled_baseuri ^ ".ml") in
-   LibrarySync.add_object_declaration_hook
-    (fun ~add_obj ~add_coercion _ obj ->
-      output_string f (CicExportation.ppobj baseuri obj);
-      flush f; []);
-      *)
-;;
-
-
 let eval_ast ~include_paths ?do_heavy_checks status (text,prefix_len,ast) =
  let baseuri = status#baseuri in
  let new_aliases,new_status =
   GrafiteDisambiguate.eval_with_new_aliases status
    (fun status ->
+   let time0 = Unix.gettimeofday () in
+   let status =
      GrafiteEngine.eval_ast ~include_paths ?do_heavy_checks status
-      (text,prefix_len,ast)) in
+      (text,prefix_len,ast) in
+   let time1 = Unix.gettimeofday () in
+   HLog.debug ("... grafite_engine done in " ^ string_of_float (time1 -. time0) ^ "s");
+   status
+   ) in
  let _,intermediate_states = 
   List.fold_left
    (fun (status,acc) (k,value) -> 
@@ -252,9 +239,14 @@ and compile ~compiling ~asserted ~include_paths fname =
   let root,baseuri,fname,_tgt = 
     Librarian.baseuri_of_script ~include_paths fname in
   if Http_getter_storage.is_read_only baseuri then assert false;
-  activate_extraction baseuri fname ;
   (* MATITA 1.0: debbo fare time_travel sulla ng_library? *)
   let status = new status baseuri in
+  let ocamldirname = Filename.dirname fname in
+  let ocamlfname = Filename.chop_extension (Filename.basename fname) in
+  let status,ocamlfname =
+   Common.modname_of_filename status false ocamlfname in
+  let ocamlfname = ocamldirname ^ "/" ^ ocamlfname ^ ".ml" in
+  let status = OcamlExtractionTable.open_file status ~baseuri ocamlfname in
   let big_bang = Unix.gettimeofday () in
   let { Unix.tms_utime = big_bang_u ; Unix.tms_stime = big_bang_s} = 
     Unix.times () 
@@ -296,6 +288,7 @@ and compile ~compiling ~asserted ~include_paths fname =
     in
     let asserted, status =
      eval_from_stream ~compiling ~asserted ~include_paths status buf print_cb in
+    let status = OcamlExtractionTable.close_file status in
     let elapsed = Unix.time () -. time in
      (if Helm_registry.get_bool "matita.moo" then begin
        GrafiteTypes.Serializer.serialize ~baseuri:(NUri.uri_of_string baseuri)
