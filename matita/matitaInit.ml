@@ -199,6 +199,9 @@ let parse_cmdline init_status =
           (Printf.sprintf ("<filename> Read configuration from filename"
              ^^ "\n    Default: %s")
             BuildTimeConf.matita_conf);
+        "-extract_ocaml", 
+          Arg.Unit (fun () -> Helm_registry.set_bool "extract_ocaml" true),
+          "Extract ocaml code";
         "-force",
             Arg.Unit (fun () -> Helm_registry.set_bool "matita.force" true),
             ("Force actions that would not be executed per default");
