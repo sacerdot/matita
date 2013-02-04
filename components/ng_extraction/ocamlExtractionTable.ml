@@ -249,6 +249,8 @@ let close_file status =
  match ch with
     None -> assert false
   | Some ch ->
+     Format.pp_print_flush (snd (fst ch)) ();
+     Format.pp_print_flush (snd (snd ch)) ();
      close_out (fst (fst ch));
      close_out (fst (snd ch));
      let ch = None in
