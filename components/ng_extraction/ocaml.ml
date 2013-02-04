@@ -560,15 +560,16 @@ let pp_ind status co ind =
           status, pp_logical_ind p ++ res
 	else
 	  let s = !init in
-          let status,res =
-	    pp_one_ind
-	      status prefix p.ip_vars names.(i) cnames.(i) p.ip_types in
-          let status,res2 = pp status (i+1) in
 	  begin
 	    init := (fnl () ++ str "and ");
-            status,
-	    s ++
-	    (if co then pp_coind p.ip_vars names.(i) else mt ()) ++ res ++ res2
+            let status,res =
+	      pp_one_ind
+	        status prefix p.ip_vars names.(i) cnames.(i) p.ip_types in
+            let status,res2 = pp status (i+1) in
+              status,
+	      s ++
+	      (if co then pp_coind p.ip_vars names.(i) else mt ()) ++
+              res ++ res2
 	  end
       end
   in
