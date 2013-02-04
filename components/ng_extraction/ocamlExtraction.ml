@@ -18,8 +18,9 @@ let print_ocaml_of_obj0 status ((_uri,_,_,_,_) as obj) =
       status,()) res in
   status
  with
-  HExtlib.Localized (_,exn) ->
-   prerr_endline (Printexc.to_string exn); assert false
+    HExtlib.Localized (_,exn)
+  | exn ->
+     prerr_endline (Printexc.to_string exn); assert false
 
 let do_if_ocaml_set f status =
  if try ignore (Helm_registry.get "extract_ocaml"); true
