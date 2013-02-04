@@ -16,4 +16,4 @@ open OcamlExtractionTable
 
 val extract:
  #OcamlExtractionTable.status as 'status -> NCic.obj ->
-  'status * ml_decl option * ml_spec list
+  'status * ml_decl list * ml_spec list

@@ -10,15 +10,13 @@ let print_ocaml_of_obj0 status ((_uri,_,_,_,_) as obj) =
       let status,cmds = Ocaml.pp_spec status ml in
       print_ppcmds ~in_ml:false status (cmds ++ fnl () ++ fnl ());
       status,()) resl in
-  match res with
-     None ->
-(*    print_ppcmds status
-       (str("(* " ^ NUri.string_of_uri uri ^ " non informative *)\n")++ fnl ());*)
-      status
-   | Some ml ->
-      let status,std_ppcmds = Ocaml.pp_decl status ml in
-      print_ppcmds status ~in_ml:true (std_ppcmds ++ fnl ());
-      status
+  let status,_ =
+   map_status status
+    (fun status ml ->
+      let status,cmds = Ocaml.pp_decl status ml in
+      print_ppcmds ~in_ml:true status (cmds ++ fnl ());
+      status,()) res in
+  status
  with
   HExtlib.Localized (_,exn) ->
    prerr_endline (Printexc.to_string exn); assert false

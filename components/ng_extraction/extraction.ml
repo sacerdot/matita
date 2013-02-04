@@ -1151,22 +1151,34 @@ let extract_fixpoint status uri height fix_or_cofix is_projection ifl =
      confirm_projection status ref
    else
     status in
-  let ti,ci,n,vkn= extract_fixpoint_common uri height fix_or_cofix ifl in
-  let types = Array.make n (Tdummy Kother)
-  and terms = Array.make n MLdummy in
+  let ti,ci,_,vkn= extract_fixpoint_common uri height fix_or_cofix ifl in
   current_fixpoints := Some uri;
-  let status = ref status in
-  for i = 0 to n-1 do
-    if sort_of !status [] ti.(i) <> InProp then begin
-      let status',e,t = extract_std_constant !status vkn.(i) ci.(i) ti.(i) in
-      status := status';
-      terms.(i) <- e;
-      types.(i) <- t;
-    end
-  done;
-  let status = !status in
+  let status,res = array_mapi_status status
+   (fun status i _ ->
+     let _,head = split_all_prods status ~subst:[] [] ti.(i) in
+     match head with
+        NCic.Sort _ ->
+         (*let n = type_scheme_nb_args status [] typ in*)
+         (*let ids = iterate (fun l -> anonymous_name::l) n [] in*)
+         let ids = [] in
+         status,`Type (Dtype (vkn.(i), ids, Tunknown))
+      | _ ->
+        if sort_of status [] ti.(i) <> InProp then
+         let status,e,t = extract_std_constant status vkn.(i) ci.(i) ti.(i) in
+          status,`Some (e,t)
+        else
+          status,`None
+   ) ti in
+  let axioms,terms,types =
+   Array.fold_right
+    (fun x ((axioms,terms,types) as res) ->
+      match x with
+         `None -> res
+       | `Some (t,ty) -> axioms,t::terms,ty::types
+       | `Type decl -> decl::axioms,terms,types
+    ) res ([],[],[]) in
   current_fixpoints := None;
-  status,Dfix (vkn, terms, types)
+  status,axioms @ [Dfix (vkn, Array.of_list terms, Array.of_list types)]
 
 let extract_fixpoint_spec status uri height fix_or_cofix ifl =
   let ti,_,_,vkn= extract_fixpoint_common uri height fix_or_cofix ifl in
@@ -1277,17 +1289,18 @@ let extract_impl status (uri,height,metasenv,subst,obj_kind) =
          | Some _ -> NReference.Def height
        in NReference.reference_of_spec uri spec
       in
-       extract_constant status r bo typ
+      let status,res = extract_constant status r bo typ in
+       status,[res]
    | NCic.Inductive (inductive,leftno,types,(_,ind_pragma)) ->
       let status,res =
        extract_inductive status uri inductive ind_pragma leftno types
       in
-       status,Dind res
+       status,[Dind res]
    | NCic.Fixpoint (fix_or_cofix,ifl,(_,_,def_pragma)) ->
       extract_fixpoint status uri height fix_or_cofix
        (def_pragma = `Projection) ifl
  in
-  status, if logical_decl decl then None else Some decl
+  status, List.filter (fun decl -> not (logical_decl decl)) decl
 ;;
 
 let extract_spec status (uri,height,metasenv,subst,obj_kind) =
