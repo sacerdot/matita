@@ -324,12 +324,12 @@ definition R_mte_step_true ≝ λalpha,D,t1,t2.
 definition R_mte_step_false ≝ λalpha.λt1,t2:tape alpha.
   current ? t1 = None ? ∧ t1 = t2.
 
-definition mte2 : ∀alpha,D.states ? (mte_step alpha D) ≝ 
+definition mte_acc : ∀alpha,D.states ? (mte_step alpha D) ≝ 
 λalpha,D.(inr … (inl … (inr … start_nop))).
   
 lemma sem_mte_step :
   ∀alpha,D.mte_step alpha D ⊨ 
-   [ mte2 … : R_mte_step_true alpha D, R_mte_step_false alpha ] .
+   [ mte_acc … : R_mte_step_true alpha D, R_mte_step_false alpha ] .
 #alpha #D #ta
 @(acc_sem_if_app ??????????? (sem_test_null …) 
   (sem_move_single …) (sem_nop alpha) ??)
@@ -342,7 +342,7 @@ lemma sem_mte_step :
 | #tb #tc #td * #Hcurtb #Htb whd in ⊢ (%→?); #Htc whd % // ]
 qed.
 
-definition move_to_end ≝ λsig,D.whileTM sig (mte_step sig D) (mte2 …).
+definition move_to_end ≝ λsig,D.whileTM sig (mte_step sig D) (mte_acc …).
 
 definition R_move_to_end_r ≝ 
   λsig,int,outt.
