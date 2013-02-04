@@ -14,7 +14,7 @@ let print_ocaml_of_obj0 status ((_uri,_,_,_,_) as obj) =
    map_status status
     (fun status ml ->
       let status,cmds = Ocaml.pp_decl status ml in
-      print_ppcmds ~in_ml:true status (cmds ++ fnl ());
+      print_ppcmds ~in_ml:true status (cmds ++ fnl () ++ fnl ());
       status,()) res in
   status
  with

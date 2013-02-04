@@ -32,8 +32,6 @@ let pr_binding = function
 
 let fnl () = stras (1000000,"") ++ fnl ()
 
-let fnl2 () = fnl () ++ fnl ()
-
 let space_if = function true -> str " " | false -> mt ()
 
 let is_invalid_id s =

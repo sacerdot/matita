@@ -438,7 +438,7 @@ and pp_fix status par env i (ids,bl) args =
 let pp_val status e typ =
  let status,res = pp_type status false [] typ in
   status,
-  hov 4 (str "(** val " ++ e ++ str " :" ++ spc ()++res++ str " **)") ++ fnl2 ()
+  hov 4 (str "(** val " ++ e ++ str " :" ++ spc ()++res++ str " **)") ++ fnl ()
 
 (*s Pretty-printing of [Dfix] *)
 
@@ -461,7 +461,7 @@ let pp_Dfix status (rv,c,t) =
         let status,res = pp_val status names.(i) t.(i) in
         let status,res2 = pp status false (i+1) in
         status,
-	(if init then mt () else fnl2 ()) ++ res ++
+	(if init then mt () else fnl ()) ++ res ++
 	str (if init then "let rec " else "and ") ++ names.(i) ++ def ++ res2
   in pp status true 0
 

@@ -19,7 +19,6 @@ open OcamlExtractionTable
     we attach a big virtual size to [fnl] newlines. *)
 
 val fnl : unit -> std_ppcmds
-val fnl2 : unit -> std_ppcmds
 val space_if : bool -> std_ppcmds
 
 val pp_par : bool -> std_ppcmds -> std_ppcmds
