@@ -41,6 +41,7 @@ let print_open status uris =
      List.map (fun uri -> Filename.basename (NUri.string_of_uri uri)) uris in
     let status,cmds = map_status status Ocaml.pp_open fnames in
     List.iter (print_ppcmds status ~in_ml:true) cmds;
+    let status,cmds = map_status status Ocaml.pp_open fnames in
     List.iter (print_ppcmds status ~in_ml:false) cmds;
     status
   ) status
