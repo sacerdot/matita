@@ -67,39 +67,46 @@ cases (acc_sem_inject … Hin (sem_test_null alpha) int)
   | @(eq_vec … (niltape ?)) #i0 #Hi0 cases (decidable_eq_nat i0 i) // 
     #Hi0i @sym_eq @Hnth_j @sym_not_eq // ] ] 
 qed.
+
 (* move a single tape *)
-definition mmove_states ≝ initN 2.
+definition smove_states ≝ initN 2.
 
-definition mmove0 : mmove_states ≝ mk_Sig ?? 0 (leb_true_to_le 1 2 (refl …)).
-definition mmove1 : mmove_states ≝ mk_Sig ?? 1 (leb_true_to_le 2 2 (refl …)).
+definition smove0 : smove_states ≝ mk_Sig ?? 0 (leb_true_to_le 1 2 (refl …)).
+definition smove1 : smove_states ≝ mk_Sig ?? 1 (leb_true_to_le 2 2 (refl …)).
 
-definition trans_mmove ≝ 
- λi,sig,n,D.
- λp:mmove_states × (Vector (option sig) (S n)).
+definition trans_smove ≝ 
+ λsig,D.
+ λp:smove_states × (option sig).
  let 〈q,a〉 ≝ p in match (pi1 … q) with
- [ O ⇒ 〈mmove1,change_vec ? (S n) (null_action ? n) (〈None ?,D〉) i〉
- | S _ ⇒ 〈mmove1,null_action sig n〉 ].
+ [ O ⇒ 〈smove1,None sig, D〉
+ | S _ ⇒ 〈smove1,None sig, N〉 ].
 
-definition mmove ≝ 
-  λi,sig,n,D.
-  mk_mTM sig n mmove_states (trans_mmove i sig n D) 
-    mmove0 (λq.q == mmove1).
-    
+definition move ≝ 
+  λsig,D.mk_TM sig smove_states (trans_smove sig D) smove0 (λq.q == smove1).
+
+definition mmove ≝ λi,sig,n,D.inject_TM sig (move sig D) n i.
+
+definition Rmove ≝ 
+  λalpha,D,t1,t2. t2 = tape_move alpha t1 D.
+
+lemma sem_move_single :
+  ∀alpha,D.move alpha D ⊨ Rmove alpha D.
+#alpha #D #int %{2} %{(mk_config ? smove_states smove1 ?)} [| % % ]
+qed.
+
 definition Rm_multi ≝ 
   λalpha,n,i,D.λt1,t2:Vector ? (S n).
   t2 = change_vec ? (S n) t1 (tape_move alpha (nth i ? t1 (niltape ?)) D) i.
-   
+
 lemma sem_move_multi :
   ∀alpha,n,i,D.i ≤ n → 
   mmove i alpha n D ⊨ Rm_multi alpha n i D.
-#alpha #n #i #D #Hin #int %{2}
-%{(mk_mconfig ? mmove_states n mmove1 ?)} 
-[| %
- [ whd in ⊢ (??%?); @eq_f whd in ⊢ (??%?); @eq_f %
- | whd >tape_move_multi_def
-   <(change_vec_same … (ctapes …) i (niltape ?))
-   >pmap_change <tape_move_multi_def >tape_move_null_action % ] ]
- qed.
+#alpha #n #i #D #Hin #ta cases (sem_inject … Hin (sem_move_single alpha D) ta)
+#k * #outc * #Hloop * whd in ⊢ (%→?); #Htb1 #Htb2 %{k} %{outc} % [ @Hloop ]
+whd @(eq_vec … (niltape ?)) #i0 #Hi0 cases (decidable_eq_nat i0 i) #Hi0i
+[ >Hi0i >Htb1 >nth_change_vec //
+| >nth_change_vec_neq [|@sym_not_eq //] <Htb2 // @sym_not_eq // ]
+qed.
 
 (* simple copy with no move *)
 definition copy_states ≝ initN 3.

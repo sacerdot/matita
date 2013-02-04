@@ -13,6 +13,8 @@ include "turing/turing.ma".
 include "turing/inject.ma".
 include "turing/while_multi.ma".
 include "turing/while_machine.ma".
+include "turing/simple_machines.ma".
+include "turing/if_machine.ma".
 
 definition parmove_states ≝ initN 3.
 
@@ -311,22 +313,10 @@ qed.
         else nop
      }
  *)
- 
-definition mte_states ≝ initN 3.
-definition mte0 : mte_states ≝ mk_Sig ?? 0 (leb_true_to_le 1 3 (refl …)).
-definition mte1 : mte_states ≝ mk_Sig ?? 1 (leb_true_to_le 2 3 (refl …)).
-definition mte2 : mte_states ≝ mk_Sig ?? 2 (leb_true_to_le 3 3 (refl …)).
 
-definition mte_step ≝ 
-  λalpha:FinSet.λD.mk_TM alpha mte_states
-  (λp.let 〈q,a〉 ≝ p in
-    match a with
-    [ None ⇒ 〈mte1,None ?,N〉
-    | Some a' ⇒ match (pi1 … q) with
-      [ O ⇒ 〈mte2,Some ? a',D〉
-      | S q ⇒ 〈mte2,None ?,N〉 ] ])
-  mte0 (λq.q == mte1 ∨ q == mte2).
-  
+definition mte_step ≝ λalpha,D.
+ifTM ? (test_null alpha) (single_finalTM ? (move alpha D)) (nop ?) tc_true.
+ 
 definition R_mte_step_true ≝ λalpha,D,t1,t2.
   ∃ls,c,rs.
     t1 = midtape alpha ls c rs ∧ t2 = tape_move ? t1 D.
@@ -334,21 +324,25 @@ definition R_mte_step_true ≝ λalpha,D,t1,t2.
 definition R_mte_step_false ≝ λalpha.λt1,t2:tape alpha.
   current ? t1 = None ? ∧ t1 = t2.
 
+definition mte2 : ∀alpha,D.states ? (mte_step alpha D) ≝ 
+λalpha,D.(inr … (inl … (inr … start_nop))).
+  
 lemma sem_mte_step :
-  ∀alpha,D.mte_step alpha D ⊨ [ mte2 : R_mte_step_true alpha D, R_mte_step_false alpha ] .
-#alpha #D #intape @(ex_intro ?? 2) cases intape
-[ @ex_intro
-  [| % [ % [ % | normalize #H destruct ] | #_ % // ] ]
-|#a #al @ex_intro
-  [| % [ % [ % | normalize #H destruct ] | #_ % // ] ]
-|#a #al @ex_intro
-  [| % [ % [ % | normalize #H destruct ] | #_ % // ] ]
-| #ls #c #rs
-  @ex_intro [| % [ % [ % | #_ %{ls} %{c} %{rs} % // ]
-                     | normalize in ⊢ (?(??%?)→?); * #H @False_ind /2/ ] ] ]
+  ∀alpha,D.mte_step alpha D ⊨ 
+   [ mte2 … : R_mte_step_true alpha D, R_mte_step_false alpha ] .
+#alpha #D #ta
+@(acc_sem_if_app ??????????? (sem_test_null …) 
+  (sem_move_single …) (sem_nop alpha) ??)
+[ #tb #tc #td * #Hcurtb
+  lapply (refl ? (current ? tb)) cases (current ? tb) in ⊢ (???%→?);
+  [ #H @False_ind >H in Hcurtb; * /2/ ]
+  -Hcurtb #c #Hcurtb #Htb whd in ⊢ (%→?); #Htc whd
+  cases (current_to_midtape … Hcurtb) #ls * #rs #Hmidtb 
+  %{ls} %{c} %{rs} % //
+| #tb #tc #td * #Hcurtb #Htb whd in ⊢ (%→?); #Htc whd % // ]
 qed.
 
-definition move_to_end ≝ λsig,D.whileTM sig (mte_step sig D) mte2.
+definition move_to_end ≝ λsig,D.whileTM sig (mte_step sig D) (mte2 …).
 
 definition R_move_to_end_r ≝ 
   λsig,int,outt.
