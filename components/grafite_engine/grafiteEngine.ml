@@ -882,7 +882,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
       else
         let status = status#set_ng_mode `ProofMode in
         let metasenv,subst,status,indty =
-          GrafiteDisambiguate.disambiguate_nterm status `XTSort [] [] [] (text,prefix_len,indty) in
+          GrafiteDisambiguate.disambiguate_nterm status `XTNone [] [] [] (text,prefix_len,indty) in
         let indtyno, (_,_,tys,_,_),leftno = match indty with
             NCic.Const ((NReference.Ref (_,NReference.Ind (_,indtyno,leftno))) as r) ->
               indtyno, NCicEnvironment.get_checked_indtys status r, leftno
