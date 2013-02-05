@@ -246,7 +246,7 @@ and compile ~compiling ~asserted ~include_paths fname =
   let status,ocamlfname =
    Common.modname_of_filename status false ocamlfname in
   let ocamlfname = ocamldirname ^ "/" ^ ocamlfname ^ ".ml" in
-  let status = OcamlExtractionTable.open_file status ~baseuri ocamlfname in
+  let status = OcamlExtraction.open_file status ~baseuri ocamlfname in
   let big_bang = Unix.gettimeofday () in
   let { Unix.tms_utime = big_bang_u ; Unix.tms_stime = big_bang_s} = 
     Unix.times () 
@@ -288,7 +288,7 @@ and compile ~compiling ~asserted ~include_paths fname =
     in
     let asserted, status =
      eval_from_stream ~compiling ~asserted ~include_paths status buf print_cb in
-    let status = OcamlExtractionTable.close_file status in
+    let status = OcamlExtraction.close_file status in
     let elapsed = Unix.time () -. time in
      (if Helm_registry.get_bool "matita.moo" then begin
        GrafiteTypes.Serializer.serialize ~baseuri:(NUri.uri_of_string baseuri)
