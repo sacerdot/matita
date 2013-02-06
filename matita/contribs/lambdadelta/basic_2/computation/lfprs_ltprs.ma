@@ -12,18 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unfold/ltpss_sn_ltpss_sn.ma".
-include "basic_2/reducibility/cpr.ma".
-include "basic_2/reducibility/lfpr.ma".
+include "basic_2/computation/ltprs.ma".
+include "basic_2/computation/lfprs.ma".
 
-(* FOCALIZED PARALLEL REDUCTION FOR LOCAL ENVIRONMENTS **********************)
+(* FOCALIZED PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS *********************)
 
-(* Advanced properties ******************************************************)
+(* Properties on context-free parallel computation for local environments ***)
 
-lemma lfpr_pair_cpr: ∀L1,L2. ⦃L1⦄ ➡ ⦃L2⦄ → ∀V1,V2. L2 ⊢ V1 ➡ V2 →
-                     ∀I. ⦃L1. ⓑ{I} V1⦄ ➡ ⦃L2. ⓑ{I} V2⦄.
-#L1 #L2 * #L #HL1 #HL2 #V1 #V2 *
-<(ltpss_sn_fwd_length … HL2) #V #HV1 #HV2 #I
-lapply (ltpss_sn_tpss_trans_eq … HV2 … HL2) -HV2 #V2
-@(ex2_intro … (L.ⓑ{I}V)) /2 width=1/ (**) (* explicit constructor *)
-qed.
+lemma ltprs_lfprs: ∀L1,L2. L1 ➡* L2 → ⦃L1⦄ ➡* ⦃L2⦄.
+/3 width=3/ qed.

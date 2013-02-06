@@ -40,7 +40,7 @@ let check () =
    Hashtbl.iter iter graph 
 
 let rec read ich = 
-   let _ = Scanf.fscanf ich "./%s@:include \"%s@\". " init in
+   let _ = Scanf.fscanf ich "%s@:include \"%s@\". " init in
    read ich
    
 let _ =

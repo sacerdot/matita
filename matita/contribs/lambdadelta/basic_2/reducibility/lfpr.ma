@@ -34,6 +34,9 @@ lemma lfpr_refl: ∀L. ⦃L⦄ ➡ ⦃L⦄.
 lemma ltpss_sn_lfpr: ∀L1,L2,d,e. L1 ⊢ ▶* [d, e] L2 → ⦃L1⦄ ➡ ⦃L2⦄.
 /3 width=5/ qed.
 
+lemma ltpr_lfpr: ∀L1,L2. L1 ➡ L2 → ⦃L1⦄ ➡ ⦃L2⦄.
+/3 width=3/ qed.
+
 (* Basic inversion lemmas ***************************************************)
 
 lemma lfpr_inv_atom1: ∀L2. ⦃⋆⦄ ➡ ⦃L2⦄ → L2 = ⋆.

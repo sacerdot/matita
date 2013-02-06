@@ -205,6 +205,15 @@ lemma tpr_inv_lref2: ∀T1,i. T1 ➡ #i →
 
 (* Basic forward lemmas *****************************************************)
 
+lemma tpr_fwd_bind1_minus: ∀I,V1,T1,T. -ⓑ{I}V1.T1 ➡ T → ∀b.
+                           ∃∃V2,T2. ⓑ{b,I}V1.T1 ➡ ⓑ{b,I}V2.T2 &
+                                    T = -ⓑ{I}V2.T2.
+#I #V1 #T1 #T #H #b elim (tpr_inv_bind1 … H) -H *
+[ #V2 #T0 #T2 #HV12 #HT10 #HT02 #H destruct /3 width=4/
+| #T2 #_ #_ #H destruct
+]
+qed-.
+
 lemma tpr_fwd_shift1: ∀L1,T1,T. L1 @@ T1 ➡ T →
                       ∃∃L2,T2. |L1| = |L2| & T = L2 @@ T2.
 #L1 @(lenv_ind_dx … L1) -L1 normalize

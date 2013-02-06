@@ -12,15 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
+
 include "basic_2/reducibility/ltpr.ma".
 include "basic_2/computation/xprs_lift.ma".
 include "basic_2/equivalence/cpcs_cpcs.ma".
 include "basic_2/equivalence/lsubse_ssta.ma".
-include "basic_2/equivalence/fpcs.ma".
+include "basic_2/equivalence/fpcs_cpcs.ma".
+include "basic_2/equivalence/fpcs_fpcs.ma".
 include "basic_2/dynamic/snv_ssta.ma".
 (*
 include "basic_2/static/ssta_ltpss_dx.ma".
-include "basic_2/equivalence/fpcs_fpcs.ma".
 include "basic_2/dynamic/snv_lift.ma".
 *)
 (* STRATIFIED NATIVE VALIDITY FOR TERMS *************************************)
@@ -67,10 +68,15 @@ fact ssta_ltpr_tpr_aux: ∀h,g,n. (
     elim (IH1 … HVW1 … HL12 … HV12) -HVW1 // -HV1 #W2 #HVW2 #HW12
     elim (IH1 … HWV … HL12 W) -HWV // -HW #V0 #HWV0 #_
     elim (IH1 … HTU2 (L2.ⓛW) … HT20 HT2) -IH1 -HTU2 -HT20 -HT2 // [2: /2 width=1/ ] #U20 #HTU20 #HU20
+    lapply (lfpr_inv_fpr L1 L2 … W) [ /2 width=1/ ] -HL12 #HL12
     elim (lsubse_ssta_trans … HTU20 (L2.ⓓV2) ?) -HTU20
-    [ #U #HTU20 #HU20 -HWV0 -HL12 -W1 -W2 
-      @(ex2_intro … (ⓓ{b}V2.U)) [ /2 width=1/ ] -T20 -l
-    | @(lsubse_abbr … HVW2) // -g -h -b -l -l1 -V -V0 -V1 -V2 -T2 -T20 -U0 
+    [ #U #HTU20 #HU20 -HWV0 -HL12 -W1 -W2
+      @(ex2_intro … (ⓓ{b}V2.U)) [ /2 width=1/ ] -h -l -l1 -V -V0 -T2 -T20 -U0
+      @(fpcs_fprs_strap2 ? L1 … (ⓓ{b}V2.U2)) [ /4 width=1/ ] -V1
+      @fpcs_shift_full -b
+      @(fpcs_canc_dx ?? (L2.ⓓV2) … U20) [2: /2 width=1/ ] -U
+    | -b -l -V -V1 -T2 -T20 -U0 -U2 -U20
+      /6 width=6 by lsubse_abbr, fpcs_inv_cpcs, fpcs_canc_sn, fpcs_fprs_strap1, cpcs_fpcs, bi_inj/
     ]
   ]
 |   

@@ -17,7 +17,7 @@ include "basic_2/reducibility/cfpr_cpr.ma".
 
 (* FOCALIZED PARALLEL REDUCTION ON LOCAL ENVIRONMENTS ***********************)
 
-(* Inversion lemmas on context-free parallel reduction for closures *********)
+(* Properties on context-free parallel reduction for closures ***************)
 
 lemma fpr_lfpr: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ➡ ⦃L2, T2⦄ → ⦃L1⦄ ➡ ⦃L2⦄.
 #L1 #L2 #T1 #T2 #H

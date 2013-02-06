@@ -25,3 +25,6 @@ lemma lfprs_pair_dx: ∀I,L1,L2. ⦃L1⦄ ➡ ⦃L2⦄ → ∀V1,V2. L2 ⊢ V1 �
 #I #L1 #L2 #HL12 #V1 #V2 #H @(cprs_ind … H) -V2
 /3 width=1/ /3 width=5/
 qed.
+(*
+lamma lfprs_cprs_conf: ∀L1,L,L2,T1,T2. ⦃L1⦄ ➡* ⦃L2⦄ → L1 ⊢ T1 ➡* T2 → ⦃L1, T1⦄ ➡* ⦃L2, T2⦄.
+*)

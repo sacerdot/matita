@@ -12,18 +12,27 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unfold/ltpss_sn_ltpss_sn.ma".
-include "basic_2/reducibility/cpr.ma".
-include "basic_2/reducibility/lfpr.ma".
+include "basic_2/reducibility/lfpr_fpr.ma".
+include "basic_2/computation/fprs_fprs.ma".
+include "basic_2/computation/lfprs.ma".
 
-(* FOCALIZED PARALLEL REDUCTION FOR LOCAL ENVIRONMENTS **********************)
+(* FOCALIZED PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS *********************)
 
-(* Advanced properties ******************************************************)
+(* Inversion lemmas on context-free parallel reduction for closures *********)
 
-lemma lfpr_pair_cpr: ∀L1,L2. ⦃L1⦄ ➡ ⦃L2⦄ → ∀V1,V2. L2 ⊢ V1 ➡ V2 →
-                     ∀I. ⦃L1. ⓑ{I} V1⦄ ➡ ⦃L2. ⓑ{I} V2⦄.
-#L1 #L2 * #L #HL1 #HL2 #V1 #V2 *
-<(ltpss_sn_fwd_length … HL2) #V #HV1 #HV2 #I
-lapply (ltpss_sn_tpss_trans_eq … HV2 … HL2) -HV2 #V2
-@(ex2_intro … (L.ⓑ{I}V)) /2 width=1/ (**) (* explicit constructor *)
+lemma lfprs_inv_fprs: ∀L1,L2. ⦃L1⦄ ➡* ⦃L2⦄ → ∀T. ⦃L1, T⦄ ➡* ⦃L2, T⦄.
+#L1 #L2 #H @(lfprs_ind … H) -L2 //
+#L #L2 #_ #HL2 #IHL1 #T
+lapply (lfpr_inv_fpr … HL2 T) -HL2 /3 width=4/
+qed-.
+
+(* Properties on context-free parallel computation for closures *************)
+
+lemma fprs_lfprs: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ➡* ⦃L2, T2⦄ → ⦃L1⦄ ➡* ⦃L2⦄.
+#L1 #L2 #T1 #T2 #H @(fprs_ind … H) -L2 -T2 // /3 width=5/
+qed.
+
+lemma lfprs_fprs_trans: ∀L1,L,L2,T1,T2. ⦃L1⦄ ➡* ⦃L⦄ → ⦃L, T1⦄ ➡* ⦃L2, T2⦄ → ⦃L1, T1⦄ ➡* ⦃L2, T2⦄.
+#L1 #L #L2 #T1 #T2 #HL1 #HL2
+lapply (lfprs_inv_fprs … HL1 T1) -HL1 /2 width=4/
 qed.

@@ -88,6 +88,14 @@ qed-.
 
 (* Basic forward lemmas *****************************************************)
 
+lemma cpr_fwd_bind1_minus: ∀I,L,V1,T1,T. L ⊢ -ⓑ{I}V1.T1 ➡ T → ∀b.
+                           ∃∃V2,T2. L ⊢ ⓑ{b,I}V1.T1 ➡ ⓑ{b,I}V2.T2 &
+                                    T = -ⓑ{I}V2.T2.
+#I #L #V1 #T1 #T * #X #H1 #H2 #b
+elim (tpr_fwd_bind1_minus … H1 b) -H1 #V0 #T0 #HT10 #H destruct
+elim (tpss_inv_bind1 … H2) -H2 #V2 #T2 #HV02 #HT02 #H destruct /4 width=5/
+qed-.
+
 lemma cpr_fwd_shift1: ∀L,L1,T1,T. L ⊢ L1 @@ T1 ➡ T →
                       ∃∃L2,T2. |L1| = |L2| & T = L2 @@ T2.
 #L #L1 #T1 #T * #X #H1 #H2
