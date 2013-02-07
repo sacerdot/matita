@@ -12,74 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "turing/simple_machines.ma".
-include "turing/multi_universal/compare.ma".
-include "turing/multi_universal/par_test.ma".
-include "turing/multi_universal/moves_2.ma".
+include "turing/auxiliary_multi_machines.ma".
 
-lemma eq_vec_change_vec : ∀sig,n.∀v1,v2:Vector sig n.∀i,t,d.
-  nth i ? v2 d = t → 
-  (∀j.i ≠ j → nth j ? v1 d = nth j ? v2 d) → 
-  v2 = change_vec ?? v1 t i.
-#sig #n #v1 #v2 #i #t #d #H1 #H2 @(eq_vec … d)
-#i0 #Hlt cases (decidable_eq_nat i0 i) #Hii0
-[ >Hii0 >nth_change_vec //
-| >nth_change_vec_neq [|@sym_not_eq //] @sym_eq @H2 @sym_not_eq // ]
-qed.
-
-lemma right_mk_tape : 
-  ∀sig,ls,c,rs.(c = None ? → ls = [ ] ∨ rs = [ ]) → right ? (mk_tape sig ls c rs) = rs.
-#sig #ls #c #rs cases c // cases ls 
-[ cases rs // 
-| #l0 #ls0 #H normalize cases (H (refl ??)) #H1 [ destruct (H1) | >H1 % ] ]
-qed.
-
-lemma left_mk_tape : ∀sig,ls,c,rs.left ? (mk_tape sig ls c rs) = ls.
-#sig #ls #c #rs cases c // cases ls // cases rs //
-qed.
-
-lemma current_mk_tape : ∀sig,ls,c,rs.current ? (mk_tape sig ls c rs) = c.
-#sig #ls #c #rs cases c // cases ls // cases rs //
-qed.
-
-lemma length_tail : ∀A,l.0 < |l| → |tail A l| < |l|.
-#A * normalize //
-qed.
-
-(*
-[ ]   → [ ], l2, 1
-a::al → 
-      [ ]   → [ ], l1, 2
-      b::bl → match rec(al,bl)
-            x, y, 1 → b::x, y, 1
-            x, y, 2 → a::x, y, 2
-*)
-
-lemma lists_length_split : 
- ∀A.∀l1,l2:list A.(∃la,lb.(|la| = |l1| ∧ l2 = la@lb) ∨ (|la| = |l2| ∧ l1 = la@lb)).
-#A #l1 elim l1
-[ #l2 %{[ ]} %{l2} % % %
-| #hd1 #tl1 #IH *
-  [ %{[ ]} %{(hd1::tl1)} %2 % %
-  | #hd2 #tl2 cases (IH tl2) #x * #y *
-    [ * #IH1 #IH2 %{(hd2::x)} %{y} % normalize % //
-    | * #IH1 #IH2 %{(hd1::x)} %{y} %2 normalize % // ]
-  ]
-]
-qed.
-
-definition option_cons ≝ λsig.λc:option sig.λl.
-  match c with [ None ⇒ l | Some c0 ⇒ c0::l ].
-
-lemma opt_cons_tail_expand : ∀A,l.l = option_cons A (option_hd ? l) (tail ? l). 
-#A * //
-qed.
-
-definition match_test ≝ λsrc,dst.λsig:DeqSet.λn.λv:Vector ? n.
-  match (nth src (option sig) v (None ?)) with 
-  [ None ⇒  false 
-  | Some x ⇒  notb (nth dst (DeqOption sig) v (None ?) == None ?) ].
-  
+(* rewind *)
 definition rewind ≝ λsrc,dst,sig,n.
   parmove src dst sig n L · mmove src sig n R · mmove dst sig n R.
 
@@ -116,18 +51,6 @@ definition R_rewind ≝ λsrc,dst,sig,n.λint,outt: Vector (tape sig) (S n).
   (∀x,rs.nth src ? int (niltape ?) = midtape sig [] x rs → 
    ∀ls0,y,rs0.nth dst ? int (niltape ?) = midtape sig ls0 y rs0 → 
    outt = int).
-
-(*
-theorem accRealize_to_Realize :
-  ∀sig,n.∀M:mTM sig n.∀Rtrue,Rfalse,acc.
-  M ⊨ [ acc: Rtrue, Rfalse ] →  M ⊨ Rtrue ∪ Rfalse.
-#sig #n #M #Rtrue #Rfalse #acc #HR #t
-cases (HR t) #k * #outc * * #Hloop
-#Htrue #Hfalse %{k} %{outc} % // 
-cases (true_or_false (cstate sig (states sig n M) n outc == acc)) #Hcase
-[ % @Htrue @(\P Hcase) | %2 @Hfalse @(\Pf Hcase) ]
-qed.
-*)
 
 lemma sem_rewind_strong : ∀src,dst,sig,n.
   src ≠ dst → src < S n → dst < S n → 
@@ -197,6 +120,13 @@ lemma sem_rewind : ∀src,dst,sig,n.
 #src #dst #sig #n #Hneq #Hsrc #Hdst @(Realize_to_Realize … (sem_rewind_strong …)) //
 #ta #tb * * * #H1 #H2 #H3 #H4 % /2 by /
 qed.
+
+(* match step *) 
+
+definition match_test ≝ λsrc,dst.λsig:DeqSet.λn.λv:Vector ? n.
+  match (nth src (option sig) v (None ?)) with 
+  [ None ⇒  false 
+  | Some x ⇒  notb (nth dst (DeqOption sig) v (None ?) == None ?) ].
 
 definition match_step ≝ λsrc,dst,sig,n.
   compare src dst sig n ·

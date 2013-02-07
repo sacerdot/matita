@@ -9,7 +9,7 @@
      \ /   GNU General Public License Version 2   
       V_____________________________________________________________*)
 
-include "turing/simple_machines.ma".
+include "turing/auxiliary_multi_machines.ma".
 include "turing/multi_universal/unistep.ma".
 
 definition stop ≝ λc.

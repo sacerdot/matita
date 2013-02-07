@@ -9,9 +9,8 @@
      \ /   GNU General Public License Version 2   
       V_____________________________________________________________*)
 
-include "turing/multi_universal/moves_2.ma".
-include "turing/multi_universal/match.ma".
-include "turing/multi_universal/copy.ma".
+include "turing/auxiliary_machines.ma".
+include "turing/auxiliary_multi_machines.ma".
 include "turing/multi_universal/alphabet.ma".
 include "turing/multi_universal/tuples.ma".
 
