@@ -10,8 +10,10 @@
       V_____________________________________________________________*)
 
 include "turing/turing.ma".
+(* include "turing/basic_machines.ma". *)
 
 (******************* inject a mono machine into a multi tape one **********************)
+
 definition inject_trans ≝ λsig,states:FinSet.λn,i:nat.
   λtrans:states × (option sig) → states  × (option sig × move).
   λp:states × (Vector (option sig) (S n)).
@@ -110,34 +112,10 @@ lemma loop_inject: ∀sig,n,M,i,k,ins,int,outs,outt,vt.i < S n →
   ]
 qed.
 
-(*
-lemma cstate_inject: ∀sig,n,M,i,x. *)
-
 definition inject_R ≝ λsig.λR:relation (tape sig).λn,i:nat.
   λv1,v2: (Vector (tape sig) (S n)).
   R (nth i ? v1 (niltape ?)) (nth i ? v2 (niltape ?)) ∧
   ∀j. i ≠ j → nth j ? v1 (niltape ?) = nth j ? v2 (niltape ?). 
-
-(*
-lemma nth_make : ∀A,i,n,j,a,d. i < n → nth i ? (make_veci A a n j) d = a (j+i).
-#A #i elim i
-  [#n #j #a #d #ltOn @(lt_O_n_elim … ltOn) <plus_n_O //
-  |#m #Hind #n #j #a #d #Hlt lapply Hlt @(lt_O_n_elim … (ltn_to_ltO … Hlt)) 
-   #p <plus_n_Sm #ltmp @Hind @le_S_S_to_le //  
-  ]
-qed. *)
-
-(*
-lemma mk_config_eq_s: ∀S,sig,s1,s2,t1,t2. 
-  mk_config S sig s1 t1 = mk_config S sig s2 t2 → s1=s2.
-#S #sig #s1 #s2 #t1 #t2 #H destruct //
-qed.
-
-lemma mk_config_eq_t: ∀S,sig,s1,s2,t1,t2. 
-  mk_config S sig s1 t1 = mk_config S sig s2 t2 → s1=s2.
-#S #sig #s1 #s2 #t1 #t2 #H destruct //
-qed.
-*)
 
 theorem sem_inject: ∀sig.∀M:TM sig.∀R.∀n,i.
  i≤n → M ⊨ R → inject_TM sig M n i ⊨ inject_R sig R n i. 

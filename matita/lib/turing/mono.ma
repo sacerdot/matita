@@ -47,6 +47,21 @@ definition mk_tape :
       | cons r0 rs0 ⇒ leftof ? r0 rs0 ]
     | cons l0 ls0 ⇒ rightof ? l0 ls0 ] ].
 
+lemma right_mk_tape : 
+  ∀sig,ls,c,rs.(c = None ? → ls = [ ] ∨ rs = [ ]) → right ? (mk_tape sig ls c rs) = rs.
+#sig #ls #c #rs cases c // cases ls 
+[ cases rs // 
+| #l0 #ls0 #H normalize cases (H (refl ??)) #H1 [ destruct (H1) | >H1 % ] ]
+qed-.
+
+lemma left_mk_tape : ∀sig,ls,c,rs.left ? (mk_tape sig ls c rs) = ls.
+#sig #ls #c #rs cases c // cases ls // cases rs //
+qed.
+
+lemma current_mk_tape : ∀sig,ls,c,rs.current ? (mk_tape sig ls c rs) = c.
+#sig #ls #c #rs cases c // cases ls // cases rs //
+qed.
+
 lemma current_to_midtape: ∀sig,t,c. current sig t = Some ? c →
   ∃ls,rs. t = midtape ? ls c rs.
 #sig *

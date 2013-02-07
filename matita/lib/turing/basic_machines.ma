@@ -106,6 +106,30 @@ lemma sem_move_l :
   #ls1 #c1 #rs1 #H destruct cases ls1 // ] ] ]
 qed.
 
+(* a slightly different move machine. *)
+definition smove_states ≝ initN 2.
+
+definition smove0 : smove_states ≝ mk_Sig ?? 0 (leb_true_to_le 1 2 (refl …)).
+definition smove1 : smove_states ≝ mk_Sig ?? 1 (leb_true_to_le 2 2 (refl …)).
+
+definition trans_smove ≝ 
+ λsig,D.
+ λp:smove_states × (option sig).
+ let 〈q,a〉 ≝ p in match (pi1 … q) with
+ [ O ⇒ 〈smove1,None sig, D〉
+ | S _ ⇒ 〈smove1,None sig, N〉 ].
+
+definition move ≝ 
+  λsig,D.mk_TM sig smove_states (trans_smove sig D) smove0 (λq.q == smove1).
+
+definition Rmove ≝ 
+  λalpha,D,t1,t2. t2 = tape_move alpha t1 D.
+
+lemma sem_move_single :
+  ∀alpha,D.move alpha D ⊨ Rmove alpha D.
+#alpha #D #int %{2} %{(mk_config ? smove_states smove1 ?)} [| % % ]
+qed.
+
 (********************************* test char **********************************)
 
 (* the test_char machine ends up in two different states q1 and q2 wether or not
