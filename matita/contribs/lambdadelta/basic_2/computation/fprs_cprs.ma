@@ -19,6 +19,16 @@ include "basic_2/computation/lfprs_fprs.ma".
 
 (* CONTEXT-FREE PARALLEL COMPUTATION ON CLOSURES ****************************)
 
+(* Advanced properties ******************************************************)
+
+lemma fprs_bind2_minus: ∀I,L1,L2,V1,T1,U2. ⦃L1, -ⓑ{I}V1.T1⦄ ➡* ⦃L2, U2⦄ →
+                        ∃∃V2,T2. ⦃L1.ⓑ{I}V1, T1⦄ ➡* ⦃L2.ⓑ{I}V2, T2⦄ &
+                                 U2 = -ⓑ{I}V2.T2.
+#I #L1 #L2 #V1 #T1 #U2 #H @(fprs_ind … H) -L2 -U2 /2 width=4/
+#L #L2 #U #U2 #_ #HU2 * #V #T #HT1 #H destruct
+elim (fpr_bind2_minus … HU2) -HU2 /3 width=4/
+qed-.
+
 (* Advanced inversion lemmas ************************************************)
 
 lemma fprs_inv_pair1: ∀I,K1,L2,V1,T1,T2. ⦃K1.ⓑ{I}V1, T1⦄ ➡* ⦃L2, T2⦄ →
@@ -56,6 +66,14 @@ lemma fprs_fwd_pair1_full: ∀I,K1,L2,V1,T1,T2. ⦃K1.ⓑ{I}V1, T1⦄ ➡* ⦃L2
 #I #K1 #L2 #V1 #T1 #T2 #H #b
 elim (fprs_inv_pair1 … H) -H #K2 #V2 #HV12 #HT12 #H destruct
 elim (fprs_fwd_bind2_minus … HT12 b) -HT12 #W1 #U1 #HTU1 #H destruct /2 width=5/
+qed-.
+
+lemma fprs_fwd_abst2: ∀a,L1,L2,V1,T1,U2. ⦃L1, ⓛ{a}V1.T1⦄ ➡* ⦃L2, U2⦄ → ∀b,I,W.
+                      ∃∃V2,T2. ⦃L1, ⓑ{b,I}W.T1⦄ ➡* ⦃L2, ⓑ{b,I}W.T2⦄ &
+                               U2 = ⓛ{a}V2.T2.
+#a #L1 #L2 #V1 #T1 #U2 #H #b #I #W @(fprs_ind … H) -L2 -U2 /2 width=4/
+#L #L2 #U #U2 #_ #H2 * #V #T #HT1 #H destruct
+elim (fpr_fwd_abst2 … H2 b I W) -H2 /3 width=4/
 qed-.
 
 (* Properties on context-sensitive parallel computation for terms ***********)

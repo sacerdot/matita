@@ -98,21 +98,24 @@ qed-.
 
 (* Advanced inversion lemmas ************************************************)
 
-fact tpr_inv_abst1_aux: ∀U1,U2. U1 ➡ U2 → ∀a,V1,T1. U1 = ⓛ{a}V1. T1 →
-                        ∃∃V2,T2. V1 ➡ V2 & T1 ➡ T2 & U2 = ⓛ{a}V2. T2.
-#U1 #U2 * -U1 -U2
-[ #I #a #V #T #H destruct
-| #I #V1 #V2 #T1 #T2 #_ #_ #a #V #T #H destruct
-| #b #V1 #V2 #W #T1 #T2 #_ #_ #a #V #T #H destruct
-| #b #I #V1 #V2 #T1 #T #T2 #HV12 #HT1 #HT2 #a #V0 #T0 #H destruct
-  <(tps_inv_refl_SO2 … HT2 ? ? ?) -T2 /2 width=5/
-| #b #V #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #_ #a #V0 #T0 #H destruct
-| #V #T1 #T #T2 #_ #_ #a #V0 #T0 #H destruct
-| #V #T1 #T2 #_ #a #V0 #T0 #H destruct
-]
-qed.
-
 (* Basic_1: was pr0_gen_abst *)
 lemma tpr_inv_abst1: ∀a,V1,T1,U2. ⓛ{a}V1. T1 ➡ U2 →
                      ∃∃V2,T2. V1 ➡ V2 & T1 ➡ T2 & U2 = ⓛ{a}V2. T2.
-/2 width=3/ qed-.
+#a #V1 #T1 #U2 #H elim (tpr_inv_bind1 … H) -H *
+[ #V2 #T #T2 #HV12 #HT1 #HT2
+  lapply (tps_inv_refl_SO2 … HT2 ???) -HT2 // /2 width=5/
+| #T2 #_ #_ #_ #H destruct
+]
+qed-.
+
+(* Advanced forward lemmas **************************************************)
+
+lemma tpr_fwd_abst1: ∀a,V1,T1,U2. ⓛ{a}V1.T1 ➡ U2 → ∀b,I,W.
+                     ∃∃V2,T2. ⓑ{b,I}W.T1 ➡ ⓑ{b,I}W.T2 &
+                              U2 = ⓛ{a}V2.T2.
+#a #V1 #T1 #U2 #H #b #I #W elim (tpr_inv_bind1 … H) -H *
+[ #V2 #T #T2 #HV12 #HT1 #HT2
+  lapply (tps_inv_refl_SO2 … HT2 ???) -HT2 // /3 width=4/
+| #T2 #_ #_ #_ #H destruct
+]
+qed-.

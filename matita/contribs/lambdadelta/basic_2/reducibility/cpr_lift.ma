@@ -134,7 +134,18 @@ elim (cpr_inv_appl1 … H) -H *
   elim (simple_inv_bind … HT1)
 ]
 qed-.
-     
+
+(* Advanced forward lemmas **************************************************)
+
+lemma cpr_fwd_abst1: ∀a,L,V1,T1,U2. L ⊢ ⓛ{a}V1.T1 ➡ U2 → ∀b,I,W.
+                     ∃∃V2,T2. L ⊢ ⓑ{b,I}W.T1 ➡ ⓑ{b,I}W.T2 &
+                              U2 = ⓛ{a}V2.T2.
+#a #L #V1 #T1 #U2 * #U #H #HU2 #b #I #W
+elim (tpr_fwd_abst1 … H b I W) -H #V #T #HT1 #H destruct
+elim (tpss_inv_bind1 … HU2) -HU2 #V2 #T2 #_ #HT2
+lapply (tpss_lsubs_trans … HT2 (L.ⓑ{I}W) ?) -HT2 /2 width=1/ /4 width=5/
+qed-.
+
 (* Relocation properties ****************************************************)
 
 (* Basic_1: was: pr2_lift *)

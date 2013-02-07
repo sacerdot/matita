@@ -73,8 +73,7 @@ fact ssta_ltpr_tpr_aux: ∀h,g,n. (
     [ #U #HTU20 #HU20 -HWV0 -HL12 -W1 -W2
       @(ex2_intro … (ⓓ{b}V2.U)) [ /2 width=1/ ] -h -l -l1 -V -V0 -T2 -T20 -U0
       @(fpcs_fprs_strap2 ? L1 … (ⓓ{b}V2.U2)) [ /4 width=1/ ] -V1
-      @fpcs_shift_full -b
-      @(fpcs_canc_dx ?? (L2.ⓓV2) … U20) [2: /2 width=1/ ] -U
+      /4 width=4 by fpcs_fwd_shift, fpcs_canc_dx, cpcs_fpcs, fpcs_fwd_abst13/
     | -b -l -V -V1 -T2 -T20 -U0 -U2 -U20
       /6 width=6 by lsubse_abbr, fpcs_inv_cpcs, fpcs_canc_sn, fpcs_fprs_strap1, cpcs_fpcs, bi_inj/
     ]

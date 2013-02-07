@@ -29,6 +29,14 @@ lemma fpr_bind_sn: ∀L1,L2,V1,V2. ⦃L1, V1⦄ ➡ ⦃L2, V2⦄ → ∀T1,T2. T
 elim (fpr_inv_all … H) /3 width=4/
 qed.
 
+lemma fpr_bind2_minus: ∀I,L1,L2,V1,T1,U2. ⦃L1, -ⓑ{I}V1.T1⦄ ➡ ⦃L2, U2⦄ →
+                       ∃∃V2,T2. ⦃L1.ⓑ{I}V1, T1⦄ ➡ ⦃L2.ⓑ{I}V2, T2⦄ &
+                                U2 = -ⓑ{I}V2.T2.
+#I1 #L1 #L2 #V1 #T1 #U2 #H
+elim (fpr_inv_all … H) -H #L #HL1 #H #HL2
+elim (cpr_fwd_bind1_minus … H false) -H /4 width=4/
+qed-.
+
 (* Advanced forward lemmas **************************************************)
 
 lemma fpr_fwd_bind2_minus: ∀I,L1,L,V1,T1,T. ⦃L1, -ⓑ{I}V1.T1⦄ ➡ ⦃L, T⦄ → ∀b.
@@ -51,6 +59,14 @@ elim (fpr_inv_all … H) -H #L #HL1 #H #HL2
 | elim (cpr_inv_abst1 … H Abst V2) -H
   #V #T #HV1 #_ #H destruct /3 width=4/
 ]
+qed-.
+
+lemma fpr_fwd_abst2: ∀a,L1,L2,V1,T1,U2. ⦃L1, ⓛ{a}V1.T1⦄ ➡ ⦃L2, U2⦄ → ∀b,I,W.
+                     ∃∃V2,T2. ⦃L1, ⓑ{b,I}W.T1⦄ ➡ ⦃L2, ⓑ{b,I}W.T2⦄ &
+                              U2 = ⓛ{a}V2.T2.
+#a #L1 #L2 #V1 #T1 #U2 #H
+elim (fpr_inv_all … H) #L #HL1 #H #HL2 #b #I #W
+elim (cpr_fwd_abst1 … H b I W) -H /3 width=4/
 qed-.
 
 (* Advanced inversion lemmas ************************************************)
