@@ -171,43 +171,17 @@ cases (decidable_eq_nat i i0) #Hii0
   >nth_change_vec_neq // ]
 qed.
 
+lemma eq_vec_change_vec : ∀sig,n.∀v1,v2:Vector sig n.∀i,t,d.
+  nth i ? v2 d = t → 
+  (∀j.i ≠ j → nth j ? v1 d = nth j ? v2 d) → 
+  v2 = change_vec ?? v1 t i.
+#sig #n #v1 #v2 #i #t #d #H1 #H2 @(eq_vec … d)
+#i0 #Hlt cases (decidable_eq_nat i0 i) #Hii0
+[ >Hii0 >nth_change_vec //
+| >nth_change_vec_neq [|@sym_not_eq //] @sym_eq @H2 @sym_not_eq // ]
+qed-.
 
-(*
-lemma length_make_listi: ∀A,a,n,i. 
-  |make_listi A a n i| = n.
-#A #a #n elim n // #m #Hind normalize //
-qed.
-definition change_vec ≝ λA,n,v,a,i.
-  make_veci A (λj.if (eqb i j) then a else (nth j A v a)) n 0.
-
-let rec mapi (A,B:Type[0]) (f: nat → A → B) (l:list A) (i:nat) on l: list B ≝
- match l with 
- [ nil ⇒ nil ? 
- | cons x tl ⇒ f i x :: (mapi A B f tl (S i))].
- 
-lemma length_mapi: ∀A,B,l.∀f:nat→A→B.∀i. 
-  |mapi ?? f l i| = |l|.
-#A #B #l #f elim l // #a #tl #Hind normalize //
-qed.
-
-let rec make_listi (A:Type[0]) (a:nat→A) (n,i:nat) on n : list A ≝
-match n with
-[ O ⇒ [ ]
-| S m ⇒ a i::(make_listi A a m (S i))
-].
-
-lemma length_make_listi: ∀A,a,n,i. 
-  |make_listi A a n i| = n.
-#A #a #n elim n // #m #Hind normalize //
-qed.
-
-definition vec_mapi ≝ λA,B.λf:nat→A→B.λn.λv:Vector A n.λi.
-mk_Vector B n (mapi ?? f v i) 
-  (trans_eq … (length_mapi …) (len A n v)).
-  
-definition make_veci ≝ λA.λa:nat→A.λn,i.
-mk_Vector A n (make_listi A a n i) (length_make_listi A a n i).
-*)
+(* map *) 
 
 let rec pmap A B C (f:A→B→C) l1 l2 on l1 ≝
    match l1 with

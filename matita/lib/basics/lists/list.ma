@@ -92,6 +92,15 @@ lemma cons_injective_r : ∀A.∀a1,a2:A.∀l1,l2.a1::l1 = a2::l2 → l1 = l2.
 #A #a1 #a2 #l1 #l2 #Heq destruct //
 qed.
 
+(* option cons *)
+
+definition option_cons ≝ λsig.λc:option sig.λl.
+  match c with [ None ⇒ l | Some c0 ⇒ c0::l ].
+
+lemma opt_cons_tail_expand : ∀A,l.l = option_cons A (option_hd ? l) (tail ? l). 
+#A * //
+qed.
+
 (* comparing lists *)
 
 lemma compare_append : ∀A,l1,l2,l3,l4. l1@l2 = l3@l4 → 
@@ -199,6 +208,10 @@ lemma length_tail: ∀A,l. length ? (tail A l) = pred (length ? l).
 #A #l elim l // 
 qed.
 
+lemma length_tail1 : ∀A,l.0 < |l| → |tail A l| < |l|.
+#A * normalize //
+qed.
+
 lemma length_append: ∀A.∀l1,l2:list A. 
   |l1@l2| = |l1|+|l2|.
 #A #l1 elim l1 // normalize /2/
@@ -218,6 +231,19 @@ lemma lenght_to_nil: ∀A.∀l:list A.
 #A * // #a #tl normalize #H destruct
 qed.
  
+lemma lists_length_split : 
+ ∀A.∀l1,l2:list A.(∃la,lb.(|la| = |l1| ∧ l2 = la@lb) ∨ (|la| = |l2| ∧ l1 = la@lb)).
+#A #l1 elim l1
+[ #l2 %{[ ]} %{l2} % % %
+| #hd1 #tl1 #IH *
+  [ %{[ ]} %{(hd1::tl1)} %2 % %
+  | #hd2 #tl2 cases (IH tl2) #x * #y *
+    [ * #IH1 #IH2 %{(hd2::x)} %{y} % normalize % //
+    | * #IH1 #IH2 %{(hd1::x)} %{y} %2 normalize % // ]
+  ]
+]
+qed.
+
 (****************** traversing two lists in parallel *****************)
 lemma list_ind2 : 
   ∀T1,T2:Type[0].∀l1:list T1.∀l2:list T2.∀P:list T1 → list T2 → Prop.
