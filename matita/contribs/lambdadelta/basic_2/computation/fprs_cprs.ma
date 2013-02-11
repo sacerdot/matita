@@ -29,6 +29,20 @@ lemma fprs_bind2_minus: ∀I,L1,L2,V1,T1,U2. ⦃L1, -ⓑ{I}V1.T1⦄ ➡* ⦃L2, 
 elim (fpr_bind2_minus … HU2) -HU2 /3 width=4/
 qed-.
 
+lemma fprs_lift: ∀K1,K2,T1,T2. ⦃K1, T1⦄ ➡* ⦃K2, T2⦄ →
+                 ∀d,e,L1. ⇩[d, e] L1 ≡ K1 →
+                 ∀U1,U2. ⇧[d, e] T1 ≡ U1 → ⇧[d, e] T2 ≡ U2 →
+                 ∃∃L2. ⦃L1, U1⦄ ➡* ⦃L2, U2⦄ & ⇩[d, e] L2 ≡ K2.
+#K1 #K2 #T1 #T2 #HT12 @(fprs_ind … HT12) -K2 -T2
+[ #d #e #L1 #HLK1 #U1 #U2 #HTU1 #HTU2
+  >(lift_mono … HTU2 … HTU1) -U2 /2 width=3/
+| #K #K2 #T #T2 #_ #HT2 #IHT1 #d #e #L1 #HLK1 #U1 #U2 #HTU1 #HTU2
+  elim (lift_total T d e) #U #HTU
+  elim (IHT1 … HLK1 … HTU1 HTU) -K1 -T1 #L #HU1 #HKL
+  elim (fpr_lift … HT2 … HKL … HTU HTU2) -K -T -T2 /3 width=4/
+]
+qed-.  
+
 (* Advanced inversion lemmas ************************************************)
 
 lemma fprs_inv_pair1: ∀I,K1,L2,V1,T1,T2. ⦃K1.ⓑ{I}V1, T1⦄ ➡* ⦃L2, T2⦄ →

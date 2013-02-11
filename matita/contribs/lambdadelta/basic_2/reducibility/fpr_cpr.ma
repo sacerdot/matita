@@ -18,8 +18,26 @@ include "basic_2/reducibility/cfpr_cpr.ma".
 
 (* Properties on context-sensitive parallel reduction for terms *************)
 
+lemma ltpr_tpr_fpr: ∀L1,L2. L1 ➡ L2 → ∀T1,T2. T1 ➡ T2 → ⦃L1, T1⦄ ➡ ⦃L2, T2⦄.
+/3 width=4/ qed.
+
 lemma cpr_fpr: ∀L,T1,T2. L ⊢ T1 ➡ T2 → ⦃L, T1⦄ ➡ ⦃L, T2⦄.
 /2 width=4/ qed.
+
+lemma fpr_lift: ∀K1,K2,T1,T2. ⦃K1, T1⦄ ➡ ⦃K2, T2⦄ →
+                ∀d,e,L1. ⇩[d, e] L1 ≡ K1 →
+                ∀U1,U2. ⇧[d, e] T1 ≡ U1 → ⇧[d, e] T2 ≡ U2 →
+                ∃∃L2. ⦃L1, U1⦄ ➡ ⦃L2, U2⦄ & ⇩[d, e] L2 ≡ K2.
+#K1 #K2 #T1 #T2 #HT12 #d #e #L1 #HLK1 #U1 #U2 #HTU1 #HTU2
+elim (fpr_inv_all … HT12) -HT12 #K #HK1 #HT12 #HK2
+elim (ldrop_ltpr_trans … HLK1 … HK1) -K1 #L #HL1 #HLK
+lapply (cpr_lift … HLK … HTU1 … HTU2 HT12) -T1 -T2 #HU12
+elim (le_or_ge (|K|) d) #Hd
+[ elim (ldrop_ltpss_sn_trans_ge … HLK … HK2 …)
+| elim (ldrop_ltpss_sn_trans_be … HLK … HK2 …)
+] // -Hd #L2 #HL2 #HLK2
+lapply (ltpss_sn_weak_all … HL2) -K /3 width=4/ 
+qed-.
 
 (* Advanced properties ******************************************************)
 

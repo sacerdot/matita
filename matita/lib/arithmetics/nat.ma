@@ -686,6 +686,10 @@ lapply (minus_le x y) <H -H #H
 elim (not_le_Sn_n x) #H0 elim (H0 ?) //
 qed-.
 
+lemma plus_le_0: ∀x,y. x + y ≤ 0 → x = 0 ∧ y = 0.
+#x #y #H elim (le_inv_plus_l … H) -H #H1 #H2 /3 width=1/
+qed-.
+
 (* Still more equalities ****************************************************)
 
 theorem eq_minus_O: ∀n,m:nat.

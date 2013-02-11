@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/ldrop_ldrop.ma".
 include "basic_2/unfold/ltpss_sn_ldrop.ma".
 include "basic_2/unfold/thin.ma".
 

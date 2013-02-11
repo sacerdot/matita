@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/unfold/tpss_lift.ma".
 include "basic_2/unfold/ltpss_sn.ma".
 
 (* SN PARALLEL UNFOLD ON LOCAL ENVIRONMENTS *********************************)
@@ -129,3 +130,60 @@ lemma ltpss_sn_ldrop_trans_le: ∀L1,L0,d1,e1. L1 ⊢ ▶* [d1, e1] L0 →
   ]
 ]
 qed.
+
+lemma ldrop_ltpss_sn_trans_be: ∀L1,K1,d1,e1. ⇩[d1, e1] L1 ≡ K1 →
+                               ∀K2,d2,e2. K1 ⊢ ▶* [d2, e2] K2 →
+                               d2 ≤ d1 → d1 ≤ d2 + e2 → 
+                               ∃∃L2. L1 ⊢ ▶* [d2, e1 + e2] L2 &
+                                     ⇩[d1, e1] L2 ≡ K2.
+#L1 #K1 #d1 #e1 #H elim H -L1 -K1 -d1 -e1
+[ #d1 #e1 #K2 #d2 #e2 #H #_ #_
+  >(ltpss_sn_inv_atom1 … H) -H /2 width=3/
+| #K1 #I #V1 #K2 #d2 #e2 #HK12 #H #_
+  lapply (le_n_O_to_eq … H) -H #H destruct /2 width=3/
+| #L1 #K1 #I #V #e1 #_ #IHLK1 #K2 #d2 #e2 #HK12 #H1 #H2
+  elim (IHLK1 … HK12 H1 H2) -K1 -H2
+  lapply (le_n_O_to_eq … H1) -H1 #H destruct /3 width=5/
+| #L1 #K1 #I #V1 #W1 #d1 #e1 #HLK1 #HWV1 #IHLK1 #X #d2 #e2 #H #Hd21 #Hd12
+  elim (eq_or_gt d2) #Hd2 [ -Hd21 elim (eq_or_gt e2) #He2 ] destruct
+  [ lapply (le_n_O_to_eq … Hd12) -Hd12 <plus_n_Sm #H destruct
+  | elim (ltpss_sn_inv_tpss21 … H He2) -H #K2 #W2 #HK12 #HW12 #H destruct
+    elim (IHLK1 … HK12 …) -IHLK1 // /2 width=1/ >plus_minus_commutative // #L2 #HL12 #HLK2
+    elim (lift_total W2 d1 e1) #V2 #HWV2
+    lapply (tpss_lift_be … HW12 … HLK1 HWV1 … HWV2) -HLK1 -W1 // /2 width=1/
+    >plus_minus // >commutative_plus /4 width=5/
+  | elim (ltpss_sn_inv_tpss11 … H Hd2) -H #K2 #W2 #HK12 #HW12 #H destruct
+    elim (IHLK1 … HK12 …) -IHLK1 [2: >plus_minus // ] /2 width=1/ #L2 #HL12 #HLK2
+    elim (lift_total W2 d1 e1) #V2 #HWV2
+    lapply (tpss_lift_be … HW12 … HLK1 HWV1 … HWV2) -HLK1 -W1 [ >plus_minus // ] /2 width=1/
+    >commutative_plus /3 width=5/
+  ]
+]
+qed-.
+
+lemma ldrop_ltpss_sn_trans_ge: ∀L1,K1,d1,e1. ⇩[d1, e1] L1 ≡ K1 →
+                               ∀K2,d2,e2. K1 ⊢ ▶* [d2, e2] K2 → d2 + e2 ≤ d1 →
+                               ∃∃L2. L1 ⊢ ▶* [d2, e2] L2 & ⇩[d1, e1] L2 ≡ K2.
+#L1 #K1 #d1 #e1 #H elim H -L1 -K1 -d1 -e1
+[ #d1 #e1 #K2 #d2 #e2 #H #_
+  >(ltpss_sn_inv_atom1 … H) -H /2 width=3/
+| #K1 #I #V1 #K2 #d2 #e2 #HK12 #H
+  elim (plus_le_0 … H) -H #H1 #H2 destruct /2 width=3/
+| #L1 #K1 #I #V #e1 #_ #IHLK1 #K2 #d2 #e2 #HK12 #H
+  elim (IHLK1 … HK12 H) -K1
+  elim (plus_le_0 … H) -H #H1 #H2 destruct #L2 #HL12
+  >(ltpss_sn_inv_refl_O2 … HL12) -L1 /3 width=5/
+| #L1 #K1 #I #V1 #W1 #d1 #e1 #HLK1 #HWV1 #IHLK1 #X #d2 #e2 #H #Hd21
+  elim (eq_or_gt d2) #Hd2 [ elim (eq_or_gt e2) #He2 ] destruct
+  [ -IHLK1 -Hd21 <(ltpss_sn_inv_refl_O2 … H) -X /3 width=5/
+  | elim (ltpss_sn_inv_tpss21 … H He2) -H #K2 #W2 #HK12 #HW12 #H destruct
+    elim (IHLK1 … HK12 …) -IHLK1 /2 width=1/ #L2 #HL12 #HLK2
+    elim (lift_total W2 d1 e1) #V2 #HWV2
+    lapply (tpss_lift_le … HW12 … HLK1 HWV1 … HWV2) -HLK1 -W1 /2 width=1/ /3 width=5/
+  | elim (ltpss_sn_inv_tpss11 … H Hd2) -H #K2 #W2 #HK12 #HW12 #H destruct
+    elim (IHLK1 … HK12 …) -IHLK1 [2: >plus_minus // /2 width=1/ ] #L2 #HL12 #HLK2
+    elim (lift_total W2 d1 e1) #V2 #HWV2
+    lapply (tpss_lift_le … HW12 … HLK1 HWV1 … HWV2) -HLK1 -W1 [ >plus_minus // /2 width=1/ ] /3 width=5/
+  ]
+]
+qed-.

@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unfold/tpss_lift.ma".
 include "basic_2/unfold/ltpss_sn_tps.ma".
 
 (* SN PARALLEL UNFOLD ON LOCAL ENVIRONMENTS *********************************)

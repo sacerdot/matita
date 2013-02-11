@@ -79,6 +79,19 @@ lemma ssta_inv_lref1: ∀h,g,L,U,i,l. ⦃h, L⦄ ⊢ #i •[g, l] U →
                       ).
 /2 width=3/ qed-.
 
+fact ssta_inv_gref1_aux: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g, l] U → ∀p0. T = §p0 → ⊥.
+#h #g #L #T #U #l * -L -T -U -l
+[ #L #k #l #_ #p0 #H destruct
+| #L #K #V #W #U #i #l #_ #_ #_ #p0 #H destruct
+| #L #K #W #V #U #i #l #_ #_ #_ #p0 #H destruct
+| #a #I #L #V #T #U #l #_ #p0 #H destruct
+| #L #V #T #U #l #_ #p0 #H destruct
+| #L #W #T #U #l #_ #p0 #H destruct
+qed.
+
+lemma ssta_inv_gref1: ∀h,g,L,U,p,l. ⦃h, L⦄ ⊢ §p •[g, l] U → ⊥.
+/2 width=9/ qed-.
+
 fact ssta_inv_bind1_aux: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g, l] U →
                          ∀a,I,X,Y. T = ⓑ{a,I}Y.X →
                          ∃∃Z. ⦃h, L.ⓑ{I}Y⦄ ⊢ X •[g, l] Z & U = ⓑ{a,I}Y.Z.

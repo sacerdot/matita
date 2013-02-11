@@ -12,17 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-
-include "basic_2/reducibility/ltpr.ma".
+include "basic_2/static/ssta_ltpss_dx.ma".
 include "basic_2/computation/xprs_lift.ma".
-include "basic_2/equivalence/cpcs_cpcs.ma".
 include "basic_2/equivalence/lsubse_ssta.ma".
 include "basic_2/equivalence/fpcs_cpcs.ma".
-include "basic_2/equivalence/fpcs_fpcs.ma".
+include "basic_2/equivalence/lfpcs_fpcs.ma".
 include "basic_2/dynamic/snv_ssta.ma".
 (*
-include "basic_2/static/ssta_ltpss_dx.ma".
-include "basic_2/dynamic/snv_lift.ma".
+anclude "basic_2/dynamic/snv_lift.ma".
 *)
 (* STRATIFIED NATIVE VALIDITY FOR TERMS *************************************)
 
@@ -48,10 +45,51 @@ fact ssta_ltpr_tpr_aux: ∀h,g,n. (
                         ∀L2. L1 ➡ L2 → ∀T2. T1 ➡ T2 → ⦃h, L1⦄ ⊩ T1 :[g] →
                         ∃∃U2. ⦃h, L2⦄ ⊢ T2 •[g, l] U2 & ⦃L1, U1⦄ ⬌* ⦃L2, U2⦄.
 #h #g #n #IH3 #IH2 #IH1 #L1 * * [|||| *]
-[
-|
-|
-|
+[ #k #_ #Y #l #H1 #L2 #HL12 #X #H2 #_ -IH3 -IH1
+  elim (ssta_inv_sort1 … H1) -H1 #Hkl #H destruct
+  >(tpr_inv_atom1 … H2) -X /4 width=6/
+| #i #Hn #U1 #l #H1 #L2 #HL12 #X #H2 #H3 destruct -IH3
+  elim (ssta_inv_lref1 … H1) -H1 * #K1
+  >(tpr_inv_atom1 … H2) -X
+  elim (snv_inv_lref … H3) -H3 #I0 #K0 #V0 #H #HV1
+  [ #V1 #W1 #HLK1 #HVW1 #HWU1
+    lapply (ldrop_mono … H … HLK1) -H #H destruct
+    lapply (ldrop_pair2_fwd_fw … HLK1 (#i)) #HKV1
+    elim (ltpr_ldrop_conf … HLK1 … HL12) #X #H #HLK2
+    elim (ltpr_inv_pair1 … H) -H #K2 #V2 #HK12 #HV12 #H destruct
+    elim (IH1 … HVW1 K2 … HV12) -IH1 -HVW1 -HV12 // -HV1 -HKV1 #W2 #HVW2 #HW12
+    lapply (ldrop_fwd_ldrop2 … HLK1) -V1 #H1
+    lapply (ldrop_fwd_ldrop2 … HLK2) #H2
+    elim (lift_total W2 0 (i+1)) #U2 #HWU2
+    lapply (fpcs_lift … HW12 … H1 H2 … HWU1 … HWU2) -H1 -H2 -W1 [ /3 width=1/ ] /3 width=6/
+  | #V1 #W1 #l0 #HLK1 #HVW1 #HVU1 #H destruct
+    lapply (ldrop_mono … H … HLK1) -H #H destruct
+    lapply (ldrop_pair2_fwd_fw … HLK1 (#i)) #HKV1
+    elim (ltpr_ldrop_conf … HLK1 … HL12) -HLK1 #X #H #HLK2
+    elim (ltpr_inv_pair1 … H) -H #K2 #V2 #HK12 #HV12 #H destruct
+    elim (IH1 … HVW1 K2 … HV12) -IH1 -HVW1 // -HV1 -HK12 -HKV1 #W2 #HVW2 #_ -W1
+    elim (lift_total V2 0 (i+1)) #U2 #HVU2
+    lapply (tpr_lift … HV12 … HVU1 … HVU2) -V1 /4 width=6/
+  ]
+| #p #Hn #U1 #l #H1 -IH3 -IH1
+  elim (ssta_inv_gref1 … H1)
+| #a #I #V1 #T1 #Hn #Y #l #H1 #L2 #HL12 #X #H2 #H3 destruct -IH3
+  elim (ssta_inv_bind1 … H1) -H1 #U1 #HTU1 #H destruct
+  elim (snv_inv_bind … H3) -H3 #_ #HT1
+  elim (tpr_inv_bind1 … H2) -H2 *
+  [ #V2 #T0 #T2 #HV12 #HT10 #HT02 #H destruct
+    elim (IH1 … HTU1 (L2.ⓑ{I}V2) … HT10) -IH1 -HTU1 -HT10 // -T1 /3 width=1/ #U0 #HTU0 #HU10
+    lapply (tps_lsubs_trans … HT02 (L2.ⓑ{I}V2) ?) -HT02 [ /2 width=1/ ] #HT02
+    elim (ssta_tps_conf … HTU0 … HT02) -T0 #U2 #HTU2 #HU02
+    lapply (cpr_intro … U0 … HU02) -HU02 // #HU02
+    lapply (fpcs_fpr_strap1 … HU10 (L2.ⓑ{I}V2) U2 ?) [ /2 width=1/ ] -U0 #HU12
+    lapply (fpcs_fwd_shift … HU12 a) -HU12 /3 width=3/
+  | #T2 #HT12 #HT2 #H1 #H2 destruct
+    elim (IH1 … HTU1 (L2.ⓓV1) … HT12) -IH1 -HTU1 -HT12 // -T1 [2: /3 width=1/ ] #U2 #HTU2 #HU12
+    lapply (fpcs_fwd_shift … HU12 true) -HU12 #HU12
+    elim (ssta_inv_lift1 … HTU2 … HT2) -T2 [3: /2 width=1/ |2: skip ] #U #HXU #HU2
+    lapply (fpcs_fpr_strap1 … HU12 L2 U ?) -HU12 [ /3 width=3/ ] -U2 /2 width=3/
+  ]
 | #V1 #T1 #Hn #Y #l #H1 #L2 #HL12 #X #H2 #H3 destruct
   elim (ssta_inv_appl1 … H1) -H1 #U1 #HTU1 #H destruct
   elim (snv_inv_appl … H3) -H3 #a #W1 #W10 #U10 #l0 #HV1 #HT1 #HVW1 #HW10 #HTU10
