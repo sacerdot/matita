@@ -20,6 +20,13 @@ include "basic_2/equivalence/fpcs_fpcs.ma".
 
 (* Advanced properties ******************************************************)
 
+lemma fpcs_flat_dx_tpr: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⬌* ⦃L2, T2⦄ → ∀V1,V2. V1 ➡ V2 →
+                        ∀I. ⦃L1, ⓕ{I}V1.T1⦄ ⬌* ⦃L2, ⓕ{I}V2.T2⦄.
+#L1 #L2 #T1 #T2 #HT12
+elim (fpcs_inv_fprs … HT12) -HT12
+/3 width=6 by fprs_flat_dx_tpr, fprs_div/ (**) (* auto too slow without trace *)
+qed.
+
 lemma fpcs_shift: ∀I,L1,L2,V1,V2,T1,T2. ⦃L1, -ⓑ{I}V1.T1⦄ ⬌* ⦃L2, -ⓑ{I}V2.T2⦄ →
                   ⦃L1.ⓑ{I}V1, T1⦄ ⬌* ⦃L2.ⓑ{I}V2, T2⦄.
 #I #L1 #L2 #V1 #V2 #T1 #T2 #H12

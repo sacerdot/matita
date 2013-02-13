@@ -36,10 +36,16 @@ elim (le_or_ge (|K|) d) #Hd
 [ elim (ldrop_ltpss_sn_trans_ge … HLK … HK2 …)
 | elim (ldrop_ltpss_sn_trans_be … HLK … HK2 …)
 ] // -Hd #L2 #HL2 #HLK2
-lapply (ltpss_sn_weak_all … HL2) -K /3 width=4/ 
+lapply (ltpss_sn_weak_all … HL2) -K /3 width=4/
 qed-.
 
 (* Advanced properties ******************************************************)
+
+lemma fpr_flat_dx: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ➡ ⦃L2, T2⦄ → ∀V1,V2. V1 ➡ V2 →
+                   ∀I. ⦃L1, ⓕ{I}V1.T1⦄ ➡ ⦃L2, ⓕ{I}V2.T2⦄.
+#L1 #L2 #T1 #T2 #HT12
+elim (fpr_inv_all … HT12) -HT12 /4 width=4/
+qed.
 
 lemma fpr_bind_sn: ∀L1,L2,V1,V2. ⦃L1, V1⦄ ➡ ⦃L2, V2⦄ → ∀T1,T2. T1 ➡ T2 →
                    ∀a,I. ⦃L1, ⓑ{a,I}V1.T1⦄ ➡ ⦃L2, ⓑ{a,I}V2.T2⦄.

@@ -21,6 +21,13 @@ include "basic_2/computation/lfprs_fprs.ma".
 
 (* Advanced properties ******************************************************)
 
+lemma fprs_flat_dx_tpr: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ➡* ⦃L2, T2⦄ → ∀V1,V2. V1 ➡ V2 →
+                        ∀I. ⦃L1, ⓕ{I}V1.T1⦄ ➡* ⦃L2, ⓕ{I}V2.T2⦄.
+#L1 #L2 #T1 #T2 #HT12 @(fprs_ind … HT12) -L2 -T2 /3 width=1/
+#L #L2 #T #T2 #_ #HT2 #IHT2 #V1 #V2 #HV12 #I
+lapply (IHT2 … HV12 I) -IHT2 -HV12 /3 width=6/
+qed.
+
 lemma fprs_bind2_minus: ∀I,L1,L2,V1,T1,U2. ⦃L1, -ⓑ{I}V1.T1⦄ ➡* ⦃L2, U2⦄ →
                         ∃∃V2,T2. ⦃L1.ⓑ{I}V1, T1⦄ ➡* ⦃L2.ⓑ{I}V2, T2⦄ &
                                  U2 = -ⓑ{I}V2.T2.
