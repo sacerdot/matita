@@ -74,39 +74,41 @@ define STATS_TEMPLATE
 
 $$(STT_$(1)):
 	@printf '\x1B[1;40;37m'
-	@printf '%-15s %-43s' 'Statistics for:' $(1)
+	@printf '%-15s %-44s' 'Statistics for:' $(1)
 	@printf '\x1B[0m\n'
 	@printf '\x1B[1;40;35m'
 	@printf '%-8s %6i' Chars $$(S1)
-	@printf '   %-8s %3i' Pages $$(S2)
+	@printf '   %-8s %4i' Pages $$(S2)
 	@printf '   %-26s' ''
 	@printf '\x1B[0m\n'
 	@printf '\x1B[1;40;36m'
 	@printf '%-8s %6i' Files $$(S4)
-	@printf '   %-8s %3i' Sources $$(word 1, $$(S5))	
+	@printf '   %-8s %4i' Sources $$(word 1, $$(S5))	
 	@printf '   %-7s %4i' Objects $$(word 2, $$(S5))
 	@printf '   %-11s' ''
 	@printf '\x1B[0m\n'	
 	@printf '\x1B[1;40;32m'
 	@printf '%-8s %6i' Theorems $$(P1)
-	@printf '   %-8s %3i' Lemmas $$(P2)
+	@printf '   %-8s %4i' Lemmas $$(P2)
 	@printf '   %-7s %4i' Facts $$(P3)
 	@printf '   %-6s %4i' Proofs $$(P4)
 	@printf '\x1B[0m\n'	
 	@printf '\x1B[1;40;33m'
 	@printf '%-8s %6i' Declared $$(C1)
-	@printf '   %-8s %3i' Defined $$(C2)	
+	@printf '   %-8s %4i' Defined $$(C2)	
 	@printf '   %-26s' ''
 	@printf '\x1B[0m\n'
 	@printf '\x1B[1;40;31m'
 	@printf '%-8s %6i' Axioms $$(M1)
-	@printf '   %-8s %3i' Comments $$(M2)
+	@printf '   %-8s %4i' Comments $$(M2)
 	@printf '   %-7s %4i' Marks $$(M3)
 	@printf '   %-11s' ''
 	@printf '\x1B[0m\n'
 endef
 
-$(foreach PKG, $(PACKAGES), $(eval $(call STATS_TEMPLATE,$(PKG))))
+ifeq ($(MAKECMDGOALS), stats)
+   $(foreach PKG, $(PACKAGES), $(eval $(call STATS_TEMPLATE,$(PKG))))
+endif
 
 stats: $(STTS)
 
@@ -154,6 +156,8 @@ define SUMMARY_TEMPLATE
 	@printf 'class "number" { 2 } { 4 } { 6 }\n\n' >> $$@
 endef
 
-$(foreach PKG, $(PACKAGES), $(eval $(call SUMMARY_TEMPLATE,$(PKG))))
+ifeq ($(MAKECMDGOALS), tbls)
+   $(foreach PKG, $(PACKAGES), $(eval $(call SUMMARY_TEMPLATE,$(PKG))))
+endif
 
 tbls: $(TBLS)

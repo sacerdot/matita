@@ -13,8 +13,8 @@
 (**************************************************************************)
 
 include "basic_2/computation/csn_aaa.ma".
-include "basic_2/computation/xprs_aaa.ma".
-include "basic_2/computation/xprs_cprs.ma".
+include "basic_2/computation/dxprs_lift.ma".
+include "basic_2/computation/dxprs_aaa.ma".
 include "basic_2/equivalence/cpcs_aaa.ma".
 include "basic_2/dynamic/snv.ma".
 
@@ -28,8 +28,8 @@ lemma snv_aaa: ∀h,g,L,T. ⦃h, L⦄ ⊩ T :[g] → ∃A. L ⊢ T ⁝ A.
 | #I #L #K #V #i #HLK #_ * /3 width=6/
 | #a * #L #V #T #_ #_ * #B #HV * #A #HA /3 width=2/
 | #a #L #V #W #W0 #T #U #l #_ #_ #HVW #HW0 #HTU * #B #HV * #X #HT
-  lapply (xprs_aaa h g … HV W0 ?) [ /3 width=3/ ] -W #HW0
-  lapply (xprs_aaa … HT … HTU) -HTU #H
+  lapply (dxprs_aaa h g … HV W0 ?) [ -HTU /2 width=4/ ] -W #HW0 (**) (* auto fail without -HTU *)
+  lapply (dxprs_aaa … HT … HTU) -HTU #H
   elim (aaa_inv_abst … H) -H #B0 #A #H1 #HU #H2 destruct
   lapply (aaa_mono … H1 … HW0) -W0 #H destruct /3 width=4/
 | #L #W #T #U #l #_ #_ #HTU #HUW * #B #HW * #A #HT

@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/static/ssta_ltpss_dx.ma".
-include "basic_2/computation/xprs_lift.ma".
+include "basic_2/computation/dxprs_lift.ma".
 include "basic_2/equivalence/lsubse_ssta.ma".
 include "basic_2/equivalence/fpcs_cpcs.ma".
 include "basic_2/equivalence/lfpcs_fpcs.ma".
@@ -97,7 +97,7 @@ fact ssta_ltpr_tpr_aux: ∀h,g,n. (
   | #b #V2 #W #T2 #T20 #HV12 #HT20 #H1 #H2 destruct
     elim (snv_inv_bind … HT1) -HT1 #HW #HT2
     elim (ssta_inv_bind1 … HTU1) -HTU1 #U2 #HTU2 #H destruct
-    elim (xprs_fwd_abst1 … HTU10) -HTU10 #W0 #U0 #HW0 #H destruct
+    elim (dxprs_inv_abst1 … HTU10) -HTU10 #W0 #U0 #HW0 #_ #H destruct
     lapply (cprs_div … HW10 … HW0) -W0 #HW1
     elim (ssta_fwd_correct … HVW1) <minus_plus_m_m #X1 #HWX1
     elim (snv_ssta … HW) #V #l1 #HWV
@@ -134,47 +134,3 @@ fact ssta_ltpr_tpr_aux: ∀h,g,n. (
   ]
 ]
 qed-.
-(*  
-fact snv_ltpr_tpr_aux: ∀h,g,L,T. (
-                          ∀L1,T1,U1,l. ⦃h, L1⦄ ⊢ T1 •[g, l] U1 →
-                          ∀L2. L1 ➡ L2 → ∀T2. T1 ➡ T2 → ⦃h, L1⦄ ⊩ T1 :[g] →
-                          h ⊢ ⦃L, T⦄ •⭃*[g] ⦃L1 ,T1⦄ →
-                          ∃∃U2. ⦃h, L2⦄ ⊢ T2 •[g, l] U2 & ⦃L1, U1⦄ ⬌* ⦃L2, U2⦄
-                       ) → (
-                          ∀L1,T1. ⦃h, L1⦄ ⊩ T1 :[g] →
-                          ∀L2. L1 ➡ L2 → ∀T2. ⦃h, L2⦄ ⊢ T1 •➡*[g] T2 →
-                          h ⊢ ⦃L, T⦄ •⭃*[g] ⦃L1 ,T1⦄ → ⦃h, L2⦄ ⊩ T2 :[g]
-                       ) →
-                       ∀L1,T1. ⦃h, L1⦄ ⊩ T1 :[g] →
-                       ∀L2. L1 ➡ L2 → ∀T2. T1 ➡ T2 →
-                       L = L1 → T = T1 → ⦃h, L2⦄ ⊩ T2 :[g].
-#h #g #L #T #IH2 #IH1 #L1 #T1 * -L1 -T1
-[ #L1 #k #L2 #_ #X #H #H1 #H2 destruct -IH2 -IH1 -L1
-  >(tpr_inv_atom1 … H) -X //
-| #I #L1 #K1 #V1 #i #HLK1 #HV1 #L2 #HL12 #X #H #H1 #H2 destruct -IH2
-  >(tpr_inv_atom1 … H) -X
-  elim (ltpr_ldrop_conf … HLK1 … HL12) -HL12 #X #H #HLK2
-  elim (ltpr_inv_pair1 … H) -H #K2 #V2 #HK12 #HV12 #H destruct
-  lapply (IH1 … HV1 … HK12 V2 ? ?) -IH1 -HV1 -HK12 /4 width=1/ -HV12 /3 width=4/ -HLK1 /3 width=5/
-| #a #I #L1 #V1 #T1 #HV1 #HT1 #L2 #HL12 #X #H #H1 #H2 destruct -IH2
-  elim (tpr_inv_bind1 … H) -H *
-  [ #V2 #T0 #T2 #HV12 #HT10 #HT02 #H destruct
-    lapply (tps_lsubs_trans … HT02 (L2.ⓑ{I}V2) ?) -HT02 /2 width=1/ #HT02
-    lapply (cpr_intro (L2.ⓑ{I}V2) … T2 0 1 HT10 ?) -HT10 /2 width=1/ -HT02 #HT12
-    lapply (IH1 … HV1 … HL12 V2 ? ?) -HV1 /4 width=1/ #HV2
-    lapply (IH1 … HT1 (L2.ⓑ{I}V2) … T2 ? ?) -IH1 -HT1 /3 width=1/
-  | #T2 #HT12 #HXT2 #H1 #H2 destruct
-    lapply (IH1 … HT1 (L2.ⓓV1) ? T2 ? ?) -IH1 -HT1 /4 width=1/ -HT12 -HL12 #HT2
-    lapply (snv_inv_lift … HT2 L2 … HXT2) -T2 // /2 width=1/
-  ]
-| #a #L1 #V1 #W1 #W10 #T1 #U1 #l #HV1 #HT1 #HVW1 #HW10 #HTU1 #L2 #HL12 #X #H #H1 #H2 destruct
-  elim (tpr_inv_appl1 … H) -H *
-  [ #V2 #T2 #HV12 #HT12 #H destruct
-    lapply (IH1 … HV1 … HL12 V2 ? ?) /4 width=1/ #HV2
-    lapply (IH1 … HT1 … HL12 T2 ? ?) /4 width=1/ #HT2
-    lapply (IH1 … HT1 … HTU1 ?) -IH1 -HT1 // /2 width=1/ #H
-    elim (snv_inv_bind … H) -H #HW10 #HU1
-    elim (IH2 … HVW1 … HL12 … HV12 HV1 ?) -IH2 -HVW1 -HL12 -HV12 -HV1 /2 width=1/ #W2 #HVW2 #HW12
-    lapply (fpcs_canc_sn L1 L1 … W10 … HW12) -HW12 /3 width=1/ -W1 #HW102
-    @(snv_appl … HV2 HT2 HVW2)
-*)

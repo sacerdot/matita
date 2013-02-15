@@ -264,6 +264,10 @@ notation "hvbox( h ⊢ break term 46 L1 • ⊑ [ term 46 g ] break term 46 L2 )
 
 (* Unwind *******************************************************************)
 
+notation "hvbox( ⦃ term 46 h , break term 46 L ⦄ ⊢ break term 46 T1 •* break [ term 46 g ] break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'StaticTypeStar $h $g $L $T1 $T2 }.
+
 notation "hvbox( L1 ⊢ ⧫ * break term 46 T ≡ break term 46 L2 )"
    non associative with precedence 45
    for @{ 'Unwind $L1 $T $L2 }.
@@ -336,10 +340,6 @@ notation "hvbox( ⦃ term 46 L1 ⦄ ➡ ➡ break ⦃ term 46 L2 ⦄ )"
    non associative with precedence 45
    for @{ 'FocalizedPRedAlt $L1 $L2 }.
 
-notation "hvbox( ⦃ term 46 h , break term 46 L ⦄ ⊢ break term 46 T1 • ➡ break [ term 46 g ] break term 46 T2 )"
-   non associative with precedence 45
-   for @{ 'XPRed $h $g $L $T1 $T2 }.
-
 (* Computation **************************************************************)
 
 notation "hvbox( T1 ➡ * break term 46 T2 )"
@@ -394,13 +394,13 @@ notation "hvbox( T1 ⊑ break [ term 46 R ] break term 46 T2 )"
    non associative with precedence 45
    for @{ 'CrSubEq $T1 $R $T2 }.
 
-notation "hvbox( ⦃ term 46 h , break term 46 L ⦄ ⊢ break term 46 T1 • ➡ * break [ term 46 g ] break term 46 T2 )"
+notation "hvbox( ⦃ term 46 h , break term 46 L ⦄ ⊢ break term 46 T1 • * ➡ * break [ term 46 g ] break term 46 T2 )"
    non associative with precedence 45
-   for @{ 'XPRedStar $h $g $L $T1 $T2 }.
+   for @{ 'DecomposedXPRedStar $h $g $L $T1 $T2 }.
 
-notation "hvbox( ⦃ term 46 h , break term 46 L ⦄ ⊢ • ⬊ * break [ term 46 g ] break term 46 T2 )"
+notation "hvbox( ⦃ term 46 h , break term 46 L ⦄ ⊢ • * ⬊ * break [ term 46 g ] break term 46 T2 )"
    non associative with precedence 45
-   for @{ 'XSN $h $g $L $T }.
+   for @{ 'DecomposedXSN $h $g $L $T }.
 
 (* Conversion ***************************************************************)
 
