@@ -21,5 +21,5 @@ include "basic_2/unwind/sstas.ma".
 
 lemma sstas_aaa: ∀h,g,L,T,U. ⦃h, L⦄ ⊢ T •*[g] U →
                  ∀A. L ⊢ T ⁝ A → L ⊢ U ⁝ A.
-#h #g #L #T #U #H @(sstas_ind_alt … H) -T // /3 width=6/
+#h #g #L #T #U #H @(sstas_ind_dx … H) -T // /3 width=6/
 qed.

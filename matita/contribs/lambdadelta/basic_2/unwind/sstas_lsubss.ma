@@ -21,10 +21,10 @@ include "basic_2/unwind/sstas.ma".
 
 lemma lsubss_sstas_trans: ∀h,g,L2,T,U. ⦃h, L2⦄ ⊢ T •*[g] U →
                           ∀L1. h ⊢ L1 •⊑[g] L2 → ⦃h, L1⦄ ⊢ T •*[g] U.
-#h #g #L2 #T #U #H @(sstas_ind_alt … H) -T /3 width=4/ /3 width=5/
+#h #g #L2 #T #U #H @(sstas_ind_dx … H) -T // /3 width=5/
 qed.
 
 lemma lsubss_sstas_conf: ∀h,g,L1,T,U. ⦃h, L1⦄ ⊢ T •*[g] U →
                          ∀L2. h ⊢ L1 •⊑[g] L2 → ⦃h, L2⦄ ⊢ T •*[g] U.
-#h #g #L2 #T #U #H @(sstas_ind_alt … H) -T /3 width=4/ /3 width=5/
+#h #g #L2 #T #U #H @(sstas_ind_dx … H) -T // /3 width=5/
 qed.

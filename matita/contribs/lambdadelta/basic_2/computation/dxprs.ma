@@ -25,15 +25,14 @@ interpretation "decomposed extended parallel computation (term)"
 
 (* Basic properties *********************************************************)
 
-lemma dxprs_refl: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g, l] U → ⦃h, L⦄ ⊢ T •*➡*[g] T.
-/3 width=3/ qed.
+lemma dxprs_refl: ∀h,g,L. reflexive … (dxprs h g L).
+/2 width=3/ qed.
 
 lemma sstas_dxprs: ∀h,g,L,T1,T2. ⦃h, L⦄ ⊢ T1 •*[g] T2 → ⦃h, L⦄ ⊢ T1 •*➡*[g] T2.
 /2 width=3/ qed.
 
-lemma cprs_dxprs: ∀h,g,L,T1,T2,U,l. ⦃h, L⦄ ⊢ T1 •[g, l] U → L ⊢ T1 ➡* T2 →
-                  ⦃h, L⦄ ⊢ T1 •*➡*[g] T2.
-/3 width=3/ qed.
+lemma cprs_dxprs: ∀h,g,L,T1,T2.  L ⊢ T1 ➡* T2 → ⦃h, L⦄ ⊢ T1 •*➡*[g] T2.
+/2 width=3/ qed.
 
 lemma dxprs_strap1: ∀h,g,L,T1,T,T2.
                     ⦃h, L⦄ ⊢ T1 •*➡*[g] T → L ⊢ T ➡ T2 → ⦃h, L⦄ ⊢ T1 •*➡*[g] T2.

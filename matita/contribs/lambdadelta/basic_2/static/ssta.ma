@@ -34,6 +34,9 @@ inductive ssta (h:sh) (g:sd h): nat → lenv → relation term ≝
 interpretation "stratified static type assignment (term)"
    'StaticType h g l L T U = (ssta h g l L T U).
 
+definition ssta_step: ∀h. sd h → lenv → relation term ≝ λh,g,L,T,U.
+                      ∃l. ⦃h, L⦄ ⊢ T •[g, l+1] U.
+
 (* Basic inversion lemmas ************************************************)
 
 fact ssta_inv_sort1_aux: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g, l] U → ∀k0. T = ⋆k0 →

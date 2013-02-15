@@ -22,5 +22,5 @@ include "basic_2/computation/dxprs.ma".
 lemma lsubss_dxprs_trans: ∀h,g,L1,L2. h ⊢ L1 •⊑[g] L2 →
                           ∀T1,T2. ⦃h, L2⦄ ⊢ T1 •*➡*[g] T2 → ⦃h, L1⦄ ⊢ T1 •*➡*[g] T2.
 #h #g #L1 #L2 #HL12 #T1 #T2 *
-lapply (lsubss_fwd_lsubs2 … HL12) /4 width=5/
+lapply (lsubss_fwd_lsubs2 … HL12) /3 width=5/
 qed-.

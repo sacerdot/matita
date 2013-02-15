@@ -39,7 +39,9 @@ fact snv_ltpr_tpr_aux: ∀h,g,n. (
   elim (ltpr_ldrop_conf … HLK1 … HL12) -HL12 #X #H #HLK2
   elim (ltpr_inv_pair1 … H) -H #K2 #V2 #HK12 #HV12 #H destruct
   lapply (ldrop_pair2_fwd_fw … HLK1 (#i)) -HLK1 #HLK1
-  lapply (IH1 … HV1 … HK12 V2 ?) -IH1 -HV1 -HK12 // -L1 -K1 /4 width=1/ -HV12 /2 width=5/
+  lapply (IH1 … HV1 … HK12 V2 ?) -IH1 -HV1 -HK12 //
+  [ @cprs_dxprs /3 width=1/ (**) (* auto: /4 width=1/ fails *)
+  ] -HV12 /2 width=5/
 | #p #Hn #H1 #L2 #HL12 #X #H2 destruct -IH2
   elim (snv_inv_gref … H1)
 | #a #I #V1 #T1 #Hn #H1 #L2 #HL12 #X #H2 destruct -IH2
@@ -48,18 +50,28 @@ fact snv_ltpr_tpr_aux: ∀h,g,n. (
   [ #V2 #T0 #T2 #HV12 #HT10 #HT02 #H destruct
     lapply (tps_lsubs_trans … HT02 (L2.ⓑ{I}V2) ?) -HT02 /2 width=1/ #HT02
     lapply (cpr_intro (L2.ⓑ{I}V2) … T2 0 1 HT10 ?) -HT10 /2 width=1/ -HT02 #HT12
-    lapply (IH1 … HV1 … HL12 V2 ?) -HV1 // /4 width=1/ #HV2
+    lapply (IH1 … HV1 … HL12 V2 ?) -HV1 //
+    [ @cprs_dxprs /3 width=1/ (**) (* auto: /4 width=1/ fails *)
+    ] #HV2
     lapply (IH1 … HT1 (L2.ⓑ{I}V2) … T2 ?) -IH1 -HT1 /3 width=1/
   | #T2 #HT12 #HXT2 #H1 #H2 destruct
-    lapply (IH1 … HT1 (L2.ⓓV1) … T2 ?) -IH1 -HT1 // /4 width=1/ -HT12 -HL12 #HT2
+    lapply (IH1 … HT1 (L2.ⓓV1) … T2 ?) -IH1 -HT1 // /2 width=2/
+    [ @cprs_dxprs /3 width=1/ (**) (* auto: /4 width=1/ fails *)
+    ] -HT12 -HL12 #HT2
     lapply (snv_inv_lift … HT2 L2 … HXT2) -T2 // /2 width=1/
   ]
 | #V1 #T1 #Hn #H1 #L2 #HL12 #X #H2 destruct
   elim (snv_inv_appl … H1) -H1 #a #W10 #W1 #U1 #l #HV1 #HT1 #HVW1 #HW10 #HTU1
   elim (tpr_inv_appl1 … H2) -H2 *
   [ #V2 #T2 #HV12 #HT12 #H destruct
-    lapply (IH1 … HV1 … HL12 V2 ?) // /4 width=1/ #HV2
-    lapply (IH1 … HT1 … HL12 T2 ?) // /4 width=1/ #HT2
+    lapply (IH1 … HV1 … HL12 V2 ?) 
+    [ @cprs_dxprs /3 width=1/ (**) (* auto: /4 width=1/ fails *)
+    | //
+    ] #HV2
+    lapply (IH1 … HT1 … HL12 T2 ?)
+    [ @cprs_dxprs /3 width=1/ (**) (* auto: /4 width=1/ fails *)
+    | //
+    ] #HT2
     lapply (IH1 … HT1 … HTU1) -IH1 // #H
     elim (snv_inv_bind … H) -H #HW1 #HU1
     elim (IH2 … HVW1 … HL12 … HV12 HV1) -IH2 -HVW1 -HV12 -HV1 // #W2 #HVW2 #HW12
