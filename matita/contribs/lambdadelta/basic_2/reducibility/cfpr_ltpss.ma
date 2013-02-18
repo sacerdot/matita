@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/reducibility/cpr_lift.ma".
-include "basic_2/reducibility/cpr_ltpss.ma".
+include "basic_2/reducibility/cpr_ltpss_sn.ma".
 include "basic_2/reducibility/cfpr.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL REDUCTION ON CLOSURES *************************)

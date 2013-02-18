@@ -69,6 +69,11 @@ lemma cprs_flat_dx: ∀I,L,V1,V2. L ⊢ V1 ➡ V2 → ∀T1,T2. L ⊢ T1 ➡* T2
 @(cprs_strap1 … IHT2) -IHT2 /2 width=1/
 qed.
 
+lemma tpss_cprs: ∀L,T1,T2,d,e. L ⊢ T1 ▶*[d, e] T2 → L ⊢ T1 ➡* T2.
+#L #T1 #T2 #d #e #HT12
+lapply (cpr_intro … T1 … HT12) // /2 width=1/
+qed.
+
 (* Basic_1: was: pr3_pr1 *)
 lemma tprs_cprs: ∀T1,T2. T1 ➡* T2 → ∀L. L ⊢ T1 ➡* T2.
 #T1 #T2 #H @(tprs_ind … H) -T2 /2 width=1/ /3 width=3/

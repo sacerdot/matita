@@ -12,28 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reducibility/tpr_tpss.ma".
-include "basic_2/reducibility/cpr.ma".
+include "basic_2/unfold/ltpss_sn_alt.ma".
+include "basic_2/computation/dxprs_ltpss_dx.ma".
 
-(* CONTEXT-SENSITIVE PARALLEL REDUCTION ON TERMS ****************************)
+(* DECOMPOSED EXTENDED PARALLEL COMPUTATION ON TERMS ************************)
 
-(* Properties on partial unfold for terms ***********************************)
+(* Properties about sn parallel unfold **************************************)
 
-lemma cpr_tpss_trans: ∀L,T1,T. L ⊢ T1 ➡ T →
-                      ∀T2,d,e. L ⊢ T ▶* [d, e] T2 → L ⊢ T1 ➡ T2.
-#L #T1 #T * #T0 #HT10 #HT0 #T2 #d #e #HT2
-lapply (tpss_weak_all … HT2) -HT2 #HT2
-lapply (tpss_trans_eq … HT0 HT2) -T /2 width=3/
-qed.
-
-lemma cpr_tps_trans: ∀L,T1,T. L ⊢ T1 ➡ T →
-                     ∀T2,d,e. L ⊢ T ▶ [d, e] T2 → L ⊢ T1 ➡ T2.
-/3 width=5/ qed.
-
-lemma cpr_tpss_conf: ∀L,T0,T1. L ⊢ T0 ➡ T1 →
-                     ∀T2,d,e. L ⊢ T0 ▶* [d, e] T2 →
-                     ∃∃T. L ⊢ T1 ▶* [d, e] T & L ⊢ T2 ➡ T.
-#L #T0 #T1 * #U0 #HTU0 #HU0T1 #T2 #d #e #HT02
-elim (tpr_tpss_conf … HTU0 … HT02) -T0 #T0 #HT20 #HUT0
-elim (tpss_conf_eq … HU0T1 … HUT0) -U0 /3 width=5/
+lemma dxprs_ltpss_sn_conf: ∀h,g,L1,L2,d,e. L1 ⊢ ▶* [d, e] L2 →
+                           ∀T,U1. ⦃h, L1⦄ ⊢ T •*➡*[g] U1 →
+                           ∃∃U2. ⦃h, L2⦄ ⊢ T •*➡*[g] U2 & L1 ⊢ U1 ▶* [d, e] U2.
+#h #g #L1 #L2 #d #e #H
+lapply (ltpss_sn_ltpssa … H) -H #H @(ltpssa_ind … H) -L2 [ /2 width=3/ ]
+#L #L2 #HL1 #HL2 #IHL1 #T #U1 #HTU1
+lapply (ltpssa_ltpss_sn … HL1) -HL1 #HL1
+lapply (ltpss_sn_dx_trans_eq … HL1 … HL2) -HL1 #HL12
+elim (IHL1 … HTU1) -IHL1 -HTU1 #U #HTU #HU1
+elim (dxprs_ltpss_dx_conf … HTU … HL2) -HTU -HL2 #U2 #HTU2 #HU2
+lapply (ltpss_sn_tpss_trans_eq … HU2 … HL12) -HU2 -HL12 #HU2
+lapply (tpss_trans_eq … HU1 HU2) -U /2 width=3/
 qed-.

@@ -12,35 +12,27 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reducibility/ltpr_tps.ma".
-include "basic_2/reducibility/cpr_ltpss_sn.ma".
-include "basic_2/reducibility/lfpr.ma".
+include "basic_2/reducibility/cpr_tpss.ma".
 include "basic_2/computation/cprs.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL COMPUTATION ON TERMS **************************)
 
-(* Properties concerning focalized parallel reduction on local environments *)
+(* Properties on partial unfold for terms ***********************************)
 
-lemma ltpr_tpss_trans: ∀L1,L2. L1 ➡ L2 → ∀T1,T2,d,e. L2 ⊢ T1 ▶* [d, e] T2 →
-                       ∃∃T. L1 ⊢ T1 ▶* [d, e] T & L1 ⊢ T ➡* T2.
-#L1 #L2 #HL12 #T1 #T2 #d #e #H @(tpss_ind … H) -T2
-[ /2 width=3/
-| #T #T2 #_ #HT2 * #T0 #HT10 #HT0
-  elim (ltpr_tps_trans … HT2 … HL12) -L2 #T3 #HT3 #HT32
-  @(ex2_intro … HT10) -T1 (**) (* explicit constructors *)
-  @(cprs_strap1 … T3 …) /2 width=1/ -HT32
-  @(cprs_strap1 … HT0) -HT0 /3 width=3/
-]
+lemma cprs_tpss_trans: ∀L,T1,T. L ⊢ T1 ➡* T →
+                       ∀T2,d,e. L ⊢ T ▶* [d, e] T2 → L ⊢ T1 ➡* T2.
+#L #T1 #T #H @(cprs_ind … H) -T /2 width=3/ /3 width=5/
 qed.
 
-(* Basic_1: was just: pr3_pr0_pr2_t *)
-lemma ltpr_cpr_trans: ∀L1,L2. L1 ➡ L2 → ∀T1,T2. L2 ⊢ T1 ➡ T2 → L1 ⊢ T1 ➡* T2.
-#L1 #L2 #HL12 #T1 #T2 * #T #HT1
-<(ltpr_fwd_length … HL12) #HT2
-elim (ltpr_tpss_trans … HL12 … HT2) -L2 /3 width=3/
-qed.
+lemma cprs_tps_trans: ∀L,T1,T. L ⊢ T1 ➡* T →
+                      ∀T2,d,e. L ⊢ T ▶ [d, e] T2 → L ⊢ T1 ➡* T2.
+/3 width=5 by inj, cprs_tpss_trans/ qed. (**) (* auto too slow without trace *)
 
-(* Basic_1: was just: pr3_pr2_pr2_t *)
-lemma lfpr_cpr_trans: ∀L1,L2. ⦃L1⦄ ➡ ⦃L2⦄ → ∀T1,T2. L2 ⊢ T1 ➡ T2 → L1 ⊢ T1 ➡* T2.
-#L1 #L2 * /3 width=7/
-qed.
+lemma cprs_tpss_conf: ∀L,T0,T1. L ⊢ T0 ➡* T1 →
+                      ∀T2,d,e. L ⊢ T0 ▶* [d, e] T2 →
+                      ∃∃T. L ⊢ T1 ▶* [d, e] T & L ⊢ T2 ➡* T.
+#L #T0 #T1 #H @(cprs_ind … H) -T1 /2 width=3/
+#T #T1 #_ #HT1 #IHT0 #T2 #d #e #HT02
+elim (IHT0 … HT02) -T0 #T0 #HT0 #HT20
+elim (cpr_tpss_conf … HT1 … HT0) -T /3 width=5/
+qed-.

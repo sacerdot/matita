@@ -12,12 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/dynamic/snv_ltpr_1.ma".
 include "basic_2/dynamic/snv_lift.ma".
+include "basic_2/dynamic/snv_fpr_ssta.ma".
 
 (* STRATIFIED NATIVE VALIDITY FOR TERMS *************************************)
 
-(* Properties on context-free parallel reduction for local environments *****)
+(* Properties on context-free parallel reduction for closures ***************)
 
 fact snv_ltpr_tpr_aux: ∀h,g,n. (
                           ∀L1,T1. ♯{L1, T1} < n →

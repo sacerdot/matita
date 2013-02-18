@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unfold/ltpss_sn_alt.ma".
 include "basic_2/reducibility/cpr_tpss.ma".
 include "basic_2/reducibility/cpr_cpr.ma".
 include "basic_2/reducibility/cfpr_ltpss.ma".
@@ -30,7 +29,7 @@ lemma fpr_all: ∀L1,L. L1 ➡ L → ∀L2,T1,T2. L ⊢ T1 ➡ T2 →
 | #I #L1 #L #V1 #V #_ #HV1 #IH #X #T1 #T2 #HT12 #H
   elim (ltpss_sn_inv_tpss21 … H ?) -H // <minus_plus_m_m #L2 #V2 #HL2 #HV2 #H destruct
   lapply (cpr_bind_dx false … HV1 HT12) -HV1 -HT12 #HT12
-  lapply (cpr_tpss_trans … HT12 (-ⓑ{I}V2.T2) ?) -HT12 /2 width=1/ -HV2 /3 width=1/
+  lapply (cpr_tpss_trans … HT12 (-ⓑ{I}V2.T2) 0 (|L|) ?) -HT12 /2 width=1/ -HV2 /3 width=1/
 ]
 qed.
 

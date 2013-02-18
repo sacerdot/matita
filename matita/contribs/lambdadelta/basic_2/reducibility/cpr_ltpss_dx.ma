@@ -12,28 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reducibility/tpr_tpss.ma".
+include "basic_2/unfold/ltpss_dx_ltpss_dx.ma".
 include "basic_2/reducibility/cpr.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL REDUCTION ON TERMS ****************************)
 
-(* Properties on partial unfold for terms ***********************************)
+(* Properties concerning dx partial unfold on local environments ************)
 
-lemma cpr_tpss_trans: ∀L,T1,T. L ⊢ T1 ➡ T →
-                      ∀T2,d,e. L ⊢ T ▶* [d, e] T2 → L ⊢ T1 ➡ T2.
-#L #T1 #T * #T0 #HT10 #HT0 #T2 #d #e #HT2
-lapply (tpss_weak_all … HT2) -HT2 #HT2
-lapply (tpss_trans_eq … HT0 HT2) -T /2 width=3/
-qed.
-
-lemma cpr_tps_trans: ∀L,T1,T. L ⊢ T1 ➡ T →
-                     ∀T2,d,e. L ⊢ T ▶ [d, e] T2 → L ⊢ T1 ➡ T2.
-/3 width=5/ qed.
-
-lemma cpr_tpss_conf: ∀L,T0,T1. L ⊢ T0 ➡ T1 →
-                     ∀T2,d,e. L ⊢ T0 ▶* [d, e] T2 →
-                     ∃∃T. L ⊢ T1 ▶* [d, e] T & L ⊢ T2 ➡ T.
-#L #T0 #T1 * #U0 #HTU0 #HU0T1 #T2 #d #e #HT02
-elim (tpr_tpss_conf … HTU0 … HT02) -T0 #T0 #HT20 #HUT0
-elim (tpss_conf_eq … HU0T1 … HUT0) -U0 /3 width=5/
+lemma ltpss_dx_cpr_conf: ∀L1,T,U1. L1 ⊢ T ➡ U1 →
+                         ∀L2,d,e. L1 ▶* [d, e] L2 →
+                         ∃∃U2. L2 ⊢ T ➡ U2 & L2 ⊢ U1 ▶* [d, e] U2.
+#L1 #T #U1 * #U #HTU #HU1 #L2 #d #e #HL12
+lapply (ltpss_dx_fwd_length … HL12) #H >H in HU1; -H #HU1
+elim (ltpss_dx_tpss_conf … HU1 … HL12) -L1 /3 width=3/
 qed-.
