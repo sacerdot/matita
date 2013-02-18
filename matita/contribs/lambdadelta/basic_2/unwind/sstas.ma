@@ -48,7 +48,7 @@ qed-.
 (* Basic properties *********************************************************)
 
 lemma ssta_sstas: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g, l+1] U → ⦃h, L⦄ ⊢ T •*[g] U.
-/3 width=2/ qed.
+/3 width=2 by R_to_star, ex_intro/ qed. (**) (* auto fails without trace *)
 
 lemma sstas_strap1: ∀h,g,L,T1,T2,U2,l. ⦃h, L⦄ ⊢ T1 •*[g] T2 → ⦃h, L⦄ ⊢ T2 •[g,l+1] U2 →
                     ⦃h, L⦄ ⊢ T1 •*[g] U2.
