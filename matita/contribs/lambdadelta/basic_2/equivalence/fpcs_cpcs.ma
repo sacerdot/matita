@@ -38,7 +38,7 @@ qed.
 (* Advanced inversion lemmas ************************************************)
 
 lemma fpcs_inv_shift: ∀I,L1,L2,V1,V2,T1,T2. ⦃L1.ⓑ{I}V1, T1⦄ ⬌* ⦃L2.ⓑ{I}V2, T2⦄ →
-                         ⦃L1, -ⓑ{I}V1.T1⦄ ⬌* ⦃L2, -ⓑ{I}V2.T2⦄.
+                      ⦃L1, -ⓑ{I}V1.T1⦄ ⬌* ⦃L2, -ⓑ{I}V2.T2⦄.
 #I #L1 #L2 #V1 #V2 #T1 #T2 #H12
 elim (fpcs_inv_fprs … H12) -H12 #L #T #H1 #H2
 elim (fprs_inv_pair1 … H1) -H1 #K1 #U1 #_ #HTU1 #H destruct

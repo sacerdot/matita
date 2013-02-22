@@ -12,17 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/yprs_csups.ma".
-include "basic_2/computation/ysteps.ma".
+include "basic_2/static/ssta.ma".
+include "basic_2/reducibility/cpr.ma".
 
-(* ITERATED STEP OF HYPER PARALLEL COMPUTATION ON CLOSURES ******************)
+(* "BIG TREE" SUCCESSOR ON CLOSURES *****************************************)
 
-(* Properties on iterated supclosure ****************************************)
+inductive ysc (h) (g) (L1) (T1): relation2 lenv term ≝
+| ysc_fw  : ∀L2,T2. ♯{L2, T2} < ♯{L1, T1} → ysc h g L1 T1 L2 T2
+| ysc_cpr : ∀T2. L1 ⊢ T1 ➡ T2 → (T1 = T2 → ⊥) → ysc h g L1 T1 L1 T2
+| ysc_ssta: ∀T2,l. ⦃h, L1⦄ ⊢ T1 •[g, l + 1] T2 → ysc h g L1 T1 L1 T2
+.
 
-lemma csups_ysteps: ∀h,g,L1,L2,T1,T2. ⦃L1, T1⦄ >* ⦃L2, T2⦄ →
-                    h ⊢ ⦃L1, T1⦄ •⭃*[g] ⦃L2, T2⦄.
-#h #g #L1 #L2 #T1 #T2 #H
-lapply (csups_fwd_cw … H) #H1
-@ysteps_intro /2 width=1/ -H #H2 #H3 destruct
-elim (lt_refl_false … H1)
-qed.
+interpretation
+   "'big tree' successor (closure)"
+   'BTSuccessor h g L1 T1 L2 T2 = (ysc h g L1 T1 L2 T2).

@@ -259,6 +259,7 @@ lemma lift_inv_pair_xy_x: ∀d,e,I,V,T. ⇧[d, e] ②{I} V. T ≡ V → ⊥.
 ]
 qed-.
 
+(* Basic_1: was: thead_x_lift_y_y *)
 lemma lift_inv_pair_xy_y: ∀I,T,V,d,e. ⇧[d, e] ②{I} V. T ≡ T → ⊥.
 #J #T elim T -T
 [ * #i #V #d #e #H

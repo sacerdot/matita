@@ -12,14 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unfold/csups.ma".
-include "basic_2/computation/yprs.ma".
+include "basic_2/computation/ygt.ma".
 
-(* HYPER PARALLEL COMPUTATION ON CLOSURES ***********************************)
+(* "BIG TREE" ORDER FOR CLOSURES ********************************************)
 
-(* Properties on iterated supclosure ****************************************)
-
-lemma csups_yprs: ∀h,g,L1,L2,T1,T2. ⦃L1, T1⦄ >* ⦃L2, T2⦄ →
-                  h ⊢ ⦃L1, T1⦄ •⥸*[g] ⦃L2, T2⦄.
-#h #g #L1 #L2 #T1 #T2 #H @(csups_ind … H) -L2 -T2 /3 width=1/ /3 width=4/
-qed.
+theorem ygt_trans: ∀h,g. bi_transitive … (ygt h g).
+/2 width=4/ qed-.

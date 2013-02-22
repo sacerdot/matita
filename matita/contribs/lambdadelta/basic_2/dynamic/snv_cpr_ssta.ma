@@ -21,7 +21,7 @@ include "basic_2/dynamic/snv_ssta.ma".
 
 (* STRATIFIED NATIVE VALIDITY FOR TERMS *************************************)
 
-(* Properties on context-free parallel reduction for closures ***************)
+(* Properties on context-sensitive parallel reduction for terms *************)
 
 fact ssta_ltpr_tpr_aux: ∀h,g,n. (
                            ∀L,T2. ♯{L,T2} < n →
@@ -135,33 +135,7 @@ fact ssta_ltpr_tpr_aux: ∀h,g,n. (
 ]
 qed-.
 
-fact ssta_ltpr_cpr_aux: ∀h,g,n. (
-                           ∀L,T2. ♯{L,T2} < n →
-                           ∀T1. L ⊢ T1 ⬌* T2 → ⦃h, L⦄ ⊩ T1 :[g] → ⦃h, L⦄ ⊩ T2 :[g] →
-                           ∀U1,l1. ⦃h, L⦄ ⊢ T1 •[g, l1] U1 →
-                           ∀U2,l2. ⦃h, L⦄ ⊢ T2 •[g, l2] U2 →
-                           L ⊢ U1 ⬌* U2 ∧ l1 = l2
-                        ) → (
-                           ∀L,T. ♯{L,T} < n → ⦃h, L⦄ ⊩ T :[g] →
-                           ∀U,l. ⦃h, L⦄ ⊢ T •[g, l + 1] U → ⦃h, L⦄ ⊩ U :[g]
-                        ) → (
-                           ∀L1,T1. ♯{L1,T1} < n →
-                           ∀U1,l. ⦃h, L1⦄ ⊢ T1 •[g, l] U1 →
-                           ∀L2. L1 ➡ L2 → ∀T2. L2 ⊢ T1 ➡ T2 → ⦃h, L1⦄ ⊩ T1 :[g] → 
-                           ∃∃U2. ⦃h, L2⦄ ⊢ T2 •[g, l] U2 & ⦃L1, U1⦄ ⬌* ⦃L2, U2⦄
-                        ) →
-                        ∀L1,T1. ♯{L1,T1} = n →
-                        ∀U1,l. ⦃h, L1⦄ ⊢ T1 •[g, l] U1 →
-                        ∀L2. L1 ➡ L2 → ∀T2. L2 ⊢ T1 ➡ T2 → ⦃h, L1⦄ ⊩ T1 :[g] →
-                        ∃∃U2. ⦃h, L2⦄ ⊢ T2 •[g, l] U2 & ⦃L1, U1⦄ ⬌* ⦃L2, U2⦄.
-#h #g #n #IH3 #IH2 #IH1 #L1 #T1 #Hn #U1 #l #HTU1 #L2 #HL12 #T2 * #T0 #HT10 #HT02 #HT1
-elim (ssta_ltpr_tpr_aux … IH3 IH2 … Hn … HTU1 … HL12 … HT10 HT1)
--T1 -IH3 -IH2 -HL12 [2: /3 width=5/ ] -n #U0 #HTU0 #HU10
-elim (ssta_tpss_conf … HTU0 … HT02) -T0 #U2 #HTU2 #HU02
-lapply (fpcs_fpr_strap1 … HU10 L2 U2 ?) -HU10 /2 width=3/ -HTU2 /3 width=3/
-qed-.
-
-fact ssta_fpr_aux: ∀h,g,n. (
+fact ssta_cpr_aux: ∀h,g,n. (
                       ∀L,T2. ♯{L,T2} < n →
                       ∀T1. L ⊢ T1 ⬌* T2 → ⦃h, L⦄ ⊩ T1 :[g] → ⦃h, L⦄ ⊩ T2 :[g] →
                       ∀U1,l1. ⦃h, L⦄ ⊢ T1 •[g, l1] U1 →
@@ -173,17 +147,44 @@ fact ssta_fpr_aux: ∀h,g,n. (
                    ) → (
                       ∀L1,T1. ♯{L1,T1} < n →
                       ∀U1,l. ⦃h, L1⦄ ⊢ T1 •[g, l] U1 →
-                      ∀L2,T2. ⦃L1, T1⦄ ➡ ⦃L2, T2⦄ →  ⦃h, L1⦄ ⊩ T1 :[g] →
+                      ∀L2. ⦃L1⦄ ➡ ⦃L2⦄ → ∀T2. L2 ⊢ T1 ➡ T2 → ⦃h, L1⦄ ⊩ T1 :[g] →
                       ∃∃U2. ⦃h, L2⦄ ⊢ T2 •[g, l] U2 & ⦃L1, U1⦄ ⬌* ⦃L2, U2⦄
                    ) →
                    ∀L1,T1. ♯{L1,T1} = n →
                    ∀U1,l. ⦃h, L1⦄ ⊢ T1 •[g, l] U1 →
-                   ∀L2,T2. ⦃L1, T1⦄ ➡ ⦃L2, T2⦄ → ⦃h, L1⦄ ⊩ T1 :[g] →
-                   ∃∃U2. ⦃h, L2⦄ ⊢ T2 •[g, l] U2 & ⦃L1, U1⦄ ⬌* ⦃L2, U2⦄.
-#h #g #n #IH3 #IH2 #IH1 #L1 #T1 #Hn #U1 #l #HTU1 #L2 #T2 #H12 #HT1
-elim (fpr_inv_all … H12) -H12 #L #HL1 #HT12 #HL2
-elim (ssta_ltpr_cpr_aux … IH3 IH2 … Hn … HTU1 … HL1 … HT12 HT1)
--T1 -IH3 -IH2 -HL1 [2: /3 width=5/ ] -n #U #HTU #HU1
-elim (ssta_ltpss_sn_conf … HTU … HL2) -HTU #U2 #HTU2 #HU2
-lapply (fpcs_fpr_strap1 … HU1 L2 U2 ?) -HU1 /2 width=3/ -HTU2 /3 width=4/
+                   ∀T2. L1 ⊢ T1 ➡ T2 → ⦃h, L1⦄ ⊩ T1 :[g] →
+                   ∃∃U2. ⦃h, L1⦄ ⊢ T2 •[g, l] U2 & L1 ⊢ U1 ⬌* U2.
+#h #g #n #IH3 #IH2 #IH1 #L1 #T1 #Hn #U1 #l #HTU1 #T2 * #T0 #HT10 #HT02 #HT1
+elim (ssta_ltpr_tpr_aux … IH3 IH2 … Hn … HTU1  … HT10 HT1)
+-T1 -IH3 -IH2 [3: // |2: skip |4: /3 width=5/ ] -n #U0 #HTU0 #HU10
+lapply (fpcs_inv_cpcs … HU10) -HU10 #HU10
+elim (ssta_tpss_conf … HTU0 … HT02) -T0 #U2 #HTU2 #HU02
+lapply (cpcs_cpr_strap1 … HU10 U2 ?) -HU10 /2 width=3/
+qed-.
+
+fact ssta_lfpr_aux: ∀h,g,n. (
+                       ∀L,T2. ♯{L,T2} < n →
+                       ∀T1. L ⊢ T1 ⬌* T2 → ⦃h, L⦄ ⊩ T1 :[g] → ⦃h, L⦄ ⊩ T2 :[g] →
+                       ∀U1,l1. ⦃h, L⦄ ⊢ T1 •[g, l1] U1 →
+                       ∀U2,l2. ⦃h, L⦄ ⊢ T2 •[g, l2] U2 →
+                       L ⊢ U1 ⬌* U2 ∧ l1 = l2
+                    ) → (
+                       ∀L,T. ♯{L,T} < n → ⦃h, L⦄ ⊩ T :[g] →
+                       ∀U,l. ⦃h, L⦄ ⊢ T •[g, l + 1] U → ⦃h, L⦄ ⊩ U :[g]
+                    ) → (
+                       ∀L1,T1. ♯{L1,T1} < n →
+                       ∀U1,l. ⦃h, L1⦄ ⊢ T1 •[g, l] U1 →
+                       ∀L2. ⦃L1⦄ ➡ ⦃L2⦄ → ∀T2. L2 ⊢ T1 ➡ T2 → ⦃h, L1⦄ ⊩ T1 :[g] →
+                       ∃∃U2. ⦃h, L2⦄ ⊢ T2 •[g, l] U2 & ⦃L1, U1⦄ ⬌* ⦃L2, U2⦄
+                    ) →
+                    ∀L1,T1. ♯{L1,T1} = n →
+                    ∀U1,l. ⦃h, L1⦄ ⊢ T1 •[g, l] U1 →
+                    ∀L2. ⦃L1⦄ ➡ ⦃L2⦄ → ⦃h, L1⦄ ⊩ T1 :[g] →
+                    ∃∃U2. ⦃h, L2⦄ ⊢ T1 •[g, l] U2 & ⦃L1, U1⦄ ⬌* ⦃L2, U2⦄.
+#h #g #n #IH3 #IH2 #IH1 #L1 #T1 #Hn #U1 #l #HTU1 #L2 * #L #HL1 #HL2 #HT1
+elim (ssta_ltpr_tpr_aux … IH3 IH2 … Hn … HTU1 … HL1 … HT1) -HTU1 -HL1 -HT1
+-IH3 -IH2 [3: // |2: skip |4: /3 width=5/ ] -n #U0 #HTU0 #HU10
+elim (ssta_ltpss_sn_conf … HTU0 … HL2) -HTU0 #U2 #HTU2 #HU02
+lapply (fpcs_fpr_strap1 … HU10 L U2 ?) -HU10 /3 width=3/ -HU02 #HU12
+lapply (fpcs_fpr_strap1 … HU12 L2 U2 ?) /2 width=3/ -h -L1 -T1 -U1 -U0 -l /3 width=4/
 qed-.

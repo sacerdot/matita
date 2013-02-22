@@ -44,9 +44,8 @@ arity/subst0 arity_fsubst0
 arity/subst0 arity_subst0
 asucc/fwd asucc_gen_sort
 asucc/fwd asucc_gen_head
+
 cnt/props cnt_lift
-C/props clt_wf__q_ind
-C/props clt_wf_ind
 
 csuba/arity csuba_arity
 csuba/arity csuba_arity_rev
@@ -119,7 +118,6 @@ leq/props leq_ahead_false_2
 lift1/fwd lift1_cons_tail
 lift1/fwd lifts1_nil
 lift1/fwd lifts1_cons
-lift/props thead_x_lift_y_y
 lift/props lifts_tapp
 lift/props lifts_inj
 llt/props lweight_repl

@@ -12,14 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/dynamic/snv_lift.ma".
-include "basic_2/dynamic/snv_fpr_ssta.ma".
+include "basic_2/dynamic/snv_ltpss_sn.ma".
+include "basic_2/dynamic/snv_cpr_ssta.ma".
 
 (* STRATIFIED NATIVE VALIDITY FOR TERMS *************************************)
 
 (* Properties on context-free parallel reduction for closures ***************)
 
-fact snv_ltpr_tpr_aux: ∀h,g,n. (
+axiom snv_ltpr_tpr_aux: ∀h,g,n. (
                           ∀L1,T1. ♯{L1, T1} < n →
                           ∀U1,l. ⦃h, L1⦄ ⊢ T1 •[g, l] U1 →
                           ∀L2. L1 ➡ L2 → ∀T2. T1 ➡ T2 → ⦃h, L1⦄ ⊩ T1 :[g] →
@@ -30,6 +30,7 @@ fact snv_ltpr_tpr_aux: ∀h,g,n. (
                        ) →
                        ∀L1,T1. ♯{L1, T1} = n → ⦃h, L1⦄ ⊩ T1 :[g] →
                        ∀L2. L1 ➡ L2 → ∀T2. T1 ➡ T2 → ⦃h, L2⦄ ⊩ T2 :[g].
+(*
 #h #g #n #IH2 #IH1 #L1 * * [||||*]
 [ #k #Hn #H1 #L2 #_ #X #H2 destruct -IH2 -IH1 -L1
   >(tpr_inv_atom1 … H2) -X //
@@ -77,3 +78,36 @@ fact snv_ltpr_tpr_aux: ∀h,g,n. (
     elim (IH2 … HVW1 … HL12 … HV12 HV1) -IH2 -HVW1 -HV12 -HV1 // #W2 #HVW2 #HW12
     lapply (fpcs_canc_sn L1 L1 … W10 W1 … HW12) -HW12 /3 width=1/ -W10 #HW12
     @(snv_appl … HV2 HT2 HVW2)
+*)
+
+fact snv_cpr_aux: ∀h,g,n. (
+                     ∀L1,T1. ♯{L1, T1} < n →
+                     ∀U1,l. ⦃h, L1⦄ ⊢ T1 •[g, l] U1 →
+                     ∀L2. ⦃L1⦄ ➡ ⦃L2⦄ → ∀T2. L2 ⊢ T1 ➡ T2 → ⦃h, L1⦄ ⊩ T1 :[g] →
+                     ∃∃U2. ⦃h, L2⦄ ⊢ T2 •[g, l] U2 & ⦃L1, U1⦄ ⬌* ⦃L2, U2⦄
+                  ) → (
+                     ∀L1,T1. ♯{L1, T1} < n → ⦃h, L1⦄ ⊩ T1 :[g] →
+                     ∀L2. ⦃L1⦄ ➡ ⦃L2⦄ → ∀T2. ⦃h, L2⦄ ⊢ T1 •*➡*[g] T2 → ⦃h, L2⦄ ⊩ T2 :[g]
+                  ) →
+                  ∀L1,T1. ♯{L1, T1} = n → ⦃h, L1⦄ ⊩ T1 :[g] →
+                  ∀T2. L1 ⊢ T1 ➡ T2 → ⦃h, L1⦄ ⊩ T2 :[g].
+#h #g #n #IH2 #IH1 #L1 #T1 #Hn #HT1 #T2 * #T0 #HT10 #HT02
+lapply (snv_ltpr_tpr_aux  … Hn HT1 … HT10) -Hn -HT1 -HT10 [ // | skip | /3 width=6/ | /3 width=5/ ] -n -T1 #HT0
+lapply (snv_tpss_conf … HT0 … HT02) -T0 //
+qed-.
+
+fact snv_lfpr_aux: ∀h,g,n. (
+                      ∀L1,T1. ♯{L1, T1} < n →
+                      ∀U1,l. ⦃h, L1⦄ ⊢ T1 •[g, l] U1 →
+                      ∀L2. ⦃L1⦄ ➡ ⦃L2⦄ → ∀T2. L2 ⊢ T1 ➡ T2 → ⦃h, L1⦄ ⊩ T1 :[g] →
+                      ∃∃U2. ⦃h, L2⦄ ⊢ T2 •[g, l] U2 & ⦃L1, U1⦄ ⬌* ⦃L2, U2⦄
+                   ) → (
+                      ∀L1,T1. ♯{L1, T1} < n → ⦃h, L1⦄ ⊩ T1 :[g] →
+                      ∀L2. ⦃L1⦄ ➡ ⦃L2⦄  → ∀T2. ⦃h, L2⦄ ⊢ T1 •*➡*[g] T2 → ⦃h, L2⦄ ⊩ T2 :[g]
+                   ) →
+                   ∀L1,T1. ♯{L1, T1} = n → ⦃h, L1⦄ ⊩ T1 :[g] →
+                   ∀L2. ⦃L1⦄ ➡ ⦃L2⦄ → ⦃h, L2⦄ ⊩ T1 :[g].
+#h #g #n #IH2 #IH1 #L1 #T1 #Hn #HT1 #L2 * #L #HL1 #HL2
+lapply (snv_ltpr_tpr_aux  … Hn HT1 … HL1 ??) -Hn -HT1 -HL1 [ // | skip | /3 width=6/ | /3 width=5/ ] -n -L1 #HT1
+lapply (snv_ltpss_sn_conf … HL2 … HT1) -L //
+qed-.
