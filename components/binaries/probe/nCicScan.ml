@@ -9,15 +9,16 @@
      \ /   This software is distributed as is, NO WARRANTY.     
       V_______________________________________________________________ *)
 
-module L = List
+module L  = List
 
-module U = NUri
-module R = NReference
-module C = NCic
-module P = NCicPp
-module E = NCicEnvironment
+module U  = NUri
+module US = U.UriSet
+module R  = NReference
+module C  = NCic
+module P  = NCicPp
+module E  = NCicEnvironment
 
-module O = Options
+module O  = Options
 
 let status = new P.status
 
@@ -50,7 +51,7 @@ let scan_gref a = function
    | R.Ref (u, R.Def _)
    | R.Ref (u, R.Fix _)
    | R.Ref (u, R.CoFix _) ->
-      if L.exists (U.eq u) !O.objs then a else succ a
+      if US.mem u !O.objs then a else succ a
 
 let rec scan_term a = function
    | []                                 -> a
@@ -70,7 +71,7 @@ let rec scan_term a = function
    | (c, C.LetIn (s, t0, t1, t2)) :: tl ->
       scan_term a ((c, t0) :: (c, t1) :: ((s, C.Def (t1, t0)) :: c, t2) :: tl)
 
-let scan_obj a u = 
+let scan_obj u a = 
    let _, _, _, _, obj = E.get_checked_obj status u in 
    match obj with
       | C.Constant (_, _, None, t, _)     ->
@@ -94,5 +95,5 @@ let accept_obj u =
 
 let scan () = 
    if !O.exclude <> [] then 
-      O.objs := L.filter accept_obj !O.objs;
-   O.net := L.fold_left scan_obj !O.net !O.objs
+      O.objs := US.filter accept_obj !O.objs;
+   O.net := US.fold scan_obj !O.objs !O.net

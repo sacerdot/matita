@@ -32,9 +32,13 @@ let init registry =
    C.set_trust trusted;
    H.set_log_callback no_log
 
-let scan str =
-   M.from_string (R.get "matita.basedir") str;
+let scan_uri devel str =
+   M.from_string (R.get "matita.basedir") devel str;
    S.scan ()
+
+let scan_from devel =
+   let devel, uri = E.get_uri devel in
+   scan_uri devel uri
 
 let set_g () = O.exclude := `Generated :: !O.exclude
 
@@ -46,12 +50,14 @@ let out_on () = E.out_length !O.objs
 
 let out_os () = E.out_uris !O.objs
 
-let out_sn () = E.out_length !O.srcs
+let out_sn () = E.out_length !O.srcs 
 
 let out_ss () = E.out_uris !O.srcs
 
 let process s =
-   if L.is_uri s then scan s else init s
+   if L.is_uri s then scan_uri "" s
+   else if E.is_registry s then init s
+   else scan_from s
 
 let _ =
    let help = "Usage: probe [ -X | <configuration file> | -gp | HELM (base)uri | -i | -on | os | -sn | -ss  ]*" in
@@ -67,9 +73,9 @@ let _ =
       "-X" , A.Unit O.clear, help_X;
       "-g" , A.Unit set_g, help_g;
       "-i" , A.Unit out_i, help_i;
-      "-p" , A.Unit set_p, help_p;      
       "-on", A.Unit out_on, help_on;
       "-os", A.Unit out_os, help_os;
+      "-p" , A.Unit set_p, help_p;      
       "-sn", A.Unit out_sn, help_sn;
       "-ss", A.Unit out_ss, help_ss;
    ] process help

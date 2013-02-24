@@ -9,7 +9,7 @@ MAC_DIR  = ../../../components/binaries/mac
 MAC      = mac.native
 PRB_DIR  = ../../../components/binaries/probe
 PRB      = probe.native
-PRB_OPTS = ../../matita.conf.xml -g cic:/matita/lambdadelta/
+PRB_OPTS = ../../matita.conf.xml -g
 
 XOA_CONF    = ground_2/xoa.conf.xml
 XOA_TARGETS = ground_2/xoa_notation.ma ground_2/xoa.ma
@@ -61,7 +61,7 @@ define STATS_TEMPLATE
   $$(STT_$(1)): S1 = $$(shell $$(MAC_DIR)/$$(MAC) $$(MAS_$(1)))
   $$(STT_$(1)): S2 := $$(shell echo $$$$(($$(S1) / 5120)))
   $$(STT_$(1)): S4 := $$(shell ls $$(MAS_$(1)) | wc -l)
-  $$(STT_$(1)): S5 := $$(shell $$(PRB_DIR)/$$(PRB) $$(PRB_OPTS)$(1)/ -sn -on)  
+  $$(STT_$(1)): S5 := $$(shell $$(PRB_DIR)/$$(PRB) $$(PRB_OPTS) $(1) -sn -on)  
   $$(STT_$(1)): P1 := $$(shell grep "theorem " $$(MAS_$(1)) | wc -l)
   $$(STT_$(1)): P2 := $$(shell grep "lemma " $$(MAS_$(1)) | wc -l)
   $$(STT_$(1)): P3 := $$(shell grep "fact " $$(MAS_$(1)) | wc -l)
@@ -120,7 +120,7 @@ define SUMMARY_TEMPLATE
 
   $$(TBL_$(1)): S1 := $$(shell ls $$(MAS_$(1)) | wc -l)
   $$(TBL_$(1)): S2 := $$(shell $$(MAC_DIR)/$$(MAC) $$(MAS_$(1)))
-  $$(TBL_$(1)): S3 := $$(shell $$(PRB_DIR)/$$(PRB) $$(PRB_OPTS)$(1)/ -i)
+  $$(TBL_$(1)): S3 := $$(shell $$(PRB_DIR)/$$(PRB) $$(PRB_OPTS) $(1) -i)
   $$(TBL_$(1)): C1 := $$(shell grep "inductive \|record " $$(MAS_$(1)) | wc -l)
   $$(TBL_$(1)): C2 := $$(shell grep "definition \|let rec " $$(MAS_$(1)) | wc -l)
   $$(TBL_$(1)): C3 := $$(shell grep "inductive \|record \|definition \|let rec " $$(MAS_$(1)) | wc -l)

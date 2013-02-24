@@ -23,3 +23,4 @@ val hash: uri -> int
 
 module UriHash: Hashtbl.S with type key = uri
 module UriMap: Map.S with type key = uri
+module UriSet: Set.S with type elt = uri

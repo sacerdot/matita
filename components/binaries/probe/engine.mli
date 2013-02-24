@@ -9,8 +9,16 @@
      \ /   This software is distributed as is, NO WARRANTY.     
       V_______________________________________________________________ *)
 
-val out_uris: NUri.uri list -> unit
-
 val out_int: int -> unit
 
-val out_length: 'a list -> unit
+val out_length: NUri.UriSet.t -> unit
+
+val out_uris: NUri.UriSet.t -> unit
+
+val is_registry: string -> bool
+
+val get_uri: string -> string * string
+
+val unsupported: string -> 'a
+
+val missing: string -> 'a

@@ -9,9 +9,11 @@
      \ /   This software is distributed as is, NO WARRANTY.     
       V_______________________________________________________________ *)
 
-let default_objs = []
+module US = NUri.UriSet
 
-let default_srcs = []
+let default_objs = US.empty
+
+let default_srcs = US.empty
 
 let default_exclude = []
 
@@ -24,6 +26,8 @@ let srcs = ref default_srcs
 let exclude = ref default_exclude
 
 let net = ref default_net
+
+let no_devel = ref true
 
 let clear () =
    objs := default_objs; srcs := default_srcs;

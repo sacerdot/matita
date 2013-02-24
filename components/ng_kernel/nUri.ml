@@ -59,3 +59,4 @@ end;;
 
 module UriHash = Hashtbl.Make(HT);;
 module UriMap = Map.Make(HT);;
+module UriSet = Set.Make(HT);;

@@ -9,6 +9,6 @@
      \ /   This software is distributed as is, NO WARRANTY.     
       V_______________________________________________________________ *)
 
-val from_uri: string -> NUri.uri -> unit
+val from_uri: string -> string -> NUri.uri -> unit
 
-val from_string: string -> string -> unit
+val from_string: string -> string -> string -> unit
