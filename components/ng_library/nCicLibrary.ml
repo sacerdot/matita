@@ -195,6 +195,16 @@ let dump_obj status obj =
  status#set_dump {status#dump with objs = obj::status#dump.objs }
 ;;
 
+let remove_objects ~baseuri =
+   let uri = NUri.string_of_uri baseuri in   
+   let path = String.sub uri 4 (String.length uri - 4) in
+   let path = Helm_registry.get "matita.basedir" ^ path in
+   let map name = Sys.remove (Filename.concat path name) in
+   if HExtlib.is_dir path && HExtlib.is_regular (path ^ ".ng") then begin
+      HLog.warn ("removing contents of baseuri: " ^ uri);
+      Array.iter map (Sys.readdir path)
+   end
+
 module type SerializerType =
  sig
   type dumpable_status
@@ -250,6 +260,7 @@ module Serializer(D: sig type dumpable_s = private #dumpable_status end) =
    let ch = open_out (ng_path_of_baseuri baseuri) in
    Marshal.to_channel ch (magic,(status#dump.dependencies,status#dump.objs)) [];
    close_out ch;
+   remove_objects ~baseuri; (* FG: we remove the old objects before putting the new ones*)
    List.iter
     (function 
      | `Obj (uri,obj) ->
@@ -384,4 +395,4 @@ let get_obj status u =
    raise (NCicEnvironment.ObjectNotFound (lazy (NUri.string_of_uri u)))
 ;;
 
-NCicEnvironment.set_get_obj get_obj;;
+NCicEnvironment.set_get_obj get_obj
