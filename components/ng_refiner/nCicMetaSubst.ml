@@ -47,10 +47,13 @@ let outside exc_opt =
 exception MetaSubstFailure of string Lazy.t
 exception Uncertain of string Lazy.t
 
-let newmeta,maxmeta = 
+let newmeta,maxmeta,pushmaxmeta,popmaxmeta = 
   let maxmeta = ref 0 in
+  let pushedmetas = ref [] in
   (fun () -> incr maxmeta; !maxmeta),
-  (fun () -> !maxmeta)
+  (fun () -> !maxmeta),
+  (fun () -> pushedmetas := !maxmeta::!pushedmetas; maxmeta := 0),
+  (fun () -> match !pushedmetas with [] -> assert false | hd::tl -> pushedmetas := tl)
 ;;
 
 exception NotFound of [`NotInTheList | `NotWellTyped];;

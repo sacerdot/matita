@@ -19,6 +19,10 @@ val debug: bool ref
 (* the index of the last created meta *)
 val maxmeta: unit -> int
 
+(* Bad, this should be made functional and put in the status! *)
+val pushmaxmeta: unit -> unit
+val popmaxmeta: unit -> unit
+
 (* the delift function takes in input a metavariable index, a local_context
  * and a term t, and substitutes every subterm t' of t with its position 
  * (searched up-to unification) in
