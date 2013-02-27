@@ -1158,9 +1158,8 @@ let extract_fixpoint status uri height fix_or_cofix is_projection ifl =
      let _,head = split_all_prods status ~subst:[] [] ti.(i) in
      match head with
         NCic.Sort _ ->
-         (*let n = type_scheme_nb_args status [] typ in*)
-         (*let ids = iterate (fun l -> anonymous_name::l) n [] in*)
-         let ids = [] in
+         let n = type_scheme_nb_args status [] ti.(i) in
+         let ids = iterate (fun l -> anonymous_name::l) n [] in
          status,`Type (Dtype (vkn.(i), ids, Tunknown))
       | _ ->
         if sort_of status [] ti.(i) <> InProp then
