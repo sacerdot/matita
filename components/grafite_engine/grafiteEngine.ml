@@ -549,6 +549,14 @@ let compute_relevance status uri =
       NCic.Inductive (ind,leftno,tys,attrs)
 ;;
 
+let extract_uris status uris =
+ List.fold_left
+  (fun status uri ->
+    let obj = NCicEnvironment.get_checked_obj status uri in
+     let status = eval_extract_obj status obj in
+      eval_extract_ocaml_obj status obj
+  ) status uris
+;;
 
 let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
   match cmd with
@@ -590,17 +598,15 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
        in
        status, o_t, NotationPt.NCic ty, source, target
      in
-     let status, composites =
-      NCicCoercDeclaration.eval_ncoercion status name compose t ty source
-       target
-     in
-     let mode = GrafiteAst.WithPreferences in (* MATITA 1.0: fixme *)
-     let aliases = GrafiteDisambiguate.aliases_for_objs status composites in
-      eval_alias status (mode,aliases)
+      let cmd = 
+       GrafiteAst.NCoercion (loc, name, compose, Some (t, ty, source, target))
+      in
+      eval_ncommand ~include_paths opts status (text,prefix_len,cmd)
   | GrafiteAst.NCoercion (loc, name, compose, Some (t, ty, source, target)) ->
      let status, composites =
       NCicCoercDeclaration.eval_ncoercion status name compose t ty source
        target in
+     let status = extract_uris status composites in
      let mode = GrafiteAst.WithPreferences in (* MATITA 1.0: fixme *)
      let aliases = GrafiteDisambiguate.aliases_for_objs status composites in
       eval_alias status (mode,aliases)
@@ -688,7 +694,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
                 else
                   nstatus
                with
-               | MultiPassDisambiguator.DisambiguationError _ as e ->
+               | MultiPassDisambiguator.DisambiguationError _ ->
                   HLog.warn "error in disambiguating projection/eliminator";
                   status
                | NCicTypeChecker.TypeCheckerFailure _ ->
@@ -808,14 +814,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
                      basic_eval_and_record_ncoercion_from_t_cpos_arity 
                       status (name,true,t,cpos,arity) in
                  let aliases = GrafiteDisambiguate.aliases_for_objs status nuris in
-                 let status =
-                  List.fold_left
-                   (fun status uri ->
-                     let obj = NCicEnvironment.get_checked_obj status uri in
-                      let status = eval_extract_obj status obj in
-                       eval_extract_ocaml_obj status obj
-                   ) status nuris
-                 in
+                 let status = extract_uris status nuris in
                   eval_alias status (mode,aliases)
                with MultiPassDisambiguator.DisambiguationError _-> 
                  HLog.warn ("error in generating coercion: "^name);
