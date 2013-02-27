@@ -241,6 +241,9 @@ and compile ~compiling ~asserted ~include_paths fname =
   if Http_getter_storage.is_read_only baseuri then assert false;
   (* MATITA 1.0: debbo fare time_travel sulla ng_library? *)
   let status = new status baseuri in
+  (*CSC: bad, one imperative bit is still there!
+         to be moved into functional status *)
+  NCicMetaSubst.pushmaxmeta ();
   let ocamldirname = Filename.dirname fname in
   let ocamlfname = Filename.chop_extension (Filename.basename fname) in
   let status,ocamlfname =
@@ -305,17 +308,23 @@ and compile ~compiling ~asserted ~include_paths fname =
      HLog.message 
        (sprintf "execution of %s completed in %s." fname (hou^min^sec));
      pp_times s fname true big_bang big_bang_u big_bang_s;
-     asserted
+     (*CSC: bad, one imperative bit is still there!
+            to be moved into functional status *)
+     NCicMetaSubst.pushmaxmeta ();
 (* MATITA 1.0: debbo fare time_travel sulla ng_library?
      LexiconSync.time_travel 
        ~present:lexicon_status ~past:initial_lexicon_status;
-*))
+*)
+     asserted)
   with 
   (* all exceptions should be wrapped to allow lexicon-undo (LS.time_travel) *)
   | exn when not matita_debug ->
 (* MATITA 1.0: debbo fare time_travel sulla ng_library?
        LexiconSync.time_travel ~present:lexicon ~past:initial_lexicon_status;
  *       *)
+      (*CSC: bad, one imperative bit is still there!
+             to be moved into functional status *)
+      NCicMetaSubst.pushmaxmeta ();
       pp_times s fname false big_bang big_bang_u big_bang_s;
       clean_exit baseuri exn
 
