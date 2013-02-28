@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "background/preamble.ma".
+include "lambda/background/preamble.ma".
 
 (* SUBSETS OF SUBTERMS ******************************************************)
 

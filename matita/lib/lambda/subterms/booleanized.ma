@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "subterms/boolean.ma".
+include "lambda/subterms/boolean.ma".
 
 (* BOOLEANIZED SUBSET (EMPTY OR FULL) ***************************************)
 

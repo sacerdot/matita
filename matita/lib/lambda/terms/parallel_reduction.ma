@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "terms/size.ma".
-include "terms/sequential_reduction.ma".
+include "lambda/terms/size.ma".
+include "lambda/terms/sequential_reduction.ma".
 
 (* PARALLEL REDUCTION (SINGLE STEP) *****************************************)
 

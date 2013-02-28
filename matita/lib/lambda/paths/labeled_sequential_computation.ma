@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "terms/labeled_sequential_computation.ma".
-include "paths/trace.ma".
-include "paths/labeled_sequential_reduction.ma".
+include "lambda/terms/labeled_sequential_computation.ma".
+include "lambda/paths/trace.ma".
+include "lambda/paths/labeled_sequential_reduction.ma".
 
 (* PATH-LABELED SEQUENTIAL COMPUTATION (MULTISTEP) *******************************)
 

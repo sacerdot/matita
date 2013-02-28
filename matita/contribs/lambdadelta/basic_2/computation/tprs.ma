@@ -43,6 +43,9 @@ qed-.
 lemma tprs_refl: reflexive … tprs.
 /2 width=1/ qed.
 
+lemma tpr_tprs: ∀T1,T2. T1 ➡ T2 → T2 ➡* T2.
+/2 width=1/ qed.
+
 lemma tprs_strap1: ∀T1,T,T2. T1 ➡* T → T ➡ T2 → T1 ➡* T2.
 /2 width=3/ qed.
 

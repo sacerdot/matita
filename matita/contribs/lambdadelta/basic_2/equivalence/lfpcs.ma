@@ -41,8 +41,11 @@ qed-.
 lemma lfpcs_refl: reflexive … lfpcs.
 /2 width=1/ qed.
 
-lemma lfprs_sym: symmetric … lfpcs.
+lemma lfpcs_sym: symmetric … lfpcs.
 /3 width=1/ qed.
+
+lemma lfpc_lfpcs: ∀L1,L2. ⦃L1⦄ ⬌ ⦃L2⦄ → ⦃L1⦄ ⬌* ⦃L2⦄.
+/2 width=1/ qed.
 
 lemma lfpcs_strap1: ∀L1,L,L2. ⦃L1⦄ ⬌* ⦃L⦄ → ⦃L⦄ ⬌ ⦃L2⦄ → ⦃L1⦄ ⬌* ⦃L2⦄.
 /2 width=3/ qed.

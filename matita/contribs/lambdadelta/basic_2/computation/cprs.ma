@@ -17,7 +17,6 @@ include "basic_2/computation/tprs.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL COMPUTATION ON TERMS **************************)
 
-(* Basic_1: includes: pr3_pr2 *)
 definition cprs: lenv → relation term ≝
                  λL. TC … (cpr L).
 
@@ -41,6 +40,10 @@ lemma cprs_ind_dx: ∀L,T2. ∀R:predicate term. R T2 →
 qed-.
 
 (* Basic properties *********************************************************)
+
+(* Basic_1: was: pr3_pr2 *)
+lemma cpr_cprs: ∀L,T1,T2. L ⊢ T1 ➡ T2 → L ⊢ T1 ➡* T2.
+/2 width=1/ qed.
 
 (* Basic_1: was: pr3_refl *)
 lemma cprs_refl: ∀L,T. L ⊢ T ➡* T.

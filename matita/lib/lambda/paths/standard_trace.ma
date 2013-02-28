@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "paths/trace.ma".
-include "paths/standard_order.ma".
+include "lambda/paths/trace.ma".
+include "lambda/paths/standard_order.ma".
 
 (* STANDARD TRACE ***********************************************************)
 

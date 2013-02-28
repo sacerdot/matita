@@ -40,6 +40,9 @@ qed-.
 
 (* Basic properties *********************************************************)
 
+lemma lfpr_lfprs: ∀L1,L2. ⦃L1⦄ ➡ ⦃L2⦄ → ⦃L1⦄ ➡* ⦃L2⦄.
+/2 width=1/ qed.
+
 lemma lfprs_refl: ∀L. ⦃L⦄ ➡* ⦃L⦄.
 /2 width=1/ qed.
 

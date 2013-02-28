@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "terms/relocating_substitution.ma".
-include "subterms/relocating_substitution.ma".
+include "lambda/terms/relocating_substitution.ma".
+include "lambda/subterms/relocating_substitution.ma".
 
 (* CARRIER (UNDERLYING TERM) ************************************************)
 

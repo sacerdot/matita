@@ -44,7 +44,7 @@ theorem lfpcs_trans: ∀L1,L. ⦃L1⦄ ⬌* ⦃L⦄ → ∀L2. ⦃L⦄ ⬌* ⦃L
 /2 width=3/ qed.
 
 theorem lfpcs_canc_sn: ∀L,L1,L2. ⦃L⦄ ⬌* ⦃L1⦄ → ⦃L⦄ ⬌* ⦃L2⦄ → ⦃L1⦄ ⬌* ⦃L2⦄.
-/3 width=3 by lfpcs_trans, lfprs_sym/ qed.
+/3 width=3 by lfpcs_trans, lfpcs_sym/ qed.
 
 theorem lfpcs_canc_dx: ∀L,L1,L2. ⦃L1⦄ ⬌* ⦃L⦄ → ⦃L2⦄ ⬌* ⦃L⦄ → ⦃L1⦄ ⬌* ⦃L2⦄.
-/3 width=3 by lfpcs_trans, lfprs_sym/ qed.
+/3 width=3 by lfpcs_trans, lfpcs_sym/ qed.

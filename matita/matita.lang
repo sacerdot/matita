@@ -82,7 +82,8 @@
          <keyword>inductive</keyword>
          <keyword>coinductive</keyword>
          <keyword>let</keyword>
-         <keyword>lemma</keyword>
+         <keyword>fact</keyword>
+	 <keyword>lemma</keyword>
          <keyword>remark</keyword>
          <keyword>axiom</keyword>
 

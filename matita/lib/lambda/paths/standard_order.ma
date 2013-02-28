@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "paths/standard_precedence.ma".
+include "lambda/paths/standard_precedence.ma".
 
 (* STANDARD ORDER ************************************************************)
 

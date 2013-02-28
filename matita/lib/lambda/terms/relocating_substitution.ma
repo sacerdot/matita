@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "terms/relocation.ma".
+include "lambda/terms/relocation.ma".
 
 (* RELOCATING SUBSTITUTION **************************************************)
 

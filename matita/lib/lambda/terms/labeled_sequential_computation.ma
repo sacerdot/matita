@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "terms/sequential_computation.ma".
+include "lambda/terms/sequential_computation.ma".
 
 (* ABSTRACT LABELED SEQUENTIAL COMPUTATION (MULTISTEP) **********************)
 

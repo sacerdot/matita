@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "terms/relocating_substitution.ma".
+include "lambda/terms/relocating_substitution.ma".
 
 (* MULTIPLICITY *************************************************************)
 

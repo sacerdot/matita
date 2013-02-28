@@ -47,6 +47,9 @@ lemma cpcs_refl: ∀L. reflexive … (cpcs L).
 lemma cpcs_sym: ∀L. symmetric … (cpcs L).
 /3 width=1/ qed.
 
+lemma cpc_cpcs: ∀L,T1,T2. L ⊢ T1 ⬌ T2 → L ⊢ T2 ⬌* T2.
+/2 width=1/ qed.
+
 lemma cpcs_strap1: ∀L,T1,T,T2. L ⊢ T1 ⬌* T → L ⊢ T ⬌ T2 → L ⊢ T1 ⬌* T2.
 /2 width=3/ qed.
 

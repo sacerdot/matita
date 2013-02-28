@@ -41,6 +41,9 @@ lemma fpcs_refl: bi_reflexive … fpcs.
 lemma fpcs_sym: bi_symmetric … fpcs.
 /3 width=1/ qed.
 
+lemma fpc_fpcs: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⬌ ⦃L2, T2⦄ → ⦃L1, T1⦄ ⬌* ⦃L2, T2⦄.
+/2 width=1/ qed.
+
 lemma fpcs_strap1: ∀L1,L,L2,T1,T,T2. ⦃L1, T1⦄ ⬌* ⦃L, T⦄ → ⦃L, T⦄ ⬌ ⦃L2, T2⦄ → ⦃L1, T1⦄ ⬌* ⦃L2, T2⦄.
 /2 width=4/ qed.
 

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "terms/multiplicity.ma".
+include "lambda/terms/multiplicity.ma".
 
 (* SEQUENTIAL REDUCTION (SINGLE STEP) ***************************************)
 

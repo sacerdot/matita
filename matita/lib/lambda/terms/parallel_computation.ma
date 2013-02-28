@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "terms/parallel_reduction.ma".
+include "lambda/terms/parallel_reduction.ma".
 
 (* PARALLEL COMPUTATION (MULTISTEP) *****************************************)
 

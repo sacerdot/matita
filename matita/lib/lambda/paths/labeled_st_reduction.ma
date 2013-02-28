@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "subterms/booleanized.ma".
-include "paths/labeled_sequential_reduction.ma".
-include "paths/standard_order.ma".
+include "lambda/subterms/booleanized.ma".
+include "lambda/paths/labeled_sequential_reduction.ma".
+include "lambda/paths/standard_order.ma".
 
 (* PATH-LABELED STANDARD REDUCTION ON SUBTERMS (SINGLE STEP) ****************)
 

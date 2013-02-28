@@ -44,6 +44,9 @@ qed-.
 lemma ltprs_refl: reflexive … ltprs.
 /2 width=1/ qed.
 
+lemma ltpr_ltprs: ∀L1,L2. L1 ➡ L2 → L1 ➡* L2.
+/2 width=1/ qed.
+
 lemma ltprs_strap1: ∀L1,L,L2. L1 ➡* L → L ➡ L2 → L1 ➡* L2.
 /2 width=3/ qed.
 

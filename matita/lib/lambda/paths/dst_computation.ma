@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "paths/standard_trace.ma".
-include "paths/labeled_sequential_computation.ma".
+include "lambda/paths/standard_trace.ma".
+include "lambda/paths/labeled_sequential_computation.ma".
 
 (* DECOMPOSED STANDARD COMPUTATION ***********************************************)
 

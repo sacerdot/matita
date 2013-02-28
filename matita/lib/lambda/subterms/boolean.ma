@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "subterms/carrier.ma".
+include "lambda/subterms/carrier.ma".
 
 (* BOOLEAN (EMPTY OR FULL) SUBSET *******************************************)
 

@@ -40,6 +40,9 @@ qed-.
 
 (* Basic properties *********************************************************)
 
+lemma tps_tpss: ∀L,T1,T2,d,e. L ⊢ T1 ▶ [d, e] T2 → L ⊢ T1 ▶* [d, e] T2.
+/2 width=1/ qed.
+
 lemma tpss_strap1: ∀L,T1,T,T2,d,e.
                    L ⊢ T1 ▶* [d, e] T → L ⊢ T ▶ [d, e] T2 → L ⊢ T1 ▶* [d, e] T2. 
 /2 width=3/ qed.

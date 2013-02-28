@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "subterms/subterms.ma".
+include "lambda/subterms/subterms.ma".
 
 (* RELOCATION FOR SUBTERMS **************************************************)
 

@@ -35,6 +35,9 @@ lemma fprs_ind_dx: ∀L2,T2. ∀R:relation2 lenv term. R L2 T2 →
 
 (* Basic properties *********************************************************)
 
+lemma fpr_fprs: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ➡ ⦃L2, T2⦄ → ⦃L1, T1⦄ ➡* ⦃L2, T2⦄.
+/2 width=1/ qed.
+
 lemma fprs_refl: bi_reflexive … fprs.
 /2 width=1/ qed.
 

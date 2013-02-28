@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "paths/path.ma".
-include "terms/sequential_reduction.ma".
+include "lambda/paths/path.ma".
+include "lambda/terms/sequential_reduction.ma".
 
 (* PATH-LABELED SEQUENTIAL REDUCTION (SINGLE STEP) **************************)
 

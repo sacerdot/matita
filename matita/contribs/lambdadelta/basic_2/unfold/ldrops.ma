@@ -86,5 +86,4 @@ lemma ldrops_skip: ∀L1,L2,des. ⇩*[des] L1 ≡ L2 → ∀V1,V2. ⇧*[des] V2 
 ].
 qed.
 
-(* Basic_1: removed theorems 1: drop1_getl_trans
-*)
+(* Basic_1: removed theorems 1: drop1_getl_trans *)
