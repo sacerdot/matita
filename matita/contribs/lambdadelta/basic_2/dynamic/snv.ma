@@ -111,3 +111,18 @@ lemma snv_inv_cast: ∀h,g,L,W,T. ⦃h, L⦄ ⊩ ⓝW.T :[g] →
                     ∃∃U,l. ⦃h, L⦄ ⊩ W :[g] & ⦃h, L⦄ ⊩ T :[g] &
                            ⦃h, L⦄ ⊢ T •[g, l + 1] U & L ⊢ U ⬌* W.
 /2 width=3/ qed-.
+
+(* Basic forward lemmas *****************************************************)
+
+lemma snv_fwd_ssta: ∀h,g,L,T. ⦃h, L⦄ ⊩ T :[g] → ∃∃U,l. ⦃h, L⦄ ⊢ T •[g, l] U.
+#h #g #L #T #H elim H -L -T
+[ #L #k elim (deg_total h g k) /3 width=3/
+| * #L #K #V #i #HLK #_ * #W #l0 #HVW
+  [ elim (lift_total W 0 (i+1)) /3 width=8/
+  | elim (lift_total V 0 (i+1)) /3 width=8/
+  ]
+| #a #I #L #V #T #_ #_ #_ * /3 width=3/
+| #a #L #V #W #W1 #T0 #T1 #l #_ #_ #_ #_ #_ #_ * /3 width=3/
+| #L #W #T #U #l #_ #_ #HTU #_ #_ #_ /3 width=3/ (**) (* auto fails without the last #_ *) 
+]
+qed-.

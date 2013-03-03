@@ -12,27 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/dynamic/snv_cpcs.ma".
+include "basic_2/unwind/sstas_lift.ma".
+include "basic_2/dynamic/snv.ma".
 
 (* STRATIFIED NATIVE VALIDITY FOR TERMS *************************************)
 
-(* Properties on stratified static type assignment for terms ****************)
+(* Forward_lemmas on iterated stratified static type assignment for terms ***)
 
-fact snv_ssta_aux: ∀h,g,L,T. (
-                      ∀L0,T0. ⦃h, L0⦄ ⊩ T0 :[g] →
-                      ∀U0,l. ⦃h, L0⦄ ⊢ T0 •[g, l + 1] U0 →
-                      ♯{L0, T0} < ♯{L, T} → ⦃h, L0⦄ ⊩ U0 :[g]
-                   ) →
-                   ∀L0,T0. ⦃h, L0⦄ ⊩ T0 :[g] →
-                   ∀U0,l. ⦃h, L0⦄ ⊢ T0 •[g, l + 1] U0 →
-                   L0 = L → T0 = T → ⦃h, L0⦄ ⊩ U0 :[g].
-#h #g #L #T #IH1 #L0 #T0 * -L0 -T0
-[
-|
-|
-| #a #L0 #V #W #W0 #T0 #V0 #l0 #HV #HT0 #HVW #HW0 #HTV0 #X #l #H #H1 #H2 destruct
-  elim (ssta_inv_appl1 … H) -H #U0 #HTU0 #H destruct
-  lapply (IH1 … HT0 … HTU0 ?) // #HU0
-  @(snv_appl … HV HU0 HVW HW0) -HV -HU0 -HVW -HW0
-| #L0 #W #T0 #W0 #l0 #_ #HT0 #_ #_ #U0 #l #H #H1 #H2 destruct -W0
-  lapply (ssta_inv_cast1 … H) -H /2 width=5/
+lemma snv_sstas_fwd_correct: ∀h,g,L,T1,T2. ⦃h, L⦄ ⊩ T1 :[g] → ⦃h, L⦄ ⊢ T1 •* [g] T2 →
+                             ∃∃U2,l. ⦃h, L⦄ ⊢ T2 •[g, l] U2.
+#h #g #L #T1 #T2 #HT1 #HT12
+elim (snv_fwd_ssta … HT1) -HT1 /2 width=5 by sstas_fwd_correct/
+qed-.

@@ -19,9 +19,9 @@ include "basic_2/dynamic/snv.ma".
 
 (* STRATIFIED NATIVE VALIDITY FOR TERMS *************************************)
 
-(* Properties on atomic arity assignment for terms **************************)
+(* Forward lemmas on atomic arity assignment for terms **********************)
 
-lemma snv_aaa: ∀h,g,L,T. ⦃h, L⦄ ⊩ T :[g] → ∃A. L ⊢ T ⁝ A.
+lemma snv_fwd_aaa: ∀h,g,L,T. ⦃h, L⦄ ⊩ T :[g] → ∃A. L ⊢ T ⁝ A.
 #h #g #L #T #H elim H -L -T
 [ /2 width=2/
 | #I #L #K #V #i #HLK #_ * /3 width=6/
@@ -36,6 +36,6 @@ lemma snv_aaa: ∀h,g,L,T. ⦃h, L⦄ ⊩ T :[g] → ∃A. L ⊢ T ⁝ A.
 ]
 qed-.
 
-lemma snv_csn: ∀h,g,L,T. ⦃h, L⦄ ⊩ T :[g] → L ⊢ ⬊* T.
-#h #g #L #T #H elim (snv_aaa … H) -H /2 width=2/
+lemma snv_fwd_csn: ∀h,g,L,T. ⦃h, L⦄ ⊩ T :[g] → L ⊢ ⬊* T.
+#h #g #L #T #H elim (snv_fwd_aaa … H) -H /2 width=2/
 qed-.

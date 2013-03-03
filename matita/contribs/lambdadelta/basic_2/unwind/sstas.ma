@@ -47,6 +47,9 @@ qed-.
 
 (* Basic properties *********************************************************)
 
+lemma sstas_refl: ∀h,g,L. reflexive … (sstas h g L).
+// qed.
+
 lemma ssta_sstas: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g, l+1] U → ⦃h, L⦄ ⊢ T •*[g] U.
 /3 width=2 by R_to_star, ex_intro/ qed. (**) (* auto fails without trace *)
 

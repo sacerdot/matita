@@ -90,17 +90,24 @@ qed-.
 
 (* Advanced properties ******************************************************)
 
-lemma cpr_cprs_conf: ∀L,T,T1,T2. L ⊢ T ➡* T1 → L ⊢ T ➡ T2 → L ⊢ T1 ⬌* T2.
+lemma ltpr_cpcs_trans: ∀L1,L2. L1 ➡ L2 → ∀T1,T2. L2 ⊢ T1 ⬌* T2 → L1 ⊢ T1 ⬌* T2.
+#L1 #L2 #HL12 #T1 #T2 #H
+elim (cpcs_inv_cprs … H) -H #T #HT1 #HT2
+lapply (ltpr_cprs_trans … HL12 … HT1) -HT1
+lapply (ltpr_cprs_trans … HL12 … HT2) -L2 /2 width=3/
+qed-.
+
+lemma cpr_cprs_conf_cpcs: ∀L,T,T1,T2. L ⊢ T ➡* T1 → L ⊢ T ➡ T2 → L ⊢ T1 ⬌* T2.
 #L #T #T1 #T2 #HT1 #HT2
 elim (cprs_strip … HT1 … HT2) /2 width=3 by cpr_cprs_div/
 qed-.
 
-lemma cprs_cpr_conf: ∀L,T,T1,T2. L ⊢ T ➡* T1 → L ⊢ T ➡ T2 → L ⊢ T2 ⬌* T1.
+lemma cprs_cpr_conf_cpcs: ∀L,T,T1,T2. L ⊢ T ➡* T1 → L ⊢ T ➡ T2 → L ⊢ T2 ⬌* T1.
 #L #T #T1 #T2 #HT1 #HT2
 elim (cprs_strip … HT1 … HT2) /2 width=3 by cprs_cpr_div/
 qed-.
 
-lemma cprs_conf: ∀L,T,T1,T2. L ⊢ T ➡* T1 → L ⊢ T ➡* T2 → L ⊢ T1 ⬌* T2.
+lemma cprs_conf_cpcs: ∀L,T,T1,T2. L ⊢ T ➡* T1 → L ⊢ T ➡* T2 → L ⊢ T1 ⬌* T2.
 #L #T #T1 #T2 #HT1 #HT2
 elim (cprs_conf … HT1 … HT2) /2 width=3/
 qed-.
@@ -117,9 +124,9 @@ lemma cpcs_flat_dx_tpr_rev: ∀L,V1,V2. V2 ➡ V1 → ∀T1,T2. L ⊢ T1 ⬌* T2
                             ∀I. L ⊢ ⓕ{I}V1. T1 ⬌* ⓕ{I}V2. T2.
 /3 width=1/ qed.
 
-lemma cpcs_abst: ∀a,L,V1,V2. L ⊢ V1 ⬌* V2 →
-                 ∀V,T1,T2. L.ⓛV ⊢ T1 ⬌* T2 → L ⊢ ⓛ{a}V1. T1 ⬌* ⓛ{a}V2. T2.
-#a #L #V1 #V2 #HV12 #V #T1 #T2 #HT12
+lemma cpcs_abst: ∀L,V1,V2. L ⊢ V1 ⬌* V2 → ∀V,T1,T2. L.ⓛV ⊢ T1 ⬌* T2 →
+                 ∀a,I. L ⊢ ⓑ{a,I}V1. T1 ⬌* ⓑ{a,I}V2. T2.
+#L #V1 #V2 #HV12 #V #T1 #T2 #HT12 #a #I
 elim (cpcs_inv_cprs … HV12) -HV12
 elim (cpcs_inv_cprs … HT12) -HT12
 /3 width=6 by cprs_div, cprs_abst/ (**) (* /3 width=6/ is a bit slow *)
@@ -201,4 +208,14 @@ lemma cpcs_abbr2: ∀a,L,V1,V2. L ⊢ V1 ⬌* V2 → ∀T1,T2. L.ⓓV2 ⊢ T1 �
                   L ⊢ ⓓ{a}V1. T1 ⬌* ⓓ{a}V2. T2.
 #a #L #V1 #V2 #HV12 #T1 #T2 #HT12
 @(cpcs_trans … (ⓓ{a}V2.T1)) /2 width=1/
+qed.
+
+lemma cpcs_bind1: ∀I,L,V1,T1,T2. L.ⓑ{I}V1 ⊢ T1 ⬌* T2 → ∀V2. L ⊢ V1 ⬌* V2 →
+                  ∀a. L ⊢ ⓑ{a,I}V1. T1 ⬌* ⓑ{a,I}V2. T2.
+* /2 width=1/ /2 width=2/
+qed.
+
+lemma cpcs_bind2: ∀L,V1,V2. L ⊢ V1 ⬌* V2 → ∀I,T1,T2. L.ⓑ{I}V2 ⊢ T1 ⬌* T2 → 
+                  ∀a. L ⊢ ⓑ{a,I}V1. T1 ⬌* ⓑ{a,I}V2. T2.
+#L #V1 #V2 #HV12 * /2 width=1/ /2 width=2/
 qed.

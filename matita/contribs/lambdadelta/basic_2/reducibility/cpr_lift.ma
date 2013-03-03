@@ -28,12 +28,12 @@ lapply (ldrop_fwd_ldrop2_length … HLK) #Hi
 @ex2_intro [2: // | skip | @tpss_subst /width=6/ ] (**) (* /3 width=6/ is too slow *)
 qed.
 
-lemma cpr_abst: ∀L,V1,V2. L ⊢ V1 ➡ V2 → ∀V,T1,T2.
-                L.ⓛV ⊢ T1 ➡ T2 → ∀a. L ⊢ ⓛ{a}V1. T1 ➡ ⓛ{a}V2. T2.
-#L #V1 #V2 * #V0 #HV10 #HV02 #V #T1 #T2 * #T0 #HT10 #HT02 #a
+lemma cpr_abst: ∀L,V1,V2. L ⊢ V1 ➡ V2 → ∀V,T1,T2. L.ⓛV ⊢ T1 ➡ T2 →
+                          ∀a,I. L ⊢ ⓑ{a,I}V1. T1 ➡ ⓑ{a,I}V2. T2.
+#L #V1 #V2 * #V0 #HV10 #HV02 #V #T1 #T2 * #T0 #HT10 #HT02 #a #I
 lapply (tpss_inv_S2 … HT02 L V ?) -HT02 // #HT02
-lapply (tpss_lsubs_trans … HT02 (L.ⓛV2) ?) -HT02 /2 width=1/ #HT02
-@(ex2_intro … (ⓛ{a}V0.T0)) /2 width=1/ (* explicit constructors *)
+lapply (tpss_lsubs_trans … HT02 (L.ⓑ{I}V2) ?) -HT02 /2 width=1/ #HT02
+@(ex2_intro … (ⓑ{a,I}V0.T0)) /2 width=1/ (* explicit constructors *)
 qed.
 
 lemma cpr_beta: ∀a,L,V1,V2,W,T1,T2.

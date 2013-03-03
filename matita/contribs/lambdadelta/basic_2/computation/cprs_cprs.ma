@@ -21,8 +21,8 @@ include "basic_2/computation/cprs_lfpr.ma".
 
 (* Advanced properties ******************************************************)
 
-lemma cprs_abst_dx: ∀L,V1,V2. L ⊢ V1 ➡ V2 → ∀V,T1,T2.
-                    L.ⓛV ⊢ T1 ➡* T2 → ∀a. L ⊢ ⓛ{a}V1. T1 ➡* ⓛ{a}V2. T2.
+lemma cprs_abst_dx: ∀L,V1,V2. L ⊢ V1 ➡ V2 → ∀V,T1,T2. L.ⓛV ⊢ T1 ➡* T2 →
+                    ∀a,I. L ⊢ ⓑ{a,I}V1. T1 ➡* ⓑ{a,I}V2. T2.
 #L #V1 #V2 #HV12 #V #T1 #T2 #HT12 #a @(cprs_ind … HT12) -T2
 [ /3 width=2/
 | /3 width=6 by cprs_strap1, cpr_abst/ (**) (* /3 width=6/ is too slow *)
@@ -96,9 +96,9 @@ lemma cprs_flat: ∀I,L,T1,T2. L ⊢ T1 ➡* T2 → ∀V1,V2. L ⊢ V1 ➡* V2 �
 @(cprs_trans … IHV1) -IHV1 /2 width=1/
 qed.
 
-lemma cprs_abst: ∀L,V1,V2. L ⊢ V1 ➡* V2 → ∀V,T1,T2.
-                 L.ⓛV ⊢ T1 ➡* T2 → ∀a. L ⊢ ⓛ{a}V1. T1 ➡* ⓛ{a}V2. T2.
-#L #V1 #V2 #HV12 #V #T1 #T2 #HT12 #a @(cprs_ind … HV12) -V2
+lemma cprs_abst: ∀L,V1,V2. L ⊢ V1 ➡* V2 → ∀V,T1,T2. L.ⓛV ⊢ T1 ➡* T2 →
+                 ∀a,I. L ⊢ ⓑ{a,I}V1. T1 ➡* ⓑ{a,I}V2. T2.
+#L #V1 #V2 #HV12 #V #T1 #T2 #HT12 #a #I @(cprs_ind … HV12) -V2
 [ lapply (cprs_lsubs_trans … HT12 (L.ⓛV1) ?) -HT12 /2 width=2/
 | #V0 #V2 #_ #HV02 #IHV01
   @(cprs_trans … IHV01) -V1 /2 width=2/
@@ -111,6 +111,11 @@ lemma cprs_abbr1: ∀L,V1,T1,T2. L. ⓓV1 ⊢ T1 ➡* T2 → ∀V2. L ⊢ V1 ➡
 #V #V2 #_ #HV2 #IHV1
 @(cprs_trans … IHV1) -IHV1 /2 width=1/
 qed.
+
+lemma cprs_bind1: ∀I,L,V1,T1,T2. L. ⓑ{I}V1 ⊢ T1 ➡* T2 → ∀V2. L ⊢ V1 ➡* V2 →
+                  ∀a. L ⊢ ⓑ{a,I}V1. T1 ➡* ⓑ{a,I}V2. T2.
+* /2 width=1/ /2 width=2/
+qed. 
 
 lemma cprs_abbr2_dx: ∀L,V1,V2. L ⊢ V1 ➡ V2 → ∀T1,T2. L. ⓓV2 ⊢ T1 ➡* T2 →
                      ∀a. L ⊢ ⓓ{a}V1. T1 ➡* ⓓ{a}V2. T2.
@@ -130,6 +135,11 @@ lapply (IHV1 T1 T1 ? a) -IHV1 // #HV1
 @(cprs_trans … HV1) -HV1 /2 width=1/
 qed.
 
+lemma cprs_bind2: ∀L,V1,V2. L ⊢ V1 ➡* V2 → ∀I,T1,T2. L. ⓑ{I}V2 ⊢ T1 ➡* T2 → 
+                  ∀a. L ⊢ ⓑ{a,I}V1. T1 ➡* ⓑ{a,I}V2. T2.
+#L #V1 #V2 #HV12 * /2 width=1/ /2 width=2/
+qed. 
+
 lemma cprs_beta_dx: ∀L,V1,V2,W,T1,T2.
                     L ⊢ V1 ➡ V2 → L.ⓛW ⊢ T1 ➡* T2 →
                     ∀a.L ⊢ ⓐV1.ⓛ{a}W.T1 ➡* ⓓ{a}V2.T2.
@@ -139,6 +149,13 @@ lemma cprs_beta_dx: ∀L,V1,V2,W,T1,T2.
   lapply (cpr_lsubs_trans … HT2 (L.ⓓV2) ?) -HT2 /2 width=1/ #HT2
   @(cprs_trans … IHT1) -V1 -W -T1 /3 width=1/
 ]
+qed.
+
+lemma ltpr_cprs_trans: ∀L1,L2. L1 ➡ L2 →
+                       ∀T1,T2. L2 ⊢ T1 ➡* T2 → L1 ⊢ T1 ➡* T2.
+#L1 #L2 #HL12 #T1 #T2 #H @(cprs_ind … H) -T2 //
+#T #T2 #_ #HT2 #IHT2
+@(cprs_trans … IHT2) /2 width=3/
 qed.
 
 (* Basic_1: was only: pr3_pr2_pr3_t pr3_wcpr0_t *)

@@ -21,7 +21,7 @@ include "basic_2/computation/dxprs.ma".
 (* Advanced properties ******************************************************)
 
 lemma dxprs_cprs_trans: ∀h,g,L,T1,T,T2.
-                   ⦃h, L⦄ ⊢ T1 •*➡*[g] T → L ⊢ T ➡* T2 → ⦃h, L⦄ ⊢ T1 •*➡*[g] T2.
+                        ⦃h, L⦄ ⊢ T1 •*➡*[g] T → L ⊢ T ➡* T2 → ⦃h, L⦄ ⊢ T1 •*➡*[g] T2.
 #h #g #L #T1 #T #T2 * #T0 #HT10 #HT0 #HT2
 lapply (cprs_trans … HT0 … HT2) -T /2 width=3/
 qed-.
