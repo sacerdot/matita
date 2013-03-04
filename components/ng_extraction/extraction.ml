@@ -1142,6 +1142,13 @@ let extract_fixpoint_common uri height fix_or_cofix ifl =
        NReference.reference_of_spec uri (NReference.CoFix i)) in
   ti,ci,n,vkn
 
+(*s Is a [ml_spec] logical ? *)
+let logical_spec = function
+  | Stype (_, [], Some (Tdummy _)) -> true
+  | Sval (_,Tdummy _) -> true
+  | Sind i -> array_for_all (fun ip -> ip.ip_logical) i.ind_packets
+  | _ -> false
+
 let extract_fixpoint status uri height fix_or_cofix is_projection ifl =
   let status =
    if is_projection then
@@ -1157,7 +1164,8 @@ let extract_fixpoint status uri height fix_or_cofix is_projection ifl =
    (fun status i _ ->
      let _,head = split_all_prods status ~subst:[] [] ti.(i) in
      match head with
-        NCic.Sort _ ->
+        NCic.Sort s when classify_sort s = InProp -> status,`None
+      | NCic.Sort _ ->
          let n = type_scheme_nb_args status [] ti.(i) in
          let ids = iterate (fun l -> anonymous_name::l) n [] in
          status,`Type (Dtype (vkn.(i), ids, Tunknown))
@@ -1186,7 +1194,7 @@ let extract_fixpoint_spec status uri height fix_or_cofix ifl =
     (fun status i vkn ->
       if sort_of status [] ti.(i) <> InProp then begin
        let status,spec = extract_constant_spec status vkn None ti.(i) in
-       status, Some spec
+       status, if logical_spec spec then None else Some spec
       end
      else status,None
     ) vkn in
@@ -1265,14 +1273,6 @@ let logical_decl = function
       (array_for_all ((=) MLdummy) av) &&
       (array_for_all isDummy tv)
   | Dind i -> array_for_all (fun ip -> ip.ip_logical) i.ind_packets
-  | _ -> false
-
-(*s Is a [ml_spec] logical ? *)
-
-let logical_spec = function
-  | Stype (_, [], Some (Tdummy _)) -> true
-  | Sval (_,Tdummy _) -> true
-  | Sind i -> array_for_all (fun ip -> ip.ip_logical) i.ind_packets
   | _ -> false
 
 let extract_impl status (uri,height,metasenv,subst,obj_kind) =
