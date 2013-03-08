@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/ssta_ssta.ma".
+include "basic_2/unwind/sstas_sstas.ma".
 include "basic_2/computation/ygt.ma".
 include "basic_2/equivalence/cpcs_ltpr.ma".
 include "basic_2/dynamic/snv_ltpss_dx.ma".
@@ -140,13 +140,16 @@ lapply (ltpr_cprs_conf … HL12 … HWU1) -L1 #HWU1
 lapply (cpcs_canc_sn … HW12 HWU1) -W1 #H
 elim (cpcs_inv_cprs … H) -H /3 width=3/
 qed-.
-(*
-fact sstas_dxprs_aux: ∀h,g,L0,T0.
-                      (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_ssta h g L1 T1) →
-                      (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_ltpr_tpr h g L1 T1) →
-                      (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_ssta_ltpr_tpr h g L1 T1) →
-                      ∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → ⦃h, L1⦄ ⊩ T1 :[g] →
-                      ∀U1. ⦃h, L1⦄ ⊢ T1 •*[g] U1 → ∀T2. ⦃h, L1⦄ ⊢ T1 •*➡*[g] T2 →
-                      ∃∃U2. ⦃h, L1⦄ ⊢ T2 •*[g] U2 & L1 ⊢ U1 ⬌* U2.
-#h #g #L0 #T0 #IH3 #IH2 #IH1 #L1 #T1 #H01 #HT1 #U1 #HTU1 #T2 * #T #HT1T #HTT2
-*)
+
+fact ssta_dxprs_aux: ∀h,g,L0,T0.
+                     (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_ltpr_tpr h g L1 T1) →
+                     (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_ssta_ltpr_tpr h g L1 T1) →
+                     ∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → ⦃h, L1⦄ ⊩ T1 :[g] →
+                     ∀l,U1. ⦃h, L1⦄ ⊢ T1 •[g, l+1] U1 → ∀T2. ⦃h, L1⦄ ⊢ T1 •*➡*[g] T2 →
+                     ∃∃U,U2. ⦃h, L1⦄ ⊢ U1 •*[g] U & ⦃h, L1⦄ ⊢ T2 •*[g] U2 & L1 ⊢ U ⬌* U2.
+#h #g #L0 #T0 #IH2 #IH1 #L1 #T1 #H01 #HT1 #l #U1 #HTU1 #T2 * #T #HT1T #HTT2
+elim (sstas_strip … HT1T … HTU1) #HU1T destruct [ -HT1T | -L0 -T0 -T1 ]
+[ elim (ssta_ltpr_cprs_aux … IH2 IH1 … HTU1 L1 … HTT2) // -L0 -T0 -T /3 width=5/
+| @(ex3_2_intro …T2 HU1T) // /2 width=1/
+]
+qed-.

@@ -30,7 +30,7 @@ qed-.
 
 lemma sstas_strip: ∀h,g,L,T,U1. ⦃h, L⦄ ⊢ T •*[g] U1 →
                    ∀U2,l. ⦃h, L⦄ ⊢ T •[g, l] U2 →
-                   ⦃h, L⦄ ⊢ U1 •[g, l] U2 ∨ ⦃h, L⦄ ⊢ U2 •*[g] U1.
+                   T = U1 ∨ ⦃h, L⦄ ⊢ U2 •*[g] U1.
 #h #g #L #T #U1 #H1 @(sstas_ind_dx … H1) -T /2 width=1/
 #T #U #l0 #HTU #HU1 #_ #U2 #l #H2
 elim (ssta_mono … H2 … HTU) -H2 -HTU #H1 #H2 destruct /2 width=1/
@@ -47,5 +47,8 @@ theorem sstas_conf: ∀h,g,L,T,U1. ⦃h, L⦄ ⊢ T •*[g] U1 →
                    ⦃h, L⦄ ⊢ U1 •*[g] U2 ∨ ⦃h, L⦄ ⊢ U2 •*[g] U1.
 #h #g #L #T #U1 #H1 @(sstas_ind_dx … H1) -T /2 width=1/
 #T #U #l #HTU #HU1 #IHU1 #U2 #H2
-elim (sstas_strip … H2 … HTU) -T /2 width=1/ -IHU1 /3 width=4/
+elim (sstas_strip … H2 … HTU) #H destruct
+[ -H2 -IHU1 /3 width=4/
+| -T /2 width=1/
+]
 qed-.
