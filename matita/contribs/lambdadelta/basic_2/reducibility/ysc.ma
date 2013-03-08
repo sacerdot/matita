@@ -12,10 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/ssta.ma".
-include "basic_2/reducibility/cpr.ma".
+include "basic_2/reducibility/ypr.ma".
 
-(* "BIG TREE" SUCCESSOR ON CLOSURES *****************************************)
+(* "BIG TREE" PROPER PARALLEL REDUCTION FOR CLOSURES ************************)
 
 inductive ysc (h) (g) (L1) (T1): relation2 lenv term ≝
 | ysc_fw  : ∀L2,T2. ♯{L2, T2} < ♯{L1, T1} → ysc h g L1 T1 L2 T2
@@ -24,5 +23,20 @@ inductive ysc (h) (g) (L1) (T1): relation2 lenv term ≝
 .
 
 interpretation
-   "'big tree' successor (closure)"
-   'BTSuccessor h g L1 T1 L2 T2 = (ysc h g L1 T1 L2 T2).
+   "'big tree' proper parallel reduction (closure)"
+   'BTPRedProper h g L1 T1 L2 T2 = (ysc h g L1 T1 L2 T2).
+
+(* Basic properties *********************************************************)
+
+lemma ysc_ypr: ∀h,g,L1,L2,T1,T2. h ⊢ ⦃L1, T1⦄ ≻[g] ⦃L2, T2⦄ →
+               h ⊢ ⦃L1, T1⦄ ≽[g] ⦃L2, T2⦄.
+#h #g #L1 #L2 #T1 #T2 * -L2 -T2 /2 width=1/ /2 width=2/
+qed.
+
+(* Inversion lemmas on "big tree" parallel reduction for closures ***********)
+
+lemma ypr_inv_ysc: ∀h,g,L1,L2,T1,T2. h ⊢ ⦃L1, T1⦄ ≽[g] ⦃L2, T2⦄ →
+                   h ⊢ ⦃L1, T1⦄ ≻[g] ⦃L2, T2⦄ ∨ (L1 ➡ L2 ∧ T1 = T2).
+#h #g #L1 #L2 #T1 #T2 * -L2 -T2 /3 width=1/ /3 width=2/
+#T2 #HT12 elim (term_eq_dec T1 T2) #H destruct /3 width=1/ /4 width=1/
+qed-.

@@ -12,11 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/ygt.ma".
+include "basic_2/computation/yprs.ma".
 
-(* "BIG TREE" ORDER FOR CLOSURES ********************************************)
+(* "BIG TREE" PARALLEL COMPUTATION FOR CLOSURES *****************************)
 
-(* Main properties **********************************************************)
-
-theorem ygt_trans: ∀h,g. bi_transitive … (ygt h g).
-/3 width=4 by ygt_fwd_yprs, ygt_yprs_trans/ qed-.
+theorem yprs_trans: ∀h,g. bi_transitive … (yprs h g).
+/2 width=4/ qed-.

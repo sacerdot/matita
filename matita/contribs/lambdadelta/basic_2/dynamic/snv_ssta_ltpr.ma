@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/equivalence/cpcs_ltpr.ma".
 include "basic_2/equivalence/lsubse_ssta.ma".
 include "basic_2/dynamic/snv_cpcs.ma".
 
@@ -36,12 +35,12 @@ fact ssta_ltpr_tpr_aux: ∀h,g,L0,T0.
   [ #V1 #W1 #HLK1 #HVW1 #HWU1
     lapply (ldrop_mono … H … HLK1) -H #H destruct
     lapply (ldrop_pair2_fwd_fw … HLK1 (#i)) #HKV1
-    elim (ltpr_ldrop_conf … HLK1 … HL12) #X #H #HLK2
+    elim (ltpr_ldrop_conf … HLK1 … HL12) -HLK1 -HL12 #X #H #HLK2
     elim (ltpr_inv_pair1 … H) -H #K2 #V2 #HK12 #HV12 #H destruct
-    elim (IH1 … HVW1 … HK12 … HV12) -IH1 -HVW1 -HV12 // [2: /2 width=1/ ] -HV1 -HKV1 #W2 #HVW2 #HW12
-    lapply (ldrop_fwd_ldrop2 … HLK1) -V1 #H1
+    elim (IH1 … HVW1 … HK12 … HV12) -IH1 -HVW1 -HV12 // [2: /2 width=1/ ] -V1 #W2 #HVW2 #HW12
+    lapply (ldrop_fwd_ldrop2 … HLK2) #H2
     elim (lift_total W2 0 (i+1)) #U2 #HWU2
-    lapply (cpcs_lift … H1 … HWU1 … HWU2 HW12) -H1 -W1 /3 width=6/
+    lapply (cpcs_lift … H2 … HWU1 … HWU2 HW12) -H2 -W1 /3 width=6/
   | #V1 #W1 #l0 #HLK1 #HVW1 #HVU1 #H destruct
     lapply (ldrop_mono … H … HLK1) -H #H destruct
     lapply (ldrop_pair2_fwd_fw … HLK1 (#i)) #HKV1
@@ -61,7 +60,7 @@ fact ssta_ltpr_tpr_aux: ∀h,g,L0,T0.
     lapply (tps_lsubs_trans … HT02 (L2.ⓑ{I}V2) ?) -HT02 [ /2 width=1/ ] #HT02
     elim (ssta_ltpr_cpr_aux … HT1 … HTU1 (L2.ⓑ{I}V2) … T2) -HT1 -HTU1
     [2: /3 width=5 by cpr_intro, tps_tpss/ |3: /2 width=1/ |4: /3 width=1/ ] -IH1 -T0 -HL12 #U2 #HTU2 #HU12
-    lapply (cpcs_bind1 … HU12 … V2 … a) -HU12 [ /2 width=1/ ] -HV12 /3 width=3/
+    lapply (cpcs_bind2 … V1 … HU12 … a) -HU12 [ /2 width=1/ ] -HV12 /3 width=3/
   | #T2 #HT12 #HT2 #H1 #H2 destruct
     elim (IH1 … HTU1 (L2.ⓓV1) … T2) -IH1 -HTU1 // [2,3: /2 width=1/ ] -T1 -HL12 #U2 #HTU2 #HU12
     lapply (cpcs_bind1 … HU12 … V1 … true) // -HU12 #HU12
@@ -83,26 +82,25 @@ fact ssta_ltpr_tpr_aux: ∀h,g,L0,T0.
     elim (ssta_fwd_correct … HVW1) <minus_plus_m_m #X1 #HWX1
     elim (snv_fwd_ssta … HW) #V #l1 #HWV
     lapply (IH3 … HVW1) -IH3 // [ /2 width=1/ ] #HW1
-    elim (ssta_cpcs_aux … IH2 IH1 … HWX1 … HWV …) -IH2 -HWX1 //
-    [2: /2 width=1/ |3: /4 width=4 by fw_ygt, ysc_ssta, bi_step/ ] #H #_ destruct -X1
+    elim (ssta_ltpr_cpcs_aux … IH2 IH1 … HWX1 … HWV …) -IH2 -HWX1 //
+    [2: /2 width=1/ |3: /3 width=4 by ygt_strap1, fw_ygt, ypr_ssta/ ] #H #_ destruct -X1
     elim (IH1 … HVW1 … HL12 … HV12) -HVW1 // -HV1 [2: /2 width=1/ ] #W2 #HVW2 #HW12
     elim (IH1 … HWV … HL12 W) -HWV // -HW [2: /2 width=1/ ] #V0 #HWV0 #_
     elim (IH1 … HTU2 (L2.ⓛW) … HT20) -IH1 -HTU2 -HT20 // [2,3: /2 width=1/ ] -HT2 #U20 #HTU20 #HU20
+    lapply (ltpr_cpcs_conf … HL12 … HW1W) -L1 #HW1W
+    lapply (cpcs_canc_sn … HW12 HW1W) -W1 #HW2
     elim (lsubse_ssta_trans … HTU20 (L2.ⓓV2) ?) -HTU20
-    [ #U #HTU20 #HUU20 -HWV0 -W1 -W2
-      lapply (ltpr_cpcs_trans (L1.ⓓV2) … HUU20) -HUU20 [ /2 width=1/ ] -HL12 #HUU20
+    [ #U #HTU20 #HUU20 -HWV0 -W2
       @(ex2_intro … (ⓓ{b}V2.U)) [ /2 width=1/ ] -h -l -l1 -V -V0 -T2 -T20 -U0
-      @(cpcs_cprs_strap2 … (ⓓ{b}V2.U2)) [ /4 width=1/ ] -V1
+      @(cpcs_cprs_strap2 … (ⓓ{b}V2.U2)) [ /3 width=1/ ] -V1
       @(cpcs_canc_dx … (ⓓ{b}V2.U20)) /2 width=2/
-    | -b -l -V -V1 -T2 -T20 -U0 -U2 -U20 -HW1
-      lapply (cpcs_canc_sn … HW12 … HW1W) -HW1W -HW12 #HW2
-      lapply (ltpr_cpcs_conf … HL12 … HW2) -L1 /2 width=6/
+    | -b -l -V -V1 -T2 -T20 -U0 -U2 -U20 /2 width=6/
     ]
   | #b #V0 #V2 #W0 #W2 #T0 #T2 #HV10 #HW02 #HT02 #HV02 #H1 #H2 destruct -a -l0 -W1 -W10 -HV1 -IH3 -IH2
     elim (ssta_inv_bind1 … HTU1) -HTU1 #U0 #HTU0 #H destruct
     elim (snv_inv_bind … HT1) -HT1 #_ #HT0
     elim (IH1 … HTU0 (L2.ⓓW2) … HT02) -IH1 -HTU0 // [2,3: /2 width=1/ ] -T0 -HL12 #U2 #HTU2 #HU02
-    lapply (cpcs_bind1 … HU02  … W0 … b) -HU02 // #HU02
+    lapply (cpcs_bind2 … W0 … HU02 b) -HU02 [ /2 width=1/ ] #HU02
     lapply (cpcs_flat … V1 V0 … HU02 Appl) [ /2 width=1/ ] -HV10 -HU02 #HU02
     lapply (cpcs_cpr_strap1 … HU02 (ⓓ{b}W2.ⓐV2.U2) ?) -HU02 [ /3 width=3/ ] -V0 -HW02 /4 width=3/ 
   ]
