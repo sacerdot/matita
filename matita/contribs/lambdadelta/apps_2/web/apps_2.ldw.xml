@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page xmlns="http://lambdadelta.info/"
+      description = "applications of lambdadelta version 2"
+      title = "applications of lambdadelta version 2"
+      head = "cic:/matita/lambdadelta/apps_2/ (applications of λδ version 2)"
+>
+   <section>Contents of the Specification</section>
+   <body>This specification comprises a collection of checked
+         applications of λδ version 2.
+	 In particular it contains the components below.
+   </body>
+   <news date="MLTT1.">
+         Martin-Löf's Type Theory with one universe
+	 using λδ as theory of expressions.
+   </news>
+   <news date="Functional.">
+         The validation algorithm for λδ as implemented in
+	 <rlink to="implementation.html#helena">Helena 0.8</rlink>.
+   </news>
+   
+   <section>Summary of the Specification</section>
+   <body>Here is a numerical acount of the specification's contents
+         and its timeline.
+   </body>
+   <table name="apps_2_sum"/>
+   <news date="2012 February 24.">
+         The Applications directory is started.
+   </news>
+   <news date="2011 December 20.">
+         The Functional component is started
+	 inside the specification of λδ version 2.
+   </news>
+   <news date="2011 December 12.">
+         The MLTT1 component is started.
+   </news>
+
+   <section>Logical Structure of the Specification</section>
+   <body>The source files are grouped in planes and components
+         according to the following table.
+         Each component contains its own notation file.
+	 The notation for the relations or functions introduced in each file
+	 is shown in parentheses (? are placeholders).
+   </body>
+   <table name="apps_2_src"/>
+
+   <section>Physical Structure of the Specification</section>
+   <body>The source files are grouped in directories,
+         one for each component.
+   </body>
+   <footer/>
+</page>

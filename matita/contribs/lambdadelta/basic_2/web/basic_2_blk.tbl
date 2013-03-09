@@ -1,0 +1,52 @@
+name "basic_2_blk"
+
+table {
+   class "grey" [ { "domain" * } {
+      [
+         [ "block" ] [ "leader" ]
+	 [ "applicator (with →θ)*" ] [ "reduction" ] [ "→ζ *" ] [ "reference *" ]
+      ]
+   } ]
+   [ { "{X | Γ ⊢ X : W}" * } {
+      class "wine" [
+         [ "local typed abstraction *" ] [ "Γ ⊢ +λW" ]
+         [ "ⓐV" ] [ "→β" ] [ "no" ] [ "#i" ]
+      ]
+      class "magenta" [
+         [ "local typed declaration **" ] [ "Γ ⊢ -λW" ]
+         [ "ⓐV" ] [ "→β" ] [ "no" ] [ "#i" ]
+      ]
+      class "prune" [
+         [ "global typed declaration ***" ] [ "Γ ⊢ pλW" ] 
+	 [ "no" ] [ "no" ] [ "no" ] [ "$p" ]
+      ]
+      class "blue" [
+         [ "native type annotation *" ] [ "Γ ⊢ ⓝW" ]
+	 [ "no" ] [ "no" ] [ "yes" ] [ "no" ]
+      ]
+   } ]
+   [ { "{X | Γ ⊢ X = V}" * } {
+      class "sky" [
+         [ "local abbreviation *" ] [ "Γ ⊢ +δV" ] 
+         [ "no" ] [ "local →δ" ] [ "yes" ] [ "#i" ]
+      ]
+      class "cyan" [
+         [ "local definition **" ] [ "Γ ⊢ -δV" ] 
+         [ "no" ] [ "local →δ" ] [ "no" ] [ "#i" ]
+      ]      
+      class "water" [
+         [ "global definition ***" ] [ "Γ ⊢ pδV" ]
+         [ "no" ] [ "global →δ" ] [ "no" ] [ "$p" ]
+      ]
+   } ]
+   [ { "no" * } {
+      class "green" [
+         [ "sort ****" ] [ "Γ ⊢ ⋆k" ]
+	 [ "no" ] [ "no" ] [ "no" ] [ "no" ]
+      ]
+   } ]
+}
+
+class "text" { 0 } { 2 * }
+
+class "plane" { 1 }

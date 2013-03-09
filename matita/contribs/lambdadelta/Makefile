@@ -115,7 +115,7 @@ stats: $(STTS)
 # summary ####################################################################
 
 define SUMMARY_TEMPLATE
-  TBL_$(1) := $(1)/$(1)_sum.tbl  
+  TBL_$(1) := $(1)/web/$(1)_sum.tbl  
   TBLS     += $$(TBL_$(1))
 
   $$(TBL_$(1)): S1 := $$(shell ls $$(MAS_$(1)) | wc -l)

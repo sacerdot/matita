@@ -14,6 +14,7 @@
 
 include "basic_2/computation/dxprs_dxprs.ma".
 include "basic_2/dynamic/snv_cpcs.ma".
+include "basic_2/dynamic/lsubsv_snv.ma".
 
 (* STRATIFIED NATIVE VALIDITY FOR TERMS *************************************)
 
@@ -62,3 +63,15 @@ fact snv_ltpr_tpr_aux: ∀h,g,L0,T0.
     lapply (cpcs_canc_sn … HW12 HW120) -W10 #HW20
     elim (cpcs_inv_cprs … HW20) -HW20 #W0 #HW20 #HW200
     lapply (dxprs_cprs_trans … (ⓛ{a}W0.U2) HTU2 ?) [ /2 width=1/ ] -HW200 /2 width=8/
+  | #b #V2 #W20 #T20 #T2 #HV12 #HT202 #H1 #H2 destruct
+    elim (snv_inv_bind … HT1) -HT1 #HW20 #HT20
+    elim (dxprs_inv_abst1 … HTU1) -HTU1 #W30 #T30 #HW230 #_ #H destruct -T30
+    lapply (cprs_div … HW230 … HW10) -W30 #HW210
+    lapply (ltpr_cpcs_conf … HL12 … HW210) -HW210 #HW210
+    lapply (IH1 … HL12 … HV12) // [ /2 width=1/ ] #HV2
+    lapply (IH1 … HW20 … HL12 W20 ?) // [ /2 width=1/ ] -HW20 #HW20
+    lapply (IH1 … HT20 … (L2.ⓛW20) … HT202) [1,2: /2 width=1/ ] -IH1 -HT20 -HT202 #HT2
+    elim (IH3 … HVW1 … HL12 … HV12) // [2: /2 width=1/ ] -HV1 -HVW1 -HV12 #W200 #HVW200 #H
+    lapply (cpcs_trans … HW210 … H) -W10 #HW200
+    lapply (lsubsv_snv_trans … HT2 (L2.ⓓV2) ?) -L1 -HT2 /2 width=1/ /2 width=4/
+  | 

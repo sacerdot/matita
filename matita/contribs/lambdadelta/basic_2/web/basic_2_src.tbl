@@ -1,0 +1,293 @@
+name "basic_2_src"
+
+table {
+   class "grey"
+   [ { "component" * } {
+        [ { "plane" * } { 
+             [ "files" * ]
+          }
+        ]
+     }
+   ]
+(*
+   class "wine"
+   [ { "examples" * } {
+        [ { "" * } {
+             [ "" * ]
+          }
+        ]
+     }
+   ]
+   class "magenta"
+   [ { "higher order dynamic typing" * } {
+        [ { "higher order native type assignment" * } {
+             [ "ntas ( ⦃?,?⦄ ⊢ ? :* ? )" "nta_lift" * ]
+          }
+        ]
+     }
+   ]
+*)
+   class "prune"
+   [ { "dynamic typing" * } {
+(*        
+        [ { "local env. ref. for native type assignment" * } {
+             [ "lsubn ( ? ⊢ ? :⊑ ? )" "lsubn_ldrop" "lsubn_cpcs" "lsubn_nta" * ]
+          }
+        ]
+        [ { "native type assignment" * } {
+             [ "nta ( ⦃?,?⦄ ⊢ ? : ? )" "nta_alt ( ⦃?,?⦄ ⊢ ? :: ? )" "nta_lift" "nta_ltpss" "nta_thin" "nta_aaa" "nta_sta" "nta_ltpr" "nta_nta" * ]
+          }
+        ]
+*)
+        [ { "local env. ref. for stratified native validity" * } {
+             [ "lsubsv ( ? ⊢ ? ⊩:⊑[?] ? )" "lsubsv_ldrop" "lsubsv_snv" * ]
+          }
+        ]
+        [ { "stratified native validity" * } {
+             [ "snv ( ⦃?,?⦄ ⊩ ? :[?] )" "snv_lift" + "snv_ltpss_dx" + "snv_ltpss_sn" + "snv_aaa" + "snv_ssta" + "snv_sstas" + "snv_ssta_ltpr" + "snv_ltpr" + "snv_cpcs" * ]
+          }
+        ]
+     }
+   ]
+   class "blue"
+   [ { "equivalence" * } {
+        [ { "focalized equivalence" * } {
+             [ "lfpcs ( ⦃?⦄ ⬌* ⦃?⦄ )" "lfpcs_aaa" + "lfpcs_fpcs" + "lfpcs_lfprs" + "lfpcs_lfpcs" * ]
+             [ "fpcs ( ⦃?,?⦄ ⬌* ⦃?,?⦄ )" "fpcs_aaa" + "fpcs_cpcs" + "fpcs_fprs" + "fpcs_fpcs" * ]
+          }
+        ]
+        [ { "local env. ref. for context-sensitive equivalence" * } {
+             [ "lsubse ( ? ⊢•⊑[?] ? )" "lsubse_ldrop" + "lsubse_ssta" + "lsubse_cpcs" * ]
+          }
+        ]
+        [ { "context-sensitive equivalence" * } {
+             [ "cpcs ( ? ⊢ ? ⬌* ? )" "cpcs_ltpss_dx" + "cpcs_ltpss_sn" + "cpcs_delift" + "cpcs_aaa" + "cpcs_ltpr" + "cpcs_cprs" + "cpcs_cpcs" * ]
+          }
+        ]
+     }
+   ]
+   class "sky"
+   [ { "conversion" * } {
+        [ { "focalized conversion" * } {
+             [ "lfpc ( ⦃?⦄ ⬌ ⦃?⦄ )" "lfpc_lfpc" * ]
+             [ "fpc ( ⦃?,?⦄ ⬌ ⦃?,?⦄ )" "fpc_fpc" * ]
+          }
+        ]
+        [ { "context-sensitive conversion" * } {
+             [ "cpc ( ? ⊢ ? ⬌ ? )" "cpc_cpc" * ]
+          }
+        ]
+     }
+   ]
+   class "cyan"
+   [ { "computation" * } {
+        [ { "focalized computation" * } {
+             [ "lfprs ( ⦃?⦄ ➡* ⦃?⦄ )" "lfprs_aaa" + "lfprs_ltprs" + "lfprs_cprs" + "lfprs_fprs" + "lfprs_lfprs" * ]
+             [ "fprs ( ⦃?,?⦄ ➡* ⦃?,?⦄ )" "fprs_aaa" + "fprs_fprs" * ]
+          }
+        ]
+        [ { "\"big tree\" order" * } {
+             [ "ygt ( ? ⊢ ⦃?,?⦄ >[g] ⦃?,?⦄ )" "ygt_ygt" * ]
+          }
+        ]
+        [ { "decomposed extended computation" * } {
+             [ "dxprs ( ⦃?,?⦄ ⊢ ? •*➡*[?] ? )" "dxprs_lift" + "dxprs_ltpss_dx" + "dxprs_ltpss_sn" + "dxprs_aaa" + "dxpr_lsubss" + "dxprs_dxprs" * ]
+          }
+        ]
+        [ { "weakly normalizing computation" * } {
+             [ "cpe ( ? ⊢ ➡* 𝐍⦃?⦄ )" "cpe_cpe" * ]
+          }
+        ]
+        [ { "strongly normalizing computation" * } {
+             [ "csn_vector ( ? ⊢ ⬊* ? )" "csn_cpr_vector" + "csn_tstc_vector" + "csn_aaa" * ]
+             [ "csn ( ? ⊢ ⬊* ? )" "csn_alt ( ? ⊢ ⬊⬊* ? )" "csn_lift" + "csn_cpr" + "csn_lfpr" * ]
+          }
+        ]
+        [ { "context-sensitive computation" * } {
+             [ "cprs (? ⊢ ? ➡* ?)" "cprs_lift" + "cprs_tpss" + "cprs_ltpss_dx" + "cprs_ltpss_sn" + "cprs_delift" + "cprs_aaa" + "cprs_ltpr" + "cprs_lfpr" + "cprs_cprs" + "cprs_lfprs" + "cprs_tstc" + "cprs_tstc_vector" * ]
+          }
+        ]
+        [ { "context-free computation" * } {
+             [ "ltprs ( ? ➡* ? )" "ltprs_alt ( ? ➡➡* ? )" "ltprs_ldrop" + "ltprs_ltprs" * ]
+             [ "tprs ( ? ➡* ?)" "tprs_lift" + "tprs_tprs" * ]
+          }
+        ]
+        [ { "local env. ref. for abstract candidates of reducibility" * } {
+             [ "lsubc ( ? ⊑[?] ? )" "lsubc_ldrop" + "lsubc_ldrops" + "lsubc_lsuba" * ]
+          }
+        ]
+        [ { "support for abstract computation properties" * } {
+             [ "acp" "acp_cr ( ⦃?,?⦄ ϵ[?] 〚?〛 )" "acp_aaa" * ]
+          }
+        ]
+     }
+   ]
+   class "water"
+   [ { "reducibility" * } {        
+        [ { "context-sensitive focalized reduction" * } {
+             [ "cfpr ( ? ⊢ ⦃?,?⦄ ➡ ⦃?,?⦄ )" "cnfpr_ltpss" + "cfpr_aaa" + "cfpr_cpr" + "cfpr_cfpr" * ]
+          }
+        ]
+        [ { "context-free focalized reduction" * } {
+             [ "lfpr ( ⦃?⦄ ➡ ⦃?⦄ )" "lfpr_alt ( ⦃?⦄ ➡➡ ⦃?⦄ )" "lfpr_aaa" + "lfpr_cpr" + "lfpr_fpr" + "lfpr_lfpr" * ]
+             [ "fpr ( ⦃?,?⦄ ➡ ⦃?,?⦄ )" "fpr_cpr" + "fpr_fpr" * ]
+          }
+        ]
+        [ { "\"big tree\" successor" * } {
+             [ "ysucc ( ? ⊢ ⦃?,?⦄ ≻[g] ⦃?,?⦄ )" * ]
+          }
+        ]
+        [ { "context-sensitive normal forms" * } {
+             [ "cnf ( ? ⊢ 𝐍⦃?⦄ )" "cnf_lift" + "cnf_cif" * ]
+          }
+        ]       
+        [ { "context-sensitive reduction" * } {
+             [ "cpr ( ? ⊢ ? ➡ ? )" "cpr_lift" + "cpr_tpss" + "cpr_ltpss_dx" + "cpr_ltpss_sn" + "cpr_delift" + "cpr_aaa" + "cpr_ltpr" + "cpr_cpr" * ]
+          }
+        ]
+        [ { "context-sensitive reducible forms" * } {
+             [ "crf ( ? ⊢ 𝐑⦃?⦄ )" "crf_append" "cif ( ? ⊢ 𝐈⦃?⦄ )" "cif_append" * ]
+          }
+        ]
+        [ { "context-free normal forms" * } {
+             [ "thnf ( 𝐇𝐍⦃?⦄ )" * ]
+          }
+        ]
+        [ { "context-free reduction" * } {
+             [ "ltpr ( ? ➡ ? )" "ltpr_ldrop" + "ltpr_tps" + "ltpr_ltpss_dx" + "ltpr_ltpss_sn" + "ltpr_aaa" + "ltpr_ltpr" * ]
+             [ "tpr ( ? ➡ ? )"  "tpr_lift" + "tpr_tps" + "tpr_tpss" + "tpr_delift" + "tpr_tpr" * ]
+          }
+        ]
+     }
+   ]
+   class "green"
+   [ { "unwind" * } {
+        [ { "iterated stratified static type assignment" * } {
+             [ "sstas ( ⦃?,?⦄ ⊢ ? •*[?] ? )" "sstas_lift" + "sstas_ltpss_dx" + "sstas_ltpss_sn" + "sstas_aaa" + "sstas_lsubss" + "sstas_sstas" * ]
+          }
+        ]
+     }
+   ]
+   class "grass"
+   [ { "static typing" * } {
+        [ { "local env. ref. for stratified static type assignment" * } {
+             [ "lsubss ( ? •⊑[?] ? )" "lsubss_ldrop" + "lsubss_ssta" + "lsubss_lsubss" * ]
+          }
+        ]
+        [ { "stratified static type assignment" * } {
+             [ "ssta ( ⦃?,?⦄ ⊢ ? •[?,?] ? )" "ssta_lift" + "ssta_ltpss_dx" + "ssta_ltpss_sn" + "ssta_aaa" + "ssta_ssta" * ]
+          }
+        ]
+        [ { "local env. ref. for atomic arity assignment" * } {
+             [ "lsuba ( ? ⁝⊑ ? )" "lsuba_ldrop" + "lsuba_aaa" + "lsuba_lsuba" * ]
+          }
+        ]
+        [ { "atomic arity assignment" * } {
+             [ "aaa ( ? ⊢ ? ⁝ ? )" "aaa_lift" + "aaa_lifts" + "aaa_ltpss_dx" + "aaa_ltpss_sn" + "aaa_aaa" * ]
+          }
+        ]
+        [ { "parameters" * } {
+             [ "sh" "sd" * ]
+          }
+        ]
+     }
+   ]
+   class "yellow"
+   [ { "unfold" * } {
+        [ { "basic local env. thinning" * } {
+             [ "thin ( ? ▼*[?,?] ≡ ? )" "thin_ldrop" + "thin_delift" * ]
+          }
+        ]        
+        [ { "inverse basic term relocation" * } {
+             [ "delift ( ? ⊢ ? ▼*[?,?] ≡ ? )" "delift_alt ( ? ⊢ ? ▼▼*[?,?] ≡ ? )" "delift_lift" + "delift_tpss" + "delift_ltpss" + "delift_delift" * ]
+          }
+        ]
+        [ { "partial unfold" * } {
+             [ "ltpss_sn ( ? ⊢ ▶*[?,?] ? )" "ltpss_sn_alt ( ? ⊢ ▶▶*[?,?] ? )" "ltpss_sn_ldrop" + "ltpss_sn_tps" + "ltpss_sn_tpss" + "ltpss_sn_ltpss_sn" * ]
+             [ "ltpss_dx ( ? ▶*[?,?] ? )" "ltpss_dx_ldrop" + "ltpss_dx_tps" + "ltpss_dx_tpss" + "ltpss_dx_ltpss_dx" * ]
+             [ "tpss ( ? ⊢ ? ▶*[?,?] ? )" "tpss_alt ( ? ⊢ ? ▶▶*[?,?] ? )" "tpss_lift" "tpss_tpss" * ]
+          }
+        ]
+        [ { "generic local env. slicing" * } { 
+             [ "ldrops ( ⇩*[?] ? ≡ ? )" "ldrops_ldrop" + "ldrops_ldrops" * ]
+          }
+        ]
+        [ { "iterated restricted structural predecessor for closures" * } {
+             [ "frsups ( ⦃?,?⦄ ⧁* ⦃?,?⦄ )" "frsups_frsups" * ]
+             [ "frsupp ( ⦃?,?⦄ ⧁+ ⦃?,?⦄ )" "frsupp_frsupp" * ]
+          }
+        ]
+        [ { "generic term relocation" * } {
+             [ "lifts_vector ( ⇧*[?] ? ≡ ? )" "lifts_lift_vector" * ]
+             [ "lifts ( ⇧*[?] ? ≡ ? )" "lifts_lift" + "lifts_lifts" * ] 
+          }
+        ]
+        [ { "support for generic relocation" * } { 
+             [ "gr2 ( @⦃?,?⦄ ≡ ? )" "gr2_plus ( ? + ? )" "gr2_minus ( ? ▭ ? ≡ ? )" "gr2_gr2" * ]
+          }
+        ]
+     }
+   ]
+   class "orange"   
+   [ { "substitution" * } { 
+        [ { "parallel substitution" * } {
+             [ "tps ( ? ⊢ ? ▶[?,?] ? )" "tps_lift" + "tps_tps" * ]
+          }
+        ]
+        [ { "global env. slicing" * } {
+             [ "gdrop ( ⇩[?] ? ≡ ? )" "gdrop_gdrop" * ]
+          }
+        ]
+        [ { "basic local env. slicing" * } {
+             [ "ldrop ( ⇩[?,?] ? ≡ ? )" "ldrop_append" + "ldrop_lpx" + "ldrop_sfr" + "ldrop_ldrop" * ]
+          }
+        ]
+        [ { "local env. ref. for substitution" * } {
+             [ "lsubs ( ? ≼[?,?] ? )" "(lsubs_lsubs)" "lsubs_sfr ( ≽[?,?] ? )" * ]
+          }
+        ]
+        [ { "restricted structural predecessor for closures" * } {
+             [ "frsup ( ⦃?,?⦄ ⧁ ⦃?,?⦄ )" * ]
+          }
+        ]
+        [ { "basic term relocation" * } {
+             [ "lift_vector ( ⇧[?,?] ? ≡ ? )" "lift_lift_vector" * ]
+             [ "lift ( ⇧[?,?] ? ≡ ? )" "lift_lift" * ]
+          }
+        ]
+     }
+   ]
+   class "red"   
+   [ { "grammar" * } {
+        [ { "same head term form" * } {
+             [ "tshf ( ? ≈ ? )" "(tshf_tshf)" * ]
+          }
+        ]
+        [ { "same top term constructor" * } {
+             [ "tstc ( ? ≃ ? )" "tstc_tstc" + "tstc_vector" * ]
+          }
+        ]
+        [ { "closures" * } {
+             [ "cl_shift ( ? @@ ? )" "cl_weight ( ♯{?,?} )" * ]
+          }
+        ]
+        [ { "internal syntax" * } {
+             [ "genv" * ]
+             [ "lenv" "lenv_weight ( ♯{?} )" "lenv_length ( |?| )" "lenv_append ( ? @@ ? )" "lenv_px" + "lenv_px_bi" * ]
+             [ "term" "term_weight ( ♯{?} )" "term_simple ( 𝐒⦃?⦄ )" "term_vector" * ]
+             [ "item" * ]
+          }
+        ] 
+        [ { "external syntax" * } {
+             [ "aarity" * ]
+          }
+        ] 
+     }
+   ]
+}
+
+class "component" { 0 }
+
+class "plane" { 1 }
+
+class "file" { 2 * }

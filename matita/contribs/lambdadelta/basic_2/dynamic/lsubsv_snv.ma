@@ -13,16 +13,17 @@
 (**************************************************************************)
 
 include "basic_2/dynamic/lsubsv_ldrop.ma".
+(*
 include "basic_2/dynamic/lsubsv_ssta.ma".
 include "basic_2/dynamic/lsubsv_cpcs.ma".
-
+*)
 (* LOCAL ENVIRONMENT REFINEMENT FOR STRATIFIED NATIVE VALIDITY **************)
 
 (* Properties concerning stratified native validity *************************)
-
+(*
 axiom lsubsv_xprs_trans: ∀h,g,L1,L2. h ⊢ L1 ⊩:⊑[g] L2 →
                          ∀T1,T2. ⦃h, L2⦄ ⊢ T1 •➡*[g] T2 → ⦃h, L1⦄ ⊢ T1 •➡*[g] T2.
-(*
+
 /3 width=3 by lsubsv_fwd_lsubss, lsubss_xprs_trans/ qed-.
 *)
 axiom lsubsv_snv_trans: ∀h,g,L2,T. ⦃h, L2⦄ ⊩ T :[g] →
