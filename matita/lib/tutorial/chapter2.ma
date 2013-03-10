@@ -26,11 +26,13 @@ ones you received in input. Most mathematical functions can be naturally defined
 in this way. For instance, the sum of two natural numbers can be defined as 
 follows: *)
 
-let rec add n m ≝ 
+let rec add n (m:nat) ≝ 
 match n with
 [ O ⇒ m
-| S a ⇒ S (add a m)
+| S a ⇒ add (S a) m
 ].
+
+check 
 
 (* Observe that the definition of a recursive function requires the keyword 
 "let rec" instead of "definition". The specification of formal parameters is 
