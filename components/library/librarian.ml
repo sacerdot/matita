@@ -111,8 +111,12 @@ let find_root_for ~include_paths file =
 
 let mk_baseuri root extra =
   let chop name = 
+(* FG: there is no reason why matita should edit just matita files
+       matita's editor is good on its own and has interesting facilities
+       including predefined virtuals
     assert(Filename.check_suffix name ".ma" ||
       Filename.check_suffix name ".mma");
+*)    
     try Filename.chop_extension name
     with Invalid_argument "Filename.chop_extension" -> name
   in
