@@ -244,7 +244,7 @@ lemma ltpss_dx_append_ge: ∀K1,K2,d,e. K1 ▶* [d, e] K2 →
                           L1 @@ K1 ▶* [d, e] L2 @@ K2.
 #K1 #K2 #d #e #H elim H -K1 -K2 -d -e
 [ #d #e #L1 #L2 <minus_n_O //
-| #K #I #V #L1 #L2 #_ #H 
+| #K #I #V #L1 #L2 #_ #H
   lapply (le_n_O_to_eq … H) -H normalize <plus_n_Sm #H destruct
 | #K1 #K2 #I #V1 #V2 #e #_ #_ #_ #L1 #L2 #_ #H
   lapply (le_n_O_to_eq … H) -H normalize <plus_n_Sm #H destruct

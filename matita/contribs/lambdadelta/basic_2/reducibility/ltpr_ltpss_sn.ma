@@ -19,7 +19,7 @@ include "basic_2/reducibility/ltpr_ltpss_dx.ma".
 
 (* Properties on sn parallel unfold on local environments *******************)
 
-(* Note: this can also be proved like ltpr_ltpss_dx_conf *) 
+(* Note: this can also be proved like ltpr_ltpss_dx_conf *)
 lemma ltpr_ltpss_sn_conf: ∀L1,K1,d,e. L1 ⊢ ▶* [d, e] K1 → ∀L2. L1 ➡ L2 →
                           ∃∃K2. L2 ⊢ ▶* [d, e] K2 & K1 ➡ K2.
 #L1 #K1 #d #e #H

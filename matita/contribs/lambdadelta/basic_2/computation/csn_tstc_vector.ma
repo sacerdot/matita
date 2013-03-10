@@ -22,7 +22,7 @@ include "basic_2/computation/csn_vector.ma".
 (* Advanced properties ******************************************************)
 
 (* Basic_1: was only: sn3_appls_lref *)
-lemma csn_applv_cnf: ∀L,T. 𝐒⦃T⦄ → L ⊢ 𝐍⦃T⦄ → 
+lemma csn_applv_cnf: ∀L,T. 𝐒⦃T⦄ → L ⊢ 𝐍⦃T⦄ →
                      ∀Vs. L ⊢ ⬊* Vs → L ⊢ ⬊* ⒶVs.T.
 #L #T #H1T #H2T #Vs elim Vs -Vs [ #_ @(csn_cnf … H2T) ] (**) (* /2 width=1/ does not work *)
 #V #Vs #IHV #H
@@ -68,12 +68,12 @@ lemma csn_applv_delta: ∀L,K,V1,i. ⇩[0, i] L ≡ K. ⓓV1 →
 ]
 qed.
 
-(* Basic_1: was: sn3_appls_abbr *) 
+(* Basic_1: was: sn3_appls_abbr *)
 lemma csn_applv_theta: ∀a,L,V1s,V2s. ⇧[0, 1] V1s ≡ V2s →
                        ∀V,T. L ⊢ ⬊* ⓓ{a}V. ⒶV2s. T → L ⊢ ⬊* V →
                        L ⊢ ⬊* ⒶV1s. ⓓ{a}V. T.
 #a #L #V1s #V2s * -V1s -V2s /2 width=1/
-#V1s #V2s #V1 #V2 #HV12 #H 
+#V1s #V2s #V1 #V2 #HV12 #H
 generalize in match HV12; -HV12 generalize in match V2; -V2 generalize in match V1; -V1
 elim H -V1s -V2s /2 width=3/
 #V1s #V2s #V1 #V2 #HV12 #HV12s #IHV12s #W1 #W2 #HW12 #V #T #H #HV

@@ -41,7 +41,7 @@ lemma cpr_refl: ∀L,T. L ⊢ T ➡ T.
 /2 width=1/ qed.
 
 (* Note: new property *)
-(* Basic_1: was only: pr2_thin_dx *) 
+(* Basic_1: was only: pr2_thin_dx *)
 lemma cpr_flat: ∀I,L,V1,V2,T1,T2.
                 L ⊢ V1 ➡ V2 → L ⊢ T1 ➡ T2 → L ⊢ ⓕ{I} V1. T1 ➡ ⓕ{I} V2. T2.
 #I #L #V1 #V2 #T1 #T2 * #V #HV1 #HV2 * /3 width=5/
@@ -56,7 +56,7 @@ qed.
 (* Basic_1: was only: pr2_change *)
 lemma cpr_lsubs_trans: ∀L1,T1,T2. L1 ⊢ T1 ➡ T2 →
                        ∀L2. L2 ≼ [0, |L1|] L1 → L2 ⊢ T1 ➡ T2.
-#L1 #T1 #T2 * #T #HT1 #HT2 #L2 #HL12 
+#L1 #T1 #T2 * #T #HT1 #HT2 #L2 #HL12
 lapply (tpss_lsubs_trans … HT2 … HL12) -HT2 -HL12 /3 width=4/
 qed.
 
@@ -103,7 +103,7 @@ elim (tpr_fwd_shift1 … H1) -H1 #L0 #T0 #HL10 #H destruct
 elim (tpss_fwd_shift1 … H2) -H2 #L2 #T2 #HL02 #H destruct /2 width=4/
 qed-.
 
-(* Basic_1: removed theorems 6: 
+(* Basic_1: removed theorems 6:
             pr2_head_2 pr2_cflat pr2_gen_cflat clear_pr2_trans
             pr2_gen_ctail pr2_ctail
    Basic_1: removed local theorems 3:

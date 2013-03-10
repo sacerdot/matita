@@ -11,11 +11,11 @@
    </body>
    <table name="basic_2_blk"/>
    <body>* In terms only.
-	 ** In terms and local environments only.
+         ** In terms and local environments only.
          *** In global environments only.
-         **** Sort level k in terms only. 
+         **** Sort level k in terms only.
    </body>
-   
+
    <section>Summary of the Specification</section>
    <body>Here is a numerical acount of the specification's contents
          and its timeline.
@@ -23,30 +23,30 @@
    <table name="basic_2_sum"/>
    <news date="In progress.">
          Context-sensitive subject equivalence
-	 for native type assignment.
+         for native type assignment.
    </news>
    <news date="In progress.">
          Closure of extended context-sensitive computation
-	 for native validity.
+         for native validity.
    </news>
    <news date="In progress.">
          Extended context-sensitive strong normalization
-	 for simply typed terms.
+         for simply typed terms.
    </news>
    <news date="2012 October 16.">
          Confluence for context-free parallel reduction on closures.
    </news>
    <news date="2012 July 26.">
          Term binders polarized to control ζ reduction.
-   </news>   
+   </news>
    <news date="2012 April 16.">
          Context-sensitive subject equivalence
-	 for atomic arity assignment
-	 (anniversary milestone).
+         for atomic arity assignment
+         (anniversary milestone).
    </news>
    <news date="2012 March 15.">
          Context-sensitive strong normalization
-	 for simply typed terms.
+         for simply typed terms.
    </news>
    <news date="2012 January 27.">
          Support for abstract candidates of reducibility.
@@ -65,8 +65,8 @@
    <body>The source files are grouped in planes and components
          according to the following table.
          A notation file covering the whole specification is provided.
-	 The notation for the relations or functions introduced in each file
-	 is shown in parentheses (? are placeholders).
+         The notation for the relations or functions introduced in each file
+         is shown in parentheses (? are placeholders).
    </body>
    <table name="basic_2_src"/>
 

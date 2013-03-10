@@ -43,4 +43,3 @@ lemma shift_inj: ∀L1,L2. ∀T1,T2:term. L1 @@ T1 = L2 @@ T2 → |L1| = |L2| �
   ]
 ]
 qed-.
-  

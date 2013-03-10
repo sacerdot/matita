@@ -96,7 +96,7 @@ lemma snv_inv_appl: ∀h,g,L,V,T. ⦃h, L⦄ ⊩ ⓐV.T :[g] →
 /2 width=3/ qed-.
 
 fact snv_inv_cast_aux: ∀h,g,L,X. ⦃h, L⦄ ⊩ X :[g] → ∀W,T. X = ⓝW.T →
-                       ∃∃U,l. ⦃h, L⦄ ⊩ W :[g] & ⦃h, L⦄ ⊩ T :[g] & 
+                       ∃∃U,l. ⦃h, L⦄ ⊩ W :[g] & ⦃h, L⦄ ⊩ T :[g] &
                               ⦃h, L⦄ ⊢ T •[g, l + 1] U & L ⊢ U ⬌* W.
 #h #g #L #X * -L -X
 [ #L #k #W #T #H destruct
@@ -123,6 +123,6 @@ lemma snv_fwd_ssta: ∀h,g,L,T. ⦃h, L⦄ ⊩ T :[g] → ∃∃U,l. ⦃h, L⦄ 
   ]
 | #a #I #L #V #T #_ #_ #_ * /3 width=3/
 | #a #L #V #W #W1 #T0 #T1 #l #_ #_ #_ #_ #_ #_ * /3 width=3/
-| #L #W #T #U #l #_ #_ #HTU #_ #_ #_ /3 width=3/ (**) (* auto fails without the last #_ *) 
+| #L #W #T #U #l #_ #_ #HTU #_ #_ #_ /3 width=3/ (**) (* auto fails without the last #_ *)
 ]
 qed-.

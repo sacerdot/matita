@@ -38,7 +38,7 @@ lemma cif_inv_bind: ∀a,I,L,V,T. L ⊢ 𝐈⦃ⓑ{a,I}V.T⦄ →
 #a * [ elim a -a ]
 [ #L #V #T #H elim (H ?) -H /3 width=1/
 |*: #L #V #T #H elim (cif_inv_ib2 … H) -H /2 width=1/ /3 width=1/
-]  
+]
 qed-.
 
 lemma cif_inv_appl: ∀L,V,T. L ⊢ 𝐈⦃ⓐV.T⦄ → ∧∧ L ⊢ 𝐈⦃V⦄ & L ⊢ 𝐈⦃T⦄ & 𝐒⦃T⦄.

@@ -22,7 +22,7 @@ include "basic_2/reducibility/cfpr_cpr.ma".
 lemma fpr_lfpr: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ➡ ⦃L2, T2⦄ → ⦃L1⦄ ➡ ⦃L2⦄.
 #L1 #L2 #T1 #T2 #H
 elim (fpr_inv_all … H) -H /2 width=3/
-qed. 
+qed.
 
 (* Inversion lemmas on context-free parallel reduction for closures *********)
 

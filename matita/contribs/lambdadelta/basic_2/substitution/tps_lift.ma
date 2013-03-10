@@ -19,7 +19,7 @@ include "basic_2/substitution/tps.ma".
 
 (* Advanced inversion lemmas ************************************************)
 
-fact tps_inv_S2_aux: ∀L,T1,T2,d,e1. L ⊢ T1 ▶ [d, e1] T2 → ∀e2. e1 = e2 + 1 → 
+fact tps_inv_S2_aux: ∀L,T1,T2,d,e1. L ⊢ T1 ▶ [d, e1] T2 → ∀e2. e1 = e2 + 1 →
                      ∀K,V. ⇩[0, d] L ≡ K. ⓛV → L ⊢ T1 ▶ [d + 1, e2] T2.
 #L #T1 #T2 #d #e1 #H elim H -L -T1 -T2 -d -e1
 [ //
@@ -98,7 +98,7 @@ lemma tps_lift_be: ∀K,T1,T2,dt,et. K ⊢ T1 ▶ [dt, et] T2 →
 | #K #a #I #V1 #V2 #T1 #T2 #dt #et #_ #_ #IHV12 #IHT12 #L #U1 #U2 #d #e #HLK #H1 #H2 #Hdtd #Hddet
   elim (lift_inv_bind1 … H1) -H1 #VV1 #TT1 #HVV1 #HTT1 #H1
   elim (lift_inv_bind1 … H2) -H2 #VV2 #TT2 #HVV2 #HTT2 #H2 destruct
-  @tps_bind [ /2 width=6/ | @IHT12 [3,4: // | skip |5,6: /2 width=1/ | /2 width=1/ ] 
+  @tps_bind [ /2 width=6/ | @IHT12 [3,4: // | skip |5,6: /2 width=1/ | /2 width=1/ ]
             ] (**) (* /3 width=6/ is too slow, simplification like tps_lift_le is too slow *)
 | #K #I #V1 #V2 #T1 #T2 #dt #et #_ #_ #IHV12 #IHT12 #L #U1 #U2 #d #e #HLK #H1 #H2 #Hdetd
   elim (lift_inv_flat1 … H1) -H1 #VV1 #TT1 #HVV1 #HTT1 #H1
@@ -212,7 +212,7 @@ lemma tps_inv_lift1_ge: ∀L,U1,U2,dt,et. L ⊢ U1 ▶ [dt, et] U2 →
   elim (le_inv_plus_l … Hdei) #Hdie #Hei
   lapply (lift_inv_lref2_ge … H … Hdei) -H #H destruct
   lapply (ldrop_conf_ge … HLK … HLKV ?) -L // #HKV
-  elim (lift_split … HVW d (i - e + 1) ? ? ?) -HVW [4: // |3: /2 width=1/ |2: /3 width=1/ ] -Hdei -Hdie 
+  elim (lift_split … HVW d (i - e + 1) ? ? ?) -HVW [4: // |3: /2 width=1/ |2: /3 width=1/ ] -Hdei -Hdie
   #V0 #HV10 >plus_minus // <minus_minus // /2 width=1/ <minus_n_n <plus_n_O #H
   @ex2_intro [3: @H | skip | @tps_subst [5,6: // |1,2: skip | /2 width=1/ | >plus_minus // /2 width=1/ ] ] (**) (* explicit constructor, uses monotonic_lt_minus_l *)
 | #L #a #I #V1 #V2 #U1 #U2 #dt #et #_ #_ #IHV12 #IHU12 #K #d #e #HLK #X #H #Hdetd
@@ -249,18 +249,18 @@ lemma tps_inv_lift1_eq: ∀L,U1,U2,d,e.
 ]
 qed.
 (*
-      Theorem subst0_gen_lift_rev_ge: (t1,v,u2,i,h,d:?) 
+      Theorem subst0_gen_lift_rev_ge: (t1,v,u2,i,h,d:?)
                                       (subst0 i v t1 (lift h d u2)) ->
                                       (le (plus d h) i) ->
                                       (EX u1 | (subst0 (minus i h) v u1 u2) &
-		                               t1 = (lift h d u1)
-		                      ).
+                                               t1 = (lift h d u1)
+                                      ).
 
 
       Theorem subst0_gen_lift_rev_lelt: (t1,v,u2,i,h,d:?)
                                         (subst0 i v t1 (lift h d u2)) ->
                                         (le d i) -> (lt i (plus d h)) ->
-				        (EX u1 | t1 = (lift (minus (plus d h) (S i)) (S i) u1)).
+                                        (EX u1 | t1 = (lift (minus (plus d h) (S i)) (S i) u1)).
 *)
 lemma tps_inv_lift1_ge_up: ∀L,U1,U2,dt,et. L ⊢ U1 ▶ [dt, et] U2 →
                            ∀K,d,e. ⇩[d, e] L ≡ K → ∀T1. ⇧[d, e] T1 ≡ U1 →

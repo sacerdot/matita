@@ -30,7 +30,7 @@ lemma cfpr_refl: ∀L. bi_reflexive … (cfpr L).
 /2 width=1/ qed.
 
 lemma fpr_cfpr: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ➡ ⦃L2, T2⦄ → ⋆ ⊢ ⦃L1, T1⦄ ➡ ⦃L2, T2⦄.
-#L1 #L2 #T1 #T2 * /3 width=1/ 
+#L1 #L2 #T1 #T2 * /3 width=1/
 qed.
 
 (* Basic inversion lemmas ***************************************************)
@@ -47,7 +47,7 @@ lemma fpr_inv_pair1_sn: ∀I,K1,L2,V1,T1,T2. ⦃⋆.ⓑ{I}V1@@K1, T1⦄ ➡ ⦃L
                                  L2 = ⋆.ⓑ{I}V2@@K2.
 #I1 #K1 #L2 #V1 #T1 #T2 * >append_length #H
 elim (length_inv_pos_sn_append … H) -H #I2 #K2 #V2 #HK12 #H destruct
->shift_append_assoc >shift_append_assoc normalize in ⊢ (%→?); #H 
+>shift_append_assoc >shift_append_assoc normalize in ⊢ (%→?); #H
 elim (tpr_inv_bind1 … H) -H *
 [ #V0 #T #T0 #HV10 #HT1 #HT0 #H destruct /5 width=5/
 | #T0 #_ #_ #H destruct

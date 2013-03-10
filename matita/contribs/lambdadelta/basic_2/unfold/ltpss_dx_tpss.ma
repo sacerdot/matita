@@ -59,7 +59,7 @@ lemma ltpss_dx_tps_conf: ∀L0,T2,U2,d2,e2. L0 ⊢ T2 ▶ [d2, e2] U2 →
   elim (IHTU2 … HL01) -IHTU2 -HL01 /3 width=5/
 ]
 qed.
-  
+
 lemma ltpss_dx_tpss_trans_ge: ∀L0,T2,U2,d2,e2. L0 ⊢ T2 ▶* [d2, e2] U2 →
                               ∀L1,d1,e1. L1 ▶* [d1, e1] L0 → d1 + e1 ≤ d2 →
                               L1 ⊢ T2 ▶* [d2, e2] U2.

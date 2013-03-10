@@ -102,7 +102,7 @@ fact ssta_ltpr_tpr_aux: ∀h,g,L0,T0.
     elim (IH1 … HTU0 (L2.ⓓW2) … HT02) -IH1 -HTU0 // [2,3: /2 width=1/ ] -T0 -HL12 #U2 #HTU2 #HU02
     lapply (cpcs_bind2 … W0 … HU02 b) -HU02 [ /2 width=1/ ] #HU02
     lapply (cpcs_flat … V1 V0 … HU02 Appl) [ /2 width=1/ ] -HV10 -HU02 #HU02
-    lapply (cpcs_cpr_strap1 … HU02 (ⓓ{b}W2.ⓐV2.U2) ?) -HU02 [ /3 width=3/ ] -V0 -HW02 /4 width=3/ 
+    lapply (cpcs_cpr_strap1 … HU02 (ⓓ{b}W2.ⓐV2.U2) ?) -HU02 [ /3 width=3/ ] -V0 -HW02 /4 width=3/
   ]
 | #U0 #T1 #HL0 #HT0 #H1 #X2 #l #H2 #L2 #HL12 #X3 #H3 destruct -IH3 -IH2
   elim (snv_inv_cast … H1) -H1 #T0 #l0 #_ #HT1 #HT10 #_

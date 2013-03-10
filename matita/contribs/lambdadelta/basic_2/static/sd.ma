@@ -82,7 +82,7 @@ definition sd_SO: ∀h. nat → sd h ≝ λh,k. mk_sd h (deg_SO h k) ….
 qed.
 
 let rec sd_l (h:sh) (k:nat) (l:nat) on l : sd h ≝
-   match l with 
+   match l with
    [ O   ⇒ sd_O h
    | S l ⇒ match l with
            [ O ⇒ sd_SO h k

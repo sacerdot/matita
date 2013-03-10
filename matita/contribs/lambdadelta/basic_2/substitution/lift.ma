@@ -290,7 +290,7 @@ lemma lift_simple_sn: ∀d,e,T1,T2. ⇧[d, e] T1 ≡ T2 → 𝐒⦃T2⦄ → �
 #d #e #T1 #T2 #H elim H -d -e -T1 -T2 //
 #a #I #V1 #V2 #T1 #T2 #d #e #_ #_ #_ #_ #H
 elim (simple_inv_bind … H)
-qed-. 
+qed-.
 
 (* Basic properties *********************************************************)
 
@@ -394,7 +394,7 @@ lemma t_deliftable_sn_TC: ∀R. t_deliftable_sn R → t_deliftable_sn (TC … R)
   elim (IHU1 … HTU1) -U1 #T #HTU #HT1
   elim (HR … HU2 … HTU) -U /3 width=5/
 ]
-qed-. 
+qed-.
 
 (* Basic_1: removed theorems 7:
             lift_head lift_gen_head

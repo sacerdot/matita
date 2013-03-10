@@ -68,7 +68,7 @@ lemma csna_intro_cpr: ∀L,T1.
   [ -HLT1 -HLT2 -H /3 width=1/
   | -IHT -HT12 /4 width=3/
   ]
-] 
+]
 qed.
 
 (* Main properties **********************************************************)

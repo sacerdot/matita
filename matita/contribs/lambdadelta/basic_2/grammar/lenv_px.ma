@@ -80,7 +80,7 @@ lemma lpx_inv_append1: ∀R,L1,K1,L. lpx R (K1 @@ L1) L →
                        ∃∃K2,L2. lpx R K1 K2 & lpx R L1 L2 & L = K2 @@ L2.
 #R #L1 elim L1 -L1 normalize
 [ #K1 #K2 #HK12
-  @(ex3_2_intro … K2 (⋆)) // (**) (* explicit constructor, /2 width=5/ does not work *) 
+  @(ex3_2_intro … K2 (⋆)) // (**) (* explicit constructor, /2 width=5/ does not work *)
 | #L1 #I #V1 #IH #K1 #X #H
   elim (lpx_inv_pair1 … H) -H #L #V2 #H1 #HV12 #H destruct
   elim (IH … H1) -IH -H1 #K2 #L2 #HK12 #HL12 #H destruct
@@ -92,13 +92,13 @@ lemma lpx_inv_append2: ∀R,L2,K2,L. lpx R L (K2 @@ L2) →
                        ∃∃K1,L1. lpx R K1 K2 & lpx R L1 L2 & L = K1 @@ L1.
 #R #L2 elim L2 -L2 normalize
 [ #K2 #K1 #HK12
-  @(ex3_2_intro … K1 (⋆)) // (**) (* explicit constructor, /2 width=5/ does not work *) 
+  @(ex3_2_intro … K1 (⋆)) // (**) (* explicit constructor, /2 width=5/ does not work *)
 | #L2 #I #V2 #IH #K2 #X #H
   elim (lpx_inv_pair2 … H) -H #L #V1 #H1 #HV12 #H destruct
   elim (IH … H1) -IH -H1 #K1 #L1 #HK12 #HL12 #H destruct
   @(ex3_2_intro … HK12) [2: /2 width=2/ | skip | // ] (* explicit constructor, /3 width=5/ does not work *)
 ]
-qed-.   
+qed-.
 
 (* Basic properties *********************************************************)
 
@@ -126,7 +126,7 @@ lemma lpx_conf: ∀R. confluent ? R → confluent … (lpx R).
 ]
 qed.
 
-lemma lpx_TC_inj: ∀R,L1,L2. lpx R L1 L2 → lpx (TC … R) L1 L2. 
+lemma lpx_TC_inj: ∀R,L1,L2. lpx R L1 L2 → lpx (TC … R) L1 L2.
 #R #L1 #L2 #H elim H -L1 -L2 // /3 width=1/
 qed.
 

@@ -30,7 +30,7 @@ qed-.
 
 (* Advanced properties ******************************************************)
 
-lemma ssta_cprs_dxprs: ∀h,g,L,T1,T,T2,l. ⦃h, L⦄ ⊢ T1 •[g, l+1] T → 
+lemma ssta_cprs_dxprs: ∀h,g,L,T1,T,T2,l. ⦃h, L⦄ ⊢ T1 •[g, l+1] T →
                        L ⊢ T ➡* T2 → ⦃h, L⦄ ⊢ T1 •*➡*[g] T2.
 /3 width=3/ qed.
 

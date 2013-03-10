@@ -89,7 +89,7 @@ qed.
 lemma rp_lifts: ∀RR,RS,RP. acr RR RS RP (λL,T. RP L T) →
                 ∀des,L0,L,V,V0. ⇩*[des] L0 ≡ L → ⇧*[des] V ≡ V0 →
                 RP L V → RP L0 V0.
-#RR #RS #RP #HRP #des #L0 #L #V #V0 #HL0 #HV0 #HV 
+#RR #RS #RP #HRP #des #L0 #L #V #V0 #HL0 #HV0 #HV
 @acr_lifts /width=6/
 @(s7 … HRP)
 qed.
@@ -103,9 +103,9 @@ lemma rp_liftsv_all: ∀RR,RS,RP. acr RR RS RP (λL,T. RP L T) →
 @conj /2 width=1/ /2 width=6 by rp_lifts/
 qed.
 
-(* Basic_1: was: 
+(* Basic_1: was:
    sc3_sn3 sc3_abst sc3_appl sc3_abbr sc3_bind sc3_cast sc3_lift
-*) 
+*)
 lemma aacr_acr: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
                 ∀A. acr RR RS RP (aacr RP A).
 #RR #RS #RP #H1RP #H2RP #A elim A -A normalize //

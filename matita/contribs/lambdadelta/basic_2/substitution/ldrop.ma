@@ -81,7 +81,7 @@ lemma ldrop_inv_atom1: ∀d,e,L2. ⇩[d, e] ⋆ ≡ L2 → L2 = ⋆.
 /2 width=5/ qed-.
 
 fact ldrop_inv_O1_aux: ∀d,e,L1,L2. ⇩[d, e] L1 ≡ L2 → d = 0 →
-                       ∀K,I,V. L1 = K. ⓑ{I} V → 
+                       ∀K,I,V. L1 = K. ⓑ{I} V →
                        (e = 0 ∧ L2 = K. ⓑ{I} V) ∨
                        (0 < e ∧ ⇩[d, e - 1] K ≡ L2).
 #d #e #L1 #L2 * -d -e -L1 -L2
@@ -114,7 +114,7 @@ qed-.
 fact ldrop_inv_skip1_aux: ∀d,e,L1,L2. ⇩[d, e] L1 ≡ L2 → 0 < d →
                           ∀I,K1,V1. L1 = K1. ⓑ{I} V1 →
                           ∃∃K2,V2. ⇩[d - 1, e] K1 ≡ K2 &
-                                   ⇧[d - 1, e] V2 ≡ V1 & 
+                                   ⇧[d - 1, e] V2 ≡ V1 &
                                    L2 = K2. ⓑ{I} V2.
 #d #e #L1 #L2 * -d -e -L1 -L2
 [ #d #e #_ #I #K #V #H destruct
@@ -127,14 +127,14 @@ qed.
 (* Basic_1: was: drop_gen_skip_l *)
 lemma ldrop_inv_skip1: ∀d,e,I,K1,V1,L2. ⇩[d, e] K1. ⓑ{I} V1 ≡ L2 → 0 < d →
                        ∃∃K2,V2. ⇩[d - 1, e] K1 ≡ K2 &
-                                ⇧[d - 1, e] V2 ≡ V1 & 
+                                ⇧[d - 1, e] V2 ≡ V1 &
                                 L2 = K2. ⓑ{I} V2.
 /2 width=3/ qed-.
 
 fact ldrop_inv_skip2_aux: ∀d,e,L1,L2. ⇩[d, e] L1 ≡ L2 → 0 < d →
                           ∀I,K2,V2. L2 = K2. ⓑ{I} V2 →
                           ∃∃K1,V1. ⇩[d - 1, e] K1 ≡ K2 &
-                                   ⇧[d - 1, e] V2 ≡ V1 & 
+                                   ⇧[d - 1, e] V2 ≡ V1 &
                                    L1 = K1. ⓑ{I} V1.
 #d #e #L1 #L2 * -d -e -L1 -L2
 [ #d #e #_ #I #K #V #H destruct
@@ -171,7 +171,7 @@ qed.
 lemma ldrop_O1_le: ∀i,L. i ≤ |L| → ∃K. ⇩[0, i] L ≡ K.
 #i @(nat_ind_plus … i) -i /2 width=2/
 #i #IHi *
-[ #H lapply (le_n_O_to_eq … H) -H >commutative_plus normalize #H destruct 
+[ #H lapply (le_n_O_to_eq … H) -H >commutative_plus normalize #H destruct
 | #L #I #V normalize #H
   elim (IHi L ?) -IHi /2 width=1/ -H /3 width=2/
 ]
@@ -264,7 +264,7 @@ lemma ldrop_fwd_lw: ∀L1,L2,d,e. ⇩[d, e] L1 ≡ L2 → ♯{L2} ≤ ♯{L1}.
 | #L1 #L2 #I #V1 #V2 #d #e #_ #HV21 #IHL12
   >(tw_lift … HV21) -HV21 /2 width=1/
 ]
-qed-. 
+qed-.
 
 lemma ldrop_pair2_fwd_fw: ∀I,L,K,V,d,e. ⇩[d, e] L ≡ K. ⓑ{I} V →
                           ∀T. ♯{K, V} < ♯{L, T}.
@@ -298,7 +298,7 @@ lemma ldrop_fwd_O1_length: ∀L1,L2,e. ⇩[0, e] L1 ≡ L2 → |L2| = |L1| - e.
 qed-.
 
 (* Basic_1: removed theorems 50:
-            drop_ctail drop_skip_flat 
+            drop_ctail drop_skip_flat
             cimp_flat_sx cimp_flat_dx cimp_bind cimp_getl_conf
             drop_clear drop_clear_O drop_clear_S
             clear_gen_sort clear_gen_bind clear_gen_flat clear_gen_flat_r

@@ -3,29 +3,29 @@ name "apps_2_src"
 table {
    class "grey"
    [ { "component" * } {
-        [ { "plane" * } { 
+        [ { "plane" * } {
              [ "files" * ]
-	  }
+          }
         ]
      }
    ]
    class "orange"
    [ { "MLTT1" * } {
-        [ { "" * } { 
+        [ { "" * } {
              [ "genv_primitive" "judgement" * ]
-	  }
+          }
         ]
      }
    ]
    class "red"
    [ { "functional" * } {
-        [ { "reduction and type machine" * } { 
+        [ { "reduction and type machine" * } {
              [ "rtm" "rtm_step ( ? ⇨ ? )" * ]
-	  }
+          }
         ]
-        [ { "unfold" * } { 
+        [ { "unfold" * } {
              [ "lift ( ↑[?,?] ? )" "subst ( [?←?] ? )" * ]
-	  }
+          }
         ]
      }
    ]

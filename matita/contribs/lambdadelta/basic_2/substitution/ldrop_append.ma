@@ -18,7 +18,7 @@ include "basic_2/substitution/ldrop.ma".
 
 (* Properties on append for local environments ******************************)
 
-fact ldrop_O1_append_sn_le_aux: ∀L1,L2,d,e. ⇩[d, e] L1 ≡ L2 → 
+fact ldrop_O1_append_sn_le_aux: ∀L1,L2,d,e. ⇩[d, e] L1 ≡ L2 →
                                 d = 0 → e ≤ |L1| →
                                 ∀L. ⇩[0, e] L @@ L1 ≡ L @@ L2.
 #L1 #L2 #d #e #H elim H -L1 -L2 -d -e normalize // /4 width=1/
@@ -61,4 +61,4 @@ lemma ldrop_O1_inv_append1_le: ∀K,L1,L2,e. ⇩[0, e] L1 @@ L2 ≡ K → e ≤ 
     <minus_plus_m_m /2 width=4/
   ]
 ]
-qed-. 
+qed-.

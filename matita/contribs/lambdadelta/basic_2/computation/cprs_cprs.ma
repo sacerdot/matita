@@ -70,7 +70,7 @@ lemma cprs_inv_appl1: ∀L,V1,T1,U2. L ⊢ ⓐV1. T1 ➡* U2 →
   [ #V2 #T2 #HV02 #HT02 #H destruct /4 width=5/
   | #a #V2 #W2 #T #T2 #HV02 #HT2 #H1 #H2 destruct /4 width=7/
   | #a #V #V2 #W0 #W2 #T #T2 #HV0 #HW02 #HT2 #HV2 #H1 #H2 destruct
-    @or3_intro2 @(ex4_5_intro … HV2 HT10) /2 width=3/ /3 width=1/ (**) (* explicit constructor. /5 width=8/ is too slow because TC_transitive gets in the way *) 
+    @or3_intro2 @(ex4_5_intro … HV2 HT10) /2 width=3/ /3 width=1/ (**) (* explicit constructor. /5 width=8/ is too slow because TC_transitive gets in the way *)
   ]
 | /4 width=9/
 | /4 width=11/
@@ -115,7 +115,7 @@ qed.
 lemma cprs_bind1: ∀I,L,V1,T1,T2. L. ⓑ{I}V1 ⊢ T1 ➡* T2 → ∀V2. L ⊢ V1 ➡* V2 →
                   ∀a. L ⊢ ⓑ{a,I}V1. T1 ➡* ⓑ{a,I}V2. T2.
 * /2 width=1/ /2 width=2/
-qed. 
+qed.
 
 lemma cprs_abbr2_dx: ∀L,V1,V2. L ⊢ V1 ➡ V2 → ∀T1,T2. L. ⓓV2 ⊢ T1 ➡* T2 →
                      ∀a. L ⊢ ⓓ{a}V1. T1 ➡* ⓓ{a}V2. T2.
@@ -135,10 +135,10 @@ lapply (IHV1 T1 T1 ? a) -IHV1 // #HV1
 @(cprs_trans … HV1) -HV1 /2 width=1/
 qed.
 
-lemma cprs_bind2: ∀L,V1,V2. L ⊢ V1 ➡* V2 → ∀I,T1,T2. L. ⓑ{I}V2 ⊢ T1 ➡* T2 → 
+lemma cprs_bind2: ∀L,V1,V2. L ⊢ V1 ➡* V2 → ∀I,T1,T2. L. ⓑ{I}V2 ⊢ T1 ➡* T2 →
                   ∀a. L ⊢ ⓑ{a,I}V1. T1 ➡* ⓑ{a,I}V2. T2.
 #L #V1 #V2 #HV12 * /2 width=1/ /2 width=2/
-qed. 
+qed.
 
 lemma cprs_beta_dx: ∀L,V1,V2,W,T1,T2.
                     L ⊢ V1 ➡ V2 → L.ⓛW ⊢ T1 ➡* T2 →

@@ -55,7 +55,7 @@ lemma sfr_ldrop: ∀L,d,e.
   #e #_ #H0
   >(H0 I L V 0 ? ? ?) //
   /5 width=6 by sfr_abbr, ldrop_ldrop, lt_minus_to_plus_r/ (**) (* auto now too slow without trace *)
-| #d #_ #e #H0 
+| #d #_ #e #H0
   /5 width=6 by sfr_skip, ldrop_ldrop, le_S_S, lt_minus_to_plus_r/ (**) (* auto now too slow without trace *)
 ]
 qed.

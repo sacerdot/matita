@@ -75,7 +75,7 @@ qed.
 
 lemma delifta_delift: ∀L,T1,T2,d,e. L ⊢ ▼▼*[d, e] T1 ≡ T2 → L ⊢ ▼*[d, e] T1 ≡ T2.
 #L #T1 #T2 #d #e #H elim H -L -T1 -T2 -d -e // /2 width=1/ /2 width=6/
-qed-. 
+qed-.
 
 lemma delift_ind_alt: ∀R:ℕ→ℕ→lenv→relation term.
                       (∀L,d,e,k. R d e L (⋆k) (⋆k)) →

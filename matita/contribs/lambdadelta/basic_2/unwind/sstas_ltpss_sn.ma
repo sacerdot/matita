@@ -28,7 +28,7 @@ lapply (ltpss_sn_ltpssa … H) -H #H @(ltpssa_ind … H) -L2 /2 width=3/
 lapply (ltpssa_ltpss_sn … HL1) -HL1 #HL1
 lapply (ltpss_sn_dx_trans_eq … HL1 … HL2) -HL1 #HL12
 elim (IHL1 … H1) -IHL1 -H1 #U #HU1 #HTU
-elim (sstas_ltpss_dx_conf … HTU … HL2) -HTU -HL2 #U2 #H2 #HU2  
+elim (sstas_ltpss_dx_conf … HTU … HL2) -HTU -HL2 #U2 #H2 #HU2
 lapply (ltpss_sn_tpss_trans_eq … HU2 … HL12) -HU2 -HL12 #HU2
 lapply (tpss_trans_eq … HU1 HU2) -U /2 width=3/
 qed.

@@ -22,7 +22,7 @@ inductive gdrop (e:nat): relation genv ≝
 | gdrop_lt: ∀I,G1,G2,V. e < |G1| → gdrop e G1 G2 → gdrop e (G1. ⓑ{I} V) G2
 .
 
-interpretation "global slicing" 
+interpretation "global slicing"
    'RDrop e G1 G2 = (gdrop e G1 G2).
 
 (* basic inversion lemmas ***************************************************)

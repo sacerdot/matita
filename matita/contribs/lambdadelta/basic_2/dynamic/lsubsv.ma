@@ -58,7 +58,7 @@ qed-.
 
 lemma lsubsv_inv_pair1: ∀h,g,I,K1,L2,V1. h ⊢ K1. ⓑ{I} V1 ⊩:⊑[g] L2 →
                         (∃∃K2. h ⊢ K1 ⊩:⊑[g] K2 & L2 = K2. ⓑ{I} V1) ∨
-                        ∃∃K2,W1,W2,l. ⦃h, K1⦄ ⊩ V1 :[g] & ⦃h, K1⦄ ⊢ V1 •[g,l+1] W1 & 
+                        ∃∃K2,W1,W2,l. ⦃h, K1⦄ ⊩ V1 :[g] & ⦃h, K1⦄ ⊢ V1 •[g,l+1] W1 &
                                       K1 ⊢ W2 ⬌* W1 & ⦃h, K2⦄ ⊩ W2 :[g] &
                                       h ⊢ K1 ⊩:⊑[g] K2 & L2 = K2. ⓛW2 & I = Abbr.
 /2 width=3 by lsubsv_inv_pair1_aux/ qed-.

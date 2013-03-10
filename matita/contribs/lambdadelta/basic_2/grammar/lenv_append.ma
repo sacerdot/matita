@@ -85,7 +85,7 @@ qed-.
 lemma length_inv_pos_dx_append: ∀d,L. |L| = d + 1 →
                                 ∃∃I,K,V. |K| = d & L = ⋆.ⓑ{I}V @@ K.
 #d @(nat_ind_plus … d) -d
-[ #L #H 
+[ #L #H
   elim (length_inv_pos_dx … H) -H #I #K #V #H
   >(length_inv_zero_dx … H) -H #H destruct
   @ex2_3_intro [4: /2 width=2/ |5: // |1,2,3: skip ] (**) (* /3/ does not work *)

@@ -24,4 +24,4 @@ lemma tpr_delift_conf: ∀U1,U2. U1 ➡ U2 → ∀L,T1,d,e. L ⊢ ▼*[d, e] U1 
 #U1 #U2 #HU12 #L #T1 #d #e * #W1 #HUW1 #HTW1
 elim (tpr_tpss_conf … HU12 … HUW1) -U1 #U1 #HWU1 #HU21
 elim (tpr_inv_lift1 … HWU1 … HTW1) -W1 /3 width=5/
-qed. 
+qed.

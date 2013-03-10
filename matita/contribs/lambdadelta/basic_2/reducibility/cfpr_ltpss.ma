@@ -26,7 +26,7 @@ lemma cfpr_inv_pair1: ∀I,L,K1,L2,V1,T1,T2. L ⊢ ⦃⋆.ⓑ{I}V1@@K1, T1⦄ �
                                  L2 = ⋆.ⓑ{I}V2@@K2.
 * #L #K1 #L2 #V1 #T1 #T2 * >append_length #H
 elim (length_inv_pos_sn_append … H) -H #I2 #K2 #V2 #HK12 #H destruct
->shift_append_assoc >shift_append_assoc normalize in ⊢ (??%%→?); #H 
+>shift_append_assoc >shift_append_assoc normalize in ⊢ (??%%→?); #H
 [ elim (cpr_inv_abbr1 … H) -H *
   [ #V #V0 #T0 #HV1 #HV0 #HT10 #H destruct /3 width=7/
   | #T0 #_ #_ #H destruct

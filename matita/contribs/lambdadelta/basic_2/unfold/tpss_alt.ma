@@ -79,7 +79,7 @@ qed.
 
 lemma tpssa_tpss: ∀L,T1,T2,d,e. L ⊢ T1 ▶▶* [d, e] T2 → L ⊢ T1 ▶* [d, e] T2.
 #L #T1 #T2 #d #e #H elim H -L -T1 -T2 -d -e // /2 width=6/
-qed-. 
+qed-.
 
 lemma tpss_ind_alt: ∀R:nat→nat→lenv→relation term.
                     (∀L,I,d,e. R d e L (⓪{I}) (⓪{I})) →

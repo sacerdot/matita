@@ -48,7 +48,7 @@ lemma fprs_lift: ∀K1,K2,T1,T2. ⦃K1, T1⦄ ➡* ⦃K2, T2⦄ →
   elim (IHT1 … HLK1 … HTU1 HTU) -K1 -T1 #L #HU1 #HKL
   elim (fpr_lift … HT2 … HKL … HTU HTU2) -K -T -T2 /3 width=4/
 ]
-qed-.  
+qed-.
 
 (* Advanced inversion lemmas ************************************************)
 

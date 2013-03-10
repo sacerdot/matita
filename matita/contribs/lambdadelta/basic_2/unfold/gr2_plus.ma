@@ -35,6 +35,6 @@ lemma pluss_inv_cons2: ∀i,d,e,des2,des. des + i = {d, e} @ des2 →
                        ∃∃des1. des1 + i = des2 & des = {d - i, e} @ des1.
 #i #d #e #des2 * normalize
 [ #H destruct
-| #d1 #e1 #des1 #H destruct /2 width=3/ 
+| #d1 #e1 #des1 #H destruct /2 width=3/
 ]
 qed-.

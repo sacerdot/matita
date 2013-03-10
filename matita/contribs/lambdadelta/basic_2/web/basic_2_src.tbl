@@ -3,7 +3,7 @@ name "basic_2_src"
 table {
    class "grey"
    [ { "component" * } {
-        [ { "plane" * } { 
+        [ { "plane" * } {
              [ "files" * ]
           }
         ]
@@ -29,7 +29,7 @@ table {
 *)
    class "prune"
    [ { "dynamic typing" * } {
-(*        
+(*
         [ { "local env. ref. for native type assignment" * } {
              [ "lsubn ( ? ⊢ ? :⊑ ? )" "lsubn_ldrop" "lsubn_cpcs" "lsubn_nta" * ]
           }
@@ -123,7 +123,7 @@ table {
      }
    ]
    class "water"
-   [ { "reducibility" * } {        
+   [ { "reducibility" * } {
         [ { "context-sensitive focalized reduction" * } {
              [ "cfpr ( ? ⊢ ⦃?,?⦄ ➡ ⦃?,?⦄ )" "cnfpr_ltpss" + "cfpr_aaa" + "cfpr_cpr" + "cfpr_cfpr" * ]
           }
@@ -140,7 +140,7 @@ table {
         [ { "context-sensitive normal forms" * } {
              [ "cnf ( ? ⊢ 𝐍⦃?⦄ )" "cnf_lift" + "cnf_cif" * ]
           }
-        ]       
+        ]
         [ { "context-sensitive reduction" * } {
              [ "cpr ( ? ⊢ ? ➡ ? )" "cpr_lift" + "cpr_tpss" + "cpr_ltpss_dx" + "cpr_ltpss_sn" + "cpr_delift" + "cpr_aaa" + "cpr_ltpr" + "cpr_cpr" * ]
           }
@@ -197,7 +197,7 @@ table {
         [ { "basic local env. thinning" * } {
              [ "thin ( ? ▼*[?,?] ≡ ? )" "thin_ldrop" + "thin_delift" * ]
           }
-        ]        
+        ]
         [ { "inverse basic term relocation" * } {
              [ "delift ( ? ⊢ ? ▼*[?,?] ≡ ? )" "delift_alt ( ? ⊢ ? ▼▼*[?,?] ≡ ? )" "delift_lift" + "delift_tpss" + "delift_ltpss" + "delift_delift" * ]
           }
@@ -208,7 +208,7 @@ table {
              [ "tpss ( ? ⊢ ? ▶*[?,?] ? )" "tpss_alt ( ? ⊢ ? ▶▶*[?,?] ? )" "tpss_lift" "tpss_tpss" * ]
           }
         ]
-        [ { "generic local env. slicing" * } { 
+        [ { "generic local env. slicing" * } {
              [ "ldrops ( ⇩*[?] ? ≡ ? )" "ldrops_ldrop" + "ldrops_ldrops" * ]
           }
         ]
@@ -219,17 +219,17 @@ table {
         ]
         [ { "generic term relocation" * } {
              [ "lifts_vector ( ⇧*[?] ? ≡ ? )" "lifts_lift_vector" * ]
-             [ "lifts ( ⇧*[?] ? ≡ ? )" "lifts_lift" + "lifts_lifts" * ] 
+             [ "lifts ( ⇧*[?] ? ≡ ? )" "lifts_lift" + "lifts_lifts" * ]
           }
         ]
-        [ { "support for generic relocation" * } { 
+        [ { "support for generic relocation" * } {
              [ "gr2 ( @⦃?,?⦄ ≡ ? )" "gr2_plus ( ? + ? )" "gr2_minus ( ? ▭ ? ≡ ? )" "gr2_gr2" * ]
           }
         ]
      }
    ]
-   class "orange"   
-   [ { "substitution" * } { 
+   class "orange"
+   [ { "substitution" * } {
         [ { "parallel substitution" * } {
              [ "tps ( ? ⊢ ? ▶[?,?] ? )" "tps_lift" + "tps_tps" * ]
           }
@@ -257,7 +257,7 @@ table {
         ]
      }
    ]
-   class "red"   
+   class "red"
    [ { "grammar" * } {
         [ { "same head term form" * } {
              [ "tshf ( ? ≈ ? )" "(tshf_tshf)" * ]
@@ -277,11 +277,11 @@ table {
              [ "term" "term_weight ( ♯{?} )" "term_simple ( 𝐒⦃?⦄ )" "term_vector" * ]
              [ "item" * ]
           }
-        ] 
+        ]
         [ { "external syntax" * } {
              [ "aarity" * ]
           }
-        ] 
+        ]
      }
    ]
 }

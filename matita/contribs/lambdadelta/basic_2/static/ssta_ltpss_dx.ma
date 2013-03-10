@@ -106,7 +106,7 @@ lemma ssta_ltpss_dx_tps_conf: ∀h,g,L1,T1,U1,l. ⦃h, L1⦄ ⊢ T1 •[g, l] U1
                               ∀L2,d,e. L1 ▶* [d, e] L2 →
                               ∀T2. L2 ⊢ T1 ▶ [d, e] T2 →
                               ∃∃U2. ⦃h, L2⦄ ⊢ T2 •[g, l] U2 &
-			            L2 ⊢ U1 ▶* [d, e] U2.
+                                    L2 ⊢ U1 ▶* [d, e] U2.
 /3 width=5/ qed.
 
 lemma ssta_ltpss_dx_conf: ∀h,g,L1,T,U1,l. ⦃h, L1⦄ ⊢ T •[g, l] U1 →

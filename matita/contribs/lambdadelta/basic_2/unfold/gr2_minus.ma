@@ -17,7 +17,7 @@ include "basic_2/unfold/gr2.ma".
 (* GENERIC RELOCATION WITH PAIRS ********************************************)
 
 inductive minuss: nat → relation (list2 nat nat) ≝
-| minuss_nil: ∀i. minuss i ⟠ ⟠ 
+| minuss_nil: ∀i. minuss i ⟠ ⟠
 | minuss_lt : ∀des1,des2,d,e,i. i < d → minuss i des1 des2 →
               minuss i ({d, e} @ des1) ({d - i, e} @ des2)
 | minuss_ge : ∀des1,des2,d,e,i. d ≤ i → minuss (e + i) des1 des2 →
@@ -46,7 +46,7 @@ fact minuss_inv_cons1_aux: ∀des1,des2,i. des1 ▭ i ≡ des2 →
                            ∃∃des0. i < d & des ▭ i ≡ des0 &
                                    des2 = {d - i, e} @ des0.
 #des1 #des2 #i * -des1 -des2 -i
-[ #i #d #e #des #H destruct 
+[ #i #d #e #des #H destruct
 | #des1 #des #d1 #e1 #i1 #Hid1 #Hdes #d2 #e2 #des2 #H destruct /3 width=3/
 | #des1 #des #d1 #e1 #i1 #Hdi1 #Hdes #d2 #e2 #des2 #H destruct /3 width=1/
 ]
@@ -67,7 +67,7 @@ elim (lt_refl_false … Hi)
 qed-.
 
 lemma minuss_inv_cons1_lt: ∀des1,des2,d,e,i. {d, e} @ des1 ▭ i ≡ des2 →
-                           i < d → 
+                           i < d →
                            ∃∃des. des1 ▭ i ≡ des & des2 = {d - i, e} @ des.
 #des1 #des2 #d #e #i #H
 elim (minuss_inv_cons1 … H) -H * /2 width=3/ #Hdi #_ #Hid

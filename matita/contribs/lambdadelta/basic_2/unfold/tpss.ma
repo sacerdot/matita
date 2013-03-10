@@ -44,11 +44,11 @@ lemma tps_tpss: ∀L,T1,T2,d,e. L ⊢ T1 ▶ [d, e] T2 → L ⊢ T1 ▶* [d, e] 
 /2 width=1/ qed.
 
 lemma tpss_strap1: ∀L,T1,T,T2,d,e.
-                   L ⊢ T1 ▶* [d, e] T → L ⊢ T ▶ [d, e] T2 → L ⊢ T1 ▶* [d, e] T2. 
+                   L ⊢ T1 ▶* [d, e] T → L ⊢ T ▶ [d, e] T2 → L ⊢ T1 ▶* [d, e] T2.
 /2 width=3/ qed.
 
 lemma tpss_strap2: ∀L,T1,T,T2,d,e.
-                   L ⊢ T1 ▶ [d, e] T → L ⊢ T ▶* [d, e] T2 → L ⊢ T1 ▶* [d, e] T2. 
+                   L ⊢ T1 ▶ [d, e] T → L ⊢ T ▶* [d, e] T2 → L ⊢ T1 ▶* [d, e] T2.
 /2 width=3/ qed.
 
 lemma tpss_lsubs_trans: ∀L1,T1,T2,d,e. L1 ⊢ T1 ▶* [d, e] T2 →
@@ -137,7 +137,7 @@ lemma tpss_inv_gref1: ∀L,T2,p,d,e. L ⊢ §p ▶* [d, e] T2 → T2 = §p.
 qed-.
 
 lemma tpss_inv_bind1: ∀d,e,L,a,I,V1,T1,U2. L ⊢ ⓑ{a,I} V1. T1 ▶* [d, e] U2 →
-                      ∃∃V2,T2. L ⊢ V1 ▶* [d, e] V2 & 
+                      ∃∃V2,T2. L ⊢ V1 ▶* [d, e] V2 &
                                L. ⓑ{I} V2 ⊢ T1 ▶* [d + 1, e] T2 &
                                U2 = ⓑ{a,I} V2. T2.
 #d #e #L #a #I #V1 #T1 #U2 #H @(tpss_ind … H) -U2
@@ -182,4 +182,3 @@ lemma tpss_fwd_shift1: ∀L,L1,T1,T,d,e. L ⊢ L1 @@ T1 ▶*[d, e] T →
   elim (tps_fwd_shift1 … H0) -H0 #L2 #T2 #HL02 #H destruct /2 width=4/
 ]
 qed-.
-  

@@ -61,7 +61,7 @@ elim (cpr_inv_cast1 … H1) -H1
 [ * #W0 #T0 #HLW0 #HLT0 #H destruct
   elim (eq_false_inv_tpair_sn … H2) -H2
   [ /3 width=3/
-  | -HLW0 * #H destruct /3 width=1/ 
+  | -HLW0 * #H destruct /3 width=1/
   ]
 | /3 width=3/
 ]

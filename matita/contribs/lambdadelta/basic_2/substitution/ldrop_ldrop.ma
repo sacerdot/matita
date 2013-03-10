@@ -80,7 +80,7 @@ qed.
 
 (* Note: apparently this was missing in basic_1 *)
 theorem ldrop_conf_le: ∀L0,L1,d1,e1. ⇩[d1, e1] L0 ≡ L1 →
-                       ∀L2,e2. ⇩[0, e2] L0 ≡ L2 → e2 ≤ d1 → 
+                       ∀L2,e2. ⇩[0, e2] L0 ≡ L2 → e2 ≤ d1 →
                        ∃∃L. ⇩[0, e2] L1 ≡ L & ⇩[d1 - e2, e1] L2 ≡ L.
 #L0 #L1 #d1 #e1 #H elim H -L0 -L1 -d1 -e1
 [ #d1 #e1 #L2 #e2 #H

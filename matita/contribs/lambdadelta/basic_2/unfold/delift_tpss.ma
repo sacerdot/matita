@@ -89,4 +89,4 @@ qed.
 
 lemma tps_delift_trans_eq: ∀L,U1,U2,d,e. L ⊢ U1 ▶ [d, e] U2 →
                            ∀T. L ⊢ ▼*[d, e] U2 ≡ T → L ⊢ ▼*[d, e] U1 ≡ T.
-/3 width=3/ qed.                            
+/3 width=3/ qed.

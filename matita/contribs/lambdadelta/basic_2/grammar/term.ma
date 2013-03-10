@@ -104,7 +104,7 @@ lemma eq_false_inv_tpair_sn: ∀I,V1,T1,V2,T2.
                              (V1 = V2 → ⊥) ∨ (V1 = V2 ∧ (T1 = T2 → ⊥)).
 #I #V1 #T1 #V2 #T2 #H
 elim (term_eq_dec V1 V2) /3 width=1/ #HV12 destruct
-@or_intror @conj // #HT12 destruct /2 width=1/ 
+@or_intror @conj // #HT12 destruct /2 width=1/
 qed-.
 
 lemma eq_false_inv_tpair_dx: ∀I,V1,T1,V2,T2.

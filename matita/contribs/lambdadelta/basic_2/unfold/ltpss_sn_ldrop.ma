@@ -133,7 +133,7 @@ qed.
 
 lemma ldrop_ltpss_sn_trans_be: ∀L1,K1,d1,e1. ⇩[d1, e1] L1 ≡ K1 →
                                ∀K2,d2,e2. K1 ⊢ ▶* [d2, e2] K2 →
-                               d2 ≤ d1 → d1 ≤ d2 + e2 → 
+                               d2 ≤ d1 → d1 ≤ d2 + e2 →
                                ∃∃L2. L1 ⊢ ▶* [d2, e1 + e2] L2 &
                                      ⇩[d1, e1] L2 ≡ K2.
 #L1 #K1 #d1 #e1 #H elim H -L1 -K1 -d1 -e1

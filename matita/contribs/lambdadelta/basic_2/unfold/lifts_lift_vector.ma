@@ -23,7 +23,7 @@ include "basic_2/unfold/lifts_vector.ma".
 (* Basic_1: was: lifts1_xhg (right to left) *)
 lemma liftsv_liftv_trans_le: ∀T1s,Ts,des. ⇧*[des] T1s ≡ Ts →
                              ∀T2s:list term. ⇧[0, 1] Ts ≡ T2s →
-                             ∃∃T0s. ⇧[0, 1] T1s ≡ T0s & ⇧*[des + 1] T0s ≡ T2s. 
+                             ∃∃T0s. ⇧[0, 1] T1s ≡ T0s & ⇧*[des + 1] T0s ≡ T2s.
 #T1s #Ts #des #H elim H -T1s -Ts
 [ #T1s #H
   >(liftv_inv_nil1 … H) -T1s /2 width=3/

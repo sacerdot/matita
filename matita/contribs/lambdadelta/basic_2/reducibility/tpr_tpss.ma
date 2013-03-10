@@ -88,4 +88,4 @@ qed.
 lemma tpr_tpss_conf: ∀T1,T2. T1 ➡ T2 →
                      ∀L,U1,d,e. L ⊢ T1 ▶* [d, e] U1 →
                      ∃∃U2. U1 ➡ U2 & L ⊢ T2 ▶* [d, e] U2.
-/2 width=5/ qed. 
+/2 width=5/ qed.

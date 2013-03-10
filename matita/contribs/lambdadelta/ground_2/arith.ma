@@ -103,7 +103,7 @@ qed.
 
 (* Note: this is "if eqb n1 n2 then a2 else if leb n1 n2 then a1 else a3" *)
 let rec tri (A:Type[0]) n1 n2 a1 a2 a3 on n1 : A ≝
-  match n1 with 
+  match n1 with
   [ O    ⇒ match n2 with [ O ⇒ a2 | S n2 ⇒ a1 ]
   | S n1 ⇒ match n2 with [ O ⇒ a3 | S n2 ⇒ tri A n1 n2 a1 a2 a3 ]
   ].

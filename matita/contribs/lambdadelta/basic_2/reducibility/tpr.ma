@@ -234,5 +234,5 @@ qed-.
 
 (* Basic_1: removed theorems 3:
             pr0_subst0_back pr0_subst0_fwd pr0_subst0
-*)   
+*)
 (* Basic_1: removed local theorems: 1: pr0_delta_tau *)

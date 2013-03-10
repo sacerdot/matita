@@ -130,7 +130,7 @@ elim (cprs_inv_appl1 … H) -H *
       @(cprs_strap2 … (ⓓ{b}V0.ⓐV2a.T0)) [ /3 width=3/ ] -V1a /3 width=1/
     ]
   ]
-]  
+]
 qed-.
 
 (* Basic_1: was: pr3_iso_appls_cast *)

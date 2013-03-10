@@ -96,7 +96,7 @@ lemma cnf_crf_false: ∀L,T. L ⊢ 𝐑⦃T⦄ → L ⊢ 𝐍⦃T⦄ → ⊥.
 | #a #L #V #W #T #H
   elim (cnf_inv_appl … H) -H #_ #_ #H
   elim (simple_inv_bind … H)
-| #a #L #V #W #T #H 
+| #a #L #V #W #T #H
   elim (cnf_inv_appl … H) -H #_ #_ #H
   elim (simple_inv_bind … H)
 ]

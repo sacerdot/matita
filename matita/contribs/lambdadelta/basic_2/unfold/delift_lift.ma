@@ -25,7 +25,7 @@ lemma delift_lref_be: ∀L,K,V1,V2,U2,i,d,e. d ≤ i → i < d + e →
                       ⇧[0, d] V2 ≡ U2 → L ⊢ ▼*[d, e] #i ≡ U2.
 #L #K #V1 #V2 #U2 #i #d #e #Hdi #Hide #HLK * #V #HV1 #HV2 #HVU2
 elim (lift_total V 0 (i+1)) #U #HVU
-lapply (lift_trans_be … HV2 … HVU ? ?) -HV2 // >minus_plus <plus_minus_m_m /2 width=1/ #HV2U 
+lapply (lift_trans_be … HV2 … HVU ? ?) -HV2 // >minus_plus <plus_minus_m_m /2 width=1/ #HV2U
 lapply (lift_conf_be … HVU2 … HV2U ?) //
 >commutative_plus in ⊢ (??%??→?); <minus_plus_m_m /3 width=6/
 qed.
@@ -95,7 +95,7 @@ elim (tpss_inv_lref1 … HU) -HU
 qed-.
 
 lemma delift_inv_lref1: ∀L,U2,i,d,e. L ⊢ ▼*[d, e] #i ≡ U2 →
-                        ∨∨ (i < d ∧ U2 = #i) 
+                        ∨∨ (i < d ∧ U2 = #i)
                         |  (∃∃K,V1,V2. d ≤ i & i < d + e &
                                        ⇩[0, i] L ≡ K. ⓓV1 &
                                        K ⊢ ▼*[0, d + e - i - 1] V1 ≡ V2 &

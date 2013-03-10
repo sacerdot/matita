@@ -26,7 +26,7 @@ definition CP3 ≝ λRR:lenv→relation term. λRP:lenv→predicate term.
                  ∀L,V,k. RP L (ⓐ⋆k.V) → RP L V.
 
 definition CP4 ≝ λRR:lenv→relation term. λRS:relation term.
-                 ∀L0,L,T,T0,d,e. NF … (RR L) RS T → 
+                 ∀L0,L,T,T0,d,e. NF … (RR L) RS T →
                  ⇩[d, e] L0 ≡ L → ⇧[d, e] T ≡ T0 → NF … (RR L0) RS T0.
 
 definition CP4s ≝ λRR:lenv→relation term. λRS:relation term.

@@ -28,6 +28,6 @@ qed.
 
 lemma ltpss_sn_delift_trans_eq: ∀L,K,d,e. L ⊢ ▶* [d, e] K →
                                 ∀T1,T2. K ⊢ ▼*[d, e] T1 ≡ T2 → L ⊢ ▼*[d, e] T1 ≡ T2.
-#L #K #d #e #HLK #T1 #T2 * #T #HT1 #HT2 
+#L #K #d #e #HLK #T1 #T2 * #T #HT1 #HT2
 lapply (ltpss_sn_tpss_trans_eq … HT1 … HLK) -K /2 width=3/
 qed.

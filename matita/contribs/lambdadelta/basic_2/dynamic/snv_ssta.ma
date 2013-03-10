@@ -47,7 +47,7 @@ fact snv_ssta_aux: ∀h,g,L0,T0.
   elim (cprs_inv_abst … HU02 Abst W0) -HU02 #HW02 #_
   lapply (cprs_trans … HW10 … HW02) -W0 /3 width=10 by snv_appl, ex2_intro/ (**) (* auto is too slow without trace *)
 | #W1 #T1 #HL0 #HT0 #H1 #X #l #H2 destruct -IH3 -IH2
-  elim (snv_inv_cast … H1) -H1 #U1 #l0 #HW1 #HT1 #HTU1 #HUW1 
+  elim (snv_inv_cast … H1) -H1 #U1 #l0 #HW1 #HT1 #HTU1 #HUW1
   lapply (ssta_inv_cast1 … H2) -H2 /3 width=5/
 ]
 qed-.

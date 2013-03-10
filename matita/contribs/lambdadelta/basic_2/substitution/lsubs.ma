@@ -42,7 +42,7 @@ lemma lsubs_bind_eq: ∀L1,L2,e. L1 ≼ [0, e] L2 → ∀I,V.
 #L1 #L2 #e #HL12 #I #V elim I -I /2 width=1/
 qed.
 
-lemma lsubs_abbr_lt: ∀L1,L2,V,e. L1 ≼ [0, e - 1] L2 → 0 < e → 
+lemma lsubs_abbr_lt: ∀L1,L2,V,e. L1 ≼ [0, e - 1] L2 → 0 < e →
                      L1. ⓓV ≼ [0, e] L2.ⓓV.
 #L1 #L2 #V #e #HL12 #He >(plus_minus_m_m e 1) // /2 width=1/
 qed.
@@ -57,7 +57,7 @@ lemma lsubs_skip_lt: ∀L1,L2,d,e. L1 ≼ [d - 1, e] L2 → 0 < d →
 #L1 #L2 #d #e #HL12 #Hd >(plus_minus_m_m d 1) // /2 width=1/
 qed.
 
-lemma lsubs_bind_lt: ∀I,L1,L2,V,e. L1 ≼ [0, e - 1] L2 → 0 < e → 
+lemma lsubs_bind_lt: ∀I,L1,L2,V,e. L1 ≼ [0, e - 1] L2 → 0 < e →
                      L1. ⓓV ≼ [0, e] L2. ⓑ{I}V.
 * /2 width=1/ qed.
 
@@ -76,7 +76,7 @@ lemma TC_lsubs_trans: ∀S,R. lsubs_trans S R → lsubs_trans S (λL. (TC … (R
 ]
 qed.
 
-(* Basic inversion lemmas ***************************************************) 
+(* Basic inversion lemmas ***************************************************)
 
 fact lsubs_inv_atom1_aux: ∀L1,L2,d,e. L1 ≼ [d, e] L2 → L1 = ⋆ →
                           L2 = ⋆ ∨ (d = 0 ∧ e = 0).

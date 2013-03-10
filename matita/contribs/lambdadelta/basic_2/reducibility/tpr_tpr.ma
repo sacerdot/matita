@@ -199,7 +199,7 @@ qed.
 (* Basic_1: was: pr0_confluence *)
 theorem tpr_conf: ∀T0:term. ∀T1,T2. T0 ➡ T1 → T0 ➡ T2 →
                   ∃∃T. T1 ➡ T & T2 ➡ T.
-#T0 @(f_ind … tw … T0) -T0 #n #IH * 
+#T0 @(f_ind … tw … T0) -T0 #n #IH *
 [ #I #_ #X1 #X2 #H1 #H2 -n
   >(tpr_inv_atom1 … H1) -X1
   >(tpr_inv_atom1 … H2) -X2
@@ -215,13 +215,13 @@ theorem tpr_conf: ∀T0:term. ∀T1,T2. T0 ➡ T1 → T0 ➡ T2 →
     |2,4: #T2 #HT02 #HXT2 #H21 #H22
     ] destruct
 (* case 2: delta, delta *)
-    [ /3 width=11 by tpr_conf_delta_delta/ (**) (* /3 width=11/ is too slow *)   
+    [ /3 width=11 by tpr_conf_delta_delta/ (**) (* /3 width=11/ is too slow *)
 (* case 3: zeta, delta (repeated) *)
     | @ex2_commute /3 width=10 by tpr_conf_delta_zeta/
 (* case 4: delta, zeta *)
     | /3 width=10 by tpr_conf_delta_zeta/ (**) (* /3 width=10/ is too slow *)
 (* case 5: zeta, zeta *)
-    | /3 width=9 by tpr_conf_zeta_zeta/ (**) (* /3 width=9/ is too slow *)    
+    | /3 width=9 by tpr_conf_zeta_zeta/ (**) (* /3 width=9/ is too slow *)
     ]
   | elim (tpr_inv_flat1 … H1) -H1 *
     [ #V1 #T1 #HV01 #HT01 #H1

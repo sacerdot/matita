@@ -203,7 +203,7 @@ qed-.
 
 fact tps_inv_bind1_aux: ∀d,e,L,U1,U2. L ⊢ U1 ▶ [d, e] U2 →
                         ∀a,I,V1,T1. U1 = ⓑ{a,I} V1. T1 →
-                        ∃∃V2,T2. L ⊢ V1 ▶ [d, e] V2 & 
+                        ∃∃V2,T2. L ⊢ V1 ▶ [d, e] V2 &
                                  L. ⓑ{I} V2 ⊢ T1 ▶ [d + 1, e] T2 &
                                  U2 = ⓑ{a,I} V2. T2.
 #d #e #L #U1 #U2 * -d -e -L -U1 -U2
@@ -215,7 +215,7 @@ fact tps_inv_bind1_aux: ∀d,e,L,U1,U2. L ⊢ U1 ▶ [d, e] U2 →
 qed.
 
 lemma tps_inv_bind1: ∀d,e,L,a,I,V1,T1,U2. L ⊢ ⓑ{a,I} V1. T1 ▶ [d, e] U2 →
-                     ∃∃V2,T2. L ⊢ V1 ▶ [d, e] V2 & 
+                     ∃∃V2,T2. L ⊢ V1 ▶ [d, e] V2 &
                               L. ⓑ{I} V2 ⊢ T1 ▶ [d + 1, e] T2 &
                               U2 = ⓑ{a,I} V2. T2.
 /2 width=3/ qed-.
@@ -280,5 +280,5 @@ qed-.
             subst0_subst0 subst0_subst0_back subst0_weight_le subst0_weight_lt
             subst0_confluence_neq subst0_confluence_eq subst0_tlt_head
             subst0_confluence_lift subst0_tlt
-            subst1_head subst1_gen_head subst1_lift_S subst1_confluence_lift 
+            subst1_head subst1_gen_head subst1_lift_S subst1_confluence_lift
 *)

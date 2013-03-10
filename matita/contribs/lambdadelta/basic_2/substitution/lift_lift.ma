@@ -103,9 +103,9 @@ theorem lift_mono: ∀d,e,T,U1. ⇧[d,e] T ≡ U1 → ∀U2. ⇧[d,e] T ≡ U2 �
 #d #e #T #U1 #H elim H -d -e -T -U1
 [ #k #d #e #X #HX
   lapply (lift_inv_sort1 … HX) -HX //
-| #i #d #e #Hid #X #HX 
+| #i #d #e #Hid #X #HX
   lapply (lift_inv_lref1_lt … HX ?) -HX //
-| #i #d #e #Hdi #X #HX 
+| #i #d #e #Hdi #X #HX
   lapply (lift_inv_lref1_ge … HX ?) -HX //
 | #p #d #e #X #HX
   lapply (lift_inv_gref1 … HX) -HX //

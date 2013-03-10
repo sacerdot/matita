@@ -215,7 +215,7 @@ lemma cpcs_bind1: ∀I,L,V1,T1,T2. L.ⓑ{I}V1 ⊢ T1 ⬌* T2 → ∀V2. L ⊢ V1
 * /2 width=1/ /2 width=2/
 qed.
 
-lemma cpcs_bind2: ∀L,V1,V2. L ⊢ V1 ⬌* V2 → ∀I,T1,T2. L.ⓑ{I}V2 ⊢ T1 ⬌* T2 → 
+lemma cpcs_bind2: ∀L,V1,V2. L ⊢ V1 ⬌* V2 → ∀I,T1,T2. L.ⓑ{I}V2 ⊢ T1 ⬌* T2 →
                   ∀a. L ⊢ ⓑ{a,I}V1. T1 ⬌* ⓑ{a,I}V2. T2.
 #L #V1 #V2 #HV12 * /2 width=1/ /2 width=2/
 qed.
