@@ -69,10 +69,10 @@ define STATS_TEMPLATE
   STT_$(1) := $(1).stats
   STTS     += $$(STT_$(1))
 
+  $$(STT_$(1)): S0  = $$(shell cat $(1)/$(1)_probe.txt)    
   $$(STT_$(1)): S1 := $$(shell $$(MAC_DIR)/$$(MAC) $$(MAS_$(1)))
-  $$(STT_$(1)): S2  = $$(shell echo $$$$(($$(S1) / 5120)))
+  $$(STT_$(1)): S3  = $$(shell echo $$$$(($$(S1) / 5120)))
   $$(STT_$(1)): S4  = $$(shell ls $$(MAS_$(1)) | wc -l)
-  $$(STT_$(1)): S5  = $$(shell cat $(1)/$(1)_probe.txt)  
   $$(STT_$(1)): P1  = $$(shell grep "theorem " $$(MAS_$(1)) | wc -l)
   $$(STT_$(1)): P2  = $$(shell grep "lemma " $$(MAS_$(1)) | wc -l)
   $$(STT_$(1)): P3  = $$(shell grep "fact " $$(MAS_$(1)) | wc -l)
@@ -89,14 +89,14 @@ $$(STT_$(1)): $$(MAS_$(1)) $(1)/$(1)_probe.txt
 	@printf '\x1B[0m\n'
 	@printf '\x1B[1;40;35m'
 	@printf '%-8s %6i' Chars $$(S1)
-	@printf '   %-8s %4i' Pages $$(S2)
-	@printf '   %-7s %7i' Nodes $$(word 3, $$(S5))
+	@printf '   %-8s %4i' Pages $$(S3)
+	@printf '   %-7s %7i' Nodes $$(word 3, $$(S0))
 	@printf '   %-11s' ''
 	@printf '\x1B[0m\n'
 	@printf '\x1B[1;40;36m'
 	@printf '%-8s %6i' Files $$(S4)
-	@printf '   %-8s %4i' Sources $$(word 1, $$(S5))
-	@printf '   %-7s %7i' Objects $$(word 2, $$(S5))
+	@printf '   %-8s %4i' Sources $$(word 1, $$(S0))
+	@printf '   %-7s %7i' Objects $$(word 2, $$(S0))
 	@printf '   %-11s' ''
 	@printf '\x1B[0m\n'	
 	@printf '\x1B[1;40;32m'
@@ -132,9 +132,9 @@ define SUMMARY_TEMPLATE
   SUM_$(1) := $(1)/web/$(1)_sum.tbl  
   SUMS     += $$(SUM_$(1))
 
-  $$(SUM_$(1)): S1 = $$(shell ls $$(MAS_$(1)) | wc -l)
-  $$(SUM_$(1)): S2 = $$(shell $$(MAC_DIR)/$$(MAC) $$(MAS_$(1)))
-  $$(SUM_$(1)): S3 = $$(shell cat $(1)/$(1)_probe.txt)
+  $$(SUM_$(1)): S0 = $$(shell cat $(1)/$(1)_probe.txt)  
+  $$(SUM_$(1)): S1 = $$(shell $$(MAC_DIR)/$$(MAC) $$(MAS_$(1)))
+  $$(SUM_$(1)): S4 = $$(shell ls $$(MAS_$(1)) | wc -l)  
   $$(SUM_$(1)): C1 = $$(shell grep "inductive \|record " $$(MAS_$(1)) | wc -l)
   $$(SUM_$(1)): C2 = $$(shell grep "definition \|let rec " $$(MAS_$(1)) | wc -l)
   $$(SUM_$(1)): C3 = $$(shell grep "inductive \|record \|definition \|let rec " $$(MAS_$(1)) | wc -l)
@@ -144,30 +144,30 @@ define SUMMARY_TEMPLATE
 
   $$(SUM_$(1)): $$(MAS_$(1)) $(1)/$(1)_probe.txt
 	@printf '  SUMMARY $(1)\n'
-	@printf 'name "$$(basename $$(@F))"\n\n'           >  $$@
-	@printf 'table {\n'                                >> $$@
-	@printf '   class "grey" [ "category"\n'           >> $$@
-	@printf '      [ "objects" * ]\n'                  >> $$@
-	@printf '   ]\n'                                   >> $$@
-	@printf '   class "cyan" [ "sizes"\n'              >> $$@
-	@printf '      [ "files" "$$(S1)" ]\n'             >> $$@
-	@printf '      [ "characters" "$$(S2)" ]\n'        >> $$@
-	@printf '      [ "nodes" "$$(word 3, $$(S5))" ]\n' >> $$@
-	@printf '   ]\n'                                   >> $$@	
-	@printf '   class "green" [ "propositions"\n'      >> $$@
-	@printf '      [ "theorems" "$$(P1)" ]\n'          >> $$@
-	@printf '      [ "lemmas"   "$$(P2)" ]\n'          >> $$@
-	@printf '      [ "total"    "$$(P3)" ]\n'          >> $$@
-	@printf '   ]\n'                                   >> $$@
-	@printf '   class "yellow" [ "concepts"\n'         >> $$@
-	@printf '      [ "declared" "$$(C1)" ]\n'          >> $$@
-	@printf '      [ "defined"  "$$(C2)" ]\n'          >> $$@
-	@printf '      [ "total"    "$$(C3)" ]\n'          >> $$@
-	@printf '   ]\n'                                   >> $$@
-	@printf '}\n\n'                                    >> $$@
-	@printf 'class "component" { 0 }\n\n'              >> $$@
-	@printf 'class "plane" { 1 } { 3 } { 5 }\n\n'      >> $$@
-	@printf 'class "number" { 2 } { 4 } { 6 }\n\n'     >> $$@
+	@printf 'name "$$(basename $$(@F))"\n\n'                >  $$@
+	@printf 'table {\n'                                     >> $$@
+	@printf '   class "grey"   [ "category"\n'              >> $$@
+	@printf '      [ "objects" * ]\n'                       >> $$@
+	@printf '   ]\n'                                        >> $$@
+	@printf '   class "cyan"   [ "sizes"\n'                 >> $$@
+	@printf '      [ "files"      "$$(S4)" ]\n'             >> $$@
+	@printf '      [ "characters" "$$(S1)" ]\n'             >> $$@
+	@printf '      [ "nodes"      "$$(word 3, $$(S0))" ]\n' >> $$@
+	@printf '   ]\n'                                        >> $$@	
+	@printf '   class "green"  [ "propositions"\n'          >> $$@
+	@printf '      [ "theorems" "$$(P1)" ]\n'               >> $$@
+	@printf '      [ "lemmas"   "$$(P2)" ]\n'               >> $$@
+	@printf '      [ "total"    "$$(P3)" ]\n'               >> $$@
+	@printf '   ]\n'                                        >> $$@
+	@printf '   class "yellow" [ "concepts"\n'              >> $$@
+	@printf '      [ "declared" "$$(C1)" ]\n'               >> $$@
+	@printf '      [ "defined"  "$$(C2)" ]\n'               >> $$@
+	@printf '      [ "total"    "$$(C3)" ]\n'               >> $$@
+	@printf '   ]\n'                                        >> $$@
+	@printf '}\n\n'                                         >> $$@
+	@printf 'class "component" { 0 }\n\n'                   >> $$@
+	@printf 'class "plane"     { 1 } { 3 } { 5 }\n\n'       >> $$@
+	@printf 'class "number"    { 2 } { 4 } { 6 }\n'         >> $$@
 endef
 
 ifeq ($(MAKECMDGOALS), tbls)

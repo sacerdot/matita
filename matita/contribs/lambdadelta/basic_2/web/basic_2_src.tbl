@@ -40,7 +40,7 @@ table {
         ]
 *)
         [ { "local env. ref. for stratified native validity" * } {
-             [ "lsubsv ( ? ⊢ ? ⊩:⊑[?] ? )" "lsubsv_ldrop" "lsubsv_snv" * ]
+             [ "lsubsv ( ? ⊢ ? ⊩:⊑[?] ? )" "lsubsv_ldrop" + "lsubsv_ssta" + "lsubsv_cpcs" + "lsubsv_snv" * ]
           }
         ]
         [ { "stratified native validity" * } {
