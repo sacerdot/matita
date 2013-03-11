@@ -73,5 +73,7 @@ fact snv_ltpr_tpr_aux: ∀h,g,L0,T0.
     lapply (IH1 … HT20 … (L2.ⓛW20) … HT202) [1,2: /2 width=1/ ] -IH1 -HT20 -HT202 #HT2
     elim (IH3 … HVW1 … HL12 … HV12) // [2: /2 width=1/ ] -HV1 -HVW1 -HV12 #W200 #HVW200 #H
     lapply (cpcs_trans … HW210 … H) -W10 #HW200
+(*    
     lapply (lsubsv_snv_trans … HT2 (L2.ⓓV2) ?) -L1 -HT2 /2 width=1/ /2 width=4/
   |
+*)
