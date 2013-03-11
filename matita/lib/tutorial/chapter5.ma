@@ -1,253 +1,523 @@
-(* 
-Effective searching
-
-The fact of being able to decide, via a computable boolean function, the 
-equality between elements of a given set is an essential prerequisite for 
-effectively searching an element of that set inside a data structure. In this 
-section we shall define several boolean functions acting on lists of elements in 
-a DeqSet, and prove some of their properties.*)
-
-include "basics/lists/list.ma". 
-include "tutorial/chapter4.ma".
-
-(* The first function we define is an effective version of the membership relation,
-between an element x and a list l. Its definition is a straightforward recursion on
-l.*)
-
-let rec memb (S:DeqSet) (x:S) (l: list S) on l  ≝
-  match l with
-  [ nil ⇒ false
-  | cons a tl ⇒ (x == a) ∨ memb S x tl
-  ].
-
-notation < "\memb x l" non associative with precedence 90 for @{'memb $x $l}.
-interpretation "boolean membership" 'memb a l = (memb ? a l).
-
-(* We can now prove several interesing properties for memb:
-- memb_hd: x is a member of x::l
-- memb_cons: if x is a member of l than x is a member of a::l
-- memb_single: if x is a member of [a] then x=a
-- memb_append: if x is a member of l1@l2 then either x is a member of l1
-  or x is a member of l2
-- memb_append_l1: if x is a member of l1 then x is a member of l1@l2
-- memb_append_l2: if x is a member of l2 then x is a member of l1@l2
-- memb_exists: if x is a member of l, than l can decomposed as l1@(x::l2)
-- not_memb_to_not_eq: if x is not a member of l and y is, then x≠y
-- memb_map: if a is a member of l, then (f a) is a member of (map f l)
-- memb_compose: if a is a member of l1 and b is a meber of l2 than
-  (op a b) is a member of (compose op l1 l2)
+(*
+  More Data Types
 *)
 
-lemma memb_hd: ∀S,a,l. memb S a (a::l) = true.
-#S #a #l normalize >(proj2 … (eqb_true S …) (refl S a)) //
-qed.
+include "basics/logic.ma".
 
-lemma memb_cons: ∀S,a,b,l. 
-  memb S a l = true → memb S a (b::l) = true.
-#S #a #b #l normalize cases (a==b) normalize // 
-qed.
+(******************************** Option Type *********************************)
 
-lemma memb_single: ∀S,a,x. memb S a (x::[]) = true → a = x.
-#S #a #x normalize cases (true_or_false … (a==x)) #H
-  [#_ >(\P H) // |>H normalize #abs @False_ind /2/]
-qed.
+(* Matita may only define total functions. However, not always we may return a 
+meaningful value: for instance, working on natural numbers, the predecessor of 
+0 is undefined. In these situations, we may either return a default value 
+(usually, pred 0 = 0), or decide to return an "option type" as a result. An 
+Option type is a polymorphic type that represents encapsulation of an optional 
+value. It consists of either an empty constructor (traditionally called None), 
+or a constructor encapsulating the original data type A (written Some A): *)
 
-lemma memb_append: ∀S,a,l1,l2. 
-memb S a (l1@l2) = true → memb S a l1= true ∨ memb S a l2 = true.
-#S #a #l1 elim l1 normalize [#l2 #H %2 //] 
-#b #tl #Hind #l2 cases (a==b) normalize /2/ 
-qed. 
-
-lemma memb_append_l1: ∀S,a,l1,l2. 
- memb S a l1= true → memb S a (l1@l2) = true.
-#S #a #l1 elim l1 normalize
-  [normalize #le #abs @False_ind /2/
-  |#b #tl #Hind #l2 cases (a==b) normalize /2/ 
-  ]
-qed. 
-
-lemma memb_append_l2: ∀S,a,l1,l2. 
- memb S a l2= true → memb S a (l1@l2) = true.
-#S #a #l1 elim l1 normalize //
-#b #tl #Hind #l2 cases (a==b) normalize /2/ 
-qed. 
-
-lemma memb_exists: ∀S,a,l.memb S a l = true → ∃l1,l2.l=l1@(a::l2).
-#S #a #l elim l [normalize #abs @False_ind /2/]
-#b #tl #Hind #H cases (orb_true_l … H)
-  [#eqba @(ex_intro … (nil S)) @(ex_intro … tl) >(\P eqba) //
-  |#mem_tl cases (Hind mem_tl) #l1 * #l2 #eqtl
-   @(ex_intro … (b::l1)) @(ex_intro … l2) >eqtl //
-  ]
-qed.
-
-lemma not_memb_to_not_eq: ∀S,a,b,l. 
- memb S a l = false → memb S b l = true → a==b = false.
-#S #a #b #l cases (true_or_false (a==b)) // 
-#eqab >(\P eqab) #H >H #abs @False_ind /2/
-qed. 
+inductive option (A:Type[0]) : Type[0] ≝
+   None : option A
+ | Some : A → option A.
  
-lemma memb_map: ∀S1,S2,f,a,l. memb S1 a l= true → 
-  memb S2 (f a) (map … f l) = true.
-#S1 #S2 #f #a #l elim l normalize [//]
-#x #tl #memba cases (true_or_false (a==x))
-  [#eqx >eqx >(\P eqx) >(\b (refl … (f x))) normalize //
-  |#eqx >eqx cases (f a==f x) normalize /2/
-  ]
-qed.
+(* The type option A is isomorphic to the disjoint sum between A and unit. The 
+two bijections are simply defined as
+follows:
+\begin{lstlisting}[language=grafite]
+definition option_to_sum ≝ λA.λx:option A.
+  match x with 
+  [ None ⇒ inl ?? it 
+  | Some a ⇒ inr ?? a ].
+\end{lstlisting}
 
-lemma memb_compose: ∀S1,S2,S3,op,a1,a2,l1,l2.   
-  memb S1 a1 l1 = true → memb S2 a2 l2 = true →
-  memb S3 (op a1 a2) (compose S1 S2 S3 op l1 l2) = true.
-#S1 #S2 #S3 #op #a1 #a2 #l1 elim l1 [normalize //]
-#x #tl #Hind #l2 #memba1 #memba2 cases (orb_true_l … memba1)
-  [#eqa1 >(\P eqa1) @memb_append_l1 @memb_map // 
-  |#membtl @memb_append_l2 @Hind //
-  ]
-qed.
+\begin{lstlisting}[language=grafite]
+definition sum_to_option ≝ λA.λx:unit+A.
+  match x with 
+  [ inl a ⇒ None A
+  | inr a ⇒ Some A a ].
+\end{lstlisting}
+The fact that going from the option type to the sum and back again we get the
+original element follows from a straightforward case analysis:
+\begin{lstlisting}[language=grafite]
+lemma option_bij1: ∀A,x. sum_to_option A (option_to_sum A x) = x.
+#A * // qed. 
+\end{lstlisting}
+The other direction is just slightly more complex, since we need to exploit
+the fact that the unit type contains a single element: we could use lemma ... or
+proceed by cases on the unit element. 
+\begin{lstlisting}[language=grafite]
+lemma option_bij2: ∀A,x. option_to_sum A (sum_to_option A x) = x.
+#A * // * // qed. 
+\end{lstlisting}
+We shall see more examples of functions involving the otion type in the
+next section.
 
-(* 
-Unicity
+\subsection{Lists}
+The option type, as well as the cartesian product or the sum are simple
+examples of polymorphic types, that is types that depend in a uniform 
+and effective way on other types. This form of polymorphism (sometimes
+called {\em parametric} polymporphism to distinguish it from the 
+{\em ad hoc} polymorphism
+typical of object oriented languages) is a major feature of modern 
+functional programming languages: in many intersting cases,
+it allows to write {\em generic} functions operating on inputs without 
+depending on their type. Typical examples can be found on lists.
+For instance, appending two lists is an operation that is essentially
+independent from the type $A$ of the elements in the list, and we would like
+to write a {\em single} append function working parametrically on $A$.
 
-If we are interested in representing finite sets as lists, is is convenient
-to avoid duplications of elements. The following uniqueb check this property. 
-*)
+The first step is to define a type for lists polimorphic over the 
+type $A$ of its elements:
+\begin{lstlisting}[language=grafite]
+inductive list (A:Type[0]) : Type[0] :=
+  | nil: list A
+  | cons: A -> list A -> list A.
+\end{lstlisting}
+The deinition should be clear: a list is either empty (\verb+nil+) or
+is is obtained by concatenating (\verb+cons+) an element of type $A$ 
+to a given list. In other word, the type of lists is the smallest inductive
+type generated by the two constructors \verb+nil+ and \verb+cons+.
 
-let rec uniqueb (S:DeqSet) l on l : bool ≝
-  match l with 
-  [ nil ⇒ true
-  | cons a tl ⇒ notb (memb S a tl) ∧ uniqueb S tl
-  ].
+The first element of a list is called its {\em head}. If the list
+is empty the head is undefined: as discussed in the previous section, 
+we should either return a ``default''
+element, or decide to return an option type. 
+We have an additional complication in this
+case, since the ``default'' element should have type $A$ (as the head),
+and we know nothing about $A$ (it could even be an empty type!). We
+have no way to guess a canonical element, and the only
+possibility (along this approach) is to take it in input. These
+are the two options:
+\begin{lstlisting}[language=grafite]
+definition hd ≝ λA.λl: list A.λd:A.
+  match l with [ nil ⇒ d | cons a _ ⇒ a].
 
-(* unique_append l1 l2 add l1 in fornt of l2, but preserving unicity *)
+definition option_hd ≝ 
+  λA.λl:list A. match l with
+  [ nil ⇒ None ?
+  | cons a _ ⇒ Some ? a ].
+\end{lstlisting}
+What remains of a list after removing its head is called the {\em tail}
+of the list. Again, the tail of an empty list is undefined, but in
+this case the result must be a list, and we have a canonical inhabitant
+of lists, that is the empty list. So, it is natural to extend the 
+definition of tail saying that the tail of nil is nil (that is
+very similar to say that the predecessor of $0$  is $0$):
+\begin{lstlisting}[language=grafite]
+definition tail ≝  λA.λl: list A.
+  match l with [ nil ⇒  [] | cons hd tl ⇒  tl].
+\end{lstlisting}
 
-let rec unique_append (S:DeqSet) (l1,l2: list S) on l1 ≝
+Using destruct, it is easy to prove that \verb+cons+ is injective
+in both arguments.
+\begin{lstlisting}[language=grafite]
+lemma cons_injective_l : ∀A.∀a1,a2:A.∀l1,l2.a1::l1 = a2::l2 → a1 = a2.
+#A #a1 #a2 #l1 #l2 #Heq destruct // qed.
+
+lemma cons_injective_r : ∀A.∀a1,a2:A.∀l1,l2.a1::l1 = a2::l2 → l1 = l2.
+#A #a1 #a2 #l1 #l2 #Heq destruct // qed.
+\end{lstlisting}
+The append function is defined by recursion over the first list:
+\begin{lstlisting}[language=grafite]
+let rec append A (l1: list A) l2 on l1 ≝ 
   match l1 with
+  [ nil ⇒  l2
+  | cons hd tl ⇒  hd :: append A tl l2 ].
+\end{lstlisting}
+We leave to the reader to prove that \verb+append+ is associative, and
+that \verb+nil+ is a neutral element for it.
+
+\input{list_notation.tex}
+
+We conclude this section discussing another important operation
+over lists, namely the reverse funtion, retrurning
+a list with the same elements of the original list but in reverse order.
+
+One could define the revert operation as follows: 
+\begin{lstlisting}[language=grafite]
+let rec rev S l1 on l1 ≝
+  match l1 with 
+  [ nil ⇒ nil
+  | cons a tl ⇒ rev A tl @ [a]
+  ].
+\end{lstlisting}
+However, this implementation is sligtly inefficient, since it has a 
+quadratic complexity.
+A better solution consists in exploiting an accumulator, passing through
+the following auxilary function:
+\begin{lstlisting}[language=grafite]
+let rec rev_append S (l1,l2:list S) on l1 ≝
+  match l1 with 
   [ nil ⇒ l2
-  | cons a tl ⇒ 
-     let r ≝ unique_append S tl l2 in
-     if memb S a r then r else a::r
+  | cons a tl ⇒ rev_append S tl (a::l2)
   ].
 
-lemma memb_unique_append: ∀S,a,l1,l2. 
-  memb S a (unique_append S l1 l2) = true → memb S a l1= true ∨ memb S a l2 = true.
-#S #a #l1 elim l1 normalize [#l2 #H %2 //] 
-#b #tl #Hind #l2 cases (true_or_false … (a==b)) #Hab >Hab normalize /2/
-cases (memb S b (unique_append S tl l2)) normalize 
-  [@Hind | >Hab normalize @Hind]   
-qed. 
+definition reverse ≝λS.λl.rev_append S l [].
+\end{lstlisting}
 
-lemma unique_append_elim: ∀S:DeqSet.∀P: S → Prop.∀l1,l2. 
-  (∀x. memb S x l1 = true → P x) → (∀x. memb S x l2 = true → P x) →
-    ∀x. memb S x (unique_append S l1 l2) = true → P x. 
-#S #P #l1 #l2 #Hl1 #Hl2 #x #membx cases (memb_unique_append … membx) /2/ 
+{\bf Exercise} Prove the following results:
+\begin{lstlisting}[language=grafite]
+lemma reverse_cons : ∀S,a,l. reverse S (a::l) = (reverse S l)@[a].
+
+lemma reverse_append: ∀S,l1,l2. 
+  reverse S (l1 @ l2) = (reverse S l2)@(reverse S l1).
+
+lemma reverse_reverse : ∀S,l. reverse S (reverse S l) = l.
+\end{lstlisting}
+
+
+\subsection{List iterators}
+In general, an iterator for some data type is an object that enables to
+traverse its structure performing a given computation. 
+There is a canonical set of iterators over lists deriving from 
+the programming experience. In this section we shall review a few of
+them, proving some of their properties.
+
+A first, famous iterator is the map function, that 
+applies a function $f$ to each element of a list $[a_1,\dots , a_n]$, 
+building the list $[f\,a_1; \dots ; f\,a_n]$.
+\begin{lstlisting}[language=grafite]
+let rec map (A,B:Type[0]) (f: A → B) (l:list A) on l: list B ≝
+ match l with [ nil ⇒ nil ? | cons x tl ⇒ f x :: (map A B f tl)].
+\end{lstlisting}
+The \verb+map+ function distributes over \verb+append+, as can be simply
+proved by induction over the first list:
+\begin{lstlisting}[language=grafite]
+lemma map_append : ∀A,B,f,l1,l2.
+  (map A B f l1) @ (map A B f l2) = map A B f (l1@l2).
+#A #B #f #l1 elim l1
+  [ #l2 @refl | #h #t #IH #l2 normalize // ] qed.
+\end{lstlisting}
+The most important itarator is traditionally called {\em fold}; we
+shall only consider the so called fold-right variant, 
+that takes in input a function $f:A\to B \to B$, a list $[a_1; \dots; a_n]$ 
+of elements of type $A$, a base element $b:B$ and returns
+the value $f\,a_1\,(f\,a_2\,(\dots (f\,a_n\,b) \dots))$.
+\begin{lstlisting}[language=grafite]
+let rec foldr (A,B:Type[0]) (f:A → B → B) (b:B) (l:list A) on l :B ≝  
+ match l with [ nil ⇒ b | cons a l ⇒ f a (foldr A B f b l)].
+\end{lstlisting}
+Many other interesting functions can be defined in terms of \verb+foldr+.
+A first interesting example is the filter function, taking in input
+a boolean test \verb+p+ and a list $l$ and returning the sublist of all
+elements of $l$ satisfying the test. 
+\begin{lstlisting}[language=grafite]
+definition filter ≝ 
+  λT.λp:T → bool.
+  foldr T (list T) (λx,l0.if p x then x::l0 else l0) (nil T).
+\end{lstlisting}
+As another example, we can generalize the map function to an operation
+taking in input a binary function $f:A\to B \to C$, two lists
+$[a_1;\dots ;a_n]$ and $[b_1;\dots ;b_m]$ and returning the list 
+$[f\,a_1\,b_1; \dots ;f\,a_n\,b_1;\dots ;f\,a_1\,b_m; f\,a_n\,b_m]$
+\begin{lstlisting}[language=grafite]
+definition compose ≝ λA,B,C.λf:A→B→C.λl1,l2.
+  foldr ?? (λi,acc.(map ?? (f i) l2)@acc) [ ] l1.
+\end{lstlisting}
+The folded function $\lambda$\verb+i,acc.(map ?? (f i) l2)@acc+ 
+takes in input an element $i$ and an accumulator, 
+and add to the accumulator the values obtained by mapping the 
+partial instantiation $f\,i$ on the elements of $l_2$. This function 
+is iterated over
+all elements of the first list $l_1$, starting with an empty accumulator.
+
+\subsection{Naive Set Theory}
+Given a ``universe'' $U$ (an arbitrary type $U:Type$), a naive but
+practical way to deal with ``sets'' in $U$ is simply to identify
+them with their characteristic property, that is to as functions
+of type $U\to \mbox{Prop}$. 
+
+For instance, the empty set is defined by the False predicate; 
+a singleton set $\{x\}$ is defined by the property that its elements are
+equal to $x$.
+
+\begin{lstlisting}[language=grafite]
+definition empty_set ≝ λU:Type[0].λu:U.False.
+definition singleton ≝ λU.λx,u:U.x=u.
+\end{lstlisting}
+
+The membership relation is trivial: an element $x$ is in the set
+(defined by the property) $P$ if and only if it enjoyes the property:
+
+\begin{lstlisting}[language=grafite]
+definition member ≝ λU:Type[0].λu:U.P→Prop:U.P u.
+\end{lstlisting}
+The operations of union, intersection, complementation and substraction
+are defined in a straightforward way, in terms of logical operations:
+
+\begin{lstlisting}[language=grafite]
+definition union ≝ λU:Type[0].λP,Q:U → Prop.λa.P a ∨ Q a.
+
+definition intersection ≝ λU:Type[0].λP,Q:U → Prop.λa..P a ∧ Q a.
+
+definition complement ≝ λU:Type[0].λA:U → Prop.λw.¬ A w.
+
+definition substraction ≝  λU:Type[0].λA,B:U → Prop.λw.A w ∧ ¬ B w.
+\end{lstlisting}
+More interesting are the notions of subset and equality. Given
+two sets $P$ and $Q$, $P$ is a subset of $Q$ when any element $u$ in
+$P$ is also in $Q$, that is when $P\,u$ implies $Q\,u$.
+\begin{lstlisting}[language=grafite]
+definition subset: ∀A:Type[0].∀P,Q:A→Prop.Prop ≝ λA,P,Q.∀a:A.(P a → Q a).
+\end{lstlisting}
+Then, two sets $P$ and $Q$ are equal when $P \subseteq Q$ and 
+$Q \subseteq P$, or equivalently when for any element $u$, 
+$P\,u \iff Q\,u$.
+\begin{lstlisting}[language=grafite]
+definition eqP ≝ λA:Type.λP,Q:A → Prop.∀a:A.P a ↔ Q a.
+\end{lstlisting}
+We shall use the infix notation $\approx$ for the previous notion of 
+equality.
+It is important to observe that the \verb+eqP+ is
+different from Leibniz equality of section \ref{}. As we already
+observed, Leibniz equality is a pretty syntactical (or intensional)
+notion, that is a notion concerning the {\em connotation} of an object
+and not its {\em denotation} (the shape assumed by the object, and
+not the information it is supposed to convey). Intensionality stands
+in contrast with {\em extensionality}, referring to principles that 
+judge objects to be equal if they enjoy {\em a given subset} of external, 
+observable properties (e.g. the property of having the same 
+elements). For instance given two sets $A$ and $B$ we can prove that
+$A\cup B \approx B\cup A$, since they have the same elements, but
+there is no way to prove $A\cup B = B\cup A$.
+
+The main practical consequence is that, while we can always exploit
+a Leibniz equality between two terms $t_1$ and $t_2$ for rewriting
+one into the other (in fact, this is the {\em essence} of Leibniz 
+equality), we cannot do the same for an extensional equality (we
+could only rewrite inside propositions ``compatible'' with our
+external observation of the objects).  
+
+\subsection{Sets with decidable equality}
+We say that a property $P:A\to Prop$ over a datatype $A$ 
+is {\em decidable} when we have an
+effective way to assess the validity of $P\,a$ for any 
+$a:A$. As a consequence
+of G\"odel incompleteness theorem, not every predicate
+is decidable: for instance, extensional equality on sets is not decidable,
+in general.  
+
+Decidability can be expressed in several possible ways. A convenient
+one is to state it in terms of the computability of the characterisitc
+function of the predicate $P$, that is in terms of the existence of a 
+function $Pb: A \to \mbox{bool}$ such that 
+   \[P\,a \iff Pb\,a = \mbox{true}\]
+Decidability is an important issue, and since equality is an essential 
+predicate, it is always interesting to try to understand when a given 
+notion of equality is decidable or not. 
+
+In particular, Leibniz equality on inductively generated datastructures
+is often decidable, since we can simply write a decision algorithm by
+structural induction on the terms. For instance we can define
+characteristic functions for booleans and natural numbers in the following
+way:
+\begin{lstlisting}[language=grafite]
+definition beqb ≝ λb1,b2.
+  match b1 with [ true ⇒ b2 | false ⇒ notb b2].
+
+let rec neqb n m ≝ 
+match n with 
+  [ O ⇒ match m with [ O ⇒ true | S q ⇒ false] 
+  | S p ⇒ match m with [ O ⇒ false | S q ⇒ neqb p q]
+  ].
+\end{lstlisting}
+It is so important to know if Leibniz equality for a given type is decidable 
+that turns out to be convenient to pack this information into a single 
+algebraic datastructure, called \verb+DeqSet+:
+\begin{lstlisting}[language=grafite]
+record DeqSet : Type[1] ≝ 
+ { carr :> Type[0];
+   eqb: carr → carr → bool;
+   eqb_true: ∀x,y. (eqb x y = true) ↔ (x = y)}.
+
+notation "a == b" non associative with precedence 45 for @{ 'eqb $a $b }.
+interpretation "eqb" 'eqb a b = (eqb ? a b).
+\end{lstlisting}
+A \verb+DeqSet+ is simply a record composed by a carrier type \verb+carr+,
+a boolean function \verb+eqb: carr+$\to$\verb+carr+$\to$\verb+carr+ representing 
+the decision algorithm, and a {\em proof} \verb+eqb_true+ that the decision algorithm
+is correct. The \verb+:>+ symbol declares \verb+carr+ as a {\em coercion} from a DeqSet to its 
+carrier type. We use the infix notation ``=='' for the decidable
+equality \verb+eqb+ of the carrier.
+
+Suppose we proved the following facts (do it as an exercise)
+\begin{lstlisting}[language=grafite]
+lemma beqb_true_to_eq: ∀b1,b2. beqb b1 b2 = true ↔ b1 = b2.
+lemma neqb_true_to_eq: ∀n,m:nat. eqb n m = true → n = m.
+\end{lstlisting}
+Then, we can build the following records:
+\begin{lstlisting}[language=grafite]
+definition DeqBool ≝ mk_DeqSet bool beqb beqb_true_to_eq.
+definition DeqNat ≝ mk_DeqSet nat eqb eqbnat_true.
+\end{lstlisting}
+Note that, since we declare a coercion from the \verb+DeqSet+ to its
+carrier, the expression \verb+0:DeqNat+ is well typed, and it is understood 
+by the system as \verb+0:carr DeqNat+ (that is, coercions are automatically
+insterted by the system, if required).
+
+%It is convenient to have a simple way to {\em reflect} \cite{ssreflect}
+%a proof of
+%$(eqb\;x\;y = true)$ into a proof of $(x = y)$; we use the two operators
+%$\mathit{\\P}$ and $\mathit{\\b}$ to this aim.
+
+\subsection{Unification hints}
+Suppose now to write an expression of the following kind:
+\[b == \mbox{false}\]
+that, after removing the notation, is equivalent to 
+\[eqb\;?\;b\;\mbox{false}\]
+The system knows that $\mbox{false}$ is a boolean, so in order to 
+accept the expression, he should {\em figure out} some \verb+DeqSet+ 
+having \verb+bool+
+as carrier. This is not a trivial operation: Matita should either try
+to synthetize it (that is a complex operation known as {\em narrowing}) 
+or look into its database of results for a possible solution. 
+
+In this situations, we may suggest the intended solution to Matita using
+the mechanism of unification hints \cite{hints}. The concrete syntax
+of unification hints is a bit involved: we strongly recommend the user
+to include the file \verb+hints_declaration.ma+ that allows you
+to write thing in a more convenient and readable way.
+\begin{lstlisting}[language=grafite]
+include ``hints_declaration.ma''.
+\end{lstlisting}
+For instance, the following declaration tells Matita that a solution
+of the equation \verb+bool = carr X+ is $X = DeqBool$.
+\begin{lstlisting}[language=grafite]
+unification hint  0 ≔ ; 
+    X ≟ DeqBool
+(* ---------------------------------------- *) ⊢ 
+    bool ≡ carr X.
+\end{lstlisting}
+Using the previous notation (we suggest the reader to cut and paste it
+from previous hints) the hint is expressed as an inference rule.
+The conclusion of the rule is the unification problem that we intend to solve, 
+containing one or more variables $X_1,\dots X_b$. The premises of
+the rule are the solutions we are suggesting to Matita. In general,
+unification hints should only be used when there exists just one
+``intended'' (canonical) solution for the given equation. 
+When you declare a unification hint, Matita verifies it correctness by
+instantiating the unification problem with the hinted solution, 
+and checking the convertibility between the two sides of the equation.
+\begin{lstlisting}[language=grafite]       
+example exhint: ∀b:bool. (b == false) = true → b = false. 
+#b #H @(\P H).
 qed.
+\end{lstlisting}
+In a similar way, 
 
-lemma unique_append_unique: ∀S,l1,l2. uniqueb S l2 = true →
-  uniqueb S (unique_append S l1 l2) = true.
-#S #l1 elim l1 normalize // #a #tl #Hind #l2 #uniquel2
-cases (true_or_false … (memb S a (unique_append S tl l2))) 
-#H >H normalize [@Hind //] >H normalize @Hind //
-qed.
+\begin{lstlisting}[language=grafite]   
+unification hint  0 ≔ b1,b2:bool; 
+    X ≟ mk_DeqSet bool beqb beqb_true
+(* ---------------------------------------- *) ⊢ 
+    beqb b1 b2 ≡ eqb X b1 b2.
+\end{lstlisting}
 
-(*
-Sublists
 
-*)
-definition sublist ≝ 
-  λS,l1,l2.∀a. memb S a l1 = true → memb S a l2 = true.
+\subsection{Prop vs. bool}
+It is probably time to make a discussion about \verb+Prop+ and \verb+bool+, and
+their different roles in a the Calculus of Inductive Constructions. 
 
-lemma sublist_length: ∀S,l1,l2. 
- uniqueb S l1 = true → sublist S l1 l2 → |l1| ≤ |l2|.
-#S #l1 elim l1 // 
-#a #tl #Hind #l2 #unique #sub
-cut (∃l3,l4.l2=l3@(a::l4)) [@memb_exists @sub //]
-* #l3 * #l4 #eql2 >eql2 >length_append normalize 
-applyS le_S_S <length_append @Hind [@(andb_true_r … unique)]
->eql2 in sub; #sub #x #membx 
-cases (memb_append … (sub x (orb_true_r2 … membx)))
-  [#membxl3 @memb_append_l1 //
-  |#membxal4 cases (orb_true_l … membxal4)
-    [#eqxa @False_ind lapply (andb_true_l … unique)
-     <(\P eqxa) >membx normalize /2/ |#membxl4 @memb_append_l2 //
-    ]
-  ]
-qed.
+Inhabitants of the sort \verb+Prop+ are logical propositions. In turn, logical
+propositions \verb+P:Prop+ can be inhabitated by their proofs $H:P$. Since, in
+general, the validity of a property $P$is not decidable, the role of the
+proof is to provide a witness of the correctness of $P$ that the system can 
+automatically check.
 
-lemma sublist_unique_append_l1: 
-  ∀S,l1,l2. sublist S l1 (unique_append S l1 l2).
-#S #l1 elim l1 normalize [#l2 #S #abs @False_ind /2/]
-#x #tl #Hind #l2 #a 
-normalize cases (true_or_false … (a==x)) #eqax >eqax 
-[<(\P eqax) cases (true_or_false (memb S a (unique_append S tl l2)))
-  [#H >H normalize // | #H >H normalize >(\b (refl … a)) //]
-|cases (memb S x (unique_append S tl l2)) normalize 
-  [/2/ |>eqax normalize /2/]
-]
-qed.
-
-lemma sublist_unique_append_l2: 
-  ∀S,l1,l2. sublist S l2 (unique_append S l1 l2).
-#S #l1 elim l1 [normalize //] #x #tl #Hind normalize 
-#l2 #a cases (memb S x (unique_append S tl l2)) normalize
-[@Hind | cases (a==x) normalize // @Hind]
-qed.
-
-lemma decidable_sublist:∀S,l1,l2. 
-  (sublist S l1 l2) ∨ ¬(sublist S l1 l2).
-#S #l1 #l2 elim l1 
-  [%1 #a normalize in ⊢ (%→?); #abs @False_ind /2/
-  |#a #tl * #subtl 
-    [cases (true_or_false (memb S a l2)) #memba
-      [%1 whd #x #membx cases (orb_true_l … membx)
-        [#eqax >(\P eqax) // |@subtl]
-      |%2 @(not_to_not … (eqnot_to_noteq … true memba)) #H1 @H1 @memb_hd
-      ]
-    |%2 @(not_to_not … subtl) #H1 #x #H2 @H1 @memb_cons //
-    ] 
-  ]
-qed.
-
-(*
-Filtering
-*)
-
-lemma memb_filter_true: ∀S,f,a,l. 
-  memb S a (filter S f l) = true → f a = true.
-#S #f #a #l elim l [normalize #H @False_ind /2/]
-#b #tl #Hind cases (true_or_false (f b)) #H
-normalize >H normalize [2:@Hind]
-cases (true_or_false (a==b)) #eqab
-  [#_ >(\P eqab) // | >eqab normalize @Hind]
-qed. 
+On the other hand, bool is just an inductive datatype with two constructors true
+and false: these are terms, not types, and cannot be inhabited.
+Logical connectives on bool are computable functions, defined by their
+truth tables, using case analysis.
   
-lemma memb_filter_memb: ∀S,f,a,l. 
-  memb S a (filter S f l) = true → memb S a l = true.
-#S #f #a #l elim l [normalize //]
-#b #tl #Hind normalize (cases (f b)) normalize 
-cases (a==b) normalize // @Hind
-qed.
-  
-lemma memb_filter: ∀S,f,l,x. memb S x (filter ? f l) = true → 
-memb S x l = true ∧ (f x = true).
-/3/ qed.
+  Prop and bool are, in a sense, complementary: the former is more suited for 
+abstract logical reasoning, 
+while the latter allows, in some situations, for brute-force evaluation. 
+Suppose for instance that we wish to prove that the $2 \le 3!$. Starting
+from the definition of the factorial function and properties of the less
+or equal relation, the previous proof could take several steps. Suppose
+however we proved the decidability of $\le$, that is the existence of
+a boolean function $\mbox{leb}$ reflecting $\le$ in the sense that
+\[n \le m \iff \mbox{leb}\,n,m = \mbox{true}\]
+Then, we could reduce the verification of $2 \le 3!$ to that of 
+of $\mbox{leb}\,2,3! = \mbox{true}$ that just requires a mere computation!
 
-lemma memb_filter_l: ∀S,f,x,l. (f x = true) → memb S x l = true →
-memb S x (filter ? f l) = true.
-#S #f #x #l #fx elim l normalize //
-#b #tl #Hind cases (true_or_false (x==b)) #eqxb
-  [<(\P eqxb) >(\b (refl … x)) >fx normalize >(\b (refl … x)) normalize //
-  |>eqxb cases (f b) normalize [>eqxb normalize @Hind| @Hind]
-  ]
-qed. 
+\subsection{Finite Sets}
+A finite set is a record consisting of a DeqSet $A$, 
+a list of elements of type A enumerating all the elements of the set,
+and the proofs that the enumeration does not contain repetitions 
+and is complete (\verb+memb+ is the membership operation on 
+lists, defined in the obvious way, and the question mark is an {\em
+implicit parameter} automatically filled in by the system). 
+\begin{lstlisting}[language=grafite]
+record FinSet : ≝ 
+{ FinSetcarr:> DeqSet;
+  enum: list FinSetcarr;
+  enum_unique: uniqueb FinSetcarr enum = true;
+  enum_complete : ∀x:FinSetcarr. memb ? x enum = true}.
+\end{lstlisting}
+The library provides many operations for building new \verb+FinSet+s by 
+composing
+existing ones: for example, 
+if \verb+A+ and \verb+B+ have type \verb+FinSet+, then 
+also \verb+option A+, \verb+A+$\times$\verb+B+, 
+\verb+A+$\oplus$\verb+B+ are finite sets. In all these cases, unification 
+hints are used to suggest the {\em intended} finite set structure 
+associated with them, that makes their use quite transparent to the user.
 
-(*
-Exists
+A particularly intersting case is that of the arrow type \verb+A+$\to$\verb+B+. 
+We may define the graph of \verb+f:A+$\to$\verb+B+, as the 
+set (sigma type) of all pairs $\langle a,b \rangle$ such that
+$f (a) = b$. 
+\begin{lstlisting}[language=grafite]
+definition graph_of ≝ λA,B.λf:A→B. Σp:A×B.f (\fst p) = \snd p.
+\end{lstlisting}
+In case the equality is decidable, we may effectively
+enumerate all elements of the graph by simply filtering from
+pairs in \verb+A+$\times$\verb+B+ those satisfying the 
+test $\lambda$\verb+p.f (\fst p) == \snd p)+:
 
-*)
+\begin{lstlisting}[language=grafite]
+definition graph_enum ≝ λA,B:FinSet.λf:A→B. 
+  filter ? (λp.f (\fst p) == \snd p) (enum (FinProd A B)).
+\end{lstlisting}
+The proofs that this enumeration does not contain repetitions and
+is complete are straightforward.
 
-let rec exists (A:Type[0]) (p:A → bool) (l:list A) on l : bool ≝
-match l with
-[ nil ⇒ false
-| cons h t ⇒ orb (p h) (exists A p t)
-].
+\subsection{Vectors}
+A vector of length $n$ of elements of type $A$ 
+is simply defined in Matita as a record composed 
+by a list of elements of type $A$, plus a proof that the
+list has the expected length. Vectors are a paradigmatic example 
+of {\em dependent} type, that is of a type whose definition depends on
+a term.
+\begin{lstlisting}[language=grafite]
+record Vector (A:Type) (n:nat): Type ≝ 
+{ vec :> list A;
+  len: length ? vec = n }.
+\end{lstlisting}
+Given a list $l$ we may trivially turn it into a vector of length $|l|$; 
+we just need to prove that $|l|=|l|$ that follows from the reflexivity
+of equality.
+\begin{lstlisting}[language=grafite]
+lemma Vector_of_list ≝ λA,l.mk_Vector A (|l|) l (refl ??).
+\end{lstlisting}
+
+Most functions operating on lists can be naturally extended to 
+vectors: interesting cases are \verb+vec_append+, concatenating vectors, 
+and \verb+vec_map+, mapping a function $f$ on all elements of the input
+vector and returning a vector of the same dimension of the input one.
+
+Since a vector is automatically coerced, if needed, to the list of
+its elements, we may simply use typical functions over lists (such as
+\verb+nth+) to extract/filter specific components.
+
+The function \verb+change_vec A n v a i+ replaces the content of
+the vector $v$ at position $i$ with the value $a$. 
+
+The most frequent operation on vectors for the purposes or our work
+is their comparison. In this case, we have essentially two possible 
+approaches: we may proceed component-wise, using the following lemma
+\begin{lstlisting}[language=grafite]
+lemma eq_vec: ∀A,n.∀v1,v2:Vector A n.∀d. 
+  (∀i. i < n → nth i A v1 d = nth i A v2 d) → v1 = v2.
+\end{lstlisting}
+or alternatively we may manipulate vectors exploiting the commutation
+or idempotency of \verb+change_vec+ and its interplay with 
+other operations. 
