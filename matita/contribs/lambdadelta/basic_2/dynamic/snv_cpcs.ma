@@ -13,10 +13,10 @@
 (**************************************************************************)
 
 include "basic_2/unwind/sstas_sstas.ma".
-include "basic_2/computation/ygt.ma".
 include "basic_2/equivalence/cpcs_ltpr.ma".
 include "basic_2/dynamic/snv_ltpss_dx.ma".
 include "basic_2/dynamic/snv_sstas.ma".
+include "basic_2/dynamic/ygt.ma".
 
 (* STRATIFIED NATIVE VALIDITY FOR TERMS *************************************)
 
@@ -35,6 +35,12 @@ definition IH_ssta_ltpr_tpr: ∀h:sh. sd h → relation2 lenv term ≝
 definition IH_snv_ssta: ∀h:sh. sd h → relation2 lenv term ≝
                         λh,g,L1,T1. ⦃h, L1⦄ ⊩ T1 :[g] →
                         ∀U1,l. ⦃h, L1⦄ ⊢ T1 •[g, l + 1] U1 → ⦃h, L1⦄ ⊩ U1 :[g].
+
+(* Properties for the preservation results **********************************)
+
+definition IH_snv_lsubsv: ∀h:sh. sd h → relation2 lenv term ≝
+                          λh,g,L2,T. ⦃h, L2⦄ ⊩ T :[g] →
+                          ∀L1. h ⊢ L1 ⊩:⊑[g] L2 → ⦃h, L1⦄ ⊩ T :[g].
 
 fact snv_ltpr_cpr_aux: ∀h,g,L1,T1. IH_snv_ltpr_tpr h g L1 T1 →
                        ⦃h, L1⦄ ⊩ T1 :[g] →

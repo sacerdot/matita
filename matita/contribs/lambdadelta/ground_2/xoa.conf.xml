@@ -2,12 +2,6 @@
 <helm_registry>
   <section name="matita">
     <key name="rt_base_dir">$(MATITA_RT_BASE_DIR)</key>
-<!--
-    <key name="system">false</key>
-    <key name="map_unicode_to_tex">false</key>
-    <key name="do_heavy_checks">true</key>
-    <key name="include_path">lib</key>
--->
   </section>
   <section name="xoa">
     <key name="output_dir">contribs/lambdadelta/ground_2/</key>
@@ -35,8 +29,8 @@
     <key name="ex">6 5</key>
     <key name="ex">6 6</key>
     <key name="ex">6 7</key>
-    <key name="ex">7 4</key>
     <key name="ex">7 7</key>
+    <key name="ex">8 5</key>
     <key name="or">3</key>
     <key name="or">4</key>
     <key name="and">3</key>

@@ -340,14 +340,6 @@ notation "hvbox( ⦃ term 46 L1 ⦄ ➡ ➡ break ⦃ term 46 L2 ⦄ )"
    non associative with precedence 45
    for @{ 'FocalizedPRedAlt $L1 $L2 }.
 
-notation "hvbox( h ⊢ break ⦃ term 46 L1, break term 46 T1 ⦄ ≽ break [ term 46 g ] break ⦃ term 46 L2 , break term 46 T2 ⦄ )"
-   non associative with precedence 45
-   for @{ 'BTPRed $h $g $L1 $T1 $L2 $T2 }.
-
-notation "hvbox( h ⊢ break ⦃ term 46 L1, break term 46 T1 ⦄ ≻ break [ term 46 g ] break ⦃ term 46 L2 , break term 46 T2 ⦄ )"
-   non associative with precedence 45
-   for @{ 'BTPRedProper $h $g $L1 $T1 $L2 $T2 }.
-
 (* Computation **************************************************************)
 
 notation "hvbox( T1 ➡ * break term 46 T2 )"
@@ -410,14 +402,6 @@ notation "hvbox( ⦃ term 46 h , break term 46 L ⦄ ⊢ • * ⬊ * break [ ter
    non associative with precedence 45
    for @{ 'DecomposedXSN $h $g $L $T }.
 
-notation "hvbox( h ⊢ break ⦃ term 46 L1, break term 46 T1 ⦄  ≥ break [ term 46 g ] break ⦃ term 46 L2 , break term 46 T2 ⦄ )"
-   non associative with precedence 45
-   for @{ 'BTPRedStar $h $g $L1 $T1 $L2 $T2 }.
-
-notation "hvbox( h ⊢ break ⦃ term 46 L1, break term 46 T1 ⦄ > break [ term 46 g ] break ⦃ term 46 L2 , break term 46 T2 ⦄ )"
-   non associative with precedence 45
-   for @{ 'BTPRedStarProper $h $g $L1 $T1 $L2 $T2 }.
-
 (* Conversion ***************************************************************)
 
 notation "hvbox( L ⊢ break term 46 T1 ⬌ break term 46 T2 )"
@@ -475,6 +459,22 @@ notation "hvbox( ⦃ term 46 h , break term 46 L ⦄ ⊩ break term 46 T : break
 notation "hvbox( h ⊢ break term 46 L1 ⊩ : ⊑ [ term 46 g ] break term 46 L2 )"
    non associative with precedence 45
    for @{ 'CrSubEqV $h $g $L1 $L2 }.
+
+notation "hvbox( h ⊢ break ⦃ term 46 L1, break term 46 T1 ⦄ ≽ break [ term 46 g ] break ⦃ term 46 L2 , break term 46 T2 ⦄ )"
+   non associative with precedence 45
+   for @{ 'BTPRed $h $g $L1 $T1 $L2 $T2 }.
+
+notation "hvbox( h ⊢ break ⦃ term 46 L1, break term 46 T1 ⦄ ≻ break [ term 46 g ] break ⦃ term 46 L2 , break term 46 T2 ⦄ )"
+   non associative with precedence 45
+   for @{ 'BTPRedProper $h $g $L1 $T1 $L2 $T2 }.
+
+notation "hvbox( h ⊢ break ⦃ term 46 L1, break term 46 T1 ⦄  ≥ break [ term 46 g ] break ⦃ term 46 L2 , break term 46 T2 ⦄ )"
+   non associative with precedence 45
+   for @{ 'BTPRedStar $h $g $L1 $T1 $L2 $T2 }.
+
+notation "hvbox( h ⊢ break ⦃ term 46 L1, break term 46 T1 ⦄ > break [ term 46 g ] break ⦃ term 46 L2 , break term 46 T2 ⦄ )"
+   non associative with precedence 45
+   for @{ 'BTPRedStarProper $h $g $L1 $T1 $L2 $T2 }.
 
 notation "hvbox( ⦃ term 46 h , break term 46 L ⦄ ⊢ break term 46 T1 : break term 46 T2 )"
    non associative with precedence 45

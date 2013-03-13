@@ -12,15 +12,24 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/equivalence/lsubse_ssta.ma".
+include "basic_2/reducibility/ltpr.ma".
 include "basic_2/dynamic/lsubsv.ma".
 
-(* LOCAL ENVIRONMENT REFINEMENT FOR STRATIFIED NATIVE VALIDITY **************)
+(* "BIG TREE" PARALLEL REDUCTION FOR CLOSURES *******************************)
 
-(* Properties on stratified static type assignment **************************)
+inductive ypr (h) (g) (L1) (T1): relation2 lenv term ≝
+| ypr_fw    : ∀L2,T2. ♯{L2, T2} < ♯{L1, T1} → ypr h g L1 T1 L2 T2
+| ypr_ltpr  : ∀L2. L1 ➡ L2 → ypr h g L1 T1 L2 T1
+| ypr_cpr   : ∀T2. L1 ⊢ T1 ➡ T2 → ypr h g L1 T1 L1 T2
+| ypr_ssta  : ∀T2,l. ⦃h, L1⦄ ⊢ T1 •[g, l + 1] T2 → ypr h g L1 T1 L1 T2
+| ypr_lsubsv: ∀L2. h ⊢ L2 ⊩:⊑[g] L1 → ypr h g L1 T1 L2 T1
+.
 
-lemma lsubsv_ssta_trans: ∀h,g,L2,T,U2,l. ⦃h, L2⦄ ⊢ T •[g,l] U2 →
-                         ∀L1. h ⊢ L1 ⊩:⊑[g] L2 →
-                         ∃∃U1. ⦃h, L1⦄ ⊢ T •[g,l] U1 & L1 ⊢ U1 ⬌* U2.
-/3 width=3 by lsubsv_fwd_lsubse, lsubse_ssta_trans/
-qed-.
+interpretation
+   "'big tree' parallel reduction (closure)"
+   'BTPRed h g L1 T1 L2 T2 = (ypr h g L1 T1 L2 T2).
+
+(* Basic properties *********************************************************)
+
+lemma ypr_refl: ∀h,g. bi_reflexive … (ypr h g).
+/2 width=1/ qed.

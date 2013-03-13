@@ -9,7 +9,9 @@
      \ /   This software is distributed as is, NO WARRANTY.     
       V_______________________________________________________________ *)
 
-module R   = Helm_registry
+module G = Arg
+
+module R = Helm_registry
 
 module L = Lib
 module A = Ast
@@ -26,14 +28,19 @@ let unm_and s =
 
 let process conf =
    let preamble = L.get_preamble conf in
-   let ooch = L.open_out preamble (R.get_string "xoa.objects") in
-   let noch = L.open_out preamble (R.get_string "xoa.notations") in
-   List.iter (L.out_include ooch) (R.get_list R.string "xoa.include");   
-   List.iter (E.generate ooch noch) (R.get_list unm_ex "xoa.ex");
-   List.iter (E.generate ooch noch) (R.get_list unm_or "xoa.or");
-   List.iter (E.generate ooch noch) (R.get_list unm_and "xoa.and");
-   close_out noch; close_out ooch
+   if R.has "xoa.objects" && R.has "xoa.notations" then begin
+      let ooch = L.open_out preamble (R.get_string "xoa.objects") in
+      let noch = L.open_out preamble (R.get_string "xoa.notations") in
+      List.iter (L.out_include ooch) (R.get_list R.string "xoa.include");   
+      List.iter (E.generate ooch noch) (R.get_list unm_ex "xoa.ex");
+      List.iter (E.generate ooch noch) (R.get_list unm_or "xoa.or");
+      List.iter (E.generate ooch noch) (R.get_list unm_and "xoa.and");
+      close_out noch; close_out ooch
+   end
 
 let _ =
-   let help = "Usage: xoa [ <configuration file> ]*\n" in
-   Arg.parse [] process help
+   let help = "Usage: xoa [ -X | <configuration file> ]*\n" in
+   let help_X  = " Clear configuration" in   
+   Arg.parse [
+      "-X" , G.Unit R.clear, help_X;
+   ] process help

@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reducibility/ysc.ma".
-include "basic_2/computation/yprs.ma".
+include "basic_2/dynamic/ysc.ma".
+include "basic_2/dynamic/yprs.ma".
 
 (* "BIG TREE" PROPER PARALLEL COMPUTATION FOR CLOSURES **********************)
 
@@ -93,3 +93,7 @@ lemma sstas_ygt: ∀h,g,L,T1,T2. ⦃h, L⦄ ⊢ T1 •*[g] T2 → (T1 = T2 → �
   ]
 ]
 qed.
+
+lemma lsubsv_ygt: ∀h,g,L1,L2,T. h ⊢ L2 ⊩:⊑[g] L1 → (L1 = L2 → ⊥) →
+                  h ⊢ ⦃L1, T⦄ >[g] ⦃L2, T⦄.
+/4 width=1/ qed.

@@ -9,6 +9,7 @@
      \ /   This software is distributed as is, NO WARRANTY.     
       V_______________________________________________________________ *)
 
+module R  = Helm_registry
 module US = NUri.UriSet
 
 let default_objs = US.empty
@@ -19,6 +20,10 @@ let default_exclude = []
 
 let default_net = 0
 
+let default_no_devel = true
+
+let default_no_init = true
+
 let objs = ref default_objs
 
 let srcs = ref default_srcs
@@ -27,8 +32,12 @@ let exclude = ref default_exclude
 
 let net = ref default_net
 
-let no_devel = ref true
+let no_devel = ref default_no_devel
+
+let no_init = ref default_no_init
 
 let clear () =
+   R.clear ();
    objs := default_objs; srcs := default_srcs;
-   exclude := default_exclude; net := default_net
+   exclude := default_exclude; net := default_net;
+   no_devel := default_no_devel; no_init := default_no_init

@@ -3,24 +3,25 @@ H    := @
 
 TRIM := sed "s/ \\+$$//"
 
-XOA_DIR  := ../../../components/binaries/xoa
-XOA      := xoa.native
-DEP_DIR  := ../../../components/binaries/matitadep
-DEP      := matitadep.native
-MAC_DIR  := ../../../components/binaries/mac
-MAC      := mac.native
-PRB_DIR  := ../../../components/binaries/probe
-PRB      := probe.native
-PRB_OPTS := ../../matita.conf.xml -g
-
+XOA_DIR     := ../../../components/binaries/xoa
+XOA         := xoa.native
 XOA_CONF    := ground_2/xoa.conf.xml
 XOA_TARGETS := ground_2/xoa_notation.ma ground_2/xoa.ma
 
-ORIG     := . ./orig.sh 
+DEP_DIR     := ../../../components/binaries/matitadep
+DEP         := matitadep.native
 
-ORIGS    := basic_2/basic_1.orig
+MAC_DIR     := ../../../components/binaries/mac
+MAC         := mac.native
 
-TAGS     := all xoa orig deps stats tbls trim
+PRB_DIR     := ../../../components/binaries/probe
+PRB         := probe.native
+PRB_OPTS    := ../../matita.conf.xml $(XOA_CONF) -g 
+
+ORIG        := . ./orig.sh 
+ORIGS       := basic_2/basic_1.orig
+
+TAGS := all xoa orig deps stats tbls trim
 
 PACKAGES := ground_2 basic_2 apps_2
 

@@ -37,6 +37,10 @@ interpretation "abbreviation (local environment)"
 interpretation "abstraction (local environment)"
    'DxAbst L T = (LPair L Abst T).
 
+(* Basic properties *********************************************************)
+
+axiom lenv_eq_dec: ∀L1,L2:lenv. Decidable (L1 = L2).
+
 (* Basic inversion lemmas ***************************************************)
 
 lemma destruct_lpair_lpair: ∀I1,I2,L1,L2,V1,V2. L1.ⓑ{I1}V1 = L2.ⓑ{I2}V2 →

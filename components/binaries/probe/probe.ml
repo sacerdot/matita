@@ -28,9 +28,12 @@ let no_log _ _ = ()
 
 let init registry =
    R.load_from registry; 
-   B.init (); 
-   C.set_trust trusted;
-   H.set_log_callback no_log
+   if !O.no_init then begin
+      B.init (); 
+      C.set_trust trusted;
+      H.set_log_callback no_log;
+      O.no_init := false;
+   end
 
 let scan_uri devel str =
    M.from_string (R.get "matita.basedir") devel str;
@@ -61,7 +64,7 @@ let process s =
 
 let _ =
    let help = "Usage: probe [ -X | <configuration file> | -gp | HELM (base)uri | -i | -on | os | -sn | -ss  ]*" in
-   let help_X  = " Reset options and counters" in
+   let help_X  = " Clear configuration, options and counters" in
    let help_g  = " Exclude generated objects" in
    let help_i  = " Print the total intrinsic size" in
    let help_p  = " Exclude provided objects" in

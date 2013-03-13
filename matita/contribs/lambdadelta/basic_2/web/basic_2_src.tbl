@@ -39,8 +39,16 @@ table {
           }
         ]
 *)
+        [ { "\"big tree\" parallel computation" * } {
+             [ "yprs ( ? ⊢ ⦃?,?⦄ ≥[g] ⦃?,?⦄ )" "yprs_yprs"  "ygt ( ? ⊢ ⦃?,?⦄ >[g] ⦃?,?⦄ )" "ygt_ygt" * ]
+          }
+        ]
+        [ { "\"big tree\" parallel reduction" * } {
+             [ "ypr ( ? ⊢ ⦃?,?⦄ ≽[g] ⦃?,?⦄ )" "ysc ( ? ⊢ ⦃?,?⦄ ≻[g] ⦃?,?⦄ )" * ]
+          }
+        ]
         [ { "local env. ref. for stratified native validity" * } {
-             [ "lsubsv ( ? ⊢ ? ⊩:⊑[?] ? )" "lsubsv_ldrop" + "lsubsv_ssta" + "lsubsv_cpcs" + "lsubsv_snv" * ]
+             [ "lsubsv ( ? ⊢ ? ⊩:⊑[?] ? )" "lsubsv_ldrop" + "lsubsv_lsuba" + "lsubsv_ssta" + "lsubsv_dxprs" + "lsubsv_cpcs" + "lsubsv_snv" * ]
           }
         ]
         [ { "stratified native validity" * } {
@@ -86,10 +94,6 @@ table {
              [ "fprs ( ⦃?,?⦄ ➡* ⦃?,?⦄ )" "fprs_aaa" + "fprs_fprs" * ]
           }
         ]
-        [ { "\"big tree\" parallel computation" * } {
-             [ "yprs ( ? ⊢ ⦃?,?⦄ ≥[g] ⦃?,?⦄ )" "yprs_yprs"  "ygt ( ? ⊢ ⦃?,?⦄ >[g] ⦃?,?⦄ )" "ygt_ygt" * ]
-          }
-        ]
         [ { "decomposed extended computation" * } {
              [ "dxprs ( ⦃?,?⦄ ⊢ ? •*➡*[?] ? )" "dxprs_lift" + "dxprs_ltpss_dx" + "dxprs_ltpss_sn" + "dxprs_aaa" + "dxpr_lsubss" + "dxprs_dxprs" * ]
           }
@@ -131,10 +135,6 @@ table {
         [ { "context-free focalized reduction" * } {
              [ "lfpr ( ⦃?⦄ ➡ ⦃?⦄ )" "lfpr_alt ( ⦃?⦄ ➡➡ ⦃?⦄ )" "lfpr_aaa" + "lfpr_cpr" + "lfpr_fpr" + "lfpr_lfpr" * ]
              [ "fpr ( ⦃?,?⦄ ➡ ⦃?,?⦄ )" "fpr_cpr" + "fpr_fpr" * ]
-          }
-        ]
-        [ { "\"big tree\" parallel reduction" * } {
-             [ "ypr ( ? ⊢ ⦃?,?⦄ ≽[g] ⦃?,?⦄ )" "ysc ( ? ⊢ ⦃?,?⦄ ≻[g] ⦃?,?⦄ )" * ]
           }
         ]
         [ { "context-sensitive normal forms" * } {

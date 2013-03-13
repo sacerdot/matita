@@ -12,10 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unwind/sstas.ma".
-include "basic_2/reducibility/ypr.ma".
 include "basic_2/computation/ltprs.ma".
-include "basic_2/computation/cprs.ma".
+include "basic_2/dynamic/ypr.ma".
 
 (* "BIG TREE" PARALLEL COMPUTATION FOR CLOSURES *****************************)
 
@@ -70,6 +68,9 @@ lemma sstas_yprs: ∀h,g,L,T1,T2. ⦃h, L⦄ ⊢ T1 •*[g] T2 →
                   h ⊢ ⦃L, T1⦄ ≥[g] ⦃L, T2⦄.
 #h #g #L #T1 #T2 #H @(sstas_ind … H) -T2 // /3 width=4 by ypr_ssta, yprs_strap1/
 qed.
+
+lemma lsubsv_yprs: ∀h,g,L1,L2,T. h ⊢ L2 ⊩:⊑[g] L1 → h ⊢ ⦃L1, T⦄ ≥[g] ⦃L2, T⦄.
+/3 width=1/ qed.
 
 lemma ltpr_cprs_yprs: ∀h,g,L1,L2,T1,T2. L1 ➡ L2 → L2 ⊢ T1 ➡* T2 →
                       h ⊢ ⦃L1, T1⦄ ≥[g] ⦃L2, T2⦄.

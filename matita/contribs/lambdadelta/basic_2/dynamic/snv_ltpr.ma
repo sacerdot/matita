@@ -14,30 +14,30 @@
 
 include "basic_2/computation/dxprs_dxprs.ma".
 include "basic_2/dynamic/snv_cpcs.ma".
-include "basic_2/dynamic/lsubsv_snv.ma".
 
 (* STRATIFIED NATIVE VALIDITY FOR TERMS *************************************)
 
 (* Properties on context-free parallel reduction for local environments *****)
 
 fact snv_ltpr_tpr_aux: ∀h,g,L0,T0.
+                       (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_lsubsv h g L1 T1) →
                        (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_ssta_ltpr_tpr h g L1 T1) →
                        (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_ssta h g L1 T1) →
                        (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_ltpr_tpr h g L1 T1) →
                        ∀L1,T1. L0 = L1 → T0 = T1 → IH_snv_ltpr_tpr h g L1 T1.
-#h #g #L0 #T0 #IH3 #IH2 #IH1 #L1 * * [||||*]
-[ #k #HL0 #HT0 #H1 #L2 #_ #X #H2 destruct -IH3 -IH2 -IH1 -L1
+#h #g #L0 #T0 #IH4 #IH3 #IH2 #IH1 #L1 * * [||||*]
+[ #k #HL0 #HT0 #H1 #L2 #_ #X #H2 destruct -IH4 -IH3 -IH2 -IH1 -L1
   >(tpr_inv_atom1 … H2) -X //
-| #i #HL0 #HT0 #H1 #L2 #HL12 #X #H2 destruct -IH3 -IH2
+| #i #HL0 #HT0 #H1 #L2 #HL12 #X #H2 destruct -IH4 -IH3 -IH2
   elim (snv_inv_lref … H1) -H1 #I #K1 #V1 #HLK1 #HV1
   >(tpr_inv_atom1 … H2) -X
   elim (ltpr_ldrop_conf … HLK1 … HL12) -HL12 #X #H #HLK2
   elim (ltpr_inv_pair1 … H) -H #K2 #V2 #HK12 #HV12 #H destruct
   lapply (ldrop_pair2_fwd_fw … HLK1 (#i)) -HLK1 #HLK1
   lapply (IH1 … HK12 … HV12) -IH1 -HV12 -HK12 // -HV1 [ /2 width=1/ ] -HLK1 /2 width=5/
-| #p #HL0 #HT0 #H1 #L2 #HL12 #X #H2 destruct -IH3 -IH2 -IH1
+| #p #HL0 #HT0 #H1 #L2 #HL12 #X #H2 destruct -IH4 -IH3 -IH2 -IH1
   elim (snv_inv_gref … H1)
-| #a #I #V1 #T1 #HL0 #HT0 #H1 #L2 #HL12 #X #H2 destruct -IH3 -IH2
+| #a #I #V1 #T1 #HL0 #HT0 #H1 #L2 #HL12 #X #H2 destruct -IH4 -IH3 -IH2
   elim (snv_inv_bind … H1) -H1 #HV1 #HT1
   elim (tpr_inv_bind1 … H2) -H2 *
   [ #V2 #T0 #T2 #HV12 #HT10 #HT02 #H destruct
@@ -52,7 +52,7 @@ fact snv_ltpr_tpr_aux: ∀h,g,L0,T0.
 | #V1 #T1 #HL0 #HT0 #H1 #L2 #HL12 #X #H2 destruct
   elim (snv_inv_appl … H1) -H1 #a #W10 #W1 #U1 #l #HV1 #HT1 #HVW1 #HW10 #HTU1
   elim (tpr_inv_appl1 … H2) -H2 *
-  [ #V2 #T2 #HV12 #HT12 #H destruct
+  [ #V2 #T2 #HV12 #HT12 #H destruct -IH4
     lapply (IH1 … HV1 … HL12 … HV12) [ /2 width=1/ ] #HV2
     lapply (IH1 … HT1 … HL12 … HT12) [ /2 width=1/ ] #HT2
     elim (IH3 … HVW1 … HL12 … HV12) -HVW1 -HV12 // -HV1 [2: /2 width=1/ ] #W2 #HVW2 #HW12
@@ -73,7 +73,8 @@ fact snv_ltpr_tpr_aux: ∀h,g,L0,T0.
     lapply (IH1 … HT20 … (L2.ⓛW20) … HT202) [1,2: /2 width=1/ ] -IH1 -HT20 -HT202 #HT2
     elim (IH3 … HVW1 … HL12 … HV12) // [2: /2 width=1/ ] -HV1 -HVW1 -HV12 #W200 #HVW200 #H
     lapply (cpcs_trans … HW210 … H) -W10 #HW200
-(*    
-    lapply (lsubsv_snv_trans … HT2 (L2.ⓓV2) ?) -L1 -HT2 /2 width=1/ /2 width=4/
-  |
-*)
+    lapply (IH4 … HT2 (L2.ⓓV2) ?) -HT2
+    [ (* /2 width=4/ *)
+    |
+    | /2 width=1/
+    ] 

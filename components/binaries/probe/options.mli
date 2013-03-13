@@ -17,6 +17,8 @@ val exclude: NCic.generated list ref
 
 val net: int ref
 
-val clear: unit -> unit
-
 val no_devel: bool ref
+
+val no_init: bool ref
+
+val clear: unit -> unit
