@@ -16,7 +16,6 @@ include "basic_2/static/ssta.ma".
 
 (* LOCAL ENVIRONMENT REFINEMENT FOR STRATIFIED STATIC TYPE ASSIGNMENT *******)
 
-(* Note: may not be transitive *)
 inductive lsubss (h:sh) (g:sd h): relation lenv ≝
 | lsubss_atom: lsubss h g (⋆) (⋆)
 | lsubss_pair: ∀I,L1,L2,W. lsubss h g L1 L2 →

@@ -3,10 +3,12 @@ H    := @
 
 TRIM := sed "s/ \\+$$//"
 
-XOA_DIR     := ../../../components/binaries/xoa
-XOA         := xoa.native
 XOA_CONF    := ground_2/xoa.conf.xml
 XOA_TARGETS := ground_2/xoa_notation.ma ground_2/xoa.ma
+
+XOA_DIR     := ../../../components/binaries/xoa
+XOA         := xoa.native
+XOA_OPTS    := ../../matita.conf.xml $(XOA_CONF)
 
 DEP_DIR     := ../../../components/binaries/matitadep
 DEP         := matitadep.native
@@ -16,7 +18,7 @@ MAC         := mac.native
 
 PRB_DIR     := ../../../components/binaries/probe
 PRB         := probe.native
-PRB_OPTS    := ../../matita.conf.xml $(XOA_CONF) -g 
+PRB_OPTS    := $(XOA_OPTS) -g 
 
 ORIG        := . ./orig.sh 
 ORIGS       := basic_2/basic_1.orig
@@ -50,7 +52,7 @@ xoa: $(XOA_TARGETS)
 
 $(XOA_TARGETS): $(XOA_CONF)
 	@echo "  EXEC $(XOA) $(XOA_CONF)"
-	$(H)MATITA_RT_BASE_DIR=../.. $(XOA_DIR)/$(XOA) $(XOA_CONF)
+	$(H)MATITA_RT_BASE_DIR=../.. $(XOA_DIR)/$(XOA) $(XOA_OPTS)
 
 # orig #######################################################################
 

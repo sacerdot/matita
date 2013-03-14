@@ -66,15 +66,14 @@ fact snv_ltpr_tpr_aux: ∀h,g,L0,T0.
   | #b #V2 #W20 #T20 #T2 #HV12 #HT202 #H1 #H2 destruct
     elim (snv_inv_bind … HT1) -HT1 #HW20 #HT20
     elim (dxprs_inv_abst1 … HTU1) -HTU1 #W30 #T30 #HW230 #_ #H destruct -T30
-    lapply (cprs_div … HW230 … HW10) -W30 #HW210
-    lapply (ltpr_cpcs_conf … HL12 … HW210) -HW210 #HW210
+    lapply (cprs_div … HW10 … HW230) -W30 #HW120
+    elim (snv_fwd_ssta … HW20) #U20 #l0 #HWU20
+    elim (ssta_fwd_correct … HVW1) <minus_plus_m_m #U10 #HWU10
+    elim (ssta_ltpr_cpcs_aux … IH1 IH3 … HW20 … HWU10 … HWU20) // -IH3 -HWU10
+    [2: /3 width=5/ |3: /2 width=1/
+    |4: /4 width=4 by ygt_yprs_trans, ypr_yprs, ypr_ssta, fw_ygt/
+    ] #H #_ -IH2 -U10 destruct
+    lapply (IH4 … HT20 (L1.ⓓV1) ?) [ /2 width=6/ | /2 width=1/ ] -U20 -W10 -l0 -IH4 -HT20 -HW20 #HT20
     lapply (IH1 … HL12 … HV12) // [ /2 width=1/ ] #HV2
-    lapply (IH1 … HW20 … HL12 W20 ?) // [ /2 width=1/ ] -HW20 #HW20
-    lapply (IH1 … HT20 … (L2.ⓛW20) … HT202) [1,2: /2 width=1/ ] -IH1 -HT20 -HT202 #HT2
-    elim (IH3 … HVW1 … HL12 … HV12) // [2: /2 width=1/ ] -HV1 -HVW1 -HV12 #W200 #HVW200 #H
-    lapply (cpcs_trans … HW210 … H) -W10 #HW200
-    lapply (IH4 … HT2 (L2.ⓓV2) ?) -HT2
-    [ (* /2 width=4/ *)
-    |
-    | /2 width=1/
-    ] 
+    lapply (IH1 … HT20 … (L2.ⓓV2) … HT202) [1,2: /2 width=1/ ] -L1 -V1 -W20 -T20 /2 width=1/
+  |

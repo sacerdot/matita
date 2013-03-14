@@ -95,7 +95,7 @@ table {
           }
         ]
         [ { "decomposed extended computation" * } {
-             [ "dxprs ( ⦃?,?⦄ ⊢ ? •*➡*[?] ? )" "dxprs_lift" + "dxprs_ltpss_dx" + "dxprs_ltpss_sn" + "dxprs_aaa" + "dxpr_lsubss" + "dxprs_dxprs" * ]
+             [ "dxprs ( ⦃?,?⦄ ⊢ ? •*➡*[?] ? )" "dxprs_lift" + "dxprs_ltpss_dx" + "dxprs_ltpss_sn" + "dxprs_aaa" + "dxprs_dxprs" * ]
           }
         ]
         [ { "weakly normalizing computation" * } {
@@ -163,17 +163,19 @@ table {
    class "green"
    [ { "unwind" * } {
         [ { "iterated stratified static type assignment" * } {
-             [ "sstas ( ⦃?,?⦄ ⊢ ? •*[?] ? )" "sstas_lift" + "sstas_ltpss_dx" + "sstas_ltpss_sn" + "sstas_aaa" + "sstas_lsubss" + "sstas_sstas" * ]
+             [ "sstas ( ⦃?,?⦄ ⊢ ? •*[?] ? )" "sstas_lift" + "sstas_ltpss_dx" + "sstas_ltpss_sn" + "sstas_aaa" + "sstas_sstas" * ]
           }
         ]
      }
    ]
    class "grass"
    [ { "static typing" * } {
-        [ { "local env. ref. for stratified static type assignment" * } {
+(*        
+	[ { "local env. ref. for stratified static type assignment" * } {
              [ "lsubss ( ? •⊑[?] ? )" "lsubss_ldrop" + "lsubss_ssta" + "lsubss_lsubss" * ]
           }
         ]
+*)
         [ { "stratified static type assignment" * } {
              [ "ssta ( ⦃?,?⦄ ⊢ ? •[?,?] ? )" "ssta_lift" + "ssta_ltpss_dx" + "ssta_ltpss_sn" + "ssta_aaa" + "ssta_ssta" * ]
           }
