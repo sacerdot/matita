@@ -33,7 +33,7 @@ lapply (IH1 … HT … HL12) // #H
 lapply (snv_sstas_aux … IH2 … HTU1) // /3 width=4 by ygt_yprs_trans, lsubsv_yprs/ -H #HU1
 lapply (snv_sstas_aux … IH2 … HTU2) // #H
 lapply (IH1 … H … HL12) [ /3 width=4 by ygt_yprs_trans, sstas_yprs/ ] -H #HU2
-elim (snv_fwd_ssta … HU1) #W1 #l1 #HUW1
+elim (snv_fwd_ssta … HU1) #l1 #W1 #HUW1
 elim (lsubsv_ssta_trans … HU2W … HL12) -HU2W #W2 #HUW2 #HW2
 elim (ssta_ltpr_cpcs_aux … IH4 IH3 … HU1 HU2 … HUW1 … HUW2 … HU12) -HU1 -HU2 -HUW2 -HU12 //
 [2,3: /4 width=4 by ygt_yprs_trans, sstas_yprs, lsubsv_yprs/ ] -L2 -L0 -T0 -U2 #H #HW12 destruct

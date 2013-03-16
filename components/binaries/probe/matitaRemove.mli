@@ -9,18 +9,4 @@
      \ /   This software is distributed as is, NO WARRANTY.     
       V_______________________________________________________________ *)
 
-val objs: NUri.UriSet.t ref
-
-val srcs: NUri.UriSet.t ref
-
-val remove: string list ref
-
-val exclude: NCic.generated list ref
-
-val net: int ref
-
-val no_devel: bool ref
-
-val no_init: bool ref
-
-val clear: unit -> unit
+val objects: unit -> unit

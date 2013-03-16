@@ -9,18 +9,23 @@
      \ /   This software is distributed as is, NO WARRANTY.     
       V_______________________________________________________________ *)
 
-val objs: NUri.UriSet.t ref
+module A = Array
+module F = Filename
+module Y = Sys
+module U = Unix
 
-val srcs: NUri.UriSet.t ref
+module O = Options
 
-val remove: string list ref
+let remove_dir dir =
+   if Y.file_exists dir then begin
+      let map name = Y.remove (F.concat dir name) in
+      A.iter map (Y.readdir dir);
+      U.rmdir dir (* Sys.remove does not seem to remove empty directories *)
+   end
 
-val exclude: NCic.generated list ref
-
-val net: int ref
-
-val no_devel: bool ref
-
-val no_init: bool ref
-
-val clear: unit -> unit
+let objects () =
+   let map name = 
+      Y.remove name;
+      remove_dir (F.chop_extension name)
+   in
+   List.iter map !O.remove

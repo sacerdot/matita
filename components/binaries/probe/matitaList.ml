@@ -38,11 +38,17 @@ let add_src devel path =
       let str = F.concat "cic:" path ^ "/" in
       O.srcs := US.add (U.uri_of_string str) !O.srcs
 
+let add_remove base path =
+   O.remove := F.concat base path :: !O.remove
+
 let rec scan_entry base devel path =
    if F.check_suffix path ".con.ng" then add_obj path else
    if F.check_suffix path ".ind.ng" then add_obj path else
    if F.check_suffix path ".var.ng" then add_obj path else 
-   if F.check_suffix path ".ng" then add_src devel path else
+   if F.check_suffix path ".ng" then
+      if src_exists (F.chop_extension devel ^ ".ma")
+      then add_src devel path else add_remove base path
+   else
    if src_exists devel || src_exists (devel ^ ".ma") then   
       let files = Y.readdir (F.concat base path) in
       let map base file = scan_entry base (F.concat devel file) (F.concat path file) in

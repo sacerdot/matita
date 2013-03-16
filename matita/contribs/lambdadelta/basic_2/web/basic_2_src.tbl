@@ -64,8 +64,8 @@ table {
              [ "fpcs ( ⦃?,?⦄ ⬌* ⦃?,?⦄ )" "fpcs_aaa" + "fpcs_cpcs" + "fpcs_fprs" + "fpcs_fpcs" * ]
           }
         ]
-        [ { "local env. ref. for context-sensitive equivalence" * } {
-             [ "lsubse ( ? ⊢•⊑[?] ? )" "lsubse_ldrop" + "lsubse_ssta" + "lsubse_cpcs" * ]
+        [ { "local env. ref. for stratified static type assignment" * } {
+             [ "lsubss ( ? •⊑[?] ? )" "lsubss_ldrop" + "lsubss_ssta" + "lsubss_cpcs" * ]
           }
         ]
         [ { "context-sensitive equivalence" * } {
@@ -170,12 +170,6 @@ table {
    ]
    class "grass"
    [ { "static typing" * } {
-(*        
-	[ { "local env. ref. for stratified static type assignment" * } {
-             [ "lsubss ( ? •⊑[?] ? )" "lsubss_ldrop" + "lsubss_ssta" + "lsubss_lsubss" * ]
-          }
-        ]
-*)
         [ { "stratified static type assignment" * } {
              [ "ssta ( ⦃?,?⦄ ⊢ ? •[?,?] ? )" "ssta_lift" + "ssta_ltpss_dx" + "ssta_ltpss_sn" + "ssta_aaa" + "ssta_ssta" * ]
           }

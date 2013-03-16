@@ -19,7 +19,7 @@ include "basic_2/static/ssta.ma".
 
 (* Properties on atomic arity assignment for terms **************************)
 
-lemma ssta_aaa: ∀h,g,L,T,A. L ⊢ T ⁝ A → ∀U,l. ⦃h, L⦄ ⊢ T •[g, l] U → L ⊢ U ⁝ A.
+lemma ssta_aaa: ∀h,g,L,T,A. L ⊢ T ⁝ A → ∀U,l. ⦃h, L⦄ ⊢ T •[g] ⦃l, U⦄ → L ⊢ U ⁝ A.
 #h #g #L #T #A #H elim H -L -T -A
 [ #L #k #U #l #H
   elim (ssta_inv_sort1 … H) -H #_ #H destruct //

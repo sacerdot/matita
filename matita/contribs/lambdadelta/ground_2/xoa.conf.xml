@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <helm_registry>
-  <section name="matita">
-    <key name="rt_base_dir">$(MATITA_RT_BASE_DIR)</key>
-  </section>
   <section name="xoa">
     <key name="output_dir">contribs/lambdadelta/ground_2/</key>
     <key name="objects">xoa</key>

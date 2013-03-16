@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page xmlns="http://lambdadelta.info/"
+      description = "BTM"
+      title = "BTM"
+      head = "cic:/matita/BTM/"
+>
+   <section>Character classes</section>
+   <body>This table shows how the first 45 positive integers
+         are distributed in the four classes.
+   </body>
+   <table name="chc_45"/>
+
+   <footer/>
+</page>

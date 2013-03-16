@@ -19,9 +19,9 @@ include "basic_2/unwind/sstas.ma".
 
 (* Advanced forward lemmas **************************************************)
 
-lemma sstas_fwd_correct: ∀h,g,L,T1,U1,l1. ⦃h, L⦄ ⊢ T1 •[g, l1] U1 →
+lemma sstas_fwd_correct: ∀h,g,L,T1,U1,l1. ⦃h, L⦄ ⊢ T1 •[g] ⦃l1, U1⦄ →
                          ∀T2. ⦃h, L⦄ ⊢ T1 •*[g] T2 →
-                         ∃∃U2,l2. ⦃h, L⦄ ⊢ T2 •[g, l2] U2.
+                         ∃∃U2,l2. ⦃h, L⦄ ⊢ T2 •[g] ⦃l2, U2⦄.
 #h #g #L #T1 #U1 #l1 #HTU1 #T2 #H @(sstas_ind … H) -T2 [ /2 width=3/ ] -HTU1
 #T #T2 #l #_ #HT2 * #U #l0 #_ -l0
 elim (ssta_fwd_correct … HT2) -T /2 width=3/

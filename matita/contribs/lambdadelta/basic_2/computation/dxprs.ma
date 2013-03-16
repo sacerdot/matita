@@ -40,6 +40,6 @@ lemma dxprs_strap1: ∀h,g,L,T1,T,T2.
 qed.
 
 lemma dxprs_strap2: ∀h,g,L,T1,T,T2,l.
-                    ⦃h, L⦄ ⊢ T1 •[g, l+1] T → ⦃h, L⦄ ⊢ T •*➡*[g] T2 → ⦃h, L⦄ ⊢ T1 •*➡*[g] T2.
+                    ⦃h, L⦄ ⊢ T1 •[g] ⦃l+1, T⦄ → ⦃h, L⦄ ⊢ T •*➡*[g] T2 → ⦃h, L⦄ ⊢ T1 •*➡*[g] T2.
 #h #g #L #T1 #T #T2 #l #HT1 * /3 width=4/
 qed.

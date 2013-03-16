@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/equivalence/lsubse_ssta.ma".
+include "basic_2/equivalence/lsubss_ssta.ma".
 include "basic_2/dynamic/snv_cpcs.ma".
 
 (* STRATIFIED NATIVE VALIDITY FOR TERMS *************************************)
@@ -80,7 +80,7 @@ fact ssta_ltpr_tpr_aux: ∀h,g,L0,T0.
     elim (dxprs_inv_abst1 … HTU10) -HTU10 #W0 #U0 #HW0 #_ #H destruct
     lapply (cprs_div … HW10 … HW0) -W0 #HW1W
     elim (ssta_fwd_correct … HVW1) <minus_plus_m_m #X1 #HWX1
-    elim (snv_fwd_ssta … HW) #V #l1 #HWV
+    elim (snv_fwd_ssta … HW) #l1 #V #HWV
     lapply (IH3 … HVW1) -IH3 // [ /2 width=1/ ] #HW1
     elim (ssta_ltpr_cpcs_aux … IH2 IH1 … HWX1 … HWV …) -IH2 -HWX1 //
     [2: /2 width=1/ |3: /3 width=4 by ygt_strap1, fw_ygt, ypr_ssta/ ] #H #_ destruct -X1
@@ -89,7 +89,7 @@ fact ssta_ltpr_tpr_aux: ∀h,g,L0,T0.
     elim (IH1 … HTU2 (L2.ⓛW) … HT20) -IH1 -HTU2 -HT20 // [2,3: /2 width=1/ ] -HT2 #U20 #HTU20 #HU20
     lapply (ltpr_cpcs_conf … HL12 … HW1W) -L1 #HW1W
     lapply (cpcs_canc_sn … HW12 HW1W) -W1 #HW2
-    elim (lsubse_ssta_trans … HTU20 (L2.ⓓV2) ?) -HTU20
+    elim (lsubss_ssta_trans … HTU20 (L2.ⓓV2) ?) -HTU20
     [ #U #HTU20 #HUU20 -HWV0 -W2
       @(ex2_intro … (ⓓ{b}V2.U)) [ /2 width=1/ ] -h -l -l1 -V -V0 -T2 -T20 -U0
       @(cpcs_cprs_strap2 … (ⓓ{b}V2.U2)) [ /3 width=1/ ] -V1

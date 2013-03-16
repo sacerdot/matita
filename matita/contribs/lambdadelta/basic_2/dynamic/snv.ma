@@ -22,10 +22,10 @@ inductive snv (h:sh) (g:sd h): lenv → predicate term ≝
 | snv_lref: ∀I,L,K,V,i. ⇩[0, i] L ≡ K.ⓑ{I}V → snv h g K V → snv h g L (#i)
 | snv_bind: ∀a,I,L,V,T. snv h g L V → snv h g (L.ⓑ{I}V) T → snv h g L (ⓑ{a,I}V.T)
 | snv_appl: ∀a,L,V,W,W0,T,U,l. snv h g L V → snv h g L T →
-            ⦃h, L⦄ ⊢ V •[g, l + 1] W → L ⊢ W ➡* W0 →
+            ⦃h, L⦄ ⊢ V •[g] ⦃l+1, W⦄ → L ⊢ W ➡* W0 →
             ⦃h, L⦄ ⊢ T •*➡*[g] ⓛ{a}W0.U → snv h g L (ⓐV.T)
 | snv_cast: ∀L,W,T,U,l. snv h g L W → snv h g L T →
-            ⦃h, L⦄ ⊢ T •[g, l + 1] U → L ⊢ U ⬌* W → snv h g L (ⓝW.T)
+            ⦃h, L⦄ ⊢ T •[g] ⦃l+1, U⦄ → L ⊢ U ⬌* W → snv h g L (ⓝW.T)
 .
 
 interpretation "stratified native validity (term)"
@@ -78,7 +78,7 @@ lemma snv_inv_bind: ∀h,g,a,I,L,V,T. ⦃h, L⦄ ⊩ ⓑ{a,I}V.T :[g] →
 
 fact snv_inv_appl_aux: ∀h,g,L,X. ⦃h, L⦄ ⊩ X :[g] → ∀V,T. X = ⓐV.T →
                        ∃∃a,W,W0,U,l. ⦃h, L⦄ ⊩ V :[g] & ⦃h, L⦄ ⊩ T :[g] &
-                                   ⦃h, L⦄ ⊢ V •[g, l + 1] W & L ⊢ W ➡* W0 &
+                                   ⦃h, L⦄ ⊢ V •[g] ⦃l+1, W⦄ & L ⊢ W ➡* W0 &
                                    ⦃h, L⦄ ⊢ T •*➡*[g] ⓛ{a}W0.U.
 #h #g #L #X * -L -X
 [ #L #k #V #T #H destruct
@@ -91,13 +91,13 @@ qed.
 
 lemma snv_inv_appl: ∀h,g,L,V,T. ⦃h, L⦄ ⊩ ⓐV.T :[g] →
                     ∃∃a,W,W0,U,l. ⦃h, L⦄ ⊩ V :[g] & ⦃h, L⦄ ⊩ T :[g] &
-                                ⦃h, L⦄ ⊢ V •[g, l + 1] W & L ⊢ W ➡* W0 &
+                                ⦃h, L⦄ ⊢ V •[g] ⦃l+1, W⦄ & L ⊢ W ➡* W0 &
                                 ⦃h, L⦄ ⊢ T •*➡*[g] ⓛ{a}W0.U.
 /2 width=3/ qed-.
 
 fact snv_inv_cast_aux: ∀h,g,L,X. ⦃h, L⦄ ⊩ X :[g] → ∀W,T. X = ⓝW.T →
                        ∃∃U,l. ⦃h, L⦄ ⊩ W :[g] & ⦃h, L⦄ ⊩ T :[g] &
-                              ⦃h, L⦄ ⊢ T •[g, l + 1] U & L ⊢ U ⬌* W.
+                              ⦃h, L⦄ ⊢ T •[g] ⦃l+1, U⦄ & L ⊢ U ⬌* W.
 #h #g #L #X * -L -X
 [ #L #k #W #T #H destruct
 | #I #L #K #V #i #_ #_ #W #T #H destruct
@@ -109,15 +109,15 @@ qed.
 
 lemma snv_inv_cast: ∀h,g,L,W,T. ⦃h, L⦄ ⊩ ⓝW.T :[g] →
                     ∃∃U,l. ⦃h, L⦄ ⊩ W :[g] & ⦃h, L⦄ ⊩ T :[g] &
-                           ⦃h, L⦄ ⊢ T •[g, l + 1] U & L ⊢ U ⬌* W.
+                           ⦃h, L⦄ ⊢ T •[g] ⦃l+1, U⦄ & L ⊢ U ⬌* W.
 /2 width=3/ qed-.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma snv_fwd_ssta: ∀h,g,L,T. ⦃h, L⦄ ⊩ T :[g] → ∃∃U,l. ⦃h, L⦄ ⊢ T •[g, l] U.
+lemma snv_fwd_ssta: ∀h,g,L,T. ⦃h, L⦄ ⊩ T :[g] → ∃∃l,U. ⦃h, L⦄ ⊢ T •[g] ⦃l, U⦄.
 #h #g #L #T #H elim H -L -T
 [ #L #k elim (deg_total h g k) /3 width=3/
-| * #L #K #V #i #HLK #_ * #W #l0 #HVW
+| * #L #K #V #i #HLK #_ * #l0 #W #HVW
   [ elim (lift_total W 0 (i+1)) /3 width=8/
   | elim (lift_total V 0 (i+1)) /3 width=8/
   ]

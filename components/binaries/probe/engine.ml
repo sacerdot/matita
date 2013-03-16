@@ -55,8 +55,3 @@ let get_uri str =
 	 aux (F.dirname bdir) (F.concat (F.basename bdir) file)
    in
    aux dir file
-(* 
-   
-   let bpath = F.dirname str ^ "/" in
-   bpath, buri
-*)

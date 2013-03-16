@@ -20,7 +20,7 @@ include "basic_2/unwind/sstas.ma".
 (* Advanced inversion lemmas ************************************************)
 
 lemma sstas_inv_O: ∀h,g,L,T,U. ⦃h, L⦄ ⊢ T •*[g] U →
-                   ∀T0. ⦃h, L⦄ ⊢ T •[g , 0] T0 → U = T.
+                   ∀T0. ⦃h, L⦄ ⊢ T •[g] ⦃0, T0⦄ → U = T.
 #h #g #L #T #U #H @(sstas_ind_dx … H) -T //
 #T0 #U0 #l0 #HTU0 #_ #_ #T1 #HT01
 elim (ssta_mono … HTU0 … HT01) <plus_n_Sm #H destruct
@@ -29,7 +29,7 @@ qed-.
 (* Advanced properties ******************************************************)
 
 lemma sstas_strip: ∀h,g,L,T,U1. ⦃h, L⦄ ⊢ T •*[g] U1 →
-                   ∀U2,l. ⦃h, L⦄ ⊢ T •[g, l] U2 →
+                   ∀U2,l. ⦃h, L⦄ ⊢ T •[g] ⦃l, U2⦄ →
                    T = U1 ∨ ⦃h, L⦄ ⊢ U2 •*[g] U1.
 #h #g #L #T #U1 #H1 @(sstas_ind_dx … H1) -T /2 width=1/
 #T #U #l0 #HTU #HU1 #_ #U2 #l #H2

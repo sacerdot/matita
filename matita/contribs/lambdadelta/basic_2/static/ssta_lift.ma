@@ -20,9 +20,9 @@ include "basic_2/static/ssta.ma".
 (* Properties on relocation *************************************************)
 
 (* Basic_1: was just: sty0_lift *)
-lemma ssta_lift: ∀h,g,L1,T1,U1,l. ⦃h, L1⦄ ⊢ T1 •[g, l] U1 →
+lemma ssta_lift: ∀h,g,L1,T1,U1,l. ⦃h, L1⦄ ⊢ T1 •[g] ⦃l, U1⦄ →
                  ∀L2,d,e. ⇩[d, e] L2 ≡ L1 → ∀T2. ⇧[d, e] T1 ≡ T2 →
-                 ∀U2. ⇧[d, e] U1 ≡ U2 → ⦃h, L2⦄ ⊢ T2 •[g, l] U2.
+                 ∀U2. ⇧[d, e] U1 ≡ U2 → ⦃h, L2⦄ ⊢ T2 •[g] ⦃l, U2⦄.
 #h #g #L1 #T1 #U1 #l #H elim H -L1 -T1 -U1 -l
 [ #L1 #k #l #Hkl #L2 #d #e #HL21 #X1 #H1 #X2 #H2
   >(lift_inv_sort1 … H1) -X1
@@ -60,9 +60,9 @@ lemma ssta_lift: ∀h,g,L1,T1,U1,l. ⦃h, L1⦄ ⊢ T1 •[g, l] U1 →
 qed.
 
 (* Note: apparently this was missing in basic_1 *)
-lemma ssta_inv_lift1: ∀h,g,L2,T2,U2,l. ⦃h, L2⦄ ⊢ T2 •[g, l] U2 →
+lemma ssta_inv_lift1: ∀h,g,L2,T2,U2,l. ⦃h, L2⦄ ⊢ T2 •[g] ⦃l, U2⦄ →
                       ∀L1,d,e. ⇩[d, e] L2 ≡ L1 → ∀T1. ⇧[d, e] T1 ≡ T2 →
-                      ∃∃U1. ⦃h, L1⦄ ⊢ T1 •[g, l] U1 & ⇧[d, e] U1 ≡ U2.
+                      ∃∃U1. ⦃h, L1⦄ ⊢ T1 •[g] ⦃l, U1⦄ & ⇧[d, e] U1 ≡ U2.
 #h #g #L2 #T2 #U2 #l #H elim H -L2 -T2 -U2 -l
 [ #L2 #k #l #Hkl #L1 #d #e #_ #X #H
   >(lift_inv_sort2 … H) -X /3 width=3/
@@ -105,8 +105,8 @@ qed.
 (* Advanced forvard lemmas **************************************************)
 
 (* Basic_1: was just: sty0_correct *)
-lemma ssta_fwd_correct: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g, l] U →
-                        ∃T0. ⦃h, L⦄ ⊢ U •[g, l - 1] T0.
+lemma ssta_fwd_correct: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g] ⦃l, U⦄ →
+                        ∃T0. ⦃h, L⦄ ⊢ U •[g] ⦃l-1, T0⦄.
 #h #g #L #T #U #l #H elim H -L -T -U -l
 [ /4 width=2/
 | #L #K #V #W #W0 #i #l #HLK #_ #HW0 * #V0 #HWV0

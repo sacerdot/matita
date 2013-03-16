@@ -19,6 +19,7 @@ module H = HLog
 
 module O = Options
 module M = MatitaList
+module D = MatitaRemove
 module S = NCicScan
 module E = Engine
 
@@ -62,6 +63,9 @@ let process s =
    else if E.is_registry s then init s
    else scan_from s
 
+let clear () = 
+   D.objects (); O.clear ()
+
 let _ =
    let help = "Usage: probe [ -X | <configuration file> | -gp | HELM (base)uri | -i | -on | os | -sn | -ss  ]*" in
    let help_X  = " Clear configuration, options and counters" in
@@ -73,7 +77,7 @@ let _ =
    let help_sn = " Print the number of sources" in
    let help_ss = " Print the list of sources" in
    A.parse [
-      "-X" , A.Unit O.clear, help_X;
+      "-X" , A.Unit clear, help_X;
       "-g" , A.Unit set_g, help_g;
       "-i" , A.Unit out_i, help_i;
       "-on", A.Unit out_on, help_on;
@@ -81,4 +85,5 @@ let _ =
       "-p" , A.Unit set_p, help_p;      
       "-sn", A.Unit out_sn, help_sn;
       "-ss", A.Unit out_ss, help_ss;
-   ] process help
+   ] process help;
+   D.objects ()

@@ -27,7 +27,7 @@ interpretation "iterated stratified static type assignment (term)"
 
 lemma sstas_ind: ∀h,g,L,T. ∀R:predicate term.
                  R T → (
-                    ∀U1,U2,l. ⦃h, L⦄ ⊢ T •* [g] U1 →  ⦃h, L⦄ ⊢ U1 •[g, l + 1] U2 →
+                    ∀U1,U2,l. ⦃h, L⦄ ⊢ T •* [g] U1 →  ⦃h, L⦄ ⊢ U1 •[g] ⦃l+1, U2⦄ →
                     R U1 → R U2
                  ) →
                  ∀U. ⦃h, L⦄ ⊢ T •*[g] U → R U.
@@ -37,7 +37,7 @@ qed-.
 
 lemma sstas_ind_dx: ∀h,g,L,U2. ∀R:predicate term.
                     R U2 → (
-                       ∀T,U1,l. ⦃h, L⦄ ⊢ T •[g, l + 1] U1 → ⦃h, L⦄ ⊢ U1 •* [g] U2 →
+                       ∀T,U1,l. ⦃h, L⦄ ⊢ T •[g] ⦃l+1, U1⦄ → ⦃h, L⦄ ⊢ U1 •* [g] U2 →
                        R U1 → R T
                     ) →
                     ∀T. ⦃h, L⦄ ⊢ T •*[g] U2 → R T.
@@ -50,15 +50,15 @@ qed-.
 lemma sstas_refl: ∀h,g,L. reflexive … (sstas h g L).
 // qed.
 
-lemma ssta_sstas: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g, l+1] U → ⦃h, L⦄ ⊢ T •*[g] U.
+lemma ssta_sstas: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g] ⦃l+1, U⦄ → ⦃h, L⦄ ⊢ T •*[g] U.
 /3 width=2 by R_to_star, ex_intro/ qed. (**) (* auto fails without trace *)
 
-lemma sstas_strap1: ∀h,g,L,T1,T2,U2,l. ⦃h, L⦄ ⊢ T1 •*[g] T2 → ⦃h, L⦄ ⊢ T2 •[g,l+1] U2 →
+lemma sstas_strap1: ∀h,g,L,T1,T2,U2,l. ⦃h, L⦄ ⊢ T1 •*[g] T2 → ⦃h, L⦄ ⊢ T2 •[g] ⦃l+1, U2⦄ →
                     ⦃h, L⦄ ⊢ T1 •*[g] U2.
 /3 width=4 by sstep, ex_intro/ (**) (* auto fails without trace *)
 qed.
 
-lemma sstas_strap2: ∀h,g,L,T1,U1,U2,l. ⦃h, L⦄ ⊢ T1 •[g, l+1] U1 → ⦃h, L⦄ ⊢ U1 •*[g] U2 →
+lemma sstas_strap2: ∀h,g,L,T1,U1,U2,l. ⦃h, L⦄ ⊢ T1 •[g] ⦃l+1, U1⦄ → ⦃h, L⦄ ⊢ U1 •*[g] U2 →
                     ⦃h, L⦄ ⊢ T1 •*[g] U2.
 /3 width=3 by star_compl, ex_intro/ (**) (* auto fails without trace *)
 qed.

@@ -16,6 +16,8 @@ let default_objs = US.empty
 
 let default_srcs = US.empty
 
+let default_remove = []
+
 let default_exclude = []
 
 let default_net = 0
@@ -28,6 +30,8 @@ let objs = ref default_objs
 
 let srcs = ref default_srcs
 
+let remove = ref default_remove
+
 let exclude = ref default_exclude
 
 let net = ref default_net
@@ -38,6 +42,6 @@ let no_init = ref default_no_init
 
 let clear () =
    R.clear ();
-   objs := default_objs; srcs := default_srcs;
+   objs := default_objs; srcs := default_srcs; remove := default_remove;
    exclude := default_exclude; net := default_net;
    no_devel := default_no_devel; no_init := default_no_init

@@ -28,19 +28,19 @@ definition IH_snv_ltpr_tpr: ∀h:sh. sd h → relation2 lenv term ≝
 
 definition IH_ssta_ltpr_tpr: ∀h:sh. sd h → relation2 lenv term ≝
                              λh,g,L1,T1. ⦃h, L1⦄ ⊩ T1 :[g] →
-                             ∀U1,l. ⦃h, L1⦄ ⊢ T1 •[g, l] U1 →
+                             ∀U1,l. ⦃h, L1⦄ ⊢ T1 •[g] ⦃l, U1⦄ →
                              ∀L2. L1 ➡ L2 → ∀T2. T1 ➡ T2 →
-                             ∃∃U2. ⦃h, L2⦄ ⊢ T2 •[g, l] U2 & L2 ⊢ U1 ⬌* U2.
+                             ∃∃U2. ⦃h, L2⦄ ⊢ T2 •[g] ⦃l, U2⦄ & L2 ⊢ U1 ⬌* U2.
 
 definition IH_snv_ssta: ∀h:sh. sd h → relation2 lenv term ≝
                         λh,g,L1,T1. ⦃h, L1⦄ ⊩ T1 :[g] →
-                        ∀U1,l. ⦃h, L1⦄ ⊢ T1 •[g, l + 1] U1 → ⦃h, L1⦄ ⊩ U1 :[g].
-
-(* Properties for the preservation results **********************************)
+                        ∀U1,l. ⦃h, L1⦄ ⊢ T1 •[g] ⦃l+1, U1⦄ → ⦃h, L1⦄ ⊩ U1 :[g].
 
 definition IH_snv_lsubsv: ∀h:sh. sd h → relation2 lenv term ≝
                           λh,g,L2,T. ⦃h, L2⦄ ⊩ T :[g] →
                           ∀L1. h ⊢ L1 ⊩:⊑[g] L2 → ⦃h, L1⦄ ⊩ T :[g].
+
+(* Properties for the preservation results **********************************)
 
 fact snv_ltpr_cpr_aux: ∀h,g,L1,T1. IH_snv_ltpr_tpr h g L1 T1 →
                        ⦃h, L1⦄ ⊩ T1 :[g] →
@@ -52,9 +52,9 @@ qed-.
 
 fact ssta_ltpr_cpr_aux: ∀h,g,L1,T1. IH_ssta_ltpr_tpr h g L1 T1 →
                         ⦃h, L1⦄ ⊩ T1 :[g] →
-                        ∀U1,l. ⦃h, L1⦄ ⊢ T1 •[g, l] U1 →
+                        ∀U1,l. ⦃h, L1⦄ ⊢ T1 •[g] ⦃l, U1⦄ →
                         ∀L2. L1 ➡ L2 → ∀T2. L2 ⊢ T1 ➡ T2 →
-                        ∃∃U2. ⦃h, L2⦄ ⊢ T2 •[g, l] U2 & L2 ⊢ U1 ⬌* U2.
+                        ∃∃U2. ⦃h, L2⦄ ⊢ T2 •[g] ⦃l, U2⦄ & L2 ⊢ U1 ⬌* U2.
 #h #g #L1 #T1 #IH #HT1 #U1 #l #HTU1 #L2 #HL12 #T2 * #T #HT1T #HTT2
 elim (IH … HTU1 … HL12 … HT1T) // -L1 -T1 #U #HTU #HU1
 elim (ssta_tpss_conf … HTU … HTT2) -T #U2 #HTU2 #HU2
@@ -74,9 +74,9 @@ fact ssta_ltpr_cprs_aux: ∀h,g,L0,T0.
                          (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_ltpr_tpr h g L1 T1) →
                          (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_ssta_ltpr_tpr h g L1 T1) →
                          ∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → ⦃h, L1⦄ ⊩ T1 :[g] →
-                         ∀U1,l. ⦃h, L1⦄ ⊢ T1 •[g, l] U1 →
+                         ∀U1,l. ⦃h, L1⦄ ⊢ T1 •[g] ⦃l, U1⦄ →
                          ∀L2. L1 ➡ L2 → ∀T2. L2 ⊢ T1 ➡* T2 →
-                         ∃∃U2. ⦃h, L2⦄ ⊢ T2 •[g, l] U2 & L2 ⊢ U1 ⬌* U2.
+                         ∃∃U2. ⦃h, L2⦄ ⊢ T2 •[g] ⦃l, U2⦄ & L2 ⊢ U1 ⬌* U2.
 #h #g #L0 #T0 #IH2 #IH1 #L1 #T1 #H01 #HT1 #U1 #l #HTU1 #L2 #HL12 #T2 #H
 @(cprs_ind … H) -T2 [ /2 width=7 by ssta_ltpr_cpr_aux/ ]
 #T #T2 #HT1T #HTT2 * #U #HTU #HU1
@@ -92,8 +92,8 @@ fact ssta_ltpr_cpcs_aux: ∀h,g,L0,T0.
                          (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_ssta_ltpr_tpr h g L1 T1) →
                          ∀L1,L2,T1,T2. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → h ⊢ ⦃L0, T0⦄ >[g] ⦃L2, T2⦄ →
                          ⦃h, L1⦄ ⊩ T1 :[g] → ⦃h, L2⦄ ⊩ T2 :[g] →
-                         ∀U1,l1. ⦃h, L1⦄ ⊢ T1 •[g, l1] U1 →
-                         ∀U2,l2. ⦃h, L2⦄ ⊢ T2 •[g, l2] U2 →
+                         ∀U1,l1. ⦃h, L1⦄ ⊢ T1 •[g] ⦃l1, U1⦄ →
+                         ∀U2,l2. ⦃h, L2⦄ ⊢ T2 •[g] ⦃l2, U2⦄ →
                          L1 ➡ L2 → L2 ⊢ T1 ⬌* T2 →
                          l1 = l2 ∧ L2 ⊢ U1 ⬌* U2.
 #h #g #L0 #T0 #IH2 #IH1 #L1 #L2 #T1 #T2 #HLT01 #HLT02 #HT1 #HT2 #U1 #l1 #HTU1 #U2 #l2 #HTU2 #HL12 #H
@@ -151,7 +151,7 @@ fact ssta_dxprs_aux: ∀h,g,L0,T0.
                      (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_ltpr_tpr h g L1 T1) →
                      (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_ssta_ltpr_tpr h g L1 T1) →
                      ∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → ⦃h, L1⦄ ⊩ T1 :[g] →
-                     ∀l,U1. ⦃h, L1⦄ ⊢ T1 •[g, l+1] U1 → ∀T2. ⦃h, L1⦄ ⊢ T1 •*➡*[g] T2 →
+                     ∀l,U1. ⦃h, L1⦄ ⊢ T1 •[g] ⦃l+1, U1⦄ → ∀T2. ⦃h, L1⦄ ⊢ T1 •*➡*[g] T2 →
                      ∃∃U,U2. ⦃h, L1⦄ ⊢ U1 •*[g] U & ⦃h, L1⦄ ⊢ T2 •*[g] U2 & L1 ⊢ U ⬌* U2.
 #h #g #L0 #T0 #IH2 #IH1 #L1 #T1 #H01 #HT1 #l #U1 #HTU1 #T2 * #T #HT1T #HTT2
 elim (sstas_strip … HT1T … HTU1) #HU1T destruct [ -HT1T | -L0 -T0 -T1 ]

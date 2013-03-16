@@ -21,10 +21,10 @@ include "basic_2/static/ssta_lift.ma".
 (* Properties about dx parallel unfold **************************************)
 
 (* Note: apparently this was missing in basic_1 *)
-lemma ssta_ltpss_dx_tpss_conf: ∀h,g,L1,T1,U1,l. ⦃h, L1⦄ ⊢ T1 •[g, l] U1 →
+lemma ssta_ltpss_dx_tpss_conf: ∀h,g,L1,T1,U1,l. ⦃h, L1⦄ ⊢ T1 •[g] ⦃l, U1⦄ →
                                ∀L2,d,e. L1 ▶* [d, e] L2 →
                                ∀T2. L2 ⊢ T1 ▶* [d, e] T2 →
-                               ∃∃U2. ⦃h, L2⦄ ⊢ T2 •[g, l] U2 &
+                               ∃∃U2. ⦃h, L2⦄ ⊢ T2 •[g] ⦃l, U2⦄ &
                                      L2 ⊢ U1 ▶* [d, e] U2.
 #h #g #L1 #T1 #U #l #H elim H -L1 -T1 -U -l
 [ #L1 #k1 #l1 #Hkl1 #L2 #d #e #_ #T2 #H
@@ -102,24 +102,24 @@ lemma ssta_ltpss_dx_tpss_conf: ∀h,g,L1,T1,U1,l. ⦃h, L1⦄ ⊢ T1 •[g, l] U
 ]
 qed.
 
-lemma ssta_ltpss_dx_tps_conf: ∀h,g,L1,T1,U1,l. ⦃h, L1⦄ ⊢ T1 •[g, l] U1 →
+lemma ssta_ltpss_dx_tps_conf: ∀h,g,L1,T1,U1,l. ⦃h, L1⦄ ⊢ T1 •[g] ⦃l, U1⦄ →
                               ∀L2,d,e. L1 ▶* [d, e] L2 →
                               ∀T2. L2 ⊢ T1 ▶ [d, e] T2 →
-                              ∃∃U2. ⦃h, L2⦄ ⊢ T2 •[g, l] U2 &
+                              ∃∃U2. ⦃h, L2⦄ ⊢ T2 •[g] ⦃l, U2⦄ &
                                     L2 ⊢ U1 ▶* [d, e] U2.
 /3 width=5/ qed.
 
-lemma ssta_ltpss_dx_conf: ∀h,g,L1,T,U1,l. ⦃h, L1⦄ ⊢ T •[g, l] U1 →
+lemma ssta_ltpss_dx_conf: ∀h,g,L1,T,U1,l. ⦃h, L1⦄ ⊢ T •[g] ⦃l, U1⦄ →
                           ∀L2,d,e. L1 ▶* [d, e] L2 →
-                          ∃∃U2. ⦃h, L2⦄ ⊢ T •[g, l] U2 & L2 ⊢ U1 ▶* [d, e] U2.
+                          ∃∃U2. ⦃h, L2⦄ ⊢ T •[g] ⦃l, U2⦄ & L2 ⊢ U1 ▶* [d, e] U2.
 /2 width=5/ qed.
 
-lemma ssta_tpss_conf: ∀h,g,L,T1,U1,l. ⦃h, L⦄ ⊢ T1 •[g, l] U1 →
+lemma ssta_tpss_conf: ∀h,g,L,T1,U1,l. ⦃h, L⦄ ⊢ T1 •[g] ⦃l, U1⦄ →
                       ∀T2,d,e. L ⊢ T1 ▶* [d, e] T2 →
-                      ∃∃U2. ⦃h, L⦄ ⊢ T2 •[g, l] U2 & L ⊢ U1 ▶* [d, e] U2.
+                      ∃∃U2. ⦃h, L⦄ ⊢ T2 •[g] ⦃l, U2⦄ & L ⊢ U1 ▶* [d, e] U2.
 /2 width=5/ qed.
 
-lemma ssta_tps_conf: ∀h,g,L,T1,U1,l. ⦃h, L⦄ ⊢ T1 •[g, l] U1 →
+lemma ssta_tps_conf: ∀h,g,L,T1,U1,l. ⦃h, L⦄ ⊢ T1 •[g] ⦃l, U1⦄ →
                      ∀T2,d,e. L ⊢ T1 ▶ [d, e] T2 →
-                     ∃∃U2. ⦃h, L⦄ ⊢ T2 •[g, l] U2 & L ⊢ U1 ▶* [d, e] U2.
+                     ∃∃U2. ⦃h, L⦄ ⊢ T2 •[g] ⦃l, U2⦄ & L ⊢ U1 ▶* [d, e] U2.
 /2 width=5/ qed.

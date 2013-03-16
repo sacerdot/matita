@@ -20,8 +20,8 @@ include "basic_2/static/ssta.ma".
 (* Main properties **********************************************************)
 
 (* Note: apparently this was missing in basic_1 *)
-theorem ssta_mono: ∀h,g,L,T,U1,l1. ⦃h, L⦄ ⊢ T •[g, l1] U1 →
-                   ∀U2,l2. ⦃h, L⦄ ⊢ T •[g, l2] U2 → l1 = l2 ∧ U1 = U2.
+theorem ssta_mono: ∀h,g,L,T,U1,l1. ⦃h, L⦄ ⊢ T •[g] ⦃l1, U1⦄ →
+                   ∀U2,l2. ⦃h, L⦄ ⊢ T •[g] ⦃l2, U2⦄ → l1 = l2 ∧ U1 = U2.
 #h #g #L #T #U1 #l1 #H elim H -L -T -U1 -l1
 [ #L #k #l #Hkl #X #l2 #H
   elim (ssta_inv_sort1 … H) -H #Hkl2 #H destruct
