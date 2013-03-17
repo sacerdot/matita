@@ -146,13 +146,13 @@ notation "hvbox( ⇧ [ term 46 d , break term 46 e ] break term 46 T1 ≡ break 
    non associative with precedence 45
    for @{ 'RLift $d $e $T1 $T2 }.
 
-notation "hvbox( T1 break ⊑ [ term 46 d , break term 46 e ] break term 46 T2 )"
+notation "hvbox( L1 break ⊑ [ term 46 d , break term 46 e ] break term 46 L2 )"
    non associative with precedence 45
-   for @{ 'SubEq $T1 $d $e $T2 }.
+   for @{ 'SubEq $L1 $d $e $L2 }.
 
-notation "hvbox( ≽ [ term 46 d , break term 46 e ] break term 46 T2 )"
+notation "hvbox( ⊒ [ term 46 d , break term 46 e ] break term 46 L2 )"
    non associative with precedence 45
-   for @{ 'SubEqBottom $d $e $T2 }.
+   for @{ 'SubEqBottom $d $e $L2 }.
 
 notation "hvbox( ⇩ [ term 46 e ] break term 46 L1 ≡ break term 46 L2 )"
    non associative with precedence 45

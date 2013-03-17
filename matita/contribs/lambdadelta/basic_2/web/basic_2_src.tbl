@@ -235,11 +235,11 @@ table {
           }
         ]
         [ { "basic local env. slicing" * } {
-             [ "ldrop ( ⇩[?,?] ? ≡ ? )" "ldrop_append" + "ldrop_lpx" + "ldrop_sfr" + "ldrop_ldrop" * ]
+             [ "ldrop ( ⇩[?,?] ? ≡ ? )" "ldrop_append" + "ldrop_lpx" + "ldrop_lbotr" + "ldrop_ldrop" * ]
           }
         ]
         [ { "local env. ref. for substitution" * } {
-             [ "lsubr ( ? ⊑[?,?] ? )" "(lsubr_lsubr)" "lsubr_sfr ( ≽[?,?] ? )" * ]
+             [ "lsubr ( ? ⊑[?,?] ? )" "(lsubr_lsubr)" "lsubr_lbotr ( ⊒[?,?] ? )" * ]
           }
         ]
         [ { "restricted structural predecessor for closures" * } {

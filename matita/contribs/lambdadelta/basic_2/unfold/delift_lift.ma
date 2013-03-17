@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/ldrop_sfr.ma".
+include "basic_2/substitution/ldrop_lbotr.ma".
 include "basic_2/unfold/tpss_lift.ma".
 include "basic_2/unfold/delift.ma".
 
@@ -30,8 +30,8 @@ lapply (lift_conf_be … HVU2 … HV2U ?) //
 >commutative_plus in ⊢ (??%??→?); <minus_plus_m_m /3 width=6/
 qed.
 
-lemma sfr_delift: ∀L,T1,d,e. d + e ≤ |L| → ≽ [d, e] L →
-                  ∃T2. L ⊢ ▼*[d, e] T1 ≡ T2.
+lemma lbotr_delift: ∀L,T1,d,e. d + e ≤ |L| → ⊒[d, e] L →
+                    ∃T2. L ⊢ ▼*[d, e] T1 ≡ T2.
 #L #T1 @(f2_ind … fw … L T1) -L -T1
 #n #IH #L * * /2 width=2/
 [ #i #H #d #e #Hde #HL destruct
@@ -39,11 +39,11 @@ lemma sfr_delift: ∀L,T1,d,e. d + e ≤ |L| → ≽ [d, e] L →
   elim (lt_or_ge i (d+e)) #Hide [2: /3 width=2/ ]
   lapply (lt_to_le_to_lt … Hide Hde) #Hi
   elim (ldrop_O1_lt … Hi) -Hi #I #K #V1 #HLK
-  lapply (sfr_inv_ldrop … HLK … HL ? ?) // #H destruct
+  lapply (lbotr_inv_ldrop … HLK … HL ? ?) // #H destruct
   lapply (ldrop_pair2_fwd_fw … HLK (#i)) #HKL
   lapply (ldrop_fwd_ldrop2 … HLK) #HLK0
   lapply (ldrop_fwd_O1_length … HLK0) #H
-  lapply (sfr_ldrop_trans_be_up … HLK0 … HL ? ?) -HLK0 -HL
+  lapply (lbotr_ldrop_trans_be_up … HLK0 … HL ? ?) -HLK0 -HL
   [1,2: /2 width=1/ | <minus_n_O <minus_plus ] #HK
   elim (IH … HKL … HK) -IH -HKL -HK
   [2: >H -H /2 width=1/ ] -Hde -H #V2 #V12 (**) (* H erased two times *)
