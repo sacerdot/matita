@@ -23,35 +23,35 @@ include "basic_2/dynamic/ygt.ma".
 (* Inductive premises for the preservation results **************************)
 
 definition IH_snv_ltpr_tpr: ∀h:sh. sd h → relation2 lenv term ≝
-                            λh,g,L1,T1. ⦃h, L1⦄ ⊩ T1 :[g] →
-                            ∀L2. L1 ➡ L2 → ∀T2. T1 ➡ T2 → ⦃h, L2⦄ ⊩ T2 :[g].
+                            λh,g,L1,T1. ⦃h, L1⦄ ⊢ T1 ¡[g] →
+                            ∀L2. L1 ➡ L2 → ∀T2. T1 ➡ T2 → ⦃h, L2⦄ ⊢ T2 ¡[g].
 
 definition IH_ssta_ltpr_tpr: ∀h:sh. sd h → relation2 lenv term ≝
-                             λh,g,L1,T1. ⦃h, L1⦄ ⊩ T1 :[g] →
+                             λh,g,L1,T1. ⦃h, L1⦄ ⊢ T1 ¡[g] →
                              ∀U1,l. ⦃h, L1⦄ ⊢ T1 •[g] ⦃l, U1⦄ →
                              ∀L2. L1 ➡ L2 → ∀T2. T1 ➡ T2 →
                              ∃∃U2. ⦃h, L2⦄ ⊢ T2 •[g] ⦃l, U2⦄ & L2 ⊢ U1 ⬌* U2.
 
 definition IH_snv_ssta: ∀h:sh. sd h → relation2 lenv term ≝
-                        λh,g,L1,T1. ⦃h, L1⦄ ⊩ T1 :[g] →
-                        ∀U1,l. ⦃h, L1⦄ ⊢ T1 •[g] ⦃l+1, U1⦄ → ⦃h, L1⦄ ⊩ U1 :[g].
+                        λh,g,L1,T1. ⦃h, L1⦄ ⊢ T1 ¡[g] →
+                        ∀U1,l. ⦃h, L1⦄ ⊢ T1 •[g] ⦃l+1, U1⦄ → ⦃h, L1⦄ ⊢ U1 ¡[g].
 
 definition IH_snv_lsubsv: ∀h:sh. sd h → relation2 lenv term ≝
-                          λh,g,L2,T. ⦃h, L2⦄ ⊩ T :[g] →
-                          ∀L1. h ⊢ L1 ⊩:⊑[g] L2 → ⦃h, L1⦄ ⊩ T :[g].
+                          λh,g,L2,T. ⦃h, L2⦄ ⊢ T ¡[g] →
+                          ∀L1. h ⊢ L1 ¡⊑[g] L2 → ⦃h, L1⦄ ⊢ T ¡[g].
 
 (* Properties for the preservation results **********************************)
 
 fact snv_ltpr_cpr_aux: ∀h,g,L1,T1. IH_snv_ltpr_tpr h g L1 T1 →
-                       ⦃h, L1⦄ ⊩ T1 :[g] →
-                       ∀L2. L1 ➡ L2 → ∀T2. L2 ⊢ T1 ➡ T2 → ⦃h, L2⦄ ⊩ T2 :[g].
+                       ⦃h, L1⦄ ⊢ T1 ¡[g] →
+                       ∀L2. L1 ➡ L2 → ∀T2. L2 ⊢ T1 ➡ T2 → ⦃h, L2⦄ ⊢ T2 ¡[g].
 #h #g #L1 #T1 #IH #HT1 #L2 #HL12 #T2 * #T #HT1T #HTT2
 lapply (IH … HL12 … HT1T) -HL12 // -T1 #HT0
 lapply (snv_tpss_conf … HT0 … HTT2) -T //
 qed-.
 
 fact ssta_ltpr_cpr_aux: ∀h,g,L1,T1. IH_ssta_ltpr_tpr h g L1 T1 →
-                        ⦃h, L1⦄ ⊩ T1 :[g] →
+                        ⦃h, L1⦄ ⊢ T1 ¡[g] →
                         ∀U1,l. ⦃h, L1⦄ ⊢ T1 •[g] ⦃l, U1⦄ →
                         ∀L2. L1 ➡ L2 → ∀T2. L2 ⊢ T1 ➡ T2 →
                         ∃∃U2. ⦃h, L2⦄ ⊢ T2 •[g] ⦃l, U2⦄ & L2 ⊢ U1 ⬌* U2.
@@ -63,8 +63,8 @@ qed-.
 
 fact snv_ltpr_cprs_aux: ∀h,g,L0,T0.
                         (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_ltpr_tpr h g L1 T1) →
-                        ∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → ⦃h, L1⦄ ⊩ T1 :[g] →
-                        ∀L2. L1 ➡ L2 → ∀T2. L2 ⊢ T1 ➡* T2 → ⦃h, L2⦄ ⊩ T2 :[g].
+                        ∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → ⦃h, L1⦄ ⊢ T1 ¡[g] →
+                        ∀L2. L1 ➡ L2 → ∀T2. L2 ⊢ T1 ➡* T2 → ⦃h, L2⦄ ⊢ T2 ¡[g].
 #h #g #L0 #T0 #IH #L1 #T1 #HLT0 #HT1 #L2 #HL12 #T2 #H
 @(cprs_ind … H) -T2 [ /2 width=6 by snv_ltpr_cpr_aux/ ] -HT1
 /5 width=6 by snv_ltpr_cpr_aux, ygt_yprs_trans, ltpr_cprs_yprs/
@@ -73,7 +73,7 @@ qed-.
 fact ssta_ltpr_cprs_aux: ∀h,g,L0,T0.
                          (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_ltpr_tpr h g L1 T1) →
                          (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_ssta_ltpr_tpr h g L1 T1) →
-                         ∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → ⦃h, L1⦄ ⊩ T1 :[g] →
+                         ∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → ⦃h, L1⦄ ⊢ T1 ¡[g] →
                          ∀U1,l. ⦃h, L1⦄ ⊢ T1 •[g] ⦃l, U1⦄ →
                          ∀L2. L1 ➡ L2 → ∀T2. L2 ⊢ T1 ➡* T2 →
                          ∃∃U2. ⦃h, L2⦄ ⊢ T2 •[g] ⦃l, U2⦄ & L2 ⊢ U1 ⬌* U2.
@@ -91,7 +91,7 @@ fact ssta_ltpr_cpcs_aux: ∀h,g,L0,T0.
                          (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_ltpr_tpr h g L1 T1) →
                          (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_ssta_ltpr_tpr h g L1 T1) →
                          ∀L1,L2,T1,T2. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → h ⊢ ⦃L0, T0⦄ >[g] ⦃L2, T2⦄ →
-                         ⦃h, L1⦄ ⊩ T1 :[g] → ⦃h, L2⦄ ⊩ T2 :[g] →
+                         ⦃h, L1⦄ ⊢ T1 ¡[g] → ⦃h, L2⦄ ⊢ T2 ¡[g] →
                          ∀U1,l1. ⦃h, L1⦄ ⊢ T1 •[g] ⦃l1, U1⦄ →
                          ∀U2,l2. ⦃h, L2⦄ ⊢ T2 •[g] ⦃l2, U2⦄ →
                          L1 ➡ L2 → L2 ⊢ T1 ⬌* T2 →
@@ -106,8 +106,8 @@ qed-.
 
 fact snv_sstas_aux: ∀h,g,L0,T0.
                     (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_ssta h g L1 T1) →
-                    ∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → ⦃h, L1⦄ ⊩ T1 :[g] →
-                    ∀U1. ⦃h, L1⦄ ⊢ T1 •*[g] U1 → ⦃h, L1⦄ ⊩ U1 :[g].
+                    ∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → ⦃h, L1⦄ ⊢ T1 ¡[g] →
+                    ∀U1. ⦃h, L1⦄ ⊢ T1 •*[g] U1 → ⦃h, L1⦄ ⊢ U1 ¡[g].
 #h #g #L0 #T0 #IH #L1 #T1 #HLT0 #HT1 #U1 #H
 @(sstas_ind … H) -U1 // -HT1 /4 width=5 by ygt_yprs_trans, sstas_yprs/
 qed-.
@@ -116,7 +116,7 @@ fact sstas_ltpr_cprs_aux: ∀h,g,L0,T0.
                           (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_ssta h g L1 T1) →
                           (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_ltpr_tpr h g L1 T1) →
                           (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_ssta_ltpr_tpr h g L1 T1) →
-                          ∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → ⦃h, L1⦄ ⊩ T1 :[g] →
+                          ∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → ⦃h, L1⦄ ⊢ T1 ¡[g] →
                           ∀L2. L1 ➡ L2 → ∀T2. L2 ⊢ T1 ➡* T2 → ∀U1. ⦃h, L1⦄ ⊢ T1 •*[g] U1 →
                           ∃∃U2. ⦃h, L2⦄ ⊢ T2 •*[g] U2 & L2 ⊢ U1 ⬌* U2.
 #h #g #L0 #T0 #IH3 #IH2 #IH1 #L1 #T1 #H01 #HT1 #L2 #HL12 #T2 #HT12 #U1 #H
@@ -136,7 +136,7 @@ fact dxprs_ltpr_cprs_aux: ∀h,g,L0,T0.
                           (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_ssta h g L1 T1) →
                           (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_ltpr_tpr h g L1 T1) →
                           (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_ssta_ltpr_tpr h g L1 T1) →
-                          ∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → ⦃h, L1⦄ ⊩ T1 :[g] →
+                          ∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → ⦃h, L1⦄ ⊢ T1 ¡[g] →
                           ∀U1. ⦃h, L1⦄ ⊢ T1 •*➡*[g] U1 →
                           ∀L2. L1 ➡ L2 → ∀T2. L2 ⊢ T1 ➡* T2 →
                           ∃∃U2. ⦃h, L2⦄ ⊢ T2 •*➡*[g] U2 & L2 ⊢ U1 ➡* U2.
@@ -150,7 +150,7 @@ qed-.
 fact ssta_dxprs_aux: ∀h,g,L0,T0.
                      (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_ltpr_tpr h g L1 T1) →
                      (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_ssta_ltpr_tpr h g L1 T1) →
-                     ∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → ⦃h, L1⦄ ⊩ T1 :[g] →
+                     ∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → ⦃h, L1⦄ ⊢ T1 ¡[g] →
                      ∀l,U1. ⦃h, L1⦄ ⊢ T1 •[g] ⦃l+1, U1⦄ → ∀T2. ⦃h, L1⦄ ⊢ T1 •*➡*[g] T2 →
                      ∃∃U,U2. ⦃h, L1⦄ ⊢ U1 •*[g] U & ⦃h, L1⦄ ⊢ T2 •*[g] U2 & L1 ⊢ U ⬌* U2.
 #h #g #L0 #T0 #IH2 #IH1 #L1 #T1 #H01 #HT1 #l #U1 #HTU1 #T2 * #T #HT1T #HTT2

@@ -448,11 +448,11 @@ notation "hvbox( ⦃ term 46 L1 , break term 46 T1 ⦄ ⬌ ⬌ * break ⦃ term 
 
 (* Dynamic typing ***********************************************************)
 
-notation "hvbox( ⦃ term 46 h , break term 46 L ⦄ ⊩ break term 46 T : break [ term 46 g ] )"
+notation "hvbox( ⦃ term 46 h , break term 46 L ⦄ ⊢ break term 46 T ¡ break [ term 46 g ] )"
    non associative with precedence 45
    for @{ 'NativeValid $h $g $L $T }.
 
-notation "hvbox( h ⊢ break term 46 L1 ⊩ : ⊑ break [ term 46 g ] break term 46 L2 )"
+notation "hvbox( h ⊢ break term 46 L1 ¡ ⊑ break [ term 46 g ] break term 46 L2 )"
    non associative with precedence 45
    for @{ 'CrSubEqV $h $g $L1 $L2 }.
 

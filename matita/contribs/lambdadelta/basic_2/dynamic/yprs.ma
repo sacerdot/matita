@@ -69,7 +69,7 @@ lemma sstas_yprs: ∀h,g,L,T1,T2. ⦃h, L⦄ ⊢ T1 •*[g] T2 →
 #h #g #L #T1 #T2 #H @(sstas_ind … H) -T2 // /3 width=4 by ypr_ssta, yprs_strap1/
 qed.
 
-lemma lsubsv_yprs: ∀h,g,L1,L2,T. h ⊢ L2 ⊩:⊑[g] L1 → h ⊢ ⦃L1, T⦄ ≥[g] ⦃L2, T⦄.
+lemma lsubsv_yprs: ∀h,g,L1,L2,T. h ⊢ L2 ¡⊑[g] L1 → h ⊢ ⦃L1, T⦄ ≥[g] ⦃L2, T⦄.
 /3 width=1/ qed.
 
 lemma ltpr_cprs_yprs: ∀h,g,L1,L2,T1,T2. L1 ➡ L2 → L2 ⊢ T1 ➡* T2 →

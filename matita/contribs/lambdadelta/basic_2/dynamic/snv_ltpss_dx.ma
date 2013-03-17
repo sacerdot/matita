@@ -20,9 +20,9 @@ include "basic_2/dynamic/snv_lift.ma".
 
 (* Properties about dx parallel unfold **************************************)
 
-lemma snv_ltpss_dx_tpss_conf: ∀h,g,L1,T1. ⦃h, L1⦄ ⊩ T1 :[g] →
+lemma snv_ltpss_dx_tpss_conf: ∀h,g,L1,T1. ⦃h, L1⦄ ⊢ T1 ¡[g] →
                               ∀L2,d,e. L1 ▶* [d, e] L2 →
-                              ∀T2. L2 ⊢ T1 ▶* [d, e] T2 → ⦃h, L2⦄ ⊩ T2 :[g].
+                              ∀T2. L2 ⊢ T1 ▶* [d, e] T2 → ⦃h, L2⦄ ⊢ T2 ¡[g].
 #h #g #L1 #T1 #H elim H -L1 -T1
 [ #L1 #k #L2 #d #e #_ #X #H
    >(tpss_inv_sort1 … H) -X //
@@ -68,20 +68,20 @@ lemma snv_ltpss_dx_tpss_conf: ∀h,g,L1,T1. ⦃h, L1⦄ ⊩ T1 :[g] →
 ]
 qed-.
 
-lemma snv_ltpss_dx_conf: ∀h,g,L1,T. ⦃h, L1⦄ ⊩ T :[g] →
-                         ∀L2,d,e. L1 ▶* [d, e] L2 → ⦃h, L2⦄ ⊩ T :[g].
+lemma snv_ltpss_dx_conf: ∀h,g,L1,T. ⦃h, L1⦄ ⊢ T ¡[g] →
+                         ∀L2,d,e. L1 ▶* [d, e] L2 → ⦃h, L2⦄ ⊢ T ¡[g].
 #h #g #L1 #T #HT #L2 #d #e #HL12
 @(snv_ltpss_dx_tpss_conf … HT … HL12) //
 qed-.
 
-lemma snv_tpss_conf: ∀h,g,L,T1. ⦃h, L⦄ ⊩ T1 :[g] →
-                     ∀T2,d,e. L ⊢ T1 ▶* [d, e] T2 → ⦃h, L⦄ ⊩ T2 :[g].
+lemma snv_tpss_conf: ∀h,g,L,T1. ⦃h, L⦄ ⊢ T1 ¡[g] →
+                     ∀T2,d,e. L ⊢ T1 ▶* [d, e] T2 → ⦃h, L⦄ ⊢ T2 ¡[g].
 #h #g #L #T1 #HT1 #T2 #d #e #HT12
 @(snv_ltpss_dx_tpss_conf … HT1 … HT12) //
 qed-.
 
-lemma snv_tps_conf: ∀h,g,L,T1. ⦃h, L⦄ ⊩ T1 :[g] →
-                    ∀T2,d,e. L ⊢ T1 ▶ [d, e] T2 → ⦃h, L⦄ ⊩ T2 :[g].
+lemma snv_tps_conf: ∀h,g,L,T1. ⦃h, L⦄ ⊢ T1 ¡[g] →
+                    ∀T2,d,e. L ⊢ T1 ▶ [d, e] T2 → ⦃h, L⦄ ⊢ T2 ¡[g].
 #h #g #L #T1 #HT1 #T2 #d #e #HT12
 @(snv_tpss_conf … HT1 T2) /2 width=3/
 qed-.

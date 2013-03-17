@@ -19,9 +19,9 @@ include "basic_2/dynamic/lsubsv.ma".
 (* Properties concerning basic local environment slicing ********************)
 
 (* Note: the constant 0 cannot be generalized *)
-lemma lsubsv_ldrop_O1_conf: ∀h,g,L1,L2. h ⊢ L1 ⊩:⊑[g] L2 →
+lemma lsubsv_ldrop_O1_conf: ∀h,g,L1,L2. h ⊢ L1 ¡⊑[g] L2 →
                             ∀K1,e. ⇩[0, e] L1 ≡ K1 →
-                            ∃∃K2. h ⊢ K1 ⊩:⊑[g] K2 & ⇩[0, e] L2 ≡ K2.
+                            ∃∃K2. h ⊢ K1 ¡⊑[g] K2 & ⇩[0, e] L2 ≡ K2.
 #h #g #L1 #L2 #H elim H -L1 -L2
 [ /2 width=3/
 | #I #L1 #L2 #V #_ #IHL12 #K1 #e #H
@@ -42,9 +42,9 @@ lemma lsubsv_ldrop_O1_conf: ∀h,g,L1,L2. h ⊢ L1 ⊩:⊑[g] L2 →
 qed.
 
 (* Note: the constant 0 cannot be generalized *)
-lemma lsubsv_ldrop_O1_trans: ∀h,g,L1,L2. h ⊢ L1 ⊩:⊑[g] L2 →
+lemma lsubsv_ldrop_O1_trans: ∀h,g,L1,L2. h ⊢ L1 ¡⊑[g] L2 →
                              ∀K2,e. ⇩[0, e] L2 ≡ K2 →
-                             ∃∃K1. h ⊢ K1 ⊩:⊑[g] K2 & ⇩[0, e] L1 ≡ K1.
+                             ∃∃K1. h ⊢ K1 ¡⊑[g] K2 & ⇩[0, e] L1 ≡ K1.
 #h #g #L1 #L2 #H elim H -L1 -L2
 [ /2 width=3/
 | #I #L1 #L2 #V #_ #IHL12 #K2 #e #H

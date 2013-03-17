@@ -94,6 +94,6 @@ lemma sstas_ygt: ∀h,g,L,T1,T2. ⦃h, L⦄ ⊢ T1 •*[g] T2 → (T1 = T2 → �
 ]
 qed.
 
-lemma lsubsv_ygt: ∀h,g,L1,L2,T. h ⊢ L2 ⊩:⊑[g] L1 → (L1 = L2 → ⊥) →
+lemma lsubsv_ygt: ∀h,g,L1,L2,T. h ⊢ L2 ¡⊑[g] L1 → (L1 = L2 → ⊥) →
                   h ⊢ ⦃L1, T⦄ >[g] ⦃L2, T⦄.
 /4 width=1/ qed.

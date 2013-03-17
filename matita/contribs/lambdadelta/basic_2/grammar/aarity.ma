@@ -13,8 +13,7 @@
 (**************************************************************************)
 
 (* THE FORMAL SYSTEM λδ: MATITA SOURCE FILES
- * Suggested invocation to start formal specifications with:
- *   - Patience on me to gain peace and perfection! -
+ * Initial invocation: - Patience on me to gain peace and perfection! -
  *)
 
 include "ground_2/star.ma".

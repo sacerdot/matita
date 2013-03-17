@@ -19,7 +19,7 @@ include "basic_2/dynamic/lsubsv.ma".
 
 (* Properties on local environment refinement for atomic arity assignment ***)
 
-lemma lsubsv_fwd_lsuba: ∀h,g,L1,L2. h ⊢ L1 ⊩:⊑[g] L2 → L1 ⁝⊑ L2.
+lemma lsubsv_fwd_lsuba: ∀h,g,L1,L2. h ⊢ L1 ¡⊑[g] L2 → L1 ⁝⊑ L2.
 #h #g #L1 #L2 #H elim H -L1 -L2 // /2 width=1/
 #L1 #L2 #V1 #V2 #W1 #W2 #l #HV1 #HVW1 #HW12 #HW2 #_ #_ #HL12
 elim (snv_fwd_aaa … HV1) -HV1 #A #HV1

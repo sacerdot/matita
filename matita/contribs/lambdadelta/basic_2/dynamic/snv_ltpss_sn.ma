@@ -19,7 +19,7 @@ include "basic_2/dynamic/snv_ltpss_dx.ma".
 (* Properties about sn parallel unfold **************************************)
 
 lemma snv_ltpss_sn_conf: ∀h,g,L1,L2,d,e. L1 ⊢ ▶* [d, e] L2 →
-                         ∀T. ⦃h, L1⦄ ⊩ T :[g] → ⦃h, L2⦄ ⊩ T :[g].
+                         ∀T. ⦃h, L1⦄ ⊢ T ¡[g] → ⦃h, L2⦄ ⊢ T ¡[g].
 #h #g #L1 #L2 #d #e #H
 lapply (ltpss_sn_ltpssa … H) -H #H @(ltpssa_ind … H) -L2 //
 #L #L2 #_ #HL2 #IHL1 #T1 #HT1

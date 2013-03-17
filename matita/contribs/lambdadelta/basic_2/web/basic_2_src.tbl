@@ -48,11 +48,11 @@ table {
           }
         ]
         [ { "local env. ref. for stratified native validity" * } {
-             [ "lsubsv ( ? ⊢ ? ⊩:⊑[?] ? )" "lsubsv_ldrop" + "lsubsv_lsuba" + "lsubsv_ssta" + "lsubsv_dxprs" + "lsubsv_cpcs" + "lsubsv_snv" * ]
+             [ "lsubsv ( ? ⊢ ? ¡⊑[?] ? )" "lsubsv_ldrop" + "lsubsv_lsuba" + "lsubsv_ssta" + "lsubsv_dxprs" + "lsubsv_cpcs" + "lsubsv_snv" * ]
           }
         ]
         [ { "stratified native validity" * } {
-             [ "snv ( ⦃?,?⦄ ⊩ ? :[?] )" "snv_lift" + "snv_ltpss_dx" + "snv_ltpss_sn" + "snv_aaa" + "snv_ssta" + "snv_sstas" + "snv_ssta_ltpr" + "snv_ltpr" + "snv_cpcs" * ]
+             [ "snv ( ⦃?,?⦄ ⊢ ? ¡[?] )" "snv_lift" + "snv_ltpss_dx" + "snv_ltpss_sn" + "snv_aaa" + "snv_ssta" + "snv_sstas" + "snv_ssta_ltpr" + "snv_ltpr" + "snv_cpcs" * ]
           }
         ]
      }
