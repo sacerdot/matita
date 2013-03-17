@@ -38,7 +38,7 @@ lemma aaa_ltpr_tpr_conf: ∀L1,T1,A. L1 ⊢ T1 ⁝ A → ∀L2. L1 ➡ L2 →
 | elim (aaa_inv_abbr … H1) -H1 #B #HB #HA
   elim (tpr_inv_abbr1 … H2) -H2 *
   [ #V2 #T #T2 #HV12 #HT1 #HT2 #H destruct
-    lapply (tps_lsubs_trans … HT2 (L2.ⓓV2) ?) -HT2 /2 width=1/ #HT2
+    lapply (tps_lsubr_trans … HT2 (L2.ⓓV2) ?) -HT2 /2 width=1/ #HT2
     lapply (IH … HB … HL12 … HV12) -HB /width=5/ #HB
     lapply (IH … HA … (L2.ⓓV2) … HT1) -IH -HA -HT1 /width=5/ -T1 /2 width=1/ -L1 -V1 /3 width=5/
   | -B #T #HT1 #HXT #H destruct

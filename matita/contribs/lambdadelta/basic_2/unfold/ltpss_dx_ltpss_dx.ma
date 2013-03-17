@@ -58,10 +58,10 @@ lemma ltpss_dx_tpss_trans_eq: ∀L1,T2,U2,d,e. L1 ⊢ T2 ▶* [d, e] U2 →
   [ normalize /2 width=1/ | /2 width=6/ ]
 | * [ #a ] #I #V2 #T2 #Hn #X #d #e #H #L0 #HL0 destruct
   [ elim (tpss_inv_bind1 … H) -H #W2 #U2 #HVW2 #HTU2 #H destruct
-    lapply (tpss_lsubs_trans … HTU2 (L1. ⓑ{I} V2) ?) -HTU2 /2 width=1/ #HTU2
+    lapply (tpss_lsubr_trans … HTU2 (L1. ⓑ{I} V2) ?) -HTU2 /2 width=1/ #HTU2
     lapply (IH … HVW2 … HL0) -HVW2 [ /2 width=2/ ] #HVW2
     lapply (IH … HTU2 (L0. ⓑ{I} V2) ?) -IH -HTU2 // /2 width=2/ -HL0 #HTU2
-    lapply (tpss_lsubs_trans … HTU2 (L0. ⓑ{I} W2) ?) -HTU2 /2 width=1/
+    lapply (tpss_lsubr_trans … HTU2 (L0. ⓑ{I} W2) ?) -HTU2 /2 width=1/
   | elim (tpss_inv_flat1 … H) -H #W2 #U2 #HVW2 #HTU2 #H destruct
     lapply (IH … HVW2 … HL0) -HVW2 //
     lapply (IH … HTU2 … HL0) -IH -HTU2 // -HL0 /2 width=1/

@@ -54,10 +54,10 @@ qed.
 
 (* Note: it does not hold replacing |L1| with |L2| *)
 (* Basic_1: was only: pr2_change *)
-lemma cpr_lsubs_trans: ∀L1,T1,T2. L1 ⊢ T1 ➡ T2 →
+lemma cpr_lsubr_trans: ∀L1,T1,T2. L1 ⊢ T1 ➡ T2 →
                        ∀L2. L2 ≼ [0, |L1|] L1 → L2 ⊢ T1 ➡ T2.
 #L1 #T1 #T2 * #T #HT1 #HT2 #L2 #HL12
-lapply (tpss_lsubs_trans … HT2 … HL12) -HT2 -HL12 /3 width=4/
+lapply (tpss_lsubr_trans … HT2 … HL12) -HT2 -HL12 /3 width=4/
 qed.
 
 (* Basic inversion lemmas ***************************************************)

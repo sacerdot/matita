@@ -21,5 +21,5 @@ include "basic_2/equivalence/lsubss.ma".
 
 lemma lsubss_cpcs_trans: ∀h,g,L1,L2. h ⊢ L1 •⊑[g] L2 →
                          ∀T1,T2. L2 ⊢ T1 ⬌* T2 → L1 ⊢ T1 ⬌* T2.
-/3 width=5 by lsubss_fwd_lsubs2, cpcs_lsubs_trans/
+/3 width=5 by lsubss_fwd_lsubr2, cpcs_lsubr_trans/
 qed-.

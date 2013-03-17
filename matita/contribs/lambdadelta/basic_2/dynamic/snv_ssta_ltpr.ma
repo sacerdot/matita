@@ -57,7 +57,7 @@ fact ssta_ltpr_tpr_aux: ∀h,g,L0,T0.
   elim (ssta_inv_bind1 … H2) -H2 #U1 #HTU1 #H destruct
   elim (tpr_inv_bind1 … H3) -H3 *
   [ #V2 #T0 #T2 #HV12 #HT10 #HT02 #H destruct
-    lapply (tps_lsubs_trans … HT02 (L2.ⓑ{I}V2) ?) -HT02 [ /2 width=1/ ] #HT02
+    lapply (tps_lsubr_trans … HT02 (L2.ⓑ{I}V2) ?) -HT02 [ /2 width=1/ ] #HT02
     elim (ssta_ltpr_cpr_aux … HT1 … HTU1 (L2.ⓑ{I}V2) … T2) -HT1 -HTU1
     [2: /3 width=5 by cpr_intro, tps_tpss/ |3: /2 width=1/ |4: /3 width=1/ ] -IH1 -T0 -HL12 #U2 #HTU2 #HU12
     lapply (cpcs_bind2 … V1 … HU12 … a) -HU12 [ /2 width=1/ ] -HV12 /3 width=3/

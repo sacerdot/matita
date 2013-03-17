@@ -41,7 +41,7 @@ fact snv_ltpr_tpr_aux: ∀h,g,L0,T0.
   elim (snv_inv_bind … H1) -H1 #HV1 #HT1
   elim (tpr_inv_bind1 … H2) -H2 *
   [ #V2 #T0 #T2 #HV12 #HT10 #HT02 #H destruct
-    lapply (tps_lsubs_trans … HT02 (L2.ⓑ{I}V2) ?) -HT02 /2 width=1/ #HT02
+    lapply (tps_lsubr_trans … HT02 (L2.ⓑ{I}V2) ?) -HT02 /2 width=1/ #HT02
     lapply (IH1 … HL12 … HV12) // [ /2 width=1/ ] #HV2
     lapply (snv_ltpr_cpr_aux … HT1  (L2.ⓑ{I}V2) … T2 ?) -HT1
     [ /3 width=5 by cpr_intro, tps_tpss/ | /2 width=1/ | /3 width=1/ ] -IH1 -T0 /2 width=1/

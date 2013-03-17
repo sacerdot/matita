@@ -52,7 +52,7 @@ lemma ltpss_sn_tps_conf: ∀L0,T2,U2,d2,e2. L0 ⊢ T2 ▶ [d2, e2] U2 →
 | #L0 #a #I #V2 #W2 #T2 #U2 #d2 #e2 #_ #_ #IHVW2 #IHTU2 #L1 #d1 #e1 #HL01
   elim (IHVW2 … HL01) -IHVW2 #V #HV2 #HVW2
   elim (IHTU2 (L1. ⓑ{I} V) (d1 + 1) e1 ?) -IHTU2 /2 width=1/ -HL01 #T #HT2 #H
-  lapply (tpss_lsubs_trans … H (L0.ⓑ{I}V) ?) -H /2 width=1/ /3 width=5/
+  lapply (tpss_lsubr_trans … H (L0.ⓑ{I}V) ?) -H /2 width=1/ /3 width=5/
 | #L0 #I #V2 #W2 #T2 #U2 #d2 #e2 #_ #_ #IHVW2 #IHTU2 #L1 #d1 #e1 #HL01
   elim (IHVW2 … HL01) -IHVW2
   elim (IHTU2 … HL01) -IHTU2 -HL01 /3 width=5/
@@ -93,7 +93,7 @@ lemma ltpss_sn_tps_trans: ∀L0,T2,U2,d2,e2. L0 ⊢ T2 ▶ [d2, e2] U2 →
 | #L0 #a #I #V2 #W2 #T2 #U2 #d2 #e2 #_ #_ #IHVW2 #IHTU2 #L1 #d1 #e1 #HL10
   elim (IHVW2 … HL10) -IHVW2 #V #HV2 #HVW2
   elim (IHTU2 (L1. ⓑ{I} V) (d1 + 1) e1 ?) -IHTU2 /2 width=1/ -HL10 #T #HT2 #H
-  lapply (tpss_lsubs_trans … H (L1.ⓑ{I}W2) ?) -H /2 width=1/ /3 width=5/
+  lapply (tpss_lsubr_trans … H (L1.ⓑ{I}W2) ?) -H /2 width=1/ /3 width=5/
 | #L0 #I #V2 #W2 #T2 #U2 #d2 #e2 #_ #_ #IHVW2 #IHTU2 #L1 #d1 #e1 #HL10
   elim (IHVW2 … HL10) -IHVW2
   elim (IHTU2 … HL10) -IHTU2 -HL10 /3 width=5/

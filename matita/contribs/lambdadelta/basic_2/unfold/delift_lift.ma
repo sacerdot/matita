@@ -51,7 +51,7 @@ lemma sfr_delift: ∀L,T1,d,e. d + e ≤ |L| → ≽ [d, e] L →
 | #a #I #V1 #T1 #H #d #e #Hde #HL destruct
   elim (IH … V1 … Hde HL) // #V2 #HV12
   elim (IH (L.ⓑ{I}V1) T1 … (d+1) e ??) -IH // [2,3: /2 width=1/ ] -Hde -HL #T2 #HT12
-  lapply (delift_lsubs_trans … HT12 (L.ⓑ{I}V2) ?) -HT12 /2 width=1/ /3 width=4/
+  lapply (delift_lsubr_trans … HT12 (L.ⓑ{I}V2) ?) -HT12 /2 width=1/ /3 width=4/
 | #I #V1 #T1 #H #d #e #Hde #HL destruct
   elim (IH … V1 … Hde HL) // #V2 #HV12
   elim (IH … T1 … Hde HL) -IH -Hde -HL // /3 width=2/

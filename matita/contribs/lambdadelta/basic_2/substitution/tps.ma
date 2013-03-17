@@ -33,12 +33,12 @@ interpretation "parallel substritution (term)"
 
 (* Basic properties *********************************************************)
 
-lemma tps_lsubs_trans: ∀L1,T1,T2,d,e. L1 ⊢ T1 ▶ [d, e] T2 →
+lemma tps_lsubr_trans: ∀L1,T1,T2,d,e. L1 ⊢ T1 ▶ [d, e] T2 →
                        ∀L2. L2 ≼ [d, e] L1 → L2 ⊢ T1 ▶ [d, e] T2.
 #L1 #T1 #T2 #d #e #H elim H -L1 -T1 -T2 -d -e
 [ //
 | #L1 #K1 #V #W #i #d #e #Hdi #Hide #HLK1 #HVW #L2 #HL12
-  elim (ldrop_lsubs_ldrop2_abbr … HL12 … HLK1 ? ?) -HL12 -HLK1 // /2 width=4/
+  elim (ldrop_lsubr_ldrop2_abbr … HL12 … HLK1 ? ?) -HL12 -HLK1 // /2 width=4/
 | /4 width=1/
 | /3 width=1/
 ]
@@ -113,7 +113,7 @@ lemma tps_split_up: ∀L,T1,T2,d,e. L ⊢ T1 ▶ [d, e] T2 → ∀i. d ≤ i →
   elim (IHV12 i ? ?) -IHV12 // #V #HV1 #HV2
   elim (IHT12 (i + 1) ? ?) -IHT12 /2 width=1/
   -Hdi -Hide >arith_c1x #T #HT1 #HT2
-  lapply (tps_lsubs_trans … HT1 (L. ⓑ{I} V) ?) -HT1 /3 width=5/
+  lapply (tps_lsubr_trans … HT1 (L. ⓑ{I} V) ?) -HT1 /3 width=5/
 | #L #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #i #Hdi #Hide
   elim (IHV12 i ? ?) -IHV12 // elim (IHT12 i ? ?) -IHT12 //
   -Hdi -Hide /3 width=5/
@@ -136,7 +136,7 @@ lemma tps_split_down: ∀L,T1,T2,d,e. L ⊢ T1 ▶ [d, e] T2 →
   elim (IHV12 i ? ?) -IHV12 // #V #HV1 #HV2
   elim (IHT12 (i + 1) ? ?) -IHT12 /2 width=1/
   -Hdi -Hide >arith_c1x #T #HT1 #HT2
-  lapply (tps_lsubs_trans … HT1 (L. ⓑ{I} V) ?) -HT1 /3 width=5/
+  lapply (tps_lsubr_trans … HT1 (L. ⓑ{I} V) ?) -HT1 /3 width=5/
 | #L #I #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #i #Hdi #Hide
   elim (IHV12 i ? ?) -IHV12 // elim (IHT12 i ? ?) -IHT12 //
   -Hdi -Hide /3 width=5/

@@ -32,7 +32,7 @@ lemma cpr_abst: ∀L,V1,V2. L ⊢ V1 ➡ V2 → ∀V,T1,T2. L.ⓛV ⊢ T1 ➡ T2
                           ∀a,I. L ⊢ ⓑ{a,I}V1. T1 ➡ ⓑ{a,I}V2. T2.
 #L #V1 #V2 * #V0 #HV10 #HV02 #V #T1 #T2 * #T0 #HT10 #HT02 #a #I
 lapply (tpss_inv_S2 … HT02 L V ?) -HT02 // #HT02
-lapply (tpss_lsubs_trans … HT02 (L.ⓑ{I}V2) ?) -HT02 /2 width=1/ #HT02
+lapply (tpss_lsubr_trans … HT02 (L.ⓑ{I}V2) ?) -HT02 /2 width=1/ #HT02
 @(ex2_intro … (ⓑ{a,I}V0.T0)) /2 width=1/ (* explicit constructors *)
 qed.
 
@@ -40,7 +40,7 @@ lemma cpr_beta: ∀a,L,V1,V2,W,T1,T2.
                 L ⊢ V1 ➡ V2 → L.ⓛW ⊢ T1 ➡ T2 → L ⊢ ⓐV1.ⓛ{a}W.T1 ➡ ⓓ{a}V2.T2.
 #a #L #V1 #V2 #W #T1 #T2 * #V #HV1 #HV2 * #T #HT1 #HT2
 lapply (tpss_inv_S2 … HT2 L W ?) -HT2 // #HT2
-lapply (tpss_lsubs_trans … HT2 (L.ⓓV2) ?) -HT2 /2 width=1/ #HT2
+lapply (tpss_lsubr_trans … HT2 (L.ⓓV2) ?) -HT2 /2 width=1/ #HT2
 @(ex2_intro … (ⓓ{a}V.T)) /2 width=1/ (**) (* explicit constructor, /3/ is too slow *)
 qed.
 
@@ -74,9 +74,9 @@ lemma cpr_inv_abbr1: ∀a,L,V1,T1,U2. L ⊢ ⓓ{a}V1. T1 ➡ U2 →
 elim (tpr_inv_abbr1 … H1) -H1 *
 [ #V #T #T0 #HV1 #HT1 #HT0 #H destruct
   elim (tpss_inv_bind1 … H2) -H2 #V2 #T2 #HV2 #HT02 #H destruct
-  lapply (tps_lsubs_trans … HT0 (L. ⓓV) ?) -HT0 /2 width=1/ #HT0
+  lapply (tps_lsubr_trans … HT0 (L. ⓓV) ?) -HT0 /2 width=1/ #HT0
   lapply (tps_weak_all … HT0) -HT0 #HT0
-  lapply (tpss_lsubs_trans … HT02 (L. ⓓV) ?) -HT02 /2 width=1/ #HT02
+  lapply (tpss_lsubr_trans … HT02 (L. ⓓV) ?) -HT02 /2 width=1/ #HT02
   lapply (tpss_weak_all … HT02) -HT02 #HT02
   lapply (tpss_strap2 … HT0 HT02) -T0 /4 width=7/
 | #T2 #HT12 #HXT2 #H destruct
@@ -92,7 +92,7 @@ lemma cpr_inv_abst1: ∀a,L,V1,T1,U2. L ⊢ ⓛ{a}V1. T1 ➡ U2 → ∀I,W.
 #a #L #V1 #T1 #Y * #X #H1 #H2 #I #W
 elim (tpr_inv_abst1 … H1) -H1 #V #T #HV1 #HT1 #H destruct
 elim (tpss_inv_bind1 … H2) -H2 #V2 #T2 #HV2 #HT2 #H destruct
-lapply (tpss_lsubs_trans … HT2 (L. ⓑ{I} W) ?) -HT2 /2 width=1/ /4 width=5/
+lapply (tpss_lsubr_trans … HT2 (L. ⓑ{I} W) ?) -HT2 /2 width=1/ /4 width=5/
 qed-.
 
 (* Basic_1: was pr2_gen_appl *)
@@ -143,7 +143,7 @@ lemma cpr_fwd_abst1: ∀a,L,V1,T1,U2. L ⊢ ⓛ{a}V1.T1 ➡ U2 → ∀b,I,W.
 #a #L #V1 #T1 #U2 * #U #H #HU2 #b #I #W
 elim (tpr_fwd_abst1 … H b I W) -H #V #T #HT1 #H destruct
 elim (tpss_inv_bind1 … HU2) -HU2 #V2 #T2 #_ #HT2
-lapply (tpss_lsubs_trans … HT2 (L.ⓑ{I}W) ?) -HT2 /2 width=1/ /4 width=5/
+lapply (tpss_lsubr_trans … HT2 (L.ⓑ{I}W) ?) -HT2 /2 width=1/ /4 width=5/
 qed-.
 
 (* Relocation properties ****************************************************)

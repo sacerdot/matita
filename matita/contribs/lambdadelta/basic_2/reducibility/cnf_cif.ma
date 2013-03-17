@@ -50,7 +50,7 @@ lemma tpr_cif_eq: ∀T1,T2. T1 ➡ T2 → ∀L. L ⊢ 𝐈⦃T1⦄ → T1 = T2.
   elim (cif_inv_appl … H) -H #_ #_ #H
   elim (simple_inv_bind … H)
 | #a * #V1 #V2 #T1 #T #T2 #_ #_ #HT2 #IHV1 #IHT1 #L #H
-  [ lapply (tps_lsubs_trans … HT2 (L.ⓓV2) ?) -HT2 /2 width=1/ #HT2
+  [ lapply (tps_lsubr_trans … HT2 (L.ⓓV2) ?) -HT2 /2 width=1/ #HT2
     elim (cif_inv_bind … H) -H #HV1 #HT1 * #H destruct
     lapply (IHV1 … HV1) -IHV1 -HV1 #H destruct
     lapply (IHT1 … HT1) -IHT1 #H destruct

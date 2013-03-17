@@ -94,11 +94,11 @@ lemma lsubss_inv_pair2: ∀h,g,I,L1,K2,W2. h ⊢ L1 •⊑[g] K2. ⓑ{I} W2 →
 
 (* Basic_forward lemmas *****************************************************)
 
-lemma lsubss_fwd_lsubs1: ∀h,g,L1,L2. h ⊢ L1 •⊑[g] L2 → L1 ≼[0, |L1|] L2.
+lemma lsubss_fwd_lsubr1: ∀h,g,L1,L2. h ⊢ L1 •⊑[g] L2 → L1 ≼[0, |L1|] L2.
 #h #g #L1 #L2 #H elim H -L1 -L2 // /2 width=1/
 qed-.
 
-lemma lsubss_fwd_lsubs2: ∀h,g,L1,L2. h ⊢ L1 •⊑[g] L2 → L1 ≼[0, |L2|] L2.
+lemma lsubss_fwd_lsubr2: ∀h,g,L1,L2. h ⊢ L1 •⊑[g] L2 → L1 ≼[0, |L2|] L2.
 #h #g #L1 #L2 #H elim H -L1 -L2 // /2 width=1/
 qed-.
 
@@ -110,5 +110,5 @@ qed.
 
 lemma lsubss_cprs_trans: ∀h,g,L1,L2. h ⊢ L1 •⊑[g] L2 →
                          ∀T1,T2. L2 ⊢ T1 ➡* T2 → L1 ⊢ T1 ➡* T2.
-/3 width=5 by lsubss_fwd_lsubs2, cprs_lsubs_trans/
+/3 width=5 by lsubss_fwd_lsubr2, cprs_lsubr_trans/
 qed-.

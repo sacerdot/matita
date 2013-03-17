@@ -99,7 +99,7 @@ qed.
 lemma cprs_abst: ∀L,V1,V2. L ⊢ V1 ➡* V2 → ∀V,T1,T2. L.ⓛV ⊢ T1 ➡* T2 →
                  ∀a,I. L ⊢ ⓑ{a,I}V1. T1 ➡* ⓑ{a,I}V2. T2.
 #L #V1 #V2 #HV12 #V #T1 #T2 #HT12 #a #I @(cprs_ind … HV12) -V2
-[ lapply (cprs_lsubs_trans … HT12 (L.ⓛV1) ?) -HT12 /2 width=2/
+[ lapply (cprs_lsubr_trans … HT12 (L.ⓛV1) ?) -HT12 /2 width=2/
 | #V0 #V2 #_ #HV02 #IHV01
   @(cprs_trans … IHV01) -V1 /2 width=2/
 ]
@@ -146,7 +146,7 @@ lemma cprs_beta_dx: ∀L,V1,V2,W,T1,T2.
 #L #V1 #V2 #W #T1 #T2 #HV12 #HT12 #a @(cprs_ind … HT12) -T2
 [ /3 width=1/
 | -HV12 #T #T2 #_ #HT2 #IHT1
-  lapply (cpr_lsubs_trans … HT2 (L.ⓓV2) ?) -HT2 /2 width=1/ #HT2
+  lapply (cpr_lsubr_trans … HT2 (L.ⓓV2) ?) -HT2 /2 width=1/ #HT2
   @(cprs_trans … IHT1) -V1 -W -T1 /3 width=1/
 ]
 qed.

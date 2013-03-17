@@ -154,7 +154,7 @@ lemma cpcs_beta_dx: ∀a,L,V1,V2,W,T1,T2.
 #a #L #V1 #V2 #W #T1 #T2 #HV12 #HT12
 elim (cpcs_inv_cprs … HT12) -HT12 #T #HT1 #HT2
 lapply (cprs_beta_dx … HV12 HT1 a) -HV12 -HT1 #HT1
-lapply (cprs_lsubs_trans … HT2 (L.ⓓV2) ?) -HT2 /2 width=1/ #HT2
+lapply (cprs_lsubr_trans … HT2 (L.ⓓV2) ?) -HT2 /2 width=1/ #HT2
 @(cprs_div … HT1) /2 width=1/
 qed.
 
@@ -164,11 +164,11 @@ lemma cpcs_beta_dx_tpr_rev: ∀a,L,V1,V2,W,T1,T2.
 /4 width=1/ qed.
 
 (* Note: it does not hold replacing |L1| with |L2| *)
-lemma cpcs_lsubs_trans: ∀L1,T1,T2. L1 ⊢ T1 ⬌* T2 →
+lemma cpcs_lsubr_trans: ∀L1,T1,T2. L1 ⊢ T1 ⬌* T2 →
                         ∀L2. L2 ≼ [0, |L1|] L1 → L2 ⊢ T1 ⬌* T2.
 #L1 #T1 #T2 #HT12
 elim (cpcs_inv_cprs … HT12) -HT12
-/3 width=5 by cprs_div, cprs_lsubs_trans/ (**) (* /3 width=5/ is a bit slow *)
+/3 width=5 by cprs_div, cprs_lsubr_trans/ (**) (* /3 width=5/ is a bit slow *)
 qed.
 
 (* Basic_1: was: pc3_lift *)

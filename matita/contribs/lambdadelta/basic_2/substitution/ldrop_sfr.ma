@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/lsubs_sfr.ma".
+include "basic_2/substitution/lsubr_sfr.ma".
 include "basic_2/substitution/ldrop_ldrop.ma".
 
 (* DROPPING *****************************************************************)
@@ -30,7 +30,7 @@ lemma sfr_inv_ldrop: ∀I,L,K,V,i. ⇩[0, i] L ≡ K. ⓑ{I}V → ∀d,e. ≽ [d
   [ -IHL #H1 #H2 #d #e #HL #Hdi #Hide destruct
     lapply (le_n_O_to_eq … Hdi) -Hdi #H destruct
     lapply (HL … (L.ⓓW) ?) -HL /2 width=1/ #H
-    elim (lsubs_inv_abbr2 … H ?) -H // -Hide #K #_ #H destruct //
+    elim (lsubr_inv_abbr2 … H ?) -H // -Hide #K #_ #H destruct //
   | #Hi #HLK #d @(nat_ind_plus … d) -d
     [ #e #H #_ #Hide
       elim (sfr_inv_bind … H ?) -H [2: /2 width=2/ ] #HL #H destruct
