@@ -52,7 +52,7 @@ lemma tpss_strap2: ∀L,T1,T,T2,d,e.
 /2 width=3/ qed.
 
 lemma tpss_lsubr_trans: ∀L1,T1,T2,d,e. L1 ⊢ T1 ▶* [d, e] T2 →
-                        ∀L2. L2 ≼ [d, e] L1 → L2 ⊢ T1 ▶* [d, e] T2.
+                        ∀L2. L2 ⊑ [d, e] L1 → L2 ⊢ T1 ▶* [d, e] T2.
 /3 width=3/ qed.
 
 lemma tpss_refl: ∀d,e,L,T. L ⊢ T ▶* [d, e] T.

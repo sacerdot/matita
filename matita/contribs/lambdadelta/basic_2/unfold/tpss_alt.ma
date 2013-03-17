@@ -36,7 +36,7 @@ interpretation "parallel unfold (term) alternative"
 (* Basic properties *********************************************************)
 
 lemma tpssa_lsubr_trans: ∀L1,T1,T2,d,e. L1 ⊢ T1 ▶▶* [d, e] T2 →
-                         ∀L2. L2 ≼ [d, e] L1 → L2 ⊢ T1 ▶▶* [d, e] T2.
+                         ∀L2. L2 ⊑ [d, e] L1 → L2 ⊢ T1 ▶▶* [d, e] T2.
 #L1 #T1 #T2 #d #e #H elim H -L1 -T1 -T2 -d -e
 [ //
 | #L1 #K1 #V1 #V2 #W2 #i #d #e #Hdi #Hide #HLK1 #_ #HVW2 #IHV12 #L2 #HL12

@@ -34,7 +34,7 @@ interpretation "parallel substritution (term)"
 (* Basic properties *********************************************************)
 
 lemma tps_lsubr_trans: ∀L1,T1,T2,d,e. L1 ⊢ T1 ▶ [d, e] T2 →
-                       ∀L2. L2 ≼ [d, e] L1 → L2 ⊢ T1 ▶ [d, e] T2.
+                       ∀L2. L2 ⊑ [d, e] L1 → L2 ⊢ T1 ▶ [d, e] T2.
 #L1 #T1 #T2 #d #e #H elim H -L1 -T1 -T2 -d -e
 [ //
 | #L1 #K1 #V #W #i #d #e #Hdi #Hide #HLK1 #HVW #L2 #HL12

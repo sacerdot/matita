@@ -186,10 +186,10 @@ lemma ldrop_O1_lt: ∀L,i. i < |L| → ∃∃I,K,V. ⇩[0, i] L ≡ K.ⓑ{I}V.
 ]
 qed.
 
-lemma ldrop_lsubr_ldrop2_abbr: ∀L1,L2,d,e. L1 ≼ [d, e] L2 →
+lemma ldrop_lsubr_ldrop2_abbr: ∀L1,L2,d,e. L1 ⊑ [d, e] L2 →
                                ∀K2,V,i. ⇩[0, i] L2 ≡ K2. ⓓV →
                                d ≤ i → i < d + e →
-                               ∃∃K1. K1 ≼ [0, d + e - i - 1] K2 &
+                               ∃∃K1. K1 ⊑ [0, d + e - i - 1] K2 &
                                      ⇩[0, i] L1 ≡ K1. ⓓV.
 #L1 #L2 #d #e #H elim H -L1 -L2 -d -e
 [ #d #e #K1 #V #i #H

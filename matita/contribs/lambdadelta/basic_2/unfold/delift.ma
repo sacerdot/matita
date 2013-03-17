@@ -32,7 +32,7 @@ lemma delift_refl_O2: ∀L,T,d. L ⊢ ▼*[d, 0] T ≡ T.
 /2 width=3/ qed.
 
 lemma delift_lsubr_trans: ∀L1,T1,T2,d,e. L1 ⊢ ▼*[d, e] T1 ≡ T2 →
-                          ∀L2. L2 ≼ [d, e] L1 → L2 ⊢ ▼*[d, e] T1 ≡ T2.
+                          ∀L2. L2 ⊑ [d, e] L1 → L2 ⊢ ▼*[d, e] T1 ≡ T2.
 #L1 #T1 #T2 #d #e * /3 width=3/
 qed.
 

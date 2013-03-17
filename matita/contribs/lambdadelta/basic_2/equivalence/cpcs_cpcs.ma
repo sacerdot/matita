@@ -165,7 +165,7 @@ lemma cpcs_beta_dx_tpr_rev: ∀a,L,V1,V2,W,T1,T2.
 
 (* Note: it does not hold replacing |L1| with |L2| *)
 lemma cpcs_lsubr_trans: ∀L1,T1,T2. L1 ⊢ T1 ⬌* T2 →
-                        ∀L2. L2 ≼ [0, |L1|] L1 → L2 ⊢ T1 ⬌* T2.
+                        ∀L2. L2 ⊑ [0, |L1|] L1 → L2 ⊢ T1 ⬌* T2.
 #L1 #T1 #T2 #HT12
 elim (cpcs_inv_cprs … HT12) -HT12
 /3 width=5 by cprs_div, cprs_lsubr_trans/ (**) (* /3 width=5/ is a bit slow *)

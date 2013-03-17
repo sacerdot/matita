@@ -239,7 +239,7 @@ table {
           }
         ]
         [ { "local env. ref. for substitution" * } {
-             [ "lsubr ( ? ≼[?,?] ? )" "(lsubr_lsubr)" "lsubr_sfr ( ≽[?,?] ? )" * ]
+             [ "lsubr ( ? ⊑[?,?] ? )" "(lsubr_lsubr)" "lsubr_sfr ( ≽[?,?] ? )" * ]
           }
         ]
         [ { "restricted structural predecessor for closures" * } {
