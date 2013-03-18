@@ -71,7 +71,7 @@ fact snv_ltpr_tpr_aux: ∀h,g,L0,T0.
     elim (ssta_fwd_correct … HVW1) <minus_plus_m_m #U10 #HWU10
     elim (ssta_ltpr_cpcs_aux … IH1 IH3 … HW20 … HWU10 … HWU20) // -IH3 -HWU10
     [2: /3 width=5/ |3: /2 width=1/
-    |4: /4 width=4 by ygt_yprs_trans, ypr_yprs, ypr_ssta, fw_ygt/
+    |4: /4 width=4 by ygt_yprs_trans, fw_ygt, sstas_yprs, ssta_sstas/
     ] #H #_ -IH2 -U10 destruct
     lapply (IH4 … HT20 (L1.ⓓV1) ?) [ /2 width=6/ | /2 width=1/ ] -U20 -W10 -l0 -IH4 -HT20 -HW20 #HT20
     lapply (IH1 … HL12 … HV12) // [ /2 width=1/ ] #HV2

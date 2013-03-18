@@ -83,7 +83,9 @@ fact ssta_ltpr_tpr_aux: ∀h,g,L0,T0.
     elim (snv_fwd_ssta … HW) #l1 #V #HWV
     lapply (IH3 … HVW1) -IH3 // [ /2 width=1/ ] #HW1
     elim (ssta_ltpr_cpcs_aux … IH2 IH1 … HWX1 … HWV …) -IH2 -HWX1 //
-    [2: /2 width=1/ |3: /3 width=4 by ygt_strap1, fw_ygt, ypr_ssta/ ] #H #_ destruct -X1
+    [2: /2 width=1/
+    |3: /4 width=4 by ygt_yprs_trans, fw_ygt, sstas_yprs, ssta_sstas/
+    ] #H #_ destruct -X1
     elim (IH1 … HVW1 … HL12 … HV12) -HVW1 // -HV1 [2: /2 width=1/ ] #W2 #HVW2 #HW12
     elim (IH1 … HWV … HL12 W) -HWV // -HW [2: /2 width=1/ ] #V0 #HWV0 #_
     elim (IH1 … HTU2 (L2.ⓛW) … HT20) -IH1 -HTU2 -HT20 // [2,3: /2 width=1/ ] -HT2 #U20 #HTU20 #HU20
