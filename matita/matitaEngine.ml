@@ -360,10 +360,13 @@ and assert_ng ~already_included ~compiling ~asserted ~include_paths mapath =
         let preamble = GrafiteTypes.Serializer.dependencies_of baseuri in
         let asserted,children_bad =
          List.fold_left
-          (fun (asserted,b) mapath ->
-            let asserted,b1 =
-              assert_ng ~already_included ~compiling ~asserted ~include_paths
-               mapath
+          (fun (asserted,b) mapath -> 
+	    let asserted,b1 =
+              try 
+	       assert_ng ~already_included ~compiling ~asserted ~include_paths
+                mapath
+	      with Librarian.NoRootFor _ | Librarian.FileNotFound _ ->
+	        asserted, true 
             in
              asserted, b || b1
               || let _,baseuri,_,_ =
