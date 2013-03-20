@@ -17,10 +17,14 @@ module U = Unix
 module O = Options
 
 let remove_dir dir =
+   let map name = Y.remove (F.concat dir name) in
+   let rec rmdir dir =
+      U.rmdir dir; (* Sys.remove does not seem to remove empty directories *)
+      rmdir (F.dirname dir)
+   in
    if Y.file_exists dir then begin
-      let map name = Y.remove (F.concat dir name) in
       A.iter map (Y.readdir dir);
-      U.rmdir dir (* Sys.remove does not seem to remove empty directories *)
+      try rmdir dir with U.Unix_error _ -> ()
    end
 
 let objects () =
