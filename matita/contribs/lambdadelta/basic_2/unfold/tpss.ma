@@ -12,6 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
+notation "hvbox( L ⊢ break term 46 T1 break ▶ * [ term 46 d , break term 46 e ] break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'PSubstStar $L $T1 $d $e $T2 }.
+
 include "basic_2/substitution/tps.ma".
 
 (* PARTIAL UNFOLD ON TERMS **************************************************)
@@ -104,8 +108,8 @@ lemma tpss_weak_top: ∀L,T1,T2,d,e.
 ]
 qed.
 
-lemma tpss_weak_all: ∀L,T1,T2,d,e.
-                     L ⊢ T1 ▶* [d, e] T2 → L ⊢ T1 ▶* [0, |L|] T2.
+lemma tpss_weak_full: ∀L,T1,T2,d,e.
+                      L ⊢ T1 ▶* [d, e] T2 → L ⊢ T1 ▶* [0, |L|] T2.
 #L #T1 #T2 #d #e #HT12
 lapply (tpss_weak … HT12 0 (d + e) ? ?) -HT12 // #HT12
 lapply (tpss_weak_top … HT12) //

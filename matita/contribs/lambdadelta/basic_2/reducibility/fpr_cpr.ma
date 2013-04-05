@@ -36,7 +36,7 @@ elim (le_or_ge (|K|) d) #Hd
 [ elim (ldrop_ltpss_sn_trans_ge … HLK … HK2 …)
 | elim (ldrop_ltpss_sn_trans_be … HLK … HK2 …)
 ] // -Hd #L2 #HL2 #HLK2
-lapply (ltpss_sn_weak_all … HL2) -K /3 width=4/
+lapply (ltpss_sn_weak_full … HL2) -K /3 width=4/
 qed-.
 
 (* Advanced properties ******************************************************)

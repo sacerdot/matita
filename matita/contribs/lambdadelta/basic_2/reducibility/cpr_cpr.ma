@@ -57,7 +57,7 @@ theorem cpr_conf: ∀L,U0,T1,T2. L ⊢ U0 ➡ T1 → L ⊢ U0 ➡ T2 →
                   ∃∃T. L ⊢ T1 ➡ T & L ⊢ T2 ➡ T.
 #L #U0 #T1 #T2 * #U1 #HU01 #HUT1 * #U2 #HU02 #HUT2
 elim (tpr_conf … HU01 HU02) -U0 #U #HU1 #HU2
-elim (tpr_tpss_ltpr ? L … HU1 … HUT1) -U1 // #U1 #HTU1 #HU1
-elim (tpr_tpss_ltpr ? L … HU2 … HUT2) -U2 // #U2 #HTU2 #HU2
+elim (ltpr_tpr_tpss_conf ? L … HU1 … HUT1) -U1 // #U1 #HTU1 #HU1
+elim (ltpr_tpr_tpss_conf ? L … HU2 … HUT2) -U2 // #U2 #HTU2 #HU2
 elim (tpss_conf_eq … HU1 … HU2) -U /3 width=5/
 qed.

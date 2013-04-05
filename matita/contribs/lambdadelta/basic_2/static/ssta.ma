@@ -13,7 +13,6 @@
 (**************************************************************************)
 
 include "basic_2/substitution/ldrop.ma".
-include "basic_2/unfold/frsups.ma".
 include "basic_2/static/sd.ma".
 
 (* STRATIFIED STATIC TYPE ASSIGNMENT ON TERMS *******************************)
@@ -146,55 +145,3 @@ qed.
 lemma ssta_inv_cast1: ∀h,g,L,X,Y,U,l. ⦃h, L⦄ ⊢ ⓝY.X •[g] ⦃l, U⦄ →
                       ⦃h, L⦄ ⊢ X •[g] ⦃l, U⦄.
 /2 width=4/ qed-.
-
-(* Advanced inversion lemmas ************************************************)
-
-lemma ssta_inv_frsupp: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g] ⦃l, U⦄ → ⦃L, U⦄ ⧁+ ⦃L, T⦄ → ⊥.
-#h #g #L #T #U #l #H elim H -L -T -U -l
-[ #L #k #l #_ #H
-  elim (frsupp_inv_atom1_frsups … H)
-| #L #K #V #W #U #i #l #_ #_ #HWU #_ #H
-  elim (lift_frsupp_trans … (⋆) … H … HWU) -U #X #H
-  elim (lift_inv_lref2_be … H ? ?) -H //
-| #L #K #W #V #U #i #l #_ #_ #HWU #_ #H
-  elim (lift_frsupp_trans … (⋆) … H … HWU) -U #X #H
-  elim (lift_inv_lref2_be … H ? ?) -H //
-| #a #I #L #V #T #U #l #_ #IHTU #H
-  elim (frsupp_inv_bind1_frsups … H) -H #H [2: /4 width=4/ ] -IHTU
-  lapply (frsups_fwd_fw … H) -H normalize
-  <associative_plus <associative_plus #H
-  elim (le_plus_xySz_x_false … H)
-| #L #V #T #U #l #_ #IHTU #H
-  elim (frsupp_inv_flat1_frsups … H) -H #H [2: /4 width=4/ ] -IHTU
-  lapply (frsups_fwd_fw … H) -H normalize
-  <associative_plus <associative_plus #H
-  elim (le_plus_xySz_x_false … H)
-| /3 width=4/
-]
-qed-.
-
-fact ssta_inv_refl_aux: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g] ⦃l, U⦄ → T = U → ⊥.
-#h #g #L #T #U #l #H elim H -L -T -U -l
-[ #L #k #l #_ #H
-  lapply (next_lt h k) destruct -H -e0 (**) (* destruct: these premises are not erased *)
-  <e1 -e1 #H elim (lt_refl_false … H)
-| #L #K #V #W #U #i #l #_ #_ #HWU #_ #H destruct
-  elim (lift_inv_lref2_be … HWU ? ?) -HWU //
-| #L #K #W #V #U #i #l #_ #_ #HWU #_ #H destruct
-  elim (lift_inv_lref2_be … HWU ? ?) -HWU //
-| #a #I #L #V #T #U #l #_ #IHTU #H destruct /2 width=1/
-| #L #V #T #U #l #_ #IHTU #H destruct /2 width=1/
-| #L #W #T #U #l #HTU #_ #H destruct
-  elim (ssta_inv_frsupp … HTU ?) -HTU /2 width=1/
-]
-qed-.
-
-lemma ssta_inv_refl: ∀h,g,T,L,l. ⦃h, L⦄ ⊢ T •[g] ⦃l, T⦄ → ⊥.
-/2 width=8 by ssta_inv_refl_aux/ qed-.
-
-lemma ssta_inv_frsups: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g] ⦃l, U⦄ → ⦃L, U⦄ ⧁* ⦃L, T⦄ → ⊥.
-#h #g #L #T #U #L #HTU #H elim (frsups_inv_all … H) -H
-[ * #_ #H destruct /2 width=6 by ssta_inv_refl/
-| /2 width=8 by ssta_inv_frsupp/
-]
-qed-.

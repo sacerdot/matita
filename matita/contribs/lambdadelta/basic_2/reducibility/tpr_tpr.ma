@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reducibility/tpr_tpss.ma".
+include "basic_2/reducibility/ltpr_tpss.ma".
 
 (* CONTEXT-FREE PARALLEL REDUCTION ON TERMS *********************************)
 
@@ -71,7 +71,7 @@ elim (tpr_inv_abbr1 … H) -H *
 [ -HV2 -HVV2 #WW2 #UU2 #UU #HWW2 #HUU02 #HUU2 #H destruct
   elim (IH … HW02 … HWW2) -HW02 -HWW2 /2 width=1/ #W #HW02 #HWW2
   elim (IH … HU02 … HUU02) -HU02 -HUU02 -IH /2 width=1/ #U #HU2 #HUUU2
-  elim (tpr_tps_bind … HWW2 HUUU2 … HUU2) -UU2 #UUU #HUUU2 #HUUU1
+  elim (tpr_tps_conf_bind … HWW2 HUUU2 … HUU2) -UU2 #UUU #HUUU2 #HUUU1
   @ex2_intro
   [2: @tpr_theta [6: @HVV |7: @HWW2 |8: @HUUU2 |1,2,3,4: skip | // ]
   |1:skip
@@ -124,8 +124,8 @@ fact tpr_conf_delta_delta:
 #a #I1 #V0 #V1 #T0 #T1 #TT1 #V2 #T2 #TT2 #IH #HV01 #HV02 #HT01 #HT02 #HTT1 #HTT2
 elim (IH … HV01 … HV02) -HV01 -HV02 // #V #HV1 #HV2
 elim (IH … HT01 … HT02) -HT01 -HT02 -IH // #T #HT1 #HT2
-elim (tpr_tps_bind … HV1 HT1 … HTT1) -T1 #U1 #TTU1 #HTU1
-elim (tpr_tps_bind … HV2 HT2 … HTT2) -T2 #U2 #TTU2 #HTU2
+elim (tpr_tps_conf_bind … HV1 HT1 … HTT1) -T1 #U1 #TTU1 #HTU1
+elim (tpr_tps_conf_bind … HV2 HT2 … HTT2) -T2 #U2 #TTU2 #HTU2
 elim (tps_conf_eq … HTU1 … HTU2) -T #U #HU1 #HU2
 @ex2_intro [2,3: @tpr_delta |1: skip ] /width=10/ (**) (* /3 width=10/ is too slow *)
 qed.
@@ -141,7 +141,7 @@ fact tpr_conf_delta_zeta:
    ∃∃X. +ⓓV1. TT1 ➡ X & X2 ➡ X.
 #X2 #V0 #V1 #T0 #T1 #TT1 #T2 #IH #_ #HT01 #HTT1 #HT02 #HXT2
 elim (IH … HT01 … HT02) -IH -HT01 -HT02 // -V0 -T0 #T #HT1 #HT2
-elim (tpr_tps_bind ? ? V1 … HT1 HTT1) -T1 // #TT #HTT1 #HTT
+elim (tpr_tps_conf_bind ? ? V1 … HT1 HTT1) -T1 // #TT #HTT1 #HTT
 elim (tpr_inv_lift1 … HT2 … HXT2) -T2 #X #HXT #HX2
 lapply (tps_inv_lift1_eq … HTT … HXT) -HTT #H destruct /3 width=3/
 qed.
@@ -258,4 +258,4 @@ theorem tpr_conf: ∀T0:term. ∀T1,T2. T0 ➡ T1 → T0 ➡ T2 →
     ]
   ]
 ]
-qed.
+qed-.

@@ -12,8 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/ldrop_ldrop.ma".
-include "basic_2/static/ssta.ma".
+include "basic_2/static/ssta_lift.ma".
 
 (* STRATIFIED STATIC TYPE ASSIGNMENT ON TERMS *******************************)
 
@@ -46,4 +45,13 @@ theorem ssta_mono: ∀h,g,L,T,U1,l1. ⦃h, L⦄ ⊢ T •[g] ⦃l1, U1⦄ →
   lapply (ssta_inv_cast1 … H) -H #HTU2
   elim (IHTU1 … HTU2) -T /2 width=1/
 ]
+qed-.
+
+(* Advanced inversion lemmas ************************************************)
+
+lemma ssta_inv_refl_pos: ∀h,g,L,T,l. ⦃h, L⦄ ⊢ T •[g] ⦃l+1, T⦄ → ⊥.
+#h #g #L #T #l #HTT
+elim (ssta_fwd_correct … HTT) <minus_plus_m_m #U #HTU
+elim (ssta_mono … HTU … HTT) -h -L #H #_ -T -U
+elim (plus_xySz_x_false 0 l 0 ?) //
 qed-.

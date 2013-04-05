@@ -12,6 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
+notation "hvbox( T1 break ⊢ ▶ ▶ * [ term 46 d , break term 46 e ] break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'PSubstStarSnAlt $T1 $d $e $T2 }.
+
 include "basic_2/unfold/ltpss_dx_ltpss_dx.ma".
 include "basic_2/unfold/ltpss_sn_ltpss_sn.ma".
 

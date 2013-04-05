@@ -12,10 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/substitution/fsup.ma".
 include "basic_2/unfold/tpss_lift.ma".
 include "basic_2/unfold/ltpss_sn.ma".
 
 (* SN PARALLEL UNFOLD ON LOCAL ENVIRONMENTS *********************************)
+
+(* Properies on local environment slicing ***********************************)
 
 lemma ltpss_sn_ldrop_conf_ge: ∀L0,L1,d1,e1. L0 ⊢ ▶* [d1, e1] L1 →
                               ∀L2,e2. ⇩[0, e2] L0 ≡ L2 →
@@ -131,6 +134,25 @@ lemma ltpss_sn_ldrop_trans_le: ∀L1,L0,d1,e1. L1 ⊢ ▶* [d1, e1] L0 →
 ]
 qed.
 
+lemma ldrop_ltpss_sn_trans_le: ∀L1,K1,d1,e1. ⇩[d1, e1] L1 ≡ K1 →
+                               ∀K2,d2,e2. K1 ⊢ ▶* [d2, e2] K2 → d1 ≤ d2 →
+                               ∃∃L2. L1 ⊢ ▶* [d2 + e1, e2] L2 & ⇩[d1, e1] L2 ≡ K2.
+#L1 #K1 #d1 #e1 #H elim H -L1 -K1 -d1 -e1
+[ #d1 #e1 #K2 #d2 #e2 #H #_
+  >(ltpss_sn_inv_atom1 … H) -H /2 width=3/
+| /2 width=3/
+| #L1 #K1 #I #V #e1 #_ #IHLK1 #K2 #d2 #e2 #HK12 #Hd
+  elim (IHLK1 … HK12 Hd) -K1 -Hd /3 width=5/
+| #L1 #K1 #I #V1 #W1 #d1 #e1 #HLK1 #HWV1 #IHLK1 #X #d2 #e2 #H #Hd12
+  elim (le_inv_plus_l … Hd12) -Hd12 #Hd12 #Hd2
+  elim (ltpss_sn_inv_tpss11 … H Hd2) -H #K2 #W2 #HK12 #HW12 #H destruct
+  elim (IHLK1 … HK12 … Hd12) -IHLK1 -HK12 <le_plus_minus_comm // #L2 #HL12 #HLK2
+  elim (lift_total W2 d1 e1) #V2 #HWV2
+  lapply (tpss_lift_ge … HW12 … HLK1 HWV1 … HWV2) -HLK1 -W1 // -Hd12
+  <le_plus_minus_comm // /4 width=5/
+]
+qed-.
+
 lemma ldrop_ltpss_sn_trans_be: ∀L1,K1,d1,e1. ⇩[d1, e1] L1 ≡ K1 →
                                ∀K2,d2,e2. K1 ⊢ ▶* [d2, e2] K2 →
                                d2 ≤ d1 → d1 ≤ d2 + e2 →
@@ -186,4 +208,24 @@ lemma ldrop_ltpss_sn_trans_ge: ∀L1,K1,d1,e1. ⇩[d1, e1] L1 ≡ K1 →
     lapply (tpss_lift_le … HW12 … HLK1 HWV1 … HWV2) -HLK1 -W1 [ >plus_minus // /2 width=1/ ] /3 width=5/
   ]
 ]
+qed-.
+
+(* Properties on supclosure *************************************************)
+
+lemma fsup_tpss_trans_full: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⊃ ⦃L2, T2⦄ → ∀U2. L2 ⊢ T2 ▶*[0,|L2|] U2 →
+                            ∃∃L,U1. L1 ⊢ ▶*[0,|L1|] L & L ⊢ T1 ▶*[0,|L|] U1 & ⦃L, U1⦄ ⊃ ⦃L2, T2⦄.
+#L1 #L2 #T1 #T2 #H elim H -L1 -L2 -T1 -T2 [1,2,3,4,5: /3 width=5/ ]
+#L1 #K1 #K2 #T1 #T2 #U1 #d #e #HLK1 #HTU1 #_ #IHT12 #U2 #HTU2
+elim (IHT12 … HTU2) -IHT12 -HTU2 #K #T #HK1 #HT1 #HT2
+elim (lift_total T d e) #U #HTU
+lapply (ltpss_sn_fwd_length … HK1) #H >H in HK1; -H #HK1
+elim (le_or_ge d (|K|)) #Hd
+[ elim (ldrop_ltpss_sn_trans_be … HLK1 … HK1 … Hd) // -HLK1 -HK1 #L2 #HL12 #HL2K
+  lapply (tpss_lift_be … HT1 … Hd HL2K HTU1 … HTU) // -HT1 -HTU1 #HU1
+| elim (ldrop_ltpss_sn_trans_ge … HLK1 … HK1 Hd) -HLK1 -HK1 #L2 #HL12 #HL2K
+  lapply (tpss_lift_le … HT1 … Hd HL2K HTU1 … HTU) -HT1 -HTU1 #HU1
+]
+lapply (ltpss_sn_weak_full … HL12) -HL12 #HL12
+lapply (tpss_weak_full … HU1) -HU1 #HU1
+@(ex3_2_intro … L2 U) // /2 width=7/ (**) (* explicit constructor: auto /3 width=14/ too slow *)
 qed-.

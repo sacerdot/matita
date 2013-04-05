@@ -22,7 +22,7 @@ include "basic_2/computation/tprs.ma".
 (* Basic_1: was: pr1_strip *)
 lemma tprs_strip: ∀T1,T. T ➡* T1 → ∀T2. T ➡ T2 →
                   ∃∃T0. T1 ➡ T0 & T2 ➡* T0.
-/3 width=3/ qed.
+/3 width=3 by TC_strip1, tpr_conf/ qed.
 
 (* Main propertis ***********************************************************)
 

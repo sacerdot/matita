@@ -1,0 +1,62 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/substitution/fsup.ma".
+include "basic_2/substitution/ldrop_ldrop.ma".
+
+(* LOCAL ENVIRONMENT SLICING ************************************************)
+
+(* Inversion lemmas on supclosure *******************************************)
+
+lemma fsup_inv_atom1_ldrop: ∀K,V,L,I. ⦃L, ⓪{I}⦄ ⊃ ⦃K, V⦄ →
+                            ∃∃J,i. ⇩[0, i] L ≡ K.ⓑ{J}V & I = LRef i.
+#K #V #L @(f_ind … length … L) -L #n #IH #L #Hn #I #H
+elim (fsup_inv_atom1 … H) -H *
+[ #J #L0 #V0 #H1 #H2 #H3 #H4 destruct /2 width=4/
+| #J #L0 #V0 #i #HLK #H1 #H2 destruct
+  elim (IH … HLK) -IH -HLK [2: normalize // ] #I #j #HLK #H destruct /3 width=4/
+]
+qed-.
+
+(* Advanced eliminators on supclosure ***************************************)
+
+lemma fsup_ind_ldrop: ∀R:bi_relation lenv term.
+                      (∀I,L,K,V,i. ⇩[0, i] L ≡ K.ⓑ{I}V → R L (#i) K V) →
+                      (∀a,I,L,V,T. R L (ⓑ{a,I}V.T) L V) →
+                      (∀a,I,L,V,T. R L (ⓑ{a,I}V.T) (L.ⓑ{I}V) T) →
+                      (∀I,L,V,T. R L (ⓕ{I}V.T) L V) →
+                      (∀I,L,V,T. R L (ⓕ{I}V.T) L T) →
+                      ∀L1,T1,L2,T2. ⦃L1,T1⦄⊃⦃L2,T2⦄ → R L1 T1 L2 T2.
+#R #H1 #H2 #H3 #H4 #H5 #L1 #T1 #L2 #T2 #H elim H -L1 -T1 -L2 -T2 //
+[ /3 width=2/
+| #I #L #K #V #T #i #H #H1LK
+  elim (fsup_inv_atom1_ldrop … H) -H #J #j #H2LK #H destruct /3 width=2/
+]
+qed-.
+
+(* Advanced inversion lemmas on supclosure **********************************)
+
+lemma fsup_inv_ldrop: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⊃ ⦃L2, T2⦄ →
+                      ∀J,W,j. ⇩[0, j] L1 ≡ L2.ⓑ{J}W → T1 = #j ∧ T2 = W.
+#L1 #L2 #T1 #T2 #H @(fsup_ind_ldrop … H) -L1 -L2 -T1 -T2
+[ #I #L #K #V #i #HLKV #J #W #j #HLKW
+  elim (ldrop_conf_div … HLKV … HLKW) -L /2 width=1/
+| #a
+| #a
+]
+#I #L #V #T #J #W #j #H
+lapply (ldrop_pair2_fwd_fw … H W) -H #H
+[2: lapply (transitive_lt (♯{L,W}) … H) /2 width=1/ -H #H ]
+elim (lt_refl_false … H)
+qed-.

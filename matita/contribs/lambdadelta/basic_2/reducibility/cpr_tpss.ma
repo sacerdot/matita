@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reducibility/tpr_tpss.ma".
+include "basic_2/reducibility/ltpr_tpss.ma".
 include "basic_2/reducibility/cpr.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL REDUCTION ON TERMS ****************************)
@@ -22,7 +22,7 @@ include "basic_2/reducibility/cpr.ma".
 lemma cpr_tpss_trans: ∀L,T1,T. L ⊢ T1 ➡ T →
                       ∀T2,d,e. L ⊢ T ▶* [d, e] T2 → L ⊢ T1 ➡ T2.
 #L #T1 #T * #T0 #HT10 #HT0 #T2 #d #e #HT2
-lapply (tpss_weak_all … HT2) -HT2 #HT2
+lapply (tpss_weak_full … HT2) -HT2 #HT2
 lapply (tpss_trans_eq … HT0 HT2) -T /2 width=3/
 qed.
 

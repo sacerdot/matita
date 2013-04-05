@@ -131,6 +131,19 @@ lemma ldrop_inv_skip1: ∀d,e,I,K1,V1,L2. ⇩[d, e] K1. ⓑ{I} V1 ≡ L2 → 0 <
                                 L2 = K2. ⓑ{I} V2.
 /2 width=3/ qed-.
 
+lemma ldrop_inv_O1_pair2: ∀I,K,V,e,L1. ⇩[0, e] L1 ≡ K. ⓑ{I} V →
+                          (e = 0 ∧ L1 = K. ⓑ{I} V) ∨
+                          ∃∃I1,K1,V1. ⇩[0, e - 1] K1 ≡ K. ⓑ{I} V & L1 = K1.ⓑ{I1}V1 & 0 < e.
+#I #K #V #e *
+[ #H lapply (ldrop_inv_atom1 … H) -H #H destruct
+| #L1 #I1 #V1 #H
+  elim (ldrop_inv_O1 … H) -H *
+  [ #H1 #H2 destruct /3 width=1/
+  | /3 width=5/
+  ]
+]
+qed-.
+
 fact ldrop_inv_skip2_aux: ∀d,e,L1,L2. ⇩[d, e] L1 ≡ L2 → 0 < d →
                           ∀I,K2,V2. L2 = K2. ⓑ{I} V2 →
                           ∃∃K1,V1. ⇩[d - 1, e] K1 ≡ K2 &
@@ -258,11 +271,15 @@ lemma ldrop_fwd_ldrop2: ∀L1,I2,K2,V2,e. ⇩[O, e] L1 ≡ K2. ⓑ{I2} V2 →
 ]
 qed-.
 
+lemma ldrop_fwd_length: ∀L1,L2,d,e. ⇩[d, e] L1 ≡ L2 → |L2| ≤ |L1|.
+#L1 #L2 #d #e #H elim H -L1 -L2 -d -e // normalize /2 width=1/
+qed-.
+
 lemma ldrop_fwd_lw: ∀L1,L2,d,e. ⇩[d, e] L1 ≡ L2 → ♯{L2} ≤ ♯{L1}.
 #L1 #L2 #d #e #H elim H -L1 -L2 -d -e // normalize
 [ /2 width=3/
 | #L1 #L2 #I #V1 #V2 #d #e #_ #HV21 #IHL12
-  >(tw_lift … HV21) -HV21 /2 width=1/
+  >(lift_fwd_tw … HV21) -HV21 /2 width=1/
 ]
 qed-.
 

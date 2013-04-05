@@ -12,25 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reducibility/ltpr_tpss.ma".
+include "basic_2/grammar/fsups.ma".
 
-(* CONTEXT-FREE PARALLEL REDUCTION ON LOCAL ENVIRONMENTS ********************)
+(* STAR-ITERATED SUPCLOSURE *************************************************)
 
-(* Properties concerning dx parallel unfold on local environments ***********)
+(* Main properties **********************************************************)
 
-lemma ltpr_ltpss_dx_conf: ∀L1,K1,d,e. L1 ▶* [d, e] K1 → ∀L2. L1 ➡ L2 →
-                          ∃∃K2. L2 ▶* [d, e] K2 & K1 ➡ K2.
-#L1 #K1 #d #e #H elim H -L1 -K1 -d -e
-[ /2 width=3/
-| #L1 #I #V1 #X #H
-  elim (ltpr_inv_pair1 … H) -H #L2 #V2 #HL12 #HV12 #H destruct /3 width=5/
-| #L1 #K1 #I #V1 #W1 #e #_ #HVW1 #IHLK1 #X #H
-  elim (ltpr_inv_pair1 … H) -H #L2 #V2 #HL12 #HV12 #H destruct
-  elim (IHLK1 … HL12) -L1 #K2 #HLK2 #HK12
-  elim (ltpr_tpr_tpss_conf … HK12 … HV12 … HVW1) -V1 /3 width=5/
-| #L1 #K1 #I #V1 #W1 #d #e #_ #HVW1 #IHLK1 #X #H
-  elim (ltpr_inv_pair1 … H) -H #L2 #V2 #HL12 #HV12 #H destruct
-  elim (IHLK1 … HL12) -L1 #K2 #HLK2 #HK12
-  elim (ltpr_tpr_tpss_conf … HK12 … HV12 … HVW1) -V1 /3 width=5/
-]
-qed.
+theorem fsups_trans: bi_transitive … fsups.
+/2 width=4/ qed.

@@ -62,7 +62,7 @@ fact lpx_dropable_aux: ∀R,L2,K2,d,e. ⇩[d, e] L2 ≡ K2 → ∀L1. lpx R L1 L
 | #L2 #K2 #I #V2 #W2 #d #e #_ #_ #_ #L1 #_
   >commutative_plus normalize #H destruct
 ]
-qed.
+qed-.
 
-lemma ltpr_dropable: ∀R. dropable_dx (lpx R).
-/2 width=5/ qed.
+lemma ltpx_dropable: ∀R. dropable_dx (lpx R).
+/2 width=5 by lpx_dropable_aux/ qed.

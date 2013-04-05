@@ -12,11 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unfold/csupp.ma".
+include "basic_2/grammar/fsups.ma".
+include "basic_2/substitution/ldrop_fsup.ma".
 
-(* PLUS-ITERATED SUPCLOSURE *************************************************)
+(* LOCAL ENVIRONMENT SLICING ************************************************)
 
-(* Main propertis ***********************************************************)
+(* Inversion lemmas on plus-iterated supclosure  ****************************)
 
-theorem csupp_trans: bi_transitive … csupp.
-/2 width=4/ qed.
+lemma fsupp_inv_atom1_fsups: ∀J,L1,L2,T2. ⦃L1, ⓪{J}⦄ ⊃+ ⦃L2, T2⦄ →
+                             ∃∃I,K,V,i. ⇩[0, i] L1 ≡ K.ⓑ{I}V &
+                             ⦃K, V⦄ ⊃* ⦃L2, T2⦄ & J = LRef i.
+#J #L1 #L2 #T2 #H @(fsupp_ind … H) -L2 -T2
+[ #L2 #T2 #H
+  elim (fsup_inv_atom1_ldrop … H) -H * #i #HL12 #H destruct /2 width=7/
+| #L #T #L2 #T2 #_ #HT2 * #I #K #V #i #HLK #HVT #H destruct /3 width=8/
+]
+qed-.

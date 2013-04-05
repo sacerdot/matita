@@ -19,7 +19,7 @@ include "basic_2/computation/ltprs.ma".
 
 (* Advanced properties ******************************************************)
 
-lemma ltprs_strip: ∀L1. ∀L:term. L ➡* L1 → ∀L2. L ➡ L2 →
+lemma ltprs_strip: ∀L1. ∀L:lenv. L ➡* L1 → ∀L2. L ➡ L2 →
                    ∃∃L0. L1 ➡ L0 & L2 ➡* L0.
 /3 width=3/ qed.
 

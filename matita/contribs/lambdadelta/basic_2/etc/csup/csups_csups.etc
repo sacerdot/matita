@@ -55,8 +55,3 @@ lemma lift_csups_trans_aux: ∀T1,U1,d,e. ⇧[d, e] T1 ≡ U1 →
 #L #L2 #U #U2 #HL1 #HL2 #IHL1 #H destruct
 
 * -T1 -U1 -d -e
-
-(* Main propertis ***********************************************************)
-
-theorem csups_trans: bi_transitive … csups.
-/2 width=4/ qed.

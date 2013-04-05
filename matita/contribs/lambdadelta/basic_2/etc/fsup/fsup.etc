@@ -1,0 +1,73 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/substitution/ldrop.ma".
+
+(* SUPCLOSURE ***************************************************************)
+
+(* Basic inversion lemmas ***************************************************)
+
+fact fsup_inv_atom1_aux: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⊃ ⦃L2, T2⦄ → ∀J. T1 = ⓪{J} →
+                         (∃∃I,K,V. L1 = K.ⓑ{I}V & J = LRef 0 & L2 = K & T2 = V) ∨
+                         ∃∃I,K,V,i. ⦃K, #i⦄ ⊃ ⦃L2, T2⦄ & L1 = K.ⓑ{I}V & J = LRef (i+1).
+#L1 #L2 #T1 #T2 * -L1 -L2 -T1 -T2
+[ #I #L #V #J #H destruct /3 width=6/
+| #I #L #K #V #T #i #HLK #J #H destruct /3 width=7/
+| #a #I #L #V #T #J #H destruct
+| #a #I #L #V #T #J #H destruct
+| #I #L #V #T #J #H destruct
+| #I #L #V #T #J #H destruct
+]
+qed-.
+
+lemma fsup_inv_atom1: ∀J,L1,L2,T2. ⦃L1, ⓪{J}⦄ ⊃ ⦃L2, T2⦄ →
+                      (∃∃I,K,V. L1 = K.ⓑ{I}V & J = LRef 0 & L2 = K & T2 = V) ∨
+                      ∃∃I,K,V,i. ⦃K, #i⦄ ⊃ ⦃L2, T2⦄ & L1 = K.ⓑ{I}V & J = LRef (i+1).
+/2 width=3 by fsup_inv_atom1_aux/ qed-.
+
+fact fsup_inv_bind1_aux: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⊃ ⦃L2, T2⦄ →
+                         ∀b,J,W,U. T1 = ⓑ{b,J}W.U →
+                         (L2 = L1 ∧ T2 = W) ∨
+                         (L2 = L1.ⓑ{J}W ∧ T2 = U).
+#L1 #L2 #T1 #T2 * -L1 -L2 -T1 -T2
+[ #I #L #V #b #J #W #U #H destruct
+| #I #L #K #V #T #i #_ #b #J #W #U #H destruct
+| #a #I #L #V #T #b #J #W #U #H destruct /3 width=1/
+| #a #I #L #V #T #b #J #W #U #H destruct /3 width=1/
+| #I #L #V #T #b #J #W #U #H destruct
+| #I #L #V #T #b #J #W #U #H destruct
+]
+qed-.
+
+lemma fsup_inv_bind1: ∀b,J,L1,L2,W,U,T2. ⦃L1, ⓑ{b,J}W.U⦄ ⊃ ⦃L2, T2⦄ →
+                      (L2 = L1 ∧ T2 = W) ∨
+                      (L2 = L1.ⓑ{J}W ∧ T2 = U).
+/2 width=4 by fsup_inv_bind1_aux/ qed-.
+
+fact fsup_inv_flat1_aux: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⊃ ⦃L2, T2⦄ →
+                         ∀J,W,U. T1 = ⓕ{J}W.U →
+                         L2 = L1 ∧ (T2 = W ∨ T2 = U).
+#L1 #L2 #T1 #T2 * -L1 -L2 -T1 -T2
+[ #I #L #K #J #W #U #H destruct
+| #I #L #K #V #T #i #_ #J #W #U #H destruct
+| #a #I #L #V #T #J #W #U #H destruct
+| #a #I #L #V #T #J #W #U #H destruct
+| #I #L #V #T #J #W #U #H destruct /3 width=1/
+| #I #L #V #T #J #W #U #H destruct /3 width=1/
+]
+qed-.
+
+lemma fsup_inv_flat1: ∀J,L1,L2,W,U,T2. ⦃L1, ⓕ{J}W.U⦄ ⊃ ⦃L2, T2⦄ →
+                      L2 = L1 ∧ (T2 = W ∨ T2 = U).
+/2 width=4 by fsup_inv_flat1_aux/ qed-.

@@ -12,25 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-notation "hvbox( ⦃ term 46 h , break term 46 L ⦄ ⊢ break term 46 T1 • ➡ break [ term 46 g ] break term 46 T2 )"
-   non associative with precedence 45
-   for @{ 'XPRed $h $g $L $T1 $T2 }.
+include "basic_2/unfold/fsupp.ma".
 
-include "basic_2/static/ssta.ma".
-include "basic_2/reducibility/cpr.ma".
+(* PLUS-ITERATED SUPCLOSURE *************************************************)
 
-(* EXTENDED PARALLEL REDUCTION ON TERMS *************************************)
+(* Main propertis ***********************************************************)
 
-inductive xpr (h) (g) (L) (T1) (T2): Prop ≝
-| xpr_cpr : L ⊢ T1 ➡ T2 → xpr h g L T1 T2
-| xpr_ssta: ∀l. ⦃h, L⦄ ⊢ T1 •[g, l + 1] T2 → xpr h g L T1 T2
-.
-
-interpretation
-   "extended parallel reduction (term)"
-   'XPRed h g L T1 T2 = (xpr h g L T1 T2).
-
-(* Basic properties *********************************************************)
-
-lemma xpr_refl: ∀h,g,L. reflexive … (xpr h g L).
-/2 width=1/ qed.
+theorem fsupp_trans: bi_transitive … fsupp.
+/2 width=4/ qed.

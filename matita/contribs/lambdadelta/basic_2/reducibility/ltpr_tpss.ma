@@ -13,20 +13,20 @@
 (**************************************************************************)
 
 include "basic_2/unfold/ltpss_dx_ltpss_dx.ma".
-include "basic_2/reducibility/tpr_tps.ma".
+include "basic_2/reducibility/ltpr_tps.ma".
 
-(* CONTEXT-FREE PARALLEL REDUCTION ON TERMS *********************************)
+(* CONTEXT-FREE PARALLEL REDUCTION ON LOCAL ENVIRONMENTS ********************)
 
-(* Unfold properties ********************************************************)
+(* Properties on partial unfold for terms ***********************************)
 
 (* Basic_1: was: pr0_subst1 *)
-lemma tpr_tps_ltpr: ∀T1,T2. T1 ➡ T2 →
-                    ∀L1,d,e,U1. L1 ⊢ T1 ▶ [d, e] U1 →
-                    ∀L2. L1 ➡ L2 →
-                    ∃∃U2. U1 ➡ U2 & L2 ⊢ T2 ▶* [d, e] U2.
+lemma ltpr_tpr_tps_conf: ∀T1,T2. T1 ➡ T2 →
+                         ∀L1,d,e,U1. L1 ⊢ T1 ▶ [d, e] U1 →
+                         ∀L2. L1 ➡ L2 →
+                         ∃∃U2. U1 ➡ U2 & L2 ⊢ T2 ▶* [d, e] U2.
 #T1 #T2 #H elim H -T1 -T2
 [ #I #L1 #d #e #U1 #H #L2 #HL12
-  elim (ltpr_tpr_conf … H … HL12) -L1 /3 width=3/
+  elim (ltpr_tps_conf … H … HL12) -L1 /3 width=3/
 | #I #V1 #V2 #T1 #T2 #_ #_ #IHV12 #IHT12 #L1 #d #e #X #H #L2 #HL12
   elim (tps_inv_flat1 … H) -H #W1 #U1 #HVW1 #HTU1 #H destruct
   elim (IHV12 … HVW1 … HL12) -V1
@@ -64,28 +64,28 @@ lemma tpr_tps_ltpr: ∀T1,T2. T1 ➡ T2 →
   elim (tps_inv_flat1 … H) -H #VV1 #TT1 #HVV1 #HTT1 #H destruct
   elim (IHT12 … HTT1 … HL12) -T1 -HL12 /3 width=3/
 ]
-qed.
+qed-.
 
-lemma tpr_tps_bind: ∀I,V1,V2,T1,T2,U1. V1 ➡ V2 → T1 ➡ T2 →
-                    ⋆. ⓑ{I} V1 ⊢ T1 ▶ [0, 1] U1 →
-                    ∃∃U2. U1 ➡ U2 & ⋆. ⓑ{I} V2 ⊢ T2 ▶ [0, 1] U2.
+lemma tpr_tps_conf_bind: ∀I,V1,V2,T1,T2,U1. V1 ➡ V2 → T1 ➡ T2 →
+                         ⋆. ⓑ{I} V1 ⊢ T1 ▶ [0, 1] U1 →
+                         ∃∃U2. U1 ➡ U2 & ⋆. ⓑ{I} V2 ⊢ T2 ▶ [0, 1] U2.
 #I #V1 #V2 #T1 #T2 #U1 #HV12 #HT12 #HTU1
-elim (tpr_tps_ltpr … HT12 … HTU1 (⋆. ⓑ{I} V2) ?) -T1 /2 width=1/ -V1 #U2 #HU12 #HTU2
+elim (ltpr_tpr_tps_conf … HT12 … HTU1 (⋆. ⓑ{I} V2) ?) -T1 /2 width=1/ -V1 #U2 #HU12 #HTU2
 lapply (tpss_inv_SO2 … HTU2) -HTU2 /2 width=3/
-qed.
+qed-.
 
-lemma tpr_tpss_ltpr: ∀L1,L2. L1 ➡ L2 → ∀T1,T2. T1 ➡ T2 →
-                     ∀d,e,U1. L1 ⊢ T1 ▶* [d, e] U1 →
-                     ∃∃U2. U1 ➡ U2 & L2 ⊢ T2 ▶* [d, e] U2.
+lemma ltpr_tpr_tpss_conf: ∀L1,L2. L1 ➡ L2 → ∀T1,T2. T1 ➡ T2 →
+                          ∀d,e,U1. L1 ⊢ T1 ▶* [d, e] U1 →
+                          ∃∃U2. U1 ➡ U2 & L2 ⊢ T2 ▶* [d, e] U2.
 #L1 #L2 #HL12 #T1 #T2 #HT12 #d #e #U1 #HTU1 @(tpss_ind … HTU1) -U1
 [ /2 width=3/
 | -HT12 #U #U1 #_ #HU1 * #T #HUT #HT2
-  elim (tpr_tps_ltpr … HUT … HU1 … HL12) -U -HL12 #U2 #HU12 #HTU2
+  elim (ltpr_tpr_tps_conf … HUT … HU1 … HL12) -U -HL12 #U2 #HU12 #HTU2
   lapply (tpss_trans_eq … HT2 … HTU2) -T /2 width=3/
 ]
-qed.
+qed-.
 
 lemma tpr_tpss_conf: ∀T1,T2. T1 ➡ T2 →
                      ∀L,U1,d,e. L ⊢ T1 ▶* [d, e] U1 →
                      ∃∃U2. U1 ➡ U2 & L ⊢ T2 ▶* [d, e] U2.
-/2 width=5/ qed.
+/2 width=5 by ltpr_tpr_tpss_conf/ qed-.

@@ -154,8 +154,8 @@ table {
           }
         ]
         [ { "context-free reduction" * } {
-             [ "ltpr ( ? ➡ ? )" "ltpr_ldrop" + "ltpr_tps" + "ltpr_ltpss_dx" + "ltpr_ltpss_sn" + "ltpr_aaa" + "ltpr_ltpr" * ]
-             [ "tpr ( ? ➡ ? )"  "tpr_lift" + "tpr_tps" + "tpr_tpss" + "tpr_delift" + "tpr_tpr" * ]
+             [ "ltpr ( ? ➡ ? )" "ltpr_ldrop" + "ltpr_tps" + "ltpr_tpss" + "ltpr_ltpss_dx" + "ltpr_ltpss_sn" + "ltpr_aaa" + "ltpr_ltpr" * ]
+             [ "tpr ( ? ➡ ? )"  "tpr_lift" + "tpr_delift" + "tpr_tpr" * ]
           }
         ]
      }
@@ -198,19 +198,23 @@ table {
              [ "delift ( ? ⊢ ? ▼*[?,?] ≡ ? )" "delift_alt ( ? ⊢ ? ▼▼*[?,?] ≡ ? )" "delift_lift" + "delift_tpss" + "delift_ltpss" + "delift_delift" * ]
           }
         ]
-        [ { "partial unfold" * } {
+	[ { "revised parallel substitution" * } {
+             [ "lcpss ( ? ⊢ ▶* ? )" "lcpss_ldrop" + "lcpss_cpss" + "lcpss_lcpss" * ]
+             [ "cpss ( ? ⊢ ? ▶* ? )" "cpss_lift" * ]
+          }
+        ]        
+	[ { "partial unfold" * } {
              [ "ltpss_sn ( ? ⊢ ▶*[?,?] ? )" "ltpss_sn_alt ( ? ⊢ ▶▶*[?,?] ? )" "ltpss_sn_ldrop" + "ltpss_sn_tps" + "ltpss_sn_tpss" + "ltpss_sn_ltpss_sn" * ]
              [ "ltpss_dx ( ? ▶*[?,?] ? )" "ltpss_dx_ldrop" + "ltpss_dx_tps" + "ltpss_dx_tpss" + "ltpss_dx_ltpss_dx" * ]
              [ "tpss ( ? ⊢ ? ▶*[?,?] ? )" "tpss_alt ( ? ⊢ ? ▶▶*[?,?] ? )" "tpss_lift" "tpss_tpss" * ]
           }
         ]
-        [ { "generic local env. slicing" * } {
-             [ "ldrops ( ⇩*[?] ? ≡ ? )" "ldrops_ldrop" + "ldrops_ldrops" * ]
+        [ { "iterated structural successor for closures" * } {
+             [ "fsupp ( ⦃?,?⦄ ⊃+ ⦃?,?⦄ )" "fsupp_fsupp" * ]
           }
         ]
-        [ { "iterated restricted structural predecessor for closures" * } {
-             [ "frsups ( ⦃?,?⦄ ⧁* ⦃?,?⦄ )" "frsups_frsups" * ]
-             [ "frsupp ( ⦃?,?⦄ ⧁+ ⦃?,?⦄ )" "frsupp_frsupp" * ]
+        [ { "generic local env. slicing" * } {
+             [ "ldrops ( ⇩*[?] ? ≡ ? )" "ldrops_ldrop" + "ldrops_ldrops" * ]
           }
         ]
         [ { "generic term relocation" * } {
@@ -230,6 +234,10 @@ table {
              [ "tps ( ? ⊢ ? ▶[?,?] ? )" "tps_lift" + "tps_tps" * ]
           }
         ]
+        [ { "structural successor for closures" * } {
+             [ "fsup ( ⦃?,?⦄ ⊃ ⦃?,?⦄ )" * ]
+          }
+        ]
         [ { "global env. slicing" * } {
              [ "gdrop ( ⇩[?] ? ≡ ? )" "gdrop_gdrop" * ]
           }
@@ -240,10 +248,6 @@ table {
         ]
         [ { "local env. ref. for substitution" * } {
              [ "lsubr ( ? ⊑[?,?] ? )" "(lsubr_lsubr)" "lsubr_lbotr ( ⊒[?,?] ? )" * ]
-          }
-        ]
-        [ { "restricted structural predecessor for closures" * } {
-             [ "frsup ( ⦃?,?⦄ ⧁ ⦃?,?⦄ )" * ]
           }
         ]
         [ { "basic term relocation" * } {

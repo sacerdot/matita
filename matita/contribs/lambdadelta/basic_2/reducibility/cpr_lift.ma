@@ -75,9 +75,9 @@ elim (tpr_inv_abbr1 … H1) -H1 *
 [ #V #T #T0 #HV1 #HT1 #HT0 #H destruct
   elim (tpss_inv_bind1 … H2) -H2 #V2 #T2 #HV2 #HT02 #H destruct
   lapply (tps_lsubr_trans … HT0 (L. ⓓV) ?) -HT0 /2 width=1/ #HT0
-  lapply (tps_weak_all … HT0) -HT0 #HT0
+  lapply (tps_weak_full … HT0) -HT0 #HT0
   lapply (tpss_lsubr_trans … HT02 (L. ⓓV) ?) -HT02 /2 width=1/ #HT02
-  lapply (tpss_weak_all … HT02) -HT02 #HT02
+  lapply (tpss_weak_full … HT02) -HT02 #HT02
   lapply (tpss_strap2 … HT0 HT02) -T0 /4 width=7/
 | #T2 #HT12 #HXT2 #H destruct
   elim (lift_total Y 0 1) #Z #HYZ

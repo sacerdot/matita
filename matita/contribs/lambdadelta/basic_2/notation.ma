@@ -162,17 +162,13 @@ notation "hvbox( ⇩ [ term 46 d , break term 46 e ] break term 46 L1 ≡ break 
    non associative with precedence 45
    for @{ 'RDrop $d $e $L1 $L2 }.
 
-notation "hvbox( ⦃ term 46 L1, break term 46 T1 ⦄ ⧁ break ⦃ term 46 L2 , break term 46 T2 ⦄ )"
+notation "hvbox( ⦃ term 46 L1, break term 46 T1 ⦄ ⊃ break ⦃ term 46 L2 , break term 46 T2 ⦄ )"
    non associative with precedence 45
-   for @{ 'RestSupTerm $L1 $T1 $L2 $T2 }.
+   for @{ 'SupTerm $L1 $T1 $L2 $T2 }.
 
 notation "hvbox( L ⊢ break ⌘ ⦃ term 46 T ⦄ ≡ break term 46 k )"
    non associative with precedence 45
    for @{ 'ICM $L $T $k }.
-
-notation "hvbox( L ⊢ break term 46 T1 break ▶ [ term 46 d , break term 46 e ] break term 46 T2 )"
-   non associative with precedence 45
-   for @{ 'PSubst $L $T1 $d $e $T2 }.
 
 (* Unfold *******************************************************************)
 
@@ -192,33 +188,21 @@ notation "hvbox( ⇩ * [ term 46 e ] break term 46 L1 ≡ break term 46 L2 )"
    non associative with precedence 45
    for @{ 'RDropStar $e $L1 $L2 }.
 
-notation "hvbox( ⦃ term 46 L1, break term 46 T1 ⦄ ⧁ + break ⦃ term 46 L2 , break term 46 T2 ⦄ )"
+notation "hvbox( ⦃ term 46 L1, break term 46 T1 ⦄ ⊃ + break ⦃ term 46 L2 , break term 46 T2 ⦄ )"
    non associative with precedence 45
-   for @{ 'RestSupTermPlus $L1 $T1 $L2 $T2 }.
+   for @{ 'SupTermPlus $L1 $T1 $L2 $T2 }.
 
-notation "hvbox( ⦃ term 46 L1, break term 46 T1 ⦄ ⧁ * break ⦃ term 46 L2 , break term 46 T2 ⦄ )"
+notation "hvbox( ⦃ term 46 L1, break term 46 T1 ⦄ ⊃ * break ⦃ term 46 L2 , break term 46 T2 ⦄ )"
    non associative with precedence 45
-   for @{ 'RestSupTermStar $L1 $T1 $L2 $T2 }.
+   for @{ 'SupTermStar $L1 $T1 $L2 $T2 }.
 
-notation "hvbox( T1 break ▶ * [ term 46 d , break term 46 e ] break term 46 T2 )"
+notation "hvbox( L ⊢ break term 46 T1 ▶* break term 46 T2 )"
    non associative with precedence 45
-   for @{ 'PSubstStar $T1 $d $e $T2 }.
+   for @{ 'PSubstStar $L $T1 $T2 }.
 
-notation "hvbox( L ⊢ break term 46 T1 break ▶ * [ term 46 d , break term 46 e ] break term 46 T2 )"
+notation "hvbox( T1 ⊢ ▶ * break term 46 T2 )"
    non associative with precedence 45
-   for @{ 'PSubstStar $L $T1 $d $e $T2 }.
-
-notation "hvbox( L ⊢ break term 46 T1 break ▶ ▶ * [ term 46 d , break term 46 e ] break term 46 T2 )"
-   non associative with precedence 45
-   for @{ 'PSubstStarAlt $L $T1 $d $e $T2 }.
-
-notation "hvbox( T1 break ⊢ ▶ * [ term 46 d , break term 46 e ] break term 46 T2 )"
-   non associative with precedence 45
-   for @{ 'PSubstStarSn $T1 $d $e $T2 }.
-
-notation "hvbox( T1 break ⊢ ▶ ▶ * [ term 46 d , break term 46 e ] break term 46 T2 )"
-   non associative with precedence 45
-   for @{ 'PSubstStarSnAlt $T1 $d $e $T2 }.
+   for @{ 'PSubstStarSn $T1 $T2 }.
 
 notation "hvbox( ▼ * [ term 46 d , break term 46 e ] break term 46 T1 ≡ break term 46 T2 )"
    non associative with precedence 45

@@ -12,6 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
+notation "hvbox( T1 break ▶ * [ term 46 d , break term 46 e ] break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'PSubstStar $T1 $d $e $T2 }.
+
 include "basic_2/unfold/tpss.ma".
 
 (* DX PARALLEL UNFOLD ON LOCAL ENVIRONMENTS *********************************)
@@ -208,7 +212,7 @@ lemma ltpss_dx_weak: ∀L1,L2,d1,e1. L1 ▶* [d1, e1] L2 →
 ]
 qed.
 
-lemma ltpss_dx_weak_all: ∀L1,L2,d,e. L1 ▶* [d, e] L2 → L1 ▶* [0, |L2|] L2.
+lemma ltpss_dx_weak_full: ∀L1,L2,d,e. L1 ▶* [d, e] L2 → L1 ▶* [0, |L2|] L2.
 #L1 #L2 #d #e #H elim H -L1 -L2 -d -e
 // /3 width=2/ /3 width=3/
 qed.

@@ -43,7 +43,7 @@ normalize in ⊢ (?→?→?→?→?%%); //
 qed.
 
 lemma fw_tpair_dx_sn: ∀I1,I2,L,V1,V2,T. ♯{L, V2} < ♯{L, ②{I1}V1.②{I2}V2.T}.
-normalize in ⊢ (?→?→?→?→?→?→?%%); /2 width=1/
+normalize in ⊢ (?→?→?→?→?→?→?%%); /2 width=1 by monotonic_le_plus_r/ (**) (* auto too slow without trace *)
 qed.
 
 lemma fw_tpair_sn_sn_shift: ∀I,I1,I2,L,V1,V2,T.
@@ -53,7 +53,11 @@ qed.
 
 lemma fw_tpair_sn_dx_shift: ∀I,I1,I2,L,V1,V2,T.
                             ♯{L.ⓑ{I}V2, T} < ♯{L, ②{I1}V1.②{I2}V2.T}.
-normalize in ⊢ (?→?→?→?→?→?→?→?%%); /2 width=1/
+normalize in ⊢ (?→?→?→?→?→?→?→?%%); /2 width=1 by monotonic_le_plus_r/ (**) (* auto too slow without trace *)
+qed.
+
+lemma fw_lpair_sn: ∀I,L,V,T. ♯{L, V} < ♯{L.ⓑ{I}V, T}.
+normalize /3 width=1 by monotonic_lt_plus_l, monotonic_le_plus_r/ (**) (* auto too slow without trace *)
 qed.
 
 (* Basic_1: removed theorems 7:

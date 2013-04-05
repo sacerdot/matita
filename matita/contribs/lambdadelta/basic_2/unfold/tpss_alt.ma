@@ -12,6 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
+notation "hvbox( L ⊢ break term 46 T1 break ▶ ▶ * [ term 46 d , break term 46 e ] break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'PSubstStarAlt $L $T1 $d $e $T2 }.
+
 include "basic_2/unfold/tpss_lift.ma".
 
 (* PARALLEL UNFOLD ON TERMS *************************************************)
