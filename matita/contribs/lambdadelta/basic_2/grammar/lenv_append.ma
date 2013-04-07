@@ -23,6 +23,9 @@ let rec append L K on K ≝ match K with
 
 interpretation "append (local environment)" 'Append L1 L2 = (append L1 L2).
 
+definition l_appendable_sn: predicate (lenv→relation term) ≝ λR.
+                            ∀K,T1,T2. R K T1 T2 → ∀L. R (L @@ K) T1 T2.
+
 (* Basic properties *********************************************************)
 
 lemma append_atom_sn: ∀L. ⋆ @@ L = L.

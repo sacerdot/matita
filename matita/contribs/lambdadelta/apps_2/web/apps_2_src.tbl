@@ -9,7 +9,7 @@ table {
         ]
      }
    ]
-   class "orange"
+   class "yellow"
    [ { "MLTT1" * } {
         [ { "" * } {
              [ "genv_primitive" "judgement" * ]
@@ -17,7 +17,7 @@ table {
         ]
      }
    ]
-   class "red"
+   class "orange"
    [ { "functional" * } {
         [ { "reduction and type machine" * } {
              [ "rtm" "rtm_step ( ? ⇨ ? )" * ]
@@ -25,6 +25,14 @@ table {
         ]
         [ { "unfold" * } {
              [ "lift ( ↑[?,?] ? )" "subst ( [?←?] ? )" * ]
+          }
+        ]
+     }
+   ]   
+   class "red"
+   [ { "examples" * } {
+        [ { "" * } {
+             [ "" * ]
           }
         ]
      }

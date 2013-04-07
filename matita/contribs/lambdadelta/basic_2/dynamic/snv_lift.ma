@@ -77,3 +77,20 @@ lemma snv_inv_lift: ∀h,g,L,U. ⦃h, L⦄ ⊢ U ¡[g] → ∀K,d,e. ⇩[d, e] L
   lapply (cpcs_inv_lift … HLK … HVW … HVW0 ?) // -W /3 width=4/
 ]
 qed-.
+
+(* Advanced properties ******************************************************)
+
+lemma snv_fsup_conf: ∀h,g,L1,L2,T1,T2. ⦃L1, T1⦄ ⊃ ⦃L2, T2⦄ →
+                     ⦃h, L1⦄ ⊢ T1 ¡[g] → ⦃h, L2⦄ ⊢ T2 ¡[g].
+#h #g #L1 #L2 #T1 #T2 #H elim H -L1 -L2 -T1 -T2
+[ #I1 #L1 #V1 #H
+  elim (snv_inv_lref … H) -H #I2 #L2 #V2 #H #HV2
+  lapply (ldrop_inv_refl … H) -H #H destruct //
+|2,3: #a #I #L1 #V1 #T1 #H elim (snv_inv_bind … H) -H //
+|4,5: * #L1 #V1 #T1 #H
+  [1,3: elim (snv_inv_appl … H) -H //
+  |2,4: elim (snv_inv_cast … H) -H //
+  ]
+| /3 width=7 by snv_inv_lift/
+]
+qed-.

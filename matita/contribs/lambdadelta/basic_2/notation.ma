@@ -252,6 +252,16 @@ notation "hvbox( L1 ⊢ ⧫ * break term 46 T ≡ break term 46 L2 )"
    non associative with precedence 45
    for @{ 'Unwind $L1 $T $L2 }.
 
+(* Restricted ***************************************************************)
+
+notation "hvbox( L ⊢ break term 46 T1 ➤ * break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'PRestStar $L $T1 $T2 }.
+
+notation "hvbox( T1 ⊢ ➤ * break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'PRestStarSn $T1 $T2 }.
+
 (* Reducibility *************************************************************)
 
 notation "hvbox( L ⊢ break 𝐑 ⦃ term 46 T ⦄ )"

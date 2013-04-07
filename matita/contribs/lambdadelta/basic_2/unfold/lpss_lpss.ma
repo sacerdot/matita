@@ -12,30 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unfold/lcpss_cpss.ma".
+include "basic_2/unfold/lpss_cpss.ma".
 
 (* SN PARALLEL UNFOLD ON LOCAL ENVIRONMENTS *********************************)
 
 (* Main properties **********************************************************)
 
-theorem lcpss_conf: confluent … lcpss.
-#L0 @(f_ind … length … L0) -L0 #n #IH *
-[ #_ #X1 #H1 #X2 #H2 -n
-  >(lcpss_inv_atom1 … H1) -X1
-  >(lcpss_inv_atom1 … H2) -X2 /2 width=3/
-| #L0 #I #V0 #Hn #X1 #H1 #X2 #H2 destruct
-  elim (lcpss_inv_pair1 … H1) -H1 #L1 #V1 #HL01 #HV01 #H destruct
-  elim (lcpss_inv_pair1 … H2) -H2 #L2 #V2 #HL02 #HV02 #H destruct
-  elim (IH … HL01 … HL02) -IH normalize // #L #HL1 #HL2
-  elim (cpss_conf_lcpss … HV01 … HV02 … HL01 … HL02) -L0 -V0 /3 width=5/
-]
+theorem lpss_conf: confluent … lpss.
+/3 width=6 by lpx_sn_conf, cpss_conf_lpss/
 qed-.
 
-theorem lcpss_trans: Transitive … lcpss.
-#L1 #L #H elim H -L1 -L //
-#I #L1 #L #V1 #V #HL1 #HV1 #IHL1 #X #H
-elim (lcpss_inv_pair1 … H) -H #L2 #V2 #HL2 #HV2 #H destruct
-lapply (cpss_trans_lcpss … HV1 … HL1 … HV2) -V -HL1 /3 width=1/
+theorem lpss_trans: Transitive … lpss.
+/3 width=5 by lpx_sn_trans, cpss_trans_lpss/
 qed-.
 
 (* Advanced forward lemmas **************************************************)
@@ -49,7 +37,7 @@ lemma cpss_fwd_shift1: ∀L1,L,T1,T. L ⊢ L1 @@ T1 ▶* T →
 | #I #L1 #V1 #IH #L #T1 #T >shift_append_assoc #H <append_assoc
   elim (cpss_inv_bind1 … H) -H #V2 #T2 #HV12 #HT12 #H destruct
   elim (IH … HT12) -IH -HT12 #L2 #T #HL12 #HT1 #H destruct
-  lapply (lcpss_trans … HL12 (L.ⓑ{I}V2@@L2) ?) -HL12 /3 width=1/ #HL12
+  lapply (lpss_trans … HL12 (L.ⓑ{I}V2@@L2) ?) -HL12 /3 width=1/ #HL12
   @(ex3_2_intro … (⋆.ⓑ{I}V2@@L2)) [4: /2 width=3/ | skip ] <append_assoc // (**) (* explicit constructor *)
 ]
 qed-.

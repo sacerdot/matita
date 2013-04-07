@@ -11,14 +11,6 @@ table {
    ]
 (*
    class "wine"
-   [ { "examples" * } {
-        [ { "" * } {
-             [ "" * ]
-          }
-        ]
-     }
-   ]
-   class "magenta"
    [ { "higher order dynamic typing" * } {
         [ { "higher order native type assignment" * } {
              [ "ntas ( ⦃?,?⦄ ⊢ ? :* ? )" "nta_lift" * ]
@@ -27,7 +19,7 @@ table {
      }
    ]
 *)
-   class "prune"
+   class "magenta"
    [ { "dynamic typing" * } {
 (*
         [ { "local env. ref. for native type assignment" * } {
@@ -57,7 +49,7 @@ table {
         ]
      }
    ]
-   class "blue"
+   class "prune"
    [ { "equivalence" * } {
         [ { "focalized equivalence" * } {
              [ "lfpcs ( ⦃?⦄ ⬌* ⦃?⦄ )" "lfpcs_aaa" + "lfpcs_fpcs" + "lfpcs_lfprs" + "lfpcs_lfpcs" * ]
@@ -74,7 +66,7 @@ table {
         ]
      }
    ]
-   class "sky"
+   class "blue"
    [ { "conversion" * } {
         [ { "focalized conversion" * } {
              [ "lfpc ( ⦃?⦄ ⬌ ⦃?⦄ )" "lfpc_lfpc" * ]
@@ -87,7 +79,7 @@ table {
         ]
      }
    ]
-   class "cyan"
+   class "sky"
    [ { "computation" * } {
         [ { "focalized computation" * } {
              [ "lfprs ( ⦃?⦄ ➡* ⦃?⦄ )" "lfprs_aaa" + "lfprs_ltprs" + "lfprs_cprs" + "lfprs_fprs" + "lfprs_lfprs" * ]
@@ -126,7 +118,7 @@ table {
         ]
      }
    ]
-   class "water"
+   class "cyan"
    [ { "reducibility" * } {
         [ { "context-sensitive focalized reduction" * } {
              [ "cfpr ( ? ⊢ ⦃?,?⦄ ➡ ⦃?,?⦄ )" "cnfpr_ltpss" + "cfpr_aaa" + "cfpr_cpr" + "cfpr_cfpr" * ]
@@ -160,6 +152,15 @@ table {
         ]
      }
    ]
+   class "water"
+   [ { "restricted computation" * } {
+        [ { "restricted parallel computation" * } {
+             [ "lpqs ( ? ⊢ ➤* ? )" "lpqs_ldrop" + "lpqs_cpqs" + "lpqs_lpqs" * ]
+             [ "cpqs ( ? ⊢ ? ➤* ? )" "cpqs_lift" * ]
+          }
+        ]        
+     }
+   ]   
    class "green"
    [ { "unwind" * } {
         [ { "iterated stratified static type assignment" * } {
@@ -198,12 +199,12 @@ table {
              [ "delift ( ? ⊢ ? ▼*[?,?] ≡ ? )" "delift_alt ( ? ⊢ ? ▼▼*[?,?] ≡ ? )" "delift_lift" + "delift_tpss" + "delift_ltpss" + "delift_delift" * ]
           }
         ]
-	[ { "revised parallel substitution" * } {
-             [ "lcpss ( ? ⊢ ▶* ? )" "lcpss_ldrop" + "lcpss_cpss" + "lcpss_lcpss" * ]
+        [ { "revised parallel substitution" * } {
+             [ "lpss ( ? ⊢ ▶* ? )" "lpss_ldrop" + "lpss_cpss" + "lpss_lpss" * ]
              [ "cpss ( ? ⊢ ? ▶* ? )" "cpss_lift" * ]
           }
         ]        
-	[ { "partial unfold" * } {
+        [ { "partial unfold" * } {
              [ "ltpss_sn ( ? ⊢ ▶*[?,?] ? )" "ltpss_sn_alt ( ? ⊢ ▶▶*[?,?] ? )" "ltpss_sn_ldrop" + "ltpss_sn_tps" + "ltpss_sn_tpss" + "ltpss_sn_ltpss_sn" * ]
              [ "ltpss_dx ( ? ▶*[?,?] ? )" "ltpss_dx_ldrop" + "ltpss_dx_tps" + "ltpss_dx_tpss" + "ltpss_dx_ltpss_dx" * ]
              [ "tpss ( ? ⊢ ? ▶*[?,?] ? )" "tpss_alt ( ? ⊢ ? ▶▶*[?,?] ? )" "tpss_lift" "tpss_tpss" * ]
@@ -243,7 +244,7 @@ table {
           }
         ]
         [ { "basic local env. slicing" * } {
-             [ "ldrop ( ⇩[?,?] ? ≡ ? )" "ldrop_append" + "ldrop_lpx" + "ldrop_lbotr" + "ldrop_ldrop" * ]
+             [ "ldrop ( ⇩[?,?] ? ≡ ? )" "ldrop_append" + "ldrop_lpx" + "ldrop_lpx_sn" + "ldrop_lbotr" + "ldrop_ldrop" * ]
           }
         ]
         [ { "local env. ref. for substitution" * } {
@@ -273,7 +274,7 @@ table {
         ]
         [ { "internal syntax" * } {
              [ "genv" * ]
-             [ "lenv" "lenv_weight ( ♯{?} )" "lenv_length ( |?| )" "lenv_append ( ? @@ ? )" "lenv_px" + "lenv_px_bi" * ]
+             [ "lenv" "lenv_weight ( ♯{?} )" "lenv_length ( |?| )" "lenv_append ( ? @@ ? )" "lenv_px" + "lenv_px_sn" + "lenv_px_bi" * ]
              [ "term" "term_weight ( ♯{?} )" "term_simple ( 𝐒⦃?⦄ )" "term_vector" * ]
              [ "item" * ]
           }

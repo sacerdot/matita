@@ -46,3 +46,31 @@ d: abbreviation
 f: flat
 l: abstraction
 n: native type annotation
+
+NAMING CONVENTIONS FOR TRANSFORMATIONS
+
+- first letter
+
+f: context-freee for closures
+l: sn contex-sensitive for terms
+r: dx contex-sensitive for terms
+t: context-free for terms
+
+-second letter
+
+p: parallel
+s: sequential
+
+- third letter
+
+c: conversion
+d: decomposed extended reduction
+q: restricted reduction
+r: reduction
+s: substitution
+x: extended reduction
+
+- forth letter (if present)
+
+p: non-reflexive transitive closure
+s: reflexive transitive closure

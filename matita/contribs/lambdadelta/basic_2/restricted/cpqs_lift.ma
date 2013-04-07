@@ -13,14 +13,13 @@
 (**************************************************************************)
 
 include "basic_2/substitution/ldrop_ldrop.ma".
-include "basic_2/unfold/cpss.ma".
+include "basic_2/restricted/cpqs.ma".
 
-(* CONTEXT-SENSITIVE PARALLEL UNFOLD FOR TERMS ******************************)
+(* CONTEXT-SENSITIVE RESTRICTED PARALLEL COMPUTATION FOR TERMS **************)
 
 (* Relocation properties ****************************************************)
 
-(* Basic_1: was only: subst1_lift_lt subst1_lift_ge *)
-lemma cpss_lift: l_liftable cpss.
+lemma cpqs_lift: l_liftable cpqs.
 #K #T1 #T2 #H elim H -K -T1 -T2
 [ #I #K #L #d #e #_ #U1 #H1 #U2 #H2
   >(lift_mono … H1 … H2) -H1 -H2 //
@@ -38,11 +37,15 @@ lemma cpss_lift: l_liftable cpss.
 | #I #K #V1 #V2 #T1 #T2 #_ #_ #IHV12 #IHT12 #L #d #e #HLK #U1 #H1 #U2 #H2
   elim (lift_inv_flat1 … H1) -H1 #VV1 #TT1 #HVV1 #HTT1 #H1 destruct
   elim (lift_inv_flat1 … H2) -H2 #VV2 #TT2 #HVV2 #HTT2 #H2 destruct /3 width=6/
-]
+| #K #V #T1 #T #T2 #_ #HT2 #IHT1 #L #d #e #HLK #U1 #H #U2 #HTU2
+  elim (lift_inv_bind1 … H) -H #VV1 #TT1 #HVV1 #HTT1 #H destruct
+  elim (lift_conf_O1 … HTU2 … HT2) -T2 /4 width=5/
+| #K #V #T1 #T2 #_ #IHT12 #L #d #e #HLK #U1 #H #U2 #HTU2
+  elim (lift_inv_flat1 … H) -H #VV1 #TT1 #HVV1 #HTT1 #H destruct /3 width=5/
+] 
 qed.
 
-(* Basic_1: was only: subst1_gen_lift_lt subst1_gen_lift_ge *)
-lemma cpss_inv_lift1: l_deliftable_sn cpss.
+lemma cpqs_inv_lift1: l_deliftable_sn cpqs.
 #L #U1 #U2 #H elim H -L -U1 -U2
 [ * #L #i #K #d #e #_ #T1 #H
   [ lapply (lift_inv_sort2 … H) -H #H destruct /2 width=3/
@@ -67,5 +70,12 @@ lemma cpss_inv_lift1: l_deliftable_sn cpss.
   elim (lift_inv_flat2 … H) -H #W1 #T1 #HWV1 #HTU1 #H destruct
   elim (IHV12 … HLK … HWV1) -V1
   elim (IHU12 … HLK … HTU1) -U1 -HLK /3 width=5/
+| #L #V #U1 #U #U2 #_ #HU2 #IHU1 #K #d #e #HLK #X #H
+  elim (lift_inv_bind2 … H) -H #W1 #T1 #HWV1 #HTU1 #H destruct
+  elim (IHU1 (K.ⓓW1) … HTU1) /2 width=1/ -L -U1 #T #HTU #HT1
+  elim (lift_div_le … HU2 … HTU) -U // /3 width=5/
+| #L #V #U1 #U2 #_ #IHU12 #K #d #e #HLK #X #H
+  elim (lift_inv_flat2 … H) -H #W1 #T1 #HWV1 #HTU1 #H destruct
+  elim (IHU12 … HLK … HTU1) -L -U1 /3 width=3/
 ]
 qed-.

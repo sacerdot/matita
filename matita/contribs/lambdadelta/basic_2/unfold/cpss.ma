@@ -17,14 +17,14 @@ include "basic_2/substitution/ldrop_append.ma".
 (* CONTEXT-SENSITIVE PARALLEL UNFOLD FOR TERMS ******************************)
 
 inductive cpss: lenv → relation term ≝
-| cpss_atom : ∀L,I. cpss L (⓪{I}) (⓪{I})
-| cpss_subst: ∀L,K,V,V2,W2,i.
+| cpss_atom : ∀I,L. cpss L (⓪{I}) (⓪{I})
+| cpss_delta: ∀L,K,V,V2,W2,i.
               ⇩[0, i] L ≡ K. ⓓV → cpss K V V2 →
               ⇧[0, i + 1] V2 ≡ W2 → cpss L (#i) W2
-| cpss_bind : ∀L,a,I,V1,V2,T1,T2.
+| cpss_bind : ∀a,I,L,V1,V2,T1,T2.
               cpss L V1 V2 → cpss (L. ⓑ{I} V1) T1 T2 →
               cpss L (ⓑ{a,I} V1. T1) (ⓑ{a,I} V2. T2)
-| cpss_flat : ∀L,I,V1,V2,T1,T2.
+| cpss_flat : ∀I,L,V1,V2,T1,T2.
               cpss L V1 V2 → cpss L T1 T2 →
               cpss L (ⓕ{I} V1. T1) (ⓕ{I} V2. T2)
 .
@@ -49,11 +49,13 @@ lemma cpss_lsubr_trans: ∀L1,T1,T2. L1 ⊢ T1 ▶* T2 →
 ]
 qed-.
 
+(* Basic_1: was by definition: subst1_refl *)
 lemma cpss_refl: ∀T,L. L ⊢ T ▶* T.
 #T elim T -T //
 #I elim I -I /2 width=1/
 qed.
 
+(* Basic_1: was only: subst1_ex *)
 lemma cpss_delift: ∀K,V,T1,L,d. ⇩[0, d] L ≡ (K. ⓓV) →
                    ∃∃T2,T. L ⊢ T1 ▶* T2 & ⇧[d, 1] T ≡ T2.
 #K #V #T1 elim T1 -T1
@@ -70,11 +72,11 @@ lemma cpss_delift: ∀K,V,T1,L,d. ⇩[0, d] L ≡ (K. ⓓV) →
 ]
 qed-.
 
-lemma cpss_append: ∀K,T1,T2. K ⊢ T1 ▶* T2 → ∀L. L @@ K ⊢ T1 ▶* T2.
+lemma cpss_append: l_appendable_sn … cpss.
 #K #T1 #T2 #H elim H -K -T1 -T2 // /2 width=1/
 #K #K0 #V1 #V2 #W2 #i #HK0 #_ #HVW2 #IHV12 #L
 lapply (ldrop_fwd_ldrop2_length … HK0) #H
-@(cpss_subst … (L@@K0) V1 … HVW2) //
+@(cpss_delta … (L@@K0) V1 … HVW2) //
 @(ldrop_O1_append_sn_le … HK0) /2 width=2/ (**) (* /3/ does not work *)
 qed.
 
@@ -87,14 +89,14 @@ fact cpss_inv_atom1_aux: ∀L,T1,T2. L ⊢ T1 ▶* T2 → ∀I. T1 = ⓪{I} →
                                      ⇧[O, i + 1] V2 ≡ T2 &
                                      I = LRef i.
 #L #T1 #T2 * -L -T1 -T2
-[ #L #I #J #H destruct /2 width=1/
+[ #I #L #J #H destruct /2 width=1/
 | #L #K #V #V2 #T2 #i #HLK #HV2 #HVT2 #I #H destruct /3 width=8/
-| #L #a #I #V1 #V2 #T1 #T2 #_ #_ #J #H destruct
-| #L #I #V1 #V2 #T1 #T2 #_ #_ #J #H destruct
+| #a #I #L #V1 #V2 #T1 #T2 #_ #_ #J #H destruct
+| #I #L #V1 #V2 #T1 #T2 #_ #_ #J #H destruct
 ]
 qed-.
 
-lemma cpss_inv_atom1: ∀L,T2,I. L ⊢ ⓪{I} ▶* T2 →
+lemma cpss_inv_atom1: ∀I,L,T2. L ⊢ ⓪{I} ▶* T2 →
                       T2 = ⓪{I} ∨
                       ∃∃K,V,V2,i. ⇩[O, i] L ≡ K. ⓓV &
                                   K ⊢ V ▶* V2 &
@@ -102,12 +104,14 @@ lemma cpss_inv_atom1: ∀L,T2,I. L ⊢ ⓪{I} ▶* T2 →
                                   I = LRef i.
 /2 width=3 by cpss_inv_atom1_aux/ qed-.
 
+(* Basic_1: was only: subst1_gen_sort *)
 lemma cpss_inv_sort1: ∀L,T2,k. L ⊢ ⋆k ▶* T2 → T2 = ⋆k.
 #L #T2 #k #H
 elim (cpss_inv_atom1 … H) -H //
 * #K #V #V2 #i #_ #_ #_ #H destruct
 qed-.
 
+(* Basic_1: was only: subst1_gen_lref *)
 lemma cpss_inv_lref1: ∀L,T2,i. L ⊢ #i ▶* T2 →
                       T2 = #i ∨
                       ∃∃K,V,V2. ⇩[O, i] L ≡ K. ⓓV &
@@ -130,14 +134,14 @@ fact cpss_inv_bind1_aux: ∀L,U1,U2. L ⊢ U1 ▶* U2 →
                                   L. ⓑ{I} V1 ⊢ T1 ▶* T2 &
                                   U2 = ⓑ{a,I} V2. T2.
 #L #U1 #U2 * -L -U1 -U2
-[ #L #k #a #I #V1 #T1 #H destruct
-| #L #K #V #V2 #W2 #i #_ #_ #_ #a #I #V1 #T1 #H destruct
-| #L #b #J #V1 #V2 #T1 #T2 #HV12 #HT12 #a #I #V #T #H destruct /2 width=5/
-| #L #J #V1 #V2 #T1 #T2 #_ #_ #a #I #V #T #H destruct
+[ #I #L #b #J #W1 #U1 #H destruct
+| #L #K #V #V2 #W2 #i #_ #_ #_ #b #J #W1 #U1 #H destruct
+| #a #I #L #V1 #V2 #T1 #T2 #HV12 #HT12 #b #J #W1 #U1 #H destruct /2 width=5/
+| #I #L #V1 #V2 #T1 #T2 #_ #_ #b #J #W1 #U1 #H destruct
 ]
 qed-.
 
-lemma cpss_inv_bind1: ∀L,a,I,V1,T1,U2. L ⊢ ⓑ{a,I} V1. T1 ▶* U2 →
+lemma cpss_inv_bind1: ∀a,I,L,V1,T1,U2. L ⊢ ⓑ{a,I} V1. T1 ▶* U2 →
                       ∃∃V2,T2. L ⊢ V1 ▶* V2 &
                                L. ⓑ{I} V1 ⊢ T1 ▶* T2 &
                                U2 = ⓑ{a,I} V2. T2.
@@ -148,14 +152,14 @@ fact cpss_inv_flat1_aux: ∀L,U1,U2. L ⊢ U1 ▶* U2 →
                          ∃∃V2,T2. L ⊢ V1 ▶* V2 & L ⊢ T1 ▶* T2 &
                                   U2 =  ⓕ{I} V2. T2.
 #L #U1 #U2 * -L -U1 -U2
-[ #L #k #I #V1 #T1 #H destruct
-| #L #K #V #V2 #W2 #i #_ #_ #_ #I #V1 #T1 #H destruct
-| #L #a #J #V1 #V2 #T1 #T2 #_ #_ #I #V #T #H destruct
-| #L #J #V1 #V2 #T1 #T2 #HV12 #HT12 #I #V #T #H destruct /2 width=5/
+[ #I #L #J #W1 #U1 #H destruct
+| #L #K #V #V2 #W2 #i #_ #_ #_ #J #W1 #U1 #H destruct
+| #a #I #L #V1 #V2 #T1 #T2 #_ #_ #J #W1 #U1 #H destruct
+| #I #L #V1 #V2 #T1 #T2 #HV12 #HT12 #J #W1 #U1 #H destruct /2 width=5/
 ]
 qed-.
 
-lemma cpss_inv_flat1: ∀L,I,V1,T1,U2. L ⊢ ⓕ{I} V1. T1 ▶* U2 →
+lemma cpss_inv_flat1: ∀I,L,V1,T1,U2. L ⊢ ⓕ{I} V1. T1 ▶* U2 →
                       ∃∃V2,T2. L ⊢ V1 ▶* V2 & L ⊢ T1 ▶* T2 &
                                U2 =  ⓕ{I} V2. T2.
 /2 width=3 by cpss_inv_flat1_aux/ qed-.
@@ -164,7 +168,7 @@ lemma cpss_inv_flat1: ∀L,I,V1,T1,U2. L ⊢ ⓕ{I} V1. T1 ▶* U2 →
 
 lemma cpss_fwd_tw: ∀L,T1,T2. L ⊢ T1 ▶* T2 → ♯{T1} ≤ ♯{T2}.
 #L #T1 #T2 #H elim H -L -T1 -T2 normalize
-/3 by monotonic_le_plus_l, le_plus/ (**) (* just /3 width=1/ is too slow *)
+/3 width=1 by monotonic_le_plus_l, le_plus/ (**) (* auto is too slow without trace *)
 qed-.
 
 lemma cpss_fwd_shift1: ∀L1,L,T1,T. L ⊢ L1 @@ T1 ▶* T →
@@ -181,3 +185,14 @@ lemma cpss_fwd_shift1: ∀L1,L,T1,T. L ⊢ L1 @@ T1 ▶* T →
   @(ex2_2_intro … (⋆.ⓑ{I}V0@@L2) T2) [ >append_length ] // /2 width=3/ (**) (* explicit constructor *)
 ]
 qed-.
+
+(* Basic_1: removed theorems 27:
+            subst0_gen_sort subst0_gen_lref subst0_gen_head subst0_gen_lift_lt
+            subst0_gen_lift_false subst0_gen_lift_ge subst0_refl subst0_trans
+            subst0_lift_lt subst0_lift_ge subst0_lift_ge_S subst0_lift_ge_s
+            subst0_subst0 subst0_subst0_back subst0_weight_le subst0_weight_lt
+            subst0_confluence_neq subst0_confluence_eq subst0_tlt_head
+            subst0_confluence_lift subst0_tlt
+            subst1_head subst1_gen_head subst1_lift_S subst1_confluence_lift
+            subst1_gen_lift_eq subst1_confluence_neq
+*)
