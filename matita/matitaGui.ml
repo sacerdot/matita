@@ -419,7 +419,7 @@ class gui () =
     val mutable chosen_file = None
     val mutable _ok_not_exists = false
     val mutable _only_directory = false
-    val mutable current_page = 0
+    val mutable current_page = -1
       
     initializer
       let s () = MatitaScript.current () in
@@ -870,14 +870,12 @@ class gui () =
         MatitaMisc.decrease_font_size;
       connect_menu_item main#normalFontSizeMenuItem
         MatitaMisc.reset_font_size;
-      ignore (main#scriptNotebook#connect#switch_page
-       (fun page ->
-         let old_script = MatitaScript.at_page current_page in
-         save_moo0 ~do_clean:false old_script old_script#status;
-         current_page <- page;
-         let script = MatitaScript.at_page page in
-          script#activate;
-          main#saveMenuItem#misc#set_sensitive script#has_name))
+      ignore (main#scriptNotebook#connect#switch_page (fun page ->
+        self#save_page ();
+        current_page <- page;
+        let script = MatitaScript.at_page page in
+        script#activate;
+        main#saveMenuItem#misc#set_sensitive script#has_name))
 
     method private externalEditor () =
      let script = MatitaScript.current () in
@@ -979,7 +977,13 @@ class gui () =
      let script = MatitaScript.at_page page in 
       self#closeScript page script
 
+    method private save_page () =
+      if current_page >= 0 then
+        let old_script = MatitaScript.at_page current_page in
+        save_moo0 ~do_clean:false old_script old_script#status
+
     method newScript () = 
+       self#save_page ();
        let scrolledWindow = GBin.scrolled_window () in
        let hbox = GPack.hbox () in
        let tab_label = GMisc.label ~text:"foo" ~packing:hbox#pack () in
