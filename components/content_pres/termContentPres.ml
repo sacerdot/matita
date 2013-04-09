@@ -300,14 +300,14 @@ module IntMap = Map.Make(struct type t = int let compare = compare end);;
 
 type db = {
  level1_patterns21: NotationPt.term IntMap.t;
- compiled21: ((NotationPt.term -> (NotationEnv.t * NotationPt.term list * int) option)) Lazy.t option;
+ compiled21: ((NotationPt.term -> (NotationEnv.t * NotationPt.term list * int) option)) Lazy.t;
  pattern21_matrix: (NotationPt.term * pattern_id) list;
  counter: pattern_id
 }
 
 let initial_db = {
  level1_patterns21 = IntMap.empty;
- compiled21 = None;
+ compiled21 = lazy (Content2presMatcher.Matcher21.compiler []);
  pattern21_matrix = [];
  counter = ~-1 
 }
@@ -329,13 +329,11 @@ class virtual status =
  end
 
 let get_compiled21 status =
-  match status#content_pres_db.compiled21 with
-  | None -> assert false
-  | Some f -> Lazy.force f
+  Lazy.force status#content_pres_db.compiled21
 
 let set_compiled21 status f =
  status#set_content_pres_db
-  { status#content_pres_db with compiled21 = Some f }
+  { status#content_pres_db with compiled21 = f }
 
 let add_idrefs =
   List.fold_right (fun idref t -> Ast.AttributedTerm (`IdRef idref, t))
