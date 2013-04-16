@@ -306,17 +306,17 @@ notation "hvbox( L ⊢ break 𝐇𝐍 ⦃ term 46 T ⦄ )"
    non associative with precedence 45
    for @{ 'HdNormal $L $T }.
 
-notation "hvbox( T1 ➡ break term 46 T2 )"
-   non associative with precedence 45
-   for @{ 'PRed $T1 $T2 }.
-
 notation "hvbox( L ⊢ break term 46 T1 ➡ break term 46 T2 )"
    non associative with precedence 45
    for @{ 'PRed $L $T1 $T2 }.
 
-notation "hvbox( ⦃ term 46 L1 ⦄ ➡ break ⦃ term 46 L2 ⦄ )"
+notation "hvbox( L1 ⊢ ➡ break term 46 L2 )"
    non associative with precedence 45
-   for @{ 'FocalizedPRed $L1 $L2 }.
+   for @{ 'PRedSn $L1 $L2 }.
+
+notation "hvbox( L1 ⊢ ➡ ➡ break term 46 L2 )"
+   non associative with precedence 45
+   for @{ 'PRedSnAlt $L1 $L2 }.
 
 notation "hvbox( ⦃ term 46 L1, break term 46 T1 ⦄ ➡ break ⦃ term 46 L2 , break term 46 T2 ⦄ )"
    non associative with precedence 45
@@ -325,10 +325,6 @@ notation "hvbox( ⦃ term 46 L1, break term 46 T1 ⦄ ➡ break ⦃ term 46 L2 ,
 notation "hvbox( L ⊢ break ⦃ term 46 L1, break term 46 T1 ⦄ ➡ break ⦃ term 46 L2 , break term 46 T2 ⦄ )"
    non associative with precedence 45
    for @{ 'FocalizedPRed $L $L1 $T1 $L2 $T2 }.
-
-notation "hvbox( ⦃ term 46 L1 ⦄ ➡ ➡ break ⦃ term 46 L2 ⦄ )"
-   non associative with precedence 45
-   for @{ 'FocalizedPRedAlt $L1 $L2 }.
 
 (* Computation **************************************************************)
 

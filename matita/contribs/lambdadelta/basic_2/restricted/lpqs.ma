@@ -40,7 +40,6 @@ lemma lpqs_inv_pair2: ∀I,L1,K2,V2. L1 ⊢ ➤* K2. ⓑ{I} V2 →
 
 (* Basic properties *********************************************************)
 
-(* Basic_1: was by definition: csubst1_refl *)
 lemma lpqs_refl: ∀L. L ⊢ ➤* L.
 /2 width=1 by lpx_sn_refl/ qed.
 
@@ -56,3 +55,13 @@ qed.
 
 lemma lpqs_fwd_length: ∀L1,L2. L1 ⊢ ➤* L2 → |L1| = |L2|.
 /2 width=2 by lpx_sn_fwd_length/ qed-.
+
+(* Advanced forward lemmas **************************************************)
+
+lemma lpqs_fwd_append1: ∀K1,L1,L. K1 @@ L1 ⊢ ➤* L →
+                        ∃∃K2,L2. K1 ⊢ ➤* K2 & L = K2 @@ L2.
+/2 width=2 by lpx_sn_fwd_append1/ qed-.
+
+lemma lpqs_fwd_append2: ∀L,K2,L2. L ⊢ ➤* K2 @@ L2 →
+                        ∃∃K1,L1. K1 ⊢ ➤* K2 & L = K1 @@ L1.
+/2 width=2 by lpx_sn_fwd_append2/ qed-.

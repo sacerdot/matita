@@ -48,9 +48,8 @@ lemma cpqs_lsubr_trans: ∀L1,T1,T2. L1 ⊢ T1 ➤* T2 →
   elim (ldrop_lsubr_ldrop2_abbr … HL12 … HLK1 ? ?) -HL12 -HLK1 // -Hi
   <H2i -H2i <minus_plus_m_m /3 width=6/
 | /4 width=1/
-| /3 width=1/
+|4,6: /3 width=1/
 | /4 width=3/
-| /3 width=1/
 ]
 qed-.
 

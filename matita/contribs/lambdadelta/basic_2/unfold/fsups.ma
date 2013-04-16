@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/fsupp.ma".
+include "basic_2/unfold/fsupp.ma".
 
 (* STAR-ITERATED SUPCLOSURE *************************************************)
 
@@ -70,7 +70,7 @@ lemma fsups_fwd_cw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⊃* ⦃L2, T2⦄ → ♯{L2, T
 #L1 #L2 #T1 #T2 #H @(fsups_ind … H) -L2 -T2 //
 /4 width=3 by fsup_fwd_cw, lt_to_le_to_lt, lt_to_le/ (**) (* slow even with trace *)
 qed-.
-
+(*
 (* Advanced inversion lemmas on plus-iterated supclosure ********************)
 
 lemma fsupp_inv_bind1_fsups: ∀b,J,L1,L2,W,U,T2. ⦃L1, ⓑ{b,J}W.U⦄ ⊃+ ⦃L2, T2⦄ →
@@ -90,3 +90,4 @@ lemma fsupp_inv_flat1_fsups: ∀J,L1,L2,W,U,T2. ⦃L1, ⓕ{J}W.U⦄ ⊃+ ⦃L2, 
 | #L #T #L2 #T2 #_ #HT2 * /3 width=4/
 ]
 qed-.
+*)

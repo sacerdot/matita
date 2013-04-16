@@ -40,7 +40,7 @@ lemma cpqs_fwd_shift1: ∀L1,L,T1,T. L ⊢ L1 @@ T1 ➤* T →
     elim (IH … HT12) -IH -HT12 #L2 #T #HL12 #HT1 #H destruct
     lapply (lpqs_trans … HL12 (L.ⓑ{I}V2@@L2) ?) -HL12 /3 width=1/ #HL12
     @(ex3_2_intro … (⋆.ⓑ{I}V2@@L2)) [4: /2 width=3/ | skip ] <append_assoc // (**) (* explicit constructor *)
-  | #T #_ #_ #H destruct  
+  | #T #_ #_ #H destruct
   ]
 ]
 qed-.

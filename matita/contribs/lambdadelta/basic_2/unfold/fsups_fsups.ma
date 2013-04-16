@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/fsups.ma".
+include "basic_2/unfold/fsups.ma".
 
 (* STAR-ITERATED SUPCLOSURE *************************************************)
 

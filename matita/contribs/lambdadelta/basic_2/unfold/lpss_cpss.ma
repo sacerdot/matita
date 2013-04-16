@@ -109,7 +109,7 @@ elim (IH … HV01 … HV02 … HL01 … HL02) //
 elim (IH … HT01 … HT02 … HL01 … HL02) // /3 width=5/
 qed-.
 
-theorem cpss_conf_lpss: lpx_sn_confluent cpss.
+theorem cpss_conf_lpss: lpx_sn_confluent cpss cpss.
 #L0 #T0 @(f2_ind … fw … L0 T0) -L0 -T0 #n #IH #L0 * [|*]
 [ #I0 #Hn #T1 #H1 #T2 #H2 #L1 #HL01 #L2 #HL02 destruct
   elim (cpss_inv_atom1 … H1) -H1
@@ -139,7 +139,7 @@ qed-.
 theorem cpss_conf: ∀L. confluent … (cpss L).
 /2 width=6 by cpss_conf_lpss/ qed-.
 
-theorem cpss_trans_lpss: lpx_sn_transitive cpss.
+theorem cpss_trans_lpss: lpx_sn_transitive cpss cpss.
 #L1 #T1 @(f2_ind … fw … L1 T1) -L1 -T1 #n #IH #L1 * [|*]
 [ #I #Hn #T #H1 #L2 #HL12 #T2 #HT2 destruct
   elim (cpss_inv_atom1 … H1) -H1

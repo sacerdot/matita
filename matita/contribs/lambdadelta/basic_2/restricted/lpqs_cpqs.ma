@@ -175,7 +175,7 @@ fact cpqs_conf_lpqs_tau_tau:
 elim (IH … HT01 … HT02 … HL01 … HL02) // -L0 -V0 -T0 /2 width=3/
 qed-.
 
-theorem cpqs_conf_lpqs: lpx_sn_confluent cpqs.
+theorem cpqs_conf_lpqs: lpx_sn_confluent cpqs cpqs.
 #L0 #T0 @(f2_ind … fw … L0 T0) -L0 -T0 #n #IH #L0 * [|*]
 [ #I0 #Hn #T1 #H1 #T2 #H2 #L1 #HL01 #L2 #HL02 destruct
   elim (cpqs_inv_atom1 … H1) -H1
@@ -224,7 +224,7 @@ qed-.
 theorem cpqs_conf: ∀L. confluent … (cpqs L).
 /2 width=6 by cpqs_conf_lpqs/ qed-.
 
-theorem cpqs_trans_lpqs: lpx_sn_transitive cpqs.
+theorem cpqs_trans_lpqs: lpx_sn_transitive cpqs cpqs.
 #L1 #T1 @(f2_ind … fw … L1 T1) -L1 -T1 #n #IH #L1 * [|*]
 [ #I #Hn #T #H1 #L2 #HL12 #T2 #HT2 destruct
   elim (cpqs_inv_atom1 … H1) -H1

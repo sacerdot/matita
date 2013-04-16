@@ -29,7 +29,7 @@ lemma lpss_inv_atom1: ∀L2. ⋆ ⊢ ▶* L2 → L2 = ⋆.
 /2 width=4 by lpx_sn_inv_atom1_aux/ qed-.
 
 lemma lpss_inv_pair1: ∀I,K1,V1,L2. K1. ⓑ{I} V1 ⊢ ▶* L2 →
-                       ∃∃K2,V2. K1 ⊢ ▶* K2 & K1 ⊢ V1 ▶* V2 & L2 = K2. ⓑ{I} V2.
+                      ∃∃K2,V2. K1 ⊢ ▶* K2 & K1 ⊢ V1 ▶* V2 & L2 = K2. ⓑ{I} V2.
 /2 width=3 by lpx_sn_inv_pair1_aux/ qed-.
 
 lemma lpss_inv_atom2: ∀L1. L1 ⊢ ▶* ⋆ → L1 = ⋆.
@@ -53,6 +53,16 @@ lemma lpss_append: ∀K1,K2. K1 ⊢ ▶* K2 → ∀L1,L2. L1 ⊢ ▶* L2 →
 
 lemma lpss_fwd_length: ∀L1,L2. L1 ⊢ ▶* L2 → |L1| = |L2|.
 /2 width=2 by lpx_sn_fwd_length/ qed-.
+
+(* Advanced forward lemmas **************************************************)
+
+lemma lpss_fwd_append1: ∀K1,L1,L. K1 @@ L1 ⊢ ▶* L →
+                        ∃∃K2,L2. K1 ⊢ ▶* K2 & L = K2 @@ L2.
+/2 width=2 by lpx_sn_fwd_append1/ qed-.
+
+lemma lpss_fwd_append2: ∀L,K2,L2. L ⊢ ▶* K2 @@ L2 →
+                        ∃∃K1,L1. K1 ⊢ ▶* K2 & L = K1 @@ L1.
+/2 width=2 by lpx_sn_fwd_append2/ qed-.
 
 (* Basic_1: removed theorems 28:
             csubst0_clear_O csubst0_drop_lt csubst0_drop_gt csubst0_drop_eq
