@@ -663,6 +663,9 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
             | _ -> status)
          else
           status in
+        (* purge tinycals stack *)
+        let ninitial_stack = Continuationals.Stack.of_nmetasenv [] in
+        let status = status#set_stack ninitial_stack in
 (*
 	  try 
 	    index_eq uri status

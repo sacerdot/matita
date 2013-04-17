@@ -117,8 +117,13 @@ let eval_nmacro include_paths (buffer : GText.buffer) status unparsed_text parse
            if tl <> [] then
             HLog.warn
              "Many goals focused. Using the context of the first one\n";
-           let _, ctx, _ = NCicUtils.lookup_meta g menv in
-            ctx in
+           let ctx = try
+             let _, ctx, _ = NCicUtils.lookup_meta g menv in ctx
+             with NCicUtils.Meta_not_found _ -> 
+               HLog.warn "Current goal is closed. Using empty context.";
+               [ ]
+           in ctx
+      in
       let m, s, status, t = 
         GrafiteDisambiguate.disambiguate_nterm 
           status `XTNone ctx menv subst (parsed_text,parsed_text_length,
