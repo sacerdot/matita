@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/ldrop.ma".
+include "basic_2/relocation/ldrop.ma".
 include "basic_2/static/sd.ma".
 
 (* STRATIFIED STATIC TYPE ASSIGNMENT ON TERMS *******************************)

@@ -12,19 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/ldrops.ma".
-include "basic_2/static/aaa_lift.ma".
+include "basic_2/substitution/gr2.ma".
 
-(* ATONIC ARITY ASSIGNMENT ON TERMS *****************************************)
+(* GENERIC RELOCATION WITH PAIRS ********************************************)
 
-(* Properties concerning generic relocation *********************************)
+(* Main properties **********************************************************)
 
-lemma aaa_lifts: ∀L1,L2,T2,A,des. ⇩*[des] L2 ≡ L1 → ∀T1. ⇧*[des] T1 ≡ T2 →
-                                  L1 ⊢ T1 ⁝ A →  L2 ⊢ T2 ⁝ A.
-#L1 #L2 #T2 #A #des #H elim H -L1 -L2 -des
-[ #L #T1 #H #HT1
-  <(lifts_inv_nil … H) -H //
-| #L1 #L #L2 #des #d #e #_ #HL2 #IHL1 #T1 #H #HT1
-  elim (lifts_inv_cons … H) -H /3 width=9/
+theorem at_mono: ∀des,i,i1. @⦃i, des⦄ ≡ i1 → ∀i2. @⦃i, des⦄ ≡ i2 → i1 = i2.
+#des #i #i1 #H elim H -des -i -i1
+[ #i #x #H <(at_inv_nil … H) -x //
+| #des #d #e #i #i1 #Hid #_ #IHi1 #x #H
+  lapply (at_inv_cons_lt … H Hid) -H -Hid /2 width=1/
+| #des #d #e #i #i1 #Hdi #_ #IHi1 #x #H
+  lapply (at_inv_cons_ge … H Hdi) -H -Hdi /2 width=1/
 ]
-qed.
+qed-.

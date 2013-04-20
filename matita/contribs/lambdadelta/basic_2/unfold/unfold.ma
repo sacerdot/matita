@@ -12,19 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/ldrops.ma".
-include "basic_2/static/aaa_lift.ma".
+include "basic_2/relocation/ldrop.ma".
 
-(* ATONIC ARITY ASSIGNMENT ON TERMS *****************************************)
+(* CONTEXT-SENSITIVE UNFOLD FOR TERMS ***************************************)
 
-(* Properties concerning generic relocation *********************************)
+inductive unfold: lenv → relation2 term lenv ≝
+| unfold_sort: ∀L,k. unfold L (⋆k) L
+| unfold_lref: ∀I,L1,L2,K1,K2,V,i. ⇩[0, i] L1 ≡ K1. ⓑ{I}V →
+               unfold K1 V K2 → ⇩[|L2|, i] L2 ≡ K2 →
+               unfold L1 (#i) (L1@@L2)
+| unfold_bind: ∀a,I,L1,L2,V,T.
+               unfold (L1.ⓑ{I}V) T L2 → unfold L1 (ⓑ{a,I}V.T) L2
+| unfold_flat: ∀I,L1,L2,V,T.
+               unfold L1 T L2 → unfold L1 (ⓕ{I}V.T) L2
+.
 
-lemma aaa_lifts: ∀L1,L2,T2,A,des. ⇩*[des] L2 ≡ L1 → ∀T1. ⇧*[des] T1 ≡ T2 →
-                                  L1 ⊢ T1 ⁝ A →  L2 ⊢ T2 ⁝ A.
-#L1 #L2 #T2 #A #des #H elim H -L1 -L2 -des
-[ #L #T1 #H #HT1
-  <(lifts_inv_nil … H) -H //
-| #L1 #L #L2 #des #d #e #_ #HL2 #IHL1 #T1 #H #HT1
-  elim (lifts_inv_cons … H) -H /3 width=9/
-]
-qed.
+interpretation "context-sensitive unfold (term)"
+   'Unwind L1 T L2 = (unfold L1 T L2).

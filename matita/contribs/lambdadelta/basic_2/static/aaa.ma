@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/grammar/aarity.ma".
-include "basic_2/substitution/ldrop.ma".
+include "basic_2/relocation/ldrop.ma".
 
 (* ATONIC ARITY ASSIGNMENT ON TERMS *****************************************)
 

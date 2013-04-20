@@ -12,19 +12,29 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/ldrops.ma".
-include "basic_2/static/aaa_lift.ma".
+include "basic_2/relocation/gdrop.ma".
 
-(* ATONIC ARITY ASSIGNMENT ON TERMS *****************************************)
+(* GLOBAL ENVIRONMENT SLICING ***********************************************)
 
-(* Properties concerning generic relocation *********************************)
+(* Main properties **********************************************************)
 
-lemma aaa_lifts: ∀L1,L2,T2,A,des. ⇩*[des] L2 ≡ L1 → ∀T1. ⇧*[des] T1 ≡ T2 →
-                                  L1 ⊢ T1 ⁝ A →  L2 ⊢ T2 ⁝ A.
-#L1 #L2 #T2 #A #des #H elim H -L1 -L2 -des
-[ #L #T1 #H #HT1
-  <(lifts_inv_nil … H) -H //
-| #L1 #L #L2 #des #d #e #_ #HL2 #IHL1 #T1 #H #HT1
-  elim (lifts_inv_cons … H) -H /3 width=9/
+theorem gdrop_mono: ∀G,G1,e. ⇩[e] G ≡ G1 → ∀G2. ⇩[e] G ≡ G2 → G1 = G2.
+#G #G1 #e #H elim H -G -G1
+[ #G #He #G2 #H
+  >(gdrop_inv_gt … H He) -H -He //
+| #G #He #G2 #H
+  >(gdrop_inv_eq … H He) -H -He //
+| #I #G #G1 #V #He #_ #IHG1 #G2 #H
+  lapply (gdrop_inv_lt … H He) -H -He /2 width=1/
 ]
-qed.
+qed-.
+
+lemma gdrop_dec: ∀G1,G2,e. Decidable (⇩[e] G1 ≡ G2).
+#G1 #G2 #e
+elim (gdrop_total e G1) #G #HG1
+elim (genv_eq_dec G G2) #HG2
+[ destruct /2 width=1/
+| @or_intror #HG12
+  lapply (gdrop_mono … HG1 … HG12) -HG1 -HG12 /2 width=1/
+]
+qed-.

@@ -12,19 +12,29 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/ldrops.ma".
-include "basic_2/static/aaa_lift.ma".
+include "basic_2/substitution/gr2.ma".
 
-(* ATONIC ARITY ASSIGNMENT ON TERMS *****************************************)
+(* GENERIC RELOCATION WITH PAIRS ********************************************)
 
-(* Properties concerning generic relocation *********************************)
+let rec pluss (des:list2 nat nat) (i:nat) on des ≝ match des with
+[ nil2          ⇒ ⟠
+| cons2 d e des ⇒ {d + i, e} @ pluss des i
+].
 
-lemma aaa_lifts: ∀L1,L2,T2,A,des. ⇩*[des] L2 ≡ L1 → ∀T1. ⇧*[des] T1 ≡ T2 →
-                                  L1 ⊢ T1 ⁝ A →  L2 ⊢ T2 ⁝ A.
-#L1 #L2 #T2 #A #des #H elim H -L1 -L2 -des
-[ #L #T1 #H #HT1
-  <(lifts_inv_nil … H) -H //
-| #L1 #L #L2 #des #d #e #_ #HL2 #IHL1 #T1 #H #HT1
-  elim (lifts_inv_cons … H) -H /3 width=9/
-]
+interpretation "plus (generic relocation with pairs)"
+   'plus x y = (pluss x y).
+
+(* Basic inversion lemmas ***************************************************)
+
+lemma pluss_inv_nil2: ∀i,des. des + i = ⟠ → des = ⟠.
+#i * // normalize
+#d #e #des #H destruct
 qed.
+
+lemma pluss_inv_cons2: ∀i,d,e,des2,des. des + i = {d, e} @ des2 →
+                       ∃∃des1. des1 + i = des2 & des = {d - i, e} @ des1.
+#i #d #e #des2 * normalize
+[ #H destruct
+| #d1 #e1 #des1 #H destruct /2 width=3/
+]
+qed-.

@@ -12,19 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/ldrops.ma".
-include "basic_2/static/aaa_lift.ma".
+include "basic_2/relocation/ldrop_lpx_sn.ma".
+include "basic_2/unfold/cpqs_lift.ma".
+include "basic_2/unfold/lpqs.ma".
 
-(* ATONIC ARITY ASSIGNMENT ON TERMS *****************************************)
+(* SN RESTRICTED PARALLEL COMPUTATION FOR LOCAL ENVIRONMENTS ****************)
 
-(* Properties concerning generic relocation *********************************)
+(* Properies on local environment slicing ***********************************)
 
-lemma aaa_lifts: ∀L1,L2,T2,A,des. ⇩*[des] L2 ≡ L1 → ∀T1. ⇧*[des] T1 ≡ T2 →
-                                  L1 ⊢ T1 ⁝ A →  L2 ⊢ T2 ⁝ A.
-#L1 #L2 #T2 #A #des #H elim H -L1 -L2 -des
-[ #L #T1 #H #HT1
-  <(lifts_inv_nil … H) -H //
-| #L1 #L #L2 #des #d #e #_ #HL2 #IHL1 #T1 #H #HT1
-  elim (lifts_inv_cons … H) -H /3 width=9/
-]
-qed.
+lemma lpqs_ldrop_conf: dropable_sn lpqs.
+/3 width=5 by lpx_sn_deliftable_dropable, cpqs_inv_lift1/ qed-.
+
+lemma ldrop_lpqs_trans: dedropable_sn lpqs.
+/3 width=9 by lpx_sn_liftable_dedropable, cpqs_lift/ qed-.
+
+lemma lpqs_ldrop_trans_O1: dropable_dx lpqs.
+/2 width=3 by lpx_sn_dropable/ qed-.

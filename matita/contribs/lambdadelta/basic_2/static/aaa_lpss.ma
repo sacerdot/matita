@@ -12,12 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unfold/lpss_ldrop.ma".
+include "basic_2/substitution/lpss_ldrop.ma".
 include "basic_2/static/aaa_lift.ma".
 
 (* ATONIC ARITY ASSIGNMENT ON TERMS *****************************************)
 
-(* Properties about sn parallel unfold **************************************)
+(* Properties about sn parallel substitution ********************************)
 
 (* Note: lemma 500 *)
 lemma aaa_cpss_lpss_conf: ∀L1,T1,A. L1 ⊢ T1 ⁝ A → ∀T2. L1 ⊢ T1 ▶* T2 →

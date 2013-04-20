@@ -12,19 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/ldrops.ma".
-include "basic_2/static/aaa_lift.ma".
+include "basic_2/static/ssta_aaa.ma".
+include "basic_2/unfold/sstas.ma".
 
-(* ATONIC ARITY ASSIGNMENT ON TERMS *****************************************)
+(* ITERATED STRATIFIED STATIC TYPE ASSIGNMENT FOR TERMS *********************)
 
-(* Properties concerning generic relocation *********************************)
+(* Properties on atomic arity assignment for terms **************************)
 
-lemma aaa_lifts: ∀L1,L2,T2,A,des. ⇩*[des] L2 ≡ L1 → ∀T1. ⇧*[des] T1 ≡ T2 →
-                                  L1 ⊢ T1 ⁝ A →  L2 ⊢ T2 ⁝ A.
-#L1 #L2 #T2 #A #des #H elim H -L1 -L2 -des
-[ #L #T1 #H #HT1
-  <(lifts_inv_nil … H) -H //
-| #L1 #L #L2 #des #d #e #_ #HL2 #IHL1 #T1 #H #HT1
-  elim (lifts_inv_cons … H) -H /3 width=9/
-]
+lemma sstas_aaa: ∀h,g,L,T,U. ⦃h, L⦄ ⊢ T •*[g] U →
+                 ∀A. L ⊢ T ⁝ A → L ⊢ U ⁝ A.
+#h #g #L #T #U #H @(sstas_ind_dx … H) -T // /3 width=6/
 qed.

@@ -12,12 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unfold/lpss_ldrop.ma".
+include "basic_2/substitution/lpss_ldrop.ma".
 include "basic_2/static/ssta_lift.ma".
 
 (* STRATIFIED STATIC TYPE ASSIGNMENT ON TERMS *******************************)
 
-(* Properties about sn parallel unfold **************************************)
+(* Properties about sn parallel substitution ********************************)
 
 (* Note: apparently this was missing in basic_1 *)
 lemma ssta_tpss_lpss_conf: ∀h,g,L1,T1,U1,l. ⦃h, L1⦄ ⊢ T1 •[g] ⦃l, U1⦄ →

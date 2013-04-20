@@ -1,0 +1,73 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/relocation/lsubr.ma".
+
+(* LOCAL ENVIRONMENT REFINEMENT FOR SUBSTITUTION ****************************)
+
+(* bottom element of the refinement *)
+definition lbotr: nat → nat → predicate lenv ≝
+   λd,e. NF_sn … (lsubr d e) (lsubr d e …).
+
+interpretation
+   "local environment full refinement (substitution)"
+   'SubEqBottom d e L = (lbotr d e L).
+
+(* Basic properties *********************************************************)
+
+lemma lbotr_atom: ∀d,e. ⊒[d, e] ⋆.
+#d #e #L #H
+elim (lsubr_inv_atom2 … H) -H
+[ #H destruct //
+| * #H1 #H2 destruct //
+]
+qed.
+
+lemma lbotr_OO: ∀L. ⊒[0, 0] L.
+// qed.
+
+lemma lbotr_abbr: ∀L,V,e. ⊒[0, e] L → ⊒[0, e + 1] L.ⓓV.
+#L #V #e #HL #K #H
+elim (lsubr_inv_abbr2 … H ?) -H // <minus_plus_m_m #X #HLX #H destruct
+lapply (HL … HLX) -HL -HLX /2 width=1/
+qed.
+
+lemma lbotr_abbr_O: ∀L,V. ⊒[0,1] L.ⓓV.
+#L #V
+@(lbotr_abbr … 0) //
+qed.
+
+lemma lbotr_skip: ∀I,L,V,d,e. ⊒[d, e] L → ⊒[d + 1, e] L.ⓑ{I}V.
+#I #L #V #d #e #HL #K #H
+elim (lsubr_inv_skip2 … H ?) -H // <minus_plus_m_m #J #X #W #HLX #H destruct
+lapply (HL … HLX) -HL -HLX /2 width=1/
+qed.
+
+(* Basic inversion lemmas ***************************************************)
+
+lemma lbotr_inv_bind: ∀I,L,V,e. ⊒[0, e] L.ⓑ{I}V → 0 < e →
+                      ⊒[0, e - 1] L ∧ I = Abbr.
+#I #L #V #e #HL #He
+lapply (HL (L.ⓓV) ?) /2 width=1/ #H
+elim (lsubr_inv_abbr2 … H ?) -H // #K #_ #H destruct
+@conj // #L #HKL
+lapply (HL (L.ⓓV) ?) -HL /2 width=1/ -HKL #H
+elim (lsubr_inv_abbr2 … H ?) -H // -He #X #HLX #H destruct //
+qed-.
+
+lemma lbotr_inv_skip: ∀I,L,V,d,e. ⊒[d, e] L.ⓑ{I}V → 0 < d → ⊒[d - 1, e] L.
+#I #L #V #d #e #HL #Hd #K #HLK
+lapply (HL (K.ⓑ{I}V) ?) -HL /2 width=1/ -HLK #H
+elim (lsubr_inv_skip2 … H ?) -H // -Hd #J #X #W #HKX #H destruct //
+qed-.

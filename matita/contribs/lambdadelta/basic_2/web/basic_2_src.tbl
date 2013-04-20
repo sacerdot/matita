@@ -10,7 +10,7 @@ table {
      }
    ]
 (*
-   class "wine"
+   class "magenta"
    [ { "higher order dynamic typing" * } {
         [ { "higher order native type assignment" * } {
              [ "ntas ( ⦃?,?⦄ ⊢ ? :* ? )" "nta_lift" * ]
@@ -19,7 +19,7 @@ table {
      }
    ]
 *)
-   class "magenta"
+   class "prune"
    [ { "dynamic typing" * } {
 (*
         [ { "local env. ref. for native type assignment" * } {
@@ -49,7 +49,7 @@ table {
         ]
      }
    ]
-   class "prune"
+   class "blue"
    [ { "equivalence" * } {
         [ { "focalized equivalence" * } {
              [ "lfpcs ( ⦃?⦄ ⬌* ⦃?⦄ )" "lfpcs_aaa" + "lfpcs_fpcs" + "lfpcs_lfprs" + "lfpcs_lfpcs" * ]
@@ -66,7 +66,7 @@ table {
         ]
      }
    ]
-   class "blue"
+   class "sky"
    [ { "conversion" * } {
         [ { "focalized conversion" * } {
              [ "lfpc ( ⦃?⦄ ⬌ ⦃?⦄ )" "lfpc_lfpc" * ]
@@ -79,7 +79,7 @@ table {
         ]
      }
    ]
-   class "sky"
+   class "cyan"
    [ { "computation" * } {
         [ { "focalized computation" * } {
              [ "lfprs ( ⦃?⦄ ➡* ⦃?⦄ )" "lfprs_aaa" + "lfprs_ltprs" + "lfprs_cprs" + "lfprs_fprs" + "lfprs_lfprs" * ]
@@ -118,7 +118,7 @@ table {
         ]
      }
    ]
-   class "cyan"
+   class "water"
    [ { "reducibility" * } {
         [ { "context-sensitive focalized reduction" * } {
              [ "cfpr ( ? ⊢ ⦃?,?⦄ ➡ ⦃?,?⦄ )" "cnfpr_ltpss" + "cfpr_aaa" + "cfpr_cpr" + "cfpr_cfpr" * ]
@@ -157,17 +157,17 @@ table {
         ]
      }
    ]
-   class "water"
-   [ { "restricted computation" * } {
+   class "green"
+   [ { "unfold" * } {
         [ { "restricted parallel computation" * } {
              [ "lpqs ( ? ⊢ ➤* ? )" "lpqs_ldrop" + "lpqs_cpqs" + "lpqs_lpqs" * ]
              [ "cpqs ( ? ⊢ ? ➤* ? )" "cpqs_lift" * ]
           }
         ]
-     }
-   ]   
-   class "green"
-   [ { "unwind" * } {
+        [ { "unfold" * } {
+             [ "unfold ( ? ⊢ ? ⧫* ? )" * ]
+          }
+        ]
         [ { "iterated stratified static type assignment" * } {
              [ "sstas ( ⦃?,?⦄ ⊢ ? •*[?] ? )" "sstas_lift" + "sstas_lpss" + "sstas_aaa" + "sstas_sstas" * ]
           }
@@ -195,7 +195,7 @@ table {
      }
    ]
    class "yellow"
-   [ { "unfold" * } {
+   [ { "substitution" * } {
 (*        
 	[ { "basic local env. thinning" * } {
              [ "thin ( ? ▼*[?,?] ≡ ? )" "thin_ldrop" + "thin_delift" * ]
@@ -232,7 +232,7 @@ table {
      }
    ]
    class "orange"
-   [ { "substitution" * } {
+   [ { "relocation" * } {
         [ { "structural successor for closures" * } {
              [ "fsup ( ⦃?,?⦄ ⊃ ⦃?,?⦄ )" * ]
           }

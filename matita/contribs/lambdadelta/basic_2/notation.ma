@@ -48,7 +48,7 @@ notation "hvbox( ② { term 46 I } break term 55 T1 . break term 55 T )"
  non associative with precedence 55
  for @{ 'SnItem2 $I $T1 $T }.
 
-notation "hvbox( ⓑ { term 46 a , term 46 I } break term 55 T1 . break term 55 T )"
+notation "hvbox( ⓑ { term 46 a , break term 46 I } break term 55 T1 . break term 55 T )"
  non associative with precedence 55
  for @{ 'SnBind2 $a $I $T1 $T }.
 
@@ -64,7 +64,7 @@ notation "hvbox( ⓕ { term 46 I } break term 55 T1 . break term 55 T )"
  non associative with precedence 55
  for @{ 'SnFlat2 $I $T1 $T }.
 
-notation "hvbox( ⓓ { term 46 a } term 55 T1 . break term 55 T2 )"
+notation "hvbox( ⓓ { term 46 a } break term 55 T1 . break term 55 T2 )"
  non associative with precedence 55
  for @{ 'SnAbbr $a $T1 $T2 }.
 
@@ -76,7 +76,7 @@ notation "hvbox( - ⓓ term 55 T1 . break term 55 T2 )"
  non associative with precedence 55
  for @{ 'SnAbbrNeg $T1 $T2 }.
 
-notation "hvbox( ⓛ { term 46 a } term 55 T1 . break term 55 T2 )"
+notation "hvbox( ⓛ { term 46 a } break term 55 T1 . break term 55 T2 )"
  non associative with precedence 55
  for @{ 'SnAbst $a $T1 $T2 }.
 
@@ -140,7 +140,7 @@ notation "hvbox( T1 ≃ break term 46 T2 )"
    non associative with precedence 45
    for @{ 'Iso $T1 $T2 }.
 
-(* Substitution *************************************************************)
+(* Relocation ***************************************************************)
 
 notation "hvbox( ⇧ [ term 46 d , break term 46 e ] break term 46 T1 ≡ break term 46 T2 )"
    non associative with precedence 45
@@ -170,7 +170,7 @@ notation "hvbox( L ⊢ break ⌘ ⦃ term 46 T ⦄ ≡ break term 46 k )"
    non associative with precedence 45
    for @{ 'ICM $L $T $k }.
 
-(* Unfold *******************************************************************)
+(* Substitution *************************************************************)
 
 notation "hvbox( @ ⦃ term 46 T1 , break term 46 f ⦄ ≡ break term 46 T2 )"
    non associative with precedence 45
@@ -204,22 +204,6 @@ notation "hvbox( T1 ⊢ ▶ * break term 46 T2 )"
    non associative with precedence 45
    for @{ 'PSubstStarSn $T1 $T2 }.
 
-notation "hvbox( ▼ * [ term 46 d , break term 46 e ] break term 46 T1 ≡ break term 46 T2 )"
-   non associative with precedence 45
-   for @{ 'TSubst $T1 $d $e $T2 }.
-
-notation "hvbox( L ⊢ break ▼ * [ term 46 d , break term 46 e ] break term 46 T1 ≡ break term 46 T2 )"
-   non associative with precedence 45
-   for @{ 'TSubst $L $T1 $d $e $T2 }.
-
-notation "hvbox( ▼ ▼ * [ term 46 d , break term 46 e ] break term 46 T1 ≡ break term 46 T2 )"
-   non associative with precedence 45
-   for @{ 'TSubstAlt $T1 $d $e $T2 }.
-
-notation "hvbox( L ⊢ break ▼ ▼ * [ term 46 d , break term 46 e ] break term 46 T1 ≡ break term 46 T2 )"
-   non associative with precedence 45
-   for @{ 'TSubstAlt $L $T1 $d $e $T2 }.
-
 (* Static typing ************************************************************)
 
 notation "hvbox( L ⊢ break term 46 T ⁝ break term 46 A )"
@@ -242,7 +226,7 @@ notation "hvbox( ⦃ term 46 h , break term 46 L ⦄ ⊢ break term 46 T1 • br
    non associative with precedence 45
    for @{ 'StaticType $h $g $L $T1 $T2 $l }.
 
-(* Unwind *******************************************************************)
+(* Unfold *******************************************************************)
 
 notation "hvbox( ⦃ term 46 h , break term 46 L ⦄ ⊢ break term 46 T1 •* break [ term 46 g ] break term 46 T2 )"
    non associative with precedence 45
@@ -250,9 +234,7 @@ notation "hvbox( ⦃ term 46 h , break term 46 L ⦄ ⊢ break term 46 T1 •* b
 
 notation "hvbox( L1 ⊢ ⧫ * break term 46 T ≡ break term 46 L2 )"
    non associative with precedence 45
-   for @{ 'Unwind $L1 $T $L2 }.
-
-(* Restricted ***************************************************************)
+   for @{ 'Unfold $L1 $T $L2 }.
 
 notation "hvbox( L ⊢ break term 46 T1 ➤ * break term 46 T2 )"
    non associative with precedence 45
@@ -262,7 +244,7 @@ notation "hvbox( T1 ⊢ ➤ * break term 46 T2 )"
    non associative with precedence 45
    for @{ 'PRestStarSn $T1 $T2 }.
 
-(* Reducibility *************************************************************)
+(* Reduction ****************************************************************)
 
 notation "hvbox( L ⊢ break 𝐑 ⦃ term 46 T ⦄ )"
    non associative with precedence 45
@@ -314,47 +296,15 @@ notation "hvbox( L1 ⊢ ➡ break term 46 L2 )"
    non associative with precedence 45
    for @{ 'PRedSn $L1 $L2 }.
 
-notation "hvbox( L1 ⊢ ➡ ➡ break term 46 L2 )"
-   non associative with precedence 45
-   for @{ 'PRedSnAlt $L1 $L2 }.
-
-notation "hvbox( ⦃ term 46 L1, break term 46 T1 ⦄ ➡ break ⦃ term 46 L2 , break term 46 T2 ⦄ )"
-   non associative with precedence 45
-   for @{ 'FocalizedPRed $L1 $T1 $L2 $T2 }.
-
-notation "hvbox( L ⊢ break ⦃ term 46 L1, break term 46 T1 ⦄ ➡ break ⦃ term 46 L2 , break term 46 T2 ⦄ )"
-   non associative with precedence 45
-   for @{ 'FocalizedPRed $L $L1 $T1 $L2 $T2 }.
-
 (* Computation **************************************************************)
-
-notation "hvbox( T1 ➡ * break term 46 T2 )"
-   non associative with precedence 45
-   for @{ 'PRedStar $T1 $T2 }.
 
 notation "hvbox( L ⊢ break term 46 T1 ➡ * break term 46 T2 )"
    non associative with precedence 45
    for @{ 'PRedStar $L $T1 $T2 }.
 
-notation "hvbox( T1 ➡ ➡ * break term 46 T2 )"
+notation "hvbox( L1 ⊢ ➡* break term 46 L2 )"
    non associative with precedence 45
-   for @{ 'PRedStarAlt $T1 $T2 }.
-
-notation "hvbox( ⦃ term 46 L1 ⦄ ➡ * break ⦃ term 46 L2 ⦄ )"
-   non associative with precedence 45
-   for @{ 'FocalizedPRedStar $L1 $L2 }.
-
-notation "hvbox( ⦃ term 46 L1 , term 46 T1 ⦄ ➡ * break ⦃ term 46 L2 , term 46 T2 ⦄ )"
-   non associative with precedence 45
-   for @{ 'FocalizedPRedStar $L1 $T1 $L2 $T2 }.
-
-notation "hvbox( ⦃ term 46 L1 ⦄ ➡ ➡ * break ⦃ term 46 L2 ⦄ )"
-   non associative with precedence 45
-   for @{ 'FocalizedPRedStarAlt $L1 $L2 }.
-
-notation "hvbox( ⦃ term 46 L1 , term 46 T1 ⦄ ➡ ➡ * break ⦃ term 46 L2 , term 46 T2 ⦄ )"
-   non associative with precedence 45
-   for @{ 'FocalizedPRedStarAlt $L1 $T1 $L2 $T2 }.
+   for @{ 'PRedSnStar $L1 $L2 }.
 
 notation "hvbox( L ⊢ break term 46 T1 ➡ * break 𝐍 ⦃ term 46 T2 ⦄ )"
    non associative with precedence 45
@@ -394,21 +344,9 @@ notation "hvbox( L ⊢ break term 46 T1 ⬌ break term 46 T2 )"
    non associative with precedence 45
    for @{ 'PConv $L $T1 $T2 }.
 
-notation "hvbox( ⦃ term 46 L1 ⦄ ⬌ break ⦃ term 46 L2 ⦄ )"
+notation "hvbox( L1 ⊢ ⬌ break term 46 L2 )"
    non associative with precedence 45
-   for @{ 'FocalizedPConv $L1 $L2 }.
-
-notation "hvbox( ⦃ term 46 L1 , break term 46 T1 ⦄ ⬌ break ⦃ term 46 L2 , break term 46 T2 ⦄ )"
-   non associative with precedence 45
-   for @{ 'FocalizedPConv $L1 $T1 $L2 $T2 }.
-
-notation "hvbox( ⦃ term 46 L1 ⦄ ⬌ ⬌ break ⦃ term 46 L2 ⦄ )"
-   non associative with precedence 45
-   for @{ 'FocalizedPConvAlt $L1 $L2 }.
-
-notation "hvbox( ⦃ term 46 L1 , break term 46 T1 ⦄ ⬌ ⬌ break ⦃ term 46 L2 , break term 46 T2 ⦄ )"
-   non associative with precedence 45
-   for @{ 'FocalizedPConvAlt $L1 $T1 $L2 $T2 }.
+   for @{ 'PConvSn $L1 $L2 }.
 
 (* Equivalence **************************************************************)
 
@@ -420,21 +358,9 @@ notation "hvbox( h ⊢ break term 46 L1 • ⊑ break [ term 46 g ] break term 4
    non associative with precedence 45
    for @{ 'CrSubEqS $h $g $L1 $L2 }.
 
-notation "hvbox( ⦃ term 46 L1 ⦄ ⬌ * break ⦃ term 46 L2 ⦄ )"
+notation "hvbox( L1 ⊢ ⬌* break term 46 L2 )"
    non associative with precedence 45
-   for @{ 'FocalizedPConvStar $L1 $L2 }.
-
-notation "hvbox( ⦃ term 46 L1 , break term 46 T1 ⦄ ⬌ * break ⦃ term 46 L2 , break term 46 T2 ⦄ )"
-   non associative with precedence 45
-   for @{ 'FocalizedPConvStar $L1 $T1 $L2 $T2 }.
-
-notation "hvbox( ⦃ term 46 L1 ⦄ ⬌ ⬌ * break ⦃ term 46 L2 ⦄ )"
-   non associative with precedence 45
-   for @{ 'FocalizedPConvStarAlt $L1 $L2 }.
-
-notation "hvbox( ⦃ term 46 L1 , break term 46 T1 ⦄ ⬌ ⬌ * break ⦃ term 46 L2 , break term 46 T2 ⦄ )"
-   non associative with precedence 45
-   for @{ 'FocalizedPConvStarAlt $L1 $T1 $L2 $T2 }.
+   for @{ 'PConvSnStar $L1 $L2 }.
 
 (* Dynamic typing ***********************************************************)
 

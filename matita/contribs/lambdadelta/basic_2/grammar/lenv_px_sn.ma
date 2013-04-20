@@ -26,7 +26,7 @@ inductive lpx_sn (R:lenv→relation term): relation lenv ≝
 definition lpx_sn_confluent: relation (lenv→relation term) ≝ λR1,R2.
                              ∀L0,T0,T1. R1 L0 T0 T1 → ∀T2. R2 L0 T0 T2 →
                              ∀L1. lpx_sn R1 L0 L1 → ∀L2. lpx_sn R2 L0 L2 →
-                             ∃∃T. R1 L1 T1 T & R2 L2 T2 T.
+                             ∃∃T. R2 L1 T1 T & R1 L2 T2 T.
 
 definition lpx_sn_transitive: relation (lenv→relation term) ≝ λR1,R2.
                               ∀L1,T1,T. R1 L1 T1 T → ∀L2. lpx_sn R1 L1 L2 →
@@ -130,8 +130,9 @@ lemma lpx_sn_trans: ∀R. lpx_sn_transitive R R → Transitive … (lpx_sn R).
 elim (lpx_sn_inv_pair1 … H) -H #L2 #V2 #HL2 #HV2 #H destruct /3 width=5/
 qed-.
 
-lemma lpx_sn_conf: ∀R. lpx_sn_confluent R R → confluent … (lpx_sn R).
-#R #HR #L0 @(f_ind … length … L0) -L0 #n #IH *
+lemma lpx_sn_conf: ∀R1,R2. lpx_sn_confluent R1 R2 →
+                   confluent2 … (lpx_sn R1) (lpx_sn R2).
+#R1 #R2 #HR12 #L0 @(f_ind … length … L0) -L0 #n #IH *
 [ #_ #X1 #H1 #X2 #H2 -n
   >(lpx_sn_inv_atom1 … H1) -X1
   >(lpx_sn_inv_atom1 … H2) -X2 /2 width=3/
@@ -139,6 +140,6 @@ lemma lpx_sn_conf: ∀R. lpx_sn_confluent R R → confluent … (lpx_sn R).
   elim (lpx_sn_inv_pair1 … H1) -H1 #L1 #V1 #HL01 #HV01 #H destruct
   elim (lpx_sn_inv_pair1 … H2) -H2 #L2 #V2 #HL02 #HV02 #H destruct
   elim (IH … HL01 … HL02) -IH normalize // #L #HL1 #HL2
-  elim (HR … HV01 … HV02 … HL01 … HL02) -L0 -V0 /3 width=5/
+  elim (HR12 … HV01 … HV02 … HL01 … HL02) -L0 -V0 /3 width=5/
 ]
 qed-.

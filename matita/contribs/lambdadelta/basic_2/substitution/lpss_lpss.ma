@@ -12,28 +12,32 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/ldrop_ldrop.ma".
-include "basic_2/static/aaa.ma".
+include "basic_2/substitution/lpss_cpss.ma".
 
-(* ATONIC ARITY ASSIGNMENT ON TERMS *****************************************)
+(* SN PARALLEL SUBSTITUTION ON LOCAL ENVIRONMENTS ***************************)
 
 (* Main properties **********************************************************)
 
-theorem aaa_mono: ∀L,T,A1. L ⊢ T ⁝ A1 → ∀A2. L ⊢ T ⁝ A2 → A1 = A2.
-#L #T #A1 #H elim H -L -T -A1
-[ #L #k #A2 #H
-  >(aaa_inv_sort … H) -H //
-| #I1 #L #K1 #V1 #B #i #HLK1 #_ #IHA1 #A2 #H
-  elim (aaa_inv_lref … H) -H #I2 #K2 #V2 #HLK2 #HA2
-  lapply (ldrop_mono … HLK1 … HLK2) -L #H destruct /2 width=1/
-| #a #L #V #T #B1 #A1 #_ #_ #_ #IHA1 #A2 #H
-  elim (aaa_inv_abbr … H) -H /2 width=1/
-| #a #L #V1 #T1 #B1 #A1 #_ #_ #IHB1 #IHA1 #X #H
-  elim (aaa_inv_abst … H) -H #B2 #A2 #HB2 #HA2 #H destruct /3 width=1/
-| #L #V1 #T1 #B1 #A1 #_ #_ #_ #IHA1 #A2 #H
-  elim (aaa_inv_appl … H) -H #B2 #_ #HA2
-  lapply (IHA1 … HA2) -L #H destruct //
-| #L #V #T #A1 #_ #_ #_ #IHA1 #A2 #H
-  elim (aaa_inv_cast … H) -H /2 width=1/
+theorem lpss_conf: confluent … lpss.
+/3 width=6 by lpx_sn_conf, cpss_conf_lpss/
+qed-.
+
+theorem lpss_trans: Transitive … lpss.
+/3 width=5 by lpx_sn_trans, cpss_trans_lpss/
+qed-.
+
+(* Advanced forward lemmas **************************************************)
+
+lemma cpss_fwd_shift1: ∀L1,L,T1,T. L ⊢ L1 @@ T1 ▶* T →
+                       ∃∃L2,T2. L @@ L1 ⊢ ▶* L @@ L2 & L @@ L1 ⊢ T1 ▶* T2 &
+                                T = L2 @@ T2.
+#L1 @(lenv_ind_dx … L1) -L1
+[ #L #T1 #T #HT1
+  @ex3_2_intro [3: // |4,5: // |1,2: skip ] (**) (* /2 width=4/ does not work *)
+| #I #L1 #V1 #IH #L #T1 #T >shift_append_assoc #H <append_assoc
+  elim (cpss_inv_bind1 … H) -H #V2 #T2 #HV12 #HT12 #H destruct
+  elim (IH … HT12) -IH -HT12 #L2 #T #HL12 #HT1 #H destruct
+  lapply (lpss_trans … HL12 (L.ⓑ{I}V2@@L2) ?) -HL12 /3 width=1/ #HL12
+  @(ex3_2_intro … (⋆.ⓑ{I}V2@@L2)) [4: /2 width=3/ | skip ] <append_assoc // (**) (* explicit constructor *)
 ]
 qed-.

@@ -12,19 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/ldrops.ma".
-include "basic_2/static/aaa_lift.ma".
+include "basic_2/substitution/ldrops_ldrop.ma".
 
-(* ATONIC ARITY ASSIGNMENT ON TERMS *****************************************)
+(* GENERIC LOCAL ENVIRONMENT SLICING ****************************************)
 
-(* Properties concerning generic relocation *********************************)
+(* Main properties **********************************************************)
 
-lemma aaa_lifts: ∀L1,L2,T2,A,des. ⇩*[des] L2 ≡ L1 → ∀T1. ⇧*[des] T1 ≡ T2 →
-                                  L1 ⊢ T1 ⁝ A →  L2 ⊢ T2 ⁝ A.
-#L1 #L2 #T2 #A #des #H elim H -L1 -L2 -des
-[ #L #T1 #H #HT1
-  <(lifts_inv_nil … H) -H //
-| #L1 #L #L2 #des #d #e #_ #HL2 #IHL1 #T1 #H #HT1
-  elim (lifts_inv_cons … H) -H /3 width=9/
-]
+(* Basic_1: was: drop1_trans *)
+theorem ldrops_trans: ∀L,L2,des2. ⇩*[des2] L ≡ L2 → ∀L1,des1. ⇩*[des1] L1 ≡ L →
+                      ⇩*[des2 @@ des1] L1 ≡ L2.
+#L #L2 #des2 #H elim H -L -L2 -des2 // /3 width=3/
 qed.

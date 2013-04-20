@@ -12,19 +12,24 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/relocation/ldrop_ldrop.ma".
 include "basic_2/substitution/ldrops.ma".
-include "basic_2/static/aaa_lift.ma".
 
-(* ATONIC ARITY ASSIGNMENT ON TERMS *****************************************)
+(* GENERIC LOCAL ENVIRONMENT SLICING ****************************************)
 
-(* Properties concerning generic relocation *********************************)
+(* Properties concerning basic local environment slicing ********************)
 
-lemma aaa_lifts: ∀L1,L2,T2,A,des. ⇩*[des] L2 ≡ L1 → ∀T1. ⇧*[des] T1 ≡ T2 →
-                                  L1 ⊢ T1 ⁝ A →  L2 ⊢ T2 ⁝ A.
-#L1 #L2 #T2 #A #des #H elim H -L1 -L2 -des
-[ #L #T1 #H #HT1
-  <(lifts_inv_nil … H) -H //
-| #L1 #L #L2 #des #d #e #_ #HL2 #IHL1 #T1 #H #HT1
-  elim (lifts_inv_cons … H) -H /3 width=9/
+lemma ldrops_ldrop_trans: ∀L1,L,des. ⇩*[des] L1 ≡ L → ∀L2,i. ⇩[0, i] L ≡ L2 →
+                          ∃∃L0,des0,i0. ⇩[0, i0] L1 ≡ L0 & ⇩*[des0] L0 ≡ L2 &
+                                        @⦃i, des⦄ ≡ i0 & des ▭ i ≡ des0.
+#L1 #L #des #H elim H -L1 -L -des
+[ /2 width=7/
+| #L1 #L3 #L #des3 #d #e #_ #HL3 #IHL13 #L2 #i #HL2
+  elim (lt_or_ge i d) #Hid
+  [ elim (ldrop_trans_le … HL3 … HL2 ?) -L /2 width=2/ #L #HL3 #HL2
+    elim (IHL13 … HL3) -L3 /3 width=7/
+  | lapply (ldrop_trans_ge … HL3 … HL2 ?) -L // #HL32
+    elim (IHL13 … HL32) -L3 /3 width=7/
+  ]
 ]
-qed.
+qed-.

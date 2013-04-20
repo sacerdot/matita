@@ -12,19 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/ldrops.ma".
-include "basic_2/static/aaa_lift.ma".
+include "basic_2/substitution/lifts_lift.ma".
 
-(* ATONIC ARITY ASSIGNMENT ON TERMS *****************************************)
+(* GENERIC RELOCATION *******************************************************)
 
-(* Properties concerning generic relocation *********************************)
+(* Main properties **********************************************************)
 
-lemma aaa_lifts: ∀L1,L2,T2,A,des. ⇩*[des] L2 ≡ L1 → ∀T1. ⇧*[des] T1 ≡ T2 →
-                                  L1 ⊢ T1 ⁝ A →  L2 ⊢ T2 ⁝ A.
-#L1 #L2 #T2 #A #des #H elim H -L1 -L2 -des
-[ #L #T1 #H #HT1
-  <(lifts_inv_nil … H) -H //
-| #L1 #L #L2 #des #d #e #_ #HL2 #IHL1 #T1 #H #HT1
-  elim (lifts_inv_cons … H) -H /3 width=9/
-]
+(* Basic_1: was: lift1_lift1 (left to right) *)
+theorem lifts_trans: ∀T1,T,des1. ⇧*[des1] T1 ≡ T → ∀T2:term. ∀des2. ⇧*[des2] T ≡ T2 →
+                     ⇧*[des1 @@ des2] T1 ≡ T2.
+#T1 #T #des1 #H elim H -T1 -T -des1 // /3 width=3/
 qed.

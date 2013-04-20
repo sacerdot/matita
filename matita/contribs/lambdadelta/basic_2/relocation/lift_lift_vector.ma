@@ -12,19 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/ldrops.ma".
-include "basic_2/static/aaa_lift.ma".
+include "basic_2/relocation/lift_lift.ma".
+include "basic_2/relocation/lift_vector.ma".
 
-(* ATONIC ARITY ASSIGNMENT ON TERMS *****************************************)
+(* BASIC TERM VECTOR RELOCATION *********************************************)
 
-(* Properties concerning generic relocation *********************************)
+(* Main properies ***********************************************************)
 
-lemma aaa_lifts: ∀L1,L2,T2,A,des. ⇩*[des] L2 ≡ L1 → ∀T1. ⇧*[des] T1 ≡ T2 →
-                                  L1 ⊢ T1 ⁝ A →  L2 ⊢ T2 ⁝ A.
-#L1 #L2 #T2 #A #des #H elim H -L1 -L2 -des
-[ #L #T1 #H #HT1
-  <(lifts_inv_nil … H) -H //
-| #L1 #L #L2 #des #d #e #_ #HL2 #IHL1 #T1 #H #HT1
-  elim (lifts_inv_cons … H) -H /3 width=9/
+theorem liftv_mono: ∀Ts,U1s,d,e. ⇧[d,e] Ts ≡ U1s →
+                    ∀U2s:list term. ⇧[d,e] Ts ≡ U2s → U1s = U2s.
+#Ts #U1s #d #e #H elim H -Ts -U1s
+[ #U2s #H >(liftv_inv_nil1 … H) -H //
+| #Ts #U1s #T #U1 #HTU1 #_ #IHTU1s #X #H destruct
+  elim (liftv_inv_cons1 … H) -H #U2 #U2s #HTU2 #HTU2s #H destruct
+  >(lift_mono … HTU1 … HTU2) -T /3 width=1/
 ]
 qed.
