@@ -13,44 +13,34 @@
 (**************************************************************************)
 
 include "basic_2/grammar/tshf.ma".
-include "basic_2/reducibility/tpr.ma".
+include "basic_2/reduction/cpr.ma".
 
-(* CONTEXT-FREE WEAK HEAD NORMAL TERMS **************************************)
+(* CONTEXT-SENSITIVE PARALLEL REDUCTION FOR TERMS ***************************)
 
-definition thnf: predicate term ≝ NF … tpr tshf.
+(* Forward lemmas on same head forms for terms ******************************)
 
-interpretation
-   "context-free head normality (term)"
-   'HdNormal T = (thnf T).
-
-(* Basic inversion lemmas ***************************************************)
-
-lemma thnf_inv_tshf: ∀T. 𝐇𝐍⦃T⦄ → T ≈ T.
-normalize /2 width=1/
-qed-.
-
-(* Basic properties *********************************************************)
-
-lemma tpr_tshf: ∀T1,T2. T1 ➡ T2 → T1 ≈ T1 → T1 ≈ T2.
-#T1 #T2 #H elim H -T1 -T2 //
-[ #I #V1 #V2 #T1 #T2 #_ #_ #_ #IHT12 #H
+lemma cpr_fwd_tshf1: ∀L,T1,T2. L ⊢ T1 ➡ T2 → T1 ≈ T1 →
+                     T2 ≈ T1 ∨ (L = ⋆ → ⊥).
+#L #T1 #T2 #H elim H -L -T1 -T2
+[ /2 width=1/
+| #L #K #V1 #V2 #W2 #i #HLK #_ #_ #_ #_
+  @or_intror #H destruct
+  lapply (ldrop_inv_atom1 … HLK) -HLK #H destruct
+| #a #I #L #V1 #V2 #T1 #T2 #_ #_ #_ #_ #H
+  elim (tshf_inv_bind1 … H) -H #W2 #U2 #H1 * #H2 destruct /2 width=1/
+| #I #L #V1 #V2 #T1 #T2 #_ #_ #_ #IHT12 #H
   elim (tshf_inv_flat1 … H) -H #W2 #U2 #HT1U2 #HT1 #_ #H1 #H2 destruct
-  lapply (IHT12 HT1U2) -IHT12 -HT1U2 #HUT2
-  lapply (simple_tshf_repl_dx … HUT2 HT1) /2 width=1/
-| #a #V1 #V2 #W #T1 #T2 #_ #_ #_ #_ #H
+  lapply (IHT12 HT1U2) -IHT12 -HT1U2 * #HUT2 /3 width=1/
+  lapply (simple_tshf_repl_sn … HUT2 HT1) /3 width=1/
+| #L #V #T #T1 #T2 #_ #_ #_ #H
+  elim (tshf_inv_bind1 … H) -H #W2 #U2 #H1 * #H2 destruct
+| #L #V #T1 #T2 #_ #_ #H
+  elim (tshf_inv_flat1 … H) -H #W2 #U2 #_ #_ #_ #H destruct
+| #a #L #V1 #V2 #W #T1 #T2 #_ #_ #_ #_ #H
   elim (tshf_inv_flat1 … H) -H #W2 #U2 #_ #H
   elim (simple_inv_bind … H)
-| #a #I #V1 #V2 #T1 #T #T2 #_ #_ #_ #_ #_ #H
-  elim (tshf_inv_bind1 … H) -H #W2 #U2 #H1 * #H2 destruct //
-| #a #V2 #V1 #V #W1 #W2 #T1 #T2 #_ #_ #_ #_ #_ #_ #_ #H
+| #a #L #V2 #V1 #V #W1 #W2 #T1 #T2 #_ #_ #_ #_ #_ #_ #_ #H
   elim (tshf_inv_flat1 … H) -H #U1 #U2 #_ #H
   elim (simple_inv_bind … H)
-| #V #T #T1 #T2 #_ #_ #_ #H
-  elim (tshf_inv_bind1 … H) -H #W2 #U2 #H1 * #H2 destruct
-| #V #T1 #T2 #_ #_ #H
-  elim (tshf_inv_flat1 … H) -H #W2 #U2 #_ #_ #_ #H destruct
 ]
-qed.
-
-lemma thnf_tshf: ∀T. T ≈ T → 𝐇𝐍⦃T⦄.
-/3 width=1/ qed.
+qed-.

@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/ldrop_append.ma".
-include "basic_2/reducibility/crf.ma".
+include "basic_2/relocation/ldrop_append.ma".
+include "basic_2/reduction/crf.ma".
 
 (* CONTEXT-SENSITIVE REDUCIBLE TERMS ****************************************)
 

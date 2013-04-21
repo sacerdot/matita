@@ -12,16 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/ldrop.ma".
+include "basic_2/relocation/ldrop.ma".
 
 (* CONTEXT-SENSITIVE REDUCIBLE TERMS ****************************************)
 
 (* reducible binary items *)
-definition ri2: item2 → Prop ≝
+definition ri2: predicate item2 ≝
                 λI. I = Bind2 true Abbr ∨ I = Flat2 Cast.
 
 (* irreducible binary binders *)
-definition ib2: bool → bind2 → Prop ≝
+definition ib2: relation2 bool bind2 ≝
                 λa,I. I = Abst ∨ Bind2 a I = Bind2 false Abbr.
 
 (* reducible terms *)
@@ -54,12 +54,12 @@ fact trf_inv_atom_aux: ∀I,L,T. L ⊢ 𝐑⦃T⦄ → L = ⋆ → T = ⓪{I} �
 | #a #L #V #W #T #_ #H destruct
 | #a #L #V #W #T #_ #H destruct
 ]
-qed.
+qed-.
 
 lemma trf_inv_atom: ∀I. ⋆ ⊢ 𝐑⦃⓪{I}⦄ → ⊥.
-/2 width=6/ qed-.
+/2 width=6 by trf_inv_atom_aux/ qed-.
 
-fact trf_inv_lref_aux: ∀L,T. L ⊢ 𝐑⦃T⦄ → ∀i. T = #i → ∃∃K,V. ⇩[0, i] L ≡ K.ⓓV.
+fact crf_inv_lref_aux: ∀L,T. L ⊢ 𝐑⦃T⦄ → ∀i. T = #i → ∃∃K,V. ⇩[0, i] L ≡ K.ⓓV.
 #L #T * -L -T
 [ #L #K #V #j #HLK #i #H destruct /2 width=3/
 | #L #V #T #_ #i #H destruct
@@ -70,10 +70,10 @@ fact trf_inv_lref_aux: ∀L,T. L ⊢ 𝐑⦃T⦄ → ∀i. T = #i → ∃∃K,V.
 | #a #L #V #W #T #i #H destruct
 | #a #L #V #W #T #i #H destruct
 ]
-qed.
+qed-.
 
-lemma trf_inv_lref: ∀L,i. L ⊢ 𝐑⦃#i⦄ → ∃∃K,V. ⇩[0, i] L ≡ K.ⓓV.
-/2 width=3/ qed-.
+lemma crf_inv_lref: ∀L,i. L ⊢ 𝐑⦃#i⦄ → ∃∃K,V. ⇩[0, i] L ≡ K.ⓓV.
+/2 width=3 by crf_inv_lref_aux/ qed-.
 
 fact crf_inv_ib2_aux: ∀a,I,L,W,U,T. ib2 a I → L ⊢ 𝐑⦃T⦄ → T = ⓑ{a,I}W. U →
                       L ⊢ 𝐑⦃W⦄ ∨ L.ⓑ{I}W ⊢ 𝐑⦃U⦄.
@@ -89,11 +89,11 @@ fact crf_inv_ib2_aux: ∀a,I,L,W,U,T. ib2 a I → L ⊢ 𝐑⦃T⦄ → T = ⓑ{
 | #b #L #V #W #T #H destruct
 | #b #L #V #W #T #H destruct
 ]
-qed.
+qed-.
 
 lemma crf_inv_ib2: ∀a,I,L,W,T. ib2 a I → L ⊢ 𝐑⦃ⓑ{a,I}W.T⦄ →
                    L ⊢ 𝐑⦃W⦄ ∨ L.ⓑ{I}W ⊢ 𝐑⦃T⦄.
-/2 width=5/ qed-.
+/2 width=5 by crf_inv_ib2_aux/ qed-.
 
 fact crf_inv_appl_aux: ∀L,W,U,T. L ⊢ 𝐑⦃T⦄ → T = ⓐW. U →
                        ∨∨ L ⊢ 𝐑⦃W⦄ | L ⊢ 𝐑⦃U⦄ | (𝐒⦃U⦄ → ⊥).
@@ -110,7 +110,7 @@ fact crf_inv_appl_aux: ∀L,W,U,T. L ⊢ 𝐑⦃T⦄ → T = ⓐW. U →
 | #a #L #V #W0 #T #H destruct
   @or3_intro2 #H elim (simple_inv_bind … H)
 ]
-qed.
+qed-.
 
 lemma crf_inv_appl: ∀L,V,T. L ⊢ 𝐑⦃ⓐV.T⦄ → ∨∨ L ⊢ 𝐑⦃V⦄ | L ⊢ 𝐑⦃T⦄ | (𝐒⦃T⦄ → ⊥).
-/2 width=3/ qed-.
+/2 width=3 by crf_inv_appl_aux/ qed-.

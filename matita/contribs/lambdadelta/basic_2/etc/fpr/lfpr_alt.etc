@@ -12,6 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
+notation "hvbox( L1 ⊢ ➡ ➡ break term 46 L2 )"
+   non associative with precedence 45
+   for @{ 'PRedSnAlt $L1 $L2 }.
+
+notation "hvbox( ⦃ term 46 L1 ⦄ ➡ ➡ break ⦃ term 46 L2 ⦄ )"
+   non associative with precedence 45
+   for @{ 'FocalizedPRedAlt $L1 $L2 }.
+
 include "basic_2/grammar/lenv_px_bi.ma".
 include "basic_2/reducibility/fpr_cpr.ma".
 include "basic_2/reducibility/lfpr_fpr.ma".

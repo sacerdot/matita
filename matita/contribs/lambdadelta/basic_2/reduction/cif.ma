@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reducibility/crf.ma".
+include "basic_2/reduction/crf.ma".
 
 (* CONTEXT-SENSITIVE IRREDUCIBLE TERMS **************************************)
 

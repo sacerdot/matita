@@ -119,40 +119,19 @@ table {
      }
    ]
    class "water"
-   [ { "reducibility" * } {
-        [ { "context-sensitive focalized reduction" * } {
-             [ "cfpr ( ? ⊢ ⦃?,?⦄ ➡ ⦃?,?⦄ )" "cnfpr_ltpss" + "cfpr_aaa" + "cfpr_cpr" + "cfpr_cfpr" * ]
-          }
-        ]
-        [ { "context-free focalized reduction" * } {
-             [ "lfpr ( ⦃?⦄ ➡ ⦃?⦄ )" "lfpr_alt ( ⦃?⦄ ➡➡ ⦃?⦄ )" "lfpr_aaa" + "lfpr_cpr" + "lfpr_fpr" + "lfpr_lfpr" * ]
-             [ "fpr ( ⦃?,?⦄ ➡ ⦃?,?⦄ )" "fpr_cpr" + "fpr_fpr" * ]
-          }
-        ]
+   [ { "reduction" * } {
         [ { "context-sensitive normal forms" * } {
-             [ "cnf ( ? ⊢ 𝐍⦃?⦄ )" "cnf_lift" + "cnf_cif" * ]
-          }
-        ]
-        [ { "revised context-sensitive reduction" * } {
-             [ "lpr ( ? ⊢ ➡ ? )" "lpr_ldrop" + "lpr_cpr" + "lpr_lpr" * ]
-             [ "cpr ( ? ⊢ ? ➡ ? )" "cpr_lift" * ]
+             [ "cnf ( ? ⊢ 𝐍⦃?⦄ )" "cnf_liftt" + "cnf_crf" + "cnf_cif" * ]
+             [ "chnf ( ? ⊢ 𝐇𝐍⦃?⦄ )" * ]
           }
         ]
         [ { "context-sensitive reduction" * } {
-             [ "cpr ( ? ⊢ ? ➡ ? )" "cpr_lift" + "cpr_tpss" + "cpr_ltpss_dx" + "cpr_ltpss_sn" + "cpr_delift" + "cpr_aaa" + "cpr_ltpr" + "cpr_cpr" * ]
+             [ "lpr ( ? ⊢ ➡ ? )" "lpr_ldrop" + "lpr_cpss" + "lpr_lpss" + "lpr_aaa" + "lpr_cpr" + "lpr_lpr" * ]
+             [ "cpr ( ? ⊢ ? ➡ ? )" "lpr_tshf" + "cpr_lift" + "cpr_cif" * ]
           }
         ]
         [ { "context-sensitive reducible forms" * } {
              [ "crf ( ? ⊢ 𝐑⦃?⦄ )" "crf_append" "cif ( ? ⊢ 𝐈⦃?⦄ )" "cif_append" * ]
-          }
-        ]
-        [ { "context-free normal forms" * } {
-             [ "thnf ( 𝐇𝐍⦃?⦄ )" * ]
-          }
-        ]
-        [ { "context-free reduction" * } {
-             [ "ltpr ( ? ➡ ? )" "ltpr_ldrop" + "ltpr_tps" + "ltpr_tpss" + "ltpr_ltpss_dx" + "ltpr_ltpss_sn" + "ltpr_aaa" + "ltpr_ltpr" * ]
-             [ "tpr ( ? ➡ ? )"  "tpr_lift" + "tpr_delift" + "tpr_tpr" * ]
           }
         ]
      }
@@ -196,16 +175,6 @@ table {
    ]
    class "yellow"
    [ { "substitution" * } {
-(*        
-	[ { "basic local env. thinning" * } {
-             [ "thin ( ? ▼*[?,?] ≡ ? )" "thin_ldrop" + "thin_delift" * ]
-          }
-        ]
-        [ { "inverse basic term relocation" * } {
-             [ "delift ( ? ⊢ ? ▼*[?,?] ≡ ? )" "delift_alt ( ? ⊢ ? ▼▼*[?,?] ≡ ? )" "delift_lift" + "delift_tpss" + "delift_ltpss" + "delift_delift" * ]
-          }
-        ]
-*)        
 	[ { "parallel substitution" * } {
              [ "lpss ( ? ⊢ ▶* ? )" "lpss_ldrop" + "lpss_cpss" + "lpss_lpss" * ]
              [ "cpss ( ? ⊢ ? ▶* ? )" "cpss_lift" * ]

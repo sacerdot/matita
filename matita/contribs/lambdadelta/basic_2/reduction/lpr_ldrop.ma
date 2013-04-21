@@ -12,23 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reducibility/crf_append.ma".
-include "basic_2/reducibility/cif.ma".
+include "basic_2/relocation/ldrop_lpx_sn.ma".
+include "basic_2/reduction/cpr_lift.ma".
+include "basic_2/reduction/lpr.ma".
 
-(* CONTEXT-SENSITIVE IRREDUCIBLE TERMS **************************************)
+(* SN PARALLEL REDUCTION FOR LOCAL ENVIRONMENTS *****************************)
 
-(* Advanved properties ******************************************************)
+(* Properies on local environment slicing ***********************************)
 
-lemma cif_labst_last: ∀L,T,W. L ⊢ 𝐈⦃T⦄  → ⋆.ⓛW @@ L ⊢ 𝐈⦃T⦄.
-/3 width=2 by crf_inv_labst_last/ qed.
+(* Basic_1: includes: wcpr0_drop *)
+lemma lpr_ldrop_conf: dropable_sn lpr.
+/3 width=5 by lpx_sn_deliftable_dropable, cpr_inv_lift1/ qed-.
 
-lemma cif_tif: ∀T,W. ⋆ ⊢ 𝐈⦃T⦄ → ⋆.ⓛW ⊢ 𝐈⦃T⦄.
-/3 width=2 by crf_inv_trf/ qed.
+(* Basic_1: includes: wcpr0_drop_back *)
+lemma ldrop_lpr_trans: dedropable_sn lpr.
+/3 width=9 by lpx_sn_liftable_dedropable, cpr_lift/ qed-.
 
-(* Advanced inversion lemmas ************************************************)
-
-lemma cif_inv_labst_last: ∀L,T,W. ⋆.ⓛW @@ L ⊢ 𝐈⦃T⦄  → L ⊢ 𝐈⦃T⦄.
-/3 width=1/ qed-.
-
-lemma cif_inv_tif: ∀T,W. ⋆.ⓛW ⊢ 𝐈⦃T⦄  → ⋆ ⊢ 𝐈⦃T⦄.
-/3 width=1/ qed-.
+lemma lpr_ldrop_trans_O1: dropable_dx lpr.
+/2 width=3 by lpx_sn_dropable/ qed-.

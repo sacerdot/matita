@@ -12,6 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
+notation "hvbox( ⦃ term 46 L1, break term 46 T1 ⦄ ➡ break ⦃ term 46 L2 , break term 46 T2 ⦄ )"
+   non associative with precedence 45
+   for @{ 'FocalizedPRed $L1 $T1 $L2 $T2 }.
+
 include "basic_2/reducibility/tpr.ma".
 
 (* CONTEXT-FREE PARALLEL REDUCTION ON CLOSURES ******************************)
