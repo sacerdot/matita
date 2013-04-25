@@ -266,6 +266,9 @@ for @{ 'comprehension $s (\lambda ${ident i}. $p)}.
 notation "hvbox(a break ∈ b)" non associative with precedence 45
 for @{ 'mem $a $b }.
 
+notation "hvbox(a break ∉ b)" non associative with precedence 45
+for @{ 'notmem $a $b }.
+
 notation "hvbox(a break ≬ b)" non associative with precedence 45
 for @{ 'overlaps $a $b }. (* \between *)
 
