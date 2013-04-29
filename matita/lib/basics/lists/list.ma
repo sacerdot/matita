@@ -119,6 +119,7 @@ lemma compare_append : ∀A,l1,l2,l3,l4. l1@l2 = l3@l4 →
     ]
   ]
 qed.
+
 (**************************** iterators ******************************)
 
 let rec map (A,B:Type[0]) (f: A → B) (l:list A) on l: list B ≝

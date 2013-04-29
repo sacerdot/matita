@@ -210,9 +210,27 @@ unification hint  0 ≔ C1,C2;
 definition enum_prod ≝ λA,B:DeqSet.λl1.λl2.
   compose ??? (mk_Prod A B) l1 l2.
   
-axiom enum_prod_unique: ∀A,B,l1,l2. 
+lemma enum_prod_unique: ∀A,B,l1,l2. 
   uniqueb A l1 = true → uniqueb B l2 = true →
   uniqueb ? (enum_prod A B l1 l2) = true.
+#A #B #l1 elim l1 //
+  #a #tl #Hind #l2 #H1 #H2 @uniqueb_append 
+  [@unique_map_inj // 
+  |@Hind // @(andb_true_r … H1)
+  |#p #H3 cases (memb_map_to_exists … H3) #b * 
+   #Hmemb #eqp <eqp @(not_to_not ? (memb ? a tl = true))
+    [2: @sym_not_eq @eqnot_to_noteq @sym_eq @(andb_true_l … H1)
+    |elim tl 
+      [normalize //
+      |#a1 #tl1 #Hind2 #H4 cases (memb_append … H4) -H4 #H4
+        [cases (memb_map_to_exists … H4) #b1 * #memb1 #H destruct (H)
+         normalize >(\b (refl ? a)) //
+        |@orb_true_r2 @Hind2 @H4
+        ]
+      ]
+    ]
+  ]
+qed.
 
 lemma enum_prod_complete:∀A,B:DeqSet.∀l1,l2.
   (∀a. memb A a l1 = true) → (∀b.memb B b l2 = true) →

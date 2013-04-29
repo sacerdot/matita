@@ -172,6 +172,32 @@ cases (true_or_false … (memb S a (unique_append S tl l2)))
 #H >H normalize [@Hind //] >H normalize @Hind //
 qed.
 
+lemma uniqueb_append: ∀A,l1,l2. uniqueb A l1 = true → uniqueb A l2 =true → 
+  (∀a. memb A a l1 =true → ¬ memb A a l2 =true) → uniqueb A (l1@l2) = true.
+#A #l1 elim l1 [normalize //] #a #tl #Hind #l2 #Hatl #Hl2 
+#Hmem normalize cut (memb A a (tl@l2)=false)
+  [2:#Hcut >Hcut normalize @Hind //
+    [@(andb_true_r … Hatl) |#x #Hmemx @Hmem @orb_true_r2 //]
+  |@(noteq_to_eqnot ? true) % #Happend cases (memb_append … Happend)
+    [#H1 @(absurd … H1) @sym_not_eq @eqnot_to_noteq 
+     @sym_eq @(andb_true_l … Hatl)
+    |#H @(absurd … H) @Hmem normalize >(\b (refl ? a)) //
+    ]
+  ]
+qed.
+
+lemma memb_map_to_exists: ∀A,B:DeqSet.∀f:A→B.∀l,b. 
+  memb ? b (map ?? f l) = true → ∃a. memb ? a l = true ∧ f a = b.
+#A #B #f #l elim l 
+  [#b normalize #H destruct (H) 
+  |#a #tl #Hind #b #H cases (orb_true_l … H) 
+    [#eqb @(ex_intro … a) <(\P eqb) % // 
+    |#memb cases (Hind … memb) #a * #mema #eqb
+     @(ex_intro … a) /3/
+    ]
+  ]
+qed.
+
 lemma memb_map_inj: ∀A,B:DeqSet.∀f:A→B.∀l,a. injective A B f → 
   memb ? (f a) (map ?? f l) = true → memb ? a l = true.
 #A #B #f #l #a #injf elim l

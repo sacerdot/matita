@@ -14,11 +14,12 @@ include "basics/bool.ma".
 
 (****** DeqSet: a set with a decidbale equality ******)
 
-record DeqSet : Type[1] ≝ { carr :> Type[0];
+record DeqSet : Type[1] ≝ { 
+   carr :> Type[0];
    eqb: carr → carr → bool;
    eqb_true: ∀x,y. (eqb x y = true) ↔ (x = y)
 }.
-
+    
 notation "a == b" non associative with precedence 45 for @{ 'eqb $a $b }.
 interpretation "eqb" 'eqb a b = (eqb ? a b).
 

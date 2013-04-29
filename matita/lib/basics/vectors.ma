@@ -9,7 +9,7 @@
      \ /   GNU General Public License Version 2   
       V_____________________________________________________________*)
 
-include "basics/finset.ma".
+include "basics/lists/list.ma".
 
 record Vector (A:Type[0]) (n:nat): Type[0] ≝ 
 { vec :> list A;
