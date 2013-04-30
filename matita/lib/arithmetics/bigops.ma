@@ -241,7 +241,8 @@ theorem bigop_prod: ∀k1,k2,p1,p2,B.∀nil.∀op:Aop B nil.∀f: nat →nat →
      >Hp1 >(mod_plus_times …) /2 by refl, monotonic_lt_minus_l, eq_f/
   |>bigop_Sfalse // >Hind >(pad_bigop (S n*k2)) // @same_bigop
    #i #lti @leb_elim // #lei cut (i = n*k2+(i-n*k2)) /2 by plus_minus/
-   #eqi >eqi in ⊢ (???%); >div_plus_times /2 by refl, monotonic_lt_minus_l, trans_eq/ 
+   #eqi >eqi in ⊢ (???%); >div_plus_times 
+   /2 by refl, monotonic_lt_minus_l, trans_eq/ 
   ]
 qed.
 

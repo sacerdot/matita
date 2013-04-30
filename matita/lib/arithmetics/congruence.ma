@@ -15,6 +15,10 @@ definition S_mod ≝ λn,m:nat. S m \mod n.
 
 definition congruent ≝ λn,m,p:nat. mod n p = mod m p.
 
+notation "hvbox(n break ≅_{p} m)"
+  non associative with precedence 45
+for @{ 'congruent $n $m $p }.
+
 interpretation "congruent" 'congruent n m p = (congruent n m p).
 
 theorem congruent_n_n: ∀n,p:nat.congruent n n p.
