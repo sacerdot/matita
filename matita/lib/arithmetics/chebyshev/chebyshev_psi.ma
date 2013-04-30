@@ -122,6 +122,7 @@ theorem lePsi_r2: ∀n.
        @monotonic_le_plus_r @lt_O_log //
        @le_S_S_to_le //
       ]
+
     ]
   |<Hn @le_n
   ]
