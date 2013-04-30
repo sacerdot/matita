@@ -1,252 +1,377 @@
-(* 
-Moves
-We now define the move operation, that corresponds to the advancement of the 
-state in response to the processing of an input character a. The intuition is 
-clear: we have to look at points inside $e$ preceding the given character a,
-let the point traverse the character, and broadcast it. All other points must 
-be removed.
+(*
+Broadcasting points
 
-We can give a particularly elegant definition in terms of the
-lifted operators of the previous section:
+Intuitively, a regular expression e must be understood as a pointed expression with a single 
+point in front of it. Since however we only allow points before symbols, we must broadcast 
+this initial point inside e traversing all nullable subexpressions, that essentially corresponds 
+to the ϵ-closure operation on automata. We use the notation •(_) to denote such an operation;
+its definition is the expected one: let us start discussing an example.
+
+Example
+Let us broadcast a point inside (a + ϵ)(b*a + b)b. We start working in parallel on the 
+first occurrence of a (where the point stops), and on ϵ that gets traversed. We have hence 
+reached the end of a + ϵ and we must pursue broadcasting inside (b*a + b)b. Again, we work in 
+parallel on the two additive subterms b^*a and b; the first point is allowed to both enter the 
+star, and to traverse it, stopping in front of a; the second point just stops in front of b. 
+No point reached that end of b^*a + b hence no further propagation is possible. In conclusion: 
+               •((a + ϵ)(b^*a + b)b) = 〈(•a + ϵ)((•b)^*•a + •b)b, false〉
 *)
 
 include "tutorial/chapter8.ma".
 
-let rec move (S: DeqSet) (x:S) (E: pitem S) on E : pre S ≝
- match E with
-  [ pz ⇒ 〈 pz S, false 〉
-  | pe ⇒ 〈 ϵ, false 〉
-  | ps y ⇒ 〈 `y, false 〉
-  | pp y ⇒ 〈 `y, x == y 〉
-  | po e1 e2 ⇒ (move ? x e1) ⊕ (move ? x e2) 
-  | pc e1 e2 ⇒ (move ? x e1) ⊙ (move ? x e2)
-  | pk e ⇒ (move ? x e)^⊛ ].
-  
-lemma move_plus: ∀S:DeqSet.∀x:S.∀i1,i2:pitem S.
-  move S x (i1 + i2) = (move ? x i1) ⊕ (move ? x i2).
-// qed.
+(* Broadcasting a point inside an item generates a pre, since the point could possibly reach 
+the end of the expression. 
+Broadcasting inside a i1+i2 amounts to broadcast in parallel inside i1 and i2.
+If we define
+                 〈i1,b1〉 ⊕ 〈i2,b2〉 = 〈i1 + i2, b1∨ b2〉
+then, we just have •(i1+i2) = •(i1)⊕ •(i2).
+*)
 
-lemma move_cat: ∀S:DeqSet.∀x:S.∀i1,i2:pitem S.
-  move S x (i1 · i2) = (move ? x i1) ⊙ (move ? x i2).
-// qed.
+definition lo ≝ λS:DeqSet.λa,b:pre S.〈fst … a + fst \dots b,snd \dots a ∨ snd \dots b〉.
+notation "a ⊕ b" left associative with precedence 60 for @{'oplus $a $b}.
+interpretation "oplus" 'oplus a b = (lo ? a b).
 
-lemma move_star: ∀S:DeqSet.∀x:S.∀i:pitem S.
-  move S x i^* = (move ? x i)^⊛.
+lemma lo_def: ∀S.∀i1,i2:pitem S.∀b1,b2. 〈i1,b1〉⊕〈i2,b2〉=〈i1+i2,b1∨b2〉.
 // qed.
 
 (*
-Example. Let us consider the item                      
-  
-                               (•a + ϵ)((•b)*•a + •b)b
+Concatenation is a bit more complex. In order to broadcast a point inside i1 · i2 
+we should start broadcasting it inside i1 and then proceed into i2 if and only if a 
+point reached the end of i1. This suggests to define •(i1 · i2) as •(i1) ▹ i2, where 
+e ▹ i is a general operation of concatenation between a pre and an item, defined by 
+cases on the boolean in e: 
 
-and the two moves w.r.t. the characters a and b. 
-For a, we have two possible positions (all other points gets erased); the innermost 
-point stops in front of the final b, while the other one broadcast inside (b^*a + b)b, 
-so
- 
-      move((•a + ϵ)((•b)*•a + •b)b,a) = 〈(a + ϵ)((•b)^*•a + •b)•b, false〉
-
-For b, we have two positions too. The innermost point stops in front of the final b too, 
-while the other point reaches the end of b* and must go back through b*a:  
-    
-      move((•a + ϵ)((•b)*•a + •b)b ,b) = 〈(a +  ϵ)((•b)*•a + b)•b, false〉
-
+       〈i1,true〉 ▹ i2  = i1 ◃ •(i_2)
+       〈i1,false〉 ▹ i2 = i1 · i2
+In turn, ◃ says how to concatenate an item with a pre, that is however extremely simple:
+        i1 ◃ 〈i1,b〉  = 〈i_1 · i2, b〉
+Let us come to the formalized definitions:
 *)
 
-definition pmove ≝ λS:DeqSet.λx:S.λe:pre S. move ? x (\fst e).
-
-lemma pmove_def : ∀S:DeqSet.∀x:S.∀i:pitem S.∀b. 
-  pmove ? x 〈i,b〉 = move ? x i.
-// qed.
-
-lemma eq_to_eq_hd: ∀A.∀l1,l2:list A.∀a,b. 
-  a::l1 = b::l2 → a = b.
-#A #l1 #l2 #a #b #H destruct //
-qed. 
-
-(* Obviously, a move does not change the carrier of the item, as one can easily 
-prove by induction on the item. *)
-
-lemma same_kernel: ∀S:DeqSet.∀a:S.∀i:pitem S.
-  |\fst (move ? a i)| = |i|.
-#S #a #i elim i //
-  [#i1 #i2 #H1 #H2 >move_cat >erase_odot //
-  |#i1 #i2 #H1 #H2 >move_plus whd in ⊢ (??%%); // 
-  ]
-qed.
-
-(* Here is our first, major result, stating the correctness of the
-move operation. The proof is a simple induction on i. *)
-
-theorem move_ok:
- ∀S:DeqSet.∀a:S.∀i:pitem S.∀w: word S. 
-   \sem{move ? a i} w ↔ \sem{i} (a::w).
-#S #a #i elim i 
-  [normalize /2/
-  |normalize /2/
-  |normalize /2/
-  |normalize #x #w cases (true_or_false (a==x)) #H >H normalize
-    [>(\P H) % [* // #bot @False_ind //| #H1 destruct /2/]
-    |% [@False_ind |#H1 cases (\Pf H) #H2 @H2 destruct //]
-    ]
-  |#i1 #i2 #HI1 #HI2 #w >move_cat
-   @iff_trans[|@sem_odot] >same_kernel >sem_cat_w
-   @iff_trans[||@(iff_or_l … (HI2 w))] @iff_or_r 
-   @iff_trans[||@iff_sym @deriv_middot //]
-   @cat_ext_l @HI1
-  |#i1 #i2 #HI1 #HI2 #w >(sem_plus S i1 i2) >move_plus >sem_plus_w 
-   @iff_trans[|@sem_oplus] 
-   @iff_trans[|@iff_or_l [|@HI2]| @iff_or_r //]
-  |#i1 #HI1 #w >move_star 
-   @iff_trans[|@sem_ostar] >same_kernel >sem_star_w 
-   @iff_trans[||@iff_sym @deriv_middot //]
-   @cat_ext_l @HI1
-  ]
-qed.
-    
-(* The move operation is generalized to strings in the obvious way. *)
-
-notation > "x ↦* E" non associative with precedence 60 for @{moves ? $x $E}.
-
-let rec moves (S : DeqSet) w e on w : pre S ≝
- match w with
-  [ nil ⇒ e
-  | cons x w' ⇒ w' ↦* (move S x (\fst e))]. 
-
-lemma moves_empty: ∀S:DeqSet.∀e:pre S. 
-  moves ? [ ] e = e.
-// qed.
-
-lemma moves_cons: ∀S:DeqSet.∀a:S.∀w.∀e:pre S. 
-  moves ? (a::w)  e = moves ? w (move S a (\fst e)).
-// qed.
-
-lemma moves_left : ∀S,a,w,e. 
-  moves S (w@(a::[])) e = move S a (\fst (moves S w e)). 
-#S #a #w elim w // #x #tl #Hind #e >moves_cons >moves_cons //
-qed.
-
-lemma not_epsilon_sem: ∀S:DeqSet.∀a:S.∀w: word S. ∀e:pre S. 
-  iff ((a::w) ∈ e) ((a::w) ∈ \fst e).
-#S #a #w * #i #b cases b normalize 
-  [% /2/ * // #H destruct |% normalize /2/]
-qed.
-
-lemma same_kernel_moves: ∀S:DeqSet.∀w.∀e:pre S.
-  |\fst (moves ? w e)| = |\fst e|.
-#S #w elim w //
-qed.
-
-theorem decidable_sem: ∀S:DeqSet.∀w: word S. ∀e:pre S. 
-   (\snd (moves ? w e) = true) ↔ \sem{e} w.
-#S #w elim w 
- [* #i #b >moves_empty cases b % /2/
- |#a #w1 #Hind #e >moves_cons
-  @iff_trans [||@iff_sym @not_epsilon_sem]
-  @iff_trans [||@move_ok] @Hind
- ]
-qed.
-
-(* It is now clear that we can build a DFA D_e for e by taking pre as states, 
-and move as transition function; the initial state is •(e) and a state 〈i,b〉 is 
-final if and only if b is true. The fact that states in D_e are finite is obvious: 
-in fact, their cardinality is at most 2^{n+1} where n is the number of symbols in 
-e. This is one of the advantages of pointed regular expressions w.r.t. derivatives, 
-whose finite nature only holds after a suitable quotient.
-
-Let us discuss a couple of examples.
-
-Example. 
-Below is the DFA associated with the regular expression (ac+bc)*.
-
-DFA for (ac+bc)  
-
-The graphical description of the automaton is the traditional one, with nodes for 
-states and labelled arcs for transitions. Unreachable states are not shown.
-Final states are emphasized by a double circle: since a state 〈e,b〉 is final if and 
-only if b is true, we may just label nodes with the item.
-The automaton is not minimal: it is easy to see that the two states corresponding to 
-the items (a•c +bc)* and (ac+b•c)* are equivalent (a way to prove it is to observe 
-that they define the same language!). In fact, an important property of pres e is that 
-each state has a clear semantics, given in terms of the specification e and not of the 
-behaviour of the automaton. As a consequence, the construction of the automaton is not 
-only direct, but also extremely intuitive and locally verifiable. 
-
-Let us consider a more complex case.
-
-Example. 
-Starting form the regular expression (a+ϵ)(b*a + b)b, we obtain the following automaton.
-
-DFA for (a+ϵ)(b*a + b)b 
-
-Remarkably, this DFA is minimal, testifying the small number of states produced by our 
-technique (the pair of states 6-8 and 7-9 differ for the fact that 6 and 7 
-are final, while 8 and 9 are not). 
-
-
-Move to pit
-. 
-
-We conclude this chapter with a few properties of the move opertions in relation
-with the pit state. *)
-
-definition pit_pre ≝ λS.λi.〈blank S (|i|), false〉. 
-
-(* The following function compute the list of characters occurring in a given
-item i. *)
-
-let rec occur (S: DeqSet) (i: re S) on i ≝  
-  match i with
-  [ z ⇒ [ ]
-  | e ⇒ [ ]
-  | s y ⇒ y::[]
-  | o e1 e2 ⇒ unique_append ? (occur S e1) (occur S e2) 
-  | c e1 e2 ⇒ unique_append ? (occur S e1) (occur S e2) 
-  | k e ⇒ occur S e].
-
-(* If a symbol a does not occur in i, then move(i,a) gets to the
-pit state. *)
-
-lemma not_occur_to_pit: ∀S,a.∀i:pitem S. memb S a (occur S (|i|)) ≠ true →
-  move S a i  = pit_pre S i.
-#S #a #i elim i //
-  [#x normalize cases (a==x) normalize // #H @False_ind /2/
-  |#i1 #i2 #Hind1 #Hind2 #H >move_cat 
-   >Hind1 [2:@(not_to_not … H) #H1 @sublist_unique_append_l1 //]
-   >Hind2 [2:@(not_to_not … H) #H1 @sublist_unique_append_l2 //] //
-  |#i1 #i2 #Hind1 #Hind2 #H >move_plus 
-   >Hind1 [2:@(not_to_not … H) #H1 @sublist_unique_append_l1 //]
-   >Hind2 [2:@(not_to_not … H) #H1 @sublist_unique_append_l2 //] //
-  |#i #Hind #H >move_star >Hind // 
-  ]
-qed.
-
-(* We cannot escape form the pit state. *)
-
-lemma move_pit: ∀S,a,i. move S a (\fst (pit_pre S i)) = pit_pre S i.
-#S #a #i elim i //
-  [#i1 #i2 #Hind1 #Hind2 >move_cat >Hind1 >Hind2 // 
-  |#i1 #i2 #Hind1 #Hind2 >move_plus >Hind1 >Hind2 // 
-  |#i #Hind >move_star >Hind //
-  ]
-qed. 
-
-lemma moves_pit: ∀S,w,i. moves S w (pit_pre S i) = pit_pre S i.
-#S #w #i elim w // 
-qed. 
+definition pre_concat_r ≝ λS:DeqSet.λi:pitem S.λe:pre S.
+  match e with [ mk_Prod i1 b ⇒ 〈i · i1, b〉].
  
-(* If any character in w does not occur in i, then moves(i,w) gets
-to the pit state. *)
+notation "i ◃ e" left associative with precedence 60 for @{'lhd $i $e}.
+interpretation "pre_concat_r" 'lhd i e = (pre_concat_r ? i e).
 
-lemma to_pit: ∀S,w,e. ¬ sublist S w (occur S (|\fst e|)) →
- moves S w e = pit_pre S (\fst e).
-#S #w elim w
-  [#e * #H @False_ind @H normalize #a #abs @False_ind /2/
-  |#a #tl #Hind #e #H cases (true_or_false (memb S a (occur S (|\fst e|))))
-    [#Htrue >moves_cons whd in ⊢ (???%); <(same_kernel … a) 
-     @Hind >same_kernel @(not_to_not … H) #H1 #b #memb cases (orb_true_l … memb)
-      [#H2 >(\P H2) // |#H2 @H1 //]
-    |#Hfalse >moves_cons >not_occur_to_pit // >Hfalse /2/ 
+lemma eq_to_ex_eq: ∀S.∀A,B:word S → Prop. 
+  A = B → A =1 B. 
+#S #A #B #H >H #x % // qed.
+
+(* The behaviour of ◃ is summarized by the following, easy lemma: *)
+
+lemma sem_pre_concat_r : ∀S,i.∀e:pre S.
+  \sem{i ◃ e} =1 \sem{i} · \sem{|fst \dots e|} ∪ \sem{e}.
+#S #i * #i1 #b1 cases b1 [2: @eq_to_ex_eq //] 
+>sem_pre_true >sem_cat >sem_pre_true /2/ 
+qed.
+ 
+(* The definition of $•(-)$ (eclose) and ▹ (pre_concat_l) are mutually recursive.
+In this situation, a viable alternative that is usually simpler to reason about, 
+is to abstract one of the two functions with respect to the other. In particular
+we abstract pre_concat_l with respect to an input bcast function from items to
+pres. *)
+
+definition pre_concat_l ≝ λS:DeqSet.λbcast:∀S:DeqSet.pitem S → pre S.λe1:pre S.λi2:pitem S.
+  match e1 with 
+  [ mk_Prod i1 b1 ⇒ match b1 with 
+    [ true ⇒ (i1 ◃ (bcast ? i2)) 
+    | false ⇒ 〈i1 · i2,false〉
     ]
+  ].
+
+notation "a ▹ b" left associative with precedence 60 for @{'tril eclose $a $b}.
+interpretation "item-pre concat" 'tril op a b = (pre_concat_l ? op a b).
+
+(* We are ready to give the formal definition of the broadcasting operation. *)
+
+notation "•" non associative with precedence 60 for @{eclose ?}.
+
+let rec eclose (S: DeqSet) (i: pitem S) on i : pre S ≝
+ match i with
+  [ pz ⇒ 〈 pz ?, false 〉
+  | pe ⇒ 〈 ϵ,  true 〉
+  | ps x ⇒ 〈 `.x, false 〉
+  | pp x ⇒ 〈 `.x, false 〉
+  | po i1 i2 ⇒ •i1 ⊕ •i2
+  | pc i1 i2 ⇒ •i1 ▹ i2
+  | pk i ⇒ 〈(fst \dots (•i))^*,true〉].
+  
+notation "• x" non associative with precedence 60 for @{'eclose $x}.
+interpretation "eclose" 'eclose x = (eclose ? x).
+
+(* Here are a few simple properties of ▹ and •(-) *)
+
+lemma pcl_true : ∀S.∀i1,i2:pitem S.
+  〈i1,true〉 ▹ i2 = i1 ◃ (•i2).
+// qed.
+
+lemma pcl_true_bis : ∀S.∀i1,i2:pitem S.
+  〈i1,true〉 ▹ i2 = 〈i1 · fst \dots (•i2), snd \dots (•i2)〉.
+#S #i1 #i2 normalize cases (•i2) // qed.
+
+lemma pcl_false: ∀S.∀i1,i2:pitem S.
+  〈i1,false〉 ▹  i2  = 〈i1 · i2, false〉.
+// qed.
+
+lemma eclose_plus: ∀S:DeqSet.∀i1,i2:pitem S.
+  •(i1 + i2) = •i1 ⊕ •i2.
+// qed.
+
+lemma eclose_dot: ∀S:DeqSet.∀i1,i2:pitem S.
+  •(i1 · i2) = •i1 ▹ i2.
+// qed.
+
+lemma eclose_star: ∀S:DeqSet.∀i:pitem S.
+  •i^* = 〈(fst \dots(•i))^*,true〉.
+// qed.
+
+(* The definition of •(-) (eclose) can then be lifted from items to pres
+in the obvious way. *)
+
+definition lift ≝ λS.λf:pitem S →pre S.λe:pre S. 
+  match e with 
+  [ mk_Prod i b ⇒ 〈fst \dots (f i), snd \dots (f i) ∨ b〉].
+  
+definition preclose ≝ λS. lift S (eclose S). 
+interpretation "preclose" 'eclose x = (preclose ? x).
+
+(* Obviously, broadcasting does not change the carrier of the item,
+as it is easily proved by structural induction. *)
+
+lemma erase_bull : ∀S.∀i:pitem S. |fst \dots (•i)| = |i|.
+#S #i elim i // 
+  [ #i1 #i2 #IH1 #IH2 >erase_dot <IH1 >eclose_dot
+    cases (•i1) #i11 #b1 cases b1 // <IH2 >pcl_true_bis //
+  | #i1 #i2 #IH1 #IH2 >eclose_plus >(erase_plus … i1) <IH1 <IH2
+    cases (•i1) #i11 #b1 cases (•i2) #i21 #b2 //  
+  | #i #IH >eclose_star >(erase_star … i) <IH cases (•i) //
   ]
 qed.
+
+(* We are now ready to state the main semantic properties of ⊕, ◃ and •(-):
+
+sem_oplus:     \sem{e1 ⊕ e2} =1 \sem{e1} ∪ \sem{e2} 
+sem_pcl:       \sem{e1 ▹ i2} =1  \sem{e1} · \sem{|i2|} ∪ \sem{i2}
+sem_bullet     \sem{•i} =1 \sem{i} ∪ \sem{|i|}
+
+The proof of sem_oplus is straightforward. *)
+
+lemma sem_oplus: ∀S:DeqSet.∀e1,e2:pre S.
+  \sem{e1 ⊕ e2} =1 \sem{e1} ∪ \sem{e2}. 
+#S * #i1 #b1 * #i2 #b2 #w %
+  [cases b1 cases b2 normalize /2/ * /3/ * /3/
+  |cases b1 cases b2 normalize /2/ * /3/ * /3/
+  ]
+qed.
+
+(* For the others, we proceed as follow: we first prove the following 
+auxiliary lemma, that assumes sem_bullet:
+
+sem_pcl_aux: 
+   \sem{•i2} =1  \sem{i2} ∪ \sem{|i2|} →
+   \sem{e1 ▹ i2} =1  \sem{e1} · \sem{|i2|} ∪ \sem{i2}.
+
+Then, using the previous result, we prove sem_bullet by induction 
+on i. Finally, sem_pcl_aux and sem_bullet give sem_pcl. *)
+
+lemma LcatE : ∀S.∀e1,e2:pitem S.
+  \sem{e1 · e2} = \sem{e1} · \sem{|e2|} ∪ \sem{e2}. 
+// qed.
+
+lemma sem_pcl_aux : ∀S.∀e1:pre S.∀i2:pitem S.
+   \sem{•i2} =1  \sem{i2} ∪ \sem{|i2|} →
+   \sem{e1 ▹ i2} =1  \sem{e1} · \sem{|i2|} ∪ \sem{i2}.
+#S * #i1 #b1 #i2 cases b1
+  [2:#th >pcl_false >sem_pre_false >sem_pre_false >sem_cat /2/
+  |#H >pcl_true >sem_pre_true @(eqP_trans … (sem_pre_concat_r …))
+   >erase_bull @eqP_trans [|@(eqP_union_l … H)]
+    @eqP_trans [|@eqP_union_l[|@union_comm ]]
+    @eqP_trans [|@eqP_sym @union_assoc ] /3/ 
+  ]
+qed.
+  
+lemma minus_eps_pre_aux: ∀S.∀e:pre S.∀i:pitem S.∀A. 
+ \sem{e} =1 \sem{i} ∪ A → \sem{fst \dots e} =1 \sem{i} ∪ (A - {[ ]}).
+#S #e #i #A #seme
+@eqP_trans [|@minus_eps_pre]
+@eqP_trans [||@eqP_union_r [|@eqP_sym @minus_eps_item]]
+@eqP_trans [||@distribute_substract] 
+@eqP_substract_r //
+qed.
+
+theorem sem_bull: ∀S:DeqSet. ∀i:pitem S.  \sem{•i} =1 \sem{i} ∪ \sem{|i|}.
+#S #e elim e 
+  [#w normalize % [/2/ | * //]
+  |/2/ 
+  |#x normalize #w % [ /2/ | * [@False_ind | //]]
+  |#x normalize #w % [ /2/ | * // ] 
+  |#i1 #i2 #IH1 #IH2 >eclose_dot
+   @eqP_trans [|@sem_pcl_aux //] >sem_cat 
+   @eqP_trans
+     [|@eqP_union_r
+       [|@eqP_trans [|@(cat_ext_l … IH1)] @distr_cat_r]]
+   @eqP_trans [|@union_assoc]
+   @eqP_trans [||@eqP_sym @union_assoc]
+   @eqP_union_l //
+  |#i1 #i2 #IH1 #IH2 >eclose_plus
+   @eqP_trans [|@sem_oplus] >sem_plus >erase_plus 
+   @eqP_trans [|@(eqP_union_l … IH2)]
+   @eqP_trans [|@eqP_sym @union_assoc]
+   @eqP_trans [||@union_assoc] @eqP_union_r
+   @eqP_trans [||@eqP_sym @union_assoc]
+   @eqP_trans [||@eqP_union_l [|@union_comm]]
+   @eqP_trans [||@union_assoc] /2/
+  |#i #H >sem_pre_true >sem_star >erase_bull >sem_star
+   @eqP_trans [|@eqP_union_r [|@cat_ext_l [|@minus_eps_pre_aux //]]]
+   @eqP_trans [|@eqP_union_r [|@distr_cat_r]]
+   @eqP_trans [|@union_assoc] @eqP_union_l >erase_star 
+   @eqP_sym @star_fix_eps 
+  ]
+qed.
+
+(*
+Blank item
+ 
+
+As a corollary of theorem sem_bullet, given a regular expression e, we can easily 
+find an item with the same semantics of $e$: it is enough to get an item (blank e) 
+having e as carrier and no point, and then broadcast a point in it. The semantics of
+(blank e) is obviously the empty language: from the point of view of the automaton,
+it corresponds with the pit state. *)
+
+let rec blank (S: DeqSet) (i: re S) on i :pitem S ≝
+ match i with
+  [ z ⇒ pz ?
+  | e ⇒ ϵ
+  | s y ⇒ `y
+  | o e1 e2 ⇒ (blank S e1) + (blank S e2) 
+  | c e1 e2 ⇒ (blank S e1) · (blank S e2)
+  | k e ⇒ (blank S e)^* ].
+  
+lemma forget_blank: ∀S.∀e:re S.|blank S e| = e.
+#S #e elim e normalize //
+qed.
+
+lemma sem_blank: ∀S.∀e:re S.\sem{blank S e} =1 ∅.
+#S #e elim e 
+  [1,2:@eq_to_ex_eq // 
+  |#s @eq_to_ex_eq //
+  |#e1 #e2 #Hind1 #Hind2 >sem_cat 
+   @eqP_trans [||@(union_empty_r … ∅)] 
+   @eqP_trans [|@eqP_union_l[|@Hind2]] @eqP_union_r
+   @eqP_trans [||@(cat_empty_l … ?)] @cat_ext_l @Hind1
+  |#e1 #e2 #Hind1 #Hind2 >sem_plus 
+   @eqP_trans [||@(union_empty_r … ∅)] 
+   @eqP_trans [|@eqP_union_l[|@Hind2]] @eqP_union_r @Hind1
+  |#e #Hind >sem_star
+   @eqP_trans [||@(cat_empty_l … ?)] @cat_ext_l @Hind
+  ]
+qed.
+   
+theorem re_embedding: ∀S.∀e:re S. 
+  \sem{•(blank S e)} =1 \sem{e}.
+#S #e @eqP_trans [|@sem_bull] >forget_blank 
+@eqP_trans [|@eqP_union_r [|@sem_blank]]
+@eqP_trans [|@union_comm] @union_empty_r.
+qed.
+
+(*
+Lifted Operators
+ 
+
+Plus and bullet have been already lifted from items to pres. We can now 
+do a similar job for concatenation ⊙ and Kleene's star ⊛.*)
+
+definition lifted_cat ≝ λS:DeqSet.λe:pre S. 
+  lift S (pre_concat_l S eclose e).
+
+notation "e1 ⊙ e2" left associative with precedence 70 for @{'odot $e1 $e2}.
+
+interpretation "lifted cat" 'odot e1 e2 = (lifted_cat ? e1 e2).
+
+lemma odot_true_b : ∀S.∀i1,i2:pitem S.∀b. 
+  〈i1,true〉 ⊙ 〈i2,b〉 = 〈i1 · (fst \dots (•i2)),snd \dots (•i2) ∨ b〉.
+#S #i1 #i2 #b normalize in ⊢ (??%?); cases (•i2) // 
+qed.
+
+lemma odot_false_b : ∀S.∀i1,i2:pitem S.∀b.
+  〈i1,false〉 ⊙ 〈i2,b〉 = 〈i1 · i2 ,b〉.
+// 
+qed.
+  
+lemma erase_odot:∀S.∀e1,e2:pre S.
+  |fst \dots (e1 ⊙ e2)| = |fst \dots e1| · (|fst \dots e2|).
+#S * #i1 * * #i2 #b2 // >odot_true_b >erase_dot //  
+qed.
+
+(* Let us come to the star operation: *)
+
+definition lk ≝ λS:DeqSet.λe:pre S.
+  match e with 
+  [ mk_Prod i1 b1 ⇒
+    match b1 with 
+    [true ⇒ 〈(fst \dots (eclose ? i1))^*, true〉
+    |false ⇒ 〈i1^*,false〉
+    ]
+  ]. 
+
+(* notation < "a \sup ⊛" non associative with precedence 90 for @{'lk $a}.*)
+interpretation "lk" 'lk a = (lk ? a).
+notation "a^⊛" non associative with precedence 90 for @{'lk $a}.
+
+lemma ostar_true: ∀S.∀i:pitem S.
+  〈i,true〉^⊛ = 〈(fst \dots (•i))^*, true〉.
+// qed.
+
+lemma ostar_false: ∀S.∀i:pitem S.
+  〈i,false〉^⊛ = 〈i^*, false〉.
+// qed.
+  
+lemma erase_ostar: ∀S.∀e:pre S.
+  |fst \dots (e^⊛)| = |fst \dots e|^*.
+#S * #i * // qed.
+
+lemma sem_odot_true: ∀S:DeqSet.∀e1:pre S.∀i. 
+  \sem{e1 ⊙ 〈i,true〉} =1 \sem{e1 ▹ i} ∪ { [ ] }.
+#S #e1 #i 
+cut (e1 ⊙ 〈i,true〉 = 〈fst \dots (e1 ▹ i), snd \dots(e1 ▹ i) ∨ true〉) [//]
+#H >H cases (e1 ▹ i) #i1 #b1 cases b1 
+  [>sem_pre_true @eqP_trans [||@eqP_sym @union_assoc]
+   @eqP_union_l /2/ 
+  |/2/
+  ]
+qed.
+
+lemma eq_odot_false: ∀S:DeqSet.∀e1:pre S.∀i. 
+  e1 ⊙ 〈i,false〉 = e1 ▹ i.
+#S #e1 #i  
+cut (e1 ⊙ 〈i,false〉 = 〈fst \dots (e1 ▹ i), snd \dots(e1 ▹ i) ∨ false〉) [//]
+cases (e1 ▹ i) #i1 #b1 cases b1 #H @H
+qed.
+
+(* We conclude this section with the proof of the main semantic properties
+of ⊙ and ⊛. *)
+
+lemma sem_odot: 
+  ∀S.∀e1,e2: pre S. \sem{e1 ⊙ e2} =1 \sem{e1}· \sem{|fst \dots e2|} ∪ \sem{e2}.
+#S #e1 * #i2 * 
+  [>sem_pre_true 
+   @eqP_trans [|@sem_odot_true]
+   @eqP_trans [||@union_assoc] @eqP_union_r @sem_pcl_aux //
+  |>sem_pre_false >eq_odot_false @sem_pcl_aux //
+  ]
+qed.
+
+theorem sem_ostar: ∀S.∀e:pre S. 
+  \sem{e^⊛} =1  \sem{e} · \sem{|fst \dots e|}^*.
+#S * #i #b cases b
+  [>sem_pre_true >sem_pre_true >sem_star >erase_bull
+   @eqP_trans [|@eqP_union_r[|@cat_ext_l [|@minus_eps_pre_aux //]]]
+   @eqP_trans [|@eqP_union_r [|@distr_cat_r]]
+   @eqP_trans [||@eqP_sym @distr_cat_r]
+   @eqP_trans [|@union_assoc] @eqP_union_l
+   @eqP_trans [||@eqP_sym @epsilon_cat_l] @eqP_sym @star_fix_eps 
+  |>sem_pre_false >sem_pre_false >sem_star /2/
+  ]
+qed. 
