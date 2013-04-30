@@ -10,6 +10,7 @@
       V_____________________________________________________________*)
 
 include "basics/vectors.ma".
+include "basics/finset.ma".
 (* include "basics/relations.ma". *)
 
 record tape (sig:FinSet): Type[0] ≝ 
