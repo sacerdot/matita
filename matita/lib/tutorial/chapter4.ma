@@ -2,7 +2,6 @@
   Propositions as Types
 *)
 
-include "tutorial/chapter3.ma".
 include "basics/logic.ma".
 
 (* In the previous section, we introduced many interesting logical connectives 
@@ -151,6 +150,27 @@ inductive Sig (A:Type[0]) (Q:A → Prop) : Type[0] ≝
 inductive DPair (A:Type[0]) (Q:A → Type[0]) : Type[0] ≝
    DPair_intro: ∀x:A. Q x →  DPair A Q.
 
+(* We shall use the notation Σx:A.Q x for the sigma type, and the similar 
+notation ∑x:A.Q x for dependent pairs. *)
+
+notation "hvbox(\Sigma ident i : ty break . p)"
+ left associative with precedence 20 
+for @{'sigma (\lambda ${ident i} : $ty. $p) }.
+
+notation "hvbox(\Sigma ident i break . p)"
+ with precedence 20 for @{'sigma (\lambda ${ident i}. $p) }.
+ 
+interpretation "Sigma" 'sigma x = (Sig ? x).
+
+notation "hvbox(∑ ident i : ty break . p)"
+ left associative with precedence 20 
+ for @{'dpair (\lambda ${ident i} : $ty. $p) }.
+
+notation "hvbox(∑ ident i break . p)" 
+ with precedence 20 for @{'dpair (\lambda ${ident i}. $p) }.
+ 
+interpretation "Sum" 'dpair x = (DPair ? x).
+
 (* In the first case (traditionally called sigma type), an element of type 
 (Sig A P) is a pair (Sig_intro ?? a h) where a is an element of type A and h is a 
 proof that the property (P a) holds. 
@@ -201,7 +221,15 @@ We declare such a type immediately after the match, introduces by the keyword
 
 definition Sig_snd : ∀A,P.∀x:Sig A P.P (Sig_fst A P x) ≝ λA,P,x.
   match x return λx.P (Sig_fst A P x) with [Sig_intro a h ⇒ h].
+  
+(* Similarly, we have: *)
 
+definition DPair_fst  ≝ λA:Type[0].λP:A→Type[0].λx:DPair A P. 
+  match x with [DPair_intro a h ⇒ a].
+  
+definition DPair_snd : ∀A,P.∀x:DPair A P.P (DPair_fst A P x) ≝ λA,P,x.
+  match x return λx.P (DPair_fst A P x) with [DPair_intro a h ⇒ h].
+  
 (* Remark: The careful reader may have possibly remarked that we also did a 
 systematic abuse of the arrow symbol: the expression A → B was sometimes 
 interpreted as the "implication" between A and B and sometimes as the "function 
@@ -299,7 +327,7 @@ the implication in natural deduction, that are particularly interesting:
       Γ,A ⊢ B                    Γ ⊢ A → B    Γ ⊢ A
       ----------                 -------------------
       Γ ⊢ A → B                         Γ ⊢ B
-  
+     
 The first step is to enrich the representation by decorating formulae with
 explicit proof terms. In particular, formulae in the context, being assumptions,
 will be decorated with free variables (different form each others), while the 
@@ -376,11 +404,11 @@ following Picture:
           cut             | reducible expression (redex) 
           cut free        | normal form 
           cut elimination | normalization 
-          correctness     |type checking 
+          correctness     | type checking 
 *)
 
 (******************************* Prop vs. Type ********************************)
-
+    
 (* In view of the Curry-Howard analogy, the reader could wonder if there is any 
 actual difference between the two sorts Prop and Type in a system like the 
 Calculus of Constructions, or if it just a matter of flavour. 
@@ -452,7 +480,7 @@ definition discriminate_to_bool ≝ λA,B:Prop.λp:A∨B.
   match p with
   [ or_introl a ⇒ tt
   | or_intror b ⇒ ff
-  ].
+  ]. 
 
 If you type the previous definition, Matita will complain with the following 
 error message: ``TypeChecker failure: Sort elimination not allowed: Prop towards 
@@ -467,7 +495,7 @@ definition discriminate_to_Prop ≝ λA,B:Prop.λp:A∨B.
  ].
  
 The error message is the same as before: in both cases the sort of the branches 
-is Type[0]. The only think we can do is to return other proof, like in the 
+is Type[0]. The only thing we can do is to return other proofs, like in the 
 following example: *)
 
 definition or_elim ≝ λA,B,C:Prop.λp:A∨B.λf:A→C.λg:B→C.
@@ -478,5 +506,58 @@ definition or_elim ≝ λA,B,C:Prop.λp:A∨B.λf:A→C.λg:B→C.
 
 (* Exercise: repeat the previous examples in interactive mode, eliminating the
 hypothesis p:A∨B. *)
+
+(**************************** The axiom of choice *****************************)
+
+(* The axiom of choice says that given a collection of non-empty sets S_i 
+indexed over a base set I, it is possible to make a selection of exactly one
+element x_i ∈ S_i. 
+In type theory, this can be expressed in the following terms: *)
+
+axiom choice_ax: ∀I:Type[0].∀S:I→Type[0].∀A:(∀i:I.S i → Type[0]).
+  (∀i:I.(∑x:S i.A i x)) → ∑f:∀i:I.S i.∀i:I.A i (f i).
+
+(* The axiom of choice is independent from the traditional basic axioms of set
+theory, like Zermelo–Fraenkel set theory, hence, if required, must be explicitly
+added to the theory. This extension of ZF, known as ZFC, provides the "standard" 
+axiomatization of set theory. 
+
+The controversial nature of the axiom of choice is related to the effectiveness
+of performing the selection claimed by the axiom of choice; for this reasons the 
+axiom of choice is usually rejected by constructive mathematicians. 
+
+However, if the proof of the existence on an inhabitant x_i for each type S_i is
+itself constructive, then this proof already provides a method that, when 
+applied to an element i∈I returns the witness x_i. In other words, not only the
+above axiom "choice" is perfectly acceptable, but it is actually provable! *)
+
+theorem choice: ∀I:Type[0].∀S:I→Type[0].∀A.
+  (∀i:I.∑x:S i.A i x) → ∑f:∀i:I.S i.∀i:I.A i (f i).
+#I #S #A #H   
+(* The goal is 
+    ∑f:∀i:I.S i.(∀i:I.A i (f i))
+We need to provide the function f:∀i:I.S i, and the proof that for any i:I, 
+A i (f i). The hypothesis H tells us that for any i we can build an object 
+(H i): ∑x:S i.A i x. The first projection of (H i) is an element of type (S i), 
+and we may define f ≝ λi. DPair_fst … (H i).The second projection of (H i) is
+a witness of A i (DPair_fst … (H i)), that is, according to our defintion 
+of f, a witness of A i (f i). Hence, λi.DPair_snd ?? (H i): ∀i:I.A i (f i). *)
+%{(λi.DPair_fst ?? (H i)) (λi.DPair_snd ?? (H i))}
+qed.
+
+(* It is worth to observe that if we try to repeat the same proof with either 
+the existential of the sigma type it will not work. For instance, the 
+following property is not provable: *)
+
+axiom Pchoice: ∀I:Type[0].∀S:I→Type[0].∀A.
+  (∀i:I.∃x:S i.A i x) → ∃f:∀i:I.S i.∀i:I.A i (f i).
+  
+(* The point is that the proof would require to extract from a non-informative
+content, namely the fact that there exists an x such that (A i x), the actual 
+witness x, that is an informative notion, and we know that this is forbidden for 
+consistency reasons. *)
+
+
+
 
 

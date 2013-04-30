@@ -29,10 +29,8 @@ follows: *)
 let rec add n (m:nat) ≝ 
 match n with
 [ O ⇒ m
-| S a ⇒ add (S a) m
+| S a ⇒ S (add a m)
 ].
-
-check 
 
 (* Observe that the definition of a recursive function requires the keyword 
 "let rec" instead of "definition". The specification of formal parameters is 
@@ -375,3 +373,20 @@ normalize // qed.
 example quotient8: witness … (div2Pagain (twice (twice (twice (twice (S O)))))) 
        = 〈twice (twice (twice (S O))), ff〉.
 // qed. 
+
+(********************)
+
+inductive Pari : nat → Prop ≝
+   | pariO : Pari O
+   | pari2 : ∀x. Pari x → Pari (S (S x)).
+   
+definition natPari ≝ Sub nat Pari.
+
+definition addPari: natPari → natPari → natPari.
+* #a #Ha * #b #Hb check mk_Sub @(mk_Sub … (add a b))  
+elim Ha
+  [normalize @Hb
+  |#x #Hx #Hind normalize @pari2 @Hind
+  ]
+qed.    
+

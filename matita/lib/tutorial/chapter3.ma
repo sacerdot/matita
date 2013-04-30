@@ -316,6 +316,32 @@ an explicit type. The content term is build by folding the function
 (where "rec" is the binder, "acc" is the bound variable and the rest is the 
 body) over the initial content expression @{$Px}. *)
 
+lemma distr_and_or_l : ∀A,B,C:Prop. A ∧(B ∨ C) → (A ∧ B) ∨ (A ∧ C).
+#A #B #C * #H *
+ [#H1 %1 % [@H |@H1] |#H1 %2 % //]
+qed.
+
+lemma distr_and_or_r : ∀A,B,C:Prop. (A ∧ B) ∨ (A ∧ C) → A ∧ (B ∨ C).
+#A #B #C * * #H1 #H2 
+  [% [// | %1 //] | % [// | %2 //]
+qed.
+
+
+lemma distr_or_and_l : ∀A,B,C:Prop. A ∨(B ∧ C) → (A ∨ B) ∧ (A ∨ C).
+#A #B #C *
+ [#H % [%1 // |%1 //] | * #H1 #H2 % [%2 // | %2 //] ] 
+qed.
+
+lemma distr_or_and_r : ∀A,B,C:Prop. (A ∨ B) ∧ (A ∨ C) → A ∨ (B ∧ C).
+#A #B #C 
+* * #H * /3/ 
+qed.
+
+definition neg ≝ λA:Prop. A → False.
+
+lemma neg_neg : ∀A. A → neg (neg A).
+#A #H normalize #H1 @(H1 H)
+qed.
 
 (***************************** Leibniz Equality *******************************)
 
@@ -454,9 +480,9 @@ theorem not_eq_O_S : ∀n:nat. O = S n → False.
 #n #H
 
 (* After introducing n and the hypothesis H:O = S n we are left with the goal 
-False. Now, observe that (not_zero O) reduces to Fals, hence these two terms 
-convertible, that is identical. So, it should be possible to replace False with
-(not_zero O) in the conclusion, since they are the same term.
+False. Now, observe that (not_zero O) reduces to False, hence these two terms 
+are convertible, that is identical. So, it should be possible to replace False 
+with (not_zero O) in the conclusion, since they are the same term.
 
 The tactic that does the job is the "change with" tactic. The invocation of 
 "change with t" checks that the current goal is convertible with t, and in this 
