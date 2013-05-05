@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/relocation/ldrop_append.ma".
+include "basic_2/substitution/lsubr.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL SUBSTITUTION FOR TERMS ************************)
 
@@ -34,16 +35,11 @@ interpretation "context-sensitive parallel substitution (term)"
 
 (* Basic properties *********************************************************)
 
-(* Note: it does not hold replacing |L1| with |L2| *)
-lemma cpss_lsubr_trans: ∀L1,T1,T2. L1 ⊢ T1 ▶* T2 →
-                        ∀L2. L2 ⊑ [0, |L1|] L1 → L2 ⊢ T1 ▶* T2.
+lemma cpss_lsubr_trans: lsubr_trans … cpss.
 #L1 #T1 #T2 #H elim H -L1 -T1 -T2
 [ //
 | #L1 #K1 #V1 #V2 #W2 #i #HLK1 #_ #HVW2 #IHV12 #L2 #HL12
-  lapply (ldrop_fwd_ldrop2_length … HLK1) #Hi
-  lapply (ldrop_fwd_O1_length … HLK1) #H2i
-  elim (ldrop_lsubr_ldrop2_abbr … HL12 … HLK1 ? ?) -HL12 -HLK1 // -Hi
-  <H2i -H2i <minus_plus_m_m /3 width=6/
+  elim (lsubr_fwd_ldrop2_abbr … HL12 … HLK1) -HL12 -HLK1 /3 width=6/
 | /4 width=1/
 | /3 width=1/
 ]
@@ -63,10 +59,10 @@ lemma cpss_delift: ∀K,V,T1,L,d. ⇩[0, d] L ≡ (K. ⓓV) →
   elim (lt_or_eq_or_gt i d) #Hid /3 width=4/
   destruct
   elim (lift_total V 0 (i+1)) #W #HVW
-  elim (lift_split … HVW i i ? ? ?) // /3 width=6/
+  elim (lift_split … HVW i i) // /3 width=6/
 | * [ #a ] #I #W1 #U1 #IHW1 #IHU1 #L #d #HLK
   elim (IHW1 … HLK) -IHW1 #W2 #W #HW12 #HW2
-  [ elim (IHU1 (L. ⓑ{I} W1) (d+1) ?) -IHU1 /2 width=1/ -HLK /3 width=9/
+  [ elim (IHU1 (L. ⓑ{I} W1) (d+1)) -IHU1 /2 width=1/ -HLK /3 width=9/
   | elim (IHU1 … HLK) -IHU1 -HLK /3 width=8/
   ]
 ]

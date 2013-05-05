@@ -1,0 +1,41 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/reducibility/lfpr_fpr.ma".
+include "basic_2/computation/fprs_fprs.ma".
+include "basic_2/computation/lfprs.ma".
+
+(* FOCALIZED PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS *********************)
+
+(* Inversion lemmas on context-free parallel reduction for closures *********)
+
+lemma lfprs_inv_fprs: ∀L1,L2. ⦃L1⦄ ➡* ⦃L2⦄ → ∀T. ⦃L1, T⦄ ➡* ⦃L2, T⦄.
+#L1 #L2 #H @(lfprs_ind … H) -L2 //
+#L #L2 #_ #HL2 #IHL1 #T
+lapply (lfpr_inv_fpr … HL2 T) -HL2 /3 width=4/
+qed-.
+
+(* Properties on context-free parallel computation for closures *************)
+
+lemma fprs_lfprs: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ➡* ⦃L2, T2⦄ → ⦃L1⦄ ➡* ⦃L2⦄.
+#L1 #L2 #T1 #T2 #H @(fprs_ind … H) -L2 -T2 // /3 width=5/
+qed.
+
+lemma lfprs_fprs_trans: ∀L1,L,L2,T1,T2. ⦃L1⦄ ➡* ⦃L⦄ → ⦃L, T1⦄ ➡* ⦃L2, T2⦄ → ⦃L1, T1⦄ ➡* ⦃L2, T2⦄.
+#L1 #L #L2 #T1 #T2 #HL1 #HL2
+lapply (lfprs_inv_fprs … HL1 T1) -HL1 /2 width=4/
+qed.
+(*
+lamma lfprs_cprs_conf: ∀L1,L,L2,T1,T2. ⦃L1⦄ ➡* ⦃L2⦄ → L1 ⊢ T1 ➡* T2 → ⦃L1, T1⦄ ➡* ⦃L2, T2⦄.
+*)

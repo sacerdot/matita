@@ -12,6 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
+notation "hvbox( L1 break ⊑ [ term 46 d , break term 46 e ] break term 46 L2 )"
+   non associative with precedence 45
+   for @{ 'SubEq $L1 $d $e $L2 }.
+
 include "basic_2/grammar/lenv_length.ma".
 
 (* LOCAL ENVIRONMENT REFINEMENT FOR SUBSTITUTION ****************************)

@@ -12,25 +12,27 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reduction/cpr_tshf.ma".
+notation "hvbox( T1 ➡ ➡ * break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'PRedStarAlt $T1 $T2 }.
 
-(* CONTEXT-SENSITIVE WEAK HEAD NORMAL TERMS *********************************)
+include "basic_2/computation/ltprs.ma".
 
-definition chnf: lenv → predicate term ≝ λL. NF … (cpr L) tshf.
+(* CONTEXT-FREE PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS ******************)
+
+(* alternative definition of ltprs *)
+definition ltprsa: relation lenv ≝ lpx tprs.
 
 interpretation
-   "context-sensitive head normality (term)"
-   'HdNormal L T = (chnf L T).
-
-(* Basic inversion lemmas ***************************************************)
-
-lemma chnf_inv_tshf: ∀L,T. L ⊢ 𝐇𝐍⦃T⦄ → T ≈ T.
-normalize /2 width=1/
-qed-.
+  "context-free parallel computation (environment) alternative"
+  'PRedStarAlt L1 L2 = (ltprsa L1 L2).
 
 (* Basic properties *********************************************************)
 
-lemma tshf_thnf: ∀T. T ≈ T → ⋆ ⊢ 𝐇𝐍⦃T⦄.
-#T #HT #T2 #H elim (cpr_fwd_tshf1 … H) -H //
-#H elim H //
-qed.
+lemma ltprs_ltprsa: ∀L1,L2. L1 ➡* L2 → L1 ➡➡* L2.
+/2 width=1/ qed.
+
+(* Basic inversion lemmas ***************************************************)
+
+lemma ltprsa_ltprs: ∀L1,L2. L1 ➡➡* L2 → L1 ➡* L2.
+/2 width=1/ qed-.

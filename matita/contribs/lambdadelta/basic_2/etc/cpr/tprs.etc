@@ -1,0 +1,94 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+notation "hvbox( T1 ➡ * break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'PRedStar $T1 $T2 }.
+
+include "basic_2/reducibility/tpr.ma".
+
+(* CONTEXT-FREE PARALLEL COMPUTATION ON TERMS *******************************)
+
+(* Basic_1: includes: pr1_pr0 *)
+definition tprs: relation term ≝ TC … tpr.
+
+interpretation "context-free parallel computation (term)"
+   'PRedStar T1 T2 = (tprs T1 T2).
+
+(* Basic eliminators ********************************************************)
+
+lemma tprs_ind: ∀T1. ∀R:predicate term. R T1 →
+                (∀T,T2. T1 ➡* T → T ➡ T2 → R T → R T2) →
+                ∀T2. T1 ➡* T2 → R T2.
+#T1 #R #HT1 #IHT1 #T2 #HT12
+@(TC_star_ind … HT1 IHT1 … HT12) //
+qed-.
+
+lemma tprs_ind_dx: ∀T2. ∀R:predicate term. R T2 →
+                   (∀T1,T. T1 ➡ T → T ➡* T2 → R T → R T1) →
+                   ∀T1. T1 ➡* T2 → R T1.
+#T2 #R #HT2 #IHT2 #T1 #HT12
+@(TC_star_ind_dx … HT2 IHT2 … HT12) //
+qed-.
+
+(* Basic properties *********************************************************)
+
+lemma tprs_refl: reflexive … tprs.
+/2 width=1/ qed.
+
+lemma tpr_tprs: ∀T1,T2. T1 ➡ T2 → T2 ➡* T2.
+/2 width=1/ qed.
+
+lemma tprs_strap1: ∀T1,T,T2. T1 ➡* T → T ➡ T2 → T1 ➡* T2.
+/2 width=3/ qed.
+
+lemma tprs_strap2: ∀T1,T,T2. T1 ➡ T → T ➡* T2 → T1 ➡* T2.
+/2 width=3/ qed.
+
+(* Basic_1: was only: pr1_head_1 *)
+lemma tprs_pair_sn: ∀I,T1,T2. T1 ➡ T2 → ∀V1,V2. V1 ➡* V2 →
+                    ②{I} V1. T1 ➡* ②{I} V2. T2.
+* [ #a ] #I #T1 #T2 #HT12 #V1 #V2 #H @(tprs_ind … H) -V2
+[1,3: /3 width=1/
+|2,4: #V #V2 #_ #HV2 #IHV1
+      @(tprs_strap1 … IHV1) -IHV1 /2 width=1/
+]
+qed.
+
+(* Basic_1: was only: pr1_head_2 *)
+lemma tprs_pair_dx: ∀I,V1,V2. V1 ➡ V2 → ∀T1,T2. T1 ➡* T2 →
+                    ②{I} V1. T1 ➡* ②{I} V2. T2.
+* [ #a ] #I #V1 #V2 #HV12 #T1 #T2 #H @(tprs_ind … H) -T2
+[1,3: /3 width=1/
+|2,4: #T #T2 #_ #HT2 #IHT1
+      @(tprs_strap1 … IHT1) -IHT1 /2 width=1/
+]
+qed.
+
+(* Basic inversion lemmas ***************************************************)
+
+lemma tprs_inv_atom1: ∀U2,k. ⋆k ➡* U2 → U2 = ⋆k.
+#U2 #k #H @(tprs_ind … H) -U2 //
+#U #U2 #_ #HU2 #IHU1 destruct
+>(tpr_inv_atom1 … HU2) -HU2 //
+qed-.
+
+lemma tprs_inv_cast1: ∀W1,T1,U2. ⓝW1.T1 ➡* U2 → T1 ➡* U2 ∨
+                      ∃∃W2,T2. W1 ➡* W2 & T1 ➡* T2 & U2 = ⓝW2.T2.
+#W1 #T1 #U2 #H @(tprs_ind … H) -U2 /3 width=5/
+#U #U2 #_ #HU2 * /3 width=3/ *
+#W #T #HW1 #HT1 #H destruct
+elim (tpr_inv_cast1 … HU2) -HU2 /3 width=3/ *
+#W2 #T2 #HW2 #HT2 #H destruct /4 width=5/
+qed-.

@@ -12,6 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
+notation "hvbox( L ⊢ break term 46 T1 ≈ break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'Hom $L $T1 $T2 }.
+
+notation "hvbox( L ⊢ break 𝐇𝐑 ⦃ term 46 T ⦄ )"
+   non associative with precedence 45
+   for @{ 'HdReducible $L $T }.
+
+notation "hvbox( L ⊢ break 𝐇𝐈 ⦃ term 46 T ⦄ )"
+   non associative with precedence 45
+   for @{ 'NotHdReducible $L $T }.
+
 include "basic_2/grammar/term_simple.ma".
 
 (* SAME HEAD TERM FORMS *****************************************************)

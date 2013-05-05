@@ -43,6 +43,10 @@ lemma lpqs_inv_pair2: ∀I,L1,K2,V2. L1 ⊢ ➤* K2. ⓑ{I} V2 →
 lemma lpqs_refl: ∀L. L ⊢ ➤* L.
 /2 width=1 by lpx_sn_refl/ qed.
 
+lemma lpqs_pair: ∀I,K1,K2,V1,V2. K1 ⊢ ➤* K2 → K1 ⊢ V1 ➤* V2 →
+                 K1.ⓑ{I}V1 ⊢ ➤* K2.ⓑ{I}V2.
+/2 width=1/ qed.
+
 lemma lpqs_append: ∀K1,K2. K1 ⊢ ➤* K2 → ∀L1,L2. L1 ⊢ ➤* L2 →
                    L1 @@ K1 ⊢ ➤* L2 @@ K2.
 /3 width=1 by lpx_sn_append, cpqs_append/ qed.

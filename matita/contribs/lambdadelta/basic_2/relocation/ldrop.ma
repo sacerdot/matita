@@ -14,7 +14,6 @@
 
 include "basic_2/grammar/cl_weight.ma".
 include "basic_2/relocation/lift.ma".
-include "basic_2/relocation/lsubr.ma".
 
 (* LOCAL ENVIRONMENT SLICING ************************************************)
 
@@ -30,24 +29,24 @@ inductive ldrop: nat → nat → relation lenv ≝
 
 interpretation "local slicing" 'RDrop d e L1 L2 = (ldrop d e L1 L2).
 
-definition l_liftable: (lenv → relation term) → Prop ≝
+definition l_liftable: predicate (lenv → relation term) ≝
                        λR. ∀K,T1,T2. R K T1 T2 → ∀L,d,e. ⇩[d, e] L ≡ K →
                        ∀U1. ⇧[d, e] T1 ≡ U1 → ∀U2. ⇧[d, e] T2 ≡ U2 → R L U1 U2.
 
-definition l_deliftable_sn: (lenv → relation term) → Prop ≝
+definition l_deliftable_sn: predicate (lenv → relation term) ≝
                             λR. ∀L,U1,U2. R L U1 U2 → ∀K,d,e. ⇩[d, e] L ≡ K →
                             ∀T1. ⇧[d, e] T1 ≡ U1 →
                             ∃∃T2. ⇧[d, e] T2 ≡ U2 & R K T1 T2.
 
-definition dropable_sn: relation lenv → Prop ≝
+definition dropable_sn: predicate (relation lenv) ≝
                         λR. ∀L1,K1,d,e. ⇩[d, e] L1 ≡ K1 → ∀L2. R L1 L2 →
                         ∃∃K2. R K1 K2 & ⇩[d, e] L2 ≡ K2.
 
-definition dedropable_sn: relation lenv → Prop ≝
+definition dedropable_sn: predicate (relation lenv) ≝
                           λR. ∀L1,K1,d,e. ⇩[d, e] L1 ≡ K1 → ∀K2. R K1 K2 →
                           ∃∃L2. R L1 L2 & ⇩[d, e] L2 ≡ K2.
 
-definition dropable_dx: relation lenv → Prop ≝
+definition dropable_dx: predicate (relation lenv) ≝
                         λR. ∀L1,L2. R L1 L2 → ∀K2,e. ⇩[0, e] L2 ≡ K2 →
                         ∃∃K1. ⇩[0, e] L1 ≡ K1 & R K1 K2.
 
@@ -199,32 +198,21 @@ lemma ldrop_O1_lt: ∀L,i. i < |L| → ∃∃I,K,V. ⇩[0, i] L ≡ K.ⓑ{I}V.
 ]
 qed.
 
-lemma ldrop_lsubr_ldrop2_abbr: ∀L1,L2,d,e. L1 ⊑ [d, e] L2 →
-                               ∀K2,V,i. ⇩[0, i] L2 ≡ K2. ⓓV →
-                               d ≤ i → i < d + e →
-                               ∃∃K1. K1 ⊑ [0, d + e - i - 1] K2 &
-                                     ⇩[0, i] L1 ≡ K1. ⓓV.
-#L1 #L2 #d #e #H elim H -L1 -L2 -d -e
-[ #d #e #K1 #V #i #H
-  lapply (ldrop_inv_atom1 … H) -H #H destruct
-| #L1 #L2 #K1 #V #i #_ #_ #H
-  elim (lt_zero_false … H)
-| #L1 #L2 #V #e #HL12 #IHL12 #K1 #W #i #H #_ #Hie
-  elim (ldrop_inv_O1 … H) -H * #Hi #HLK1
-  [ -IHL12 -Hie destruct
-    <minus_n_O <minus_plus_m_m // /2 width=3/
-  | -HL12
-    elim (IHL12 … HLK1 ? ?) -IHL12 -HLK1 // /2 width=1/ -Hie >minus_minus_comm >arith_b1 // /4 width=3/
-  ]
-| #L1 #L2 #I #V1 #V2 #e #_ #IHL12 #K1 #W #i #H #_ #Hie
-  elim (ldrop_inv_O1 … H) -H * #Hi #HLK1
-  [ -IHL12 -Hie -Hi destruct
-  | elim (IHL12 … HLK1 ? ?) -IHL12 -HLK1 // /2 width=1/ -Hie >minus_minus_comm >arith_b1 // /3 width=3/
-  ]
-| #L1 #L2 #I1 #I2 #V1 #V2 #d #e #_ #IHL12 #K1 #V #i #H #Hdi >plus_plus_comm_23 #Hide
-  elim (le_inv_plus_l … Hdi) #Hdim #Hi
-  lapply (ldrop_inv_ldrop1 … H ?) -H // #HLK1
-  elim (IHL12 … HLK1 ? ?) -IHL12 -HLK1 // /2 width=1/ -Hdi -Hide >minus_minus_comm >arith_b1 // /3 width=3/
+lemma l_liftable_LTC: ∀R. l_liftable R → l_liftable (LTC … R).
+#R #HR #K #T1 #T2 #H elim H -T2
+[ /3 width=9/
+| #T #T2 #_ #HT2 #IHT1 #L #d #e #HLK #U1 #HTU1 #U2 #HTU2
+  elim (lift_total T d e) /4 width=11 by step/ (**) (* auto too slow without trace *)
+]
+qed.
+
+lemma l_deliftable_sn_LTC: ∀R. l_deliftable_sn R → l_deliftable_sn (LTC … R).
+#R #HR #L #U1 #U2 #H elim H -U2
+[ #U2 #HU12 #K #d #e #HLK #T1 #HTU1
+  elim (HR … HU12 … HLK … HTU1) -HR -L -U1 /3 width=3/
+| #U #U2 #_ #HU2 #IHU1 #K #d #e #HLK #T1 #HTU1
+  elim (IHU1 … HLK … HTU1) -IHU1 -U1 #T #HTU #HT1
+  elim (HR … HU2 … HLK … HTU) -HR -L -U /3 width=5/
 ]
 qed.
 

@@ -35,14 +35,6 @@ inductive lift: nat → nat → relation term ≝
 
 interpretation "relocation" 'RLift d e T1 T2 = (lift d e T1 T2).
 
-definition t_liftable: relation term → Prop ≝
-                       λR. ∀T1,T2. R T1 T2 → ∀U1,d,e. ⇧[d, e] T1 ≡ U1 →
-                       ∀U2. ⇧[d, e] T2 ≡ U2 → R U1 U2.
-
-definition t_deliftable_sn: relation term → Prop ≝
-                            λR. ∀U1,U2. R U1 U2 → ∀T1,d,e. ⇧[d, e] T1 ≡ U1 →
-                            ∃∃T2. ⇧[d, e] T2 ≡ U2 & R T1 T2.
-
 (* Basic inversion lemmas ***************************************************)
 
 fact lift_inv_refl_O2_aux: ∀d,e,T1,T2. ⇧[d, e] T1 ≡ T2 → e = 0 → T1 = T2.
@@ -377,24 +369,6 @@ lemma is_lift_dec: ∀T2,d,e. Decidable (∃T1. ⇧[d,e] T1 ≡ T2).
   ]
 ]
 qed.
-
-lemma t_liftable_TC: ∀R. t_liftable R → t_liftable (TC … R).
-#R #HR #T1 #T2 #H elim H -T2
-[ /3 width=7/
-| #T #T2 #_ #HT2 #IHT1 #U1 #d #e #HTU1 #U2 #HTU2
-  elim (lift_total T d e) /3 width=9/
-]
-qed.
-
-lemma t_deliftable_sn_TC: ∀R. t_deliftable_sn R → t_deliftable_sn (TC … R).
-#R #HR #U1 #U2 #H elim H -U2
-[ #U2 #HU12 #T1 #d #e #HTU1
-  elim (HR … HU12 … HTU1) -U1 /3 width=3/
-| #U #U2 #_ #HU2 #IHU1 #T1 #d #e #HTU1
-  elim (IHU1 … HTU1) -U1 #T #HTU #HT1
-  elim (HR … HU2 … HTU) -U /3 width=5/
-]
-qed-.
 
 (* Basic_1: removed theorems 7:
             lift_head lift_gen_head

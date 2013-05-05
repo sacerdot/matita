@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/grammar/lpx_sn_lpx_sn.ma".
 include "basic_2/relocation/fsup.ma".
 include "basic_2/unfold/lpqs_ldrop.ma".
 

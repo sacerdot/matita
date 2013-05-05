@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/lenv_px_sn.ma".
+include "basic_2/grammar/lpx_sn.ma".
 include "basic_2/relocation/ldrop.ma".
 
 (* DROPPING *****************************************************************)

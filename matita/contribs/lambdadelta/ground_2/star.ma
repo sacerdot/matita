@@ -35,6 +35,15 @@ definition bi_confluent:  ∀A,B. ∀R: bi_relation A B. Prop ≝ λA,B,R.
                           ∀a0,a1,b0,b1. R a0 b0 a1 b1 → ∀a2,b2. R a0 b0 a2 b2 →
                           ∃∃a,b. R a1 b1 a b & R a2 b2 a b.
 
+definition LTC: ∀A:Type[0]. ∀B. (A→relation B) → (A→relation B) ≝
+                λA,B,R,a. TC … (R a).
+
+definition s_r_trans: ∀A,B. relation2 (A→relation B) (relation A) ≝ λA,B,R1,R2.
+                      ∀L2,T1,T2. R1 L2 T1 T2 → ∀L1. R2 L1 L2 → LTC … R1 L1 T1 T2.
+
+definition s_rs_trans: ∀A,B. relation2 (A→relation B) (relation A) ≝ λA,B,R1,R2.
+                       ∀L2,T1,T2. LTC … R1 L2 T1 T2 → ∀L1. R2 L1 L2 → LTC … R1 L1 T1 T2.
+
 lemma TC_strip1: ∀A,R1,R2. confluent2 A R1 R2 →
                  ∀a0,a1. TC … R1 a0 a1 → ∀a2. R2 a0 a2 →
                  ∃∃a. R2 a1 a & TC … R1 a2 a.
@@ -115,7 +124,7 @@ inductive SN (A) (R,S:relation A): predicate A ≝
 lemma NF_to_SN: ∀A,R,S,a. NF A R S a → SN A R S a.
 #A #R #S #a1 #Ha1
 @SN_intro #a2 #HRa12 #HSa12
-elim (HSa12 ?) -HSa12 /2 width=1/
+elim HSa12 -HSa12 /2 width=1/
 qed.
 
 definition NF_sn: ∀A. relation A → relation A → predicate A ≝
@@ -128,7 +137,7 @@ inductive SN_sn (A) (R,S:relation A): predicate A ≝
 lemma NF_to_SN_sn: ∀A,R,S,a. NF_sn A R S a → SN_sn A R S a.
 #A #R #S #a2 #Ha2
 @SN_sn_intro #a1 #HRa12 #HSa12
-elim (HSa12 ?) -HSa12 /2 width=1/
+elim HSa12 -HSa12 /2 width=1/
 qed.
 
 lemma bi_TC_strip: ∀A,B,R. bi_confluent A B R →
@@ -164,8 +173,18 @@ lemma bi_TC_decomp_l: ∀A,B. ∀R:bi_relation A B.
                       ∀a1,a2,b1,b2. bi_TC … R a1 b1 a2 b2 →
                       R a1 b1 a2 b2 ∨
                       ∃∃a,b. R a1 b1 a b & bi_TC … R a b a2 b2.
-#A #B #R #a1 #a2 #b1 #b2 #H @(bi_TC_ind_dx ?????????? H) -a1 -b1
+#A #B #R #a1 #a2 #b1 #b2 #H @(bi_TC_ind_dx … a1 b1 H) -a1 -b1
 [ /2 width=1/
 | #a1 #a #b1 #b #Hab1 #Hab2 #_ /3 width=4/
 ]
+qed-.
+
+lemma s_r_trans_TC1: ∀A,B,R,S. s_r_trans A B R S → s_rs_trans A B R S.
+#A #B #R #S #HRS #L2 #T1 #T2 #H elim H -T2 [ /3 width=3/ ]
+#T #T2 #_ #HT2 #IHT1 #L1 #HL12
+lapply (HRS … HT2 … HL12) -HRS -HT2 /3 width=3/
+qed-.
+
+lemma s_r_trans_TC2: ∀A,B,R,S. s_rs_trans A B R S → s_r_trans A B R (TC … S).
+#A #B #R #S #HRS #L2 #T1 #T2 #HT12 #L1 #H @(TC_ind_dx … L1 H) -L1 /2 width=3/ /3 width=3/
 qed-.

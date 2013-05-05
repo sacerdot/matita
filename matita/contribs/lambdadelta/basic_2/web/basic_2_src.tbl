@@ -100,12 +100,8 @@ table {
           }
         ]
         [ { "context-sensitive computation" * } {
-             [ "cprs (? ⊢ ? ➡* ?)" "cprs_lift" + "cprs_tpss" + "cprs_ltpss_dx" + "cprs_ltpss_sn" + "cprs_delift" + "cprs_aaa" + "cprs_ltpr" + "cprs_lfpr" + "cprs_cprs" + "cprs_lfprs" + "cprs_tstc" + "cprs_tstc_vector" * ]
-          }
-        ]
-        [ { "context-free computation" * } {
-             [ "ltprs ( ? ➡* ? )" "ltprs_alt ( ? ➡➡* ? )" "ltprs_ldrop" + "ltprs_ltprs" * ]
-             [ "tprs ( ? ➡* ?)" "tprs_lift" + "tprs_tprs" * ]
+             [ "lprs ( ? ⊢ ➡* ? )" "lprs_alt ( ? ⊢ ➡➡* ? )" "lprs_ldrop" + "lprs_aaa" + "lprs_cprs" + "lprs_lprs" * ]
+             [ "cprs ( ? ⊢ ? ➡* ?)" "cprs_lift" + "cprs_tpss" + "cprs_ltpss_dx" + "cprs_ltpss_sn" + "cprs_aaa" + "cprs_lpr" + "cprs_cprs" + "cprs_tstc" + "cprs_tstc_vector" * ]
           }
         ]
         [ { "local env. ref. for abstract candidates of reducibility" * } {
@@ -122,12 +118,11 @@ table {
    [ { "reduction" * } {
         [ { "context-sensitive normal forms" * } {
              [ "cnf ( ? ⊢ 𝐍⦃?⦄ )" "cnf_liftt" + "cnf_crf" + "cnf_cif" * ]
-             [ "chnf ( ? ⊢ 𝐇𝐍⦃?⦄ )" * ]
           }
         ]
         [ { "context-sensitive reduction" * } {
              [ "lpr ( ? ⊢ ➡ ? )" "lpr_ldrop" + "lpr_cpss" + "lpr_lpss" + "lpr_aaa" + "lpr_cpr" + "lpr_lpr" * ]
-             [ "cpr ( ? ⊢ ? ➡ ? )" "lpr_tshf" + "cpr_lift" + "cpr_cif" * ]
+             [ "cpr ( ? ⊢ ? ➡ ? )" "cpr_lift" + "cpr_cif" * ]
           }
         ]
         [ { "context-sensitive reducible forms" * } {
@@ -180,6 +175,10 @@ table {
              [ "cpss ( ? ⊢ ? ▶* ? )" "cpss_lift" * ]
           }
         ]        
+        [ { "local env. ref. for substitution" * } {
+             [ "lsubr ( ? ⊑ ? )" "lsubr_lsubr" * ]
+          }
+        ]
         [ { "iterated structural successor for closures" * } {
              [ "fsups ( ⦃?,?⦄ ⊃* ⦃?,?⦄ )" "fsups_fsups" * ]
              [ "fsupp ( ⦃?,?⦄ ⊃+ ⦃?,?⦄ )" "fsupp_fsupp" * ]
@@ -211,11 +210,7 @@ table {
           }
         ]
         [ { "basic local env. slicing" * } {
-             [ "ldrop ( ⇩[?,?] ? ≡ ? )" "ldrop_append" + "ldrop_lpx" + "ldrop_lpx_sn" + "ldrop_lbotr" + "ldrop_ldrop" * ]
-          }
-        ]
-        [ { "local env. ref. for substitution" * } {
-             [ "lsubr ( ? ⊑[?,?] ? )" "(lsubr_lsubr)" "lsubr_lbotr ( ⊒[?,?] ? )" * ]
+             [ "ldrop ( ⇩[?,?] ? ≡ ? )" "ldrop_append" + "ldrop_lpx_sn" + "ldrop_ldrop" * ]
           }
         ]
         [ { "basic term relocation" * } {
@@ -227,8 +222,8 @@ table {
    ]
    class "red"
    [ { "grammar" * } {
-        [ { "same head term form" * } {
-             [ "tshf ( ? ≈ ? )" "(tshf_tshf)" * ]
+	[ { "pointwise extension of a relation" * } {
+             [ "lpx_sn" "lpx_sn_tc" + "lpx_sn_lpx_sn" * ]
           }
         ]
         [ { "same top term constructor" * } {
@@ -241,7 +236,7 @@ table {
         ]
         [ { "internal syntax" * } {
              [ "genv" * ]
-             [ "lenv" "lenv_weight ( ♯{?} )" "lenv_length ( |?| )" "lenv_append ( ? @@ ? )" "lenv_px" + "lenv_px_sn" + "lenv_px_bi" * ]
+             [ "lenv" "lenv_weight ( ♯{?} )" "lenv_length ( |?| )" "lenv_append ( ? @@ ? )" * ]
              [ "term" "term_weight ( ♯{?} )" "term_simple ( 𝐒⦃?⦄ )" "term_vector" * ]
              [ "item" * ]
           }

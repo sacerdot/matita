@@ -1,0 +1,58 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+notation "hvbox( ⦃ term 46 L1 , term 46 T1 ⦄ ➡ * break ⦃ term 46 L2 , term 46 T2 ⦄ )"
+   non associative with precedence 45
+   for @{ 'FocalizedPRedStar $L1 $T1 $L2 $T2 }.
+
+notation "hvbox( ⦃ term 46 L1 , term 46 T1 ⦄ ➡ ➡ * break ⦃ term 46 L2 , term 46 T2 ⦄ )"
+   non associative with precedence 45
+   for @{ 'FocalizedPRedStarAlt $L1 $T1 $L2 $T2 }.
+
+include "basic_2/reducibility/fpr.ma".
+
+(* CONTEXT-FREE PARALLEL COMPUTATION ON CLOSURES ****************************)
+
+definition fprs: bi_relation lenv term ≝ bi_TC … fpr.
+
+interpretation "context-free parallel computation (closure)"
+   'FocalizedPRedStar L1 T1 L2 T2 = (fprs L1 T1 L2 T2).
+
+(* Basic eliminators ********************************************************)
+
+lemma fprs_ind: ∀L1,T1. ∀R:relation2 lenv term. R L1 T1 →
+                (∀L,L2,T,T2. ⦃L1, T1⦄ ➡* ⦃L, T⦄ → ⦃L, T⦄ ➡ ⦃L2, T2⦄ → R L T → R L2 T2) →
+                ∀L2,T2. ⦃L1, T1⦄ ➡* ⦃L2, T2⦄ → R L2 T2.
+/3 width=7 by bi_TC_star_ind/ qed-.
+
+lemma fprs_ind_dx: ∀L2,T2. ∀R:relation2 lenv term. R L2 T2 →
+                   (∀L1,L,T1,T. ⦃L1, T1⦄ ➡ ⦃L, T⦄ → ⦃L, T⦄ ➡* ⦃L2, T2⦄ → R L T → R L1 T1) →
+                   ∀L1,T1. ⦃L1, T1⦄ ➡* ⦃L2, T2⦄ → R L1 T1.
+/3 width=7 by bi_TC_star_ind_dx/ qed-.
+
+(* Basic properties *********************************************************)
+
+lemma fpr_fprs: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ➡ ⦃L2, T2⦄ → ⦃L1, T1⦄ ➡* ⦃L2, T2⦄.
+/2 width=1/ qed.
+
+lemma fprs_refl: bi_reflexive … fprs.
+/2 width=1/ qed.
+
+lemma fprs_strap1: ∀L1,L,L2,T1,T,T2. ⦃L1, T1⦄ ➡* ⦃L, T⦄ → ⦃L, T⦄ ➡ ⦃L2, T2⦄ →
+                   ⦃L1, T1⦄ ➡* ⦃L2, T2⦄.
+/2 width=4/ qed.
+
+lemma fprs_strap2: ∀L1,L,L2,T1,T,T2. ⦃L1, T1⦄ ➡ ⦃L, T⦄ → ⦃L, T⦄ ➡* ⦃L2, T2⦄ →
+                   ⦃L1, T1⦄ ➡* ⦃L2, T2⦄.
+/2 width=4/ qed.

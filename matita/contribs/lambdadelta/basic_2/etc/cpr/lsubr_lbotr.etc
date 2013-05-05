@@ -12,6 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
+notation "hvbox( ⊒ [ term 46 d , break term 46 e ] break term 46 L2 )"
+   non associative with precedence 45
+   for @{ 'SubEqBottom $d $e $L2 }.
+
 include "basic_2/relocation/lsubr.ma".
 
 (* LOCAL ENVIRONMENT REFINEMENT FOR SUBSTITUTION ****************************)
