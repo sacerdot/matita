@@ -101,7 +101,7 @@ table {
         ]
         [ { "context-sensitive computation" * } {
              [ "lprs ( ? ⊢ ➡* ? )" "lprs_alt ( ? ⊢ ➡➡* ? )" "lprs_ldrop" + "lprs_aaa" + "lprs_cprs" + "lprs_lprs" * ]
-             [ "cprs ( ? ⊢ ? ➡* ?)" "cprs_lift" + "cprs_tpss" + "cprs_ltpss_dx" + "cprs_ltpss_sn" + "cprs_aaa" + "cprs_lpr" + "cprs_cprs" + "cprs_tstc" + "cprs_tstc_vector" * ]
+             [ "cprs ( ? ⊢ ? ➡* ?)" "cprs_lift" + "cprs_cpss" + "cprs_ltpss_dx" + "cprs_ltpss_sn" + "cprs_aaa" + "cprs_lpr" + "cprs_cprs" + "cprs_tstc" + "cprs_tstc_vector" * ]
           }
         ]
         [ { "local env. ref. for abstract candidates of reducibility" * } {
@@ -121,7 +121,7 @@ table {
           }
         ]
         [ { "context-sensitive reduction" * } {
-             [ "lpr ( ? ⊢ ➡ ? )" "lpr_ldrop" + "lpr_cpss" + "lpr_lpss" + "lpr_aaa" + "lpr_cpr" + "lpr_lpr" * ]
+             [ "lpr ( ? ⊢ ➡ ? )" "lpr_ldrop" + "lpr_lpss" + "lpr_aaa" + "lpr_lpr" * ]
              [ "cpr ( ? ⊢ ? ➡ ? )" "cpr_lift" + "cpr_cif" * ]
           }
         ]
