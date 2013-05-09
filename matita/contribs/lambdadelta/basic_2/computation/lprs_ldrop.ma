@@ -12,21 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reducibility/cpr_ltpr.ma".
-include "basic_2/computation/cprs.ma".
+include "basic_2/reduction/lpr_ldrop.ma".
+include "basic_2/computation/lprs.ma".
 
-(* CONTEXT-SENSITIVE PARALLEL COMPUTATION ON TERMS **************************)
+(* SN PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS ****************************)
 
-(* Properties concerning parallel unfold on terms ***************************)
+(* Properies on local environment slicing ***********************************)
 
-(* Basic_1: was only: pr3_subst1 *)
-lemma cprs_tpss_ltpr: ∀L1,T1,U1,d,e. L1 ⊢ T1 ▶* [d, e] U1 →
-                      ∀L2. L1 ➡ L2 → ∀T2. L2 ⊢ T1 ➡* T2 →
-                      ∃∃U2. L2 ⊢ U1 ➡* U2 & L2 ⊢ T2 ▶* [d, e] U2.
-#L1 #T1 #U1 #d #e #HTU1 #L2 #HL12 #T2 #HT12 elim HT12 -T2
-[ #T2 #HT12
-  elim (cpr_tpss_ltpr … HL12 … HT12 … HTU1) -L1 -T1 /3 width=3/
-| #T #T2 #_ #HT2 * #U #HU1 #HTU
-  elim (cpr_tpss_ltpr … HT2 … HTU) -L1 -T // /3 width=3/
-]
-qed.
+lemma lprs_ldrop_conf: dropable_sn lprs.
+/3 width=3 by dropable_sn_TC, lpr_ldrop_conf/ qed-.
+
+lemma ldrop_lprs_trans: dedropable_sn lprs.
+/3 width=3 by dedropable_sn_TC, ldrop_lpr_trans/ qed-.
+
+lemma lprs_ldrop_trans_O1: dropable_dx lprs.
+/3 width=3 by dropable_dx_TC, lpr_ldrop_trans_O1/ qed-.

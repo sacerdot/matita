@@ -73,21 +73,21 @@ qed-.
 (*
 (* Advanced inversion lemmas on plus-iterated supclosure ********************)
 
-lemma fsupp_inv_bind1_fsups: ∀b,J,L1,L2,W,U,T2. ⦃L1, ⓑ{b,J}W.U⦄ ⊃+ ⦃L2, T2⦄ →
+lamma fsupp_inv_bind1_fsups: ∀b,J,L1,L2,W,U,T2. ⦃L1, ⓑ{b,J}W.U⦄ ⊃+ ⦃L2, T2⦄ →
                              ⦃L1, W⦄ ⊃* ⦃L2, T2⦄ ∨ ⦃L1.ⓑ{J}W, U⦄ ⊃* ⦃L2, T2⦄.
 #b #J #L1 #L2 #W #U #T2 #H @(fsupp_ind … H) -L2 -T2
 [ #L2 #T2 #H
   elim (fsup_inv_bind1 … H) -H * #H1 #H2 destruct /2 width=1/
 | #L #T #L2 #T2 #_ #HT2 * /3 width=4/
 ]
-qed-.
+qad-.
 
-lemma fsupp_inv_flat1_fsups: ∀J,L1,L2,W,U,T2. ⦃L1, ⓕ{J}W.U⦄ ⊃+ ⦃L2, T2⦄ →
+lamma fsupp_inv_flat1_fsups: ∀J,L1,L2,W,U,T2. ⦃L1, ⓕ{J}W.U⦄ ⊃+ ⦃L2, T2⦄ →
                              ⦃L1, W⦄ ⊃* ⦃L2, T2⦄ ∨ ⦃L1, U⦄ ⊃* ⦃L2, T2⦄.
 #J #L1 #L2 #W #U #T2 #H @(fsupp_ind … H) -L2 -T2
 [ #L2 #T2 #H
   elim (fsup_inv_flat1 … H) -H #H1 * #H2 destruct /2 width=1/
 | #L #T #L2 #T2 #_ #HT2 * /3 width=4/
 ]
-qed-.
+qad-.
 *)

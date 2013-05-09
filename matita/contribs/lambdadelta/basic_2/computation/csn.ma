@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reducibility/cnf.ma".
+include "basic_2/reduction/cnf.ma".
 
 (* CONTEXT-SENSITIVE STRONGLY NORMALIZING TERMS *****************************)
 
@@ -68,6 +68,27 @@ elim (cpr_inv_cast1 … H1) -H1
 qed.
 
 (* Basic forward lemmas *****************************************************)
+
+fact csn_fwd_pair_sn_aux: ∀L,U. L ⊢ ⬊* U → ∀I,V,T. U = ②{I} V. T → L ⊢ ⬊* V.
+#L #U #H elim H -H #U0 #_ #IH #I #V #T #H destruct
+@csn_intro #V2 #HLV2 #HV2
+@(IH (②{I} V2. T)) -IH // /2 width=1/ -HLV2 #H destruct /2 width=1/
+qed-.
+
+(* Basic_1: was: sn3_gen_head *)
+lemma csn_fwd_pair_sn: ∀I,L,V,T. L ⊢ ⬊* ②{I} V. T → L ⊢ ⬊* V.
+/2 width=5 by csn_fwd_pair_sn_aux/ qed-.
+
+fact csn_fwd_bind_dx_aux: ∀L,U. L ⊢ ⬊* U →
+                          ∀a,I,V,T. U = ⓑ{a,I} V. T → L. ⓑ{I} V ⊢ ⬊* T.
+#L #U #H elim H -H #U0 #_ #IH #a #I #V #T #H destruct
+@csn_intro #T2 #HLT2 #HT2
+@(IH (ⓑ{a,I} V. T2)) -IH // /2 width=1/ -HLT2 #H destruct /2 width=1/
+qed-.
+
+(* Basic_1: was: sn3_gen_bind *)
+lemma csn_fwd_bind_dx: ∀a,I,L,V,T. L ⊢ ⬊* ⓑ{a,I} V. T → L. ⓑ{I} V ⊢ ⬊* T.
+/2 width=4 by csn_fwd_bind_dx_aux/ qed-.
 
 fact csn_fwd_flat_dx_aux: ∀L,U. L ⊢ ⬊* U → ∀I,V,T. U = ⓕ{I} V. T → L ⊢ ⬊* T.
 #L #U #H elim H -H #U0 #_ #IH #I #V #T #H destruct

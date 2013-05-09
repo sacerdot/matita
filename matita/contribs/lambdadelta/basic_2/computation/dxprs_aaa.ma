@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unwind/sstas_aaa.ma".
+include "basic_2/unfold/sstas_aaa.ma".
 include "basic_2/computation/cprs_aaa.ma".
 include "basic_2/computation/dxprs.ma".
 
@@ -21,5 +21,5 @@ include "basic_2/computation/dxprs.ma".
 (* Properties on atomic arity assignment for terms **************************)
 
 lemma dxprs_aaa: ∀h,g,L,T,A. L ⊢ T ⁝ A → ∀U. ⦃h, L⦄ ⊢ T •*➡*[g] U → L ⊢ U ⁝ A.
-#h #g #L #T #A #HT #U * /3 width=5/
+#h #g #L #T #A #HT #U * /3 width=5 by sstas_aaa, aaa_cprs_conf/
 qed.

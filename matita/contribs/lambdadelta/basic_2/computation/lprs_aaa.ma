@@ -12,19 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reducibility/lfpr_cpr.ma".
-include "basic_2/computation/cprs.ma".
-include "basic_2/computation/lfprs.ma".
+include "basic_2/reduction/lpr_aaa.ma".
+include "basic_2/computation/lprs.ma".
 
-(* FOCALIZED PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS *********************)
+(* SN PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS ****************************)
 
-(* Advanced properties ******************************************************)
+(* Properties about atomic arity assignment on terms ************************)
 
-lemma lfprs_pair_dx: ∀I,L1,L2. ⦃L1⦄ ➡ ⦃L2⦄ → ∀V1,V2. L2 ⊢ V1 ➡* V2 →
-                     ⦃L1. ⓑ{I} V1⦄ ➡* ⦃L2. ⓑ{I} V2⦄.
-#I #L1 #L2 #HL12 #V1 #V2 #H @(cprs_ind … H) -V2
-/3 width=1/ /3 width=5/
-qed.
-(*
-lamma lfprs_cprs_conf: ∀L1,L,L2,T1,T2. ⦃L1⦄ ➡* ⦃L2⦄ → L1 ⊢ T1 ➡* T2 → ⦃L1, T1⦄ ➡* ⦃L2, T2⦄.
-*)
+lemma aaa_lprs_conf: ∀L1,T,A. L1 ⊢ T ⁝ A → ∀L2. L1 ⊢ ➡* L2 → L2 ⊢ T ⁝ A.
+#L1 #T #A #HT #L2 #HL12
+@(TC_Conf3 … (λL,A. L ⊢ T ⁝ A) … HT ? HL12) /2 width=3 by aaa_lpr_conf/
+qed-.

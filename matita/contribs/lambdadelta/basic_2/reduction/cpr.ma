@@ -16,7 +16,7 @@ include "basic_2/unfold/cpqs.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL REDUCTION FOR TERMS ***************************)
 
-(* Basic_1: includes: pr0_delta1 pr2_delta1 pr2_thin_dx pr2_head_1 *)
+(* Basic_1: includes: pr0_delta1 pr2_delta1 pr2_thin_dx *)
 (* Note: cpr_flat: does not hold in basic_1 *)
 inductive cpr: lenv → relation term ≝
 | cpr_atom : ∀I,L. cpr L (⓪{I}) (⓪{I})
@@ -72,6 +72,11 @@ lemma cpss_cpr: ∀L,T1,T2. L ⊢ T1 ▶* T2 → L ⊢ T1 ➡ T2.
 (* Basic_1: includes by definition: pr0_refl *)
 lemma cpr_refl: ∀T,L. L ⊢ T ➡ T.
 /2 width=1/ qed.
+
+(* Basic_1: was: pr2_head_1 *)
+lemma cpr_pair_sn: ∀I,L,V1,V2. L ⊢ V1 ➡ V2 →
+                   ∀T. L⊢ ②{I}V1.T ➡ ②{I}V2.T.
+* /2 width=1/ qed.
 
 lemma cpr_delift: ∀L,K,V,T1,d. ⇩[0, d] L ≡ (K. ⓓV) →
                   ∃∃T2,T. L ⊢ T1 ➡ T2 & ⇧[d, 1] T ≡ T2.
@@ -321,13 +326,12 @@ lemma cpr_fwd_shift1: ∀L1,L,T1,T. L ⊢ L1 @@ T1 ➡ T →
 ]
 qed-.
 
-(* Basic_1: removed theorems 12:
+(* Basic_1: removed theorems 11:
             pr0_subst0_back pr0_subst0_fwd pr0_subst0
             pr2_head_2 pr2_cflat clear_pr2_trans
             pr2_gen_csort pr2_gen_cflat pr2_gen_cbind
-            pr2_subst1
             pr2_gen_ctail pr2_ctail
-*)   
+*)
 (* Basic_1: removed local theorems 4:
             pr0_delta_tau pr0_cong_delta
             pr2_free_free pr2_free_delta

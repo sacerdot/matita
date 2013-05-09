@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/grammar/tstc_vector.ma".
-include "basic_2/substitution/lift_vector.ma".
+include "basic_2/relocation/lift_vector.ma".
 include "basic_2/computation/cprs_tstc.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL COMPUTATION ON TERMS **************************)
@@ -120,11 +120,11 @@ elim (cprs_inv_appl1 … H) -H *
     @(cprs_trans … HU) -U
     elim (cprs_inv_abbr1 … HT0) -HT0 *
     [ #V1 #T1 #HV1 #HT1 #H destruct
-      lapply (cprs_lift (L.ⓓV) … HV12a … HV10a … HV0a) -V1a -V0a [ /2 width=1/ ] #HV2a
+      lapply (cprs_lift … HV10a (L.ⓓV) … HV12a … HV0a) -V1a -V0a [ /2 width=1/ ] #HV2a
       @(cprs_trans … (ⓓ{a}V.ⓐV2a.T1)) [ /3 width=1/ ] -T -V2b -V2s /3 width=1/
     | #X #HT1 #H #H0 destruct
       elim (lift_inv_bind1 … H) -H #V1 #T1 #HW01 #HT01 #H destruct
-      lapply (cprs_lift (L.ⓓV0) … HV12a … HV10a … HV0a) -V0a [ /2 width=1/ ] #HV2a
+      lapply (cprs_lift … HV10a (L.ⓓV0) … HV12a … HV0a) -V0a [ /2 width=1/ ] #HV2a
       @(cprs_trans … (+ⓓV.ⓐV2a.ⓓ{b}V1.T1)) [ /3 width=1/ ] -T -V2b -V2s
       @(cprs_strap2 … (ⓐV1a.ⓓ{b}V0.T0)) [ /5 width=7/ ] -V -V1 -T1
       @(cprs_strap2 … (ⓓ{b}V0.ⓐV2a.T0)) [ /3 width=3/ ] -V1a /3 width=1/

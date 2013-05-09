@@ -12,27 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unwind/sstas_lift.ma".
+include "basic_2/unfold/sstas_lift.ma".
 include "basic_2/computation/cprs_lift.ma".
 include "basic_2/computation/dxprs.ma".
 
 (* DECOMPOSED EXTENDED PARALLEL COMPUTATION ON TERMS ************************)
-
-(* Advanced inversion lemmas *************************************************)
-
-lemma dxprs_inv_abst1: ∀h,g,a,L,V1,T1,U2. ⦃h, L⦄ ⊢ ⓛ{a}V1. T1 •*➡*[g] U2 →
-                       ∃∃V2,T2. L ⊢ V1 ➡* V2 & ⦃h, L.ⓛV1⦄ ⊢ T1 •*➡*[g] T2 &
-                                U2 = ⓛ{a}V2. T2.
-#h #g #a #L #V1 #T1 #U2 * #X #H1 #H2
-elim (sstas_inv_bind1 … H1) -H1 #U #HTU1 #H destruct
-elim (cprs_inv_abst1 Abst V1 … H2) -H2 #V2 #T2 #HV12 #HUT2 #H destruct /3 width=5/
-qed-.
-
-(* Advanced properties ******************************************************)
-
-lemma ssta_cprs_dxprs: ∀h,g,L,T1,T,T2,l. ⦃h, L⦄ ⊢ T1 •[g] ⦃l+1, T⦄ →
-                       L ⊢ T ➡* T2 → ⦃h, L⦄ ⊢ T1 •*➡*[g] T2.
-/3 width=3/ qed.
 
 (* Relocation properties ****************************************************)
 
@@ -48,5 +32,5 @@ lemma dxprs_inv_lift1: ∀L,K,d,e. ⇩[d, e] L ≡ K →
                        ∃∃T2. ⇧[d, e] T2 ≡ U2 & ⦃h, K⦄ ⊢ T1 •*➡*[g] T2.
 #L #K #d #e #HLK #T1 #U1 #HTU1 #h #g #U2 * #U #HU1 #HU2
 elim (sstas_inv_lift1 … HU1 … HLK … HTU1) -U1 #T #HT1 #HTU
-elim (cprs_inv_lift1 … HLK … HTU … HU2) -U -L /3 width=5/
+elim (cprs_inv_lift1 … HU2 … HLK … HTU) -U -L /3 width=5/
 qed-.

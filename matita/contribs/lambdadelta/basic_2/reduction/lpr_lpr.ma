@@ -220,7 +220,8 @@ lapply (cpr_lift … HV2 (L2.ⓓW2) … HVU2 … HVU) -HVU2 /2 width=1/ #HU2
 elim (cpr_inv_abbr1 … H) -H *
 [ #W1 #T1 #HW01 #HT01 #H destruct
   elim (IH … HW01 … HW02 … HL01 … HL02) /2 width=1/
-  elim (IH … HT01 … HT02 (L1.ⓓW1) … (L2.ⓓW2)) /2 width=1/ -L0 -V0 -W0 -T0 /4 width=7/
+  elim (IH … HT01 … HT02 (L1.ⓓW1) … (L2.ⓓW2)) /2 width=1/ -L0 -V0 -W0 -T0
+  /4 width=7 by cpr_bind, cpr_flat, cpr_theta, ex2_intro/ (**) (* timeout=35 *)
 | #T1 #HT01 #HXT1 #H destruct
   elim (IH … HT01 … HT02 (L1.ⓓW2) … (L2.ⓓW2)) /2 width=1/ -L0 -V0 -W0 -T0 #T #HT1 #HT2
   elim (cpr_inv_lift1 … HT1 L1 … HXT1) -HXT1 /2 width=1/ #Y #HYT #HXY
@@ -268,7 +269,8 @@ elim (IH … HW01 … HW02 … HL01 … HL02) /2 width=1/
 elim (IH … HT01 … HT02 (L1.ⓓW1) … (L2.ⓓW2)) /2 width=1/ -L0 -V0 -W0 -T0
 elim (lift_total V 0 1) #U #HVU
 lapply (cpr_lift … HV1 (L1.ⓓW1) … HVU1 … HVU) -HVU1 /2 width=1/
-lapply (cpr_lift … HV2 (L2.ⓓW2) … HVU2 … HVU) -HVU2 /2 width=1/ /4 width=7/
+lapply (cpr_lift … HV2 (L2.ⓓW2) … HVU2 … HVU) -HVU2 /2 width=1/
+/4 width=7 by cpr_bind, cpr_flat, ex2_intro/ (**) (* timeout 40 *)
 qed-.
 
 theorem cpr_conf_lpr: lpx_sn_confluent cpr cpr.

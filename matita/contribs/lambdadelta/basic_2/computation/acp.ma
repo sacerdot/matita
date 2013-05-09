@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unfold/ldrops.ma".
+include "basic_2/substitution/ldrops.ma".
 
 (* ABSTRACT COMPUTATION PROPERTIES ******************************************)
 

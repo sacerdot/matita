@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unfold/lifts_lifts.ma".
-include "basic_2/unfold/ldrops_ldrops.ma".
+include "basic_2/substitution/lifts_lifts.ma".
+include "basic_2/substitution/ldrops_ldrops.ma".
 include "basic_2/static/aaa_lifts.ma".
 include "basic_2/static/aaa_aaa.ma".
 include "basic_2/computation/lsubc_ldrops.ma".

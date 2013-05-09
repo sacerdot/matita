@@ -13,9 +13,9 @@
 (**************************************************************************)
 
 include "basic_2/grammar/aarity.ma".
-include "basic_2/unfold/gr2_gr2.ma".
-include "basic_2/unfold/lifts_lift_vector.ma".
-include "basic_2/unfold/ldrops_ldrop.ma".
+include "basic_2/substitution/gr2_gr2.ma".
+include "basic_2/substitution/lifts_lift_vector.ma".
+include "basic_2/substitution/ldrops_ldrop.ma".
 include "basic_2/computation/acp.ma".
 
 (* ABSTRACT COMPUTATION PROPERTIES ******************************************)

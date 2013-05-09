@@ -81,13 +81,8 @@ table {
    ]
    class "cyan"
    [ { "computation" * } {
-        [ { "focalized computation" * } {
-             [ "lfprs ( ⦃?⦄ ➡* ⦃?⦄ )" "lfprs_aaa" + "lfprs_ltprs" + "lfprs_cprs" + "lfprs_fprs" + "lfprs_lfprs" * ]
-             [ "fprs ( ⦃?,?⦄ ➡* ⦃?,?⦄ )" "fprs_aaa" + "fprs_fprs" * ]
-          }
-        ]
         [ { "decomposed extended computation" * } {
-             [ "dxprs ( ⦃?,?⦄ ⊢ ? •*➡*[?] ? )" "dxprs_lift" + "dxprs_ltpss_dx" + "dxprs_ltpss_sn" + "dxprs_aaa" + "dxprs_dxprs" * ]
+             [ "dxprs ( ⦃?,?⦄ ⊢ ? •*➡*[?] ? )" "dxprs_lift" + "dxprs_lpss" + "dxprs_aaa" + "dxprs_dxprs" * ]
           }
         ]
         [ { "weakly normalizing computation" * } {
@@ -95,13 +90,13 @@ table {
           }
         ]
         [ { "strongly normalizing computation" * } {
-             [ "csn_vector ( ? ⊢ ⬊* ? )" "csn_cpr_vector" + "csn_tstc_vector" + "csn_aaa" * ]
-             [ "csn ( ? ⊢ ⬊* ? )" "csn_alt ( ? ⊢ ⬊⬊* ? )" "csn_lift" + "csn_cpr" + "csn_lfpr" * ]
+             [ "csn_vector ( ? ⊢ ⬊* ? )" "csn_tstc_vector" + "csn_aaa" * ]
+             [ "csn ( ? ⊢ ⬊* ? )" "csn_alt ( ? ⊢ ⬊⬊* ? )" "csn_lift" + "csn_lpr" * ]
           }
         ]
         [ { "context-sensitive computation" * } {
-             [ "lprs ( ? ⊢ ➡* ? )" "lprs_alt ( ? ⊢ ➡➡* ? )" "lprs_ldrop" + "lprs_aaa" + "lprs_cprs" + "lprs_lprs" * ]
-             [ "cprs ( ? ⊢ ? ➡* ?)" "cprs_lift" + "cprs_cpss" + "cprs_ltpss_dx" + "cprs_ltpss_sn" + "cprs_aaa" + "cprs_lpr" + "cprs_cprs" + "cprs_tstc" + "cprs_tstc_vector" * ]
+             [ "lprs ( ? ⊢ ➡* ? )" "lprs_alt ( ? ⊢ ➡➡* ? )" "lprs_ldrop" + "lprs_lpss" + "lprs_aaa" + "lprs_cprs" + "lprs_lprs" * ]
+             [ "cprs ( ? ⊢ ? ➡* ?)" "cprs_tstc" + "cprs_tstc_vector" + "cprs_lift" + "cprs_lpss" + "cprs_aaa" + "cprs_cprs" * ]
           }
         ]
         [ { "local env. ref. for abstract candidates of reducibility" * } {

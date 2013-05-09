@@ -14,7 +14,7 @@
 
 include "basic_2/computation/acp_cr.ma".
 include "basic_2/computation/cprs_tstc_vector.ma".
-include "basic_2/computation/csn_lfpr.ma".
+include "basic_2/computation/csn_lpr.ma".
 include "basic_2/computation/csn_vector.ma".
 
 (* CONTEXT-SENSITIVE STRONGLY NORMALIZING TERM VECTORS **********************)

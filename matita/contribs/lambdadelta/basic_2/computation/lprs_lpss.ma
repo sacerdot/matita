@@ -12,15 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/csn_cpr.ma".
-include "basic_2/computation/csn_vector.ma".
+include "basic_2/reduction/lpr_lpss.ma".
+include "basic_2/computation/lprs.ma".
 
-(* Advanced forward lemmas **************************************************)
+(* SN PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS ****************************)
 
-lemma csn_fwd_applv: ∀L,T,Vs. L ⊢ ⬊* Ⓐ Vs. T → L ⊢ ⬊* Vs ∧ L ⊢ ⬊* T.
-#L #T #Vs elim Vs -Vs /2 width=1/
-#V #Vs #IHVs #HVs
-lapply (csn_fwd_pair_sn … HVs) #HV
-lapply (csn_fwd_flat_dx … HVs) -HVs #HVs
-elim (IHVs HVs) -IHVs -HVs /3 width=1/
+(* Properties on sn parallel substitution on local environments *************)
+
+lemma lprs_lpss_conf: confluent2 … lprs lpss.
+/3 width=3 by TC_strip1, lpr_lpss_conf/
 qed-.

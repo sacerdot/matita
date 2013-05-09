@@ -248,6 +248,7 @@ lemma cpr_cpss_conf_lpr_lpss: lpx_sn_confluent cpr cpss.
 qed-.
 
 (* Basic_1: includes: pr0_subst1 *)
+(* Basic_1: was: pr2_subst1 *)
 lemma cpr_cpss_conf: ∀L. confluent2 … (cpr L) (cpss L).
 /2 width=6 by cpr_cpss_conf_lpr_lpss/ qed-.
 

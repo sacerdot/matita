@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unwind/sstas_sstas.ma".
-include "basic_2/computation/cprs_lfprs.ma".
+include "basic_2/unfold/sstas_sstas.ma".
+include "basic_2/computation/lprs_cprs.ma".
 include "basic_2/computation/dxprs.ma".
 
 (* DECOMPOSED EXTENDED PARALLEL COMPUTATION ON TERMS ************************)
