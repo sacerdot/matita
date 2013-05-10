@@ -53,7 +53,7 @@ lemma cprs_div: ∀L,T1,T. L ⊢ T1 ➡* T → ∀T2. L ⊢ T2 ➡* T → L ⊢ 
 qed.
 
 lemma cprs_cpr_div: ∀L,T1,T. L ⊢ T1 ➡* T → ∀T2. L ⊢ T2 ➡ T → L ⊢ T1 ⬌* T2.
-/3 width=5 by step, cprs_div/ qed-.
+/3 width=5 by cpr_cprs, cprs_div/ qed-.
 
 lemma cpr_cprs_div: ∀L,T1,T. L ⊢ T1 ➡ T → ∀T2. L ⊢ T2 ➡* T → L ⊢ T1 ⬌* T2.
-/3 width=3 by step, cprs_div/ qed-.
+/3 width=3 by cpr_cprs, cprs_div/ qed-.

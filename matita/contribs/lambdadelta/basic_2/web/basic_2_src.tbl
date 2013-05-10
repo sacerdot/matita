@@ -51,28 +51,18 @@ table {
    ]
    class "blue"
    [ { "equivalence" * } {
-        [ { "focalized equivalence" * } {
-             [ "lfpcs ( ⦃?⦄ ⬌* ⦃?⦄ )" "lfpcs_aaa" + "lfpcs_fpcs" + "lfpcs_lfprs" + "lfpcs_lfpcs" * ]
-             [ "fpcs ( ⦃?,?⦄ ⬌* ⦃?,?⦄ )" "fpcs_aaa" + "fpcs_cpcs" + "fpcs_fprs" + "fpcs_fpcs" * ]
-          }
-        ]
         [ { "local env. ref. for stratified static type assignment" * } {
              [ "lsubss ( ? •⊑[?] ? )" "lsubss_ldrop" + "lsubss_ssta" + "lsubss_cpcs" * ]
           }
         ]
         [ { "context-sensitive equivalence" * } {
-             [ "cpcs ( ? ⊢ ? ⬌* ? )" "cpcs_ltpss_dx" + "cpcs_ltpss_sn" + "cpcs_delift" + "cpcs_aaa" + "cpcs_ltpr" + "cpcs_cprs" + "cpcs_cpcs" * ]
+             [ "cpcs ( ? ⊢ ? ⬌* ? )" "cpcs_lpss" + "cpcs_aaa" + "cpcs_cprs" + "cpcs_cpcs" * ]
           }
         ]
      }
    ]
    class "sky"
    [ { "conversion" * } {
-        [ { "focalized conversion" * } {
-             [ "lfpc ( ⦃?⦄ ⬌ ⦃?⦄ )" "lfpc_lfpc" * ]
-             [ "fpc ( ⦃?,?⦄ ⬌ ⦃?,?⦄ )" "fpc_fpc" * ]
-          }
-        ]
         [ { "context-sensitive conversion" * } {
              [ "cpc ( ? ⊢ ? ⬌ ? )" "cpc_cpc" * ]
           }

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reducibility/cpr.ma".
+include "basic_2/reduction/cpr.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL CONVERSION ON TERMS ***************************)
 

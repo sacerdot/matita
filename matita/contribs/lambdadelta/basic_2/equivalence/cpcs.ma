@@ -16,8 +16,7 @@ include "basic_2/conversion/cpc.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL EQUIVALENCE ON TERMS **************************)
 
-definition cpcs: lenv → relation term ≝
-                 λL. TC … (cpc L).
+definition cpcs: lenv → relation term ≝ LTC … cpc.
 
 interpretation "context-sensitive parallel equivalence (term)"
    'PConvStar L T1 T2 = (cpcs L T1 T2).
@@ -45,29 +44,23 @@ lemma cpcs_refl: ∀L. reflexive … (cpcs L).
 
 (* Basic_1: was: pc3_s *)
 lemma cpcs_sym: ∀L. symmetric … (cpcs L).
-/3 width=1/ qed.
+#L @TC_symmetric // qed.
 
 lemma cpc_cpcs: ∀L,T1,T2. L ⊢ T1 ⬌ T2 → L ⊢ T2 ⬌* T2.
 /2 width=1/ qed.
 
 lemma cpcs_strap1: ∀L,T1,T,T2. L ⊢ T1 ⬌* T → L ⊢ T ⬌ T2 → L ⊢ T1 ⬌* T2.
-/2 width=3/ qed.
+#L @step qed.
 
 lemma cpcs_strap2: ∀L,T1,T,T2. L ⊢ T1 ⬌ T → L ⊢ T ⬌* T2 → L ⊢ T1 ⬌* T2.
-/2 width=3/ qed.
+#L @TC_strap qed.
 
 (* Basic_1: was: pc3_pr2_r *)
-lemma cpcs_cpr_dx: ∀L,T1,T2. L ⊢ T1 ➡ T2 → L ⊢ T1 ⬌* T2.
-/3 width=1/ qed.
-
-lemma cpcs_tpr_dx: ∀L,T1,T2. T1 ➡ T2 → L ⊢ T1 ⬌* T2.
+lemma cpr_cpcs_dx: ∀L,T1,T2. L ⊢ T1 ➡ T2 → L ⊢ T1 ⬌* T2.
 /3 width=1/ qed.
 
 (* Basic_1: was: pc3_pr2_x *)
-lemma cpcs_cpr_sn: ∀L,T1,T2. L ⊢ T2 ➡ T1 → L ⊢ T1 ⬌* T2.
-/3 width=1/ qed.
-
-lemma cpcs_tpr_sn: ∀L,T1,T2. T2 ➡ T1 → L ⊢ T1 ⬌* T2.
+lemma cpr_cpcs_sn: ∀L,T1,T2. L ⊢ T2 ➡ T1 → L ⊢ T1 ⬌* T2.
 /3 width=1/ qed.
 
 lemma cpcs_cpr_strap1: ∀L,T1,T. L ⊢ T1 ⬌* T → ∀T2. L ⊢ T ➡ T2 → L ⊢ T1 ⬌* T2.
@@ -87,15 +80,13 @@ lemma cpr_div: ∀L,T1,T. L ⊢ T1 ➡ T → ∀T2. L ⊢ T2 ➡ T → L ⊢ T1 
 lemma cpcs_cpr_conf: ∀L,T1,T. L ⊢ T ➡ T1 → ∀T2. L ⊢ T ⬌* T2 → L ⊢ T1 ⬌* T2.
 /3 width=3/ qed.
 
-lemma cpcs_tpss_strap1: ∀L,T1,T. L ⊢ T1 ⬌* T →
-                        ∀T2,d,e. L ⊢ T ▶* [d, e] T2 → L ⊢ T1 ⬌* T2.
-#L #T1 #T #HT1 #T2 #d #e #HT2
+lemma cpcs_cpss_strap1: ∀L,T1,T. L ⊢ T1 ⬌* T → ∀T2. L ⊢ T ▶* T2 → L ⊢ T1 ⬌* T2.
+#L #T1 #T #HT1 #T2 #HT2
 @(cpcs_cpr_strap1 … HT1) -T1 /2 width=3/
 qed-.
 
-lemma cpcs_tpss_conf: ∀L,T,T1,d,e. L ⊢ T ▶* [d, e] T1 →
-                      ∀T2. L ⊢ T ⬌* T2 → L ⊢ T1 ⬌* T2.
-#L #T #T1 #d #e #HT1 #T2 #HT2
+lemma cpcs_cpss_conf: ∀L,T,T1. L ⊢ T ▶* T1 → ∀T2. L ⊢ T ⬌* T2 → L ⊢ T1 ⬌* T2.
+#L #T #T1 #HT1 #T2 #HT2
 @(cpcs_cpr_conf … HT2) -T2 /2 width=3/
 qed-.
 
