@@ -32,14 +32,14 @@ qed-.
 lemma dxprs_cpss_conf: ∀h,g,L,T1,U1. ⦃h, L⦄ ⊢ T1 •*➡*[g] U1 → ∀T2. L ⊢ T1 ▶* T2 →
                        ∃∃U2. ⦃h, L⦄ ⊢ T2 •*➡*[g] U2 & L ⊢ U1 ▶* U2.
 #h #g #L #T1 #U1 * #W1 #HTW1 #HWU1 #T2 #HT12
-elim (sstas_tpss_conf … HTW1 … HT12) -T1 #W2 #HTW2 #HW12
+elim (sstas_cpss_conf … HTW1 … HT12) -T1 #W2 #HTW2 #HW12
 elim (cprs_cpss_conf … HWU1 … HW12) -W1 /3 width=3/
 qed-.
 
-lemma dxprs_lpss_cpss_conf: ∀h,g,L1,T1,U1. ⦃h, L1⦄ ⊢ T1 •*➡*[g] U1 →
-                            ∀L2. L1 ⊢ ▶* L2 → ∀T2. L1 ⊢ T1 ▶* T2 →
+lemma dxprs_cpss_lpss_conf: ∀h,g,L1,T1,U1. ⦃h, L1⦄ ⊢ T1 •*➡*[g] U1 →
+                            ∀T2. L1 ⊢ T1 ▶* T2 → ∀L2. L1 ⊢ ▶* L2 →
                             ∃∃U2. ⦃h, L2⦄ ⊢ T2 •*➡*[g] U2 & L1 ⊢ U1 ▶* U2.
-#h #g #L1 #T1 #U1 #HTU1 #L2 #HL12 #T2 #HT12
+#h #g #L1 #T1 #U1 #HTU1 #T2 #HT12 #L2 #HL12
 elim (dxprs_cpss_conf … HTU1 … HT12) -T1 #U2 #HTU2 #HU12
 elim (dxprs_lpss_conf … HTU2 … HL12) -HTU2 -HL12 #U #HT2U #HU2
 lapply (cpss_trans … HU12 … HU2) -U2 /2 width=3/

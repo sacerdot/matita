@@ -20,7 +20,7 @@ include "basic_2/dynamic/yprs.ma".
 inductive ygt (h) (g) (L1) (T1): relation2 lenv term ≝
 | ygt_inj : ∀L,L2,T,T2. h ⊢ ⦃L1, T1⦄ ≥[g] ⦃L, T⦄ → h ⊢ ⦃L, T⦄ ≻[g] ⦃L2, T2⦄ →
             ygt h g L1 T1 L2 T2
-| ygt_step: ∀L,L2,T. ygt h g L1 T1 L T → L ➡ L2 → ygt h g L1 T1 L2 T
+| ygt_step: ∀L,L2,T. ygt h g L1 T1 L T → L ⊢ ➡ L2 → ygt h g L1 T1 L2 T
 .
 
 interpretation "'big tree' proper parallel computation (closure)"
@@ -31,7 +31,7 @@ interpretation "'big tree' proper parallel computation (closure)"
 lemma ygt_fwd_yprs: ∀h,g,L1,L2,T1,T2. h ⊢ ⦃L1, T1⦄ >[g] ⦃L2, T2⦄ →
                     h ⊢ ⦃L1, T1⦄ ≥[g] ⦃L2, T2⦄.
 #h #g #L1 #L2 #T1 #T2 #H elim H -L2 -T2
-/3 width=4 by yprs_strap1, ysc_ypr, ypr_ltpr/
+/3 width=4 by yprs_strap1, ysc_ypr, ypr_lpr/
 qed-.
 
 (* Basic properties *********************************************************)

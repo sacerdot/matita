@@ -101,11 +101,11 @@ lemma lsubsv_fwd_lsubss: ∀h,g,L1,L2. h ⊢ L1 ¡⊑[g] L2 → h ⊢ L1 •⊑[
 #h #g #L1 #L2 #H elim H -L1 -L2 // /2 width=1/ /2 width=6/
 qed-.
 
-lemma lsubsv_fwd_lsubr1: ∀h,g,L1,L2. h ⊢ L1 ¡⊑[g] L2 → L1 ⊑[0, |L1|] L2.
+lemma lsubsv_fwd_lsubr1: ∀h,g,L1,L2. h ⊢ L1 ¡⊑[g] L2 → L1 ⊑ L2.
 /3 width=3 by lsubsv_fwd_lsubss, lsubss_fwd_lsubr1/
 qed-.
 
-lemma lsubsv_fwd_lsubr2: ∀h,g,L1,L2. h ⊢ L1 ¡⊑[g] L2 → L1 ⊑[0, |L2|] L2.
+lemma lsubsv_fwd_lsubr2: ∀h,g,L1,L2. h ⊢ L1 ¡⊑[g] L2 → L1 ⊑ L2.
 /3 width=3 by lsubsv_fwd_lsubss, lsubss_fwd_lsubr2/
 qed-.
 

@@ -37,7 +37,7 @@ qed.
 (* Inversion lemmas on "big tree" parallel reduction for closures ***********)
 
 lemma ypr_inv_ysc: ∀h,g,L1,L2,T1,T2. h ⊢ ⦃L1, T1⦄ ≽[g] ⦃L2, T2⦄ →
-                   h ⊢ ⦃L1, T1⦄ ≻[g] ⦃L2, T2⦄ ∨ (L1 ➡ L2 ∧ T1 = T2).
+                   h ⊢ ⦃L1, T1⦄ ≻[g] ⦃L2, T2⦄ ∨ (L1 ⊢ ➡ L2 ∧ T1 = T2).
 #h #g #L1 #L2 #T1 #T2 * -L2 -T2 /3 width=1/ /3 width=2/
 [ #T2 #HT12 elim (term_eq_dec T1 T2) #H destruct /3 width=1/ /4 width=1/
 | #L2 #HL21 elim (lenv_eq_dec L1 L2) #H destruct /3 width=1/ /4 width=1/

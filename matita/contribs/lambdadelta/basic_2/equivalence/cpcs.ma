@@ -85,9 +85,19 @@ lemma cpcs_cpss_strap1: ∀L,T1,T. L ⊢ T1 ⬌* T → ∀T2. L ⊢ T ▶* T2 �
 @(cpcs_cpr_strap1 … HT1) -T1 /2 width=3/
 qed-.
 
+lemma cpcs_cpss_strap2: ∀L,T1,T. L ⊢ T1 ▶* T → ∀T2. L ⊢ T ⬌* T2 → L ⊢ T1 ⬌* T2.
+#L #T1 #T #HT1 #T2 #HT2
+@(cpcs_cpr_strap2 … HT2) -T2 /2 width=3/
+qed-.
+
 lemma cpcs_cpss_conf: ∀L,T,T1. L ⊢ T ▶* T1 → ∀T2. L ⊢ T ⬌* T2 → L ⊢ T1 ⬌* T2.
 #L #T #T1 #HT1 #T2 #HT2
 @(cpcs_cpr_conf … HT2) -T2 /2 width=3/
+qed-.
+
+lemma cpcs_cpss_div: ∀L,T1,T. L ⊢ T1 ⬌* T → ∀T2. L ⊢ T2 ▶* T → L ⊢ T1 ⬌* T2.
+#L #T1 #T #HT1 #T2 #HT2
+@(cpcs_cpr_div … HT1) -T1 /2 width=3/
 qed-.
 
 (* Basic_1: removed theorems 9:

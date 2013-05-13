@@ -12,14 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reducibility/ltpr.ma".
+include "basic_2/reduction/lpr.ma".
 include "basic_2/dynamic/lsubsv.ma".
 
 (* "BIG TREE" PARALLEL REDUCTION FOR CLOSURES *******************************)
 
 inductive ypr (h) (g) (L1) (T1): relation2 lenv term ≝
 | ypr_fw    : ∀L2,T2. ♯{L2, T2} < ♯{L1, T1} → ypr h g L1 T1 L2 T2
-| ypr_ltpr  : ∀L2. L1 ➡ L2 → ypr h g L1 T1 L2 T1
+| ypr_lpr   : ∀L2. L1 ⊢ ➡ L2 → ypr h g L1 T1 L2 T1
 | ypr_cpr   : ∀T2. L1 ⊢ T1 ➡ T2 → ypr h g L1 T1 L1 T2
 | ypr_ssta  : ∀T2,l. ⦃h, L1⦄ ⊢ T1 •[g] ⦃l+1, T2⦄ → ypr h g L1 T1 L1 T2
 | ypr_lsubsv: ∀L2. h ⊢ L2 ¡⊑[g] L1 → ypr h g L1 T1 L2 T1

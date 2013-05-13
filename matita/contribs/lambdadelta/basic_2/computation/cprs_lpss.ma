@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/lpss_cpss.ma".
+include "basic_2/substitution/lpss_lpss.ma".
 include "basic_2/reduction/lpr_lpss.ma".
 include "basic_2/computation/cprs.ma".
 
@@ -46,4 +46,47 @@ lemma cprs_lpss_conf_sn: ∀L0,T0,T1. L0 ⊢ T0 ➡* T1 → ∀L1. L0 ⊢ ▶* L
 #L0 #T0 #T1 #HT01 #L1 #HL01
 elim (cprs_lpss_conf_dx … HT01 … HL01) -HT01 #T #HT1
 lapply (lpss_cpss_trans … HL01 … HT1) -HT1 /2 width=3/
+qed-.
+
+lemma cprs_cpss_lpss_conf_sn: ∀L1,T1,U1. L1 ⊢ T1 ➡* U1 →
+                              ∀T2. L1 ⊢ T1 ▶* T2 → ∀L2. L1 ⊢ ▶* L2 →
+                              ∃∃U2. L2 ⊢ T2 ➡* U2 & L1 ⊢ U1 ▶* U2.
+#L1 #T1 #U1 #HTU1 #T2 #HT12 #L2 #HL12
+elim (cprs_cpss_conf … HTU1 … HT12) -T1 #U #HU1 #HT2U
+elim (cprs_lpss_conf_sn … HT2U … HL12) -HT2U -HL12 #U2 #HU2 #HTU2
+lapply (cpss_trans … HU1 … HU2) -U /2 width=3/
+qed-.
+
+lemma cprs_cpss_lpss_conf_dx: ∀L1,T1,U1. L1 ⊢ T1 ➡* U1 →
+                              ∀T2. L1 ⊢ T1 ▶* T2 → ∀L2. L1 ⊢ ▶* L2 →
+                              ∃∃U2. L2 ⊢ T2 ➡* U2 & L2 ⊢ U1 ▶* U2.
+#L1 #T1 #U1 #HTU1 #T2 #HT12 #L2 #HL12
+elim (cprs_lpss_conf_dx … HTU1 … HL12) -HTU1 #U2 #HU12 #HT1U2
+elim (lpss_cpss_conf_dx … HT12 … HL12) -L1 #T #HT1 #HT2
+elim (cprs_cpss_conf … HT1U2 … HT1) -T1 #U #HU2 #HTU
+lapply (cpss_trans … HU12 … HU2) -U2
+lapply (cpss_cprs_trans … HT2 … HTU) -T /2 width=3/
+qed-.
+
+
+lemma cprs_cpss2_lpss_conf_sn: ∀L1,T1,U1. L1 ⊢ T1 ➡* U1 → ∀T2. L1 ⊢ T1 ▶* T2 →
+                               ∀U2. L1 ⊢ U1 ▶* U2 → ∀L2. L1 ⊢ ▶* L2 →
+                               ∃∃U. L2 ⊢ T2 ➡* U & L1 ⊢ U2 ▶* U.
+#L1 #T1 #U1 #HTU1 #T2 #HT12 #U2 #HU12 #L2 #HL12
+elim (cprs_cpss_lpss_conf_sn … HTU1 … HT12 … HL12) -T1 #T1 #HT21 #HUT1
+elim (cpss_conf … HU12 … HUT1) -U1 #U1 #HU21 #HTU1
+elim (lpss_cpss_conf_sn … HTU1 … HL12) -HTU1 -HL12 #U2 #HT1U2 #HU12
+lapply (cpss_trans … HU21 … HU12) -U1
+lapply (cprs_cpss_trans … HT21 … HT1U2) -T1 /2 width=3/
+qed-.
+
+lemma cprs_cpss2_lpss_conf_dx: ∀L1,T1,U1. L1 ⊢ T1 ➡* U1 → ∀T2. L1 ⊢ T1 ▶* T2 →
+                               ∀U2. L1 ⊢ U1 ▶* U2 → ∀L2. L1 ⊢ ▶* L2 →
+                               ∃∃U. L2 ⊢ T2 ➡* U & L2 ⊢ U2 ▶* U.
+#L1 #T1 #U1 #HTU1 #T2 #HT12 #U2 #HU12 #L2 #HL12
+elim (cprs_cpss_lpss_conf_dx … HTU1 … HT12 … HL12) -T1 #T1 #HT21 #HUT1
+elim (lpss_cpss_conf_dx … HU12 … HL12) -L1 #U #HU1 #HU2
+elim (cpss_conf … HU1 … HUT1) -U1 #U1 #HU1 #HTU1
+lapply (cpss_trans … HU2 … HU1) -U
+lapply (cprs_cpss_trans … HT21 … HTU1) -T1 /2 width=3/
 qed-.

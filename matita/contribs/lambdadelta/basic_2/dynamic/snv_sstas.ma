@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unwind/sstas_lift.ma".
+include "basic_2/unfold/sstas_lift.ma".
 include "basic_2/dynamic/snv.ma".
 
 (* STRATIFIED NATIVE VALIDITY FOR TERMS *************************************)

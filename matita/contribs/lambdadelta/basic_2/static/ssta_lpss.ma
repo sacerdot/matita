@@ -20,7 +20,7 @@ include "basic_2/static/ssta_lift.ma".
 (* Properties about sn parallel substitution ********************************)
 
 (* Note: apparently this was missing in basic_1 *)
-lemma ssta_tpss_lpss_conf: ∀h,g,L1,T1,U1,l. ⦃h, L1⦄ ⊢ T1 •[g] ⦃l, U1⦄ →
+lemma ssta_cpss_lpss_conf: ∀h,g,L1,T1,U1,l. ⦃h, L1⦄ ⊢ T1 •[g] ⦃l, U1⦄ →
                            ∀T2. L1 ⊢ T1 ▶* T2 → ∀L2. L1 ⊢ ▶* L2 →
                            ∃∃U2. ⦃h, L2⦄ ⊢ T2 •[g] ⦃l, U2⦄ & L1 ⊢ U1 ▶* U2.
 #h #g #L1 #T1 #U1 #l #H elim H -L1 -T1 -U1 -l
@@ -73,9 +73,9 @@ qed-.
 lemma ssta_cpss_conf: ∀h,g,L,T1,U1,l. ⦃h, L⦄ ⊢ T1 •[g] ⦃l, U1⦄ →
                       ∀T2. L ⊢ T1 ▶* T2 →
                       ∃∃U2. ⦃h, L⦄ ⊢ T2 •[g] ⦃l, U2⦄ & L ⊢ U1 ▶* U2.
-/2 width=3 by ssta_tpss_lpss_conf/ qed-.
+/2 width=3 by ssta_cpss_lpss_conf/ qed-.
 
 lemma ssta_lpss_conf: ∀h,g,L1,T,U1,l. ⦃h, L1⦄ ⊢ T •[g] ⦃l, U1⦄ →
                       ∀L2. L1 ⊢ ▶* L2 →
                       ∃∃U2. ⦃h, L2⦄ ⊢ T •[g] ⦃l, U2⦄ & L1 ⊢ U1 ▶* U2.
-/2 width=3 by ssta_tpss_lpss_conf/ qed-.
+/2 width=3 by ssta_cpss_lpss_conf/ qed-.
