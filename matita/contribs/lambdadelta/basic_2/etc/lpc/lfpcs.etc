@@ -12,6 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
+notation "hvbox( ⦃ term 46 L1 ⦄ ⬌ ⬌ * break ⦃ term 46 L2 ⦄ )"
+   non associative with precedence 45
+   for @{ 'FocalizedPConvStarAlt $L1 $L2 }.
+
 include "basic_2/conversion/lfpc.ma".
 
 (* FOCALIZED PARALLEL EQUIVALENCE ON LOCAL ENVIRONMENTS *********************)

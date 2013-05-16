@@ -22,8 +22,8 @@ include "basic_2/dynamic/lsubsv_cpcs.ma".
 (* Properties concerning stratified native validity *************************)
 
 fact snv_lsubsv_aux: ∀h,g,L0,T0.
-                     (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_ltpr_tpr h g L1 T1) →
-                     (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_ssta_ltpr_tpr h g L1 T1) →
+                     (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_cpr_lpr h g L1 T1) →
+                     (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_ssta_cpr_lpr h g L1 T1) →
                      (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_ssta h g L1 T1) →
                      (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_lsubsv h g L1 T1) →
                      ∀L1,T1. L0 = L1 → T0 = T1 → IH_snv_lsubsv h g L1 T1.
@@ -45,8 +45,8 @@ fact snv_lsubsv_aux: ∀h,g,L0,T0.
   lapply (lsubsv_cprs_trans … HL12 … HW0) -HW0 #HW0
   elim (lsubsv_ssta_trans … HVW … HL12) -HVW #W1 #HVW1 #HW1
   lapply (cpcs_cprs_strap1 … HW1 … HW0) -W #HW10
-  elim (dxprs_lsubsv_aux … IH4 IH3 IH2 IH1 … HL12 … HTU) -IH4 -IH3 -IH2 -HTU // /2 width=1/ #X #HTU #H
-  elim (cprs_inv_abst1 Abst W0 … H) -H #W #U2 #HW0 #HU2 #H destruct
+  elim (lsubsv_dxprs_aux … IH4 IH3 IH2 IH1 … HL12 … HTU) -IH4 -IH3 -IH2 -HTU // /2 width=1/ #X #HTU #H
+  elim (cprs_fwd_abst1 … H Abst W0) -H #W #U2 #HW0 #HU2 #H destruct
   lapply (cpcs_cprs_strap1 … HW10 … HW0) -W0 #H
   elim (cpcs_inv_cprs … H) -H #W0 #HW10 #HW0
   lapply (dxprs_cprs_trans … (ⓛ{a}W0.U2) HTU ?) [ /2 width=1/ ] -HTU -HW0

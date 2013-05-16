@@ -211,13 +211,13 @@ qed.
 
 (* Basic_1: was: pc3_wcpr0_t *)
 (* Basic_1: note: pc3_wcpr0_t should be renamed *)
-lemma lpr_cprs_conf: ∀L1,L2. L1 ⊢ ➡ L2 → ∀T1,T2. L1 ⊢ T1 ➡* T2 → L2 ⊢ T1 ⬌* T2.
+lemma cprs_lpr_conf: ∀L1,L2. L1 ⊢ ➡ L2 → ∀T1,T2. L1 ⊢ T1 ➡* T2 → L2 ⊢ T1 ⬌* T2.
 #L1 #L2 #HL12 #T1 #T2 #H @(cprs_ind … H) -T2 //
 /3 width=5 by cpcs_trans, lpr_cpr_conf/
 qed-.
 
 (* Basic_1: was: pc3_wcpr0 *)
-lemma lpr_cpcs_conf: ∀L1,L2. L1 ⊢ ➡ L2 → ∀T1,T2. L1 ⊢ T1 ⬌* T2 → L2 ⊢ T1 ⬌* T2.
+lemma cpcs_lpr_conf: ∀L1,L2. L1 ⊢ ➡ L2 → ∀T1,T2. L1 ⊢ T1 ⬌* T2 → L2 ⊢ T1 ⬌* T2.
 #L1 #L2 #HL12 #T1 #T2 #H
-elim (cpcs_inv_cprs … H) -H /3 width=5 by cpcs_canc_dx, lpr_cprs_conf/
+elim (cpcs_inv_cprs … H) -H /3 width=5 by cpcs_canc_dx, cprs_lpr_conf/
 qed-.

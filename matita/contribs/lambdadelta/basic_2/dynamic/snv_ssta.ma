@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/dynamic/snv_lift.ma".
 include "basic_2/dynamic/snv_cpcs.ma".
 
 (* STRATIFIED NATIVE VALIDITY FOR TERMS *************************************)
@@ -19,8 +20,8 @@ include "basic_2/dynamic/snv_cpcs.ma".
 (* Properties on stratified static type assignment for terms ****************)
 
 fact snv_ssta_aux: ∀h,g,L0,T0.
-                   (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_ltpr_tpr h g L1 T1) →
-                   (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_ssta_ltpr_tpr h g L1 T1) →
+                   (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_cpr_lpr h g L1 T1) →
+                   (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_ssta_cpr_lpr h g L1 T1) →
                    (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_ssta h g L1 T1) →
                    ∀L1,T1. L0 = L1 → T0 = T1 → IH_snv_ssta h g L1 T1.
 #h #g #L0 #T0 #IH3 #IH2 #IH1 #L1 * * [||||*]
@@ -44,7 +45,7 @@ fact snv_ssta_aux: ∀h,g,L0,T0.
   elim (ssta_dxprs_aux … IH3 IH2 … HTU1 … HT10) -IH3 -IH2 // /2 width=2/ -T1 #U #X #HU1U #H #HU0
   elim (sstas_inv_bind1 … H) -H #U0 #HTU0 #H destruct
   elim (cpcs_inv_abst2 … HU0) -HU0 #W2 #U2 #HU2 #HU02
-  elim (cprs_inv_abst … HU02 Abst W0) -HU02 #HW02 #_
+  elim (cprs_fwd_abst … HU02 Abst W0) -HU02 #HW02 #_
   lapply (cprs_trans … HW10 … HW02) -W0 /3 width=10 by snv_appl, ex2_intro/ (**) (* auto is too slow without trace *)
 | #W1 #T1 #HL0 #HT0 #H1 #X #l #H2 destruct -IH3 -IH2
   elim (snv_inv_cast … H1) -H1 #U1 #l0 #HW1 #HT1 #HTU1 #HUW1
