@@ -440,20 +440,29 @@ lemma unique_filter : ∀S,l,f.
   ]
 qed.
 
-lemma filter_eqb : ∀m,l. unique ? l → |filter ? (eqb m) l| ≤ 1.
-#m #l #Huni cut (∀lf. lf = filter ? (eqb m) l → |lf| ≤1) 
-  [2: #Hcut @Hcut %] 
-* // #a * // #b #tl #H @False_ind 
-cut (m=a) 
-  [@eqb_true_to_eq @(mem_filter_true ??? l) <H %1 %] #eqma
-cut (m=b) 
-  [@eqb_true_to_eq @(mem_filter_true ??? l) <H %2 %1 %] #eqmb
-@(absurd (unique ? (a::b::tl))) 
-  [>H @unique_filter // 
-  |<eqma <eqmb normalize % * * #H1 #_ @H1 %1 //
+lemma filter_eqb : ∀m,l. unique ? l → 
+  (mem ? m l ∧ filter ? (eqb m) l = [m])∨(¬mem ? m l ∧ filter ? (eqb m) l = []).
+#m #l elim l
+  [#_ %2 % [% @False_ind | //]
+  |#a #tl #Hind * #Hmema #Hunique
+   cases (Hind Hunique)
+    [* #Hmemm #Hind %1 % [%2 //]
+     >filter_false // @not_eq_to_eqb_false % #eqma @(absurd ? Hmemm) //
+    |* #Hmemm #Hind cases (decidable_eq_nat m a) #eqma 
+      [%1 <eqma % [%1 //] >filter_true [2: @eq_to_eqb_true //] >Hind //
+      |%2 % 
+        [@(not_to_not … Hmemm) * // #H @False_ind  @(absurd … H) //
+        |>filter_false // @not_eq_to_eqb_false @eqma
+        ]
+      ]
+    ]
   ]
-qed.  
-    
+qed.
+
+lemma length_filter_eqb: ∀m,l. unique ? l → 
+  |filter ? (eqb m) l| ≤ 1.
+#m #l #Huni cases (filter_eqb m l Huni) * #_ #H >H // 
+qed. 
 
 (***************************** split *******************************)
 let rec split_rev A (l:list A) acc n on n ≝ 
