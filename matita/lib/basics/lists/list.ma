@@ -361,6 +361,100 @@ lemma mem_map_forward: ∀A,B.∀f:A→B.∀a,l.
   ]
 qed.
 
+(****************************** mem filter ***************************)
+lemma mem_filter: ∀S,f,a,l. 
+  mem S a (filter S f l) → mem S a l.
+#S #f #a #l elim l [normalize //]
+#b #tl #Hind normalize (cases (f b)) normalize
+  [* [#eqab %1 @eqab | #H %2 @Hind @H]
+  |#H %2 @Hind @H]
+qed.
+
+lemma mem_filter_true: ∀S,f,a,l. 
+  mem S a (filter S f l)  → f a = true.
+#S #f #a #l elim l [normalize @False_ind ]
+#b #tl #Hind cases (true_or_false (f b)) #H
+normalize >H normalize [2:@Hind]
+* [#eqab // | @Hind]
+qed. 
+
+lemma mem_filter_l: ∀S,f,x,l. (f x = true) → mem S x l →
+mem S x (filter ? f l).
+#S #f #x #l #fx elim l [@False_ind]
+#b #tl #Hind * 
+  [#eqxb <eqxb >(filter_true ???? fx) %1 % 
+  |#Htl cases (true_or_false (f b)) #fb 
+    [>(filter_true ???? fb) %2 @Hind @Htl
+    |>(filter_false ???? fb) @Hind @Htl
+    ]
+  ]
+qed.
+
+lemma filter_case: ∀A,p,l,x. mem ? x l → 
+  mem ? x (filter A p l) ∨ mem ? x (filter A (λx.¬ p x) l).
+#A #p #l elim l 
+  [#x @False_ind 
+  |#a #tl #Hind #x * 
+    [#eqxa >eqxa cases (true_or_false (p a)) #Hcase
+      [%1 >(filter_true A tl a p Hcase) %1 % 
+      |%2 >(filter_true A tl a ??) [%1 % | >Hcase %]
+      ]
+    |#memx cases (Hind … memx) -memx #memx
+      [%1 cases (true_or_false (p a)) #Hpa 
+        [>(filter_true A tl a p Hpa) %2 @memx
+        |>(filter_false A tl a p Hpa) @memx
+        ]
+      |cases (true_or_false (p a)) #Hcase
+        [%2 >(filter_false A tl a) [@memx |>Hcase %]
+        |%2 >(filter_true A tl a) [%2 @memx|>Hcase %]
+        ]
+      ]
+    ]
+  ]
+qed.
+
+lemma filter_length2: ∀A,p,l. |filter A p l|+|filter A (λx.¬ p x) l| = |l|.
+#A #p #l elim l //
+#a #tl #Hind cases (true_or_false (p a)) #Hcase
+  [>(filter_true A tl a p Hcase) >(filter_false A tl a ??) 
+    [@(eq_f ?? S) @Hind | >Hcase %]
+  |>(filter_false A tl a p Hcase) >(filter_true A tl a ??) 
+    [<plus_n_Sm @(eq_f ?? S) @Hind | >Hcase %]
+  ]
+qed.
+
+(***************************** unique *******************************)
+let rec unique A (l:list A) on l ≝ 
+  match l with 
+  [nil ⇒ True
+  |cons a tl ⇒ ¬ mem A a tl ∧ unique A tl].
+
+lemma unique_filter : ∀S,l,f.
+ unique S l → unique S (filter S f l).
+#S #l #f elim l //
+#a #tl #Hind * 
+#memba #uniquetl cases (true_or_false … (f a)) #Hfa
+  [>(filter_true ???? Hfa) % 
+    [@(not_to_not … memba) @mem_filter |/2/ ]
+  |>filter_false /2/
+  ]
+qed.
+
+lemma filter_eqb : ∀m,l. unique ? l → |filter ? (eqb m) l| ≤ 1.
+#m #l #Huni cut (∀lf. lf = filter ? (eqb m) l → |lf| ≤1) 
+  [2: #Hcut @Hcut %] 
+* // #a * // #b #tl #H @False_ind 
+cut (m=a) 
+  [@eqb_true_to_eq @(mem_filter_true ??? l) <H %1 %] #eqma
+cut (m=b) 
+  [@eqb_true_to_eq @(mem_filter_true ??? l) <H %2 %1 %] #eqmb
+@(absurd (unique ? (a::b::tl))) 
+  [>H @unique_filter // 
+  |<eqma <eqmb normalize % * * #H1 #_ @H1 %1 //
+  ]
+qed.  
+    
+
 (***************************** split *******************************)
 let rec split_rev A (l:list A) acc n on n ≝ 
   match n with 
