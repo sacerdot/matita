@@ -10,8 +10,8 @@
       V_______________________________________________________________ *)
 
 include "arithmetics/exp.ma".
-include "arithmetics/minimization.ma".
 include "arithmetics/div_and_mod.ma".
+include "arithmetics/minimization.ma".
 
 definition log ≝ λp,n.
   max n (λx.leb (exp p x) n).

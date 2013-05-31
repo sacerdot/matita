@@ -184,6 +184,7 @@ theorem false_to_lt_max: ∀f,n,m.O < n →
     ]
   ]
 qed.
+
 (* minimization *)
  
 (* min k b f is the minimun i, b ≤ i < b + k s.t. f i;  
@@ -346,4 +347,10 @@ theorem f_min_true : ∀ f.∀n,b.
 (∃i:nat. b ≤ i ∧ i < n + b ∧ f i = true) → f (min n b f) = true. 
 #f #n #b cases(min_to_min_spec f n b (min n b f) (refl …)) //
 #Hall * #x * * #leb #ltx #fx @False_ind @(absurd … fx) >Hall /2/
+qed.
+
+theorem lt_min : ∀ f.∀n,b.
+(∃i:nat. b ≤ i ∧ i < n + b ∧ f i = true) → min n b f < n + b. 
+#f #n #b #H cases H #i * * #lebi #ltin #fi_true  
+@(le_to_lt_to_lt … ltin) @true_to_le_min //
 qed.
