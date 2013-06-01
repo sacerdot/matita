@@ -17,7 +17,7 @@ include "basic_2/dynamic/ypr.ma".
 (* "BIG TREE" PROPER PARALLEL REDUCTION FOR CLOSURES ************************)
 
 inductive ysc (h) (g) (L1) (T1): relation2 lenv term ≝
-| ysc_fw    : ∀L2,T2. ♯{L2, T2} < ♯{L1, T1} → ysc h g L1 T1 L2 T2
+| ysc_fsup  : ∀L2,T2. ⦃L1, T1⦄ ⊃ ⦃L2, T2⦄ → ysc h g L1 T1 L2 T2
 | ysc_cpr   : ∀T2. L1 ⊢ T1 ➡ T2 → (T1 = T2 → ⊥) → ysc h g L1 T1 L1 T2
 | ysc_ssta  : ∀T2,l. ⦃h, L1⦄ ⊢ T1 •[g] ⦃l+1, T2⦄ → ysc h g L1 T1 L1 T2
 | ysc_lsubsv: ∀L2. h ⊢ L2 ¡⊑[g] L1 → (L1 = L2 → ⊥) → ysc h g L1 T1 L2 T1

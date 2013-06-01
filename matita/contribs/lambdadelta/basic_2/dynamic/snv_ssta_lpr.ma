@@ -33,7 +33,7 @@ fact ssta_cpr_lpr_aux: ∀h,g,L0,T0.
   elim (ssta_inv_lref1 … H2) -H2 * #K1
   #V1 #W1 [| #l0 ] #HLK1 #HVW1 #HWU1 [| #H destruct ]
   lapply (ldrop_mono … H … HLK1) -H #H destruct
-  lapply (ldrop_pair2_fwd_fw … HLK1 (#i)) #HKV1
+  lapply (fsupp_lref … HLK1) #HKV1
   elim (lpr_ldrop_conf … HLK1 … HL12) -HL12 #X #H #HLK2
   elim (lpr_inv_pair1 … H) -H #K2 #V2 #HK12 #HV12 #H destruct
   lapply (ldrop_fwd_ldrop2 … HLK2) #H2
@@ -86,7 +86,7 @@ fact ssta_cpr_lpr_aux: ∀h,g,L0,T0.
     lapply (IH3 … HVW1) -IH3 // [ /2 width=1/ ] #HW1
     elim (ssta_cpcs_lpr_aux … IH2 IH1 … HWX1 … HWV … L1) -IH2 -HWX1 //
     [2: /2 width=1/
-    |3: /4 width=4 by ygt_yprs_trans, fw_ygt, sstas_yprs, ssta_sstas/
+    |3: /4 width=4 by ygt_yprs_trans, fsupp_ygt, sstas_yprs, ssta_sstas/
     ] #H #_ destruct -X1
     elim (IH1 … HVW1 … HV12 … HL12) -HVW1 // -HV1 [2: /2 width=1/ ] #W2 #HVW2 #HW12
     elim (IH1 … HWV W … HL12) -HWV // -HW [2: /2 width=1/ ] #V0 #HWV0 #_

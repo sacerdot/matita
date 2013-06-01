@@ -10,6 +10,14 @@ table {
      }
    ]
 (*
+   class "wine"
+   [ { "examples" * } {
+        [ { "" * } {
+             [ "" * ]
+          }
+        ]
+     }
+   ]
    class "magenta"
    [ { "higher order dynamic typing" * } {
         [ { "higher order native type assignment" * } {

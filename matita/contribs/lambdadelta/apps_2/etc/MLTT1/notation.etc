@@ -1,0 +1,108 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* NOTATION FOR MARTIN-LÖF TYPE THEORY WITH ONE UNIVERSE (MLTT1) ************)
+
+(* Syntax extension *********************************************************)
+
+notation "hvbox( □ )"
+ non associative with precedence 90
+ for @{ 'Box }.
+
+notation "hvbox(T1 break ⤏ T2)" 
+  right associative with precedence 65
+  for @{ 'TImp $T1 $T2 }.
+
+notation "hvbox( L break Λ T )"
+ left associative with precedence 60
+ for @{ 'LAbst $L $T }.
+
+notation "hvbox( L break Δ T )"
+ left associative with precedence 60
+ for @{ 'LAbbr $L $T }.
+
+notation "hvbox( Λ T )"
+ non associative with precedence 65
+ for @{ 'TAbst $T }.
+
+(* Primitive global constants ***********************************************)
+
+notation "hvbox( 𝔼 )"
+ non associative with precedence 90
+ for @{ 'Empty }.
+
+notation "hvbox( 𝕖𝕣 [ T ] )"
+ non associative with precedence 90
+ for @{ 'ERec $T }.
+
+notation "hvbox( 𝕆 )"
+ non associative with precedence 90
+ for @{ 'One }.
+
+notation "hvbox( 𝕥 )"
+ non associative with precedence 90
+ for @{ 'TT }.
+
+notation "hvbox( 𝕠𝕣 [ T1 , break T2 ] )"
+ non associative with precedence 90
+ for @{ 'ORec $T1 $T2 }.
+(*
+notation "hvbox( ℕ )"
+ non associative with precedence 90
+ for @{ 'Nat }.
+
+notation "hvbox( 𝕫 )"
+ non associative with precedence 90
+ for @{ 'Zero }.
+
+notation "hvbox( 𝕤 [ T ] )"
+ non associative with precedence 90
+ for @{ 'Succ $T }.
+
+notation "hvbox( 𝕟𝕣 [ T1 , break T2 , break T3 ] )"
+ non associative with precedence 90
+ for @{ 'NRec $T1 $T2 $3 }.
+*)
+notation "hvbox( T1 ⊕ T2 )"
+ left associative with precedence 70
+ for @{ 'Sum $T1 $T2 }.
+
+notation "hvbox( 𝕤𝕟 [ T ] )"
+ non associative with precedence 90
+ for @{ 'Sn $T }.
+
+notation "hvbox( 𝕕𝕩 [ T ] )"
+ non associative with precedence 90
+ for @{ 'Dx $T }.
+
+notation "hvbox( 𝕤𝕣 [ T1 , break T2 , break T3 ] )"
+ non associative with precedence 90
+ for @{ 'SRec $T1 $T2 $3 }.
+(*
+notation "hvbox( 𝕌 )"
+ non associative with precedence 90
+ for @{ 'Univ }.
+
+notation "hvbox( 𝕖 )"
+ non associative with precedence 90
+ for @{ 'UE }.
+
+notation "hvbox( 𝕠 )"
+ non associative with precedence 90
+ for @{ 'UO }.
+
+notation "hvbox( 𝕟 )"
+ non associative with precedence 90
+ for @{ 'UN }.
+*)

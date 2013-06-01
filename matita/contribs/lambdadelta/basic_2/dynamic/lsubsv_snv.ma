@@ -31,9 +31,9 @@ fact snv_lsubsv_aux: ∀h,g,L0,T0.
 [ #i #HL0 #HT0 #H #L1 #HL12 destruct -IH4 -IH3 -IH2
   elim (snv_inv_lref … H) -H #I2 #K2 #W2 #HLK2 #HW2
   elim (lsubsv_ldrop_O1_trans … HL12 … HLK2) -HL12 #X #H #HLK1
-  lapply (ldrop_pair2_fwd_fw … HLK2 (#i)) -HLK2 #HLK2
   elim (lsubsv_inv_pair2 … H) -H * #K1
-  [ #HK12 #H destruct /4 width=8 by snv_lref, fw_ygt/ (**) (* auto too slow without trace *)
+  [ #HK12 #H destruct
+    /5 width=8 by snv_lref, fsupp_ygt, fsupp_lref/ (**) (* auto too slow without trace *)
   | #W1 #V1 #V2 #l #HV1 #_ #_ #_ #_ #_ #H #_ destruct /2 width=5/
   ]
 | #p #HL0 #HT0 #H #L1 #HL12 destruct -IH4 -IH3 -IH2 -IH1
@@ -50,11 +50,11 @@ fact snv_lsubsv_aux: ∀h,g,L0,T0.
   lapply (cpcs_cprs_strap1 … HW10 … HW0) -W0 #H
   elim (cpcs_inv_cprs … H) -H #W0 #HW10 #HW0
   lapply (dxprs_cprs_trans … (ⓛ{a}W0.U2) HTU ?) [ /2 width=1/ ] -HTU -HW0
-  /4 width=8 by snv_appl, fw_ygt/ (**) (* auto too slow without trace *)
+  /4 width=8 by snv_appl, fsupp_ygt/ (**) (* auto too slow without trace *)
 | #W #T #HL0 #HT0 #H #L1 #HL12 destruct -IH4 -IH3 -IH2
   elim (snv_inv_cast … H) -H #U #l #HW #HT #HTU #HUW
   lapply (lsubsv_cpcs_trans … HL12 … HUW) -HUW #HUW
   elim (lsubsv_ssta_trans … HTU … HL12) -HTU #U0 #HTU0 #HU0
-  lapply (cpcs_trans … HU0 … HUW) -U /4 width=4 by snv_cast, fw_ygt/ (**) (* auto too slow without trace *)
+  lapply (cpcs_trans … HU0 … HUW) -U /4 width=4 by snv_cast, fsupp_ygt/ (**) (* auto too slow without trace *)
 ]
 qed-.

@@ -63,6 +63,11 @@ lemma fsups_fsupp_fsupp: ∀L1,L,L2,T1,T,T2. ⦃L1, T1⦄ ⊃* ⦃L, T⦄ →
 lemma fsupp_fsups_fsupp: ∀L1,L,L2,T1,T,T2. ⦃L1, T1⦄ ⊃+ ⦃L, T⦄ →
                          ⦃L, T⦄ ⊃* ⦃L2, T2⦄ → ⦃L1, T1⦄ ⊃+ ⦃L2, T2⦄.
 /2 width=4/ qed.
+(*
+lemma fsups_pippo: ∀L,T. ⦃L, T⦄ ⊃+ ⦃L, #0⦄.
+#L * *
+[ #i 
+*)
 
 (* Basic forward lemmas *****************************************************)
 

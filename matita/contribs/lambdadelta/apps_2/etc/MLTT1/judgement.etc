@@ -12,25 +12,22 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/fsup.ma".
-include "basic_2/reduction/lpr.ma".
-include "basic_2/dynamic/lsubsv.ma".
+include "basic_2/unfold/delift.ma".
+include "apps_2/MLTT1_1/genv_primitive.ma".
 
-(* "BIG TREE" PARALLEL REDUCTION FOR CLOSURES *******************************)
+(* JUDJEMENTS ***************************************************************)
 
-inductive ypr (h) (g) (L1) (T1): relation2 lenv term ≝
-| ypr_fsup  : ∀L2,T2. ⦃L1, T1⦄ ⊃ ⦃L2, T2⦄ → ypr h g L1 T1 L2 T2
-| ypr_lpr   : ∀L2. L1 ⊢ ➡ L2 → ypr h g L1 T1 L2 T1
-| ypr_cpr   : ∀T2. L1 ⊢ T1 ➡ T2 → ypr h g L1 T1 L1 T2
-| ypr_ssta  : ∀T2,l. ⦃h, L1⦄ ⊢ T1 •[g] ⦃l+1, T2⦄ → ypr h g L1 T1 L1 T2
-| ypr_lsubsv: ∀L2. h ⊢ L2 ¡⊑[g] L1 → ypr h g L1 T1 L2 T1
+(* type judgement *)
+inductive TJ: lenv → predicate term ≝
+| tj_weak : ∀L,V,T1,T2. TJ L V → TJ L T1 → ⇧[0,1] T1 ≡ T2 → TJ (L Λ V) T2
+| tj_empty: TJ (⋆) 𝔼
+| tj_one  : TJ (⋆) 𝕆
+| tj_sum  : ∀G,A,B. TJ G A → TJ G B → TJ G (A ⊕ B)
 .
 
-interpretation
-   "'big tree' parallel reduction (closure)"
-   'BTPRed h g L1 T1 L2 T2 = (ypr h g L1 T1 L2 T2).
-
-(* Basic properties *********************************************************)
-
-lemma ypr_refl: ∀h,g. bi_reflexive … (ypr h g).
-/2 width=1/ qed.
+(* element judgement *)
+inductive EJ: lenv → relation term ≝
+| tj_erec: ∀L,V,T1,T2. 
+           EJ L V 𝔼 → TJ (L Λ 𝔼) T1 → L Δ V ⊢ T1 [0,1] ≡ T2 → EJ L 𝕖𝕣[V] T2
+| tj_tt  : EJ (⋆) 𝕥 𝕆
+.

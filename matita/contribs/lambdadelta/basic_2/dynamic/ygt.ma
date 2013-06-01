@@ -65,8 +65,9 @@ lemma yprs_ygt_trans: ∀h,g,L1,L,T1,T. h ⊢ ⦃L1, T1⦄ ≥[g] ⦃L, T⦄ →
 /3 width=4 by ygt_strap2/
 qed-.
 
-lemma fw_ygt: ∀h,g,L1,L2,T1,T2. ♯{L2, T2} < ♯{L1, T1} → h ⊢ ⦃L1, T1⦄ >[g] ⦃L2, T2⦄.
-/3 width=1/ qed.
+lemma fsupp_ygt: ∀h,g,L1,L2,T1,T2. ⦃L1, T1⦄ ⊃+ ⦃L2, T2⦄ → h ⊢ ⦃L1, T1⦄ >[g] ⦃L2, T2⦄.
+#h #g #L1 #L2 #T1 #T2 #H @(fsupp_ind … L2 T2 H) -L2 -T2 /3 width=1/ /3 width=4/
+qed.
 
 lemma cprs_ygt: ∀h,g,L,T1,T2. L ⊢ T1 ➡* T2 → (T1 = T2 → ⊥) →
                 h ⊢ ⦃L, T1⦄ >[g] ⦃L, T2⦄.

@@ -52,6 +52,33 @@ lemma fsupp_strap2: ∀L1,L,L2,T1,T,T2. ⦃L1, T1⦄ ⊃ ⦃L, T⦄ → ⦃L, T�
                     ⦃L1, T1⦄ ⊃+ ⦃L2, T2⦄.
 /2 width=4/ qed.
 
+lemma fsupp_lref: ∀I,K,V,i,L. ⇩[0, i] L ≡ K.ⓑ{I}V → ⦃L, #i⦄ ⊃+ ⦃K, V⦄.
+/3 width=2/ qed.
+
+lemma fsupp_pair_sn: ∀I,L,V,T. ⦃L, ②{I}V.T⦄ ⊃+ ⦃L, V⦄.
+/2 width=1/ qed.
+
+lemma fsupp_bind_dx: ∀a,K,I,V,T. ⦃K, ⓑ{a,I}V.T⦄ ⊃+ ⦃K.ⓑ{I}V, T⦄.
+/2 width=1/ qed.
+
+lemma fsupp_flat_dx: ∀I,L,V,T. ⦃L, ⓕ{I}V.T⦄ ⊃+ ⦃L, T⦄.
+/2 width=1/ qed.
+
+lemma fsupp_flat_dx_pair_sn: ∀I1,I2,L,V1,V2,T. ⦃L, ⓕ{I1}V1.②{I2}V2.T⦄ ⊃+ ⦃L, V2⦄.
+/2 width=4/ qed.
+
+lemma fsupp_bind_dx_flat_dx: ∀a,I1,I2,L,V1,V2,T. ⦃L, ⓑ{a,I1}V1.ⓕ{I2}V2.T⦄ ⊃+ ⦃L.ⓑ{I1}V1, T⦄.
+/2 width=4/ qed.
+
+lemma fsupp_flat_dx_bind_dx: ∀a,I1,I2,L,V1,V2,T. ⦃L, ⓕ{I1}V1.ⓑ{a,I2}V2.T⦄ ⊃+ ⦃L.ⓑ{I2}V2, T⦄.
+/2 width=4/ qed.
+(*
+lemma fsupp_append_sn: ∀I,L,K,V,T. ⦃L.ⓑ{I}V@@K, T⦄ ⊃+ ⦃L, V⦄.
+#I #L #K #V *
+[ * #i
+normalize /3 width=1 by monotonic_lt_plus_l, monotonic_le_plus_r/ (**) (* auto too slow without trace *)
+qed.
+*)
 (* Basic forward lemmas *****************************************************)
 
 lemma fsupp_fwd_cw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⊃+ ⦃L2, T2⦄ → ♯{L2, T2} < ♯{L1, T1}.

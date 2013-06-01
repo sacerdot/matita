@@ -31,7 +31,7 @@ fact snv_ssta_aux: ∀h,g,L0,T0.
   elim (snv_inv_lref … H1) -H1 #I #K1 #V1 #HLK1 #HV1
   elim (ssta_inv_lref1 … H2) -H2 * #K0 #V0 #W1 [| #l ] #H #HVW1 #HX [| #_ ]
   lapply (ldrop_mono … H … HLK1) -H #H destruct
-  lapply (ldrop_pair2_fwd_fw … HLK1 (#i)) #H
+  lapply (fsupp_lref … HLK1) #H
   lapply (ldrop_fwd_ldrop2 … HLK1) -HLK1 /4 width=7/
 | #p #HL0 #HT0 #H1 #X #l #H2 destruct -IH3 -IH2 -IH1
   elim (snv_inv_gref … H1)

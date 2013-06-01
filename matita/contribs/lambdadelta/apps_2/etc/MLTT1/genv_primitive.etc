@@ -1,0 +1,246 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "apps_2/MLTT1_1/syntax.ma".
+
+(* PRIMITIVE GLOBAL CONSTANTS  **********************************************)
+
+(* symbolic names for referring the primitive global constants *)
+
+definition empty ≝ 0. (* empty type *)
+
+definition erec ≝ 1. (* empty eliminator *)
+
+definition one ≝ 2. (* unit type *)
+
+definition tt ≝ 3. (* unit constructor *)
+
+definition orec ≝ 4. (* unit eliminator *)
+
+definition nat ≝ 5. (* natural numbers type *)
+
+definition zero ≝ 6. (* natural numbers constructor: zero *)
+
+definition succ ≝ 7. (* natural numbers constructor: successor *)
+
+definition nrec ≝ 8. (* natural numbers eliminator *)
+
+definition ii ≝ 9. (* intensional identity type *)
+
+definition refl ≝ 10. (* intensional identity constructor *)
+
+definition irec ≝ 11. (* intensional identity eliminator *)
+
+definition sum ≝ 12. (* disjoint sum type *)
+
+definition sn ≝ 13. (* disjoint sum constructor: left *)
+
+definition dx ≝ 14. (* disjoint sum constructor: right *)
+
+definition srec ≝ 15. (* disjoint sum eliminator *)
+
+definition prod ≝ 16. (* dependent product type *)
+
+definition pair ≝ 17. (* dependent product constructor *)
+
+definition prec ≝ 18. (* dependent product eliminator *)
+
+definition fun ≝ 19. (* dependent function type *)
+
+definition abst ≝ 20. (* dependent function constructor *)
+
+definition ap ≝ 21. (* dependent function eliminator *)
+
+definition univ ≝ 22. (* first universe type *)
+
+definition ue ≝ 23. (* first universe constructor: empty *)
+
+definition uo ≝ 24. (* first universe constructor: one *)
+
+definition un ≝ 25. (* first universe constructor: nat *)
+
+definition ui ≝ 26. (* first universe constructor: ii *)
+
+definition us ≝ 27. (* first universe constructor: sum *)
+
+definition up ≝ 28. (* first universe constructor: union *)
+
+definition uf ≝ 29. (* first universe constructor: fun *)
+
+definition urec ≝ 30. (* first universe eliminator *)
+
+definition primitives ≝ 31. (* number of primitive constants *)
+
+(* primitive global environment *)
+
+definition Gp: lenv ≝
+   ⋆
+   Λ □ (* empty *)
+   Λ □ ⤏ □ (* erec *)
+   Λ □ (* one *)
+   Λ □ (* tt *)
+   Λ □ ⤏ □ ⤏ □ (* orec *)
+   Λ □ (* nat *)
+   Λ □ (* zero *)
+   Λ □ ⤏ □ (* succ *)
+   Λ □ ⤏ □ ⤏ (□ ⤏ □ ⤏ □) ⤏ □ (* nrec *)
+   Λ □ ⤏ □ ⤏ □ ⤏ □ (* ii *)
+   Λ □ ⤏ □ (* refl *)
+   Λ □ ⤏ (□ ⤏ □) ⤏ □ (* irec *)
+   Λ □ ⤏ □ ⤏ □ (* sum *)   
+   Λ □ ⤏ □ (* sn *)
+   Λ □ ⤏ □ (* dx *)
+   Λ □ ⤏ (□ ⤏  □) ⤏ (□ ⤏ □) ⤏ □ (* srec *)
+   Λ □ ⤏ (□ ⤏ □) ⤏ □ (* prod *)
+   Λ □ ⤏ □ ⤏ □ (* pair *)
+   Λ □ ⤏ (□ ⤏ □ ⤏ □) ⤏ □ (* prec *)
+   Λ □ ⤏ (□ ⤏ □) ⤏ □ (* fun *)
+   Λ (□ ⤏ □) ⤏ □ (* abst *)
+   Λ □ ⤏ □ ⤏ □ (* ap *)
+   Λ □ (* univ *)
+   Λ □ (* ue *)
+   Λ □ (* uo *)
+   Λ □ (* un *)
+   Λ □ ⤏ □ ⤏ □ ⤏ □ (* ui *)
+   Λ □ ⤏ □ ⤏ □ (* us *)
+   Λ □ ⤏ (□ ⤏ □) ⤏ □ (* up *)
+   Λ □ ⤏ (□ ⤏ □) ⤏ □ (* uf *)
+   Λ □ ⤏ □ (* urec *)
+.
+
+(* notation for applying the primitive constants *)
+
+interpretation
+  "empty type (MLTT)"
+  'Empty = (TAtom (GRef empty)).
+
+interpretation
+  "empty eliminator (MLTT)"
+  'ERec T = (TPair Appl T (TAtom (GRef erec))).
+
+interpretation
+  "unit type (MLTT)"
+  'One = (TAtom (GRef one)).
+
+interpretation
+  "unit constructor (MLTT)"
+  'TT = (TAtom (GRef tt)).
+
+interpretation
+  "unit eliminator (MLTT)"
+  'SRec T1 T2 = (TPair Appl T2 (TPair Appl T1 (TAtom (GRef srec)))).
+
+interpretation
+  "natural numbers type (MLTT)"
+  'Nat = (TAtom (GRef nat)).
+
+interpretation
+  "natural numbers constructor: zero (MLTT)"
+  'Zero = (TAtom (GRef zero)).
+
+interpretation
+  "natural numbers constructor: successor (MLTT)"
+  'Succ T = (TPair Appl T (TAtom (GRef succ))).
+
+interpretation
+  "natural numbers eliminator (MLTT)"
+  'NRec T1 T2 T3 = (TPair Appl T3 (TPair Appl T2 (TPair Appl T1 (TAtom (GRef nrec))))).
+
+interpretation
+  "intensional identity type (MLTT)"
+  'II T1 T2 T3 = (TPair Appl T3 (TPair Appl T2 (TPair Appl T1 (TAtom (GRef ii))))).
+
+interpretation
+  "intensional identity constructor (MLTT)"
+  'Refl T = (TPair Appl T (TAtom (GRef refl))).
+
+interpretation
+  "intensional identity eliminator (MLTT)"
+  'IRec T1 T2 = (TPair Appl T2 (TPair Appl T1 (TAtom (GRef irec)))).
+
+interpretation
+  "sum type (MLTT)"
+  'Sum T1 T2 = (TPair Appl T2 (TPair Appl T1 (TAtom (GRef sum)))).
+
+interpretation
+  "sum constructorL left (MLTT)"
+  'Sn T = (TPair Appl T (TAtom (GRef sn))).
+
+interpretation
+  "sum constructor: right (MLTT)"
+  'Dx T = (TPair Appl T (TAtom (GRef dx))).
+
+interpretation
+  "sum eliminator (MLTT)"
+  'SRec T1 T2 T3 = (TPair Appl T3 (TPair Appl T2 (TPair Appl T1 (TAtom (GRef srec))))).
+
+interpretation
+  "product type (MLTT)"
+  'Prod T1 T2 = (TPair Appl T2 (TPair Appl T1 (TAtom (GRef prod)))).
+
+interpretation
+  "product constructor (MLTT)"
+  'Pair T1 T2 = (TPair Appl T2 (TPair Appl T1 (TAtom (GRef pair)))).
+
+interpretation
+  "product eliminator (MLTT)"
+  'PRec T1 T2 = (TPair Appl T2 (TPair Appl T1 (TAtom (GRef prec)))).
+
+interpretation
+  "function type (MLTT)"
+  'Fun T1 T2 = (TPair Appl T2 (TPair Appl T1 (TAtom (GRef fun)))).
+
+interpretation
+  "function constructor (MLTT)"
+  'Abst T = (TPair Appl T (TAtom (GRef abst))).
+
+interpretation
+  "function eliminator (MLTT)"
+  'AP T1 T2 = (TPair Appl T2 (TPair Appl T1 (TAtom (GRef ap)))).
+
+interpretation
+  "first universe type (MLTT)"
+  'Univ = (TAtom (GRef univ)).
+
+interpretation
+  "first universe constructor: empty (MLTT)"
+  'UE = (TAtom (GRef ue)).
+
+interpretation
+  "first universe constructor: one (MLTT)"
+  'UO = (TAtom (GRef us)).
+
+interpretation
+  "first universe constructor: nat (MLTT)"
+  'UN = (TAtom (GRef un)).
+
+interpretation
+  "first universe constructor: ii (MLTT)"
+  'UI T1 T2 T3 = (TPair Appl T3 (TPair Appl T2 (TPair Appl T1 (TAtom (GRef ui))))).
+
+interpretation
+  "first universe constructor: sum (MLTT)"
+  'US T1 T2 = (TPair Appl T2 (TPair Appl T1 (TAtom (GRef us)))).
+
+interpretation
+  "first universe constructor: product (MLTT)"
+  'UP T1 T2 = (TPair Appl T2 (TPair Appl T1 (TAtom (GRef up)))).
+
+interpretation
+  "first universe constructor: function (MLTT)"
+  'UF T1 T2 = (TPair Appl T2 (TPair Appl T1 (TAtom (GRef uf)))).
+
+interpretation
+  "first universe eliminator (MLTT)"
+  'URec T = (TPair Appl T (TAtom (GRef urec))).

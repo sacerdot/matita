@@ -12,25 +12,34 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/fsup.ma".
-include "basic_2/reduction/lpr.ma".
-include "basic_2/dynamic/lsubsv.ma".
+(* MARTIN-LÖF TYPE THEORY WITH ONE UNIVERSE (MLTT1): MATITA SOURCE FILES
+ * Specification started: 2011 December 12
+ * - Patience on me to gain peace and perfection! -
+ *)
 
-(* "BIG TREE" PARALLEL REDUCTION FOR CLOSURES *******************************)
+include "basic_2/grammar/lenv.ma".
+include "apps_2/MLTT1_1/notation.ma".
 
-inductive ypr (h) (g) (L1) (T1): relation2 lenv term ≝
-| ypr_fsup  : ∀L2,T2. ⦃L1, T1⦄ ⊃ ⦃L2, T2⦄ → ypr h g L1 T1 L2 T2
-| ypr_lpr   : ∀L2. L1 ⊢ ➡ L2 → ypr h g L1 T1 L2 T1
-| ypr_cpr   : ∀T2. L1 ⊢ T1 ➡ T2 → ypr h g L1 T1 L1 T2
-| ypr_ssta  : ∀T2,l. ⦃h, L1⦄ ⊢ T1 •[g] ⦃l+1, T2⦄ → ypr h g L1 T1 L1 T2
-| ypr_lsubsv: ∀L2. h ⊢ L2 ¡⊑[g] L1 → ypr h g L1 T1 L2 T1
-.
+(* EXTENDED NOTATION ********************************************************)
+
+definition sort ≝ 0.
 
 interpretation
-   "'big tree' parallel reduction (closure)"
-   'BTPRed h g L1 T1 L2 T2 = (ypr h g L1 T1 L2 T2).
+  "global definition"
+  'LAbbr L T = (LPair L Abbr T).
 
-(* Basic properties *********************************************************)
+interpretation
+  "global declaration"
+  'LAbst L T = (LPair L Abst T).
 
-lemma ypr_refl: ∀h,g. bi_reflexive … (ypr h g).
-/2 width=1/ qed.
+interpretation
+  "atom (arity)"
+  'Box = (TAtom (Sort sort)).
+
+interpretation
+  "function (arity)"
+  'TImp T1 T2 = (TPair Abst T1 T2).
+
+interpretation
+  "function (term)"
+  'TAbst T = (TPair Abst (TAtom (Sort sort)) T).

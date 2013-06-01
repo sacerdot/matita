@@ -33,12 +33,12 @@ fact snv_cpr_lpr_aux: ∀h,g,L0,T0.
   elim (snv_inv_lref … H1) -H1 #I #K1 #V1 #HLK1 #HV1
   elim (lpr_ldrop_conf … HLK1 … HL12) -HL12 #X #H #HLK2
   elim (lpr_inv_pair1 … H) -H #K2 #V2 #HK12 #HV12 #H destruct
-  lapply (ldrop_pair2_fwd_fw … HLK1 (#i)) #HKL
+  lapply (fsupp_lref … HLK1) #HKL
   elim (cpr_inv_lref1 … H2) -H2
   [ #H destruct -HLK1
     lapply (IH1 … HV12 … HK12) -IH1 -HV12 -HK12 // -HV1 [ /2 width=1/ ] -HKL /2 width=5/
   | * #K0 #V0 #W0 #H #HVW0 #W0 -HV12
-    lapply (ldrop_mono … H … HLK1) -HLK1 -H #H destruct 
+    lapply (ldrop_mono … H … HLK1) -HLK1 -H #H destruct
     lapply (ldrop_fwd_ldrop2 … HLK2) -HLK2 #HLK2
     lapply (IH1 … HVW0 … HK12) -IH1 -HVW0 -HK12 // -HV1 [ /2 width=1/ ] -HKL /3 width=7/
   ]
@@ -80,17 +80,17 @@ fact snv_cpr_lpr_aux: ∀h,g,L0,T0.
     lapply (IH1 … HT20 … HT202 … (L2.ⓛW20) ?) [1,2: /2 width=1/ ] -HT20 #HT2
     lapply (IH2 … HVW2) //
     [ @(ygt_yprs_trans … L1 L1 … V1) (**) (* auto /4 width=5/ is a bit slow even with trace *)
-      [ /2 width=1 by fw_ygt/
+      [ /2 width=1 by fsupp_ygt/
       | /3 width=1 by cprs_lpr_yprs, cpr_cprs/
       ]
     ] #HW2
     elim (snv_fwd_ssta … HW20) #l0 #U20 #HWU20
     elim (ssta_fwd_correct … HVW2) <minus_plus_m_m #U2 #HWU2
     elim (ssta_cpcs_lpr_aux … IH1 IH3 … HWU2 … HWU20 … HW220 … L2) // -IH3
-    [2: /4 width=4 by ygt_yprs_trans, fw_ygt, ypr_yprs, ypr_lpr/
+    [2: /4 width=4 by ygt_yprs_trans, fsupp_ygt, ypr_yprs, ypr_lpr/
     |3: @(ygt_yprs_trans … L1 L2 … V2) (**) (* auto not tried *)
         [ @(ygt_yprs_trans … L1 L1 … V1)
-          [ /2 width=1 by fw_ygt/
+          [ /2 width=1 by fsupp_ygt/
           | /3 width=1 by cprs_lpr_yprs, cpr_cprs/
           ]
         | /3 width=2 by ypr_ssta, ypr_yprs/
@@ -99,7 +99,7 @@ fact snv_cpr_lpr_aux: ∀h,g,L0,T0.
     lapply (IH4 … HT2 (L2.ⓓV2) ?)
     [ /2 width=6/
     | @(ygt_yprs_trans … (L1.ⓛW20) … T2) (**) (* auto /5 width=5/ is too slow even with trace timeout=35 *)
-      [ /4 width=4 by ygt_yprs_trans, fw_ygt, ypr_yprs, ypr_cpr/
+      [ /4 width=4 by ygt_yprs_trans, fsupp_ygt, ypr_yprs, ypr_cpr/
       | /4 width=1 by ypr_yprs, ypr_lpr, lpr_pair/
       ]
     ] -L1 -V1 -W2 -T20 -U20 -W20 -l0 /2 width=1/
