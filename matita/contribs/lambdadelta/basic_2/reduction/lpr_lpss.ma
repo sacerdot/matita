@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/grammar/lpx_sn_lpx_sn.ma".
+include "basic_2/substitution/fsupp.ma".
 include "basic_2/substitution/lpss_ldrop.ma".
 include "basic_2/reduction/lpr_ldrop.ma".
 
@@ -26,7 +27,7 @@ fact cpr_cpss_conf_lpr_lpss_atom_atom:
 
 fact cpr_cpss_conf_lpr_lpss_atom_delta:
    ∀L0,i. (
-      ∀L,T.♯{L, T} < ♯{L0, #i} →
+      ∀L,T. ⦃L0, #i⦄ ⊃+ ⦃L, T⦄ →
       ∀T1. L ⊢ T ➡ T1 → ∀T2. L ⊢ T ▶* T2 →
       ∀L1. L ⊢ ➡ L1 → ∀L2. L ⊢ ▶* L2 →
       ∃∃T0. L1 ⊢ T1 ▶* T0 & L2 ⊢ T2 ➡ T0
@@ -41,7 +42,7 @@ elim (lpr_inv_pair1 … H1) -H1 #K1 #V1 #HK01 #HV01 #H destruct
 elim (lpss_ldrop_conf … HLK0 … HL02) -HL02 #X2 #H2 #HLK2
 elim (lpss_inv_pair1 … H2) -H2 #K2 #W2 #HK02 #_ #H destruct
 lapply (ldrop_fwd_ldrop2 … HLK2) -W2 #HLK2
-lapply (ldrop_pair2_fwd_fw … HLK0 (#i)) -HLK0 #HLK0
+lapply (fsupp_lref … HLK0) -HLK0 #HLK0
 elim (IH … HLK0 … HV01 … HV02 … HK01 … HK02) -L0 -K0 -V0 #V #HV1 #HV2
 elim (lift_total V 0 (i+1)) #T #HVT
 lapply (cpr_lift … HV2 … HLK2 … HVT2 … HVT) -K2 -V2 /3 width=6/
@@ -49,7 +50,7 @@ qed-.
 
 fact cpr_cpss_conf_lpr_lpss_delta_atom:
    ∀L0,i. (
-      ∀L,T.♯{L, T} < ♯{L0, #i} →
+      ∀L,T.⦃L0, #i⦄ ⊃+ ⦃L, T⦄ →
       ∀T1. L ⊢ T ➡ T1 → ∀T2. L ⊢ T ▶* T2 →
       ∀L1. L ⊢ ➡ L1 → ∀L2. L ⊢ ▶* L2 →
       ∃∃T0. L1 ⊢ T1 ▶* T0 & L2 ⊢ T2 ➡ T0
@@ -64,7 +65,7 @@ elim (lpss_inv_pair1 … H2) -H2 #K2 #V2 #HK02 #HV02 #H destruct
 elim (lpr_ldrop_conf … HLK0 … HL01) -HL01 #X1 #H1 #HLK1
 elim (lpr_inv_pair1 … H1) -H1 #K1 #W1 #HK01 #_ #H destruct
 lapply (ldrop_fwd_ldrop2 … HLK1) -W1 #HLK1
-lapply (ldrop_pair2_fwd_fw … HLK0 (#i)) -HLK0 #HLK0
+lapply (fsupp_lref … HLK0) -HLK0 #HLK0
 elim (IH … HLK0 … HV01 … HV02 … HK01 … HK02) -L0 -K0 -V0 #V #HV1 #HV2
 elim (lift_total V 0 (i+1)) #T #HVT
 lapply (cpss_lift … HV1 … HLK1 … HVT1 … HVT) -K1 -V1 /3 width=9/
@@ -72,7 +73,7 @@ qed-.
 
 fact cpr_cpss_conf_lpr_lpss_delta_delta:
    ∀L0,i. (
-      ∀L,T.♯{L, T} < ♯{L0, #i} →
+      ∀L,T. ⦃L0, #i⦄ ⊃+ ⦃L, T⦄ →
       ∀T1. L ⊢ T ➡ T1 → ∀T2. L ⊢ T ▶* T2 →
       ∀L1. L ⊢ ➡ L1 → ∀L2. L ⊢ ▶* L2 →
       ∃∃T0. L1 ⊢ T1 ▶* T0 & L2 ⊢ T2 ➡ T0
@@ -92,7 +93,7 @@ lapply (ldrop_fwd_ldrop2 … HLK1) -W1 #HLK1
 elim (lpss_ldrop_conf … HLK0 … HL02) -HL02 #X2 #H2 #HLK2
 elim (lpss_inv_pair1 … H2) -H2 #K2 #W2 #HK02 #_ #H destruct
 lapply (ldrop_fwd_ldrop2 … HLK2) -W2 #HLK2
-lapply (ldrop_pair2_fwd_fw … HLK0 (#i)) -HLK0 #HLK0
+lapply (fsupp_lref … HLK0) -HLK0 #HLK0
 elim (IH … HLK0 … HV01 … HV02 … HK01 … HK02) -L0 -K0 -V0 #V #HV1 #HV2
 elim (lift_total V 0 (i+1)) #T #HVT
 lapply (cpss_lift … HV1 … HLK1 … HVT1 … HVT) -K1 -V1
@@ -101,7 +102,7 @@ qed-.
 
 fact cpr_cpss_conf_lpr_lpss_bind_bind:
    ∀a,I,L0,V0,T0. (
-      ∀L,T.♯{L,T} < ♯{L0,ⓑ{a,I}V0.T0} →
+      ∀L,T. ⦃L0,ⓑ{a,I}V0.T0⦄ ⊃+ ⦃L, T⦄ →
       ∀T1. L ⊢ T ➡ T1 → ∀T2. L ⊢ T ▶* T2 →
       ∀L1. L ⊢ ➡ L1 → ∀L2. L ⊢ ▶* L2 →
       ∃∃T0. L1 ⊢ T1 ▶* T0 & L2 ⊢ T2 ➡ T0
@@ -118,7 +119,7 @@ qed-.
 
 fact cpr_cpss_conf_lpr_lpss_bind_zeta:
    ∀L0,V0,T0. (
-      ∀L,T.♯{L,T} < ♯{L0,+ⓓV0.T0} →
+      ∀L,T. ⦃L0,+ⓓV0.T0⦄ ⊃+ ⦃L, T⦄ →
       ∀T1. L ⊢ T ➡ T1 → ∀T2. L ⊢ T ▶* T2 →
       ∀L1. L ⊢ ➡ L1 → ∀L2. L ⊢ ▶* L2 →
       ∃∃T0. L1 ⊢ T1 ▶* T0 & L2 ⊢ T2 ➡ T0
@@ -135,7 +136,7 @@ qed-.
 
 fact cpr_cpss_conf_lpr_lpss_flat_flat:
    ∀I,L0,V0,T0. (
-      ∀L,T.♯{L,T} < ♯{L0,ⓕ{I}V0.T0} →
+      ∀L,T. ⦃L0,ⓕ{I}V0.T0⦄ ⊃+ ⦃L, T⦄ →
       ∀T1. L ⊢ T ➡ T1 → ∀T2. L ⊢ T ▶* T2 →
       ∀L1. L ⊢ ➡ L1 → ∀L2. L ⊢ ▶* L2 →
       ∃∃T0. L1 ⊢ T1 ▶* T0 & L2 ⊢ T2 ➡ T0
@@ -152,7 +153,7 @@ qed-.
 
 fact cpr_cpss_conf_lpr_lpss_flat_tau:
    ∀L0,V0,T0. (
-      ∀L,T.♯{L,T} < ♯{L0,ⓝV0.T0} →
+      ∀L,T. ⦃L0,ⓝV0.T0⦄ ⊃+ ⦃L, T⦄ →
       ∀T1. L ⊢ T ➡ T1 → ∀T2. L ⊢ T ▶* T2 →
       ∀L1. L ⊢ ➡ L1 → ∀L2. L ⊢ ▶* L2 →
       ∃∃T0. L1 ⊢ T1 ▶* T0 & L2 ⊢ T2 ➡ T0
@@ -167,7 +168,7 @@ qed-.
 
 fact cpr_cpss_conf_lpr_lpss_flat_beta:
    ∀a,L0,V0,W0,T0. (
-      ∀L,T.♯{L,T} < ♯{L0,ⓐV0.ⓛ{a}W0.T0} →
+      ∀L,T. ⦃L0,ⓐV0.ⓛ{a}W0.T0⦄ ⊃+ ⦃L, T⦄ →
       ∀T1. L ⊢ T ➡ T1 → ∀T2. L ⊢ T ▶* T2 →
       ∀L1. L ⊢ ➡ L1 → ∀L2. L ⊢ ▶* L2 →
       ∃∃T0. L1 ⊢ T1 ▶* T0 & L2 ⊢ T2 ➡ T0
@@ -186,7 +187,7 @@ qed-.
 
 fact cpr_cpss_conf_lpr_lpss_flat_theta:
    ∀a,L0,V0,W0,T0. (
-      ∀L,T.♯{L,T} < ♯{L0,ⓐV0.ⓓ{a}W0.T0} →
+      ∀L,T. ⦃L0,ⓐV0.ⓓ{a}W0.T0⦄ ⊃+ ⦃L, T⦄ →
       ∀T1. L ⊢ T ➡ T1 → ∀T2. L ⊢ T ▶* T2 →
       ∀L1. L ⊢ ➡ L1 → ∀L2. L ⊢ ▶* L2 →
       ∃∃T0. L1 ⊢ T1 ▶* T0 & L2 ⊢ T2 ➡ T0
@@ -208,8 +209,8 @@ elim (IH … HT01 … HT02 (L1.ⓓW1) … (L2.ⓓW2)) /2 width=1/ -L0 -V0 -W0 -T
 qed-.
 
 lemma cpr_cpss_conf_lpr_lpss: lpx_sn_confluent cpr cpss.
-#L0 #T0 @(f2_ind … fw … L0 T0) -L0 -T0 #n #IH #L0 * [|*]
-[ #I0 #Hn #T1 #H1 #T2 #H2 #L1 #HL01 #L2 #HL02 destruct
+#L0 #T0 @(fsupp_wf_ind … L0 T0) -L0 -T0 #L #T #IH #L0 * [|*]
+[ #I0 #HL #HT #T1 #H1 #T2 #H2 #L1 #HL01 #L2 #HL02 destruct
   elim (cpr_inv_atom1 … H1) -H1
   elim (cpss_inv_atom1 … H2) -H2
   [ #H2 #H1 destruct
@@ -222,7 +223,7 @@ lemma cpr_cpss_conf_lpr_lpss: lpx_sn_confluent cpr cpss.
     * #K0 #V0 #V1 #i #HLK0 #HV01 #HVT1 #H1 destruct
     /3 width=17 by cpr_cpss_conf_lpr_lpss_delta_delta/
   ]
-| #a #I #V0 #T0 #Hn #X1 #H1 #X2 #H2 #L1 #HL01 #L2 #HL02 destruct
+| #a #I #V0 #T0 #HL #HT #X1 #H1 #X2 #H2 #L1 #HL01 #L2 #HL02 destruct
   elim (cpss_inv_bind1 … H2) -H2 #V2 #T2 #HV02 #HT02 #H2
   elim (cpr_inv_bind1 … H1) -H1 *
   [ #V1 #T1 #HV01 #HT01 #H1
@@ -231,7 +232,7 @@ lemma cpr_cpss_conf_lpr_lpss: lpx_sn_confluent cpr cpss.
   [ /3 width=10 by cpr_cpss_conf_lpr_lpss_bind_bind/
   | /3 width=11 by cpr_cpss_conf_lpr_lpss_bind_zeta/
   ]
-| #I #V0 #T0 #Hn #X1 #H1 #X2 #H2 #L1 #HL01 #L2 #HL02 destruct
+| #I #V0 #T0 #HL #HT #X1 #H1 #X2 #H2 #L1 #HL01 #L2 #HL02 destruct
   elim (cpss_inv_flat1 … H2) -H2 #V2 #T2 #HV02 #HT02 #H2
   elim (cpr_inv_flat1 … H1) -H1 *
   [ #V1 #T1 #HV01 #HT01 #H1

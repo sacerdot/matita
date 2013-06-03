@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/grammar/cl_shift.ma".
 include "basic_2/relocation/ldrop_append.ma".
 include "basic_2/substitution/lsubr.ma".
 

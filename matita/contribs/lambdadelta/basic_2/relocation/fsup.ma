@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/grammar/cl_weight.ma".
 include "basic_2/relocation/ldrop.ma".
 
 (* SUPCLOSURE ***************************************************************)
@@ -46,7 +47,7 @@ qed.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma fsup_fwd_cw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⊃ ⦃L2, T2⦄ → ♯{L2, T2} < ♯{L1, T1}.
+lemma fsup_fwd_fw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⊃ ⦃L2, T2⦄ → ♯{L2, T2} < ♯{L1, T1}.
 #L1 #L2 #T1 #T2 #H elim H -L1 -L2 -T1 -T2 //
 #L1 #K1 #K2 #T1 #T2 #U1 #d #e #HLK1 #HTU1 #_ #IHT12
 lapply (ldrop_fwd_lw … HLK1) -HLK1 #HLK1

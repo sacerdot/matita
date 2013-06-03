@@ -83,7 +83,8 @@ qed.
 
 (* Basic_1: was: sn3_pr3_trans *)
 lemma csn_cprs_trans: ∀L,T1. L ⊢ ⬊* T1 → ∀T2. L ⊢ T1 ➡* T2 → L ⊢ ⬊* T2.
-/4 width=3/ qed.
+#L #T1 #HT1 #T2 #H @(cprs_ind … H) -T2 // /2 width=3 by csn_cpr_trans/
+qed-.
 
 (* Main eliminators *********************************************************)
 

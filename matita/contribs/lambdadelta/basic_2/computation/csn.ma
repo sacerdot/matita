@@ -51,7 +51,7 @@ lemma csn_cpr_trans: ∀L,T1. L ⊢ ⬊* T1 → ∀T2. L ⊢ T1 ➡ T2 → L ⊢
 elim (term_eq_dec T1 T2) #HT12
 [ -IHT1 -HLT12 destruct /3 width=1/
 | -HT1 -HT2 /3 width=4/
-qed.
+qed-.
 
 (* Basic_1: was: sn3_cast *)
 lemma csn_cast: ∀L,W. L ⊢ ⬊* W → ∀T. L ⊢ ⬊* T → L ⊢ ⬊* ⓝW. T.
@@ -60,10 +60,10 @@ lemma csn_cast: ∀L,W. L ⊢ ⬊* W → ∀T. L ⊢ ⬊* T → L ⊢ ⬊* ⓝW.
 elim (cpr_inv_cast1 … H1) -H1
 [ * #W0 #T0 #HLW0 #HLT0 #H destruct
   elim (eq_false_inv_tpair_sn … H2) -H2
-  [ /3 width=3/
+  [ /3 width=3 by csn_cpr_trans/
   | -HLW0 * #H destruct /3 width=1/
   ]
-| /3 width=3/
+| /3 width=3 by csn_cpr_trans/
 ]
 qed.
 

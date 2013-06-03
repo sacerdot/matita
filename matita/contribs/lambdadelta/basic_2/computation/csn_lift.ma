@@ -63,7 +63,7 @@ lemma csn_abst: ∀a,L,W. L ⊢ ⬊* W → ∀I,V,T. L. ⓑ{I} V ⊢ ⬊* T → 
 elim (cpr_fwd_abst1 … H1 I V) -H1
 #W0 #T0 #HLW0 #HLT0 #H destruct
 elim (eq_false_inv_tpair_sn … H2) -H2
-[ /3 width=5/
+[ /3 width=5 by csn_cpr_trans/
 | -HLW0 * #H destruct /3 width=1/
 ]
 qed.

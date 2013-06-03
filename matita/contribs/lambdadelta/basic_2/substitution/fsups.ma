@@ -63,17 +63,12 @@ lemma fsups_fsupp_fsupp: ∀L1,L,L2,T1,T,T2. ⦃L1, T1⦄ ⊃* ⦃L, T⦄ →
 lemma fsupp_fsups_fsupp: ∀L1,L,L2,T1,T,T2. ⦃L1, T1⦄ ⊃+ ⦃L, T⦄ →
                          ⦃L, T⦄ ⊃* ⦃L2, T2⦄ → ⦃L1, T1⦄ ⊃+ ⦃L2, T2⦄.
 /2 width=4/ qed.
-(*
-lemma fsups_pippo: ∀L,T. ⦃L, T⦄ ⊃+ ⦃L, #0⦄.
-#L * *
-[ #i 
-*)
 
 (* Basic forward lemmas *****************************************************)
 
-lemma fsups_fwd_cw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⊃* ⦃L2, T2⦄ → ♯{L2, T2} ≤ ♯{L1, T1}.
+lemma fsups_fwd_fw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⊃* ⦃L2, T2⦄ → ♯{L2, T2} ≤ ♯{L1, T1}.
 #L1 #L2 #T1 #T2 #H @(fsups_ind … H) -L2 -T2 //
-/4 width=3 by fsup_fwd_cw, lt_to_le_to_lt, lt_to_le/ (**) (* slow even with trace *)
+/4 width=3 by fsup_fwd_fw, lt_to_le_to_lt, lt_to_le/ (**) (* slow even with trace *)
 qed-.
 (*
 (* Advanced inversion lemmas on plus-iterated supclosure ********************)

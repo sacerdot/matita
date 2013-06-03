@@ -21,24 +21,6 @@ definition fsupp: bi_relation lenv term ≝ bi_TC … fsup.
 interpretation "plus-iterated structural successor (closure)"
    'SupTermPlus L1 T1 L2 T2 = (fsupp L1 T1 L2 T2).
 
-(* Basic eliminators ********************************************************)
-
-lemma fsupp_ind: ∀L1,T1. ∀R:relation2 lenv term.
-                 (∀L2,T2. ⦃L1, T1⦄ ⊃ ⦃L2, T2⦄ → R L2 T2) →
-                 (∀L,T,L2,T2. ⦃L1, T1⦄ ⊃+ ⦃L, T⦄ → ⦃L, T⦄ ⊃ ⦃L2, T2⦄ → R L T → R L2 T2) →
-                 ∀L2,T2. ⦃L1, T1⦄ ⊃+ ⦃L2, T2⦄ → R L2 T2.
-#L1 #T1 #R #IH1 #IH2 #L2 #T2 #H
-@(bi_TC_ind … IH1 IH2 ? ? H)
-qed-.
-
-lemma fsupp_ind_dx: ∀L2,T2. ∀R:relation2 lenv term.
-                    (∀L1,T1. ⦃L1, T1⦄ ⊃ ⦃L2, T2⦄ → R L1 T1) →
-                    (∀L1,L,T1,T. ⦃L1, T1⦄ ⊃ ⦃L, T⦄ → ⦃L, T⦄ ⊃+ ⦃L2, T2⦄ → R L T → R L1 T1) →
-                    ∀L1,T1. ⦃L1, T1⦄ ⊃+ ⦃L2, T2⦄ → R L1 T1.
-#L2 #T2 #R #IH1 #IH2 #L1 #T1 #H
-@(bi_TC_ind_dx … IH1 IH2 ? ? H)
-qed-.
-
 (* Basic properties *********************************************************)
 
 lemma fsup_fsupp: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⊃ ⦃L2, T2⦄ → ⦃L1, T1⦄ ⊃+ ⦃L2, T2⦄.
@@ -79,9 +61,36 @@ lemma fsupp_append_sn: ∀I,L,K,V,T. ⦃L.ⓑ{I}V@@K, T⦄ ⊃+ ⦃L, V⦄.
 normalize /3 width=1 by monotonic_lt_plus_l, monotonic_le_plus_r/ (**) (* auto too slow without trace *)
 qed.
 *)
+(* Basic eliminators ********************************************************)
+
+lemma fsupp_ind: ∀L1,T1. ∀R:relation2 lenv term.
+                 (∀L2,T2. ⦃L1, T1⦄ ⊃ ⦃L2, T2⦄ → R L2 T2) →
+                 (∀L,T,L2,T2. ⦃L1, T1⦄ ⊃+ ⦃L, T⦄ → ⦃L, T⦄ ⊃ ⦃L2, T2⦄ → R L T → R L2 T2) →
+                 ∀L2,T2. ⦃L1, T1⦄ ⊃+ ⦃L2, T2⦄ → R L2 T2.
+#L1 #T1 #R #IH1 #IH2 #L2 #T2 #H
+@(bi_TC_ind … IH1 IH2 ? ? H)
+qed-.
+
+lemma fsupp_ind_dx: ∀L2,T2. ∀R:relation2 lenv term.
+                    (∀L1,T1. ⦃L1, T1⦄ ⊃ ⦃L2, T2⦄ → R L1 T1) →
+                    (∀L1,L,T1,T. ⦃L1, T1⦄ ⊃ ⦃L, T⦄ → ⦃L, T⦄ ⊃+ ⦃L2, T2⦄ → R L T → R L1 T1) →
+                    ∀L1,T1. ⦃L1, T1⦄ ⊃+ ⦃L2, T2⦄ → R L1 T1.
+#L2 #T2 #R #IH1 #IH2 #L1 #T1 #H
+@(bi_TC_ind_dx … IH1 IH2 ? ? H)
+qed-.
+
 (* Basic forward lemmas *****************************************************)
 
-lemma fsupp_fwd_cw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⊃+ ⦃L2, T2⦄ → ♯{L2, T2} < ♯{L1, T1}.
+lemma fsupp_fwd_fw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⊃+ ⦃L2, T2⦄ → ♯{L2, T2} < ♯{L1, T1}.
 #L1 #L2 #T1 #T2 #H @(fsupp_ind … H) -L2 -T2
-/3 width=3 by fsup_fwd_cw, transitive_lt/
+/3 width=3 by fsup_fwd_fw, transitive_lt/
+qed-.
+
+(* Advanced eliminators *****************************************************)
+
+lemma fsupp_wf_ind: ∀R:relation2 lenv term. (
+                       ∀L1,T1. (∀L2,T2. ⦃L1, T1⦄ ⊃+ ⦃L2, T2⦄ → R L2 T2) →
+                       ∀L2,T2. L1 = L2 → T1 = T2 → R L2 T2
+                    ) → ∀L1,T1. R L1 T1.
+#R #HR @(f2_ind … fw) #n #IHn #L1 #T1 #H destruct /4 width=5 by fsupp_fwd_fw/
 qed-.
