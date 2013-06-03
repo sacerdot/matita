@@ -54,13 +54,7 @@ lemma fsupp_bind_dx_flat_dx: ∀a,I1,I2,L,V1,V2,T. ⦃L, ⓑ{a,I1}V1.ⓕ{I2}V2.T
 
 lemma fsupp_flat_dx_bind_dx: ∀a,I1,I2,L,V1,V2,T. ⦃L, ⓕ{I1}V1.ⓑ{a,I2}V2.T⦄ ⊃+ ⦃L.ⓑ{I2}V2, T⦄.
 /2 width=4/ qed.
-(*
-lemma fsupp_append_sn: ∀I,L,K,V,T. ⦃L.ⓑ{I}V@@K, T⦄ ⊃+ ⦃L, V⦄.
-#I #L #K #V *
-[ * #i
-normalize /3 width=1 by monotonic_lt_plus_l, monotonic_le_plus_r/ (**) (* auto too slow without trace *)
-qed.
-*)
+
 (* Basic eliminators ********************************************************)
 
 lemma fsupp_ind: ∀L1,T1. ∀R:relation2 lenv term.
