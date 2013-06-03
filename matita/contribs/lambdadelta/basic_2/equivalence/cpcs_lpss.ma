@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/lpss_lpss.ma".
 include "basic_2/computation/cprs_lpss.ma".
 include "basic_2/equivalence/cpcs_cpcs.ma".
 
