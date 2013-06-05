@@ -191,3 +191,9 @@ definition bi_symmetric: ∀A,B. ∀R: bi_relation A B. Prop ≝ λA,B,R.
 definition bi_transitive: ∀A,B. ∀R: bi_relation A B. Prop ≝ λA,B,R.
                           ∀a1,a,b1,b. R a1 b1 a b →
                           ∀a2,b2. R a b a2 b2 → R a1 b1 a2 b2.
+
+definition bi_RC: ∀A,B:Type[0]. bi_relation A B → bi_relation A B ≝
+                  λA,B,R,x1,y1,x2,y2. R … x1 y1 x2 y2 ∨ (x1 = x2 ∧ y1 = y2).
+
+lemma bi_RC_reflexive: ∀A,B,R. bi_reflexive A B (bi_RC … R).
+/3 width=1/ qed.

@@ -142,7 +142,7 @@ lemma star_ind_l: ∀A,R,a2. ∀P:predicate A.
 @(star_ind_l_aux … H1 H2 … Ha12) //
 qed.
 
-(* RC and star *)
+(* TC and star *)
 
 lemma TC_to_star: ∀A,R,a,b.TC A R a b → star A R a b.
 #R #A #a #b #TCH (elim TCH) /2/

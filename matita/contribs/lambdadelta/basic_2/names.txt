@@ -51,9 +51,10 @@ NAMING CONVENTIONS FOR TRANSFORMATIONS
 
 - first letter
 
+c: contex-sensitive for terms
 f: context-freee for closures
-l: sn contex-sensitive for terms
-r: dx contex-sensitive for terms
+l: sn contex-sensitive for local environments
+r: dx contex-sensitive for local environments
 t: context-free for terms
 
 -second letter
@@ -73,4 +74,5 @@ x: extended reduction
 - forth letter (if present)
 
 p: non-reflexive transitive closure
+q: reflexive closure
 s: reflexive transitive closure
