@@ -75,7 +75,7 @@ lemma cpr_refl: ∀T,L. L ⊢ T ➡ T.
 
 (* Basic_1: was: pr2_head_1 *)
 lemma cpr_pair_sn: ∀I,L,V1,V2. L ⊢ V1 ➡ V2 →
-                   ∀T. L⊢ ②{I}V1.T ➡ ②{I}V2.T.
+                   ∀T. L ⊢ ②{I}V1.T ➡ ②{I}V2.T.
 * /2 width=1/ qed.
 
 lemma cpr_delift: ∀L,K,V,T1,d. ⇩[0, d] L ≡ (K. ⓓV) →

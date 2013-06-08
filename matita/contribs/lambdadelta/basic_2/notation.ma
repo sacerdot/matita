@@ -254,17 +254,17 @@ notation "hvbox( L ⊢ break term 46 T1 ➡ break term 46 T2 )"
    non associative with precedence 45
    for @{ 'PRed $L $T1 $T2 }.
 
-notation "hvbox( L1 ⊢ ➡ break term 46 L2 )"
-   non associative with precedence 45
-   for @{ 'PRedSn $L1 $L2 }.
-
 notation "hvbox( ⦃ term 46 h, break term 46 L ⦄ ⊢ break term 46 T1 ➡ break [ term 46 g ] break term 46 T2 )"
    non associative with precedence 45
    for @{ 'PRed $h $g $L $T1 $T2 }.
 
-notation "hvbox( ⦃ term 46 h, break term 46 L ⦄ ⊢ break term 46 T1 ➡ ➡ break [ term 46 g ] break term 46 T2 )"
+notation "hvbox( L1 ⊢ ➡ break term 46 L2 )"
    non associative with precedence 45
-   for @{ 'PRedAlt $h $g $L $T1 $T2 }.
+   for @{ 'PRedSn $L1 $L2 }.
+
+notation "hvbox( ⦃ term 46 h, break term 46 L1 ⦄ ⊢ ➡ break [ term 46 g ] break term 46 L2 )"
+   non associative with precedence 45
+   for @{ 'PRedSn $h $g $L1 $L2 }.
 
 (* Computation **************************************************************)
 
@@ -284,10 +284,6 @@ notation "hvbox( L ⊢ break term 46 T1 ➡ * break 𝐍 ⦃ term 46 T2 ⦄ )"
    non associative with precedence 45
    for @{ 'PEval $L $T1 $T2 }.
 
-notation "hvbox( ⬊ * term 46 T )"
-   non associative with precedence 45
-   for @{ 'SN $T }.
-
 notation "hvbox( L ⊢ ⬊ * break term 46 T )"
    non associative with precedence 45
    for @{ 'SN $L $T }.
@@ -295,6 +291,18 @@ notation "hvbox( L ⊢ ⬊ * break term 46 T )"
 notation "hvbox( L ⊢ ⬊ ⬊ * break term 46 T )"
    non associative with precedence 45
    for @{ 'SNAlt $L $T }.
+
+notation "hvbox( ⦃ term 46 h, break term 46 L ⦄ ⊢ break term 46 T1 ➡ * break [ term 46 g ] break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'PRedStar $h $g $L $T1 $T2 }.
+
+notation "hvbox( ⦃ term 46 h, break term 46 L ⦄ ⊢ ⬊ * break [ term 46 g ] break term 46 T )"
+   non associative with precedence 45
+   for @{ 'SN $h $g $L $T }.
+
+notation "hvbox( ⦃ term 46 h, break term 46 L ⦄ ⊢ ⬊ ⬊ * break [ term 46 g ] break term 46 T )"
+   non associative with precedence 45
+   for @{ 'SNAlt $h $g $L $T }.
 
 notation "hvbox( ⦃ term 46 L, break term 46 T ⦄ ϵ break [ term 46 R ] break 〚term 46  A 〛 )"
    non associative with precedence 45

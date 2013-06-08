@@ -12,28 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/arith.ma".
+include "basic_2/relocation/ldrop_lpx_sn.ma".
+include "basic_2/reduction/cpx_lift.ma".
+include "basic_2/reduction/lpx.ma".
 
-(* SORT HIERARCHY ***********************************************************)
+(* SN EXTENDED PARALLEL REDUCTION FOR LOCAL ENVIRONMENTS ********************)
 
-(* sort hierarchy specification *)
-record sh: Type[0] ≝ {
-   next   : nat → nat;     (* next sort in the hierarchy *)
-   next_lt: ∀k. k < next k (* strict monotonicity condition *)
-}.
+(* Properies on local environment slicing ***********************************)
 
-definition sh_N: sh ≝ mk_sh S ….
-// qed.
+lemma lpx_ldrop_conf: ∀h,g. dropable_sn (lpx h g).
+/3 width=5 by lpx_sn_deliftable_dropable, cpx_inv_lift1/ qed-.
 
-(* Basic properties *********************************************************)
+lemma ldrop_lpx_trans: ∀h,g. dedropable_sn (lpx h g).
+/3 width=9 by lpx_sn_liftable_dedropable, cpx_lift/ qed-.
 
-lemma nexts_le: ∀h,k,l. k ≤ (next h)^l k.
-#h #k #l elim l -l // normalize #l #IHl
-lapply (next_lt h ((next h)^l k)) #H
-lapply (le_to_lt_to_lt … IHl H) -IHl -H /2 width=2/
-qed.
-
-axiom nexts_dec: ∀h,k1,k2. Decidable (∃l. (next h)^l k1 = k2).
-
-axiom nexts_inj: ∀h,k,l1,l2. (next h)^l1 k = (next h)^l2 k → l1 = l2.
-
+lemma lpx_ldrop_trans_O1: ∀h,g. dropable_dx (lpx h g).
+/2 width=3 by lpx_sn_dropable/ qed-.

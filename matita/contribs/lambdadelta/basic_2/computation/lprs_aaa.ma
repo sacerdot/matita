@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reduction/lpr_aaa.ma".
+include "basic_2/reduction/lpx_aaa.ma".
 include "basic_2/computation/lprs.ma".
 
 (* SN PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS ****************************)

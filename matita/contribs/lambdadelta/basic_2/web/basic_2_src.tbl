@@ -109,12 +109,17 @@ table {
    ]
    class "water"
    [ { "reduction" * } {
+        [ { "context-sensitive extended reduction" * } {
+             [ "lpx ( ⦃?,?⦄ ⊢ ➡[?] ? )" "lpx_ldrop" + "lpx_aaa" * ]
+             [ "cpx ( ⦃?,?⦄ ⊢ ? ➡[?] ? )" "cpx_lift" * ]
+          }
+        ]
         [ { "context-sensitive normal forms" * } {
              [ "cnf ( ? ⊢ 𝐍⦃?⦄ )" "cnf_liftt" + "cnf_crf" + "cnf_cif" * ]
           }
         ]
         [ { "context-sensitive reduction" * } {
-             [ "lpr ( ? ⊢ ➡ ? )" "lpr_ldrop" + "lpr_lpss" + "lpr_aaa" + "lpr_lpr" * ]
+             [ "lpr ( ? ⊢ ➡ ? )" "lpr_ldrop" + "lpr_lpss" + "lpr_lpr" * ]
              [ "cpr ( ? ⊢ ? ➡ ? )" "cpr_lift" + "cpr_cif" * ]
           }
         ]
@@ -195,7 +200,7 @@ table {
    class "orange"
    [ { "relocation" * } {
         [ { "structural successor for closures" * } {
-             [ "fsup ( ⦃?,?⦄ ⊃ ⦃?,?⦄ )" * ]
+             [ "fsup ( ⦃?,?⦄ ⊃ ⦃?,?⦄ )" "fsupq ( ⦃?,?⦄ ⊃⸮ ⦃?,?⦄ )" * ]
           }
         ]
         [ { "global env. slicing" * } {

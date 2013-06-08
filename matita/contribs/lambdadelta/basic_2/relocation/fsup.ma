@@ -18,7 +18,7 @@ include "basic_2/relocation/ldrop.ma".
 (* SUPCLOSURE ***************************************************************)
 
 inductive fsup: bi_relation lenv term ≝
-| fsup_lref   : ∀I,L,V. fsup (L.ⓑ{I}V) (#0) L V
+| fsup_lref_O : ∀I,L,V. fsup (L.ⓑ{I}V) (#0) L V
 | fsup_pair_sn: ∀I,L,V,T. fsup L (②{I}V.T) L V
 | fsup_bind_dx: ∀a,I,L,V,T. fsup L (ⓑ{a,I}V.T) (L.ⓑ{I}V) T
 | fsup_flat_dx: ∀I,L,V,T.   fsup L (ⓕ{I}V.T) L T
@@ -55,7 +55,8 @@ lapply (lift_fwd_tw … HTU1) -HTU1 #HTU1
 @(lt_to_le_to_lt … IHT12) -IHT12 /2 width=1/
 qed-.
 
-fact fsup_fwd_length_lref1_aux: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⊃ ⦃L2, T2⦄ → ∀i. T1 = #i → |L2| < |L1|.
+fact fsup_fwd_length_lref1_aux: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⊃ ⦃L2, T2⦄ →
+                                ∀i. T1 = #i → |L2| < |L1|.
 #L1 #L2 #T1 #T2 #H elim H -L1 -L2 -T1 -T2
 [5: #L1 #K1 #K2 #T1 #T2 #U1 #d #e #HLK1 #HTU1 #_ #IHT12 #i #H destruct
     lapply (ldrop_fwd_length … HLK1) -HLK1 #HLK1
