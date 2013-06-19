@@ -164,7 +164,7 @@ lemma times_times: ∀x,y,z. x*(y*z) = y*(x*z).
 // qed. 
 
 theorem times_n_1 : ∀n:nat. n = n * 1.
-#n // qed.
+// qed.
 
 theorem minus_S_S: ∀n,m:nat.S n - S m = n -m.
 // qed.
@@ -186,6 +186,13 @@ theorem eq_minus_S_pred: ∀n,m. n - (S m) = pred(n -m).
 
 lemma plus_plus_comm_23: ∀x,y,z. x + y + z = x + z + y.
 // qed.
+
+lemma discr_plus_xy_minus_xz: ∀x,z,y. x + y = x - z → y = 0.
+#x elim x -x // #x #IHx * normalize
+[ #y #H @(IHx 0) <minus_n_O /2 width=1/
+| #z #y >plus_n_Sm #H lapply (IHx … H) -x -z #H destruct
+]
+qed-.
 
 (* Negated equalities *******************************************************)
 

@@ -100,6 +100,13 @@ lapply (deg_mono … H1 H2) -H1 -H2 #H
 <(associative_plus l 1 1) >H <plus_minus_m_m // /2 width=3 by transitive_le/
 qed.
 
+lemma deg_prec: ∀h,g,k,l,l0. deg h g ((next h)^l k) (l0+1) → deg h g k (l+l0+1).
+#h #g #k #l @(nat_ind_plus … l) -l //
+#l #IHl #l0 >iter_SO #H
+lapply (deg_pred … H) -H <(associative_plus l0 1 1) #H
+lapply (IHl … H) -IHl -H //
+qed.
+
 lemma sd_l_SS: ∀h,k,l. sd_l h k (l + 2) = sd_l h (next h k) (l + 1).
 #h #k #l <plus_n_Sm <plus_n_Sm //
 qed.

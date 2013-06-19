@@ -83,6 +83,10 @@ table {
              [ "dxprs ( ⦃?,?⦄ ⊢ ? •*➡*[?] ? )" "dxprs_lift" + "dxprs_lpss" + "dxprs_aaa" + "dxprs_dxprs" * ]
           }
         ]
+        [ { "context-sensitive extended computation" * } {
+             [ "cpxs ( ⦃?,?⦄ ⊢ ? ➡*[?] ? )" "cpxs_lift" * ]
+          }
+        ]
         [ { "weakly normalizing computation" * } {
              [ "cpe ( ? ⊢ ➡* 𝐍⦃?⦄ )" "cpe_cpe" * ]
           }

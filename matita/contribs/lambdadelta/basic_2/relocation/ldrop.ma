@@ -296,6 +296,29 @@ lemma ldrop_fwd_O1_length: ∀L1,L2,e. ⇩[0, e] L1 ≡ L2 → |L2| = |L1| - e.
 ]
 qed-.
 
+lemma ldrop_fwd_lw_eq: ∀L1,L2,d,e. ⇩[d, e] L1 ≡ L2 →
+                       |L1| = |L2| → ♯{L2} = ♯{L1}.
+#L1 #L2 #d #e #H elim H -L1 -L2 -d -e //
+[ #L1 #L2 #I #V #e #HL12 #_
+  lapply (ldrop_fwd_O1_length … HL12) -HL12 #HL21 >HL21 -HL21 normalize #H -I
+  lapply (discr_plus_xy_minus_xz … H) -e #H destruct
+| #L1 #L2 #I #V1 #V2 #d #e #_ #HV21 #HL12 normalize in ⊢ (??%%→??%%); #H -I 
+  >(lift_fwd_tw … HV21) -V2 /3 width=1 by eq_f2/ (**) (* auto is a bit slow without trace *)
+]
+qed-.
+
+lemma ldrop_fwd_lw_lt: ∀L1,L2,d,e. ⇩[d, e] L1 ≡ L2 →
+                      |L2| < |L1| → ♯{L2} < ♯{L1}.
+#L1 #L2 #d #e #H elim H -L1 -L2 -d -e //
+[ #L #I #V #H elim (lt_refl_false … H)
+| #L1 #L2 #I #V #e #HL12 #_ #_
+  lapply (ldrop_fwd_lw … HL12) -HL12 #HL12
+  @(le_to_lt_to_lt … HL12) -HL12 //
+| #L1 #L2 #I #V1 #V2 #d #e #_ #HV21 #IHL12 normalize in ⊢ (?%%→?%%); #H -I
+  >(lift_fwd_tw … HV21) -V2 /4 width=2 by lt_minus_to_plus, lt_plus_to_lt_l/ (**) (* auto too slow without trace *)
+]
+qed-.
+
 (* Basic_1: removed theorems 50:
             drop_ctail drop_skip_flat
             cimp_flat_sx cimp_flat_dx cimp_bind cimp_getl_conf

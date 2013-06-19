@@ -114,18 +114,15 @@ qed.
 lemma cprs_beta_dx: ∀a,L,V1,V2,W,T1,T2.
                     L ⊢ V1 ➡ V2 → L.ⓛW ⊢ T1 ➡* T2 →
                     L ⊢ ⓐV1.ⓛ{a}W.T1 ➡* ⓓ{a}V2.T2.
-#a #L #V1 #V2 #W #T1 #T2 #HV12 #H elim H -T2 /3 width=1/
-#T #T2 #_ #HT2 #IHT1
-@(cprs_strap1 … IHT1) -V1 -T1 /3 width=2/
+#a #L #V1 #V2 #W #T1 #T2 #HV12 * -T2 /3 width=1/
+/4 width=6 by cprs_strap1, cprs_bind_dx, cprs_flat_dx, cpr_beta/ (**) (* auto too slow without trace *)
 qed.
 
-lemma cprs_theta_dx: ∀a,L,V1,V,V2,W1,T1,T2.
+lemma cprs_theta_dx: ∀a,L,V1,V,V2,W1,W2,T1,T2.
                      L ⊢ V1 ➡ V → ⇧[0, 1] V ≡ V2 → L.ⓓW1 ⊢ T1 ➡* T2 →
-                     ∀W2. L ⊢ W1 ➡ W2 → L ⊢ ⓐV1.ⓓ{a}W1.T1 ➡* ⓓ{a}W2.ⓐV2.T2.
-#a #L #V1 #V #V2 #W1 #T1 #T2 #HV1 #HV2 #H elim H -T2 [ /3 width=3/ ]
-#T #T2 #_ #HT2 #IHT1 #W2 #HW12
-lapply (IHT1 W1 ?) -IHT1 // #HT1
-@(cprs_strap1 … HT1) -HT1 -V -V1 /3 width=1/
+                     L ⊢ W1 ➡ W2 → L ⊢ ⓐV1.ⓓ{a}W1.T1 ➡* ⓓ{a}W2.ⓐV2.T2.
+#a #L #V1 #V #V2 #W1 #W2 #T1 #T2 #HV1 #HV2 * -T2 [ /3 width=3/ ]
+/4 width=9 by cprs_strap1, cprs_bind_dx, cprs_flat_dx, cpr_theta/ (**) (* auto too slow without trace *)
 qed.
 
 (* Basic inversion lemmas ***************************************************)

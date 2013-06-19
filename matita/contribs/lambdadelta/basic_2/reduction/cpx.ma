@@ -109,10 +109,10 @@ lemma cpx_inv_atom1: ∀h,g,J,L,T2. ⦃h, L⦄ ⊢ ⓪{J} ➡[g] T2 →
 /2 width=3 by cpx_inv_atom1_aux/ qed-.
 
 lemma cpx_inv_sort1: ∀h,g,L,T2,k. ⦃h, L⦄ ⊢ ⋆k ➡[g] T2 → T2 = ⋆k ∨
-                     ∃∃k,l. deg h g k (l+1) & T2 = ⋆(next h k).
+                     ∃∃l. deg h g k (l+1) & T2 = ⋆(next h k).
 #h #g #L #T2 #k #H
 elim (cpx_inv_atom1 … H) -H /2 width=1/ *
-[ #k0 #l #Hkl #H1 #H2 destruct /3 width=4/
+[ #k0 #l0 #Hkl0 #H1 #H2 destruct /3 width=4/
 | #I #K #V #V2 #i #_ #_ #_ #H destruct
 ]
 qed-.
