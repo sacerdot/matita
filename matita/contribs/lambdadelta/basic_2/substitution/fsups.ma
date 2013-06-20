@@ -12,11 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/fsupp.ma".
+include "basic_2/relocation/fsupq.ma".
 
 (* STAR-ITERATED SUPCLOSURE *************************************************)
 
-definition fsups: bi_relation lenv term ≝ bi_star … fsup.
+definition fsups: bi_relation lenv term ≝ bi_TC … fsupq.
 
 interpretation "star-iterated structural successor (closure)"
    'SupTermStar L1 T1 L2 T2 = (fsups L1 T1 L2 T2).
@@ -24,17 +24,17 @@ interpretation "star-iterated structural successor (closure)"
 (* Basic eliminators ********************************************************)
 
 lemma fsups_ind: ∀L1,T1. ∀R:relation2 lenv term. R L1 T1 →
-                 (∀L,L2,T,T2. ⦃L1, T1⦄ ⊃* ⦃L, T⦄ → ⦃L, T⦄ ⊃ ⦃L2, T2⦄ → R L T → R L2 T2) →
+                 (∀L,L2,T,T2. ⦃L1, T1⦄ ⊃* ⦃L, T⦄ → ⦃L, T⦄ ⊃⸮ ⦃L2, T2⦄ → R L T → R L2 T2) →
                  ∀L2,T2. ⦃L1, T1⦄ ⊃* ⦃L2, T2⦄ → R L2 T2.
 #L1 #T1 #R #IH1 #IH2 #L2 #T2 #H
-@(bi_star_ind … IH1 IH2 ? ? H)
+@(bi_TC_star_ind … IH1 IH2 ? ? H) //
 qed-.
 
 lemma fsups_ind_dx: ∀L2,T2. ∀R:relation2 lenv term. R L2 T2 →
-                    (∀L1,L,T1,T. ⦃L1, T1⦄ ⊃ ⦃L, T⦄ → ⦃L, T⦄ ⊃* ⦃L2, T2⦄ → R L T → R L1 T1) →
+                    (∀L1,L,T1,T. ⦃L1, T1⦄ ⊃⸮ ⦃L, T⦄ → ⦃L, T⦄ ⊃* ⦃L2, T2⦄ → R L T → R L1 T1) →
                     ∀L1,T1. ⦃L1, T1⦄ ⊃* ⦃L2, T2⦄ → R L1 T1.
 #L2 #T2 #R #IH1 #IH2 #L1 #T1 #H
-@(bi_star_ind_dx … IH1 IH2 ? ? H)
+@(bi_TC_star_ind_dx … IH1 IH2 ? ? H) //
 qed-.
 
 (* Basic properties *********************************************************)
@@ -42,33 +42,22 @@ qed-.
 lemma fsups_refl: bi_reflexive … fsups.
 /2 width=1/ qed.
 
-lemma fsupp_fsups: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⊃+ ⦃L2, T2⦄ → ⦃L1, T1⦄ ⊃* ⦃L2, T2⦄.
+lemma fsupq_fsups: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⊃⸮ ⦃L2, T2⦄ → ⦃L1, T1⦄ ⊃* ⦃L2, T2⦄.
 /2 width=1/ qed.
 
-lemma fsup_fsups: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⊃ ⦃L2, T2⦄ → ⦃L1, T1⦄ ⊃* ⦃L2, T2⦄.
-/2 width=1/ qed.
-
-lemma fsups_strap1: ∀L1,L,L2,T1,T,T2. ⦃L1, T1⦄ ⊃* ⦃L, T⦄ → ⦃L, T⦄ ⊃ ⦃L2, T2⦄ →
+lemma fsups_strap1: ∀L1,L,L2,T1,T,T2. ⦃L1, T1⦄ ⊃* ⦃L, T⦄ → ⦃L, T⦄ ⊃⸮ ⦃L2, T2⦄ →
                     ⦃L1, T1⦄ ⊃* ⦃L2, T2⦄.
 /2 width=4/ qed.
 
-lemma fsups_strap2: ∀L1,L,L2,T1,T,T2. ⦃L1, T1⦄ ⊃ ⦃L, T⦄ → ⦃L, T⦄ ⊃* ⦃L2, T2⦄ →
+lemma fsups_strap2: ∀L1,L,L2,T1,T,T2. ⦃L1, T1⦄ ⊃⸮ ⦃L, T⦄ → ⦃L, T⦄ ⊃* ⦃L2, T2⦄ →
                     ⦃L1, T1⦄ ⊃* ⦃L2, T2⦄.
-/2 width=4/ qed.
-
-lemma fsups_fsupp_fsupp: ∀L1,L,L2,T1,T,T2. ⦃L1, T1⦄ ⊃* ⦃L, T⦄ →
-                         ⦃L, T⦄ ⊃+ ⦃L2, T2⦄ → ⦃L1, T1⦄ ⊃+ ⦃L2, T2⦄.
-/2 width=4/ qed.
-
-lemma fsupp_fsups_fsupp: ∀L1,L,L2,T1,T,T2. ⦃L1, T1⦄ ⊃+ ⦃L, T⦄ →
-                         ⦃L, T⦄ ⊃* ⦃L2, T2⦄ → ⦃L1, T1⦄ ⊃+ ⦃L2, T2⦄.
 /2 width=4/ qed.
 
 (* Basic forward lemmas *****************************************************)
 
 lemma fsups_fwd_fw: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⊃* ⦃L2, T2⦄ → ♯{L2, T2} ≤ ♯{L1, T1}.
 #L1 #L2 #T1 #T2 #H @(fsups_ind … H) -L2 -T2 //
-/4 width=3 by fsup_fwd_fw, lt_to_le_to_lt, lt_to_le/ (**) (* slow even with trace *)
+/3 width=3 by fsupq_fwd_fw, transitive_le/ (**) (* slow even with trace *)
 qed-.
 (*
 (* Advanced inversion lemmas on plus-iterated supclosure ********************)

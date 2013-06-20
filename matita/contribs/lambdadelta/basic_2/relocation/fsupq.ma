@@ -59,7 +59,7 @@ fact fsupq_fwd_length_lref1_aux: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⊃⸮ ⦃L2, T2�
 #L1 #L2 #T1 #T2 #H elim H -L1 -L2 -T1 -T2 //
 [ #a #I #L #V #T #j #H destruct
 | #L1 #K1 #K2 #T1 #T2 #U1 #d #e #HLK1 #HTU1 #_ #IHT12 #i #H destruct
-  lapply (ldrop_fwd_length … HLK1) -HLK1 #HLK1
+  lapply (ldrop_fwd_length_le4 … HLK1) -HLK1 #HLK1
   elim (lift_inv_lref2 … HTU1) -HTU1 * #Hdei #H destruct
   @(transitive_le … HLK1) /2 width=2/
 ]

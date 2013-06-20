@@ -21,7 +21,7 @@ include "basic_2/relocation/ldrop.ma".
 
 lemma lpx_sn_deliftable_dropable: ∀R. l_deliftable_sn R → dropable_sn (lpx_sn R).
 #R #HR #L1 #K1 #d #e #H elim H -L1 -K1 -d -e
-[ #d #e #X #H >(lpx_sn_inv_atom1 … H) -H /2 width=3/
+[ #d #X #H >(lpx_sn_inv_atom1 … H) -H /2 width=3/
 | #K1 #I #V1 #X #H
   elim (lpx_sn_inv_pair1 … H) -H #L2 #V2 #HL12 #HV12 #H destruct /3 width=5/
 | #L1 #K1 #I #V1 #e #_ #IHLK1 #X #H
@@ -37,7 +37,7 @@ qed-.
 lemma lpx_sn_liftable_dedropable: ∀R. (∀L. reflexive ? (R L)) →
                                   l_liftable R → dedropable_sn (lpx_sn R).
 #R #H1R #H2R #L1 #K1 #d #e #H elim H -L1 -K1 -d -e
-[ #d #e #X #H >(lpx_sn_inv_atom1 … H) -H /2 width=3/
+[ #d #X #H >(lpx_sn_inv_atom1 … H) -H /2 width=3/
 | #K1 #I #V1 #X #H
   elim (lpx_sn_inv_pair1 … H) -H #K2 #V2 #HK12 #HV12 #H destruct /3 width=5/
 | #L1 #K1 #I #V1 #e #_ #IHLK1 #K2 #HK12
@@ -53,7 +53,7 @@ qed-.
 fact lpx_sn_dropable_aux: ∀R,L2,K2,d,e. ⇩[d, e] L2 ≡ K2 → ∀L1. lpx_sn R L1 L2 →
                           d = 0 → ∃∃K1. ⇩[0, e] L1 ≡ K1 & lpx_sn R K1 K2.
 #R #L2 #K2 #d #e #H elim H -L2 -K2 -d -e
-[ #d #e #X #H >(lpx_sn_inv_atom2 … H) -H /2 width=3/
+[ #d #X #H >(lpx_sn_inv_atom2 … H) -H /2 width=3/
 | #K2 #I #V2 #X #H
   elim (lpx_sn_inv_pair2 … H) -H #K1 #V1 #HK12 #HV12 #H destruct /3 width=5/
 | #L2 #K2 #I #V2 #e #_ #IHLK2 #X #H #_

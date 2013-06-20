@@ -45,7 +45,7 @@ interpretation
 fact trf_inv_atom_aux: ∀I,L,T. L ⊢ 𝐑⦃T⦄ → L = ⋆ → T = ⓪{I} → ⊥.
 #I #L #T * -L -T
 [ #L #K #V #i #HLK #H1 #H2 destruct
-  lapply (ldrop_inv_atom1 … HLK) -HLK #H destruct
+  elim (ldrop_inv_atom1 … HLK) -HLK #H destruct
 | #L #V #T #_ #_ #H destruct
 | #L #V #T #_ #_ #H destruct
 | #J #L #V #T #_ #_ #H destruct

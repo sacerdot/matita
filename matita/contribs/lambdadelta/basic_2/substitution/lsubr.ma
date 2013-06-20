@@ -98,14 +98,14 @@ lemma lsubr_fwd_ldrop2_abbr: ∀L1,L2. L1 ⊑ L2 →
                              ∃∃K1. K1 ⊑ K2 & ⇩[0, i] L1 ≡ K1. ⓓW.
 #L1 #L2 #H elim H -L1 -L2
 [ #L #K2 #W #i #H
-  lapply (ldrop_inv_atom1 … H) -H #H destruct
+  elim (ldrop_inv_atom1 … H) -H #H destruct
 | #L1 #L2 #V #HL12 #IHL12 #K2 #W #i #H
-  elim (ldrop_inv_O1 … H) -H * #Hi #HLK2 destruct [ -IHL12 | -HL12 ]
+  elim (ldrop_inv_O1_pair1 … H) -H * #Hi #HLK2 destruct [ -IHL12 | -HL12 ]
   [ /2 width=3/
   | elim (IHL12 … HLK2) -IHL12 -HLK2 /3 width=3/
   ]
 | #I #L1 #L2 #V1 #V2 #_ #IHL12 #K2 #W #i #H
-  elim (ldrop_inv_O1 … H) -H * #Hi #HLK2 destruct
+  elim (ldrop_inv_O1_pair1 … H) -H * #Hi #HLK2 destruct
   elim (IHL12 … HLK2) -IHL12 -HLK2 /3 width=3/
 ]
 qed-.

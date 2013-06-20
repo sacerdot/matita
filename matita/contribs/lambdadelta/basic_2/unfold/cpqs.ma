@@ -64,7 +64,7 @@ qed-.
 lemma cpqs_append: l_appendable_sn … cpqs.
 #K #T1 #T2 #H elim H -K -T1 -T2 // /2 width=1/ /2 width=3/
 #K #K0 #V1 #V2 #W2 #i #HK0 #_ #HVW2 #IHV12 #L
-lapply (ldrop_fwd_ldrop2_length … HK0) #H
+lapply (ldrop_fwd_length_lt2 … HK0) #H
 @(cpqs_delta … (L@@K0) V1 … HVW2) //
 @(ldrop_O1_append_sn_le … HK0) /2 width=2/ (**) (* /3/ does not work *)
 qed.

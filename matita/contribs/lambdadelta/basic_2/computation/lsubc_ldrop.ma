@@ -24,16 +24,15 @@ include "basic_2/computation/lsubc.ma".
 lemma lsubc_ldrop_O1_trans: ∀RP,L1,L2. L1 ⊑[RP] L2 → ∀K2,e. ⇩[0, e] L2 ≡ K2 →
                             ∃∃K1. ⇩[0, e] L1 ≡ K1 & K1 ⊑[RP] K2.
 #RP #L1 #L2 #H elim H -L1 -L2
-[ #X #e #H
-  >(ldrop_inv_atom1 … H) -H /2 width=3/
+[ #X #e #H elim (ldrop_inv_atom1 … H) -H /2 width=3/
 | #I #L1 #L2 #V #_ #IHL12 #X #e #H
-  elim (ldrop_inv_O1 … H) -H * #He #H destruct
-  [ elim (IHL12 L2 0 ?) -IHL12 // #X #H <(ldrop_inv_refl … H) -H /3 width=3/
+  elim (ldrop_inv_O1_pair1 … H) -H * #He #H destruct
+  [ elim (IHL12 L2 0) -IHL12 // #X #H <(ldrop_inv_O2 … H) -H /3 width=3/
   | elim (IHL12 … H) -L2 /3 width=3/
   ]
 | #L1 #L2 #V #W #A #HV #HW #_ #IHL12 #X #e #H
-  elim (ldrop_inv_O1 … H) -H * #He #H destruct
-  [ elim (IHL12 L2 0 ?) -IHL12 // #X #H <(ldrop_inv_refl … H) -H /3 width=7/
+  elim (ldrop_inv_O1_pair1 … H) -H * #He #H destruct
+  [ elim (IHL12 L2 0) -IHL12 // #X #H <(ldrop_inv_O2 … H) -H /3 width=7/
   | elim (IHL12 … H) -L2 /3 width=3/
   ]
 qed-.
@@ -44,8 +43,7 @@ lemma ldrop_lsubc_trans: ∀RR,RS,RP.
                          ∀L1,K1,d,e. ⇩[d, e] L1 ≡ K1 → ∀K2. K1 ⊑[RP] K2 →
                          ∃∃L2. L1 ⊑[RP] L2 & ⇩[d, e] L2 ≡ K2.
 #RR #RS #RP #Hacp #Hacr #L1 #K1 #d #e #H elim H -L1 -K1 -d -e
-[ #d #e #X #H
-  >(lsubc_inv_atom1 … H) -H /2 width=3/
+[ #d #X #H elim (lsubc_inv_atom1 … H) -H /2 width=3/
 | #L1 #I #V1 #X #H
   elim (lsubc_inv_pair1 … H) -H *
   [ #K1 #HLK1 #H destruct /3 width=3/

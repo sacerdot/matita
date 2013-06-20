@@ -37,9 +37,13 @@ lemma lpr_ldrop_trans_O1: dropable_dx lpr.
 lemma fsup_cpr_trans: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⊃ ⦃L2, T2⦄ → ∀U2. L2 ⊢ T2 ➡ U2 →
                       ∃∃L,U1. L1 ⊢ ➡ L & L ⊢ T1 ➡ U1 & ⦃L, U1⦄ ⊃ ⦃L2, U2⦄.
 #L1 #L2 #T1 #T2 #H elim H -L1 -L2 -T1 -T2 [1,2,3,4,5: /3 width=5/ ]
-#L1 #K1 #K2 #T1 #T2 #U1 #d #e #HLK1 #HTU1 #_ #IHT12 #U2 #HTU2
-elim (IHT12 … HTU2) -IHT12 -HTU2 #K #T #HK1 #HT1 #HT2
-elim (lift_total T d e) #U #HTU
-elim (ldrop_lpr_trans … HLK1 … HK1) -HLK1 -HK1 #L2 #HL12 #HL2K
-lapply (cpr_lift … HT1 … HL2K … HTU1 … HTU) -HT1 -HTU1 /3 width=11/
+[ #L #K #U #T #d #e #HLK #HUT #He #U2 #HU2
+  elim (lift_total U2 d e) #T2 #HUT2
+  lapply (cpr_lift … HU2 … HLK … HUT … HUT2) -HU2 -HUT /3 width=9/
+| #L1 #K1 #K2 #T1 #T2 #U1 #d #e #HLK1 #HTU1 #_ #IHT12 #U2 #HTU2
+  elim (IHT12 … HTU2) -IHT12 -HTU2 #K #T #HK1 #HT1 #HT2
+  elim (lift_total T d e) #U #HTU
+  elim (ldrop_lpr_trans … HLK1 … HK1) -HLK1 -HK1 #L2 #HL12 #HL2K
+  lapply (cpr_lift … HT1 … HL2K … HTU1 … HTU) -HT1 -HTU1 /3 width=11/
+]
 qed-.
