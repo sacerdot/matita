@@ -13,26 +13,26 @@
 (**************************************************************************)
 
 include "basic_2/relocation/ldrop_append.ma".
-include "basic_2/reduction/crf.ma".
+include "basic_2/reduction/crr.ma".
 
 (* CONTEXT-SENSITIVE REDUCIBLE TERMS ****************************************)
 
 (* Advanved properties ******************************************************)
 
-lemma crf_labst_last: ∀L,T,W. L ⊢ 𝐑⦃T⦄  → ⋆.ⓛW @@ L ⊢ 𝐑⦃T⦄.
-#L #T #W #H elim H -L -T /2 width=1/
+lemma crr_append_sn: ∀L,K,T. L ⊢ 𝐑⦃T⦄  → K @@ L ⊢ 𝐑⦃T⦄.
+#L #K0 #T #H elim H -L -T /2 width=1/
 #L #K #V #i #HLK
 lapply (ldrop_fwd_length_lt2 … HLK) #Hi
-lapply (ldrop_O1_append_sn_le … HLK … (⋆.ⓛW)) -HLK /2 width=2/ -Hi /2 width=3/
+lapply (ldrop_O1_append_sn_le … HLK … K0) -HLK /2 width=2/ -Hi /2 width=3/
 qed.
 
-lemma crf_trf: ∀T,W. ⋆ ⊢ 𝐑⦃T⦄ → ⋆.ⓛW ⊢ 𝐑⦃T⦄.
-#T #W #H lapply (crf_labst_last … W H) //
+lemma trr_crr: ∀L,T. ⋆ ⊢ 𝐑⦃T⦄ → L ⊢ 𝐑⦃T⦄.
+#L #T #H lapply (crr_append_sn … H) //
 qed.
 
 (* Advanced inversion lemmas ************************************************)
 
-fact crf_inv_labst_last_aux: ∀L1,T,W. L1 ⊢ 𝐑⦃T⦄  →
+fact crr_inv_labst_last_aux: ∀L1,T,W. L1 ⊢ 𝐑⦃T⦄  →
                              ∀L2. L1 = ⋆.ⓛW @@ L2 → L2 ⊢ 𝐑⦃T⦄.
 #L1 #T #W #H elim H -L1 -T /2 width=1/ /3 width=1/
 [ #L1 #K1 #V1 #i #HLK1 #L2 #H destruct
@@ -49,8 +49,8 @@ fact crf_inv_labst_last_aux: ∀L1,T,W. L1 ⊢ 𝐑⦃T⦄  →
 ]
 qed.
 
-lemma crf_inv_labst_last: ∀L,T,W. ⋆.ⓛW @@ L ⊢ 𝐑⦃T⦄  → L ⊢ 𝐑⦃T⦄.
+lemma crr_inv_labst_last: ∀L,T,W. ⋆.ⓛW @@ L ⊢ 𝐑⦃T⦄  → L ⊢ 𝐑⦃T⦄.
 /2 width=4/ qed-.
 
-lemma crf_inv_trf: ∀T,W. ⋆.ⓛW ⊢ 𝐑⦃T⦄  → ⋆ ⊢ 𝐑⦃T⦄.
+lemma crr_inv_trr: ∀T,W. ⋆.ⓛW ⊢ 𝐑⦃T⦄  → ⋆ ⊢ 𝐑⦃T⦄.
 /2 width=4/ qed-.

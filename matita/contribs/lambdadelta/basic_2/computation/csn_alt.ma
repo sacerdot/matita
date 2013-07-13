@@ -12,55 +12,59 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/cprs.ma".
+include "basic_2/computation/cpxs.ma".
 include "basic_2/computation/csn.ma".
 
-(* CONTEXT-SENSITIVE STRONGLY NORMALIZING TERMS *****************************)
+(* CONTEXT-SENSITIVE EXTENDED STRONGLY NORMALIZING TERMS ********************)
 
 (* alternative definition of csn *)
-definition csna: lenv → predicate term ≝ λL. SN … (cprs L) (eq …).
+definition csna: ∀h. sd h → lenv → predicate term ≝
+                 λh,g,L. SN … (cpxs h g L) (eq …).
 
 interpretation
-   "context-sensitive strong normalization (term) alternative"
-   'SNAlt L T = (csna L T).
+   "context-sensitive extended strong normalization (term) alternative"
+   'SNAlt h g L T = (csna h g L T).
 
 (* Basic eliminators ********************************************************)
 
-lemma csna_ind: ∀L. ∀R:predicate term.
-                (∀T1. L ⊢ ⬊⬊* T1 →
-                      (∀T2. L ⊢ T1 ➡* T2 → (T1 = T2 → ⊥) → R T2) → R T1
+lemma csna_ind: ∀h,g,L. ∀R:predicate term.
+                (∀T1. ⦃h, L⦄ ⊢ ⬊⬊*[g] T1 →
+                      (∀T2. ⦃h, L⦄ ⊢ T1 ➡*[g] T2 → (T1 = T2 → ⊥) → R T2) → R T1
                 ) →
-                ∀T. L ⊢ ⬊⬊* T → R T.
-#L #R #H0 #T1 #H elim H -T1 #T1 #HT1 #IHT1
+                ∀T. ⦃h, L⦄ ⊢ ⬊⬊*[g] T → R T.
+#h #g #L #R #H0 #T1 #H elim H -T1 #T1 #HT1 #IHT1
 @H0 -H0 /3 width=1/ -IHT1 /4 width=1/
 qed-.
 
 (* Basic properties *********************************************************)
 
-(* Basic_1: was: sn3_intro *)
-lemma csna_intro: ∀L,T1.
-                  (∀T2. L ⊢ T1 ➡* T2 → (T1 = T2 → ⊥) → L ⊢ ⬊⬊* T2) → L ⊢ ⬊⬊* T1.
+(* Basic_1: was just: sn3_intro *)
+lemma csna_intro: ∀h,g,L,T1.
+                  (∀T2. ⦃h, L⦄ ⊢ T1 ➡*[g] T2 → (T1 = T2 → ⊥) → ⦃h, L⦄ ⊢ ⬊⬊*[g] T2) →
+                  ⦃h, L⦄ ⊢ ⬊⬊*[g] T1.
 /4 width=1/ qed.
 
-fact csna_intro_aux: ∀L,T1.
-                     (∀T,T2. L ⊢ T ➡* T2 → T1 = T → (T1 = T2 → ⊥) → L ⊢ ⬊⬊* T2) → L ⊢ ⬊⬊* T1.
+fact csna_intro_aux: ∀h,g,L,T1. (
+                        ∀T,T2. ⦃h, L⦄ ⊢ T ➡*[g] T2 → T1 = T → (T1 = T2 → ⊥) → ⦃h, L⦄ ⊢ ⬊⬊*[g] T2
+                     ) → ⦃h, L⦄ ⊢ ⬊⬊*[g] T1.
 /4 width=3/ qed-.
 
-(* Basic_1: was: sn3_pr3_trans (old version) *)
-lemma csna_cprs_trans: ∀L,T1. L ⊢ ⬊⬊* T1 → ∀T2. L ⊢ T1 ➡* T2 → L ⊢ ⬊⬊* T2.
-#L #T1 #H elim H -T1 #T1 #HT1 #IHT1 #T2 #HLT12
+(* Basic_1: was just: sn3_pr3_trans (old version) *)
+lemma csna_cpxs_trans: ∀h,g,L,T1. ⦃h, L⦄ ⊢ ⬊⬊*[g] T1 →
+                       ∀T2. ⦃h, L⦄ ⊢ T1 ➡*[g] T2 → ⦃h, L⦄ ⊢ ⬊⬊*[g] T2.
+#h #g #L #T1 #H elim H -T1 #T1 #HT1 #IHT1 #T2 #HLT12
 @csna_intro #T #HLT2 #HT2
 elim (term_eq_dec T1 T2) #HT12
 [ -IHT1 -HLT12 destruct /3 width=1/
 | -HT1 -HT2 /3 width=4/
 qed.
 
-(* Basic_1: was: sn3_pr2_intro (old version) *)
-lemma csna_intro_cpr: ∀L,T1.
-                      (∀T2. L ⊢ T1 ➡ T2 → (T1 = T2 → ⊥) → L ⊢ ⬊⬊* T2) →
-                      L ⊢ ⬊⬊* T1.
-#L #T1 #H
-@csna_intro_aux #T #T2 #H @(cprs_ind_dx … H) -T
+(* Basic_1: was just: sn3_pr2_intro (old version) *)
+lemma csna_intro_cpx: ∀h,g,L,T1. (
+                         ∀T2. ⦃h, L⦄ ⊢ T1 ➡[g] T2 → (T1 = T2 → ⊥) → ⦃h, L⦄ ⊢ ⬊⬊*[g] T2
+                      ) → ⦃h, L⦄ ⊢ ⬊⬊*[g] T1.
+#h #g #L #T1 #H
+@csna_intro_aux #T #T2 #H @(cpxs_ind_dx … H) -T
 [ -H #H destruct #H
   elim (H ?) //
 | #T0 #T #HLT1 #HLT2 #IHT #HT10 #HT12 destruct
@@ -73,26 +77,27 @@ qed.
 
 (* Main properties **********************************************************)
 
-theorem csn_csna: ∀L,T. L ⊢ ⬊* T → L ⊢ ⬊⬊* T.
-#L #T #H @(csn_ind … H) -T /4 width=1/
+theorem csn_csna: ∀h,g,L,T. ⦃h, L⦄ ⊢ ⬊*[g] T → ⦃h, L⦄ ⊢ ⬊⬊*[g] T.
+#h #g #L #T #H @(csn_ind … H) -T /4 width=1/
 qed.
 
-theorem csna_csn: ∀L,T. L ⊢ ⬊⬊* T → L ⊢ ⬊* T.
-#L #T #H @(csna_ind … H) -T /4 width=1/
+theorem csna_csn: ∀h,g,L,T. ⦃h, L⦄ ⊢ ⬊⬊*[g] T → ⦃h, L⦄ ⊢ ⬊*[g] T.
+#h #g #L #T #H @(csna_ind … H) -T /4 width=1/
 qed.
 
-(* Basic_1: was: sn3_pr3_trans *)
-lemma csn_cprs_trans: ∀L,T1. L ⊢ ⬊* T1 → ∀T2. L ⊢ T1 ➡* T2 → L ⊢ ⬊* T2.
-#L #T1 #HT1 #T2 #H @(cprs_ind … H) -T2 // /2 width=3 by csn_cpr_trans/
+(* Basic_1: was just: sn3_pr3_trans *)
+lemma csn_cpxs_trans: ∀h,g,L,T1. ⦃h, L⦄ ⊢ ⬊*[g] T1 →
+                      ∀T2. ⦃h, L⦄ ⊢ T1 ➡*[g] T2 → ⦃h, L⦄ ⊢ ⬊*[g] T2.
+#h #g #L #T1 #HT1 #T2 #H @(cpxs_ind … H) -T2 // /2 width=3 by csn_cpx_trans/
 qed-.
 
 (* Main eliminators *********************************************************)
 
-lemma csn_ind_alt: ∀L. ∀R:predicate term.
-                   (∀T1. L ⊢ ⬊* T1 →
-                         (∀T2. L ⊢ T1 ➡* T2 → (T1 = T2 → ⊥) → R T2) → R T1
+lemma csn_ind_alt: ∀h,g,L. ∀R:predicate term.
+                   (∀T1. ⦃h, L⦄ ⊢ ⬊*[g] T1 →
+                         (∀T2. ⦃h, L⦄ ⊢ T1 ➡*[g] T2 → (T1 = T2 → ⊥) → R T2) → R T1
                    ) →
-                   ∀T. L ⊢ ⬊* T → R T.
-#L #R #H0 #T1 #H @(csna_ind … (csn_csna … H)) -T1 #T1 #HT1 #IHT1
+                   ∀T. ⦃h, L⦄ ⊢ ⬊*[g] T → R T.
+#h #g #L #R #H0 #T1 #H @(csna_ind … (csn_csna … H)) -T1 #T1 #HT1 #IHT1
 @H0 -H0 /2 width=1/ -HT1 /3 width=1/
 qed-.

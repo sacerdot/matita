@@ -242,17 +242,29 @@ notation "hvbox( T1 ⊢ ➤ * break term 46 T2 )"
 
 (* Reduction ****************************************************************)
 
-notation "hvbox( L ⊢ break 𝐑 ⦃ term 46 T ⦄ )"
+notation "hvbox( L ⊢ 𝐑 break ⦃ term 46 T ⦄ )"
    non associative with precedence 45
    for @{ 'Reducible $L $T }.
 
-notation "hvbox( L ⊢ break 𝐈 ⦃ term 46 T ⦄ )"
+notation "hvbox( ⦃ term 46 h, break term 46 L ⦄ ⊢ 𝐑 break [ term 46 g ] break ⦃ term 46 T ⦄ )"
+   non associative with precedence 45
+   for @{ 'Reducible $h $g $L $T }.
+
+notation "hvbox( L ⊢ 𝐈 break ⦃ term 46 T ⦄ )"
    non associative with precedence 45
    for @{ 'NotReducible $L $T }.
 
-notation "hvbox( L ⊢ break 𝐍 ⦃ term 46 T ⦄ )"
+notation "hvbox( ⦃ term 46 h, break term 46 L ⦄ ⊢ 𝐈 break [ term 46 g ] break ⦃ term 46 T ⦄ )"
+   non associative with precedence 45
+   for @{ 'NotReducible $h $g $L $T }.
+
+notation "hvbox( L ⊢ 𝐍 break ⦃ term 46 T ⦄ )"
    non associative with precedence 45
    for @{ 'Normal $L $T }.
+
+notation "hvbox( ⦃ term 46 h, break term 46 L ⦄ ⊢ 𝐍 break [ term 46 g ] break ⦃ term 46 T ⦄ )"
+   non associative with precedence 45
+   for @{ 'Normal $h $g $L $T }.
 
 notation "hvbox( L ⊢ break term 46 T1 ➡ break term 46 T2 )"
    non associative with precedence 45
@@ -272,42 +284,6 @@ notation "hvbox( ⦃ term 46 h, break term 46 L1 ⦄ ⊢ ➡ break [ term 46 g ]
 
 (* Computation **************************************************************)
 
-notation "hvbox( L ⊢ break term 46 T1 ➡ * break term 46 T2 )"
-   non associative with precedence 45
-   for @{ 'PRedStar $L $T1 $T2 }.
-
-notation "hvbox( L1 ⊢ ➡* break term 46 L2 )"
-   non associative with precedence 45
-   for @{ 'PRedSnStar $L1 $L2 }.
-
-notation "hvbox( L1 ⊢ ➡➡* break term 46 L2 )"
-   non associative with precedence 45
-   for @{ 'PRedSnStarAlt $L1 $L2 }.
-
-notation "hvbox( L ⊢ break term 46 T1 ➡ * break 𝐍 ⦃ term 46 T2 ⦄ )"
-   non associative with precedence 45
-   for @{ 'PEval $L $T1 $T2 }.
-
-notation "hvbox( L ⊢ ⬊ * break term 46 T )"
-   non associative with precedence 45
-   for @{ 'SN $L $T }.
-
-notation "hvbox( L ⊢ ⬊ ⬊ * break term 46 T )"
-   non associative with precedence 45
-   for @{ 'SNAlt $L $T }.
-
-notation "hvbox( ⦃ term 46 h, break term 46 L ⦄ ⊢ break term 46 T1 ➡ * break [ term 46 g ] break term 46 T2 )"
-   non associative with precedence 45
-   for @{ 'PRedStar $h $g $L $T1 $T2 }.
-
-notation "hvbox( ⦃ term 46 h, break term 46 L ⦄ ⊢ ⬊ * break [ term 46 g ] break term 46 T )"
-   non associative with precedence 45
-   for @{ 'SN $h $g $L $T }.
-
-notation "hvbox( ⦃ term 46 h, break term 46 L ⦄ ⊢ ⬊ ⬊ * break [ term 46 g ] break term 46 T )"
-   non associative with precedence 45
-   for @{ 'SNAlt $h $g $L $T }.
-
 notation "hvbox( ⦃ term 46 L, break term 46 T ⦄ ϵ break [ term 46 R ] break 〚term 46  A 〛 )"
    non associative with precedence 45
    for @{ 'InEInt $R $L $T $A }.
@@ -316,13 +292,45 @@ notation "hvbox( T1 ⊑ break [ term 46 R ] break term 46 T2 )"
    non associative with precedence 45
    for @{ 'CrSubEq $T1 $R $T2 }.
 
+notation "hvbox( L ⊢ break term 46 T1 ➡ * break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'PRedStar $L $T1 $T2 }.
+
+notation "hvbox( ⦃ term 46 h, break term 46 L ⦄ ⊢ break term 46 T1 ➡ * break [ term 46 g ] break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'PRedStar $h $g $L $T1 $T2 }.
+
+notation "hvbox( L1 ⊢ ➡* break term 46 L2 )"
+   non associative with precedence 45
+   for @{ 'PRedSnStar $L1 $L2 }.
+
+notation "hvbox( ⦃ term 46 h, break term 46 L1 ⦄ ⊢ ➡ * break [ term 46 g ] break term 46 L2 )"
+   non associative with precedence 45
+   for @{ 'PRedSnStar $h $g $L1 $L2 }.
+
+notation "hvbox( L1 ⊢ ➡ ➡ * break term 46 L2 )"
+   non associative with precedence 45
+   for @{ 'PRedSnStarAlt $L1 $L2 }.
+
+notation "hvbox( ⦃ term 46 h, break term 46 L1 ⦄ ⊢ ➡ ➡ * break [ term 46 g ] break term 46 L2 )"
+   non associative with precedence 45
+   for @{ 'PRedSnStarAlt $h $g $L1 $L2 }.
+
 notation "hvbox( ⦃ term 46 h , break term 46 L ⦄ ⊢ break term 46 T1 • * ➡ * break [ term 46 g ] break term 46 T2 )"
    non associative with precedence 45
-   for @{ 'DecomposedXPRedStar $h $g $L $T1 $T2 }.
+   for @{ 'DecomposedPRedStar $h $g $L $T1 $T2 }.
 
-notation "hvbox( ⦃ term 46 h , break term 46 L ⦄ ⊢ • * ⬊ * break [ term 46 g ] break term 46 T2 )"
+notation "hvbox( L ⊢ break term 46 T1 ➡ * break 𝐍 ⦃ term 46 T2 ⦄ )"
    non associative with precedence 45
-   for @{ 'DecomposedXSN $h $g $L $T }.
+   for @{ 'PEval $L $T1 $T2 }.
+
+notation "hvbox( ⦃ term 46 h, break term 46 L ⦄ ⊢ ⬊ * break [ term 46 g ] break term 46 T )"
+   non associative with precedence 45
+   for @{ 'SN $h $g $L $T }.
+
+notation "hvbox( ⦃ term 46 h, break term 46 L ⦄ ⊢ ⬊ ⬊ * break [ term 46 g ] break term 46 T )"
+   non associative with precedence 45
+   for @{ 'SNAlt $h $g $L $T }.
 
 (* Conversion ***************************************************************)
 

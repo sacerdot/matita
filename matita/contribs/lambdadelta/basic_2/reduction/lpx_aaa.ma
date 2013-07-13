@@ -16,7 +16,7 @@ include "basic_2/static/aaa_lift.ma".
 include "basic_2/static/lsuba_aaa.ma".
 include "basic_2/reduction/lpx_ldrop.ma".
 
-(* SN PARALLEL REDUCTION FOR LOCAL ENVIRONMENTS *****************************)
+(* SN EXTENDED PARALLEL REDUCTION FOR LOCAL ENVIRONMENTS ********************)
 
 (* Properties on atomic arity assignment for terms **************************)
 

@@ -92,6 +92,11 @@ let rec sd_l (h:sh) (k:nat) (l:nat) on l : sd h ≝
 
 (* Basic properties *********************************************************)
 
+lemma deg_iter: ∀h,g,k,l1,l2. deg h g k l1 → deg h g ((next h)^l2 k) (l1-l2).
+#h #g #k #l1 #l2 @(nat_ind_plus … l2) -l2  [ <minus_n_O // ]
+#l2 #IHl2 #Hkl1 >iter_SO <minus_plus /3 width=1/
+qed.
+
 lemma deg_pred: ∀h,g,k,l. deg h g (next h k) (l + 1) → deg h g k (l + 2).
 #h #g #k #l #H1
 elim (deg_total h g k) #l0 #H0

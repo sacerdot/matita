@@ -12,23 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reduction/crf_append.ma".
-include "basic_2/reduction/cif.ma".
+include "basic_2/reduction/crx_append.ma".
+include "basic_2/reduction/cix.ma".
 
-(* CONTEXT-SENSITIVE IRREDUCIBLE TERMS **************************************)
-
-(* Advanved properties ******************************************************)
-
-lemma cif_labst_last: ∀L,T,W. L ⊢ 𝐈⦃T⦄  → ⋆.ⓛW @@ L ⊢ 𝐈⦃T⦄.
-/3 width=2 by crf_inv_labst_last/ qed.
-
-lemma cif_tif: ∀T,W. ⋆ ⊢ 𝐈⦃T⦄ → ⋆.ⓛW ⊢ 𝐈⦃T⦄.
-/3 width=2 by crf_inv_trf/ qed.
+(* CONTEXT-SENSITIVE EXTENDED IRREDUCIBLE TERMS *****************************)
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma cif_inv_labst_last: ∀L,T,W. ⋆.ⓛW @@ L ⊢ 𝐈⦃T⦄  → L ⊢ 𝐈⦃T⦄.
+lemma cix_inv_append_sn: ∀h,g,L,K,T. ⦃h, K @@ L⦄ ⊢ 𝐈[g]⦃T⦄  → ⦃h, L⦄ ⊢ 𝐈[g]⦃T⦄.
 /3 width=1/ qed-.
 
-lemma cif_inv_tif: ∀T,W. ⋆.ⓛW ⊢ 𝐈⦃T⦄  → ⋆ ⊢ 𝐈⦃T⦄.
+lemma cix_inv_tix: ∀h,g,L,T. ⦃h, L⦄ ⊢ 𝐈[g]⦃T⦄  → ⦃h, ⋆⦄ ⊢ 𝐈[g]⦃T⦄.
 /3 width=1/ qed-.

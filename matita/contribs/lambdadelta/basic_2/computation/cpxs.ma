@@ -12,10 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reduction/cpx.ma".
+include "basic_2/reduction/cnx.ma".
 include "basic_2/computation/cprs.ma".
 
-(* EXTENDED CONTEXT-SENSITIVE PARALLEL COMPUTATION ON TERMS *****************)
+(* CONTEXT-SENSITIVE EXTENDED PARALLEL COMPUTATION ON TERMS *****************)
 
 definition cpxs: ∀h. sd h → lenv → relation term ≝
                  λh,g. LTC … (cpx h g).
@@ -146,4 +146,10 @@ lemma cpxs_inv_cast1: ∀h,g,L,W1,T1,U2. ⦃h, L⦄ ⊢ ⓝW1.T1 ➡*[g] U2 → 
 #W #T #HW1 #HT1 #H destruct
 elim (cpx_inv_cast1 … HU2) -HU2 /3 width=3/ *
 #W2 #T2 #HW2 #HT2 #H destruct /4 width=5/
+qed-.
+
+lemma cpxs_inv_cnx1: ∀h,g,L,T,U. ⦃h, L⦄ ⊢ T ➡*[g] U → ⦃h, L⦄ ⊢ 𝐍[g]⦃T⦄ → T = U.
+#h #g #L #T #U #H @(cpxs_ind_dx … H) -T //
+#T0 #T #H1T0 #_ #IHT #H2T0
+lapply (H2T0 … H1T0) -H1T0 #H destruct /2 width=1/
 qed-.

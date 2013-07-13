@@ -12,20 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reduction/lpr_lpr.ma".
-include "basic_2/computation/lprs.ma".
+include "basic_2/computation/lpxs.ma".
 
-(* SN PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS ****************************)
-
-(* Advanced properties ******************************************************)
-
-lemma lprs_strip: confluent2 … lprs lpr.
-/3 width=3 by TC_strip1, lpr_conf/ qed-.
+(* SN EXTENDED PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS *******************)
 
 (* Main properties **********************************************************)
 
-theorem lprs_conf: confluent2 … lprs lprs.
-/3 width=3 by TC_confluent2, lpr_conf/ qed-.
-
-theorem lprs_trans: Transitive … lprs.
+theorem lpxs_trans: ∀h,g. Transitive … (lpxs h g).
 /2 width=3/ qed-.

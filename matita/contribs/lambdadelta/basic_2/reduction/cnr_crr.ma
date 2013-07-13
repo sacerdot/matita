@@ -12,17 +12,35 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reduction/cpr_cif.ma".
-include "basic_2/reduction/cnf_crf.ma".
+include "basic_2/reduction/crr.ma".
+include "basic_2/reduction/cnr.ma".
 
 (* CONTEXT-SENSITIVE NORMAL TERMS *******************************************)
 
-(* Main properties on context-sensitive irreducible terms *******************)
+(* Advanced inversion lemmas on context-sensitive reducible terms ***********)
 
-theorem cif_cnf: ∀L,T. L ⊢ 𝐈⦃T⦄ → L ⊢ 𝐍⦃T⦄.
-/2 width=3 by cpr_fwd_cif/ qed.
-
-(* Main inversion lemmas on context-sensitive irreducible terms *************)
-
-theorem cnf_inv_cif: ∀L,T. L ⊢ 𝐍⦃T⦄ → L ⊢ 𝐈⦃T⦄.
-/2 width=4 by cnf_inv_crf/ qed-.
+(* Note: this property is unusual *)
+lemma cnr_inv_crr: ∀L,T. L ⊢ 𝐑⦃T⦄ → L ⊢ 𝐍⦃T⦄ → ⊥.
+#L #T #H elim H -L -T
+[ #L #K #V #i #HLK #H
+  elim (cnr_inv_delta … HLK H)
+| #L #V #T #_ #IHV #H
+  elim (cnr_inv_appl … H) -H /2 width=1/
+| #L #V #T #_ #IHT #H
+  elim (cnr_inv_appl … H) -H /2 width=1/
+| #I #L #V #T * #H1 #H2 destruct
+  [ elim (cnr_inv_zeta … H2)
+  | elim (cnr_inv_tau … H2)
+  ]
+|5,6: #a * [ elim a ] #L #V #T * #H1 #_ #IH #H2 destruct
+  [1,3: elim (cnr_inv_abbr … H2) -H2 /2 width=1/
+  |*: elim (cnr_inv_abst … H2) -H2 /2 width=1/
+  ]
+| #a #L #V #W #T #H
+  elim (cnr_inv_appl … H) -H #_ #_ #H
+  elim (simple_inv_bind … H)
+| #a #L #V #W #T #H
+  elim (cnr_inv_appl … H) -H #_ #_ #H
+  elim (simple_inv_bind … H)
+]
+qed-.

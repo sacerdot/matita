@@ -83,22 +83,23 @@ table {
              [ "dxprs ( ⦃?,?⦄ ⊢ ? •*➡*[?] ? )" "dxprs_lift" + "dxprs_lpss" + "dxprs_aaa" + "dxprs_dxprs" * ]
           }
         ]
-        [ { "context-sensitive extended computation" * } {
-             [ "cpxs ( ⦃?,?⦄ ⊢ ? ➡*[?] ? )" "cpxs_lift" * ]
-          }
-        ]
         [ { "weakly normalizing computation" * } {
              [ "cpe ( ? ⊢ ➡* 𝐍⦃?⦄ )" "cpe_cpe" * ]
           }
         ]
         [ { "strongly normalizing computation" * } {
              [ "csn_vector ( ? ⊢ ⬊* ? )" "csn_tstc_vector" + "csn_aaa" * ]
-             [ "csn ( ? ⊢ ⬊* ? )" "csn_alt ( ? ⊢ ⬊⬊* ? )" "csn_lift" + "csn_lpr" * ]
+             [ "csn ( ? ⊢ ⬊* ? )" "csn_alt ( ? ⊢ ⬊⬊* ? )" "csn_lift" + "csn_lpx" * ]
+          }
+        ]
+        [ { "context-sensitive extended computation" * } {
+             [ "lpxs ( ⦃?,?⦄ ⊢ ➡*[?] ? )" "lpxs_alt ( ⦃?,?⦄ ⊢ ➡➡*[?] ? )" "lpxs_ldrop" + "lpxs_aaa" + "lpxs_cpxs" + "lpxs_lpxs" * ]
+             [ "cpxs ( ⦃?,?⦄ ⊢ ? ➡*[?] ? )" "cpxs_tstc" + "cpxs_tstc_vector" + "cpxs_lift" + "cpxs_aaa" + "cpxs_cpxs" * ]
           }
         ]
         [ { "context-sensitive computation" * } {
-             [ "lprs ( ? ⊢ ➡* ? )" "lprs_alt ( ? ⊢ ➡➡* ? )" "lprs_ldrop" + "lprs_lpss" + "lprs_aaa" + "lprs_cprs" + "lprs_lprs" * ]
-             [ "cprs ( ? ⊢ ? ➡* ?)" "cprs_tstc" + "cprs_tstc_vector" + "cprs_lift" + "cprs_lpss" + "cprs_aaa" + "cprs_cprs" * ]
+             [ "lprs ( ? ⊢ ➡* ? )" "lprs_alt ( ? ⊢ ➡➡* ? )" "lprs_ldrop" + "lprs_lpss" + "lprs_cprs" + "lprs_lprs" * ]
+             [ "cprs ( ? ⊢ ? ➡* ?)" "cprs_lift" + "cprs_lpss" + "cprs_cprs" * ]
           }
         ]
         [ { "local env. ref. for abstract candidates of reducibility" * } {
@@ -113,22 +114,38 @@ table {
    ]
    class "water"
    [ { "reduction" * } {
+        [ { "context-sensitive extended normal forms" * } {
+             [ "cnx ( ⦃?,?⦄ ⊢ 𝐍[?]⦃?⦄ )" "cnx_lift" + "cnx_crx" + "cnx_cix" * ]
+          }
+        ]
         [ { "context-sensitive extended reduction" * } {
              [ "lpx ( ⦃?,?⦄ ⊢ ➡[?] ? )" "lpx_ldrop" + "lpx_aaa" * ]
-             [ "cpx ( ⦃?,?⦄ ⊢ ? ➡[?] ? )" "cpx_lift" * ]
+             [ "cpx ( ⦃?,?⦄ ⊢ ? ➡[?] ? )" "cpx_lift" + "cpx_cix" * ]
+          }
+        ]
+        [ { "context-sensitive extended irreducible forms" * } {
+             [ "cix ( ⦃?,?⦄ ⊢ 𝐈[?]⦃?⦄ )" "cix_append" + "cix_lift" * ]
+          }
+        ]
+        [ { "context-sensitive extended reducible forms" * } {
+             [ "crx ( ⦃?,?⦄ ⊢ 𝐑[?]⦃?⦄ )" "crx_append" + "crx_lift" * ]
           }
         ]
         [ { "context-sensitive normal forms" * } {
-             [ "cnf ( ? ⊢ 𝐍⦃?⦄ )" "cnf_liftt" + "cnf_crf" + "cnf_cif" * ]
+             [ "cnr ( ? ⊢ 𝐍⦃?⦄ )" "cnr_lift" + "cnr_crr" + "cnr_cir" * ]
           }
         ]
         [ { "context-sensitive reduction" * } {
              [ "lpr ( ? ⊢ ➡ ? )" "lpr_ldrop" + "lpr_lpss" + "lpr_lpr" * ]
-             [ "cpr ( ? ⊢ ? ➡ ? )" "cpr_lift" + "cpr_cif" * ]
+             [ "cpr ( ? ⊢ ? ➡ ? )" "cpr_lift" + "cpr_cir" * ]
+          }
+        ]
+        [ { "context-sensitive irreducible forms" * } {
+             [ "cir ( ? ⊢ 𝐈⦃?⦄ )" "cir_append" + "cir_lift" * ]
           }
         ]
         [ { "context-sensitive reducible forms" * } {
-             [ "crf ( ? ⊢ 𝐑⦃?⦄ )" "crf_append" "cif ( ? ⊢ 𝐈⦃?⦄ )" "cif_append" * ]
+             [ "crr ( ? ⊢ 𝐑⦃?⦄ )" "crr_append" + "crr_lift" * ]
           }
         ]
      }
@@ -224,7 +241,7 @@ table {
    ]
    class "red"
    [ { "grammar" * } {
-	[ { "pointwise extension of a relation" * } {
+        [ { "pointwise extension of a relation" * } {
              [ "lpx_sn" "lpx_sn_tc" + "lpx_sn_lpx_sn" * ]
           }
         ]

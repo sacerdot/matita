@@ -135,6 +135,8 @@ qed.
 axiom ldrop_div: ∀e1,L1,L. ⇩[0, e1] L1 ≡ L → ∀e2,L2. ⇩[0, e2] L2 ≡ L →
                  ∃∃L0. ⇩[0, e1] L0 ≡ L2 & ⇩[e1, e2] L0 ≡ L1.
 
+(* Advanced properties ******************************************************)
+
 (* Basic_1: was: drop_conf_lt *)
 lemma ldrop_conf_lt: ∀d1,e1,L,L1. ⇩[d1, e1] L ≡ L1 →
                      ∀e2,K2,I,V2. ⇩[0, e2] L ≡ K2. ⓑ{I} V2 →
@@ -145,6 +147,17 @@ lemma ldrop_conf_lt: ∀d1,e1,L,L1. ⇩[d1, e1] L ≡ L1 →
 elim (ldrop_conf_le … H1 … H2) -L [2: /2 width=2/] #K #HL1K #HK2
 elim (ldrop_inv_skip1 … HK2) -HK2 [2: /2 width=1/] #K1 #V1 #HK21 #HV12 #H destruct /2 width=5/
 qed.
+
+(* Note: apparently this was missing in basic_1 *)
+lemma ldrop_trans_lt: ∀d1,e1,L1,L. ⇩[d1, e1] L1 ≡ L →
+                      ∀e2,L2,I,V2. ⇩[0, e2] L ≡ L2.ⓑ{I}V2 →
+                      e2 < d1 → let d ≝ d1 - e2 - 1 in
+                      ∃∃L0,V0. ⇩[0, e2] L1 ≡ L0.ⓑ{I}V0 &
+                               ⇩[d, e1] L0 ≡ L2 & ⇧[d, e1] V2 ≡ V0.
+#d1 #e1 #L1 #L #HL1 #e2 #L2 #I #V2 #HL2 #Hd21
+elim (ldrop_trans_le … HL1 … HL2) -L [2: /2 width=1/ ] #L0 #HL10 #HL02
+elim (ldrop_inv_skip2 … HL02) -HL02 [2: /2 width=1/ ] #L #V1 #HL2 #HV21 #H destruct /2 width=5/
+qed-.
 
 lemma ldrop_trans_ge_comm: ∀d1,e1,e2,L1,L2,L.
                            ⇩[d1, e1] L1 ≡ L → ⇩[0, e2] L ≡ L2 → d1 ≤ e2 →

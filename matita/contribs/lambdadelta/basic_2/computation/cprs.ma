@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reduction/cnf.ma".
+include "basic_2/reduction/cnr.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL COMPUTATION ON TERMS **************************)
 
@@ -168,7 +168,7 @@ elim (cpr_inv_cast1 … HU2) -HU2 /3 width=3/ *
 qed-.
 
 (* Basic_1: was: nf2_pr3_unfold *)
-lemma cprs_inv_cnf1: ∀L,T,U. L ⊢ T ➡* U → L ⊢ 𝐍⦃T⦄ → T = U.
+lemma cprs_inv_cnr1: ∀L,T,U. L ⊢ T ➡* U → L ⊢ 𝐍⦃T⦄ → T = U.
 #L #T #U #H @(cprs_ind_dx … H) -T //
 #T0 #T #H1T0 #_ #IHT #H2T0
 lapply (H2T0 … H1T0) -H1T0 #H destruct /2 width=1/

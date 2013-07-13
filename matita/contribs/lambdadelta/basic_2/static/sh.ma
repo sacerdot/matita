@@ -33,6 +33,12 @@ lapply (next_lt h ((next h)^l k)) #H
 lapply (le_to_lt_to_lt … IHl H) -IHl -H /2 width=2/
 qed.
 
+lemma nexts_lt: ∀h,k,l. k < (next h)^(l+1) k.
+#h #k #l >iter_SO
+lapply (nexts_le h k l) #H
+@(le_to_lt_to_lt … H) //
+qed.
+
 axiom nexts_dec: ∀h,k1,k2. Decidable (∃l. (next h)^l k1 = k2).
 
 axiom nexts_inj: ∀h,k,l1,l2. (next h)^l1 k = (next h)^l2 k → l1 = l2.

@@ -12,20 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reduction/lpr_lpr.ma".
-include "basic_2/computation/lprs.ma".
+include "basic_2/reduction/lpx_aaa.ma".
+include "basic_2/computation/cpxs.ma".
 
-(* SN PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS ****************************)
+(* CONTEXT-SENSITIVE EXTENDED PARALLEL COMPUTATION ON TERMS *****************)
 
-(* Advanced properties ******************************************************)
+(* Properties about atomic arity assignment on terms ************************)
 
-lemma lprs_strip: confluent2 … lprs lpr.
-/3 width=3 by TC_strip1, lpr_conf/ qed-.
+lemma aaa_cpxs_conf: ∀h,g,L,T1,A. L ⊢ T1 ⁝ A →
+                     ∀T2. ⦃h, L⦄ ⊢ T1 ➡*[g] T2 → L ⊢ T2 ⁝ A.
+#h #g #L #T1 #A #HT1 #T2 #HT12
+@(TC_Conf3 … HT1 ? HT12) -A -T1 -T2 /2 width=5 by aaa_cpx_conf/
+qed-.
 
-(* Main properties **********************************************************)
-
-theorem lprs_conf: confluent2 … lprs lprs.
-/3 width=3 by TC_confluent2, lpr_conf/ qed-.
-
-theorem lprs_trans: Transitive … lprs.
-/2 width=3/ qed-.
+lemma aaa_cprs_conf: ∀L,T1,A. L ⊢ T1 ⁝ A → ∀T2. L ⊢ T1 ➡* T2 → L ⊢ T2 ⁝ A.
+/3 width=5 by aaa_cpxs_conf, cprs_cpxs/ qed-.

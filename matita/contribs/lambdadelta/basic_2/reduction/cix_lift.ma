@@ -12,20 +12,24 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reduction/lpr_lpr.ma".
-include "basic_2/computation/lprs.ma".
+include "basic_2/reduction/crx_lift.ma".
+include "basic_2/reduction/cix.ma".
 
-(* SN PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS ****************************)
+(* CONTEXT-SENSITIVE EXTENDED IRREDUCIBLE TERMS *****************************)
 
 (* Advanced properties ******************************************************)
 
-lemma lprs_strip: confluent2 … lprs lpr.
-/3 width=3 by TC_strip1, lpr_conf/ qed-.
+lemma cix_lref: ∀h,g,L,i. ⇩[0, i] L ≡ ⋆ → ⦃h, L⦄ ⊢ 𝐈[g]⦃#i⦄.
+#h #g #L #i #HL #H elim (crx_inv_lref … H) -h #I #K #V #HLK
+lapply (ldrop_mono … HLK … HL) -L -i #H destruct
+qed.
 
-(* Main properties **********************************************************)
+(* Properties on relocation *************************************************)
 
-theorem lprs_conf: confluent2 … lprs lprs.
-/3 width=3 by TC_confluent2, lpr_conf/ qed-.
+lemma cix_lift: ∀h,g,K,T. ⦃h, K⦄ ⊢ 𝐈[g]⦃T⦄ → ∀L,d,e. ⇩[d, e] L ≡ K →
+                ∀U. ⇧[d, e] T ≡ U → ⦃h, L⦄ ⊢ 𝐈[g]⦃U⦄.
+/3 width=7 by crx_inv_lift/ qed.
 
-theorem lprs_trans: Transitive … lprs.
-/2 width=3/ qed-.
+lemma cix_inv_lift: ∀h,g,L,U. ⦃h, L⦄ ⊢ 𝐈[g]⦃U⦄ → ∀K,d,e. ⇩[d, e] L ≡ K →
+                    ∀T. ⇧[d, e] T ≡ U → ⦃h, K⦄ ⊢ 𝐈[g]⦃T⦄.
+/3 width=7/ qed-.

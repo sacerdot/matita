@@ -12,14 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reduction/lpx_aaa.ma".
-include "basic_2/computation/cprs.ma".
+include "basic_2/reduction/lpx_ldrop.ma".
+include "basic_2/computation/lpxs.ma".
 
-(* CONTEXT-SENSITIVE PARALLEL COMPUTATION ON TERMS **************************)
+(* SN EXTENDED PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS *******************)
 
-(* Properties about atomic arity assignment on terms ************************)
+(* Properies on local environment slicing ***********************************)
 
-lemma aaa_cprs_conf: ∀L,T1,A. L ⊢ T1 ⁝ A → ∀T2. L ⊢ T1 ➡* T2 → L ⊢ T2 ⁝ A.
-#L #T1 #A #HT1 #T2 #HT12
-@(TC_Conf3 … HT1 ? HT12) -A -T1 -T2 /2 width=3 by aaa_cpr_conf/
-qed-.
+lemma lpxs_ldrop_conf: ∀h,g. dropable_sn (lpxs h g).
+/3 width=3 by dropable_sn_TC, lpx_ldrop_conf/ qed-.
+
+lemma ldrop_lpxs_trans: ∀h,g. dedropable_sn (lpxs h g).
+/3 width=3 by dedropable_sn_TC, ldrop_lpx_trans/ qed-.
+
+lemma lpxs_ldrop_trans_O1: ∀h,g. dropable_dx (lpxs h g).
+/3 width=3 by dropable_dx_TC, lpx_ldrop_trans_O1/ qed-.

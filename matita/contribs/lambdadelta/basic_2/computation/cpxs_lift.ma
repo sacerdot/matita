@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/substitution/fsups_fsups.ma".
 include "basic_2/reduction/cpx_lift.ma".
 include "basic_2/computation/cpxs.ma".
 
@@ -47,18 +48,14 @@ qed-.
 
 (* Relocation properties ****************************************************)
 
-(* Basic_1: was: pr3_lift *)
 lemma cpxs_lift: ∀h,g. l_liftable (cpxs h g).
 /3 width=9/ qed.
 
-(* Basic_1: was: pr3_gen_lift *)
 lemma cpxs_inv_lift1: ∀h,g. l_deliftable_sn (cpxs h g).
 /3 width=5 by l_deliftable_sn_LTC, cpx_inv_lift1/
 qed-.
 
 (* Properties on supclosure *************************************************)
-
-include "basic_2/substitution/fsups.ma".
 
 lemma fsupq_cpxs_trans: ∀h,g,L1,L2,T2,U2. ⦃h, L2⦄ ⊢ T2 ➡*[g] U2 →
                         ∀T1. ⦃L1, T1⦄ ⊃⸮ ⦃L2, T2⦄ →
@@ -67,6 +64,16 @@ lemma fsupq_cpxs_trans: ∀h,g,L1,L2,T2,U2. ⦃h, L2⦄ ⊢ T2 ➡*[g] U2 →
 #T #T2 #HT2 #_ #IHTU2 #T1 #HT1
 elim (fsupq_cpx_trans … HT1 … HT2) -T #T #HT1 #HT2
 elim (IHTU2 … HT2) -T2 /3 width=3/
+qed-.
+
+lemma fsups_cpxs_trans: ∀h,g,L1,L2,T1,T2. ⦃L1, T1⦄ ⊃* ⦃L2, T2⦄ →
+                        ∀U2. ⦃h, L2⦄ ⊢ T2 ➡*[g] U2 →
+                        ∃∃U1. ⦃h, L1⦄ ⊢ T1 ➡*[g] U1 & ⦃L1, U1⦄ ⊃* ⦃L2, U2⦄.
+#h #g #L1 #L2 #T1 #T2 #H @(fsups_ind … H) -L2 -T2 [ /2 width=3/ ]
+#L #L2 #T #T2 #_ #HT2 #IHT1 #U2 #HTU2
+elim (fsupq_cpxs_trans … HTU2 … HT2) -T2 #T2 #HT2 #HTU2
+elim (IHT1 … HT2) -T #T #HT1 #HT2
+lapply (fsups_trans … HT2 … HTU2) -L -T2 /2 width=3/
 qed-.
 
 lemma fsup_ssta_trans: ∀h,g,L1,L2,T1,T2. ⦃L1, T1⦄ ⊃ ⦃L2, T2⦄ →

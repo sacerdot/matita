@@ -12,20 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reduction/lpr_lpr.ma".
-include "basic_2/computation/lprs.ma".
+include "basic_2/reduction/crr_append.ma".
+include "basic_2/reduction/cir.ma".
 
-(* SN PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS ****************************)
+(* CONTEXT-SENSITIVE IRREDUCIBLE TERMS **************************************)
 
-(* Advanced properties ******************************************************)
+(* Advanved properties ******************************************************)
 
-lemma lprs_strip: confluent2 … lprs lpr.
-/3 width=3 by TC_strip1, lpr_conf/ qed-.
+lemma cir_labst_last: ∀L,T,W. L ⊢ 𝐈⦃T⦄  → ⋆.ⓛW @@ L ⊢ 𝐈⦃T⦄.
+/3 width=2 by crr_inv_labst_last/ qed.
 
-(* Main properties **********************************************************)
+lemma cir_tif: ∀T,W. ⋆ ⊢ 𝐈⦃T⦄ → ⋆.ⓛW ⊢ 𝐈⦃T⦄.
+/3 width=2 by crr_inv_trr/ qed.
 
-theorem lprs_conf: confluent2 … lprs lprs.
-/3 width=3 by TC_confluent2, lpr_conf/ qed-.
+(* Advanced inversion lemmas ************************************************)
 
-theorem lprs_trans: Transitive … lprs.
-/2 width=3/ qed-.
+lemma cir_inv_append_sn: ∀L,K,T. K @@ L ⊢ 𝐈⦃T⦄  → L ⊢ 𝐈⦃T⦄.
+/3 width=1/ qed-.
+
+lemma cir_inv_tir: ∀T,W. ⋆.ⓛW ⊢ 𝐈⦃T⦄  → ⋆ ⊢ 𝐈⦃T⦄.
+/3 width=1/ qed-.

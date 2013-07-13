@@ -58,7 +58,7 @@ lemma ldrop_lsubc_trans: ∀RR,RS,RP.
   | #K2 #W2 #A #HV2 #HW2 #HK12 #H1 #H2 destruct
     elim (IHLK1 … HK12) #K #HL1K #HK2
     lapply (aacr_acr … Hacp Hacr A) -Hacp -Hacr #HA
-    lapply (s7 … HA … HV2 … HLK1 HV21) -HV2
+    lapply (s8 … HA … HV2 … HLK1 HV21) -HV2
     elim (lift_total W2 d e) /4 width=9/
   ]
 ]

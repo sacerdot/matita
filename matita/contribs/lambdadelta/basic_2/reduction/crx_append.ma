@@ -12,20 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reduction/lpr_lpr.ma".
-include "basic_2/computation/lprs.ma".
+include "basic_2/relocation/ldrop_append.ma".
+include "basic_2/reduction/crx.ma".
 
-(* SN PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS ****************************)
+(* CONTEXT-SENSITIVE EXTENDED REDUCIBLE TERMS *******************************)
 
-(* Advanced properties ******************************************************)
+(* Advanved properties ******************************************************)
 
-lemma lprs_strip: confluent2 … lprs lpr.
-/3 width=3 by TC_strip1, lpr_conf/ qed-.
+lemma crx_append_sn: ∀h,g,L,K,T. ⦃h, L⦄ ⊢ 𝐑[g]⦃T⦄  → ⦃h, K @@ L⦄ ⊢ 𝐑[g]⦃T⦄.
+#h #g #L #K0 #T #H elim H -L -T /2 width=1/ /2 width=2/
+#I #L #K #V #i #HLK
+lapply (ldrop_fwd_length_lt2 … HLK) #Hi
+lapply (ldrop_O1_append_sn_le … HLK … K0) -HLK /2 width=2/ -Hi /2 width=4/
+qed.
 
-(* Main properties **********************************************************)
-
-theorem lprs_conf: confluent2 … lprs lprs.
-/3 width=3 by TC_confluent2, lpr_conf/ qed-.
-
-theorem lprs_trans: Transitive … lprs.
-/2 width=3/ qed-.
+lemma trx_crx: ∀h,g,L,T. ⦃h, ⋆⦄ ⊢ 𝐑[g]⦃T⦄ → ⦃h, L⦄ ⊢ 𝐑[g]⦃T⦄.
+#h #g #L #T #H lapply (crx_append_sn … H) //
+qed.

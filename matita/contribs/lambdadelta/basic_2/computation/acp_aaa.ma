@@ -32,7 +32,7 @@ theorem aacr_aaa_csubc_lifts: ∀RR,RS,RP.
 [ #L #k #L0 #des #HL0 #X #H #L2 #HL20
   >(lifts_inv_sort1 … H) -H
   lapply (aacr_acr … H1RP H2RP (⓪)) #HAtom
-  @(s2 … HAtom … ◊) // /2 width=2/
+  @(s4 … HAtom … ◊) //
 | #I #L1 #K1 #V1 #B #i #HLK1 #HKV1B #IHB #L0 #des #HL01 #X #H #L2 #HL20
   lapply (aacr_acr … H1RP H2RP B) #HB
   elim (lifts_inv_lref1 … H) -H #i1 #Hi1 #H destruct
@@ -43,27 +43,24 @@ theorem aacr_aaa_csubc_lifts: ∀RR,RS,RP.
   elim (lsubc_ldrop_O1_trans … HL20 … HL0) -HL0 #X #HLK2 #H
   elim (lsubc_inv_pair2 … H) -H *
   [ #K2 #HK20 #H destruct
-    generalize in match HLK2; generalize in match I; -HLK2 -I * #HLK2
-    [ elim (lift_total V0 0 (i0 +1)) #V #HV0
-      elim (lifts_lift_trans  … Hi0 … Hdes0 … HV10 … HV0) -HV10 #V2 #HV12 #HV2
-      @(s4 … HB … ◊ … HV0 HLK2) /3 width=7/ (* uses IHB HL20 V2 HV0 *)
-    | @(s2 … HB … ◊) // /2 width=3/
-    ]
+    elim (lift_total V0 0 (i0 +1)) #V #HV0
+    elim (lifts_lift_trans  … Hi0 … Hdes0 … HV10 … HV0) -HV10 #V2 #HV12 #HV2
+    @(s5 … HB … ◊ … HV0 HLK2) /3 width=7/ (* uses IHB HL20 V2 HV0 *)
   | -HLK1 -IHB -HL01 -HL20 -HK1b -Hi0 -Hdes0
     #K2 #V2 #A2 #HKV2A #HKV0A #_ #H1 #H2 destruct
     lapply (ldrop_fwd_ldrop2 … HLK2) #HLK2b
     lapply (aaa_lifts … HK01 … HV10 HKV1B) -HKV1B -HK01 -HV10 #HKV0B
     >(aaa_mono … HKV0A … HKV0B) in HKV2A; -HKV0A -HKV0B #HKV2B
     elim (lift_total V2 0 (i0 +1)) #V #HV2
-    @(s4 … HB … ◊ … HV2 HLK2)
-    @(s7 … HB … HKV2B) //
+    @(s5 … HB … ◊ … HV2 HLK2)
+    @(s8 … HB … HKV2B) //
   ]
 | #a #L #V #T #B #A #_ #_ #IHB #IHA #L0 #des #HL0 #X #H #L2 #HL20
   elim (lifts_inv_bind1 … H) -H #V0 #T0 #HV0 #HT0 #H destruct
   lapply (aacr_acr … H1RP H2RP A) #HA
   lapply (aacr_acr … H1RP H2RP B) #HB
   lapply (s1 … HB) -HB #HB
-  @(s5 … HA … ◊ ◊) // /3 width=5/
+  @(s6 … HA … ◊ ◊) // /3 width=5/
 | #a #L #W #T #B #A #HLWB #_ #IHB #IHA #L0 #des #HL0 #X #H #L2 #HL02
   elim (lifts_inv_bind1 … H) -H #W0 #T0 #HW0 #HT0 #H destruct
   @(aacr_abst  … H1RP H2RP)
@@ -84,7 +81,7 @@ theorem aacr_aaa_csubc_lifts: ∀RR,RS,RP.
   elim (lifts_inv_flat1 … H) -H #V0 #T0 #HV0 #HT0 #H destruct
   lapply (aacr_acr … H1RP H2RP A) #HA
   lapply (s1 … HA) #H
-  @(s6 … HA … ◊) /2 width=5/ /3 width=5/
+  @(s7 … HA … ◊) /2 width=5/ /3 width=5/
 ]
 qed.
 

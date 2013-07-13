@@ -117,6 +117,10 @@ qed.
 definition NF: ∀A. relation A → relation A → predicate A ≝
    λA,R,S,a1. ∀a2. R a1 a2 → S a2 a1.
 
+definition NF_dec: ∀A. relation A → relation A → Prop ≝
+                   λA,R,S. ∀a1. NF A R S a1 ∨
+                   ∃∃a2. R … a1 a2 & (S a2 a1 → ⊥). 
+
 inductive SN (A) (R,S:relation A): predicate A ≝
 | SN_intro: ∀a1. (∀a2. R a1 a2 → (S a2 a1 → ⊥) → SN A R S a2) → SN A R S a1
 .
@@ -126,6 +130,14 @@ lemma NF_to_SN: ∀A,R,S,a. NF A R S a → SN A R S a.
 @SN_intro #a2 #HRa12 #HSa12
 elim HSa12 -HSa12 /2 width=1/
 qed.
+
+lemma SN_to_NF: ∀A,R,S. NF_dec A R S →
+                ∀a1. SN A R S a1 →
+                ∃∃a2. star … R a1 a2 & NF A R S a2.
+#A #R #S #HRS #a1 #H elim H -a1
+#a1 #_ #IHa1 elim (HRS a1) -HRS /2 width=3/
+* #a0 #Ha10 #Ha01 elim (IHa1 … Ha10 Ha01) -IHa1 -Ha01 /3 width=3/
+qed-.
 
 definition NF_sn: ∀A. relation A → relation A → predicate A ≝
    λA,R,S,a2. ∀a1. R a1 a2 → S a2 a1.
