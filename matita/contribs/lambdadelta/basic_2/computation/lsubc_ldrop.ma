@@ -30,9 +30,9 @@ lemma lsubc_ldrop_O1_trans: ∀RP,L1,L2. L1 ⊑[RP] L2 → ∀K2,e. ⇩[0, e] L2
   [ elim (IHL12 L2 0) -IHL12 // #X #H <(ldrop_inv_O2 … H) -H /3 width=3/
   | elim (IHL12 … H) -L2 /3 width=3/
   ]
-| #L1 #L2 #V #W #A #HV #HW #_ #IHL12 #X #e #H
+| #L1 #L2 #V #W #A #HV #H1W #H2W #_ #IHL12 #X #e #H
   elim (ldrop_inv_O1_pair1 … H) -H * #He #H destruct
-  [ elim (IHL12 L2 0) -IHL12 // #X #H <(ldrop_inv_O2 … H) -H /3 width=7/
+  [ elim (IHL12 L2 0) -IHL12 // #X #H <(ldrop_inv_O2 … H) -H /3 width=8/
   | elim (IHL12 … H) -L2 /3 width=3/
   ]
 qed-.
@@ -47,7 +47,7 @@ lemma ldrop_lsubc_trans: ∀RR,RS,RP.
 | #L1 #I #V1 #X #H
   elim (lsubc_inv_pair1 … H) -H *
   [ #K1 #HLK1 #H destruct /3 width=3/
-  | #K1 #W1 #A #HV1 #HW1 #HLK1 #H1 #H2 destruct /3 width=3/
+  | #K1 #V #W1 #A #HV1 #H1W1 #H2W1 #HLK1 #H1 #H2 #H3 destruct /3 width=4/
   ]
 | #L1 #K1 #I #V1 #e #_ #IHLK1 #K2 #HK12
   elim (IHLK1 … HK12) -K1 /3 width=5/
@@ -55,11 +55,12 @@ lemma ldrop_lsubc_trans: ∀RR,RS,RP.
   elim (lsubc_inv_pair1 … H) -H *
   [ #K2 #HK12 #H destruct
     elim (IHLK1 … HK12) -K1 /3 width=5/
-  | #K2 #W2 #A #HV2 #HW2 #HK12 #H1 #H2 destruct
+  | #K2 #V #W2 #A #HV2 #H1W2 #H2W2 #HK12 #H1 #H2 #H3 destruct
+    elim (lift_inv_flat1 … HV21) -HV21 #W3 #V3 #HW23 #HV3 #H destruct
     elim (IHLK1 … HK12) #K #HL1K #HK2
     lapply (aacr_acr … Hacp Hacr A) -Hacp -Hacr #HA
-    lapply (s8 … HA … HV2 … HLK1 HV21) -HV2
-    elim (lift_total W2 d e) /4 width=9/
+    lapply (s8 … HA … HV2 … HLK1 HV3) -HV2
+    lapply (s8 … HA … H1W2 … HLK1 HW23) -H1W2 /4 width=10/
   ]
 ]
 qed-.

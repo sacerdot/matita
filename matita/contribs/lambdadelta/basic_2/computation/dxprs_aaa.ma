@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/unfold/sstas_aaa.ma".
-include "basic_2/computation/cprs_aaa.ma".
+include "basic_2/computation/cpxs_aaa.ma".
 include "basic_2/computation/dxprs.ma".
 
 (* DECOMPOSED EXTENDED PARALLEL COMPUTATION ON TERMS ************************)

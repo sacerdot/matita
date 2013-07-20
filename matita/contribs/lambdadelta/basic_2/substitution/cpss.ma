@@ -36,7 +36,7 @@ interpretation "context-sensitive parallel substitution (term)"
 
 (* Basic properties *********************************************************)
 
-lemma cpss_lsubr_trans: lsubr_trans … cpss.
+lemma cpss_lsubr_trans: lsub_trans … cpss lsubr.
 #L1 #T1 #T2 #H elim H -L1 -T1 -T2
 [ //
 | #L1 #K1 #V1 #V2 #W2 #i #HLK1 #_ #HVW2 #IHV12 #L2 #HL12

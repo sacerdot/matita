@@ -115,21 +115,6 @@ elim (term_eq_dec T1 T2) /3 width=1/ #HT12 destruct
 @or_intror @conj // #HT12 destruct /2 width=1/
 qed-.
 
-lemma eq_false_inv_beta: ∀a,V1,V2,W1,W2,T1,T2.
-                         (ⓐV1. ⓛ{a}W1. T1 = ⓐV2. ⓛ{a}W2 .T2 → ⊥) →
-                         (W1 = W2 → ⊥) ∨
-                         (W1 = W2 ∧ (ⓓ{a}V1. T1 = ⓓ{a}V2. T2 → ⊥)).
-#a #V1 #V2 #W1 #W2 #T1 #T2 #H
-elim (eq_false_inv_tpair_sn … H) -H
-[ #HV12 elim (term_eq_dec W1 W2) /3 width=1/
-  #H destruct @or_intror @conj // #H destruct /2 width=1/
-| * #H1 #H2 destruct
-  elim (eq_false_inv_tpair_sn … H2) -H2 /3 width=1/
-  * #H #HT12 destruct
-  @or_intror @conj // #H destruct /2 width=1/
-]
-qed.
-
 (* Basic_1: removed theorems 3:
             not_void_abst not_abbr_void not_abst_void
 *)

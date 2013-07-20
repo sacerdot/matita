@@ -66,8 +66,8 @@ lemma cprs_cpss_trans: ∀L,T1,T. L ⊢ T1 ➡* T → ∀T2. L ⊢ T ▶* T2 →
 lemma cpss_cprs_trans: ∀L,T1,T. L ⊢ T1 ▶* T → ∀T2. L ⊢ T ➡* T2 → L ⊢ T1 ➡* T2.
 /3 width=3/ qed-.
 
-lemma cprs_lsubr_trans: lsubr_trans … cprs.
-/3 width=3 by cpr_lsubr_trans, TC_lsubr_trans/
+lemma cprs_lsubr_trans: lsub_trans … cprs lsubr.
+/3 width=5 by cpr_lsubr_trans, TC_lsub_trans/
 qed-.
 
 (* Basic_1: was: pr3_pr1 *)

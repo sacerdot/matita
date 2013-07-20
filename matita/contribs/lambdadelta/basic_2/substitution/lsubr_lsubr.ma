@@ -16,6 +16,8 @@ include "basic_2/substitution/lsubr.ma".
 
 (* LOCAL ENVIRONMENT REFINEMENT FOR SUBSTITUTION ****************************)
 
+(* Auxiliary inversion lemmas ***********************************************)
+
 fact lsubr_inv_abbr1_aux: ∀L1,L2. L1 ⊑ L2 → ∀K1,W. L1 = K1.ⓓW →
                           ∨∨ L2 = ⋆
                            | ∃∃K2. K1 ⊑ K2 & L2 = K2.ⓓW

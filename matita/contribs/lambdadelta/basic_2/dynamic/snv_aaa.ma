@@ -36,6 +36,6 @@ lemma snv_fwd_aaa: ∀h,g,L,T. ⦃h, L⦄ ⊢ T ¡[g] → ∃A. L ⊢ T ⁝ A.
 ]
 qed-.
 
-lemma snv_fwd_csn: ∀h,g,L,T. ⦃h, L⦄ ⊢ T ¡[g] → L ⊢ ⬊* T.
+lemma snv_fwd_csn: ∀h,g,L,T. ⦃h, L⦄ ⊢ T ¡[g] → ⦃h, L⦄ ⊢ ⬊*[g] T.
 #h #g #L #T #H elim (snv_fwd_aaa … H) -H /2 width=2/
 qed-.

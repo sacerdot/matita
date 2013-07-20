@@ -40,9 +40,10 @@ qed-.
 
 (* Basic properties *********************************************************)
 
-lemma lprs_lpxs: ∀h,g,L1,L2. L1 ⊢ ➡* L2 → ⦃h, L1⦄ ⊢ ➡*[g] L2.
+axiom lprs_lpxs: ∀h,g,L1,L2. L1 ⊢ ➡* L2 → ⦃h, L1⦄ ⊢ ➡*[g] L2.
+(*
 /3 width=3/ qed.
-
+*)
 lemma lpx_lpxs: ∀h,g,L1,L2. ⦃h, L1⦄ ⊢ ➡[g] L2 → ⦃h, L1⦄ ⊢ ➡*[g] L2.
 /2 width=1/ qed.
 

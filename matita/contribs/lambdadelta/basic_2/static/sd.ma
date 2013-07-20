@@ -90,6 +90,23 @@ let rec sd_l (h:sh) (k:nat) (l:nat) on l : sd h ≝
            ]
    ].
 
+(* Basic inversion lemmas ***************************************************)
+
+lemma deg_inv_pred: ∀h,g,k,l. deg h g (next h k) (l+1) → deg h g k (l+2).
+#h #g #k #l #H1
+elim (deg_total h g k) #l0 #H0
+lapply (deg_next … H0) #H2
+lapply (deg_mono … H1 H2) -H1 -H2 #H
+<(associative_plus l 1 1) >H <plus_minus_m_m // /2 width=3 by transitive_le/
+qed-.
+
+lemma deg_inv_prec: ∀h,g,k,l,l0. deg h g ((next h)^l k) (l0+1) → deg h g k (l+l0+1).
+#h #g #k #l @(nat_ind_plus … l) -l //
+#l #IHl #l0 >iter_SO #H
+lapply (deg_inv_pred … H) -H <(associative_plus l0 1 1) #H
+lapply (IHl … H) -IHl -H //
+qed-.
+
 (* Basic properties *********************************************************)
 
 lemma deg_iter: ∀h,g,k,l1,l2. deg h g k l1 → deg h g ((next h)^l2 k) (l1-l2).
@@ -97,25 +114,15 @@ lemma deg_iter: ∀h,g,k,l1,l2. deg h g k l1 → deg h g ((next h)^l2 k) (l1-l2)
 #l2 #IHl2 #Hkl1 >iter_SO <minus_plus /3 width=1/
 qed.
 
-lemma deg_pred: ∀h,g,k,l. deg h g (next h k) (l + 1) → deg h g k (l + 2).
-#h #g #k #l #H1
-elim (deg_total h g k) #l0 #H0
-lapply (deg_next … H0) #H2
-lapply (deg_mono … H1 H2) -H1 -H2 #H
-<(associative_plus l 1 1) >H <plus_minus_m_m // /2 width=3 by transitive_le/
-qed.
-
-lemma deg_prec: ∀h,g,k,l,l0. deg h g ((next h)^l k) (l0+1) → deg h g k (l+l0+1).
-#h #g #k #l @(nat_ind_plus … l) -l //
-#l #IHl #l0 >iter_SO #H
-lapply (deg_pred … H) -H <(associative_plus l0 1 1) #H
-lapply (IHl … H) -IHl -H //
-qed.
+lemma deg_next_SO: ∀h,g,k,l. deg h g k (l+1) → deg h g (next h k) l.
+#h #g #k #l #Hkl
+lapply (deg_next … Hkl) -Hkl <minus_plus_m_m //
+qed-.
 
 lemma sd_l_SS: ∀h,k,l. sd_l h k (l + 2) = sd_l h (next h k) (l + 1).
 #h #k #l <plus_n_Sm <plus_n_Sm //
 qed.
 
 lemma sd_l_correct: ∀h,l,k. deg h (sd_l h k l) k l.
-#h #l @(nat_ind_plus … l) -l // #l @(nat_ind_plus … l) -l // /3 width=1/
+#h #l @(nat_ind_plus … l) -l // #l @(nat_ind_plus … l) -l // /3 width=1 by deg_inv_pred/
 qed.

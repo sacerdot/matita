@@ -40,7 +40,9 @@ lemma cpx_fwd_cix: ∀h,g,L,T1,T2. ⦃h, L⦄ ⊢ T1 ➡[g] T2 → ⦃h, L⦄ �
   elim (cix_inv_ri2 … H) /2 width=1/
 | #L #V1 #T1 #T2 #_ #_ #H
   elim (cix_inv_ri2 … H) /2 width=1/
-| #a #L #V1 #V2 #W #T1 #T2 #_ #_ #_ #_ #H
+| #L #V1 #V2 #T #_ #_ #H
+  elim (cix_inv_ri2 … H) /2 width=1/
+| #a #L #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #_ #_ #_ #H
   elim (cix_inv_appl … H) -H #_ #_ #H
   elim (simple_inv_bind … H)
 | #a #L #V #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #_ #_ #_ #_ #H

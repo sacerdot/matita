@@ -45,7 +45,7 @@ interpretation "context-sensitive parallel reduction (term)"
 
 (* Basic properties *********************************************************)
 
-lemma cpr_lsubr_trans: lsubr_trans … cpr.
+lemma cpr_lsubr_trans: lsub_trans … cpr lsubr.
 #L1 #T1 #T2 #H elim H -L1 -T1 -T2
 [ //
 | #L1 #K1 #V1 #V2 #W2 #i #HLK1 #_ #HVW2 #IHV12 #L2 #HL12

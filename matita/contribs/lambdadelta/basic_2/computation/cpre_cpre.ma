@@ -12,19 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/cpxs_aaa.ma".
-include "basic_2/equivalence/cpcs_cpcs.ma".
+include "basic_2/computation/cprs_cprs.ma".
+include "basic_2/computation/cpre.ma".
 
-(* CONTEXT-SENSITIVE PARALLEL EQUIVALENCE ON TERMS **************************)
+(* CONTEXT-SENSITIVE PARALLEL EVALUATION ON TERMS **************************)
 
-(* Main properties about atomic arity assignment on terms *******************)
+(* Main properties *********************************************************)
 
-theorem aaa_cpcs_mono: ∀L,T1,T2. L ⊢ T1 ⬌* T2 →
-                       ∀A1. L ⊢ T1 ⁝ A1 → ∀A2. L ⊢ T2 ⁝ A2 →
-                       A1 = A2.
-#L #T1 #T2 #HT12 #A1 #HA1 #A2 #HA2
-elim (cpcs_inv_cprs … HT12) -HT12 #T #HT1 #HT2
-lapply (aaa_cprs_conf … HA1 … HT1) -T1 #HA1
-lapply (aaa_cprs_conf … HA2 … HT2) -T2 #HA2
-lapply (aaa_mono … HA1 … HA2) -L -T //
+(* Basic_1: was: nf2_pr3_confluence *)
+theorem cpre_mono: ∀L,T,T1. L ⊢ T ➡* 𝐍⦃T1⦄ → ∀T2. L ⊢ T ➡* 𝐍⦃T2⦄ → T1 = T2.
+#L #T #T1 * #H1T1 #H2T1 #T2 * #H1T2 #H2T2
+elim (cprs_conf … H1T1 … H1T2) -T #T #HT1
+>(cprs_inv_cnr1 … HT1 H2T1) -T1 #HT2
+>(cprs_inv_cnr1 … HT2 H2T2) -T2 //
 qed-.

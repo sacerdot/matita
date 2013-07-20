@@ -190,7 +190,7 @@ notation "hvbox( ⦃ term 46 L1, break term 46 T1 ⦄ ⊃ * break ⦃ term 46 L2
 
 notation "hvbox( L1 ⊑ break term 46 L2 )"
    non associative with precedence 45
-   for @{ 'SubEq $L1 $L2 }.
+   for @{ 'CrSubEq $L1 $L2 }.
 
 notation "hvbox( L ⊢ break term 46 T1 ▶* break term 46 T2 )"
    non associative with precedence 45
@@ -292,6 +292,10 @@ notation "hvbox( T1 ⊑ break [ term 46 R ] break term 46 T2 )"
    non associative with precedence 45
    for @{ 'CrSubEq $T1 $R $T2 }.
 
+notation "hvbox( L1 ⓝ ⊑ break term 46 L2 )"
+   non associative with precedence 45
+   for @{ 'CrSubEqT $L1 $L2 }.
+
 notation "hvbox( L ⊢ break term 46 T1 ➡ * break term 46 T2 )"
    non associative with precedence 45
    for @{ 'PRedStar $L $T1 $T2 }.
@@ -320,10 +324,6 @@ notation "hvbox( ⦃ term 46 h , break term 46 L ⦄ ⊢ break term 46 T1 • * 
    non associative with precedence 45
    for @{ 'DecomposedPRedStar $h $g $L $T1 $T2 }.
 
-notation "hvbox( L ⊢ break term 46 T1 ➡ * break 𝐍 ⦃ term 46 T2 ⦄ )"
-   non associative with precedence 45
-   for @{ 'PEval $L $T1 $T2 }.
-
 notation "hvbox( ⦃ term 46 h, break term 46 L ⦄ ⊢ ⬊ * break [ term 46 g ] break term 46 T )"
    non associative with precedence 45
    for @{ 'SN $h $g $L $T }.
@@ -331,6 +331,14 @@ notation "hvbox( ⦃ term 46 h, break term 46 L ⦄ ⊢ ⬊ * break [ term 46 g 
 notation "hvbox( ⦃ term 46 h, break term 46 L ⦄ ⊢ ⬊ ⬊ * break [ term 46 g ] break term 46 T )"
    non associative with precedence 45
    for @{ 'SNAlt $h $g $L $T }.
+
+notation "hvbox( L ⊢ break term 46 T1 ➡ * break 𝐍 ⦃ term 46 T2 ⦄ )"
+   non associative with precedence 45
+   for @{ 'PEval $L $T1 $T2 }.
+
+notation "hvbox( ⦃ term 46 h, break term 46 L ⦄ ⊢ break term 46 T1 ➡ * break [ term 46 g ] break 𝐍 ⦃ term 46 T2 ⦄ )"
+   non associative with precedence 45
+   for @{ 'PEval $h $g $L $T1 $T2 }.
 
 (* Conversion ***************************************************************)
 

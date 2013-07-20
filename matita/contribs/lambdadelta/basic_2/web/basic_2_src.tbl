@@ -79,17 +79,21 @@ table {
    ]
    class "cyan"
    [ { "computation" * } {
-        [ { "decomposed extended computation" * } {
-             [ "dxprs ( ⦃?,?⦄ ⊢ ? •*➡*[?] ? )" "dxprs_lift" + "dxprs_lpss" + "dxprs_aaa" + "dxprs_dxprs" * ]
+        [ { "context-sensitive extended evaluation" * } {
+             [ "cpxe ( ⦃?,?⦄ ⊢ ➡*[?] 𝐍⦃?⦄ )" * ]
           }
         ]
-        [ { "weakly normalizing computation" * } {
-             [ "cpe ( ? ⊢ ➡* 𝐍⦃?⦄ )" "cpe_cpe" * ]
+        [ { "context-sensitive evaluation" * } {
+             [ "cpre ( ? ⊢ ➡* 𝐍⦃?⦄ )" "cpre_cpre" * ]
           }
         ]
         [ { "strongly normalizing computation" * } {
              [ "csn_vector ( ? ⊢ ⬊* ? )" "csn_tstc_vector" + "csn_aaa" * ]
              [ "csn ( ? ⊢ ⬊* ? )" "csn_alt ( ? ⊢ ⬊⬊* ? )" "csn_lift" + "csn_lpx" * ]
+          }
+        ]
+        [ { "decomposed extended computation" * } {
+             [ "dxprs ( ⦃?,?⦄ ⊢ ? •*➡*[?] ? )" "dxprs_lift" + "dxprs_lpss" + "dxprs_aaa" + "dxprs_dxprs" * ]
           }
         ]
         [ { "context-sensitive extended computation" * } {
@@ -129,6 +133,10 @@ table {
         ]
         [ { "context-sensitive extended reducible forms" * } {
              [ "crx ( ⦃?,?⦄ ⊢ 𝐑[?]⦃?⦄ )" "crx_append" + "crx_lift" * ]
+          }
+        ]
+        [ { "local env. ref. for extended reduction" * } {
+             [ "lsubx ( ? ⓝ⊑ ? )" "lsubx_lsubx" * ]
           }
         ]
         [ { "context-sensitive normal forms" * } {
@@ -189,7 +197,7 @@ table {
    ]
    class "yellow"
    [ { "substitution" * } {
-	[ { "parallel substitution" * } {
+        [ { "parallel substitution" * } {
              [ "lpss ( ? ⊢ ▶* ? )" "lpss_ldrop" + "lpss_cpss" + "lpss_lpss" * ]
              [ "cpss ( ? ⊢ ? ▶* ? )" "cpss_lift" * ]
           }

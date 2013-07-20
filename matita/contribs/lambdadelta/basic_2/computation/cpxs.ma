@@ -55,10 +55,15 @@ lemma cpxs_strap2: ∀h,g,L,T1,T. ⦃h, L⦄ ⊢ T1 ➡[g] T →
                    ∀T2. ⦃h, L⦄ ⊢ T ➡*[g] T2 → ⦃h, L⦄ ⊢ T1 ➡*[g] T2.
 normalize /2 width=3/ qed.
 
-lemma cprs_cpxs: ∀h,g,L,T1,T2. L ⊢ T1 ➡* T2 → ⦃h, L⦄ ⊢ T1 ➡*[g] T2.
+lemma lsubx_cpxs_trans: ∀h,g. lsub_trans … (cpxs h g) lsubx.
+/3 width=5 by lsubx_cpx_trans, TC_lsub_trans/
+qed-.
+
+axiom cprs_cpxs: ∀h,g,L,T1,T2. L ⊢ T1 ➡* T2 → ⦃h, L⦄ ⊢ T1 ➡*[g] T2.
+(*
 #h #g #L #T1 #T2 #H @(cprs_ind … H) -T2 // /3 width=3/
 qed.
-
+*)
 lemma cpxs_bind_dx: ∀h,g,L,V1,V2. ⦃h, L⦄ ⊢ V1 ➡[g] V2 →
                     ∀I,T1,T2. ⦃h, L. ⓑ{I}V1⦄ ⊢ T1 ➡*[g] T2 →
                     ∀a. ⦃h, L⦄ ⊢ ⓑ{a,I}V1.T1 ➡*[g] ⓑ{a,I}V2.T2.
@@ -87,11 +92,15 @@ lemma cpxs_tau: ∀h,g,L,T1,T2. ⦃h, L⦄ ⊢ T1 ➡*[g] T2 → ∀V. ⦃h, L�
 #h #g #L #T1 #T2 #H elim H -T2 /2 width=3/ /3 width=1/
 qed.
 
-lemma cpxs_beta_dx: ∀h,g,a,L,V1,V2,W,T1,T2.
-                    ⦃h, L⦄ ⊢ V1 ➡[g] V2 → ⦃h, L.ⓛW⦄ ⊢ T1 ➡*[g] T2 →
-                    ⦃h, L⦄ ⊢ ⓐV1.ⓛ{a}W.T1 ➡*[g] ⓓ{a}V2.T2.
-#h #g #a #L #V1 #V2 #W #T1 #T2 #HV12 * -T2 /3 width=1/
-/4 width=6 by cpxs_strap1, cpxs_bind_dx, cpxs_flat_dx, cpx_beta/ (**) (* auto too slow without trace *)
+lemma cpxs_ti: ∀h,g,L,V1,V2. ⦃h, L⦄ ⊢ V1 ➡*[g] V2 → ∀T. ⦃h, L⦄ ⊢ ⓝV1.T ➡*[g] V2.
+#h #g #L #V1 #V2 #H elim H -V2 /2 width=3/ /3 width=1/
+qed.
+
+lemma cpxs_beta_dx: ∀h,g,a,L,V1,V2,W1,W2,T1,T2.
+                    ⦃h, L⦄ ⊢ V1 ➡[g] V2 → ⦃h, L.ⓛW1⦄ ⊢ T1 ➡*[g] T2 → ⦃h, L⦄ ⊢ W1 ➡[g] W2 →
+                    ⦃h, L⦄ ⊢ ⓐV1.ⓛ{a}W1.T1 ➡*[g] ⓓ{a}ⓝW2.V2.T2.
+#h #g #a #L #V1 #V2 #W1 #W2 #T1 #T2 #HV12 * -T2 /3 width=1/
+/4 width=7 by cpxs_strap1, cpxs_bind_dx, cpxs_flat_dx, cpx_beta/ (**) (* auto too slow without trace *)
 qed.
 
 lemma cpxs_theta_dx: ∀h,g,a,L,V1,V,V2,W1,W2,T1,T2.
@@ -112,40 +121,22 @@ lemma cpxs_inv_sort1: ∀h,g,L,U2,k. ⦃h, L⦄ ⊢ ⋆k ➡*[g] U2 →
   elim (cpx_inv_sort1 … HU2) -HU2
   [ #H destruct /2 width=4/
   | * #l0 #Hkl0 #H destruct -l
-    @(ex2_2_intro … (n+1) l0) /2 width=1/ >iter_SO //
+    @(ex2_2_intro … (n+1) l0) /2 width=1 by deg_inv_prec/ >iter_SO //
   ]
 ]
 qed-.
 
-lemma cpxs_inv_appl1: ∀h,g,L,V1,T1,U2. ⦃h, L⦄ ⊢ ⓐV1.T1 ➡*[g] U2 →
-                      ∨∨ ∃∃V2,T2.       ⦃h, L⦄ ⊢ V1 ➡*[g] V2 & ⦃h, L⦄ ⊢ T1 ➡*[g] T2 &
-                                        U2 = ⓐV2. T2
-                       | ∃∃a,V2,W,T.    ⦃h, L⦄ ⊢ V1 ➡*[g] V2 &
-                                        ⦃h, L⦄ ⊢ T1 ➡*[g] ⓛ{a}W.T & ⦃h, L⦄ ⊢ ⓓ{a}V2.T ➡*[g] U2
-                       | ∃∃a,V0,V2,V,T. ⦃h, L⦄ ⊢ V1 ➡*[g] V0 & ⇧[0,1] V0 ≡ V2 &
-                                        ⦃h, L⦄ ⊢ T1 ➡*[g] ⓓ{a}V.T & ⦃h, L⦄ ⊢ ⓓ{a}V.ⓐV2.T ➡*[g] U2.
-#h #g #L #V1 #T1 #U2 #H @(cpxs_ind … H) -U2 [ /3 width=5/ ]
-#U #U2 #_ #HU2 * *
-[ #V0 #T0 #HV10 #HT10 #H destruct
-  elim (cpx_inv_appl1 … HU2) -HU2 *
-  [ #V2 #T2 #HV02 #HT02 #H destruct /4 width=5/
-  | #a #V2 #W2 #T #T2 #HV02 #HT2 #H1 #H2 destruct
-    lapply (cpxs_strap1 … HV10 … HV02) -V0 /5 width=7/
-  | #a #V #V2 #W0 #W2 #T #T2 #HV0 #HV2 #HW02 #HT2 #H1 #H2 destruct
-    @or3_intro2 @(ex4_5_intro … HV2 HT10) /2 width=3/ /3 width=1/ (**) (* explicit constructor. /5 width=8/ is too slow because TC_transitive gets in the way *)
-  ]
-| /4 width=9/
-| /4 width=11/
-]
-qed-.
-
-lemma cpxs_inv_cast1: ∀h,g,L,W1,T1,U2. ⦃h, L⦄ ⊢ ⓝW1.T1 ➡*[g] U2 → ⦃h, L⦄ ⊢ T1 ➡*[g] U2 ∨
-                      ∃∃W2,T2. ⦃h, L⦄ ⊢ W1 ➡*[g] W2 & ⦃h, L⦄ ⊢ T1 ➡*[g] T2 & U2 = ⓝW2.T2.
+lemma cpxs_inv_cast1: ∀h,g,L,W1,T1,U2. ⦃h, L⦄ ⊢ ⓝW1.T1 ➡*[g] U2 →
+                      ∨∨ ∃∃W2,T2. ⦃h, L⦄ ⊢ W1 ➡*[g] W2 & ⦃h, L⦄ ⊢ T1 ➡*[g] T2 & U2 = ⓝW2.T2
+                       | ⦃h, L⦄ ⊢ T1 ➡*[g] U2
+                       | ⦃h, L⦄ ⊢ W1 ➡*[g] U2.
 #h #g #L #W1 #T1 #U2 #H @(cpxs_ind … H) -U2 /3 width=5/
 #U2 #U #_ #HU2 * /3 width=3/ *
 #W #T #HW1 #HT1 #H destruct
 elim (cpx_inv_cast1 … HU2) -HU2 /3 width=3/ *
-#W2 #T2 #HW2 #HT2 #H destruct /4 width=5/
+#W2 #T2 #HW2 #HT2 #H destruct
+lapply (cpxs_strap1 … HW1 … HW2) -W
+lapply (cpxs_strap1 … HT1 … HT2) -T /3 width=5/
 qed-.
 
 lemma cpxs_inv_cnx1: ∀h,g,L,T,U. ⦃h, L⦄ ⊢ T ➡*[g] U → ⦃h, L⦄ ⊢ 𝐍[g]⦃T⦄ → T = U.

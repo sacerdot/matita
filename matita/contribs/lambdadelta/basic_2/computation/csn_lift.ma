@@ -96,5 +96,6 @@ theorem csn_acp: ∀h,g. acp (cpx h g) (eq …) (csn h g).
   #l #Hl lapply (cnx_sort_iter … L … Hl) /2 width=2/
 | @cnx_lift
 | /2 width=3 by csn_fwd_flat_dx/
+| /2 width=1/
 ]
 qed.

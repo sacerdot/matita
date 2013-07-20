@@ -56,7 +56,8 @@ lemma cnx_inv_abbr: ∀h,g,L,V,T. ⦃h, L⦄ ⊢ 𝐍[g]⦃-ⓓV.T⦄ →
 ]
 qed-.
 
-lemma cnx_inv_zeta: ∀h,g,L,V,T. ⦃h, L⦄ ⊢ 𝐍[g]⦃+ⓓV.T⦄ → ⊥.
+axiom cnx_inv_zeta: ∀h,g,L,V,T. ⦃h, L⦄ ⊢ 𝐍[g]⦃+ⓓV.T⦄ → ⊥.
+(*
 #h #g #L #V #T #H elim (is_lift_dec T 0 1)
 [ * #U #HTU
   lapply (H U ?) -H /2 width=3/ #H destruct
@@ -66,7 +67,7 @@ lemma cnx_inv_zeta: ∀h,g,L,V,T. ⦃h, L⦄ ⊢ 𝐍[g]⦃+ⓓV.T⦄ → ⊥.
   lapply (H (+ⓓV.T2) ?) -H /5 width=1/ -HT2 #H destruct /3 width=2/
 ]
 qed-.
-
+*)
 lemma cnx_inv_appl: ∀h,g,L,V,T. ⦃h, L⦄ ⊢ 𝐍[g]⦃ⓐV.T⦄ →
                     ∧∧ ⦃h, L⦄ ⊢ 𝐍[g]⦃V⦄ & ⦃h, L⦄ ⊢ 𝐍[g]⦃T⦄ & 𝐒⦃T⦄.
 #h #g #L #V1 #T1 #HVT1 @and3_intro
@@ -75,7 +76,7 @@ lemma cnx_inv_appl: ∀h,g,L,V,T. ⦃h, L⦄ ⊢ 𝐍[g]⦃ⓐV.T⦄ →
 | generalize in match HVT1; -HVT1 elim T1 -T1 * // #a * #W1 #U1 #_ #_ #H
   [ elim (lift_total V1 0 1) #V2 #HV12
     lapply (H (ⓓ{a}W1.ⓐV2.U1) ?) -H /3 width=3/ -HV12 #H destruct
-  | lapply (H (ⓓ{a}V1.U1) ?) -H /3 width=1/ #H destruct
+  | lapply (H (ⓓ{a}ⓝW1.V1.U1) ?) -H /3 width=1/ #H destruct
 ]
 qed-.
 
@@ -85,12 +86,12 @@ lemma cnx_inv_tau: ∀h,g,L,V,T. ⦃h, L⦄ ⊢ 𝐍[g]⦃ⓝV.T⦄ → ⊥.
 qed-.
 
 (* Basic forward lemmas *****************************************************)
-
-lemma cnx_fwd_cnr: ∀h,g,L,T. ⦃h, L⦄ ⊢ 𝐍[g]⦃T⦄ → L ⊢ 𝐍⦃T⦄.
+(*
+lamma cnx_fwd_cnr: ∀h,g,L,T. ⦃h, L⦄ ⊢ 𝐍[g]⦃T⦄ → L ⊢ 𝐍⦃T⦄.
 #h #g #L #T #H #U #HTU
 @H /2 width=1/ (**) (* auto fails because a δ-expansion gets in the way *)
 qed-.
-
+*)
 (* Basic properties *********************************************************)
 
 lemma cnx_sort: ∀h,g,L,k. deg h g k 0 → ⦃h, L⦄ ⊢ 𝐍[g]⦃⋆k⦄.

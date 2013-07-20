@@ -76,6 +76,7 @@ x: extended reduction
 
 - forth letter (if present)
 
-p: non-reflexive transitive closure (plus)
-q: reflexive closure                (question)
-s: reflexive transitive closure     (star)
+e: reflexive transitive closure to normal form (evaluation)
+p: non-reflexive transitive closure            (plus)
+q: reflexive closure                           (question)
+s: reflexive transitive closure                (star)

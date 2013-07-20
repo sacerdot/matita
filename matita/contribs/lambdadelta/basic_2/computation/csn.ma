@@ -43,10 +43,6 @@ lemma csn_intro: ∀h,g,L,T1.
                  ⦃h, L⦄ ⊢ ⬊*[g] T1.
 /4 width=1/ qed.
 
-(* Basic_1: was just: sn3_nf2 *)
-lemma cnx_csn: ∀h,g,L,T. ⦃h, L⦄ ⊢ 𝐍[g]⦃T⦄ → ⦃h, L⦄ ⊢ ⬊*[g] T.
-/2 width=1/ qed.
-
 lemma csn_cpx_trans: ∀h,g,L,T1. ⦃h, L⦄ ⊢ ⬊*[g] T1 →
                      ∀T2. ⦃h, L⦄ ⊢ T1 ➡[g] T2 → ⦃h, L⦄ ⊢ ⬊*[g] T2.
 #h #g #L #T1 #H elim H -T1 #T1 #HT1 #IHT1 #T2 #HLT12
@@ -56,10 +52,24 @@ elim (term_eq_dec T1 T2) #HT12
 | -HT1 -HT2 /3 width=4/
 qed-.
 
+(* Basic_1: was just: sn3_nf2 *)
+lemma cnx_csn: ∀h,g,L,T. ⦃h, L⦄ ⊢ 𝐍[g]⦃T⦄ → ⦃h, L⦄ ⊢ ⬊*[g] T.
+/2 width=1/ qed.
+
+lemma cnx_sort: ∀h,g,L,k. ⦃h, L⦄ ⊢ ⬊*[g] ⋆k.
+#h #g #L #k elim (deg_total h g k)
+#l generalize in match k; -k @(nat_ind_plus … l) -l /3 width=1/
+#l #IHl #k #Hkl lapply (deg_next_SO … Hkl) -Hkl
+#Hkl @csn_intro #X #H #HX elim (cpx_inv_sort1 … H) -H
+[ #H destruct elim HX //
+| -HX * #l0 #_ #H destruct -l0 /2 width=1/
+]
+qed.
+
 (* Basic_1: was just: sn3_cast *)
 lemma csn_cast: ∀h,g,L,W. ⦃h, L⦄ ⊢ ⬊*[g] W →
                 ∀T. ⦃h, L⦄ ⊢ ⬊*[g] T → ⦃h, L⦄ ⊢ ⬊*[g] ⓝW.T.
-#h #g #L #W #HW elim HW -W #W #_ #IHW #T #HT @(csn_ind … HT) -T #T #HT #IHT
+#h #g #L #W #HW @(csn_ind … HW) -W #W #HW #IHW #T #HT @(csn_ind … HT) -T #T #HT #IHT
 @csn_intro #X #H1 #H2
 elim (cpx_inv_cast1 … H1) -H1
 [ * #W0 #T0 #HLW0 #HLT0 #H destruct
@@ -67,7 +77,7 @@ elim (cpx_inv_cast1 … H1) -H1
   [ /3 width=3 by csn_cpx_trans/
   | -HLW0 * #H destruct /3 width=1/
   ]
-| /3 width=3 by csn_cpx_trans/
+|2,3: /3 width=3 by csn_cpx_trans/
 ]
 qed.
 

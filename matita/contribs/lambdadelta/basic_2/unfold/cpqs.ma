@@ -37,7 +37,7 @@ interpretation "context-sensitive restricted parallel computation (term)"
 
 (* Basic properties *********************************************************)
 
-lemma cpqs_lsubr_trans: lsubr_trans … cpqs.
+lemma cpqs_lsubr_trans: lsub_trans … cpqs lsubr.
 #L1 #T1 #T2 #H elim H -L1 -T1 -T2
 [ //
 | #L1 #K1 #V1 #V2 #W2 #i #HLK1 #_ #HVW2 #IHV12 #L2 #HL12

@@ -12,17 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/cprs_cprs.ma".
-include "basic_2/computation/cpe.ma".
+include "basic_2/computation/cpxs.ma".
+include "basic_2/computation/csn.ma".
 
-(* CONTEXT-SENSITIVE PARALLEL EVALUATION ON TERMS **************************)
+(* CONTEXT-SENSITIVE EXTENDED PARALLEL EVALUATION ON TERMS ******************)
 
-(* Main properties *********************************************************)
+definition cpxe: ∀h. sd h → lenv → relation term ≝
+                 λh,g,L,T1,T2. ⦃h, L⦄ ⊢ T1 ➡*[g] T2 ∧ ⦃h, L⦄ ⊢ 𝐍[g]⦃T2⦄.
 
-(* Basic_1: was: nf2_pr3_confluence *)
-theorem cpe_mono: ∀L,T,T1. L ⊢ T ➡* 𝐍⦃T1⦄ → ∀T2. L ⊢ T ➡* 𝐍⦃T2⦄ → T1 = T2.
-#L #T #T1 * #H1T1 #H2T1 #T2 * #H1T2 #H2T2
-elim (cprs_conf … H1T1 … H1T2) -T #T #HT1
->(cprs_inv_cnf1 … HT1 H2T1) -T1 #HT2
->(cprs_inv_cnf1 … HT2 H2T2) -T2 //
+interpretation "context-sensitive extended parallel evaluation (term)"
+   'PEval h g L T1 T2 = (cpxe h g L T1 T2).
+
+(* Basic_properties *********************************************************)
+
+lemma csn_cpxe: ∀h,g,L,T1. ⦃h, L⦄ ⊢ ⬊*[g] T1 → ∃T2. ⦃h, L⦄ ⊢ T1 ➡*[g] 𝐍⦃T2⦄.
+#h #g #L #T1 #H @(csn_ind … H) -T1
+#T1 #_ #IHT1
+elim (cnx_dec h g L T1) /3 width=3/
+* #T #H1T1 #H2T1
+elim (IHT1 … H1T1 H2T1) -IHT1 -H2T1 #T2 * /4 width=3/
 qed-.

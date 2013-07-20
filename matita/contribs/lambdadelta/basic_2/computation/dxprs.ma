@@ -21,7 +21,7 @@ definition dxprs: ∀h. sd h → lenv → relation term ≝ λh,g,L,T1,T2.
                   ∃∃T. ⦃h, L⦄ ⊢ T1 •*[g] T & L ⊢ T ➡* T2.
 
 interpretation "decomposed extended parallel computation (term)"
-   'DecomposedXPRedStar h g L T1 T2 = (dxprs h g L T1 T2).
+   'DecomposedPRedStar h g L T1 T2 = (dxprs h g L T1 T2).
 
 (* Basic properties *********************************************************)
 

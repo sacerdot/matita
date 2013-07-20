@@ -29,13 +29,17 @@ definition CP2s ≝ λRR:lenv→relation term. λRS:relation term.
                   NF … (RR L) RS T → NF … (RR L0) RS T0.
 
 definition CP3 ≝ λRP:lenv→predicate term.
-                 ∀L,V,k. RP L (ⓐ⋆k.V) → RP L V.
+                 ∀L,T,k. RP L (ⓐ⋆k.T) → RP L T.
+
+definition CP4 ≝ λRP:lenv→predicate term.
+                 ∀L,W,T. RP L W → RP L T → RP L (ⓝW.T).
 
 (* requirements for abstract computation properties *)
 record acp (RR:lenv->relation term) (RS:relation term) (RP:lenv→predicate term) : Prop ≝
 { cp1: CP1 RR RS;
   cp2: CP2 RR RS;
-  cp3: CP3 RP
+  cp3: CP3 RP;
+  cp4: CP4 RP
 }.
 
 (* Basic properties *********************************************************)

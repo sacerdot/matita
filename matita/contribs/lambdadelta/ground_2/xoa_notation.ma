@@ -184,6 +184,26 @@ notation < "hvbox(∃∃ ident x0 , ident x1 , ident x2 , ident x3 , ident x4 br
  non associative with precedence 20
  for @{ 'Ex (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.λ${ident x3}:$T3.λ${ident x4}:$T4.$P0) (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.λ${ident x3}:$T3.λ${ident x4}:$T4.$P1) (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.λ${ident x3}:$T3.λ${ident x4}:$T4.$P2) (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.λ${ident x3}:$T3.λ${ident x4}:$T4.$P3) (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.λ${ident x3}:$T3.λ${ident x4}:$T4.$P4) }.
 
+(* multiple existental quantifier (5, 6) *)
+
+notation > "hvbox(∃∃ ident x0 , ident x1 , ident x2 , ident x3 , ident x4 , ident x5 break . term 19 P0 break & term 19 P1 break & term 19 P2 break & term 19 P3 break & term 19 P4)"
+ non associative with precedence 20
+ for @{ 'Ex (λ${ident x0}.λ${ident x1}.λ${ident x2}.λ${ident x3}.λ${ident x4}.λ${ident x5}.$P0) (λ${ident x0}.λ${ident x1}.λ${ident x2}.λ${ident x3}.λ${ident x4}.λ${ident x5}.$P1) (λ${ident x0}.λ${ident x1}.λ${ident x2}.λ${ident x3}.λ${ident x4}.λ${ident x5}.$P2) (λ${ident x0}.λ${ident x1}.λ${ident x2}.λ${ident x3}.λ${ident x4}.λ${ident x5}.$P3) (λ${ident x0}.λ${ident x1}.λ${ident x2}.λ${ident x3}.λ${ident x4}.λ${ident x5}.$P4) }.
+
+notation < "hvbox(∃∃ ident x0 , ident x1 , ident x2 , ident x3 , ident x4 , ident x5 break . term 19 P0 break & term 19 P1 break & term 19 P2 break & term 19 P3 break & term 19 P4)"
+ non associative with precedence 20
+ for @{ 'Ex (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.λ${ident x3}:$T3.λ${ident x4}:$T4.λ${ident x5}:$T5.$P0) (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.λ${ident x3}:$T3.λ${ident x4}:$T4.λ${ident x5}:$T5.$P1) (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.λ${ident x3}:$T3.λ${ident x4}:$T4.λ${ident x5}:$T5.$P2) (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.λ${ident x3}:$T3.λ${ident x4}:$T4.λ${ident x5}:$T5.$P3) (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.λ${ident x3}:$T3.λ${ident x4}:$T4.λ${ident x5}:$T5.$P4) }.
+
+(* multiple existental quantifier (6, 3) *)
+
+notation > "hvbox(∃∃ ident x0 , ident x1 , ident x2 break . term 19 P0 break & term 19 P1 break & term 19 P2 break & term 19 P3 break & term 19 P4 break & term 19 P5)"
+ non associative with precedence 20
+ for @{ 'Ex (λ${ident x0}.λ${ident x1}.λ${ident x2}.$P0) (λ${ident x0}.λ${ident x1}.λ${ident x2}.$P1) (λ${ident x0}.λ${ident x1}.λ${ident x2}.$P2) (λ${ident x0}.λ${ident x1}.λ${ident x2}.$P3) (λ${ident x0}.λ${ident x1}.λ${ident x2}.$P4) (λ${ident x0}.λ${ident x1}.λ${ident x2}.$P5) }.
+
+notation < "hvbox(∃∃ ident x0 , ident x1 , ident x2 break . term 19 P0 break & term 19 P1 break & term 19 P2 break & term 19 P3 break & term 19 P4 break & term 19 P5)"
+ non associative with precedence 20
+ for @{ 'Ex (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.$P0) (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.$P1) (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.$P2) (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.$P3) (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.$P4) (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.$P5) }.
+
 (* multiple existental quantifier (6, 4) *)
 
 notation > "hvbox(∃∃ ident x0 , ident x1 , ident x2 , ident x3 break . term 19 P0 break & term 19 P1 break & term 19 P2 break & term 19 P3 break & term 19 P4 break & term 19 P5)"
@@ -224,6 +244,16 @@ notation < "hvbox(∃∃ ident x0 , ident x1 , ident x2 , ident x3 , ident x4 , 
  non associative with precedence 20
  for @{ 'Ex (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.λ${ident x3}:$T3.λ${ident x4}:$T4.λ${ident x5}:$T5.λ${ident x6}:$T6.$P0) (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.λ${ident x3}:$T3.λ${ident x4}:$T4.λ${ident x5}:$T5.λ${ident x6}:$T6.$P1) (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.λ${ident x3}:$T3.λ${ident x4}:$T4.λ${ident x5}:$T5.λ${ident x6}:$T6.$P2) (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.λ${ident x3}:$T3.λ${ident x4}:$T4.λ${ident x5}:$T5.λ${ident x6}:$T6.$P3) (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.λ${ident x3}:$T3.λ${ident x4}:$T4.λ${ident x5}:$T5.λ${ident x6}:$T6.$P4) (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.λ${ident x3}:$T3.λ${ident x4}:$T4.λ${ident x5}:$T5.λ${ident x6}:$T6.$P5) }.
 
+(* multiple existental quantifier (7, 4) *)
+
+notation > "hvbox(∃∃ ident x0 , ident x1 , ident x2 , ident x3 break . term 19 P0 break & term 19 P1 break & term 19 P2 break & term 19 P3 break & term 19 P4 break & term 19 P5 break & term 19 P6)"
+ non associative with precedence 20
+ for @{ 'Ex (λ${ident x0}.λ${ident x1}.λ${ident x2}.λ${ident x3}.$P0) (λ${ident x0}.λ${ident x1}.λ${ident x2}.λ${ident x3}.$P1) (λ${ident x0}.λ${ident x1}.λ${ident x2}.λ${ident x3}.$P2) (λ${ident x0}.λ${ident x1}.λ${ident x2}.λ${ident x3}.$P3) (λ${ident x0}.λ${ident x1}.λ${ident x2}.λ${ident x3}.$P4) (λ${ident x0}.λ${ident x1}.λ${ident x2}.λ${ident x3}.$P5) (λ${ident x0}.λ${ident x1}.λ${ident x2}.λ${ident x3}.$P6) }.
+
+notation < "hvbox(∃∃ ident x0 , ident x1 , ident x2 , ident x3 break . term 19 P0 break & term 19 P1 break & term 19 P2 break & term 19 P3 break & term 19 P4 break & term 19 P5 break & term 19 P6)"
+ non associative with precedence 20
+ for @{ 'Ex (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.λ${ident x3}:$T3.$P0) (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.λ${ident x3}:$T3.$P1) (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.λ${ident x3}:$T3.$P2) (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.λ${ident x3}:$T3.$P3) (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.λ${ident x3}:$T3.$P4) (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.λ${ident x3}:$T3.$P5) (λ${ident x0}:$T0.λ${ident x1}:$T1.λ${ident x2}:$T2.λ${ident x3}:$T3.$P6) }.
+
 (* multiple existental quantifier (7, 7) *)
 
 notation > "hvbox(∃∃ ident x0 , ident x1 , ident x2 , ident x3 , ident x4 , ident x5 , ident x6 break . term 19 P0 break & term 19 P1 break & term 19 P2 break & term 19 P3 break & term 19 P4 break & term 19 P5 break & term 19 P6)"
@@ -255,6 +285,12 @@ notation "hvbox(∨∨ term 29 P0 break | term 29 P1 break | term 29 P2)"
 notation "hvbox(∨∨ term 29 P0 break | term 29 P1 break | term 29 P2 break | term 29 P3)"
  non associative with precedence 30
  for @{ 'Or $P0 $P1 $P2 $P3 }.
+
+(* multiple disjunction connective (5) *)
+
+notation "hvbox(∨∨ term 29 P0 break | term 29 P1 break | term 29 P2 break | term 29 P3 break | term 29 P4)"
+ non associative with precedence 30
+ for @{ 'Or $P0 $P1 $P2 $P3 $P4 }.
 
 (* multiple conjunction connective (3) *)
 

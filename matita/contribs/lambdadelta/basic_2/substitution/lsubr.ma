@@ -24,10 +24,7 @@ inductive lsubr: relation lenv ≝
 
 interpretation
   "local environment refinement (substitution)"
-  'SubEq L1 L2 = (lsubr L1 L2).
-
-definition lsubr_trans: ∀S. predicate (lenv → relation S) ≝ λS,R.
-                        ∀L2,s1,s2. R L2 s1 s2 → ∀L1. L1 ⊑ L2 → R L1 s1 s2.
+  'CrSubEq L1 L2 = (lsubr L1 L2).
 
 (* Basic properties *********************************************************)
 
@@ -39,14 +36,6 @@ lemma lsubr_abbr: ∀I,L1,L2,V. L1 ⊑ L2 → L1. ⓓV ⊑ L2. ⓑ{I}V.
 
 lemma lsubr_refl: ∀L. L ⊑ L.
 #L elim L -L // /2 width=1/
-qed.
-
-lemma TC_lsubr_trans: ∀S,R. lsubr_trans S R → lsubr_trans S (LTC … R).
-#S #R #HR #L1 #s1 #s2 #H elim H -s2
-[ /3 width=3/
-| #s #s2 #_ #Hs2 #IHs1 #L2 #HL12
-  lapply (HR … Hs2 … HL12) -HR -Hs2 /3 width=3/
-]
 qed.
 
 (* Basic inversion lemmas ***************************************************)

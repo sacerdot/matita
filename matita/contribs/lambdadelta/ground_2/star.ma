@@ -38,6 +38,9 @@ definition bi_confluent:  ∀A,B. ∀R: bi_relation A B. Prop ≝ λA,B,R.
 definition LTC: ∀A:Type[0]. ∀B. (A→relation B) → (A→relation B) ≝
                 λA,B,R,a. TC … (R a).
 
+definition lsub_trans: ∀A,B. relation2 (A→relation B) (relation A) ≝ λA,B,R1,R2.
+                       ∀L2,T1,T2. R1 L2 T1 T2 → ∀L1. R2 L1 L2 → R1 L1 T1 T2.
+
 definition s_r_trans: ∀A,B. relation2 (A→relation B) (relation A) ≝ λA,B,R1,R2.
                       ∀L2,T1,T2. R1 L2 T1 T2 → ∀L1. R2 L1 L2 → LTC … R1 L1 T1 T2.
 
@@ -189,6 +192,12 @@ lemma bi_TC_decomp_l: ∀A,B. ∀R:bi_relation A B.
 [ /2 width=1/
 | #a1 #a #b1 #b #Hab1 #Hab2 #_ /3 width=4/
 ]
+qed-.
+
+lemma TC_lsub_trans: ∀A,B,R,S. lsub_trans A B R S → lsub_trans A B (LTC … R) S.
+#A #B #R #S #HRS #L2 #T1 #T2 #H elim H -T2 [ /3 width=3/ ]
+#T #T2 #_ #HT2 #IHT1 #L1 #HL12
+lapply (HRS … HT2 … HL12) -HRS -HT2 /3 width=3/
 qed-.
 
 lemma s_r_trans_TC1: ∀A,B,R,S. s_r_trans A B R S → s_rs_trans A B R S.
