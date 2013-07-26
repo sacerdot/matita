@@ -39,8 +39,8 @@ theorem cpxs_flat: ∀h,g,I,L,V1,V2,T1,T2. ⦃h, L⦄ ⊢ T1 ➡*[g] T2 →
 qed.
 
 theorem cpxs_beta_rc: ∀h,g,a,L,V1,V2,W1,W2,T1,T2.
-                   ⦃h, L⦄ ⊢ V1 ➡[g] V2 → ⦃h, L.ⓛW1⦄ ⊢ T1 ➡*[g] T2 → ⦃h, L⦄ ⊢ W1 ➡*[g] W2 →
-                   ⦃h, L⦄ ⊢ ⓐV1.ⓛ{a}W1.T1 ➡*[g] ⓓ{a}ⓝW2.V2.T2.
+                      ⦃h, L⦄ ⊢ V1 ➡[g] V2 → ⦃h, L.ⓛW1⦄ ⊢ T1 ➡*[g] T2 → ⦃h, L⦄ ⊢ W1 ➡*[g] W2 →
+                      ⦃h, L⦄ ⊢ ⓐV1.ⓛ{a}W1.T1 ➡*[g] ⓓ{a}ⓝW2.V2.T2.
 #h #g #a #L #V1 #V2 #W1 #W2 #T1 #T2 #HV12 #HT12 #H @(cpxs_ind … H) -W2 /2 width=1/
 #W #W2 #_ #HW2 #IHW1
 @(cpxs_trans … IHW1) -IHW1 /3 width=1/

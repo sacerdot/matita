@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/predsnstaralt_4.ma".
 include "basic_2/computation/cpxs_cpxs.ma".
 include "basic_2/computation/lpxs.ma".
 

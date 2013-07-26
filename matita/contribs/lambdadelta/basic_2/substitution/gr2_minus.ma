@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/rminus_3.ma".
 include "basic_2/substitution/gr2.ma".
 
 (* GENERIC RELOCATION WITH PAIRS ********************************************)

@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/btpredstar_6.ma".
 include "basic_2/substitution/fsupp.ma".
 include "basic_2/computation/lprs.ma".
 include "basic_2/dynamic/ypr.ma".

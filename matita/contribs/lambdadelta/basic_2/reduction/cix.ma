@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/notreducible_4.ma".
 include "basic_2/reduction/cir.ma".
 include "basic_2/reduction/crx.ma".
 

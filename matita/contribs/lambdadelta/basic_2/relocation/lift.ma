@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/rlift_4.ma".
 include "basic_2/grammar/term_weight.ma".
 include "basic_2/grammar/term_simple.ma".
 

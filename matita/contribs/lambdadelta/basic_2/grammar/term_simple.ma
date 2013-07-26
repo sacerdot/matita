@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/simple_1.ma".
 include "basic_2/grammar/term.ma".
 
 (* SIMPLE (NEUTRAL) TERMS ***************************************************)

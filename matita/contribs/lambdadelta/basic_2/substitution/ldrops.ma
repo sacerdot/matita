@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/rdropstar_3.ma".
 include "basic_2/relocation/ldrop.ma".
 include "basic_2/substitution/gr2_minus.ma".
 include "basic_2/substitution/lifts.ma".

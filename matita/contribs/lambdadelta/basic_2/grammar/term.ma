@@ -12,6 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/constructors/item0_1.ma".
+include "basic_2/notation/constructors/snitem2_3.ma".
+include "basic_2/notation/constructors/snbind2_4.ma".
+include "basic_2/notation/constructors/snbind2pos_3.ma".
+include "basic_2/notation/constructors/snbind2neg_3.ma".
+include "basic_2/notation/constructors/snflat2_3.ma".
+include "basic_2/notation/constructors/star_1.ma".
+include "basic_2/notation/constructors/lref_1.ma".
+include "basic_2/notation/constructors/gref_1.ma".
+include "basic_2/notation/constructors/snabbr_3.ma".
+include "basic_2/notation/constructors/snabbrpos_2.ma".
+include "basic_2/notation/constructors/snabbrneg_2.ma".
+include "basic_2/notation/constructors/snabst_3.ma".
+include "basic_2/notation/constructors/snabstpos_2.ma".
+include "basic_2/notation/constructors/snabstneg_2.ma".
+include "basic_2/notation/constructors/snappl_2.ma".
+include "basic_2/notation/constructors/sncast_2.ma".
 include "basic_2/grammar/item.ma".
 
 (* TERMS ********************************************************************)

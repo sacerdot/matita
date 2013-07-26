@@ -1,0 +1,85 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+notation "hvbox( T1 ⊢ ▶ * break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'PSubstStarSn $T1 $T2 }.
+
+include "basic_2/grammar/lpx_sn.ma".
+include "basic_2/substitution/cpss.ma".
+
+(* SN PARALLEL SUBSTITUTION FOR LOCAL ENVIRONMENTS **************************)
+
+(* Basic_1: includes: csubst1_bind *)
+definition lpss: relation lenv ≝ lpx_sn cpss. 
+
+interpretation "parallel substitution (local environment, sn variant)"
+   'PSubstStarSn L1 L2 = (lpss L1 L2).
+
+(* Basic inversion lemmas ***************************************************)
+
+lemma lpss_inv_atom1: ∀L2. ⋆ ⊢ ▶* L2 → L2 = ⋆.
+/2 width=4 by lpx_sn_inv_atom1_aux/ qed-.
+
+lemma lpss_inv_pair1: ∀I,K1,V1,L2. K1. ⓑ{I} V1 ⊢ ▶* L2 →
+                      ∃∃K2,V2. K1 ⊢ ▶* K2 & K1 ⊢ V1 ▶* V2 & L2 = K2. ⓑ{I} V2.
+/2 width=3 by lpx_sn_inv_pair1_aux/ qed-.
+
+lemma lpss_inv_atom2: ∀L1. L1 ⊢ ▶* ⋆ → L1 = ⋆.
+/2 width=4 by lpx_sn_inv_atom2_aux/ qed-.
+
+lemma lpss_inv_pair2: ∀I,L1,K2,V2. L1 ⊢ ▶* K2. ⓑ{I} V2 →
+                       ∃∃K1,V1. K1 ⊢ ▶* K2 & K1 ⊢ V1 ▶* V2 & L1 = K1. ⓑ{I} V1.
+/2 width=3 by lpx_sn_inv_pair2_aux/ qed-.
+
+(* Basic properties *********************************************************)
+
+(* Basic_1: was by definition: csubst1_refl *)
+lemma lpss_refl: ∀L. L ⊢ ▶* L.
+/2 width=1 by lpx_sn_refl/ qed.
+
+lemma lpss_pair: ∀I,K1,K2,V1,V2. K1 ⊢ ▶* K2 → K1 ⊢ V1 ▶* V2 →
+                 K1.ⓑ{I}V1 ⊢ ▶* K2.ⓑ{I}V2.
+/2 width=1/ qed.
+
+lemma lpss_append: ∀K1,K2. K1 ⊢ ▶* K2 → ∀L1,L2. L1 ⊢ ▶* L2 →
+                    L1 @@ K1 ⊢ ▶* L2 @@ K2.
+/3 width=1 by lpx_sn_append, cpss_append/ qed.
+
+(* Basic forward lemmas *****************************************************)
+
+lemma lpss_fwd_length: ∀L1,L2. L1 ⊢ ▶* L2 → |L1| = |L2|.
+/2 width=2 by lpx_sn_fwd_length/ qed-.
+
+(* Advanced forward lemmas **************************************************)
+
+lemma lpss_fwd_append1: ∀K1,L1,L. K1 @@ L1 ⊢ ▶* L →
+                        ∃∃K2,L2. K1 ⊢ ▶* K2 & L = K2 @@ L2.
+/2 width=2 by lpx_sn_fwd_append1/ qed-.
+
+lemma lpss_fwd_append2: ∀L,K2,L2. L ⊢ ▶* K2 @@ L2 →
+                        ∃∃K1,L1. K1 ⊢ ▶* K2 & L = K1 @@ L1.
+/2 width=2 by lpx_sn_fwd_append2/ qed-.
+
+(* Basic_1: removed theorems 28:
+            csubst0_clear_O csubst0_drop_lt csubst0_drop_gt csubst0_drop_eq
+            csubst0_clear_O_back csubst0_clear_S csubst0_clear_trans
+            csubst0_drop_gt_back csubst0_drop_eq_back csubst0_drop_lt_back
+            csubst0_gen_sort csubst0_gen_head csubst0_getl_ge csubst0_getl_lt
+            csubst0_gen_S_bind_2 csubst0_getl_ge_back csubst0_getl_lt_back
+            csubst0_snd_bind csubst0_fst_bind csubst0_both_bind
+            csubst1_head csubst1_flat csubst1_gen_head
+            csubst1_getl_ge csubst1_getl_lt csubst1_getl_ge_back getl_csubst1
+            fsubst0_gen_base
+*)

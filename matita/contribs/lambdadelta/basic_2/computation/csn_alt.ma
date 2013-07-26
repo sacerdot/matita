@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/snalt_4.ma".
 include "basic_2/computation/cpxs.ma".
 include "basic_2/computation/csn.ma".
 
@@ -66,7 +67,7 @@ lemma csna_intro_cpx: ∀h,g,L,T1. (
 #h #g #L #T1 #H
 @csna_intro_aux #T #T2 #H @(cpxs_ind_dx … H) -T
 [ -H #H destruct #H
-  elim (H ?) //
+  elim H //
 | #T0 #T #HLT1 #HLT2 #IHT #HT10 #HT12 destruct
   elim (term_eq_dec T0 T) #HT0
   [ -HLT1 -HLT2 -H /3 width=1/

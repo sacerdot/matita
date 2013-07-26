@@ -1,0 +1,3 @@
+lemma lsubsv_fwd_lsubss: ∀h,g,L1,L2. h ⊢ L1 ¡⊑[g] L2 → h ⊢ L1 •⊑[g] L2.
+#h #g #L1 #L2 #H elim H -L1 -L2 // /2 width=1/ /2 width=6/
+qed-.

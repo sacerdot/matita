@@ -52,19 +52,15 @@ table {
           }
         ]
         [ { "stratified native validity" * } {
-             [ "snv ( ⦃?,?⦄ ⊢ ? ¡[?] )" "snv_lift" + "snv_lpss" + "snv_aaa" + "snv_ssta" + "snv_sstas" + "snv_ssta_lpr" + "snv_lpr" + "snv_cpcs" * ]
+             [ "snv ( ⦃?,?⦄ ⊢ ? ¡[?] )" "snv_lift" + "snv_aaa" + "snv_ssta" + "snv_sstas" + "snv_ssta_lpr" + "snv_lpr" + "snv_cpcs" * ]
           }
         ]
      }
    ]
    class "blue"
    [ { "equivalence" * } {
-        [ { "local env. ref. for stratified static type assignment" * } {
-             [ "lsubss ( ? •⊑[?] ? )" "lsubss_ldrop" + "lsubss_ssta" + "lsubss_cpcs" * ]
-          }
-        ]
         [ { "context-sensitive equivalence" * } {
-             [ "cpcs ( ? ⊢ ? ⬌* ? )" "cpcs_lpss" + "cpcs_aaa" + "cpcs_cprs" + "cpcs_cpcs" * ]
+             [ "cpcs ( ? ⊢ ? ⬌* ? )" "cpcs_aaa" + "cpcs_cprs" + "cpcs_cpcs" * ]
           }
         ]
      }
@@ -93,7 +89,7 @@ table {
           }
         ]
         [ { "decomposed extended computation" * } {
-             [ "dxprs ( ⦃?,?⦄ ⊢ ? •*➡*[?] ? )" "dxprs_lift" + "dxprs_lpss" + "dxprs_aaa" + "dxprs_dxprs" * ]
+             [ "dxprs ( ⦃?,?⦄ ⊢ ? •*➡*[?] ? )" "dxprs_lift" + "dxprs_aaa" + "dxprs_dxprs" * ]
           }
         ]
         [ { "context-sensitive extended computation" * } {
@@ -102,8 +98,8 @@ table {
           }
         ]
         [ { "context-sensitive computation" * } {
-             [ "lprs ( ? ⊢ ➡* ? )" "lprs_alt ( ? ⊢ ➡➡* ? )" "lprs_ldrop" + "lprs_lpss" + "lprs_cprs" + "lprs_lprs" * ]
-             [ "cprs ( ? ⊢ ? ➡* ?)" "cprs_lift" + "cprs_lpss" + "cprs_cprs" * ]
+             [ "lprs ( ? ⊢ ➡* ? )" "lprs_alt ( ? ⊢ ➡➡* ? )" "lprs_ldrop" + "lprs_cprs" + "lprs_lprs" * ]
+             [ "cprs ( ? ⊢ ? ➡* ?)" "cprs_lift" + "cprs_cprs" * ]
           }
         ]
         [ { "local env. ref. for abstract candidates of reducibility" * } {
@@ -135,16 +131,12 @@ table {
              [ "crx ( ⦃?,?⦄ ⊢ 𝐑[?]⦃?⦄ )" "crx_append" + "crx_lift" * ]
           }
         ]
-        [ { "local env. ref. for extended reduction" * } {
-             [ "lsubx ( ? ⓝ⊑ ? )" "lsubx_lsubx" * ]
-          }
-        ]
         [ { "context-sensitive normal forms" * } {
              [ "cnr ( ? ⊢ 𝐍⦃?⦄ )" "cnr_lift" + "cnr_crr" + "cnr_cir" * ]
           }
         ]
         [ { "context-sensitive reduction" * } {
-             [ "lpr ( ? ⊢ ➡ ? )" "lpr_ldrop" + "lpr_lpss" + "lpr_lpr" * ]
+             [ "lpr ( ? ⊢ ➡ ? )" "lpr_ldrop" + "lpr_lpr" * ]
              [ "cpr ( ? ⊢ ? ➡ ? )" "cpr_lift" + "cpr_cir" * ]
           }
         ]
@@ -156,21 +148,20 @@ table {
              [ "crr ( ? ⊢ 𝐑⦃?⦄ )" "crr_append" + "crr_lift" * ]
           }
         ]
+        [ { "local env. ref. for extended reduction" * } {
+             [ "lsubx ( ? ⓝ⊑ ? )" "lsubx_lsubx" * ]
+          }
+        ]
      }
    ]
    class "green"
    [ { "unfold" * } {
-        [ { "restricted parallel computation" * } {
-             [ "lpqs ( ? ⊢ ➤* ? )" "lpqs_ldrop" + "lpqs_cpqs" + "lpqs_lpqs" * ]
-             [ "cpqs ( ? ⊢ ? ➤* ? )" "cpqs_lift" * ]
-          }
-        ]
         [ { "unfold" * } {
              [ "unfold ( ? ⊢ ? ⧫* ? )" * ]
           }
         ]
         [ { "iterated stratified static type assignment" * } {
-             [ "sstas ( ⦃?,?⦄ ⊢ ? •*[?] ? )" "sstas_lift" + "sstas_lpss" + "sstas_aaa" + "sstas_sstas" * ]
+             [ "sstas ( ⦃?,?⦄ ⊢ ? •*[?] ? )" "sstas_lift" + "sstas_aaa" + "sstas_sstas" * ]
           }
         ]
      }
@@ -178,7 +169,7 @@ table {
    class "grass"
    [ { "static typing" * } {
         [ { "stratified static type assignment" * } {
-             [ "ssta ( ⦃?,?⦄ ⊢ ? •[?,?] ? )" "ssta_lift" + "ssta_lpss" + "ssta_aaa" + "ssta_ssta" * ]
+             [ "ssta ( ⦃?,?⦄ ⊢ ? •[?,?] ? )" "ssta_lift" + "ssta_aaa" + "ssta_ssta" * ]
           }
         ]
         [ { "local env. ref. for atomic arity assignment" * } {
@@ -186,7 +177,7 @@ table {
           }
         ]
         [ { "atomic arity assignment" * } {
-             [ "aaa ( ? ⊢ ? ⁝ ? )" "aaa_lift" + "aaa_lifts" + "aaa_lpss" + "aaa_aaa" * ]
+             [ "aaa ( ? ⊢ ? ⁝ ? )" "aaa_lift" + "aaa_lifts" + "aaa_aaa" * ]
           }
         ]
         [ { "parameters" * } {
@@ -197,15 +188,6 @@ table {
    ]
    class "yellow"
    [ { "substitution" * } {
-        [ { "parallel substitution" * } {
-             [ "lpss ( ? ⊢ ▶* ? )" "lpss_ldrop" + "lpss_cpss" + "lpss_lpss" * ]
-             [ "cpss ( ? ⊢ ? ▶* ? )" "cpss_lift" * ]
-          }
-        ]        
-        [ { "local env. ref. for substitution" * } {
-             [ "lsubr ( ? ⊑ ? )" "lsubr_lsubr" * ]
-          }
-        ]
         [ { "iterated structural successor for closures" * } {
              [ "fsups ( ⦃?,?⦄ ⊃* ⦃?,?⦄ )" "fsups_fsups" * ]
              [ "fsupp ( ⦃?,?⦄ ⊃+ ⦃?,?⦄ )" "fsupp_fsupp" * ]

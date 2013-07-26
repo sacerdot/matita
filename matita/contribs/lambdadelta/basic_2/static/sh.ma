@@ -42,4 +42,3 @@ qed.
 axiom nexts_dec: ∀h,k1,k2. Decidable (∃l. (next h)^l k1 = k2).
 
 axiom nexts_inj: ∀h,k,l1,l2. (next h)^l1 k = (next h)^l2 k → l1 = l2.
-

@@ -21,7 +21,12 @@ module US = U.UriSet
 module O = Options
 module E = Engine
 
-let src_exists path = !O.no_devel ||  Y.file_exists path
+let is_obj path = 
+   F.check_suffix path ".con.ng" &
+   F.check_suffix path ".ind.ng" &
+   F.check_suffix path ".var.ng"
+  
+let src_exists path = !O.no_devel || Y.file_exists path
 
 let mk_file path =
    if F.check_suffix path "/" then S.sub path 0 (pred (S.length path))
@@ -42,9 +47,7 @@ let add_remove base path =
    O.remove := F.concat base path :: !O.remove
 
 let rec scan_entry base devel path =
-   if F.check_suffix path ".con.ng" then add_obj path else
-   if F.check_suffix path ".ind.ng" then add_obj path else
-   if F.check_suffix path ".var.ng" then add_obj path else 
+   if is_obj path then add_obj path else
    if F.check_suffix path ".ng" then
       if src_exists (F.chop_extension devel ^ ".ma")
       then add_src devel path else add_remove base path

@@ -43,16 +43,17 @@ lemma cpr_lift: l_liftable cpr.
   elim (lift_conf_O1 … HTU2 … HT2) -T2 /4 width=5/
 | #K #V #T1 #T2 #_ #IHT12 #L #d #e #HLK #U1 #H #U2 #HTU2
   elim (lift_inv_flat1 … H) -H #VV1 #TT1 #HVV1 #HTT1 #H destruct /3 width=5/
-| #a #K #V1 #V2 #W #T1 #T2 #_ #_ #IHV12 #IHT12 #L #d #e #HLK #X1 #HX1 #X2 #HX2
+| #a #K #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #IHV12 #IHW12 #IHT12 #L #d #e #HLK #X1 #HX1 #X2 #HX2
   elim (lift_inv_flat1 … HX1) -HX1 #V0 #X #HV10 #HX #HX1 destruct
   elim (lift_inv_bind1 … HX) -HX #W0 #T0 #HW0 #HT10 #HX destruct
-  elim (lift_inv_bind1 … HX2) -HX2 #V3 #T3 #HV23 #HT23 #HX2 destruct /4 width=5/
+  elim (lift_inv_bind1 … HX2) -HX2 #X #T3 #HX #HT23 #HX2 destruct
+  elim (lift_inv_flat1 … HX) -HX #W3 #V3 #HW23 #HV23 #HX destruct /4 width=5/
 | #a #K #V1 #V #V2 #W1 #W2 #T1 #T2 #_ #HV2 #_ #_ #IHV1 #IHW12 #IHT12 #L #d #e #HLK #X1 #HX1 #X2 #HX2
   elim (lift_inv_flat1 … HX1) -HX1 #V0 #X #HV10 #HX #HX1 destruct
   elim (lift_inv_bind1 … HX) -HX #W0 #T0 #HW0 #HT10 #HX destruct
   elim (lift_inv_bind1 … HX2) -HX2 #W3 #X #HW23 #HX #HX2 destruct
   elim (lift_inv_flat1 … HX) -HX #V3 #T3 #HV3 #HT23 #HX destruct
-  elim (lift_trans_ge … HV2 … HV3 ?) -V2 // /4 width=5/
+  elim (lift_trans_ge … HV2 … HV3) -V2 // /4 width=5/
 ]
 qed.
 
@@ -89,18 +90,20 @@ lemma cpr_inv_lift1: l_deliftable_sn cpr.
 | #L #V #U1 #U2 #_ #IHU12 #K #d #e #HLK #X #H
   elim (lift_inv_flat2 … H) -H #W1 #T1 #HWV1 #HTU1 #H destruct
   elim (IHU12 … HLK … HTU1) -L -U1 /3 width=3/
-| #a #L #V1 #V2 #W #T1 #T2 #_ #_ #IHV12 #IHT12 #K #d #e #HLK #X #HX
+| #a #L #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #IHV12 #IHW12 #IHT12 #K #d #e #HLK #X #HX
   elim (lift_inv_flat2 … HX) -HX #V0 #Y #HV01 #HY #HX destruct
   elim (lift_inv_bind2 … HY) -HY #W0 #T0 #HW01 #HT01 #HY destruct
-  elim (IHV12 … HLK … HV01) -V1
-  elim (IHT12 (K.ⓛW0) … HT01) -T1 /2 width=1/ /3 width=5/
+  elim (IHV12 … HLK … HV01) -V1 #V3 #HV32 #HV03
+  elim (IHT12 (K.ⓛW0) … HT01) -T1 /2 width=1/ #T3 #HT32 #HT03
+  elim (IHW12 … HLK … HW01) -W1 #W3 #HW32 #HW03
+  @ex2_intro [2: /3 width=2/ | skip |3: /2 width=1/ ] (**) (* /4 width=6/ is slow *) 
 | #a #L #V1 #V #V2 #W1 #W2 #T1 #T2 #_ #HV2 #_ #_ #IHV1 #IHW12 #IHT12 #K #d #e #HLK #X #HX
   elim (lift_inv_flat2 … HX) -HX #V0 #Y #HV01 #HY #HX destruct
   elim (lift_inv_bind2 … HY) -HY #W0 #T0 #HW01 #HT01 #HY destruct
   elim (IHV1 … HLK … HV01) -V1 #V3 #HV3 #HV03
   elim (IHT12 (K.ⓓW0) … HT01) -T1 /2 width=1/ #T3 #HT32 #HT03
   elim (IHW12 … HLK … HW01) -W1 #W3 #HW32 #HW03
-  elim (lift_trans_le … HV3 … HV2 ?) -V // #V #HV3 #HV2
+  elim (lift_trans_le … HV3 … HV2) -V // #V #HV3 #HV2
   @ex2_intro [2: /3 width=2/ | skip |3: /2 width=3/ ] (**) (* /4 width=5/ is slow *)
 ]
 qed-.

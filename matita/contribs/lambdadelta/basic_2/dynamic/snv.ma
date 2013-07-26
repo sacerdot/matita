@@ -12,7 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/dxprs.ma".
+include "basic_2/notation/relations/nativevalid_4.ma".
+include "basic_2/computation/cpds.ma".
 include "basic_2/equivalence/cpcs.ma".
 
 (* STRATIFIED NATIVE VALIDITY FOR TERMS *************************************)

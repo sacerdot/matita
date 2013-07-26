@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/pconv_3.ma".
 include "basic_2/reduction/cpr.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL CONVERSION ON TERMS ***************************)

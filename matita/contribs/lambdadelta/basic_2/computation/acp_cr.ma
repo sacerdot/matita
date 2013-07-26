@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/ineint_4.ma".
 include "basic_2/grammar/aarity.ma".
 include "basic_2/substitution/gr2_gr2.ma".
 include "basic_2/substitution/lifts_lift_vector.ma".

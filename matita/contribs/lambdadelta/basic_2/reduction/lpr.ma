@@ -12,7 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unfold/lpqs.ma".
+include "basic_2/notation/relations/predsn_2.ma".
+include "basic_2/grammar/lpx_sn.ma".
 include "basic_2/reduction/cpr.ma".
 
 (* SN PARALLEL REDUCTION FOR LOCAL ENVIRONMENTS *****************************)
@@ -53,13 +54,6 @@ lemma lpr_pair: ∀I,K1,K2,V1,V2. K1 ⊢ ➡ K2 → K1 ⊢ V1 ➡ V2 →
 lemma lpr_append: ∀K1,K2. K1 ⊢ ➡ K2 → ∀L1,L2. L1 ⊢ ➡ L2 →
                   L1 @@ K1 ⊢ ➡ L2 @@ K2.
 /3 width=1 by lpx_sn_append, cpr_append/ qed.
-
-lemma lpqs_lpr: ∀L1,L2. L1 ⊢ ➤* L2 → L1 ⊢ ➡ L2.
-#L1 #L2 #H elim H -L1 -L2 // /3 width=1/
-qed.
-
-lemma lpss_lpr: ∀L1,L2. L1 ⊢ ▶* L2 → L1 ⊢ ➡ L2.
-/3 width=1/ qed.
 
 (* Basic forward lemmas *****************************************************)
 

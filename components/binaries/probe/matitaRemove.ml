@@ -23,8 +23,8 @@ let remove_dir dir =
       rmdir (F.dirname dir)
    in
    if Y.file_exists dir then begin
-      A.iter map (Y.readdir dir);
-      try rmdir dir with U.Unix_error _ -> ()
+      try A.iter map (Y.readdir dir); rmdir dir
+      with U.Unix_error _ -> ()
    end
 
 let objects () =

@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/btpredproper_6.ma".
 include "basic_2/dynamic/ypr.ma".
 
 (* "BIG TREE" PROPER PARALLEL REDUCTION FOR CLOSURES ************************)

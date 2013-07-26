@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/reducible_4.ma".
 include "basic_2/static/sd.ma".
 include "basic_2/reduction/crr.ma".
 

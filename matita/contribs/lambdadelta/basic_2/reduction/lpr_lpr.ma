@@ -185,15 +185,17 @@ fact cpr_conf_lpr_flat_beta:
       ∃∃T0. L1 ⊢ T1 ➡ T0 & L2 ⊢ T2 ➡ T0
    ) →
    ∀V1. L0 ⊢ V0 ➡ V1 → ∀T1. L0 ⊢ ⓛ{a}W0.T0 ➡ T1 →
-   ∀V2. L0 ⊢ V0 ➡ V2 → ∀T2. L0.ⓛW0 ⊢ T0 ➡ T2 →
+   ∀V2. L0 ⊢ V0 ➡ V2 → ∀W2. L0 ⊢ W0 ➡ W2 → ∀T2. L0.ⓛW0 ⊢ T0 ➡ T2 →
    ∀L1. L0 ⊢ ➡ L1 → ∀L2. L0 ⊢ ➡ L2 →
-   ∃∃T. L1 ⊢ ⓐV1.T1 ➡ T & L2 ⊢ ⓓ{a}V2.T2 ➡ T.
+   ∃∃T. L1 ⊢ ⓐV1.T1 ➡ T & L2 ⊢ ⓓ{a}ⓝW2.V2.T2 ➡ T.
 #a #L0 #V0 #W0 #T0 #IH #V1 #HV01 #X #H
-#V2 #HV02 #T2 #HT02 #L1 #HL01 #L2 #HL02
+#V2 #HV02 #W2 #HW02 #T2 #HT02 #L1 #HL01 #L2 #HL02
 elim (cpr_inv_abst1 … H) -H #W1 #T1 #HW01 #HT01 #H destruct
 elim (IH … HV01 … HV02 … HL01 … HL02) -HV01 -HV02 /2 width=1/ #V #HV1 #HV2
-elim (IH … HT01 … HT02 (L1.ⓛW1) … (L2.ⓛW1)) /2 width=1/ -L0 -V0 -W0 -T0 #T #HT1 #HT2
-lapply (cpr_lsubr_trans … HT2 (L2.ⓓV2) ?) -HT2 /2 width=1/ /3 width=5/
+elim (IH … HW01 … HW02 … HL01 … HL02) /2 width=1/ #W #HW1 #HW2
+elim (IH … HT01 … HT02 (L1.ⓛW1) … (L2.ⓛW2)) /2 width=1/ -L0 -V0 -W0 -T0 #T #HT1 #HT2
+lapply (lsubx_cpr_trans … HT2 (L2.ⓓⓝW2.V2) ?) -HT2 /2 width=1/
+/4 width=5 by cpr_bind, cpr_flat, cpr_beta, ex2_intro/ (**) (* auto too slow without trace *)
 qed-.
 
 (* Basic-1: includes:
@@ -236,16 +238,18 @@ fact cpr_conf_lpr_beta_beta:
       ∀L1. L ⊢ ➡ L1 → ∀L2. L ⊢ ➡ L2 →
       ∃∃T0. L1 ⊢ T1 ➡ T0 & L2 ⊢ T2 ➡ T0
    ) →
-   ∀V1. L0 ⊢ V0 ➡ V1 → ∀T1. L0.ⓛW0 ⊢ T0 ➡ T1 →
-   ∀V2. L0 ⊢ V0 ➡ V2 → ∀T2. L0.ⓛW0 ⊢ T0 ➡ T2 →
+   ∀V1. L0 ⊢ V0 ➡ V1 → ∀W1. L0 ⊢ W0 ➡ W1 → ∀T1. L0.ⓛW0 ⊢ T0 ➡ T1 →
+   ∀V2. L0 ⊢ V0 ➡ V2 → ∀W2. L0 ⊢ W0 ➡ W2 → ∀T2. L0.ⓛW0 ⊢ T0 ➡ T2 →
    ∀L1. L0 ⊢ ➡ L1 → ∀L2. L0 ⊢ ➡ L2 →
-   ∃∃T. L1 ⊢ ⓓ{a}V1.T1 ➡ T & L2 ⊢ ⓓ{a}V2.T2 ➡ T.
-#a #L0 #V0 #W0 #T0 #IH #V1 #HV01 #T1 #HT01
-#V2 #HV02 #T2 #HT02 #L1 #HL01 #L2 #HL02
+   ∃∃T. L1 ⊢ ⓓ{a}ⓝW1.V1.T1 ➡ T & L2 ⊢ ⓓ{a}ⓝW2.V2.T2 ➡ T.
+#a #L0 #V0 #W0 #T0 #IH #V1 #HV01 #W1 #HW01 #T1 #HT01
+#V2 #HV02 #W2 #HW02 #T2 #HT02 #L1 #HL01 #L2 #HL02
 elim (IH … HV01 … HV02 … HL01 … HL02) -HV01 -HV02 /2 width=1/ #V #HV1 #HV2
-elim (IH … HT01 … HT02 (L1.ⓛW0) … (L2.ⓛW0)) /2 width=1/ -L0 -V0 -T0 #T #HT1 #HT2
-lapply (cpr_lsubr_trans … HT1 (L1.ⓓV1) ?) -HT1 /2 width=1/
-lapply (cpr_lsubr_trans … HT2 (L2.ⓓV2) ?) -HT2 /2 width=1/ /3 width=5/
+elim (IH … HW01 … HW02 … HL01 … HL02) /2 width=1/ #W #HW1 #HW2
+elim (IH … HT01 … HT02 (L1.ⓛW1) … (L2.ⓛW2)) /2 width=1/ -L0 -V0 -W0 -T0 #T #HT1 #HT2
+lapply (lsubx_cpr_trans … HT1 (L1.ⓓⓝW1.V1) ?) -HT1 /2 width=1/
+lapply (lsubx_cpr_trans … HT2 (L2.ⓓⓝW2.V2) ?) -HT2 /2 width=1/
+/4 width=5 by cpr_bind, cpr_flat, ex2_intro/
 qed-.
 
 (* Basic_1: was: pr0_upsilon_upsilon *)
@@ -306,23 +310,23 @@ theorem cpr_conf_lpr: lpx_sn_confluent cpr cpr.
   elim (cpr_inv_flat1 … H1) -H1 *
   [ #V1 #T1 #HV01 #HT01 #H1
   | #HX1 #H1
-  | #a1 #V1 #Y1 #Z1 #T1 #HV01 #HZT1 #H11 #H12 #H13
+  | #a1 #V1 #Y1 #W1 #Z1 #T1 #HV01 #HYW1 #HZT1 #H11 #H12 #H13
   | #a1 #V1 #U1 #Y1 #W1 #Z1 #T1 #HV01 #HVU1 #HYW1 #HZT1 #H11 #H12 #H13
   ]
   elim (cpr_inv_flat1 … H2) -H2 *
   [1,5,9,13: #V2 #T2 #HV02 #HT02 #H2
   |2,6,10,14: #HX2 #H2
-  |3,7,11,15: #a2 #V2 #Y2 #Z2 #T2 #HV02 #HZT2 #H21 #H22 #H23
+  |3,7,11,15: #a2 #V2 #Y2 #W2 #Z2 #T2 #HV02 #HYW2 #HZT2 #H21 #H22 #H23
   |4,8,12,16: #a2 #V2 #U2 #Y2 #W2 #Z2 #T2 #HV02 #HVU2 #HYW2 #HZT2 #H21 #H22 #H23
   ] destruct
   [ /3 width=10 by cpr_conf_lpr_flat_flat/
   | /4 width=8 by ex2_commute, cpr_conf_lpr_flat_tau/
-  | /4 width=11 by ex2_commute, cpr_conf_lpr_flat_beta/
+  | /4 width=12 by ex2_commute, cpr_conf_lpr_flat_beta/
   | /4 width=14 by ex2_commute, cpr_conf_lpr_flat_theta/
   | /3 width=8 by cpr_conf_lpr_flat_tau/
   | /3 width=7 by cpr_conf_lpr_tau_tau/
-  | /3 width=11 by cpr_conf_lpr_flat_beta/
-  | /3 width=11 by cpr_conf_lpr_beta_beta/
+  | /3 width=12 by cpr_conf_lpr_flat_beta/
+  | /3 width=13 by cpr_conf_lpr_beta_beta/
   | /3 width=14 by cpr_conf_lpr_flat_theta/
   | /3 width=17 by cpr_conf_lpr_theta_theta/
   ]

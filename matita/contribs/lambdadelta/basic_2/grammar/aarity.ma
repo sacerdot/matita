@@ -17,7 +17,8 @@
  *)
 
 include "ground_2/star.ma".
-include "basic_2/notation.ma".
+include "basic_2/notation/constructors/item0_0.ma".
+include "basic_2/notation/constructors/snitem2_2.ma".
 
 (* ATOMIC ARITY *************************************************************)
 

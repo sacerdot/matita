@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/crsubeq_3.ma".
 include "basic_2/static/aaa.ma".
 include "basic_2/computation/acp_cr.ma".
 

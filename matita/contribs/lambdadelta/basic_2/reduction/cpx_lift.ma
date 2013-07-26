@@ -58,7 +58,7 @@ lemma cpx_lift: ∀h,g. l_liftable (cpx h g).
   elim (lift_inv_bind1 … HX) -HX #W0 #T0 #HW0 #HT10 #HX destruct
   elim (lift_inv_bind1 … HX2) -HX2 #W3 #X #HW23 #HX #HX2 destruct
   elim (lift_inv_flat1 … HX) -HX #V3 #T3 #HV3 #HT23 #HX destruct
-  elim (lift_trans_ge … HV2 … HV3 ?) -V2 // /4 width=5/
+  elim (lift_trans_ge … HV2 … HV3) -V2 // /4 width=5/
 ]
 qed.
 
@@ -112,7 +112,7 @@ lemma cpx_inv_lift1: ∀h,g. l_deliftable_sn (cpx h g).
   elim (IHV1 … HLK … HV01) -V1 #V3 #HV3 #HV03
   elim (IHT12 (K.ⓓW0) … HT01) -T1 /2 width=1/ #T3 #HT32 #HT03
   elim (IHW12 … HLK … HW01) -W1 #W3 #HW32 #HW03
-  elim (lift_trans_le … HV3 … HV2 ?) -V // #V #HV3 #HV2
+  elim (lift_trans_le … HV3 … HV2) -V // #V #HV3 #HV2
   @ex2_intro [2: /3 width=2/ | skip |3: /2 width=3/ ] (**) (* /4 width=5/ is slow *)
 ]
 qed-.

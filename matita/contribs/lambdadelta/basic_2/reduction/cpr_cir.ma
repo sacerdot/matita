@@ -39,7 +39,7 @@ lemma cpr_fwd_cir: ∀L,T1,T2. L ⊢ T1 ➡ T2 → L ⊢ 𝐈⦃T1⦄ → T2 = T
   elim (cir_inv_ri2 … H) /2 width=1/
 | #L #V1 #T1 #T2 #_ #_ #H
   elim (cir_inv_ri2 … H) /2 width=1/
-| #a #L #V1 #V2 #W #T1 #T2 #_ #_ #_ #_ #H
+| #a #L #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #_ #_ #_ #H
   elim (cir_inv_appl … H) -H #_ #_ #H
   elim (simple_inv_bind … H)
 | #a #L #V #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #_ #_ #_ #_ #H
@@ -47,6 +47,3 @@ lemma cpr_fwd_cir: ∀L,T1,T2. L ⊢ T1 ➡ T2 → L ⊢ 𝐈⦃T1⦄ → T2 = T
   elim (simple_inv_bind … H)
 ]
 qed-.
-
-lemma cpss_fwd_cir_eq: ∀L,T1,T2. L ⊢ T1 ▶* T2 → L ⊢ 𝐈⦃T1⦄ → T2 = T1.
-/3 width=3 by cpr_fwd_cir, cpss_cpr/ qed-.

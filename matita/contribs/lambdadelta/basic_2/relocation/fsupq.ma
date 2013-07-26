@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/suptermopt_4.ma".
 include "basic_2/relocation/fsup.ma".
 
 (* OPTIONAL SUPCLOSURE ******************************************************)

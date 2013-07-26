@@ -29,13 +29,6 @@ theorem cprs_trans: ∀L. Transitive … (cprs L).
 theorem cprs_conf: ∀L. confluent2 … (cprs L) (cprs L).
 #L @TC_confluent2 /2 width=3 by cpr_conf/ qed-. (**) (* auto /3 width=3/ does not work because a δ-expansion gets in the way *)
 
-theorem cprs_ext_bind: ∀L,V1,V2. L ⊢ V1 ➡* V2 → ∀V,T1,T2. L.ⓛV ⊢ T1 ➡* T2 →
-                       ∀a,I. L ⊢ ⓑ{a,I}V1. T1 ➡* ⓑ{a,I}V2. T2.
-#L #V1 #V2 #H #V #T1 #T2 #HT12 #a #I @(TC_ind_dx … V1 H) -V1 /2 width=3/
-#V1 #V0 #HV10 #_ #IHV02
-@(cprs_trans … IHV02) /2 width=1/
-qed.
-
 theorem cprs_bind: ∀a,I,L,V1,V2,T1,T2. L. ⓑ{I}V1 ⊢ T1 ➡* T2 → L ⊢ V1 ➡* V2 →
                    L ⊢ ⓑ{a,I}V1. T1 ➡* ⓑ{a,I}V2. T2.
 #a #I #L #V1 #V2 #T1 #T2 #HT12 #H @(cprs_ind … H) -V2 /2 width=1/
@@ -51,12 +44,20 @@ theorem cprs_flat: ∀I,L,V1,V2,T1,T2. L ⊢ T1 ➡* T2 → L ⊢ V1 ➡* V2 →
 @(cprs_trans … IHV1) -IHV1 /2 width=1/
 qed.
 
-theorem cprs_beta: ∀a,L,V1,V2,W,T1,T2.
-                   L.ⓛW ⊢ T1 ➡* T2 → L ⊢ V1 ➡* V2 →
-                   L ⊢ ⓐV1.ⓛ{a}W.T1 ➡* ⓓ{a}V2.T2.
-#a #L #V1 #V2 #W #T1 #T2 #HT12 #H @(cprs_ind … H) -V2 /2 width=1/
+theorem cprs_beta_rc: ∀a,L,V1,V2,W1,W2,T1,T2.
+                      L ⊢ V1 ➡ V2 → L.ⓛW1 ⊢ T1 ➡* T2 → L ⊢ W1 ➡* W2 →
+                      L ⊢ ⓐV1.ⓛ{a}W1.T1 ➡* ⓓ{a}ⓝW2.V2.T2.
+#a #L #V1 #V2 #W1 #W2 #T1 #T2 #HV12 #HT12 #H @(cprs_ind … H) -W2 /2 width=1/
+#W #W2 #_ #HW2 #IHW1
+@(cprs_trans … IHW1) -IHW1 /3 width=1/
+qed.
+
+theorem cprs_beta: ∀a,L,V1,V2,W1,W2,T1,T2.
+                   L.ⓛW1 ⊢ T1 ➡* T2 → L ⊢ W1 ➡* W2 → L ⊢ V1 ➡* V2 →
+                   L ⊢ ⓐV1.ⓛ{a}W1.T1 ➡* ⓓ{a}ⓝW2.V2.T2.
+#a #L #V1 #V2 #W1 #W2 #T1 #T2 #HT12 #HW12 #H @(cprs_ind … H) -V2 /2 width=1/
 #V #V2 #_ #HV2 #IHV1
-@(cprs_trans … IHV1) /2 width=1/
+@(cprs_trans … IHV1) -IHV1 /3 width=1/
 qed.
 
 theorem cprs_theta_rc: ∀a,L,V1,V,V2,W1,W2,T1,T2.
@@ -75,6 +76,34 @@ theorem cprs_theta: ∀a,L,V1,V,V2,W1,W2,T1,T2.
 @(cprs_trans … IHV0) /2 width=1/
 qed.
 
+(* Advanced inversion lemmas ************************************************)
+
+(* Basic_1: was pr3_gen_appl *)
+lemma cprs_inv_appl1: ∀L,V1,T1,U2. L ⊢ ⓐV1.T1 ➡* U2 →
+                      ∨∨ ∃∃V2,T2.       L ⊢ V1 ➡* V2 & L ⊢ T1 ➡* T2 &
+                                        U2 = ⓐV2. T2
+                       | ∃∃a,W,T.       L ⊢ T1 ➡* ⓛ{a}W.T &
+                                        L ⊢ ⓓ{a}ⓝW.V1.T ➡* U2
+                       | ∃∃a,V0,V2,V,T. L ⊢ V1 ➡* V0 & ⇧[0,1] V0 ≡ V2 &
+                                        L ⊢ T1 ➡* ⓓ{a}V.T &
+                                        L ⊢ ⓓ{a}V.ⓐV2.T ➡* U2.
+#L #V1 #T1 #U2 #H @(cprs_ind … H) -U2 [ /3 width=5/ ]
+#U #U2 #_ #HU2 * *
+[ #V0 #T0 #HV10 #HT10 #H destruct
+  elim (cpr_inv_appl1 … HU2) -HU2 *
+  [ #V2 #T2 #HV02 #HT02 #H destruct /4 width=5/
+  | #a #V2 #W #W2 #T #T2 #HV02 #HW2 #HT2 #H1 #H2 destruct
+    lapply (cprs_strap1 … HV10 … HV02) -V0 #HV12
+    lapply (lsubx_cpr_trans … HT2 (L.ⓓⓝW.V1) ?) -HT2 /2 width=1/ #HT2
+    @or3_intro1 @(ex2_3_intro … HT10) -HT10 /3 width=1/ (**) (* explicit constructor. /5 width=8/ is too slow because TC_transitive gets in the way *)
+  | #a #V #V2 #W0 #W2 #T #T2 #HV0 #HV2 #HW02 #HT2 #H1 #H2 destruct
+    @or3_intro2 @(ex4_5_intro … HV2 HT10) /2 width=3/ /3 width=1/ (**) (* explicit constructor. /5 width=8/ is too slow because TC_transitive gets in the way *)
+  ]
+| /4 width=9/
+| /4 width=11/
+]
+qed-.
+
 (* Properties concerning sn parallel reduction on local environments ********)
 
 (* Basic_1: was just: pr3_pr2_pr2_t *)
@@ -92,8 +121,8 @@ lemma lpr_cpr_trans: s_r_trans … cpr lpr.
 |4,6: /3 width=1/
 | #L2 #V2 #T1 #T #T2 #_ #HT2 #IHT1 #L1 #HL12
   lapply (IHT1 (L1.ⓓV2) ?) -IHT1 /2 width=1/ /2 width=3/
-| #a #L2 #V1 #V2 #W #T1 #T2 #_ #_ #IHV12 #IHT12 #L1 #HL12
-  lapply (IHT12 (L1.ⓛW) ?) -IHT12 /2 width=1/ /3 width=1/
+| #a #L2 #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #IHV12 #IHW12 #IHT12 #L1 #HL12
+  lapply (IHT12 (L1.ⓛW1) ?) -IHT12 /2 width=1/ /3 width=1/
 | #a #L2 #V1 #V #V2 #W1 #W2 #T1 #T2 #_ #HV2 #_ #_ #IHV1 #IHW12 #IHT12 #L1 #HL12
   lapply (IHT12 (L1.ⓓW1) ?) -IHT12 /2 width=1/ /3 width=3/
 ]

@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/rdrop_3.ma".
 include "basic_2/grammar/genv.ma".
 
 (* GLOBAL ENVIRONMENT SLICING ***********************************************)

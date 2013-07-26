@@ -13,6 +13,10 @@
 (**************************************************************************)
 
 include "ground_2/list.ma".
+include "basic_2/notation/constructors/star_0.ma".
+include "basic_2/notation/constructors/dxbind2_3.ma".
+include "basic_2/notation/constructors/dxabbr_2.ma".
+include "basic_2/notation/constructors/dxabst_2.ma".
 include "basic_2/grammar/term.ma".
 
 (* GLOBAL ENVIRONMENTS ******************************************************)
@@ -22,9 +26,6 @@ definition genv ≝ list2 bind2 term.
 
 interpretation "sort (global environment)"
    'Star = (nil2 bind2 term).
-
-interpretation "environment construction (binary)"
-   'DxItem2 L I T = (cons2 bind2 term I T L).
 
 interpretation "environment binding construction (binary)"
    'DxBind2 L I T = (cons2 bind2 term I T L).

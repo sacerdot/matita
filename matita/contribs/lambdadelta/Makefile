@@ -3,27 +3,32 @@ H    := @
 
 TRIM := sed "s/ \\+$$//"
 
-XOA_CONF    := ground_2/xoa.conf.xml
-XOA_TARGETS := ground_2/xoa_notation.ma ground_2/xoa.ma
+XOA_CONF     := ground_2/xoa.conf.xml
+XOA_TARGETS  := ground_2/xoa_notation.ma ground_2/xoa.ma
 
-XOA_DIR     := ../../../components/binaries/xoa
-XOA         := xoa.native
-XOA_OPTS    := ../../matita.conf.xml $(XOA_CONF)
+XOA_DIR      := ../../../components/binaries/xoa
+XOA          := xoa.native
+XOA_OPTS     := ../../matita.conf.xml $(XOA_CONF)
 
-DEP_DIR     := ../../../components/binaries/matitadep
-DEP         := matitadep.native
+XOA2_CONF    := ground_2/xoa2.conf.xml
+XOA2_TARGETS := ground_2/xoa2_notation.ma ground_2/xoa2.ma
+XOA2_OPTS    := ../../matita.conf.xml $(XOA2_CONF)
 
-MAC_DIR     := ../../../components/binaries/mac
-MAC         := mac.native
+DEP_DIR      := ../../../components/binaries/matitadep
+DEP          := matitadep.native
 
-PRB_DIR     := ../../../components/binaries/probe
-PRB         := probe.native
-PRB_OPTS    := $(XOA_OPTS) -g 
+MAC_DIR      := ../../../components/binaries/mac
+MAC          := mac.native
+MAC_OPTS     :=
 
-ORIG        := . ./orig.sh 
-ORIGS       := basic_2/basic_1.orig
+PRB_DIR      := ../../../components/binaries/probe
+PRB          := probe.native
+PRB_OPTS     := $(XOA_OPTS) -g 
 
-TAGS := all xoa orig deps stats tbls trim
+ORIG         := . ./orig.sh 
+ORIGS        := basic_2/basic_1.orig
+
+TAGS := all xoa xoa2 orig elim deps stats tbls trim
 
 PACKAGES := ground_2 basic_2 apps_2
 
@@ -42,6 +47,10 @@ define MAS_TEMPLATE
 $(1)/$(1)_probe.txt: $$(MAS_$(1))
 	@echo "  PROBE $(1)"
 	$$(H)$$(PRB_DIR)/$$(PRB) $$(PRB_OPTS) $(1) -sn -on -i > $$@
+
+$(1)/$(1)_mac.txt: $$(MAS_$(1))
+	@echo "  MAC $(1)"
+	$$(H)$$(MAC_DIR)/$$(MAC) $$(MAC_OPTS) $$^ > $$@
 endef
 
 $(foreach PKG, $(PACKAGES), $(eval $(call MAS_TEMPLATE,$(PKG))))
@@ -53,6 +62,20 @@ xoa: $(XOA_TARGETS)
 $(XOA_TARGETS): $(XOA_CONF)
 	@echo "  EXEC $(XOA) $(XOA_CONF)"
 	$(H)MATITA_RT_BASE_DIR=../.. $(XOA_DIR)/$(XOA) $(XOA_OPTS)
+
+# xoa2 #######################################################################
+
+xoa2: $(XOA2_TARGETS)
+
+$(XOA2_TARGETS): $(XOA2_CONF)
+	@echo "  EXEC $(XOA) $(XOA2_CONF)"
+	$(H)MATITA_RT_BASE_DIR=../.. $(XOA_DIR)/$(XOA) $(XOA2_OPTS)
+
+# elim #######################################################################
+
+elim:
+	@echo "  MATITADEP"
+	$(H)grep "elim (.*?)" $(MAS)
 
 # orig #######################################################################
 
@@ -73,8 +96,7 @@ define STATS_TEMPLATE
   STTS     += $$(STT_$(1))
 
   $$(STT_$(1)): S0  = $$(shell cat $(1)/$(1)_probe.txt)    
-  $$(STT_$(1)): S1 := $$(shell $$(MAC_DIR)/$$(MAC) $$(MAS_$(1)))
-  $$(STT_$(1)): S3  = $$(shell echo $$$$(($$(S1) / 5120)))
+  $$(STT_$(1)): S1  = $$(shell cat $(1)/$(1)_mac.txt)
   $$(STT_$(1)): S4  = $$(shell ls $$(MAS_$(1)) | wc -l)
   $$(STT_$(1)): P1  = $$(shell grep "theorem " $$(MAS_$(1)) | wc -l)
   $$(STT_$(1)): P2  = $$(shell grep "lemma " $$(MAS_$(1)) | wc -l)
@@ -86,13 +108,13 @@ define STATS_TEMPLATE
   $$(STT_$(1)): M2  = $$(shell grep "$$(OPEN)\*[^*:]*$$$$" $$(MAS_$(1)) | wc -l)
   $$(STT_$(1)): M3  = $$(shell grep "(\*\*)" $$(MAS_$(1)) | wc -l)
 
-$$(STT_$(1)): $$(MAS_$(1)) $(1)/$(1)_probe.txt
+$$(STT_$(1)): $$(MAS_$(1)) $(1)/$(1)_probe.txt $(1)/$(1)_mac.txt
 	@printf '\x1B[1;40;37m'
 	@printf '%-15s %-47s' 'Statistics for:' $(1)
 	@printf '\x1B[0m\n'
 	@printf '\x1B[1;40;35m'
-	@printf '%-8s %6i' Chars $$(S1)
-	@printf '   %-8s %4i' Pages $$(S3)
+	@printf '%-8s %6i' Chars $$(word 1, $$(S1))
+	@printf '   %-8s %4i' Pages $$(word 2, $$(S1))
 	@printf '   %-7s %7i' Nodes $$(word 3, $$(S0))
 	@printf '   %-11s' ''
 	@printf '\x1B[0m\n'
@@ -136,7 +158,7 @@ define SUMMARY_TEMPLATE
   SUMS     += $$(SUM_$(1))
 
   $$(SUM_$(1)): S0 = $$(shell cat $(1)/$(1)_probe.txt)  
-  $$(SUM_$(1)): S1 = $$(shell $$(MAC_DIR)/$$(MAC) $$(MAS_$(1)))
+  $$(SUM_$(1)): S1 = $$(shell cat $(1)/$(1)_mac.txt)
   $$(SUM_$(1)): S4 = $$(shell ls $$(MAS_$(1)) | wc -l)  
   $$(SUM_$(1)): C1 = $$(shell grep "inductive \|record " $$(MAS_$(1)) | wc -l)
   $$(SUM_$(1)): C2 = $$(shell grep "definition \|let rec " $$(MAS_$(1)) | wc -l)
@@ -145,7 +167,7 @@ define SUMMARY_TEMPLATE
   $$(SUM_$(1)): P2 = $$(shell grep "lemma " $$(MAS_$(1)) | wc -l)
   $$(SUM_$(1)): P3 = $$(shell grep "lemma \|theorem " $$(MAS_$(1)) | wc -l)
 
-  $$(SUM_$(1)): $$(MAS_$(1)) $(1)/$(1)_probe.txt
+  $$(SUM_$(1)): $$(MAS_$(1)) $(1)/$(1)_probe.txt $(1)/$(1)_mac.txt
 	@printf '  SUMMARY $(1)\n'
 	@printf 'name "$$(basename $$(@F))"\n\n'                >  $$@
 	@printf 'table {\n'                                     >> $$@
@@ -154,7 +176,7 @@ define SUMMARY_TEMPLATE
 	@printf '   ]\n'                                        >> $$@
 	@printf '   class "cyan"   [ "sizes"\n'                 >> $$@
 	@printf '      [ "files"      "$$(S4)" ]\n'             >> $$@
-	@printf '      [ "characters" "$$(S1)" ]\n'             >> $$@
+	@printf '      [ "characters" "$$(word 1, $$(S1))" ]\n' >> $$@
 	@printf '      [ "nodes"      "$$(word 3, $$(S0))" ]\n' >> $$@
 	@printf '   ]\n'                                        >> $$@	
 	@printf '   class "green"  [ "propositions"\n'          >> $$@
@@ -171,6 +193,8 @@ define SUMMARY_TEMPLATE
 	@printf 'class "component" { 0 }\n\n'                   >> $$@
 	@printf 'class "plane"     { 1 } { 3 } { 5 }\n\n'       >> $$@
 	@printf 'class "number"    { 2 } { 4 } { 6 }\n'         >> $$@
+
+.PHONY: $$(SUM_$(1))
 endef
 
 ifeq ($(MAKECMDGOALS), tbls)

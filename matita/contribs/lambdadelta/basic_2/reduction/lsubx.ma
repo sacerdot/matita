@@ -12,7 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/lsubr.ma".
+include "basic_2/notation/relations/crsubeqt_2.ma".
+include "basic_2/relocation/ldrop.ma".
 
 (* LOCAL ENVIRONMENT REFINEMENT FOR EXTENDED REDUCTION **********************)
 
@@ -23,7 +24,7 @@ inductive lsubx: relation lenv ≝
 .
 
 interpretation
-  "local environment refinement (extended reduction)"
+  "local environment refinement (reduction)"
   'CrSubEqT L1 L2 = (lsubx L1 L2).
 
 (* Basic properties *********************************************************)
@@ -76,14 +77,10 @@ lemma lsubx_fwd_length: ∀L1,L2. L1 ⓝ⊑ L2 → |L2| ≤ |L1|.
 #L1 #L2 #H elim H -L1 -L2 // /2 width=1/
 qed-.
 
-lemma lsubx_fwd_lsubr: ∀L1,L2. L1 ⓝ⊑ L2 → L1 ⊑ L2.
-#L1 #L2 #H elim H -L1 -L2 // /2 width=1/
-qed-.
-
 lemma lsubx_fwd_ldrop2_bind: ∀L1,L2. L1 ⓝ⊑ L2 →
                              ∀I,K2,W,i. ⇩[0, i] L2 ≡ K2.ⓑ{I}W →
                              (∃∃K1. K1 ⓝ⊑ K2 & ⇩[0, i] L1 ≡ K1.ⓑ{I}W) ∨
-                             ∃∃K1,V. K1 ⓝ⊑ K2 & ⇩[0, i] L1 ≡ K1.ⓓⓝW.V.
+                             ∃∃K1,V. K1 ⓝ⊑ K2 & ⇩[0, i] L1 ≡ K1.ⓓⓝW.V & I = Abst.
 #L1 #L2 #H elim H -L1 -L2
 [ #L #I #K2 #W #i #H
   elim (ldrop_inv_atom1 … H) -H #H destruct
@@ -98,4 +95,11 @@ lemma lsubx_fwd_ldrop2_bind: ∀L1,L2. L1 ⓝ⊑ L2 →
   | elim (IHL12 … HLK2) -IHL12 -HLK2 * /4 width=3/ /4 width=4/
   ]
 ]
+qed-.
+
+lemma lsubx_fwd_ldrop2_abbr: ∀L1,L2. L1 ⓝ⊑ L2 →
+                             ∀K2,V,i. ⇩[0, i] L2 ≡ K2.ⓓV →
+                             ∃∃K1. K1 ⓝ⊑ K2 & ⇩[0, i] L1 ≡ K1.ⓓV.
+#L1 #L2 #HL12 #K2 #V #i #HLK2 elim (lsubx_fwd_ldrop2_bind … HL12 … HLK2) -L2 // *
+#K1 #W #_ #_ #H destruct
 qed-.

@@ -63,6 +63,6 @@ qed-.
 lemma flift_join: ∀e1,e2,T. ⇧[e1, e2] ↑[0, e1] T ≡ ↑[0, e1 + e2] T.
 #e1 #e2 #T
 lapply (flift_lift T 0 (e1+e2)) #H
-elim (lift_split … H e1 e1 ? ? ?) -H // #U #H
+elim (lift_split … H e1 e1) -H // #U #H
 >(flift_inv_lift … H) -H //
 qed.

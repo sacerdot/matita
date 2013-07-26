@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/supterm_4.ma".
 include "basic_2/grammar/cl_weight.ma".
 include "basic_2/relocation/ldrop.ma".
 

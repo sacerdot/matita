@@ -1,0 +1,227 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+notation "hvbox( L ⊢ break term 46 T1 ➤ * break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'PRestStar $L $T1 $T2 }.
+
+include "basic_2/substitution/cpss.ma".
+
+(* CONTEXT-SENSITIVE RESTRICTED PARALLEL COMPUTATION FOR TERMS **************)
+
+inductive cpqs: lenv → relation term ≝
+| cpqs_atom : ∀I,L. cpqs L (⓪{I}) (⓪{I})
+| cpqs_delta: ∀L,K,V,V2,W2,i.
+              ⇩[0, i] L ≡ K. ⓓV → cpqs K V V2 →
+              ⇧[0, i + 1] V2 ≡ W2 → cpqs L (#i) W2
+| cpqs_bind : ∀a,I,L,V1,V2,T1,T2.
+              cpqs L V1 V2 → cpqs (L. ⓑ{I} V1) T1 T2 →
+              cpqs L (ⓑ{a,I} V1. T1) (ⓑ{a,I} V2. T2)
+| cpqs_flat : ∀I,L,V1,V2,T1,T2.
+              cpqs L V1 V2 → cpqs L T1 T2 →
+              cpqs L (ⓕ{I} V1. T1) (ⓕ{I} V2. T2)
+| cpqs_zeta : ∀L,V,T1,T,T2. cpqs (L.ⓓV) T1 T →
+              ⇧[0, 1] T2 ≡ T → cpqs L (+ⓓV. T1) T2
+| cpqs_tau  : ∀L,V,T1,T2. cpqs L T1 T2 → cpqs L (ⓝV. T1) T2
+.
+
+interpretation "context-sensitive restricted parallel computation (term)"
+   'PRestStar L T1 T2 = (cpqs L T1 T2).
+
+(* Basic properties *********************************************************)
+
+lemma cpqs_lsubr_trans: lsub_trans … cpqs lsubr.
+#L1 #T1 #T2 #H elim H -L1 -T1 -T2
+[ //
+| #L1 #K1 #V1 #V2 #W2 #i #HLK1 #_ #HVW2 #IHV12 #L2 #HL12
+  elim (lsubr_fwd_ldrop2_abbr … HL12 … HLK1) -HL12 -HLK1 /3 width=6/
+| /4 width=1/
+|4,6: /3 width=1/
+| /4 width=3/
+]
+qed-.
+
+lemma cpss_cpqs: ∀L,T1,T2. L ⊢ T1 ▶* T2 → L ⊢ T1 ➤* T2.
+#L #T1 #T2 #H elim H -L -T1 -T2 // /2 width=1/ /2 width=6/
+qed.
+
+lemma cpqs_refl: ∀T,L. L ⊢ T ➤* T.
+/2 width=1/ qed.
+
+lemma cpqs_delift: ∀L,K,V,T1,d. ⇩[0, d] L ≡ (K. ⓓV) →
+                   ∃∃T2,T. L ⊢ T1 ➤* T2 & ⇧[d, 1] T ≡ T2.
+#L #K #V #T1 #d #HLK
+elim (cpss_delift … T1 … HLK) -HLK /3 width=4/
+qed-.
+
+lemma cpqs_append: l_appendable_sn … cpqs.
+#K #T1 #T2 #H elim H -K -T1 -T2 // /2 width=1/ /2 width=3/
+#K #K0 #V1 #V2 #W2 #i #HK0 #_ #HVW2 #IHV12 #L
+lapply (ldrop_fwd_length_lt2 … HK0) #H
+@(cpqs_delta … (L@@K0) V1 … HVW2) //
+@(ldrop_O1_append_sn_le … HK0) /2 width=2/ (**) (* /3/ does not work *)
+qed.
+
+(* Basic inversion lemmas ***************************************************)
+
+fact cpqs_inv_atom1_aux: ∀L,T1,T2. L ⊢ T1 ➤* T2 → ∀I. T1 = ⓪{I} →
+                         T2 = ⓪{I} ∨
+                         ∃∃K,V,V2,i. ⇩[O, i] L ≡ K. ⓓV &
+                                     K ⊢ V ➤* V2 &
+                                     ⇧[O, i + 1] V2 ≡ T2 &
+                                     I = LRef i.
+#L #T1 #T2 * -L -T1 -T2
+[ #I #L #J #H destruct /2 width=1/
+| #L #K #V #V2 #T2 #i #HLK #HV2 #HVT2 #J #H destruct /3 width=8/
+| #a #I #L #V1 #V2 #T1 #T2 #_ #_ #J #H destruct
+| #I #L #V1 #V2 #T1 #T2 #_ #_ #J #H destruct
+| #L #V #T1 #T #T2 #_ #_ #J #H destruct
+| #L #V #T1 #T2 #_ #J #H destruct
+]
+qed-.
+
+lemma cpqs_inv_atom1: ∀I,L,T2. L ⊢ ⓪{I} ➤* T2 →
+                      T2 = ⓪{I} ∨
+                      ∃∃K,V,V2,i. ⇩[O, i] L ≡ K. ⓓV &
+                                  K ⊢ V ➤* V2 &
+                                  ⇧[O, i + 1] V2 ≡ T2 &
+                                  I = LRef i.
+/2 width=3 by cpqs_inv_atom1_aux/ qed-.
+
+lemma cpqs_inv_sort1: ∀L,T2,k. L ⊢ ⋆k ➤* T2 → T2 = ⋆k.
+#L #T2 #k #H
+elim (cpqs_inv_atom1 … H) -H //
+* #K #V #V2 #i #_ #_ #_ #H destruct
+qed-.
+
+lemma cpqs_inv_lref1: ∀L,T2,i. L ⊢ #i ➤* T2 →
+                      T2 = #i ∨
+                      ∃∃K,V,V2. ⇩[O, i] L ≡ K. ⓓV &
+                                K ⊢ V ➤* V2 &
+                                ⇧[O, i + 1] V2 ≡ T2.
+#L #T2 #i #H
+elim (cpqs_inv_atom1 … H) -H /2 width=1/
+* #K #V #V2 #j #HLK #HV2 #HVT2 #H destruct /3 width=6/
+qed-.
+
+lemma cpqs_inv_gref1: ∀L,T2,p. L ⊢ §p ➤* T2 → T2 = §p.
+#L #T2 #p #H
+elim (cpqs_inv_atom1 … H) -H //
+* #K #V #V2 #i #_ #_ #_ #H destruct
+qed-.
+
+fact cpqs_inv_bind1_aux: ∀L,U1,U2. L ⊢ U1 ➤* U2 →
+                         ∀a,I,V1,T1. U1 = ⓑ{a,I} V1. T1 → (
+                         ∃∃V2,T2. L ⊢ V1 ➤* V2 &
+                                  L. ⓑ{I} V1 ⊢ T1 ➤* T2 &
+                                  U2 = ⓑ{a,I} V2. T2
+                         ) ∨
+                         ∃∃T. L.ⓓV1 ⊢ T1 ➤* T & ⇧[0, 1] U2 ≡ T & a = true & I = Abbr.
+#L #U1 #U2 * -L -U1 -U2
+[ #I #L #b #J #W1 #U1 #H destruct
+| #L #K #V #V2 #W2 #i #_ #_ #_ #b #J #W1 #U1 #H destruct
+| #a #I #L #V1 #V2 #T1 #T2 #HV12 #HT12 #b #J #W1 #U1 #H destruct /3 width=5/
+| #I #L #V1 #V2 #T1 #T2 #_ #_ #b #J #W1 #U1 #H destruct
+| #L #V #T1 #T #T2 #HT1 #HT2 #b #J #W1 #U1 #H destruct /3 width=3/
+| #L #V #T1 #T2 #_ #b #J #W1 #U1 #H destruct
+]
+qed-.
+
+lemma cpqs_inv_bind1: ∀a,I,L,V1,T1,U2. L ⊢ ⓑ{a,I} V1. T1 ➤* U2 → (
+                      ∃∃V2,T2. L ⊢ V1 ➤* V2 &
+                               L. ⓑ{I} V1 ⊢ T1 ➤* T2 &
+                               U2 = ⓑ{a,I} V2. T2
+                      ) ∨
+                      ∃∃T. L.ⓓV1 ⊢ T1 ➤* T & ⇧[0, 1] U2 ≡ T & a = true & I = Abbr.
+/2 width=3 by cpqs_inv_bind1_aux/ qed-.
+
+lemma cpqs_inv_abbr1: ∀a,L,V1,T1,U2. L ⊢ ⓓ{a} V1. T1 ➤* U2 → (
+                      ∃∃V2,T2. L ⊢ V1 ➤* V2 &
+                               L. ⓓ V1 ⊢ T1 ➤* T2 &
+                               U2 = ⓓ{a} V2. T2
+                      ) ∨
+                      ∃∃T. L.ⓓV1 ⊢ T1 ➤* T & ⇧[0, 1] U2 ≡ T & a = true.
+#a #L #V1 #T1 #U2 #H
+elim (cpqs_inv_bind1 … H) -H * /3 width=3/ /3 width=5/
+qed-.
+
+lemma cpqs_inv_abst1: ∀a,L,V1,T1,U2. L ⊢ ⓛ{a} V1. T1 ➤* U2 →
+                      ∃∃V2,T2. L ⊢ V1 ➤* V2 &
+                               L. ⓛ V1 ⊢ T1 ➤* T2 &
+                               U2 = ⓛ{a} V2. T2.
+#a #L #V1 #T1 #U2 #H
+elim (cpqs_inv_bind1 … H) -H *
+[ /3 width=5/
+| #T #_ #_ #_ #H destruct
+]
+qed-.
+
+fact cpqs_inv_flat1_aux: ∀L,U1,U2. L ⊢ U1 ➤* U2 →
+                         ∀I,V1,T1. U1 = ⓕ{I} V1. T1 → (
+                         ∃∃V2,T2. L ⊢ V1 ➤* V2 & L ⊢ T1 ➤* T2 &
+                                  U2 = ⓕ{I} V2. T2
+                         ) ∨
+                         (L ⊢ T1 ➤* U2 ∧ I = Cast).
+#L #U1 #U2 * -L -U1 -U2
+[ #I #L #J #W1 #U1 #H destruct
+| #L #K #V #V2 #W2 #i #_ #_ #_ #J #W1 #U1 #H destruct
+| #a #I #L #V1 #V2 #T1 #T2 #_ #_ #J #W1 #U1 #H destruct
+| #I #L #V1 #V2 #T1 #T2 #HV12 #HT12 #J #W1 #U1 #H destruct /3 width=5/
+| #L #V #T1 #T #T2 #_ #_ #J #W1 #U1 #H destruct
+| #L #V #T1 #T2 #HT12 #J #W1 #U1 #H destruct /3 width=1/
+]
+qed-.
+
+lemma cpqs_inv_flat1: ∀I,L,V1,T1,U2. L ⊢ ⓕ{I} V1. T1 ➤* U2 → (
+                      ∃∃V2,T2. L ⊢ V1 ➤* V2 & L ⊢ T1 ➤* T2 &
+                               U2 = ⓕ{I} V2. T2
+                      ) ∨
+                      (L ⊢ T1 ➤* U2 ∧ I = Cast).
+/2 width=3 by cpqs_inv_flat1_aux/ qed-.
+
+lemma cpqs_inv_appl1: ∀L,V1,T1,U2. L ⊢ ⓐ V1. T1 ➤* U2 →
+                      ∃∃V2,T2. L ⊢ V1 ➤* V2 & L ⊢ T1 ➤* T2 &
+                               U2 = ⓐ V2. T2.
+#L #V1 #T1 #U2 #H elim (cpqs_inv_flat1 … H) -H *
+[ /3 width=5/
+| #_ #H destruct
+]
+qed-.
+
+lemma cpqs_inv_cast1: ∀L,V1,T1,U2. L ⊢ ⓝ V1. T1 ➤* U2 → (
+                      ∃∃V2,T2. L ⊢ V1 ➤* V2 & L ⊢ T1 ➤* T2 &
+                               U2 = ⓝ V2. T2
+                      ) ∨
+                      L ⊢ T1 ➤* U2.
+#L #V1 #T1 #U2 #H elim (cpqs_inv_flat1 … H) -H * /2 width=1/ /3 width=5/
+qed-.
+
+(* Basic forward lemmas *****************************************************)
+
+lemma cpqs_fwd_shift1: ∀L1,L,T1,T. L ⊢ L1 @@ T1 ➤* T →
+                       ∃∃L2,T2. |L1| = |L2| & T = L2 @@ T2.
+#L1 @(lenv_ind_dx … L1) -L1 normalize
+[ #L #T1 #T #HT1
+  @(ex2_2_intro … (⋆)) // (**) (* explicit constructor *)
+| #I #L1 #V1 #IH #L #T1 #X
+  >shift_append_assoc normalize #H
+  elim (cpqs_inv_bind1 … H) -H *
+  [ #V0 #T0 #_ #HT10 #H destruct
+    elim (IH … HT10) -IH -HT10 #L2 #T2 #HL12 #H destruct
+    >append_length >HL12 -HL12
+    @(ex2_2_intro … (⋆.ⓑ{I}V0@@L2) T2) [ >append_length ] // /2 width=3/ (**) (* explicit constructor *)
+  | #T #_ #_ #H destruct
+  ]
+]
+qed-.

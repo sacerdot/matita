@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/predsnstar_2.ma".
 include "basic_2/grammar/lpx_sn_tc.ma".
 include "basic_2/reduction/lpr.ma".
 

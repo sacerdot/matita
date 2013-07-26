@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/functions/weight_2.ma".
 include "basic_2/grammar/lenv_weight.ma".
 include "basic_2/grammar/cl_shift.ma".
 

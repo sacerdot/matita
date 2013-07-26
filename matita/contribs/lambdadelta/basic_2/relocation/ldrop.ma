@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/rdrop_4.ma".
 include "basic_2/grammar/lenv_length.ma".
 include "basic_2/grammar/lenv_weight.ma".
 include "basic_2/relocation/lift.ma".

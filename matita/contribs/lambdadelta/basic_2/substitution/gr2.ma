@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/rat_3.ma".
 include "basic_2/grammar/term_vector.ma".
 
 (* GENERIC RELOCATION WITH PAIRS ********************************************)

@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/normal_4.ma".
 include "basic_2/reduction/cnr.ma".
 include "basic_2/reduction/cpx.ma".
 
@@ -56,18 +57,17 @@ lemma cnx_inv_abbr: ∀h,g,L,V,T. ⦃h, L⦄ ⊢ 𝐍[g]⦃-ⓓV.T⦄ →
 ]
 qed-.
 
-axiom cnx_inv_zeta: ∀h,g,L,V,T. ⦃h, L⦄ ⊢ 𝐍[g]⦃+ⓓV.T⦄ → ⊥.
-(*
+lemma cnx_inv_zeta: ∀h,g,L,V,T. ⦃h, L⦄ ⊢ 𝐍[g]⦃+ⓓV.T⦄ → ⊥.
 #h #g #L #V #T #H elim (is_lift_dec T 0 1)
 [ * #U #HTU
   lapply (H U ?) -H /2 width=3/ #H destruct
   elim (lift_inv_pair_xy_y … HTU)
 | #HT
-  elim (cpss_delift (⋆) V T (⋆. ⓓV) 0 ?) // #T2 #T1 #HT2 #HT12
+  elim (cpr_delift (⋆) V T (⋆.ⓓV) 0) // #T2 #T1 #HT2 #HT12
   lapply (H (+ⓓV.T2) ?) -H /5 width=1/ -HT2 #H destruct /3 width=2/
 ]
 qed-.
-*)
+
 lemma cnx_inv_appl: ∀h,g,L,V,T. ⦃h, L⦄ ⊢ 𝐍[g]⦃ⓐV.T⦄ →
                     ∧∧ ⦃h, L⦄ ⊢ 𝐍[g]⦃V⦄ & ⦃h, L⦄ ⊢ 𝐍[g]⦃T⦄ & 𝐒⦃T⦄.
 #h #g #L #V1 #T1 #HVT1 @and3_intro
@@ -86,12 +86,12 @@ lemma cnx_inv_tau: ∀h,g,L,V,T. ⦃h, L⦄ ⊢ 𝐍[g]⦃ⓝV.T⦄ → ⊥.
 qed-.
 
 (* Basic forward lemmas *****************************************************)
-(*
-lamma cnx_fwd_cnr: ∀h,g,L,T. ⦃h, L⦄ ⊢ 𝐍[g]⦃T⦄ → L ⊢ 𝐍⦃T⦄.
+
+lemma cnx_fwd_cnr: ∀h,g,L,T. ⦃h, L⦄ ⊢ 𝐍[g]⦃T⦄ → L ⊢ 𝐍⦃T⦄.
 #h #g #L #T #H #U #HTU
 @H /2 width=1/ (**) (* auto fails because a δ-expansion gets in the way *)
 qed-.
-*)
+
 (* Basic properties *********************************************************)
 
 lemma cnx_sort: ∀h,g,L,k. deg h g k 0 → ⦃h, L⦄ ⊢ 𝐍[g]⦃⋆k⦄.
@@ -114,7 +114,7 @@ qed.
 lemma cnx_appl_simple: ∀h,g,L,V,T. ⦃h, L⦄ ⊢ 𝐍[g]⦃V⦄ → ⦃h, L⦄ ⊢ 𝐍[g]⦃T⦄ → 𝐒⦃T⦄ →
                        ⦃h, L⦄ ⊢ 𝐍[g]⦃ⓐV.T⦄.
 #h #g #L #V #T #HV #HT #HS #X #H
-elim (cpx_inv_appl1_simple … H ?) -H // #V0 #T0 #HV0 #HT0 #H destruct
+elim (cpx_inv_appl1_simple … H) -H // #V0 #T0 #HV0 #HT0 #H destruct
 >(HV … HV0) -V0 >(HT … HT0) -T0 //
 qed.
 

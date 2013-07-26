@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/statictypestar_5.ma".
 include "basic_2/static/ssta.ma".
 
 (* ITERATED STRATIFIED STATIC TYPE ASSIGNMENT FOR TERMS *********************)

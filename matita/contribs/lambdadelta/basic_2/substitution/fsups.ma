@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/suptermstar_4.ma".
 include "basic_2/relocation/fsupq.ma".
 
 (* STAR-ITERATED SUPCLOSURE *************************************************)

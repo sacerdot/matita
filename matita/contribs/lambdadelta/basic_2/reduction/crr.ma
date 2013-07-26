@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/reducible_2.ma".
 include "basic_2/relocation/ldrop.ma".
 
 (* CONTEXT-SENSITIVE REDUCIBLE TERMS ****************************************)

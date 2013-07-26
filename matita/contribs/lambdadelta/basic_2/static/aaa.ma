@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/atomicarity_3.ma".
 include "basic_2/grammar/aarity.ma".
 include "basic_2/relocation/ldrop.ma".
 

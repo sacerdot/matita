@@ -12,9 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/dxprs_dxprs.ma".
-include "basic_2/dynamic/lsubsv_ldrop.ma".
-include "basic_2/dynamic/lsubsv_dxprs.ma".
+include "basic_2/computation/cpds_cpds.ma".
+include "basic_2/dynamic/lsubsv_cpds.ma".
 include "basic_2/dynamic/lsubsv_cpcs.ma".
 
 (* LOCAL ENVIRONMENT REFINEMENT FOR STRATIFIED NATIVE VALIDITY **************)
@@ -34,7 +33,7 @@ fact snv_lsubsv_aux: ∀h,g,L0,T0.
   elim (lsubsv_inv_pair2 … H) -H * #K1
   [ #HK12 #H destruct
     /5 width=8 by snv_lref, fsupp_ygt, fsupp_lref/ (**) (* auto too slow without trace *)
-  | #W1 #V1 #V2 #l #HV1 #_ #_ #_ #_ #_ #H #_ destruct /2 width=5/
+  | #V #W1 #V2 #l #HV #_ #_ #_ #_ #_ #H destruct /2 width=5/
   ]
 | #p #HL0 #HT0 #H #L1 #HL12 destruct -IH4 -IH3 -IH2 -IH1
   elim (snv_inv_gref … H)
@@ -45,11 +44,11 @@ fact snv_lsubsv_aux: ∀h,g,L0,T0.
   lapply (lsubsv_cprs_trans … HL12 … HW0) -HW0 #HW0
   elim (lsubsv_ssta_trans … HVW … HL12) -HVW #W1 #HVW1 #HW1
   lapply (cpcs_cprs_strap1 … HW1 … HW0) -W #HW10
-  elim (lsubsv_dxprs_aux … IH4 IH3 IH2 IH1 … HL12 … HTU) -IH4 -IH3 -IH2 -HTU // /2 width=1/ #X #HTU #H
-  elim (cprs_fwd_abst1 … H Abst W0) -H #W #U2 #HW0 #HU2 #H destruct
+  elim (lsubsv_cpds_aux … IH4 IH3 IH2 IH1 … HL12 … HTU) -IH4 -IH3 -IH2 -HTU // /2 width=1/ #X #HTU #H
+  elim (cprs_inv_abst1 … H) -H #W #U2 #HW0 #HU2 #H destruct
   lapply (cpcs_cprs_strap1 … HW10 … HW0) -W0 #H
   elim (cpcs_inv_cprs … H) -H #W0 #HW10 #HW0
-  lapply (dxprs_cprs_trans … (ⓛ{a}W0.U2) HTU ?) [ /2 width=1/ ] -HTU -HW0
+  lapply (cpds_cprs_trans … (ⓛ{a}W0.U2) HTU ?) [ /2 width=1/ ] -HTU -HW0
   /4 width=8 by snv_appl, fsupp_ygt/ (**) (* auto too slow without trace *)
 | #W #T #HL0 #HT0 #H #L1 #HL12 destruct -IH4 -IH3 -IH2
   elim (snv_inv_cast … H) -H #U #l #HW #HT #HTU #HUW

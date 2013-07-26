@@ -42,10 +42,10 @@ fact snv_ssta_aux: ∀h,g,L0,T0.
   elim (snv_inv_appl … H1) -H1 #a #W1 #W0 #T0 #l0 #HV1 #HT1 #HVW1 #HW10 #HT10
   elim (ssta_inv_appl1 … H2) -H2 #U1 #HTU1 #H destruct
   lapply (IH1 … HT1 … HTU1) -IH1 /2 width=1/ #HU1
-  elim (ssta_dxprs_aux … IH3 IH2 … HTU1 … HT10) -IH3 -IH2 // /2 width=2/ -T1 #U #X #HU1U #H #HU0
+  elim (ssta_cpds_aux … IH3 IH2 … HTU1 … HT10) -IH3 -IH2 // /2 width=2/ -T1 #U #X #HU1U #H #HU0
   elim (sstas_inv_bind1 … H) -H #U0 #HTU0 #H destruct
   elim (cpcs_inv_abst2 … HU0) -HU0 #W2 #U2 #HU2 #HU02
-  elim (cprs_fwd_abst … HU02 Abst W0) -HU02 #HW02 #_
+  elim (cprs_inv_abst … HU02) -HU02 #HW02 #_
   lapply (cprs_trans … HW10 … HW02) -W0 /3 width=10 by snv_appl, ex2_intro/ (**) (* auto is too slow without trace *)
 | #W1 #T1 #HL0 #HT0 #H1 #X #l #H2 destruct -IH3 -IH2
   elim (snv_inv_cast … H1) -H1 #U1 #l0 #HW1 #HT1 #HTU1 #HUW1

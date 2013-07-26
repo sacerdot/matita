@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/predsn_4.ma".
 include "basic_2/reduction/lpr.ma".
 include "basic_2/reduction/cpx.ma".
 
@@ -52,11 +53,11 @@ lemma lpx_pair: ∀h,g,I,K1,K2,V1,V2. ⦃h, K1⦄ ⊢ ➡[g] K2 → ⦃h, K1⦄ 
 lemma lpx_append: ∀h,g,K1,K2. ⦃h, K1⦄ ⊢ ➡[g] K2 → ∀L1,L2. ⦃h, L1⦄ ⊢ ➡[g] L2 →
                   ⦃h, L1 @@ K1⦄ ⊢ ➡[g] L2 @@ K2.
 /3 width=1 by lpx_sn_append, cpx_append/ qed.
-(*
-lamma lpr_lpx: ∀h,g,L1,L2. L1 ⊢ ➡ L2 → ⦃h, L1⦄ ⊢ ➡[g] L2.
+
+lemma lpr_lpx: ∀h,g,L1,L2. L1 ⊢ ➡ L2 → ⦃h, L1⦄ ⊢ ➡[g] L2.
 #h #g #L1 #L2 #H elim H -L1 -L2 // /3 width=1/
 qed.
-*)
+
 (* Basic forward lemmas *****************************************************)
 
 lemma lpx_fwd_length: ∀h,g,L1,L2. ⦃h, L1⦄ ⊢ ➡[g] L2 → |L1| = |L2|.

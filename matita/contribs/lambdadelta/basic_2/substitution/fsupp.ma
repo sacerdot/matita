@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/suptermplus_4.ma".
 include "basic_2/relocation/fsup.ma".
 
 (* PLUS-ITERATED SUPCLOSURE *************************************************)

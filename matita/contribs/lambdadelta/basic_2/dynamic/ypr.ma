@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/btpred_6.ma".
 include "basic_2/relocation/fsup.ma".
 include "basic_2/reduction/lpr.ma".
 include "basic_2/dynamic/lsubsv.ma".

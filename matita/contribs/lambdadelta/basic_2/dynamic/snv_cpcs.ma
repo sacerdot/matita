@@ -65,7 +65,7 @@ elim (IH1 … HTU … HTT2 … HL12) -IH1 -HTU -HTT2
 [2: /3 width=9 by snv_cprs_lpr_aux/
 |3: /5 width=6 by ygt_yprs_trans, cprs_yprs/
 ] -L0 -T0 -T1 -T #U2 #HTU2 #HU2
-lapply (cpcs_lpr_conf … HL12 … HU1) -L1 #HU1
+lapply (lpr_cpcs_conf … HL12 … HU1) -L1 #HU1
 lapply (cpcs_trans … HU1 … HU2) -U /2 width=3/
 qed-.
 
@@ -110,7 +110,7 @@ fact sstas_cprs_lpr_aux: ∀h,g,L0,T0.
                          ∀U1. ⦃h, L1⦄ ⊢ T1 •*[g] U1 → ∀T2. L1 ⊢ T1 ➡* T2 → ∀L2. L1 ⊢ ➡ L2 →
                          ∃∃U2. ⦃h, L2⦄ ⊢ T2 •*[g] U2 & L2 ⊢ U1 ⬌* U2.
 #h #g #L0 #T0 #IH3 #IH2 #IH1 #L1 #T1 #H01 #HT1 #U1 #H
-@(sstas_ind … H) -U1 [ /3 width=5 by cprs_lpr_conf, ex2_intro/ ]
+@(sstas_ind … H) -U1 [ /3 width=5 by lpr_cprs_conf, ex2_intro/ ]
 #U1 #W1 #l1 #HTU1 #HUW1 #IHTU1 #T2 #HT12 #L2 #HL12
 elim (IHTU1 … HT12 … HL12) -IHTU1 #U2 #HTU2 #HU12
 lapply (snv_cprs_lpr_aux … IH2 … HT1 … HT12 … HL12) // #HT2
@@ -127,27 +127,27 @@ elim (ssta_cpcs_lpr_aux … IH2 IH1 … HU1W … HUW2 … HU12 L2) // -IH1 -HU1W
 lapply (cpcs_trans … HW1 … HW12) -W /3 width=4/
 qed-.
 
-fact dxprs_cprs_lpr_aux: ∀h,g,L0,T0.
-                         (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_ssta h g L1 T1) →
-                         (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_cpr_lpr h g L1 T1) →
-                         (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_ssta_cpr_lpr h g L1 T1) →
-                         ∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → ⦃h, L1⦄ ⊢ T1 ¡[g] →
-                         ∀U1. ⦃h, L1⦄ ⊢ T1 •*➡*[g] U1 →
-                         ∀T2. L1 ⊢ T1 ➡* T2 → ∀L2. L1 ⊢ ➡ L2 →
-                         ∃∃U2. ⦃h, L2⦄ ⊢ T2 •*➡*[g] U2 & L2 ⊢ U1 ➡* U2.
+fact cpds_cprs_lpr_aux: ∀h,g,L0,T0.
+                        (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_ssta h g L1 T1) →
+                        (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_cpr_lpr h g L1 T1) →
+                        (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_ssta_cpr_lpr h g L1 T1) →
+                        ∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → ⦃h, L1⦄ ⊢ T1 ¡[g] →
+                        ∀U1. ⦃h, L1⦄ ⊢ T1 •*➡*[g] U1 →
+                        ∀T2. L1 ⊢ T1 ➡* T2 → ∀L2. L1 ⊢ ➡ L2 →
+                        ∃∃U2. ⦃h, L2⦄ ⊢ T2 •*➡*[g] U2 & L2 ⊢ U1 ➡* U2.
 #h #g #L0 #T0 #IH3 #IH2 #IH1 #L1 #T1 #H01 #HT1 #U1 * #W1 #HTW1 #HWU1 #T2 #HT12 #L2 #HL12
 elim (sstas_cprs_lpr_aux … IH3 IH2 IH1 … H01 … HTW1 … HT12 … HL12) // -L0 -T0 -T1 #W2 #HTW2 #HW12
-lapply (cprs_lpr_conf … HL12 … HWU1) -L1 #HWU1
+lapply (lpr_cprs_conf … HL12 … HWU1) -L1 #HWU1
 lapply (cpcs_canc_sn … HW12 HWU1) -W1 #H
 elim (cpcs_inv_cprs … H) -H /3 width=3/
 qed-.
 
-fact ssta_dxprs_aux: ∀h,g,L0,T0.
-                     (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_cpr_lpr h g L1 T1) →
-                     (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_ssta_cpr_lpr h g L1 T1) →
-                     ∀L,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L, T1⦄ → ⦃h, L⦄ ⊢ T1 ¡[g] →
-                     ∀l,U1. ⦃h, L⦄ ⊢ T1 •[g] ⦃l+1, U1⦄ → ∀T2. ⦃h, L⦄ ⊢ T1 •*➡*[g] T2 →
-                     ∃∃U,U2. ⦃h, L⦄ ⊢ U1 •*[g] U & ⦃h, L⦄ ⊢ T2 •*[g] U2 & L ⊢ U ⬌* U2.
+fact ssta_cpds_aux: ∀h,g,L0,T0.
+                    (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_cpr_lpr h g L1 T1) →
+                    (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_ssta_cpr_lpr h g L1 T1) →
+                    ∀L,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L, T1⦄ → ⦃h, L⦄ ⊢ T1 ¡[g] →
+                    ∀l,U1. ⦃h, L⦄ ⊢ T1 •[g] ⦃l+1, U1⦄ → ∀T2. ⦃h, L⦄ ⊢ T1 •*➡*[g] T2 →
+                    ∃∃U,U2. ⦃h, L⦄ ⊢ U1 •*[g] U & ⦃h, L⦄ ⊢ T2 •*[g] U2 & L ⊢ U ⬌* U2.
 #h #g #L0 #T0 #IH2 #IH1 #L #T1 #H01 #HT1 #l #U1 #HTU1 #T2 * #T #HT1T #HTT2
 elim (sstas_strip … HT1T … HTU1) #HU1T destruct [ -HT1T | -L0 -T0 -T1 ]
 [ elim (ssta_cprs_lpr_aux … IH2 IH1 … HTU1 … HTT2 L) // -L0 -T0 -T /3 width=5/

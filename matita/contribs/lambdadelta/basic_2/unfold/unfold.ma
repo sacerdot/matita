@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/unfold_3.ma".
 include "basic_2/grammar/lenv_append.ma".
 include "basic_2/relocation/ldrop.ma".
 
@@ -29,4 +30,4 @@ inductive unfold: lenv → relation2 term lenv ≝
 .
 
 interpretation "context-sensitive unfold (term)"
-   'Unwind L1 T L2 = (unfold L1 T L2).
+   'Unfold L1 T L2 = (unfold L1 T L2).

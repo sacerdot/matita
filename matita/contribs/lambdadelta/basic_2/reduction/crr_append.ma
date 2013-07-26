@@ -38,7 +38,7 @@ fact crr_inv_labst_last_aux: ∀L1,T,W. L1 ⊢ 𝐑⦃T⦄  →
 [ #L1 #K1 #V1 #i #HLK1 #L2 #H destruct
   lapply (ldrop_fwd_length_lt2 … HLK1)
   >append_length >commutative_plus normalize in ⊢ (??% → ?); #H
-  elim (le_to_or_lt_eq i (|L2|) ?) /2 width=1/ -H #Hi destruct
+  elim (le_to_or_lt_eq i (|L2|)) /2 width=1/ -H #Hi destruct
   [ elim (ldrop_O1_lt … Hi) #I2 #K2 #V2 #HLK2
     lapply (ldrop_O1_inv_append1_le … HLK1 … HLK2) -HLK1 /2 width=2/ -Hi
     normalize #H destruct /2 width=3/

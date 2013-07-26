@@ -20,7 +20,6 @@ include "basic_2/static/aaa_lift.ma".
 
 (* Properties about dx parallel unfold **************************************)
 
-(* Note: lemma 500 *)
 lemma aaa_ltpss_dx_tpss_conf: ∀L1,T1,A. L1 ⊢ T1 ⁝ A →
                               ∀L2,d,e. L1 ▶* [d, e] L2 →
                               ∀T2. L2 ⊢ T1 ▶* [d, e] T2 → L2 ⊢ T2 ⁝ A.

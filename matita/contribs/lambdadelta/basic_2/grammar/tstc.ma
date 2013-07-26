@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/iso_2.ma".
 include "basic_2/grammar/term_simple.ma".
 
 (* SAME TOP TERM CONSTRUCTOR ************************************************)

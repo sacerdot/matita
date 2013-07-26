@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "ground_2/list.ma".
+include "basic_2/notation/functions/snapplv_2.ma".
 include "basic_2/grammar/term_simple.ma".
 
 (* TERMS ********************************************************************)

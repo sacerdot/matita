@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/peval_5.ma".
 include "basic_2/computation/cpxs.ma".
 include "basic_2/computation/csn.ma".
 

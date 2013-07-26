@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/notreducible_2.ma".
 include "basic_2/reduction/crr.ma".
 
 (* CONTEXT-SENSITIVE IRREDUCIBLE TERMS **************************************)

@@ -1,0 +1,64 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+lemma lsubr_fwd_lsubr: ∀L1,L2. L1 ⓝ⊑ L2 → L1 ⊑ L2.
+#L1 #L2 #H elim H -L1 -L2 // /2 width=1/
+qed-.
+
+lemma cpqs_cpr: ∀L,T1,T2. L ⊢ T1 ➤* T2 → L ⊢ T1 ➡ T2.
+#L #T1 #T2 #H elim H -L -T1 -T2 // /2 width=1/ /2 width=6/
+qed.
+
+lemma cpss_cpr: ∀L,T1,T2. L ⊢ T1 ▶* T2 → L ⊢ T1 ➡ T2.
+/3 width=1/ qed.
+
+lemma lpqs_lpr: ∀L1,L2. L1 ⊢ ➤* L2 → L1 ⊢ ➡ L2.
+#L1 #L2 #H elim H -L1 -L2 // /3 width=1/
+qed.
+
+lemma lpss_lpr: ∀L1,L2. L1 ⊢ ▶* L2 → L1 ⊢ ➡ L2.
+/3 width=1/ qed.
+
+lemma cpss_fwd_cir_eq: ∀L,T1,T2. L ⊢ T1 ▶* T2 → L ⊢ 𝐈⦃T1⦄ → T2 = T1.
+/3 width=3 by cpr_fwd_cir, cpss_cpr/ qed-.
+
+lemma cpss_cprs: ∀L,T1,T2. L ⊢ T1 ▶* T2 → L ⊢ T1 ➡* T2.
+/3 width=1/ qed.
+
+lemma cprs_cpss_trans: ∀L,T1,T. L ⊢ T1 ➡* T → ∀T2. L ⊢ T ▶* T2 → L ⊢ T1 ➡* T2.
+/3 width=3/ qed-.
+
+lemma cpss_cprs_trans: ∀L,T1,T. L ⊢ T1 ▶* T → ∀T2. L ⊢ T ➡* T2 → L ⊢ T1 ➡* T2.
+/3 width=3/ qed-.
+
+lemma cpcs_cpss_strap1: ∀L,T1,T. L ⊢ T1 ⬌* T → ∀T2. L ⊢ T ▶* T2 → L ⊢ T1 ⬌* T2.
+#L #T1 #T #HT1 #T2 #HT2
+@(cpcs_cpr_strap1 … HT1) -T1 /2 width=3/
+qed-.
+
+lemma cpcs_cpss_strap2: ∀L,T1,T. L ⊢ T1 ▶* T → ∀T2. L ⊢ T ⬌* T2 → L ⊢ T1 ⬌* T2.
+#L #T1 #T #HT1 #T2 #HT2
+@(cpcs_cpr_strap2 … HT2) -T2 /2 width=3/
+qed-.
+
+lemma cpcs_cpss_conf: ∀L,T,T1. L ⊢ T ▶* T1 → ∀T2. L ⊢ T ⬌* T2 → L ⊢ T1 ⬌* T2.
+#L #T #T1 #HT1 #T2 #HT2
+@(cpcs_cpr_conf … HT2) -T2 /2 width=3/
+qed-.
+
+lemma cpcs_cpss_div: ∀L,T1,T. L ⊢ T1 ⬌* T → ∀T2. L ⊢ T2 ▶* T → L ⊢ T1 ⬌* T2.
+#L #T1 #T #HT1 #T2 #HT2
+@(cpcs_cpr_div … HT1) -T1 /2 width=3/
+qed-.
+

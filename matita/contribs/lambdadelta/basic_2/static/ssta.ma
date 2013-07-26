@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/statictype_6.ma".
 include "basic_2/relocation/ldrop.ma".
 include "basic_2/static/sd.ma".
 

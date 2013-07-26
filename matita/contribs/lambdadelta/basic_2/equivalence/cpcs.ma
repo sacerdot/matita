@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/pconvstar_3.ma".
 include "basic_2/conversion/cpc.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL EQUIVALENCE ON TERMS **************************)
@@ -80,30 +81,11 @@ lemma cpr_div: ∀L,T1,T. L ⊢ T1 ➡ T → ∀T2. L ⊢ T2 ➡ T → L ⊢ T1 
 lemma cpcs_cpr_conf: ∀L,T1,T. L ⊢ T ➡ T1 → ∀T2. L ⊢ T ⬌* T2 → L ⊢ T1 ⬌* T2.
 /3 width=3/ qed.
 
-lemma cpcs_cpss_strap1: ∀L,T1,T. L ⊢ T1 ⬌* T → ∀T2. L ⊢ T ▶* T2 → L ⊢ T1 ⬌* T2.
-#L #T1 #T #HT1 #T2 #HT2
-@(cpcs_cpr_strap1 … HT1) -T1 /2 width=3/
-qed-.
-
-lemma cpcs_cpss_strap2: ∀L,T1,T. L ⊢ T1 ▶* T → ∀T2. L ⊢ T ⬌* T2 → L ⊢ T1 ⬌* T2.
-#L #T1 #T #HT1 #T2 #HT2
-@(cpcs_cpr_strap2 … HT2) -T2 /2 width=3/
-qed-.
-
-lemma cpcs_cpss_conf: ∀L,T,T1. L ⊢ T ▶* T1 → ∀T2. L ⊢ T ⬌* T2 → L ⊢ T1 ⬌* T2.
-#L #T #T1 #HT1 #T2 #HT2
-@(cpcs_cpr_conf … HT2) -T2 /2 width=3/
-qed-.
-
-lemma cpcs_cpss_div: ∀L,T1,T. L ⊢ T1 ⬌* T → ∀T2. L ⊢ T2 ▶* T → L ⊢ T1 ⬌* T2.
-#L #T1 #T #HT1 #T2 #HT2
-@(cpcs_cpr_div … HT1) -T1 /2 width=3/
-qed-.
-
 (* Basic_1: removed theorems 9:
             clear_pc3_trans pc3_ind_left
             pc3_head_1 pc3_head_2 pc3_head_12 pc3_head_21
             pc3_pr2_fsubst0 pc3_pr2_fsubst0_back pc3_fsubst0
+            pc3_gen_abst pc3_gen_abst_shift
 *)
 (* Basic_1: removed local theorems 6:
             pc3_left_pr3 pc3_left_trans pc3_left_sym pc3_left_pc3 pc3_pc3_left

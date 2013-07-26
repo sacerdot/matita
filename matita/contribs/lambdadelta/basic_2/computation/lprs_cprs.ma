@@ -20,7 +20,7 @@ include "basic_2/computation/lprs.ma".
 (* Advanced properties ******************************************************)
 
 lemma lprs_pair: ∀I,L1,L2. L1 ⊢ ➡* L2 → ∀V1,V2. L1 ⊢ V1 ➡* V2 →
-                 L1. ⓑ{I} V1 ⊢ ➡* L2. ⓑ{I} V2.
+                 L1. ⓑ{I} V1 ⊢ ➡* L2.ⓑ{I} V2.
 /2 width=1 by TC_lpx_sn_pair/ qed.
 
 (* Advanced inversion lemmas ************************************************)
@@ -78,6 +78,24 @@ lapply (lprs_cprs_trans … HT12 (L.ⓑ{I}V1) ?) /2 width=1/
 qed.
 
 (* Inversion lemmas on context-sensitive parallel computation for terms *****)
+
+(* Basic_1: was: pr3_gen_abst *)
+lemma cprs_inv_abst1: ∀a,L,W1,T1,U2. L ⊢ ⓛ{a}W1.T1 ➡* U2 →
+                      ∃∃W2,T2. L ⊢ W1 ➡* W2 & L.ⓛW1 ⊢ T1 ➡* T2 &
+                               U2 = ⓛ{a}W2.T2.
+#a #L #V1 #T1 #U2 #H @(cprs_ind … H) -U2 /2 width=5/
+#U0 #U2 #_ #HU02 * #V0 #T0 #HV10 #HT10 #H destruct
+elim (cpr_inv_abst1 … HU02) -HU02 #V2 #T2 #HV02 #HT02 #H destruct
+lapply (lprs_cpr_trans … HT02 (L.ⓛV1) ?) /2 width=1/ -HT02 #HT02
+lapply (cprs_strap1 … HV10 … HV02) -V0
+lapply (cprs_trans … HT10 … HT02) -T0 /2 width=5/
+qed-.
+
+lemma cprs_inv_abst: ∀a,L,W1,W2,T1,T2. L ⊢ ⓛ{a}W1.T1 ➡* ⓛ{a}W2.T2 →
+                     L ⊢ W1 ➡* W2 ∧ L.ⓛW1 ⊢ T1 ➡* T2.
+#a #L #W1 #W2 #T1 #T2 #H
+elim (cprs_inv_abst1 … H) -H #W #T #HW1 #HT1 #H destruct /2 width=1/
+qed-.
 
 (* Basic_1: was pr3_gen_abbr *)
 lemma cprs_inv_abbr1: ∀a,L,V1,T1,U2. L ⊢ ⓓ{a}V1.T1 ➡* U2 → (
