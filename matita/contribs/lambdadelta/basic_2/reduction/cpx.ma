@@ -49,12 +49,12 @@ interpretation
 
 (* Basic properties *********************************************************)
 
-lemma lsubx_cpx_trans: ∀h,g. lsub_trans … (cpx h g) lsubx.
+lemma lsubr_cpx_trans: ∀h,g. lsub_trans … (cpx h g) lsubr.
 #h #g #L1 #T1 #T2 #H elim H -L1 -T1 -T2
 [ //
 | /2 width=2/
 | #I #L1 #K1 #V1 #V2 #W2 #i #HLK1 #_ #HVW2 #IHV12 #L2 #HL12
-  elim (lsubx_fwd_ldrop2_bind … HL12 … HLK1) -HL12 -HLK1 *
+  elim (lsubr_fwd_ldrop2_bind … HL12 … HLK1) -HL12 -HLK1 *
   [ /3 width=7/ | /4 width=7/ ]
 |4,9: /4 width=1/
 |5,7,8: /3 width=1/

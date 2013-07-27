@@ -67,9 +67,9 @@ elim (cpx_inv_appl1 … H1) -H1 *
 [ -HT1 #V0 #Y #HLV0 #H #H0 destruct
   elim (cpx_inv_abst1 … H) -H #W0 #T0 #HLW0 #HLT0 #H destruct
   @IHT1 -IHT1 [4: // | skip |3: #H destruct /2 width=1/ ] -H2
-  lapply (lsubx_cpx_trans … HLT0 (L.ⓓⓝW.V) ?) -HLT0 [ /2 width=1/ ] /3 width=1/
+  lapply (lsubr_cpx_trans … HLT0 (L.ⓓⓝW.V) ?) -HLT0 [ /2 width=1/ ] /3 width=1/
 | -IHT1 -H2 #b #V0 #W0 #W2 #T0 #T2 #HLV0 #HLW02 #HLT02 #H1 #H3 destruct
-  lapply (lsubx_cpx_trans … HLT02 (L.ⓓⓝW0.V) ?) -HLT02 [ /2 width=1/ ] #HT02
+  lapply (lsubr_cpx_trans … HLT02 (L.ⓓⓝW0.V) ?) -HLT02 [ /2 width=1/ ] #HT02
   @(csn_cpx_trans … HT1) -HT1 /3 width=1/
 | -HT1 -IHT1 -H2 #b #V0 #V1 #W0 #W1 #T0 #T3 #_ #_ #_ #_ #H destruct
 ]

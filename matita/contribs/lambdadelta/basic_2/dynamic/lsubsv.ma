@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/crsubeqv_4.ma".
+include "basic_2/notation/relations/lrsubeqv_4.ma".
 include "basic_2/dynamic/snv.ma".
 
 (* LOCAL ENVIRONMENT REFINEMENT FOR STRATIFIED NATIVE VALIDITY **************)
@@ -29,7 +29,7 @@ inductive lsubsv (h:sh) (g:sd h): relation lenv ≝
 
 interpretation
   "local environment refinement (stratified native validity)"
-  'CrSubEqV h g L1 L2 = (lsubsv h g L1 L2).
+  'LRSubEqV h g L1 L2 = (lsubsv h g L1 L2).
 
 (* Basic inversion lemmas ***************************************************)
 
@@ -99,7 +99,7 @@ lemma lsubsv_inv_pair2: ∀h,g,I,L1,K2,W. h ⊢ L1 ¡⊑[g] K2.ⓑ{I}W →
 
 (* Basic_forward lemmas *****************************************************)
 
-lemma lsubsv_fwd_lsubx: ∀h,g,L1,L2. h ⊢ L1 ¡⊑[g] L2 → L1 ⓝ⊑ L2.
+lemma lsubsv_fwd_lsubr: ∀h,g,L1,L2. h ⊢ L1 ¡⊑[g] L2 → L1 ⊑ L2.
 #h #g #L1 #L2 #H elim H -L1 -L2 // /2 width=1/
 qed-.
 
@@ -111,5 +111,5 @@ qed.
 
 lemma lsubsv_cprs_trans: ∀h,g,L1,L2. h ⊢ L1 ¡⊑[g] L2 →
                          ∀T1,T2. L2 ⊢ T1 ➡* T2 → L1 ⊢ T1 ➡* T2.
-/3 width=5 by lsubsv_fwd_lsubx, lsubx_cprs_trans/
+/3 width=5 by lsubsv_fwd_lsubr, lsubr_cprs_trans/
 qed-.

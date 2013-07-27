@@ -21,5 +21,5 @@ include "basic_2/dynamic/lsubsv.ma".
 
 lemma lsubsv_cpcs_trans: ∀h,g,L1,L2. h ⊢ L1 ¡⊑[g] L2 →
                          ∀T1,T2. L2 ⊢ T1 ⬌* T2 → L1 ⊢ T1 ⬌* T2.
-/3 width=5 by lsubsv_fwd_lsubx, lsubx_cpcs_trans/
+/3 width=5 by lsubsv_fwd_lsubr, lsubr_cpcs_trans/
 qed-.

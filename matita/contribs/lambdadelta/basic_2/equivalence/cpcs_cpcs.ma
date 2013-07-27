@@ -140,11 +140,11 @@ lemma cpcs_bind_sn: ∀a,I,L,V1,V2,T. L ⊢ V1 ⬌* V2 → L ⊢ ⓑ{a,I}V1. T �
 elim (cpcs_inv_cprs … HV12) -HV12 /3 width=5 by cprs_div, cprs_bind/ (**) (* /3 width=5/ is a bit slow *)
 qed.
 
-lemma lsubx_cpcs_trans: ∀L1,T1,T2. L1 ⊢ T1 ⬌* T2 →
-                        ∀L2. L2 ⓝ⊑ L1 → L2 ⊢ T1 ⬌* T2.
+lemma lsubr_cpcs_trans: ∀L1,T1,T2. L1 ⊢ T1 ⬌* T2 →
+                        ∀L2. L2 ⊑ L1 → L2 ⊢ T1 ⬌* T2.
 #L1 #T1 #T2 #HT12
 elim (cpcs_inv_cprs … HT12) -HT12
-/3 width=5 by cprs_div, lsubx_cprs_trans/ (**) (* /3 width=5/ is a bit slow *)
+/3 width=5 by cprs_div, lsubr_cprs_trans/ (**) (* /3 width=5/ is a bit slow *)
 qed-.
 
 (* Basic_1: was: pc3_lift *)
@@ -204,21 +204,6 @@ lemma cpcs_bind2: ∀a,I,L,V1,V2. L ⊢ V1 ⬌* V2 → ∀T1,T2. L.ⓑ{I}V2 ⊢ 
                   L ⊢ ⓑ{a,I}V1. T1 ⬌* ⓑ{a,I}V2. T2.
 #a #I #L #V1 #V2 #HV12 #T1 #T2 #HT12
 @(cpcs_trans … (ⓑ{a,I}V2.T1)) /2 width=1/
-qed.
-
-lemma cpcs_beta_dx: ∀a,L,V1,V2,W1,W2,T1,T2.
-                    L ⊢ V1 ⬌* V2 → L ⊢ W1 ⬌* W2 → L.ⓛW2 ⊢ T1 ⬌* T2 →
-                    L ⊢ ⓐV1.ⓛ{a}W1.T1 ⬌* ⓓ{a}ⓝW2.V2.T2.
-#a #L #V1 #V2 #W1 #W2 #T1 #T2 #HV12 #HW12 #HT12
-@(cpcs_cpr_strap1 … (ⓐV2.ⓛ{a}W2.T2)) /2 width=1/ /3 width=1/
-qed.
-
-lemma cpcs_beta_sn: ∀a,L,V1,V2,W1,W2,T1,T2.
-                    L ⊢ V1 ⬌* V2 → L ⊢ W1 ⬌* W2 → L.ⓛW1 ⊢ T1 ⬌* T2 →
-                    L ⊢ ⓐV1.ⓛ{a}W1.T1 ⬌* ⓓ{a}ⓝW2.V2.T2.
-#a #L #V1 #V2 #W1 #W2 #T1 #T2 #HV12 #HW12 #HT12
-lapply (lsubx_cpcs_trans … HT12 (L.ⓓⓝW1.V1) ?) /2 width=1/ #H2T12
-@(cpcs_cpr_strap2 … (ⓓ{a}ⓝW1.V1.T1)) /2 width=1/ -HT12 /3 width=1/
 qed.
 
 (* Basic_1: was: pc3_wcpr0 *)

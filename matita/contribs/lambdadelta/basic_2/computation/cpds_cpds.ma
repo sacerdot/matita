@@ -14,6 +14,7 @@
 
 include "basic_2/unfold/sstas_sstas.ma".
 include "basic_2/computation/lprs_cprs.ma".
+include "basic_2/computation/cpxs_cpxs.ma".
 include "basic_2/computation/cpds.ma".
 
 (* DECOMPOSED EXTENDED PARALLEL COMPUTATION ON TERMS ************************)
@@ -50,4 +51,10 @@ elim (cprs_inv_abbr1 … H2) -H2 *
 [ #V2 #U2 #HV12 #HU12 #H destruct
 | /3 width=3/
 ]
+qed-.
+
+(* Advanced forward lemmas **************************************************)
+
+lemma cpds_fwd_cpxs: ∀h,g,L,T1,T2. ⦃h, L⦄ ⊢ T1 •*➡*[g] T2 → ⦃h, L⦄ ⊢ T1 ➡*[g] T2.
+#h #g #L #T1 #T2 * /3 width=3 by cpxs_trans, sstas_cpxs, cprs_cpxs/
 qed-.

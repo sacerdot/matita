@@ -87,7 +87,7 @@ lemma cpxs_inv_appl1: ∀h,g,L,V1,T1,U2. ⦃h, L⦄ ⊢ ⓐV1.T1 ➡*[g] U2 →
   [ #V2 #T2 #HV02 #HT02 #H destruct /4 width=5/
   | #a #V2 #W #W2 #T #T2 #HV02 #HW2 #HT2 #H1 #H2 destruct
     lapply (cpxs_strap1 … HV10 … HV02) -V0 #HV12
-    lapply (lsubx_cpx_trans … HT2 (L.ⓓⓝW.V1) ?) -HT2 /2 width=1/ #HT2
+    lapply (lsubr_cpx_trans … HT2 (L.ⓓⓝW.V1) ?) -HT2 /2 width=1/ #HT2
     @or3_intro1 @(ex2_3_intro … HT10) -HT10 /3 width=1/ (**) (* explicit constructor. /5 width=8/ is too slow because TC_transitive gets in the way *)
   | #a #V #V2 #W0 #W2 #T #T2 #HV0 #HV2 #HW02 #HT2 #H1 #H2 destruct
     @or3_intro2 @(ex4_5_intro … HV2 HT10) /2 width=3/ /3 width=1/ (**) (* explicit constructor. /5 width=8/ is too slow because TC_transitive gets in the way *)

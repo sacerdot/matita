@@ -30,7 +30,7 @@ lemma lsuba_ldrop_O1_conf: ∀L1,L2. L1 ⁝⊑ L2 → ∀K1,e. ⇩[0, e] L1 ≡ 
     <(ldrop_inv_O2 … H) in HL12; -H /3 width=3/
   | elim (IHL12 … HLK1) -L1 /3 width=3/
   ]
-| #L1 #L2 #V #W #A #HV #HW #_ #IHL12 #K1 #e #H
+| #L1 #L2 #W #V #A #HV #HW #_ #IHL12 #K1 #e #H
   elim (ldrop_inv_O1_pair1 … H) -H * #He #HLK1
   [ destruct
     elim (IHL12 L1 0) -IHL12 // #X #HL12 #H
@@ -52,7 +52,7 @@ lemma lsuba_ldrop_O1_trans: ∀L1,L2. L1 ⁝⊑ L2 → ∀K2,e. ⇩[0, e] L2 ≡
     <(ldrop_inv_O2 … H) in HL12; -H /3 width=3/
   | elim (IHL12 … HLK2) -L2 /3 width=3/
   ]
-| #L1 #L2 #V #W #A #HV #HW #_ #IHL12 #K2 #e #H
+| #L1 #L2 #W #V #A #HV #HW #_ #IHL12 #K2 #e #H
   elim (ldrop_inv_O1_pair1 … H) -H * #He #HLK2
   [ destruct
     elim (IHL12 L2 0) -IHL12 // #X #HL12 #H

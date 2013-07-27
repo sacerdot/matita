@@ -1,0 +1,14 @@
+lemma cpcs_beta_dx: ∀a,L,V1,V2,W1,W2,T1,T2.
+                    L ⊢ V1 ⬌* V2 → L ⊢ W1 ⬌* W2 → L.ⓛW2 ⊢ T1 ⬌* T2 →
+                    L ⊢ ⓐV1.ⓛ{a}W1.T1 ⬌* ⓓ{a}ⓝW2.V2.T2.
+#a #L #V1 #V2 #W1 #W2 #T1 #T2 #HV12 #HW12 #HT12
+@(cpcs_cpr_strap1 … (ⓐV2.ⓛ{a}W2.T2)) /2 width=1/ /3 width=1/
+qed.
+
+lemma cpcs_beta_sn: ∀a,L,V1,V2,W1,W2,T1,T2.
+                    L ⊢ V1 ⬌* V2 → L ⊢ W1 ⬌* W2 → L.ⓛW1 ⊢ T1 ⬌* T2 →
+                    L ⊢ ⓐV1.ⓛ{a}W1.T1 ⬌* ⓓ{a}ⓝW2.V2.T2.
+#a #L #V1 #V2 #W1 #W2 #T1 #T2 #HV12 #HW12 #HT12
+lapply (lsubr_cpcs_trans … HT12 (L.ⓓⓝW1.V1) ?) /2 width=1/ #H2T12
+@(cpcs_cpr_strap2 … (ⓓ{a}ⓝW1.V1.T1)) /2 width=1/ -HT12 /3 width=1/
+qed.

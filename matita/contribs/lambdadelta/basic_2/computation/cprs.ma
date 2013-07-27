@@ -58,13 +58,13 @@ lemma cprs_strap2: ∀L,T1,T,T2.
                    L ⊢ T1 ➡ T → L ⊢ T ➡* T2 → L ⊢ T1 ➡* T2.
 normalize /2 width=3/ qed.
 
-lemma lsubx_cprs_trans: lsub_trans … cprs lsubx.
-/3 width=5 by lsubx_cpr_trans, TC_lsub_trans/
+lemma lsubr_cprs_trans: lsub_trans … cprs lsubr.
+/3 width=5 by lsubr_cpr_trans, TC_lsub_trans/
 qed-.
 
 (* Basic_1: was: pr3_pr1 *)
 lemma tprs_cprs: ∀L,T1,T2. ⋆ ⊢ T1 ➡* T2 → L ⊢ T1 ➡* T2.
-#L #T1 #T2 #H @(lsubx_cprs_trans … H) -H //
+#L #T1 #T2 #H @(lsubr_cprs_trans … H) -H //
 qed.
 
 lemma cprs_bind_dx: ∀L,V1,V2. L ⊢ V1 ➡ V2 → ∀I,T1,T2. L. ⓑ{I}V1 ⊢ T1 ➡* T2 →

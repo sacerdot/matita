@@ -194,7 +194,7 @@ elim (cpr_inv_abst1 … H) -H #W1 #T1 #HW01 #HT01 #H destruct
 elim (IH … HV01 … HV02 … HL01 … HL02) -HV01 -HV02 /2 width=1/ #V #HV1 #HV2
 elim (IH … HW01 … HW02 … HL01 … HL02) /2 width=1/ #W #HW1 #HW2
 elim (IH … HT01 … HT02 (L1.ⓛW1) … (L2.ⓛW2)) /2 width=1/ -L0 -V0 -W0 -T0 #T #HT1 #HT2
-lapply (lsubx_cpr_trans … HT2 (L2.ⓓⓝW2.V2) ?) -HT2 /2 width=1/
+lapply (lsubr_cpr_trans … HT2 (L2.ⓓⓝW2.V2) ?) -HT2 /2 width=1/
 /4 width=5 by cpr_bind, cpr_flat, cpr_beta, ex2_intro/ (**) (* auto too slow without trace *)
 qed-.
 
@@ -247,8 +247,8 @@ fact cpr_conf_lpr_beta_beta:
 elim (IH … HV01 … HV02 … HL01 … HL02) -HV01 -HV02 /2 width=1/ #V #HV1 #HV2
 elim (IH … HW01 … HW02 … HL01 … HL02) /2 width=1/ #W #HW1 #HW2
 elim (IH … HT01 … HT02 (L1.ⓛW1) … (L2.ⓛW2)) /2 width=1/ -L0 -V0 -W0 -T0 #T #HT1 #HT2
-lapply (lsubx_cpr_trans … HT1 (L1.ⓓⓝW1.V1) ?) -HT1 /2 width=1/
-lapply (lsubx_cpr_trans … HT2 (L2.ⓓⓝW2.V2) ?) -HT2 /2 width=1/
+lapply (lsubr_cpr_trans … HT1 (L1.ⓓⓝW1.V1) ?) -HT1 /2 width=1/
+lapply (lsubr_cpr_trans … HT2 (L2.ⓓⓝW2.V2) ?) -HT2 /2 width=1/
 /4 width=5 by cpr_bind, cpr_flat, ex2_intro/
 qed-.
 

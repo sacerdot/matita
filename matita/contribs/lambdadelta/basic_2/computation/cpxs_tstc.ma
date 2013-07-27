@@ -48,7 +48,7 @@ elim (cpxs_inv_appl1 … H) -H *
 [ #V0 #T0 #_ #_ #H destruct /2 width=1/
 | #b #W0 #T0 #HT0 #HU
   elim (cpxs_inv_abst1 … HT0) -HT0 #W1 #T1 #HW1 #HT1 #H destruct
-  lapply (lsubx_cpxs_trans … HT1 (L.ⓓⓝW.V) ?) -HT1 /2 width=1/ #HT1
+  lapply (lsubr_cpxs_trans … HT1 (L.ⓓⓝW.V) ?) -HT1 /2 width=1/ #HT1
   @or_intror @(cpxs_trans … HU) -U /3 width=1/ (**) (* explicit constructor *)  
 | #b #V1 #V2 #V0 #T1 #_ #_ #HT1 #_
   elim (cpxs_inv_abst1 … HT1) -HT1 #W2 #T2 #_ #_ #H destruct

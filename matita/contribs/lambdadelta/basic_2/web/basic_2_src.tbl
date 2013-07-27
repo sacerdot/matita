@@ -148,10 +148,6 @@ table {
              [ "crr ( ? ⊢ 𝐑⦃?⦄ )" "crr_append" + "crr_lift" * ]
           }
         ]
-        [ { "local env. ref. for extended reduction" * } {
-             [ "lsubx ( ? ⓝ⊑ ? )" "lsubx_lsubx" * ]
-          }
-        ]
      }
    ]
    class "green"
@@ -188,6 +184,10 @@ table {
    ]
    class "yellow"
    [ { "substitution" * } {
+        [ { "restricted local env. ref." * } {
+             [ "lsubr ( ? ⊑ ? )" "lsubr_lsubr" * ]
+          }
+        ]
         [ { "iterated structural successor for closures" * } {
              [ "fsups ( ⦃?,?⦄ ⊃* ⦃?,?⦄ )" "fsups_fsups" * ]
              [ "fsupp ( ⦃?,?⦄ ⊃+ ⦃?,?⦄ )" "fsupp_fsupp" * ]

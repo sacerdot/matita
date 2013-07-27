@@ -15,7 +15,7 @@
 include "basic_2/notation/relations/pred_3.ma".
 include "basic_2/grammar/cl_shift.ma".
 include "basic_2/relocation/ldrop_append.ma".
-include "basic_2/reduction/lsubx.ma".
+include "basic_2/substitution/lsubr.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL REDUCTION FOR TERMS ***************************)
 
@@ -48,11 +48,11 @@ interpretation "context-sensitive parallel reduction (term)"
 
 (* Basic properties *********************************************************)
 
-lemma lsubx_cpr_trans: lsub_trans … cpr lsubx.
+lemma lsubr_cpr_trans: lsub_trans … cpr lsubr.
 #L1 #T1 #T2 #H elim H -L1 -T1 -T2
 [ //
 | #L1 #K1 #V1 #V2 #W2 #i #HLK1 #_ #HVW2 #IHV12 #L2 #HL12
-  elim (lsubx_fwd_ldrop2_abbr … HL12 … HLK1) -L1 * /3 width=6/
+  elim (lsubr_fwd_ldrop2_abbr … HL12 … HLK1) -L1 * /3 width=6/
 |3,7: /4 width=1/
 |4,6: /3 width=1/
 |5,8: /4 width=3/
@@ -62,7 +62,7 @@ qed-.
 (* Basic_1: was by definition: pr2_free *)
 lemma tpr_cpr: ∀T1,T2. ⋆ ⊢ T1 ➡ T2 → ∀L. L ⊢ T1 ➡ T2.
 #T1 #T2 #HT12 #L
-lapply (lsubx_cpr_trans … HT12 L ?) //
+lapply (lsubr_cpr_trans … HT12 L ?) //
 qed.
 
 (* Basic_1: includes by definition: pr0_refl *)

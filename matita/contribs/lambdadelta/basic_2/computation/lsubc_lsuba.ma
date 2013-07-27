@@ -18,10 +18,9 @@ include "basic_2/computation/acp_aaa.ma".
 (* LOCAL ENVIRONMENT REFINEMENT FOR ABSTRACT CANDIDATES OF REDUCIBILITY *****)
 
 (* properties concerning lenv refinement for atomic arity assignment ********)
-(*
-lamma lsubc_lsuba: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
+
+lemma lsuba_lsubc: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
                    ∀L1,L2. L1 ⁝⊑ L2 → L1 ⊑[RP] L2.
-#RR #RS #RP #H1RP #H2RP #L1 #L2 #H elim H -L1 -L2
-// /2 width=1/ /3 width=4/
+#RR #RS #RP #H1RP #H2RP #L1 #L2 #H elim H -L1 -L2 // /2 width=1/
+#L1 #L2 #W #V #A #H elim (aaa_inv_cast … H) -H /3 width=4/
 qed.
-*)

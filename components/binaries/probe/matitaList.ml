@@ -22,8 +22,8 @@ module O = Options
 module E = Engine
 
 let is_obj path = 
-   F.check_suffix path ".con.ng" &
-   F.check_suffix path ".ind.ng" &
+   F.check_suffix path ".con.ng" ||
+   F.check_suffix path ".ind.ng" ||
    F.check_suffix path ".var.ng"
   
 let src_exists path = !O.no_devel || Y.file_exists path
