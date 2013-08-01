@@ -19,7 +19,7 @@ include "basic_2/computation/csn_tstc_vector.ma".
 
 (* Main properties concerning atomic arity assignment ***********************)
 
-theorem csn_aaa: ∀h,g,L,T,A. L ⊢ T ⁝ A → ⦃h, L⦄ ⊢ ⬊*[g] T.
+theorem csn_aaa: ∀h,g,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ⦃G, L⦄ ⊢ ⬊*[h, g] T.
 #h #g #L #T #A #H
 @(acp_aaa … (csn_acp h g) (csn_acr h g) … H)
 qed.

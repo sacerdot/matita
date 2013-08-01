@@ -19,10 +19,10 @@ include "basic_2/reduction/cnr_crr.ma".
 
 (* Main properties on context-sensitive irreducible terms *******************)
 
-theorem cir_cnr: ∀L,T. L ⊢ 𝐈⦃T⦄ → L ⊢ 𝐍⦃T⦄.
+theorem cir_cnr: ∀L,T. ⦃G, L⦄ ⊢ 𝐈⦃T⦄ → ⦃G, L⦄ ⊢ 𝐍⦃T⦄.
 /2 width=3 by cpr_fwd_cir/ qed.
 
 (* Main inversion lemmas on context-sensitive irreducible terms *************)
 
-theorem cnr_inv_cir: ∀L,T. L ⊢ 𝐍⦃T⦄ → L ⊢ 𝐈⦃T⦄.
+theorem cnr_inv_cir: ∀L,T. ⦃G, L⦄ ⊢ 𝐍⦃T⦄ → ⦃G, L⦄ ⊢ 𝐈⦃T⦄.
 /2 width=4 by cnr_inv_crr/ qed-.

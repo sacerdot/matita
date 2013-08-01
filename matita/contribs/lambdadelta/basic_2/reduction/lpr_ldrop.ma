@@ -35,7 +35,7 @@ lemma lpr_ldrop_trans_O1: dropable_dx lpr.
 (* Properties on context-sensitive parallel reduction for terms *************)
 
 lemma fsup_cpr_trans: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⊃ ⦃L2, T2⦄ → ∀U2. L2 ⊢ T2 ➡ U2 →
-                      ∃∃L,U1. L1 ⊢ ➡ L & L ⊢ T1 ➡ U1 & ⦃L, U1⦄ ⊃ ⦃L2, U2⦄.
+                      ∃∃L,U1. L1 ⊢ ➡ L & ⦃G, L⦄ ⊢ T1 ➡ U1 & ⦃L, U1⦄ ⊃ ⦃L2, U2⦄.
 #L1 #L2 #T1 #T2 #H elim H -L1 -L2 -T1 -T2 [1,2,3,4,5: /3 width=5/ ]
 [ #L #K #U #T #d #e #HLK #HUT #He #U2 #HU2
   elim (lift_total U2 d e) #T2 #HUT2

@@ -37,13 +37,13 @@ interpretation
 
 (* Basic properties *********************************************************)
 
-lemma crr_crx: ∀h,g,L,T. L ⊢ 𝐑⦃T⦄ → ⦃h, L⦄ ⊢ 𝐑[g]⦃T⦄.
+lemma crr_crx: ∀h,g,L,T. ⦃G, L⦄ ⊢ 𝐑⦃T⦄ → ⦃G, L⦄ ⊢ 𝐑[h, g]⦃T⦄.
 #h #g #L #T #H elim H -L -T // /2 width=1/ /2 width=4/
 qed.
 
 (* Basic inversion lemmas ***************************************************)
 
-fact crx_inv_sort_aux: ∀h,g,L,T,k. ⦃h, L⦄ ⊢ 𝐑[g]⦃T⦄ → T = ⋆k →
+fact crx_inv_sort_aux: ∀h,g,L,T,k. ⦃G, L⦄ ⊢ 𝐑[h, g]⦃T⦄ → T = ⋆k →
                        ∃l. deg h g k (l+1).
 #h #g #L #T #k0 * -L -T
 [ #L #k #l #Hkl #H destruct /2 width=2/
@@ -58,10 +58,10 @@ fact crx_inv_sort_aux: ∀h,g,L,T,k. ⦃h, L⦄ ⊢ 𝐑[g]⦃T⦄ → T = ⋆k 
 ]
 qed-.
 
-lemma crx_inv_sort: ∀h,g,L,k. ⦃h, L⦄ ⊢ 𝐑[g]⦃⋆k⦄ → ∃l. deg h g k (l+1).
+lemma crx_inv_sort: ∀h,g,L,k. ⦃G, L⦄ ⊢ 𝐑[h, g]⦃⋆k⦄ → ∃l. deg h g k (l+1).
 /2 width=4 by crx_inv_sort_aux/ qed-.
 
-fact crx_inv_lref_aux: ∀h,g,L,T,i. ⦃h, L⦄ ⊢ 𝐑[g]⦃T⦄ → T = #i →
+fact crx_inv_lref_aux: ∀h,g,L,T,i. ⦃G, L⦄ ⊢ 𝐑[h, g]⦃T⦄ → T = #i →
                        ∃∃I,K,V. ⇩[0, i] L ≡ K.ⓑ{I}V.
 #h #g #L #T #j * -L -T
 [ #L #k #l #_ #H destruct
@@ -76,10 +76,10 @@ fact crx_inv_lref_aux: ∀h,g,L,T,i. ⦃h, L⦄ ⊢ 𝐑[g]⦃T⦄ → T = #i �
 ]
 qed-.
 
-lemma crx_inv_lref: ∀h,g,L,i. ⦃h, L⦄ ⊢ 𝐑[g]⦃#i⦄ → ∃∃I,K,V. ⇩[0, i] L ≡ K.ⓑ{I}V.
+lemma crx_inv_lref: ∀h,g,L,i. ⦃G, L⦄ ⊢ 𝐑[h, g]⦃#i⦄ → ∃∃I,K,V. ⇩[0, i] L ≡ K.ⓑ{I}V.
 /2 width=5 by crx_inv_lref_aux/ qed-.
 
-fact crx_inv_gref_aux: ∀h,g,L,T,p. ⦃h, L⦄ ⊢ 𝐑[g]⦃T⦄ → T = §p → ⊥.
+fact crx_inv_gref_aux: ∀h,g,L,T,p. ⦃G, L⦄ ⊢ 𝐑[h, g]⦃T⦄ → T = §p → ⊥.
 #h #g #L #T #q * -L -T
 [ #L #k #l #_ #H destruct
 | #I #L #K #V #i #HLK #H destruct
@@ -93,10 +93,10 @@ fact crx_inv_gref_aux: ∀h,g,L,T,p. ⦃h, L⦄ ⊢ 𝐑[g]⦃T⦄ → T = §p �
 ]
 qed-.
 
-lemma crx_inv_gref: ∀h,g,L,p. ⦃h, L⦄ ⊢ 𝐑[g]⦃§p⦄ → ⊥.
+lemma crx_inv_gref: ∀h,g,L,p. ⦃G, L⦄ ⊢ 𝐑[h, g]⦃§p⦄ → ⊥.
 /2 width=7 by crx_inv_gref_aux/ qed-.
 
-lemma trx_inv_atom: ∀h,g,I. ⦃h, ⋆⦄ ⊢ 𝐑[g]⦃⓪{I}⦄ →
+lemma trx_inv_atom: ∀h,g,I. ⦃h, ⋆⦄ ⊢ 𝐑[h, g]⦃⓪{I}⦄ →
                     ∃∃k,l. deg h g k (l+1) & I = Sort k.
 #h #g * #i #H
 [ elim (crx_inv_sort … H) -H /2 width=4/
@@ -106,8 +106,8 @@ lemma trx_inv_atom: ∀h,g,I. ⦃h, ⋆⦄ ⊢ 𝐑[g]⦃⓪{I}⦄ →
 ]
 qed-.
 
-fact crx_inv_ib2_aux: ∀h,g,a,I,L,W,U,T. ib2 a I → ⦃h, L⦄ ⊢ 𝐑[g]⦃T⦄ →
-                      T = ⓑ{a,I}W.U → ⦃h, L⦄ ⊢ 𝐑[g]⦃W⦄ ∨ ⦃h, L.ⓑ{I}W⦄ ⊢ 𝐑[g]⦃U⦄.
+fact crx_inv_ib2_aux: ∀h,g,a,I,L,W,U,T. ib2 a I → ⦃G, L⦄ ⊢ 𝐑[h, g]⦃T⦄ →
+                      T = ⓑ{a,I}W.U → ⦃G, L⦄ ⊢ 𝐑[h, g]⦃W⦄ ∨ ⦃h, L.ⓑ{I}W⦄ ⊢ 𝐑[h, g]⦃U⦄.
 #h #g #b #J #L #W0 #U #T #HI * -L -T
 [ #L #k #l #_ #H destruct
 | #I #L #K #V #i #_ #H destruct
@@ -123,12 +123,12 @@ fact crx_inv_ib2_aux: ∀h,g,a,I,L,W,U,T. ib2 a I → ⦃h, L⦄ ⊢ 𝐑[g]⦃T
 ]
 qed-.
 
-lemma crx_inv_ib2: ∀h,g,a,I,L,W,T. ib2 a I → ⦃h, L⦄ ⊢ 𝐑[g]⦃ⓑ{a,I}W.T⦄ →
-                   ⦃h, L⦄ ⊢ 𝐑[g]⦃W⦄ ∨ ⦃h, L.ⓑ{I}W⦄ ⊢ 𝐑[g]⦃T⦄.
+lemma crx_inv_ib2: ∀h,g,a,I,L,W,T. ib2 a I → ⦃G, L⦄ ⊢ 𝐑[h, g]⦃ⓑ{a,I}W.T⦄ →
+                   ⦃G, L⦄ ⊢ 𝐑[h, g]⦃W⦄ ∨ ⦃h, L.ⓑ{I}W⦄ ⊢ 𝐑[h, g]⦃T⦄.
 /2 width=5 by crx_inv_ib2_aux/ qed-.
 
-fact crx_inv_appl_aux: ∀h,g,L,W,U,T. ⦃h, L⦄ ⊢ 𝐑[g]⦃T⦄ → T = ⓐW.U →
-                       ∨∨ ⦃h, L⦄ ⊢ 𝐑[g]⦃W⦄ | ⦃h, L⦄ ⊢ 𝐑[g]⦃U⦄ | (𝐒⦃U⦄ → ⊥).
+fact crx_inv_appl_aux: ∀h,g,L,W,U,T. ⦃G, L⦄ ⊢ 𝐑[h, g]⦃T⦄ → T = ⓐW.U →
+                       ∨∨ ⦃G, L⦄ ⊢ 𝐑[h, g]⦃W⦄ | ⦃G, L⦄ ⊢ 𝐑[h, g]⦃U⦄ | (𝐒⦃U⦄ → ⊥).
 #h #g #L #W0 #U #T * -L -T
 [ #L #k #l #_ #H destruct
 | #I #L #K #V #i #_ #H destruct
@@ -145,6 +145,6 @@ fact crx_inv_appl_aux: ∀h,g,L,W,U,T. ⦃h, L⦄ ⊢ 𝐑[g]⦃T⦄ → T = ⓐ
 ]
 qed-.
 
-lemma crx_inv_appl: ∀h,g,L,V,T. ⦃h, L⦄ ⊢ 𝐑[g]⦃ⓐV.T⦄ →
-                    ∨∨ ⦃h, L⦄ ⊢ 𝐑[g]⦃V⦄ | ⦃h, L⦄ ⊢ 𝐑[g]⦃T⦄ | (𝐒⦃T⦄ → ⊥).
+lemma crx_inv_appl: ∀h,g,L,V,T. ⦃G, L⦄ ⊢ 𝐑[h, g]⦃ⓐV.T⦄ →
+                    ∨∨ ⦃G, L⦄ ⊢ 𝐑[h, g]⦃V⦄ | ⦃G, L⦄ ⊢ 𝐑[h, g]⦃T⦄ | (𝐒⦃T⦄ → ⊥).
 /2 width=3 by crx_inv_appl_aux/ qed-.

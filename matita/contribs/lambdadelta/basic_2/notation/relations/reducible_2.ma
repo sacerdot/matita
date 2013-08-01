@@ -14,6 +14,6 @@
 
 (* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-notation "hvbox( L ⊢ 𝐑 break ⦃ term 46 T ⦄ )"
+notation "hvbox( ⦃G, L⦄ ⊢ 𝐑 break ⦃ term 46 T ⦄ )"
    non associative with precedence 45
    for @{ 'Reducible $L $T }.

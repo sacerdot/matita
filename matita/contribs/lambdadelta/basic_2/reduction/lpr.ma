@@ -44,7 +44,7 @@ lemma lpr_inv_pair2: ∀I,L1,K2,V2. L1 ⊢ ➡ K2. ⓑ{I} V2 →
 (* Basic properties *********************************************************)
 
 (* Note: lemma 250 *)
-lemma lpr_refl: ∀L. L ⊢ ➡ L.
+lemma lpr_refl: ∀L. ⦃G, L⦄ ⊢ ➡ L.
 /2 width=1 by lpx_sn_refl/ qed.
 
 lemma lpr_pair: ∀I,K1,K2,V1,V2. K1 ⊢ ➡ K2 → K1 ⊢ V1 ➡ V2 →
@@ -66,7 +66,7 @@ lemma lpr_fwd_append1: ∀K1,L1,L. K1 @@ L1 ⊢ ➡ L →
                        ∃∃K2,L2. K1 ⊢ ➡ K2 & L = K2 @@ L2.
 /2 width=2 by lpx_sn_fwd_append1/ qed-.
 
-lemma lpr_fwd_append2: ∀L,K2,L2. L ⊢ ➡ K2 @@ L2 →
+lemma lpr_fwd_append2: ∀L,K2,L2. ⦃G, L⦄ ⊢ ➡ K2 @@ L2 →
                        ∃∃K1,L1. K1 ⊢ ➡ K2 & L = K1 @@ L1.
 /2 width=2 by lpx_sn_fwd_append2/ qed-.
 

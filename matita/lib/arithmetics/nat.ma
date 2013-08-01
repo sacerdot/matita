@@ -531,6 +531,19 @@ lemma f2_ind: ∀A1,A2. ∀f:A1→A2→ℕ. ∀P:relation2 A1 A2.
 @(f2_ind_aux … H) -H [2: // | skip ]
 qed-. 
 
+fact f3_ind_aux: ∀A1,A2,A3. ∀f:A1→A2→A3→ℕ. ∀P:relation3 A1 A2 A3.
+                 (∀n. (∀a1,a2,a3. f a1 a2 a3 < n → P a1 a2 a3) → ∀a1,a2,a3. f a1 a2 a3 = n → P a1 a2 a3) →
+                 ∀n,a1,a2,a3. f a1 a2 a3 = n → P a1 a2 a3.
+#A1 #A2 #A3 #f #P #H #n @(nat_elim1 … n) -n #n /3 width=3/ (**) (* auto slow (34s) without #n *)
+qed-.
+
+lemma f3_ind: ∀A1,A2,A3. ∀f:A1→A2→A3→ℕ. ∀P:relation3 A1 A2 A3.
+              (∀n. (∀a1,a2,a3. f a1 a2 a3 < n → P a1 a2 a3) → ∀a1,a2,a3. f a1 a2 a3 = n → P a1 a2 a3) →
+              ∀a1,a2,a3. P a1 a2 a3.
+#A1 #A2 #A3 #f #P #H #a1 #a2 #a3
+@(f3_ind_aux … H) -H [2: // | skip ]
+qed-. 
+
 (* More negated equalities **************************************************)
 
 theorem lt_to_not_eq : ∀n,m:nat. n < m → n ≠ m.

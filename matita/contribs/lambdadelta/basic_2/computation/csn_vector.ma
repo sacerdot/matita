@@ -26,14 +26,14 @@ interpretation
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma csnv_inv_cons: ∀h,g,L,T,Ts. ⦃h, L⦄ ⊢ ⬊*[g] T @ Ts →
-                     ⦃h, L⦄ ⊢ ⬊*[g] T ∧ ⦃h, L⦄ ⊢ ⬊*[g] Ts.
+lemma csnv_inv_cons: ∀h,g,L,T,Ts. ⦃G, L⦄ ⊢ ⬊*[h, g] T @ Ts →
+                     ⦃G, L⦄ ⊢ ⬊*[h, g] T ∧ ⦃G, L⦄ ⊢ ⬊*[h, g] Ts.
 normalize // qed-.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma csn_fwd_applv: ∀h,g,L,T,Vs. ⦃h, L⦄ ⊢ ⬊*[g] Ⓐ Vs.T →
-                     ⦃h, L⦄ ⊢ ⬊*[g] Vs ∧ ⦃h, L⦄ ⊢ ⬊*[g] T.
+lemma csn_fwd_applv: ∀h,g,L,T,Vs. ⦃G, L⦄ ⊢ ⬊*[h, g] Ⓐ Vs.T →
+                     ⦃G, L⦄ ⊢ ⬊*[h, g] Vs ∧ ⦃G, L⦄ ⊢ ⬊*[h, g] T.
 #h #g #L #T #Vs elim Vs -Vs /2 width=1/
 #V #Vs #IHVs #HVs
 lapply (csn_fwd_pair_sn … HVs) #HV

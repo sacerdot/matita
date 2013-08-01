@@ -38,4 +38,4 @@ interpretation "abstraction (global environment)"
 
 (* Basic properties *********************************************************)
 
-axiom genv_eq_dec: ∀T1,T2:genv. Decidable (T1 = T2).
+axiom genv_eq_dec: ∀G1,G2:genv. Decidable (G1 = G2).

@@ -19,14 +19,14 @@ include "basic_2/reduction/crr.ma".
 
 (* Advanved properties ******************************************************)
 
-lemma crr_append_sn: ∀L,K,T. L ⊢ 𝐑⦃T⦄  → K @@ L ⊢ 𝐑⦃T⦄.
+lemma crr_append_sn: ∀L,K,T. ⦃G, L⦄ ⊢ 𝐑⦃T⦄  → K @@ ⦃G, L⦄ ⊢ 𝐑⦃T⦄.
 #L #K0 #T #H elim H -L -T /2 width=1/
 #L #K #V #i #HLK
 lapply (ldrop_fwd_length_lt2 … HLK) #Hi
 lapply (ldrop_O1_append_sn_le … HLK … K0) -HLK /2 width=2/ -Hi /2 width=3/
 qed.
 
-lemma trr_crr: ∀L,T. ⋆ ⊢ 𝐑⦃T⦄ → L ⊢ 𝐑⦃T⦄.
+lemma trr_crr: ∀L,T. ⋆ ⊢ 𝐑⦃T⦄ → ⦃G, L⦄ ⊢ 𝐑⦃T⦄.
 #L #T #H lapply (crr_append_sn … H) //
 qed.
 
@@ -49,7 +49,7 @@ fact crr_inv_labst_last_aux: ∀L1,T,W. L1 ⊢ 𝐑⦃T⦄  →
 ]
 qed.
 
-lemma crr_inv_labst_last: ∀L,T,W. ⋆.ⓛW @@ L ⊢ 𝐑⦃T⦄  → L ⊢ 𝐑⦃T⦄.
+lemma crr_inv_labst_last: ∀L,T,W. ⋆.ⓛW @@ ⦃G, L⦄ ⊢ 𝐑⦃T⦄  → ⦃G, L⦄ ⊢ 𝐑⦃T⦄.
 /2 width=4/ qed-.
 
 lemma crr_inv_trr: ∀T,W. ⋆.ⓛW ⊢ 𝐑⦃T⦄  → ⋆ ⊢ 𝐑⦃T⦄.

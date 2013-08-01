@@ -153,7 +153,7 @@ table {
    class "green"
    [ { "unfold" * } {
         [ { "unfold" * } {
-             [ "unfold ( ? ⊢ ? ⧫* ? )" * ]
+             [ "unfold ( ⦃?,?⦄ ⊢ ? ⧫* ? )" * ]
           }
         ]
         [ { "iterated stratified static type assignment" * } {
@@ -165,15 +165,15 @@ table {
    class "grass"
    [ { "static typing" * } {
         [ { "stratified static type assignment" * } {
-             [ "ssta ( ⦃?,?⦄ ⊢ ? •[?,?] ? )" "ssta_lift" + "ssta_aaa" + "ssta_ssta" * ]
+             [ "ssta ( ⦃?,?⦄ ⊢ ? •[?,?] ⦃?,?⦄ )" "ssta_lift" + "ssta_aaa" + "ssta_ssta" * ]
           }
         ]
         [ { "local env. ref. for atomic arity assignment" * } {
-             [ "lsuba ( ? ⁝⊑ ? )" "lsuba_ldrop" + "lsuba_aaa" + "lsuba_lsuba" * ]
+             [ "lsuba ( ? ⊢ ? ⁝⊑ ? )" "lsuba_ldrop" + "lsuba_aaa" + "lsuba_lsuba" * ]
           }
         ]
         [ { "atomic arity assignment" * } {
-             [ "aaa ( ? ⊢ ? ⁝ ? )" "aaa_lift" + "aaa_lifts" + "aaa_aaa" * ]
+             [ "aaa ( ⦃?,?⦄ ⊢ ? ⁝ ? )" "aaa_lift" + "aaa_lifts" + "aaa_aaa" * ]
           }
         ]
         [ { "parameters" * } {
@@ -189,8 +189,8 @@ table {
           }
         ]
         [ { "iterated structural successor for closures" * } {
-             [ "fsups ( ⦃?,?⦄ ⊃* ⦃?,?⦄ )" "fsups_fsups" * ]
-             [ "fsupp ( ⦃?,?⦄ ⊃+ ⦃?,?⦄ )" "fsupp_fsupp" * ]
+             [ "fsups ( ⦃?,?,?⦄ ⊃* ⦃?,?,?⦄ )" "fsups_fsups" * ]
+             [ "fsupp ( ⦃?,?,?⦄ ⊃+ ⦃?,?,?⦄ )" "fsupp_fsupp" * ]
           }
         ]
         [ { "generic local env. slicing" * } {
@@ -211,7 +211,7 @@ table {
    class "orange"
    [ { "relocation" * } {
         [ { "structural successor for closures" * } {
-             [ "fsup ( ⦃?,?⦄ ⊃ ⦃?,?⦄ )" "fsupq ( ⦃?,?⦄ ⊃⸮ ⦃?,?⦄ )" "fsupq_alt" * ]
+             [ "fsup ( ⦃?,?,?⦄ ⊃ ⦃?,?,?⦄ )" "fsupq ( ⦃?,?,?⦄ ⊃⸮ ⦃?,?,?⦄ )" "fsupq_alt ( ⦃?,?,?⦄ ⊃⊃⸮ ⦃?,?,?⦄ )" * ]
           }
         ]
         [ { "global env. slicing" * } {
@@ -240,7 +240,7 @@ table {
           }
         ]
         [ { "closures" * } {
-             [ "cl_shift ( ? @@ ? )" "cl_weight ( ♯{?,?} )" * ]
+             [ "cl_shift ( ? @@ ? )" "cl_weight ( ♯{?,?,?} )" * ]
           }
         ]
         [ { "internal syntax" * } {

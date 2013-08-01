@@ -14,6 +14,6 @@
 
 (* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-notation "hvbox( ⦃ term 46 L1, break term 46 T1 ⦄ ⊃⊃⸮ break ⦃ term 46 L2 , break term 46 T2 ⦄ )"
-   non associative with precedence 45
-   for @{ 'SupTermOptAlt $L1 $T1 $L2 $T2 }.
+notation "hvbox( ♯ { term 46 G , break term 46 L , break term 46 T } )"
+ non associative with precedence 90
+ for @{ 'Weight $G $L $T }.

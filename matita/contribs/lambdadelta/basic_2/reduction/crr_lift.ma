@@ -20,7 +20,7 @@ include "basic_2/reduction/crr.ma".
 (* Properties on relocation *************************************************)
 
 lemma crr_lift: ∀K,T. K ⊢ 𝐑⦃T⦄ → ∀L,d,e. ⇩[d, e] L ≡ K →
-                ∀U. ⇧[d, e] T ≡ U → L ⊢ 𝐑⦃U⦄.
+                ∀U. ⇧[d, e] T ≡ U → ⦃G, L⦄ ⊢ 𝐑⦃U⦄.
 #K #T #H elim H -K -T
 [ #K #K0 #V #i #HK0 #L #d #e #HLK #X #H
   elim (lift_inv_lref1 … H) -H * #Hid #H destruct
@@ -46,7 +46,7 @@ lemma crr_lift: ∀K,T. K ⊢ 𝐑⦃T⦄ → ∀L,d,e. ⇩[d, e] L ≡ K →
 ]
 qed.
 
-lemma crr_inv_lift: ∀L,U. L ⊢ 𝐑⦃U⦄ → ∀K,d,e. ⇩[d, e] L ≡ K →
+lemma crr_inv_lift: ∀L,U. ⦃G, L⦄ ⊢ 𝐑⦃U⦄ → ∀K,d,e. ⇩[d, e] L ≡ K →
                     ∀T. ⇧[d, e] T ≡ U → K ⊢ 𝐑⦃T⦄.
 #L #U #H elim H -L -U
 [ #L #L0 #W #i #HK0 #K #d #e #HLK #X #H

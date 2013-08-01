@@ -19,7 +19,7 @@ include "basic_2/computation/csn.ma".
 (* CONTEXT-SENSITIVE PARALLEL EVALUATION ON TERMS **************************)
 
 definition cpre: lenv → relation term ≝
-                 λL,T1,T2. L ⊢ T1 ➡* T2 ∧ L ⊢ 𝐍⦃T2⦄.
+                 λL,T1,T2. ⦃G, L⦄ ⊢ T1 ➡* T2 ∧ ⦃G, L⦄ ⊢ 𝐍⦃T2⦄.
 
 interpretation "context-sensitive parallel evaluation (term)"
    'PEval L T1 T2 = (cpre L T1 T2).
@@ -27,7 +27,7 @@ interpretation "context-sensitive parallel evaluation (term)"
 (* Basic_properties *********************************************************)
 
 (* Basic_1: was just: nf2_sn3 *)
-lemma csn_cpre: ∀h,g,L,T1. ⦃h, L⦄ ⊢ ⬊*[g] T1 → ∃T2. L ⊢ T1 ➡* 𝐍⦃T2⦄.
+lemma csn_cpre: ∀h,g,L,T1. ⦃G, L⦄ ⊢ ⬊*[h, g] T1 → ∃T2. ⦃G, L⦄ ⊢ T1 ➡* 𝐍⦃T2⦄.
 #h #g #L #T1 #H @(csn_ind … H) -T1
 #T1 #_ #IHT1
 elim (cnr_dec L T1) /3 width=3/

@@ -19,7 +19,7 @@ include "basic_2/reduction/cpx.ma".
 
 (* Advanced forward lemmas on context-sensitive extended irreducible terms **)
 
-lemma cpx_fwd_cix: ∀h,g,L,T1,T2. ⦃h, L⦄ ⊢ T1 ➡[g] T2 → ⦃h, L⦄ ⊢ 𝐈[g]⦃T1⦄ → T2 = T1.
+lemma cpx_fwd_cix: ∀h,g,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[h, g] T2 → ⦃G, L⦄ ⊢ 𝐈[h, g]⦃T1⦄ → T2 = T1.
 #h #g #L #T1 #T2 #H elim H -L -T1 -T2
 [ //
 | #L #k #l #Hkl #H elim (cix_inv_sort … Hkl H)

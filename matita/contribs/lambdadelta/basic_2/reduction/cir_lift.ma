@@ -20,9 +20,9 @@ include "basic_2/reduction/cir.ma".
 (* Properties on relocation *************************************************)
 
 lemma cir_lift: ∀K,T. K ⊢ 𝐈⦃T⦄ → ∀L,d,e. ⇩[d, e] L ≡ K →
-                ∀U. ⇧[d, e] T ≡ U → L ⊢ 𝐈⦃U⦄.
+                ∀U. ⇧[d, e] T ≡ U → ⦃G, L⦄ ⊢ 𝐈⦃U⦄.
 /3 width=7 by crr_inv_lift/ qed.
 
-lemma cir_inv_lift: ∀L,U. L ⊢ 𝐈⦃U⦄ → ∀K,d,e. ⇩[d, e] L ≡ K →
+lemma cir_inv_lift: ∀L,U. ⦃G, L⦄ ⊢ 𝐈⦃U⦄ → ∀K,d,e. ⇩[d, e] L ≡ K →
                     ∀T. ⇧[d, e] T ≡ U → K ⊢ 𝐈⦃T⦄.
 /3 width=7/ qed-.

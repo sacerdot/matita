@@ -21,7 +21,7 @@ include "basic_2/dynamic/snv.ma".
 
 (* Forward lemmas on atomic arity assignment for terms **********************)
 
-lemma snv_fwd_aaa: ∀h,g,L,T. ⦃h, L⦄ ⊢ T ¡[g] → ∃A. L ⊢ T ⁝ A.
+lemma snv_fwd_aaa: ∀h,g,L,T. ⦃G, L⦄ ⊢ T ¡[h, g] → ∃A. ⦃G, L⦄ ⊢ T ⁝ A.
 #h #g #L #T #H elim H -L -T
 [ /2 width=2/
 | #I #L #K #V #i #HLK #_ * /3 width=6/
@@ -36,6 +36,6 @@ lemma snv_fwd_aaa: ∀h,g,L,T. ⦃h, L⦄ ⊢ T ¡[g] → ∃A. L ⊢ T ⁝ A.
 ]
 qed-.
 
-lemma snv_fwd_csn: ∀h,g,L,T. ⦃h, L⦄ ⊢ T ¡[g] → ⦃h, L⦄ ⊢ ⬊*[g] T.
+lemma snv_fwd_csn: ∀h,g,L,T. ⦃G, L⦄ ⊢ T ¡[h, g] → ⦃G, L⦄ ⊢ ⬊*[h, g] T.
 #h #g #L #T #H elim (snv_fwd_aaa … H) -H /2 width=2/
 qed-.

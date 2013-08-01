@@ -18,5 +18,5 @@ include "basic_2/substitution/fsups.ma".
 
 (* Main properties **********************************************************)
 
-theorem fsups_trans: bi_transitive … fsups.
-/2 width=4/ qed.
+theorem fsups_trans: tri_transitive … fsups.
+/2 width=5/ qed-.

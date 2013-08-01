@@ -26,6 +26,9 @@ definition relation2 : Type[0] → Type[0] → Type[0]
 definition relation3 : Type[0] → Type[0] → Type[0] → Type[0]
 ≝ λA,B,C.A→B→C→Prop.
 
+definition relation4 : Type[0] → Type[0] → Type[0] → Type[0] → Type[0]
+≝ λA,B,C,D.A→B→C→D→Prop.
+
 definition reflexive: ∀A.∀R :relation A.Prop
 ≝ λA.λR.∀x:A.R x x.
 
@@ -183,7 +186,7 @@ definition bi_relation: Type[0] → Type[0] → Type[0]
 ≝ λA,B.A→B→A→B→Prop.
 
 definition bi_reflexive: ∀A,B. ∀R:bi_relation A B. Prop
-≝ λA,B,R. ∀x,y. R x y x y.
+≝ λA,B,R. ∀a,b. R a b a b.
 
 definition bi_symmetric: ∀A,B. ∀R: bi_relation A B. Prop ≝ λA,B,R.
                          ∀a1,a2,b1,b2. R a2 b2 a1 b1 → R a1 b1 a2 b2.
@@ -193,7 +196,23 @@ definition bi_transitive: ∀A,B. ∀R: bi_relation A B. Prop ≝ λA,B,R.
                           ∀a2,b2. R a b a2 b2 → R a1 b1 a2 b2.
 
 definition bi_RC: ∀A,B:Type[0]. bi_relation A B → bi_relation A B ≝
-                  λA,B,R,x1,y1,x2,y2. R … x1 y1 x2 y2 ∨ (x1 = x2 ∧ y1 = y2).
+                  λA,B,R,a1,b1,a2,b2. R … a1 b1 a2 b2 ∨ (a1 = a2 ∧ b1 = b2).
 
 lemma bi_RC_reflexive: ∀A,B,R. bi_reflexive A B (bi_RC … R).
 /3 width=1/ qed.
+
+(********** relations on unboxed triples **********)
+
+definition tri_relation: Type[0] → Type[0] → Type[0] → Type[0]
+≝ λA,B,C.A→B→C→A→B→C→Prop.
+
+definition tri_reflexive: ∀A,B,C. ∀R:tri_relation A B C. Prop
+≝ λA,B,C,R. ∀a,b,c. R a b c a b c.
+
+definition tri_symmetric: ∀A,B,C. ∀R: tri_relation A B C. Prop ≝ λA,B,C,R.
+                          ∀a1,a2,b1,b2,c1,c2.
+                          R a2 b2 c2 a1 b1 c1 → R a1 b1 c1 a2 b2 c2.
+
+definition tri_transitive: ∀A,B,C. ∀R: tri_relation A B C. Prop ≝ λA,B,C,R.
+                           ∀a1,a,b1,b,c1,c. R a1 b1 c1 a b c →
+                           ∀a2,b2,c2. R a b c a2 b2 c2 → R a1 b1 c1 a2 b2 c2.

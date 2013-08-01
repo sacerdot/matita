@@ -18,7 +18,7 @@ include "basic_2/reduction/cpr.ma".
 (* CONTEXT-SENSITIVE PARALLEL CONVERSION ON TERMS ***************************)
 
 definition cpc: lenv → relation term ≝
-   λL,T1,T2. L ⊢ T1 ➡ T2 ∨ L ⊢ T2 ➡ T1.
+   λL,T1,T2. ⦃G, L⦄ ⊢ T1 ➡ T2 ∨ ⦃G, L⦄ ⊢ T2 ➡ T1.
 
 interpretation
    "context-sensitive parallel conversion (term)"
@@ -35,6 +35,6 @@ qed.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma cpc_fwd_cpr: ∀L,T1,T2. L ⊢ T1 ⬌ T2 → ∃∃T. L ⊢ T1 ➡ T & L ⊢ T2 ➡ T.
+lemma cpc_fwd_cpr: ∀L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬌ T2 → ∃∃T. ⦃G, L⦄ ⊢ T1 ➡ T & ⦃G, L⦄ ⊢ T2 ➡ T.
 #L #T1 #T2 * /2 width=3/
 qed.

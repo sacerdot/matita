@@ -26,14 +26,14 @@ interpretation "parallel computation (local environment, sn variant)"
 (* Basic eliminators ********************************************************)
 
 lemma lprs_ind: ∀L1. ∀R:predicate lenv. R L1 →
-                (∀L,L2. L1 ⊢ ➡* L → L ⊢ ➡ L2 → R L → R L2) →
+                (∀L,L2. L1 ⊢ ➡* L → ⦃G, L⦄ ⊢ ➡ L2 → R L → R L2) →
                 ∀L2. L1 ⊢ ➡* L2 → R L2.
 #L1 #R #HL1 #IHL1 #L2 #HL12
 @(TC_star_ind … HL1 IHL1 … HL12) //
 qed-.
 
 lemma lprs_ind_dx: ∀L2. ∀R:predicate lenv. R L2 →
-                   (∀L1,L. L1 ⊢ ➡ L → L ⊢ ➡* L2 → R L → R L1) →
+                   (∀L1,L. L1 ⊢ ➡ L → ⦃G, L⦄ ⊢ ➡* L2 → R L → R L1) →
                    ∀L1. L1 ⊢ ➡* L2 → R L1.
 #L2 #R #HL2 #IHL2 #L1 #HL12
 @(TC_star_ind_dx … HL2 IHL2 … HL12) //
@@ -44,13 +44,13 @@ qed-.
 lemma lpr_lprs: ∀L1,L2. L1 ⊢ ➡ L2 → L1 ⊢ ➡* L2.
 /2 width=1/ qed.
 
-lemma lprs_refl: ∀L. L ⊢ ➡* L.
+lemma lprs_refl: ∀L. ⦃G, L⦄ ⊢ ➡* L.
 /2 width=1/ qed.
 
-lemma lprs_strap1: ∀L1,L,L2. L1 ⊢ ➡* L → L ⊢ ➡ L2 → L1 ⊢ ➡* L2.
+lemma lprs_strap1: ∀L1,L,L2. L1 ⊢ ➡* L → ⦃G, L⦄ ⊢ ➡ L2 → L1 ⊢ ➡* L2.
 /2 width=3/ qed.
 
-lemma lprs_strap2: ∀L1,L,L2. L1 ⊢ ➡ L → L ⊢ ➡* L2 → L1 ⊢ ➡* L2.
+lemma lprs_strap2: ∀L1,L,L2. L1 ⊢ ➡ L → ⦃G, L⦄ ⊢ ➡* L2 → L1 ⊢ ➡* L2.
 /2 width=3/ qed.
 
 lemma lprs_pair_refl: ∀L1,L2. L1 ⊢ ➡* L2 → ∀I,V. L1. ⓑ{I} V ⊢ ➡* L2. ⓑ{I} V.

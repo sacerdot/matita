@@ -20,9 +20,9 @@ include "basic_2/computation/lpxs.ma".
 (* Properties about atomic arity assignment on terms ************************)
 
 lemma aaa_lpxs_conf: ∀h,g,L1,T,A.
-                     L1 ⊢ T ⁝ A → ∀L2. ⦃h, L1⦄ ⊢ ➡*[g] L2 → L2 ⊢ T ⁝ A.
+                     L1 ⊢ T ⁝ A → ∀L2. ⦃h, L1⦄ ⊢ ➡*[h, g] L2 → L2 ⊢ T ⁝ A.
 #h #g #L1 #T #A #HT #L2 #HL12
-@(TC_Conf3 … (λL,A. L ⊢ T ⁝ A) … HT ? HL12) /2 width=5 by aaa_lpx_conf/
+@(TC_Conf3 … (λL,A. ⦃G, L⦄ ⊢ T ⁝ A) … HT ? HL12) /2 width=5 by aaa_lpx_conf/
 qed-.
 
 lemma aaa_lprs_conf: ∀L1,T,A. L1 ⊢ T ⁝ A → ∀L2. L1 ⊢ ➡* L2 → L2 ⊢ T ⁝ A.

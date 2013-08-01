@@ -71,8 +71,8 @@ lemma lprs_cpr_conf_sn: ∀L0,T0,T1. L0 ⊢ T0 ➡ T1 → ∀L1. L0 ⊢ ➡* L1 
                         ∃∃T. L0 ⊢ T1 ➡* T & L1 ⊢ T0 ➡* T.
 /3 width=3 by lprs_cprs_conf_sn, cpr_cprs/ qed-.
 
-lemma cprs_bind2: ∀L,V1,V2. L ⊢ V1 ➡* V2 → ∀I,T1,T2. L. ⓑ{I}V2 ⊢ T1 ➡* T2 →
-                  ∀a. L ⊢ ⓑ{a,I}V1. T1 ➡* ⓑ{a,I}V2. T2.
+lemma cprs_bind2: ∀L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡* V2 → ∀I,T1,T2. L. ⓑ{I}V2 ⊢ T1 ➡* T2 →
+                  ∀a. ⦃G, L⦄ ⊢ ⓑ{a,I}V1. T1 ➡* ⓑ{a,I}V2. T2.
 #L #V1 #V2 #HV12 #I #T1 #T2 #HT12
 lapply (lprs_cprs_trans … HT12 (L.ⓑ{I}V1) ?) /2 width=1/
 qed.
@@ -80,8 +80,8 @@ qed.
 (* Inversion lemmas on context-sensitive parallel computation for terms *****)
 
 (* Basic_1: was: pr3_gen_abst *)
-lemma cprs_inv_abst1: ∀a,L,W1,T1,U2. L ⊢ ⓛ{a}W1.T1 ➡* U2 →
-                      ∃∃W2,T2. L ⊢ W1 ➡* W2 & L.ⓛW1 ⊢ T1 ➡* T2 &
+lemma cprs_inv_abst1: ∀a,L,W1,T1,U2. ⦃G, L⦄ ⊢ ⓛ{a}W1.T1 ➡* U2 →
+                      ∃∃W2,T2. ⦃G, L⦄ ⊢ W1 ➡* W2 & L.ⓛW1 ⊢ T1 ➡* T2 &
                                U2 = ⓛ{a}W2.T2.
 #a #L #V1 #T1 #U2 #H @(cprs_ind … H) -U2 /2 width=5/
 #U0 #U2 #_ #HU02 * #V0 #T0 #HV10 #HT10 #H destruct
@@ -91,15 +91,15 @@ lapply (cprs_strap1 … HV10 … HV02) -V0
 lapply (cprs_trans … HT10 … HT02) -T0 /2 width=5/
 qed-.
 
-lemma cprs_inv_abst: ∀a,L,W1,W2,T1,T2. L ⊢ ⓛ{a}W1.T1 ➡* ⓛ{a}W2.T2 →
-                     L ⊢ W1 ➡* W2 ∧ L.ⓛW1 ⊢ T1 ➡* T2.
+lemma cprs_inv_abst: ∀a,L,W1,W2,T1,T2. ⦃G, L⦄ ⊢ ⓛ{a}W1.T1 ➡* ⓛ{a}W2.T2 →
+                     ⦃G, L⦄ ⊢ W1 ➡* W2 ∧ L.ⓛW1 ⊢ T1 ➡* T2.
 #a #L #W1 #W2 #T1 #T2 #H
 elim (cprs_inv_abst1 … H) -H #W #T #HW1 #HT1 #H destruct /2 width=1/
 qed-.
 
 (* Basic_1: was pr3_gen_abbr *)
-lemma cprs_inv_abbr1: ∀a,L,V1,T1,U2. L ⊢ ⓓ{a}V1.T1 ➡* U2 → (
-                      ∃∃V2,T2. L ⊢ V1 ➡* V2 & L. ⓓV1 ⊢ T1 ➡* T2 &
+lemma cprs_inv_abbr1: ∀a,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓓ{a}V1.T1 ➡* U2 → (
+                      ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡* V2 & L. ⓓV1 ⊢ T1 ➡* T2 &
                                U2 = ⓓ{a}V2.T2
                       ) ∨
                       ∃∃T2. L. ⓓV1 ⊢ T1 ➡* T2 & ⇧[0, 1] U2 ≡ T2 & a = true.

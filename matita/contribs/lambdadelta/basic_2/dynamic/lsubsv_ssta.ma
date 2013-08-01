@@ -20,9 +20,9 @@ include "basic_2/dynamic/lsubsv_ldrop.ma".
 
 (* Properties on stratified static type assignment **************************)
 
-lemma lsubsv_ssta_trans: ∀h,g,L2,T,U2,l. ⦃h, L2⦄ ⊢ T •[g] ⦃l, U2⦄ →
-                         ∀L1. h ⊢ L1 ¡⊑[g] L2 →
-                         ∃∃U1. ⦃h, L1⦄ ⊢ T •[g] ⦃l, U1⦄ & L1 ⊢ U1 ⬌* U2.
+lemma lsubsv_ssta_trans: ∀h,g,L2,T,U2,l. ⦃h, L2⦄ ⊢ T •[h, g] ⦃l, U2⦄ →
+                         ∀L1. h ⊢ L1 ¡⊑[h, g] L2 →
+                         ∃∃U1. ⦃h, L1⦄ ⊢ T •[h, g] ⦃l, U1⦄ & L1 ⊢ U1 ⬌* U2.
 #h #g #L2 #T #U #l #H elim H -L2 -T -U -l
 [ /3 width=3/
 | #L2 #K2 #X #Y #U #i #l #HLK2 #_ #HYU #IHXY #L1 #HL12

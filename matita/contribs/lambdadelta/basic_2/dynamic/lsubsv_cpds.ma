@@ -20,13 +20,13 @@ include "basic_2/dynamic/lsubsv_ssta.ma".
 (* Properties for the preservation results **********************************)
 
 fact lsubsv_sstas_aux: ∀h,g,L0,T0.
-                       (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_cpr_lpr h g L1 T1) →
-                       (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_ssta_cpr_lpr h g L1 T1) →
-                       (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_ssta h g L1 T1) →
-                       (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_lsubsv h g L1 T1) →
-                       ∀L2,T. h ⊢ ⦃L0, T0⦄ >[g] ⦃L2, T⦄ → ⦃h, L2⦄ ⊢ T ¡[g] →
-                       ∀L1. h ⊢ L1 ¡⊑[g] L2 → ∀U2. ⦃h, L2⦄ ⊢ T •*[g] U2 →
-                       ∃∃U1. ⦃h, L1⦄ ⊢ T •*[g] U1 & L1 ⊢ U1 ⬌* U2.
+                       (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[h, g] ⦃L1, T1⦄ → IH_snv_cpr_lpr h g L1 T1) →
+                       (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[h, g] ⦃L1, T1⦄ → IH_ssta_cpr_lpr h g L1 T1) →
+                       (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[h, g] ⦃L1, T1⦄ → IH_snv_ssta h g L1 T1) →
+                       (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[h, g] ⦃L1, T1⦄ → IH_snv_lsubsv h g L1 T1) →
+                       ∀L2,T. h ⊢ ⦃L0, T0⦄ >[h, g] ⦃L2, T⦄ → ⦃h, L2⦄ ⊢ T ¡[h, g] →
+                       ∀L1. h ⊢ L1 ¡⊑[h, g] L2 → ∀U2. ⦃h, L2⦄ ⊢ T •*[h, g] U2 →
+                       ∃∃U1. ⦃h, L1⦄ ⊢ T •*[h, g] U1 & L1 ⊢ U1 ⬌* U2.
 #h #g #L0 #T0 #IH4 #IH3 #IH2 #IH1 #L2 #T #HLT0 #HT #L1 #HL12 #U2 #H @(sstas_ind … H) -U2 [ /2 width=3/ ]
 #U2 #W #l #HTU2 #HU2W * #U1 #HTU1 #HU12
 lapply (IH1 … HT … HL12) // #H
@@ -41,13 +41,13 @@ lapply (cpcs_trans … HW12 … HW2) -W2 /3 width=4/
 qed-.
 
 fact lsubsv_cpds_aux: ∀h,g,L0,T0.
-                      (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_cpr_lpr h g L1 T1) →
-                      (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_ssta_cpr_lpr h g L1 T1) →
-                      (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_ssta h g L1 T1) →
-                      (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L1, T1⦄ → IH_snv_lsubsv h g L1 T1) →
-                      ∀L2,T1. h ⊢ ⦃L0, T0⦄ >[g] ⦃L2, T1⦄ → ⦃h, L2⦄ ⊢ T1 ¡[g] →
-                      ∀L1. h ⊢ L1 ¡⊑[g] L2 → ∀T2. ⦃h, L2⦄ ⊢ T1 •*➡*[g] T2 →
-                      ∃∃T. ⦃h, L1⦄ ⊢ T1 •*➡*[g] T & L1 ⊢ T2 ➡* T.
+                      (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[h, g] ⦃L1, T1⦄ → IH_snv_cpr_lpr h g L1 T1) →
+                      (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[h, g] ⦃L1, T1⦄ → IH_ssta_cpr_lpr h g L1 T1) →
+                      (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[h, g] ⦃L1, T1⦄ → IH_snv_ssta h g L1 T1) →
+                      (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[h, g] ⦃L1, T1⦄ → IH_snv_lsubsv h g L1 T1) →
+                      ∀L2,T1. h ⊢ ⦃L0, T0⦄ >[h, g] ⦃L2, T1⦄ → ⦃h, L2⦄ ⊢ T1 ¡[h, g] →
+                      ∀L1. h ⊢ L1 ¡⊑[h, g] L2 → ∀T2. ⦃h, L2⦄ ⊢ T1 •*➡*[h, g] T2 →
+                      ∃∃T. ⦃h, L1⦄ ⊢ T1 •*➡*[h, g] T & L1 ⊢ T2 ➡* T.
 #h #g #L0 #T0 #IH4 #IH3 #IH2 #IH1 #L2 #T1 #HLT0 #HT1 #L1 #HL12 #T2 * #T #HT1T #HTT2
 lapply (lsubsv_cprs_trans … HL12 … HTT2) -HTT2 #HTT2
 elim (lsubsv_sstas_aux … IH4 IH3 IH2 IH1 … HLT0 … HL12 … HT1T) // -L2 -L0 -T0 #T0 #HT10 #HT0

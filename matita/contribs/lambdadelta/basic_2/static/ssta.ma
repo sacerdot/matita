@@ -35,11 +35,11 @@ interpretation "stratified static type assignment (term)"
    'StaticType h g L T U l = (ssta h g l L T U).
 
 definition ssta_step: ∀h. sd h → lenv → relation term ≝ λh,g,L,T,U.
-                      ∃l. ⦃h, L⦄ ⊢ T •[g] ⦃l+1, U⦄.
+                      ∃l. ⦃G, L⦄ ⊢ T •[h, g] ⦃l+1, U⦄.
 
 (* Basic inversion lemmas ************************************************)
 
-fact ssta_inv_sort1_aux: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g] ⦃l, U⦄ → ∀k0. T = ⋆k0 →
+fact ssta_inv_sort1_aux: ∀h,g,L,T,U,l. ⦃G, L⦄ ⊢ T •[h, g] ⦃l, U⦄ → ∀k0. T = ⋆k0 →
                          deg h g k0 l ∧ U = ⋆(next h k0).
 #h #g #L #T #U #l * -L -T -U -l
 [ #L #k #l #Hkl #k0 #H destruct /2 width=1/
@@ -51,15 +51,15 @@ fact ssta_inv_sort1_aux: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g] ⦃l, U⦄ → 
 qed.
 
 (* Basic_1: was just: sty0_gen_sort *)
-lemma ssta_inv_sort1: ∀h,g,L,U,k,l. ⦃h, L⦄ ⊢ ⋆k •[g] ⦃l, U⦄ →
+lemma ssta_inv_sort1: ∀h,g,L,U,k,l. ⦃G, L⦄ ⊢ ⋆k •[h, g] ⦃l, U⦄ →
                       deg h g k l ∧ U = ⋆(next h k).
 /2 width=4/ qed-.
 
-fact ssta_inv_lref1_aux: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g] ⦃l, U⦄ → ∀j. T = #j →
-                         (∃∃K,V,W. ⇩[0, j] L ≡ K. ⓓV & ⦃h, K⦄ ⊢ V •[g] ⦃l, W⦄ &
+fact ssta_inv_lref1_aux: ∀h,g,L,T,U,l. ⦃G, L⦄ ⊢ T •[h, g] ⦃l, U⦄ → ∀j. T = #j →
+                         (∃∃K,V,W. ⇩[0, j] L ≡ K. ⓓV & ⦃h, K⦄ ⊢ V •[h, g] ⦃l, W⦄ &
                                    ⇧[0, j + 1] W ≡ U
                          ) ∨
-                         (∃∃K,W,V,l0. ⇩[0, j] L ≡ K. ⓛW & ⦃h, K⦄ ⊢ W •[g] ⦃l0, V⦄ &
+                         (∃∃K,W,V,l0. ⇩[0, j] L ≡ K. ⓛW & ⦃h, K⦄ ⊢ W •[h, g] ⦃l0, V⦄ &
                                       ⇧[0, j + 1] W ≡ U & l = l0 + 1
                          ).
 #h #g #L #T #U #l * -L -T -U -l
@@ -73,16 +73,16 @@ fact ssta_inv_lref1_aux: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g] ⦃l, U⦄ → 
 qed.
 
 (* Basic_1: was just: sty0_gen_lref *)
-lemma ssta_inv_lref1: ∀h,g,L,U,i,l. ⦃h, L⦄ ⊢ #i •[g] ⦃l, U⦄ →
-                      (∃∃K,V,W. ⇩[0, i] L ≡ K. ⓓV & ⦃h, K⦄ ⊢ V •[g] ⦃l, W⦄ &
+lemma ssta_inv_lref1: ∀h,g,L,U,i,l. ⦃G, L⦄ ⊢ #i •[h, g] ⦃l, U⦄ →
+                      (∃∃K,V,W. ⇩[0, i] L ≡ K. ⓓV & ⦃h, K⦄ ⊢ V •[h, g] ⦃l, W⦄ &
                                 ⇧[0, i + 1] W ≡ U
                       ) ∨
-                      (∃∃K,W,V,l0. ⇩[0, i] L ≡ K. ⓛW & ⦃h, K⦄ ⊢ W •[g] ⦃l0, V⦄ &
+                      (∃∃K,W,V,l0. ⇩[0, i] L ≡ K. ⓛW & ⦃h, K⦄ ⊢ W •[h, g] ⦃l0, V⦄ &
                                    ⇧[0, i + 1] W ≡ U & l = l0 + 1
                       ).
 /2 width=3/ qed-.
 
-fact ssta_inv_gref1_aux: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g] ⦃l, U⦄ → ∀p0. T = §p0 → ⊥.
+fact ssta_inv_gref1_aux: ∀h,g,L,T,U,l. ⦃G, L⦄ ⊢ T •[h, g] ⦃l, U⦄ → ∀p0. T = §p0 → ⊥.
 #h #g #L #T #U #l * -L -T -U -l
 [ #L #k #l #_ #p0 #H destruct
 | #L #K #V #W #U #i #l #_ #_ #_ #p0 #H destruct
@@ -92,12 +92,12 @@ fact ssta_inv_gref1_aux: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g] ⦃l, U⦄ → 
 | #L #W #T #U #l #_ #p0 #H destruct
 qed.
 
-lemma ssta_inv_gref1: ∀h,g,L,U,p,l. ⦃h, L⦄ ⊢ §p •[g] ⦃l, U⦄ → ⊥.
+lemma ssta_inv_gref1: ∀h,g,L,U,p,l. ⦃G, L⦄ ⊢ §p •[h, g] ⦃l, U⦄ → ⊥.
 /2 width=9/ qed-.
 
-fact ssta_inv_bind1_aux: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g] ⦃l, U⦄ →
+fact ssta_inv_bind1_aux: ∀h,g,L,T,U,l. ⦃G, L⦄ ⊢ T •[h, g] ⦃l, U⦄ →
                          ∀a,I,X,Y. T = ⓑ{a,I}Y.X →
-                         ∃∃Z. ⦃h, L.ⓑ{I}Y⦄ ⊢ X •[g] ⦃l, Z⦄ & U = ⓑ{a,I}Y.Z.
+                         ∃∃Z. ⦃h, L.ⓑ{I}Y⦄ ⊢ X •[h, g] ⦃l, Z⦄ & U = ⓑ{a,I}Y.Z.
 #h #g #L #T #U #l * -L -T -U -l
 [ #L #k #l #_ #a #I #X #Y #H destruct
 | #L #K #V #W #U #i #l #_ #_ #_ #a #I #X #Y #H destruct
@@ -109,12 +109,12 @@ fact ssta_inv_bind1_aux: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g] ⦃l, U⦄ →
 qed.
 
 (* Basic_1: was just: sty0_gen_bind *)
-lemma ssta_inv_bind1: ∀h,g,a,I,L,Y,X,U,l. ⦃h, L⦄ ⊢ ⓑ{a,I}Y.X •[g] ⦃l, U⦄ →
-                      ∃∃Z. ⦃h, L.ⓑ{I}Y⦄ ⊢ X •[g] ⦃l, Z⦄ & U = ⓑ{a,I}Y.Z.
+lemma ssta_inv_bind1: ∀h,g,a,I,L,Y,X,U,l. ⦃G, L⦄ ⊢ ⓑ{a,I}Y.X •[h, g] ⦃l, U⦄ →
+                      ∃∃Z. ⦃h, L.ⓑ{I}Y⦄ ⊢ X •[h, g] ⦃l, Z⦄ & U = ⓑ{a,I}Y.Z.
 /2 width=3/ qed-.
 
-fact ssta_inv_appl1_aux: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g] ⦃l, U⦄ → ∀X,Y. T = ⓐY.X →
-                         ∃∃Z. ⦃h, L⦄ ⊢ X •[g] ⦃l, Z⦄ & U = ⓐY.Z.
+fact ssta_inv_appl1_aux: ∀h,g,L,T,U,l. ⦃G, L⦄ ⊢ T •[h, g] ⦃l, U⦄ → ∀X,Y. T = ⓐY.X →
+                         ∃∃Z. ⦃G, L⦄ ⊢ X •[h, g] ⦃l, Z⦄ & U = ⓐY.Z.
 #h #g #L #T #U #l * -L -T -U -l
 [ #L #k #l #_ #X #Y #H destruct
 | #L #K #V #W #U #i #l #_ #_ #_ #X #Y #H destruct
@@ -126,12 +126,12 @@ fact ssta_inv_appl1_aux: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g] ⦃l, U⦄ → 
 qed.
 
 (* Basic_1: was just: sty0_gen_appl *)
-lemma ssta_inv_appl1: ∀h,g,L,Y,X,U,l. ⦃h, L⦄ ⊢ ⓐY.X •[g] ⦃l, U⦄ →
-                      ∃∃Z. ⦃h, L⦄ ⊢ X •[g] ⦃l, Z⦄ & U = ⓐY.Z.
+lemma ssta_inv_appl1: ∀h,g,L,Y,X,U,l. ⦃G, L⦄ ⊢ ⓐY.X •[h, g] ⦃l, U⦄ →
+                      ∃∃Z. ⦃G, L⦄ ⊢ X •[h, g] ⦃l, Z⦄ & U = ⓐY.Z.
 /2 width=3/ qed-.
 
-fact ssta_inv_cast1_aux: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g] ⦃l, U⦄ →
-                         ∀X,Y. T = ⓝY.X → ⦃h, L⦄ ⊢ X •[g] ⦃l, U⦄.
+fact ssta_inv_cast1_aux: ∀h,g,L,T,U,l. ⦃G, L⦄ ⊢ T •[h, g] ⦃l, U⦄ →
+                         ∀X,Y. T = ⓝY.X → ⦃G, L⦄ ⊢ X •[h, g] ⦃l, U⦄.
 #h #g #L #T #U #l * -L -T -U -l
 [ #L #k #l #_ #X #Y #H destruct
 | #L #K #V #W #U #l #i #_ #_ #_ #X #Y #H destruct
@@ -143,6 +143,6 @@ fact ssta_inv_cast1_aux: ∀h,g,L,T,U,l. ⦃h, L⦄ ⊢ T •[g] ⦃l, U⦄ →
 qed.
 
 (* Basic_1: was just: sty0_gen_cast *)
-lemma ssta_inv_cast1: ∀h,g,L,X,Y,U,l. ⦃h, L⦄ ⊢ ⓝY.X •[g] ⦃l, U⦄ →
-                      ⦃h, L⦄ ⊢ X •[g] ⦃l, U⦄.
+lemma ssta_inv_cast1: ∀h,g,L,X,Y,U,l. ⦃G, L⦄ ⊢ ⓝY.X •[h, g] ⦃l, U⦄ →
+                      ⦃G, L⦄ ⊢ X •[h, g] ⦃l, U⦄.
 /2 width=4/ qed-.

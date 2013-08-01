@@ -15,20 +15,20 @@
 include "basic_2/notation/relations/rdrop_3.ma".
 include "basic_2/grammar/genv.ma".
 
-(* GLOBAL ENVIRONMENT SLICING ***********************************************)
+(* GLOBAL ENVIRONMENT READING ***********************************************)
 
-inductive gdrop (e:nat): relation genv ≝
-| gdrop_gt: ∀G. |G| ≤ e → gdrop e G (⋆)
-| gdrop_eq: ∀G. |G| = e + 1 → gdrop e G G
-| gdrop_lt: ∀I,G1,G2,V. e < |G1| → gdrop e G1 G2 → gdrop e (G1. ⓑ{I} V) G2
+inductive gget (e:nat): relation genv ≝
+| gget_gt: ∀G. |G| ≤ e → gget e G (⋆)
+| gget_eq: ∀G. |G| = e + 1 → gget e G G
+| gget_lt: ∀I,G1,G2,V. e < |G1| → gget e G1 G2 → gget e (G1. ⓑ{I} V) G2
 .
 
-interpretation "global slicing"
-   'RDrop e G1 G2 = (gdrop e G1 G2).
+interpretation "global reading"
+   'RDrop e G1 G2 = (gget e G1 G2).
 
 (* basic inversion lemmas ***************************************************)
 
-lemma gdrop_inv_gt: ∀G1,G2,e. ⇩[e] G1 ≡ G2 → |G1| ≤ e → G2 = ⋆.
+lemma gget_inv_gt: ∀G1,G2,e. ⇩[e] G1 ≡ G2 → |G1| ≤ e → G2 = ⋆.
 #G1 #G2 #e * -G1 -G2 //
 [ #G #H >H -H >commutative_plus #H
   lapply (le_plus_to_le_r … 0 H) -H #H
@@ -40,7 +40,7 @@ lemma gdrop_inv_gt: ∀G1,G2,e. ⇩[e] G1 ≡ G2 → |G1| ≤ e → G2 = ⋆.
 ]
 qed-.
 
-lemma gdrop_inv_eq: ∀G1,G2,e. ⇩[e] G1 ≡ G2 → |G1| = e + 1 → G1 = G2.
+lemma gget_inv_eq: ∀G1,G2,e. ⇩[e] G1 ≡ G2 → |G1| = e + 1 → G1 = G2.
 #G1 #G2 #e * -G1 -G2 //
 [ #G #H1 #H2 >H2 in H1; -H2 >commutative_plus #H
   lapply (le_plus_to_le_r … 0 H) -H #H
@@ -51,8 +51,8 @@ lemma gdrop_inv_eq: ∀G1,G2,e. ⇩[e] G1 ≡ G2 → |G1| = e + 1 → G1 = G2.
 ]
 qed-.
 
-fact gdrop_inv_lt_aux: ∀I,G,G1,G2,V,e. ⇩[e] G ≡ G2 → G = G1. ⓑ{I} V →
-                       e < |G1| → ⇩[e] G1 ≡ G2.
+fact gget_inv_lt_aux: ∀I,G,G1,G2,V,e. ⇩[e] G ≡ G2 → G = G1. ⓑ{I} V →
+                      e < |G1| → ⇩[e] G1 ≡ G2.
 #I #G #G1 #G2 #V #e * -G -G2
 [ #G #H1 #H destruct #H2
   lapply (le_to_lt_to_lt … H1 H2) -H1 -H2 normalize in ⊢ (? % ? → ?); >commutative_plus #H
@@ -62,20 +62,20 @@ fact gdrop_inv_lt_aux: ∀I,G,G1,G2,V,e. ⇩[e] G ≡ G2 → G = G1. ⓑ{I} V �
   elim (lt_refl_false … H)
 | #J #G #G2 #W #_ #HG2 #H destruct //
 ]
-qed.
+qed-.
 
-lemma gdrop_inv_lt: ∀I,G1,G2,V,e.
+lemma gget_inv_lt: ∀I,G1,G2,V,e.
                     ⇩[e] G1. ⓑ{I} V ≡ G2 → e < |G1| → ⇩[e] G1 ≡ G2.
-/2 width=5/ qed-.
+/2 width=5 by gget_inv_lt_aux/ qed-.
 
 (* Basic properties *********************************************************)
 
-lemma gdrop_total: ∀e,G1. ∃G2. ⇩[e] G1 ≡ G2.
+lemma gget_total: ∀e,G1. ∃G2. ⇩[e] G1 ≡ G2.
 #e #G1 elim G1 -G1 /3 width=2/
 #I #V #G1 * #G2 #HG12
 elim (lt_or_eq_or_gt e (|G1|)) #He
 [ /3 width=2/
 | destruct /3 width=2/
-| @ex_intro [2: @gdrop_gt normalize /2 width=1/ | skip ] (**) (* explicit constructor *)
+| @ex_intro [2: @gget_gt normalize /2 width=1/ | skip ] (**) (* explicit constructor *)
 ]
-qed.
+qed-.

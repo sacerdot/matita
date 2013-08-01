@@ -19,7 +19,7 @@ include "basic_2/reduction/cpr.ma".
 
 (* Advanced forward lemmas on context-sensitive irreducible terms ***********)
 
-lemma cpr_fwd_cir: ∀L,T1,T2. L ⊢ T1 ➡ T2 → L ⊢ 𝐈⦃T1⦄ → T2 = T1.
+lemma cpr_fwd_cir: ∀L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡ T2 → ⦃G, L⦄ ⊢ 𝐈⦃T1⦄ → T2 = T1.
 #L #T1 #T2 #H elim H -L -T1 -T2
 [ //
 | #L #K #V1 #V2 #W2 #i #HLK #_ #HVW2 #IHV12 #H

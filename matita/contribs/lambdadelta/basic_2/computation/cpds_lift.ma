@@ -21,15 +21,15 @@ include "basic_2/computation/cpds.ma".
 (* Relocation properties ****************************************************)
 
 lemma cpds_lift: ∀L,K,d,e. ⇩[d, e] L ≡ K → ∀T1,U1. ⇧[d, e] T1 ≡ U1 →
-                 ∀h,g,T2. ⦃h, K⦄ ⊢ T1 •*➡*[g] T2 → ∀U2. ⇧[d, e] T2 ≡ U2 →
-                 ⦃h, L⦄ ⊢ U1 •*➡*[g] U2.
+                 ∀h,g,T2. ⦃h, K⦄ ⊢ T1 •*➡*[h, g] T2 → ∀U2. ⇧[d, e] T2 ≡ U2 →
+                 ⦃G, L⦄ ⊢ U1 •*➡*[h, g] U2.
 #L #K #d #e #HLK #T1 #U1 #HTU1 #h #g #T2 * #T
 elim (lift_total T d e) /3 width=11/
 qed.
 
 lemma cpds_inv_lift1: ∀L,K,d,e. ⇩[d, e] L ≡ K →
-                      ∀T1,U1. ⇧[d, e] T1 ≡ U1 → ∀h,g,U2. ⦃h, L⦄ ⊢ U1 •*➡*[g] U2 →
-                      ∃∃T2. ⇧[d, e] T2 ≡ U2 & ⦃h, K⦄ ⊢ T1 •*➡*[g] T2.
+                      ∀T1,U1. ⇧[d, e] T1 ≡ U1 → ∀h,g,U2. ⦃G, L⦄ ⊢ U1 •*➡*[h, g] U2 →
+                      ∃∃T2. ⇧[d, e] T2 ≡ U2 & ⦃h, K⦄ ⊢ T1 •*➡*[h, g] T2.
 #L #K #d #e #HLK #T1 #U1 #HTU1 #h #g #U2 * #U #HU1 #HU2
 elim (sstas_inv_lift1 … HU1 … HLK … HTU1) -U1 #T #HT1 #HTU
 elim (cprs_inv_lift1 … HU2 … HLK … HTU) -U -L /3 width=5/

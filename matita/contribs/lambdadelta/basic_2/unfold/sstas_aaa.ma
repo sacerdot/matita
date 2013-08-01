@@ -19,7 +19,7 @@ include "basic_2/unfold/sstas.ma".
 
 (* Properties on atomic arity assignment for terms **************************)
 
-lemma sstas_aaa: ∀h,g,L,T,U. ⦃h, L⦄ ⊢ T •*[g] U →
-                 ∀A. L ⊢ T ⁝ A → L ⊢ U ⁝ A.
+lemma sstas_aaa: ∀h,g,L,T,U. ⦃G, L⦄ ⊢ T •*[h, g] U →
+                 ∀A. ⦃G, L⦄ ⊢ T ⁝ A → ⦃G, L⦄ ⊢ U ⁝ A.
 #h #g #L #T #U #H @(sstas_ind_dx … H) -T // /3 width=6/
 qed.

@@ -22,7 +22,7 @@ include "basic_2/computation/cprs.ma".
 (* Note: apparently this was missing in basic_1 *)
 lemma cprs_delta: ∀L,K,V,V2,i.
                   ⇩[0, i] L ≡ K. ⓓV → K ⊢ V ➡* V2 →
-                  ∀W2. ⇧[0, i + 1] V2 ≡ W2 → L ⊢ #i ➡* W2.
+                  ∀W2. ⇧[0, i + 1] V2 ≡ W2 → ⦃G, L⦄ ⊢ #i ➡* W2.
 #L #K #V #V2 #i #HLK #H elim H -V2 [ /3 width=6/ ]
 #V1 #V2 #_ #HV12 #IHV1 #W2 #HVW2
 lapply (ldrop_fwd_ldrop2 … HLK) -HLK #HLK
@@ -32,7 +32,7 @@ qed.
 (* Advanced inversion lemmas ************************************************)
 
 (* Basic_1: was: pr3_gen_lref *)
-lemma cprs_inv_lref1: ∀L,T2,i. L ⊢ #i ➡* T2 →
+lemma cprs_inv_lref1: ∀L,T2,i. ⦃G, L⦄ ⊢ #i ➡* T2 →
                       T2 = #i ∨
                       ∃∃K,V1,T1. ⇩[0, i] L ≡ K. ⓓV1 &
                                  K ⊢ V1 ➡* T1 &

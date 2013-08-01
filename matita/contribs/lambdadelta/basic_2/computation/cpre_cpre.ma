@@ -20,7 +20,7 @@ include "basic_2/computation/cpre.ma".
 (* Main properties *********************************************************)
 
 (* Basic_1: was: nf2_pr3_confluence *)
-theorem cpre_mono: ∀L,T,T1. L ⊢ T ➡* 𝐍⦃T1⦄ → ∀T2. L ⊢ T ➡* 𝐍⦃T2⦄ → T1 = T2.
+theorem cpre_mono: ∀L,T,T1. ⦃G, L⦄ ⊢ T ➡* 𝐍⦃T1⦄ → ∀T2. ⦃G, L⦄ ⊢ T ➡* 𝐍⦃T2⦄ → T1 = T2.
 #L #T #T1 * #H1T1 #H2T1 #T2 * #H1T2 #H2T2
 elim (cprs_conf … H1T1 … H1T2) -T #T #HT1
 >(cprs_inv_cnr1 … HT1 H2T1) -T1 #HT2

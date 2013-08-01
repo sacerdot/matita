@@ -14,7 +14,7 @@
 
 (* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-notation "hvbox( L ⊢ break ⌘ ⦃ term 46 T ⦄ ≡ break term 46 k )"
+notation "hvbox( ⦃G, L⦄ ⊢ break ⌘ ⦃ term 46 T ⦄ ≡ break term 46 k )"
    non associative with precedence 45
    for @{ 'ICM $L $T $k }.
 

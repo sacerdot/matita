@@ -120,8 +120,8 @@ qed-.
 (* Properties on supclosure *************************************************)
 
 lemma fsupq_cpx_trans: ∀h,g,L1,L2,T1,T2. ⦃L1, T1⦄ ⊃⸮ ⦃L2, T2⦄ →
-                       ∀U2. ⦃h, L2⦄ ⊢ T2 ➡[g] U2 →
-                       ∃∃U1. ⦃h, L1⦄ ⊢ T1 ➡[g] U1 & ⦃L1, U1⦄ ⊃⸮ ⦃L2, U2⦄.
+                       ∀U2. ⦃h, L2⦄ ⊢ T2 ➡[h, g] U2 →
+                       ∃∃U1. ⦃h, L1⦄ ⊢ T1 ➡[h, g] U1 & ⦃L1, U1⦄ ⊃⸮ ⦃L2, U2⦄.
 #h #g #L1 #L2 #T1 #T2 #H elim H -L1 -L2 -T1 -T2 [1: /2 width=3/ |3,4,5: /3 width=3/ ]
 [ #I #L1 #V2 #U2 #HVU2
   elim (lift_total U2 0 1) /4 width=9/
@@ -133,16 +133,16 @@ lemma fsupq_cpx_trans: ∀h,g,L1,L2,T1,T2. ⦃L1, T1⦄ ⊃⸮ ⦃L2, T2⦄ →
 qed-.
 
 lemma fsupq_ssta_trans: ∀h,g,L1,L2,T1,T2. ⦃L1, T1⦄ ⊃⸮ ⦃L2, T2⦄ →
-                        ∀U2,l. ⦃h, L2⦄ ⊢ T2 •[g] ⦃l+1, U2⦄ →
-                        ∃∃U1. ⦃h, L1⦄ ⊢ T1 ➡[g] U1 & ⦃L1, U1⦄ ⊃⸮ ⦃L2, U2⦄.
+                        ∀U2,l. ⦃h, L2⦄ ⊢ T2 •[h, g] ⦃l+1, U2⦄ →
+                        ∃∃U1. ⦃h, L1⦄ ⊢ T1 ➡[h, g] U1 & ⦃L1, U1⦄ ⊃⸮ ⦃L2, U2⦄.
 /3 width=4 by fsupq_cpx_trans, ssta_cpx/ qed-.
 
 lemma fsup_cpx_trans: ∀h,g,L1,L2,T1,T2. ⦃L1, T1⦄ ⊃ ⦃L2, T2⦄ →
-                      ∀U2. ⦃h, L2⦄ ⊢ T2 ➡[g] U2 →
-                      ∃∃U1. ⦃h, L1⦄ ⊢ T1 ➡[g] U1 & ⦃L1, U1⦄ ⊃⸮ ⦃L2, U2⦄.
+                      ∀U2. ⦃h, L2⦄ ⊢ T2 ➡[h, g] U2 →
+                      ∃∃U1. ⦃h, L1⦄ ⊢ T1 ➡[h, g] U1 & ⦃L1, U1⦄ ⊃⸮ ⦃L2, U2⦄.
 /3 width=3 by fsupq_cpx_trans, fsup_fsupq/ qed-.
 
 lemma fsup_ssta_trans: ∀h,g,L1,L2,T1,T2. ⦃L1, T1⦄ ⊃ ⦃L2, T2⦄ →
-                       ∀U2,l. ⦃h, L2⦄ ⊢ T2 •[g] ⦃l+1, U2⦄ →
-                       ∃∃U1. ⦃h, L1⦄ ⊢ T1 ➡[g] U1 & ⦃L1, U1⦄ ⊃⸮ ⦃L2, U2⦄.
+                       ∀U2,l. ⦃h, L2⦄ ⊢ T2 •[h, g] ⦃l+1, U2⦄ →
+                       ∃∃U1. ⦃h, L1⦄ ⊢ T1 ➡[h, g] U1 & ⦃L1, U1⦄ ⊃⸮ ⦃L2, U2⦄.
 /3 width=4 by fsupq_ssta_trans, fsup_fsupq/ qed-.

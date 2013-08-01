@@ -155,6 +155,24 @@ lemma NF_to_SN_sn: ∀A,R,S,a. NF_sn A R S a → SN_sn A R S a.
 elim HSa12 -HSa12 /2 width=1/
 qed.
 
+lemma TC_lsub_trans: ∀A,B,R,S. lsub_trans A B R S → lsub_trans A B (LTC … R) S.
+#A #B #R #S #HRS #L2 #T1 #T2 #H elim H -T2 [ /3 width=3/ ]
+#T #T2 #_ #HT2 #IHT1 #L1 #HL12
+lapply (HRS … HT2 … HL12) -HRS -HT2 /3 width=3/
+qed-.
+
+lemma s_r_trans_TC1: ∀A,B,R,S. s_r_trans A B R S → s_rs_trans A B R S.
+#A #B #R #S #HRS #L2 #T1 #T2 #H elim H -T2 [ /3 width=3/ ]
+#T #T2 #_ #HT2 #IHT1 #L1 #HL12
+lapply (HRS … HT2 … HL12) -HRS -HT2 /3 width=3/
+qed-.
+
+lemma s_r_trans_TC2: ∀A,B,R,S. s_rs_trans A B R S → s_r_trans A B R (TC … S).
+#A #B #R #S #HRS #L2 #T1 #T2 #HT12 #L1 #H @(TC_ind_dx … L1 H) -L1 /2 width=3/ /3 width=3/
+qed-.
+
+(* relations on unboxed pairs ***********************************************)
+
 lemma bi_TC_strip: ∀A,B,R. bi_confluent A B R →
                    ∀a0,a1,b0,b1. R a0 b0 a1 b1 → ∀a2,b2. bi_TC … R a0 b0 a2 b2 →
                    ∃∃a,b. bi_TC … R a1 b1 a b & R a2 b2 a b.
@@ -194,18 +212,89 @@ lemma bi_TC_decomp_l: ∀A,B. ∀R:bi_relation A B.
 ]
 qed-.
 
-lemma TC_lsub_trans: ∀A,B,R,S. lsub_trans A B R S → lsub_trans A B (LTC … R) S.
-#A #B #R #S #HRS #L2 #T1 #T2 #H elim H -T2 [ /3 width=3/ ]
-#T #T2 #_ #HT2 #IHT1 #L1 #HL12
-lapply (HRS … HT2 … HL12) -HRS -HT2 /3 width=3/
+(* relations on unboxed triples *********************************************)
+
+definition tri_RC: ∀A,B,C. tri_relation A B C → tri_relation A B C ≝
+                   λA,B,C,R,a1,b1,c1,a2,b2,c2. R … a1 b1 c1 a2 b2 c2 ∨
+                   ∧∧ a1 = a2 & b1 = b2 & c1 = c2.
+
+lemma tri_RC_reflexive: ∀A,B,C,R. tri_reflexive A B C (tri_RC … R).
+/3 width=1/ qed.
+
+definition tri_star: ∀A,B,C,R. tri_relation A B C ≝
+                     λA,B,C,R. tri_RC A B C (tri_TC … R).
+
+lemma tri_star_tri_reflexive: ∀A,B,C,R. tri_reflexive A B C (tri_star … R).
+/2 width=1/ qed.
+
+lemma tri_TC_to_tri_star: ∀A,B,C,R,a1,b1,c1,a2,b2,c2.
+                          tri_TC A B C R a1 b1 c1 a2 b2 c2 →
+                          tri_star A B C R a1 b1 c1 a2 b2 c2.
+/2 width=1/ qed.
+
+lemma tri_R_to_tri_star: ∀A,B,C,R,a1,b1,c1,a2,b2,c2.
+                         R a1 b1 c1 a2 b2 c2 → tri_star A B C R a1 b1 c1 a2 b2 c2.
+/3 width=1/ qed.
+
+lemma tri_star_strap1: ∀A,B,C,R,a1,a,a2,b1,b,b2,c1,c,c2.
+                       tri_star A B C R a1 b1 c1 a b c →
+                       R a b c a2 b2 c2 → tri_star A B C R a1 b1 c1 a2 b2 c2.
+#A #B #C #R #a1 #a #a2 #b1 #b #b2 #c1 #c #c2 *
+[ /3 width=5/
+| * #H1 #H2 #H3 destruct /2 width=1/
+]
+qed.
+
+lemma tri_star_strap2: ∀A,B,C,R,a1,a,a2,b1,b,b2,c1,c,c2. R a1 b1 c1 a b c →
+                       tri_star A B C R a b c a2 b2 c2 →
+                       tri_star A B C R a1 b1 c1 a2 b2 c2.
+#A #B #C #R #a1 #a #a2 #b1 #b #b2 #c1 #c #c2 #H *
+[ /3 width=5/
+| * #H1 #H2 #H3 destruct /2 width=1/
+]
+qed.
+
+lemma tri_star_to_tri_TC_to_tri_TC: ∀A,B,C,R,a1,a,a2,b1,b,b2,c1,c,c2.
+                                    tri_star A B C R a1 b1 c1 a b c →
+                                    tri_TC A B C R a b c a2 b2 c2 →
+                                    tri_TC A B C R a1 b1 c1 a2 b2 c2.
+#A #B #C #R #a1 #a #a2 #b1 #b #b2 #c1 #c #c2 *
+[ /2 width=5/
+| * #H1 #H2 #H3 destruct /2 width=1/
+]
+qed.
+
+lemma tri_TC_to_tri_star_to_tri_TC: ∀A,B,C,R,a1,a,a2,b1,b,b2,c1,c,c2.
+                                    tri_TC A B C R a1 b1 c1 a b c →
+                                    tri_star A B C R a b c a2 b2 c2 →
+                                    tri_TC A B C R a1 b1 c1 a2 b2 c2.
+#A #B #C #R #a1 #a #a2 #b1 #b #b2 #c1 #c #c2 #H *
+[ /2 width=5/
+| * #H1 #H2 #H3 destruct /2 width=1/
+]
+qed.
+
+lemma tri_tansitive_tri_star: ∀A,B,C,R. tri_transitive A B C (tri_star … R).
+#A #B #C #R #a1 #a #b1 #b #c1 #c #H #a2 #b2 #c2 *
+[ /3 width=5/
+| * #H1 #H2 #H3 destruct /2 width=1/
+]
+qed.
+
+lemma tri_star_ind: ∀A,B,C,R,a1,b1,c1. ∀P:relation3 A B C. P a1 b1 c1 →
+                    (∀a,a2,b,b2,c,c2. tri_star … R a1 b1 c1 a b c → R a b c a2 b2 c2 → P a b c → P a2 b2 c2) →
+                    ∀a2,b2,c2. tri_star … R a1 b1 c1 a2 b2 c2 → P a2 b2 c2.
+#A #B #C #R #a1 #b1 #c1 #P #H #IH #a2 #b2 #c2 *
+[ #H12 elim H12 -a2 -b2 -c2 /2 width=6/ -H /3 width=6/
+| * #H1 #H2 #H3 destruct //
+]
 qed-.
 
-lemma s_r_trans_TC1: ∀A,B,R,S. s_r_trans A B R S → s_rs_trans A B R S.
-#A #B #R #S #HRS #L2 #T1 #T2 #H elim H -T2 [ /3 width=3/ ]
-#T #T2 #_ #HT2 #IHT1 #L1 #HL12
-lapply (HRS … HT2 … HL12) -HRS -HT2 /3 width=3/
-qed-.
-
-lemma s_r_trans_TC2: ∀A,B,R,S. s_rs_trans A B R S → s_r_trans A B R (TC … S).
-#A #B #R #S #HRS #L2 #T1 #T2 #HT12 #L1 #H @(TC_ind_dx … L1 H) -L1 /2 width=3/ /3 width=3/
+lemma tri_star_ind_dx: ∀A,B,C,R,a2,b2,c2. ∀P:relation3 A B C. P a2 b2 c2 →
+                       (∀a1,a,b1,b,c1,c. R a1 b1 c1 a b c → tri_star … R a b c a2 b2 c2 → P a b c → P a1 b1 c1) →
+                       ∀a1,b1,c1. tri_star … R a1 b1 c1 a2 b2 c2 → P a1 b1 c1.
+#A #B #C #R #a2 #b2 #c2 #P #H #IH #a1 #b1 #c1 *
+[ #H12 @(tri_TC_ind_dx … a1 b1 c1 H12) -a1 -b1 -c1 /2 width=6/ -H /3 width=6/
+| * #H1 #H2 #H3 destruct //
+]
 qed-.

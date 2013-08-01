@@ -14,6 +14,6 @@
 
 (* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-notation "hvbox( L ⊢ 𝐍 break ⦃ term 46 T ⦄ )"
+notation "hvbox( ⦃G, L⦄ ⊢ 𝐍 break ⦃ term 46 T ⦄ )"
    non associative with precedence 45
    for @{ 'Normal $L $T }.

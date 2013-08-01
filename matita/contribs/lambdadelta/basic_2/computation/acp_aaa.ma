@@ -81,11 +81,11 @@ qed.
 
 (* Basic_1: was: sc3_arity *)
 lemma aacr_aaa: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
-                ∀L,T,A. L ⊢ T ⁝ A → ⦃L, T⦄ ϵ[RP] 〚A〛.
+                ∀L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ⦃L, T⦄ ϵ[RP] 〚A〛.
 /2 width=8/ qed.
 
 lemma acp_aaa: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λL,T. RP L T) →
-               ∀L,T,A. L ⊢ T ⁝ A → RP L T.
+               ∀L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → RP L T.
 #RR #RS #RP #H1RP #H2RP #L #T #A #HT
 lapply (aacr_acr … H1RP H2RP A) #HA
 @(s1 … HA) /2 width=4/
