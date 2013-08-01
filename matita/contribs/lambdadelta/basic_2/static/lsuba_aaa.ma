@@ -19,10 +19,11 @@ include "basic_2/static/lsuba_ldrop.ma".
 
 (* Properties concerning atomic arity assignment ****************************)
 
-lemma lsuba_aaa_conf: ∀L1,V,A. L1 ⊢ V ⁝ A → ∀L2. L1 ⁝⊑ L2 → L2 ⊢ V ⁝ A.
-#L1 #V #A #H elim H -L1 -V -A
+lemma lsuba_aaa_conf: ∀G,L1,V,A. ⦃G, L1⦄ ⊢ V ⁝ A →
+                      ∀L2. G ⊢ L1 ⁝⊑ L2 → ⦃G, L2⦄ ⊢ V ⁝ A.
+#G #L1 #V #A #H elim H -G -L1 -V -A
 [ //
-| #I #L1 #K1 #V #A #i #HLK1 #HV #IHV #L2 #HL12
+| #I #G #L1 #K1 #V #A #i #HLK1 #HV #IHV #L2 #HL12
   elim (lsuba_ldrop_O1_conf … HL12 … HLK1) -L1 #X #H #HLK2
   elim (lsuba_inv_pair1 … H) -H * #K2
   [ #HK12 #H destruct /3 width=5/
@@ -36,10 +37,11 @@ lemma lsuba_aaa_conf: ∀L1,V,A. L1 ⊢ V ⁝ A → ∀L2. L1 ⁝⊑ L2 → L2 �
 ]
 qed-.
 
-lemma lsuba_aaa_trans: ∀L2,V,A. L2 ⊢ V ⁝ A → ∀L1. L1 ⁝⊑ L2 → L1 ⊢ V ⁝ A.
-#L2 #V #A #H elim H -L2 -V -A
+lemma lsuba_aaa_trans: ∀G,L2,V,A. ⦃G, L2⦄ ⊢ V ⁝ A →
+                       ∀L1. G ⊢ L1 ⁝⊑ L2 → ⦃G, L1⦄ ⊢ V ⁝ A.
+#G #L2 #V #A #H elim H -G -L2 -V -A
 [ //
-| #I #L2 #K2 #V #A #i #HLK2 #H1V #IHV #L1 #HL12
+| #I #G #L2 #K2 #V #A #i #HLK2 #H1V #IHV #L1 #HL12
   elim (lsuba_ldrop_O1_trans … HL12 … HLK2) -L2 #X #H #HLK1
   elim (lsuba_inv_pair2 … H) -H * #K1
   [ #HK12 #H destruct /3 width=5/
