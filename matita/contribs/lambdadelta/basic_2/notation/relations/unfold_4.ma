@@ -14,6 +14,6 @@
 
 (* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-notation "hvbox( L1 ⊢ ⧫ * break term 46 T ≡ break term 46 L2 )"
+notation "hvbox( ⦃ term 46 G, break term 46 L1 ⦄ ⊢ ⧫ * break term 46 T ≡ break term 46 L2 )"
    non associative with precedence 45
-   for @{ 'Unfold $L1 $T $L2 }.
+   for @{ 'Unfold $G $L1 $T $L2 }.

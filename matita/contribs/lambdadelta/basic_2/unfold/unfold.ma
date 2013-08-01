@@ -12,22 +12,24 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/unfold_3.ma".
+include "basic_2/notation/relations/unfold_4.ma".
+include "basic_2/grammar/genv.ma". (**) (* disambiguation error *)
 include "basic_2/grammar/lenv_append.ma".
 include "basic_2/relocation/ldrop.ma".
 
 (* CONTEXT-SENSITIVE UNFOLD FOR TERMS ***************************************)
 
-inductive unfold: lenv → relation2 term lenv ≝
-| unfold_sort: ∀L,k. unfold L (⋆k) L
-| unfold_lref: ∀I,L1,L2,K1,K2,V,i. ⇩[0, i] L1 ≡ K1. ⓑ{I}V →
-               unfold K1 V K2 → ⇩[|L2|, i] L2 ≡ K2 →
-               unfold L1 (#i) (L1@@L2)
-| unfold_bind: ∀a,I,L1,L2,V,T.
-               unfold (L1.ⓑ{I}V) T L2 → unfold L1 (ⓑ{a,I}V.T) L2
-| unfold_flat: ∀I,L1,L2,V,T.
-               unfold L1 T L2 → unfold L1 (ⓕ{I}V.T) L2
+(* activate genv *)
+inductive unfold: relation4 genv lenv term lenv ≝
+| unfold_sort: ∀G,L,k. unfold G L (⋆k) L
+| unfold_lref: ∀I,G,L1,L2,K1,K2,V,i. ⇩[0, i] L1 ≡ K1. ⓑ{I}V →
+               unfold G K1 V K2 → ⇩[|L2|, i] L2 ≡ K2 →
+               unfold G L1 (#i) (L1@@L2)
+| unfold_bind: ∀a,I,G,L1,L2,V,T.
+               unfold G (L1.ⓑ{I}V) T L2 → unfold G L1 (ⓑ{a,I}V.T) L2
+| unfold_flat: ∀I,G,L1,L2,V,T.
+               unfold G L1 T L2 → unfold G L1 (ⓕ{I}V.T) L2
 .
 
 interpretation "context-sensitive unfold (term)"
-   'Unfold L1 T L2 = (unfold L1 T L2).
+   'Unfold G L1 T L2 = (unfold G L1 T L2).

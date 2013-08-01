@@ -19,20 +19,20 @@ include "basic_2/unfold/sstas.ma".
 
 (* Advanced forward lemmas **************************************************)
 
-lemma sstas_fwd_correct: ∀h,g,L,T1,U1,l1. ⦃G, L⦄ ⊢ T1 •[h, g] ⦃l1, U1⦄ →
+lemma sstas_fwd_correct: ∀h,g,G,L,T1,U1,l1. ⦃G, L⦄ ⊢ T1 •[h, g] ⦃l1, U1⦄ →
                          ∀T2. ⦃G, L⦄ ⊢ T1 •*[h, g] T2 →
                          ∃∃U2,l2. ⦃G, L⦄ ⊢ T2 •[h, g] ⦃l2, U2⦄.
-#h #g #L #T1 #U1 #l1 #HTU1 #T2 #H @(sstas_ind … H) -T2 [ /2 width=3/ ] -HTU1
+#h #g #G #L #T1 #U1 #l1 #HTU1 #T2 #H @(sstas_ind … H) -T2 [ /2 width=3/ ] -HTU1
 #T #T2 #l #_ #HT2 * #U #l0 #_ -l0
 elim (ssta_fwd_correct … HT2) -T /2 width=3/
 qed-.
 
 (* Properties on relocation *************************************************)
 
-lemma sstas_lift: ∀h,g,L1,T1,U1. ⦃h, L1⦄ ⊢ T1 •*[h, g] U1 →
+lemma sstas_lift: ∀h,g,G,L1,T1,U1. ⦃G, L1⦄ ⊢ T1 •*[h, g] U1 →
                   ∀L2,d,e. ⇩[d, e] L2 ≡ L1 → ∀T2. ⇧[d, e] T1 ≡ T2 →
-                  ∀U2. ⇧[d, e] U1 ≡ U2 → ⦃h, L2⦄ ⊢ T2 •*[h, g] U2.
-#h #g #L1 #T1 #U1 #H @(sstas_ind_dx … H) -T1
+                  ∀U2. ⇧[d, e] U1 ≡ U2 → ⦃G, L2⦄ ⊢ T2 •*[h, g] U2.
+#h #g #G #L1 #T1 #U1 #H @(sstas_ind_dx … H) -T1
 [ #L2 #d #e #HL21 #X #HX #U2 #HU12
   >(lift_mono … HX … HU12) -X //
 | #T0 #U0 #l0 #HTU0 #_ #IHU01 #L2 #d #e #HL21 #T2 #HT02 #U2 #HU12
@@ -42,10 +42,10 @@ qed.
 
 (* Inversion lemmas on relocation *******************************************)
 
-lemma sstas_inv_lift1: ∀h,g,L2,T2,U2. ⦃h, L2⦄ ⊢ T2 •*[h, g] U2 →
+lemma sstas_inv_lift1: ∀h,g,G,L2,T2,U2. ⦃G, L2⦄ ⊢ T2 •*[h, g] U2 →
                        ∀L1,d,e. ⇩[d, e] L2 ≡ L1 → ∀T1. ⇧[d, e] T1 ≡ T2 →
-                       ∃∃U1. ⦃h, L1⦄ ⊢ T1 •*[h, g] U1 & ⇧[d, e] U1 ≡ U2.
-#h #g #L2 #T2 #U2 #H @(sstas_ind_dx … H) -T2 /2 width=3/
+                       ∃∃U1. ⦃G, L1⦄ ⊢ T1 •*[h, g] U1 & ⇧[d, e] U1 ≡ U2.
+#h #g #G #L2 #T2 #U2 #H @(sstas_ind_dx … H) -T2 /2 width=3/
 #T0 #U0 #l0 #HTU0 #_ #IHU01 #L1 #d #e #HL21 #U1 #HU12
 elim (ssta_inv_lift1 … HTU0 … HL21 … HU12) -HTU0 -HU12 #U #HU1 #HU0
 elim (IHU01 … HL21 … HU0) -IHU01 -HL21 -U0 /3 width=4/
