@@ -20,8 +20,8 @@ include "basic_2/reduction/cnr.ma".
 (* Advanced inversion lemmas on context-sensitive reducible terms ***********)
 
 (* Note: this property is unusual *)
-lemma cnr_inv_crr: ∀L,T. ⦃G, L⦄ ⊢ 𝐑⦃T⦄ → ⦃G, L⦄ ⊢ 𝐍⦃T⦄ → ⊥.
-#L #T #H elim H -L -T
+lemma cnr_inv_crr: ∀G,L,T. ⦃G, L⦄ ⊢ 𝐑⦃T⦄ → ⦃G, L⦄ ⊢ 𝐍⦃T⦄ → ⊥.
+#G #L #T #H elim H -L -T
 [ #L #K #V #i #HLK #H
   elim (cnr_inv_delta … HLK H)
 | #L #V #T #_ #IHV #H

@@ -20,8 +20,8 @@ include "basic_2/reduction/cnx.ma".
 (* Advanced inversion lemmas on context-sensitive reducible terms ***********)
 
 (* Note: this property is unusual *)
-lemma cnx_inv_crx: ∀h,g,L,T. ⦃G, L⦄ ⊢ 𝐑[h, g]⦃T⦄ → ⦃G, L⦄ ⊢ 𝐍[h, g]⦃T⦄ → ⊥.
-#h #g #L #T #H elim H -L -T
+lemma cnx_inv_crx: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ 𝐑[h, g]⦃T⦄ → ⦃G, L⦄ ⊢ 𝐍[h, g]⦃T⦄ → ⊥.
+#h #g #G #L #T #H elim H -L -T
 [ #L #k #l #Hkl #H
   lapply (cnx_inv_sort … H) -H #H
   lapply (deg_mono … H Hkl) -h -L -k <plus_n_Sm #H destruct 

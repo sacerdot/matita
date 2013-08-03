@@ -19,9 +19,9 @@ include "basic_2/reduction/crx.ma".
 
 (* Properties on relocation *************************************************)
 
-lemma crx_lift: ∀h,g,K,T. ⦃h, K⦄ ⊢ 𝐑[h, g]⦃T⦄ → ∀L,d,e. ⇩[d, e] L ≡ K →
+lemma crx_lift: ∀h,g,G,K,T. ⦃G, K⦄ ⊢ 𝐑[h, g]⦃T⦄ → ∀L,d,e. ⇩[d, e] L ≡ K →
                 ∀U. ⇧[d, e] T ≡ U → ⦃G, L⦄ ⊢ 𝐑[h, g]⦃U⦄.
-#h #g #K #T #H elim H -K -T
+#h #g #G #K #T #H elim H -K -T
 [ #K #k #l #Hkl #L #d #e #_ #X #H
   >(lift_inv_sort1 … H) -X /2 width=2/
 | #I #K #K0 #V #i #HK0 #L #d #e #HLK #X #H
@@ -48,9 +48,9 @@ lemma crx_lift: ∀h,g,K,T. ⦃h, K⦄ ⊢ 𝐑[h, g]⦃T⦄ → ∀L,d,e. ⇩[d
 ]
 qed.
 
-lemma crx_inv_lift: ∀h,g,L,U. ⦃G, L⦄ ⊢ 𝐑[h, g]⦃U⦄ → ∀K,d,e. ⇩[d, e] L ≡ K →
-                    ∀T. ⇧[d, e] T ≡ U → ⦃h, K⦄ ⊢ 𝐑[h, g]⦃T⦄.
-#h #g #L #U #H elim H -L -U
+lemma crx_inv_lift: ∀h,g,G,L,U. ⦃G, L⦄ ⊢ 𝐑[h, g]⦃U⦄ → ∀K,d,e. ⇩[d, e] L ≡ K →
+                    ∀T. ⇧[d, e] T ≡ U → ⦃G, K⦄ ⊢ 𝐑[h, g]⦃T⦄.
+#h #g #G #L #U #H elim H -L -U
 [ #L #k #l #Hkl #K #d #e #_ #X #H
   >(lift_inv_sort2 … H) -X /2 width=2/
 | #I #L #L0 #W #i #HK0 #K #d #e #HLK #X #H

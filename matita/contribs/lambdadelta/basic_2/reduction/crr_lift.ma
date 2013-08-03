@@ -19,9 +19,9 @@ include "basic_2/reduction/crr.ma".
 
 (* Properties on relocation *************************************************)
 
-lemma crr_lift: ∀K,T. K ⊢ 𝐑⦃T⦄ → ∀L,d,e. ⇩[d, e] L ≡ K →
+lemma crr_lift: ∀G,K,T. ⦃G, K⦄ ⊢ 𝐑⦃T⦄ → ∀L,d,e. ⇩[d, e] L ≡ K →
                 ∀U. ⇧[d, e] T ≡ U → ⦃G, L⦄ ⊢ 𝐑⦃U⦄.
-#K #T #H elim H -K -T
+#G #K #T #H elim H -K -T
 [ #K #K0 #V #i #HK0 #L #d #e #HLK #X #H
   elim (lift_inv_lref1 … H) -H * #Hid #H destruct
   [ elim (ldrop_trans_lt … HLK … HK0) -K // /2 width=4/
@@ -46,9 +46,9 @@ lemma crr_lift: ∀K,T. K ⊢ 𝐑⦃T⦄ → ∀L,d,e. ⇩[d, e] L ≡ K →
 ]
 qed.
 
-lemma crr_inv_lift: ∀L,U. ⦃G, L⦄ ⊢ 𝐑⦃U⦄ → ∀K,d,e. ⇩[d, e] L ≡ K →
-                    ∀T. ⇧[d, e] T ≡ U → K ⊢ 𝐑⦃T⦄.
-#L #U #H elim H -L -U
+lemma crr_inv_lift: ∀G,L,U. ⦃G, L⦄ ⊢ 𝐑⦃U⦄ → ∀K,d,e. ⇩[d, e] L ≡ K →
+                    ∀T. ⇧[d, e] T ≡ U → ⦃G, K⦄ ⊢ 𝐑⦃T⦄.
+#G #L #U #H elim H -L -U
 [ #L #L0 #W #i #HK0 #K #d #e #HLK #X #H
   elim (lift_inv_lref2 … H) -H * #Hid #H destruct
   [ elim (ldrop_conf_lt … HLK … HK0) -L // /2 width=4/
@@ -71,4 +71,4 @@ lemma crr_inv_lift: ∀L,U. ⦃G, L⦄ ⊢ 𝐑⦃U⦄ → ∀K,d,e. ⇩[d, e] L
   elim (lift_inv_flat2 … H) -H #V #X0 #_ #H0 #H destruct
   elim (lift_inv_bind2 … H0) -H0 #V0 #T #_ #_ #H0 destruct /2 width=1/
 ]
-qed.
+qed-.

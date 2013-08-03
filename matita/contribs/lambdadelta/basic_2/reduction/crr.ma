@@ -12,7 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/reducible_2.ma".
+include "basic_2/notation/relations/reducible_3.ma".
+include "basic_2/grammar/genv.ma".
 include "basic_2/relocation/ldrop.ma".
 
 (* CONTEXT-SENSITIVE REDUCIBLE TERMS ****************************************)
@@ -25,26 +26,27 @@ definition ri2: predicate item2 ≝
 definition ib2: relation2 bool bind2 ≝
                 λa,I. I = Abst ∨ Bind2 a I = Bind2 false Abbr.
 
+(* activate genv *)
 (* reducible terms *)
-inductive crr: lenv → predicate term ≝
-| crr_delta  : ∀L,K,V,i. ⇩[0, i] L ≡ K.ⓓV → crr L (#i)
-| crr_appl_sn: ∀L,V,T. crr L V → crr L (ⓐV.T)
-| crr_appl_dx: ∀L,V,T. crr L T → crr L (ⓐV.T)
-| crr_ri2    : ∀I,L,V,T. ri2 I → crr L (②{I}V.T)
-| crr_ib2_sn : ∀a,I,L,V,T. ib2 a I → crr L V → crr L (ⓑ{a,I}V.T)
-| crr_ib2_dx : ∀a,I,L,V,T. ib2 a I → crr (L.ⓑ{I}V) T → crr L (ⓑ{a,I}V.T)
-| crr_beta   : ∀a,L,V,W,T. crr L (ⓐV. ⓛ{a}W.T)
-| crr_theta  : ∀a,L,V,W,T. crr L (ⓐV. ⓓ{a}W.T)
+inductive crr (G:genv): relation2 lenv term ≝
+| crr_delta  : ∀L,K,V,i. ⇩[0, i] L ≡ K.ⓓV → crr G L (#i)
+| crr_appl_sn: ∀L,V,T. crr G L V → crr G L (ⓐV.T)
+| crr_appl_dx: ∀L,V,T. crr G L T → crr G L (ⓐV.T)
+| crr_ri2    : ∀I,L,V,T. ri2 I → crr G L (②{I}V.T)
+| crr_ib2_sn : ∀a,I,L,V,T. ib2 a I → crr G L V → crr G L (ⓑ{a,I}V.T)
+| crr_ib2_dx : ∀a,I,L,V,T. ib2 a I → crr G (L.ⓑ{I}V) T → crr G L (ⓑ{a,I}V.T)
+| crr_beta   : ∀a,L,V,W,T. crr G L (ⓐV.ⓛ{a}W.T)
+| crr_theta  : ∀a,L,V,W,T. crr G L (ⓐV.ⓓ{a}W.T)
 .
 
 interpretation
    "context-sensitive reducibility (term)"
-   'Reducible L T = (crr L T).
+   'Reducible G L T = (crr G L T).
 
 (* Basic inversion lemmas ***************************************************)
 
-fact crr_inv_sort_aux: ∀L,T,k. ⦃G, L⦄ ⊢ 𝐑⦃T⦄ → T = ⋆k → ⊥.
-#L #T #k0 * -L -T
+fact crr_inv_sort_aux: ∀G,L,T,k. ⦃G, L⦄ ⊢ 𝐑⦃T⦄ → T = ⋆k → ⊥.
+#G #L #T #k0 * -L -T
 [ #L #K #V #i #HLK #H destruct
 | #L #V #T #_ #H destruct
 | #L #V #T #_ #H destruct
@@ -56,11 +58,12 @@ fact crr_inv_sort_aux: ∀L,T,k. ⦃G, L⦄ ⊢ 𝐑⦃T⦄ → T = ⋆k → ⊥
 ]
 qed-.
 
-lemma crr_inv_sort: ∀L,k. ⦃G, L⦄ ⊢ 𝐑⦃⋆k⦄ → ⊥.
-/2 width=5 by crr_inv_sort_aux/ qed-.
+lemma crr_inv_sort: ∀G,L,k. ⦃G, L⦄ ⊢ 𝐑⦃⋆k⦄ → ⊥.
+/2 width=6 by crr_inv_sort_aux/ qed-.
 
-fact crr_inv_lref_aux: ∀L,T,i. ⦃G, L⦄ ⊢ 𝐑⦃T⦄ → T = #i → ∃∃K,V. ⇩[0, i] L ≡ K.ⓓV.
-#L #T #j * -L -T
+fact crr_inv_lref_aux: ∀G,L,T,i. ⦃G, L⦄ ⊢ 𝐑⦃T⦄ → T = #i →
+                       ∃∃K,V. ⇩[0, i] L ≡ K.ⓓV.
+#G #L #T #j * -L -T
 [ #L #K #V #i #HLK #H destruct /2 width=3/
 | #L #V #T #_ #H destruct
 | #L #V #T #_ #H destruct
@@ -72,11 +75,11 @@ fact crr_inv_lref_aux: ∀L,T,i. ⦃G, L⦄ ⊢ 𝐑⦃T⦄ → T = #i → ∃�
 ]
 qed-.
 
-lemma crr_inv_lref: ∀L,i. ⦃G, L⦄ ⊢ 𝐑⦃#i⦄ → ∃∃K,V. ⇩[0, i] L ≡ K.ⓓV.
-/2 width=3 by crr_inv_lref_aux/ qed-.
+lemma crr_inv_lref: ∀G,L,i. ⦃G, L⦄ ⊢ 𝐑⦃#i⦄ → ∃∃K,V. ⇩[0, i] L ≡ K.ⓓV.
+/2 width=4 by crr_inv_lref_aux/ qed-.
 
-fact crr_inv_gref_aux: ∀L,T,p. ⦃G, L⦄ ⊢ 𝐑⦃T⦄ → T = §p → ⊥.
-#L #T #q * -L -T
+fact crr_inv_gref_aux: ∀G,L,T,p. ⦃G, L⦄ ⊢ 𝐑⦃T⦄ → T = §p → ⊥.
+#G #L #T #q * -L -T
 [ #L #K #V #i #HLK #H destruct
 | #L #V #T #_ #H destruct
 | #L #V #T #_ #H destruct
@@ -88,11 +91,11 @@ fact crr_inv_gref_aux: ∀L,T,p. ⦃G, L⦄ ⊢ 𝐑⦃T⦄ → T = §p → ⊥.
 ]
 qed-.
 
-lemma crr_inv_gref: ∀L,p. ⦃G, L⦄ ⊢ 𝐑⦃§p⦄ → ⊥.
-/2 width=5 by crr_inv_gref_aux/ qed-.
+lemma crr_inv_gref: ∀G,L,p. ⦃G, L⦄ ⊢ 𝐑⦃§p⦄ → ⊥.
+/2 width=6 by crr_inv_gref_aux/ qed-.
 
-lemma trr_inv_atom: ∀I. ⋆ ⊢ 𝐑⦃⓪{I}⦄ → ⊥.
-* #i #H
+lemma trr_inv_atom: ∀G,I. ⦃G, ⋆⦄ ⊢ 𝐑⦃⓪{I}⦄ → ⊥.
+#G * #i #H
 [ elim (crr_inv_sort … H)
 | elim (crr_inv_lref … H) -H #L #V #H
   elim (ldrop_inv_atom1 … H) -H #H destruct
@@ -100,9 +103,9 @@ lemma trr_inv_atom: ∀I. ⋆ ⊢ 𝐑⦃⓪{I}⦄ → ⊥.
 ]
 qed-.
 
-fact crr_inv_ib2_aux: ∀a,I,L,W,U,T. ib2 a I → ⦃G, L⦄ ⊢ 𝐑⦃T⦄ → T = ⓑ{a,I}W.U →
-                      ⦃G, L⦄ ⊢ 𝐑⦃W⦄ ∨ L.ⓑ{I}W ⊢ 𝐑⦃U⦄.
-#b #J #L #W0 #U #T #HI * -L -T
+fact crr_inv_ib2_aux: ∀a,I,G,L,W,U,T. ib2 a I → ⦃G, L⦄ ⊢ 𝐑⦃T⦄ → T = ⓑ{a,I}W.U →
+                      ⦃G, L⦄ ⊢ 𝐑⦃W⦄ ∨ ⦃G, L.ⓑ{I}W⦄ ⊢ 𝐑⦃U⦄.
+#G #b #J #L #W0 #U #T #HI * -L -T
 [ #L #K #V #i #_ #H destruct
 | #L #V #T #_ #H destruct
 | #L #V #T #_ #H destruct
@@ -116,13 +119,13 @@ fact crr_inv_ib2_aux: ∀a,I,L,W,U,T. ib2 a I → ⦃G, L⦄ ⊢ 𝐑⦃T⦄ →
 ]
 qed-.
 
-lemma crr_inv_ib2: ∀a,I,L,W,T. ib2 a I → ⦃G, L⦄ ⊢ 𝐑⦃ⓑ{a,I}W.T⦄ →
-                   ⦃G, L⦄ ⊢ 𝐑⦃W⦄ ∨ L.ⓑ{I}W ⊢ 𝐑⦃T⦄.
+lemma crr_inv_ib2: ∀a,I,G,L,W,T. ib2 a I → ⦃G, L⦄ ⊢ 𝐑⦃ⓑ{a,I}W.T⦄ →
+                   ⦃G, L⦄ ⊢ 𝐑⦃W⦄ ∨ ⦃G, L.ⓑ{I}W⦄ ⊢ 𝐑⦃T⦄.
 /2 width=5 by crr_inv_ib2_aux/ qed-.
 
-fact crr_inv_appl_aux: ∀L,W,U,T. ⦃G, L⦄ ⊢ 𝐑⦃T⦄ → T = ⓐW.U →
+fact crr_inv_appl_aux: ∀G,L,W,U,T. ⦃G, L⦄ ⊢ 𝐑⦃T⦄ → T = ⓐW.U →
                        ∨∨ ⦃G, L⦄ ⊢ 𝐑⦃W⦄ | ⦃G, L⦄ ⊢ 𝐑⦃U⦄ | (𝐒⦃U⦄ → ⊥).
-#L #W0 #U #T * -L -T
+#G #L #W0 #U #T * -L -T
 [ #L #K #V #i #_ #H destruct
 | #L #V #T #HV #H destruct /2 width=1/
 | #L #V #T #HT #H destruct /2 width=1/
@@ -137,5 +140,6 @@ fact crr_inv_appl_aux: ∀L,W,U,T. ⦃G, L⦄ ⊢ 𝐑⦃T⦄ → T = ⓐW.U →
 ]
 qed-.
 
-lemma crr_inv_appl: ∀L,V,T. ⦃G, L⦄ ⊢ 𝐑⦃ⓐV.T⦄ → ∨∨ ⦃G, L⦄ ⊢ 𝐑⦃V⦄ | ⦃G, L⦄ ⊢ 𝐑⦃T⦄ | (𝐒⦃T⦄ → ⊥).
+lemma crr_inv_appl: ∀G,L,V,T. ⦃G, L⦄ ⊢ 𝐑⦃ⓐV.T⦄ →
+                              ∨∨ ⦃G, L⦄ ⊢ 𝐑⦃V⦄ | ⦃G, L⦄ ⊢ 𝐑⦃T⦄ | (𝐒⦃T⦄ → ⊥).
 /2 width=3 by crr_inv_appl_aux/ qed-.

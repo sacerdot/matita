@@ -115,37 +115,37 @@ table {
    class "water"
    [ { "reduction" * } {
         [ { "context-sensitive extended normal forms" * } {
-             [ "cnx ( ⦃?,?⦄ ⊢ 𝐍[?]⦃?⦄ )" "cnx_lift" + "cnx_crx" + "cnx_cix" * ]
+             [ "cnx ( ⦃?,?⦄ ⊢ 𝐍[?,?]⦃?⦄ )" "cnx_lift" + "cnx_crx" + "cnx_cix" * ]
           }
         ]
         [ { "context-sensitive extended reduction" * } {
-             [ "lpx ( ⦃?,?⦄ ⊢ ➡[?] ? )" "lpx_ldrop" + "lpx_aaa" * ]
-             [ "cpx ( ⦃?,?⦄ ⊢ ? ➡[?] ? )" "cpx_lift" + "cpx_cix" * ]
+             [ "lpx ( ⦃?,?⦄ ⊢ ➡[?,?] ? )" "lpx_ldrop" + "lpx_aaa" * ]
+             [ "cpx ( ⦃?,?⦄ ⊢ ? ➡[?,?] ? )" "cpx_lift" + "cpx_cix" * ]
           }
         ]
         [ { "context-sensitive extended irreducible forms" * } {
-             [ "cix ( ⦃?,?⦄ ⊢ 𝐈[?]⦃?⦄ )" "cix_append" + "cix_lift" * ]
+             [ "cix ( ⦃?,?⦄ ⊢ 𝐈[?,?]⦃?⦄ )" "cix_append" + "cix_lift" * ]
           }
         ]
         [ { "context-sensitive extended reducible forms" * } {
-             [ "crx ( ⦃?,?⦄ ⊢ 𝐑[?]⦃?⦄ )" "crx_append" + "crx_lift" * ]
+             [ "crx ( ⦃?,?⦄ ⊢ 𝐑[?,?]⦃?⦄ )" "crx_append" + "crx_lift" * ]
           }
         ]
         [ { "context-sensitive normal forms" * } {
-             [ "cnr ( ? ⊢ 𝐍⦃?⦄ )" "cnr_lift" + "cnr_crr" + "cnr_cir" * ]
+             [ "cnr ( ⦃?,?⦄ ⊢ 𝐍⦃?⦄ )" "cnr_lift" + "cnr_crr" + "cnr_cir" * ]
           }
         ]
         [ { "context-sensitive reduction" * } {
-             [ "lpr ( ? ⊢ ➡ ? )" "lpr_ldrop" + "lpr_lpr" * ]
-             [ "cpr ( ? ⊢ ? ➡ ? )" "cpr_lift" + "cpr_cir" * ]
+             [ "lpr ( ⦃?,?⦄ ⊢ ➡ ? )" "lpr_ldrop" + "lpr_lpr" * ]
+             [ "cpr ( ⦃?,?⦄ ⊢ ? ➡ ? )" "cpr_lift" + "cpr_cir" * ]
           }
         ]
         [ { "context-sensitive irreducible forms" * } {
-             [ "cir ( ? ⊢ 𝐈⦃?⦄ )" "cir_append" + "cir_lift" * ]
+             [ "cir ( ⦃?,?⦄ ⊢ 𝐈⦃?⦄ )" "cir_append" + "cir_lift" * ]
           }
         ]
         [ { "context-sensitive reducible forms" * } {
-             [ "crr ( ? ⊢ 𝐑⦃?⦄ )" "crr_append" + "crr_lift" * ]
+             [ "crr ( ⦃?,?⦄ ⊢ 𝐑⦃?⦄ )" "crr_append" + "crr_lift" * ]
           }
         ]
      }

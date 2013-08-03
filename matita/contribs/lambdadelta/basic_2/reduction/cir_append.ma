@@ -19,16 +19,16 @@ include "basic_2/reduction/cir.ma".
 
 (* Advanved properties ******************************************************)
 
-lemma cir_labst_last: ∀L,T,W. ⦃G, L⦄ ⊢ 𝐈⦃T⦄  → ⋆.ⓛW @@ ⦃G, L⦄ ⊢ 𝐈⦃T⦄.
+lemma cir_labst_last: ∀G,L,T,W. ⦃G, L⦄ ⊢ 𝐈⦃T⦄  → ⦃G, ⋆.ⓛW @@ L⦄ ⊢ 𝐈⦃T⦄.
 /3 width=2 by crr_inv_labst_last/ qed.
 
-lemma cir_tif: ∀T,W. ⋆ ⊢ 𝐈⦃T⦄ → ⋆.ⓛW ⊢ 𝐈⦃T⦄.
+lemma cir_tif: ∀G,T,W. ⦃G, ⋆⦄ ⊢ 𝐈⦃T⦄ → ⦃G, ⋆.ⓛW⦄ ⊢ 𝐈⦃T⦄.
 /3 width=2 by crr_inv_trr/ qed.
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma cir_inv_append_sn: ∀L,K,T. K @@ ⦃G, L⦄ ⊢ 𝐈⦃T⦄  → ⦃G, L⦄ ⊢ 𝐈⦃T⦄.
+lemma cir_inv_append_sn: ∀G,L,K,T. ⦃G, K @@ L⦄ ⊢ 𝐈⦃T⦄  → ⦃G, L⦄ ⊢ 𝐈⦃T⦄.
 /3 width=1/ qed-.
 
-lemma cir_inv_tir: ∀T,W. ⋆.ⓛW ⊢ 𝐈⦃T⦄  → ⋆ ⊢ 𝐈⦃T⦄.
+lemma cir_inv_tir: ∀G,T,W. ⦃G, ⋆.ⓛW⦄ ⊢ 𝐈⦃T⦄  → ⦃G, ⋆⦄ ⊢ 𝐈⦃T⦄.
 /3 width=1/ qed-.

@@ -19,8 +19,8 @@ include "basic_2/reduction/cix.ma".
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma cix_inv_append_sn: ∀h,g,L,K,T. ⦃h, K @@ L⦄ ⊢ 𝐈[h, g]⦃T⦄  → ⦃G, L⦄ ⊢ 𝐈[h, g]⦃T⦄.
+lemma cix_inv_append_sn: ∀h,g,G,L,K,T. ⦃G, K @@ L⦄ ⊢ 𝐈[h, g]⦃T⦄  → ⦃G, L⦄ ⊢ 𝐈[h, g]⦃T⦄.
 /3 width=1/ qed-.
 
-lemma cix_inv_tix: ∀h,g,L,T. ⦃G, L⦄ ⊢ 𝐈[h, g]⦃T⦄  → ⦃h, ⋆⦄ ⊢ 𝐈[h, g]⦃T⦄.
+lemma cix_inv_tix: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ 𝐈[h, g]⦃T⦄  → ⦃G, ⋆⦄ ⊢ 𝐈[h, g]⦃T⦄.
 /3 width=1/ qed-.

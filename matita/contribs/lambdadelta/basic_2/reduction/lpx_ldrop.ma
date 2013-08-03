@@ -20,11 +20,11 @@ include "basic_2/reduction/lpx.ma".
 
 (* Properies on local environment slicing ***********************************)
 
-lemma lpx_ldrop_conf: ∀h,g. dropable_sn (lpx h g).
+lemma lpx_ldrop_conf: ∀h,g,G. dropable_sn (lpx h g G).
 /3 width=5 by lpx_sn_deliftable_dropable, cpx_inv_lift1/ qed-.
 
-lemma ldrop_lpx_trans: ∀h,g. dedropable_sn (lpx h g).
+lemma ldrop_lpx_trans: ∀h,g,G. dedropable_sn (lpx h g G).
 /3 width=9 by lpx_sn_liftable_dedropable, cpx_lift/ qed-.
 
-lemma lpx_ldrop_trans_O1: ∀h,g. dropable_dx (lpx h g).
+lemma lpx_ldrop_trans_O1: ∀h,g,G. dropable_dx (lpx h g G).
 /2 width=3 by lpx_sn_dropable/ qed-.
