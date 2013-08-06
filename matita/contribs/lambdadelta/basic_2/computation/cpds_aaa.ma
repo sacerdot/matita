@@ -20,6 +20,6 @@ include "basic_2/computation/cpds.ma".
 
 (* Properties on atomic arity assignment for terms **************************)
 
-lemma cpds_aaa: ∀h,g,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ∀U. ⦃G, L⦄ ⊢ T •*➡*[h, g] U → ⦃G, L⦄ ⊢ U ⁝ A.
-#h #g #L #T #A #HT #U * /3 width=5 by sstas_aaa, aaa_cprs_conf/
+lemma cpds_aaa: ∀h,g,G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ∀U. ⦃G, L⦄ ⊢ T •*➡*[h, g] U → ⦃G, L⦄ ⊢ U ⁝ A.
+#h #g #G #L #T #A #HT #U * /3 width=5 by sstas_aaa, aaa_cprs_conf/
 qed.

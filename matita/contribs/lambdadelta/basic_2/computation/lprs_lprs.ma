@@ -19,13 +19,13 @@ include "basic_2/computation/lprs.ma".
 
 (* Advanced properties ******************************************************)
 
-lemma lprs_strip: confluent2 … lprs lpr.
+lemma lprs_strip: ∀G. confluent2 … (lprs G) (lpr G).
 /3 width=3 by TC_strip1, lpr_conf/ qed-.
 
 (* Main properties **********************************************************)
 
-theorem lprs_conf: confluent2 … lprs lprs.
+theorem lprs_conf: ∀G. confluent2 … (lprs G) (lprs G).
 /3 width=3 by TC_confluent2, lpr_conf/ qed-.
 
-theorem lprs_trans: Transitive … lprs.
+theorem lprs_trans: ∀G. Transitive … (lprs G).
 /2 width=3/ qed-.

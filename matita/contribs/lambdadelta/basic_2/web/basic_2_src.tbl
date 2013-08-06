@@ -76,38 +76,38 @@ table {
    class "cyan"
    [ { "computation" * } {
         [ { "context-sensitive extended evaluation" * } {
-             [ "cpxe ( ⦃?,?⦄ ⊢ ➡*[?] 𝐍⦃?⦄ )" * ]
+             [ "cpxe ( ⦃?,?⦄ ⊢ ➡*[?,?] 𝐍⦃?⦄ )" * ]
           }
         ]
         [ { "context-sensitive evaluation" * } {
-             [ "cpre ( ? ⊢ ➡* 𝐍⦃?⦄ )" "cpre_cpre" * ]
+             [ "cpre ( ⦃?,?⦄ ⊢ ➡* 𝐍⦃?⦄ )" "cpre_cpre" * ]
           }
         ]
         [ { "strongly normalizing computation" * } {
-             [ "csn_vector ( ? ⊢ ⬊* ? )" "csn_tstc_vector" + "csn_aaa" * ]
-             [ "csn ( ? ⊢ ⬊* ? )" "csn_alt ( ? ⊢ ⬊⬊* ? )" "csn_lift" + "csn_lpx" * ]
+             [ "csn_vector ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csn_tstc_vector" + "csn_aaa" * ]
+             [ "csn ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csn_alt ( ⦃?,?⦄ ⊢ ⬊⬊*[?,?] ? )" "csn_lift" + "csn_lpx" * ]
           }
         ]
         [ { "decomposed extended computation" * } {
-             [ "dxprs ( ⦃?,?⦄ ⊢ ? •*➡*[?] ? )" "dxprs_lift" + "dxprs_aaa" + "dxprs_dxprs" * ]
+             [ "dxprs ( ⦃?,?⦄ ⊢ ? •*➡*[?,?] ? )" "dxprs_lift" + "dxprs_aaa" + "dxprs_dxprs" * ]
           }
         ]
         [ { "context-sensitive extended computation" * } {
-             [ "lpxs ( ⦃?,?⦄ ⊢ ➡*[?] ? )" "lpxs_alt ( ⦃?,?⦄ ⊢ ➡➡*[?] ? )" "lpxs_ldrop" + "lpxs_aaa" + "lpxs_cpxs" + "lpxs_lpxs" * ]
-             [ "cpxs ( ⦃?,?⦄ ⊢ ? ➡*[?] ? )" "cpxs_tstc" + "cpxs_tstc_vector" + "cpxs_lift" + "cpxs_aaa" + "cpxs_cpxs" * ]
+             [ "lpxs ( ⦃?,?⦄ ⊢ ➡*[?,?] ? )" "lpxs_alt ( ⦃?,?⦄ ⊢ ➡➡*[?,?] ? )" "lpxs_ldrop" + "lpxs_aaa" + "lpxs_cpxs" + "lpxs_lpxs" * ]
+             [ "cpxs ( ⦃?,?⦄ ⊢ ? ➡*[?,?] ? )" "cpxs_tstc" + "cpxs_tstc_vector" + "cpxs_lift" + "cpxs_aaa" + "cpxs_cpxs" * ]
           }
         ]
         [ { "context-sensitive computation" * } {
-             [ "lprs ( ? ⊢ ➡* ? )" "lprs_alt ( ? ⊢ ➡➡* ? )" "lprs_ldrop" + "lprs_cprs" + "lprs_lprs" * ]
-             [ "cprs ( ? ⊢ ? ➡* ?)" "cprs_lift" + "cprs_cprs" * ]
+             [ "lprs ( ⦃?,?⦄ ⊢ ➡* ? )" "lprs_alt ( ⦃?,?⦄ ⊢ ➡➡* ? )" "lprs_ldrop" + "lprs_cprs" + "lprs_lprs" * ]
+             [ "cprs ( ⦃?,?⦄ ⊢ ? ➡* ?)" "cprs_lift" + "cprs_cprs" * ]
           }
         ]
         [ { "local env. ref. for abstract candidates of reducibility" * } {
-             [ "lsubc ( ? ⊑[?] ? )" "lsubc_ldrop" + "lsubc_ldrops" + "lsubc_lsuba" * ]
+             [ "lsubc ( ? ⊢ ? ⊑[?] ? )" "lsubc_ldrop" + "lsubc_ldrops" + "lsubc_lsuba" * ]
           }
         ]
         [ { "support for abstract computation properties" * } {
-             [ "acp" "acp_cr ( ⦃?,?⦄ ϵ[?] 〚?〛 )" "acp_aaa" * ]
+             [ "acp" "acp_cr ( ⦃?,?,?⦄ ϵ[?] 〚?〛 )" "acp_aaa" * ]
           }
         ]
      }

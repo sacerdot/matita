@@ -14,6 +14,6 @@
 
 (* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-notation "hvbox( T1 ⊑ break [ term 46 R ] break term 46 T2 )"
+notation "hvbox( ⦃ term 46 G, break term 46 L ⦄ ⊢ break term 46 T1 ➡ * break 𝐍 ⦃ term 46 T2 ⦄ )"
    non associative with precedence 45
-   for @{ 'LRSubEq $R $T1 $T2 }.
+   for @{ 'PEval $G $L $T1 $T2 }.

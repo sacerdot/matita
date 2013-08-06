@@ -12,25 +12,25 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/peval_3.ma".
+include "basic_2/notation/relations/peval_4.ma".
 include "basic_2/computation/cprs.ma".
 include "basic_2/computation/csn.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL EVALUATION ON TERMS **************************)
 
-definition cpre: lenv → relation term ≝
-                 λL,T1,T2. ⦃G, L⦄ ⊢ T1 ➡* T2 ∧ ⦃G, L⦄ ⊢ 𝐍⦃T2⦄.
+definition cpre: relation4 genv lenv term term ≝
+                 λG,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡* T2 ∧ ⦃G, L⦄ ⊢ 𝐍⦃T2⦄.
 
 interpretation "context-sensitive parallel evaluation (term)"
-   'PEval L T1 T2 = (cpre L T1 T2).
+   'PEval G L T1 T2 = (cpre G L T1 T2).
 
 (* Basic_properties *********************************************************)
 
 (* Basic_1: was just: nf2_sn3 *)
-lemma csn_cpre: ∀h,g,L,T1. ⦃G, L⦄ ⊢ ⬊*[h, g] T1 → ∃T2. ⦃G, L⦄ ⊢ T1 ➡* 𝐍⦃T2⦄.
-#h #g #L #T1 #H @(csn_ind … H) -T1
+lemma csn_cpre: ∀h,g,G,L,T1. ⦃G, L⦄ ⊢ ⬊*[h, g] T1 → ∃T2. ⦃G, L⦄ ⊢ T1 ➡* 𝐍⦃T2⦄.
+#h #g #G #L #T1 #H @(csn_ind … H) -T1
 #T1 #_ #IHT1
-elim (cnr_dec L T1) /3 width=3/
+elim (cnr_dec G L T1) /3 width=3/
 * #T #H1T1 #H2T1
 elim (IHT1 … H2T1) -IHT1 -H2T1 [2: /2 width=2/ ] #T2 * /4 width=3/
 qed.

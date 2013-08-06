@@ -17,24 +17,24 @@ include "basic_2/computation/csn.ma".
 
 (* CONTEXT-SENSITIVE EXTENDED STRONGLY NORMALIZING TERM VECTORS *************)
 
-definition csnv: ∀h. sd h → lenv → predicate (list term) ≝
-                 λh,g,L. all … (csn h g L).
+definition csnv: ∀h. sd h → relation3 genv lenv (list term) ≝
+                 λh,g,G,L. all … (csn h g G L).
 
 interpretation
    "context-sensitive strong normalization (term vector)"
-   'SN h g L Ts = (csnv h g L Ts).
+   'SN h g G L Ts = (csnv h g G L Ts).
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma csnv_inv_cons: ∀h,g,L,T,Ts. ⦃G, L⦄ ⊢ ⬊*[h, g] T @ Ts →
+lemma csnv_inv_cons: ∀h,g,G,L,T,Ts. ⦃G, L⦄ ⊢ ⬊*[h, g] T @ Ts →
                      ⦃G, L⦄ ⊢ ⬊*[h, g] T ∧ ⦃G, L⦄ ⊢ ⬊*[h, g] Ts.
 normalize // qed-.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma csn_fwd_applv: ∀h,g,L,T,Vs. ⦃G, L⦄ ⊢ ⬊*[h, g] Ⓐ Vs.T →
+lemma csn_fwd_applv: ∀h,g,G,L,T,Vs. ⦃G, L⦄ ⊢ ⬊*[h, g] Ⓐ Vs.T →
                      ⦃G, L⦄ ⊢ ⬊*[h, g] Vs ∧ ⦃G, L⦄ ⊢ ⬊*[h, g] T.
-#h #g #L #T #Vs elim Vs -Vs /2 width=1/
+#h #g #G #L #T #Vs elim Vs -Vs /2 width=1/
 #V #Vs #IHVs #HVs
 lapply (csn_fwd_pair_sn … HVs) #HV
 lapply (csn_fwd_flat_dx … HVs) -HVs #HVs

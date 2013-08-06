@@ -12,30 +12,31 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/grammar/genv.ma".
 include "basic_2/substitution/ldrops.ma".
 
 (* ABSTRACT COMPUTATION PROPERTIES ******************************************)
 
-definition CP1 ≝ λRR:lenv→relation term. λRS:relation term.
-                 ∀L. ∃k. NF … (RR L) RS (⋆k).
+definition CP1 ≝ λRR:relation4 genv lenv term term. λRS:relation term.
+                 ∀G,L. ∃k. NF … (RR G L) RS (⋆k).
 
-definition CP2 ≝ λRR:lenv→relation term. λRS:relation term.
-                 ∀L0,L,T,T0,d,e. NF … (RR L) RS T →
-                 ⇩[d, e] L0 ≡ L → ⇧[d, e] T ≡ T0 → NF … (RR L0) RS T0.
+definition CP2 ≝ λRR:relation4 genv lenv term term. λRS:relation term.
+                 ∀G,L0,L,T,T0,d,e. NF … (RR G L) RS T →
+                 ⇩[d, e] L0 ≡ L → ⇧[d, e] T ≡ T0 → NF … (RR G L0) RS T0.
 
-definition CP2s ≝ λRR:lenv→relation term. λRS:relation term.
-                  ∀L0,L,des. ⇩*[des] L0 ≡ L →
+definition CP2s ≝ λRR:relation4 genv lenv term term. λRS:relation term.
+                  ∀G,L0,L,des. ⇩*[des] L0 ≡ L →
                   ∀T,T0. ⇧*[des] T ≡ T0 →
-                  NF … (RR L) RS T → NF … (RR L0) RS T0.
+                  NF … (RR G L) RS T → NF … (RR G L0) RS T0.
 
-definition CP3 ≝ λRP:lenv→predicate term.
-                 ∀L,T,k. RP L (ⓐ⋆k.T) → RP L T.
+definition CP3 ≝ λRP:relation3 genv lenv term.
+                 ∀G,L,T,k. RP G L (ⓐ⋆k.T) → RP G L T.
 
-definition CP4 ≝ λRP:lenv→predicate term.
-                 ∀L,W,T. RP L W → RP L T → RP L (ⓝW.T).
+definition CP4 ≝ λRP:relation3 genv lenv term.
+                 ∀G,L,W,T. RP G L W → RP G L T → RP G L (ⓝW.T).
 
 (* requirements for abstract computation properties *)
-record acp (RR:lenv->relation term) (RS:relation term) (RP:lenv→predicate term) : Prop ≝
+record acp (RR:relation4 genv lenv term term) (RS:relation term) (RP:relation3 genv lenv term) : Prop ≝
 { cp1: CP1 RR RS;
   cp2: CP2 RR RS;
   cp3: CP3 RP;
@@ -46,7 +47,7 @@ record acp (RR:lenv->relation term) (RS:relation term) (RP:lenv→predicate term
 
 (* Basic_1: was: nf2_lift1 *)
 lemma acp_lifts: ∀RR,RS. CP2 RR RS → CP2s RR RS.
-#RR #RS #HRR #L1 #L2 #des #H elim H -L1 -L2 -des
+#RR #RS #HRR #G #L1 #L2 #des #H elim H -L1 -L2 -des
 [ #L #T1 #T2 #H #HT1
   <(lifts_inv_nil … H) -H //
 | #L1 #L #L2 #des #d #e #_ #HL2 #IHL #T2 #T1 #H #HLT2
