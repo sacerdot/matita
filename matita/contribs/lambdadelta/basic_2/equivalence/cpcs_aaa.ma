@@ -19,10 +19,10 @@ include "basic_2/equivalence/cpcs_cpcs.ma".
 
 (* Main properties about atomic arity assignment on terms *******************)
 
-theorem aaa_cpcs_mono: ∀L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬌* T2 →
+theorem aaa_cpcs_mono: ∀G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬌* T2 →
                        ∀A1. ⦃G, L⦄ ⊢ T1 ⁝ A1 → ∀A2. ⦃G, L⦄ ⊢ T2 ⁝ A2 →
                        A1 = A2.
-#L #T1 #T2 #HT12 #A1 #HA1 #A2 #HA2
+#G #L #T1 #T2 #HT12 #A1 #HA1 #A2 #HA2
 elim (cpcs_inv_cprs … HT12) -HT12 #T #HT1 #HT2
 lapply (aaa_cprs_conf … HA1 … HT1) -T1 #HA1
 lapply (aaa_cprs_conf … HA2 … HT2) -T2 #HA2

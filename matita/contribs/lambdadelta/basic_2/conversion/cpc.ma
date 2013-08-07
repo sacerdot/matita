@@ -12,29 +12,29 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/pconv_3.ma".
+include "basic_2/notation/relations/pconv_4.ma".
 include "basic_2/reduction/cpr.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL CONVERSION ON TERMS ***************************)
 
-definition cpc: lenv → relation term ≝
-   λL,T1,T2. ⦃G, L⦄ ⊢ T1 ➡ T2 ∨ ⦃G, L⦄ ⊢ T2 ➡ T1.
+definition cpc: relation4 genv lenv term term ≝
+                λG,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡ T2 ∨ ⦃G, L⦄ ⊢ T2 ➡ T1.
 
 interpretation
    "context-sensitive parallel conversion (term)"
-   'PConv L T1 T2 = (cpc L T1 T2).
+   'PConv G L T1 T2 = (cpc G L T1 T2).
 
 (* Basic properties *********************************************************)
 
-lemma cpc_refl: ∀L. reflexive … (cpc L).
+lemma cpc_refl: ∀G,L. reflexive … (cpc G L).
 /2 width=1/ qed.
 
-lemma cpc_sym: ∀L. symmetric … (cpc L).
-#L #T1 #T2 * /2 width=1/
+lemma cpc_sym: ∀G,L. symmetric … (cpc L G).
+#G #L #T1 #T2 * /2 width=1/
 qed.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma cpc_fwd_cpr: ∀L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬌ T2 → ∃∃T. ⦃G, L⦄ ⊢ T1 ➡ T & ⦃G, L⦄ ⊢ T2 ➡ T.
-#L #T1 #T2 * /2 width=3/
-qed.
+lemma cpc_fwd_cpr: ∀G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬌ T2 → ∃∃T. ⦃G, L⦄ ⊢ T1 ➡ T & ⦃G, L⦄ ⊢ T2 ➡ T.
+#G #L #T1 #T2 * /2 width=3/
+qed-.

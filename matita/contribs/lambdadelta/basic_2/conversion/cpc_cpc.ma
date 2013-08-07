@@ -18,6 +18,6 @@ include "basic_2/conversion/cpc.ma".
 
 (* Main properties **********************************************************)
 
-theorem cpc_conf: ∀L,T0,T1,T2. ⦃G, L⦄ ⊢ T0 ⬌ T1 → ⦃G, L⦄ ⊢ T0 ⬌ T2 →
+theorem cpc_conf: ∀G,L,T0,T1,T2. ⦃G, L⦄ ⊢ T0 ⬌ T1 → ⦃G, L⦄ ⊢ T0 ⬌ T2 →
                   ∃∃T. ⦃G, L⦄ ⊢ T1 ⬌ T & ⦃G, L⦄ ⊢ T2 ⬌ T.
-/3 width=3/ qed.
+/3 width=3/ qed-.

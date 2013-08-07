@@ -12,73 +12,74 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/pconvstar_3.ma".
+include "basic_2/notation/relations/pconvstar_4.ma".
 include "basic_2/conversion/cpc.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL EQUIVALENCE ON TERMS **************************)
 
-definition cpcs: lenv → relation term ≝ LTC … cpc.
+definition cpcs: relation4 genv lenv term term ≝
+           λG. LTC … (cpc G).
 
 interpretation "context-sensitive parallel equivalence (term)"
-   'PConvStar L T1 T2 = (cpcs L T1 T2).
+   'PConvStar G L T1 T2 = (cpcs G L T1 T2).
 
 (* Basic eliminators ********************************************************)
 
-lemma cpcs_ind: ∀L,T1. ∀R:predicate term. R T1 →
+lemma cpcs_ind: ∀G,L,T1. ∀R:predicate term. R T1 →
                 (∀T,T2. ⦃G, L⦄ ⊢ T1 ⬌* T → ⦃G, L⦄ ⊢ T ⬌ T2 → R T → R T2) →
                 ∀T2. ⦃G, L⦄ ⊢ T1 ⬌* T2 → R T2.
-#L #T1 #R #HT1 #IHT1 #T2 #HT12 @(TC_star_ind … HT1 IHT1 … HT12) //
+#G #L #T1 #R #HT1 #IHT1 #T2 #HT12 @(TC_star_ind … HT1 IHT1 … HT12) //
 qed-.
 
-lemma cpcs_ind_dx: ∀L,T2. ∀R:predicate term. R T2 →
+lemma cpcs_ind_dx: ∀G,L,T2. ∀R:predicate term. R T2 →
                    (∀T1,T. ⦃G, L⦄ ⊢ T1 ⬌ T → ⦃G, L⦄ ⊢ T ⬌* T2 → R T → R T1) →
                    ∀T1. ⦃G, L⦄ ⊢ T1 ⬌* T2 → R T1.
-#L #T2 #R #HT2 #IHT2 #T1 #HT12
+#G #L #T2 #R #HT2 #IHT2 #T1 #HT12
 @(TC_star_ind_dx … HT2 IHT2 … HT12) //
 qed-.
 
 (* Basic properties *********************************************************)
 
 (* Basic_1: was: pc3_refl *)
-lemma cpcs_refl: ∀L. reflexive … (cpcs L).
+lemma cpcs_refl: ∀G,L. reflexive … (cpcs G L).
 /2 width=1/ qed.
 
 (* Basic_1: was: pc3_s *)
-lemma cpcs_sym: ∀L. symmetric … (cpcs L).
-#L @TC_symmetric // qed.
+lemma cpcs_sym: ∀G,L. symmetric … (cpcs G L).
+#G #L @TC_symmetric // qed.
 
-lemma cpc_cpcs: ∀L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬌ T2 → ⦃G, L⦄ ⊢ T2 ⬌* T2.
+lemma cpc_cpcs: ∀G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬌ T2 → ⦃G, L⦄ ⊢ T2 ⬌* T2.
 /2 width=1/ qed.
 
-lemma cpcs_strap1: ∀L,T1,T,T2. ⦃G, L⦄ ⊢ T1 ⬌* T → ⦃G, L⦄ ⊢ T ⬌ T2 → ⦃G, L⦄ ⊢ T1 ⬌* T2.
-#L @step qed.
+lemma cpcs_strap1: ∀G,L,T1,T,T2. ⦃G, L⦄ ⊢ T1 ⬌* T → ⦃G, L⦄ ⊢ T ⬌ T2 → ⦃G, L⦄ ⊢ T1 ⬌* T2.
+#G #L @step qed.
 
-lemma cpcs_strap2: ∀L,T1,T,T2. ⦃G, L⦄ ⊢ T1 ⬌ T → ⦃G, L⦄ ⊢ T ⬌* T2 → ⦃G, L⦄ ⊢ T1 ⬌* T2.
-#L @TC_strap qed.
+lemma cpcs_strap2: ∀G,L,T1,T,T2. ⦃G, L⦄ ⊢ T1 ⬌ T → ⦃G, L⦄ ⊢ T ⬌* T2 → ⦃G, L⦄ ⊢ T1 ⬌* T2.
+#G #L @TC_strap qed.
 
 (* Basic_1: was: pc3_pr2_r *)
-lemma cpr_cpcs_dx: ∀L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡ T2 → ⦃G, L⦄ ⊢ T1 ⬌* T2.
+lemma cpr_cpcs_dx: ∀G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡ T2 → ⦃G, L⦄ ⊢ T1 ⬌* T2.
 /3 width=1/ qed.
 
 (* Basic_1: was: pc3_pr2_x *)
-lemma cpr_cpcs_sn: ∀L,T1,T2. ⦃G, L⦄ ⊢ T2 ➡ T1 → ⦃G, L⦄ ⊢ T1 ⬌* T2.
+lemma cpr_cpcs_sn: ∀G,L,T1,T2. ⦃G, L⦄ ⊢ T2 ➡ T1 → ⦃G, L⦄ ⊢ T1 ⬌* T2.
 /3 width=1/ qed.
 
-lemma cpcs_cpr_strap1: ∀L,T1,T. ⦃G, L⦄ ⊢ T1 ⬌* T → ∀T2. ⦃G, L⦄ ⊢ T ➡ T2 → ⦃G, L⦄ ⊢ T1 ⬌* T2.
+lemma cpcs_cpr_strap1: ∀G,L,T1,T. ⦃G, L⦄ ⊢ T1 ⬌* T → ∀T2. ⦃G, L⦄ ⊢ T ➡ T2 → ⦃G, L⦄ ⊢ T1 ⬌* T2.
 /3 width=3/ qed.
 
 (* Basic_1: was: pc3_pr2_u *)
-lemma cpcs_cpr_strap2: ∀L,T1,T. ⦃G, L⦄ ⊢ T1 ➡ T → ∀T2. ⦃G, L⦄ ⊢ T ⬌* T2 → ⦃G, L⦄ ⊢ T1 ⬌* T2.
+lemma cpcs_cpr_strap2: ∀G,L,T1,T. ⦃G, L⦄ ⊢ T1 ➡ T → ∀T2. ⦃G, L⦄ ⊢ T ⬌* T2 → ⦃G, L⦄ ⊢ T1 ⬌* T2.
 /3 width=3/ qed.
 
-lemma cpcs_cpr_div: ∀L,T1,T. ⦃G, L⦄ ⊢ T1 ⬌* T → ∀T2. ⦃G, L⦄ ⊢ T2 ➡ T → ⦃G, L⦄ ⊢ T1 ⬌* T2.
+lemma cpcs_cpr_div: ∀G,L,T1,T. ⦃G, L⦄ ⊢ T1 ⬌* T → ∀T2. ⦃G, L⦄ ⊢ T2 ➡ T → ⦃G, L⦄ ⊢ T1 ⬌* T2.
 /3 width=3/ qed.
 
-lemma cpr_div: ∀L,T1,T. ⦃G, L⦄ ⊢ T1 ➡ T → ∀T2. ⦃G, L⦄ ⊢ T2 ➡ T → ⦃G, L⦄ ⊢ T1 ⬌* T2.
+lemma cpr_div: ∀G,L,T1,T. ⦃G, L⦄ ⊢ T1 ➡ T → ∀T2. ⦃G, L⦄ ⊢ T2 ➡ T → ⦃G, L⦄ ⊢ T1 ⬌* T2.
 /3 width=3/ qed-.
 
 (* Basic_1: was: pc3_pr2_u2 *)
-lemma cpcs_cpr_conf: ∀L,T1,T. ⦃G, L⦄ ⊢ T ➡ T1 → ∀T2. ⦃G, L⦄ ⊢ T ⬌* T2 → ⦃G, L⦄ ⊢ T1 ⬌* T2.
+lemma cpcs_cpr_conf: ∀G,L,T1,T. ⦃G, L⦄ ⊢ T ➡ T1 → ∀T2. ⦃G, L⦄ ⊢ T ⬌* T2 → ⦃G, L⦄ ⊢ T1 ⬌* T2.
 /3 width=3/ qed.
 
 (* Basic_1: removed theorems 9:
