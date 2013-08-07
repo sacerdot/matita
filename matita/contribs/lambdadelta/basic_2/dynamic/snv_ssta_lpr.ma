@@ -20,21 +20,21 @@ include "basic_2/dynamic/lsubsv_ssta.ma".
 
 (* Properties on sn parallel reduction for local environments ***************)
 
-fact ssta_cpr_lpr_aux: ∀h,g,L0,T0.
-                       (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[h, g] ⦃L1, T1⦄ → IH_snv_ssta h g L1 T1) →
-                       (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[h, g] ⦃L1, T1⦄ → IH_snv_cpr_lpr h g L1 T1) →
-                       (∀L1,T1. h ⊢ ⦃L0, T0⦄ >[h, g] ⦃L1, T1⦄ → IH_ssta_cpr_lpr h g L1 T1) →
-                       ∀L1,T1. L0 = L1 → T0 = T1 → IH_ssta_cpr_lpr h g L1 T1.
-#h #g #L0 #T0 #IH3 #IH2 #IH1 #L1 * * [|||| *]
-[ #k #_ #_ #_ #X2 #l #H2 #X3 #H3 #L2 #HL12 -IH3 -IH2 -IH1
+fact ssta_cpr_lpr_aux: ∀h,g,G0,L0,T0.
+                       (∀G1,L1,T1. ⦃G0, L0, T0⦄ >[h, g] ⦃G1, L1, T1⦄ → IH_snv_ssta h g G1 L1 T1) →
+                       (∀G1,L1,T1. ⦃G0, L0, T0⦄ >[h, g] ⦃G1, L1, T1⦄ → IH_snv_cpr_lpr h g G1 L1 T1) →
+                       (∀G1,L1,T1. ⦃G0, L0, T0⦄ >[h, g] ⦃G1, L1, T1⦄ → IH_ssta_cpr_lpr h g G1 L1 T1) →
+                       ∀G1,L1,T1. G0 = G1 → L0 = L1 → T0 = T1 → IH_ssta_cpr_lpr h g G1 L1 T1.
+#h #g #G0 #L0 #T0 #IH3 #IH2 #IH1 #G1 #L1 * * [|||| *]
+[ #k #_ #_ #_ #_ #X2 #l #H2 #X3 #H3 #L2 #HL12 -IH3 -IH2 -IH1
   elim (ssta_inv_sort1 … H2) -H2 #Hkl #H destruct
   >(cpr_inv_sort1 … H3) -X3 /4 width=6/
-| #i #HL0 #HT0 #H1 #X2 #l #H2 #X3 #H3 #L2 #HL12 destruct -IH3 -IH2
+| #i #HG0 #HL0 #HT0 #H1 #X2 #l #H2 #X3 #H3 #L2 #HL12 destruct -IH3 -IH2
   elim (snv_inv_lref … H1) -H1 #I0 #K0 #V0 #H #HV1
   elim (ssta_inv_lref1 … H2) -H2 * #K1
   #V1 #W1 [| #l0 ] #HLK1 #HVW1 #HWU1 [| #H destruct ]
   lapply (ldrop_mono … H … HLK1) -H #H destruct
-  lapply (fsupp_lref … HLK1) #HKV1
+  lapply (fsupp_lref … G1 … HLK1) #HKV1
   elim (lpr_ldrop_conf … HLK1 … HL12) -HL12 #X #H #HLK2
   elim (lpr_inv_pair1 … H) -H #K2 #V2 #HK12 #HV12 #H destruct
   lapply (ldrop_fwd_ldrop2 … HLK2) #H2
@@ -55,9 +55,9 @@ fact ssta_cpr_lpr_aux: ∀h,g,L0,T0.
     lapply (ssta_lift … HVW2 … H2 … HW0 … HWU2) -HVW2 -HW0
     lapply (cpcs_lift … H2 … HWU1 … HWU2 HW12) -H2 -W1 /3 width=6/
   ]
-| #p #_ #HT0 #H1 destruct -IH3 -IH2 -IH1
+| #p #_ #_ #HT0 #H1 destruct -IH3 -IH2 -IH1
   elim (snv_inv_gref … H1)
-| #a #I #V1 #T1 #HL0 #HT0 #H1 #X2 #l #H2 #X3 #H3 #L2 #HL12 destruct -IH3 -IH2
+| #a #I #V1 #T1 #HG0 #HL0 #HT0 #H1 #X2 #l #H2 #X3 #H3 #L2 #HL12 destruct -IH3 -IH2
   elim (snv_inv_bind … H1) -H1 #_ #HT1
   elim (ssta_inv_bind1 … H2) -H2 #U1 #HTU1 #H destruct
   elim (cpr_inv_bind1 … H3) -H3 *
@@ -70,7 +70,7 @@ fact ssta_cpr_lpr_aux: ∀h,g,L0,T0.
     lapply (cpcs_bind1 true … V1 V1 … HU12) // -HU12 #HU12
     lapply (cpcs_cpr_strap1 … HU12 U ?) -HU12 /2 width=3/
   ]
-| #V1 #T1 #HL0 #HT0 #H1 #X2 #l #H2 #X3 #H3 #L2 #HL12 destruct
+| #V1 #T1 #HG0 #HL0 #HT0 #H1 #X2 #l #H2 #X3 #H3 #L2 #HL12 destruct
   elim (snv_inv_appl … H1) -H1 #a #W1 #W10 #U10 #l0 #HV1 #HT1 #HVW1 #HW10 #HTU10
   elim (ssta_inv_appl1 … H2) -H2 #U1 #HTU1 #H destruct
   elim (cpr_inv_appl1 … H3) -H3 *
@@ -87,7 +87,7 @@ fact ssta_cpr_lpr_aux: ∀h,g,L0,T0.
     lapply (IH3 … HVW1) -IH3 // [ /2 width=1/ ] #HW1
     elim (ssta_cpcs_lpr_aux … IH2 IH1 … HWX1 … HWV22 … L1) -HWX1 //
     [2: /2 width=1/
-    |3: /4 width=4 by ygt_yprs_trans, fsupp_ygt, sstas_yprs, ssta_sstas/
+    |3: /4 width=5 by ygt_yprs_trans, fsupp_ygt, sstas_yprs, ssta_sstas/
     ] #H #_ destruct -X1
     lapply (IH2 … HV1 … HV12 … HL12) [ /2 width=1/ ] #HV2    
     lapply (IH2 … HW2 … HW20 … HL12) [ /2 width=1/ ] -IH2 #H2W20
@@ -117,7 +117,7 @@ fact ssta_cpr_lpr_aux: ∀h,g,L0,T0.
     lapply (cpcs_flat … HV10 … HU02 Appl) -HV10 -HU02 #HU02
     lapply (cpcs_cpr_strap1 … HU02 (ⓓ{b}W2.ⓐV2.U2) ?) [ /2 width=3/ ] -V0 /4 width=3/
   ]
-| #U0 #T1 #HL0 #HT0 #H1 #X2 #l #H2 #X3 #H3 #L2 #HL12 destruct -IH3 -IH2
+| #U0 #T1 #HG0 #HL0 #HT0 #H1 #X2 #l #H2 #X3 #H3 #L2 #HL12 destruct -IH3 -IH2
   elim (snv_inv_cast … H1) -H1 #T0 #l0 #_ #HT1 #HT10 #_
   lapply (ssta_inv_cast1 … H2) -H2 #HTU1
   elim (ssta_mono … HT10 … HTU1) -HT10 #H1 #H2 destruct

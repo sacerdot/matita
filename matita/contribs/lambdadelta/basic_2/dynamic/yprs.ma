@@ -12,71 +12,71 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/btpredstar_6.ma".
+include "basic_2/notation/relations/btpredstar_8.ma".
 include "basic_2/substitution/fsupp.ma".
 include "basic_2/computation/lprs.ma".
 include "basic_2/dynamic/ypr.ma".
 
 (* "BIG TREE" PARALLEL COMPUTATION FOR CLOSURES *****************************)
 
-definition yprs: ∀h. sd h → bi_relation lenv term ≝
-                 λh,g. bi_TC … (ypr h g).
+definition yprs: ∀h. sd h → tri_relation genv lenv term ≝
+                 λh,g. tri_TC … (ypr h g).
 
 interpretation "'big tree' parallel computation (closure)"
-   'BTPRedStar h g L1 T1 L2 T2 = (yprs h g L1 T1 L2 T2).
+   'BTPRedStar h g G1 L1 T1 G2 L2 T2 = (yprs h g G1 L1 T1 G2 L2 T2).
 
 (* Basic eliminators ********************************************************)
 
-lemma yprs_ind: ∀h,g,L1,T1. ∀R:relation2 lenv term. R L1 T1 →
-                (∀L,L2,T,T2. h ⊢ ⦃L1, T1⦄ ≥[h, g] ⦃L, T⦄ → h ⊢ ⦃L, T⦄ ≽[h, g] ⦃L2, T2⦄ → R L T → R L2 T2) →
-                ∀L2,T2. h ⊢ ⦃L1, T1⦄ ≥[h, g] ⦃L2, T2⦄ → R L2 T2.
-/3 width=7 by bi_TC_star_ind/ qed-.
+lemma yprs_ind: ∀h,g,G1,L1,T1. ∀R:relation3 genv lenv term. R G1 L1 T1 →
+                (∀L,G2,G,L2,T,T2. ⦃G1, L1, T1⦄ ≥[h, g] ⦃G, L, T⦄ → ⦃G, L, T⦄ ≽[h, g] ⦃G2, L2, T2⦄ → R G L T → R G2 L2 T2) →
+                ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄ → R G2 L2 T2.
+/3 width=8 by tri_TC_star_ind/ qed-.
 
-lemma yprs_ind_dx: ∀h,g,L2,T2. ∀R:relation2 lenv term. R L2 T2 →
-                   (∀L1,L,T1,T. h ⊢ ⦃L1, T1⦄ ≽[h, g] ⦃L, T⦄ → h ⊢ ⦃L, T⦄ ≥[h, g] ⦃L2, T2⦄ → R L T → R L1 T1) →
-                   ∀L1,T1. h ⊢ ⦃L1, T1⦄ ≥[h, g] ⦃L2, T2⦄ → R L1 T1.
-/3 width=7 by bi_TC_star_ind_dx/ qed-.
+lemma yprs_ind_dx: ∀h,g,G2,L2,T2. ∀R:relation3 genv lenv term. R G2 L2 T2 →
+                   (∀G1,G,L1,L,T1,T. ⦃G1, L1, T1⦄ ≽[h, g] ⦃G, L, T⦄ → ⦃G, L, T⦄ ≥[h, g] ⦃G2, L2, T2⦄ → R G L T → R G1 L1 T1) →
+                   ∀G1,L1,T1. ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄ → R G1 L1 T1.
+/3 width=8 by tri_TC_star_ind_dx/ qed-.
 
 (* Basic properties *********************************************************)
 
-lemma yprs_refl: ∀h,g. bi_reflexive … (yprs h g).
+lemma yprs_refl: ∀h,g. tri_reflexive … (yprs h g).
 /2 width=1/ qed.
 
-lemma ypr_yprs: ∀h,g,L1,L2,T1,T2. h ⊢ ⦃L1, T1⦄ ≽[h, g] ⦃L2, T2⦄ →
-                h ⊢ ⦃L1, T1⦄ ≥[h, g] ⦃L2, T2⦄.
+lemma ypr_yprs: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≽[h, g] ⦃G2, L2, T2⦄ →
+                ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
 /2 width=1/ qed.
 
-lemma yprs_strap1: ∀h,g,L1,L,L2,T1,T,T2. h ⊢ ⦃L1, T1⦄ ≥[h, g] ⦃L, T⦄ →
-                   h ⊢ ⦃L, T⦄ ≽[h, g] ⦃L2, T2⦄ → h ⊢ ⦃L1, T1⦄ ≥[h, g] ⦃L2, T2⦄.
-/2 width=4/ qed-.
+lemma yprs_strap1: ∀h,g,G1,G,G2,L1,L,L2,T1,T,T2. ⦃G1, L1, T1⦄ ≥[h, g] ⦃G, L, T⦄ →
+                   ⦃G, L, T⦄ ≽[h, g] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
+/2 width=5/ qed-.
 
-lemma yprs_strap2: ∀h,g,L1,L,L2,T1,T,T2. h ⊢ ⦃L1, T1⦄ ≽[h, g] ⦃L, T⦄ →
-                   h ⊢ ⦃L, T⦄ ≥[h, g] ⦃L2, T2⦄ → h ⊢ ⦃L1, T1⦄ ≥[h, g] ⦃L2, T2⦄.
-/2 width=4/ qed-.
+lemma yprs_strap2: ∀h,g,G1,G,G2,L1,L,L2,T1,T,T2. ⦃G1, L1, T1⦄ ≽[h, g] ⦃G, L, T⦄ →
+                   ⦃G, L, T⦄ ≥[h, g] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
+/2 width=5/ qed-.
 
 (* Note: this is a general property of bi_TC *)
-lemma fsupp_yprs: ∀h,g,L1,L2,T1,T2. ⦃L1, T1⦄ ⊃+ ⦃L2, T2⦄ →
-                  h ⊢ ⦃L1, T1⦄ ≥[h, g] ⦃L2, T2⦄.
-#h #g #L1 #L2 #T1 #T2 #H @(fsupp_ind … L2 T2 H) -L2 -T2 /3 width=1/ /3 width=4/
+lemma fsupp_yprs: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃+ ⦃G2, L2, T2⦄ →
+                  ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
+#h #g #G1 #G2 #L1 #L2 #T1 #T2 #H @(fsupp_ind … L2 T2 H) -G2 -L2 -T2 /3 width=1/ /3 width=5/
 qed.
 
-lemma cprs_yprs: ∀h,g,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡* T2 → h ⊢ ⦃L, T1⦄ ≥[h, g] ⦃L, T2⦄.
-#h #g #L #T1 #T2 #H @(cprs_ind … H) -T2 // /3 width=4 by ypr_cpr, yprs_strap1/
+lemma cprs_yprs: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡* T2 → ⦃G, L, T1⦄ ≥[h, g] ⦃G, L, T2⦄.
+#h #g #G #L #T1 #T2 #H @(cprs_ind … H) -T2 // /3 width=5 by ypr_cpr, yprs_strap1/
 qed.
 
-lemma lprs_yprs: ∀h,g,L1,L2,T. L1 ⊢ ➡* L2 → h ⊢ ⦃L1, T⦄ ≥[h, g] ⦃L2, T⦄.
-#h #g #L1 #L2 #T #H @(lprs_ind … H) -L2 // /3 width=4 by ypr_lpr, yprs_strap1/
+lemma lprs_yprs: ∀h,g,G,L1,L2,T. ⦃G, L1⦄ ⊢ ➡* L2 → ⦃G, L1, T⦄ ≥[h, g] ⦃G, L2, T⦄.
+#h #g #G #L1 #L2 #T #H @(lprs_ind … H) -L2 // /3 width=5 by ypr_lpr, yprs_strap1/
 qed.
 
-lemma sstas_yprs: ∀h,g,L,T1,T2. ⦃G, L⦄ ⊢ T1 •*[h, g] T2 →
-                  h ⊢ ⦃L, T1⦄ ≥[h, g] ⦃L, T2⦄.
-#h #g #L #T1 #T2 #H @(sstas_ind … H) -T2 // /3 width=4 by ypr_ssta, yprs_strap1/
+lemma sstas_yprs: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 •*[h, g] T2 →
+                  ⦃G, L, T1⦄ ≥[h, g] ⦃G, L, T2⦄.
+#h #g #G #L #T1 #T2 #H @(sstas_ind … H) -T2 // /3 width=5 by ypr_ssta, yprs_strap1/
 qed.
 
-lemma lsubsv_yprs: ∀h,g,L1,L2,T. h ⊢ L2 ¡⊑[h, g] L1 → h ⊢ ⦃L1, T⦄ ≥[h, g] ⦃L2, T⦄.
+lemma lsubsv_yprs: ∀h,g,G,L1,L2,T. G ⊢ L2 ¡⊑[h, g] L1 → ⦃G, L1, T⦄ ≥[h, g] ⦃G, L2, T⦄.
 /3 width=1/ qed.
 
-lemma cprs_lpr_yprs: ∀h,g,L1,L2,T1,T2. L1 ⊢ T1 ➡* T2 → L1 ⊢ ➡ L2 →
-                     h ⊢ ⦃L1, T1⦄ ≥[h, g] ⦃L2, T2⦄.
-/3 width=4 by yprs_strap1, ypr_lpr, cprs_yprs/
+lemma cprs_lpr_yprs: ∀h,g,G,L1,L2,T1,T2. ⦃G, L1⦄ ⊢ T1 ➡* T2 → ⦃G, L1⦄ ⊢ ➡ L2 →
+                     ⦃G, L1, T1⦄ ≥[h, g] ⦃G, L2, T2⦄.
+/3 width=5 by yprs_strap1, ypr_lpr, cprs_yprs/
 qed.

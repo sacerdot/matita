@@ -18,5 +18,5 @@ include "basic_2/dynamic/ygt.ma".
 
 (* Main properties **********************************************************)
 
-theorem ygt_trans: ∀h,g. bi_transitive … (ygt h g).
-/3 width=4 by ygt_fwd_yprs, ygt_yprs_trans/ qed-.
+theorem ygt_trans: ∀h,g. tri_transitive … (ygt h g).
+/3 width=5 by ygt_fwd_yprs, ygt_yprs_trans/ qed-.

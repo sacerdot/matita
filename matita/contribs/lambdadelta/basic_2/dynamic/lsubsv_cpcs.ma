@@ -19,7 +19,7 @@ include "basic_2/dynamic/lsubsv.ma".
 
 (* Properties on context-sensitive parallel equivalence for terms ***********)
 
-lemma lsubsv_cpcs_trans: ∀h,g,L1,L2. h ⊢ L1 ¡⊑[h, g] L2 →
-                         ∀T1,T2. L2 ⊢ T1 ⬌* T2 → L1 ⊢ T1 ⬌* T2.
-/3 width=5 by lsubsv_fwd_lsubr, lsubr_cpcs_trans/
+lemma lsubsv_cpcs_trans: ∀h,g,G,L1,L2. G ⊢ L1 ¡⊑[h, g] L2 →
+                         ∀T1,T2. ⦃G, L2⦄ ⊢ T1 ⬌* T2 → ⦃G, L1⦄ ⊢ T1 ⬌* T2.
+/3 width=6 by lsubsv_fwd_lsubr, lsubr_cpcs_trans/
 qed-.

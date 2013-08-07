@@ -16,5 +16,5 @@ include "basic_2/dynamic/yprs.ma".
 
 (* "BIG TREE" PARALLEL COMPUTATION FOR CLOSURES *****************************)
 
-theorem yprs_trans: ∀h,g. bi_transitive … (yprs h g).
-/2 width=4/ qed-.
+theorem yprs_trans: ∀h,g. tri_transitive … (yprs h g).
+/2 width=5/ qed-.
