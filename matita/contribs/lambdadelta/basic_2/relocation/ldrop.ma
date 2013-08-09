@@ -20,7 +20,7 @@ include "basic_2/relocation/lift.ma".
 (* LOCAL ENVIRONMENT SLICING ************************************************)
 
 (* Basic_1: includes: drop_skip_bind *)
-inductive ldrop: nat → nat → relation lenv ≝
+inductive ldrop: relation4 nat nat lenv lenv ≝
 | ldrop_atom : ∀d. ldrop d 0 (⋆) (⋆)
 | ldrop_pair : ∀L,I,V. ldrop 0 0 (L. ⓑ{I} V) (L. ⓑ{I} V)
 | ldrop_ldrop: ∀L1,L2,I,V,e. ldrop 0 e L1 L2 → ldrop 0 (e + 1) (L1. ⓑ{I} V) L2

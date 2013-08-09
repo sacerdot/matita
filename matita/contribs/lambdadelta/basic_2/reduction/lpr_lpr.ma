@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reduction/lpr_ldrop.ma". (**) (* disambiguation error *)
 include "basic_2/grammar/lpx_sn_lpx_sn.ma".
 include "basic_2/substitution/fsupp.ma".
+include "basic_2/reduction/lpr_ldrop.ma".
 
 (* SN PARALLEL REDUCTION FOR LOCAL ENVIRONMENTS *****************************)
 

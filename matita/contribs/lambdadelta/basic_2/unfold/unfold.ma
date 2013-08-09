@@ -13,8 +13,8 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/unfold_4.ma".
-include "basic_2/grammar/genv.ma". (**) (* disambiguation error *)
 include "basic_2/grammar/lenv_append.ma".
+include "basic_2/grammar/genv.ma".
 include "basic_2/relocation/ldrop.ma".
 
 (* CONTEXT-SENSITIVE UNFOLD FOR TERMS ***************************************)

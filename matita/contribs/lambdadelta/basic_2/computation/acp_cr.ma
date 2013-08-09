@@ -14,7 +14,6 @@
 
 include "basic_2/notation/relations/ineint_5.ma".
 include "basic_2/grammar/aarity.ma".
-include "basic_2/grammar/genv.ma". (**) (* not needed, disambiguation error *)
 include "basic_2/substitution/gr2_gr2.ma". 
 include "basic_2/substitution/lifts_lift_vector.ma".
 include "basic_2/substitution/ldrops_ldrop.ma".

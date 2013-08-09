@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/reduction/lpx_ldrop.ma".
 include "basic_2/computation/cpxs_lift.ma".
-include "basic_2/reduction/lpx_ldrop.ma". (**) (* disambiguation error *)
 
 (* CONTEXT-SENSITIVE EXTENDED PARALLEL COMPUTATION ON TERMS *****************)
 

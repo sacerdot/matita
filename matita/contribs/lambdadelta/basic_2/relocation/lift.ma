@@ -21,7 +21,7 @@ include "basic_2/grammar/term_simple.ma".
 (* Basic_1: includes:
             lift_sort lift_lref_lt lift_lref_ge lift_bind lift_flat
 *)
-inductive lift: nat → nat → relation term ≝
+inductive lift: relation4 nat nat term term ≝
 | lift_sort   : ∀k,d,e. lift d e (⋆k) (⋆k)
 | lift_lref_lt: ∀i,d,e. i < d → lift d e (#i) (#i)
 | lift_lref_ge: ∀i,d,e. d ≤ i → lift d e (#i) (#(i + e))

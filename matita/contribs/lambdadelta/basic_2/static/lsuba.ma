@@ -13,8 +13,8 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/lrsubeqa_3.ma".
-include "basic_2/static/aaa.ma". (**) (* disambiguation error *)
 include "basic_2/substitution/lsubr.ma".
+include "basic_2/static/aaa.ma".
 
 (* LOCAL ENVIRONMENT REFINEMENT FOR ATOMIC ARITY ASSIGNMENT *****************)
 

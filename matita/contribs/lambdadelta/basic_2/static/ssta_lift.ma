@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/ssta.ma". (**) (* disambiguation error *)
 include "basic_2/relocation/ldrop_ldrop.ma".
+include "basic_2/static/ssta.ma".
 
 (* STRATIFIED STATIC TYPE ASSIGNMENT ON TERMS *******************************)
 

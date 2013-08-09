@@ -13,8 +13,8 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/predsn_3.ma".
+include "basic_2/grammar/lpx_sn.ma".
 include "basic_2/reduction/cpr.ma".
-include "basic_2/grammar/lpx_sn.ma". (**) (* disambiguation error *)
 
 (* SN PARALLEL REDUCTION FOR LOCAL ENVIRONMENTS *****************************)
 

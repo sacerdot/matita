@@ -13,14 +13,14 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/statictype_7.ma".
-include "basic_2/grammar/genv.ma". (**) (* disambiguation error *)
+include "basic_2/grammar/genv.ma".
 include "basic_2/relocation/ldrop.ma".
 include "basic_2/static/sd.ma".
 
 (* STRATIFIED STATIC TYPE ASSIGNMENT ON TERMS *******************************)
 
 (* activate genv *)
-inductive ssta (h:sh) (g:sd h): nat → genv → lenv → relation term ≝
+inductive ssta (h:sh) (g:sd h): nat → relation4 genv lenv term term ≝
 | ssta_sort: ∀G,L,k,l. deg h g k l → ssta h g l G L (⋆k) (⋆(next h k))
 | ssta_ldef: ∀G,L,K,V,W,U,i,l. ⇩[0, i] L ≡ K. ⓓV → ssta h g l G K V W →
              ⇧[0, i + 1] W ≡ U → ssta h g l G L (#i) U
@@ -36,8 +36,8 @@ inductive ssta (h:sh) (g:sd h): nat → genv → lenv → relation term ≝
 interpretation "stratified static type assignment (term)"
    'StaticType h g G L T U l = (ssta h g l G L T U).
 
-definition ssta_step: ∀h. sd h → genv → lenv → relation term ≝ λh,g,G,L,T,U.
-                      ∃l. ⦃G, L⦄ ⊢ T •[h, g] ⦃l+1, U⦄.
+definition ssta_step: ∀h. sd h → relation4 genv lenv term term ≝
+                      λh,g,G,L,T,U. ∃l. ⦃G, L⦄ ⊢ T •[h, g] ⦃l+1, U⦄.
 
 (* Basic inversion lemmas ************************************************)
 

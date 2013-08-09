@@ -18,7 +18,7 @@ include "basic_2/static/ssta.ma".
 (* ITERATED STRATIFIED STATIC TYPE ASSIGNMENT FOR TERMS *********************)
 
 (* Note: includes: stass_refl *)
-definition sstas: ∀h. sd h → genv → lenv → relation term ≝
+definition sstas: ∀h. sd h → relation4 genv lenv term term ≝
                   λh,g,G,L. star … (ssta_step h g G L).
 
 interpretation "iterated stratified static type assignment (term)"

@@ -27,7 +27,7 @@ definition genv ≝ list2 bind2 term.
 interpretation "sort (global environment)"
    'Star = (nil2 bind2 term).
 
-interpretation "environment binding construction (binary)"
+interpretation "global environment binding construction (binary)"
    'DxBind2 L I T = (cons2 bind2 term I T L).
 
 interpretation "abbreviation (global environment)"

@@ -29,7 +29,7 @@ inductive lenv: Type[0] ≝
 interpretation "sort (local environment)"
    'Star = LAtom.
 
-interpretation "environment binding construction (binary)"
+interpretation "local environment binding construction (binary)"
    'DxBind2 L I T = (LPair L I T).
 
 interpretation "abbreviation (local environment)"

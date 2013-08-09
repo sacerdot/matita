@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/csn.ma". (**) (* disambiguation error *)
 include "basic_2/reduction/cnx_lift.ma".
 include "basic_2/computation/acp.ma".
+include "basic_2/computation/csn.ma".
 
 (* CONTEXT-SENSITIVE EXTENDED STRONGLY NORMALIZING TERMS ********************)
 
