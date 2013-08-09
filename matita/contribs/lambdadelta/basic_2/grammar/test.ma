@@ -12,90 +12,40 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "arithmetics/nat.ma".
+universe constraint Type[0] < Type[1].
 
 (* notations ****************************************************************)
 
-include "basic_2/notation/constructors/snbind2_4.ma".
-include "basic_2/notation/constructors/dxbind2_3.ma".
-include "basic_2/notation/functions/weight_1.ma".
-include "basic_2/notation/functions/weight_3.ma".
+notation "hvbox(a break \to b)"
+  right associative with precedence 20
+for @{ \forall $_:$a.$b }.
+
+notation "hvbox( T . break ⓑ { term 46 I } break term 48 T1 )"
+ non associative with precedence 47
+ for @{ 'DxBind2 $T $I $T1 }.
 
 (* definitions **************************************************************)
 
-inductive list2 (A1,A2:Type[0]) : Type[0] :=
-  | nil2 : list2 A1 A2
-  | cons2: A1 → A2 → list2 A1 A2 → list2 A1 A2.
-
-
-inductive item0: Type[0] ≝
-   | Sort: nat → item0
-   | LRef: nat → item0
-   | GRef: nat → item0
-.
-
-inductive bind2: Type[0] ≝
-  | Abbr: bind2
-  | Abst: bind2 
-.
-
-inductive flat2: Type[0] ≝
-  | Appl: flat2
-  | Cast: flat2
-.
-
-inductive item2: Type[0] ≝
-  | Bind2: bool → bind2 → item2
-  | Flat2: flat2 → item2
-.
-
-inductive term: Type[0] ≝
-  | TAtom: item0 → term
-  | TPair: item2 → term → term → term 
-.
-
-let rec tw T ≝ match T with
-[ TAtom _     ⇒ 1
-| TPair _ V T ⇒ tw V + tw T + 1
-].
-
 inductive lenv: Type[0] ≝
 | LAtom: lenv
-| LPair: lenv → bind2 → term → lenv
+| LPair: lenv → lenv → lenv → lenv
 .
 
-let rec lw L ≝ match L with
-[ LAtom       ⇒ 0
-| LPair L _ V ⇒ lw L + tw V
-].
+inductive genv: Type[0] ≝
+| GAtom: genv
+| GPair: genv → genv → genv → genv
+.
 
-definition genv ≝ list2 bind2 term.
-
-definition fw: genv → lenv → term → ? ≝ λG,L,T. (lw L) + (tw T).
+axiom fw: genv → lenv → Prop.
 
 (* interpretations **********************************************************)
-
-interpretation "term binding construction (binary)"
-   'SnBind2 a I T1 T2 = (TPair (Bind2 a I) T1 T2).
-
-interpretation "weight (term)" 'Weight T = (tw T).
-
-interpretation "weight (local environment)" 'Weight L = (lw L).
-
-interpretation "weight (closure)" 'Weight G L T = (fw G L T).
-
-(* first set *)
 
 interpretation "environment binding construction (binary)"
    'DxBind2 L I T = (LPair L I T).
 
-(* second set *)
-
 interpretation "environment binding construction (binary)"
-   'DxBind2 L I T = (cons2 bind2 term I T L).
+   'DxBind2 G I T = (GPair G I T).
 
 (* statements ***************************************************************)
 
-lemma fw_shift: ∀a,I,G,K,V,T. ♯{G, K.ⓑ{I}V, T} < ♯{G, K, ⓑ{a,I}V.T}.
-normalize //
-qed.
+axiom fw_shift: ∀I,G,K,V. fw G (K.ⓑ{I}V).

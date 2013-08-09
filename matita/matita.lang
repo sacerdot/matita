@@ -113,6 +113,7 @@
           <keyword>prefer</keyword>
           <keyword>nocomposites</keyword>
           <keyword>coinductive</keyword>
+          <keyword>constraint</keyword>          
           <keyword>corec</keyword>
           <keyword>default</keyword>
           <keyword>discriminator</keyword>
@@ -134,7 +135,8 @@
           <keyword>return</keyword>
           <keyword>source</keyword>    
           <keyword>to</keyword>
-          <keyword>using</keyword>
+          <keyword>universe</keyword>          
+	  <keyword>using</keyword>
           <keyword>with</keyword>
          
          
