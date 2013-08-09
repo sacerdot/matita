@@ -46,9 +46,29 @@ let check () =
    let iter fname file = ignore (compute [] fname file) in
    Hashtbl.iter iter graph 
 
+let get_unions () =
+   let map1 ddeps dname = StringSet.add dname ddeps in 
+   let map2 fname file (fnames, ddeps) =
+      StringSet.add fname fnames, List.fold_left map1 ddeps file.ddeps
+   in
+   Hashtbl.fold map2 graph (StringSet.empty, StringSet.empty)
+
+let top () =
+   let iter dname = Printf.printf "top: %s\n" dname in
+   let fnames, ddeps = get_unions () in
+   StringSet.iter iter (StringSet.diff fnames ddeps) 
+
 let rec read ich = 
    let _ = Scanf.sscanf (input_line ich) "%s@:include \"%s@\"." init in
    read ich
    
 let _ =
-   try read stdin with End_of_file -> check ()
+   let show_top = ref false in
+   let process_file name = () in
+   let help   = "" in
+   let help_t = " Print the top nodes of the dependences graph" in
+   Arg.parse [
+      "-t", Arg.Set show_top, help_t;
+   ] process_file help;
+   try read stdin with End_of_file ->
+   if !show_top then top () else check ()

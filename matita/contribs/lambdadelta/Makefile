@@ -28,7 +28,7 @@ PRB_OPTS     := $(XOA_OPTS) -g
 ORIG         := . ./orig.sh 
 ORIGS        := basic_2/basic_1.orig
 
-TAGS := all xoa xoa2 orig elim deps stats tbls trim
+TAGS := all xoa xoa2 orig elim deps top stats tbls trim
 
 PACKAGES := ground_2 basic_2 apps_2
 
@@ -88,6 +88,12 @@ orig: $(ORIGS)
 deps: $(DEP_DIR)/$(DEP)
 	@echo "  MATITADEP"
 	$(H)grep "include \"" $(MAS) | $<
+
+# top ########################################################################
+
+top: $(DEP_DIR)/$(DEP)
+	@echo "  MATITADEP -t"
+	$(H)grep "include \"" $(MAS) | $< -t
 
 # stats ######################################################################
 

@@ -15,7 +15,6 @@
 include "basic_2/notation/functions/weight_3.ma".
 include "basic_2/grammar/genv.ma". (**) (* including genv after lenv shows a disambiguation bug: only the last interpretation is considered *)
 include "basic_2/grammar/lenv_weight.ma".
-include "basic_2/grammar/cl_shift.ma".
 
 (* WEIGHT OF A CLOSURE ******************************************************)
 
