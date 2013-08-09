@@ -14,38 +14,26 @@
 
 universe constraint Type[0] < Type[1].
 
-(* notations ****************************************************************)
-
 notation "hvbox(a break \to b)"
   right associative with precedence 20
 for @{ \forall $_:$a.$b }.
 
-notation "hvbox( T . break ⓑ { term 46 I } break term 48 T1 )"
- non associative with precedence 47
- for @{ 'DxBind2 $T $I $T1 }.
+notation "hvbox( * )"
+ non associative with precedence 90
+ for @{ 'B }.
 
-(* definitions **************************************************************)
+inductive l: Type[0] ≝ L: l.
 
-inductive lenv: Type[0] ≝
-| LAtom: lenv
-| LPair: lenv → lenv → lenv → lenv
-.
+inductive g: Type[0] ≝ G: g.
 
-inductive genv: Type[0] ≝
-| GAtom: genv
-| GPair: genv → genv → genv → genv
-.
+axiom f: l → Prop.
 
-axiom fw: genv → lenv → Prop.
+interpretation "b" 'B = L.
 
-(* interpretations **********************************************************)
+interpretation "b" 'B = G.
 
-interpretation "environment binding construction (binary)"
-   'DxBind2 L I T = (LPair L I T).
+(* FG: two interpretations of the same notation and with the same description
+       override eachother, so the description is not just informative
+*)
 
-interpretation "environment binding construction (binary)"
-   'DxBind2 G I T = (GPair G I T).
-
-(* statements ***************************************************************)
-
-axiom fw_shift: ∀I,G,K,V. fw G (K.ⓑ{I}V).
+axiom s: f *.

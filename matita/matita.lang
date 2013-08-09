@@ -109,6 +109,7 @@
           <keyword>alias</keyword>
           <keyword>and</keyword>
           <keyword>as</keyword>
+          <keyword>associative</keyword>
           <keyword>coercion</keyword>
           <keyword>prefer</keyword>
           <keyword>nocomposites</keyword>
@@ -124,15 +125,19 @@
           <keyword>inverter</keyword>
           <keyword>in</keyword>
           <keyword>interpretation</keyword>
+	  <keyword>left</keyword>          
           <keyword>let</keyword>
           <keyword>match</keyword>
           <keyword>names</keyword>
-          <keyword>notation</keyword>
+	  <keyword>non</keyword>          
+	  <keyword>notation</keyword>
           <keyword>on</keyword>
+          <keyword>precedence</keyword>
           <keyword>qed</keyword>
           <keyword>rec</keyword>
           <keyword>record</keyword>
           <keyword>return</keyword>
+	  <keyword>right</keyword>          
           <keyword>source</keyword>    
           <keyword>to</keyword>
           <keyword>universe</keyword>          
