@@ -11,7 +11,7 @@
 
 include "basics/lists/list.ma".
 
-(* labeled reflexive and transitive closure *********************************)
+(* list-labeled reflexive and transitive closure ****************************)
 
 definition ltransitive: ∀A,B:Type[0]. predicate (list A → relation B) ≝ λA,B,R.
                         ∀l1,b1,b. R l1 b1 b → ∀l2,b2. R l2 b b2 → R (l1@l2) b1 b2. 
@@ -65,34 +65,34 @@ qed-.
 
 lemma lstar_inv_step: ∀A,B,R,a,b1,b2. lstar A B R ([a]) b1 b2 → R a b1 b2.
 #A #B #R #a #b1 #b2 #H
-elim (lstar_inv_cons ?????? H ???) -H [4: // |2,3: skip ] #b #Hb1 #H (**) (* simplify line *)
+elim (lstar_inv_cons ?????? H) -H [4: // |2,3: skip ] #b #Hb1 #H (**) (* simplify line *)
 <(lstar_inv_nil ?????? H ?) -H // (**) (* simplify line *)
 qed-.
 
 theorem lstar_singlevalued: ∀A,B,R. (∀a. singlevalued ?? (R a)) →
                             ∀l. singlevalued … (lstar A B R l).
-#A #B #R #HR #l #b #c1 #H @(lstar_ind_l ????????? H) -l -b
+#A #B #R #HR #l #b #c1 #H @(lstar_ind_l … l b H) -l -b
 [ /2 width=5 by lstar_inv_nil/
 | #a #l #b #b1 #Hb1 #_ #IHbc1 #c2 #H
-  elim (lstar_inv_cons ?????? H ???) -H [4: // |2,3: skip ] #b2 #Hb2 #Hbc2 (**) (* simplify line *)
+  elim (lstar_inv_cons ?????? H) -H [4: // |2,3: skip ] #b2 #Hb2 #Hbc2 (**) (* simplify line *)
   lapply (HR … Hb1 … Hb2) -b #H destruct /2 width=1/
 ]
 qed-.
 
 theorem lstar_ltransitive: ∀A,B,R. ltransitive … (lstar A B R).
-#A #B #R #l1 #b1 #b #H @(lstar_ind_l ????????? H) -l1 -b1 normalize // /3 width=3/
+#A #B #R #l1 #b1 #b #H @(lstar_ind_l … l1 b1 H) -l1 -b1 normalize // /3 width=3/
 qed-.
 
 lemma lstar_inv_ltransitive: ∀A,B,R. inv_ltransitive … (lstar A B R).
 #A #B #R #l1 elim l1 -l1 normalize /2 width=3/
 #a #l1 #IHl1 #l2 #b1 #b2 #H
-elim (lstar_inv_cons … b2 H ???) -H [4: // |2,3: skip ] #b #Hb1 #Hb2 (**) (* simplify line *)
+elim (lstar_inv_cons … b2 H) -H [4: // |2,3: skip ] #b #Hb1 #Hb2 (**) (* simplify line *)
 elim (IHl1 … Hb2) -IHl1 -Hb2 /3 width=3/
 qed-.
 
 lemma lstar_app: ∀A,B,R,l,b1,b. lstar A B R l b1 b → ∀a,b2. R a b b2 →
                  lstar A B R (l@[a]) b1 b2.
-#A #B #R #l #b1 #b #H @(lstar_ind_l ????????? H) -l -b1 /2 width=1/
+#A #B #R #l #b1 #b #H @(lstar_ind_l … l b1 H) -l -b1 /2 width=1/
 normalize /3 width=3/
 qed.
 
@@ -110,7 +110,7 @@ lemma lstar_r_cons: ∀A,B,R,l,b,b2. lstar_r A B R l b b2 → ∀a,b1. R a b1 b 
 qed.
 
 lemma lstar_lstar_r: ∀A,B,R,l,b1,b2. lstar A B R l b1 b2 → lstar_r A B R l b1 b2.
-#A #B #R #l #b1 #b2 #H @(lstar_ind_l ????????? H) -l -b1 // /2 width=3/
+#A #B #R #l #b1 #b2 #H @(lstar_ind_l … l b1 H) -l -b1 // /2 width=3/
 qed.
 
 lemma lstar_r_inv_lstar: ∀A,B,R,l,b1,b2. lstar_r A B R l b1 b2 → lstar A B R l b1 b2.
@@ -121,7 +121,7 @@ fact lstar_ind_r_aux: ∀A,B,R,b1. ∀P:relation2 (list A) B.
                       P ([]) b1 →
                       (∀a,l,b,b2. lstar … R l b1 b → R a b b2 → P l b → P (l@[a]) b2) →
                       ∀l,b,b2. lstar … R l b b2 → b = b1 → P l b2.
-#A #B #R #b1 #P #H1 #H2 #l #b #b2 #H elim (lstar_lstar_r ?????? H) -l -b -b2
+#A #B #R #b1 #P #H1 #H2 #l #b #b2 #H elim (lstar_lstar_r … l b b2 H) -l -b -b2
 [ #b #H destruct //
 | #l #b #b0 #Hb0 #a #b2 #Hb02 #IH #H destruct /3 width=4 by lstar_r_inv_lstar/
 ]
