@@ -48,6 +48,11 @@ lemma lstar_step: ∀B,R,b1,b2. R b1 b2 → lstar B R 1 b1 b2.
 /2 width=3/
 qed.
 
+lemma lstar_dx: ∀B,R,l,b1,b. lstar B R l b1 b → ∀b2. R b b2 →
+                lstar B R (l+1) b1 b2.
+#B #R #l #b1 #b #H @(lstar_ind_l … l b1 H) -l -b1 /2 width=1/ /3 width=3/
+qed.
+
 lemma lstar_inv_O: ∀B,R,l,b1,b2. lstar B R l b1 b2 → 0 = l → b1 = b2.
 #B #R #l #b1 #b2 * -l -b1 -b2 //
 #b1 #b #_ #l #b2 #_ <plus_n_Sm #H destruct
@@ -90,10 +95,12 @@ elim (lstar_inv_S … b2 H (l1+l2)) -H // #b #Hb1 #Hb2
 elim (IHl1 … Hb2) -IHl1 -Hb2 /3 width=3/
 qed-.
 
-lemma lstar_dx: ∀B,R,l,b1,b. lstar B R l b1 b → ∀b2. R b b2 →
-                lstar B R (l+1) b1 b2.
-#B #R #l #b1 #b #H @(lstar_ind_l … l b1 H) -l -b1 /2 width=1/ /3 width=3/
-qed.
+lemma lstar_inv_S_dx: ∀B,R,l,b1,b2. lstar B R (l+1) b1 b2 →
+                      ∃∃b. lstar B R l b1 b & R b b2.
+#B #R #l #b1 #b2 #H
+elim (lstar_inv_ltransitive B R … H) -H #b #Hb1 #H
+lapply (lstar_inv_step B R … H) -H /2 width=3/
+qed-.
 
 inductive lstar_r (B:Type[0]) (R: relation B): ℕ → relation B ≝
 | lstar_r_O: ∀b. lstar_r B R 0 b b
@@ -132,4 +139,8 @@ lemma lstar_ind_r: ∀B,R,b1. ∀P:relation2 ℕ B.
                    ∀l,b2. lstar … R l b1 b2 → P l b2.
 #B #R #b1 #P #H1 #H2 #l #b2 #Hb12
 @(lstar_ind_r_aux … H1 H2 … Hb12) //
+qed-.
+
+lemma lstar_Conf3: ∀A,B,S,R. Conf3 A B S R → ∀l. Conf3 A B S (lstar … R l).
+#A #B #S #R #HSR #l #b #a1 #Ha1 #a2 #H @(lstar_ind_r … l a2 H) -l -a2 // /2 width=3/
 qed-.

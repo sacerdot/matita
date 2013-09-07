@@ -258,9 +258,6 @@ lemma TC_star_ind_dx: ∀A,R. reflexive A R →
 @(TC_ind_dx … P ? H … Ha12) /3 width=4/
 qed-.
 
-definition Conf3: ∀A,B. relation2 A B → relation A → Prop ≝ λA,B,S,R.
-                  ∀b,a1. S a1 b → ∀a2. R a1 a2 → S a2 b.
-
 lemma TC_Conf3: ∀A,B,S,R. Conf3 A B S R → Conf3 A B S (TC … R).
 #A #B #S #R #HSR #b #a1 #Ha1 #a2 #H elim H -a2 /2 width=3/
 qed.

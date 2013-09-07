@@ -61,6 +61,10 @@ definition confluent1: ∀A. relation A → predicate A ≝ λA,R,a0.
 definition confluent: ∀A. predicate (relation A) ≝ λA,R.
                       ∀a0. confluent1 … R a0.
 
+(* triangular confluence of two relations *)
+definition Conf3: ∀A,B. relation2 A B → relation A → Prop ≝ λA,B,S,R.
+                  ∀b,a1. S a1 b → ∀a2. R a1 a2 → S a2 b.
+
 (* Reflexive closure ************)
 
 definition RC: ∀A:Type[0]. relation A → relation A ≝
