@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/lstar.ma".
 include "basic_2/notation/relations/rdrop_4.ma".
 include "basic_2/grammar/lenv_length.ma".
 include "basic_2/grammar/lenv_weight.ma".
@@ -231,6 +232,16 @@ lemma dropable_dx_TC: ∀R. dropable_dx R → dropable_dx (TC … R).
 | #L #L2 #_ #HL2 #IHL1 #K2 #e #HLK2
   elim (HR … HL2 … HLK2) -HR -L2 #K #HLK #HK2
   elim (IHL1 … HLK) -L /3 width=5/
+]
+qed.
+
+lemma l_deliftable_sn_llstar: ∀R. l_deliftable_sn R →
+                              ∀l. l_deliftable_sn (llstar … R l).
+#R #HR #l #L #U1 #U2 #H @(lstar_ind_r … l U2 H) -l -U2
+[ /2 width=3/
+| #l #U #U2 #_ #HU2 #IHU1 #K #d #e #HLK #T1 #HTU1
+  elim (IHU1 … HLK … HTU1) -IHU1 -U1 #T #HTU #HT1
+  elim (HR … HU2 … HLK … HTU) -HR -L -U /3 width=5/
 ]
 qed.
 

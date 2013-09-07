@@ -137,6 +137,15 @@ axiom ldrop_div: ∀e1,L1,L. ⇩[0, e1] L1 ≡ L → ∀e2,L2. ⇩[0, e2] L2 ≡
 
 (* Advanced properties ******************************************************)
 
+lemma l_liftable_llstar: ∀R. l_liftable R → ∀l. l_liftable (llstar … R l).
+#R #HR #l #K #T1 #T2 #H @(lstar_ind_r … l T2 H) -l -T2
+[ #L #d #e #_ #U1 #HTU1 #U2 #HTU2 -HR -K
+  >(lift_mono … HTU2 … HTU1) -T1 -U2 -d -e //
+| #l #T #T2 #_ #HT2 #IHT1 #L #d #e #HLK #U1 #HTU1 #U2 #HTU2
+  elim (lift_total T d e) /3 width=11 by lstar_dx/ (**) (* auto too slow without trace *)
+]
+qed.
+
 (* Basic_1: was: drop_conf_lt *)
 lemma ldrop_conf_lt: ∀d1,e1,L,L1. ⇩[d1, e1] L ≡ L1 →
                      ∀e2,K2,I,V2. ⇩[0, e2] L ≡ K2. ⓑ{I} V2 →
