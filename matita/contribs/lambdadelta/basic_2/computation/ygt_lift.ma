@@ -12,19 +12,26 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/dynamic/yprs.ma".
+include "basic_2/unfold/lsstas_lift.ma".
+include "basic_2/computation/ygt.ma".
 
 (* "BIG TREE" PARALLEL COMPUTATION FOR CLOSURES *****************************)
 
-(* Main properties **********************************************************)
-
-theorem yprs_trans: ∀h,g. tri_transitive … (yprs h g).
-/2 width=5/ qed-.
-
 (* Advanced properties ******************************************************)
 
-lemma cpr_lpr_ssta_yprs: ∀h,g,G,L1,L2,T1,T2,U2,l2.
-                         ⦃G, L1⦄ ⊢ T1 ➡ T2 → ⦃G, L1⦄ ⊢ ➡ L2 →
-                         ⦃G, L2⦄ ⊢ T2 ▪[h, g] l2+1 → ⦃G, L2⦄ ⊢ T2 •[h, g] U2 →
-                         ⦃G, L1, T1⦄ ≥[h, g] ⦃G, L2, U2⦄.
-/3 width=5 by yprs_trans, cpr_lpr_yprs, ssta_yprs/ qed.
+lemma lsstas_ygt: ∀h,g,G,L,T1,T2,l2. ⦃G, L⦄ ⊢ T1 •*[h, g, l2] T2 → (T1 = T2 → ⊥) →
+                  ∀l1. l2 ≤ l1 → ⦃G, L⦄ ⊢ T1 ▪[h, g] l1 → ⦃G, L, T1⦄ >[h, g] ⦃G, L, T2⦄.
+#h #g #G #L #T1 #T2 #l2 #H @(lsstas_ind_dx … H) -l2 -T2
+[ #H elim H //
+| #l2 #T #T2 #HT1 #HT2 #IHT1 #HT12 #l1 #Hl21
+  elim (term_eq_dec T1 T) #H destruct [ -IHT1 |]
+  [ elim (le_inv_plus_l … Hl21) -Hl21 #_ #Hl1
+    >(plus_minus_m_m … Hl1) -Hl1 /3 width=5 by ysc_ssta, ygt_inj/
+  | #Hl1 >commutative_plus in Hl21; #Hl21
+    elim (le_inv_plus_l … Hl21) -Hl21 #Hl12 #Hl21
+    lapply (lsstas_da_conf … HT1 … Hl1) -HT1
+    >(plus_minus_m_m … Hl12) -Hl12
+    /4 width=5 by ypr_ssta, ygt_strap1/
+  ]
+]
+qed.

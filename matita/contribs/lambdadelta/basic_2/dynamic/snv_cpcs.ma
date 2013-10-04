@@ -13,9 +13,10 @@
 (**************************************************************************)
 
 include "basic_2/unfold/lsstas_lsstas.ma".
+include "basic_2/computation/yprs_lift.ma".
+include "basic_2/computation/ygt.ma".
 include "basic_2/equivalence/cpes_cpds.ma".
-include "basic_2/dynamic/yprs_lift.ma".
-include "basic_2/dynamic/ygt.ma".
+include "basic_2/dynamic/snv.ma".
 
 (* STRATIFIED NATIVE VALIDITY FOR TERMS *************************************)
 

@@ -39,15 +39,6 @@ table {
           }
         ]
 *)
-        [ { "\"big tree\" parallel computation" * } {
-             [ "ygt ( ⦃?,?,?⦄ >[?,?] ⦃?,?,?⦄ )" "ygt_lift" + "ygt_ygt" * ]
-             [ "yprs ( ? ⊢ ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "yprs_lift" + "yprs_yprs" * ]
-          }
-        ]
-        [ { "\"big tree\" parallel reduction" * } {
-             [ "ypr ( ⦃?,?,?⦄ ≽[?,?] ⦃?,?,?⦄ )" "ysc ( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" * ]
-          }
-        ]
         [ { "local env. ref. for stratified native validity" * } {
              [ "lsubsv ( ? ⊢ ? ¡⊑[?,?] ? )" "lsubsv_ldrop" + "lsubsv_lsubd" + "lsubsv_lsuba" + "lsubsv_lsstas" + "lsubsv_cpds" + "lsubsv_cpcs" + "lsubsv_snv" * ]
           }
@@ -93,6 +84,11 @@ table {
              [ "csn ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csn_alt ( ⦃?,?⦄ ⊢ ⬊⬊*[?,?] ? )" "csn_lift" + "csn_lpx" * ]
           }
         ]
+        [ { "\"big tree\" parallel computation" * } {
+             [ "ygt ( ⦃?,?,?⦄ >[?,?] ⦃?,?,?⦄ )" "ygt_lift" + "ygt_ygt" * ]
+             [ "yprs ( ? ⊢ ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "yprs_lift" + "yprs_yprs" * ]
+          }
+        ]
         [ { "decomposed extended computation" * } {
              [ "cpds ( ⦃?,?⦄ ⊢ ? •*➡*[?,?] ? )" "cpds_lift" + "cpds_aaa" + "cpds_cpds" * ]
           }
@@ -119,6 +115,10 @@ table {
    ]
    class "water"
    [ { "reduction" * } {
+        [ { "\"big tree\" parallel reduction" * } {
+             [ "ypr ( ⦃?,?,?⦄ ≽[?,?] ⦃?,?,?⦄ )" "ysc ( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" * ]
+          }
+        ]
         [ { "context-sensitive extended normal forms" * } {
              [ "cnx ( ⦃?,?⦄ ⊢ 𝐍[?,?]⦃?⦄ )" "cnx_lift" + "cnx_crx" + "cnx_cix" * ]
           }

@@ -12,10 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/computation/yprs_yprs.ma".
 include "basic_2/dynamic/snv_lift.ma".
 include "basic_2/dynamic/snv_cpcs.ma".
 include "basic_2/dynamic/lsubsv_snv.ma".
-include "basic_2/dynamic/yprs_yprs.ma".
 
 (* STRATIFIED NATIVE VALIDITY FOR TERMS *************************************)
 
