@@ -1,0 +1,8 @@
+(* Advanced inversion lemmas ************************************************)
+
+lemma sta_inv_refl_pos: ∀h,g,G,L,T,l.  ⦃G, L⦄ ⊢ T ▪[h, g] l+1 → ⦃G, L⦄ ⊢ T •[h] T → ⊥.
+#h #g #G #L #T #l #H1T #HTT
+lapply (sta_da_conf … HTT … H1T) -HTT <minus_plus_m_m #H2T
+lapply (da_mono … H2T … H1T) -h -G -L -T #H
+elim (plus_xySz_x_false 0 l 0 ?) //
+qed-.

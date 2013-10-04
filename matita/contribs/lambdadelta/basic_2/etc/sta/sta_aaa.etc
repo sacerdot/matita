@@ -1,0 +1,13 @@
+(* Forward lemmas on stratified static type assignment for terms ************)
+
+lemma aaa_fwd_ssta: ∀h,g,G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ∃U. ⦃G, L⦄ ⊢ T •[h, g] U.
+#h #G #L #T #A #H elim H -G -L -T -A
+[ /2 width=2/
+| * #G #L #K [ #V | #W ] #B #i #HLK #_ * [ #W | #V ] #HVW
+  elim (lift_total W 0 (i+1)) /3 width=7/
+| #a #G #L #V #T #B #A #_ #_ #_ * /3 width=2/
+| #a #G #L #V #T #B #A #_ #_ #_ * /3 width=2/
+| #G #L #V #T #B #A #_ #_ #_ * /3 width=2/
+| #G #L #W #T #A #_ #_ #_ * /3 width=2/
+]
+qed-.

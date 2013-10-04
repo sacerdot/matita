@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unfold/sstas_sstas.ma".
+include "basic_2/unfold/lsstas_lsstas.ma".
 include "basic_2/computation/lprs_cprs.ma".
 include "basic_2/computation/cpxs_cpxs.ma".
 include "basic_2/computation/cpds.ma".
@@ -21,16 +21,28 @@ include "basic_2/computation/cpds.ma".
 
 (* Advanced properties ******************************************************)
 
+lemma cpds_strap2: ∀h,g,G,L,T1,T,T2,l. ⦃G, L⦄ ⊢ T1 ▪[h, g] l+1 →
+                   ⦃G, L⦄ ⊢ T1 •[h, g] T → ⦃G, L⦄ ⊢ T •*➡*[h, g] T2 → ⦃G, L⦄ ⊢ T1 •*➡*[h, g] T2.
+#h #g #G #L #T1 #T #T2 #l #Hl #HT1 *
+#T0 #l0 #l1 #Hl10 #HT #HT0 #HT02
+lapply (ssta_da_conf … HT1 … Hl) <minus_plus_m_m #H0T
+lapply (da_mono … H0T … HT) -HT -H0T #H destruct /3 width=7/
+qed.
+
 lemma cpds_cprs_trans: ∀h,g,G,L,T1,T,T2.
                        ⦃G, L⦄ ⊢ T1 •*➡*[h, g] T → ⦃G, L⦄ ⊢ T ➡* T2 → ⦃G, L⦄ ⊢ T1 •*➡*[h, g] T2.
-#h #g #G #L #T1 #T #T2 * #T0 #HT10 #HT0 #HT2
-lapply (cprs_trans … HT0 … HT2) -T /2 width=3/
+#h #g #G #L #T1 #T #T2 * #T0 #l1 #l2 #Hl12 #Hl1 #HT10 #HT0 #HT2
+lapply (cprs_trans … HT0 … HT2) -T /2 width=7/
 qed-.
 
-lemma sstas_cpds_trans: ∀h,g,G,L,T1,T,T2.
-                        ⦃G, L⦄ ⊢ T1 •*[h, g] T → ⦃G, L⦄ ⊢ T •*➡*[h, g] T2 → ⦃G, L⦄ ⊢ T1 •*➡*[h, g] T2.
-#h #g #G #L #T1 #T #T2 #HT1 * #T0 #HT0 #HT02
-lapply (sstas_trans … HT1 … HT0) -T /2 width=3/
+lemma lsstas_cpds_trans: ∀h,g,G,L,T1,T,T2,l1,l2.
+                         l2 ≤ l1 → ⦃G, L⦄ ⊢ T1 ▪[h, g] l1 →
+                         ⦃G, L⦄ ⊢ T1 •*[h, g, l2] T → ⦃G, L⦄ ⊢ T •*➡*[h, g] T2 → ⦃G, L⦄ ⊢ T1 •*➡*[h, g] T2.
+#h #g #G #L #T1 #T #T2 #l1 #l2 #Hl21 #Hl1 #HT1 * #T0 #l3 #l4 #Hl43 #Hl3 #HT0 #HT02
+lapply (lsstas_da_conf … HT1 … Hl1) #H0T
+lapply (da_mono … H0T … Hl3) -H0T -Hl3 #H destruct
+lapply (le_minus_to_plus_r … Hl21 Hl43) -Hl21 -Hl43
+lapply (lsstas_trans … HT1 … HT0) -T /2 width=7/
 qed-.
 
 (* Advanced inversion lemmas ************************************************)
@@ -38,23 +50,25 @@ qed-.
 lemma cpds_inv_abst1: ∀h,g,a,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓛ{a}V1.T1 •*➡*[h, g] U2 →
                       ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡* V2 & ⦃G, L.ⓛV1⦄ ⊢ T1 •*➡*[h, g] T2 &
                                U2 = ⓛ{a}V2.T2.
-#h #g #a #G #L #V1 #T1 #U2 * #X #H1 #H2
-elim (sstas_inv_bind1 … H1) -H1 #U #HTU1 #H destruct
-elim (cprs_inv_abst1 … H2) -H2 #V2 #T2 #HV12 #HUT2 #H destruct /3 width=5/
+#h #g #a #G #L #V1 #T1 #U2 * #X #l1 #l2 #Hl21 #Hl1 #H1 #H2
+lapply (da_inv_bind … Hl1) -Hl1 #Hl1
+elim (lsstas_inv_bind1 … H1) -H1 #U #HTU1 #H destruct
+elim (cprs_inv_abst1 … H2) -H2 #V2 #T2 #HV12 #HUT2 #H destruct /3 width=7/
 qed-.
 
 lemma cpds_inv_abbr_abst: ∀h,g,a1,a2,G,L,V1,W2,T1,T2. ⦃G, L⦄ ⊢ ⓓ{a1}V1.T1 •*➡*[h, g] ⓛ{a2}W2.T2 →
                           ∃∃T. ⦃G, L.ⓓV1⦄ ⊢ T1 •*➡*[h, g] T & ⇧[0, 1] ⓛ{a2}W2.T2 ≡ T & a1 = true.
-#h #g #a1 #a2 #G #L #V1 #W2 #T1 #T2 * #X #H1 #H2
-elim (sstas_inv_bind1 … H1) -H1 #U1 #HTU1 #H destruct
+#h #g #a1 #a2 #G #L #V1 #W2 #T1 #T2 * #X #l1 #l2 #Hl21 #Hl1 #H1 #H2
+lapply (da_inv_bind … Hl1) -Hl1 #Hl1
+elim (lsstas_inv_bind1 … H1) -H1 #U1 #HTU1 #H destruct
 elim (cprs_inv_abbr1 … H2) -H2 *
 [ #V2 #U2 #HV12 #HU12 #H destruct
-| /3 width=3/
+| /3 width=7/
 ]
 qed-.
 
 (* Advanced forward lemmas **************************************************)
 
 lemma cpds_fwd_cpxs: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 •*➡*[h, g] T2 → ⦃G, L⦄ ⊢ T1 ➡*[h, g] T2.
-#h #g #G #L #T1 #T2 * /3 width=3 by cpxs_trans, sstas_cpxs, cprs_cpxs/
+#h #g #G #L #T1 #T2 * /3 width=5 by cpxs_trans, lsstas_cpxs, cprs_cpxs/
 qed-.

@@ -68,15 +68,14 @@ lemma lprs_yprs: ∀h,g,G,L1,L2,T. ⦃G, L1⦄ ⊢ ➡* L2 → ⦃G, L1, T⦄ �
 #h #g #G #L1 #L2 #T #H @(lprs_ind … H) -L2 // /3 width=5 by ypr_lpr, yprs_strap1/
 qed.
 
-lemma sstas_yprs: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 •*[h, g] T2 →
-                  ⦃G, L, T1⦄ ≥[h, g] ⦃G, L, T2⦄.
-#h #g #G #L #T1 #T2 #H @(sstas_ind … H) -T2 // /3 width=5 by ypr_ssta, yprs_strap1/
-qed.
-
 lemma lsubsv_yprs: ∀h,g,G,L1,L2,T. G ⊢ L2 ¡⊑[h, g] L1 → ⦃G, L1, T⦄ ≥[h, g] ⦃G, L2, T⦄.
 /3 width=1/ qed.
 
-lemma cprs_lpr_yprs: ∀h,g,G,L1,L2,T1,T2. ⦃G, L1⦄ ⊢ T1 ➡* T2 → ⦃G, L1⦄ ⊢ ➡ L2 →
-                     ⦃G, L1, T1⦄ ≥[h, g] ⦃G, L2, T2⦄.
-/3 width=5 by yprs_strap1, ypr_lpr, cprs_yprs/
-qed.
+lemma cpr_lpr_yprs: ∀h,g,G,L1,L2,T1,T2. ⦃G, L1⦄ ⊢ T1 ➡ T2 → ⦃G, L1⦄ ⊢ ➡ L2 →
+                    ⦃G, L1, T1⦄ ≥[h, g] ⦃G, L2, T2⦄.
+/4 width=5 by yprs_strap1, ypr_lpr, ypr_cpr/ qed.
+
+lemma ssta_yprs: ∀h,g,G,L,T,U,l.
+                 ⦃G, L⦄ ⊢ T ▪[h, g] l+1 → ⦃G, L⦄ ⊢ T •[h, g] U →
+                 ⦃G, L, T⦄ ≥[h, g] ⦃G, L, U⦄.
+/3 width=2 by ypr_yprs, ypr_ssta/ qed.

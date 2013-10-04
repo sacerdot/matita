@@ -40,7 +40,8 @@ table {
         ]
 *)
         [ { "\"big tree\" parallel computation" * } {
-             [ "yprs ( ? ⊢ ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "yprs_yprs"  "ygt ( ⦃?,?,?⦄ >[?,?] ⦃?,?,?⦄ )" "ygt_ygt" * ]
+             [ "ygt ( ⦃?,?,?⦄ >[?,?] ⦃?,?,?⦄ )" "ygt_lift" + "ygt_ygt" * ]
+             [ "yprs ( ? ⊢ ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "yprs_lift" + "yprs_yprs" * ]
           }
         ]
         [ { "\"big tree\" parallel reduction" * } {
@@ -48,17 +49,21 @@ table {
           }
         ]
         [ { "local env. ref. for stratified native validity" * } {
-             [ "lsubsv ( ? ⊢ ? ¡⊑[?,?] ? )" "lsubsv_ldrop" + "lsubsv_lsuba" + "lsubsv_ssta" + "lsubsv_dxprs" + "lsubsv_cpcs" + "lsubsv_snv" * ]
+             [ "lsubsv ( ? ⊢ ? ¡⊑[?,?] ? )" "lsubsv_ldrop" + "lsubsv_lsubd" + "lsubsv_lsuba" + "lsubsv_lsstas" + "lsubsv_cpds" + "lsubsv_cpcs" + "lsubsv_snv" * ]
           }
         ]
         [ { "stratified native validity" * } {
-             [ "snv ( ⦃?,?⦄ ⊢ ? ¡[?,?] )" "snv_lift" + "snv_aaa" + "snv_ssta" + "snv_sstas" + "snv_ssta_lpr" + "snv_lpr" + "snv_cpcs" * ]
+             [ "snv ( ⦃?,?⦄ ⊢ ? ¡[?,?] )" "snv_lift" + "snv_da_lpr" + "snv_aaa" + "snv_lsstas" + "snv_lsstas_lpr" + "snv_lpr" + "snv_cpcs" * ]
           }
         ]
      }
    ]
    class "blue"
    [ { "equivalence" * } {
+        [ { "decomposed extended equivalence" * } {
+             [ "cpes ( ⦃?,?⦄ ⊢ ? •*⬌*[?,?] ? )" "cpes_cpds" * ]
+          }
+        ]
         [ { "context-sensitive equivalence" * } {
              [ "cpcs ( ⦃?,?⦄ ⊢ ? ⬌* ? )" "cpcs_aaa" + "cpcs_cprs" + "cpcs_cpcs" * ]
           }
@@ -89,7 +94,7 @@ table {
           }
         ]
         [ { "decomposed extended computation" * } {
-             [ "dxprs ( ⦃?,?⦄ ⊢ ? •*➡*[?,?] ? )" "dxprs_lift" + "dxprs_aaa" + "dxprs_dxprs" * ]
+             [ "cpds ( ⦃?,?⦄ ⊢ ? •*➡*[?,?] ? )" "cpds_lift" + "cpds_aaa" + "cpds_cpds" * ]
           }
         ]
         [ { "context-sensitive extended computation" * } {
@@ -156,24 +161,32 @@ table {
              [ "unfold ( ⦃?,?⦄ ⊢ ? ⧫* ? )" * ]
           }
         ]
-        [ { "iterated stratified static type assignment" * } {
-             [ "sstas ( ⦃?,?⦄ ⊢ ? •*[?] ? )" "sstas_lift" + "sstas_aaa" + "sstas_sstas" * ]
+        [ { "iterated static type assignment" * } {
+             [ "lsstas ( ⦃?,?⦄ ⊢ ? •*[?,?,?] ? )" "lsstas_alt ( ⦃?,?⦄ ⊢ ? ••*[?,?,?] ? )" "lsstas_lift" + "lsstas_aaa" + "lsstas_lsstas" * ]
           }
         ]
      }
    ]
    class "grass"
    [ { "static typing" * } {
-        [ { "stratified static type assignment" * } {
-             [ "ssta ( ⦃?,?⦄ ⊢ ? •[?,?] ⦃?,?⦄ )" "ssta_lift" + "ssta_aaa" + "ssta_ssta" * ]
-          }
-        ]
         [ { "local env. ref. for atomic arity assignment" * } {
              [ "lsuba ( ? ⊢ ? ⁝⊑ ? )" "lsuba_ldrop" + "lsuba_aaa" + "lsuba_lsuba" * ]
           }
         ]
         [ { "atomic arity assignment" * } {
-             [ "aaa ( ⦃?,?⦄ ⊢ ? ⁝ ? )" "aaa_lift" + "aaa_lifts" + "aaa_aaa" * ]
+             [ "aaa ( ⦃?,?⦄ ⊢ ? ⁝ ? )" "aaa_lift" + "aaa_lifts" + "aaa_da" + "aaa_ssta" + "aaa_aaa" * ]
+          }
+        ]
+        [ { "stratified static type assignment" * } {
+             [ "ssta ( ⦃?,?⦄ ⊢ ? •[?,?] ? )" "ssta_lift" + "ssta_ssta" * ]
+          }
+        ]
+        [ { "local env. ref. for degree assignment" * } {
+             [ "lsubd ( ? ⊢ ? ▪⊑ ? )" "lsubd_da" + "lsubd_lsubd" * ]
+          }
+        ]
+        [ { "degree assignment" * } {
+             [ "da ( ⦃?,?⦄ ⊢ ? ▪[?,?] ? )" "da_lift" + "da_da" * ]
           }
         ]
         [ { "parameters" * } {

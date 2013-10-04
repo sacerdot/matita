@@ -185,7 +185,7 @@ elim (cpxs_inv_appl1 … H) -H *
     @(cpxs_strap1 … (ⓐV0.ⓓ{b}V2.T0)) [ /2 width=1/ ] -V -Vs -T /2 width=3/
   | @or3_intro2 -T (**) (* explicit constructor *)
     @(cpxs_trans … HU) -U
-    @(cpxs_strap1 … (ⓐV0.ⓓ{b}V2.T0)) [ /2 width=1/ ] -V -Vs -W /2 width=3/  
+    @(cpxs_strap1 … (ⓐV0.ⓓ{b}V2.T0)) [ /2 width=1/ ] -V -Vs -W /2 width=3/
   ]
 ]
 qed-.

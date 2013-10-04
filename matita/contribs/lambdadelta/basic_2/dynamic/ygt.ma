@@ -83,19 +83,6 @@ lemma cprs_ygt: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡* T2 → (T1 = T2 → ⊥
 ]
 qed.
 
-lemma sstas_ygt: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 •*[h, g] T2 → (T1 = T2 → ⊥) →
-                 ⦃G, L, T1⦄ >[h, g] ⦃G, L, T2⦄.
-#h #g #G #L #T1 #T2 #H @(sstas_ind … H) -T2
-[ #H elim H //
-| #T #T2 #l #_ #HT2 #IHT1 #HT12 -HT12
-  elim (term_eq_dec T1 T) #H destruct
-  [ -IHT1 /3 width=2/
-  | lapply (IHT1 … H) -IHT1 -H #HT1
-    @(ygt_strap1 … HT1) -HT1 /2 width=2/
-  ]
-]
-qed.
-
 lemma lsubsv_ygt: ∀h,g,G,L1,L2,T. G ⊢ L2 ¡⊑[h, g] L1 → (L1 = L2 → ⊥) →
                   ⦃G, L1, T⦄ >[h, g] ⦃G, L2, T⦄.
 /4 width=1/ qed.

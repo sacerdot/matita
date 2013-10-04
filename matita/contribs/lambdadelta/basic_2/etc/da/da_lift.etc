@@ -1,0 +1,23 @@
+(* Advanced properties ******************************************************)
+
+lemma sta_da_conf: ∀h,g,G,L,T,U. ⦃G, L⦄ ⊢ T •[h] U →
+                   ∀l. ⦃G, L⦄ ⊢ T ▪[h, g] l → ⦃G, L⦄ ⊢ U ▪[h, g] l-1.
+#h #g #G #L #T #U #H elim H -G -L -T -U
+[ #G #L #k #l #H
+  lapply (da_inv_sort … H) -H /3 width=1/
+| #G #L #K #V #W #W0 #i #HLK #_ #HW0 #IHVW #l #H
+  elim (da_inv_lref … H) -H * #K0 #V0 [2: #l0] #HLK0 #HV0 [ #H0 ]
+  lapply (ldrop_mono … HLK0 … HLK) -HLK0 #H destruct
+  lapply (ldrop_fwd_ldrop2 … HLK) -HLK /3 width=7/
+| #G #L #K #W #V #W0 #i #HLK #HWV #HW0 #_ #l #H
+  elim (da_inv_lref … H) -H * #K0 #V0 [2: #l0] #HLK0 #HV0 [ #H0 ]
+  lapply (ldrop_mono … HLK0 … HLK) -HLK0 #H destruct
+  lapply (ldrop_fwd_ldrop2 … HLK) -HLK /3 width=7/
+| #a #I #G #L #V #T #U #_ #IHTU #l #H
+  lapply (da_inv_bind … H) -H /3 width=1/
+| #G #L #V #T #U #_ #IHTU #l #H
+  lapply (da_inv_flat … H) -H /3 width=1/
+| #G #L #W #T #U #_ #IHTU #l #H
+  lapply (da_inv_flat … H) -H /2 width=1/
+]
+qed-.

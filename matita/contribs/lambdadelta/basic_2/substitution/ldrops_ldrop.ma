@@ -26,7 +26,7 @@ lemma ldrops_ldrop_trans: ∀L1,L,des. ⇩*[des] L1 ≡ L → ∀L2,i. ⇩[0, i]
 [ /2 width=7/
 | #L1 #L3 #L #des3 #d #e #_ #HL3 #IHL13 #L2 #i #HL2
   elim (lt_or_ge i d) #Hid
-  [ elim (ldrop_trans_le … HL3 … HL2 ?) -L /2 width=2/ #L #HL3 #HL2
+  [ elim (ldrop_trans_le … HL3 … HL2) -L /2 width=2/ #L #HL3 #HL2
     elim (IHL13 … HL3) -L3 /3 width=7/
   | lapply (ldrop_trans_ge … HL3 … HL2 ?) -L // #HL32
     elim (IHL13 … HL32) -L3 /3 width=7/

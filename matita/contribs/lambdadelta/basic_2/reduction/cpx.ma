@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/pred_6.ma".
-include "basic_2/static/ssta.ma".
+include "basic_2/static/sd.ma".
 include "basic_2/reduction/cpr.ma".
 
 (* CONTEXT-SENSITIVE EXTENDED PARALLEL REDUCTION FOR TERMS ******************)
@@ -71,14 +71,6 @@ qed.
 lemma cpr_cpx: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡ T2 → ⦃G, L⦄ ⊢ T1 ➡[h, g] T2.
 #h #g #G #L #T1 #T2 #H elim H -L -T1 -T2 // /2 width=1/ /2 width=3/ /2 width=7/
 qed.
-
-fact ssta_cpx_aux: ∀h,g,G,L,T1,T2,l0. ⦃G, L⦄ ⊢ T1 •[h, g] ⦃l0, T2⦄ →
-                   ∀l. l0 = l+1 → ⦃G, L⦄ ⊢ T1 ➡[h, g] T2.
-#h #g #G #L #T1 #T2 #l0 #H elim H -L -T1 -T2 -l0 /2 width=2/ /2 width=7/ /3 width=2/ /3 width=7/
-qed-.
-
-lemma ssta_cpx: ∀h,g,G,L,T1,T2,l. ⦃G, L⦄ ⊢ T1 •[h, g] ⦃l+1, T2⦄ → ⦃G, L⦄ ⊢ T1 ➡[h, g] T2.
-/2 width=4 by ssta_cpx_aux/ qed.
 
 lemma cpx_pair_sn: ∀h,g,I,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡[h, g] V2 →
                    ∀T. ⦃G, L⦄ ⊢ ②{I}V1.T ➡[h, g] ②{I}V2.T.
@@ -307,7 +299,7 @@ lemma cpx_fwd_bind1_minus: ∀h,g,I,G,L,V1,T1,T. ⦃G, L⦄ ⊢ -ⓑ{I}V1.T1 ➡
 #h #g #I #G #L #V1 #T1 #T #H #b
 elim (cpx_inv_bind1 … H) -H *
 [ #V2 #T2 #HV12 #HT12 #H destruct /3 width=4/
-| #T2 #_ #_ #H destruct 
+| #T2 #_ #_ #H destruct
 ]
 qed-.
 

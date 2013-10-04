@@ -12,45 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/dynamic/snv_cpcs.ma".
-include "basic_2/dynamic/lsubsv_ssta.ma".
+include "basic_2/dynamic/lsubsv_lsstas.ma".
 
 (* LOCAL ENVIRONMENT REFINEMENT FOR STRATIFIED NATIVE VALIDITY **************)
 
-(* Properties for the preservation results **********************************)
+(* Properties on decomposed extended parallel computation on terms **********)
 
-fact lsubsv_sstas_aux: ∀h,g,G0,L0,T0.
-                       (∀G1,L1,T1. ⦃G0, L0, T0⦄ >[h, g] ⦃G1, L1, T1⦄ → IH_snv_cpr_lpr h g G1 L1 T1) →
-                       (∀G1,L1,T1. ⦃G0, L0, T0⦄ >[h, g] ⦃G1, L1, T1⦄ → IH_ssta_cpr_lpr h g G1 L1 T1) →
-                       (∀G1,L1,T1. ⦃G0, L0, T0⦄ >[h, g] ⦃G1, L1, T1⦄ → IH_snv_ssta h g G1 L1 T1) →
-                       (∀G1,L1,T1. ⦃G0, L0, T0⦄ >[h, g] ⦃G1, L1, T1⦄ → IH_snv_lsubsv h g G1 L1 T1) →
-                       ∀G,L2,T. ⦃G0, L0, T0⦄ >[h, g] ⦃G, L2, T⦄ → ⦃G, L2⦄ ⊢ T ¡[h, g] →
-                       ∀L1. G ⊢ L1 ¡⊑[h, g] L2 → ∀U2. ⦃G, L2⦄ ⊢ T •*[h, g] U2 →
-                       ∃∃U1. ⦃G, L1⦄ ⊢ T •*[h, g] U1 & ⦃G, L1⦄ ⊢ U1 ⬌* U2.
-#h #g #G0 #L0 #T0 #IH4 #IH3 #IH2 #IH1 #G #L2 #T #HLT0 #HT #L1 #HL12 #U2 #H @(sstas_ind … H) -U2 [ /2 width=3/ ]
-#U2 #W #l #HTU2 #HU2W * #U1 #HTU1 #HU12
-lapply (IH1 … HT … HL12) // #H
-lapply (snv_sstas_aux … IH2 … HTU1) // /3 width=5 by ygt_yprs_trans, lsubsv_yprs/ -H #HU1
-lapply (snv_sstas_aux … IH2 … HTU2) // #H
-lapply (IH1 … H … HL12) [ /3 width=5 by ygt_yprs_trans, sstas_yprs/ ] -H #HU2
-elim (snv_fwd_ssta … HU1) #l1 #W1 #HUW1
-elim (lsubsv_ssta_trans … HU2W … HL12) -HU2W #W2 #HUW2 #HW2
-elim (ssta_cpcs_lpr_aux … IH4 IH3 … HU1 HU2 … HUW1 … HUW2 … HU12 L1) -HU1 -HU2 -HUW2 -HU12 //
-[2,3: /4 width=5 by ygt_yprs_trans, sstas_yprs, lsubsv_yprs/ ] -G0 -L2 -L0 -T0 -U2 #H #HW12 destruct
-lapply (cpcs_trans … HW12 … HW2) -W2 /3 width=4/
-qed-.
-
-fact lsubsv_cpds_aux: ∀h,g,G0,L0,T0.
-                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >[h, g] ⦃G1, L1, T1⦄ → IH_snv_cpr_lpr h g G1 L1 T1) →
-                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >[h, g] ⦃G1, L1, T1⦄ → IH_ssta_cpr_lpr h g G1 L1 T1) →
-                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >[h, g] ⦃G1, L1, T1⦄ → IH_snv_ssta h g G1 L1 T1) →
-                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >[h, g] ⦃G1, L1, T1⦄ → IH_snv_lsubsv h g G1 L1 T1) →
-                      ∀G,L2,T1. ⦃G0, L0, T0⦄ >[h, g] ⦃G,L2, T1⦄ → ⦃G, L2⦄ ⊢ T1 ¡[h, g] →
-                      ∀L1. G ⊢ L1 ¡⊑[h, g] L2 → ∀T2. ⦃G, L2⦄ ⊢ T1 •*➡*[h, g] T2 →
-                      ∃∃T. ⦃G, L1⦄ ⊢ T1 •*➡*[h, g] T & ⦃G, L1⦄ ⊢ T2 ➡* T.
-#h #g #G0 #L0 #T0 #IH4 #IH3 #IH2 #IH1 #G #L2 #T1 #HLT0 #HT1 #L1 #HL12 #T2 * #T #HT1T #HTT2
-lapply (lsubsv_cprs_trans … HL12 … HTT2) -HTT2 #HTT2
-elim (lsubsv_sstas_aux … IH4 IH3 IH2 IH1 … HLT0 … HL12 … HT1T) // -G0 -L2 -L0 -T0 #T0 #HT10 #HT0
-lapply (cpcs_cprs_strap1 … HT0 … HTT2) -T #HT02
-elim (cpcs_inv_cprs … HT02) -HT02 /3 width=3/
+lemma lsubsv_cpds_trans: ∀h,g,G,L2,T1,T2. ⦃G, L2⦄ ⊢ T1 •*➡*[h, g] T2 →
+                         ∀L1. G ⊢ L1 ¡⊑[h, g] L2 →
+                         ∃∃T. ⦃G, L1⦄ ⊢ T1 •*➡*[h, g] T & ⦃G, L1⦄ ⊢ T2 ➡* T.
+#h #g #G #L2 #T1 #T2 * #T #l1 #l2 #Hl21 #Hl1 #HT1 #HT2 #L1 #HL12
+lapply (lsubsv_cprs_trans … HL12 … HT2) -HT2 #HT2
+elim (lsubsv_lsstas_trans … HT1 … Hl1 … HL12) // #T0 #HT10 #HT0
+lapply (lsubsv_fwd_lsubd … HL12) -HL12 #HL12
+lapply (lsubd_da_trans … Hl1 … HL12) -L2 #Hl1
+lapply (cpcs_cprs_strap1 … HT0 … HT2) -T #HT02
+elim (cpcs_inv_cprs … HT02) -HT02 /3 width=7/
 qed-.

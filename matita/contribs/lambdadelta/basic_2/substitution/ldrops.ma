@@ -64,7 +64,7 @@ lemma ldrops_inv_skip2: ∀I,des,i,des2. des ▭ i ≡ des2 →
   >(ldrops_inv_nil … H) -L1 /2 width=7/
 | #des #des2 #d #e #i #Hid #_ #IHdes2 #L1 #K2 #V2 #H
   elim (ldrops_inv_cons … H) -H #L #HL1 #H
-  elim (ldrop_inv_skip2 … H ?) -H /2 width=1/ #K #V >minus_plus #HK2 #HV2 #H destruct
+  elim (ldrop_inv_skip2 … H) -H /2 width=1/ #K #V >minus_plus #HK2 #HV2 #H destruct
   elim (IHdes2 … HL1) -IHdes2 -HL1 #K1 #V1 #des1 #Hdes1 #HK1 #HV1 #X destruct
   @(ex4_3_intro … K1 V1 … ) // [3,4: /2 width=7/ | skip ]
   normalize >plus_minus // @minuss_lt // /2 width=1/ (**) (* explicit constructors, /3 width=1/ is a bit slow *)

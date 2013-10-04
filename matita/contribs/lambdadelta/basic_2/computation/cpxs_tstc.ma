@@ -49,7 +49,7 @@ elim (cpxs_inv_appl1 … H) -H *
 | #b #W0 #T0 #HT0 #HU
   elim (cpxs_inv_abst1 … HT0) -HT0 #W1 #T1 #HW1 #HT1 #H destruct
   lapply (lsubr_cpxs_trans … HT1 (L.ⓓⓝW.V) ?) -HT1 /2 width=1/ #HT1
-  @or_intror @(cpxs_trans … HU) -U /3 width=1/ (**) (* explicit constructor *)  
+  @or_intror @(cpxs_trans … HU) -U /3 width=1/ (**) (* explicit constructor *)
 | #b #V1 #V2 #V0 #T1 #_ #_ #HT1 #_
   elim (cpxs_inv_abst1 … HT1) -HT1 #W2 #T2 #_ #_ #H destruct
 ]
@@ -81,7 +81,7 @@ elim (cpxs_inv_appl1 … H) -H *
     @or_intror @(cpxs_trans … HU) -U (**) (* explicit constructor *)
     @(cpxs_trans … (+ⓓV.ⓐV2.ⓛ{b}W2.T2)) [ /3 width=1/ ] -T
     @(cpxs_strap2 … (ⓐV1.ⓛ{b}W.T0)) [2: /2 width=1/ ]
-    /4 width=7 by cpx_zeta, lift_bind, lift_flat/ (**) (* auto too slow without trace *) 
+    /4 width=7 by cpx_zeta, lift_bind, lift_flat/ (**) (* auto too slow without trace *)
   ]
 | #b #V3 #V4 #V0 #T0 #HV13 #HV34 #HT0 #HU
   @or_intror @(cpxs_trans … HU) -U (**) (* explicit constructor *)

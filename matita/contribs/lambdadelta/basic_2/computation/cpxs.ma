@@ -13,7 +13,6 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/predstar_6.ma".
-include "basic_2/unfold/sstas.ma".
 include "basic_2/reduction/cnx.ma".
 include "basic_2/computation/cprs.ma".
 
@@ -60,11 +59,6 @@ normalize /2 width=3/ qed.
 lemma lsubr_cpxs_trans: ∀h,g,G. lsub_trans … (cpxs h g G) lsubr.
 /3 width=5 by lsubr_cpx_trans, TC_lsub_trans/
 qed-.
-
-lemma sstas_cpxs: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 •* [h, g] T2 → ⦃G, L⦄ ⊢ T1 ➡*[h, g] T2.
-#h #g #G #L #T1 #T2 #H @(sstas_ind … H) -T2 //
-/3 width=4 by cpxs_strap1, ssta_cpx/
-qed.
 
 lemma cprs_cpxs: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡* T2 → ⦃G, L⦄ ⊢ T1 ➡*[h, g] T2.
 #h #g #G #L #T1 #T2 #H @(cprs_ind … H) -T2 // /3 width=3/

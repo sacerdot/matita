@@ -96,7 +96,7 @@ qed-.
 
 lemma cnx_sort: ∀h,g,G,L,k. deg h g k 0 → ⦃G, L⦄ ⊢ 𝐍[h, g]⦃⋆k⦄.
 #h #g #G #L #k #Hk #X #H elim (cpx_inv_sort1 … H) -H // * #l #Hkl #_
-lapply (deg_mono … Hkl Hk) -h -L <plus_n_Sm #H destruct 
+lapply (deg_mono … Hkl Hk) -h -L <plus_n_Sm #H destruct
 qed.
 
 lemma cnx_sort_iter: ∀h,g,G,L,k,l. deg h g k l → ⦃G, L⦄ ⊢ 𝐍[h, g]⦃⋆((next h)^l k)⦄.

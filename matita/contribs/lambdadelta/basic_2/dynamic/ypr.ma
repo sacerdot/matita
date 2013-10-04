@@ -23,7 +23,7 @@ inductive ypr (h) (g) (G1) (L1) (T1): relation3 genv lenv term ≝
 | ypr_fsup  : ∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ → ypr h g G1 L1 T1 G2 L2 T2
 | ypr_lpr   : ∀L2. ⦃G1, L1⦄ ⊢ ➡ L2 → ypr h g G1 L1 T1 G1 L2 T1
 | ypr_cpr   : ∀T2. ⦃G1, L1⦄ ⊢ T1 ➡ T2 → ypr h g G1 L1 T1 G1 L1 T2
-| ypr_ssta  : ∀T2,l. ⦃G1, L1⦄ ⊢ T1 •[h, g] ⦃l+1, T2⦄ → ypr h g G1 L1 T1 G1 L1 T2
+| ypr_ssta  : ∀T2,l. ⦃G1, L1⦄ ⊢ T1 ▪[h, g] l+1 → ⦃G1, L1⦄ ⊢ T1 •[h, g] T2 → ypr h g G1 L1 T1 G1 L1 T2
 | ypr_lsubsv: ∀L2. G1 ⊢ L2 ¡⊑[h, g] L1 → ypr h g G1 L1 T1 G1 L2 T1
 .
 

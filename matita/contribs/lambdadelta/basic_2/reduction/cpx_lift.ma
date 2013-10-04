@@ -14,9 +14,28 @@
 
 include "basic_2/relocation/ldrop_ldrop.ma".
 include "basic_2/relocation/fsupq.ma".
+include "basic_2/static/ssta.ma".
 include "basic_2/reduction/cpx.ma".
 
 (* CONTEXT-SENSITIVE EXTENDED PARALLEL REDUCTION FOR TERMS ******************)
+
+(* Advanced properties ******************************************************)
+
+lemma ssta_cpx: ∀h,g,G,L,T1,T2,l. ⦃G, L⦄ ⊢ T1 •[h, g] T2 →
+                ⦃G, L⦄ ⊢ T1 ▪[h, g] l+1 → ⦃G, L⦄ ⊢ T1 ➡[h, g] T2.
+#h #g #G #L #T1 #T2 #l #H elim H -G -L -T1 -T2
+[ #G #L #k #H lapply (da_inv_sort … H) -H /2 width=2/
+| #G #L #K #V #U #W #i #HLK #_ #HWU #IHVW #H
+  elim (da_inv_lref … H) -H * #K0 #V0 [| #l0 ] #HLK0
+  lapply (ldrop_mono … HLK0 … HLK) -HLK0 #H destruct /3 width=7/
+| #G #L #K #W #U #l0 #i #HLK #_ #HWU #H
+  elim (da_inv_lref … H) -H * #K0 #W0 [| #l1 ] #HLK0
+  lapply (ldrop_mono … HLK0 … HLK) -HLK0 #H destruct /2 width=7/
+| #a #I #G #L #V #T #U #_ #IHTU #H lapply (da_inv_bind … H) -H /3 width=1/
+| #G #L #V #T #U #_ #IHTU #H lapply (da_inv_flat … H) -H /3 width=1/
+| #G #L #W #T #U #_ #IHTU #H lapply (da_inv_flat … H) -H /3 width=1/
+]
+qed.
 
 (* Relocation properties ****************************************************)
 
@@ -105,7 +124,7 @@ lemma cpx_inv_lift1: ∀h,g,G. l_deliftable_sn (cpx h g G).
   elim (IHV12 … HLK … HV01) -V1 #V3 #HV32 #HV03
   elim (IHT12 (K.ⓛW0) … HT01) -T1 /2 width=1/ #T3 #HT32 #HT03
   elim (IHW12 … HLK … HW01) -W1 #W3 #HW32 #HW03
-  @ex2_intro [2: /3 width=2/ | skip |3: /2 width=1/ ] (**) (* /4 width=6/ is slow *) 
+  @ex2_intro [2: /3 width=2/ | skip |3: /2 width=1/ ] (**) (* /4 width=6/ is slow *)
 | #a #G #L #V1 #V #V2 #W1 #W2 #T1 #T2 #_ #HV2 #_ #_ #IHV1 #IHW12 #IHT12 #K #d #e #HLK #X #HX
   elim (lift_inv_flat2 … HX) -HX #V0 #Y #HV01 #HY #HX destruct
   elim (lift_inv_bind2 … HY) -HY #W0 #T0 #HW01 #HT01 #HY destruct
@@ -133,9 +152,10 @@ lemma fsupq_cpx_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, 
 qed-.
 
 lemma fsupq_ssta_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, L2, T2⦄ →
-                        ∀U2,l. ⦃G2, L2⦄ ⊢ T2 •[h, g] ⦃l+1, U2⦄ →
+                        ∀U2. ⦃G2, L2⦄ ⊢ T2 •[h, g] U2 →
+                        ∀l. ⦃G2, L2⦄ ⊢ T2 ▪[h, g] l+1 →
                         ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡[h, g] U1 & ⦃G1, L1, U1⦄ ⊃⸮ ⦃G2, L2, U2⦄.
-/3 width=4 by fsupq_cpx_trans, ssta_cpx/ qed-.
+/3 width=5 by fsupq_cpx_trans, ssta_cpx/ qed-.
 
 lemma fsup_cpx_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ →
                       ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡[h, g] U2 →
@@ -143,6 +163,7 @@ lemma fsup_cpx_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, 
 /3 width=3 by fsupq_cpx_trans, fsup_fsupq/ qed-.
 
 lemma fsup_ssta_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ →
-                       ∀U2,l. ⦃G2, L2⦄ ⊢ T2 •[h, g] ⦃l+1, U2⦄ →
+                       ∀U2. ⦃G2, L2⦄ ⊢ T2 •[h, g] U2 →
+                       ∀l. ⦃G2, L2⦄ ⊢ T2 ▪[h, g] l+1 →
                        ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡[h, g] U1 & ⦃G1, L1, U1⦄ ⊃⸮ ⦃G2, L2, U2⦄.
-/3 width=4 by fsupq_ssta_trans, fsup_fsupq/ qed-.
+/3 width=5 by fsupq_ssta_trans, fsup_fsupq/ qed-.

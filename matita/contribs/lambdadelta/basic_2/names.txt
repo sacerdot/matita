@@ -69,6 +69,7 @@ s: sequential transformation
 
 c: conversion
 d: decomposed extended reduction
+e: decomposed extended conversion
 q: restricted reduction
 r: reduction
 s: substitution

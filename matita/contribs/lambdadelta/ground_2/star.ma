@@ -122,7 +122,7 @@ definition NF: ∀A. relation A → relation A → predicate A ≝
 
 definition NF_dec: ∀A. relation A → relation A → Prop ≝
                    λA,R,S. ∀a1. NF A R S a1 ∨
-                   ∃∃a2. R … a1 a2 & (S a2 a1 → ⊥). 
+                   ∃∃a2. R … a1 a2 & (S a2 a1 → ⊥).
 
 inductive SN (A) (R,S:relation A): predicate A ≝
 | SN_intro: ∀a1. (∀a2. R a1 a2 → (S a2 a1 → ⊥) → SN A R S a2) → SN A R S a1

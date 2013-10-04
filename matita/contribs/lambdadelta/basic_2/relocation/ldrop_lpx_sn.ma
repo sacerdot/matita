@@ -58,7 +58,7 @@ fact lpx_sn_dropable_aux: ∀R,L2,K2,d,e. ⇩[d, e] L2 ≡ K2 → ∀L1. lpx_sn 
   elim (lpx_sn_inv_pair2 … H) -H #K1 #V1 #HK12 #HV12 #H destruct /3 width=5/
 | #L2 #K2 #I #V2 #e #_ #IHLK2 #X #H #_
   elim (lpx_sn_inv_pair2 … H) -H #L1 #V1 #HL12 #HV12 #H destruct
-  elim (IHLK2 … HL12 ?) -L2 // /3 width=3/
+  elim (IHLK2 … HL12) -L2 // /3 width=3/
 | #L2 #K2 #I #V2 #W2 #d #e #_ #_ #_ #L1 #_
   >commutative_plus normalize #H destruct
 ]

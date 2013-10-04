@@ -31,11 +31,11 @@ lemma lsubsv_ldrop_O1_conf: ∀h,g,G,L1,L2. G ⊢ L1 ¡⊑[h, g] L2 →
     <(ldrop_inv_O2 … H) in HL12; -H /3 width=3/
   | elim (IHL12 … HLK1) -L1 /3 width=3/
   ]
-| #L1 #L2 #W #V #W1 #V2 #l #HV #HW #HW1 #HV2 #_ #IHL12 #K1 #e #H
+| #L1 #L2 #W #V #l #H1W #HV #HVW #H2W #H1l #H2l #_ #IHL12 #K1 #e #H
   elim (ldrop_inv_O1_pair1 … H) -H * #He #HLK1
   [ destruct
     elim (IHL12 L1 0) -IHL12 // #X #HL12 #H
-    <(ldrop_inv_O2 … H) in HL12; -H /3 width=6/
+    <(ldrop_inv_O2 … H) in HL12; -H /3 width=4/
   | elim (IHL12 … HLK1) -L1 /3 width=3/
   ]
 ]
@@ -54,11 +54,11 @@ lemma lsubsv_ldrop_O1_trans: ∀h,g,G,L1,L2. G ⊢ L1 ¡⊑[h, g] L2 →
     <(ldrop_inv_O2 … H) in HL12; -H /3 width=3/
   | elim (IHL12 … HLK2) -L2 /3 width=3/
   ]
-| #L1 #L2 #W #V #W1 #V2 #l #HV #HW #HW1 #HV2 #_ #IHL12 #K2 #e #H
+| #L1 #L2 #W #V #l #H1W #HV #HVW #H2W #H1l #H2l #_ #IHL12 #K2 #e #H
   elim (ldrop_inv_O1_pair1 … H) -H * #He #HLK2
   [ destruct
     elim (IHL12 L2 0) -IHL12 // #X #HL12 #H
-    <(ldrop_inv_O2 … H) in HL12; -H /3 width=6/
+    <(ldrop_inv_O2 … H) in HL12; -H /3 width=4/
   | elim (IHL12 … HLK2) -L2 /3 width=3/
   ]
 ]

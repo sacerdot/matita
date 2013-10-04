@@ -286,7 +286,7 @@ lemma cpr_fwd_bind1_minus: ∀I,G,L,V1,T1,T. ⦃G, L⦄ ⊢ -ⓑ{I}V1.T1 ➡ T �
 #I #G #L #V1 #T1 #T #H #b
 elim (cpr_inv_bind1 … H) -H *
 [ #V2 #T2 #HV12 #HT12 #H destruct /3 width=4/
-| #T2 #_ #_ #H destruct 
+| #T2 #_ #_ #H destruct
 ]
 qed-.
 

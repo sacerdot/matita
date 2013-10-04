@@ -26,8 +26,8 @@ lemma aaa_lift: ∀G,L1,T1,A. ⦃G, L1⦄ ⊢ T1 ⁝ A → ∀L2,d,e. ⇩[d, e] 
   >(lift_inv_sort1 … H) -H //
 | #I #G #L1 #K1 #V1 #B #i #HLK1 #_ #IHB #L2 #d #e #HL21 #T2 #H
   elim (lift_inv_lref1 … H) -H * #Hid #H destruct
-  [ elim (ldrop_trans_le … HL21 … HLK1 ?) -L1 /2 width=2/ #X #HLK2 #H
-    elim (ldrop_inv_skip2 … H ?) -H /2 width=1/ -Hid #K2 #V2 #HK21 #HV12 #H destruct
+  [ elim (ldrop_trans_le … HL21 … HLK1) -L1 /2 width=2/ #X #HLK2 #H
+    elim (ldrop_inv_skip2 … H) -H /2 width=1/ -Hid #K2 #V2 #HK21 #HV12 #H destruct
     /3 width=8/
   | lapply (ldrop_trans_ge … HL21 … HLK1 ?) -L1 // -Hid /3 width=8/
   ]
@@ -53,7 +53,7 @@ lemma aaa_inv_lift: ∀G,L2,T2,A. ⦃G, L2⦄ ⊢ T2 ⁝ A → ∀L1,d,e. ⇩[d,
   >(lift_inv_sort2 … H) -H //
 | #I #G #L2 #K2 #V2 #B #i #HLK2 #_ #IHB #L1 #d #e #HL21 #T1 #H
   elim (lift_inv_lref2 … H) -H * #Hid #H destruct
-  [ elim (ldrop_conf_lt … HL21 … HLK2 ?) -L2 // -Hid /3 width=8/
+  [ elim (ldrop_conf_lt … HL21 … HLK2) -L2 // -Hid /3 width=8/
   | lapply (ldrop_conf_ge … HL21 … HLK2 ?) -L2 // -Hid /3 width=8/
   ]
 | #a #G #L2 #V2 #T2 #B #A #_ #_ #IHB #IHA #L1 #d #e #HL21 #X #H

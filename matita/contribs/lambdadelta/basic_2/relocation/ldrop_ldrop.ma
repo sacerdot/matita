@@ -28,7 +28,7 @@ theorem ldrop_mono: ∀d,e,L,L1. ⇩[d, e] L ≡ L1 →
 | #L #K #I #V #e #_ #IHLK #L2 #H
   lapply (ldrop_inv_ldrop1 … H ?) -H // /2 width=1/
 | #L #K1 #I #T #V1 #d #e #_ #HVT1 #IHLK1 #X #H
-  elim (ldrop_inv_skip1 … H ?) -H // <minus_plus_m_m #K2 #V2 #HLK2 #HVT2 #H destruct
+  elim (ldrop_inv_skip1 … H) -H // <minus_plus_m_m #K2 #V2 #HLK2 #HVT2 #H destruct
   >(lift_inj … HVT1 … HVT2) -HVT1 -HVT2
   >(IHLK1 … HLK2) -IHLK1 -HLK2 //
 ]
@@ -64,7 +64,7 @@ theorem ldrop_conf_be: ∀L0,L1,d1,e1. ⇩[d1, e1] L0 ≡ L1 →
   lapply (ldrop_inv_O1_pair1 … H) -H * * #He2 #HL20
   [ -IHLK0 -He21 destruct <minus_n_O /3 width=3/
   | -HLK0 <minus_le_minus_minus_comm //
-    elim (IHLK0 … HL20 ? ?) -L0 // /2 width=1/ /2 width=3/
+    elim (IHLK0 … HL20) -L0 // /2 width=1/ /2 width=3/
   ]
 | #L0 #K0 #I #V0 #V1 #d1 #e1 >plus_plus_comm_23 #_ #_ #IHLK0 #L2 #e2 #H #Hd1e2 #He2de1
   elim (le_inv_plus_l … Hd1e2) #_ #He2
@@ -120,7 +120,7 @@ theorem ldrop_trans_le: ∀d1,e1,L1,L. ⇩[d1, e1] L1 ≡ L →
   lapply (le_n_O_to_eq … H) -H #H destruct /2 width=3/
 | #L1 #L2 #I #V #e #_ #IHL12 #e2 #L #HL2 #H
   lapply (le_n_O_to_eq … H) -H #H destruct
-  elim (IHL12 … HL2 ?) -IHL12 -HL2 // #L0 #H #HL0
+  elim (IHL12 … HL2) -IHL12 -HL2 // #L0 #H #HL0
   lapply (ldrop_inv_O2 … H) -H #H destruct /3 width=5/
 | #L1 #L2 #I #V1 #V2 #d #e #HL12 #HV12 #IHL12 #e2 #L #H #He2d
   elim (ldrop_inv_O1_pair1 … H) -H *

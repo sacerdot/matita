@@ -35,18 +35,18 @@ lemma snv_lift: ∀h,g,G,K,T. ⦃G, K⦄ ⊢ T ¡[h, g] → ∀L,d,e. ⇩[d, e] 
 | #a #I #G #K #V #T #_ #_ #IHV #IHT #L #d #e #HLK #X #H
   elim (lift_inv_bind1 … H) -H #W #U #HVW #HTU #H destruct
   /4 width=4/
-| #a #G #K #V #V0 #V1 #T #T1 #l #_ #_ #HV0 #HV01 #HT1 #IHV #IHT #L #d #e #HLK #X #H
+| #a #G #K #V #V0 #V1 #T #T1 #l #_ #_ #Hl #HV0 #HV01 #HT1 #IHV #IHT #L #d #e #HLK #X #H
   elim (lift_inv_flat1 … H) -H #W #U #HVW #HTU #H destruct
   elim (lift_total V0 d e) #W0 #HVW0
   elim (lift_total V1 d e) #W1 #HVW1
   elim (lift_total T1 (d+1) e) #U1 #HTU1
   @(snv_appl … a … W0 … W1 … U1 l)
-  [ /2 width=4/ | /2 width=4/ | /2 width=9/ | /2 width=9/ ]
+  [1,2: /2 width=4/ | /2 width=7/ |4,5: /2 width=9/ ]
   @(cpds_lift … HT1 … HLK … HTU) /2 width=1/
-| #G #K #V0 #T #V #l #_ #_ #HTV #HV0 #IHV0 #IHT #L #d #e #HLK #X #H
+| #G #K #V0 #T #V #l #_ #_ #Hl #HTV #HV0 #IHV0 #IHT #L #d #e #HLK #X #H
   elim (lift_inv_flat1 … H) -H #W0 #U #HVW0 #HTU #H destruct
   elim (lift_total V d e) #W #HVW
-  @(snv_cast … W l) [ /2 width=4/ | /2 width=4/ | /2 width=9/ | /2 width=9/ ]
+  @(snv_cast … W l) [1,2: /2 width=4/ | /2 width=7/ |4,5: /2 width=9/ ]
 ]
 qed.
 
@@ -64,16 +64,18 @@ lemma snv_inv_lift: ∀h,g,G,L,U. ⦃G, L⦄ ⊢ U ¡[h, g] → ∀K,d,e. ⇩[d,
   ]
 | #a #I #G #L #W #U #_ #_ #IHW #IHU #K #d #e #HLK #X #H
   elim (lift_inv_bind2 … H) -H #V #T #HVW #HTU #H destruct /4 width=4/
-| #a #G #L #W #W0 #W1 #U #U1 #l #_ #_ #HW0 #HW01 #HU1 #IHW #IHU #K #d #e #HLK #X #H
+| #a #G #L #W #W0 #W1 #U #U1 #l #_ #_ #Hl #HW0 #HW01 #HU1 #IHW #IHU #K #d #e #HLK #X #H
   elim (lift_inv_flat2 … H) -H #V #T #HVW #HTU #H destruct
-  elim (ssta_inv_lift1 … HW0 … HLK … HVW) -HW0 #V0 #HV0 #HVW0
+  lapply (da_inv_lift … Hl … HLK … HVW) -Hl #Hl
+  elim (ssta_inv_lift1 … HW0 … HLK … HVW) -HW0 #V0 #HVW0 #HV0
   elim (cprs_inv_lift1 … HW01 … HLK … HVW0) -W0 #V1 #HVW1 #HV01
   elim (cpds_inv_lift1 … HU1 … HLK … HTU) -HU1 #X #H #HTU
   elim (lift_inv_bind2 … H) -H #Y #T1 #HY #HTU1 #H destruct
   lapply (lift_inj … HY … HVW1) -HY #H destruct /3 width=8/
-| #G #L #W0 #U #W #l #_ #_ #HUW #HW0 #IHW0 #IHU #K #d #e #HLK #X #H
+| #G #L #W0 #U #W #l #_ #_ #Hl #HUW #HW0 #IHW0 #IHU #K #d #e #HLK #X #H
   elim (lift_inv_flat2 … H) -H #V0 #T #HVW0 #HTU #H destruct
-  elim (ssta_inv_lift1 … HUW … HLK … HTU) -HUW #V #HTV #HVW
+  lapply (da_inv_lift … Hl … HLK … HTU) -Hl #Hl
+  elim (ssta_inv_lift1 … HUW … HLK … HTU) -HUW #V #HVW #HTV
   lapply (cpcs_inv_lift G … HLK … HVW … HVW0 ?) // -W /3 width=4/
 ]
 qed-.

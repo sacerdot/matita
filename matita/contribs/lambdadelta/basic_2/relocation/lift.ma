@@ -274,7 +274,7 @@ lemma lift_fwd_pair1: ∀I,T2,V1,U1,d,e. ⇧[d,e] ②{I}V1.U1 ≡ T2 →
 * [ #a ] #I #T2 #V1 #U1 #d #e #H
 [ elim (lift_inv_bind1 … H) -H /2 width=4/
 |  elim (lift_inv_flat1 … H) -H /2 width=4/
-] 
+]
 qed-.
 
 lemma lift_fwd_pair2: ∀I,T1,V2,U2,d,e. ⇧[d,e] T1 ≡ ②{I}V2.U2 →
@@ -282,7 +282,7 @@ lemma lift_fwd_pair2: ∀I,T1,V2,U2,d,e. ⇧[d,e] T1 ≡ ②{I}V2.U2 →
 * [ #a ] #I #T1 #V2 #U2 #d #e #H
 [ elim (lift_inv_bind2 … H) -H /2 width=4/
 |  elim (lift_inv_flat2 … H) -H /2 width=4/
-] 
+]
 qed-.
 
 lemma lift_fwd_tw: ∀d,e,T1,T2. ⇧[d, e] T1 ≡ T2 → ♯{T1} = ♯{T2}.

@@ -35,7 +35,7 @@ lemma csn_abst: ∀h,g,a,G,L,W. ⦃G, L⦄ ⊢ ⬊*[h, g] W →
 elim (cpx_inv_abst1 … H1) -H1
 #W0 #T0 #HLW0 #HLT0 #H destruct
 elim (eq_false_inv_tpair_sn … H2) -H2
-[ -IHT #H lapply (csn_cpx_trans … HLT0) // -HT 
+[ -IHT #H lapply (csn_cpx_trans … HLT0) // -HT
   #HT0 lapply (csn_lpx_conf … (L.ⓛW0) … HT0) -HT0 /2 width=1/ /3 width=1/
 | -IHW -HLW0 -HT * #H destruct /3 width=1/
 ]

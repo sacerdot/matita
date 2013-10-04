@@ -19,10 +19,10 @@
    <section>Summary of the Specification</section>
    <body>Here is a numerical acount of the specification's contents
          and its timeline.
-	 Nodes are counted according to the "intrinsinc complexity measure"
-	 [F. Guidi: "Procedural Representation of CIC Proof Terms"
+         Nodes are counted according to the "intrinsinc complexity measure"
+         [F. Guidi: "Procedural Representation of CIC Proof Terms"
          Journal of Automated Reasoning 44(1-2), Springer (February 2010),
-	 pp. 53-78].
+         pp. 53-78].
    </body>
    <table name="basic_2_sum"/>
    <news date="In progress.">
@@ -35,7 +35,7 @@
    </news>
    <news date="2013 August 7.">
          Passive support for global environments.
-   </news>   
+   </news>
    <news date="2013 July 27.">
          Reaxiomatized β-reductum as in extended β-reduction
    </news>
@@ -44,7 +44,7 @@
          for simply typed terms.
    </news>
    <news date="2013 April 16.">
-         Reaxiomatized substitution and reduction 
+         Reaxiomatized substitution and reduction
          commute with respect to subclosure
          (anniversary milestone).
    </news>

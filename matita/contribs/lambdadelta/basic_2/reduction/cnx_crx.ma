@@ -24,7 +24,7 @@ lemma cnx_inv_crx: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ 𝐑[h, g]⦃T⦄ → ⦃G, L⦄
 #h #g #G #L #T #H elim H -L -T
 [ #L #k #l #Hkl #H
   lapply (cnx_inv_sort … H) -H #H
-  lapply (deg_mono … H Hkl) -h -L -k <plus_n_Sm #H destruct 
+  lapply (deg_mono … H Hkl) -h -L -k <plus_n_Sm #H destruct
 | #I #L #K #V #i #HLK #H
   elim (cnx_inv_delta … HLK H)
 | #L #V #T #_ #IHV #H

@@ -13,12 +13,22 @@
 (**************************************************************************)
 
 include "basic_2/substitution/fsups_fsups.ma".
+include "basic_2/unfold/lsstas_lift.ma".
 include "basic_2/reduction/cpx_lift.ma".
 include "basic_2/computation/cpxs.ma".
 
 (* CONTEXT-SENSITIVE EXTENDED PARALLEL COMPUTATION ON TERMS *****************)
 
 (* Advanced properties ******************************************************)
+
+lemma lsstas_cpxs: ∀h,g,G,L,T1,T2,l1. ⦃G, L⦄ ⊢ T1 •* [h, g, l1] T2 →
+                   ∀l2. ⦃G, L⦄ ⊢ T1 ▪ [h, g] l2 → l1 ≤ l2 → ⦃G, L⦄ ⊢ T1 ➡*[h, g] T2.
+#h #g #G #L #T1 #T2 #l1 #H @(lsstas_ind_dx … H) -T2 -l1 //
+#l1 #T #T2 #HT1 #HT2 #IHT1 #l2 #Hl2 #Hl12
+lapply (lsstas_da_conf … HT1 … Hl2) -HT1
+>(plus_minus_m_m (l2-l1) 1 ?) [2: /2 width=1/ ]
+/4 width=5 by cpxs_strap1, ssta_cpx, lt_to_le/
+qed.
 
 lemma cpxs_delta: ∀h,g,I,G,L,K,V,V2,i.
                   ⇩[0, i] L ≡ K.ⓑ{I}V → ⦃G, K⦄ ⊢ V ➡*[h, g] V2 →
@@ -66,6 +76,12 @@ elim (fsupq_cpx_trans … HT1 … HT2) -T #T #HT1 #HT2
 elim (IHTU2 … HT2) -T2 /3 width=3/
 qed-.
 
+lemma fsupq_lsstas_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, L2, T2⦄ →
+                          ∀U2,l1. ⦃G2, L2⦄ ⊢ T2 •*[h, g, l1] U2 →
+                          ∀l2. ⦃G2, L2⦄ ⊢ T2 ▪ [h, g] l2 → l1 ≤ l2 →
+                          ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡*[h, g] U1 & ⦃G1, L1, U1⦄ ⊃* ⦃G2, L2, U2⦄.
+/3 width=5 by fsupq_cpxs_trans, lsstas_cpxs/ qed-.
+
 lemma fsups_cpxs_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃* ⦃G2, L2, T2⦄ →
                         ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡*[h, g] U2 →
                         ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡*[h, g] U1 & ⦃G1, L1, U1⦄ ⊃* ⦃G2, L2, U2⦄.
@@ -76,7 +92,8 @@ elim (IHT1 … HT2) -T #T #HT1 #HT2
 lapply (fsups_trans … HT2 … HTU2) -G -L -T2 /2 width=3/
 qed-.
 
-lemma fsup_ssta_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ →
-                       ∀U2,l. ⦃G2, L2⦄ ⊢ T2 •[h, g] ⦃l+1, U2⦄ →
-                       ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡[h, g] U1 & ⦃G1, L1, U1⦄ ⊃⸮ ⦃G2, L2, U2⦄.
-/3 width=4 by fsup_cpx_trans, ssta_cpx/ qed-.
+lemma fsups_lsstas_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃* ⦃G2, L2, T2⦄ →
+                          ∀U2,l1. ⦃G2, L2⦄ ⊢ T2 •*[h, g, l1] U2 →
+                          ∀l2. ⦃G2, L2⦄ ⊢ T2 ▪ [h, g] l2 → l1 ≤ l2 →
+                          ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡*[h, g] U1 & ⦃G1, L1, U1⦄ ⊃* ⦃G2, L2, U2⦄.
+/3 width=7 by fsups_cpxs_trans, lsstas_cpxs/ qed-.

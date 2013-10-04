@@ -70,8 +70,8 @@ definition sd_SO: ∀h. nat → sd h ≝ λh,k. mk_sd h (deg_SO h k) ….
 | #K0 #l1 #l2 * [ #l01 ] #H1 * [1,3: #l02 ] #H2 //
   [ < H2 in H1; -H2 #H
     lapply (nexts_inj … H) -H #H destruct //
-  | elim (H1 ?) /2 width=2/
-  | elim (H2 ?) /2 width=2/
+  | elim H1 /2 width=2/
+  | elim H2 /2 width=2/
   ]
 | #k0 #l0 *
   [ #l #H destruct elim l -l normalize /2 width=1/

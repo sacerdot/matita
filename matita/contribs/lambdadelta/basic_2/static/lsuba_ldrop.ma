@@ -26,7 +26,7 @@ lemma lsuba_ldrop_O1_conf: ∀G,L1,L2. G ⊢ L1 ⁝⊑ L2 → ∀K1,e. ⇩[0, e]
 | #I #L1 #L2 #V #_ #IHL12 #K1 #e #H
   elim (ldrop_inv_O1_pair1 … H) -H * #He #HLK1
   [ destruct
-    elim (IHL12 L1 0 ?) -IHL12 // #X #HL12 #H
+    elim (IHL12 L1 0) -IHL12 // #X #HL12 #H
     <(ldrop_inv_O2 … H) in HL12; -H /3 width=3/
   | elim (IHL12 … HLK1) -L1 /3 width=3/
   ]
