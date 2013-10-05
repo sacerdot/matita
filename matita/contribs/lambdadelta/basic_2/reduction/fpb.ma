@@ -12,19 +12,25 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unfold/lsstas_lift.ma".
-include "basic_2/computation/yprs.ma".
+include "basic_2/notation/relations/btpred_8.ma".
+include "basic_2/relocation/fsup.ma".
+include "basic_2/static/ssta.ma".
+include "basic_2/reduction/lpr.ma".
 
-(* "BIG TREE" PARALLEL COMPUTATION FOR CLOSURES *****************************)
+(* "BIG TREE" PARALLEL REDUCTION FOR CLOSURES *******************************)
 
-(* Advanced properties ******************************************************)
+inductive fpb (h) (g) (G1) (L1) (T1): relation3 genv lenv term ≝
+| fpb_fsup  : ∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ → fpb h g G1 L1 T1 G2 L2 T2
+| fpb_lpr   : ∀L2. ⦃G1, L1⦄ ⊢ ➡ L2 → fpb h g G1 L1 T1 G1 L2 T1
+| fpb_cpr   : ∀T2. ⦃G1, L1⦄ ⊢ T1 ➡ T2 → fpb h g G1 L1 T1 G1 L1 T2
+| fpb_ssta  : ∀T2,l. ⦃G1, L1⦄ ⊢ T1 ▪[h, g] l+1 → ⦃G1, L1⦄ ⊢ T1 •[h, g] T2 → fpb h g G1 L1 T1 G1 L1 T2
+.
 
-lemma lsstas_yprs: ∀h,g,G,L,T1,T2,l2. ⦃G, L⦄ ⊢ T1 •*[h, g, l2] T2 →
-                   ∀l1. l2 ≤ l1 → ⦃G, L⦄ ⊢ T1 ▪[h, g] l1 → ⦃G, L, T1⦄ ≥[h, g] ⦃G, L, T2⦄.
-#h #g #G #L #T1 #T2 #l2 #H @(lsstas_ind_dx … H) -l2 -T2 //
-#l2 #T #T2 #HT1 #HT2 #IHT1 #l1 >commutative_plus #Hl21 #Hl1
-elim (le_inv_plus_l … Hl21) -Hl21 #Hl12 #Hl21
-lapply (lsstas_da_conf … HT1 … Hl1) -HT1
->(plus_minus_m_m … Hl12) -Hl12
-/3 width=5 by ypr_ssta, yprs_strap1/
-qed.
+interpretation
+   "'big tree' parallel reduction (closure)"
+   'BTPRed h g G1 L1 T1 G2 L2 T2 = (fpb h g G1 L1 T1 G2 L2 T2).
+
+(* Basic properties *********************************************************)
+
+lemma fpb_refl: ∀h,g. tri_reflexive … (fpb h g).
+/2 width=1 by fpb_cpr/ qed.

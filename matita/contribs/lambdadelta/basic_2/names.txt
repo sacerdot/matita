@@ -67,6 +67,7 @@ s: sequential transformation
 
 - third letter
 
+b: "big tree" reduction
 c: conversion
 d: decomposed extended reduction
 e: decomposed extended conversion

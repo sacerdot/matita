@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/unfold/lsstas_lsstas.ma".
-include "basic_2/computation/yprs_lift.ma".
+include "basic_2/computation/fpbs_lift.ma".
 include "basic_2/computation/ygt.ma".
 include "basic_2/equivalence/cpes_cpds.ma".
 include "basic_2/dynamic/snv.ma".
@@ -51,7 +51,7 @@ fact snv_cprs_lpr_aux: ∀h,g,G0,L0,T0.
                        ∀G,L1,T1. ⦃G0, L0, T0⦄ >[h, g] ⦃G, L1, T1⦄ → ⦃G, L1⦄ ⊢ T1 ¡[h, g] →
                        ∀T2. ⦃G, L1⦄ ⊢ T1 ➡* T2 → ∀L2. ⦃G, L1⦄ ⊢ ➡ L2 → ⦃G, L2⦄ ⊢ T2 ¡[h, g].
 #h #g #G0 #L0 #T0 #IH #G #L1 #T1 #HLT0 #HT1 #T2 #H
-@(cprs_ind … H) -T2 /4 width=6 by ygt_yprs_trans, cprs_yprs/
+@(cprs_ind … H) -T2 /4 width=6 by ygt_fpbs_trans, cprs_fpbs/
 qed-.
 
 fact da_cprs_lpr_aux: ∀h,g,G0,L0,T0.
@@ -61,7 +61,7 @@ fact da_cprs_lpr_aux: ∀h,g,G0,L0,T0.
                       ∀l. ⦃G, L1⦄ ⊢ T1 ▪[h, g] l →
                       ∀T2. ⦃G, L1⦄ ⊢ T1 ➡* T2 → ∀L2. ⦃G, L1⦄ ⊢ ➡ L2 → ⦃G, L2⦄ ⊢ T2 ▪[h, g] l.
 #h #g #G0 #L0 #T0 #IH2 #IH1 #G #L1 #T1 #HLT0 #HT1 #l #Hl #T2 #H
-@(cprs_ind … H) -T2 /4 width=10 by snv_cprs_lpr_aux, ygt_yprs_trans, cprs_yprs/
+@(cprs_ind … H) -T2 /4 width=10 by snv_cprs_lpr_aux, ygt_fpbs_trans, cprs_fpbs/
 qed-.
 
 fact da_cpcs_aux: ∀h,g,G0,L0,T0.
@@ -103,7 +103,7 @@ elim (IHT1 L1) // -IHT1 #U #HTU #HU1
 elim (IH1 … Hl21 … HTU … HTT2 … HL12) -IH1 -HTU -HTT2
 [2: /3 width=12 by da_cprs_lpr_aux/
 |3: /3 width=10 by snv_cprs_lpr_aux/
-|4: /3 width=5 by ygt_yprs_trans, cprs_yprs/
+|4: /3 width=5 by ygt_fpbs_trans, cprs_fpbs/
 ] -G0 -L0 -T0 -T1 -T -l1 #U2 #HTU2 #HU2
 /4 width=5 by lpr_cpcs_conf, cpcs_trans, ex2_intro/
 qed-.
@@ -149,7 +149,7 @@ elim (le_or_ge l2 l) #Hl2
 | lapply (lsstas_da_conf … HT1T … Hl1) #Hl1l
   lapply (lsstas_conf_le … HT1T … HTU1) -HTU1 // #HTU1
   elim (lsstas_cprs_lpr_aux … IH3 IH2 IH1 … Hl1l … HTU1 … HTT2 L)
-  /3 width=8 by ygt_yprs_trans, lsstas_yprs, monotonic_le_minus_l/ -T #U2 #HTU2 #HU12
+  /3 width=8 by ygt_fpbs_trans, lsstas_fpbs, monotonic_le_minus_l/ -T #U2 #HTU2 #HU12
   /3 width=5 by cpcs_cpes, ex3_2_intro/
 ]
 qed-.

@@ -31,7 +31,7 @@ lemma lsstas_ygt: ∀h,g,G,L,T1,T2,l2. ⦃G, L⦄ ⊢ T1 •*[h, g, l2] T2 → (
     elim (le_inv_plus_l … Hl21) -Hl21 #Hl12 #Hl21
     lapply (lsstas_da_conf … HT1 … Hl1) -HT1
     >(plus_minus_m_m … Hl12) -Hl12
-    /4 width=5 by ypr_ssta, ygt_strap1/
+    /4 width=5 by fpb_ssta, ygt_strap1/
   ]
 ]
 qed.

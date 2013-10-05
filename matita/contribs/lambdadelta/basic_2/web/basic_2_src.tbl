@@ -86,7 +86,7 @@ table {
         ]
         [ { "\"big tree\" parallel computation" * } {
              [ "ygt ( ⦃?,?,?⦄ >[?,?] ⦃?,?,?⦄ )" "ygt_lift" + "ygt_ygt" * ]
-             [ "yprs ( ? ⊢ ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "yprs_lift" + "yprs_yprs" * ]
+             [ "fpbs ( ? ⊢ ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "fpbs_lift" + "fpbs_fpbs" * ]
           }
         ]
         [ { "decomposed extended computation" * } {
@@ -116,7 +116,7 @@ table {
    class "water"
    [ { "reduction" * } {
         [ { "\"big tree\" parallel reduction" * } {
-             [ "ypr ( ⦃?,?,?⦄ ≽[?,?] ⦃?,?,?⦄ )" "ysc ( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" * ]
+             [ "fpb ( ⦃?,?,?⦄ ≽[?,?] ⦃?,?,?⦄ )" "ysc ( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" * ]
           }
         ]
         [ { "context-sensitive extended normal forms" * } {

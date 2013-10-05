@@ -12,25 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/btpred_8.ma".
-include "basic_2/relocation/fsup.ma".
-include "basic_2/static/ssta.ma".
-include "basic_2/reduction/lpr.ma".
+include "basic_2/computation/fpbs.ma".
 
-(* "BIG TREE" PARALLEL REDUCTION FOR CLOSURES *******************************)
+(* "BIG TREE" PARALLEL COMPUTATION FOR CLOSURES *****************************)
 
-inductive ypr (h) (g) (G1) (L1) (T1): relation3 genv lenv term ≝
-| ypr_fsup  : ∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ → ypr h g G1 L1 T1 G2 L2 T2
-| ypr_lpr   : ∀L2. ⦃G1, L1⦄ ⊢ ➡ L2 → ypr h g G1 L1 T1 G1 L2 T1
-| ypr_cpr   : ∀T2. ⦃G1, L1⦄ ⊢ T1 ➡ T2 → ypr h g G1 L1 T1 G1 L1 T2
-| ypr_ssta  : ∀T2,l. ⦃G1, L1⦄ ⊢ T1 ▪[h, g] l+1 → ⦃G1, L1⦄ ⊢ T1 •[h, g] T2 → ypr h g G1 L1 T1 G1 L1 T2
-.
+(* Main properties **********************************************************)
 
-interpretation
-   "'big tree' parallel reduction (closure)"
-   'BTPRed h g G1 L1 T1 G2 L2 T2 = (ypr h g G1 L1 T1 G2 L2 T2).
+theorem fpbs_trans: ∀h,g. tri_transitive … (fpbs h g).
+/2 width=5 by tri_TC_transitive/ qed-.
 
-(* Basic properties *********************************************************)
+(* Advanced properties ******************************************************)
 
-lemma ypr_refl: ∀h,g. tri_reflexive … (ypr h g).
-/2 width=1 by ypr_cpr/ qed.
+lemma cpr_lpr_ssta_fpbs: ∀h,g,G,L1,L2,T1,T2,U2,l2.
+                         ⦃G, L1⦄ ⊢ T1 ➡ T2 → ⦃G, L1⦄ ⊢ ➡ L2 →
+                         ⦃G, L2⦄ ⊢ T2 ▪[h, g] l2+1 → ⦃G, L2⦄ ⊢ T2 •[h, g] U2 →
+                         ⦃G, L1, T1⦄ ≥[h, g] ⦃G, L2, U2⦄.
+/3 width=5 by fpbs_trans, cpr_lpr_fpbs, ssta_fpbs/ qed.

@@ -73,7 +73,7 @@ fact da_cpr_lpr_aux: ∀h,g,G0,L0,T0.
     elim (snv_fwd_da … HW) #l1 #Hl1
     lapply (IH3 … HV1 … 1 … Hl0 W1 ?) /2 width=2 by fsupp_ygt, ssta_lsstas/ #HW1
     lapply (da_cpcs_aux … IH2 IH1 … Hl1 … H … HWW1) -H
-    /3 width=5 by ygt_yprs_trans, fsupp_ygt, ssta_yprs/ #H destruct
+    /3 width=5 by ygt_fpbs_trans, fsupp_ygt, ssta_fpbs/ #H destruct
     lapply (IH1 … HV1 … Hl0 … HV12 … HL12) -HV1 -Hl0 -HV12 [ /2 by fsupp_ygt/ ] #Hl0
     lapply (IH1 … Hl1 … HW2 … HL12) -Hl1 // /2 width=1 by fsupp_ygt/ -HW
     lapply (IH1 … HU1 … Hl … HU12 (L2.ⓛW2) ?) -IH1 -HU1 -Hl -HU12 [1,2: /2 by fsupp_ygt, lpr_pair/ ] -HL12 -HW2

@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/computation/cpds_cpds.ma".
-include "basic_2/computation/yprs_yprs.ma".
+include "basic_2/computation/fpbs_fpbs.ma".
 include "basic_2/dynamic/snv_aaa.ma".
 include "basic_2/dynamic/snv_cpcs.ma".
 include "basic_2/dynamic/lsubsv_lsstas.ma".
@@ -94,13 +94,13 @@ fact lsstas_cpr_lpr_aux: ∀h,g,G0,L0,T0.
     elim (snv_fwd_da … HW2) #l #Hl
     lapply (IH4 … HV1 … 1 … Hl0 W1 ?) /2 width=1 by fsupp_ygt, ssta_lsstas/ #HW1
     lapply (da_cpcs_aux … IH3 IH2 … H … Hl … HW12) // -H
-    /3 width=5 by ygt_yprs_trans, fsupp_ygt, ssta_yprs/ #H destruct
+    /3 width=5 by ygt_fpbs_trans, fsupp_ygt, ssta_fpbs/ #H destruct
     lapply (IH3 … HV12 … HL12) /2 width=1 by fsupp_ygt/ #HV2
     lapply (IH2 … Hl0 … HV12 … HL12) /2 width=1 by fsupp_ygt/ #HV2l
     elim (IH1 … 1 … Hl0 … W1 … HV12 … HL12) /2 width=1 by fsupp_ygt, ssta_lsstas/ -HVW1 #W4 #H #HW14
     lapply (lsstas_inv_SO … H) #HV2W4
     lapply (ssta_da_conf … HV2W4 … HV2l) <minus_plus_m_m #HW4l
-    lapply (IH4 … HV2 … HV2l … H) -H /3 width=5 by ygt_yprs_trans, fsupp_ygt, cpr_lpr_yprs/ #HW4
+    lapply (IH4 … HV2 … HV2l … H) -H /3 width=5 by ygt_fpbs_trans, fsupp_ygt, cpr_lpr_fpbs/ #HW4
     lapply (IH3 … HW23 … HL12) /2 width=1 by fsupp_ygt/ #HW3
     lapply (IH2 … Hl … HW23 … HL12) /2 width=1 by fsupp_ygt/ #HW3l
     elim (IH1 … Hl1 … HTU2 … HT23 (L2.ⓛW3)) -HTU2 /2 width=1 by fsupp_ygt, lpr_pair/ #U3 #HTU3 #HU23
@@ -118,8 +118,8 @@ fact lsstas_cpr_lpr_aux: ∀h,g,G0,L0,T0.
       #W #W0 #l0 #Hl0 #HV2W #HW30
       lapply (lsstas_ssta_conf_pos … HV2W4 … HV2W) -HV2W #HW4W
       @(lsstas_cpcs_lpr_aux … IH3 IH2 IH1 … Hl0 … HW4W … Hl0 … HW30 … HW43) //
-      [ /3 width=9 by ygt_yprs_trans, fsupp_ygt, cpr_lpr_ssta_yprs/
-      | /3 width=5 by ygt_yprs_trans, fsupp_ygt, cpr_lpr_yprs/
+      [ /3 width=9 by ygt_fpbs_trans, fsupp_ygt, cpr_lpr_ssta_fpbs/
+      | /3 width=5 by ygt_fpbs_trans, fsupp_ygt, cpr_lpr_fpbs/
       ]
     | -IH1 -IH3 -IH4 /3 width=9 by fsupp_ygt, lpr_pair/
     ]

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/yprs_yprs.ma".
+include "basic_2/computation/fpbs_fpbs.ma".
 include "basic_2/dynamic/snv_lift.ma".
 include "basic_2/dynamic/snv_cpcs.ma".
 include "basic_2/dynamic/lsubsv_snv.ma".
@@ -74,7 +74,7 @@ fact snv_cpr_lpr_aux: ∀h,g,G0,L0,T0.
     lapply (ssta_da_conf … HVW1 … Hl0) <minus_plus_m_m #HlW10
     elim (snv_fwd_da … HW20) #l #Hl
     lapply (da_cpcs_aux … IH1 IH2 … HlW10 … Hl … HW120) // -HlW10
-    /3 width=5 by ygt_yprs_trans, fsupp_ygt, ssta_yprs/ #H destruct
+    /3 width=5 by ygt_fpbs_trans, fsupp_ygt, ssta_fpbs/ #H destruct
     lapply (IH2 … Hl0 … HV12 … HL12) /2 width=1 by fsupp_ygt/ #HlV2
     lapply (IH2 … Hl … HW202 … HL12) /2 width=1 by fsupp_ygt/ #HlW2
     elim (ssta_cpr_lpr_aux … IH3 … Hl0 … HVW1 … HV12 … HL12) /2 width=1 by fsupp_ygt/ #W3 #HV2W3 #HW103
@@ -86,13 +86,13 @@ fact snv_cpr_lpr_aux: ∀h,g,G0,L0,T0.
     lapply (IH1 … HW202 … HL12) /2 width=1 by fsupp_ygt/ -HW20 #HW2
     lapply (IH1 … HT20 … HT202 … (L2.ⓛW2) ?) /2 width=1 by fsupp_ygt, lpr_pair/ -HT20 #HT2
     lapply (snv_ssta_aux … IH4 … HlV2 … HV2W3)
-    /3 width=5 by ygt_yprs_trans, fsupp_ygt, cpr_lpr_yprs/ #HW3
+    /3 width=5 by ygt_fpbs_trans, fsupp_ygt, cpr_lpr_fpbs/ #HW3
     lapply (lsubsv_snv_trans … HT2 (L2.ⓓⓝW2.V2) ?) -HT2 /3 width=3 by snv_bind, snv_cast/
     @(lsubsv_abbr … l) /3 width=7 by fsupp_ygt/ #W #W0 #l0 #Hl0 #HV2W #HW20
     lapply (lsstas_ssta_conf_pos … HV2W3 … HV2W) -HV2W #HW3W
     @(lsstas_cpcs_lpr_aux … IH1 IH2 IH3 … HlW3 … HW3W … HlW2 … HW20 … HW32) //
-    [ /3 width=9 by ygt_yprs_trans, fsupp_ygt, cpr_lpr_ssta_yprs/
-    | /3 width=5 by ygt_yprs_trans, fsupp_ygt, cpr_lpr_yprs/
+    [ /3 width=9 by ygt_fpbs_trans, fsupp_ygt, cpr_lpr_ssta_fpbs/
+    | /3 width=5 by ygt_fpbs_trans, fsupp_ygt, cpr_lpr_fpbs/
     ]
   | #b #V0 #V2 #W0 #W2 #T0 #T2 #HV10 #HV02 #HW02 #HT02 #H1 #H2 destruct -IH4
     elim (snv_inv_bind … HT1) -HT1 #HW0 #HT0

@@ -19,4 +19,4 @@ include "basic_2/computation/ygt.ma".
 (* Main properties **********************************************************)
 
 theorem ygt_trans: ∀h,g. tri_transitive … (ygt h g).
-/3 width=5 by ygt_fwd_yprs, ygt_yprs_trans/ qed-.
+/3 width=5 by ygt_fwd_fpbs, ygt_fpbs_trans/ qed-.

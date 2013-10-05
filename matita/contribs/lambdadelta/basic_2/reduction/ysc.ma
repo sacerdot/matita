@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/btpredproper_8.ma".
-include "basic_2/reduction/ypr.ma".
+include "basic_2/reduction/fpb.ma".
 
 (* "BIG TREE" PROPER PARALLEL REDUCTION FOR CLOSURES ************************)
 
@@ -29,15 +29,15 @@ interpretation
 
 (* Basic properties *********************************************************)
 
-lemma ysc_ypr: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≻[h, g] ⦃G2, L2, T2⦄ →
+lemma ysc_fpb: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≻[h, g] ⦃G2, L2, T2⦄ →
                ⦃G1, L1, T1⦄ ≽[h, g] ⦃G2, L2, T2⦄.
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2
-/2 width=2 by ypr_fsup, ypr_cpr, ypr_ssta/
+/2 width=2 by fpb_fsup, fpb_cpr, fpb_ssta/
 qed.
 
 (* Inversion lemmas on "big tree" parallel reduction for closures ***********)
 
-lemma ypr_inv_ysc: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≽[h, g] ⦃G2, L2, T2⦄ →
+lemma fpb_inv_ysc: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≽[h, g] ⦃G2, L2, T2⦄ →
                    ⦃G1, L1, T1⦄ ≻[h, g] ⦃G2, L2, T2⦄ ∨
                    ∧∧ G1 = G2 & ⦃G1, L1⦄ ⊢ ➡ L2 & T1 = T2.
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2
