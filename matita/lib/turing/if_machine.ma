@@ -224,6 +224,20 @@ qed.
 
 lemma sem_if_app: ∀sig,M1,M2,M3,Rtrue,Rfalse,R2,R3,R4,acc.
   accRealize sig M1 acc Rtrue Rfalse  → M2 ⊨ R2  → M3 ⊨ R3 →  
+    (∀t1,t2,t3. (Rtrue t1 t3 ∧ R2 t3 t2) ∨ (Rfalse t1 t3 ∧ R3 t3 t2) → R4 t1 t2) → 
+    ifTM sig M1 M2 M3 acc ⊨ R4.
+#sig #M1 #M2 #M3 #Rtrue #Rfalse #R2 #R3 #R4 #acc
+#HRacc #HRtrue #HRfalse #Hsub
+#t cases (sem_if … HRacc HRtrue HRfalse t)
+#k * #outc * #Hloop #Houtc @(ex_intro … k) @(ex_intro … outc)
+% [@Hloop] cases Houtc
+  [* #t3 * #Hleft #Hright @(Hsub … t3) %1 /2/
+  |* #t3 * #Hleft #Hright @(Hsub … t3) %2 /2/ ]
+qed.
+
+(* weak 
+lemma sem_if_app: ∀sig,M1,M2,M3,Rtrue,Rfalse,R2,R3,R4,acc.
+  accRealize sig M1 acc Rtrue Rfalse  → M2 ⊨ R2  → M3 ⊨ R3 →  
     (∀t1,t2,t3. (Rtrue t1 t3 → R2 t3 t2) ∨ (Rfalse t1 t3 → R3 t3 t2) → R4 t1 t2) → 
     ifTM sig M1 M2 M3 acc ⊨ R4.
 #sig #M1 #M2 #M3 #Rtrue #Rfalse #R2 #R3 #R4 #acc
@@ -234,7 +248,8 @@ lemma sem_if_app: ∀sig,M1,M2,M3,Rtrue,Rfalse,R2,R3,R4,acc.
   [* #t3 * #Hleft #Hright @(Hsub … t3) %1 /2/
   |* #t3 * #Hleft #Hright @(Hsub … t3) %2 /2/ ]
 qed.
- 
+*)
+
 (* we can probably use acc_sem_if to prove sem_if *)
 (* for sure we can use acc_sem_if_guarded to prove acc_sem_if *)
 lemma acc_sem_if: ∀sig,M1,M2,M3,Rtrue,Rfalse,R2,R3,acc.

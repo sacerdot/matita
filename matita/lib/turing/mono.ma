@@ -9,6 +9,7 @@
      \ /   GNU General Public License Version 2   
       V_____________________________________________________________*)
 
+include "basics/finset.ma".
 include "basics/vectors.ma".
 include "basics/finset.ma".
 (* include "basics/relations.ma". *)

@@ -32,7 +32,15 @@ lemma sem_write : ∀alpha,c.Realize ? (write alpha c) (R_write alpha c).
 #alpha #c #t @(ex_intro … 2) @ex_intro
   [|% [% |#ls #c #rs #Ht >Ht % ] ]
 qed. 
- 
+
+definition R_write_strong ≝ λalpha,c,t1,t2.
+  t2 = midtape alpha (left ? t1) c (right ? t1).
+  
+lemma sem_write_strong : ∀alpha,c.Realize ? (write alpha c) (R_write_strong alpha c).
+#alpha #c #t @(ex_intro … 2) @ex_intro
+  [|% [% |cases t normalize // ] ]
+qed. 
+
 (******************** moves the head one step to the right ********************)
 
 definition move_states ≝ initN 2.
@@ -345,6 +353,232 @@ lemma sem_swap_l : ∀alpha,foo.
       [#b #rs #H destruct normalize // |#a #b #ls #rs #H destruct]]]
     |#r0 #rt0 @ex_intro [| % [ % | %
       [#b #rs #H destruct | #a #b #ls #rs #H destruct normalize //
+    ]
+  ]
+qed.
+
+(********************************** combine ***********************************)
+(* replace the content x of a cell with a combiation f(x,y) of x and the content
+y of the adiacent cell *)
+
+definition combf_states : FinSet → FinSet ≝ 
+  λalpha:FinSet.FinProd (initN 4) alpha.
+
+definition combf0 : initN 4 ≝ mk_Sig ?? 0 (leb_true_to_le 1 4 (refl …)).
+definition combf1 : initN 4 ≝ mk_Sig ?? 1 (leb_true_to_le 2 4 (refl …)).
+definition combf2 : initN 4 ≝ mk_Sig ?? 2 (leb_true_to_le 3 4 (refl …)).
+definition combf3 : initN 4 ≝ mk_Sig ?? 3 (leb_true_to_le 4 4 (refl …)).
+
+definition combf_r ≝ 
+ λalpha:FinSet.λf.λfoo:alpha.
+ mk_TM alpha (combf_states alpha)
+ (λp.let 〈q,a〉 ≝ p in
+  let 〈q',b〉 ≝ q in
+  let q' ≝ pi1 nat (λi.i<4) q' in
+  match a with 
+  [ None ⇒ 〈〈combf3,foo〉,None ?,N〉 (* if tape is empty then stop *)
+  | Some a' ⇒ 
+  match q' with
+  [ O ⇒ (* q0 *) 〈〈combf1,a'〉,Some ? a',R〉  (* save in register and move R *)
+  | S q' ⇒ match q' with
+    [ O ⇒ (* q1 *) 〈〈combf2,f b a'〉,Some ? a',L〉 
+      (* combine in register and move L *)
+    | S q' ⇒ match q' with
+      [ O ⇒ (* q2 *) 〈〈combf3,foo〉,Some ? b,R〉 
+        (* copy from register and move R *)
+      | S q' ⇒ (* q3 *) 〈〈combf3,foo〉,None ?,N〉 (* final state *)
+      ]
+    ]
+  ]])
+  〈combf0,foo〉
+  (λq.\fst q == combf3).
+  
+definition Rcombf_r ≝ 
+  λalpha,f,t1,t2.
+    (∀b,ls.
+      t1 = midtape alpha ls b [ ] → 
+      t2 = rightof ? b ls) ∧
+    (∀a,b,ls,rs. 
+      t1 = midtape alpha ls b (a::rs) → 
+      t2 = midtape alpha ((f b a)::ls) a rs).
+
+lemma sem_combf_r : ∀alpha,f,foo.
+  combf_r alpha f foo ⊨ Rcombf_r alpha f. 
+#alpha #f #foo *
+  [@(ex_intro ?? 2) @(ex_intro … (mk_config ?? 〈combf3,foo〉 (niltape ?)))
+   % [% |% [#b #ls | #a #b #ls #rs] #H destruct]
+  |#l0 #lt0 @(ex_intro ?? 2) @(ex_intro … (mk_config ?? 〈combf3,foo〉 (leftof ? l0 lt0)))
+   % [% | % [#b #ls | #a #b #ls #rs] #H destruct]
+  |#r0 #rt0 @(ex_intro ?? 2) @(ex_intro … (mk_config ?? 〈combf3,foo〉 (rightof ? r0 rt0)))
+   % [% |% [#b #ls | #a #b #ls #rs] #H destruct] 
+  | #lt #c #rt @(ex_intro ?? 4) cases rt
+    [@ex_intro [|% [ % | %
+      [#b #ls #H destruct normalize // |#a #b #ls #rs #H destruct]]]
+    |#r0 #rt0 @ex_intro [| % [ % | %
+      [#b #ls #H destruct | #a #b #ls #rs #H destruct normalize //
+    ]
+  ]
+qed.
+
+definition combf_l ≝ 
+ λalpha:FinSet.λf.λfoo:alpha.
+ mk_TM alpha (combf_states alpha)
+ (λp.let 〈q,a〉 ≝ p in
+  let 〈q',b〉 ≝ q in
+  let q' ≝ pi1 nat (λi.i<4) q' in
+  match a with 
+  [ None ⇒ 〈〈combf3,foo〉,None ?,N〉 (* if tape is empty then stop *)
+  | Some a' ⇒ 
+  match q' with
+  [ O ⇒ (* q0 *) 〈〈combf1,a'〉,Some ? a',L〉  (* save in register and move R *)
+  | S q' ⇒ match q' with
+    [ O ⇒ (* q1 *) 〈〈combf2,f b a'〉,Some ? a',R〉 
+      (* combine in register and move L *)
+    | S q' ⇒ match q' with
+      [ O ⇒ (* q2 *) 〈〈combf3,foo〉,Some ? b,L〉 
+        (* copy from register and move R *)
+      | S q' ⇒ (* q3 *) 〈〈combf3,foo〉,None ?,N〉 (* final state *)
+      ]
+    ]
+  ]])
+  〈combf0,foo〉
+  (λq.\fst q == combf3).
+  
+definition Rcombf_l ≝ 
+  λalpha,f,t1,t2.
+    (∀b,rs.
+      t1 = midtape alpha [ ] b rs → 
+      t2 = leftof ? b rs) ∧
+    (∀a,b,ls,rs. 
+      t1 = midtape alpha (a::ls) b rs → 
+      t2 = midtape alpha ls a ((f b a)::rs)).
+
+lemma sem_combf_l : ∀alpha,f,foo.
+  combf_l alpha f foo ⊨ Rcombf_l alpha f. 
+#alpha #f #foo *
+  [@(ex_intro ?? 2) @(ex_intro … (mk_config ?? 〈combf3,foo〉 (niltape ?)))
+   % [% |% [#b #ls | #a #b #ls #rs] #H destruct]
+  |#l0 #lt0 @(ex_intro ?? 2) @(ex_intro … (mk_config ?? 〈combf3,foo〉 (leftof ? l0 lt0)))
+   % [% | % [#b #ls | #a #b #ls #rs] #H destruct]
+  |#r0 #rt0 @(ex_intro ?? 2) @(ex_intro … (mk_config ?? 〈combf3,foo〉 (rightof ? r0 rt0)))
+   % [% |% [#b #ls | #a #b #ls #rs] #H destruct] 
+  | #lt #c #rt @(ex_intro ?? 4) cases lt
+    [@ex_intro [|% [ % | %
+      [#b #ls #H destruct normalize // |#a #b #ls #rs #H destruct]]]
+    |#r0 #rt0 @ex_intro [| % [ % | %
+      [#b #ls #H destruct | #a #b #ls #rs #H destruct normalize //
+    ]
+  ]
+qed.
+
+(********************************* new_combine ********************************)
+(* replace the content x of a cell with a combiation f(x,y) of x and the content
+y of the adiacent cell; if there is no adjacent cell, combines with a default 
+value foo *)
+
+definition ncombf_r ≝ 
+ λalpha:FinSet.λf.λfoo:alpha.
+ mk_TM alpha (combf_states alpha)
+ (λp.let 〈q,a〉 ≝ p in
+  let 〈q',b〉 ≝ q in
+  let q' ≝ pi1 nat (λi.i<4) q' in
+  match a with 
+  [ None ⇒ if (eqb q' 1)then (* if on right cell, combine in register and move L *) 
+           〈〈combf2,f b foo〉,None ?,L〉
+           else 〈〈combf3,foo〉,None ?,N〉 (* else stop *)
+  | Some a' ⇒ 
+  match q' with
+  [ O ⇒ (* q0 *) 〈〈combf1,a'〉,Some ? a',R〉  (* save in register and move R *)
+  | S q' ⇒ match q' with
+    [ O ⇒ (* q1 *) 〈〈combf2,f b a'〉,Some ? a',L〉 
+      (* combine in register and move L *)
+    | S q' ⇒ match q' with
+      [ O ⇒ (* q2 *) 〈〈combf3,foo〉,Some ? b,R〉 
+        (* copy from register and move R *)
+      | S q' ⇒ (* q3 *) 〈〈combf3,foo〉,None ?,N〉 (* final state *)
+      ]
+    ]
+  ]])
+  〈combf0,foo〉
+  (λq.\fst q == combf3).
+  
+definition Rncombf_r ≝ 
+  λalpha,f,foo,t1,t2.
+    (∀b,ls.
+      t1 = midtape alpha ls b [ ] → 
+      t2 = rightof ? (f b foo) ls) ∧
+    (∀a,b,ls,rs. 
+      t1 = midtape alpha ls b (a::rs) → 
+      t2 = midtape alpha ((f b a)::ls) a rs).
+
+lemma sem_ncombf_r : ∀alpha,f,foo.
+  ncombf_r alpha f foo ⊨ Rncombf_r alpha f foo. 
+#alpha #f #foo *
+  [@(ex_intro ?? 2) @(ex_intro … (mk_config ?? 〈combf3,foo〉 (niltape ?)))
+   % [% |% [#b #ls | #a #b #ls #rs] #H destruct]
+  |#l0 #lt0 @(ex_intro ?? 2) @(ex_intro … (mk_config ?? 〈combf3,foo〉 (leftof ? l0 lt0)))
+   % [% | % [#b #ls | #a #b #ls #rs] #H destruct]
+  |#r0 #rt0 @(ex_intro ?? 2) @(ex_intro … (mk_config ?? 〈combf3,foo〉 (rightof ? r0 rt0)))
+   % [% |% [#b #ls | #a #b #ls #rs] #H destruct] 
+  | #lt #c #rt @(ex_intro ?? 4) cases rt
+    [@ex_intro [|% [ % | %
+      [#b #ls #H destruct normalize // |#a #b #ls #rs #H destruct]]]
+    |#r0 #rt0 @ex_intro [| % [ % | %
+      [#b #ls #H destruct | #a #b #ls #rs #H destruct normalize //
+    ]
+  ]
+qed.
+
+definition ncombf_l ≝ 
+ λalpha:FinSet.λf.λfoo:alpha.
+ mk_TM alpha (combf_states alpha)
+ (λp.let 〈q,a〉 ≝ p in
+  let 〈q',b〉 ≝ q in
+  let q' ≝ pi1 nat (λi.i<4) q' in
+  match a with 
+  [ None ⇒ if (eqb q' 1)then 
+           (* if on left cell, combine in register and move R *) 
+           〈〈combf2,f b foo〉,None ?,R〉
+           else 〈〈combf3,foo〉,None ?,N〉 (* else stop *)
+  | Some a' ⇒ 
+  match q' with
+  [ O ⇒ (* q0 *) 〈〈combf1,a'〉,Some ? a',L〉  (* save in register and move R *)
+  | S q' ⇒ match q' with
+    [ O ⇒ (* q1 *) 〈〈combf2,f b a'〉,Some ? a',R〉 
+      (* combine in register and move L *)
+    | S q' ⇒ match q' with
+      [ O ⇒ (* q2 *) 〈〈combf3,foo〉,Some ? b,L〉 
+        (* copy from register and move R *)
+      | S q' ⇒ (* q3 *) 〈〈combf3,foo〉,None ?,N〉 (* final state *)
+      ]
+    ]
+  ]])
+  〈combf0,foo〉
+  (λq.\fst q == combf3).
+  
+definition Rncombf_l ≝ 
+  λalpha,f,foo,t1,t2.
+    (∀b,rs.
+      t1 = midtape alpha [ ] b rs → 
+      t2 = leftof ? (f b foo) rs) ∧
+    (∀a,b,ls,rs. 
+      t1 = midtape alpha (a::ls) b rs → 
+      t2 = midtape alpha ls a ((f b a)::rs)).
+
+lemma sem_ncombf_l : ∀alpha,f,foo.
+  ncombf_l alpha f foo ⊨ Rncombf_l alpha f foo. 
+#alpha #f #foo *
+  [@(ex_intro ?? 2) @(ex_intro … (mk_config ?? 〈combf3,foo〉 (niltape ?)))
+   % [% |% [#b #ls | #a #b #ls #rs] #H destruct]
+  |#l0 #lt0 @(ex_intro ?? 2) @(ex_intro … (mk_config ?? 〈combf3,foo〉 (leftof ? l0 lt0)))
+   % [% | % [#b #ls | #a #b #ls #rs] #H destruct]
+  |#r0 #rt0 @(ex_intro ?? 2) @(ex_intro … (mk_config ?? 〈combf3,foo〉 (rightof ? r0 rt0)))
+   % [% |% [#b #ls | #a #b #ls #rs] #H destruct] 
+  | #lt #c #rt @(ex_intro ?? 4) cases lt
+    [@ex_intro [|% [ % | %
+      [#b #ls #H destruct normalize // |#a #b #ls #rs #H destruct]]]
+    |#r0 #rt0 @ex_intro [| % [ % | %
+      [#b #ls #H destruct | #a #b #ls #rs #H destruct normalize //
     ]
   ]
 qed.
