@@ -86,7 +86,7 @@ table {
         ]
         [ { "\"big tree\" parallel computation" * } {
              [ "fpbg ( ⦃?,?,?⦄ >[?,?] ⦃?,?,?⦄ )" "fpbg_lift" + "fpbg_fpbg" * ]
-             [ "fpbs ( ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "fpbs_lift" + "fpbs_fpbs" * ]
+             [ "fpbs ( ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "fpbs_alt ( ⦃?,?,?⦄ ≥≥[?,?] ⦃?,?,?⦄ )" "fpbs_lift" + "fpbs_fpbs" * ]
           }
         ]
         [ { "decomposed extended computation" * } {

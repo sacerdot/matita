@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/btpredstar_8.ma".
-include "basic_2/substitution/fsupp.ma".
+include "basic_2/substitution/fsups.ma".
 include "basic_2/reduction/fpb.ma".
 include "basic_2/computation/cpxs.ma".
 include "basic_2/computation/lpxs.ma".
@@ -55,11 +55,10 @@ lemma fpbs_strap2: ∀h,g,G1,G,G2,L1,L,L2,T1,T,T2. ⦃G1, L1, T1⦄ ≽[h, g] �
                    ⦃G, L, T⦄ ≥[h, g] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
 /2 width=5 by tri_TC_strap/ qed-.
 
-(* Note: this is a general property of bi_TC *)
-lemma fsupp_fpbs: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃+ ⦃G2, L2, T2⦄ →
+lemma fsups_fpbs: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃* ⦃G2, L2, T2⦄ →
                   ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
-#h #g #G1 #G2 #L1 #L2 #T1 #T2 #H @(fsupp_ind … L2 T2 H) -G2 -L2 -T2
-/3 width=5 by fpb_fsup, tri_step, fpb_fpbs/
+#h #g #G1 #G2 #L1 #L2 #T1 #T2 #H @(fsups_ind … L2 T2 H) -G2 -L2 -T2 
+/3 width=5 by fpb_fsupq, tri_step/
 qed.
 
 lemma cpxs_fpbs: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡*[h, g] T2 → ⦃G, L, T1⦄ ≥[h, g] ⦃G, L, T2⦄.

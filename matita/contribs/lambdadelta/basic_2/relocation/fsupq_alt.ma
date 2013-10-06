@@ -33,19 +33,29 @@ lemma fsupqa_ldrop: ∀G1,G2,K1,K2,T1,T2. ⦃G1, K1, T1⦄ ⊃⊃⸮ ⦃G2, K2, 
                     ∀L1,d,e. ⇩[d, e] L1 ≡ K1 →
                     ∀U1. ⇧[d, e] T1 ≡ U1 → ⦃G1, L1, U1⦄ ⊃⊃⸮ ⦃G2, K2, T2⦄.
 #G1 #G2 #K1 #K2 #T1 #T2 * [ /3 width=7/ ] * #H1 #H2 #H3 destruct
-#L1 #d #e #HLK #U1 #HTU elim (eq_or_gt e) [2: /3 width=5/ ] #H destruct
+#L1 #d #e #HLK #U1 #HTU elim (eq_or_gt e)
+/3 width=5 by fsup_ldrop_lt, or_introl/ #H destruct
 >(ldrop_inv_O2 … HLK) -L1 >(lift_inv_O2 … HTU) -T2 -d //
 qed.
 
 (* Main properties **********************************************************)
 
 theorem fsupq_fsupqa: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ⊃⊃⸮ ⦃G2, L2, T2⦄.
-#G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2 // /2 width=1/ /2 width=7/
+#G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2
+/2 width=7 by fsupqa_ldrop, fsup_lref_O, fsup_pair_sn, fsup_bind_dx, fsup_flat_dx, or_introl/
 qed.
 
 (* Main inversion properties ************************************************)
 
 theorem fsupqa_inv_fsupq: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃⊃⸮ ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, L2, T2⦄.
-#G1 #G2 #L1 #L2 #T1 #T2 #H elim H -H /2 width=1/
+#G1 #G2 #L1 #L2 #T1 #T2 #H elim H -H /2 width=1 by fsup_fsupq/
 * #H1 #H2 #H3 destruct //
+qed-.
+
+(* Advanced inversion lemmas ************************************************)
+
+lemma fsupq_inv_gen: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, L2, T2⦄ →
+⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ ∨ (∧∧ G1 = G2 & L1 = L2 & T1 = T2).
+#G1 #G2 #L1 #L2 #T1 #T2 #H elim (fsupq_fsupqa … H) -H [| * ]
+/2 width=1 by or_introl/
 qed-.

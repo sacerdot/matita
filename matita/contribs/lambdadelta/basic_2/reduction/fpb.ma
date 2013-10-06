@@ -13,15 +13,15 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/btpred_8.ma".
-include "basic_2/relocation/fsup.ma".
+include "basic_2/relocation/fsupq.ma".
 include "basic_2/reduction/lpx.ma".
 
 (* "BIG TREE" PARALLEL REDUCTION FOR CLOSURES *******************************)
 
 inductive fpb (h) (g) (G1) (L1) (T1): relation3 genv lenv term ≝
-| fpb_fsup: ∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ → fpb h g G1 L1 T1 G2 L2 T2
-| fpb_cpx : ∀T2. ⦃G1, L1⦄ ⊢ T1 ➡[h, g] T2 → fpb h g G1 L1 T1 G1 L1 T2
-| fpb_lpx : ∀L2. ⦃G1, L1⦄ ⊢ ➡[h, g] L2 → fpb h g G1 L1 T1 G1 L2 T1
+| fpb_fsupq: ∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, L2, T2⦄ → fpb h g G1 L1 T1 G2 L2 T2
+| fpb_cpx  : ∀T2. ⦃G1, L1⦄ ⊢ T1 ➡[h, g] T2 → fpb h g G1 L1 T1 G1 L1 T2
+| fpb_lpx  : ∀L2. ⦃G1, L1⦄ ⊢ ➡[h, g] L2 → fpb h g G1 L1 T1 G1 L2 T1
 .
 
 interpretation

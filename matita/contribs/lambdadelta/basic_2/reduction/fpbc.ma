@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/btpredproper_8.ma".
+include "basic_2/relocation/fsupq_alt.ma".
 include "basic_2/reduction/fpb.ma".
 
 (* "BIG TREE" PROPER PARALLEL REDUCTION FOR CLOSURES ************************)
@@ -31,7 +32,7 @@ interpretation
 lemma fpbc_fpb: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≻[h, g] ⦃G2, L2, T2⦄ →
                ⦃G1, L1, T1⦄ ≽[h, g] ⦃G2, L2, T2⦄.
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2
-/2 width=1 by fpb_fsup, fpb_cpx/
+/3 width=1 by fpb_fsupq, fpb_cpx, fsup_fsupq/
 qed.
 
 lemma cpr_fpbc: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡ T2 → (T1 = T2 → ⊥) →
@@ -44,7 +45,10 @@ lemma fpb_inv_fpbc: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≽[h, g] ⦃G2, 
                    ⦃G1, L1, T1⦄ ≻[h, g] ⦃G2, L2, T2⦄ ∨
                    ∧∧ G1 = G2 & ⦃G1, L1⦄ ⊢ ➡[h, g] L2 & T1 = T2.
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2
-/3 width=1 by and3_intro, or_introl, or_intror, fpbc_fsup/
-#T2 #HT12 elim (term_eq_dec T1 T2) #H destruct
-/4 width=1 by and3_intro, or_introl, or_intror, fpbc_cpx/
+/3 width=1 by and3_intro, or_intror/
+[ #G2 #L2 #T2 #H elim (fsupq_inv_gen … H) -H [| * ]
+  /3 width=1 by fpbc_fsup, and3_intro, or_introl, or_intror/
+| #T2 #HT12 elim (term_eq_dec T1 T2) #H destruct
+  /4 width=1 by and3_intro, or_introl, or_intror, fpbc_cpx/
+]
 qed-.
