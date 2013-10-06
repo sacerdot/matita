@@ -14,7 +14,7 @@
 
 include "basic_2/notation/relations/peval_6.ma".
 include "basic_2/computation/cpxs.ma".
-include "basic_2/computation/csn.ma".
+include "basic_2/computation/csx.ma".
 
 (* CONTEXT-SENSITIVE EXTENDED PARALLEL EVALUATION ON TERMS ******************)
 
@@ -26,8 +26,8 @@ interpretation "context-sensitive extended parallel evaluation (term)"
 
 (* Basic_properties *********************************************************)
 
-lemma csn_cpxe: ∀h,g,G,L,T1. ⦃G, L⦄ ⊢ ⬊*[h, g] T1 → ∃T2. ⦃G, L⦄ ⊢ T1 ➡*[h, g] 𝐍⦃T2⦄.
-#h #g #G #L #T1 #H @(csn_ind … H) -T1
+lemma csx_cpxe: ∀h,g,G,L,T1. ⦃G, L⦄ ⊢ ⬊*[h, g] T1 → ∃T2. ⦃G, L⦄ ⊢ T1 ➡*[h, g] 𝐍⦃T2⦄.
+#h #g #G #L #T1 #H @(csx_ind … H) -T1
 #T1 #_ #IHT1
 elim (cnx_dec h g G L T1) /3 width=3/
 * #T #H1T1 #H2T1

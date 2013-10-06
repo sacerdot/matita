@@ -61,9 +61,10 @@ t: context-free for terms
 
 i: irreducible form
 n: normal form
-p: parallel transformation
+p: reflexive parallel transformation
+q: sequential transformation
 r: reducible form
-s: sequential transformation
+s: strongly normalizing form
 
 - third letter
 
@@ -78,7 +79,9 @@ x: extended reduction
 
 - forth letter (if present)
 
+c: proper single step                          (successor)
 e: reflexive transitive closure to normal form (evaluation)
+g: proper multiple step                        (greater)
 p: non-reflexive transitive closure            (plus)
 q: reflexive closure                           (question)
 s: reflexive transitive closure                (star)

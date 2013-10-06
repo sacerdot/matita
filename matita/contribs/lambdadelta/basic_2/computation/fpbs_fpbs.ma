@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/fpbs.ma".
+include "basic_2/computation/fpbs_lift.ma".
 
 (* "BIG TREE" PARALLEL COMPUTATION FOR CLOSURES *****************************)
 

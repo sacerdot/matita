@@ -37,19 +37,19 @@ fact snv_lsstas_aux: ∀h,g,G0,L0,T0.
   lapply (ldrop_mono … HLK0 … HLK1) -HLK0 #H destruct
   [ lapply (le_plus_to_le_r … Hl21) -Hl21 #Hl21 ]
   lapply (fsupp_lref … G1 … HLK1) #H
-  lapply (ldrop_fwd_ldrop2 … HLK1) -HLK1 /4 width=8 by fsupp_ygt, snv_lift/
+  lapply (ldrop_fwd_ldrop2 … HLK1) -HLK1 /4 width=8 by fsupp_fpbg, snv_lift/
 | #p #HG0 #HL0 #HT0 #H1 #l1 #l2 #Hl21 #Hl1 #X #H2 destruct -IH4 -IH3 -IH2 -IH1
   elim (snv_inv_gref … H1)
 | #a #I #V1 #T1 #HG0 #HL0 #HT0 #H1 #l1 #l2 #Hl21 #Hl1 #X #H2 destruct -IH4 -IH3 -IH2
   elim (snv_inv_bind … H1) -H1 #HV1 #HT1
   lapply (da_inv_bind … Hl1) -Hl1 #Hl1
-  elim (lsstas_inv_bind1 … H2) -H2 #U1 #HTU1 #H destruct /4 width=8 by fsupp_ygt, snv_bind/
+  elim (lsstas_inv_bind1 … H2) -H2 #U1 #HTU1 #H destruct /4 width=8 by fsupp_fpbg, snv_bind/
 | #V1 #T1 #HG0 #HL0 #HT0 #H1 #l1 #l2 #Hl21 #Hl1 #X #H2 destruct
   elim (snv_inv_appl … H1) -H1 #a #W1 #W0 #T0 #l0 #HV1 #HT1 #Hl0 #HVW1 #HW10 #HT10
   lapply (da_inv_flat … Hl1) -Hl1 #Hl1
   elim (lsstas_inv_appl1 … H2) -H2 #U1 #HTU1 #H destruct
-  lapply (IH1 … HT1 … Hl1 … HTU1) /2 width=1 by fsupp_ygt/ #HU1
-  elim (lsstas_cpds_aux … IH1 IH4 IH3 IH2 … Hl1 … HTU1 … HT10) -IH4 -IH3 -IH2 -IH1 /2 width=1 by fsupp_ygt/ -T1 -l1 #X #l #_ #H #HU10 -l2
+  lapply (IH1 … HT1 … Hl1 … HTU1) /2 width=1 by fsupp_fpbg/ #HU1
+  elim (lsstas_cpds_aux … IH1 IH4 IH3 IH2 … Hl1 … HTU1 … HT10) -IH4 -IH3 -IH2 -IH1 /2 width=1 by fsupp_fpbg/ -T1 -l1 #X #l #_ #H #HU10 -l2
   elim (lsstas_inv_bind1 … H) -H #U0 #_ #H destruct -T0 -l
   elim (cpes_inv_abst2 … HU10) -HU10 #W2 #U2 #HU12 #HU02
   elim (cprs_inv_abst … HU02) -HU02 #HW02 #_
@@ -58,6 +58,6 @@ fact snv_lsstas_aux: ∀h,g,G0,L0,T0.
   [ lapply (lsstas_inv_O … H2) -H2 #H destruct // ]
   elim (snv_inv_cast … H1) -H1
   lapply (da_inv_flat … Hl1) -Hl1
-  lapply (lsstas_inv_cast1 … H2) -H2 /3 width=8 by fsupp_ygt/
+  lapply (lsstas_inv_cast1 … H2) -H2 /3 width=8 by fsupp_fpbg/
 ]
 qed-.

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/csn_aaa.ma".
+include "basic_2/computation/csx_aaa.ma".
 include "basic_2/computation/cpds_aaa.ma".
 include "basic_2/equivalence/cpcs_aaa.ma".
 include "basic_2/dynamic/snv.ma".
@@ -37,7 +37,7 @@ lemma snv_fwd_aaa: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ T ¡[h, g] → ∃A. ⦃G, L⦄ 
 ]
 qed-.
 
-lemma snv_fwd_csn: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ T ¡[h, g] → ⦃G, L⦄ ⊢ ⬊*[h, g] T.
+lemma snv_fwd_csx: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ T ¡[h, g] → ⦃G, L⦄ ⊢ ⬊*[h, g] T.
 #h #g #G #L #T #H elim (snv_fwd_aaa … H) -H /2 width=2/
 qed-.
 

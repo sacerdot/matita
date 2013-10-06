@@ -12,14 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/acp_aaa.ma".
-include "basic_2/computation/csn_tstc_vector.ma".
+include "basic_2/reduction/cpx_lift.ma".
+include "basic_2/reduction/fpb.ma".
 
-(* CONTEXT-SENSITIVE EXTENDED STRONGLY NORMALIZING TERMS ********************)
+(* "BIG TREE" PARALLEL REDUCTION FOR CLOSURES *******************************)
 
-(* Main properties concerning atomic arity assignment ***********************)
+(* Advanced properties ******************************************************)
 
-theorem aaa_csn: ∀h,g,G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ⦃G, L⦄ ⊢ ⬊*[h, g] T.
-#h #g #G #L #T #A #H
-@(acp_aaa … (csn_acp h g) (csn_acr h g) … H)
-qed.
+lemma ssta_fpb: ∀h,g,G,L,T1,T2,l.
+                ⦃G, L⦄ ⊢ T1 ▪[h, g] l+1 → ⦃G, L⦄ ⊢ T1 •[h, g] T2 →
+                ⦃G, L, T1⦄ ≽[h, g] ⦃G, L, T2⦄.
+/3 width=5 by fpb_cpx, ssta_cpx/ qed.

@@ -80,13 +80,13 @@ table {
           }
         ]
         [ { "strongly normalizing computation" * } {
-             [ "csn_vector ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csn_tstc_vector" + "csn_aaa" * ]
-             [ "csn ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csn_alt ( ⦃?,?⦄ ⊢ ⬊⬊*[?,?] ? )" "csn_lift" + "csn_lpx" * ]
+             [ "csx_vector ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csx_tstc_vector" + "csx_aaa" * ]
+             [ "csx ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csx_alt ( ⦃?,?⦄ ⊢ ⬊⬊*[?,?] ? )" "csx_lift" + "csx_lpx" * ]
           }
         ]
         [ { "\"big tree\" parallel computation" * } {
-             [ "ygt ( ⦃?,?,?⦄ >[?,?] ⦃?,?,?⦄ )" "ygt_lift" + "ygt_ygt" * ]
-             [ "fpbs ( ? ⊢ ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "fpbs_lift" + "fpbs_fpbs" * ]
+             [ "fpbg ( ⦃?,?,?⦄ >[?,?] ⦃?,?,?⦄ )" "fpbg_lift" + "fpbg_fpbg" * ]
+             [ "fpbs ( ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "fpbs_lift" + "fpbs_fpbs" * ]
           }
         ]
         [ { "decomposed extended computation" * } {
@@ -116,7 +116,8 @@ table {
    class "water"
    [ { "reduction" * } {
         [ { "\"big tree\" parallel reduction" * } {
-             [ "fpb ( ⦃?,?,?⦄ ≽[?,?] ⦃?,?,?⦄ )" "ysc ( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" * ]
+             [ "fpbc ( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" "fpbc_lift" * ]
+             [ "fpb ( ⦃?,?,?⦄ ≽[?,?] ⦃?,?,?⦄ )" "fpb_lift" * ]
           }
         ]
         [ { "context-sensitive extended normal forms" * } {

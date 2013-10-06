@@ -17,16 +17,16 @@ include "basic_2/reduction/cnx.ma".
 
 (* CONTEXT-SENSITIVE EXTENDED STRONGLY NORMALIZING TERMS ********************)
 
-definition csn: ∀h. sd h → relation3 genv lenv term ≝
+definition csx: ∀h. sd h → relation3 genv lenv term ≝
                 λh,g,G,L. SN … (cpx h g G L) (eq …).
 
 interpretation
    "context-sensitive extended strong normalization (term)"
-   'SN h g G L T = (csn h g G L T).
+   'SN h g G L T = (csx h g G L T).
 
 (* Basic eliminators ********************************************************)
 
-lemma csn_ind: ∀h,g,G,L. ∀R:predicate term.
+lemma csx_ind: ∀h,g,G,L. ∀R:predicate term.
                (∀T1. ⦃G, L⦄ ⊢ ⬊*[h, g] T1 →
                      (∀T2. ⦃G, L⦄ ⊢ T1 ➡[h, g] T2 → (T1 = T2 → ⊥) → R T2) →
                      R T1
@@ -39,83 +39,83 @@ qed-.
 (* Basic properties *********************************************************)
 
 (* Basic_1: was just: sn3_pr2_intro *)
-lemma csn_intro: ∀h,g,G,L,T1.
+lemma csx_intro: ∀h,g,G,L,T1.
                  (∀T2. ⦃G, L⦄ ⊢ T1 ➡[h, g] T2 → (T1 = T2 → ⊥) → ⦃G, L⦄ ⊢ ⬊*[h, g] T2) →
                  ⦃G, L⦄ ⊢ ⬊*[h, g] T1.
 /4 width=1/ qed.
 
-lemma csn_cpx_trans: ∀h,g,G,L,T1. ⦃G, L⦄ ⊢ ⬊*[h, g] T1 →
+lemma csx_cpx_trans: ∀h,g,G,L,T1. ⦃G, L⦄ ⊢ ⬊*[h, g] T1 →
                      ∀T2. ⦃G, L⦄ ⊢ T1 ➡[h, g] T2 → ⦃G, L⦄ ⊢ ⬊*[h, g] T2.
 #h #g #G #L #T1 #H elim H -T1 #T1 #HT1 #IHT1 #T2 #HLT12
-@csn_intro #T #HLT2 #HT2
+@csx_intro #T #HLT2 #HT2
 elim (term_eq_dec T1 T2) #HT12
 [ -IHT1 -HLT12 destruct /3 width=1/
 | -HT1 -HT2 /3 width=4/
 qed-.
 
 (* Basic_1: was just: sn3_nf2 *)
-lemma cnx_csn: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ 𝐍[h, g]⦃T⦄ → ⦃G, L⦄ ⊢ ⬊*[h, g] T.
+lemma cnx_csx: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ 𝐍[h, g]⦃T⦄ → ⦃G, L⦄ ⊢ ⬊*[h, g] T.
 /2 width=1/ qed.
 
 lemma cnx_sort: ∀h,g,G,L,k. ⦃G, L⦄ ⊢ ⬊*[h, g] ⋆k.
 #h #g #G #L #k elim (deg_total h g k)
 #l generalize in match k; -k @(nat_ind_plus … l) -l /3 width=1/
 #l #IHl #k #Hkl lapply (deg_next_SO … Hkl) -Hkl
-#Hkl @csn_intro #X #H #HX elim (cpx_inv_sort1 … H) -H
+#Hkl @csx_intro #X #H #HX elim (cpx_inv_sort1 … H) -H
 [ #H destruct elim HX //
 | -HX * #l0 #_ #H destruct -l0 /2 width=1/
 ]
 qed.
 
 (* Basic_1: was just: sn3_cast *)
-lemma csn_cast: ∀h,g,G,L,W. ⦃G, L⦄ ⊢ ⬊*[h, g] W →
+lemma csx_cast: ∀h,g,G,L,W. ⦃G, L⦄ ⊢ ⬊*[h, g] W →
                 ∀T. ⦃G, L⦄ ⊢ ⬊*[h, g] T → ⦃G, L⦄ ⊢ ⬊*[h, g] ⓝW.T.
-#h #g #G #L #W #HW @(csn_ind … HW) -W #W #HW #IHW #T #HT @(csn_ind … HT) -T #T #HT #IHT
-@csn_intro #X #H1 #H2
+#h #g #G #L #W #HW @(csx_ind … HW) -W #W #HW #IHW #T #HT @(csx_ind … HT) -T #T #HT #IHT
+@csx_intro #X #H1 #H2
 elim (cpx_inv_cast1 … H1) -H1
 [ * #W0 #T0 #HLW0 #HLT0 #H destruct
   elim (eq_false_inv_tpair_sn … H2) -H2
-  [ /3 width=3 by csn_cpx_trans/
+  [ /3 width=3 by csx_cpx_trans/
   | -HLW0 * #H destruct /3 width=1/
   ]
-|2,3: /3 width=3 by csn_cpx_trans/
+|2,3: /3 width=3 by csx_cpx_trans/
 ]
 qed.
 
 (* Basic forward lemmas *****************************************************)
 
-fact csn_fwd_pair_sn_aux: ∀h,g,G,L,U. ⦃G, L⦄ ⊢ ⬊*[h, g] U →
+fact csx_fwd_pair_sn_aux: ∀h,g,G,L,U. ⦃G, L⦄ ⊢ ⬊*[h, g] U →
                           ∀I,V,T. U = ②{I}V.T → ⦃G, L⦄ ⊢ ⬊*[h, g] V.
 #h #g #G #L #U #H elim H -H #U0 #_ #IH #I #V #T #H destruct
-@csn_intro #V2 #HLV2 #HV2
+@csx_intro #V2 #HLV2 #HV2
 @(IH (②{I}V2.T)) -IH // /2 width=1/ -HLV2 #H destruct /2 width=1/
 qed-.
 
 (* Basic_1: was just: sn3_gen_head *)
-lemma csn_fwd_pair_sn: ∀h,g,I,G,L,V,T. ⦃G, L⦄ ⊢ ⬊*[h, g] ②{I}V.T → ⦃G, L⦄ ⊢ ⬊*[h, g] V.
-/2 width=5 by csn_fwd_pair_sn_aux/ qed-.
+lemma csx_fwd_pair_sn: ∀h,g,I,G,L,V,T. ⦃G, L⦄ ⊢ ⬊*[h, g] ②{I}V.T → ⦃G, L⦄ ⊢ ⬊*[h, g] V.
+/2 width=5 by csx_fwd_pair_sn_aux/ qed-.
 
-fact csn_fwd_bind_dx_aux: ∀h,g,G,L,U. ⦃G, L⦄ ⊢ ⬊*[h, g] U →
+fact csx_fwd_bind_dx_aux: ∀h,g,G,L,U. ⦃G, L⦄ ⊢ ⬊*[h, g] U →
                           ∀a,I,V,T. U = ⓑ{a,I}V.T → ⦃G, L.ⓑ{I}V⦄ ⊢ ⬊*[h, g] T.
 #h #g #G #L #U #H elim H -H #U0 #_ #IH #a #I #V #T #H destruct
-@csn_intro #T2 #HLT2 #HT2
+@csx_intro #T2 #HLT2 #HT2
 @(IH (ⓑ{a,I}V.T2)) -IH // /2 width=1/ -HLT2 #H destruct /2 width=1/
 qed-.
 
 (* Basic_1: was just: sn3_gen_bind *)
-lemma csn_fwd_bind_dx: ∀h,g,a,I,G,L,V,T. ⦃G, L⦄ ⊢ ⬊*[h, g] ⓑ{a,I}V.T → ⦃G, L.ⓑ{I}V⦄ ⊢ ⬊*[h, g] T.
-/2 width=4 by csn_fwd_bind_dx_aux/ qed-.
+lemma csx_fwd_bind_dx: ∀h,g,a,I,G,L,V,T. ⦃G, L⦄ ⊢ ⬊*[h, g] ⓑ{a,I}V.T → ⦃G, L.ⓑ{I}V⦄ ⊢ ⬊*[h, g] T.
+/2 width=4 by csx_fwd_bind_dx_aux/ qed-.
 
-fact csn_fwd_flat_dx_aux: ∀h,g,G,L,U. ⦃G, L⦄ ⊢ ⬊*[h, g] U →
+fact csx_fwd_flat_dx_aux: ∀h,g,G,L,U. ⦃G, L⦄ ⊢ ⬊*[h, g] U →
                           ∀I,V,T. U = ⓕ{I}V.T → ⦃G, L⦄ ⊢ ⬊*[h, g] T.
 #h #g #G #L #U #H elim H -H #U0 #_ #IH #I #V #T #H destruct
-@csn_intro #T2 #HLT2 #HT2
+@csx_intro #T2 #HLT2 #HT2
 @(IH (ⓕ{I}V.T2)) -IH // /2 width=1/ -HLT2 #H destruct /2 width=1/
 qed-.
 
 (* Basic_1: was just: sn3_gen_flat *)
-lemma csn_fwd_flat_dx: ∀h,g,I,G,L,V,T. ⦃G, L⦄ ⊢ ⬊*[h, g] ⓕ{I}V.T → ⦃G, L⦄ ⊢ ⬊*[h, g] T.
-/2 width=5 by csn_fwd_flat_dx_aux/ qed-.
+lemma csx_fwd_flat_dx: ∀h,g,I,G,L,V,T. ⦃G, L⦄ ⊢ ⬊*[h, g] ⓕ{I}V.T → ⦃G, L⦄ ⊢ ⬊*[h, g] T.
+/2 width=5 by csx_fwd_flat_dx_aux/ qed-.
 
 (* Basic_1: removed theorems 14:
             sn3_cdelta

@@ -15,8 +15,8 @@
 include "basic_2/notation/relations/btpredstar_8.ma".
 include "basic_2/substitution/fsupp.ma".
 include "basic_2/reduction/fpb.ma".
-include "basic_2/computation/cprs.ma".
-include "basic_2/computation/lprs.ma".
+include "basic_2/computation/cpxs.ma".
+include "basic_2/computation/lpxs.ma".
 
 (* "BIG TREE" PARALLEL COMPUTATION FOR CLOSURES *****************************)
 
@@ -62,21 +62,22 @@ lemma fsupp_fpbs: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃+ ⦃G2, L2, T2�
 /3 width=5 by fpb_fsup, tri_step, fpb_fpbs/
 qed.
 
-lemma cprs_fpbs: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡* T2 → ⦃G, L, T1⦄ ≥[h, g] ⦃G, L, T2⦄.
-#h #g #G #L #T1 #T2 #H @(cprs_ind … H) -T2 
-/3 width=5 by fpb_cpr, fpbs_strap1/
+lemma cpxs_fpbs: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡*[h, g] T2 → ⦃G, L, T1⦄ ≥[h, g] ⦃G, L, T2⦄.
+#h #g #G #L #T1 #T2 #H @(cpxs_ind … H) -T2 
+/3 width=5 by fpb_cpx, fpbs_strap1/
 qed.
 
-lemma lprs_fpbs: ∀h,g,G,L1,L2,T. ⦃G, L1⦄ ⊢ ➡* L2 → ⦃G, L1, T⦄ ≥[h, g] ⦃G, L2, T⦄.
-#h #g #G #L1 #L2 #T #H @(lprs_ind … H) -L2
-/3 width=5 by fpb_lpr, fpbs_strap1/
+lemma lpxs_fpbs: ∀h,g,G,L1,L2,T. ⦃G, L1⦄ ⊢ ➡*[h, g] L2 → ⦃G, L1, T⦄ ≥[h, g] ⦃G, L2, T⦄.
+#h #g #G #L1 #L2 #T #H @(lpxs_ind … H) -L2
+/3 width=5 by fpb_lpx, fpbs_strap1/
 qed.
+
+lemma cprs_fpbs: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡* T2 → ⦃G, L, T1⦄ ≥[h, g] ⦃G, L, T2⦄.
+/3 width=1 by cprs_cpxs, cpxs_fpbs/ qed.
+
+lemma lprs_fpbs: ∀h,g,G,L1,L2,T. ⦃G, L1⦄ ⊢ ➡* L2 → ⦃G, L1, T⦄ ≥[h, g] ⦃G, L2, T⦄.
+/3 width=1 by lprs_lpxs, lpxs_fpbs/ qed.
 
 lemma cpr_lpr_fpbs: ∀h,g,G,L1,L2,T1,T2. ⦃G, L1⦄ ⊢ T1 ➡ T2 → ⦃G, L1⦄ ⊢ ➡ L2 →
                     ⦃G, L1, T1⦄ ≥[h, g] ⦃G, L2, T2⦄.
-/4 width=5 by fpbs_strap1, fpb_lpr, fpb_cpr/ qed.
-
-lemma ssta_fpbs: ∀h,g,G,L,T,U,l.
-                 ⦃G, L⦄ ⊢ T ▪[h, g] l+1 → ⦃G, L⦄ ⊢ T •[h, g] U →
-                 ⦃G, L, T⦄ ≥[h, g] ⦃G, L, U⦄.
-/3 width=2 by fpb_fpbs, fpb_ssta/ qed.
+/4 width=5 by fpbs_strap1, lpr_fpb, cpr_fpb/ qed.

@@ -17,31 +17,34 @@ include "basic_2/reduction/fpb.ma".
 
 (* "BIG TREE" PROPER PARALLEL REDUCTION FOR CLOSURES ************************)
 
-inductive ysc (h) (g) (G1) (L1) (T1): relation3 genv lenv term ≝
-| ysc_fsup  : ∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ → ysc h g G1 L1 T1 G2 L2 T2
-| ysc_cpr   : ∀T2. ⦃G1, L1⦄ ⊢ T1 ➡ T2 → (T1 = T2 → ⊥) → ysc h g G1 L1 T1 G1 L1 T2
-| ysc_ssta  : ∀T2,l. ⦃G1, L1⦄ ⊢ T1 ▪[h, g] l+1 → ⦃G1, L1⦄ ⊢ T1 •[h, g] T2 → ysc h g G1 L1 T1 G1 L1 T2
+inductive fpbc (h) (g) (G1) (L1) (T1): relation3 genv lenv term ≝
+| fpbc_fsup  : ∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ → fpbc h g G1 L1 T1 G2 L2 T2
+| fpbc_cpx   : ∀T2. ⦃G1, L1⦄ ⊢ T1 ➡[h, g] T2 → (T1 = T2 → ⊥) → fpbc h g G1 L1 T1 G1 L1 T2
 .
 
 interpretation
    "'big tree' proper parallel reduction (closure)"
-   'BTPRedProper h g G1 L1 T1 G2 L2 T2 = (ysc h g G1 L1 T1 G2 L2 T2).
+   'BTPRedProper h g G1 L1 T1 G2 L2 T2 = (fpbc h g G1 L1 T1 G2 L2 T2).
 
 (* Basic properties *********************************************************)
 
-lemma ysc_fpb: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≻[h, g] ⦃G2, L2, T2⦄ →
+lemma fpbc_fpb: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≻[h, g] ⦃G2, L2, T2⦄ →
                ⦃G1, L1, T1⦄ ≽[h, g] ⦃G2, L2, T2⦄.
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2
-/2 width=2 by fpb_fsup, fpb_cpr, fpb_ssta/
+/2 width=1 by fpb_fsup, fpb_cpx/
 qed.
+
+lemma cpr_fpbc: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡ T2 → (T1 = T2 → ⊥) →
+               ⦃G, L, T1⦄ ≻[h, g] ⦃G, L, T2⦄.
+/3 width=1 by fpbc_cpx, cpr_cpx/ qed.
 
 (* Inversion lemmas on "big tree" parallel reduction for closures ***********)
 
-lemma fpb_inv_ysc: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≽[h, g] ⦃G2, L2, T2⦄ →
+lemma fpb_inv_fpbc: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≽[h, g] ⦃G2, L2, T2⦄ →
                    ⦃G1, L1, T1⦄ ≻[h, g] ⦃G2, L2, T2⦄ ∨
-                   ∧∧ G1 = G2 & ⦃G1, L1⦄ ⊢ ➡ L2 & T1 = T2.
+                   ∧∧ G1 = G2 & ⦃G1, L1⦄ ⊢ ➡[h, g] L2 & T1 = T2.
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2
-/3 width=2 by and3_intro, or_introl, or_intror, ysc_fsup, ysc_ssta/
+/3 width=1 by and3_intro, or_introl, or_intror, fpbc_fsup/
 #T2 #HT12 elim (term_eq_dec T1 T2) #H destruct
-/4 width=1 by and3_intro, or_introl, or_intror, ysc_cpr/
+/4 width=1 by and3_intro, or_introl, or_intror, fpbc_cpx/
 qed-.
