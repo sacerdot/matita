@@ -43,6 +43,7 @@ definition states_binaryTM : FinSet → FinSet → FinSet ≝ λsig,states.
          (FinProd (FinOption sig) (initN (2 * (FS_crd sig)))).
 
 axiom daemon : ∀T:Type[0].T.
+definition initN_pred ≝ λn.λm:initN n.(pred (pi1 … m) : initN n).
 
 (* controllare i contatori, molti andranno incrementati di uno *)
 definition trans_binaryTM : ∀sig,states:FinSet.
@@ -97,9 +98,9 @@ definition trans_binaryTM : ∀sig,states:FinSet.
       ]
   | S phase ⇒ match phase with
   [ O ⇒ (*** PHASE 5: left extension ***)
-      match count with
-      [ O ⇒ 〈〈s0,2,ch,FS_crd sig〉,None ?,N〉
-      | S k ⇒ 〈〈s0,5,ch,k〉,Some ? false,L〉 ]
+      match pi1 … count with
+      [ O ⇒ 〈〈s0,bin2,ch,FS_crd sig〉,None ?,N〉
+      | S k ⇒ 〈〈s0,bin5,ch,k〉,Some ? false,L〉 ]
   | S _ ⇒ (*** PHASE 6: stop ***) 〈s,None ?,N〉 ]]]]]].  
 
 (*
