@@ -21,27 +21,31 @@ include "basic_2/computation/fpbs_fpbs.ma".
 (* Note: alternative definition of fpbs *)
 definition fpbsa: ∀h. sd h → tri_relation genv lenv term ≝
                   λh,g,G1,L1,T1,G2,L2,T2.
-                  ∃∃L,T. ⦃G1, L1, T1⦄ ⊃* ⦃G2, L, T⦄ & ⦃G2, L⦄ ⊢ T ➡*[h, g] T2 & ⦃G2, L⦄ ⊢ ➡*[h, g] L2.
+                  ∃∃L,T. ⦃G1, L1⦄ ⊢ T1 ➡*[h, g] T &
+                         ⦃G1, L1, T⦄ ⊃* ⦃G2, L, T2⦄ &
+                         ⦃G2, L⦄ ⊢ ➡*[h, g] L2.
 
 interpretation "'big tree' parallel computation (closure) alternative"
    'BTPRedStarAlt h g G1 L1 T1 G2 L2 T2 = (fpbsa h g G1 L1 T1 G2 L2 T2).
 
 (* Basic properties *********************************************************)
 
-lemma fpbsa_fpb_trans: ∀h,g,G1,G,L1,L,T1,T. ⦃G1, L1, T1⦄ ≥≥[h, g] ⦃G, L, T⦄ →
-                       ∀G2,L2,T2. ⦃G, L, T⦄ ≽[h, g] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥≥[h, g] ⦃G2, L2, T2⦄.
-#h #g #G1 #G #L1 #L #T1 #T * #L0 #T0 #H10 #HT0 #HL0 #G2 #L2 #T2 * -G2 -L2 -T2
-[ #G2 #L2 #T2 #H2
-| /4 width=7 by lpxs_cpx_trans, cpxs_trans, ex3_2_intro/
-| /3 width=7 by lpxs_strap1, ex3_2_intro/
+lemma fpb_fpbsa_trans: ∀h,g,G1,G,L1,L,T1,T. ⦃G1, L1, T1⦄ ≽[h, g] ⦃G, L, T⦄ →
+                       ∀G2,L2,T2. ⦃G, L, T⦄ ≥≥[h, g] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥≥[h, g] ⦃G2, L2, T2⦄.
+#h #g #G1 #G #L1 #L #T1 #T * -G -L -T [ #G #L #T #HG1 | #T #HT1 | #L #HL1 ]   
+#G2 #L2 #T2 * #L0 #T0 #HT0 #HG2 #L2
+[ elim (fsupq_cpxs_trans … HT0 … HG1) -T
+  /3 width=7 by fsups_trans, ex3_2_intro/
+| /3 width=5 by cpxs_strap2, ex3_2_intro/
+| lapply (lpx_cpxs_trans … HT0 … HL1) -HT0 #HT10
 ] 
 
 (* Main properties **********************************************************)
 
 theorem fpbs_fpbsa: ∀h,g,G1,G2,L1,L2,T1,T2.
                     ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥≥[h, g] ⦃G2, L2, T2⦄.
-#h #g #G1 #G2 #L1 #L2 #T1 #T2 #H @(fpbs_ind … H) -G2 -L2 -T2
-/2 width=5 by fpbsa_fpb_trans, ex3_2_intro/
+#h #g #G1 #G2 #L1 #L2 #T1 #T2 #H @(fpbs_ind_dx … H) -G1 -L1 -T1
+/2 width=5 by fpb_fpbsa_trans, ex3_2_intro/
 qed.
 
 (* Main inversion lemmas ****************************************************)
