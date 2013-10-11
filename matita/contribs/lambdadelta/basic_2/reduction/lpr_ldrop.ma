@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/fsup.ma".
+include "basic_2/relocation/fsupq_alt.ma".
 include "basic_2/relocation/ldrop_lpx_sn.ma".
 include "basic_2/reduction/cpr_lift.ma".
 include "basic_2/reduction/lpr.ma".
@@ -37,14 +37,18 @@ lemma lpr_ldrop_trans_O1: ∀G. dropable_dx (lpr G).
 lemma fsup_cpr_trans: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ →
                       ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡ U2 →
                       ∃∃L,U1. ⦃G1, L1⦄ ⊢ ➡ L & ⦃G1, L⦄ ⊢ T1 ➡ U1 & ⦃G1, L, U1⦄ ⊃ ⦃G2, L2, U2⦄.
-#G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2 [1,2,3,4,5: /3 width=5/ ]
-[ #G #L #K #U #T #d #e #HLK #HUT #He #U2 #HU2
-  elim (lift_total U2 d e) #T2 #HUT2
-  lapply (cpr_lift … HU2 … HLK … HUT … HUT2) -HU2 -HUT /3 width=9/
-| #G1 #G2 #L1 #K1 #K2 #T1 #T2 #U1 #d #e #HLK1 #HTU1 #_ #IHT12 #U2 #HTU2
-  elim (IHT12 … HTU2) -IHT12 -HTU2 #K #T #HK1 #HT1 #HT2
-  elim (lift_total T d e) #U #HTU
-  elim (ldrop_lpr_trans … HLK1 … HK1) -HLK1 -HK1 #L2 #HL12 #HL2K
-  lapply (cpr_lift … HT1 … HL2K … HTU1 … HTU) -HT1 -HTU1 /3 width=11/
+#G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2
+/3 width=5 by fsup_lref_O, fsup_pair_sn, fsup_bind_dx, fsup_flat_dx, lpr_pair, cpr_pair_sn, cpr_atom, cpr_bind, cpr_flat, ex3_2_intro/
+#G #L #K #U #T #e #HLK #HUT #U2 #HU2
+elim (lift_total U2 0 (e+1)) #T2 #HUT2
+lapply (cpr_lift … HU2 … HLK … HUT … HUT2) -HU2 -HUT /3 width=9 by fsup_drop, ex3_2_intro/
+qed-.
+
+lemma fsupq_cpr_trans: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, L2, T2⦄ →
+                       ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡ U2 →
+                       ∃∃L,U1. ⦃G1, L1⦄ ⊢ ➡ L & ⦃G1, L⦄ ⊢ T1 ➡ U1 & ⦃G1, L, U1⦄ ⊃⸮ ⦃G2, L2, U2⦄.
+#G1 #G2 #L1 #L2 #T1 #T2 #H #U2 #HTU2 elim (fsupq_inv_gen … H) -H
+[ #HT12 elim (fsup_cpr_trans … HT12 … HTU2) /3 width=5 by fsup_fsupq, ex3_2_intro/
+| * #H1 #H2 #H3 destruct /2 width=5 by ex3_2_intro/
 ]
 qed-.

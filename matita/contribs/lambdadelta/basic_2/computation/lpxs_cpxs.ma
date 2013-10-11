@@ -45,21 +45,18 @@ lemma lpxs_cpxs_trans: ∀h,g,G. s_rs_trans … (cpx h g G) (lpxs h g G).
 lemma cpxs_bind2: ∀h,g,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡*[h, g] V2 →
                   ∀I,T1,T2. ⦃G, L.ⓑ{I}V2⦄ ⊢ T1 ➡*[h, g] T2 →
                   ∀a. ⦃G, L⦄ ⊢ ⓑ{a,I}V1.T1 ➡*[h, g] ⓑ{a,I}V2.T2.
-#h #g #G #L #V1 #V2 #HV12 #I #T1 #T2 #HT12
-lapply (lpxs_cpxs_trans … HT12 (L.ⓑ{I}V1) ?) /2 width=1/
-qed.
+/4 width=5 by lpxs_cpxs_trans, lpxs_pair, cpxs_bind/ qed.
 
 (* Inversion lemmas on context-sensitive ext parallel computation for terms *)
 
 lemma cpxs_inv_abst1: ∀h,g,a,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓛ{a}V1.T1 ➡*[h, g] U2 →
                       ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡*[h, g] V2 & ⦃G, L.ⓛV1⦄ ⊢ T1 ➡*[h, g] T2 &
                                U2 = ⓛ{a}V2.T2.
-#h #g #a #G #L #V1 #T1 #U2 #H @(cpxs_ind … H) -U2 /2 width=5/
+#h #g #a #G #L #V1 #T1 #U2 #H @(cpxs_ind … H) -U2 /2 width=5 by ex3_2_intro/
 #U0 #U2 #_ #HU02 * #V0 #T0 #HV10 #HT10 #H destruct
 elim (cpx_inv_abst1 … HU02) -HU02 #V2 #T2 #HV02 #HT02 #H destruct
-lapply (lpxs_cpx_trans … HT02 (L.ⓛV1) ?) /2 width=1/ -HT02 #HT02
-lapply (cpxs_strap1 … HV10 … HV02) -V0
-lapply (cpxs_trans … HT10 … HT02) -T0 /2 width=5/
+lapply (lpxs_cpx_trans … HT02 (L.ⓛV1) ?)
+/3 width=5 by lpxs_pair, cpxs_trans, cpxs_strap1, ex3_2_intro/
 qed-.
 
 lemma cpxs_inv_abbr1: ∀h,g,a,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓓ{a}V1.T1 ➡*[h, g] U2 → (
@@ -67,21 +64,20 @@ lemma cpxs_inv_abbr1: ∀h,g,a,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓓ{a}V1.T1 ➡*[h, 
                                U2 = ⓓ{a}V2.T2
                       ) ∨
                       ∃∃T2. ⦃G, L.ⓓV1⦄ ⊢ T1 ➡*[h, g] T2 & ⇧[0, 1] U2 ≡ T2 & a = true.
-#h #g #a #G #L #V1 #T1 #U2 #H @(cpxs_ind … H) -U2 /3 width=5/
+#h #g #a #G #L #V1 #T1 #U2 #H @(cpxs_ind … H) -U2 /3 width=5 by ex3_2_intro, or_introl/
 #U0 #U2 #_ #HU02 * *
 [ #V0 #T0 #HV10 #HT10 #H destruct
   elim (cpx_inv_abbr1 … HU02) -HU02 *
   [ #V2 #T2 #HV02 #HT02 #H destruct
-    lapply (lpxs_cpx_trans … HT02 (L.ⓓV1) ?) /2 width=1/ -HT02 #HT02
-    lapply (cpxs_strap1 … HV10 … HV02) -V0
-    lapply (cpxs_trans … HT10 … HT02) -T0 /3 width=5/
+    lapply (lpxs_cpx_trans … HT02 (L.ⓓV1) ?)
+    /4 width=5 by lpxs_pair, cpxs_trans, cpxs_strap1, ex3_2_intro, or_introl/
   | #T2 #HT02 #HUT2
-    lapply (lpxs_cpx_trans … HT02 (L.ⓓV1) ?) -HT02 /2 width=1/ -V0 #HT02
-    lapply (cpxs_trans … HT10 … HT02) -T0 /3 width=3/
+    lapply (lpxs_cpx_trans … HT02 (L.ⓓV1) ?) -HT02
+    /4 width=3 by lpxs_pair, cpxs_trans, ex3_intro, or_intror/
   ]
 | #U1 #HTU1 #HU01
   elim (lift_total U2 0 1) #U #HU2
-  lapply (cpx_lift … HU02 (L.ⓓV1) … HU01 … HU2) -U0 /2 width=1/ /4 width=3/
+  /6 width=11 by cpxs_strap1, cpx_lift, ldrop_ldrop, ex3_intro, or_intror/
 ]
 qed-.
 
@@ -90,3 +86,37 @@ qed-.
 lemma lpxs_pair2: ∀h,g,I,G,L1,L2. ⦃G, L1⦄ ⊢ ➡*[h, g] L2 →
                   ∀V1,V2. ⦃G, L2⦄ ⊢ V1 ➡*[h, g] V2 → ⦃G, L1.ⓑ{I}V1⦄ ⊢ ➡*[h, g] L2.ⓑ{I}V2.
 /3 width=3 by lpxs_pair, lpxs_cpxs_trans/ qed.
+
+(* Properties on supclosure *************************************************)
+
+lemma lpxs_fsupq_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, L2, T2⦄ →
+                        ∀K1. ⦃G1, K1⦄ ⊢ ➡*[h, g] L1 →
+                        ∃∃K2,T. ⦃G1, K1⦄ ⊢ T1 ➡*[h, g] T & ⦃G1, K1, T⦄ ⊃⸮ ⦃G2, K2, T2⦄ & ⦃G2, K2⦄ ⊢ ➡*[h, g] L2.
+#h #g #G1 #G2 #L1 #L2 #T1 #T2 #HT12 #K1 #H @(lpxs_ind_dx … H) -K1
+[ /2 width=5 by ex3_2_intro/
+| #K1 #K #HK1 #_ * #L #T #HT1 #HT2 #HL2 -HT12
+  lapply (lpx_cpxs_trans … HT1 … HK1) -HT1
+  elim (lpx_fsupq_trans … HT2 … HK1) -K
+  /3 width=7 by lpxs_strap2, cpxs_strap1, ex3_2_intro/
+]
+qed-.
+
+lemma lpxs_fsups_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃* ⦃G2, L2, T2⦄ →
+                        ∀K1. ⦃G1, K1⦄ ⊢ ➡*[h, g] L1 →
+                        ∃∃K2,T. ⦃G1, K1⦄ ⊢ T1 ➡*[h, g] T & ⦃G1, K1, T⦄ ⊃* ⦃G2, K2, T2⦄ & ⦃G2, K2⦄ ⊢ ➡*[h, g] L2.
+#h #g #G1 #G2 #L1 #L2 #T1 #T2 #H @(fsups_ind … H) -G2 -L2 -T2 /2 width=5 by ex3_2_intro/
+#G #G2 #L #L2 #T #T2 #_ #H2 #IH1 #K1 #HLK1 elim (IH1 … HLK1) -L1
+#L0 #T0 #HT10 #HT0 #HL0 elim (lpxs_fsupq_trans … H2 … HL0) -L
+#L #T3 #HT3 #HT32 #HL2 elim (fsups_cpxs_trans … HT0 … HT3) -T
+/3 width=7 by cpxs_trans, fsups_strap1, ex3_2_intro/
+qed-.
+
+lemma lpx_fsups_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃* ⦃G2, L2, T2⦄ →
+                       ∀K1. ⦃G1, K1⦄ ⊢ ➡[h, g] L1 →
+                       ∃∃K2,T. ⦃G1, K1⦄ ⊢ T1 ➡*[h, g] T & ⦃G1, K1, T⦄ ⊃* ⦃G2, K2, T2⦄ & ⦃G2, K2⦄ ⊢ ➡[h, g] L2.
+#h #g #G1 #G2 #L1 #L2 #T1 #T2 #H @(fsups_ind … H) -G2 -L2 -T2 /2 width=5 by ex3_2_intro/
+#G #G2 #L #L2 #T #T2 #_ #H2 #IH1 #K1 #HLK1 elim (IH1 … HLK1) -L1
+#L0 #T0 #HT10 #HT0 #HL0 elim (lpx_fsupq_trans … H2 … HL0) -L
+#L #T3 #HT3 #HT32 #HL2 elim (fsups_cpx_trans … HT0 … HT3) -T
+/3 width=7 by cpxs_strap1, fsups_strap1, ex3_2_intro/
+qed-.

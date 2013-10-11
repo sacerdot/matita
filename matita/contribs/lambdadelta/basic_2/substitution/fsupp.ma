@@ -25,38 +25,46 @@ interpretation "plus-iterated structural successor (closure)"
 (* Basic properties *********************************************************)
 
 lemma fsup_fsupp: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ⊃+ ⦃G2, L2, T2⦄.
-/2 width=1/ qed.
+/2 width=1 by tri_inj/ qed.
 
 lemma fsupp_strap1: ∀G1,G,G2,L1,L,L2,T1,T,T2.
                     ⦃G1, L1, T1⦄ ⊃+ ⦃G, L, T⦄ → ⦃G, L, T⦄ ⊃ ⦃G2, L2, T2⦄ →
                     ⦃G1, L1, T1⦄ ⊃+ ⦃G2, L2, T2⦄.
-/2 width=5/ qed.
+/2 width=5 by tri_step/ qed.
 
 lemma fsupp_strap2: ∀G1,G,G2,L1,L,L2,T1,T,T2.
                     ⦃G1, L1, T1⦄ ⊃ ⦃G, L, T⦄ → ⦃G, L, T⦄ ⊃+ ⦃G2, L2, T2⦄ →
                     ⦃G1, L1, T1⦄ ⊃+ ⦃G2, L2, T2⦄.
-/2 width=5/ qed.
+/2 width=5 by tri_TC_strap/ qed.
+
+lemma fsupp_ldrop: ∀G1,G2,L1,K1,K2,T1,T2,U1,e. ⇩[0, e] L1 ≡ K1 → ⇧[0, e] T1 ≡ U1 →
+                   ⦃G1, K1, T1⦄ ⊃+ ⦃G2, K2, T2⦄ → ⦃G1, L1, U1⦄ ⊃+ ⦃G2, K2, T2⦄.
+#G1 #G2 #L1 #K1 #K2 #T1 #T2 #U1 #e #HLK1 #HTU1 #HT12 elim (eq_or_gt … e) #H destruct
+[ >(ldrop_inv_O2 … HLK1) -L1 <(lift_inv_O2 … HTU1) -U1 //
+| /3 width=5 by fsupp_strap2, fsup_drop_lt/
+]
+qed-.
 
 lemma fsupp_lref: ∀I,G,L,K,V,i. ⇩[0, i] L ≡ K.ⓑ{I}V → ⦃G, L, #i⦄ ⊃+ ⦃G, K, V⦄.
-/3 width=2/ qed.
+/3 width=6 by fsup_lref_O, fsup_fsupp, lift_lref_ge, fsupp_ldrop/ qed.
 
 lemma fsupp_pair_sn: ∀I,G,L,V,T. ⦃G, L, ②{I}V.T⦄ ⊃+ ⦃G, L, V⦄.
-/2 width=1/ qed.
+/2 width=1 by fsup_pair_sn, fsup_fsupp/ qed.
 
 lemma fsupp_bind_dx: ∀a,I,G,L,V,T. ⦃G, L, ⓑ{a,I}V.T⦄ ⊃+ ⦃G, L.ⓑ{I}V, T⦄.
-/2 width=1/ qed.
+/2 width=1 by fsup_bind_dx, fsup_fsupp/ qed.
 
 lemma fsupp_flat_dx: ∀I,G,L,V,T. ⦃G, L, ⓕ{I}V.T⦄ ⊃+ ⦃G, L, T⦄.
-/2 width=1/ qed.
+/2 width=1 by fsup_flat_dx, fsup_fsupp/ qed.
 
 lemma fsupp_flat_dx_pair_sn: ∀I1,I2,G,L,V1,V2,T. ⦃G, L, ⓕ{I1}V1.②{I2}V2.T⦄ ⊃+ ⦃G, L, V2⦄.
-/2 width=5/ qed.
+/2 width=5 by fsup_pair_sn, fsupp_strap1/ qed.
 
 lemma fsupp_bind_dx_flat_dx: ∀a,G,I1,I2,L,V1,V2,T. ⦃G, L, ⓑ{a,I1}V1.ⓕ{I2}V2.T⦄ ⊃+ ⦃G, L.ⓑ{I1}V1, T⦄.
-/2 width=5/ qed.
+/2 width=5 by fsup_flat_dx, fsupp_strap1/ qed.
 
 lemma fsupp_flat_dx_bind_dx: ∀a,I1,I2,G,L,V1,V2,T. ⦃G, L, ⓕ{I1}V1.ⓑ{a,I2}V2.T⦄ ⊃+ ⦃G, L.ⓑ{I2}V2, T⦄.
-/2 width=5/ qed.
+/2 width=5 by fsup_bind_dx, fsupp_strap1/ qed.
 
 (* Basic eliminators ********************************************************)
 

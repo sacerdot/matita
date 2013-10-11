@@ -1,0 +1,88 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+(*
+include "basic_2/reduction/lpr_ldrop.ma".
+
+include "basic_2/unfold/fsups.ma".
+include "basic_2/reducibility/lpr_ldrop.ma".
+
+lamma pippo: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⊃ ⦃L2, T2⦄ → ∀V1,i. ⇧[i, 1] V1 ≡ T1 → T2 = #i → ⊥.
+#L1 #L2 #T1 #T2 #H elim H -L1 -L2 -T1 -T2
+[ #I #L1 #V #W1 #j #H1 #H2
+  elim (lift_inv_lref2 … H1) -H1 * #H1 #H3
+
+ HVT2 : ()
+ HV2 : (K2⊢V➡V2)
+
+
+thaorem cpr_trans_lpr: ∀L1,T1,T. L1 ⊢ T1 ➡ T → ∀L2. L1 ⊢ ➡ L2 →
+                       ∀T2. L2 ⊢ T ➡ T2 →
+                       (⦃L2, T2⦄ ⊃* ⦃L1, T1⦄ → ⊥) ∨ T1 = T.
+#L1 #T1 @(fsupp_wf_ind … L1 T1) -L1 -T1 #n #IH #L1 * [|*]
+[ #I #Hn #T #H1 #L2 #HL12 #T2 #HT2 destruct -IH
+  elim (cpr_inv_atom1 … H1) -H1
+  [ #H destruct
+    elim (cpr_inv_atom1 … HT2) -HT2
+    [ #H destruct //
+    | * #K2 #V #V2 #i #HLK2 #HV2 #HVT2 #H destruct //
+    ]
+  | * #K1 #V1 #V #i #HLK1 #HV1 #HVT #H destruct
+    lapply (ldrop_pair2_fwd_fw … HLK1 (#i)) #HKV1
+    elim (lpr_ldrop_conf … HLK1 … HL12) -HLK1 -HL12 #X #H #HLK2
+    elim (lpr_inv_pair1 … H) -H #K2 #V0 #HK12 #_ #H destruct
+    lapply (ldrop_fwd_ldrop2 … HLK2) -V0 #HLK2
+    elim (cpr_inv_lift1 … HT2 … HLK2 … HVT) -HT2 -HLK2 -HVT #V2 #HVT2 #HV2
+    @or_introl #H
+
+
+
+
+
+
+    elim (lift_inv_lref2 … HVT2) -HVT2 * #H #_
+    [ elim (lt_zero_false … H)
+    | >commutative_plus in H; >plus_plus_comm_23 #H
+      elim (le_plus_xySz_x_false … H)
+    ]
+  ]
+| #a #I #V1 #T1 #Hn #X1 #H1 #L2 #HL12 #X2 #H2
+  elim (cpr_inv_bind1 … H1) -H1 *
+  [ #V #T #HV1 #HT1 #H destruct
+    elim (cpr_inv_bind1 … H2) -H2 *
+    [ #V2 #T2 #HV2 #HT2 #H destruct
+      elim (IH … HV1 … HV2) // #HV12 destruct
+      [ @or_introl #H destruct /2 width=1/
+      | elim (IH … HT1 … HT2) // /2 width=1/ -L1 -L2 #HT12 destruct
+        @or_introl #H destruct /2 width=1/
+      ]
+    | #T2 #HT2 #HXT2 #H1 #H2 destruct
+      elim (IH … HT1 … HT2) // /2 width=1/ -L1 -L2 #HT12 destruct
+      |        elim (term_eq_dec V1 V) #HV1 destruct
+
+    ]
+  | #Y1 #HTY1 #HXY1 #H11 #H12 destruct
+    elim (lift_total (+ⓓV1.T1) 0 1) #Y2 #HXY2
+    lapply (cpr_lift … H2 (L2.ⓓV1) … HXY1 … HXY2) /2 width=1/ -X1 /4 width=5/
+  ]
+| #I #V1 #T1 #Hn #X1 #H1 #L2 #HL12 #X2 #H2
+  elim (cpr_inv_flat1 … H1) -H1 *
+  [ #V #T #HV1 #HT1 #H destruct
+    elim (cpr_inv_flat1 … H2) -H2 *
+    [ #V2 #T2 #HV2 #HT2 #H destruct /3 width=5/
+    | #HX2 #H destruct /3 width=5/
+    ]
+  | #HX1 #H destruct /3 width=5/
+]
+qed-.
+*)

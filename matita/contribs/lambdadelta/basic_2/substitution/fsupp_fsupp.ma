@@ -19,4 +19,4 @@ include "basic_2/substitution/fsupp.ma".
 (* Main propertis ***********************************************************)
 
 theorem fsupp_trans: tri_transitive … fsupp.
-/2 width=5/ qed-.
+/2 width=5 by tri_TC_transitive/ qed-.
