@@ -1,6 +1,5 @@
 include "turing/basic_machines.ma".
 include "turing/if_machine.ma".
-include "turing/auxiliary_machines1.ma".
 include "turing/multi_to_mono/trace_alphabet.ma".
 
 (* a machine that shift the i trace r starting from the bord of the trace *)
