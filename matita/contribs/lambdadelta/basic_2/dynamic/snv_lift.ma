@@ -82,8 +82,8 @@ qed-.
 
 (* Advanced properties ******************************************************)
 
-lemma snv_fsup_conf: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ →
-                     ⦃G1, L1⦄ ⊢ T1 ¡[h, g] → ⦃G2, L2⦄ ⊢ T2 ¡[h, g].
+lemma snv_fqu_conf: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ →
+                    ⦃G1, L1⦄ ⊢ T1 ¡[h, g] → ⦃G2, L2⦄ ⊢ T2 ¡[h, g].
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2
 [ #I1 #G1 #L1 #V1 #H
   elim (snv_inv_lref … H) -H #I2 #L2 #V2 #H #HV2

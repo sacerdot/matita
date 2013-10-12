@@ -203,8 +203,8 @@ table {
           }
         ]
         [ { "iterated structural successor for closures" * } {
-             [ "fsups ( ⦃?,?,?⦄ ⊃* ⦃?,?,?⦄ )" "fsups_fsups" * ]
-             [ "fsupp ( ⦃?,?,?⦄ ⊃+ ⦃?,?,?⦄ )" "fsupp_fsupp" * ]
+             [ "fqus ( ⦃?,?,?⦄ ⊃* ⦃?,?,?⦄ )" "fqus_fqus" * ]
+             [ "fqup ( ⦃?,?,?⦄ ⊃+ ⦃?,?,?⦄ )" "fqup_fqup" * ]
           }
         ]
         [ { "generic local env. slicing" * } {
@@ -225,7 +225,7 @@ table {
    class "orange"
    [ { "relocation" * } {
         [ { "structural successor for closures" * } {
-             [ "fsup ( ⦃?,?,?⦄ ⊃ ⦃?,?,?⦄ )" "fsupq ( ⦃?,?,?⦄ ⊃⸮ ⦃?,?,?⦄ )" "fsupq_alt ( ⦃?,?,?⦄ ⊃⊃⸮ ⦃?,?,?⦄ )" * ]
+             [ "fqu ( ⦃?,?,?⦄ ⊃ ⦃?,?,?⦄ )" "fquq ( ⦃?,?,?⦄ ⊃⸮ ⦃?,?,?⦄ )" "fquq_alt ( ⦃?,?,?⦄ ⊃⊃⸮ ⦃?,?,?⦄ )" * ]
           }
         ]
         [ { "global env. slicing" * } {

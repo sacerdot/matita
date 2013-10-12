@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/relocation/ldrop_ldrop.ma".
-include "basic_2/relocation/fsupq_alt.ma".
+include "basic_2/relocation/fquq_alt.ma".
 include "basic_2/static/ssta.ma".
 include "basic_2/reduction/cpx.ma".
 
@@ -138,37 +138,37 @@ qed-.
 
 (* Properties on supclosure *************************************************)
 
-lemma fsup_cpx_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ →
-                      ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡[h, g] U2 →
-                      ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡[h, g] U1 & ⦃G1, L1, U1⦄ ⊃ ⦃G2, L2, U2⦄.
+lemma fqu_cpx_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ →
+                     ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡[h, g] U2 →
+                     ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡[h, g] U1 & ⦃G1, L1, U1⦄ ⊃ ⦃G2, L2, U2⦄.
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2 
-/3 width=3 by fsup_pair_sn, fsup_bind_dx, fsup_flat_dx, cpx_pair_sn, cpx_bind, cpx_flat, ex2_intro/
+/3 width=3 by fqu_pair_sn, fqu_bind_dx, fqu_flat_dx, cpx_pair_sn, cpx_bind, cpx_flat, ex2_intro/
 [ #I #G #L #V2 #U2 #HVU2
   elim (lift_total U2 0 1)
-  /4 width=9 by fsup_drop, cpx_append, cpx_delta, ldrop_pair, ldrop_ldrop, ex2_intro/
+  /4 width=9 by fqu_drop, cpx_append, cpx_delta, ldrop_pair, ldrop_ldrop, ex2_intro/
 | #G #L #K #T1 #U1 #e #HLK1 #HTU1 #T2 #HTU2
   elim (lift_total T2 0 (e+1))
-  /3 width=11 by cpx_lift, fsup_drop, ex2_intro/
+  /3 width=11 by cpx_lift, fqu_drop, ex2_intro/
 ]
 qed-.
 
-lemma fsup_ssta_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ →
-                       ∀U2. ⦃G2, L2⦄ ⊢ T2 •[h, g] U2 →
-                       ∀l. ⦃G2, L2⦄ ⊢ T2 ▪[h, g] l+1 →
-                       ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡[h, g] U1 & ⦃G1, L1, U1⦄ ⊃ ⦃G2, L2, U2⦄.
-/3 width=5 by fsup_cpx_trans, ssta_cpx/ qed-.
+lemma fqu_ssta_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ →
+                      ∀U2. ⦃G2, L2⦄ ⊢ T2 •[h, g] U2 →
+                      ∀l. ⦃G2, L2⦄ ⊢ T2 ▪[h, g] l+1 →
+                      ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡[h, g] U1 & ⦃G1, L1, U1⦄ ⊃ ⦃G2, L2, U2⦄.
+/3 width=5 by fqu_cpx_trans, ssta_cpx/ qed-.
 
-lemma fsupq_cpx_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, L2, T2⦄ →
-                       ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡[h, g] U2 →
-                       ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡[h, g] U1 & ⦃G1, L1, U1⦄ ⊃⸮ ⦃G2, L2, U2⦄.
-#h #g #G1 #G2 #L1 #L2 #T1 #T2 #H #U2 #HTU2 elim (fsupq_inv_gen … H) -H
-[ #HT12 elim (fsup_cpx_trans … HT12 … HTU2) /3 width=3 by fsup_fsupq, ex2_intro/
+lemma fquq_cpx_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, L2, T2⦄ →
+                      ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡[h, g] U2 →
+                      ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡[h, g] U1 & ⦃G1, L1, U1⦄ ⊃⸮ ⦃G2, L2, U2⦄.
+#h #g #G1 #G2 #L1 #L2 #T1 #T2 #H #U2 #HTU2 elim (fquq_inv_gen … H) -H
+[ #HT12 elim (fqu_cpx_trans … HT12 … HTU2) /3 width=3 by fqu_fquq, ex2_intro/
 | * #H1 #H2 #H3 destruct /2 width=3 by ex2_intro/
 ]
 qed-.
 
-lemma fsupq_ssta_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, L2, T2⦄ →
-                        ∀U2. ⦃G2, L2⦄ ⊢ T2 •[h, g] U2 →
-                        ∀l. ⦃G2, L2⦄ ⊢ T2 ▪[h, g] l+1 →
-                        ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡[h, g] U1 & ⦃G1, L1, U1⦄ ⊃⸮ ⦃G2, L2, U2⦄.
-/3 width=5 by fsupq_cpx_trans, ssta_cpx/ qed-.
+lemma fquq_ssta_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, L2, T2⦄ →
+                       ∀U2. ⦃G2, L2⦄ ⊢ T2 •[h, g] U2 →
+                       ∀l. ⦃G2, L2⦄ ⊢ T2 ▪[h, g] l+1 →
+                       ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡[h, g] U1 & ⦃G1, L1, U1⦄ ⊃⸮ ⦃G2, L2, U2⦄.
+/3 width=5 by fquq_cpx_trans, ssta_cpx/ qed-.

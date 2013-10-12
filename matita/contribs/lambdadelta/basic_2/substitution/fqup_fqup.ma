@@ -12,11 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/fsups.ma".
+include "basic_2/substitution/fqup.ma".
 
-(* STAR-ITERATED SUPCLOSURE *************************************************)
+(* PLUS-ITERATED SUPCLOSURE *************************************************)
 
-(* Main properties **********************************************************)
+(* Main propertis ***********************************************************)
 
-theorem fsups_trans: tri_transitive … fsups.
+theorem fqup_trans: tri_transitive … fqup.
 /2 width=5 by tri_TC_transitive/ qed-.

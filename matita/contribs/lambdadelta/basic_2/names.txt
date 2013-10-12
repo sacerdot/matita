@@ -76,6 +76,7 @@ e: decomposed extended conversion
 q: restricted reduction
 r: reduction
 s: substitution
+u: supclosure
 x: extended reduction
 
 - forth letter (if present)

@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/btpredstarproper_8.ma".
-include "basic_2/substitution/fsupp.ma".
+include "basic_2/substitution/fqup.ma".
 include "basic_2/reduction/fpbc.ma".
 include "basic_2/computation/fpbs.ma".
 
@@ -68,9 +68,9 @@ lemma fpbs_fpbg_trans: ∀h,g,G1,G,L1,L,T1,T. ⦃G1, L1, T1⦄ ≥[h, g] ⦃G, L
 /3 width=5 by fpbg_strap2/
 qed-.
 
-lemma fsupp_fpbg: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃+ ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ >[h, g] ⦃G2, L2, T2⦄.
-#h #g #G1 #G2 #L1 #L2 #T1 #T2 #H @(fsupp_ind … L2 T2 H) -G2 -L2 -T2
-/4 width=5 by fpbg_strap1, fpbc_fpbg, fpbc_fsup, fpb_fsupq, fsup_fsupq/
+lemma fqup_fpbg: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃+ ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ >[h, g] ⦃G2, L2, T2⦄.
+#h #g #G1 #G2 #L1 #L2 #T1 #T2 #H @(fqup_ind … L2 T2 H) -G2 -L2 -T2
+/4 width=5 by fpbg_strap1, fpbc_fpbg, fpbc_fqu, fpb_fquq, fqu_fquq/
 qed.
 
 lemma cpxs_fpbg: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡*[h, g] T2 → (T1 = T2 → ⊥) →

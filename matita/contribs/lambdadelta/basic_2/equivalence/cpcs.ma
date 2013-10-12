@@ -85,7 +85,7 @@ lemma cpcs_cpr_conf: ∀G,L,T1,T. ⦃G, L⦄ ⊢ T ➡ T1 → ∀T2. ⦃G, L⦄ 
 (* Basic_1: removed theorems 9:
             clear_pc3_trans pc3_ind_left
             pc3_head_1 pc3_head_2 pc3_head_12 pc3_head_21
-            pc3_pr2_fsubst0 pc3_pr2_fsubst0_back pc3_fsubst0
+            pc3_pr2_fqubst0 pc3_pr2_fqubst0_back pc3_fqubst0
             pc3_gen_abst pc3_gen_abst_shift
 *)
 (* Basic_1: removed local theorems 6:

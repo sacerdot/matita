@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/grammar/lpx_sn_lpx_sn.ma".
-include "basic_2/substitution/fsupp.ma".
+include "basic_2/substitution/fqup.ma".
 include "basic_2/reduction/lpr_ldrop.ma".
 
 (* SN PARALLEL REDUCTION FOR LOCAL ENVIRONMENTS *****************************)
@@ -41,7 +41,7 @@ elim (lpr_inv_pair1 … H1) -H1 #K1 #V1 #HK01 #HV01 #H destruct
 elim (lpr_ldrop_conf … HLK0 … HL02) -HL02 #X2 #H2 #HLK2
 elim (lpr_inv_pair1 … H2) -H2 #K2 #W2 #HK02 #_ #H destruct
 lapply (ldrop_fwd_ldrop2 … HLK2) -W2 #HLK2
-lapply (fsupp_lref … G … HLK0) -HLK0 #HLK0
+lapply (fqup_lref … G … HLK0) -HLK0 #HLK0
 elim (IH … HLK0 … HV01 … HV02 … HK01 … HK02) -L0 -K0 -V0 #V #HV1 #HV2
 elim (lift_total V 0 (i+1)) #T #HVT
 lapply (cpr_lift … HV2 … HLK2 … HVT2 … HVT) -K2 -V2 /3 width=6/
@@ -70,7 +70,7 @@ lapply (ldrop_fwd_ldrop2 … HLK1) -W1 #HLK1
 elim (lpr_ldrop_conf … HLK0 … HL02) -HL02 #X2 #H2 #HLK2
 elim (lpr_inv_pair1 … H2) -H2 #K2 #W2 #HK02 #_ #H destruct
 lapply (ldrop_fwd_ldrop2 … HLK2) -W2 #HLK2
-lapply (fsupp_lref … G … HLK0) -HLK0 #HLK0
+lapply (fqup_lref … G … HLK0) -HLK0 #HLK0
 elim (IH … HLK0 … HV01 … HV02 … HK01 … HK02) -L0 -K0 -V0 #V #HV1 #HV2
 elim (lift_total V 0 (i+1)) #T #HVT
 lapply (cpr_lift … HV1 … HLK1 … HVT1 … HVT) -K1 -V1
@@ -278,7 +278,7 @@ lapply (cpr_lift … HV2 (L2.ⓓW2) … HVU2 … HVU) -HVU2 /2 width=1/
 qed-.
 
 theorem cpr_conf_lpr: ∀G. lpx_sn_confluent (cpr G) (cpr G).
-#G #L0 #T0 @(fsupp_wf_ind … G L0 T0) -G -L0 -T0 #G #L #T #IH #G0 #L0 * [|*]
+#G #L0 #T0 @(fqup_wf_ind … G L0 T0) -G -L0 -T0 #G #L #T #IH #G0 #L0 * [|*]
 [ #I0 #HG #HL #HT #T1 #H1 #T2 #H2 #L1 #HL01 #L2 #HL02 destruct
   elim (cpr_inv_atom1 … H1) -H1
   elim (cpr_inv_atom1 … H2) -H2

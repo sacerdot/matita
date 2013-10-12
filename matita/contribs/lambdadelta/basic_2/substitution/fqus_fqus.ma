@@ -12,11 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/fsupp.ma".
+include "basic_2/substitution/fqus.ma".
 
-(* PLUS-ITERATED SUPCLOSURE *************************************************)
+(* STAR-ITERATED SUPCLOSURE *************************************************)
 
-(* Main propertis ***********************************************************)
+(* Main properties **********************************************************)
 
-theorem fsupp_trans: tri_transitive … fsupp.
+theorem fqus_trans: tri_transitive … fqus.
 /2 width=5 by tri_TC_transitive/ qed-.

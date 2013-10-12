@@ -13,36 +13,36 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/suptermopt_6.ma".
-include "basic_2/relocation/fsup.ma".
+include "basic_2/relocation/fqu.ma".
 
 (* OPTIONAL SUPCLOSURE ******************************************************)
 
 (* activate genv *)
-inductive fsupq: tri_relation genv lenv term ≝
-| fsupq_lref_O : ∀I,G,L,V. fsupq G (L.ⓑ{I}V) (#0) G L V
-| fsupq_pair_sn: ∀I,G,L,V,T. fsupq G L (②{I}V.T) G L V
-| fsupq_bind_dx: ∀a,I,G,L,V,T. fsupq G L (ⓑ{a,I}V.T) G (L.ⓑ{I}V) T
-| fsupq_flat_dx: ∀I,G, L,V,T. fsupq G L (ⓕ{I}V.T) G L T
-| fsupq_drop   : ∀G,L,K,T,U,e.
-                 ⇩[0, e] L ≡ K → ⇧[0, e] T ≡ U → fsupq G L U G K T
+inductive fquq: tri_relation genv lenv term ≝
+| fquq_lref_O : ∀I,G,L,V. fquq G (L.ⓑ{I}V) (#0) G L V
+| fquq_pair_sn: ∀I,G,L,V,T. fquq G L (②{I}V.T) G L V
+| fquq_bind_dx: ∀a,I,G,L,V,T. fquq G L (ⓑ{a,I}V.T) G (L.ⓑ{I}V) T
+| fquq_flat_dx: ∀I,G, L,V,T. fquq G L (ⓕ{I}V.T) G L T
+| fquq_drop   : ∀G,L,K,T,U,e.
+                ⇩[0, e] L ≡ K → ⇧[0, e] T ≡ U → fquq G L U G K T
 .
 
 interpretation
    "optional structural successor (closure)"
-   'SupTermOpt G1 L1 T1 G2 L2 T2 = (fsupq G1 L1 T1 G2 L2 T2).
+   'SupTermOpt G1 L1 T1 G2 L2 T2 = (fquq G1 L1 T1 G2 L2 T2).
 
 (* Basic properties *********************************************************)
 
-lemma fsupq_refl: tri_reflexive … fsupq.
-/2 width=3 by fsupq_drop/ qed.
+lemma fquq_refl: tri_reflexive … fquq.
+/2 width=3 by fquq_drop/ qed.
 
-lemma fsup_fsupq: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, L2, T2⦄.
-#G1 #G2 #L1 #L2 #T1 #T2 #H elim H -L1 -L2 -T1 -T2 // /2 width=3 by fsupq_drop/
+lemma fqu_fquq: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, L2, T2⦄.
+#G1 #G2 #L1 #L2 #T1 #T2 #H elim H -L1 -L2 -T1 -T2 // /2 width=3 by fquq_drop/
 qed.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma fsupq_fwd_fw: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, L2, T2⦄ → ♯{G2, L2, T2} ≤ ♯{G1, L1, T1}.
+lemma fquq_fwd_fw: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, L2, T2⦄ → ♯{G2, L2, T2} ≤ ♯{G1, L1, T1}.
 #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2 /2 width=1 by lt_to_le/
 #G1 #L1 #K1 #T1 #U1 #e #HLK1 #HTU1
 lapply (ldrop_fwd_lw … HLK1) -HLK1
@@ -50,8 +50,8 @@ lapply (lift_fwd_tw … HTU1) -HTU1
 /2 width=1 by le_plus, le_n/
 qed-.
 
-fact fsupq_fwd_length_lref1_aux: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, L2, T2⦄ →
-                                 ∀i. T1 = #i → |L2| ≤ |L1|.
+fact fquq_fwd_length_lref1_aux: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, L2, T2⦄ →
+                                ∀i. T1 = #i → |L2| ≤ |L1|.
 #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2 //
 [ #a #I #G #L #V #T #j #H destruct
 | #G1 #L1 #K1 #T1 #U1 #e #HLK1 #HTU1 #i #H destruct
@@ -59,6 +59,6 @@ fact fsupq_fwd_length_lref1_aux: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃⸮ �
 ]
 qed-.
 
-lemma fsupq_fwd_length_lref1: ∀G1,G2,L1,L2,T2,i. ⦃G1, L1, #i⦄ ⊃⸮ ⦃G2, L2, T2⦄ → |L2| ≤ |L1|.
-/2 width=7 by fsupq_fwd_length_lref1_aux/
+lemma fquq_fwd_length_lref1: ∀G1,G2,L1,L2,T2,i. ⦃G1, L1, #i⦄ ⊃⸮ ⦃G2, L2, T2⦄ → |L2| ≤ |L1|.
+/2 width=7 by fquq_fwd_length_lref1_aux/
 qed-.
