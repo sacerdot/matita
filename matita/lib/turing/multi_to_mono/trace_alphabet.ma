@@ -57,6 +57,12 @@ definition trace ≝ λsig,n,i,l.
 lemma trace_def : ∀sig,n,i,l. 
   trace sig n i l = map ?? (λa. nth i ? (vec … n a) (blank sig)) l.
 // qed.
+
+lemma hd_trace:  ∀sig,n,i,l. 
+  hd ? (trace sig n i l) (blank ?) = 
+    nth i ? (hd ? l (all_blank … )) (blank ?).
+#sig #n #i #l elim l // normalize >blank_all_blank % 
+qed.
  
 lemma tail_trace:  ∀sig,n,i,l. 
   tail ? (trace sig n i l) = trace sig n i (tail ? l).
@@ -94,6 +100,7 @@ qed.
 
 definition no_head_in ≝ λsig,n,l. 
   ∀x. mem ? x (trace sig n n l) → x ≠ head ?.
+
 
 (* some lemmas over lists, to be moved *)
 lemma injective_append_l: ∀A,l. injective ?? (append A l).
@@ -211,6 +218,12 @@ let rec to_blank sig l on l ≝
   [ nil ⇒  [ ]
   | cons a tl ⇒ 
       if a == blank sig then [ ] else a::(to_blank sig tl)]. 
+      
+let rec after_blank sig l on l ≝
+  match l with
+  [ nil ⇒  [ ]
+  | cons a tl ⇒ 
+      if a == blank sig then (a::tl) else (after_blank sig tl)]. 
       
 definition to_blank_i ≝ λsig,n,i,l. to_blank ? (trace sig n i l).
 
