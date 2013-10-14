@@ -65,3 +65,16 @@ qed-.
 lemma fqu_fwd_length_lref1: ∀G1,G2,L1,L2,T2,i. ⦃G1, L1, #i⦄ ⊃ ⦃G2, L2, T2⦄ → |L2| < |L1|.
 /2 width=7 by fqu_fwd_length_lref1_aux/
 qed-.
+
+lemma fqu_fwd_gen: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ →
+                   |G1| = |G2| → |L1| = |L2| → T1 = T2 → ⊥.
+#G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2
+[ #I #G #L #V #_ #H elim (plus_xSy_x_false … H)
+| #I #G #L #V #T #_ #_ #H elim (discr_tpair_xy_x … H)
+| #a #I #G #L #V #T #_ #_ #H elim (discr_tpair_xy_y … H)
+| #I #G #L #V #T #_ #_ #H elim (discr_tpair_xy_y … H)
+| #G #L #K #T #U #e #HLK #_ #_ #H
+  lapply (ldrop_fwd_length_lt4 … HLK ?) // >H -L #H
+  elim (lt_refl_false … H)
+]
+qed-.

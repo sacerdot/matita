@@ -33,7 +33,7 @@ interpretation "'big tree' proper parallel computation (closure)"
 lemma fpbg_fwd_fpbs: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ >[h, g] ⦃G2, L2, T2⦄ →
                      ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G2 -L2 -T2
-/3 width=5 by fpbs_strap1, fpbc_fpb, fpb_lpx/
+/3 width=5 by fpbs_strap1, fpbc_fwd_fpb, fpb_lpx/
 qed-.
 
 (* Basic properties *********************************************************)
@@ -46,7 +46,7 @@ lemma fpbg_strap1: ∀h,g,G1,G,G2,L1,L,L2,T1,T,T2. ⦃G1, L1, T1⦄ >[h, g] ⦃G
                    ⦃G, L, T⦄ ≽[h, g] ⦃G2, L2, T2⦄ →  ⦃G1, L1, T1⦄ >[h, g] ⦃G2, L2, T2⦄.
 #h #g #G1 #G #G2 #L1 #L #L2 #T1 #T #T2 #H1 #H2
 lapply (fpbg_fwd_fpbs … H1) #H0
-elim (fpb_inv_fpbc … H2) -H2 [| * #HG2 #HL2 #HT2 destruct ]
+elim (fpb_fpbc_or_refl … H2) -H2 [| * #HG2 #HL2 #HT2 destruct ]
 /2 width=5 by fpbg_inj, fpbg_step/
 qed-.
 

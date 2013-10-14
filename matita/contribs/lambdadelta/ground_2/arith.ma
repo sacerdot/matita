@@ -80,6 +80,9 @@ qed-.
 lemma plus_xySz_x_false: ∀z,x,y. x + y + S z = x → ⊥.
 /2 width=4 by le_plus_xySz_x_false/ qed-.
 
+lemma plus_xSy_x_false: ∀y,x. x + S y = x → ⊥.
+/2 width=4 by plus_xySz_x_false/ qed-.
+
 (* Iterators ****************************************************************)
 
 (* Note: see also: lib/arithemetcs/bigops.ma *)
