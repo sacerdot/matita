@@ -629,3 +629,57 @@ theorem sem_seq_app_guarded: ∀sig.∀M1,M2:TM sig.∀Pre1,Pre2,R1,R2,R3.
 #k * #outc * #Hloop #Houtc @(ex_intro … k) @(ex_intro … outc)
 % [@Hloop |@Hsub @Houtc]
 qed.
+
+theorem acc_sem_seq : ∀sig.∀M1,M2:TM sig.∀R1,Rtrue,Rfalse,acc.
+  M1 ⊨ R1 → M2 ⊨ [ acc: Rtrue, Rfalse ] → 
+  M1 · M2 ⊨ [ inr … acc: R1 ∘ Rtrue, R1 ∘ Rfalse ].
+#sig #M1 #M2 #R1 #Rtrue #Rfalse #acc #HR1 #HR2 #t 
+cases (HR1 t) #k1 * #outc1 * #Hloop1 #HM1
+cases (HR2 (ctape sig (states ? M1) outc1)) #k2 * #outc2 * * #Hloop2 
+#HMtrue #HMfalse
+@(ex_intro … (k1+k2)) @(ex_intro … (lift_confR … outc2))
+% [ %
+[@(loop_merge …
+   (loop_lift ??? (lift_confL sig (states sig M1) (states sig M2))
+   (step sig M1) (step sig (seq sig M1 M2)) 
+   (λc.halt sig M1 (cstate … c)) 
+   (λc.halt_liftL ?? (halt sig M1) (cstate … c)) … Hloop1))
+  [ * *
+   [ #sl #tl whd in ⊢ (??%? → ?); #Hl %
+   | #sr #tr whd in ⊢ (??%? → ?); #Hr destruct (Hr) ]
+  || #c0 #Hhalt <step_seq_liftL //
+  | #x <p_halt_liftL %
+  |6:cases outc1 #s1 #t1 %
+  |7:@(loop_lift … (initc ?? (ctape … outc1)) … Hloop2) 
+    [ * #s2 #t2 %
+    | #c0 #Hhalt <step_seq_liftR // ]
+  |whd in ⊢ (??(???%)?);whd in ⊢ (??%?);
+   generalize in match Hloop1; cases outc1 #sc1 #tc1 #Hloop10 
+   >(trans_liftL_true sig M1 M2 ??) 
+    [ whd in ⊢ (??%?); whd in ⊢ (???%); //
+    | @(loop_Some ?????? Hloop10) ]
+ ]
+| >(config_expand … outc2) in ⊢ (%→?); whd in ⊢ (??%?→?); 
+  #Hqtrue destruct (Hqtrue)
+  @(ex_intro … (ctape ? (FinSum (states ? M1) (states ? M2)) (lift_confL … outc1)))
+  % // >eq_ctape_lift_conf_L >eq_ctape_lift_conf_R /2/ ]
+| >(config_expand … outc2) in ⊢ (%→?); whd in ⊢ (?(??%?)→?); #Hqfalse
+  @(ex_intro … (ctape ? (FinSum (states ? M1) (states ? M2)) (lift_confL … outc1)))
+  % // >eq_ctape_lift_conf_L >eq_ctape_lift_conf_R @HMfalse
+  @(not_to_not … Hqfalse) //
+]
+qed.
+
+lemma acc_sem_seq_app : ∀sig.∀M1,M2:TM sig.∀R1,Rtrue,Rfalse,R2,R3,acc.
+  M1 ⊨ R1 → M2 ⊨ [acc: Rtrue, Rfalse] → 
+    (∀t1,t2,t3. R1 t1 t3 → Rtrue t3 t2 → R2 t1 t2) → 
+    (∀t1,t2,t3. R1 t1 t3 → Rfalse t3 t2 → R3 t1 t2) → 
+    M1 · M2 ⊨ [inr … acc : R2, R3].    
+#sig #M1 #M2 #R1 #Rtrue #Rfalse #R2 #R3 #acc
+#HR1 #HRacc #Hsub1 #Hsub2 
+#t cases (acc_sem_seq … HR1 HRacc t)
+#k * #outc * * #Hloop #Houtc1 #Houtc2 @(ex_intro … k) @(ex_intro … outc)
+% [% [@Hloop
+     |#H cases (Houtc1 H) #t3 * #Hleft #Hright @Hsub1 // ]
+  |#H cases (Houtc2 H) #t3 * #Hleft #Hright @Hsub2 // ]
+qed.
