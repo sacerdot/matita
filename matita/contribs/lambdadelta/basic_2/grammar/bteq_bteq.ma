@@ -12,14 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/acp_aaa.ma".
-include "basic_2/computation/csx_tstc_vector.ma".
+include "basic_2/grammar/bteq.ma".
 
-(* CONTEXT-SENSITIVE EXTENDED STRONGLY NORMALIZING TERMS ********************)
+(* EQUIVALENT "BIG TREE" NORMAL FORMS ***************************************)
 
-(* Main properties on atomic arity assignment *******************************)
+(* Main properties **********************************************************)
 
-theorem aaa_csx: ∀h,g,G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ⦃G, L⦄ ⊢ ⬊*[h, g] T.
-#h #g #G #L #T #A #H
-@(acp_aaa … (csx_acp h g) (csx_acr h g) … H)
-qed.
+theorem bteq_trans: tri_transitive … bteq.
+#G1 #G #L1 #L #T1 #T * //
+qed-.

@@ -254,6 +254,7 @@ table {
           }
         ]
         [ { "closures" * } {
+             [ "bteq ( ⦃?,?,?⦄ ⪴ ⦃?,?,?⦄ )" "bteq_bteq" * ]
              [ "cl_shift ( ? @@ ? )" "cl_weight ( ♯{?,?,?} )" * ]
           }
         ]

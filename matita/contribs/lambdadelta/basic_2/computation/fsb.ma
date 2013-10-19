@@ -14,12 +14,13 @@
 
 include "basic_2/notation/relations/btsn_5.ma".
 include "basic_2/reduction/fpbc.ma".
+include "basic_2/computation/csx.ma".
 
 (* "BIG TREE" STRONGLY NORMALIZING TERMS ************************************)
 
 inductive fsb (h) (g): relation3 genv lenv term ≝
 | fsb_intro: ∀G1,L1,T1. (
-                ∀G2,L2,T2.  ⦃G1, L1, T1⦄ ≻[h, g] ⦃G2, L2, T2⦄ → fsb h g G2 L2 T2
+                ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≻[h, g] ⦃G2, L2, T2⦄ → fsb h g G2 L2 T2
              ) → fsb h g G1 L1 T1
 .
 
@@ -40,4 +41,10 @@ theorem fsb_ind_alt: ∀h,g. ∀R: relation3 …. (
                      ) →
                      ∀G,L,T. ⦃G, L⦄ ⊢ ⦥[h, g] T → R G L T.
 #h #g #R #IH #G #L #T #H elim H -G -L -T /5 width=1 by fpb_fpbc/
+qed-.
+
+(* Basic inversion lemmas ***************************************************)
+
+lemma fsb_inv_csx: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ ⦥[h, g] T → ⦃G, L⦄ ⊢ ⬊*[h, g] T.
+#h #g #G #L #T #H elim H -G -L -T /5 width=1 by csx_intro, fpbc_cpx/
 qed-.

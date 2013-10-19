@@ -12,14 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/acp_aaa.ma".
-include "basic_2/computation/csx_tstc_vector.ma".
+(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-(* CONTEXT-SENSITIVE EXTENDED STRONGLY NORMALIZING TERMS ********************)
-
-(* Main properties on atomic arity assignment *******************************)
-
-theorem aaa_csx: ∀h,g,G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ⦃G, L⦄ ⊢ ⬊*[h, g] T.
-#h #g #G #L #T #A #H
-@(acp_aaa … (csx_acp h g) (csx_acr h g) … H)
-qed.
+notation "hvbox( ⦃ term 46 G1, break term 46 L1, break term 46 T1 ⦄ ⪴ break ⦃ term 46 G2, break term 46 L2 , break term 46 T2 ⦄ )"
+   non associative with precedence 45
+   for @{ 'BTEq $G1 $L1 $T1 $G2 $L2 $T2 }.
