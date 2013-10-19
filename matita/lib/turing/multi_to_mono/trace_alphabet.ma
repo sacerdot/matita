@@ -4,38 +4,42 @@ simulating a multi-tape machine, and a library of functions operating on them *)
 include "basics/vector_finset.ma".
 
 (* a multi_sig characheter is composed by n+1 sub-characters: n for each tape 
-of a multitape machine, and an additional one to mark the position of the head. 
-We extend the tape alphabet with two new symbols true and false. 
-false is used to pad shorter tapes, and true to mark the head of the tape *)
+of a multitape machine.  
+We extend the tape alphabet with a special symbol None to pad shorter tapes.
+For the moment, the actual content of the tape alphabet is left unspecifed, 
+but we shall need characters to store states and moves of the multitape 
+machines and to mark the head position *)
 
-definition sig_ext ≝ λsig. FinSum FinBool sig.
-definition blank : ∀sig.sig_ext sig ≝ λsig. inl … false.
-definition head : ∀sig.sig_ext sig ≝ λsig. inl … true.
+definition sig_ext ≝ λsig. FinOption sig.
+definition blank : ∀sig.sig_ext sig ≝ λsig. None sig.
+
+(* definition head : ∀sig.sig_ext sig ≝ λsig. inl … true. *)
 
 definition multi_sig ≝ λsig:FinSet.λn.FinVector (sig_ext sig) n.
 
 (* a character containing blank characters in each trace *)
-let rec all_blank sig n on n : multi_sig sig n ≝ 
+let rec all_blanks sig n on n : multi_sig sig n ≝ 
   match n with
   [ O ⇒ Vector_of_list ? []
-  | S m ⇒ vec_cons ? (blank ?) m (all_blank sig m)
+  | S m ⇒ vec_cons ? (blank ?) m (all_blanks sig m)
   ].
 
-lemma blank_all_blank: ∀sig,n,i.
-  nth i ? (vec … (all_blank sig n)) (blank sig) = blank ?.
+lemma blank_all_blanks: ∀sig,n,i.
+  nth i ? (vec … (all_blanks sig n)) (blank sig) = blank ?.
 #sig #n elim n normalize [#i >nth_nil // |#m #Hind #i cases i // #j @Hind ]
 qed.
 
 lemma all_blank_n: ∀sig,n.
-  nth n ? (vec … (all_blank sig n)) (blank sig) = blank ?.
-#sig #n @blank_all_blank 
+  nth n ? (vec … (all_blanks sig n)) (blank sig) = blank ?.
+#sig #n @blank_all_blanks 
 qed.
 
 (* boolen test functions *)
 
-definition no_blank ≝ λsig,n,i.λc:multi_sig sig n.
+definition not_blank ≝ λsig,n,i.λc:multi_sig sig n.
   ¬(nth i ? (vec … c) (blank ?))==blank ?.
 
+(*
 definition no_head ≝ λsig,n.λc:multi_sig sig n.
   ¬((nth n ? (vec … c) (blank ?))==head ?).
     
@@ -48,7 +52,7 @@ qed.
 lemma no_head_false: ∀sig,n,a. 
   nth n ? (vec … n a) (blank sig) = head ? → no_head … a = false.
 #sig #n #a #H normalize >H //  
-qed.
+qed. *)
 
 (**************************** extract the i-th trace **************************)
 definition trace ≝ λsig,n,i,l. 
@@ -60,8 +64,8 @@ lemma trace_def : ∀sig,n,i,l.
 
 lemma hd_trace:  ∀sig,n,i,l. 
   hd ? (trace sig n i l) (blank ?) = 
-    nth i ? (hd ? l (all_blank … )) (blank ?).
-#sig #n #i #l elim l // normalize >blank_all_blank % 
+    nth i ? (hd ? l (all_blanks … )) (blank ?).
+#sig #n #i #l elim l // normalize >blank_all_blanks % 
 qed.
  
 lemma tail_trace:  ∀sig,n,i,l. 
@@ -88,19 +92,20 @@ qed.
 
 lemma nth_trace : ∀sig,n,i,j,l.
   nth j ? (trace sig n i l) (blank ?) = 
-    nth i ? (nth j ? l (all_blank sig n)) (blank ?).
+    nth i ? (nth j ? l (all_blanks sig n)) (blank ?).
 #sig #n #i #j elim j
-  [#l cases l normalize // >blank_all_blank //
+  [#l cases l normalize // >blank_all_blanks //
   |-j #j #Hind #l whd in match (nth ????); whd in match (nth ????);
    cases l 
-    [normalize >nth_nil >nth_nil >blank_all_blank //
+    [normalize >nth_nil >nth_nil >blank_all_blanks //
     |#a #tl normalize @Hind]
   ]
 qed.
 
+(*
 definition no_head_in ≝ λsig,n,l. 
   ∀x. mem ? x (trace sig n n l) → x ≠ head ?.
-
+*)
 
 (* some lemmas over lists, to be moved *)
 lemma injective_append_l: ∀A,l. injective ?? (append A l).
@@ -178,9 +183,9 @@ asserts that v1 is obtained from v2 by shifting_left the i-trace *)
 
 definition shift_l ≝ λsig,n,i,v1,v2.  (* multi_sig sig n *) 
   |v1| = |v2| ∧ 
-  ∀j.nth j ? v2 (all_blank sig n) = 
-      change_vec ? n (nth j ? v1 (all_blank sig n)) 
-        (nth i ? (vec … (nth (S j) ? v1 (all_blank sig n))) (blank ?)) i.
+  ∀j.nth j ? v2 (all_blanks sig n) = 
+      change_vec ? n (nth j ? v1 (all_blanks sig n)) 
+        (nth i ? (vec … (nth (S j) ? v1 (all_blanks sig n))) (blank ?)) i.
 
 (* supposing (shift_l … i v1 v2), the i-th trace of v2 is equal to the tail of
 the i-th trace of v1, plus a trailing blank *)
@@ -193,8 +198,8 @@ lemma trace_shift: ∀sig,n,i,v1,v2. i < n → 0 < |v1| →
     |#b #tl #_ normalize >length_append >length_trace normalize //
     ]
   |#j >nth_trace >Hnth >nth_change_vec // >tail_trace 
-   cut (trace ? n i [all_blank sig n] = [blank sig]) 
-     [normalize >blank_all_blank //] 
+   cut (trace ? n i [all_blanks sig n] = [blank sig]) 
+     [normalize >blank_all_blanks //] 
    #Hcut <Hcut <trace_append >nth_trace 
    <nth_extended //
   ]
@@ -250,16 +255,16 @@ axiom to_blank_hd : ∀sig,n,a,b,l1,l2.
   (∀i. i ≤ n → to_blank_i sig n i (a::l1) = to_blank_i sig n i (b::l2)) → a = b.
 
 lemma to_blank_i_ext : ∀sig,n,i,l.
-  to_blank_i sig n i l = to_blank_i sig n i (l@[all_blank …]).
+  to_blank_i sig n i l = to_blank_i sig n i (l@[all_blanks …]).
 #sig #n #i #l elim l
-  [@sym_eq @to_blank_cons_b @blank_all_blank
+  [@sym_eq @to_blank_cons_b @blank_all_blanks
   |#a #tl #Hind whd in match (to_blank_i ????); >Hind <to_blank_i_def >Hind %
   ]
 qed. 
   
 lemma to_blank_hd_cons : ∀sig,n,i,l1,l2.
   to_blank_i sig n i (l1@l2) = 
-    to_blank_i … i (l1@(hd … l2 (all_blank …))::tail … l2).
+    to_blank_i … i (l1@(hd … l2 (all_blanks …))::tail … l2).
 #sig #n #i #l1 #l2 cases l2
   [whd in match (hd ???); whd in match (tail ??); >append_nil @to_blank_i_ext 
   |#a #tl % 

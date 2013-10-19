@@ -4,10 +4,12 @@ include "turing/multi_to_mono/trace_alphabet.ma".
 
 (* a machine that shift the i trace r starting from the bord of the trace *)
 
+(* (λc.¬(nth i ? (vec … c) (blank ?))==blank ?)) *)
 (* vec is a coercion. Why should I insert it? *)
 definition mti_step ≝ λsig:FinSet.λn,i.
-  ifTM (multi_sig sig n) (test_char ? (λc:multi_sig sig n.¬(nth i ? (vec … c) (blank ?))==blank ?))
-     (single_finalTM … (ncombf_r (multi_sig sig n) (shift_i sig n i) (all_blank sig n)))
+  ifTM (multi_sig sig n) (test_char ? (not_blank sig n i))
+     (single_finalTM … 
+       (ncombf_r (multi_sig sig n) (shift_i sig n i) (all_blanks sig n)))
      (nop ?) tc_true.
       
 definition Rmti_step_true ≝ 
@@ -18,7 +20,7 @@ definition Rmti_step_true ≝
        t2 = midtape (multi_sig sig n) ((shift_i sig n i b a)::ls) a rs) ∨
      (∃ls.
        t1 = midtape ? ls b [] ∧
-       t2 = rightof ? (shift_i sig n i b (all_blank sig n)) ls)).
+       t2 = rightof ? (shift_i sig n i b (all_blanks sig n)) ls)).
 
 (* 〈combf0,all_blank sig n〉 *)
 definition Rmti_step_false ≝ 
@@ -31,9 +33,9 @@ lemma sem_mti_step :
   mti_step sig n i  ⊨ 
     [inr … (inl … (inr … start_nop)): Rmti_step_true sig n i, Rmti_step_false sig n i].
 #sig #n #i
-@(acc_sem_if_app (multi_sig sig n) ?????????? 
-     (sem_test_char …) (sem_ncombf_r (multi_sig sig n) (shift_i sig n i)(all_blank sig n)) 
-     (sem_nop (multi_sig sig n)))
+@(acc_sem_if_app (multi_sig sig n) … (sem_test_char …) 
+  (sem_ncombf_r (multi_sig sig n) (shift_i sig n i)(all_blanks sig n)) 
+  (sem_nop (multi_sig sig n)))
   [#intape #outtape #tapea whd in ⊢ (%→%→%); * * #c *
    #Hcur cases (current_to_midtape … Hcur) #ls * #rs #Hintape
    #ctest #Htapea * #Hout1 #Hout2 @(ex_intro … c) %
@@ -58,23 +60,22 @@ definition mti ≝
 
 axiom daemon: ∀P:Prop.P.
 
-definition R_mti ≝ 
-  λsig,n,i,t1,t2.
-    (∀a,rs. t1 = rightof ? a rs → t2 = t1) ∧
-    (∀a,ls,rs. 
-      t1 = midtape (multi_sig sig n) ls a rs → 
-      (nth i ? (vec … a) (blank ?) = blank ? ∧ t2 = t1) ∨
-      ((∃rs1,b,rs2,rss.
-        rs = rs1@b::rs2 ∧ 
-        nth i ? (vec … b) (blank ?) = (blank ?) ∧
-        (∀x. mem ? x (a::rs1) → nth i ? (vec … x) (blank ?) ≠ (blank ?)) ∧
-        shift_l sig n i (a::rs1) rss ∧
-        t2 = midtape (multi_sig sig n) ((reverse ? rss)@ls) b rs2) ∨
-      (∃b,rss. 
-        (∀x. mem ? x (a::rs) → nth i ? (vec … x) (blank ?) ≠ (blank ?)) ∧
-        shift_l sig n i (a::rs) (rss@[b]) ∧
-        t2 = rightof (multi_sig sig n) (shift_i sig n i b (all_blank sig n)) 
-         ((reverse ? rss)@ls)))).  
+definition R_mti ≝ λsig,n,i,t1,t2.
+  (∀a,rs. t1 = rightof ? a rs → t2 = t1) ∧
+  (∀a,ls,rs. 
+    t1 = midtape (multi_sig sig n) ls a rs → 
+    (nth i ? (vec … a) (blank ?) = blank ? ∧ t2 = t1) ∨
+    ((∃rs1,b,rs2,rss.
+      rs = rs1@b::rs2 ∧ 
+      nth i ? (vec … b) (blank ?) = (blank ?) ∧
+      (∀x. mem ? x (a::rs1) → nth i ? (vec … x) (blank ?) ≠ (blank ?)) ∧
+      shift_l sig n i (a::rs1) rss ∧
+      t2 = midtape (multi_sig sig n) ((reverse ? rss)@ls) b rs2) ∨
+    (∃b,rss. 
+      (∀x. mem ? x (a::rs) → nth i ? (vec … x) (blank ?) ≠ (blank ?)) ∧
+      shift_l sig n i (a::rs) (rss@[b]) ∧
+      t2 = rightof (multi_sig sig n) (shift_i sig n i b (all_blanks sig n)) 
+       ((reverse ? rss)@ls)))).  
 
 lemma sem_mti:
   ∀sig,n,i.
