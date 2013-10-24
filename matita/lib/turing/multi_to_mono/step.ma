@@ -113,9 +113,25 @@ definition to_sig_tape ≝ λQ,sig,t.
     | Some x ⇒ midtape ? (to_sig_map Q sig ls) x (to_sig_map Q sig rs) ]
   ].
 
-definition rb_tapes ≝ λQ,sig,n,ls.λa:MTA Q sig (S n).λrs.
-  vec_map ?? (to_sig_tape ??) n (readback ? (S n) ls (vec … a) rs n).
-
+let rec rb_tapes Q sig n ls (a:MTA Q sig (S n)) rs i on i ≝
+  match i with 
+  [ O ⇒ mk_Vector ? 0 (nil ?) (refl ??)
+  | S j ⇒ vec_cons_right ? (to_sig_tape ?? (rb_trace_i ? (S n) ls (vec … a) rs j)) j
+           (rb_tapes Q sig n ls a rs j)].
+ 
+lemma nth_rb_tapes : ∀Q,sig,n,ls.∀a:MTA Q sig (S n).∀rs,j,i. i < j →
+  nth i ? (rb_tapes Q sig n ls (a:MTA Q sig (S n)) rs j) (niltape ?) =
+    to_sig_tape ?? (rb_trace_i ? (S n) ls (vec … a) rs i).
+#Q #sig #n #ls #a #rs #j elim j
+  [#i #H @False_ind /2/
+  |#k #Hind #i #lti cases (le_to_or_lt_eq … (le_S_S_to_le … lti))
+    [#Hlt >nth_cons_right_lt [@Hind //|//]
+    |#Heq >Heq @nth_cons_right_n
+    ]
+  ]
+qed.
+  
+ 
 (* q0 is a default value *)
 definition get_state ≝ λQ,sig,n.λa:MTA (HC Q n) sig (S n).λq0.
   match nth n ? (vec … a) (blank ?) with 
@@ -139,7 +155,7 @@ definition readback_config ≝
   λQ,sig,n,q0,ls.λa:MTA (HC Q (S n)) sig (S (S n)).λrs.
   mk_mconfig sig Q n 
     (get_state Q sig (S n) a q0)
-    (rb_tapes (HC Q (S n)) sig (S n) ls a rs).
+    (rb_tapes (HC Q (S n)) sig (S n) ls a rs (S n)).
 
 lemma state_readback : ∀Q,sig,n,q0,ls,a,rs.
   cstate … (readback_config Q sig n q0 ls a rs) =
@@ -148,7 +164,7 @@ lemma state_readback : ∀Q,sig,n,q0,ls,a,rs.
 
 lemma tapes_readback : ∀Q,sig,n,q0,ls,a,rs.
   ctapes … (readback_config Q sig n q0 ls a rs) =
-    rb_tapes (HC Q (S n)) sig (S n) ls a rs.
+    rb_tapes (HC Q (S n)) sig (S n) ls a rs (S n).
 // qed.
     
 definition R_stepM ≝ λsig.λn.λM:mTM sig n.λt1,t2.
@@ -241,7 +257,11 @@ axiom to_sig_write : ∀Q,sig,n,t,c.
   (tape_write ? t (to_sig_conv ??? c))
    = tape_write sig (to_sig_tape ?? t) c.
 
+definition opt ≝ λA.λoc1: option A.λc2.
+  match oc1 with [None ⇒ c2 | Some c1 ⇒ c1].
+
 axiom rb_write: ∀sig,n,ls,a,rs,i,c1,c2.
+  nth i ? c1 (None ?) = opt ? c2 (nth i ? c1 (None ?)) → 
   rb_trace_i ? n ls c1 rs i =
   tape_write ? (rb_trace_i sig n ls a rs i) c2.
    
@@ -265,7 +285,7 @@ lapply (transf_eq … HaSn (refl ??) (refl ??) (eq_pair_fst_snd …) (refl ??) (
 *)
 lapply (Hmoves … Ht1 ?? H3 H4)
   [>(transf_eq … HaSn (refl ??) (refl ??) (eq_pair_fst_snd …) (refl ??) (refl ??))
-   >nth_cons_right %
+   >nth_cons_right_n %
   | (* regularity is preserved *) @daemon
   |* #ls1 * #a1 * #rs1 * * * #Htout #Hreg #Hrb #HtrSn
    lapply (HtrSn (S n) (le_n ?) (le_n ?)) -HtrSn #HtrSn
@@ -282,26 +302,30 @@ lapply (Hmoves … Ht1 ?? H3 H4)
       [(* state *) >state_readback whd in match (step ????);
        >(cstate_rb … HaSn) >eq_current_chars_resize >get_chars_def
        <Hc1 <Hc2 >Htrans whd in ⊢ (???%);
-       whd in ⊢ (??%?); >Ha1 >HaSn >Htransf >nth_cons_right %
+       whd in ⊢ (??%?); >Ha1 >HaSn >Htransf >nth_cons_right_n %
       |>tapes_readback whd in match (step ????);
        >(cstate_rb … HaSn) >eq_current_chars_resize >get_chars_def
        <Hc1 <Hc2 >Htrans >ctapes_mk_config 
        @(eq_vec … (niltape ?)) #i #lti
-       >nth_vec_map_lt [2:@lti |3:@niltape]
-       >Hrb <nth_pmap_lt [2:@lti|3:@N|4:@niltape]
-       >tapes_readback
-       >Htransf whd in match (vec_moves ?????);
-       >get_moves_cons_right >resize_id [2:@(len ?? moves)]
+       >nth_rb_tapes [2:@lti]
+       >Hrb [2:@lt_to_le @lti|3:@lti]
+       >Htransf whd in match (get_move ?????); (* whd in match (vec_moves ?????); *)
+       >get_moves_cons_right 
        (* lhs *)
        <nth_pmap_lt [2:@lti|3:%[@None|@N]|4:@niltape]
-       >nth_vec_map_lt [2:@lti |3:@niltape]
-       >(eq_pair_fst_snd … (nth i ? actions ?))
+       >ctapes_mk_config >nth_rb_tapes [2:@lti]
+       (* >nth_vec_map_lt [2:@lti |3:@niltape] *)
+       >(eq_pair_fst_snd … (nth i ? actions ?)) 
        >tape_move_mono_def
        cut (snd ?? (nth i ? actions 〈None sig,N〉) = nth i ? moves N)
          [>Hmoves @nth_vec_map] #Hmoves1 >Hmoves1
-       >(nth_readback … lti) >(nth_readback … lti)
        >to_sig_move @eq_f2 [2://]
-       <to_sig_write @eq_f @rb_write (* finto *)
+       <to_sig_write @eq_f @rb_write 
+       >nth_cons_right_lt [2:@lti]
+       >Hnew_chars <nth_pmap_lt [2:@lti|3:@None |4:%[@None|@N]]
+       whd in ⊢ (??%%); 
+       inversion (\fst  (nth i ? actions 〈None sig,N〉))  
+        [#Hcase whd in ⊢ (??%%); >Hcase % |#c #Hcase % ]
       ]
     ]
   ]

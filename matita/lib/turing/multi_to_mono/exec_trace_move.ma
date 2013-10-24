@@ -117,7 +117,71 @@ definition move_R_i ≝ λA,sig,n,i.
 definition Rmove_R_i ≝ λA,sig,n,i. 
   R_guarded_M ? (S n) i (Rmtil A sig n i).
 
+(**************************** Vector Operations *******************************)
 
+let rec resize A (l:list A) i d on i ≝
+  match i with 
+  [ O ⇒ [ ]
+  | S j ⇒ (hd ? l d)::resize A (tail ? l) j d
+  ].
+
+lemma length_resize : ∀A,l,i,d. |resize A l i d| = i.
+#A #l #i lapply l -l elim i 
+  [#l #d % 
+  |#m #Hind #l cases l 
+    [#d normalize @eq_f @Hind
+    |#a #tl #d normalize @eq_f @Hind
+    ]
+  ]
+qed.
+
+lemma resize_id : ∀A,n,l,d. |l| = n → 
+  resize A l n d = l.
+#A #n elim n 
+  [#l #d #H >(lenght_to_nil … H) //
+  |#m #Hind * #d normalize 
+    [#H destruct |#a #tl #H @eq_f @Hind @injective_S // ]
+  ]
+qed.
+
+definition resize_vec :∀A,n.Vector A n → ∀i.A→Vector A i.
+#A #n #a #i #d @(mk_Vector A i (resize A a i d) ) @length_resize
+qed.
+
+axiom nth_resize_vec :∀A,n.∀v:Vector A n.∀d,i,j. i < j →i < n →
+  nth i ? (resize_vec A n v j d) d = nth i ? v d.
+  
+lemma resize_vec_id : ∀A,n.∀v:Vector A n.∀d. 
+  resize_vec A n v n d = v.
+#A #n #v #d @(eq_vec … d) #i #ltin @nth_resize_vec //
+qed.
+
+definition vec_single: ∀A,a. Vector A 1 ≝ λA,a.
+  mk_Vector A 1 [a] (refl ??).
+  
+definition vec_cons_right : ∀A.∀a:A.∀n. Vector A n → Vector A (S n).
+#A #a #n #v >(plus_n_O n) >plus_n_Sm @(vec_append … v (vec_single A a))
+>length_append >(len A n v) //
+qed.
+
+lemma eq_cons_right : ∀A,a1,a2.∀n.∀v1,v2:Vector A n.
+  a1 = a2 → v1 = v2 → vec_cons_right A a1 n v1 = vec_cons_right A a2 n v2.
+// qed.
+
+axiom nth_cons_right_n: ∀A.∀a:A.∀n.∀v:Vector A n.∀d. 
+  nth n ? (vec_cons_right A a n v) d = a.
+  
+axiom nth_cons_right_lt: ∀A.∀a:A.∀n.∀v:Vector A n.∀d.∀i. i < n →
+  nth i ? (vec_cons_right A a n v) d = nth i ? v d.
+(*
+#A #a #n elim n 
+  [#v #d >(vector_nil … v) //
+  |#m #Hind #v #d >(vec_expand … v) whd in ⊢ (??%?);    
+   whd in match (vec_cons_right ????);  
+*)
+    
+axiom resize_cons_right: ∀A.∀a:A.∀n.∀v:Vector A n.∀d. 
+  resize_vec ? (S n) (vec_cons_right A a n v) n d = v.
 (*************************** readback of the tape *****************************)
 
 definition opt_cur ≝ λsig,a. 
@@ -139,12 +203,10 @@ lemma rb_trace_i_def: ∀sig,n,ls,a,rs,i.
     rb_trace sig (trace ? n i ls) (nth i ? a (blank ?)) (trace ? n i rs).
 // qed.
 
-let rec readback sig n ls a rs i on i : Vector (tape (sig_ext sig)) i ≝
-  match i with 
-  [ O ⇒ mk_Vector ? 0 (nil ?) (refl ??)
-  | S j ⇒ vec_cons ? (rb_trace_i sig n ls a rs j) j (readback sig n ls a rs j)
-  ].
-
+(*
+definition readback :∀sig,n,ls,a,rs,i.Vector (tape (sig_ext sig)) i ≝
+vec_map (rb_trace_i *)
+ 
 lemma orb_false_l: ∀b1,b2:bool. 
   (b1 ∨ b2) = false → (b1 = false) ∧ (b2 = false).
 * * normalize /2/ qed.
@@ -316,6 +378,12 @@ definition get_moves ≝ λQ,sig,n.λa:MTA (HC Q n) sig (S n).
     
 definition get_move ≝ λQ,sig,n.λa:MTA (HC Q n) sig (S n).λi.
   nth i ? (vec … (get_moves Q sig n a)) N.
+  
+lemma get_moves_cons_right: ∀Q,sig,n,q,moves,a.
+  get_moves Q sig (S n)
+    (vec_cons_right ? (Some ? (inl ?? 〈q,moves〉)) (S n) a) = moves.
+#Q #sig #n #q #moves #a whd in ⊢(??%?); >nth_cons_right_n //
+qed.
 
 definition exec_move_i ≝ λQ,sig,n,i.
     (ifTM ? (test_char ? (λa. (get_move Q sig n a i == R)))
