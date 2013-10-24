@@ -12,51 +12,6 @@
 include "turing/multi_universal/alphabet.ma".
 include "turing/mono.ma".
 
-(************************* turning DeqMove into a DeqSet **********************)
-definition move_eq ≝ λm1,m2:move.
-  match m1 with
-  [R ⇒ match m2 with [R ⇒ true | _ ⇒ false]
-  |L ⇒ match m2 with [L ⇒ true | _ ⇒ false]
-  |N ⇒ match m2 with [N ⇒ true | _ ⇒ false]].
-
-lemma move_eq_true:∀m1,m2.
-  move_eq m1 m2 = true ↔ m1 = m2.
-*
-  [* normalize [% #_ % |2,3: % #H destruct ]
-  |* normalize [1,3: % #H destruct |% #_ % ]
-  |* normalize [1,2: % #H destruct |% #_ % ]
-qed.
-
-definition DeqMove ≝ mk_DeqSet move move_eq move_eq_true.
-
-unification hint 0 ≔ ;
-    X ≟ DeqMove
-(* ---------------------------------------- *) ⊢ 
-    move ≡ carr X.
-
-unification hint  0 ≔ m1,m2; 
-    X ≟ DeqMove
-(* ---------------------------------------- *) ⊢ 
-    move_eq m1 m2 ≡ eqb X m1 m2.
-
-
-(************************ turning DeqMove into a FinSet ***********************)
-definition move_enum ≝ [L;R;N].
-
-lemma move_enum_unique: uniqueb ? [L;R;N] = true.
-// qed.
-
-lemma move_enum_complete: ∀x:move. memb ? x [L;R;N] = true.
-* // qed.
-
-definition FinMove ≝ 
-  mk_FinSet DeqMove [L;R;N] move_enum_unique move_enum_complete.
-
-unification hint  0 ≔ ; 
-    X ≟ FinMove
-(* ---------------------------------------- *) ⊢ 
-    move ≡ FinSetcarr X.
-
 (*************************** normal Turing Machines ***************************)
 
 (* A normal turing machine is just an ordinary machine where:

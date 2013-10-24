@@ -96,7 +96,7 @@ definition R_move_to_blank_L ≝ λsig,n,i,t1,t2.
       (hd ? (ls1@b::ls2) (all_blanks …)) (tail ? (ls1@b::ls2)) rs j) ∧ 
     (not_blank sig n i b = false) ∧ 
     (hd (multi_sig sig n) (ls1@[b]) (all_blanks …) = a) ∧ (* not implied by the next fact *)
-    (∀j.j ≤n → to_blank_i ?? j (ls1@b::ls2) = to_blank_i ?? j (a::ls)) ∧
+    (∀j.j < n → to_blank_i ?? j (ls1@b::ls2) = to_blank_i ?? j (a::ls)) ∧
     t2 = midtape ? ls2 b ((reverse ? ls1)@rs)).
 
 theorem sem_move_to_blank_L: ∀sig,n,i. 
@@ -250,39 +250,47 @@ definition is_sig ≝ λA,sig.λc:sig_ext (TA A sig).
      [ inl _ ⇒ false
      | inr _ ⇒ true]].
 
-definition not_head ≝ λA,sig,n.λc:multi_sig (TA A sig) n.
+definition not_head ≝ λA,sig,n.λc:multi_sig (TA A sig) (S n).
   ¬(is_head A sig (nth n ? (vec … c) (blank ?))).
   
+lemma not_head_all_blanks : ∀A,sig,n. 
+  not_head A sig n (all_blanks … (S n)) = true.
+#A #sig #n whd in ⊢ (??%?); >blank_all_blanks //
+qed.  
+
 definition no_head_in ≝ λA,sig,n,l. 
-  ∀x. mem ? x (trace (TA A sig) n n l) → is_head … x = false.
+  ∀x. mem ? x (trace (TA A sig) (S n) n l) → is_head … x = false.
 
 (*
 lemma not_head_true: ∀A,sig,n,c. not_head A sig n c = true → 
   is_head … (nth n ? (vec … c) (blank ?)) = false.
 *)
 
+lemma hd_nil : ∀A,d. hd A [ ] d = d. 
+// qed.
+
 definition mtiL ≝ λA,sig,n,i.
-   move_to_blank_L (TA A sig) n i · 
-   shift_i_L (TA A sig) n i ·
+   move_to_blank_L (TA A sig) (S n) i · 
+   shift_i_L (TA A sig) (S n) i ·
    move_until ? L (not_head A sig n). 
    
 definition Rmtil ≝ λA,sig,n,i,t1,t2.
   ∀ls,a,rs. 
-   t1 = midtape (MTA A sig n) ls a rs → 
+   t1 = midtape (MTA A sig (S n)) ls a rs → 
    is_head A sig (nth n ? (vec … a) (blank ?)) = true →  
-   (∀i.regular_trace (TA A sig) n a ls rs i) → 
+   (∀i.regular_trace (TA A sig) (S n) a ls rs i) → 
    (* next: we cannot be on rightof on trace i *)
    (nth i ? (vec … a) (blank ?) = (blank ?) 
      → nth i ? (vec … (hd ? rs (all_blanks …))) (blank ?) ≠ (blank ?)) →
    no_head_in … ls →   
    no_head_in … rs  → 
    (∃ls1,a1,rs1.
-     t2 = midtape (MTA A sig n) ls1 a1 rs1 ∧
+     t2 = midtape (MTA A sig (S n)) ls1 a1 rs1 ∧
      (∀i.regular_trace … a1 ls1 rs1 i) ∧
-     (∀j. j ≤ n → j ≠ i → to_blank_i ? n j (a1::ls1) = to_blank_i ? n j (a::ls)) ∧
-     (∀j. j ≤ n → j ≠ i → to_blank_i ? n j rs1 = to_blank_i ? n j rs) ∧
-     (to_blank_i ? n i ls1 = to_blank_i ? n i (a::ls)) ∧
-     (to_blank_i ? n i (a1::rs1)) = to_blank_i ? n i rs).
+     (∀j. j ≤ n → j ≠ i → to_blank_i ? (S n) j (a1::ls1) = to_blank_i ? (S n) j (a::ls)) ∧
+     (∀j. j ≤ n → j ≠ i → to_blank_i ? (S n) j rs1 = to_blank_i ? (S n) j rs) ∧
+     (to_blank_i ? (S n) i ls1 = to_blank_i ? (S n) i (a::ls)) ∧
+     (to_blank_i ? (S n) i (a1::rs1)) = to_blank_i ? (S n) i rs).
 
 theorem sem_Rmtil: ∀A,sig,n,i. i < n → mtiL A sig n i  ⊨ Rmtil A sig n i.
 #A #sig #n #i #lt_in
@@ -294,7 +302,7 @@ theorem sem_Rmtil: ∀A,sig,n,i. i < n → mtiL A sig n i  ⊨ Rmtil A sig n i.
 (* we start looking into Rmitl *)
 #ls #a #rs #Htin (* tin is a midtape *)
 #Hheada #Hreg #no_rightof #Hnohead_ls #Hnohead_rs 
-cut (regular_i ? n (a::ls) i)
+cut (regular_i ? (S n) (a::ls) i)
   [cases (Hreg i) * // 
    cases (true_or_false (nth i ? (vec … a) (blank ?) == (blank ?))) #Htest
     [#_ @daemon (* absurd, since hd rs non e' blank *)
@@ -329,8 +337,7 @@ lapply (Htout … Ht2) -Htout -Ht2 *
    * #H3 @False_ind @(absurd (true=false)) [2://] <H3 @sym_eq
    <(notb_notb true) @(eq_f … notb) @Hnohead_rs >H2 >trace_append @mem_append_l2 
    lapply Hb0 cases rs2 
-    [whd in match (hd ???); #H >H in H3; whd in match (not_head ????); 
-     >all_blank_n normalize -H #H destruct (H); @False_ind
+    [>hd_nil #H >H in H3; >not_head_all_blanks #Habs destruct (Habs)
     |#c #r #H4 %1 >H4 //
     ]
   |* 
@@ -338,43 +345,43 @@ lapply (Htout … Ht2) -Htout -Ht2 *
    (* cut (trace sig n j (a1::ls20)=trace sig n j (ls1@b::ls2)) *)
    * #ls10 * #a1 * #ls20 * * * #Hls20 #Ha1 #Hnh #Htout
    cut (∀j.j ≠ i →
-      trace ? n j (reverse (multi_sig (TA A sig) n) rs1@b::ls2) = 
-      trace ? n j (ls10@a1::ls20))
+      trace ? (S n) j (reverse (multi_sig (TA A sig) (S n)) rs1@b::ls2) = 
+      trace ? (S n) j (ls10@a1::ls20))
     [#j #ineqj >append_cons <reverse_cons >trace_def <map_append <reverse_map
-     lapply (trace_shift_neq …lt_in ? (sym_not_eq … ineqj) … Hrss) [//] #Htr
+     lapply (trace_shift_neq … (le_S … lt_in) ? (sym_not_eq … ineqj) … Hrss) [//] #Htr
      <(trace_def …  (b::rs1)) <Htr >reverse_map >map_append @eq_f @Hls20 ] 
    #Htracej
-   cut (trace ? n i (reverse (multi_sig (TA A sig) n) (rs1@[b0])@ls2) = 
-        trace ? n i (ls10@a1::ls20))
+   cut (trace ? (S n) i (reverse (multi_sig (TA A sig) (S n)) (rs1@[b0])@ls2) = 
+        trace ? (S n) i (ls10@a1::ls20))
     [>trace_def <map_append <reverse_map <map_append <(trace_def … [b0]) 
-     cut (trace ? n i [b0] = [blank ?]) [@daemon] #Hcut >Hcut
-     lapply (trace_shift … lt_in … Hrss) [//] whd in match (tail ??); #Htr <Htr
+     cut (trace ? (S n) i [b0] = [blank ?]) [@daemon] #Hcut >Hcut
+     lapply (trace_shift … (le_S … lt_in) … Hrss) [//] whd in match (tail ??); #Htr <Htr
      >reverse_map >map_append <trace_def <Hls20 % 
     ] 
    #Htracei
    cut (∀j. j ≠ i →
-      (trace ? n j (reverse (MTA A sig n) rs11) = trace ? n j ls10) ∧ 
-      (trace ? n j (ls1@b::ls2) = trace ? n j (a1::ls20)))
+      (trace ? (S n) j (reverse (MTA A sig (S n)) rs11) = trace ? (S n) j ls10) ∧ 
+      (trace ? (S n) j (ls1@b::ls2) = trace ? (S n) j (a1::ls20)))
    [@daemon (* si fa 
      #j #ineqj @(first_P_to_eq ? (λx. x ≠ head ?))
       [lapply (Htracej … ineqj) >trace_def in ⊢ (%→?); <map_append 
        >trace_def in ⊢ (%→?); <map_append #H @H  
       | *) ] #H2
-  cut ((trace ? n i (b0::reverse ? rs11) = trace ? n i (ls10@[a1])) ∧ 
-      (trace ? n i (ls1@ls2) = trace ? n i ls20))
+  cut ((trace ? (S n) i (b0::reverse ? rs11) = trace ? (S n) i (ls10@[a1])) ∧ 
+      (trace ? (S n) i (ls1@ls2) = trace ? (S n) i ls20))
    [>H1 in Htracei; >reverse_append >reverse_single >reverse_append 
      >reverse_reverse >associative_append >associative_append
      @daemon
     ] #H3    
   cut (∀j. j ≠ i → 
-    trace ? n j (reverse (MTA A sig n) ls10@rs2) = trace ? n j rs)
-    [#j #jneqi @(injective_append_l … (trace ? n j (reverse ? ls1)))
+    trace ? (S n) j (reverse ? ls10@rs2) = trace ? (S n) j rs)
+    [#j #jneqi @(injective_append_l … (trace ? (S n) j (reverse ? ls1)))
      >map_append >map_append >Hrs1 >H1 >associative_append 
      <map_append <map_append in ⊢ (???%); @eq_f 
      <map_append <map_append @eq_f2 // @sym_eq 
      <(reverse_reverse … rs11) <reverse_map <reverse_map in ⊢ (???%);
      @eq_f @(proj1 … (H2 j jneqi))] #Hrs_j
-   %{ls20} %{a1} %{(reverse ? (b0::ls10)@tail (MTA A sig n) rs2)}
+   %{ls20} %{a1} %{(reverse ? (b0::ls10)@tail ? rs2)}
    %[%[%[%[%[@Htout
     |#j cases (decidable_eq_nat j i)
       [#eqji >eqji (* by cases wether a1 is blank *)
@@ -387,17 +394,17 @@ lapply (Htout … Ht2) -Htout -Ht2 *
         |@sym_eq @Hrs_j //
         ]
       ]]
-    |#j #lejn #jneqi <(Hls1 … lejn) 
+    |#j #lejn #jneqi <(Hls1 … (le_S_S … lejn)) 
      >to_blank_i_def >to_blank_i_def @eq_f @sym_eq @(proj2 … (H2 j jneqi))]
     |#j #lejn #jneqi >reverse_cons >associative_append >Hb0
      <to_blank_hd_cons >to_blank_i_def >to_blank_i_def @eq_f @Hrs_j //]
-    |<(Hls1 i) [2:@lt_to_le //] 
+    |<(Hls1 i) [2:@le_S //] 
      lapply (all_blank_after_blank … reg_ls1_i) 
        [@(\P ?) @daemon] #allb_ls2
      whd in match (to_blank_i ????); <(proj2 … H3)
      @daemon ]
     |>reverse_cons >associative_append  
-     cut (to_blank_i ? n i rs = to_blank_i ? n i (rs11@[b0])) [@daemon] 
+     cut (to_blank_i ? (S n) i rs = to_blank_i ? (S n) i (rs11@[b0])) [@daemon] 
      #Hcut >Hcut >(to_blank_i_chop  … b0 (a1::reverse …ls10)) [2: @Hb0blank]
      >to_blank_i_def >to_blank_i_def @eq_f 
      >trace_def >trace_def @injective_reverse >reverse_map >reverse_cons
@@ -406,12 +413,12 @@ lapply (Htout … Ht2) -Htout -Ht2 *
     ]
   |(*we do not find the head: this is absurd *)
    * #b1 * #lss * * #H2 @False_ind 
-   cut (∀x0. mem ? x0 (trace ? n n (b0::reverse ? rss@ls2)) → is_head … x0 = false)
+   cut (∀x0. mem ? x0 (trace ? (S n) n (b0::reverse ? rss@ls2)) → is_head … x0 = false)
      [@daemon] -H2 #H2
-   lapply (trace_shift_neq ? n i n … lt_in … Hrss)
+   lapply (trace_shift_neq ? (S n) i n … (le_S … lt_in) … Hrss)
      [@lt_to_not_eq @lt_in | // ] 
    #H3 @(absurd 
-        (is_head  … (nth n ? (vec … (hd ? (ls1@[b]) (all_blanks … n))) (blank ?)) = true))
+        (is_head  … (nth n ? (vec … (hd ? (ls1@[b]) (all_blanks … (S n)))) (blank ?)) = true))
      [>Hhead //
      |@eqnot_to_noteq @H2 >trace_def %2 <map_append @mem_append_l1 <reverse_map <trace_def 
       >H3 >H1 >trace_def >reverse_map >reverse_cons >reverse_append 

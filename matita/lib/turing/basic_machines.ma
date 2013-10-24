@@ -41,6 +41,26 @@ lemma sem_write_strong : ∀alpha,c.Realize ? (write alpha c) (R_write_strong al
   [|% [% |cases t normalize // ] ]
 qed. 
 
+(***************************** replace a with f a *****************************)
+
+definition writef ≝ λalpha,f.
+  mk_TM alpha write_states
+  (λp.let 〈q,a〉 ≝ p in
+    match pi1 … q with 
+    [ O ⇒ 〈wr1,Some ? (f a),N〉
+    | S _ ⇒ 〈wr1,None ?,N〉 ])
+  wr0 (λx.x == wr1).
+
+definition R_writef ≝ λalpha,f,t1,t2.
+  ∀c. current ? t1 = c  →
+  t2 = midtape alpha (left ? t1) (f c) (right ? t1).
+  
+lemma sem_writef : ∀alpha,f.
+  writef alpha f  ⊨ R_writef alpha f.
+#alpha #f #t @(ex_intro … 2) @ex_intro
+  [|% [% |cases t normalize // ] ]
+qed. 
+
 (******************** moves the head one step to the right ********************)
 
 definition move_states ≝ initN 2.

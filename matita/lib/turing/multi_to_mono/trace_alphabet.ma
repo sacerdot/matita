@@ -252,7 +252,7 @@ lemma to_blank_cons_nb: ∀sig,n,i,a,l.
 qed.
 
 axiom to_blank_hd : ∀sig,n,a,b,l1,l2. 
-  (∀i. i ≤ n → to_blank_i sig n i (a::l1) = to_blank_i sig n i (b::l2)) → a = b.
+  (∀i. i < n → to_blank_i sig n i (a::l1) = to_blank_i sig n i (b::l2)) → a = b.
 
 lemma to_blank_i_ext : ∀sig,n,i,l.
   to_blank_i sig n i l = to_blank_i sig n i (l@[all_blanks …]).
