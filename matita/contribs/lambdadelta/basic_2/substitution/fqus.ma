@@ -14,6 +14,7 @@
 
 include "basic_2/notation/relations/suptermstar_6.ma".
 include "basic_2/relocation/fquq.ma".
+include "basic_2/substitution/fqup.ma".
 
 (* STAR-ITERATED SUPCLOSURE *************************************************)
 
@@ -48,11 +49,11 @@ lemma fquq_fqus: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, L2, T2⦄ 
 
 lemma fqus_strap1: ∀G1,G,G2,L1,L,L2,T1,T,T2. ⦃G1, L1, T1⦄ ⊃* ⦃G, L, T⦄ → ⦃G, L, T⦄ ⊃⸮ ⦃G2, L2, T2⦄ →
                    ⦃G1, L1, T1⦄ ⊃* ⦃G2, L2, T2⦄.
-/2 width=5 by tri_step/ qed.
+/2 width=5 by tri_step/ qed-.
 
 lemma fqus_strap2: ∀G1,G,G2,L1,L,L2,T1,T,T2. ⦃G1, L1, T1⦄ ⊃⸮ ⦃G, L, T⦄ → ⦃G, L, T⦄ ⊃* ⦃G2, L2, T2⦄ →
                    ⦃G1, L1, T1⦄ ⊃* ⦃G2, L2, T2⦄.
-/2 width=5 by tri_TC_strap/ qed.
+/2 width=5 by tri_TC_strap/ qed-.
 
 lemma fqus_ldrop: ∀G1,G2,K1,K2,T1,T2. ⦃G1, K1, T1⦄ ⊃* ⦃G2, K2, T2⦄ →
                   ∀L1,U1,e. ⇩[0, e] L1 ≡ K1 → ⇧[0, e] T1 ≡ U1 →
@@ -60,6 +61,11 @@ lemma fqus_ldrop: ∀G1,G2,K1,K2,T1,T2. ⦃G1, K1, T1⦄ ⊃* ⦃G2, K2, T2⦄ �
 #G1 #G2 #K1 #K2 #T1 #T2 #H @(fqus_ind … H) -G2 -K2 -T2
 /3 width=5 by fqus_strap1, fquq_fqus, fquq_drop/
 qed-.
+
+lemma fqup_fqus: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃+ ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ⊃* ⦃G2, L2, T2⦄.
+#G1 #G2 #L1 #L2 #T1 #T2 #H @(fqup_ind … H) -G2 -L2 -T2
+/3 width=5 by fqus_strap1, fquq_fqus, fqu_fquq/
+qed.
 
 (* Basic forward lemmas *****************************************************)
 

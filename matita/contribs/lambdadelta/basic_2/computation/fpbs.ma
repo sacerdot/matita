@@ -62,7 +62,7 @@ lemma fqus_fpbs: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃* ⦃G2, L2, T2�
 qed.
 
 lemma cpxs_fpbs: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡*[h, g] T2 → ⦃G, L, T1⦄ ≥[h, g] ⦃G, L, T2⦄.
-#h #g #G #L #T1 #T2 #H @(cpxs_ind … H) -T2 
+#h #g #G #L #T1 #T2 #H @(cpxs_ind … H) -T2
 /3 width=5 by fpb_cpx, fpbs_strap1/
 qed.
 

@@ -12,8 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
+include "basic_2/computation/csx_aaa.ma".
+include "basic_2/computation/fsb.ma".
 
-notation "hvbox( ⦃ term 46 G1, break term 46 L1, break term 46 T1 ⦄ ⋕ break ⦃ term 46 G2, break term 46 L2 , break term 46 T2 ⦄ )"
-   non associative with precedence 45
-   for @{ 'BTEq $G1 $L1 $T1 $G2 $L2 $T2 }.
+(* "BIG TREE" STRONGLY NORMALIZING TERMS ************************************)
+
+(* Advanced propreties ******************************************************)
+
+lemma csx_fsb: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ ⬊*[h, g] T → ⦃G, L⦄ ⊢ ⦥[h, g] T.
+#h #g #G #L #T #H @(csx_ind_fpbc … H) -T /3 width=1 by fsb_intro/
+qed.
+
+(* Main properties **********************************************************)
+
+(* Note: this is the "big tree" theorem ("small step" version) *)
+theorem aaa_fsb: ∀h,g,G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ⦃G, L⦄ ⊢ ⦥[h, g] T.
+/3 width=2 by aaa_csx, csx_fsb/ qed.

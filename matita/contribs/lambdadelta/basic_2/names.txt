@@ -58,7 +58,7 @@ l: sn contex-sensitive for local environments
 r: dx contex-sensitive for local environments
 t: context-free for terms
 
--second letter
+- second letter
 
 i: irreducible form
 n: normal form
@@ -73,6 +73,7 @@ b: "big tree" reduction
 c: conversion
 d: decomposed extended reduction
 e: decomposed extended conversion
+n: order on "big tree" normal forms
 q: restricted reduction
 r: reduction
 s: substitution

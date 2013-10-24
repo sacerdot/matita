@@ -1,0 +1,105 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/notation/relations/btsnalt_5.ma".
+include "basic_2/computation/fpbs_fpbs.ma".
+include "basic_2/computation/fsb.ma".
+
+(* "BIG TREE" STRONGLY NORMALIZING TERMS ************************************)
+
+(* Note: alternative definition of fsb *)
+inductive fsba (h) (g): relation3 genv lenv term ≝
+| fsba_intro: ∀G1,L1,T1. (
+                 ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄ →
+                 (⦃G1, L1, T1⦄ ⋕ ⦃G2, L2, T2⦄ → ⊥) → fsba h g G2 L2 T2
+              ) → fsba h g G1 L1 T1.
+
+interpretation
+   "'big tree' strong normalization (closure) alternative"
+   'BTSNAlt h g G L T = (fsba h g G L T).
+
+(* Basic eliminators ********************************************************)
+
+theorem fsba_ind_alt: ∀h,g. ∀R: relation3 …. (
+                         ∀G1,L1,T1. ⦃G1, L1⦄ ⊢ ⦥⦥[h,g] T1 → (
+                            ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄ →
+                            (⦃G1, L1, T1⦄ ⋕ ⦃G2, L2, T2⦄ → ⊥) → R G2 L2 T2
+                         ) → R G1 L1 T1
+                      ) →
+                      ∀G,L,T. ⦃G, L⦄ ⊢ ⦥⦥[h, g] T → R G L T.
+#h #g #R #IH #G #L #T #H elim H -G -L -T
+/5 width=1 by fsba_intro/
+qed-.
+
+(* Basic_properties *********************************************************)
+
+fact fsba_intro_aux: ∀h,g,G1,L1,T1. (
+                        ∀G,G2,L,L2,T,T2. ⦃G, L, T⦄ ≥[h, g] ⦃G2, L2, T2⦄ →
+                        ⦃G1, L1, T1⦄ ⋕ ⦃G, L, T⦄ →
+                        (⦃G1, L1, T1⦄ ⋕ ⦃G2, L2, T2⦄ → ⊥) → fsba h g G2 L2 T2
+                     ) → fsba h g G1 L1 T1.
+/4 width=5 by fsba_intro/ qed-.
+
+lemma fsba_fpbs_trans: ∀h,g,G1,L1,T1. ⦃G1, L1⦄ ⊢ ⦥⦥[h, g] T1 →
+                       ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄ → ⦃G2, L2⦄ ⊢ ⦥⦥[h, g] T2.
+#h #g #G1 #L1 #T1 #H @(fsba_ind_alt … H) -G1 -L1 -T1
+#G1 #L1 #T1 #H0 #IH0 #G #L #T #H1 @fsba_intro
+#G2 #L2 #T2 #H2 #_ lapply (fpbs_trans … H1 … H2) -G -L -T
+#H12 elim (bteq_dec G1 G2 L1 L2 T1 T2) /3 width=6 by fpb_fpbs/
+-IH0 #H212 
+ 
+
+ -H0 -H #H @(IH0 … H) -IH0 -H // @(fpbs_trans … H1 … H2)    
+
+lemma fsba_intro_fpb: ∀h,g,G1,L1,T1. (
+                         ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≽[h, g] ⦃G2, L2, T2⦄ →
+                         (⦃G1, L1, T1⦄ ⋕ ⦃G2, L2, T2⦄ → ⊥) → ⦃G2, L2⦄ ⊢ ⦥⦥[h, g] T2
+                      ) → ⦃G1, L1⦄ ⊢ ⦥⦥[h, g] T1.
+#h #g #G1 #L1 #T1 #IH1 @fsba_intro_aux
+#G #G2 #L #L2 #T #T2 #H @(fpbs_ind_dx … H) -G -L -T
+[ #H1 #H2 -IH1 elim H2 -H2 //
+| #G0 #G #L0 #L #T0 #T #H10 #H12 #IH2 #H210 #H212 elim (bteq_dec G1 G L1 L T1 T) 
+  [ -IH1 -H210 -H10 -H12 /3 width=1 by/
+  | -IH2 -H212 #H21 lapply (IH1 … H21) -IH1 -H21
+    [
+    | -H10 -H210 #H 
+(*
+(* Main inversion lemmas ****************************************************)
+
+theorem fsba_inv_fsb: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ ⦥⦥[h, g] T → ⦃G, L⦄ ⊢ ⦥[h, g] T.
+#h #g #G #L #T #H elim H -G -L -T
+/5 width=12 by fsb_intro, fpb_fpbs, fpbc_fwd_fpb, fpbc_fwd_gen/
+qed-.
+
+(* Main properties **********************************************************)
+
+theorem fsb_fsba: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ ⦥[h, g] T → ⦃G, L⦄ ⊢ ⦥⦥[h, g] T.
+#h #g #G #L #T #H @(fsb_ind_alt … H) -G -L -T
+/4 width=1 by fsba_intro_fpb/
+qed.
+(*
+| fsba_intro: ∀G1,L1,T1. (
+                ∀G2,L2,T2.  ⦃G1, L1, T1⦄ ≻[h, g] ⦃G2, L2, T2⦄ → fsb h g G2 L2 T2
+              ) → fsb h g G1 L1 T1
+.
+
+
+
+(****************************************************************************)
+
+include "basic_2/substitution/fqup.ma".
+
+lemma fsb_csx: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ ⬊*[h, g] T → ⦃G, L⦄ ⊢ ⦥[h, g] T.
+#h #g #G #L #T #H @(csx_ind … H) -T
+*)*)

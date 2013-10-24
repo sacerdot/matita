@@ -79,13 +79,17 @@ table {
              [ "cpre ( ⦃?,?⦄ ⊢ ➡* 𝐍⦃?⦄ )" "cpre_cpre" * ]
           }
         ]
-        [ { "strongly normalizing computation" * } {
+        [ { "strongly normalizing \"big tree\" computation" * } {
+             [ "fsb ( ⦃?,?⦄ ⊢ ⦥[?,?] ? )" "fsb_alt ( ⦃?,?⦄ ⊢ ⦥⦥[?,?] ? )" "fsb_csx" * ]
+          }
+	]
+	[ { "strongly normalizing extended computation" * } {
              [ "csx_vector ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csx_tstc_vector" + "csx_aaa" * ]
              [ "csx ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csx_alt ( ⦃?,?⦄ ⊢ ⬊⬊*[?,?] ? )" "csx_lift" + "csx_lpx" * ]
           }
         ]
         [ { "\"big tree\" parallel computation" * } {
-             [ "fpbg ( ⦃?,?,?⦄ >[?,?] ⦃?,?,?⦄ )" "fpbg_lift" + "fpbg_fpbg" * ]
+             [ "fpbg ( ⦃?,?,?⦄ >[?,?] ⦃?,?,?⦄ )" "fpbg_alt" "fpbg_lift" + "fpbg_fpbg" * ]
              [ "fpbs ( ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "fpbs_alt ( ⦃?,?,?⦄ ≥≥[?,?] ⦃?,?,?⦄ )" "fpbs_lift" + "fpbs_fpbs" * ]
           }
         ]
@@ -203,7 +207,7 @@ table {
           }
         ]
         [ { "iterated structural successor for closures" * } {
-             [ "fqus ( ⦃?,?,?⦄ ⊃* ⦃?,?,?⦄ )" "fqus_fqus" * ]
+             [ "fqus ( ⦃?,?,?⦄ ⊃* ⦃?,?,?⦄ )" "fqus_alt" "fqus_fqus" * ]
              [ "fqup ( ⦃?,?,?⦄ ⊃+ ⦃?,?,?⦄ )" "fqup_fqup" * ]
           }
         ]
@@ -254,7 +258,7 @@ table {
           }
         ]
         [ { "closures" * } {
-             [ "bteq ( ⦃?,?,?⦄ ⪴ ⦃?,?,?⦄ )" "bteq_bteq" * ]
+(*             [ "bteq ( ⦃?,?,?⦄ ⪴ ⦃?,?,?⦄ )" "bteq_bteq" * ] *)
              [ "cl_shift ( ? @@ ? )" "cl_weight ( ♯{?,?,?} )" * ]
           }
         ]

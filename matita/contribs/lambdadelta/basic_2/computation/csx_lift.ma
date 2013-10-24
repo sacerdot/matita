@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/reduction/cnx_lift.ma".
+include "basic_2/reduction/fpbc.ma".
 include "basic_2/computation/acp.ma".
 include "basic_2/computation/csx.ma".
 
@@ -27,7 +28,7 @@ lemma csx_lift: ∀h,g,G,L2,L1,T1,d,e. ⦃G, L1⦄ ⊢ ⬊*[h, g] T1 →
 @csx_intro #T #HLT2 #HT2
 elim (cpx_inv_lift1 … HLT2 … HL21 … HT12) -HLT2 #T0 #HT0 #HLT10
 @(IHT1 … HLT10) // -L1 -L2 #H destruct
->(lift_mono … HT0 … HT12) in HT2; -T1 /2 width=1/
+>(lift_mono … HT0 … HT12) in HT2; -T1 /2 width=1 by/
 qed.
 
 (* Basic_1: was just: sn3_gen_lift *)
@@ -38,8 +39,18 @@ lemma csx_inv_lift: ∀h,g,G,L2,L1,T1,d,e. ⦃G, L1⦄ ⊢ ⬊*[h, g] T1 →
 elim (lift_total T d e) #T0 #HT0
 lapply (cpx_lift … HLT2 … HL12 … HT21 … HT0) -HLT2 #HLT10
 @(IHT1 … HLT10) // -L1 -L2 #H destruct
->(lift_inj … HT0 … HT21) in HT2; -T1 /2 width=1/
+>(lift_inj … HT0 … HT21) in HT2; -T1 /2 width=1 by/
 qed.
+
+(* Advanced inversion lemmas ************************************************)
+
+(* Basic_1: was: sn3_gen_def *)
+lemma csx_inv_lref_bind: ∀h,g,I,G,L,K,V,i. ⇩[0, i] L ≡ K.ⓑ{I}V →
+                         ⦃G, L⦄ ⊢ ⬊*[h, g] #i → ⦃G, K⦄ ⊢ ⬊*[h, g] V.
+#h #g #I #G #L #K #V #i #HLK #Hi
+elim (lift_total V 0 (i+1))
+/4 width=9 by csx_inv_lift, csx_cpx_trans, cpx_delta, ldrop_fwd_ldrop2/
+qed-.
 
 (* Advanced properties ******************************************************)
 
@@ -51,9 +62,7 @@ elim (cpx_inv_lref1 … H) -H
 [ #H destruct elim Hi //
 | -Hi * #I0 #K0 #V0 #V1 #HLK0 #HV01 #HV1
   lapply (ldrop_mono … HLK0 … HLK) -HLK #H destruct
-  lapply (ldrop_fwd_ldrop2 … HLK0) -HLK0 #HLK
-  @(csx_lift … HLK HV1) -HLK -HV1
-  @(csx_cpx_trans … HV) -HV //
+  /3 width=7 by csx_lift, csx_cpx_trans, ldrop_fwd_ldrop2/
 ]
 qed.
 
@@ -65,37 +74,76 @@ lemma csx_appl_simple: ∀h,g,G,L,V. ⦃G, L⦄ ⊢ ⬊*[h, g] V → ∀T1.
 elim (cpx_inv_appl1_simple … H1) // -H1
 #V0 #T0 #HLV0 #HLT10 #H destruct
 elim (eq_false_inv_tpair_dx … H2) -H2
-[ -IHV -HT1 #HT10
-  @(csx_cpx_trans … (ⓐV.T0)) /2 width=1/ -HLV0
-  @IHT1 -IHT1 // /2 width=1/
+[ -IHV -HT1 /4 width=3 by csx_cpx_trans, cpx_pair_sn/
 | -HLT10 * #H #HV0 destruct
-  @IHV -IHV // -HT1 /2 width=1/ -HV0
-  #T2 #HLT02 #HT02
-  @(csx_cpx_trans … (ⓐV.T2)) /2 width=1/ -HLV0
-  @IHT1 -IHT1 // -HLT02 /2 width=1/
+  @IHV /4 width=3 by csx_cpx_trans, cpx_pair_sn/ (**) (* full auto 17s *)
 ]
 qed.
 
-(* Advanced inversion lemmas ************************************************)
-
-(* Basic_1: was: sn3_gen_def *)
-lemma csx_inv_lref_bind: ∀h,g,I,G,L,K,V,i. ⇩[0, i] L ≡ K.ⓑ{I}V →
-                         ⦃G, L⦄ ⊢ ⬊*[h, g] #i → ⦃G, K⦄ ⊢ ⬊*[h, g] V.
-#h #g #I #G #L #K #V #i #HLK #Hi
-elim (lift_total V 0 (i+1)) #V0 #HV0
-lapply (ldrop_fwd_ldrop2 … HLK) #H0LK
-@(csx_inv_lift … H0LK … HV0) -H0LK
-@(csx_cpx_trans … Hi) -Hi /2 width=7/
+lemma csx_fqu_conf: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ →
+                    ⦃G1, L1⦄ ⊢ ⬊*[h, g] T1 → ⦃G2, L2⦄ ⊢ ⬊*[h, g] T2.
+#h #g #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2
+/2 width=7 by csx_inv_lref_bind, csx_inv_lift, csx_fwd_flat_dx, csx_fwd_bind_dx, csx_fwd_pair_sn/
 qed-.
+
+lemma csx_fquq_conf: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, L2, T2⦄ →
+                     ⦃G1, L1⦄ ⊢ ⬊*[h, g] T1 → ⦃G2, L2⦄ ⊢ ⬊*[h, g] T2.
+#h #g #G1 #G2 #L1 #L2 #T1 #T2 #H12 #H elim (fquq_inv_gen … H12) -H12
+[ /2 width=5 by csx_fqu_conf/
+| * #HG #HL #HT destruct //
+]
+qed-.
+
+lemma csx_fqup_conf: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃+ ⦃G2, L2, T2⦄ →
+                     ⦃G1, L1⦄ ⊢ ⬊*[h, g] T1 → ⦃G2, L2⦄ ⊢ ⬊*[h, g] T2.
+#h #g #G1 #G2 #L1 #L2 #T1 #T2 #H @(fqup_ind … H) -G2 -L2 -T2
+/3 width=5 by csx_fqu_conf/
+qed-.
+
+lemma csx_fqus_conf: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃* ⦃G2, L2, T2⦄ →
+                     ⦃G1, L1⦄ ⊢ ⬊*[h, g] T1 → ⦃G2, L2⦄ ⊢ ⬊*[h, g] T2.
+#h #g #G1 #G2 #L1 #L2 #T1 #T2 #H12 #H elim (fqus_inv_gen … H12) -H12
+[ /2 width=5 by csx_fqup_conf/
+| * #HG #HL #HT destruct //
+]
+qed-.
+
+(* Advanced eliminators *****************************************************)
+
+lemma csx_ind_fpbc_fqus: ∀h,g. ∀R:relation3 genv lenv term.
+                         (∀G1,L1,T1. ⦃G1, L1⦄ ⊢ ⬊*[h, g] T1 →
+                                     (∀G2,L2,T2. ⦃G1, L1, T1⦄ ≻[h, g] ⦃G2, L2, T2⦄ → R G2 L2 T2) →
+                                     R G1 L1 T1
+                         ) →
+                         ∀G1,L1,T1. ⦃G1, L1⦄ ⊢ ⬊*[h, g] T1 →
+                         ∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊃* ⦃G2, L2, T2⦄ → R G2 L2 T2.
+#h #g #R #IH1 #G1 #L1 #T1 #H @(csx_ind … H) -T1
+#T1 @(fqup_wf_ind … G1 L1 T1) -G1 -L1 -T1
+#G1 #L1 #T1 #IH2 #H1 #IH3 #G2 #L2 #T2 #H12 @IH1 -IH1 /2 width=5 by csx_fqus_conf/
+#G #L #T *
+[ #G0 #L0 #T0 #H20 lapply (fqus_strap1_fqu … H12 H20) -G2 -L2 -T2
+  #H10 @(IH2 … H10) -IH2 /2 width=5 by csx_fqup_conf/
+  #T2 #HT02 #H #G3 #L3 #T3 #HT23 elim (fqup_cpx_trans_neq … H10 … HT02 H) -T0
+  /4 width=8 by fqup_fqus_trans, fqup_fqus/
+| #T0 #HT20 #H elim (fqus_cpx_trans_neq … H12 … HT20 H) -T2 /3 width=4 by/
+]
+qed-.
+
+lemma csx_ind_fpbc: ∀h,g. ∀R:relation3 genv lenv term.
+                    (∀G1,L1,T1. ⦃G1, L1⦄ ⊢ ⬊*[h, g] T1 →
+                                (∀G2,L2,T2. ⦃G1, L1, T1⦄ ≻[h, g] ⦃G2, L2, T2⦄ → R G2 L2 T2) →
+                                R G1 L1 T1
+                    ) →
+                    ∀G,L,T. ⦃G, L⦄ ⊢ ⬊*[h, g] T → R G L T.
+/4 width=8 by csx_ind_fpbc_fqus/ qed-.
 
 (* Main properties **********************************************************)
 
 theorem csx_acp: ∀h,g. acp (cpx h g) (eq …) (csx h g).
 #h #g @mk_acp
-[ #G #L elim (deg_total h g 0)
-  #l #Hl lapply (cnx_sort_iter … L … Hl) /2 width=2/
-| @cnx_lift
+[ #G #L elim (deg_total h g 0) /3 width=8 by cnx_sort_iter, ex_intro/
+| /3 width=12 by cnx_lift/
 | /2 width=3 by csx_fwd_flat_dx/
-| /2 width=1/
+| /2 width=1 by csx_cast/
 ]
 qed.

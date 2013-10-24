@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/computation/acp_aaa.ma".
+include "basic_2/computation/cpxs_aaa.ma".
 include "basic_2/computation/csx_tstc_vector.ma".
 
 (* CONTEXT-SENSITIVE EXTENDED STRONGLY NORMALIZING TERMS ********************)
@@ -23,3 +24,35 @@ theorem aaa_csx: ∀h,g,G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ⦃G, L⦄ ⊢ ⬊*[
 #h #g #G #L #T #A #H
 @(acp_aaa … (csx_acp h g) (csx_acr h g) … H)
 qed.
+
+(* Advanced eliminators *****************************************************)
+
+fact aaa_ind_csx_aux: ∀h,g,G,L,A. ∀R:predicate term.
+                      (∀T1. ⦃G, L⦄ ⊢ T1 ⁝ A →
+                            (∀T2. ⦃G, L⦄ ⊢ T1 ➡[h, g] T2 → (T1 = T2 → ⊥) → R T2) → R T1
+                      ) →
+                      ∀T. ⦃G, L⦄ ⊢ ⬊*[h, g] T → ⦃G, L⦄ ⊢ T ⁝ A → R T.
+#h #g #G #L #A #R #IH #T #H @(csx_ind … H) -T /4 width=5 by aaa_cpx_conf/
+qed-.
+
+lemma aaa_ind_csx: ∀h,g,G,L,A. ∀R:predicate term.
+                   (∀T1. ⦃G, L⦄ ⊢ T1 ⁝ A →
+                         (∀T2. ⦃G, L⦄ ⊢ T1 ➡[h, g] T2 → (T1 = T2 → ⊥) → R T2) → R T1
+                   ) →
+                   ∀T. ⦃G, L⦄ ⊢ T ⁝ A → R T.
+/5 width=9 by aaa_ind_csx_aux, aaa_csx/ qed-.
+
+fact aaa_ind_csx_alt_aux: ∀h,g,G,L,A. ∀R:predicate term.
+                          (∀T1. ⦃G, L⦄ ⊢ T1 ⁝ A →
+                                (∀T2. ⦃G, L⦄ ⊢ T1 ➡*[h, g] T2 → (T1 = T2 → ⊥) → R T2) → R T1
+                          ) →
+                          ∀T. ⦃G, L⦄ ⊢ ⬊*[h, g] T → ⦃G, L⦄ ⊢ T ⁝ A → R T.
+#h #g #G #L #A #R #IH #T #H @(csx_ind_alt … H) -T /4 width=5 by aaa_cpxs_conf/
+qed-.
+
+lemma aaa_ind_csx_alt: ∀h,g,G,L,A. ∀R:predicate term.
+                       (∀T1. ⦃G, L⦄ ⊢ T1 ⁝ A →
+                             (∀T2. ⦃G, L⦄ ⊢ T1 ➡*[h, g] T2 → (T1 = T2 → ⊥) → R T2) → R T1
+                       ) →
+                       ∀T. ⦃G, L⦄ ⊢ T ⁝ A → R T.
+/5 width=9 by aaa_ind_csx_alt_aux, aaa_csx/ qed-.

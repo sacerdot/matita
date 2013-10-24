@@ -35,7 +35,7 @@ lemma bteq_sym: tri_symmetric … bteq.
 #G1 #G2 #L1 #L2 #T1 #T2 * //
 qed-.
 
-lemma bteq_dec: ∀G1,G2,L1,L2,T1,T2. Decidable (⦃G1, L1, T1⦄ ⪴ ⦃G2, L2, T2⦄).
+lemma bteq_dec: ∀G1,G2,L1,L2,T1,T2. Decidable (⦃G1, L1, T1⦄ ⋕ ⦃G2, L2, T2⦄).
 #G1 #G2 #L1 #L2 #T1 #T2 elim (genv_eq_dec G1 G2)
 #H1G [2: @or_intror * #H2G #H2L #H2T destruct /2 width=1 by/ ]
 elim (eq_nat_dec (|L1|) (|L2|))
