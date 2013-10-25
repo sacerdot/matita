@@ -40,7 +40,7 @@ interpretation "abstraction (local environment)"
 
 (* Basic properties *********************************************************)
 
-axiom lenv_eq_dec: ∀L1,L2:lenv. Decidable (L1 = L2).
+axiom eq_lenv_dec: ∀L1,L2:lenv. Decidable (L1 = L2).
 
 (* Basic inversion lemmas ***************************************************)
 

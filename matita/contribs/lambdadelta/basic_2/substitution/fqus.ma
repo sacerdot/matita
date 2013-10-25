@@ -73,3 +73,11 @@ lemma fqus_fwd_fw: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃* ⦃G2, L2, T2⦄ 
 #G1 #G2 #L1 #L2 #T1 #T2 #H @(fqus_ind … H) -L2 -T2
 /3 width=3 by fquq_fwd_fw, transitive_le/
 qed-.
+
+(* Basic inversion lemmas ***************************************************)
+
+lemma fqup_inv_step_sn: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃+ ⦃G2, L2, T2⦄ →
+                        ∃∃G,L,T. ⦃G1, L1, T1⦄ ⊃ ⦃G, L, T⦄ & ⦃G, L, T⦄ ⊃* ⦃G2, L2, T2⦄.
+#G1 #G2 #L1 #L2 #T1 #T2 #H @(fqup_ind_dx … H) -G1 -L1 -T1 /2 width=5 by ex2_3_intro/
+#G1 #G #L1 #L #T1 #T #H1 #_ * /4 width=9 by fqus_strap2, fqu_fquq, ex2_3_intro/
+qed-.

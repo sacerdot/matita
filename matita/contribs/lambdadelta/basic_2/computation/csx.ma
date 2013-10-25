@@ -48,7 +48,7 @@ lemma csx_cpx_trans: ∀h,g,G,L,T1. ⦃G, L⦄ ⊢ ⬊*[h, g] T1 →
                      ∀T2. ⦃G, L⦄ ⊢ T1 ➡[h, g] T2 → ⦃G, L⦄ ⊢ ⬊*[h, g] T2.
 #h #g #G #L #T1 #H elim H -T1 #T1 #HT1 #IHT1 #T2 #HLT12
 @csx_intro #T #HLT2 #HT2
-elim (term_eq_dec T1 T2) #HT12
+elim (eq_term_dec T1 T2) #HT12
 [ -IHT1 -HLT12 destruct /3 width=1/
 | -HT1 -HT2 /3 width=4/
 qed-.

@@ -81,7 +81,7 @@ qed.
 
 lemma tstc_dec: ∀T1,T2. Decidable (T1 ≃ T2).
 * #I1 [2: #V1 #T1 ] * #I2 [2,4: #V2 #T2 ]
-[ elim (item2_eq_dec I1 I2) #HI12
+[ elim (eq_item2_dec I1 I2) #HI12
   [ destruct /2 width=1/
   | @or_intror #H
     elim (tstc_inv_pair1 … H) -H #V #T #H destruct /2 width=1/
@@ -90,7 +90,7 @@ lemma tstc_dec: ∀T1,T2. Decidable (T1 ≃ T2).
   lapply (tstc_inv_atom1 … H) -H #H destruct
 | @or_intror #H
   lapply (tstc_inv_atom2 … H) -H #H destruct
-| elim (item0_eq_dec I1 I2) #HI12
+| elim (eq_item0_dec I1 I2) #HI12
   [ destruct /2 width=1/
   | @or_intror #H
     lapply (tstc_inv_atom2 … H) -H #H destruct /2 width=1/

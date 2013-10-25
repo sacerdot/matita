@@ -93,7 +93,7 @@ interpretation "native type annotation (term)"
 (* Basic properties *********************************************************)
 
 (* Basic_1: was: term_dec *)
-axiom term_eq_dec: ∀T1,T2:term. Decidable (T1 = T2).
+axiom eq_term_dec: ∀T1,T2:term. Decidable (T1 = T2).
 
 (* Basic inversion lemmas ***************************************************)
 
@@ -120,7 +120,7 @@ lemma eq_false_inv_tpair_sn: ∀I,V1,T1,V2,T2.
                              (②{I} V1. T1 = ②{I} V2. T2 → ⊥) →
                              (V1 = V2 → ⊥) ∨ (V1 = V2 ∧ (T1 = T2 → ⊥)).
 #I #V1 #T1 #V2 #T2 #H
-elim (term_eq_dec V1 V2) /3 width=1/ #HV12 destruct
+elim (eq_term_dec V1 V2) /3 width=1/ #HV12 destruct
 @or_intror @conj // #HT12 destruct /2 width=1/
 qed-.
 
@@ -128,7 +128,7 @@ lemma eq_false_inv_tpair_dx: ∀I,V1,T1,V2,T2.
                              (②{I} V1. T1 = ②{I} V2. T2 → ⊥) →
                              (T1 = T2 → ⊥) ∨ (T1 = T2 ∧ (V1 = V2 → ⊥)).
 #I #V1 #T1 #V2 #T2 #H
-elim (term_eq_dec T1 T2) /3 width=1/ #HT12 destruct
+elim (eq_term_dec T1 T2) /3 width=1/ #HT12 destruct
 @or_intror @conj // #HT12 destruct /2 width=1/
 qed-.
 

@@ -32,7 +32,7 @@ qed-.
 lemma gget_dec: ∀G1,G2,e. Decidable (⇩[e] G1 ≡ G2).
 #G1 #G2 #e
 elim (gget_total e G1) #G #HG1
-elim (genv_eq_dec G G2) #HG2
+elim (eq_genv_dec G G2) #HG2
 [ destruct /2 width=1/
 | @or_intror #HG12
   lapply (gget_mono … HG1 … HG12) -HG1 -HG12 /2 width=1/

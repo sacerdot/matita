@@ -12,23 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/fpbs_lift.ma".
+include "basic_2/computation/fpbg_fpbg.ma".
+include "basic_2/computation/fpbr.ma".
 
-(* "BIG TREE" PARALLEL COMPUTATION FOR CLOSURES *****************************)
+(* RESTRICTED "BIG TREE" ORDER FOR CLOSURES *********************************)
+
+(* Advanced forward lemmas **************************************************)
+lemma fpbr_fwd_fpbs: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃≥[h, g] ⦃G2, L2, T2⦄ →
+                     ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
+/3 width=5 by fpbr_fwd_fpbg, fpbg_fwd_fpbs/
+qed-.
 
 (* Main properties **********************************************************)
 
-theorem fpbs_trans: ∀h,g. tri_transitive … (fpbs h g).
-/2 width=5 by tri_TC_transitive/ qed-.
-
-(* Advanced properties ******************************************************)
-
-lemma cpr_lpr_ssta_fpbs: ∀h,g,G,L1,L2,T1,T2,U2,l2.
-                         ⦃G, L1⦄ ⊢ T1 ➡ T2 → ⦃G, L1⦄ ⊢ ➡ L2 →
-                         ⦃G, L2⦄ ⊢ T2 ▪[h, g] l2+1 → ⦃G, L2⦄ ⊢ T2 •[h, g] U2 →
-                         ⦃G, L1, T1⦄ ≥[h, g] ⦃G, L2, U2⦄.
-/3 width=5 by fpbs_trans, cpr_lpr_fpbs, ssta_fpbs/ qed.
-
-lemma cpxs_fqup_fpbs: ∀h,g,G1,G2,L1,L2,T1,T,T2. ⦃G1, L1⦄ ⊢ T1 ➡*[h, g] T →
-                      ⦃G1, L1, T⦄ ⊃+ ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
-/3 width=5 by fpbs_trans, cpxs_fpbs, fqup_fpbs/ qed.
+theorem fpbr_trans: ∀h,g. tri_transitive … (fpbr h g).
+/3 width=5 by fpbr_fwd_fpbs, fpbr_fpbs_trans/ qed-.

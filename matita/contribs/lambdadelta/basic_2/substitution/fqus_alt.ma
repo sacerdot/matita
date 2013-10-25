@@ -54,8 +54,8 @@ lemma fqus_fqup_trans: ∀G1,G,G2,L1,L,L2,T1,T,T2. ⦃G1, L1, T1⦄ ⊃* ⦃G, L
 /2 width=5 by fqus_strap1_fqu, fqup_strap1/
 qed-.
 
-lemma fqup_fqus_trans: ∀G1,G,L1,L,T1,T. ⦃G1, L1, T1⦄ ⊃+ ⦃G, L, T⦄ →
-                       ∀G2,L2,T2. ⦃G, L, T⦄ ⊃* ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ⊃+ ⦃G2, L2, T2⦄.
-#G1 #G #L1 #L #T1 #T #H1 @(fqup_ind_dx … H1) -H1 -G1 -L1 -T1
+lemma fqup_fqus_trans: ∀G1,G,G2,L1,L,L2,T1,T,T2. ⦃G1, L1, T1⦄ ⊃+ ⦃G, L, T⦄ →
+                       ⦃G, L, T⦄ ⊃* ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ⊃+ ⦃G2, L2, T2⦄.
+#G1 #G #G2 #L1 #L #L2 #T1 #T #T2 #H1 @(fqup_ind_dx … H1) -H1 -G1 -L1 -T1
 /3 width=5 by fqus_strap2_fqu, fqup_strap2/
 qed-.

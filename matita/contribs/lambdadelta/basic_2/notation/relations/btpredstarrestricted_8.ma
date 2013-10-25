@@ -12,11 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/fpbg.ma".
+(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-(* "BIG TREE" ORDER FOR CLOSURES ********************************************)
-
-(* Main properties **********************************************************)
-
-theorem fpbg_trans: ∀h,g. tri_transitive … (fpbg h g).
-/3 width=5 by fpbg_fwd_fpbs, fpbg_fpbs_trans/ qed-.
+notation "hvbox( ⦃ term 46 G1, break term 46 L1, break term 46 T1 ⦄ ⊃≥ break [ term 46 h, break term 46 g ] break ⦃ term 46 G2, break term 46 L2 , break term 46 T2 ⦄ )"
+   non associative with precedence 45
+   for @{ 'BTPRedStarRestricted $h $g $G1 $L1 $T1 $G2 $L2 $T2 }.

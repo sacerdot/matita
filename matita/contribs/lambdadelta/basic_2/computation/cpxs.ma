@@ -146,3 +146,14 @@ lemma cpxs_inv_cnx1: ∀h,g,G,L,T,U. ⦃G, L⦄ ⊢ T ➡*[h, g] U → ⦃G, L�
 #T0 #T #H1T0 #_ #IHT #H2T0
 lapply (H2T0 … H1T0) -H1T0 #H destruct /2 width=1/
 qed-.
+
+lemma cpxs_neq_inv_step_sn: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡*[h, g] T2 → (T1 = T2 → ⊥) →
+                            ∃∃T. ⦃G, L⦄ ⊢ T1 ➡[h, g] T & T1 = T → ⊥ & ⦃G, L⦄ ⊢ T ➡*[h, g] T2.
+#h #g #G #L #T1 #T2 #H @(cpxs_ind_dx … H) -T1
+[ #H elim H -H //
+| #T1 #T #H1 #H2 #IH2 #H12 elim (eq_term_dec T1 T) #H destruct
+  [ -H1 -H2 /3 width=1 by/
+  | -IH2 /3 width=4 by ex3_intro/ (**) (* auto fails without clear *)
+  ]
+]
+qed-.

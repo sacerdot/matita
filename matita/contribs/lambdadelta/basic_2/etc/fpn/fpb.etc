@@ -1,0 +1,14 @@
+include "basic_2/reduction/fpn.ma".
+
+(* Basic forward lemmas *****************************************************)
+
+lemma fpb_bteq_fwd_fpn: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≽[h, g] ⦃G2, L2, T2⦄ →
+                        ⦃G1, L1, T1⦄ ⋕ ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ⊢ ➡[h, g] ⦃G2, L2, T2⦄.
+#h #g #G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2 /2 width=1 by and3_intro/
+[ #G2 #L2 #T2 #H elim (fquq_inv_gen … H) -H
+  [ #H1 #H2 elim (fqu_fwd_bteq … H1 H2)
+  | * #HG #HL #HT #_ destruct //
+  ]
+| #T2 #HT12 * //
+]
+qed-.

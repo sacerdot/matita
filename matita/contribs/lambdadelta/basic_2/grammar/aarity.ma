@@ -55,7 +55,7 @@ qed-.
 
 (* Basic properties *********************************************************)
 
-lemma aarity_eq_dec: ∀A1,A2:aarity. Decidable (A1 = A2).
+lemma eq_aarity_dec: ∀A1,A2:aarity. Decidable (A1 = A2).
 #A1 elim A1 -A1
 [ #A2 elim A2 -A2 /2 width=1/
   #B2 #A2 #_ #_ @or_intror #H destruct

@@ -90,7 +90,7 @@ elim (cpx_inv_appl1 … HL) -HL *
   elim (cpx_inv_abbr1 … HL) -HL *
   [ #V3 #T3 #HV3 #HLT3 #H0 destruct
     elim (lift_total V0 0 1) #V4 #HV04
-    elim (term_eq_dec (ⓓ{a}V.ⓐV2.T) (ⓓ{a}V3.ⓐV4.T3))
+    elim (eq_term_dec (ⓓ{a}V.ⓐV2.T) (ⓓ{a}V3.ⓐV4.T3))
     [ -IHVT #H0 destruct
       elim (eq_false_inv_tpair_sn … H) -H
       [ -HLV10 -HV3 -HLT3 -HVT

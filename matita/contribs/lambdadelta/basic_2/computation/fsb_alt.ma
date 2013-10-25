@@ -13,10 +13,10 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/btsnalt_5.ma".
-include "basic_2/computation/fpbg_alt.ma".
+include "basic_2/computation/fpbg.ma".
 include "basic_2/computation/fsb.ma".
 
-(* "BIG TREE" STRONGLY NORMALIZING TERMS ************************************)
+(* GENERAL "BIG TREE" STRONGLY NORMALIZING TERMS ****************************)
 
 (* Note: alternative definition of fsb *)
 inductive fsba (h) (g): relation3 genv lenv term ≝

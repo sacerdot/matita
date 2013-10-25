@@ -73,7 +73,6 @@ b: "big tree" reduction
 c: conversion
 d: decomposed extended reduction
 e: decomposed extended conversion
-n: order on "big tree" normal forms
 q: restricted reduction
 r: reduction
 s: substitution
@@ -84,7 +83,8 @@ x: extended reduction
 
 c: proper single step                          (successor)
 e: reflexive transitive closure to normal form (evaluation)
-g: proper multiple step                        (greater)
+g: proper multiple step (general)              (greater)
 p: non-reflexive transitive closure            (plus)
 q: reflexive closure                           (question)
+r: proper multiple step (restricted)           (restricted)
 s: reflexive transitive closure                (star)

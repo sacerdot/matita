@@ -43,16 +43,16 @@ inductive item2: Type[0] ≝
 
 (* Basic properties *********************************************************)
 
-axiom item0_eq_dec: ∀I1,I2:item0. Decidable (I1 = I2).
+axiom eq_item0_dec: ∀I1,I2:item0. Decidable (I1 = I2).
 
 (* Basic_1: was: bind_dec *)
-axiom bind2_eq_dec: ∀I1,I2:bind2. Decidable (I1 = I2).
+axiom eq_bind2_dec: ∀I1,I2:bind2. Decidable (I1 = I2).
 
 (* Basic_1: was: flat_dec *)
-axiom flat2_eq_dec: ∀I1,I2:flat2. Decidable (I1 = I2).
+axiom eq_flat2_dec: ∀I1,I2:flat2. Decidable (I1 = I2).
 
 (* Basic_1: was: kind_dec *)
-axiom item2_eq_dec: ∀I1,I2:item2. Decidable (I1 = I2).
+axiom eq_item2_dec: ∀I1,I2:item2. Decidable (I1 = I2).
 
 (* Basic_1: removed theorems 21:
             s_S s_plus s_plus_sym s_minus minus_s_s s_le s_lt s_inj s_inc

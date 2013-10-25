@@ -89,7 +89,8 @@ table {
           }
         ]
         [ { "\"big tree\" parallel computation" * } {
-             [ "fpbg ( ⦃?,?,?⦄ >[?,?] ⦃?,?,?⦄ )" "fpbg_alt" "fpbg_lift" + "fpbg_fpbg" * ]
+	     [ "fpbr ( ⦃?,?,?⦄ ⊃≥[?,?] ⦃?,?,?⦄ )" "fpbr_fpbr" * ]             
+	     [ "fpbg ( ⦃?,?,?⦄ >[?,?] ⦃?,?,?⦄ )" "fpbg_lift" + "fpbg_fpbg" * ]
              [ "fpbs ( ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "fpbs_alt ( ⦃?,?,?⦄ ≥≥[?,?] ⦃?,?,?⦄ )" "fpbs_lift" + "fpbs_fpbs" * ]
           }
         ]
@@ -207,7 +208,7 @@ table {
           }
         ]
         [ { "iterated structural successor for closures" * } {
-             [ "fqus ( ⦃?,?,?⦄ ⊃* ⦃?,?,?⦄ )" "fqus_alt" "fqus_fqus" * ]
+             [ "fqus ( ⦃?,?,?⦄ ⊃* ⦃?,?,?⦄ )" "fqus_alt" + "fqus_fqus" * ]
              [ "fqup ( ⦃?,?,?⦄ ⊃+ ⦃?,?,?⦄ )" "fqup_fqup" * ]
           }
         ]
@@ -258,7 +259,6 @@ table {
           }
         ]
         [ { "closures" * } {
-(*             [ "bteq ( ⦃?,?,?⦄ ⪴ ⦃?,?,?⦄ )" "bteq_bteq" * ] *)
              [ "cl_shift ( ? @@ ? )" "cl_weight ( ♯{?,?,?} )" * ]
           }
         ]

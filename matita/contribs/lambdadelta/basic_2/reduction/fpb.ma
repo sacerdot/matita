@@ -14,7 +14,7 @@
 
 include "basic_2/notation/relations/btpred_8.ma".
 include "basic_2/relocation/fquq_alt.ma".
-include "basic_2/reduction/fpn.ma".
+include "basic_2/reduction/lpx.ma".
 
 (* "BIG TREE" PARALLEL REDUCTION FOR CLOSURES *******************************)
 
@@ -38,16 +38,3 @@ lemma cpr_fpb: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡ T2 → ⦃G, L, T1⦄ ≽
 
 lemma lpr_fpb: ∀h,g,G,L1,L2,T. ⦃G, L1⦄ ⊢ ➡ L2 → ⦃G, L1, T⦄ ≽[h, g] ⦃G, L2, T⦄.
 /3 width=1 by fpb_lpx, lpr_lpx/ qed.
-
-(* Basic forward lemmas *****************************************************)
-
-lemma fpb_bteq_fwd_fpn: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≽[h, g] ⦃G2, L2, T2⦄ →
-                        ⦃G1, L1, T1⦄ ⋕ ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ⊢ ➡[h, g] ⦃G2, L2, T2⦄.
-#h #g #G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2 /2 width=1 by and3_intro/
-[ #G2 #L2 #T2 #H elim (fquq_inv_gen … H) -H
-  [ #H1 #H2 elim (fqu_fwd_bteq … H1 H2)
-  | * #HG #HL #HT #_ destruct //
-  ]
-| #T2 #HT12 * //
-]
-qed-.
