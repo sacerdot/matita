@@ -173,6 +173,27 @@ lemma fquq_ssta_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, 
                        ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡[h, g] U1 & ⦃G1, L1, U1⦄ ⊃⸮ ⦃G2, L2, U2⦄.
 /3 width=5 by fquq_cpx_trans, ssta_cpx/ qed-.
 
+lemma fqup_cpx_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃+ ⦃G2, L2, T2⦄ →
+                      ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡[h, g] U2 →
+                      ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡[h, g] U1 & ⦃G1, L1, U1⦄ ⊃+ ⦃G2, L2, U2⦄.
+#h #g #G1 #G2 #L1 #L2 #T1 #T2 #H @(fqup_ind … H) -G2 -L2 -T2
+[ #G2 #L2 #T2 #H12 #U2 #HTU2 elim (fqu_cpx_trans … H12 … HTU2) -T2
+  /3 width=3 by fqu_fqup, ex2_intro/
+| #G #G2 #L #L2 #T #T2 #_ #HT2 #IHT1 #U2 #HTU2
+  elim (fqu_cpx_trans … HT2 … HTU2) -T2 #T2 #HT2 #HTU2
+  elim (IHT1 … HT2) -T /3 width=7 by fqup_strap1, ex2_intro/
+]
+qed-.
+
+lemma fqus_cpx_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃* ⦃G2, L2, T2⦄ →
+                      ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡[h, g] U2 →
+                      ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡[h, g] U1 & ⦃G1, L1, U1⦄ ⊃* ⦃G2, L2, U2⦄.
+#h #g #G1 #G2 #L1 #L2 #T1 #T2 #H #U2 #HTU2 elim (fqus_inv_gen … H) -H
+[ #HT12 elim (fqup_cpx_trans … HT12 … HTU2) /3 width=3 by fqup_fqus, ex2_intro/
+| * #H1 #H2 #H3 destruct /2 width=3 by ex2_intro/
+]
+qed-.
+
 lemma fqu_cpx_trans_neq: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ →
                          ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡[h, g] U2 → (T2 = U2 → ⊥) →
                          ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡[h, g] U1 & T1 = U1 → ⊥ & ⦃G1, L1, U1⦄ ⊃ ⦃G2, L2, U2⦄.

@@ -32,10 +32,10 @@ interpretation "'big tree' parallel computation (closure) alternative"
 
 lemma fpb_fpbsa_trans: ∀h,g,G1,G,L1,L,T1,T. ⦃G1, L1, T1⦄ ≽[h, g] ⦃G, L, T⦄ →
                        ∀G2,L2,T2. ⦃G, L, T⦄ ≥≥[h, g] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥≥[h, g] ⦃G2, L2, T2⦄.
-#h #g #G1 #G #L1 #L #T1 #T * -G -L -T [ #G #L #T #HG1 | #T #HT1 | #L #HL1 ]   
+#h #g #G1 #G #L1 #L #T1 #T * -G -L -T [ #G #L #T #HG1 | #T #HT1 | #L #HL1 ]
 #G2 #L2 #T2 * #L0 #T0 #HT0 #HG2 #HL02
 [ elim (fquq_cpxs_trans … HT0 … HG1) -T
-  /3 width=7 by fqus_trans, ex3_2_intro/
+  /3 width=7 by fqus_strap2, ex3_2_intro/
 | /3 width=5 by cpxs_strap2, ex3_2_intro/
 | lapply (lpx_cpxs_trans … HT0 … HL1) -HT0
   elim (lpx_fqus_trans … HG2 … HL1) -L

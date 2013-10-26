@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/btpredstarrestricted_8.ma".
-include "basic_2/computation/fpbg.ma".
+include "basic_2/computation/fpbs.ma".
 
 (* RESTRICTED "BIG TREE" PROPER PARALLEL COMPUTATION FOR CLOSURES ***********)
 
@@ -26,13 +26,15 @@ inductive fpbr (h) (g) (G1) (L1) (T1): relation3 genv lenv term ≝
 interpretation "restricted 'big tree' proper parallel computation (closure)"
    'BTPRedStarRestricted h g G1 L1 T1 G2 L2 T2 = (fpbr h g G1 L1 T1 G2 L2 T2).
 
-(* Basic forward lemmas *****************************************************)
+(* Basic inversion lemmas ***************************************************)
 
-lemma fpbr_fwd_fpbg: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃≥[h, g] ⦃G2, L2, T2⦄ →
-                     ⦃G1, L1, T1⦄ >[h, g] ⦃G2, L2, T2⦄.
-#h #g #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G2 -L2 -T2
-/3 width=5 by fpbg_strap1, fpbc_fpbg, fpbc_fqu/
+lemma fpbr_inv_fqu_fpbs: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃≥[h, g] ⦃G2, L2, T2⦄ →
+                         ∃∃G,L,T. ⦃G1, L1, T1⦄ ⊃ ⦃G, L, T⦄ & ⦃G, L, T⦄ ≥[h, g] ⦃G2, L2, T2⦄.
+#h #g #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G2 -L2 -T2 [ /2 width=5 by ex2_3_intro/ ] (**) (* auto fails without brackets *)
+#G #G2 #L #L2 #T #T2 #_ #HT2 * /3 width=9 by fpbs_strap1, ex2_3_intro/
 qed-.
+
+(* Basic forward lemmas *****************************************************)
 
 lemma fpbr_fwd_fpbs: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃≥[h, g] ⦃G2, L2, T2⦄ →
                      ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.

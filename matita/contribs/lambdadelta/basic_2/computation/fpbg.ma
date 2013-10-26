@@ -18,6 +18,7 @@ include "basic_2/computation/fpbs.ma".
 
 (* GENEARAL "BIG TREE" PROPER PARALLEL COMPUTATION FOR CLOSURES *************)
 
+(* Note: this is not transitive *)
 inductive fpbg (h) (g) (G1) (L1) (T1): relation3 genv lenv term ≝
 | fpbg_cpxs: ∀L2,T2. ⦃G1, L1⦄ ⊢ T1 ➡*[h, g] T2 → (T1 = T2 → ⊥) → ⦃G1, L1⦄ ⊢ ➡*[h, g] L2 →
              fpbg h g G1 L1 T1 G1 L2 T2
@@ -35,21 +36,3 @@ lemma fpbc_fpbg: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≻[h, g] ⦃G2, L2,
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2
 /3 width=5 by fpbg_cpxs, fpbg_fqup, fqu_fqup, cpx_cpxs/
 qed.
-
-axiom fpbg_strap1: ∀h,g,G1,G,G2,L1,L,L2,T1,T,T2. ⦃G1, L1, T1⦄ >[h, g] ⦃G, L, T⦄ →
-                   ⦃G, L, T⦄ ≽[h, g] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ >[h, g] ⦃G2, L2, T2⦄.
-
-axiom fpbg_strap2: ∀h,g,G1,G,G2,L1,L,L2,T1,T,T2. ⦃G1, L1, T1⦄ ≽[h, g] ⦃G, L, T⦄ →
-                   ⦃G, L, T⦄ >[h, g] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ >[h, g] ⦃G2, L2, T2⦄.
-
-lemma fpbg_fpbs_trans: ∀h,g,G1,G,G2,L1,L,L2,T1,T,T2. ⦃G1, L1, T1⦄ >[h, g] ⦃G, L, T⦄ →
-                       ⦃G, L, T⦄ ≥[h, g] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ >[h, g] ⦃G2, L2, T2⦄.
-#h #g #G1 #G #G2 #L1 #L #L2 #T1 #T #T2 #H1 #H @(fpbs_ind … H) -G2 -L2 -T2
-/2 width=5 by fpbg_strap1/
-qed-.
-
-lemma fpbs_fpbg_trans: ∀h,g,G1,G,G2,L1,L,L2,T1,T,T2. ⦃G1, L1, T1⦄ ≥[h, g] ⦃G, L, T⦄ →
-                       ⦃G, L, T⦄ >[h, g] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ >[h, g] ⦃G2, L2, T2⦄.
-#h #g #G1 #G #G2 #L1 #L #L2 #T1 #T #T2 #H @(fpbs_ind_dx … H) -G1 -L1 -T1
-/3 width=5 by fpbg_strap2/
-qed-.
