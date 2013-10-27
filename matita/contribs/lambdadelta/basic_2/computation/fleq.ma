@@ -12,25 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/fpbg_fpbg.ma".
-include "basic_2/computation/fpbr.ma".
+include "basic_2/notation/relations/fleq_8.ma".
+include "basic_2/computation/lpxs.ma".
 
-(* RESTRICTED "BIG TREE" PROPER PARALLEL COMPUTATION FOR CLOSURES ***********)
+(* EQUIVALENT "BIG TREE" NORMAL FORMS ***************************************)
 
-(* Advanced forward lemmas **************************************************)
+(* Note: this definition works but is not symmetric nor decidable *)
+definition fleq: ∀h. sd h → tri_relation genv lenv term ≝
+                 λh,g,G1,L1,T1,G2,L2,T2.
+                 ∧∧ G1 = G2 & ⦃G1, L1⦄ ⊢ ➡*[h, g] L2 & T1 = T2.
 
-lemma fpbr_fwd_fpbg: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃≥[h, g] ⦃G2, L2, T2⦄ →
-                     ⦃G1, L1, T1⦄ >[h, g] ⦃G2, L2, T2⦄.
-#h #g #G1 #G2 #L1 #L2 #T1 #T2 #H elim (fpbr_inv_fqu_fpbs … H) -H
-/2 width=5 by fqu_fpbs_fpbg/
-qed-.
+interpretation
+   "equivalent 'big tree' normal forms (closure)"
+   'FLEq h g G1 L1 T1 G2 L2 T2 = (fleq h g G1 L1 T1 G2 L2 T2).
 
-lemma fpbr_fwd_fpbs: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃≥[h, g] ⦃G2, L2, T2⦄ →
-                     ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
-/3 width=5 by fpbr_fwd_fpbg, fpbg_fwd_fpbs/
-qed-.
+(* Basic_properties *********************************************************)
 
-(* Main properties **********************************************************)
-
-theorem fpbr_trans: ∀h,g. tri_transitive … (fpbr h g).
-/3 width=5 by fpbr_fwd_fpbs, fpbr_fpbs_trans/ qed-.
+lemma fleq_refl: ∀h,g. tri_reflexive … (fleq h g).
+/2 width=1 by and3_intro/ qed.

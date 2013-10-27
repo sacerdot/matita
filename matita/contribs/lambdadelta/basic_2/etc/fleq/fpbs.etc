@@ -1,0 +1,22 @@
+(* alternative proof that needs decidability of bteq to go in fpbs.ma 
+ * or lpx_fpbc_trans to go in fpbs_lift.ma (possibly)  
+*)
+
+axiom lpx_bteq_trans: ∀h,g,G1,G2,L1,L,L2,T1,T2. ⦃G1, L1⦄ ⊢➡ [h, g] L →
+                      ⦃G1, L, T1⦄ ⋕[h, g] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ⋕[h, g] ⦃G2, L2, T2⦄.
+
+lemma fpbs_fwd_fpb_sn: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄ →
+                       ⦃G1, L1, T1⦄ ⋕[h, g] ⦃G2, L2, T2⦄ ∨
+                       ∃∃G,L,T. ⦃G1, L1, T1⦄ ≻[h, g] ⦃G, L, T⦄ & ⦃G, L, T⦄ ≥[h, g] ⦃G2, L2, T2⦄.
+#h #g #G1 #G2 #L1 #L2 #T1 #T2 #H @(fpbs_ind_dx … H) -G1 -L1 -T1 [ /2 width=1 by or_introl/ ] (**) (* auto fails without brackets *)
+#G1 #G #L1 #L #T1 #T *
+[ #G0 #L0 #T0 #H #H02 #IH1 elim (fquq_inv_gen … H) -H
+  [ -IH1 /4 width=5 by fpbc_fqu, ex2_3_intro, or_intror/
+  | -H02 * #HG #HL #HT destruct /2 width=1 by/
+  ]
+| #T0 #HT10 #H02 #IH02 elim (eq_term_dec T1 T0) #H destruct
+  [ -H02 /2 width=1 by/
+  | -IH02 /5 width=5 by fpbc_cpx, ex2_3_intro, or_intror/
+  ]
+| #L0 #HL10 #_ * [ /3 width=3 by or_introl, lpx_bteq_trans/ ]
+  * #G3 #L3 #T3 #H13 #H32

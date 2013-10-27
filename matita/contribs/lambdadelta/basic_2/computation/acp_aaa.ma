@@ -20,7 +20,7 @@ include "basic_2/computation/lsubc_ldrops.ma".
 
 (* ABSTRACT COMPUTATION PROPERTIES ******************************************)
 
-(* Main propertis ***********************************************************)
+(* Main properties **********************************************************)
 
 (* Basic_1: was: sc3_arity_csubc *)
 theorem aacr_aaa_csubc_lifts: ∀RR,RS,RP.

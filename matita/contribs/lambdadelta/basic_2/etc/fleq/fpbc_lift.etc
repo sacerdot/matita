@@ -1,0 +1,9 @@
+include "basic_2/reduction/lpx_ldrop.ma".
+
+lemma lpx_fpbc_trans: ∀h,g,G1,G2,K1,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≻[h, g] ⦃G2, L2, T2⦄ →
+                      ⦃G1, K1⦄ ⊢ ➡[h, g] L1 →
+                      ∃∃K2,T. ⦃G1, K1⦄ ⊢ T1 ➡[h, g] T & ⦃G1, K1, T⦄ ≻[h, g] ⦃G2, K2, T2⦄ & ⦃G2, K2⦄ ⊢ ➡[h, g] L2.
+#h #g #G1 #G2 #K1 #L1 #L2 #T1 #T2 * -G2 -L2 -T2
+[ #G2 #L2 #T2 #H12 #HKL1 elim (lpx_fqu_trans … H12 … HKL1) -L1
+  /3 width=5 by fpbc_fqu, ex3_2_intro/
+| #T2 #HT12 #H #HKL1  

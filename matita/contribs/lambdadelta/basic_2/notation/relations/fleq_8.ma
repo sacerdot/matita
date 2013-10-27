@@ -12,25 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/fpbg_fpbg.ma".
-include "basic_2/computation/fpbr.ma".
+(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-(* RESTRICTED "BIG TREE" PROPER PARALLEL COMPUTATION FOR CLOSURES ***********)
-
-(* Advanced forward lemmas **************************************************)
-
-lemma fpbr_fwd_fpbg: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃≥[h, g] ⦃G2, L2, T2⦄ →
-                     ⦃G1, L1, T1⦄ >[h, g] ⦃G2, L2, T2⦄.
-#h #g #G1 #G2 #L1 #L2 #T1 #T2 #H elim (fpbr_inv_fqu_fpbs … H) -H
-/2 width=5 by fqu_fpbs_fpbg/
-qed-.
-
-lemma fpbr_fwd_fpbs: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃≥[h, g] ⦃G2, L2, T2⦄ →
-                     ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
-/3 width=5 by fpbr_fwd_fpbg, fpbg_fwd_fpbs/
-qed-.
-
-(* Main properties **********************************************************)
-
-theorem fpbr_trans: ∀h,g. tri_transitive … (fpbr h g).
-/3 width=5 by fpbr_fwd_fpbs, fpbr_fpbs_trans/ qed-.
+notation "hvbox( ⦃ term 46 G1, break term 46 L1, break term 46 T1 ⦄ ⋕ break [ term 46 h , break term 46 g ] break ⦃ term 46 G2, break term 46 L2 , break term 46 T2 ⦄ )"
+   non associative with precedence 45
+   for @{ 'FLEq $h $g $G1 $L1 $T1 $G2 $L2 $T2 }.

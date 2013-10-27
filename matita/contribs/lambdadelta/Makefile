@@ -14,8 +14,10 @@ XOA2_CONF    := ground_2/xoa2.conf.xml
 XOA2_TARGETS := ground_2/xoa2_notation.ma ground_2/xoa2.ma
 XOA2_OPTS    := ../../matita.conf.xml $(XOA2_CONF)
 
+DEP_INPUT    := .depend
 DEP_DIR      := ../../../components/binaries/matitadep
 DEP          := matitadep.native
+DEP_OPTS     :=
 
 MAC_DIR      := ../../../components/binaries/mac
 MAC          := mac.native
@@ -28,7 +30,7 @@ PRB_OPTS     := $(XOA_OPTS) -g
 ORIG         := . ./orig.sh 
 ORIGS        := basic_2/basic_1.orig
 
-TAGS := all xoa xoa2 orig elim deps top stats tbls trim
+TAGS := all xoa xoa2 orig elim deps top leaf stats tbls trim
 
 PACKAGES := ground_2 basic_2 apps_2
 
@@ -83,17 +85,29 @@ orig: $(ORIGS)
 	@echo "  ORIG basic_2"
 	$(H)$(ORIG) basic_2 < $<
 
+# dep input ##################################################################
+
+$(DEP_INPUT): $(MAS)
+	@echo "  GREP include"
+	$(H)grep "include \"" $^ > $(DEP_INPUT)
+
 # dep ########################################################################
 
-deps: $(DEP_DIR)/$(DEP)
-	@echo "  MATITADEP"
-	$(H)grep "include \"" $(MAS) | $<
+deps: $(DEP_INPUT)
+	@echo "  MATITADEP -c"
+	$(H)$(DEP_DIR)/$(DEP) -c $(DEP_OPTS) < $<
 
 # top ########################################################################
 
-top: $(DEP_DIR)/$(DEP)
+top: $(DEP_INPUT)
 	@echo "  MATITADEP -t"
-	$(H)grep "include \"" $(MAS) | $< -t
+	$(H)$(DEP_DIR)/$(DEP) -t $(DEP_OPTS) < $<
+
+# leaf #######################################################################
+
+leaf: $(DEP_INPUT)
+	@echo "  MATITADEP -l"
+	$(H)$(DEP_DIR)/$(DEP) -l $(DEP_OPTS) < $<
 
 # stats ######################################################################
 

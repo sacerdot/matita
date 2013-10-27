@@ -28,6 +28,18 @@ interpretation
    "'big tree' strong normalization (closure)"
    'BTSN h g G L T = (fsb h g G L T).
 
+(* Basic eliminators ********************************************************)
+
+lemma fsb_ind_alt: ∀h,g. ∀R: relation3 …. (
+                      ∀G1,L1,T1. ⦃G1, L1⦄ ⊢ ⦥[h,g] T1 → (
+                         ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≻[h, g] ⦃G2, L2, T2⦄ → R G2 L2 T2
+                      ) → R G1 L1 T1
+                   ) →
+                   ∀G,L,T. ⦃G, L⦄ ⊢ ⦥[h, g] T → R G L T.
+#h #g #R #IH #G #L #T #H elim H -G -L -T
+/4 width=1 by fsb_intro/
+qed-.
+
 (* Basic inversion lemmas ***************************************************)
 
 lemma fsb_inv_csx: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ ⦥[h, g] T → ⦃G, L⦄ ⊢ ⬊*[h, g] T.

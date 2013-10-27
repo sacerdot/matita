@@ -80,7 +80,7 @@ table {
           }
         ]
         [ { "strongly normalizing \"big tree\" computation" * } {
-             [ "fsb ( ⦃?,?⦄ ⊢ ⦥[?,?] ? )" "fsb_alt ( ⦃?,?⦄ ⊢ ⦥⦥[?,?] ? )" "fsb_csx" * ]
+             [ "fsb ( ⦃?,?⦄ ⊢ ⦥[?,?] ? )" "fsb_alt ( ⦃?,?⦄ ⊢ ⦥⦥[?,?] ? )" "fsb_fleq" + "fsb_csx" * ]
           }
 	]
 	[ { "strongly normalizing extended computation" * } {
@@ -91,7 +91,7 @@ table {
         [ { "\"big tree\" parallel computation" * } {
 	     [ "fpbr ( ⦃?,?,?⦄ ⊃≥[?,?] ⦃?,?,?⦄ )" "fpbr_fpbr" * ]             
 	     [ "fpbg ( ⦃?,?,?⦄ >[?,?] ⦃?,?,?⦄ )" "fpbg_lift" + "fpbg_fpbg" * ]
-             [ "fpbs ( ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "fpbs_alt ( ⦃?,?,?⦄ ≥≥[?,?] ⦃?,?,?⦄ )" "fpbs_lift" + "fpbs_fpbs" * ]
+             [ "fpbs ( ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "fpbs_alt ( ⦃?,?,?⦄ ≥≥[?,?] ⦃?,?,?⦄ )" "fpbs_lift" + "fpbs_fleq" + "fpbs_fpbs" * ]
           }
         ]
         [ { "decomposed extended computation" * } {
@@ -233,7 +233,11 @@ table {
              [ "fqu ( ⦃?,?,?⦄ ⊃ ⦃?,?,?⦄ )" "fquq ( ⦃?,?,?⦄ ⊃⸮ ⦃?,?,?⦄ )" "fquq_alt ( ⦃?,?,?⦄ ⊃⊃⸮ ⦃?,?,?⦄ )" * ]
           }
         ]
-        [ { "global env. slicing" * } {
+	[ { "lazy equivalence for closures" * } {
+             [ "fleq ( ⦃?,?,?⦄ ⋕ ⦃?,?,?⦄ )" "fleq_fleq" * ]
+          }
+        ]        
+	[ { "global env. slicing" * } {
              [ "gdrop ( ⇩[?] ? ≡ ? )" "gdrop_gdrop" * ]
           }
         ]

@@ -50,7 +50,7 @@
    </news>
    <news date="2013 March 16.">
          Mutual recursive preservation of stratified native validity
-         for hyper computation on closures.
+         for "big tree" computation on closures.
    </news>
    <news date="2012 October 16.">
          Confluence for context-free parallel reduction on closures.
