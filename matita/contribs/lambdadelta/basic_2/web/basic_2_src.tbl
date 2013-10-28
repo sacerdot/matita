@@ -236,7 +236,11 @@ table {
 	[ { "lazy equivalence for closures" * } {
              [ "fleq ( ⦃?,?,?⦄ ⋕ ⦃?,?,?⦄ )" "fleq_fleq" * ]
           }
-        ]        
+        ]
+	[ { "lazy equivalence for local environments" * } {
+             [ "lleq ( ? ⋕[?] ? )" "lleq_fleq" * ]
+          }
+        ]
 	[ { "global env. slicing" * } {
              [ "gdrop ( ⇩[?] ? ≡ ? )" "gdrop_gdrop" * ]
           }
