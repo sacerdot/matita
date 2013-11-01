@@ -81,7 +81,17 @@ let leaf () =
    StringSet.iter iter fnames
 
 let rec read ich = 
-   let _ = Scanf.sscanf (input_line ich) "%s@:include \"%s@\"." init in
+   let line = input_line ich in
+   begin try Scanf.sscanf line "%s@:include \"%s@\"." init 
+   with Scanf.Scan_failure _ ->
+      begin try Scanf.sscanf line "./%s@:include \"%s@\"." init
+      with Scanf.Scan_failure _ ->   
+         begin try Scanf.sscanf line "%s@:(*%s@*)" (fun _ _ -> ())
+         with Scanf.Scan_failure _ ->
+	    Printf.eprintf "unknown line: %s.\n" line
+         end
+      end  
+   end;
    read ich
    
 let _ =

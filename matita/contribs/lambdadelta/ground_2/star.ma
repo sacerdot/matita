@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basics/star.ma".
+include "basics/star1.ma".
 include "ground_2/xoa_props.ma".
 include "ground_2/notation.ma".
 

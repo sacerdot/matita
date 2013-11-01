@@ -230,13 +230,16 @@ table {
    class "orange"
    [ { "relocation" * } {
         [ { "structural successor for closures" * } {
-             [ "fqu ( ⦃?,?,?⦄ ⊃ ⦃?,?,?⦄ )" "fquq ( ⦃?,?,?⦄ ⊃⸮ ⦃?,?,?⦄ )" "fquq_alt ( ⦃?,?,?⦄ ⊃⊃⸮ ⦃?,?,?⦄ )" * ]
+             [ "fquq ( ⦃?,?,?⦄ ⊃⸮ ⦃?,?,?⦄ )" "fquq_alt ( ⦃?,?,?⦄ ⊃⊃⸮ ⦃?,?,?⦄ )" "fquq_fquq" * ]
+	     [ "fqu ( ⦃?,?,?⦄ ⊃ ⦃?,?,?⦄ )" "fqu_fqu" * ]
           }
         ]
+(*	
 	[ { "lazy equivalence for closures" * } {
              [ "fleq ( ⦃?,?,?⦄ ⋕ ⦃?,?,?⦄ )" "fleq_fleq" * ]
           }
         ]
+*)	
 	[ { "lazy equivalence for local environments" * } {
              [ "lleq ( ? ⋕[?] ? )" "lleq_fleq" * ]
           }

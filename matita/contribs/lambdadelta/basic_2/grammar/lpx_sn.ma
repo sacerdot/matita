@@ -17,7 +17,7 @@ include "basic_2/grammar/lenv_append.ma".
 (* SN POINTWISE EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS *********)
 
 inductive lpx_sn (R:lenv→relation term): relation lenv ≝
-| lpx_sn_stom: lpx_sn R (⋆) (⋆)
+| lpx_sn_atom: lpx_sn R (⋆) (⋆)
 | lpx_sn_pair: ∀I,K1,K2,V1,V2.
                lpx_sn R K1 K2 → R K1 V1 V2 →
                lpx_sn R (K1. ⓑ{I} V1) (K2. ⓑ{I} V2)

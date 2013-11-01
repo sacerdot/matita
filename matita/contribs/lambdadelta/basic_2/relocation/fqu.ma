@@ -35,7 +35,7 @@ interpretation
 (* Basic properties *********************************************************)
 
 lemma fqu_drop_lt: ∀G,L,K,T,U,e. 0 < e →
-                   ⇩[0, e] L ≡ K → ⇧[0, e] T ≡ U → fqu G L U G K T.
+                   ⇩[0, e] L ≡ K → ⇧[0, e] T ≡ U → ⦃G, L, U⦄ ⊃ ⦃G, K, T⦄.
 #G #L #K #T #U #e #He >(plus_minus_m_m e 1) /2 width=3 by fqu_drop/
 qed.
 

@@ -15,7 +15,7 @@
 include "ground_2/lstar.ma".
 include "basic_2/notation/relations/rdrop_4.ma".
 include "basic_2/grammar/lenv_length.ma".
-include "basic_2/grammar/lenv_weight.ma".
+include "basic_2/grammar/cl_restricted_weight.ma".
 include "basic_2/relocation/lift.ma".
 
 (* LOCAL ENVIRONMENT SLICING ************************************************)
@@ -290,6 +290,14 @@ lemma ldrop_fwd_length_lt4: ∀L1,L2,d,e. ⇩[d, e] L1 ≡ L2 → 0 < e → |L2|
 #L1 #L2 #d #e #H lapply (ldrop_fwd_length … H) -H /2 width=1/
 qed-.
 
+lemma ldrop_fwd_length_eq: ∀L1,L2,K1,K2,d,e. ⇩[d, e] L1 ≡ K1 → ⇩[d, e] L2 ≡ K2 →
+                           |L1| = |L2| → |K1| = |K2|.
+#L1 #L2 #K1 #K2 #d #e #HLK1 #HLK2 #HL12
+lapply (ldrop_fwd_length … HLK1) -HLK1
+lapply (ldrop_fwd_length … HLK2) -HLK2
+/2 width=2 by injective_plus_r/ (**) (* full auto fails *)
+qed-.
+
 lemma ldrop_fwd_lw: ∀L1,L2,d,e. ⇩[d, e] L1 ≡ L2 → ♯{L2} ≤ ♯{L1}.
 #L1 #L2 #d #e #H elim H -L1 -L2 -d -e // normalize
 [ /2 width=3/
@@ -307,6 +315,11 @@ lemma ldrop_fwd_lw_lt: ∀L1,L2,d,e. ⇩[d, e] L1 ≡ L2 → 0 < e → ♯{L2} <
 | #L1 #L2 #I #V1 #V2 #d #e #_ #HV21 #IHL12 #H normalize in ⊢ (?%%); -I
   >(lift_fwd_tw … HV21) -V2 /3 by lt_minus_to_plus/ (**) (* auto too slow without trace *)
 ]
+qed-.
+
+lemma ldrop_fwd_rfw: ∀I,L,K,V,i. ⇩[O, i] L ≡ K.ⓑ{I}V → ♯{K, V} < ♯{L, #i}.
+#I #L #K #V #i #HLK lapply (ldrop_fwd_lw … HLK) -HLK
+normalize in ⊢ (%→?%%); /2 width=1 by le_S_S/
 qed-.
 
 (* Advanced inversion lemmas ************************************************)
