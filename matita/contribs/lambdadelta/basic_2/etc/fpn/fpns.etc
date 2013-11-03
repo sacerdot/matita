@@ -12,45 +12,47 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/predsnstar_8.ma".
+include "basic_2/notation/relations/btpredsnstar_8.ma".
 include "basic_2/reduction/fpn.ma".
-include "basic_2/computation/lpxs.ma".
 
-(* ORDERED "BIG TREE" NORMAL FORMS ******************************************)
+(* COMPUTATION FOR "BIG TREE" NORMAL FORMS **********************************)
 
 definition fpns: ∀h. sd h → tri_relation genv lenv term ≝
-                 λh,g,G1,L1,T1,G2,L2,T2.
-                 ∧∧ G1 = G2 & ⦃G1, L1⦄ ⊢ ➡*[h, g] L2 & T1 = T2.
+                 λh,g. tri_TC … (fpn h g).
 
 interpretation
-   "ordered 'big tree' normal forms (closure)"
-   'PRedSnStar h g G1 L1 T1 G2 L2 T2 = (fpns h g G1 L1 T1 G2 L2 T2).
+   "computation for 'big tree' normal forms (closure)"
+   'BTPRedSnStar h g G1 L1 T1 G2 L2 T2 = (fpns h g G1 L1 T1 G2 L2 T2).
+
+(* Basic eliminators ********************************************************)
+
+lemma fpns_ind: ∀h,g,G1,L1,T1. ∀R:relation3 …. R G1 L1 T1 →
+                (∀G,G2,L,L2,T,T2. ⦃G1, L1, T1⦄ ⊢ ⋕➡*[h, g] ⦃G, L, T⦄ → ⦃G, L, T⦄ ⊢ ⋕➡[h, g] ⦃G2, L2, T2⦄ → R G L T → R G2 L2 T2) →
+                ∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊢ ⋕➡*[h, g] ⦃G2, L2, T2⦄ → R G2 L2 T2.
+#h #g #G1 #L1 #T1 #R #IH1 #IH2 #G2 #L2 #T2 #H
+lapply (tri_TC_star_ind … IH1 IH2 G2 L2 T2 H) //
+qed-.
+
+lemma fpns_ind_dx: ∀h,g,G2,L2,T2. ∀R:relation3 …. R G2 L2 T2 →
+                   (∀G1,G,L1,L,T1,T. ⦃G1, L1, T1⦄ ⊢ ⋕➡[h, g] ⦃G, L, T⦄ → ⦃G, L, T⦄ ⊢ ⋕➡*[h, g] ⦃G2, L2, T2⦄ → R G L T → R G1 L1 T1) →
+                   ∀G1,L1,T1. ⦃G1, L1, T1⦄ ⊢ ⋕➡*[h, g] ⦃G2, L2, T2⦄ → R G1 L1 T1.
+#h #g #G2 #L2 #T2 #R #IH1 #IH2 #G1 #L1 #T1 #H
+@(tri_TC_star_ind_dx … IH1 IH2 G1 L1 T1 H) //
+qed-.
 
 (* Basic_properties *********************************************************)
 
 lemma fpns_refl: ∀h,g. tri_reflexive … (fpns h g).
-/2 width=1 by and3_intro/ qed.
+/2 width=1 by tri_inj/ qed.
 
-lemma fpn_fpns: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊢ ➡[h, g] ⦃G2, L2, T2⦄ →
-                ⦃G1, L1, T1⦄ ⊢ ➡*[h, g] ⦃G2, L2, T2⦄.
-#h #g #G1 #G2 #L1 #L2 #T1 #T2 * /3 width=1 by lpx_lpxs, and3_intro/
-qed.
+lemma fpn_fpns: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊢ ⋕➡[h, g] ⦃G2, L2, T2⦄ →
+                ⦃G1, L1, T1⦄ ⊢ ⋕➡*[h, g] ⦃G2, L2, T2⦄.
+/2 width=1 by tri_inj/ qed.
 
-lemma fpns_strap1: ∀h,g,G1,G,G2,L1,L,L2,T1,T,T2. ⦃G1, L1, T1⦄ ⊢ ➡*[h, g] ⦃G, L, T⦄ →
-                   ⦃G, L, T⦄ ⊢ ➡[h, g] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ⊢ ➡*[h, g] ⦃G2, L2, T2⦄.
-#h #g #G1 #G #G2 #L1 #L #L2 #T1 #T #T2 * #H1G #H1L #G1T *
-/3 width=3 by lpxs_strap1, and3_intro/
-qed-.
+lemma fpns_strap1: ∀h,g,G1,G,G2,L1,L,L2,T1,T,T2. ⦃G1, L1, T1⦄ ⊢ ⋕➡*[h, g] ⦃G, L, T⦄ →
+                   ⦃G, L, T⦄ ⊢ ⋕➡[h, g] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ⊢ ⋕➡*[h, g] ⦃G2, L2, T2⦄.
+/2 width=5 by tri_step/ qed-.
 
-lemma fpns_strap2: ∀h,g,G1,G,G2,L1,L,L2,T1,T,T2. ⦃G1, L1, T1⦄ ⊢ ➡[h, g] ⦃G, L, T⦄ →
-                   ⦃G, L, T⦄ ⊢ ➡*[h, g] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ⊢ ➡*[h, g] ⦃G2, L2, T2⦄.
-#h #g #G1 #G #G2 #L1 #L #L2 #T1 #T #T2 * #H1G #H1L #G1T *
-/3 width=3 by lpxs_strap2, and3_intro/
-qed-.
-
-(* Basic forward lemmas *****************************************************)
-
-lemma fpns_fwd_bteq: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊢ ➡*[h, g] ⦃G2, L2, T2⦄ →
-                     ⦃G1, L1, T1⦄ ⋕ ⦃G2, L2, T2⦄.
-#h #g #G1 #G2 #L1 #L2 #T1 #T2 * /3 width=4 by lpxs_fwd_length, and3_intro/
-qed-.
+lemma fpns_strap2: ∀h,g,G1,G,G2,L1,L,L2,T1,T,T2. ⦃G1, L1, T1⦄ ⊢ ⋕➡[h, g] ⦃G, L, T⦄ →
+                   ⦃G, L, T⦄ ⊢ ⋕➡*[h, g] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ⊢ ⋕➡*[h, g] ⦃G2, L2, T2⦄.
+/2 width=5 by tri_TC_strap/ qed-.

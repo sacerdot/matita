@@ -1,9 +1,9 @@
 NAMING CONVENTIONS FOR METAVARIABLES
 
 A,B    : arity
-C,D    : candidate of reducibility
-E,F    : RTM environment
-G      : global environment 
+C      : candidate of reducibility
+D,E    : RTM environment
+F,G    : global environment 
 H      : reserved: transient premise
 IH     : reserved: inductive premise
 I,J    : item
@@ -73,6 +73,7 @@ b: "big tree" reduction
 c: conversion
 d: decomposed extended reduction
 e: decomposed extended conversion
+n: reduction for "big tree" normal forms
 q: restricted reduction
 r: reduction
 s: substitution

@@ -12,28 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/btpredsn_8.ma".
-include "basic_2/relocation/lleq.ma".
-include "basic_2/reduction/lpx.ma".
+include "basic_2/relocation/lleq_lleq.ma".
+include "basic_2/computation/lpxs_lpxs.ma".
+include "basic_2/computation/fpns.ma".
 
-(* REDUCTION FOR "BIG TREE" NORMAL FORMS ************************************)
+(* PARALLEL COMPUTATION FOR "BIG TREE" NORMAL FORMS *************************)
 
-inductive fpn (h) (g) (G) (L1) (T): relation3 genv lenv term ≝
-| fpn_intro: ∀L2. ⦃G, L1⦄ ⊢ ➡[h, g] L2 → L1 ⋕[T] L2 → fpn h g G L1 T G L2 T
-.
+(* Main properties **********************************************************)
 
-interpretation
-   "reduction for 'big tree' normal forms (closure)"
-   'BTPRedSn h g G1 L1 T1 G2 L2 T2 = (fpn h g G1 L1 T1 G2 L2 T2).
-
-(* Basic_properties *********************************************************)
-
-lemma fpn_refl: ∀h,g. tri_reflexive … (fpn h g).
-/2 width=1 by fpn_intro/ qed.
-
-(* Basic inversion lemmas ***************************************************) 
-
-lemma fpn_inv_gen: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊢ ⋕➡[h, g] ⦃G2, L2, T2⦄ →
-                   ∧∧ G1 = G2 & ⦃G1, L1⦄ ⊢ ➡[h, g] L2 & L1 ⋕[T1] L2 & T1 = T2.
-#h #g #G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2 /2 width=1 by and4_intro/
+theorem fpns_trans: ∀h,g. tri_transitive … (fpns h g).
+#h #g #G1 #G #L1 #L #T1 #T * -G -L -T
+#L #HL1 #HT1 #G2 #L2 #T2 * -G2 -L2 -T2
+/3 width=3 by lpxs_trans, lleq_trans, fpns_intro/
 qed-.

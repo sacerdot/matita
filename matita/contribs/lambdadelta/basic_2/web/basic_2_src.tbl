@@ -82,15 +82,19 @@ table {
         [ { "strongly normalizing \"big tree\" computation" * } {
              [ "fsb ( ⦃?,?⦄ ⊢ ⦥[?,?] ? )" "fsb_alt ( ⦃?,?⦄ ⊢ ⦥⦥[?,?] ? )" "fsb_fleq" + "fsb_csx" * ]
           }
-	]
-	[ { "strongly normalizing extended computation" * } {
+        ]
+        [ { "strongly normalizing extended computation" * } {
              [ "csx_vector ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csx_tstc_vector" + "csx_aaa" * ]
              [ "csx ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csx_alt ( ⦃?,?⦄ ⊢ ⬊⬊*[?,?] ? )" "csx_lift" + "csx_lpx" * ]
           }
         ]
+        [ { "parallel computation for \"big tree\" normal forms" * } {
+             [ "fpns ( ⦃?,?,?⦄ ⊢ ⋕➡*[?,?] ⦃?,?,?⦄ )" "fpns_fpns" * ]
+          }
+        ]
         [ { "\"big tree\" parallel computation" * } {
-	     [ "fpbr ( ⦃?,?,?⦄ ⊃≥[?,?] ⦃?,?,?⦄ )" "fpbr_fpbr" * ]             
-	     [ "fpbg ( ⦃?,?,?⦄ >[?,?] ⦃?,?,?⦄ )" "fpbg_lift" + "fpbg_fpbg" * ]
+             [ "fpbr ( ⦃?,?,?⦄ ⊃≥[?,?] ⦃?,?,?⦄ )" "fpbr_fpbr" * ]             
+             [ "fpbg ( ⦃?,?,?⦄ >[?,?] ⦃?,?,?⦄ )" "fpbg_lift" + "fpbg_fpbg" * ]
              [ "fpbs ( ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "fpbs_alt ( ⦃?,?,?⦄ ≥≥[?,?] ⦃?,?,?⦄ )" "fpbs_lift" + "fpbs_fleq" + "fpbs_fpbs" * ]
           }
         ]
@@ -130,8 +134,8 @@ table {
           }
         ]
         [ { "context-sensitive extended reduction" * } {
-             [ "lpx ( ⦃?,?⦄ ⊢ ➡[?,?] ? )" "lpx_ldrop" + "lpx_aaa" * ]
-             [ "cpx ( ⦃?,?⦄ ⊢ ? ➡[?,?] ? )" "cpx_lift" + "cpx_cix" * ]
+             [ "lpx ( ⦃?,?⦄ ⊢ ➡[?,?] ? )" "lpx_ldrop" + "lpx_aaa" + "lpx_lpx" * ]
+             [ "cpx ( ⦃?,?⦄ ⊢ ? ➡[?,?] ? )" "cpx_lift" + "cpx_cix" + "cpx_cpx" * ]
           }
         ]
         [ { "context-sensitive extended irreducible forms" * } {
@@ -231,20 +235,14 @@ table {
    [ { "relocation" * } {
         [ { "structural successor for closures" * } {
              [ "fquq ( ⦃?,?,?⦄ ⊃⸮ ⦃?,?,?⦄ )" "fquq_alt ( ⦃?,?,?⦄ ⊃⊃⸮ ⦃?,?,?⦄ )" "fquq_fquq" * ]
-	     [ "fqu ( ⦃?,?,?⦄ ⊃ ⦃?,?,?⦄ )" "fqu_fqu" * ]
+             [ "fqu ( ⦃?,?,?⦄ ⊃ ⦃?,?,?⦄ )" "fqu_fqu" * ]
           }
         ]
-(*	
-	[ { "lazy equivalence for closures" * } {
-             [ "fleq ( ⦃?,?,?⦄ ⋕ ⦃?,?,?⦄ )" "fleq_fleq" * ]
-          }
-        ]
-*)	
-	[ { "lazy equivalence for local environments" * } {
+        [ { "lazy equivalence for local environments" * } {
              [ "lleq ( ? ⋕[?] ? )" "lleq_fleq" * ]
           }
         ]
-	[ { "global env. slicing" * } {
+        [ { "global env. slicing" * } {
              [ "gdrop ( ⇩[?] ? ≡ ? )" "gdrop_gdrop" * ]
           }
         ]
