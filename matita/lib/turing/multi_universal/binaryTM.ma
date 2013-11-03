@@ -50,12 +50,12 @@ cases m #m0 /2 by le_to_lt_to_lt/ qed.
 
 definition displ_of_move ≝ λsig,mv.
   match mv with
-  [ L ⇒ S (2*FS_crd sig)
-  | N ⇒ S (FS_crd sig)
+  [ L ⇒ 2*FS_crd sig
+  | N ⇒ FS_crd sig
   | R ⇒ O ].
   
 lemma le_displ_of_move : ∀sig,mv.displ_of_move sig mv ≤ S (2*FS_crd sig).
-#sig * /2 by le_n/
+#sig * /2 by le_S/
 qed.
 
 (* controllare i contatori, molti andranno incrementati di uno *)
@@ -143,13 +143,16 @@ definition mk_binaryTM ≝
 
 definition bin_char ≝ λsig,ch.unary_of_nat (FS_crd sig) (index_of_FS sig ch).
 
-definition bin_current ≝ λsig,t.match current ? t with
-[ None ⇒ [ ] | Some c ⇒ bin_char sig c ].
+definition opt_bin_char ≝ λsig,c.match c with
+[ None ⇒ [ ] | Some c0 ⇒ bin_char sig c0 ].
+
+definition bin_list ≝ λsig,l.flatten ? (map ?? (bin_char sig) l).
+definition rev_bin_list ≝ λsig,l.flatten ? (map ?? (λc.reverse ? (bin_char sig c)) l).
 
 definition tape_bin_lift ≝ λsig,t.
-let ls' ≝ flatten ? (map ?? (bin_char sig) (left ? t)) in
-let c' ≝ option_hd ? (bin_current sig t) in
-let rs' ≝ tail ? (bin_current sig t)@flatten ? (map ?? (bin_char sig) (right ? t)) in
+let ls' ≝ rev_bin_list ? (left ? t) in
+let c' ≝ option_hd ? (opt_bin_char sig (current ? t)) in
+let rs' ≝ (tail ? (opt_bin_char sig (current ? t))@bin_list ? (right ? t)) in
  mk_tape ? ls' c' rs'.
 
 definition R_bin_lift ≝ λsig,R,t1,t2.
@@ -280,7 +283,7 @@ lemma minus_tech : ∀a,b.a + b - a = b. // qed.
 lemma binaryTM_phase0_midtape :
   ∀sig,M,t,q,ls,a,rs,ch,k.
   halt sig M q=false → S (FS_crd sig) ≤ k → 
-  t = mk_tape ? ls (option_hd ? (bin_char ? a)) (tail ? (bin_char sig a@rs)) →
+  t = mk_tape ? ls (option_hd ? (bin_char ? a)) (tail ? (bin_char sig a)@rs) →
   loopM ? (mk_binaryTM sig M) k
     (mk_config ?? (〈q,bin0,ch,FS_crd sig〉) t) 
   = loopM ? (mk_binaryTM sig M) (k - S (FS_crd sig))
@@ -582,23 +585,24 @@ lemma binaryTM_bin3_O :
 qed.
 
 lemma binaryTM_bin3_S :
-  ∀sig,M,t,q,ch,k. S k <S (2*FS_crd sig) → 
+  ∀sig,M,t,q,ch,k. S k ≤ S (2*FS_crd sig) → 
   step ? (mk_binaryTM sig M) (mk_config ?? (〈q,bin3,ch,S k〉) t) 
-  = mk_config ?? (〈q,bin3,ch,to_initN k ??〉) (tape_move ? t L). [2,3:@le_S /2 by lt_S_to_lt/]
+  = mk_config ?? (〈q,bin3,ch,to_initN k ??〉) (tape_move ? t L). [2,3: @le_S_S /2 by lt_to_le/]
 #sig #M #t #q #ch #k #HSk %
 qed.
 
 lemma binaryTM_phase3 :∀sig,M,q,ch,k,n.
-  S n ≤ k → n<S (2*FS_crd sig) →
+  S n ≤ k → n ≤ S (2*FS_crd sig) →
   ∀t.loopM ? (mk_binaryTM sig M) k
     (mk_config ?? (〈q,bin3,ch,n〉) t) 
   = loopM ? (mk_binaryTM sig M) (k - S n)
       (mk_config ?? (〈q,bin0,None ?,FS_crd sig〉) 
-        (iter ? (λt0.tape_move ? t0 L) n t)). [2,3: @le_S //]
+        (iter ? (λt0.tape_move ? t0 L) n t)). [2,3: /2 by lt_S_to_lt, le_to_lt_to_lt/]
 #sig #M #q #ch #k #n #Hk
 cases (le_to_eq … Hk) #k0 #Hk0 >Hk0 >minus_tech elim n
 [ #Hcrd #t >loopM_unfold >loop_S_false [| % ] >binaryTM_bin3_O // 
-| #n0 #IH #Hlt #t >loopM_unfold >loop_S_false [|%] >binaryTM_bin3_S <IH [|/2 by lt_S_to_lt/]
+| #n0 #IH #Hlt #t >loopM_unfold >loop_S_false [|%] >binaryTM_bin3_S [|//]  
+  <IH [|/2 by lt_to_le/]
   <loopM_unfold % ]
 qed.
 
@@ -705,7 +709,88 @@ lemma state_bin_lift_unfold :
   
 axiom current_tape_bin_list :
  ∀sig,t.current sig t = None ? → current ? (tape_bin_lift sig t) = None ?.
- 
+
+lemma tape_bin_lift_unfold :
+ ∀sig,t. tape_bin_lift sig t = 
+ mk_tape ? (rev_bin_list ? (left ? t)) (option_hd ? (opt_bin_char sig (current ? t)))
+   (tail ? (opt_bin_char sig (current ? t))@bin_list ? (right ? t)). //
+qed.
+
+lemma reverse_bin_char_list : ∀sig,c,l.
+  reverse ? (bin_char sig c)@rev_bin_list ? l = rev_bin_list ? (c::l). // qed.
+
+lemma left_midtape : ∀sig,ls,c,rs.left ? (midtape sig ls c rs) = ls.// qed.
+lemma current_midtape : ∀sig,ls,c,rs.current ? (midtape sig ls c rs) = Some ? c.// qed.
+lemma right_midtape : ∀sig,ls,c,rs.right ? (midtape sig ls c rs) = rs.// qed.
+lemma opt_bin_char_Some : ∀sig,c.opt_bin_char sig (Some ? c) = bin_char ? c.// qed.
+
+lemma opt_cons_hd_tl : ∀A,l.option_cons A (option_hd ? l) (tail ? l) = l.
+#A * // qed.
+
+lemma le_tech : ∀a,b,c.a ≤ b → a * c ≤ b * c.
+#a #b #c #H /2 by monotonic_le_times_r/
+qed.
+
+lemma iter_split : ∀T,f,m,n,x. 
+  iter T f (m+n) x = iter T f m (iter T f n x).
+#T #f #m #n elim n /2/
+#n0 #IH #x <plus_n_Sm whd in ⊢ (??%(????%)); >IH %
+qed.
+
+lemma iter_tape_move_R : ∀T,n,ls,cs,rs.|cs| = n → 
+  iter ? (λt0.tape_move T t0 R) n (mk_tape ? ls (option_hd ? (cs@rs)) (tail ? (cs@rs)))
+  = mk_tape ? (reverse ? cs@ls) (option_hd ? rs) (tail ? rs).
+#T #n elim n
+[ #ls * [| #c0 #cs0 #rs #H normalize in H; destruct (H) ] #rs #_ %
+| #n0 #IH #ls * [ #rs #H normalize in H; destruct (H) ] #c #cs #rs #Hlen
+  whd in ⊢ (??%?); 
+  >(?: (tape_move T (mk_tape T ls (option_hd T ((c::cs)@rs)) (tail T ((c::cs)@rs))) R)
+    = mk_tape ? (c::ls) (option_hd ? (cs@rs)) (tail ? (cs@rs))) in ⊢ (??(????%)?);
+  [| cases cs // cases rs // ] >IH
+  [ >reverse_cons >associative_append %
+  | normalize in Hlen; destruct (Hlen) % ]
+]
+qed.
+
+lemma tail_tech : ∀T,l1,l2.O < |l1| → tail T (l1@l2) = tail ? l1@l2.
+#T * normalize // #l2 #Hfalse @False_ind cases (not_le_Sn_O O) /2/
+qed.
+
+lemma hd_tech : ∀T,l1,l2.O < |l1| → option_hd T (l1@l2) = option_hd ? l1.
+#T * normalize // #l2 #Hfalse @False_ind cases (not_le_Sn_O O) /2/
+qed.
+
+lemma iter_tape_move_l_nil : ∀T,n,rs.
+  iter ? (λt0.tape_move T t0 L) n (mk_tape ? [ ] (None ?) rs) =
+  mk_tape ? [ ] (None ?) rs.
+#T #n #rs elim n // #n0 #IH <IH in ⊢ (???%); cases rs //
+qed.
+
+lemma iter_tape_move_L_left : ∀T,n,cs,rs. O < n →
+  iter ? (λt0.tape_move T t0 L) n 
+    (mk_tape ? [ ] (option_hd ? cs) (tail ? cs@rs)) =
+  mk_tape ? [ ] (None ?) (cs@rs).
+#T #n #cs #rs * 
+[ cases cs // cases rs //
+| #m #_ whd in ⊢ (??%?); <(iter_tape_move_l_nil ? m) cases cs // cases rs // ]
+qed.
+
+lemma iter_tape_move_L : ∀T,n,ls,cs,rs.|cs| = n → 
+  iter ? (λt0.tape_move T t0 L) n (mk_tape ? (reverse ? cs@ls) (option_hd ? rs) (tail ? rs))
+  = mk_tape ? ls (option_hd ? (cs@rs)) (tail ? (cs@rs)).
+#T #n elim n
+[ #ls * [| #c0 #cs0 #rs #H normalize in H; destruct (H) ] #rs #_ %
+| #n0 #IH #ls #cs #rs @(list_elim_left … cs)
+  [ #H normalize in H; destruct (H) ] -cs 
+  #c #cs #_ #Hlen >reverse_append whd in ⊢ (??%?); 
+  >(?: tape_move T (mk_tape T ((reverse T [c]@reverse T cs)@ls) (option_hd T rs) (tail T rs)) L
+    = mk_tape ? (reverse T cs@ls) (option_hd ? (c::rs)) (tail ? (c::rs))) in ⊢ (??(????%)?);
+  [| cases rs // ] >IH
+  [ >associative_append %
+  | >length_append in Hlen; normalize // ]
+]
+qed.
+
 lemma binaryTM_loop :
  ∀sig,M,i,t,q,tf,qf.
  O < FS_crd sig → 
@@ -724,16 +809,106 @@ lemma binaryTM_loop :
   >(loop_S_false ??? (λc.halt ?? (cstate ?? c)) (mk_config ?? q t) Hhalt)
   <loopM_unfold >(config_expand ?? (step ???)) #Hloop 
   lapply (IH … Hloop) [@Hcrd] -IH * #k0 #IH <config_expand in Hloop; #Hloop
-  %{(S (FS_crd sig) + k0)} cases (current_None_or_midtape ? t)
-  (* 1) current = None *)
-  [ #Hcur >state_bin_lift_unfold in ⊢ (??%?); 
+  %{(7*(S (FS_crd sig)) + k0)}
+  (*** PHASE 0 ***)
+  >state_bin_lift_unfold cases (current_None_or_midtape ? t)
+  (* 0.1) current = None *)
+  [ (* #Hcur >state_bin_lift_unfold in ⊢ (??%?); 
     lapply (current_tape_bin_list … Hcur) #Hcur' 
     >binaryTM_phase0_None /2 by monotonic_lt_plus_l/
     >(?: FS_crd sig + k0 = S (FS_crd sig + k0 - 1)) [|@daemon]
     >loopM_unfold >loop_S_false // lapply (refl ? t) cases t in ⊢ (???%→?);
     [4: #ls #c #rs normalize in ⊢ (%→?); #H destruct (H) normalize in Hcur; destruct (Hcur)
-    | #Ht >Ht >binaryTM_bin4_None // <loopM_unfold
-  
+    | #Ht >Ht >binaryTM_bin4_None // <loopM_unfold *)
+  (* 0.2) midtape *)
+  | * #ls * #c * #rs #Ht >Ht >tape_bin_lift_unfold
+    >left_midtape >current_midtape >right_midtape >opt_bin_char_Some
+    >(binaryTM_phase0_midtape … Hhalt ? (refl ??)) [| // ]
+    >(?: 7*S (FS_crd sig) + k0 - S (FS_crd sig) = 6*S (FS_crd sig) + k0) [|/2 by plus_minus/]
+    (*** PHASE 1 ***)
+    >binaryTM_phase1
+    [| cases (bin_list ? rs) normalize // #r0 #rs0 #H destruct (H)
+    | >length_reverse @daemon
+    | // ]
+    >(?:6*S (FS_crd sig) + k0 - S (FS_crd sig) = 5*S (FS_crd sig) + k0) [|/2 by plus_minus/]
+    >reverse_reverse >opt_cons_hd_tl
+    cut (∃qn,chn,mv.〈qn,chn,mv〉 = trans ? M 〈q,Some ? c〉)
+    [ cases (trans ? M 〈q,Some ? c〉) * #qn #chn #mv /4 by ex_intro/ ]
+    * #qn * #chn * #mv cases chn -chn
+    [ (* no write! *) #Htrans >(binaryTM_phase2_None … Htrans) [2,3: //]
+      >iter_tape_move_R [|@daemon]
+      >(?:5*S (FS_crd sig) + k0 - S (FS_crd sig) = 4*S (FS_crd sig) + k0) [|/2 by plus_minus/]
+      >binaryTM_phase3 
+      [|//| cut (S (displ_of_move sig mv) ≤ 2*(S (FS_crd sig)))
+        [ /2 by le_S_S/ 
+        | #H @(transitive_le ??? H) -H -Hcrd @(transitive_le ? (4*S (FS_crd sig))) /2 by le_plus_a/ ]
+      ]
+      cut (∀sig,M,m,n,cfg,cfg'.m < n → loopM sig M m cfg = Some ? cfg' → loopM sig M n cfg = Some ? cfg') [@daemon]
+      #Hcut <(Hcut ??? (4*S (FS_crd sig) + k0 - S (displ_of_move sig mv)) ??? IH)
+      [| cases mv 
+        [ >(?:displ_of_move sig L = 2*FS_crd sig) //
+          >eq_minus_S_pred
+          @(transitive_le ? (pred (4*FS_crd sig+k0-2*FS_crd sig)))
+          [ >(?:4*FS_crd sig+k0-2*FS_crd sig = 2*FS_crd sig + k0) 
+            [ cases Hcrd /2 by le_minus_to_plus, le_n/
+            | <plus_minus [2://] 
+              >(commutative_times 4) >(commutative_times 2) 
+              <distributive_times_minus //
+            ]
+          | @monotonic_pred /2 by monotonic_le_minus_l/ ]
+        | whd in match (displ_of_move ??); @(transitive_le ? (4*1+k0-1)) 
+          [ //
+          | change with (pred (4*1+k0)) in ⊢ (?%?);
+             >eq_minus_S_pred <minus_n_O @monotonic_pred // ]
+        | >(?:displ_of_move sig N = FS_crd sig) //
+          >eq_minus_S_pred
+          @(transitive_le ? (pred (4*FS_crd sig+k0-1*FS_crd sig)))
+          [ >(?:4*FS_crd sig+k0-1*FS_crd sig = 3*FS_crd sig + k0) 
+            [ cases Hcrd /2 by le_minus_to_plus, le_n/
+            | <plus_minus [2://]
+              >(commutative_times 4) >(commutative_times 1) 
+              <distributive_times_minus //
+            ]
+          | @monotonic_pred /2 by transitive_le, le_n/ ] ] ] 
+      @eq_f @eq_f2 
+      [ <state_bin_lift_unfold >Ht whd in match (step ???); <Htrans %
+      | (* must distinguish mv *)
+        cases mv in Htrans; #Htrans
+        [ >(?:displ_of_move ? L = FS_crd sig + FS_crd sig) [| normalize // ]
+          >iter_split >iter_tape_move_L [|@daemon] >Ht cases ls
+          [ normalize in match (rev_bin_list ??); 
+            >hd_tech [|@daemon] >tail_tech [|@daemon]
+            >iter_tape_move_L_left // whd in match (step ???);
+            <Htrans whd in match (ctape ???);
+            >tape_bin_lift_unfold %
+          | #l0 #ls0 change with (reverse ? (bin_char ? l0)@rev_bin_list ? ls0) in match (rev_bin_list ??);
+            >iter_tape_move_L [|@daemon]
+            >hd_tech [|@daemon] >tail_tech [|@daemon]
+            whd in match (step ???); <Htrans whd in match (ctape ???);
+            >tape_bin_lift_unfold >left_midtape >current_midtape
+            >opt_bin_char_Some >right_midtape %
+          ]
+        | change with 
+            (mk_tape ? (reverse ? (bin_char ? c)@rev_bin_list ? ls)
+              (option_hd ? (bin_list ? rs)) (tail ? (bin_list ? rs)))
+          in ⊢ (??%?);
+          >reverse_bin_char_list <IH
+          >Ht >tape_bin_lift_unfold @eq_f3
+          whd in match (step ???); <Htrans cases rs //
+          #r0 #rs0 whd in match (ctape ???); >current_midtape >opt_bin_char_Some
+          [ <hd_tech in ⊢(???%); // @daemon 
+          | >right_midtape <tail_tech // @daemon ]
+        | whd in match (displ_of_move ? N); >iter_tape_move_L [|@daemon]
+          >Ht whd in match (step ???); <Htrans whd in match (ctape ???);
+          >tape_bin_lift_unfold >left_midtape >current_midtape >right_midtape
+          >opt_bin_char_Some lapply Hcrd >(?:FS_crd sig = |bin_char ? c|) [| @daemon ]
+          cases (bin_char ? c) // #H normalize in H; @False_ind
+          cases (not_le_Sn_O O) /2/
+        ]
+      ]
+         
+          
+         
 
 
 (*
