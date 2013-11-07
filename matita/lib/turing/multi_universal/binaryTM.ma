@@ -26,7 +26,9 @@ axiom index_of_FS : ∀F:FinSet.F → nat.
 (* unary bit representation (with a given length) of a certain number *)
 axiom unary_of_nat : nat → nat → (list bool).
 
-axiom FinVector : Type[0] → nat → FinSet.
+axiom lt_FS_index_crd : ∀sig,c.index_of_FS sig c < FS_crd sig.
+
+(* axiom FinVector : Type[0] → nat → FinSet.*)
 
 definition binary_base_states ≝ initN 6.
 
@@ -40,8 +42,6 @@ definition bin5 : binary_base_states ≝ mk_Sig ?? 5 (leb_true_to_le 6 6 (refl �
 definition states_binaryTM : FinSet → FinSet → FinSet ≝ λsig,states.
  FinProd (FinProd states binary_base_states) 
          (FinProd (FinOption sig) (initN (S (S (2 * (FS_crd sig)))))).
-
-axiom daemon : ∀T:Type[0].T.
 
 definition to_initN : ∀n,m.n < m → initN m ≝ λn,m,Hn.mk_Sig … n ….// qed.
 
@@ -154,6 +154,10 @@ definition mk_binaryTM ≝
 
 definition bin_char ≝ λsig,ch.unary_of_nat (FS_crd sig) (index_of_FS sig ch).
 
+axiom eq_length_bin_char_FS_crd : ∀sig,c.|bin_char sig c| = FS_crd sig.
+axiom bin_char_FS_nth : 
+  ∀sig,c,l1,b,l2.bin_char sig c = l1@b::l2 → b = (FS_nth sig (|l2|) == Some ? c).
+
 definition opt_bin_char ≝ λsig,c.match c with
 [ None ⇒ [ ] | Some c0 ⇒ bin_char sig c0 ].
 
@@ -226,6 +230,8 @@ qed.
 axiom binary_to_bin_char :∀sig,csl,csr,a.
   csl@true::csr=bin_char sig a → FS_nth ? (length ? csr) = Some ? a.
 
+axiom daemon : ∀P:Prop.P.
+
 lemma binaryTM_phase0_midtape_aux :
   ∀sig,M,q,ls,a,rs,k.
   halt sig M q=false → 
@@ -241,7 +247,7 @@ lemma binaryTM_phase0_midtape_aux :
         (mk_tape ? (reverse ? (bin_char ? a)@ls) (option_hd ? rs) (tail ? rs))). [2,3:@le_S /2 by O/]
 #sig #M #q #ls #a #rs #k #Hhalt #csr elim csr
 [ #csl #t #ch #Hlen #Ht >append_nil #Hcsl #Hlencsl #Hch >loopM_unfold >loop_S_false [|normalize //]
-  >Hch [| >Hlencsl (* lemmatize *) @daemon]
+  >Hch [| >Hlencsl // ]
   <loopM_unfold @eq_f >binaryTM_bin0_bin1 @eq_f >Ht 
   whd in match (step ???); whd in match (trans ???); <Hcsl %
 | #c cases c
@@ -289,6 +295,7 @@ lemma minus_tech : ∀a,b.a + b - a = b. // qed.
 
 lemma binaryTM_phase0_midtape :
   ∀sig,M,t,q,ls,a,rs,ch.
+  O < FS_crd sig → 
   halt sig M q=false → 
   t = mk_tape ? ls (option_hd ? (bin_char ? a)) (tail ? (bin_char sig a)@rs) →
   ∀k.S (FS_crd sig) ≤ k → 
@@ -297,16 +304,20 @@ lemma binaryTM_phase0_midtape :
   = loopM ? (mk_binaryTM sig M) (k - S (FS_crd sig))
       (mk_config ?? (〈q,bin1,Some ? a,FS_crd sig〉) 
         (mk_tape ? (reverse ? (bin_char ? a)@ls) (option_hd ? rs) (tail ? rs))). [|*:@le_S //]
-#sig #M #t #q #ls #a #rs #ch #Hhalt #Ht #k #Hk
+#sig #M #t #q #ls #a #rs #ch #Hcrd #Hhalt #Ht #k #Hk
 cases (le_to_eq … Hk) #k0 #Hk0 >Hk0 >(minus_tech (S (FS_crd sig)))
-cut (∃c,cl.bin_char sig a = c::cl) [@daemon] * #c * #cl #Ha >Ha
-cut (FS_crd sig = |bin_char sig a|) [@daemon] #Hlen
+cut (∃c,cl.bin_char sig a = c::cl) 
+[ lapply (refl ? (|bin_char ? a|)) >eq_length_bin_char_FS_crd in ⊢ (???%→?);
+  cases (bin_char ? a) normalize /3 by ex_intro/ #H
+  <H in Hcrd; -H #H cases (not_le_Sn_O O) #Hfalse cases (Hfalse H) ] 
+* #c * #cl #Ha >Ha
+cut (FS_crd sig = |bin_char sig a|) [/2 by plus_minus_m_m/] #Hlen
 @(trans_eq ?? (loopM ? (mk_binaryTM ? M) (S (|c::cl|) + k0)
    (mk_config ?? 〈q,bin0,〈ch,|c::cl|〉〉 t))) 
-[ /2 by O/ | @eq_f2 // @eq_f2 // @eq_f <Ha >Hlen % ]
+[ @le_S_S <Ha <Hlen // | @eq_f2 // @eq_f2 // @eq_f <Ha >Hlen % ]
 >(binaryTM_phase0_midtape_aux ? M q ls a rs ? ? (c::cl) [ ] t ch) //
 [| normalize #Hfalse @False_ind cases (not_le_Sn_O ?) /2/
-| <Ha (* |bin_char sig ?| = FS_crd sig *) @daemon
+| <Ha >Hlen %
 | >Ha %
 | >Ht >Ha % 
 | <Ha <Hlen // ]
@@ -499,7 +510,7 @@ cut (∀sig,M,q,ch,qn,chn,mv,ls,k,n.
   [ #csl #Hcount #Hcrd * #fs #Hfs >loopM_unfold >loop_S_false // <loopM_unfold 
     cut (fs = [ ]) 
     [ cases fs in Hfs; // #f0 #fs0 #H lapply (eq_f ?? (length ?) … H)
-      >length_append >(?:|bin_char sig chn| = FS_crd sig) [|@daemon]
+      >length_append >(?:|bin_char sig chn| = FS_crd sig) [|//]
       <Hcrd >length_reverse #H1 cut (O = |f0::fs0|) [ /2/ ]
       normalize #H1 destruct (H1) ]
     #H destruct (H) >append_nil in Hfs; #Hfs
@@ -518,11 +529,14 @@ cut (∀sig,M,q,ch,qn,chn,mv,ls,k,n.
     [| cases csl // cases ls // ]
     cases fs in Hfs;
     [ #Hfalse cut (|bin_char ? chn| = |csl|) [ >Hfalse >length_append >length_reverse // ]
-      -Hfalse >(?:|bin_char sig chn| = FS_crd sig) [|@daemon]
+      -Hfalse >(?:|bin_char sig chn| = FS_crd sig) [|//]
       <Hcrd in ⊢ (%→?); >(?:|csl| = |csl|+ O) in ⊢ (???%→?); //
       #Hfalse cut (S n0 = O) /2 by injective_plus_r/ #H destruct (H)
     | #f0 #fs0 #Hbinchar 
-      cut (bin_char ? chn = reverse ? csl@(FS_nth ? n0 == Some ? chn)::fs0) [@daemon]
+      cut (bin_char ? chn = reverse ? csl@(FS_nth ? n0 == Some ? chn)::fs0) 
+      [ >Hbinchar >(bin_char_FS_nth … Hbinchar) >(?:|fs0|=n0) //
+        <(eq_length_bin_char_FS_crd sig chn) in Hcrd; >Hbinchar
+        >length_append >length_reverse whd in ⊢ (???(??%)→?); /2 by injective_S/ ]
       -Hbinchar #Hbinchar >Hbinchar @(trans_eq ???? (IH …)) //
       [ %{fs0} >reverse_cons >associative_append @Hbinchar
       | whd in ⊢ (??%?); <Hcrd // ]
@@ -562,7 +576,7 @@ cut (∀sig,M,q,ch,qn,chn,mv,ls,rs,k,csr.
   [ #csl #Hcount #Hcrd * #fs #Hfs >loopM_unfold >loop_S_false // normalize in match (length ? [ ]);
     >(binaryTM_bin2_O … Htrans) <loopM_unfold @eq_f @eq_f @eq_f3 //
     cases fs in Hfs; // #f0 #fs0 #H lapply (eq_f ?? (length ?) … H)
-    >length_append >(?:|bin_char sig chn| = FS_crd sig) [|@daemon]
+    >length_append >(?:|bin_char sig chn| = FS_crd sig) [|//]
     <Hcrd >length_reverse #H1 cut (O = |f0::fs0|) [ /2/ ]
     normalize #H1 destruct (H1) 
   | #b0 #bs0 #IH #csl #Hcount #Hcrd * #fs #Hfs
@@ -575,11 +589,15 @@ cut (∀sig,M,q,ch,qn,chn,mv,ls,rs,k,csr.
     [ whd in Hcount:(?%?); /2 by lt_S_to_lt/
     | <Hcrd >length_append >length_append normalize //
     | cases fs in Hfs;
-      [ #Hfalse cut (|bin_char ? chn| = |csl|) [ >Hfalse >length_append >length_reverse // ]      -Hfalse >(?:|bin_char sig chn| = FS_crd sig) [|@daemon]
+      [ #Hfalse cut (|bin_char ? chn| = |csl|) [ >Hfalse >length_append >length_reverse // ]      -Hfalse >(?:|bin_char sig chn| = FS_crd sig) [|//]
         <Hcrd >length_append normalize >(?:|csl| = |csl|+ O) in ⊢ (???%→?); //
         #Hfalse cut (S (|bs0|) = O) /2 by injective_plus_r/ #H destruct (H)
       | #f0 #fs0 #Hbinchar 
-        cut (bin_char ? chn = reverse ? csl@(FS_nth ? (|bs0|) == Some ? chn)::fs0) [@daemon]
+        cut (bin_char ? chn = reverse ? csl@(FS_nth ? (|bs0|) == Some ? chn)::fs0) 
+        [ >Hbinchar >(bin_char_FS_nth … Hbinchar) >(?:|fs0|=|bs0|) //
+          <(eq_length_bin_char_FS_crd sig chn) in Hcrd; >Hbinchar
+          >length_append >length_append >length_reverse 
+          whd in ⊢ (??(??%)(??%)→?); /2 by injective_S/ ]
         -Hbinchar #Hbinchar >Hbinchar %{fs0} >reverse_cons >associative_append %
       ]
     ]
@@ -815,6 +833,19 @@ lemma iter_tape_move_L : ∀T,n,ls,cs,rs.|cs| = n →
 ]
 qed.
 
+lemma tape_move_niltape : 
+  ∀sig,mv.tape_move sig (niltape ?) mv = niltape ?. #sig * // qed.
+
+lemma iter_tape_move_niltape :
+  ∀sig,mv,n.iter … (λt.tape_move sig t mv) n (niltape ?) = niltape ?.
+#sig #mv #n elim n // -n #n #IH whd in ⊢ (??%?); >tape_move_niltape //
+qed.
+
+lemma tape_move_R_left :
+  ∀sig,rs.tape_move sig (mk_tape ? [ ] (None ?) rs) R = 
+  mk_tape ? [ ] (option_hd ? rs) (tail ? rs). #sig * //
+qed.
+
 axiom loop_increase : ∀sig,M,m,n,cfg,cfg'.m < n → 
   loopM sig M m cfg = Some ? cfg' → loopM sig M n cfg = Some ? cfg'.
 
@@ -859,27 +890,21 @@ lemma binaryTM_loop :
       [|cases t in Hcur;
         [4: #ls #c #rs normalize in ⊢ (%→?); #H destruct (H)
         | #_ whd in match (tape_bin_lift ??);
-          (* TODO *)
-          (* ∀mv.tape_move ? (niltape ?) mv = niltape ? *)
-          (* ∀n.iter ? (λt.tape_move ? t ?) n (niltape ?) = niltape ? *)
-          @daemon
+          >tape_move_niltape >iter_tape_move_niltape >tape_move_niltape %
         | #r0 #rs0 #_ cases mv
           [ >tape_bin_lift_unfold whd in match (mv_tech L); whd in match (displ2_of_move sig L);
             whd in match (rev_bin_list ??); whd in match (option_hd ??); 
             whd in match (right ??); >(?: []@bin_list ? (r0::rs0) = bin_char ? r0@bin_list ? rs0) [|%]
-            (* TODO *)
-            (* tape_move (mk_tape [ ] (None ?) rs R = ... *)
-            (* use iter_tape_move_R *)
-            @daemon
+            >tape_move_R_left >hd_tech [| >eq_length_bin_char_FS_crd // ] 
+            >tail_tech [| >eq_length_bin_char_FS_crd // ] 
+            >iter_tape_move_L_left //
           | >tape_bin_lift_unfold whd in match (mv_tech R); whd in match (displ2_of_move sig R);
             whd in match (rev_bin_list ??); whd in match (option_hd ??); 
             whd in match (right ??); >(?: []@bin_list ? (r0::rs0) = bin_char ? r0@bin_list ? rs0) [|%]
             whd in match (tape_move ? (leftof ???) R);
             >tape_bin_lift_unfold >left_midtape >opt_bin_char_Some >right_midtape
-            >iter_O
-            (* TODO *)
-            (* tape_move (mk_tape [ ] (None ?) rs R = ... *)
-            @daemon
+            >iter_O >tape_move_R_left >hd_tech [| >eq_length_bin_char_FS_crd // ] 
+            >tail_tech [| >eq_length_bin_char_FS_crd // ] //
           | >tape_bin_lift_unfold % ]
         | #l0 #ls0 #_ cases mv
           [ >tape_bin_lift_unfold whd in match (mv_tech L); whd in match (displ2_of_move sig L);
@@ -887,10 +912,12 @@ lemma binaryTM_loop :
             whd in match (left ??); whd in match (tail ??);
             whd in match (tape_move ? (rightof ???) L);
             >(?: rev_bin_list ? (l0::ls0) = reverse ? (bin_char ? l0)@rev_bin_list ? ls0) [|%]
-            (* TODO *)
-            (* tape_move (mk_tape ls (None ?) [ ] R = ... *)
-            (* use iter_tape_move_L *)
-            @daemon
+            >(?:tape_move ? (mk_tape ? ? (None ?) [ ]) R = 
+                 mk_tape ? (reverse ? (bin_char ? l0)@rev_bin_list ? ls0) (None ?) [ ])
+            [| cases (reverse ? (bin_char ? l0)@rev_bin_list ? ls0) //]
+            >(?:None ? = option_hd ? [ ]) // >iter_tape_move_L [|@eq_length_bin_char_FS_crd]
+            >append_nil >tape_bin_lift_unfold >left_midtape >current_midtape >right_midtape
+            >opt_bin_char_Some >append_nil %
           | >tape_bin_lift_unfold whd in match (mv_tech R); whd in match (displ2_of_move sig R);
             whd in match (bin_list ??); >append_nil whd in match (option_hd ??); 
             whd in match (left ??); whd in match (tail ??); >iter_O cases (rev_bin_list ??) //
@@ -904,7 +931,10 @@ lemma binaryTM_loop :
       lapply (binaryTM_phase0_None_Some … (None ?) (FS_crd sig) … Hhalt Hcur' Htrans) // [/2 by monotonic_lt_plus_l/]
       cases t in Hcur;
       [ 4: #ls #c #rs normalize in ⊢ (%→?); #H destruct (H)
-      | 2: #r0 #rs0 #_ cut (∃b,bs.bin_char ? r0 = b::bs) [ @daemon ] * #b * #bs #Hbs 
+      | 2: #r0 #rs0 #_ cut (∃b,bs.bin_char ? r0 = b::bs)
+        [ <(eq_length_bin_char_FS_crd sig r0) in Hcrd; cases (bin_char ? r0) 
+          [ cases (not_le_Sn_O O) #H #H1 cases (H H1) |/3 by ex_intro/] ]
+        * #b * #bs #Hbs 
         lapply (binaryTM_phase4_extend ???? (tape_move ? (tape_bin_lift ? (leftof ? r0 rs0)) R) b … Htrans)
         [ >tape_bin_lift_unfold whd in match (option_hd ??); whd in match (tail ??);
           whd in match (right ??);
@@ -927,14 +957,16 @@ lemma binaryTM_loop :
           [ @eq_f @eq_f
             >tape_bin_lift_unfold whd in match (rev_bin_list ??);
             whd in match (right ??); whd in match (bin_list ??);
-            cases (bin_char ? r0) // (* bin_char can't be nil *) @daemon
+            <(eq_length_bin_char_FS_crd sig r0) in Hcrd; cases (bin_char ? r0) //
+            cases (not_le_Sn_O O) #H #H1 cases (H H1)
           | @le_S_S >associative_plus >associative_plus >commutative_plus @(le_plus O) //
           |]]
-        >phase2 [| (*arith*) @daemon ]
-        >phase3 [| (*arith*) @daemon ]
+        >phase2 
+        [|<plus_minus [|//] <plus_minus [|//] <plus_minus [|//] // ]
+        >phase3 [|<plus_minus [|//] <plus_minus [|//] // ]
         >(?: 1+1+S (FS_crd sig)+S (FS_crd sig)+S (displ_of_move sig mv)+k0-1-1
               -S (FS_crd sig)-S (FS_crd sig) -S (displ_of_move sig mv) = k0) 
-        [| (*arith*) @daemon ]
+        [|<plus_minus [|//] <plus_minus [|//] // ]
         -phase0 -phase2 -phase3 -phase4 -phase5 <state_bin_lift_unfold
         >(?: iter ? (λt0.tape_move ? t0 L) (displ_of_move sig mv)
               (mk_tape ? (reverse ? (bin_char sig chn)@[])
@@ -947,17 +979,20 @@ lemma binaryTM_loop :
         | >(?:bin_list ? (r0::rs0) = bin_char ? r0@bin_list ? rs0) [|%] 
           cases mv
           [ >(?:displ_of_move sig L = FS_crd sig+FS_crd sig) [|normalize //]
-            >iter_split >iter_tape_move_L [| @daemon ]
-            >hd_tech [|@daemon] >tail_tech [|@daemon] >iter_tape_move_L_left [|//]
+            >iter_split >iter_tape_move_L [|@eq_length_bin_char_FS_crd]
+            >hd_tech [|>eq_length_bin_char_FS_crd // ]
+            >tail_tech [|>eq_length_bin_char_FS_crd // ] >iter_tape_move_L_left [|//]
             whd in match (tape_move ???); >tape_bin_lift_unfold %
           | normalize in match (displ_of_move ??); >iter_O
             normalize in match (tape_move ???); 
             >tape_bin_lift_unfold >opt_bin_char_Some
-            >hd_tech [|@daemon] >tail_tech [| @daemon ] %
+            >hd_tech [|>eq_length_bin_char_FS_crd // ] 
+            >tail_tech [| >eq_length_bin_char_FS_crd // ] %
           | normalize in match (displ_of_move ??);
-            >iter_tape_move_L [|@daemon]
+            >iter_tape_move_L [|>eq_length_bin_char_FS_crd // ]
             normalize in match (tape_move ???); >tape_bin_lift_unfold
-            >opt_bin_char_Some >hd_tech [|@daemon] >tail_tech [|@daemon] % ]
+            >opt_bin_char_Some >hd_tech [|>eq_length_bin_char_FS_crd // ]
+            >tail_tech [|>eq_length_bin_char_FS_crd // ] % ]
         ]
       | #_ lapply (binaryTM_phase4_write ? M q (None ?) (niltape ?) (refl ??))
         lapply (binaryTM_phase2_Some_of ?? q (None ?) … [ ] Htrans)
@@ -969,11 +1004,11 @@ lemma binaryTM_loop :
         [ @le_S_S @(le_plus O) // ]
         >state_bin_lift_unfold >phase0 [|//]
         >phase4 [|//]
-        >phase2 [|(*arith *) @daemon]
-        >phase3 [| (*arith*) @daemon ]
+        >phase2 [| <plus_minus [|//] // ]
+        >phase3 [| <plus_minus [|//] <plus_minus [|//] // ]
         >(?: 1+1+S (FS_crd sig) + S (displ_of_move sig mv)+k0-1-1
               -S (FS_crd sig)-S (displ_of_move sig mv) = k0) 
-        [| (*arith*) @daemon ]
+        [| <plus_minus [|//] <plus_minus [|//] // ]
         -phase0 -phase2 -phase3 -phase4 <state_bin_lift_unfold
         >(?: iter ? (λt0.tape_move ? t0 L) (displ_of_move sig mv)
               (mk_tape ? (reverse ? (bin_char sig chn)@[]) (None ?) [ ])
@@ -984,8 +1019,9 @@ lemma binaryTM_loop :
         | cases mv
           [ >(?:displ_of_move sig L = FS_crd sig+FS_crd sig) [|normalize //]
             >iter_split change with (mk_tape ?? (option_hd ? [ ]) (tail ? [ ])) in ⊢ (??(????(????%))?);
-            >iter_tape_move_L [| @daemon ]
-            >append_nil in ⊢ (??(????(???%?))?); >tail_tech [|@daemon] 
+            >iter_tape_move_L [| >eq_length_bin_char_FS_crd // ]
+            >append_nil in ⊢ (??(????(???%?))?); 
+            >tail_tech [| >eq_length_bin_char_FS_crd // ] 
             >iter_tape_move_L_left [|//]
             normalize in match (tape_move ???);
             >tape_bin_lift_unfold %
@@ -994,9 +1030,10 @@ lemma binaryTM_loop :
             >tape_bin_lift_unfold %
           | normalize in match (displ_of_move ??);
             change with (mk_tape ?? (option_hd ? [ ]) (tail ? [ ])) in ⊢ (??(????%)?);
-            >iter_tape_move_L [|@daemon]
+            >iter_tape_move_L [|>eq_length_bin_char_FS_crd // ]
             normalize in match (tape_move ???); >tape_bin_lift_unfold
-            >opt_bin_char_Some >hd_tech [|@daemon] >tail_tech [|@daemon] % ]
+            >opt_bin_char_Some >hd_tech [|>eq_length_bin_char_FS_crd // ]
+            >tail_tech [|>eq_length_bin_char_FS_crd // ] % ]
         ]
       | #l0 #ls0 #_ lapply (binaryTM_phase4_write ? M q (None ?) (tape_bin_lift ? (rightof ? l0 ls0)) ?) 
         [ >tape_bin_lift_unfold >current_mk_tape % ]
@@ -1014,11 +1051,11 @@ lemma binaryTM_loop :
            >(?:rev_bin_list ? (l0::ls0) = reverse ? (bin_char ? l0)@rev_bin_list ? ls0) [|%]
            cases (reverse ? (bin_char ? l0)) // cases (rev_bin_list ? ls0) // ]
         >phase4 [|//]
-        >phase2 [|(*arith *) @daemon]
-        >phase3 [| (*arith*) @daemon]
+        >phase2 [|<plus_minus [|//] // ]
+        >phase3 [|<plus_minus [|//] <plus_minus [|//] // ]
         >(?: 1+1+S (FS_crd sig) + S (displ_of_move sig mv)+k0-1-1
               -S (FS_crd sig)-S (displ_of_move sig mv) = k0) 
-        [| (*arith*) @daemon ]
+        [| <plus_minus [|//] <plus_minus [|//] // ]
         -phase0 -phase2 -phase3 -phase4 <state_bin_lift_unfold
         >(?: iter ? (λt0.tape_move ? t0 L) (displ_of_move sig mv)
               (mk_tape ? (reverse ? (bin_char sig chn)@rev_bin_list ? (l0::ls0)) (None ?) [ ])
@@ -1029,22 +1066,24 @@ lemma binaryTM_loop :
         | cases mv
           [ >(?:displ_of_move sig L = FS_crd sig+FS_crd sig) [|normalize //]
             >iter_split change with (mk_tape ?? (option_hd ? [ ]) (tail ? [ ])) in ⊢ (??(????(????%))?);
-            >iter_tape_move_L [| @daemon ]
-            >append_nil in ⊢ (??(????(???%?))?); >tail_tech [|@daemon] 
+            >iter_tape_move_L [|>eq_length_bin_char_FS_crd // ]
+            >append_nil in ⊢ (??(????(???%?))?); >tail_tech [|>eq_length_bin_char_FS_crd // ] 
             >(?:rev_bin_list ? (l0::ls0) = reverse ? (bin_char ? l0)@rev_bin_list ? ls0) [|%]
-            >append_nil >iter_tape_move_L [|@daemon]
+            >append_nil >iter_tape_move_L [|>eq_length_bin_char_FS_crd // ]
             normalize in match (tape_move ???);
             >tape_bin_lift_unfold @eq_f2
-            [ >hd_tech [|@daemon] %
-            | >tail_tech [|@daemon] >opt_bin_char_Some normalize in match (bin_list ??); >append_nil %]
+            [ >hd_tech [|>eq_length_bin_char_FS_crd // ] %
+            | >tail_tech [|>eq_length_bin_char_FS_crd // ] >opt_bin_char_Some 
+              normalize in match (bin_list ??); >append_nil %]
           | normalize in match (displ_of_move ??); >iter_O
             normalize in match (tape_move ???); 
             >tape_bin_lift_unfold %
           | normalize in match (displ_of_move ??);
             change with (mk_tape ?? (option_hd ? [ ]) (tail ? [ ])) in ⊢ (??(????%)?);
-            >iter_tape_move_L [|@daemon]
+            >iter_tape_move_L [|>eq_length_bin_char_FS_crd // ]
             normalize in match (tape_move ???); >tape_bin_lift_unfold
-            >opt_bin_char_Some >hd_tech [|@daemon] >tail_tech [|@daemon] % ]
+            >opt_bin_char_Some >hd_tech [|>eq_length_bin_char_FS_crd // ]
+            >tail_tech [|>eq_length_bin_char_FS_crd // ] % ]
         ]
       ]
     ]
@@ -1055,10 +1094,11 @@ lemma binaryTM_loop :
     * #qn * #chn * #mv #Htrans
     cut (tape_bin_lift ? t = ?) [| >tape_bin_lift_unfold % ] 
     >Ht in ⊢ (???%→?); >opt_bin_char_Some >left_midtape >right_midtape #Ht'
-    lapply (binaryTM_phase0_midtape ?? (tape_bin_lift ? t) q … (None ?) Hhalt Ht')
+    lapply (binaryTM_phase0_midtape ?? (tape_bin_lift ? t) q … (None ?) Hcrd Hhalt Ht')
     lapply (binaryTM_phase1 ?? q (reverse ? (bin_char ? c)) (rev_bin_list ? ls) 
              (option_hd ? (bin_list ? rs)) (tail ? (bin_list ? rs)) (Some ? c) ??)
-    [ cases (bin_list ? rs) // @daemon | >length_reverse @daemon |]
+    [ cases (bin_list ? rs) // #r0 #rs0 normalize in ⊢ (%→?); #H destruct (H)
+    | >length_reverse >eq_length_bin_char_FS_crd // |]
     >opt_cons_hd_tl >reverse_reverse
     cases chn in Htrans; -chn
     [ #Htrans 
@@ -1076,12 +1116,12 @@ lemma binaryTM_loop :
       >state_bin_lift_unfold <Ht >phase0 [|//]
       >phase1 [|/2 by monotonic_le_minus_l/]
       >phase2 [|/2 by monotonic_le_minus_l/]
-      >iter_tape_move_R [|@daemon]
+      >iter_tape_move_R [|>eq_length_bin_char_FS_crd // ]
       >phase3 [|/2 by monotonic_le_minus_l/]
       -phase0 -phase1 -phase2 -phase3
       >(?: S (FS_crd sig) + S (FS_crd sig) + S (FS_crd sig) + S (displ_of_move sig mv) + k0
            - S (FS_crd sig) - S (FS_crd sig) - S (FS_crd sig) - S (displ_of_move sig mv)
-         = k0) [| (*arith*) @daemon]
+         = k0) [| <plus_minus [|//] <plus_minus [|//] <plus_minus [|//] // ]
       <state_bin_lift_unfold
       >(?: iter ? (λt0.tape_move ? t0 L) (displ_of_move sig mv)
             (mk_tape ? (reverse ? (bin_char sig c)@rev_bin_list ? ls) 
@@ -1092,14 +1132,17 @@ lemma binaryTM_loop :
         | @IHNone <Hloop @eq_f whd in ⊢ (???%); >Ht <Htrans % ]
       | normalize in match (tape_write ???); cases mv in Htrans; #Htrans
         [ >(?:displ_of_move sig L = FS_crd sig+FS_crd sig) [|normalize //]
-          >iter_split >iter_tape_move_L [| @daemon ]
+          >iter_split >iter_tape_move_L [| >eq_length_bin_char_FS_crd // ]
           cases ls
-          [ >hd_tech [|@daemon] >tail_tech [|@daemon] >iter_tape_move_L_left [|//]
+          [ >hd_tech [|>eq_length_bin_char_FS_crd // ] 
+            >tail_tech [|>eq_length_bin_char_FS_crd // ] 
+            >iter_tape_move_L_left [|//]
             >tape_bin_lift_unfold %
           | #l0 #ls0 >(?:rev_bin_list ? (l0::ls0) = reverse ? (bin_char ? l0)@rev_bin_list ? ls0) [|%]
             normalize in match (tape_move ???);
-            >iter_tape_move_L [|@daemon]
-            >hd_tech [|@daemon] >tail_tech [|@daemon]
+            >iter_tape_move_L [|>eq_length_bin_char_FS_crd // ]
+            >hd_tech [|>eq_length_bin_char_FS_crd // ]
+            >tail_tech [|>eq_length_bin_char_FS_crd // ]
             >tape_bin_lift_unfold % ]
         | normalize in match (displ_of_move ??); >iter_O cases rs
           [ normalize in match (tape_move ???); >tape_bin_lift_unfold %
@@ -1107,15 +1150,18 @@ lemma binaryTM_loop :
             >tape_bin_lift_unfold >opt_bin_char_Some
             >left_midtape >right_midtape
             >(?:bin_list ? (r0::rs0) = bin_char ? r0@bin_list ? rs0) [|%]
-            >hd_tech [|@daemon] >tail_tech [|@daemon] %
+            >hd_tech [|>eq_length_bin_char_FS_crd // ]
+            >tail_tech [|>eq_length_bin_char_FS_crd // ] %
           ]
-        | normalize in match (displ_of_move ??); >iter_tape_move_L [|@daemon]
-          >hd_tech [|@daemon] >tail_tech [|@daemon] >tape_bin_lift_unfold %
+        | normalize in match (displ_of_move ??); >iter_tape_move_L 
+          [|>eq_length_bin_char_FS_crd // ]
+          >hd_tech [|>eq_length_bin_char_FS_crd // ]
+          >tail_tech [|>eq_length_bin_char_FS_crd // ] >tape_bin_lift_unfold %
         ]
       ]
     | #chn #Htrans 
       lapply (binaryTM_phase2_Some_ow ?? q (Some ? c) ??? (rev_bin_list ? ls) (bin_char ? c) (bin_list ? rs) Htrans ?)
-      [@daemon]
+      [>eq_length_bin_char_FS_crd // ]
       lapply (binaryTM_phase3 ? M qn (Some ? c) (displ_of_move sig mv) ? 
                (mk_tape FinBool (reverse bool (bin_char sig chn)@rev_bin_list ? ls)
                (option_hd FinBool (bin_list sig rs)) (tail FinBool (bin_list sig rs)))) [//]
@@ -1130,7 +1176,8 @@ lemma binaryTM_loop :
       -phase0 -phase1 -phase2 -phase3
       >(?: S (FS_crd sig) + S (FS_crd sig) + S (FS_crd sig) + S (displ_of_move sig mv) + k0
            - S (FS_crd sig) - S (FS_crd sig) - S (FS_crd sig) - S (displ_of_move sig mv)
-         = k0) [| (*arith*) @daemon]
+         = k0) 
+      [| <plus_minus [|//] <plus_minus [|//] <plus_minus [|//] // ]
       <state_bin_lift_unfold
       >(?: iter ? (λt0.tape_move ? t0 L) (displ_of_move sig mv)
             (mk_tape ? (reverse ? (bin_char sig chn)@rev_bin_list ? ls) 
@@ -1141,14 +1188,16 @@ lemma binaryTM_loop :
         | @IHNone <Hloop @eq_f whd in ⊢ (???%); >Ht <Htrans % ]
       | normalize in match (tape_write ???); cases mv in Htrans; #Htrans
         [ >(?:displ_of_move sig L = FS_crd sig+FS_crd sig) [|normalize //]
-          >iter_split >iter_tape_move_L [| @daemon ]
+          >iter_split >iter_tape_move_L [|>eq_length_bin_char_FS_crd // ]
           cases ls
-          [ >hd_tech [|@daemon] >tail_tech [|@daemon] >iter_tape_move_L_left [|//]
+          [ >hd_tech [|>eq_length_bin_char_FS_crd // ]
+            >tail_tech [|>eq_length_bin_char_FS_crd // ] >iter_tape_move_L_left [|//]
             >tape_bin_lift_unfold %
           | #l0 #ls0 >(?:rev_bin_list ? (l0::ls0) = reverse ? (bin_char ? l0)@rev_bin_list ? ls0) [|%]
             normalize in match (tape_move ???);
-            >iter_tape_move_L [|@daemon]
-            >hd_tech [|@daemon] >tail_tech [|@daemon]
+            >iter_tape_move_L [|>eq_length_bin_char_FS_crd // ]
+            >hd_tech [|>eq_length_bin_char_FS_crd // ]
+            >tail_tech [|>eq_length_bin_char_FS_crd // ]
             >tape_bin_lift_unfold % ]
         | normalize in match (displ_of_move ??); >iter_O cases rs
           [ normalize in match (tape_move ???); >tape_bin_lift_unfold %
@@ -1156,10 +1205,12 @@ lemma binaryTM_loop :
             >tape_bin_lift_unfold >opt_bin_char_Some
             >left_midtape >right_midtape
             >(?:bin_list ? (r0::rs0) = bin_char ? r0@bin_list ? rs0) [|%]
-            >hd_tech [|@daemon] >tail_tech [|@daemon] %
+            >hd_tech [|>eq_length_bin_char_FS_crd // ]
+            >tail_tech [|>eq_length_bin_char_FS_crd // ] %
           ]
-        | normalize in match (displ_of_move ??); >iter_tape_move_L [|@daemon]
-          >hd_tech [|@daemon] >tail_tech [|@daemon] >tape_bin_lift_unfold %
+        | normalize in match (displ_of_move ??); >iter_tape_move_L [|>eq_length_bin_char_FS_crd // ]
+          >hd_tech [|>eq_length_bin_char_FS_crd // ]
+          >tail_tech [|>eq_length_bin_char_FS_crd // ] >tape_bin_lift_unfold %
         ]
       ]
     ]
