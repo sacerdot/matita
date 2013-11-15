@@ -14,19 +14,194 @@
 
 include "turing/mono.ma".
 
+lemma le_to_eq : ∀m,n.m ≤ n → ∃k. n = m + k. /3 by plus_minus, ex_intro/
+qed.
+
+lemma minus_tech : ∀a,b.a + b - a = b. // qed.
+
+lemma loop_incr2 : ∀sig,M,m,n,cfg,cfg'.m ≤ n → 
+  loopM sig M m cfg = Some ? cfg' → loopM sig M n cfg = Some ? cfg'.
+#sig #M #m #n #cfg #cfg' #H cases (le_to_eq … H) #k #Hk >Hk 
+>commutative_plus @loop_incr
+qed.
+
 (* given a FinSet F:
    - get its cardinality
    - return its nth element
    - return the index of a given element
  *)
-axiom FS_crd : FinSet → nat.
-axiom FS_nth : ∀F:FinSet.nat → option F.
-axiom index_of_FS : ∀F:FinSet.F → nat.
+definition FS_crd ≝ λF:FinSet.|enum F|.
+definition FS_nth ≝ λF:FinSet.λn.nth_opt ? n (enum F).
+definition index_of_FS_aux ≝ λF:FinSet.λf.position_of ? (λx.x==f) (enum F).
+
+lemma index_of_FS_aux_None : 
+  ∀F,f.index_of_FS_aux F f = None ? → False.
+#F #f #e cut (memb ? f (enum F) = false) 
+[ generalize in match e; -e normalize in ⊢ (%→?); generalize in match O;
+  elim (enum F) //
+  #hd #tl #IH #n whd in ⊢ (??%?→?); cases (true_or_false (hd==f)) 
+  #Hbool >Hbool normalize
+  [ #H destruct (H)
+  | #H >(\bf ?) [| @sym_not_eq @(\Pf Hbool) ] @IH // ]
+| >enum_complete #H destruct (H) ]
+qed.
+
+definition index_of_FS : ∀F:FinSet.F → nat ≝ λF,f.
+match index_of_FS_aux F f 
+return (λx:option nat.index_of_FS_aux F f = x → nat) with 
+[ None ⇒ λe.?
+| Some n ⇒ λe.n ] (refl ??).cases (index_of_FS_aux_None … e)
+qed.
 
 (* unary bit representation (with a given length) of a certain number *)
-axiom unary_of_nat : nat → nat → (list bool).
+let rec unary_of_nat n k on n ≝ 
+  match n with [ O ⇒ [ ] | S q ⇒ (eqb q k)::unary_of_nat q k].
 
-axiom lt_FS_index_crd : ∀sig,c.index_of_FS sig c < FS_crd sig.
+lemma lt_FS_index_crd_aux : ∀sig,c,n.index_of_FS_aux sig c = Some ? n → n < FS_crd sig.
+#sig #c #n whd in ⊢ (??%?→?); >(?:FS_crd sig = O + FS_crd sig) //
+generalize in match O; normalize in match (FS_crd sig); elim (enum sig)
+normalize [ #n0 #H destruct (H) ]
+#hd #tl #IH #n0 cases (hd==c) normalize
+[ #H destruct (H) //
+| #H lapply (IH ? H) // ]
+qed.
+
+lemma index_of_FS_def : ∀sig,c,n.index_of_FS sig c = n → index_of_FS_aux sig c = Some ? n.
+#sig #c #n whd in ⊢ (??%?→?); lapply (refl ? (index_of_FS_aux sig c))
+cases (index_of_FS_aux sig c) in ⊢ (???%→??(match % return ? with [ _ ⇒ ? | _ ⇒ ? ] ?)?→%);
+[ #e cases (index_of_FS_aux_None ?? e)
+| normalize // ]
+qed.
+
+lemma index_of_FS_def2 : ∀sig,c.index_of_FS_aux sig c = Some ? (index_of_FS sig c)./2/
+qed.
+
+lemma lt_FS_index_crd: ∀sig,c.index_of_FS sig c < FS_crd sig.
+#sig #c @(lt_FS_index_crd_aux sig c ? (index_of_FS_def2 …))
+qed.
+
+lemma le_position_of_aux : ∀T,f,l,k,n.position_of_aux T f l k = Some ? n → k ≤ n.
+#T #f #l elim l normalize
+[ #k #n #H destruct (H)
+| #hd #tl #IH #k #n cases (f hd) normalize
+  [ #H destruct (H) %
+  | #H lapply (IH … H) /2 by lt_to_le/ ]
+]
+qed.
+
+lemma nth_index_of_FS_aux : 
+∀sig,a,n.index_of_FS_aux sig a = Some ? n → FS_nth sig n = Some ? a.
+#sig #a #n normalize >(?:n = O + n) in ⊢ (%→?); //
+lapply O lapply n -n elim (enum sig) normalize
+[ #n #k #H destruct (H)
+| #hd #tl #IH #n #k cases (true_or_false (hd==a)) #Ha >Ha normalize
+  [ #H destruct (H) >(?:n = O) // >(\P Ha) //
+  | cases n
+    [ <plus_n_O #H @False_ind lapply (le_position_of_aux … H) #H1
+      cases (not_le_Sn_n k) /2/
+    | #n0 #Hrec @(IH ? (S k)) >Hrec /2 by eq_f/ ]
+  ]
+]
+qed.
+
+lemma nth_index_of_FS : ∀sig,a.FS_nth sig (index_of_FS ? a) = Some ? a.
+#sig #a @nth_index_of_FS_aux >index_of_FS_def2 %
+qed.
+
+definition bin_char ≝ λsig,ch.unary_of_nat (FS_crd sig) (index_of_FS sig ch).
+
+definition opt_bin_char ≝ λsig,c.match c with
+[ None ⇒ [ ] | Some c0 ⇒ bin_char sig c0 ].
+
+lemma eq_length_bin_char_FS_crd : ∀sig,c.|bin_char sig c| = FS_crd sig.
+#sig #c whd in ⊢ (??(??%)?); elim (FS_crd sig) //
+#n #IH <IH in ⊢ (???%); %
+qed.
+
+lemma bin_char_FS_nth_tech : 
+  ∀sig,c,l1,b,l2.bin_char sig c = l1@b::l2 → b = (((|l2|):DeqNat) == index_of_FS sig c).
+#sig #c #l1 #b #l2 #Hbin lapply (eq_length_bin_char_FS_crd sig c)
+>Hbin #Hlen lapply Hbin lapply Hlen -Hlen -Hbin  
+whd in match (bin_char ??); lapply l2 lapply c lapply l1 -l2 -c -l1 
+elim (FS_crd sig)
+[ #l1 #b #l2 normalize in ⊢ (??%?→?); cases l1 
+  [ normalize #H destruct (H) | #hd #tl normalize #H destruct (H) ]
+| #n #IH #l1 #b #l2 whd in ⊢ (?→??%?→?); cases l1
+  [ whd in ⊢ (??%?→???%→?); #Hlen destruct (Hlen) 
+    #H <(cons_injective_l ????? H) @eq_f2 //
+  | #b0 #l10 #Hlen #H lapply (cons_injective_r ????? H) -H #H @(IH … H)
+    normalize in Hlen; destruct (Hlen) % ]
+]
+qed.
+
+lemma nth_opt_memb : ∀T:DeqSet.∀l,n,t.nth_opt T n l = Some ? t → memb T t l = true.
+#T #l elim l normalize [ #n #t #H destruct (H) ]
+#hd #tl #IH #n #t cases n normalize
+[ #Ht destruct (Ht) >(\b (refl ? t)) %
+| #n0 #Ht cases (t==hd) // @(IH … Ht) ]
+qed.
+
+lemma FS_nth_neq : 
+∀sig,m,n. m ≠ n → 
+∀s1,s2.FS_nth sig m = Some ? s1 → FS_nth sig n = Some ? s2 → s1 ≠ s2.
+#sig #m #n #Hneq #s1 #s2 lapply (enum_unique sig) lapply Hneq
+lapply n lapply m -n -m normalize elim (enum sig)
+[ #m #n #_ #_ normalize #H destruct (H)
+| #hd #tl #IH #m #n #Hneq whd in ⊢ (??%?→?);
+  cases (true_or_false (hd ∈ tl)) #Hbool >Hbool normalize in ⊢ (%→?);
+  [ #H destruct (H)
+  | #H cases m in Hneq;
+    [ #Hneq whd in ⊢ (??%?→?); #H1 destruct (H1) cases n in Hneq;
+      [ * #H cases (H (refl ??))
+      | #n0 #_ whd in ⊢ (??%?→?); #Htl % #Heq destruct (Heq)
+        >(nth_opt_memb … Htl) in Hbool; #Hfalse destruct (Hfalse)
+      ]
+    | #m0 #Hneq whd in ⊢ (??%?→?); #H1
+      whd in ⊢ (??%?→?); cases n in Hneq;
+      [ #_ whd in ⊢ (??%?→?); #H2 destruct (H2) % #Heq destruct (Heq)
+        >(nth_opt_memb … H1) in Hbool; #Hfalse destruct (Hfalse)
+      | #n0 #Hneq whd in ⊢ (??%?→?); @(IH m0 n0 ? H … H1)
+        % #Heq cases Hneq /2/
+      ]
+    ]
+  ]
+]
+qed.
+
+lemma nth_opt_Some : ∀T,l,n.n < |l| → ∃t.nth_opt T n l = Some ? t.
+#T #l elim l
+[ normalize #n #H @False_ind cases (not_le_Sn_O n) /2/
+| #hd #tl #IH #n normalize cases n
+  [ #_ %{hd} //
+  | #n0 #Hlt cases (IH n0 ?) [| @le_S_S_to_le // ]
+    #t #Ht normalize %{t} // ]
+]
+qed.
+
+corollary FS_nth_Some : ∀sig,n.n < FS_crd sig → ∃s.FS_nth sig n = Some ? s.
+#sig #n @nth_opt_Some
+qed.
+
+lemma bin_char_FS_nth : 
+  ∀sig,c,l1,b,l2.bin_char sig c = l1@b::l2 → b = (FS_nth sig (|l2|) == Some ? c).
+#sig #c #l1 #b #l2 #H >(bin_char_FS_nth_tech … H)
+cases (true_or_false (((|l2|):DeqNat)==index_of_FS sig c)) #Hbool >Hbool
+[ >(?:(|l2|)=index_of_FS sig c) [|change with ((|l2|):DeqNat) in ⊢ (??%?); @(\P Hbool) ]
+  @sym_eq @(\b ?) @nth_index_of_FS
+| <nth_index_of_FS @sym_eq @(\bf ?) % #Hfalse
+  cases (FS_nth_Some sig (|l2|) ?) [| <(eq_length_bin_char_FS_crd sig c) >H >length_append normalize // ]
+  #s1 #H1
+  cases (FS_nth_Some sig (index_of_FS sig c) ?) [|//]
+  #s2 #H2
+  cases (FS_nth_neq … H1 H2) [| @(\Pf Hbool) ]
+  #Hfalse2 @Hfalse2 <Hfalse in H2; >H1 #HSome destruct (HSome) %
+]
+qed.
+
+corollary binary_to_bin_char :∀sig,csl,csr,a.
+  csl@true::csr=bin_char sig a → FS_nth ? (length ? csr) = Some ? a.
+#sig #csl #csr #a #H @(\P ?) @sym_eq @bin_char_FS_nth //
+qed.
 
 (* axiom FinVector : Type[0] → nat → FinSet.*)
 
@@ -152,15 +327,6 @@ definition mk_binaryTM ≝
     (〈start sig M,bin0,None ?,FS_crd sig〉) (halt_binaryTM sig M). 
 /2 by lt_S_to_lt/ qed.
 
-definition bin_char ≝ λsig,ch.unary_of_nat (FS_crd sig) (index_of_FS sig ch).
-
-axiom eq_length_bin_char_FS_crd : ∀sig,c.|bin_char sig c| = FS_crd sig.
-axiom bin_char_FS_nth : 
-  ∀sig,c,l1,b,l2.bin_char sig c = l1@b::l2 → b = (FS_nth sig (|l2|) == Some ? c).
-
-definition opt_bin_char ≝ λsig,c.match c with
-[ None ⇒ [ ] | Some c0 ⇒ bin_char sig c0 ].
-
 definition bin_list ≝ λsig,l.flatten ? (map ?? (bin_char sig) l).
 definition rev_bin_list ≝ λsig,l.flatten ? (map ?? (λc.reverse ? (bin_char sig c)) l).
 
@@ -226,12 +392,6 @@ whd in match (step ???); whd in match (trans ???);
 >Hcur %
 qed.
 
-(* to be checked *)
-axiom binary_to_bin_char :∀sig,csl,csr,a.
-  csl@true::csr=bin_char sig a → FS_nth ? (length ? csr) = Some ? a.
-
-axiom daemon : ∀P:Prop.P.
-
 lemma binaryTM_phase0_midtape_aux :
   ∀sig,M,q,ls,a,rs,k.
   halt sig M q=false → 
@@ -239,7 +399,7 @@ lemma binaryTM_phase0_midtape_aux :
   t = mk_tape ? (reverse ? csl@ls) (option_hd ? (csr@rs)) (tail ? (csr@rs)) → 
   csl@csr = bin_char sig a → 
   |csl@csr| = FS_crd sig → 
-  (index_of_FS ? a < |csl| → ch = Some ? a) → 
+  (|csr| ≤ index_of_FS ? a → ch = Some ? a) → 
   loopM ? (mk_binaryTM sig M) (S (length ? csr) + k)
     (mk_config ?? (〈q,bin0,ch,length ? csr〉) t) 
   = loopM ? (mk_binaryTM sig M) k 
@@ -266,13 +426,14 @@ lemma binaryTM_phase0_midtape_aux :
       | #c1 #csr1 normalize >rev_append_def >rev_append_def >reverse_append % ]
     | /2 by lt_S_to_lt/
     |]
-    #H whd in match (plus ??); >H @eq_f @eq_f2 %
+    #H whd in match (plus ??); >Ha >H @eq_f @eq_f2 %
   | #csr0 #IH #csl #t #ch #Hlen #Ht #Heq #Hcrd #Hch >loopM_unfold >loop_S_false [|normalize //]
     <loopM_unfold >binaryTM_bin0_false [| >Ht % ]
     lapply (IH (csl@[false]) (tape_move FinBool t R) ??????)
     [6: @ch
-    | (* by cases: if index < |csl|, then Hch, else False *)
-       @daemon
+    | #Hle cases (le_to_or_lt_eq … Hle) [ @Hch ]
+      #Hindex lapply (bin_char_FS_nth … (sym_eq … Heq)) >Hindex
+      >(nth_index_of_FS sig a) >(\b (refl ? (Some sig a))) #H destruct (H)
     | >associative_append @Hcrd
     | >associative_append @Heq
     | >Ht whd in match (option_hd ??) in ⊢ (??%?); whd in match (tail ??) in ⊢ (??%?);
@@ -287,11 +448,6 @@ lemma binaryTM_phase0_midtape_aux :
   ]
 ]
 qed.
-
-lemma le_to_eq : ∀m,n.m ≤ n → ∃k. n = m + k. /3 by plus_minus, ex_intro/
-qed.
-
-lemma minus_tech : ∀a,b.a + b - a = b. // qed.
 
 lemma binaryTM_phase0_midtape :
   ∀sig,M,t,q,ls,a,rs,ch.
@@ -308,7 +464,7 @@ lemma binaryTM_phase0_midtape :
 cases (le_to_eq … Hk) #k0 #Hk0 >Hk0 >(minus_tech (S (FS_crd sig)))
 cut (∃c,cl.bin_char sig a = c::cl) 
 [ lapply (refl ? (|bin_char ? a|)) >eq_length_bin_char_FS_crd in ⊢ (???%→?);
-  cases (bin_char ? a) normalize /3 by ex_intro/ #H
+  cases (bin_char ? a) [|/3 by ex_intro/] normalize in ⊢ (??%?→?); #H
   <H in Hcrd; -H #H cases (not_le_Sn_O O) #Hfalse cases (Hfalse H) ] 
 * #c * #cl #Ha >Ha
 cut (FS_crd sig = |bin_char sig a|) [/2 by plus_minus_m_m/] #Hlen
@@ -316,7 +472,9 @@ cut (FS_crd sig = |bin_char sig a|) [/2 by plus_minus_m_m/] #Hlen
    (mk_config ?? 〈q,bin0,〈ch,|c::cl|〉〉 t))) 
 [ @le_S_S <Ha <Hlen // | @eq_f2 // @eq_f2 // @eq_f <Ha >Hlen % ]
 >(binaryTM_phase0_midtape_aux ? M q ls a rs ? ? (c::cl) [ ] t ch) //
-[| normalize #Hfalse @False_ind cases (not_le_Sn_O ?) /2/
+[| <Ha <Hlen lapply (lt_FS_index_crd sig a) #Hlt #Hle
+   lapply (transitive_le ??? Hlt Hle) #H cases (not_le_Sn_n (index_of_FS ? a))
+   #H1 @False_ind /2/
 | <Ha >Hlen %
 | >Ha %
 | >Ht >Ha % 
@@ -571,13 +729,13 @@ cut (∀sig,M,q,ch,qn,chn,mv,ls,rs,k,csr.
          (mk_tape ? (csl@ls) (option_hd ? (csr@rs)) (tail ? (csr@rs))))
      = loopM ? (mk_binaryTM sig M) k 
          (mk_config ?? (〈qn,bin3,ch,displ_of_move sig mv〉) 
-           (mk_tape ? (reverse ? (bin_char sig chn)@ls) (option_hd ? rs) (tail ? rs)))) [1,2: @le_S_S /2 by le_S/]
+           (mk_tape ? (reverse ? (bin_char sig chn)@ls) (option_hd ? rs) (tail ? rs)))) [1,2: @le_S_S [/2 by lt_to_le/|/2 by le_S/] ]
 [ #sig #M #q #ch #qn #chn #mv #ls #rs #k #csr #Htrans elim csr
   [ #csl #Hcount #Hcrd * #fs #Hfs >loopM_unfold >loop_S_false // normalize in match (length ? [ ]);
     >(binaryTM_bin2_O … Htrans) <loopM_unfold @eq_f @eq_f @eq_f3 //
     cases fs in Hfs; // #f0 #fs0 #H lapply (eq_f ?? (length ?) … H)
     >length_append >(?:|bin_char sig chn| = FS_crd sig) [|//]
-    <Hcrd >length_reverse #H1 cut (O = |f0::fs0|) [ /2/ ]
+    <Hcrd >length_reverse >length_append whd in match (|[]|); #H1 cut (O = |f0::fs0|) [ /2 by plus_to_minus/ ]
     normalize #H1 destruct (H1) 
   | #b0 #bs0 #IH #csl #Hcount #Hcrd * #fs #Hfs
     >loopM_unfold >loop_S_false // >(binaryTM_bin2_S_Some … Htrans)  
@@ -586,8 +744,7 @@ cut (∀sig,M,q,ch,qn,chn,mv,ls,rs,k,csr.
             (option_hd ? (bs0@rs)) (tail ? (bs0@rs)))
       in match (tape_move ? (tape_write ???) ?);
     [| cases bs0 // cases rs // ] @IH
-    [ whd in Hcount:(?%?); /2 by lt_S_to_lt/
-    | <Hcrd >length_append >length_append normalize //
+    [ <Hcrd >length_append >length_append normalize //
     | cases fs in Hfs;
       [ #Hfalse cut (|bin_char ? chn| = |csl|) [ >Hfalse >length_append >length_reverse // ]      -Hfalse >(?:|bin_char sig chn| = FS_crd sig) [|//]
         <Hcrd >length_append normalize >(?:|csl| = |csl|+ O) in ⊢ (???%→?); //
@@ -603,7 +760,8 @@ cut (∀sig,M,q,ch,qn,chn,mv,ls,rs,k,csr.
     ]
   ]
 | #Hcut #sig #M #q #ch #qn #chn #mv #ls #cs #rs #Htrans #Hcrd #k #Hk
-  cases (le_to_eq … Hk) #k0 #Hk0 >Hk0 >minus_tech @trans_eq 
+  cases (le_to_eq … Hk) #k0 #Hk0 >Hk0 >(?:S (FS_crd sig) +k0-S (FS_crd sig) = k0) [|@minus_tech] 
+  @trans_eq 
   [3: @(trans_eq ???? (Hcut ??????? ls ?? cs Htrans [ ] …)) //
     [ normalize % // | normalize @Hcrd | >Hcrd // ]
   || @eq_f2 [ >Hcrd % | @eq_f2 // @eq_f cases Hcrd // ] ] ]
@@ -845,9 +1003,6 @@ lemma tape_move_R_left :
   ∀sig,rs.tape_move sig (mk_tape ? [ ] (None ?) rs) R = 
   mk_tape ? [ ] (option_hd ? rs) (tail ? rs). #sig * //
 qed.
-
-axiom loop_increase : ∀sig,M,m,n,cfg,cfg'.m < n → 
-  loopM sig M m cfg = Some ? cfg' → loopM sig M n cfg = Some ? cfg'.
 
 lemma binaryTM_loop :
  ∀sig,M,i,tf,qf. O < FS_crd sig → 
@@ -1222,20 +1377,6 @@ definition R_bin_lift ≝ λsig,R,t1,t2.
   ∀u1.t1 = tape_bin_lift sig u1 → 
   ∃u2.t2 = tape_bin_lift sig u2 ∧ R u1 u2.
   
-(*
-∀sig,M,i,tf,qf. O < FS_crd sig → 
- ∀t,q.∃k.i ≤ k ∧ 
- ((loopM sig M i (mk_config ?? q t) = Some ? (mk_config ?? qf tf) →
-  loopM ? (mk_binaryTM sig M) k 
-    (mk_config ?? (state_bin_lift ? M q) (tape_bin_lift ? t)) = 
-  Some ? (mk_config ?? (state_bin_lift ? M qf) (tape_bin_lift ? tf))) ∧
- (loopM sig M i (mk_config ?? q t) = None ? →
-  loopM ? (mk_binaryTM sig M) k 
-    (mk_config ?? (state_bin_lift ? M q) (tape_bin_lift ? t)) = None ?)).
-    *)
-axiom loop_incr : ∀sig,M,m,n,cfg,cfg'.m ≤ n → 
-  loopM sig M m cfg = Some ? cfg' → loopM sig M n cfg = Some ? cfg'.
-
 theorem sem_binaryTM : 
   ∀sig,M,R.O < FS_crd sig → M ⊫ R → mk_binaryTM sig M ⊫ R_bin_lift ? R.
 #sig #M #R #Hcrd #HM #t #k #outc #Hloopbin #u #Ht
@@ -1243,10 +1384,10 @@ lapply (refl ? (loopM ? M k (initc ? M u))) cases (loopM ? M k (initc ? M u)) in
 [ #H cases (binaryTM_loop ? M k u (start ? M) Hcrd u (start ? M))
   #k0 * #Hlt * #_ #H1 lapply (H1 H) -H -H1 <Ht
   whd in match (initc ???) in Hloopbin; whd in match (start ??) in Hloopbin;
-  >state_bin_lift_unfold >(loop_incr … Hlt Hloopbin) #H destruct (H)
+  >state_bin_lift_unfold >(loop_incr2 … Hlt Hloopbin) #H destruct (H)
 | * #qf #tf #H cases (binaryTM_loop ? M k tf qf Hcrd u (start ? M))
   #k0 * #Hlt * #H1 #_ lapply (H1 H) -H1 <Ht
   whd in match (initc ???) in Hloopbin; whd in match (start ??) in Hloopbin;
-  >state_bin_lift_unfold >(loop_incr … Hlt Hloopbin) #Heq destruct (Heq)
+  >state_bin_lift_unfold >(loop_incr2 … Hlt Hloopbin) #Heq destruct (Heq)
   % [| % [%]] @(HM … H)
 qed.
