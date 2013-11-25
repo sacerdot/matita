@@ -4,9 +4,9 @@
     <key name="rt_base_dir">$(MATITA_RT_BASE_DIR)</key>
   </section>
   <section name="xoa">
-    <key name="output_dir">contribs/lambda/background/</key>
-    <key name="objects">xoa</key>
-    <key name="notations">xoa_notation</key>
+    <key name="output_dir">lib/</key>
+    <key name="objects">lambda/background/xoa</key>
+    <key name="notations">lambda/background/xoa_notation</key>
     <key name="include">basics/pts.ma</key>
     <key name="ex">1 2</key>
     <key name="ex">2 2</key>

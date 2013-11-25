@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basics/star.ma".
+include "basics/star1.ma".
 include "basics/lists/lstar.ma".
 include "arithmetics/exp.ma".
 

@@ -46,8 +46,8 @@ inductive rtm_step: relation rtm ≝
               rtm_step (mk_rtm G u E ({D, V} @ S) (+ⓛW. T))
                        (mk_rtm G u (E. ④{Abbr} {u, D, V}) S T)
 | rtm_push  : ∀G,u,E,W,T.
-              rtm_step (mk_rtm G u E ⟠ (+ⓛW. T))
-                       (mk_rtm G (u + 1) (E. ④{Abst} {u, E, W}) ⟠ T)
+              rtm_step (mk_rtm G u E (⟠) (+ⓛW. T))
+                       (mk_rtm G (u + 1) (E. ④{Abst} {u, E, W}) (⟠) T)
 | rtm_theta : ∀G,u,E,S,V,T.
               rtm_step (mk_rtm G u E S (+ⓓV. T))
                        (mk_rtm G u (E. ④{Abbr} {u, E, V}) S T)

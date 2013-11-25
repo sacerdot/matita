@@ -32,6 +32,7 @@ let process conf =
       let ooch = L.open_out preamble (R.get_string "xoa.objects") in
       let noch = L.open_out preamble (R.get_string "xoa.notations") in
       List.iter (L.out_include ooch) (R.get_list R.string "xoa.include");   
+      L.out_include ooch (R.get_string "xoa.notations" ^ ".ma");      
       List.iter (E.generate ooch noch) (R.get_list unm_ex "xoa.ex");
       List.iter (E.generate ooch noch) (R.get_list unm_or "xoa.or");
       List.iter (E.generate ooch noch) (R.get_list unm_and "xoa.and");

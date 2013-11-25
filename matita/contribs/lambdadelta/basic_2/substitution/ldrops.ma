@@ -20,7 +20,7 @@ include "basic_2/substitution/lifts.ma".
 (* GENERIC LOCAL ENVIRONMENT SLICING ****************************************)
 
 inductive ldrops: list2 nat nat → relation lenv ≝
-| ldrops_nil : ∀L. ldrops ⟠ L L
+| ldrops_nil : ∀L. ldrops (⟠) L L
 | ldrops_cons: ∀L1,L,L2,des,d,e.
                ldrops des L1 L → ⇩[d,e] L ≡ L2 → ldrops ({d, e} @ des) L1 L2
 .
@@ -33,11 +33,11 @@ interpretation "generic local environment slicing"
 fact ldrops_inv_nil_aux: ∀L1,L2,des. ⇩*[des] L1 ≡ L2 → des = ⟠ → L1 = L2.
 #L1 #L2 #des * -L1 -L2 -des //
 #L1 #L #L2 #d #e #des #_ #_ #H destruct
-qed.
+qed-.
 
 (* Basic_1: was: drop1_gen_pnil *)
 lemma ldrops_inv_nil: ∀L1,L2. ⇩*[⟠] L1 ≡ L2 → L1 = L2.
-/2 width=3/ qed-.
+/2 width=3 by ldrops_inv_nil_aux/ qed-.
 
 fact ldrops_inv_cons_aux: ∀L1,L2,des. ⇩*[des] L1 ≡ L2 →
                           ∀d,e,tl. des = {d, e} @ tl →
@@ -45,13 +45,13 @@ fact ldrops_inv_cons_aux: ∀L1,L2,des. ⇩*[des] L1 ≡ L2 →
 #L1 #L2 #des * -L1 -L2 -des
 [ #L #d #e #tl #H destruct
 | #L1 #L #L2 #des #d #e #HT1 #HT2 #hd #he #tl #H destruct
-  /2 width=3/
-qed.
+  /2 width=3 by ex2_intro/
+qed-.
 
 (* Basic_1: was: drop1_gen_pcons *)
 lemma ldrops_inv_cons: ∀L1,L2,d,e,des. ⇩*[{d, e} @ des] L1 ≡ L2 →
                        ∃∃L. ⇩*[des] L1 ≡ L & ⇩[d, e] L ≡ L2.
-/2 width=3/ qed-.
+/2 width=3 by ldrops_inv_cons_aux/ qed-.
 
 lemma ldrops_inv_skip2: ∀I,des,i,des2. des ▭ i ≡ des2 →
                         ∀L1,K2,V2. ⇩*[des2] L1 ≡ K2. ⓑ{I} V2 →
@@ -61,16 +61,16 @@ lemma ldrops_inv_skip2: ∀I,des,i,des2. des ▭ i ≡ des2 →
                                       L1 = K1. ⓑ{I} V1.
 #I #des #i #des2 #H elim H -des -i -des2
 [ #i #L1 #K2 #V2 #H
-  >(ldrops_inv_nil … H) -L1 /2 width=7/
+  >(ldrops_inv_nil … H) -L1 /2 width=7 by lifts_nil, minuss_nil, ex4_3_intro, ldrops_nil/
 | #des #des2 #d #e #i #Hid #_ #IHdes2 #L1 #K2 #V2 #H
   elim (ldrops_inv_cons … H) -H #L #HL1 #H
-  elim (ldrop_inv_skip2 … H) -H /2 width=1/ #K #V >minus_plus #HK2 #HV2 #H destruct
+  elim (ldrop_inv_skip2 … H) -H /2 width=1 by lt_plus_to_minus_r/ #K #V >minus_plus #HK2 #HV2 #H destruct
   elim (IHdes2 … HL1) -IHdes2 -HL1 #K1 #V1 #des1 #Hdes1 #HK1 #HV1 #X destruct
-  @(ex4_3_intro … K1 V1 … ) // [3,4: /2 width=7/ | skip ]
-  normalize >plus_minus // @minuss_lt // /2 width=1/ (**) (* explicit constructors, /3 width=1/ is a bit slow *)
+  @(ex4_3_intro … K1 V1 … ) // [3,4: /2 width=7 by lifts_cons, ldrops_cons/ | skip ]
+  normalize >plus_minus /3 width=1 by minuss_lt, lt_minus_to_plus/ (**) (* explicit constructors *)
 | #des #des2 #d #e #i #Hid #_ #IHdes2 #L1 #K2 #V2 #H
   elim (IHdes2 … H) -IHdes2 -H #K1 #V1 #des1 #Hdes1 #HK1 #HV1 #X destruct
-  /4 width=7/
+  /4 width=7 by minuss_ge, ex4_3_intro, le_S_S/
 ]
 qed-.
 
@@ -83,7 +83,7 @@ lemma ldrops_skip: ∀L1,L2,des. ⇩*[des] L1 ≡ L2 → ∀V1,V2. ⇧*[des] V2 
 [ #L #V1 #V2 #HV12 #I
   >(lifts_inv_nil … HV12) -HV12 //
 | #L1 #L #L2 #des #d #e #_ #HL2 #IHL #V1 #V2 #H #I
-  elim (lifts_inv_cons … H) -H /3 width=5/
+  elim (lifts_inv_cons … H) -H /3 width=5 by ldrop_skip, ldrops_cons/
 ].
 qed.
 

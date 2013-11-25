@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/notation/functions/append_2.ma".
 include "basic_2/grammar/lenv_length.ma".
 
 (* LOCAL ENVIRONMENTS *******************************************************)

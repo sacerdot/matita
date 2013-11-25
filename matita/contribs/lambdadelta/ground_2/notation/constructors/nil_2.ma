@@ -12,10 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basics/logic.ma".
-include "ground_2/xoa_notation.ma".
-include "ground_2/xoa.ma".
+(* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
 
-interpretation "logical false" 'false = False.
-
-interpretation "logical true" 'true = True.
+notation "⟠"
+  non associative with precedence 46
+  for @{ 'Nil ? ? }.

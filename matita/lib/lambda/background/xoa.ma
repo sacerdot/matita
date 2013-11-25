@@ -16,6 +16,8 @@
 
 include "basics/pts.ma".
 
+include "lambda/background/xoa_notation.ma".
+
 (* multiple existental quantifier (1, 2) *)
 
 inductive ex1_2 (A0,A1:Type[0]) (P0:A0→A1→Prop) : Prop ≝

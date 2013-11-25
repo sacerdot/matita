@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/lstar.ma".
+include "ground_2/lib/lstar.ma".
 include "basic_2/notation/relations/rdrop_4.ma".
 include "basic_2/grammar/lenv_length.ma".
 include "basic_2/grammar/cl_restricted_weight.ma".

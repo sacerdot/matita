@@ -13,8 +13,7 @@
 (**************************************************************************)
 
 include "basics/star1.ma".
-include "ground_2/xoa_props.ma".
-include "ground_2/notation.ma".
+include "ground_2/xoa/xoa_props.ma".
 
 (* PROPERTIES OF RELATIONS **************************************************)
 

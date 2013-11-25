@@ -16,8 +16,11 @@ module U = Unix
 
 module O = Options
 
-let remove_dir dir =
-   let map name = Y.remove (F.concat dir name) in
+let rec remove_obj name =
+   try Y.remove name with Sys_error _ -> remove_dir name
+
+and remove_dir dir =
+   let map name = remove_obj (F.concat dir name) in
    let rec rmdir dir =
       U.rmdir dir; (* Sys.remove does not seem to remove empty directories *)
       rmdir (F.dirname dir)
@@ -28,8 +31,4 @@ let remove_dir dir =
    end
 
 let objects () =
-   let map name = 
-      Y.remove name;
-      remove_dir (F.chop_extension name)
-   in
-   List.iter map !O.remove
+   List.iter remove_obj !O.remove
