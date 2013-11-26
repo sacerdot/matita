@@ -475,6 +475,11 @@ lemma le_or_ge: ∀m,n. m ≤ n ∨ n ≤ m.
 #m #n elim (decidable_le m n) /2/ /4/
 qed-.
 
+lemma le_inv_S1: ∀x,y. S x ≤ y → ∃∃z. x ≤ z & y = S z.
+#x #y #H elim H -y /2 width=3 by ex2_intro/
+#y #_ * #n #Hxn #H destruct /3 width=3 by le_S, ex2_intro/
+qed-. 
+
 (* More general conclusion **************************************************)
 
 theorem nat_ind_plus: ∀R:predicate nat.
