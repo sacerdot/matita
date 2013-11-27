@@ -53,3 +53,11 @@ qed-.
 lemma ysucc_inv_inj_dx: ∀m2,n1. ⫯n1 = yinj m2  →
                         ∃∃m1. n1 = yinj m1 & m2 = S m1.
 /2 width=1 by ysucc_inv_inj_sn/ qed-.
+
+lemma ysucc_inv_Y_sn: ∀m. ∞ = ⫯m → m = ∞.
+* // normalize
+#m #H destruct
+qed-.
+
+lemma ysucc_inv_Y_dx: ∀m. ⫯m = ∞ → m = ∞.
+/2 width=1 by ysucc_inv_Y_sn/ qed-.
