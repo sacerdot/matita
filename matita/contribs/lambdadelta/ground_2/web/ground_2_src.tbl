@@ -1,0 +1,23 @@
+name "ground_2_src"
+
+table {
+   class "grey"
+   [ { "plane" * } {
+        [ "files" * ]
+     }     
+   ]
+   class "orange"
+   [ { "natural numbers with infinity" * } {
+        [ "ynat ( ∞ )" "ynat_pred ( ⫰? )" "ynat_succ ( ⫯? )" "ynat_le ( ?≤? )" "ynat_lt ( ?&lt;? )" * ]
+     }     
+   ]
+   class "red"
+   [ { "" * } {
+        [ "" * ]
+     }     
+   ]
+}
+
+class "plane" { 0 }
+
+class "file" { 1 * }
