@@ -39,7 +39,7 @@ fact lpx_sn_inv_pair1_aux: ∀R,L1,L2. lpx_sn R L1 L2 → ∀I,K1,V1. L1 = K1. �
                            ∃∃K2,V2. lpx_sn R K1 K2 & R K1 V1 V2 & L2 = K2. ⓑ{I} V2.
 #R #L1 #L2 * -L1 -L2
 [ #J #K1 #V1 #H destruct
-| #I #K1 #K2 #V1 #V2 #HK12 #HV12 #J #L #W #H destruct /2 width=5/
+| #I #K1 #K2 #V1 #V2 #HK12 #HV12 #J #L #W #H destruct /2 width=5 by ex3_2_intro/
 ]
 qed-.
 
@@ -61,13 +61,20 @@ fact lpx_sn_inv_pair2_aux: ∀R,L1,L2. lpx_sn R L1 L2 → ∀I,K2,V2. L2 = K2. �
                            ∃∃K1,V1. lpx_sn R K1 K2 & R K1 V1 V2 & L1 = K1. ⓑ{I} V1.
 #R #L1 #L2 * -L1 -L2
 [ #J #K2 #V2 #H destruct
-| #I #K1 #K2 #V1 #V2 #HK12 #HV12 #J #K #W #H destruct /2 width=5/
+| #I #K1 #K2 #V1 #V2 #HK12 #HV12 #J #K #W #H destruct /2 width=5 by ex3_2_intro/
 ]
 qed-.
 
 lemma lpx_sn_inv_pair2: ∀R,I,L1,K2,V2. lpx_sn R L1 (K2. ⓑ{I} V2) →
                         ∃∃K1,V1. lpx_sn R K1 K2 & R K1 V1 V2 & L1 = K1. ⓑ{I} V1.
 /2 width=3 by lpx_sn_inv_pair2_aux/ qed-.
+
+lemma lpx_sn_inv_pair: ∀R,I1,I2,L1,L2,V1,V2.
+                       lpx_sn R (L1.ⓑ{I1}V1) (L2.ⓑ{I2}V2) →
+                       ∧∧ lpx_sn R L1 L2 & R L1 V1 V2 & I1 = I2.
+#R #I1 #I2 #L1 #L2 #V1 #V2 #H elim (lpx_sn_inv_pair1 … H) -H
+#L0 #V0 #HL10 #HV10 #H destruct /2 width=1 by and3_intro/
+qed-.
 
 (* Basic forward lemmas *****************************************************)
 
@@ -104,11 +111,11 @@ qed-.
 (* Basic properties *********************************************************)
 
 lemma lpx_sn_refl: ∀R. (∀L. reflexive ? (R L)) → reflexive … (lpx_sn R).
-#R #HR #L elim L -L // /2 width=1/
+#R #HR #L elim L -L /2 width=1 by lpx_sn_atom, lpx_sn_pair/
 qed-.
 
 lemma lpx_sn_append: ∀R. l_appendable_sn R →
                      ∀K1,K2. lpx_sn R K1 K2 → ∀L1,L2. lpx_sn R L1 L2 →
                      lpx_sn R (L1 @@ K1) (L2 @@ K2).
-#R #HR #K1 #K2 #H elim H -K1 -K2 // /3 width=1/
+#R #HR #K1 #K2 #H elim H -K1 -K2 /3 width=1 by lpx_sn_pair/
 qed-.

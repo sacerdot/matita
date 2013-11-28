@@ -30,6 +30,14 @@ interpretation "ynat successor" 'Successor m = (ysucc m).
 lemma ypred_succ: ∀m. ⫰⫯m = m.
 * // qed.
 
+lemma ynat_cases: ∀n:ynat. n = 0 ∨ ∃m. n = ⫯m.
+*
+[ * /2 width=1 by or_introl/
+  #n @or_intror @(ex_intro … n) // (**) (* explicit constructor *)
+| @or_intror @(ex_intro … (∞)) // (**) (* explicit constructor *)
+]
+qed-.
+
 (* Inversion lemmas *********************************************************)
 
 lemma ysucc_inj: ∀m,n. ⫯m = ⫯n → m = n.
@@ -61,3 +69,11 @@ qed-.
 
 lemma ysucc_inv_Y_dx: ∀m. ⫯m = ∞ → m = ∞.
 /2 width=1 by ysucc_inv_Y_sn/ qed-.
+
+lemma ysucc_inv_O_sn: ∀m. yinj 0 = ⫯m → ⊥. (**) (* explicit coercion *)
+#m #H elim (ysucc_inv_inj_sn … H) -H
+#n #_ #H destruct
+qed-.
+
+lemma ysucc_inv_O_dx: ∀m. ⫯m = 0 → ⊥.
+/2 width=2 by ysucc_inv_O_sn/ qed-.

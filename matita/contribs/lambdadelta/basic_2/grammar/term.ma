@@ -97,12 +97,15 @@ axiom eq_term_dec: ∀T1,T2:term. Decidable (T1 = T2).
 
 (* Basic inversion lemmas ***************************************************)
 
+lemma destruct_tpair_tpair: ∀I1,I2,T1,T2,V1,V2. ②{I1}T1.V1 = ②{I2}T2.V2 →
+                            ∧∧T1 = T2 & I1 = I2 & V1 = V2.
+#I1 #I2 #T1 #T2 #V1 #V2 #H destruct /2 width=1 by and3_intro/
+qed-.
+
 lemma discr_tpair_xy_x: ∀I,T,V. ②{I} V. T = V → ⊥.
 #I #T #V elim V -V
 [ #J #H destruct
-| #J #W #U #IHW #_ #H destruct
-  -H >e0 in e1; normalize (**) (* destruct: one quality is not simplified, the destucted equality is not erased *)
-  /2 width=1/
+| #J #W #U #IHW #_ #H elim (destruct_tpair_tpair … H) -H /2 width=1 by/ (**) (* destruct lemma needed *)
 ]
 qed-.
 
@@ -110,9 +113,7 @@ qed-.
 lemma discr_tpair_xy_y: ∀I,V,T. ②{I} V. T = T → ⊥.
 #I #V #T elim T -T
 [ #J #H destruct
-| #J #W #U #_ #IHU #H destruct
-  -H (**) (* destruct: the destucted equality is not erased *)
-  /2 width=1/
+| #J #W #U #_ #IHU #H elim (destruct_tpair_tpair … H) -H /2 width=1 by/ (**) (* destruct lemma needed *)
 ]
 qed-.
 
@@ -120,16 +121,16 @@ lemma eq_false_inv_tpair_sn: ∀I,V1,T1,V2,T2.
                              (②{I} V1. T1 = ②{I} V2. T2 → ⊥) →
                              (V1 = V2 → ⊥) ∨ (V1 = V2 ∧ (T1 = T2 → ⊥)).
 #I #V1 #T1 #V2 #T2 #H
-elim (eq_term_dec V1 V2) /3 width=1/ #HV12 destruct
-@or_intror @conj // #HT12 destruct /2 width=1/
+elim (eq_term_dec V1 V2) /3 width=1 by or_introl/ #HV12 destruct
+@or_intror @conj // #HT12 destruct /2 width=1 by/
 qed-.
 
 lemma eq_false_inv_tpair_dx: ∀I,V1,T1,V2,T2.
                              (②{I} V1. T1 = ②{I} V2. T2 → ⊥) →
                              (T1 = T2 → ⊥) ∨ (T1 = T2 ∧ (V1 = V2 → ⊥)).
 #I #V1 #T1 #V2 #T2 #H
-elim (eq_term_dec T1 T2) /3 width=1/ #HT12 destruct
-@or_intror @conj // #HT12 destruct /2 width=1/
+elim (eq_term_dec T1 T2) /3 width=1 by or_introl/ #HT12 destruct
+@or_intror @conj // #HT12 destruct /2 width=1 by/
 qed-.
 
 (* Basic_1: removed theorems 3:

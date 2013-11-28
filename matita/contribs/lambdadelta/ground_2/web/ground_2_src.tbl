@@ -4,17 +4,22 @@ table {
    class "grey"
    [ { "plane" * } {
         [ "files" * ]
-     }     
+     }
    ]
-   class "orange"
+   class "yellow"
    [ { "natural numbers with infinity" * } {
         [ "ynat ( ∞ )" "ynat_pred ( ⫰? )" "ynat_succ ( ⫯? )" "ynat_le ( ?≤? )" "ynat_lt ( ?&lt;? )" * ]
-     }     
+     }
+   ]
+   class "orange"
+   [ { "extensions to the library" * } {
+        [ "arith.ma ( ?^? )" * ]
+     }
    ]
    class "red"
-   [ { "" * } {
-        [ "" * ]
-     }     
+   [ { "generated logical decomposables" * } {
+        [ "xoa ( ∃∃ ) ( ∨∨ ) ( ∧∧ )" "xoa_props ( ⊥ ) ( ⊤ )" * ]
+     }
    ]
 }
 
