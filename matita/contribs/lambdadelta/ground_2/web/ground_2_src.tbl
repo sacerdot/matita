@@ -8,7 +8,7 @@ table {
    ]
    class "yellow"
    [ { "natural numbers with infinity" * } {
-        [ "ynat ( ∞ )" "ynat_pred ( ⫰? )" "ynat_succ ( ⫯? )" "ynat_le ( ?≤? )" "ynat_lt ( ?&lt;? )" * ]
+        [ "ynat ( ∞ )" "ynat_pred ( ⫰? )" "ynat_succ ( ⫯? )" "ynat_le ( ?≤? )" "ynat_lt ( ?&lt;? )" "ynat_plus ( ? + ? )" * ]
      }
    ]
    class "orange"

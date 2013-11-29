@@ -134,6 +134,10 @@ lemma iter_n_Sm: ∀B:Type[0]. ∀f:B→B. ∀b,l. f^l (f b) = f (f^l b).
 #B #f #b #l elim l -l normalize //
 qed.
 
+lemma iter_plus: ∀B:Type[0]. ∀f:B→B. ∀b,l1,l2. f^(l1+l2) b = f^l1 (f^l2 b).
+#B #f #b #l1 elim l1 -l1 normalize //
+qed.
+
 (* Trichotomy operator ******************************************************)
 
 (* Note: this is "if eqb n1 n2 then a2 else if leb n1 n2 then a1 else a3" *)

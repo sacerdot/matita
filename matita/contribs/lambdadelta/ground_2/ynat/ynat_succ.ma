@@ -38,6 +38,11 @@ lemma ynat_cases: ∀n:ynat. n = 0 ∨ ∃m. n = ⫯m.
 ]
 qed-.
 
+lemma ysucc_iter_Y: ∀m. ysucc^m (∞) = ∞.
+#m elim m -m //
+#m #IHm whd in ⊢ (??%?); >IHm //
+qed.
+
 (* Inversion lemmas *********************************************************)
 
 lemma ysucc_inj: ∀m,n. ⫯m = ⫯n → m = n.
