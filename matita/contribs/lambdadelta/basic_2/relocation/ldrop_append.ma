@@ -22,7 +22,8 @@ include "basic_2/relocation/ldrop.ma".
 fact ldrop_O1_append_sn_le_aux: ∀L1,L2,d,e. ⇩[d, e] L1 ≡ L2 →
                                 d = 0 → e ≤ |L1| →
                                 ∀L. ⇩[0, e] L @@ L1 ≡ L @@ L2.
-#L1 #L2 #d #e #H elim H -L1 -L2 -d -e normalize // /4 width=1/
+#L1 #L2 #d #e #H elim H -L1 -L2 -d -e normalize
+/4 width=1 by ldrop_skip_lt, ldrop_ldrop, arith_b1, lt_minus_to_plus_r, monotonic_pred/
 qed-.
 
 lemma ldrop_O1_append_sn_le: ∀L1,L2,e. ⇩[0, e] L1 ≡ L2 → e ≤ |L1| →
@@ -38,7 +39,7 @@ lemma ldrop_O1_inv_append1_ge: ∀K,L1,L2,e. ⇩[0, e] L1 @@ L2 ≡ K →
 elim (ldrop_inv_O1_pair1 … H) -H * #H2e #HL12 destruct
 [ lapply (le_n_O_to_eq … H1e) -H1e -IHL2
   >commutative_plus normalize #H destruct
-| <minus_plus >minus_minus_comm /3 width=1/
+| <minus_plus >minus_minus_comm /3 width=1 by monotonic_pred/
 ]
 qed-.
 
@@ -53,11 +54,7 @@ lemma ldrop_O1_inv_append1_le: ∀K,L1,L2,e. ⇩[0, e] L1 @@ L2 ≡ K → e ≤ 
   [ #H1 #_ #K2 #H2
     lapply (ldrop_inv_O2 … H1) -H1 #H1
     lapply (ldrop_inv_O2 … H2) -H2 #H2 destruct //
-  | #e #_ #H1 #H #K2 #H2
-    lapply (le_plus_to_le_r … H) -H
-    lapply (ldrop_inv_ldrop1 … H1 ?) -H1 //
-    lapply (ldrop_inv_ldrop1 … H2 ?) -H2 //
-    <minus_plus_m_m /2 width=4/
+  | /4 width=6 by ldrop_inv_ldrop1, le_plus_to_le_r/
   ]
 ]
 qed-.

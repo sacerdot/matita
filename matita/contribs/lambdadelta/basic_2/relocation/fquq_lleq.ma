@@ -12,16 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/fqu_fqu.ma".
+include "basic_2/relocation/fqu_lleq.ma".
 include "basic_2/relocation/fquq_alt.ma".
 
 (* OPTIONAL SUPCLOSURE ******************************************************)
 
-(* Advanced properties ******************************************************)
+(* Properties on lazy equivalence for local environments ********************)
 
 lemma lleq_fquq_trans: ∀G1,G2,L2,K2,T,U. ⦃G1, L2, T⦄ ⊃⸮ ⦃G2, K2, U⦄ →
-                       ∀L1. L1 ⋕[T] L2 →
-                       ∃∃K1. ⦃G1, L1, T⦄ ⊃⸮ ⦃G2, K1, U⦄ & K1 ⋕[U] K2.
+                       ∀L1. L1 ⋕[0, T] L2 →
+                       ∃∃K1. ⦃G1, L1, T⦄ ⊃⸮ ⦃G2, K1, U⦄ & K1 ⋕[0, U] K2.
 #G1 #G2 #L2 #K2 #T #U #H #L1 #HL12 elim(fquq_inv_gen … H) -H
 [ #H elim (lleq_fqu_trans … H … HL12) -L2 /3 width=3 by fqu_fquq, ex2_intro/
 | * #HG #HL #HT destruct /2 width=3 by ex2_intro/

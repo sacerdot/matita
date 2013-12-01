@@ -51,6 +51,11 @@ qed-.
 lemma ylt_inv_Y2: ∀x. x < ∞ → ∃m. x = yinj m.
 /2 width=3 by ylt_inv_Y2_aux/ qed-.
 
+lemma ylt_inv_O1: ∀n. 0 < n → ⫯⫰n = n.
+* // #n #H lapply (ylt_inv_inj … H) -H normalize
+/3 width=1 by S_pred, eq_f/
+qed-.
+
 (* Inversion lemmas on successor ********************************************)
 
 fact ylt_inv_succ1_aux: ∀x,y. x < y → ∀m. x = ⫯m → ∃∃n. m < n & y = ⫯n.
@@ -68,7 +73,7 @@ qed-.
 lemma ylt_inv_succ1: ∀m,y.  ⫯m < y → ∃∃n. m < n & y = ⫯n.
 /2 width=3 by ylt_inv_succ1_aux/ qed-.
 
-lemma yle_inv_succ: ∀m,n. ⫯m < ⫯n → m < n.
+lemma ylt_inv_succ: ∀m,n. ⫯m < ⫯n → m < n.
 #m #n #H elim (ylt_inv_succ1 … H) -H
 #x #Hx #H destruct //
 qed-.
@@ -81,7 +86,9 @@ fact ylt_inv_succ2_aux: ∀x,y. x < y → ∀n. y = ⫯n → x ≤ n.
 ]
 qed-.
 
-lemma ylt_inv_succ2: ∀m,n. m < ⫯n → m ≤ n.
+(* Forward lemmas on successor **********************************************)
+
+lemma ylt_fwd_succ2: ∀m,n. m < ⫯n → m ≤ n.
 /2 width=3 by ylt_inv_succ2_aux/ qed-.
 
 (* inversion and forward lemmas on yle **************************************)
@@ -98,6 +105,12 @@ lemma ylt_yle_false: ∀m:ynat. ∀n:ynat. m < n → n ≤ m → ⊥.
   #H destruct
 ]
 qed-.
+
+(* Properties on successor **************************************************)
+
+lemma ylt_O_succ: ∀n. 0 < ⫯n.
+* /2 width=1 by ylt_inj/
+qed.
 
 (* Properties on yle ********************************************************)
 

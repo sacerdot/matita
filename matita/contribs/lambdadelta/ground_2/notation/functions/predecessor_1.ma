@@ -14,6 +14,6 @@
 
 (* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
 
-notation "hvbox( ⫰ term 55 T )" 
-   non associative with precedence 55
+notation "hvbox( ⫰ term 70 T )" 
+   non associative with precedence 70
    for @{ 'Predecessor $T }.

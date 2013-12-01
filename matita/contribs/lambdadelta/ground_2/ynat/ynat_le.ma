@@ -81,7 +81,18 @@ lemma yle_inv_succ: ∀m,n. ⫯m ≤ ⫯n → m ≤ n.
 #x #Hx #H destruct //
 qed-.
 
+(* Forward lemmas on successor **********************************************)
+
+lemma yle_fwd_succ1: ∀m,n. ⫯m ≤ n → m ≤ ⫰n.
+#m #x #H elim (yle_inv_succ1 … H) -H
+#n #Hmn #H destruct //
+qed-.
+
 (* Basic properties *********************************************************)
+
+lemma le_O1: ∀n:ynat. 0 ≤ n.
+* /2 width=1 by yle_inj/
+qed.
 
 lemma yle_refl: reflexive … yle.
 * /2 width=1 by le_n, yle_inj/
@@ -97,6 +108,10 @@ lemma yle_refl_pred_sn: ∀x. ⫰x ≤ x.
 /2 width=1 by yle_refl, yle_pred_sn/ qed.
 
 (* Properties on successor **************************************************)
+
+lemma yle_succ: ∀m,n. m ≤ n → ⫯m ≤ ⫯n.
+#m #n * -m -n /3 width=1 by yle_inj, le_S_S/
+qed.
 
 lemma yle_succ_dx: ∀m,n. m ≤ n → m ≤ ⫯n.
 #m #n * -m -n /3 width=1 by le_S, yle_inj/
