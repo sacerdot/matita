@@ -12,11 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/fqup.ma".
+(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-(* PLUS-ITERATED SUPCLOSURE *************************************************)
-
-(* Main properties **********************************************************)
-
-theorem fqup_trans: tri_transitive … fqup.
-/2 width=5 by tri_TC_transitive/ qed-.
+notation "hvbox( L1 ≚ break [ term 46 d ] break term 46 L2 )"
+   non associative with precedence 45
+   for @{ 'LEqDx $d $L1 $L2 }.

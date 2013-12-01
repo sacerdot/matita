@@ -1,0 +1,44 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "Basic-2/grammar/lenv_length.ma".
+
+(* LOCAL ENVIRONMENT EQUALITY ***********************************************)
+
+interpretation "local environment equality" 'Eq L1 d e L2 = (leq L1 d e L2).
+
+(* Basic properties *********************************************************)
+
+| leq_comp: ∀L1,L2,I1,I2,V1,V2.
+            leq L1 0 0 L2 → leq (L1. 𝕓{I1} V1) 0 0 (L2. 𝕓{I2} V2)
+
+lemma leq_fwd_length: ∀L1,L2,d,e. L1 [d, e] ≈ L2 → |L1| = |L2|.
+#L1 #L2 #d #e #H elim H -H L1 L2 d e; normalize //
+qed.  
+
+(* Basic inversion lemmas ***************************************************)
+
+lemma leq_inv_sort1_aux: ∀L1,L2,d,e. L1 [d, e] ≈ L2 → L1 = ⋆ → L2 = ⋆.
+#L1 #L2 #d #e #H elim H -H L1 L2 d e
+[ //
+| #L1 #L2 #I1 #I2 #V1 #V2 #_ #_ #H destruct
+| #L1 #L2 #I #V #e #_ #_ #H destruct
+| #L1 #L2 #I1 #I2 #V1 #V2 #d #e #_ #_ #H destruct
+qed.
+
+lemma leq_inv_sort1: ∀L2,d,e. ⋆ [d, e] ≈ L2 → L2 = ⋆.
+/2 width=5/ qed.
+
+lemma leq_inv_sort2: ∀L1,d,e. L1 [d, e] ≈ ⋆ → L1 = ⋆.
+/3/ qed.

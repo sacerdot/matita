@@ -83,7 +83,7 @@
    <section>Logical Structure of the Specification</section>
    <body>The source files are grouped in planes and components
          according to the following table.
-         A notation file covering the whole specification is provided.
+         Notation files covering the whole specification are provided.
          The notation for the relations or functions introduced in each file
          is shown in parentheses (? are placeholders).
    </body>

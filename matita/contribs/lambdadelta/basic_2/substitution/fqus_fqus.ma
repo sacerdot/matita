@@ -16,7 +16,7 @@ include "basic_2/substitution/fqus.ma".
 
 (* STAR-ITERATED SUPCLOSURE *************************************************)
 
-(* Advaveded properties *****************************************************)
+(* Main properties **********************************************************)
 
 theorem fqus_trans: tri_transitive … fqus.
 /2 width=5 by tri_TC_transitive/ qed-.
