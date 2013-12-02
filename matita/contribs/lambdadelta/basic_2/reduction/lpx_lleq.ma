@@ -3,22 +3,22 @@ include "basic_2/reduction/lpx_ldrop.ma".
 
 (* SN EXTENDED PARALLEL REDUCTION FOR LOCAL ENVIRONMENTS ********************)
 
-(* Advanced properties ******************************************************)
+(* Properties on lazy equivalence for local environments ********************)
 
 lemma lpx_lleq_fqu_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ →
-                          ∀K1. ⦃G1, K1⦄ ⊢ ➡[h, g] L1 → K1 ⋕[T1] L1 →
-                          ∃∃K2. ⦃G1, K1, T1⦄ ⊃ ⦃G2, K2, T2⦄ & ⦃G2, K2⦄ ⊢ ➡[h, g] L2 & K2 ⋕[T2] L2.
+                          ∀K1. ⦃G1, K1⦄ ⊢ ➡[h, g] L1 → K1 ⋕[0, T1] L1 →
+                          ∃∃K2. ⦃G1, K1, T1⦄ ⊃ ⦃G2, K2, T2⦄ & ⦃G2, K2⦄ ⊢ ➡[h, g] L2 & K2 ⋕[0, T2] L2.
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2
 [ #I #G1 #L1 #V1 #X #H1 #H2 elim (lpx_inv_pair2 … H1) -H1
   #K0 #V0 #H1KL1 #_ #H destruct
-  elim (lleq_inv_lref_dx … H2 I L1 V1) -H2 //
+  elim (lleq_inv_lref_dx … H2 ? I L1 V1) -H2 //
   #K1 #H #H2KL1 lapply (ldrop_inv_O2 … H) -H #H destruct
   /2 width=4 by fqu_lref_O, ex3_intro/
 | * [ #a ] #I #G1 #L1 #V1 #T1 #K1 #HLK1 #H
   [ elim (lleq_inv_bind … H)
   | elim (lleq_inv_flat … H)
   ] -H /2 width=4 by fqu_pair_sn, ex3_intro/
-| #a #I #G1 #L1 #V1 #T1 #K1 #HLK1 #H elim (lleq_inv_bind … H) -H
+| #a #I #G1 #L1 #V1 #T1 #K1 #HLK1 #H elim (lleq_inv_bind_O … H) -H
   /3 width=4 by lpx_pair, fqu_bind_dx, ex3_intro/
 | #I #G1 #L1 #V1 #T1 #K1 #HLK1 #H elim (lleq_inv_flat … H) -H
   /2 width=4 by fqu_flat_dx, ex3_intro/
@@ -35,8 +35,8 @@ lemma lpx_lleq_fqu_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, 
 qed-.
 
 lemma lpx_lleq_fquq_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, L2, T2⦄ →
-                           ∀K1. ⦃G1, K1⦄ ⊢ ➡[h, g] L1 → K1 ⋕[T1] L1 →
-                           ∃∃K2. ⦃G1, K1, T1⦄ ⊃⸮ ⦃G2, K2, T2⦄ & ⦃G2, K2⦄ ⊢ ➡[h, g] L2 & K2 ⋕[T2] L2.
+                           ∀K1. ⦃G1, K1⦄ ⊢ ➡[h, g] L1 → K1 ⋕[0, T1] L1 →
+                           ∃∃K2. ⦃G1, K1, T1⦄ ⊃⸮ ⦃G2, K2, T2⦄ & ⦃G2, K2⦄ ⊢ ➡[h, g] L2 & K2 ⋕[0, T2] L2.
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 #H #K1 #H1KL1 #H2KL1
 elim (fquq_inv_gen … H) -H
 [ #H elim (lpx_lleq_fqu_trans … H … H1KL1 H2KL1) -L1
@@ -46,8 +46,8 @@ elim (fquq_inv_gen … H) -H
 qed-.
 
 lemma lpx_lleq_fqup_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃+ ⦃G2, L2, T2⦄ →
-                           ∀K1. ⦃G1, K1⦄ ⊢ ➡[h, g] L1 → K1 ⋕[T1] L1 →
-                           ∃∃K2. ⦃G1, K1, T1⦄ ⊃+ ⦃G2, K2, T2⦄ & ⦃G2, K2⦄ ⊢ ➡[h, g] L2 & K2 ⋕[T2] L2.
+                           ∀K1. ⦃G1, K1⦄ ⊢ ➡[h, g] L1 → K1 ⋕[0, T1] L1 →
+                           ∃∃K2. ⦃G1, K1, T1⦄ ⊃+ ⦃G2, K2, T2⦄ & ⦃G2, K2⦄ ⊢ ➡[h, g] L2 & K2 ⋕[0, T2] L2.
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 #H @(fqup_ind … H) -G2 -L2 -T2
 [ #G2 #L2 #T2 #H #K1 #H1KL1 #H2KL1 elim (lpx_lleq_fqu_trans … H … H1KL1 H2KL1) -L1
   /3 width=4 by fqu_fqup, ex3_intro/
@@ -58,8 +58,8 @@ lemma lpx_lleq_fqup_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃+ ⦃G2
 qed-.
 
 lemma lpx_lleq_fqus_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃* ⦃G2, L2, T2⦄ →
-                           ∀K1. ⦃G1, K1⦄ ⊢ ➡[h, g] L1 → K1 ⋕[T1] L1 →
-                           ∃∃K2. ⦃G1, K1, T1⦄ ⊃* ⦃G2, K2, T2⦄ & ⦃G2, K2⦄ ⊢ ➡[h, g] L2 & K2 ⋕[T2] L2.
+                           ∀K1. ⦃G1, K1⦄ ⊢ ➡[h, g] L1 → K1 ⋕[0, T1] L1 →
+                           ∃∃K2. ⦃G1, K1, T1⦄ ⊃* ⦃G2, K2, T2⦄ & ⦃G2, K2⦄ ⊢ ➡[h, g] L2 & K2 ⋕[0, T2] L2.
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 #H #K1 #H1KL1 #H2KL1
 elim (fqus_inv_gen … H) -H
 [ #H elim (lpx_lleq_fqup_trans … H … H1KL1 H2KL1) -L1

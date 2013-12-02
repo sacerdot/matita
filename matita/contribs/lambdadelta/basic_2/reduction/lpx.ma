@@ -42,6 +42,10 @@ lemma lpx_inv_pair2: ∀h,g,I,G,L1,K2,V2.  ⦃G, L1⦄ ⊢ ➡[h, g] K2.ⓑ{I}V2
                              L1 = K1. ⓑ{I} V1.
 /2 width=3 by lpx_sn_inv_pair2_aux/ qed-.
 
+lemma lpx_inv_pair: ∀h,g,I1,I2,G,L1,L2,V1,V2.  ⦃G, L1.ⓑ{I1}V1⦄ ⊢ ➡[h, g] L2.ⓑ{I2}V2 →
+                    ∧∧ ⦃G, L1⦄ ⊢ ➡[h, g] L2 & ⦃G, L1⦄ ⊢ V1 ➡[h, g] V2 & I1 = I2.
+/2 width=1 by lpx_sn_inv_pair/ qed-.
+
 (* Basic properties *********************************************************)
 
 lemma lpx_refl: ∀h,g,G,L.  ⦃G, L⦄ ⊢ ➡[h, g] L.
@@ -49,14 +53,14 @@ lemma lpx_refl: ∀h,g,G,L.  ⦃G, L⦄ ⊢ ➡[h, g] L.
 
 lemma lpx_pair: ∀h,g,I,G,K1,K2,V1,V2. ⦃G, K1⦄ ⊢ ➡[h, g] K2 → ⦃G, K1⦄ ⊢ V1 ➡[h, g] V2 →
                 ⦃G, K1.ⓑ{I}V1⦄ ⊢ ➡[h, g] K2.ⓑ{I}V2.
-/2 width=1/ qed.
+/2 width=1 by lpx_sn_pair/ qed.
 
 lemma lpx_append: ∀h,g,G,K1,K2. ⦃G, K1⦄ ⊢ ➡[h, g] K2 → ∀L1,L2. ⦃G, L1⦄ ⊢ ➡[h, g] L2 →
                   ⦃G, L1 @@ K1⦄ ⊢ ➡[h, g] L2 @@ K2.
 /3 width=1 by lpx_sn_append, cpx_append/ qed.
 
 lemma lpr_lpx: ∀h,g,G,L1,L2. ⦃G, L1⦄ ⊢ ➡ L2 → ⦃G, L1⦄ ⊢ ➡[h, g] L2.
-#h #g #G #L1 #L2 #H elim H -L1 -L2 // /3 width=1/
+#h #g #G #L1 #L2 #H elim H -L1 -L2 /3 width=1 by lpx_pair, cpr_cpx/
 qed.
 
 (* Basic forward lemmas *****************************************************)
