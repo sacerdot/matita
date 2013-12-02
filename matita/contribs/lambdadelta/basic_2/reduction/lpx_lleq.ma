@@ -11,7 +11,7 @@ lemma lpx_lleq_fqu_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, 
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2
 [ #I #G1 #L1 #V1 #X #H1 #H2 elim (lpx_inv_pair2 … H1) -H1
   #K0 #V0 #H1KL1 #_ #H destruct
-  elim (lleq_inv_lref_dx … H2 ? I L1 V1) -H2 //
+  elim (lleq_inv_lref_ge_dx … H2 ? I L1 V1) -H2 //
   #K1 #H #H2KL1 lapply (ldrop_inv_O2 … H) -H #H destruct
   /2 width=4 by fqu_lref_O, ex3_intro/
 | * [ #a ] #I #G1 #L1 #V1 #T1 #K1 #HLK1 #H
@@ -24,7 +24,7 @@ lemma lpx_lleq_fqu_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, 
   /2 width=4 by fqu_flat_dx, ex3_intro/
 | #G1 #L1 #L #T1 #U1 #e #HL1 #HTU1 #K1 #H1KL1 #H2KL1
   elim (ldrop_O1_le (e+1) K1)
-  [ #K #HK1 lapply (lleq_inv_lift … H2KL1 … HK1 HL1 … HTU1) -H2KL1
+  [ #K #HK1 lapply (lleq_inv_lift_le … H2KL1 … HK1 HL1 … HTU1 ?) -H2KL1 //
     #H2KL elim (lpx_ldrop_trans_O1 … H1KL1 … HL1) -L1
     #K0 #HK10 #H1KL lapply (ldrop_mono … HK10 … HK1) -HK10 #H destruct
     /3 width=4 by fqu_drop, ex3_intro/

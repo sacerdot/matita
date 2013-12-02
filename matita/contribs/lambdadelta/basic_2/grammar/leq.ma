@@ -44,6 +44,15 @@ lemma leq_sym: ∀L1,L2,d,e. L1 ≃[d, e] L2 → L2 ≃[d, e] L1.
 /2 width=1 by leq_atom, leq_zero, leq_pair, leq_succ/
 qed-.
 
+lemma leq_O_Y: ∀L1,L2. |L1| = |L2| → L1 ≃[0, ∞] L2.
+#L1 elim L1 -L1
+[ #X #H lapply (length_inv_zero_sn … H) -H //
+| #L1 #I1 #V1 #IHL1 #X #H elim (length_inv_pos_sn … H) -H
+  #L2 #I2 #V2 #HL12 #H destruct
+  @(leq_pair … (∞)) /2 width=1 by/ (**) (* explicit constructor *)
+]
+qed.
+
 (* Basic forward lemmas *****************************************************)
 
 lemma leq_fwd_length: ∀L1,L2,d,e. L1 ≃[d, e] L2 → |L1| = |L2|.
