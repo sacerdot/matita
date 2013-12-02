@@ -70,7 +70,7 @@ definition reset: ∀A:Type[0]. (tp → A) → tp → A ≝
 definition setleaf: ∀A:Type[0]. nat → (bool → tp → A) → tp → A ≝
  λA,v,k,x.
   let 〈t,p〉 ≝ x in
-  let 〈t',res〉 ≝ setleaf_fun v t p in
+  let 〈t',res〉 ≝ setleaf_fun v t (reverse … p) in
    k res 〈t',p〉.
 
 (*****************************)
@@ -92,3 +92,68 @@ definition example ≝
 lemma test: update ? 5 (λres,x. 〈res,x〉) [false;false] 〈example,nil …〉 = ?.
  normalize //
 qed.
+
+lemma update_fun_correct:
+ ∀v,p,t.
+  admissible t p = false → setleaf_fun v t p = 〈t,false〉.
+ #v #p elim p normalize [#t #abs destruct ]
+ #hd #tl #IH * normalize // #x1 #x2 cases hd normalize #H >IH //
+qed.
+
+lemma rev_append_cons:
+ ∀A,x,l1,l2. rev_append A (x::l1) [] @ l2 = rev_append A l1 []@x::l2.
+ #A #x #l1 #l2 <(associative_append ?? [?]) <reverse_cons //
+qed.
+
+theorem update_correct1:
+ ∀A,v,p1,p2,k,t.
+  admissible t (reverse … p2 @ p1) = false →
+   update A v k p1 〈t,p2〉 = k false 〈t,[]〉.
+ #A #v #p1 elim p1 normalize
+ [ #p2 #k #t #H >update_fun_correct //
+ | #hd #tl #IH #p2 #k #t cases hd normalize nodelta
+  cases t normalize [1,3:#n|2,4:#x1 #x2] #H >IH // cases (admissible ??) //
+qed.
+
+lemma admissible_leaf_cons:
+ ∀n,p1,dir,p2. admissible (leaf n) (p1@dir::p2) = false.
+ #n #p1 elim p1 //
+qed.
+
+theorem update_correct2:
+ ∀A,v,p1,p2,k,t.
+  admissible t (reverse … p2 @ p1) = true →
+   update A v k p1 〈t,p2〉 = update … v k [] 〈t,reverse … p1 @ p2〉.
+#A #v #p1 elim p1 normalize //
+#dir #ptl #IH #p2 #k #t cases dir normalize nodelta cases t normalize nodelta
+[1,3: #n >admissible_leaf_cons #abs destruct
+|*: #x1 #x2 change with (reverse ? (?::ptl)) in match (rev_append ???); >reverse_cons
+      >associative_append #H normalize >IH //
+
+ normalize change with (reverse ? (true::ptl)) in match (rev_append bool ptl [true]);
+[>(reverse_cons … true ptl) | >(reverse_cons … false ptl)]
+[ >(associative_append ??[?]) 
+  
+
+
+theorem update_correct:
+ ∀v,p1,p2,t.
+  let 〈t',res〉 ≝ setleaf_fun v t (reverse … p1 @ p2) in 
+  update ? v (λres,x.〈res,x〉) p2 〈t,p1〉 = 〈res,〈t',nil …〉〉.
+ #v #p1 elim p1 normalize
+  [ #p2 elim p2 normalize
+    [ #x cases x normalize //
+    | #dir #path #IH #x elim x normalize
+      [ #n cases dir normalize
+ 
+ 
+  #p2 elim p normalize
+  [ #t elim t normalize //
+  | * normalize 
+    [ #path #IH
+  
+  
+  #path #IH #x elim x normalize
+    [ #v cases res normalize lapply (IH (leaf v)) -IH elim path
+      normalize // * normalize
+      [2: #path' #IH #IH2 @IH
