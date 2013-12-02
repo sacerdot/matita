@@ -120,22 +120,26 @@ lemma admissible_leaf_cons:
  #n #p1 elim p1 //
 qed.
 
+(*
+lemma admissible_node_cons:
+ ∀x1,x2,p1,p2.
+  admissible (node x1 x2) (rev_append bool p1 [true]@p2)=true →
+   admissible x2 p1=true.
+ #x1 #x2 #p1 elim p1 normalize // #dir #tl #IH #p2 cases x2 normalize
+ [ #n *)
+
 theorem update_correct2:
  ∀A,v,p1,p2,k,t.
-  admissible t (reverse … p2 @ p1) = true →
+  admissible t (p2 @ reverse … p1) = true →
    update A v k p1 〈t,p2〉 = update … v k [] 〈t,reverse … p1 @ p2〉.
 #A #v #p1 elim p1 normalize //
 #dir #ptl #IH #p2 #k #t cases dir normalize nodelta cases t normalize nodelta
 [1,3: #n >admissible_leaf_cons #abs destruct
-|*: #x1 #x2 change with (reverse ? (?::ptl)) in match (rev_append ???); >reverse_cons
-      >associative_append #H normalize >IH //
+|*: #x1 #x2 #H >IH // >rev_append_cons >(?:admissible ? p2 = true) try %
+    <rev_append_cons in H; change with (reverse ??) in match (rev_append ???);
+    
 
- normalize change with (reverse ? (true::ptl)) in match (rev_append bool ptl [true]);
-[>(reverse_cons … true ptl) | >(reverse_cons … false ptl)]
-[ >(associative_append ??[?]) 
-  
-
-
+(* OLD
 theorem update_correct:
  ∀v,p1,p2,t.
   let 〈t',res〉 ≝ setleaf_fun v t (reverse … p1 @ p2) in 
@@ -157,3 +161,4 @@ theorem update_correct:
     [ #v cases res normalize lapply (IH (leaf v)) -IH elim path
       normalize // * normalize
       [2: #path' #IH #IH2 @IH
+*)
