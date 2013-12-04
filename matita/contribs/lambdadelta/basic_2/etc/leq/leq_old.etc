@@ -12,6 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
+axiom- lleq_inv_lref_lt_bi: ∀L1,L2,i,d. L1 ⋕[d, #i] L2 → i < d →
+                           ∀I1,I2,K1,K2,V1,V2. ⇩[0, i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[0, i] L2 ≡ K2.ⓑ{I2}V2 → 
+                           K1 ⋕[d-i-1, V1] K2 ∧ K1 ⋕[d-i-1, V2] K2.
+
 include "Basic-2/grammar/lenv_length.ma".
 
 (* LOCAL ENVIRONMENT EQUALITY ***********************************************)
