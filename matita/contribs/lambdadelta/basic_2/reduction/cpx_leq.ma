@@ -48,6 +48,7 @@ lemma lleq_cpx_trans_leq: ∀h,g,G,L2,T1,T2. ⦃G, L2⦄ ⊢ T1 ➡[h, g] T2 →
 ]
 qed-.
 
+(* Note: this can be proved directly *)
 lemma lleq_cpx_trans: ∀h,g,G,L2,T1,T2. ⦃G, L2⦄ ⊢ T1 ➡[h, g] T2 →
                       ∀L1. L1 ⋕[0, T1] L2 → ⦃G, L1⦄ ⊢ T1 ➡[h, g] T2.
 /4 width=6 by lleq_cpx_trans_leq, lleq_fwd_length, leq_O_Y/ qed-. 

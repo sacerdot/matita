@@ -134,8 +134,8 @@ table {
           }
         ]
         [ { "context-sensitive extended reduction" * } {
-             [ "lpx ( ⦃?,?⦄ ⊢ ➡[?,?] ? )" "lpx_ldrop" + "lpx_lleq" + "lpx_aaa" * ]
-             [ "cpx ( ⦃?,?⦄ ⊢ ? ➡[?,?] ? )" "cpx_lift" + "cpx_lleq" + "cpx_cix" * ]
+             [ "lpx ( ⦃?,?⦄ ⊢ ➡[?,?] ? )" "lpx_leq" + "lpx_ldrop" + "lpx_lleq" + "lpx_aaa" * ]
+             [ "cpx ( ⦃?,?⦄ ⊢ ? ➡[?,?] ? )" "cpx_leq" + "cpx_lift" + "cpx_cix" * ]
           }
         ]
         [ { "context-sensitive extended irreducible forms" * } {
