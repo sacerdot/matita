@@ -32,3 +32,11 @@ lemma cpr_lpr_ssta_fpbs: ∀h,g,G,L1,L2,T1,T2,U2,l2.
 lemma cpxs_fqup_fpbs: ∀h,g,G1,G2,L1,L2,T1,T,T2. ⦃G1, L1⦄ ⊢ T1 ➡*[h, g] T →
                       ⦃G1, L1, T⦄ ⊃+ ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
 /3 width=5 by fpbs_trans, cpxs_fpbs, fqup_fpbs/ qed.
+
+lemma cpxs_fqus_fpbs: ∀h,g,G1,G2,L1,L2,T1,T,T2. ⦃G1, L1⦄ ⊢ T1 ➡*[h, g] T →
+                      ⦃G1, L1, T⦄ ⊃* ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
+/3 width=5 by fpbs_trans, cpxs_fpbs, fqus_fpbs/ qed.
+
+lemma cpxs_fqus_lpxs_fpbs: ∀h,g,G1,G2,L1,L,L2,T1,T,T2. ⦃G1, L1⦄ ⊢ T1 ➡*[h, g] T →
+                           ⦃G1, L1, T⦄ ⊃* ⦃G2, L, T2⦄ → ⦃G2, L⦄ ⊢ ➡*[h, g] L2 → ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
+/3 width=5 by fpbs_trans, cpxs_fqus_fpbs, lpxs_fpbs/ qed.

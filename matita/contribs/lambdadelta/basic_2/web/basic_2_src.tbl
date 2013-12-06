@@ -88,14 +88,15 @@ table {
              [ "csx ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csx_alt ( ⦃?,?⦄ ⊢ ⬊⬊*[?,?] ? )" "csx_lift" + "csx_lpx" * ]
           }
         ]
-        [ { "parallel computation for \"big tree\" normal forms" * } {
-             [ "fpns ( ⦃?,?,?⦄ ⊢ ⋕➡*[?,?] ⦃?,?,?⦄ )" "fpns_fpns" * ]
-          }
-        ]
         [ { "\"big tree\" parallel computation" * } {
              [ "fpbr ( ⦃?,?,?⦄ ⊃≥[?,?] ⦃?,?,?⦄ )" "fpbr_fpbr" * ]             
              [ "fpbg ( ⦃?,?,?⦄ >[?,?] ⦃?,?,?⦄ )" "fpbg_lift" + "fpbg_fpbg" * ]
-             [ "fpbs ( ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "fpbs_alt ( ⦃?,?,?⦄ ≥≥[?,?] ⦃?,?,?⦄ )" "fpbs_lift" + "fpbs_fleq" + "fpbs_fpbs" * ]
+             [ "fpbc ( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" "fpbc_lift" + "fpbc_fpns" * ]
+             [ "fpbs ( ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "fpbs_alt ( ⦃?,?,?⦄ ≥≥[?,?] ⦃?,?,?⦄ )" "fpbs_lift" + "fpbs_fpbs" * ]
+          }
+        ]
+        [ { "parallel computation for \"big tree\" normal forms" * } {
+             [ "fpns ( ⦃?,?,?⦄ ⊢ ⋕➡*[?,?] ⦃?,?,?⦄ )" "fpns_fpns" * ]
           }
         ]
         [ { "decomposed extended computation" * } {
@@ -125,7 +126,6 @@ table {
    class "water"
    [ { "reduction" * } {
         [ { "\"big tree\" parallel reduction" * } {
-             [ "fpbc ( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" "fpbc_lift" * ]
              [ "fpb ( ⦃?,?,?⦄ ≽[?,?] ⦃?,?,?⦄ )" "fpb_lift" * ]
           }
         ]

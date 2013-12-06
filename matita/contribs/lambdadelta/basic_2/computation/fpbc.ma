@@ -13,13 +13,15 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/btpredproper_8.ma".
-include "basic_2/reduction/fpb.ma".
+include "basic_2/relocation/lleq.ma".
+include "basic_2/computation/fpbs.ma".
 
-(* "BIG TREE" PROPER PARALLEL REDUCTION FOR CLOSURES ************************)
+(* ATOMIC "BIG TREE" PROPER PARALLEL COMPUTATION FOR CLOSURES ***************)
 
 inductive fpbc (h) (g) (G1) (L1) (T1): relation3 genv lenv term ≝
-| fpbc_fqu: ∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ → fpbc h g G1 L1 T1 G2 L2 T2
-| fpbc_cpx: ∀T2. ⦃G1, L1⦄ ⊢ T1 ➡[h, g] T2 → (T1 = T2 → ⊥) → fpbc h g G1 L1 T1 G1 L1 T2
+| fpbc_fqup: ∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊃+ ⦃G2, L2, T2⦄ → fpbc h g G1 L1 T1 G2 L2 T2
+| fpbc_cpxs: ∀T2. ⦃G1, L1⦄ ⊢ T1 ➡*[h, g] T2 → (T1 = T2 → ⊥) → fpbc h g G1 L1 T1 G1 L1 T2
+| fpbc_lpxs: ∀L2. ⦃G1, L1⦄ ⊢ ➡*[h, g] L2 → (L1 ⋕[0, T1] L2 → ⊥) → fpbc h g G1 L1 T1 G1 L2 T1
 .
 
 interpretation
@@ -28,14 +30,18 @@ interpretation
 
 (* Basic properties *********************************************************)
 
-lemma cpr_fpbc: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡ T2 → (T1 = T2 → ⊥) →
-                ⦃G, L, T1⦄ ≻[h, g] ⦃G, L, T2⦄.
-/3 width=1 by fpbc_cpx, cpr_cpx/ qed.
+lemma cprs_fpbc: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡* T2 → (T1 = T2 → ⊥) →
+                 ⦃G, L, T1⦄ ≻[h, g] ⦃G, L, T2⦄.
+/3 width=1 by fpbc_cpxs, cprs_cpxs/ qed.
+
+lemma lprs_fpbc: ∀h,g,G,L1,L2,T. ⦃G, L1⦄ ⊢ ➡* L2 → (L1 ⋕[0, T] L2 → ⊥) →
+                 ⦃G, L1, T⦄ ≻[h, g] ⦃G, L2, T⦄.
+/3 width=1 by fpbc_lpxs, lprs_lpxs/ qed.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma fpbc_fwd_fpb: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≻[h, g] ⦃G2, L2, T2⦄ →
-                    ⦃G1, L1, T1⦄ ≽[h, g] ⦃G2, L2, T2⦄.
+lemma fpbc_fwd_fpbs: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≻[h, g] ⦃G2, L2, T2⦄ →
+                     ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2
-/3 width=1 by fpb_fquq, fpb_cpx, fqu_fquq/
+/3 width=1 by lpxs_fpbs, cpxs_fpbs, fqup_fpbs/
 qed-.

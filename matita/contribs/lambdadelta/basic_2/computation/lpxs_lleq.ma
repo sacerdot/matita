@@ -18,6 +18,20 @@ include "basic_2/computation/lpxs_cpxs.ma".
 
 (* SN EXTENDED PARALLEL COMPUTATION FOR LOCAL ENVIRONMENTS ******************)
 
+(* Inversion lemmas on lazy equivalence for local environments **************)
+
+lemma lpxs_nlleq_inv_step_sn: ∀h,g,G,L1,L2,T,d. ⦃G, L1⦄ ⊢ ➡*[h, g] L2 → (L1 ⋕[d, T] L2 → ⊥) →
+                              ∃∃L. ⦃G, L1⦄ ⊢ ➡*[h, g] L & L1 ⋕[d, T] L → ⊥ & ⦃G, L⦄ ⊢ ➡*[h, g] L2.
+#h #g #G #L1 #L2 #T #d #H @(lpxs_ind_dx … H) -L1
+[ #H elim H -H //
+| #L1 #L #H1 #H2 #IH2 #H12 elim (lleq_dec T L1 L d) #H
+  [ -H2 elim IH2 -IH2
+    /4 width=4 by lpxs_strap2, lleq_canc_sn, lleq_trans, ex3_intro/
+  | -IH2 -H12 /3 width=4 by lpx_lpxs, ex3_intro/ (**) (* auto fails without clear *)
+  ]
+]
+qed-.
+
 (* Properties on lazy equivalence for local environments ********************)
 
 lemma lpxs_lleq_fqu_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ →
