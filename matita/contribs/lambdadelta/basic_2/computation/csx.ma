@@ -32,8 +32,8 @@ lemma csx_ind: ∀h,g,G,L. ∀R:predicate term.
                      R T1
                ) →
                ∀T. ⦃G, L⦄ ⊢ ⬊*[h, g] T → R T.
-#h #g #G #L #R #H0 #T1 #H elim H -T1 #T1 #HT1 #IHT1
-@H0 -H0 /3 width=1/ -IHT1 /4 width=1/
+#h #g #G #L #R #H0 #T1 #H elim H -T1
+/5 width=1 by SN_intro/
 qed-.
 
 (* Basic properties *********************************************************)
@@ -42,28 +42,25 @@ qed-.
 lemma csx_intro: ∀h,g,G,L,T1.
                  (∀T2. ⦃G, L⦄ ⊢ T1 ➡[h, g] T2 → (T1 = T2 → ⊥) → ⦃G, L⦄ ⊢ ⬊*[h, g] T2) →
                  ⦃G, L⦄ ⊢ ⬊*[h, g] T1.
-/4 width=1/ qed.
+/4 width=1 by SN_intro/ qed.
 
 lemma csx_cpx_trans: ∀h,g,G,L,T1. ⦃G, L⦄ ⊢ ⬊*[h, g] T1 →
                      ∀T2. ⦃G, L⦄ ⊢ T1 ➡[h, g] T2 → ⦃G, L⦄ ⊢ ⬊*[h, g] T2.
-#h #g #G #L #T1 #H elim H -T1 #T1 #HT1 #IHT1 #T2 #HLT12
-@csx_intro #T #HLT2 #HT2
-elim (eq_term_dec T1 T2) #HT12
-[ -IHT1 -HLT12 destruct /3 width=1/
-| -HT1 -HT2 /3 width=4/
+#h #g #G #L #T1 #H @(csx_ind … H) -T1 #T1 #HT1 #IHT1 #T2 #HLT12
+elim (eq_term_dec T1 T2) #HT12 destruct /3 width=4 by/
 qed-.
 
 (* Basic_1: was just: sn3_nf2 *)
 lemma cnx_csx: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ 𝐍[h, g]⦃T⦄ → ⦃G, L⦄ ⊢ ⬊*[h, g] T.
-/2 width=1/ qed.
+/2 width=1 by NF_to_SN/ qed.
 
-lemma cnx_sort: ∀h,g,G,L,k. ⦃G, L⦄ ⊢ ⬊*[h, g] ⋆k.
+lemma csx_sort: ∀h,g,G,L,k. ⦃G, L⦄ ⊢ ⬊*[h, g] ⋆k.
 #h #g #G #L #k elim (deg_total h g k)
-#l generalize in match k; -k @(nat_ind_plus … l) -l /3 width=1/
+#l generalize in match k; -k @(nat_ind_plus … l) -l /3 width=6 by cnx_csx, cnx_sort/
 #l #IHl #k #Hkl lapply (deg_next_SO … Hkl) -Hkl
 #Hkl @csx_intro #X #H #HX elim (cpx_inv_sort1 … H) -H
 [ #H destruct elim HX //
-| -HX * #l0 #_ #H destruct -l0 /2 width=1/
+| -HX * #l0 #_ #H destruct -l0 /2 width=1 by/
 ]
 qed.
 
@@ -76,7 +73,7 @@ elim (cpx_inv_cast1 … H1) -H1
 [ * #W0 #T0 #HLW0 #HLT0 #H destruct
   elim (eq_false_inv_tpair_sn … H2) -H2
   [ /3 width=3 by csx_cpx_trans/
-  | -HLW0 * #H destruct /3 width=1/
+  | -HLW0 * #H destruct /3 width=1 by/
   ]
 |2,3: /3 width=3 by csx_cpx_trans/
 ]
@@ -88,7 +85,8 @@ fact csx_fwd_pair_sn_aux: ∀h,g,G,L,U. ⦃G, L⦄ ⊢ ⬊*[h, g] U →
                           ∀I,V,T. U = ②{I}V.T → ⦃G, L⦄ ⊢ ⬊*[h, g] V.
 #h #g #G #L #U #H elim H -H #U0 #_ #IH #I #V #T #H destruct
 @csx_intro #V2 #HLV2 #HV2
-@(IH (②{I}V2.T)) -IH // /2 width=1/ -HLV2 #H destruct /2 width=1/
+@(IH (②{I}V2.T)) -IH /2 width=3 by cpx_pair_sn/ -HLV2
+#H destruct /2 width=1 by/
 qed-.
 
 (* Basic_1: was just: sn3_gen_head *)
@@ -99,7 +97,8 @@ fact csx_fwd_bind_dx_aux: ∀h,g,G,L,U. ⦃G, L⦄ ⊢ ⬊*[h, g] U →
                           ∀a,I,V,T. U = ⓑ{a,I}V.T → ⦃G, L.ⓑ{I}V⦄ ⊢ ⬊*[h, g] T.
 #h #g #G #L #U #H elim H -H #U0 #_ #IH #a #I #V #T #H destruct
 @csx_intro #T2 #HLT2 #HT2
-@(IH (ⓑ{a,I}V.T2)) -IH // /2 width=1/ -HLT2 #H destruct /2 width=1/
+@(IH (ⓑ{a,I}V.T2)) -IH /2 width=3 by cpx_bind/ -HLT2
+#H destruct /2 width=1 by/
 qed-.
 
 (* Basic_1: was just: sn3_gen_bind *)
@@ -110,7 +109,8 @@ fact csx_fwd_flat_dx_aux: ∀h,g,G,L,U. ⦃G, L⦄ ⊢ ⬊*[h, g] U →
                           ∀I,V,T. U = ⓕ{I}V.T → ⦃G, L⦄ ⊢ ⬊*[h, g] T.
 #h #g #G #L #U #H elim H -H #U0 #_ #IH #I #V #T #H destruct
 @csx_intro #T2 #HLT2 #HT2
-@(IH (ⓕ{I}V.T2)) -IH // /2 width=1/ -HLT2 #H destruct /2 width=1/
+@(IH (ⓕ{I}V.T2)) -IH /2 width=3 by cpx_flat/ -HLT2
+#H destruct /2 width=1 by/
 qed-.
 
 (* Basic_1: was just: sn3_gen_flat *)

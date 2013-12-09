@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/lpxs_lleq.ma".
+include "basic_2/relocation/lleq_lleq.ma".
 include "basic_2/computation/fpns.ma".
 include "basic_2/computation/fpbs_alt.ma".
 include "basic_2/computation/fpbc.ma".
@@ -27,13 +27,11 @@ lemma fpbs_fwd_fpbc_sn: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≥[h, g] ⦃
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 #H elim(fpbs_fpbsa … H) -H
 #L #T #HT1 #HT2 #HL2 elim (eq_term_dec T1 T) #H destruct
 [ -HT1 elim (fqus_inv_gen … HT2) -HT2
-  [ #HT2 elim (fqup_inv_step_sn … HT2) -HT2
-    #H6 #H7 #H8 #H9 #H10 @or_intror @(ex2_3_intro … H6 H7 H8)
-    /5 width=9 by fpbsa_inv_fpbs, fpbc_fqup, fqu_fqup, ex3_2_intro, ex2_3_intro, or_intror/
+  [ #HT2 @or_intror
+    /5 width=9 by fpbsa_inv_fpbs, fpbc_fqup, ex3_2_intro, ex2_3_intro, or_intror/
   | * #HG #HL #HT destruct elim (lleq_dec T2 L L2 0) #H
     [ /3 width=1 by fpns_intro, or_introl/
-    | elim (lpxs_nlleq_inv_step_sn … HL2 H) -HL2 -H
-      /5 width=5 by fpbc_lpxs, lpxs_fpbs, ex2_3_intro, or_intror/
+    | /5 width=5 by fpbc_lpxs, ex2_3_intro, or_intror/
     ]
   ]
 | elim (cpxs_neq_inv_step_sn … HT1 H) -HT1 -H

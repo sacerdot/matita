@@ -18,19 +18,16 @@ include "basic_2/computation/lpxs_cpxs.ma".
 
 (* SN EXTENDED PARALLEL COMPUTATION FOR LOCAL ENVIRONMENTS ******************)
 
-(* Inversion lemmas on lazy equivalence for local environments **************)
+(* Advanced properties ******************************************************)
 
-lemma lpxs_nlleq_inv_step_sn: ∀h,g,G,L1,L2,T,d. ⦃G, L1⦄ ⊢ ➡*[h, g] L2 → (L1 ⋕[d, T] L2 → ⊥) →
-                              ∃∃L. ⦃G, L1⦄ ⊢ ➡*[h, g] L & L1 ⋕[d, T] L → ⊥ & ⦃G, L⦄ ⊢ ➡*[h, g] L2.
-#h #g #G #L1 #L2 #T #d #H @(lpxs_ind_dx … H) -L1
-[ #H elim H -H //
-| #L1 #L #H1 #H2 #IH2 #H12 elim (lleq_dec T L1 L d) #H
-  [ -H2 elim IH2 -IH2
-    /4 width=4 by lpxs_strap2, lleq_canc_sn, lleq_trans, ex3_intro/
-  | -IH2 -H12 /3 width=4 by lpx_lpxs, ex3_intro/ (**) (* auto fails without clear *)
-  ]
-]
-qed-.
+axiom lleq_lpxs_trans_nlleq: ∀h,g,G,L1s,L1d,T,d. L1s ⋕[d, T] L1d →
+                             ∀L2d. ⦃G, L1d⦄ ⊢ ➡*[h, g] L2d → (L1d ⋕[d, T] L2d → ⊥) →
+                             ∃∃L2s. ⦃G, L1s⦄ ⊢ ➡*[h, g] L2s & L2s ⋕[d, T] L2d & L1s ⋕[d, T] L2s → ⊥.
+
+(* Advanced inversion lemmas ************************************************)
+
+axiom lpxs_inv_cpxs_nlleq: ∀h,g,G,L1,L2,T1. ⦃G, L1⦄ ⊢ ➡*[h,g] L2 → (L1 ⋕[O, T1] L2 → ⊥) →
+                           ∃∃T2. ⦃G, L1⦄ ⊢ T1 ➡*[h, g] T2 & T1 = T2 → ⊥ & ⦃G, L2⦄ ⊢ T1 ➡[h, g] T2.
 
 (* Properties on lazy equivalence for local environments ********************)
 

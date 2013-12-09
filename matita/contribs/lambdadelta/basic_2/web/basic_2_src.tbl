@@ -84,8 +84,9 @@ table {
           }
         ]
         [ { "strongly normalizing extended computation" * } {
-             [ "csx_vector ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csx_tstc_vector" + "csx_aaa" * ]
-             [ "csx ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csx_alt ( ⦃?,?⦄ ⊢ ⬊⬊*[?,?] ? )" "csx_lift" + "csx_lpx" * ]
+             [ "lsx ()" "lsx_cpxs" + "lsx_fpbc" + "lsx_csx" * ]
+	     [ "csx_vector ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csx_tstc_vector" + "csx_aaa" * ]
+             [ "csx ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csx_alt ( ⦃?,?⦄ ⊢ ⬊⬊*[?,?] ? )" "csx_lift" + "csx_lpx" + "csx_fpbs" * ]
           }
         ]
         [ { "\"big tree\" parallel computation" * } {
