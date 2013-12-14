@@ -16,31 +16,31 @@ include "basic_2/notation/relations/btpredproper_8.ma".
 include "basic_2/relocation/lleq.ma".
 include "basic_2/computation/fpbs.ma".
 
-(* ATOMIC "BIG TREE" PROPER PARALLEL COMPUTATION FOR CLOSURES ***************)
+(* UNITARY "BIG TREE" PROPER PARALLEL COMPUTATION FOR CLOSURES **************)
 
-inductive fpbc (h) (g) (G1) (L1) (T1): relation3 genv lenv term ≝
-| fpbc_fqup: ∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊃+ ⦃G2, L2, T2⦄ → fpbc h g G1 L1 T1 G2 L2 T2
-| fpbc_cpxs: ∀T2. ⦃G1, L1⦄ ⊢ T1 ➡*[h, g] T2 → (T1 = T2 → ⊥) → fpbc h g G1 L1 T1 G1 L1 T2
-| fpbc_lpxs: ∀L2. ⦃G1, L1⦄ ⊢ ➡*[h, g] L2 → (L1 ⋕[0, T1] L2 → ⊥) → fpbc h g G1 L1 T1 G1 L2 T1
+inductive fpbu (h) (g) (G1) (L1) (T1): relation3 genv lenv term ≝
+| fpbu_fqup: ∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊃+ ⦃G2, L2, T2⦄ → fpbu h g G1 L1 T1 G2 L2 T2
+| fpbu_cpxs: ∀T2. ⦃G1, L1⦄ ⊢ T1 ➡*[h, g] T2 → (T1 = T2 → ⊥) → fpbu h g G1 L1 T1 G1 L1 T2
+| fpbu_lpxs: ∀L2. ⦃G1, L1⦄ ⊢ ➡*[h, g] L2 → (L1 ⋕[0, T1] L2 → ⊥) → fpbu h g G1 L1 T1 G1 L2 T1
 .
 
 interpretation
-   "'big tree' proper parallel reduction (closure)"
-   'BTPRedProper h g G1 L1 T1 G2 L2 T2 = (fpbc h g G1 L1 T1 G2 L2 T2).
+   "unitary 'big tree' proper parallel reduction (closure)"
+   'BTPRedProper h g G1 L1 T1 G2 L2 T2 = (fpbu h g G1 L1 T1 G2 L2 T2).
 
 (* Basic properties *********************************************************)
 
-lemma cprs_fpbc: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡* T2 → (T1 = T2 → ⊥) →
+lemma cprs_fpbu: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡* T2 → (T1 = T2 → ⊥) →
                  ⦃G, L, T1⦄ ≻[h, g] ⦃G, L, T2⦄.
-/3 width=1 by fpbc_cpxs, cprs_cpxs/ qed.
+/3 width=1 by fpbu_cpxs, cprs_cpxs/ qed.
 
-lemma lprs_fpbc: ∀h,g,G,L1,L2,T. ⦃G, L1⦄ ⊢ ➡* L2 → (L1 ⋕[0, T] L2 → ⊥) →
+lemma lprs_fpbu: ∀h,g,G,L1,L2,T. ⦃G, L1⦄ ⊢ ➡* L2 → (L1 ⋕[0, T] L2 → ⊥) →
                  ⦃G, L1, T⦄ ≻[h, g] ⦃G, L2, T⦄.
-/3 width=1 by fpbc_lpxs, lprs_lpxs/ qed.
+/3 width=1 by fpbu_lpxs, lprs_lpxs/ qed.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma fpbc_fwd_fpbs: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≻[h, g] ⦃G2, L2, T2⦄ →
+lemma fpbu_fwd_fpbs: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≻[h, g] ⦃G2, L2, T2⦄ →
                      ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2
 /3 width=1 by lpxs_fpbs, cpxs_fpbs, fqup_fpbs/

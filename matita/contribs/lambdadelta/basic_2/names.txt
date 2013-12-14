@@ -82,10 +82,11 @@ x: extended reduction
 
 - forth letter (if present)
 
-c: proper single step                          (successor)
+c: proper single step (general)                (successor)
 e: reflexive transitive closure to normal form (evaluation)
 g: proper multiple step (general)              (greater)
 p: non-reflexive transitive closure            (plus)
 q: reflexive closure                           (question)
 r: proper multiple step (restricted)           (restricted)
 s: reflexive transitive closure                (star)
+u: proper single step (restricted)             (unit)

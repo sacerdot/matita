@@ -24,3 +24,8 @@ lemma lleq_cpxs_trans: ∀h,g,G,L2,T1,T2. ⦃G, L2⦄ ⊢ T1 ➡*[h, g] T2 →
 #h #g #G #L2 #T1 #T2 #H @(cpxs_ind_dx … H) -T1
 /4 width=6 by lleq_cpx_conf_dx, lleq_cpx_trans, cpxs_strap2/
 qed-.
+
+lemma lleq_cpxs_conf_dx: ∀h,g,G,L2,T1,T2. ⦃G, L2⦄ ⊢ T1 ➡*[h, g] T2 →
+                         ∀L1. L1 ⋕[0, T1] L2 → L1 ⋕[0, T2] L2.
+#h #g #G #L2 #T1 #T2 #H @(cpxs_ind … H) -T2 /3 width=6 by lleq_cpx_conf_dx/
+qed-.

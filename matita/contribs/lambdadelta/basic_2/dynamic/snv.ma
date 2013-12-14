@@ -79,13 +79,13 @@ fact snv_inv_bind_aux: ∀h,g,G,L,X. ⦃G, L⦄ ⊢ X ¡[h, g] → ∀a,I,V,T. X
 qed-.
 
 lemma snv_inv_bind: ∀h,g,a,I,G,L,V,T. ⦃G, L⦄ ⊢ ⓑ{a,I}V.T ¡[h, g] →
-                        ⦃G, L⦄ ⊢ V ¡[h, g] ∧ ⦃G, L.ⓑ{I}V⦄ ⊢ T ¡[h, g].
+                    ⦃G, L⦄ ⊢ V ¡[h, g] ∧ ⦃G, L.ⓑ{I}V⦄ ⊢ T ¡[h, g].
 /2 width=4 by snv_inv_bind_aux/ qed-.
 
 fact snv_inv_appl_aux: ∀h,g,G,L,X. ⦃G, L⦄ ⊢ X ¡[h, g] → ∀V,T. X = ⓐV.T →
                        ∃∃a,W,W0,U,l. ⦃G, L⦄ ⊢ V ¡[h, g] & ⦃G, L⦄ ⊢ T ¡[h, g] &
-                                   ⦃G, L⦄ ⊢ V ▪[h, g] l+1 & ⦃G, L⦄ ⊢ V •[h, g] W & ⦃G, L⦄ ⊢ W ➡* W0 &
-                                   ⦃G, L⦄ ⊢ T •*➡*[h, g] ⓛ{a}W0.U.
+                                     ⦃G, L⦄ ⊢ V ▪[h, g] l+1 & ⦃G, L⦄ ⊢ V •[h, g] W & ⦃G, L⦄ ⊢ W ➡* W0 &
+                                     ⦃G, L⦄ ⊢ T •*➡*[h, g] ⓛ{a}W0.U.
 #h #g #G #L #X * -L -X
 [ #G #L #k #V #T #H destruct
 | #I #G #L #K #V0 #i #_ #_ #V #T #H destruct
@@ -97,8 +97,8 @@ qed-.
 
 lemma snv_inv_appl: ∀h,g,G,L,V,T. ⦃G, L⦄ ⊢ ⓐV.T ¡[h, g] →
                     ∃∃a,W,W0,U,l. ⦃G, L⦄ ⊢ V ¡[h, g] & ⦃G, L⦄ ⊢ T ¡[h, g] &
-                                ⦃G, L⦄ ⊢ V ▪[h, g] l+1 & ⦃G, L⦄ ⊢ V •[h, g] W & ⦃G, L⦄ ⊢ W ➡* W0 &
-                                ⦃G, L⦄ ⊢ T •*➡*[h, g] ⓛ{a}W0.U.
+                                  ⦃G, L⦄ ⊢ V ▪[h, g] l+1 & ⦃G, L⦄ ⊢ V •[h, g] W & ⦃G, L⦄ ⊢ W ➡* W0 &
+                                  ⦃G, L⦄ ⊢ T •*➡*[h, g] ⓛ{a}W0.U.
 /2 width=3 by snv_inv_appl_aux/ qed-.
 
 fact snv_inv_cast_aux: ∀h,g,G,L,X. ⦃G, L⦄ ⊢ X ¡[h, g] → ∀W,T. X = ⓝW.T →

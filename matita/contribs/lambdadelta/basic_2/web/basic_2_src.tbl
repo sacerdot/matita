@@ -80,20 +80,20 @@ table {
           }
         ]
         [ { "strongly normalizing \"big tree\" computation" * } {
-             [ "fsb ( ⦃?,?⦄ ⊢ ⦥[?,?] ? )" "fsb_alt ( ⦃?,?⦄ ⊢ ⦥⦥[?,?] ? )" "fsb_fleq" + "fsb_csx" * ]
+             [ "fsb ( ⦃?,?⦄ ⊢ ⦥[?,?] ? )" "fsb_alt ( ⦃?,?⦄ ⊢ ⦥⦥[?,?] ? )" "fsb_aaa" + "fsb_csx" * ]
           }
         ]
         [ { "strongly normalizing extended computation" * } {
-             [ "lsx ()" "lsx_cpxs" + "lsx_fpbc" + "lsx_csx" * ]
-	     [ "csx_vector ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csx_tstc_vector" + "csx_aaa" * ]
+             [ "lsx ( ? ⊢ ⬊*[?,?,?] ? )" "lsx_cpxs" + "lsx_csx" * ]
+             [ "csx_vector ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csx_tstc_vector" + "csx_aaa" * ]
              [ "csx ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csx_alt ( ⦃?,?⦄ ⊢ ⬊⬊*[?,?] ? )" "csx_lift" + "csx_lpx" + "csx_fpbs" * ]
           }
         ]
         [ { "\"big tree\" parallel computation" * } {
-             [ "fpbr ( ⦃?,?,?⦄ ⊃≥[?,?] ⦃?,?,?⦄ )" "fpbr_fpbr" * ]             
-             [ "fpbg ( ⦃?,?,?⦄ >[?,?] ⦃?,?,?⦄ )" "fpbg_lift" + "fpbg_fpbg" * ]
-             [ "fpbc ( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" "fpbc_lift" + "fpbc_fpns" * ]
-             [ "fpbs ( ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "fpbs_alt ( ⦃?,?,?⦄ ≥≥[?,?] ⦃?,?,?⦄ )" "fpbs_lift" + "fpbs_fpbs" * ]
+             [ "fpbg ( ⦃?,?,?⦄ >⋕[?,?] ⦃?,?,?⦄ )" "fpbg_lift" + "fpbg_fpns" + "fpbg_fpbg" * ]
+             [ "fpbc ( ⦃?,?,?⦄ ≻⋕[?,?] ⦃?,?,?⦄ )" "fpbc_fpns" + "fpbc_fpbs" * ]
+             [ "fpbu ( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" "fpbu_lift" + "fpbu_fpns" * ]
+             [ "fpbs ( ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "fpbs_alt ( ⦃?,?,?⦄ ≥≥[?,?] ⦃?,?,?⦄ )" "fpbs_lift" + "fpbs_fpns" + "fpbs_fpbs" * ]
           }
         ]
         [ { "parallel computation for \"big tree\" normal forms" * } {

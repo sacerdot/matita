@@ -22,9 +22,9 @@ include "basic_2/dynamic/snv_cpcs.ma".
 (* Properties on degree assignment for terms ********************************)
 
 fact da_cpr_lpr_aux: ∀h,g,G0,L0,T0.
-                     (∀G1,L1,T1. ⦃G0, L0, T0⦄ ⊃≥[h, g] ⦃G1, L1, T1⦄ → IH_snv_lsstas h g G1 L1 T1) →
-                     (∀G1,L1,T1. ⦃G0, L0, T0⦄ ⊃≥[h, g] ⦃G1, L1, T1⦄ → IH_snv_cpr_lpr h g G1 L1 T1) →
-                     (∀G1,L1,T1. ⦃G0, L0, T0⦄ ⊃≥[h, g] ⦃G1, L1, T1⦄ → IH_da_cpr_lpr h g G1 L1 T1) →
+                     (∀G1,L1,T1. ⦃G0, L0, T0⦄ >⋕[h, g] ⦃G1, L1, T1⦄ → IH_snv_lsstas h g G1 L1 T1) →
+                     (∀G1,L1,T1. ⦃G0, L0, T0⦄ >⋕[h, g] ⦃G1, L1, T1⦄ → IH_snv_cpr_lpr h g G1 L1 T1) →
+                     (∀G1,L1,T1. ⦃G0, L0, T0⦄ >⋕[h, g] ⦃G1, L1, T1⦄ → IH_da_cpr_lpr h g G1 L1 T1) →
                      ∀G1,L1,T1. G0 = G1 → L0 = L1 → T0 = T1 → IH_da_cpr_lpr h g G1 L1 T1.
 #h #g #G0 #L0 #T0 #IH3 #IH2 #IH1 #G1 #L1 * * [|||| * ]
 [ #k #_ #_ #_ #_ #l #H2 #X3 #H3 #L2 #_ -IH3 -IH2 -IH1
@@ -39,14 +39,14 @@ fact da_cpr_lpr_aux: ∀h,g,G0,L0,T0.
     lapply (fqup_lref … G1 … HLK1)
     elim (lpr_ldrop_conf … HLK1 … HL12) -HLK1 -HL12 #X #H #HLK2
     elim (lpr_inv_pair1 … H) -H #K2 #V2 #HK12 #HV12 #H destruct
-    /4 width=10 by da_ldef, da_ldec, fqup_fpbr/
+    /4 width=10 by da_ldef, da_ldec, fqup_fpbg/
   |2,4: * #K0 #V0 #W0 #H #HVW0 #HW0
     lapply (ldrop_mono … H … HLK1) -H #H destruct
     lapply (fqup_lref … G1 … HLK1)
     elim (lpr_ldrop_conf … HLK1 … HL12) -HLK1 -HL12 #X #H #HLK2
     elim (lpr_inv_pair1 … H) -H #K2 #V2 #HK12 #_ #H destruct
     lapply (ldrop_fwd_ldrop2 … HLK2) -V2
-    /4 width=7 by da_lift, fqup_fpbr/
+    /4 width=7 by da_lift, fqup_fpbg/
   ]
 | #p #_ #_ #HT0 #H1 destruct -IH3 -IH2 -IH1
   elim (snv_inv_gref … H1)
@@ -55,15 +55,15 @@ fact da_cpr_lpr_aux: ∀h,g,G0,L0,T0.
   lapply (da_inv_bind … H2) -H2
   elim (cpr_inv_bind1 … H3) -H3 *
   [ #V2 #T2 #HV12 #HT12 #H destruct
-    /4 width=9 by da_bind, fqup_fpbr, lpr_pair/
+    /4 width=9 by da_bind, fqup_fpbg, lpr_pair/
   | #T2 #HT12 #HT2 #H1 #H2 destruct
-    /4 width=11 by da_inv_lift, fqup_fpbr, lpr_pair, ldrop_ldrop/
+    /4 width=11 by da_inv_lift, fqup_fpbg, lpr_pair, ldrop_ldrop/
   ]
 | #V1 #T1 #HG0 #HL0 #HT0 #H1 #l #H2 #X3 #H3 #L2 #HL12 destruct
   elim (snv_inv_appl … H1) -H1 #b0 #W1 #W0 #T0 #l0 #HV1 #HT1 #Hl0 #HVW1 #HW10 #HT10
   lapply (da_inv_flat … H2) -H2 #Hl
   elim (cpr_inv_appl1 … H3) -H3 *
-  [ #V2 #T2 #HV12 #HT12 #H destruct -IH3 -IH2 /4 width=7 by da_flat, fqup_fpbr/
+  [ #V2 #T2 #HV12 #HT12 #H destruct -IH3 -IH2 /4 width=7 by da_flat, fqup_fpbg/
   | #b #V2 #W #W2 #U1 #U2 #HV12 #HW2 #HU12 #H1 #H2 destruct
     elim (snv_inv_bind … HT1) -HT1 #HW #HU1
     lapply (da_inv_bind … Hl) -Hl #Hl
@@ -71,24 +71,24 @@ fact da_cpr_lpr_aux: ∀h,g,G0,L0,T0.
     lapply (cprs_div … HW3 … HW10) -W3 #HWW1
     lapply (ssta_da_conf … HVW1 … Hl0) <minus_plus_m_m #H
     elim (snv_fwd_da … HW) #l1 #Hl1
-    lapply (IH3 … HV1 … 1 … Hl0 W1 ?) /2 width=2 by fqup_fpbr, ssta_lsstas/ #HW1
+    lapply (IH3 … HV1 … 1 … Hl0 W1 ?) /2 width=2 by fqup_fpbg, ssta_lsstas/ #HW1
     lapply (da_cpcs_aux … IH2 IH1 … Hl1 … H … HWW1) -H
-    /3 width=5 by fpbr_fpbs_trans, fqup_fpbr, ssta_fpbs/ #H destruct
-    lapply (IH1 … HV1 … Hl0 … HV12 … HL12) -HV1 -Hl0 -HV12 [ /2 by fqup_fpbr/ ] #Hl0
-    lapply (IH1 … Hl1 … HW2 … HL12) -Hl1 // /2 width=1 by fqup_fpbr/ -HW
-    lapply (IH1 … HU1 … Hl … HU12 (L2.ⓛW2) ?) -IH1 -HU1 -Hl -HU12 [1,2: /2 by fqup_fpbr, lpr_pair/ ] -HL12 -HW2
+    /3 width=5 by fpbg_fpbs_trans, fqup_fpbg, ssta_fpbs/ #H destruct
+    lapply (IH1 … HV1 … Hl0 … HV12 … HL12) -HV1 -Hl0 -HV12 [ /2 by fqup_fpbg/ ] #Hl0
+    lapply (IH1 … Hl1 … HW2 … HL12) -Hl1 // /2 width=1 by fqup_fpbg/ -HW
+    lapply (IH1 … HU1 … Hl … HU12 (L2.ⓛW2) ?) -IH1 -HU1 -Hl -HU12 [1,2: /2 by fqup_fpbg, lpr_pair/ ] -HL12 -HW2
     /4 width=6 by da_bind, lsubd_da_trans, lsubd_abbr/
   | #b #V #V2 #W #W2 #U1 #U2 #HV1 #HV2 #HW2 #HU12 #H1 #H2 destruct -IH3 -IH2 -V -W0 -T0 -l0 -HV1 -HVW1
     elim (snv_inv_bind … HT1) -HT1 #_
     lapply (da_inv_bind … Hl) -Hl
-    /5 width=9 by da_bind, da_flat, fqup_fpbr, lpr_pair/
+    /5 width=9 by da_bind, da_flat, fqup_fpbg, lpr_pair/
   ]
 | #W1 #T1 #HG0 #HL0 #HT0 #H1 #l #H2 #X3 #H3 #L2 #HL12 destruct -IH3 -IH2
   elim (snv_inv_cast … H1) -H1 #U1 #l0 #HW1 #HT1 #Hl0 #HTU1 #HUW1
   lapply (da_inv_flat … H2) -H2 #Hl
   elim (cpr_inv_cast1 … H3) -H3
-  [ * #W2 #T2 #HW12 #HT12 #H destruct /4 width=7 by da_flat, fqup_fpbr/
-  | /3 width=7 by fqup_fpbr/
+  [ * #W2 #T2 #HW12 #HT12 #H destruct /4 width=7 by da_flat, fqup_fpbg/
+  | /3 width=7 by fqup_fpbg/
   ]
 ]
 qed-.
