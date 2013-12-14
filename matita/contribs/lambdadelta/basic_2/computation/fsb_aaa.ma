@@ -28,7 +28,7 @@ theorem aaa_fsba: ∀h,g,G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ⦃G, L⦄ ⊢ ⦥�
 /3 width=2 by fsb_fsba, aaa_fsb/ qed.
 
 (* Advanced eliminators on atomica arity assignment for terms ***************)
-
+(*
 fact aaa_ind_fpbu: ∀h,g. ∀R:relation3 genv lenv term.
                    (∀G1,L1,T1,A. ⦃G1, L1⦄ ⊢ T1 ⁝ A →
                                  (∀G2,L2,T2. ⦃G1, L1, T1⦄ ≻[h, g] ⦃G2, L2, T2⦄ → R G2 L2 T2) →
@@ -37,4 +37,5 @@ fact aaa_ind_fpbu: ∀h,g. ∀R:relation3 genv lenv term.
                     ∀G,L,T. ⦃G, L⦄ ⊢ ⬊*[h, g] T → ∀A. ⦃G, L⦄ ⊢ T ⁝ A → R G L T.
 #h #g #R #IH #G #L #T #H @(csx_ind_fpbu … H) -G -L -T
 #G1 #L1 #T1 #H1 #IH1 #A1 #HTA1 @IH -IH //
-#G2 #L2 #T2 #H12 @IH1 // 
+#G2 #L2 #T2 #H12 @IH1 //
+*)
