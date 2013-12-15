@@ -93,7 +93,7 @@ table {
              [ "fpbg ( ⦃?,?,?⦄ >⋕[?,?] ⦃?,?,?⦄ )" "fpbg_lift" + "fpbg_fpns" + "fpbg_fpbg" * ]
              [ "fpbc ( ⦃?,?,?⦄ ≻⋕[?,?] ⦃?,?,?⦄ )" "fpbc_fpns" + "fpbc_fpbs" * ]
              [ "fpbu ( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" "fpbu_lift" + "fpbu_fpns" * ]
-             [ "fpbs ( ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "fpbs_alt ( ⦃?,?,?⦄ ≥≥[?,?] ⦃?,?,?⦄ )" "fpbs_lift" + "fpbs_fpns" + "fpbs_fpbs" * ]
+             [ "fpbs ( ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "fpbs_alt ( ⦃?,?,?⦄ ≥≥[?,?] ⦃?,?,?⦄ )" "fpbs_lift" + "fpbs_aaa" + "fpbs_fpns" + "fpbs_fpbs" * ]
           }
         ]
         [ { "parallel computation for \"big tree\" normal forms" * } {
@@ -127,7 +127,7 @@ table {
    class "water"
    [ { "reduction" * } {
         [ { "\"big tree\" parallel reduction" * } {
-             [ "fpb ( ⦃?,?,?⦄ ≽[?,?] ⦃?,?,?⦄ )" "fpb_lift" * ]
+             [ "fpb ( ⦃?,?,?⦄ ≽[?,?] ⦃?,?,?⦄ )" "fpb_lift" + "fpb_aaa" * ]
           }
         ]
         [ { "context-sensitive extended normal forms" * } {
@@ -185,7 +185,7 @@ table {
           }
         ]
         [ { "atomic arity assignment" * } {
-             [ "aaa ( ⦃?,?⦄ ⊢ ? ⁝ ? )" "aaa_lift" + "aaa_lifts" + "aaa_da" + "aaa_ssta" + "aaa_aaa" * ]
+             [ "aaa ( ⦃?,?⦄ ⊢ ? ⁝ ? )" "aaa_lift" + "aaa_lifts" + "aaa_fqus" + "aaa_da" + "aaa_ssta" + "aaa_aaa" * ]
           }
         ]
         [ { "stratified static type assignment" * } {
