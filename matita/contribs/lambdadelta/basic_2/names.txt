@@ -79,6 +79,7 @@ r: reduction
 s: substitution
 u: supclosure
 x: extended reduction
+y: extended substitution
 
 - forth letter (if present)
 

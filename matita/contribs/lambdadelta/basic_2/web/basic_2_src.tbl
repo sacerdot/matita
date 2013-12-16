@@ -208,10 +208,6 @@ table {
    ]
    class "yellow"
    [ { "substitution" * } {
-        [ { "restricted local env. ref." * } {
-             [ "lsubr ( ? ⊑ ? )" "lsubr_lsubr" * ]
-          }
-        ]
         [ { "iterated structural successor for closures" * } {
              [ "fqus ( ⦃?,?,?⦄ ⊃* ⦃?,?,?⦄ )" "fqus_alt" + "fqus_lleq" + "fqus_fqus" * ]
              [ "fqup ( ⦃?,?,?⦄ ⊃+ ⦃?,?,?⦄ )" "fqup_lleq" + "fqup_fqup" * ]
@@ -241,6 +237,18 @@ table {
         ]
         [ { "lazy equivalence for local environments" * } {
              [ "lleq ( ? ⋕[?,?] ? )" "lleq_lleq" * ]
+          }
+        ]
+        [ { "contxt-sensitive extended substitution" * } {
+             [ "cpy ( ⦃?,?⦄ ⊢ ? ×▶[?,?] ? )" "cpy_lift" + "cpy_cpy" * ]
+          }
+        ]        
+        [ { "local env. ref. for extended substitution" * } {
+             [ "lsuby ( ? ×⊑ ? )" "lsuby_lsuby" * ]
+          }
+        ]
+        [ { "restricted local env. ref." * } {
+             [ "lsubr ( ? ⊑ ? )" "lsubr_lsubr" * ]
           }
         ]
         [ { "global env. slicing" * } {
