@@ -240,11 +240,11 @@ table {
           }
         ]
         [ { "contxt-sensitive extended substitution" * } {
-             [ "cpy ( ⦃?,?⦄ ⊢ ? ×▶[?,?] ? )" "cpy_lift" + "cpy_cpy" * ]
+             [ "cpy ( ⦃?,?⦄ ⊢ ? ▶×[?,?] ? )" "cpy_lift" + "cpy_cpy" * ]
           }
         ]        
         [ { "local env. ref. for extended substitution" * } {
-             [ "lsuby ( ? ×⊑ ? )" "lsuby_lsuby" * ]
+             [ "lsuby ( ? ⊑×[?,?] ? )" "lsuby_lsuby" * ]
           }
         ]
         [ { "restricted local env. ref." * } {
@@ -269,7 +269,7 @@ table {
    class "red"
    [ { "grammar" * } {
         [ { "equivalence for local environments" * } {
-             [ "leq ( ? ≃[?,?] ? ) " * ]
+             [ "leq ( ? ≃[?,?] ? )" * ]
           }
         ]
         [ { "pointwise extension of a relation" * } {

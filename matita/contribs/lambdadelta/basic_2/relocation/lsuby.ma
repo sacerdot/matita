@@ -12,183 +12,187 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/extlrsubeq_4.ma".
 include "basic_2/grammar/lenv_length.ma".
 
-(* LOCAL ENVIRONMENT REFINEMENT FOR SUBSTITUTION ****************************)
+(* LOCAL ENVIRONMENT REFINEMENT FOR EXTENDED SUBSTITUTION *******************)
 
-inductive lsubr: nat → nat → relation lenv ≝
-| lsubr_sort: ∀d,e. lsubr d e (⋆) (⋆)
-| lsubr_OO:   ∀L1,L2. lsubr 0 0 L1 L2
-| lsubr_abbr: ∀L1,L2,V,e. lsubr 0 e L1 L2 →
-              lsubr 0 (e + 1) (L1. ⓓV) (L2.ⓓV)
-| lsubr_abst: ∀L1,L2,I,V1,V2,e. lsubr 0 e L1 L2 →
-              lsubr 0 (e + 1) (L1. ⓑ{I}V1) (L2. ⓛV2)
-| lsubr_skip: ∀L1,L2,I1,I2,V1,V2,d,e.
-              lsubr d e L1 L2 → lsubr (d + 1) e (L1. ⓑ{I1} V1) (L2. ⓑ{I2} V2)
+inductive lsuby: relation4 nat nat lenv lenv ≝
+| lsuby_atom: ∀L,d,e. lsuby d e L (⋆)
+| lsuby_zero: ∀I1,I2,L1,L2,V1,V2.
+              lsuby 0 0 L1 L2 → lsuby 0 0 (L1.ⓑ{I1}V1) (L2.ⓑ{I2}V2)
+| lsuby_pair: ∀I1,I2,L1,L2,V,e. lsuby 0 e L1 L2 →
+              lsuby 0 (e + 1) (L1.ⓑ{I1}V) (L2.ⓑ{I2}V)
+| lsuby_succ: ∀I1,I2,L1,L2,V1,V2,d,e.
+              lsuby d e L1 L2 → lsuby (d + 1) e (L1. ⓑ{I1}V1) (L2. ⓑ{I2} V2)
 .
 
 interpretation
-  "local environment refinement (substitution)"
-  'SubEq L1 d e L2 = (lsubr d e L1 L2).
+  "local environment refinement (extended substitution)"
+  'ExtLRSubEq L1 d e L2 = (lsuby d e L1 L2).
 
-definition lsubr_trans: ∀S. (lenv → relation S) → Prop ≝ λS,R.
+definition lsuby_trans: ∀S. predicate (lenv → relation S) ≝ λS,R.
                         ∀L2,s1,s2. R L2 s1 s2 →
-                        ∀L1,d,e. L1 ⊑ [d, e] L2 → R L1 s1 s2.
+                        ∀L1,d,e. L1 ⊑×[d, e] L2 → R L1 s1 s2.
 
 (* Basic properties *********************************************************)
 
-lemma lsubr_bind_eq: ∀L1,L2,e. L1 ⊑ [0, e] L2 → ∀I,V.
-                     L1. ⓑ{I} V ⊑ [0, e + 1] L2.ⓑ{I} V.
-#L1 #L2 #e #HL12 #I #V elim I -I /2 width=1/
+lemma lsuby_pair_lt: ∀I1,I2,L1,L2,V,e. L1 ⊑×[0, e-1] L2 → 0 < e →
+                     L1.ⓑ{I1}V ⊑×[0, e] L2.ⓑ{I2}V.
+#I1 #I2 #L1 #L2 #V #e #HL12 #He >(plus_minus_m_m e 1) /2 width=1 by lsuby_pair/
 qed.
 
-lemma lsubr_abbr_lt: ∀L1,L2,V,e. L1 ⊑ [0, e - 1] L2 → 0 < e →
-                     L1. ⓓV ⊑ [0, e] L2.ⓓV.
-#L1 #L2 #V #e #HL12 #He >(plus_minus_m_m e 1) // /2 width=1/
+lemma lsuby_succ_lt: ∀I1,I2,L1,L2,V1,V2,d,e. L1 ⊑×[d-1, e] L2 → 0 < d →
+                     L1.ⓑ{I1}V1 ⊑×[d, e] L2. ⓑ{I2}V2.
+#I1 #I2 #L1 #L2 #V1 #V2 #d #e #HL12 #Hd >(plus_minus_m_m d 1) /2 width=1 by lsuby_succ/
 qed.
 
-lemma lsubr_abst_lt: ∀L1,L2,I,V1,V2,e. L1 ⊑ [0, e - 1] L2 → 0 < e →
-                     L1. ⓑ{I}V1 ⊑ [0, e] L2. ⓛV2.
-#L1 #L2 #I #V1 #V2 #e #HL12 #He >(plus_minus_m_m e 1) // /2 width=1/
+lemma lsuby_refl: ∀L,d,e. L ⊑×[d, e] L.
+#L elim L -L //
+#L #I #V #IHL #d @(nat_ind_plus … d) -d /2 width=1 by lsuby_succ/
+#e @(nat_ind_plus … e) -e /2 width=2 by lsuby_pair, lsuby_zero/
 qed.
 
-lemma lsubr_skip_lt: ∀L1,L2,d,e. L1 ⊑ [d - 1, e] L2 → 0 < d →
-                     ∀I1,I2,V1,V2. L1. ⓑ{I1} V1 ⊑ [d, e] L2. ⓑ{I2} V2.
-#L1 #L2 #d #e #HL12 #Hd >(plus_minus_m_m d 1) // /2 width=1/
-qed.
-
-lemma lsubr_bind_lt: ∀I,L1,L2,V,e. L1 ⊑ [0, e - 1] L2 → 0 < e →
-                     L1. ⓓV ⊑ [0, e] L2. ⓑ{I}V.
-* /2 width=1/ qed.
-
-lemma lsubr_refl: ∀d,e,L. L ⊑ [d, e] L.
-#d elim d -d
-[ #e elim e -e // #e #IHe #L elim L -L // /2 width=1/
-| #d #IHd #e #L elim L -L // /2 width=1/
+lemma lsuby_length: ∀L1,L2. |L2| ≤ |L1| → L1 ⊑×[0, 0] L2.
+#L1 elim L1 -L1
+[ #X #H lapply (le_n_O_to_eq … H) -H
+  #H lapply (length_inv_zero_sn … H) #H destruct /2 width=1 by lsuby_atom/  
+| #L1 #I1 #V1 #IHL1 * normalize
+  /4 width=2 by lsuby_zero, le_S_S_to_le/
 ]
 qed.
 
-lemma TC_lsubr_trans: ∀S,R. lsubr_trans S R → lsubr_trans S (λL. (TC … (R L))).
-#S #R #HR #L1 #s1 #s2 #H elim H -s2
-[ /3 width=5/
-| #s #s2 #_ #Hs2 #IHs1 #L2 #d #e #HL12
-  lapply (HR … Hs2 … HL12) -HR -Hs2 -HL12 /3 width=3/
-]
+lemma TC_lsuby_trans: ∀S,R. lsuby_trans S R → lsuby_trans S (λL. (TC … (R L))).
+#S #R #HR #L1 #s1 #s2 #H elim H -s2 /3 width=7 by step, inj/
 qed.
 
 (* Basic inversion lemmas ***************************************************)
 
-fact lsubr_inv_atom1_aux: ∀L1,L2,d,e. L1 ⊑ [d, e] L2 → L1 = ⋆ →
-                          L2 = ⋆ ∨ (d = 0 ∧ e = 0).
-#L1 #L2 #d #e * -L1 -L2 -d -e
-[ /2 width=1/
-| /3 width=1/
-| #L1 #L2 #W #e #_ #H destruct
-| #L1 #L2 #I #W1 #W2 #e #_ #H destruct
-| #L1 #L2 #I1 #I2 #W1 #W2 #d #e #_ #H destruct
+fact lsuby_inv_atom1_aux: ∀L1,L2,d,e. L1 ⊑×[d, e] L2 → L1 = ⋆ → L2 = ⋆.
+#L1 #L2 #d #e * -L1 -L2 -d -e //
+[ #I1 #I2 #L1 #L2 #V1 #V2 #_ #H destruct
+| #I1 #I2 #L1 #L2 #V #e #_ #H destruct
+| #I1 #I2 #L1 #L2 #V1 #V2 #d #e #_ #H destruct
 ]
-qed.
+qed-.
 
-lemma lsubr_inv_atom1: ∀L2,d,e. ⋆ ⊑ [d, e] L2 →
-                       L2 = ⋆ ∨ (d = 0 ∧ e = 0).
-/2 width=3/ qed-.
+lemma lsuby_inv_atom1: ∀L2,d,e. ⋆ ⊑×[d, e] L2 → L2 = ⋆.
+/2 width=5 by lsuby_inv_atom1_aux/ qed-.
 
-fact lsubr_inv_skip1_aux: ∀L1,L2,d,e. L1 ⊑ [d, e] L2 →
-                          ∀I1,K1,V1. L1 = K1.ⓑ{I1}V1 → 0 < d →
-                          ∃∃I2,K2,V2. K1 ⊑ [d - 1, e] K2 & L2 = K2.ⓑ{I2}V2.
-#L1 #L2 #d #e * -L1 -L2 -d -e
-[ #d #e #I1 #K1 #V1 #H destruct
-| #L1 #L2 #I1 #K1 #V1 #_ #H
-  elim (lt_zero_false … H)
-| #L1 #L2 #W #e #_ #I1 #K1 #V1 #_ #H
-  elim (lt_zero_false … H)
-| #L1 #L2 #I #W1 #W2 #e #_ #I1 #K1 #V1 #_ #H
-  elim (lt_zero_false … H)
-| #L1 #L2 #J1 #J2 #W1 #W2 #d #e #HL12 #I1 #K1 #V1 #H #_ destruct /2 width=5/
+fact lsuby_inv_zero1_aux: ∀L1,L2,d,e. L1 ⊑×[d, e] L2 →
+                          ∀J1,K1,W1. L1 = K1.ⓑ{J1}W1 → d = 0 → e = 0 →
+                          L2 = ⋆ ∨
+                          ∃∃J2,K2,W2. K1 ⊑×[0, 0] K2 & L2 = K2.ⓑ{J2}W2.
+#L1 #L2 #d #e * -L1 -L2 -d -e /2 width=1 by or_introl/
+[ #I1 #I2 #L1 #L2 #V1 #V2 #HL12 #J1 #K1 #W1 #H #_ #_ destruct
+  /3 width=5 by ex2_3_intro, or_intror/
+| #I1 #I2 #L1 #L2 #V #e #_ #J1 #K1 #W1 #_ #_
+  <plus_n_Sm #H destruct
+| #I1 #I2 #L1 #L2 #V1 #V2 #d #e #_ #J1 #K1 #W1 #_
+  <plus_n_Sm #H destruct
 ]
-qed.
+qed-.
 
-lemma lsubr_inv_skip1: ∀I1,K1,L2,V1,d,e. K1.ⓑ{I1}V1 ⊑ [d, e] L2 → 0 < d →
-                       ∃∃I2,K2,V2. K1 ⊑ [d - 1, e] K2 & L2 = K2.ⓑ{I2}V2.
-/2 width=5/ qed-.
+lemma lsuby_inv_zero1: ∀I1,K1,L2,V1. K1.ⓑ{I1}V1 ⊑×[0, 0] L2 →
+                       L2 = ⋆ ∨
+                       ∃∃I2,K2,V2. K1 ⊑×[0, 0] K2 & L2 = K2.ⓑ{I2}V2.
+/2 width=9 by lsuby_inv_zero1_aux/ qed-.
 
-fact lsubr_inv_atom2_aux: ∀L1,L2,d,e. L1 ⊑ [d, e] L2 → L2 = ⋆ →
-                          L1 = ⋆ ∨ (d = 0 ∧ e = 0).
-#L1 #L2 #d #e * -L1 -L2 -d -e
-[ /2 width=1/
-| /3 width=1/
-| #L1 #L2 #W #e #_ #H destruct
-| #L1 #L2 #I #W1 #W2 #e #_ #H destruct
-| #L1 #L2 #I1 #I2 #W1 #W2 #d #e #_ #H destruct
+fact lsuby_inv_pair1_aux: ∀L1,L2,d,e. L1 ⊑×[d, e] L2 →
+                          ∀J1,K1,W. L1 = K1.ⓑ{J1}W → d = 0 → 0 < e →
+                          L2 = ⋆ ∨
+                          ∃∃J2,K2. K1 ⊑×[0, e-1] K2 & L2 = K2.ⓑ{J2}W.
+#L1 #L2 #d #e * -L1 -L2 -d -e /2 width=1 by or_introl/
+[ #I1 #I2 #L1 #L2 #V1 #V2 #_ #J1 #K1 #W #_ #_ #H
+  elim (lt_zero_false … H)
+| #I1 #I2 #L1 #L2 #V #e #HL12 #J1 #K1 #W #H #_ #_ destruct
+  /3 width=4 by ex2_2_intro, or_intror/
+| #I1 #I2 #L1 #L2 #V1 #V2 #d #e #_ #J1 #K1 #W #_
+  <plus_n_Sm #H destruct
 ]
-qed.
+qed-.
 
-lemma lsubr_inv_atom2: ∀L1,d,e. L1 ⊑ [d, e] ⋆ →
-                       L1 = ⋆ ∨ (d = 0 ∧ e = 0).
-/2 width=3/ qed-.
+lemma lsuby_inv_pair1: ∀I1,K1,L2,V,e. K1.ⓑ{I1}V ⊑×[0, e] L2 → 0 < e →
+                       L2 = ⋆ ∨
+                       ∃∃I2,K2. K1 ⊑×[0, e-1] K2 & L2 = K2.ⓑ{I2}V.
+/2 width=6 by lsuby_inv_pair1_aux/ qed-.
 
-fact lsubr_inv_abbr2_aux: ∀L1,L2,d,e. L1 ⊑ [d, e] L2 →
-                          ∀K2,V. L2 = K2.ⓓV → d = 0 → 0 < e →
-                          ∃∃K1. K1 ⊑ [0, e - 1] K2 & L1 = K1.ⓓV.
-#L1 #L2 #d #e * -L1 -L2 -d -e
-[ #d #e #K1 #V #H destruct
-| #L1 #L2 #K1 #V #_ #_ #H
+
+fact lsuby_inv_succ1_aux: ∀L1,L2,d,e. L1 ⊑×[d, e] L2 →
+                          ∀J1,K1,W1. L1 = K1.ⓑ{J1}W1 → 0 < d →
+                          L2 = ⋆ ∨
+                          ∃∃J2,K2,W2. K1 ⊑×[d-1, e] K2 & L2 = K2.ⓑ{J2}W2.
+#L1 #L2 #d #e * -L1 -L2 -d -e /2 width=1 by or_introl/
+[ #I1 #I2 #L1 #L2 #V1 #V2 #_ #J1 #K1 #W1 #_ #H
   elim (lt_zero_false … H)
-| #L1 #L2 #W #e #HL12 #K1 #V #H #_ #_ destruct /2 width=3/
-| #L1 #L2 #I #W1 #W2 #e #_ #K1 #V #H destruct
-| #L1 #L2 #I1 #I2 #W1 #W2 #d #e #_ #K1 #V #_ >commutative_plus normalize #H destruct
+| #I1 #I2 #L1 #L2 #V #e #_ #J1 #K1 #W1 #_ #H
+  elim (lt_zero_false … H)
+| #I1 #I2 #L1 #L2 #V1 #V2 #d #e #HL12 #J1 #K1 #W1 #H #_ destruct
+  /3 width=5 by ex2_3_intro, or_intror/
 ]
-qed.
+qed-.
 
-lemma lsubr_inv_abbr2: ∀L1,K2,V,e. L1 ⊑ [0, e] K2.ⓓV → 0 < e →
-                       ∃∃K1. K1 ⊑ [0, e - 1] K2 & L1 = K1.ⓓV.
-/2 width=5/ qed-.
+lemma lsuby_inv_succ1: ∀I1,K1,L2,V1,d,e. K1.ⓑ{I1}V1 ⊑×[d, e] L2 → 0 < d →
+                       L2 = ⋆ ∨
+                       ∃∃I2,K2,V2. K1 ⊑×[d - 1, e] K2 & L2 = K2.ⓑ{I2}V2.
+/2 width=5 by lsuby_inv_succ1_aux/ qed-.
 
-fact lsubr_inv_skip2_aux: ∀L1,L2,d,e. L1 ⊑ [d, e] L2 →
-                          ∀I2,K2,V2. L2 = K2.ⓑ{I2}V2 → 0 < d →
-                          ∃∃I1,K1,V1. K1 ⊑ [d - 1, e] K2 & L1 = K1.ⓑ{I1}V1.
+fact lsuby_inv_zero2_aux: ∀L1,L2,d,e. L1 ⊑×[d, e] L2 →
+                          ∀J2,K2,W2. L2 = K2.ⓑ{J2}W2 → d = 0 → e = 0 →
+                          ∃∃J1,K1,W1. K1 ⊑×[0, 0] K2 & L1 = K1.ⓑ{J1}W1.
 #L1 #L2 #d #e * -L1 -L2 -d -e
-[ #d #e #I1 #K1 #V1 #H destruct
-| #L1 #L2 #I1 #K1 #V1 #_ #H
-  elim (lt_zero_false … H)
-| #L1 #L2 #W #e #_ #I1 #K1 #V1 #_ #H
-  elim (lt_zero_false … H)
-| #L1 #L2 #I #W1 #W2 #e #_ #I1 #K1 #V1 #_ #H
-  elim (lt_zero_false … H)
-| #L1 #L2 #J1 #J2 #W1 #W2 #d #e #HL12 #I1 #K1 #V1 #H #_ destruct /2 width=5/
+[ #L1 #d #e #J2 #K2 #W1 #H destruct
+| #I1 #I2 #L1 #L2 #V1 #V2 #HL12 #J2 #K2 #W2 #H #_ #_ destruct
+  /2 width=5 by ex2_3_intro/
+| #I1 #I2 #L1 #L2 #V #e #_ #J2 #K2 #W2 #_ #_
+  <plus_n_Sm #H destruct
+| #I1 #I2 #L1 #L2 #V1 #V2 #d #e #_ #J2 #K2 #W2 #_
+  <plus_n_Sm #H destruct
 ]
-qed.
+qed-.
 
-lemma lsubr_inv_skip2: ∀I2,L1,K2,V2,d,e. L1 ⊑ [d, e] K2.ⓑ{I2}V2 → 0 < d →
-                       ∃∃I1,K1,V1. K1 ⊑ [d - 1, e] K2 & L1 = K1.ⓑ{I1}V1.
-/2 width=5/ qed-.
+lemma lsuby_inv_zero2: ∀I2,K2,L1,V2. L1 ⊑×[0, 0] K2.ⓑ{I2}V2 →
+                       ∃∃I1,K1,V1. K1 ⊑×[0, 0] K2 & L1 = K1.ⓑ{I1}V1.
+/2 width=9 by lsuby_inv_zero2_aux/ qed-.
+
+fact lsuby_inv_pair2_aux: ∀L1,L2,d,e. L1 ⊑×[d, e] L2 →
+                          ∀J2,K2,W. L2 = K2.ⓑ{J2}W → d = 0 → 0 < e →
+                          ∃∃J1,K1. K1 ⊑×[0, e-1] K2 & L1 = K1.ⓑ{J1}W.
+#L1 #L2 #d #e * -L1 -L2 -d -e
+[ #L1 #d #e #J2 #K2 #W #H destruct
+| #I1 #I2 #L1 #L2 #V1 #V2 #_ #J2 #K2 #W #_ #_ #H
+  elim (lt_zero_false … H)
+| #I1 #I2 #L1 #L2 #V #e #HL12 #J2 #K2 #W #H #_ #_ destruct
+  /2 width=4 by ex2_2_intro/
+| #I1 #I2 #L1 #L2 #V1 #V2 #d #e #_ #J2 #K2 #W #_
+  <plus_n_Sm #H destruct
+]
+qed-.
+
+lemma lsuby_inv_pair2: ∀I2,K2,L1,V,e. L1 ⊑×[0, e] K2.ⓑ{I2}V → 0 < e →
+                       ∃∃I1,K1. K1 ⊑×[0, e-1] K2 & L1 = K1.ⓑ{I1}V.
+/2 width=6 by lsuby_inv_pair2_aux/ qed-.
+
+fact lsuby_inv_succ2_aux: ∀L1,L2,d,e. L1 ⊑×[d, e] L2 →
+                          ∀J2,K2,W2. L2 = K2.ⓑ{J2}W2 → 0 < d →
+                          ∃∃J1,K1,W1. K1 ⊑×[d-1, e] K2 & L1 = K1.ⓑ{J1}W1.
+#L1 #L2 #d #e * -L1 -L2 -d -e
+[ #L1 #d #e #J2 #K2 #W2 #H destruct
+| #I1 #I2 #L1 #L2 #V1 #V2 #_ #J2 #K2 #W2 #_ #H
+  elim (lt_zero_false … H)
+| #I1 #I2 #L1 #L2 #V #e #_ #J2 #K1 #W2 #_ #H
+  elim (lt_zero_false … H)
+| #I1 #I2 #L1 #L2 #V1 #V2 #d #e #HL12 #J2 #K2 #W2 #H #_ destruct
+  /2 width=5 by ex2_3_intro/
+]
+qed-.
+
+lemma lsuby_inv_succ2: ∀I2,K2,L1,V2,d,e. L1 ⊑×[d, e] K2.ⓑ{I2}V2 → 0 < d →
+                       ∃∃I1,K1,V1. K1 ⊑×[d-1, e] K2 & L1 = K1.ⓑ{I1}V1.
+/2 width=5 by lsuby_inv_succ2_aux/ qed-.
 
 (* Basic forward lemmas *****************************************************)
 
-fact lsubr_fwd_length_full1_aux: ∀L1,L2,d,e. L1 ⊑ [d, e] L2 →
-                                 d = 0 → e = |L1| → |L1| ≤ |L2|.
-#L1 #L2 #d #e #H elim H -L1 -L2 -d -e normalize
-[ //
-| /2 width=1/
-| /3 width=1/
-| /3 width=1/
-| #L1 #L2 #_ #_ #_ #_ #d #e #_ #_ >commutative_plus normalize #H destruct
-]
-qed.
-
-lemma lsubr_fwd_length_full1: ∀L1,L2. L1 ⊑ [0, |L1|] L2 → |L1| ≤ |L2|.
-/2 width=5/ qed-.
-
-fact lsubr_fwd_length_full2_aux: ∀L1,L2,d,e. L1 ⊑ [d, e] L2 →
-                                 d = 0 → e = |L2| → |L2| ≤ |L1|.
-#L1 #L2 #d #e #H elim H -L1 -L2 -d -e normalize
-[ //
-| /2 width=1/
-| /3 width=1/
-| /3 width=1/
-| #L1 #L2 #_ #_ #_ #_ #d #e #_ #_ >commutative_plus normalize #H destruct
-]
-qed.
-
-lemma lsubr_fwd_length_full2: ∀L1,L2. L1 ⊑ [0, |L2|] L2 → |L2| ≤ |L1|.
-/2 width=5/ qed-.
+lemma lsuby_fwd_length: ∀L1,L2,d,e. L1 ⊑×[d, e] L2 → |L2| ≤ |L1|.
+#L1 #L2 #d #e #H elim H -L1 -L2 -d -e normalize /2 width=1 by le_S_S/
+qed-.
