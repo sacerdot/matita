@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/extlrsubeq_4.ma".
-include "basic_2/grammar/lenv_length.ma".
+include "basic_2/relocation/ldrop.ma".
 
 (* LOCAL ENVIRONMENT REFINEMENT FOR EXTENDED SUBSTITUTION *******************)
 
@@ -195,4 +195,30 @@ lemma lsuby_inv_succ2: ∀I2,K2,L1,V2,d,e. L1 ⊑×[d, e] K2.ⓑ{I2}V2 → 0 < d
 
 lemma lsuby_fwd_length: ∀L1,L2,d,e. L1 ⊑×[d, e] L2 → |L2| ≤ |L1|.
 #L1 #L2 #d #e #H elim H -L1 -L2 -d -e normalize /2 width=1 by le_S_S/
+qed-.
+
+lemma lsuby_fwd_ldrop2_be: ∀L1,L2,d,e. L1 ⊑×[d, e] L2 →
+                           ∀I2,K2,W,i. ⇩[0, i] L2 ≡ K2.ⓑ{I2}W →
+                           d ≤ i → i < d + e →
+                           ∃∃I1,K1. K1 ⊑×[0, d+e-i-1] K2 & ⇩[0, i] L1 ≡ K1.ⓑ{I1}W.
+#L1 #L2 #d #e #H elim H -L1 -L2 -d -e
+[ #L1 #d #e #J2 #K2 #W #i #H
+  elim (ldrop_inv_atom1 … H) -H #H destruct
+| #I1 #I2 #L1 #L2 #V1 #V2 #_ #_ #J2 #K2 #W #i #_ #_ #H
+  elim (lt_zero_false … H)
+| #I1 #I2 #L1 #L2 #V #e #HL12 #IHL12 #J2 #K2 #W #i #H #_ #Hie
+  elim (ldrop_inv_O1_pair1 … H) -H * #Hi #HLK1
+  [ -IHL12 -Hie destruct normalize -I2
+    <minus_n_O <minus_plus_m_m /2 width=4 by ldrop_pair, ex2_2_intro/
+  | -HL12
+    elim (IHL12 … HLK1) -IHL12 -HLK1 // [2: /2 width=1 by lt_plus_to_minus/ ] -Hie normalize 
+    >minus_minus_comm >arith_b1 /3 width=4 by ldrop_ldrop_lt, ex2_2_intro/
+  ]
+| #I1 #I2 #L1 #L2 #V1 #V2 #d #e #_ #IHL12 #J2 #K2 #W #i #H #Hdi >plus_plus_comm_23 #Hide
+  elim (le_inv_plus_l … Hdi) #_ #Hi
+  lapply (ldrop_inv_ldrop1_lt … H ?) -H // #HLK1
+  elim (IHL12 … HLK1) -IHL12 -HLK1
+  [2,3: /2 width=1 by lt_plus_to_minus, monotonic_pred/ ] -Hdi -Hide
+  >minus_minus_comm >arith_b1 /3 width=4 by ldrop_ldrop_lt, ex2_2_intro/
+]
 qed-.
