@@ -20,17 +20,18 @@ include "basic_2/relocation/lsuby.ma".
 
 (* CONTEXT-SENSITIVE EXTENDED PARALLEL SUBSTITUTION FOR TERMS ***************)
 
+(* Note: this substitution is ordinary *)
 (* activate genv *)
 inductive cpy: nat → nat → relation4 genv lenv term term ≝
 | cpy_atom : ∀I,G,L,d,e. cpy d e G L (⓪{I}) (⓪{I})
 | cpy_subst: ∀I,G,L,K,V,W,i,d,e. d ≤ i → i < d + e →
              ⇩[0, i] L ≡ K.ⓑ{I}V → ⇧[0, i + 1] V ≡ W → cpy d e G L (#i) W
 | cpy_bind : ∀a,I,G,L,V1,V2,T1,T2,d,e.
-             cpy d e G L V1 V2 → cpy (d + 1) e G (L.ⓑ{I} V2) T1 T2 →
-             cpy d e G L (ⓑ{a,I} V1. T1) (ⓑ{a,I} V2. T2)
+             cpy d e G L V1 V2 → cpy (d + 1) e G (L.ⓑ{I}V2) T1 T2 →
+             cpy d e G L (ⓑ{a,I}V1.T1) (ⓑ{a,I}V2.T2)
 | cpy_flat : ∀I,G,L,V1,V2,T1,T2,d,e.
              cpy d e G L V1 V2 → cpy d e G L T1 T2 →
-             cpy d e G L (ⓕ{I}V1. T1) (ⓕ{I}V2. T2)
+             cpy d e G L (ⓕ{I}V1.T1) (ⓕ{I}V2.T2)
 .
 
 interpretation "context-sensitive extended parallel substritution (term)"
