@@ -60,7 +60,7 @@ lemma cprs_strap2: ∀G,L,T1,T,T2.
 normalize /2 width=3/ qed.
 
 lemma lsubr_cprs_trans: ∀G. lsub_trans … (cprs G) lsubr.
-/3 width=5 by lsubr_cpr_trans, TC_lsub_trans/
+/3 width=5 by lsubr_cpr_trans, LTC_lsub_trans/
 qed-.
 
 (* Basic_1: was: pr3_pr1 *)

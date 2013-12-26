@@ -1,0 +1,72 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/grammar/lpx_sn_lpx_sn.ma".
+include "basic_2/substitution/fqup.ma".
+include "basic_2/substitution/lpys_ldrop.ma".
+
+(* CONTEXT-SENSITIVE EXTENDED MULTIPLE SUBSTITUTION FOR TERMS ***************)
+
+(* Main properties **********************************************************)
+
+theorem cpys_antisym: ∀G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ▶*× T2 → ⦃G, L⦄ ⊢ T2 ▶*× T1 → T1 = T2.
+#G #L #T1 #T2 #H elim H -G -L -T1 -T2 //
+[ #I #G #L #K #V1 #V2 #W2 #i #HLK #_ #HVW2 #_ #HW2 lapply (ldrop_fwd_ldrop2 … HLK) -I -V1
+  #HLK elim (cpys_inv_lift1 … HW2 … HLK … HVW2) -L -HVW2
+  #X #H #_ elim (lift_inv_lref2_be … H) -G -K -V2 -W2 -X //
+| #a #I #G #L #V1 #V2 #T1 #T2 #_ #_ #IHV12 #IHT12 #H elim (cpys_inv_bind1 … H) -H
+  #V #T #HV2 #HT2 #H destruct
+  lapply (IHV12 HV2) #H destruct -IHV12 -HV2 /3 width=1 by eq_f2/
+| #I #G #L #V1 #V2 #T1 #T2 #_ #_ #IHV12 #IHT12 #H elim (cpys_inv_flat1 … H) -H
+  #V #T #HV2 #HT2 #H destruct /3 width=1 by eq_f2/
+]
+qed-.
+
+theorem cpys_trans_lpys: ∀G. lpx_sn_transitive (cpys G) (cpys G).
+#G0 #L0 #T0 @(fqup_wf_ind_eq … G0 L0 T0) -G0 -L0 -T0 #G0 #L0 #T0 #IH #G1 #L1 * [|*]
+[ #I #HG #HL #HT #T #H1 #L2 #HL12 #T2 #HT2 destruct
+  elim (cpys_inv_atom1 … H1) -H1
+  [ #H destruct
+    elim (cpys_inv_atom1 … HT2) -HT2
+    [ #H destruct //
+    | * #I2 #K2 #V #V2 #i #HLK2 #HV2 #HVT2 #H destruct
+      elim (lpys_ldrop_trans_O1 … HL12 … HLK2) -L2 #X #HLK1 #H
+      elim (lpys_inv_pair2 … H) -H #K1 #V1 #HK12 #HV1 #H destruct
+      lapply (fqup_lref … G1 … HLK1) /3 width=10 by cpys_delta/
+    ]
+  | * #I1 #K1 #V1 #V #i #HLK1 #HV1 #HVT #H destruct
+    elim (lpys_ldrop_conf … HLK1 … HL12) -HL12 #X #H #HLK2
+    elim (lpys_inv_pair1 … H) -H #K2 #W2 #HK12 #_ #H destruct
+    lapply (ldrop_fwd_ldrop2 … HLK2) -W2 #HLK2
+    elim (cpys_inv_lift1 … HT2 … HLK2 … HVT) -L2 -T
+    lapply (fqup_lref … G1 … HLK1) /3 width=10 by cpys_delta/
+  ]
+| #a #I #V1 #T1 #HG #HL #HT #X1 #H1 #L2 #HL12 #X2 #H2
+  elim (cpys_inv_bind1 … H1) -H1 #V #T #HV1 #HT1 #H destruct
+  elim (cpys_inv_bind1 … H2) -H2 #V2 #T2 #HV2 #HT2 #H destruct
+  /4 width=5 by cpys_bind, lpys_pair/
+| #I #V1 #T1 #HG #HL #HT #X1 #H1 #L2 #HL12 #X2 #H2
+  elim (cpys_inv_flat1 … H1) -H1 #V #T #HV1 #HT1 #H destruct
+  elim (cpys_inv_flat1 … H2) -H2 #V2 #T2 #HV2 #HT2 #H destruct
+  /3 width=5 by cpys_flat/
+]
+qed-.
+
+theorem cpys_trans: ∀G,L. Transitive … (cpys G L).
+/2 width=5 by cpys_trans_lpys/ qed-.
+
+(* Advanced properties ******************************************************)
+
+lemma lpys_cpys_trans: ∀G. lsub_trans … (cpys G) (lpys G).
+/2 width=5 by cpys_trans_lpys/ qed-.

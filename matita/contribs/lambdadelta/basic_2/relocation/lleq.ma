@@ -67,6 +67,10 @@ lemma lleq_ge: ∀L1,L2,T,d1. L1 ⋕[d1, T] L2 → ∀d2. d1 ≤ d2 → L1 ⋕[d
 ]
 qed-.
 
+lemma lleq_bind_O: ∀a,I,L1,L2,V,T. L1 ⋕[0, V] L2 → L1.ⓑ{I}V ⋕[0, T] L2.ⓑ{I}V →
+                   L1 ⋕[0, ⓑ{a,I}V.T] L2.
+/3 width=3 by lleq_ge, lleq_bind/ qed.
+
 (* Basic inversion lemmas ***************************************************)
 
 fact lleq_inv_lref_aux: ∀d,X,L1,L2. L1 ⋕[d, X] L2 → ∀i. X = #i →

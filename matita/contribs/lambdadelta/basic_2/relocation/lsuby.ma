@@ -31,10 +31,6 @@ interpretation
   "local environment refinement (extended substitution)"
   'ExtLRSubEq L1 d e L2 = (lsuby d e L1 L2).
 
-definition lsuby_trans: ∀S. predicate (lenv → relation S) ≝ λS,R.
-                        ∀L2,s1,s2. R L2 s1 s2 →
-                        ∀L1,d,e. L1 ⊑×[d, e] L2 → R L1 s1 s2.
-
 (* Basic properties *********************************************************)
 
 lemma lsuby_pair_lt: ∀I1,I2,L1,L2,V,e. L1 ⊑×[0, e-1] L2 → 0 < e →
@@ -60,10 +56,6 @@ lemma lsuby_length: ∀L1,L2. |L2| ≤ |L1| → L1 ⊑×[0, 0] L2.
 | #L1 #I1 #V1 #IHL1 * normalize
   /4 width=2 by lsuby_zero, le_S_S_to_le/
 ]
-qed.
-
-lemma TC_lsuby_trans: ∀S,R. lsuby_trans S R → lsuby_trans S (λL. (TC … (R L))).
-#S #R #HR #L1 #s1 #s2 #H elim H -s2 /3 width=7 by step, inj/
 qed.
 
 (* Basic inversion lemmas ***************************************************)

@@ -208,6 +208,10 @@ table {
    ]
    class "yellow"
    [ { "substitution" * } {
+        [ { "contxt-sensitive extended multiple substitution" * } {
+             [ "cpys ( ⦃?,?⦄ ⊢ ? ▶*×[?,?] ? )" "cpys_alt ( ⦃?,?⦄ ⊢ ? ▶▶*×[?,?] ? )" "cpys_lift" + "cpys_cpys" * ]
+          }
+        ]        
         [ { "iterated structural successor for closures" * } {
              [ "fqus ( ⦃?,?,?⦄ ⊃* ⦃?,?,?⦄ )" "fqus_alt" + "fqus_lleq" + "fqus_fqus" * ]
              [ "fqup ( ⦃?,?,?⦄ ⊃+ ⦃?,?,?⦄ )" "fqup_lleq" + "fqup_fqup" * ]
@@ -230,16 +234,11 @@ table {
    ]
    class "orange"
    [ { "relocation" * } {
-        [ { "structural successor for closures" * } {
-             [ "fquq ( ⦃?,?,?⦄ ⊃⸮ ⦃?,?,?⦄ )" "fquq_alt ( ⦃?,?,?⦄ ⊃⊃⸮ ⦃?,?,?⦄ )" "fquq_lleq" * ]
-             [ "fqu ( ⦃?,?,?⦄ ⊃ ⦃?,?,?⦄ )" "fqu_lleq" * ]
-          }
-        ]
         [ { "lazy equivalence for local environments" * } {
              [ "lleq ( ? ⋕[?,?] ? )" "lleq_lleq" * ]
           }
         ]
-        [ { "contxt-sensitive extended substitution" * } {
+        [ { "contxt-sensitive extended ordinary substitution" * } {
              [ "cpy ( ⦃?,?⦄ ⊢ ? ▶×[?,?] ? )" "cpy_lift" + "cpy_cpy" * ]
           }
         ]        
@@ -249,6 +248,11 @@ table {
         ]
         [ { "restricted local env. ref." * } {
              [ "lsubr ( ? ⊑ ? )" "lsubr_lsubr" * ]
+          }
+        ]
+        [ { "structural successor for closures" * } {
+             [ "fquq ( ⦃?,?,?⦄ ⊃⸮ ⦃?,?,?⦄ )" "fquq_alt ( ⦃?,?,?⦄ ⊃⊃⸮ ⦃?,?,?⦄ )" "fquq_lleq" * ]
+             [ "fqu ( ⦃?,?,?⦄ ⊃ ⦃?,?,?⦄ )" "fqu_lleq" * ]
           }
         ]
         [ { "global env. slicing" * } {

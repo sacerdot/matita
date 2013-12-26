@@ -15,7 +15,7 @@
 include "basic_2/relocation/ldrop_ldrop.ma".
 include "basic_2/relocation/cpy.ma".
 
-(* CONTEXT-SENSITIVE EXTENDED PARALLEL SUBSTITUTION FOR TERMS ***************)
+(* CONTEXT-SENSITIVE EXTENDED ORDINARY SUBSTITUTION FOR TERMS ***************)
 
 (* Relocation properties ****************************************************)
 
@@ -156,11 +156,11 @@ lemma cpy_inv_lift1_be: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶×[dt, et] U2 �
   elim (lift_inv_bind2 … H) -H #W1 #T1 #HWV1 #HTU1 #H destruct
   elim (IHV12 … HLK … HWV1) -V1 // #W2 #HW12 #HWV2
   elim (IHU12 … HTU1) -U1
-  [5: @ldrop_skip // |2: skip 
+  [5: /2 width=2 by ldrop_skip/ |2: skip 
   |3: >plus_plus_comm_23 >(plus_plus_comm_23 dt) /2 width=1 by le_S_S/
   |4: /2 width=1 by le_S_S/
-  ] (**) (* 29s without the rewrites *)
-  /3 width=5 by _//3 width=5 by cpy_bind, lift_bind, ex2_intro/
+  ]
+  /3 width=5 by cpy_bind, lift_bind, ex2_intro/
 | #I #G #L #V1 #V2 #U1 #U2 #dt #et #_ #_ #IHV12 #IHU12 #K #d #e #HLK #X #H #Hdtd #Hdedet
   elim (lift_inv_flat2 … H) -H #W1 #T1 #HWV1 #HTU1 #H destruct
   elim (IHV12 … HLK … HWV1) -V1 //

@@ -14,7 +14,7 @@
 
 include "basic_2/relocation/cpy_lift.ma".
 
-(* CONTEXT-SENSITIVE EXTENDED PARALLEL SUBSTITUTION FOR TERMS ***************)
+(* CONTEXT-SENSITIVE EXTENDED ORDINARY SUBSTITUTION FOR TERMS ***************)
 
 (* Main properties **********************************************************)
 

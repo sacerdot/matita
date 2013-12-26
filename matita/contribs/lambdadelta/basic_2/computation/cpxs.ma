@@ -57,7 +57,7 @@ lemma cpxs_strap2: ∀h,g,G,L,T1,T. ⦃G, L⦄ ⊢ T1 ➡[h, g] T →
 normalize /2 width=3 by TC_strap/ qed.
 
 lemma lsubr_cpxs_trans: ∀h,g,G. lsub_trans … (cpxs h g G) lsubr.
-/3 width=5 by lsubr_cpx_trans, TC_lsub_trans/
+/3 width=5 by lsubr_cpx_trans, LTC_lsub_trans/
 qed-.
 
 lemma cprs_cpxs: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡* T2 → ⦃G, L⦄ ⊢ T1 ➡*[h, g] T2.

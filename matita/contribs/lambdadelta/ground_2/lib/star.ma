@@ -154,7 +154,7 @@ lemma NF_to_SN_sn: ∀A,R,S,a. NF_sn A R S a → SN_sn A R S a.
 elim HSa12 -HSa12 /2 width=1/
 qed.
 
-lemma TC_lsub_trans: ∀A,B,R,S. lsub_trans A B R S → lsub_trans A B (LTC … R) S.
+lemma LTC_lsub_trans: ∀A,B,R,S. lsub_trans A B R S → lsub_trans A B (LTC … R) S.
 #A #B #R #S #HRS #L2 #T1 #T2 #H elim H -T2 [ /3 width=3/ ]
 #T #T2 #_ #HT2 #IHT1 #L1 #HL12
 lapply (HRS … HT2 … HL12) -HRS -HT2 /3 width=3/

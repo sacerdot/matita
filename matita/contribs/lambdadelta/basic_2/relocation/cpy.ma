@@ -18,9 +18,8 @@ include "basic_2/grammar/cl_shift.ma".
 include "basic_2/relocation/ldrop_append.ma".
 include "basic_2/relocation/lsuby.ma".
 
-(* CONTEXT-SENSITIVE EXTENDED PARALLEL SUBSTITUTION FOR TERMS ***************)
+(* CONTEXT-SENSITIVE EXTENDED ORDINARY SUBSTITUTION FOR TERMS ***************)
 
-(* Note: this substitution is ordinary *)
 (* activate genv *)
 inductive cpy: nat → nat → relation4 genv lenv term term ≝
 | cpy_atom : ∀I,G,L,d,e. cpy d e G L (⓪{I}) (⓪{I})
@@ -34,13 +33,12 @@ inductive cpy: nat → nat → relation4 genv lenv term term ≝
              cpy d e G L (ⓕ{I}V1.T1) (ⓕ{I}V2.T2)
 .
 
-interpretation "context-sensitive extended parallel substritution (term)"
+interpretation "context-sensitive extended ordinary substritution (term)"
    'ExtPSubst G L T1 d e T2 = (cpy d e G L T1 T2).
 
 (* Basic properties *********************************************************)
 
-lemma lsuby_cpy_trans: ∀G,L1,T1,T2,d,e. ⦃G, L1⦄ ⊢ T1 ▶×[d, e] T2 →
-                       ∀L2. L2 ⊑×[d, e] L1 → ⦃G, L2⦄ ⊢ T1 ▶×[d, e] T2.
+lemma lsuby_cpy_trans: ∀G,d,e. lsub_trans … (cpy d e G) (lsuby d e). 
 #G #d #e #L1 #T1 #T2 #H elim H -G -L1 -T1 -T2 -d -e
 [ //
 | #I #G #L1 #K1 #V #W #i #d #e #Hdi #Hide #HLK1 #HVW #L2 #HL12
@@ -150,9 +148,8 @@ lemma cpy_split_down: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶×[d, e] T2 →
 ]
 qed-.
 
-lemma cpy_append: ∀G,K,T1,T2,d,e. ⦃G, K⦄ ⊢ T1 ▶×[d, e] T2 →
-                  ∀L. ⦃G, L @@ K⦄ ⊢ T1 ▶×[d, e] T2.
-#G #K #T1 #T2 #d #e #H elim H -K -T1 -T2 -d -e
+lemma cpy_append: ∀G,d,e. l_appendable_sn … (cpy d e G).
+#G #d #e #K #T1 #T2 #H elim H -K -T1 -T2 -d -e
 /2 width=1 by cpy_atom, cpy_bind, cpy_flat/
 #I #G #K #K0 #V #W #i #d #e #Hdi #Hide #HK0 #HVW #L
 lapply (ldrop_fwd_length_lt2 … HK0) #H

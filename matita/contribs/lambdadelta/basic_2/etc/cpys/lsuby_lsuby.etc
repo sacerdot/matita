@@ -1,0 +1,27 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/relocation/lsuby.ma".
+
+(* LOCAL ENVIRONMENT REFINEMENT FOR EXTENDED SUBSTITUTION *******************)
+
+(* Main properties **********************************************************)
+
+theorem lsuby_trans: Transitive … lsuby.
+#L1 #L #H elim H -L1 -L
+[ #L1 #X #H lapply (lsuby_inv_atom1 … H) -H //
+| #I1 #I #L1 #L #V #_ #IHL1 #X #H elim (lsuby_inv_pair1 … H) -H // *
+  #I2 #L2 #HL2 #H destruct /3 width=1 by lsuby_pair/
+]
+qed-.

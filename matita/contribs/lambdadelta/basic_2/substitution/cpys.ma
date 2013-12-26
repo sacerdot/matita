@@ -12,177 +12,155 @@
 (*                                                                        *)
 (**************************************************************************)
 
-notation "hvbox( L ⊢ break term 46 T1 break ▶ * [ term 46 d , break term 46 e ] break term 46 T2 )"
-   non associative with precedence 45
-   for @{ 'PSubstStar $L $T1 $d $e $T2 }.
+include "basic_2/notation/relations/extpsubststar_6.ma".
+include "basic_2/relocation/cpy.ma".
 
-include "basic_2/substitution/tps.ma".
+(* CONTEXT-SENSITIVE EXTENDED MULTIPLE SUBSTITUTION FOR TERMS ***************)
 
-(* PARTIAL UNFOLD ON TERMS **************************************************)
+definition cpys: nat → nat → relation4 genv lenv term term ≝
+                 λd,e,G. LTC … (cpy d e G).
 
-definition tpss: nat → nat → lenv → relation term ≝
-                 λd,e,L. TC … (tps d e L).
-
-interpretation "partial unfold (term)"
-   'PSubstStar L T1 d e T2 = (tpss d e L T1 T2).
+interpretation "context-sensitive extended multiple substritution (term)"
+   'ExtPSubstStar G L T1 d e T2 = (cpys d e G L T1 T2).
 
 (* Basic eliminators ********************************************************)
 
-lemma tpss_ind: ∀d,e,L,T1. ∀R:predicate term. R T1 →
-                (∀T,T2. L ⊢ T1 ▶* [d, e] T → L ⊢ T ▶ [d, e] T2 → R T → R T2) →
-                ∀T2. L ⊢ T1 ▶* [d, e] T2 → R T2.
-#d #e #L #T1 #R #HT1 #IHT1 #T2 #HT12
+lemma cpys_ind: ∀G,L,T1,d,e. ∀R:predicate term. R T1 →
+                (∀T,T2. ⦃G, L⦄ ⊢ T1 ▶*×[d, e] T → ⦃G, L⦄ ⊢ T ▶×[d, e] T2 → R T → R T2) →
+                ∀T2. ⦃G, L⦄ ⊢ T1 ▶*×[d, e] T2 → R T2.
+#G #L #T1 #d #e #R #HT1 #IHT1 #T2 #HT12
 @(TC_star_ind … HT1 IHT1 … HT12) //
 qed-.
 
-lemma tpss_ind_dx: ∀d,e,L,T2. ∀R:predicate term. R T2 →
-                   (∀T1,T. L ⊢ T1 ▶ [d, e] T → L ⊢ T ▶* [d, e] T2 → R T → R T1) →
-                   ∀T1. L ⊢ T1 ▶* [d, e] T2 → R T1.
-#d #e #L #T2 #R #HT2 #IHT2 #T1 #HT12
+lemma cpys_ind_dx: ∀G,L,T2,d,e. ∀R:predicate term. R T2 →
+                   (∀T1,T. ⦃G, L⦄ ⊢ T1 ▶×[d, e] T → ⦃G, L⦄ ⊢ T ▶*×[d, e] T2 → R T → R T1) →
+                   ∀T1. ⦃G, L⦄ ⊢ T1 ▶*×[d, e] T2 → R T1.
+#G #L #T2 #d #e #R #HT2 #IHT2 #T1 #HT12
 @(TC_star_ind_dx … HT2 IHT2 … HT12) //
 qed-.
 
 (* Basic properties *********************************************************)
 
-lemma tps_tpss: ∀L,T1,T2,d,e. L ⊢ T1 ▶ [d, e] T2 → L ⊢ T1 ▶* [d, e] T2.
-/2 width=1/ qed.
+lemma cpy_cpys: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶×[d, e] T2 → ⦃G, L⦄ ⊢ T1 ▶*×[d, e] T2.
+/2 width=1 by inj/ qed.
 
-lemma tpss_strap1: ∀L,T1,T,T2,d,e.
-                   L ⊢ T1 ▶* [d, e] T → L ⊢ T ▶ [d, e] T2 → L ⊢ T1 ▶* [d, e] T2.
-/2 width=3/ qed.
+lemma cpys_strap1: ∀G,L,T1,T,T2,d,e.
+                   ⦃G, L⦄ ⊢ T1 ▶*×[d, e] T → ⦃G, L⦄ ⊢ T ▶×[d, e] T2 → ⦃G, L⦄ ⊢ T1 ▶*×[d, e] T2.
+normalize /2 width=3 by step/ qed-.
 
-lemma tpss_strap2: ∀L,T1,T,T2,d,e.
-                   L ⊢ T1 ▶ [d, e] T → L ⊢ T ▶* [d, e] T2 → L ⊢ T1 ▶* [d, e] T2.
-/2 width=3/ qed.
+lemma cpys_strap2: ∀G,L,T1,T,T2,d,e.
+                   ⦃G, L⦄ ⊢ T1 ▶×[d, e] T → ⦃G, L⦄ ⊢ T ▶*×[d, e] T2 → ⦃G, L⦄ ⊢ T1 ▶*×[d, e] T2.
+normalize /2 width=3 by TC_strap/ qed-.
 
-lemma tpss_lsubr_trans: ∀L1,T1,T2,d,e. L1 ⊢ T1 ▶* [d, e] T2 →
-                        ∀L2. L2 ⊑ [d, e] L1 → L2 ⊢ T1 ▶* [d, e] T2.
-/3 width=3/ qed.
+lemma lsuby_cpys_trans: ∀G,d,e. lsub_trans … (cpys d e G) (lsuby d e).
+/3 width=5 by lsuby_cpy_trans, LTC_lsub_trans/
+qed-.
 
-lemma tpss_refl: ∀d,e,L,T. L ⊢ T ▶* [d, e] T.
-/2 width=1/ qed.
+lemma cpys_refl: ∀G,L,d,e. reflexive … (cpys d e G L).
+/2 width=1 by cpy_cpys/ qed.
 
-lemma tpss_bind: ∀L,V1,V2,d,e. L ⊢ V1 ▶* [d, e] V2 →
-                 ∀a,I,T1,T2. L. ⓑ{I} V2 ⊢ T1 ▶* [d + 1, e] T2 →
-                 L ⊢ ⓑ{a,I} V1. T1 ▶* [d, e] ⓑ{a,I} V2. T2.
-#L #V1 #V2 #d #e #HV12 elim HV12 -V2
-[ #V2 #HV12 #a #I #T1 #T2 #HT12 elim HT12 -T2
-  [ /3 width=5/
-  | #T #T2 #_ #HT2 #IHT @step /2 width=5/ (**) (* /3 width=5/ is too slow *)
-  ]
-| #V #V2 #_ #HV12 #IHV #a #I #T1 #T2 #HT12
-  lapply (tpss_lsubr_trans … HT12 (L. ⓑ{I} V) ?) -HT12 /2 width=1/ #HT12
-  lapply (IHV a … HT12) -IHV -HT12 #HT12 @step /2 width=5/ (**) (* /3 width=5/ is too slow *)
+lemma cpys_bind: ∀G,L,V1,V2,d,e. ⦃G, L⦄ ⊢ V1 ▶*×[d, e] V2 →
+                 ∀I,T1,T2. ⦃G, L.ⓑ{I}V2⦄ ⊢ T1 ▶*×[d+1, e] T2 →
+                 ∀a. ⦃G, L⦄ ⊢ ⓑ{a,I}V1.T1 ▶*×[d, e] ⓑ{a,I}V2.T2.
+#G #L #V1 #V2 #d #e #HV12 @(cpys_ind … HV12) -V2
+[ #I #T1 #T2 #HT12 @(cpys_ind … HT12) -T2 /3 width=5 by cpys_strap1, cpy_bind/
+| #V #V2 #_ #HV2 #IHV1 #I #T1 #T2 #HT12 #a
+  lapply (lsuby_cpys_trans … HT12 (L.ⓑ{I}V) ?) -HT12
+  /3 width=5 by cpys_strap1, cpy_bind, lsuby_succ/
 ]
 qed.
 
-lemma tpss_flat: ∀L,I,V1,V2,T1,T2,d,e.
-                 L ⊢ V1 ▶* [d, e] V2 → L ⊢ T1 ▶* [d, e] T2 →
-                 L ⊢ ⓕ{I} V1. T1 ▶* [d, e] ⓕ{I} V2. T2.
-#L #I #V1 #V2 #T1 #T2 #d #e #HV12 elim HV12 -V2
-[ #V2 #HV12 #HT12 elim HT12 -T2
-  [ /3 width=1/
-  | #T #T2 #_ #HT2 #IHT @step /2 width=5/ (**) (* /3 width=5/ is too slow *)
-  ]
-| #V #V2 #_ #HV12 #IHV #HT12
-  lapply (IHV … HT12) -IHV -HT12 #HT12 @step /2 width=5/ (**) (* /3 width=5/ is too slow *)
-]
+lemma cpys_flat: ∀G,L,V1,V2,d,e. ⦃G, L⦄ ⊢ V1 ▶*×[d, e] V2 →
+                 ∀T1,T2. ⦃G, L⦄ ⊢ T1 ▶*×[d, e] T2 →
+                 ∀I. ⦃G, L⦄ ⊢ ⓕ{I}V1.T1 ▶*×[d, e] ⓕ{I}V2.T2.
+#G #L #V1 #V2 #d #e #HV12 @(cpys_ind … HV12) -V2
+[ #T1 #T2 #HT12 @(cpys_ind … HT12) -T2 /3 width=5 by cpys_strap1, cpy_flat/
+| /3 width=5 by cpys_strap1, cpy_flat/
 qed.
 
-lemma tpss_weak: ∀L,T1,T2,d1,e1. L ⊢ T1 ▶* [d1, e1] T2 →
+lemma cpys_weak: ∀G,L,T1,T2,d1,e1. ⦃G, L⦄ ⊢ T1 ▶*×[d1, e1] T2 →
                  ∀d2,e2. d2 ≤ d1 → d1 + e1 ≤ d2 + e2 →
-                 L ⊢ T1 ▶* [d2, e2] T2.
-#L #T1 #T2 #d1 #e1 #H #d1 #d2 #Hd21 #Hde12 @(tpss_ind … H) -T2
-[ //
-| #T #T2 #_ #HT12 #IHT
-  lapply (tps_weak … HT12 … Hd21 Hde12) -HT12 -Hd21 -Hde12 /2 width=3/
-]
-qed.
+                 ⦃G, L⦄ ⊢ T1 ▶*×[d2, e2] T2.
+#G #L #T1 #T2 #d1 #e1 #H #d1 #d2 #Hd21 #Hde12 @(cpys_ind … H) -T2
+/3 width=7 by cpys_strap1, cpy_weak/
+qed-.
 
-lemma tpss_weak_top: ∀L,T1,T2,d,e.
-                     L ⊢ T1 ▶* [d, e] T2 → L ⊢ T1 ▶* [d, |L| - d] T2.
-#L #T1 #T2 #d #e #H @(tpss_ind … H) -T2
-[ //
-| #T #T2 #_ #HT12 #IHT
-  lapply (tps_weak_top … HT12) -HT12 /2 width=3/
-]
-qed.
+lemma cpys_weak_top: ∀G,L,T1,T2,d,e.
+                     ⦃G, L⦄ ⊢ T1 ▶*×[d, e] T2 → ⦃G, L⦄ ⊢ T1 ▶*×[d, |L| - d] T2.
+#G #L #T1 #T2 #d #e #H @(cpys_ind … H) -T2
+/3 width=4 by cpys_strap1, cpy_weak_top/
+qed-.
 
-lemma tpss_weak_full: ∀L,T1,T2,d,e.
-                      L ⊢ T1 ▶* [d, e] T2 → L ⊢ T1 ▶* [0, |L|] T2.
-#L #T1 #T2 #d #e #HT12
-lapply (tpss_weak … HT12 0 (d + e) ? ?) -HT12 // #HT12
-lapply (tpss_weak_top … HT12) //
-qed.
+lemma cpys_weak_full: ∀G,L,T1,T2,d,e.
+                      ⦃G, L⦄ ⊢ T1 ▶*×[d, e] T2 → ⦃G, L⦄ ⊢ T1 ▶*×[0, |L|] T2.
+#G #L #T1 #T2 #d #e #H @(cpys_ind … H) -T2
+/3 width=5 by cpys_strap1, cpy_weak_full/
+qed-.
 
-lemma tpss_append: ∀K,T1,T2,d,e. K ⊢ T1 ▶* [d, e] T2 →
-                   ∀L. L @@ K ⊢ T1 ▶* [d, e] T2.
-#K #T1 #T2 #d #e #H @(tpss_ind … H) -T2 // /3 width=3/
-qed.
+lemma cpys_append: ∀G,d,e. l_appendable_sn … (cpys d e G).
+#G #d #e #K #T1 #T2 #H @(cpys_ind … H) -T2
+/3 width=3 by cpys_strap1, cpy_append/
+qed-.
 
 (* Basic inversion lemmas ***************************************************)
 
-(* Note: this can be derived from tpss_inv_atom1 *)
-lemma tpss_inv_sort1: ∀L,T2,k,d,e. L ⊢ ⋆k ▶* [d, e] T2 → T2 = ⋆k.
-#L #T2 #k #d #e #H @(tpss_ind … H) -T2
-[ //
-| #T #T2 #_ #HT2 #IHT destruct
-  >(tps_inv_sort1 … HT2) -HT2 //
-]
+(* Note: this can be derived from cpys_inv_atom1 *)
+lemma cpys_inv_sort1: ∀G,L,T2,k,d,e. ⦃G, L⦄ ⊢ ⋆k ▶*×[d, e] T2 → T2 = ⋆k.
+#G #L #T2 #k #d #e #H @(cpys_ind … H) -T2 //
+#T #T2 #_ #HT2 #IHT1 destruct
+>(cpy_inv_sort1 … HT2) -HT2 //
 qed-.
 
-(* Note: this can be derived from tpss_inv_atom1 *)
-lemma tpss_inv_gref1: ∀L,T2,p,d,e. L ⊢ §p ▶* [d, e] T2 → T2 = §p.
-#L #T2 #p #d #e #H @(tpss_ind … H) -T2
-[ //
-| #T #T2 #_ #HT2 #IHT destruct
-  >(tps_inv_gref1 … HT2) -HT2 //
-]
+(* Note: this can be derived from cpys_inv_atom1 *)
+lemma cpys_inv_gref1: ∀G,L,T2,p,d,e. ⦃G, L⦄ ⊢ §p ▶*×[d, e] T2 → T2 = §p.
+#G #L #T2 #p #d #e #H @(cpys_ind … H) -T2 //
+#T #T2 #_ #HT2 #IHT1 destruct
+>(cpy_inv_gref1 … HT2) -HT2 //
 qed-.
 
-lemma tpss_inv_bind1: ∀d,e,L,a,I,V1,T1,U2. L ⊢ ⓑ{a,I} V1. T1 ▶* [d, e] U2 →
-                      ∃∃V2,T2. L ⊢ V1 ▶* [d, e] V2 &
-                               L. ⓑ{I} V2 ⊢ T1 ▶* [d + 1, e] T2 &
-                               U2 = ⓑ{a,I} V2. T2.
-#d #e #L #a #I #V1 #T1 #U2 #H @(tpss_ind … H) -U2
-[ /2 width=5/
+lemma cpys_inv_bind1: ∀a,I,G,L,V1,T1,U2,d,e. ⦃G, L⦄ ⊢ ⓑ{a,I}V1.T1 ▶*×[d, e] U2 →
+                      ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ▶*×[d, e] V2 &
+                               ⦃G, L.ⓑ{I}V2⦄ ⊢ T1 ▶*×[d+1, e] T2 &
+                               U2 = ⓑ{a,I}V2.T2.
+#a #I #G #L #V1 #T1 #U2 #d #e #H @(cpys_ind … H) -U2
+[ /2 width=5 by ex3_2_intro/
 | #U #U2 #_ #HU2 * #V #T #HV1 #HT1 #H destruct
-  elim (tps_inv_bind1 … HU2) -HU2 #V2 #T2 #HV2 #HT2 #H
-  lapply (tpss_lsubr_trans … HT1 (L. ⓑ{I} V2) ?) -HT1 /2 width=1/ /3 width=5/
+  elim (cpy_inv_bind1 … HU2) -HU2 #V2 #T2 #HV2 #HT2 #H
+  lapply (lsuby_cpys_trans … HT1 (L.ⓑ{I}V2) ?) -HT1
+  /3 width=5 by cpys_strap1, lsuby_succ, ex3_2_intro/
 ]
 qed-.
 
-lemma tpss_inv_flat1: ∀d,e,L,I,V1,T1,U2. L ⊢ ⓕ{I} V1. T1 ▶* [d, e] U2 →
-                      ∃∃V2,T2. L ⊢ V1 ▶* [d, e] V2 & L ⊢ T1 ▶* [d, e] T2 &
-                               U2 =  ⓕ{I} V2. T2.
-#d #e #L #I #V1 #T1 #U2 #H @(tpss_ind … H) -U2
-[ /2 width=5/
+lemma cpys_inv_flat1: ∀I,G,L,V1,T1,U2,d,e. ⦃G, L⦄ ⊢ ⓕ{I}V1.T1 ▶*×[d, e] U2 →
+                      ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ▶*×[d, e] V2 & ⦃G, L⦄ ⊢ T1 ▶*×[d, e] T2 &
+                               U2 = ⓕ{I}V2.T2.
+#I #G #L #V1 #T1 #U2 #d #e #H @(cpys_ind … H) -U2
+[ /2 width=5 by ex3_2_intro/
 | #U #U2 #_ #HU2 * #V #T #HV1 #HT1 #H destruct
-  elim (tps_inv_flat1 … HU2) -HU2 /3 width=5/
+  elim (cpy_inv_flat1 … HU2) -HU2
+  /3 width=5 by cpys_strap1, ex3_2_intro/
 ]
 qed-.
 
-lemma tpss_inv_refl_O2: ∀L,T1,T2,d. L ⊢ T1 ▶* [d, 0] T2 → T1 = T2.
-#L #T1 #T2 #d #H @(tpss_ind … H) -T2
-[ //
-| #T #T2 #_ #HT2 #IHT <(tps_inv_refl_O2 … HT2) -HT2 //
-]
+lemma cpys_inv_refl_O2: ∀G,L,T1,T2,d. ⦃G, L⦄ ⊢ T1 ▶*×[d, 0] T2 → T1 = T2.
+#G #L #T1 #T2 #d #H @(cpys_ind … H) -T2 //
+#T #T2 #_ #HT2 #IHT1 <(cpy_inv_refl_O2 … HT2) -HT2 //
 qed-.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma tpss_fwd_tw: ∀L,T1,T2,d,e. L ⊢ T1 ▶* [d, e] T2 → ♯{T1} ≤ ♯{T2}.
-#L #T1 #T2 #d #e #H @(tpss_ind … H) -T2 //
-#T #T2 #_ #HT2 #IHT1
-lapply (tps_fwd_tw … HT2) -HT2 #HT2
-@(transitive_le … IHT1) //
+lemma cpys_fwd_tw: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶*×[d, e] T2 → ♯{T1} ≤ ♯{T2}.
+#G #L #T1 #T2 #d #e #H @(cpys_ind … H) -T2 //
+#T #T2 #_ #HT2 #IHT1 lapply (cpy_fwd_tw … HT2) -HT2
+/2 width=3 by transitive_le/
 qed-.
 
-lemma tpss_fwd_shift1: ∀L,L1,T1,T,d,e. L ⊢ L1 @@ T1 ▶*[d, e] T →
+lemma cpys_fwd_shift1: ∀G,L,L1,T1,T,d,e. ⦃G, L⦄ ⊢ L1 @@ T1 ▶*×[d, e] T →
                        ∃∃L2,T2. |L1| = |L2| & T = L2 @@ T2.
-#L #L1 #T1 #T #d #e #H @(tpss_ind … H) -T
-[ /2 width=4/
-| #T #X #_ #H0 * #L0 #T0 #HL10 #H destruct
-  elim (tps_fwd_shift1 … H0) -H0 #L2 #T2 #HL02 #H destruct /2 width=4/
+#G #L #L1 #T1 #T #d #e #H @(cpys_ind … H) -T
+[ /2 width=4 by ex2_2_intro/
+| #T #X #_ #HX * #L0 #T0 #HL10 #H destruct
+  elim (cpy_fwd_shift1 … HX) -HX #L2 #T2 #HL02 #H destruct
+  /2 width=4 by ex2_2_intro/
 ]
 qed-.
