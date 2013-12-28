@@ -35,6 +35,12 @@ lemma yminus_Y_inj: ∀n. ∞ - yinj n = ∞.
 #n #IHn >IHn //
 qed.
 
+(* Properties on predecessor ************************************************)
+
+lemma yminus_SO2: ∀m. m - 1 = ⫰m.
+* //
+qed.
+
 (* Properties on successor **************************************************)
 
 lemma yminus_succ: ∀n,m. ⫯m - ⫯n = m - n.

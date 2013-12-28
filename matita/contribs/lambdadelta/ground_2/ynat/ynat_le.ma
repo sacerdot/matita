@@ -62,30 +62,20 @@ lemma yle_inv_Y1: ∀n. ∞ ≤ n → n = ∞.
 
 (* Inversion lemmas on successor ********************************************)
 
-fact yle_inv_succ1_aux: ∀x,y. x ≤ y → ∀m. x = ⫯m → ∃∃n. m ≤ n & y = ⫯n.
+fact yle_inv_succ1_aux: ∀x,y. x ≤ y → ∀m. x = ⫯m → m ≤ ⫰y ∧ y = ⫯⫰y.
 #x #y * -x -y
 [ #x #y #Hxy #m #H elim (ysucc_inv_inj_sn … H) -H
   #n #H1 #H2 destruct elim (le_inv_S1 … Hxy) -Hxy
-  #m #Hnm #H destruct
-  @(ex2_intro … m) /2 width=1 by yle_inj/ (**) (* explicit constructor *)
-| #x #y #H destruct
-  @(ex2_intro … (∞)) /2 width=1 by yle_Y/ (**) (* explicit constructor *)
+  #m #Hnm #H destruct /3 width=1 by yle_inj, conj/
+| #x #y #H destruct /2 width=1 by yle_Y, conj/
 ]
 qed-.
 
-lemma yle_inv_succ1: ∀m,y.  ⫯m ≤ y → ∃∃n. m ≤ n & y = ⫯n.
+lemma yle_inv_succ1: ∀m,y. ⫯m ≤ y → m ≤ ⫰y ∧ y = ⫯⫰y.
 /2 width=3 by yle_inv_succ1_aux/ qed-.
 
 lemma yle_inv_succ: ∀m,n. ⫯m ≤ ⫯n → m ≤ n.
-#m #n #H elim (yle_inv_succ1 … H) -H
-#x #Hx #H destruct //
-qed-.
-
-(* Forward lemmas on successor **********************************************)
-
-lemma yle_fwd_succ1: ∀m,n. ⫯m ≤ n → m ≤ ⫰n.
-#m #x #H elim (yle_inv_succ1 … H) -H
-#n #Hmn #H destruct //
+#m #n #H elim (yle_inv_succ1 … H) -H //
 qed-.
 
 (* Basic properties *********************************************************)
@@ -97,6 +87,12 @@ qed.
 lemma yle_refl: reflexive … yle.
 * /2 width=1 by le_n, yle_inj/
 qed.
+
+lemma yle_split: ∀x,y:ynat. x ≤ y ∨ y ≤ x.
+* /2 width=1 by or_intror/
+#x * /2 width=1 by or_introl/
+#y elim (le_or_ge x y) /3 width=1 by yle_inj, or_introl, or_intror/
+qed-.
 
 (* Properties on predecessor ************************************************)
 
@@ -118,7 +114,11 @@ lemma yle_succ_dx: ∀m,n. m ≤ n → m ≤ ⫯n.
 qed.
 
 lemma yle_refl_S_dx: ∀x. x ≤ ⫯x.
-/2 width=1 by yle_refl, yle_succ_dx/ qed.
+/2 width=1 by yle_succ_dx/ qed.
+
+lemma yle_refl_SP_dx: ∀x. x ≤ ⫯⫰x.
+* // * //
+qed. 
 
 (* Main properties **********************************************************)
 

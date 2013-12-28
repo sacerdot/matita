@@ -58,27 +58,26 @@ qed-.
 
 (* Inversion lemmas on successor ********************************************)
 
-fact ylt_inv_succ1_aux: ∀x,y. x < y → ∀m. x = ⫯m → ∃∃n. m < n & y = ⫯n.
+fact ylt_inv_succ1_aux: ∀x,y. x < y → ∀m. x = ⫯m → m < ⫰y ∧ y = ⫯⫰y.
 #x #y * -x -y
 [ #x #y #Hxy #m #H elim (ysucc_inv_inj_sn … H) -H
   #n #H1 #H2 destruct elim (le_inv_S1 … Hxy) -Hxy
-  #m #Hnm #H destruct
-  @(ex2_intro … m) /2 width=1 by ylt_inj/ (**) (* explicit constructor *)
+  #m #Hnm #H destruct /3 width=1 by ylt_inj, conj/
 | #x #y #H elim (ysucc_inv_inj_sn … H) -H
-  #m #H #_ destruct
-  @(ex2_intro … (∞)) /2 width=1 by/ (**) (* explicit constructor *)
+  #m #H #_ destruct /2 width=1 by ylt_Y, conj/
 ]
 qed-.
 
-lemma ylt_inv_succ1: ∀m,y.  ⫯m < y → ∃∃n. m < n & y = ⫯n.
+lemma ylt_inv_succ1: ∀m,y. ⫯m < y → m < ⫰y ∧ y = ⫯⫰y.
 /2 width=3 by ylt_inv_succ1_aux/ qed-.
 
 lemma ylt_inv_succ: ∀m,n. ⫯m < ⫯n → m < n.
-#m #n #H elim (ylt_inv_succ1 … H) -H
-#x #Hx #H destruct //
+#m #n #H elim (ylt_inv_succ1 … H) -H //
 qed-.
 
-fact ylt_inv_succ2_aux: ∀x,y. x < y → ∀n. y = ⫯n → x ≤ n.
+(* Forward lemmas on successor **********************************************)
+
+fact ylt_fwd_succ2_aux: ∀x,y. x < y → ∀n. y = ⫯n → x ≤ n.
 #x #y * -x -y
 [ #x #y #Hxy #m #H elim (ysucc_inv_inj_sn … H) -H
   #n #H1 #H2 destruct /3 width=1 by yle_inj, le_S_S_to_le/
@@ -86,10 +85,8 @@ fact ylt_inv_succ2_aux: ∀x,y. x < y → ∀n. y = ⫯n → x ≤ n.
 ]
 qed-.
 
-(* Forward lemmas on successor **********************************************)
-
 lemma ylt_fwd_succ2: ∀m,n. m < ⫯n → m ≤ n.
-/2 width=3 by ylt_inv_succ2_aux/ qed-.
+/2 width=3 by ylt_fwd_succ2_aux/ qed-.
 
 (* inversion and forward lemmas on yle **************************************)
 
@@ -147,4 +144,4 @@ theorem ylt_trans: Transitive … ylt.
   /3 width=3 by transitive_lt, ylt_inj/ (**) (* full auto too slow *)
 | #x #z #H elim (ylt_yle_false … H) //
 ]
-qed-. 
+qed-.
