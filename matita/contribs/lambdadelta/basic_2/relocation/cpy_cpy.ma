@@ -53,15 +53,9 @@ theorem cpy_conf_neq: ∀G,L1,T0,T1,d1,e1. ⦃G, L1⦄ ⊢ T0 ▶×[d1, e1] T1 �
 | #I1 #G #L1 #K1 #V1 #T1 #i0 #d1 #e1 #Hd1 #Hde1 #HLK1 #HVT1 #L2 #T2 #d2 #e2 #H1 #H2
   elim (cpy_inv_lref1 … H1) -H1
   [ #H destruct /3 width=7 by cpy_subst, ex2_intro/
-  | -HLK1 -HVT1 * #I2 #K2 #V2 #Hd2 #Hde2 #_ #_ elim H2 -H2 #Hded
-    [ -Hd1 -Hde2
-      lapply (transitive_le … Hded Hd2) -Hded -Hd2 #H
-      lapply (lt_to_le_to_lt … Hde1 H) -Hde1 -H #H
-      elim (lt_refl_false … H)
-    | -Hd2 -Hde1
-      lapply (transitive_le … Hded Hd1) -Hded -Hd1 #H
-      lapply (lt_to_le_to_lt … Hde2 H) -Hde2 -H #H
-      elim (lt_refl_false … H)
+  | -HLK1 -HVT1 * #I2 #K2 #V2 #Hd2 #Hde2 #_ #_ elim H2 -H2 #Hded [ -Hd1 -Hde2 | -Hd2 -Hde1 ]
+    [ elim (ylt_yle_false … Hde1) -Hde1 /2 width=3 by yle_trans/
+    | elim (ylt_yle_false … Hde2) -Hde2 /2 width=3 by yle_trans/
     ]
   ]
 | #a #I #G #L1 #V0 #V1 #T0 #T1 #d1 #e1 #_ #_ #IHV01 #IHT01 #L2 #X #d2 #e2 #HX #H
@@ -71,8 +65,7 @@ theorem cpy_conf_neq: ∀G,L1,T0,T1,d1,e1. ⦃G, L1⦄ ⊢ T0 ▶×[d1, e1] T1 �
   [ -H #T #HT1 #HT2
     lapply (lsuby_cpy_trans … HT1 (L2.ⓑ{I}V) ?) -HT1 /2 width=1 by lsuby_succ/
     lapply (lsuby_cpy_trans … HT2 (L1.ⓑ{I}V) ?) -HT2 /3 width=5 by cpy_bind, lsuby_succ, ex2_intro/
-  | -HV1 -HV2 >plus_plus_comm_23 >plus_plus_comm_23 in ⊢ (? ? %); elim H -H
-    /3 width=1 by monotonic_le_plus_l, or_intror, or_introl/
+  | -HV1 -HV2 elim H -H /3 width=1 by yle_succ, or_introl, or_intror/
   ]
 | #I #G #L1 #V0 #V1 #T0 #T1 #d1 #e1 #_ #_ #IHV01 #IHT01 #L2 #X #d2 #e2 #HX #H
   elim (cpy_inv_flat1 … HX) -HX #V2 #T2 #HV02 #HT02 #HX destruct
@@ -89,11 +82,11 @@ theorem cpy_trans_ge: ∀G,L,T1,T0,d,e. ⦃G, L⦄ ⊢ T1 ▶×[d, e] T0 →
   elim (cpy_inv_atom1 … H) -H
   [ #H destruct //
   | * #J #K #V #i #Hd2i #Hide2 #HLK #HVT2 #H destruct
-    lapply (lt_to_le_to_lt … (d+e) Hide2 ?) /2 width=5 by cpy_subst, monotonic_lt_plus_r/
+    lapply (ylt_yle_trans … (d+e) … Hide2) /2 width=5 by cpy_subst, monotonic_yle_plus_dx/
   ]
 | #I #G #L #K #V #V2 #i #d #e #Hdi #Hide #HLK #HVW #T2 #HVT2 #He
-  lapply (cpy_weak … HVT2 0 (i +1) ? ?) -HVT2 /2 width=1 by le_S_S/ #HVT2
-  <(cpy_inv_lift1_eq … HVT2 … HVW) -HVT2 /2 width=5 by cpy_subst/
+  lapply (cpy_weak … HVT2 0 (i+1) ? ?) -HVT2 /3 width=1 by yle_plus_dx2_trans, yle_succ/
+  >yplus_inj #HVT2 <(cpy_inv_lift1_eq … HVW … HVT2) -HVT2 /2 width=5 by cpy_subst/
 | #a #I #G #L #V1 #V0 #T1 #T0 #d #e #_ #_ #IHV10 #IHT10 #X #H #He
   elim (cpy_inv_bind1 … H) -H #V2 #T2 #HV02 #HT02 #H destruct
   lapply (lsuby_cpy_trans … HT02 (L.ⓑ{I}V0) ?) -HT02 /2 width=1 by lsuby_succ/ #HT02
@@ -110,14 +103,14 @@ theorem cpy_trans_down: ∀G,L,T1,T0,d1,e1. ⦃G, L⦄ ⊢ T1 ▶×[d1, e1] T0 �
 #G #L #T1 #T0 #d1 #e1 #H elim H -G -L -T1 -T0 -d1 -e1
 [ /2 width=3 by ex2_intro/
 | #I #G #L #K #V #W #i1 #d1 #e1 #Hdi1 #Hide1 #HLK #HVW #T2 #d2 #e2 #HWT2 #Hde2d1
-  lapply (transitive_le … Hde2d1 Hdi1) -Hde2d1 #Hde2i1
-  lapply (cpy_weak … HWT2 0 (i1 + 1) ? ?) -HWT2 normalize /2 width=1 by le_S/ -Hde2i1 #HWT2
-  <(cpy_inv_lift1_eq … HWT2 … HVW) -HWT2 /3 width=9 by cpy_subst, ex2_intro/
+  lapply (yle_trans … Hde2d1 … Hdi1) -Hde2d1 #Hde2i1
+  lapply (cpy_weak … HWT2 0 (i1+1) ? ?) -HWT2 /3 width=1 by yle_succ, yle_pred_sn/ -Hde2i1
+  >yplus_inj #HWT2 <(cpy_inv_lift1_eq … HVW … HWT2) -HWT2 /3 width=9 by cpy_subst, ex2_intro/
 | #a #I #G #L #V1 #V0 #T1 #T0 #d1 #e1 #_ #_ #IHV10 #IHT10 #X #d2 #e2 #HX #de2d1
   elim (cpy_inv_bind1 … HX) -HX #V2 #T2 #HV02 #HT02 #HX destruct
   lapply (lsuby_cpy_trans … HT02 (L. ⓑ{I} V0) ?) -HT02 /2 width=1 by lsuby_succ/ #HT02
-  elim (IHV10 … HV02 ?) -IHV10 -HV02 // #V
-  elim (IHT10 … HT02 ?) -T0 /2 width=1 by le_S_S/ #T #HT1 #HT2
+  elim (IHV10 … HV02) -IHV10 -HV02 // #V
+  elim (IHT10 … HT02) -T0 /2 width=1 by yle_succ/ #T #HT1 #HT2
   lapply (lsuby_cpy_trans … HT1 (L. ⓑ{I} V) ?) -HT1 /2 width=1 by lsuby_succ/
   lapply (lsuby_cpy_trans … HT2 (L. ⓑ{I} V2) ?) -HT2 /3 width=6 by cpy_bind, lsuby_succ, ex2_intro/
 | #I #G #L #V1 #V0 #T1 #T0 #d1 #e1 #_ #_ #IHV10 #IHT10 #X #d2 #e2 #HX #de2d1

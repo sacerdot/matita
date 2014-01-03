@@ -55,13 +55,17 @@ lemma yminus_succ: ∀n,m. ⫯m - ⫯n = m - n.
 #m >yminus_inj //
 qed.
 
-lemma yminus_succ1_inj: ∀n:nat. ∀m:ynat. n ≤ m →  ⫯m - n = ⫯(m - n).
+lemma yminus_succ1_inj: ∀n:nat. ∀m:ynat. n ≤ m → ⫯m - n = ⫯(m - n).
 #n *
 [ #m #Hmn >yminus_inj >yminus_inj
   /4 width=1 by yle_inv_inj, plus_minus, eq_f/
 | >yminus_Y_inj //
 ]
 qed-.
+
+lemma yminus_succ2: ∀y,x. x - ⫯y = ⫰(x-y).
+* //
+qed.
 
 (* Properties on order ******************************************************)
 

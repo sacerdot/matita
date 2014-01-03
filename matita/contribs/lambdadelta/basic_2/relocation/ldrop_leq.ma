@@ -66,8 +66,8 @@ lemma ldrop_leq_conf_be: ∀L1,L2,d,e. L1 ≃[d, e] L2 →
     >yminus_succ /3 width=5 by ldrop_ldrop_lt, ex2_3_intro/
   ]
 | #I #L1 #L2 #V #d #e #_ #IHL12 #J1 #K1 #W1 #i #H #Hdi lapply (ylt_yle_trans 0 … Hdi ?) //
-  #Hi <(ylt_inv_O1 … Hi) >yplus_succ1 >yminus_succ lapply (yle_fwd_succ1 … Hdi) -Hdi
-  #Hdi #Hide lapply (ylt_inv_succ … Hide)
+  #Hi <(ylt_inv_O1 … Hi) >yplus_succ1 >yminus_succ elim (yle_inv_succ1 … Hdi) -Hdi
+  #Hdi #_ #Hide lapply (ylt_inv_succ … Hide)
   #Hide lapply (ylt_inv_inj … Hi) -Hi
   #Hi lapply (ldrop_inv_ldrop1_lt … H ?) -H //
   #H elim (IHL12 … H) -IHL12 -H

@@ -26,8 +26,12 @@ interpretation "ynat 'less than'" 'lt x y = (ylt x y).
 
 (* Basic forward lemmas *****************************************************)
 
-lemma ylt_inv_gen: ∀x,y. x < y → ∃m. x = yinj m.
+lemma ylt_fwd_gen: ∀x,y. x < y → ∃m. x = yinj m.
 #x #y * -x -y /2 width=2 by ex_intro/
+qed-.
+
+lemma ylt_fwd_le_succ: ∀x,y. x < y → ⫯x ≤ y.
+#x #y * -x -y /2 width=1 by yle_inj/
 qed-.
 
 (* Basic inversion lemmas ***************************************************)
@@ -51,7 +55,7 @@ lemma ylt_inv_inj: ∀m,n. yinj m < yinj n → m < n.
 qed-.
 
 lemma ylt_inv_Y1: ∀n. ∞ < n → ⊥.
-#n #H elim (ylt_inv_gen … H) -H
+#n #H elim (ylt_fwd_gen … H) -H
 #y #H destruct
 qed-.
 

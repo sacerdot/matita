@@ -52,9 +52,9 @@ lemma cpys_split_up: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶*×[d, e] T2 →
 #G #L #T1 #T2 #d #e #H #i #Hdi #Hide @(cpys_ind … H) -T2
 [ /2 width=3 by ex2_intro/
 | #T #T2 #_ #HT12 * #T3 #HT13 #HT3
-  elim (cpy_split_up … HT12 … Hdi Hide) -HT12 -Hide #T0 #HT0 #HT02
-  elim (cpys_strap1_down … HT3 … HT0 ?) -T /3 width=5 by cpys_strap1, ex2_intro/
-  >commutative_plus /2 width=1 by le_minus_to_plus_r/
+  elim (cpy_split_up … HT12 … Hide) -HT12 -Hide #T0 #HT0 #HT02
+  elim (cpys_strap1_down … HT3 … HT0) -T /3 width=5 by cpys_strap1, ex2_intro/
+  >ymax_pre_sn_comm //
 ]
 qed-.
 
@@ -65,9 +65,10 @@ lemma cpys_inv_lift1_up: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶*×[dt, et] U2
                                ⇧[d, e] T2 ≡ U2.
 #G #L #U1 #U2 #dt #et #HU12 #K #d #e #HLK #T1 #HTU1 #Hddt #Hdtde #Hdedet
 elim (cpys_split_up … HU12 (d + e)) -HU12 // -Hdedet #U #HU1 #HU2
-lapply (cpys_weak … HU1 d e ? ?) -HU1 // [ >commutative_plus /2 width=1 by le_minus_to_plus_r/ ] -Hddt -Hdtde #HU1
+lapply (cpys_weak … HU1 d e ? ?) -HU1 // [ >ymax_pre_sn_comm // ] -Hddt -Hdtde #HU1
 lapply (cpys_inv_lift1_eq … HU1 … HTU1) -HU1 #HU1 destruct
-elim (cpys_inv_lift1_ge … HU2 … HLK … HTU1) -HU2 -HLK -HTU1 // <minus_plus_m_m /2 width=3 by ex2_intro/
+elim (cpys_inv_lift1_ge … HU2 … HLK … HTU1) -HU2 -HLK -HTU1 //
+>yplus_minus_inj /2 width=3 by ex2_intro/
 qed-.
 
 (* Main properties **********************************************************)

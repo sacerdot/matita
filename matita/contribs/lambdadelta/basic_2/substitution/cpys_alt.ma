@@ -18,9 +18,9 @@ include "basic_2/substitution/cpys_lift.ma".
 (* CONTEXT-SENSITIVE EXTENDED MULTIPLE SUBSTITUTION FOR TERMS ***************)
 
 (* alternative definition of cpys *)
-inductive cpysa: nat → nat → relation4 genv lenv term term ≝
+inductive cpysa: ynat → ynat → relation4 genv lenv term term ≝
 | cpysa_atom : ∀I,G,L,d,e. cpysa d e G L (⓪{I}) (⓪{I})
-| cpysa_subst: ∀I,G,L,K,V1,V2,W2,i,d,e. d ≤ i → i < d + e →
+| cpysa_subst: ∀I,G,L,K,V1,V2,W2,i,d,e. d ≤ yinj i → i < d+e →
                ⇩[0, i] L ≡ K.ⓑ{I}V1 → cpysa 0 (d+e-i-1) G K V1 V2 →
                ⇧[0, i+1] V2 ≡ W2 → cpysa d e G L (#i) W2
 | cpysa_bind : ∀a,I,G,L,V1,V2,T1,T2,d,e.
@@ -60,7 +60,8 @@ lemma cpysa_cpy_trans: ∀G,L,T1,T,d,e. ⦃G, L⦄ ⊢ T1 ▶▶*×[d, e] T →
 | #I #G #L #K #V1 #V2 #W2 #i #d #e #Hdi #Hide #HLK #_ #HVW2 #IHV12 #T2 #H
   lapply (ldrop_fwd_ldrop2 … HLK) #H0LK
   lapply (cpy_weak … H 0 (d+e) ? ?) -H // #H
-  elim (cpy_inv_lift1_be … H … H0LK … HVW2) -H -H0LK -HVW2 /3 width=7 by cpysa_subst/
+  elim (cpy_inv_lift1_be … H … H0LK … HVW2) -H -H0LK -HVW2
+  /3 width=7 by cpysa_subst, ylt_fwd_le_succ/
 | #a #I #G #L #V1 #V #T1 #T #d #e #_ #_ #IHV1 #IHT1 #X #H
   elim (cpy_inv_bind1 … H) -H #V2 #T2 #HV2 #HT2 #H destruct
   lapply (lsuby_cpy_trans … HT2 (L.ⓑ{I}V) ?) -HT2 /2 width=1 by lsuby_succ/ #HT2
@@ -82,9 +83,9 @@ lemma cpysa_cpys: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶▶*×[d, e] T2 → ⦃
 /2 width=7 by cpys_subst, cpys_flat, cpys_bind, cpy_cpys/
 qed-.
 
-lemma cpys_ind_alt: ∀R:nat→nat→relation4 genv lenv term term.
+lemma cpys_ind_alt: ∀R:ynat→ynat→relation4 genv lenv term term.
                     (∀I,G,L,d,e. R d e G L (⓪{I}) (⓪{I})) →
-                    (∀I,G,L,K,V1,V2,W2,i,d,e. d ≤ i → i < d + e →
+                    (∀I,G,L,K,V1,V2,W2,i,d,e. d ≤ yinj i → i < d + e →
                      ⇩[O, i] L ≡ K.ⓑ{I}V1 → ⦃G, K⦄ ⊢ V1 ▶*×[O, d+e-i-1] V2 →
                      ⇧[O, i + 1] V2 ≡ W2 → R O (d+e-i-1) G K V1 V2 → R d e G L (#i) W2
                     ) →

@@ -17,7 +17,7 @@ include "basic_2/relocation/cpy.ma".
 
 (* CONTEXT-SENSITIVE EXTENDED MULTIPLE SUBSTITUTION FOR TERMS ***************)
 
-definition cpys: nat → nat → relation4 genv lenv term term ≝
+definition cpys: ynat → ynat → relation4 genv lenv term term ≝
                  λd,e,G. LTC … (cpy d e G).
 
 interpretation "context-sensitive extended multiple substritution (term)"
