@@ -24,6 +24,12 @@ inductive ylt: relation ynat ≝
 
 interpretation "ynat 'less than'" 'lt x y = (ylt x y).
 
+(* Basic forward lemmas *****************************************************)
+
+lemma ylt_inv_gen: ∀x,y. x < y → ∃m. x = yinj m.
+#x #y * -x -y /2 width=2 by ex_intro/
+qed-.
+
 (* Basic inversion lemmas ***************************************************)
 
 fact ylt_inv_inj2_aux: ∀x,y. x < y → ∀n. y = yinj n →
@@ -44,12 +50,10 @@ lemma ylt_inv_inj: ∀m,n. yinj m < yinj n → m < n.
 #x #Hx #H destruct //
 qed-.
 
-fact ylt_inv_Y2_aux: ∀x,y. x < y → y = ∞ → ∃m. x = yinj m.
-#x #y * -x -y /2 width=2 by ex_intro/
+lemma ylt_inv_Y1: ∀n. ∞ < n → ⊥.
+#n #H elim (ylt_inv_gen … H) -H
+#y #H destruct
 qed-.
-
-lemma ylt_inv_Y2: ∀x. x < ∞ → ∃m. x = yinj m.
-/2 width=3 by ylt_inv_Y2_aux/ qed-.
 
 lemma ylt_inv_O1: ∀n. 0 < n → ⫯⫰n = n.
 * // #n #H lapply (ylt_inv_inj … H) -H normalize
@@ -58,7 +62,7 @@ qed-.
 
 (* Inversion lemmas on successor ********************************************)
 
-fact ylt_inv_succ1_aux: ∀x,y. x < y → ∀m. x = ⫯m → m < ⫰y ∧ y = ⫯⫰y.
+fact ylt_inv_succ1_aux: ∀x,y. x < y → ∀m. x = ⫯m → m < ⫰y ∧ ⫯⫰y = y.
 #x #y * -x -y
 [ #x #y #Hxy #m #H elim (ysucc_inv_inj_sn … H) -H
   #n #H1 #H2 destruct elim (le_inv_S1 … Hxy) -Hxy
@@ -68,7 +72,7 @@ fact ylt_inv_succ1_aux: ∀x,y. x < y → ∀m. x = ⫯m → m < ⫰y ∧ y = �
 ]
 qed-.
 
-lemma ylt_inv_succ1: ∀m,y. ⫯m < y → m < ⫰y ∧ y = ⫯⫰y.
+lemma ylt_inv_succ1: ∀m,y. ⫯m < y → m < ⫰y ∧ ⫯⫰y = y.
 /2 width=3 by ylt_inv_succ1_aux/ qed-.
 
 lemma ylt_inv_succ: ∀m,n. ⫯m < ⫯n → m < n.
@@ -103,21 +107,37 @@ lemma ylt_yle_false: ∀m:ynat. ∀n:ynat. m < n → n ≤ m → ⊥.
 ]
 qed-.
 
+(* Basic properties *********************************************************)
+
+lemma ylt_O: ∀x. ⫯⫰(yinj x) = yinj x → 0 < x.
+* /2 width=1 by/ normalize
+#H destruct
+qed.
+
 (* Properties on successor **************************************************)
 
 lemma ylt_O_succ: ∀n. 0 < ⫯n.
 * /2 width=1 by ylt_inj/
 qed.
 
-(* Properties on yle ********************************************************)
+lemma ylt_succ: ∀m,n. m < n → ⫯m < ⫯n.
+#m #n #H elim H -m -n /3 width=1 by ylt_inj, le_S_S/ 
+qed.
 
-lemma yle_to_ylt_or_eq: ∀m:ynat. ∀n:ynat. m ≤ n → m < n ∨ m = n.
+(* Properties on order ******************************************************)
+
+lemma yle_split_eq: ∀m:ynat. ∀n:ynat. m ≤ n → m < n ∨ m = n.
 #m #n * -m -n
 [ #m #n #Hmn elim (le_to_or_lt_eq … Hmn) -Hmn
   /3 width=1 by or_introl, ylt_inj/
 | * /2 width=1 by or_introl, ylt_Y/
 ]
 qed-.
+
+lemma ylt_split: ∀m,n:ynat. m < n ∨ n ≤ m..
+#m #n elim (yle_split m n) /2 width=1 by or_intror/
+#H elim (yle_split_eq … H) -H /2 width=1 by or_introl, or_intror/
+qed-. 
 
 lemma ylt_yle_trans: ∀x:ynat. ∀y:ynat. ∀z:ynat. y ≤ z → x < y → x < z.
 #x #y #z * -y -z

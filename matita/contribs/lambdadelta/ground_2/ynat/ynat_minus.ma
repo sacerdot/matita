@@ -35,6 +35,13 @@ lemma yminus_Y_inj: ∀n. ∞ - yinj n = ∞.
 #n #IHn >IHn //
 qed.
 
+lemma yminus_O1: ∀x:ynat. 0 - x = 0.
+* // qed.
+
+lemma yminus_minus_comm: ∀y,z,x. x - y - z = x - z - y.
+* #y [ * #z [ * // ] ] >yminus_O1 //
+qed.
+
 (* Properties on predecessor ************************************************)
 
 lemma yminus_SO2: ∀m. m - 1 = ⫰m.
@@ -46,7 +53,15 @@ qed.
 lemma yminus_succ: ∀n,m. ⫯m - ⫯n = m - n.
 * // #n * [2: >yminus_Y_inj // ]
 #m >yminus_inj //
-qed. 
+qed.
+
+lemma yminus_succ1_inj: ∀n:nat. ∀m:ynat. n ≤ m →  ⫯m - n = ⫯(m - n).
+#n *
+[ #m #Hmn >yminus_inj >yminus_inj
+  /4 width=1 by yle_inv_inj, plus_minus, eq_f/
+| >yminus_Y_inj //
+]
+qed-.
 
 (* Properties on order ******************************************************)
 
@@ -64,4 +79,16 @@ lemma yminus_to_le: ∀n:ynat. ∀m:ynat. m - n = 0 → m ≤ n.
   /2 width=1 by yle_inj/
 | >yminus_Y_inj #H destruct
 ]
+qed.
+
+lemma monotonic_yle_minus_dx: ∀x,y. x ≤ y → ∀z. x - z ≤ y - z.
+#x #y #Hxy * //
+#z elim z -z /3 width=1 by yle_pred/
+qed.
+
+(* Properties on strict order ***********************************************)
+
+lemma monotonic_ylt_minus_dx: ∀x,y:ynat. x < y → ∀z:nat. z ≤ x → x - z < y - z.
+#x #y * -x -y
+/4 width=1 by ylt_inj, yle_inv_inj, monotonic_lt_minus_l/
 qed.

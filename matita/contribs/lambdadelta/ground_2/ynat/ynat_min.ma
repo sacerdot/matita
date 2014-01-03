@@ -20,7 +20,7 @@ fact ymin_pre_dx_aux: ∀x,y. y ≤ x → x - (x - y) ≤ y.
 #x #y * -x -y
 [ #x #y #Hxy >yminus_inj
  /3 width=4 by yle_inj, monotonic_le_minus_l/
-| * // #m >yminus_Y_inj //
+| * //
 ]
 qed-.
 

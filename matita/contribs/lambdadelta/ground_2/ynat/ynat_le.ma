@@ -62,7 +62,7 @@ lemma yle_inv_Y1: ∀n. ∞ ≤ n → n = ∞.
 
 (* Inversion lemmas on successor ********************************************)
 
-fact yle_inv_succ1_aux: ∀x,y. x ≤ y → ∀m. x = ⫯m → m ≤ ⫰y ∧ y = ⫯⫰y.
+fact yle_inv_succ1_aux: ∀x,y. x ≤ y → ∀m. x = ⫯m → m ≤ ⫰y ∧ ⫯⫰y = y.
 #x #y * -x -y
 [ #x #y #Hxy #m #H elim (ysucc_inv_inj_sn … H) -H
   #n #H1 #H2 destruct elim (le_inv_S1 … Hxy) -Hxy
@@ -71,7 +71,7 @@ fact yle_inv_succ1_aux: ∀x,y. x ≤ y → ∀m. x = ⫯m → m ≤ ⫰y ∧ y 
 ]
 qed-.
 
-lemma yle_inv_succ1: ∀m,y. ⫯m ≤ y → m ≤ ⫰y ∧ y = ⫯⫰y.
+lemma yle_inv_succ1: ∀m,y. ⫯m ≤ y → m ≤ ⫰y ∧ ⫯⫰y = y.
 /2 width=3 by yle_inv_succ1_aux/ qed-.
 
 lemma yle_inv_succ: ∀m,n. ⫯m ≤ ⫯n → m ≤ n.
@@ -102,6 +102,10 @@ qed.
 
 lemma yle_refl_pred_sn: ∀x. ⫰x ≤ x.
 /2 width=1 by yle_refl, yle_pred_sn/ qed.
+
+lemma yle_pred: ∀m,n. m ≤ n → ⫰m ≤ ⫰n.
+#m #n * -m -n /3 width=1 by yle_inj, monotonic_pred/
+qed.
 
 (* Properties on successor **************************************************)
 
