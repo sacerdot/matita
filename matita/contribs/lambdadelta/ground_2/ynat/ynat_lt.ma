@@ -98,7 +98,7 @@ lemma ylt_fwd_succ2: ∀m,n. m < ⫯n → m ≤ n.
 
 (* inversion and forward lemmas on yle **************************************)
 
-lemma lt_fwd_le: ∀m:ynat. ∀n:ynat. m < n → m ≤ n.
+lemma ylt_fwd_le: ∀m:ynat. ∀n:ynat. m < n → m ≤ n.
 #m #n * -m -n /3 width=1 by yle_pred_sn, yle_inj, yle_Y/
 qed-.
 

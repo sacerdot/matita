@@ -32,7 +32,7 @@ lemma cpys_subst: ∀I,G,L,K,V,U1,i,d,e.
   lapply (cpy_lift_ge … HU1 … HLK HU0 HU12 ?) -HU1 -HLK -HU0 -HU12 // #HU02
   lapply (cpy_weak … HU02 d e ? ?) -HU02
   [2,3: /2 width=3 by cpys_strap1, yle_succ_dx/ ]
-  >yplus_O_sn <yplus_inj >ymax_pre_sn_comm /2 width=1 by ylt_fwd_le_succ/
+  >yplus_O1 <yplus_inj >ymax_pre_sn_comm /2 width=1 by ylt_fwd_le_succ/
 ]
 qed.
 
@@ -67,6 +67,21 @@ lemma cpys_inv_lref1: ∀G,L,T2,i,d,e. ⦃G, L⦄ ⊢ #i ▶*×[d, e] T2 →
                                    ⇧[O, i+1] V2 ≡ T2.
 #G #L #T2 #i #d #e #H elim (cpys_inv_atom1 … H) -H /2 width=1 by or_introl/
 * #I #K #V1 #V2 #j #Hdj #Hjde #HLK #HV12 #HVT2 #H destruct /3 width=7 by ex5_4_intro, or_intror/
+qed-.
+
+lemma cpys_inv_lref1_ldrop: ∀G,L,T2,i,d,e. ⦃G, L⦄ ⊢ #i ▶*×[d, e] T2 →
+                            ∀I,K,V1. ⇩[O, i] L ≡ K.ⓑ{I}V1 →
+                            ∀V2. ⇧[O, i+1] V2 ≡ T2 →
+                            ∧∧ ⦃G, K⦄ ⊢ V1 ▶*×[0, d+e-i-1] V2
+                             & d ≤ i
+                             & i < d + e.
+#G #L #T2 #i #d #e #H #I #K #V1 #HLK #V2 #HVT2 elim (cpys_inv_lref1 … H) -H
+[ #H destruct elim (lift_inv_lref2_be … HVT2) -HVT2 -HLK //
+| * #Z #Y #X1 #X2 #Hdi #Hide #HLY #HX12 #HXT2
+  lapply (lift_inj … HXT2 … HVT2) -T2 #H destruct
+  lapply (ldrop_mono … HLY … HLK) -L #H destruct
+  /2 width=1 by and3_intro/
+]
 qed-.
 
 (* Relocation properties ****************************************************)

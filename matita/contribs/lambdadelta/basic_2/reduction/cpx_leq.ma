@@ -28,7 +28,7 @@ lemma lleq_cpx_trans_leq: ∀h,g,G,L2,T1,T2. ⦃G, L2⦄ ⊢ T1 ➡[h, g] T2 →
     >yminus_Y_inj #J #Y #X #HK12 #H lapply (ldrop_mono … H … HLK2) -L2
     #H destruct /3 width=7 by cpx_delta/
   | #J #K1 #V #HLK1 #_ #HV1 #Hid elim (ldrop_leq_conf_lt … HL12 … HLK1) -HL12 /2 width=1 by ylt_inj/
-    #Y #HK12 #H lapply (ldrop_mono … H … HLK2) -L2
+    <yminus_SO2 >yminus_inj #Y #HK12 #H lapply (ldrop_mono … H … HLK2) -L2
     #H destruct /3 width=7 by cpx_delta/
   ]
 | #a #I #G #L2 #V1 #V2 #T1 #T2 #_ #_ #IHV12 #IHT12 #L1 #d #H elim (lleq_inv_bind … H) -H

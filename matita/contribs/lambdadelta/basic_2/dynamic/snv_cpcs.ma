@@ -13,7 +13,6 @@
 (**************************************************************************)
 
 include "basic_2/unfold/lsstas_lsstas.ma".
-include "basic_2/computation/fpbs_lift.ma".
 include "basic_2/computation/fpbg_fpns.ma".
 include "basic_2/equivalence/cpes_cpds.ma".
 include "basic_2/dynamic/snv.ma".

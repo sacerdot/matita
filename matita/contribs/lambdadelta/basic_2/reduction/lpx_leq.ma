@@ -36,17 +36,21 @@ lemma lleq_cpx_conf_leq_dx: ∀h,g,G,L1s,L1d,T1,d. L1s ⋕[d, T1] L1d → L1s �
   elim (cpx_inv_sort1 … H2) -H2 [| * #l #_ ]
   #H destruct /2 width=1 by lleq_sort/
 | #Is #Id #L1s #L1d #K1s #K1d #V1s #V1d #d #i #Hid #HLK1s #HLK1d #_ #_ #_ #IHV1d #H1 #X #H2 #L2s #H1s #H2s #L2d #H1d #H2d #H3
-  elim (ldrop_leq_conf_lt … H1 … HLK1s) -H1 /2 width=1 by ylt_inj/ #Y #H1 #HY
+  elim (ldrop_leq_conf_lt … H1 … HLK1s) -H1 /2 width=1 by ylt_inj/
+  <yminus_SO2 >yminus_inj #Y #H1 #HY
   lapply (ldrop_mono … HY … HLK1d) -HY #H destruct
   elim (lpx_ldrop_conf … HLK1s … H1s) -H1s #Y #H #HLK2s
   elim (lpx_inv_pair1 … H) -H #K2s #V2s #H1s #HV12s #H destruct
   elim (lpx_ldrop_conf … HLK1d … H1d) -H1d #Y #H #HLK2d
   elim (lpx_inv_pair1 … H) -H #K2d #V2d #H1d #HV12d #H destruct
-  elim (ldrop_leq_conf_be … H2s … HLK1s) -H2s /2 width=1 by ylt_inj/ #Z #Y #X #HK12s #H
+  elim (ldrop_leq_conf_be … H2s … HLK1s) -H2s /2 width=1 by ylt_inj/
+  >yplus_O1 <yminus_SO2 >yminus_inj #Z #Y #X #HK12s #H
   lapply (ldrop_mono … H … HLK2s) -H #H destruct
-  elim (ldrop_leq_conf_be … H2d … HLK1d) -H2d /2 width=1 by ylt_inj/ #Z #Y #X #HK12d #H
+  elim (ldrop_leq_conf_be … H2d … HLK1d) -H2d /2 width=1 by ylt_inj/
+  >yplus_O1 <yminus_SO2 >yminus_inj #Z #Y #X #HK12d #H
   lapply (ldrop_mono … H … HLK2d) -H #H destruct
-  elim (ldrop_leq_conf_lt … H3 … HLK2s) -H3 /2 width=1 by ylt_inj/ #Y #H3 #HY
+  elim (ldrop_leq_conf_lt … H3 … HLK2s) -H3 /2 width=1 by ylt_inj/
+  <yminus_SO2 >yminus_inj #Y #H3 #HY
   lapply (ldrop_mono … HY … HLK2d) -HY #H destruct
   elim (cpx_inv_lref1 … H2) -H2 -L1s
   [ -L1d #H destruct /3 width=15 by lleq_skip/

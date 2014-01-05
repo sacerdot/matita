@@ -200,7 +200,7 @@ lemma lsuby_fwd_ldrop2_be: ∀L1,L2,d,e. L1 ⊑×[d, e] L2 →
   elim (ldrop_inv_atom1 … H) -H #H destruct
 | #I1 #I2 #L1 #L2 #V1 #V2 #_ #_ #J2 #K2 #W #i #_ #_ #H
   elim (ylt_yle_false … H) //
-| #I1 #I2 #L1 #L2 #V #e #HL12 #IHL12 #J2 #K2 #W #i #H #_ >yplus_O_sn
+| #I1 #I2 #L1 #L2 #V #e #HL12 #IHL12 #J2 #K2 #W #i #H #_ >yplus_O1
   elim (ldrop_inv_O1_pair1 … H) -H * #Hi #HLK1 [ -IHL12 | -HL12 ]
   [ #_ destruct -I2 >ypred_succ
     /2 width=4 by ldrop_pair, ex2_2_intro/

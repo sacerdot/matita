@@ -13,7 +13,6 @@
 (**************************************************************************)
 
 include "basic_2/computation/cpds_cpds.ma".
-include "basic_2/computation/fpbs_fpbs.ma".
 include "basic_2/dynamic/snv_aaa.ma".
 include "basic_2/dynamic/snv_cpcs.ma".
 include "basic_2/dynamic/lsubsv_lsstas.ma".

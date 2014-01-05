@@ -14,6 +14,6 @@
 
 (* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-notation "hvbox( L1 ⋕ break [ term 46 d , break term 46 T ] break term 46 L2 )"
+notation "hvbox( L1 ⋕ break [ term 46 T , break term 46 d ] break term 46 L2 )"
    non associative with precedence 45
-   for @{ 'LazyEq $d $T $L1 $L2 }.
+   for @{ 'LazyEq $T $d $L1 $L2 }.

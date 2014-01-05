@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/relocation/cpy_cpy.ma".
-include "basic_2/substitution/cpys_lift.ma".
+include "basic_2/substitution/cpys_alt.ma".
 
 (* CONTEXT-SENSITIVE EXTENDED MULTIPLE SUBSTITUTION FOR TERMS ***************)
 
@@ -93,3 +93,25 @@ theorem cpys_trans_down: ∀G,L,T1,T0,d1,e1. ⦃G, L⦄ ⊢ T1 ▶*×[d1, e1] T0
                          ∀T2,d2,e2. ⦃G, L⦄ ⊢ T0 ▶*×[d2, e2] T2 → d2 + e2 ≤ d1 →
                          ∃∃T. ⦃G, L⦄ ⊢ T1 ▶*×[d2, e2] T & ⦃G, L⦄ ⊢ T ▶*×[d1, e1] T2.
 normalize /3 width=3 by cpy_trans_down, TC_transitive2/ qed-.
+
+theorem cpys_antisym_eq: ∀G,L1,T1,T2,d,e. ⦃G, L1⦄ ⊢ T1 ▶*×[d, e] T2 →
+                         ∀L2. ⦃G, L2⦄ ⊢ T2 ▶*×[d, e] T1 → T1 = T2.
+#G #L1 #T1 #T2 #d #e #H @(cpys_ind_alt … H) -G -L1 -T1 -T2 //
+[ #I1 #G #L1 #K1 #V1 #V2 #W2 #i #d #e #Hdi #Hide #_ #_ #HVW2 #_ #L2 #HW2
+  elim (lt_or_ge (|L2|) (i+1)) #Hi [ -Hdi -Hide | ]
+  [ lapply (cpys_weak_full … HW2) -HW2 #HW2
+    lapply (cpys_weak … HW2 0 (i+1) ? ?) -HW2 //
+    [ >yplus_O1 >yplus_O1 /3 width=1 by ylt_fwd_le, ylt_inj/ ] -Hi
+    #HW2 >(cpys_inv_lift1_eq … HW2) -HW2 //
+  | elim (ldrop_O1_le … Hi) -Hi #K2 #HLK2
+    elim (cpys_inv_lift1_ge_up … HW2 … HLK2 … HVW2 ? ? ?) -HW2 -HLK2 -HVW2
+    /2 width=1 by ylt_fwd_le_succ, yle_succ_dx/ -Hdi -Hide
+    #X #_ #H elim (lift_inv_lref2_be … H) -H //
+  ]
+| #a #I #G #L1 #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #L2 #H elim (cpys_inv_bind1 … H) -H
+  #V #T #HV2 #HT2 #H destruct
+  lapply (IHV12 … HV2) #H destruct -IHV12 -HV2 /3 width=2 by eq_f2/
+| #I #G #L1 #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #L2 #H elim (cpys_inv_flat1 … H) -H
+  #V #T #HV2 #HT2 #H destruct /3 width=2 by eq_f2/
+]
+qed-.

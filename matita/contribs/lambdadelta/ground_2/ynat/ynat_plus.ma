@@ -65,7 +65,7 @@ lemma yplus_assoc: associative … yplus.
 ]
 qed.
 
-lemma yplus_O_sn: ∀n:ynat. 0 + n = n.
+lemma yplus_O1: ∀n:ynat. 0 + n = n.
 #n >yplus_comm // qed.
 
 (* Basic inversion lemmas ***************************************************)

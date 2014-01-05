@@ -55,7 +55,7 @@ lemma ldrop_leq_conf_be: ∀L1,L2,d,e. L1 ≃[d, e] L2 →
 [ #d #e #J1 #K1 #W1 #i #H elim (ldrop_inv_atom1 … H) -H
   #H destruct
 | #I #L1 #L2 #V #HL12 #IHL12 #J1 #K1 #W1 #i #_ #_ #H elim (ylt_yle_false … H) //
-| #I1 #I2 #L1 #L2 #V1 #V2 #e #HL12 >yplus_O_sn >yplus_O_sn
+| #I1 #I2 #L1 #L2 #V1 #V2 #e #HL12 >yplus_O1 >yplus_O1
   #IHL12 #J1 #K1 #W1 #i #H #_ elim (eq_or_gt i) #Hi destruct [ -IHL12 | -HL12 ]
   [ #_ lapply (ldrop_inv_O2 … H) -H
     #H destruct >ypred_succ /2 width=5 by ldrop_pair, ex2_3_intro/

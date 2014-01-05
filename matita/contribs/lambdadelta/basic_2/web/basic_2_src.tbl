@@ -208,6 +208,10 @@ table {
    ]
    class "yellow"
    [ { "substitution" * } {
+        [ { "lazy equivalence for local environments" * } {
+             [ "lleq ( ? ⋕[?,?] ? )" "lleq_alt ( ? ⋕⋕[?,?] ? )" "lleq_ldrop" + "lleq_lleq" * ]
+          }
+        ]
         [ { "contxt-sensitive extended multiple substitution" * } {
              [ "cpys ( ⦃?,?⦄ ⊢ ? ▶*×[?,?] ? )" "cpys_alt ( ⦃?,?⦄ ⊢ ? ▶▶*×[?,?] ? )" "cpys_lift" + "cpys_cpys" * ]
           }
@@ -234,10 +238,6 @@ table {
    ]
    class "orange"
    [ { "relocation" * } {
-        [ { "lazy equivalence for local environments" * } {
-             [ "lleq ( ? ⋕[?,?] ? )" "lleq_lleq" * ]
-          }
-        ]
         [ { "contxt-sensitive extended ordinary substitution" * } {
              [ "cpy ( ⦃?,?⦄ ⊢ ? ▶×[?,?] ? )" "cpy_lift" + "cpy_cpy" * ]
           }
