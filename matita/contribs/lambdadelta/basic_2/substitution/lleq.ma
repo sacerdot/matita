@@ -17,7 +17,7 @@ include "basic_2/substitution/cpys.ma".
 
 (* LAZY EQUIVALENCE FOR LOCAL ENVIRONMENTS **********************************)
 
-definition lleq: relation4 nat term lenv lenv ≝
+definition lleq: relation4 ynat term lenv lenv ≝
                  λd,T,L1,L2. |L1| = |L2| ∧
                              (∀U. ⦃⋆, L1⦄ ⊢ T ▶*×[d, ∞] U ↔ ⦃⋆, L2⦄ ⊢ T ▶*×[d, ∞] U).
 
@@ -38,7 +38,7 @@ lemma lleq_gref: ∀L1,L2,d,p. |L1| = |L2| → L1 ⋕[§p, d] L2.
 qed.
 
 lemma lleq_bind: ∀a,I,L1,L2,V,T,d.
-                 L1 ⋕[V, d] L2 → L1.ⓑ{I}V ⋕[T, d+1] L2.ⓑ{I}V →
+                 L1 ⋕[V, d] L2 → L1.ⓑ{I}V ⋕[T, ⫯d] L2.ⓑ{I}V →
                  L1 ⋕[ⓑ{a,I}V.T, d] L2.
 #a #I #L1 #L2 #V #T #d * #HL12 #IHV * #_ #IHT @conj // -HL12
 #X @conj #H elim (cpys_inv_bind1 … H) -H
@@ -78,7 +78,7 @@ lemma lleq_fwd_bind_sn: ∀a,I,L1,L2,V,T,d.
 qed-.
 
 lemma lleq_fwd_bind_dx: ∀a,I,L1,L2,V,T,d.
-                        L1 ⋕[ⓑ{a,I}V.T, d] L2 → L1.ⓑ{I}V ⋕[T, d+1] L2.ⓑ{I}V.
+                        L1 ⋕[ⓑ{a,I}V.T, d] L2 → L1.ⓑ{I}V ⋕[T, ⫯d] L2.ⓑ{I}V.
 #a #I #L1 #L2 #V #T #d * #HL12 #H @conj [ normalize // ] -HL12
 #U elim (H (ⓑ{a,I}V.U)) -H
 #H1 #H2 @conj
@@ -113,7 +113,7 @@ qed-.
 (* Basic inversion lemmas ***************************************************)
 
 lemma lleq_inv_bind: ∀a,I,L1,L2,V,T,d. L1 ⋕[ⓑ{a,I}V.T, d] L2 →
-                     L1 ⋕[V, d] L2 ∧ L1.ⓑ{I}V ⋕[T, d+1] L2.ⓑ{I}V.
+                     L1 ⋕[V, d] L2 ∧ L1.ⓑ{I}V ⋕[T, ⫯d] L2.ⓑ{I}V.
 /3 width=4 by lleq_fwd_bind_sn, lleq_fwd_bind_dx, conj/ qed-.
 
 lemma lleq_inv_flat: ∀I,L1,L2,V,T,d. L1 ⋕[ⓕ{I}V.T, d] L2 →

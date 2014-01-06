@@ -19,14 +19,13 @@ include "basic_2/substitution/lleq.ma".
 
 (* Advanced properties ******************************************************)
 
-lemma lleq_skip: ∀L1,L2,d,i. i < d → |L1| = |L2| → L1 ⋕[#i, d] L2.
+lemma lleq_skip: ∀L1,L2,d,i. yinj i < d → |L1| = |L2| → L1 ⋕[#i, d] L2.
 #L1 #L2 #d #i #Hid #HL12 @conj // -HL12
 #U @conj #H elim (cpys_inv_lref1 … H) -H // *
-#I #Z #Y #X #H elim (ylt_yle_false … H) -H
-/2 width=1 by ylt_inj/
+#I #Z #Y #X #H elim (ylt_yle_false … Hid … H)
 qed.
 
-lemma lleq_lref: ∀I1,I2,L1,L2,K1,K2,V,d,i. d ≤ i →
+lemma lleq_lref: ∀I1,I2,L1,L2,K1,K2,V,d,i. d ≤ yinj i →
                  ⇩[0, i] L1 ≡ K1.ⓑ{I1}V → ⇩[0, i] L2 ≡ K2.ⓑ{I2}V →
                  K1 ⋕[V, 0] K2 → L1 ⋕[#i, d] L2.
 #I1 #I2 #L1 #L2 #K1 #K2 #V #d #i #Hdi #HLK1 #HLK2 * #HK12 #IH @conj [ -IH | -HK12 ]
@@ -34,9 +33,10 @@ lemma lleq_lref: ∀I1,I2,L1,L2,K1,K2,V,d,i. d ≤ i →
   lapply (ldrop_fwd_length … HLK2) -HLK2 #H2
   >H1 >H2 -H1 -H2 normalize //
 | #U @conj #H elim (cpys_inv_lref1 … H) -H // *
-  #I #K #X #W #_ #_ #H #HVW #HWU
-  [ lapply (ldrop_mono … H … HLK1) | lapply (ldrop_mono … H … HLK2) ] -H
-  #H destruct elim (IH W) /3 width=7 by cpys_subst, yle_inj/
+  >yminus_Y_inj #I #K #X #W #_ #_ #H #HVW #HWU
+  [ letin HLK ≝ HLK1 | letin HLK ≝ HLK2 ]
+  lapply (ldrop_mono … H … HLK) -H #H destruct elim (IH W)
+  /3 width=7 by cpys_subst_Y2/
 ]
 qed.
 

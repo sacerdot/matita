@@ -156,7 +156,7 @@ fact cpy_inv_atom1_aux: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶×[d, e] T2 → �
                         T2 = ⓪{J} ∨
                         ∃∃I,K,V,i. d ≤ yinj i & i < d + e &
                                    ⇩[O, i] L ≡ K.ⓑ{I}V &
-                                   ⇧[O, i + 1] V ≡ T2 &
+                                   ⇧[O, i+1] V ≡ T2 &
                                    J = LRef i.
 #G #L #T1 #T2 #d #e * -G -L -T1 -T2 -d -e
 [ #I #G #L #d #e #J #H destruct /2 width=1 by or_introl/
@@ -170,7 +170,7 @@ lemma cpy_inv_atom1: ∀I,G,L,T2,d,e. ⦃G, L⦄ ⊢ ⓪{I} ▶×[d, e] T2 →
                      T2 = ⓪{I} ∨
                      ∃∃J,K,V,i. d ≤ yinj i & i < d + e &
                                 ⇩[O, i] L ≡ K.ⓑ{J}V &
-                                ⇧[O, i + 1] V ≡ T2 &
+                                ⇧[O, i+1] V ≡ T2 &
                                 I = LRef i.
 /2 width=4 by cpy_inv_atom1_aux/ qed-.
 
@@ -184,7 +184,7 @@ lemma cpy_inv_lref1: ∀G,L,T2,i,d,e. ⦃G, L⦄ ⊢ #i ▶×[d, e] T2 →
                      T2 = #i ∨
                      ∃∃I,K,V. d ≤ i & i < d + e &
                               ⇩[O, i] L ≡ K.ⓑ{I}V &
-                              ⇧[O, i + 1] V ≡ T2.
+                              ⇧[O, i+1] V ≡ T2.
 #G #L #T2 #i #d #e #H
 elim (cpy_inv_atom1 … H) -H /2 width=1 by or_introl/
 * #I #K #V #j #Hdj #Hjde #HLK #HVT2 #H destruct /3 width=5 by ex4_3_intro, or_intror/

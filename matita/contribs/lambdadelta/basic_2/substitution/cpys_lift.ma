@@ -36,13 +36,21 @@ lemma cpys_subst: ∀I,G,L,K,V,U1,i,d,e.
 ]
 qed.
 
+lemma cpys_subst_Y2: ∀I,G,L,K,V,U1,i,d.
+                     d ≤ yinj i →
+                     ⇩[0, i] L ≡ K.ⓑ{I}V → ⦃G, K⦄ ⊢ V ▶*×[0, ∞] U1 →
+                     ∀U2. ⇧[0, i+1] U1 ≡ U2 → ⦃G, L⦄ ⊢ #i ▶*×[d, ∞] U2.
+#I #G #L #K #V #U1 #i #d #Hdi #HLK #HVU1 #U2 #HU12
+@(cpys_subst … HLK … HU12) >yminus_Y_inj //
+qed.
+
 (* Advanced inverion lemmas *************************************************)
 
 lemma cpys_inv_atom1: ∀I,G,L,T2,d,e. ⦃G, L⦄ ⊢ ⓪{I} ▶*×[d, e] T2 →
                       T2 = ⓪{I} ∨
                       ∃∃J,K,V1,V2,i. d ≤ yinj i & i < d + e &
                                     ⇩[O, i] L ≡ K.ⓑ{J}V1 &
-                                     ⦃G, K⦄ ⊢ V1 ▶*×[0, d+e-i-1] V2 &
+                                     ⦃G, K⦄ ⊢ V1 ▶*×[0, ⫰(d+e-i)] V2 &
                                      ⇧[O, i+1] V2 ≡ T2 &
                                      I = LRef i.
 #I #G #L #T2 #d #e #H @(cpys_ind … H) -T2
@@ -63,7 +71,7 @@ lemma cpys_inv_lref1: ∀G,L,T2,i,d,e. ⦃G, L⦄ ⊢ #i ▶*×[d, e] T2 →
                       T2 = #i ∨
                       ∃∃I,K,V1,V2. d ≤ i & i < d + e &
                                    ⇩[O, i] L ≡ K.ⓑ{I}V1 &
-                                   ⦃G, K⦄ ⊢ V1 ▶*×[0, d+e-i-1] V2 &
+                                   ⦃G, K⦄ ⊢ V1 ▶*×[0, ⫰(d+e-i)] V2 &
                                    ⇧[O, i+1] V2 ≡ T2.
 #G #L #T2 #i #d #e #H elim (cpys_inv_atom1 … H) -H /2 width=1 by or_introl/
 * #I #K #V1 #V2 #j #Hdj #Hjde #HLK #HV12 #HVT2 #H destruct /3 width=7 by ex5_4_intro, or_intror/
@@ -72,7 +80,7 @@ qed-.
 lemma cpys_inv_lref1_ldrop: ∀G,L,T2,i,d,e. ⦃G, L⦄ ⊢ #i ▶*×[d, e] T2 →
                             ∀I,K,V1. ⇩[O, i] L ≡ K.ⓑ{I}V1 →
                             ∀V2. ⇧[O, i+1] V2 ≡ T2 →
-                            ∧∧ ⦃G, K⦄ ⊢ V1 ▶*×[0, d+e-i-1] V2
+                            ∧∧ ⦃G, K⦄ ⊢ V1 ▶*×[0, ⫰(d+e-i)] V2
                              & d ≤ i
                              & i < d + e.
 #G #L #T2 #i #d #e #H #I #K #V1 #HLK #V2 #HVT2 elim (cpys_inv_lref1 … H) -H

@@ -164,7 +164,7 @@ fact lsuby_inv_pair2_aux: ∀L1,L2,d,e. L1 ⊑×[d, e] L2 →
 qed-.
 
 lemma lsuby_inv_pair2: ∀I2,K2,L1,V,e. L1 ⊑×[0, e] K2.ⓑ{I2}V → 0 < e →
-                       ∃∃I1,K1. K1 ⊑×[0, e-1] K2 & L1 = K1.ⓑ{I1}V.
+                       ∃∃I1,K1. K1 ⊑×[0, ⫰e] K2 & L1 = K1.ⓑ{I1}V.
 /2 width=6 by lsuby_inv_pair2_aux/ qed-.
 
 fact lsuby_inv_succ2_aux: ∀L1,L2,d,e. L1 ⊑×[d, e] L2 →

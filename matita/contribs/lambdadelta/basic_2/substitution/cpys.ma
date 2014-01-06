@@ -60,7 +60,7 @@ lemma cpys_refl: ∀G,L,d,e. reflexive … (cpys d e G L).
 /2 width=1 by cpy_cpys/ qed.
 
 lemma cpys_bind: ∀G,L,V1,V2,d,e. ⦃G, L⦄ ⊢ V1 ▶*×[d, e] V2 →
-                 ∀I,T1,T2. ⦃G, L.ⓑ{I}V2⦄ ⊢ T1 ▶*×[d+1, e] T2 →
+                 ∀I,T1,T2. ⦃G, L.ⓑ{I}V2⦄ ⊢ T1 ▶*×[⫯d, e] T2 →
                  ∀a. ⦃G, L⦄ ⊢ ⓑ{a,I}V1.T1 ▶*×[d, e] ⓑ{a,I}V2.T2.
 #G #L #V1 #V2 #d #e #HV12 @(cpys_ind … HV12) -V2
 [ #I #T1 #T2 #HT12 @(cpys_ind … HT12) -T2 /3 width=5 by cpys_strap1, cpy_bind/
@@ -120,7 +120,7 @@ qed-.
 
 lemma cpys_inv_bind1: ∀a,I,G,L,V1,T1,U2,d,e. ⦃G, L⦄ ⊢ ⓑ{a,I}V1.T1 ▶*×[d, e] U2 →
                       ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ▶*×[d, e] V2 &
-                               ⦃G, L.ⓑ{I}V2⦄ ⊢ T1 ▶*×[d+1, e] T2 &
+                               ⦃G, L.ⓑ{I}V2⦄ ⊢ T1 ▶*×[⫯d, e] T2 &
                                U2 = ⓑ{a,I}V2.T2.
 #a #I #G #L #V1 #T1 #U2 #d #e #H @(cpys_ind … H) -U2
 [ /2 width=5 by ex3_2_intro/
