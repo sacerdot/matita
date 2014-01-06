@@ -16,16 +16,16 @@ include "basic_2/notation/relations/lazyeqalt_4.ma".
 include "basic_2/substitution/lleq_ldrop.ma".
 include "basic_2/substitution/lleq_lleq.ma".
 
-inductive lleqa: relation4 nat term lenv lenv ≝
+inductive lleqa: relation4 ynat term lenv lenv ≝
 | lleqa_sort: ∀L1,L2,d,k. |L1| = |L2| → lleqa d (⋆k) L1 L2
-| lleqa_skip: ∀L1,L2,d,i. |L1| = |L2| → i < d → lleqa d (#i) L1 L2
-| lleqa_lref: ∀I1,I2,L1,L2,K1,K2,V,d,i. d ≤ i →
+| lleqa_skip: ∀L1,L2,d,i. |L1| = |L2| → yinj i < d → lleqa d (#i) L1 L2
+| lleqa_lref: ∀I1,I2,L1,L2,K1,K2,V,d,i. d ≤ yinj i →
               ⇩[0, i] L1 ≡ K1.ⓑ{I1}V → ⇩[0, i] L2 ≡ K2.ⓑ{I2}V →
-              lleqa 0 V K1 K2 → lleqa d (#i) L1 L2
+              lleqa (yinj 0) V K1 K2 → lleqa d (#i) L1 L2
 | lleqa_free: ∀L1,L2,d,i. |L1| = |L2| → |L1| ≤ i → |L2| ≤ i → lleqa d (#i) L1 L2
 | lleqa_gref: ∀L1,L2,d,p. |L1| = |L2| → lleqa d (§p) L1 L2
 | lleqa_bind: ∀a,I,L1,L2,V,T,d.
-              lleqa d V L1 L2 → lleqa (d+1) T (L1.ⓑ{I}V) (L2.ⓑ{I}V) →
+              lleqa d V L1 L2 → lleqa (⫯d) T (L1.ⓑ{I}V) (L2.ⓑ{I}V) →
               lleqa d (ⓑ{a,I}V.T) L1 L2
 | lleqa_flat: ∀I,L1,L2,V,T,d.
               lleqa d V L1 L2 → lleqa d T L1 L2 → lleqa d (ⓕ{I}V.T) L1 L2
