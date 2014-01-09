@@ -27,6 +27,13 @@ interpretation
 
 (* Basic properties *********************************************************)
 
+lemma lleq_refl: ∀d,T. reflexive … (lleq d T).
+/3 width=1 by conj/ qed.
+
+lemma lleq_sym: ∀d,T. symmetric … (lleq d T).
+#d #T #L1 #L2 * /3 width=1 by iff_sym, conj/
+qed-.
+
 lemma lleq_sort: ∀L1,L2,d,k. |L1| = |L2| → L1 ⋕[⋆k, d] L2.
 #L1 #L2 #d #k #HL12 @conj // -HL12
 #U @conj #H >(cpys_inv_sort1 … H) -H //
@@ -60,11 +67,28 @@ elim (IHV W) -IHV elim (IHT U) -IHT
 /3 width=1 by cpys_flat/
 qed.
 
+lemma lleq_be: ∀L1,L2,U,dt. L1 ⋕[U, dt] L2 → ∀T,d,e. ⇧[d, e] T ≡ U →
+               d ≤ dt → dt ≤ d + e → L1 ⋕[U, d] L2.
+#L1 #L2 #U #dt * #HL12 #IH #T #d #e #HTU #Hddt #Hdtde @conj // -HL12
+#U0 elim (IH U0) -IH #H12 #H21 @conj
+#HU0 elim (cpys_up … HU0 … HTU) // -HU0 /4 width=5 by cpys_weak/
+qed-.
+
 (* Basic forward lemmas *****************************************************)
 
 lemma lleq_fwd_length: ∀L1,L2,T,d. L1 ⋕[T, d] L2 → |L1| = |L2|.
 #L1 #L2 #T #d * //
 qed-.
+
+lemma lleq_fwd_ldrop_sn: ∀L1,L2,T,d. L1 ⋕[d, T] L2 → ∀K1,i. ⇩[0, i] L1 ≡ K1 →
+                         ∃K2. ⇩[0, i] L2 ≡ K2.
+#L1 #L2 #T #d #H #K1 #i #HLK1 lapply (lleq_fwd_length … H) -H
+#HL12 lapply (ldrop_fwd_length_le2 … HLK1) -HLK1 /2 width=1 by ldrop_O1_le/
+qed-.
+
+lemma lleq_fwd_ldrop_dx: ∀L1,L2,T,d. L1 ⋕[d, T] L2 → ∀K2,i. ⇩[0, i] L2 ≡ K2 →
+                         ∃K1. ⇩[0, i] L1 ≡ K1.
+/3 width=6 by lleq_fwd_ldrop_sn, lleq_sym/ qed-.
 
 lemma lleq_fwd_bind_sn: ∀a,I,L1,L2,V,T,d.
                         L1 ⋕[ⓑ{a,I}V.T, d] L2 → L1 ⋕[V, d] L2.

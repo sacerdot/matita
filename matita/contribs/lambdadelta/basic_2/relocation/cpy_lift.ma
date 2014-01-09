@@ -17,7 +17,7 @@ include "basic_2/relocation/cpy.ma".
 
 (* CONTEXT-SENSITIVE EXTENDED ORDINARY SUBSTITUTION FOR TERMS ***************)
 
-(* Relocation properties ****************************************************)
+(* Properties on relocation *************************************************)
 
 lemma cpy_lift_le: ∀G,K,T1,T2,dt,et. ⦃G, K⦄ ⊢ T1 ▶×[dt, et] T2 →
                    ∀L,U1,U2,d,e. ⇩[d, e] L ≡ K →
@@ -103,15 +103,17 @@ lemma cpy_lift_ge: ∀G,K,T1,T2,dt,et. ⦃G, K⦄ ⊢ T1 ▶×[dt, et] T2 →
 ]
 qed-.
 
+(* Inversion lemmas on relocation *******************************************)
+
 lemma cpy_inv_lift1_le: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶×[dt, et] U2 →
                         ∀K,d,e. ⇩[d, e] L ≡ K → ∀T1. ⇧[d, e] T1 ≡ U1 →
                         dt + et ≤ d →
                         ∃∃T2. ⦃G, K⦄ ⊢ T1 ▶×[dt, et] T2 & ⇧[d, e] T2 ≡ U2.
 #G #L #U1 #U2 #dt #et #H elim H -G -L -U1 -U2 -dt -et
-[ * #G #L #i #dt #et #K #d #e #_ #T1 #H #_
-  [ lapply (lift_inv_sort2 … H) -H #H destruct /2 width=3 by cpy_atom, lift_sort, ex2_intro/
-  | elim (lift_inv_lref2 … H) -H * #Hid #H destruct /3 width=3 by cpy_atom, lift_lref_ge_minus, lift_lref_lt, ex2_intro/
-  | lapply (lift_inv_gref2 … H) -H #H destruct /2 width=3 by cpy_atom, lift_gref, ex2_intro/
+[ * #i #G #L #dt #et #K #d #e #_ #T1 #H #_
+  [ lapply (lift_inv_sort2 … H) -H #H destruct /2 width=3 by ex2_intro/
+  | elim (lift_inv_lref2 … H) -H * #Hid #H destruct /3 width=3 by lift_lref_ge_minus, lift_lref_lt, ex2_intro/
+  | lapply (lift_inv_gref2 … H) -H #H destruct /2 width=3 by ex2_intro/
   ]
 | #I #G #L #KV #V #W #i #dt #et #Hdti #Hidet #HLKV #HVW #K #d #e #HLK #T1 #H #Hdetd
   lapply (ylt_yle_trans … Hdetd … Hidet) -Hdetd #Hid
@@ -119,14 +121,14 @@ lemma cpy_inv_lift1_le: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶×[dt, et] U2 �
   lapply (lift_inv_lref2_lt … H … Hid) -H #H destruct
   elim (ldrop_conf_lt … HLK … HLKV) -L // #L #U #HKL #_ #HUV
   elim (lift_trans_le … HUV … HVW) -V // >minus_plus <plus_minus_m_m // -Hid /3 width=5 by cpy_subst, ex2_intro/
-| #a #I #G #L #V1 #V2 #U1 #U2 #dt #et #_ #_ #IHV12 #IHU12 #K #d #e #HLK #X #H #Hdetd
-  elim (lift_inv_bind2 … H) -H #W1 #T1 #HWV1 #HTU1 #H destruct
-  elim (IHV12 … HLK … HWV1) -V1 // #W2 #HW12 #HWV2
+| #a #I #G #L #W1 #W2 #U1 #U2 #dt #et #_ #_ #IHW12 #IHU12 #K #d #e #HLK #X #H #Hdetd
+  elim (lift_inv_bind2 … H) -H #V1 #T1 #HVW1 #HTU1 #H destruct
+  elim (IHW12 … HLK … HVW1) -W1 // #V2 #HV12 #HVW2
   elim (IHU12 … HTU1) -IHU12 -HTU1
   /3 width=5 by cpy_bind, yle_succ, ldrop_skip, lift_bind, ex2_intro/
-| #I #G #L #V1 #V2 #U1 #U2 #dt #et #_ #_ #IHV12 #IHU12 #K #d #e #HLK #X #H #Hdetd
-  elim (lift_inv_flat2 … H) -H #W1 #T1 #HWV1 #HTU1 #H destruct
-  elim (IHV12 … HLK … HWV1) -V1 //
+| #I #G #L #W1 #W2 #U1 #U2 #dt #et #_ #_ #IHW12 #IHU12 #K #d #e #HLK #X #H #Hdetd
+  elim (lift_inv_flat2 … H) -H #V1 #T1 #HVW1 #HTU1 #H destruct
+  elim (IHW12 … HLK … HVW1) -W1 //
   elim (IHU12 … HLK … HTU1) -U1 -HLK
   /3 width=5 by cpy_flat, lift_flat, ex2_intro/
 ]
@@ -137,10 +139,10 @@ lemma cpy_inv_lift1_be: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶×[dt, et] U2 �
                         dt ≤ d → d + e ≤ dt + et →
                         ∃∃T2. ⦃G, K⦄ ⊢ T1 ▶×[dt, et-e] T2 & ⇧[d, e] T2 ≡ U2.
 #G #L #U1 #U2 #dt #et #H elim H -G -L -U1 -U2 -dt -et
-[ * #G #L #i #dt #et #K #d #e #_ #T1 #H #_
-  [ lapply (lift_inv_sort2 … H) -H #H destruct /2 width=3 by cpy_atom, lift_sort, ex2_intro/
-  | elim (lift_inv_lref2 … H) -H * #Hid #H destruct /3 width=3 by cpy_atom, lift_lref_ge_minus, lift_lref_lt, ex2_intro/
-  | lapply (lift_inv_gref2 … H) -H #H destruct /2 width=3 by cpy_atom, lift_gref, ex2_intro/
+[ * #i #G #L #dt #et #K #d #e #_ #T1 #H #_ #_
+  [ lapply (lift_inv_sort2 … H) -H #H destruct /2 width=3 by ex2_intro/
+  | elim (lift_inv_lref2 … H) -H * #Hid #H destruct /3 width=3 by lift_lref_ge_minus, lift_lref_lt, ex2_intro/
+  | lapply (lift_inv_gref2 … H) -H #H destruct /2 width=3 by ex2_intro/
   ]
 | #I #G #L #KV #V #W #i #dt #et #Hdti #Hidet #HLKV #HVW #K #d #e #HLK #T1 #H #Hdtd #Hdedet
   lapply (yle_fwd_plus_ge_inj … Hdtd Hdedet) #Heet
@@ -158,14 +160,14 @@ lemma cpy_inv_lift1_be: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶×[dt, et] U2 �
     @(ex2_intro … H) @(cpy_subst … HKV HV1) // (**) (* explicit constructor *)
     >yplus_minus_assoc_inj /3 width=1 by monotonic_ylt_minus_dx, yle_inj/
   ]
-| #a #I #G #L #V1 #V2 #U1 #U2 #dt #et #_ #_ #IHV12 #IHU12 #K #d #e #HLK #X #H #Hdtd #Hdedet
-  elim (lift_inv_bind2 … H) -H #W1 #T1 #HWV1 #HTU1 #H destruct
-  elim (IHV12 … HLK … HWV1) -V1 // #W2 #HW12 #HWV2
+| #a #I #G #L #W1 #W2 #U1 #U2 #dt #et #_ #_ #IHW12 #IHU12 #K #d #e #HLK #X #H #Hdtd #Hdedet
+  elim (lift_inv_bind2 … H) -H #V1 #T1 #HVW1 #HTU1 #H destruct
+  elim (IHW12 … HLK … HVW1) -W1 // #V2 #HV12 #HVW2
   elim (IHU12 … HTU1) -U1
   /3 width=5 by cpy_bind, ldrop_skip, lift_bind, yle_succ, ex2_intro/
-| #I #G #L #V1 #V2 #U1 #U2 #dt #et #_ #_ #IHV12 #IHU12 #K #d #e #HLK #X #H #Hdtd #Hdedet
-  elim (lift_inv_flat2 … H) -H #W1 #T1 #HWV1 #HTU1 #H destruct
-  elim (IHV12 … HLK … HWV1) -V1 //
+| #I #G #L #W1 #W2 #U1 #U2 #dt #et #_ #_ #IHW12 #IHU12 #K #d #e #HLK #X #H #Hdtd #Hdedet
+  elim (lift_inv_flat2 … H) -H #V1 #T1 #HVW1 #HTU1 #H destruct
+  elim (IHW12 … HLK … HVW1) -W1 //
   elim (IHU12 … HLK … HTU1) -U1 -HLK //
   /3 width=5 by cpy_flat, lift_flat, ex2_intro/
 ]
@@ -176,10 +178,10 @@ lemma cpy_inv_lift1_ge: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶×[dt, et] U2 �
                         d + e ≤ dt →
                         ∃∃T2. ⦃G, K⦄ ⊢ T1 ▶×[dt-e, et] T2 & ⇧[d, e] T2 ≡ U2.
 #G #L #U1 #U2 #dt #et #H elim H -G -L -U1 -U2 -dt -et
-[ * #G #L #i #dt #et #K #d #e #_ #T1 #H #_
-  [ lapply (lift_inv_sort2 … H) -H #H destruct /2 width=3 by cpy_atom, lift_sort, ex2_intro/
-  | elim (lift_inv_lref2 … H) -H * #Hid #H destruct /3 width=3 by cpy_atom, lift_lref_ge_minus, lift_lref_lt, ex2_intro/
-  | lapply (lift_inv_gref2 … H) -H #H destruct /2 width=3 by cpy_atom, lift_gref, ex2_intro/
+[ * #i #G #L #dt #et #K #d #e #_ #T1 #H #_
+  [ lapply (lift_inv_sort2 … H) -H #H destruct /2 width=3 by ex2_intro/
+  | elim (lift_inv_lref2 … H) -H * #Hid #H destruct /3 width=3 by lift_lref_ge_minus, lift_lref_lt, ex2_intro/
+  | lapply (lift_inv_gref2 … H) -H #H destruct /2 width=3 by ex2_intro/
   ]
 | #I #G #L #KV #V #W #i #dt #et #Hdti #Hidet #HLKV #HVW #K #d #e #HLK #T1 #H #Hdedt
   lapply (yle_trans … Hdedt … Hdti) #Hdei
@@ -193,35 +195,20 @@ lemma cpy_inv_lift1_ge: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶×[dt, et] U2 �
   [ /2 width=1 by monotonic_yle_minus_dx/
   | <yplus_minus_comm_inj /2 width=1 by monotonic_ylt_minus_dx/
   ]
-| #a #I #G #L #V1 #V2 #U1 #U2 #dt #et #_ #_ #IHV12 #IHU12 #K #d #e #HLK #X #H #Hdetd
-  elim (lift_inv_bind2 … H) -H #W1 #T1 #HWV1 #HTU1 #H destruct
+| #a #I #G #L #W1 #W2 #U1 #U2 #dt #et #_ #_ #IHW12 #IHU12 #K #d #e #HLK #X #H #Hdetd
+  elim (lift_inv_bind2 … H) -H #V1 #T1 #HVW1 #HTU1 #H destruct
   elim (yle_inv_plus_inj2 … Hdetd) #_ #Hedt
-  elim (IHV12 … HLK … HWV1) -V1 // #W2 #HW12 #HWV2
+  elim (IHW12 … HLK … HVW1) -W1 // #V2 #HV12 #HVW2
   elim (IHU12 … HTU1) -U1 [4: @ldrop_skip // |2: skip |3: /2 width=1 by yle_succ/ ]
   >yminus_succ1_inj /3 width=5 by cpy_bind, lift_bind, ex2_intro/
-| #I #G #L #V1 #V2 #U1 #U2 #dt #et #_ #_ #IHV12 #IHU12 #K #d #e #HLK #X #H #Hdetd
-  elim (lift_inv_flat2 … H) -H #W1 #T1 #HWV1 #HTU1 #H destruct
-  elim (IHV12 … HLK … HWV1) -V1 //
+| #I #G #L #W1 #W2 #U1 #U2 #dt #et #_ #_ #IHW12 #IHU12 #K #d #e #HLK #X #H #Hdetd
+  elim (lift_inv_flat2 … H) -H #V1 #T1 #HVW1 #HTU1 #H destruct
+  elim (IHW12 … HLK … HVW1) -W1 //
   elim (IHU12 … HLK … HTU1) -U1 -HLK /3 width=5 by cpy_flat, lift_flat, ex2_intro/
 ]
 qed-.
 
-lemma cpy_inv_lift1_eq: ∀G,T1,U1,d,e. ⇧[d, e] T1 ≡ U1 →
-                        ∀L,U2. ⦃G, L⦄ ⊢ U1 ▶×[d, e] U2 → U1 = U2.
-#G #T1 #U1 #d #e #H elim H -T1 -U1 -d -e
-[ #k #d #e #L #X #H >(cpy_inv_sort1 … H) -H //
-| #i #d #e #Hid #L #X #H elim (cpy_inv_lref1 … H) -H //
-  * #I #K #V #H elim (ylt_yle_false … H) -H /2 width=1 by ylt_inj/
-| #i #d #e #Hdi #L #X #H elim (cpy_inv_lref1 … H) -H //
-  * #I #K #V #_ #H elim (ylt_yle_false i d)
-  /2 width=2 by ylt_inv_monotonic_plus_dx, yle_inj/
-| #p #d #e #L #X #H >(cpy_inv_gref1 … H) -H //
-| #a #I #V1 #W1 #T1 #U1 #d #e #_ #_ #IHVW1 #IHTU1 #L #X #H elim (cpy_inv_bind1 … H) -H
-  #W2 #U2 #HW12 #HU12 #H destruct /3 width=2 by eq_f2/
-| #I #V1 #W1 #T1 #U1 #d #e #_ #_ #IHVW1 #IHTU1 #L #X #H elim (cpy_inv_flat1 … H) -H
-  #W2 #U2 #HW12 #HU12 #H destruct /3 width=2 by eq_f2/
-]
-qed-.
+(* Advancd inversion lemmas on relocation ***********************************)
 
 lemma cpy_inv_lift1_ge_up: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶×[dt, et] U2 →
                            ∀K,d,e. ⇩[d, e] L ≡ K → ∀T1. ⇧[d, e] T1 ≡ U1 →

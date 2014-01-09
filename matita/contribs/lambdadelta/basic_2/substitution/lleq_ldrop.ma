@@ -46,3 +46,78 @@ lemma lleq_free: ∀L1,L2,d,i. |L1| ≤ i → |L2| ≤ i → |L1| = |L2| → L1 
 #I #Z #Y #X #_ #_ #H lapply (ldrop_fwd_length_lt2 … H) -H
 #H elim (lt_refl_false i) /2 width=3 by lt_to_le_to_lt/
 qed.
+
+(* Properties on relocation *************************************************)
+
+lemma lleq_lift_le: ∀K1,K2,T,dt. K1 ⋕[T, dt] K2 →
+                    ∀L1,L2,d,e. ⇩[d, e] L1 ≡ K1 → ⇩[d, e] L2 ≡ K2 →
+                    ∀U. ⇧[d, e] T ≡ U → dt ≤ d → L1 ⋕[U, dt] L2.
+#K1 #K2 #T #dt * #HK12 #IHT #L1 #L2 #d #e #HLK1 #HLK2 #U #HTU #Hdtd
+lapply (ldrop_fwd_length … HLK1) lapply (ldrop_fwd_length … HLK2)
+#H2 #H1 @conj // -HK12 -H1 -H2 #U0 @conj #HU0
+[ letin HLKA ≝ HLK1 letin HLKB ≝ HLK2 | letin HLKA ≝ HLK2 letin HLKB ≝ HLK1 ]
+elim (cpys_inv_lift1_be … HU0 … HLKA … HTU) // -HU0 >yminus_Y_inj #T0 #HT0 #HTU0
+elim (IHT T0) [ #H #_ | #_ #H ] -IHT /3 width=11 by cpys_lift_be/
+qed-.
+
+lemma lleq_lift_ge: ∀K1,K2,T,dt. K1 ⋕[T, dt] K2 →
+                    ∀L1,L2,d,e. ⇩[d, e] L1 ≡ K1 → ⇩[d, e] L2 ≡ K2 →
+                    ∀U. ⇧[d, e] T ≡ U → d ≤ dt → L1 ⋕[U, dt+e] L2.
+#K1 #K2 #T #dt * #HK12 #IHT #L1 #L2 #d #e #HLK1 #HLK2 #U #HTU #Hddt
+lapply (ldrop_fwd_length … HLK1) lapply (ldrop_fwd_length … HLK2)
+#H2 #H1 @conj // -HK12 -H1 -H2 #U0 @conj #HU0
+[ letin HLKA ≝ HLK1 letin HLKB ≝ HLK2 | letin HLKA ≝ HLK2 letin HLKB ≝ HLK1 ]
+elim (cpys_inv_lift1_ge … HU0 … HLKA … HTU) /2 width=1 by monotonic_yle_plus_dx/ -HU0 >yplus_minus_inj #T0 #HT0 #HTU0
+elim (IHT T0) [ #H #_ | #_ #H ] -IHT /3 width=9 by cpys_lift_ge/
+qed-.
+
+(* Inversion lemmas on relocation *******************************************)
+
+lemma lleq_inv_lift_le: ∀L1,L2,U,dt. L1 ⋕[U, dt] L2 →
+                        ∀K1,K2,d,e. ⇩[d, e] L1 ≡ K1 → ⇩[d, e] L2 ≡ K2 →
+                        ∀T. ⇧[d, e] T ≡ U → dt ≤ d → K1 ⋕[T, dt] K2.
+#L1 #L2 #U #dt * #HL12 #IH #K1 #K2 #d #e #HLK1 #HLK2 #T #HTU #Hdtd
+lapply (ldrop_fwd_length_minus2 … HLK1) lapply (ldrop_fwd_length_minus2 … HLK2)
+#H2 #H1 @conj // -HL12 -H1 -H2
+#T0 elim (lift_total T0 d e)
+#U0 #HTU0 elim (IH U0) -IH
+#H12 #H21 @conj #HT0
+[ letin HLKA ≝ HLK1 letin HLKB ≝ HLK2 letin H0 ≝ H12 | letin HLKA ≝ HLK2 letin HLKB ≝ HLK1 letin H0 ≝ H21 ]
+lapply (cpys_lift_be … HT0 … HLKA … HTU … HTU0) // -HT0
+>yplus_Y1 #HU0 elim (cpys_inv_lift1_be … (H0 HU0) … HLKB … HTU) // -L1 -L2 -U -Hdtd
+#X #HT0 #HX lapply (lift_inj … HX … HTU0) -U0 //
+qed-.
+
+lemma lleq_inv_lift_ge: ∀L1,L2,U,dt. L1 ⋕[U, dt] L2 →
+                        ∀K1,K2,d,e. ⇩[d, e] L1 ≡ K1 → ⇩[d, e] L2 ≡ K2 →
+                        ∀T. ⇧[d, e] T ≡ U → d+e ≤ dt → K1 ⋕[T, dt-e] K2.
+#L1 #L2 #U #dt * #HL12 #IH #K1 #K2 #d #e #HLK1 #HLK2 #T #HTU #Hdedt
+lapply (ldrop_fwd_length_minus2 … HLK1) lapply (ldrop_fwd_length_minus2 … HLK2)
+#H2 #H1 @conj // -HL12 -H1 -H2
+elim (yle_inv_plus_inj2 … Hdedt) #Hddt #Hedt
+#T0 elim (lift_total T0 d e)
+#U0 #HTU0 elim (IH U0) -IH
+#H12 #H21 @conj #HT0
+[ letin HLKA ≝ HLK1 letin HLKB ≝ HLK2 letin H0 ≝ H12 | letin HLKA ≝ HLK2 letin HLKB ≝ HLK1 letin H0 ≝ H21 ]
+lapply (cpys_lift_ge … HT0 … HLKA … HTU … HTU0) // -HT0 -Hddt
+>ymax_pre_sn // #HU0 elim (cpys_inv_lift1_ge … (H0 HU0) … HLKB … HTU) // -L1 -L2 -U -Hdedt -Hedt
+#X #HT0 #HX lapply (lift_inj … HX … HTU0) -U0 //
+qed-.
+
+lemma lleq_inv_lift_be: ∀L1,L2,U,dt. L1 ⋕[U, dt] L2 →
+                        ∀K1,K2,d,e. ⇩[d, e] L1 ≡ K1 → ⇩[d, e] L2 ≡ K2 →
+                        ∀T. ⇧[d, e] T ≡ U → d ≤ dt → dt ≤ d + e → K1 ⋕[T, d] K2.
+#L1 #L2 #U #dt * #HL12 #IH #K1 #K2 #d #e #HLK1 #HLK2 #T #HTU #Hddt #Hdtde
+lapply (ldrop_fwd_length_minus2 … HLK1) lapply (ldrop_fwd_length_minus2 … HLK2)
+#H2 #H1 @conj // -HL12 -H1 -H2
+#T0 elim (lift_total T0 d e)
+#U0 #HTU0 elim (IH U0) -IH
+#H12 #H21 @conj #HT0
+[ letin HLKA ≝ HLK1 letin HLKB ≝ HLK2 letin H0 ≝ H12 | letin HLKA ≝ HLK2 letin HLKB ≝ HLK1 letin H0 ≝ H21 ]
+lapply (cpys_lift_ge … HT0 … HLKA … HTU … HTU0) // -HT0
+#HU0 lapply (cpys_weak … HU0 dt (∞) ? ?) // -HU0
+#HU0 lapply (H0 HU0)
+#HU0 lapply (cpys_weak … HU0 d (∞) ? ?) // -HU0
+#HU0 elim (cpys_inv_lift1_ge_up … HU0 … HLKB … HTU) // -L1 -L2 -U -Hddt -Hdtde
+#X #HT0 #HX lapply (lift_inj … HX … HTU0) -U0 //
+qed-.

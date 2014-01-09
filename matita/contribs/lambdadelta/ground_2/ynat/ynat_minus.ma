@@ -38,6 +38,9 @@ qed.
 lemma yminus_O1: ∀x:ynat. 0 - x = 0.
 * // qed.
 
+lemma yminus_refl: ∀x:ynat. x - x = 0.
+* // qed.
+
 lemma yminus_minus_comm: ∀y,z,x. x - y - z = x - z - y.
 * #y [ * #z [ * // ] ] >yminus_O1 //
 qed.

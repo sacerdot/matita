@@ -92,7 +92,7 @@ lemma cpys_inv_lref1_ldrop: ∀G,L,T2,i,d,e. ⦃G, L⦄ ⊢ #i ▶*×[d, e] T2 �
 ]
 qed-.
 
-(* Relocation properties ****************************************************)
+(* Properties on relocation *************************************************)
 
 lemma cpys_lift_le: ∀G,K,T1,T2,dt,et. ⦃G, K⦄ ⊢ T1 ▶*×[dt, et] T2 →
                     ∀L,U1,d,e. dt + et ≤ yinj d → ⇩[d, e] L ≡ K →
@@ -133,6 +133,8 @@ lemma cpys_lift_ge: ∀G,K,T1,T2,dt,et. ⦃G, K⦄ ⊢ T1 ▶*×[dt, et] T2 →
 ]
 qed-.
 
+(* Inversion lemmas for relocation ******************************************)
+
 lemma cpys_inv_lift1_le: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶*×[dt, et] U2 →
                          ∀K,d,e. ⇩[d, e] L ≡ K → ∀T1. ⇧[d, e] T1 ≡ U1 →
                          dt + et ≤ d →
@@ -166,12 +168,7 @@ lemma cpys_inv_lift1_ge: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶*×[dt, et] U2
 ]
 qed-.
 
-lemma cpys_inv_lift1_eq: ∀G,L,U1,U2. ∀d,e:nat.
-                         ⦃G, L⦄ ⊢ U1 ▶*×[d, e] U2 → ∀T1. ⇧[d, e] T1 ≡ U1 → U1 = U2.
-#G #L #U1 #U2 #d #e #H #T1 #HTU1 @(cpys_ind … H) -U2 //
-#U #U2 #_ #HU2 #IHU destruct
-<(cpy_inv_lift1_eq … HTU1 … HU2) -HU2 -HTU1 //
-qed-.
+(* Advanced inversion lemmas on relocation **********************************)
 
 lemma cpys_inv_lift1_ge_up: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶*×[dt, et] U2 →
                             ∀K,d,e. ⇩[d, e] L ≡ K → ∀T1. ⇧[d, e] T1 ≡ U1 →
