@@ -19,9 +19,9 @@ axiom lsx_fqup_conf: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃+ ⦃G2, L2, 
                      G1 ⊢ ⋕⬊*[h, g, T1] L1 → G2 ⊢ ⋕⬊*[h, g, T2] L2.
 
 axiom fqup_lpxs_trans_nlleq: ∀h,g,G1,G2,K1,K2,T1,T2. ⦃G1, K1, T1⦄ ⊃+ ⦃G2, K2, T2⦄ →
-                             ∀L2. ⦃G2, K2⦄ ⊢ ➡*[h, g] L2 → (K2 ⋕[O, T2] L2 →⊥) →
+                             ∀L2. ⦃G2, K2⦄ ⊢ ➡*[h, g] L2 → (K2 ⋕[T2, 0] L2 →⊥) →
                              ∃∃L1. ⦃G1, K1⦄ ⊢ ➡*[h, g] L1 &
-                                   K1 ⋕[O, T1] L1 → ⊥ & ⦃G1, L1, T1⦄ ⊃+ ⦃G2, L2, T2⦄.
+                                   K1 ⋕[T1, 0] L1 → ⊥ & ⦃G1, L1, T1⦄ ⊃+ ⦃G2, L2, T2⦄.
 
 (* "BIG TREE" STRONGLY NORMALIZING TERMS ************************************)
 

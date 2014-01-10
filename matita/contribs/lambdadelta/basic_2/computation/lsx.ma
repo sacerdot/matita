@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/lazysn_5.ma".
-include "basic_2/relocation/lleq.ma".
+include "basic_2/substitution/lleq.ma".
 include "basic_2/computation/lpxs.ma".
 
 (* SN EXTENDED STRONGLY NORMALIZING LOCAL ENVIRONMENTS **********************)
@@ -29,7 +29,7 @@ interpretation
 
 lemma lsx_ind: ∀h,g,T,G. ∀R:predicate lenv.
                (∀L1. G ⊢ ⋕⬊*[h, g, T] L1 →
-                     (∀L2. ⦃G, L1⦄ ⊢ ➡*[h, g] L2 → (L1 ⋕[0, T] L2 → ⊥) → R L2) →
+                     (∀L2. ⦃G, L1⦄ ⊢ ➡*[h, g] L2 → (L1 ⋕[T, 0] L2 → ⊥) → R L2) →
                      R L1
                ) →
                ∀L. G ⊢ ⋕⬊*[h, g, T] L → R L.
@@ -40,7 +40,7 @@ qed-.
 (* Basic properties *********************************************************)
 
 lemma lsx_intro: ∀h,g,T,G,L1.
-                 (∀L2. ⦃G, L1⦄ ⊢ ➡*[h, g] L2 → (L1 ⋕[0, T] L2 → ⊥) → G ⊢ ⋕⬊*[h, g, T] L2) →
+                 (∀L2. ⦃G, L1⦄ ⊢ ➡*[h, g] L2 → (L1 ⋕[T, 0] L2 → ⊥) → G ⊢ ⋕⬊*[h, g, T] L2) →
                  G ⊢ ⋕⬊*[h, g, T] L1.
 /5 width=1 by lleq_sym, SN_intro/ qed.
 

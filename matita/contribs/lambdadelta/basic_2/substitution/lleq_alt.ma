@@ -81,25 +81,6 @@ lemma lleq_ind_alt: ∀R:relation4 ynat term lenv lenv. (
 /3 width=9 by lleqa_inv_lleq/
 qed-.
 
-(* Advanced properties ******************************************************)
-
-lemma lleq_ge: ∀L1,L2,T,d1. L1 ⋕[T, d1] L2 → ∀d2. d1 ≤ d2 → L1 ⋕[T, d2] L2.
-#L1 #L2 #T #d1 #H @(lleq_ind_alt … H) -L1 -L2 -T -d1
-/4 width=1 by lleq_sort, lleq_free, lleq_gref, lleq_bind, lleq_flat, yle_succ/
-[ /3 width=3 by lleq_skip, ylt_yle_trans/
-| #I1 #I2 #L1 #L2 #K1 #K2 #V #d1 #i #Hi #HLK1 #HLK2 #HV #IHV #d2 #Hd12 elim (ylt_split i d2)
-  [ lapply (lleq_fwd_length … HV) #HK12 #Hid2
-    lapply (ldrop_fwd_length … HLK1) lapply (ldrop_fwd_length … HLK2)
-    normalize in ⊢ (%→%→?); -I1 -I2 -V -d1 /2 width=1 by lleq_skip/ 
-  | /3 width=8 by lleq_lref, yle_trans/
-  ]
-]
-qed-.
-
-lemma lleq_bind_O: ∀a,I,L1,L2,V,T. L1 ⋕[V, 0] L2 → L1.ⓑ{I}V ⋕[T, 0] L2.ⓑ{I}V →
-                   L1 ⋕[ⓑ{a,I}V.T, 0] L2.
-/3 width=3 by lleq_ge, lleq_bind/ qed.
-
 (* Advanced inversion lemmas ************************************************)
 
 fact lleq_inv_S_aux: ∀L1,L2,T,d0. L1 ⋕[T, d0] L2 → ∀d. d0 = d + 1 →
@@ -129,3 +110,32 @@ lemma lleq_inv_bind_O: ∀a,I,L1,L2,V,T. L1 ⋕[ⓑ{a,I}V.T, 0] L2 →
 #a #I #L1 #L2 #V #T #H elim (lleq_inv_bind … H) -H
 /3 width=7 by ldrop_pair, conj, lleq_inv_S/
 qed-.
+
+(* Advanced properties ******************************************************)
+
+lemma lleq_ge: ∀L1,L2,T,d1. L1 ⋕[T, d1] L2 → ∀d2. d1 ≤ d2 → L1 ⋕[T, d2] L2.
+#L1 #L2 #T #d1 #H @(lleq_ind_alt … H) -L1 -L2 -T -d1
+/4 width=1 by lleq_sort, lleq_free, lleq_gref, lleq_bind, lleq_flat, yle_succ/
+[ /3 width=3 by lleq_skip, ylt_yle_trans/
+| #I1 #I2 #L1 #L2 #K1 #K2 #V #d1 #i #Hi #HLK1 #HLK2 #HV #IHV #d2 #Hd12 elim (ylt_split i d2)
+  [ lapply (lleq_fwd_length … HV) #HK12 #Hid2
+    lapply (ldrop_fwd_length … HLK1) lapply (ldrop_fwd_length … HLK2)
+    normalize in ⊢ (%→%→?); -I1 -I2 -V -d1 /2 width=1 by lleq_skip/ 
+  | /3 width=8 by lleq_lref, yle_trans/
+  ]
+]
+qed-.
+
+lemma lleq_bind_O: ∀a,I,L1,L2,V,T. L1 ⋕[V, 0] L2 → L1.ⓑ{I}V ⋕[T, 0] L2.ⓑ{I}V →
+                   L1 ⋕[ⓑ{a,I}V.T, 0] L2.
+/3 width=3 by lleq_ge, lleq_bind/ qed.
+
+lemma lleq_bind_repl_SO: ∀I,L1,L2,V,T. L1.ⓑ{I}V ⋕[T, 0] L2.ⓑ{I}V →
+                         ∀J,W. L1.ⓑ{J}W ⋕[T, 1] L2.ⓑ{J}W.
+#I #L1 #L2 #V #T #HT #J #W lapply (lleq_ge … HT 1 ?) // -HT
+#HT @(lleq_lsuby_repl … HT) /2 width=1 by lsuby_succ/ (**) (* full auto fails *)
+qed-.
+
+lemma lleq_bind_repl_O: ∀I,L1,L2,V,T. L1.ⓑ{I}V ⋕[T, 0] L2.ⓑ{I}V →
+                        ∀J,W. L1 ⋕[W, 0] L2 → L1.ⓑ{J}W ⋕[T, 0] L2.ⓑ{J}W.
+/3 width=7 by lleq_bind_repl_SO, lleq_inv_S/ qed-.

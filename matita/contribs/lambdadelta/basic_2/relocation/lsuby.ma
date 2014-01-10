@@ -61,6 +61,17 @@ lemma lsuby_length: ∀L1,L2. |L2| ≤ |L1| → L1 ⊑×[yinj 0, yinj 0] L2.
 ]
 qed.
 
+lemma lsuby_sym: ∀d,e,L1,L2. L1 ⊑×[d, e] L2 → |L1| = |L2| → L2 ⊑×[d, e] L1.
+#d #e #L1 #L2 #H elim H -d -e -L1 -L2
+[ #L1 #d #e #H >(length_inv_zero_dx … H) -L1 //
+| /2 width=1 by lsuby_length/
+| #I1 #I2 #L1 #L2 #V #e #_ #IHL12 #H lapply (injective_plus_l … H)
+  /3 width=1 by lsuby_pair/
+| #I1 #I2 #L1 #L2 #V1 #V2 #d #e #_ #IHL12 #H lapply (injective_plus_l … H)
+  /3 width=1 by lsuby_succ/
+]
+qed-.
+
 (* Basic inversion lemmas ***************************************************)
 
 fact lsuby_inv_atom1_aux: ∀L1,L2,d,e. L1 ⊑×[d, e] L2 → L1 = ⋆ → L2 = ⋆.

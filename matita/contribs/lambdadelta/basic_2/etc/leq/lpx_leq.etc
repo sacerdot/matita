@@ -24,7 +24,6 @@ axiom- lleq_beta: ∀L2s,L2d,V2,W2,T2,d.
 
 (* Properties using equivalences for local environments *********************)
 
-(* Note: lemma 1000 *)
 lemma lleq_cpx_conf_leq_dx: ∀h,g,G,L1s,L1d,T1,d. L1s ⋕[d, T1] L1d → L1s ≃[d, ∞] L1d →
                             ∀T2. ⦃G, L1d⦄ ⊢ T1 ➡[h, g] T2 →
                             ∀L2s. ⦃G, L1s⦄ ⊢ ➡[h, g] L2s → L1s ≃[0, d] L2s →

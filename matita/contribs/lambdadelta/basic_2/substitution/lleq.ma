@@ -74,6 +74,26 @@ lemma lleq_be: ∀L1,L2,U,dt. L1 ⋕[U, dt] L2 → ∀T,d,e. ⇧[d, e] T ≡ U �
 #HU0 elim (cpys_up … HU0 … HTU) // -HU0 /4 width=5 by cpys_weak/
 qed-.
 
+lemma lsuby_lleq_trans: ∀L2,L,T,d. L2 ⋕[T, d] L →
+                        ∀L1. L1 ⊑×[d, ∞] L2 → |L1| = |L2| → L1 ⋕[T, d] L.
+#L2 #L #T #d * #HL2 #IH #L1 #HL12 #H @conj // -HL2
+#U elim (IH U) -IH #Hdx #Hsn @conj #HTU
+[ @Hdx -Hdx -Hsn @(lsuby_cpys_trans … HTU) -HTU
+  /2 width=1 by lsuby_sym/ (**) (* full auto does not work *)
+| -H -Hdx /3 width=3 by lsuby_cpys_trans/
+]
+qed-.
+
+lemma lleq_lsuby_trans: ∀L,L1,T,d. L ⋕[T, d] L1 →
+                        ∀L2. L1 ⊑×[d, ∞] L2 → |L1| = |L2| → L ⋕[T, d] L2.
+/5 width=4 by lsuby_lleq_trans, lleq_sym, lsuby_sym/ qed-.
+
+lemma lleq_lsuby_repl: ∀L1,L2,T,d. L1 ⋕[T, d] L2 →
+                       ∀K1. K1 ⊑×[d, ∞] L1 → |K1| = |L1| →
+                       ∀K2. L2 ⊑×[d, ∞] K2 → |L2| = |K2| →
+                       K1 ⋕[T, d] K2.
+/3 width=4 by lleq_lsuby_trans, lsuby_lleq_trans/ qed-.
+
 (* Basic forward lemmas *****************************************************)
 
 lemma lleq_fwd_length: ∀L1,L2,T,d. L1 ⋕[T, d] L2 → |L1| = |L2|.
