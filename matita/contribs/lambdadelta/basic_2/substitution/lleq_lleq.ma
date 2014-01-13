@@ -137,3 +137,23 @@ theorem lleq_canc_sn: ∀L,L1,L2,T,d. L ⋕[d, T] L1→ L ⋕[d, T] L2 → L1 �
 
 theorem lleq_canc_dx: ∀L1,L2,L,T,d. L1 ⋕[d, T] L → L2 ⋕[d, T] L → L1 ⋕[d, T] L2.
 /3 width=3 by lleq_trans, lleq_sym/ qed-.
+
+(* Inversion lemmas on negated lazy quivalence for local environments *******)
+
+lemma nlleq_inv_bind: ∀a,I,L1,L2,V,T,d. (L1 ⋕[ⓑ{a,I}V.T, d] L2 → ⊥) →
+                      (L1 ⋕[V, d] L2 → ⊥) ∨ (L1.ⓑ{I}V ⋕[T, ⫯d] L2.ⓑ{I}V → ⊥).
+#a #I #L1 #L2 #V #T #d #H elim (lleq_dec V L1 L2 d)
+/4 width=1 by lleq_bind, or_intror, or_introl/
+qed-.
+
+lemma nlleq_inv_flat: ∀I,L1,L2,V,T,d. (L1 ⋕[ⓕ{I}V.T, d] L2 → ⊥) →
+                      (L1 ⋕[V, d] L2 → ⊥) ∨ (L1 ⋕[T, d] L2 → ⊥).
+#I #L1 #L2 #V #T #d #H elim (lleq_dec V L1 L2 d)
+/4 width=1 by lleq_flat, or_intror, or_introl/
+qed-.
+
+(* Note: lleq_nlleq_trans: ∀d,T,L1,L. L1⋕[T, d] L →
+                           ∀L2. (L ⋕[T, d] L2 → ⊥) → (L1 ⋕[T, d] L2 → ⊥).
+/3 width=3 by lleq_canc_sn/ qed-.
+works with /4 width=8/ so lleq_canc_sn is more convenient
+*)

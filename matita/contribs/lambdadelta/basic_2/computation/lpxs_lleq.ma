@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/lleq_alt.ma".
+include "basic_2/substitution/lleq_ext.ma".
 include "basic_2/computation/lpxs_ldrop.ma".
 include "basic_2/computation/lpxs_cpxs.ma".
 
@@ -20,14 +20,22 @@ include "basic_2/computation/lpxs_cpxs.ma".
 
 (* Advanced properties ******************************************************)
 
-axiom lleq_lpxs_trans_nlleq: ∀h,g,G,L1s,L1d,T,d. L1s ⋕[T, d] L1d →
-                             ∀L2d. ⦃G, L1d⦄ ⊢ ➡*[h, g] L2d → (L1d ⋕[T, d] L2d → ⊥) →
-                             ∃∃L2s. ⦃G, L1s⦄ ⊢ ➡*[h, g] L2s & L2s ⋕[T, d] L2d & L1s ⋕[T, d] L2s → ⊥.
+axiom lleq_lpxs_trans: ∀h,g,G,L1,L2,T,d. L1 ⋕[T, d] L2 → ∀K2. ⦃G, L2⦄ ⊢ ➡*[h, g] K2 →
+                       ∃∃K1. ⦃G, L1⦄ ⊢ ➡*[h, g] K1 & K1 ⋕[T, d] K2.
+(*
+#h #g #G #L1 #L2 #T #d #H @(lleq_ind_alt … H) -L1 -L2 -T -d
+[
+|
+|
+|
+|
+| #a #I #L1 #L2 #V #T #d #_ #_ #IHV #IHT #K2 #HLK2
+  elim (IHV … HLK2) -IHV #KV #HLKV #HV
+  elim (IHT (K2.ⓑ{I}V)) -IHT /2 width=1 by lpxs_pair_refl/ -HLK2 #Y #H #HT
+  elim (lpxs_inv_pair1 … H) -H #KT #VT #HLKT #_ #H destruct  
 
-(* Advanced inversion lemmas ************************************************)
-
-axiom lpxs_inv_cpxs_nlleq: ∀h,g,G,L1,L2,T1. ⦃G, L1⦄ ⊢ ➡*[h,g] L2 → (L1 ⋕[T1, 0] L2 → ⊥) →
-                           ∃∃T2. ⦃G, L1⦄ ⊢ T1 ➡*[h, g] T2 & T1 = T2 → ⊥ & ⦃G, L2⦄ ⊢ T1 ➡[h, g] T2.
+#h #g #G #L1 #L2 #T #d * #HL12 #IH #K2 #HLK2
+*)
 
 (* Properties on lazy equivalence for local environments ********************)
 

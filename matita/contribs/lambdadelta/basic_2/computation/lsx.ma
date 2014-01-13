@@ -61,3 +61,37 @@ lemma lsx_gref: ∀h,g,G,L,p. G ⊢ ⋕⬊*[h, g, §p] L.
 #L2 #HL12 #H elim H -H
 /3 width=4 by lpxs_fwd_length, lleq_gref/
 qed.
+
+(* Basic forward lemmas *****************************************************)
+
+lemma lsx_fwd_bind_sn: ∀h,g,a,I,G,L,V,T. G ⊢ ⋕⬊*[h, g, ⓑ{a,I}V.T] L →
+                       G ⊢ ⋕⬊*[h, g, V] L.
+#h #g #a #I #G #L #V #T #H @(lsx_ind … H) -L
+#L1 #_ #IHL1 @lsx_intro
+#L2 #HL12 #HV @IHL1 /3 width=4 by lleq_fwd_bind_sn/
+qed-.
+
+lemma lsx_fwd_flat_sn: ∀h,g,I,G,L,V,T. G ⊢ ⋕⬊*[h, g, ⓕ{I}V.T] L →
+                       G ⊢ ⋕⬊*[h, g, V] L.
+#h #g #I #G #L #V #T #H @(lsx_ind … H) -L
+#L1 #_ #IHL1 @lsx_intro
+#L2 #HL12 #HV @IHL1 /3 width=3 by lleq_fwd_flat_sn/
+qed-.
+
+lemma lsx_fwd_flat_dx: ∀h,g,I,G,L,V,T. G ⊢ ⋕⬊*[h, g, ⓕ{I}V.T] L →
+                       G ⊢ ⋕⬊*[h, g, T] L.
+#h #g #I #G #L #V #T #H @(lsx_ind … H) -L
+#L1 #_ #IHL1 @lsx_intro
+#L2 #HL12 #HV @IHL1 /3 width=3 by lleq_fwd_flat_dx/
+qed-.
+
+lemma lsx_fwd_pair_sn: ∀h,g,I,G,L,V,T. G ⊢ ⋕⬊*[h, g, ②{I}V.T] L →
+                       G ⊢ ⋕⬊*[h, g, V] L.
+#h #g * /2 width=4 by lsx_fwd_bind_sn, lsx_fwd_flat_sn/
+qed-.
+
+(* Basic inversion lemmas ***************************************************)
+
+lemma lsx_inv_flat: ∀h,g,I,G,L,V,T. G ⊢ ⋕⬊*[h, g, ⓕ{I}V.T] L →
+                    G ⊢ ⋕⬊*[h, g, V] L ∧ G ⊢ ⋕⬊*[h, g, T] L.
+/3 width=3 by lsx_fwd_flat_sn, lsx_fwd_flat_dx, conj/ qed-.

@@ -117,6 +117,14 @@ qed-.
 lemma csx_fwd_flat_dx: ∀h,g,I,G,L,V,T. ⦃G, L⦄ ⊢ ⬊*[h, g] ⓕ{I}V.T → ⦃G, L⦄ ⊢ ⬊*[h, g] T.
 /2 width=5 by csx_fwd_flat_dx_aux/ qed-.
 
+lemma csx_fwd_bind: ∀h,g,a,I,G,L,V,T. ⦃G, L⦄ ⊢ ⬊*[h, g] ⓑ{a,I}V.T →
+                    ⦃G, L⦄ ⊢ ⬊*[h, g] V ∧ ⦃G, L.ⓑ{I}V⦄ ⊢ ⬊*[h, g] T.
+/3 width=3 by csx_fwd_pair_sn, csx_fwd_bind_dx, conj/ qed-.
+
+lemma csx_fwd_flat: ∀h,g,I,G,L,V,T. ⦃G, L⦄ ⊢ ⬊*[h, g] ⓕ{I}V.T →
+                    ⦃G, L⦄ ⊢ ⬊*[h, g] V ∧ ⦃G, L⦄ ⊢ ⬊*[h, g] T.
+/3 width=3 by csx_fwd_pair_sn, csx_fwd_flat_dx, conj/ qed-.
+
 (* Basic_1: removed theorems 14:
             sn3_cdelta
             sn3_gen_cflat sn3_cflat sn3_cpr3_trans sn3_shift sn3_change

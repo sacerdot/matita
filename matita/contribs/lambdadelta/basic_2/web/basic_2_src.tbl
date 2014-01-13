@@ -209,7 +209,7 @@ table {
    class "yellow"
    [ { "substitution" * } {
         [ { "lazy equivalence for local environments" * } {
-             [ "lleq ( ? ⋕[?,?] ? )" "lleq_alt ( ? ⋕⋕[?,?] ? )" "lleq_ldrop" + "lleq_fqus" + "lleq_lleq" * ]
+             [ "lleq ( ? ⋕[?,?] ? )" "lleq_alt ( ? ⋕⋕[?,?] ? )" "lleq_ldrop" + "lleq_fqus" + "lleq_lleq" + "lleq_ext" * ]
           }
         ]
         [ { "contxt-sensitive extended multiple substitution" * } {

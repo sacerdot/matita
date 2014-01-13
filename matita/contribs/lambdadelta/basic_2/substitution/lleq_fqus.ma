@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/substitution/fqus_alt.ma".
-include "basic_2/substitution/lleq_alt.ma".
+include "basic_2/substitution/lleq_ext.ma".
 
 (* LAZY EQUIVALENCE FOR LOCAL ENVIRONMENTS **********************************)
 

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/lleq_alt.ma".
+include "basic_2/substitution/lleq_ext.ma".
 include "basic_2/reduction/lpx_ldrop.ma".
 
 (* SN EXTENDED PARALLEL REDUCTION FOR LOCAL ENVIRONMENTS ********************)
