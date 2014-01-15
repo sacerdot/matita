@@ -106,7 +106,7 @@ table {
         ]
         [ { "context-sensitive extended computation" * } {
              [ "lpxs ( ⦃?,?⦄ ⊢ ➡*[?,?] ? )" "lpxs_alt ( ⦃?,?⦄ ⊢ ➡➡*[?,?] ? )" "lpxs_ldrop" + "lpxs_lleq" + "lpxs_aaa" + "lpxs_cpxs" + "lpxs_lpxs" * ]
-             [ "cpxs ( ⦃?,?⦄ ⊢ ? ➡*[?,?] ? )" "cpxs_tstc" + "cpxs_tstc_vector" + "cpxs_lift" + "cpxs_lleq" + "cpxs_aaa" + "cpxs_cpxs" * ]
+             [ "cpxs ( ⦃?,?⦄ ⊢ ? ➡*[?,?] ? )" "cpxs_tstc" + "cpxs_tstc_vector" + "cpxs_lift" + "cpxs_cpys" + "cpxs_lleq" + "cpxs_aaa" + "cpxs_cpxs" * ]
           }
         ]
         [ { "context-sensitive computation" * } {
