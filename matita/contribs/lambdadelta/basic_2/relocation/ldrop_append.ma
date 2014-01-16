@@ -19,23 +19,24 @@ include "basic_2/relocation/ldrop.ma".
 
 (* Properties on append for local environments ******************************)
 
-fact ldrop_O1_append_sn_le_aux: ∀L1,L2,d,e. ⇩[d, e] L1 ≡ L2 →
+fact ldrop_O1_append_sn_le_aux: ∀L1,L2,s,d,e. ⇩[s, d, e] L1 ≡ L2 →
                                 d = 0 → e ≤ |L1| →
-                                ∀L. ⇩[0, e] L @@ L1 ≡ L @@ L2.
-#L1 #L2 #d #e #H elim H -L1 -L2 -d -e normalize
-/4 width=1 by ldrop_skip_lt, ldrop_ldrop, arith_b1, lt_minus_to_plus_r, monotonic_pred/
+                                ∀L. ⇩[s, 0, e] L @@ L1 ≡ L @@ L2.
+#L1 #L2 #s #d #e #H elim H -L1 -L2 -d -e normalize
+[2,3,4: /4 width=1 by ldrop_skip_lt, ldrop_drop, arith_b1, lt_minus_to_plus_r, monotonic_pred/ ]
+#d #e #_ #_ #H <(le_n_O_to_eq … H) -H //
 qed-.
 
-lemma ldrop_O1_append_sn_le: ∀L1,L2,e. ⇩[0, e] L1 ≡ L2 → e ≤ |L1| →
-                             ∀L. ⇩[0, e] L @@ L1 ≡ L @@ L2.
+lemma ldrop_O1_append_sn_le: ∀L1,L2,s,e. ⇩[s, 0, e] L1 ≡ L2 → e ≤ |L1| →
+                             ∀L. ⇩[s, 0, e] L @@ L1 ≡ L @@ L2.
 /2 width=3 by ldrop_O1_append_sn_le_aux/ qed.
 
 (* Inversion lemmas on append for local environments ************************)
 
-lemma ldrop_O1_inv_append1_ge: ∀K,L1,L2,e. ⇩[0, e] L1 @@ L2 ≡ K →
-                               |L2| ≤ e → ⇩[0, e - |L2|] L1 ≡ K.
+lemma ldrop_O1_inv_append1_ge: ∀K,L1,L2,s,e. ⇩[s, 0, e] L1 @@ L2 ≡ K →
+                               |L2| ≤ e → ⇩[s, 0, e - |L2|] L1 ≡ K.
 #K #L1 #L2 elim L2 -L2 normalize //
-#L2 #I #V #IHL2 #e #H #H1e
+#L2 #I #V #IHL2 #s #e #H #H1e
 elim (ldrop_inv_O1_pair1 … H) -H * #H2e #HL12 destruct
 [ lapply (le_n_O_to_eq … H1e) -H1e -IHL2
   >commutative_plus normalize #H destruct
@@ -43,18 +44,17 @@ elim (ldrop_inv_O1_pair1 … H) -H * #H2e #HL12 destruct
 ]
 qed-.
 
-lemma ldrop_O1_inv_append1_le: ∀K,L1,L2,e. ⇩[0, e] L1 @@ L2 ≡ K → e ≤ |L2| →
-                               ∀K2. ⇩[0, e] L2 ≡ K2 → K = L1 @@ K2.
+lemma ldrop_O1_inv_append1_le: ∀K,L1,L2,s,e. ⇩[s, 0, e] L1 @@ L2 ≡ K → e ≤ |L2| →
+                               ∀K2. ⇩[s, 0, e] L2 ≡ K2 → K = L1 @@ K2.
 #K #L1 #L2 elim L2 -L2 normalize
-[ #e #H1 #H2 #K2 #H3
-  lapply (le_n_O_to_eq … H2) -H2 #H2
-  elim (ldrop_inv_atom1 … H3) -H3 #H3 #_ destruct
+[ #s #e #H1 #H2 #K2 #H3 lapply (le_n_O_to_eq … H2) -H2
+  #H2 elim (ldrop_inv_atom1 … H3) -H3 #H3 #_ destruct
   >(ldrop_inv_O2 … H1) -H1 //
-| #L2 #I #V #IHL2 #e @(nat_ind_plus … e) -e [ -IHL2 ]
+| #L2 #I #V #IHL2 #s #e @(nat_ind_plus … e) -e [ -IHL2 ]
   [ #H1 #_ #K2 #H2
     lapply (ldrop_inv_O2 … H1) -H1 #H1
     lapply (ldrop_inv_O2 … H2) -H2 #H2 destruct //
-  | /4 width=6 by ldrop_inv_ldrop1, le_plus_to_le_r/
+  | /4 width=7 by ldrop_inv_drop1, le_plus_to_le_r/
   ]
 ]
 qed-.

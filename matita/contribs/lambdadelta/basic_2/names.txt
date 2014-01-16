@@ -28,7 +28,8 @@ l      : term degree
 m,n    : reserved: future use
 o      :
 p,q    : global reference position
-r,s    :
+r      : reduction kind parameter (true = ordinary, false = extended)
+s      : local dropping kind parameter (true = general, false = restricted)
 t,u    : local reference position level (de Bruijn's)
 v,w    :
 x,y,z  : reserved: transient objet denoted by a small letter
@@ -39,6 +40,8 @@ NAMING CONVENTIONS FOR CONSTRUCTORS
 2: binary
 
 A: application to vector
+F: boolean false
+T: boolean true
 
 a: application
 b: binder

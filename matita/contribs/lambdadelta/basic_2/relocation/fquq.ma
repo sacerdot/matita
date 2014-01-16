@@ -24,7 +24,7 @@ inductive fquq: tri_relation genv lenv term ≝
 | fquq_bind_dx: ∀a,I,G,L,V,T. fquq G L (ⓑ{a,I}V.T) G (L.ⓑ{I}V) T
 | fquq_flat_dx: ∀I,G, L,V,T. fquq G L (ⓕ{I}V.T) G L T
 | fquq_drop   : ∀G,L,K,T,U,e.
-                ⇩[0, e] L ≡ K → ⇧[0, e] T ≡ U → fquq G L U G K T
+                ⇩[e] L ≡ K → ⇧[0, e] T ≡ U → fquq G L U G K T
 .
 
 interpretation
@@ -37,7 +37,7 @@ lemma fquq_refl: tri_reflexive … fquq.
 /2 width=3 by fquq_drop/ qed.
 
 lemma fqu_fquq: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, L2, T2⦄.
-#G1 #G2 #L1 #L2 #T1 #T2 #H elim H -L1 -L2 -T1 -T2 // /2 width=3 by fquq_drop/
+#G1 #G2 #L1 #L2 #T1 #T2 #H elim H -L1 -L2 -T1 -T2 /2 width=3 by fquq_drop/
 qed.
 
 (* Basic forward lemmas *****************************************************)

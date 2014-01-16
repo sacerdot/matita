@@ -24,9 +24,9 @@ fact lsubr_inv_bind1_aux: ∀L1,L2. L1 ⊑ L2 → ∀I,K1,X. L1 = K1.ⓑ{I}X →
                            | ∃∃K2,V,W. K1 ⊑ K2 & L2 = K2.ⓛW &
                                        I = Abbr & X = ⓝW.V.
 #L1 #L2 * -L1 -L2
-[ #L #J #K1 #X #H destruct /2 width=1/
-| #I #L1 #L2 #V #HL12 #J #K1 #X #H destruct /3 width=3/
-| #L1 #L2 #V #W #HL12 #J #K1 #X #H destruct /3 width=6/
+[ #L #J #K1 #X #H destruct /2 width=1 by or3_intro0/
+| #I #L1 #L2 #V #HL12 #J #K1 #X #H destruct /3 width=3 by or3_intro1, ex2_intro/
+| #L1 #L2 #V #W #HL12 #J #K1 #X #H destruct /3 width=6 by or3_intro2, ex4_3_intro/
 ]
 qed-.
 
@@ -45,9 +45,9 @@ theorem lsubr_trans: Transitive … lsubr.
   lapply (lsubr_inv_atom1 … H) -H //
 | #I #L1 #L #V #_ #IHL1 #X #H
   elim (lsubr_inv_bind1 … H) -H // *
-  #L2 [2: #V2 #W2 ] #HL2 #H1 [ #H2 #H3 ] destruct /3 width=1/
+  #L2 [2: #V2 #W2 ] #HL2 #H1 [ #H2 #H3 ] destruct /3 width=1 by lsubr_bind, lsubr_abst/
 | #L1 #L #V1 #W #_ #IHL1 #X #H
   elim (lsubr_inv_abst1 … H) -H // *
-  #L2 #HL2 #H destruct /3 width=1/
+  #L2 #HL2 #H destruct /3 width=1 by lsubr_abst/
 ]
 qed-.

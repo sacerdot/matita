@@ -25,7 +25,7 @@ include "basic_2/relocation/lsuby.ma".
 inductive cpy: ynat → ynat → relation4 genv lenv term term ≝
 | cpy_atom : ∀I,G,L,d,e. cpy d e G L (⓪{I}) (⓪{I})
 | cpy_subst: ∀I,G,L,K,V,W,i,d,e. d ≤ yinj i → i < d+e →
-             ⇩[0, i] L ≡ K.ⓑ{I}V → ⇧[0, i+1] V ≡ W → cpy d e G L (#i) W
+             ⇩[i] L ≡ K.ⓑ{I}V → ⇧[0, i+1] V ≡ W → cpy d e G L (#i) W
 | cpy_bind : ∀a,I,G,L,V1,V2,T1,T2,d,e.
              cpy d e G L V1 V2 → cpy (⫯d) e G (L.ⓑ{I}V2) T1 T2 →
              cpy d e G L (ⓑ{a,I}V1.T1) (ⓑ{a,I}V2.T2)
@@ -39,7 +39,7 @@ interpretation "context-sensitive extended ordinary substritution (term)"
 
 (* Basic properties *********************************************************)
 
-lemma lsuby_cpy_trans: ∀G,d,e. lsub_trans … (cpy d e G) (lsuby d e). 
+lemma lsuby_cpy_trans: ∀G,d,e. lsub_trans … (cpy d e G) (lsuby d e).
 #G #d #e #L1 #T1 #T2 #H elim H -G -L1 -T1 -T2 -d -e
 [ //
 | #I #G #L1 #K1 #V #W #i #d #e #Hdi #Hide #HLK1 #HVW #L2 #HL12
@@ -53,7 +53,7 @@ lemma cpy_refl: ∀G,T,L,d,e. ⦃G, L⦄ ⊢ T ▶×[d, e] T.
 #G #T elim T -T // * /2 width=1 by cpy_bind, cpy_flat/
 qed.
 
-lemma cpy_full: ∀I,G,K,V,T1,L,d. ⇩[0, d] L ≡ K.ⓑ{I}V →
+lemma cpy_full: ∀I,G,K,V,T1,L,d. ⇩[d] L ≡ K.ⓑ{I}V →
                 ∃∃T2,T. ⦃G, L⦄ ⊢ T1 ▶×[d, 1] T2 & ⇧[d, 1] T ≡ T2.
 #I #G #K #V #T1 elim T1 -T1
 [ * #i #L #d #HLK
@@ -67,7 +67,7 @@ lemma cpy_full: ∀I,G,K,V,T1,L,d. ⇩[0, d] L ≡ K.ⓑ{I}V →
 | * [ #a ] #J #W1 #U1 #IHW1 #IHU1 #L #d #HLK
   elim (IHW1 … HLK) -IHW1 #W2 #W #HW12 #HW2
   [ elim (IHU1 (L.ⓑ{J}W2) (d+1)) -IHU1
-    /3 width=9 by cpy_bind, ldrop_ldrop, lift_bind, ex2_2_intro/
+    /3 width=9 by cpy_bind, ldrop_drop, lift_bind, ex2_2_intro/
   | elim (IHU1 … HLK) -IHU1 -HLK
     /3 width=8 by cpy_flat, lift_flat, ex2_2_intro/
   ]
@@ -186,7 +186,7 @@ qed-.
 fact cpy_inv_atom1_aux: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶×[d, e] T2 → ∀J. T1 = ⓪{J} →
                         T2 = ⓪{J} ∨
                         ∃∃I,K,V,i. d ≤ yinj i & i < d + e &
-                                   ⇩[O, i] L ≡ K.ⓑ{I}V &
+                                   ⇩[i] L ≡ K.ⓑ{I}V &
                                    ⇧[O, i+1] V ≡ T2 &
                                    J = LRef i.
 #G #L #T1 #T2 #d #e * -G -L -T1 -T2 -d -e
@@ -200,7 +200,7 @@ qed-.
 lemma cpy_inv_atom1: ∀I,G,L,T2,d,e. ⦃G, L⦄ ⊢ ⓪{I} ▶×[d, e] T2 →
                      T2 = ⓪{I} ∨
                      ∃∃J,K,V,i. d ≤ yinj i & i < d + e &
-                                ⇩[O, i] L ≡ K.ⓑ{J}V &
+                                ⇩[i] L ≡ K.ⓑ{J}V &
                                 ⇧[O, i+1] V ≡ T2 &
                                 I = LRef i.
 /2 width=4 by cpy_inv_atom1_aux/ qed-.
@@ -214,7 +214,7 @@ qed-.
 lemma cpy_inv_lref1: ∀G,L,T2,i,d,e. ⦃G, L⦄ ⊢ #i ▶×[d, e] T2 →
                      T2 = #i ∨
                      ∃∃I,K,V. d ≤ i & i < d + e &
-                              ⇩[O, i] L ≡ K.ⓑ{I}V &
+                              ⇩[i] L ≡ K.ⓑ{I}V &
                               ⇧[O, i+1] V ≡ T2.
 #G #L #T2 #i #d #e #H
 elim (cpy_inv_atom1 … H) -H /2 width=1 by or_introl/

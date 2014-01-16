@@ -203,28 +203,28 @@ lemma lsuby_fwd_length: ∀L1,L2,d,e. L1 ⊑×[d, e] L2 → |L2| ≤ |L1|.
 qed-.
 
 lemma lsuby_fwd_ldrop2_be: ∀L1,L2,d,e. L1 ⊑×[d, e] L2 →
-                           ∀I2,K2,W,i. ⇩[0, i] L2 ≡ K2.ⓑ{I2}W →
+                           ∀I2,K2,W,s,i. ⇩[s, 0, i] L2 ≡ K2.ⓑ{I2}W →
                            d ≤ i → i < d + e →
-                           ∃∃I1,K1. K1 ⊑×[0, ⫰(d+e-i)] K2 & ⇩[0, i] L1 ≡ K1.ⓑ{I1}W.
+                           ∃∃I1,K1. K1 ⊑×[0, ⫰(d+e-i)] K2 & ⇩[s, 0, i] L1 ≡ K1.ⓑ{I1}W.
 #L1 #L2 #d #e #H elim H -L1 -L2 -d -e
-[ #L1 #d #e #J2 #K2 #W #i #H
+[ #L1 #d #e #J2 #K2 #W #s #i #H
   elim (ldrop_inv_atom1 … H) -H #H destruct
-| #I1 #I2 #L1 #L2 #V1 #V2 #_ #_ #J2 #K2 #W #i #_ #_ #H
+| #I1 #I2 #L1 #L2 #V1 #V2 #_ #_ #J2 #K2 #W #s #i #_ #_ #H
   elim (ylt_yle_false … H) //
-| #I1 #I2 #L1 #L2 #V #e #HL12 #IHL12 #J2 #K2 #W #i #H #_ >yplus_O1
+| #I1 #I2 #L1 #L2 #V #e #HL12 #IHL12 #J2 #K2 #W #s #i #H #_ >yplus_O1
   elim (ldrop_inv_O1_pair1 … H) -H * #Hi #HLK1 [ -IHL12 | -HL12 ]
   [ #_ destruct -I2 >ypred_succ
     /2 width=4 by ldrop_pair, ex2_2_intro/
   | lapply (ylt_inv_O1 i ?) /2 width=1 by ylt_inj/
     #H <H -H #H lapply (ylt_inv_succ … H) -H
     #Hie elim (IHL12 … HLK1) -IHL12 -HLK1 // -Hie
-    >yminus_succ <yminus_inj /3 width=4 by ldrop_ldrop_lt, ex2_2_intro/
+    >yminus_succ <yminus_inj /3 width=4 by ldrop_drop_lt, ex2_2_intro/
   ]
-| #I1 #I2 #L1 #L2 #V1 #V2 #d #e #_ #IHL12 #J2 #K2 #W #i #HLK2 #Hdi
+| #I1 #I2 #L1 #L2 #V1 #V2 #d #e #_ #IHL12 #J2 #K2 #W #s #i #HLK2 #Hdi
   elim (yle_inv_succ1 … Hdi) -Hdi
   #Hdi #Hi <Hi >yplus_succ1 #H lapply (ylt_inv_succ … H) -H
-  #Hide lapply (ldrop_inv_ldrop1_lt … HLK2 ?) -HLK2 /2 width=1 by ylt_O/
+  #Hide lapply (ldrop_inv_drop1_lt … HLK2 ?) -HLK2 /2 width=1 by ylt_O/
   #HLK1 elim (IHL12 … HLK1) -IHL12 -HLK1 <yminus_inj >yminus_SO2
-  /4 width=4 by ylt_O, ldrop_ldrop_lt, ex2_2_intro/
+  /4 width=4 by ylt_O, ldrop_drop_lt, ex2_2_intro/
 ]
 qed-.

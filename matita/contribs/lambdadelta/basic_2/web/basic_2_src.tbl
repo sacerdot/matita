@@ -222,7 +222,7 @@ table {
           }
         ]
         [ { "generic local env. slicing" * } {
-             [ "ldrops ( ⇩*[?] ? ≡ ? )" "ldrops_ldrop" + "ldrops_ldrops" * ]
+             [ "ldrops ( ⇩*[?,?] ? ≡ ? )" "ldrops_ldrop" + "ldrops_ldrops" * ]
           }
         ]
         [ { "generic term relocation" * } {
@@ -260,7 +260,7 @@ table {
           }
         ]
         [ { "basic local env. slicing" * } {
-             [ "ldrop ( ⇩[?,?] ? ≡ ? )" "ldrop_append" + "ldrop_lpx_sn" + "ldrop_ldrop" * ]
+             [ "ldrop ( ⇩[?,?,?] ? ≡ ? )" "ldrop_append" + "ldrop_lpx_sn" + "ldrop_ldrop" * ]
           }
         ]
         [ { "basic term relocation" * } {

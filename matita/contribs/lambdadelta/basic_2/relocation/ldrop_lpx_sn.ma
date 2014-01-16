@@ -20,47 +20,53 @@ include "basic_2/relocation/ldrop.ma".
 (* Properties on sn pointwise extension *************************************)
 
 lemma lpx_sn_deliftable_dropable: ∀R. l_deliftable_sn R → dropable_sn (lpx_sn R).
-#R #HR #L1 #K1 #d #e #H elim H -L1 -K1 -d -e
-[ #d #X #H >(lpx_sn_inv_atom1 … H) -H /2 width=3/
-| #K1 #I #V1 #X #H
-  elim (lpx_sn_inv_pair1 … H) -H #L2 #V2 #HL12 #HV12 #H destruct /3 width=5/
-| #L1 #K1 #I #V1 #e #_ #IHLK1 #X #H
-  elim (lpx_sn_inv_pair1 … H) -H #L2 #V2 #HL12 #HV12 #H destruct
-  elim (IHLK1 … HL12) -L1 /3 width=3/
-| #L1 #K1 #I #V1 #W1 #d #e #HLK1 #HWV1 #IHLK1 #X #H
+#R #HR #L1 #K1 #s #d #e #H elim H -L1 -K1 -d -e
+[ #d #e #He #X #H >(lpx_sn_inv_atom1 … H) -H
+  /4 width=3 by ldrop_atom, lpx_sn_atom, ex2_intro/
+| #I #K1 #V1 #X #H elim (lpx_sn_inv_pair1 … H) -H
+  #L2 #V2 #HL12 #HV12 #H destruct
+  /3 width=5 by ldrop_pair, lpx_sn_pair, ex2_intro/
+| #I #L1 #K1 #V1 #e #_ #IHLK1 #X #H elim (lpx_sn_inv_pair1 … H) -H
+  #L2 #V2 #HL12 #HV12 #H destruct
+  elim (IHLK1 … HL12) -L1 /3 width=3 by ldrop_drop, ex2_intro/
+| #I #L1 #K1 #V1 #W1 #d #e #HLK1 #HWV1 #IHLK1 #X #H
   elim (lpx_sn_inv_pair1 … H) -H #L2 #V2 #HL12 #HV12 #H destruct
   elim (HR … HV12 … HLK1 … HWV1) -V1
-  elim (IHLK1 … HL12) -L1 /3 width=5/
+  elim (IHLK1 … HL12) -L1 /3 width=5 by ldrop_skip, lpx_sn_pair, ex2_intro/
 ]
 qed-.
 
 lemma lpx_sn_liftable_dedropable: ∀R. (∀L. reflexive ? (R L)) →
                                   l_liftable R → dedropable_sn (lpx_sn R).
-#R #H1R #H2R #L1 #K1 #d #e #H elim H -L1 -K1 -d -e
-[ #d #X #H >(lpx_sn_inv_atom1 … H) -H /2 width=3/
-| #K1 #I #V1 #X #H
-  elim (lpx_sn_inv_pair1 … H) -H #K2 #V2 #HK12 #HV12 #H destruct /3 width=5/
-| #L1 #K1 #I #V1 #e #_ #IHLK1 #K2 #HK12
-  elim (IHLK1 … HK12) -K1 /3 width=5/
-| #L1 #K1 #I #V1 #W1 #d #e #HLK1 #HWV1 #IHLK1 #X #H
+#R #H1R #H2R #L1 #K1 #s #d #e #H elim H -L1 -K1 -d -e
+[ #d #e #He #X #H >(lpx_sn_inv_atom1 … H) -H
+  /4 width=3 by ldrop_atom, lpx_sn_atom, ex2_intro/
+| #I #K1 #V1 #X #H elim (lpx_sn_inv_pair1 … H) -H
+  #K2 #V2 #HK12 #HV12 #H destruct
+  /3 width=5 by ldrop_pair, lpx_sn_pair, ex2_intro/
+| #I #L1 #K1 #V1 #e #_ #IHLK1 #K2 #HK12 elim (IHLK1 … HK12) -K1
+  /3 width=5 by ldrop_drop, lpx_sn_pair, ex2_intro/
+| #I #L1 #K1 #V1 #W1 #d #e #HLK1 #HWV1 #IHLK1 #X #H
   elim (lpx_sn_inv_pair1 … H) -H #K2 #W2 #HK12 #HW12 #H destruct
   elim (lift_total W2 d e) #V2 #HWV2
   lapply (H2R … HW12 … HLK1 … HWV1 … HWV2) -W1
-  elim (IHLK1 … HK12) -K1 /3 width=5/
+  elim (IHLK1 … HK12) -K1 /3 width=5 by ldrop_skip, lpx_sn_pair, ex2_intro/
 ]
 qed-.
 
-fact lpx_sn_dropable_aux: ∀R,L2,K2,d,e. ⇩[d, e] L2 ≡ K2 → ∀L1. lpx_sn R L1 L2 →
-                          d = 0 → ∃∃K1. ⇩[0, e] L1 ≡ K1 & lpx_sn R K1 K2.
-#R #L2 #K2 #d #e #H elim H -L2 -K2 -d -e
-[ #d #X #H >(lpx_sn_inv_atom2 … H) -H /2 width=3/
-| #K2 #I #V2 #X #H
-  elim (lpx_sn_inv_pair2 … H) -H #K1 #V1 #HK12 #HV12 #H destruct /3 width=5/
-| #L2 #K2 #I #V2 #e #_ #IHLK2 #X #H #_
-  elim (lpx_sn_inv_pair2 … H) -H #L1 #V1 #HL12 #HV12 #H destruct
-  elim (IHLK2 … HL12) -L2 // /3 width=3/
-| #L2 #K2 #I #V2 #W2 #d #e #_ #_ #_ #L1 #_
-  >commutative_plus normalize #H destruct
+fact lpx_sn_dropable_aux: ∀R,L2,K2,s,d,e. ⇩[s, d, e] L2 ≡ K2 → ∀L1. lpx_sn R L1 L2 →
+                          d = 0 → ∃∃K1. ⇩[s, 0, e] L1 ≡ K1 & lpx_sn R K1 K2.
+#R #L2 #K2 #s #d #e #H elim H -L2 -K2 -d -e
+[ #d #e #He #X #H >(lpx_sn_inv_atom2 … H) -H 
+  /4 width=3 by ldrop_atom, lpx_sn_atom, ex2_intro/
+| #I #K2 #V2 #X #H elim (lpx_sn_inv_pair2 … H) -H
+  #K1 #V1 #HK12 #HV12 #H destruct
+  /3 width=5 by ldrop_pair, lpx_sn_pair, ex2_intro/
+| #I #L2 #K2 #V2 #e #_ #IHLK2 #X #H #_ elim (lpx_sn_inv_pair2 … H) -H
+  #L1 #V1 #HL12 #HV12 #H destruct
+  elim (IHLK2 … HL12) -L2 /3 width=3 by ldrop_drop, ex2_intro/
+| #I #L2 #K2 #V2 #W2 #d #e #_ #_ #_ #L1 #_
+  <plus_n_Sm #H destruct
 ]
 qed-.
 
