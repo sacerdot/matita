@@ -26,7 +26,7 @@ lemma lleq_skip: ∀L1,L2,d,i. yinj i < d → |L1| = |L2| → L1 ⋕[#i, d] L2.
 qed.
 
 lemma lleq_lref: ∀I1,I2,L1,L2,K1,K2,V,d,i. d ≤ yinj i →
-                 ⇩[0, i] L1 ≡ K1.ⓑ{I1}V → ⇩[0, i] L2 ≡ K2.ⓑ{I2}V →
+                 ⇩[i] L1 ≡ K1.ⓑ{I1}V → ⇩[i] L2 ≡ K2.ⓑ{I2}V →
                  K1 ⋕[V, 0] K2 → L1 ⋕[#i, d] L2.
 #I1 #I2 #L1 #L2 #K1 #K2 #V #d #i #Hdi #HLK1 #HLK2 * #HK12 #IH @conj [ -IH | -HK12 ]
 [ lapply (ldrop_fwd_length … HLK1) -HLK1 #H1
@@ -50,31 +50,31 @@ qed.
 (* Properties on relocation *************************************************)
 
 lemma lleq_lift_le: ∀K1,K2,T,dt. K1 ⋕[T, dt] K2 →
-                    ∀L1,L2,d,e. ⇩[d, e] L1 ≡ K1 → ⇩[d, e] L2 ≡ K2 →
+                    ∀L1,L2,d,e. ⇩[Ⓕ, d, e] L1 ≡ K1 → ⇩[Ⓕ, d, e] L2 ≡ K2 →
                     ∀U. ⇧[d, e] T ≡ U → dt ≤ d → L1 ⋕[U, dt] L2.
 #K1 #K2 #T #dt * #HK12 #IHT #L1 #L2 #d #e #HLK1 #HLK2 #U #HTU #Hdtd
 lapply (ldrop_fwd_length … HLK1) lapply (ldrop_fwd_length … HLK2)
 #H2 #H1 @conj // -HK12 -H1 -H2 #U0 @conj #HU0
 [ letin HLKA ≝ HLK1 letin HLKB ≝ HLK2 | letin HLKA ≝ HLK2 letin HLKB ≝ HLK1 ]
 elim (cpys_inv_lift1_be … HU0 … HLKA … HTU) // -HU0 >yminus_Y_inj #T0 #HT0 #HTU0
-elim (IHT T0) [ #H #_ | #_ #H ] -IHT /3 width=11 by cpys_lift_be/
+elim (IHT T0) [ #H #_ | #_ #H ] -IHT /3 width=12 by cpys_lift_be/
 qed-.
 
 lemma lleq_lift_ge: ∀K1,K2,T,dt. K1 ⋕[T, dt] K2 →
-                    ∀L1,L2,d,e. ⇩[d, e] L1 ≡ K1 → ⇩[d, e] L2 ≡ K2 →
+                    ∀L1,L2,d,e. ⇩[Ⓕ, d, e] L1 ≡ K1 → ⇩[Ⓕ, d, e] L2 ≡ K2 →
                     ∀U. ⇧[d, e] T ≡ U → d ≤ dt → L1 ⋕[U, dt+e] L2.
 #K1 #K2 #T #dt * #HK12 #IHT #L1 #L2 #d #e #HLK1 #HLK2 #U #HTU #Hddt
 lapply (ldrop_fwd_length … HLK1) lapply (ldrop_fwd_length … HLK2)
 #H2 #H1 @conj // -HK12 -H1 -H2 #U0 @conj #HU0
 [ letin HLKA ≝ HLK1 letin HLKB ≝ HLK2 | letin HLKA ≝ HLK2 letin HLKB ≝ HLK1 ]
 elim (cpys_inv_lift1_ge … HU0 … HLKA … HTU) /2 width=1 by monotonic_yle_plus_dx/ -HU0 >yplus_minus_inj #T0 #HT0 #HTU0
-elim (IHT T0) [ #H #_ | #_ #H ] -IHT /3 width=9 by cpys_lift_ge/
+elim (IHT T0) [ #H #_ | #_ #H ] -IHT /3 width=10 by cpys_lift_ge/
 qed-.
 
 (* Inversion lemmas on relocation *******************************************)
 
 lemma lleq_inv_lift_le: ∀L1,L2,U,dt. L1 ⋕[U, dt] L2 →
-                        ∀K1,K2,d,e. ⇩[d, e] L1 ≡ K1 → ⇩[d, e] L2 ≡ K2 →
+                        ∀K1,K2,d,e. ⇩[Ⓕ, d, e] L1 ≡ K1 → ⇩[Ⓕ, d, e] L2 ≡ K2 →
                         ∀T. ⇧[d, e] T ≡ U → dt ≤ d → K1 ⋕[T, dt] K2.
 #L1 #L2 #U #dt * #HL12 #IH #K1 #K2 #d #e #HLK1 #HLK2 #T #HTU #Hdtd
 lapply (ldrop_fwd_length_minus2 … HLK1) lapply (ldrop_fwd_length_minus2 … HLK2)
@@ -89,8 +89,8 @@ lapply (cpys_lift_be … HT0 … HLKA … HTU … HTU0) // -HT0
 qed-.
 
 lemma lleq_inv_lift_ge: ∀L1,L2,U,dt. L1 ⋕[U, dt] L2 →
-                        ∀K1,K2,d,e. ⇩[d, e] L1 ≡ K1 → ⇩[d, e] L2 ≡ K2 →
-                        ∀T. ⇧[d, e] T ≡ U → d+e ≤ dt → K1 ⋕[T, dt-e] K2.
+                        ∀K1,K2,d,e. ⇩[Ⓕ, d, e] L1 ≡ K1 → ⇩[Ⓕ, d, e] L2 ≡ K2 →
+                        ∀T. ⇧[d, e] T ≡ U → yinj d + e ≤ dt → K1 ⋕[T, dt-e] K2.
 #L1 #L2 #U #dt * #HL12 #IH #K1 #K2 #d #e #HLK1 #HLK2 #T #HTU #Hdedt
 lapply (ldrop_fwd_length_minus2 … HLK1) lapply (ldrop_fwd_length_minus2 … HLK2)
 #H2 #H1 @conj // -HL12 -H1 -H2
@@ -105,8 +105,8 @@ lapply (cpys_lift_ge … HT0 … HLKA … HTU … HTU0) // -HT0 -Hddt
 qed-.
 
 lemma lleq_inv_lift_be: ∀L1,L2,U,dt. L1 ⋕[U, dt] L2 →
-                        ∀K1,K2,d,e. ⇩[d, e] L1 ≡ K1 → ⇩[d, e] L2 ≡ K2 →
-                        ∀T. ⇧[d, e] T ≡ U → d ≤ dt → dt ≤ d + e → K1 ⋕[T, d] K2.
+                        ∀K1,K2,d,e. ⇩[Ⓕ, d, e] L1 ≡ K1 → ⇩[Ⓕ, d, e] L2 ≡ K2 →
+                        ∀T. ⇧[d, e] T ≡ U → d ≤ dt → dt ≤ yinj d + e → K1 ⋕[T, d] K2.
 #L1 #L2 #U #dt * #HL12 #IH #K1 #K2 #d #e #HLK1 #HLK2 #T #HTU #Hddt #Hdtde
 lapply (ldrop_fwd_length_minus2 … HLK1) lapply (ldrop_fwd_length_minus2 … HLK2)
 #H2 #H1 @conj // -HL12 -H1 -H2

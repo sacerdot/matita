@@ -44,7 +44,7 @@ fact lsstas_cpr_lpr_aux: ∀h,g,G0,L0,T0.
   lapply (fqup_lref … G1 … HLK1) #HKV1
   elim (lpr_ldrop_conf … HLK1 … HL12) -HL12 #X #H #HLK2
   elim (lpr_inv_pair1 … H) -H #K2 [ #W2 | #V2 ] #HK12 [ #HW12 | #HV12 ] #H destruct
-  lapply (ldrop_fwd_ldrop2 … HLK2) #H2
+  lapply (ldrop_fwd_drop2 … HLK2) #H2
   elim (cpr_inv_lref1 … H3) -H3
   [1,3: #H destruct -HLK1
   |2,4: * #K0 #V0 #X0 #H #HVX0 #HX0
@@ -73,7 +73,7 @@ fact lsstas_cpr_lpr_aux: ∀h,g,G0,L0,T0.
   | #T3 #HT13 #HXT3 #H1 #H2 destruct
     elim (IH1 … Hl1 … HTU1 … HT13 (L2.ⓓV1)) -IH1 -Hl1 -HTU1 -HT13 /2 width=1 by fqup_fpbg, lpr_pair/ -T1 -HL12 #U3 #HTU3 #HU13
     elim (lsstas_inv_lift1 … HTU3 L2 … HXT3) -T3
-    /5 width=8 by cpcs_cpr_strap1, cpcs_bind1, cpr_zeta, ldrop_ldrop, ex2_intro/
+    /5 width=8 by cpcs_cpr_strap1, cpcs_bind1, cpr_zeta, ldrop_drop, ex2_intro/
   ]
 | #V1 #T1 #HG0 #HL0 #HT0 #H1 #l1 #l2 #Hl21 #Hl1 #X2 #H2 #X3 #H3 #L2 #HL12 destruct
   elim (snv_inv_appl … H1) -H1 #a #W1 #W10 #U10 #l0 #HV1 #HT1 #Hl0 #HVW1 #HW10 #HTU10

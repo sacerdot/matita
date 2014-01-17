@@ -36,7 +36,7 @@ lemma aaa_cpx_lpx_conf: ∀h,g,G,L1,T1,A. ⦃G, L1⦄ ⊢ T1 ⁝ A →
     lapply (ldrop_mono … H … HLK1) -H #H destruct
     elim (lpx_ldrop_conf … HLK1 … HL12) -L1 #Z #H #HLK2
     elim (lpx_inv_pair1 … H) -H #K2 #V0 #HK12 #_ #H destruct
-    lapply (ldrop_fwd_ldrop2 … HLK2) -V0 /3 width=7/
+    lapply (ldrop_fwd_drop2 … HLK2) -V0 /3 width=7/
   ]
 | #a #G #L1 #V1 #T1 #B #A #_ #_ #IHV1 #IHT1 #X #H #L2 #HL12
   elim (cpx_inv_abbr1 … H) -H *

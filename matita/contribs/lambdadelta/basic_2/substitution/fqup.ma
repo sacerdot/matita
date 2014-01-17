@@ -37,7 +37,7 @@ lemma fqup_strap2: ∀G1,G,G2,L1,L,L2,T1,T,T2.
                    ⦃G1, L1, T1⦄ ⊃+ ⦃G2, L2, T2⦄.
 /2 width=5 by tri_TC_strap/ qed.
 
-lemma fqup_ldrop: ∀G1,G2,L1,K1,K2,T1,T2,U1,e. ⇩[0, e] L1 ≡ K1 → ⇧[0, e] T1 ≡ U1 →
+lemma fqup_ldrop: ∀G1,G2,L1,K1,K2,T1,T2,U1,e. ⇩[e] L1 ≡ K1 → ⇧[0, e] T1 ≡ U1 →
                   ⦃G1, K1, T1⦄ ⊃+ ⦃G2, K2, T2⦄ → ⦃G1, L1, U1⦄ ⊃+ ⦃G2, K2, T2⦄.
 #G1 #G2 #L1 #K1 #K2 #T1 #T2 #U1 #e #HLK1 #HTU1 #HT12 elim (eq_or_gt … e) #H destruct
 [ >(ldrop_inv_O2 … HLK1) -L1 <(lift_inv_O2 … HTU1) -U1 //
@@ -45,7 +45,7 @@ lemma fqup_ldrop: ∀G1,G2,L1,K1,K2,T1,T2,U1,e. ⇩[0, e] L1 ≡ K1 → ⇧[0, e
 ]
 qed-.
 
-lemma fqup_lref: ∀I,G,L,K,V,i. ⇩[0, i] L ≡ K.ⓑ{I}V → ⦃G, L, #i⦄ ⊃+ ⦃G, K, V⦄.
+lemma fqup_lref: ∀I,G,L,K,V,i. ⇩[i] L ≡ K.ⓑ{I}V → ⦃G, L, #i⦄ ⊃+ ⦃G, K, V⦄.
 /3 width=6 by fqu_lref_O, fqu_fqup, lift_lref_ge, fqup_ldrop/ qed.
 
 lemma fqup_pair_sn: ∀I,G,L,V,T. ⦃G, L, ②{I}V.T⦄ ⊃+ ⦃G, L, V⦄.

@@ -25,7 +25,7 @@ lemma cprs_delta: ∀G,L,K,V,V2,i.
                   ∀W2. ⇧[0, i + 1] V2 ≡ W2 → ⦃G, L⦄ ⊢ #i ➡* W2.
 #G #L #K #V #V2 #i #HLK #H elim H -V2 [ /3 width=6/ ]
 #V1 #V2 #_ #HV12 #IHV1 #W2 #HVW2
-lapply (ldrop_fwd_ldrop2 … HLK) -HLK #HLK
+lapply (ldrop_fwd_drop2 … HLK) -HLK #HLK
 elim (lift_total V1 0 (i+1)) /4 width=11 by cpr_lift, cprs_strap1/
 qed.
 
@@ -42,7 +42,7 @@ lemma cprs_inv_lref1: ∀G,L,T2,i. ⦃G, L⦄ ⊢ #i ➡* T2 →
   elim (cpr_inv_lref1 … HT2) -HT2 /2 width=1/
   * /4 width=6/
 | * #K #V1 #T1 #HLK #HVT1 #HT1
-  lapply (ldrop_fwd_ldrop2 … HLK) #H0LK
+  lapply (ldrop_fwd_drop2 … HLK) #H0LK
   elim (cpr_inv_lift1 … HT2 … H0LK … HT1) -H0LK -T /4 width=6/
 ]
 qed-.

@@ -145,7 +145,7 @@ lemma fqu_cpx_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T
 /3 width=3 by fqu_pair_sn, fqu_bind_dx, fqu_flat_dx, cpx_pair_sn, cpx_bind, cpx_flat, ex2_intro/
 [ #I #G #L #V2 #U2 #HVU2
   elim (lift_total U2 0 1)
-  /4 width=7 by fqu_drop, cpx_delta, ldrop_pair, ldrop_ldrop, ex2_intro/
+  /4 width=7 by fqu_drop, cpx_delta, ldrop_pair, ldrop_drop, ex2_intro/
 | #G #L #K #T1 #U1 #e #HLK1 #HTU1 #T2 #HTU2
   elim (lift_total T2 0 (e+1))
   /3 width=11 by cpx_lift, fqu_drop, ex2_intro/
@@ -200,7 +200,7 @@ lemma fqu_cpx_trans_neq: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2
 [ #I #G #L #V1 #V2 #HV12 #_ elim (lift_total V2 0 1)
   #U2 #HVU2 @(ex3_intro … U2)
-  [1,3: /3 width=7 by fqu_drop, cpx_delta, ldrop_pair, ldrop_ldrop/
+  [1,3: /3 width=7 by fqu_drop, cpx_delta, ldrop_pair, ldrop_drop/
   | #H destruct /2 width=7 by lift_inv_lref2_be/
   ]
 | #I #G #L #V1 #T #V2 #HV12 #H @(ex3_intro … (②{I}V2.T))

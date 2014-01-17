@@ -20,8 +20,8 @@ include "basic_2/substitution/lleq_ldrop.ma".
 lemma lleq_fwd_lref: ∀L1,L2. ∀d:ynat. ∀i:nat. L1 ⋕[#i, d] L2 →
                      ∨∨ |L1| ≤ i ∧ |L2| ≤ i
                       | yinj i < d
-                      | ∃∃I1,I2,K1,K2,V. ⇩[0, i] L1 ≡ K1.ⓑ{I1}V &
-                                         ⇩[0, i] L2 ≡ K2.ⓑ{I2}V &
+                      | ∃∃I1,I2,K1,K2,V. ⇩[i] L1 ≡ K1.ⓑ{I1}V &
+                                         ⇩[i] L2 ≡ K2.ⓑ{I2}V &
                                          K1 ⋕[V, yinj 0] K2 & d ≤ yinj i.
 #L1 #L2 #d #i * #HL12 #IH elim (lt_or_ge i (|L1|)) /3 width=3 by or3_intro0, conj/
 elim (ylt_split i d) /2 width=1 by or3_intro1/ #Hdi #Hi
@@ -46,9 +46,9 @@ lapply (cpys_antisym_eq … H12 … H21) -H12 -H21 #H destruct
 qed-.
 
 lemma lleq_fwd_lref_dx: ∀L1,L2,d,i. L1 ⋕[#i, d] L2 →
-                        ∀I2,K2,V. ⇩[0, i] L2 ≡ K2.ⓑ{I2}V →
+                        ∀I2,K2,V. ⇩[i] L2 ≡ K2.ⓑ{I2}V →
                         i < d ∨
-                        ∃∃I1,K1. ⇩[0, i] L1 ≡ K1.ⓑ{I1}V & K1 ⋕[V, 0] K2 & d ≤ i.
+                        ∃∃I1,K1. ⇩[i] L1 ≡ K1.ⓑ{I1}V & K1 ⋕[V, 0] K2 & d ≤ i.
 #L1 #L2 #d #i #H #I2 #K2 #V #HLK2 elim (lleq_fwd_lref … H) -H [ * || * ]
 [ #_ #H elim (lt_refl_false i)
   lapply (ldrop_fwd_length_lt2 … HLK2) -HLK2
@@ -60,9 +60,9 @@ lemma lleq_fwd_lref_dx: ∀L1,L2,d,i. L1 ⋕[#i, d] L2 →
 qed-.
 
 lemma lleq_fwd_lref_sn: ∀L1,L2,d,i. L1 ⋕[#i, d] L2 →
-                        ∀I1,K1,V. ⇩[0, i] L1 ≡ K1.ⓑ{I1}V →
+                        ∀I1,K1,V. ⇩[i] L1 ≡ K1.ⓑ{I1}V →
                         i < d ∨
-                        ∃∃I2,K2. ⇩[0, i] L2 ≡ K2.ⓑ{I2}V & K1 ⋕[V, 0] K2 & d ≤ i.
+                        ∃∃I2,K2. ⇩[i] L2 ≡ K2.ⓑ{I2}V & K1 ⋕[V, 0] K2 & d ≤ i.
 #L1 #L2 #d #i #HL12 #I1 #K1 #V #HLK1 elim (lleq_fwd_lref_dx L2 … d … HLK1) -HLK1
 [2: * ] /4 width=6 by lleq_sym, ex3_2_intro, or_introl, or_intror/
 qed-.
@@ -70,8 +70,8 @@ qed-.
 (* Advanced inversion lemmas ************************************************)
 
 lemma lleq_inv_lref_ge_dx: ∀L1,L2,d,i. L1 ⋕[#i, d] L2 → d ≤ i →
-                           ∀I2,K2,V. ⇩[0, i] L2 ≡ K2.ⓑ{I2}V →
-                           ∃∃I1,K1. ⇩[0, i] L1 ≡ K1.ⓑ{I1}V & K1 ⋕[V, 0] K2.
+                           ∀I2,K2,V. ⇩[i] L2 ≡ K2.ⓑ{I2}V →
+                           ∃∃I1,K1. ⇩[i] L1 ≡ K1.ⓑ{I1}V & K1 ⋕[V, 0] K2.
 #L1 #L2 #d #i #H #Hdi #I2 #K2 #V #HLK2 elim (lleq_fwd_lref_dx … H … HLK2) -L2
 [ #H elim (ylt_yle_false … H Hdi)
 | * /2 width=4 by ex2_2_intro/
@@ -79,8 +79,8 @@ lemma lleq_inv_lref_ge_dx: ∀L1,L2,d,i. L1 ⋕[#i, d] L2 → d ≤ i →
 qed-.
 
 lemma lleq_inv_lref_ge_sn: ∀L1,L2,d,i. L1 ⋕[#i, d] L2 → d ≤ i →
-                           ∀I1,K1,V. ⇩[0, i] L1 ≡ K1.ⓑ{I1}V →
-                           ∃∃I2,K2. ⇩[0, i] L2 ≡ K2.ⓑ{I2}V & K1 ⋕[V, 0] K2.
+                           ∀I1,K1,V. ⇩[i] L1 ≡ K1.ⓑ{I1}V →
+                           ∃∃I2,K2. ⇩[i] L2 ≡ K2.ⓑ{I2}V & K1 ⋕[V, 0] K2.
 #L1 #L2 #d #i #HL12 #Hdi #I1 #K1 #V #HLK1 elim (lleq_inv_lref_ge_dx L2 … Hdi … HLK1) -Hdi -HLK1
 /3 width=4 by lleq_sym, ex2_2_intro/
 qed-.

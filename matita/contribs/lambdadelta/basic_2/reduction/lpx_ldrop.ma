@@ -61,7 +61,7 @@ lemma lpx_fqu_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T
 /3 width=7 by fqu_pair_sn, fqu_bind_dx, fqu_flat_dx, lpx_pair, ex3_2_intro/
 [ #I #G1 #L1 #V1 #X #H elim (lpx_inv_pair2 … H) -H
   #K1 #W1 #HKL1 #HWV1 #H destruct elim (lift_total V1 0 1)
-  /4 width=7 by cpx_delta, fqu_drop, ldrop_ldrop, ex3_2_intro/
+  /4 width=7 by cpx_delta, fqu_drop, ldrop_drop, ex3_2_intro/
 | #G #L1 #K1 #T1 #U1 #e #HLK1 #HTU1 #L0 #HL01
   elim (lpx_ldrop_trans_O1 … HL01 … HLK1) -L1
   /3 width=5 by fqu_drop, ex3_2_intro/

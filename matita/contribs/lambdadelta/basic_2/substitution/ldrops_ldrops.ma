@@ -14,12 +14,12 @@
 
 include "basic_2/substitution/ldrops_ldrop.ma".
 
-(* GENERIC LOCAL ENVIRONMENT SLICING ****************************************)
+(* ITERATED LOCAL ENVIRONMENT SLICING ***************************************)
 
 (* Main properties **********************************************************)
 
 (* Basic_1: was: drop1_trans *)
-theorem ldrops_trans: ∀L,L2,des2. ⇩*[des2] L ≡ L2 → ∀L1,des1. ⇩*[des1] L1 ≡ L →
-                      ⇩*[des2 @@ des1] L1 ≡ L2.
-#L #L2 #des2 #H elim H -L -L2 -des2 // /3 width=3/
-qed.
+theorem ldrops_trans: ∀L,L2,s,des2. ⇩*[s, des2] L ≡ L2 → ∀L1,des1. ⇩*[s, des1] L1 ≡ L →
+                      ⇩*[s, des2 @@ des1] L1 ≡ L2.
+#L #L2 #s #des2 #H elim H -L -L2 -des2 /3 width=3 by ldrops_cons/
+qed-.

@@ -55,7 +55,7 @@ lemma lsubr_cpx_trans: ∀h,g,G. lsub_trans … (cpx h g G) lsubr.
 [ //
 | /2 width=2 by cpx_sort/
 | #I #G #L1 #K1 #V1 #V2 #W2 #i #HLK1 #_ #HVW2 #IHV12 #L2 #HL12
-  elim (lsubr_fwd_ldrop2_bind … HL12 … HLK1) -HL12 -HLK1 *
+  elim (lsubr_fwd_drop2_bind … HL12 … HLK1) -HL12 -HLK1 *
   /4 width=7 by cpx_delta, cpx_ti/
 |4,9: /4 width=1 by cpx_bind, cpx_beta, lsubr_bind/
 |5,7,8: /3 width=1 by cpx_flat, cpx_tau, cpx_ti/
@@ -88,7 +88,7 @@ lemma cpx_delift: ∀h,g,I,G,K,V,T1,L,d. ⇩[0, d] L ≡ (K.ⓑ{I}V) →
   elim (lift_split … HVW i i) /3 width=7 by cpx_delta, ex2_2_intro/
 | * [ #a ] #I #W1 #U1 #IHW1 #IHU1 #L #d #HLK
   elim (IHW1 … HLK) -IHW1 #W2 #W #HW12 #HW2
-  [ elim (IHU1 (L. ⓑ{I} W1) (d+1)) -IHU1 /3 width=9 by cpx_bind, ldrop_ldrop, lift_bind, ex2_2_intro/
+  [ elim (IHU1 (L. ⓑ{I} W1) (d+1)) -IHU1 /3 width=9 by cpx_bind, ldrop_drop, lift_bind, ex2_2_intro/
   | elim (IHU1 … HLK) -IHU1 -HLK /3 width=8 by cpx_flat, lift_flat, ex2_2_intro/
   ]
 ]

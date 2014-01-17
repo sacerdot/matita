@@ -221,7 +221,7 @@ table {
              [ "fqup ( ⦃?,?,?⦄ ⊃+ ⦃?,?,?⦄ )" "fqup_fqup" * ]
           }
         ]
-        [ { "generic local env. slicing" * } {
+        [ { "iterated local env. slicing" * } {
              [ "ldrops ( ⇩*[?,?] ? ≡ ? )" "ldrops_ldrop" + "ldrops_ldrops" * ]
           }
         ]

@@ -37,7 +37,7 @@ lemma cpxs_delta: ∀h,g,I,G,L,K,V,V2,i.
                   ∀W2. ⇧[0, i + 1] V2 ≡ W2 → ⦃G, L⦄ ⊢ #i ➡*[h, g] W2.
 #h #g #I #G #L #K #V #V2 #i #HLK #H elim H -V2
 [ /3 width=9 by cpx_cpxs, cpx_delta/
-| #V1 lapply (ldrop_fwd_ldrop2 … HLK) -HLK
+| #V1 lapply (ldrop_fwd_drop2 … HLK) -HLK
   elim (lift_total V1 0 (i+1)) /4 width=11 by cpx_lift, cpxs_strap1/
 ]
 qed.
@@ -54,7 +54,7 @@ lemma cpxs_inv_lref1: ∀h,g,G,L,T2,i. ⦃G, L⦄ ⊢ #i ➡*[h, g] T2 →
   elim (cpx_inv_lref1 … HT2) -HT2 /2 width=1 by or_introl/
   * /4 width=7 by cpx_cpxs, ex3_4_intro, or_intror/
 | * #I #K #V1 #T1 #HLK #HVT1 #HT1
-  lapply (ldrop_fwd_ldrop2 … HLK) #H0LK
+  lapply (ldrop_fwd_drop2 … HLK) #H0LK
   elim (cpx_inv_lift1 … HT2 … H0LK … HT1) -H0LK -T
   /4 width=7 by cpxs_strap1, ex3_4_intro, or_intror/
 ]

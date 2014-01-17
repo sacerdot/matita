@@ -38,7 +38,7 @@ fact snv_cpr_lpr_aux: ∀h,g,G0,L0,T0.
   [ #H destruct -HLK1 /4 width=10 by fqup_fpbg, snv_lref/
   | * #K0 #V0 #W0 #H #HVW0 #W0 -HV12
     lapply (ldrop_mono … H … HLK1) -HLK1 -H #H destruct
-    lapply (ldrop_fwd_ldrop2 … HLK2) -HLK2 /4 width=7 by fqup_fpbg, snv_lift/
+    lapply (ldrop_fwd_drop2 … HLK2) -HLK2 /4 width=7 by fqup_fpbg, snv_lift/
   ]
 | #p #HG0 #HL0 #HT0 #H1 #X #H2 #L2 #HL12 destruct -IH4 -IH3 -IH2 -IH1
   elim (snv_inv_gref … H1)
@@ -47,7 +47,7 @@ fact snv_cpr_lpr_aux: ∀h,g,G0,L0,T0.
   elim (cpr_inv_bind1 … H2) -H2 *
   [ #V2 #T2 #HV12 #HT12 #H destruct /4 width=8 by fqup_fpbg, snv_bind, lpr_pair/
   | #T2 #HT12 #HXT2 #H1 #H2 destruct -HV1
-    /4 width=10 by fqup_fpbg, snv_inv_lift, lpr_pair, ldrop_ldrop/
+    /4 width=10 by fqup_fpbg, snv_inv_lift, lpr_pair, ldrop_drop/
   ]
 | #V1 #T1 #HG0 #HL0 #HT0 #H1 #X #H2 #L2 #HL12 destruct
   elim (snv_inv_appl … H1) -H1 #a #W10 #W1 #U1 #l0 #HV1 #HT1 #Hl0 #HVW1 #HW10 #HTU1
@@ -103,17 +103,17 @@ fact snv_cpr_lpr_aux: ∀h,g,G0,L0,T0.
     elim (ssta_cpr_lpr_aux … IH3 … HVW1 … HV10 … HL12) /2 width=2 by fqup_fpbg/ -IH3 -HVW1 #X #H1 #H2
     lapply (cpcs_canc_sn … H2 HW10) -W10 #H2
     elim (lift_total X 0 1) #W20 #H3
-    lapply (ssta_lift … H1 (L2.ⓓW2) … HV02 … H3) /2 width=1 by ldrop_ldrop/ -H1 #HVW20
-    lapply (cpcs_lift … (L2.ⓓW2) … H3 … HW13 H2) /2 width=1 by ldrop_ldrop/ -HW13 -H3 -H2 #HW320
+    lapply (ssta_lift … H1 (L2.ⓓW2) … HV02 … H3) /2 width=1 by ldrop_drop/ -H1 #HVW20
+    lapply (cpcs_lift … (L2.ⓓW2) … H3 … HW13 H2) /2 width=1 by ldrop_drop/ -HW13 -H3 -H2 #HW320
     lapply (cpcs_cprs_strap1 … HW320 … HW1) -W3 #HW20
     elim (cpcs_inv_cprs … HW20) -HW20 #W3 #HW203 #HW3
     lapply (cpds_cprs_trans … (ⓛ{a}W3.U2) HTU2 ?) /2 width=1 by cprs_bind/ -HW3 -HTU2 #HTU2
     lapply (IH2 … Hl0 … HV10 … HL12) /2 width=1 by fqup_fpbg/ -IH2 -Hl0 #Hl0
-    lapply (da_lift … Hl0 (L2.ⓓW2) … HV02) /2 width=1 by ldrop_ldrop/ -Hl0 #Hl0
+    lapply (da_lift … Hl0 (L2.ⓓW2) … HV02) /2 width=1 by ldrop_drop/ -Hl0 #Hl0
     lapply (IH1 … HW02 … HL12) /2 width=1 by fqup_fpbg/ -HW0 #HW2
     lapply (IH1 … HV10 … HL12) /2 width=1 by fqup_fpbg/ -HV1 -HV10 #HV0
     lapply (IH1 … HT02 (L2.ⓓW2) ?) /2 width=1 by fqup_fpbg, lpr_pair/ -L1 #HT2
-    lapply (snv_lift … HV0 (L2.ⓓW2) … HV02) /3 width=7 by snv_bind, snv_appl, ldrop_ldrop/
+    lapply (snv_lift … HV0 (L2.ⓓW2) … HV02) /3 width=7 by snv_bind, snv_appl, ldrop_drop/
   ]
 | #W1 #T1 #HG0 #HL0 #HT0 #H1 #X #H2 #L2 #HL12 destruct -IH4
   elim (snv_inv_cast … H1) -H1 #U1 #l0 #HW1 #HT1 #Hl0 #HTU1 #HUW1

@@ -19,7 +19,7 @@ include "basic_2/substitution/lleq_alt.ma".
 (* Advanced inversion lemmas ************************************************)
 
 fact lleq_inv_S_aux: ∀L1,L2,T,d0. L1 ⋕[T, d0] L2 → ∀d. d0 = d + 1 →
-                     ∀K1,K2,I,V. ⇩[0, d] L1 ≡ K1.ⓑ{I}V → ⇩[0, d] L2 ≡ K2.ⓑ{I}V →
+                     ∀K1,K2,I,V. ⇩[d] L1 ≡ K1.ⓑ{I}V → ⇩[d] L2 ≡ K2.ⓑ{I}V →
                      K1 ⋕[V, 0] K2 → L1 ⋕[T, d] L2.
 #L1 #L2 #T #d0 #H @(lleq_ind_alt … H) -L1 -L2 -T -d0
 /2 width=1 by lleq_gref, lleq_free, lleq_sort/
@@ -29,14 +29,14 @@ fact lleq_inv_S_aux: ∀L1,L2,T,d0. L1 ⋕[T, d0] L2 → ∀d. d0 = d + 1 →
 | #I1 #I2 #L1 #L2 #K11 #K22 #V #d0 #i #Hd0i #HLK11 #HLK22 #HV #_ #d #H #K1 #K2 #J #W #_ #_ #_ destruct
   /3 width=8 by lleq_lref, yle_pred_sn/
 | #a #I #L1 #L2 #V #T #d0 #_ #_ #IHV #IHT #d #H #K1 #K2 #J #W #HLK1 #HLK2 destruct
-  /4 width=7 by lleq_bind, ldrop_ldrop/
+  /4 width=7 by lleq_bind, ldrop_drop/
 | #I #L1 #L2 #V #T #d0 #_ #_ #IHV #IHT #d #H #K1 #K2 #J #W #HLK1 #HLK2 destruct
   /3 width=7 by lleq_flat/
 ]
 qed-.
 
 lemma lleq_inv_S: ∀T,L1,L2,d. L1 ⋕[T, d+1] L2 →
-                  ∀K1,K2,I,V. ⇩[0, d] L1 ≡ K1.ⓑ{I}V → ⇩[0, d] L2 ≡ K2.ⓑ{I}V →
+                  ∀K1,K2,I,V. ⇩[d] L1 ≡ K1.ⓑ{I}V → ⇩[d] L2 ≡ K2.ⓑ{I}V →
                   K1 ⋕[V, 0] K2 → L1 ⋕[T, d] L2.
 /2 width=7 by lleq_inv_S_aux/ qed-.
 

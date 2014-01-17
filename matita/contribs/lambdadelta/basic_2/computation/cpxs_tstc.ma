@@ -64,7 +64,7 @@ lemma cpxs_fwd_delta: ∀h,g,I,G,L,K,V1,i. ⇩[0, i] L ≡ K.ⓑ{I}V1 →
 elim (cpxs_inv_lref1 … H) -H /2 width=1/
 * #I0 #K0 #V0 #U0 #HLK0 #HVU0 #HU0
 lapply (ldrop_mono … HLK0 … HLK) -HLK0 #H destruct
-lapply (ldrop_fwd_ldrop2 … HLK) -HLK /3 width=9/
+lapply (ldrop_fwd_drop2 … HLK) -HLK /3 width=9/
 qed-.
 
 lemma cpxs_fwd_theta: ∀h,g,a,G,L,V1,V,T,U. ⦃G, L⦄ ⊢ ⓐV1.ⓓ{a}V.T ➡*[h, g] U →

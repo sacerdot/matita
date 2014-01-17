@@ -108,11 +108,11 @@ lemma ssta_da_conf: ∀h,g,G,L,T,U. ⦃G, L⦄ ⊢ T •[h, g] U →
 | #G #L #K #V #U #W #i #HLK #_ #HWU #IHVW #l #H
   elim (da_inv_lref … H) -H * #K0 #V0 [| #l0] #HLK0 #HV0
   lapply (ldrop_mono … HLK0 … HLK) -HLK0 #H destruct
-  lapply (ldrop_fwd_ldrop2 … HLK) -HLK /3 width=7/
+  lapply (ldrop_fwd_drop2 … HLK) -HLK /3 width=7/
 | #G #L #K #W #U #l0 #i #HLK #_ #HWU #l #H -l0
   elim (da_inv_lref … H) -H * #K0 #V0 [| #l1] #HLK0 #HV0 [| #H0 ]
   lapply (ldrop_mono … HLK0 … HLK) -HLK0 #H destruct
-  lapply (ldrop_fwd_ldrop2 … HLK) -HLK /3 width=7/
+  lapply (ldrop_fwd_drop2 … HLK) -HLK /3 width=7/
 | #a #I #G #L #V #T #U #_ #IHTU #l #H
   lapply (da_inv_bind … H) -H /3 width=1/
 | #G #L #V #T #U #_ #IHTU #l #H
@@ -129,11 +129,11 @@ lemma ssta_fwd_correct: ∀h,g,G,L,T,U. ⦃G, L⦄ ⊢ T •[h, g] U →
 #h #g #G #L #T #U #H elim H -G -L -T -U
 [ /2 width=2/
 | #G #L #K #V #U #W #i #HLK #_ #HWU * #T #HWT
-  lapply (ldrop_fwd_ldrop2 … HLK) -HLK #HLK
+  lapply (ldrop_fwd_drop2 … HLK) -HLK #HLK
   elim (lift_total T 0 (i+1)) /3 width=10/
 | #G #L #K #W #U #l #i #HLK #HWl #HWU
   elim (da_ssta … HWl) -HWl #T #HWT
-  lapply (ldrop_fwd_ldrop2 … HLK) -HLK #HLK
+  lapply (ldrop_fwd_drop2 … HLK) -HLK #HLK
   elim (lift_total T 0 (i+1)) /3 width=10/
 | #a #I #G #L #V #T #U #_ * /3 width=2/
 | #G #L #V #T #U #_ * #T0 #HUT0 /3 width=2/

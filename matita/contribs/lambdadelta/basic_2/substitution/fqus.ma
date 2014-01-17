@@ -56,7 +56,7 @@ lemma fqus_strap2: ∀G1,G,G2,L1,L,L2,T1,T,T2. ⦃G1, L1, T1⦄ ⊃⸮ ⦃G, L, 
 /2 width=5 by tri_TC_strap/ qed-.
 
 lemma fqus_ldrop: ∀G1,G2,K1,K2,T1,T2. ⦃G1, K1, T1⦄ ⊃* ⦃G2, K2, T2⦄ →
-                  ∀L1,U1,e. ⇩[0, e] L1 ≡ K1 → ⇧[0, e] T1 ≡ U1 →
+                  ∀L1,U1,e. ⇩[e] L1 ≡ K1 → ⇧[0, e] T1 ≡ U1 →
                   ⦃G1, L1, U1⦄ ⊃* ⦃G2, K2, T2⦄.
 #G1 #G2 #K1 #K2 #T1 #T2 #H @(fqus_ind … H) -G2 -K2 -T2
 /3 width=5 by fqus_strap1, fquq_fqus, fquq_drop/

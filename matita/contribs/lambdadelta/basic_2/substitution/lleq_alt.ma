@@ -19,7 +19,7 @@ inductive lleqa: relation4 ynat term lenv lenv ≝
 | lleqa_sort: ∀L1,L2,d,k. |L1| = |L2| → lleqa d (⋆k) L1 L2
 | lleqa_skip: ∀L1,L2,d,i. |L1| = |L2| → yinj i < d → lleqa d (#i) L1 L2
 | lleqa_lref: ∀I1,I2,L1,L2,K1,K2,V,d,i. d ≤ yinj i →
-              ⇩[0, i] L1 ≡ K1.ⓑ{I1}V → ⇩[0, i] L2 ≡ K2.ⓑ{I2}V →
+              ⇩[i] L1 ≡ K1.ⓑ{I1}V → ⇩[i] L2 ≡ K2.ⓑ{I2}V →
               lleqa (yinj 0) V K1 K2 → lleqa d (#i) L1 L2
 | lleqa_free: ∀L1,L2,d,i. |L1| = |L2| → |L1| ≤ i → |L2| ≤ i → lleqa d (#i) L1 L2
 | lleqa_gref: ∀L1,L2,d,p. |L1| = |L2| → lleqa d (§p) L1 L2
@@ -61,7 +61,7 @@ lemma lleq_ind_alt: ∀R:relation4 ynat term lenv lenv. (
                        ∀L1,L2,d,i. |L1| = |L2| → yinj i < d → R d (#i) L1 L2
                     ) → (
                        ∀I1,I2,L1,L2,K1,K2,V,d,i. d ≤ yinj i →
-                       ⇩[O, i] L1 ≡ K1.ⓑ{I1}V → ⇩[O, i] L2 ≡ K2.ⓑ{I2}V →
+                       ⇩[i] L1 ≡ K1.ⓑ{I1}V → ⇩[i] L2 ≡ K2.ⓑ{I2}V →
                        K1 ⋕[V, yinj O] K2 → R (yinj O) V K1 K2 → R d (#i) L1 L2
                     ) → (
                        ∀L1,L2,d,i. |L1| = |L2| → |L1| ≤ i → |L2| ≤ i → R d (#i) L1 L2

@@ -51,15 +51,15 @@ lemma lleq_cpx_conf_dx: ∀h,g,G,L2,T1,T2. ⦃G, L2⦄ ⊢ T1 ➡[h, g] T2 →
 | /3 width=3 by lleq_fwd_length, lleq_sort/
 | #I2 #G #L2 #K2 #V1 #V2 #W2 #i #HLK2 #_ #HVW2 #IHV12 #L1 #H elim (lleq_inv_lref_ge_dx … H … HLK2) // -H
   #I1 #K1 #HLK1 #HV1
-  lapply (ldrop_fwd_ldrop2 … HLK1) -HLK1 #HLK1
-  lapply (ldrop_fwd_ldrop2 … HLK2) -HLK2 #HLK2
+  lapply (ldrop_fwd_drop2 … HLK1) -HLK1 #HLK1
+  lapply (ldrop_fwd_drop2 … HLK2) -HLK2 #HLK2
   @(lleq_lift_le … HLK1 HLK2 … HVW2) -HLK1 -HLK2 -HVW2 /2 width=1 by/ (**) (* full auto too slow *)
 | #a #I #G #L2 #V1 #V2 #T1 #T2 #_ #_ #IHV12 #IHT12 #L1 #H elim (lleq_inv_bind_O … H) -H
   /4 width=5 by lleq_bind_repl_SO, lleq_bind/
 | #I #G #L2 #V1 #V2 #T1 #T2 #_ #_ #IHV12 #IHT12 #L1 #H elim (lleq_inv_flat … H) -H
   /3 width=1 by lleq_flat/
 | #G #L2 #V #T1 #T2 #T #_ #HT2 #IHT12 #L1 #H elim (lleq_inv_bind_O … H) -H
-  /3 width=10 by lleq_inv_lift_le, ldrop_ldrop/
+  /3 width=10 by lleq_inv_lift_le, ldrop_drop/
 | #G #L2 #V #T1 #T2 #_ #IHT12 #L1 #H elim (lleq_inv_flat … H) -H /2 width=1 by/
 | #G #L2 #V1 #V2 #T #_ #IHV12 #L1 #H elim (lleq_inv_flat … H) -H /2 width=1 by/
 | #a #G #L2 #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #IHV12 #IHW12 #IHT12 #L1 #H elim (lleq_inv_flat … H) -H
@@ -68,7 +68,7 @@ lemma lleq_cpx_conf_dx: ∀h,g,G,L2,T1,T2. ⦃G, L2⦄ ⊢ T1 ➡[h, g] T2 →
 | #a #G #L2 #V1 #V2 #V #W1 #W2 #T1 #T2 #_ #HV2 #_ #_ #IHV12 #IHW12 #IHT12 #L1 #H elim (lleq_inv_flat … H) -H
   #HV1 #H elim (lleq_inv_bind_O … H) -H
   #HW1 #HT1 @lleq_bind_O /2 width=1 by/ @lleq_flat (**) (* full auto too slow *)
-  [ /3 width=10 by lleq_lift_le, ldrop_ldrop/
+  [ /3 width=10 by lleq_lift_le, ldrop_drop/
   | /3 width=3 by lleq_bind_repl_O/
 ]
 qed-.

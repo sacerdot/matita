@@ -100,14 +100,14 @@ lemma lleq_fwd_length: ∀L1,L2,T,d. L1 ⋕[T, d] L2 → |L1| = |L2|.
 #L1 #L2 #T #d * //
 qed-.
 
-lemma lleq_fwd_ldrop_sn: ∀L1,L2,T,d. L1 ⋕[d, T] L2 → ∀K1,i. ⇩[0, i] L1 ≡ K1 →
-                         ∃K2. ⇩[0, i] L2 ≡ K2.
+lemma lleq_fwd_ldrop_sn: ∀L1,L2,T,d. L1 ⋕[d, T] L2 → ∀K1,i. ⇩[i] L1 ≡ K1 →
+                         ∃K2. ⇩[i] L2 ≡ K2.
 #L1 #L2 #T #d #H #K1 #i #HLK1 lapply (lleq_fwd_length … H) -H
 #HL12 lapply (ldrop_fwd_length_le2 … HLK1) -HLK1 /2 width=1 by ldrop_O1_le/
 qed-.
 
-lemma lleq_fwd_ldrop_dx: ∀L1,L2,T,d. L1 ⋕[d, T] L2 → ∀K2,i. ⇩[0, i] L2 ≡ K2 →
-                         ∃K1. ⇩[0, i] L1 ≡ K1.
+lemma lleq_fwd_ldrop_dx: ∀L1,L2,T,d. L1 ⋕[d, T] L2 → ∀K2,i. ⇩[i] L2 ≡ K2 →
+                         ∃K1. ⇩[i] L1 ≡ K1.
 /3 width=6 by lleq_fwd_ldrop_sn, lleq_sym/ qed-.
 
 lemma lleq_fwd_bind_sn: ∀a,I,L1,L2,V,T,d.

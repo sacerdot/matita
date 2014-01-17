@@ -48,7 +48,7 @@ lemma csx_inv_lref_bind: ∀h,g,I,G,L,K,V,i. ⇩[0, i] L ≡ K.ⓑ{I}V →
                          ⦃G, L⦄ ⊢ ⬊*[h, g] #i → ⦃G, K⦄ ⊢ ⬊*[h, g] V.
 #h #g #I #G #L #K #V #i #HLK #Hi
 elim (lift_total V 0 (i+1))
-/4 width=9 by csx_inv_lift, csx_cpx_trans, cpx_delta, ldrop_fwd_ldrop2/
+/4 width=9 by csx_inv_lift, csx_cpx_trans, cpx_delta, ldrop_fwd_drop2/
 qed-.
 
 (* Advanced properties ******************************************************)
@@ -61,7 +61,7 @@ elim (cpx_inv_lref1 … H) -H
 [ #H destruct elim Hi //
 | -Hi * #I0 #K0 #V0 #V1 #HLK0 #HV01 #HV1
   lapply (ldrop_mono … HLK0 … HLK) -HLK #H destruct
-  /3 width=7 by csx_lift, csx_cpx_trans, ldrop_fwd_ldrop2/
+  /3 width=7 by csx_lift, csx_cpx_trans, ldrop_fwd_drop2/
 ]
 qed.
 

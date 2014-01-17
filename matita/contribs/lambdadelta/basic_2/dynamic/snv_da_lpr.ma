@@ -45,7 +45,7 @@ fact da_cpr_lpr_aux: ∀h,g,G0,L0,T0.
     lapply (fqup_lref … G1 … HLK1)
     elim (lpr_ldrop_conf … HLK1 … HL12) -HLK1 -HL12 #X #H #HLK2
     elim (lpr_inv_pair1 … H) -H #K2 #V2 #HK12 #_ #H destruct
-    lapply (ldrop_fwd_ldrop2 … HLK2) -V2
+    lapply (ldrop_fwd_drop2 … HLK2) -V2
     /4 width=7 by da_lift, fqup_fpbg/
   ]
 | #p #_ #_ #HT0 #H1 destruct -IH3 -IH2 -IH1
@@ -57,7 +57,7 @@ fact da_cpr_lpr_aux: ∀h,g,G0,L0,T0.
   [ #V2 #T2 #HV12 #HT12 #H destruct
     /4 width=9 by da_bind, fqup_fpbg, lpr_pair/
   | #T2 #HT12 #HT2 #H1 #H2 destruct
-    /4 width=11 by da_inv_lift, fqup_fpbg, lpr_pair, ldrop_ldrop/
+    /4 width=11 by da_inv_lift, fqup_fpbg, lpr_pair, ldrop_drop/
   ]
 | #V1 #T1 #HG0 #HL0 #HT0 #H1 #l #H2 #X3 #H3 #L2 #HL12 destruct
   elim (snv_inv_appl … H1) -H1 #b0 #W1 #W0 #T0 #l0 #HV1 #HT1 #Hl0 #HVW1 #HW10 #HT10

@@ -36,11 +36,11 @@ inductive ldrop (s:bool): relation4 nat nat lenv lenv ≝
 interpretation
    "basic slicing (local environment) abstract"
    'RDrop s d e L1 L2 = (ldrop s d e L1 L2).
-
+(*
 interpretation
    "basic slicing (local environment) general"
    'RDrop d e L1 L2 = (ldrop true d e L1 L2).
-
+*)
 interpretation
    "basic slicing (local environment) lget"
    'RDrop e L1 L2 = (ldrop false O e L1 L2).

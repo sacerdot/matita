@@ -27,7 +27,7 @@ lemma aaa_ssta_conf: ∀h,g,G,L. Conf3 … (aaa G L) (ssta h g G L).
 | #I #G #L #K #V #B #i #HLK #HV #IHV #U #H
   elim (ssta_inv_lref1 … H) -H * #K0 #V0 #W0 #HLK0 #HVW0 #HU
   lapply (ldrop_mono … HLK0 … HLK) -HLK0 #H0 destruct
-  lapply (ldrop_fwd_ldrop2 … HLK) -HLK #HLK
+  lapply (ldrop_fwd_drop2 … HLK) -HLK #HLK
   @(aaa_lift … HLK … HU) -HU -L // -HV /2 width=2/
 | #a #G #L #V #T #B #A #HV #_ #_ #IHT #X #H
   elim (ssta_inv_bind1 … H) -H #U #HTU #H destruct /3 width=2/
