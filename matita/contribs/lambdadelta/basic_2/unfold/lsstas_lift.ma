@@ -20,27 +20,28 @@ include "basic_2/unfold/lsstas.ma".
 (* Properties on relocation *************************************************)
 
 lemma lsstas_lift: ∀h,g,G,l. l_liftable (llstar … (ssta h g G) l).
-/2 width=1/ qed.
+/3 width=10 by l_liftable_llstar, ssta_lift/ qed.
 
 (* Inversion lemmas on relocation *******************************************)
 
 lemma lsstas_inv_lift1: ∀h,g,G,l. l_deliftable_sn (llstar … (ssta h g G) l).
-/3 width=5 by l_deliftable_sn_llstar, ssta_inv_lift1/ qed-.
+/3 width=6 by l_deliftable_sn_llstar, ssta_inv_lift1/ qed-.
 
 (* Advanced inversion lemmas ************************************************)
 
 lemma lsstas_inv_lref1: ∀h,g,G,L,U,i,l. ⦃G, L⦄ ⊢ #i •*[h, g, l+1] U →
-                        (∃∃K,V,W. ⇩[0, i] L ≡ K.ⓓV & ⦃G, K⦄ ⊢ V •*[h, g, l+1] W &
+                        (∃∃K,V,W. ⇩[i] L ≡ K.ⓓV & ⦃G, K⦄ ⊢ V •*[h, g, l+1] W &
                                   ⇧[0, i + 1] W ≡ U
                         ) ∨
-                        (∃∃K,W,V,l0. ⇩[0, i] L ≡ K.ⓛW & ⦃G, K⦄ ⊢ W ▪[h, g] l0 &
+                        (∃∃K,W,V,l0. ⇩[i] L ≡ K.ⓛW & ⦃G, K⦄ ⊢ W ▪[h, g] l0 &
                                      ⦃G, K⦄ ⊢ W •*[h, g, l] V & ⇧[0, i + 1] V ≡ U
                         ).
 #h #g #G #L #U #i #l #H elim (lsstas_inv_step_sn … H) -H
 #X #H #HXU elim (ssta_inv_lref1 … H) -H
 * #K [ #V #W | #W #l0 ] #HLK [ #HVW | #HWl0 ] #HWX
 lapply (ldrop_fwd_drop2 … HLK) #H0LK
-elim (lsstas_inv_lift1 … HXU … H0LK … HWX) -H0LK -X /3 width=8/ /4 width=6/
+elim (lsstas_inv_lift1 … HXU … H0LK … HWX) -H0LK -X
+/4 width=8 by lsstas_step_sn, ex4_4_intro, ex3_3_intro, or_introl, or_intror/
 qed-.
 
 (* Advanced forward lemmas **************************************************)
@@ -48,35 +49,35 @@ qed-.
 lemma lsstas_fwd_correct: ∀h,g,G,L,T1,U1. ⦃G, L⦄ ⊢ T1 •[h, g] U1 →
                           ∀T2,l. ⦃G, L⦄ ⊢ T1 •*[h, g, l] T2 →
                           ∃U2. ⦃G, L⦄ ⊢ T2 •[h, g] U2.
-#h #g #G #L #T1 #U1 #HTU1 #T2 #l #H @(lsstas_ind_dx … H) -l -T2 [ /2 width=3/ ] -HTU1
+#h #g #G #L #T1 #U1 #HTU1 #T2 #l #H @(lsstas_ind_dx … H) -l -T2 [ /2 width=3 by ex_intro/ ] -HTU1
 #l #T #T2 #_ #HT2 #_ -T1 -U1 -l
-elim (ssta_fwd_correct … HT2) -T /2 width=2/
+elim (ssta_fwd_correct … HT2) -T /2 width=2 by ex_intro/
 qed-.
 
 (* Advanced properties ******************************************************)
 
 lemma lsstas_total: ∀h,g,G,L,T,U. ⦃G, L⦄ ⊢ T •[h, g] U →
                     ∀l. ∃U0. ⦃G, L⦄ ⊢ T •*[h, g, l] U0.
-#h #g #G #L #T #U #HTU #l @(nat_ind_plus … l) -l [ /2 width=2/ ]
+#h #g #G #L #T #U #HTU #l @(nat_ind_plus … l) -l [ /2 width=2 by lstar_O, ex_intro/ ]
 #l * #U0 #HTU0
-elim (lsstas_fwd_correct … HTU … HTU0) -U /3 width=4/
+elim (lsstas_fwd_correct … HTU … HTU0) -U /3 width=4 by lsstas_step_dx, ex_intro/
 qed-.
 
-lemma lsstas_ldef: ∀h,g,G,L,K,V,i. ⇩[0, i] L ≡ K.ⓓV →
+lemma lsstas_ldef: ∀h,g,G,L,K,V,i. ⇩[i] L ≡ K.ⓓV →
                    ∀W,l. ⦃G, K⦄ ⊢ V •*[h, g, l+1] W →
                    ∀U. ⇧[0, i+1] W ≡ U → ⦃G, L⦄ ⊢ #i •*[h, g, l+1] U.
 #h #g #G #L #K #V #i #HLK #W #l #HVW #U #HWU
 lapply (ldrop_fwd_drop2 … HLK)
 elim (lsstas_inv_step_sn … HVW) -HVW #W0
-elim (lift_total W0 0 (i+1)) /3 width=11/
+elim (lift_total W0 0 (i+1)) /3 width=12 by lsstas_step_sn, ssta_ldef, lsstas_lift/
 qed.
 
-lemma lsstas_ldec: ∀h,g,G,L,K,W,i. ⇩[0, i] L ≡ K.ⓛW → ∀l0. ⦃G, K⦄ ⊢ W ▪[h, g] l0 →
+lemma lsstas_ldec: ∀h,g,G,L,K,W,i. ⇩[i] L ≡ K.ⓛW → ∀l0. ⦃G, K⦄ ⊢ W ▪[h, g] l0 →
                    ∀V,l. ⦃G, K⦄ ⊢ W •*[h, g, l] V →
                    ∀U. ⇧[0, i+1] V ≡ U → ⦃G, L⦄ ⊢ #i •*[h, g, l+1] U.
 #h #g #G #L #K #W #i #HLK #T #HWT #V #l #HWV #U #HVU
 lapply (ldrop_fwd_drop2 … HLK) #H
-elim (lift_total W 0 (i+1)) /3 width=11/
+elim (lift_total W 0 (i+1)) /3 width=12 by lsstas_step_sn, ssta_ldec, lsstas_lift/
 qed.
 
 (* Properties on degree assignment for terms ********************************)
