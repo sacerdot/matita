@@ -20,9 +20,9 @@ include "basic_2/static/da.ma".
 (* activate genv *)
 inductive ssta (h) (g): relation4 genv lenv term term ≝
 | ssta_sort: ∀G,L,k. ssta h g G L (⋆k) (⋆(next h k))
-| ssta_ldef: ∀G,L,K,V,U,W,i. ⇩[0, i] L ≡ K.ⓓV → ssta h g G K V W →
+| ssta_ldef: ∀G,L,K,V,U,W,i. ⇩[i] L ≡ K.ⓓV → ssta h g G K V W →
              ⇧[0, i + 1] W ≡ U → ssta h g G L (#i) U
-| ssta_ldec: ∀G,L,K,W,U,l,i. ⇩[0, i] L ≡ K.ⓛW → ⦃G, K⦄ ⊢ W ▪[h, g] l →
+| ssta_ldec: ∀G,L,K,W,U,l,i. ⇩[i] L ≡ K.ⓛW → ⦃G, K⦄ ⊢ W ▪[h, g] l →
              ⇧[0, i + 1] W ≡ U → ssta h g G L (#i) U
 | ssta_bind: ∀a,I,G,L,V,T,U. ssta h g G (L.ⓑ{I}V) T U →
              ssta h g G L (ⓑ{a,I}V.T) (ⓑ{a,I}V.U)
@@ -51,16 +51,16 @@ lemma ssta_inv_sort1: ∀h,g,G,L,U,k. ⦃G, L⦄ ⊢ ⋆k •[h, g] U → U = �
 /2 width=6 by ssta_inv_sort1_aux/ qed-.
 
 fact ssta_inv_lref1_aux: ∀h,g,G,L,T,U. ⦃G, L⦄ ⊢ T •[h, g] U → ∀j. T = #j →
-                         (∃∃K,V,W. ⇩[0, j] L ≡ K.ⓓV & ⦃G, K⦄ ⊢ V •[h, g] W &
+                         (∃∃K,V,W. ⇩[j] L ≡ K.ⓓV & ⦃G, K⦄ ⊢ V •[h, g] W &
                                    ⇧[0, j + 1] W ≡ U
                          ) ∨
-                         (∃∃K,W,l. ⇩[0, j] L ≡ K.ⓛW & ⦃G, K⦄ ⊢ W ▪[h, g] l &
+                         (∃∃K,W,l. ⇩[j] L ≡ K.ⓛW & ⦃G, K⦄ ⊢ W ▪[h, g] l &
                                    ⇧[0, j + 1] W ≡ U
                          ).
 #h #g #G #L #T #U * -G -L -T -U
 [ #G #L #k #j #H destruct
-| #G #L #K #V #U #W #i #HLK #HVW #HWU #j #H destruct /3 width=6/
-| #G #L #K #W #U #l #i #HLK #HWl #HWU #j #H destruct /3 width=6/
+| #G #L #K #V #U #W #i #HLK #HVW #HWU #j #H destruct /3 width=6 by ex3_3_intro, or_introl/
+| #G #L #K #W #U #l #i #HLK #HWl #HWU #j #H destruct /3 width=6 by ex3_3_intro, or_intror/
 | #a #I #G #L #V #T #U #_ #j #H destruct
 | #G #L #V #T #U #_ #j #H destruct
 | #G #L #W #T #U #_ #j #H destruct
@@ -68,10 +68,10 @@ fact ssta_inv_lref1_aux: ∀h,g,G,L,T,U. ⦃G, L⦄ ⊢ T •[h, g] U → ∀j. 
 qed-.
 
 lemma ssta_inv_lref1: ∀h,g,G,L,U,i. ⦃G, L⦄ ⊢ #i •[h, g] U →
-                      (∃∃K,V,W. ⇩[0, i] L ≡ K.ⓓV & ⦃G, K⦄ ⊢ V •[h, g] W &
+                      (∃∃K,V,W. ⇩[i] L ≡ K.ⓓV & ⦃G, K⦄ ⊢ V •[h, g] W &
                                 ⇧[0, i + 1] W ≡ U
                       ) ∨
-                      (∃∃K,W,l. ⇩[0, i] L ≡ K.ⓛW & ⦃G, K⦄ ⊢ W ▪[h, g] l &
+                      (∃∃K,W,l. ⇩[i] L ≡ K.ⓛW & ⦃G, K⦄ ⊢ W ▪[h, g] l &
                                 ⇧[0, i + 1] W ≡ U
                       ).
 /2 width=3 by ssta_inv_lref1_aux/ qed-.
@@ -97,7 +97,7 @@ fact ssta_inv_bind1_aux: ∀h,g,G,L,T,U. ⦃G, L⦄ ⊢ T •[h, g] U →
 [ #G #L #k #b #J #X #Y #H destruct
 | #G #L #K #V #U #W #i #_ #_ #_ #b #J #X #Y #H destruct
 | #G #L #K #W #U #l #i #_ #_ #_ #b #J #X #Y #H destruct
-| #a #I #G #L #V #T #U #HTU #b #J #X #Y #H destruct /2 width=3/
+| #a #I #G #L #V #T #U #HTU #b #J #X #Y #H destruct /2 width=3 by ex2_intro/
 | #G #L #V #T #U #_ #b #J #X #Y #H destruct
 | #G #L #W #T #U #_ #b #J #X #Y #H destruct
 ]
@@ -114,7 +114,7 @@ fact ssta_inv_appl1_aux: ∀h,g,G,L,T,U. ⦃G, L⦄ ⊢ T •[h, g] U → ∀X,Y
 | #G #L #K #V #U #W #i #_ #_ #_ #X #Y #H destruct
 | #G #L #K #W #U #l #i #_ #_ #_ #X #Y #H destruct
 | #a #I #G #L #V #T #U #_ #X #Y #H destruct
-| #G #L #V #T #U #HTU #X #Y #H destruct /2 width=3/
+| #G #L #V #T #U #HTU #X #Y #H destruct /2 width=3 by ex2_intro/
 | #G #L #W #T #U #_ #X #Y #H destruct
 ]
 qed-.
@@ -143,12 +143,12 @@ lemma ssta_inv_cast1: ∀h,g,G,L,X,Y,U. ⦃G, L⦄ ⊢ ⓝY.X •[h, g] U → �
 lemma ssta_inv_da: ∀h,g,G,L,T,U. ⦃G, L⦄ ⊢ T •[h, g] U →
                    ∃l. ⦃G, L⦄ ⊢ T ▪[h, g] l.
 #h #g #G #L #T #U #H elim H -G -L -T -U
-[ #G #L #k elim (deg_total h g k) /3 width=2/
-| #G #L #K #V #U #W #i #HLK #_ #_ * /3 width=5/
-| #G #L #K #W #U #l #i #HLK #HWl #_ /3 width=5/
-| #a #I #G #L #V #T #U #_ * /3 width=2/
-| #G #L #V #T #U #_ * /3 width=2/
-| #G #L #W #T #U #_ * /3 width=2/
+[ #G #L #k elim (deg_total h g k) /3 width=2 by da_sort, ex_intro/
+| #G #L #K #V #U #W #i #HLK #_ #_ * /3 width=5 by da_ldef, ex_intro/
+| #G #L #K #W #U #l #i #HLK #HWl #_ /3 width=5 by da_ldec, ex_intro/
+| #a #I #G #L #V #T #U #_ * /3 width=2 by da_bind, ex_intro/
+| #G #L #V #T #U #_ * /3 width=2 by da_flat, ex_intro/
+| #G #L #W #T #U #_ * /3 width=2 by da_flat, ex_intro/
 ]
 qed-.
 
@@ -159,11 +159,11 @@ lemma da_ssta: ∀h,g,G,L,T,l. ⦃G, L⦄ ⊢ T ▪[h, g] l →
 #h #g #G #L #T #l #H elim H -G -L -T -l
 [ /2 width=2/
 | #G #L #K #V #i #l #HLK #_ * #W #HVW
-  elim (lift_total W 0 (i+1)) /3 width=7/
+  elim (lift_total W 0 (i+1)) /3 width=7 by ssta_ldef, ex_intro/
 | #G #L #K #W #i #l #HLK #HW #_
-  elim (lift_total W 0 (i+1)) /3 width=7/
-| #a #I #G #L #V #T #l #_ * /3 width=2/
-| * #G #L #V #T #l #_ * /3 width=2/
+  elim (lift_total W 0 (i+1)) /3 width=7 by ssta_ldec, ex_intro/
+| #a #I #G #L #V #T #l #_ * /3 width=2 by ssta_bind, ex_intro/
+| * #G #L #V #T #l #_ * /3 width=2 by ssta_appl, ssta_cast, ex_intro/
 ]
 qed-.
 

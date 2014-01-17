@@ -22,7 +22,7 @@ include "basic_2/relocation/ldrop.ma".
 (* activate genv *)
 inductive aaa: relation4 genv lenv term aarity ≝
 | aaa_sort: ∀G,L,k. aaa G L (⋆k) (⓪)
-| aaa_lref: ∀I,G,L,K,V,B,i. ⇩[0, i] L ≡ K. ⓑ{I}V → aaa G K V B → aaa G L (#i) B
+| aaa_lref: ∀I,G,L,K,V,B,i. ⇩[i] L ≡ K. ⓑ{I}V → aaa G K V B → aaa G L (#i) B
 | aaa_abbr: ∀a,G,L,V,T,B,A.
             aaa G L V B → aaa G (L.ⓓV) T A → aaa G L (ⓓ{a}V.T) A
 | aaa_abst: ∀a,G,L,V,T,B,A.
@@ -51,10 +51,10 @@ lemma aaa_inv_sort: ∀G,L,A,k. ⦃G, L⦄ ⊢ ⋆k ⁝ A → A = ⓪.
 /2 width=6 by aaa_inv_sort_aux/ qed-.
 
 fact aaa_inv_lref_aux: ∀G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ∀i. T = #i →
-                       ∃∃I,K,V. ⇩[0, i] L ≡ K.ⓑ{I} V & ⦃G, K⦄ ⊢ V ⁝ A.
+                       ∃∃I,K,V. ⇩[i] L ≡ K.ⓑ{I} V & ⦃G, K⦄ ⊢ V ⁝ A.
 #G #L #T #A * -G -L -T -A
 [ #G #L #k #i #H destruct
-| #I #G #L #K #V #B #j #HLK #HB #i #H destruct /2 width=5/
+| #I #G #L #K #V #B #j #HLK #HB #i #H destruct /2 width=5 by ex2_3_intro/
 | #a #G #L #V #T #B #A #_ #_ #i #H destruct
 | #a #G #L #V #T #B #A #_ #_ #i #H destruct
 | #G #L #V #T #B #A #_ #_ #i #H destruct
@@ -63,7 +63,7 @@ fact aaa_inv_lref_aux: ∀G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ∀i. T = #i →
 qed-.
 
 lemma aaa_inv_lref: ∀G,L,A,i. ⦃G, L⦄ ⊢ #i ⁝ A →
-                    ∃∃I,K,V. ⇩[0, i] L ≡ K. ⓑ{I} V & ⦃G, K⦄ ⊢ V ⁝ A.
+                    ∃∃I,K,V. ⇩[i] L ≡ K. ⓑ{I} V & ⦃G, K⦄ ⊢ V ⁝ A.
 /2 width=3 by aaa_inv_lref_aux/ qed-.
 
 fact aaa_inv_gref_aux: ∀G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ∀p. T = §p → ⊥.
@@ -85,7 +85,7 @@ fact aaa_inv_abbr_aux: ∀G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ∀a,W,U. T = ⓓ{
 #G #L #T #A * -G -L -T -A
 [ #G #L #k #a #W #U #H destruct
 | #I #G #L #K #V #B #i #_ #_ #a #W #U #H destruct
-| #b #G #L #V #T #B #A #HV #HT #a #W #U #H destruct /2 width=2/
+| #b #G #L #V #T #B #A #HV #HT #a #W #U #H destruct /2 width=2 by ex2_intro/
 | #b #G #L #V #T #B #A #_ #_ #a #W #U #H destruct
 | #G #L #V #T #B #A #_ #_ #a #W #U #H destruct
 | #G #L #V #T #A #_ #_ #a #W #U #H destruct
@@ -102,7 +102,7 @@ fact aaa_inv_abst_aux: ∀G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ∀a,W,U. T = ⓛ{
 [ #G #L #k #a #W #U #H destruct
 | #I #G #L #K #V #B #i #_ #_ #a #W #U #H destruct
 | #b #G #L #V #T #B #A #_ #_ #a #W #U #H destruct
-| #b #G #L #V #T #B #A #HV #HT #a #W #U #H destruct /2 width=5/
+| #b #G #L #V #T #B #A #HV #HT #a #W #U #H destruct /2 width=5 by ex3_2_intro/
 | #G #L #V #T #B #A #_ #_ #a #W #U #H destruct
 | #G #L #V #T #A #_ #_ #a #W #U #H destruct
 ]
@@ -119,7 +119,7 @@ fact aaa_inv_appl_aux: ∀G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ∀W,U. T = ⓐW.U
 | #I #G #L #K #V #B #i #_ #_ #W #U #H destruct
 | #a #G #L #V #T #B #A #_ #_ #W #U #H destruct
 | #a #G #L #V #T #B #A #_ #_ #W #U #H destruct
-| #G #L #V #T #B #A #HV #HT #W #U #H destruct /2 width=3/
+| #G #L #V #T #B #A #HV #HT #W #U #H destruct /2 width=3 by ex2_intro/
 | #G #L #V #T #A #_ #_ #W #U #H destruct
 ]
 qed-.
@@ -136,7 +136,7 @@ fact aaa_inv_cast_aux: ∀G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ∀W,U. T = ⓝW. 
 | #a #G #L #V #T #B #A #_ #_ #W #U #H destruct
 | #a #G #L #V #T #B #A #_ #_ #W #U #H destruct
 | #G #L #V #T #B #A #_ #_ #W #U #H destruct
-| #G #L #V #T #A #HV #HT #W #U #H destruct /2 width=1/
+| #G #L #V #T #A #HV #HT #W #U #H destruct /2 width=1 by conj/
 ]
 qed-.
 

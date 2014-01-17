@@ -39,7 +39,7 @@ lemma aaa_fqu_conf: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ 
   [ elim (aaa_inv_appl … H)
   | elim (aaa_inv_cast … H)
   ] -H /2 width=2 by ex_intro/
-| /3 width=8 by aaa_inv_lift, ex_intro/
+| /3 width=9 by aaa_inv_lift, ex_intro/
 ]
 qed-.
 

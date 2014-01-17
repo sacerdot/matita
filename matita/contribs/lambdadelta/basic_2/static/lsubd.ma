@@ -33,7 +33,7 @@ interpretation
 (* Basic_forward lemmas *****************************************************)
 
 lemma lsubd_fwd_lsubr: ∀h,g,G,L1,L2. G ⊢ L1 ▪⊑[h, g] L2 → L1 ⊑ L2.
-#h #g #G #L1 #L2 #H elim H -L1 -L2 // /2 width=1/
+#h #g #G #L1 #L2 #H elim H -L1 -L2 /2 width=1 by lsubr_bind, lsubr_abst/
 qed-.
 
 (* Basic inversion lemmas ***************************************************)
@@ -57,8 +57,8 @@ fact lsubd_inv_pair1_aux: ∀h,g,G,L1,L2. G ⊢ L1 ▪⊑[h, g] L2 →
                                       I = Abbr & L2 = K2.ⓛW & X = ⓝW.V.
 #h #g #G #L1 #L2 * -L1 -L2
 [ #J #K1 #X #H destruct
-| #I #L1 #L2 #V #HL12 #J #K1 #X #H destruct /3 width=3/
-| #L1 #L2 #W #V #l #HV #HW #HL12 #J #K1 #X #H destruct /3 width=9/
+| #I #L1 #L2 #V #HL12 #J #K1 #X #H destruct /3 width=3 by ex2_intro, or_introl/
+| #L1 #L2 #W #V #l #HV #HW #HL12 #J #K1 #X #H destruct /3 width=9 by ex6_4_intro, or_intror/
 ]
 qed-.
 
@@ -87,8 +87,8 @@ fact lsubd_inv_pair2_aux: ∀h,g,G,L1,L2. G ⊢ L1 ▪⊑[h, g] L2 →
                                     G ⊢ K1 ▪⊑[h, g] K2 & I = Abst & L1 = K1. ⓓⓝW.V.
 #h #g #G #L1 #L2 * -L1 -L2
 [ #J #K2 #U #H destruct
-| #I #L1 #L2 #V #HL12 #J #K2 #U #H destruct /3 width=3/
-| #L1 #L2 #W #V #l #HV #HW #HL12 #J #K2 #U #H destruct /3 width=7/
+| #I #L1 #L2 #V #HL12 #J #K2 #U #H destruct /3 width=3 by ex2_intro, or_introl/
+| #L1 #L2 #W #V #l #HV #HW #HL12 #J #K2 #U #H destruct /3 width=7 by ex5_3_intro, or_intror/
 ]
 qed-.
 
@@ -101,51 +101,51 @@ lemma lsubd_inv_pair2: ∀h,g,I,G,L1,K2,W. G ⊢ L1 ▪⊑[h, g] K2.ⓑ{I}W →
 (* Basic properties *********************************************************)
 
 lemma lsubd_refl: ∀h,g,G,L. G ⊢ L ▪⊑[h, g] L.
-#h #g #G #L elim L -L // /2 width=1/
+#h #g #G #L elim L -L /2 width=1 by lsubd_pair/
 qed.
 
 (* Note: the constant 0 cannot be generalized *)
 lemma lsubd_ldrop_O1_conf: ∀h,g,G,L1,L2. G ⊢ L1 ▪⊑[h, g] L2 →
-                           ∀K1,e. ⇩[0, e] L1 ≡ K1 →
-                           ∃∃K2. G ⊢ K1 ▪⊑[h, g] K2 & ⇩[0, e] L2 ≡ K2.
+                           ∀K1,s,e. ⇩[s, 0, e] L1 ≡ K1 →
+                           ∃∃K2. G ⊢ K1 ▪⊑[h, g] K2 & ⇩[s, 0, e] L2 ≡ K2.
 #h #g #G #L1 #L2 #H elim H -L1 -L2
-[ /2 width=3/
-| #I #L1 #L2 #V #_ #IHL12 #K1 #e #H
+[ /2 width=3 by ex2_intro/
+| #I #L1 #L2 #V #_ #IHL12 #K1 #s #e #H
   elim (ldrop_inv_O1_pair1 … H) -H * #He #HLK1
   [ destruct
-    elim (IHL12 L1 0) -IHL12 // #X #HL12 #H
-    <(ldrop_inv_O2 … H) in HL12; -H /3 width=3/
-  | elim (IHL12 … HLK1) -L1 /3 width=3/
+    elim (IHL12 L1 s 0) -IHL12 // #X #HL12 #H
+    <(ldrop_inv_O2 … H) in HL12; -H /3 width=3 by lsubd_pair, ldrop_pair, ex2_intro/
+  | elim (IHL12 … HLK1) -L1 /3 width=3 by ldrop_drop_lt, ex2_intro/
   ]
-| #L1 #L2 #W #V #l #HV #HW #_ #IHL12 #K1 #e #H
+| #L1 #L2 #W #V #l #HV #HW #_ #IHL12 #K1 #s #e #H
   elim (ldrop_inv_O1_pair1 … H) -H * #He #HLK1
   [ destruct
-    elim (IHL12 L1 0) -IHL12 // #X #HL12 #H
-    <(ldrop_inv_O2 … H) in HL12; -H /3 width=3/
-  | elim (IHL12 … HLK1) -L1 /3 width=3/
+    elim (IHL12 L1 s 0) -IHL12 // #X #HL12 #H
+    <(ldrop_inv_O2 … H) in HL12; -H /3 width=3 by lsubd_abbr, ldrop_pair, ex2_intro/
+  | elim (IHL12 … HLK1) -L1 /3 width=3 by ldrop_drop_lt, ex2_intro/
   ]
 ]
 qed-.
 
 (* Note: the constant 0 cannot be generalized *)
 lemma lsubd_ldrop_O1_trans: ∀h,g,G,L1,L2. G ⊢ L1 ▪⊑[h, g] L2 →
-                            ∀K2,e. ⇩[0, e] L2 ≡ K2 →
-                            ∃∃K1. G ⊢ K1 ▪⊑[h, g] K2 & ⇩[0, e] L1 ≡ K1.
+                            ∀K2,s,e. ⇩[s, 0, e] L2 ≡ K2 →
+                            ∃∃K1. G ⊢ K1 ▪⊑[h, g] K2 & ⇩[s, 0, e] L1 ≡ K1.
 #h #g #G #L1 #L2 #H elim H -L1 -L2
-[ /2 width=3/
-| #I #L1 #L2 #V #_ #IHL12 #K2 #e #H
+[ /2 width=3 by ex2_intro/
+| #I #L1 #L2 #V #_ #IHL12 #K2 #s #e #H
   elim (ldrop_inv_O1_pair1 … H) -H * #He #HLK2
   [ destruct
-    elim (IHL12 L2 0) -IHL12 // #X #HL12 #H
-    <(ldrop_inv_O2 … H) in HL12; -H /3 width=3/
-  | elim (IHL12 … HLK2) -L2 /3 width=3/
+    elim (IHL12 L2 s 0) -IHL12 // #X #HL12 #H
+    <(ldrop_inv_O2 … H) in HL12; -H /3 width=3 by lsubd_pair, ldrop_pair, ex2_intro/
+  | elim (IHL12 … HLK2) -L2 /3 width=3 by ldrop_drop_lt, ex2_intro/
   ]
-| #L1 #L2 #W #V #l #HV #HW #_ #IHL12 #K2 #e #H
+| #L1 #L2 #W #V #l #HV #HW #_ #IHL12 #K2 #s #e #H
   elim (ldrop_inv_O1_pair1 … H) -H * #He #HLK2
   [ destruct
-    elim (IHL12 L2 0) -IHL12 // #X #HL12 #H
-    <(ldrop_inv_O2 … H) in HL12; -H /3 width=3/
-  | elim (IHL12 … HLK2) -L2 /3 width=3/
+    elim (IHL12 L2 s 0) -IHL12 // #X #HL12 #H
+    <(ldrop_inv_O2 … H) in HL12; -H /3 width=3 by lsubd_abbr, ldrop_pair, ex2_intro/
+  | elim (IHL12 … HLK2) -L2 /3 width=3 by ldrop_drop_lt, ex2_intro/
   ]
 ]
 qed-.
