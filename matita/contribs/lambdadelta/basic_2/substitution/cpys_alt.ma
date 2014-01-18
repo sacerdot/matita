@@ -24,7 +24,7 @@ inductive cpysa: ynat → ynat → relation4 genv lenv term term ≝
                ⇩[i] L ≡ K.ⓑ{I}V1 → cpysa 0 (⫰(d+e-i)) G K V1 V2 →
                ⇧[0, i+1] V2 ≡ W2 → cpysa d e G L (#i) W2
 | cpysa_bind : ∀a,I,G,L,V1,V2,T1,T2,d,e.
-               cpysa d e G L V1 V2 → cpysa (⫯d) e G (L.ⓑ{I}V2) T1 T2 →
+               cpysa d e G L V1 V2 → cpysa (⫯d) e G (L.ⓑ{I}V1) T1 T2 →
                cpysa d e G L (ⓑ{a,I}V1.T1) (ⓑ{a,I}V2.T2)
 | cpysa_flat : ∀I,G,L,V1,V2,T1,T2,d,e.
                cpysa d e G L V1 V2 → cpysa d e G L T1 T2 →
@@ -64,10 +64,7 @@ lemma cpysa_cpy_trans: ∀G,L,T1,T,d,e. ⦃G, L⦄ ⊢ T1 ▶▶*×[d, e] T →
   /3 width=7 by cpysa_subst, ylt_fwd_le_succ/
 | #a #I #G #L #V1 #V #T1 #T #d #e #_ #_ #IHV1 #IHT1 #X #H
   elim (cpy_inv_bind1 … H) -H #V2 #T2 #HV2 #HT2 #H destruct
-  lapply (lsuby_cpy_trans … HT2 (L.ⓑ{I}V) ?) -HT2 /2 width=1 by lsuby_succ/ #HT2
-  lapply (IHV1 … HV2) -IHV1 -HV2 #HV12
-  lapply (IHT1 … HT2) -IHT1 -HT2 #HT12
-  lapply (lsuby_cpysa_trans … HT12 (L.ⓑ{I}V2) ?) -HT12 /2 width=1 by lsuby_succ, cpysa_bind/
+  /5 width=5 by cpysa_bind, lsuby_cpy_trans, lsuby_succ/
 | #I #G #L #V1 #V #T1 #T #d #e #_ #_ #IHV1 #IHT1 #X #H
   elim (cpy_inv_flat1 … H) -H #V2 #T2 #HV2 #HT2 #H destruct /3 width=1 by cpysa_flat/
 ]
@@ -90,8 +87,8 @@ lemma cpys_ind_alt: ∀R:ynat→ynat→relation4 genv lenv term term.
                      ⇧[O, i+1] V2 ≡ W2 → R O (⫰(d+e-i)) G K V1 V2 → R d e G L (#i) W2
                     ) →
                     (∀a,I,G,L,V1,V2,T1,T2,d,e. ⦃G, L⦄ ⊢ V1 ▶*×[d, e] V2 →
-                     ⦃G, L.ⓑ{I}V2⦄ ⊢ T1 ▶*×[⫯d, e] T2 → R d e G L V1 V2 →
-                     R (⫯d) e G (L.ⓑ{I}V2) T1 T2 → R d e G L (ⓑ{a,I}V1.T1) (ⓑ{a,I}V2.T2)
+                     ⦃G, L.ⓑ{I}V1⦄ ⊢ T1 ▶*×[⫯d, e] T2 → R d e G L V1 V2 →
+                     R (⫯d) e G (L.ⓑ{I}V1) T1 T2 → R d e G L (ⓑ{a,I}V1.T1) (ⓑ{a,I}V2.T2)
                     ) →
                     (∀I,G,L,V1,V2,T1,T2,d,e. ⦃G, L⦄ ⊢ V1 ▶*×[d, e] V2 →
                      ⦃G, L⦄ ⊢ T1 ▶*×[d, e] T2 → R d e G L V1 V2 →

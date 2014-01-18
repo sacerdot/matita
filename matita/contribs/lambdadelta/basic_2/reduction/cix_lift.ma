@@ -19,17 +19,17 @@ include "basic_2/reduction/cix.ma".
 
 (* Advanced properties ******************************************************)
 
-lemma cix_lref: ∀h,g,G,L,i. ⇩[0, i] L ≡ ⋆ → ⦃G, L⦄ ⊢ 𝐈[h, g]⦃#i⦄.
+lemma cix_lref: ∀h,g,G,L,i. ⇩[i] L ≡ ⋆ → ⦃G, L⦄ ⊢ 𝐈[h, g]⦃#i⦄.
 #h #g #G #L #i #HL #H elim (crx_inv_lref … H) -h #I #K #V #HLK
 lapply (ldrop_mono … HLK … HL) -L -i #H destruct
 qed.
 
 (* Properties on relocation *************************************************)
 
-lemma cix_lift: ∀h,g,G,K,T. ⦃G, K⦄ ⊢ 𝐈[h, g]⦃T⦄ → ∀L,d,e. ⇩[d, e] L ≡ K →
+lemma cix_lift: ∀h,g,G,K,T. ⦃G, K⦄ ⊢ 𝐈[h, g]⦃T⦄ → ∀L,s,d,e. ⇩[s, d, e] L ≡ K →
                 ∀U. ⇧[d, e] T ≡ U → ⦃G, L⦄ ⊢ 𝐈[h, g]⦃U⦄.
-/3 width=7 by crx_inv_lift/ qed.
+/3 width=8 by crx_inv_lift/ qed.
 
-lemma cix_inv_lift: ∀h,g,G,L,U. ⦃G, L⦄ ⊢ 𝐈[h, g]⦃U⦄ → ∀K,d,e. ⇩[d, e] L ≡ K →
+lemma cix_inv_lift: ∀h,g,G,L,U. ⦃G, L⦄ ⊢ 𝐈[h, g]⦃U⦄ → ∀K,s,d,e. ⇩[s, d, e] L ≡ K →
                     ∀T. ⇧[d, e] T ≡ U → ⦃G, K⦄ ⊢ 𝐈[h, g]⦃T⦄.
-/3 width=7/ qed-.
+/3 width=8 by crx_lift/ qed-.

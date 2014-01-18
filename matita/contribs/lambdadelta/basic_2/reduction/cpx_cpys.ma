@@ -12,17 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reduction/crr_lift.ma".
-include "basic_2/reduction/cir.ma".
+include "basic_2/substitution/cpys_alt.ma".
+include "basic_2/reduction/cpx.ma".
 
-(* CONTEXT-SENSITIVE IRREDUCIBLE TERMS **************************************)
+(* CONTEXT-SENSITIVE EXTENDED PARALLEL REDUCTION FOR TERMS ******************)
 
-(* Properties on relocation *************************************************)
+(* Properties on context-sensitive extended multiple substitution for terms *)
 
-lemma cir_lift: ∀G,K,T. ⦃G, K⦄ ⊢ 𝐈⦃T⦄ → ∀L,s,d,e. ⇩[s, d, e] L ≡ K →
-                ∀U. ⇧[d, e] T ≡ U → ⦃G, L⦄ ⊢ 𝐈⦃U⦄.
-/3 width=8 by crr_inv_lift/ qed.
+lemma cpys_cpx: ∀h,g,G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶*×[d, e] T2 → ⦃G, L⦄ ⊢ T1 ➡[h, g] T2.
+#h #g #G #L #T1 #T2 #d #e #H @(cpys_ind_alt … H) -G -L -T1 -T2 -d -e
+/2 width=7 by cpx_delta, cpx_bind, cpx_flat/
+qed.
 
-lemma cir_inv_lift: ∀G,L,U. ⦃G, L⦄ ⊢ 𝐈⦃U⦄ → ∀K,s,d,e. ⇩[s, d, e] L ≡ K →
-                    ∀T. ⇧[d, e] T ≡ U → ⦃G, K⦄ ⊢ 𝐈⦃T⦄.
-/3 width=8 by crr_lift/ qed-.
+lemma cpy_cpx: ∀h,g,G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶×[d, e] T2 → ⦃G, L⦄ ⊢ T1 ➡[h, g] T2.
+/3 width=3 by cpy_cpys, cpys_cpx/ qed.

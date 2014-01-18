@@ -60,13 +60,11 @@ lemma cpys_refl: ∀G,L,d,e. reflexive … (cpys d e G L).
 /2 width=1 by cpy_cpys/ qed.
 
 lemma cpys_bind: ∀G,L,V1,V2,d,e. ⦃G, L⦄ ⊢ V1 ▶*×[d, e] V2 →
-                 ∀I,T1,T2. ⦃G, L.ⓑ{I}V2⦄ ⊢ T1 ▶*×[⫯d, e] T2 →
+                 ∀I,T1,T2. ⦃G, L.ⓑ{I}V1⦄ ⊢ T1 ▶*×[⫯d, e] T2 →
                  ∀a. ⦃G, L⦄ ⊢ ⓑ{a,I}V1.T1 ▶*×[d, e] ⓑ{a,I}V2.T2.
 #G #L #V1 #V2 #d #e #HV12 @(cpys_ind … HV12) -V2
 [ #I #T1 #T2 #HT12 @(cpys_ind … HT12) -T2 /3 width=5 by cpys_strap1, cpy_bind/
-| #V #V2 #_ #HV2 #IHV1 #I #T1 #T2 #HT12 #a
-  lapply (lsuby_cpys_trans … HT12 (L.ⓑ{I}V) ?) -HT12
-  /3 width=5 by cpys_strap1, cpy_bind, lsuby_succ/
+| /3 width=5 by cpys_strap1, cpy_bind/
 ]
 qed.
 
@@ -131,13 +129,13 @@ qed-.
 
 lemma cpys_inv_bind1: ∀a,I,G,L,V1,T1,U2,d,e. ⦃G, L⦄ ⊢ ⓑ{a,I}V1.T1 ▶*×[d, e] U2 →
                       ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ▶*×[d, e] V2 &
-                               ⦃G, L.ⓑ{I}V2⦄ ⊢ T1 ▶*×[⫯d, e] T2 &
+                               ⦃G, L.ⓑ{I}V1⦄ ⊢ T1 ▶*×[⫯d, e] T2 &
                                U2 = ⓑ{a,I}V2.T2.
 #a #I #G #L #V1 #T1 #U2 #d #e #H @(cpys_ind … H) -U2
 [ /2 width=5 by ex3_2_intro/
 | #U #U2 #_ #HU2 * #V #T #HV1 #HT1 #H destruct
   elim (cpy_inv_bind1 … HU2) -HU2 #V2 #T2 #HV2 #HT2 #H
-  lapply (lsuby_cpys_trans … HT1 (L.ⓑ{I}V2) ?) -HT1
+  lapply (lsuby_cpy_trans … HT2 (L.ⓑ{I}V1) ?) -HT2
   /3 width=5 by cpys_strap1, lsuby_succ, ex3_2_intro/
 ]
 qed-.

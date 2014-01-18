@@ -27,7 +27,7 @@ inductive cpy: ynat → ynat → relation4 genv lenv term term ≝
 | cpy_subst: ∀I,G,L,K,V,W,i,d,e. d ≤ yinj i → i < d+e →
              ⇩[i] L ≡ K.ⓑ{I}V → ⇧[0, i+1] V ≡ W → cpy d e G L (#i) W
 | cpy_bind : ∀a,I,G,L,V1,V2,T1,T2,d,e.
-             cpy d e G L V1 V2 → cpy (⫯d) e G (L.ⓑ{I}V2) T1 T2 →
+             cpy d e G L V1 V2 → cpy (⫯d) e G (L.ⓑ{I}V1) T1 T2 →
              cpy d e G L (ⓑ{a,I}V1.T1) (ⓑ{a,I}V2.T2)
 | cpy_flat : ∀I,G,L,V1,V2,T1,T2,d,e.
              cpy d e G L V1 V2 → cpy d e G L T1 T2 →
@@ -66,7 +66,7 @@ lemma cpy_full: ∀I,G,K,V,T1,L,d. ⇩[d] L ≡ K.ⓑ{I}V →
   /4 width=5 by cpy_subst, ylt_inj, ex2_2_intro/
 | * [ #a ] #J #W1 #U1 #IHW1 #IHU1 #L #d #HLK
   elim (IHW1 … HLK) -IHW1 #W2 #W #HW12 #HW2
-  [ elim (IHU1 (L.ⓑ{J}W2) (d+1)) -IHU1
+  [ elim (IHU1 (L.ⓑ{J}W1) (d+1)) -IHU1
     /3 width=9 by cpy_bind, ldrop_drop, lift_bind, ex2_2_intro/
   | elim (IHU1 … HLK) -IHU1 -HLK
     /3 width=8 by cpy_flat, lift_flat, ex2_2_intro/
@@ -145,7 +145,7 @@ lemma cpy_split_up: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶×[d, e] T2 → ∀i.
   elim (IHV12 i) -IHV12 // #V
   elim (IHT12 (i+1)) -IHT12 /2 width=1 by yle_succ/ -Hide
   >yplus_SO2 >yplus_succ1 #T #HT1 #HT2
-  lapply (lsuby_cpy_trans … HT1 (L.ⓑ{I}V) ?) -HT1
+  lapply (lsuby_cpy_trans … HT2 (L.ⓑ{I}V) ?) -HT2
   /3 width=5 by lsuby_succ, ex2_intro, cpy_bind/
 | #I #G #L #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #i #Hide
   elim (IHV12 i) -IHV12 // elim (IHT12 i) -IHT12 // -Hide
@@ -164,7 +164,7 @@ lemma cpy_split_down: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶×[d, e] T2 → ∀
   elim (IHV12 i) -IHV12 // #V
   elim (IHT12 (i+1)) -IHT12 /2 width=1 by yle_succ/ -Hide
   >yplus_SO2 >yplus_succ1 #T #HT1 #HT2
-  lapply (lsuby_cpy_trans … HT1 (L. ⓑ{I} V) ?) -HT1
+  lapply (lsuby_cpy_trans … HT2 (L.ⓑ{I}V) ?) -HT2
   /3 width=5 by lsuby_succ, ex2_intro, cpy_bind/
 | #I #G #L #V1 #V2 #T1 #T2 #d #e #_ #_ #IHV12 #IHT12 #i #Hide
   elim (IHV12 i) -IHV12 // elim (IHT12 i) -IHT12 // -Hide
@@ -230,7 +230,7 @@ qed-.
 fact cpy_inv_bind1_aux: ∀G,L,U1,U2,d,e. ⦃G, L⦄ ⊢ U1 ▶×[d, e] U2 →
                         ∀a,I,V1,T1. U1 = ⓑ{a,I}V1.T1 →
                         ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ▶×[d, e] V2 &
-                                 ⦃G, L. ⓑ{I}V2⦄ ⊢ T1 ▶×[⫯d, e] T2 &
+                                 ⦃G, L. ⓑ{I}V1⦄ ⊢ T1 ▶×[⫯d, e] T2 &
                                  U2 = ⓑ{a,I}V2.T2.
 #G #L #U1 #U2 #d #e * -G -L -U1 -U2 -d -e
 [ #I #G #L #d #e #b #J #W1 #U1 #H destruct
@@ -242,7 +242,7 @@ qed-.
 
 lemma cpy_inv_bind1: ∀a,I,G,L,V1,T1,U2,d,e. ⦃G, L⦄ ⊢ ⓑ{a,I} V1. T1 ▶×[d, e] U2 →
                      ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ▶×[d, e] V2 &
-                              ⦃G, L.ⓑ{I}V2⦄ ⊢ T1 ▶×[⫯d, e] T2 &
+                              ⦃G, L.ⓑ{I}V1⦄ ⊢ T1 ▶×[⫯d, e] T2 &
                               U2 = ⓑ{a,I}V2.T2.
 /2 width=3 by cpy_inv_bind1_aux/ qed-.
 

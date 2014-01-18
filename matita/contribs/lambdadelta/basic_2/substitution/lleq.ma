@@ -50,12 +50,7 @@ lemma lleq_bind: ∀a,I,L1,L2,V,T,d.
 #a #I #L1 #L2 #V #T #d * #HL12 #IHV * #_ #IHT @conj // -HL12
 #X @conj #H elim (cpys_inv_bind1 … H) -H
 #W #U #HVW #HTU #H destruct
-elim (IHV W) -IHV #H1VW #H1WV
-elim (IHT U) -IHT #H1TU #H1UT
-@cpys_bind /2 width=1 by/ -HVW -H1VW -H1WV
-[ @(lsuby_cpys_trans … (L2.ⓑ{I}V))
-| @(lsuby_cpys_trans … (L1.ⓑ{I}V))
-] /4 width=5 by lsuby_cpys_trans, lsuby_succ/ (**) (* full auto too slow *)
+elim (IHV W) -IHV elim (IHT U) -IHT /3 width=1 by cpys_bind/
 qed.
 
 lemma lleq_flat: ∀I,L1,L2,V,T,d.

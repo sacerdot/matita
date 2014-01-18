@@ -23,11 +23,11 @@ include "basic_2/reduction/lpr.ma".
 
 (* Basic_1: includes: wcpr0_drop *)
 lemma lpr_ldrop_conf: ∀G. dropable_sn (lpr G).
-/3 width=5 by lpx_sn_deliftable_dropable, cpr_inv_lift1/ qed-.
+/3 width=6 by lpx_sn_deliftable_dropable, cpr_inv_lift1/ qed-.
 
 (* Basic_1: includes: wcpr0_drop_back *)
 lemma ldrop_lpr_trans: ∀G. dedropable_sn (lpr G).
-/3 width=9 by lpx_sn_liftable_dedropable, cpr_lift/ qed-.
+/3 width=10 by lpx_sn_liftable_dedropable, cpr_lift/ qed-.
 
 lemma lpr_ldrop_trans_O1: ∀G. dropable_dx (lpr G).
 /2 width=3 by lpx_sn_dropable/ qed-.
