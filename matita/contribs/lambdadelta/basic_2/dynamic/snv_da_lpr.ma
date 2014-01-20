@@ -29,7 +29,7 @@ fact da_cpr_lpr_aux: ∀h,g,G0,L0,T0.
 #h #g #G0 #L0 #T0 #IH3 #IH2 #IH1 #G1 #L1 * * [|||| * ]
 [ #k #_ #_ #_ #_ #l #H2 #X3 #H3 #L2 #_ -IH3 -IH2 -IH1
   lapply (da_inv_sort … H2) -H2
-  lapply (cpr_inv_sort1 … H3) -H3 #H destruct /2 width=1/
+  lapply (cpr_inv_sort1 … H3) -H3 #H destruct /2 width=1 by da_sort/
 | #i #HG0 #HL0 #HT0 #H1 #l #H2 #X3 #H3 #L2 #HL12 destruct -IH3 -IH2
   elim (snv_inv_lref … H1) -H1 #I0 #K0 #X0 #H #HX0
   elim (da_inv_lref … H2) -H2 * #K1 [ #V1 | #W1 #l1 ] #HLK1 [ #HV1 | #HW1 #H ] destruct
@@ -46,7 +46,7 @@ fact da_cpr_lpr_aux: ∀h,g,G0,L0,T0.
     elim (lpr_ldrop_conf … HLK1 … HL12) -HLK1 -HL12 #X #H #HLK2
     elim (lpr_inv_pair1 … H) -H #K2 #V2 #HK12 #_ #H destruct
     lapply (ldrop_fwd_drop2 … HLK2) -V2
-    /4 width=7 by da_lift, fqup_fpbg/
+    /4 width=8 by da_lift, fqup_fpbg/
   ]
 | #p #_ #_ #HT0 #H1 destruct -IH3 -IH2 -IH1
   elim (snv_inv_gref … H1)

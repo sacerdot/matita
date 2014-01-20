@@ -27,7 +27,7 @@ lemma lsubsv_lsstas_trans: ∀h,g,G,L2,T,U2,l1. ⦃G, L2⦄ ⊢ T •*[h, g, l1]
                            ∀L1. G ⊢ L1 ¡⊑[h, g] L2 →
                            ∃∃U1. ⦃G, L1⦄ ⊢ T •*[h, g, l1] U1 & ⦃G, L1⦄ ⊢ U1 ⬌* U2.
 #h #g #G #L2 #T #U #l1 #H @(lsstas_ind_alt … H) -G -L2 -T -U -l1
-[1,2: /2 width=3/
+[1,2: /2 width=3 by lstar_O, ex2_intro/
 | #G #L2 #K2 #X #Y #U #i #l1 #HLK2 #_ #HYU #IHXY #l2 #Hl12 #Hl2 #L1 #HL12
   elim (da_inv_lref … Hl2) -Hl2 * #K0 #V0 [| #l0 ] #HK0 #HV0
   lapply (ldrop_mono … HK0 … HLK2) -HK0 #H destruct
@@ -37,7 +37,7 @@ lemma lsubsv_lsstas_trans: ∀h,g,G,L2,T,U2,l1. ⦃G, L2⦄ ⊢ T •*[h, g, l1]
     elim (IHXY … Hl12 HV0 … HK12) -K2 -l2 #T #HXT #HTY
     lapply (ldrop_fwd_drop2 … HLK1) #H
     elim (lift_total T 0 (i+1))
-    /3 width=11 by lsstas_ldef, cpcs_lift, ex2_intro/
+    /3 width=12 by lsstas_ldef, cpcs_lift, ex2_intro/
   | #V #l0 #_ #_ #_ #_ #_ #_ #_ #H destruct
   ]
 | #G #L2 #K2 #X #Y #U #i #l1 #l #HLK2 #_ #_ #HYU #IHXY #l2 #Hl12 #Hl2 #L1 #HL12 -l
@@ -52,7 +52,7 @@ lemma lsubsv_lsstas_trans: ∀h,g,G,L2,T,U2,l1. ⦃G, L2⦄ ⊢ T •*[h, g, l1]
     elim (IHXY … Hl12 HV0 … HK12) -K2 -Hl12 #Y0
     lapply (ldrop_fwd_drop2 … HLK1)
     elim (lift_total Y0 0 (i+1))
-    /3 width=11 by lsstas_ldec, cpcs_lift, ex2_intro/
+    /3 width=12 by lsstas_ldec, cpcs_lift, ex2_intro/
   | #V #l #_ #_ #HVX #_ #HV #HX #HK12 #_ #H destruct
     lapply (da_mono … HX … HV0) -HX #H destruct
     elim (IHXY … Hl12 HV0 … HK12) -K2 #Y0 #HXY0 #HY0
@@ -62,7 +62,7 @@ lemma lsubsv_lsstas_trans: ∀h,g,G,L2,T,U2,l1. ⦃G, L2⦄ ⊢ T •*[h, g, l1]
     lapply (cpcs_trans … HWY0 … HY0) -Y0
     lapply (ldrop_fwd_drop2 … HLK1)
     elim (lift_total W 0 (i+1))
-    /4 width=11 by lsstas_ldef, lsstas_cast, cpcs_lift, ex2_intro/
+    /4 width=12 by lsstas_ldef, lsstas_cast, cpcs_lift, ex2_intro/
   ]
 | #a #I #G #L2 #V2 #T2 #U2 #l1 #_ #IHTU2 #l2 #Hl12 #Hl2 #L1 #HL12
   lapply (da_inv_bind … Hl2) -Hl2 #Hl2

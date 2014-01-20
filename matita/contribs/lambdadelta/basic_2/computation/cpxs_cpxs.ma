@@ -159,7 +159,7 @@ lemma fqu_cpxs_trans_neq: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, 
   ]
 | #G #L #K #T1 #U1 #e #HLK #HTU1 #T2 #HT12 #H elim (lift_total T2 0 (e+1))
   #U2 #HTU2 @(ex3_intro … U2)
-  [1,3: /2 width=9 by cpxs_lift, fqu_drop/
+  [1,3: /2 width=10 by cpxs_lift, fqu_drop/
   | #H0 destruct /3 width=5 by lift_inj/
 ]
 qed-.

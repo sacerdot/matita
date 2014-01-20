@@ -25,7 +25,7 @@ definition scast: ∀h. sd h → nat → relation4 genv lenv term term ≝
 (* activate genv *)
 inductive snv (h:sh) (g:sd h): relation3 genv lenv term ≝
 | snv_sort: ∀G,L,k. snv h g G L (⋆k)
-| snv_lref: ∀I,G,L,K,V,i. ⇩[0, i] L ≡ K.ⓑ{I}V → snv h g G K V → snv h g G L (#i)
+| snv_lref: ∀I,G,L,K,V,i. ⇩[i] L ≡ K.ⓑ{I}V → snv h g G K V → snv h g G L (#i)
 | snv_bind: ∀a,I,G,L,V,T. snv h g G L V → snv h g G (L.ⓑ{I}V) T → snv h g G L (ⓑ{a,I}V.T)
 | snv_appl: ∀a,G,L,V,W,W0,T,U,l. snv h g G L V → snv h g G L T →
             ⦃G, L⦄ ⊢ V ▪[h, g] l+1 → ⦃G, L⦄ ⊢ V •[h, g] W → ⦃G, L⦄ ⊢ W ➡* W0 →
@@ -40,10 +40,10 @@ interpretation "stratified native validity (term)"
 (* Basic inversion lemmas ***************************************************)
 
 fact snv_inv_lref_aux: ∀h,g,G,L,X. ⦃G, L⦄ ⊢ X ¡[h, g] → ∀i. X = #i →
-                       ∃∃I,K,V. ⇩[0, i] L ≡ K.ⓑ{I}V & ⦃G, K⦄ ⊢ V ¡[h, g].
+                       ∃∃I,K,V. ⇩[i] L ≡ K.ⓑ{I}V & ⦃G, K⦄ ⊢ V ¡[h, g].
 #h #g #G #L #X * -G -L -X
 [ #G #L #k #i #H destruct
-| #I #G #L #K #V #i0 #HLK #HV #i #H destruct /2 width=5/
+| #I #G #L #K #V #i0 #HLK #HV #i #H destruct /2 width=5 by ex2_3_intro/
 | #a #I #G #L #V #T #_ #_ #i #H destruct
 | #a #G #L #V #W #W0 #T #U #l #_ #_ #_ #_ #_ #_ #i #H destruct
 | #G #L #W #T #U #l #_ #_ #_ #_ #_ #i #H destruct
@@ -51,7 +51,7 @@ fact snv_inv_lref_aux: ∀h,g,G,L,X. ⦃G, L⦄ ⊢ X ¡[h, g] → ∀i. X = #i 
 qed-.
 
 lemma snv_inv_lref: ∀h,g,G,L,i. ⦃G, L⦄ ⊢ #i ¡[h, g] →
-                    ∃∃I,K,V. ⇩[0, i] L ≡ K.ⓑ{I}V & ⦃G, K⦄ ⊢ V ¡[h, g].
+                    ∃∃I,K,V. ⇩[i] L ≡ K.ⓑ{I}V & ⦃G, K⦄ ⊢ V ¡[h, g].
 /2 width=3 by snv_inv_lref_aux/ qed-.
 
 fact snv_inv_gref_aux: ∀h,g,G,L,X. ⦃G, L⦄ ⊢ X ¡[h, g] → ∀p. X = §p → ⊥.
@@ -72,7 +72,7 @@ fact snv_inv_bind_aux: ∀h,g,G,L,X. ⦃G, L⦄ ⊢ X ¡[h, g] → ∀a,I,V,T. X
 #h #g #G #L #X * -G -L -X
 [ #G #L #k #a #I #V #T #H destruct
 | #I0 #G #L #K #V0 #i #_ #_ #a #I #V #T #H destruct
-| #b #I0 #G #L #V0 #T0 #HV0 #HT0 #a #I #V #T #H destruct /2 width=1/
+| #b #I0 #G #L #V0 #T0 #HV0 #HT0 #a #I #V #T #H destruct /2 width=1 by conj/
 | #b #G #L #V0 #W0 #W00 #T0 #U0 #l #_ #_ #_ #_#_ #_ #a #I #V #T #H destruct
 | #G #L #W0 #T0 #U0 #l #_ #_ #_ #_ #_ #a #I #V #T #H destruct
 ]
@@ -90,7 +90,7 @@ fact snv_inv_appl_aux: ∀h,g,G,L,X. ⦃G, L⦄ ⊢ X ¡[h, g] → ∀V,T. X = �
 [ #G #L #k #V #T #H destruct
 | #I #G #L #K #V0 #i #_ #_ #V #T #H destruct
 | #a #I #G #L #V0 #T0 #_ #_ #V #T #H destruct
-| #a #G #L #V0 #W0 #W00 #T0 #U0 #l #HV0 #HT0 #Hl #HVW0 #HW00 #HTU0 #V #T #H destruct /2 width=8/
+| #a #G #L #V0 #W0 #W00 #T0 #U0 #l #HV0 #HT0 #Hl #HVW0 #HW00 #HTU0 #V #T #H destruct /2 width=8 by ex6_5_intro/
 | #G #L #W0 #T0 #U0 #l #_ #_ #_ #_ #_ #V #T #H destruct
 ]
 qed-.
@@ -109,7 +109,7 @@ fact snv_inv_cast_aux: ∀h,g,G,L,X. ⦃G, L⦄ ⊢ X ¡[h, g] → ∀W,T. X = �
 | #I #G #L #K #V #i #_ #_ #W #T #H destruct
 | #a #I #G #L #V #T0 #_ #_ #W #T #H destruct
 | #a #G #L #V #W0 #W00 #T0 #U #l #_ #_ #_ #_ #_ #_ #W #T #H destruct
-| #G #L #W0 #T0 #U0 #l #HW0 #HT0 #Hl #HTU0 #HUW0 #W #T #H destruct /2 width=4/
+| #G #L #W0 #T0 #U0 #l #HW0 #HT0 #Hl #HTU0 #HUW0 #W #T #H destruct /2 width=4 by ex5_2_intro/
 ]
 qed-.
 

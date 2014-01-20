@@ -25,7 +25,7 @@ include "basic_2/computation/lsubc_ldrops.ma".
 (* Basic_1: was: sc3_arity_csubc *)
 theorem aacr_aaa_csubc_lifts: ∀RR,RS,RP.
                               acp RR RS RP → acr RR RS RP (λG,L,T. RP G L T) →
-                              ∀G,L1,T,A. ⦃G, L1⦄ ⊢ T ⁝ A → ∀L0,des. ⇩*[des] L0 ≡ L1 →
+                              ∀G,L1,T,A. ⦃G, L1⦄ ⊢ T ⁝ A → ∀L0,des. ⇩*[Ⓕ, des] L0 ≡ L1 →
                               ∀T0. ⇧*[des] T ≡ T0 → ∀L2. G ⊢ L2 ⊑[RP] L0 →
                               ⦃G, L2, T0⦄ ϵ[RP] 〚A〛.
 #RR #RS #RP #H1RP #H2RP #G #L1 #T #A #H elim H -G -L1 -T -A
@@ -67,8 +67,9 @@ theorem aacr_aaa_csubc_lifts: ∀RR,RS,RP.
   @(aacr_abst  … H1RP H2RP) [ /2 width=5 by/ ]
   #L3 #V3 #W3 #T3 #des3 #HL32 #HW03 #HT03 #H1B #H2B
   elim (ldrops_lsubc_trans … H1RP H2RP … HL32 … HL02) -L2 #L2 #HL32 #HL20
-  lapply (aaa_lifts … L2 W3 … (des @@ des3) … HLWB) -HLWB /2 width=3 by ldrops_trans, lifts_trans/ #HLW2B
-  @(IHA (L2. ⓛW3) … (des + 1 @@ des3 + 1)) -IHA /2 width=3/ /3 width=5 by lsubc_abbr, ldrops_trans, ldrops_skip/
+  lapply (aaa_lifts … L2 W3 … (des @@ des3) … HLWB) -HLWB /2 width=4 by ldrops_trans, lifts_trans/ #HLW2B
+  @(IHA (L2. ⓛW3) … (des + 1 @@ des3 + 1)) -IHA 
+  /3 width=5 by lsubc_abbr, ldrops_trans, ldrops_skip, lifts_trans/
 | #G #L #V #T #B #A #_ #_ #IHB #IHA #L0 #des #HL0 #X #H #L2 #HL20
   elim (lifts_inv_flat1 … H) -H #V0 #T0 #HV0 #HT0 #H destruct
   /3 width=10 by ldrops_nil, lifts_nil/

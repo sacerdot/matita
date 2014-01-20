@@ -33,6 +33,11 @@
          Closure of context-sensitive extended computation
          for native validity.
    </news>
+   <news date="2014 January 20.">
+         Parametrized slicing for local environments
+	 comprises both versions of this operation
+	 (one from basic_1, the other used in basic_2 till now).
+   </news>
    <news date="2013 August 7.">
          Passive support for global environments.
    </news>

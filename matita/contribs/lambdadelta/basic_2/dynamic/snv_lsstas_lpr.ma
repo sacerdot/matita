@@ -52,13 +52,13 @@ fact lsstas_cpr_lpr_aux: ∀h,g,G0,L0,T0.
   ]
   [ elim (IH1 … HWl1 … HW0 … HW12 … HK12) -IH1 -HW0 /2 width=1 by fqup_fpbg/ #V2 #HWV2 #HV2
     elim (lift_total V2 0 (i+1))
-    /6 width=11 by fqup_fpbg, cpcs_lift, lsstas_ldec, ex2_intro/
+    /6 width=12 by fqup_fpbg, cpcs_lift, lsstas_ldec, ex2_intro/
   | elim (IH1 … HVl1 … HW0 … HV12 … HK12) -IH1 -HVl1 -HW0 -HV12 -HK12 -IH2 /2 width=1 by fqup_fpbg/ #W2 #HVW2 #HW02
     elim (lift_total W2 0 (i+1))
-    /4 width=11 by cpcs_lift, lsstas_ldef, ex2_intro/
+    /4 width=12 by cpcs_lift, lsstas_ldef, ex2_intro/
   | elim (IH1 … HVl1 … HW0 … HVX0 … HK12) -IH1 -HVl1 -HW0 -HVX0 -HK12 -IH2 -V2 /2 width=1 by fqup_fpbg/ -l1 #W2 #HXW2 #HW02
     elim (lift_total W2 0 (i+1))
-    /3 width=11 by cpcs_lift, lsstas_lift, ex2_intro/
+    /3 width=12 by cpcs_lift, lsstas_lift, ex2_intro/
   ]
 | #p #_ #_ #HT0 #H1 destruct -IH4 -IH3 -IH2 -IH1
   elim (snv_inv_gref … H1)

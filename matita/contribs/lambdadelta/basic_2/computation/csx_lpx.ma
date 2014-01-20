@@ -23,9 +23,8 @@ include "basic_2/computation/csx_lift.ma".
 
 lemma csx_lpx_conf: ∀h,g,G,L1,L2. ⦃G, L1⦄ ⊢ ➡[h, g] L2 →
                     ∀T. ⦃G, L1⦄ ⊢ ⬊*[h, g] T → ⦃G, L2⦄ ⊢ ⬊*[h, g] T.
-#h #g #G #L1 #L2 #HL12 #T #H @(csx_ind_alt … H) -T #T #_ #IHT
-@csx_intro #T0 #HLT0 #HT0
-@IHT /2 width=2/ -IHT -HT0 /2 width=3 by lpx_cpx_trans/
+#h #g #G #L1 #L2 #HL12 #T #H @(csx_ind_alt … H) -T
+/4 width=3 by csx_intro, lpx_cpx_trans/
 qed.
 
 lemma csx_abst: ∀h,g,a,G,L,W. ⦃G, L⦄ ⊢ ⬊*[h, g] W →
@@ -36,8 +35,8 @@ elim (cpx_inv_abst1 … H1) -H1
 #W0 #T0 #HLW0 #HLT0 #H destruct
 elim (eq_false_inv_tpair_sn … H2) -H2
 [ -IHT #H lapply (csx_cpx_trans … HLT0) // -HT
-  #HT0 lapply (csx_lpx_conf … (L.ⓛW0) … HT0) -HT0 /2 width=1/ /3 width=1/
-| -IHW -HLW0 -HT * #H destruct /3 width=1/
+  #HT0 lapply (csx_lpx_conf … (L.ⓛW0) … HT0) -HT0 /3 width=1 by lpx_pair/
+| -IHW -HLW0 -HT * #H destruct /3 width=1 by/
 ]
 qed.
 
@@ -48,13 +47,11 @@ lemma csx_abbr: ∀h,g,a,G,L,V. ⦃G, L⦄ ⊢ ⬊*[h, g] V →
 elim (cpx_inv_abbr1 … H1) -H1 *
 [ #V1 #T1 #HLV1 #HLT1 #H destruct
   elim (eq_false_inv_tpair_sn … H2) -H2
-  [ #HV1 @IHV // /2 width=1/ -HV1
-    @(csx_lpx_conf … (L.ⓓV)) /2 width=1/ -HLV1 /2 width=3 by csx_cpx_trans/
-  | -IHV -HLV1 * #H destruct /3 width=1/
+  [ /4 width=5 by csx_cpx_trans, csx_lpx_conf, lpx_pair/
+  | -IHV -HLV1 * #H destruct /3 width=1 by cpx_cpxs/
   ]
-| -IHV -IHT -H2 #T0 #HLT0 #HT0
-  lapply (csx_cpx_trans … HT … HLT0) -T #HLT0
-  lapply (csx_inv_lift … HLT0 … HT0) -T0 /2 width=3/
+| -IHV -IHT -H2
+  /3 width=8 by csx_cpx_trans, csx_inv_lift, ldrop_drop/
 ]
 qed.
 
@@ -66,11 +63,11 @@ fact csx_appl_beta_aux: ∀h,g,a,G,L,U1. ⦃G, L⦄ ⊢ ⬊*[h, g] U1 →
 elim (cpx_inv_appl1 … H1) -H1 *
 [ -HT1 #V0 #Y #HLV0 #H #H0 destruct
   elim (cpx_inv_abst1 … H) -H #W0 #T0 #HLW0 #HLT0 #H destruct
-  @IHT1 -IHT1 [4: // | skip |3: #H destruct /2 width=1/ ] -H2
-  lapply (lsubr_cpx_trans … HLT0 (L.ⓓⓝW.V) ?) -HLT0 [ /2 width=1/ ] /3 width=1/
+  @IHT1 -IHT1 [4: // | skip |3: #H destruct /2 width=1 by/ ] -H2
+  lapply (lsubr_cpx_trans … HLT0 (L.ⓓⓝW.V) ?) -HLT0 /3 width=1 by cpx_bind, cpx_flat, lsubr_abst/
 | -IHT1 -H2 #b #V0 #W0 #W2 #T0 #T2 #HLV0 #HLW02 #HLT02 #H1 #H3 destruct
-  lapply (lsubr_cpx_trans … HLT02 (L.ⓓⓝW0.V) ?) -HLT02 [ /2 width=1/ ] #HT02
-  @(csx_cpx_trans … HT1) -HT1 /3 width=1/
+  lapply (lsubr_cpx_trans … HLT02 (L.ⓓⓝW0.V) ?) -HLT02
+  /4 width=5 by csx_cpx_trans, cpx_bind, cpx_flat, lsubr_abst/
 | -HT1 -IHT1 -H2 #b #V0 #V1 #W0 #W1 #T0 #T3 #_ #_ #_ #_ #H destruct
 ]
 qed-.
@@ -99,20 +96,20 @@ elim (cpx_inv_appl1 … HL) -HL *
       | * #_ #H elim H //
       ]
     | -H -HVT #H
-      lapply (cpx_lift … HLV10 (L. ⓓV) … HV12 … HV04) -HLV10 -HV12 /2 width=1/ #HV24
-      @(IHVT … H … HV04) -IHVT // -H -HV04 /4 width=1/
+      lapply (cpx_lift … HLV10 (L.ⓓV) (Ⓣ) … HV12 … HV04) -HLV10 -HV12 /2 width=1 by ldrop_drop/ #HV24
+      @(IHVT … H … HV04) -IHVT /4 width=1 by cpx_cpxs, cpx_bind, cpx_flat/
     ]
   | -H -IHVT #T0 #HLT0 #HT0 #H0 destruct
-    lapply (csx_cpx_trans … HVT (ⓐV2.T0) ?) /2 width=1/ -T #HVT0
-    lapply (csx_inv_lift … L … 1 HVT0 ? ? ?) -HVT0 [ /2 width=4/ |2,3: skip | /2 width=1/ ] -V2 -T0 #HVY
-    @(csx_cpx_trans … HVY) /2 width=1/
+    lapply (csx_cpx_trans … HVT (ⓐV2.T0) ?) /2 width=1 by cpx_flat/ -T #HVT0
+    lapply (csx_inv_lift … L … (Ⓣ) … 1 HVT0 ? ? ?) -HVT0
+    /3 width=5 by csx_cpx_trans, cpx_pair_sn, ldrop_drop, lift_flat/
   ]
 | -HV -HV12 -HVT -IHVT -H #b #V0 #W0 #W1 #T0 #T1 #_ #_ #_ #H destruct
 | -IHVT -H #b #V0 #V3 #W0 #W1 #T0 #T1 #HLV10 #HV03 #HLW01 #HLT01 #H1 #H2 destruct
-  lapply (cpx_lift … HLV10 (L. ⓓW0) … HV12 … HV03) -HLV10 -HV12 -HV03 /2 width=1/ #HLV23
+  lapply (cpx_lift … HLV10 (L. ⓓW0) … HV12 … HV03) -HLV10 -HV12 -HV03 /2 width=2 by ldrop_drop/ #HLV23
   @csx_abbr /2 width=3 by csx_cpx_trans/ -HV
-  @(csx_lpx_conf … (L. ⓓW0)) /2 width=1/ -W1
-  @(csx_cpxs_trans … HVT) -HVT /3 width=1/
+  @(csx_lpx_conf … (L.ⓓW0)) /2 width=1 by lpx_pair/ -W1
+  /4 width=5 by csx_cpxs_trans, cpx_cpxs, cpx_flat/
 ]
 qed-.
 
@@ -130,18 +127,12 @@ elim (cpx_inv_appl1_simple … HL) -HL //
 #V0 #T0 #HLV0 #HLT10 #H0 destruct
 elim (eq_false_inv_tpair_sn … H) -H
 [ -IHT1 #HV0
-  @(csx_cpx_trans … (ⓐV0.T1)) /2 width=1/ -HLT10
-  @IHV -IHV // -H1T1 -H3T1 /2 width=1/ -HV0
-  #T2 #HLT12 #HT12
-  @(csx_cpx_trans … (ⓐV.T2)) /2 width=1/ -HLV0
-  @H2T1 -H2T1 // -HLT12 /2 width=1/
+  @(csx_cpx_trans … (ⓐV0.T1)) /2 width=1 by cpx_flat/ -HLT10
+  @IHV -IHV /4 width=3 by csx_cpx_trans, cpx_pair_sn/
 | -IHV -H1T1 -HLV0 * #H #H1T10 destruct
   elim (tstc_dec T1 T0) #H2T10
-  [ @IHT1 -IHT1 // /2 width=1/ -H1T10 /2 width=3/ -H3T1
-    #T2 #HLT02 #HT02
-    @H2T1 -H2T1 /2 width=3/ -HLT10 -HLT02 /3 width=3/
-  | -IHT1 -H3T1 -H1T10
-    @H2T1 -H2T1 /2 width=1/
+  [ @IHT1 -IHT1 /4 width=3 by cpxs_strap2, cpxs_strap1, tstc_canc_sn, simple_tstc_repl_dx/
+  | -IHT1 -H3T1 -H1T10 /3 width=1 by cpx_cpxs/
   ]
 ]
 qed.

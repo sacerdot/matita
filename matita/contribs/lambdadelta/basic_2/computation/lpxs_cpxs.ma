@@ -77,7 +77,7 @@ lemma cpxs_inv_abbr1: ∀h,g,a,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓓ{a}V1.T1 ➡*[h, 
   ]
 | #U1 #HTU1 #HU01
   elim (lift_total U2 0 1) #U #HU2
-  /6 width=11 by cpxs_strap1, cpx_lift, ldrop_drop, ex3_intro, or_intror/
+  /6 width=12 by cpxs_strap1, cpx_lift, ldrop_drop, ex3_intro, or_intror/
 ]
 qed-.
 

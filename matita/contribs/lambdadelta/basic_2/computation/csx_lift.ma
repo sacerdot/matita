@@ -21,9 +21,9 @@ include "basic_2/computation/csx.ma".
 (* Relocation properties ****************************************************)
 
 (* Basic_1: was just: sn3_lift *)
-lemma csx_lift: ∀h,g,G,L2,L1,T1,d,e. ⦃G, L1⦄ ⊢ ⬊*[h, g] T1 →
-                ∀T2. ⇩[d, e] L2 ≡ L1 → ⇧[d, e] T1 ≡ T2 → ⦃G, L2⦄ ⊢ ⬊*[h, g] T2.
-#h #g #G #L2 #L1 #T1 #d #e #H elim H -T1 #T1 #_ #IHT1 #T2 #HL21 #HT12
+lemma csx_lift: ∀h,g,G,L2,L1,T1,s,d,e. ⦃G, L1⦄ ⊢ ⬊*[h, g] T1 →
+                ∀T2. ⇩[s, d, e] L2 ≡ L1 → ⇧[d, e] T1 ≡ T2 → ⦃G, L2⦄ ⊢ ⬊*[h, g] T2.
+#h #g #G #L2 #L1 #T1 #s #d #e #H elim H -T1 #T1 #_ #IHT1 #T2 #HL21 #HT12
 @csx_intro #T #HLT2 #HT2
 elim (cpx_inv_lift1 … HLT2 … HL21 … HT12) -HLT2 #T0 #HT0 #HLT10
 @(IHT1 … HLT10) // -L1 -L2 #H destruct
@@ -31,9 +31,9 @@ elim (cpx_inv_lift1 … HLT2 … HL21 … HT12) -HLT2 #T0 #HT0 #HLT10
 qed.
 
 (* Basic_1: was just: sn3_gen_lift *)
-lemma csx_inv_lift: ∀h,g,G,L2,L1,T1,d,e. ⦃G, L1⦄ ⊢ ⬊*[h, g] T1 →
-                    ∀T2. ⇩[d, e] L1 ≡ L2 → ⇧[d, e] T2 ≡ T1 → ⦃G, L2⦄ ⊢ ⬊*[h, g] T2.
-#h #g #G #L2 #L1 #T1 #d #e #H elim H -T1 #T1 #_ #IHT1 #T2 #HL12 #HT21
+lemma csx_inv_lift: ∀h,g,G,L2,L1,T1,s,d,e. ⦃G, L1⦄ ⊢ ⬊*[h, g] T1 →
+                    ∀T2. ⇩[s, d, e] L1 ≡ L2 → ⇧[d, e] T2 ≡ T1 → ⦃G, L2⦄ ⊢ ⬊*[h, g] T2.
+#h #g #G #L2 #L1 #T1 #s #d #e #H elim H -T1 #T1 #_ #IHT1 #T2 #HL12 #HT21
 @csx_intro #T #HLT2 #HT2
 elim (lift_total T d e) #T0 #HT0
 lapply (cpx_lift … HLT2 … HL12 … HT21 … HT0) -HLT2 #HLT10
@@ -44,7 +44,7 @@ qed.
 (* Advanced inversion lemmas ************************************************)
 
 (* Basic_1: was: sn3_gen_def *)
-lemma csx_inv_lref_bind: ∀h,g,I,G,L,K,V,i. ⇩[0, i] L ≡ K.ⓑ{I}V →
+lemma csx_inv_lref_bind: ∀h,g,I,G,L,K,V,i. ⇩[i] L ≡ K.ⓑ{I}V →
                          ⦃G, L⦄ ⊢ ⬊*[h, g] #i → ⦃G, K⦄ ⊢ ⬊*[h, g] V.
 #h #g #I #G #L #K #V #i #HLK #Hi
 elim (lift_total V 0 (i+1))
@@ -54,14 +54,14 @@ qed-.
 (* Advanced properties ******************************************************)
 
 (* Basic_1: was just: sn3_abbr *)
-lemma csx_lref_bind: ∀h,g,I,G,L,K,V,i. ⇩[0, i] L ≡ K.ⓑ{I}V → ⦃G, K⦄ ⊢ ⬊*[h, g] V → ⦃G, L⦄ ⊢ ⬊*[h, g] #i.
+lemma csx_lref_bind: ∀h,g,I,G,L,K,V,i. ⇩[i] L ≡ K.ⓑ{I}V → ⦃G, K⦄ ⊢ ⬊*[h, g] V → ⦃G, L⦄ ⊢ ⬊*[h, g] #i.
 #h #g #I #G #L #K #V #i #HLK #HV
 @csx_intro #X #H #Hi
 elim (cpx_inv_lref1 … H) -H
 [ #H destruct elim Hi //
 | -Hi * #I0 #K0 #V0 #V1 #HLK0 #HV01 #HV1
   lapply (ldrop_mono … HLK0 … HLK) -HLK #H destruct
-  /3 width=7 by csx_lift, csx_cpx_trans, ldrop_fwd_drop2/
+  /3 width=8 by csx_lift, csx_cpx_trans, ldrop_fwd_drop2/
 ]
 qed.
 
@@ -82,7 +82,7 @@ qed.
 lemma csx_fqu_conf: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ →
                     ⦃G1, L1⦄ ⊢ ⬊*[h, g] T1 → ⦃G2, L2⦄ ⊢ ⬊*[h, g] T2.
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2
-/2 width=7 by csx_inv_lref_bind, csx_inv_lift, csx_fwd_flat_dx, csx_fwd_bind_dx, csx_fwd_pair_sn/
+/2 width=8 by csx_inv_lref_bind, csx_inv_lift, csx_fwd_flat_dx, csx_fwd_bind_dx, csx_fwd_pair_sn/
 qed-.
 
 lemma csx_fquq_conf: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, L2, T2⦄ →
@@ -112,7 +112,7 @@ qed-.
 theorem csx_acp: ∀h,g. acp (cpx h g) (eq …) (csx h g).
 #h #g @mk_acp
 [ #G #L elim (deg_total h g 0) /3 width=8 by cnx_sort_iter, ex_intro/
-| /3 width=12 by cnx_lift/
+| /3 width=13 by cnx_lift/
 | /2 width=3 by csx_fwd_flat_dx/
 | /2 width=1 by csx_cast/
 ]

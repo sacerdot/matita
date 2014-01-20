@@ -33,12 +33,12 @@ lapply (lsstas_da_conf … HT1 … Hl2) -HT1
 qed.
 
 lemma cpxs_delta: ∀h,g,I,G,L,K,V,V2,i.
-                  ⇩[0, i] L ≡ K.ⓑ{I}V → ⦃G, K⦄ ⊢ V ➡*[h, g] V2 →
-                  ∀W2. ⇧[0, i + 1] V2 ≡ W2 → ⦃G, L⦄ ⊢ #i ➡*[h, g] W2.
+                  ⇩[i] L ≡ K.ⓑ{I}V → ⦃G, K⦄ ⊢ V ➡*[h, g] V2 →
+                  ∀W2. ⇧[0, i+1] V2 ≡ W2 → ⦃G, L⦄ ⊢ #i ➡*[h, g] W2.
 #h #g #I #G #L #K #V #V2 #i #HLK #H elim H -V2
 [ /3 width=9 by cpx_cpxs, cpx_delta/
 | #V1 lapply (ldrop_fwd_drop2 … HLK) -HLK
-  elim (lift_total V1 0 (i+1)) /4 width=11 by cpx_lift, cpxs_strap1/
+  elim (lift_total V1 0 (i+1)) /4 width=12 by cpx_lift, cpxs_strap1/
 ]
 qed.
 
@@ -46,8 +46,8 @@ qed.
 
 lemma cpxs_inv_lref1: ∀h,g,G,L,T2,i. ⦃G, L⦄ ⊢ #i ➡*[h, g] T2 →
                       T2 = #i ∨
-                      ∃∃I,K,V1,T1. ⇩[0, i] L ≡ K.ⓑ{I}V1 & ⦃G, K⦄ ⊢ V1 ➡*[h, g] T1 &
-                                   ⇧[0, i + 1] T1 ≡ T2.
+                      ∃∃I,K,V1,T1. ⇩[i] L ≡ K.ⓑ{I}V1 & ⦃G, K⦄ ⊢ V1 ➡*[h, g] T1 &
+                                   ⇧[0, i+1] T1 ≡ T2.
 #h #g #G #L #T2 #i #H @(cpxs_ind … H) -T2 /2 width=1 by or_introl/
 #T #T2 #_ #HT2 *
 [ #H destruct
@@ -63,10 +63,10 @@ qed-.
 (* Relocation properties ****************************************************)
 
 lemma cpxs_lift: ∀h,g,G. l_liftable (cpxs h g G).
-/3 width=9 by cpx_lift, cpxs_strap1, l_liftable_LTC/ qed.
+/3 width=10 by cpx_lift, cpxs_strap1, l_liftable_LTC/ qed.
 
 lemma cpxs_inv_lift1: ∀h,g,G. l_deliftable_sn (cpxs h g G).
-/3 width=5 by l_deliftable_sn_LTC, cpx_inv_lift1/
+/3 width=6 by l_deliftable_sn_LTC, cpx_inv_lift1/
 qed-.
 
 (* Properties on supclosure *************************************************)
