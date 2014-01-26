@@ -190,7 +190,7 @@ theorem le_Psi_exp1: ∀n.
       ] #Hcut
      @le_S_S_to_le cut(∀a,b. S a + b = S (a+b)) [//] #Hplus <Hplus >S_pred
       [>eq_minus_S_pred in ⊢ (??%); >S_pred
-        [>plus_minus_commutative
+        [>plus_minus_associative
           [@monotonic_le_minus_l
            cut (∀a. 2*a = a + a) [//] #times2 <times2 
            @monotonic_le_times_r >commutative_times @le_n
@@ -263,7 +263,7 @@ theorem le_Psi_exp4: ∀n. 1 < n →
             [@lt_O_S
             |@(transitive_le ? (m+(m-3)))
               [@monotonic_le_plus_l // 
-              |normalize <plus_n_O >plus_minus_commutative
+              |normalize <plus_n_O >plus_minus_associative
                 [@le_n
                 |>Hm @(transitive_le ? (2*2) ? (le_n_Sn 3))
                  @monotonic_le_times_r //
@@ -297,7 +297,7 @@ theorem le_Psi_exp4: ∀n. 1 < n →
          >commutative_times in ⊢ (? (? (? % ?) ?) ?);
          >associative_times @monotonic_le_times_r
          <exp_plus_times @(le_exp … (lt_O_S ?))
-         >plus_minus_commutative
+         >plus_minus_associative
           [normalize >(plus_n_O (a+(a+0))) in ⊢ (?(?(??%)?)?); @le_n
           |@le_S_S >(times_n_1 2) in ⊢ (?%?); @monotonic_le_times_r @Ha
           ]
@@ -353,7 +353,7 @@ cases (decidable_le 9 m)
         [@lt_O_S |@(le_times_to_le 2) [@lt_O_S |<Hm @lt_to_le @lem]]
       |<Hm <exp_plus_times @(le_exp … (lt_O_S ?))
        whd in match (times 2 m); >commutative_times <times_n_1
-       <plus_minus_commutative
+       <plus_minus_associative
         [@monotonic_le_plus_l @le_pred_n
         |@(transitive_le … lem) @leb_true_to_le //
         ]

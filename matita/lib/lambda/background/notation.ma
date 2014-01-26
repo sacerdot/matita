@@ -37,13 +37,17 @@ notation "hvbox( { term 46 b } # break term 90 i )"
  non associative with precedence 46
  for @{ 'VariableReferenceByIndex $b $i }.
 
-notation "hvbox( 𝛌  . term 46 A )"
+notation "hvbox( 𝛌 . term 46 A )"
    non associative with precedence 46
    for @{ 'Abstraction $A }.
 
-notation "hvbox( { term 46 b } 𝛌  . break term 46 T)"
+notation "hvbox( { term 46 b } 𝛌 . break term 46 T)"
    non associative with precedence 46
    for @{ 'Abstraction $b $T }.
+
+notation "hvbox( 𝛌 term 46 d . break term 46 A )"
+   non associative with precedence 46
+   for @{ 'AnnotatedAbstraction $d $A }.
 
 notation "hvbox( @ term 46 C . break term 46 A )"
    non associative with precedence 46

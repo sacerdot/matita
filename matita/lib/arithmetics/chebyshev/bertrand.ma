@@ -414,7 +414,7 @@ cut (0<n) [@(lt_to_le_to_lt … len) @lt_O_S] #posn
          <exp_S <plus_minus_m_m [2:@lt_O_log //]
          -Hind #Hind <Hclog @(transitive_le … Hind)
          >(eq_log_exp … (le_n ?)) >(eq_log_exp … (le_n ?))
-         >plus_minus_commutative [2:@lt_O_log //]
+         >plus_minus_associative [2:@lt_O_log //]
          cut (2+3 ≤ 2+log 2 m) 
           [@monotonic_le_plus_r @(le_exp_to_le 2) [@le_n|>Hclog @lt_to_le @lt8m]]
          generalize in match (2+log 2 m); #a #Hle >(commutative_times 2 a)

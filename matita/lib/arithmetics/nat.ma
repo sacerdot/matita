@@ -86,7 +86,7 @@ interpretation "natural minus" 'minus x y = (minus x y).
 theorem nat_case:
  ∀n:nat.∀P:nat → Prop. 
   (n=O → P O) → (∀m:nat. n= S m → P (S m)) → P n.
-#n #P (elim n) /2/ qed.
+#n #P elim n /2/ qed.
 
 theorem nat_elim2 :
  ∀R:nat → nat → Prop.
@@ -94,7 +94,7 @@ theorem nat_elim2 :
   → (∀n:nat. R (S n) O)
   → (∀n,m:nat. R n m → R (S n) (S m))
   → ∀n,m:nat. R n m.
-#R #ROn #RSO #RSS #n (elim n) // #n0 #Rn0m #m (cases m) /2/ qed.
+#R #ROn #RSO #RSS #n elim n // #n0 #Rn0m #m cases m /2/ qed.
 
 lemma le_gen: ∀P:nat → Prop.∀n.(∀i. i ≤ n → P i) → P n.
 /2/ qed.
@@ -115,25 +115,25 @@ theorem plus_O_n: ∀n:nat. n = 0 + n.
 // qed.
 
 theorem plus_n_O: ∀n:nat. n = n + 0.
-#n (elim n) normalize // qed.
+#n elim n normalize // qed.
 
 theorem plus_n_Sm : ∀n,m:nat. S (n+m) = n + S m.
-#n (elim n) normalize // qed.
+#n elim n normalize // qed.
 
 theorem commutative_plus: commutative ? plus.
-#n (elim n) normalize // qed. 
+#n elim n normalize // qed. 
 
 theorem associative_plus : associative nat plus.
-#n (elim n) normalize // qed.
+#n elim n normalize // qed.
 
 theorem assoc_plus1: ∀a,b,c. c + (b + a) = b + c + a.
 // qed. 
 
 theorem injective_plus_r: ∀n:nat.injective nat nat (λm.n+m).
-#n (elim n) normalize /3/ qed.
+#n elim n normalize /3 width=1 by injective_S/ qed.
 
 theorem injective_plus_l: ∀n:nat.injective nat nat (λm.m+n). 
-/2/ qed.
+/2 width=2 by injective_plus_r/ qed.
 
 theorem times_Sn_m: ∀n,m:nat. m+n*m = S n*m.
 // qed.
@@ -142,23 +142,23 @@ theorem times_O_n: ∀n:nat. 0 = 0 * n.
 // qed.
 
 theorem times_n_O: ∀n:nat. 0 = n * 0.
-#n (elim n) // qed.
+#n elim n // qed.
 
 theorem times_n_Sm : ∀n,m:nat. n+(n*m) = n*(S m).
-#n (elim n) normalize // qed.
+#n elim n normalize // qed.
 
 theorem commutative_times : commutative nat times. 
-#n (elim n) normalize // qed. 
+#n elim n normalize // qed. 
 
 theorem distributive_times_plus : distributive nat times plus.
-#n (elim n) normalize // qed.
+#n elim n normalize // qed.
 
 theorem distributive_times_plus_r :
   ∀a,b,c:nat. (b+c)*a = b*a + c*a.
 // qed. 
 
 theorem associative_times: associative nat times.
-#n (elim n) normalize // qed.
+#n elim n normalize // qed.
 
 lemma times_times: ∀x,y,z. x*(y*z) = y*(x*z).
 // qed. 
@@ -170,16 +170,16 @@ theorem minus_S_S: ∀n,m:nat.S n - S m = n -m.
 // qed.
 
 theorem minus_O_n: ∀n:nat.0=0-n.
-#n (cases n) // qed.
+#n cases n // qed.
 
 theorem minus_n_O: ∀n:nat.n=n-0.
-#n (cases n) // qed.
+#n cases n // qed.
 
 theorem minus_n_n: ∀n:nat.0=n-n.
-#n (elim n) // qed.
+#n elim n // qed.
 
 theorem minus_Sn_n: ∀n:nat. S 0 = (S n)-n.
-#n (elim n) normalize // qed.
+#n elim n normalize // qed.
 
 theorem eq_minus_S_pred: ∀n,m. n - (S m) = pred(n -m).
 @nat_elim2 normalize // qed.
@@ -189,7 +189,7 @@ lemma plus_plus_comm_23: ∀x,y,z. x + y + z = x + z + y.
 
 lemma discr_plus_xy_minus_xz: ∀x,z,y. x + y = x - z → y = 0.
 #x elim x -x // #x #IHx * normalize
-[ #y #H @(IHx 0) <minus_n_O /2 width=1/
+[ #y #H @(IHx 0) <minus_n_O /2 width=1 by injective_S/
 | #z #y >plus_n_Sm #H lapply (IHx … H) -x -z #H destruct
 ]
 qed-.
@@ -197,68 +197,69 @@ qed-.
 (* Negated equalities *******************************************************)
 
 theorem not_eq_S: ∀n,m:nat. n ≠ m → S n ≠ S m.
-/2/ qed.
+/2 width=3 by not_to_not/ qed.
 
 theorem not_eq_O_S : ∀n:nat. 0 ≠ S n.
-#n @nmk #eqOS (change with (not_zero O)) >eqOS // qed.
+#n @nmk #eqOS change with (not_zero 0) >eqOS // qed.
 
 theorem not_eq_n_Sn: ∀n:nat. n ≠ S n.
-#n (elim n) /2/ qed.
+#n elim n /2 width=1 by not_eq_S/ qed.
 
 (* Atomic conclusion *******************************************************)
 
 (* not_zero *)
 
 theorem lt_to_not_zero : ∀n,m:nat. n < m → not_zero m.
-#n #m #Hlt (elim Hlt) // qed.
+#n #m #Hlt elim Hlt // qed.
 
 (* le *)
 
 theorem le_S_S: ∀n,m:nat. n ≤ m → S n ≤ S m.
-#n #m #lenm (elim lenm) /2/ qed.
+#n #m #lenm elim lenm /2 width=1 by le_S/ qed.
 
 theorem le_O_n : ∀n:nat. 0 ≤ n.
-#n (elim n) /2/ qed.
+#n elim n /2 width=1 by le_S/ qed.
 
 theorem le_n_Sn : ∀n:nat. n ≤ S n.
-/2/ qed.
+/2 width=1 by le_S/ qed.
 
 theorem transitive_le : transitive nat le.
-#a #b #c #leab #lebc (elim lebc) /2/
+#a #b #c #leab #lebc elim lebc /2 width=1 by le_S/
 qed.
 
 theorem le_pred_n : ∀n:nat. pred n ≤ n.
-#n (elim n) // qed.
+#n elim n // qed.
 
 theorem monotonic_pred: monotonic ? le pred.
-#n #m #lenm (elim lenm) /2/ qed.
+#n #m #lenm elim lenm /2 width=3 by transitive_le/ qed.
 
 theorem le_S_S_to_le: ∀n,m:nat. S n ≤ S m → n ≤ m.
 (* demo *)
-/2/ qed-.
+/2 width=1 by monotonic_pred/ qed-.
 
 theorem monotonic_le_plus_r: 
 ∀n:nat.monotonic nat le (λm.n + m).
-#n #a #b (elim n) normalize //
-#m #H #leab @le_S_S /2/ qed.
+#n #a #b elim n normalize //
+#m #H #leab /3 width=1 by le_S_S/
+qed.
 
 theorem monotonic_le_plus_l: 
 ∀m:nat.monotonic nat le (λn.n + m).
-/2/ qed.
+/2 width=1 by monotonic_le_plus_r/ qed.
 
 theorem le_plus: ∀n1,n2,m1,m2:nat. n1 ≤ n2  → m1 ≤ m2 
 → n1 + m1 ≤ n2 + m2.
 #n1 #n2 #m1 #m2 #len #lem @(transitive_le ? (n1+m2))
-/2/ qed.
+/2 width=1 by monotonic_le_plus_l, monotonic_le_plus_r/ qed.
 
 theorem le_plus_n :∀n,m:nat. m ≤ n + m.
-/2/ qed. 
+/2 width=1 by monotonic_le_plus_l/ qed. 
 
 lemma le_plus_a: ∀a,n,m. n ≤ m → n ≤ a + m.
-/2/ qed.
+/2 width=1 by le_plus/ qed.
 
 lemma le_plus_b: ∀b,n,m. n + b ≤ m → n ≤ m.
-/2/ qed.
+/2 width=3 by transitive_le/ qed.
 
 theorem le_plus_n_r :∀n,m:nat. m ≤ m + n.
 /2/ qed.
@@ -267,47 +268,46 @@ theorem eq_plus_to_le: ∀n,m,p:nat.n=m+p → m ≤ n.
 // qed-.
 
 theorem le_plus_to_le: ∀a,n,m. a + n ≤ a + m → n ≤ m.
-#a (elim a) normalize /3/ qed. 
+#a elim a normalize /3 width=1 by monotonic_pred/ qed. 
 
 theorem le_plus_to_le_r: ∀a,n,m. n + a ≤ m +a → n ≤ m.
-/2/ qed-. 
+/2 width=2 by le_plus_to_le/ qed-. 
 
 theorem monotonic_le_times_r: 
 ∀n:nat.monotonic nat le (λm. n * m).
-#n #x #y #lexy (elim n) normalize//(* lento /2/*)
-#a #lea @le_plus //
+#n #x #y #lexy elim n normalize /2 width=1 by le_plus/
 qed.
 
 theorem le_times: ∀n1,n2,m1,m2:nat. 
 n1 ≤ n2  → m1 ≤ m2 → n1*m1 ≤ n2*m2.
-#n1 #n2 #m1 #m2 #len #lem @(transitive_le ? (n1*m2)) /2/
+#n1 #n2 #m1 #m2 #len #lem @(transitive_le ? (n1*m2))
+/2 width=1 by monotonic_le_times_r/
 qed.
 
 (* interessante *)
 theorem lt_times_n: ∀n,m:nat. O < n → m ≤ n*m.
-#n #m #H /2/ qed.
+/2 width=1 by monotonic_le_times_r/ qed.
 
 theorem le_times_to_le: 
 ∀a,n,m. O < a → a * n ≤ a * m → n ≤ m.
 #a @nat_elim2 normalize
   [//
   |#n #H1 #H2 
-     @(transitive_le ? (a*S n)) /2/
-  |#n #m #H #lta #le
-     @le_S_S @H /2/
+     @(transitive_le ? (a*S n)) /2 width=1 by monotonic_le_times_r/
+  |#n #m #H #lta #le /4 width=2 by le_plus_to_le, le_S_S/
   ]
 qed-.
 
 theorem le_plus_minus_m_m: ∀n,m:nat. n ≤ (n-m)+m.
-#n (elim n) // #a #Hind #m (cases m) // normalize #n/2/  
+#n elim n // #a #Hind #m cases m // normalize #n /2 width=1 by le_S_S/  
 qed.
 
 theorem le_plus_to_minus_r: ∀a,b,c. a + b ≤ c → a ≤ c -b.
-#a #b #c #H @(le_plus_to_le_r … b) /2/
+#a #b #c #H @(le_plus_to_le_r … b) /2 width=3 by transitive_le/
 qed.
 
 lemma lt_to_le: ∀x,y. x < y → x ≤ y.
-/2 width=2/ qed.
+/2 width=2 by le_plus_b/ qed.
 
 lemma inv_eq_minus_O: ∀x,y. x - y = 0 → x ≤ y.
 // qed-.
@@ -319,84 +319,84 @@ qed.
 (* lt *)
 
 theorem transitive_lt: transitive nat lt.
-#a #b #c #ltab #ltbc (elim ltbc) /2/
+#a #b #c #ltab #ltbc elim ltbc /2 width=1 by le_S/
 qed.
 
 theorem lt_to_le_to_lt: ∀n,m,p:nat. n < m → m ≤ p → n < p.
-#n #m #p #H #H1 (elim H1) /2/ qed.
+#n #m #p #H #H1 elim H1 /2 width=3 by transitive_lt/ qed.
 
 theorem le_to_lt_to_lt: ∀n,m,p:nat. n ≤ m → m < p → n < p.
-#n #m #p #H (elim H) /3/ qed.
+#n #m #p #H elim H /3 width=3 by transitive_lt/ qed.
 
 theorem lt_S_to_lt: ∀n,m. S n < m → n < m.
-/2/ qed.
+/2 width=3 by transitive_lt/ qed.
 
 theorem ltn_to_ltO: ∀n,m:nat. n < m → 0 < m.
-/2/ qed.
+/2 width=3 by lt_to_le_to_lt/ qed.
 
 theorem lt_O_S : ∀n:nat. O < S n.
-/2/ qed.
+/2 width=1 by ltn_to_ltO/ qed.
 
 theorem monotonic_lt_plus_r: 
 ∀n:nat.monotonic nat lt (λm.n+m).
-/2/ qed.
+/2 width=1 by monotonic_le_plus_r/ qed.
 
 theorem monotonic_lt_plus_l: 
 ∀n:nat.monotonic nat lt (λm.m+n).
-/2/ qed.
+/2 width=1 by monotonic_le_plus_r/ qed.
 
 theorem lt_plus: ∀n,m,p,q:nat. n < m → p < q → n + p < m + q.
 #n #m #p #q #ltnm #ltpq
-@(transitive_lt ? (n+q))/2/ qed.
+@(transitive_lt ? (n+q)) /2 width=1 by monotonic_lt_plus_l, monotonic_le_plus_r/ qed.
 
 theorem lt_plus_to_lt_l :∀n,p,q:nat. p+n < q+n → p<q.
-/2/ qed.
+/2 width=2 by le_plus_to_le/ qed.
 
 theorem lt_plus_to_lt_r :∀n,p,q:nat. n+p < n+q → p<q.
-/2/ qed-.
+/2 width=2 by lt_plus_to_lt_l/ qed-.
 
 theorem increasing_to_monotonic: ∀f:nat → nat.
   increasing f → monotonic nat lt f.
-#f #incr #n #m #ltnm (elim ltnm) /2/
+#f #incr #n #m #ltnm elim ltnm /2 width=3 by transitive_lt/
 qed.
 
 theorem monotonic_lt_times_r: 
   ∀c:nat. O < c → monotonic nat lt (λt.(c*t)).
 #c #posc #n #m #ltnm
-(elim ltnm) normalize
-  [/2/ 
-  |#a #_ #lt1 @(transitive_le … lt1) //
+elim ltnm normalize
+  [/2 width=1 by monotonic_lt_plus_l/
+  |#a #_ #lt1 /2 width=3 by transitive_le/
   ]
 qed.
 
 theorem monotonic_lt_times_l: 
   ∀c:nat. 0 < c → monotonic nat lt (λt.(t*c)).
-/2/
+/2 width=1 by monotonic_lt_times_r/
 qed.
 
 theorem lt_to_le_to_lt_times: 
 ∀n,m,p,q:nat. n < m → p ≤ q → O < q → n*p < m*q.
 #n #m #p #q #ltnm #lepq #posq
 @(le_to_lt_to_lt ? (n*q))
-  [@monotonic_le_times_r //
-  |@monotonic_lt_times_l //
+  [/2 width=1 by monotonic_le_times_r/
+  |/2 width=1 by monotonic_lt_times_l/
   ]
 qed.
 
 theorem lt_times:∀n,m,p,q:nat. n<m → p<q → n*p < m*q.
-#n #m #p #q #ltnm #ltpq @lt_to_le_to_lt_times/2/
+/3 width=2 by lt_to_le_to_lt_times, ltn_to_ltO, lt_to_le/
 qed.
 
 theorem lt_plus_to_minus_r: ∀a,b,c. a + b < c → a < c - b.
-#a #b #c #H @le_plus_to_minus_r //
+/2 width=1 by le_plus_to_minus_r/ 
 qed.
 
 lemma lt_plus_Sn_r: ∀a,x,n. a < a + x + (S n).
-/2 width=1/ qed.
+/2 width=1 by le_S_S/ qed.
 
 theorem lt_S_S_to_lt: ∀n,m:nat. S n < S m → n < m.
 (* demo *)
-/2/ qed-.
+/2 width=2 by lt_plus_to_lt_l/ qed-.
 
 (* not le, lt *)
 
@@ -404,75 +404,82 @@ theorem not_le_Sn_O: ∀ n:nat. S n ≰ 0.
 #n @nmk #Hlen0 @(lt_to_not_zero ?? Hlen0) qed.
 
 theorem not_le_to_not_le_S_S: ∀ n,m:nat. n ≰ m → S n ≰ S m.
-/3/ qed.
+/3 width=3 by monotonic_pred, not_to_not/ qed.
 
 theorem not_le_S_S_to_not_le: ∀ n,m:nat. S n ≰ S m → n ≰ m.
-/3/ qed.
+/3 width=3 by le_S_S, not_to_not/ qed.
 
 theorem not_le_Sn_n: ∀n:nat. S n ≰ n.
-#n (elim n) /2/ qed.
+#n elim n /2 width=1 by not_le_to_not_le_S_S/ qed.
 
 theorem lt_to_not_le: ∀n,m. n < m → m ≰ n.
-#n #m #Hltnm (elim Hltnm) /3/ qed.
+#n #m #Hltnm elim Hltnm /3 width=3 by lt_to_le, not_to_not/ qed.
 
 theorem not_le_to_lt: ∀n,m. n ≰ m → m < n.
 @nat_elim2 #n
- [#abs @False_ind /2/
+ [#abs @False_ind /2 width=3 by absurd/
  |/2/
- |#m #Hind #HnotleSS @le_S_S @Hind /2/ 
+ |/4 width=1 by le_S_S, not_le_S_S_to_not_le/
  ]
 qed.
 
 (* not lt, le *)
 
 theorem not_lt_to_le: ∀n,m:nat. n ≮ m → m ≤ n.
-#n #m #H @le_S_S_to_le @not_le_to_lt /2/ qed.
+/4 width=3 by le_S_S_to_le, not_le_to_lt, not_to_not/
+qed.
 
 theorem le_to_not_lt: ∀n,m:nat. n ≤ m → m ≮ n.
-#n #m #H @lt_to_not_le /2/ (* /3/ *) qed.
+/3 width=3 by lt_to_not_le, le_to_lt_to_lt/
+qed.
 
 (* Compound conclusion ******************************************************)
 
 theorem decidable_eq_nat : ∀n,m:nat.decidable (n=m).
-@nat_elim2 #n [ (cases n) /2/ | /3/ | #m #Hind (cases Hind) /3/]
+@nat_elim2 #n [ cases n || #m #Hind cases Hind ]
+/3 width=1 by or_introl, or_intror, sym_not_eq, not_eq_S/
 qed. 
 
 theorem decidable_le: ∀n,m. decidable (n≤m).
-@nat_elim2 #n /2/ #m * /3/ qed.
+@nat_elim2 #n /2 width=1 by or_introl, or_intror/
+#m * /3 width=1 by not_le_to_not_le_S_S, le_S_S, or_introl, or_intror/
+qed.
 
 theorem decidable_lt: ∀n,m. decidable (n < m).
-#n #m @decidable_le  qed.
+#n #m @decidable_le qed.
 
 theorem le_to_or_lt_eq: ∀n,m:nat. n ≤ m → n < m ∨ n = m.
-#n #m #lenm (elim lenm) /3/ qed.
+#n #m #lenm elim lenm /3 width=3 by le_to_lt_to_lt, or_introl/ qed.
 
 theorem eq_or_gt: ∀n. 0 = n ∨ 0 < n.
-#n elim (le_to_or_lt_eq 0 n ?) // /2 width=1/
+#n elim (le_to_or_lt_eq 0 n ?) /2 width=1 by or_introl, or_intror/
 qed-.
 
 theorem increasing_to_le2: ∀f:nat → nat. increasing f → 
   ∀m:nat. f 0 ≤ m → ∃i. f i ≤ m ∧ m < f (S i).
-#f #incr #m #lem (elim lem)
-  [@(ex_intro ? ? O) /2/
-  |#n #len * #a * #len #ltnr (cases(le_to_or_lt_eq … ltnr)) #H
-    [@(ex_intro ? ? a) % /2/ 
+#f #incr #m #lem elim lem
+  [@(ex_intro ? ? O) % //
+  |#n #len * #a * #len #ltnr cases (le_to_or_lt_eq … ltnr) #H
+    [@(ex_intro ? ? a) % /2 width=1 by le_S/ 
     |@(ex_intro ? ? (S a)) % //
     ]
   ]
 qed.
 
 lemma le_inv_plus_l: ∀x,y,z. x + y ≤ z → x ≤ z - y ∧ y ≤ z.
-/3/ qed-.
+/3 width=2 by le_plus_to_minus_r, le_plus_b, conj/ qed-.
 
 lemma lt_inv_plus_l: ∀x,y,z. x + y < z → x < z ∧ y < z - x.
-/3/ qed-.
+/3 width=3 by lt_plus_to_minus_r, lt_to_le_to_lt, conj/ qed-.
 
 lemma lt_or_ge: ∀m,n. m < n ∨ n ≤ m.
-#m #n elim (decidable_lt m n) /2/ /3/
+#m #n elim (decidable_lt m n) 
+/3 width=1 by not_lt_to_le, or_introl, or_intror/
 qed-.
 
 lemma le_or_ge: ∀m,n. m ≤ n ∨ n ≤ m.
-#m #n elim (decidable_le m n) /2/ /4/
+#m #n elim (decidable_le m n)
+/4 width=1 by not_le_to_lt, lt_to_le, or_intror, or_introl/
 qed-.
 
 lemma le_inv_S1: ∀x,y. S x ≤ y → ∃∃z. x ≤ z & y = S z.
@@ -484,19 +491,19 @@ qed-.
 
 theorem nat_ind_plus: ∀R:predicate nat.
                       R 0 → (∀n. R n → R (n + 1)) → ∀n. R n.
-/3 by nat_ind/ qed-.
+/3 width=1 by nat_ind/ qed-.
 
 theorem lt_O_n_elim: ∀n:nat. 0 < n → 
   ∀P:nat → Prop.(∀m:nat.P (S m)) → P n.
-#n (elim n) // #abs @False_ind /2/ @absurd
+#n elim n // #abs @False_ind /2 width=3 by absurd/
 qed.
 
 theorem le_n_O_elim: ∀n:nat. n ≤ O → ∀P: nat →Prop. P O → P n.
-#n (cases n) // #a #abs @False_ind /2/ qed. 
+#n cases n // #a #abs @False_ind /2 width=3 by absurd/ qed. 
 
 theorem le_n_Sm_elim : ∀n,m:nat.n ≤ S m → 
 ∀P:Prop. (S n ≤ S m → P) → (n=S m → P) → P.
-#n #m #Hle #P (elim Hle) /3/ qed.
+#n #m #Hle #P elim Hle /3 width=1 by le_S_S/ qed.
 
 theorem nat_elim1 : ∀n:nat.∀P:nat → Prop. 
 (∀m.(∀p. p < m → P p) → P m) → P n.
@@ -505,9 +512,9 @@ cut (∀q:nat. q ≤ n → P q) /2/
 (elim n) 
  [#q #HleO (* applica male *) 
     @(le_n_O_elim ? HleO)
-    @H #p #ltpO @False_ind /2/ (* 3 *)
+    @H #p #ltpO /3 width=3 by False_ind, absurd/
  |#p #Hind #q #HleS 
-    @H #a #lta @Hind @le_S_S_to_le /2/
+    @H #a #lta @Hind @le_S_S_to_le /2 width=3 by transitive_le/
  ]
 qed.
 
@@ -552,35 +559,35 @@ qed-.
 (* More negated equalities **************************************************)
 
 theorem lt_to_not_eq : ∀n,m:nat. n < m → n ≠ m.
-#n #m #H @not_to_not /2/ qed.
+/2 width=3 by not_to_not, absurd, nmk/ qed.
 
 (* More equalities **********************************************************)
 
 theorem le_n_O_to_eq : ∀n:nat. n ≤ 0 → 0=n.
-#n (cases n) // #a  #abs @False_ind /2/ qed.
+#n cases n // #a #abs @False_ind /2 width=3 by absurd/ qed.
 
 theorem le_to_le_to_eq: ∀n,m. n ≤ m → m ≤ n → n = m.
-@nat_elim2 /4 by le_n_O_to_eq, monotonic_pred, eq_f, sym_eq/
+@nat_elim2 /4 width=1 by le_n_O_to_eq, monotonic_pred, eq_f, sym_eq/
 qed. 
 
 theorem increasing_to_injective: ∀f:nat → nat.
   increasing f → injective nat nat f.
-#f #incr #n #m cases(decidable_le n m)
-  [#lenm cases(le_to_or_lt_eq … lenm) //
+#f #incr #n #m cases (decidable_le n m)
+  [#lenm cases (le_to_or_lt_eq … lenm) //
    #lenm #eqf @False_ind @(absurd … eqf) @lt_to_not_eq 
    @increasing_to_monotonic //
   |#nlenm #eqf @False_ind @(absurd … eqf) @sym_not_eq 
-   @lt_to_not_eq @increasing_to_monotonic /2/
+   @lt_to_not_eq @increasing_to_monotonic /2 width=1 by not_le_to_lt/
   ]
 qed.
 
 theorem minus_Sn_m: ∀m,n:nat. m ≤ n → S n -m = S (n-m).
-(* qualcosa da capire qui 
-#n #m #lenm nelim lenm napplyS refl_eq. *)
+(* qualcosa da capire qui
+#n #m #lenm elim lenm applyS refl *)
 @nat_elim2 
   [//
-  |#n #abs @False_ind /2/ 
-  |#n #m #Hind #c applyS Hind /2/
+  |#n #abs @False_ind /2 width=3 by absurd/ 
+  |#n #m #Hind #c applyS Hind /2 width=1 by monotonic_pred/
   ]
 qed.
 
@@ -588,17 +595,17 @@ theorem plus_minus:
 ∀m,n,p:nat. m ≤ n → (n-m)+p = (n+p)-m.
 @nat_elim2 
   [//
-  |#n #p #abs @False_ind /2/
-  |normalize/3/
+  |#n #p #abs @False_ind /2 width=3 by absurd/
+  |normalize /3 width=1 by monotonic_pred/
   ]
 qed.
 
 theorem minus_plus_m_m: ∀n,m:nat.n = (n+m)-m.
-/2/ qed.
+/2 width=1 by plus_minus/ qed.
 
 theorem plus_minus_m_m: ∀n,m:nat.
   m ≤ n → n = (n-m)+m.
-#n #m #lemn @sym_eq /2/ qed.
+/2 width=1 by plus_minus/ qed.
 
 theorem minus_to_plus :∀n,m,p:nat.
   m ≤ n → n-m = p → n = m+p.
@@ -614,8 +621,8 @@ pred n - pred m = n - m.
 #n #m #posn #posm @(lt_O_n_elim n posn) @(lt_O_n_elim m posm) //.
 qed.
 
-theorem plus_minus_commutative: ∀x,y,z. z ≤ y → x + (y - z) = x + y - z.
-/2 by plus_minus/ qed.
+theorem plus_minus_associative: ∀x,y,z. z ≤ y → x + (y - z) = x + y - z.
+/2 width=1 by plus_minus/ qed.
 
 (* More atomic conclusion ***************************************************)
 
@@ -623,7 +630,7 @@ theorem plus_minus_commutative: ∀x,y,z. z ≤ y → x + (y - z) = x + y - z.
 
 theorem le_n_fn: ∀f:nat → nat. 
   increasing f → ∀n:nat. n ≤ f n.
-#f #incr #n (elim n) /2/
+#f #incr #n elim n /2 width=3 by le_to_lt_to_lt/
 qed-.
 
 theorem monotonic_le_minus_l: 
@@ -631,7 +638,7 @@ theorem monotonic_le_minus_l:
 @nat_elim2 #p #q
   [#lePO @(le_n_O_elim ? lePO) //
   |//
-  |#Hind #n (cases n) // #a #leSS @Hind /2/
+  |#Hind * /3 width=1 by monotonic_pred/
   ]
 qed.
 
@@ -641,52 +648,48 @@ theorem le_minus_to_plus: ∀n,m,p. n-m ≤ p → n≤ p+m.
 qed.
 
 theorem le_minus_to_plus_r: ∀a,b,c. c ≤ b → a ≤ b - c → a + c ≤ b.
-#a #b #c #Hlecb #H >(plus_minus_m_m … Hlecb) /2/
+#a #b #c #Hlecb #H >(plus_minus_m_m … Hlecb) /2 width=1 by monotonic_le_plus_l/
 qed.
 
 theorem le_plus_to_minus: ∀n,m,p. n ≤ p+m → n-m ≤ p.
-#n #m #p #lep /2/ qed.
+/2 width=1 by monotonic_le_minus_l/ qed.
 
 theorem monotonic_le_minus_r: 
 ∀p,q,n:nat. q ≤ p → n-p ≤ n-q.
 #p #q #n #lepq @le_plus_to_minus
-@(transitive_le … (le_plus_minus_m_m ? q)) /2/
+@(transitive_le … (le_plus_minus_m_m ? q)) /2 width=1 by monotonic_le_plus_r/
 qed.
 
 theorem increasing_to_le: ∀f:nat → nat. 
   increasing f → ∀m:nat.∃i.m ≤ f i.
-#f #incr #m (elim m) /2/#n * #a #lenfa
-@(ex_intro ?? (S a)) /2/
+#f #incr #m elim m /2 width=2 by ex_intro/
+#n * #a #lenfa
+@(ex_intro ?? (S a)) /2 width=3 by le_to_lt_to_lt/
 qed.
 
-(* thus is le_plus
-lemma le_plus_compatible: ∀x1,x2,y1,y2. x1 ≤ y1 → x2 ≤ y2 → x1 + x2 ≤ y1 + y2.
-#x1 #y1 #x2 #y2 #H1 #H2 /2/ @le_plus // /2/ /3 by le_minus_to_plus, monotonic_le_plus_r, transitive_le/ qed.
-*)
-
 lemma minus_le: ∀x,y. x - y ≤ x.
-/2 width=1/ qed.
+/2 width=1 by monotonic_le_minus_l/ qed.
 
 (* lt *)
 
 theorem not_eq_to_le_to_lt: ∀n,m. n≠m → n≤m → n<m.
 #n #m #Hneq #Hle cases (le_to_or_lt_eq ?? Hle) //
-#Heq @not_le_to_lt /2/ qed-.
+#Heq @not_le_to_lt /2 width=3 by not_to_not/ qed-.
 
 theorem lt_times_n_to_lt_l: 
 ∀n,p,q:nat. p*n < q*n → p < q.
 #n #p #q #Hlt (elim (decidable_lt p q)) //
 #nltpq @False_ind @(absurd ? ? (lt_to_not_le ? ? Hlt))
-applyS monotonic_le_times_r /2/
+applyS monotonic_le_times_r /2 width=1 by not_lt_to_le/
 qed.
 
 theorem lt_times_n_to_lt_r: 
 ∀n,p,q:nat. n*p < n*q → p < q.
-/2/ qed-.
+/2 width=2 by lt_times_n_to_lt_l/ qed-.
 
 theorem lt_minus_to_plus: ∀a,b,c. a - b < c → a < c + b.
 #a #b #c #H @not_le_to_lt 
-@(not_to_not … (lt_to_not_le …H)) /2/
+@(not_to_not … (lt_to_not_le …H)) /2 width=1 by le_plus_to_minus_r/
 qed.
 
 theorem lt_minus_to_plus_r: ∀a,b,c. a < b - c → a + c < b.
@@ -712,32 +715,33 @@ elim (not_le_Sn_n x) #H0 elim (H0 ?) //
 qed-.
 
 lemma plus_le_0: ∀x,y. x + y ≤ 0 → x = 0 ∧ y = 0.
-#x #y #H elim (le_inv_plus_l … H) -H #H1 #H2 /3 width=1/
+#x #y #H elim (le_inv_plus_l … H) -H /3 width=1 by conj, plus_minus_associative/
 qed-.
 
 (* Still more equalities ****************************************************)
 
 theorem eq_minus_O: ∀n,m:nat.
   n ≤ m → n-m = O.
-#n #m #lenm @(le_n_O_elim (n-m)) /2/
+#n #m #lenm @(le_n_O_elim (n-m)) /2 width=1 by monotonic_le_minus_r/
 qed.
 
 theorem distributive_times_minus: distributive ? times minus.
 #a #b #c
 (cases (decidable_lt b c)) #Hbc
- [> eq_minus_O [2:/2/] >eq_minus_O // 
-  @monotonic_le_times_r /2/
+ [>eq_minus_O [ >eq_minus_O // @monotonic_le_times_r ] 
+  /2 width=1 by lt_to_le/
  |@sym_eq (applyS plus_to_minus) <distributive_times_plus 
-  @eq_f (applyS plus_minus_m_m) /2/
+  @eq_f (applyS plus_minus_m_m) /2 width=1 by not_lt_to_le/
+ ]
 qed.
 
-theorem minus_plus: ∀n,m,p. n-m-p = n -(m+p).
+theorem minus_plus: ∀n,m,p. n-m-p = n-(m+p).
 #n #m #p 
 cases (decidable_le (m+p) n) #Hlt
   [@plus_to_minus @plus_to_minus <associative_plus
    @minus_to_plus //
   |cut (n ≤ m+p) [@(transitive_le … (le_n_Sn …)) @not_le_to_lt //]
-   #H >eq_minus_O /2/ (* >eq_minus_O // *) 
+   #H >eq_minus_O /2 width=1 by eq_minus_O, monotonic_le_minus_l/ (* >eq_minus_O // *) 
   ]
 qed.
 
@@ -748,17 +752,23 @@ theorem minus_minus: ∀n,m,p:nat. p ≤ m → m ≤ n →
 <commutative_plus <plus_minus_m_m //
 qed.
 
+lemma minus_minus_associative: ∀x,y,z. z ≤ y → y ≤ x → x - (y - z) = x - y + z.
+/2 width=1 by minus_minus/ qed.
+
 lemma minus_minus_comm: ∀a,b,c. a - b - c = a - c - b.
-/3 by monotonic_le_minus_l, le_to_le_to_eq/ qed.
+/3 width=1 by monotonic_le_minus_l, le_to_le_to_eq/ qed.
 
 lemma minus_le_minus_minus_comm: ∀b,c,a. c ≤ b → a - (b - c) = a + c - b.
 #b #c #a #H >(plus_minus_m_m b c) in ⊢ (? ? ?%); //
 qed.
 
 lemma minus_minus_m_m: ∀m,n. n ≤ m → m - (m - n) = n.
-/2 width=1/ qed.
+/2 width=1 by minus_le_minus_minus_comm/ qed.
 
 lemma minus_plus_plus_l: ∀x,y,h. (x + h) - (y + h) = x - y.
+// qed.
+
+lemma plus_minus_plus_plus_l: ∀z,x,y,h. z + (x + h) - (y + h) = z + x - y.
 // qed.
 
 (* Stilll more atomic conclusion ********************************************)
