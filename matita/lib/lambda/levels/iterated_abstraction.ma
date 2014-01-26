@@ -12,18 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "lambda/terms/term.ma".
+include "lambda/levels/term.ma".
 
 (* ITERATED ABSTRACTION *****************************************************)
 
-let rec abst d M on d ≝ match d with
-[ O   ⇒ M
-| S e ⇒ 𝛌. (abst e M)
+definition labst: nat → lterm → lterm ≝ λh,M. match M with
+[ LVRef i e   ⇒ {i+h}§e
+| LAppl i C A ⇒ {i+h}@C.A
 ].
 
-interpretation "iterated abstraction (term)"
-   'AnnotatedAbstraction d M = (abst d M).
+interpretation "iterated abstraction (term by level)"
+   'AnnotatedAbstraction h M = (labst h M).
 
-lemma abst_plus: ∀A,m,n. 𝛌m+n.A = 𝛌m.𝛌n.A.
-#A #m elim m -m normalize //
+interpretation "abstraction (term by level)"
+   'Abstraction M = (labst (S O) M).
+
+lemma labst_O: ∀M. 𝛌0.M = M.
+* normalize //
 qed.
