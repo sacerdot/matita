@@ -119,16 +119,3 @@ lemma sem_exec_moves: ∀Q,sig,n,i. i ≤ n →
   ]
 qed.
   
-
-
-
-
-
-
-
-
-
-
-
-
-
