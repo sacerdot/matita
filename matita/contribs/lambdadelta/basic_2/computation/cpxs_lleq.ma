@@ -29,3 +29,7 @@ lemma lleq_cpxs_conf_dx: ∀h,g,G,L2,T1,T2. ⦃G, L2⦄ ⊢ T1 ➡*[h, g] T2 →
                          ∀L1. L1 ⋕[T1, 0] L2 → L1 ⋕[T2, 0] L2.
 #h #g #G #L2 #T1 #T2 #H @(cpxs_ind … H) -T2 /3 width=6 by lleq_cpx_conf_dx/
 qed-.
+
+lemma lleq_cpxs_conf_sn: ∀h,g,G,L1,T1,T2. ⦃G, L1⦄ ⊢ T1 ➡*[h, g] T2 →
+                         ∀L2. L1 ⋕[T1, 0] L2 → L1 ⋕[T2, 0] L2.
+/4 width=6 by lleq_cpxs_conf_dx, lleq_sym/ qed-.

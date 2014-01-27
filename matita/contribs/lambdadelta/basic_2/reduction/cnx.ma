@@ -103,7 +103,7 @@ qed.
 
 lemma cnx_sort_iter: ∀h,g,G,L,k,l. deg h g k l → ⦃G, L⦄ ⊢ 𝐍[h, g]⦃⋆((next h)^l k)⦄.
 #h #g #G #L #k #l #Hkl
-lapply (deg_iter … l Hkl) -Hkl <minus_n_n /2 width=1 by cnx_sort/
+lapply (deg_iter … l Hkl) -Hkl <minus_n_n /2 width=6 by cnx_sort/
 qed.
 
 lemma cnx_abst: ∀h,g,a,G,L,W,T. ⦃G, L⦄ ⊢ 𝐍[h, g]⦃W⦄ → ⦃G, L.ⓛW⦄ ⊢ 𝐍[h, g]⦃T⦄ →

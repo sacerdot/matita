@@ -53,6 +53,7 @@ lemma cpy_refl: ∀G,T,L,d,e. ⦃G, L⦄ ⊢ T ▶×[d, e] T.
 #G #T elim T -T // * /2 width=1 by cpy_bind, cpy_flat/
 qed.
 
+(* Basic_1: was: subst1_ex *)
 lemma cpy_full: ∀I,G,K,V,T1,L,d. ⇩[d] L ≡ K.ⓑ{I}V →
                 ∃∃T2,T. ⦃G, L⦄ ⊢ T1 ▶×[d, 1] T2 & ⇧[d, 1] T ≡ T2.
 #I #G #K #V #T1 elim T1 -T1
@@ -205,12 +206,14 @@ lemma cpy_inv_atom1: ∀I,G,L,T2,d,e. ⦃G, L⦄ ⊢ ⓪{I} ▶×[d, e] T2 →
                                 I = LRef i.
 /2 width=4 by cpy_inv_atom1_aux/ qed-.
 
+(* Basic_1: was: subst1_gen_sort *)
 lemma cpy_inv_sort1: ∀G,L,T2,k,d,e. ⦃G, L⦄ ⊢ ⋆k ▶×[d, e] T2 → T2 = ⋆k.
 #G #L #T2 #k #d #e #H
 elim (cpy_inv_atom1 … H) -H //
 * #I #K #V #i #_ #_ #_ #_ #H destruct
 qed-.
 
+(* Basic_1: was: subst1_gen_lref *)
 lemma cpy_inv_lref1: ∀G,L,T2,i,d,e. ⦃G, L⦄ ⊢ #i ▶×[d, e] T2 →
                      T2 = #i ∨
                      ∃∃I,K,V. d ≤ i & i < d + e &
@@ -279,6 +282,7 @@ qed-.
 lemma cpy_inv_refl_O2: ∀G,L,T1,T2,d. ⦃G, L⦄ ⊢ T1 ▶×[d, 0] T2 → T1 = T2.
 /2 width=6 by cpy_inv_refl_O2_aux/ qed-.
 
+(* Basic_1: was: subst1_gen_lift_eq *)
 lemma cpy_inv_lift1_eq: ∀G,T1,U1,d,e. ⇧[d, e] T1 ≡ U1 →
                         ∀L,U2. ⦃G, L⦄ ⊢ U1 ▶×[d, e] U2 → U1 = U2.
 #G #T1 #U1 #d #e #HTU1 #L #U2 #HU12 elim (cpy_up … HU12 … HTU1) -HU12 -HTU1
@@ -307,3 +311,13 @@ lemma cpy_fwd_shift1: ∀G,L1,L,T1,T,d,e. ⦃G, L⦄ ⊢ L1 @@ T1 ▶×[d, e] T 
   /2 width=3 by trans_eq/
 ]
 qed-.
+
+(* Basic_1: removed theorems 25:
+            subst0_gen_sort subst0_gen_lref subst0_gen_head subst0_gen_lift_lt
+            subst0_gen_lift_false subst0_gen_lift_ge subst0_refl subst0_trans
+            subst0_lift_lt subst0_lift_ge subst0_lift_ge_S subst0_lift_ge_s
+            subst0_subst0 subst0_subst0_back subst0_weight_le subst0_weight_lt
+            subst0_confluence_neq subst0_confluence_eq subst0_tlt_head
+            subst0_confluence_lift subst0_tlt
+            subst1_head subst1_gen_head subst1_lift_S subst1_confluence_lift
+*)

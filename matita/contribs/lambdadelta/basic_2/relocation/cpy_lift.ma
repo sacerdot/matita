@@ -19,6 +19,7 @@ include "basic_2/relocation/cpy.ma".
 
 (* Properties on relocation *************************************************)
 
+(* Basic_1: was: subst1_lift_lt *)
 lemma cpy_lift_le: ∀G,K,T1,T2,dt,et. ⦃G, K⦄ ⊢ T1 ▶×[dt, et] T2 →
                    ∀L,U1,U2,s,d,e. ⇩[s, d, e] L ≡ K →
                    ⇧[d, e] T1 ≡ U1 → ⇧[d, e] T2 ≡ U2 →
@@ -78,6 +79,7 @@ lemma cpy_lift_be: ∀G,K,T1,T2,dt,et. ⦃G, K⦄ ⊢ T1 ▶×[dt, et] T2 →
 ]
 qed-.
 
+(* Basic_1: was: subst1_lift_ge *)
 lemma cpy_lift_ge: ∀G,K,T1,T2,dt,et. ⦃G, K⦄ ⊢ T1 ▶×[dt, et] T2 →
                    ∀L,U1,U2,s,d,e. ⇩[s, d, e] L ≡ K →
                    ⇧[d, e] T1 ≡ U1 → ⇧[d, e] T2 ≡ U2 →
@@ -105,6 +107,7 @@ qed-.
 
 (* Inversion lemmas on relocation *******************************************)
 
+(* Basic_1: was: subst1_gen_lift_lt *)
 lemma cpy_inv_lift1_le: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶×[dt, et] U2 →
                         ∀K,s,d,e. ⇩[s, d, e] L ≡ K → ∀T1. ⇧[d, e] T1 ≡ U1 →
                         dt + et ≤ d →
@@ -173,6 +176,7 @@ lemma cpy_inv_lift1_be: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶×[dt, et] U2 �
 ]
 qed-.
 
+(* Basic_1: was: subst1_gen_lift_ge *)
 lemma cpy_inv_lift1_ge: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶×[dt, et] U2 →
                         ∀K,s,d,e. ⇩[s, d, e] L ≡ K → ∀T1. ⇧[d, e] T1 ≡ U1 →
                         yinj d + e ≤ dt →

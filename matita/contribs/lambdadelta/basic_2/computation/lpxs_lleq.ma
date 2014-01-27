@@ -20,6 +20,38 @@ include "basic_2/computation/lpxs_cpxs.ma".
 
 (* Advanced properties ******************************************************)
 
+fact le_repl_sn_aux: ∀x,y,z:nat. x ≤ z → x = y → y ≤ z.
+// qed-.
+
+fact pippo_aux: ∀h,g,G,L1,T,T1,d,e. ⦃G, L1⦄ ⊢ T ▶×[d, e] T1 → e = ∞ →
+                ∀L2. ⦃G, L1⦄ ⊢ ➡*[h, g] L2 →
+                ∃∃T2. ⦃G, L2⦄ ⊢ T ▶×[d, e] T2 & ⦃G, L1⦄ ⊢ T1 ➡*[h, g] T2 &
+                      L1 ⋕[T, d] L2 ↔ T1 = T2.
+#h #g #G #L1 #T #T1 #d #e #H elim H -G -L1 -T -T1 -d -e [ * ]
+[ /5 width=5 by lpxs_fwd_length, lleq_sort, ex3_intro, conj/
+| #i #G #L1 elim (lt_or_ge i (|L1|)) [2: /6 width=6 by lpxs_fwd_length, lleq_free, le_repl_sn_aux, ex3_intro, conj/ ]
+  #Hi #d elim (ylt_split i d) [ /5 width=5 by lpxs_fwd_length, lleq_skip, ex3_intro, conj/ ]
+  #Hdi #e #He #L2 elim (lleq_dec (#i) L1 L2 d) [ /4 width=5 by lpxs_fwd_length, ex3_intro, conj/ ]
+  #HnL12 #HL12 elim (ldrop_O1_lt L1 i) // -Hi #I #K1 #V1 #HLK1
+  elim (lpxs_ldrop_conf … HLK1 … HL12) -HL12 #X #H #HLK2
+  elim (lpxs_inv_pair1 … H) -H #K2 #V2 #HK12 #HV12 #H destruct
+  elim (lift_total V2 0 (i+1)) #W2 #HVW2
+  @(ex3_intro … W2) /2 width=7 by cpxs_delta, cpy_subst/ -I -K1 -V1 -Hdi
+  @conj #H [ elim HnL12 // | destruct elim (lift_inv_lref2_be … HVW2) // ]
+| /5 width=5 by lpxs_fwd_length, lleq_gref, ex3_intro, conj/
+| #I #G #L1 #K1 #V1 #W1 #i #d #e #Hdi #Hide #HLK1 #HVW1 #He #L2 #HL12 destruct
+  elim (lpxs_ldrop_conf … HLK1 … HL12) -HL12 #X #H #HLK2
+  elim (lpxs_inv_pair1 … H) -H #K2 #V2 #HK12 #HV12 #H destruct
+  lapply (ldrop_fwd_drop2 … HLK1) -HLK1 #HLK1
+  elim (lift_total V2 0 (i+1)) #W2 #HVW2
+  @(ex3_intro … W2) /2 width=10 by cpxs_lift, cpy_subst/
+  
+  
+  elim (lleq_dec (#i) L1 L2 d) 
+    
+|
+]  
+
 axiom lleq_lpxs_trans: ∀h,g,G,L1,L2,T,d. L1 ⋕[T, d] L2 → ∀K2. ⦃G, L2⦄ ⊢ ➡*[h, g] K2 →
                        ∃∃K1. ⦃G, L1⦄ ⊢ ➡*[h, g] K1 & K1 ⋕[T, d] K2.
 (*

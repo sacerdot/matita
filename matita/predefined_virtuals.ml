@@ -1503,6 +1503,7 @@ let load_predefined_virtuals () =
 ;;
 
 let predefined_classes = [
+ ["&"; "⅋"; ];  
  ["!"; "¡"; "⫯"; "⫰"; ]; 
  ["?"; "¿"; "⸮"; ];
  [":"; "⁝"; ];
