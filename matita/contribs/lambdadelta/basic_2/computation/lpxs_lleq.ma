@@ -23,11 +23,25 @@ include "basic_2/computation/lpxs_cpxs.ma".
 fact le_repl_sn_aux: ∀x,y,z:nat. x ≤ z → x = y → y ≤ z.
 // qed-.
 
-fact pippo_aux: ∀h,g,G,L1,T,T1,d,e. ⦃G, L1⦄ ⊢ T ▶×[d, e] T1 → e = ∞ →
+axiom cpxs_cpys_conf_lpxs: ∀h,g,G,d,e.
+                           ∀L0,T0,T1. ⦃G, L0⦄ ⊢ T0 ➡*[h, g] T1 →
+                           ∀T2. ⦃G, L0⦄ ⊢ T0 ▶*×[d, e] T2 →
+                           ∀L1. ⦃G, L0⦄ ⊢ ➡*[h, g] L1 →
+                           ∃∃T.  ⦃G, L1⦄ ⊢ T1 ▶*×[d, e] T & ⦃G, L0⦄ ⊢ T2 ➡*[h, g] T.
+
+axiom cpxs_conf_lpxs_lpys: ∀h,g,G,d,e.
+                           ∀I,L0,V0,T0,T1. ⦃G, L0.ⓑ{I}V0⦄ ⊢ T0 ➡*[h, g] T1 →
+                           ∀L1. ⦃G, L0⦄ ⊢ ➡*[h, g] L1 → ∀V2. ⦃G, L0⦄ ⊢ V0 ▶*×[d, e] V2 →
+                           ∃∃T. ⦃G, L1.ⓑ{I}V0⦄  ⊢ T1 ▶*×[⫯d, e] T & ⦃G, L0.ⓑ{I}V2⦄ ⊢ T0 ➡*[h, g] T.
+
+
+include "basic_2/reduction/cpx_cpys.ma".
+
+fact pippo_aux: ∀h,g,G,L1,T,T1,d,e. ⦃G, L1⦄ ⊢ T ▶*×[d, e] T1 → e = ∞ →
                 ∀L2. ⦃G, L1⦄ ⊢ ➡*[h, g] L2 →
-                ∃∃T2. ⦃G, L2⦄ ⊢ T ▶×[d, e] T2 & ⦃G, L1⦄ ⊢ T1 ➡*[h, g] T2 &
+                ∃∃T2. ⦃G, L2⦄ ⊢ T ▶*×[d, e] T2 & ⦃G, L1⦄ ⊢ T1 ➡*[h, g] T2 &
                       L1 ⋕[T, d] L2 ↔ T1 = T2.
-#h #g #G #L1 #T #T1 #d #e #H elim H -G -L1 -T -T1 -d -e [ * ]
+#h #g #G #L1 #T #T1 #d #e #H @(cpys_ind_alt … H) -G -L1 -T -T1 -d -e [ * ]
 [ /5 width=5 by lpxs_fwd_length, lleq_sort, ex3_intro, conj/
 | #i #G #L1 elim (lt_or_ge i (|L1|)) [2: /6 width=6 by lpxs_fwd_length, lleq_free, le_repl_sn_aux, ex3_intro, conj/ ]
   #Hi #d elim (ylt_split i d) [ /5 width=5 by lpxs_fwd_length, lleq_skip, ex3_intro, conj/ ]
@@ -36,19 +50,42 @@ fact pippo_aux: ∀h,g,G,L1,T,T1,d,e. ⦃G, L1⦄ ⊢ T ▶×[d, e] T1 → e = �
   elim (lpxs_ldrop_conf … HLK1 … HL12) -HL12 #X #H #HLK2
   elim (lpxs_inv_pair1 … H) -H #K2 #V2 #HK12 #HV12 #H destruct
   elim (lift_total V2 0 (i+1)) #W2 #HVW2
-  @(ex3_intro … W2) /2 width=7 by cpxs_delta, cpy_subst/ -I -K1 -V1 -Hdi
+  @(ex3_intro … W2) /2 width=7 by cpxs_delta, cpys_subst/ -I -K1 -V1 -Hdi
   @conj #H [ elim HnL12 // | destruct elim (lift_inv_lref2_be … HVW2) // ]
 | /5 width=5 by lpxs_fwd_length, lleq_gref, ex3_intro, conj/
-| #I #G #L1 #K1 #V1 #W1 #i #d #e #Hdi #Hide #HLK1 #HVW1 #He #L2 #HL12 destruct
+| #I #G #L1 #K1 #V #V1 #T1 #i #d #e #Hdi #Hide #HLK1 #HV1 #HVT1 #_ #He #L2 #HL12 destruct
   elim (lpxs_ldrop_conf … HLK1 … HL12) -HL12 #X #H #HLK2
-  elim (lpxs_inv_pair1 … H) -H #K2 #V2 #HK12 #HV12 #H destruct
+  elim (lpxs_inv_pair1 … H) -H #K2 #W #HK12 #HVW #H destruct
+  elim (cpxs_cpys_conf_lpxs … HVW … HV1 … HK12) -HVW -HV1 -HK12 #W1 #HW1 #VW1
+  elim (lift_total W1 0 (i+1)) #U1 #HWU1
   lapply (ldrop_fwd_drop2 … HLK1) -HLK1 #HLK1
-  elim (lift_total V2 0 (i+1)) #W2 #HVW2
-  @(ex3_intro … W2) /2 width=10 by cpxs_lift, cpy_subst/
+  @(ex3_intro … U1) /2 width=10 by cpxs_lift, cpys_subst/
+| #a #I #G #L #V #V1 #T #T1 #d #e #HV1 #_ #IHV1 #IHT1 #He #L2 #HL12
+  elim (IHV1 … HL12) // -IHV1 #V2 #HV2 #HV12 * #H1V #H2V
+  elim (IHT1 … (L2.ⓑ{I}V2)) /4 width=3 by lpxs_cpx_trans, lpxs_pair, cpys_cpx/ -IHT1 -He #T2 #HT2 #HT12 * #H1T #H2T
+  elim (cpxs_conf_lpxs_lpys … HT12 … HL12 … HV1) -HT12 -HL12 -HV1 #T0 #HT20 #HT10
+  @(ex3_intro … (ⓑ{a,I}V2.T0))
+  [ @cpys_bind // @(cpys_trans_eq … T2) /3 width=5 by lsuby_cpys_trans, lsuby_succ/
+  | /2 width=1 by cpxs_bind/
+  | @conj #H destruct
+    [ elim (lleq_inv_bind … H) -H #HV #HT >H1V -H1V // 
+    | @lleq_bind /2 width=1/     
+  
+   
+     /3 width=5 by lsuby_cpys_trans, lsuby_succ/
+| #I #G #L #V #V1 #T #T1 #d #e #HV1 #HT1 #IHV1 #IHT1 #He #L2 #HL12
+  elim (IHV1 … HL12) // -IHV1 #V2 #HV2 #HV12 * #H1V #H2V
+  elim (IHT1 … HL12) // -IHT1 #T2 #HT2 #HT12 * #H1T #H2T -He -HL12
+  @(ex3_intro … (ⓕ{I}V2.T2)) /2 width=1 by cpxs_flat, cpys_flat/
+  @conj #H destruct [2: /3 width=1 by lleq_flat/ ]
+  elim (lleq_inv_flat … H) -H /3 width=1 by eq_f2/
+]
   
   
-  elim (lleq_dec (#i) L1 L2 d) 
-    
+  
+    [ 
+    | @cpxs_bind //
+      @(lpx_cpxs_trans … HT12)
 |
 ]  
 

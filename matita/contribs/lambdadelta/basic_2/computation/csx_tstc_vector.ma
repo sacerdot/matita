@@ -22,7 +22,7 @@ include "basic_2/computation/csx_vector.ma".
 (* Advanced properties ******************************************************)
 
 (* Basic_1: was just: sn3_appls_lref *)
-lemma csx_applv_cnx: ∀h,g,G,L,T. 𝐒⦃T⦄ → ⦃G, L⦄ ⊢ 𝐍[h, g]⦃T⦄ →
+lemma csx_applv_cnx: ∀h,g,G,L,T. 𝐒⦃T⦄ → ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃T⦄ →
                      ∀Vs. ⦃G, L⦄ ⊢ ⬊*[h, g] Vs → ⦃G, L⦄ ⊢ ⬊*[h, g] ⒶVs.T.
 #h #g #G #L #T #H1T #H2T #Vs elim Vs -Vs [ #_ @(cnx_csx … H2T) ] (**) (* /2 width=1/ does not work *)
 #V #Vs #IHV #H

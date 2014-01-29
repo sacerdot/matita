@@ -51,7 +51,7 @@ elim (eq_term_dec T1 T2) #HT12 destruct /3 width=4 by/
 qed-.
 
 (* Basic_1: was just: sn3_nf2 *)
-lemma cnx_csx: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ 𝐍[h, g]⦃T⦄ → ⦃G, L⦄ ⊢ ⬊*[h, g] T.
+lemma cnx_csx: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃T⦄ → ⦃G, L⦄ ⊢ ⬊*[h, g] T.
 /2 width=1 by NF_to_SN/ qed.
 
 lemma csx_sort: ∀h,g,G,L,k. ⦃G, L⦄ ⊢ ⬊*[h, g] ⋆k.

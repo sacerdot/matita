@@ -19,7 +19,7 @@ include "basic_2/computation/lpxs_cpxs.ma".
 
 (* Forward lemmas involving same top term constructor ***********************)
 
-lemma cpxs_fwd_cnx: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ 𝐍[h, g]⦃T⦄ → ∀U. ⦃G, L⦄ ⊢ T ➡*[h, g] U → T ≃ U.
+lemma cpxs_fwd_cnx: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃T⦄ → ∀U. ⦃G, L⦄ ⊢ T ➡*[h, g] U → T ≃ U.
 #h #g #G #L #T #HT #U #H
 >(cpxs_inv_cnx1 … H HT) -G -L -T //
 qed-.

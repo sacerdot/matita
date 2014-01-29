@@ -152,7 +152,7 @@ lapply (cpxs_strap1 … HW1 … HW2) -W
 lapply (cpxs_strap1 … HT1 … HT2) -T /3 width=5 by or3_intro0, ex3_2_intro/
 qed-.
 
-lemma cpxs_inv_cnx1: ∀h,g,G,L,T,U. ⦃G, L⦄ ⊢ T ➡*[h, g] U → ⦃G, L⦄ ⊢ 𝐍[h, g]⦃T⦄ → T = U.
+lemma cpxs_inv_cnx1: ∀h,g,G,L,T,U. ⦃G, L⦄ ⊢ T ➡*[h, g] U → ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃T⦄ → T = U.
 #h #g #G #L #T #U #H @(cpxs_ind_dx … H) -T //
 #T0 #T #H1T0 #_ #IHT #H2T0
 lapply (H2T0 … H1T0) -H1T0 #H destruct /2 width=1 by/

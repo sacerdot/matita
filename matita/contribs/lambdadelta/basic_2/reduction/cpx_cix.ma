@@ -19,7 +19,7 @@ include "basic_2/reduction/cpx.ma".
 
 (* Advanced forward lemmas on context-sensitive extended irreducible terms **)
 
-lemma cpx_fwd_cix: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[h, g] T2 → ⦃G, L⦄ ⊢ 𝐈[h, g]⦃T1⦄ → T2 = T1.
+lemma cpx_fwd_cix: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[h, g] T2 → ⦃G, L⦄ ⊢ ➡[h, g] 𝐈⦃T1⦄ → T2 = T1.
 #h #g #G #L #T1 #T2 #H elim H -G -L -T1 -T2
 [ //
 | #G #L #k #l #Hkl #H elim (cix_inv_sort … Hkl H)
@@ -29,19 +29,19 @@ lemma cpx_fwd_cix: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[h, g] T2 → ⦃G, L�
   [ elim (cix_inv_bind … H) -H #HV1 #HT1 * #H destruct
     lapply (IHV1 … HV1) -IHV1 -HV1 #H destruct
     lapply (IHT1 … HT1) -IHT1 #H destruct //
-  | elim (cix_inv_ib2 … H) -H /2 width=1/ /3 width=2/
+  | elim (cix_inv_ib2 … H) -H /3 width=2 by or_introl, eq_f2/
   ]
 | * #G #L #V1 #V2 #T1 #T2 #_ #_ #IHV1 #IHT1 #H
   [ elim (cix_inv_appl … H) -H #HV1 #HT1 #_
     >IHV1 -IHV1 // -HV1 >IHT1 -IHT1 //
-  | elim (cix_inv_ri2 … H) /2 width=1/
+  | elim (cix_inv_ri2 … H) /2 width=1 by/
   ]
 | #G #L #V1 #T1 #T #T2 #_ #_ #_ #H
-  elim (cix_inv_ri2 … H) /2 width=1/
+  elim (cix_inv_ri2 … H) /2 width=1 by or_introl/
 | #G #L #V1 #T1 #T2 #_ #_ #H
-  elim (cix_inv_ri2 … H) /2 width=1/
+  elim (cix_inv_ri2 … H) /2 width=1 by/
 | #G #L #V1 #V2 #T #_ #_ #H
-  elim (cix_inv_ri2 … H) /2 width=1/
+  elim (cix_inv_ri2 … H) /2 width=1 by/
 | #a #G #L #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #_ #_ #_ #H
   elim (cix_inv_appl … H) -H #_ #_ #H
   elim (simple_inv_bind … H)

@@ -21,7 +21,7 @@ include "basic_2/computation/cpxs_tstc.ma".
 (* Vector form of forward lemmas involving same top term constructor ********)
 
 (* Basic_1: was just: nf2_iso_appls_lref *)
-lemma cpxs_fwd_cnx_vector: ∀h,g,G,L,T.  𝐒⦃T⦄ → ⦃G, L⦄ ⊢ 𝐍[h, g]⦃T⦄ →
+lemma cpxs_fwd_cnx_vector: ∀h,g,G,L,T.  𝐒⦃T⦄ → ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃T⦄ →
                            ∀Vs,U. ⦃G, L⦄ ⊢ ⒶVs.T ➡*[h, g] U → ⒶVs.T ≃ U.
 #h #g #G #L #T #H1T #H2T #Vs elim Vs -Vs [ @(cpxs_fwd_cnx … H2T) ] (**) (* /2 width=3 by cpxs_fwd_cnx/ does not work *)
 #V #Vs #IHVs #U #H

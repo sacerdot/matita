@@ -20,7 +20,7 @@ include "basic_2/reduction/cnr.ma".
 (* Advanced properties ******************************************************)
 
 (* Basic_1: was only: nf2_csort_lref *)
-lemma cnr_lref_atom: ∀G,L,i. ⇩[i] L ≡ ⋆ → ⦃G, L⦄ ⊢ 𝐍⦃#i⦄.
+lemma cnr_lref_atom: ∀G,L,i. ⇩[i] L ≡ ⋆ → ⦃G, L⦄ ⊢ ➡ 𝐍⦃#i⦄.
 #G #L #i #HL #X #H
 elim (cpr_inv_lref1 … H) -H // *
 #K #V1 #V2 #HLK #_ #_
@@ -28,7 +28,7 @@ lapply (ldrop_mono … HL … HLK) -L #H destruct
 qed.
 
 (* Basic_1: was: nf2_lref_abst *)
-lemma cnr_lref_abst: ∀G,L,K,V,i. ⇩[i] L ≡ K. ⓛV → ⦃G, L⦄ ⊢ 𝐍⦃#i⦄.
+lemma cnr_lref_abst: ∀G,L,K,V,i. ⇩[i] L ≡ K. ⓛV → ⦃G, L⦄ ⊢ ➡ 𝐍⦃#i⦄.
 #G #L #K #V #i #HLK #X #H
 elim (cpr_inv_lref1 … H) -H // *
 #K0 #V1 #V2 #HLK0 #_ #_
@@ -38,8 +38,8 @@ qed.
 (* Relocation properties ****************************************************)
 
 (* Basic_1: was: nf2_lift *)
-lemma cnr_lift: ∀G,L0,L,T,T0,s,d,e. ⦃G, L⦄ ⊢ 𝐍⦃T⦄ →
-                ⇩[s, d, e] L0 ≡ L → ⇧[d, e] T ≡ T0 → ⦃G, L0⦄ ⊢ 𝐍⦃T0⦄.
+lemma cnr_lift: ∀G,L0,L,T,T0,s,d,e. ⦃G, L⦄ ⊢ ➡ 𝐍⦃T⦄ →
+                ⇩[s, d, e] L0 ≡ L → ⇧[d, e] T ≡ T0 → ⦃G, L0⦄ ⊢ ➡ 𝐍⦃T0⦄.
 #G #L0 #L #T #T0 #s #d #e #HLT #HL0 #HT0 #X #H
 elim (cpr_inv_lift1 … H … HL0 … HT0) -L0 #T1 #HT10 #HT1
 <(HLT … HT1) in HT0; -L #HT0
@@ -47,8 +47,8 @@ elim (cpr_inv_lift1 … H … HL0 … HT0) -L0 #T1 #HT10 #HT1
 qed.
 
 (* Note: this was missing in basic_1 *)
-lemma cnr_inv_lift: ∀G,L0,L,T,T0,s,d,e. ⦃G, L0⦄ ⊢ 𝐍⦃T0⦄ →
-                    ⇩[s, d, e] L0 ≡ L → ⇧[d, e] T ≡ T0 → ⦃G, L⦄ ⊢ 𝐍⦃T⦄.
+lemma cnr_inv_lift: ∀G,L0,L,T,T0,s,d,e. ⦃G, L0⦄ ⊢ ➡ 𝐍⦃T0⦄ →
+                    ⇩[s, d, e] L0 ≡ L → ⇧[d, e] T ≡ T0 → ⦃G, L⦄ ⊢ ➡ 𝐍⦃T⦄.
 #G #L0 #L #T #T0 #s #d #e #HLT0 #HL0 #HT0 #X #H
 elim (lift_total X d e) #X0 #HX0
 lapply (cpr_lift … H … HL0 … HT0 … HX0) -L #HTX0
