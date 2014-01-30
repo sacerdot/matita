@@ -19,14 +19,6 @@ include "basic_2/reduction/cnr.ma".
 
 (* Advanced properties ******************************************************)
 
-(* Basic_1: was only: nf2_csort_lref *)
-lemma cnr_lref_atom: ∀G,L,i. ⇩[i] L ≡ ⋆ → ⦃G, L⦄ ⊢ ➡ 𝐍⦃#i⦄.
-#G #L #i #HL #X #H
-elim (cpr_inv_lref1 … H) -H // *
-#K #V1 #V2 #HLK #_ #_
-lapply (ldrop_mono … HL … HLK) -L #H destruct
-qed.
-
 (* Basic_1: was: nf2_lref_abst *)
 lemma cnr_lref_abst: ∀G,L,K,V,i. ⇩[i] L ≡ K. ⓛV → ⦃G, L⦄ ⊢ ➡ 𝐍⦃#i⦄.
 #G #L #K #V #i #HLK #X #H

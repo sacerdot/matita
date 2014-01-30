@@ -17,15 +17,6 @@ include "basic_2/reduction/cnx.ma".
 
 (* CONTEXT-SENSITIVE EXTENDED NORMAL TERMS **********************************)
 
-(* Advanced properties ******************************************************)
-
-lemma cnx_lref_atom: ∀h,g,G,L,i. ⇩[i] L ≡ ⋆ → ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃#i⦄.
-#h #g #G #L #i #HL #X #H
-elim (cpx_inv_lref1 … H) -H // *
-#I #K #V1 #V2 #HLK #_ #_
-lapply (ldrop_mono … HL … HLK) -L #H destruct
-qed.
-
 (* Relocation properties ****************************************************)
 
 lemma cnx_lift: ∀h,g,G,L0,L,T,T0,s,d,e. ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃T⦄ → ⇩[s, d, e] L0 ≡ L →

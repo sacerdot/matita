@@ -212,6 +212,10 @@ table {
              [ "lleq ( ? ⋕[?,?] ? )" "lleq_alt ( ? ⋕⋕[?,?] ? )" "lleq_ldrop" + "lleq_fqus" + "lleq_lleq" + "lleq_ext" * ]
           }
         ]
+        [ { "normal forms for context-sensitive extended substitution" * } {
+             [ "cny ( ⦃?,?⦄ ⊢ ▶[?,?] 𝐍⦃?⦄ )" "cny_lift" * ]
+          }
+        ]
         [ { "contxt-sensitive extended multiple substitution" * } {
              [ "cpys ( ⦃?,?⦄ ⊢ ? ▶*×[?,?] ? )" "cpys_alt ( ⦃?,?⦄ ⊢ ? ▶▶*×[?,?] ? )" "cpys_lift" + "cpys_cpys" * ]
           }
