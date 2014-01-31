@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "ground_2/ynat/ynat_max.ma".
-include "basic_2/notation/relations/extpsubst_6.ma".
+include "basic_2/notation/relations/psubst_6.ma".
 include "basic_2/grammar/genv.ma".
 include "basic_2/grammar/cl_shift.ma".
 include "basic_2/relocation/ldrop_append.ma".
@@ -35,7 +35,7 @@ inductive cpy: ynat → ynat → relation4 genv lenv term term ≝
 .
 
 interpretation "context-sensitive extended ordinary substritution (term)"
-   'ExtPSubst G L T1 d e T2 = (cpy d e G L T1 T2).
+   'PSubst G L T1 d e T2 = (cpy d e G L T1 T2).
 
 (* Basic properties *********************************************************)
 
@@ -49,13 +49,13 @@ lemma lsuby_cpy_trans: ∀G,d,e. lsub_trans … (cpy d e G) (lsuby d e).
 ]
 qed-.
 
-lemma cpy_refl: ∀G,T,L,d,e. ⦃G, L⦄ ⊢ T ▶×[d, e] T.
+lemma cpy_refl: ∀G,T,L,d,e. ⦃G, L⦄ ⊢ T ▶[d, e] T.
 #G #T elim T -T // * /2 width=1 by cpy_bind, cpy_flat/
 qed.
 
 (* Basic_1: was: subst1_ex *)
 lemma cpy_full: ∀I,G,K,V,T1,L,d. ⇩[d] L ≡ K.ⓑ{I}V →
-                ∃∃T2,T. ⦃G, L⦄ ⊢ T1 ▶×[d, 1] T2 & ⇧[d, 1] T ≡ T2.
+                ∃∃T2,T. ⦃G, L⦄ ⊢ T1 ▶[d, 1] T2 & ⇧[d, 1] T ≡ T2.
 #I #G #K #V #T1 elim T1 -T1
 [ * #i #L #d #HLK
   /2 width=4 by lift_sort, lift_gref, ex2_2_intro/
@@ -75,9 +75,9 @@ lemma cpy_full: ∀I,G,K,V,T1,L,d. ⇩[d] L ≡ K.ⓑ{I}V →
 ]
 qed-.
 
-lemma cpy_weak: ∀G,L,T1,T2,d1,e1. ⦃G, L⦄ ⊢ T1 ▶×[d1, e1] T2 →
+lemma cpy_weak: ∀G,L,T1,T2,d1,e1. ⦃G, L⦄ ⊢ T1 ▶[d1, e1] T2 →
                 ∀d2,e2. d2 ≤ d1 → d1 + e1 ≤ d2 + e2 →
-                ⦃G, L⦄ ⊢ T1 ▶×[d2, e2] T2.
+                ⦃G, L⦄ ⊢ T1 ▶[d2, e2] T2.
 #G #L #T1 #T2 #d1 #e1 #H elim H -G -L -T1 -T2 -d1 -e1 //
 [ /3 width=5 by cpy_subst, ylt_yle_trans, yle_trans/
 | /4 width=3 by cpy_bind, ylt_yle_trans, yle_succ/
@@ -86,7 +86,7 @@ lemma cpy_weak: ∀G,L,T1,T2,d1,e1. ⦃G, L⦄ ⊢ T1 ▶×[d1, e1] T2 →
 qed-.
 
 lemma cpy_weak_top: ∀G,L,T1,T2,d,e.
-                    ⦃G, L⦄ ⊢ T1 ▶×[d, e] T2 → ⦃G, L⦄ ⊢ T1 ▶×[d, |L| - d] T2.
+                    ⦃G, L⦄ ⊢ T1 ▶[d, e] T2 → ⦃G, L⦄ ⊢ T1 ▶[d, |L| - d] T2.
 #G #L #T1 #T2 #d #e #H elim H -G -L -T1 -T2 -d -e //
 [ #I #G #L #K #V #W #i #d #e #Hdi #_ #HLK #HVW
   lapply (ldrop_fwd_length_lt2 … HLK)
@@ -98,16 +98,16 @@ lemma cpy_weak_top: ∀G,L,T1,T2,d,e.
 qed-.
 
 lemma cpy_weak_full: ∀G,L,T1,T2,d,e.
-                     ⦃G, L⦄ ⊢ T1 ▶×[d, e] T2 → ⦃G, L⦄ ⊢ T1 ▶×[0, |L|] T2.
+                     ⦃G, L⦄ ⊢ T1 ▶[d, e] T2 → ⦃G, L⦄ ⊢ T1 ▶[0, |L|] T2.
 #G #L #T1 #T2 #d #e #HT12
 lapply (cpy_weak … HT12 0 (d + e) ? ?) -HT12
 /2 width=2 by cpy_weak_top/
 qed-.
 
-lemma cpy_up: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶×[dt, et] U2 →
+lemma cpy_up: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶[dt, et] U2 →
               ∀T1,d,e. ⇧[d, e] T1 ≡ U1 →
               d ≤ dt → d + e ≤ dt + et →
-              ∃∃T2. ⦃G, L⦄ ⊢ U1 ▶×[d+e, dt+et-(d+e)] U2 & ⇧[d, e] T2 ≡ U2.
+              ∃∃T2. ⦃G, L⦄ ⊢ U1 ▶[d+e, dt+et-(d+e)] U2 & ⇧[d, e] T2 ≡ U2.
 #G #L #U1 #U2 #dt #et #H elim H -G -L -U1 -U2 -dt -et
 [ * #i #G #L #dt #et #T1 #d #e #H #_
   [ lapply (lift_inv_sort2 … H) -H #H destruct /2 width=3 by ex2_intro/
@@ -135,8 +135,8 @@ lemma cpy_up: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶×[dt, et] U2 →
 ]
 qed-.
 
-lemma cpy_split_up: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶×[d, e] T2 → ∀i. i ≤ d + e →
-                    ∃∃T. ⦃G, L⦄ ⊢ T1 ▶×[d, i-d] T & ⦃G, L⦄ ⊢ T ▶×[i, d+e-i] T2.
+lemma cpy_split_up: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶[d, e] T2 → ∀i. i ≤ d + e →
+                    ∃∃T. ⦃G, L⦄ ⊢ T1 ▶[d, i-d] T & ⦃G, L⦄ ⊢ T ▶[i, d+e-i] T2.
 #G #L #T1 #T2 #d #e #H elim H -G -L -T1 -T2 -d -e
 [ /2 width=3 by ex2_intro/
 | #I #G #L #K #V #W #i #d #e #Hdi #Hide #HLK #HVW #j #Hjde
@@ -154,8 +154,8 @@ lemma cpy_split_up: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶×[d, e] T2 → ∀i.
 ]
 qed-.
 
-lemma cpy_split_down: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶×[d, e] T2 → ∀i. i ≤ d + e →
-                      ∃∃T. ⦃G, L⦄ ⊢ T1 ▶×[i, d+e-i] T & ⦃G, L⦄ ⊢ T ▶×[d, i-d] T2.
+lemma cpy_split_down: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶[d, e] T2 → ∀i. i ≤ d + e →
+                      ∃∃T. ⦃G, L⦄ ⊢ T1 ▶[i, d+e-i] T & ⦃G, L⦄ ⊢ T ▶[d, i-d] T2.
 #G #L #T1 #T2 #d #e #H elim H -G -L -T1 -T2 -d -e
 [ /2 width=3 by ex2_intro/
 | #I #G #L #K #V #W #i #d #e #Hdi #Hide #HLK #HVW #j #Hjde
@@ -184,7 +184,7 @@ qed-.
 
 (* Basic inversion lemmas ***************************************************)
 
-fact cpy_inv_atom1_aux: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶×[d, e] T2 → ∀J. T1 = ⓪{J} →
+fact cpy_inv_atom1_aux: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶[d, e] T2 → ∀J. T1 = ⓪{J} →
                         T2 = ⓪{J} ∨
                         ∃∃I,K,V,i. d ≤ yinj i & i < d + e &
                                    ⇩[i] L ≡ K.ⓑ{I}V &
@@ -198,7 +198,7 @@ fact cpy_inv_atom1_aux: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶×[d, e] T2 → �
 ]
 qed-.
 
-lemma cpy_inv_atom1: ∀I,G,L,T2,d,e. ⦃G, L⦄ ⊢ ⓪{I} ▶×[d, e] T2 →
+lemma cpy_inv_atom1: ∀I,G,L,T2,d,e. ⦃G, L⦄ ⊢ ⓪{I} ▶[d, e] T2 →
                      T2 = ⓪{I} ∨
                      ∃∃J,K,V,i. d ≤ yinj i & i < d + e &
                                 ⇩[i] L ≡ K.ⓑ{J}V &
@@ -207,14 +207,14 @@ lemma cpy_inv_atom1: ∀I,G,L,T2,d,e. ⦃G, L⦄ ⊢ ⓪{I} ▶×[d, e] T2 →
 /2 width=4 by cpy_inv_atom1_aux/ qed-.
 
 (* Basic_1: was: subst1_gen_sort *)
-lemma cpy_inv_sort1: ∀G,L,T2,k,d,e. ⦃G, L⦄ ⊢ ⋆k ▶×[d, e] T2 → T2 = ⋆k.
+lemma cpy_inv_sort1: ∀G,L,T2,k,d,e. ⦃G, L⦄ ⊢ ⋆k ▶[d, e] T2 → T2 = ⋆k.
 #G #L #T2 #k #d #e #H
 elim (cpy_inv_atom1 … H) -H //
 * #I #K #V #i #_ #_ #_ #_ #H destruct
 qed-.
 
 (* Basic_1: was: subst1_gen_lref *)
-lemma cpy_inv_lref1: ∀G,L,T2,i,d,e. ⦃G, L⦄ ⊢ #i ▶×[d, e] T2 →
+lemma cpy_inv_lref1: ∀G,L,T2,i,d,e. ⦃G, L⦄ ⊢ #i ▶[d, e] T2 →
                      T2 = #i ∨
                      ∃∃I,K,V. d ≤ i & i < d + e &
                               ⇩[i] L ≡ K.ⓑ{I}V &
@@ -224,16 +224,16 @@ elim (cpy_inv_atom1 … H) -H /2 width=1 by or_introl/
 * #I #K #V #j #Hdj #Hjde #HLK #HVT2 #H destruct /3 width=5 by ex4_3_intro, or_intror/
 qed-.
 
-lemma cpy_inv_gref1: ∀G,L,T2,p,d,e. ⦃G, L⦄ ⊢ §p ▶×[d, e] T2 → T2 = §p.
+lemma cpy_inv_gref1: ∀G,L,T2,p,d,e. ⦃G, L⦄ ⊢ §p ▶[d, e] T2 → T2 = §p.
 #G #L #T2 #p #d #e #H
 elim (cpy_inv_atom1 … H) -H //
 * #I #K #V #i #_ #_ #_ #_ #H destruct
 qed-.
 
-fact cpy_inv_bind1_aux: ∀G,L,U1,U2,d,e. ⦃G, L⦄ ⊢ U1 ▶×[d, e] U2 →
+fact cpy_inv_bind1_aux: ∀G,L,U1,U2,d,e. ⦃G, L⦄ ⊢ U1 ▶[d, e] U2 →
                         ∀a,I,V1,T1. U1 = ⓑ{a,I}V1.T1 →
-                        ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ▶×[d, e] V2 &
-                                 ⦃G, L. ⓑ{I}V1⦄ ⊢ T1 ▶×[⫯d, e] T2 &
+                        ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ▶[d, e] V2 &
+                                 ⦃G, L. ⓑ{I}V1⦄ ⊢ T1 ▶[⫯d, e] T2 &
                                  U2 = ⓑ{a,I}V2.T2.
 #G #L #U1 #U2 #d #e * -G -L -U1 -U2 -d -e
 [ #I #G #L #d #e #b #J #W1 #U1 #H destruct
@@ -243,16 +243,16 @@ fact cpy_inv_bind1_aux: ∀G,L,U1,U2,d,e. ⦃G, L⦄ ⊢ U1 ▶×[d, e] U2 →
 ]
 qed-.
 
-lemma cpy_inv_bind1: ∀a,I,G,L,V1,T1,U2,d,e. ⦃G, L⦄ ⊢ ⓑ{a,I} V1. T1 ▶×[d, e] U2 →
-                     ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ▶×[d, e] V2 &
-                              ⦃G, L.ⓑ{I}V1⦄ ⊢ T1 ▶×[⫯d, e] T2 &
+lemma cpy_inv_bind1: ∀a,I,G,L,V1,T1,U2,d,e. ⦃G, L⦄ ⊢ ⓑ{a,I} V1. T1 ▶[d, e] U2 →
+                     ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ▶[d, e] V2 &
+                              ⦃G, L.ⓑ{I}V1⦄ ⊢ T1 ▶[⫯d, e] T2 &
                               U2 = ⓑ{a,I}V2.T2.
 /2 width=3 by cpy_inv_bind1_aux/ qed-.
 
-fact cpy_inv_flat1_aux: ∀G,L,U1,U2,d,e. ⦃G, L⦄ ⊢ U1 ▶×[d, e] U2 →
+fact cpy_inv_flat1_aux: ∀G,L,U1,U2,d,e. ⦃G, L⦄ ⊢ U1 ▶[d, e] U2 →
                         ∀I,V1,T1. U1 = ⓕ{I}V1.T1 →
-                        ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ▶×[d, e] V2 &
-                                 ⦃G, L⦄ ⊢ T1 ▶×[d, e] T2 &
+                        ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ▶[d, e] V2 &
+                                 ⦃G, L⦄ ⊢ T1 ▶[d, e] T2 &
                                  U2 = ⓕ{I}V2.T2.
 #G #L #U1 #U2 #d #e * -G -L -U1 -U2 -d -e
 [ #I #G #L #d #e #J #W1 #U1 #H destruct
@@ -262,14 +262,14 @@ fact cpy_inv_flat1_aux: ∀G,L,U1,U2,d,e. ⦃G, L⦄ ⊢ U1 ▶×[d, e] U2 →
 ]
 qed-.
 
-lemma cpy_inv_flat1: ∀I,G,L,V1,T1,U2,d,e. ⦃G, L⦄ ⊢ ⓕ{I} V1. T1 ▶×[d, e] U2 →
-                     ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ▶×[d, e] V2 &
-                              ⦃G, L⦄ ⊢ T1 ▶×[d, e] T2 &
+lemma cpy_inv_flat1: ∀I,G,L,V1,T1,U2,d,e. ⦃G, L⦄ ⊢ ⓕ{I} V1. T1 ▶[d, e] U2 →
+                     ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ▶[d, e] V2 &
+                              ⦃G, L⦄ ⊢ T1 ▶[d, e] T2 &
                               U2 = ⓕ{I}V2.T2.
 /2 width=3 by cpy_inv_flat1_aux/ qed-.
 
 
-fact cpy_inv_refl_O2_aux: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶×[d, e] T2 → e = 0 → T1 = T2.
+fact cpy_inv_refl_O2_aux: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶[d, e] T2 → e = 0 → T1 = T2.
 #G #L #T1 #T2 #d #e #H elim H -G -L -T1 -T2 -d -e
 [ //
 | #I #G #L #K #V #W #i #d #e #Hdi #Hide #_ #_ #H destruct
@@ -279,24 +279,24 @@ fact cpy_inv_refl_O2_aux: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶×[d, e] T2 →
 ]
 qed-.
 
-lemma cpy_inv_refl_O2: ∀G,L,T1,T2,d. ⦃G, L⦄ ⊢ T1 ▶×[d, 0] T2 → T1 = T2.
+lemma cpy_inv_refl_O2: ∀G,L,T1,T2,d. ⦃G, L⦄ ⊢ T1 ▶[d, 0] T2 → T1 = T2.
 /2 width=6 by cpy_inv_refl_O2_aux/ qed-.
 
 (* Basic_1: was: subst1_gen_lift_eq *)
 lemma cpy_inv_lift1_eq: ∀G,T1,U1,d,e. ⇧[d, e] T1 ≡ U1 →
-                        ∀L,U2. ⦃G, L⦄ ⊢ U1 ▶×[d, e] U2 → U1 = U2.
+                        ∀L,U2. ⦃G, L⦄ ⊢ U1 ▶[d, e] U2 → U1 = U2.
 #G #T1 #U1 #d #e #HTU1 #L #U2 #HU12 elim (cpy_up … HU12 … HTU1) -HU12 -HTU1
 /2 width=4 by cpy_inv_refl_O2/
 qed-.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma cpy_fwd_tw: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶×[d, e] T2 → ♯{T1} ≤ ♯{T2}.
+lemma cpy_fwd_tw: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶[d, e] T2 → ♯{T1} ≤ ♯{T2}.
 #G #L #T1 #T2 #d #e #H elim H -G -L -T1 -T2 -d -e normalize
 /3 width=1 by monotonic_le_plus_l, le_plus/
 qed-.
 
-lemma cpy_fwd_shift1: ∀G,L1,L,T1,T,d,e. ⦃G, L⦄ ⊢ L1 @@ T1 ▶×[d, e] T →
+lemma cpy_fwd_shift1: ∀G,L1,L,T1,T,d,e. ⦃G, L⦄ ⊢ L1 @@ T1 ▶[d, e] T →
                       ∃∃L2,T2. |L1| = |L2| & T = L2 @@ T2.
 #G #L1 @(lenv_ind_dx … L1) -L1 normalize
 [ #L #T1 #T #d #e #HT1

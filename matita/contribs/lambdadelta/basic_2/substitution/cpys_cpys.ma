@@ -19,36 +19,36 @@ include "basic_2/substitution/cpys_alt.ma".
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma cpys_inv_SO2: ∀G,L,T1,T2,d. ⦃G, L⦄ ⊢ T1 ▶*×[d, 1] T2 → ⦃G, L⦄ ⊢ T1 ▶×[d, 1] T2.
+lemma cpys_inv_SO2: ∀G,L,T1,T2,d. ⦃G, L⦄ ⊢ T1 ▶*[d, 1] T2 → ⦃G, L⦄ ⊢ T1 ▶[d, 1] T2.
 #G #L #T1 #T2 #d #H @(cpys_ind … H) -T2 /2 width=3 by cpy_trans_ge/
 qed-.
 
 (* Advanced properties ******************************************************)
 
-lemma cpys_strip_eq: ∀G,L,T0,T1,d1,e1. ⦃G, L⦄ ⊢ T0 ▶*×[d1, e1] T1 →
-                     ∀T2,d2,e2. ⦃G, L⦄ ⊢ T0 ▶×[d2, e2] T2 →
-                     ∃∃T. ⦃G, L⦄ ⊢ T1 ▶×[d2, e2] T & ⦃G, L⦄ ⊢ T2 ▶*×[d1, e1] T.
+lemma cpys_strip_eq: ∀G,L,T0,T1,d1,e1. ⦃G, L⦄ ⊢ T0 ▶*[d1, e1] T1 →
+                     ∀T2,d2,e2. ⦃G, L⦄ ⊢ T0 ▶[d2, e2] T2 →
+                     ∃∃T. ⦃G, L⦄ ⊢ T1 ▶[d2, e2] T & ⦃G, L⦄ ⊢ T2 ▶*[d1, e1] T.
 normalize /3 width=3 by cpy_conf_eq, TC_strip1/ qed-.
 
-lemma cpys_strip_neq: ∀G,L1,T0,T1,d1,e1. ⦃G, L1⦄ ⊢ T0 ▶*×[d1, e1] T1 →
-                      ∀L2,T2,d2,e2. ⦃G, L2⦄ ⊢ T0 ▶×[d2, e2] T2 →
+lemma cpys_strip_neq: ∀G,L1,T0,T1,d1,e1. ⦃G, L1⦄ ⊢ T0 ▶*[d1, e1] T1 →
+                      ∀L2,T2,d2,e2. ⦃G, L2⦄ ⊢ T0 ▶[d2, e2] T2 →
                       (d1 + e1 ≤ d2 ∨ d2 + e2 ≤ d1) →
-                      ∃∃T. ⦃G, L2⦄ ⊢ T1 ▶×[d2, e2] T & ⦃G, L1⦄ ⊢ T2 ▶*×[d1, e1] T.
+                      ∃∃T. ⦃G, L2⦄ ⊢ T1 ▶[d2, e2] T & ⦃G, L1⦄ ⊢ T2 ▶*[d1, e1] T.
 normalize /3 width=3 by cpy_conf_neq, TC_strip1/ qed-.
 
-lemma cpys_strap1_down: ∀G,L,T1,T0,d1,e1. ⦃G, L⦄ ⊢ T1 ▶*×[d1, e1] T0 →
-                        ∀T2,d2,e2. ⦃G, L⦄ ⊢ T0 ▶×[d2, e2] T2 → d2 + e2 ≤ d1 →
-                        ∃∃T. ⦃G, L⦄ ⊢ T1 ▶×[d2, e2] T & ⦃G, L⦄ ⊢ T ▶*×[d1, e1] T2.
+lemma cpys_strap1_down: ∀G,L,T1,T0,d1,e1. ⦃G, L⦄ ⊢ T1 ▶*[d1, e1] T0 →
+                        ∀T2,d2,e2. ⦃G, L⦄ ⊢ T0 ▶[d2, e2] T2 → d2 + e2 ≤ d1 →
+                        ∃∃T. ⦃G, L⦄ ⊢ T1 ▶[d2, e2] T & ⦃G, L⦄ ⊢ T ▶*[d1, e1] T2.
 normalize /3 width=3 by cpy_trans_down, TC_strap1/ qed.
 
-lemma cpys_strap2_down: ∀G,L,T1,T0,d1,e1. ⦃G, L⦄ ⊢ T1 ▶×[d1, e1] T0 →
-                        ∀T2,d2,e2. ⦃G, L⦄ ⊢ T0 ▶*×[d2, e2] T2 → d2 + e2 ≤ d1 →
-                        ∃∃T. ⦃G, L⦄ ⊢ T1 ▶*×[d2, e2] T & ⦃G, L⦄ ⊢ T ▶×[d1, e1] T2.
+lemma cpys_strap2_down: ∀G,L,T1,T0,d1,e1. ⦃G, L⦄ ⊢ T1 ▶[d1, e1] T0 →
+                        ∀T2,d2,e2. ⦃G, L⦄ ⊢ T0 ▶*[d2, e2] T2 → d2 + e2 ≤ d1 →
+                        ∃∃T. ⦃G, L⦄ ⊢ T1 ▶*[d2, e2] T & ⦃G, L⦄ ⊢ T ▶[d1, e1] T2.
 normalize /3 width=3 by cpy_trans_down, TC_strap2/ qed-.
 
-lemma cpys_split_up: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶*×[d, e] T2 →
+lemma cpys_split_up: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶*[d, e] T2 →
                      ∀i. d ≤ i → i ≤ d + e →
-                     ∃∃T. ⦃G, L⦄ ⊢ T1 ▶*×[d, i - d] T & ⦃G, L⦄ ⊢ T ▶*×[i, d + e - i] T2.
+                     ∃∃T. ⦃G, L⦄ ⊢ T1 ▶*[d, i - d] T & ⦃G, L⦄ ⊢ T ▶*[i, d + e - i] T2.
 #G #L #T1 #T2 #d #e #H #i #Hdi #Hide @(cpys_ind … H) -T2
 [ /2 width=3 by ex2_intro/
 | #T #T2 #_ #HT12 * #T3 #HT13 #HT3
@@ -58,10 +58,10 @@ lemma cpys_split_up: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶*×[d, e] T2 →
 ]
 qed-.
 
-lemma cpys_inv_lift1_up: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶*×[dt, et] U2 →
+lemma cpys_inv_lift1_up: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶*[dt, et] U2 →
                          ∀K,s,d,e. ⇩[s, d, e] L ≡ K → ∀T1. ⇧[d, e] T1 ≡ U1 →
                          d ≤ dt → dt ≤ yinj d + e → yinj d + e ≤ dt + et →
-                         ∃∃T2. ⦃G, K⦄ ⊢ T1 ▶*×[d, dt + et - (yinj d + e)] T2 &
+                         ∃∃T2. ⦃G, K⦄ ⊢ T1 ▶*[d, dt + et - (yinj d + e)] T2 &
                                ⇧[d, e] T2 ≡ U2.
 #G #L #U1 #U2 #dt #et #HU12 #K #s #d #e #HLK #T1 #HTU1 #Hddt #Hdtde #Hdedet
 elim (cpys_split_up … HU12 (d + e)) -HU12 // -Hdedet #U #HU1 #HU2
@@ -73,29 +73,29 @@ qed-.
 
 (* Main properties **********************************************************)
 
-theorem cpys_conf_eq: ∀G,L,T0,T1,d1,e1. ⦃G, L⦄ ⊢ T0 ▶*×[d1, e1] T1 →
-                      ∀T2,d2,e2. ⦃G, L⦄ ⊢ T0 ▶*×[d2, e2] T2 →
-                      ∃∃T. ⦃G, L⦄ ⊢ T1 ▶*×[d2, e2] T & ⦃G, L⦄ ⊢ T2 ▶*×[d1, e1] T.
+theorem cpys_conf_eq: ∀G,L,T0,T1,d1,e1. ⦃G, L⦄ ⊢ T0 ▶*[d1, e1] T1 →
+                      ∀T2,d2,e2. ⦃G, L⦄ ⊢ T0 ▶*[d2, e2] T2 →
+                      ∃∃T. ⦃G, L⦄ ⊢ T1 ▶*[d2, e2] T & ⦃G, L⦄ ⊢ T2 ▶*[d1, e1] T.
 normalize /3 width=3 by cpy_conf_eq, TC_confluent2/ qed-.
 
-theorem cpys_conf_neq: ∀G,L1,T0,T1,d1,e1. ⦃G, L1⦄ ⊢ T0 ▶*×[d1, e1] T1 →
-                       ∀L2,T2,d2,e2. ⦃G, L2⦄ ⊢ T0 ▶*×[d2, e2] T2 →
+theorem cpys_conf_neq: ∀G,L1,T0,T1,d1,e1. ⦃G, L1⦄ ⊢ T0 ▶*[d1, e1] T1 →
+                       ∀L2,T2,d2,e2. ⦃G, L2⦄ ⊢ T0 ▶*[d2, e2] T2 →
                        (d1 + e1 ≤ d2 ∨ d2 + e2 ≤ d1) →
-                       ∃∃T. ⦃G, L2⦄ ⊢ T1 ▶*×[d2, e2] T & ⦃G, L1⦄ ⊢ T2 ▶*×[d1, e1] T.
+                       ∃∃T. ⦃G, L2⦄ ⊢ T1 ▶*[d2, e2] T & ⦃G, L1⦄ ⊢ T2 ▶*[d1, e1] T.
 normalize /3 width=3 by cpy_conf_neq, TC_confluent2/ qed-.
 
 theorem cpys_trans_eq: ∀G,L,T1,T,T2,d,e.
-                       ⦃G, L⦄ ⊢ T1 ▶*×[d, e] T → ⦃G, L⦄ ⊢ T ▶*×[d, e] T2 →
-                       ⦃G, L⦄ ⊢ T1 ▶*×[d, e] T2.
+                       ⦃G, L⦄ ⊢ T1 ▶*[d, e] T → ⦃G, L⦄ ⊢ T ▶*[d, e] T2 →
+                       ⦃G, L⦄ ⊢ T1 ▶*[d, e] T2.
 normalize /2 width=3 by trans_TC/ qed-.
 
-theorem cpys_trans_down: ∀G,L,T1,T0,d1,e1. ⦃G, L⦄ ⊢ T1 ▶*×[d1, e1] T0 →
-                         ∀T2,d2,e2. ⦃G, L⦄ ⊢ T0 ▶*×[d2, e2] T2 → d2 + e2 ≤ d1 →
-                         ∃∃T. ⦃G, L⦄ ⊢ T1 ▶*×[d2, e2] T & ⦃G, L⦄ ⊢ T ▶*×[d1, e1] T2.
+theorem cpys_trans_down: ∀G,L,T1,T0,d1,e1. ⦃G, L⦄ ⊢ T1 ▶*[d1, e1] T0 →
+                         ∀T2,d2,e2. ⦃G, L⦄ ⊢ T0 ▶*[d2, e2] T2 → d2 + e2 ≤ d1 →
+                         ∃∃T. ⦃G, L⦄ ⊢ T1 ▶*[d2, e2] T & ⦃G, L⦄ ⊢ T ▶*[d1, e1] T2.
 normalize /3 width=3 by cpy_trans_down, TC_transitive2/ qed-.
 
-theorem cpys_antisym_eq: ∀G,L1,T1,T2,d,e. ⦃G, L1⦄ ⊢ T1 ▶*×[d, e] T2 →
-                         ∀L2. ⦃G, L2⦄ ⊢ T2 ▶*×[d, e] T1 → T1 = T2.
+theorem cpys_antisym_eq: ∀G,L1,T1,T2,d,e. ⦃G, L1⦄ ⊢ T1 ▶*[d, e] T2 →
+                         ∀L2. ⦃G, L2⦄ ⊢ T2 ▶*[d, e] T1 → T1 = T2.
 #G #L1 #T1 #T2 #d #e #H @(cpys_ind_alt … H) -G -L1 -T1 -T2 //
 [ #I1 #G #L1 #K1 #V1 #V2 #W2 #i #d #e #Hdi #Hide #_ #_ #HVW2 #_ #L2 #HW2
   elim (lt_or_ge (|L2|) (i+1)) #Hi [ -Hdi -Hide | ]

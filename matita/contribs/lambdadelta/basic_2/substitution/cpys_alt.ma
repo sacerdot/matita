@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/extpsubststaralt_6.ma".
+include "basic_2/notation/relations/psubststaralt_6.ma".
 include "basic_2/substitution/cpys_lift.ma".
 
 (* CONTEXT-SENSITIVE EXTENDED MULTIPLE SUBSTITUTION FOR TERMS ***************)
@@ -33,7 +33,7 @@ inductive cpysa: ynat → ynat → relation4 genv lenv term term ≝
 
 interpretation
    "context-sensitive extended multiple substritution (term) alternative"
-   'ExtPSubstStarAlt G L T1 d e T2 = (cpysa d e G L T1 T2).
+   'PSubstStarAlt G L T1 d e T2 = (cpysa d e G L T1 T2).
 
 (* Basic properties *********************************************************)
 
@@ -47,13 +47,13 @@ lemma lsuby_cpysa_trans: ∀G,d,e. lsub_trans … (cpysa d e G) (lsuby d e).
 ]
 qed-.
 
-lemma cpysa_refl: ∀G,T,L,d,e. ⦃G, L⦄ ⊢ T ▶▶*×[d, e] T.
+lemma cpysa_refl: ∀G,T,L,d,e. ⦃G, L⦄ ⊢ T ▶▶*[d, e] T.
 #G #T elim T -T //
 #I elim I -I /2 width=1 by cpysa_bind, cpysa_flat/
 qed.
 
-lemma cpysa_cpy_trans: ∀G,L,T1,T,d,e. ⦃G, L⦄ ⊢ T1 ▶▶*×[d, e] T →
-                       ∀T2. ⦃G, L⦄ ⊢ T ▶×[d, e] T2 → ⦃G, L⦄ ⊢ T1 ▶▶*×[d, e] T2.
+lemma cpysa_cpy_trans: ∀G,L,T1,T,d,e. ⦃G, L⦄ ⊢ T1 ▶▶*[d, e] T →
+                       ∀T2. ⦃G, L⦄ ⊢ T ▶[d, e] T2 → ⦃G, L⦄ ⊢ T1 ▶▶*[d, e] T2.
 #G #L #T1 #T #d #e #H elim H -G -L -T1 -T -d -e
 [ #I #G #L #d #e #X #H
   elim (cpy_inv_atom1 … H) -H // * /2 width=7 by cpysa_subst/
@@ -70,12 +70,12 @@ lemma cpysa_cpy_trans: ∀G,L,T1,T,d,e. ⦃G, L⦄ ⊢ T1 ▶▶*×[d, e] T →
 ]
 qed-.
 
-lemma cpys_cpysa: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶*×[d, e] T2 → ⦃G, L⦄ ⊢ T1 ▶▶*×[d, e] T2.
+lemma cpys_cpysa: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶*[d, e] T2 → ⦃G, L⦄ ⊢ T1 ▶▶*[d, e] T2.
 /3 width=8 by cpysa_cpy_trans, cpys_ind/ qed.
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma cpysa_cpys: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶▶*×[d, e] T2 → ⦃G, L⦄ ⊢ T1 ▶*×[d, e] T2.
+lemma cpysa_cpys: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶▶*[d, e] T2 → ⦃G, L⦄ ⊢ T1 ▶*[d, e] T2.
 #G #L #T1 #T2 #d #e #H elim H -G -L -T1 -T2 -d -e
 /2 width=7 by cpys_subst, cpys_flat, cpys_bind, cpy_cpys/
 qed-.
@@ -83,18 +83,18 @@ qed-.
 lemma cpys_ind_alt: ∀R:ynat→ynat→relation4 genv lenv term term.
                     (∀I,G,L,d,e. R d e G L (⓪{I}) (⓪{I})) →
                     (∀I,G,L,K,V1,V2,W2,i,d,e. d ≤ yinj i → i < d + e →
-                     ⇩[i] L ≡ K.ⓑ{I}V1 → ⦃G, K⦄ ⊢ V1 ▶*×[O, ⫰(d+e-i)] V2 →
+                     ⇩[i] L ≡ K.ⓑ{I}V1 → ⦃G, K⦄ ⊢ V1 ▶*[O, ⫰(d+e-i)] V2 →
                      ⇧[O, i+1] V2 ≡ W2 → R O (⫰(d+e-i)) G K V1 V2 → R d e G L (#i) W2
                     ) →
-                    (∀a,I,G,L,V1,V2,T1,T2,d,e. ⦃G, L⦄ ⊢ V1 ▶*×[d, e] V2 →
-                     ⦃G, L.ⓑ{I}V1⦄ ⊢ T1 ▶*×[⫯d, e] T2 → R d e G L V1 V2 →
+                    (∀a,I,G,L,V1,V2,T1,T2,d,e. ⦃G, L⦄ ⊢ V1 ▶*[d, e] V2 →
+                     ⦃G, L.ⓑ{I}V1⦄ ⊢ T1 ▶*[⫯d, e] T2 → R d e G L V1 V2 →
                      R (⫯d) e G (L.ⓑ{I}V1) T1 T2 → R d e G L (ⓑ{a,I}V1.T1) (ⓑ{a,I}V2.T2)
                     ) →
-                    (∀I,G,L,V1,V2,T1,T2,d,e. ⦃G, L⦄ ⊢ V1 ▶*×[d, e] V2 →
-                     ⦃G, L⦄ ⊢ T1 ▶*×[d, e] T2 → R d e G L V1 V2 →
+                    (∀I,G,L,V1,V2,T1,T2,d,e. ⦃G, L⦄ ⊢ V1 ▶*[d, e] V2 →
+                     ⦃G, L⦄ ⊢ T1 ▶*[d, e] T2 → R d e G L V1 V2 →
                      R d e G L T1 T2 → R d e G L (ⓕ{I}V1.T1) (ⓕ{I}V2.T2)
                     ) →
-                    ∀d,e,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ▶*×[d, e] T2 → R d e G L T1 T2.
+                    ∀d,e,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ▶*[d, e] T2 → R d e G L T1 T2.
 #R #H1 #H2 #H3 #H4 #d #e #G #L #T1 #T2 #H elim (cpys_cpysa … H) -G -L -T1 -T2 -d -e
 /3 width=8 by cpysa_cpys/
 qed-.

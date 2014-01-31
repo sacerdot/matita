@@ -15,7 +15,7 @@
 include "basic_2/reduction/cpx_lift.ma".
 include "basic_2/reduction/cnx.ma".
 
-(* CONTEXT-SENSITIVE EXTENDED NORMAL TERMS **********************************)
+(* NORMAL TERMS FOR CONTEXT-SENSITIVE EXTENDED REDUCTION ********************)
 
 (* Relocation properties ****************************************************)
 

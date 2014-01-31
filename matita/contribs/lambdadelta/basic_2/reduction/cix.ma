@@ -12,17 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/notreducible_5.ma".
+include "basic_2/notation/relations/prednotreducible_5.ma".
 include "basic_2/reduction/cir.ma".
 include "basic_2/reduction/crx.ma".
 
-(* CONTEXT-SENSITIVE EXTENDED IRREDUCIBLE TERMS *****************************)
+(* IRREDUCIBLE TERMS FOR CONTEXT-SENSITIVE EXTENDED REDUCTION ***************)
 
 definition cix: ∀h. sd h → relation3 genv lenv term ≝
                 λh,g,G,L,T. ⦃G, L⦄ ⊢ ➡[h, g] 𝐑⦃T⦄ → ⊥.
 
-interpretation "context-sensitive extended irreducibility (term)"
-   'NotReducible h g G L T = (cix h g G L T).
+interpretation "irreducibility for context-sensitive extended reduction (term)"
+   'PRedNotReducible h g G L T = (cix h g G L T).
 
 (* Basic inversion lemmas ***************************************************)
 

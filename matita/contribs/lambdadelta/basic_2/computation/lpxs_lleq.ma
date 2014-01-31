@@ -25,21 +25,21 @@ fact le_repl_sn_aux: ∀x,y,z:nat. x ≤ z → x = y → y ≤ z.
 
 axiom cpxs_cpys_conf_lpxs: ∀h,g,G,d,e.
                            ∀L0,T0,T1. ⦃G, L0⦄ ⊢ T0 ➡*[h, g] T1 →
-                           ∀T2. ⦃G, L0⦄ ⊢ T0 ▶*×[d, e] T2 →
+                           ∀T2. ⦃G, L0⦄ ⊢ T0 ▶*[d, e] T2 →
                            ∀L1. ⦃G, L0⦄ ⊢ ➡*[h, g] L1 →
-                           ∃∃T.  ⦃G, L1⦄ ⊢ T1 ▶*×[d, e] T & ⦃G, L0⦄ ⊢ T2 ➡*[h, g] T.
+                           ∃∃T.  ⦃G, L1⦄ ⊢ T1 ▶*[d, e] T & ⦃G, L0⦄ ⊢ T2 ➡*[h, g] T.
 
 axiom cpxs_conf_lpxs_lpys: ∀h,g,G,d,e.
                            ∀I,L0,V0,T0,T1. ⦃G, L0.ⓑ{I}V0⦄ ⊢ T0 ➡*[h, g] T1 →
-                           ∀L1. ⦃G, L0⦄ ⊢ ➡*[h, g] L1 → ∀V2. ⦃G, L0⦄ ⊢ V0 ▶*×[d, e] V2 →
-                           ∃∃T. ⦃G, L1.ⓑ{I}V0⦄  ⊢ T1 ▶*×[⫯d, e] T & ⦃G, L0.ⓑ{I}V2⦄ ⊢ T0 ➡*[h, g] T.
+                           ∀L1. ⦃G, L0⦄ ⊢ ➡*[h, g] L1 → ∀V2. ⦃G, L0⦄ ⊢ V0 ▶*[d, e] V2 →
+                           ∃∃T. ⦃G, L1.ⓑ{I}V0⦄  ⊢ T1 ▶*[⫯d, e] T & ⦃G, L0.ⓑ{I}V2⦄ ⊢ T0 ➡*[h, g] T.
 
 
 include "basic_2/reduction/cpx_cpys.ma".
 
-fact pippo_aux: ∀h,g,G,L1,T,T1,d,e. ⦃G, L1⦄ ⊢ T ▶*×[d, e] T1 → e = ∞ →
+fact pippo_aux: ∀h,g,G,L1,T,T1,d,e. ⦃G, L1⦄ ⊢ T ▶*[d, e] T1 → e = ∞ →
                 ∀L2. ⦃G, L1⦄ ⊢ ➡*[h, g] L2 →
-                ∃∃T2. ⦃G, L2⦄ ⊢ T ▶*×[d, e] T2 & ⦃G, L1⦄ ⊢ T1 ➡*[h, g] T2 &
+                ∃∃T2. ⦃G, L2⦄ ⊢ T ▶*[d, e] T2 & ⦃G, L1⦄ ⊢ T1 ➡*[h, g] T2 &
                       L1 ⋕[T, d] L2 ↔ T1 = T2.
 #h #g #G #L1 #T #T1 #d #e #H @(cpys_ind_alt … H) -G -L1 -T -T1 -d -e [ * ]
 [ /5 width=5 by lpxs_fwd_length, lleq_sort, ex3_intro, conj/

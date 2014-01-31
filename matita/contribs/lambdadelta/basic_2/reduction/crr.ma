@@ -12,11 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/reducible_3.ma".
+include "basic_2/notation/relations/predreducible_3.ma".
 include "basic_2/grammar/genv.ma".
 include "basic_2/relocation/ldrop.ma".
 
-(* CONTEXT-SENSITIVE REDUCIBLE TERMS ****************************************)
+(* REDUCIBLE TERMS FOR CONTEXT-SENSITIVE REDUCTION **************************)
 
 (* reducible binary items *)
 definition ri2: predicate item2 ≝
@@ -40,8 +40,8 @@ inductive crr (G:genv): relation2 lenv term ≝
 .
 
 interpretation
-   "context-sensitive reducibility (term)"
-   'Reducible G L T = (crr G L T).
+   "reducibility for context-sensitive reduction (term)"
+   'PRedReducible G L T = (crr G L T).
 
 (* Basic inversion lemmas ***************************************************)
 

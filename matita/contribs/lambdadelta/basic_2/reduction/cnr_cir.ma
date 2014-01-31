@@ -15,14 +15,14 @@
 include "basic_2/reduction/cpr_cir.ma".
 include "basic_2/reduction/cnr_crr.ma".
 
-(* CONTEXT-SENSITIVE NORMAL TERMS *******************************************)
+(* NORMAL TERMS FOR CONTEXT-SENSITIVE REDUCTION *****************************)
 
-(* Main properties on context-sensitive irreducible terms *******************)
+(* Main properties on irreducibility ****************************************)
 
 theorem cir_cnr: ∀G,L,T. ⦃G, L⦄ ⊢ ➡ 𝐈⦃T⦄ → ⦃G, L⦄ ⊢ ➡ 𝐍⦃T⦄.
 /2 width=4 by cpr_fwd_cir/ qed.
 
-(* Main inversion lemmas on context-sensitive irreducible terms *************)
+(* Main inversion lemmas on irreducibility **********************************)
 
 theorem cnr_inv_cir: ∀G,L,T. ⦃G, L⦄ ⊢ ➡ 𝐍⦃T⦄ → ⦃G, L⦄ ⊢ ➡ 𝐈⦃T⦄.
 /2 width=5 by cnr_inv_crr/ qed-.

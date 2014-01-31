@@ -12,11 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/reducible_5.ma".
+include "basic_2/notation/relations/predreducible_5.ma".
 include "basic_2/static/sd.ma".
 include "basic_2/reduction/crr.ma".
 
-(* CONTEXT-SENSITIVE EXTENDED REDUCIBLE TERMS *******************************)
+(* REDUCIBLE TERMS FOR CONTEXT-SENSITIVE EXTENDED REDUCTION *****************)
 
 (* activate genv *)
 (* extended reducible terms *)
@@ -33,8 +33,8 @@ inductive crx (h) (g) (G:genv): relation2 lenv term ≝
 .
 
 interpretation
-   "context-sensitive extended reducibility (term)"
-   'Reducible h g G L T = (crx h g G L T).
+   "reducibility for context-sensitive extended reduction (term)"
+   'PRedReducible h g G L T = (crx h g G L T).
 
 (* Basic properties *********************************************************)
 

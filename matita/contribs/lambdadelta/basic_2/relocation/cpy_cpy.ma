@@ -19,9 +19,9 @@ include "basic_2/relocation/cpy_lift.ma".
 (* Main properties **********************************************************)
 
 (* Basic_1: was: subst1_confluence_eq *)
-theorem cpy_conf_eq: ∀G,L,T0,T1,d1,e1. ⦃G, L⦄ ⊢ T0 ▶×[d1, e1] T1 →
-                     ∀T2,d2,e2. ⦃G, L⦄ ⊢ T0 ▶×[d2, e2] T2 →
-                     ∃∃T. ⦃G, L⦄ ⊢ T1 ▶×[d2, e2] T & ⦃G, L⦄ ⊢ T2 ▶×[d1, e1] T.
+theorem cpy_conf_eq: ∀G,L,T0,T1,d1,e1. ⦃G, L⦄ ⊢ T0 ▶[d1, e1] T1 →
+                     ∀T2,d2,e2. ⦃G, L⦄ ⊢ T0 ▶[d2, e2] T2 →
+                     ∃∃T. ⦃G, L⦄ ⊢ T1 ▶[d2, e2] T & ⦃G, L⦄ ⊢ T2 ▶[d1, e1] T.
 #G #L #T0 #T1 #d1 #e1 #H elim H -G -L -T0 -T1 -d1 -e1
 [ /2 width=3 by ex2_intro/
 | #I1 #G #L #K1 #V1 #T1 #i0 #d1 #e1 #Hd1 #Hde1 #HLK1 #HVT1 #T2 #d2 #e2 #H
@@ -46,10 +46,10 @@ theorem cpy_conf_eq: ∀G,L,T0,T1,d1,e1. ⦃G, L⦄ ⊢ T0 ▶×[d1, e1] T1 →
 qed-.
 
 (* Basic_1: was: subst1_confluence_neq *)
-theorem cpy_conf_neq: ∀G,L1,T0,T1,d1,e1. ⦃G, L1⦄ ⊢ T0 ▶×[d1, e1] T1 →
-                      ∀L2,T2,d2,e2. ⦃G, L2⦄ ⊢ T0 ▶×[d2, e2] T2 →
+theorem cpy_conf_neq: ∀G,L1,T0,T1,d1,e1. ⦃G, L1⦄ ⊢ T0 ▶[d1, e1] T1 →
+                      ∀L2,T2,d2,e2. ⦃G, L2⦄ ⊢ T0 ▶[d2, e2] T2 →
                       (d1 + e1 ≤ d2 ∨ d2 + e2 ≤ d1) →
-                      ∃∃T. ⦃G, L2⦄ ⊢ T1 ▶×[d2, e2] T & ⦃G, L1⦄ ⊢ T2 ▶×[d1, e1] T.
+                      ∃∃T. ⦃G, L2⦄ ⊢ T1 ▶[d2, e2] T & ⦃G, L1⦄ ⊢ T2 ▶[d1, e1] T.
 #G #L1 #T0 #T1 #d1 #e1 #H elim H -G -L1 -T0 -T1 -d1 -e1
 [ /2 width=3 by ex2_intro/
 | #I1 #G #L1 #K1 #V1 #T1 #i0 #d1 #e1 #Hd1 #Hde1 #HLK1 #HVT1 #L2 #T2 #d2 #e2 #H1 #H2
@@ -78,8 +78,8 @@ qed-.
 
 (* Note: the constant 1 comes from cpy_subst *)
 (* Basic_1: was: subst1_trans *)
-theorem cpy_trans_ge: ∀G,L,T1,T0,d,e. ⦃G, L⦄ ⊢ T1 ▶×[d, e] T0 →
-                      ∀T2. ⦃G, L⦄ ⊢ T0 ▶×[d, 1] T2 → 1 ≤ e → ⦃G, L⦄ ⊢ T1 ▶×[d, e] T2.
+theorem cpy_trans_ge: ∀G,L,T1,T0,d,e. ⦃G, L⦄ ⊢ T1 ▶[d, e] T0 →
+                      ∀T2. ⦃G, L⦄ ⊢ T0 ▶[d, 1] T2 → 1 ≤ e → ⦃G, L⦄ ⊢ T1 ▶[d, e] T2.
 #G #L #T1 #T0 #d #e #H elim H -G -L -T1 -T0 -d -e
 [ #I #G #L #d #e #T2 #H #He
   elim (cpy_inv_atom1 … H) -H
@@ -99,9 +99,9 @@ theorem cpy_trans_ge: ∀G,L,T1,T0,d,e. ⦃G, L⦄ ⊢ T1 ▶×[d, e] T0 →
 ]
 qed-.
 
-theorem cpy_trans_down: ∀G,L,T1,T0,d1,e1. ⦃G, L⦄ ⊢ T1 ▶×[d1, e1] T0 →
-                        ∀T2,d2,e2. ⦃G, L⦄ ⊢ T0 ▶×[d2, e2] T2 → d2 + e2 ≤ d1 →
-                        ∃∃T. ⦃G, L⦄ ⊢ T1 ▶×[d2, e2] T & ⦃G, L⦄ ⊢ T ▶×[d1, e1] T2.
+theorem cpy_trans_down: ∀G,L,T1,T0,d1,e1. ⦃G, L⦄ ⊢ T1 ▶[d1, e1] T0 →
+                        ∀T2,d2,e2. ⦃G, L⦄ ⊢ T0 ▶[d2, e2] T2 → d2 + e2 ≤ d1 →
+                        ∃∃T. ⦃G, L⦄ ⊢ T1 ▶[d2, e2] T & ⦃G, L⦄ ⊢ T ▶[d1, e1] T2.
 #G #L #T1 #T0 #d1 #e1 #H elim H -G -L -T1 -T0 -d1 -e1
 [ /2 width=3 by ex2_intro/
 | #I #G #L #K #V #W #i1 #d1 #e1 #Hdi1 #Hide1 #HLK #HVW #T2 #d2 #e2 #HWT2 #Hde2d1

@@ -12,16 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/normal_3.ma".
+include "basic_2/notation/relations/prednormal_3.ma".
 include "basic_2/reduction/cpr.ma".
 
-(* CONTEXT-SENSITIVE NORMAL TERMS *******************************************)
+(* NORMAL TERMS FOR CONTEXT-SENSITIVE REDUCTION *****************************)
 
 definition cnr: relation3 genv lenv term ≝ λG,L. NF … (cpr G L) (eq …).
 
 interpretation
-   "context-sensitive normality (term)"
-   'Normal G L T = (cnr G L T).
+   "normality for context-sensitive reduction (term)"
+   'PRedNormal G L T = (cnr G L T).
 
 (* Basic inversion lemmas ***************************************************)
 

@@ -17,7 +17,7 @@ include "basic_2/reduction/cpr.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL REDUCTION FOR TERMS ***************************)
 
-(* Advanced forward lemmas on context-sensitive irreducible terms ***********)
+(* Advanced forward lemmas on irreducibility ********************************)
 
 lemma cpr_fwd_cir: ∀G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡ T2 → ⦃G, L⦄ ⊢ ➡ 𝐈⦃T1⦄ → T2 = T1.
 #G #L #T1 #T2 #H elim H -G -L -T1 -T2

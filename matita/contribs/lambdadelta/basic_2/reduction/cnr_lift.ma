@@ -15,7 +15,7 @@
 include "basic_2/reduction/cpr_lift.ma".
 include "basic_2/reduction/cnr.ma".
 
-(* CONTEXT-SENSITIVE NORMAL TERMS *******************************************)
+(* NORMAL TERMS FOR CONTEXT-SENSITIVE REDUCTION *****************************)
 
 (* Advanced properties ******************************************************)
 

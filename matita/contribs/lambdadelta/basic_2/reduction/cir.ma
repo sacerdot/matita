@@ -12,15 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/notreducible_3.ma".
+include "basic_2/notation/relations/prednotreducible_3.ma".
 include "basic_2/reduction/crr.ma".
 
-(* CONTEXT-SENSITIVE IRREDUCIBLE TERMS **************************************)
+(* IRREDUCIBLE TERMS FOR CONTEXT-SENSITIVE REDUCTION ************************)
 
 definition cir: relation3 genv lenv term ≝ λG,L,T. ⦃G, L⦄ ⊢ ➡ 𝐑⦃T⦄ → ⊥.
 
-interpretation "context-sensitive irreducibility (term)"
-   'NotReducible G L T = (cir G L T).
+interpretation "irreducibility for context-sensitive reduction (term)"
+   'PRedNotReducible G L T = (cir G L T).
 
 (* Basic inversion lemmas ***************************************************)
 

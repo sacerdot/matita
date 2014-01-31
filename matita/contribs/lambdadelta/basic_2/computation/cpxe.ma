@@ -12,17 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/peval_6.ma".
+include "basic_2/notation/relations/predeval_6.ma".
 include "basic_2/computation/cpxs.ma".
 include "basic_2/computation/csx.ma".
 
-(* CONTEXT-SENSITIVE EXTENDED PARALLEL EVALUATION ON TERMS ******************)
+(* EVALUATION FOR CONTEXT-SENSITIVE EXTENDED PARALLEL REDUCTION ON TERMS ****)
 
 definition cpxe: ∀h. sd h → relation4 genv lenv term term ≝
                  λh,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡*[h, g] T2 ∧ ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃T2⦄.
 
-interpretation "context-sensitive extended parallel evaluation (term)"
-   'PEval h g G L T1 T2 = (cpxe h g G L T1 T2).
+interpretation "evaluation for context-sensitive extended parallel reduction (term)"
+   'PRedEval h g G L T1 T2 = (cpxe h g G L T1 T2).
 
 (* Basic_properties *********************************************************)
 

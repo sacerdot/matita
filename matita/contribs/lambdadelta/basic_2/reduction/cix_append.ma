@@ -15,7 +15,7 @@
 include "basic_2/reduction/crx_append.ma".
 include "basic_2/reduction/cix.ma".
 
-(* CONTEXT-SENSITIVE EXTENDED IRREDUCIBLE TERMS *****************************)
+(* IRREDUCIBLE TERMS FOR CONTEXT-SENSITIVE EXTENDED REDUCTION ***************)
 
 (* Advanced inversion lemmas ************************************************)
 

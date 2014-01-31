@@ -12,17 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/peval_4.ma".
+include "basic_2/notation/relations/predeval_4.ma".
 include "basic_2/computation/cprs.ma".
 include "basic_2/computation/csx.ma".
 
-(* CONTEXT-SENSITIVE PARALLEL EVALUATION ON TERMS **************************)
+(* EVALUATION FOR CONTEXT-SENSITIVE PARALLEL REDUCTION ON TERMS *************)
 
 definition cpre: relation4 genv lenv term term ≝
                  λG,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡* T2 ∧ ⦃G, L⦄ ⊢ ➡ 𝐍⦃T2⦄.
 
-interpretation "context-sensitive parallel evaluation (term)"
-   'PEval G L T1 T2 = (cpre G L T1 T2).
+interpretation "evaluation for context-sensitive parallel reduction (term)"
+   'PRedEval G L T1 T2 = (cpre G L T1 T2).
 
 (* Basic_properties *********************************************************)
 

@@ -15,7 +15,7 @@
 include "basic_2/computation/cprs_cprs.ma".
 include "basic_2/computation/cpre.ma".
 
-(* CONTEXT-SENSITIVE PARALLEL EVALUATION ON TERMS **************************)
+(* EVALUATION FOR CONTEXT-SENSITIVE PARALLEL REDUCTION ON TERMS *************)
 
 (* Main properties *********************************************************)
 

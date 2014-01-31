@@ -15,14 +15,14 @@
 include "basic_2/reduction/cpx_cix.ma".
 include "basic_2/reduction/cnx_crx.ma".
 
-(* CONTEXT-SENSITIVE EXTENDED NORMAL TERMS **********************************)
+(* NORMAL TERMS FOR CONTEXT-SENSITIVE EXTENDED REDUCTION ********************)
 
-(* Main properties on context-sensitive extended irreducible terms **********)
+(* Main properties on irreducibility ****************************************)
 
 theorem cix_cnr: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ ➡[h, g] 𝐈⦃T⦄ → ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃T⦄.
 /2 width=6 by cpx_fwd_cix/ qed.
 
-(* Main inversion lemmas on context-sensitive extended irreducible terms ****)
+(* Main inversion lemmas on irreducibility **********************************)
 
 theorem cnr_inv_cix: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃T⦄ → ⦃G, L⦄ ⊢ ➡[h, g] 𝐈⦃T⦄.
 /2 width=7 by cnx_inv_crx/ qed-.

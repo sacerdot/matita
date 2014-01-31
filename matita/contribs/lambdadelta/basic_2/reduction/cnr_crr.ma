@@ -15,9 +15,9 @@
 include "basic_2/reduction/crr.ma".
 include "basic_2/reduction/cnr.ma".
 
-(* CONTEXT-SENSITIVE NORMAL TERMS *******************************************)
+(* NORMAL TERMS FOR CONTEXT-SENSITIVE REDUCTION *****************************)
 
-(* Advanced inversion lemmas on context-sensitive reducible terms ***********)
+(* Advanced inversion lemmas on reducibility ********************************)
 
 (* Note: this property is unusual *)
 lemma cnr_inv_crr: ∀G,L,T. ⦃G, L⦄ ⊢ ➡ 𝐑⦃T⦄ → ⦃G, L⦄ ⊢ ➡ 𝐍⦃T⦄ → ⊥.

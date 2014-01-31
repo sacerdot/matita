@@ -15,7 +15,7 @@
 include "basic_2/reduction/crr_append.ma".
 include "basic_2/reduction/cir.ma".
 
-(* CONTEXT-SENSITIVE IRREDUCIBLE TERMS **************************************)
+(* IRREDUCIBLE TERMS FOR CONTEXT-SENSITIVE REDUCTION ************************)
 
 (* Advanved properties ******************************************************)
 

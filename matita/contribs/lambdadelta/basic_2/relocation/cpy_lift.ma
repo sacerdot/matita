@@ -20,10 +20,10 @@ include "basic_2/relocation/cpy.ma".
 (* Properties on relocation *************************************************)
 
 (* Basic_1: was: subst1_lift_lt *)
-lemma cpy_lift_le: ∀G,K,T1,T2,dt,et. ⦃G, K⦄ ⊢ T1 ▶×[dt, et] T2 →
+lemma cpy_lift_le: ∀G,K,T1,T2,dt,et. ⦃G, K⦄ ⊢ T1 ▶[dt, et] T2 →
                    ∀L,U1,U2,s,d,e. ⇩[s, d, e] L ≡ K →
                    ⇧[d, e] T1 ≡ U1 → ⇧[d, e] T2 ≡ U2 →
-                   dt + et ≤ d → ⦃G, L⦄ ⊢ U1 ▶×[dt, et] U2.
+                   dt + et ≤ d → ⦃G, L⦄ ⊢ U1 ▶[dt, et] U2.
 #G #K #T1 #T2 #dt #et #H elim H -G -K -T1 -T2 -dt -et
 [ #I #G #K #dt #et #L #U1 #U2 #s #d #e #_ #H1 #H2 #_
   >(lift_mono … H1 … H2) -H1 -H2 //
@@ -46,10 +46,10 @@ lemma cpy_lift_le: ∀G,K,T1,T2,dt,et. ⦃G, K⦄ ⊢ T1 ▶×[dt, et] T2 →
 ]
 qed-.
 
-lemma cpy_lift_be: ∀G,K,T1,T2,dt,et. ⦃G, K⦄ ⊢ T1 ▶×[dt, et] T2 →
+lemma cpy_lift_be: ∀G,K,T1,T2,dt,et. ⦃G, K⦄ ⊢ T1 ▶[dt, et] T2 →
                    ∀L,U1,U2,s,d,e. ⇩[s, d, e] L ≡ K →
                    ⇧[d, e] T1 ≡ U1 → ⇧[d, e] T2 ≡ U2 →
-                   dt ≤ d → d ≤ dt + et → ⦃G, L⦄ ⊢ U1 ▶×[dt, et + e] U2.
+                   dt ≤ d → d ≤ dt + et → ⦃G, L⦄ ⊢ U1 ▶[dt, et + e] U2.
 #G #K #T1 #T2 #dt #et #H elim H -G -K -T1 -T2 -dt -et
 [ #I #G #K #dt #et #L #U1 #U2 #s #d #e #_ #H1 #H2 #_ #_
   >(lift_mono … H1 … H2) -H1 -H2 //
@@ -80,10 +80,10 @@ lemma cpy_lift_be: ∀G,K,T1,T2,dt,et. ⦃G, K⦄ ⊢ T1 ▶×[dt, et] T2 →
 qed-.
 
 (* Basic_1: was: subst1_lift_ge *)
-lemma cpy_lift_ge: ∀G,K,T1,T2,dt,et. ⦃G, K⦄ ⊢ T1 ▶×[dt, et] T2 →
+lemma cpy_lift_ge: ∀G,K,T1,T2,dt,et. ⦃G, K⦄ ⊢ T1 ▶[dt, et] T2 →
                    ∀L,U1,U2,s,d,e. ⇩[s, d, e] L ≡ K →
                    ⇧[d, e] T1 ≡ U1 → ⇧[d, e] T2 ≡ U2 →
-                   d ≤ dt → ⦃G, L⦄ ⊢ U1 ▶×[dt+e, et] U2.
+                   d ≤ dt → ⦃G, L⦄ ⊢ U1 ▶[dt+e, et] U2.
 #G #K #T1 #T2 #dt #et #H elim H -G -K -T1 -T2 -dt -et
 [ #I #G #K #dt #et #L #U1 #U2 #s #d #e #_ #H1 #H2 #_
   >(lift_mono … H1 … H2) -H1 -H2 //
@@ -108,10 +108,10 @@ qed-.
 (* Inversion lemmas on relocation *******************************************)
 
 (* Basic_1: was: subst1_gen_lift_lt *)
-lemma cpy_inv_lift1_le: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶×[dt, et] U2 →
+lemma cpy_inv_lift1_le: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶[dt, et] U2 →
                         ∀K,s,d,e. ⇩[s, d, e] L ≡ K → ∀T1. ⇧[d, e] T1 ≡ U1 →
                         dt + et ≤ d →
-                        ∃∃T2. ⦃G, K⦄ ⊢ T1 ▶×[dt, et] T2 & ⇧[d, e] T2 ≡ U2.
+                        ∃∃T2. ⦃G, K⦄ ⊢ T1 ▶[dt, et] T2 & ⇧[d, e] T2 ≡ U2.
 #G #L #U1 #U2 #dt #et #H elim H -G -L -U1 -U2 -dt -et
 [ * #i #G #L #dt #et #K #s #d #e #_ #T1 #H #_
   [ lapply (lift_inv_sort2 … H) -H #H destruct /2 width=3 by ex2_intro/
@@ -137,10 +137,10 @@ lemma cpy_inv_lift1_le: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶×[dt, et] U2 �
 ]
 qed-.
 
-lemma cpy_inv_lift1_be: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶×[dt, et] U2 →
+lemma cpy_inv_lift1_be: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶[dt, et] U2 →
                         ∀K,s,d,e. ⇩[s, d, e] L ≡ K → ∀T1. ⇧[d, e] T1 ≡ U1 →
                         dt ≤ d → yinj d + e ≤ dt + et →
-                        ∃∃T2. ⦃G, K⦄ ⊢ T1 ▶×[dt, et-e] T2 & ⇧[d, e] T2 ≡ U2.
+                        ∃∃T2. ⦃G, K⦄ ⊢ T1 ▶[dt, et-e] T2 & ⇧[d, e] T2 ≡ U2.
 #G #L #U1 #U2 #dt #et #H elim H -G -L -U1 -U2 -dt -et
 [ * #i #G #L #dt #et #K #s #d #e #_ #T1 #H #_ #_
   [ lapply (lift_inv_sort2 … H) -H #H destruct /2 width=3 by ex2_intro/
@@ -177,10 +177,10 @@ lemma cpy_inv_lift1_be: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶×[dt, et] U2 �
 qed-.
 
 (* Basic_1: was: subst1_gen_lift_ge *)
-lemma cpy_inv_lift1_ge: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶×[dt, et] U2 →
+lemma cpy_inv_lift1_ge: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶[dt, et] U2 →
                         ∀K,s,d,e. ⇩[s, d, e] L ≡ K → ∀T1. ⇧[d, e] T1 ≡ U1 →
                         yinj d + e ≤ dt →
-                        ∃∃T2. ⦃G, K⦄ ⊢ T1 ▶×[dt-e, et] T2 & ⇧[d, e] T2 ≡ U2.
+                        ∃∃T2. ⦃G, K⦄ ⊢ T1 ▶[dt-e, et] T2 & ⇧[d, e] T2 ≡ U2.
 #G #L #U1 #U2 #dt #et #H elim H -G -L -U1 -U2 -dt -et
 [ * #i #G #L #dt #et #K #s #d #e #_ #T1 #H #_
   [ lapply (lift_inv_sort2 … H) -H #H destruct /2 width=3 by ex2_intro/
@@ -214,10 +214,10 @@ qed-.
 
 (* Advancd inversion lemmas on relocation ***********************************)
 
-lemma cpy_inv_lift1_ge_up: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶×[dt, et] U2 →
+lemma cpy_inv_lift1_ge_up: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶[dt, et] U2 →
                            ∀K,s,d,e. ⇩[s, d, e] L ≡ K → ∀T1. ⇧[d, e] T1 ≡ U1 →
                            d ≤ dt → dt ≤ yinj d + e → yinj d + e ≤ dt + et →
-                           ∃∃T2. ⦃G, K⦄ ⊢ T1 ▶×[d, dt + et - (yinj d + e)] T2 & ⇧[d, e] T2 ≡ U2.
+                           ∃∃T2. ⦃G, K⦄ ⊢ T1 ▶[d, dt + et - (yinj d + e)] T2 & ⇧[d, e] T2 ≡ U2.
 #G #L #U1 #U2 #dt #et #HU12 #K #s #d #e #HLK #T1 #HTU1 #Hddt #Hdtde #Hdedet
 elim (cpy_split_up … HU12 (d + e)) -HU12 // -Hdedet #U #HU1 #HU2
 lapply (cpy_weak … HU1 d e ? ?) -HU1 // [ >ymax_pre_sn_comm // ] -Hddt -Hdtde #HU1
@@ -225,20 +225,20 @@ lapply (cpy_inv_lift1_eq … HTU1 … HU1) -HU1 #HU1 destruct
 elim (cpy_inv_lift1_ge … HU2 … HLK … HTU1) -U -L /2 width=3 by ex2_intro/
 qed-.
 
-lemma cpy_inv_lift1_be_up: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶×[dt, et] U2 →
+lemma cpy_inv_lift1_be_up: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶[dt, et] U2 →
                            ∀K,s,d,e. ⇩[s, d, e] L ≡ K → ∀T1. ⇧[d, e] T1 ≡ U1 →
                            dt ≤ d → dt + et ≤ yinj d + e →
-                           ∃∃T2. ⦃G, K⦄ ⊢ T1 ▶×[dt, d-dt] T2 & ⇧[d, e] T2 ≡ U2.
+                           ∃∃T2. ⦃G, K⦄ ⊢ T1 ▶[dt, d-dt] T2 & ⇧[d, e] T2 ≡ U2.
 #G #L #U1 #U2 #dt #et #HU12 #K #s #d #e #HLK #T1 #HTU1 #Hdtd #Hdetde
 lapply (cpy_weak … HU12 dt (d+e-dt) ? ?) -HU12 //
 [ >ymax_pre_sn_comm /2 width=1 by yle_plus_dx1_trans/ ] -Hdetde #HU12
 elim (cpy_inv_lift1_be … HU12 … HLK … HTU1) -U1 -L /2 width=3 by ex2_intro/
 qed-.
 
-lemma cpy_inv_lift1_le_up: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶×[dt, et] U2 →
+lemma cpy_inv_lift1_le_up: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶[dt, et] U2 →
                            ∀K,s,d,e. ⇩[s, d, e] L ≡ K → ∀T1. ⇧[d, e] T1 ≡ U1 →
                            dt ≤ d → d ≤ dt + et → dt + et ≤ yinj d + e →
-                           ∃∃T2. ⦃G, K⦄ ⊢ T1 ▶×[dt, d - dt] T2 & ⇧[d, e] T2 ≡ U2.
+                           ∃∃T2. ⦃G, K⦄ ⊢ T1 ▶[dt, d - dt] T2 & ⇧[d, e] T2 ≡ U2.
 #G #L #U1 #U2 #dt #et #HU12 #K #s #d #e #HLK #T1 #HTU1 #Hdtd #Hddet #Hdetde
 elim (cpy_split_up … HU12 d) -HU12 // #U #HU1 #HU2
 elim (cpy_inv_lift1_le … HU1 … HLK … HTU1) -U1

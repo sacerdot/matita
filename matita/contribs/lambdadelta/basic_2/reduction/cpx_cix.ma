@@ -17,7 +17,7 @@ include "basic_2/reduction/cpx.ma".
 
 (* CONTEXT-SENSITIVE EXTENDED PARALLEL REDUCTION FOR TERMS ******************)
 
-(* Advanced forward lemmas on context-sensitive extended irreducible terms **)
+(* Advanced forward lemmas on irreducibility ********************************)
 
 lemma cpx_fwd_cix: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[h, g] T2 → ⦃G, L⦄ ⊢ ➡[h, g] 𝐈⦃T1⦄ → T2 = T1.
 #h #g #G #L #T1 #T2 #H elim H -G -L -T1 -T2

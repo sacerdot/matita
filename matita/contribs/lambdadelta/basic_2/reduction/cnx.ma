@@ -12,18 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/normal_5.ma".
+include "basic_2/notation/relations/prednormal_5.ma".
 include "basic_2/reduction/cnr.ma".
 include "basic_2/reduction/cpx.ma".
 
-(* CONTEXT-SENSITIVE EXTENDED NORMAL TERMS **********************************)
+(* NORMAL TERMS FOR CONTEXT-SENSITIVE EXTENDED REDUCTION ********************)
 
 definition cnx: ∀h. sd h → relation3 genv lenv term ≝
                 λh,g,G,L. NF … (cpx h g G L) (eq …).
 
 interpretation
-   "context-sensitive extended normality (term)"
-   'Normal h g L T = (cnx h g L T).
+   "normality for context-sensitive extended reduction (term)"
+   'PRedNormal h g L T = (cnx h g L T).
 
 (* Basic inversion lemmas ***************************************************)
 

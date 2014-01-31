@@ -19,7 +19,7 @@ include "basic_2/substitution/cpys.ma".
 
 definition lleq: relation4 ynat term lenv lenv ≝
                  λd,T,L1,L2. |L1| = |L2| ∧
-                             (∀U. ⦃⋆, L1⦄ ⊢ T ▶*×[d, ∞] U ↔ ⦃⋆, L2⦄ ⊢ T ▶*×[d, ∞] U).
+                             (∀U. ⦃⋆, L1⦄ ⊢ T ▶*[d, ∞] U ↔ ⦃⋆, L2⦄ ⊢ T ▶*[d, ∞] U).
 
 interpretation
    "lazy equivalence (local environment)"

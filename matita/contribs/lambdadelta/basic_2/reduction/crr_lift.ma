@@ -15,7 +15,7 @@
 include "basic_2/relocation/ldrop_ldrop.ma".
 include "basic_2/reduction/crr.ma".
 
-(* CONTEXT-SENSITIVE REDUCIBLE TERMS ****************************************)
+(* REDUCIBLE TERMS FOR CONTEXT-SENSITIVE REDUCTION **************************)
 
 (* Properties on relocation *************************************************)
 

@@ -15,9 +15,9 @@
 include "basic_2/reduction/crx.ma".
 include "basic_2/reduction/cnx.ma".
 
-(* CONTEXT-SENSITIVE EXTENDED NORMAL TERMS **********************************)
+(* NORMAL TERMS FOR CONTEXT-SENSITIVE EXTENDED REDUCTION ********************)
 
-(* Advanced inversion lemmas on context-sensitive reducible terms ***********)
+(* Advanced inversion lemmas on reducibility ********************************)
 
 (* Note: this property is unusual *)
 lemma cnx_inv_crx: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ ➡[h, g] 𝐑⦃T⦄ → ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃T⦄ → ⊥.
