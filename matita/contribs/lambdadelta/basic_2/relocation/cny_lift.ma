@@ -70,3 +70,18 @@ lapply (cpy_lift_ge … HT12 … HLK … HTU1 … HTU2 ?) // -K -Hddte
 >ymax_pre_sn // -Hedt #HU12
 lapply (HU1 … HU12) -L /2 width=5 by lift_inj/
 qed-.
+
+(* Advanced properties ******************************************************)
+
+fact cny_subst_aux: ∀G,L,K,V,W,i,d,e. d ≤ yinj i → i < d + e →
+                    ⇩[i+1] L ≡ K → ⦃G, K⦄ ⊢ ▶[O, ⫰(d+e-i)] 𝐍⦃V⦄ →
+                    ⇧[O, i+1] V ≡ W → ⦃G, L⦄ ⊢ ▶[d, e] 𝐍⦃W⦄.
+#G #L #K #V #W #i #d #e #Hdi #Hide #HLK #HV #HVW
+lapply (cny_lift_be … HV … HLK … HVW ? ?) // -HV -HLK -HVW
+#HW @(cny_narrow … HW) -HW //
+qed-.
+
+lemma cny_subst: ∀I,G,L,K,V,W,i,d,e. d ≤ yinj i → i < d + e →
+                 ⇩[i] L ≡ K.ⓑ{I}V → ⦃G, K⦄ ⊢ ▶[O, ⫰(d+e-i)] 𝐍⦃V⦄ →
+                 ⇧[O, i+1] V ≡ W → ⦃G, L⦄ ⊢ ▶[d, e] 𝐍⦃W⦄.
+/3 width=13 by cny_subst_aux, ldrop_fwd_drop2/ qed-.

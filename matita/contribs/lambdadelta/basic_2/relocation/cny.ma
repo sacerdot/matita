@@ -57,6 +57,13 @@ qed-.
 
 (* Basic properties *********************************************************)
 
+lemma lsuby_cny_conf: ∀G,d,e.
+                      ∀L1,T. ⦃G, L1⦄ ⊢ ▶[d, e] 𝐍⦃T⦄ →
+                      ∀L2. L1 ⊑×[d, e] L2 → ⦃G, L2⦄ ⊢ ▶[d, e] 𝐍⦃T⦄.
+#G #d #e #L1 #T1 #HT1 #L2 #HL12 #T2 #HT12
+@HT1 /3 width=3 by lsuby_cpy_trans/
+qed-. 
+
 lemma cny_sort: ∀G,L,d,e,k. ⦃G, L⦄ ⊢ ▶[d, e] 𝐍⦃⋆k⦄.
 #G #L #d #e #k #X #H elim (cpy_inv_sort1 … H) -H //
 qed.
@@ -100,3 +107,8 @@ lemma cny_flat: ∀G,L,V,d,e. ⦃G, L⦄ ⊢ ▶[d, e] 𝐍⦃V⦄ →
 elim (cpy_inv_flat1 … H) -H #V2 #T2 #HV12 #HT12 #H destruct
 >(HV1 … HV12) -V2 >(HT1 … HT12) -T2 //
 qed.
+
+lemma cny_narrow: ∀G,L,T,d1,e1. ⦃G, L⦄ ⊢ ▶[d1, e1] 𝐍⦃T⦄ →
+                  ∀d2,e2. d1 ≤ d2 → d2 + e2 ≤ d1 + e1 → ⦃G, L⦄ ⊢ ▶[d2, e2] 𝐍⦃T⦄.
+#G #L #T1 #d1 #e1 #HT1 #d2 #e2 #Hd12 #Hde21 #T2 #HT12
+@HT1 /2 width=5 by cpy_weak/ qed-.
