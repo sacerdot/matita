@@ -85,3 +85,25 @@ lemma cny_subst: ∀I,G,L,K,V,W,i,d,e. d ≤ yinj i → i < d + e →
                  ⇩[i] L ≡ K.ⓑ{I}V → ⦃G, K⦄ ⊢ ▶[O, ⫰(d+e-i)] 𝐍⦃V⦄ →
                  ⇧[O, i+1] V ≡ W → ⦃G, L⦄ ⊢ ▶[d, e] 𝐍⦃W⦄.
 /3 width=13 by cny_subst_aux, ldrop_fwd_drop2/ qed-.
+
+(* Advanced inversion lemmas ************************************************)
+
+fact cny_inv_subst_aux: ∀G,L,K,V,W,i,d,e. d ≤ yinj i → i < d + e →
+                        ⇩[i+1] L ≡ K → ⦃G, L⦄ ⊢ ▶[d, e] 𝐍⦃W⦄ →
+                        ⇧[O, i+1] V ≡ W → ⦃G, K⦄ ⊢ ▶[O, ⫰(d+e-i)] 𝐍⦃V⦄.
+#G #L #K #V #W #i #d #e #Hdi #Hide #HLK #HW #HVW
+lapply (cny_narrow … HW (i+1) (⫰(d+e-i)) ? ?) -HW
+[ >yplus_SO2 <yplus_succ_swap >ylt_inv_O1
+  [ >ymax_pre_sn_comm /2 width=2 by ylt_fwd_le/
+  | lapply (monotonic_ylt_minus_dx … Hide i ?) //
+  ]
+| /2 width=3 by yle_trans/
+| #HW lapply (cny_lift_inv_ge … HW … HLK … HVW ?) // -L -W
+  >yplus_inj >yminus_refl //
+]
+qed-.
+
+lemma cny_inv_subst: ∀I,G,L,K,V,W,i,d,e. d ≤ yinj i → i < d + e →
+                     ⇩[i] L ≡ K.ⓑ{I}V → ⦃G, L⦄ ⊢ ▶[d, e] 𝐍⦃W⦄ →
+                     ⇧[O, i+1] V ≡ W →  ⦃G, K⦄ ⊢ ▶[O, ⫰(d+e-i)] 𝐍⦃V⦄.
+/3 width=13 by cny_inv_subst_aux, ldrop_fwd_drop2/ qed-.

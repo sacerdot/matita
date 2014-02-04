@@ -75,10 +75,12 @@ lemma cpys_cpysa: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶*[d, e] T2 → ⦃G, L�
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma cpysa_cpys: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶▶*[d, e] T2 → ⦃G, L⦄ ⊢ T1 ▶*[d, e] T2.
+lemma cpysa_inv_cpys: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶▶*[d, e] T2 → ⦃G, L⦄ ⊢ T1 ▶*[d, e] T2.
 #G #L #T1 #T2 #d #e #H elim H -G -L -T1 -T2 -d -e
 /2 width=7 by cpys_subst, cpys_flat, cpys_bind, cpy_cpys/
 qed-.
+
+(* Advanced eliminators *****************************************************)
 
 lemma cpys_ind_alt: ∀R:ynat→ynat→relation4 genv lenv term term.
                     (∀I,G,L,d,e. R d e G L (⓪{I}) (⓪{I})) →
@@ -96,5 +98,5 @@ lemma cpys_ind_alt: ∀R:ynat→ynat→relation4 genv lenv term term.
                     ) →
                     ∀d,e,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ▶*[d, e] T2 → R d e G L T1 T2.
 #R #H1 #H2 #H3 #H4 #d #e #G #L #T1 #T2 #H elim (cpys_cpysa … H) -G -L -T1 -T2 -d -e
-/3 width=8 by cpysa_cpys/
+/3 width=8 by cpysa_inv_cpys/
 qed-.

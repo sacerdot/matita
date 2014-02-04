@@ -16,4 +16,4 @@
 
 notation "hvbox( ⦃ term 46 G, break term 46 L ⦄ ⊢ break term 46 T1 ▶ ▶ * break [ term 46 d , break term 46 e ] break 𝐍 ⦃ term 46 T2 ⦄ )"
    non associative with precedence 45
-   for @{ 'PRedEval $G $L $T1 $T2 $d $e }.
+   for @{ 'PSubstEvalAlt $G $L $T1 $T2 $d $e }.

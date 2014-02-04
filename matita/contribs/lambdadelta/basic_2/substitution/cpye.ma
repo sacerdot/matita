@@ -57,4 +57,26 @@ qed.
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma 
+lemma cpye_inv_sort1: ∀G,L,X,d,e,k. ⦃G, L⦄ ⊢ ⋆k ▶*[d, e] 𝐍⦃X⦄ → X = ⋆k.
+#G #L #X #d #e #k * /2 width=5 by cpys_inv_sort1/
+qed-.
+
+lemma cpye_inv_gref1: ∀G,L,X,d,e,p. ⦃G, L⦄ ⊢ §p ▶*[d, e] 𝐍⦃X⦄ → X = §p.
+#G #L #X #d #e #p * /2 width=5 by cpys_inv_gref1/
+qed-.
+
+lemma cpye_inv_bind1: ∀a,I,G,L,V1,T1,X,d,e. ⦃G, L⦄ ⊢ ⓑ{a,I}V1.T1 ▶*[d, e] 𝐍⦃X⦄ →
+                      ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ▶*[d, e] 𝐍⦃V2⦄ & ⦃G, L.ⓑ{I}V1⦄ ⊢ T1 ▶*[⫯d, e] 𝐍⦃T2⦄ &
+                               X = ⓑ{a,I}V2.T2.
+#a #I #G #L #V1 #T1 #X #d #e * #H1 #H2 elim (cpys_inv_bind1 … H1) -H1
+#V2 #T2 #HV12 #HT12 #H destruct elim (cny_inv_bind … H2) -H2
+/5 width=8 by lsuby_cny_conf, lsuby_succ, ex3_2_intro, conj/
+qed-.
+
+lemma cpye_inv_flat1: ∀I,G,L,V1,T1,X,d,e. ⦃G, L⦄ ⊢ ⓕ{I}V1.T1 ▶*[d, e] 𝐍⦃X⦄ →
+                      ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ▶*[d, e] 𝐍⦃V2⦄ & ⦃G, L⦄ ⊢ T1 ▶*[d, e] 𝐍⦃T2⦄ &
+                               X = ⓕ{I}V2.T2.
+#I #G #L #V1 #T1 #X #d #e * #H1 #H2 elim (cpys_inv_flat1 … H1) -H1
+#V2 #T2 #HV12 #HT12 #H destruct elim (cny_inv_flat … H2) -H2
+/3 width=5 by ex3_2_intro, conj/
+qed-.
