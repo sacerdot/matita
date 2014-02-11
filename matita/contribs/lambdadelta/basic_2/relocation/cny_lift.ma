@@ -42,7 +42,7 @@ qed-.
 
 (* Inversion lemmas on relocation *******************************************)
 
-lemma cny_lift_inv_le: ∀G,L,K,T,U,s,d,dt,e,et. ⦃G, L⦄ ⊢ ▶[dt, et] 𝐍⦃U⦄ → ⇩[s, d, e] L ≡ K →
+lemma cny_inv_lift_le: ∀G,L,K,T,U,s,d,dt,e,et. ⦃G, L⦄ ⊢ ▶[dt, et] 𝐍⦃U⦄ → ⇩[s, d, e] L ≡ K →
                        ⇧[d, e] T ≡ U → dt + et ≤ d → ⦃G, K⦄ ⊢ ▶[dt, et] 𝐍⦃T⦄.
 #G #L #K #T1 #U1 #s #d #dt #e #et #HU1 #HLK #HTU1 #Hdetd #T2 #HT12
 elim (lift_total T2 d e) #U2 #HTU2
@@ -50,7 +50,7 @@ lapply (cpy_lift_le … HT12 … HLK … HTU1 … HTU2 ?) // -K -Hdetd #HU12
 lapply (HU1 … HU12) -L /2 width=5 by lift_inj/
 qed-.
 
-lemma cny_lift_inv_be: ∀G,L,K,T,U,s,d,dt,e,et. ⦃G, L⦄ ⊢ ▶[dt, et] 𝐍⦃U⦄ → ⇩[s, d, e] L ≡ K →
+lemma cny_inv_lift_be: ∀G,L,K,T,U,s,d,dt,e,et. ⦃G, L⦄ ⊢ ▶[dt, et] 𝐍⦃U⦄ → ⇩[s, d, e] L ≡ K →
                        ⇧[d, e] T ≡ U → dt ≤ d → yinj d + e ≤ dt + et → ⦃G, K⦄ ⊢ ▶[dt, et-e] 𝐍⦃T⦄.
 #G #L #K #T1 #U1 #s #d #dt #e #et #HU1 #HLK #HTU1 #Hdtd #Hdedet #T2 #HT12
 lapply (yle_fwd_plus_ge_inj … Hdedet) // #Heet
@@ -61,7 +61,7 @@ lapply (cpy_lift_be … HT12 … HLK … HTU1 … HTU2 ? ?) // [ >yplus_minus_as
 lapply (HU1 … HU12) -L /2 width=5 by lift_inj/
 qed-.
 
-lemma cny_lift_inv_ge: ∀G,L,K,T,U,s,d,dt,e,et. ⦃G, L⦄ ⊢ ▶[dt, et] 𝐍⦃U⦄ → ⇩[s, d, e] L ≡ K →
+lemma cny_inv_lift_ge: ∀G,L,K,T,U,s,d,dt,e,et. ⦃G, L⦄ ⊢ ▶[dt, et] 𝐍⦃U⦄ → ⇩[s, d, e] L ≡ K →
                        ⇧[d, e] T ≡ U → yinj d + e ≤ dt → ⦃G, K⦄ ⊢ ▶[dt-e, et] 𝐍⦃T⦄.
 #G #L #K #T1 #U1 #s #d #dt #e #et #HU1 #HLK #HTU1 #Hdedt #T2 #HT12
 elim (yle_inv_plus_inj2 … Hdedt) -Hdedt #Hddte #Hedt
@@ -71,39 +71,48 @@ lapply (cpy_lift_ge … HT12 … HLK … HTU1 … HTU2 ?) // -K -Hddte
 lapply (HU1 … HU12) -L /2 width=5 by lift_inj/
 qed-.
 
-(* Advanced properties ******************************************************)
+(* Advanced inversion lemmas on relocation **********************************)
 
-fact cny_subst_aux: ∀G,L,K,V,W,i,d,e. d ≤ yinj i → i < d + e →
-                    ⇩[i+1] L ≡ K → ⦃G, K⦄ ⊢ ▶[O, ⫰(d+e-i)] 𝐍⦃V⦄ →
-                    ⇧[O, i+1] V ≡ W → ⦃G, L⦄ ⊢ ▶[d, e] 𝐍⦃W⦄.
-#G #L #K #V #W #i #d #e #Hdi #Hide #HLK #HV #HVW
-lapply (cny_lift_be … HV … HLK … HVW ? ?) // -HV -HLK -HVW
-#HW @(cny_narrow … HW) -HW //
+lemma cny_inv_lift_ge_up: ∀G,L,K,T,U,s,d,dt,e,et. ⦃G, L⦄ ⊢ ▶[dt, et] 𝐍⦃U⦄ → ⇩[s, d, e] L ≡ K →
+                          ⇧[d, e] T ≡ U → d ≤ dt → dt ≤ yinj d + e → yinj d + e ≤ dt + et →
+                          ⦃G, K⦄ ⊢ ▶[d, dt + et - (yinj d + e)] 𝐍⦃T⦄.
+#G #L #K #T1 #U1 #s #d #dt #e #et #HU1 #HLK #HTU1 #Hddt #Hdtde #Hdedet
+lapply (cny_narrow … HU1 (d+e) (dt+et-(d+e)) ? ?) -HU1 [ >ymax_pre_sn_comm ] // #HU1
+lapply (cny_inv_lift_ge … HU1 … HLK … HTU1 ?) // -L -U1
+>yplus_minus_inj //
 qed-.
 
-lemma cny_subst: ∀I,G,L,K,V,W,i,d,e. d ≤ yinj i → i < d + e →
-                 ⇩[i] L ≡ K.ⓑ{I}V → ⦃G, K⦄ ⊢ ▶[O, ⫰(d+e-i)] 𝐍⦃V⦄ →
-                 ⇧[O, i+1] V ≡ W → ⦃G, L⦄ ⊢ ▶[d, e] 𝐍⦃W⦄.
-/3 width=13 by cny_subst_aux, ldrop_fwd_drop2/ qed-.
-
-(* Advanced inversion lemmas ************************************************)
-
-fact cny_inv_subst_aux: ∀G,L,K,V,W,i,d,e. d ≤ yinj i → i < d + e →
-                        ⇩[i+1] L ≡ K → ⦃G, L⦄ ⊢ ▶[d, e] 𝐍⦃W⦄ →
-                        ⇧[O, i+1] V ≡ W → ⦃G, K⦄ ⊢ ▶[O, ⫰(d+e-i)] 𝐍⦃V⦄.
+lemma cny_inv_lift_subst: ∀G,L,K,V,W,i,d,e. d ≤ yinj i → i < d + e →
+                          ⇩[i+1] L ≡ K → ⦃G, L⦄ ⊢ ▶[d, e] 𝐍⦃W⦄ →
+                          ⇧[O, i+1] V ≡ W → ⦃G, K⦄ ⊢ ▶[O, ⫰(d+e-i)] 𝐍⦃V⦄.
 #G #L #K #V #W #i #d #e #Hdi #Hide #HLK #HW #HVW
-lapply (cny_narrow … HW (i+1) (⫰(d+e-i)) ? ?) -HW
-[ >yplus_SO2 <yplus_succ_swap >ylt_inv_O1
-  [ >ymax_pre_sn_comm /2 width=2 by ylt_fwd_le/
-  | lapply (monotonic_ylt_minus_dx … Hide i ?) //
-  ]
+lapply (cny_inv_lift_ge_up … HW … HLK … HVW ? ? ?) //
+>yplus_O1 <yplus_inj >yplus_SO2
+[ /2 width=1 by ylt_fwd_le_succ1/
 | /2 width=3 by yle_trans/
-| #HW lapply (cny_lift_inv_ge … HW … HLK … HVW ?) // -L -W
-  >yplus_inj >yminus_refl //
+| >yminus_succ2 //
 ]
 qed-.
 
-lemma cny_inv_subst: ∀I,G,L,K,V,W,i,d,e. d ≤ yinj i → i < d + e →
-                     ⇩[i] L ≡ K.ⓑ{I}V → ⦃G, L⦄ ⊢ ▶[d, e] 𝐍⦃W⦄ →
-                     ⇧[O, i+1] V ≡ W →  ⦃G, K⦄ ⊢ ▶[O, ⫰(d+e-i)] 𝐍⦃V⦄.
-/3 width=13 by cny_inv_subst_aux, ldrop_fwd_drop2/ qed-.
+(* Advanced properties ******************************************************)
+
+(* Note: this should be applicable in a forward manner *)
+lemma cny_lift_ge_up: ∀G,L,K,T,U,s,d,dt,e,et. ⦃G, K⦄ ⊢ ▶[yinj d, dt + et - (yinj d + yinj e)] 𝐍⦃T⦄ →
+                      ⇩[s, d, e] L ≡ K → ⇧[d, e] T ≡ U →
+                      yinj d ≤ dt → dt ≤ yinj d + yinj e → yinj d + yinj e ≤ dt + et →
+                      ⦃G, L⦄ ⊢ ▶[dt, et] 𝐍⦃U⦄.
+#G #L #K #T1 #U1 #s #d #dt #e #et #HT1 #HLK #HTU1 #Hddt #Hdtde #Hdedet
+lapply (cny_lift_be … HT1 … HLK … HTU1 ? ?) // -K -T1
+#HU1 @(cny_narrow … HU1) -HU1 // (**) (* auto fails *)
+qed-.
+
+lemma cny_lift_subst: ∀G,L,K,V,W,i,d,e. d ≤ yinj i → i < d + e →
+                      ⇩[i+1] L ≡ K → ⦃G, K⦄ ⊢ ▶[O, ⫰(d+e-i)] 𝐍⦃V⦄ →
+                      ⇧[O, i+1] V ≡ W → ⦃G, L⦄ ⊢ ▶[d, e] 𝐍⦃W⦄.
+#G #L #K #V #W #i #d #e #Hdi #Hide #HLK #HV #HVW
+@(cny_lift_ge_up … HLK … HVW) // >yplus_O1 <yplus_inj >yplus_SO2
+[ >yminus_succ2 //
+| /2 width=3 by yle_trans/
+| /2 width=1 by ylt_fwd_le_succ1/
+]
+qed-.

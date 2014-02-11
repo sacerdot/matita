@@ -52,6 +52,9 @@ lemma arith_i: ∀x,y,z. y < x → x+z-y-1 = x-y-1+z.
 
 (* Properties ***************************************************************)
 
+fact le_repl_sn_aux: ∀x,y,z:nat. x ≤ z → x = y → y ≤ z.
+// qed-.
+
 lemma monotonic_le_minus_l2: ∀x1,x2,y,z. x1 ≤ x2 → x1 - y - z ≤ x2 - y - z.
 /3 width=1 by monotonic_le_minus_l/ qed.
 

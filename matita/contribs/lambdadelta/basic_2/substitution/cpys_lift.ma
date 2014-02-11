@@ -203,3 +203,16 @@ lemma cpys_inv_lift1_le_up: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶*[dt, et] U
   elim (cpy_inv_lift1_le_up … HU2 … HLK … HTU) -HU2 -HLK -HTU /3 width=3 by cpys_strap1, ex2_intro/
 ]
 qed-.
+
+lemma cpys_inv_lift1_subst: ∀G,L,W1,W2,d,e. ⦃G, L⦄ ⊢ W1 ▶*[d, e] W2 →
+                            ∀K,V1,i. ⇩[i+1] L ≡ K → ⇧[O, i+1] V1 ≡ W1 → 
+                            d ≤ yinj i → i < d + e →
+                            ∃∃V2.  ⦃G, K⦄ ⊢ V1 ▶*[O, ⫰(d+e-i)] V2 & ⇧[O, i+1] V2 ≡ W2.
+#G #L #W1 #W2 #d #e #HW12 #K #V1 #i #HLK #HVW1 #Hdi #Hide
+elim (cpys_inv_lift1_ge_up … HW12 … HLK … HVW1 ? ? ?) //
+>yplus_O1 <yplus_inj >yplus_SO2
+[ >yminus_succ2 /2 width=3 by ex2_intro/
+| /2 width=1 by ylt_fwd_le_succ1/
+| /2 width=3 by yle_trans/
+]
+qed-.

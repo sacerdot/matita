@@ -15,8 +15,6 @@
 include "ground_2/ynat/ynat_max.ma".
 include "basic_2/notation/relations/psubst_6.ma".
 include "basic_2/grammar/genv.ma".
-include "basic_2/grammar/cl_shift.ma".
-include "basic_2/relocation/ldrop_append.ma".
 include "basic_2/relocation/lsuby.ma".
 
 (* CONTEXT-SENSITIVE EXTENDED ORDINARY SUBSTITUTION FOR TERMS ***************)
@@ -104,37 +102,6 @@ lapply (cpy_weak … HT12 0 (d + e) ? ?) -HT12
 /2 width=2 by cpy_weak_top/
 qed-.
 
-lemma cpy_up: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶[dt, et] U2 →
-              ∀T1,d,e. ⇧[d, e] T1 ≡ U1 →
-              d ≤ dt → d + e ≤ dt + et →
-              ∃∃T2. ⦃G, L⦄ ⊢ U1 ▶[d+e, dt+et-(d+e)] U2 & ⇧[d, e] T2 ≡ U2.
-#G #L #U1 #U2 #dt #et #H elim H -G -L -U1 -U2 -dt -et
-[ * #i #G #L #dt #et #T1 #d #e #H #_
-  [ lapply (lift_inv_sort2 … H) -H #H destruct /2 width=3 by ex2_intro/
-  | elim (lift_inv_lref2 … H) -H * #Hid #H destruct /3 width=3 by lift_lref_ge_minus, lift_lref_lt, ex2_intro/
-  | lapply (lift_inv_gref2 … H) -H #H destruct /2 width=3 by ex2_intro/
-  ]
-| #I #G #L #K #V #W #i #dt #et #Hdti #Hidet #HLK #HVW #T1 #d #e #H #Hddt #Hdedet
-  elim (lift_inv_lref2 … H) -H * #Hid #H destruct [ -V -Hidet -Hdedet | -Hdti -Hddt ]
-  [ elim (ylt_yle_false … Hddt) -Hddt /3 width=3 by yle_ylt_trans, ylt_inj/
-  | elim (le_inv_plus_l … Hid) #Hdie #Hei
-    elim (lift_split … HVW d (i-e+1) ? ? ?) [2,3,4: /2 width=1 by le_S_S, le_S/ ] -Hdie
-    #T2 #_ >plus_minus // <minus_minus /2 width=1 by le_S/ <minus_n_n <plus_n_O #H -Hei
-    @(ex2_intro … H) -H @(cpy_subst … HLK HVW) /2 width=1 by yle_inj/ >ymax_pre_sn_comm // (**) (* explicit constructor *)
-  ]
-| #a #I #G #L #W1 #W2 #U1 #U2 #dt #et #_ #_ #IHW12 #IHU12 #X #d #e #H #Hddt #Hdedet
-  elim (lift_inv_bind2 … H) -H #V1 #T1 #HVW1 #HTU1 #H destruct
-  elim (IHW12 … HVW1) -V1 -IHW12 //
-  elim (IHU12 … HTU1) -T1 -IHU12 /2 width=1 by yle_succ/
-  <yplus_inj >yplus_SO2 >yplus_succ1 >yplus_succ1
-  /3 width=2 by cpy_bind, lift_bind, ex2_intro/
-| #I #G #L #W1 #W2 #U1 #U2 #dt #et #_ #_ #IHW12 #IHU12 #X #d #e #H #Hddt #Hdedet
-  elim (lift_inv_flat2 … H) -H #V1 #T1 #HVW1 #HTU1 #H destruct
-  elim (IHW12 … HVW1) -V1 -IHW12 // elim (IHU12 … HTU1) -T1 -IHU12
-  /3 width=2 by cpy_flat, lift_flat, ex2_intro/
-]
-qed-.
-
 lemma cpy_split_up: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶[d, e] T2 → ∀i. i ≤ d + e →
                     ∃∃T. ⦃G, L⦄ ⊢ T1 ▶[d, i-d] T & ⦃G, L⦄ ⊢ T ▶[i, d+e-i] T2.
 #G #L #T1 #T2 #d #e #H elim H -G -L -T1 -T2 -d -e
@@ -173,13 +140,42 @@ lemma cpy_split_down: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶[d, e] T2 → ∀i.
 ]
 qed-.
 
-lemma cpy_append: ∀G,d,e. l_appendable_sn … (cpy d e G).
-#G #d #e #K #T1 #T2 #H elim H -G -K -T1 -T2 -d -e
-/2 width=1 by cpy_atom, cpy_bind, cpy_flat/
-#I #G #K #K0 #V #W #i #d #e #Hdi #Hide #HK0 #HVW #L
-lapply (ldrop_fwd_length_lt2 … HK0) #H
-@(cpy_subst I … (L@@K0) … HVW) // (**) (* /4/ does not work *)
-@(ldrop_O1_append_sn_le … HK0) /2 width=2 by lt_to_le/
+(* Basic forward lemmas *****************************************************)
+
+lemma cpy_fwd_up: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶[dt, et] U2 →
+                  ∀T1,d,e. ⇧[d, e] T1 ≡ U1 →
+                  d ≤ dt → d + e ≤ dt + et →
+                  ∃∃T2. ⦃G, L⦄ ⊢ U1 ▶[d+e, dt+et-(d+e)] U2 & ⇧[d, e] T2 ≡ U2.
+#G #L #U1 #U2 #dt #et #H elim H -G -L -U1 -U2 -dt -et
+[ * #i #G #L #dt #et #T1 #d #e #H #_
+  [ lapply (lift_inv_sort2 … H) -H #H destruct /2 width=3 by ex2_intro/
+  | elim (lift_inv_lref2 … H) -H * #Hid #H destruct /3 width=3 by lift_lref_ge_minus, lift_lref_lt, ex2_intro/
+  | lapply (lift_inv_gref2 … H) -H #H destruct /2 width=3 by ex2_intro/
+  ]
+| #I #G #L #K #V #W #i #dt #et #Hdti #Hidet #HLK #HVW #T1 #d #e #H #Hddt #Hdedet
+  elim (lift_inv_lref2 … H) -H * #Hid #H destruct [ -V -Hidet -Hdedet | -Hdti -Hddt ]
+  [ elim (ylt_yle_false … Hddt) -Hddt /3 width=3 by yle_ylt_trans, ylt_inj/
+  | elim (le_inv_plus_l … Hid) #Hdie #Hei
+    elim (lift_split … HVW d (i-e+1) ? ? ?) [2,3,4: /2 width=1 by le_S_S, le_S/ ] -Hdie
+    #T2 #_ >plus_minus // <minus_minus /2 width=1 by le_S/ <minus_n_n <plus_n_O #H -Hei
+    @(ex2_intro … H) -H @(cpy_subst … HLK HVW) /2 width=1 by yle_inj/ >ymax_pre_sn_comm // (**) (* explicit constructor *)
+  ]
+| #a #I #G #L #W1 #W2 #U1 #U2 #dt #et #_ #_ #IHW12 #IHU12 #X #d #e #H #Hddt #Hdedet
+  elim (lift_inv_bind2 … H) -H #V1 #T1 #HVW1 #HTU1 #H destruct
+  elim (IHW12 … HVW1) -V1 -IHW12 //
+  elim (IHU12 … HTU1) -T1 -IHU12 /2 width=1 by yle_succ/
+  <yplus_inj >yplus_SO2 >yplus_succ1 >yplus_succ1
+  /3 width=2 by cpy_bind, lift_bind, ex2_intro/
+| #I #G #L #W1 #W2 #U1 #U2 #dt #et #_ #_ #IHW12 #IHU12 #X #d #e #H #Hddt #Hdedet
+  elim (lift_inv_flat2 … H) -H #V1 #T1 #HVW1 #HTU1 #H destruct
+  elim (IHW12 … HVW1) -V1 -IHW12 // elim (IHU12 … HTU1) -T1 -IHU12
+  /3 width=2 by cpy_flat, lift_flat, ex2_intro/
+]
+qed-.
+
+lemma cpy_fwd_tw: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶[d, e] T2 → ♯{T1} ≤ ♯{T2}.
+#G #L #T1 #T2 #d #e #H elim H -G -L -T1 -T2 -d -e normalize
+/3 width=1 by monotonic_le_plus_l, le_plus/
 qed-.
 
 (* Basic inversion lemmas ***************************************************)
@@ -285,31 +281,8 @@ lemma cpy_inv_refl_O2: ∀G,L,T1,T2,d. ⦃G, L⦄ ⊢ T1 ▶[d, 0] T2 → T1 = T
 (* Basic_1: was: subst1_gen_lift_eq *)
 lemma cpy_inv_lift1_eq: ∀G,T1,U1,d,e. ⇧[d, e] T1 ≡ U1 →
                         ∀L,U2. ⦃G, L⦄ ⊢ U1 ▶[d, e] U2 → U1 = U2.
-#G #T1 #U1 #d #e #HTU1 #L #U2 #HU12 elim (cpy_up … HU12 … HTU1) -HU12 -HTU1
+#G #T1 #U1 #d #e #HTU1 #L #U2 #HU12 elim (cpy_fwd_up … HU12 … HTU1) -HU12 -HTU1
 /2 width=4 by cpy_inv_refl_O2/
-qed-.
-
-(* Basic forward lemmas *****************************************************)
-
-lemma cpy_fwd_tw: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶[d, e] T2 → ♯{T1} ≤ ♯{T2}.
-#G #L #T1 #T2 #d #e #H elim H -G -L -T1 -T2 -d -e normalize
-/3 width=1 by monotonic_le_plus_l, le_plus/
-qed-.
-
-lemma cpy_fwd_shift1: ∀G,L1,L,T1,T,d,e. ⦃G, L⦄ ⊢ L1 @@ T1 ▶[d, e] T →
-                      ∃∃L2,T2. |L1| = |L2| & T = L2 @@ T2.
-#G #L1 @(lenv_ind_dx … L1) -L1 normalize
-[ #L #T1 #T #d #e #HT1
-  @(ex2_2_intro … (⋆)) // (**) (* explicit constructor *)
-| #I #L1 #V1 #IH #L #T1 #X #d #e
-  >shift_append_assoc normalize #H
-  elim (cpy_inv_bind1 … H) -H
-  #V0 #T0 #_ #HT10 #H destruct
-  elim (IH … HT10) -IH -HT10 #L2 #T2 #HL12 #H destruct
-  >append_length >HL12 -HL12
-  @(ex2_2_intro … (⋆.ⓑ{I}V0@@L2) T2) [ >append_length ] (**) (* explicit constructor *)
-  /2 width=3 by trans_eq/
-]
 qed-.
 
 (* Basic_1: removed theorems 25:

@@ -66,7 +66,7 @@ lemma lleq_be: ∀L1,L2,U,dt. L1 ⋕[U, dt] L2 → ∀T,d,e. ⇧[d, e] T ≡ U �
                d ≤ dt → dt ≤ d + e → L1 ⋕[U, d] L2.
 #L1 #L2 #U #dt * #HL12 #IH #T #d #e #HTU #Hddt #Hdtde @conj // -HL12
 #U0 elim (IH U0) -IH #H12 #H21 @conj
-#HU0 elim (cpys_up … HU0 … HTU) // -HU0 /4 width=5 by cpys_weak/
+#HU0 elim (cpys_fwd_up … HU0 … HTU) // -HU0 /4 width=5 by cpys_weak/
 qed-.
 
 lemma lsuby_lleq_trans: ∀L2,L,T,d. L2 ⋕[T, d] L →

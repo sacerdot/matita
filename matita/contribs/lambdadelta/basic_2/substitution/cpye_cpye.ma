@@ -12,31 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reduction/cpx_cpys.ma".
-include "basic_2/computation/lpxs_cpye.ma".
-include "basic_2/computation/csx_alt.ma".
-include "basic_2/computation/lsx_lpxs.ma".
+include "basic_2/substitution/cpys_cny.ma".
+include "basic_2/substitution/cpys_cpys.ma".
+include "basic_2/substitution/cpye.ma".
 
-(* SN EXTENDED STRONGLY NORMALIZING LOCAL ENVIRONMENTS **********************)
+(* EVALUATION FOR CONTEXT-SENSITIVE EXTENDED SUBSTITUTION ON TERMS **********)
 
 (* Advanced properties ******************************************************)
 
-axiom lpxs_cpye_csx_lsx: ∀h,g,G,L1,U. ⦃G, L1⦄ ⊢ ⬊*[h, g] U →
-                         ∀L2. ⦃G, L1⦄ ⊢ ➡*[h, g] L2 → ∀T.  ⦃G, L2⦄ ⊢ T ▶*[0, ∞] 𝐍⦃U⦄ →
-                         G ⊢ ⋕⬊*[h, g, T] L2.
-(*
-#h #g #G #L1 #U #H @(csx_ind_alt … H) -U
-#U0 #_ #IHU0 #L0 #HL10 #T #H0 @lsx_intro
-#L2 #HL02 #HnT elim (cpye_total G L2 T 0 (∞))
-#U2 #H2 elim (eq_term_dec U0 U2) #H destruct
-[ -IHU0
-| -HnT /4 width=9 by lpxs_trans, lpxs_cpxs_trans, cpx_cpye_fwd_lpxs/
-]
-*)
-(* Main properties **********************************************************)
-
-lemma csx_lsx: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ ⬊*[h, g] T → G ⊢ ⋕⬊*[h, g, T] L.
-#h #g #G #L #T #HT elim (cpye_total G L T 0 (∞))
-#U #HTU elim HTU
-/4 width=5 by lpxs_cpye_csx_lsx, csx_cpx_trans, cpys_cpx/
-qed.
+lemma cpye_cpys_conf: ∀G,L,T,T2,d,e. ⦃G, L⦄ ⊢ T ▶*[d, e] 𝐍⦃T2⦄ →
+                      ∀T1. ⦃G, L⦄ ⊢ T ▶*[d, e] T1 → ⦃G, L⦄ ⊢ T1 ▶*[d, e] T2.
+#G #L #T #T2 #d #e * #H2 #HT2 #T1 #H1 elim (cpys_conf_eq … H1 … H2) -T
+#T0 #HT10 #HT20 >(cpys_inv_cny1 … HT2 … HT20) -T2 //
+qed-.
+   

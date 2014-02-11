@@ -95,20 +95,23 @@ lemma cpys_weak_full: ∀G,L,T1,T2,d,e.
 /3 width=5 by cpys_strap1, cpy_weak_full/
 qed-.
 
-lemma cpys_up: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶*[dt, et] U2 →
-               ∀T1,d,e. ⇧[d, e] T1 ≡ U1 →
-               d ≤ dt → d + e ≤ dt + et →
-               ∃∃T2. ⦃G, L⦄ ⊢ U1 ▶*[d+e, dt+et-(d+e)] U2 & ⇧[d, e] T2 ≡ U2.
+(* Basic forward lemmas *****************************************************)
+
+lemma cpys_fwd_up: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶*[dt, et] U2 →
+                   ∀T1,d,e. ⇧[d, e] T1 ≡ U1 →
+                   d ≤ dt → d + e ≤ dt + et →
+                   ∃∃T2. ⦃G, L⦄ ⊢ U1 ▶*[d+e, dt+et-(d+e)] U2 & ⇧[d, e] T2 ≡ U2.
 #G #L #U1 #U2 #dt #et #H #T1 #d #e #HTU1 #Hddt #Hdedet @(cpys_ind … H) -U2
 [ /2 width=3 by ex2_intro/
 | -HTU1 #U #U2 #_ #HU2 * #T #HU1 #HTU
-  elim (cpy_up … HU2 … HTU) -HU2 -HTU /3 width=3 by cpys_strap1, ex2_intro/
+  elim (cpy_fwd_up … HU2 … HTU) -HU2 -HTU /3 width=3 by cpys_strap1, ex2_intro/
 ]
 qed-.
 
-lemma cpys_append: ∀G,d,e. l_appendable_sn … (cpys d e G).
-#G #d #e #K #T1 #T2 #H @(cpys_ind … H) -T2
-/3 width=3 by cpys_strap1, cpy_append/
+lemma cpys_fwd_tw: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶*[d, e] T2 → ♯{T1} ≤ ♯{T2}.
+#G #L #T1 #T2 #d #e #H @(cpys_ind … H) -T2 //
+#T #T2 #_ #HT2 #IHT1 lapply (cpy_fwd_tw … HT2) -HT2
+/2 width=3 by transitive_le/
 qed-.
 
 (* Basic inversion lemmas ***************************************************)
@@ -160,22 +163,4 @@ lemma cpys_inv_lift1_eq: ∀G,L,U1,U2. ∀d,e:nat.
                          ⦃G, L⦄ ⊢ U1 ▶*[d, e] U2 → ∀T1. ⇧[d, e] T1 ≡ U1 → U1 = U2.
 #G #L #U1 #U2 #d #e #H #T1 #HTU1 @(cpys_ind … H) -U2
 /2 width=7 by cpy_inv_lift1_eq/
-qed-.
-
-(* Basic forward lemmas *****************************************************)
-
-lemma cpys_fwd_tw: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶*[d, e] T2 → ♯{T1} ≤ ♯{T2}.
-#G #L #T1 #T2 #d #e #H @(cpys_ind … H) -T2 //
-#T #T2 #_ #HT2 #IHT1 lapply (cpy_fwd_tw … HT2) -HT2
-/2 width=3 by transitive_le/
-qed-.
-
-lemma cpys_fwd_shift1: ∀G,L,L1,T1,T,d,e. ⦃G, L⦄ ⊢ L1 @@ T1 ▶*[d, e] T →
-                       ∃∃L2,T2. |L1| = |L2| & T = L2 @@ T2.
-#G #L #L1 #T1 #T #d #e #H @(cpys_ind … H) -T
-[ /2 width=4 by ex2_2_intro/
-| #T #X #_ #HX * #L0 #T0 #HL10 #H destruct
-  elim (cpy_fwd_shift1 … HX) -HX #L2 #T2 #HL02 #H destruct
-  /2 width=4 by ex2_2_intro/
-]
 qed-.

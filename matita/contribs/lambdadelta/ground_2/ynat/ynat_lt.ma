@@ -98,8 +98,12 @@ lemma ylt_fwd_succ2: ∀m,n. m < ⫯n → m ≤ n.
 
 (* inversion and forward lemmas on yle **************************************)
 
+lemma ylt_fwd_le_succ1: ∀m,n. m < n → ⫯m ≤ n.
+#m #n * -m -n /2 width=1 by yle_inj/
+qed-.
+
 lemma ylt_fwd_le: ∀m:ynat. ∀n:ynat. m < n → m ≤ n.
-#m #n * -m -n /3 width=1 by yle_pred_sn, yle_inj, yle_Y/
+#m #n * -m -n /3 width=1 by lt_to_le, yle_inj/
 qed-.
 
 lemma ylt_yle_false: ∀m:ynat. ∀n:ynat. m < n → n ≤ m → ⊥.
@@ -125,7 +129,7 @@ lemma ylt_O_succ: ∀n. 0 < ⫯n.
 qed.
 
 lemma ylt_succ: ∀m,n. m < n → ⫯m < ⫯n.
-#m #n #H elim H -m -n /3 width=1 by ylt_inj, le_S_S/ 
+#m #n #H elim H -m -n /3 width=1 by ylt_inj, le_S_S/
 qed.
 
 (* Properties on order ******************************************************)

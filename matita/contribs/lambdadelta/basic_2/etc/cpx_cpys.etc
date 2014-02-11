@@ -1,0 +1,70 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/substitution/cpys_alt.ma".
+include "basic_2/reduction/cpx.ma".
+
+(* CONTEXT-SENSITIVE EXTENDED PARALLEL REDUCTION FOR TERMS ******************)
+
+(* Properties on context-sensitive extended multiple substitution for terms *)
+
+lemma cpys_cpx: ∀h,g,G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶*[d, e] T2 → ⦃G, L⦄ ⊢ T1 ➡[h, g] T2.
+#h #g #G #L #T1 #T2 #d #e #H @(cpys_ind_alt … H) -G -L -T1 -T2 -d -e
+/2 width=7 by cpx_delta, cpx_bind, cpx_flat/
+qed.
+
+lemma cpy_cpx: ∀h,g,G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶[d, e] T2 → ⦃G, L⦄ ⊢ T1 ➡[h, g] T2.
+/3 width=3 by cpy_cpys, cpys_cpx/ qed.
+
+lemma cpx_cpy_trans: ∀h,g,G,L,T1,T. ⦃G, L⦄ ⊢ T1 ➡[h, g] T →
+                     ∀T2,d,e. ⦃G, L⦄ ⊢ T ▶[d, e] T2 → ⦃G, L⦄ ⊢ T1 ➡[h, g] T2.
+#h #g #G #L #T1 #T #H elim H -G -L -T1 -T
+[ #I #G #L #X #d #e #H elim (cpy_inv_atom1 … H) //
+  * /2 width=3 by cpy_cpx/
+| #G #L #k #l #Hkl #X #d #e #H >(cpy_inv_sort1 … H) -X /2 width=2 by cpx_sort/
+| #I #G #L #K #V1 #V #W #i #HLK #_ #HVW #IHV1 #X #d #e #H
+  lapply (ldrop_fwd_drop2 … HLK) #H0
+  lapply (cpy_weak … H 0 (∞) ? ?) -H // #H
+  elim (cpy_inv_lift1_be … H … H0 … HVW) -H -H0 -HVW
+  /3 width=7 by cpx_delta/
+| #a #I #G #L #V1 #V #T1 #T #_ #_ #IHV1 #IHT1 #X #d #e #H elim (cpy_inv_bind1 … H) -H
+  #V2 #T2 #HV2 #HT2 #H destruct
+  /5 width=7 by cpx_bind, lsuby_cpy_trans, lsuby_succ/
+| #I #G #L #V1 #V #T1 #T #_ #_ #IHV1 #IHT1 #X #d #e #H elim (cpy_inv_flat1 … H) -H
+  #V2 #T2 #HV2 #HT2 #H destruct /3 width=3 by cpx_flat/
+| #G #L #V1 #U1 #U #T #_ #HTU #IHU1 #T2 #d #e #HT2
+  lapply (cpy_weak … HT2 0 (∞) ? ?) -HT2 // #HT2
+  elim (lift_total T2 0 1) #U2 #HTU2
+  lapply (cpy_lift_be … HT2 (L.ⓓV1) … (Ⓕ) … HTU … HTU2 ? ?) -T
+  /3 width=3 by cpx_zeta, ldrop_drop/
+| /3 width=3 by cpx_tau/
+| /3 width=3 by cpx_ti/
+| #a #G #L #V1 #V #W1 #W #T1 #T #_ #_ #_ #IHV1 #IHW1 #IHT1 #X #d #e #HX
+  elim (cpy_inv_bind1 … HX) -HX #Y #T2 #HY #HT2 #H destruct
+  elim (cpy_inv_flat1 … HY) -HY #W2 #V2 #HW2 #HV2 #H destruct
+  /5 width=7 by cpx_beta, lsuby_cpy_trans, lsuby_succ/
+| #a #G #L #V1 #V #U #W1 #W #T1 #T #_ #HVU #_ #_ #IHV1 #IHW1 #IHT1 #X #d #e #HX
+  elim (cpy_inv_bind1 … HX) -HX #W2 #Y #HW2 #HY #H destruct
+  elim (cpy_inv_flat1 … HY) -HY #U2 #T2 #HU2 #HT2 #H destruct
+  lapply (cpy_weak … HU2 0 (∞) ? ?) -HU2 // #HU2
+  elim (cpy_inv_lift1_be … HU2 L … HVU) -U
+  /5 width=7 by cpx_theta, lsuby_cpy_trans, lsuby_succ, ldrop_drop/
+]
+qed-.
+
+lemma cpx_cpys_trans: ∀h,g,G,L,T1,T. ⦃G, L⦄ ⊢ T1 ➡[h, g] T →
+                      ∀T2,d,e. ⦃G, L⦄ ⊢ T ▶*[d, e] T2 → ⦃G, L⦄ ⊢ T1 ➡[h, g] T2.
+#h #g #G #L #T1 #T #HT1 #T2 #d #e #H @(cpys_ind … H) -T2
+/2 width=5 by cpx_cpy_trans/
+qed-.
