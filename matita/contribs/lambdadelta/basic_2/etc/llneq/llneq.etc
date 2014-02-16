@@ -1,0 +1,25 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/notation/relations/lazynegatedeq_4.ma".
+include "basic_2/substitution/lleq.ma".
+
+(* NEGATED LAZY EQUIVALENCE FOR LOCAL ENVIRONMENTS **************************)
+
+definition llneq: relation4 ynat term lenv lenv ≝
+                  λd,T,L1,L2. |L1| = |L2| ∧ (L1 ⋕[T, d] L2 → ⊥).
+
+interpretation
+   "negated lazy equivalence (local environment)"
+   'LazyNegatedEq T d L1 L2 = (llneq d T L1 L2).

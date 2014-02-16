@@ -18,6 +18,31 @@ include "basic_2/reduction/lpx_ldrop.ma".
 (* SN EXTENDED PARALLEL REDUCTION FOR LOCAL ENVIRONMENTS ********************)
 
 (* Properties on lazy equivalence for local environments ********************)
+(*
+lamma pippo: ∀h,g,G,L2,K2. ⦃G, L2⦄ ⊢ ➡[h, g] K2 → ∀L1. |L1| = |L2| →
+             ∃∃K1. ⦃G, L1⦄ ⊢ ➡[h, g] K1 & |K1| = |K2| &
+                   (∀T,d. L1 ⋕[T, d] L2 ↔ K1 ⋕[T, d] K2).
+#h #g #G #L2 #K2 #H elim H -L2 -K2
+[ #L1 #H >(length_inv_zero_dx … H) -L1 /3 width=5 by ex3_intro, conj/
+| #I2 #L2 #K2 #V2 #W2 #_ #HVW2 #IHLK2 #Y #H
+  elim (length_inv_pos_dx … H) -H #I #L1 #V1 #HL12 #H destruct
+  elim (IHLK2 … HL12) -IHLK2 #K1 #HLK1 #HK12 #IH
+  elim (eq_term_dec V1 V2) #H destruct
+  [ @(ex3_intro … (K1.ⓑ{I}W2)) normalize /2 width=1 by /
+*)
+axiom lleq_lpx_trans: ∀h,g,G,L2,K2. ⦃G, L2⦄ ⊢ ➡[h, g] K2 →
+                      ∀L1,T,d. L1 ⋕[T, d] L2 →
+                      ∃∃K1. ⦃G, L1⦄ ⊢ ➡[h, g] K1 & K1 ⋕[T, d] K2.
+(*
+#h #g #G #L2 #K2 #H elim H -L2 -K2
+[ #L1 #T #d #H lapply (lleq_fwd_length … H) -H
+  #H >(length_inv_zero_dx … H) -L1 /2 width=3 by ex2_intro/
+| #I2 #L2 #K2 #V2 #W2 #HLK2 #HVW2 #IHLK2 #Y #T #d #HT
+  lapply (lleq_fwd_length … HT) #H
+  elim (length_inv_pos_dx … H) -H #I1 #L1 #V1 #HL12 #H destruct
+  elim (eq_term_dec V1 V2) #H destruct
+  [ @ex2_intro …
+*)
 
 lemma lpx_lleq_fqu_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ →
                           ∀K1. ⦃G1, K1⦄ ⊢ ➡[h, g] L1 → K1 ⋕[T1, 0] L1 →

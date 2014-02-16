@@ -44,6 +44,11 @@ lemma lsuby_succ_lt: ∀I1,I2,L1,L2,V1,V2,d,e. L1 ⊑×[⫰d, e] L2 → 0 < d �
 #I1 #I2 #L1 #L2 #V1 #V2 #d #e #HL12 #Hd <(ylt_inv_O1 … Hd) /2 width=1 by lsuby_succ/
 qed.
 
+lemma lsuby_pair_O_Y: ∀L1,L2. L1 ⊑×[0, ∞] L2 →
+                      ∀I1,I2,V. L1.ⓑ{I1}V ⊑×[0,∞] L2.ⓑ{I2}V.
+#L1 #L2 #HL12 #I1 #I2 #V lapply (lsuby_pair I1 I2 … V … HL12) -HL12 //
+qed.
+
 lemma lsuby_refl: ∀L,d,e. L ⊑×[d, e] L.
 #L elim L -L //
 #L #I #V #IHL #d elim (ynat_cases … d) [| * #x ]
@@ -52,19 +57,19 @@ lemma lsuby_refl: ∀L,d,e. L ⊑×[d, e] L.
 #He destruct /2 width=1 by lsuby_zero, lsuby_pair/
 qed.
 
-lemma lsuby_length: ∀L1,L2. |L2| ≤ |L1| → L1 ⊑×[yinj 0, yinj 0] L2.
-#L1 elim L1 -L1
-[ #X #H lapply (le_n_O_to_eq … H) -H
-  #H lapply (length_inv_zero_sn … H) #H destruct /2 width=1 by lsuby_atom/  
-| #L1 #I1 #V1 #IHL1 * normalize
-  /4 width=2 by lsuby_zero, le_S_S_to_le/
+lemma lsuby_O1: ∀L2,L1,d. |L2| ≤ |L1| → L1 ⊑×[d, yinj 0] L2.
+#L2 elim L2 -L2 // #L2 #I2 #V2 #IHL2 * normalize
+[ #d #H lapply (le_n_O_to_eq … H) -H <plus_n_Sm #H destruct
+| #L1 #I1 #V1 #d #H lapply (le_plus_to_le_r … H) -H #HL12
+ elim (ynat_cases d) /3 width=1 by lsuby_zero/
+ * /3 width=1 by lsuby_succ/
 ]
 qed.
 
 lemma lsuby_sym: ∀d,e,L1,L2. L1 ⊑×[d, e] L2 → |L1| = |L2| → L2 ⊑×[d, e] L1.
 #d #e #L1 #L2 #H elim H -d -e -L1 -L2
 [ #L1 #d #e #H >(length_inv_zero_dx … H) -L1 //
-| /2 width=1 by lsuby_length/
+| /2 width=1 by lsuby_O1/
 | #I1 #I2 #L1 #L2 #V #e #_ #IHL12 #H lapply (injective_plus_l … H)
   /3 width=1 by lsuby_pair/
 | #I1 #I2 #L1 #L2 #V1 #V2 #d #e #_ #IHL12 #H lapply (injective_plus_l … H)

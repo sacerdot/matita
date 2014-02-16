@@ -1,0 +1,83 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/notation/relations/pdeltaconvstar_6.ma".
+include "basic_2/substitution/cpye_lift.ma".
+
+(* CONTEXT-SENSITIVE EXTENDED DELTA-EQUIVALENCE FOR TERMS *******************)
+
+definition cpzs: ynat → ynat → relation4 genv lenv term term ≝
+                 λd,e,G,L,T1,T2.
+                 ∃∃T. ⦃G, L⦄ ⊢ T1 ▶*[d, e] 𝐍⦃T⦄ & ⦃G, L⦄ ⊢ T2 ▶*[d, e] 𝐍⦃T⦄.
+
+interpretation "context-sensitive extended delta-equivalence (term)"
+   'PDeltaConvStar G L T1 d e T2 = (cpzs d e G L T1 T2).
+
+(* Basic properties **********************************************************)
+
+lemma cpye_div: ∀G,L,T1,T,d,e.  ⦃G, L⦄ ⊢ T1 ▶*[d, e] 𝐍⦃T⦄ →
+                ∀T2. ⦃G, L⦄ ⊢ T2 ▶*[d, e] 𝐍⦃T⦄ → ⦃G, L⦄ ⊢ T1 ◆*[d, e] T2.
+/2 width=3 by ex2_intro/ qed.
+
+lemma cpzs_refl: ∀G,L,d,e. reflexive … (cpzs d e G L).
+#G #L #d #e #T elim (cpye_total G L T d e) /2 width=3 by cpye_div/
+qed.
+
+lemma cpzs_bind: ∀G,L,V1,V2,d,e. ⦃G, L⦄ ⊢ V1 ◆*[d, e] V2 →
+                 ∀I,T1,T2. ⦃G, L.ⓑ{I}V1⦄ ⊢ T1 ◆*[⫯d, e] T2 →
+                 ∀a. ⦃G, L⦄ ⊢ ⓑ{a,I}V1.T1 ◆*[d, e] ⓑ{a,I}V2.T2.
+#G #L #V1 #V2 #d #e * #V #HV1 #HV2 #I #T1 #T2 *
+/5 width=10 by cpye_div, cpye_bind, leqy_cpye_trans, cny_bind, lsuby_succ/
+qed.
+
+lemma cpzs_flat: ∀G,L,V1,V2,d,e. ⦃G, L⦄ ⊢ V1 ◆*[d, e] V2 →
+                 ∀T1,T2. ⦃G, L⦄ ⊢ T1 ◆*[d, e] T2 →
+                 ∀I. ⦃G, L⦄ ⊢ ⓕ{I}V1.T1 ◆*[d, e] ⓕ{I}V2.T2.
+#G #L #V1 #V2 #d #e * #V #HV1 #HV2 #T1 #T2 *
+/3 width=5 by cpye_div, cpye_flat, cny_flat/
+qed.
+
+(* Basic inversion lemmas ***************************************************)
+
+lemma cpzs_inv_sort: ∀G,L,d,e,k1,k2. ⦃G, L⦄ ⊢ ⋆k1 ◆*[d, e] ⋆k2 → k1 = k2.
+#G #L #d #e #k1 #k2 * #X #H1 #H2
+lapply (cpye_inv_sort1 … H1) -H1 #H1
+lapply (cpye_inv_sort1 … H2) -H2 #H2
+destruct //
+qed-.
+
+lemma cpzs_inv_bind: ∀a1,a2,I1,I2,G,L,V1,V2,T1,T2,d,e. ⦃G, L⦄ ⊢ ⓑ{a1,I1}V1.T1 ◆*[d, e] ⓑ{a2,I2}V2.T2 →
+                     ∧∧ a1 = a2 & I1 = I2
+                      & ⦃G, L⦄ ⊢ V1 ◆*[d, e] V2 & ⦃G, L.ⓑ{I1}V1⦄ ⊢ T1 ◆*[⫯d, e] T2.
+#a1 #a2 #I1 #I2 #G #L #V1 #V2 #T1 #T2 #d #e * #X #H1 #H2
+elim (cpye_inv_bind1 … H1) -H1 #V2 #T2 #HV12 #HT12 #H1
+elim (cpye_inv_bind1 … H2) -H2 #W2 #U2 #HW12 #HU12 #H2
+destruct /5 width=8 by cpye_div, leqy_cpye_trans, lsuby_succ, and4_intro/
+qed-.
+
+lemma cpzs_inv_flat: ∀I1,I2,G,L,V1,V2,T1,T2,d,e. ⦃G, L⦄ ⊢ ⓕ{I1}V1.T1 ◆*[d, e] ⓕ{I2}V2.T2 →
+                     ∧∧ I1 = I2
+                      & ⦃G, L⦄ ⊢ V1 ◆*[d, e] V2 & ⦃G, L⦄ ⊢ T1 ◆*[d, e] T2.
+#I1 #I2 #G #L #V1 #V2 #T1 #T2 #d #e * #X #H1 #H2
+elim (cpye_inv_flat1 … H1) -H1 #V2 #T2 #HV12 #HT12 #H1
+elim (cpye_inv_flat1 … H2) -H2 #W2 #U2 #HW12 #HU12 #H2
+destruct /3 width=3 by cpye_div, and3_intro/
+qed-.
+
+lemma cpzs_inv_flat_bind: ∀a2,I1,I2,G,L,V1,V2,T1,T2,d,e. ⦃G, L⦄ ⊢ ⓕ{I1}V1.T1 ◆*[d, e] ⓑ{a2,I2}V2.T2 → ⊥.
+#a2 #I1 #I2 #G #L #V1 #V2 #T1 #T2 #d #e * #X #H1 #H2
+elim (cpye_inv_flat1 … H1) -H1 #V2 #T2 #HV12 #HT12 #H1
+elim (cpye_inv_bind1 … H2) -H2 #W2 #U2 #HW12 #HU12 #H2
+destruct
+qed-.

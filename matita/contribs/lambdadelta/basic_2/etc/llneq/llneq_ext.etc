@@ -1,0 +1,33 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/substitution/llneq_alt.ma".
+
+(* NEGATED LAZY EQUIVALENCE FOR LOCAL ENVIRONMENTS **************************)
+
+(* Advanced inversion lemmas ************************************************)
+
+lemma llneq_inv_atom1: ∀L1,L2,T,d. L1 ⧣⧣[T, d] L2 → |L1| ≤ d → ⊥.
+#L1 #L2 #T #d #H elim H -L1 -L2 -T -d /2 width=1 by/
+[ #I1 #I2 #L1 #L2 #K1 #K2 #V1 #V2 #d #i #Hdi #HLK1 #_ #_ #_
+  >(ldrop_fwd_length … HLK1) -HLK1 normalize
+  #H lapply (yle_trans … H … Hdi) -d
+  /3 width=4 by yle_inv_inj, le_plus_xySz_x_false/
+| #I1 #I2 #L1 #L2 #K1 #K2 #V #d #i #Hdi #HLK1 #_ #_ #_
+  >(ldrop_fwd_length … HLK1) -HLK1 normalize
+  #H lapply (yle_trans … H … Hdi) -d
+  /3 width=4 by yle_inv_inj, le_plus_xySz_x_false/
+| #a #I #L1 <yplus_inj /4 width=1 by yle_succ/
+]
+qed-.

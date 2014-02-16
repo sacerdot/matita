@@ -1,0 +1,68 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/notation/relations/lazynegatedeqalt_4.ma".
+include "basic_2/substitution/lleq_lleq.ma".
+include "basic_2/substitution/llneq.ma".
+
+(* NEGATED LAZY EQUIVALENCE FOR LOCAL ENVIRONMENTS **************************)
+
+(* alternative definition of llneq *)
+inductive llneqa: relation4 ynat term lenv lenv ≝
+| llneqa_neq:     ∀I1,I2,L1,L2,K1,K2,V1,V2,d,i. d ≤ yinj i →
+                  ⇩[i]L1 ≡ K1.ⓑ{I1}V1 → ⇩[i]L2 ≡ K2.ⓑ{I2}V2 →
+                  |K1| = |K2| → (V1 = V2 → ⊥) → llneqa d (#i) L1 L2
+| llneqa_eq :     ∀I1,I2,L1,L2,K1,K2,V,d,i. d ≤ yinj i →
+                  ⇩[i]L1 ≡ K1.ⓑ{I1}V → ⇩[i]L2 ≡ K2.ⓑ{I2}V →
+                  llneqa 0 (V) K1 K2 → llneqa d (#i) L1 L2
+| llneqa_bind_sn: ∀a,I,L1,L2,V,T,d.
+                  llneqa d V L1 L2 → llneqa d (ⓑ{a,I}V.T) L1 L2
+| llneqa_bind_dx: ∀a,I,L1,L2,V,T,d.
+                  llneqa (⫯d) T (L1.ⓑ{I}V) (L2.ⓑ{I}V) → llneqa d (ⓑ{a,I}V.T) L1 L2
+| llneqa_flat_sn: ∀I,L1,L2,V,T,d.
+                  llneqa d V L1 L2 → llneqa d (ⓕ{I}V.T) L1 L2
+| llneqa_flat_dx: ∀I,L1,L2,V,T,d.
+                  llneqa d T L1 L2 → llneqa d (ⓕ{I}V.T) L1 L2
+.
+
+interpretation
+   "negated lazy equivalence (local environment) alternative"
+   'LazyNegatedEqAlt T d L1 L2 = (llneqa d T L1 L2).
+
+(* Main properties **********************************************************)
+
+theorem llneq_llneqa: ∀T,L1,L2,d. L1 ⧣[T, d] L2 → L1 ⧣⧣[T, d] L2.
+#T #L1 @(f2_ind … rfw … L1 T) -L1 -T
+#n #IH #L1 * *
+[ #k #Hn #L2 #d * #HL12 #H elim H /2 width=1 by lleq_sort/
+| #i #Hn #L2 #d * #HL12 #H elim (ylt_split i d) #Hdi
+  [ elim H /2 width=1 by lleq_skip/ ]
+  elim (lt_or_ge i (|L1|)) #HiL1
+  [2: elim H /3 width=3 by lleq_free, le_repl_sn_aux/ ]
+  elim (ldrop_O1_lt … HiL1) #I1 #K1 #V1 #HLK1
+  elim (ldrop_O1_lt L2 i) /2 width=1 by/ #I2 #K2 #V2 #HLK2
+  lapply (ldrop_fwd_length_eq1 … HLK1 HLK2 HL12) normalize
+  elim (eq_term_dec V1 V2) #HnV12 destruct
+  [2: #H @(llneqa_neq … HLK1 … HLK2) /2 width=1 by/ ] (**) (* explicit constructor *)
+  elim (lleq_dec V2 K1 K2 0) #HnV2 [ elim H /2 width=8 by lleq_lref/ ]
+  #H @(llneqa_eq … HLK1 … HLK2) /4 width=2 by ldrop_fwd_rfw, conj/ (**) (* explicit constructor *)
+| #p #Hn #L2 #d * #HL12 #H elim H /2 width=1 by lleq_gref/
+| #a #I #V #T #Hn #L2 #d * #HL12 #H destruct elim (nlleq_inv_bind … H) -H
+  [ /5 width=1 by llneqa_bind_sn, conj/
+  | #H @llneqa_bind_dx @IH // @conj normalize /2 width=1 by/
+  ]
+| #I #V #T #Hn #L2 #d * #HL12 #H destruct elim (nlleq_inv_flat … H) -H
+  /5 width=1 by llneqa_flat_dx, llneqa_flat_sn, conj/
+]
+qed.

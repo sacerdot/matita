@@ -1,0 +1,73 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/delta_equivalence/cpzs.ma".
+include "basic_2/reduction/cpx.ma".
+
+fact destruct_tsort_tsort: ∀k1,k2. ⋆k1 = ⋆k2 → k1 = k2.
+#k1 #k2 #H destruct //
+qed-.
+
+axiom cpzs_inv_subst: ∀I,G,L,K,V1,V2,W2,i.
+                      ⇩[i] L ≡ K.ⓑ{I}V1 → ⇧[O, i+1] V2 ≡ W2 →
+                      ⦃G, L⦄ ⊢ #i ◆*[O, ∞] W2 → ⦃G, K⦄⊢ V1 ◆*[O, ∞] V2.
+
+axiom cpzs_subst: ∀I,G,L,K,V1,V2,W2,i.
+                  ⇩[i] L ≡ K.ⓑ{I}V1 → ⇧[O, i+1] V2 ≡ W2 →
+                  ⦃G, K⦄⊢ V1 ◆*[O, ∞] V2 → ⦃G, L⦄ ⊢ #i ◆*[O, ∞] W2.
+
+(* CONTEXT-SENSITIVE EXTENDED PARALLEL REDUCTION FOR TERMS ******************)
+
+(* Forward lemmas on delta-equivalence for terms ****************************)
+
+lemma cpx_fwd_cpys_cpzs: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[h, g] T2 →
+                         ∀d,e. ⦃G, L⦄ ⊢ T1 ◆*[d, e] T2 ↔ ⦃G, L⦄ ⊢ T1 ▶*[d, e] T2.
+#h #g #G #L #T1 #T2 #H elim H -G -L -T1 -T2
+[ /2 width=1 by conj/
+| #G #L #k #l #_ #d #e @conj #H lapply (next_lt h k)
+  [ <(cpzs_inv_sort … H)
+  | lapply (cpys_inv_sort1 … H) -H #H >(destruct_tsort_tsort … H)
+  ] -H #H elim (lt_refl_false … H)
+| #I #G #L #K #V1 #V2 #W2 #i #HLK #_ #HVW2 #IHV12 #d #e @conj #H
+(*  
+  [ @(cpys_subst … HLK … HVW2) // >yminus_Y_inj /3 width=7 by cpzs_inv_subst/
+  | elim (cpys_inv_lref1_ldrop … H … HLK … HVW2) -H /3 width=7 by cpzs_subst/
+  ]
+*)
+| #a #I #G #L #V1 #V2 #T1 #T2 #_ #_ #IHV12 #IHT12 #d #e
+  elim (IHV12 d e) -IHV12 elim (IHT12 (⫯d) e) -IHT12
+  #IHTdx #IHTsn #IHVdx #IHVsn @conj #H
+  [ elim (cpzs_inv_bind … H) -H /3 width=1 by cpys_bind/
+  | elim (cpys_inv_bind1 … H) -H #X1 #X2 #H1 #H2 #H destruct /3 width=1 by cpzs_bind/
+  ]
+| #I #G #L #V1 #V2 #T1 #T2 #_ #_ #IHV12 #IHT12 #d #e
+  elim (IHV12 d e) -IHV12 elim (IHT12 (d) e) -IHT12
+  #IHTdx #IHTsn #IHVdx #IHVsn @conj #H
+  [ elim (cpzs_inv_flat … H) -H /3 width=1 by cpys_flat/
+  | elim (cpys_inv_flat1 … H) -H #X1 #X2 #H1 #H2 #H destruct /3 width=1 by cpzs_flat/
+  ]
+| #G #L #V #U1 #U2 #T2 #_ #HTU2 #_ #d #e @conj #H
+| #G #L #V1 #T1 #T2 #_ #_ #d #e @conj #H
+| #G #L #V1 #V2 #T1 #HV12 #_ #d #e @conj #H
+| #a #G #L #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #_ #_ #_ #d #e @conj #H
+  [ elim (cpzs_inv_flat_bind … H)
+  | elim (cpys_inv_flat1 … H) -H #X1 #X2 #H1 #H2 #H destruct
+  ]
+| #a #G #L #V1 #V #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #_ #_ #_ #_ #d #e @conj #H
+  [ elim (cpzs_inv_flat_bind … H)
+  | elim (cpys_inv_flat1 … H) -H #X1 #X2 #H1 #H2 #H destruct
+  ]
+]
+ 
+    

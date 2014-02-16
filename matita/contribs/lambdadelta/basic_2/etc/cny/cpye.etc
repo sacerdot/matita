@@ -26,6 +26,13 @@ interpretation "evaluation for context-sensitive extended substitution (term)"
 
 (* Basic_properties *********************************************************)
 
+(* Note: this should go in subconversion *)
+lemma leqy_cpye_trans: ∀G,L2,T1,T2,d,e. ⦃G, L2⦄ ⊢ T1 ▶*[d, e] 𝐍⦃T2⦄ →
+                       ∀L1. L1 ⊑×[d, e] L2 → L2 ⊑×[d, e] L1 → ⦃G, L1⦄ ⊢ T1 ▶*[d, e] 𝐍⦃T2⦄.
+#G #L2 #T1 #T2 #d #e *
+/4 width=8 by lsuby_cpys_trans, lsuby_cny_conf, conj/
+qed-.
+
 lemma cpye_sort: ∀G,L,d,e,k. ⦃G, L⦄ ⊢ ⋆k ▶*[d, e] 𝐍⦃⋆k⦄.
 /3 width=5 by cny_sort, conj/ qed.
 
