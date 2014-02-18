@@ -15,7 +15,7 @@
 include "ground_2/ynat/ynat_max.ma".
 include "basic_2/notation/relations/psubst_6.ma".
 include "basic_2/grammar/genv.ma".
-include "basic_2/relocation/lsuby.ma".
+include "basic_2/relocation/ldrop.ma".
 
 (* CONTEXT-SENSITIVE EXTENDED ORDINARY SUBSTITUTION FOR TERMS ***************)
 
@@ -41,7 +41,7 @@ lemma lsuby_cpy_trans: ∀G,d,e. lsub_trans … (cpy d e G) (lsuby d e).
 #G #d #e #L1 #T1 #T2 #H elim H -G -L1 -T1 -T2 -d -e
 [ //
 | #I #G #L1 #K1 #V #W #i #d #e #Hdi #Hide #HLK1 #HVW #L2 #HL12
-  elim (lsuby_fwd_ldrop2_be … HL12 … HLK1) -HL12 -HLK1 /2 width=5 by cpy_subst/
+  elim (lsuby_ldrop_trans_be … HL12 … HLK1) -HL12 -HLK1 /2 width=5 by cpy_subst/
 | /4 width=1 by lsuby_succ, cpy_bind/
 | /3 width=1 by cpy_flat/
 ]

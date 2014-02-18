@@ -84,7 +84,7 @@ table {
           }
         ]
         [ { "strongly normalizing extended computation" * } {
-             [ "lsx ( ? ⊢ ⬊*[?,?,?,?] ? )" "lsx_cpxs" + "lsx_csx" * ]
+             [ "lsx ( ? ⊢ ⬊*[?,?,?,?] ? )" "lsx_ldrop" + "lsx_cpxs" + "lsx_csx" * ]
              [ "csx_vector ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csx_tstc_vector" + "csx_aaa" * ]
              [ "csx ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csx_alt ( ⦃?,?⦄ ⊢ ⬊⬊*[?,?] ? )" "csx_lift" + "csx_lpx" + "csx_fpbs" * ]
           }
@@ -242,10 +242,6 @@ table {
              [ "cpy ( ⦃?,?⦄ ⊢ ? ▶[?,?] ? )" "cpy_lift" + "cpy_cpy" * ]
           }
         ]        
-        [ { "local env. ref. for extended substitution" * } {
-             [ "lsuby ( ? ⊑×[?,?] ? )" "lsuby_lsuby" * ]
-          }
-        ]
         [ { "restricted local env. ref." * } {
              [ "lsubr ( ? ⊑ ? )" "lsubr_lsubr" * ]
           }
@@ -260,7 +256,11 @@ table {
           }
         ]
         [ { "basic local env. slicing" * } {
-             [ "ldrop ( ⇩[?,?,?] ? ≡ ? )" "ldrop_append" + "ldrop_lpx_sn" + "ldrop_ldrop" * ]
+             [ "ldrop ( ⇩[?,?,?] ? ≡ ? )" "ldrop_append" + "ldrop_lpx_sn" + "ldrop_lsuby" + "ldrop_ldrop" * ]
+          }
+        ]
+        [ { "local env. ref. for extended substitution" * } {
+             [ "lsuby ( ? ⊑×[?,?] ? )" "lsuby_lsuby" * ]
           }
         ]
         [ { "basic term relocation" * } {

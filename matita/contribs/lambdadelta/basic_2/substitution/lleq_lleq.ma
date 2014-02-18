@@ -85,6 +85,14 @@ lemma lleq_inv_lref_ge_sn: ∀L1,L2,d,i. L1 ⋕[#i, d] L2 → d ≤ i →
 /3 width=4 by lleq_sym, ex2_2_intro/
 qed-.
 
+lemma lleq_inv_lref_ge: ∀L1,L2,d,i. L1 ⋕[#i, d] L2 → d ≤ i →
+                        ∀I1,I2,K1,K2,V.
+                        ⇩[i] L1 ≡ K1.ⓑ{I1}V → ⇩[i] L2 ≡ K2.ⓑ{I2}V → K1 ⋕[V, 0] K2.
+#L1 #L2 #d #i #HL12 #Hdi #I1 #I2 #K1 #K2 #V #HLK1 #HLK2
+elim (lleq_inv_lref_ge_sn … HL12 … HLK1) // -L1 -d
+#J #Y #HY lapply (ldrop_mono … HY … HLK2) -L2 -i #H destruct //
+qed-.
+
 (* Advanced properties ******************************************************)
 
 lemma lleq_dec: ∀T,L1,L2,d. Decidable (L1 ⋕[T, d] L2).

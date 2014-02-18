@@ -12,19 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/ldrop_lsuby.ma".
-include "basic_2/reduction/lpx_ldrop.ma".
-include "basic_2/computation/lpxs.ma".
+include "basic_2/substitution/lleq_ldrop.ma".
+include "basic_2/computation/lsx.ma".
 
-(* SN EXTENDED PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS *******************)
+(* SN EXTENDED STRONGLY NORMALIZING LOCAL ENVIRONMENTS **********************)
 
-(* Properies on local environment slicing ***********************************)
+(* Advanced properties ******************************************************)
 
-lemma lpxs_ldrop_conf: ∀h,g,G. dropable_sn (lpxs h g G).
-/3 width=3 by dropable_sn_TC, lpx_ldrop_conf/ qed-.
+lemma lsx_lref_free: ∀h,g,G,L,d,i. |L| ≤ i → G ⊢ ⋕⬊*[h, g, #i, d] L.
+#h #g #G #L1 #d #i #HL1 @lsx_intro
+#L2 #HL12 #H elim H -H
+/4 width=6 by lpxs_fwd_length, lleq_free, le_repl_sn_aux/
+qed.
 
-lemma ldrop_lpxs_trans: ∀h,g,G. dedropable_sn (lpxs h g G).
-/3 width=3 by dedropable_sn_TC, ldrop_lpx_trans/ qed-.
-
-lemma lpxs_ldrop_trans_O1: ∀h,g,G. dropable_dx (lpxs h g G).
-/3 width=3 by dropable_dx_TC, lpx_ldrop_trans_O1/ qed-.
+lemma lsx_lref_skip: ∀h,g,G,L,d,i. yinj i < d → G ⊢ ⋕⬊*[h, g, #i, d] L.
+#h #g #G #L1 #d #i #HL1 @lsx_intro
+#L2 #HL12 #H elim H -H
+/3 width=4 by lpxs_fwd_length, lleq_skip/
+qed.

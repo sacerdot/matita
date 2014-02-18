@@ -41,7 +41,7 @@ lemma lsuby_cpysa_trans: ∀G,d,e. lsub_trans … (cpysa d e G) (lsuby d e).
 #G #d #e #L1 #T1 #T2 #H elim H -G -L1 -T1 -T2 -d -e
 [ //
 | #I #G #L1 #K1 #V1 #V2 #W2 #i #d #e #Hdi #Hide #HLK1 #_ #HVW2 #IHV12 #L2 #HL12
-  elim (lsuby_fwd_ldrop2_be … HL12 … HLK1) -HL12 -HLK1 /3 width=7 by cpysa_subst/
+  elim (lsuby_ldrop_trans_be … HL12 … HLK1) -HL12 -HLK1 /3 width=7 by cpysa_subst/
 | /4 width=1 by lsuby_succ, cpysa_bind/
 | /3 width=1 by cpysa_flat/
 ]

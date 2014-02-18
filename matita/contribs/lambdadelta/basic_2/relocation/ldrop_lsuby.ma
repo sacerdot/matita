@@ -12,31 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/cpys_alt.ma".
-include "basic_2/reduction/cpx.ma".
+include "basic_2/relocation/lsuby_lsuby.ma".
+include "basic_2/relocation/ldrop.ma".
 
-(* CONTEXT-SENSITIVE EXTENDED PARALLEL REDUCTION FOR TERMS ******************)
+(* BASIC SLICING FOR LOCAL ENVIRONMENTS *************************************)
 
 (* Properties on local environment refinement for extended substitution *****)
 
-lemma lsuby_cpx_trans: ∀h,g,G. lsub_trans … (cpx h g G) (lsuby 0 (∞)).
-#h #g #G #L1 #T1 #T2 #H elim H -G -L1 -T1 -T2
-[ //
-| /2 width=2 by cpx_sort/
-| #I #G #L1 #K1 #V1 #V2 #W2 #i #HLK1 #_ #HVW2 #IHV12 #L2 #HL12
-  elim (lsuby_ldrop_trans_be … HL12 … HLK1) // -HL12 -HLK1 /3 width=7 by cpx_delta/
-|4,9: /4 width=1 by cpx_bind, cpx_beta, lsuby_pair_O_Y/
-|5,7,8: /3 width=1 by cpx_flat, cpx_tau, cpx_ti/
-|6,10: /4 width=3 by cpx_zeta, cpx_theta, lsuby_pair_O_Y/
+lemma dedropable_sn_TC: ∀R. dedropable_sn R → dedropable_sn (TC … R).
+#R #HR #L1 #K1 #s #d #e #HLK1 #K2 #H elim H -K2
+[ #K2 #HK12 elim (HR … HLK1 … HK12) -HR -K1
+  /3 width=4 by inj, ex3_intro/
+| #K #K2 #_ #HK2 * #L #H1L1 #HLK #H2L1 elim (HR … HLK … HK2) -HR -K
+  /3 width=6 by lsuby_trans, step, ex3_intro/
 ]
 qed-.
-
-(* Properties on context-sensitive extended multiple substitution for terms *)
-
-lemma cpys_cpx: ∀h,g,G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶*[d, e] T2 → ⦃G, L⦄ ⊢ T1 ➡[h, g] T2.
-#h #g #G #L #T1 #T2 #d #e #H @(cpys_ind_alt … H) -G -L -T1 -T2 -d -e
-/2 width=7 by cpx_delta, cpx_bind, cpx_flat/
-qed.
-
-lemma cpy_cpx: ∀h,g,G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶[d, e] T2 → ⦃G, L⦄ ⊢ T1 ➡[h, g] T2.
-/3 width=3 by cpy_cpys, cpys_cpx/ qed.

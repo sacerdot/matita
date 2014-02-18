@@ -89,6 +89,21 @@ lemma lsx_flat: ∀h,g,I,G,L,V,d. G ⊢ ⋕⬊*[h, g, V, d] L →
 
 (* Advanced forward lemmas **************************************************)
 
+lemma lsx_fwd_lref_be: ∀h,g,I,G,L,d,i. d ≤ yinj i → G ⊢ ⋕⬊*[h, g, #i, d] L →
+                       ∀K,V. ⇩[i] L ≡ K.ⓑ{I}V → G ⊢ ⋕⬊*[h, g, V, 0] K.
+#h #g #I #G #L #d #i #Hdi #H @(lsx_ind … H) -L
+#L1 #_ #IHL1 #K1 #V #HLK1 @lsx_intro
+#K2 #HK12 #HnK12 lapply (ldrop_fwd_drop2 … HLK1)
+#H2LK1 elim (ldrop_lpxs_trans … H2LK1 … HK12) -H2LK1 -HK12
+#L2 #HL12 #H2LK2 #HL21 elim (lsuby_ldrop_trans_be … HL21 … HLK1) -HL21 /2 width=1 by ylt_inj/
+#J #Y #_ #HLK2 lapply (ldrop_fwd_drop2 … HLK2)
+#HY lapply (ldrop_mono … HY … H2LK2) -HY -H2LK2 #H destruct
+elim (lpxs_ldrop_conf … HLK1 … HL12) #Y #H #HY
+elim (lpxs_inv_pair1 … H) -H #Z #X #_ #_ #H destruct
+lapply (ldrop_mono … HY … HLK2) -HY #H destruct
+/4 width=10 by lleq_inv_lref_ge/
+qed-.
+
 lemma lsx_fwd_bind_dx: ∀h,g,a,I,G,L,V,T,d. G ⊢ ⋕⬊*[h, g, ⓑ{a,I}V.T, d] L →
                        G ⊢ ⋕⬊*[h, g, T, ⫯d] L.ⓑ{I}V.
 #h #g #a #I #G #L #V1 #T #d #H @(lsx_ind … H) -L
