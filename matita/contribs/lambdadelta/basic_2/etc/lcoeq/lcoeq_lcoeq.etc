@@ -12,18 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/lsuby_lsuby.ma".
-include "basic_2/relocation/ldrop.ma".
+include "basic_2/grammar/lcoeq.ma".
 
-(* BASIC SLICING FOR LOCAL ENVIRONMENTS *************************************)
+(* COEQUIVALENCE FOR LOCAL ENVIRONMENTS *************************************)
 
-(* Properties on local environment refinement for extended substitution *****)
+(* Main properties **********************************************************)
 
-lemma dedropable_sn_TC: ∀R. dedropable_sn R → dedropable_sn (TC … R).
-#R #HR #L1 #K1 #s #d #e #HLK1 #K2 #H elim H -K2
-[ #K2 #HK12 elim (HR … HLK1 … HK12) -HR -K1
-  /3 width=4 by inj, ex3_intro/
-| #K #K2 #_ #HK2 * #L #H1L1 #HLK #H2L1 elim (HR … HLK … HK2) -HR -K
-  /3 width=6 by lsuby_trans, step, ex3_intro/
+theorem lcoeq_trans: ∀d,e. Transitive … (lcoeq d e).
+#d #e #L1 #L2 #H elim H -L1 -L2 -d -e //
+[ #I #L1 #L #V #HL1 #_ #X #H >(lcoeq_inv_O2 … HL1) -HL1 //
+| #I1 #I #L1 #L #V1 #V #e #_ #IHL1 #X #H elim (lcoeq_inv_pair1 … H) -H //
+  #I2 #L2 #V2 #HL2 #H destruct /3 width=1 by lcoeq_pair/
+| #I #L1 #L #V #d #e #_ #IHL1 #X #H elim (lcoeq_inv_succ1 … H) -H //
+  #L2 #HL2 #H destruct /3 width=1 by lcoeq_succ/
 ]
 qed-.

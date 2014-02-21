@@ -16,7 +16,7 @@ include "basic_2/computation/lsx_csx.ma".
 include "basic_2/computation/fsb_alt.ma".
 
 axiom lsx_fqup_conf: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃+ ⦃G2, L2, T2⦄ →
-                     G1 ⊢ ⋕⬊*[h, g, T1] L1 → G2 ⊢ ⋕⬊*[h, g, T2] L2.
+                     G1 ⊢ ⋕⬊*[h, g, T1, 0] L1 → G2 ⊢ ⋕⬊*[h, g, T2, 0] L2.
 
 axiom fqup_lpxs_trans_nlleq: ∀h,g,G1,G2,K1,K2,T1,T2. ⦃G1, K1, T1⦄ ⊃+ ⦃G2, K2, T2⦄ →
                              ∀L2. ⦃G2, K2⦄ ⊢ ➡*[h, g] L2 → (K2 ⋕[T2, 0] L2 →⊥) →
@@ -29,7 +29,7 @@ axiom fqup_lpxs_trans_nlleq: ∀h,g,G1,G2,K1,K2,T1,T2. ⦃G1, K1, T1⦄ ⊃+ ⦃
 
 lemma csx_fsb: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ ⬊*[h, g] T → ⦃G, L⦄ ⊢ ⦥[h, g] T.
 #h #g #G1 #L1 #T1 #H @(csx_ind_alt … H) -T1
-#T1 #HT1 @(lsx_ind h g T1 G1 … L1) /2 width=1 by csx_lsx/ -L1
+#T1 #HT1 @(lsx_ind h g G1 T1 0 … L1) /2 width=1 by csx_lsx/ -L1
 #L1 @(fqup_wf_ind … G1 L1 T1) -G1 -L1 -T1
 #G1 #L1 #T1 #IHu #H1 #IHl #IHc @fsb_intro
 #G2 #L2 #T2 * -G2 -L2 -T2

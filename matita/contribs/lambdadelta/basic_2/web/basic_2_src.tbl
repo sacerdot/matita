@@ -84,7 +84,8 @@ table {
           }
         ]
         [ { "strongly normalizing extended computation" * } {
-             [ "lsx ( ? ⊢ ⬊*[?,?,?,?] ? )" "lsx_ldrop" + "lsx_cpxs" + "lsx_csx" * ]
+             [ "lcosx ( ? ⊢ ⧤⬊*[?,?,?] ? )" "lcosx_cpxs" * ]
+             [ "lsx ( ? ⊢ ⋕⬊*[?,?,?,?] ? )" "lsx_ldrop" + "lsx_cpxs" + "lsx_csx" * ]
              [ "csx_vector ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csx_tstc_vector" + "csx_aaa" * ]
              [ "csx ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csx_alt ( ⦃?,?⦄ ⊢ ⬊⬊*[?,?] ? )" "csx_lift" + "csx_lpx" + "csx_fpbs" * ]
           }
@@ -140,11 +141,11 @@ table {
           }
         ]
         [ { "irreducible forms for context-sensitive extended reduction" * } {
-             [ "cix ( ⦃?,?⦄ ⊢ ➡[?,?] 𝐈⦃?⦄ )" "cix_append" + "cix_lift" * ]
+             [ "cix ( ⦃?,?⦄ ⊢ ➡[?,?] 𝐈⦃?⦄ )" "cix_lift" * ]
           }
         ]
         [ { "reducible forms for context-sensitive extended reduction" * } {
-             [ "crx ( ⦃?,?⦄ ⊢ ➡[?,?] 𝐑⦃?⦄ )" "crx_append" + "crx_lift" * ]
+             [ "crx ( ⦃?,?⦄ ⊢ ➡[?,?] 𝐑⦃?⦄ )" "crx_lift" * ]
           }
         ]
         [ { "normal forms for context-sensitive reduction" * } {
@@ -157,11 +158,11 @@ table {
           }
         ]
         [ { "irreducible forms for context-sensitive reduction" * } {
-             [ "cir ( ⦃?,?⦄ ⊢ ➡ 𝐈⦃?⦄ )" "cir_append" + "cir_lift" * ]
+             [ "cir ( ⦃?,?⦄ ⊢ ➡ 𝐈⦃?⦄ )" "cir_lift" * ]
           }
         ]
         [ { "reducible forms for context-sensitive reduction" * } {
-             [ "crr ( ⦃?,?⦄ ⊢ ➡ 𝐑⦃?⦄ )" "crr_append" + "crr_lift" * ]
+             [ "crr ( ⦃?,?⦄ ⊢ ➡ 𝐑⦃?⦄ )" "crr_lift" * ]
           }
         ]
      }
@@ -246,6 +247,10 @@ table {
              [ "lsubr ( ? ⊑ ? )" "lsubr_lsubr" * ]
           }
         ]
+        [ { "local env. ref. for extended substitution" * } {
+             [ "lsuby ( ? ⊑×[?,?] ? )" "lsuby_lsuby" * ]
+          }
+        ]
         [ { "structural successor for closures" * } {
              [ "fquq ( ⦃?,?,?⦄ ⊃⸮ ⦃?,?,?⦄ )" "fquq_alt ( ⦃?,?,?⦄ ⊃⊃⸮ ⦃?,?,?⦄ )" * ]
              [ "fqu ( ⦃?,?,?⦄ ⊃ ⦃?,?,?⦄ )" * ]
@@ -256,11 +261,7 @@ table {
           }
         ]
         [ { "basic local env. slicing" * } {
-             [ "ldrop ( ⇩[?,?,?] ? ≡ ? )" "ldrop_append" + "ldrop_lpx_sn" + "ldrop_lsuby" + "ldrop_ldrop" * ]
-          }
-        ]
-        [ { "local env. ref. for extended substitution" * } {
-             [ "lsuby ( ? ⊑×[?,?] ? )" "lsuby_lsuby" * ]
+             [ "ldrop ( ⇩[?,?,?] ? ≡ ? )" "ldrop_lpx_sn" + "ldrop_leq" + "ldrop_ldrop" * ]
           }
         ]
         [ { "basic term relocation" * } {
@@ -272,6 +273,10 @@ table {
    ]
    class "red"
    [ { "grammar" * } {
+        [ { "equivalence for local environments" * } {
+             [ "leq ( ? ≃[?,?] ? )" "leq_leq" * ]
+          }
+        ]
         [ { "pointwise extension of a relation" * } {
              [ "lpx_sn" "lpx_sn_tc" + "lpx_sn_lpx_sn" * ]
           }
@@ -281,7 +286,7 @@ table {
           }
         ]
         [ { "closures" * } {
-             [ "cl_shift ( ? @@ ? )" "cl_weight ( ♯{?,?,?} )" * ]
+             [ "cl_weight ( ♯{?,?,?} )" "cl_restricted_weight ( ♯{?,?} )" * ]
           }
         ]
         [ { "internal syntax" * } {

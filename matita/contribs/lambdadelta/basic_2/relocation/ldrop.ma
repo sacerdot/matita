@@ -17,9 +17,9 @@ include "ground_2/lib/lstar.ma".
 include "basic_2/notation/relations/rdrop_5.ma".
 include "basic_2/notation/relations/rdrop_4.ma".
 include "basic_2/notation/relations/rdrop_3.ma".
+include "basic_2/grammar/lenv_length.ma".
 include "basic_2/grammar/cl_restricted_weight.ma".
 include "basic_2/relocation/lift.ma".
-include "basic_2/relocation/lsuby.ma".
 
 (* BASIC SLICING FOR LOCAL ENVIRONMENTS *************************************)
 
@@ -57,10 +57,6 @@ definition l_deliftable_sn: predicate (lenv → relation term) ≝
 definition dropable_sn: predicate (relation lenv) ≝
                         λR. ∀L1,K1,s,d,e. ⇩[s, d, e] L1 ≡ K1 → ∀L2. R L1 L2 →
                         ∃∃K2. R K1 K2 & ⇩[s, d, e] L2 ≡ K2.
-
-definition dedropable_sn: predicate (relation lenv) ≝
-                          λR. ∀L1,K1,s,d,e. ⇩[s, d, e] L1 ≡ K1 → ∀K2. R K1 K2 →
-                          ∃∃L2. R L1 L2 & ⇩[s, d, e] L2 ≡ K2 & L2 ⊑×[d, e] L1.
 
 definition dropable_dx: predicate (relation lenv) ≝
                         λR. ∀L1,L2. R L1 L2 → ∀K2,s,e. ⇩[s, 0, e] L2 ≡ K2 →
@@ -267,33 +263,6 @@ lemma l_deliftable_sn_llstar: ∀R. l_deliftable_sn R →
 | #l #U #U2 #_ #HU2 #IHU1 #K #s #d #e #HLK #T1 #HTU1
   elim (IHU1 … HLK … HTU1) -IHU1 -U1 #T #HTU #HT1
   elim (HR … HU2 … HLK … HTU) -HR -L -U /3 width=5 by lstar_dx, ex2_intro/
-]
-qed-.
-
-lemma lsuby_ldrop_trans_be: ∀L1,L2,d,e. L1 ⊑×[d, e] L2 →
-                            ∀I2,K2,W,s,i. ⇩[s, 0, i] L2 ≡ K2.ⓑ{I2}W →
-                            d ≤ i → i < d + e →
-                            ∃∃I1,K1. K1 ⊑×[0, ⫰(d+e-i)] K2 & ⇩[s, 0, i] L1 ≡ K1.ⓑ{I1}W.
-#L1 #L2 #d #e #H elim H -L1 -L2 -d -e
-[ #L1 #d #e #J2 #K2 #W #s #i #H
-  elim (ldrop_inv_atom1 … H) -H #H destruct
-| #I1 #I2 #L1 #L2 #V1 #V2 #_ #_ #J2 #K2 #W #s #i #_ #_ #H
-  elim (ylt_yle_false … H) //
-| #I1 #I2 #L1 #L2 #V #e #HL12 #IHL12 #J2 #K2 #W #s #i #H #_ >yplus_O1
-  elim (ldrop_inv_O1_pair1 … H) -H * #Hi #HLK1 [ -IHL12 | -HL12 ]
-  [ #_ destruct -I2 >ypred_succ
-    /2 width=4 by ldrop_pair, ex2_2_intro/
-  | lapply (ylt_inv_O1 i ?) /2 width=1 by ylt_inj/
-    #H <H -H #H lapply (ylt_inv_succ … H) -H
-    #Hie elim (IHL12 … HLK1) -IHL12 -HLK1 // -Hie
-    >yminus_succ <yminus_inj /3 width=4 by ldrop_drop_lt, ex2_2_intro/
-  ]
-| #I1 #I2 #L1 #L2 #V1 #V2 #d #e #_ #IHL12 #J2 #K2 #W #s #i #HLK2 #Hdi
-  elim (yle_inv_succ1 … Hdi) -Hdi
-  #Hdi #Hi <Hi >yplus_succ1 #H lapply (ylt_inv_succ … H) -H
-  #Hide lapply (ldrop_inv_drop1_lt … HLK2 ?) -HLK2 /2 width=1 by ylt_O/
-  #HLK1 elim (IHL12 … HLK1) -IHL12 -HLK1 <yminus_inj >yminus_SO2
-  /4 width=4 by ylt_O, ldrop_drop_lt, ex2_2_intro/
 ]
 qed-.
 

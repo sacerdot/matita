@@ -1,0 +1,13 @@
+lemma lpr_append: ∀G,K1,K2. ⦃G, K1⦄ ⊢ ➡ K2 → ∀L1,L2. ⦃G, L1⦄ ⊢ ➡ L2 →
+                  ⦃G, L1 @@ K1⦄ ⊢ ➡ L2 @@ K2.
+/3 width=1 by lpx_sn_append, cpr_append/ qed.
+
+(* Advanced forward lemmas **************************************************)
+
+lemma lpr_fwd_append1: ∀G,K1,L1,L. ⦃G, K1 @@ L1⦄ ⊢ ➡ L →
+                       ∃∃K2,L2. ⦃G, K1⦄ ⊢ ➡ K2 & L = K2 @@ L2.
+/2 width=2 by lpx_sn_fwd_append1/ qed-.
+
+lemma lpr_fwd_append2: ∀G,L,K2,L2. ⦃G, L⦄ ⊢ ➡ K2 @@ L2 →
+                       ∃∃K1,L1. ⦃G, K1⦄ ⊢ ➡ K2 & L = K1 @@ L1.
+/2 width=2 by lpx_sn_fwd_append2/ qed-.

@@ -122,6 +122,13 @@ lemma ylt_O: ∀x. ⫯⫰(yinj x) = yinj x → 0 < x.
 #H destruct
 qed.
 
+(* Properties on predecessor ************************************************)
+
+lemma ylt_pred: ∀m,n. m < n → 0 < m → ⫰m < ⫰n.
+#m #n * -m -n
+/4 width=1 by ylt_inv_inj, ylt_inj, monotonic_lt_pred/
+qed.
+
 (* Properties on successor **************************************************)
 
 lemma ylt_O_succ: ∀n. 0 < ⫯n.

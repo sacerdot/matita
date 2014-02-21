@@ -51,6 +51,14 @@ lemma yminus_SO2: ∀m. m - 1 = ⫰m.
 * //
 qed.
 
+lemma yminus_pred: ∀n,m. 0 < m → 0 < n → ⫰m - ⫰n = m - n.
+* // #n *
+[ #m #Hm #Hn >yminus_inj >yminus_inj
+  /4 width=1 by ylt_inv_inj, minus_pred_pred, eq_f/
+| >yminus_Y_inj //
+]
+qed-.
+
 (* Properties on successor **************************************************)
 
 lemma yminus_succ: ∀n,m. ⫯m - ⫯n = m - n.

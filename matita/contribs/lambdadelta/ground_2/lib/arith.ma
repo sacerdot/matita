@@ -58,6 +58,12 @@ fact le_repl_sn_aux: ∀x,y,z:nat. x ≤ z → x = y → y ≤ z.
 lemma monotonic_le_minus_l2: ∀x1,x2,y,z. x1 ≤ x2 → x1 - y - z ≤ x2 - y - z.
 /3 width=1 by monotonic_le_minus_l/ qed.
 
+(* Note: this might interfere with nat.ma *)
+lemma monotonic_lt_pred: ∀m,n. m < n → O < m → pred m < pred n.
+#m #n #Hmn #Hm whd >(S_pred … Hm)
+@le_S_S_to_le >S_pred /2 width=3 by transitive_lt/
+qed.
+
 lemma arith_j: ∀x,y,z. x-y-1 ≤ x-(y-z)-1.
 /3 width=1 by monotonic_le_minus_l, monotonic_le_minus_r/ qed.
 

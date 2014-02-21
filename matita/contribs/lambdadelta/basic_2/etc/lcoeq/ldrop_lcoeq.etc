@@ -1,0 +1,51 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "ground_2/ynat/ynat_minus.ma".
+include "basic_2/grammar/lcoeq.ma".
+include "basic_2/relocation/ldrop.ma".
+
+(* BASIC SLICING FOR LOCAL ENVIRONMENTS *************************************)
+
+(* Properties on coequivalence **********************************************)
+
+lemma lcoeq_ldrop_trans_lt: ∀L1,L2,d,e. L1 ≅[d, e] L2 →
+                            ∀I,K2,W,s,i. ⇩[s, 0, i] L2 ≡ K2.ⓑ{I}W → i < d →
+                            ∃∃K1. K1 ≅[⫰(d-i), e] K2 & ⇩[s, 0, i] L1 ≡ K1.ⓑ{I}W.
+#L1 #L2 #d #e #H elim H -L1 -L2 -d -e
+[ #d #e #J #K2 #W #s #i #H
+  elim (ldrop_inv_atom1 … H) -H #H destruct
+| #I #L1 #L2 #V #_ #_ #J #K2 #W #s #i #_ #H
+  elim (ylt_yle_false … H) //
+| #I1 #I2 #L1 #L2 #V1 #V2 #e #_ #_ #J #K2 #W #s #i #_ #H
+  elim (ylt_yle_false … H) //
+| #I #L1 #L2 #V #d #e #HL12 #IHL12 #J #K2 #W #s #i #H
+  elim (ldrop_inv_O1_pair1 … H) -H * #Hi #HLK1 [ -IHL12 | -HL12 ]
+  [ #_ destruct >ypred_succ
+    /2 width=3 by ldrop_pair, ex2_intro/
+  | lapply (ylt_inv_O1 i ?) /2 width=1 by ylt_inj/
+    #H <H -H #H lapply (ylt_inv_succ … H) -H
+    #Hie elim (IHL12 … HLK1) -IHL12 -HLK1 // -Hie
+    >yminus_succ <yminus_inj /3 width=3 by ldrop_drop_lt, ex2_intro/
+  ]
+]
+qed-.
+
+lemma lcoeq_ldrop_conf_lt: ∀L1,L2,d,e. L1 ≅[d, e] L2 →
+                           ∀I,K1,W,s,i. ⇩[s, 0, i] L1 ≡ K1.ⓑ{I}W → i < d →
+                           ∃∃K2. K1 ≅[⫰(d-i), e] K2 & ⇩[s, 0, i] L2 ≡ K2.ⓑ{I}W.
+#L1 #L2 #d #e #HL12 #I #K1 #W #s #i #HLK1 #Hid
+elim (lcoeq_ldrop_trans_lt … (lcoeq_sym … HL12) … HLK1) // -L1 -Hid
+/3 width=3 by lcoeq_sym, ex2_intro/
+qed-.

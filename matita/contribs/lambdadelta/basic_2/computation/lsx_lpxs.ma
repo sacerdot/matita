@@ -31,6 +31,12 @@ lemma lsx_leqy_conf: ∀h,g,G,L1,T,d. G ⊢ ⋕⬊*[h, g, T, d] L1 →
 #_ #H @(IHL1 … H1L10) -IHL1 -H1L10 /3 width=1 by/
 qed-.
 
+lemma lsx_ge: ∀h,g,G,L,T,d1,d2. d1 ≤ d2 →
+              G ⊢ ⋕⬊*[h, g, T, d1] L → G ⊢ ⋕⬊*[h, g, T, d2] L.
+#h #g #G #L #T #d1 #d2 #Hd12 #H @(lsx_ind … H) -L
+/5 width=7 by lsx_intro, lleq_ge/
+qed-.
+
 lemma lsx_lleq_trans: ∀h,g,T,G,L1,d. G ⊢ ⋕⬊*[h, g, T, d] L1 →
                       ∀L2. L1 ⋕[T, d] L2 → G ⊢ ⋕⬊*[h, g, T, d] L2.
 #h #g #T #G #L1 #d #H @(lsx_ind … H) -L1
@@ -95,12 +101,9 @@ lemma lsx_fwd_lref_be: ∀h,g,I,G,L,d,i. d ≤ yinj i → G ⊢ ⋕⬊*[h, g, #i
 #L1 #_ #IHL1 #K1 #V #HLK1 @lsx_intro
 #K2 #HK12 #HnK12 lapply (ldrop_fwd_drop2 … HLK1)
 #H2LK1 elim (ldrop_lpxs_trans … H2LK1 … HK12) -H2LK1 -HK12
-#L2 #HL12 #H2LK2 #HL21 elim (lsuby_ldrop_trans_be … HL21 … HLK1) -HL21 /2 width=1 by ylt_inj/
-#J #Y #_ #HLK2 lapply (ldrop_fwd_drop2 … HLK2)
+#L2 #HL12 #H2LK2 #H elim (leq_ldrop_conf_be … H … HLK1) -H /2 width=1 by ylt_inj/
+#Y #_ #HLK2 lapply (ldrop_fwd_drop2 … HLK2)
 #HY lapply (ldrop_mono … HY … H2LK2) -HY -H2LK2 #H destruct
-elim (lpxs_ldrop_conf … HLK1 … HL12) #Y #H #HY
-elim (lpxs_inv_pair1 … H) -H #Z #X #_ #_ #H destruct
-lapply (ldrop_mono … HY … HLK2) -HY #H destruct
 /4 width=10 by lleq_inv_lref_ge/
 qed-.
 

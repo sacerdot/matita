@@ -12,18 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reduction/lpx_ldrop.ma".
-include "basic_2/computation/lpxs.ma".
+(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-(* SN EXTENDED PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS *******************)
-
-(* Properies on local environment slicing ***********************************)
-
-lemma lpxs_ldrop_conf: ∀h,g,G. dropable_sn (lpxs h g G).
-/3 width=3 by dropable_sn_TC, lpx_ldrop_conf/ qed-.
-
-lemma ldrop_lpxs_trans: ∀h,g,G. dedropable_sn (lpxs h g G).
-/3 width=3 by dedropable_sn_TC, ldrop_lpx_trans/ qed-.
-
-lemma lpxs_ldrop_trans_O1: ∀h,g,G. dropable_dx (lpxs h g G).
-/3 width=3 by dropable_dx_TC, lpx_ldrop_trans_O1/ qed-.
+notation "hvbox( G ⊢ ⧤ ⬊ * break [ term 46 h , break term 46 g , break term 46 d ] break term 46 L )"
+   non associative with precedence 45
+   for @{ 'LazyCoSN $h $g $d $G $L }.

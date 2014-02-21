@@ -51,24 +51,10 @@ lemma lpr_pair: ∀I,G,K1,K2,V1,V2. ⦃G, K1⦄ ⊢ ➡ K2 → ⦃G, K1⦄ ⊢ V
                 ⦃G, K1.ⓑ{I}V1⦄ ⊢ ➡ K2.ⓑ{I}V2.
 /2 width=1/ qed.
 
-lemma lpr_append: ∀G,K1,K2. ⦃G, K1⦄ ⊢ ➡ K2 → ∀L1,L2. ⦃G, L1⦄ ⊢ ➡ L2 →
-                  ⦃G, L1 @@ K1⦄ ⊢ ➡ L2 @@ K2.
-/3 width=1 by lpx_sn_append, cpr_append/ qed.
-
 (* Basic forward lemmas *****************************************************)
 
 lemma lpr_fwd_length: ∀G,L1,L2. ⦃G, L1⦄ ⊢ ➡ L2 → |L1| = |L2|.
 /2 width=2 by lpx_sn_fwd_length/ qed-.
-
-(* Advanced forward lemmas **************************************************)
-
-lemma lpr_fwd_append1: ∀G,K1,L1,L. ⦃G, K1 @@ L1⦄ ⊢ ➡ L →
-                       ∃∃K2,L2. ⦃G, K1⦄ ⊢ ➡ K2 & L = K2 @@ L2.
-/2 width=2 by lpx_sn_fwd_append1/ qed-.
-
-lemma lpr_fwd_append2: ∀G,L,K2,L2. ⦃G, L⦄ ⊢ ➡ K2 @@ L2 →
-                       ∃∃K1,L1. ⦃G, K1⦄ ⊢ ➡ K2 & L = K1 @@ L1.
-/2 width=2 by lpx_sn_fwd_append2/ qed-.
 
 (* Basic_1: removed theorems 3: wcpr0_getl wcpr0_getl_back
                                 pr0_subst1_back

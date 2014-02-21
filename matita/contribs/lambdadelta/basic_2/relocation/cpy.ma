@@ -15,7 +15,7 @@
 include "ground_2/ynat/ynat_max.ma".
 include "basic_2/notation/relations/psubst_6.ma".
 include "basic_2/grammar/genv.ma".
-include "basic_2/relocation/ldrop.ma".
+include "basic_2/relocation/lsuby.ma".
 
 (* CONTEXT-SENSITIVE EXTENDED ORDINARY SUBSTITUTION FOR TERMS ***************)
 

@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/ldrop_lsuby.ma".
 include "basic_2/reduction/lpr_ldrop.ma".
 include "basic_2/computation/lprs.ma".
 

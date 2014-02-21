@@ -14,8 +14,6 @@
 
 include "basic_2/notation/relations/pred_4.ma".
 include "basic_2/grammar/genv.ma".
-include "basic_2/grammar/cl_shift.ma".
-include "basic_2/relocation/ldrop_append.ma".
 include "basic_2/relocation/lsubr.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL REDUCTION FOR TERMS ***************************)
@@ -94,15 +92,6 @@ lemma cpr_delift: ∀G,K,V,T1,L,d. ⇩[d] L ≡ (K.ⓓV) →
   ]
 ]
 qed-.
-
-lemma cpr_append: ∀G. l_appendable_sn … (cpr G).
-#G #K #T1 #T2 #H elim H -G -K -T1 -T2
-/2 width=3 by cpr_bind, cpr_flat, cpr_zeta, cpr_tau, cpr_beta, cpr_theta/
-#G #K #K0 #V1 #V2 #W2 #i #HK0 #_ #HVW2 #IHV12 #L
-lapply (ldrop_fwd_length_lt2 … HK0) #H
-@(cpr_delta … (L@@K0) V1 … HVW2) //
-@(ldrop_O1_append_sn_le … HK0) /2 width=2 by lt_to_le/ (**) (* /3/ does not work *)
-qed.
 
 (* Basic inversion lemmas ***************************************************)
 
@@ -291,23 +280,6 @@ lemma cpr_fwd_bind1_minus: ∀I,G,L,V1,T1,T. ⦃G, L⦄ ⊢ -ⓑ{I}V1.T1 ➡ T �
 elim (cpr_inv_bind1 … H) -H *
 [ #V2 #T2 #HV12 #HT12 #H destruct /3 width=4 by cpr_bind, ex2_2_intro/
 | #T2 #_ #_ #H destruct
-]
-qed-.
-
-lemma cpr_fwd_shift1: ∀G,L1,L,T1,T. ⦃G, L⦄ ⊢ L1 @@ T1 ➡ T →
-                      ∃∃L2,T2. |L1| = |L2| & T = L2 @@ T2.
-#G #L1 @(lenv_ind_dx … L1) -L1 normalize
-[ #L #T1 #T #HT1
-  @(ex2_2_intro … (⋆)) // (**) (* explicit constructor *)
-| #I #L1 #V1 #IH #L #T1 #X
-  >shift_append_assoc normalize #H
-  elim (cpr_inv_bind1 … H) -H *
-  [ #V0 #T0 #_ #HT10 #H destruct
-    elim (IH … HT10) -IH -HT10 #L2 #T2 #HL12 #H destruct
-    >append_length >HL12 -HL12
-    @(ex2_2_intro … (⋆.ⓑ{I}V0@@L2) T2) [ >append_length ] /2 width=3 by trans_eq/ (**) (* explicit constructor *)
-  | #T #_ #_ #H destruct
-  ]
 ]
 qed-.
 

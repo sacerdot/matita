@@ -94,15 +94,6 @@ lemma cpx_delift: ∀h,g,I,G,K,V,T1,L,d. ⇩[d] L ≡ (K.ⓑ{I}V) →
 ]
 qed-.
 
-lemma cpx_append: ∀h,g,G. l_appendable_sn … (cpx h g G).
-#h #g #G #K #T1 #T2 #H elim H -G -K -T1 -T2
-/2 width=3 by cpx_sort, cpx_bind, cpx_flat, cpx_zeta, cpx_tau, cpx_ti, cpx_beta, cpx_theta/
-#I #G #K #K0 #V1 #V2 #W2 #i #HK0 #_ #HVW2 #IHV12 #L
-lapply (ldrop_fwd_length_lt2 … HK0) #H
-@(cpx_delta … I … (L@@K0) V1 … HVW2) // 
-@(ldrop_O1_append_sn_le … HK0) /2 width=2 by lt_to_le/ (**) (* /3/ does not work *)
-qed.
-
 (* Basic inversion lemmas ***************************************************)
 
 fact cpx_inv_atom1_aux: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[h, g] T2 → ∀J. T1 = ⓪{J} →
@@ -309,22 +300,5 @@ lemma cpx_fwd_bind1_minus: ∀h,g,I,G,L,V1,T1,T. ⦃G, L⦄ ⊢ -ⓑ{I}V1.T1 ➡
 elim (cpx_inv_bind1 … H) -H *
 [ #V2 #T2 #HV12 #HT12 #H destruct /3 width=4 by cpx_bind, ex2_2_intro/
 | #T2 #_ #_ #H destruct
-]
-qed-.
-
-lemma cpx_fwd_shift1: ∀h,g,G,L1,L,T1,T. ⦃G, L⦄ ⊢ L1 @@ T1 ➡[h, g] T →
-                      ∃∃L2,T2. |L1| = |L2| & T = L2 @@ T2.
-#h #g #G #L1 @(lenv_ind_dx … L1) -L1 normalize
-[ #L #T1 #T #HT1
-  @(ex2_2_intro … (⋆)) // (**) (* explicit constructor *)
-| #I #L1 #V1 #IH #L #T1 #X
-  >shift_append_assoc normalize #H
-  elim (cpx_inv_bind1 … H) -H *
-  [ #V0 #T0 #_ #HT10 #H destruct
-    elim (IH … HT10) -IH -HT10 #L2 #T2 #HL12 #H destruct
-    >append_length >HL12 -HL12
-    @(ex2_2_intro … (⋆.ⓑ{I}V0@@L2) T2) [ >append_length ] /2 width=3 by refl, trans_eq/ (**) (* explicit constructor *)
-  | #T #_ #_ #H destruct
-  ]
 ]
 qed-.

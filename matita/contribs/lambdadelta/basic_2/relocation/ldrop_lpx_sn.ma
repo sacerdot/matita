@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/grammar/lpx_sn.ma".
-include "basic_2/relocation/ldrop.ma".
+include "basic_2/relocation/ldrop_leq.ma".
 
 (* DROPPING *****************************************************************)
 
@@ -44,16 +44,17 @@ lemma lpx_sn_liftable_dedropable: ∀R. (∀L. reflexive ? (R L)) →
 | #I #K1 #V1 #X #H elim (lpx_sn_inv_pair1 … H) -H
   #K2 #V2 #HK12 #HV12 #H destruct
   lapply (lpx_sn_fwd_length … HK12)
-  #H @(ex3_intro … (K2.ⓑ{I}V2))  (**) (* explicit constructor *)
-  /3 width=1 by lsuby_O1, lpx_sn_pair, monotonic_le_plus_l/
+  #H @(ex3_intro … (K2.ⓑ{I}V2)) (**) (* explicit constructor *)
+  /3 width=1 by lpx_sn_pair, monotonic_le_plus_l/
+  @leq_O2 normalize //
 | #I #L1 #K1 #V1 #e #_ #IHLK1 #K2 #HK12 elim (IHLK1 … HK12) -K1
-  /3 width=5 by ldrop_drop, lsuby_pair, lpx_sn_pair, ex3_intro/
+  /3 width=5 by ldrop_drop, leq_pair, lpx_sn_pair, ex3_intro/
 | #I #L1 #K1 #V1 #W1 #d #e #HLK1 #HWV1 #IHLK1 #X #H
   elim (lpx_sn_inv_pair1 … H) -H #K2 #W2 #HK12 #HW12 #H destruct
   elim (lift_total W2 d e) #V2 #HWV2
   lapply (H2R … HW12 … HLK1 … HWV1 … HWV2) -W1
   elim (IHLK1 … HK12) -K1
-  /3 width=6 by ldrop_skip, lsuby_succ, lpx_sn_pair, ex3_intro/
+  /3 width=6 by ldrop_skip, leq_succ, lpx_sn_pair, ex3_intro/
 ]
 qed-.
 

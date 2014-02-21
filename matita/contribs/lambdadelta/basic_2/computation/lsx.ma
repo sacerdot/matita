@@ -62,6 +62,12 @@ lemma lsx_gref: ∀h,g,G,L,d,p. G ⊢ ⋕⬊*[h, g, §p, d] L.
 /3 width=4 by lpxs_fwd_length, lleq_gref/
 qed.
 
+lemma lsx_be: ∀h,g,G,L,T,U,dt,d,e. yinj d ≤ dt → dt ≤ d + e →
+              ⇧[d, e] T ≡ U → G ⊢ ⋕⬊*[h, g, U, dt] L → G ⊢ ⋕⬊*[h, g, U, d] L.
+#h #g #G #L #T #U #dt #d #e #Hddt #Hdtde #HTU #H @(lsx_ind … H) -L
+/5 width=7 by lsx_intro, lleq_be/
+qed-.
+
 (* Basic forward lemmas *****************************************************)
 
 lemma lsx_fwd_bind_sn: ∀h,g,a,I,G,L,V,T,d. G ⊢ ⋕⬊*[h, g, ⓑ{a,I}V.T, d] L →

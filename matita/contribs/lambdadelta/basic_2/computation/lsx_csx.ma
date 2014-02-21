@@ -12,76 +12,50 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reduction/cpx_cpys.ma".
-include "basic_2/computation/lpxs_llneq.ma".
 include "basic_2/computation/csx_alt.ma".
-include "basic_2/computation/lsx_lpxs.ma".
+include "basic_2/computation/csx_lift.ma".
+include "basic_2/computation/lcosx_cpxs.ma".
 
 (* SN EXTENDED STRONGLY NORMALIZING LOCAL ENVIRONMENTS **********************)
 
 (* Advanced properties ******************************************************)
 
-lemma lpxs_cpys_csx_lsx: ∀h,g,G,L1,U. ⦃G, L1⦄ ⊢ ⬊*[h, g] U →
-                         ∀T.  ⦃G, L1⦄ ⊢ T ▶*[0, ∞] U →
-                         G ⊢ ⋕⬊*[h, g, T] L1.
-#h #g #G #L1 #U #H @(csx_ind_alt … H) -U
-#U #_ #IHU #T #HTU @lsx_intro
-#L2 #HL02 #HnT elim (lpxs_nlleq_fwd_cpxs … HL02 HnT) -HnT
-#U0 #U2 #H0 #H2 #HU02 #HnU02 elim (cpys_conf_eq … HTU … H0)
-#X #HUX #H0X elim (eq_term_dec U X) #HnUX destruct
-[ -HUX 
-| -HnU02 @(lsx_lpxs_trans … HL02) @(IHU … HnUX)
-  [ /3 width=3 by cpys_cpx, cpx_cpxs/
-  | /2 width=3 by cpys_trans_eq/
-  ]
-] 
-
-lemma lpxs_cpys_csx_lsx: ∀h,g,G,L1,U. ⦃G, L1⦄ ⊢ ⬊*[h, g] U →
-                         ∀L2. ⦃G, L1⦄ ⊢ ➡*[h, g] L2 → ∀T.  ⦃G, L2⦄ ⊢ T ▶*[0, ∞] U →
-                         G ⊢ ⋕⬊*[h, g, T] L2.
-#h #g #G #L1 #U #H @(csx_ind_alt … H) -U
-#U #_ #IHU #L0 #HL10 #T #HTU @lsx_intro
-#L2 #HL02 #HnT elim (lpxs_nlleq_fwd_cpxs … HL02 HnT) -HnT
-#U0 #U2 #H0 #H2 #HU02 #HnU02 elim (cpys_conf_eq … HTU … H0)
-#X #HUX #H0X elim (eq_term_dec U X) #HnUX destruct
-[ -HUX
-| -HnU02 @(IHU … HnUX)
-
-
--HnT /4 width=9 by lpxs_trans, lpxs_cpxs_trans, cpx_cpye_fwd_lpxs/
+lemma lsx_lref_be_lpxs: ∀h,g,I,G,K1,V,i,d. d ≤ yinj i → ⦃G, K1⦄ ⊢ ⬊*[h, g] V →
+                        ∀K2. G ⊢ ⋕⬊*[h, g, V, 0] K2 → ⦃G, K1⦄ ⊢ ➡*[h, g] K2 →
+                        ∀L2. ⇩[i] L2 ≡ K2.ⓑ{I}V → G ⊢ ⋕⬊*[h, g, #i, d] L2.
+#h #g #I #G #K1 #V #i #d #Hdi #H @(csx_ind_alt … H) -V
+#V0 #_ #IHV0 #K2 #H @(lsx_ind … H) -K2
+#K0 #HK0 #IHK0 #HK10 #L0 #HLK0 @lsx_intro
+#L2 #HL02 #HnL02 elim (lpxs_ldrop_conf … HLK0 … HL02) -HL02
+#Y #H #HLK2 elim (lpxs_inv_pair1 … H) -H
+#K2 #V2 #HK02 #HV02 #H destruct
+lapply (lpxs_trans … HK10 … HK02) #HK12
+elim (eq_term_dec V0 V2) #HnV02 destruct [ -IHV0 -HV02 -HK0 -HK10 | -IHK0 -HnL02 -HLK0 ]
+[ /4 width=8 by lleq_lref/
+| @(IHV0 … HnV02 … HK12 … HLK2) -IHV0 -HnV02 -HK12 -HLK2
+  /3 width=4 by lsx_cpxs_trans_O, lsx_lpxs_trans, lpxs_cpxs_trans/ (**) (* full auto too slow *)
 ]
-                         
+qed.
 
+lemma lsx_lref_be: ∀h,g,I,G,K,V,i,d. d ≤ yinj i → ⦃G, K⦄ ⊢ ⬊*[h, g] V →
+                   G ⊢ ⋕⬊*[h, g, V, 0] K →
+                   ∀L. ⇩[i] L ≡ K.ⓑ{I}V → G ⊢ ⋕⬊*[h, g, #i, d] L.
+/2 width=8 by lsx_lref_be_lpxs/ qed.
 
-
-
-
-
-include "basic_2/reduction/cpx_cpys.ma".
-include "basic_2/computation/lpxs_cpye.ma".
-include "basic_2/computation/csx_alt.ma".
-include "basic_2/computation/lsx_lpxs.ma".
-
-(* SN EXTENDED STRONGLY NORMALIZING LOCAL ENVIRONMENTS **********************)
-
-(* Advanced properties ******************************************************)
-
-axiom lpxs_cpye_csx_lsx: ∀h,g,G,L1,U. ⦃G, L1⦄ ⊢ ⬊*[h, g] U →
-                         ∀L2. ⦃G, L1⦄ ⊢ ➡*[h, g] L2 → ∀T.  ⦃G, L2⦄ ⊢ T ▶*[0, ∞] 𝐍⦃U⦄ →
-                         G ⊢ ⋕⬊*[h, g, T] L2.
-(*
-#h #g #G #L1 #U #H @(csx_ind_alt … H) -U
-#U0 #_ #IHU0 #L0 #HL10 #T #H0 @lsx_intro
-#L2 #HL02 #HnT elim (cpye_total G L2 T 0 (∞))
-#U2 #H2 elim (eq_term_dec U0 U2) #H destruct
-[ -IHU0
-| -HnT /4 width=9 by lpxs_trans, lpxs_cpxs_trans, cpx_cpye_fwd_lpxs/
-]
-*)
 (* Main properties **********************************************************)
 
-lemma csx_lsx: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ ⬊*[h, g] T → G ⊢ ⋕⬊*[h, g, T] L.
-#h #g #G #L #T #HT elim (cpye_total G L T 0 (∞))
-#U #HTU elim HTU
-/4 width=5 by lpxs_cpye_csx_lsx, csx_cpx_trans, cpys_cpx/
+theorem csx_lsx: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ ⬊*[h, g] T → ∀d. G ⊢ ⋕⬊*[h, g, T, d] L.
+#h #g #G #L #T @(fqup_wf_ind_eq … G L T) -G -L -T
+#Z #Y #X #IH #G #L * * //
+[ #i #HG #HL #HT #H #d destruct
+  elim (lt_or_ge i (|L|)) /2 width=1 by lsx_lref_free/
+  elim (ylt_split i d) /2 width=1 by lsx_lref_skip/
+  #Hdi #Hi elim (ldrop_O1_lt … Hi) -Hi
+  #I #K #V #HLK lapply (csx_inv_lref_bind … HLK … H) -H
+  /4 width=6 by lsx_lref_be, fqup_lref/
+| #a #I #V #T #HG #HL #HT #H #d destruct
+  elim (csx_fwd_bind … H) -H /3 width=1 by lsx_bind/
+| #I #V #T #HG #HL #HT #H #d destruct
+  elim (csx_fwd_flat … H) -H /3 width=1 by lsx_flat/
+]
 qed.
