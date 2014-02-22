@@ -1,0 +1,7 @@
+let rec append A (l1: list A) l2 on l1 ≝
+  match l1 with
+  [ nil        ⇒ l2
+  | cons hd tl ⇒ hd :: append A tl l2
+  ].
+
+interpretation "append (list)" 'Append l1 l2 = (append ? l1 l2).

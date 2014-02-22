@@ -1,0 +1,84 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "ground_2/star.ma".
+include "ground_2/ynat/ynat_iszero.ma".
+include "ground_2/ynat/ynat_pred.ma".
+
+(* INFINITARY NATURAL NUMBERS ***********************************************)
+
+(* order relation *)
+coinductive yle: relation ynat ≝
+| yle_O: ∀n. yle 0 n
+| yle_S: ∀m,n. yle m n → yle (⫯m) (⫯n)
+.
+
+interpretation "natural 'less or equal to'" 'leq x y = (yle x y).
+
+(* Inversion lemmas *********************************************************)
+
+fact yle_inv_O2_aux: ∀m,x. m ≤ x → x = 0 → m = 0.
+#m #x * -m -x //
+#m #x #_ #H elim (discr_YS_YO … H) (**) (* destructing lemma needed *)
+qed-.
+
+lemma yle_inv_O2: ∀m. m ≤ 0 → m = 0.
+/2 width =3 by yle_inv_O2_aux/ qed-.
+
+fact yle_inv_S1_aux: ∀x,y. x ≤ y → ∀m. x = ⫯m → ∃∃n. m ≤ n & y = ⫯n.
+#x #y * -x -y
+[ #y #m #H elim (discr_YO_YS … H) (**) (* destructing lemma needed *)
+| #x #y #Hxy #m #H destruct /2 width=3 by ex2_intro/
+] 
+qed-.
+
+lemma yle_inv_S1: ∀m,y.  ⫯m ≤ y → ∃∃n. m ≤ n & y = ⫯n.
+/2 width=3 by yle_inv_S1_aux/ qed-.
+
+lemma yle_inv_S: ∀m,n. ⫯m ≤ ⫯n → m ≤ n.
+#m #n #H elim (yle_inv_S1 … H) -H
+#x #Hx #H destruct //
+qed-.
+
+(* Properties ***************************************************************)
+
+let corec yle_refl: reflexive … yle ≝ ?.
+* [ @yle_O | #x @yle_S // ]
+qed.
+
+let corec yle_Y: ∀m. m ≤ ∞ ≝ ?.
+* [ @yle_O | #m <Y_rew @yle_S // ]
+qed.
+
+let corec yle_S_dx: ∀m,n. m ≤ n → m ≤ ⫯n ≝ ?.
+#m #n * -m -n [ #n @yle_O | #m #n #H @yle_S /2 width=1 by/ ]
+qed.
+
+lemma yle_refl_S_dx: ∀x. x ≤ ⫯x.
+/2 width=1 by yle_refl, yle_S_dx/ qed.
+
+lemma yle_pred_sn: ∀m,n. m ≤ n → ⫰m ≤ n ≝ ?.
+* // #m #n #H elim (yle_inv_S1 … H) -H
+#x #Hm #H destruct /2 width=1 by yle_S_dx/
+qed.
+
+lemma yle_refl_pred_sn: ∀x. ⫰x ≤ x.
+/2 width=1 by yle_refl, yle_pred_sn/ qed.
+
+let corec yle_trans: Transitive … yle ≝ ?.
+#x #y * -x -y [ #x #z #_ @yle_O ]
+#x #y #Hxy #z #H elim (yle_inv_S1 … H) -H
+#n #Hyz #H destruct
+@yle_S @(yle_trans … Hxy … Hyz) (**) (* cofix not guarded by constructors *)
+qed-. 

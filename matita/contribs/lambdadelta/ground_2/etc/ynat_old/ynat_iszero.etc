@@ -1,0 +1,35 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "ground_2/notation.ma".
+include "ground_2/xoa_props.ma".
+include "ground_2/ynat/ynat.ma".
+
+(* INFINITARY NATURAL NUMBERS ***********************************************)
+
+(* "is_zero" predicate *)
+definition yzero: predicate ynat ≝ λx. match x with
+[ YO   ⇒ ⊤
+| YS _ ⇒ ⊥
+].
+
+(* Inversion lemmas *********************************************************)
+
+lemma discr_YS_YO: ∀n. ⫯n = 0 → ⊥.
+#n #H change with (yzero (⫯n))
+>H -H //
+qed-.
+
+lemma discr_YO_YS: ∀n. ynat_of_nat 0 = ⫯n → ⊥. (**) (* explicit coercion *)
+/2 width=2 by discr_YS_YO/ qed-.

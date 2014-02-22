@@ -1,0 +1,18 @@
+
+lemma zero_or_gt: ∀n. n = 0 ∨ 0 < n.
+#n elim (lt_or_eq_or_gt 0 n) /2/
+#H elim (lt_zero_false … H)
+qed. 
+
+lemma pippo: ∀x,y,z. x < z → y < z - x → x + y < z.
+/3 width=2/
+
+lemma arith_b1x: ∀e,x1,x2,y. y ≤ x2 → x2 ≤ x1 → 
+                 e + (x1 - y) - (x2 - y) = e + (x1 - x2).
+#e #x1 #x2 #y #H1 #H2
+<(arith_b1 … H1) >le_plus_minus // /2 width=1/
+qed-.
+		 
+lemma arith1: ∀x,y,z,w. z < y → x + (y + w) - z = x + y - z + w.
+#x #y #z #w #H <le_plus_minus_comm // /3 width=1 by lt_to_le, le_plus_a/
+qed-.

@@ -1,0 +1,53 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "arithmetics/nat.ma".
+
+(* INFINITARY NATURAL NUMBERS ***********************************************)
+
+(* the type of infinitary natural numbers *)
+coinductive ynat: Type[0] ≝
+| YO: ynat
+| YS: ynat → ynat
+.
+
+interpretation "ynat successor" 'Successor m = (YS m).
+
+(* the coercion of nat to ynat *)
+let rec ynat_of_nat n ≝ match n with
+[ O   ⇒ YO
+| S m ⇒ YS (ynat_of_nat m)
+].
+
+coercion ynat_of_nat.
+
+(* the infinity *)
+let corec Y : ynat ≝ ⫯Y.
+
+interpretation "ynat infinity" 'Infinity = Y.
+
+(* destructing identity on ynat *)
+definition yid: ynat → ynat ≝ λm. match m with
+[ YO   ⇒ 0
+| YS n ⇒ ⫯n
+].
+
+(* Properties ***************************************************************)
+
+fact yid_rew: ∀n. yid n = n.
+* // qed-.
+
+lemma Y_rew: ⫯∞ = ∞.
+<(yid_rew ∞) in ⊢ (???%); //
+qed.
