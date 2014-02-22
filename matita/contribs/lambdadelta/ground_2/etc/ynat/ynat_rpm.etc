@@ -1,0 +1,51 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "ground_2/notation/relations/rplusminus_4.ma".
+include "ground_2/ynat/ynat_plus.ma".
+
+(* NATURAL NUMBERS WITH INFINITY ********************************************)
+
+(* algebraic x + y1 - y2 = z *)
+inductive yrpm (x:ynat) (y1:ynat) (y2:ynat): predicate ynat ≝
+| yrpm_ge: y2 ≤ y1 → yrpm x y1 y2 (x + (y1 - y2))
+| yrpm_lt: y1 < y2 → yrpm x y1 y2 (x - (y2 - y1))
+.
+
+interpretation "ynat 'algebraic plus-minus' (relational)"
+   'RPlusMinus x y1 y2 z = (yrpm x y1 y2 z).
+
+(* Basic inversion lemmas ***************************************************)
+
+lemma ypm_inv_ge: ∀x,y1,y2,z. x ⊞ y1 ⊟ y2 ≡ z →
+                  y2 ≤ y1 → z = x + (y1 - y2).
+#x #y1 #y2 #z * -z //
+#Hy12 #H elim (ylt_yle_false … H) -H //
+qed-.
+
+lemma ypm_inv_lt: ∀x,y1,y2,z. x ⊞ y1 ⊟ y2 ≡ z →
+                  y1 < y2 → z = x - (y2 - y1).
+#x #y1 #y2 #z * -z //
+#Hy21 #H elim (ylt_yle_false … H) -H //
+qed-.
+
+(* Advanced inversion lemmas ************************************************)
+
+lemma ypm_inv_le: ∀x,y1,y2,z. x ⊞ y1 ⊟ y2 ≡ z →
+                  y1 ≤ y2 → z = x - (y2 - y1).
+#x #y1 #y2 #z #H #Hy12 elim (yle_split_eq … Hy12) -Hy12 #Hy12
+[ /2 width=1 by ypm_inv_lt/
+| >(ypm_inv_ge … H) -H // destruct >yminus_refl //
+]
+qed-. 

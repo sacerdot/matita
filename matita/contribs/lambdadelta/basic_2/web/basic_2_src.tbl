@@ -87,7 +87,7 @@ table {
              [ "lcosx ( ? ⊢ ⧤⬊*[?,?,?] ? )" "lcosx_cpxs" * ]
              [ "lsx ( ? ⊢ ⋕⬊*[?,?,?,?] ? )" "lsx_ldrop" + "lsx_cpxs" + "lsx_csx" * ]
              [ "csx_vector ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csx_tstc_vector" + "csx_aaa" * ]
-             [ "csx ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csx_alt ( ⦃?,?⦄ ⊢ ⬊⬊*[?,?] ? )" "csx_lift" + "csx_lpx" + "csx_fpbs" * ]
+             [ "csx ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csx_alt ( ⦃?,?⦄ ⊢ ⬊⬊*[?,?] ? )" "csx_lift" + "csx_lpx" + "csx_lpxs" + "csx_fpbs" * ]
           }
         ]
         [ { "\"big tree\" parallel computation" * } {

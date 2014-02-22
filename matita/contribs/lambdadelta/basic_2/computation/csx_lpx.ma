@@ -25,7 +25,7 @@ lemma csx_lpx_conf: ∀h,g,G,L1,L2. ⦃G, L1⦄ ⊢ ➡[h, g] L2 →
                     ∀T. ⦃G, L1⦄ ⊢ ⬊*[h, g] T → ⦃G, L2⦄ ⊢ ⬊*[h, g] T.
 #h #g #G #L1 #L2 #HL12 #T #H @(csx_ind_alt … H) -T
 /4 width=3 by csx_intro, lpx_cpx_trans/
-qed.
+qed-.
 
 lemma csx_abst: ∀h,g,a,G,L,W. ⦃G, L⦄ ⊢ ⬊*[h, g] W →
                 ∀T. ⦃G, L.ⓛW⦄ ⊢ ⬊*[h, g] T → ⦃G, L⦄ ⊢ ⬊*[h, g] ⓛ{a}W.T.

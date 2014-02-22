@@ -12,8 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/csx_alt.ma".
-include "basic_2/computation/csx_lift.ma".
+include "basic_2/computation/csx_lpxs.ma".
 include "basic_2/computation/lcosx_cpxs.ma".
 
 (* SN EXTENDED STRONGLY NORMALIZING LOCAL ENVIRONMENTS **********************)
@@ -59,3 +58,25 @@ theorem csx_lsx: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ ⬊*[h, g] T → ∀d. G ⊢ ⋕�
   elim (csx_fwd_flat … H) -H /3 width=1 by lsx_flat/
 ]
 qed.
+
+(* Advanced eliminators *****************************************************)
+
+fact csx_ind_lsx_aux: ∀h,g,G,T,d. ∀R:predicate lenv.
+                      (∀L1. ⦃G, L1⦄ ⊢ ⬊*[h, g] T →
+                            (∀L2. ⦃G, L1⦄ ⊢ ➡*[h, g] L2 → (L1 ⋕[T, d] L2 → ⊥) → R L2) →
+                            R L1
+                      ) →
+                      ∀L. G ⊢ ⋕⬊*[h, g, T, d] L → ⦃G, L⦄ ⊢ ⬊*[h, g] T → R L.
+#h #g #G #T #d #R #IH #L #H @(lsx_ind … H) -L
+#L1 #_ #IHL1 #HL1 @IH -IH //
+#L2 #HL12 #HnT @IHL1 -IHL1 /2 width=3 by csx_lpxs_conf/
+qed-.
+
+lemma csx_ind_lsx: ∀h,g,G,T,d. ∀R:predicate lenv.
+                   (∀L1. ⦃G, L1⦄ ⊢ ⬊*[h, g] T →
+                         (∀L2. ⦃G, L1⦄ ⊢ ➡*[h, g] L2 → (L1 ⋕[T, d] L2 → ⊥) → R L2) →
+                         R L1
+                   ) →
+                   ∀L. ⦃G, L⦄ ⊢ ⬊*[h, g] T → R L.
+#h #g #G #T #d #R #IH #L #HL @(csx_ind_lsx_aux … d … HL) /4 width=1 by csx_lsx/
+qed-.
