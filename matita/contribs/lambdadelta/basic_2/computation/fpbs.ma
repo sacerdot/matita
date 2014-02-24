@@ -93,6 +93,10 @@ lemma fpbs_fqus_trans: ∀h,g,G1,G,G2,L1,L,L2,T1,T,T2. ⦃G1, L1, T1⦄ ≥[h, g
 /3 width=5 by fpbs_strap1, fpb_fquq/
 qed-.
 
+lemma fpbs_fqup_trans: ∀h,g,G1,G,G2,L1,L,L2,T1,T,T2. ⦃G1, L1, T1⦄ ≥[h, g] ⦃G, L, T⦄ →
+                       ⦃G, L, T⦄ ⊃+ ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
+/3 width=5 by fpbs_fqus_trans, fqup_fqus/ qed-.
+
 lemma fpbs_cpxs_trans: ∀h,g,G1,G,L1,L,T1,T,T2. ⦃G1, L1, T1⦄ ≥[h, g] ⦃G, L, T⦄ →
                        ⦃G, L⦄ ⊢ T ➡*[h, g] T2 → ⦃G1, L1, T1⦄ ≥[h, g] ⦃G, L, T2⦄.
 #h #g #G1 #G #L1 #L #T1 #T #T2 #H1 #H @(cpxs_ind … H) -T2
@@ -104,6 +108,22 @@ lemma fpbs_lpxs_trans: ∀h,g,G1,G,L1,L,L2,T1,T. ⦃G1, L1, T1⦄ ≥[h, g] ⦃G
 #h #g #G1 #G #L1 #L #L2 #T1 #T #H1 #H @(lpxs_ind … H) -L2
 /3 width=5 by fpbs_strap1, fpb_lpx/
 qed-.
+
+lemma cpxs_fqus_fpbs: ∀h,g,G1,G2,L1,L2,T1,T,T2. ⦃G1, L1⦄ ⊢ T1 ➡*[h, g] T →
+                      ⦃G1, L1, T⦄ ⊃* ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
+/3 width=5 by fpbs_fqus_trans, cpxs_fpbs/ qed.
+
+lemma cpxs_fqup_fpbs: ∀h,g,G1,G2,L1,L2,T1,T,T2. ⦃G1, L1⦄ ⊢ T1 ➡*[h, g] T →
+                      ⦃G1, L1, T⦄ ⊃+ ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
+/3 width=5 by fpbs_fqup_trans, cpxs_fpbs/ qed-.
+
+lemma fqus_lpxs_fpbs: ∀h,g,G1,G2,L1,L,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃* ⦃G2, L, T2⦄ →
+                      ⦃G2, L⦄ ⊢ ➡*[h, g] L2 → ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
+/3 width=3 by fpbs_lpxs_trans, fqus_fpbs/ qed.
+
+lemma cpxs_fqus_lpxs_fpbs: ∀h,g,G1,G2,L1,L,L2,T1,T,T2. ⦃G1, L1⦄ ⊢ T1 ➡*[h, g] T →
+                           ⦃G1, L1, T⦄ ⊃* ⦃G2, L, T2⦄ → ⦃G2, L⦄ ⊢ ➡*[h, g] L2 → ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
+/3 width=5 by cpxs_fqus_fpbs, fpbs_lpxs_trans/ qed.
 
 lemma fqus_fpbs_trans: ∀h,g,G1,G,G2,L1,L,L2,T1,T,T2. ⦃G, L, T⦄ ≥[h, g] ⦃G2, L2, T2⦄ →
                        ⦃G1, L1, T1⦄ ⊃* ⦃G, L, T⦄ → ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.

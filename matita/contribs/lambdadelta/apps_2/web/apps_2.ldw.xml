@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <page xmlns="http://lambdadelta.info/"
-      description = "applications of lambdadelta version 2"
-      title = "applications of lambdadelta version 2"
+      description = "applications of \lambda\delta version 2"
+      title = "applications of \lambda\delta version 2"
       head = "cic:/matita/lambdadelta/apps_2/ (applications of λδ version 2)"
 >
    <section>Contents of the Specification</section>
