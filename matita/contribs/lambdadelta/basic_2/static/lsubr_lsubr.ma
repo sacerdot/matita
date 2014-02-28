@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/lsubr.ma".
+include "basic_2/static/lsubr.ma".
 
 (* RESTRICTED LOCAL ENVIRONMENT REFINEMENT **********************************)
 

@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/ynat/ynat_plus.ma".
 include "basic_2/grammar/leq.ma".
 
 (* EQUIVALENCE FOR LOCAL ENVIRONMENTS ***************************************)
@@ -28,5 +29,21 @@ theorem leq_trans: ∀d,e. Transitive … (leq d e).
   #L2 #HL2 #H destruct /3 width=1 by leq_pair/
 | #I1 #I #L1 #L #V1 #V #d #e #_ #IHL1 #X #H elim (leq_inv_succ1 … H) -H //
   #I2 #L2 #V2 #HL2 #H destruct /3 width=1 by leq_succ/
+]
+qed-.
+
+theorem leq_canc_sn: ∀d,e,L,L1,L2. L ≃[d, e] L1 → L ≃[d, e] L2 → L1 ≃[d, e] L2.
+/3 width=3 by leq_trans, leq_sym/ qed-.
+
+theorem leq_canc_dx: ∀d,e,L,L1,L2. L1 ≃[d, e] L → L2 ≃[d, e] L → L1 ≃[d, e] L2.
+/3 width=3 by leq_trans, leq_sym/ qed-.
+
+theorem leq_join: ∀L1,L2,d,i. L1 ≃[d, i] L2 →
+                  ∀e. L1 ≃[i+d, e] L2 → L1 ≃[d, i+e] L2.
+#L1 #L2 #d #i #H elim H -L1 -L2 -d -i //
+[ #I #L1 #L2 #V #e #_ #IHL12 #e #H
+  lapply (leq_inv_succ … H ?) -H // >ypred_succ /3 width=1 by leq_pair/
+| #I1 #I2 #L1 #L2 #V1 #V2 #d #e #_ #IHL12 #e #H
+  lapply (leq_inv_succ … H ?) -H // >yplus_succ2 >ypred_succ /3 width=1 by leq_succ/
 ]
 qed-.

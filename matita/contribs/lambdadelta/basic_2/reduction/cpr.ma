@@ -14,7 +14,7 @@
 
 include "basic_2/notation/relations/pred_4.ma".
 include "basic_2/grammar/genv.ma".
-include "basic_2/relocation/lsubr.ma".
+include "basic_2/static/lsubr.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL REDUCTION FOR TERMS ***************************)
 

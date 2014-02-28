@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/lrsubeqd_5.ma".
-include "basic_2/relocation/lsubr.ma".
+include "basic_2/static/lsubr.ma".
 include "basic_2/static/da.ma".
 
 (* LOCAL ENVIRONMENT REFINEMENT FOR DEGREE ASSIGNMENT ***********************)

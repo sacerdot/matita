@@ -68,3 +68,15 @@ lemma dedropable_sn_TC: ∀R. dedropable_sn R → dedropable_sn (TC … R).
   /3 width=6 by leq_trans, step, ex3_intro/
 ]
 qed-.
+
+(* Inversion lemmas on equivalence ******************************************)
+
+lemma ldrop_O_inj: ∀i,L1,L2,K. ⇩[i] L1 ≡ K → ⇩[i] L2 ≡ K → L1 ≃[i, ∞] L2.
+#i @(nat_ind_plus … i) -i
+[ #L1 #L2 #K #H <(ldrop_inv_O2 … H) -K #H <(ldrop_inv_O2 … H) -L1 //
+| #i #IHi * [2: #L1 #I1 #V1 ] * [2,4: #L2 #I2 #V2 ] #K #HLK1 #HLK2 //
+  lapply (ldrop_fwd_length … HLK1)
+  <(ldrop_fwd_length … HLK2) [ /4 width=5 by ldrop_inv_drop1, leq_succ/ ]
+  normalize <plus_n_Sm #H destruct
+]
+qed-.

@@ -205,6 +205,10 @@ table {
              [ "sh" "sd" * ]
           }
         ]
+        [ { "restricted local env. ref." * } {
+             [ "lsubr ( ? ⊑ ? )" "lsubr_lsubr" * ]
+          }
+        ]
      }
    ]
    class "yellow"
@@ -243,10 +247,6 @@ table {
              [ "cpy ( ⦃?,?⦄ ⊢ ? ▶[?,?] ? )" "cpy_lift" + "cpy_cpy" * ]
           }
         ]        
-        [ { "restricted local env. ref." * } {
-             [ "lsubr ( ? ⊑ ? )" "lsubr_lsubr" * ]
-          }
-        ]
         [ { "local env. ref. for extended substitution" * } {
              [ "lsuby ( ? ⊑×[?,?] ? )" "lsuby_lsuby" * ]
           }

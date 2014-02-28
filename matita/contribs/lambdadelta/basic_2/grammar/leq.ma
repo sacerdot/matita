@@ -120,6 +120,12 @@ lemma leq_inv_pair1: ∀I,K1,L2,V,e. K1.ⓑ{I}V ≃[0, e] L2 → 0 < e →
                      ∃∃K2. K1 ≃[0, ⫰e] K2 & L2 = K2.ⓑ{I}V.
 /2 width=6 by leq_inv_pair1_aux/ qed-.
 
+lemma leq_inv_pair: ∀I1,I2,L1,L2,V1,V2,e. L1.ⓑ{I1}V1 ≃[0, e] L2.ⓑ{I2}V2 → 0 < e →
+                    ∧∧ L1 ≃[0, ⫰e] L2 & I1 = I2 & V1 = V2.
+#I1 #I2 #L1 #L2 #V1 #V2 #e #H #He elim (leq_inv_pair1 … H) -H //
+#Y #HL12 #H destruct /2 width=1 by and3_intro/
+qed-.
+
 fact leq_inv_succ1_aux: ∀L1,L2,d,e. L1 ≃[d, e] L2 →
                         ∀J1,K1,W1. L1 = K1.ⓑ{J1}W1 → 0 < d →
                         ∃∃J2,K2,W2. K1 ≃[⫰d, e] K2 & L2 = K2.ⓑ{J2}W2.
@@ -142,6 +148,12 @@ lemma leq_inv_atom2: ∀L1,d,e. L1 ≃[d, e] ⋆ → L1 = ⋆.
 /3 width=3 by leq_inv_atom1, leq_sym/
 qed-.
 
+lemma leq_inv_succ: ∀I1,I2,L1,L2,V1,V2,d,e. L1.ⓑ{I1}V1 ≃[d, e] L2.ⓑ{I2}V2 → 0 < d →
+                    L1 ≃[⫰d, e] L2.
+#I1 #I2 #L1 #L2 #V1 #V2 #d #e #H #Hd elim (leq_inv_succ1 … H) -H //
+#Z #Y #X #HL12 #H destruct //
+qed-.
+
 lemma leq_inv_zero2: ∀I2,K2,L1,V2. L1 ≃[0, 0] K2.ⓑ{I2}V2 →
                      ∃∃I1,K1,V1. K1 ≃[0, 0] K2 & L1 = K1.ⓑ{I1}V1.
 #I2 #K2 #L1 #V2 #H elim (leq_inv_zero1 … (leq_sym … H)) -H 
@@ -162,8 +174,8 @@ qed-.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma leq_fwd_length: ∀L1,L2,d,e. L1 ≃[d, e] L2 → |L2| ≤ |L1|.
-#L1 #L2 #d #e #H elim H -L1 -L2 -d -e normalize /2 width=1 by le_S_S/
+lemma leq_fwd_length: ∀L1,L2,d,e. L1 ≃[d, e] L2 → |L2| = |L1|.
+#L1 #L2 #d #e #H elim H -L1 -L2 -d -e normalize //
 qed-.
 
 (* Advanced inversion lemmas ************************************************)

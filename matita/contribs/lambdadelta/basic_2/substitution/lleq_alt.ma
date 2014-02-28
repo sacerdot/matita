@@ -15,6 +15,9 @@
 include "basic_2/notation/relations/lazyeqalt_4.ma".
 include "basic_2/substitution/lleq_lleq.ma".
 
+(* LAZY EQUIVALENCE FOR LOCAL ENVIRONMENTS **********************************)
+
+(* Note: alternative definition of lleq *)
 inductive lleqa: relation4 ynat term lenv lenv ≝
 | lleqa_sort: ∀L1,L2,d,k. |L1| = |L2| → lleqa d (⋆k) L1 L2
 | lleqa_skip: ∀L1,L2,d,i. |L1| = |L2| → yinj i < d → lleqa d (#i) L1 L2
