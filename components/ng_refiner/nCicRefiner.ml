@@ -934,6 +934,7 @@ and try_coercions status
            | x::_ -> x 
            | _ -> assert false))
     | `XTProd -> C.Prod ("_",C.Implicit `Type,C.Implicit `Type)
+    | `XTInd -> assert false(*CSC: was not handled, OCaml 4.0 complains. ??? *)
   in
   pp(lazy("try_coercion " ^ 
     status#ppterm ~metasenv ~subst ~context infty ^ " |---> " ^
