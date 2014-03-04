@@ -269,7 +269,7 @@ let rec replace_in_subst i f = function
 ;;
           
 let set_kind newkind attrs = 
-  newkind :: List.filter (fun x -> not (is_kind x)) attrs 
+  (newkind :> NCic.meta_attr) :: List.filter (fun x -> not (is_kind x)) attrs 
 ;;
 
 let max_kind k1 k2 = 
