@@ -515,7 +515,9 @@ let sort_of_goal_tac sortref = distribute_tac (fun status goal ->
   let goalty = get_goalty status goal in
   let status,sort = typeof status (ctx_of goalty) goalty in
   let status, sort = fix_sorts status sort in
-  let status, sort = term_of_cic_term status sort (ctx_of goalty) in
+  let ctx = ctx_of goalty in
+  let status, sort = whd status (ctx_of sort) sort in
+  let status, sort = term_of_cic_term status sort ctx in
    sortref := sort;
    status)
 ;;
