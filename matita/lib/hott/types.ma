@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "pts.ma".
+include "hott/pts.ma".
 
 record Exists (A: Type[0]) (P: A → Type[0]) : Type[0] ≝ {
  pr1: A;

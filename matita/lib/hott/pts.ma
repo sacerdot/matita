@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "notations.ma".
+include "hott/notations.ma".
 
 universe constraint Type[0] < Type[1].
 universe constraint Type[1] < Type[2].

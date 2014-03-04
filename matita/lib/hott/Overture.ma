@@ -1,4 +1,4 @@
-include "types.ma".
+include "hott/types.ma".
 
 (* * * Basic definitions of homotopy type theory, particularly the groupoid structure of identity types. *)
 
