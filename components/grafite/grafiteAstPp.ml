@@ -83,7 +83,7 @@ let rec pp_ntactic status ~map_unicode_to_tex =
   | NIntro (_,n) -> "#" ^ n
   | NIntros (_,l) -> "#" ^ String.concat " " l
   | NInversion (_,what,where) -> "ninversion " ^ NotationPp.pp_term status what ^
-      assert false ^ " " ^ assert false
+      "...to be implemented..." ^ " " ^ "...to be implemented..."
   | NLApply (_,t) -> "lapply " ^ NotationPp.pp_term status t
   | NRewrite (_,dir,n,where) -> "nrewrite " ^
      (match dir with `LeftToRight -> ">" | `RightToLeft -> "<") ^
