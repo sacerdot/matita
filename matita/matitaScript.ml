@@ -776,7 +776,10 @@ object (self)
       buffer#move_mark mark mark_position;
       source_view#scroll_to_mark ~use_align:true ~xalign:1.0 ~yalign:0.1 mark;
      end;
-    while Glib.Main.pending () do ignore(Glib.Main.iteration false); done
+    let time0 = Unix.gettimeofday () in
+    GtkThread.sync (fun () -> while Glib.Main.pending () do ignore(Glib.Main.iteration false); done) ();
+    let time1 = Unix.gettimeofday () in
+    HLog.debug ("... refresh done in " ^ string_of_float (time1 -. time0) ^ "s")
 
   method clean_dirty_lock =
     let lock_mark_iter = buffer#get_iter_at_mark (`MARK locked_mark) in
