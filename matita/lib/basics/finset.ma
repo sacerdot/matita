@@ -64,15 +64,11 @@ lemma memb_enumn: ∀m,n,i:DeqNat. ∀h:n ≤ m. ∀k: i < m. n ≤ i →
   (¬ (memb (Nat_to m) (mk_Sig ?? i k) (enumnaux n m h))) = true.
 #m #n elim n -n // #n #Hind #i #ltm #k #ltni @sym_eq @noteq_to_eqnot @sym_not_eq
 % #H cases (orb_true_l … H)
-  [#H1 @(absurd … (\P H1)) % #Hfalse
-   cut (∀A,P,a,a1,h,h1.mk_Sig A P a h = mk_Sig A P a1 h1 → a = a1)
-   [#A #P #a #a1 #h #h1 #H destruct (H) %] #Hcut 
-    lapply (Hcut nat (λi.i<m) i n ? ? Hfalse) #Hfalse @(absurd … ltni)
-    @le_to_not_lt >Hfalse @le_n
-  |<(notb_notb (memb …)) >Hind normalize /2/
+  [whd in ⊢ (??%?→?); #H1 @(absurd  … ltni) @le_to_not_lt 
+   >(eqb_true_to_eq … H1) @le_n
+  |<(notb_notb (memb …)) >Hind normalize /2 by lt_to_le, absurd/
   ]
 qed. 
-
 
 lemma enumn_unique_aux: ∀n,m. ∀h:n ≤ m. uniqueb (Nat_to m) (enumnaux n m h) = true.
 #n elim n -n // #n #Hind #m #h @true_to_andb_true // @memb_enumn //
@@ -209,13 +205,13 @@ unification hint  0 ≔ C1,C2;
 
 definition enum_prod ≝ λA,B:DeqSet.λl1.λl2.
   compose ??? (mk_Prod A B) l1 l2.
-  
+
 lemma enum_prod_unique: ∀A,B,l1,l2. 
   uniqueb A l1 = true → uniqueb B l2 = true →
   uniqueb ? (enum_prod A B l1 l2) = true.
 #A #B #l1 elim l1 //
   #a #tl #Hind #l2 #H1 #H2 @uniqueb_append 
-  [@unique_map_inj // 
+  [@unique_map_inj [#x #y #Heq @(eq_f … \snd … Heq) | //]
   |@Hind // @(andb_true_r … H1)
   |#p #H3 cases (memb_map_to_exists … H3) #b * 
    #Hmemb #eqp <eqp @(not_to_not ? (memb ? a tl = true))

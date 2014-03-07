@@ -103,7 +103,7 @@ theorem binomial_law:∀a,b,n.
 >bigop_Strue in ⊢ (??(??%)?); // <associative_plus 
 <commutative_plus in ⊢ (??(? % ?) ?); >associative_plus @eq_f2
   [<minus_n_n >bc_n_n >bc_n_n normalize //
-  |>bigop_0 >associative_plus >commutative_plus in ⊢ (??(??%)?);
+  |>(bigop_0 ??? plusA)  >associative_plus >commutative_plus in ⊢ (??(??%)?);
    <associative_plus >(bigop_0 n ?? plusA) @eq_f2 
     [cut (∀a,b. plus a b = plusAC a b) [//] #Hplus >Hplus 
      >(bigop_op n ??? plusAC) @same_bigop //

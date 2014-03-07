@@ -56,6 +56,23 @@ notation > "≔ (list0 ( (list1 (ident x) sep , ) opt (: T) ) sep ,) opt (; (lis
                }
        }}.
 
+(* it seems unbelivable, but it works! *)
+notation > "≔ (list0 ( (list1 (ident x) sep , ) opt (: T) ) sep ,) opt (; (list1 (ident U ≟ term 19 V ) sep ,)) ⊢ term 19 Px ≡≡ term 19 Py"
+  with precedence 90
+  for @{ ${ fold right 
+               @{ ${ default 
+                    @{ ${ fold right 
+                        @{ 'hint_decl2 $Px $Py } 
+                        rec acc1 @{ let ( ${ident U} : ?) ≝ $V in $acc1} } }
+                    @{ 'hint_decl2 $Px $Py } 
+                 }
+               } 
+               rec acc @{ 
+                 ${ fold right @{ $acc } rec acc2 
+                      @{ ∀${ident x}:${ default @{ $T } @{ ? } }.$acc2 } } 
+               }
+       }}.
+
 include "basics/pts.ma".
 
 definition hint_declaration_Type0  ≝  λA:Type[0] .λa,b:A.Prop.
@@ -65,8 +82,8 @@ definition hint_declaration_CProp0 ≝  λA:CProp[0].λa,b:A.Prop.
 definition hint_declaration_CProp1 ≝  λA:CProp[1].λa,b:A.Prop.
 definition hint_declaration_CProp2 ≝  λa,b:CProp[2].Prop.
   
-interpretation "hint_decl_Type2"  'hint_decl a b = (hint_declaration_Type2 a b).
-interpretation "hint_decl_CProp2" 'hint_decl a b = (hint_declaration_CProp2 a b).
+interpretation "hint_decl_Type2"  'hint_decl2 a b = (hint_declaration_Type2 a b).
+interpretation "hint_decl_CProp2" 'hint_decl2 a b = (hint_declaration_CProp2 a b).
 interpretation "hint_decl_Type1"  'hint_decl a b = (hint_declaration_Type1 ? a b).
 interpretation "hint_decl_CProp1" 'hint_decl a b = (hint_declaration_CProp1 ? a b).
 interpretation "hint_decl_CProp0" 'hint_decl a b = (hint_declaration_CProp0 ? a b).

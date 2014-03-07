@@ -166,7 +166,7 @@ elim (log p (2*n))
           [@leb_true_to_le //
           |>commutative_times in ⊢ (??%); > times_exp
            @(transitive_le ? (exp n 2))
-            [<associative_times >exp_2 in ⊢ (??%); @le_times //
+            [<associative_times >exp_2 in ⊢ (??%); @le_times [@le18|//]
             |@(le_exp1 … (lt_O_S ?))
              @(le_plus_to_le 3)
              cut (3+2*n/3*3 = S(2*n/3)*3) [//] #eq1 >eq1
