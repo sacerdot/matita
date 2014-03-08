@@ -260,7 +260,15 @@ table {
              [ "gdrop ( ⇩[?] ? ≡ ? )" "gdrop_gdrop" * ]
           }
         ]
-        [ { "basic local env. slicing" * } {
+        [ { "lazy equivalence for local environments" * } {
+             [ "lleq ( ? ⋕[?,?] ? )" "lleq_leq" * ]
+          }
+        ]
+        [ { "lazy pointwise extension of a relation" * } {
+             [ "llpx_sn" "llpx_sn_leq" * ]
+          }
+        ]        
+	[ { "basic local env. slicing" * } {
              [ "ldrop ( ⇩[?,?,?] ? ≡ ? )" "ldrop_lpx_sn" + "ldrop_leq" + "ldrop_ldrop" * ]
           }
         ]
