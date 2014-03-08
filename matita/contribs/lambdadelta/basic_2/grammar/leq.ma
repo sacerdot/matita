@@ -174,7 +174,7 @@ qed-.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma leq_fwd_length: ∀L1,L2,d,e. L1 ≃[d, e] L2 → |L2| = |L1|.
+lemma leq_fwd_length: ∀L1,L2,d,e. L1 ≃[d, e] L2 → |L1| = |L2|.
 #L1 #L2 #d #e #H elim H -L1 -L2 -d -e normalize //
 qed-.
 

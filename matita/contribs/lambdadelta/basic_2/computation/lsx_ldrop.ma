@@ -23,7 +23,7 @@ include "basic_2/computation/lsx.ma".
 lemma lsx_lref_free: ∀h,g,G,L,d,i. |L| ≤ i → G ⊢ ⋕⬊*[h, g, #i, d] L.
 #h #g #G #L1 #d #i #HL1 @lsx_intro
 #L2 #HL12 #H elim H -H
-/4 width=6 by lpxs_fwd_length, lleq_free, le_repl_sn_aux/
+/4 width=6 by lpxs_fwd_length, lleq_free, le_repl_sn_conf_aux/
 qed.
 
 lemma lsx_lref_skip: ∀h,g,G,L,d,i. yinj i < d → G ⊢ ⋕⬊*[h, g, #i, d] L.
