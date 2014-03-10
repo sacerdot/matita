@@ -30,3 +30,7 @@ lemma lleq_leq_trans: ∀L,L1,T,d. L ⋕[T, d] L1 →
 lemma lleq_leq_repl: ∀L1,L2,T,d. L1 ⋕[T, d] L2 → ∀K1. K1 ≃[d, ∞] L1 →
                      ∀K2. L2 ≃[d, ∞] K2 → K1 ⋕[T, d] K2.
 /2 width=5 by llpx_sn_leq_repl/ qed-.
+
+lemma lleq_bind_repl_SO: ∀I1,I2,L1,L2,V1,V2,T. L1.ⓑ{I1}V1 ⋕[T, 0] L2.ⓑ{I2}V2 →
+                         ∀J1,J2,W1,W2. L1.ⓑ{J1}W1 ⋕[T, 1] L2.ⓑ{J2}W2.
+/2 width=5 by llpx_sn_bind_repl_SO/ qed-.

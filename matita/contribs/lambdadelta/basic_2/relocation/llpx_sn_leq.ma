@@ -46,3 +46,9 @@ qed-.
 lemma llpx_sn_leq_repl: ∀R,L1,L2,T,d. llpx_sn R d T L1 L2 → ∀K1. K1 ≃[d, ∞] L1 → 
                         ∀K2. L2 ≃[d, ∞] K2 → llpx_sn R d T K1 K2.
 /3 width=4 by llpx_sn_leq_trans, leq_llpx_sn_trans/ qed-.
+
+lemma llpx_sn_bind_repl_SO: ∀R,I1,I2,L1,L2,V1,V2,T. llpx_sn R 0 T (L1.ⓑ{I1}V1) (L2.ⓑ{I2}V2) →
+                            ∀J1,J2,W1,W2. llpx_sn R 1 T (L1.ⓑ{J1}W1) (L2.ⓑ{J2}W2).
+#R #I1 #I2 #L1 #L2 #V1 #V2 #T #HT #J1 #J2 #W1 #W2 lapply (llpx_sn_ge R … 1 … HT) -HT
+/3 width=7 by llpx_sn_leq_repl, leq_succ/
+qed-.

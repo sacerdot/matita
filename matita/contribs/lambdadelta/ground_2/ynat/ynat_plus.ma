@@ -132,7 +132,7 @@ lemma yle_fwd_plus_ge_inj: ∀m1:nat. ∀m2,n1,n2:ynat. m2 ≤ m1 → m1 + n1 �
 #x #H0 #H destruct /3 width=4 by yle_fwd_plus_ge, yle_inj/
 qed-.
 
-(* Forward lemmas on strict_order *******************************************)
+(* Forward lemmas on strict order *******************************************)
 
 lemma ylt_inv_monotonic_plus_dx: ∀x,y,z. x + z < y + z → x < y.
 * [2: #y #z >yplus_comm #H elim (ylt_inv_Y1 … H) ]
@@ -141,6 +141,12 @@ lemma ylt_inv_monotonic_plus_dx: ∀x,y,z. x + z < y + z → x < y.
 qed-.
 
 (* Properties on strict order ***********************************************)
+
+lemma ylt_plus_dx1_trans: ∀x,z. z < x → ∀y. z < x + yinj y.
+/2 width=3 by ylt_yle_trans/ qed.
+
+lemma ylt_plus_dx2_trans: ∀y,z. z < y → ∀x. z < yinj x + y.
+/2 width=3 by ylt_yle_trans/ qed.
 
 lemma monotonic_ylt_plus_dx: ∀x,y. x < y → ∀z:nat. x + yinj z < y + yinj z.
 #x #y #Hxy #z elim z -z /3 width=1 by ylt_succ/
