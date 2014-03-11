@@ -107,7 +107,7 @@ table {
         ]
         [ { "context-sensitive extended computation" * } {
              [ "lpxs ( ⦃?,?⦄ ⊢ ➡*[?,?] ? )" "lpxs_alt ( ⦃?,?⦄ ⊢ ➡➡*[?,?] ? )" "lpxs_ldrop" + "lpxs_lleq" + "lpxs_aaa" + "lpxs_cpxs" + "lpxs_lpxs" * ]
-             [ "cpxs ( ⦃?,?⦄ ⊢ ? ➡*[?,?] ? )" "cpxs_tstc" + "cpxs_tstc_vector" + "cpxs_lift" + "cpxs_cpys" + "cpxs_lleq" + "cpxs_aaa" + "cpxs_cpxs" * ]
+             [ "cpxs ( ⦃?,?⦄ ⊢ ? ➡*[?,?] ? )" "cpxs_tstc" + "cpxs_tstc_vector" + "cpxs_leq" + "cpxs_lift" + "cpxs_lleq" + "cpxs_aaa" + "cpxs_cpxs" * ]
           }
         ]
         [ { "context-sensitive computation" * } {
@@ -136,8 +136,8 @@ table {
           }
         ]
         [ { "context-sensitive extended reduction" * } {
-             [ "lpx ( ⦃?,?⦄ ⊢ ➡[?,?] ? )" "lpx_ldrop" + "lpx_cpys" + "lpx_lleq" + "lpx_aaa" * ]
-             [ "cpx ( ⦃?,?⦄ ⊢ ? ➡[?,?] ? )" "cpx_lift" + "cpx_cpys" + "cpx_lleq" + "cpx_cix" * ]
+             [ "lpx ( ⦃?,?⦄ ⊢ ➡[?,?] ? )" "lpx_ldrop" + "lpx_lleq" + "lpx_aaa" * ]
+             [ "cpx ( ⦃?,?⦄ ⊢ ? ➡[?,?] ? )" "cpx_leq" + "cpx_lift" + "cpx_lleq" + "cpx_cix" * ]
           }
         ]
         [ { "irreducible forms for context-sensitive extended reduction" * } {
@@ -213,17 +213,9 @@ table {
    ]
    class "yellow"
    [ { "substitution" * } {
-        [ { "lazy equivalence for local environments" * } {
-             [ "lleq ( ? ⋕[?,?] ? )" "lleq_alt ( ? ⋕⋕[?,?] ? )" "lleq_ldrop" + "lleq_fqus" + "lleq_lleq" + "lleq_ext" * ]
-          }
-        ]
-        [ { "contxt-sensitive extended multiple substitution" * } {
-             [ "cpys ( ⦃?,?⦄ ⊢ ? ▶*[?,?] ? )" "cpys_alt ( ⦃?,?⦄ ⊢ ? ▶▶*[?,?] ? )" "cpys_lift" + "cpys_cpys" * ]
-          }
-        ]        
         [ { "iterated structural successor for closures" * } {
-             [ "fqus ( ⦃?,?,?⦄ ⊃* ⦃?,?,?⦄ )" "fqus_alt" + "fqus_fqus" * ]
-             [ "fqup ( ⦃?,?,?⦄ ⊃+ ⦃?,?,?⦄ )" "fqup_fqup" * ]
+             [ "fqus ( ⦃?,?,?⦄ ⊃* ⦃?,?,?⦄ )" "fqus_alt" + "fqus_lleq" + "fqus_fqus" * ]
+             [ "fqup ( ⦃?,?,?⦄ ⊃+ ⦃?,?,?⦄ )" "fqup_lleq" + "fqup_fqup" * ]
           }
         ]
         [ { "iterated local env. slicing" * } {
@@ -243,17 +235,9 @@ table {
    ]
    class "orange"
    [ { "relocation" * } {
-        [ { "contxt-sensitive extended ordinary substitution" * } {
-             [ "cpy ( ⦃?,?⦄ ⊢ ? ▶[?,?] ? )" "cpy_lift" + "cpy_cpy" * ]
-          }
-        ]        
-        [ { "local env. ref. for extended substitution" * } {
-             [ "lsuby ( ? ⊑×[?,?] ? )" "lsuby_lsuby" * ]
-          }
-        ]
         [ { "structural successor for closures" * } {
-             [ "fquq ( ⦃?,?,?⦄ ⊃⸮ ⦃?,?,?⦄ )" "fquq_alt ( ⦃?,?,?⦄ ⊃⊃⸮ ⦃?,?,?⦄ )" * ]
-             [ "fqu ( ⦃?,?,?⦄ ⊃ ⦃?,?,?⦄ )" * ]
+             [ "fquq ( ⦃?,?,?⦄ ⊃⸮ ⦃?,?,?⦄ )" "fquq_alt ( ⦃?,?,?⦄ ⊃⊃⸮ ⦃?,?,?⦄ )" "fquq_lleq" * ]
+             [ "fqu ( ⦃?,?,?⦄ ⊃ ⦃?,?,?⦄ )" "fqu_lleq" * ]
           }
         ]
         [ { "global env. slicing" * } {
@@ -261,11 +245,11 @@ table {
           }
         ]
         [ { "lazy equivalence for local environments" * } {
-             [ "lleq ( ? ⋕[?,?] ? )" "lleq_leq" * ]
+             [ "lleq ( ? ⋕[?,?] ? )" "lleq_leq" + "lleq_ldrop" + "lleq_lleq" * ]
           }
         ]
         [ { "lazy pointwise extension of a relation" * } {
-             [ "llpx_sn" "llpx_sn_leq" * ]
+             [ "llpx_sn" "llpx_sn_leq" + "llpx_sn_ldrop" * ]
           }
         ]        
 	[ { "basic local env. slicing" * } {

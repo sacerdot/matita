@@ -12,7 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/lleq_ext.ma".
+include "basic_2/relocation/lleq_leq.ma".
+include "basic_2/relocation/lleq_ldrop.ma".
 include "basic_2/reduction/cpx.ma".
 
 (* CONTEXT-SENSITIVE EXTENDED PARALLEL REDUCTION FOR TERMS ******************)
@@ -49,8 +50,8 @@ lemma lleq_cpx_conf_dx: ∀h,g,G,L2,T1,T2. ⦃G, L2⦄ ⊢ T1 ➡[h, g] T2 →
 #h #g #G #L2 #T1 #T2 #H elim H -G -L2 -T1 -T2
 [ //
 | /3 width=3 by lleq_fwd_length, lleq_sort/
-| #I2 #G #L2 #K2 #V1 #V2 #W2 #i #HLK2 #_ #HVW2 #IHV12 #L1 #H elim (lleq_inv_lref_ge_dx … H … HLK2) // -H
-  #I1 #K1 #HLK1 #HV1
+| #I #G #L2 #K2 #V1 #V2 #W2 #i #HLK2 #_ #HVW2 #IHV12 #L1 #H elim (lleq_inv_lref_ge_dx … H … HLK2) // -H
+  #K1 #HLK1 #HV1
   lapply (ldrop_fwd_drop2 … HLK1) -HLK1 #HLK1
   lapply (ldrop_fwd_drop2 … HLK2) -HLK2 #HLK2
   @(lleq_lift_le … HLK1 HLK2 … HVW2) -HLK1 -HLK2 -HVW2 /2 width=1 by/ (**) (* full auto too slow *)

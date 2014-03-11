@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/btpredproper_8.ma".
-include "basic_2/substitution/lleq.ma".
+include "basic_2/relocation/lleq.ma".
 include "basic_2/computation/fpbs.ma".
 
 (* UNITARY "BIG TREE" PROPER PARALLEL COMPUTATION FOR CLOSURES **************)

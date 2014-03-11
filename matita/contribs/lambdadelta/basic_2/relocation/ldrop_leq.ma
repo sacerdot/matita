@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/ynat/ynat_plus.ma".
 include "basic_2/grammar/leq_leq.ma".
 include "basic_2/relocation/ldrop.ma".
 

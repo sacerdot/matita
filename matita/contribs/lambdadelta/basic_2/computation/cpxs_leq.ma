@@ -12,16 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/lleq_lleq.ma".
-include "basic_2/computation/lpxs_lpxs.ma".
-include "basic_2/computation/fpns.ma".
+include "basic_2/reduction/cpx_leq.ma".
+include "basic_2/computation/cpxs.ma".
 
-(* PARALLEL COMPUTATION FOR "BIG TREE" NORMAL FORMS *************************)
+(* CONTEXT-SENSITIVE EXTENDED PARALLEL COMPUTATION ON TERMS *****************)
 
-(* Main properties **********************************************************)
+(* Properties on equivalence for local environments *************************)
 
-theorem fpns_trans: ∀h,g. tri_transitive … (fpns h g).
-#h #g #G1 #G #L1 #L #T1 #T * -G -L -T
-#L #HL1 #HT1 #G2 #L2 #T2 * -G2 -L2 -T2
-/3 width=3 by lpxs_trans, lleq_trans, fpns_intro/
+lemma leq_cpxs_trans: ∀h,g,G. lsub_trans … (cpxs h g G) (leq 0 (∞)).
+/3 width=5 by leq_cpx_trans, LTC_lsub_trans/
 qed-.

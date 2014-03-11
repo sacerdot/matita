@@ -12,16 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/lleq_lleq.ma".
-include "basic_2/computation/lpxs_lpxs.ma".
-include "basic_2/computation/fpns.ma".
-
-(* PARALLEL COMPUTATION FOR "BIG TREE" NORMAL FORMS *************************)
+include "basic_2/relocation/lleq_ldrop.ma".
 
 (* Main properties **********************************************************)
 
-theorem fpns_trans: ∀h,g. tri_transitive … (fpns h g).
-#h #g #G1 #G #L1 #L #T1 #T * -G -L -T
-#L #HL1 #HT1 #G2 #L2 #T2 * -G2 -L2 -T2
-/3 width=3 by lpxs_trans, lleq_trans, fpns_intro/
-qed-.
+theorem lleq_trans: ∀d,T. Transitive … (lleq d T).
+/2 width=3 by lleq_llpx_sn_trans/ qed-.
+
+theorem lleq_canc_sn: ∀L,L1,L2,T,d. L ⋕[d, T] L1→ L ⋕[d, T] L2 → L1 ⋕[d, T] L2.
+/3 width=3 by lleq_trans, lleq_sym/ qed-.
+
+theorem lleq_canc_dx: ∀L1,L2,L,T,d. L1 ⋕[d, T] L → L2 ⋕[d, T] L → L1 ⋕[d, T] L2.
+/3 width=3 by lleq_trans, lleq_sym/ qed-.
+
+(* Note: lleq_nlleq_trans: ∀d,T,L1,L. L1⋕[T, d] L →
+                           ∀L2. (L ⋕[T, d] L2 → ⊥) → (L1 ⋕[T, d] L2 → ⊥).
+/3 width=3 by lleq_canc_sn/ qed-.
+works with /4 width=8/ so lleq_canc_sn is more convenient
+*)

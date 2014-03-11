@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/lleq_ext.ma".
+include "basic_2/relocation/lleq_ldrop.ma".
 include "basic_2/reduction/lpx_ldrop.ma".
 
 (* SN EXTENDED PARALLEL REDUCTION FOR LOCAL ENVIRONMENTS ********************)
@@ -51,7 +51,7 @@ lemma lpx_lleq_fqu_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, 
 [ #I #G1 #L1 #V1 #X #H1 #H2 elim (lpx_inv_pair2 … H1) -H1
   #K0 #V0 #H1KL1 #_ #H destruct
   elim (lleq_inv_lref_ge_dx … H2 ? I L1 V1) -H2 //
-  #I1 #K1 #H #H2KL1 lapply (ldrop_inv_O2 … H) -H #H destruct
+  #K1 #H #H2KL1 lapply (ldrop_inv_O2 … H) -H #H destruct
   /2 width=4 by fqu_lref_O, ex3_intro/
 | * [ #a ] #I #G1 #L1 #V1 #T1 #K1 #HLK1 #H
   [ elim (lleq_inv_bind … H)

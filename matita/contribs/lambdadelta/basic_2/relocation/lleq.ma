@@ -25,6 +25,9 @@ interpretation
    "lazy equivalence (local environment)"
    'LazyEq T d L1 L2 = (lleq d T L1 L2).
 
+definition lleq_transitive: predicate (relation3 lenv term term) ≝
+           λR. ∀L2,T1,T2. R L2 T1 T2 → ∀L1. L1 ⋕[T1, 0] L2 → R L1 T1 T2.
+
 (* Basic inversion lemmas ***************************************************)
 
 lemma lleq_ind: ∀R:relation4 ynat term lenv lenv. (

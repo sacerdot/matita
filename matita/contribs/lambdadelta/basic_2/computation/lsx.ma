@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/lazysn_6.ma".
-include "basic_2/substitution/lleq.ma".
+include "basic_2/relocation/lleq.ma".
 include "basic_2/computation/lpxs.ma".
 
 (* SN EXTENDED STRONGLY NORMALIZING LOCAL ENVIRONMENTS **********************)
@@ -62,10 +62,10 @@ lemma lsx_gref: ∀h,g,G,L,d,p. G ⊢ ⋕⬊*[h, g, §p, d] L.
 /3 width=4 by lpxs_fwd_length, lleq_gref/
 qed.
 
-lemma lsx_be: ∀h,g,G,L,T,U,dt,d,e. yinj d ≤ dt → dt ≤ d + e →
-              ⇧[d, e] T ≡ U → G ⊢ ⋕⬊*[h, g, U, dt] L → G ⊢ ⋕⬊*[h, g, U, d] L.
-#h #g #G #L #T #U #dt #d #e #Hddt #Hdtde #HTU #H @(lsx_ind … H) -L
-/5 width=7 by lsx_intro, lleq_be/
+lemma lsx_ge_up: ∀h,g,G,L,T,U,dt,d,e. dt ≤ yinj d + yinj e →
+                 ⇧[d, e] T ≡ U → G ⊢ ⋕⬊*[h, g, U, dt] L → G ⊢ ⋕⬊*[h, g, U, d] L.
+#h #g #G #L #T #U #dt #d #e #Hdtde #HTU #H @(lsx_ind … H) -L
+/5 width=7 by lsx_intro, lleq_ge_up/
 qed-.
 
 (* Basic forward lemmas *****************************************************)

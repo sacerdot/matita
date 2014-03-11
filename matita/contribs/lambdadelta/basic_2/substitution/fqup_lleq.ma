@@ -12,16 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/lleq_lleq.ma".
-include "basic_2/computation/lpxs_lpxs.ma".
-include "basic_2/computation/fpns.ma".
+include "basic_2/relocation/fqu_lleq.ma".
+include "basic_2/substitution/fqup.ma".
 
-(* PARALLEL COMPUTATION FOR "BIG TREE" NORMAL FORMS *************************)
+(* PLUS-ITERATED SUPCLOSURE *************************************************)
 
-(* Main properties **********************************************************)
+(* Properties on lazy equivalence for local environments ********************)
 
-theorem fpns_trans: ∀h,g. tri_transitive … (fpns h g).
-#h #g #G1 #G #L1 #L #T1 #T * -G -L -T
-#L #HL1 #HT1 #G2 #L2 #T2 * -G2 -L2 -T2
-/3 width=3 by lpxs_trans, lleq_trans, fpns_intro/
+lemma lleq_fqup_trans: ∀G1,G2,L2,K2,T,U. ⦃G1, L2, T⦄ ⊃+ ⦃G2, K2, U⦄ →
+                       ∀L1. L1 ⋕[T, 0] L2 →
+                       ∃∃K1. ⦃G1, L1, T⦄ ⊃+ ⦃G2, K1, U⦄ & K1 ⋕[U, 0] K2.
+#G1 #G2 #L2 #K2 #T #U #H @(fqup_ind … H) -G2 -K2 -U
+[ #G2 #K2 #U #HTU #L1 #HL12 elim (lleq_fqu_trans … HTU … HL12) -L2
+  /3 width=3 by fqu_fqup, ex2_intro/
+| #G #G2 #K #K2 #U #U2 #_ #HU2 #IHTU #L1 #HL12 elim (IHTU … HL12) -L2
+  #K1 #HTU #HK1 elim (lleq_fqu_trans … HU2 … HK1) -K
+  /3 width=5 by fqup_strap1, ex2_intro/
+]
 qed-.

@@ -12,16 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/lleq_lleq.ma".
-include "basic_2/computation/lpxs_lpxs.ma".
-include "basic_2/computation/fpns.ma".
+include "basic_2/relocation/ldrop_leq.ma".
+include "basic_2/reduction/cpx.ma".
 
-(* PARALLEL COMPUTATION FOR "BIG TREE" NORMAL FORMS *************************)
+(* CONTEXT-SENSITIVE EXTENDED PARALLEL REDUCTION FOR TERMS ******************)
 
-(* Main properties **********************************************************)
+(* Properties on equivalence for local environments *************************)
 
-theorem fpns_trans: ∀h,g. tri_transitive … (fpns h g).
-#h #g #G1 #G #L1 #L #T1 #T * -G -L -T
-#L #HL1 #HT1 #G2 #L2 #T2 * -G2 -L2 -T2
-/3 width=3 by lpxs_trans, lleq_trans, fpns_intro/
+lemma leq_cpx_trans: ∀h,g,G. lsub_trans … (cpx h g G) (leq 0 (∞)).
+#h #g #G #L1 #T1 #T2 #H elim H -G -L1 -T1 -T2
+[ //
+| /2 width=2 by cpx_sort/
+| #I #G #L1 #K1 #V1 #V2 #W2 #i #HLK1 #_ #HVW2 #IHV12 #L2 #HL12
+  elim (leq_ldrop_trans_be … HL12 … HLK1) // -HL12 -HLK1 /3 width=7 by cpx_delta/
+|4,9: /4 width=1 by cpx_bind, cpx_beta, leq_pair_O_Y/
+|5,7,8: /3 width=1 by cpx_flat, cpx_tau, cpx_ti/
+|6,10: /4 width=3 by cpx_zeta, cpx_theta, leq_pair_O_Y/
+]
 qed-.

@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/relocation/lleq_lleq.ma".
 include "basic_2/computation/lpxs_lleq.ma".
 include "basic_2/computation/lpxs_lpxs.ma".
 include "basic_2/computation/lsx.ma".
@@ -20,15 +21,12 @@ include "basic_2/computation/lsx.ma".
 
 (* Advanced properties ******************************************************)
 
-lemma lsx_leqy_conf: ∀h,g,G,L1,T,d. G ⊢ ⋕⬊*[h, g, T, d] L1 →
-                     ∀L2. L1 ⊑×[d, ∞] L2 → |L1| = |L2| → G ⊢ ⋕⬊*[h, g, T, d] L2.
+lemma lsx_leq_conf: ∀h,g,G,L1,T,d. G ⊢ ⋕⬊*[h, g, T, d] L1 →
+                    ∀L2. L1 ≃[d, ∞] L2 → G ⊢ ⋕⬊*[h, g, T, d] L2.
 #h #g #G #L1 #T #d #H @(lsx_ind … H) -L1
-#L1 #_ #IHL1 #L2 #H1L12 #H2L12 @lsx_intro
-#L3 #H1L23 #HnL23 lapply (lpxs_fwd_length … H1L23)
-#H2L23 elim (lsuby_lpxs_trans_lleq … H1L12 … H1L23) -H1L12 -H1L23
-#L0 #H1L03 #H1L10 #H lapply (lpxs_fwd_length … H1L10)
-#H2L10 elim (H T) -H //
-#_ #H @(IHL1 … H1L10) -IHL1 -H1L10 /3 width=1 by/
+#L1 #_ #IHL1 #L2 #HL12 @lsx_intro
+#L3 #HL23 #HnL23 elim (leq_lpxs_trans_lleq … HL12 … HL23) -HL12 -HL23
+#L0 #HL03 #HL10 #H elim (H T) -H /4 width=4 by/
 qed-.
 
 lemma lsx_ge: ∀h,g,G,L,T,d1,d2. d1 ≤ d2 →
@@ -113,10 +111,10 @@ lemma lsx_fwd_bind_dx: ∀h,g,a,I,G,L,V,T,d. G ⊢ ⋕⬊*[h, g, ⓑ{a,I}V.T, d]
 #L1 #_ #IHL1 @lsx_intro
 #Y #H #HT elim (lpxs_inv_pair1 … H) -H
 #L2 #V2 #HL12 #_ #H destruct
-@(lsx_leqy_conf … (L2.ⓑ{I}V1)) /2 width=1 by lsuby_succ/
+@(lsx_leq_conf … (L2.ⓑ{I}V1)) /2 width=1 by leq_succ/
 @IHL1 // #H @HT -IHL1 -HL12 -HT
-@(lleq_lsuby_trans … (L2.ⓑ{I}V1))
-/2 width=2 by lleq_fwd_bind_dx, lsuby_succ/
+@(lleq_leq_trans … (L2.ⓑ{I}V1))
+/2 width=2 by lleq_fwd_bind_dx, leq_succ/
 qed-.
 
 (* Advanced inversion lemmas ************************************************)

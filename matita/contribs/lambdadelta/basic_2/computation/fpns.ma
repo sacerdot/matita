@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/btpredsnstar_8.ma".
-include "basic_2/substitution/lleq.ma".
+include "basic_2/relocation/lleq.ma".
 include "basic_2/computation/lpxs.ma".
 
 (* PARALLEL COMPUTATION FOR "BIG TREE" NORMAL FORMS *************************)

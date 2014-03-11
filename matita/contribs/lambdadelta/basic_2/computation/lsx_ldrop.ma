@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/lleq_ldrop.ma".
+include "basic_2/relocation/lleq_ldrop.ma".
 include "basic_2/computation/lpxs_ldrop.ma".
 include "basic_2/computation/lsx.ma".
 
