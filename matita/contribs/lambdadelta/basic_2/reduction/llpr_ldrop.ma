@@ -1,0 +1,101 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/relocation/llpx_sn_ldrop.ma".
+include "basic_2/relocation/fquq_alt.ma".
+include "basic_2/reduction/cpr_lift.ma".
+include "basic_2/reduction/llpr.ma".
+
+(* LAZY SN PARALLEL REDUCTION FOR LOCAL ENVIRONMENTS ************************)
+
+(* Advanced inversion lemmas ************************************************)
+
+lemma llpr_inv_lref_ge_dx: ∀G,L1,L2,d,i. ⦃G, L1⦄ ⊢ ➡[#i, d] L2 → d ≤ i →
+                           ∀I,K2,V2. ⇩[i] L2 ≡ K2.ⓑ{I}V2 →
+                           ∃∃K1,V1. ⇩[i] L1 ≡ K1.ⓑ{I}V1 &
+                                    ⦃G, K1⦄ ⊢ ➡[V1, 0] K2 & ⦃G, K1⦄ ⊢ V1 ➡ V2.
+/2 width=5 by llpx_sn_inv_lref_ge_dx/ qed-.
+
+lemma llpr_inv_lref_ge_sn: ∀G,L1,L2,d,i. ⦃G, L1⦄ ⊢ ➡[#i, d] L2 → d ≤ i →
+                           ∀I,K1,V1. ⇩[i] L1 ≡ K1.ⓑ{I}V1 →
+                           ∃∃K2,V2. ⇩[i] L2 ≡ K2.ⓑ{I}V2 &
+                                    ⦃G, K1⦄ ⊢ ➡[V1, 0] K2 & ⦃G, K1⦄ ⊢ V1 ➡ V2.
+/2 width=5 by llpx_sn_inv_lref_ge_sn/ qed-.
+
+lemma llpr_inv_lref_ge_bi: ∀G,L1,L2,d,i. ⦃G, L1⦄ ⊢ ➡[#i, d] L2 → d ≤ i →
+                           ∀I1,I2,K1,K2,V1,V2.
+                           ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 →
+                           ∧∧ I1 = I2 & ⦃G, K1⦄ ⊢ ➡[V1, 0] K2 & ⦃G, K1⦄ ⊢ V1 ➡ V2.
+/2 width=8 by llpx_sn_inv_lref_ge_bi/ qed-.
+
+lemma llpr_inv_bind_O: ∀a,I,G,L1,L2,V,T. ⦃G, L1⦄ ⊢ ➡ [ⓑ{a,I}V.T, 0] L2 →
+                       ⦃G, L1⦄ ⊢ ➡[V, 0] L2 ∧ ⦃G, L1.ⓑ{I}V⦄ ⊢ ➡[T, 0] L2.ⓑ{I}V.
+/2 width=2 by llpx_sn_inv_bind_O/ qed-.
+
+lemma llpr_bind_repl_O: ∀I,G,L1,L2,V1,V2,T. ⦃G, L1.ⓑ{I}V1⦄ ⊢ ➡[T, 0] L2.ⓑ{I}V2 →
+                        ∀J,W1,W2. ⦃G, L1⦄ ⊢ ➡[W1, 0] L2 → ⦃G, L1⦄ ⊢ W1 ➡ W2 → ⦃G, L1.ⓑ{J}W1⦄ ⊢ ➡[T, 0] L2.ⓑ{J}W2.
+/2 width=4 by llpx_sn_bind_repl_O/ qed-.
+(*
+(* Properies on local environment slicing ***********************************)
+
+(* Basic_1: includes: wcpr0_drop *)
+lemma lpr_ldrop_conf: ∀G. dropable_sn (lpr G).
+/3 width=6 by lpx_sn_deliftable_dropable, cpr_inv_lift1/ qed-.
+
+(* Basic_1: includes: wcpr0_drop_back *)
+lemma ldrop_lpr_trans: ∀G. dedropable_sn (lpr G).
+/3 width=10 by lpx_sn_liftable_dedropable, cpr_lift/ qed-.
+
+lemma lpr_ldrop_trans_O1: ∀G. dropable_dx (lpr G).
+/2 width=3 by lpx_sn_dropable/ qed-.
+*)
+(* Properties on context-sensitive parallel reduction for terms *************)
+
+lemma fqu_cpr_trans_dx: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ →
+                        ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡ U2 →
+                        ∃∃L,U1. ⦃G1, L1⦄ ⊢ ➡[T1, 0] L & ⦃G1, L⦄ ⊢ T1 ➡ U1 & ⦃G1, L, U1⦄ ⊃ ⦃G2, L2, U2⦄.
+#G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2
+/3 width=10 by llpr_lref, cpr_pair_sn, cpr_atom, cpr_bind, cpr_flat, fqu_lref_O, fqu_pair_sn, fqu_bind_dx, fqu_flat_dx, ldrop_pair, ex3_2_intro/
+#G #L #K #U #T #e #HLK #HUT #U2 #HU2
+elim (lift_total U2 0 (e+1)) #T2 #HUT2
+lapply (cpr_lift … HU2 … HLK … HUT … HUT2) -HU2 -HUT /3 width=9 by fqu_drop, ex3_2_intro/
+qed-.
+
+lemma fquq_cpr_trans_dx: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, L2, T2⦄ →
+                         ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡ U2 →
+                         ∃∃L,U1. ⦃G1, L1⦄ ⊢ ➡[T1, 0] L & ⦃G1, L⦄ ⊢ T1 ➡ U1 & ⦃G1, L, U1⦄ ⊃⸮ ⦃G2, L2, U2⦄.
+#G1 #G2 #L1 #L2 #T1 #T2 #H #U2 #HTU2 elim (fquq_inv_gen … H) -H
+[ #HT12 elim (fqu_cpr_trans_dx … HT12 … HTU2) /3 width=5 by fqu_fquq, ex3_2_intro/
+| * #H1 #H2 #H3 destruct /2 width=5 by ex3_2_intro/
+]
+qed-.
+
+lemma fqu_cpr_trans_sn: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ →
+                        ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡ U2 →
+                        ∃∃L,U1. ⦃G1, L1⦄ ⊢ ➡[T1, 0] L & ⦃G1, L1⦄ ⊢ T1 ➡ U1 & ⦃G1, L, U1⦄ ⊃ ⦃G2, L2, U2⦄.
+#G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2
+/3 width=10 by llpr_lref, cpr_pair_sn, cpr_bind, cpr_flat, fqu_lref_O, fqu_pair_sn, fqu_bind_dx, fqu_flat_dx, ldrop_pair, ex3_2_intro/
+#G #L #K #U #T #e #HLK #HUT #U2 #HU2
+elim (lift_total U2 0 (e+1)) #T2 #HUT2
+lapply (cpr_lift … HU2 … HLK … HUT … HUT2) -HU2 -HUT /3 width=9 by fqu_drop, ex3_2_intro/
+qed-.
+
+lemma fquq_cpr_trans_sn: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, L2, T2⦄ →
+                         ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡ U2 →
+                         ∃∃L,U1. ⦃G1, L1⦄ ⊢ ➡[T1, 0] L & ⦃G1, L1⦄ ⊢ T1 ➡ U1 & ⦃G1, L, U1⦄ ⊃⸮ ⦃G2, L2, U2⦄.
+#G1 #G2 #L1 #L2 #T1 #T2 #H #U2 #HTU2 elim (fquq_inv_gen … H) -H
+[ #HT12 elim (fqu_cpr_trans_sn … HT12 … HTU2) /3 width=5 by fqu_fquq, ex3_2_intro/
+| * #H1 #H2 #H3 destruct /2 width=5 by ex3_2_intro/
+]
+qed-.

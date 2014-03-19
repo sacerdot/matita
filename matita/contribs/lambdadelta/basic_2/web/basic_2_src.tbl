@@ -245,11 +245,11 @@ table {
           }
         ]
         [ { "lazy equivalence for local environments" * } {
-             [ "lleq ( ? ⋕[?,?] ? )" "lleq_leq" + "lleq_ldrop" + "lleq_lleq" * ]
+             [ "lleq ( ? ⋕[?,?] ? )" "lleq_alt" + "lleq_leq" + "lleq_ldrop" + "lleq_lleq" * ]
           }
         ]
         [ { "lazy pointwise extension of a relation" * } {
-             [ "llpx_sn" "llpx_sn_leq" + "llpx_sn_ldrop" * ]
+             [ "llpx_sn" "llpx_sn_alt" + "llpx_sn_leq" + "llpx_sn_ldrop" * ]
           }
         ]        
 	[ { "basic local env. slicing" * } {
@@ -258,7 +258,7 @@ table {
         ]
         [ { "basic term relocation" * } {
              [ "lift_vector ( ⇧[?,?] ? ≡ ? )" "lift_lift_vector" * ]
-             [ "lift ( ⇧[?,?] ? ≡ ? )" "lift_lift" * ]
+             [ "lift ( ⇧[?,?] ? ≡ ? )" "lift_neg" + "lift_lift" * ]
           }
         ]
      }
