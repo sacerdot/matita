@@ -46,20 +46,7 @@ lemma llpr_inv_bind_O: ∀a,I,G,L1,L2,V,T. ⦃G, L1⦄ ⊢ ➡ [ⓑ{a,I}V.T, 0] 
 lemma llpr_bind_repl_O: ∀I,G,L1,L2,V1,V2,T. ⦃G, L1.ⓑ{I}V1⦄ ⊢ ➡[T, 0] L2.ⓑ{I}V2 →
                         ∀J,W1,W2. ⦃G, L1⦄ ⊢ ➡[W1, 0] L2 → ⦃G, L1⦄ ⊢ W1 ➡ W2 → ⦃G, L1.ⓑ{J}W1⦄ ⊢ ➡[T, 0] L2.ⓑ{J}W2.
 /2 width=4 by llpx_sn_bind_repl_O/ qed-.
-(*
-(* Properies on local environment slicing ***********************************)
 
-(* Basic_1: includes: wcpr0_drop *)
-lemma lpr_ldrop_conf: ∀G. dropable_sn (lpr G).
-/3 width=6 by lpx_sn_deliftable_dropable, cpr_inv_lift1/ qed-.
-
-(* Basic_1: includes: wcpr0_drop_back *)
-lemma ldrop_lpr_trans: ∀G. dedropable_sn (lpr G).
-/3 width=10 by lpx_sn_liftable_dedropable, cpr_lift/ qed-.
-
-lemma lpr_ldrop_trans_O1: ∀G. dropable_dx (lpr G).
-/2 width=3 by lpx_sn_dropable/ qed-.
-*)
 (* Properties on context-sensitive parallel reduction for terms *************)
 
 lemma fqu_cpr_trans_dx: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ →

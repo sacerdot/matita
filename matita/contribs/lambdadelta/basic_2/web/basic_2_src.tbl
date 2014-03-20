@@ -137,7 +137,7 @@ table {
         ]
         [ { "context-sensitive extended reduction" * } {
              [ "lpx ( ⦃?,?⦄ ⊢ ➡[?,?] ? )" "lpx_ldrop" + "lpx_lleq" + "lpx_aaa" * ]
-             [ "cpx ( ⦃?,?⦄ ⊢ ? ➡[?,?] ? )" "cpx_leq" + "cpx_lift" + "cpx_lleq" + "cpx_cix" * ]
+             [ "cpx ( ⦃?,?⦄ ⊢ ? ➡[?,?] ? )" "cpx_leq" + "cpx_lift" + "cpx_llpx_sn" + "cpx_lleq" + "cpx_cix" * ]
           }
         ]
         [ { "irreducible forms for context-sensitive extended reduction" * } {
@@ -245,11 +245,11 @@ table {
           }
         ]
         [ { "lazy equivalence for local environments" * } {
-             [ "lleq ( ? ⋕[?,?] ? )" "lleq_alt" + "lleq_leq" + "lleq_ldrop" + "lleq_lleq" * ]
+             [ "lleq ( ? ⋕[?,?] ? )" "lleq_leq" + "lleq_ldrop" + "lleq_lleq" * ]
           }
         ]
         [ { "lazy pointwise extension of a relation" * } {
-             [ "llpx_sn" "llpx_sn_alt" + "llpx_sn_leq" + "llpx_sn_ldrop" * ]
+             [ "llpx_sn" "llpx_sn_leq" + "llpx_sn_ldrop" + "llpx_sn_llpx_sn" * ]
           }
         ]        
 	[ { "basic local env. slicing" * } {
@@ -258,7 +258,7 @@ table {
         ]
         [ { "basic term relocation" * } {
              [ "lift_vector ( ⇧[?,?] ? ≡ ? )" "lift_lift_vector" * ]
-             [ "lift ( ⇧[?,?] ? ≡ ? )" "lift_neg" + "lift_lift" * ]
+             [ "lift ( ⇧[?,?] ? ≡ ? )" "lift_lift" * ]
           }
         ]
      }

@@ -61,7 +61,7 @@ qed.
 (* Basic_1: includes: pr0_gen_lift pr2_gen_lift *)
 lemma cpr_inv_lift1: ∀G. l_deliftable_sn (cpr G).
 #G #L #U1 #U2 #H elim H -G -L -U1 -U2
-[ * #G #L #i #K #s #d #e #_ #T1 #H
+[ * #i #G #L #K #s #d #e #_ #T1 #H
   [ lapply (lift_inv_sort2 … H) -H #H destruct /2 width=3 by ex2_intro/
   | elim (lift_inv_lref2 … H) -H * #Hid #H destruct /3 width=3 by lift_lref_ge_minus, lift_lref_lt, ex2_intro/
   | lapply (lift_inv_gref2 … H) -H #H destruct /2 width=3 by ex2_intro/

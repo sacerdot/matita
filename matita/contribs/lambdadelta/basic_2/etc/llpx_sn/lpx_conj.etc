@@ -1,0 +1,120 @@
+include "basic_2/relocation/lleq_alt.ma".
+include "basic_2/reduction/cpx_lleq.ma".
+include "basic_2/reduction/lpx_lleq.ma".
+
+lemma not_ex_to_all_not: ∀A:Type[0]. ∀R:predicate A.
+                         ((∃a. R a)→⊥) → (∀a. R a → ⊥).
+/3 width=2 by ex_intro/ qed-.
+
+lemma lt_repl_sn_trans_tw: ∀L1,L2,T1,T2. ♯{L1, T1} < ♯{L2, T2} →
+                           ∀U1. ♯{U1} = ♯{T1} → ♯{L1, U1} < ♯{L2, T2}.
+normalize in ⊢ (?→?→?→?→?%%→?→?→?%%); //
+qed-.
+
+axiom cpx_fwd_lift1: ∀h,g,G,L,U1,U2. ⦃G, L⦄ ⊢ U1 ➡[h, g] U2 →
+                     ∀T1,d,e. ⇧[d, e] T1 ≡ U1 → ∃T2. ⇧[d, e] T2 ≡ U2.
+(*
+#h #g #G #L #U1 #U2 #H elim H -G -L -U1 -U2
+[ * #i #G #L #T1 #d #e #H
+  [ lapply (lift_inv_sort2 … H) -H #H destruct /2 width=2 by ex_intro/
+  | elim (lift_inv_lref2 … H) -H * #Hid #H destruct /3 width=2 by lift_lref_ge_minus, lift_lref_lt, ex_intro/
+  | lapply (lift_inv_gref2 … H) -H #H destruct /2 width=2 by ex_intro/
+  ]
+| #G #L #k #l #Hkl #T1 #d #e #H
+  lapply (lift_inv_sort2 … H) -H #H destruct /3 width=3 by ex_intro/
+| #I #G #L #K #V1 #V2 #W2 #i #HLK #HV12 #HVW2 #IHV2 #T1 #d #e #H
+  elim (lift_inv_lref2 … H) -H * #Hid #H destruct
+  [ elim (ldrop_conf_lt … HLK … HLV) -L // #L #U #HKL #HLV #HUV
+    elim (IHV2 … HLV … HUV) -V #U2 #HUV2 #HU2
+    elim (lift_trans_le … HUV2 … HVW2) -V2 // >minus_plus <plus_minus_m_m /3 width=9 by cpx_delta, ex2_intro/
+  | elim (le_inv_plus_l … Hid) #Hdie #Hei
+    lapply (ldrop_conf_ge … HLK … HLV ?) -L // #HKLV
+    elim (lift_split … HVW2 d (i - e + 1)) -HVW2 /3 width=1 by le_S, le_S_S/ -Hid -Hdie
+    #V1 #HV1 >plus_minus // <minus_minus /2 width=1 by le_S/ <minus_n_n <plus_n_O /3 width=9 by cpx_delta, ex2_intro/
+  ]
+| #a #I #G #L #V1 #V2 #U1 #U2 #_ #_ #IHV12 #IHU12 #K #s #d #e #HLK #X #H
+  elim (lift_inv_bind2 … H) -H #W1 #T1 #HWV1 #HTU1 #H destruct
+  elim (IHV12 … HLK … HWV1) -IHV12 #W2 #HW12 #HWV2
+  elim (IHU12 … HTU1) -IHU12 -HTU1 /3 width=6 by cpx_bind, ldrop_skip, lift_bind, ex2_intro/
+| #I #G #L #V1 #V2 #U1 #U2 #_ #_ #IHV12 #IHU12 #K #s #d #e #HLK #X #H
+  elim (lift_inv_flat2 … H) -H #W1 #T1 #HWV1 #HTU1 #H destruct
+  elim (IHV12 … HLK … HWV1) -V1
+  elim (IHU12 … HLK … HTU1) -U1 -HLK /3 width=5 by cpx_flat, lift_flat, ex2_intro/
+| #G #L #V #U1 #U #U2 #_ #HU2 #IHU1 #K #s #d #e #HLK #X #H
+  elim (lift_inv_bind2 … H) -H #W1 #T1 #HWV1 #HTU1 #H destruct
+  elim (IHU1 (K.ⓓW1) s … HTU1) /2 width=1/ -L -U1 #T #HTU #HT1
+  elim (lift_div_le … HU2 … HTU) -U /3 width=5 by cpx_zeta, ex2_intro/
+| #G #L #V #U1 #U2 #_ #IHU12 #K #s #d #e #HLK #X #H
+  elim (lift_inv_flat2 … H) -H #W1 #T1 #HWV1 #HTU1 #H destruct
+  elim (IHU12 … HLK … HTU1) -L -U1 /3 width=3 by cpx_tau, ex2_intro/
+| #G #L #V1 #V2 #U1 #_ #IHV12 #K #s #d #e #HLK #X #H
+  elim (lift_inv_flat2 … H) -H #W1 #T1 #HWV1 #HTU1 #H destruct
+  elim (IHV12 … HLK … HWV1) -L -V1 /3 width=3 by cpx_ti, ex2_intro/
+| #a #G #L #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #IHV12 #IHW12 #IHT12 #K #s #d #e #HLK #X #HX
+  elim (lift_inv_flat2 … HX) -HX #V0 #Y #HV01 #HY #HX destruct
+  elim (lift_inv_bind2 … HY) -HY #W0 #T0 #HW01 #HT01 #HY destruct
+  elim (IHV12 … HLK … HV01) -V1 #V3 #HV32 #HV03
+  elim (IHT12 (K.ⓛW0) s … HT01) -T1 /2 width=1 by ldrop_skip/ #T3 #HT32 #HT03
+  elim (IHW12 … HLK … HW01) -W1
+  /4 width=7 by cpx_beta, lift_bind, lift_flat, ex2_intro/
+| #a #G #L #V1 #V #V2 #W1 #W2 #T1 #T2 #_ #HV2 #_ #_ #IHV1 #IHW12 #IHT12 #K #s #d #e #HLK #X #HX
+  elim (lift_inv_flat2 … HX) -HX #V0 #Y #HV01 #HY #HX destruct
+  elim (lift_inv_bind2 … HY) -HY #W0 #T0 #HW01 #HT01 #HY destruct
+  elim (IHV1 … HLK … HV01) -V1 #V3 #HV3 #HV03
+  elim (IHT12 (K.ⓓW0) s … HT01) -T1 /2 width=1 by ldrop_skip/ #T3 #HT32 #HT03
+  elim (IHW12 … HLK … HW01) -W1 #W3 #HW32 #HW03
+  elim (lift_trans_le … HV3 … HV2) -V
+  /4 width=9 by cpx_theta, lift_bind, lift_flat, ex2_intro/
+]
+qed-.
+*)
+lemma cpx_fwd_nlift2: ∀h,g,G,L,U1,U2. ⦃G, L⦄ ⊢ U1 ➡[h, g] U2 → ∀d,e.
+                      (∀T2. ⇧[d, e] T2 ≡ U2 → ⊥) → (∀T1. ⇧[d, e] T1 ≡ U1 → ⊥).
+#h #g #G #L #U1 #U2 #HU12 #d #e #HnU2 #T1 #HTU1
+elim (cpx_fwd_lift1 … HU12 … HTU1) -L -U1 /2 width=2 by/
+qed-.
+
+fact lleq_lpx_cpx_trans_aux: ∀h,g,G,T1,L1s,L1d,d. L1s ⋕[T1, d] L1d →
+                             ∀Y,L2d. ⦃G, Y⦄ ⊢ ➡[h, g] L2d → Y = L1d → d = 0 →
+                             ∀T2. ⦃G, L1d⦄ ⊢ T1 ➡[h, g] T2 →
+                             ∃∃L2s. ⦃G, L1s⦄ ⊢ ➡[h, g] L2s & L2s ⋕[T2, d] L2d.
+#h #g #G #T1 #L1s @(f2_ind … rfw … L1s T1) -L1s -T1 #n #IH
+#Ys #U1 #Hn #Yd #d #HU1 elim (lleq_fwd_alt … HU1) #H #IHU1
+#Y #L2d * -Y -L2d
+[ -IH -IHU1 -HU1 #HY #Hd #U2 #HU12 destruct
+  >(length_inv_zero_dx … H) -Ys /2 width=3 by ex2_intro/
+| #Id #L1d #L2d #W1d #W2d #HL12d #HW12d #HY #Hd #U2 #HU12 destruct
+  elim (length_inv_pos_dx … H) -H #Is #L1s #W1s #_ #H destruct
+  elim (is_lift_dec U1 0 1) [ -IHU1 -HW12d | -HU1 ]
+  [ * #T1 #HTU1 lapply (lift_fwd_tw … HTU1) #H
+    lapply (lleq_inv_lift_le … HU1 L1s L1d … HTU1 ?) -HU1 /2 width=1 by ldrop_drop/
+    #HT1 elim (cpx_inv_lift1 … HU12 L1d … HTU1) -HU12 -HTU1 /2 width=4 by ldrop_drop/
+    #T2 #HTU2 #HT12 elim (IH … HT1 … HL12d … HT12) /2 width=3 by lt_repl_sn_trans_tw/ -IH -HT1 -HT12 -H
+    #L2s #HL12s #HT2 @(ex2_intro … (L2s.ⓑ{Is}W1s))
+    /3 width=10 by lleq_lift_le, lpx_pair, ldrop_drop/ (**) (* full auto too slow *)
+  | #HnU1 lapply (not_ex_to_all_not … HnU1) -HnU1 #HnU1
+    elim (IHU1 … HnU1) [2,3,4: // |5,6,7,8,9,10: skip ] -HnU1 #H1 #H2 #HW1s destruct
+    elim (IH … HW1s … HL12d … HW12d) // #L2s #HL12s #HW2d
+    @(ex2_intro … (L2s.ⓑ{Id}W2d)) /3 width=3 by lleq_cpx_trans, lpx_pair/
+    lapply (lleq_fwd_length … HW2d) #HL2sd -HW12d -HW1s
+    @lleq_intro_alt [ normalize // ] -HL2sd
+    #I2s #I2d #K2s #K2d #V2s #V2d #i @(nat_ind_plus … i) -i
+    [ #_ #_ #HLK2s #HLK2d -IH -IHU1 -HU12 -HL12s -HL12d
+      lapply (ldrop_inv_O2 … HLK2s) -HLK2s #H destruct
+      lapply (ldrop_inv_O2 … HLK2d) -HLK2d #H destruct /2 width=1 by and3_intro/
+    | #i #_ #_ #HnU2 #HLK2s #HLK2d
+      lapply (cpx_fwd_nlift2 … HU12 … HnU2) -HU12 -HnU2 #HnU1
+      lapply (ldrop_inv_drop1 … HLK2s) -HLK2s #HLK2s
+      lapply (ldrop_inv_drop1 … HLK2d) -HLK2d #HLK2d
+      elim (lpx_ldrop_trans_O1 … HL12s … HLK2s) -L2s #Y #HLK1s #H
+      elim (lpx_inv_pair2 … H) -H #K1s #V1s #HK12s #HV12s #H destruct
+      elim (lpx_ldrop_trans_O1 … HL12d … HLK2d) -L2d #Y #HLK1d #H
+      elim (lpx_inv_pair2 … H) -H #K1d #V1d #HK12d #HV12d #H destruct
+      elim (IHU1 … HnU1) [2,3,4: /2 width=2 by ldrop_drop/ | 5,6,7,8,9,10: skip ] -IHU1 -HnU1 -HLK1d
+      #H1 #H2 #HV1d destruct
+      lapply (ldrop_fwd_rfw … HLK1s) -HLK1s #H
+      elim (IH … HV1d … HK12d … HV12d) // -IH -HV1d -HK12d -HV12d
+      [ #Y #H1Y #H2Y   
+       
+      
+

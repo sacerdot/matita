@@ -140,6 +140,11 @@ lemma llpx_sn_fwd_flat_dx: ∀R,I,L1,L2,V,T,d. llpx_sn R d (ⓕ{I}V.T) L1 L2 →
 #R #I #L1 #L2 #V #T #d #H elim (llpx_sn_inv_flat … H) -H //
 qed-.
 
+lemma llpx_sn_fwd_pair_sn: ∀R,I,L1,L2,V,T,d. llpx_sn R d (②{I}V.T) L1 L2 →
+                           llpx_sn R d V L1 L2.
+#R * /2 width=4 by llpx_sn_fwd_flat_sn, llpx_sn_fwd_bind_sn/
+qed-.
+
 (* Basic_properties *********************************************************)
 
 lemma llpx_sn_refl: ∀R. (∀L. reflexive … (R L)) → ∀T,L,d. llpx_sn R d T L L.
@@ -196,3 +201,9 @@ lemma llpx_sn_bind_O: ∀R,a,I,L1,L2,V,T. llpx_sn R 0 V L1 L2 →
                       llpx_sn R 0 T (L1.ⓑ{I}V) (L2.ⓑ{I}V) →
                       llpx_sn R 0 (ⓑ{a,I}V.T) L1 L2.
 /3 width=3 by llpx_sn_ge, llpx_sn_bind/ qed-.
+
+lemma llpx_sn_co: ∀R1,R2. (∀L,T1,T2. R1 L T1 T2 → R2 L T1 T2) →
+                  ∀L1,L2,T,d. llpx_sn R1 d T L1 L2 → llpx_sn R2 d T L1 L2.
+#R1 #R2 #HR12 #L1 #L2 #T #d #H elim H -L1 -L2 -T -d
+/3 width=9 by llpx_sn_sort, llpx_sn_skip, llpx_sn_lref, llpx_sn_free, llpx_sn_gref, llpx_sn_bind, llpx_sn_flat/
+qed-.

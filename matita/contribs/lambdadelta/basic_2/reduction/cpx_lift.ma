@@ -84,7 +84,7 @@ qed.
 
 lemma cpx_inv_lift1: ∀h,g,G. l_deliftable_sn (cpx h g G).
 #h #g #G #L #U1 #U2 #H elim H -G -L -U1 -U2
-[ * #G #L #i #K #s #d #e #_ #T1 #H
+[ * #i #G #L #K #s #d #e #_ #T1 #H
   [ lapply (lift_inv_sort2 … H) -H #H destruct /2 width=3 by cpx_atom, lift_sort, ex2_intro/
   | elim (lift_inv_lref2 … H) -H * #Hid #H destruct /3 width=3 by cpx_atom, lift_lref_ge_minus, lift_lref_lt, ex2_intro/
   | lapply (lift_inv_gref2 … H) -H #H destruct /2 width=3 by cpx_atom, lift_gref, ex2_intro/

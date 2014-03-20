@@ -386,6 +386,27 @@ lemma llpx_sn_inv_lift_ge: ∀R,L1,L2,U,d0. llpx_sn R d0 U L1 L2 →
 ]
 qed-.
 
+(* Advanced inversion lemmas on relocation **********************************)
+
+lemma llpx_sn_inv_lift_O: ∀R,L1,L2,U. llpx_sn R 0 U L1 L2 →
+                          ∀K1,K2,e. ⇩[e] L1 ≡ K1 → ⇩[e] L2 ≡ K2 →
+                          ∀T. ⇧[0, e] T ≡ U → llpx_sn R 0 T K1 K2.
+/2 width=11 by llpx_sn_inv_lift_be/ qed-.
+
+lemma llpx_sn_ldrop_conf_O: ∀R,L1,L2,U. llpx_sn R 0 U L1 L2 →
+                            ∀K1,e. ⇩[e] L1 ≡ K1 → ∀T. ⇧[0, e] T ≡ U →
+                            ∃∃K2. ⇩[e] L2 ≡ K2 & llpx_sn R 0 T K1 K2.
+#R #L1 #L2 #U #HU #K1 #e #HLK1 #T #HTU elim (llpx_sn_fwd_ldrop_sn … HU … HLK1)
+/3 width=10 by llpx_sn_inv_lift_O, ex2_intro/
+qed-.
+
+lemma llpx_sn_ldrop_trans_O: ∀R,L1,L2,U. llpx_sn R 0 U L1 L2 →
+                             ∀K2,e. ⇩[e] L2 ≡ K2 → ∀T. ⇧[0, e] T ≡ U →
+                             ∃∃K1. ⇩[e] L1 ≡ K1 & llpx_sn R 0 T K1 K2.
+#R #L1 #L2 #U #HU #K2 #e #HLK2 #T #HTU elim (llpx_sn_fwd_ldrop_dx … HU … HLK2)
+/3 width=10 by llpx_sn_inv_lift_O, ex2_intro/
+qed-.
+
 (* Inversion lemmas on negated lazy pointwise extension *********************)
 
 lemma nllpx_sn_inv_bind: ∀R. (∀L,T1,T2. Decidable (R L T1 T2)) →

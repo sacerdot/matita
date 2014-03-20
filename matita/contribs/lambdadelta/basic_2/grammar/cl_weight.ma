@@ -39,7 +39,7 @@ normalize in ⊢ (?→?→?→?→?→?%%); //
 qed.
 
 lemma fw_lpair_sn: ∀I,G,L,V,T. ♯{G, L, V} < ♯{G, L.ⓑ{I}V, T}.
-normalize /3 width=1 by monotonic_lt_plus_l, monotonic_le_plus_r/ (**) (* auto too slow without trace *)
+normalize /3 width=1 by monotonic_lt_plus_l, monotonic_le_plus_r/
 qed.
 
 (* Basic_1: removed theorems 7:
