@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/llpx_sn_ldrop.ma".
 include "basic_2/relocation/fquq_alt.ma".
 include "basic_2/reduction/cpr_lift.ma".
+include "basic_2/reduction/cpr_llpx_sn.ma".
 include "basic_2/reduction/llpr.ma".
 
 (* LAZY SN PARALLEL REDUCTION FOR LOCAL ENVIRONMENTS ************************)
@@ -46,6 +46,11 @@ lemma llpr_inv_bind_O: ∀a,I,G,L1,L2,V,T. ⦃G, L1⦄ ⊢ ➡ [ⓑ{a,I}V.T, 0] 
 lemma llpr_bind_repl_O: ∀I,G,L1,L2,V1,V2,T. ⦃G, L1.ⓑ{I}V1⦄ ⊢ ➡[T, 0] L2.ⓑ{I}V2 →
                         ∀J,W1,W2. ⦃G, L1⦄ ⊢ ➡[W1, 0] L2 → ⦃G, L1⦄ ⊢ W1 ➡ W2 → ⦃G, L1.ⓑ{J}W1⦄ ⊢ ➡[T, 0] L2.ⓑ{J}W2.
 /2 width=4 by llpx_sn_bind_repl_O/ qed-.
+
+(* Advanced properties ******************************************************)
+
+lemma llpr_cpr_conf: ∀G. s_r_confluent1 … (cpr G) (llpr G 0).
+/3 width=10 by llpx_sn_cpr_conf, cpr_inv_lift1, cpr_lift/ qed-.
 
 (* Properties on context-sensitive parallel reduction for terms *************)
 

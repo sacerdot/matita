@@ -300,7 +300,7 @@ lapply (cpr_lift … HV2 (L2.ⓓW2) … HVU2 … HVU) -HVU2 /2 width=2 by ldrop_
 /4 width=7 by cpr_bind, cpr_flat, ex2_intro/ (**) (* full auto not tried *)
 qed-.
 
-theorem cpr_conf_llpr: ∀G. llpx_sn_confluent (cpr G) (cpr G).
+theorem cpr_conf_llpr: ∀G. llpx_sn_confluent2 (cpr G) (cpr G).
 #G #L0 #T0 @(fqup_wf_ind_eq … G L0 T0) -G -L0 -T0 #G #L #T #IH #G0 #L0 * [| * ]
 [ #I0 #HG #HL #HT #T1 #H1 #T2 #H2 #L1 #HL01 #L2 #HL02 destruct
   elim (cpr_inv_atom1 … H1) -H1

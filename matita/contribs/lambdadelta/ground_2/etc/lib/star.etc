@@ -1,0 +1,31 @@
+lemma TC_case_sn: ∀A,R. reflexive A R →
+                  ∀a1,a2. TC … R a1 a2 → ∃∃a. R a1 a & TC … R a a2.
+#A #R #HR #a1 #a2 #H @(TC_ind_dx … a1 H) -a1
+[ /3 width=3 by inj, ex2_intro/
+| #a1 #a0 #Ha10 #Ha02 #_ /2 width=3 by ex2_intro/ (**) (* auto fails withput #_ *)
+]
+qed-.
+
+lemma TC_case_dx: ∀A,R. reflexive A R →
+                  ∀a1,a2. TC … R a1 a2 → ∃∃a. TC … R a1 a & R a a2.
+#A #R #HR #a1 #a2 #H @(TC_ind … a2 H) -a2
+[ /3 width=3 by inj, ex2_intro/
+| #a0 #a2 #Ha10 #Ha02 #_ /2 width=3 by ex2_intro/ (**) (* auto fails withput #_ *)
+]
+qed-.
+
+definition s_r_trans: ∀A,B. relation2 (A→relation B) (relation A) ≝ λA,B,R1,R2.
+                      ∀L2,T1,T2. R1 L2 T1 T2 → ∀L1. R2 L1 L2 → LTC … R1 L1 T1 T2.
+
+definition s_rs_trans: ∀A,B. relation2 (A→relation B) (relation A) ≝ λA,B,R1,R2.
+                       ∀L2,T1,T2. LTC … R1 L2 T1 T2 → ∀L1. R2 L1 L2 → LTC … R1 L1 T1 T2.
+
+lemma s_r_trans_TC1: ∀A,B,R,S. s_r_trans A B R S → s_rs_trans A B R S.
+#A #B #R #S #HRS #L2 #T1 #T2 #H elim H -T2 [ /3 width=3/ ]
+#T #T2 #_ #HT2 #IHT1 #L1 #HL12
+lapply (HRS … HT2 … HL12) -HRS -HT2 /3 width=3/
+qed-.
+
+lemma s_r_trans_TC2: ∀A,B,R,S. s_rs_trans A B R S → s_r_trans A B R (TC … S).
+#A #B #R #S #HRS #L2 #T1 #T2 #HT12 #L1 #H @(TC_ind_dx … L1 H) -L1 /2 width=3/ /3 width=3/
+qed-.

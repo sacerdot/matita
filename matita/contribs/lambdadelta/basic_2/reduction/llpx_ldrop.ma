@@ -54,8 +54,7 @@ lemma llpx_fwd_bind_O_dx: ∀h,g,a,I,G,L1,L2,V,T. ⦃G, L1⦄ ⊢ ➡[h, g, ⓑ{
 
 (* Advanced properties ******************************************************)
 
-lemma llpx_cpx_conf: ∀h,g,G,L1,T1,T2. ⦃G, L1⦄ ⊢ T1 ➡[h, g] T2 →
-                     ∀L2. ⦃G, L1⦄ ⊢ ➡[h, g, T1, 0] L2 → ⦃G, L1⦄ ⊢ ➡[h, g, T2, 0] L2.
+lemma llpx_cpx_conf: ∀h,g,G. s_r_confluent1 … (cpx h g G) (llpx h g G 0).
 /3 width=10 by llpx_sn_cpx_conf, cpx_inv_lift1, cpx_lift/ qed-.
 
 (* Inversion lemmas on relocation *******************************************)

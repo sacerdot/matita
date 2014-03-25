@@ -12,13 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/llpx_sn.ma".
+include "basic_2/reduction/cpx_lleq.ma".
+include "basic_2/reduction/llpx.ma".
 
-(* LAZY SN POINTWISE EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS ****)
+(* LAZY SN EXTENDED PARALLEL REDUCTION FOR LOCAL ENVIRONMENTS ***************)
 
-definition llpx_sn_confluent2: relation (lenv→relation term) ≝ λR1,R2.
-                               ∀L0,T0,T1. R1 L0 T0 T1 → ∀T2. R2 L0 T0 T2 →
-                               ∀L1. llpx_sn R1 0 T0 L0 L1 → ∀L2. llpx_sn R2 0 T0 L0 L2 →
-                               ∃∃T. R2 L1 T1 T & R1 L2 T2 T.
+(* Properties on lazy equivalence for local environments ********************)
 
-(* Note: we miss llpx_sn_conf and derivatives: lpr_conf lprs_conf *)
+lemma lleq_llpx_trans: ∀h,g,G,L1,L2,T,d. L1 ⋕[T, d] L2 →
+                       ∀L.⦃G, L2⦄ ⊢ ➡[h, g, T, d] L → ⦃G, L1⦄ ⊢ ➡[h, g, T, d] L.
+/3 width=3 by lleq_cpx_trans, lleq_llpx_sn_trans/ qed-.
+
+lemma lleq_llpx_conf: ∀h,g,G,L1,L2,T,d. L1 ⋕[T, d] L2 →
+                      ∀L.⦃G, L1⦄ ⊢ ➡[h, g, T, d] L → ⦃G, L2⦄ ⊢ ➡[h, g, T, d] L.
+/3 width=3 by lleq_cpx_trans, lleq_llpx_sn_conf/ qed-.

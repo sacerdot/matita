@@ -12,13 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/llpx_sn.ma".
+include "basic_2/reduction/lpr_lpr.ma".
+include "basic_2/computation/lprs.ma".
 
-(* LAZY SN POINTWISE EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS ****)
+(* SN PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS ****************************)
 
-definition llpx_sn_confluent2: relation (lenv→relation term) ≝ λR1,R2.
-                               ∀L0,T0,T1. R1 L0 T0 T1 → ∀T2. R2 L0 T0 T2 →
-                               ∀L1. llpx_sn R1 0 T0 L0 L1 → ∀L2. llpx_sn R2 0 T0 L0 L2 →
-                               ∃∃T. R2 L1 T1 T & R1 L2 T2 T.
+(* Advanced properties ******************************************************)
 
-(* Note: we miss llpx_sn_conf and derivatives: lpr_conf lprs_conf *)
+lemma lprs_strip: ∀G. confluent2 … (lprs G) (lpr G).
+/3 width=3 by TC_strip1, lpr_conf/ qed-.
+
+(* Main properties **********************************************************)
+
+theorem lprs_conf: ∀G. confluent2 … (lprs G) (lprs G).
+/3 width=3 by TC_confluent2, lpr_conf/ qed-.
+
+theorem lprs_trans: ∀G. Transitive … (lprs G).
+/2 width=3/ qed-.

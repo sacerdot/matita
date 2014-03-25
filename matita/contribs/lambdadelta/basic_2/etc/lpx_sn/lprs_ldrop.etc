@@ -12,13 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/llpx_sn.ma".
+include "basic_2/reduction/lpr_ldrop.ma".
+include "basic_2/computation/lprs.ma".
 
-(* LAZY SN POINTWISE EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS ****)
+(* SN PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS ****************************)
 
-definition llpx_sn_confluent2: relation (lenv→relation term) ≝ λR1,R2.
-                               ∀L0,T0,T1. R1 L0 T0 T1 → ∀T2. R2 L0 T0 T2 →
-                               ∀L1. llpx_sn R1 0 T0 L0 L1 → ∀L2. llpx_sn R2 0 T0 L0 L2 →
-                               ∃∃T. R2 L1 T1 T & R1 L2 T2 T.
+(* Properies on local environment slicing ***********************************)
 
-(* Note: we miss llpx_sn_conf and derivatives: lpr_conf lprs_conf *)
+lemma lprs_ldrop_conf: ∀G. dropable_sn (lprs G).
+/3 width=3 by dropable_sn_TC, lpr_ldrop_conf/ qed-.
+
+lemma ldrop_lprs_trans: ∀G. dedropable_sn (lprs G).
+/3 width=3 by dedropable_sn_TC, ldrop_lpr_trans/ qed-.
+
+lemma lprs_ldrop_trans_O1: ∀G. dropable_dx (lprs G).
+/3 width=3 by dropable_dx_TC, lpr_ldrop_trans_O1/ qed-.
