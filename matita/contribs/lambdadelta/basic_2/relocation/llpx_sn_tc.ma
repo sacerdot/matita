@@ -12,20 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reduction/cpx_lleq.ma".
-include "basic_2/reduction/llpx.ma".
+include "basic_2/relocation/llpx_sn_ldrop.ma".
 
-(* LAZY SN EXTENDED PARALLEL REDUCTION FOR LOCAL ENVIRONMENTS ***************)
+(* LAZY SN POINTWISE EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS ****)
 
-(* Properties on lazy equivalence for local environments ********************)
+(* Properties about transitive closure **************************************)
 
-lemma llpx_lrefl: ∀h,g,G,L1,L2,T,d. L1 ⋕[T, d] L2 → ⦃G, L1⦄ ⊢ ➡[h, g, T, d] L2.
-/2 width=1 by llpx_sn_lrefl/ qed-.
-
-lemma lleq_llpx_trans: ∀h,g,G,L1,L2,T,d. L1 ⋕[T, d] L2 →
-                       ∀L.⦃G, L2⦄ ⊢ ➡[h, g, T, d] L → ⦃G, L1⦄ ⊢ ➡[h, g, T, d] L.
-/3 width=3 by lleq_cpx_trans, lleq_llpx_sn_trans/ qed-.
-
-lemma lleq_llpx_conf: ∀h,g,G,L1,L2,T,d. L1 ⋕[T, d] L2 →
-                      ∀L.⦃G, L1⦄ ⊢ ➡[h, g, T, d] L → ⦃G, L2⦄ ⊢ ➡[h, g, T, d] L.
-/3 width=3 by lleq_cpx_trans, lleq_llpx_sn_conf/ qed-.
+lemma llpx_sn_TC_pair_dx: ∀R. (∀L. reflexive … (R L)) →
+                          ∀I,L,V1,V2,T. LTC … R L V1 V2 →
+                          LTC … (llpx_sn R 0) T (L.ⓑ{I}V1) (L.ⓑ{I}V2).
+#R #HR #I #L #V1 #V2 #T #H @(TC_star_ind … V2 H) -V2
+/4 width=9 by llpx_sn_bind_repl_O, llpx_sn_refl, step, inj/
+qed.

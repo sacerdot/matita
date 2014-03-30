@@ -12,20 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reduction/cpx_lleq.ma".
-include "basic_2/reduction/llpx.ma".
+include "basic_2/computation/csx_lpx.ma".
+include "basic_2/computation/lpxs.ma".
 
-(* LAZY SN EXTENDED PARALLEL REDUCTION FOR LOCAL ENVIRONMENTS ***************)
+(* CONTEXT-SENSITIVE EXTENDED STRONGLY NORMALIZING TERMS ********************)
 
-(* Properties on lazy equivalence for local environments ********************)
+(* Properties on sn extended parallel computation for local environments ****)
 
-lemma llpx_lrefl: ∀h,g,G,L1,L2,T,d. L1 ⋕[T, d] L2 → ⦃G, L1⦄ ⊢ ➡[h, g, T, d] L2.
-/2 width=1 by llpx_sn_lrefl/ qed-.
-
-lemma lleq_llpx_trans: ∀h,g,G,L1,L2,T,d. L1 ⋕[T, d] L2 →
-                       ∀L.⦃G, L2⦄ ⊢ ➡[h, g, T, d] L → ⦃G, L1⦄ ⊢ ➡[h, g, T, d] L.
-/3 width=3 by lleq_cpx_trans, lleq_llpx_sn_trans/ qed-.
-
-lemma lleq_llpx_conf: ∀h,g,G,L1,L2,T,d. L1 ⋕[T, d] L2 →
-                      ∀L.⦃G, L1⦄ ⊢ ➡[h, g, T, d] L → ⦃G, L2⦄ ⊢ ➡[h, g, T, d] L.
-/3 width=3 by lleq_cpx_trans, lleq_llpx_sn_conf/ qed-.
+lemma csx_lpxs_conf: ∀h,g,G,L1,L2. ⦃G, L1⦄ ⊢ ➡*[h, g] L2 →
+                     ∀T. ⦃G, L1⦄ ⊢ ⬊*[h, g] T → ⦃G, L2⦄ ⊢ ⬊*[h, g] T.
+#h #g #G #L1 #L2 #H @(lpxs_ind … H) -L2 /3 by lpxs_strap1, csx_lpx_conf/
+qed-.

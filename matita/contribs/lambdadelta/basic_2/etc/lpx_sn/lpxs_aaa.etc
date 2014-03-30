@@ -12,18 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/fqup_lleq.ma".
-include "basic_2/substitution/fqus_alt.ma".
+include "basic_2/reduction/lpx_aaa.ma".
+include "basic_2/computation/lpxs.ma".
 
-(* STAR-ITERATED SUPCLOSURE *************************************************)
+(* SN EXTENDED PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS *******************)
 
-(* Properties on lazy equivalence for local environments ********************)
+(* Properties about atomic arity assignment on terms ************************)
 
-lemma lleq_fqus_trans: ∀G1,G2,L2,K2,T,U. ⦃G1, L2, T⦄ ⊃* ⦃G2, K2, U⦄ →
-                       ∀L1. L1 ⋕[T, 0] L2 →
-                       ∃∃K1. ⦃G1, L1, T⦄ ⊃* ⦃G2, K1, U⦄ & K1 ⋕[U, 0] K2.
-#G1 #G2 #L2 #K2 #T #U #H #L1 #HL12 elim(fqus_inv_gen … H) -H
-[ #H elim (lleq_fqup_trans … H … HL12) -L2 /3 width=3 by fqup_fqus, ex2_intro/
-| * #HG #HL #HT destruct /2 width=3 by ex2_intro/
-]
+lemma aaa_lpxs_conf: ∀h,g,G,L1,T,A. ⦃G, L1⦄ ⊢ T ⁝ A →
+                     ∀L2. ⦃G, L1⦄ ⊢ ➡*[h, g] L2 → ⦃G, L2⦄ ⊢ T ⁝ A.
+#h #g #G #L1 #T #A #HT #L2 #HL12
+@(TC_Conf3 … (λL,A. ⦃G, L⦄ ⊢ T ⁝ A) … HT ? HL12) /2 width=5 by aaa_lpx_conf/
+qed-.
+
+lemma aaa_lprs_conf: ∀G,L1,T,A. ⦃G, L1⦄ ⊢ T ⁝ A →
+                     ∀L2. ⦃G, L1⦄ ⊢ ➡* L2 → ⦃G, L2⦄ ⊢ T ⁝ A.
+#G #L1 #T #A #HT #L2 #HL12
+@(aaa_lpxs_conf … HT) -A -T /2 width=3/
 qed-.

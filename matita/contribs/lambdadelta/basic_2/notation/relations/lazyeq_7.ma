@@ -12,21 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/lleq_ldrop.ma".
+(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-(* Main properties **********************************************************)
-
-theorem lleq_trans: ∀d,T. Transitive … (lleq d T).
-/2 width=3 by lleq_llpx_sn_trans/ qed-.
-
-theorem lleq_canc_sn: ∀L,L1,L2,T,d. L ⋕[d, T] L1→ L ⋕[d, T] L2 → L1 ⋕[d, T] L2.
-/3 width=3 by lleq_trans, lleq_sym/ qed-.
-
-theorem lleq_canc_dx: ∀L1,L2,L,T,d. L1 ⋕[d, T] L → L2 ⋕[d, T] L → L1 ⋕[d, T] L2.
-/3 width=3 by lleq_trans, lleq_sym/ qed-.
-
-(* Note: lleq_nlleq_trans: ∀d,T,L1,L. L1⋕[T, d] L →
-                           ∀L2. (L ⋕[T, d] L2 → ⊥) → (L1 ⋕[T, d] L2 → ⊥).
-/3 width=3 by lleq_canc_sn/ qed-.
-works with /4 width=8/ so lleq_canc_sn is more convenient
-*)
+notation "hvbox( ⦃ term 46 G1, break term 46 L1, break term 46 T1 ⦄ ⋕ break [ term 46 d ] break ⦃ term 46 G2, break term 46 L2 , break term 46 T2 ⦄ )"
+   non associative with precedence 45
+   for @{ 'LazyEq $d $G1 $L1 $T1 $G2 $L2 $T2 }.

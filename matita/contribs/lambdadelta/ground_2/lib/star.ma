@@ -178,6 +178,28 @@ lemma s_r_trans_LTC2: ∀A,B,S,R. s_rs_transitive A B S R → s_r_transitive A B
 #A #B #S #R #HSR #L2 #T1 #T2 #HT12 #L1 #H @(TC_ind_dx … L1 H) -L1 /3 width=3 by inj/
 qed-.
 
+lemma s_r_to_s_rs_trans: ∀A,B,S,R. s_r_transitive A B (LTC … S) R →
+                         s_rs_transitive A B S R.
+#A #B #S #R #HSR #L2 #T1 #T2 #HL2 #L1 #HT1
+elim (TC_idem … (S L1) …  T1 T2)
+#_ #H @H @HSR //
+qed-.
+
+lemma s_rs_to_s_r_trans: ∀A,B,S,R. s_rs_transitive A B S R →
+                         s_r_transitive A B (LTC … S) R.
+#A #B #S #R #HSR #L2 #T1 #T2 #HL2 #L1 #HT1
+elim (TC_idem … (S L1) …  T1 T2)
+#H #_ @H @HSR //
+qed-.
+
+lemma s_rs_trans_TC1: ∀A,B,S,R. s_rs_transitive A B S R →
+                      s_rs_transitive A B (LTC … S) R.
+#A #B #S #R #HSR #L2 #T1 #T2 #HL2 #L1 #HT1
+elim (TC_idem … (S L1) …  T1 T2)
+elim (TC_idem … (S L2) …  T1 T2)
+#_ #H1 #H2 #_ @H2 @HSR /3 width=3 by/
+qed-.
+
 (* relations on unboxed pairs ***********************************************)
 
 lemma bi_TC_strip: ∀A,B,R. bi_confluent A B R →

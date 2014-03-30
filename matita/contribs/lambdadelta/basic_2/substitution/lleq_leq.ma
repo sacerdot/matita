@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/relocation/llpx_sn_leq.ma".
-include "basic_2/relocation/lleq.ma".
+include "basic_2/substitution/lleq.ma".
 
 (* LAZY EQUIVALENCE FOR LOCAL ENVIRONMENTS **********************************)
 
