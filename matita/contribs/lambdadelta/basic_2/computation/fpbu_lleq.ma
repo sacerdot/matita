@@ -12,16 +12,22 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/lleq_lleq.ma".
-include "basic_2/computation/lpxs_lpxs.ma".
-include "basic_2/computation/fpns.ma".
+include "basic_2/substitution/lleq_fqus.ma".
+include "basic_2/substitution/lleq_lleq.ma".
+include "basic_2/computation/llpxs_lleq.ma".
+include "basic_2/computation/fpbu.ma".
 
-(* PARALLEL COMPUTATION FOR "BIG TREE" NORMAL FORMS *************************)
+(* UNITARY "BIG TREE" PROPER PARALLEL COMPUTATION FOR CLOSURES **************)
 
-(* Main properties **********************************************************)
+(* Properties on lazy equivalence for local environments ********************)
 
-theorem fpns_trans: ∀h,g. tri_transitive … (fpns h g).
-#h #g #G1 #G #L1 #L #T1 #T * -G -L -T
-#L #HL1 #HT1 #G2 #L2 #T2 * -G2 -L2 -T2
-/3 width=3 by lpxs_trans, lleq_trans, fpns_intro/
+lemma lleq_fpbu_trans: ∀h,g,F,K1,K2,T. K1 ⋕[T, 0] K2 →
+                       ∀G,L2,U. ⦃F, K2, T⦄ ≻[h, g] ⦃G, L2, U⦄ →
+                       ∃∃L1. ⦃F, K1, T⦄ ≻[h, g] ⦃G, L1, U⦄ & L1 ⋕[U, 0] L2.
+#h #g #F #K1 #K2 #T #HT #G #L2 #U * -G -L2 -U
+[ #G #L2 #U #H2 elim (lleq_fqup_trans … H2 … HT) -K2
+  /3 width=3 by fpbu_fqup, ex2_intro/
+| /4 width=10 by fpbu_cpxs, lleq_cpxs_conf_sn, lleq_cpxs_trans, ex2_intro/
+| /5 width=3 by fpbu_llpxs, lleq_llpxs_trans, lleq_canc_sn, ex2_intro/
+]
 qed-.

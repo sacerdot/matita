@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reduction/lpx_aaa.ma".
+include "basic_2/reduction/llpx_aaa.ma".
 include "basic_2/computation/cpxs.ma".
 
 (* CONTEXT-SENSITIVE EXTENDED PARALLEL COMPUTATION ON TERMS *****************)

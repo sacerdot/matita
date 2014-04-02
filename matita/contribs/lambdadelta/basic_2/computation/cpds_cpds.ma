@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/unfold/lsstas_lsstas.ma".
-include "basic_2/computation/lprs_cprs.ma".
+include "basic_2/computation/llprs_cprs.ma".
 include "basic_2/computation/cpxs_cpxs.ma".
 include "basic_2/computation/cpds.ma".
 
@@ -26,13 +26,13 @@ lemma cpds_strap2: ∀h,g,G,L,T1,T,T2,l. ⦃G, L⦄ ⊢ T1 ▪[h, g] l+1 →
 #h #g #G #L #T1 #T #T2 #l #Hl #HT1 *
 #T0 #l0 #l1 #Hl10 #HT #HT0 #HT02
 lapply (ssta_da_conf … HT1 … Hl) <minus_plus_m_m #H0T
-lapply (da_mono … H0T … HT) -HT -H0T #H destruct /3 width=7/
+lapply (da_mono … H0T … HT) -HT -H0T #H destruct
+/3 width=7 by lsstas_step_sn, le_S_S, ex4_3_intro/
 qed.
 
 lemma cpds_cprs_trans: ∀h,g,G,L,T1,T,T2.
                        ⦃G, L⦄ ⊢ T1 •*➡*[h, g] T → ⦃G, L⦄ ⊢ T ➡* T2 → ⦃G, L⦄ ⊢ T1 •*➡*[h, g] T2.
-#h #g #G #L #T1 #T #T2 * #T0 #l1 #l2 #Hl12 #Hl1 #HT10 #HT0 #HT2
-lapply (cprs_trans … HT0 … HT2) -T /2 width=7/
+#h #g #G #L #T1 #T #T2 * /3 width=9 by cprs_trans, ex4_3_intro/
 qed-.
 
 lemma lsstas_cpds_trans: ∀h,g,G,L,T1,T,T2,l1,l2.
@@ -42,7 +42,7 @@ lemma lsstas_cpds_trans: ∀h,g,G,L,T1,T,T2,l1,l2.
 lapply (lsstas_da_conf … HT1 … Hl1) #H0T
 lapply (da_mono … H0T … Hl3) -H0T -Hl3 #H destruct
 lapply (le_minus_to_plus_r … Hl21 Hl43) -Hl21 -Hl43
-lapply (lsstas_trans … HT1 … HT0) -T /2 width=7/
+/3 width=8 by lsstas_trans, ex4_3_intro/
 qed-.
 
 (* Advanced inversion lemmas ************************************************)
@@ -53,7 +53,8 @@ lemma cpds_inv_abst1: ∀h,g,a,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓛ{a}V1.T1 •*➡*
 #h #g #a #G #L #V1 #T1 #U2 * #X #l1 #l2 #Hl21 #Hl1 #H1 #H2
 lapply (da_inv_bind … Hl1) -Hl1 #Hl1
 elim (lsstas_inv_bind1 … H1) -H1 #U #HTU1 #H destruct
-elim (cprs_inv_abst1 … H2) -H2 #V2 #T2 #HV12 #HUT2 #H destruct /3 width=7/
+elim (cprs_inv_abst1 … H2) -H2 #V2 #T2 #HV12 #HUT2 #H destruct
+/3 width=7 by ex4_3_intro, ex3_2_intro/
 qed-.
 
 lemma cpds_inv_abbr_abst: ∀h,g,a1,a2,G,L,V1,W2,T1,T2. ⦃G, L⦄ ⊢ ⓓ{a1}V1.T1 •*➡*[h, g] ⓛ{a2}W2.T2 →
@@ -63,7 +64,7 @@ lapply (da_inv_bind … Hl1) -Hl1 #Hl1
 elim (lsstas_inv_bind1 … H1) -H1 #U1 #HTU1 #H destruct
 elim (cprs_inv_abbr1 … H2) -H2 *
 [ #V2 #U2 #HV12 #HU12 #H destruct
-| /3 width=7/
+| /3 width=7 by ex4_3_intro, ex3_intro/
 ]
 qed-.
 

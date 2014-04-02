@@ -12,18 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reduction/lpr_ldrop.ma".
-include "basic_2/computation/lprs.ma".
+include "basic_2/computation/csx_llpx.ma".
+include "basic_2/computation/llpxs.ma".
 
-(* SN PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS ****************************)
+(* CONTEXT-SENSITIVE EXTENDED STRONGLY NORMALIZING TERMS ********************)
 
-(* Properies on local environment slicing ***********************************)
+(* Properties on lazy sn extended computation for local environments ********)
 
-lemma lprs_ldrop_conf: ∀G. dropable_sn (lprs G).
-/3 width=3 by dropable_sn_TC, lpr_ldrop_conf/ qed-.
-
-lemma ldrop_lprs_trans: ∀G. dedropable_sn (lprs G).
-/3 width=3 by dedropable_sn_TC, ldrop_lpr_trans/ qed-.
-
-lemma lprs_ldrop_trans_O1: ∀G. dropable_dx (lprs G).
-/3 width=3 by dropable_dx_TC, lpr_ldrop_trans_O1/ qed-.
+lemma csx_llpxs_conf: ∀h,g,G,L1,T. ⦃G, L1⦄ ⊢ ⬊*[h, g] T →
+                      ∀L2.  ⦃G, L1⦄ ⊢ ➡*[h, g, T, 0] L2 → ⦃G, L2⦄ ⊢ ⬊*[h, g] T.
+#h #g #G #L1 #T #HT #L2 #H @(llpxs_ind … H) -L2 /3 by llpxs_strap1, csx_llpx_conf/
+qed-.

@@ -12,11 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/lpxs.ma".
+include "basic_2/computation/llprs.ma".
 
-(* SN EXTENDED PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS *******************)
+(* LAZY SN PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS ***********************)
 
 (* Main properties **********************************************************)
 
-theorem lpxs_trans: ∀h,g,G. Transitive … (lpxs h g G).
-/2 width=3/ qed-.
+theorem llprs_trans: ∀G,T,d. Transitive … (llprs G d T).
+normalize /2 width=3 by trans_TC/ qed-.

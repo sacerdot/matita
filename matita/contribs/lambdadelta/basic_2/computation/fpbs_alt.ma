@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/btpredstaralt_8.ma".
-include "basic_2/computation/lpxs_cpxs.ma".
+include "basic_2/computation/llpxs_cpxs.ma".
 include "basic_2/computation/fpbs_fpbs.ma".
 
 (* "BIG TREE" PARALLEL COMPUTATION FOR CLOSURES *****************************)
@@ -23,7 +23,7 @@ definition fpbsa: ∀h. sd h → tri_relation genv lenv term ≝
                   λh,g,G1,L1,T1,G2,L2,T2.
                   ∃∃L,T. ⦃G1, L1⦄ ⊢ T1 ➡*[h, g] T &
                          ⦃G1, L1, T⦄ ⊃* ⦃G2, L, T2⦄ &
-                         ⦃G2, L⦄ ⊢ ➡*[h, g] L2.
+                         ⦃G2, L⦄ ⊢ ➡*[h, g, T2, 0] L2.
 
 interpretation "'big tree' parallel computation (closure) alternative"
    'BTPRedStarAlt h g G1 L1 T1 G2 L2 T2 = (fpbsa h g G1 L1 T1 G2 L2 T2).
@@ -37,10 +37,11 @@ lemma fpb_fpbsa_trans: ∀h,g,G1,G,L1,L,T1,T. ⦃G1, L1, T1⦄ ≽[h, g] ⦃G, L
 [ elim (fquq_cpxs_trans … HT0 … HG1) -T
   /3 width=7 by fqus_strap2, ex3_2_intro/
 | /3 width=5 by cpxs_strap2, ex3_2_intro/
-| lapply (lpx_cpxs_trans … HT0 … HL1) -HT0
-  elim (lpx_fqus_trans … HG2 … HL1) -L
-  /3 width=7 by lpxs_strap2, cpxs_trans, ex3_2_intro/
-] 
+| lapply (cpxs_llpx_trans … HT0 … HL1) -HT0 #HT10
+  lapply (cpxs_llpx_conf … HT10 … HL1) -HL1 #HL1
+  elim (llpx_fqus_trans … HG2 … HL1) -L
+  /3 width=7 by llpxs_strap2, cpxs_trans, ex3_2_intro/
+]
 qed-.
 
 (* Main properties **********************************************************)
@@ -56,5 +57,5 @@ qed.
 theorem fpbsa_inv_fpbs: ∀h,g,G1,G2,L1,L2,T1,T2.
                         ⦃G1, L1, T1⦄ ≥≥[h, g] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 *
-/4 width=5 by fpbs_trans, fqus_fpbs, cpxs_fpbs, lpxs_fpbs/
+/4 width=5 by fpbs_trans, fqus_fpbs, cpxs_fpbs, llpxs_fpbs/
 qed-.

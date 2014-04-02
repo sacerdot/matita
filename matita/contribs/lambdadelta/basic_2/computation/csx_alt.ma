@@ -38,7 +38,7 @@ qed-.
 
 (* Basic properties *********************************************************)
 
-lemma csx_intro_cprs: ∀h,g,G,L,T1.
+lemma csx_intro_cpxs: ∀h,g,G,L,T1.
                          (∀T2. ⦃G, L⦄ ⊢ T1 ➡*[h, g] T2 → (T1 = T2 → ⊥) → ⦃G, L⦄ ⊢ ⬊*[h, g] T2) →
                       ⦃G, L⦄ ⊢ ⬊*[h, g] T1.
 /4 width=1 by cpx_cpxs, csx_intro/ qed.

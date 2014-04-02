@@ -21,10 +21,10 @@ include "basic_2/computation/csx_lift.ma".
 
 (* Advanced properties ******************************************************)
 
-lemma csx_lpx_conf: ∀h,g,G,L1,L2. ⦃G, L1⦄ ⊢ ➡[h, g] L2 →
-                    ∀T. ⦃G, L1⦄ ⊢ ⬊*[h, g] T → ⦃G, L2⦄ ⊢ ⬊*[h, g] T.
-#h #g #G #L1 #L2 #HL12 #T #H @(csx_ind_alt … H) -T
-/4 width=3 by csx_intro, lpx_cpx_trans/
+lemma csx_llpx_conf: ∀h,g,G,L1,T. ⦃G, L1⦄ ⊢ ⬊*[h, g] T →
+                     ∀L2. ⦃G, L1⦄ ⊢ ➡[h, g, T, 0] L2 → ⦃G, L2⦄ ⊢ ⬊*[h, g] T.
+#h #g #G #L1 #T #H @(csx_ind_alt … H) -T
+/5 width=3 by csx_intro_cpxs, cpxs_llpx_trans, cpxs_llpx_conf/ (* 2 cpxs_llpx_trans *)
 qed-.
 
 lemma csx_abst: ∀h,g,a,G,L,W. ⦃G, L⦄ ⊢ ⬊*[h, g] W →
@@ -35,7 +35,8 @@ elim (cpx_inv_abst1 … H1) -H1
 #W0 #T0 #HLW0 #HLT0 #H destruct
 elim (eq_false_inv_tpair_sn … H2) -H2
 [ -IHT #H lapply (csx_cpx_trans … HLT0) // -HT
-  #HT0 lapply (csx_lpx_conf … (L.ⓛW0) … HT0) -HT0 /3 width=1 by lpx_pair/
+  #HT0 lapply (csx_llpx_conf … HT0 (L.ⓛW0)) -HT0 
+  /4 width=4 by llpx_bind_repl_O/
 | -IHW -HLW0 -HT * #H destruct /3 width=1 by/
 ]
 qed.
@@ -47,7 +48,7 @@ lemma csx_abbr: ∀h,g,a,G,L,V. ⦃G, L⦄ ⊢ ⬊*[h, g] V →
 elim (cpx_inv_abbr1 … H1) -H1 *
 [ #V1 #T1 #HLV1 #HLT1 #H destruct
   elim (eq_false_inv_tpair_sn … H2) -H2
-  [ /4 width=5 by csx_cpx_trans, csx_lpx_conf, lpx_pair/
+  [ /4 width=9 by csx_cpx_trans, csx_llpx_conf, llpx_bind_repl_O/
   | -IHV -HLV1 * #H destruct /3 width=1 by cpx_cpxs/
   ]
 | -IHV -IHT -H2
@@ -108,7 +109,7 @@ elim (cpx_inv_appl1 … HL) -HL *
 | -IHVT -H #b #V0 #V3 #W0 #W1 #T0 #T1 #HLV10 #HV03 #HLW01 #HLT01 #H1 #H2 destruct
   lapply (cpx_lift … HLV10 (L. ⓓW0) … HV12 … HV03) -HLV10 -HV12 -HV03 /2 width=2 by ldrop_drop/ #HLV23
   @csx_abbr /2 width=3 by csx_cpx_trans/ -HV
-  @(csx_lpx_conf … (L.ⓓW0)) /2 width=1 by lpx_pair/ -W1
+  @(csx_llpx_conf … (L.ⓓW0)) /2 width=4 by llpx_bind_repl_O/ -W1
   /4 width=5 by csx_cpxs_trans, cpx_cpxs, cpx_flat/
 ]
 qed-.

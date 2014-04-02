@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/grammar/tstc.ma".
-include "basic_2/computation/lpxs_cpxs.ma".
+include "basic_2/computation/llpxs_cpxs.ma".
 
 (* CONTEXT-SENSITIVE EXTENDED PARALLEL COMPUTATION ON TERMS *****************)
 

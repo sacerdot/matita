@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reduction/cpr_lift.ma".
+include "basic_2/reduction/llpr_ldrop.ma".
 include "basic_2/computation/cprs.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL COMPUTATION ON TERMS **************************)
@@ -28,6 +28,9 @@ lemma cprs_delta: ∀G,L,K,V,V2,i.
 lapply (ldrop_fwd_drop2 … HLK) -HLK #HLK
 elim (lift_total V1 0 (i+1)) /4 width=12 by cpr_lift, cprs_strap1/
 qed.
+
+lemma cprs_llpr_conf: ∀G. s_r_confluent1 … (cprs G) (llpr G 0).
+/3 width=5 by llpr_cpr_conf, s_r_conf1_LTC1/ qed-.
 
 (* Advanced inversion lemmas ************************************************)
 

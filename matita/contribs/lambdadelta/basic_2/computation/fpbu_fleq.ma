@@ -12,32 +12,24 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/lleq_lleq.ma".
-include "basic_2/computation/cpxs_lleq.ma".
-include "basic_2/computation/lpxs_lleq.ma".
-include "basic_2/computation/lpxs_lpxs.ma".
-include "basic_2/computation/fpns.ma".
+include "basic_2/substitution/fleq.ma".
 include "basic_2/computation/fpbs_alt.ma".
-include "basic_2/computation/fpbu.ma".
+include "basic_2/computation/fpbu_lleq.ma".
 
 (* UNITARY "BIG TREE" PROPER PARALLEL COMPUTATION FOR CLOSURES **************)
 
-(* Properties on parallel computation for "big tree" normal forms ***********)
+(* Properties on lazy equivalence for closures ******************************)
 
-lemma fpns_fpbu_trans: ∀h,g,F1,F2,K1,K2,T1,T2. ⦃F1, K1, T1⦄ ⊢ ⋕➡*[h, g] ⦃F2, K2, T2⦄ →
+lemma fleq_fpbu_trans: ∀h,g,F1,F2,K1,K2,T1,T2. ⦃F1, K1, T1⦄ ⋕[0] ⦃F2, K2, T2⦄ →
                        ∀G2,L2,U2. ⦃F2, K2, T2⦄ ≻[h, g] ⦃G2, L2, U2⦄ →
-                       ∃∃G1,L1,U1. ⦃F1, K1, T1⦄ ≻[h, g] ⦃G1, L1, U1⦄ & ⦃G1, L1, U1⦄ ⊢ ⋕➡*[h, g] ⦃G2, L2, U2⦄.
+                       ∃∃G1,L1,U1. ⦃F1, K1, T1⦄ ≻[h, g] ⦃G1, L1, U1⦄ & ⦃G1, L1, U1⦄ ⋕[0] ⦃G2, L2, U2⦄.
 #h #g #F1 #F2 #K1 #K2 #T1 #T2 * -F2 -K2 -T2
-#K2 #HK12 #HT1 #G2 #L2 #U2 * -G2 -L2 -U2
-[ #G2 #L2 #U2 #H12 elim (lpxs_lleq_fqup_trans … H12 … HK12 HT1) -K2
-  /3 width=5 by fpbu_fqup, fpns_intro, ex2_3_intro/
-| /4 width=9 by fpbu_cpxs, fpns_intro, lpxs_cpxs_trans, lleq_cpxs_conf_dx, ex2_3_intro/
-| /5 width=5 by fpbu_lpxs, lpxs_trans, lleq_canc_sn, ex2_3_intro/
-]
+#K2 #HK12 #G2 #L2 #U2 #H12 elim (lleq_fpbu_trans … HK12 … H12) -K2
+/3 width=5 by fleq_intro, ex2_3_intro/
 qed-.
 
 lemma fpb_fpbu: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≽[h, g] ⦃G2, L2, T2⦄ →
-                ⦃G1, L1, T1⦄ ⊢ ⋕➡*[h, g] ⦃G2, L2, T2⦄ ∨
+                ⦃G1, L1, T1⦄ ⋕[0] ⦃G2, L2, T2⦄ ∨
                 ⦃G1, L1, T1⦄ ≻[h, g] ⦃G2, L2, T2⦄.
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2
 [ #G2 #L2 #T2 #H elim (fquq_inv_gen … H) -H
@@ -47,12 +39,12 @@ lemma fpb_fpbu: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≽[h, g] ⦃G2, L2, 
 | #T2 #HT12 elim (eq_term_dec T1 T2)
   #HnT12 destruct /4 width=1 by fpbu_cpxs, cpx_cpxs, or_intror, or_introl/
 | #L2 #HL12 elim (lleq_dec … T1 L1 L2 0)
-  /4 width=3 by fpbu_lpxs, fpns_intro, lpx_lpxs, or_intror, or_introl/
+  /4 width=3 by fpbu_llpxs, fleq_intro, llpx_llpxs, or_intror, or_introl/
 ]
 qed-.
 
 lemma fpbs_fpbu_sn: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄ →
-                    ⦃G1, L1, T1⦄ ⊢ ⋕➡*[h, g] ⦃G2, L2, T2⦄ ∨
+                    ⦃G1, L1, T1⦄ ⋕[0] ⦃G2, L2, T2⦄ ∨
                     ∃∃G,L,T. ⦃G1, L1, T1⦄ ≻[h, g] ⦃G, L, T⦄ & ⦃G, L, T⦄ ≥[h, g] ⦃G2, L2, T2⦄.
 (* ALTERNATIVE PROOF
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 #H @(fpbs_ind_dx … H) -G1 -L1 -T1
@@ -67,8 +59,8 @@ lemma fpbs_fpbu_sn: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, 
   [ #HT2 @or_intror
     /5 width=9 by fpbsa_inv_fpbs, fpbu_fqup, ex3_2_intro, ex2_3_intro, or_intror/
   | * #HG #HL #HT destruct elim (lleq_dec T2 L L2 0) #H
-    [ /3 width=1 by fpns_intro, or_introl/
-    | /5 width=5 by fpbu_lpxs, ex2_3_intro, or_intror/
+    [ /3 width=1 by fleq_intro, or_introl/
+    | /5 width=5 by fpbu_llpxs, ex2_3_intro, or_intror/
     ]
   ]
 | elim (cpxs_neq_inv_step_sn … HT1 H) -HT1 -H

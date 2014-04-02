@@ -12,14 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/fpns.ma".
-include "basic_2/computation/fpbs.ma".
+include "basic_2/substitution/lleq_ldrop.ma".
+include "basic_2/computation/llsx.ma".
 
-(* "BIG TREE" PARALLEL COMPUTATION FOR CLOSURES *****************************)
+(* LAZY SN EXTENDED STRONGLY NORMALIZING LOCAL ENVIRONMENTS *****************)
 
-(* Properties on parallel computation for "big tree" normal forms ***********)
+(* Advanced properties ******************************************************)
 
-lemma fpns_fpbs: ∀h,g,G1,G2,L1,L2,T1,T2.
-                 ⦃G1, L1, T1⦄ ⊢ ⋕➡*[h, g] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
-#h #g #G1 #G2 #L1 #L2 #T1 #T2 * /2 width=1 by lpxs_fpbs/
+lemma llsx_lref_free: ∀h,g,G,L,d,i. |L| ≤ i → G ⊢ ⋕⬊*[h, g, #i, d] L.
+#h #g #G #L1 #d #i #HL1 @llsx_intro
+#L2 #HL12 #H elim H -H
+/4 width=8 by llpx_fwd_length, lleq_free, le_repl_sn_conf_aux/
+qed.
+
+lemma llsx_lref_skip: ∀h,g,G,L,d,i. yinj i < d → G ⊢ ⋕⬊*[h, g, #i, d] L.
+#h #g #G #L1 #d #i #HL1 @llsx_intro
+#L2 #HL12 #H elim H -H
+/3 width=6 by llpx_fwd_length, lleq_skip/
 qed.

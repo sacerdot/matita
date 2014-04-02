@@ -16,7 +16,7 @@ include "basic_2/notation/relations/btpredstar_8.ma".
 include "basic_2/substitution/fqus.ma".
 include "basic_2/reduction/fpb.ma".
 include "basic_2/computation/cpxs.ma".
-include "basic_2/computation/lpxs.ma".
+include "basic_2/computation/llpxs.ma".
 
 (* "BIG TREE" PARALLEL COMPUTATION FOR CLOSURES *****************************)
 
@@ -72,20 +72,20 @@ lemma cpxs_fpbs: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡*[h, g] T2 → ⦃G, L, 
 /3 width=5 by fpb_cpx, fpbs_strap1/
 qed.
 
-lemma lpxs_fpbs: ∀h,g,G,L1,L2,T. ⦃G, L1⦄ ⊢ ➡*[h, g] L2 → ⦃G, L1, T⦄ ≥[h, g] ⦃G, L2, T⦄.
-#h #g #G #L1 #L2 #T #H @(lpxs_ind … H) -L2
-/3 width=5 by fpb_lpx, fpbs_strap1/
+lemma llpxs_fpbs: ∀h,g,G,L1,L2,T. ⦃G, L1⦄ ⊢ ➡*[h, g, T, 0] L2 → ⦃G, L1, T⦄ ≥[h, g] ⦃G, L2, T⦄.
+#h #g #G #L1 #L2 #T #H @(llpxs_ind … H) -L2
+/3 width=5 by fpb_llpx, fpbs_strap1/
 qed.
 
 lemma cprs_fpbs: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡* T2 → ⦃G, L, T1⦄ ≥[h, g] ⦃G, L, T2⦄.
 /3 width=1 by cprs_cpxs, cpxs_fpbs/ qed.
 
-lemma lprs_fpbs: ∀h,g,G,L1,L2,T. ⦃G, L1⦄ ⊢ ➡* L2 → ⦃G, L1, T⦄ ≥[h, g] ⦃G, L2, T⦄.
-/3 width=1 by lprs_lpxs, lpxs_fpbs/ qed.
+lemma llprs_fpbs: ∀h,g,G,L1,L2,T. ⦃G, L1⦄ ⊢ ➡*[T, 0] L2 → ⦃G, L1, T⦄ ≥[h, g] ⦃G, L2, T⦄.
+/3 width=1 by llprs_llpxs, llpxs_fpbs/ qed.
 
-lemma cpr_lpr_fpbs: ∀h,g,G,L1,L2,T1,T2. ⦃G, L1⦄ ⊢ T1 ➡ T2 → ⦃G, L1⦄ ⊢ ➡ L2 →
+lemma cpr_llpr_fpbs: ∀h,g,G,L1,L2,T1,T2. ⦃G, L1⦄ ⊢ T1 ➡ T2 → ⦃G, L1⦄ ⊢ ➡[T2, 0] L2 →
                     ⦃G, L1, T1⦄ ≥[h, g] ⦃G, L2, T2⦄.
-/4 width=5 by fpbs_strap1, lpr_fpb, cpr_fpb/ qed.
+/4 width=5 by fpbs_strap1, llpr_fpb, cpr_fpb/ qed.
 
 lemma fpbs_fqus_trans: ∀h,g,G1,G,G2,L1,L,L2,T1,T,T2. ⦃G1, L1, T1⦄ ≥[h, g] ⦃G, L, T⦄ →
                        ⦃G, L, T⦄ ⊃* ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
@@ -103,10 +103,10 @@ lemma fpbs_cpxs_trans: ∀h,g,G1,G,L1,L,T1,T,T2. ⦃G1, L1, T1⦄ ≥[h, g] ⦃G
 /3 width=5 by fpbs_strap1, fpb_cpx/
 qed-.
 
-lemma fpbs_lpxs_trans: ∀h,g,G1,G,L1,L,L2,T1,T. ⦃G1, L1, T1⦄ ≥[h, g] ⦃G, L, T⦄ →
-                       ⦃G, L⦄ ⊢ ➡*[h, g] L2 → ⦃G1, L1, T1⦄ ≥[h, g] ⦃G, L2, T⦄.
-#h #g #G1 #G #L1 #L #L2 #T1 #T #H1 #H @(lpxs_ind … H) -L2
-/3 width=5 by fpbs_strap1, fpb_lpx/
+lemma fpbs_llpxs_trans: ∀h,g,G1,G,L1,L,L2,T1,T. ⦃G1, L1, T1⦄ ≥[h, g] ⦃G, L, T⦄ →
+                       ⦃G, L⦄ ⊢ ➡*[h, g, T, 0] L2 → ⦃G1, L1, T1⦄ ≥[h, g] ⦃G, L2, T⦄.
+#h #g #G1 #G #L1 #L #L2 #T1 #T #H1 #H @(llpxs_ind … H) -L2
+/3 width=5 by fpbs_strap1, fpb_llpx/
 qed-.
 
 lemma cpxs_fqus_fpbs: ∀h,g,G1,G2,L1,L2,T1,T,T2. ⦃G1, L1⦄ ⊢ T1 ➡*[h, g] T →
@@ -117,13 +117,13 @@ lemma cpxs_fqup_fpbs: ∀h,g,G1,G2,L1,L2,T1,T,T2. ⦃G1, L1⦄ ⊢ T1 ➡*[h, g]
                       ⦃G1, L1, T⦄ ⊃+ ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
 /3 width=5 by fpbs_fqup_trans, cpxs_fpbs/ qed-.
 
-lemma fqus_lpxs_fpbs: ∀h,g,G1,G2,L1,L,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃* ⦃G2, L, T2⦄ →
-                      ⦃G2, L⦄ ⊢ ➡*[h, g] L2 → ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
-/3 width=3 by fpbs_lpxs_trans, fqus_fpbs/ qed.
+lemma fqus_llpxs_fpbs: ∀h,g,G1,G2,L1,L,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃* ⦃G2, L, T2⦄ →
+                      ⦃G2, L⦄ ⊢ ➡*[h, g, T2, 0] L2 → ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
+/3 width=3 by fpbs_llpxs_trans, fqus_fpbs/ qed.
 
-lemma cpxs_fqus_lpxs_fpbs: ∀h,g,G1,G2,L1,L,L2,T1,T,T2. ⦃G1, L1⦄ ⊢ T1 ➡*[h, g] T →
-                           ⦃G1, L1, T⦄ ⊃* ⦃G2, L, T2⦄ → ⦃G2, L⦄ ⊢ ➡*[h, g] L2 → ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
-/3 width=5 by cpxs_fqus_fpbs, fpbs_lpxs_trans/ qed.
+lemma cpxs_fqus_llpxs_fpbs: ∀h,g,G1,G2,L1,L,L2,T1,T,T2. ⦃G1, L1⦄ ⊢ T1 ➡*[h, g] T →
+                           ⦃G1, L1, T⦄ ⊃* ⦃G2, L, T2⦄ → ⦃G2, L⦄ ⊢ ➡*[h, g, T2, 0] L2 → ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
+/3 width=5 by cpxs_fqus_fpbs, fpbs_llpxs_trans/ qed.
 
 lemma fqus_fpbs_trans: ∀h,g,G1,G,G2,L1,L,L2,T1,T,T2. ⦃G, L, T⦄ ≥[h, g] ⦃G2, L2, T2⦄ →
                        ⦃G1, L1, T1⦄ ⊃* ⦃G, L, T⦄ → ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
@@ -137,8 +137,8 @@ lemma cpxs_fpbs_trans: ∀h,g,G1,G2,L1,L2,T1,T,T2. ⦃G1, L1, T⦄ ≥[h, g] ⦃
 /3 width=5 by fpbs_strap2, fpb_cpx/
 qed-.
 
-lemma lpxs_fpbs_trans: ∀h,g,G1,G2,L1,L,L2,T1,T2. ⦃G1, L, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄ →
-                       ⦃G1, L1⦄ ⊢ ➡*[h, g] L → ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
-#h #g #G1 #G2 #L1 #L #L2 #T1 #T2 #H1 #H @(lpxs_ind_dx … H) -L1
-/3 width=5 by fpbs_strap2, fpb_lpx/
+lemma llpxs_fpbs_trans: ∀h,g,G1,G2,L1,L,L2,T1,T2. ⦃G1, L, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄ →
+                       ⦃G1, L1⦄ ⊢ ➡*[h, g, T1, 0] L → ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
+#h #g #G1 #G2 #L1 #L #L2 #T1 #T2 #H1 #H @(llpxs_ind_dx … H) -L1
+/3 width=5 by fpbs_strap2, fpb_llpx/
 qed-.

@@ -1,0 +1,95 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/computation/csx_llpxs.ma".
+include "basic_2/computation/llsx_ldrop.ma".
+include "basic_2/computation/llsx_llpx.ma".
+include "basic_2/computation/llsx_llpxs.ma".
+(*
+axiom cpx_llpx_trans: ∀h,g,G,L1,T1,T2. ⦃G, L1⦄ ⊢ T1 ➡[h, g] T2 →
+                      ∀L2. ⦃G, L1⦄⊢ ➡[h, g, T2, O] L2 → 
+                      ∃∃L. ⦃G, L1⦄⊢ ➡[h, g, T1, O] L & L ⋕[T2, 0] L2.
+(*
+fact llsx_cpx_trans_aux: ∀h,g,G,L0,T1,T2. ⦃G, L0⦄ ⊢ T1 ➡[h, g] T2 →
+                         ∀L1,d. G ⊢ ⋕⬊*[h, g, T1, d] L1 → d = 0 → 
+                         L0 ⋕[T1, d] L1 → ∀L2. L1 ⋕[T2, d] L2 →
+                         G ⊢ ⋕⬊*[h, g, T2, d] L2.
+#h #g #G #L0 #T1 #T2 #HT12 #L1 #d #H @(llsx_ind … H) -L1
+#L1 #_ #IHL1 #Hd #He011 #L2 #He122 @llsx_intro
+#L3 #Hx223 #Hn223 destruct
+lapply (lleq_cpx_conf_sn … HT12 … He011) #He021
+lapply (lleq_cpx_conf … HT12 … He011) -HT12 #HT12
+lapply (lleq_llpx_trans … He122 … Hx223) -Hx223 #Hx123
+elim (cpx_llpx_trans … HT12 … Hx123) -Hx123 #L4 #Hx114 #He423
+(* lapply (lleq_cpx_conf … Hx114 … He011) #He120 *)
+@(IHL1 … Hx114) // -IHL1
+[ #HL13 @HnL2 -HnL2  
+*)
+
+fact llsx_cpx_trans_aux: ∀h,g,G,L1,T1,d. G ⊢ ⋕⬊*[h, g, T1, d] L1 → d = 0 →
+                         ∀T2. ⦃G, L1⦄ ⊢ T1 ➡[h, g] T2 →
+                         ∀L2. L1 ⋕[T1, d] L2 → G ⊢ ⋕⬊*[h, g, T2, 0] L2.
+#h #g #G #L1 #T1 #d #H @(llsx_ind … H) -L1
+#L1 #_ #IHL1 #Hd #T2 #HT12 #L2 #He112 @llsx_intro
+#L3 #Hx223 #Hn223 destruct
+lapply (lleq_cpx_conf_sn … HT12 … He112) #He122
+lapply (lleq_cpx_conf … HT12 … He112) -HT12 #HT12
+elim (cpx_llpx_trans … HT12 … Hx223) #L4 #Hx214 #He423
+@(IHL1 … L4) //
+*)
+axiom llsx_cpx_trans_O: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[h, g] T2 →
+                        G ⊢ ⋕⬊*[h, g, T1, 0] L → G ⊢ ⋕⬊*[h, g, T2, 0] L.
+
+(* LAZY SN EXTENDED STRONGLY NORMALIZING LOCAL ENVIRONMENTS *****************)
+
+(* Advanced properties ******************************************************)
+
+lemma llsx_lref_be_lpxs: ∀h,g,I,G,K1,V,i,d. d ≤ yinj i → ⦃G, K1⦄ ⊢ ⬊*[h, g] V →
+                         ∀K2. G ⊢ ⋕⬊*[h, g, V, 0] K2 → ⦃G, K1⦄ ⊢ ➡*[h, g, V, 0] K2 →
+                         ∀L2. ⇩[i] L2 ≡ K2.ⓑ{I}V → G ⊢ ⋕⬊*[h, g, #i, d] L2.
+#h #g #I #G #K1 #V #i #d #Hdi #H @(csx_ind_alt … H) -V
+#V0 #_ #IHV0 #K2 #H @(llsx_ind … H) -K2
+#K0 #HK0 #IHK0 #HK10 #L0 #HLK0 @llsx_intro
+#L2 #HL02 #HnL02 elim (llpx_inv_lref_ge_sn … HL02 … HLK0) // -HL02
+#K2 #V2 #HLK2 #HK02 #HV02 elim (eq_term_dec V0 V2)
+#HnV02 destruct [ -IHV0 -HV02 -HK0 | -IHK0 -HnL02 -HLK0 ]
+[ /4 width=7 by llpxs_strap1, lleq_lref/
+| lapply (llpx_cpx_conf … HV02 … HK02) -HK02 #HK02
+  @(IHV0 … HnV02 … HLK2) -IHV0 -HnV02 -HLK2
+  /3 width=3 by llsx_cpx_trans_O, llpxs_cpx_conf_dx, llsx_llpx_trans, llpxs_cpx_trans, llpxs_strap1/
+]
+qed.
+
+lemma llsx_lref_be: ∀h,g,I,G,K,V,i,d. d ≤ yinj i → ⦃G, K⦄ ⊢ ⬊*[h, g] V →
+                    G ⊢ ⋕⬊*[h, g, V, 0] K →
+                    ∀L. ⇩[i] L ≡ K.ⓑ{I}V → G ⊢ ⋕⬊*[h, g, #i, d] L.
+/2 width=8 by llsx_lref_be_lpxs/ qed.
+
+(* Main properties **********************************************************)
+
+theorem csx_llsx: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ ⬊*[h, g] T → ∀d. G ⊢ ⋕⬊*[h, g, T, d] L.
+#h #g #G #L #T @(fqup_wf_ind_eq … G L T) -G -L -T
+#Z #Y #X #IH #G #L * * //
+[ #i #HG #HL #HT #H #d destruct
+  elim (lt_or_ge i (|L|)) /2 width=1 by llsx_lref_free/
+  elim (ylt_split i d) /2 width=1 by llsx_lref_skip/
+  #Hdi #Hi elim (ldrop_O1_lt … Hi) -Hi
+  #I #K #V #HLK lapply (csx_inv_lref_bind … HLK … H) -H
+  /4 width=6 by llsx_lref_be, fqup_lref/
+| #a #I #V #T #HG #HL #HT #H #d destruct
+  elim (csx_fwd_bind … H) -H /3 width=1 by llsx_bind/
+| #I #V #T #HG #HL #HT #H #d destruct
+  elim (csx_fwd_flat … H) -H /3 width=1 by llsx_flat/
+]
+qed.

@@ -12,14 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/csx_lpx.ma".
-include "basic_2/computation/lpxs.ma".
+include "basic_2/substitution/fleq_fleq.ma".
+include "basic_2/computation/fpbu_fleq.ma".
+include "basic_2/computation/fpbc.ma".
 
-(* CONTEXT-SENSITIVE EXTENDED STRONGLY NORMALIZING TERMS ********************)
+(* SINGLE-STEP "BIG TREE" PROPER PARALLEL COMPUTATION FOR CLOSURES **********)
 
-(* Properties on sn extended parallel computation for local environments ****)
+(* Properties on lazy equivalence on closures *******************************)
 
-lemma csx_lpxs_conf: ∀h,g,G,L1,L2. ⦃G, L1⦄ ⊢ ➡*[h, g] L2 →
-                     ∀T. ⦃G, L1⦄ ⊢ ⬊*[h, g] T → ⦃G, L2⦄ ⊢ ⬊*[h, g] T.
-#h #g #G #L1 #L2 #H @(lpxs_ind … H) -L2 /3 by lpxs_strap1, csx_lpx_conf/
+lemma fpbc_fleq_trans: ∀h,g,G1,G,G2,L1,L,L2,T1,T,T2. ⦃G1, L1, T1⦄ ≻⋕[h, g] ⦃G, L, T⦄ →
+                       ⦃G, L, T⦄ ⋕[0] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≻⋕[h, g] ⦃G2, L2, T2⦄.
+#h #g #G1 #G #G2 #L1 #L #L2 #T1 #T #T2 *
+/3 width=9 by fleq_trans, ex2_3_intro/
+qed-.
+
+lemma fleq_fpbc_trans: ∀h,g,G1,G,G2,L1,L,L2,T1,T,T2. ⦃G1, L1, T1⦄ ⋕[0] ⦃G, L, T⦄ →
+                       ⦃G, L, T⦄ ≻⋕[h, g] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≻⋕[h, g] ⦃G2, L2, T2⦄.
+#h #g #G1 #G #G2 #L1 #L #L2 #T1 #T #T2 #H1 *
+#G0 #L0 #T0 #H0 #H02 elim (fleq_fpbu_trans … H1 … H0) -G -L -T
+/3 width=9 by fleq_trans, ex2_3_intro/
 qed-.

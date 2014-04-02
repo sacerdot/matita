@@ -12,19 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/fpbs_lift.ma".
+include "basic_2/reduction/llpx_aaa.ma".
+include "basic_2/computation/llpxs.ma".
 
-(* "BIG TREE" PARALLEL COMPUTATION FOR CLOSURES *****************************)
+(* LAZY SN EXTENDED PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS **************)
 
-(* Main properties **********************************************************)
+(* Properties about atomic arity assignment on terms ************************)
 
-theorem fpbs_trans: ∀h,g. tri_transitive … (fpbs h g).
-/2 width=5 by tri_TC_transitive/ qed-.
+lemma aaa_llpxs_conf: ∀h,g,G,L1,T,A. ⦃G, L1⦄ ⊢ T ⁝ A →
+                      ∀L2. ⦃G, L1⦄ ⊢ ➡*[h, g, T, 0] L2 → ⦃G, L2⦄ ⊢ T ⁝ A.
+#h #g #G #L1 #T #A #HT #L2 #HL12
+@(TC_Conf3 … (λL,A. ⦃G, L⦄ ⊢ T ⁝ A) … HT ? HL12) /2 width=5 by aaa_llpx_conf/
+qed-.
 
-(* Advanced properties ******************************************************)
-
-lemma cpr_llpr_ssta_fpbs: ∀h,g,G,L1,L2,T1,T2,U2,l2.
-                          ⦃G, L1⦄ ⊢ T1 ➡ T2 → ⦃G, L1⦄ ⊢ ➡[T2, 0] L2 →
-                          ⦃G, L2⦄ ⊢ T2 ▪[h, g] l2+1 → ⦃G, L2⦄ ⊢ T2 •[h, g] U2 →
-                          ⦃G, L1, T1⦄ ≥[h, g] ⦃G, L2, U2⦄.
-/3 width=5 by fpbs_trans, cpr_llpr_fpbs, ssta_fpbs/ qed.
+lemma aaa_llprs_conf: ∀G,L1,T,A. ⦃G, L1⦄ ⊢ T ⁝ A →
+                      ∀L2. ⦃G, L1⦄ ⊢ ➡*[T, 0] L2 → ⦃G, L2⦄ ⊢ T ⁝ A.
+/3 width=5 by aaa_llpxs_conf, llprs_llpxs/ qed-.

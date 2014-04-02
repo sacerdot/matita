@@ -43,5 +43,5 @@ qed-.
 (* Basic inversion lemmas ***************************************************)
 
 lemma fsb_inv_csx: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ ⦥[h, g] T → ⦃G, L⦄ ⊢ ⬊*[h, g] T.
-#h #g #G #L #T #H elim H -G -L -T /5 width=1 by csx_intro_cprs, fpbu_cpxs/
+#h #g #G #L #T #H elim H -G -L -T /5 width=1 by csx_intro_cpxs, fpbu_cpxs/
 qed-.

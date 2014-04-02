@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/fpbs_fpns.ma".
+include "basic_2/computation/fpbs_fleq.ma".
 include "basic_2/computation/fpbs_fpbs.ma".
 include "basic_2/computation/fpbc.ma".
 
@@ -23,5 +23,5 @@ include "basic_2/computation/fpbc.ma".
 lemma fpbc_fwd_fpbs: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≻⋕[h, g] ⦃G2, L2, T2⦄ →
                      ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 *
-/3 width=5 by fpbu_fwd_fpbs, fpbs_trans, fpns_fpbs/
+/3 width=5 by fpbu_fwd_fpbs, fpbs_trans, fleq_fpbs/
 qed-.

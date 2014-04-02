@@ -12,18 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reduction/lpx_ldrop.ma".
-include "basic_2/computation/lpxs.ma".
+include "basic_2/substitution/lleq_lleq.ma".
+include "basic_2/reduction/llpx_lleq.ma".
+include "basic_2/computation/llsx.ma".
 
-(* SN EXTENDED PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS *******************)
+(* SN EXTENDED STRONGLY NORMALIZING LOCAL ENVIRONMENTS **********************)
 
-(* Properies on local environment slicing ***********************************)
+(* Advanced properties ******************************************************)
 
-lemma lpxs_ldrop_conf: ∀h,g,G. dropable_sn (lpxs h g G).
-/3 width=3 by dropable_sn_TC, lpx_ldrop_conf/ qed-.
-
-lemma ldrop_lpxs_trans: ∀h,g,G. dedropable_sn (lpxs h g G).
-/3 width=3 by dedropable_sn_TC, ldrop_lpx_trans/ qed-.
-
-lemma lpxs_ldrop_trans_O1: ∀h,g,G. dropable_dx (lpxs h g G).
-/3 width=3 by dropable_dx_TC, lpx_ldrop_trans_O1/ qed-.
+lemma llsx_llpx_trans: ∀h,g,G,L1,T,d. G ⊢ ⋕⬊*[h, g, T, d] L1 →
+                       ∀L2. ⦃G, L1⦄ ⊢ ➡[h, g, T, d] L2 → G ⊢ ⋕⬊*[h, g, T, d] L2.
+#h #g #G #L1 #T #d #H @(llsx_ind … H) -L1 #L1 #HL1 #IHL1 #L2 #HL12 @llsx_intro
+elim (lleq_dec T L1 L2 d) /4 width=4 by lleq_llpx_trans, lleq_canc_sn/
+qed-.

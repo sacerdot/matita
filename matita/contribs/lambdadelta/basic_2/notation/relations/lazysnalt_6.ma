@@ -12,20 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reduction/lpr_lpr.ma".
-include "basic_2/computation/lprs.ma".
+(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-(* SN PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS ****************************)
-
-(* Advanced properties ******************************************************)
-
-lemma lprs_strip: ∀G. confluent2 … (lprs G) (lpr G).
-/3 width=3 by TC_strip1, lpr_conf/ qed-.
-
-(* Main properties **********************************************************)
-
-theorem lprs_conf: ∀G. confluent2 … (lprs G) (lprs G).
-/3 width=3 by TC_confluent2, lpr_conf/ qed-.
-
-theorem lprs_trans: ∀G. Transitive … (lprs G).
-/2 width=3/ qed-.
+notation "hvbox( G ⊢ ⋕ ⬊ ⬊ * break [ term 46 h , break term 46 g , break term 46 T , break term 46 d ] break term 46 L )"
+   non associative with precedence 45
+   for @{ 'LazySNAlt $h $g $T $d $G $L }.

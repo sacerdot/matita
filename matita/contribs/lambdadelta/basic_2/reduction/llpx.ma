@@ -43,6 +43,21 @@ lemma llpx_fwd_pair_sn: ∀h,g,I,G,L1,L2,V,T,d. ⦃G, L1⦄ ⊢ ➡[h, g, ②{I}
                         ⦃G, L1⦄ ⊢ ➡[h, g, V, d] L2.
 /2 width=3 by llpx_sn_fwd_pair_sn/ qed-.
 
+(* Note: this might be removed *)
+lemma llpx_fwd_bind_sn: ∀h,g,a,I,G,L1,L2,V,T,d. ⦃G, L1⦄ ⊢ ➡[h, g, ⓑ{a,I}V.T, d] L2 →
+                        ⦃G, L1⦄ ⊢ ➡[h, g, V, d] L2.
+/2 width=4 by llpx_sn_fwd_bind_sn/ qed-.
+
+(* Note: this might be removed *)
+lemma llpx_fwd_bind_dx: ∀h,g,a,I,G,L1,L2,V,T,d. ⦃G, L1⦄ ⊢ ➡[h, g, ⓑ{a,I}V.T, d] L2 →
+                        ⦃G, L1.ⓑ{I}V⦄ ⊢ ➡[h, g, T, ⫯d] L2.ⓑ{I}V.
+/2 width=2 by llpx_sn_fwd_bind_dx/ qed-.
+
+(* Note: this might be removed *)
+lemma llpx_fwd_flat_sn: ∀h,g,I,G,L1,L2,V,T,d. ⦃G, L1⦄ ⊢ ➡[h, g, ⓕ{I}V.T, d] L2 →
+                        ⦃G, L1⦄ ⊢ ➡[h, g, V, d] L2.
+/2 width=3 by llpx_sn_fwd_flat_sn/ qed-.
+
 (* Basic properties *********************************************************)
 
 lemma llpx_lref: ∀h,g,I,G,L1,L2,K1,K2,V1,V2,d,i. d ≤ yinj i →
