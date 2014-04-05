@@ -23,6 +23,7 @@ lemma lsstas_fpbs: ∀h,g,G,L,T1,T2,l2. ⦃G, L⦄ ⊢ T1 •*[h, g, l2] T2 →
                    ∀l1. l2 ≤ l1 → ⦃G, L⦄ ⊢ T1 ▪[h, g] l1 → ⦃G, L, T1⦄ ≥[h, g] ⦃G, L, T2⦄.
 /3 width=5 by cpxs_fpbs, lsstas_cpxs/ qed.
 
+(* Note: this should be moved *)
 lemma ssta_fpbs: ∀h,g,G,L,T,U,l.
                  ⦃G, L⦄ ⊢ T ▪[h, g] l+1 → ⦃G, L⦄ ⊢ T •[h, g] U →
                  ⦃G, L, T⦄ ≥[h, g] ⦃G, L, U⦄.

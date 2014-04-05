@@ -27,7 +27,7 @@ lemma lleq_fpbu_trans: ∀h,g,F,K1,K2,T. K1 ⋕[T, 0] K2 →
 #h #g #F #K1 #K2 #T #HT #G #L2 #U * -G -L2 -U
 [ #G #L2 #U #H2 elim (lleq_fqup_trans … H2 … HT) -K2
   /3 width=3 by fpbu_fqup, ex2_intro/
-| /4 width=10 by fpbu_cpxs, lleq_cpxs_conf_sn, lleq_cpxs_trans, ex2_intro/
+| /4 width=10 by fpbu_cpxs, cpxs_lleq_conf_sn, lleq_cpxs_trans, ex2_intro/
 | /5 width=3 by fpbu_llpxs, lleq_llpxs_trans, lleq_canc_sn, ex2_intro/
 ]
 qed-.

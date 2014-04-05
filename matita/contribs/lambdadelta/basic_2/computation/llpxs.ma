@@ -14,7 +14,6 @@
 
 include "basic_2/notation/relations/lazypredsnstar_7.ma".
 include "basic_2/reduction/llpx.ma".
-include "basic_2/computation/llprs.ma".
 
 (* LAZY SN EXTENDED PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS **************)
 
@@ -41,9 +40,6 @@ lemma llpxs_ind_dx: ∀h,g,G,L2,T,d. ∀R:predicate lenv. R L2 →
 qed-.
 
 (* Basic properties *********************************************************)
-
-lemma llprs_llpxs: ∀h,g,G,L1,L2,T,d. ⦃G, L1⦄ ⊢ ➡*[T, d] L2 → ⦃G, L1⦄ ⊢ ➡*[h, g, T, d] L2.
-normalize /3 width=3 by llpr_llpx, monotonic_TC/ qed.
 
 lemma llpx_llpxs: ∀h,g,G,L1,L2,T,d. ⦃G, L1⦄ ⊢ ➡[h, g, T, d] L2 → ⦃G, L1⦄ ⊢ ➡*[h, g, T, d] L2.
 normalize /2 width=1 by inj/ qed.

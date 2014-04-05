@@ -43,13 +43,13 @@ lemma lleq_cpx_trans: ∀h,g,G,L2,T1,T2. ⦃G, L2⦄ ⊢ T1 ➡[h, g] T2 →
 ]
 qed-.
 
-lemma lleq_cpx_conf: ∀h,g,G,L2,T1,T2. ⦃G, L2⦄ ⊢ T1 ➡[h, g] T2 →
+lemma cpx_lleq_conf: ∀h,g,G,L2,T1,T2. ⦃G, L2⦄ ⊢ T1 ➡[h, g] T2 →
                      ∀L1. L2 ⋕[T1, 0] L1 → ⦃G, L1⦄ ⊢ T1 ➡[h, g] T2.
 /3 width=3 by lleq_cpx_trans, lleq_sym/ qed-.
 
-lemma lleq_cpx_conf_sn: ∀h,g,G. s_r_confluent1 … (cpx h g G) (lleq 0).
-/3 width=6 by llpx_sn_cpx_conf, lift_mono, ex2_intro/ qed-.
+lemma cpx_lleq_conf_sn: ∀h,g,G. s_r_confluent1 … (cpx h g G) (lleq 0).
+/3 width=6 by cpx_llpx_sn_conf, lift_mono, ex2_intro/ qed-.
 
-lemma lleq_cpx_conf_dx: ∀h,g,G,L2,T1,T2. ⦃G, L2⦄ ⊢ T1 ➡[h, g] T2 →
+lemma cpx_lleq_conf_dx: ∀h,g,G,L2,T1,T2. ⦃G, L2⦄ ⊢ T1 ➡[h, g] T2 →
                         ∀L1. L1 ⋕[T1, 0] L2 → L1 ⋕[T2, 0] L2.
-/4 width=6 by lleq_cpx_conf_sn, lleq_sym/ qed-.
+/4 width=6 by cpx_lleq_conf_sn, lleq_sym/ qed-.

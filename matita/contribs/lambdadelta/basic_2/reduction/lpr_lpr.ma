@@ -341,13 +341,13 @@ theorem cpr_conf: ∀G,L. confluent … (cpr G L).
 lemma lpr_cpr_conf_dx: ∀G,L0,T0,T1. ⦃G, L0⦄ ⊢ T0 ➡ T1 → ∀L1. ⦃G, L0⦄ ⊢ ➡ L1 →
                        ∃∃T. ⦃G, L1⦄ ⊢ T0 ➡ T & ⦃G, L1⦄ ⊢ T1 ➡ T.
 #G #L0 #T0 #T1 #HT01 #L1 #HL01
-elim (cpr_conf_lpr … HT01 T0 … HL01 … HL01) // -L0 /2 width=3 by ex2_intro/
+elim (cpr_conf_lpr … HT01 T0 … HL01 … HL01) /2 width=3 by ex2_intro/
 qed-.
 
 lemma lpr_cpr_conf_sn: ∀G,L0,T0,T1. ⦃G, L0⦄ ⊢ T0 ➡ T1 → ∀L1. ⦃G, L0⦄ ⊢ ➡ L1 →
                        ∃∃T. ⦃G, L1⦄ ⊢ T0 ➡ T & ⦃G, L0⦄ ⊢ T1 ➡ T.
 #G #L0 #T0 #T1 #HT01 #L1 #HL01
-elim (cpr_conf_lpr … HT01 T0 … L0 … HL01) // -HT01 -HL01 /2 width=3 by ex2_intro/
+elim (cpr_conf_lpr … HT01 T0 … L0 … HL01) /2 width=3 by ex2_intro/
 qed-.
 
 (* Main properties **********************************************************)

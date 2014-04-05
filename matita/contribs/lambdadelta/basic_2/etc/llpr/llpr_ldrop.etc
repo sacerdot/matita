@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/relocation/fquq_alt.ma".
+include "basic_2/static/ssta_llpx_sn.ma".
 include "basic_2/reduction/cpr_lift.ma".
 include "basic_2/reduction/cpr_llpx_sn.ma".
 include "basic_2/reduction/llpr.ma".
@@ -49,8 +50,11 @@ lemma llpr_bind_repl_O: ∀I,G,L1,L2,V1,V2,T. ⦃G, L1.ⓑ{I}V1⦄ ⊢ ➡[T, 0]
 
 (* Advanced properties ******************************************************)
 
+lemma llpr_ssta_conf: ∀h,g,G. s_r_confluent1 … (ssta h g G) (llpr G 0).
+/3 width=10 by ssta_llpx_sn_conf, cpr_lift/ qed-.
+
 lemma llpr_cpr_conf: ∀G. s_r_confluent1 … (cpr G) (llpr G 0).
-/3 width=10 by llpx_sn_cpr_conf, cpr_inv_lift1, cpr_lift/ qed-.
+/3 width=10 by cpr_llpx_sn_conf, cpr_inv_lift1, cpr_lift/ qed-.
 
 (* Properties on context-sensitive parallel reduction for terms *************)
 

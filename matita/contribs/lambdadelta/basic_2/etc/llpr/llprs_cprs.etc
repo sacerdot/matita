@@ -35,10 +35,44 @@ lemma llprs_cprs_trans: ∀G. s_rs_transitive … (cpr G) (llprs G 0).
 /3 width=5 by cprs_llpr_trans, s_rs_trans_TC1/ (**) (* full auto too slow *)
 qed-.
 
+(* Note: this is an instance of a general theorem *)
+lemma llprs_cprs_conf_dx: ∀G2,L2,T2,U2. ⦃G2, L2⦄ ⊢ T2 ➡* U2 →
+                          ∀L0. ⦃G2, L0⦄ ⊢ ➡*[T2, O] L2 → ⦃G2, L0⦄ ⊢ ➡*[U2, O] L2.
+#G2 #L2 #T2 #U2 #HTU2 #L0 #H @(llprs_ind_dx … H) -L0 //
+#L0 #L #HL0 #HL2 #IHL2 @(llprs_strap2 … IHL2) -IHL2
+lapply (llprs_cprs_trans … HTU2 … HL2) -L2 #HTU2
+/3 width=3 by cprs_llpr_trans, cprs_llpr_conf/
+qed-.
+
+(* Note: this is an instance of a general theorem *)
+lemma llprs_cpr_conf_dx: ∀G2,L2,T2,U2. ⦃G2, L2⦄ ⊢ T2 ➡ U2 →
+                         ∀L0. ⦃G2, L0⦄ ⊢ ➡*[T2, O] L2 → ⦃G2, L0⦄ ⊢ ➡*[U2, O] L2.
+#G2 #L2 #T2 #U2 #HTU2 #L0 #H @(llprs_ind_dx … H) -L0 //
+#L0 #L #HL0 #HL2 #IHL2 @(llprs_strap2 … IHL2) -IHL2
+lapply (llprs_cpr_trans … HTU2 … HL2) -L2 #HTU2
+/3 width=3 by cprs_llpr_trans, cprs_llpr_conf/
+qed-.
+
+lemma llprs_cprs_conf_sn: ∀G,L0,L1,T0. ⦃G, L0⦄ ⊢ ➡*[T0, 0] L1 →
+                          ∀T1. ⦃G, L0⦄ ⊢ T0 ➡* T1 →
+                          ∃∃T. ⦃G, L0⦄ ⊢ T1 ➡* T & ⦃G, L1⦄ ⊢ T0 ➡* T.
+#G #L0 #L1 #T0 #H @(llprs_ind_dx … H) -L0 /2 width=3 by ex2_intro/
+#L0 #L #HL0 #HL1 #IHL1 #T1 #HT01 elim (cprs_llpr_conf_sn … HT01 … HL0)
+#T2 #HT12 #HT02 elim (IHL1 … HT02) -IHL1 -HT02
+lapply (cprs_trans … HT01 … HT12) #HT02
+lapply (cprs_llpr_conf … HT02 … HL0) -HT02 -HL0
+/4 width=5 by cprs_llpr_trans, cprs_trans, ex2_intro/
+qed-.
+
+lemma llprs_cpr_conf_sn: ∀G,L0,T0,T1. ⦃G, L0⦄ ⊢ T0 ➡ T1 →
+                         ∀L1. ⦃G, L0⦄ ⊢ ➡*[T0, 0] L1 →
+                         ∃∃T. ⦃G, L0⦄ ⊢ T1 ➡* T & ⦃G, L1⦄ ⊢ T0 ➡* T.
+/3 width=3 by llprs_cprs_conf_sn, cpr_cprs/ qed-.
+
 lemma cprs_bind2: ∀G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡* V2 →
                   ∀I,T1,T2. ⦃G, L.ⓑ{I}V2⦄ ⊢ T1 ➡* T2 →
                   ∀a. ⦃G, L⦄ ⊢ ⓑ{a,I}V1.T1 ➡* ⓑ{a,I}V2.T2.
-/4 width=3 by llprs_cprs_trans, llprs_pair_dx, cprs_bind/ qed.
+/4 width=3 by llprs_cprs_trans, llprs_pair_dx, cprs_bind/ qed-.
 
 (* Inversion lemmas on context-sensitive parallel computation for terms *****)
 
@@ -82,3 +116,7 @@ lemma cprs_inv_abbr1: ∀a,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓓ{a}V1.T1 ➡* U2 → 
   /4 width=3 by cprs_strap1, ldrop_drop, ex3_intro, or_intror/
 ]
 qed-.
+
+(* Note: we loose lprs_cprs_conf_dx and derivatives:
+         lprs_cpr_conf_dx lprs_cprs_conf
+*)

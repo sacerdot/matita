@@ -76,7 +76,6 @@ b: "big tree" reduction
 c: conversion
 d: decomposed extended reduction
 e: decomposed extended conversion
-n: reduction for "big tree" normal forms
 q: restricted reduction
 r: reduction
 s: substitution

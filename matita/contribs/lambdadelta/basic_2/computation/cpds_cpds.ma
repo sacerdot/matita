@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/unfold/lsstas_lsstas.ma".
-include "basic_2/computation/llprs_cprs.ma".
+include "basic_2/computation/lprs_cprs.ma".
 include "basic_2/computation/cpxs_cpxs.ma".
 include "basic_2/computation/cpds.ma".
 

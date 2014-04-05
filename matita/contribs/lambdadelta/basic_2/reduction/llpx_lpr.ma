@@ -12,11 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/fpbs_lift.ma".
+include "basic_2/relocation/llpx_sn_lpx_sn.ma".
+include "basic_2/reduction/lpr.ma".
+include "basic_2/reduction/llpx.ma".
 
-(* "BIG TREE" PARALLEL COMPUTATION FOR CLOSURES *****************************)
+(* LAZY SN EXTENDED PARALLEL REDUCTION FOR LOCAL ENVIRONMENTS ***************)
 
-(* Main properties **********************************************************)
+(* Properties on sn parallel reduction **************************************)
 
-theorem fpbs_trans: ∀h,g. tri_transitive … (fpbs h g).
-/2 width=5 by tri_TC_transitive/ qed-.
+(* Note: this should be moved *)
+lemma lpr_llpx: ∀h,g,G,L1,L2,T,d. ⦃G, L1⦄ ⊢ ➡ L2 → ⦃G, L1⦄ ⊢ ➡[h, g, T, d] L2.
+/3 width=4 by cpr_cpx, lpx_sn_llpx_sn, llpx_sn_co/ qed.

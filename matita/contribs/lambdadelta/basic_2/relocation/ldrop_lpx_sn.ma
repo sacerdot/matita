@@ -19,6 +19,32 @@ include "basic_2/relocation/ldrop_leq.ma".
 
 (* Properties on sn pointwise extension *************************************)
 
+lemma lpx_sn_ldrop_conf: ∀R,L1,L2. lpx_sn R L1 L2 →
+                         ∀I,K1,V1,i. ⇩[i] L1 ≡ K1.ⓑ{I}V1 →
+                         ∃∃K2,V2. ⇩[i] L2 ≡ K2.ⓑ{I}V2 & lpx_sn R K1 K2 & R K1 V1 V2.
+#R #L1 #L2 #H elim H -L1 -L2
+[ #I0 #K0 #V0 #i #H elim (ldrop_inv_atom1 … H) -H #H destruct
+| #I #K1 #K2 #V1 #V2 #HK12 #HV12 #IHK12 #I0 #K0 #V0 #i #H elim (ldrop_inv_O1_pair1 … H) * -H
+  [ -IHK12 #H1 #H2 destruct /3 width=5 by ldrop_pair, ex3_2_intro/
+  | -HK12 -HV12 #Hi #HK10 elim (IHK12 … HK10) -IHK12 -HK10
+    /3 width=5 by ldrop_drop_lt, ex3_2_intro/
+  ]
+]
+qed-.
+
+lemma lpx_sn_ldrop_trans: ∀R,L1,L2. lpx_sn R L1 L2 →
+                          ∀I,K2,V2,i. ⇩[i] L2 ≡ K2.ⓑ{I}V2 →
+                          ∃∃K1,V1. ⇩[i] L1 ≡ K1.ⓑ{I}V1 & lpx_sn R K1 K2 & R K1 V1 V2.
+#R #L1 #L2 #H elim H -L1 -L2
+[ #I0 #K0 #V0 #i #H elim (ldrop_inv_atom1 … H) -H #H destruct
+| #I #K1 #K2 #V1 #V2 #HK12 #HV12 #IHK12 #I0 #K0 #V0 #i #H elim (ldrop_inv_O1_pair1 … H) * -H
+  [ -IHK12 #H1 #H2 destruct /3 width=5 by ldrop_pair, ex3_2_intro/
+  | -HK12 -HV12 #Hi #HK10 elim (IHK12 … HK10) -IHK12 -HK10
+    /3 width=5 by ldrop_drop_lt, ex3_2_intro/
+  ]
+]
+qed-.
+
 lemma lpx_sn_deliftable_dropable: ∀R. l_deliftable_sn R → dropable_sn (lpx_sn R).
 #R #HR #L1 #K1 #s #d #e #H elim H -L1 -K1 -d -e
 [ #d #e #He #X #H >(lpx_sn_inv_atom1 … H) -H

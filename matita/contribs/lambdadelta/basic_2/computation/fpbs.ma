@@ -79,14 +79,10 @@ qed.
 
 lemma cprs_fpbs: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡* T2 → ⦃G, L, T1⦄ ≥[h, g] ⦃G, L, T2⦄.
 /3 width=1 by cprs_cpxs, cpxs_fpbs/ qed.
-
-lemma llprs_fpbs: ∀h,g,G,L1,L2,T. ⦃G, L1⦄ ⊢ ➡*[T, 0] L2 → ⦃G, L1, T⦄ ≥[h, g] ⦃G, L2, T⦄.
+(*
+lamma llprs_fpbs: ∀h,g,G,L1,L2,T. ⦃G, L1⦄ ⊢ ➡*[T, 0] L2 → ⦃G, L1, T⦄ ≥[h, g] ⦃G, L2, T⦄.
 /3 width=1 by llprs_llpxs, llpxs_fpbs/ qed.
-
-lemma cpr_llpr_fpbs: ∀h,g,G,L1,L2,T1,T2. ⦃G, L1⦄ ⊢ T1 ➡ T2 → ⦃G, L1⦄ ⊢ ➡[T2, 0] L2 →
-                    ⦃G, L1, T1⦄ ≥[h, g] ⦃G, L2, T2⦄.
-/4 width=5 by fpbs_strap1, llpr_fpb, cpr_fpb/ qed.
-
+*)
 lemma fpbs_fqus_trans: ∀h,g,G1,G,G2,L1,L,L2,T1,T,T2. ⦃G1, L1, T1⦄ ≥[h, g] ⦃G, L, T⦄ →
                        ⦃G, L, T⦄ ⊃* ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
 #h #g #G1 #G #G2 #L1 #L #L2 #T1 #T #T2 #H1 #H @(fqus_ind … H) -G2 -L2 -T2

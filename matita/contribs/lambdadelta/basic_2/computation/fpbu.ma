@@ -33,11 +33,11 @@ interpretation
 lemma cprs_fpbu: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡* T2 → (T1 = T2 → ⊥) →
                  ⦃G, L, T1⦄ ≻[h, g] ⦃G, L, T2⦄.
 /3 width=1 by fpbu_cpxs, cprs_cpxs/ qed.
-
-lemma llprs_fpbu: ∀h,g,G,L1,L2,T. ⦃G, L1⦄ ⊢ ➡*[T, 0] L2 → (L1 ⋕[T, 0] L2 → ⊥) →
+(*
+lamma llprs_fpbu: ∀h,g,G,L1,L2,T. ⦃G, L1⦄ ⊢ ➡*[T, 0] L2 → (L1 ⋕[T, 0] L2 → ⊥) →
                   ⦃G, L1, T⦄ ≻[h, g] ⦃G, L2, T⦄.
 /3 width=1 by fpbu_llpxs, llprs_llpxs/ qed.
-
+*)
 (* Basic forward lemmas *****************************************************)
 
 lemma fpbu_fwd_fpbs: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≻[h, g] ⦃G2, L2, T2⦄ →

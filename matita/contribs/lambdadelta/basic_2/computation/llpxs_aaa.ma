@@ -24,7 +24,8 @@ lemma aaa_llpxs_conf: ∀h,g,G,L1,T,A. ⦃G, L1⦄ ⊢ T ⁝ A →
 #h #g #G #L1 #T #A #HT #L2 #HL12
 @(TC_Conf3 … (λL,A. ⦃G, L⦄ ⊢ T ⁝ A) … HT ? HL12) /2 width=5 by aaa_llpx_conf/
 qed-.
-
-lemma aaa_llprs_conf: ∀G,L1,T,A. ⦃G, L1⦄ ⊢ T ⁝ A →
+(*
+lamma aaa_llprs_conf: ∀G,L1,T,A. ⦃G, L1⦄ ⊢ T ⁝ A →
                       ∀L2. ⦃G, L1⦄ ⊢ ➡*[T, 0] L2 → ⦃G, L2⦄ ⊢ T ⁝ A.
 /3 width=5 by aaa_llpxs_conf, llprs_llpxs/ qed-.
+*)

@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/lazypredsn_7.ma".
-include "basic_2/reduction/llpr.ma".
+include "basic_2/relocation/llpx_sn.ma".
 include "basic_2/reduction/cpx.ma".
 
 (* LAZY SN EXTENDED PARALLEL REDUCTION FOR LOCAL ENVIRONMENTS ***************)
@@ -67,6 +67,3 @@ lemma llpx_lref: ∀h,g,I,G,L1,L2,K1,K2,V1,V2,d,i. d ≤ yinj i →
 
 lemma llpx_refl: ∀h,g,G,T,d. reflexive … (llpx h g G d T).
 /2 width=1 by llpx_sn_refl/ qed.
-
-lemma llpr_llpx: ∀h,g,G,L1,L2,T,d. ⦃G, L1⦄ ⊢ ➡[T, d] L2 → ⦃G, L1⦄ ⊢ ➡[h, g, T, d] L2.
-/3 width=3 by llpx_sn_co, cpr_cpx/ qed.

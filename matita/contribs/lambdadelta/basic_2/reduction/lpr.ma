@@ -49,7 +49,7 @@ lemma lpr_refl: ∀G,L. ⦃G, L⦄ ⊢ ➡ L.
 
 lemma lpr_pair: ∀I,G,K1,K2,V1,V2. ⦃G, K1⦄ ⊢ ➡ K2 → ⦃G, K1⦄ ⊢ V1 ➡ V2 →
                 ⦃G, K1.ⓑ{I}V1⦄ ⊢ ➡ K2.ⓑ{I}V2.
-/2 width=1/ qed.
+/2 width=1 by lpx_sn_pair/ qed.
 
 (* Basic forward lemmas *****************************************************)
 

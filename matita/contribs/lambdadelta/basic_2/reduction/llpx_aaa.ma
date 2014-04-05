@@ -76,6 +76,7 @@ lemma aaa_llpx_conf: ∀h,g,G,L1,T,A. ⦃G, L1⦄ ⊢ T ⁝ A → ∀L2. ⦃G, L
 
 lemma aaa_cpr_conf: ∀G,L,T1,A. ⦃G, L⦄ ⊢ T1 ⁝ A → ∀T2. ⦃G, L⦄ ⊢ T1 ➡ T2 → ⦃G, L⦄ ⊢ T2 ⁝ A.
 /3 width=5 by aaa_cpx_conf, cpr_cpx/ qed-.
-
-lemma aaa_llpr_conf: ∀G,L1,T,A. ⦃G, L1⦄ ⊢ T ⁝ A → ∀L2. ⦃G, L1⦄ ⊢ ➡[T, 0] L2 → ⦃G, L2⦄ ⊢ T ⁝ A.
+(*
+lamma aaa_llpr_conf: ∀G,L1,T,A. ⦃G, L1⦄ ⊢ T ⁝ A → ∀L2. ⦃G, L1⦄ ⊢ ➡[T, 0] L2 → ⦃G, L2⦄ ⊢ T ⁝ A.
 /3 width=5 by aaa_llpx_conf, llpr_llpx/ qed-.
+*)

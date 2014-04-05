@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/lprs_cprs.ma".
+include "basic_2/computation/llprs_cprs.ma".
 include "basic_2/conversion/cpc_cpc.ma".
 include "basic_2/equivalence/cpcs_cprs.ma".
 
@@ -71,16 +71,16 @@ qed-.
 
 (* Advanced properties ******************************************************)
 
-lemma lpr_cpcs_trans: ∀G,L1,L2. ⦃G, L1⦄ ⊢ ➡ L2 →
-                      ∀T1,T2. ⦃G, L2⦄ ⊢ T1 ⬌* T2 → ⦃G, L1⦄ ⊢ T1 ⬌* T2.
-#G #L1 #L2 #HL12 #T1 #T2 #H elim (cpcs_inv_cprs … H) -H
-/4 width=5 by cprs_div, lpr_cprs_trans/
+lemma llpr_cpcs_trans: ∀G,L1,L2,T1,T2. ⦃G, L1⦄ ⊢ ➡[T1, 0] L2 → ⦃G, L1⦄ ⊢ ➡[T2, 0] L2 →
+                       ⦃G, L2⦄ ⊢ T1 ⬌* T2 → ⦃G, L1⦄ ⊢ T1 ⬌* T2.
+#G #L1 #L2 #T1 #T2 #HT1 #HT2 #H elim (cpcs_inv_cprs … H) -H
+/4 width=5 by cprs_div, cprs_llpr_trans/
 qed-.
 
-lemma lprs_cpcs_trans: ∀G,L1,L2. ⦃G, L1⦄ ⊢ ➡* L2 →
-                       ∀T1,T2. ⦃G, L2⦄ ⊢ T1 ⬌* T2 → ⦃G, L1⦄ ⊢ T1 ⬌* T2.
-#G #L1 #L2 #HL12 #T1 #T2 #H elim (cpcs_inv_cprs … H) -H
-/4 width=5 by cprs_div, lprs_cprs_trans/
+lemma llprs_cpcs_trans: ∀G,L1,L2,T1,T2. ⦃G, L1⦄ ⊢ ➡*[T1, 0] L2 → ⦃G, L1⦄ ⊢ ➡*[T2, 0] L2 →
+                        ⦃G, L2⦄ ⊢ T1 ⬌* T2 → ⦃G, L1⦄ ⊢ T1 ⬌* T2.
+#G #L1 #L2 #T1 #T2 #HT1 #HT2 #H elim (cpcs_inv_cprs … H) -H
+/4 width=5 by cprs_div, llprs_cprs_trans/
 qed-.
 
 lemma cpr_cprs_conf_cpcs: ∀G,L,T,T1,T2. ⦃G, L⦄ ⊢ T ➡* T1 → ⦃G, L⦄ ⊢ T ➡ T2 → ⦃G, L⦄ ⊢ T1 ⬌* T2.
@@ -98,26 +98,19 @@ lemma cprs_conf_cpcs: ∀G,L,T,T1,T2. ⦃G, L⦄ ⊢ T ➡* T1 → ⦃G, L⦄ �
 /2 width=3 by cprs_div/
 qed-.
 
-lemma lprs_cprs_conf: ∀G,L1,L2. ⦃G, L1⦄ ⊢ ➡* L2 →
-                      ∀T1,T2. ⦃G, L1⦄ ⊢ T1 ➡* T2 → ⦃G, L2⦄ ⊢ T1 ⬌* T2.
-#G #L1 #L2 #HL12 #T1 #T2 #HT12 elim (lprs_cprs_conf_dx … HT12 … HL12) -L1
-/2 width=3 by cprs_div/
-qed-.
-
 (* Basic_1: was: pc3_wcpr0_t *)
 (* Basic_1: note: pc3_wcpr0_t should be renamed *)
-(* Note: alternative proof /3 width=5 by lprs_cprs_conf, lpr_lprs/ *)
-lemma lpr_cprs_conf: ∀G,L1,L2. ⦃G, L1⦄ ⊢ ➡ L2 →
-                     ∀T1,T2. ⦃G, L1⦄ ⊢ T1 ➡* T2 → ⦃G, L2⦄ ⊢ T1 ⬌* T2.
-#G #L1 #L2 #HL12 #T1 #T2 #HT12 elim (cprs_lpr_conf_dx … HT12 … HL12) -L1
+lemma llpr_cprs_conf: ∀G,L1,L2,T1. ⦃G, L1⦄ ⊢ ➡[T1, 0] L2 →
+                      ∀T2. ⦃G, L1⦄ ⊢ T1 ➡* T2 → ⦃G, L2⦄ ⊢ T1 ⬌* T2.
+#G #L1 #L2 #T1 #HL12 #T2 #HT12 elim (cprs_llpr_conf_dx … HT12 … HL12) -L1
 /2 width=3 by cprs_div/
 qed-.
 
 (* Basic_1: was only: pc3_pr0_pr2_t *)
 (* Basic_1: note: pc3_pr0_pr2_t should be renamed *)
-lemma lpr_cpr_conf: ∀G,L1,L2. ⦃G, L1⦄ ⊢ ➡ L2 →
-                    ∀T1,T2. ⦃G, L1⦄ ⊢ T1 ➡ T2 → ⦃G, L2⦄ ⊢ T1 ⬌* T2.
-/3 width=5 by lpr_cprs_conf, cpr_cprs/ qed-.
+lemma llpr_cpr_conf: ∀G,L1,L2,T1. ⦃G, L1⦄ ⊢ ➡[T1, 0] L2 →
+                     ∀T2. ⦃G, L1⦄ ⊢ T1 ➡ T2 → ⦃G, L2⦄ ⊢ T1 ⬌* T2.
+/3 width=5 by llpr_cprs_conf, cpr_cprs/ qed-.
 
 (* Basic_1: was only: pc3_thin_dx *)
 lemma cpcs_flat: ∀G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ⬌* V2 → ∀T1,T2. ⦃G, L⦄ ⊢ T1 ⬌* T2 →
@@ -164,18 +157,18 @@ lemma cpcs_strip: ∀G,L,T1,T. ⦃G, L⦄ ⊢ T ⬌* T1 → ∀T2. ⦃G, L⦄ �
 
 (* More inversion lemmas ****************************************************)
 
-(* Note: there must be a proof suitable for llpr *)
-lemma cpcs_inv_abst_sn: ∀a1,a2,G,L,W1,W2,T1,T2. ⦃G, L⦄ ⊢ ⓛ{a1}W1.T1 ⬌* ⓛ{a2}W2.T2 →
+axiom cpcs_inv_abst_sn: ∀a1,a2,G,L,W1,W2,T1,T2. ⦃G, L⦄ ⊢ ⓛ{a1}W1.T1 ⬌* ⓛ{a2}W2.T2 →
                         ∧∧ ⦃G, L⦄ ⊢ W1 ⬌* W2 & ⦃G, L.ⓛW1⦄ ⊢ T1 ⬌* T2 & a1 = a2.
+(*
 #a1 #a2 #G #L #W1 #W2 #T1 #T2 #H
 elim (cpcs_inv_cprs … H) -H #T #H1 #H2
 elim (cprs_inv_abst1 … H1) -H1 #W0 #T0 #HW10 #HT10 #H destruct
 elim (cprs_inv_abst1 … H2) -H2 #W #T #HW2 #HT2 #H destruct
-lapply (lprs_cprs_conf … (L.ⓛW) … HT2) /2 width=1 by lprs_pair/ -HT2 #HT2
-lapply (lprs_cpcs_trans … (L.ⓛW1) … HT2) /2 width=1 by lprs_pair/ -HT2 #HT2
+lapply (llprs_cprs_conf … (L.ⓛW) … HT2) /2 width=1 by llprs_pair/ -HT2 #HT2
+lapply (llprs_cpcs_trans … (L.ⓛW1) … HT2) /2 width=1 by llprs_pair/ -HT2 #HT2
 /4 width=3 by and3_intro, cprs_div, cpcs_cprs_div, cpcs_sym/
 qed-.
-
+*)
 lemma cpcs_inv_abst_dx: ∀a1,a2,G,L,W1,W2,T1,T2. ⦃G, L⦄ ⊢ ⓛ{a1}W1.T1 ⬌* ⓛ{a2}W2.T2 →
                         ∧∧ ⦃G, L⦄ ⊢ W1 ⬌* W2 & ⦃G, L.ⓛW2⦄ ⊢ T1 ⬌* T2 & a1 = a2.
 #a1 #a2 #G #L #W1 #W2 #T1 #T2 #HT12 lapply (cpcs_sym … HT12) -HT12
@@ -205,8 +198,8 @@ lemma cpcs_bind2: ∀a,I,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ⬌* V2 →
 /3 width=3 by cpcs_trans, cpcs_bind_sn, cpcs_bind_dx/ qed.
 
 (* Basic_1: was: pc3_wcpr0 *)
-lemma lpr_cpcs_conf: ∀G,L1,L2. ⦃G, L1⦄ ⊢ ➡ L2 →
-                     ∀T1,T2. ⦃G, L1⦄ ⊢ T1 ⬌* T2 → ⦃G, L2⦄ ⊢ T1 ⬌* T2.
-#G #L1 #L2 #HL12 #T1 #T2 #H elim (cpcs_inv_cprs … H) -H
-/3 width=5 by cpcs_canc_dx, lpr_cprs_conf/
+lemma llpr_cpcs_conf: ∀G,L1,L2,T1,T2. ⦃G, L1⦄ ⊢ ➡[T1, 0] L2 → ⦃G, L1⦄ ⊢ ➡[T2, 0] L2 →
+                      ⦃G, L1⦄ ⊢ T1 ⬌* T2 → ⦃G, L2⦄ ⊢ T1 ⬌* T2.
+#G #L1 #L2 #T1 #T2 #HT1 #HT2 #H elim (cpcs_inv_cprs … H) -H
+/3 width=5 by cpcs_canc_dx, llpr_cprs_conf/
 qed-.
