@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/relocation/lpx_sn_ldrop.ma".
 include "basic_2/relocation/fquq_alt.ma".
-include "basic_2/relocation/ldrop_lpx_sn.ma".
 include "basic_2/reduction/cpr_lift.ma".
 include "basic_2/reduction/lpr.ma".
 

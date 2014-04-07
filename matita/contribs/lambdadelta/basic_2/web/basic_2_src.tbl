@@ -213,7 +213,7 @@ table {
    [ { "substitution" * } {
         [ { "lazy equivalence" * } {
              [ "fleq ( ⦃?,?,?⦄ ⋕[?] ⦃?,?,?⦄ )" "fleq_fleq" * ]
-             [ "lleq ( ? ⋕[?,?] ? )" "lleq_leq" + "lleq_ldrop" + "lleq_fqus" + "lleq_lleq" * ]
+             [ "lleq ( ? ⋕[?,?] ? )" "lleq_alt" + "lleq_leq" + "lleq_ldrop" + "lleq_fqus" + "lleq_lleq" * ]
           }
         ]
         [ { "iterated structural successor for closures" * } {
@@ -248,7 +248,7 @@ table {
           }
         ]
         [ { "lazy pointwise extension of a relation" * } {
-             [ "llpx_sn" "llpx_sn_tc" + "llpx_sn_leq" + "llpx_sn_ldrop" + "llpx_sn_lpx_sn" * ]
+             [ "llpx_sn" "llpx_sn_alt" + "llpx_sn_tc" + "llpx_sn_leq" + "llpx_sn_ldrop" + "llpx_sn_lpx_sn" * ]
           }
         ]
         [ { "basic local env. slicing" * } {
@@ -257,7 +257,7 @@ table {
         ]
         [ { "basic term relocation" * } {
              [ "lift_vector ( ⇧[?,?] ? ≡ ? )" "lift_lift_vector" * ]
-             [ "lift ( ⇧[?,?] ? ≡ ? )" "lift_lift" * ]
+             [ "lift ( ⇧[?,?] ? ≡ ? )" "lift_neq" + "lift_lift" * ]
           }
         ]
      }
@@ -269,7 +269,7 @@ table {
           }
         ]
         [ { "pointwise extension of a relation" * } {
-             [ "lpx_sn" "lpx_sn_tc" + "lpx_sn_lpx_sn" * ]
+             [ "lpx_sn" "lpx_sn_alt" + "lpx_sn_tc" + "lpx_sn_lpx_sn" * ]
           }
         ]
         [ { "same top term constructor" * } {

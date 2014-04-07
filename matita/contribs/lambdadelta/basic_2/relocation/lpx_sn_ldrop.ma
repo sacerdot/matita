@@ -12,12 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/lpx_sn.ma".
 include "basic_2/relocation/ldrop_leq.ma".
+include "basic_2/relocation/lpx_sn.ma".
 
-(* DROPPING *****************************************************************)
+(* SN POINTWISE EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS *********)
 
-(* Properties on sn pointwise extension *************************************)
+(* Properies on dropping ****************************************************)
 
 lemma lpx_sn_ldrop_conf: ∀R,L1,L2. lpx_sn R L1 L2 →
                          ∀I,K1,V1,i. ⇩[i] L1 ≡ K1.ⓑ{I}V1 →
