@@ -247,12 +247,17 @@ table {
              [ "gdrop ( ⇩[?] ? ≡ ? )" "gdrop_gdrop" * ]
           }
         ]
-        [ { "lazy pointwise extension of a relation" * } {
+        [ { "pointwise union for local environments" * } {
+             [ "llor ( ? ⩖[?] ? ≡ ? )" * ]
+          }
+        ]
+        [ { "pointwise extension of a relation" * } {
              [ "llpx_sn" "llpx_sn_alt" + "llpx_sn_tc" + "llpx_sn_leq" + "llpx_sn_ldrop" + "llpx_sn_lpx_sn" * ]
+             [ "lpx_sn" "lpx_sn_alt" + "lpx_sn_tc" + "lpx_sn_ldrop" + "lpx_sn_lpx_sn" * ]
           }
         ]
         [ { "basic local env. slicing" * } {
-             [ "ldrop ( ⇩[?,?,?] ? ≡ ? )" "ldrop_lpx_sn" + "ldrop_leq" + "ldrop_ldrop" * ]
+             [ "ldrop ( ⇩[?,?,?] ? ≡ ? )"  "ldrop_leq" + "ldrop_ldrop" * ]
           }
         ]
         [ { "basic term relocation" * } {
@@ -266,10 +271,6 @@ table {
    [ { "grammar" * } {
         [ { "equivalence for local environments" * } {
              [ "leq ( ? ≃[?,?] ? )" "leq_leq" * ]
-          }
-        ]
-        [ { "pointwise extension of a relation" * } {
-             [ "lpx_sn" "lpx_sn_alt" + "lpx_sn_tc" + "lpx_sn_lpx_sn" * ]
           }
         ]
         [ { "same top term constructor" * } {

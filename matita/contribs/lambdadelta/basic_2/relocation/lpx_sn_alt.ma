@@ -137,7 +137,7 @@ qed.
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma lpx_sn_inv_alt: ∀R,L1,L2. lpx_sn R L1 L2 →
+lemma lpx_sn_inv_gen: ∀R,L1,L2. lpx_sn R L1 L2 →
                       |L1| = |L2| ∧
                       ∀I1,I2,K1,K2,V1,V2,i.
                       ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 →
