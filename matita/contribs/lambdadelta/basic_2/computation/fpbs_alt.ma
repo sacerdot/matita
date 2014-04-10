@@ -37,7 +37,7 @@ lemma fpb_fpbsa_trans: ∀h,g,G1,G,L1,L,T1,T. ⦃G1, L1, T1⦄ ≽[h, g] ⦃G, L
 [ elim (fquq_cpxs_trans … HT0 … HG1) -T
   /3 width=7 by fqus_strap2, ex3_2_intro/
 | /3 width=5 by cpxs_strap2, ex3_2_intro/
-| lapply (cpxs_llpx_trans … HT0 … HL1) -HT0 #HT10
+| lapply (llpx_cpxs_trans … HT0 … HL1) -HT0 #HT10
   lapply (cpxs_llpx_conf … HT10 … HL1) -HL1 #HL1
   elim (llpx_fqus_trans … HG2 … HL1) -L
   /3 width=7 by llpxs_strap2, cpxs_trans, ex3_2_intro/

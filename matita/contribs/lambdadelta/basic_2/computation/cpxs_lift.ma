@@ -14,7 +14,7 @@
 
 include "basic_2/substitution/fqus_fqus.ma".
 include "basic_2/unfold/lsstas_lift.ma".
-include "basic_2/reduction/llpx_ldrop.ma".
+include "basic_2/reduction/cpx_lift.ma".
 include "basic_2/computation/cpxs.ma".
 
 (* CONTEXT-SENSITIVE EXTENDED PARALLEL COMPUTATION ON TERMS *****************)
@@ -41,9 +41,6 @@ lemma cpxs_delta: ∀h,g,I,G,L,K,V,V2,i.
   elim (lift_total V1 0 (i+1)) /4 width=12 by cpx_lift, cpxs_strap1/
 ]
 qed.
-
-lemma cpxs_llpx_conf: ∀h,g,G. s_r_confluent1 … (cpxs h g G) (llpx h g G 0).
-/3 width=5 by llpx_cpx_conf, s_r_conf1_LTC1/ qed-.
 
 (* Advanced inversion lemmas ************************************************)
 

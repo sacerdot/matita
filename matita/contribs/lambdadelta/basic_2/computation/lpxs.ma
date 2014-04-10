@@ -43,19 +43,19 @@ qed-.
 (* Basic properties *********************************************************)
 
 lemma lprs_lpxs: ∀h,g,G,L1,L2. ⦃G, L1⦄ ⊢ ➡* L2 → ⦃G, L1⦄ ⊢ ➡*[h, g] L2.
-/3 width=3/ qed.
+/3 width=3 by lpr_lpx, monotonic_TC/ qed.
 
 lemma lpx_lpxs: ∀h,g,G,L1,L2. ⦃G, L1⦄ ⊢ ➡[h, g] L2 → ⦃G, L1⦄ ⊢ ➡*[h, g] L2.
-/2 width=1/ qed.
+/2 width=1 by inj/ qed.
 
 lemma lpxs_refl: ∀h,g,G,L. ⦃G, L⦄ ⊢ ➡*[h, g] L.
-/2 width=1/ qed.
+/2 width=1 by lprs_lpxs/ qed.
 
 lemma lpxs_strap1: ∀h,g,G,L1,L,L2. ⦃G, L1⦄ ⊢ ➡*[h, g] L → ⦃G, L⦄ ⊢ ➡[h, g] L2 → ⦃G, L1⦄ ⊢ ➡*[h, g] L2.
-/2 width=3/ qed.
+/2 width=3 by step/ qed.
 
 lemma lpxs_strap2: ∀h,g,G,L1,L,L2. ⦃G, L1⦄ ⊢ ➡[h, g] L → ⦃G, L⦄ ⊢ ➡*[h, g] L2 → ⦃G, L1⦄ ⊢ ➡*[h, g] L2.
-/2 width=3/ qed.
+/2 width=3 by TC_strap/ qed.
 
 lemma lpxs_pair_refl: ∀h,g,G,L1,L2. ⦃G, L1⦄ ⊢ ➡*[h, g] L2 → ∀I,V. ⦃G, L1.ⓑ{I}V⦄ ⊢ ➡*[h, g] L2.ⓑ{I}V.
 /2 width=1 by TC_lpx_sn_pair_refl/ qed.

@@ -36,11 +36,14 @@ lemma lpxs_inv_pair2: ∀h,g,I,G,L1,K2,V2. ⦃G, L1⦄ ⊢ ➡*[h, g] K2.ⓑ{I}V
 
 (* Properties on context-sensitive extended parallel computation for terms **)
 
-lemma lpxs_cpx_trans: ∀h,g,G. s_r_trans … (cpx h g G) (lpxs h g G).
-/3 width=5 by s_r_trans_TC2, lpx_cpxs_trans/ qed-.
+lemma lpxs_cpx_trans: ∀h,g,G. s_r_transitive … (cpx h g G) (λ_.lpxs h g G).
+/3 width=5 by s_r_trans_LTC2, lpx_cpxs_trans/ qed-.
 
-lemma lpxs_cpxs_trans: ∀h,g,G. s_rs_trans … (cpx h g G) (lpxs h g G).
-/3 width=5 by s_r_trans_TC1, lpxs_cpx_trans/ qed-.
+(* Note: alternative proof: /3 width=5 by s_r_trans_TC1, lpxs_cpx_trans/ *)
+lemma lpxs_cpxs_trans: ∀h,g,G. s_rs_transitive … (cpx h g G) (λ_.lpxs h g G).
+#h #g #G @s_r_to_s_rs_trans @s_r_trans_LTC2
+@s_rs_trans_TC1 /2 width=3 by lpx_cpxs_trans/ (**) (* full auto too slow *)
+qed-.
 
 lemma cpxs_bind2: ∀h,g,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡*[h, g] V2 →
                   ∀I,T1,T2. ⦃G, L.ⓑ{I}V2⦄ ⊢ T1 ➡*[h, g] T2 →

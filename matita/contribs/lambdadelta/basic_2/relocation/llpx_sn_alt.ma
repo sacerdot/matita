@@ -18,7 +18,7 @@ include "basic_2/relocation/llpx_sn.ma".
 
 (* LAZY SN POINTWISE EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS ****)
 
-(* alternative definition of llpx_sn_alt *)
+(* alternative definition of llpx_sn *)
 inductive llpx_sn_alt (R:relation3 lenv term term): relation4 ynat term lenv lenv ≝
 | llpx_sn_alt_intro: ∀L1,L2,T,d.
                      (∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → (∀U. ⇧[i, 1] U ≡ T → ⊥) →
@@ -29,67 +29,7 @@ inductive llpx_sn_alt (R:relation3 lenv term term): relation4 ynat term lenv len
                      ) → |L1| = |L2| → llpx_sn_alt R d T L1 L2
 .
 
-(* Basic inversion lemmas ****************************************************)
-
-lemma llpx_sn_alt_inv_gen: ∀R,L1,L2,T,d. llpx_sn_alt R d T L1 L2 →
-                           |L1| = |L2| ∧
-                           ∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → (∀U. ⇧[i, 1] U ≡ T → ⊥) →
-                           ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 →
-                           ∧∧ I1 = I2 & R K1 V1 V2 & llpx_sn_alt R 0 V1 K1 K2.
-#R #L1 #L2 #T #d * -L1 -L2 -T -d
-#L1 #L2 #T #d #IH1 #IH2 #HL12 @conj //
-#I1 #I2 #K1 #K2 #HLK1 #HLK2 #i #Hid #HnT #HLK1 #HLK2
-elim (IH1 … HnT HLK1 HLK2) -IH1 /4 width=8 by and3_intro/
-qed-.
-
-lemma llpx_sn_alt_inv_flat: ∀R,I,L1,L2,V,T,d. llpx_sn_alt R d (ⓕ{I}V.T) L1 L2 →
-                            llpx_sn_alt R d V L1 L2 ∧ llpx_sn_alt R d T L1 L2.
-#R #I #L1 #L2 #V #T #d #H elim (llpx_sn_alt_inv_gen … H) -H
-#HL12 #IH @conj @llpx_sn_alt_intro // -HL12
-#I1 #I2 #K1 #K2 #V1 #V2 #i #Hdi #H #HLK1 #HLK2
-elim (IH … HLK1 HLK2) -IH -HLK1 -HLK2
-/3 width=8 by nlift_flat_sn, nlift_flat_dx, conj/
-qed-.
-
-lemma llpx_sn_alt_inv_bind: ∀R,a,I,L1,L2,V,T,d. llpx_sn_alt R d (ⓑ{a,I}V.T) L1 L2 →
-                            llpx_sn_alt R d V L1 L2 ∧ llpx_sn_alt R (⫯d) T (L1.ⓑ{I}V) (L2.ⓑ{I}V).
-#R #a #I #L1 #L2 #V #T #d #H elim (llpx_sn_alt_inv_gen … H) -H
-#HL12 #IH @conj @llpx_sn_alt_intro [3,6: normalize // ] -HL12
-#I1 #I2 #K1 #K2 #V1 #V2 #i #Hdi #H #HLK1 #HLK2
-[1,2: elim (IH … HLK1 HLK2) -IH -HLK1 -HLK2
-  /3 width=9 by nlift_bind_sn, conj/
-|3,4: lapply (yle_inv_succ1 … Hdi) -Hdi * #Hdi #Hi
-  lapply (ldrop_inv_drop1_lt … HLK1 ?) -HLK1 /2 width=1 by ylt_O/ #HLK1
-  lapply (ldrop_inv_drop1_lt … HLK2 ?) -HLK2 /2 width=1 by ylt_O/ #HLK2
-  elim (IH … HLK1 HLK2) -IH -HLK1 -HLK2
-  [1,3,4,6: /2 width=1 by conj/ ]
-  @nlift_bind_dx <plus_minus_m_m /2 width=2 by ylt_O/
-]
-qed-.
-
-(* Basic forward lemmas ******************************************************)
-
-lemma llpx_sn_alt_fwd_length: ∀R,L1,L2,T,d. llpx_sn_alt R d T L1 L2 → |L1| = |L2|.
-#R #L1 #L2 #T #d * -L1 -L2 -T -d //
-qed-.
-
-lemma llpx_sn_alt_fwd_lref: ∀R,L1,L2,d,i. llpx_sn_alt R d (#i) L1 L2 →
-                            ∨∨ |L1| ≤ i ∧ |L2| ≤ i
-                             | yinj i < d
-                             | ∃∃I,K1,K2,V1,V2. ⇩[i] L1 ≡ K1.ⓑ{I}V1 &
-                                                ⇩[i] L2 ≡ K2.ⓑ{I}V2 &
-                                                llpx_sn_alt R (yinj 0) V1 K1 K2 &
-                                                R K1 V1 V2 & d ≤ yinj i.
-#R #L1 #L2 #d #i #H elim (llpx_sn_alt_inv_gen … H) -H
-#HL12 #IH elim (lt_or_ge i (|L1|)) /3 width=1 by or3_intro0, conj/
-elim (ylt_split i d) /3 width=1 by or3_intro1/
-#Hdi #HL1 elim (ldrop_O1_lt … HL1)
-#I1 #K1 #V1 #HLK1 elim (ldrop_O1_lt L2 i) //
-#I2 #K2 #V2 #HLK2 elim (IH … HLK1 HLK2) -IH
-/3 width=9 by nlift_lref_be_SO, or3_intro2, ex5_5_intro/
-qed-.
-
-(* Basic properties **********************************************************)
+(* Compact definition of llpx_sn_alt ****************************************)
 
 lemma llpx_sn_alt_intro_alt: ∀R,L1,L2,T,d. |L1| = |L2| →
                              (∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → (∀U. ⇧[i, 1] U ≡ T → ⊥) →
@@ -100,6 +40,80 @@ lemma llpx_sn_alt_intro_alt: ∀R,L1,L2,T,d. |L1| = |L2| →
 #I1 #I2 #K1 #K2 #V1 #V2 #i #Hid #HnT #HLK1 #HLK2
 elim (IH … HnT HLK1 HLK2) -IH -HnT -HLK1 -HLK2 /2 width=1 by conj/
 qed.
+
+lemma llpx_sn_alt_ind_alt: ∀R. ∀S:relation4 ynat term lenv lenv.
+                           (∀L1,L2,T,d. |L1| = |L2| → (
+                              ∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → (∀U. ⇧[i, 1] U ≡ T → ⊥) →
+                              ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 →
+                              ∧∧ I1 = I2 & R K1 V1 V2 & llpx_sn_alt R 0 V1 K1 K2 & S 0 V1 K1 K2
+                           ) → S d T L1 L2) →
+                           ∀L1,L2,T,d. llpx_sn_alt R d T L1 L2 → S d T L1 L2.
+#R #S #IH #L1 #L2 #T #d #H elim H -L1 -L2 -T -d
+#L1 #L2 #T #d #H1 #H2 #HL12 #IH2 @IH -IH // -HL12
+#I1 #I2 #K1 #K2 #V1 #V2 #i #Hid #HnT #HLK1 #HLK2
+elim (H1 … HnT HLK1 HLK2) -H1 /4 width=8 by and4_intro/
+qed-.
+
+lemma llpx_sn_alt_inv_alt: ∀R,L1,L2,T,d. llpx_sn_alt R d T L1 L2 →
+                           |L1| = |L2| ∧
+                           ∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → (∀U. ⇧[i, 1] U ≡ T → ⊥) →
+                           ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 →
+                           ∧∧ I1 = I2 & R K1 V1 V2 & llpx_sn_alt R 0 V1 K1 K2.
+#R #L1 #L2 #T #d #H @(llpx_sn_alt_ind_alt … H) -L1 -L2 -T -d
+#L1 #L2 #T #d #HL12 #IH @conj // -HL12
+#I1 #I2 #K1 #K2 #V1 #V2 #i #Hid #HnT #HLK1 #HLK2
+elim (IH … HnT HLK1 HLK2) -IH -HnT -HLK1 -HLK2 /2 width=1 by and3_intro/
+qed-.
+
+(* Basic inversion lemmas ***************************************************)
+
+lemma llpx_sn_alt_inv_flat: ∀R,I,L1,L2,V,T,d. llpx_sn_alt R d (ⓕ{I}V.T) L1 L2 →
+                            llpx_sn_alt R d V L1 L2 ∧ llpx_sn_alt R d T L1 L2.
+#R #I #L1 #L2 #V #T #d #H elim (llpx_sn_alt_inv_alt … H) -H
+#HL12 #IH @conj @llpx_sn_alt_intro_alt // -HL12
+#I1 #I2 #K1 #K2 #V1 #V2 #i #Hdi #H #HLK1 #HLK2
+elim (IH … HLK1 HLK2) -IH -HLK1 -HLK2 //
+/3 width=8 by nlift_flat_sn, nlift_flat_dx, and3_intro/
+qed-.
+
+lemma llpx_sn_alt_inv_bind: ∀R,a,I,L1,L2,V,T,d. llpx_sn_alt R d (ⓑ{a,I}V.T) L1 L2 →
+                            llpx_sn_alt R d V L1 L2 ∧ llpx_sn_alt R (⫯d) T (L1.ⓑ{I}V) (L2.ⓑ{I}V).
+#R #a #I #L1 #L2 #V #T #d #H elim (llpx_sn_alt_inv_alt … H) -H
+#HL12 #IH @conj @llpx_sn_alt_intro_alt [1,3: normalize // ] -HL12
+#I1 #I2 #K1 #K2 #V1 #V2 #i #Hdi #H #HLK1 #HLK2
+[ elim (IH … HLK1 HLK2) -IH -HLK1 -HLK2
+  /3 width=9 by nlift_bind_sn, and3_intro/
+| lapply (yle_inv_succ1 … Hdi) -Hdi * #Hdi #Hi
+  lapply (ldrop_inv_drop1_lt … HLK1 ?) -HLK1 /2 width=1 by ylt_O/ #HLK1
+  lapply (ldrop_inv_drop1_lt … HLK2 ?) -HLK2 /2 width=1 by ylt_O/ #HLK2
+  elim (IH … HLK1 HLK2) -IH -HLK1 -HLK2 /2 width=1 by and3_intro/
+  @nlift_bind_dx <plus_minus_m_m /2 width=2 by ylt_O/
+]
+qed-.
+
+(* Basic forward lemmas ******************************************************)
+
+lemma llpx_sn_alt_fwd_length: ∀R,L1,L2,T,d. llpx_sn_alt R d T L1 L2 → |L1| = |L2|.
+#R #L1 #L2 #T #d #H elim (llpx_sn_alt_inv_alt … H) -H //
+qed-.
+
+lemma llpx_sn_alt_fwd_lref: ∀R,L1,L2,d,i. llpx_sn_alt R d (#i) L1 L2 →
+                            ∨∨ |L1| ≤ i ∧ |L2| ≤ i
+                             | yinj i < d
+                             | ∃∃I,K1,K2,V1,V2. ⇩[i] L1 ≡ K1.ⓑ{I}V1 &
+                                                ⇩[i] L2 ≡ K2.ⓑ{I}V2 &
+                                                llpx_sn_alt R (yinj 0) V1 K1 K2 &
+                                                R K1 V1 V2 & d ≤ yinj i.
+#R #L1 #L2 #d #i #H elim (llpx_sn_alt_inv_alt … H) -H
+#HL12 #IH elim (lt_or_ge i (|L1|)) /3 width=1 by or3_intro0, conj/
+elim (ylt_split i d) /3 width=1 by or3_intro1/
+#Hdi #HL1 elim (ldrop_O1_lt … HL1)
+#I1 #K1 #V1 #HLK1 elim (ldrop_O1_lt L2 i) //
+#I2 #K2 #V2 #HLK2 elim (IH … HLK1 HLK2) -IH
+/3 width=9 by nlift_lref_be_SO, or3_intro2, ex5_5_intro/
+qed-.
+
+(* Basic properties **********************************************************)
 
 lemma llpx_sn_alt_sort: ∀R,L1,L2,d,k. |L1| = |L2| → llpx_sn_alt R d (⋆k) L1 L2.
 #R #L1 #L2 #d #k #HL12 @llpx_sn_alt_intro_alt // -HL12
@@ -146,8 +160,8 @@ lemma llpx_sn_alt_flat: ∀R,I,L1,L2,V,T,d.
                         llpx_sn_alt R d V L1 L2 → llpx_sn_alt R d T L1 L2 →
                         llpx_sn_alt R d (ⓕ{I}V.T) L1 L2.
 #R #I #L1 #L2 #V #T #d #HV #HT
-elim (llpx_sn_alt_inv_gen … HV) -HV #HL12 #IHV
-elim (llpx_sn_alt_inv_gen … HT) -HT #_ #IHT
+elim (llpx_sn_alt_inv_alt … HV) -HV #HL12 #IHV
+elim (llpx_sn_alt_inv_alt … HT) -HT #_ #IHT
 @llpx_sn_alt_intro_alt // -HL12
 #I1 #I2 #K1 #K2 #V1 #V2 #i #Hdi #HnVT #HLK1 #HLK2
 elim (nlift_inv_flat … HnVT) -HnVT #H
@@ -161,8 +175,8 @@ lemma llpx_sn_alt_bind: ∀R,a,I,L1,L2,V,T,d.
                         llpx_sn_alt R (⫯d) T (L1.ⓑ{I}V) (L2.ⓑ{I}V) →
                         llpx_sn_alt R d (ⓑ{a,I}V.T) L1 L2.
 #R #a #I #L1 #L2 #V #T #d #HV #HT
-elim (llpx_sn_alt_inv_gen … HV) -HV #HL12 #IHV
-elim (llpx_sn_alt_inv_gen … HT) -HT #_ #IHT
+elim (llpx_sn_alt_inv_alt … HV) -HV #HL12 #IHV
+elim (llpx_sn_alt_inv_alt … HT) -HT #_ #IHT
 @llpx_sn_alt_intro_alt // -HL12
 #I1 #I2 #K1 #K2 #V1 #V2 #i #Hdi #HnVT #HLK1 #HLK2
 elim (nlift_inv_bind … HnVT) -HnVT #H
@@ -196,7 +210,7 @@ theorem llpx_sn_alt_inv_lpx_sn: ∀R,T,L1,L2,d. llpx_sn_alt R d T L1 L2 → llpx
 ]
 qed-.
 
-(* Advanced properties ******************************************************)
+(* Alternative definition of llpx_sn ****************************************)
 
 lemma llpx_sn_intro_alt: ∀R,L1,L2,T,d. |L1| = |L2| →
                          (∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → (∀U. ⇧[i, 1] U ≡ T → ⊥) →
@@ -209,15 +223,27 @@ lemma llpx_sn_intro_alt: ∀R,L1,L2,T,d. |L1| = |L2| →
 elim (IH … HnT HLK1 HLK2) -IH -HnT -HLK1 -HLK2 /3 width=1 by llpx_sn_lpx_sn_alt, and3_intro/
 qed.
 
-(* Advanced inversion lemmas ************************************************)
+lemma llpx_sn_ind_alt: ∀R. ∀S:relation4 ynat term lenv lenv.
+                       (∀L1,L2,T,d. |L1| = |L2| → (
+                          ∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → (∀U. ⇧[i, 1] U ≡ T → ⊥) →
+                          ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 →
+                          ∧∧ I1 = I2 & R K1 V1 V2 & llpx_sn R 0 V1 K1 K2 & S 0 V1 K1 K2
+                       ) → S d T L1 L2) →
+                       ∀L1,L2,T,d. llpx_sn R d T L1 L2 → S d T L1 L2.
+#R #S #IH1 #L1 #L2 #T #d #H lapply (llpx_sn_lpx_sn_alt … H) -H
+#H @(llpx_sn_alt_ind_alt … H) -L1 -L2 -T -d
+#L1 #L2 #T #d #HL12 #IH2 @IH1 -IH1 // -HL12
+#I1 #I2 #K1 #K2 #V1 #V2 #i #Hid #HnT #HLK1 #HLK2
+elim (IH2 … HnT HLK1 HLK2) -IH2 -HnT -HLK1 -HLK2 /3 width=1 by llpx_sn_alt_inv_lpx_sn, and4_intro/
+qed-.
 
-lemma llpx_sn_inv_gen: ∀R,L1,L2,T,d. llpx_sn R d T L1 L2 →
+lemma llpx_sn_inv_alt: ∀R,L1,L2,T,d. llpx_sn R d T L1 L2 →
                        |L1| = |L2| ∧
                        ∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → (∀U. ⇧[i, 1] U ≡ T → ⊥) →
                        ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 →
                        ∧∧ I1 = I2 & R K1 V1 V2 & llpx_sn R 0 V1 K1 K2.
 #R #L1 #L2 #T #d #H lapply (llpx_sn_lpx_sn_alt … H) -H
-#H elim (llpx_sn_alt_inv_gen … H) -H
+#H elim (llpx_sn_alt_inv_alt … H) -H
 #HL12 #IH @conj //
 #I1 #I2 #K1 #K2 #V1 #V2 #i #Hid #HnT #HLK1 #HLK2
 elim (IH … HnT HLK1 HLK2) -IH -HnT -HLK1 -HLK2 /3 width=1 by llpx_sn_alt_inv_lpx_sn, and3_intro/

@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/relocation/llpx_sn_tc.ma".
-include "basic_2/computation/cpxs_cpxs.ma".
+include "basic_2/computation/cpxs_llpx.ma".
 include "basic_2/computation/llpxs.ma".
 
 (* LAZY SN EXTENDED PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS **************)
@@ -27,11 +27,11 @@ lemma llpxs_pair_dx: ∀h,g,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡*[h, g] V2 →
 (* Properties on context-sensitive extended parallel computation for terms **)
 
 lemma llpxs_cpx_trans: ∀h,g,G. s_r_transitive … (cpx h g G) (llpxs h g G 0).
-/3 width=5 by s_r_trans_LTC2, cpxs_llpx_trans/ qed-.
+/3 width=5 by s_r_trans_LTC2, llpx_cpxs_trans/ qed-.
 
 lemma llpxs_cpxs_trans: ∀h,g,G. s_rs_transitive … (cpx h g G) (llpxs h g G 0).
 #h #g #G @s_r_to_s_rs_trans @s_r_trans_LTC2
-/3 width=5 by cpxs_llpx_trans, s_rs_trans_TC1/ (**) (* full auto too slow *)
+/3 width=5 by llpx_cpxs_trans, s_rs_trans_TC1/ (**) (* full auto too slow *)
 qed-.
 
 (* Note: this is an instance of a general theorem *)
@@ -40,7 +40,7 @@ lemma llpxs_cpxs_conf_dx: ∀h,g,G2,L2,T2,U2. ⦃G2, L2⦄ ⊢ T2 ➡*[h, g] U2 
 #h #g #G2 #L2 #T2 #U2 #HTU2 #L0 #H @(llpxs_ind_dx … H) -L0 //
 #L0 #L #HL0 #HL2 #IHL2 @(llpxs_strap2 … IHL2) -IHL2
 lapply (llpxs_cpxs_trans … HTU2 … HL2) -L2 #HTU2
-/3 width=3 by cpxs_llpx_trans, cpxs_llpx_conf/
+/3 width=3 by llpx_cpxs_trans, cpxs_llpx_conf/
 qed-.
 
 (* Note: this is an instance of a general theorem *)
@@ -49,7 +49,7 @@ lemma llpxs_cpx_conf_dx: ∀h,g,G2,L2,T2,U2. ⦃G2, L2⦄ ⊢ T2 ➡[h, g] U2 �
 #h #g #G2 #L2 #T2 #U2 #HTU2 #L0 #H @(llpxs_ind_dx … H) -L0 //
 #L0 #L #HL0 #HL2 #IHL2 @(llpxs_strap2 … IHL2) -IHL2
 lapply (llpxs_cpx_trans … HTU2 … HL2) -L2 #HTU2
-/3 width=3 by cpxs_llpx_trans, cpxs_llpx_conf/
+/3 width=3 by llpx_cpxs_trans, cpxs_llpx_conf/
 qed-.
 
 lemma cpxs_bind2: ∀h,g,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡*[h, g] V2 →
@@ -138,7 +138,7 @@ lemma llpxs_fquq_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2,
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 #HT12 #K1 #H @(llpxs_ind_dx … H) -K1
 [ /2 width=5 by ex3_2_intro/
 | #K1 #K #HK1 #_ * #L #T #HT1 #HT2 #HL2 -HT12
-  lapply (cpxs_llpx_trans … HT1 … HK1) -HT1 #HT1
+  lapply (llpx_cpxs_trans … HT1 … HK1) -HT1 #HT1
   lapply (cpxs_llpx_conf … HT1 … HK1) -HK1 #HK1
   elim (llpx_fquq_trans … HT2 … HK1) -K
   /3 width=7 by llpxs_strap2, cpxs_strap1, ex3_2_intro/
@@ -151,7 +151,7 @@ lemma llpxs_fqup_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃+ ⦃G2, L
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 #HT12 #K1 #H @(llpxs_ind_dx … H) -K1
 [ /2 width=5 by ex3_2_intro/
 | #K1 #K #HK1 #_ * #L #T #HT1 #HT2 #HL2 -HT12
-  lapply (cpxs_llpx_trans … HT1 … HK1) -HT1 #HT1
+  lapply (llpx_cpxs_trans … HT1 … HK1) -HT1 #HT1
   lapply (cpxs_llpx_conf … HT1 … HK1) -HK1 #HK1
   elim (llpx_fqup_trans … HT2 … HK1) -K
   /3 width=7 by llpxs_strap2, cpxs_trans, ex3_2_intro/
@@ -164,7 +164,7 @@ lemma llpxs_fqus_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃* ⦃G2, L
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 #HT12 #K1 #H @(llpxs_ind_dx … H) -K1
 [ /2 width=5 by ex3_2_intro/
 | #K1 #K #HK1 #_ * #L #T #HT1 #HT2 #HL2 -HT12
-  lapply (cpxs_llpx_trans … HT1 … HK1) -HT1 #HT1
+  lapply (llpx_cpxs_trans … HT1 … HK1) -HT1 #HT1
   lapply (cpxs_llpx_conf … HT1 … HK1) -HK1 #HK1
   elim (llpx_fqus_trans … HT2 … HK1) -K
   /3 width=7 by llpxs_strap2, cpxs_trans, ex3_2_intro/

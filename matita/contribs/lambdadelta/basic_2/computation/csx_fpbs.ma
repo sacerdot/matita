@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/computation/fpbs.ma".
+include "basic_2/computation/csx_lift.ma". (* added *)
 include "basic_2/computation/csx_llpx.ma".
 
 (* CONTEXT-SENSITIVE EXTENDED STRONGLY NORMALIZING TERMS ********************)

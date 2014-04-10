@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/ldrop_lpx_sn.ma".
+include "basic_2/relocation/lpx_sn_ldrop.ma".
 include "basic_2/reduction/cpx_lift.ma".
 include "basic_2/reduction/lpx.ma".
 

@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/reduction/lpx_ldrop.ma".
 include "basic_2/computation/cpxs_lift.ma".
 
 (* CONTEXT-SENSITIVE EXTENDED PARALLEL COMPUTATION ON TERMS *****************)
@@ -92,47 +93,36 @@ qed-.
 
 (* Properties on sn extended parallel reduction for local environments ******)
 
-lemma llpx_cpx_trans: ∀h,g,G. s_r_transitive … (cpx h g G) (llpx h g G 0).
+lemma lpx_cpx_trans: ∀h,g,G. s_r_transitive … (cpx h g G) (λ_.lpx h g G).
 #h #g #G #L2 #T1 #T2 #HT12 elim HT12 -G -L2 -T1 -T2
 [ /2 width=3 by/
 | /3 width=2 by cpx_cpxs, cpx_sort/
 | #I #G #L2 #K2 #V0 #V2 #W2 #i #HLK2 #_ #HVW2 #IHV02 #L1 #HL12
-  elim (llpx_inv_lref_ge_dx … HL12 … HLK2) -L2
-  /5 width=8 by cpxs_delta, cpxs_strap2, llpx_cpx_conf/
-| #a #I #G #L2 #V1 #V2 #T1 #T2 #_ #_ #IHV12 #IHT12 #L1 #HL12
-  elim (llpx_inv_bind_O … HL12) -HL12 /4 width=1 by cpxs_bind/
-| #I #G #L2 #V1 #V2 #T1 #T2 #_ #_ #IHV12 #IHT12 #L1 #HL12
-  elim (llpx_inv_flat … HL12) -HL12 /3 width=1 by cpxs_flat/
-| #G #L2 #V2 #T1 #T #T2 #_ #HT2 #IHT1 #L1 #HL12
-  elim (llpx_inv_bind_O … HL12) /3 width=3 by cpxs_zeta/
-| #G #L2 #V2 #T1 #T2 #HT12 #IHT12 #L1 #HL12
-  elim (llpx_inv_flat … HL12) /3 width=1 by cpxs_tau/
-| #G #L2 #V1 #V2 #T2 #HV12 #IHV12 #L1 #HL12
-  elim (llpx_inv_flat … HL12) /3 width=1 by cpxs_ti/
-| #a #G #L2 #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #IHV12 #IHW12 #IHT12 #L1 #HL12
-  elim (llpx_inv_flat … HL12) -HL12 #HV1 #HL12
-  elim (llpx_inv_bind_O … HL12) /3 width=3 by cpxs_beta/
-| #a #G #L2 #V1 #V #V2 #W1 #W2 #T1 #T2 #_ #HV2 #_ #_ #IHV1 #IHW12 #IHT12 #L1 #HL12
-  elim (llpx_inv_flat … HL12) -HL12 #HV1 #HL12
-  elim (llpx_inv_bind_O … HL12) /3 width=3 by cpxs_theta/
+  elim (lpx_ldrop_trans_O1 … HL12 … HLK2) -L2 #X #HLK1 #H
+  elim (lpx_inv_pair2 … H) -H #K1 #V1 #HK12 #HV10 #H destruct
+  /4 width=7 by cpxs_delta, cpxs_strap2/
+|4,9: /4 width=1 by cpxs_beta, cpxs_bind, lpx_pair/
+|5,7,8: /3 width=1 by cpxs_flat, cpxs_ti, cpxs_tau/
+| /4 width=3 by cpxs_zeta, lpx_pair/
+| /4 width=3 by cpxs_theta, cpxs_strap1, lpx_pair/
 ]
 qed-.
 
 lemma cpx_bind2: ∀h,g,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡[h, g] V2 →
                  ∀I,T1,T2. ⦃G, L.ⓑ{I}V2⦄ ⊢ T1 ➡[h, g] T2 →
                  ∀a. ⦃G, L⦄ ⊢ ⓑ{a,I}V1.T1 ➡*[h, g] ⓑ{a,I}V2.T2.
-/4 width=9 by llpx_cpx_trans, cpxs_bind_dx, llpx_bind_repl_O/ qed.
+/4 width=5 by lpx_cpx_trans, cpxs_bind_dx, lpx_pair/ qed.
 
 (* Advanced properties ******************************************************)
 
-lemma cpxs_llpx_trans: ∀h,g,G. s_rs_transitive … (cpx h g G) (llpx h g G 0).
-#h #g #G @s_r_trans_LTC1 /2 width=3 by llpx_cpx_trans, llpx_cpx_conf/ (**) (* full auto fails here but works in cprs_cprs *)
+lemma lpx_cpxs_trans: ∀h,g,G. s_rs_transitive … (cpx h g G) (λ_.lpx h g G).
+#h #g #G @s_r_trans_LTC1 /2 width=3 by lpx_cpx_trans/ (**) (* full auto fails *)
 qed-.
 
 lemma cpxs_bind2_dx: ∀h,g,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡[h, g] V2 →
                      ∀I,T1,T2. ⦃G, L.ⓑ{I}V2⦄ ⊢ T1 ➡*[h, g] T2 →
                      ∀a. ⦃G, L⦄ ⊢ ⓑ{a,I}V1.T1 ➡*[h, g] ⓑ{a,I}V2.T2.
-/4 width=9 by cpxs_llpx_trans, cpxs_bind_dx, llpx_bind_repl_O/ qed.
+/4 width=5 by lpx_cpxs_trans, cpxs_bind_dx, lpx_pair/ qed.
 
 (* Properties on supclosure *************************************************)
 
