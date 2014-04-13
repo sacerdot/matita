@@ -14,16 +14,17 @@
 
 include "ground_2/ynat/ynat_max.ma".
 include "basic_2/computation/lsx_ldrop.ma".
+include "basic_2/computation/lsx_lpx.ma".
 include "basic_2/computation/lsx_lpxs.ma".
 include "basic_2/computation/lcosx.ma".
 
 (* SN EXTENDED STRONGLY CONORMALIZING LOCAL ENVIRONMENTS ********************)
 
-(* Properties on extended context-sensitive parallel computation for term ***)
+(* Properties on extended context-sensitive parallel reduction for term *****)
 
 lemma lsx_cpx_trans_lcosx: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[h, g] T2 →
-                           ∀d. G ⊢ ⧤⬊*[h, g, d] L →
-                           G ⊢ ⋕⬊*[h, g, T1, d] L → G ⊢ ⋕⬊*[h, g, T2, d] L.
+                           ∀d. G ⊢ ~⬊*[h, g, d] L →
+                           G ⊢ ⬊*[h, g, T1, d] L → G ⊢ ⬊*[h, g, T2, d] L.
 #h #g #G #L #T1 #T2 #H elim H -G -L -T1 -T2 //
 [ #I #G #L #K #V1 #V2 #W2 #i #HLK #_ #HVW2 #IHV12 #d #HL #H
   elim (ylt_split i d) #Hdi [ -H | -HL ]
@@ -62,11 +63,5 @@ lemma lsx_cpx_trans_lcosx: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[h, g] T2 →
 qed-.
 
 lemma lsx_cpx_trans_O: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[h, g] T2 →
-                       G ⊢ ⋕⬊*[h, g, T1, 0] L → G ⊢ ⋕⬊*[h, g, T2, 0] L.
+                       G ⊢ ⬊*[h, g, T1, 0] L → G ⊢ ⬊*[h, g, T2, 0] L.
 /2 width=3 by lsx_cpx_trans_lcosx/ qed-.
-
-lemma lsx_cpxs_trans_O: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡*[h, g] T2 →
-                        G ⊢ ⋕⬊*[h, g, T1, 0] L → G ⊢ ⋕⬊*[h, g, T2, 0] L.
-#h #g #G #L #T1 #T2 #H @(cpxs_ind … H) -T2
-/3 width=3 by lsx_cpx_trans_O, cpxs_strap1/
-qed-.

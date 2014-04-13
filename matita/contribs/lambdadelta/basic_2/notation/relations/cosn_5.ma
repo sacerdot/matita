@@ -14,6 +14,6 @@
 
 (* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-notation "hvbox( G ⊢ ⧤ ⬊ * break [ term 46 h , break term 46 g , break term 46 d ] break term 46 L )"
+notation "hvbox( G ⊢ ~ ⬊ * break [ term 46 h , break term 46 g , break term 46 d ] break term 46 L )"
    non associative with precedence 45
-   for @{ 'LazyCoSN $h $g $d $G $L }.
+   for @{ 'CoSN $h $g $d $G $L }.

@@ -84,8 +84,9 @@ table {
           }
         ]
         [ { "strongly normalizing extended computation" * } {
-(*             [ "lcosx ( ? ⊢ ⧤⬊*[?,?,?] ? )" "lcosx_cpxs" * ] *)
+             [ "lcosx ( ? ⊢ ~⬊*[?,?,?] ? )" "lcosx_cpx" * ]
              [ "llsx ( ? ⊢ ⋕⬊*[?,?,?,?] ? )" "llsx_alt ( ? ⊢ ⋕⬊⬊*[?,?,?,?] ? )" "llsx_ldrop" + "llsx_llpx" + "llsx_llpxs" + "llsx_csx" * ]
+             [ "lsx ( ? ⊢ ⬊*[?,?,?,?] ? )" "lsx_alt ( ? ⊢ ⬊⬊*[?,?,?,?] ? )" "lsx_ldrop" + "lsx_lpx" + "lsx_lpxs" + "llsx_csx" * ]
              [ "csx_vector ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csx_tstc_vector" + "csx_aaa" * ]
              [ "csx ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csx_alt ( ⦃?,?⦄ ⊢ ⬊⬊*[?,?] ? )" "csx_lift" + "csx_lpx" + "csx_llpx" + "csx_lpxs" + "csx_llpxs" + "csx_fpbs" * ]
           }

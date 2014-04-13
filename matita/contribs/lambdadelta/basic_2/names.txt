@@ -80,6 +80,7 @@ q: restricted reduction
 r: reduction
 s: substitution
 u: supclosure
+w: reserved for generic pointwise extension
 x: extended reduction
 y: extended substitution
 
@@ -93,3 +94,4 @@ q: reflexive closure                           (question)
 r: proper multiple step (restricted)           (restricted)
 s: reflexive transitive closure                (star)
 u: proper single step (restricted)             (unit)
+x: reserved for generic pointwise extension

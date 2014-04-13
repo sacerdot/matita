@@ -12,7 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/substitution/lleq_leq.ma".
 include "basic_2/substitution/lleq_ldrop.ma".
+include "basic_2/reduction/cpx_leq.ma".
 include "basic_2/reduction/lpx_ldrop.ma".
 
 (* SN EXTENDED PARALLEL REDUCTION FOR LOCAL ENVIRONMENTS ********************)
@@ -85,3 +87,33 @@ elim (fqus_inv_gen … H) -H
 | * #HG #HL #HT destruct /2 width=4 by ex3_intro/
 ]
 qed-.
+
+fact leq_lpx_trans_lleq_aux: ∀h,g,G,L1,L0,d,e. L1 ≃[d, e] L0 → e = ∞ →
+                             ∀L2. ⦃G, L0⦄ ⊢ ➡[h, g] L2 →
+                             ∃∃L. L ≃[d, e] L2 & ⦃G, L1⦄ ⊢ ➡[h, g] L &
+                                  (∀T. L0 ⋕[T, d] L2 ↔ L1 ⋕[T, d] L).
+#h #g #G #L1 #L0 #d #e #H elim H -L1 -L0 -d -e
+[ #d #e #_ #L2 #H >(lpx_inv_atom1 … H) -H
+  /3 width=5 by ex3_intro, conj/
+| #I1 #I0 #L1 #L0 #V1 #V0 #_ #_ #He destruct
+| #I #L1 #L0 #V1 #e #HL10 #IHL10 #He #Y #H
+  elim (lpx_inv_pair1 … H) -H #L2 #V2 #HL02 #HV02 #H destruct
+  lapply (ysucc_inv_Y_dx … He) -He #He
+  elim (IHL10 … HL02) // -IHL10 -HL02 #L #HL2 #HL1 #IH
+  @(ex3_intro … (L.ⓑ{I}V2)) /3 width=3 by lpx_pair, leq_cpx_trans, leq_pair/
+  #T elim (IH T) #HL0dx #HL0sn
+  @conj #H @(lleq_leq_repl … H) -H /3 width=1 by leq_sym, leq_pair_O_Y/
+| #I1 #I0 #L1 #L0 #V1 #V0 #d #e #HL10 #IHL10 #He #Y #H
+  elim (lpx_inv_pair1 … H) -H #L2 #V2 #HL02 #HV02 #H destruct
+  elim (IHL10 … HL02) // -IHL10 -HL02 #L #HL2 #HL1 #IH
+  @(ex3_intro … (L.ⓑ{I1}V1)) /3 width=1 by lpx_pair, leq_succ/
+  #T elim (IH T) #HL0dx #HL0sn
+  @conj #H @(lleq_leq_repl … H) -H /3 width=1 by leq_sym, leq_succ/
+]
+qed-.
+
+lemma leq_lpx_trans_lleq: ∀h,g,G,L1,L0,d. L1 ≃[d, ∞] L0 →
+                          ∀L2. ⦃G, L0⦄ ⊢ ➡[h, g] L2 →
+                          ∃∃L. L ≃[d, ∞] L2 & ⦃G, L1⦄ ⊢ ➡[h, g] L &
+                               (∀T. L0 ⋕[T, d] L2 ↔ L1 ⋕[T, d] L).
+/2 width=1 by leq_lpx_trans_lleq_aux/ qed-.
