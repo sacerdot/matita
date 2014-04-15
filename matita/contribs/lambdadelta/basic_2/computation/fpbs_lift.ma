@@ -28,3 +28,10 @@ lemma ssta_fpbs: ∀h,g,G,L,T,U,l.
                  ⦃G, L⦄ ⊢ T ▪[h, g] l+1 → ⦃G, L⦄ ⊢ T •[h, g] U →
                  ⦃G, L, T⦄ ≥[h, g] ⦃G, L, U⦄.
 /4 width=2 by fpb_fpbs, ssta_fpb/ qed.
+
+(* Note: this is used in the closure proof *)
+lemma cpr_lpr_ssta_fpbs: ∀h,g,G,L1,L2,T1,T2,U2,l2.
+                         ⦃G, L1⦄ ⊢ T1 ➡ T2 → ⦃G, L1⦄ ⊢ ➡ L2 →
+                         ⦃G, L2⦄ ⊢ T2 ▪[h, g] l2+1 → ⦃G, L2⦄ ⊢ T2 •[h, g] U2 →
+                         ⦃G, L1, T1⦄ ≥[h, g] ⦃G, L2, U2⦄.
+/4 width=5 by fpbs_strap1, cpr_lpr_fpbs, ssta_cpx, fpb_cpx/ qed.

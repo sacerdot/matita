@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/fpbs_lpr.ma".
 include "basic_2/dynamic/snv_lift.ma".
 include "basic_2/dynamic/snv_cpcs.ma".
 include "basic_2/dynamic/lsubsv_snv.ma".

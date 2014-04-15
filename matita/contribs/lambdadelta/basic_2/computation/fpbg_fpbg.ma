@@ -49,4 +49,3 @@ lemma fpbs_fpbu_trans: ∀h,g,F1,F2,K1,K2,T1,T2. ⦃F1, K1, T1⦄ ≥[h, g] ⦃F
 
 theorem fpbg_trans: ∀h,g. tri_transitive … (fpbg h g).
 /2 width=5 by tri_TC_transitive/ qed-.
-

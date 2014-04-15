@@ -85,17 +85,16 @@ table {
         ]
         [ { "strongly normalizing extended computation" * } {
              [ "lcosx ( ? ⊢ ~⬊*[?,?,?] ? )" "lcosx_cpx" * ]
-             [ "llsx ( ? ⊢ ⋕⬊*[?,?,?,?] ? )" "llsx_alt ( ? ⊢ ⋕⬊⬊*[?,?,?,?] ? )" "llsx_ldrop" + "llsx_llpx" + "llsx_llpxs" + "llsx_csx" * ]
              [ "lsx ( ? ⊢ ⬊*[?,?,?,?] ? )" "lsx_alt ( ? ⊢ ⬊⬊*[?,?,?,?] ? )" "lsx_ldrop" + "lsx_lpx" + "lsx_lpxs" + "llsx_csx" * ]
              [ "csx_vector ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csx_tstc_vector" + "csx_aaa" * ]
-             [ "csx ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csx_alt ( ⦃?,?⦄ ⊢ ⬊⬊*[?,?] ? )" "csx_lift" + "csx_lpx" + "csx_llpx" + "csx_lpxs" + "csx_llpxs" + "csx_fpbs" * ]
+             [ "csx ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csx_alt ( ⦃?,?⦄ ⊢ ⬊⬊*[?,?] ? )" "csx_lift" + "csx_lleq" + "csx_lpx" + "csx_lpxs" + "csx_fpbs" * ]
           }
         ]
         [ { "\"big tree\" parallel computation" * } {
              [ "fpbg ( ⦃?,?,?⦄ >⋕[?,?] ⦃?,?,?⦄ )" "fpbg_lift" + "fpbg_fleq" + "fpbg_fpbg" * ]
              [ "fpbc ( ⦃?,?,?⦄ ≻⋕[?,?] ⦃?,?,?⦄ )" "fpbc_fleq" + "fpbc_fpbs" * ]
              [ "fpbu ( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" "fpbu_lift" + "fpbu_lleq" "fpbu_fleq" * ]
-             [ "fpbs ( ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "fpbs_alt ( ⦃?,?,?⦄ ≥≥[?,?] ⦃?,?,?⦄ )" "fpbs_lift" + "fpbs_fleq" + "fpbs_aaa" + "fpbs_lpr" + "fpbs_fpbs" + "fpbs_ext" * ]
+             [ "fpbs ( ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "fpbs_alt ( ⦃?,?,?⦄ ≥≥[?,?] ⦃?,?,?⦄ )" "fpbs_lift" + "fpbs_fleq" + "fpbs_aaa" + "fpbs_fpbs" + "fpbs_ext" * ]
           }
         ]
         [ { "decomposed extended computation" * } {
@@ -103,9 +102,8 @@ table {
           }
         ]
         [ { "context-sensitive extended computation" * } {
-             [ "llpxs ( ⦃?,?⦄ ⊢ ➡*[?,?,?,?] ? )" "llpxs_lleq" + "llpxs_aaa" + "llpxs_lprs" "llpxs_cpxs" + "llpxs_llpxs" * ]
              [ "lpxs ( ⦃?,?⦄ ⊢ ➡*[?,?] ? )" "lpxs_alt ( ⦃?,?⦄ ⊢ ➡➡*[?,?] ? )" "lpxs_ldrop" + "lpxs_lleq" + "lpxs_aaa" + "lpxs_cpxs" + "lpxs_lpxs" * ]
-             [ "cpxs ( ⦃?,?⦄ ⊢ ? ➡*[?,?] ? )" "cpxs_tstc" + "cpxs_tstc_vector" + "cpxs_leq" + "cpxs_lift" + "cpxs_lleq" + "cpxs_aaa" + "cpxs_llpx" + "cpxs_cpxs" * ]
+             [ "cpxs ( ⦃?,?⦄ ⊢ ? ➡*[?,?] ? )" "cpxs_tstc" + "cpxs_tstc_vector" + "cpxs_leq" + "cpxs_lift" + "cpxs_lleq" + "cpxs_aaa" + "cpxs_cpxs" * ]
           }
         ]
         [ { "context-sensitive computation" * } {
@@ -134,7 +132,6 @@ table {
           }
         ]
         [ { "context-sensitive extended reduction" * } {
-             [ "llpx ( ⦃?,?⦄ ⊢ ➡[?,?,?,?] ? )" "llpx_ldrop" + "llpx_lleq" + "llpx_aaa" + "llpx_lpr" * ]
              [ "lpx ( ⦃?,?⦄ ⊢ ➡[?,?] ? )" "lpx_ldrop" + "lpx_lleq" + "lpx_aaa" * ]
              [ "cpx ( ⦃?,?⦄ ⊢ ? ➡[?,?] ? )" "cpx_leq" + "cpx_lift" + "cpx_llpx_sn" + "cpx_lleq" + "cpx_cix" * ]
           }
@@ -185,7 +182,7 @@ table {
           }
         ]
         [ { "atomic arity assignment" * } {
-             [ "aaa ( ⦃?,?⦄ ⊢ ? ⁝ ? )" "aaa_lift" + "aaa_lifts" + "aaa_fqus" + "aaa_da" + "aaa_ssta" + "aaa_aaa" * ]
+             [ "aaa ( ⦃?,?⦄ ⊢ ? ⁝ ? )" "aaa_lift" + "aaa_lifts" + "aaa_fqus" + "aaa_lleq" + "aaa_da" + "aaa_ssta" + "aaa_aaa" * ]
           }
         ]
         [ { "stratified static type assignment" * } {

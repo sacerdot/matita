@@ -12,23 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/fpns_fpns.ma".
-include "basic_2/computation/fpbu_fpns.ma".
-include "basic_2/computation/fpbc.ma".
+include "basic_2/reduction/cpx_lleq.ma".
+include "basic_2/computation/csx.ma".
 
-(* SINGLE-STEP "BIG TREE" PROPER PARALLEL COMPUTATION FOR CLOSURES **********)
+(* CONTEXT-SENSITIVE EXTENDED STRONGLY NORMALIZING TERMS ********************)
 
-(* Properties on parallel computation for "big tree" normal forms ***********)
+(* Properties on lazy equivalence for local environments ********************)
 
-lemma fpbc_fpns_trans: ∀h,g,G1,G,G2,L1,L,L2,T1,T,T2. ⦃G1, L1, T1⦄ ≻⋕[h, g] ⦃G, L, T⦄ →
-                       ⦃G, L, T⦄ ⊢ ⋕➡*[h, g] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≻⋕[h, g] ⦃G2, L2, T2⦄.
-#h #g #G1 #G #G2 #L1 #L #L2 #T1 #T #T2 *
-/3 width=9 by fpns_trans, ex2_3_intro/
+lemma csx_lleq_conf: ∀h,g,G,L1,T. ⦃G, L1⦄ ⊢ ⬊*[h, g] T →
+                     ∀L2. L1 ⋕[T, 0] L2 → ⦃G, L2⦄ ⊢ ⬊*[h, g] T.
+#h #g #G #L1 #T #H @(csx_ind … H) -T
+/4 width=6 by csx_intro, cpx_lleq_conf_dx, lleq_cpx_trans/
 qed-.
 
-lemma fpns_fpbc_trans: ∀h,g,G1,G,G2,L1,L,L2,T1,T,T2. ⦃G1, L1, T1⦄ ⊢ ⋕➡*[h, g] ⦃G, L, T⦄ →
-                       ⦃G, L, T⦄ ≻⋕[h, g] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≻⋕[h, g] ⦃G2, L2, T2⦄.
-#h #g #G1 #G #G2 #L1 #L #L2 #T1 #T #T2 #H1 *
-#G0 #L0 #T0 #H0 #H02 elim (fpns_fpbu_trans … H1 … H0) -G -L -T
-/3 width=9 by fpns_trans, ex2_3_intro/
-qed-.
+lemma csx_lleq_trans: ∀h,g,G,L1,L2,T.
+                      L1 ⋕[T, 0] L2 → ⦃G, L2⦄ ⊢ ⬊*[h, g] T → ⦃G, L1⦄ ⊢ ⬊*[h, g] T.
+/3 width=3 by csx_lleq_conf, lleq_sym/ qed-.

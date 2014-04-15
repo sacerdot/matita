@@ -12,8 +12,24 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
+include "basic_2/relocation/llor.ma".
+include "basic_2/substitution/lleq_alt.ma".
 
-notation "hvbox( ⦃ term 46 G1, break term 46 L1, break term 46 T1 ⦄ ⊢ ⋕ ➡ * break [ term 46 h , break term 46 g ] break ⦃ term 46 G2, break term 46 L2 , break term 46 T2 ⦄ )"
-   non associative with precedence 45
-   for @{ 'BTPRedSnStar $h $g $G1 $L1 $T1 $G2 $L2 $T2 }.
+(* LAZY EQUIVALENCE FOR LOCAL ENVIRONMENTS **********************************)
+
+(* Properties on poinwise union for local environments **********************)
+
+lemma llor_lleq_O: ∀T,L1,L2,L. L1 ⩖[T] L2 ≡ L → |L1| ≤ |L2| → |L2| = |L| → L2 ⋕[T, yinj 0] L.
+#T #L1 @(f2_ind … rfw … L1 T) -L1 -T
+#n #IH #L1 #T #Hn #L2 #L #H #HL12 #HL2 elim (llor_inv_alt … H) // destruct
+#HL1 #IHT @lleq_intro_alt //
+#I2 #I #K2 #K #V2 #V #i #_ #HnT #HLK2 #HLK lapply (ldrop_fwd_length_lt2 … HLK)
+#Hi elim (ldrop_O1_lt L1 i) //
+#I1 #K1 #V1 #HLK1 elim (IHT … HLK1 HLK) >HL1 >HL2 <minus_n_n -IHT -HLK1 -HLK
+[
+| * #I0 #K0 #V0 #_ #HLK0 lapply (ldrop_mono … HLK0 … HLK2) -HLK0 -HLK2
+  #H1 #H2 #H3 #_ destruct
+    
+
+
+ 

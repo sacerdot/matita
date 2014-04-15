@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/csx_lift.ma". (* added *)
+include "basic_2/computation/csx_lift.ma".
 include "basic_2/computation/csx_llpxs.ma".
 include "basic_2/computation/llsx_ldrop.ma".
 include "basic_2/computation/llsx_llpx.ma".

@@ -39,7 +39,8 @@ lemma fpb_fpbu: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≽[h, g] ⦃G2, L2, 
 | #T2 #HT12 elim (eq_term_dec T1 T2)
   #HnT12 destruct /4 width=1 by fpbu_cpxs, cpx_cpxs, or_intror, or_introl/
 | #L2 #HL12 elim (lleq_dec … T1 L1 L2 0)
-  /4 width=3 by fpbu_llpxs, fleq_intro, llpx_llpxs, or_intror, or_introl/
+  /4 width=3 by fpbu_lpxs, fleq_intro, lpx_lpxs, or_intror, or_introl/
+| /3 width=1 by fleq_intro, or_introl/ 
 ]
 qed-.
 
@@ -53,17 +54,16 @@ lemma fpbs_fpbu_sn: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, 
   elim (fpb_fpbu … H1) -H1 #H1
   [ /3 width=1 by  
 *)
-#h #g #G1 #G2 #L1 #L2 #T1 #T2 #H elim(fpbs_fpbsa … H) -H
-#L #T #HT1 #HT2 #HL2 elim (eq_term_dec T1 T) #H destruct
+#h #g #G1 #G2 #L1 #L2 #T1 #T2 #H elim(fpbs_inv_alt … H) -H
+#L0 #L #T #HT1 #HT2 #HL0 #HL2 elim (eq_term_dec T1 T) #H destruct
 [ -HT1 elim (fqus_inv_gen … HT2) -HT2
-  [ #HT2 @or_intror
-    /5 width=9 by fpbsa_inv_fpbs, fpbu_fqup, ex3_2_intro, ex2_3_intro, or_intror/
-  | * #HG #HL #HT destruct elim (lleq_dec T2 L L2 0) #H
-    [ /3 width=1 by fleq_intro, or_introl/
-    | /5 width=5 by fpbu_llpxs, ex2_3_intro, or_intror/
+  [ /4 width=11 by fpbs_intro_alt, fpbu_fqup, ex2_3_intro, or_intror/
+  | * #HG #HL #HT destruct elim (lleq_dec T2 L0 L 0) #H
+    [ /4 width=3 by fleq_intro, lleq_trans, or_introl/
+    | /5 width=5 by fpbu_lpxs, lleq_fpbs, ex2_3_intro, or_intror/
     ]
   ]
 | elim (cpxs_neq_inv_step_sn … HT1 H) -HT1 -H
-  /5 width=9 by fpbsa_inv_fpbs, fpbu_cpxs, cpx_cpxs, ex3_2_intro, ex2_3_intro, or_intror/
+  /5 width=11 by fpbs_intro_alt, fpbu_cpxs, cpx_cpxs, ex2_3_intro, or_intror/
 ]
 qed-.
