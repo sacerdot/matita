@@ -5,6 +5,7 @@
       title = "\lambda\delta version 2"
       head = "cic:/matita/lambdadelta/basic_2/ (λδ version 2)"
 >
+<!--   
    <section>System's Syntax and Behavior</section>
    <body>This is a summary of the "block structure"
          of the System's syntactic items and reductions.
@@ -15,6 +16,7 @@
          *** In global environments only.
          **** Sort level k in terms only.
    </body>
+-->
 
    <section>Summary of the Specification</section>
    <body>Here is a numerical acount of the specification's contents
@@ -30,8 +32,13 @@
          for native type assignment.
    </news>
    <news date="In progress.">
-         Closure of context-sensitive extended computation
-         for native validity.
+         Closure of native validity
+	 for context-sensitive extended computation.
+   </news>
+   <news date="2014 April 16.">
+         lazy equivalence for local environments
+	 serves as irrelevant step in "big tree" computation
+         (anniversary milestone).
    </news>
    <news date="2014 January 20.">
          Parametrized slicing for local environments
@@ -61,7 +68,7 @@
          Confluence for context-free parallel reduction on closures.
    </news>
    <news date="2012 July 26.">
-         Term binders polarized to control ζ-reduction.
+         Term binders polarized to control ζ-reduction (not released).
    </news>
    <news date="2012 April 16.">
          Context-sensitive subject equivalence
