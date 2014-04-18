@@ -18,11 +18,11 @@ include "basic_2/relocation/lpx_sn.ma".
 (* SN POINTWISE EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS *********)
 
 (* alternative definition of lpx_sn *)
-definition lpx_sn_alt: relation3 lenv term term → relation lenv ≝
+definition lpx_sn_alt: relation4 bind2 lenv term term → relation lenv ≝
                        λR,L1,L2. |L1| = |L2| ∧
                        (∀I1,I2,K1,K2,V1,V2,i.
                           ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 →
-                          I1 = I2 ∧ R K1 V1 V2
+                          I1 = I2 ∧ R I1 K1 V1 V2
                        ).
 
 (* Basic forward lemmas ******************************************************)
@@ -39,7 +39,7 @@ normalize /2 width=1 by length_inv_zero_sn/
 qed-.
 
 lemma lpx_sn_alt_inv_pair1: ∀R,I,L2,K1,V1. lpx_sn_alt R (K1.ⓑ{I}V1) L2 →
-                            ∃∃K2,V2. lpx_sn_alt R K1 K2 & R K1 V1 V2 & L2 = K2.ⓑ{I}V2.
+                            ∃∃K2,V2. lpx_sn_alt R K1 K2 & R I K1 V1 V2 & L2 = K2.ⓑ{I}V2.
 #R #I1 #L2 #K1 #V1 #H elim H -H
 #H #IH elim (length_inv_pos_sn … H) -H
 #I2 #K2 #V2 #HK12 #H destruct
@@ -56,7 +56,7 @@ normalize /2 width=1 by length_inv_zero_dx/
 qed-.
 
 lemma lpx_sn_alt_inv_pair2: ∀R,I,L1,K2,V2. lpx_sn_alt R L1 (K2.ⓑ{I}V2) →
-                            ∃∃K1,V1. lpx_sn_alt R K1 K2 & R K1 V1 V2 & L1 = K1.ⓑ{I}V1.
+                            ∃∃K1,V1. lpx_sn_alt R K1 K2 & R I K1 V1 V2 & L1 = K1.ⓑ{I}V1.
 #R #I2 #L1 #K2 #V2 #H elim H -H
 #H #IH elim (length_inv_pos_dx … H) -H
 #I1 #K1 #V1 #HK12 #H destruct
@@ -76,7 +76,7 @@ lemma lpx_sn_alt_atom: ∀R. lpx_sn_alt R (⋆) (⋆).
 qed.
 
 lemma lpx_sn_alt_pair: ∀R,I,L1,L2,V1,V2.
-                       lpx_sn_alt R L1 L2 → R L1 V1 V2 →
+                       lpx_sn_alt R L1 L2 → R I L1 V1 V2 →
                        lpx_sn_alt R (L1.ⓑ{I}V1) (L2.ⓑ{I}V2).
 #R #I #L1 #L2 #V1 #V2 #H #HV12 elim H -H
 #HL12 #IH @conj normalize //
@@ -111,7 +111,7 @@ qed-.
 lemma lpx_sn_intro_alt: ∀R,L1,L2. |L1| = |L2| →
                         (∀I1,I2,K1,K2,V1,V2,i.
                            ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 →
-                           I1 = I2 ∧ R K1 V1 V2
+                           I1 = I2 ∧ R I1 K1 V1 V2
                         ) → lpx_sn R L1 L2.
 /4 width=4 by lpx_sn_alt_inv_lpx_sn, conj/ qed.
 
@@ -119,7 +119,7 @@ lemma lpx_sn_inv_alt: ∀R,L1,L2. lpx_sn R L1 L2 →
                       |L1| = |L2| ∧
                       ∀I1,I2,K1,K2,V1,V2,i.
                       ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 →
-                      I1 = I2 ∧ R K1 V1 V2.
+                      I1 = I2 ∧ R I1 K1 V1 V2.
 #R #L1 #L2 #H lapply (lpx_sn_lpx_sn_alt … H) -H
 #H elim H -H /3 width=4 by conj/
 qed-.

@@ -35,6 +35,17 @@ lemma lprs_inv_pair2: ∀I,G,L1,K2,V2. ⦃G, L1⦄ ⊢ ➡* K2.ⓑ{I}V2 →
                                L1 = K1.ⓑ{I}V1.
 /3 width=3 by TC_lpx_sn_inv_pair2, lpr_cprs_trans/ qed-.
 
+(* Advanced eliminators *****************************************************)
+
+lemma lprs_ind_alt: ∀G. ∀R:relation lenv.
+                    R (⋆) (⋆) → (
+                       ∀I,K1,K2,V1,V2.
+                       ⦃G, K1⦄ ⊢ ➡* K2 → ⦃G, K1⦄ ⊢ V1 ➡* V2 →
+                       R K1 K2 → R (K1.ⓑ{I}V1) (K2.ⓑ{I}V2)
+                    ) →
+                    ∀L1,L2. ⦃G, L1⦄ ⊢ ➡* L2 → R L1 L2.
+/3 width=4 by TC_lpx_sn_ind, lpr_cprs_trans/ qed-.
+
 (* Properties on context-sensitive parallel computation for terms ***********)
 
 lemma lprs_cpr_trans: ∀G. s_r_transitive … (cpr G) (λ_. lprs G).

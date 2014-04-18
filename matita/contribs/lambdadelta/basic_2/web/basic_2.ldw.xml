@@ -36,7 +36,7 @@
 	 for context-sensitive extended computation.
    </news>
    <news date="2014 April 16.">
-         lazy equivalence for local environments
+         lazy equivalence on local environments
 	 serves as irrelevant step in "big tree" computation
          (anniversary milestone).
    </news>

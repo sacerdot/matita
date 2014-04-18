@@ -21,8 +21,8 @@ include "basic_2/computation/lsubc.ma".
 
 (* Basic_1: was: csubc_drop_conf_O *)
 (* Note: the constant 0 can not be generalized *)
-lemma lsubc_ldrop_O1_trans: ∀RP,G,L1,L2. G ⊢ L1 ⊑[RP] L2 → ∀K2,s,e. ⇩[s, 0, e] L2 ≡ K2 →
-                            ∃∃K1. ⇩[s, 0, e] L1 ≡ K1 & G ⊢ K1 ⊑[RP] K2.
+lemma lsubc_ldrop_O1_trans: ∀RP,G,L1,L2. G ⊢ L1 ⫃[RP] L2 → ∀K2,s,e. ⇩[s, 0, e] L2 ≡ K2 →
+                            ∃∃K1. ⇩[s, 0, e] L1 ≡ K1 & G ⊢ K1 ⫃[RP] K2.
 #RP #G #L1 #L2 #H elim H -L1 -L2
 [ #X #s #e #H elim (ldrop_inv_atom1 … H) -H /4 width=3 by ldrop_atom, ex2_intro/
 | #I #L1 #L2 #V #_ #IHL12 #X #s #e #H
@@ -43,8 +43,8 @@ qed-.
 (* Basic_1: was: csubc_drop_conf_rev *)
 lemma ldrop_lsubc_trans: ∀RR,RS,RP.
                          acp RR RS RP → acr RR RS RP (λG,L,T. RP G L T) →
-                         ∀G,L1,K1,d,e. ⇩[Ⓕ, d, e] L1 ≡ K1 → ∀K2. G ⊢ K1 ⊑[RP] K2 →
-                         ∃∃L2. G ⊢ L1 ⊑[RP] L2 & ⇩[Ⓕ, d, e] L2 ≡ K2.
+                         ∀G,L1,K1,d,e. ⇩[Ⓕ, d, e] L1 ≡ K1 → ∀K2. G ⊢ K1 ⫃[RP] K2 →
+                         ∃∃L2. G ⊢ L1 ⫃[RP] L2 & ⇩[Ⓕ, d, e] L2 ≡ K2.
 #RR #RS #RP #Hacp #Hacr #G #L1 #K1 #d #e #H elim H -L1 -K1 -d -e
 [ #d #e #He #X #H elim (lsubc_inv_atom1 … H) -H
   >He /2 width=3 by ex2_intro/

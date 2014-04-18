@@ -40,7 +40,7 @@ lemma fpbg_strap2: ∀h,g,G1,G,G2,L1,L,L2,T1,T,T2.
 /2 width=5 by tri_TC_strap/ qed.
 
 (* Note: this is used in the closure proof *)
-lemma fqup_fpbg: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃+ ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ >⋕[h, g] ⦃G2, L2, T2⦄.
+lemma fqup_fpbg: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐+ ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ >⋕[h, g] ⦃G2, L2, T2⦄.
 /4 width=1 by fpbc_fpbg, fpbu_fpbc, fpbu_fqup/ qed.
 
 (* Basic eliminators ********************************************************)

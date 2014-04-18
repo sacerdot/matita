@@ -23,7 +23,7 @@ lemma llpx_sn_fwd_lref_dx: ∀R,L1,L2,d,i. llpx_sn R d (#i) L1 L2 →
                            ∀I,K2,V2. ⇩[i] L2 ≡ K2.ⓑ{I}V2 →
                            i < d ∨
                            ∃∃K1,V1. ⇩[i] L1 ≡ K1.ⓑ{I}V1 & llpx_sn R 0 V1 K1 K2 &
-                                    R K1 V1 V2 & d ≤ i.
+                                    R I K1 V1 V2 & d ≤ i.
 #R #L1 #L2 #d #i #H #I #K2 #V2 #HLK2 elim (llpx_sn_fwd_lref … H) -H [ * || * ]
 [ #_ #H elim (lt_refl_false i)
   lapply (ldrop_fwd_length_lt2 … HLK2) -HLK2
@@ -39,7 +39,7 @@ lemma llpx_sn_fwd_lref_sn: ∀R,L1,L2,d,i. llpx_sn R d (#i) L1 L2 →
                            ∀I,K1,V1. ⇩[i] L1 ≡ K1.ⓑ{I}V1 →
                            i < d ∨
                            ∃∃K2,V2. ⇩[i] L2 ≡ K2.ⓑ{I}V2 & llpx_sn R 0 V1 K1 K2 &
-                                    R K1 V1 V2 & d ≤ i.
+                                    R I K1 V1 V2 & d ≤ i.
 #R #L1 #L2 #d #i #H #I #K1 #V1 #HLK1 elim (llpx_sn_fwd_lref … H) -H [ * || * ]
 [ #H #_ elim (lt_refl_false i)
   lapply (ldrop_fwd_length_lt2 … HLK1) -HLK1
@@ -56,7 +56,7 @@ qed-.
 lemma llpx_sn_inv_lref_ge_dx: ∀R,L1,L2,d,i. llpx_sn R d (#i) L1 L2 → d ≤ i →
                               ∀I,K2,V2. ⇩[i] L2 ≡ K2.ⓑ{I}V2 →
                               ∃∃K1,V1. ⇩[i] L1 ≡ K1.ⓑ{I}V1 &
-                                       llpx_sn R 0 V1 K1 K2 & R K1 V1 V2.
+                                       llpx_sn R 0 V1 K1 K2 & R I K1 V1 V2.
 #R #L1 #L2 #d #i #H #Hdi #I #K2 #V2 #HLK2 elim (llpx_sn_fwd_lref_dx … H … HLK2) -L2
 [ #H elim (ylt_yle_false … H Hdi)
 | * /2 width=5 by ex3_2_intro/
@@ -66,7 +66,7 @@ qed-.
 lemma llpx_sn_inv_lref_ge_sn: ∀R,L1,L2,d,i. llpx_sn R d (#i) L1 L2 → d ≤ i →
                               ∀I,K1,V1. ⇩[i] L1 ≡ K1.ⓑ{I}V1 →
                               ∃∃K2,V2. ⇩[i] L2 ≡ K2.ⓑ{I}V2 &
-                                       llpx_sn R 0 V1 K1 K2 & R K1 V1 V2.
+                                       llpx_sn R 0 V1 K1 K2 & R I K1 V1 V2.
 #R #L1 #L2 #d #i #H #Hdi #I #K1 #V1 #HLK1 elim (llpx_sn_fwd_lref_sn … H … HLK1) -L1
 [ #H elim (ylt_yle_false … H Hdi)
 | * /2 width=5 by ex3_2_intro/
@@ -76,7 +76,7 @@ qed-.
 lemma llpx_sn_inv_lref_ge_bi: ∀R,L1,L2,d,i. llpx_sn R d (#i) L1 L2 → d ≤ i →
                               ∀I1,I2,K1,K2,V1,V2.
                               ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 →
-                              ∧∧ I1 = I2 & llpx_sn R 0 V1 K1 K2 & R K1 V1 V2.
+                              ∧∧ I1 = I2 & llpx_sn R 0 V1 K1 K2 & R I1 K1 V1 V2.
 #R #L1 #L2 #d #i #HL12 #Hdi #I1 #I2 #K1 #K2 #V1 #V2 #HLK1 #HLK2
 elim (llpx_sn_inv_lref_ge_sn … HL12 … HLK1) // -L1 -d
 #J #Y #HY lapply (ldrop_mono … HY … HLK2) -L2 -i #H destruct /2 width=1 by and3_intro/
@@ -84,7 +84,7 @@ qed-.
 
 fact llpx_sn_inv_S_aux: ∀R,L1,L2,T,d0. llpx_sn R d0 T L1 L2 → ∀d. d0 = d + 1 →
                         ∀K1,K2,I,V1,V2. ⇩[d] L1 ≡ K1.ⓑ{I}V1 → ⇩[d] L2 ≡ K2.ⓑ{I}V2 →
-                        llpx_sn R 0 V1 K1 K2 → R K1 V1 V2 → llpx_sn R d T L1 L2.
+                        llpx_sn R 0 V1 K1 K2 → R I K1 V1 V2 → llpx_sn R d T L1 L2.
 #R #L1 #L2 #T #d0 #H elim H -L1 -L2 -T -d0
 /2 width=1 by llpx_sn_gref, llpx_sn_free, llpx_sn_sort/
 [ #L1 #L2 #d0 #i #HL12 #Hid #d #H #K1 #K2 #I #V1 #V2 #HLK1 #HLK2 #HK12 #HV12 destruct
@@ -101,10 +101,10 @@ qed-.
 
 lemma llpx_sn_inv_S: ∀R,L1,L2,T,d. llpx_sn R (d + 1) T L1 L2 →
                      ∀K1,K2,I,V1,V2. ⇩[d] L1 ≡ K1.ⓑ{I}V1 → ⇩[d] L2 ≡ K2.ⓑ{I}V2 →
-                     llpx_sn R 0 V1 K1 K2 → R K1 V1 V2 → llpx_sn R d T L1 L2.
+                     llpx_sn R 0 V1 K1 K2 → R I K1 V1 V2 → llpx_sn R d T L1 L2.
 /2 width=9 by llpx_sn_inv_S_aux/ qed-.
 
-lemma llpx_sn_inv_bind_O: ∀R. (∀L. reflexive … (R L)) →
+lemma llpx_sn_inv_bind_O: ∀R. (∀I,L. reflexive … (R I L)) →
                           ∀a,I,L1,L2,V,T. llpx_sn R 0 (ⓑ{a,I}V.T) L1 L2 →
                           llpx_sn R 0 V L1 L2 ∧ llpx_sn R 0 T (L1.ⓑ{I}V) (L2.ⓑ{I}V).
 #R #HR #a #I #L1 #L2 #V #T #H elim (llpx_sn_inv_bind … H) -H
@@ -113,7 +113,7 @@ qed-.
 
 (* More advanced forward lemmas *********************************************)
 
-lemma llpx_sn_fwd_bind_O_dx: ∀R. (∀L. reflexive … (R L)) →
+lemma llpx_sn_fwd_bind_O_dx: ∀R. (∀I,L. reflexive … (R I L)) →
                              ∀a,I,L1,L2,V,T. llpx_sn R 0 (ⓑ{a,I}V.T) L1 L2 →
                              llpx_sn R 0 T (L1.ⓑ{I}V) (L2.ⓑ{I}V).
 #R #HR #a #I #L1 #L2 #V #T #H elim (llpx_sn_inv_bind_O … H) -H //
@@ -122,10 +122,10 @@ qed-.
 (* Advanced properties ******************************************************)
 
 lemma llpx_sn_bind_repl_O: ∀R,I,L1,L2,V1,V2,T. llpx_sn R 0 T (L1.ⓑ{I}V1) (L2.ⓑ{I}V2) →
-                           ∀J,W1,W2. llpx_sn R 0 W1 L1 L2 → R L1 W1 W2 → llpx_sn R 0 T (L1.ⓑ{J}W1) (L2.ⓑ{J}W2).
+                           ∀J,W1,W2. llpx_sn R 0 W1 L1 L2 → R J L1 W1 W2 → llpx_sn R 0 T (L1.ⓑ{J}W1) (L2.ⓑ{J}W2).
 /3 width=9 by llpx_sn_bind_repl_SO, llpx_sn_inv_S/ qed-.
 
-lemma llpx_sn_dec: ∀R. (∀L,T1,T2. Decidable (R L T1 T2)) →
+lemma llpx_sn_dec: ∀R. (∀I,L,T1,T2. Decidable (R I L T1 T2)) →
                    ∀T,L1,L2,d. Decidable (llpx_sn R d T L1 L2).
 #R #HR #T #L1 @(f2_ind … rfw … L1 T) -L1 -T
 #n #IH #L1 * *
@@ -137,7 +137,7 @@ lemma llpx_sn_dec: ∀R. (∀L,T1,T2. Decidable (R L T1 T2)) →
     elim (ldrop_O1_lt … HiL2) #I2 #K2 #V2 #HLK2
     elim (ldrop_O1_lt … HiL1) #I1 #K1 #V1 #HLK1
     elim (eq_bind2_dec I2 I1)
-    [ #H2 elim (HR K1 V1 V2) -HR
+    [ #H2 elim (HR I1 K1 V1 V2) -HR
       [ #H3 elim (IH K1 V1 … K2 0) destruct
         /3 width=9 by llpx_sn_lref, ldrop_fwd_rfw, or_introl/
       ]
@@ -169,7 +169,7 @@ qed-.
 
 (* Properties on relocation *************************************************)
 
-lemma llpx_sn_lift_le: ∀R. l_liftable R →
+lemma llpx_sn_lift_le: ∀R. (∀I. l_liftable (R I)) →
                        ∀K1,K2,T,d0. llpx_sn R d0 T K1 K2 →
                        ∀L1,L2,d,e. ⇩[Ⓕ, d, e] L1 ≡ K1 → ⇩[Ⓕ, d, e] L2 ≡ K2 →
                        ∀U. ⇧[d, e] T ≡ U → d0 ≤ d → llpx_sn R d0 U L1 L2.
@@ -252,7 +252,7 @@ qed-.
 
 (* Inversion lemmas on relocation *******************************************)
 
-lemma llpx_sn_inv_lift_le: ∀R. l_deliftable_sn R →
+lemma llpx_sn_inv_lift_le: ∀R. (∀I. l_deliftable_sn (R I)) →
                            ∀L1,L2,U,d0. llpx_sn R d0 U L1 L2 →
                            ∀K1,K2,d,e. ⇩[Ⓕ, d, e] L1 ≡ K1 → ⇩[Ⓕ, d, e] L2 ≡ K2 →
                            ∀T. ⇧[d, e] T ≡ U → d0 ≤ d → llpx_sn R d0 T K1 K2.
@@ -409,21 +409,21 @@ qed-.
 
 (* Inversion lemmas on negated lazy pointwise extension *********************)
 
-lemma nllpx_sn_inv_bind: ∀R. (∀L,T1,T2. Decidable (R L T1 T2)) →
+lemma nllpx_sn_inv_bind: ∀R. (∀I,L,T1,T2. Decidable (R I L T1 T2)) →
                          ∀a,I,L1,L2,V,T,d. (llpx_sn R d (ⓑ{a,I}V.T) L1 L2 → ⊥) →
                          (llpx_sn R d V L1 L2 → ⊥) ∨ (llpx_sn R (⫯d) T (L1.ⓑ{I}V) (L2.ⓑ{I}V) → ⊥).
 #R #HR #a #I #L1 #L2 #V #T #d #H elim (llpx_sn_dec … HR V L1 L2 d)
 /4 width=1 by llpx_sn_bind, or_intror, or_introl/
 qed-.
 
-lemma nllpx_sn_inv_flat: ∀R. (∀L,T1,T2. Decidable (R L T1 T2)) →
+lemma nllpx_sn_inv_flat: ∀R. (∀I,L,T1,T2. Decidable (R I L T1 T2)) →
                          ∀I,L1,L2,V,T,d. (llpx_sn R d (ⓕ{I}V.T) L1 L2 → ⊥) →
                          (llpx_sn R d V L1 L2 → ⊥) ∨ (llpx_sn R d T L1 L2 → ⊥).
 #R #HR #I #L1 #L2 #V #T #d #H elim (llpx_sn_dec … HR V L1 L2 d)
 /4 width=1 by llpx_sn_flat, or_intror, or_introl/
 qed-.
 
-lemma nllpx_sn_inv_bind_O: ∀R. (∀L,T1,T2. Decidable (R L T1 T2)) →
+lemma nllpx_sn_inv_bind_O: ∀R. (∀I,L,T1,T2. Decidable (R I L T1 T2)) →
                            ∀a,I,L1,L2,V,T. (llpx_sn R 0 (ⓑ{a,I}V.T) L1 L2 → ⊥) →
                            (llpx_sn R 0 V L1 L2 → ⊥) ∨ (llpx_sn R 0 T (L1.ⓑ{I}V) (L2.ⓑ{I}V) → ⊥).
 #R #HR #a #I #L1 #L2 #V #T #H elim (llpx_sn_dec … HR V L1 L2 0)

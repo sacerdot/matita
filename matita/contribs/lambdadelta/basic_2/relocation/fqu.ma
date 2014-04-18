@@ -35,17 +35,17 @@ interpretation
 (* Basic properties *********************************************************)
 
 lemma fqu_drop_lt: ∀G,L,K,T,U,e. 0 < e →
-                   ⇩[e] L ≡ K → ⇧[0, e] T ≡ U → ⦃G, L, U⦄ ⊃ ⦃G, K, T⦄.
+                   ⇩[e] L ≡ K → ⇧[0, e] T ≡ U → ⦃G, L, U⦄ ⊐ ⦃G, K, T⦄.
 #G #L #K #T #U #e #He >(plus_minus_m_m e 1) /2 width=3 by fqu_drop/
 qed.
 
-lemma fqu_lref_S_lt: ∀I,G,L,V,i. 0 < i → ⦃G, L.ⓑ{I}V, #i⦄ ⊃ ⦃G, L, #(i-1)⦄.
+lemma fqu_lref_S_lt: ∀I,G,L,V,i. 0 < i → ⦃G, L.ⓑ{I}V, #i⦄ ⊐ ⦃G, L, #(i-1)⦄.
 /3 width=3 by fqu_drop, ldrop_drop, lift_lref_ge_minus/
 qed.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma fqu_fwd_fw: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ → ♯{G2, L2, T2} < ♯{G1, L1, T1}.
+lemma fqu_fwd_fw: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T2⦄ → ♯{G2, L2, T2} < ♯{G1, L1, T1}.
 #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2 //
 #G #L #K #T #U #e #HLK #HTU
 lapply (ldrop_fwd_lw_lt … HLK ?) -HLK // #HKL
@@ -53,7 +53,7 @@ lapply (lift_fwd_tw … HTU) -e #H
 normalize in ⊢ (?%%); /2 width=1 by lt_minus_to_plus/
 qed-.
 
-fact fqu_fwd_length_lref1_aux: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ →
+fact fqu_fwd_length_lref1_aux: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T2⦄ →
                                ∀i. T1 = #i → |L2| < |L1|.
 #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2
 [1: normalize //
@@ -62,14 +62,14 @@ fact fqu_fwd_length_lref1_aux: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2,
 ] #I #G #L #V #T #j #H destruct
 qed-.
 
-lemma fqu_fwd_length_lref1: ∀G1,G2,L1,L2,T2,i. ⦃G1, L1, #i⦄ ⊃ ⦃G2, L2, T2⦄ → |L2| < |L1|.
+lemma fqu_fwd_length_lref1: ∀G1,G2,L1,L2,T2,i. ⦃G1, L1, #i⦄ ⊐ ⦃G2, L2, T2⦄ → |L2| < |L1|.
 /2 width=7 by fqu_fwd_length_lref1_aux/
 qed-.
 
 (* Advanced eliminators *****************************************************)
 
 lemma fqu_wf_ind: ∀R:relation3 …. (
-                     ∀G1,L1,T1. (∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ → R G2 L2 T2) →
+                     ∀G1,L1,T1. (∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T2⦄ → R G2 L2 T2) →
 		                R G1 L1 T1
 		  ) → ∀G1,L1,T1. R G1 L1 T1.
 #R #HR @(f3_ind … fw) #n #IHn #G1 #L1 #T1 #H destruct /4 width=1 by fqu_fwd_fw/

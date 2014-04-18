@@ -19,7 +19,7 @@ include "basic_2/static/aaa_lift.ma".
 
 (* Properties on supclosure *************************************************)
 
-lemma aaa_fqu_conf: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ →
+lemma aaa_fqu_conf: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T2⦄ →
                     ∀A1. ⦃G1, L1⦄ ⊢ T1 ⁝ A1 → ∃A2. ⦃G2, L2⦄ ⊢ T2 ⁝ A2.
 #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2
 [ #I #G #L #T #A #H elim (aaa_inv_lref … H) -H
@@ -43,20 +43,20 @@ lemma aaa_fqu_conf: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ 
 ]
 qed-.
 
-lemma aaa_fquq_conf: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, L2, T2⦄ →
+lemma aaa_fquq_conf: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐⸮ ⦃G2, L2, T2⦄ →
                      ∀A1. ⦃G1, L1⦄ ⊢ T1 ⁝ A1 → ∃A2. ⦃G2, L2⦄ ⊢ T2 ⁝ A2.
 #G1 #G2 #L1 #L2 #T1 #T2 #H elim(fquq_inv_gen … H) -H /2 width=6 by aaa_fqu_conf/
 * #H1 #H2 #H3 destruct /2 width=2 by ex_intro/
 qed-.
 
-lemma aaa_fqup_conf: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃+ ⦃G2, L2, T2⦄ →
+lemma aaa_fqup_conf: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐+ ⦃G2, L2, T2⦄ →
                      ∀A1. ⦃G1, L1⦄ ⊢ T1 ⁝ A1 → ∃A2. ⦃G2, L2⦄ ⊢ T2 ⁝ A2.
 #G1 #G2 #L1 #L2 #T1 #T2 #H @(fqup_ind … H) -G2 -L2 -T2
 [2: #G #G2 #L #L2 #T #T2 #_ #H2 #IH1 #A #HA elim (IH1 … HA) -IH1 -A ]
 /2 width=6 by aaa_fqu_conf/
 qed-.
 
-lemma aaa_fqus_conf: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃* ⦃G2, L2, T2⦄ →
+lemma aaa_fqus_conf: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐* ⦃G2, L2, T2⦄ →
                      ∀A1. ⦃G1, L1⦄ ⊢ T1 ⁝ A1 → ∃A2. ⦃G2, L2⦄ ⊢ T2 ⁝ A2.
 #G1 #G2 #L1 #L2 #T1 #T2 #H elim(fqus_inv_gen … H) -H /2 width=6 by aaa_fqup_conf/
 * #H1 #H2 #H3 destruct /2 width=2 by ex_intro/

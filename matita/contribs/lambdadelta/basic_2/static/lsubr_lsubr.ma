@@ -18,10 +18,10 @@ include "basic_2/static/lsubr.ma".
 
 (* Auxiliary inversion lemmas ***********************************************)
 
-fact lsubr_inv_bind1_aux: ∀L1,L2. L1 ⊑ L2 → ∀I,K1,X. L1 = K1.ⓑ{I}X →
+fact lsubr_inv_bind1_aux: ∀L1,L2. L1 ⫃ L2 → ∀I,K1,X. L1 = K1.ⓑ{I}X →
                           ∨∨ L2 = ⋆
-                           | ∃∃K2. K1 ⊑ K2 & L2 = K2.ⓑ{I}X
-                           | ∃∃K2,V,W. K1 ⊑ K2 & L2 = K2.ⓛW &
+                           | ∃∃K2. K1 ⫃ K2 & L2 = K2.ⓑ{I}X
+                           | ∃∃K2,V,W. K1 ⫃ K2 & L2 = K2.ⓛW &
                                        I = Abbr & X = ⓝW.V.
 #L1 #L2 * -L1 -L2
 [ #L #J #K1 #X #H destruct /2 width=1 by or3_intro0/
@@ -30,10 +30,10 @@ fact lsubr_inv_bind1_aux: ∀L1,L2. L1 ⊑ L2 → ∀I,K1,X. L1 = K1.ⓑ{I}X →
 ]
 qed-.
 
-lemma lsubr_inv_bind1: ∀I,K1,L2,X. K1.ⓑ{I}X ⊑ L2 →
+lemma lsubr_inv_bind1: ∀I,K1,L2,X. K1.ⓑ{I}X ⫃ L2 →
                        ∨∨ L2 = ⋆
-                        | ∃∃K2. K1 ⊑ K2 & L2 = K2.ⓑ{I}X
-                        | ∃∃K2,V,W. K1 ⊑ K2 & L2 = K2.ⓛW &
+                        | ∃∃K2. K1 ⫃ K2 & L2 = K2.ⓑ{I}X
+                        | ∃∃K2,V,W. K1 ⫃ K2 & L2 = K2.ⓛW &
                                     I = Abbr & X = ⓝW.V.
 /2 width=3 by lsubr_inv_bind1_aux/ qed-.
 

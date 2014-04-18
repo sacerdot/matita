@@ -18,8 +18,8 @@ include "basic_2/relocation/llpx_sn_ldrop.ma".
 
 (* Properties about transitive closure **************************************)
 
-lemma llpx_sn_TC_pair_dx: ∀R. (∀L. reflexive … (R L)) →
-                          ∀I,L,V1,V2,T. LTC … R L V1 V2 →
+lemma llpx_sn_TC_pair_dx: ∀R. (∀I,L. reflexive … (R I L)) →
+                          ∀I,L,V1,V2,T. LTC … (R I) L V1 V2 →
                           LTC … (llpx_sn R 0) T (L.ⓑ{I}V1) (L.ⓑ{I}V2).
 #R #HR #I #L #V1 #V2 #T #H @(TC_star_ind … V2 H) -V2
 /4 width=9 by llpx_sn_bind_repl_O, llpx_sn_refl, step, inj/

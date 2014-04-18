@@ -36,13 +36,13 @@ interpretation
 lemma fquq_refl: tri_reflexive … fquq.
 /2 width=3 by fquq_drop/ qed.
 
-lemma fqu_fquq: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, L2, T2⦄.
+lemma fqu_fquq: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ⊐⸮ ⦃G2, L2, T2⦄.
 #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -L1 -L2 -T1 -T2 /2 width=3 by fquq_drop/
 qed.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma fquq_fwd_fw: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, L2, T2⦄ → ♯{G2, L2, T2} ≤ ♯{G1, L1, T1}.
+lemma fquq_fwd_fw: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐⸮ ⦃G2, L2, T2⦄ → ♯{G2, L2, T2} ≤ ♯{G1, L1, T1}.
 #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2 /2 width=1 by lt_to_le/
 #G1 #L1 #K1 #T1 #U1 #e #HLK1 #HTU1
 lapply (ldrop_fwd_lw … HLK1) -HLK1
@@ -50,7 +50,7 @@ lapply (lift_fwd_tw … HTU1) -HTU1
 /2 width=1 by le_plus, le_n/
 qed-.
 
-fact fquq_fwd_length_lref1_aux: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, L2, T2⦄ →
+fact fquq_fwd_length_lref1_aux: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐⸮ ⦃G2, L2, T2⦄ →
                                 ∀i. T1 = #i → |L2| ≤ |L1|.
 #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2 //
 [ #a #I #G #L #V #T #j #H destruct
@@ -59,6 +59,6 @@ fact fquq_fwd_length_lref1_aux: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃⸮ �
 ]
 qed-.
 
-lemma fquq_fwd_length_lref1: ∀G1,G2,L1,L2,T2,i. ⦃G1, L1, #i⦄ ⊃⸮ ⦃G2, L2, T2⦄ → |L2| ≤ |L1|.
+lemma fquq_fwd_length_lref1: ∀G1,G2,L1,L2,T2,i. ⦃G1, L1, #i⦄ ⊐⸮ ⦃G2, L2, T2⦄ → |L2| ≤ |L1|.
 /2 width=7 by fquq_fwd_length_lref1_aux/
 qed-.

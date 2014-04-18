@@ -30,7 +30,7 @@ lemma fquqa_refl: tri_reflexive … fquqa.
 // qed.
 
 lemma fquqa_drop: ∀G,L,K,T,U,e.
-                  ⇩[e] L ≡ K → ⇧[0, e] T ≡ U → ⦃G, L, U⦄ ⊃⊃⸮ ⦃G, K, T⦄.
+                  ⇩[e] L ≡ K → ⇧[0, e] T ≡ U → ⦃G, L, U⦄ ⊐⊐⸮ ⦃G, K, T⦄.
 #G #L #K #T #U #e #HLK #HTU elim (eq_or_gt e)
 /3 width=5 by fqu_drop_lt, or_introl/ #H destruct
 >(ldrop_inv_O2 … HLK) -L >(lift_inv_O2 … HTU) -T //
@@ -38,22 +38,22 @@ qed.
 
 (* Main properties **********************************************************)
 
-theorem fquq_fquqa: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ⊃⊃⸮ ⦃G2, L2, T2⦄.
+theorem fquq_fquqa: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐⸮ ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ⊐⊐⸮ ⦃G2, L2, T2⦄.
 #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2
 /2 width=3 by fquqa_drop, fqu_lref_O, fqu_pair_sn, fqu_bind_dx, fqu_flat_dx, or_introl/
 qed.
 
 (* Main inversion properties ************************************************)
 
-theorem fquqa_inv_fquq: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃⊃⸮ ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, L2, T2⦄.
+theorem fquqa_inv_fquq: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐⊐⸮ ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ⊐⸮ ⦃G2, L2, T2⦄.
 #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -H /2 width=1 by fqu_fquq/
 * #H1 #H2 #H3 destruct //
 qed-.
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma fquq_inv_gen: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, L2, T2⦄ →
-                    ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ ∨ (∧∧ G1 = G2 & L1 = L2 & T1 = T2).
+lemma fquq_inv_gen: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐⸮ ⦃G2, L2, T2⦄ →
+                    ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T2⦄ ∨ (∧∧ G1 = G2 & L1 = L2 & T1 = T2).
 #G1 #G2 #L1 #L2 #T1 #T2 #H elim (fquq_fquqa … H) -H [| * ]
 /2 width=1 by or_introl/
 qed-.

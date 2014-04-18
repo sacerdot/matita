@@ -18,7 +18,7 @@ include "basic_2/computation/fpbs.ma".
 (* UNITARY "BIG TREE" PROPER PARALLEL COMPUTATION FOR CLOSURES **************)
 
 inductive fpbu (h) (g) (G1) (L1) (T1): relation3 genv lenv term ≝
-| fpbu_fqup: ∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊃+ ⦃G2, L2, T2⦄ → fpbu h g G1 L1 T1 G2 L2 T2
+| fpbu_fqup: ∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊐+ ⦃G2, L2, T2⦄ → fpbu h g G1 L1 T1 G2 L2 T2
 | fpbu_cpxs: ∀T2. ⦃G1, L1⦄ ⊢ T1 ➡*[h, g] T2 → (T1 = T2 → ⊥) → fpbu h g G1 L1 T1 G1 L1 T2
 | fpbu_lpxs: ∀L2. ⦃G1, L1⦄ ⊢ ➡*[h, g] L2 → (L1 ⋕[T1, 0] L2 → ⊥) → fpbu h g G1 L1 T1 G1 L2 T1
 .

@@ -30,9 +30,9 @@ lemma lleq_lpxs_trans: ∀h,g,G,L2,K2. ⦃G, L2⦄ ⊢ ➡*[h, g] K2 →
 /3 width=3 by lpxs_strap1, ex2_intro/
 qed-.
 
-lemma lpxs_lleq_fqu_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2, L2, T2⦄ →
+lemma lpxs_lleq_fqu_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T2⦄ →
                            ∀K1. ⦃G1, K1⦄ ⊢ ➡*[h, g] L1 → K1 ⋕[T1, 0] L1 →
-                           ∃∃K2. ⦃G1, K1, T1⦄ ⊃ ⦃G2, K2, T2⦄ & ⦃G2, K2⦄ ⊢ ➡*[h, g] L2 & K2 ⋕[T2, 0] L2.
+                           ∃∃K2. ⦃G1, K1, T1⦄ ⊐ ⦃G2, K2, T2⦄ & ⦃G2, K2⦄ ⊢ ➡*[h, g] L2 & K2 ⋕[T2, 0] L2.
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2
 [ #I #G1 #L1 #V1 #X #H1 #H2 elim (lpxs_inv_pair2 … H1) -H1
   #K0 #V0 #H1KL1 #_ #H destruct
@@ -59,9 +59,9 @@ lemma lpxs_lleq_fqu_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃ ⦃G2,
 ]
 qed-.
 
-lemma lpxs_lleq_fquq_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃⸮ ⦃G2, L2, T2⦄ →
+lemma lpxs_lleq_fquq_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐⸮ ⦃G2, L2, T2⦄ →
                             ∀K1. ⦃G1, K1⦄ ⊢ ➡*[h, g] L1 → K1 ⋕[T1, 0] L1 →
-                            ∃∃K2. ⦃G1, K1, T1⦄ ⊃⸮ ⦃G2, K2, T2⦄ & ⦃G2, K2⦄ ⊢ ➡*[h, g] L2 & K2 ⋕[T2, 0] L2.
+                            ∃∃K2. ⦃G1, K1, T1⦄ ⊐⸮ ⦃G2, K2, T2⦄ & ⦃G2, K2⦄ ⊢ ➡*[h, g] L2 & K2 ⋕[T2, 0] L2.
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 #H #K1 #H1KL1 #H2KL1
 elim (fquq_inv_gen … H) -H
 [ #H elim (lpxs_lleq_fqu_trans … H … H1KL1 H2KL1) -L1
@@ -70,9 +70,9 @@ elim (fquq_inv_gen … H) -H
 ]
 qed-.
 
-lemma lpxs_lleq_fqup_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃+ ⦃G2, L2, T2⦄ →
+lemma lpxs_lleq_fqup_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐+ ⦃G2, L2, T2⦄ →
                             ∀K1. ⦃G1, K1⦄ ⊢ ➡*[h, g] L1 → K1 ⋕[T1, 0] L1 →
-                            ∃∃K2. ⦃G1, K1, T1⦄ ⊃+ ⦃G2, K2, T2⦄ & ⦃G2, K2⦄ ⊢ ➡*[h, g] L2 & K2 ⋕[T2, 0] L2.
+                            ∃∃K2. ⦃G1, K1, T1⦄ ⊐+ ⦃G2, K2, T2⦄ & ⦃G2, K2⦄ ⊢ ➡*[h, g] L2 & K2 ⋕[T2, 0] L2.
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 #H @(fqup_ind … H) -G2 -L2 -T2
 [ #G2 #L2 #T2 #H #K1 #H1KL1 #H2KL1 elim (lpxs_lleq_fqu_trans … H … H1KL1 H2KL1) -L1
   /3 width=4 by fqu_fqup, ex3_intro/
@@ -82,9 +82,9 @@ lemma lpxs_lleq_fqup_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃+ ⦃G
 ]
 qed-.
 
-lemma lpxs_lleq_fqus_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊃* ⦃G2, L2, T2⦄ →
+lemma lpxs_lleq_fqus_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐* ⦃G2, L2, T2⦄ →
                             ∀K1. ⦃G1, K1⦄ ⊢ ➡*[h, g] L1 → K1 ⋕[T1, 0] L1 →
-                            ∃∃K2. ⦃G1, K1, T1⦄ ⊃* ⦃G2, K2, T2⦄ & ⦃G2, K2⦄ ⊢ ➡*[h, g] L2 & K2 ⋕[T2, 0] L2.
+                            ∃∃K2. ⦃G1, K1, T1⦄ ⊐* ⦃G2, K2, T2⦄ & ⦃G2, K2⦄ ⊢ ➡*[h, g] L2 & K2 ⋕[T2, 0] L2.
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 #H #K1 #H1KL1 #H2KL1
 elim (fqus_inv_gen … H) -H
 [ #H elim (lpxs_lleq_fqup_trans … H … H1KL1 H2KL1) -L1

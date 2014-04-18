@@ -144,7 +144,7 @@ lemma cpcs_bind_sn: ∀a,I,G,L,V1,V2,T. ⦃G, L⦄ ⊢ V1 ⬌* V2 → ⦃G, L⦄
 qed.
 
 lemma lsubr_cpcs_trans: ∀G,L1,T1,T2. ⦃G, L1⦄ ⊢ T1 ⬌* T2 →
-                        ∀L2. L2 ⊑ L1 → ⦃G, L2⦄ ⊢ T1 ⬌* T2.
+                        ∀L2. L2 ⫃ L1 → ⦃G, L2⦄ ⊢ T1 ⬌* T2.
 #G #L1 #T1 #T2 #HT12 elim (cpcs_inv_cprs … HT12) -HT12
 /3 width=5 by cprs_div, lsubr_cprs_trans/
 qed-.

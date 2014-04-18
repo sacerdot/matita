@@ -24,7 +24,7 @@ include "basic_2/dynamic/lsubsv_lsubd.ma".
 
 lemma lsubsv_lsstas_trans: ∀h,g,G,L2,T,U2,l1. ⦃G, L2⦄ ⊢ T •*[h, g, l1] U2 →
                            ∀l2. l1 ≤ l2 → ⦃G, L2⦄ ⊢ T ▪[h, g] l2 →
-                           ∀L1. G ⊢ L1 ¡⊑[h, g] L2 →
+                           ∀L1. G ⊢ L1 ¡⫃[h, g] L2 →
                            ∃∃U1. ⦃G, L1⦄ ⊢ T •*[h, g, l1] U1 & ⦃G, L1⦄ ⊢ U1 ⬌* U2.
 #h #g #G #L2 #T #U #l1 #H @(lsstas_ind_alt … H) -G -L2 -T -U -l1
 [1,2: /2 width=3 by lstar_O, ex2_intro/
@@ -81,7 +81,7 @@ qed-.
 
 lemma lsubsv_ssta_trans: ∀h,g,G,L2,T,U2. ⦃G, L2⦄ ⊢ T •[h, g] U2 →
                          ∀l. ⦃G, L2⦄ ⊢ T ▪[h, g] l+1 →
-                         ∀L1. G ⊢ L1 ¡⊑[h, g] L2 →
+                         ∀L1. G ⊢ L1 ¡⫃[h, g] L2 →
                          ∃∃U1. ⦃G, L1⦄ ⊢ T •[h, g] U1 & ⦃G, L1⦄ ⊢ U1 ⬌* U2.
 #h #g #G #L2 #T #U2 #H #l #HTl #L1 #HL12
 elim ( lsubsv_lsstas_trans … U2 1 … HTl … HL12)

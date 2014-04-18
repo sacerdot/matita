@@ -26,7 +26,7 @@ include "basic_2/computation/lsubc_ldrops.ma".
 theorem aacr_aaa_csubc_lifts: ∀RR,RS,RP.
                               acp RR RS RP → acr RR RS RP (λG,L,T. RP G L T) →
                               ∀G,L1,T,A. ⦃G, L1⦄ ⊢ T ⁝ A → ∀L0,des. ⇩*[Ⓕ, des] L0 ≡ L1 →
-                              ∀T0. ⇧*[des] T ≡ T0 → ∀L2. G ⊢ L2 ⊑[RP] L0 →
+                              ∀T0. ⇧*[des] T ≡ T0 → ∀L2. G ⊢ L2 ⫃[RP] L0 →
                               ⦃G, L2, T0⦄ ϵ[RP] 〚A〛.
 #RR #RS #RP #H1RP #H2RP #G #L1 #T #A #H elim H -G -L1 -T -A
 [ #G #L #k #L0 #des #HL0 #X #H #L2 #HL20

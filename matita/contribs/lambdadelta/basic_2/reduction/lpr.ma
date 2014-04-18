@@ -18,7 +18,7 @@ include "basic_2/reduction/cpr.ma".
 
 (* SN PARALLEL REDUCTION FOR LOCAL ENVIRONMENTS *****************************)
 
-definition lpr: relation3 genv lenv lenv ≝ λG. lpx_sn (cpr G).
+definition lpr: relation3 genv lenv lenv ≝ λG. lpx_sn (λ_.cpr G).
 
 interpretation "parallel reduction (local environment, sn variant)"
    'PRedSn G L1 L2 = (lpr G L1 L2).

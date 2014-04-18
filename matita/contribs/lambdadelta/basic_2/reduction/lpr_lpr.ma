@@ -26,7 +26,7 @@ fact cpr_conf_lpr_atom_atom:
 
 fact cpr_conf_lpr_atom_delta:
    ∀G,L0,i. (
-      ∀L,T. ⦃G, L0, #i⦄ ⊃+ ⦃G, L, T⦄ →
+      ∀L,T. ⦃G, L0, #i⦄ ⊐+ ⦃G, L, T⦄ →
       ∀T1. ⦃G, L⦄ ⊢ T ➡ T1 → ∀T2. ⦃G, L⦄ ⊢ T ➡ T2 →
       ∀L1. ⦃G, L⦄ ⊢ ➡ L1 → ∀L2. ⦃G, L⦄ ⊢ ➡ L2 →
       ∃∃T0. ⦃G, L1⦄ ⊢ T1 ➡ T0 & ⦃G, L2⦄ ⊢ T2 ➡ T0
@@ -50,7 +50,7 @@ qed-.
 (* Basic_1: includes: pr0_delta_delta pr2_delta_delta *)
 fact cpr_conf_lpr_delta_delta:
    ∀G,L0,i. (
-      ∀L,T. ⦃G, L0, #i⦄ ⊃+ ⦃G, L, T⦄ →
+      ∀L,T. ⦃G, L0, #i⦄ ⊐+ ⦃G, L, T⦄ →
       ∀T1. ⦃G, L⦄ ⊢ T ➡ T1 → ∀T2. ⦃G, L⦄ ⊢ T ➡ T2 →
       ∀L1. ⦃G, L⦄ ⊢ ➡ L1 → ∀L2. ⦃G, L⦄ ⊢ ➡ L2 →
       ∃∃T0. ⦃G, L1⦄ ⊢ T1 ➡ T0 & ⦃G, L2⦄ ⊢ T2 ➡ T0
@@ -77,7 +77,7 @@ qed-.
 
 fact cpr_conf_lpr_bind_bind:
    ∀a,I,G,L0,V0,T0. (
-      ∀L,T. ⦃G, L0, ⓑ{a,I}V0.T0⦄ ⊃+ ⦃G, L, T⦄ →
+      ∀L,T. ⦃G, L0, ⓑ{a,I}V0.T0⦄ ⊐+ ⦃G, L, T⦄ →
       ∀T1. ⦃G, L⦄ ⊢ T ➡ T1 → ∀T2. ⦃G, L⦄ ⊢ T ➡ T2 →
       ∀L1. ⦃G, L⦄ ⊢ ➡ L1 → ∀L2. ⦃G, L⦄ ⊢ ➡ L2 →
       ∃∃T0. ⦃G, L1⦄ ⊢ T1 ➡ T0 & ⦃G, L2⦄ ⊢ T2 ➡ T0
@@ -95,7 +95,7 @@ qed-.
 
 fact cpr_conf_lpr_bind_zeta:
    ∀G,L0,V0,T0. (
-      ∀L,T. ⦃G, L0, +ⓓV0.T0⦄ ⊃+ ⦃G, L, T⦄ →
+      ∀L,T. ⦃G, L0, +ⓓV0.T0⦄ ⊐+ ⦃G, L, T⦄ →
       ∀T1. ⦃G, L⦄ ⊢ T ➡ T1 → ∀T2. ⦃G, L⦄ ⊢ T ➡ T2 →
       ∀L1. ⦃G, L⦄ ⊢ ➡ L1 → ∀L2. ⦃G, L⦄ ⊢ ➡ L2 →
       ∃∃T0. ⦃G, L1⦄ ⊢ T1 ➡ T0 & ⦃G, L2⦄ ⊢ T2 ➡ T0
@@ -112,7 +112,7 @@ qed-.
 
 fact cpr_conf_lpr_zeta_zeta:
    ∀G,L0,V0,T0. (
-      ∀L,T. ⦃G, L0, +ⓓV0.T0⦄ ⊃+ ⦃G, L, T⦄ →
+      ∀L,T. ⦃G, L0, +ⓓV0.T0⦄ ⊐+ ⦃G, L, T⦄ →
       ∀T1. ⦃G, L⦄ ⊢ T ➡ T1 → ∀T2. ⦃G, L⦄ ⊢ T ➡ T2 →
       ∀L1. ⦃G, L⦄ ⊢ ➡ L1 → ∀L2. ⦃G, L⦄ ⊢ ➡ L2 →
       ∃∃T0. ⦃G, L1⦄ ⊢ T1 ➡ T0 & ⦃G, L2⦄ ⊢ T2 ➡ T0
@@ -131,7 +131,7 @@ qed-.
 
 fact cpr_conf_lpr_flat_flat:
    ∀I,G,L0,V0,T0. (
-      ∀L,T. ⦃G, L0, ⓕ{I}V0.T0⦄ ⊃+ ⦃G, L, T⦄ →
+      ∀L,T. ⦃G, L0, ⓕ{I}V0.T0⦄ ⊐+ ⦃G, L, T⦄ →
       ∀T1. ⦃G, L⦄ ⊢ T ➡ T1 → ∀T2. ⦃G, L⦄ ⊢ T ➡ T2 →
       ∀L1. ⦃G, L⦄ ⊢ ➡ L1 → ∀L2. ⦃G, L⦄ ⊢ ➡ L2 →
       ∃∃T0. ⦃G, L1⦄ ⊢ T1 ➡ T0 & ⦃G, L2⦄ ⊢ T2 ➡ T0
@@ -148,7 +148,7 @@ qed-.
 
 fact cpr_conf_lpr_flat_tau:
    ∀G,L0,V0,T0. (
-      ∀L,T. ⦃G, L0, ⓝV0.T0⦄ ⊃+ ⦃G, L, T⦄ →
+      ∀L,T. ⦃G, L0, ⓝV0.T0⦄ ⊐+ ⦃G, L, T⦄ →
       ∀T1. ⦃G, L⦄ ⊢ T ➡ T1 → ∀T2. ⦃G, L⦄ ⊢ T ➡ T2 →
       ∀L1. ⦃G, L⦄ ⊢ ➡ L1 → ∀L2. ⦃G, L⦄ ⊢ ➡ L2 →
       ∃∃T0. ⦃G, L1⦄ ⊢ T1 ➡ T0 & ⦃G, L2⦄ ⊢ T2 ➡ T0
@@ -163,7 +163,7 @@ qed-.
 
 fact cpr_conf_lpr_tau_tau:
    ∀G,L0,V0,T0. (
-      ∀L,T. ⦃G, L0, ⓝV0.T0⦄ ⊃+ ⦃G, L, T⦄ →
+      ∀L,T. ⦃G, L0, ⓝV0.T0⦄ ⊐+ ⦃G, L, T⦄ →
       ∀T1. ⦃G, L⦄ ⊢ T ➡ T1 → ∀T2. ⦃G, L⦄ ⊢ T ➡ T2 →
       ∀L1. ⦃G, L⦄ ⊢ ➡ L1 → ∀L2. ⦃G, L⦄ ⊢ ➡ L2 →
       ∃∃T0. ⦃G, L1⦄ ⊢ T1 ➡ T0 & ⦃G, L2⦄ ⊢ T2 ➡ T0
@@ -178,7 +178,7 @@ qed-.
 
 fact cpr_conf_lpr_flat_beta:
    ∀a,G,L0,V0,W0,T0. (
-      ∀L,T. ⦃G, L0, ⓐV0.ⓛ{a}W0.T0⦄ ⊃+ ⦃G, L, T⦄ →
+      ∀L,T. ⦃G, L0, ⓐV0.ⓛ{a}W0.T0⦄ ⊐+ ⦃G, L, T⦄ →
       ∀T1. ⦃G, L⦄ ⊢ T ➡ T1 → ∀T2. ⦃G, L⦄ ⊢ T ➡ T2 →
       ∀L1. ⦃G, L⦄ ⊢ ➡ L1 → ∀L2. ⦃G, L⦄ ⊢ ➡ L2 →
       ∃∃T0. ⦃G, L1⦄ ⊢ T1 ➡ T0 & ⦃G, L2⦄ ⊢ T2 ➡ T0
@@ -203,7 +203,7 @@ qed-.
 *)
 fact cpr_conf_lpr_flat_theta:
    ∀a,G,L0,V0,W0,T0. (
-      ∀L,T. ⦃G, L0, ⓐV0.ⓓ{a}W0.T0⦄ ⊃+ ⦃G, L, T⦄ →
+      ∀L,T. ⦃G, L0, ⓐV0.ⓓ{a}W0.T0⦄ ⊐+ ⦃G, L, T⦄ →
       ∀T1. ⦃G, L⦄ ⊢ T ➡ T1 → ∀T2. ⦃G, L⦄ ⊢ T ➡ T2 →
       ∀L1. ⦃G, L⦄ ⊢ ➡ L1 → ∀L2. ⦃G, L⦄ ⊢ ➡ L2 →
       ∃∃T0. ⦃G, L1⦄ ⊢ T1 ➡ T0 & ⦃G, L2⦄ ⊢ T2 ➡ T0
@@ -232,7 +232,7 @@ qed-.
 
 fact cpr_conf_lpr_beta_beta:
    ∀a,G,L0,V0,W0,T0. (
-      ∀L,T. ⦃G, L0, ⓐV0.ⓛ{a}W0.T0⦄ ⊃+ ⦃G, L, T⦄ →
+      ∀L,T. ⦃G, L0, ⓐV0.ⓛ{a}W0.T0⦄ ⊐+ ⦃G, L, T⦄ →
       ∀T1. ⦃G, L⦄ ⊢ T ➡ T1 → ∀T2. ⦃G, L⦄ ⊢ T ➡ T2 →
       ∀L1. ⦃G, L⦄ ⊢ ➡ L1 → ∀L2. ⦃G, L⦄ ⊢ ➡ L2 →
       ∃∃T0. ⦃G, L1⦄ ⊢ T1 ➡ T0 & ⦃G, L2⦄ ⊢ T2 ➡ T0
@@ -254,7 +254,7 @@ qed-.
 (* Basic_1: was: pr0_upsilon_upsilon *)
 fact cpr_conf_lpr_theta_theta:
    ∀a,G,L0,V0,W0,T0. (
-      ∀L,T. ⦃G, L0, ⓐV0.ⓓ{a}W0.T0⦄ ⊃+ ⦃G, L, T⦄ →
+      ∀L,T. ⦃G, L0, ⓐV0.ⓓ{a}W0.T0⦄ ⊐+ ⦃G, L, T⦄ →
       ∀T1. ⦃G, L⦄ ⊢ T ➡ T1 → ∀T2. ⦃G, L⦄ ⊢ T ➡ T2 →
       ∀L1. ⦃G, L⦄ ⊢ ➡ L1 → ∀L2. ⦃G, L⦄ ⊢ ➡ L2 →
       ∃∃T0. ⦃G, L1⦄ ⊢ T1 ➡ T0 & ⦃G, L2⦄ ⊢ T2 ➡ T0

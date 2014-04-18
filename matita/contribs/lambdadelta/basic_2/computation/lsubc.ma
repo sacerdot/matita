@@ -31,7 +31,7 @@ interpretation
 
 (* Basic inversion lemmas ***************************************************)
 
-fact lsubc_inv_atom1_aux: ∀RP,G,L1,L2. G ⊢ L1 ⊑[RP] L2 → L1 = ⋆ → L2 = ⋆.
+fact lsubc_inv_atom1_aux: ∀RP,G,L1,L2. G ⊢ L1 ⫃[RP] L2 → L1 = ⋆ → L2 = ⋆.
 #RP #G #L1 #L2 * -L1 -L2
 [ //
 | #I #L1 #L2 #V #_ #H destruct
@@ -40,13 +40,13 @@ fact lsubc_inv_atom1_aux: ∀RP,G,L1,L2. G ⊢ L1 ⊑[RP] L2 → L1 = ⋆ → L2
 qed-.
 
 (* Basic_1: was just: csubc_gen_sort_r *)
-lemma lsubc_inv_atom1: ∀RP,G,L2. G ⊢ ⋆ ⊑[RP] L2 → L2 = ⋆.
+lemma lsubc_inv_atom1: ∀RP,G,L2. G ⊢ ⋆ ⫃[RP] L2 → L2 = ⋆.
 /2 width=5 by lsubc_inv_atom1_aux/ qed-.
 
-fact lsubc_inv_pair1_aux: ∀RP,G,L1,L2. G ⊢ L1 ⊑[RP] L2 → ∀I,K1,X. L1 = K1.ⓑ{I}X →
-                          (∃∃K2. G ⊢ K1 ⊑[RP] K2 & L2 = K2.ⓑ{I}X) ∨
+fact lsubc_inv_pair1_aux: ∀RP,G,L1,L2. G ⊢ L1 ⫃[RP] L2 → ∀I,K1,X. L1 = K1.ⓑ{I}X →
+                          (∃∃K2. G ⊢ K1 ⫃[RP] K2 & L2 = K2.ⓑ{I}X) ∨
                           ∃∃K2,V,W,A. ⦃G, K1, V⦄ ϵ[RP] 〚A〛 & ⦃G, K1, W⦄ ϵ[RP] 〚A〛 & ⦃G, K2⦄ ⊢ W ⁝ A &
-                                      G ⊢ K1 ⊑[RP] K2 &
+                                      G ⊢ K1 ⫃[RP] K2 &
                                       L2 = K2. ⓛW & X = ⓝW.V & I = Abbr.
 #RP #G #L1 #L2 * -L1 -L2
 [ #I #K1 #V #H destruct
@@ -56,14 +56,14 @@ fact lsubc_inv_pair1_aux: ∀RP,G,L1,L2. G ⊢ L1 ⊑[RP] L2 → ∀I,K1,X. L1 =
 qed-.
 
 (* Basic_1: was: csubc_gen_head_r *)
-lemma lsubc_inv_pair1: ∀RP,I,G,K1,L2,X. G ⊢ K1.ⓑ{I}X ⊑[RP] L2 →
-                       (∃∃K2. G ⊢ K1 ⊑[RP] K2 & L2 = K2.ⓑ{I}X) ∨
+lemma lsubc_inv_pair1: ∀RP,I,G,K1,L2,X. G ⊢ K1.ⓑ{I}X ⫃[RP] L2 →
+                       (∃∃K2. G ⊢ K1 ⫃[RP] K2 & L2 = K2.ⓑ{I}X) ∨
                        ∃∃K2,V,W,A. ⦃G, K1, V⦄ ϵ[RP] 〚A〛 & ⦃G, K1, W⦄ ϵ[RP] 〚A〛 & ⦃G, K2⦄ ⊢ W ⁝ A &
-                                   G ⊢ K1 ⊑[RP] K2 &
+                                   G ⊢ K1 ⫃[RP] K2 &
                                    L2 = K2.ⓛW & X = ⓝW.V & I = Abbr.
 /2 width=3 by lsubc_inv_pair1_aux/ qed-.
 
-fact lsubc_inv_atom2_aux: ∀RP,G,L1,L2. G ⊢ L1 ⊑[RP] L2 → L2 = ⋆ → L1 = ⋆.
+fact lsubc_inv_atom2_aux: ∀RP,G,L1,L2. G ⊢ L1 ⫃[RP] L2 → L2 = ⋆ → L1 = ⋆.
 #RP #G #L1 #L2 * -L1 -L2
 [ //
 | #I #L1 #L2 #V #_ #H destruct
@@ -72,13 +72,13 @@ fact lsubc_inv_atom2_aux: ∀RP,G,L1,L2. G ⊢ L1 ⊑[RP] L2 → L2 = ⋆ → L1
 qed-.
 
 (* Basic_1: was just: csubc_gen_sort_l *)
-lemma lsubc_inv_atom2: ∀RP,G,L1. G ⊢ L1 ⊑[RP] ⋆ → L1 = ⋆.
+lemma lsubc_inv_atom2: ∀RP,G,L1. G ⊢ L1 ⫃[RP] ⋆ → L1 = ⋆.
 /2 width=5 by lsubc_inv_atom2_aux/ qed-.
 
-fact lsubc_inv_pair2_aux: ∀RP,G,L1,L2. G ⊢ L1 ⊑[RP] L2 → ∀I,K2,W. L2 = K2.ⓑ{I} W →
-                          (∃∃K1. G ⊢ K1 ⊑[RP] K2 & L1 = K1. ⓑ{I} W) ∨
+fact lsubc_inv_pair2_aux: ∀RP,G,L1,L2. G ⊢ L1 ⫃[RP] L2 → ∀I,K2,W. L2 = K2.ⓑ{I} W →
+                          (∃∃K1. G ⊢ K1 ⫃[RP] K2 & L1 = K1. ⓑ{I} W) ∨
                           ∃∃K1,V,A. ⦃G, K1, V⦄ ϵ[RP] 〚A〛 & ⦃G, K1, W⦄ ϵ[RP] 〚A〛 & ⦃G, K2⦄ ⊢ W ⁝ A &
-                                    G ⊢ K1 ⊑[RP] K2 &
+                                    G ⊢ K1 ⫃[RP] K2 &
                                     L1 = K1.ⓓⓝW.V & I = Abst.
 #RP #G #L1 #L2 * -L1 -L2
 [ #I #K2 #W #H destruct
@@ -88,17 +88,17 @@ fact lsubc_inv_pair2_aux: ∀RP,G,L1,L2. G ⊢ L1 ⊑[RP] L2 → ∀I,K2,W. L2 =
 qed-.
 
 (* Basic_1: was just: csubc_gen_head_l *)
-lemma lsubc_inv_pair2: ∀RP,I,G,L1,K2,W. G ⊢ L1 ⊑[RP] K2.ⓑ{I} W →
-                       (∃∃K1. G ⊢ K1 ⊑[RP] K2 & L1 = K1.ⓑ{I} W) ∨
+lemma lsubc_inv_pair2: ∀RP,I,G,L1,K2,W. G ⊢ L1 ⫃[RP] K2.ⓑ{I} W →
+                       (∃∃K1. G ⊢ K1 ⫃[RP] K2 & L1 = K1.ⓑ{I} W) ∨
                        ∃∃K1,V,A. ⦃G, K1, V⦄ ϵ[RP] 〚A〛 & ⦃G, K1, W⦄ ϵ[RP] 〚A〛 & ⦃G, K2⦄ ⊢ W ⁝ A &
-                                 G ⊢ K1 ⊑[RP] K2 &
+                                 G ⊢ K1 ⫃[RP] K2 &
                                  L1 = K1.ⓓⓝW.V & I = Abst.
 /2 width=3 by lsubc_inv_pair2_aux/ qed-.
 
 (* Basic properties *********************************************************)
 
 (* Basic_1: was just: csubc_refl *)
-lemma lsubc_refl: ∀RP,G,L. G ⊢ L ⊑[RP] L.
+lemma lsubc_refl: ∀RP,G,L. G ⊢ L ⫃[RP] L.
 #RP #G #L elim L -L // /2 width=1/
 qed.
 

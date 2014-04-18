@@ -19,7 +19,9 @@ include "basic_2/reduction/cpr.ma".
 
 (* Properties on lazy sn pointwise extensions *******************************)
 
-lemma cpr_llpx_sn_conf: ∀R. (∀L. reflexive … (R L)) → l_liftable R → l_deliftable_sn R →
+lemma cpr_llpx_sn_conf: ∀R. (∀I,L.reflexive … (R I L)) →
+                            (∀I.l_liftable (R I)) →
+                            (∀I.l_deliftable_sn (R I)) →
                         ∀G. s_r_confluent1 … (cpr G) (llpx_sn R 0).
 #R #H1R #H2R #H3R #G #Ls #T1 #T2 #H elim H -G -Ls -T1 -T2
 [ //

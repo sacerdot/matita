@@ -22,7 +22,7 @@ notation "hvbox( ⦃ term 46 h , break term 46 L ⦄ ⊢ break term 46 T ÷ brea
    non associative with precedence 45
    for @{ 'BinaryArity $h $L $T $A }.
 
-notation "hvbox( h ⊢ break term 46 L1 ÷ ⊑ break term 46 L2 )"
+notation "hvbox( h ⊢ break term 46 L1 ÷ ⫃ break term 46 L2 )"
    non associative with precedence 45
    for @{ 'LRSubEqB $h $L1 $L2 }.
 

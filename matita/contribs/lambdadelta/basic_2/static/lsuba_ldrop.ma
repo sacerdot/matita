@@ -19,8 +19,8 @@ include "basic_2/static/lsuba.ma".
 (* Properties concerning basic local environment slicing ********************)
 
 (* Note: the constant 0 cannot be generalized *)
-lemma lsuba_ldrop_O1_conf: ∀G,L1,L2. G ⊢ L1 ⁝⊑ L2 → ∀K1,s,e. ⇩[s, 0, e] L1 ≡ K1 →
-                           ∃∃K2. G ⊢ K1 ⁝⊑ K2 & ⇩[s, 0, e] L2 ≡ K2.
+lemma lsuba_ldrop_O1_conf: ∀G,L1,L2. G ⊢ L1 ⁝⫃ L2 → ∀K1,s,e. ⇩[s, 0, e] L1 ≡ K1 →
+                           ∃∃K2. G ⊢ K1 ⁝⫃ K2 & ⇩[s, 0, e] L2 ≡ K2.
 #G #L1 #L2 #H elim H -L1 -L2
 [ /2 width=3/
 | #I #L1 #L2 #V #_ #IHL12 #K1 #s #e #H
@@ -41,8 +41,8 @@ lemma lsuba_ldrop_O1_conf: ∀G,L1,L2. G ⊢ L1 ⁝⊑ L2 → ∀K1,s,e. ⇩[s, 
 qed-.
 
 (* Note: the constant 0 cannot be generalized *)
-lemma lsuba_ldrop_O1_trans: ∀G,L1,L2. G ⊢ L1 ⁝⊑ L2 → ∀K2,s,e. ⇩[s, 0, e] L2 ≡ K2 →
-                            ∃∃K1. G ⊢ K1 ⁝⊑ K2 & ⇩[s, 0, e] L1 ≡ K1.
+lemma lsuba_ldrop_O1_trans: ∀G,L1,L2. G ⊢ L1 ⁝⫃ L2 → ∀K2,s,e. ⇩[s, 0, e] L2 ≡ K2 →
+                            ∃∃K1. G ⊢ K1 ⁝⫃ K2 & ⇩[s, 0, e] L1 ≡ K1.
 #G #L1 #L2 #H elim H -L1 -L2
 [ /2 width=3/
 | #I #L1 #L2 #V #_ #IHL12 #K2 #s #e #H
