@@ -33,7 +33,7 @@ lemma cnx_inv_crx: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ ➡[h, g] 𝐑⦃T⦄ → ⦃G, 
   elim (cnx_inv_appl … H) -H /2 width=1 by/
 | #I #L #V #T * #H1 #H2 destruct
   [ elim (cnx_inv_zeta … H2)
-  | elim (cnx_inv_tau … H2)
+  | elim (cnx_inv_eps … H2)
   ]
 |6,7: #a * [ elim a ] #L #V #T * #H1 #_ #IH #H2 destruct
   [1,3: elim (cnx_inv_abbr … H2) -H2 /2 width=1 by/

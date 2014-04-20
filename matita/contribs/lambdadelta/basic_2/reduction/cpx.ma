@@ -21,7 +21,7 @@ include "basic_2/reduction/cpr.ma".
 (* avtivate genv *)
 inductive cpx (h) (g): relation4 genv lenv term term ≝
 | cpx_atom : ∀I,G,L. cpx h g G L (⓪{I}) (⓪{I})
-| cpx_sort : ∀G,L,k,l. deg h g k (l+1) → cpx h g G L (⋆k) (⋆(next h k))
+| cpx_st   : ∀G,L,k,l. deg h g k (l+1) → cpx h g G L (⋆k) (⋆(next h k))
 | cpx_delta: ∀I,G,L,K,V,V2,W2,i.
              ⇩[i] L ≡ K.ⓑ{I}V → cpx h g G K V V2 →
              ⇧[0, i+1] V2 ≡ W2 → cpx h g G L (#i) W2
@@ -33,8 +33,8 @@ inductive cpx (h) (g): relation4 genv lenv term term ≝
              cpx h g G L (ⓕ{I}V1.T1) (ⓕ{I}V2.T2)
 | cpx_zeta : ∀G,L,V,T1,T,T2. cpx h g G (L.ⓓV) T1 T →
              ⇧[0, 1] T2 ≡ T → cpx h g G L (+ⓓV.T1) T2
-| cpx_tau  : ∀G,L,V,T1,T2. cpx h g G L T1 T2 → cpx h g G L (ⓝV.T1) T2
-| cpx_ti   : ∀G,L,V1,V2,T. cpx h g G L V1 V2 → cpx h g G L (ⓝV1.T) V2
+| cpx_eps  : ∀G,L,V,T1,T2. cpx h g G L T1 T2 → cpx h g G L (ⓝV.T1) T2
+| cpx_ct   : ∀G,L,V1,V2,T. cpx h g G L V1 V2 → cpx h g G L (ⓝV1.T) V2
 | cpx_beta : ∀a,G,L,V1,V2,W1,W2,T1,T2.
              cpx h g G L V1 V2 → cpx h g G L W1 W2 → cpx h g G (L.ⓛW1) T1 T2 →
              cpx h g G L (ⓐV1.ⓛ{a}W1.T1) (ⓓ{a}ⓝW2.V2.T2)
@@ -53,12 +53,12 @@ interpretation
 lemma lsubr_cpx_trans: ∀h,g,G. lsub_trans … (cpx h g G) lsubr.
 #h #g #G #L1 #T1 #T2 #H elim H -G -L1 -T1 -T2
 [ //
-| /2 width=2 by cpx_sort/
+| /2 width=2 by cpx_st/
 | #I #G #L1 #K1 #V1 #V2 #W2 #i #HLK1 #_ #HVW2 #IHV12 #L2 #HL12
   elim (lsubr_fwd_ldrop2_bind … HL12 … HLK1) -HL12 -HLK1 *
-  /4 width=7 by cpx_delta, cpx_ti/
+  /4 width=7 by cpx_delta, cpx_ct/
 |4,9: /4 width=1 by cpx_bind, cpx_beta, lsubr_bind/
-|5,7,8: /3 width=1 by cpx_flat, cpx_tau, cpx_ti/
+|5,7,8: /3 width=1 by cpx_flat, cpx_eps, cpx_ct/
 |6,10: /4 width=3 by cpx_zeta, cpx_theta, lsubr_bind/
 ]
 qed-.
@@ -70,7 +70,7 @@ qed.
 
 lemma cpr_cpx: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡ T2 → ⦃G, L⦄ ⊢ T1 ➡[h, g] T2.
 #h #g #G #L #T1 #T2 #H elim H -L -T1 -T2
-/2 width=7 by cpx_delta, cpx_bind, cpx_flat, cpx_zeta, cpx_tau, cpx_beta, cpx_theta/
+/2 width=7 by cpx_delta, cpx_bind, cpx_flat, cpx_zeta, cpx_eps, cpx_beta, cpx_theta/
 qed.
 
 lemma cpx_pair_sn: ∀h,g,I,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡[h, g] V2 →

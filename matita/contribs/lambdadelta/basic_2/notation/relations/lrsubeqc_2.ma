@@ -16,4 +16,4 @@
 
 notation "hvbox( L1 ⫃ break term 46 L2 )"
    non associative with precedence 45
-   for @{ 'LRSubEq $L1 $L2 }.
+   for @{ 'LRSubEqC $L1 $L2 }.

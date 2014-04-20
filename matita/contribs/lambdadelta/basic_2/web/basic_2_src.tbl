@@ -214,7 +214,11 @@ table {
              [ "lleq ( ? ⋕[?,?] ? )" "lleq_alt" + "lleq_leq" + "lleq_ldrop" + "lleq_fqus" + "lleq_lleq" * ]
           }
         ]
-        [ { "iterated structural successor for closures" * } {
+        [ { "contxt-sensitive extended multiple substitution" * } {
+             [ "cpys ( ⦃?,?⦄ ⊢ ? ▶*[?,?] ? )" "cpys_alt ( ⦃?,?⦄ ⊢ ? ▶▶*[?,?] ? )" "cpys_lift" + "cpys_cpys" * ]
+          }
+        ]
+	[ { "iterated structural successor for closures" * } {
              [ "fqus ( ⦃?,?,?⦄ ⊐* ⦃?,?,?⦄ )" "fqus_alt" + "fqus_fqus" * ]
              [ "fqup ( ⦃?,?,?⦄ ⊐+ ⦃?,?,?⦄ )" "fqup_fqup" * ]
           }
@@ -254,7 +258,15 @@ table {
              [ "lpx_sn" "lpx_sn_alt" + "lpx_sn_tc" + "lpx_sn_ldrop" + "lpx_sn_lpx_sn" * ]
           }
         ]
-        [ { "basic local env. slicing" * } {
+        [ { "contxt-sensitive extended ordinary substitution" * } {
+             [ "cpy ( ⦃?,?⦄ ⊢ ? ▶[?,?] ? )" "cpy_lift" + "cpy_cpy" * ]
+          }
+        ]
+        [ { "local env. ref. for extended substitution" * } {
+             [ "lsuby ( ? ⊑×[?,?] ? )" "lsuby_lsuby" * ]
+          }
+        ]
+	[ { "basic local env. slicing" * } {
              [ "ldrop ( ⇩[?,?,?] ? ≡ ? )"  "ldrop_leq" + "ldrop_ldrop" * ]
           }
         ]

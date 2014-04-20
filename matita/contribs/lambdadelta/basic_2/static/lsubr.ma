@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/lrsubeq_2.ma".
+include "basic_2/notation/relations/lrsubeqc_2.ma".
 include "basic_2/relocation/ldrop.ma".
 
 (* RESTRICTED LOCAL ENVIRONMENT REFINEMENT **********************************)
@@ -25,7 +25,7 @@ inductive lsubr: relation lenv ≝
 
 interpretation
   "local environment refinement (restricted)"
-  'LRSubEq L1 L2 = (lsubr L1 L2).
+  'LRSubEqC L1 L2 = (lsubr L1 L2).
 
 (* Basic properties *********************************************************)
 

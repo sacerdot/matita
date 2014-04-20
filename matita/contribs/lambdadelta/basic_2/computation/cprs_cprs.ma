@@ -112,7 +112,7 @@ lemma lpr_cpr_trans: ∀G. s_r_transitive … (cpr G) (λ_. lpr G).
   elim (lpr_inv_pair2 … H) -H #K1 #V1 #HK12 #HV10 #H destruct
   /4 width=6 by cprs_strap2, cprs_delta/
 |3,7: /4 width=1 by lpr_pair, cprs_bind, cprs_beta/
-|4,6: /3 width=1 by cprs_flat, cprs_tau/
+|4,6: /3 width=1 by cprs_flat, cprs_eps/
 |5,8: /4 width=3 by lpr_pair, cprs_zeta, cprs_theta, cprs_strap1/
 ]
 qed-.

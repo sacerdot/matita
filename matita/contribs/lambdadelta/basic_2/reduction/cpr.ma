@@ -34,7 +34,7 @@ inductive cpr: relation4 genv lenv term term ≝
              cpr G L (ⓕ{I}V1.T1) (ⓕ{I}V2.T2)
 | cpr_zeta : ∀G,L,V,T1,T,T2. cpr G (L.ⓓV) T1 T →
              ⇧[0, 1] T2 ≡ T → cpr G L (+ⓓV.T1) T2
-| cpr_tau  : ∀G,L,V,T1,T2. cpr G L T1 T2 → cpr G L (ⓝV.T1) T2
+| cpr_eps  : ∀G,L,V,T1,T2. cpr G L T1 T2 → cpr G L (ⓝV.T1) T2
 | cpr_beta : ∀a,G,L,V1,V2,W1,W2,T1,T2.
              cpr G L V1 V2 → cpr G L W1 W2 → cpr G (L.ⓛW1) T1 T2 →
              cpr G L (ⓐV1.ⓛ{a}W1.T1) (ⓓ{a}ⓝW2.V2.T2)
@@ -55,7 +55,7 @@ lemma lsubr_cpr_trans: ∀G. lsub_trans … (cpr G) lsubr.
   elim (lsubr_fwd_ldrop2_abbr … HL12 … HLK1) -L1 *
   /3 width=6 by cpr_delta/
 |3,7: /4 width=1 by lsubr_bind, cpr_bind, cpr_beta/
-|4,6: /3 width=1 by cpr_flat, cpr_tau/
+|4,6: /3 width=1 by cpr_flat, cpr_eps/
 |5,8: /4 width=3 by lsubr_bind, cpr_zeta, cpr_theta/
 ]
 qed-.
@@ -290,6 +290,6 @@ qed-.
             pr2_gen_ctail pr2_ctail
 *)
 (* Basic_1: removed local theorems 4:
-            pr0_delta_tau pr0_cong_delta
+            pr0_delta_eps pr0_cong_delta
             pr2_free_free pr2_free_delta
 *)

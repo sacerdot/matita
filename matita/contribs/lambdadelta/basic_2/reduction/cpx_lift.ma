@@ -24,7 +24,7 @@ include "basic_2/reduction/cpx.ma".
 lemma ssta_cpx: ∀h,g,G,L,T1,T2,l. ⦃G, L⦄ ⊢ T1 •[h, g] T2 →
                 ⦃G, L⦄ ⊢ T1 ▪[h, g] l+1 → ⦃G, L⦄ ⊢ T1 ➡[h, g] T2.
 #h #g #G #L #T1 #T2 #l #H elim H -G -L -T1 -T2
-[ /3 width=4 by cpx_sort, da_inv_sort/
+[ /3 width=4 by cpx_st, da_inv_sort/
 | #G #L #K #V #U #W #i #HLK #_ #HWU #IHVW #H
   elim (da_inv_lref … H) -H * #K0 #V0 [| #l0 ] #HLK0
   lapply (ldrop_mono … HLK0 … HLK) -HLK0 #H destruct /3 width=7 by cpx_delta/
@@ -33,7 +33,7 @@ lemma ssta_cpx: ∀h,g,G,L,T1,T2,l. ⦃G, L⦄ ⊢ T1 •[h, g] T2 →
   lapply (ldrop_mono … HLK0 … HLK) -HLK0 #H destruct /2 width=7 by cpx_delta/
 | /4 width=2 by cpx_bind, da_inv_bind/
 | /4 width=3 by cpx_flat, da_inv_flat/
-| /4 width=3 by cpx_tau, da_inv_flat/
+| /4 width=3 by cpx_eps, da_inv_flat/
 ]
 qed.
 
@@ -45,7 +45,7 @@ lemma cpx_lift: ∀h,g,G. l_liftable (cpx h g G).
   >(lift_mono … H1 … H2) -H1 -H2 //
 | #G #K #k #l #Hkl #L #s #d #e #_ #U1 #H1 #U2 #H2
   >(lift_inv_sort1 … H1) -U1
-  >(lift_inv_sort1 … H2) -U2 /2 width=2 by cpx_sort/
+  >(lift_inv_sort1 … H2) -U2 /2 width=2 by cpx_st/
 | #I #G #K #KV #V #V2 #W2 #i #HKV #HV2 #HVW2 #IHV2 #L #s #d #e #HLK #U1 #H #U2 #HWU2
   elim (lift_inv_lref1 … H) * #Hid #H destruct
   [ elim (lift_trans_ge … HVW2 … HWU2) -W2 // <minus_plus #W2 #HVW2 #HWU2
@@ -65,9 +65,9 @@ lemma cpx_lift: ∀h,g,G. l_liftable (cpx h g G).
   elim (lift_inv_bind1 … H) -H #VV1 #TT1 #HVV1 #HTT1 #H destruct
   elim (lift_conf_O1 … HTU2 … HT2) -T2 /4 width=6 by cpx_zeta, ldrop_skip/
 | #G #K #V #T1 #T2 #_ #IHT12 #L #s #d #e #HLK #U1 #H #U2 #HTU2
-  elim (lift_inv_flat1 … H) -H #VV1 #TT1 #HVV1 #HTT1 #H destruct /3 width=6 by cpx_tau/
+  elim (lift_inv_flat1 … H) -H #VV1 #TT1 #HVV1 #HTT1 #H destruct /3 width=6 by cpx_eps/
 | #G #K #V1 #V2 #T #_ #IHV12 #L #s #d #e #HLK #U1 #H #U2 #HVU2
-  elim (lift_inv_flat1 … H) -H #VV1 #TT1 #HVV1 #HTT1 #H destruct /3 width=6 by cpx_ti/
+  elim (lift_inv_flat1 … H) -H #VV1 #TT1 #HVV1 #HTT1 #H destruct /3 width=6 by cpx_ct/
 | #a #G #K #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #IHV12 #IHW12 #IHT12 #L #s #d #e #HLK #X1 #HX1 #X2 #HX2
   elim (lift_inv_flat1 … HX1) -HX1 #V0 #X #HV10 #HX #HX1 destruct
   elim (lift_inv_bind1 … HX) -HX #W0 #T0 #HW0 #HT10 #HX destruct
@@ -90,7 +90,7 @@ lemma cpx_inv_lift1: ∀h,g,G. l_deliftable_sn (cpx h g G).
   | lapply (lift_inv_gref2 … H) -H #H destruct /2 width=3 by cpx_atom, lift_gref, ex2_intro/
   ]
 | #G #L #k #l #Hkl #K #s #d #e #_ #T1 #H
-  lapply (lift_inv_sort2 … H) -H #H destruct /3 width=3 by cpx_sort, lift_sort, ex2_intro/
+  lapply (lift_inv_sort2 … H) -H #H destruct /3 width=3 by cpx_st, lift_sort, ex2_intro/
 | #I #G #L #LV #V #V2 #W2 #i #HLV #HV2 #HVW2 #IHV2 #K #s #d #e #HLK #T1 #H
   elim (lift_inv_lref2 … H) -H * #Hid #H destruct
   [ elim (ldrop_conf_lt … HLK … HLV) -L // #L #U #HKL #HLV #HUV
@@ -115,10 +115,10 @@ lemma cpx_inv_lift1: ∀h,g,G. l_deliftable_sn (cpx h g G).
   elim (lift_div_le … HU2 … HTU) -U /3 width=5 by cpx_zeta, ex2_intro/
 | #G #L #V #U1 #U2 #_ #IHU12 #K #s #d #e #HLK #X #H
   elim (lift_inv_flat2 … H) -H #W1 #T1 #HWV1 #HTU1 #H destruct
-  elim (IHU12 … HLK … HTU1) -L -U1 /3 width=3 by cpx_tau, ex2_intro/
+  elim (IHU12 … HLK … HTU1) -L -U1 /3 width=3 by cpx_eps, ex2_intro/
 | #G #L #V1 #V2 #U1 #_ #IHV12 #K #s #d #e #HLK #X #H
   elim (lift_inv_flat2 … H) -H #W1 #T1 #HWV1 #HTU1 #H destruct
-  elim (IHV12 … HLK … HWV1) -L -V1 /3 width=3 by cpx_ti, ex2_intro/
+  elim (IHV12 … HLK … HWV1) -L -V1 /3 width=3 by cpx_ct, ex2_intro/
 | #a #G #L #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #IHV12 #IHW12 #IHT12 #K #s #d #e #HLK #X #HX
   elim (lift_inv_flat2 … HX) -HX #V0 #Y #HV01 #HY #HX destruct
   elim (lift_inv_bind2 … HY) -HY #W0 #T0 #HW01 #HT01 #HY destruct

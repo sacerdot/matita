@@ -97,16 +97,16 @@ lemma cpxs_zeta: ∀h,g,G,L,V,T1,T,T2. ⇧[0, 1] T2 ≡ T →
 /3 width=3 by cpxs_strap2, cpx_cpxs, cpx_bind, cpx_zeta/
 qed.
 
-lemma cpxs_tau: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡*[h, g] T2 →
+lemma cpxs_eps: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡*[h, g] T2 →
                 ∀V. ⦃G, L⦄ ⊢ ⓝV.T1 ➡*[h, g] T2.
 #h #g #G #L #T1 #T2 #H @(cpxs_ind … H) -T2
-/3 width=3 by cpxs_strap1, cpx_cpxs, cpx_tau/
+/3 width=3 by cpxs_strap1, cpx_cpxs, cpx_eps/
 qed.
 
-lemma cpxs_ti: ∀h,g,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡*[h, g] V2 →
+lemma cpxs_ct: ∀h,g,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡*[h, g] V2 →
                ∀T. ⦃G, L⦄ ⊢ ⓝV1.T ➡*[h, g] V2.
 #h #g #G #L #V1 #V2 #H @(cpxs_ind … H) -V2
-/3 width=3 by cpxs_strap1, cpx_cpxs, cpx_ti/
+/3 width=3 by cpxs_strap1, cpx_cpxs, cpx_ct/
 qed.
 
 lemma cpxs_beta_dx: ∀h,g,a,G,L,V1,V2,W1,W2,T1,T2.

@@ -30,7 +30,7 @@ interpretation
 lemma cnx_inv_sort: ∀h,g,G,L,k. ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃⋆k⦄ → deg h g k 0.
 #h #g #G #L #k #H elim (deg_total h g k)
 #l @(nat_ind_plus … l) -l // #l #_ #Hkl
-lapply (H (⋆(next h k)) ?) -H /2 width=2 by cpx_sort/ -L -l #H destruct -H -e0 (**) (* destruct does not remove some premises *)
+lapply (H (⋆(next h k)) ?) -H /2 width=2 by cpx_st/ -L -l #H destruct -H -e0 (**) (* destruct does not remove some premises *)
 lapply (next_lt h k) >e1 -e1 #H elim (lt_refl_false … H)
 qed-.
 
@@ -82,9 +82,9 @@ lemma cnx_inv_appl: ∀h,g,G,L,V,T. ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃ⓐV.T⦄ �
 ]
 qed-.
 
-lemma cnx_inv_tau: ∀h,g,G,L,V,T. ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃ⓝV.T⦄ → ⊥.
+lemma cnx_inv_eps: ∀h,g,G,L,V,T. ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃ⓝV.T⦄ → ⊥.
 #h #g #G #L #V #T #H lapply (H T ?) -H
-/2 width=4 by cpx_tau, discr_tpair_xy_y/
+/2 width=4 by cpx_eps, discr_tpair_xy_y/
 qed-.
 
 (* Basic forward lemmas *****************************************************)

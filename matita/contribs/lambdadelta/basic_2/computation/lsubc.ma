@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/lrsubeq_4.ma".
+include "basic_2/notation/relations/lrsubeqc_4.ma".
 include "basic_2/static/aaa.ma".
 include "basic_2/computation/acp_cr.ma".
 
@@ -27,7 +27,7 @@ inductive lsubc (RP) (G): relation lenv ≝
 
 interpretation
   "local environment refinement (abstract candidates of reducibility)"
-  'LRSubEq RP G L1 L2 = (lsubc RP G L1 L2).
+  'LRSubEqC RP G L1 L2 = (lsubc RP G L1 L2).
 
 (* Basic inversion lemmas ***************************************************)
 

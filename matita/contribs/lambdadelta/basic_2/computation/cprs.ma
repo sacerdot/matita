@@ -91,9 +91,9 @@ lemma cprs_zeta: ∀G,L,V,T1,T,T2. ⇧[0, 1] T2 ≡ T →
 /3 width=3 by cprs_strap2, cpr_cprs, cpr_bind, cpr_zeta/
 qed.
 
-lemma cprs_tau: ∀G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡* T2 → ∀V. ⦃G, L⦄ ⊢ ⓝV.T1 ➡* T2.
+lemma cprs_eps: ∀G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡* T2 → ∀V. ⦃G, L⦄ ⊢ ⓝV.T1 ➡* T2.
 #G #L #T1 #T2 #H @(cprs_ind … H) -T2
-/3 width=3 by cprs_strap1, cpr_cprs, cpr_tau/
+/3 width=3 by cprs_strap1, cpr_cprs, cpr_eps/
 qed.
 
 lemma cprs_beta_dx: ∀a,G,L,V1,V2,W1,W2,T1,T2.

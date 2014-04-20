@@ -69,9 +69,9 @@ lemma cnr_inv_appl: ∀G,L,V,T. ⦃G, L⦄ ⊢ ➡ 𝐍⦃ⓐV.T⦄ → ∧∧ �
 ]
 qed-.
 
-lemma cnr_inv_tau: ∀G,L,V,T. ⦃G, L⦄ ⊢ ➡ 𝐍⦃ⓝV.T⦄ → ⊥.
+lemma cnr_inv_eps: ∀G,L,V,T. ⦃G, L⦄ ⊢ ➡ 𝐍⦃ⓝV.T⦄ → ⊥.
 #G #L #V #T #H lapply (H T ?) -H
-/2 width=4 by cpr_tau, discr_tpair_xy_y/
+/2 width=4 by cpr_eps, discr_tpair_xy_y/
 qed-.
 
 (* Basic properties *********************************************************)

@@ -146,7 +146,7 @@ elim (IH … HV01 … HV02 … HL01 … HL02) //
 elim (IH … HT01 … HT02 … HL01 … HL02) /3 width=5 by cpr_flat, ex2_intro/
 qed-.
 
-fact cpr_conf_lpr_flat_tau:
+fact cpr_conf_lpr_flat_eps:
    ∀G,L0,V0,T0. (
       ∀L,T. ⦃G, L0, ⓝV0.T0⦄ ⊐+ ⦃G, L, T⦄ →
       ∀T1. ⦃G, L⦄ ⊢ T ➡ T1 → ∀T2. ⦃G, L⦄ ⊢ T ➡ T2 →
@@ -158,10 +158,10 @@ fact cpr_conf_lpr_flat_tau:
    ∃∃T. ⦃G, L1⦄ ⊢ ⓝV1.T1 ➡ T & ⦃G, L2⦄ ⊢ T2 ➡ T.
 #G #L0 #V0 #T0 #IH #V1 #T1 #HT01
 #T2 #HT02 #L1 #HL01 #L2 #HL02
-elim (IH … HT01 … HT02 … HL01 … HL02) // -L0 -V0 -T0 /3 width=3 by cpr_tau, ex2_intro/
+elim (IH … HT01 … HT02 … HL01 … HL02) // -L0 -V0 -T0 /3 width=3 by cpr_eps, ex2_intro/
 qed-.
 
-fact cpr_conf_lpr_tau_tau:
+fact cpr_conf_lpr_eps_eps:
    ∀G,L0,V0,T0. (
       ∀L,T. ⦃G, L0, ⓝV0.T0⦄ ⊐+ ⦃G, L, T⦄ →
       ∀T1. ⦃G, L⦄ ⊢ T ➡ T1 → ∀T2. ⦃G, L⦄ ⊢ T ➡ T2 →
@@ -319,11 +319,11 @@ theorem cpr_conf_lpr: ∀G. lpx_sn_confluent (cpr G) (cpr G).
   |4,8,12,16: #a2 #V2 #U2 #Y2 #W2 #Z2 #T2 #HV02 #HVU2 #HYW2 #HZT2 #H21 #H22 #H23
   ] destruct
   [ /3 width=10 by cpr_conf_lpr_flat_flat/
-  | /4 width=8 by ex2_commute, cpr_conf_lpr_flat_tau/
+  | /4 width=8 by ex2_commute, cpr_conf_lpr_flat_eps/
   | /4 width=12 by ex2_commute, cpr_conf_lpr_flat_beta/
   | /4 width=14 by ex2_commute, cpr_conf_lpr_flat_theta/
-  | /3 width=8 by cpr_conf_lpr_flat_tau/
-  | /3 width=7 by cpr_conf_lpr_tau_tau/
+  | /3 width=8 by cpr_conf_lpr_flat_eps/
+  | /3 width=7 by cpr_conf_lpr_eps_eps/
   | /3 width=12 by cpr_conf_lpr_flat_beta/
   | /3 width=13 by cpr_conf_lpr_beta_beta/
   | /3 width=14 by cpr_conf_lpr_flat_theta/

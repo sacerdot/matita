@@ -43,7 +43,7 @@ lemma cpr_lift: ∀G. l_liftable (cpr G).
   elim (lift_inv_bind1 … H) -H #VV1 #TT1 #HVV1 #HTT1 #H destruct
   elim (lift_conf_O1 … HTU2 … HT2) -T2 /4 width=6 by cpr_zeta, ldrop_skip/
 | #G #K #V #T1 #T2 #_ #IHT12 #L #s #d #e #HLK #U1 #H #U2 #HTU2
-  elim (lift_inv_flat1 … H) -H #VV1 #TT1 #HVV1 #HTT1 #H destruct /3 width=6 by cpr_tau/
+  elim (lift_inv_flat1 … H) -H #VV1 #TT1 #HVV1 #HTT1 #H destruct /3 width=6 by cpr_eps/
 | #a #G #K #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #IHV12 #IHW12 #IHT12 #L #s #d #e #HLK #X1 #HX1 #X2 #HX2
   elim (lift_inv_flat1 … HX1) -HX1 #V0 #X #HV10 #HX #HX1 destruct
   elim (lift_inv_bind1 … HX) -HX #W0 #T0 #HW0 #HT10 #HX destruct
@@ -91,7 +91,7 @@ lemma cpr_inv_lift1: ∀G. l_deliftable_sn (cpr G).
   elim (lift_div_le … HU2 … HTU) -U /3 width=6 by cpr_zeta, ex2_intro/
 | #G #L #V #U1 #U2 #_ #IHU12 #K #s #d #e #HLK #X #H
   elim (lift_inv_flat2 … H) -H #W1 #T1 #HWV1 #HTU1 #H destruct
-  elim (IHU12 … HLK … HTU1) -L -U1 /3 width=3 by cpr_tau, ex2_intro/
+  elim (IHU12 … HLK … HTU1) -L -U1 /3 width=3 by cpr_eps, ex2_intro/
 | #a #G #L #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #IHV12 #IHW12 #IHT12 #K #s #d #e #HLK #X #HX
   elim (lift_inv_flat2 … HX) -HX #V0 #Y #HV01 #HY #HX destruct
   elim (lift_inv_bind2 … HY) -HY #W0 #T0 #HW01 #HT01 #HY destruct

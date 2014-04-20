@@ -96,13 +96,13 @@ qed-.
 lemma lpx_cpx_trans: ∀h,g,G. s_r_transitive … (cpx h g G) (λ_.lpx h g G).
 #h #g #G #L2 #T1 #T2 #HT12 elim HT12 -G -L2 -T1 -T2
 [ /2 width=3 by/
-| /3 width=2 by cpx_cpxs, cpx_sort/
+| /3 width=2 by cpx_cpxs, cpx_st/
 | #I #G #L2 #K2 #V0 #V2 #W2 #i #HLK2 #_ #HVW2 #IHV02 #L1 #HL12
   elim (lpx_ldrop_trans_O1 … HL12 … HLK2) -L2 #X #HLK1 #H
   elim (lpx_inv_pair2 … H) -H #K1 #V1 #HK12 #HV10 #H destruct
   /4 width=7 by cpxs_delta, cpxs_strap2/
 |4,9: /4 width=1 by cpxs_beta, cpxs_bind, lpx_pair/
-|5,7,8: /3 width=1 by cpxs_flat, cpxs_ti, cpxs_tau/
+|5,7,8: /3 width=1 by cpxs_flat, cpxs_ct, cpxs_eps/
 | /4 width=3 by cpxs_zeta, lpx_pair/
 | /4 width=3 by cpxs_theta, cpxs_strap1, lpx_pair/
 ]

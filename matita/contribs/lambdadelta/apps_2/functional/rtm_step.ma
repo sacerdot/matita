@@ -36,7 +36,7 @@ inductive rtm_step: relation rtm ≝
 | rtm_gtype : ∀G,V,u,E,S,p. p = |G| →
               rtm_step (mk_rtm (G. ⓛV) u E S (§p))
                        (mk_rtm G u E S V)
-| rtm_tau   : ∀G,u,E,S,W,T.
+| rtm_eps   : ∀G,u,E,S,W,T.
               rtm_step (mk_rtm G u E S (ⓝW. T))
                        (mk_rtm G u E S T)
 | rtm_appl  : ∀G,u,E,S,V,T.
