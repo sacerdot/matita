@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/relocation/lpx_sn_ldrop.ma".
-include "basic_2/relocation/llpx_sn.ma".
+include "basic_2/substitution/llpx_sn.ma".
 
 (* LAZY SN POINTWISE EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS ****)
 

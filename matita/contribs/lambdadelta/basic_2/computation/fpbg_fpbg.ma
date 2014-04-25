@@ -19,7 +19,7 @@ include "basic_2/computation/fpbg_fleq.ma".
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma fpbg_inv_fpbu_sn: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ >⋕[h, g] ⦃G2, L2, T2⦄ →
+lemma fpbg_inv_fpbu_sn: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ >≡[h, g] ⦃G2, L2, T2⦄ →
                         ∃∃G,L,T. ⦃G1, L1, T1⦄ ≻[h, g] ⦃G, L, T⦄ & ⦃G, L, T⦄ ≥[h, g] ⦃G2, L2, T2⦄.
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 #H @(fpbg_ind_dx … H) -G1 -L1 -T1
 [ #G1 #L1 #T1 * /3 width=5 by fleq_fpbs, ex2_3_intro/
@@ -31,7 +31,7 @@ qed-.
 
 (* Advanced forward lemmas **************************************************)
 
-lemma fpbg_fwd_fpbs: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ >⋕[h, g] ⦃G2, L2, T2⦄ →
+lemma fpbg_fwd_fpbs: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ >≡[h, g] ⦃G2, L2, T2⦄ →
                      ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 #H @(fpbg_ind … H) -G2 -L2 -T2
 [2: #G #G2 #L #L2 #T #T2 #_ #H2 #IH1 @(fpbs_trans … IH1) -IH1 ] (**) (* full auto fails *)

@@ -20,6 +20,6 @@ include "basic_2/computation/fpbs.ma".
 (* Properties on lazy equivalence on closures *******************************)
 
 lemma fleq_fpbs: ∀h,g,G1,G2,L1,L2,T1,T2.
-                 ⦃G1, L1, T1⦄ ⋕[0] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
+                 ⦃G1, L1, T1⦄ ≡[0] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 * /2 width=1 by lleq_fpbs/
 qed.

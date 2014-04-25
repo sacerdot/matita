@@ -22,12 +22,12 @@ include "basic_2/reduction/lpx_ldrop.ma".
 (* Properties on lazy equivalence for local environments ********************)
 
 axiom lleq_lpx_trans: ∀h,g,G,L2,K2. ⦃G, L2⦄ ⊢ ➡[h, g] K2 →
-                      ∀L1,T,d. L1 ⋕[T, d] L2 →
-                      ∃∃K1. ⦃G, L1⦄ ⊢ ➡[h, g] K1 & K1 ⋕[T, d] K2.
+                      ∀L1,T,d. L1 ≡[T, d] L2 →
+                      ∃∃K1. ⦃G, L1⦄ ⊢ ➡[h, g] K1 & K1 ≡[T, d] K2.
 
 lemma lpx_lleq_fqu_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T2⦄ →
-                          ∀K1. ⦃G1, K1⦄ ⊢ ➡[h, g] L1 → K1 ⋕[T1, 0] L1 →
-                          ∃∃K2. ⦃G1, K1, T1⦄ ⊐ ⦃G2, K2, T2⦄ & ⦃G2, K2⦄ ⊢ ➡[h, g] L2 & K2 ⋕[T2, 0] L2.
+                          ∀K1. ⦃G1, K1⦄ ⊢ ➡[h, g] L1 → K1 ≡[T1, 0] L1 →
+                          ∃∃K2. ⦃G1, K1, T1⦄ ⊐ ⦃G2, K2, T2⦄ & ⦃G2, K2⦄ ⊢ ➡[h, g] L2 & K2 ≡[T2, 0] L2.
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2
 [ #I #G1 #L1 #V1 #X #H1 #H2 elim (lpx_inv_pair2 … H1) -H1
   #K0 #V0 #H1KL1 #_ #H destruct
@@ -55,8 +55,8 @@ lemma lpx_lleq_fqu_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, 
 qed-.
 
 lemma lpx_lleq_fquq_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐⸮ ⦃G2, L2, T2⦄ →
-                           ∀K1. ⦃G1, K1⦄ ⊢ ➡[h, g] L1 → K1 ⋕[T1, 0] L1 →
-                           ∃∃K2. ⦃G1, K1, T1⦄ ⊐⸮ ⦃G2, K2, T2⦄ & ⦃G2, K2⦄ ⊢ ➡[h, g] L2 & K2 ⋕[T2, 0] L2.
+                           ∀K1. ⦃G1, K1⦄ ⊢ ➡[h, g] L1 → K1 ≡[T1, 0] L1 →
+                           ∃∃K2. ⦃G1, K1, T1⦄ ⊐⸮ ⦃G2, K2, T2⦄ & ⦃G2, K2⦄ ⊢ ➡[h, g] L2 & K2 ≡[T2, 0] L2.
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 #H #K1 #H1KL1 #H2KL1
 elim (fquq_inv_gen … H) -H
 [ #H elim (lpx_lleq_fqu_trans … H … H1KL1 H2KL1) -L1
@@ -66,8 +66,8 @@ elim (fquq_inv_gen … H) -H
 qed-.
 
 lemma lpx_lleq_fqup_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐+ ⦃G2, L2, T2⦄ →
-                           ∀K1. ⦃G1, K1⦄ ⊢ ➡[h, g] L1 → K1 ⋕[T1, 0] L1 →
-                           ∃∃K2. ⦃G1, K1, T1⦄ ⊐+ ⦃G2, K2, T2⦄ & ⦃G2, K2⦄ ⊢ ➡[h, g] L2 & K2 ⋕[T2, 0] L2.
+                           ∀K1. ⦃G1, K1⦄ ⊢ ➡[h, g] L1 → K1 ≡[T1, 0] L1 →
+                           ∃∃K2. ⦃G1, K1, T1⦄ ⊐+ ⦃G2, K2, T2⦄ & ⦃G2, K2⦄ ⊢ ➡[h, g] L2 & K2 ≡[T2, 0] L2.
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 #H @(fqup_ind … H) -G2 -L2 -T2
 [ #G2 #L2 #T2 #H #K1 #H1KL1 #H2KL1 elim (lpx_lleq_fqu_trans … H … H1KL1 H2KL1) -L1
   /3 width=4 by fqu_fqup, ex3_intro/
@@ -78,8 +78,8 @@ lemma lpx_lleq_fqup_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐+ ⦃G2
 qed-.
 
 lemma lpx_lleq_fqus_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐* ⦃G2, L2, T2⦄ →
-                           ∀K1. ⦃G1, K1⦄ ⊢ ➡[h, g] L1 → K1 ⋕[T1, 0] L1 →
-                           ∃∃K2. ⦃G1, K1, T1⦄ ⊐* ⦃G2, K2, T2⦄ & ⦃G2, K2⦄ ⊢ ➡[h, g] L2 & K2 ⋕[T2, 0] L2.
+                           ∀K1. ⦃G1, K1⦄ ⊢ ➡[h, g] L1 → K1 ≡[T1, 0] L1 →
+                           ∃∃K2. ⦃G1, K1, T1⦄ ⊐* ⦃G2, K2, T2⦄ & ⦃G2, K2⦄ ⊢ ➡[h, g] L2 & K2 ≡[T2, 0] L2.
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 #H #K1 #H1KL1 #H2KL1
 elim (fqus_inv_gen … H) -H
 [ #H elim (lpx_lleq_fqup_trans … H … H1KL1 H2KL1) -L1
@@ -91,7 +91,7 @@ qed-.
 fact leq_lpx_trans_lleq_aux: ∀h,g,G,L1,L0,d,e. L1 ≃[d, e] L0 → e = ∞ →
                              ∀L2. ⦃G, L0⦄ ⊢ ➡[h, g] L2 →
                              ∃∃L. L ≃[d, e] L2 & ⦃G, L1⦄ ⊢ ➡[h, g] L &
-                                  (∀T. L0 ⋕[T, d] L2 ↔ L1 ⋕[T, d] L).
+                                  (∀T. L0 ≡[T, d] L2 ↔ L1 ≡[T, d] L).
 #h #g #G #L1 #L0 #d #e #H elim H -L1 -L0 -d -e
 [ #d #e #_ #L2 #H >(lpx_inv_atom1 … H) -H
   /3 width=5 by ex3_intro, conj/
@@ -115,5 +115,5 @@ qed-.
 lemma leq_lpx_trans_lleq: ∀h,g,G,L1,L0,d. L1 ≃[d, ∞] L0 →
                           ∀L2. ⦃G, L0⦄ ⊢ ➡[h, g] L2 →
                           ∃∃L. L ≃[d, ∞] L2 & ⦃G, L1⦄ ⊢ ➡[h, g] L &
-                               (∀T. L0 ⋕[T, d] L2 ↔ L1 ⋕[T, d] L).
+                               (∀T. L0 ≡[T, d] L2 ↔ L1 ≡[T, d] L).
 /2 width=1 by leq_lpx_trans_lleq_aux/ qed-.

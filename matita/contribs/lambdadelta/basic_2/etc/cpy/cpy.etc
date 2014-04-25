@@ -1,0 +1,27 @@
+include "basic_2/grammar/cl_shift.ma".
+include "basic_2/relocation/ldrop_append.ma".
+
+lemma cpy_append: ∀G,d,e. l_appendable_sn … (cpy d e G).
+#G #d #e #K #T1 #T2 #H elim H -G -K -T1 -T2 -d -e
+/2 width=1 by cpy_atom, cpy_bind, cpy_flat/
+#I #G #K #K0 #V #W #i #d #e #Hdi #Hide #HK0 #HVW #L
+lapply (ldrop_fwd_length_lt2 … HK0) #H
+@(cpy_subst I … (L@@K0) … HVW) // (**) (* /4/ does not work *)
+@(ldrop_O1_append_sn_le … HK0) /2 width=2 by lt_to_le/
+qed-.
+
+lemma cpy_fwd_shift1: ∀G,L1,L,T1,T,d,e. ⦃G, L⦄ ⊢ L1 @@ T1 ▶[d, e] T →
+                      ∃∃L2,T2. |L1| = |L2| & T = L2 @@ T2.
+#G #L1 @(lenv_ind_dx … L1) -L1 normalize
+[ #L #T1 #T #d #e #HT1
+  @(ex2_2_intro … (⋆)) // (**) (* explicit constructor *)
+| #I #L1 #V1 #IH #L #T1 #X #d #e
+  >shift_append_assoc normalize #H
+  elim (cpy_inv_bind1 … H) -H
+  #V0 #T0 #_ #HT10 #H destruct
+  elim (IH … HT10) -IH -HT10 #L2 #T2 #HL12 #H destruct
+  >append_length >HL12 -HL12
+  @(ex2_2_intro … (⋆.ⓑ{I}V0@@L2) T2) [ >append_length ] (**) (* explicit constructor *)
+  /2 width=3 by trans_eq/
+]
+qed-.

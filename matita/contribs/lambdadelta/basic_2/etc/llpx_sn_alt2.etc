@@ -1,0 +1,45 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/substitution/cofrees_lift.ma".
+include "basic_2/substitution/llpx_sn_alt1.ma".
+
+(* LAZY SN POINTWISE EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS ****)
+
+(* alternative definition of llpx_sn (not recursive) *)
+definition llpx_sn_alt2: relation4 bind2 lenv term term → relation4 ynat term lenv lenv ≝
+                         λR,d,T,L1,L2. |L1| = |L2| ∧
+                         (∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → (L1 ⊢ i ~ϵ 𝐅*[d]⦃T⦄ → ⊥) →
+                            ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 →
+                            I1 = I2 ∧ R I1 K1 V1 V2
+                         ).
+
+(* Main properties **********************************************************)
+
+lemma cpy_inv_nlift2_be: ∀G,L,U1,U2,d. ⦃G, L⦄ ⊢ U1 ▶[d, ∞] U2 → ∀i. d ≤ yinj i →
+                         ∀K,s. ⇩[s, i, 1] L ≡ K →
+                         (∀T2. ⇧[i, 1] T2 ≡ U2 → ⊥) → (∀T1. ⇧[i, 1] T1 ≡ U1 → ⊥).
+#G #L #U1 #U2 #d #HU12 #i #Hdi #K #s #HLK #HnU2 #T1 #HTU1
+elim (cpy_inv_lift1_be … HU12 … HLK … HTU1) /2 width=2 by/
+qed-.
+
+theorem llpx_sn_llpx_sn_alt2: ∀R,L1,L2,T,d. llpx_sn R d T L1 L2 → llpx_sn_alt2 R d T L1 L2.
+#R #L1 #L2 #U1 #d #H elim (llpx_sn_inv_alt1 … H) -H
+#HL12 #IH @conj // -HL12
+#I1 #I2 #K1 #K2 #V1 #V2 #i #Hdi #HnU1 #HLK1 #HLK2 elim (frees_inv_gen … HnU1) -HnU1
+#U2 #H generalize in match IH; -IH @(cpys_ind_dx … H) -U1
+[ #IH #HnU2 elim (IH … HnU2 … HLK1 HLK2) -L1 -L2 -U2 /2 width=1 by conj/
+| #U1 #U0 #HU10 #_ #IHU02 #IH #HnU2 @IHU02 /2 width=2 by/ -I1 -I2 -K1 -K2 -V1 -V2 -U2 -i
+  #I1 #I2 #K1 #K2 #V1 #V2 #i #Hdi #HnU0 #HLK1 #HLK2 @(IH … HLK1 HLK2) -IH // -R -I2 -L2 -K2 -V2
+  @(cpy_inv_nlift2_be … HU10) /2 width=3 by/   

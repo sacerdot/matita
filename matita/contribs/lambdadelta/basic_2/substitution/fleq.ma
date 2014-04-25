@@ -19,7 +19,7 @@ include "basic_2/substitution/lleq.ma".
 (* LAZY EQUIVALENCE FOR CLOSURES ********************************************)
 
 inductive fleq (d) (G) (L1) (T): relation3 genv lenv term ≝
-| fleq_intro: ∀L2. L1 ⋕[T, d] L2 → fleq d G L1 T G L2 T
+| fleq_intro: ∀L2. L1 ≡[T, d] L2 → fleq d G L1 T G L2 T
 .
 
 interpretation
@@ -37,7 +37,7 @@ qed-.
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma fleq_inv_gen: ∀G1,G2,L1,L2,T1,T2,d. ⦃G1, L1, T1⦄ ⋕[d] ⦃G2, L2, T2⦄ →
-                    ∧∧ G1 = G2 & L1 ⋕[T1, d] L2 & T1 = T2.
+lemma fleq_inv_gen: ∀G1,G2,L1,L2,T1,T2,d. ⦃G1, L1, T1⦄ ≡[d] ⦃G2, L2, T2⦄ →
+                    ∧∧ G1 = G2 & L1 ≡[T1, d] L2 & T1 = T2.
 #G1 #G2 #L1 #L2 #T1 #T2 #d * -G2 -L2 -T2 /2 width=1 by and3_intro/
 qed-.

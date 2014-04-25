@@ -29,7 +29,7 @@ interpretation
 
 lemma lsx_ind: ∀h,g,G,T,d. ∀R:predicate lenv.
                (∀L1. G ⊢ ⬊*[h, g, T, d] L1 →
-                     (∀L2. ⦃G, L1⦄ ⊢ ➡[h, g] L2 → (L1 ⋕[T, d] L2 → ⊥) → R L2) →
+                     (∀L2. ⦃G, L1⦄ ⊢ ➡[h, g] L2 → (L1 ≡[T, d] L2 → ⊥) → R L2) →
                      R L1
                ) →
                ∀L. G ⊢ ⬊*[h, g, T, d] L → R L.
@@ -40,7 +40,7 @@ qed-.
 (* Basic properties *********************************************************)
 
 lemma lsx_intro: ∀h,g,G,L1,T,d.
-                 (∀L2. ⦃G, L1⦄ ⊢ ➡[h, g] L2 → (L1 ⋕[T, d] L2 → ⊥) → G ⊢ ⬊*[h, g, T, d] L2) →
+                 (∀L2. ⦃G, L1⦄ ⊢ ➡[h, g] L2 → (L1 ≡[T, d] L2 → ⊥) → G ⊢ ⬊*[h, g, T, d] L2) →
                  G ⊢ ⬊*[h, g, T, d] L1.
 /5 width=1 by lleq_sym, SN_intro/ qed.
 

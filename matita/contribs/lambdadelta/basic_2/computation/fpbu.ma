@@ -20,7 +20,7 @@ include "basic_2/computation/fpbs.ma".
 inductive fpbu (h) (g) (G1) (L1) (T1): relation3 genv lenv term ≝
 | fpbu_fqup: ∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊐+ ⦃G2, L2, T2⦄ → fpbu h g G1 L1 T1 G2 L2 T2
 | fpbu_cpxs: ∀T2. ⦃G1, L1⦄ ⊢ T1 ➡*[h, g] T2 → (T1 = T2 → ⊥) → fpbu h g G1 L1 T1 G1 L1 T2
-| fpbu_lpxs: ∀L2. ⦃G1, L1⦄ ⊢ ➡*[h, g] L2 → (L1 ⋕[T1, 0] L2 → ⊥) → fpbu h g G1 L1 T1 G1 L2 T1
+| fpbu_lpxs: ∀L2. ⦃G1, L1⦄ ⊢ ➡*[h, g] L2 → (L1 ≡[T1, 0] L2 → ⊥) → fpbu h g G1 L1 T1 G1 L2 T1
 .
 
 interpretation
@@ -33,7 +33,7 @@ lemma cprs_fpbu: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡* T2 → (T1 = T2 → �
                  ⦃G, L, T1⦄ ≻[h, g] ⦃G, L, T2⦄.
 /3 width=1 by fpbu_cpxs, cprs_cpxs/ qed.
 
-lemma lprs_fpbu: ∀h,g,G,L1,L2,T. ⦃G, L1⦄ ⊢ ➡* L2 → (L1 ⋕[T, 0] L2 → ⊥) →
+lemma lprs_fpbu: ∀h,g,G,L1,L2,T. ⦃G, L1⦄ ⊢ ➡* L2 → (L1 ≡[T, 0] L2 → ⊥) →
                  ⦃G, L1, T⦄ ≻[h, g] ⦃G, L2, T⦄.
 /3 width=1 by fpbu_lpxs, lprs_lpxs/ qed.
 

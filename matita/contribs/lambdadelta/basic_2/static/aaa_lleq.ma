@@ -20,7 +20,7 @@ include "basic_2/static/aaa.ma".
 (* Properties on lazy equivalence for local environments ********************)
 
 lemma lleq_aaa_trans: ∀G,L2,T,A. ⦃G, L2⦄ ⊢ T ⁝ A →
-                      ∀L1. L1 ⋕[T, 0] L2 → ⦃G, L1⦄ ⊢ T ⁝ A.
+                      ∀L1. L1 ≡[T, 0] L2 → ⦃G, L1⦄ ⊢ T ⁝ A.
 #G #L2 #T #A #H elim H -G -L2 -T -A /2 width=1 by aaa_sort/
 [ #I #G #L2 #K2 #V2 #A #i #HLK2 #_ #IHV2 #L1 #H elim (lleq_fwd_lref_dx … H … HLK2) -L2
   [ #H elim (ylt_yle_false … H) //
@@ -38,5 +38,5 @@ lemma lleq_aaa_trans: ∀G,L2,T,A. ⦃G, L2⦄ ⊢ T ⁝ A →
 qed-.
 
 lemma aaa_lleq_conf: ∀G,L2,T,A. ⦃G, L2⦄ ⊢ T ⁝ A →
-                     ∀L1. L2 ⋕[T, 0] L1 → ⦃G, L1⦄ ⊢ T ⁝ A.
+                     ∀L1. L2 ≡[T, 0] L1 → ⦃G, L1⦄ ⊢ T ⁝ A.
 /3 width=3 by lleq_aaa_trans, lleq_sym/ qed-.

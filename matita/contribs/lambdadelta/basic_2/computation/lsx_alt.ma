@@ -31,7 +31,7 @@ interpretation
 
 lemma lsxa_ind: ∀h,g,G,T,d. ∀R:predicate lenv.
                 (∀L1. G ⊢ ⬊⬊*[h, g, T, d] L1 →
-                      (∀L2. ⦃G, L1⦄ ⊢ ➡*[h, g] L2 → (L1 ⋕[T, d] L2 → ⊥) → R L2) →
+                      (∀L2. ⦃G, L1⦄ ⊢ ➡*[h, g] L2 → (L1 ≡[T, d] L2 → ⊥) → R L2) →
                       R L1
                 ) →
                 ∀L. G ⊢ ⬊⬊*[h, g, T, d] L → R L.
@@ -42,17 +42,17 @@ qed-.
 (* Basic properties *********************************************************)
 
 lemma lsxa_intro: ∀h,g,G,L1,T,d.
-                  (∀L2. ⦃G, L1⦄ ⊢ ➡*[h, g] L2 → (L1 ⋕[T, d] L2 → ⊥) → G ⊢ ⬊⬊*[h, g, T, d] L2) →
+                  (∀L2. ⦃G, L1⦄ ⊢ ➡*[h, g] L2 → (L1 ≡[T, d] L2 → ⊥) → G ⊢ ⬊⬊*[h, g, T, d] L2) →
                   G ⊢ ⬊⬊*[h, g, T, d] L1.
 /5 width=1 by lleq_sym, SN_intro/ qed.
 
 fact lsxa_intro_aux: ∀h,g,G,L1,T,d.
-                     (∀L,L2. ⦃G, L⦄ ⊢ ➡*[h, g] L2 → L1 ⋕[T, d] L → (L1 ⋕[T, d] L2 → ⊥) → G ⊢ ⬊⬊*[h, g, T, d] L2) →
+                     (∀L,L2. ⦃G, L⦄ ⊢ ➡*[h, g] L2 → L1 ≡[T, d] L → (L1 ≡[T, d] L2 → ⊥) → G ⊢ ⬊⬊*[h, g, T, d] L2) →
                      G ⊢ ⬊⬊*[h, g, T, d] L1.
 /4 width=3 by lsxa_intro/ qed-.
 
 lemma lsxa_lleq_trans: ∀h,g,T,G,L1,d. G ⊢ ⬊⬊*[h, g, T, d] L1 →
-                       ∀L2. L1 ⋕[T, d] L2 → G ⊢ ⬊⬊*[h, g, T, d] L2.
+                       ∀L2. L1 ≡[T, d] L2 → G ⊢ ⬊⬊*[h, g, T, d] L2.
 #h #g #T #G #L1 #d #H @(lsxa_ind … H) -L1
 #L1 #_ #IHL1 #L2 #HL12 @lsxa_intro
 #K2 #HLK2 #HnLK2 elim (lleq_lpxs_trans … HLK2 … HL12) -HLK2
@@ -66,7 +66,7 @@ elim (lleq_dec T L1 L2 d) /3 width=4 by lsxa_lleq_trans/
 qed-.
 
 lemma lsxa_intro_lpx: ∀h,g,G,L1,T,d.
-                      (∀L2. ⦃G, L1⦄ ⊢ ➡[h, g] L2 → (L1 ⋕[T, d] L2 → ⊥) → G ⊢ ⬊⬊*[h, g, T, d] L2) →
+                      (∀L2. ⦃G, L1⦄ ⊢ ➡[h, g] L2 → (L1 ≡[T, d] L2 → ⊥) → G ⊢ ⬊⬊*[h, g, T, d] L2) →
                       G ⊢ ⬊⬊*[h, g, T, d] L1.
 #h #g #G #L1 #T #d #IH @lsxa_intro_aux
 #L #L2 #H @(lpxs_ind_dx … H) -L
@@ -95,7 +95,7 @@ qed-.
 (* Advanced properties ******************************************************)
 
 lemma lsx_intro_alt: ∀h,g,G,L1,T,d.
-                     (∀L2. ⦃G, L1⦄ ⊢ ➡*[h, g] L2 → (L1 ⋕[T, d] L2 → ⊥) → G ⊢ ⬊*[h, g, T, d] L2) →
+                     (∀L2. ⦃G, L1⦄ ⊢ ➡*[h, g] L2 → (L1 ≡[T, d] L2 → ⊥) → G ⊢ ⬊*[h, g, T, d] L2) →
                      G ⊢ ⬊*[h, g, T, d] L1.
 /6 width=1 by lsxa_inv_lsx, lsx_lsxa, lsxa_intro/ qed.
 
@@ -107,7 +107,7 @@ lemma lsx_lpxs_trans: ∀h,g,G,L1,T,d. G ⊢ ⬊*[h, g, T, d] L1 →
 
 lemma lsx_ind_alt: ∀h,g,G,T,d. ∀R:predicate lenv.
                    (∀L1. G ⊢ ⬊*[h, g, T, d] L1 →
-                         (∀L2. ⦃G, L1⦄ ⊢ ➡*[h, g] L2 → (L1 ⋕[T, d] L2 → ⊥) → R L2) →
+                         (∀L2. ⦃G, L1⦄ ⊢ ➡*[h, g] L2 → (L1 ≡[T, d] L2 → ⊥) → R L2) →
                          R L1
                    ) →
                    ∀L. G ⊢ ⬊*[h, g, T, d] L → R L.

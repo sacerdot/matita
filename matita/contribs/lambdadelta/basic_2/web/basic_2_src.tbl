@@ -214,11 +214,15 @@ table {
              [ "lleq ( ? ⋕[?,?] ? )" "lleq_alt" + "lleq_leq" + "lleq_ldrop" + "lleq_fqus" + "lleq_lleq" * ]
           }
         ]
+        [ { "context-sensitive exclusion from free variables" * } {
+             [ "cofrees ( ? ⊢ ? ~ϵ 𝐅*[?]⦃?⦄ )" "cofrees_lift" * ]
+          }
+        ]
         [ { "contxt-sensitive extended multiple substitution" * } {
              [ "cpys ( ⦃?,?⦄ ⊢ ? ▶*[?,?] ? )" "cpys_alt ( ⦃?,?⦄ ⊢ ? ▶▶*[?,?] ? )" "cpys_lift" + "cpys_cpys" * ]
           }
         ]
-	[ { "iterated structural successor for closures" * } {
+        [ { "iterated structural successor for closures" * } {
              [ "fqus ( ⦃?,?,?⦄ ⊐* ⦃?,?,?⦄ )" "fqus_alt" + "fqus_fqus" * ]
              [ "fqup ( ⦃?,?,?⦄ ⊐+ ⦃?,?,?⦄ )" "fqup_fqup" * ]
           }

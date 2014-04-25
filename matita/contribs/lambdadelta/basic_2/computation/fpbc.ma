@@ -20,7 +20,7 @@ include "basic_2/computation/fpbu.ma".
 
 definition fpbc: ∀h. sd h → tri_relation genv lenv term ≝
                  λh,g,G1,L1,T1,G2,L2,T2.
-                 ∃∃G,L,T. ⦃G1, L1, T1⦄ ≻[h, g] ⦃G, L, T⦄ & ⦃G, L, T⦄ ⋕[0] ⦃G2, L2, T2⦄.
+                 ∃∃G,L,T. ⦃G1, L1, T1⦄ ≻[h, g] ⦃G, L, T⦄ & ⦃G, L, T⦄ ≡[0] ⦃G2, L2, T2⦄.
 
 interpretation
    "single-step 'big tree' proper parallel reduction (closure)"
@@ -29,5 +29,5 @@ interpretation
 (* Baic properties **********************************************************)
 
 lemma fpbu_fpbc: ∀h,g,G1,G2,L1,L2,T1,T2.
-                 ⦃G1, L1, T1⦄ ≻[h, g] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≻⋕[h, g] ⦃G2, L2, T2⦄.
+                 ⦃G1, L1, T1⦄ ≻[h, g] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≻≡[h, g] ⦃G2, L2, T2⦄.
 /2 width=5 by ex2_3_intro/ qed.

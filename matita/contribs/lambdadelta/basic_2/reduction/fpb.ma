@@ -23,7 +23,7 @@ inductive fpb (h) (g) (G1) (L1) (T1): relation3 genv lenv term ≝
 | fpb_fquq: ∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊐⸮ ⦃G2, L2, T2⦄ → fpb h g G1 L1 T1 G2 L2 T2
 | fpb_cpx : ∀T2. ⦃G1, L1⦄ ⊢ T1 ➡[h, g] T2 → fpb h g G1 L1 T1 G1 L1 T2
 | fpb_lpx : ∀L2. ⦃G1, L1⦄ ⊢ ➡[h, g] L2 → fpb h g G1 L1 T1 G1 L2 T1
-| fpb_lleq: ∀L2. L1 ⋕[T1, 0] L2 → fpb h g G1 L1 T1 G1 L2 T1
+| fpb_lleq: ∀L2. L1 ≡[T1, 0] L2 → fpb h g G1 L1 T1 G1 L2 T1
 .
 
 interpretation

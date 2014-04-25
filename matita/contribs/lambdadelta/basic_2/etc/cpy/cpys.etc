@@ -1,0 +1,14 @@
+lemma cpys_append: ∀G,d,e. l_appendable_sn … (cpys d e G).
+#G #d #e #K #T1 #T2 #H @(cpys_ind … H) -T2
+/3 width=3 by cpys_strap1, cpy_append/
+qed-.
+
+lemma cpys_fwd_shift1: ∀G,L,L1,T1,T,d,e. ⦃G, L⦄ ⊢ L1 @@ T1 ▶*[d, e] T →
+                       ∃∃L2,T2. |L1| = |L2| & T = L2 @@ T2.
+#G #L #L1 #T1 #T #d #e #H @(cpys_ind … H) -T
+[ /2 width=4 by ex2_2_intro/
+| #T #X #_ #HX * #L0 #T0 #HL10 #H destruct
+  elim (cpy_fwd_shift1 … HX) -HX #L2 #T2 #HL02 #H destruct
+  /2 width=4 by ex2_2_intro/
+]
+qed-.

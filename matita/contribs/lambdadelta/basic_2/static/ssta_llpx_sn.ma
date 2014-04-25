@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/llpx_sn_ldrop.ma".
+include "basic_2/substitution/llpx_sn_ldrop.ma".
 include "basic_2/static/ssta.ma".
 
 (* STRATIFIED STATIC TYPE ASSIGNMENT FOR TERMS ******************************)

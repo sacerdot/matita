@@ -26,7 +26,7 @@ definition fpbsa: ∀h. sd h → tri_relation genv lenv term ≝
                   λh,g,G1,L1,T1,G2,L2,T2.
                   ∃∃L0,L,T. ⦃G1, L1⦄ ⊢ T1 ➡*[h, g] T &
                          ⦃G1, L1, T⦄ ⊐* ⦃G2, L0, T2⦄ &
-                         ⦃G2, L0⦄ ⊢ ➡*[h, g] L & L ⋕[T2, 0] L2.
+                         ⦃G2, L0⦄ ⊢ ➡*[h, g] L & L ≡[T2, 0] L2.
 
 interpretation "'big tree' parallel computation (closure) alternative"
    'BTPRedStarAlt h g G1 L1 T1 G2 L2 T2 = (fpbsa h g G1 L1 T1 G2 L2 T2).
@@ -71,7 +71,7 @@ qed-.
 
 lemma fpbs_intro_alt: ∀h,g,G1,G2,L1,L0,L,L2,T1,T,T2.
                       ⦃G1, L1⦄ ⊢ T1 ➡*[h, g] T → ⦃G1, L1, T⦄ ⊐* ⦃G2, L0, T2⦄ →
-                      ⦃G2, L0⦄ ⊢ ➡*[h, g] L → L ⋕[T2, 0] L2 →  ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄ .
+                      ⦃G2, L0⦄ ⊢ ➡*[h, g] L → L ≡[T2, 0] L2 →  ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄ .
 /3 width=7 by fpbsa_inv_fpbs, ex4_3_intro/ qed.
 
 (* Advanced inversion lemmas *************************************************)
@@ -79,5 +79,5 @@ lemma fpbs_intro_alt: ∀h,g,G1,G2,L1,L0,L,L2,T1,T,T2.
 lemma fpbs_inv_alt: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄ →
                     ∃∃L0,L,T. ⦃G1, L1⦄ ⊢ T1 ➡*[h, g] T &
                               ⦃G1, L1, T⦄ ⊐* ⦃G2, L0, T2⦄ &
-                              ⦃G2, L0⦄ ⊢ ➡*[h, g] L & L ⋕[T2, 0] L2.
+                              ⦃G2, L0⦄ ⊢ ➡*[h, g] L & L ≡[T2, 0] L2.
 /2 width=1 by  fpbs_fpbsa/ qed-.

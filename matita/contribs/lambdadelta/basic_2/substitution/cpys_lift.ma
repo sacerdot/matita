@@ -77,6 +77,14 @@ lemma cpys_inv_lref1: ∀G,L,T2,i,d,e. ⦃G, L⦄ ⊢ #i ▶*[d, e] T2 →
 * #I #K #V1 #V2 #j #Hdj #Hjde #HLK #HV12 #HVT2 #H destruct /3 width=7 by ex5_4_intro, or_intror/
 qed-.
 
+lemma cpys_inv_lref1_Y2: ∀G,L,T2,i,d. ⦃G, L⦄ ⊢ #i ▶*[d, ∞] T2 →
+                         T2 = #i ∨
+                         ∃∃I,K,V1,V2. d ≤ i & ⇩[i] L ≡ K.ⓑ{I}V1 &
+                                      ⦃G, K⦄ ⊢ V1 ▶*[0, ∞] V2 & ⇧[O, i+1] V2 ≡ T2.
+#G #L #T2 #i #d #H elim (cpys_inv_lref1 … H) -H /2 width=1 by or_introl/
+* >yminus_Y_inj /3 width=7 by or_intror, ex4_4_intro/
+qed-.
+
 lemma cpys_inv_lref1_ldrop: ∀G,L,T2,i,d,e. ⦃G, L⦄ ⊢ #i ▶*[d, e] T2 →
                             ∀I,K,V1. ⇩[i] L ≡ K.ⓑ{I}V1 →
                             ∀V2. ⇧[O, i+1] V2 ≡ T2 →

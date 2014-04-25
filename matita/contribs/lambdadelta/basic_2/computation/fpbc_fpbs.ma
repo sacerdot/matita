@@ -20,7 +20,7 @@ include "basic_2/computation/fpbc.ma".
 
 (* Forward lemmas on "big tree" parallel computation for closures ***********)
 
-lemma fpbc_fwd_fpbs: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≻⋕[h, g] ⦃G2, L2, T2⦄ →
+lemma fpbc_fwd_fpbs: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≻≡[h, g] ⦃G2, L2, T2⦄ →
                      ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 *
 /3 width=5 by fpbu_fwd_fpbs, fpbs_trans, fleq_fpbs/

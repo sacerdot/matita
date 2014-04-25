@@ -21,7 +21,7 @@ include "basic_2/computation/lsx.ma".
 (* Advanced properties ******************************************************)
 
 lemma lsx_lleq_trans: ∀h,g,T,G,L1,d. G ⊢ ⬊*[h, g, T, d] L1 →
-                      ∀L2. L1 ⋕[T, d] L2 → G ⊢ ⬊*[h, g, T, d] L2.
+                      ∀L2. L1 ≡[T, d] L2 → G ⊢ ⬊*[h, g, T, d] L2.
 #h #g #T #G #L1 #d #H @(lsx_ind … H) -L1
 #L1 #_ #IHL1 #L2 #HL12 @lsx_intro
 #K2 #HLK2 #HnLK2 elim (lleq_lpx_trans … HLK2 … HL12) -HLK2

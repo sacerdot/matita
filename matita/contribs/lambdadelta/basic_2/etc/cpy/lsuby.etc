@@ -1,0 +1,15 @@
+(*
+lemma lsuby_weak: ∀L1,L2,d1,e1. L1 ⊑×[d1, e1] L2 →
+                  ∀d2,e2. d1 ≤ d2 → e2 ≤ e1 → L1 ⊑×[d2, e2] L2.
+#L1 #L2 #d1 #e1 #H elim H -L1 -L2 -d1 -e1 //
+[ #I1 #I2 #L1 #L2 #V1 #V2 #HL12 #_ #d2 #e2 #_ #He21
+  >(yle_inv_O2 … He21) -He21
+  /4 width=3 by lsuby_fwd_length, lsuby_O1, monotonic_le_plus_l/
+| #I1 #I2 #L1 #L2 #V #e #HL12 #IHL12 #d2 #e2 #_ #He21
+  elim (ynat_cases e2) /4 width=3 by lsuby_fwd_length, lsuby_O1, monotonic_le_plus_l/
+  * #e0 #H destruct lapply (yle_inv_succ … He21) -He21 #He21
+  elim (ynat_cases d2) /3 width=1 by lsuby_pair/
+  * #d0 #H destruct @lsuby_succ @IHL12 //
+  [   destruct
+  
+*)  

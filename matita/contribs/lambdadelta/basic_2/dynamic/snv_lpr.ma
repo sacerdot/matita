@@ -21,10 +21,10 @@ include "basic_2/dynamic/lsubsv_snv.ma".
 (* Properties on context-free parallel reduction for local environments *****)
 
 fact snv_cpr_lpr_aux: ∀h,g,G0,L0,T0.
-                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >⋕[h, g] ⦃G1, L1, T1⦄ → IH_snv_lsstas h g G1 L1 T1) →
-                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >⋕[h, g] ⦃G1, L1, T1⦄ → IH_lsstas_cpr_lpr h g G1 L1 T1) →
-                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >⋕[h, g] ⦃G1, L1, T1⦄ → IH_da_cpr_lpr h g G1 L1 T1) →
-                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >⋕[h, g] ⦃G1, L1, T1⦄ → IH_snv_cpr_lpr h g G1 L1 T1) →
+                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, g] ⦃G1, L1, T1⦄ → IH_snv_lsstas h g G1 L1 T1) →
+                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, g] ⦃G1, L1, T1⦄ → IH_lsstas_cpr_lpr h g G1 L1 T1) →
+                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, g] ⦃G1, L1, T1⦄ → IH_da_cpr_lpr h g G1 L1 T1) →
+                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, g] ⦃G1, L1, T1⦄ → IH_snv_cpr_lpr h g G1 L1 T1) →
                       ∀G1,L1,T1. G0 = G1 → L0 = L1 → T0 = T1 → IH_snv_cpr_lpr h g G1 L1 T1.
 #h #g #G0 #L0 #T0 #IH4 #IH3 #IH2 #IH1 #G1 #L1 * * [|||| * ]
 [ #k #HG0 #HL0 #HT0 #H1 #X #H2 #L2 #_ destruct -IH4 -IH3 -IH2 -IH1 -H1

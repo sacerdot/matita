@@ -22,9 +22,9 @@ include "basic_2/computation/fpbu.ma".
 
 (* Properties on lazy equivalence for local environments ********************)
 
-lemma lleq_fpbu_trans: ∀h,g,F,K1,K2,T. K1 ⋕[T, 0] K2 →
+lemma lleq_fpbu_trans: ∀h,g,F,K1,K2,T. K1 ≡[T, 0] K2 →
                        ∀G,L2,U. ⦃F, K2, T⦄ ≻[h, g] ⦃G, L2, U⦄ →
-                       ∃∃L1. ⦃F, K1, T⦄ ≻[h, g] ⦃G, L1, U⦄ & L1 ⋕[U, 0] L2.
+                       ∃∃L1. ⦃F, K1, T⦄ ≻[h, g] ⦃G, L1, U⦄ & L1 ≡[U, 0] L2.
 #h #g #F #K1 #K2 #T #HT #G #L2 #U * -G -L2 -U
 [ #G #L2 #U #H2 elim (lleq_fqup_trans … H2 … HT) -K2
   /3 width=3 by fpbu_fqup, ex2_intro/
