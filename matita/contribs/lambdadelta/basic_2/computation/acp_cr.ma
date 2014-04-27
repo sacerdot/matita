@@ -21,6 +21,13 @@ include "basic_2/computation/acp.ma".
 
 (* ABSTRACT COMPUTATION PROPERTIES ******************************************)
 
+definition S0 ≝ λC:relation3 genv lenv term. ∀G,L2,L1,T1,d,e.
+                C G L1 T1 → ∀T2. ⇩[Ⓕ, d, e] L2 ≡ L1 → ⇧[d, e] T1 ≡ T2 → C G L2 T2.
+
+definition S0s ≝ λC:relation3 genv lenv term.
+                 ∀G,L1,L2,des. ⇩*[Ⓕ, des] L2 ≡ L1 →
+                 ∀T1,T2. ⇧*[des] T1 ≡ T2 → C G L1 T1 → C G L2 T2.
+
 (* Note: this is Girard's CR1 *)
 definition S1 ≝ λRP,C:relation3 genv lenv term.
                 ∀G,L,T. C G L T → RP G L T.
@@ -49,23 +56,16 @@ definition S6 ≝ λRP,C:relation3 genv lenv term.
 definition S7 ≝ λC:relation3 genv lenv term.
                 ∀G,L,Vs,T,W. C G L (ⒶVs.T) → C G L (ⒶVs.W) → C G L (ⒶVs.ⓝW.T).
 
-definition S8 ≝ λC:relation3 genv lenv term. ∀G,L2,L1,T1,d,e.
-                C G L1 T1 → ∀T2. ⇩[Ⓕ, d, e] L2 ≡ L1 → ⇧[d, e] T1 ≡ T2 → C G L2 T2.
-
-definition S8s ≝ λC:relation3 genv lenv term.
-                 ∀G,L1,L2,des. ⇩*[Ⓕ, des] L2 ≡ L1 →
-                 ∀T1,T2. ⇧*[des] T1 ≡ T2 → C G L1 T1 → C G L2 T2.
-
 (* properties of the abstract candidate of reducibility *)
 record acr (RR:relation4 genv lenv term term) (RS:relation term) (RP,C:relation3 genv lenv term) : Prop ≝
-{ s1: S1 RP C;
+{ s0: S0 C;
+  s1: S1 RP C;
   s2: S2 RR RS RP C;
   s3: S3 C;
   s4: S4 RP C;
   s5: S5 C;
   s6: S6 RP C;
-  s7: S7 C;
-  s8: S8 C
+  s7: S7 C
 }.
 
 (* the abstract candidate of reducibility associated to an atomic arity *)
@@ -84,7 +84,7 @@ interpretation
 (* Basic properties *********************************************************)
 
 (* Basic_1: was: sc3_lift1 *)
-lemma acr_lifts: ∀C. S8 C → S8s C.
+lemma acr_lifts: ∀C. S0 C → S0s C.
 #C #HC #G #L1 #L2 #des #H elim H -L1 -L2 -des
 [ #L #T1 #T2 #H #HT1 <(lifts_inv_nil … H) -H //
 | #L1 #L #L2 #des #d #e #_ #HL2 #IHL #T2 #T1 #H #HLT2
@@ -97,7 +97,7 @@ lemma rp_lifts: ∀RR,RS,RP. acr RR RS RP (λG,L,T. RP G L T) →
                 RP G L V → RP G L0 V0.
 #RR #RS #RP #HRP #des #G #L0 #L #V #V0 #HL0 #HV0 #HV
 @acr_lifts /width=7 by/
-@(s8 … HRP)
+@(s0 … HRP)
 qed.
 
 (* Basic_1: was only: sns3_lifts1 *)
@@ -115,18 +115,19 @@ lemma aacr_acr: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λG,L,T. RP G L T) �
                 ∀A. acr RR RS RP (aacr RP A).
 #RR #RS #RP #H1RP #H2RP #A elim A -A normalize //
 #B #A #IHB #IHA @mk_acr normalize
-[ #G #L #T #H
+[ /3 width=7 by ldrops_cons, lifts_cons/
+| #G #L #T #H
   elim (cp1 … H1RP G L) #k #HK
   lapply (H ? (⋆k) ? (⟠) ? ? ?) -H
   [1,3: // |2,4: skip
   | @(s2 … IHB … (◊)) //
-  | #H @(cp3 … H1RP … k) @(s1 … IHA) //
+  | #H @(cp2 … H1RP … k) @(s1 … IHA) //
   ]
 | #G #L #Vs #HVs #T #H1T #H2T #L0 #V0 #X #des #HB #HL0 #H
   elim (lifts_inv_applv1 … H) -H #V0s #T0 #HV0s #HT0 #H destruct
   lapply (s1 … IHB … HB) #HV0
   @(s2 … IHA … (V0 @ V0s))
-  /3 width=14 by rp_liftsv_all, acp_lifts, cp2, lifts_simple_dx, conj/
+  /3 width=14 by rp_liftsv_all, acp_lifts, cp0, lifts_simple_dx, conj/
 | #a #G #L #Vs #U #T #W #HA #L0 #V0 #X #des #HB #HL0 #H
   elim (lifts_inv_applv1 … H) -H #V0s #Y #HV0s #HY #H destruct
   elim (lifts_inv_flat1 … HY) -HY #U0 #X #HU0 #HX #H destruct
@@ -154,7 +155,7 @@ lemma aacr_acr: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λG,L,T. RP G L T) �
   elim (liftv_total 0 1 V10s) #V20s #HV120s
   @(s6 … IHA … (V10 @ V10s) (V20 @ V20s)) /3 width=7 by rp_lifts, liftv_cons/
   @(HA … (des + 1)) /2 width=2 by ldrops_skip/
-  [ @(s8 … IHB … HB … HV120) /2 width=2 by ldrop_drop/
+  [ @(s0 … IHB … HB … HV120) /2 width=2 by ldrop_drop/
   | @lifts_applv //
     elim (liftsv_liftv_trans_le … HV10s … HV120s) -V10s #V10s #HV10s #HV120s
     >(liftv_mono … HV12s … HV10s) -V1s //
@@ -163,7 +164,6 @@ lemma aacr_acr: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λG,L,T. RP G L T) �
   elim (lifts_inv_applv1 … H) -H #V0s #Y #HV0s #HY #H destruct
   elim (lifts_inv_flat1 … HY) -HY #W0 #T0 #HW0 #HT0 #H destruct
   @(s7 … IHA … (V0 @ V0s)) /3 width=5 by lifts_applv/
-| /3 width=7 by ldrops_cons, lifts_cons/
 ]
 qed.
 
@@ -177,12 +177,12 @@ lemma aacr_abst: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λG,L,T. RP G L T) 
 lapply (aacr_acr … H1RP H2RP A) #HCA
 lapply (aacr_acr … H1RP H2RP B) #HCB
 elim (lifts_inv_bind1 … H) -H #W0 #T0 #HW0 #HT0 #H destruct
-lapply (acr_lifts … HL0 … HW0 HW) -HW [ @(s8 … HCB) ] #HW0
+lapply (acr_lifts … HL0 … HW0 HW) -HW [ @(s0 … HCB) ] #HW0
 @(s3 … HCA … (◊))
 @(s6 … HCA … (◊) (◊)) //
 [ @(HA … HL0) //
 | lapply (s1 … HCB) -HCB #HCB
-  @(cp4 … H1RP) /2 width=1 by/
+  @(cp3 … H1RP) /2 width=1 by/
 ]
 qed.
 

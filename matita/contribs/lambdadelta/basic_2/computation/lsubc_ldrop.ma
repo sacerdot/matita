@@ -64,8 +64,8 @@ lemma ldrop_lsubc_trans: ∀RR,RS,RP.
     elim (lift_inv_flat1 … HV21) -HV21 #W3 #V3 #HW23 #HV3 #H destruct
     elim (IHLK1 … HK12) #K #HL1K #HK2
     lapply (aacr_acr … Hacp Hacr A) -Hacp -Hacr #HA
-    lapply (s8 … HA … HV2 … HLK1 HV3) -HV2
-    lapply (s8 … HA … H1W2 … HLK1 HW23) -H1W2
+    lapply (s0 … HA … HV2 … HLK1 HV3) -HV2
+    lapply (s0 … HA … H1W2 … HLK1 HW23) -H1W2
     /4 width=11 by lsubc_abbr, aaa_lift, ldrop_skip, ex2_intro/
   ]
 ]

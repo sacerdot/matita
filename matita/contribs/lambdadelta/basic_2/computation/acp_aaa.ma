@@ -54,7 +54,7 @@ theorem aacr_aaa_csubc_lifts: ∀RR,RS,RP.
     elim (lift_total V0 0 (i0 +1)) #V3 #HV03
     elim (lift_total V2 0 (i0 +1)) #V #HV2
     @(s5 … HB … (◊) … (ⓝV3.V) … HLK2) [2: /2 width=1 by lift_flat/ ]
-    @(s7 … HB … (◊)) [ @(s8 … HB … HKV2A) // | @(s8 … HB … H1KV0A) // ]
+    @(s7 … HB … (◊)) [ @(s0 … HB … HKV2A) // | @(s0 … HB … H1KV0A) // ]
   ]
 | #a #G #L #V #T #B #A #_ #_ #IHB #IHA #L0 #des #HL0 #X #H #L2 #HL20
   elim (lifts_inv_bind1 … H) -H #V0 #T0 #HV0 #HT0 #H destruct
