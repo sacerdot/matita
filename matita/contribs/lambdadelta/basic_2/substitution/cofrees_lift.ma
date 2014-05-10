@@ -95,3 +95,11 @@ lemma frees_inv_gen: ∀L,U,d,i. (L ⊢ i ~ϵ 𝐅*[d]⦃U⦄ → ⊥) →
   /4 width=9 by cpys_flat, nlift_flat_dx, nlift_flat_sn, ex2_intro/
 ]
 qed-.
+
+lemma frees_ind: ∀L,d,i. ∀R:predicate term.
+                 (∀U1. (∀T1. ⇧[i, 1] T1 ≡ U1 → ⊥) → R U1) → 
+                 (∀U1,U2. ⦃⋆, L⦄ ⊢ U1 ▶[d, ∞] U2 → (L ⊢ i ~ϵ 𝐅*[d]⦃U2⦄ → ⊥) → R U2 → R U1) →
+                 ∀U. (L ⊢ i ~ϵ 𝐅*[d]⦃U⦄ → ⊥) → R U.
+#L #d #i #R #IH1 #IH2 #U1 #H elim (frees_inv_gen … H) -H
+#U2 #H #HnU2 @(cpys_ind_dx … H) -U1 /4 width=8 by cofrees_inv_gen/
+qed-.

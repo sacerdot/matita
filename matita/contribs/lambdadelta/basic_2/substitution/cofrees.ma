@@ -71,9 +71,19 @@ lemma cofrees_flat: ∀L,V,d,i. L ⊢ i ~ϵ 𝐅*[d]⦃V⦄ → ∀T. L ⊢ i ~�
 elim (HW1 … HW12) elim (HU1 … HU12) -W1 -U1 /3 width=2 by lift_flat, ex_intro/
 qed.
 
+lemma cofrees_cpy_trans: ∀L,U1,U2,d. ⦃⋆, L⦄ ⊢ U1 ▶[d, ∞] U2 →
+                         ∀i. L ⊢ i ~ϵ 𝐅*[d]⦃U1⦄ → L ⊢ i ~ϵ 𝐅*[d]⦃U2⦄.
+/3 width=3 by cpys_strap2/ qed-.
+
 axiom cofrees_dec: ∀L,T,d,i. Decidable (L ⊢ i ~ϵ 𝐅*[d]⦃T⦄).
 
-(* Negated inversion lemmas *************************************************)
+(* Basic negated properties *************************************************)
+
+lemma frees_cpy_div: ∀L,U1,U2,d. ⦃⋆, L⦄ ⊢ U1 ▶[d, ∞] U2 →
+                     ∀i. (L ⊢ i ~ϵ 𝐅*[d]⦃U2⦄ → ⊥) → (L ⊢ i ~ϵ 𝐅*[d]⦃U1⦄ → ⊥).
+/3 width=7 by cofrees_cpy_trans/ qed-.
+
+(* Basic negated inversion lemmas *******************************************)
 
 lemma frees_inv_bind: ∀a,I,L,V,T,d,i. (L ⊢ i ~ϵ 𝐅*[d]⦃ⓑ{a,I}V.T⦄ → ⊥) →
                       (L ⊢ i ~ϵ 𝐅*[d]⦃V⦄ → ⊥) ∨ (L.ⓑ{I}V ⊢ i+1 ~ϵ 𝐅*[⫯d]⦃T⦄ → ⊥).
