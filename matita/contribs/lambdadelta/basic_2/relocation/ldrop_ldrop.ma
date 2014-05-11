@@ -48,7 +48,7 @@ theorem ldrop_conf_ge: ∀L,L1,s1,d1,e1. ⇩[s1, d1, e1] L ≡ L1 →
 | #I #L #K #V1 #V2 #d #e #_ #_ #IHLK #L2 #s2 #e2 #H #Hdee2
   lapply (transitive_le 1 … Hdee2) // #He2
   lapply (ldrop_inv_drop1_lt … H ?) -H // -He2 #HL2
-  lapply (transitive_le (1 + e) … Hdee2) // #Hee2
+  lapply (transitive_le (1+e) … Hdee2) // #Hee2
   @ldrop_drop_lt >minus_minus_comm /3 width=1 by lt_minus_to_plus_r, monotonic_le_minus_r, monotonic_pred/ (**) (* explicit constructor *)
 ]
 qed.
@@ -201,7 +201,7 @@ qed-.
 
 lemma ldrop_fwd_be: ∀L,K,s,d,e,i. ⇩[s, d, e] L ≡ K → |K| ≤ i → i < d → |L| ≤ i.
 #L #K #s #d #e #i #HLK #HK #Hd elim (lt_or_ge i (|L|)) //
-#HL elim (ldrop_O1_lt … HL) #I #K0 #V #HLK0 -HL
+#HL elim (ldrop_O1_lt (Ⓕ) … HL) #I #K0 #V #HLK0 -HL
 elim (ldrop_conf_lt … HLK … HLK0) // -HLK -HLK0 -Hd
 #K1 #V1 #HK1 #_ #_ lapply (ldrop_fwd_length_lt2 … HK1) -I -K1 -V1
 #H elim (lt_refl_false i) /2 width=3 by lt_to_le_to_lt/

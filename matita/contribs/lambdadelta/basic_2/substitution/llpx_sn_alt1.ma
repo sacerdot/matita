@@ -107,8 +107,8 @@ lemma llpx_sn_alt1_fwd_lref: ∀R,L1,L2,d,i. llpx_sn_alt1 R d (#i) L1 L2 →
 #R #L1 #L2 #d #i #H elim (llpx_sn_alt1_inv_alt … H) -H
 #HL12 #IH elim (lt_or_ge i (|L1|)) /3 width=1 by or3_intro0, conj/
 elim (ylt_split i d) /3 width=1 by or3_intro1/
-#Hdi #HL1 elim (ldrop_O1_lt … HL1)
-#I1 #K1 #V1 #HLK1 elim (ldrop_O1_lt L2 i) //
+#Hdi #HL1 elim (ldrop_O1_lt (Ⓕ) … HL1)
+#I1 #K1 #V1 #HLK1 elim (ldrop_O1_lt (Ⓕ) L2 i) //
 #I2 #K2 #V2 #HLK2 elim (IH … HLK1 HLK2) -IH
 /3 width=9 by nlift_lref_be_SO, or3_intro2, ex5_5_intro/
 qed-.

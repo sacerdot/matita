@@ -36,7 +36,7 @@ lemma arith_b1: ∀a,b,c1. c1 ≤ b → a - c1 - (b - c1) = a - b.
 qed.
 
 lemma arith_b2: ∀a,b,c1,c2. c1 + c2 ≤ b → a - c1 - c2 - (b - c1 - c2) = a - b.
-#a #b #c1 #c2 #H >minus_plus >minus_plus >minus_plus /2 width=1/
+#a #b #c1 #c2 #H >minus_plus >minus_plus >minus_plus /2 width=1 by arith_b1/
 qed.
 
 lemma arith_c1x: ∀x,a,b,c1. x + c1 + a - (b + c1) = x + a - b.
@@ -44,7 +44,7 @@ lemma arith_c1x: ∀x,a,b,c1. x + c1 + a - (b + c1) = x + a - b.
 
 lemma arith_h1: ∀a1,a2,b,c1. c1 ≤ a1 → c1 ≤ b →
                 a1 - c1 + a2 - (b - c1) = a1 + a2 - b.
-#a1 #a2 #b #c1 #H1 #H2 >plus_minus // /2 width=1/
+#a1 #a2 #b #c1 #H1 #H2 >plus_minus /2 width=1 by arith_b2/
 qed.
 
 lemma arith_i: ∀x,y,z. y < x → x+z-y-1 = x-y-1+z.
@@ -91,21 +91,21 @@ axiom eq_nat_dec: ∀n1,n2:nat. Decidable (n1 = n2).
 axiom lt_dec: ∀n1,n2. Decidable (n1 < n2).
 
 lemma lt_or_eq_or_gt: ∀m,n. ∨∨ m < n | n = m | n < m.
-#m #n elim (lt_or_ge m n) /2 width=1/
-#H elim H -m /2 width=1/
-#m #Hm * #H /2 width=1/ /3 width=1/
+#m #n elim (lt_or_ge m n) /2 width=1 by or3_intro0/
+#H elim H -m /2 width=1 by or3_intro1/
+#m #Hm * /3 width=1 by not_le_to_lt, le_S_S, or3_intro2/
 qed-.
 
 lemma lt_refl_false: ∀n. n < n → ⊥.
-#n #H elim (lt_to_not_eq … H) -H /2 width=1/
+#n #H elim (lt_to_not_eq … H) -H /2 width=1 by/
 qed-.
 
 lemma lt_zero_false: ∀n. n < 0 → ⊥.
-#n #H elim (lt_to_not_le … H) -H /2 width=1/
+#n #H elim (lt_to_not_le … H) -H /2 width=1 by/
 qed-.
 
 lemma false_lt_to_le: ∀x,y. (x < y → ⊥) → y ≤ x.
-#x #y #H elim (decidable_lt x y) /2 width=1/
+#x #y #H elim (decidable_lt x y) /2 width=1 by not_lt_to_le/
 #Hxy elim (H Hxy)
 qed-.
 
@@ -113,12 +113,13 @@ lemma pred_inv_refl: ∀m. pred m = m → m = 0.
 * // normalize #m #H elim (lt_refl_false m) //
 qed-.
 
+lemma le_plus_xSy_O_false: ∀x,y. x + S y ≤ 0 → ⊥.
+#x #y #H lapply (le_n_O_to_eq … H) -H <plus_n_Sm #H destruct
+qed-.
+
 lemma le_plus_xySz_x_false: ∀y,z,x. x + y + S z ≤ x → ⊥.
-#y #z #x elim x -x
-[ #H lapply (le_n_O_to_eq … H) -H
-  <plus_n_Sm #H destruct
-| /3 width=1 by le_S_S_to_le/
-]
+#y #z #x elim x -x /3 width=1 by le_S_S_to_le/
+#H elim (le_plus_xSy_O_false … H)
 qed-.
 
 lemma plus_xySz_x_false: ∀z,x,y. x + y + S z = x → ⊥.
@@ -162,7 +163,7 @@ let rec tri (A:Type[0]) n1 n2 a1 a2 a3 on n1 : A ≝
 lemma tri_lt: ∀A,a1,a2,a3,n2,n1. n1 < n2 → tri A n1 n2 a1 a2 a3 = a1.
 #A #a1 #a2 #a3 #n2 elim n2 -n2
 [ #n1 #H elim (lt_zero_false … H)
-| #n2 #IH #n1 elim n1 -n1 // /3 width=1/
+| #n2 #IH #n1 elim n1 -n1 /3 width=1 by monotonic_lt_pred/
 ]
 qed.
 
@@ -173,6 +174,6 @@ qed.
 lemma tri_gt: ∀A,a1,a2,a3,n1,n2. n2 < n1 → tri A n1 n2 a1 a2 a3 = a3.
 #A #a1 #a2 #a3 #n1 elim n1 -n1
 [ #n2 #H elim (lt_zero_false … H)
-| #n1 #IH #n2 elim n2 -n2 // /3 width=1/
+| #n1 #IH #n2 elim n2 -n2 /3 width=1 by monotonic_lt_pred/
 ]
 qed.

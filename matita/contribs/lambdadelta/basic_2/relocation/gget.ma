@@ -30,7 +30,7 @@ interpretation "global reading"
 
 lemma gget_inv_gt: ∀G1,G2,e. ⇩[e] G1 ≡ G2 → |G1| ≤ e → G2 = ⋆.
 #G1 #G2 #e * -G1 -G2 //
-[ #G #H >H -H >commutative_plus #H
+[ #G #H >H -H >commutative_plus #H (**) (* lemma needed here *)
   lapply (le_plus_to_le_r … 0 H) -H #H
   lapply (le_n_O_to_eq … H) -H #H destruct
 | #I #G1 #G2 #V #H1 #_ #H2
@@ -42,7 +42,7 @@ qed-.
 
 lemma gget_inv_eq: ∀G1,G2,e. ⇩[e] G1 ≡ G2 → |G1| = e + 1 → G1 = G2.
 #G1 #G2 #e * -G1 -G2 //
-[ #G #H1 #H2 >H2 in H1; -H2 >commutative_plus #H
+[ #G #H1 #H2 >H2 in H1; -H2 >commutative_plus #H (**) (* lemma needed here *)
   lapply (le_plus_to_le_r … 0 H) -H #H
   lapply (le_n_O_to_eq … H) -H #H destruct
 | #I #G1 #G2 #V #H1 #_ normalize #H2

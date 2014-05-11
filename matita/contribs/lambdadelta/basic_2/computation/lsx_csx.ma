@@ -48,7 +48,7 @@ theorem csx_lsx: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ ⬊*[h, g] T → ∀d. G ⊢ ⬊*[
 [ #i #HG #HL #HT #H #d destruct
   elim (lt_or_ge i (|L|)) /2 width=1 by lsx_lref_free/
   elim (ylt_split i d) /2 width=1 by lsx_lref_skip/
-  #Hdi #Hi elim (ldrop_O1_lt … Hi) -Hi
+  #Hdi #Hi elim (ldrop_O1_lt (Ⓕ) … Hi) -Hi
   #I #K #V #HLK lapply (csx_inv_lref_bind … HLK … H) -H
   /4 width=6 by lsx_lref_be, fqup_lref/
 | #a #I #V #T #HG #HL #HT #H #d destruct

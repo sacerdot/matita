@@ -134,8 +134,8 @@ lemma llpx_sn_dec: ∀R. (∀I,L,T1,T2. Decidable (R I L T1 T2)) →
   [ #HL12 #d elim (ylt_split i d) /3 width=1 by llpx_sn_skip, or_introl/
     #Hdi elim (lt_or_ge i (|L1|)) #HiL1
     elim (lt_or_ge i (|L2|)) #HiL2 /3 width=1 by or_introl, llpx_sn_free/
-    elim (ldrop_O1_lt … HiL2) #I2 #K2 #V2 #HLK2
-    elim (ldrop_O1_lt … HiL1) #I1 #K1 #V1 #HLK1
+    elim (ldrop_O1_lt (Ⓕ) … HiL2) #I2 #K2 #V2 #HLK2
+    elim (ldrop_O1_lt (Ⓕ) … HiL1) #I1 #K1 #V1 #HLK1
     elim (eq_bind2_dec I2 I1)
     [ #H2 elim (HR I1 K1 V1 V2) -HR
       [ #H3 elim (IH K1 V1 … K2 0) destruct

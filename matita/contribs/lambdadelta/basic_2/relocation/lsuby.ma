@@ -59,7 +59,7 @@ qed.
 
 lemma lsuby_O2: ∀L2,L1,d. |L2| ≤ |L1| → L1 ⊆[d, yinj 0] L2.
 #L2 elim L2 -L2 // #L2 #I2 #V2 #IHL2 * normalize
-[ #d #H lapply (le_n_O_to_eq … H) -H <plus_n_Sm #H destruct
+[ #d #H elim (le_plus_xSy_O_false … H)
 | #L1 #I1 #V1 #d #H lapply (le_plus_to_le_r … H) -H #HL12
  elim (ynat_cases d) /3 width=1 by lsuby_zero/
  * /3 width=1 by lsuby_succ/

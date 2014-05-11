@@ -63,7 +63,7 @@ lemma ldrop_O1_ex: ∀K2,i,L1. |L1| = |K2| + i →
                    ∃∃L2. L1 ≃[0, i] L2 & ⇩[i] L2 ≡ K2.
 #K2 #i @(nat_ind_plus … i) -i
 [ /3 width=3 by leq_O2, ex2_intro/
-| #i #IHi #Y #Hi elim (ldrop_O1_lt Y 0) //
+| #i #IHi #Y #Hi elim (ldrop_O1_lt (Ⓕ) Y 0) //
   #I #L1 #V #H lapply (ldrop_inv_O2 … H) -H #H destruct
   normalize in Hi; elim (IHi L1) -IHi
   /3 width=5 by ldrop_drop, leq_pair, injective_plus_l, ex2_intro/

@@ -166,6 +166,18 @@ lemma ldrop_inv_skip2: ∀I,L1,K2,V2,s,d,e. ⇩[s, d, e] L1 ≡ K2.ⓑ{I}V2 → 
                                 L1 = K1.ⓑ{I}V1.
 /2 width=3 by ldrop_inv_skip2_aux/ qed-.
 
+lemma ldrop_inv_O1_gt: ∀L,K,e,s. ⇩[s, 0, e] L ≡ K → |L| < e →
+                       s = Ⓣ ∧ K = ⋆.
+#L elim L -L [| #L #Z #X #IHL ] #K #e #s #H normalize in ⊢ (?%?→?); #H1e
+[ elim (ldrop_inv_atom1 … H) -H elim s -s /2 width=1 by conj/
+  #_ #Hs lapply (Hs ?) // -Hs #H destruct elim (lt_zero_false … H1e)
+| elim (ldrop_inv_O1_pair1 … H) -H * #H2e #HLK destruct
+  [ elim (lt_zero_false … H1e)
+  | elim (IHL … HLK) -IHL -HLK /2 width=1 by lt_plus_to_minus_r, conj/
+  ]
+]
+qed-.
+
 (* Basic properties *********************************************************)
 
 lemma ldrop_refl_atom_O2: ∀s,d. ⇩[s, d, O] ⋆ ≡ ⋆.
@@ -188,21 +200,60 @@ lemma ldrop_skip_lt: ∀I,L1,L2,V1,V2,s,d,e.
 #I #L1 #L2 #V1 #V2 #s #d #e #HL12 #HV21 #Hd >(plus_minus_m_m d 1) /2 width=1 by ldrop_skip/
 qed.
 
-lemma ldrop_O1_le: ∀e,L. e ≤ |L| → ∃K. ⇩[e] L ≡ K.
-#e @(nat_ind_plus … e) -e /2 width=2 by ex_intro/
+lemma ldrop_O1_le: ∀s,e,L. e ≤ |L| → ∃K. ⇩[s, 0, e] L ≡ K.
+#s #e @(nat_ind_plus … e) -e /2 width=2 by ex_intro/
 #e #IHe *
-[ #H lapply (le_n_O_to_eq … H) -H >commutative_plus normalize #H destruct
-| #L #I #V normalize #H
-  elim (IHe L) -IHe /3 width=2 by ldrop_drop, monotonic_pred, ex_intro/
+[ #H elim (le_plus_xSy_O_false … H)
+| #L #I #V normalize #H elim (IHe L) -IHe /3 width=2 by ldrop_drop, monotonic_pred, ex_intro/
 ]
 qed-.
 
-lemma ldrop_O1_lt: ∀L,e. e < |L| → ∃∃I,K,V. ⇩[e] L ≡ K.ⓑ{I}V.
-#L elim L -L
+lemma ldrop_O1_lt: ∀s,L,e. e < |L| → ∃∃I,K,V. ⇩[s, 0, e] L ≡ K.ⓑ{I}V.
+#s #L elim L -L
 [ #e #H elim (lt_zero_false … H)
 | #L #I #V #IHL #e @(nat_ind_plus … e) -e /2 width=4 by ldrop_pair, ex1_3_intro/
-  #e #_ normalize #H
-  elim (IHL e) -IHL /3 width=4 by ldrop_drop, lt_plus_to_minus_r, lt_plus_to_lt_l, ex1_3_intro/
+  #e #_ normalize #H elim (IHL e) -IHL /3 width=4 by ldrop_drop, lt_plus_to_minus_r, lt_plus_to_lt_l, ex1_3_intro/
+]
+qed-.
+
+lemma ldrop_O1_pair: ∀L,K,e,s. ⇩[s, 0, e] L ≡ K → e ≤ |L| → ∀I,V.
+                     ∃∃J,W. ⇩[s, 0, e] L.ⓑ{I}V ≡ K.ⓑ{J}W.
+#L elim L -L [| #L #Z #X #IHL ] #K #e #s #H normalize #He #I #V
+[ elim (ldrop_inv_atom1 … H) -H #H <(le_n_O_to_eq … He) -e
+  #Hs destruct /2 width=3 by ex1_2_intro/
+| elim (ldrop_inv_O1_pair1 … H) -H * #He #HLK destruct /2 width=3 by ex1_2_intro/
+  elim (IHL … HLK … Z X) -IHL -HLK
+  /3 width=3 by ldrop_drop_lt, le_plus_to_minus, ex1_2_intro/
+]
+qed-.
+
+lemma ldrop_O1_ge: ∀L,e. |L| ≤ e → ⇩[Ⓣ, 0, e] L ≡ ⋆.
+#L elim L -L [ #e #_ @ldrop_atom #H destruct ]
+#L #I #V #IHL #e @(nat_ind_plus … e) -e [ #H elim (le_plus_xSy_O_false … H) ]
+normalize /4 width=1 by ldrop_drop, monotonic_pred/
+qed.
+
+lemma ldrop_split: ∀L1,L2,d,e2,s. ⇩[s, d, e2] L1 ≡ L2 → ∀e1. e1 ≤ e2 →
+                   ∃∃L. ⇩[s, d, e2 - e1] L1 ≡ L & ⇩[s, d, e1] L ≡ L2.
+#L1 #L2 #d #e2 #s #H elim H -L1 -L2 -d -e2
+[ #d #e2 #Hs #e1 #He12 @(ex2_intro … (⋆))
+  @ldrop_atom #H lapply (Hs H) -s #H destruct /2 width=1 by le_n_O_to_eq/
+| #I #L1 #V #e1 #He1 lapply (le_n_O_to_eq … He1) -He1
+  #H destruct /2 width=3 by ex2_intro/
+| #I #L1 #L2 #V #e2 #HL12 #IHL12 #e1 @(nat_ind_plus … e1) -e1
+  [ /3 width=3 by ldrop_drop, ex2_intro/
+  | -HL12 #e1 #_ #He12 lapply (le_plus_to_le_r … He12) -He12
+    #He12 elim (IHL12 … He12) -IHL12 >minus_plus_plus_l
+    #L #HL1 #HL2 elim (lt_or_ge (|L1|) (e2-e1)) #H0
+    [ elim (ldrop_inv_O1_gt … HL1 H0) -HL1 #H1 #H2 destruct
+      elim (ldrop_inv_atom1 … HL2) -HL2 #H #_ destruct
+      @(ex2_intro … (⋆)) [ @ldrop_O1_ge normalize // ]
+      @ldrop_atom #H destruct
+    | elim (ldrop_O1_pair … HL1 H0 I V) -HL1 -H0 /3 width=5 by ldrop_drop, ex2_intro/
+    ]
+  ]
+| #I #L1 #L2 #V1 #V2 #d #e2 #_ #HV21 #IHL12 #e1 #He12 elim (IHL12 … He12) -IHL12
+  #L #HL1 #HL2 elim (lift_split … HV21 d e1) -HV21 /3 width=5 by ldrop_skip, ex2_intro/
 ]
 qed-.
 
@@ -278,6 +329,31 @@ lemma ldrop_fwd_drop2: ∀L1,I2,K2,V2,s,e. ⇩[s, O, e] L1 ≡ K2. ⓑ{I2} V2 �
   [ -IHL1 destruct /2 width=1 by ldrop_drop/
   | @ldrop_drop >(plus_minus_m_m e 1) /2 width=3 by/
   ]
+]
+qed-.
+
+lemma ldrop_fwd_length_ge: ∀L1,L2,d,e,s. ⇩[s, d, e] L1 ≡ L2 → |L1| ≤ d → |L2| = |L1|.
+#L1 #L2 #d #e #s #H elim H -L1 -L2 -d -e // normalize
+[ #I #L1 #L2 #V #e #_ #_ #H elim (le_plus_xSy_O_false … H)
+| /4 width=2 by le_plus_to_le_r, eq_f/
+]
+qed-.
+
+lemma ldrop_fwd_length_le_le: ∀L1,L2,d,e,s. ⇩[s, d, e] L1 ≡ L2 → d ≤ |L1| → e ≤ |L1| - d → |L2| = |L1| - e.
+#L1 #L2 #d #e #s #H elim H -L1 -L2 -d -e // normalize
+[ /3 width=2 by le_plus_to_le_r/
+| #I #L1 #L2 #V1 #V2 #d #e #_ #_ #IHL12 >minus_plus_plus_l
+  #Hd #He lapply (le_plus_to_le_r … Hd) -Hd
+  #Hd >IHL12 // -L2 >plus_minus /2 width=3 by transitive_le/
+]
+qed-.
+
+lemma ldrop_fwd_length_le_ge: ∀L1,L2,d,e,s. ⇩[s, d, e] L1 ≡ L2 → d ≤ |L1| → |L1| - d ≤ e → |L2| = d.
+#L1 #L2 #d #e #s #H elim H -L1 -L2 -d -e normalize
+[ /2 width=1 by le_n_O_to_eq/
+| #I #L #V #_ <minus_n_O #H elim (le_plus_xSy_O_false … H)
+| /3 width=2 by le_plus_to_le_r/
+| /4 width=2 by le_plus_to_le_r, eq_f/
 ]
 qed-.
 
