@@ -43,6 +43,13 @@ qed-.
 
 (* Inversion lemmas on negated basic relocation *****************************)
 
+lemma nlift_inv_lref_be_SO: ∀i,j. (∀X. ⇧[i, 1] X ≡ #j → ⊥) → j = i.
+#i #j elim (lt_or_eq_or_gt i j) // #Hij #H
+[ elim (H (#(j-1))) -H /2 width=1 by lift_lref_ge_minus/
+| elim (H (#j)) -H /2 width=1 by lift_lref_lt/
+]
+qed-.
+
 lemma nlift_inv_bind: ∀a,I,W,U,d,e. (∀X. ⇧[d, e] X ≡ ⓑ{a,I}W.U → ⊥) →
                       (∀V. ⇧[d, e] V ≡ W → ⊥) ∨ (∀T. ⇧[d+1, e] T ≡ U → ⊥).
 #a #I #W #U #d #e #H elim (is_lift_dec W d e)

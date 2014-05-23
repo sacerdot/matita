@@ -17,6 +17,37 @@ include "basic_2/substitution/cofrees.ma".
 
 (* CONTEXT-SENSITIVE EXCLUSION FROM FREE VARIABLES **************************)
 
+(* Advanced inversion lemmas ************************************************)
+
+lemma cofrees_inv_lref_be: ∀L,d,i,j. L ⊢ i ~ϵ 𝐅*[d]⦃#j⦄ → d ≤ yinj j → j < i →
+                           ∀I,K,W. ⇩[j]L ≡ K.ⓑ{I}W → K ⊢ i-j-1 ~ϵ 𝐅*[yinj 0]⦃W⦄.
+#L #d #i #j #Hj #Hdj #Hji #I #K #W1 #HLK #W2 #HW12 elim (lift_total W2 0 (j+1))
+#X2 #HWX2 elim (Hj X2) /2 width=7 by cpys_subst_Y2/ -I -L -K -W1 -d
+#Z2 #HZX2 elim (lift_div_le … HWX2 (i-j-1) 1 Z2) -HWX2 /2 width=2 by ex_intro/
+>minus_plus <plus_minus_m_m //
+qed-.
+
+lemma cofrees_inv_be: ∀L,U,d,i. L ⊢ i ~ϵ 𝐅*[d]⦃U⦄ → ∀j. (∀T. ⇧[j, 1] T ≡ U → ⊥) →
+                      ∀I,K,W. ⇩[j]L ≡ K.ⓑ{I}W → d ≤ yinj j → j < i → K ⊢ i-j-1 ~ϵ 𝐅*[yinj 0]⦃W⦄.
+#L #U @(f2_ind … rfw … L U) -L -U
+#n #IH #L * *
+[ -IH #k #_ #d #i #_ #j #H elim (H (⋆k)) -H //
+| -IH #j #_ #d #i #Hi0 #j0 #H <(nlift_inv_lref_be_SO … H) -j0
+  /2 width=9 by cofrees_inv_lref_be/
+| -IH #p #_ #d #i #_ #j #H elim (H (§p)) -H //
+| #a #J #W #U #Hn #d #i #H1 #j #H2 #I #K #V #HLK #Hdj #Hji destruct
+  elim (cofrees_inv_bind … H1) -H1 #HW #HU
+  elim (nlift_inv_bind … H2) -H2 [ -HU /3 width=9 by/ ]
+  -HW #HnU lapply (IH … HU … HnU I K V ? ? ?)
+  /2 width=1 by ldrop_drop, yle_succ, lt_minus_to_plus/ -a -I -J -L -W -U -d
+  >minus_plus_plus_l //
+| #J #W #U #Hn #d #i #H1 #j #H2 #I #K #V #HLK #Hdj #Hji destruct
+  elim (cofrees_inv_flat … H1) -H1 #HW #HU
+  elim (nlift_inv_flat … H2) -H2 [ /3 width=9 by/ ]
+  #HnU @(IH … HU … HnU … HLK) // (**) (* full auto fails *)
+]
+qed-.
+
 (* Advanced properties ******************************************************)
 
 lemma cofrees_lref_skip: ∀L,d,i,j. j < i → yinj j < d → L ⊢ i ~ϵ 𝐅*[d]⦃#j⦄.
@@ -80,7 +111,7 @@ lemma frees_inv_gen: ∀L,U,d,i. (L ⊢ i ~ϵ 𝐅*[d]⦃U⦄ → ⊥) →
   [ -n #Hij elim H -H /2 width=5 by cofrees_lref_lt/
   | -H -n #H destruct /3 width=7 by lift_inv_lref2_be, ex2_intro/
   | #Hji elim (frees_inv_lref_gt … H) // -H
-    #I #K #W1 #HLK #H #Hdj elim (IH … H) /2 width=2 by ldrop_fwd_rfw/ -H -n
+    #I #K #W1 #HLK #H #Hdj elim (IH … H) /2 width=3 by ldrop_fwd_rfw/ -H -n
     #W2 #HW12 #HnW2 elim (lift_total W2 0 (j+1))
     #U2 #HWU2 @(ex2_intro … U2) /2 width=7 by cpys_subst_Y2/ -I -L -K -W1 -d
     #T2 #HTU2 elim (lift_div_le … HWU2 (i-j-1) 1 T2) /2 width=2 by/ -W2
@@ -103,3 +134,11 @@ lemma frees_ind: ∀L,d,i. ∀R:predicate term.
 #L #d #i #R #IH1 #IH2 #U1 #H elim (frees_inv_gen … H) -H
 #U2 #H #HnU2 @(cpys_ind_dx … H) -U1 /4 width=8 by cofrees_inv_gen/
 qed-.
+
+(* Advanced negated properties **********************************************)
+
+lemma frees_be: ∀I,L,K,W,j. ⇩[j]L ≡ K.ⓑ{I}W →
+                ∀i. j < i → (K ⊢ i-j-1 ~ϵ 𝐅*[yinj 0]⦃W⦄ → ⊥) →
+                ∀U. (∀T. ⇧[j, 1] T ≡ U → ⊥) →
+                ∀d. d ≤ yinj j → (L ⊢ i ~ϵ 𝐅*[d]⦃U⦄ → ⊥).
+/4 width=11 by cofrees_inv_be/ qed-.

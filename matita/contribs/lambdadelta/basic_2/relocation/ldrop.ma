@@ -422,9 +422,9 @@ lemma ldrop_fwd_lw_lt: ∀L1,L2,d,e. ⇩[Ⓕ, d, e] L1 ≡ L2 → 0 < e → ♯{
 ]
 qed-.
 
-lemma ldrop_fwd_rfw: ∀I,L,K,V,i. ⇩[i] L ≡ K.ⓑ{I}V → ♯{K, V} < ♯{L, #i}.
+lemma ldrop_fwd_rfw: ∀I,L,K,V,i. ⇩[i] L ≡ K.ⓑ{I}V → ∀T. ♯{K, V} < ♯{L, T}.
 #I #L #K #V #i #HLK lapply (ldrop_fwd_lw … HLK) -HLK
-normalize in ⊢ (%→?%%); /2 width=1 by le_S_S/
+normalize in ⊢ (%→?→?%%); /3 width=3 by le_to_lt_to_lt/
 qed-.
 
 (* Advanced inversion lemmas ************************************************)

@@ -1,0 +1,3 @@
+lemma eq_repl4: ∀A,B,C,D.∀R:relation4 A B C D.
+∀x1,x2:A.∀y1,y2:B. ∀z1,z2:C. ∀w1,w2:D. x1=x2 → y1=y2 → z1=z2 → w1=w2 → R x2 y2 z2 w2 → R x1 y1 z1 w1.
+// qed-.

@@ -25,6 +25,39 @@ interpretation
    "context-sensitive exclusion from free variables (term)"
    'CoFreeStar L i d T = (cofrees d i L T).
 
+(* Basic forward lemmas *****************************************************)
+
+lemma cofrees_fwd_lift: ∀L,U,d,i. L ⊢ i ~ϵ 𝐅*[d]⦃U⦄ → ∃T. ⇧[i, 1] T ≡ U.
+/2 width=1 by/ qed-.
+
+lemma cofrees_fwd_nlift: ∀L,U,d,i. (∀T. ⇧[i, 1] T ≡ U → ⊥) → (L ⊢ i ~ϵ 𝐅*[d]⦃U⦄ → ⊥).
+#L #U #d #i #HnTU #H elim (cofrees_fwd_lift … H) -H /2 width=2 by/
+qed-.
+
+lemma cofrees_fwd_bind_sn: ∀a,I,L,W,U,i,d. L ⊢ i ~ϵ 𝐅*[d]⦃ⓑ{a,I}W.U⦄ →
+                           L ⊢ i ~ϵ 𝐅*[d]⦃W⦄.
+#a #I #L #W1 #U #i #d #H #W2 #HW12 elim (H (ⓑ{a,I}W2.U)) /2 width=1 by cpys_bind/ -W1
+#X #H elim (lift_inv_bind2 … H) -H /2 width=2 by ex_intro/
+qed-.
+
+lemma cofrees_fwd_bind_dx: ∀a,I,L,W,U,i,d. L ⊢ i ~ϵ 𝐅*[d]⦃ⓑ{a,I}W.U⦄ →
+                           L.ⓑ{I}W ⊢ i+1 ~ϵ 𝐅*[⫯d]⦃U⦄.
+#a #I #L #W #U1 #i #d #H #U2 #HU12 elim (H (ⓑ{a,I}W.U2)) /2 width=1 by cpys_bind/ -U1
+#X #H elim (lift_inv_bind2 … H) -H /2 width=2 by ex_intro/
+qed-.
+
+lemma cofrees_fwd_flat_sn: ∀I,L,W,U,i,d. L ⊢ i ~ϵ 𝐅*[d]⦃ⓕ{I}W.U⦄ →
+                           L ⊢ i ~ϵ 𝐅*[d]⦃W⦄.
+#I #L #W1 #U #i #d #H #W2 #HW12 elim (H (ⓕ{I}W2.U)) /2 width=1 by cpys_flat/ -W1
+#X #H elim (lift_inv_flat2 … H) -H /2 width=2 by ex_intro/
+qed-.
+
+lemma cofrees_fwd_flat_dx: ∀I,L,W,U,i,d. L ⊢ i ~ϵ 𝐅*[d]⦃ⓕ{I}W.U⦄ →
+                           L ⊢ i ~ϵ 𝐅*[d]⦃U⦄.
+#I #L #W #U1 #i #d #H #U2 #HU12 elim (H (ⓕ{I}W.U2)) /2 width=1 by cpys_flat/ -U1
+#X #H elim (lift_inv_flat2 … H) -H /2 width=2 by ex_intro/
+qed-.
+
 (* Basic inversion lemmas ***************************************************)
 
 lemma cofrees_inv_gen: ∀L,U,U0,d,i. ⦃⋆, L⦄ ⊢ U ▶*[d, ∞] U0 → (∀T. ⇧[i, 1] T ≡ U0 → ⊥) →
@@ -37,14 +70,13 @@ lemma cofrees_inv_lref_eq: ∀L,d,i. L ⊢ i ~ϵ 𝐅*[d]⦃#i⦄ → ⊥.
 #X #H elim (lift_inv_lref2_be … H) -H //
 qed-. 
 
-(* Basic forward lemmas *****************************************************)
+lemma cofrees_inv_bind: ∀a,I,L,W,U,i,d. L ⊢ i ~ϵ 𝐅*[d]⦃ⓑ{a,I}W.U⦄ →
+                        L ⊢ i ~ϵ 𝐅*[d]⦃W⦄ ∧ L.ⓑ{I}W ⊢ i+1 ~ϵ 𝐅*[⫯d]⦃U⦄.
+/3 width=8 by cofrees_fwd_bind_sn, cofrees_fwd_bind_dx, conj/ qed-.
 
-lemma cofrees_fwd_lift: ∀L,U,d,i. L ⊢ i ~ϵ 𝐅*[d]⦃U⦄ → ∃T. ⇧[i, 1] T ≡ U.
-/2 width=1 by/ qed-.
-
-lemma cofrees_fwd_nlift: ∀L,U,d,i. (∀T. ⇧[i, 1] T ≡ U → ⊥) → (L ⊢ i ~ϵ 𝐅*[d]⦃U⦄ → ⊥).
-#L #U #d #i #HnTU #H elim (cofrees_fwd_lift … H) -H /2 width=2 by/
-qed-.
+lemma cofrees_inv_flat: ∀I,L,W,U,i,d. L ⊢ i ~ϵ 𝐅*[d]⦃ⓕ{I}W.U⦄ →
+                        L ⊢ i ~ϵ 𝐅*[d]⦃W⦄ ∧ L ⊢ i ~ϵ 𝐅*[d]⦃U⦄.
+/3 width=7 by cofrees_fwd_flat_sn, cofrees_fwd_flat_dx, conj/ qed-.
 
 (* Basic Properties *********************************************************)
 

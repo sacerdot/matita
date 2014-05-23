@@ -214,8 +214,16 @@ table {
              [ "lleq ( ? ⋕[?,?] ? )" "lleq_alt" + "lleq_leq" + "lleq_ldrop" + "lleq_fqus" + "lleq_lleq" * ]
           }
         ]
+        [ { "lazy pointwise extension of a relation" * } {
+             [ "llpx_sn" "llpx_sn_alt" + "llpx_sn_alt2" + "llpx_sn_tc" + "llpx_sn_leq" + "llpx_sn_ldrop" + "llpx_sn_lpx_sn" * ]
+          }
+        ]
+        [ { "pointwise union for local environments" * } {
+             [ "llor ( ? ⩖[?] ? ≡ ? )" * ]
+          }
+        ]
         [ { "context-sensitive exclusion from free variables" * } {
-             [ "cofrees ( ? ⊢ ? ~ϵ 𝐅*[?]⦃?⦄ )" "cofrees_lift" * ]
+             [ "cofrees ( ? ⊢ ? ~ϵ 𝐅*[?]⦃?⦄ )" "cofrees_alt" + "cofrees_lift" * ]
           }
         ]
         [ { "contxt-sensitive extended multiple substitution" * } {
@@ -250,24 +258,19 @@ table {
           }
         ]
         [ { "global env. slicing" * } {
-             [ "gdrop ( ⇩[?] ? ≡ ? )" "gdrop_gdrop" * ]
-          }
-        ]
-        [ { "pointwise union for local environments" * } {
-             [ "llor ( ? ⩖[?] ? ≡ ? )" * ]
-          }
-        ]
-        [ { "pointwise extension of a relation" * } {
-             [ "llpx_sn" "llpx_sn_alt" + "llpx_sn_tc" + "llpx_sn_leq" + "llpx_sn_ldrop" + "llpx_sn_lpx_sn" * ]
-             [ "lpx_sn" "lpx_sn_alt" + "lpx_sn_tc" + "lpx_sn_ldrop" + "lpx_sn_lpx_sn" * ]
+             [ "gget ( ⇩[?] ? ≡ ? )" "gget_gget" * ]
           }
         ]
         [ { "contxt-sensitive extended ordinary substitution" * } {
-             [ "cpy ( ⦃?,?⦄ ⊢ ? ▶[?,?] ? )" "cpy_lift" + "cpy_cpy" * ]
+             [ "cpy ( ⦃?,?⦄ ⊢ ? ▶[?,?] ? )" "cpy_lift" + "cpy_nlift" + "cpy_cpy" * ]
           }
         ]
         [ { "local env. ref. for extended substitution" * } {
              [ "lsuby ( ? ⊑×[?,?] ? )" "lsuby_lsuby" * ]
+          }
+        ]
+        [ { "pointwise extension of a relation" * } {
+             [ "lpx_sn" "lpx_sn_alt" + "lpx_sn_tc" + "lpx_sn_ldrop" + "lpx_sn_lpx_sn" * ]
           }
         ]
 	[ { "basic local env. slicing" * } {
