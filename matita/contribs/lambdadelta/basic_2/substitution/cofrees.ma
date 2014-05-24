@@ -30,10 +30,6 @@ interpretation
 lemma cofrees_fwd_lift: ∀L,U,d,i. L ⊢ i ~ϵ 𝐅*[d]⦃U⦄ → ∃T. ⇧[i, 1] T ≡ U.
 /2 width=1 by/ qed-.
 
-lemma cofrees_fwd_nlift: ∀L,U,d,i. (∀T. ⇧[i, 1] T ≡ U → ⊥) → (L ⊢ i ~ϵ 𝐅*[d]⦃U⦄ → ⊥).
-#L #U #d #i #HnTU #H elim (cofrees_fwd_lift … H) -H /2 width=2 by/
-qed-.
-
 lemma cofrees_fwd_bind_sn: ∀a,I,L,W,U,i,d. L ⊢ i ~ϵ 𝐅*[d]⦃ⓑ{a,I}W.U⦄ →
                            L ⊢ i ~ϵ 𝐅*[d]⦃W⦄.
 #a #I #L #W1 #U #i #d #H #W2 #HW12 elim (H (ⓑ{a,I}W2.U)) /2 width=1 by cpys_bind/ -W1

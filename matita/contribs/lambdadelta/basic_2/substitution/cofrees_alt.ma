@@ -19,6 +19,10 @@ include "basic_2/substitution/cofrees_lift.ma".
 
 (* Alternative definition of frees_ge ***************************************)
 
+lemma nlift_frees: ∀L,U,d,i. (∀T. ⇧[i, 1] T ≡ U → ⊥) → (L ⊢ i ~ϵ 𝐅*[d]⦃U⦄ → ⊥).
+#L #U #d #i #HnTU #H elim (cofrees_fwd_lift … H) -H /2 width=2 by/
+qed-.
+
 lemma frees_inv_ge: ∀L,U,d,i. d ≤ yinj i → (L ⊢ i ~ϵ 𝐅*[d]⦃U⦄ → ⊥) →
                     (∀T. ⇧[i, 1] T ≡ U → ⊥) ∨
                     ∃∃I,K,W,j. d ≤ yinj j & j < i & ⇩[j]L ≡ K.ⓑ{I}W &
@@ -26,7 +30,7 @@ lemma frees_inv_ge: ∀L,U,d,i. d ≤ yinj i → (L ⊢ i ~ϵ 𝐅*[d]⦃U⦄ �
 #L #U #d #i #Hdi #H @(frees_ind … H) -U /3 width=2 by or_introl/
 #U1 #U2 #HU12 #HU2 *
 [ #HnU2 elim (cpy_fwd_nlift2_ge … HU12 … HnU2) -HU12 -HnU2 /3 width=2 by or_introl/
-  * /5 width=9 by cofrees_fwd_nlift, ex5_4_intro, or_intror/
+  * /5 width=9 by nlift_frees, ex5_4_intro, or_intror/
 | * #I2 #K2 #W2 #j2 #Hdj2 #Hj2i #HLK2 #HnW2 #HnU2 elim (cpy_fwd_nlift2_ge … HU12 … HnU2) -HU12 -HnU2 /4 width=9 by ex5_4_intro, or_intror/
   * #I1 #K1 #W1 #j1 #Hdj1 #Hj12 #HLK1 #HnW1 #HnU1
   lapply (ldrop_conf_ge … HLK1 … HLK2 ?) -HLK2 /2 width=1 by lt_to_le/
