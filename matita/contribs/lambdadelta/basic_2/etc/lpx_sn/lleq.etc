@@ -17,7 +17,7 @@ include "basic_2/substitution/llpx_sn.ma".
 
 (* LAZY EQUIVALENCE FOR LOCAL ENVIRONMENTS **********************************)
 
-definition ceq: relation3 lenv term term ≝ λL,T1,T2. T1 = T2.
+definition ceq: relation4 bind2 lenv term term ≝ λI,L,T1,T2. T1 = T2.
 
 definition lleq: relation4 ynat term lenv lenv ≝ llpx_sn ceq.
 
@@ -25,8 +25,8 @@ interpretation
    "lazy equivalence (local environment)"
    'LazyEq T d L1 L2 = (lleq d T L1 L2).
 
-definition lleq_transitive: predicate (relation3 lenv term term) ≝
-           λR. ∀L2,T1,T2. R L2 T1 T2 → ∀L1. L1 ≡[T1, 0] L2 → R L1 T1 T2.
+definition lleq_transitive: predicate (relation4 bind2 lenv term term) ≝
+           λR. ∀I,L2,T1,T2. R I L2 T1 T2 → ∀L1. L1 ≡[T1, 0] L2 → R I L1 T1 T2.
 
 (* Basic inversion lemmas ***************************************************)
 
@@ -155,6 +155,6 @@ lemma lleq_bind_O: ∀a,I,L1,L2,V,T. L1 ≡[V, 0] L2 → L1.ⓑ{I}V ≡[T, 0] L2
 
 (* Advancded properties on lazy pointwise exyensions ************************)
 
-lemma llpx_sn_lrefl: ∀R. (∀L. reflexive … (R L)) →
+lemma llpx_sn_lrefl: ∀R. (∀I,L. reflexive … (R I L)) →
                      ∀L1,L2,T,d. L1 ≡[T, d] L2 → llpx_sn R d T L1 L2.
 /2 width=3 by llpx_sn_co/ qed-.

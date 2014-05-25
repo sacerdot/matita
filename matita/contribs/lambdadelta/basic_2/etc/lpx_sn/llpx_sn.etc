@@ -17,12 +17,12 @@ include "basic_2/relocation/ldrop.ma".
 
 (* LAZY SN POINTWISE EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS ****)
 
-inductive llpx_sn (R:relation3 lenv term term): relation4 ynat term lenv lenv ≝
+inductive llpx_sn (R:relation4 bind2 lenv term term): relation4 ynat term lenv lenv ≝
 | llpx_sn_sort: ∀L1,L2,d,k. |L1| = |L2| → llpx_sn R d (⋆k) L1 L2
 | llpx_sn_skip: ∀L1,L2,d,i. |L1| = |L2| → yinj i < d → llpx_sn R d (#i) L1 L2
 | llpx_sn_lref: ∀I,L1,L2,K1,K2,V1,V2,d,i. d ≤ yinj i →
                 ⇩[i] L1 ≡ K1.ⓑ{I}V1 → ⇩[i] L2 ≡ K2.ⓑ{I}V2 →
-                llpx_sn R (yinj 0) V1 K1 K2 → R K1 V1 V2 → llpx_sn R d (#i) L1 L2
+                llpx_sn R (yinj 0) V1 K1 K2 → R I K1 V1 V2 → llpx_sn R d (#i) L1 L2
 | llpx_sn_free: ∀L1,L2,d,i. |L1| ≤ i → |L2| ≤ i → |L1| = |L2| → llpx_sn R d (#i) L1 L2
 | llpx_sn_gref: ∀L1,L2,d,p. |L1| = |L2| → llpx_sn R d (§p) L1 L2
 | llpx_sn_bind: ∀a,I,L1,L2,V,T,d.
@@ -98,7 +98,7 @@ fact llpx_sn_fwd_lref_aux: ∀R,L1,L2,X,d. llpx_sn R d X L1 L2 → ∀i. X = #i 
                             | ∃∃I,K1,K2,V1,V2. ⇩[i] L1 ≡ K1.ⓑ{I}V1 &
                                                ⇩[i] L2 ≡ K2.ⓑ{I}V2 &
                                                llpx_sn R (yinj 0) V1 K1 K2 &
-                                               R K1 V1 V2 & d ≤ yinj i.
+                                               R I K1 V1 V2 & d ≤ yinj i.
 #R #L1 #L2 #X #d * -L1 -L2 -X -d
 [ #L1 #L2 #d #k #_ #j #H destruct
 | #L1 #L2 #d #i #_ #Hid #j #H destruct /2 width=1 by or3_intro1/
@@ -117,7 +117,7 @@ lemma llpx_sn_fwd_lref: ∀R,L1,L2,d,i. llpx_sn R d (#i) L1 L2 →
                          | ∃∃I,K1,K2,V1,V2. ⇩[i] L1 ≡ K1.ⓑ{I}V1 &
                                             ⇩[i] L2 ≡ K2.ⓑ{I}V2 &
                                             llpx_sn R (yinj 0) V1 K1 K2 &
-                                            R K1 V1 V2 & d ≤ yinj i.
+                                            R I K1 V1 V2 & d ≤ yinj i.
 /2 width=3 by llpx_sn_fwd_lref_aux/ qed-.
 
 lemma llpx_sn_fwd_bind_sn: ∀R,a,I,L1,L2,V,T,d. llpx_sn R d (ⓑ{a,I}V.T) L1 L2 →
@@ -147,7 +147,7 @@ qed-.
 
 (* Basic_properties *********************************************************)
 
-lemma llpx_sn_refl: ∀R. (∀L. reflexive … (R L)) → ∀T,L,d. llpx_sn R d T L L.
+lemma llpx_sn_refl: ∀R. (∀I,L. reflexive … (R I L)) → ∀T,L,d. llpx_sn R d T L L.
 #R #HR #T #L @(f2_ind … rfw … L T) -L -T
 #n #IH #L * * /3 width=1 by llpx_sn_sort, llpx_sn_gref, llpx_sn_bind, llpx_sn_flat/
 #i #Hn elim (lt_or_ge i (|L|)) /2 width=1 by llpx_sn_free/
@@ -202,7 +202,7 @@ lemma llpx_sn_bind_O: ∀R,a,I,L1,L2,V,T. llpx_sn R 0 V L1 L2 →
                       llpx_sn R 0 (ⓑ{a,I}V.T) L1 L2.
 /3 width=3 by llpx_sn_ge, llpx_sn_bind/ qed-.
 
-lemma llpx_sn_co: ∀R1,R2. (∀L,T1,T2. R1 L T1 T2 → R2 L T1 T2) →
+lemma llpx_sn_co: ∀R1,R2. (∀I,L,T1,T2. R1 I L T1 T2 → R2 I L T1 T2) →
                   ∀L1,L2,T,d. llpx_sn R1 d T L1 L2 → llpx_sn R2 d T L1 L2.
 #R1 #R2 #HR12 #L1 #L2 #T #d #H elim H -L1 -L2 -T -d
 /3 width=9 by llpx_sn_sort, llpx_sn_skip, llpx_sn_lref, llpx_sn_free, llpx_sn_gref, llpx_sn_bind, llpx_sn_flat/

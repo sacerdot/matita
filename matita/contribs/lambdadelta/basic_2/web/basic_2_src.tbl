@@ -219,7 +219,7 @@ table {
           }
         ]
         [ { "pointwise union for local environments" * } {
-             [ "llor ( ? ⩖[?] ? ≡ ? )" * ]
+             [ "llor ( ? ⩖[?] ? ≡ ? )" "llor_alt" * ]
           }
         ]
         [ { "context-sensitive exclusion from free variables" * } {

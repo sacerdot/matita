@@ -13,19 +13,19 @@
 (**************************************************************************)
 
 include "basic_2/substitution/llpx_sn_ldrop.ma".
-include "basic_2/reduction/cpx.ma".
+include "basic_2/reduction/cpr.ma".
 
-(* CONTEXT-SENSITIVE EXTENDED PARALLEL REDUCTION FOR TERMS ******************)
+(* CONTEXT-SENSITIVE PARALLEL REDUCTION FOR TERMS ***************************)
 
 (* Properties on lazy sn pointwise extensions *******************************)
 
-(* Note: lemma 1000 *)
-lemma cpx_llpx_sn_conf: ∀R. (∀L. reflexive … (R L)) → l_liftable R → l_deliftable_sn R →
-                        ∀h,g,G. s_r_confluent1 … (cpx h g G) (llpx_sn R 0).
-#R #H1R #H2R #H3R #h #g #G #Ls #T1 #T2 #H elim H -G -Ls -T1 -T2
+lemma cpr_llpx_sn_conf: ∀R. (∀I,L.reflexive … (R I L)) →
+                            (∀I.l_liftable (R I)) →
+                            (∀I.l_deliftable_sn (R I)) →
+                        ∀G. s_r_confluent1 … (cpr G) (llpx_sn R 0).
+#R #H1R #H2R #H3R #G #Ls #T1 #T2 #H elim H -G -Ls -T1 -T2
 [ //
-| /3 width=4 by llpx_sn_fwd_length, llpx_sn_sort/
-| #I #G #Ls #Ks #V1s #V2s #W2s #i #HLKs #_ #HVW2s #IHV12s #Ld #H elim (llpx_sn_inv_lref_ge_sn … H … HLKs) // -H
+| #G #Ls #Ks #V1s #V2s #W2s #i #HLKs #_ #HVW2s #IHV12s #Ld #H elim (llpx_sn_inv_lref_ge_sn … H … HLKs) // -H
   #Kd #V1d #HLKd #HV1s #HV1sd
   lapply (ldrop_fwd_drop2 … HLKs) -HLKs #HLKs
   lapply (ldrop_fwd_drop2 … HLKd) -HLKd #HLKd
@@ -37,7 +37,6 @@ lemma cpx_llpx_sn_conf: ∀R. (∀L. reflexive … (R L)) → l_liftable R → l
 | #G #Ls #V #T1 #T2 #T #_ #HT2 #IHT12 #Ld #H elim (llpx_sn_inv_bind_O … H) -H
   /3 width=10 by llpx_sn_inv_lift_le, ldrop_drop/
 | #G #Ls #V #T1 #T2 #_ #IHT12 #Ld #H elim (llpx_sn_inv_flat … H) -H /2 width=1 by/
-| #G #Ls #V1 #V2 #T #_ #IHV12 #Ld #H elim (llpx_sn_inv_flat … H) -H /2 width=1 by/
 | #a #G #Ls #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #IHV12 #IHW12 #IHT12 #Ld #H elim (llpx_sn_inv_flat … H) -H
   #HV1 #H elim (llpx_sn_inv_bind_O … H) -H
   /4 width=5 by llpx_sn_bind_repl_SO, llpx_sn_flat, llpx_sn_bind/

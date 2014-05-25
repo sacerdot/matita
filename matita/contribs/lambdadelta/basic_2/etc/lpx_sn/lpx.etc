@@ -19,7 +19,7 @@ include "basic_2/reduction/cpx.ma".
 (* SN EXTENDED PARALLEL REDUCTION FOR LOCAL ENVIRONMENTS ********************)
 
 definition lpx: ∀h. sd h → relation3 genv lenv lenv ≝
-                λh,g,G. lpx_sn (cpx h g G).
+                λh,g,G. lpx_sn (λ_.cpx h g G).
 
 interpretation "extended parallel reduction (local environment, sn variant)"
    'PRedSn h g G L1 L2 = (lpx h g G L1 L2).

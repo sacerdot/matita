@@ -18,11 +18,11 @@ include "basic_2/substitution/llpx_sn_alt_rec.ma".
 (* LAZY SN POINTWISE EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS ****)
 
 (* alternative definition of llpx_sn (not recursive) *)
-definition llpx_sn_alt: relation3 lenv term term → relation4 ynat term lenv lenv ≝
+definition llpx_sn_alt: relation4 bind2 lenv term term → relation4 ynat term lenv lenv ≝
                         λR,d,T,L1,L2. |L1| = |L2| ∧
                         (∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → (L1 ⊢ i ~ϵ 𝐅*[d]⦃T⦄ → ⊥) →
                            ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 →
-                           I1 = I2 ∧ R K1 V1 V2
+                           I1 = I2 ∧ R I1 K1 V1 V2
                         ).
 
 (* Main properties **********************************************************)

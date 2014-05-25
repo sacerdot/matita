@@ -21,7 +21,7 @@ include "basic_2/relocation/lpx_sn.ma".
 
 lemma lpx_sn_ldrop_conf: ∀R,L1,L2. lpx_sn R L1 L2 →
                          ∀I,K1,V1,i. ⇩[i] L1 ≡ K1.ⓑ{I}V1 →
-                         ∃∃K2,V2. ⇩[i] L2 ≡ K2.ⓑ{I}V2 & lpx_sn R K1 K2 & R K1 V1 V2.
+                         ∃∃K2,V2. ⇩[i] L2 ≡ K2.ⓑ{I}V2 & lpx_sn R K1 K2 & R I K1 V1 V2.
 #R #L1 #L2 #H elim H -L1 -L2
 [ #I0 #K0 #V0 #i #H elim (ldrop_inv_atom1 … H) -H #H destruct
 | #I #K1 #K2 #V1 #V2 #HK12 #HV12 #IHK12 #I0 #K0 #V0 #i #H elim (ldrop_inv_O1_pair1 … H) * -H
@@ -34,7 +34,7 @@ qed-.
 
 lemma lpx_sn_ldrop_trans: ∀R,L1,L2. lpx_sn R L1 L2 →
                           ∀I,K2,V2,i. ⇩[i] L2 ≡ K2.ⓑ{I}V2 →
-                          ∃∃K1,V1. ⇩[i] L1 ≡ K1.ⓑ{I}V1 & lpx_sn R K1 K2 & R K1 V1 V2.
+                          ∃∃K1,V1. ⇩[i] L1 ≡ K1.ⓑ{I}V1 & lpx_sn R K1 K2 & R I K1 V1 V2.
 #R #L1 #L2 #H elim H -L1 -L2
 [ #I0 #K0 #V0 #i #H elim (ldrop_inv_atom1 … H) -H #H destruct
 | #I #K1 #K2 #V1 #V2 #HK12 #HV12 #IHK12 #I0 #K0 #V0 #i #H elim (ldrop_inv_O1_pair1 … H) * -H
@@ -45,7 +45,7 @@ lemma lpx_sn_ldrop_trans: ∀R,L1,L2. lpx_sn R L1 L2 →
 ]
 qed-.
 
-lemma lpx_sn_deliftable_dropable: ∀R. l_deliftable_sn R → dropable_sn (lpx_sn R).
+lemma lpx_sn_deliftable_dropable: ∀R. (∀I. l_deliftable_sn (R I)) → dropable_sn (lpx_sn R).
 #R #HR #L1 #K1 #s #d #e #H elim H -L1 -K1 -d -e
 [ #d #e #He #X #H >(lpx_sn_inv_atom1 … H) -H
   /4 width=3 by ldrop_atom, lpx_sn_atom, ex2_intro/
@@ -62,8 +62,8 @@ lemma lpx_sn_deliftable_dropable: ∀R. l_deliftable_sn R → dropable_sn (lpx_s
 ]
 qed-.
 
-lemma lpx_sn_liftable_dedropable: ∀R. (∀L. reflexive ? (R L)) →
-                                  l_liftable R → dedropable_sn (lpx_sn R).
+lemma lpx_sn_liftable_dedropable: ∀R. (∀I,L. reflexive ? (R I L)) →
+                                  (∀I. l_liftable (R I)) → dedropable_sn (lpx_sn R).
 #R #H1R #H2R #L1 #K1 #s #d #e #H elim H -L1 -K1 -d -e
 [ #d #e #He #X #H >(lpx_sn_inv_atom1 … H) -H
   /4 width=4 by ldrop_atom, lpx_sn_atom, ex3_intro/

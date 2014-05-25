@@ -19,7 +19,7 @@ include "basic_2/substitution/llpx_sn.ma".
 
 (* Properties on pointwise extensions ***************************************)
 
-lemma lpx_sn_llpx_sn: ∀R. (∀I,L. reflexive … (R I L)) →
+lemma lpx_sn_llpx_sn: ∀R. (∀L. reflexive … (R L)) →
                       ∀T,L1,L2,d. lpx_sn R L1 L2 → llpx_sn R d T L1 L2.
 #R #HR #T #L1 @(f2_ind … rfw … L1 T) -L1 -T
 #n #IH #L1 * *
