@@ -211,15 +211,15 @@ table {
    [ { "substitution" * } {
         [ { "lazy equivalence" * } {
              [ "fleq ( ⦃?,?,?⦄ ⋕[?] ⦃?,?,?⦄ )" "fleq_fleq" * ]
-             [ "lleq ( ? ⋕[?,?] ? )" "lleq_alt" + "lleq_alt_rec" + "lleq_leq" + "lleq_ldrop" + "lleq_fqus" + "lleq_lleq" * ]
+             [ "lleq ( ? ⋕[?,?] ? )" "lleq_alt" + "lleq_alt_rec" + "lleq_leq" + "lleq_ldrop" + "lleq_fqus" + "lleq_llor" + "lleq_lleq" * ]
           }
         ]
         [ { "lazy pointwise extension of a relation" * } {
-             [ "llpx_sn" "llpx_sn_alt" + "llpx_sn_alt_rec" + "llpx_sn_tc" + "llpx_sn_leq" + "llpx_sn_ldrop" + "llpx_sn_lpx_sn" * ]
+             [ "llpx_sn" "llpx_sn_alt" + "llpx_sn_alt_rec" + "llpx_sn_tc" + "llpx_sn_leq" + "llpx_sn_ldrop" + "llpx_sn_lpx_sn" + "llpx_sn_llor" * ]
           }
         ]
         [ { "pointwise union for local environments" * } {
-             [ "llor ( ? ⩖[?] ? ≡ ? )" "llor_alt" * ]
+             [ "llor ( ? ⩖[?] ? ≡ ? )" * ]
           }
         ]
         [ { "context-sensitive exclusion from free variables" * } {

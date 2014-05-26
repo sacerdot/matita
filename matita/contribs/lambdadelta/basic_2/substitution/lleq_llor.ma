@@ -12,24 +12,25 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/llor.ma".
+include "basic_2/substitution/llor.ma".
 include "basic_2/substitution/lleq_alt.ma".
 
 (* LAZY EQUIVALENCE FOR LOCAL ENVIRONMENTS **********************************)
 
 (* Properties on poinwise union for local environments **********************)
-
-lemma llor_lleq_O: ∀T,L1,L2,L. L1 ⩖[T] L2 ≡ L → |L1| ≤ |L2| → |L2| = |L| → L2 ⋕[T, yinj 0] L.
-#T #L1 @(f2_ind … rfw … L1 T) -L1 -T
-#n #IH #L1 #T #Hn #L2 #L #H #HL12 #HL2 elim (llor_inv_alt … H) // destruct
-#HL1 #IHT @lleq_intro_alt //
-#I2 #I #K2 #K #V2 #V #i #_ #HnT #HLK2 #HLK lapply (ldrop_fwd_length_lt2 … HLK)
-#Hi elim (ldrop_O1_lt L1 i) //
-#I1 #K1 #V1 #HLK1 elim (IHT … HLK1 HLK) >HL1 >HL2 <minus_n_n -IHT -HLK1 -HLK
-[
-| * #I0 #K0 #V0 #_ #HLK0 lapply (ldrop_mono … HLK0 … HLK2) -HLK0 -HLK2
-  #H1 #H2 #H3 #_ destruct
-    
-
-
- 
+(*
+lemma llor_lleq_O: ∀R,L1,L2,T. llpx_sn R 0 T L1 L2 →
+                   ∀L. L1 ⩖[T] L2 ≡ L → L2 ≡[T, 0] L.
+#R #L1 #L2 #T #H1 #L #H2
+elim (llpx_sn_llpx_sn_alt … H1) -H1 #HL12 #IH1
+elim H2 -H2 #_ #HL1 #IH2
+@lleq_intro_alt // #I2 #I #K2 #K #V2 #V #i #Hi #HnT #HLK2 #HLK
+lapply (ldrop_fwd_length_lt2 … HLK) #HiL
+elim (ldrop_O1_lt (Ⓕ) L1 i) // -HiL #I1 #K1 #V1 #HLK1
+elim (IH1 … HLK1 HLK2) // -IH1
+[ #H #_ destruct
+  elim (IH2 … HLK1 HLK2 HLK) * /2 width=1 by conj/
+  #H elim HnT -HnT
+| #H @HnT -HnT
+]
+*)
