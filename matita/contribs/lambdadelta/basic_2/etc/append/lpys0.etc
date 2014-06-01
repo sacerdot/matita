@@ -1,0 +1,29 @@
+lemma lpys_append: ∀G,K1,K2. ⦃G, K1⦄ ⊢ ▶*× K2 → ∀L1,L2. ⦃G, L1⦄ ⊢ ▶*× L2 →
+                   ⦃G, L1 @@ K1⦄ ⊢ ▶*× L2 @@ K2.
+/3 width=1 by lpx_sn_append, cpys_append/ qed.
+
+(* Advanced forward lemmas **************************************************)
+
+lemma lpys_fwd_append1: ∀G,K1,L1,L. ⦃G, K1 @@ L1⦄ ⊢ ▶*× L →
+                        ∃∃K2,L2. ⦃G, K1⦄ ⊢ ▶*× K2 & L = K2 @@ L2.
+/2 width=2 by lpx_sn_fwd_append1/ qed-.
+
+lemma lpys_fwd_append2: ∀G,L,K2,L2. ⦃G, L⦄ ⊢ ▶*× K2 @@ L2 →
+                        ∃∃K1,L1. ⦃G, K1⦄ ⊢ ▶*× K2 & L = K1 @@ L1.
+/2 width=2 by lpx_sn_fwd_append2/ qed-.
+
+(* Advanced forward lemmas **************************************************)
+
+lemma cpys_fwd_shift1_ext: ∀G,L1,L,T1,T. ⦃G, L⦄ ⊢ L1 @@ T1 ▶*× T →
+                           ∃∃L2,T2. ⦃G, L @@ L1⦄ ⊢ ▶*× L @@ L2 & ⦃G, L @@ L1⦄ ⊢ T1 ▶*× T2 &
+                                    T = L2 @@ T2.
+#G #L1 @(lenv_ind_dx … L1) -L1
+[ #L #T1 #T #HT1 @ex3_2_intro
+  [3: // |4,5: // |1,2: skip ] (**) (* auto does not work *)
+| #I #L1 #V1 #IH #L #T1 #T >shift_append_assoc #H <append_assoc
+  elim (cpys_inv_bind1 … H) -H #V2 #T2 #HV12 #HT12 #H destruct
+  elim (IH … HT12) -IH -HT12 #L2 #T #HL12 #HT1 #H destruct
+  lapply (lpys_trans … HL12 (L.ⓑ{I}V2@@L2) ?) -HL12 /3 width=1 by lpys_append, lpys_pair/ #HL12
+  @(ex3_2_intro … (⋆.ⓑ{I}V2@@L2)) [4: /2 width=3 by trans_eq/ | skip ] <append_assoc // (**) (* explicit constructor *)
+]
+qed-.

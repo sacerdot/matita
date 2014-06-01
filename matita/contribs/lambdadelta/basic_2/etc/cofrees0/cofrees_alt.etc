@@ -1,0 +1,104 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/relocation/lift_neg.ma".
+include "basic_2/relocation/lift_lift.ma".
+include "basic_2/substitution/cpys.ma".
+include "basic_2/substitution/cofrees_lift.ma".
+
+(* CONTEXT-SENSITIVE EXCLUSION FROM FREE VARIABLES **************************)
+
+(* Alternative definition of frees_ge ***************************************)
+
+(*
+lemma cpys_fwd_nlift2: ∀G,L,U1,U2. ⦃G, L⦄ ⊢ U1 ▶* U2 →
+                       ∀i. (∀T2. ⇧[i, 1] T2 ≡ U2 → ⊥) →
+                       (∀T1. ⇧[i, 1] T1 ≡ U1 → ⊥) ∨
+                       ∃∃I,K,W,j. j < i & ⇩[j]L ≡ K.ⓑ{I}W &
+                                  (∀V. ⇧[i-j-1, 1] V ≡ W → ⊥) & (∀T1. ⇧[j, 1] T1 ≡ U1 → ⊥).
+#G #L #U1 #U2 #H elim H -G -L -U1 -U2
+[ /3 width=2 by or_introl/
+| #I #G #L #K #V1 #V2 #W2 #j #HLK #_ #HVW2 #IHV12 #i #HnW2
+  elim (lt_or_ge j i) #Hij
+  [ @or_intror (**) @(ex4_4_intro … HLK) //
+    [ #X #HXV elim (lift_trans_le … HXV … HVW ?) -V //
+      #Y #HXY >minus_plus <plus_minus_m_m /2 width=2 by/
+    | -HnW2 /2 width=7 by lift_inv_lref2_be/
+    ]
+  | elim (lift_split … HVW2 i j) -HVW2 //
+    #X #_ #H elim HnW2 -HnW2 //
+  ]
+| #a #I #G #L #W1 #W2 #U1 #U2 #_ #_ #IHW12 #IHU12 #i #H elim (nlift_inv_bind … H) -H
+  [ #HnW2 elim (IHW12 … HnW2) -IHW12 -HnW2 -IHU12
+    [ /4 width=9 by nlift_bind_sn, or_introl/
+    | * /5 width=9 by nlift_bind_sn, ex4_4_intro, or_intror/
+    ]
+  | #HnU2 elim (IHU12 … HnU2) -IHU12 -HnU2 -IHW12
+    [ /4 width=9 by nlift_bind_dx, or_introl/
+    | * #J #K #W #j @(nat_ind_plus … j) -j
+      [ #_ #H lapply (ldrop_inv_pair1 … H) -H
+        #H destruct /4 width=9 by nlift_bind_sn, or_introl/
+      | #j #_ #Hji #HLK #HnW
+        lapply (ldrop_inv_drop1_lt … HLK ?) // -HLK #HLK #HnU1
+        <minus_le_minus_minus_comm in HnW;
+        /5 width=9 by nlift_bind_dx, monotonic_lt_pred, ex4_4_intro, or_intror/
+      ]
+    ]
+  ]
+| #I #G #L #W1 #W2 #U1 #U2 #_ #_ #IHW12 #IHU12 #i #H elim (nlift_inv_flat … H) -H
+  [ #HnW2 elim (IHW12 … HnW2) -IHW12 -HnW2 -IHU12
+    [ /4 width=9 by nlift_flat_sn, or_introl/
+    | * /5 width=9 by nlift_flat_sn, ex4_4_intro, or_intror/
+    ]
+  | #HnU2 elim (IHU12 … HnU2) -IHU12 -HnU2 -IHW12
+    [ /4 width=9 by nlift_flat_dx, or_introl/
+    | * /5 width=9 by nlift_flat_dx, ex4_4_intro, or_intror/
+  ]
+]
+qed-.
+*)
+lemma nlift_frees: ∀L,U,i. (∀T. ⇧[i, 1] T ≡ U → ⊥) → (L ⊢ i ~ϵ 𝐅*⦃U⦄ → ⊥).
+#L #U #i #HnTU #H elim (cofrees_fwd_lift … H) -H /2 width=2 by/
+qed-.
+(*
+lemma frees_inv_ge: ∀L,U,d,i. d ≤ yinj i → (L ⊢ i ~ϵ 𝐅*[d]⦃U⦄ → ⊥) →
+                    (∀T. ⇧[i, 1] T ≡ U → ⊥) ∨
+                    ∃∃I,K,W,j. d ≤ yinj j & j < i & ⇩[j]L ≡ K.ⓑ{I}W &
+                               (K ⊢ i-j-1 ~ϵ 𝐅*[yinj 0]⦃W⦄ → ⊥) & (∀T. ⇧[j, 1] T ≡ U → ⊥).
+#L #U #d #i #Hdi #H @(frees_ind … H) -U /3 width=2 by or_introl/
+#U1 #U2 #HU12 #HU2 *
+[ #HnU2 elim (cpy_fwd_nlift2_ge … HU12 … HnU2) -HU12 -HnU2 /3 width=2 by or_introl/
+  * /5 width=9 by nlift_frees, ex5_4_intro, or_intror/
+| * #I2 #K2 #W2 #j2 #Hdj2 #Hj2i #HLK2 #HnW2 #HnU2 elim (cpy_fwd_nlift2_ge … HU12 … HnU2) -HU12 -HnU2 /4 width=9 by ex5_4_intro, or_intror/
+  * #I1 #K1 #W1 #j1 #Hdj1 #Hj12 #HLK1 #HnW1 #HnU1
+  lapply (ldrop_conf_ge … HLK1 … HLK2 ?) -HLK2 /2 width=1 by lt_to_le/
+  #HK12 lapply (ldrop_inv_drop1_lt … HK12 ?) /2 width=1 by lt_plus_to_minus_r/ -HK12
+  #HK12
+  @or_intror @(ex5_4_intro … HLK1 … HnU1) -HLK1 -HnU1 /2 width=3 by transitive_lt/
+  @(frees_be … HK12 … HnW1) /2 width=1 by arith_k_sn/ -HK12 -HnW1
+  >minus_plus in ⊢ (??(?(?%?)?)??→?); >minus_plus in ⊢ (??(?(??%)?)??→?); >arith_b1 /2 width=1 by/
+]
+qed-.
+
+lemma frees_ind_ge: ∀R:relation4 ynat nat lenv term.
+                    (∀d,i,L,U. d ≤ yinj i → (∀T. ⇧[i, 1] T ≡ U → ⊥) → R d i L U) →
+                    (∀d,i,j,I,L,K,W,U. d ≤ yinj j → j < i → ⇩[j]L ≡ K.ⓑ{I}W → (K ⊢ i-j-1 ~ϵ 𝐅*[0]⦃W⦄ → ⊥) → (∀T. ⇧[j, 1] T ≡ U → ⊥) → R 0 (i-j-1) K W → R d i L U) →
+                    ∀d,i,L,U. d ≤ yinj i → (L ⊢ i ~ϵ 𝐅*[d]⦃U⦄ → ⊥) → R d i L U.
+#R #IH1 #IH2 #d #i #L #U
+generalize in match d; -d generalize in match i; -i
+@(f2_ind … rfw … L U) -L -U
+#n #IHn #L #U #Hn #i #d #Hdi #H elim (frees_inv_ge … H) -H /3 width=2 by/
+-IH1 * #I #K #W #j #Hdj #Hji #HLK #HnW #HnU destruct /4 width=12 by ldrop_fwd_rfw/
+qed-.
+*)

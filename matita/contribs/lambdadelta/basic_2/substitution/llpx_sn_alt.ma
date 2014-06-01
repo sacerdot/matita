@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/cofrees_alt.ma".
+include "basic_2/substitution/frees.ma".
 include "basic_2/substitution/llpx_sn_alt_rec.ma".
 
 (* LAZY SN POINTWISE EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS ****)
@@ -20,7 +20,7 @@ include "basic_2/substitution/llpx_sn_alt_rec.ma".
 (* alternative definition of llpx_sn (not recursive) *)
 definition llpx_sn_alt: relation3 lenv term term → relation4 ynat term lenv lenv ≝
                         λR,d,T,L1,L2. |L1| = |L2| ∧
-                        (∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → (L1 ⊢ i ~ϵ 𝐅*[d]⦃T⦄ → ⊥) →
+                        (∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → L1 ⊢ i ϵ 𝐅*[d]⦃T⦄ →
                            ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 →
                            I1 = I2 ∧ R K1 V1 V2
                         ).
@@ -31,9 +31,9 @@ theorem llpx_sn_llpx_sn_alt: ∀R,T,L1,L2,d. llpx_sn R d T L1 L2 → llpx_sn_alt
 #R #U #L1 @(f2_ind … rfw … L1 U) -L1 -U
 #n #IHn #L1 #U #Hn #L2 #d #H elim (llpx_sn_inv_alt_r … H) -H
 #HL12 #IHU @conj //
-#I1 #I2 #K1 #K2 #V1 #V2 #i #Hdi #H #HLK1 #HLK2 elim (frees_inv_ge … H) -H //
+#I1 #I2 #K1 #K2 #V1 #V2 #i #Hdi #H #HLK1 #HLK2 elim (frees_inv … H) -H
 [ -n #HnU elim (IHU … HnU HLK1 HLK2) -IHU -HnU -HLK1 -HLK2 /2 width=1 by conj/
-| * #J1 #K10 #W10 #j #Hdj #Hji #HLK10 #HnW10 #HnU destruct
+| * #J1 #K10 #W10 #j #Hdj #Hji #HnU #HLK10 #HnW10 destruct
   lapply (ldrop_fwd_drop2 … HLK10) #H
   lapply (ldrop_conf_ge … H … HLK1 ?) -H /2 width=1 by lt_to_le/ <minus_plus #HK10
   elim (ldrop_O1_lt (Ⓕ) L2 j) [2: <HL12 /2 width=5 by ldrop_fwd_length_lt2/ ] #J2 #K20 #W20 #HLK20
@@ -48,7 +48,7 @@ theorem llpx_sn_alt_inv_llpx_sn: ∀R,T,L1,L2,d. llpx_sn_alt R d T L1 L2 → llp
 #R #U #L1 @(f2_ind … rfw … L1 U) -L1 -U
 #n #IHn #L1 #U #Hn #L2 #d * #HL12 #IHU @llpx_sn_intro_alt_r //
 #I1 #I2 #K1 #K2 #V1 #V2 #i #Hdi #HnU #HLK1 #HLK2 destruct
-elim (IHU … HLK1 HLK2) /3 width=6 by nlift_frees/
+elim (IHU … HLK1 HLK2) /3 width=2 by frees_eq/
 #H #HV12 @and3_intro // @IHn -IHn /3 width=6 by ldrop_fwd_rfw/
 lapply (ldrop_fwd_drop2 … HLK1) #H1
 lapply (ldrop_fwd_drop2 … HLK2) -HLK2 #H2

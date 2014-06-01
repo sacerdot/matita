@@ -142,3 +142,39 @@ lemma frees_be: ∀I,L,K,W,j. ⇩[j]L ≡ K.ⓑ{I}W →
                 ∀U. (∀T. ⇧[j, 1] T ≡ U → ⊥) →
                 ∀d. d ≤ yinj j → (L ⊢ i ~ϵ 𝐅*[d]⦃U⦄ → ⊥).
 /4 width=11 by cofrees_inv_be/ qed-.
+
+(* Relocation properties ****************************************************)
+
+lemma cofrees_lift_be: ∀d0,e0,i. d0 ≤ i → i ≤ d0 + e0 →
+                       ∀L,K,s. ⇩[s, d0, e0+1] L ≡ K → ∀T,U. ⇧[d0, e0+1] T ≡ U →
+                       ∀d. L ⊢ i ~ϵ 𝐅*[d]⦃U⦄.
+#d0 #e0 #i #Hd0i #Hide0 #L #K #s #HLK #T1 #U1 #HTU1 #d #U2 #HU12
+elim (yle_split d0 d) #H1
+[ elim (yle_split d (d0+e0+1)) #H2
+  [ letin cpys_inv ≝ cpys_inv_lift1_ge_up
+  | letin cpys_inv ≝ cpys_inv_lift1_ge
+  ]
+| letin cpys_inv ≝ cpys_inv_lift1_be
+]
+elim (cpys_inv … HU12 … HLK … HTU1) // #T2 #_ #HTU2 -s -L -K -U1 -T1 -d
+elim (lift_split … HTU2 i e0) /2 width=2 by ex_intro/
+qed.
+
+lemma cofrees_lift_ge: ∀d0,e0,i. d0 + e0 ≤ i →
+                       ∀L,K,s. ⇩[s, d0, e0] L ≡ K → ∀T,U. ⇧[d0, e0] T ≡ U →
+                       ∀d. K ⊢ i-e0 ~ϵ 𝐅*[d-yinj e0]⦃T⦄ → L ⊢ i ~ϵ 𝐅*[d]⦃U⦄.
+#d0 #e0 #i #Hde0i #L #K #s #HLK #T1 #U1 #HTU1 #d #HT1 #U2 #HU12
+elim (le_inv_plus_l … Hde0i) -Hde0i #Hd0ie0 #He0i
+elim (yle_split d0 d) #H1
+[ elim (yle_split d (d0+e0)) #H2
+  [ elim (cpys_inv_lift1_ge_up … HU12 … HLK … HTU1) // >yplus_inj >yminus_Y_inj #T2 #HT12
+    lapply (cpys_weak … HT12 (d-yinj e0) (∞) ? ?) /2 width=1 by yle_plus2_to_minus_inj2/ -HT12
+  | elim (cpys_inv_lift1_ge … HU12 … HLK … HTU1) // #T2
+  ]
+| elim (cpys_inv_lift1_be … HU12 … HLK … HTU1) // >yminus_Y_inj #T2 #HT12
+  lapply (cpys_weak … HT12 (d-yinj e0) (∞) ? ?) // -HT12
+]
+-s -L #HT12 #HTU2
+elim (HT1 … HT12) -T1 #V2 #HVT2
+elim (lift_trans_le … HVT2 … HTU2 ?) // <plus_minus_m_m /2 width=2 by ex_intro/
+qed.

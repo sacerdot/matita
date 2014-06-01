@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/extlrsubeq_2.ma".
+include "basic_2/notation/relations/lrsubeq_2.ma".
 include "basic_2/relocation/ldrop.ma".
 
 (* LOCAL ENVIRONMENT REFINEMENT FOR EXTENDED SUBSTITUTION *******************)
@@ -24,52 +24,72 @@ inductive lsuby: relation lenv ≝
 
 interpretation
   "local environment refinement (extended substitution)"
-  'ExtLRSubEq L1 L2 = (lsuby L1 L2).
+  'LRSubEq L1 L2 = (lsuby L1 L2).
 
 (* Basic properties *********************************************************)
 
-lemma lsuby_refl: ∀L. L ⊑× L.
-#L elim L -L // /2 width=1/
+lemma lsuby_refl: ∀L. L ⊆ L.
+#L elim L -L /2 width=1 by lsuby_pair/
 qed.
+
+lemma lsuby_sym: ∀L1,L2. L1 ⊆ L2 → |L1| = |L2| → L2 ⊆ L1.
+#L1 #L2 #H elim H -L1 -L2
+[ #L1 #H >(length_inv_zero_dx … H) -L1 //
+| #I1 #I2 #L1 #L2 #V #_ #IHL12 #H lapply (injective_plus_l … H) -H
+  /3 width=1 by lsuby_pair/
+]
+qed-.
 
 (* Basic inversion lemmas ***************************************************)
 
-fact lsuby_inv_atom1_aux: ∀L1,L2. L1 ⊑× L2 → L1 = ⋆ → L2 = ⋆.
+fact lsuby_inv_atom1_aux: ∀L1,L2. L1 ⊆ L2 → L1 = ⋆ → L2 = ⋆.
 #L1 #L2 * -L1 -L2 //
 #I1 #I2 #L1 #L2 #V #_ #H destruct
 qed-.
 
-lemma lsuby_inv_atom1: ∀L2. ⋆ ⊑× L2 → L2 = ⋆.
+lemma lsuby_inv_atom1: ∀L2. ⋆ ⊆ L2 → L2 = ⋆.
 /2 width=3 by lsuby_inv_atom1_aux/ qed-.
 
-fact lsuby_inv_pair1_aux: ∀L1,L2. L1 ⊑× L2 → ∀J1,K1,W. L1 = K1.ⓑ{J1}W →
-                          L2 = ⋆ ∨ ∃∃I2,K2. K1 ⊑× K2 & L2 = K2.ⓑ{I2}W.
+fact lsuby_inv_pair1_aux: ∀L1,L2. L1 ⊆ L2 → ∀J1,K1,W. L1 = K1.ⓑ{J1}W →
+                          L2 = ⋆ ∨ ∃∃I2,K2. K1 ⊆ K2 & L2 = K2.ⓑ{I2}W.
 #L1 #L2 * -L1 -L2
 [ #L #J1 #K1 #W #H destruct /2 width=1 by or_introl/
 | #I1 #I2 #L1 #L2 #V #HL12 #J1 #K1 #W #H destruct /3 width=4 by ex2_2_intro, or_intror/
 ]
 qed-.
 
-lemma lsuby_inv_pair1: ∀I1,K1,L2,W. K1.ⓑ{I1}W ⊑× L2 →
-                       L2 = ⋆ ∨ ∃∃I2,K2. K1 ⊑× K2 & L2 = K2.ⓑ{I2}W.
+lemma lsuby_inv_pair1: ∀I1,K1,L2,W. K1.ⓑ{I1}W ⊆ L2 →
+                       L2 = ⋆ ∨ ∃∃I2,K2. K1 ⊆ K2 & L2 = K2.ⓑ{I2}W.
 /2 width=4 by lsuby_inv_pair1_aux/ qed-.
+
+fact lsuby_inv_pair2_aux: ∀L1,L2. L1 ⊆ L2 → ∀J2,K2,W. L2 = K2.ⓑ{J2}W →
+                          ∃∃I1,K1. K1 ⊆ K2 & L1 = K1.ⓑ{I1}W.
+#L1 #L2 * -L1 -L2
+[ #L #J2 #K2 #W #H destruct
+| #I1 #I2 #L1 #L2 #V #HL12 #J2 #K2 #W #H destruct /2 width=4 by ex2_2_intro/
+]
+qed-.
+
+lemma lsuby_inv_pair2: ∀I2,L1,K2,W. L1 ⊆ K2.ⓑ{I2}W  →
+                       ∃∃I1,K1. K1 ⊆ K2 & L1 = K1.ⓑ{I1}W.
+/2 width=4 by lsuby_inv_pair2_aux/ qed-.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma lsuby_fwd_length: ∀L1,L2. L1 ⊑× L2 → |L2| ≤ |L1|.
+lemma lsuby_fwd_length: ∀L1,L2. L1 ⊆ L2 → |L2| ≤ |L1|.
 #L1 #L2 #H elim H -L1 -L2 /2 width=1 by monotonic_le_plus_l/
 qed-.
 
-lemma lsuby_fwd_ldrop2_pair: ∀L1,L2. L1 ⊑× L2 →
-                             ∀I2,K2,W,i. ⇩[0, i] L2 ≡ K2.ⓑ{I2}W →
-                             ∃∃I1,K1. K1 ⊑× K2 & ⇩[0, i] L1 ≡ K1.ⓑ{I1}W.
+lemma lsuby_ldrop_trans: ∀L1,L2. L1 ⊆ L2 →
+                         ∀I2,K2,W,s,i. ⇩[s, 0, i] L2 ≡ K2.ⓑ{I2}W →
+                         ∃∃I1,K1. K1 ⊆ K2 & ⇩[s, 0, i] L1 ≡ K1.ⓑ{I1}W.
 #L1 #L2 #H elim H -L1 -L2
-[ #L #J2 #K2 #W #i #H
+[ #L #J2 #K2 #W #s #i #H
   elim (ldrop_inv_atom1 … H) -H #H destruct
-| #I1 #I2 #L1 #L2 #V #HL12 #IHL12 #J2 #K2 #W #i #H
+| #I1 #I2 #L1 #L2 #V #HL12 #IHL12 #J2 #K2 #W #s #i #H
   elim (ldrop_inv_O1_pair1 … H) -H * #Hi #HLK2 destruct [ -IHL12 | -HL12 ]
   [ /3 width=4 by ldrop_pair, ex2_2_intro/
-  | elim (IHL12 … HLK2) -IHL12 -HLK2 * /3 width=4 by ldrop_ldrop_lt, ex2_2_intro/
+  | elim (IHL12 … HLK2) -IHL12 -HLK2 * /3 width=4 by ldrop_drop_lt, ex2_2_intro/
   ]
 ]
 qed-.

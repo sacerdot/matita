@@ -83,7 +83,6 @@ lemma cpy_weak: ∀G,L,T1,T2,d1,e1. ⦃G, L⦄ ⊢ T1 ▶[d1, e1] T2 →
 ]
 qed-.
 
-(* Note: lemma 1250 *)
 lemma cpy_weak_top: ∀G,L,T1,T2,d,e.
                     ⦃G, L⦄ ⊢ T1 ▶[d, e] T2 → ⦃G, L⦄ ⊢ T1 ▶[d, |L| - d] T2.
 #G #L #T1 #T2 #d #e #H elim H -G -L -T1 -T2 -d -e //

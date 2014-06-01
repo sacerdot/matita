@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/extpsubstsnstar_3.ma".
-include "basic_2/grammar/lpx_sn.ma".
+include "basic_2/notation/relations/psubstsnstar_3.ma".
+include "basic_2/relocation/lpx_sn.ma".
 include "basic_2/substitution/cpys.ma".
 
 (* SN EXTENDED MULTIPLE SUBSTITUTION FOR LOCAL ENVIRONMENTS *****************)
@@ -22,54 +22,40 @@ definition lpys: relation3 genv lenv lenv ≝ λG. lpx_sn (cpys G).
 
 interpretation
    "extended multiple substitution (local environment, sn variant)"
-   'ExtPSubstSnStar G L1 L2 = (lpys G L1 L2).
+   'PSubstSnStar G L1 L2 = (lpys G L1 L2).
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma lpys_inv_atom1: ∀G,L2. ⦃G, ⋆⦄ ⊢ ▶*× L2 → L2 = ⋆.
+lemma lpys_inv_atom1: ∀G,L2. ⦃G, ⋆⦄ ⊢ ▶* L2 → L2 = ⋆.
 /2 width=4 by lpx_sn_inv_atom1_aux/ qed-.
 
-lemma lpys_inv_pair1: ∀I,G,K1,V1,L2. ⦃G, K1.ⓑ{I}V1⦄ ⊢ ▶*× L2 →
-                      ∃∃K2,V2. ⦃G, K1⦄ ⊢ ▶*× K2 & ⦃G, K1⦄ ⊢ V1 ▶*× V2 &
+lemma lpys_inv_pair1: ∀I,G,K1,V1,L2. ⦃G, K1.ⓑ{I}V1⦄ ⊢ ▶* L2 →
+                      ∃∃K2,V2. ⦃G, K1⦄ ⊢ ▶* K2 & ⦃G, K1⦄ ⊢ V1 ▶* V2 &
                                L2 = K2. ⓑ{I} V2.
 /2 width=3 by lpx_sn_inv_pair1_aux/ qed-.
 
-lemma lpys_inv_atom2: ∀G,L1. ⦃G, L1⦄ ⊢ ▶*× ⋆ → L1 = ⋆.
+lemma lpys_inv_atom2: ∀G,L1. ⦃G, L1⦄ ⊢ ▶* ⋆ → L1 = ⋆.
 /2 width=4 by lpx_sn_inv_atom2_aux/ qed-.
 
-lemma lpys_inv_pair2: ∀I,G,L1,K2,V2. ⦃G, L1⦄ ⊢ ▶*× K2.ⓑ{I}V2 →
-                      ∃∃K1,V1. ⦃G, K1⦄ ⊢ ▶*× K2 & ⦃G, K1⦄ ⊢ V1 ▶*× V2 &
+lemma lpys_inv_pair2: ∀I,G,L1,K2,V2. ⦃G, L1⦄ ⊢ ▶* K2.ⓑ{I}V2 →
+                      ∃∃K1,V1. ⦃G, K1⦄ ⊢ ▶* K2 & ⦃G, K1⦄ ⊢ V1 ▶* V2 &
                                L1 = K1. ⓑ{I} V1.
 /2 width=3 by lpx_sn_inv_pair2_aux/ qed-.
 
-lemma lpys_inv_pair: ∀I1,I2,G,L1,L2,V1,V2. ⦃G, L1.ⓑ{I1}V1⦄ ⊢ ▶*× L2.ⓑ{I2}V2 →
-                     ∧∧ ⦃G, L1⦄ ⊢ ▶*× L2 & ⦃G, L1⦄ ⊢ V1 ▶*× V2 & I1 = I2.
+lemma lpys_inv_pair: ∀I1,I2,G,L1,L2,V1,V2. ⦃G, L1.ⓑ{I1}V1⦄ ⊢ ▶* L2.ⓑ{I2}V2 →
+                     ∧∧ ⦃G, L1⦄ ⊢ ▶* L2 & ⦃G, L1⦄ ⊢ V1 ▶* V2 & I1 = I2.
 /2 width=1 by lpx_sn_inv_pair/ qed-.
 
 (* Basic properties *********************************************************)
 
-lemma lpys_refl: ∀G,L. ⦃G, L⦄ ⊢ ▶*× L.
+lemma lpys_refl: ∀G,L. ⦃G, L⦄ ⊢ ▶* L.
 /2 width=1 by lpx_sn_refl/ qed.
 
-lemma lpys_pair: ∀I,G,K1,K2,V1,V2. ⦃G, K1⦄ ⊢ ▶*× K2 → ⦃G, K1⦄ ⊢ V1 ▶*× V2 →
-                 ⦃G, K1.ⓑ{I}V1⦄ ⊢ ▶*× K2.ⓑ{I}V2.
+lemma lpys_pair: ∀I,G,K1,K2,V1,V2. ⦃G, K1⦄ ⊢ ▶* K2 → ⦃G, K1⦄ ⊢ V1 ▶* V2 →
+                 ⦃G, K1.ⓑ{I}V1⦄ ⊢ ▶* K2.ⓑ{I}V2.
 /2 width=1 by lpx_sn_pair/ qed.
-
-lemma lpys_append: ∀G,K1,K2. ⦃G, K1⦄ ⊢ ▶*× K2 → ∀L1,L2. ⦃G, L1⦄ ⊢ ▶*× L2 →
-                   ⦃G, L1 @@ K1⦄ ⊢ ▶*× L2 @@ K2.
-/3 width=1 by lpx_sn_append, cpys_append/ qed.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma lpys_fwd_length: ∀G,L1,L2. ⦃G, L1⦄ ⊢ ▶*× L2 → |L1| = |L2|.
+lemma lpys_fwd_length: ∀G,L1,L2. ⦃G, L1⦄ ⊢ ▶* L2 → |L1| = |L2|.
 /2 width=2 by lpx_sn_fwd_length/ qed-.
-
-(* Advanced forward lemmas **************************************************)
-
-lemma lpys_fwd_append1: ∀G,K1,L1,L. ⦃G, K1 @@ L1⦄ ⊢ ▶*× L →
-                        ∃∃K2,L2. ⦃G, K1⦄ ⊢ ▶*× K2 & L = K2 @@ L2.
-/2 width=2 by lpx_sn_fwd_append1/ qed-.
-
-lemma lpys_fwd_append2: ∀G,L,K2,L2. ⦃G, L⦄ ⊢ ▶*× K2 @@ L2 →
-                        ∃∃K1,L1. ⦃G, K1⦄ ⊢ ▶*× K2 & L = K1 @@ L1.
-/2 width=2 by lpx_sn_fwd_append2/ qed-.

@@ -12,8 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
+include "basic_2/substitution/frees_lift.ma".
+include "basic_2/substitution/llor.ma".
 
-notation "hvbox( ⦃ term 46 G , break term 46 L ⦄ ⊢ break term 46 T1 break ▶ * × break term 46 T2 )"
-   non associative with precedence 45
-   for @{ 'ExtPSubstStar $G $L $T1 $T2 }.
+(* POINTWISE UNION FOR LOCAL ENVIRONMENTS ***********************************)
+
+(* Advanced properties ******************************************************)
+
+axiom llor_total: ∀L1,L2,T. |L1| ≤ |L2| → ∃L. L1 ⩖[T] L2 ≡ L.
