@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/fqus_fqus.ma".
+include "basic_2/multiple/fqus_fqus.ma".
 include "basic_2/unfold/lsstas_lift.ma".
 include "basic_2/reduction/cpx_lift.ma".
 include "basic_2/computation/cpxs.ma".

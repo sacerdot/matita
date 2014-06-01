@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/btpredstar_8.ma".
-include "basic_2/substitution/fqus.ma".
+include "basic_2/multiple/fqus.ma".
 include "basic_2/reduction/fpb.ma".
 include "basic_2/computation/cpxs.ma".
 include "basic_2/computation/lpxs.ma".

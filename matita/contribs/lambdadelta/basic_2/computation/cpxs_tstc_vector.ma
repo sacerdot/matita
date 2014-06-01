@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/grammar/tstc_vector.ma".
-include "basic_2/relocation/lift_vector.ma".
+include "basic_2/substitution/lift_vector.ma".
 include "basic_2/computation/cpxs_tstc.ma".
 
 (* CONTEXT-SENSITIVE EXTENDED PARALLEL COMPUTATION ON TERMS *****************)

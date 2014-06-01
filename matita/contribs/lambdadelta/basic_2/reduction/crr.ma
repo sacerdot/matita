@@ -14,7 +14,7 @@
 
 include "basic_2/notation/relations/predreducible_3.ma".
 include "basic_2/grammar/genv.ma".
-include "basic_2/relocation/ldrop.ma".
+include "basic_2/substitution/ldrop.ma".
 
 (* REDUCIBLE TERMS FOR CONTEXT-SENSITIVE REDUCTION **************************)
 

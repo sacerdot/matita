@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/lpx_sn_lpx_sn.ma".
-include "basic_2/substitution/fqup.ma".
+include "basic_2/substitution/lpx_sn_lpx_sn.ma".
+include "basic_2/multiple/fqup.ma".
 include "basic_2/reduction/lpr_ldrop.ma".
 
 (* SN PARALLEL REDUCTION FOR LOCAL ENVIRONMENTS *****************************)

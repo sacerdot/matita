@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/lift.ma".
+include "basic_2/substitution/lift.ma".
 include "apps_2/functional/notation.ma".
 
 (* FUNCTIONAL RELOCATION ****************************************************)

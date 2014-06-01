@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/lazybtpredproper_8.ma".
-include "basic_2/substitution/fleq.ma".
+include "basic_2/multiple/fleq.ma".
 include "basic_2/computation/fpbu.ma".
 
 (* SINGLE-STEP "BIG TREE" PROPER PARALLEL COMPUTATION FOR CLOSURES **********)

@@ -13,8 +13,8 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/btpred_8.ma".
-include "basic_2/relocation/fquq.ma".
-include "basic_2/substitution/lleq.ma".
+include "basic_2/substitution/fquq.ma".
+include "basic_2/multiple/lleq.ma".
 include "basic_2/reduction/lpx.ma".
 
 (* "BIG TREE" PARALLEL REDUCTION FOR CLOSURES *******************************)

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/ldrop_ldrop.ma".
+include "basic_2/substitution/ldrop_ldrop.ma".
 include "basic_2/reduction/crx.ma".
 
 (* REDUCIBLE TERMS FOR CONTEXT-SENSITIVE EXTENDED REDUCTION *****************)

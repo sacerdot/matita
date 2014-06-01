@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/ldrops.ma".
+include "basic_2/multiple/ldrops.ma".
 include "basic_2/static/aaa_lift.ma".
 
 (* ATONIC ARITY ASSIGNMENT ON TERMS *****************************************)

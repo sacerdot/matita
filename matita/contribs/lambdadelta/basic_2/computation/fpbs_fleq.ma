@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/fleq.ma".
+include "basic_2/multiple/fleq.ma".
 include "basic_2/computation/fpbs.ma".
 
 (* "BIG TREE" PARALLEL COMPUTATION FOR CLOSURES *****************************)

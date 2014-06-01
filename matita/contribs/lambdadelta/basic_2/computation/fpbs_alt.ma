@@ -13,8 +13,8 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/btpredstaralt_8.ma".
-include "basic_2/substitution/lleq_fqus.ma".
-include "basic_2/substitution/lleq_lleq.ma".
+include "basic_2/multiple/lleq_fqus.ma".
+include "basic_2/multiple/lleq_lleq.ma".
 include "basic_2/computation/cpxs_lleq.ma".
 include "basic_2/computation/lpxs_lleq.ma".
 include "basic_2/computation/fpbs.ma".

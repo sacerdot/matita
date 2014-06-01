@@ -168,11 +168,17 @@ qed.
 
 (* Forward lemmas on minus **************************************************)
 
-lemma yle_plus_to_minus_inj2: ∀x,z:ynat. ∀y:nat. x + y ≤ z → x ≤ z - y.
+lemma yle_plus1_to_minus_inj2: ∀x,z:ynat. ∀y:nat. x + y ≤ z → x ≤ z - y.
 /2 width=1 by monotonic_yle_minus_dx/ qed-.
 
-lemma yle_plus_to_minus_inj1: ∀x,z:ynat. ∀y:nat. y + x ≤ z → x ≤ z - y.
-/2 width=1 by yle_plus_to_minus_inj2/ qed-.
+lemma yle_plus1_to_minus_inj1: ∀x,z:ynat. ∀y:nat. y + x ≤ z → x ≤ z - y.
+/2 width=1 by yle_plus1_to_minus_inj2/ qed-.
+
+lemma yle_plus2_to_minus_inj2: ∀x,y:ynat. ∀z:nat. x ≤ y + z → x - z ≤ y.
+/2 width=1 by monotonic_yle_minus_dx/ qed-.
+
+lemma yle_plus2_to_minus_inj1: ∀x,y:ynat. ∀z:nat. x ≤ z + y → x - z ≤ y.
+/2 width=1 by yle_plus2_to_minus_inj2/ qed-.
 
 lemma yplus_minus_assoc_inj: ∀x:nat. ∀y,z:ynat. x ≤ y → z + (y - x) = z + y - x.
 #x *
@@ -191,7 +197,7 @@ qed-.
 (* Inversion lemmas on minus ************************************************)
 
 lemma yle_inv_plus_inj2: ∀x,z:ynat. ∀y:nat. x + y ≤ z → x ≤ z - y ∧ y ≤ z.
-/3 width=3 by yle_plus_to_minus_inj2, yle_trans, conj/ qed-.
+/3 width=3 by yle_plus1_to_minus_inj2, yle_trans, conj/ qed-.
 
 lemma yle_inv_plus_inj1: ∀x,z:ynat. ∀y:nat. y + x ≤ z → x ≤ z - y ∧ y ≤ z.
 /2 width=1 by yle_inv_plus_inj2/ qed-.

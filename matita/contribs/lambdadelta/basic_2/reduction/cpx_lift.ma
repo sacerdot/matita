@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/ldrop_ldrop.ma".
-include "basic_2/substitution/fqus_alt.ma".
+include "basic_2/substitution/ldrop_ldrop.ma".
+include "basic_2/multiple/fqus_alt.ma".
 include "basic_2/static/ssta.ma".
 include "basic_2/reduction/cpx.ma".
 

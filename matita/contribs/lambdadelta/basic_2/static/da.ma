@@ -14,7 +14,7 @@
 
 include "basic_2/notation/relations/degree_6.ma".
 include "basic_2/grammar/genv.ma".
-include "basic_2/relocation/ldrop.ma".
+include "basic_2/substitution/ldrop.ma".
 include "basic_2/static/sd.ma".
 
 (* DEGREE ASSIGNMENT FOR TERMS **********************************************)

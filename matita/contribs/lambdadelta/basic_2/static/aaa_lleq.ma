@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/lleq_ldrop.ma".
+include "basic_2/multiple/lleq_ldrop.ma".
 include "basic_2/static/aaa.ma".
 
 (* ATONIC ARITY ASSIGNMENT ON TERMS *****************************************)

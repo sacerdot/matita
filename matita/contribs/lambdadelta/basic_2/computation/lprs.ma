@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/predsnstar_3.ma".
-include "basic_2/relocation/lpx_sn_tc.ma".
+include "basic_2/substitution/lpx_sn_tc.ma".
 include "basic_2/reduction/lpr.ma".
 
 (* SN PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS ****************************)

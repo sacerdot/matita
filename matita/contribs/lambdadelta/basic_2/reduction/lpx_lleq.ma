@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/lleq_leq.ma".
-include "basic_2/substitution/lleq_ldrop.ma".
+include "basic_2/multiple/lleq_leq.ma".
+include "basic_2/multiple/lleq_ldrop.ma".
 include "basic_2/reduction/cpx_leq.ma".
 include "basic_2/reduction/lpx_ldrop.ma".
 

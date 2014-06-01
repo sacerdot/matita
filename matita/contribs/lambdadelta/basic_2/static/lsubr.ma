@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/lrsubeqc_2.ma".
-include "basic_2/relocation/ldrop.ma".
+include "basic_2/substitution/ldrop.ma".
 
 (* RESTRICTED LOCAL ENVIRONMENT REFINEMENT **********************************)
 

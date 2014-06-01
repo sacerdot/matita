@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/fqus_alt.ma".
+include "basic_2/multiple/fqus_alt.ma".
 include "basic_2/static/aaa_lift.ma".
 
 (* ATONIC ARITY ASSIGNMENT ON TERMS *****************************************)

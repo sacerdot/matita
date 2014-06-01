@@ -208,7 +208,7 @@ table {
      }
    ]
    class "yellow"
-   [ { "substitution" * } {
+   [ { "multiple substitution" * } {
         [ { "lazy equivalence" * } {
              [ "fleq ( ⦃?,?,?⦄ ⋕[?] ⦃?,?,?⦄ )" "fleq_fleq" * ]
              [ "lleq ( ? ⋕[?,?] ? )" "lleq_alt" + "lleq_alt_rec" + "lleq_leq" + "lleq_ldrop" + "lleq_fqus" + "lleq_llor" + "lleq_lleq" * ]
@@ -251,7 +251,7 @@ table {
      }
    ]
    class "orange"
-   [ { "relocation" * } {
+   [ { "substitution" * } {
         [ { "structural successor for closures" * } {
              [ "fquq ( ⦃?,?,?⦄ ⊐⸮ ⦃?,?,?⦄ )" "fquq_alt ( ⦃?,?,?⦄ ⊐⊐⸮ ⦃?,?,?⦄ )" * ]
              [ "fqu ( ⦃?,?,?⦄ ⊐ ⦃?,?,?⦄ )" * ]

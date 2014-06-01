@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/sn_6.ma".
-include "basic_2/substitution/lleq.ma".
+include "basic_2/multiple/lleq.ma".
 include "basic_2/reduction/lpx.ma".
 
 (* SN EXTENDED STRONGLY NORMALIZING LOCAL ENVIRONMENTS **********************)

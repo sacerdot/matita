@@ -12,18 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/fqup.ma".
-include "basic_2/substitution/frees_lift.ma".
+include "basic_2/multiple/fqup.ma".
+include "basic_2/multiple/frees_lift.ma".
 include "basic_2/reduction/lpx_ldrop.ma".
 
 (* SN EXTENDED PARALLEL REDUCTION FOR LOCAL ENVIRONMENTS ********************)
 (*
-lemma yle_plus2_to_minus_inj2: ∀x,y:ynat. ∀z:nat. x ≤ y + z → x - z ≤ y.
-/2 width=1 by monotonic_yle_minus_dx/ qed-.
-
-lemma yle_plus2_to_minus_inj1: ∀x,y:ynat. ∀z:nat. x ≤ z + y → x - z ≤ y.
-/2 width=1 by yle_plus2_to_minus_inj2/ qed-.
-
 lemma cofrees_lsuby_conf: ∀L1,U,i. L1 ⊢ i ~ϵ 𝐅*⦃U⦄ →
                           ∀L2. lsuby L1 L2 → L2 ⊢ i ~ϵ 𝐅*⦃U⦄.
 /3 width=3 by lsuby_cpys_trans/ qed-.

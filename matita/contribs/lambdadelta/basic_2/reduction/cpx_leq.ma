@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/ldrop_leq.ma".
+include "basic_2/substitution/ldrop_leq.ma".
 include "basic_2/reduction/cpx.ma".
 
 (* CONTEXT-SENSITIVE EXTENDED PARALLEL REDUCTION FOR TERMS ******************)

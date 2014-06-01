@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/snalt_6.ma".
-include "basic_2/substitution/lleq_lleq.ma".
+include "basic_2/multiple/lleq_lleq.ma".
 include "basic_2/computation/lpxs_lleq.ma".
 include "basic_2/computation/lsx.ma".
 

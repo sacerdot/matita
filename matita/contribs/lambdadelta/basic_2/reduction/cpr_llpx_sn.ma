@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/llpx_sn_ldrop.ma".
+include "basic_2/multiple/llpx_sn_ldrop.ma".
 include "basic_2/reduction/cpr.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL REDUCTION FOR TERMS ***************************)

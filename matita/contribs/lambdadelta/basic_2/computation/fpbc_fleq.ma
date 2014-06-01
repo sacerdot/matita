@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/fleq_fleq.ma".
+include "basic_2/multiple/fleq_fleq.ma".
 include "basic_2/computation/fpbu_fleq.ma".
 include "basic_2/computation/fpbc.ma".
 
