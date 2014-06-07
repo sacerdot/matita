@@ -12,18 +12,35 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/multiple/llor_ldrop.ma".
+include "basic_2/multiple/llpx_sn_llor.ma".
+include "basic_2/multiple/llpx_sn_lpx_sn.ma".
 include "basic_2/multiple/lleq_leq.ma".
-include "basic_2/multiple/lleq_ldrop.ma".
+include "basic_2/multiple/lleq_llor.ma".
 include "basic_2/reduction/cpx_leq.ma".
-include "basic_2/reduction/lpx_ldrop.ma".
+include "basic_2/reduction/cpx_lleq.ma".
+include "basic_2/reduction/lpx_frees.ma".
 
 (* SN EXTENDED PARALLEL REDUCTION FOR LOCAL ENVIRONMENTS ********************)
 
 (* Properties on lazy equivalence for local environments ********************)
 
-axiom lleq_lpx_trans: ∀h,g,G,L2,K2. ⦃G, L2⦄ ⊢ ➡[h, g] K2 →
+(* Note: contains a proof of llpx_cpx_conf *)
+lemma lleq_lpx_trans: ∀h,g,G,L2,K2. ⦃G, L2⦄ ⊢ ➡[h, g] K2 →
                       ∀L1,T,d. L1 ≡[T, d] L2 →
                       ∃∃K1. ⦃G, L1⦄ ⊢ ➡[h, g] K1 & K1 ≡[T, d] K2.
+#h #g #G #L2 #K2 #HLK2 #L1 #T #d #HL12
+lapply (lpx_fwd_length … HLK2) #H1
+lapply (lleq_fwd_length … HL12) #H2
+lapply (lpx_sn_llpx_sn … T … d HLK2) // -HLK2 #H
+lapply (lleq_llpx_sn_trans … HL12 … H) /2 width=3 by lleq_cpx_trans/ -HL12 -H #H
+elim (llor_total L1 K2 T d) // -H1 -H2 #K1 #HLK1
+lapply (llpx_sn_llor_dx_sym … H … HLK1)
+[ /2 width=6 by cpx_frees_trans/
+| /3 width=10 by cpx_llpx_sn_conf, cpx_inv_lift1, cpx_lift/
+| /3 width=5 by llpx_sn_llor_fwd_sn, ex2_intro/
+]
+qed-.
 
 lemma lpx_lleq_fqu_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T2⦄ →
                           ∀K1. ⦃G1, K1⦄ ⊢ ➡[h, g] L1 → K1 ≡[T1, 0] L1 →

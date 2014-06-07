@@ -19,4 +19,4 @@ include "basic_2/multiple/llor.ma".
 
 (* Advanced properties ******************************************************)
 
-axiom llor_total: ∀L1,L2,T. |L1| ≤ |L2| → ∃L. L1 ⩖[T] L2 ≡ L.
+axiom llor_total: ∀L1,L2,T,d. |L1| ≤ |L2| → ∃L. L1 ⩖[T, d] L2 ≡ L.

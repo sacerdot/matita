@@ -21,7 +21,7 @@ table {
    class "magenta"
    [ { "higher order dynamic typing" * } {
         [ { "higher order native type assignment" * } {
-             [ "ntas ( ⦃?,?⦄ ⊢ ? :* ? )" "nta_lift" * ]
+             [ "ntas ( ⦃?,?⦄ ⊢ ? :* ? )" "nta_lift" * ]basic_2/multiple/frees_leq.ma
           }
         ]
      }
@@ -195,7 +195,7 @@ table {
         ]
         [ { "degree assignment" * } {
              [ "da ( ⦃?,?⦄ ⊢ ? ▪[?,?] ? )" "da_lift" + "da_da" * ]
-          }
+          }basic_2/multiple/frees_leq.ma
         ]
         [ { "parameters" * } {
              [ "sh" "sd" * ]
@@ -215,15 +215,15 @@ table {
           }
         ]
         [ { "lazy pointwise extension of a relation" * } {
-             [ "llpx_sn" "llpx_sn_alt" + "llpx_sn_alt_rec" + "llpx_sn_tc" + "llpx_sn_leq" + "llpx_sn_ldrop" + "llpx_sn_lpx_sn" + "llpx_sn_llor" * ]
+             [ "llpx_sn" "llpx_sn_alt" + "llpx_sn_alt_rec" + "llpx_sn_tc" + "llpx_sn_leq" + "llpx_sn_ldrop" + "llpx_sn_lpx_sn" + "llpx_sn_frees" + "llpx_sn_llor" * ]
           }
         ]
         [ { "pointwise union for local environments" * } {
-             [ "llor ( ? ⩖[?] ? ≡ ? )" "llor_ldrop" * ]
+             [ "llor ( ? ⩖[?,?] ? ≡ ? )" "llor_ldrop" * ]
           }
         ]
         [ { "context-sensitive exclusion from free variables" * } {
-             [ "frees ( ? ⊢ ? ϵ 𝐅*[?]⦃?⦄ )" "frees_lift" * ]
+             [ "frees ( ? ⊢ ? ϵ 𝐅*[?]⦃?⦄ )" "frees_leq" + "frees_lift" * ]
           }
         ]
         [ { "contxt-sensitive extended multiple substitution" * } {
@@ -273,7 +273,7 @@ table {
              [ "lpx_sn" "lpx_sn_alt" + "lpx_sn_tc" + "lpx_sn_ldrop" + "lpx_sn_lpx_sn" * ]
           }
         ]
-	[ { "basic local env. slicing" * } {
+        [ { "basic local env. slicing" * } {
              [ "ldrop ( ⇩[?,?,?] ? ≡ ? )"  "ldrop_leq" + "ldrop_ldrop" * ]
           }
         ]

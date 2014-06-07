@@ -115,7 +115,7 @@ define STATS_TEMPLATE
   STT_$(1) := $(1).stats
   STTS     += $$(STT_$(1))
 
-  $$(STT_$(1)): S0  = $$(shell cat $(1)/$(1)_probe.txt)    
+  $$(STT_$(1)): S0  = $$(shell cat $(1)/$(1)_probe.txt)
   $$(STT_$(1)): S1  = $$(shell cat $(1)/$(1)_mac.txt)
   $$(STT_$(1)): S4  = $$(shell ls $$(MAS_$(1)) | wc -l)
   $$(STT_$(1)): P1  = $$(shell grep "^theorem " $$(MAS_$(1)) | wc -l)
@@ -177,9 +177,9 @@ define SUMMARY_TEMPLATE
   SUM_$(1) := $(1)/web/$(1)_sum.tbl  
   SUMS     += $$(SUM_$(1))
 
-  $$(SUM_$(1)): S0 = $$(shell cat $(1)/$(1)_probe.txt)  
+  $$(SUM_$(1)): S0 = $$(shell cat $(1)/$(1)_probe.txt)
   $$(SUM_$(1)): S1 = $$(shell cat $(1)/$(1)_mac.txt)
-  $$(SUM_$(1)): S4 = $$(shell ls $$(MAS_$(1)) | wc -l)  
+  $$(SUM_$(1)): S4 = $$(shell ls $$(MAS_$(1)) | wc -l)
   $$(SUM_$(1)): C1 = $$(shell grep "^inductive \|^record " $$(MAS_$(1)) | wc -l)
   $$(SUM_$(1)): C2 = $$(shell grep "^definition \|^let rec " $$(MAS_$(1)) | wc -l)
   $$(SUM_$(1)): C3 = $$(shell grep "^inductive \|^record \|^definition \|^let rec " $$(MAS_$(1)) | wc -l)

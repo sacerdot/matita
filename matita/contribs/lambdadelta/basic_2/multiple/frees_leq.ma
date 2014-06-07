@@ -12,23 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/lpx_sn_alt.ma".
-include "basic_2/multiple/llor.ma".
-include "basic_2/multiple/lleq_alt.ma".
+include "basic_2/substitution/ldrop_leq.ma".
+include "basic_2/multiple/frees.ma".
 
-(* LAZY SN POINTWISE EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS ****)
+(* CONTEXT-SENSITIVE FREE VARIABLES *****************************************)
 
-(* Inversion lemmas on poinwise union for local environments ****************)
+(* Properties on equivalence for local environments *************************)
 
-lemma llpx_sn_llor_fwd_sn: ∀R. (∀L. reflexive … (R L)) →
-                           ∀L1,L2,T,d. llpx_sn R d T L1 L2 →
-                           ∀L. L1 ⩖[T, d] L2 ≡ L → lpx_sn R L1 L.
-#R #HR #L1 #L2 #T #d #H1 #L #H2
-elim (llpx_sn_llpx_sn_alt … H1) -H1 #HL12 #IH1
-elim H2 -H2 #_ #HL1 #IH2
-@lpx_sn_intro_alt // #I1 #I #K1 #K #V1 #V #i #HLK1 #HLK
-lapply (ldrop_fwd_length_lt2 … HLK) #HiL
-elim (ldrop_O1_lt (Ⓕ) L2 i) // -HiL -HL1 -HL12 #I2 #K2 #V2 #HLK2
-elim (IH2 … HLK1 HLK2 HLK) -IH2 -HLK * /2 width=1 by conj/
-#HnT #H1 #H2 elim (IH1 … HnT … HLK1 HLK2) -IH1 -HnT -HLK1 -HLK2 /2 width=1 by conj/
+lemma leq_frees_trans: ∀L2,U,d,i. L2 ⊢ i ϵ 𝐅*[d]⦃U⦄ →
+                       ∀L1. L1 ≃[d, ∞] L2 → L1 ⊢ i ϵ 𝐅*[d]⦃U⦄.
+#L2 #U #d #i #H elim H -L2 -U -d -i /3 width=2 by frees_eq/
+#I2 #L2 #K2 #U #W2 #d #i #j #Hdj #Hji #HnU #HLK2 #_ #IHW2 #L1 #HL12
+elim (leq_ldrop_trans_be … HL12 … HLK2) -L2 // >yminus_Y_inj #K1 #HK12 #HLK1
+lapply (leq_inv_O_Y … HK12) -HK12 #H destruct /3 width=9 by frees_be/
 qed-.
+
+lemma frees_leq_conf: ∀L1,U,d,i. L1 ⊢ i ϵ 𝐅*[d]⦃U⦄ →
+                      ∀L2. L1 ≃[d, ∞] L2 → L2 ⊢ i ϵ 𝐅*[d]⦃U⦄.
+/3 width=3 by leq_sym, leq_frees_trans/ qed-.

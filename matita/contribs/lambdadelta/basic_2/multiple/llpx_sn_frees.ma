@@ -12,23 +12,25 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/lpx_sn_alt.ma".
-include "basic_2/multiple/llor.ma".
-include "basic_2/multiple/lleq_alt.ma".
+include "basic_2/multiple/frees.ma".
+include "basic_2/multiple/llpx_sn_alt_rec.ma".
 
 (* LAZY SN POINTWISE EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS ****)
 
-(* Inversion lemmas on poinwise union for local environments ****************)
+(* Properties on context-sensitive free variables ***************************)
 
-lemma llpx_sn_llor_fwd_sn: ∀R. (∀L. reflexive … (R L)) →
-                           ∀L1,L2,T,d. llpx_sn R d T L1 L2 →
-                           ∀L. L1 ⩖[T, d] L2 ≡ L → lpx_sn R L1 L.
-#R #HR #L1 #L2 #T #d #H1 #L #H2
-elim (llpx_sn_llpx_sn_alt … H1) -H1 #HL12 #IH1
-elim H2 -H2 #_ #HL1 #IH2
-@lpx_sn_intro_alt // #I1 #I #K1 #K #V1 #V #i #HLK1 #HLK
-lapply (ldrop_fwd_length_lt2 … HLK) #HiL
-elim (ldrop_O1_lt (Ⓕ) L2 i) // -HiL -HL1 -HL12 #I2 #K2 #V2 #HLK2
-elim (IH2 … HLK1 HLK2 HLK) -IH2 -HLK * /2 width=1 by conj/
-#HnT #H1 #H2 elim (IH1 … HnT … HLK1 HLK2) -IH1 -HnT -HLK1 -HLK2 /2 width=1 by conj/
+fact llpx_sn_frees_trans_aux: ∀R. (s_r_confluent1 … R (llpx_sn R 0)) → (frees_trans R) →
+                              ∀L2,U,d,i. L2 ⊢ i ϵ 𝐅*[d]⦃U⦄ →
+                              ∀L1. llpx_sn R d U L1 L2 → L1 ⊢ i ϵ 𝐅*[d]⦃U⦄.
+#R #H1R #H2R #L2 #U #d #i #H elim H -L2 -U -d -i /3 width=2 by frees_eq/
+#I2 #L2 #K2 #U #W2 #d #i #j #Hdj #Hji #HnU #HLK2 #_ #IHW2 #L1 #HL12
+elim (llpx_sn_inv_alt_r … HL12) -HL12 #HL12 #IH
+lapply (ldrop_fwd_length_lt2 … HLK2) #Hj
+elim (ldrop_O1_lt (Ⓕ) L1 j) // -Hj -HL12 #I1 #K1 #W1 #HLK1
+elim (IH … HnU HLK1 HLK2) // -IH -HLK2 /5 width=11 by frees_be/
 qed-.
+
+lemma llpx_sn_frees_trans: ∀R. (s_r_confluent1 … R (llpx_sn R 0)) → (frees_trans R) →
+                           ∀L1,L2,U,d. llpx_sn R d U L1 L2 →
+                           ∀i. L2 ⊢ i ϵ 𝐅*[d]⦃U⦄ → L1 ⊢ i ϵ 𝐅*[d]⦃U⦄.
+/2 width=6 by llpx_sn_frees_trans_aux/ qed-.

@@ -12,27 +12,28 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/lazyor_4.ma".
+include "basic_2/notation/relations/lazyor_5.ma".
 include "basic_2/multiple/frees.ma".
 
 (* POINTWISE UNION FOR LOCAL ENVIRONMENTS ***********************************)
 
-definition llor: relation4 term lenv lenv lenv ≝ λT,L2,L1,L.
+definition llor: ynat → relation4 term lenv lenv lenv ≝ λd,T,L2,L1,L.
                  ∧∧ |L1| ≤ |L2| & |L1| = |L|
                   & (∀I1,I2,I,K1,K2,K,V1,V2,V,i.
-                       ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 → ⇩[i] L ≡ K.ⓑ{I}V →
-                       (∧∧ (L1 ⊢ i ϵ 𝐅*[yinj 0]⦃T⦄ → ⊥) & I1 = I & V1 = V) ∨
-                       (∧∧ L1 ⊢ i ϵ 𝐅*[yinj 0]⦃T⦄  & I1 = I & V2 = V)
+                       ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 → ⇩[i] L ≡ K.ⓑ{I}V → ∨∨
+                       (∧∧ yinj i < d & I1 = I & V1 = V) |
+                       (∧∧ (L1 ⊢ i ϵ 𝐅*[d]⦃T⦄ → ⊥) & I1 = I & V1 = V) |
+                       (∧∧ d ≤ yinj i & L1 ⊢ i ϵ 𝐅*[d]⦃T⦄  & I1 = I & V2 = V)
                     ).
 
 interpretation
    "lazy union (local environment)"
-   'LazyOr L1 T L2 L = (llor T L2 L1 L).
+   'LazyOr L1 T d L2 L = (llor d T L2 L1 L).
 
 (* Basic properties *********************************************************)
 
-lemma llor_atom: ∀T,L2. ⋆ ⩖[T] L2 ≡ ⋆.
-#T #L2 @and3_intro //
+lemma llor_atom: ∀L2,T,d. ⋆ ⩖[T, d] L2 ≡ ⋆.
+#L2 #T #d @and3_intro //
 #I1 #I2 #I #K1 #K2 #K #V1 #V2 #V #i #HLK1
 elim (ldrop_inv_atom1 … HLK1) -HLK1 #H destruct
 qed.

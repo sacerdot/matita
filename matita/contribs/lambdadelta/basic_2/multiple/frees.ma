@@ -29,6 +29,9 @@ interpretation
    "context-sensitive free variables (term)"
    'FreeStar L i d U = (frees d L U i).
 
+definition frees_trans: predicate (relation3 lenv term term) ≝
+                        λR. ∀L,U1,U2,i. R L U1 U2 → L ⊢ i ϵ 𝐅*[0]⦃U2⦄ → L ⊢ i ϵ 𝐅*[0]⦃U1⦄.
+
 (* Basic inversion lemmas ***************************************************)
 
 lemma frees_inv: ∀L,U,d,i. L ⊢ i ϵ 𝐅*[d]⦃U⦄ →
