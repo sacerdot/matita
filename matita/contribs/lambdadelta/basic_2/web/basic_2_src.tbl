@@ -21,7 +21,7 @@ table {
    class "magenta"
    [ { "higher order dynamic typing" * } {
         [ { "higher order native type assignment" * } {
-             [ "ntas ( ⦃?,?⦄ ⊢ ? :* ? )" "nta_lift" * ]basic_2/multiple/frees_leq.ma
+             [ "ntas ( ⦃?,?⦄ ⊢ ? :* ? )" "nta_lift" * ]
           }
         ]
      }
@@ -195,7 +195,7 @@ table {
         ]
         [ { "degree assignment" * } {
              [ "da ( ⦃?,?⦄ ⊢ ? ▪[?,?] ? )" "da_lift" + "da_da" * ]
-          }basic_2/multiple/frees_leq.ma
+          }
         ]
         [ { "parameters" * } {
              [ "sh" "sd" * ]
