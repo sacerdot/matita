@@ -274,7 +274,7 @@ table {
           }
         ]
         [ { "basic local env. slicing" * } {
-             [ "ldrop ( ⇩[?,?,?] ? ≡ ? )"  "ldrop_leq" + "ldrop_ldrop" * ]
+             [ "ldrop ( ⇩[?,?,?] ? ≡ ? )"  "ldrop_append" + "ldrop_leq" + "ldrop_ldrop" * ]
           }
         ]
         [ { "basic term relocation" * } {

@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/grammar/lenv_append.ma".
-include "basic_2/relocation/ldrop.ma".
+include "basic_2/substitution/ldrop.ma".
 
 (* DROPPING *****************************************************************)
 

@@ -13,6 +13,9 @@
 (**************************************************************************)
 
 include "ground_2/notation/functions/append_2.ma".
+include "basic_2/notation/functions/snbind2_3.ma".
+include "basic_2/notation/functions/snabbr_2.ma".
+include "basic_2/notation/functions/snabst_2.ma".
 include "basic_2/grammar/lenv_length.ma".
 
 (* LOCAL ENVIRONMENTS *******************************************************)
@@ -23,6 +26,15 @@ let rec append L K on K ≝ match K with
 ].
 
 interpretation "append (local environment)" 'Append L1 L2 = (append L1 L2).
+
+interpretation "local environment tail binding construction (binary)"
+   'SnBind2 I T L = (append (LPair LAtom I T) L).
+
+interpretation "tail abbreviation (local environment)"
+   'SnAbbr T L = (append (LPair LAtom Abbr T) L).
+
+interpretation "tail abstraction (local environment)"
+   'SnAbst L T = (append (LPair LAtom Abst T) L).
 
 definition l_appendable_sn: predicate (lenv→relation term) ≝ λR.
                             ∀K,T1,T2. R K T1 T2 → ∀L. R (L @@ K) T1 T2.
@@ -41,18 +53,30 @@ lemma append_length: ∀L1,L2. |L1 @@ L2| = |L1| + |L2|.
 #L1 #L2 elim L2 -L2 normalize //
 qed.
 
+lemma ltail_length: ∀I,L,V. |ⓑ{I}V.L| = |L| + 1.
+#I #L #V >append_length //
+qed.
+
+(* Basic_1: was just: chead_ctail *)
+lemma lpair_ltail: ∀L,I,V. ∃∃J,K,W. L.ⓑ{I}V = ⓑ{J}W.K & |L| = |K|.
+#L elim L -L /2 width=5 by ex2_3_intro/
+#L #Z #X #IHL #I #V elim (IHL Z X) -IHL
+#J #K #W #H #_ >H -H >ltail_length
+@(ex2_3_intro … J (K.ⓑ{I}V) W) //
+qed-.
+
 (* Basic inversion lemmas ***************************************************)
 
 lemma append_inj_sn: ∀K1,K2,L1,L2. L1 @@ K1 = L2 @@ K2 → |K1| = |K2| →
                      L1 = L2 ∧ K1 = K2.
 #K1 elim K1 -K1
-[ * normalize /2 width=1/
+[ * normalize /2 width=1 by conj/
   #K2 #I2 #V2 #L1 #L2 #_ <plus_n_Sm #H destruct
 | #K1 #I1 #V1 #IH * normalize
   [ #L1 #L2 #_ <plus_n_Sm #H destruct
   | #K2 #I2 #V2 #L1 #L2 #H1 #H2
     elim (destruct_lpair_lpair … H1) -H1 #H1 #H3 #H4 destruct (**) (* destruct lemma needed *)
-    elim (IH … H1) -IH -H1 // -H2 /2 width=1/
+    elim (IH … H1) -IH -H1 /2 width=1 by conj/
   ]
 ]
 qed-.
@@ -61,7 +85,7 @@ qed-.
 lemma append_inj_dx: ∀K1,K2,L1,L2. L1 @@ K1 = L2 @@ K2 → |L1| = |L2| →
                      L1 = L2 ∧ K1 = K2.
 #K1 elim K1 -K1
-[ * normalize /2 width=1/
+[ * normalize /2 width=1 by conj/
   #K2 #I2 #V2 #L1 #L2 #H1 #H2 destruct
   normalize in H2; >append_length in H2; #H
   elim (plus_xySz_x_false … H)
@@ -71,64 +95,25 @@ lemma append_inj_dx: ∀K1,K2,L1,L2. L1 @@ K1 = L2 @@ K2 → |L1| = |L2| →
     elim (plus_xySz_x_false … (sym_eq … H))
   | #K2 #I2 #V2 #L1 #L2 #H1 #H2
     elim (destruct_lpair_lpair … H1) -H1 #H1 #H3 #H4 destruct (**) (* destruct lemma needed *)
-    elim (IH … H1) -IH -H1 // -H2 /2 width=1/
+    elim (IH … H1) -IH -H1 /2 width=1 by conj/
   ]
 ]
 qed-.
 
 lemma append_inv_refl_dx: ∀L,K. L @@ K = L → K = ⋆.
-#L #K #H
-elim (append_inj_dx … (⋆) … H) //
+#L #K #H elim (append_inj_dx … (⋆) … H) //
 qed-.
 
 lemma append_inv_pair_dx: ∀I,L,K,V. L @@ K = L.ⓑ{I}V → K = ⋆.ⓑ{I}V.
-#I #L #K #V #H
-elim (append_inj_dx … (⋆.ⓑ{I}V) … H) //
-qed-.
-
-lemma length_inv_pos_dx_append: ∀d,L. |L| = d + 1 →
-                                ∃∃I,K,V. |K| = d & L = ⋆.ⓑ{I}V @@ K.
-#d @(nat_ind_plus … d) -d
-[ #L #H
-  elim (length_inv_pos_dx … H) -H #I #K #V #H
-  >(length_inv_zero_dx … H) -H #H destruct
-  @ex2_3_intro [4: /2 width=2/ |5: // |1,2,3: skip ] (**) (* /3/ does not work *)
-| #d #IHd #L #H
-  elim (length_inv_pos_dx … H) -H #I #K #V #H
-  elim (IHd … H) -IHd -H #I0 #K0 #V0 #H1 #H2 #H3 destruct
-  @(ex2_3_intro … (K0.ⓑ{I}V)) //
-]
+#I #L #K #V #H elim (append_inj_dx … (⋆.ⓑ{I}V) … H) //
 qed-.
 
 (* Basic_eliminators ********************************************************)
 
-fact lenv_ind_dx_aux: ∀R:predicate lenv. R (⋆) →
-                      (∀I,L,V. R L → R (⋆.ⓑ{I}V @@ L)) →
-                      ∀d,L. |L| = d → R L.
-#R #Hatom #Hpair #d @(nat_ind_plus … d) -d
-[ #L #H >(length_inv_zero_dx … H) -H //
-| #d #IH #L #H
-  elim (length_inv_pos_dx_append … H) -H #I #K #V #H1 #H2 destruct /3 width=1/
-]
-qed-.
-
-lemma lenv_ind_dx: ∀R:predicate lenv. R (⋆) →
-                   (∀I,L,V. R L → R (⋆.ⓑ{I}V @@ L)) →
-                   ∀L. R L.
-/3 width=2 by lenv_ind_dx_aux/ qed-.
-
-(* Advanced inversion lemmas ************************************************)
-
-lemma length_inv_pos_sn_append: ∀d,L. 1 + d = |L| →
-                                ∃∃I,K,V. d = |K| & L = ⋆. ⓑ{I}V @@ K.
-#d >commutative_plus @(nat_ind_plus … d) -d
-[ #L #H elim (length_inv_pos_sn … H) -H #I #K #V #H1 #H2 destruct
-  >(length_inv_zero_sn … H1) -K
-  @(ex2_3_intro … (⋆)) // (**) (* explicit constructor *)
-| #d #IHd #L #H elim (length_inv_pos_sn … H) -H #I #K #V #H1 #H2 destruct
-  >H1 in IHd; -H1 #IHd
-  elim (IHd K) -IHd // #J #L #W #H1 #H2 destruct
-  @(ex2_3_intro … (L.ⓑ{I}V)) // (**) (* explicit constructor *)
-  >append_length /2 width=1/
-]
+(* Basic_1: was: c_tail_ind *)
+lemma lenv_ind_alt: ∀R:predicate lenv.
+                    R (⋆) → (∀I,L,T. R L → R (ⓑ{I}T.L)) →
+                    ∀L. R L.
+#R #IH1 #IH2 #L @(f_ind … length … L) -L #n #IHn * // -IH1
+#L #I #V normalize #H destruct elim (lpair_ltail L I V) /3 width=1 by/
 qed-.

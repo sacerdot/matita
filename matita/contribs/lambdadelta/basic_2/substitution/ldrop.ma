@@ -233,6 +233,10 @@ lemma ldrop_O1_ge: ∀L,e. |L| ≤ e → ⇩[Ⓣ, 0, e] L ≡ ⋆.
 normalize /4 width=1 by ldrop_drop, monotonic_pred/
 qed.
 
+lemma ldrop_O1_eq: ∀L,s. ⇩[s, 0, |L|] L ≡ ⋆.
+#L elim L -L /2 width=1 by ldrop_drop, ldrop_atom/
+qed.
+
 lemma ldrop_split: ∀L1,L2,d,e2,s. ⇩[s, d, e2] L1 ≡ L2 → ∀e1. e1 ≤ e2 →
                    ∃∃L. ⇩[s, d, e2 - e1] L1 ≡ L & ⇩[s, d, e1] L ≡ L2.
 #L1 #L2 #d #e2 #s #H elim H -L1 -L2 -d -e2

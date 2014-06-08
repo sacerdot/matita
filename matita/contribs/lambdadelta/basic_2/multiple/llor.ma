@@ -23,7 +23,7 @@ definition llor: ynat → relation4 term lenv lenv lenv ≝ λd,T,L2,L1,L.
                        ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 → ⇩[i] L ≡ K.ⓑ{I}V → ∨∨
                        (∧∧ yinj i < d & I1 = I & V1 = V) |
                        (∧∧ (L1 ⊢ i ϵ 𝐅*[d]⦃T⦄ → ⊥) & I1 = I & V1 = V) |
-                       (∧∧ d ≤ yinj i & L1 ⊢ i ϵ 𝐅*[d]⦃T⦄  & I1 = I & V2 = V)
+                       (∧∧ d ≤ yinj i & L1 ⊢ i ϵ 𝐅*[d]⦃T⦄ & I1 = I & V2 = V)
                     ).
 
 interpretation

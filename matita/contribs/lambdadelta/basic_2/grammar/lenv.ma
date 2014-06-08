@@ -46,15 +46,13 @@ axiom eq_lenv_dec: ∀L1,L2:lenv. Decidable (L1 = L2).
 
 lemma destruct_lpair_lpair: ∀I1,I2,L1,L2,V1,V2. L1.ⓑ{I1}V1 = L2.ⓑ{I2}V2 →
                             ∧∧L1 = L2 & I1 = I2 & V1 = V2.
-#I1 #I2 #L1 #L2 #V1 #V2 #H destruct /2 width=1/
+#I1 #I2 #L1 #L2 #V1 #V2 #H destruct /2 width=1 by and3_intro/
 qed-.
 
 lemma discr_lpair_x_xy: ∀I,V,L. L = L.ⓑ{I}V → ⊥.
 #I #V #L elim L -L
 [ #H destruct
 | #L #J #W #IHL #H
-  elim (destruct_lpair_lpair … H) -H #H1 #H2 #H3 destruct /2 width=1/ (**) (* destruct lemma needed *)
+  elim (destruct_lpair_lpair … H) -H #H1 #H2 #H3 destruct /2 width=1 by/ (**) (* destruct lemma needed *)
 ]
 qed-.
-
-(* Basic_1: removed theorems 2: chead_ctail c_tail_ind *)
