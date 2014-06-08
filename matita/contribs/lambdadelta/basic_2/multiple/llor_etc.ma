@@ -20,10 +20,10 @@ include "basic_2/multiple/llor_ldrop.ma".
 lemma lt_plus_SO_to_le: ∀x,y. x < y + 1 → x ≤ y.
 /2 width=1 by monotonic_pred/ qed-.
 
-(*
+
 lemma llor_tail_frees: ∀L1,L2,L,U,d. L1 ⩖[U, d] L2 ≡ L → d < yinj (|L1|) →
                        ∀I1,W1. ⓑ{I1}W1.L1 ⊢ |L1| ϵ 𝐅*[d]⦃U⦄ →
-                       ∀I2,W2. ⓑ{I1}W1.L1 ⩖[U, d] ⓑ{I2}W2.L2 ≡ ⓑ{I1}W2.L.
+                       ∀I2,W2. ⓑ{I1}W1.L1 ⩖[U, d] ⓑ{I2}W2.L2 ≡ ⓑ{I2}W2.L.
 #L1 #L2 #L #U #d * #HL12 #HL1 #IH #Hd #I1 #W1 #HU #I2 #W2
 @and3_intro [1,2: >ltail_length /2 width=1 by le_S_S/ ]
 #J1 #J2 #J #K1 #K2 #K #V1 #V2 #V #i #HLK1 #HLK2 #HLK
@@ -41,10 +41,8 @@ elim (le_to_or_lt_eq … H) -H #H
   | #HnU #HZ #HX
   | #Hdi #H2U #HZ #HX
   ]
-| -IH destruct
-  lapply (ldrop_O1_inv_append1_le … HLK1 … (⋆) ?) // -HLK1 normalize #H destruct
-  lapply (ldrop_O1_inv_append1_le … HLK2 … HL12)
+| -IH -HLK1 destruct
+  lapply (ldrop_O1_inv_append1_le … HLK2 … (⋆) ?) // -HLK2 normalize #H destruct
   lapply (ldrop_O1_inv_append1_le … HLK … (⋆) ?) // -HLK normalize #H destruct
-  @or3_intro2 @and4_intro /2 width=1 by ylt_fwd_le/
+  /4 width=1 by ylt_fwd_le, or3_intro2, and4_intro/
 ]
-*)
