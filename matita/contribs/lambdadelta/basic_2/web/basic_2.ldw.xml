@@ -32,12 +32,16 @@
          for native type assignment.
    </news>
    <news date="In progress.">
-         Closure of native validity
-	 for context-sensitive extended computation.
+         Preservation of stratified native validity
+         for "big tree" computation on closures.
+   </news>
+   <news date="2014 June 9.">
+         "Big tree" strong normalization
+         for simply typed terms.
    </news>
    <news date="2014 April 16.">
          lazy equivalence on local environments
-	 serves as irrelevant step in "big tree" computation
+	 serves as irrelevant step in "big tree" computation on closures
          (anniversary milestone).
    </news>
    <news date="2014 January 20.">

@@ -91,8 +91,8 @@ table {
           }
         ]
         [ { "\"big tree\" parallel computation" * } {
-             [ "fpbg ( ⦃?,?,?⦄ >⋕[?,?] ⦃?,?,?⦄ )" "fpbg_lift" + "fpbg_fleq" + "fpbg_fpbg" * ]
-             [ "fpbc ( ⦃?,?,?⦄ ≻⋕[?,?] ⦃?,?,?⦄ )" "fpbc_fleq" + "fpbc_fpbs" * ]
+             [ "fpbg ( ⦃?,?,?⦄ >≡[?,?] ⦃?,?,?⦄ )" "fpbg_lift" + "fpbg_fleq" + "fpbg_fpbg" * ]
+             [ "fpbc ( ⦃?,?,?⦄ ≻≡[?,?] ⦃?,?,?⦄ )" "fpbc_fleq" + "fpbc_fpbs" * ]
              [ "fpbu ( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" "fpbu_lift" + "fpbu_lleq" "fpbu_fleq" * ]
              [ "fpbs ( ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "fpbs_alt ( ⦃?,?,?⦄ ≥≥[?,?] ⦃?,?,?⦄ )" "fpbs_lift" + "fpbs_fleq" + "fpbs_aaa" + "fpbs_fpbs" + "fpbs_ext" * ]
           }
@@ -210,8 +210,8 @@ table {
    class "yellow"
    [ { "multiple substitution" * } {
         [ { "lazy equivalence" * } {
-             [ "fleq ( ⦃?,?,?⦄ ⋕[?] ⦃?,?,?⦄ )" "fleq_fleq" * ]
-             [ "lleq ( ? ⋕[?,?] ? )" "lleq_alt" + "lleq_alt_rec" + "lleq_leq" + "lleq_ldrop" + "lleq_fqus" + "lleq_llor" + "lleq_lleq" * ]
+             [ "fleq ( ⦃?,?,?⦄ ≡[?] ⦃?,?,?⦄ )" "fleq_fleq" * ]
+             [ "lleq ( ? ≡[?,?] ? )" "lleq_alt" + "lleq_alt_rec" + "lleq_leq" + "lleq_ldrop" + "lleq_fqus" + "lleq_llor" + "lleq_lleq" * ]
           }
         ]
         [ { "lazy pointwise extension of a relation" * } {
@@ -219,11 +219,11 @@ table {
           }
         ]
         [ { "pointwise union for local environments" * } {
-             [ "llor ( ? ⩖[?,?] ? ≡ ? )" "llor_ldrop" * ]
+             [ "llor ( ? ⩖[?,?] ? ≡ ? )" "llor_alt" + "llor_ldrop" * ]
           }
         ]
         [ { "context-sensitive exclusion from free variables" * } {
-             [ "frees ( ? ⊢ ? ϵ 𝐅*[?]⦃?⦄ )" "frees_leq" + "frees_lift" * ]
+             [ "frees ( ? ⊢ ? ϵ 𝐅*[?]⦃?⦄ )" "frees_append" + "frees_leq" + "frees_lift" * ]
           }
         ]
         [ { "contxt-sensitive extended multiple substitution" * } {

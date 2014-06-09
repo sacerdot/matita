@@ -60,6 +60,16 @@ lemma arith_i: ∀x,y,z. y < x → x+z-y-1 = x-y-1+z.
 
 (* Properties ***************************************************************)
 
+axiom eq_nat_dec: ∀n1,n2:nat. Decidable (n1 = n2).
+
+axiom lt_dec: ∀n1,n2. Decidable (n1 < n2).
+
+lemma lt_or_eq_or_gt: ∀m,n. ∨∨ m < n | n = m | n < m.
+#m #n elim (lt_or_ge m n) /2 width=1 by or3_intro0/
+#H elim H -m /2 width=1 by or3_intro1/
+#m #Hm * /3 width=1 by not_le_to_lt, le_S_S, or3_intro2/
+qed-.
+
 fact le_repl_sn_conf_aux: ∀x,y,z:nat. x ≤ z → x = y → y ≤ z.
 // qed-.
 
@@ -94,15 +104,8 @@ qed.
 
 (* Inversion & forward lemmas ***********************************************)
 
-axiom eq_nat_dec: ∀n1,n2:nat. Decidable (n1 = n2).
-
-axiom lt_dec: ∀n1,n2. Decidable (n1 < n2).
-
-lemma lt_or_eq_or_gt: ∀m,n. ∨∨ m < n | n = m | n < m.
-#m #n elim (lt_or_ge m n) /2 width=1 by or3_intro0/
-#H elim H -m /2 width=1 by or3_intro1/
-#m #Hm * /3 width=1 by not_le_to_lt, le_S_S, or3_intro2/
-qed-.
+lemma lt_plus_SO_to_le: ∀x,y. x < y + 1 → x ≤ y.
+/2 width=1 by monotonic_pred/ qed-.
 
 lemma lt_refl_false: ∀n. n < n → ⊥.
 #n #H elim (lt_to_not_eq … H) -H /2 width=1 by/

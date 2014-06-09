@@ -108,6 +108,18 @@ lemma append_inv_pair_dx: ∀I,L,K,V. L @@ K = L.ⓑ{I}V → K = ⋆.ⓑ{I}V.
 #I #L #K #V #H elim (append_inj_dx … (⋆.ⓑ{I}V) … H) //
 qed-.
 
+lemma length_inv_pos_dx_ltail: ∀L,d. |L| = d + 1 →
+                               ∃∃I,K,V. |K| = d & L = ⓑ{I}V.K.
+#Y #d #H elim (length_inv_pos_dx … H) -H #I #L #V #Hd #HLK destruct
+elim (lpair_ltail L I V) /2 width=5 by ex2_3_intro/
+qed-.
+
+lemma length_inv_pos_sn_ltail: ∀L,d. d + 1 = |L| →
+                               ∃∃I,K,V. d = |K| & L = ⓑ{I}V.K.
+#Y #d #H elim (length_inv_pos_sn … H) -H #I #L #V #Hd #HLK destruct
+elim (lpair_ltail L I V) /2 width=5 by ex2_3_intro/
+qed-.
+
 (* Basic_eliminators ********************************************************)
 
 (* Basic_1: was: c_tail_ind *)
