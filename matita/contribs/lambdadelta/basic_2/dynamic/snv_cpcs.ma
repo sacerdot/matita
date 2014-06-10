@@ -83,7 +83,7 @@ fact ssta_cpr_lpr_aux: ∀h,g,G0,L0,T0.
                        ∀T2. ⦃G, L1⦄ ⊢ T1 ➡ T2 → ∀L2. ⦃G, L1⦄ ⊢ ➡ L2 →
                        ∃∃U2. ⦃G, L2⦄ ⊢ T2 •[h, g] U2 & ⦃G, L2⦄ ⊢ U1 ⬌* U2.
 #h #g #G0 #L0 #T0 #IH #G #L1 #T1 #H01 #HT1 #l #Hl #U1 #HTU1 #T2 #HT12 #L2 #HL12
-elim (IH … H01 … 1 … Hl U1 … HT12 … HL12)
+elim (IH … H01 … 1 … Hl U1 … HT12 … HL12) -H01 -Hl -HT12 -HL12
 /3 width=3 by lsstas_inv_SO, ssta_lsstas, ex2_intro/
 qed-.
 
@@ -104,7 +104,7 @@ elim (IH1 … Hl21 … HTU … HTT2 … HL12) -IH1 -HTU -HTT2
 [2: /3 width=12 by da_cprs_lpr_aux/
 |3: /3 width=10 by snv_cprs_lpr_aux/
 |4: /3 width=5 by fpbg_fpbs_trans, cprs_fpbs/
-] -G0 -L0 -T0 -T1 -T -l1 #U2 #HTU2 #HU2
+] -G0 -L0 -T0 -T1 -T -l1
 /4 width=5 by lpr_cpcs_conf, cpcs_trans, ex2_intro/
 qed-.
 
@@ -144,13 +144,12 @@ fact lsstas_cpds_aux: ∀h,g,G0,L0,T0.
 lapply (da_mono … H … Hl1) -H #H destruct
 lapply (lsstas_da_conf … HTU1 … Hl1) #Hl12
 elim (le_or_ge l2 l) #Hl2
-[ lapply (lsstas_conf_le … HTU1 … HT1T) -HT1T // #HU1T
+[ lapply (lsstas_conf_le … HTU1 … HT1T) -HT1T
   /5 width=11 by cpds_cpes_dx, monotonic_le_minus_l, ex3_2_intro, ex4_3_intro/
 | lapply (lsstas_da_conf … HT1T … Hl1) #Hl1l
   lapply (lsstas_conf_le … HT1T … HTU1) -HTU1 // #HTU1
-  elim (lsstas_cprs_lpr_aux … IH3 IH2 IH1 … Hl1l … HTU1 … HTT2 L)
-  /3 width=8 by fpbg_fpbs_trans, lsstas_fpbs, monotonic_le_minus_l/ -T #U2 #HTU2 #HU12
-  /3 width=5 by cpcs_cpes, ex3_2_intro/
+  elim (lsstas_cprs_lpr_aux … IH3 IH2 IH1 … Hl1l … HTU1 … HTT2 L) -IH3 -IH2 -IH1 -Hl1l -HTU1 -HTT2
+  /3 width=8 by cpcs_cpes, fpbg_fpbs_trans, lsstas_fpbs, monotonic_le_minus_l, ex3_2_intro/
 ]
 qed-.
 
@@ -163,7 +162,7 @@ fact cpds_cpr_lpr_aux: ∀h,g,G0,L0,T0.
                        ∃∃U2. ⦃G, L2⦄ ⊢ T2 •*➡*[h, g] U2 & ⦃G, L2⦄ ⊢ U1 ➡* U2.
 #h #g #G0 #L0 #T0 #IH2 #IH1 #G #L1 #T1 #H01 #HT1 #U1 * #W1 #l1 #l2 #Hl21 #Hl1 #HTW1 #HWU1 #T2 #HT12 #L2 #HL12
 elim (IH1 … H01 … HTW1 … HT12 … HL12) -IH1 // #W2 #HTW2 #HW12
-lapply (IH2 … H01 … Hl1 … HT12 … HL12) -L0 -T0 // -T1 #Hl1
+lapply (IH2 … H01 … Hl1 … HT12 … HL12) -L0 -T0 // -T1
 lapply (lpr_cprs_conf … HL12 … HWU1) -L1 #HWU1
 lapply (cpcs_canc_sn … HW12 HWU1) -W1 #H
 elim (cpcs_inv_cprs … H) -H /3 width=7 by ex4_3_intro, ex2_intro/

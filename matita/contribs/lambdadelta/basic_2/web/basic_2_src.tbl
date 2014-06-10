@@ -44,7 +44,7 @@ table {
           }
         ]
         [ { "stratified native validity" * } {
-             [ "snv ( ⦃?,?⦄ ⊢ ? ¡[?,?] )" "snv_lift" + "snv_da_lpr" + "snv_aaa" + "snv_lsstas" + "snv_lsstas_lpr" + "snv_lpr" + "snv_cpcs" * ]
+             [ "snv ( ⦃?,?⦄ ⊢ ? ¡[?,?] )" "snv_lift" + "snv_da_lpr" + "snv_aaa" + "snv_lsstas" + "snv_lsstas_lpr" + "snv_lpr" + "snv_cpcs" + "snv_preserve" * ]
           }
         ]
      }

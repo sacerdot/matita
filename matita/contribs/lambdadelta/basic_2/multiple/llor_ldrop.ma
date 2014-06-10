@@ -27,6 +27,7 @@ lapply (ldrop_fwd_length_lt2 … HLK1) -K1
 /5 width=3 by ylt_yle_trans, ylt_inj, or3_intro0, and3_intro/
 qed.
 
+(* Note: lemma 1400 concludes the "big tree" theorem *)
 lemma llor_total: ∀L1,L2,T,d. |L1| = |L2| → ∃L. L1 ⩖[T, d] L2 ≡ L.
 #L1 @(lenv_ind_alt … L1) -L1
 [ #L2 #T #d #H >(length_inv_zero_sn … H) -L2 /2 width=2 by ex_intro/
