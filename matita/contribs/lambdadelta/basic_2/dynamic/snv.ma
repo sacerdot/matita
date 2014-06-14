@@ -20,7 +20,7 @@ include "basic_2/equivalence/cpcs.ma".
 
 definition scast: ∀h. sd h → nat → relation4 genv lenv term term ≝
                   λh,g,l,G,L,V,W. ∀V0,W0,l0.
-                  l0 ≤ l → ⦃G, L⦄ ⊢ V •*[h, g, l0+1] V0 → ⦃G, L⦄ ⊢ W •*[h, g, l0] W0 → ⦃G, L⦄ ⊢ V0 ⬌* W0.
+                  l0 ≤ l → ⦃G, L⦄ ⊢ V •*[h, l0+1] V0 → ⦃G, L⦄ ⊢ W •*[h, l0] W0 → ⦃G, L⦄ ⊢ V0 ⬌* W0.
 
 (* activate genv *)
 inductive snv (h:sh) (g:sd h): relation3 genv lenv term ≝
@@ -28,10 +28,10 @@ inductive snv (h:sh) (g:sd h): relation3 genv lenv term ≝
 | snv_lref: ∀I,G,L,K,V,i. ⇩[i] L ≡ K.ⓑ{I}V → snv h g G K V → snv h g G L (#i)
 | snv_bind: ∀a,I,G,L,V,T. snv h g G L V → snv h g G (L.ⓑ{I}V) T → snv h g G L (ⓑ{a,I}V.T)
 | snv_appl: ∀a,G,L,V,W,W0,T,U,l. snv h g G L V → snv h g G L T →
-            ⦃G, L⦄ ⊢ V ▪[h, g] l+1 → ⦃G, L⦄ ⊢ V •[h, g] W → ⦃G, L⦄ ⊢ W ➡* W0 →
+            ⦃G, L⦄ ⊢ V ▪[h, g] l+1 → ⦃G, L⦄ ⊢ V •[h] W → ⦃G, L⦄ ⊢ W ➡* W0 →
             ⦃G, L⦄ ⊢ T •*➡*[h, g] ⓛ{a}W0.U → snv h g G L (ⓐV.T)
 | snv_cast: ∀G,L,W,T,U,l. snv h g G L W → snv h g G L T →
-            ⦃G, L⦄ ⊢ T ▪[h, g] l+1 → ⦃G, L⦄ ⊢ T •[h, g] U → ⦃G, L⦄ ⊢ U ⬌* W → snv h g G L (ⓝW.T)
+            ⦃G, L⦄ ⊢ T ▪[h, g] l+1 → ⦃G, L⦄ ⊢ T •[h] U → ⦃G, L⦄ ⊢ U ⬌* W → snv h g G L (ⓝW.T)
 .
 
 interpretation "stratified native validity (term)"
@@ -84,7 +84,7 @@ lemma snv_inv_bind: ∀h,g,a,I,G,L,V,T. ⦃G, L⦄ ⊢ ⓑ{a,I}V.T ¡[h, g] →
 
 fact snv_inv_appl_aux: ∀h,g,G,L,X. ⦃G, L⦄ ⊢ X ¡[h, g] → ∀V,T. X = ⓐV.T →
                        ∃∃a,W,W0,U,l. ⦃G, L⦄ ⊢ V ¡[h, g] & ⦃G, L⦄ ⊢ T ¡[h, g] &
-                                     ⦃G, L⦄ ⊢ V ▪[h, g] l+1 & ⦃G, L⦄ ⊢ V •[h, g] W & ⦃G, L⦄ ⊢ W ➡* W0 &
+                                     ⦃G, L⦄ ⊢ V ▪[h, g] l+1 & ⦃G, L⦄ ⊢ V •[h] W & ⦃G, L⦄ ⊢ W ➡* W0 &
                                      ⦃G, L⦄ ⊢ T •*➡*[h, g] ⓛ{a}W0.U.
 #h #g #G #L #X * -L -X
 [ #G #L #k #V #T #H destruct
@@ -97,13 +97,13 @@ qed-.
 
 lemma snv_inv_appl: ∀h,g,G,L,V,T. ⦃G, L⦄ ⊢ ⓐV.T ¡[h, g] →
                     ∃∃a,W,W0,U,l. ⦃G, L⦄ ⊢ V ¡[h, g] & ⦃G, L⦄ ⊢ T ¡[h, g] &
-                                  ⦃G, L⦄ ⊢ V ▪[h, g] l+1 & ⦃G, L⦄ ⊢ V •[h, g] W & ⦃G, L⦄ ⊢ W ➡* W0 &
+                                  ⦃G, L⦄ ⊢ V ▪[h, g] l+1 & ⦃G, L⦄ ⊢ V •[h] W & ⦃G, L⦄ ⊢ W ➡* W0 &
                                   ⦃G, L⦄ ⊢ T •*➡*[h, g] ⓛ{a}W0.U.
 /2 width=3 by snv_inv_appl_aux/ qed-.
 
 fact snv_inv_cast_aux: ∀h,g,G,L,X. ⦃G, L⦄ ⊢ X ¡[h, g] → ∀W,T. X = ⓝW.T →
                        ∃∃U,l. ⦃G, L⦄ ⊢ W ¡[h, g] & ⦃G, L⦄ ⊢ T ¡[h, g] &
-                              ⦃G, L⦄ ⊢ T ▪[h, g] l+1 & ⦃G, L⦄ ⊢ T •[h, g] U & ⦃G, L⦄ ⊢ U ⬌* W.
+                              ⦃G, L⦄ ⊢ T ▪[h, g] l+1 & ⦃G, L⦄ ⊢ T •[h] U & ⦃G, L⦄ ⊢ U ⬌* W.
 #h #g #G #L #X * -G -L -X
 [ #G #L #k #W #T #H destruct
 | #I #G #L #K #V #i #_ #_ #W #T #H destruct
@@ -115,5 +115,5 @@ qed-.
 
 lemma snv_inv_cast: ∀h,g,G,L,W,T. ⦃G, L⦄ ⊢ ⓝW.T ¡[h, g] →
                     ∃∃U,l. ⦃G, L⦄ ⊢ W ¡[h, g] & ⦃G, L⦄ ⊢ T ¡[h, g] &
-                           ⦃G, L⦄ ⊢ T ▪[h, g] l+1 & ⦃G, L⦄ ⊢ T •[h, g] U & ⦃G, L⦄ ⊢ U ⬌* W.
+                           ⦃G, L⦄ ⊢ T ▪[h, g] l+1 & ⦃G, L⦄ ⊢ T •[h] U & ⦃G, L⦄ ⊢ U ⬌* W.
 /2 width=3 by snv_inv_cast_aux/ qed-.

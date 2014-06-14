@@ -38,7 +38,7 @@ fact aaa_ind_fpbu_aux: ∀h,g. ∀R:relation3 genv lenv term.
                        ∀G,L,T. ⦃G, L⦄ ⊢ ⬊*[h, g] T → ∀A. ⦃G, L⦄ ⊢ T ⁝ A → R G L T.
 #h #g #R #IH #G #L #T #H @(csx_ind_fpbu … H) -G -L -T
 #G1 #L1 #T1 #H1 #IH1 #A1 #HTA1 @IH -IH //
-#G2 #L2 #T2 #H12 elim (aaa_fpbs_conf h g … G2 … L2 … T2 … HTA1) -A1
+#G2 #L2 #T2 #H12 elim (fpbs_aaa_conf h g … G2 … L2 … T2 … HTA1) -A1
 /2 width=2 by fpbu_fwd_fpbs/
 qed-.
 
@@ -58,7 +58,7 @@ fact aaa_ind_fpbg_aux: ∀h,g. ∀R:relation3 genv lenv term.
                        ∀G,L,T. ⦃G, L⦄ ⊢ ⬊*[h, g] T → ∀A. ⦃G, L⦄ ⊢ T ⁝ A → R G L T.
 #h #g #R #IH #G #L #T #H @(csx_ind_fpbg … H) -G -L -T
 #G1 #L1 #T1 #H1 #IH1 #A1 #HTA1 @IH -IH //
-#G2 #L2 #T2 #H12 elim (aaa_fpbs_conf h g … G2 … L2 … T2 … HTA1) -A1
+#G2 #L2 #T2 #H12 elim (fpbs_aaa_conf h g … G2 … L2 … T2 … HTA1) -A1
 /2 width=2 by fpbg_fwd_fpbs/
 qed-.
 

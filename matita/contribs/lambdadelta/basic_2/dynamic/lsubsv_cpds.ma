@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/dynamic/lsubsv_lsstas.ma".
+include "basic_2/dynamic/lsubsv_lstas.ma".
 
 (* LOCAL ENVIRONMENT REFINEMENT FOR STRATIFIED NATIVE VALIDITY **************)
 
@@ -23,9 +23,9 @@ lemma lsubsv_cpds_trans: ∀h,g,G,L2,T1,T2. ⦃G, L2⦄ ⊢ T1 •*➡*[h, g] T2
                          ∃∃T. ⦃G, L1⦄ ⊢ T1 •*➡*[h, g] T & ⦃G, L1⦄ ⊢ T2 ➡* T.
 #h #g #G #L2 #T1 #T2 * #T #l1 #l2 #Hl21 #Hl1 #HT1 #HT2 #L1 #HL12
 lapply (lsubsv_cprs_trans … HL12 … HT2) -HT2 #HT2
-elim (lsubsv_lsstas_trans … HT1 … Hl1 … HL12) // #T0 #HT10 #HT0
+elim (lsubsv_lstas_trans … HT1 … Hl1 … HL12) // #T0 #HT10 #HT0
 lapply (lsubsv_fwd_lsubd … HL12) -HL12 #HL12
 lapply (lsubd_da_trans … Hl1 … HL12) -L2 #Hl1
 lapply (cpcs_cprs_strap1 … HT0 … HT2) -T #HT02
-elim (cpcs_inv_cprs … HT02) -HT02 /3 width=7/
+elim (cpcs_inv_cprs … HT02) -HT02 /3 width=7 by ex2_intro, ex4_3_intro/
 qed-.

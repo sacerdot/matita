@@ -12,20 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/da.ma".
-include "basic_2/static/aaa.ma".
+include "basic_2/unfold/lsstas_aaa.ma".
+include "basic_2/computation/cpxs_aaa.ma".
+include "basic_2/computation/cpds.ma".
 
-(* ATONIC ARITY ASSIGNMENT FOR TERMS ****************************************)
+(* DECOMPOSED EXTENDED PARALLEL COMPUTATION ON TERMS ************************)
 
-(* Forward lemmas on degree assignment for terms ****************************)
+(* Properties on atomic arity assignment for terms **************************)
 
-lemma aaa_fwd_da: ∀h,g,G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ∃l. ⦃G, L⦄ ⊢ T ▪[h, g] l.
-#h #g #G #L #T #A #H elim H -G -L -T -A
-[ #G #L #k elim (deg_total … g k) /3 width=2/
-| * #G #L #K [ #V | #W ] #B #i #HLK #_ * /3 width=5/
-| #a #G #L #V #T #B #A #_ #_ #_ * /3 width=2/
-| #a #G #L #V #T #B #A #_ #_ #_ * /3 width=2/
-| #G #L #V #T #B #A #_ #_ #_ * /3 width=2/
-| #G #L #W #T #A #_ #_ #_ * /3 width=2/
-]
-qed-.
+lemma cpds_aaa_conf: ∀h,g,G,L. Conf3 … (aaa G L) (cpds h g G L).
+#h #g #G #L #A #T #HT #U * /3 width=6 by lsstas_aaa_conf, cprs_aaa_conf/
+qed.

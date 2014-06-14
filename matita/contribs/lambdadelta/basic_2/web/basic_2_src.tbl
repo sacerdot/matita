@@ -40,11 +40,11 @@ table {
         ]
 *)
         [ { "local env. ref. for stratified native validity" * } {
-             [ "lsubsv ( ? ⊢ ? ¡⫃[?,?] ? )" "lsubsv_ldrop" + "lsubsv_lsubd" + "lsubsv_lsuba" + "lsubsv_lsstas" + "lsubsv_cpds" + "lsubsv_cpcs" + "lsubsv_snv" * ]
+             [ "lsubsv ( ? ⊢ ? ¡⫃[?,?] ? )" "lsubsv_lsubd" + "lsubsv_lsuba" + "lsubsv_lstas" + "lsubsv_cpds" + "lsubsv_cpcs" + "lsubsv_snv" * ]
           }
         ]
         [ { "stratified native validity" * } {
-             [ "snv ( ⦃?,?⦄ ⊢ ? ¡[?,?] )" "snv_lift" + "snv_da_lpr" + "snv_aaa" + "snv_lsstas" + "snv_lsstas_lpr" + "snv_lpr" + "snv_cpcs" + "snv_preserve" * ]
+             [ "snv ( ⦃?,?⦄ ⊢ ? ¡[?,?] )" "snv_lift" + "snv_aaa" + "snv_da_lpr" + "snv_lstas" + "snv_lstas_lpr" + "snv_lpr" + "snv_cpcs" + "snv_preserve" * ]
           }
         ]
      }
@@ -170,35 +170,35 @@ table {
           }
         ]
         [ { "iterated static type assignment" * } {
-             [ "lsstas ( ⦃?,?⦄ ⊢ ? •*[?,?,?] ? )" "lsstas_alt ( ⦃?,?⦄ ⊢ ? ••*[?,?,?] ? )" "lsstas_lift" + "lsstas_aaa" + "lsstas_lsstas" * ]
+             [ "lstas ( ⦃?,?⦄ ⊢ ? •*[?,?,?] ? )" "lstas_alt ( ⦃?,?⦄ ⊢ ? ••*[?,?,?] ? )" "lstas_lift" + "lstas_aaa" + "lstas_da" + "lstas_lstas" * ]
           }
         ]
      }
    ]
    class "grass"
    [ { "static typing" * } {
-        [ { "local env. ref. for atomic arity assignment" * } {
-             [ "lsuba ( ? ⊢ ? ⁝⫃ ? )" "lsuba_ldrop" + "lsuba_aaa" + "lsuba_lsuba" * ]
-          }
-        ]
-        [ { "atomic arity assignment" * } {
-             [ "aaa ( ⦃?,?⦄ ⊢ ? ⁝ ? )" "aaa_lift" + "aaa_lifts" + "aaa_fqus" + "aaa_lleq" + "aaa_da" + "aaa_ssta" + "aaa_aaa" * ]
-          }
-        ]
-        [ { "stratified static type assignment" * } {
-             [ "ssta ( ⦃?,?⦄ ⊢ ? •[?,?] ? )" "ssta_lift" + "ssta_lpx_sn" + "ssta_ssta" * ]
-          }
-        ]
         [ { "local env. ref. for degree assignment" * } {
              [ "lsubd ( ? ⊢ ? ▪⫃ ? )" "lsubd_da" + "lsubd_lsubd" * ]
           }
         ]
         [ { "degree assignment" * } {
-             [ "da ( ⦃?,?⦄ ⊢ ? ▪[?,?] ? )" "da_lift" + "da_da" * ]
+             [ "da ( ⦃?,?⦄ ⊢ ? ▪[?,?] ? )" "da_lift" + "da_aaa" + "da_sta" + "da_da" * ]
+          }
+        ]
+        [ { "stratified static type assignment" * } {
+             [ "sta ( ⦃?,?⦄ ⊢ ? •[?,?] ? )" "sta_lift" + "sta_lpx_sn" + "sta_aaa" + "sta_sta" * ]
           }
         ]
         [ { "parameters" * } {
              [ "sh" "sd" * ]
+          }
+        ]
+        [ { "local env. ref. for atomic arity assignment" * } {
+             [ "lsuba ( ? ⊢ ? ⁝⫃ ? )" "lsuba_aaa" + "lsuba_lsuba" * ]
+          }
+        ]
+        [ { "atomic arity assignment" * } {
+             [ "aaa ( ⦃?,?⦄ ⊢ ? ⁝ ? )" "aaa_lift" + "aaa_lifts" + "aaa_fqus" + "aaa_lleq" + "aaa_aaa" * ]
           }
         ]
         [ { "restricted local env. ref." * } {

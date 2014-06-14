@@ -22,7 +22,7 @@ include "basic_2/dynamic/snv_cpcs.ma".
 (* Properties on degree assignment for terms ********************************)
 
 fact da_cpr_lpr_aux: ∀h,g,G0,L0,T0.
-                     (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, g] ⦃G1, L1, T1⦄ → IH_snv_lsstas h g G1 L1 T1) →
+                     (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, g] ⦃G1, L1, T1⦄ → IH_snv_lstas h g G1 L1 T1) →
                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, g] ⦃G1, L1, T1⦄ → IH_snv_cpr_lpr h g G1 L1 T1) →
                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, g] ⦃G1, L1, T1⦄ → IH_da_cpr_lpr h g G1 L1 T1) →
                      ∀G1,L1,T1. G0 = G1 → L0 = L1 → T0 = T1 → IH_da_cpr_lpr h g G1 L1 T1.
@@ -69,11 +69,11 @@ fact da_cpr_lpr_aux: ∀h,g,G0,L0,T0.
     lapply (da_inv_bind … Hl) -Hl #Hl
     elim (cpds_inv_abst1 … HT10) -HT10 #W3 #U3 #HW3 #_ #H destruct -U3
     lapply (cprs_div … HW3 … HW10) -W3 #HWW1
-    lapply (ssta_da_conf … HVW1 … Hl0) <minus_plus_m_m #H
+    lapply (da_sta_conf … HVW1 … Hl0) <minus_plus_m_m #H
     elim (snv_fwd_da … HW) #l1 #Hl1
-    lapply (IH3 … HV1 … 1 … Hl0 W1 ?) /2 width=2 by fqup_fpbg, ssta_lsstas/ #HW1
+    lapply (IH3 … HV1 … 1 … Hl0 W1 ?) /2 width=2 by fqup_fpbg, sta_lstas/ #HW1
     lapply (da_cpcs_aux … IH2 IH1 … Hl1 … H … HWW1) -H
-    /3 width=5 by fpbg_fpbs_trans, fqup_fpbg, ssta_fpbs/ #H destruct
+    /3 width=5 by fpbg_fpbs_trans, fqup_fpbg, sta_fpbs/ #H destruct
     lapply (IH1 … HV1 … Hl0 … HV12 … HL12) -HV1 -Hl0 -HV12 [ /2 by fqup_fpbg/ ] #Hl0
     lapply (IH1 … Hl1 … HW2 … HL12) -Hl1 // /2 width=1 by fqup_fpbg/ -HW
     lapply (IH1 … HU1 … Hl … HU12 (L2.ⓛW2) ?) -IH1 -HU1 -Hl -HU12 [1,2: /2 by fqup_fpbg, lpr_pair/ ] -HL12 -HW2

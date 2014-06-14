@@ -35,7 +35,7 @@ lemma lsubsv_snv_trans: ∀h,g,G,L2,T. ⦃G, L2⦄ ⊢ T ¡[h, g] →
   /4 width=1 by snv_bind, lsubsv_pair/
 | #a #G #L2 #V #W #W0 #T #U #l #_ #_ #HVl #HVW #HW0 #HTU #IHV #IHT #L1 #HL12
   lapply (lsubsv_cprs_trans … HL12 … HW0) -HW0 #HW0
-  elim (lsubsv_ssta_trans … HVW … HVl … HL12) -HVW #W1 #HVW1 #HW1
+  elim (lsubsv_sta_trans … HVW … HVl … HL12) -HVW #W1 #HVW1 #HW1
   lapply (cpcs_cprs_strap1 … HW1 … HW0) -W #HW10
   lapply (lsubd_da_trans … HVl L1 ?) -HVl /2 width=1 by lsubsv_fwd_lsubd/ #HVl
   elim (lsubsv_cpds_trans … HTU … HL12) -HTU #X #HTU #H
@@ -45,7 +45,7 @@ lemma lsubsv_snv_trans: ∀h,g,G,L2,T. ⦃G, L2⦄ ⊢ T ¡[h, g] →
   /4 width=11 by snv_appl, cpds_cprs_trans, cprs_bind/
 | #G #L2 #W #T #U #l #_ #_ #HTl #HTU #HUW #IHW #IHT #L1 #HL12
   lapply (lsubsv_cpcs_trans … HL12 … HUW) -HUW #HUW
-  elim (lsubsv_ssta_trans … HTU … HTl … HL12) -HTU #U0 #HTU0 #HU0
+  elim (lsubsv_sta_trans … HTU … HTl … HL12) -HTU #U0 #HTU0 #HU0
   lapply (lsubd_da_trans … HTl L1 ?) -HTl
   /4 width=5 by lsubsv_fwd_lsubd, snv_cast, cpcs_trans/
 ]

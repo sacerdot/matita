@@ -14,23 +14,24 @@
 
 include "basic_2/substitution/ldrop_ldrop.ma".
 include "basic_2/multiple/fqus_alt.ma".
-include "basic_2/static/ssta.ma".
+include "basic_2/static/sta.ma".
+include "basic_2/static/da.ma".
 include "basic_2/reduction/cpx.ma".
 
 (* CONTEXT-SENSITIVE EXTENDED PARALLEL REDUCTION FOR TERMS ******************)
 
 (* Advanced properties ******************************************************)
 
-lemma ssta_cpx: ∀h,g,G,L,T1,T2,l. ⦃G, L⦄ ⊢ T1 •[h, g] T2 →
-                ⦃G, L⦄ ⊢ T1 ▪[h, g] l+1 → ⦃G, L⦄ ⊢ T1 ➡[h, g] T2.
+lemma sta_cpx: ∀h,g,G,L,T1,T2,l. ⦃G, L⦄ ⊢ T1 •[h] T2 →
+               ⦃G, L⦄ ⊢ T1 ▪[h, g] l+1 → ⦃G, L⦄ ⊢ T1 ➡[h, g] T2.
 #h #g #G #L #T1 #T2 #l #H elim H -G -L -T1 -T2
 [ /3 width=4 by cpx_st, da_inv_sort/
-| #G #L #K #V #U #W #i #HLK #_ #HWU #IHVW #H
+| #G #L #K #V1 #V2 #W2 #i #HLK #_ #HVW2 #IHV12 #H
   elim (da_inv_lref … H) -H * #K0 #V0 [| #l0 ] #HLK0
   lapply (ldrop_mono … HLK0 … HLK) -HLK0 #H destruct /3 width=7 by cpx_delta/
-| #G #L #K #W #U #l0 #i #HLK #_ #HWU #H
+| #G #L #K #W1 #W2 #V1 #i #HLK #_ #HWV1 #IHW12 #H
   elim (da_inv_lref … H) -H * #K0 #W0 [| #l1 ] #HLK0
-  lapply (ldrop_mono … HLK0 … HLK) -HLK0 #H destruct /2 width=7 by cpx_delta/
+  lapply (ldrop_mono … HLK0 … HLK) -HLK0 #H destruct /3 width=7 by cpx_delta/
 | /4 width=2 by cpx_bind, da_inv_bind/
 | /4 width=3 by cpx_flat, da_inv_flat/
 | /4 width=3 by cpx_eps, da_inv_flat/
@@ -153,11 +154,11 @@ lemma fqu_cpx_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T
 ]
 qed-.
 
-lemma fqu_ssta_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T2⦄ →
-                      ∀U2. ⦃G2, L2⦄ ⊢ T2 •[h, g] U2 →
-                      ∀l. ⦃G2, L2⦄ ⊢ T2 ▪[h, g] l+1 →
-                      ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡[h, g] U1 & ⦃G1, L1, U1⦄ ⊐ ⦃G2, L2, U2⦄.
-/3 width=5 by fqu_cpx_trans, ssta_cpx/ qed-.
+lemma fqu_sta_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T2⦄ →
+                     ∀U2. ⦃G2, L2⦄ ⊢ T2 •[h] U2 →
+                     ∀l. ⦃G2, L2⦄ ⊢ T2 ▪[h, g] l+1 →
+                     ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡[h, g] U1 & ⦃G1, L1, U1⦄ ⊐ ⦃G2, L2, U2⦄.
+/3 width=5 by fqu_cpx_trans, sta_cpx/ qed-.
 
 lemma fquq_cpx_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐⸮ ⦃G2, L2, T2⦄ →
                       ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡[h, g] U2 →
@@ -168,11 +169,11 @@ lemma fquq_cpx_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐⸮ ⦃G2, L
 ]
 qed-.
 
-lemma fquq_ssta_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐⸮ ⦃G2, L2, T2⦄ →
-                       ∀U2. ⦃G2, L2⦄ ⊢ T2 •[h, g] U2 →
-                       ∀l. ⦃G2, L2⦄ ⊢ T2 ▪[h, g] l+1 →
-                       ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡[h, g] U1 & ⦃G1, L1, U1⦄ ⊐⸮ ⦃G2, L2, U2⦄.
-/3 width=5 by fquq_cpx_trans, ssta_cpx/ qed-.
+lemma fquq_sta_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐⸮ ⦃G2, L2, T2⦄ →
+                      ∀U2. ⦃G2, L2⦄ ⊢ T2 •[h] U2 →
+                      ∀l. ⦃G2, L2⦄ ⊢ T2 ▪[h, g] l+1 →
+                      ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡[h, g] U1 & ⦃G1, L1, U1⦄ ⊐⸮ ⦃G2, L2, U2⦄.
+/3 width=5 by fquq_cpx_trans, sta_cpx/ qed-.
 
 lemma fqup_cpx_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐+ ⦃G2, L2, T2⦄ →
                       ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡[h, g] U2 →

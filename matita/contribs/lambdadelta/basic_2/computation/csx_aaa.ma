@@ -32,7 +32,7 @@ fact aaa_ind_csx_aux: ∀h,g,G,L,A. ∀R:predicate term.
                             (∀T2. ⦃G, L⦄ ⊢ T1 ➡[h, g] T2 → (T1 = T2 → ⊥) → R T2) → R T1
                       ) →
                       ∀T. ⦃G, L⦄ ⊢ ⬊*[h, g] T → ⦃G, L⦄ ⊢ T ⁝ A → R T.
-#h #g #G #L #A #R #IH #T #H @(csx_ind … H) -T /4 width=5 by aaa_cpx_conf/
+#h #g #G #L #A #R #IH #T #H @(csx_ind … H) -T /4 width=5 by cpx_aaa_conf/
 qed-.
 
 lemma aaa_ind_csx: ∀h,g,G,L,A. ∀R:predicate term.
@@ -47,7 +47,7 @@ fact aaa_ind_csx_alt_aux: ∀h,g,G,L,A. ∀R:predicate term.
                                 (∀T2. ⦃G, L⦄ ⊢ T1 ➡*[h, g] T2 → (T1 = T2 → ⊥) → R T2) → R T1
                           ) →
                           ∀T. ⦃G, L⦄ ⊢ ⬊*[h, g] T → ⦃G, L⦄ ⊢ T ⁝ A → R T.
-#h #g #G #L #A #R #IH #T #H @(csx_ind_alt … H) -T /4 width=5 by aaa_cpxs_conf/
+#h #g #G #L #A #R #IH #T #H @(csx_ind_alt … H) -T /4 width=5 by cpxs_aaa_conf/
 qed-.
 
 lemma aaa_ind_csx_alt: ∀h,g,G,L,A. ∀R:predicate term.

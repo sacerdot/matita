@@ -19,11 +19,11 @@ include "basic_2/computation/cpxs.ma".
 
 (* Properties about atomic arity assignment on terms ************************)
 
-lemma aaa_cpxs_conf: ∀h,g,G,L,T1,A. ⦃G, L⦄ ⊢ T1 ⁝ A →
+lemma cpxs_aaa_conf: ∀h,g,G,L,T1,A. ⦃G, L⦄ ⊢ T1 ⁝ A →
                      ∀T2. ⦃G, L⦄ ⊢ T1 ➡*[h, g] T2 → ⦃G, L⦄ ⊢ T2 ⁝ A.
 #h #g #G #L #T1 #A #HT1 #T2 #HT12
-@(TC_Conf3 … HT1 ? HT12) -A -T1 -T2 /2 width=5 by aaa_cpx_conf/
+@(TC_Conf3 … HT1 ? HT12) -A -T1 -T2 /2 width=5 by cpx_aaa_conf/
 qed-.
 
-lemma aaa_cprs_conf: ∀G,L,T1,A. ⦃G, L⦄ ⊢ T1 ⁝ A → ∀T2. ⦃G, L⦄ ⊢ T1 ➡* T2 → ⦃G, L⦄ ⊢ T2 ⁝ A.
-/3 width=5 by aaa_cpxs_conf, cprs_cpxs/ qed-.
+lemma cprs_aaa_conf: ∀G,L,T1,A. ⦃G, L⦄ ⊢ T1 ⁝ A → ∀T2. ⦃G, L⦄ ⊢ T1 ➡* T2 → ⦃G, L⦄ ⊢ T2 ⁝ A.
+/3 width=5 by cpxs_aaa_conf, cprs_cpxs/ qed-.

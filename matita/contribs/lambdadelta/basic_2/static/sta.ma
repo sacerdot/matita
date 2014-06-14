@@ -14,7 +14,7 @@
 
 include "basic_2/notation/relations/statictype_5.ma".
 include "basic_2/grammar/genv.ma".
-include "basic_2/relocation/ldrop.ma".
+include "basic_2/substitution/ldrop.ma".
 include "basic_2/static/sh.ma".
 
 (* STATIC TYPE ASSIGNMENT ON TERMS ******************************************)
@@ -22,9 +22,9 @@ include "basic_2/static/sh.ma".
 (* activate genv *)
 inductive sta (h:sh): relation4 genv lenv term term ≝
 | sta_sort: ∀G,L,k. sta h G L (⋆k) (⋆(next h k))
-| sta_ldef: ∀G,L,K,V,W,U,i. ⇩[0, i] L ≡ K.ⓓV → sta h G K V W →
+| sta_ldef: ∀G,L,K,V,W,U,i. ⇩[i] L ≡ K.ⓓV → sta h G K V W →
             ⇧[0, i + 1] W ≡ U → sta h G L (#i) U
-| sta_ldec: ∀G,L,K,W,V,U,i. ⇩[0, i] L ≡ K.ⓛW → sta h G K W V →
+| sta_ldec: ∀G,L,K,W,V,U,i. ⇩[i] L ≡ K.ⓛW → sta h G K W V →
             ⇧[0, i + 1] W ≡ U → sta h G L (#i) U
 | sta_bind: ∀a,I,G,L,V,T,U. sta h G (L.ⓑ{I}V) T U →
             sta h G L (ⓑ{a,I}V.T) (ⓑ{a,I}V.U)
@@ -53,16 +53,16 @@ lemma sta_inv_sort1: ∀h,G,L,U,k. ⦃G, L⦄ ⊢ ⋆k •[h] U → U = ⋆(next
 /2 width=5 by sta_inv_sort1_aux/ qed-.
 
 fact sta_inv_lref1_aux: ∀h,G,L,T,U. ⦃G, L⦄ ⊢ T •[h] U → ∀j. T = #j →
-                        (∃∃K,V,W. ⇩[0, j] L ≡ K.ⓓV & ⦃G, K⦄ ⊢ V •[h] W &
-                                  ⇧[0, j + 1] W ≡ U
+                        (∃∃K,V,W. ⇩[j] L ≡ K.ⓓV & ⦃G, K⦄ ⊢ V •[h] W &
+                                  ⇧[0, j+1] W ≡ U
                         ) ∨
-                        (∃∃K,W,V. ⇩[0, j] L ≡ K.ⓛW & ⦃G, K⦄ ⊢ W •[h] V &
-                                  ⇧[0, j + 1] W ≡ U
+                        (∃∃K,W,V. ⇩[j] L ≡ K.ⓛW & ⦃G, K⦄ ⊢ W •[h] V &
+                                  ⇧[0, j+1] W ≡ U
                         ).
 #h #G #L #T #U * -G -L -T -U
 [ #G #L #k #j #H destruct
-| #G #L #K #V #W #U #i #HLK #HVW #HWU #j #H destruct /3 width=6/
-| #G #L #K #W #V #U #i #HLK #HWV #HWU #j #H destruct /3 width=6/
+| #G #L #K #V #W #U #i #HLK #HVW #HWU #j #H destruct /3 width=6 by or_introl, ex3_3_intro/
+| #G #L #K #W #V #U #i #HLK #HWV #HWU #j #H destruct /3 width=6 by or_intror, ex3_3_intro/
 | #a #I #G #L #V #T #U #_ #j #H destruct
 | #G #L #V #T #U #_ #j #H destruct
 | #G #L #W #T #U #_ #j #H destruct
@@ -71,11 +71,11 @@ qed-.
 
 (* Basic_1: was sty0_gen_lref *)
 lemma sta_inv_lref1: ∀h,G,L,U,i. ⦃G, L⦄ ⊢ #i •[h] U →
-                     (∃∃K,V,W. ⇩[0, i] L ≡ K.ⓓV & ⦃G, K⦄ ⊢ V •[h] W &
-                               ⇧[0, i + 1] W ≡ U
+                     (∃∃K,V,W. ⇩[i] L ≡ K.ⓓV & ⦃G, K⦄ ⊢ V •[h] W &
+                               ⇧[0, i+1] W ≡ U
                      ) ∨
-                     (∃∃K,W,V. ⇩[0, i] L ≡ K.ⓛW & ⦃G, K⦄ ⊢ W •[h] V &
-                               ⇧[0, i + 1] W ≡ U
+                     (∃∃K,W,V. ⇩[i] L ≡ K.ⓛW & ⦃G, K⦄ ⊢ W •[h] V &
+                               ⇧[0, i+1] W ≡ U
                      ).
 /2 width=3 by sta_inv_lref1_aux/ qed-.
 
@@ -98,7 +98,7 @@ fact sta_inv_bind1_aux: ∀h,G,L,T,U. ⦃G, L⦄ ⊢ T •[h] U → ∀b,J,X,Y. 
 [ #G #L #k #b #J #X #Y #H destruct
 | #G #L #K #V #W #U #i #_ #_ #_ #b #J #X #Y #H destruct
 | #G #L #K #W #V #U #i #_ #_ #_ #b #J #X #Y #H destruct
-| #a #I #G #L #V #T #U #HTU #b #J #X #Y #H destruct /2 width=3/
+| #a #I #G #L #V #T #U #HTU #b #J #X #Y #H destruct /2 width=3 by ex2_intro/
 | #G #L #V #T #U #_ #b #J #X #Y #H destruct
 | #G #L #W #T #U #_ #b #J #X #Y #H destruct
 ]
@@ -116,7 +116,7 @@ fact sta_inv_appl1_aux: ∀h,G,L,T,U. ⦃G, L⦄ ⊢ T •[h] U → ∀X,Y. T = 
 | #G #L #K #V #W #U #i #_ #_ #_ #X #Y #H destruct
 | #G #L #K #W #V #U #i #_ #_ #_ #X #Y #H destruct
 | #a #I #G #L #V #T #U #_ #X #Y #H destruct
-| #G #L #V #T #U #HTU #X #Y #H destruct /2 width=3/
+| #G #L #V #T #U #HTU #X #Y #H destruct /2 width=3 by ex2_intro/
 | #G #L #W #T #U #_ #X #Y #H destruct
 ]
 qed-.
@@ -141,32 +141,3 @@ qed-.
 (* Basic_1: was: sty0_gen_cast *)
 lemma sta_inv_cast1: ∀h,G,L,X,Y,U. ⦃G, L⦄ ⊢ ⓝY.X •[h] U → ⦃G, L⦄ ⊢ X •[h] U.
 /2 width=4 by sta_inv_cast1_aux/ qed-.
-
-(* Inversion lrmmas on static type assignment for terms *********************)
-
-lemma da_inv_sta: ∀h,g,G,L,T,l. ⦃G, L⦄ ⊢ T ▪[h, g] l →
-                  ∃U. ⦃G, L⦄ ⊢ T •[h] U.
-#h #g #G #L #T #l #H elim H -G -L -T -l
-[ /2 width=2/
-| #G #L #K #V #i #l #HLK #_ * #W #HVW
-  elim (lift_total W 0 (i+1)) /3 width=7/
-| #G #L #K #W #i #l #HLK #_ * #V #HWV
-  elim (lift_total W 0 (i+1)) /3 width=7/
-| #a #I #G #L #V #T #l #_ * /3 width=2/
-| * #G #L #V #T #l #_ * /3 width=2/
-]
-qed-.
-
-(* Properties on static type assignment for terms ***************************)
-
-lemma sta_da: ∀h,g,G,L,T,U. ⦃G, L⦄ ⊢ T •[h] U →
-              ∃l. ⦃G, L⦄ ⊢ T ▪[h, g] l.
-#h #g #G #L #T #U #H elim H -G -L -T -U
-[ #G #L #k elim (deg_total h g k) /3 width=2/
-| #G #L #K #V #W #W0 #i #HLK #_ #_ * /3 width=5/
-| #G #L #K #W #V #W0 #i #HLK #_ #_ * /3 width=5/
-| #a #I #G #L #V #T #U #_ * /3 width=2/
-| #G #L #V #T #U #_ * /3 width=2/
-| #G #L #W #T #U #_ * /3 width=2/
-]
-qed-.

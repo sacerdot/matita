@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/ldrop_ldrop.ma".
+include "basic_2/substitution/ldrop_ldrop.ma".
 include "basic_2/static/sta.ma".
 
 (* STATIC TYPE ASSIGNMENT ON TERMS ******************************************)
@@ -34,10 +34,10 @@ theorem sta_mono: ∀h,G,L. singlevalued … (sta h G L).
   lapply (IHWV … HWV0) -IHWV -HWV0 #H destruct
   >(lift_mono … HWU1 … HV0U2) -W -U1 //
 | #a #I #G #L #V #T #U1 #_ #IHTU1 #X #H
-  elim (sta_inv_bind1 … H) -H #U2 #HTU2 #H destruct /3 width=1/
+  elim (sta_inv_bind1 … H) -H #U2 #HTU2 #H destruct /3 width=1 by eq_f/
 | #G #L #V #T #U1 #_ #IHTU1 #X #H
-  elim (sta_inv_appl1 … H) -H #U2 #HTU2 #H destruct /3 width=1/
+  elim (sta_inv_appl1 … H) -H #U2 #HTU2 #H destruct /3 width=1 by eq_f/
 | #G #L #W #T #U1 #_ #IHTU1 #U2 #H
-  lapply (sta_inv_cast1 … H) -H /2 width=1/
+  lapply (sta_inv_cast1 … H) -H /2 width=1 by/
 ]
 qed-.
