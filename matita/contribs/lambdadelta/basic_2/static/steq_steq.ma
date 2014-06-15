@@ -12,14 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unfold/lsstas_aaa.ma".
-include "basic_2/computation/cpxs_aaa.ma".
-include "basic_2/computation/cpds.ma".
+include "basic_2/static/steq.ma".
 
-(* DECOMPOSED EXTENDED PARALLEL COMPUTATION ON TERMS ************************)
+(* STRATIFIED EQUIVALENCE FOR TERMS *****************************************)
 
-(* Properties on atomic arity assignment for terms **************************)
+(* Main properties **********************************************************)
 
-lemma cpds_aaa_conf: ∀h,g,G,L. Conf3 … (aaa G L) (cpds h g G L).
-#h #g #G #L #A #T #HT #U * /3 width=6 by lsstas_aaa_conf, cprs_aaa_conf/
-qed.
+theorem steq_trans: ∀h,g. Transitive … (steq h g).
+#h #g #T1 #T * //
+#k1 #k #Hk1 #HK2 #X #H elim (steq_inv … H) -H /2 width=1 by steq_zero/
+* /2 width=1 by steq_zero/
+qed-.

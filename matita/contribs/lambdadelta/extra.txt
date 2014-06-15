@@ -1,0 +1,7 @@
+basic_2/static/lsuba_lsuba.ma
+basic_2/static/sta_llpx_sn.ma
+basic_2/computation/fpbu_lift.ma
+basic_2/computation/fpbg_lift.ma
+basic_2/computation/lpxs_aaa.ma
+basic_2/computation/lsubc_lsuba.ma
+basic_2/dynamic/lsubsv_lsuba.ma

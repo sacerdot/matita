@@ -1,0 +1,11 @@
+lemma ldrop_bor1: ∀L1,L2,s1,s2,d,e. ⇩[s1, d, e] L1 ≡ L2 → ⇩[s1 ∨ s2, d, e] L1 ≡ L2.
+#L1 #L2 * /2 width=1 by ldrop_gen/
+qed.
+
+lemma ldrop_bor2: ∀L1,L2,s1,s2,d,e. ⇩[s2, d, e] L1 ≡ L2 → ⇩[s1 ∨ s2, d, e] L1 ≡ L2.
+#L1 #L2 #s1 #s2 >commutative_orb /2 width=1 by ldrop_bor1/
+qed.
+
+(* Basic_1: was: drop_conf_rev *)
+axiom ldrop_div: ∀e1,L1,L. ⇩[0, e1] L1 ≡ L → ∀e2,L2. ⇩[0, e2] L2 ≡ L →
+                 ∃∃L0. ⇩[0, e1] L0 ≡ L2 & ⇩[e1, e2] L0 ≡ L1.

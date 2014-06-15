@@ -12,8 +12,30 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
+include "basic_2/notation/relations/lazyeq_4.ma".
+include "basic_2/grammar/term.ma".
+include "basic_2/static/sd.ma".
 
-notation "hvbox( ⦃ term 46 G , break term 46 L ⦄ ⊢ break term 46 T1 • break [ term 46 h , break term 46 g ] break term 46 T2 )"
-   non associative with precedence 45
-   for @{ 'StaticType $h $g $G $L $T1 $T2 }.
+(* STRATIFIED EQUIVALENCE FOR TERMS *****************************************)
+
+inductive steq (h) (g): relation term ≝
+| steq_refl: ∀T. steq h g T T
+| steq_zero: ∀k1,k2. deg h g k1 0 → deg h g k2 0 → steq h g (⋆k1) (⋆k2)
+.
+
+interpretation
+   "stratified equivalence (term)"
+   'LazyEq h g T1 T2 = (steq h g T1 T2).
+
+(* Basic inversion lemmas ****************************************************)
+
+lemma steq_inv: ∀h,g,T1,T2. T1 ≡[h, g] T2 → T1 = T2 ∨
+                ∃∃k1,k2. deg h g k1 0 & deg h g k2 0 & T1 = ⋆k1 & T2 = ⋆k2.
+#h #g #T1 #T2 * /3 width=6 by or_introl, or_intror, ex4_2_intro/
+qed-.
+
+(* Basic properties *********************************************************)
+
+lemma steq_sym: ∀h,g. symmetric … (steq h g).
+#h #g #T1 #T2 * /2 width=1 by steq_zero/
+qed-.

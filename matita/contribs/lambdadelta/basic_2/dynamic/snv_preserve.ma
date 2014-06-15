@@ -138,7 +138,7 @@ lemma cpds_cpr_lpr: ∀h,g,G,L1,T1. ⦃G, L1⦄ ⊢ T1 ¡[h, g] →
                     ∀T2. ⦃G, L1⦄ ⊢ T1 ➡ T2 → ∀L2. ⦃G, L1⦄ ⊢ ➡ L2 →
                     ∃∃U2. ⦃G, L2⦄ ⊢ T2 •*➡*[h, g] U2 & ⦃G, L2⦄ ⊢ U1 ➡* U2.
 #h #g #G #L1 #T1 #HT1 #U1 * #W1 #l1 #l2 #Hl21 #Hl1 #HTW1 #HWU1 #T2 #HT12 #L2 #HL12
-elim (lstas_cpr_lpr … g … HTW1 … HT12 … HL12) // #W2 #HTW2 #HW12
+elim (lstas_cpr_lpr … Hl1 … HTW1 … HT12 … HL12) // #W2 #HTW2 #HW12
 lapply (da_cpr_lpr … Hl1 … HT12 … HL12) // -T1
 lapply (lpr_cprs_conf … HL12 … HWU1) -L1 #HWU1
 lapply (cpcs_canc_sn … HW12 HWU1) -W1 #H
