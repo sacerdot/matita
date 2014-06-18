@@ -1,0 +1,135 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/dynamic/snv_lift.ma".
+include "basic_2/dynamic/snv_cpcs.ma".
+include "basic_2/dynamic/lsubsv_snv.ma".
+
+(* STRATIFIED NATIVE VALIDITY FOR TERMS *************************************)
+
+(* Properties on context-free parallel reduction for local environments *****)
+
+fact snv_cpx_lpx_aux: ∀h,g,G0,L0,T0.
+                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, g] ⦃G1, L1, T1⦄ → IH_lstas_cpr_lpr h g G1 L1 T1) →
+                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, g] ⦃G1, L1, T1⦄ → IH_da_cpr_lpr h g G1 L1 T1) →
+                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, g] ⦃G1, L1, T1⦄ → IH_snv_cpx_lpx h g G1 L1 T1) →
+                      ∀G1,L1,T1. G0 = G1 → L0 = L1 → T0 = T1 → IH_snv_cpx_lpx h g G1 L1 T1.
+#h #g #G0 #L0 #T0 #IH3 #IH2 #IH1 #G1 #L1 * * [|||| * ]
+[ #k #HG0 #HL0 #HT0 #H1 #X #H2 #L2 #_ destruct -IH3 -IH2 -IH1 -H1
+  elim (cpx_inv_sort1 … H2) -H2 // * //
+| #i #HG0 #HL0 #HT0 #H1 #X #H2 #L2 #HL12 destruct -IH3 -IH2
+  elim (snv_inv_lref … H1) -H1 #I #K1 #V1 #HLK1 #HV1
+  elim (lpx_ldrop_conf … HLK1 … HL12) -HL12 #X #H #HLK2
+  elim (lpx_inv_pair1 … H) -H #K2 #V2 #HK12 #HV12 #H destruct
+  lapply (fqup_lref … G1 … HLK1) #HKL
+  elim (cpx_inv_lref1 … H2) -H2
+  [ #H destruct -HLK1 /4 width=10 by fqup_fpbg, snv_lref/
+  | * #I0 #K0 #V0 #W0 #H #HVW0 #W0 -HV12
+    lapply (ldrop_mono … H … HLK1) -HLK1 -H #H destruct
+    lapply (ldrop_fwd_drop2 … HLK2) -HLK2 /4 width=8 by fqup_fpbg, snv_lift/
+  ]
+| #p #HG0 #HL0 #HT0 #H1 #X #H2 #L2 #HL12 destruct -IH3 -IH2 -IH1
+  elim (snv_inv_gref … H1)
+| #a #I #V1 #T1 #HG0 #HL0 #HT0 #H1 #X #H2 #L2 #HL12 destruct -IH3 -IH2
+  elim (snv_inv_bind … H1) -H1 #HV1 #HT1
+  elim (cpx_inv_bind1 … H2) -H2 *
+  [ #V2 #T2 #HV12 #HT12 #H destruct /4 width=8 by fqup_fpbg, snv_bind, lpx_pair/
+  | #T2 #HT12 #HXT2 #H1 #H2 destruct -HV1
+    /4 width=10 by fqup_fpbg, snv_inv_lift, lpx_pair, ldrop_drop/
+  ]
+| #V1 #T1 #HG0 #HL0 #HT0 #H1 #X #H2 #L2 #HL12 destruct
+  elim (snv_inv_appl … H1) -H1 #a #W10 #W1 #U1 #l0 #HV1 #HT1 #Hl0 #HVW1 #HW10 #HTU1
+  elim (cpx_inv_appl1 … H2) -H2 *
+  [ #V2 #T2 #HV12 #HT12 #H destruct
+    lapply (IH1 … HV12 … HL12) /2 width=1 by fqup_fpbg/ #HV2
+    lapply (IH1 … HT12 … HL12) /2 width=1 by fqup_fpbg/ #HT2
+(*    lapply (IH2 … Hl0 … HV12 … HL12) /2 width=1 by fqup_fpbg/ #H2l0
+    elim (sta_cpr_lpr_aux … IH3 … Hl0 … HVW1 … HV12 … HL12) -Hl0 -HVW1 -HV12 /2 width=1 by fqup_fpbg/ -HV1 #W2 #HVW2 #HW12
+    elim (cpds_cpr_lpr_aux … IH2 IH3 … HTU1 … HT12 … HL12) /2 width=1 by fqup_fpbg/ -HT12 -HTU1 #X #HTU2 #H
+    elim (cprs_inv_abst1 … H) -H #W20 #U2 #HW120 #_ #H destruct
+    lapply (lpr_cprs_conf … HL12 … HW10) -L1 #HW10
+    lapply (cpcs_cprs_strap1 … HW10 … HW120) -W1 #HW120
+    lapply (cpcs_canc_sn … HW12 HW120) -W10 #HW20
+    elim (cpcs_inv_cprs … HW20) -HW20 #W0 #HW20 #HW200
+    lapply (cpds_cprs_trans … (ⓛ{a}W0.U2) HTU2 ?)
+    /2 width=7 by snv_appl, cprs_bind/ *)
+  | #b #V2 #W20 #W2 #T20 #T2 #HV12 #HW202 #HT202 #H1 #H2 destruct
+    elim (snv_inv_bind … HT1) -HT1 #HW20 #HT20
+    elim (cpds_inv_abst1 … HTU1) -HTU1 #W30 #T30 #HW230 #_ #H destruct -T30
+    lapply (cprs_div … HW10 … HW230) -W30 #HW120
+    lapply (snv_sta_aux … IH1 … Hl0 … HVW1) /2 width=1 by fqup_fpbg/ #HW10
+    lapply (da_sta_conf … HVW1 … Hl0) <minus_plus_m_m #HlW10
+    elim (snv_fwd_da … HW20) #l #Hl
+    lapply (da_cpcs_aux … IH1 IH2 … HlW10 … Hl … HW120) // -HlW10
+    /3 width=5 by fpbg_fpbs_trans, fqup_fpbg, sta_fpbs/ #H destruct
+(*    lapply (IH2 … Hl0 … HV12 … HL12) /2 width=1 by fqup_fpbg/ #HlV2
+    lapply (IH2 … Hl … HW202 … HL12) /2 width=1 by fqup_fpbg/ #HlW2
+    elim (sta_cpr_lpr_aux … IH3 … Hl0 … HVW1 … HV12 … HL12) /2 width=1 by fqup_fpbg/ #W3 #HV2W3 #HW103
+    lapply (da_sta_conf … HV2W3 … HlV2) <minus_plus_m_m #HlW3
+    lapply (cpcs_cpr_strap1 … HW120 … HW202) -HW120 #HW102
+    lapply (lpr_cpcs_conf … HL12 … HW102) -HW102 #HW102
+    lapply (cpcs_canc_sn … HW103 … HW102) -W10 #HW32
+    lapply (IH1 … HV12 … HL12) /2 width=1 by fqup_fpbg/ -HV1 #HV2
+    lapply (IH1 … HW202 … HL12) /2 width=1 by fqup_fpbg/ -HW20 #HW2
+    lapply (IH1 … HT20 … HT202 … (L2.ⓛW2) ?) /2 width=1 by fqup_fpbg, lpr_pair/ -HT20 #HT2
+    lapply (snv_sta_aux … IH4 … HlV2 … HV2W3)
+    /3 width=5 by fpbg_fpbs_trans, fqup_fpbg, cpr_lpr_fpbs/ #HW3
+    lapply (lsubsv_snv_trans … HT2 (L2.ⓓⓝW2.V2) ?) -HT2 /3 width=3 by snv_bind, snv_cast/
+    @(lsubsv_abbr … l) /3 width=7 by fqup_fpbg/ #W #W0 #l0 #Hl0 #HV2W #HW20
+    lapply (lstas_sta_conf_pos … HV2W3 … HV2W) -HV2W #HW3W
+    @(lstas_cpcs_lpr_aux … IH1 IH2 IH3 … HlW3 … HW3W … HlW2 … HW20 … HW32) //
+    [ /3 width=9 by fpbg_fpbs_trans, fqup_fpbg, cpr_lpr_sta_fpbs/
+    | /3 width=5 by fpbg_fpbs_trans, fqup_fpbg, cpr_lpr_fpbs/
+    ] *)
+  | #b #V0 #V2 #W0 #W2 #T0 #T2 #HV10 #HV02 #HW02 #HT02 #H1 #H2 destruct
+    elim (snv_inv_bind … HT1) -HT1 #HW0 #HT0
+    elim (cpds_inv_abbr_abst … HTU1) -HTU1 #X #HTU0 #HX #H destruct
+    elim (lift_inv_bind1 … HX) -HX #W3 #U3 #HW13 #_ #H destruct
+(*    lapply (lpr_cpr_conf … HL12 … HW10) -HW10 #HW10 
+    elim (cpds_cpr_lpr_aux … IH2 IH3 … HTU0 … HT02 (L2.ⓓW2)) /2 width=1 by fqup_fpbg, lpr_pair/ -HTU0 #X #HTU2 #H
+    elim (cprs_inv_abst1 … H) -H #W #U2 #HW1 #_ #H destruct -U3
+    elim (sta_cpr_lpr_aux … IH3 … HVW1 … HV10 … HL12) /2 width=2 by fqup_fpbg/ -IH3 -HVW1 #X #H1 #H2
+    lapply (cpcs_canc_sn … H2 HW10) -W10 #H2
+    elim (lift_total X 0 1) #W20 #H3
+    lapply (sta_lift … H1 (L2.ⓓW2) … HV02 … H3) /2 width=2 by ldrop_drop/ -H1 #HVW20
+    lapply (cpcs_lift … (L2.ⓓW2) … H3 … HW13 H2) /2 width=2 by ldrop_drop/ -HW13 -H3 -H2 #HW320
+    lapply (cpcs_cprs_strap1 … HW320 … HW1) -W3 #HW20
+    elim (cpcs_inv_cprs … HW20) -HW20 #W3 #HW203 #HW3
+    lapply (cpds_cprs_trans … (ⓛ{a}W3.U2) HTU2 ?) /2 width=1 by cprs_bind/ -HW3 -HTU2 #HTU2
+    lapply (IH2 … Hl0 … HV10 … HL12) /2 width=1 by fqup_fpbg/ -IH2 -Hl0 #Hl0
+    lapply (da_lift … Hl0 (L2.ⓓW2) … HV02) /2 width=2 by ldrop_drop/ -Hl0 #Hl0
+    lapply (IH1 … HW02 … HL12) /2 width=1 by fqup_fpbg/ -HW0 #HW2
+    lapply (IH1 … HV10 … HL12) /2 width=1 by fqup_fpbg/ -HV1 -HV10 #HV0
+    lapply (IH1 … HT02 (L2.ⓓW2) ?) /2 width=1 by fqup_fpbg, lpr_pair/ -L1 #HT2
+    lapply (snv_lift … HV0 (L2.ⓓW2) … HV02) /3 width=7 by snv_bind, snv_appl, ldrop_drop/ *)
+  ]
+| #W1 #T1 #HG0 #HL0 #HT0 #H1 #X #H2 #L2 #HL12 destruct
+  elim (snv_inv_cast … H1) -H1 #U1 #l0 #HW1 #HT1 #Hl0 #HTU1 #HUW1
+  elim (cpx_inv_cast1 … H2) -H2
+  [ * #W2 #T2 #HW12 #HT12 #H destruct
+(*    lapply (cpcs_cprs_strap1 … HUW1 W2 ?) /2 width=1 by cpr_cprs/ -HUW1 #H1
+*)    lapply (IH1 … HW12 … HL12) /2 width=1 by fqup_fpbg/ -HW1 -HW12 #HW2
+    lapply (IH1 … HT12 … HL12) /2 width=1 by fqup_fpbg/ -IH1 #HT2
+(*    elim (sta_cpr_lpr_aux … IH3 … Hl0 … HTU1 … HT12 … HL12) /2 width=2 by fqup_fpbg/ -IH3 -HTU1 #U2 #HTU2 #HU12
+    lapply (IH2 … Hl0 … HT12 … HL12) /2 width=1 by fqup_fpbg/ -IH2 -HT1 -HT12 -Hl0 #Hl0
+    /4 width=7 by snv_cast, lpr_cpcs_conf, cpcs_canc_sn/ *)
+  | #H -IH3 -IH2 -HW1 -HTU1 -HUW1
+    lapply (IH1 … H … HL12) -IH1 -H -HL12 /2 width=1 by fqup_fpbg/
+  | #H -IH3 -IH2 -HTU1 -HUW1
+    lapply (IH1 … H … HL12) -IH1 -H -HL12 /2 width=1 by fqup_fpbg/
+  ]
+]
+[4: @snv_cast //
+qed-.
+snv_lstas, snv_cpr_lpr

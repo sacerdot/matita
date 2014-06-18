@@ -185,10 +185,6 @@ table {
              [ "da ( ⦃?,?⦄ ⊢ ? ▪[?,?] ? )" "da_lift" + "da_aaa" + "da_sta" + "da_da" * ]
           }
         ]
-        [ { "stratified equivalence" * } {
-             [ "steq ( ? ≡[?,?] ? )" "steq_steq" * ]
-          }
-        ]
         [ { "static type assignment" * } {
              [ "sta ( ⦃?,?⦄ ⊢ ? •[?] ? )" "sta_lift" + "sta_lpx_sn" + "sta_aaa" + "sta_sta" * ]
           }

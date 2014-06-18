@@ -31,9 +31,9 @@
          Context-sensitive subject equivalence
          for native type assignment.
    </news>
-   <news date="In progress.">
+   <news date="2014 June 18.">
          Preservation of stratified native validity
-         for "big tree" computation on closures.
+         for context-sensitive computation on terms.
    </news>
    <news date="2014 June 9.">
          "Big tree" strong normalization
