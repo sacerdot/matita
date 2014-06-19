@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/lib/bool.ma".
 include "ground_2/lib/arith.ma".
 
 (* ITEMS ********************************************************************)
@@ -43,16 +44,35 @@ inductive item2: Type[0] ≝
 
 (* Basic properties *********************************************************)
 
-axiom eq_item0_dec: ∀I1,I2:item0. Decidable (I1 = I2).
+lemma eq_item0_dec: ∀I1,I2:item0. Decidable (I1 = I2).
+* #i1 * #i2 [2,3,4,6,7,8: @or_intror #H destruct ]
+elim (eq_nat_dec i1 i2) /2 width=1 by or_introl/
+#Hni12 @or_intror #H destruct /2 width=1 by/ 
+qed-.
 
 (* Basic_1: was: bind_dec *)
-axiom eq_bind2_dec: ∀I1,I2:bind2. Decidable (I1 = I2).
+lemma eq_bind2_dec: ∀I1,I2:bind2. Decidable (I1 = I2).
+* * /2 width=1 by or_introl/
+@or_intror #H destruct
+qed-.
 
 (* Basic_1: was: flat_dec *)
-axiom eq_flat2_dec: ∀I1,I2:flat2. Decidable (I1 = I2).
+lemma eq_flat2_dec: ∀I1,I2:flat2. Decidable (I1 = I2).
+* * /2 width=1 by or_introl/
+@or_intror #H destruct
+qed-.
 
 (* Basic_1: was: kind_dec *)
-axiom eq_item2_dec: ∀I1,I2:item2. Decidable (I1 = I2).
+lemma eq_item2_dec: ∀I1,I2:item2. Decidable (I1 = I2).
+* [ #a1 ] #I1 * [1,3: #a2 ] #I2
+[2,3: @or_intror #H destruct
+| elim (eq_bool_dec a1 a2) #Ha
+  [ elim (eq_bind2_dec I1 I2) /2 width=1 by or_introl/ #HI ]
+  @or_intror #H destruct /2 width=1 by/
+| elim (eq_flat2_dec I1 I2) /2 width=1 by or_introl/ #HI
+  @or_intror #H destruct /2 width=1 by/
+]
+qed-.
 
 (* Basic_1: removed theorems 21:
             s_S s_plus s_plus_sym s_minus minus_s_s s_le s_lt s_inj s_inc

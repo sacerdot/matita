@@ -40,7 +40,17 @@ interpretation "abstraction (local environment)"
 
 (* Basic properties *********************************************************)
 
-axiom eq_lenv_dec: ∀L1,L2:lenv. Decidable (L1 = L2).
+lemma eq_lenv_dec: ∀L1,L2:lenv. Decidable (L1 = L2).
+#L1 elim L1 -L1 [| #L1 #I1 #V1 #IHL1 ] * [2,4: #L2 #I2 #V2 ]
+[1,4: @or_intror #H destruct
+| elim (eq_bind2_dec I1 I2) #HI
+  [ elim (eq_term_dec V1 V2) #HV
+    [ elim (IHL1 L2) -IHL1 /2 width=1 by or_introl/ #HL ]
+  ]
+  @or_intror #H destruct /2 width=1 by/
+| /2 width=1 by or_introl/
+]
+qed-.
 
 (* Basic inversion lemmas ***************************************************)
 

@@ -60,9 +60,13 @@ lemma arith_i: ∀x,y,z. y < x → x+z-y-1 = x-y-1+z.
 
 (* Properties ***************************************************************)
 
-axiom eq_nat_dec: ∀n1,n2:nat. Decidable (n1 = n2).
-
-axiom lt_dec: ∀n1,n2. Decidable (n1 < n2).
+lemma eq_nat_dec: ∀n1,n2:nat. Decidable (n1 = n2).
+#n1 elim n1 -n1 [| #n1 #IHn1 ] * [2,4: #n2 ]
+[1,4: @or_intror #H destruct
+| elim (IHn1 n2) -IHn1 /3 width=1 by or_intror, or_introl/
+| /2 width=1 by or_introl/
+]
+qed-.
 
 lemma lt_or_eq_or_gt: ∀m,n. ∨∨ m < n | n = m | n < m.
 #m #n elim (lt_or_ge m n) /2 width=1 by or3_intro0/
@@ -113,11 +117,6 @@ qed-.
 
 lemma lt_zero_false: ∀n. n < 0 → ⊥.
 #n #H elim (lt_to_not_le … H) -H /2 width=1 by/
-qed-.
-
-lemma false_lt_to_le: ∀x,y. (x < y → ⊥) → y ≤ x.
-#x #y #H elim (decidable_lt x y) /2 width=1 by not_lt_to_le/
-#Hxy elim (H Hxy)
 qed-.
 
 lemma pred_inv_refl: ∀m. pred m = m → m = 0.

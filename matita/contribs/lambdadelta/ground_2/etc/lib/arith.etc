@@ -16,3 +16,17 @@ qed-.
 lemma arith1: ∀x,y,z,w. z < y → x + (y + w) - z = x + y - z + w.
 #x #y #z #w #H <le_plus_minus_comm // /3 width=1 by lt_to_le, le_plus_a/
 qed-.
+
+lemma lt_dec: ∀n2,n1. Decidable (n1 < n2).
+#n2 elim n2 -n2
+[ /4 width=3 by or_intror, absurd, nmk/
+| #n2 #IHn2 * /2 width=1 by or_introl/
+  #n1 elim (IHn2 n1) -IHn2
+  /4 width=1 by le_S_S, monotonic_pred, or_intror, or_introl/
+]
+qed-.
+
+lemma false_lt_to_le: ∀x,y. (x < y → ⊥) → y ≤ x.
+#x #y #H elim (decidable_lt x y) /2 width=1 by not_lt_to_le/
+#Hxy elim (H Hxy)
+qed-.

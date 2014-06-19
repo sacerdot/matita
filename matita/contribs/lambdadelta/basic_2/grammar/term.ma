@@ -93,7 +93,18 @@ interpretation "native type annotation (term)"
 (* Basic properties *********************************************************)
 
 (* Basic_1: was: term_dec *)
-axiom eq_term_dec: ∀T1,T2:term. Decidable (T1 = T2).
+lemma eq_term_dec: ∀T1,T2:term. Decidable (T1 = T2).
+#T1 elim T1 -T1 #I1 [| #V1 #T1 #IHV1 #IHT1 ] * #I2 [2,4: #V2 #T2 ]
+[1,4: @or_intror #H destruct
+| elim (eq_item2_dec I1 I2) #HI
+  [ elim (IHV1 V2) -IHV1 #HV
+    [ elim (IHT1 T2) -IHT1 /2 width=1 by or_introl/ #HT ]
+  ]
+  @or_intror #H destruct /2 width=1 by/
+| elim (eq_item0_dec I1 I2) /2 width=1 by or_introl/ #HI
+  @or_intror #H destruct /2 width=1 by/
+]
+qed-.
 
 (* Basic inversion lemmas ***************************************************)
 
