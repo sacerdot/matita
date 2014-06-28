@@ -45,7 +45,7 @@ qed.
 lemma fquq_fwd_fw: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐⸮ ⦃G2, L2, T2⦄ → ♯{G2, L2, T2} ≤ ♯{G1, L1, T1}.
 #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2 /2 width=1 by lt_to_le/
 #G1 #L1 #K1 #T1 #U1 #e #HLK1 #HTU1
-lapply (ldrop_fwd_lw … HLK1) -HLK1
+lapply (drop_fwd_lw … HLK1) -HLK1
 lapply (lift_fwd_tw … HTU1) -HTU1
 /2 width=1 by le_plus, le_n/
 qed-.
@@ -55,7 +55,7 @@ fact fquq_fwd_length_lref1_aux: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐⸮ �
 #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2 //
 [ #a #I #G #L #V #T #j #H destruct
 | #G1 #L1 #K1 #T1 #U1 #e #HLK1 #HTU1 #i #H destruct
-  /2 width=3 by ldrop_fwd_length_le4/
+  /2 width=3 by drop_fwd_length_le4/
 ]
 qed-.
 

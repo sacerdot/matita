@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/ldrop_ldrop.ma".
+include "basic_2/substitution/drop_drop.ma".
 include "basic_2/substitution/cpy.ma".
 
 (* CONTEXT-SENSITIVE EXTENDED ORDINARY SUBSTITUTION FOR TERMS ***************)
@@ -32,13 +32,13 @@ lemma cpy_lift_le: ∀G,K,T1,T2,dt,et. ⦃G, K⦄ ⊢ T1 ▶[dt, et] T2 →
   lapply (ylt_inv_inj … Hid) -Hid #Hid
   lapply (lift_inv_lref1_lt … H … Hid) -H #H destruct
   elim (lift_trans_ge … HVW … HWU2) -W // <minus_plus #W #HVW #HWU2
-  elim (ldrop_trans_le … HLK … HKV) -K /2 width=2 by lt_to_le/ #X #HLK #H
-  elim (ldrop_inv_skip2 … H) -H /2 width=1 by lt_plus_to_minus_r/ -Hid #K #Y #_ #HVY
+  elim (drop_trans_le … HLK … HKV) -K /2 width=2 by lt_to_le/ #X #HLK #H
+  elim (drop_inv_skip2 … H) -H /2 width=1 by lt_plus_to_minus_r/ -Hid #K #Y #_ #HVY
   >(lift_mono … HVY … HVW) -Y -HVW #H destruct /2 width=5 by cpy_subst/
 | #a #I #G #K #V1 #V2 #T1 #T2 #dt #et #_ #_ #IHV12 #IHT12 #L #U1 #U2 #s #d #e #HLK #H1 #H2 #Hdetd
   elim (lift_inv_bind1 … H1) -H1 #VV1 #TT1 #HVV1 #HTT1 #H1
   elim (lift_inv_bind1 … H2) -H2 #VV2 #TT2 #HVV2 #HTT2 #H2 destruct
-  /4 width=7 by cpy_bind, ldrop_skip, yle_succ/
+  /4 width=7 by cpy_bind, drop_skip, yle_succ/
 | #G #I #K #V1 #V2 #T1 #T2 #dt #et #_ #_ #IHV12 #IHT12 #L #U1 #U2 #s #d #e #HLK #H1 #H2 #Hdetd
   elim (lift_inv_flat1 … H1) -H1 #VV1 #TT1 #HVV1 #HTT1 #H1
   elim (lift_inv_flat1 … H2) -H2 #VV2 #TT2 #HVV2 #HTT2 #H2 destruct
@@ -58,20 +58,20 @@ lemma cpy_lift_be: ∀G,K,T1,T2,dt,et. ⦃G, K⦄ ⊢ T1 ▶[dt, et] T2 →
   [ -Hdtd
     lapply (ylt_yle_trans … (dt+et+e) … Hidet) // -Hidet #Hidete
     elim (lift_trans_ge … HVW … HWU2) -W // <minus_plus #W #HVW #HWU2
-    elim (ldrop_trans_le … HLK … HKV) -K /2 width=2 by lt_to_le/ #X #HLK #H
-    elim (ldrop_inv_skip2 … H) -H /2 width=1 by lt_plus_to_minus_r/ -Hid #K #Y #_ #HVY
+    elim (drop_trans_le … HLK … HKV) -K /2 width=2 by lt_to_le/ #X #HLK #H
+    elim (drop_inv_skip2 … H) -H /2 width=1 by lt_plus_to_minus_r/ -Hid #K #Y #_ #HVY
     >(lift_mono … HVY … HVW) -V #H destruct /2 width=5 by cpy_subst/
   | -Hdti
     elim (yle_inv_inj2 … Hdtd) -Hdtd #dtt #Hdtd #H destruct
     lapply (transitive_le … Hdtd Hid) -Hdtd #Hdti
     lapply (lift_trans_be … HVW … HWU2 ? ?) -W /2 width=1 by le_S/ >plus_plus_comm_23 #HVU2
-    lapply (ldrop_trans_ge_comm … HLK … HKV ?) -K // -Hid
-    /4 width=5 by cpy_subst, ldrop_inv_gen, monotonic_ylt_plus_dx, yle_plus_dx1_trans, yle_inj/
+    lapply (drop_trans_ge_comm … HLK … HKV ?) -K // -Hid
+    /4 width=5 by cpy_subst, drop_inv_gen, monotonic_ylt_plus_dx, yle_plus_dx1_trans, yle_inj/
   ]
 | #a #I #G #K #V1 #V2 #T1 #T2 #dt #et #_ #_ #IHV12 #IHT12 #L #U1 #U2 #s #d #e #HLK #H1 #H2 #Hdtd #Hddet
   elim (lift_inv_bind1 … H1) -H1 #VV1 #TT1 #HVV1 #HTT1 #H1
   elim (lift_inv_bind1 … H2) -H2 #VV2 #TT2 #HVV2 #HTT2 #H2 destruct
-  /4 width=7 by cpy_bind, ldrop_skip, yle_succ/
+  /4 width=7 by cpy_bind, drop_skip, yle_succ/
 | #I #G #K #V1 #V2 #T1 #T2 #dt #et #_ #_ #IHV12 #IHT12 #L #U1 #U2 #s #d #e #HLK #H1 #H2 #Hdetd
   elim (lift_inv_flat1 … H1) -H1 #VV1 #TT1 #HVV1 #HTT1 #H1
   elim (lift_inv_flat1 … H2) -H2 #VV2 #TT2 #HVV2 #HTT2 #H2 destruct
@@ -92,12 +92,12 @@ lemma cpy_lift_ge: ∀G,K,T1,T2,dt,et. ⦃G, K⦄ ⊢ T1 ▶[dt, et] T2 →
   elim (yle_inv_inj2 … Hid) -Hid #dd #Hddi #H0 destruct
   lapply (lift_inv_lref1_ge … H … Hddi) -H #H destruct
   lapply (lift_trans_be … HVW … HWU2 ? ?) -W /2 width=1 by le_S/ >plus_plus_comm_23 #HVU2
-  lapply (ldrop_trans_ge_comm … HLK … HKV ?) -K // -Hddi
-  /3 width=5 by cpy_subst, ldrop_inv_gen, monotonic_ylt_plus_dx, monotonic_yle_plus_dx/
+  lapply (drop_trans_ge_comm … HLK … HKV ?) -K // -Hddi
+  /3 width=5 by cpy_subst, drop_inv_gen, monotonic_ylt_plus_dx, monotonic_yle_plus_dx/
 | #a #I #G #K #V1 #V2 #T1 #T2 #dt #et #_ #_ #IHV12 #IHT12 #L #U1 #U2 #s #d #e #HLK #H1 #H2 #Hddt
   elim (lift_inv_bind1 … H1) -H1 #VV1 #TT1 #HVV1 #HTT1 #H1
   elim (lift_inv_bind1 … H2) -H2 #VV2 #TT2 #HVV2 #HTT2 #H2 destruct
-  /4 width=6 by cpy_bind, ldrop_skip, yle_succ/
+  /4 width=6 by cpy_bind, drop_skip, yle_succ/
 | #I #G #K #V1 #V2 #T1 #T2 #dt #et #_ #_ #IHV12 #IHT12 #L #U1 #U2 #s #d #e #HLK #H1 #H2 #Hddt
   elim (lift_inv_flat1 … H1) -H1 #VV1 #TT1 #HVV1 #HTT1 #H1
   elim (lift_inv_flat1 … H2) -H2 #VV2 #TT2 #HVV2 #HTT2 #H2 destruct
@@ -122,13 +122,13 @@ lemma cpy_inv_lift1_le: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶[dt, et] U2 →
   lapply (ylt_yle_trans … Hdetd … Hidet) -Hdetd #Hid
   lapply (ylt_inv_inj … Hid) -Hid #Hid
   lapply (lift_inv_lref2_lt … H … Hid) -H #H destruct
-  elim (ldrop_conf_lt … HLK … HLKV) -L // #L #U #HKL #_ #HUV
+  elim (drop_conf_lt … HLK … HLKV) -L // #L #U #HKL #_ #HUV
   elim (lift_trans_le … HUV … HVW) -V // >minus_plus <plus_minus_m_m // -Hid /3 width=5 by cpy_subst, ex2_intro/
 | #a #I #G #L #W1 #W2 #U1 #U2 #dt #et #_ #_ #IHW12 #IHU12 #K #s #d #e #HLK #X #H #Hdetd
   elim (lift_inv_bind2 … H) -H #V1 #T1 #HVW1 #HTU1 #H destruct
   elim (IHW12 … HLK … HVW1) -IHW12 // #V2 #HV12 #HVW2
   elim (IHU12 … HTU1) -IHU12 -HTU1
-  /3 width=6 by cpy_bind, yle_succ, ldrop_skip, lift_bind, ex2_intro/
+  /3 width=6 by cpy_bind, yle_succ, drop_skip, lift_bind, ex2_intro/
 | #I #G #L #W1 #W2 #U1 #U2 #dt #et #_ #_ #IHW12 #IHU12 #K #s #d #e #HLK #X #H #Hdetd
   elim (lift_inv_flat2 … H) -H #V1 #T1 #HVW1 #HTU1 #H destruct
   elim (IHW12 … HLK … HVW1) -W1 //
@@ -152,12 +152,12 @@ lemma cpy_inv_lift1_be: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶[dt, et] U2 →
   elim (lift_inv_lref2 … H) -H * #Hid #H destruct [ -Hdtd -Hidet | -Hdti -Hdedet ]
   [ lapply (ylt_yle_trans i d (dt+(et-e)) ? ?) /2 width=1 by ylt_inj/
     [ >yplus_minus_assoc_inj /2 width=1 by yle_plus1_to_minus_inj2/ ] -Hdedet #Hidete
-    elim (ldrop_conf_lt … HLK … HLKV) -L // #L #U #HKL #_ #HUV
+    elim (drop_conf_lt … HLK … HLKV) -L // #L #U #HKL #_ #HUV
     elim (lift_trans_le … HUV … HVW) -V // >minus_plus <plus_minus_m_m // -Hid
     /3 width=5 by cpy_subst, ex2_intro/
   | elim (le_inv_plus_l … Hid) #Hdie #Hei
     lapply (yle_trans … Hdtd (i-e) ?) /2 width=1 by yle_inj/ -Hdtd #Hdtie
-    lapply (ldrop_conf_ge … HLK … HLKV ?) -L // #HKV
+    lapply (drop_conf_ge … HLK … HLKV ?) -L // #HKV
     elim (lift_split … HVW d (i-e+1)) -HVW [2,3,4: /2 width=1 by le_S_S, le_S/ ] -Hid -Hdie
     #V1 #HV1 >plus_minus // <minus_minus /2 width=1 by le_S/ <minus_n_n <plus_n_O #H
     @(ex2_intro … H) @(cpy_subst … HKV HV1) // (**) (* explicit constructor *)
@@ -167,7 +167,7 @@ lemma cpy_inv_lift1_be: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶[dt, et] U2 →
   elim (lift_inv_bind2 … H) -H #V1 #T1 #HVW1 #HTU1 #H destruct
   elim (IHW12 … HLK … HVW1) -IHW12 // #V2 #HV12 #HVW2
   elim (IHU12 … HTU1) -U1
-  /3 width=6 by cpy_bind, ldrop_skip, lift_bind, yle_succ, ex2_intro/
+  /3 width=6 by cpy_bind, drop_skip, lift_bind, yle_succ, ex2_intro/
 | #I #G #L #W1 #W2 #U1 #U2 #dt #et #_ #_ #IHW12 #IHU12 #K #s #d #e #HLK #X #H #Hdtd #Hdedet
   elim (lift_inv_flat2 … H) -H #V1 #T1 #HVW1 #HTU1 #H destruct
   elim (IHW12 … HLK … HVW1) -W1 //
@@ -192,7 +192,7 @@ lemma cpy_inv_lift1_ge: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶[dt, et] U2 →
   elim (yle_inv_plus_inj2 … Hdedt) -Hdedt #_ #Hedt
   elim (yle_inv_plus_inj2 … Hdei) #Hdie #Hei
   lapply (lift_inv_lref2_ge  … H ?) -H /2 width=1 by yle_inv_inj/ #H destruct
-  lapply (ldrop_conf_ge … HLK … HLKV ?) -L /2 width=1 by yle_inv_inj/ #HKV
+  lapply (drop_conf_ge … HLK … HLKV ?) -L /2 width=1 by yle_inv_inj/ #HKV
   elim (lift_split … HVW d (i-e+1)) -HVW [2,3,4: /3 width=1 by yle_inv_inj, le_S_S, le_S/ ] -Hdei -Hdie
   #V0 #HV10 >plus_minus /2 width=1 by yle_inv_inj/ <minus_minus /3 width=1 by yle_inv_inj, le_S/ <minus_n_n <plus_n_O #H
   @(ex2_intro … H) @(cpy_subst … HKV HV10) (**) (* explicit constructor *)
@@ -203,7 +203,7 @@ lemma cpy_inv_lift1_ge: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶[dt, et] U2 →
   elim (lift_inv_bind2 … H) -H #V1 #T1 #HVW1 #HTU1 #H destruct
   elim (yle_inv_plus_inj2 … Hdetd) #_ #Hedt
   elim (IHW12 … HLK … HVW1) -IHW12 // #V2 #HV12 #HVW2
-  elim (IHU12 … HTU1) -U1 [4: @ldrop_skip // |2,5: skip |3: /2 width=1 by yle_succ/ ]
+  elim (IHU12 … HTU1) -U1 [4: @drop_skip // |2,5: skip |3: /2 width=1 by yle_succ/ ]
   >yminus_succ1_inj /3 width=5 by cpy_bind, lift_bind, ex2_intro/
 | #I #G #L #W1 #W2 #U1 #U2 #dt #et #_ #_ #IHW12 #IHU12 #K #s #d #e #HLK #X #H #Hdetd
   elim (lift_inv_flat2 … H) -H #V1 #T1 #HVW1 #HTU1 #H destruct

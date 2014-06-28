@@ -103,7 +103,7 @@ lemma trx_inv_atom: ∀h,g,I,G. ⦃G, ⋆⦄ ⊢ ➡[h, g] 𝐑⦃⓪{I}⦄ →
 #h #g * #i #G #H
 [ elim (crx_inv_sort … H) -H /2 width=4 by ex2_2_intro/
 | elim (crx_inv_lref … H) -H #I #L #V #H
-  elim (ldrop_inv_atom1 … H) -H #H destruct
+  elim (drop_inv_atom1 … H) -H #H destruct
 | elim (crx_inv_gref … H)
 ]
 qed-.

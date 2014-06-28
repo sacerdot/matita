@@ -16,7 +16,7 @@ include "basic_2/notation/relations/ineint_5.ma".
 include "basic_2/grammar/aarity.ma".
 include "basic_2/multiple/gr2_gr2.ma".
 include "basic_2/multiple/lifts_lift_vector.ma".
-include "basic_2/multiple/ldrops_ldrop.ma".
+include "basic_2/multiple/drops_drop.ma".
 include "basic_2/computation/acp.ma".
 
 (* ABSTRACT COMPUTATION PROPERTIES ******************************************)
@@ -115,7 +115,7 @@ lemma aacr_acr: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λG,L,T. RP G L T) �
                 ∀A. acr RR RS RP (aacr RP A).
 #RR #RS #RP #H1RP #H2RP #A elim A -A normalize //
 #B #A #IHB #IHA @mk_acr normalize
-[ /3 width=7 by ldrops_cons, lifts_cons/
+[ /3 width=7 by drops_cons, lifts_cons/
 | #G #L #T #H
   elim (cp1 … H1RP G L) #k #HK
   lapply (H ? (⋆k) ? (⟠) ? ? ?) -H
@@ -141,9 +141,9 @@ lemma aacr_acr: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λG,L,T. RP G L T) �
 | #I #G #L #K #Vs #V1 #V2 #i #HA #HV12 #HLK #L0 #V0 #X #des #HB #HL0 #H
   elim (lifts_inv_applv1 … H) -H #V0s #Y #HV0s #HY #H destruct
   elim (lifts_inv_lref1 … HY) -HY #i0 #Hi0 #H destruct
-  elim (ldrops_ldrop_trans … HL0 … HLK) #X #des0 #i1 #HL02 #H #Hi1 #Hdes0
+  elim (drops_drop_trans … HL0 … HLK) #X #des0 #i1 #HL02 #H #Hi1 #Hdes0
   >(at_mono … Hi1 … Hi0) in HL02; -i1 #HL02
-  elim (ldrops_inv_skip2 … Hdes0 … H) -H -des0 #L2 #W1 #des0 #Hdes0 #HLK #HVW1 #H destruct
+  elim (drops_inv_skip2 … Hdes0 … H) -H -des0 #L2 #W1 #des0 #Hdes0 #HLK #HVW1 #H destruct
   elim (lift_total W1 0 (i0 + 1)) #W2 #HW12
   elim (lifts_lift_trans  … Hdes0 … HVW1 … HW12) // -Hdes0 -Hi0 #V3 #HV13 #HVW2
   >(lift_mono … HV13 … HV12) in HVW2; -V3 #HVW2
@@ -154,8 +154,8 @@ lemma aacr_acr: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λG,L,T. RP G L T) �
   elim (lift_total V10 0 1) #V20 #HV120
   elim (liftv_total 0 1 V10s) #V20s #HV120s
   @(s6 … IHA … (V10 @ V10s) (V20 @ V20s)) /3 width=7 by rp_lifts, liftv_cons/
-  @(HA … (des + 1)) /2 width=2 by ldrops_skip/
-  [ @(s0 … IHB … HB … HV120) /2 width=2 by ldrop_drop/
+  @(HA … (des + 1)) /2 width=2 by drops_skip/
+  [ @(s0 … IHB … HB … HV120) /2 width=2 by drop_drop/
   | @lifts_applv //
     elim (liftsv_liftv_trans_le … HV10s … HV120s) -V10s #V10s #HV10s #HV120s
     >(liftv_mono … HV12s … HV10s) -V1s //

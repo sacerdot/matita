@@ -21,7 +21,7 @@ include "basic_2/reduction/cix.ma".
 
 lemma cix_lref: ∀h,g,G,L,i. ⇩[i] L ≡ ⋆ → ⦃G, L⦄ ⊢ ➡[h, g] 𝐈⦃#i⦄.
 #h #g #G #L #i #HL #H elim (crx_inv_lref … H) -h #I #K #V #HLK
-lapply (ldrop_mono … HLK … HL) -L -i #H destruct
+lapply (drop_mono … HLK … HL) -L -i #H destruct
 qed.
 
 (* Properties on relocation *************************************************)

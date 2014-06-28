@@ -14,7 +14,7 @@
 
 include "basic_2/notation/relations/statictype_5.ma".
 include "basic_2/grammar/genv.ma".
-include "basic_2/substitution/ldrop.ma".
+include "basic_2/substitution/drop.ma".
 include "basic_2/static/sh.ma".
 
 (* STATIC TYPE ASSIGNMENT ON TERMS ******************************************)

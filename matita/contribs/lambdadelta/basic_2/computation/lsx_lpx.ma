@@ -35,7 +35,7 @@ elim (lleq_dec T L1 L2 d) /3 width=4 by lsx_lleq_trans/
 qed-.
 
 lemma lsx_leq_conf: ∀h,g,G,L1,T,d. G ⊢ ⬊*[h, g, T, d] L1 →
-                    ∀L2. L1 ≃[d, ∞] L2 → G ⊢ ⬊*[h, g, T, d] L2.
+                    ∀L2. L1 ⩬[d, ∞] L2 → G ⊢ ⬊*[h, g, T, d] L2.
 #h #g #G #L1 #T #d #H @(lsx_ind … H) -L1
 #L1 #_ #IHL1 #L2 #HL12 @lsx_intro
 #L3 #HL23 #HnL23 elim (leq_lpx_trans_lleq … HL12 … HL23) -HL12 -HL23

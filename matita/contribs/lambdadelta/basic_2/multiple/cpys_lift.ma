@@ -28,7 +28,7 @@ lemma cpys_subst: ∀I,G,L,K,V,U1,i,d,e.
 | #U #U1 #_ #HU1 #IHU #U2 #HU12
   elim (lift_total U 0 (i+1)) #U0 #HU0
   lapply (IHU … HU0) -IHU #H
-  lapply (ldrop_fwd_drop2 … HLK) -HLK #HLK
+  lapply (drop_fwd_drop2 … HLK) -HLK #HLK
   lapply (cpy_lift_ge … HU1 … HLK HU0 HU12 ?) -HU1 -HLK -HU0 -HU12 // #HU02
   lapply (cpy_weak … HU02 d e ? ?) -HU02
   [2,3: /2 width=3 by cpys_strap1, yle_succ_dx/ ]
@@ -59,7 +59,7 @@ lemma cpys_inv_atom1: ∀I,G,L,T2,d,e. ⦃G, L⦄ ⊢ ⓪{I} ▶*[d, e] T2 →
   [ #H destruct
     elim (cpy_inv_atom1 … HT2) -HT2 [ /2 width=1 by or_introl/ | * /3 width=11 by ex6_5_intro, or_intror/ ]
   | * #J #K #V1 #V #i #Hdi #Hide #HLK #HV1 #HVT #HI
-    lapply (ldrop_fwd_drop2 … HLK) #H
+    lapply (drop_fwd_drop2 … HLK) #H
     elim (cpy_inv_lift1_ge_up … HT2 … H … HVT) -HT2 -H -HVT
     [2,3,4: /2 width=1 by ylt_fwd_le_succ, yle_succ_dx/ ]
     /4 width=11 by cpys_strap1, ex6_5_intro, or_intror/
@@ -85,7 +85,7 @@ lemma cpys_inv_lref1_Y2: ∀G,L,T2,i,d. ⦃G, L⦄ ⊢ #i ▶*[d, ∞] T2 →
 * >yminus_Y_inj /3 width=7 by or_intror, ex4_4_intro/
 qed-.
 
-lemma cpys_inv_lref1_ldrop: ∀G,L,T2,i,d,e. ⦃G, L⦄ ⊢ #i ▶*[d, e] T2 →
+lemma cpys_inv_lref1_drop: ∀G,L,T2,i,d,e. ⦃G, L⦄ ⊢ #i ▶*[d, e] T2 →
                             ∀I,K,V1. ⇩[i] L ≡ K.ⓑ{I}V1 →
                             ∀V2. ⇧[O, i+1] V2 ≡ T2 →
                             ∧∧ ⦃G, K⦄ ⊢ V1 ▶*[0, ⫰(d+e-i)] V2
@@ -95,7 +95,7 @@ lemma cpys_inv_lref1_ldrop: ∀G,L,T2,i,d,e. ⦃G, L⦄ ⊢ #i ▶*[d, e] T2 →
 [ #H destruct elim (lift_inv_lref2_be … HVT2) -HVT2 -HLK //
 | * #Z #Y #X1 #X2 #Hdi #Hide #HLY #HX12 #HXT2
   lapply (lift_inj … HXT2 … HVT2) -T2 #H destruct
-  lapply (ldrop_mono … HLY … HLK) -L #H destruct
+  lapply (drop_mono … HLY … HLK) -L #H destruct
   /2 width=1 by and3_intro/
 ]
 qed-.

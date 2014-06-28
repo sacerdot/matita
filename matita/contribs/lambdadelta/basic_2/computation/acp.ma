@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/grammar/genv.ma".
-include "basic_2/multiple/ldrops.ma".
+include "basic_2/multiple/drops.ma".
 
 (* ABSTRACT COMPUTATION PROPERTIES ******************************************)
 

@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "ground_2/ynat/ynat_plus.ma".
-include "basic_2/substitution/ldrop.ma".
+include "basic_2/substitution/drop.ma".
 
 (* LAZY SN POINTWISE EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS ****)
 
@@ -75,21 +75,21 @@ lemma llpx_sn_inv_flat: ∀R,I,L1,L2,V,T,d. llpx_sn R d (ⓕ{I}V.T) L1 L2 →
 lemma llpx_sn_fwd_length: ∀R,L1,L2,T,d. llpx_sn R d T L1 L2 → |L1| = |L2|.
 #R #L1 #L2 #T #d #H elim H -L1 -L2 -T -d //
 #I #L1 #L2 #K1 #K2 #V1 #V2 #d #i #_ #HLK1 #HLK2 #_ #_ #HK12
-lapply (ldrop_fwd_length … HLK1) -HLK1
-lapply (ldrop_fwd_length … HLK2) -HLK2
+lapply (drop_fwd_length … HLK1) -HLK1
+lapply (drop_fwd_length … HLK2) -HLK2
 normalize //
 qed-.
 
-lemma llpx_sn_fwd_ldrop_sn: ∀R,L1,L2,T,d. llpx_sn R d T L1 L2 →
+lemma llpx_sn_fwd_drop_sn: ∀R,L1,L2,T,d. llpx_sn R d T L1 L2 →
                             ∀K1,i. ⇩[i] L1 ≡ K1 → ∃K2. ⇩[i] L2 ≡ K2.
 #R #L1 #L2 #T #d #H #K1 #i #HLK1 lapply (llpx_sn_fwd_length … H) -H
-#HL12 lapply (ldrop_fwd_length_le2 … HLK1) -HLK1 /2 width=1 by ldrop_O1_le/
+#HL12 lapply (drop_fwd_length_le2 … HLK1) -HLK1 /2 width=1 by drop_O1_le/
 qed-.
 
-lemma llpx_sn_fwd_ldrop_dx: ∀R,L1,L2,T,d. llpx_sn R d T L1 L2 →
+lemma llpx_sn_fwd_drop_dx: ∀R,L1,L2,T,d. llpx_sn R d T L1 L2 →
                             ∀K2,i. ⇩[i] L2 ≡ K2 → ∃K1. ⇩[i] L1 ≡ K1.
 #R #L1 #L2 #T #d #H #K2 #i #HLK2 lapply (llpx_sn_fwd_length … H) -H
-#HL12 lapply (ldrop_fwd_length_le2 … HLK2) -HLK2 /2 width=1 by ldrop_O1_le/
+#HL12 lapply (drop_fwd_length_le2 … HLK2) -HLK2 /2 width=1 by drop_O1_le/
 qed-.
 
 fact llpx_sn_fwd_lref_aux: ∀R,L1,L2,X,d. llpx_sn R d X L1 L2 → ∀i. X = #i →
@@ -152,7 +152,7 @@ lemma llpx_sn_refl: ∀R. (∀L. reflexive … (R L)) → ∀T,L,d. llpx_sn R d 
 #n #IH #L * * /3 width=1 by llpx_sn_sort, llpx_sn_gref, llpx_sn_bind, llpx_sn_flat/
 #i #Hn elim (lt_or_ge i (|L|)) /2 width=1 by llpx_sn_free/
 #HiL #d elim (ylt_split i d) /2 width=1 by llpx_sn_skip/
-elim (ldrop_O1_lt … HiL) -HiL destruct /4 width=9 by llpx_sn_lref, ldrop_fwd_rfw/
+elim (drop_O1_lt … HiL) -HiL destruct /4 width=9 by llpx_sn_lref, drop_fwd_rfw/
 qed-.
 
 lemma llpx_sn_Y: ∀R,T,L1,L2. |L1| = |L2| → llpx_sn R (∞) T L1 L2.
@@ -174,7 +174,7 @@ lemma llpx_sn_ge_up: ∀R,L1,L2,U,dt. llpx_sn R dt U L1 L2 → ∀T,d,e. ⇧[d, 
 | #I #L1 #L2 #K1 #K2 #W1 #W2 #dt #i #Hdti #HLK1 #HLK2 #HW1 #HW12 #_ #X #d #e #H #_
   elim (lift_inv_lref2 … H) -H * #Hid #H destruct
   [ lapply (llpx_sn_fwd_length … HW1) -HW1 #HK12
-    lapply (ldrop_fwd_length … HLK1) lapply (ldrop_fwd_length … HLK2)
+    lapply (drop_fwd_length … HLK1) lapply (drop_fwd_length … HLK2)
     normalize in ⊢ (%→%→?); -I -W1 -W2 -dt /3 width=1 by llpx_sn_skip, ylt_inj/
   | /4 width=9 by llpx_sn_lref, yle_inj, le_plus_b/
   ]

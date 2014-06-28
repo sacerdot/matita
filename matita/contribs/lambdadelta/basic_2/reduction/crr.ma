@@ -14,7 +14,7 @@
 
 include "basic_2/notation/relations/predreducible_3.ma".
 include "basic_2/grammar/genv.ma".
-include "basic_2/substitution/ldrop.ma".
+include "basic_2/substitution/drop.ma".
 
 (* REDUCIBLE TERMS FOR CONTEXT-SENSITIVE REDUCTION **************************)
 
@@ -98,7 +98,7 @@ lemma trr_inv_atom: ∀G,I. ⦃G, ⋆⦄ ⊢ ➡ 𝐑⦃⓪{I}⦄ → ⊥.
 #G * #i #H
 [ elim (crr_inv_sort … H)
 | elim (crr_inv_lref … H) -H #L #V #H
-  elim (ldrop_inv_atom1 … H) -H #H destruct
+  elim (drop_inv_atom1 … H) -H #H destruct
 | elim (crr_inv_gref … H)
 ]
 qed-.

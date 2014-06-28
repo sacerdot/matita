@@ -25,7 +25,7 @@ lemma lsx_lref_be_lpxs: ∀h,g,I,G,K1,V,i,d. d ≤ yinj i → ⦃G, K1⦄ ⊢ �
 #h #g #I #G #K1 #V #i #d #Hdi #H @(csx_ind_alt … H) -V
 #V0 #_ #IHV0 #K2 #H @(lsx_ind … H) -K2
 #K0 #HK0 #IHK0 #HK10 #L0 #HLK0 @lsx_intro
-#L2 #HL02 #HnL02 elim (lpx_ldrop_conf … HLK0 … HL02) -HL02
+#L2 #HL02 #HnL02 elim (lpx_drop_conf … HLK0 … HL02) -HL02
 #Y #H #HLK2 elim (lpx_inv_pair1 … H) -H
 #K2 #V2 #HK02 #HV02 #H destruct
 elim (eq_term_dec V0 V2) #HnV02 destruct [ -IHV0 -HV02 -HK0 | -IHK0 -HnL02 -HLK0 ]
@@ -48,7 +48,7 @@ theorem csx_lsx: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ ⬊*[h, g] T → ∀d. G ⊢ ⬊*[
 [ #i #HG #HL #HT #H #d destruct
   elim (lt_or_ge i (|L|)) /2 width=1 by lsx_lref_free/
   elim (ylt_split i d) /2 width=1 by lsx_lref_skip/
-  #Hdi #Hi elim (ldrop_O1_lt (Ⓕ) … Hi) -Hi
+  #Hdi #Hi elim (drop_O1_lt (Ⓕ) … Hi) -Hi
   #I #K #V #HLK lapply (csx_inv_lref_bind … HLK … H) -H
   /4 width=6 by lsx_lref_be, fqup_lref/
 | #a #I #V #T #HG #HL #HT #H #d destruct

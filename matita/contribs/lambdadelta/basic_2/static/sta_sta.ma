@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/ldrop_ldrop.ma".
+include "basic_2/substitution/drop_drop.ma".
 include "basic_2/static/sta.ma".
 
 (* STATIC TYPE ASSIGNMENT ON TERMS ******************************************)
@@ -25,12 +25,12 @@ theorem sta_mono: ∀h,G,L. singlevalued … (sta h G L).
 [ #G #L #k #X #H >(sta_inv_sort1 … H) -X //
 | #G #L #K #V #W #U1 #i #HLK #_ #HWU1 #IHVW #U2 #H
   elim (sta_inv_lref1 … H) -H * #K0 #V0 #W0 #HLK0 #HVW0 #HW0U2
-  lapply (ldrop_mono … HLK0 … HLK) -HLK -HLK0 #H destruct
+  lapply (drop_mono … HLK0 … HLK) -HLK -HLK0 #H destruct
   lapply (IHVW … HVW0) -IHVW -HVW0 #H destruct
   >(lift_mono … HWU1 … HW0U2) -W0 -U1 //
 | #G #L #K #W #V #U1 #i #HLK #_ #HWU1 #IHWV #U2 #H
   elim (sta_inv_lref1 … H) -H * #K0 #W0 #V0 #HLK0 #HWV0 #HV0U2
-  lapply (ldrop_mono … HLK0 … HLK) -HLK -HLK0 #H destruct
+  lapply (drop_mono … HLK0 … HLK) -HLK -HLK0 #H destruct
   lapply (IHWV … HWV0) -IHWV -HWV0 #H destruct
   >(lift_mono … HWU1 … HV0U2) -W -U1 //
 | #a #I #G #L #V #T #U1 #_ #IHTU1 #X #H

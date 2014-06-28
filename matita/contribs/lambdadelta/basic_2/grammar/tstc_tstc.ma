@@ -19,14 +19,14 @@ include "basic_2/grammar/tstc.ma".
 (* Main properties **********************************************************)
 
 (* Basic_1: was: iso_trans *)
-theorem tstc_trans: ∀T1,T. T1 ≃ T → ∀T2. T ≃ T2 → T1 ≃ T2.
+theorem tstc_trans: Transitive … tstc.
 #T1 #T * -T1 -T //
 #I #V1 #V #T1 #T #X #H
 elim (tstc_inv_pair1 … H) -H #V2 #T2 #H destruct //
-qed.
+qed-.
 
-theorem tstc_canc_sn: ∀T,T1. T ≃ T1 → ∀T2. T ≃ T2 → T1 ≃ T2.
-/3 width=3/ qed.
+theorem tstc_canc_sn: ∀T,T1. T ≂ T1 → ∀T2. T ≂ T2 → T1 ≂ T2.
+/3 width=3 by tstc_trans, tstc_sym/ qed-.
 
-theorem tstc_canc_dx: ∀T1,T. T1 ≃ T → ∀T2. T2 ≃ T → T1 ≃ T2.
-/3 width=3/ qed.
+theorem tstc_canc_dx: ∀T1,T. T1 ≂ T → ∀T2. T2 ≂ T → T1 ≂ T2.
+/3 width=3 by tstc_trans, tstc_sym/ qed-.

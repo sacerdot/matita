@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/lpx_sn_ldrop.ma".
+include "basic_2/substitution/lpx_sn_drop.ma".
 include "basic_2/reduction/cpx_lift.ma".
 include "basic_2/reduction/lpx.ma".
 
@@ -20,13 +20,13 @@ include "basic_2/reduction/lpx.ma".
 
 (* Properies on local environment slicing ***********************************)
 
-lemma lpx_ldrop_conf: ∀h,g,G. dropable_sn (lpx h g G).
+lemma lpx_drop_conf: ∀h,g,G. dropable_sn (lpx h g G).
 /3 width=6 by lpx_sn_deliftable_dropable, cpx_inv_lift1/ qed-.
 
-lemma ldrop_lpx_trans: ∀h,g,G. dedropable_sn (lpx h g G).
+lemma drop_lpx_trans: ∀h,g,G. dedropable_sn (lpx h g G).
 /3 width=10 by lpx_sn_liftable_dedropable, cpx_lift/ qed-.
 
-lemma lpx_ldrop_trans_O1: ∀h,g,G. dropable_dx (lpx h g G).
+lemma lpx_drop_trans_O1: ∀h,g,G. dropable_dx (lpx h g G).
 /2 width=3 by lpx_sn_dropable/ qed-.
 
 (* Properties on supclosure *************************************************)
@@ -40,7 +40,7 @@ lemma fqu_lpx_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T
   #K2 #W2 #HLK2 #HVW2 #H destruct
   /3 width=5 by fqu_fquq, cpx_pair_sn, fqu_bind_dx, ex3_2_intro/
 | #G #L1 #K1 #T1 #U1 #e #HLK1 #HTU1 #K2 #HK12
-  elim (ldrop_lpx_trans … HLK1 … HK12) -HK12
+  elim (drop_lpx_trans … HLK1 … HK12) -HK12
   /3 width=7 by fqu_drop, ex3_2_intro/
 ]
 qed-.
@@ -61,9 +61,9 @@ lemma lpx_fqu_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T
 /3 width=7 by fqu_pair_sn, fqu_bind_dx, fqu_flat_dx, lpx_pair, ex3_2_intro/
 [ #I #G1 #L1 #V1 #X #H elim (lpx_inv_pair2 … H) -H
   #K1 #W1 #HKL1 #HWV1 #H destruct elim (lift_total V1 0 1)
-  /4 width=7 by cpx_delta, fqu_drop, ldrop_drop, ex3_2_intro/
+  /4 width=7 by cpx_delta, fqu_drop, drop_drop, ex3_2_intro/
 | #G #L1 #K1 #T1 #U1 #e #HLK1 #HTU1 #L0 #HL01
-  elim (lpx_ldrop_trans_O1 … HL01 … HLK1) -L1
+  elim (lpx_drop_trans_O1 … HL01 … HLK1) -L1
   /3 width=5 by fqu_drop, ex3_2_intro/
 ]
 qed-.

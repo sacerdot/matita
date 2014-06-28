@@ -84,13 +84,13 @@ qed.
 
 lemma cnr_lref_free: ∀G,L,i. |L| ≤ i → ⦃G, L⦄ ⊢ ➡ 𝐍⦃#i⦄.
 #G #L #i #Hi #X #H elim (cpr_inv_lref1 … H) -H // *
-#K #V1 #V2 #HLK lapply (ldrop_fwd_length_lt2 … HLK) -HLK
+#K #V1 #V2 #HLK lapply (drop_fwd_length_lt2 … HLK) -HLK
 #H elim (lt_refl_false i) /2 width=3 by lt_to_le_to_lt/
 qed.
 
 (* Basic_1: was only: nf2_csort_lref *)
 lemma cnr_lref_atom: ∀G,L,i. ⇩[i] L ≡ ⋆ → ⦃G, L⦄ ⊢ ➡ 𝐍⦃#i⦄.
-#G #L #i #HL @cnr_lref_free >(ldrop_fwd_length … HL) -HL //
+#G #L #i #HL @cnr_lref_free >(drop_fwd_length … HL) -HL //
 qed.
 
 (* Basic_1: was: nf2_abst *)

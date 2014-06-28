@@ -47,7 +47,7 @@ lemma cpy_fwd_nlift2_ge: ∀G,L,U1,U2,d,e. ⦃G, L⦄ ⊢ U1 ▶[d, e] U2 →
     | * #J #K #W #j #Hdj #Hji #HLK #HnW
       elim (yle_inv_succ1 … Hdj) -Hdj #Hdj #Hj
       lapply (ylt_O … Hj) -Hj #Hj
-      lapply (ldrop_inv_drop1_lt … HLK ?) // -HLK #HLK
+      lapply (drop_inv_drop1_lt … HLK ?) // -HLK #HLK
       >(plus_minus_m_m j 1) in ⊢ (%→?); [2: /3 width=3 by yle_trans, yle_inv_inj/ ]
       #HnU1 <minus_le_minus_minus_comm in HnW;
       /5 width=9 by nlift_bind_dx, monotonic_lt_pred, lt_plus_to_minus_r, ex5_4_intro, or_intror/

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/ldrop_ldrop.ma".
+include "basic_2/substitution/drop_drop.ma".
 include "basic_2/static/aaa.ma".
 
 (* ATONIC ARITY ASSIGNMENT ON TERMS *****************************************)
@@ -25,7 +25,7 @@ theorem aaa_mono: ∀G,L,T,A1. ⦃G, L⦄ ⊢ T ⁝ A1 → ∀A2. ⦃G, L⦄ ⊢
   >(aaa_inv_sort … H) -H //
 | #I1 #G #L #K1 #V1 #B #i #HLK1 #_ #IHA1 #A2 #H
   elim (aaa_inv_lref … H) -H #I2 #K2 #V2 #HLK2 #HA2
-  lapply (ldrop_mono … HLK1 … HLK2) -L #H destruct /2 width=1/
+  lapply (drop_mono … HLK1 … HLK2) -L #H destruct /2 width=1/
 | #a #G #L #V #T #B1 #A1 #_ #_ #_ #IHA1 #A2 #H
   elim (aaa_inv_abbr … H) -H /2 width=1/
 | #a #G #L #V1 #T1 #B1 #A1 #_ #_ #IHB1 #IHA1 #X #H

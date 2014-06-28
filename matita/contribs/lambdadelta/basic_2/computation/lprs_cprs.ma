@@ -131,7 +131,7 @@ lemma cprs_inv_abbr1: ∀a,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓓ{a}V1.T1 ➡* U2 → 
   ]
 | #U1 #HTU1 #HU01 elim (lift_total U2 0 1)
   #U #HU2 lapply (cpr_lift … HU02 (L.ⓓV1) … HU01 … HU2) -U0
-  /4 width=3 by cprs_strap1, ldrop_drop, ex3_intro, or_intror/
+  /4 width=3 by cprs_strap1, drop_drop, ex3_intro, or_intror/
 ]
 qed-.
 

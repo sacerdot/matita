@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/lrsubeqc_2.ma".
-include "basic_2/substitution/ldrop.ma".
+include "basic_2/substitution/drop.ma".
 
 (* RESTRICTED LOCAL ENVIRONMENT REFINEMENT **********************************)
 
@@ -77,31 +77,31 @@ lemma lsubr_fwd_length: ∀L1,L2. L1 ⫃ L2 → |L2| ≤ |L1|.
 #L1 #L2 #H elim H -L1 -L2 /2 width=1 by monotonic_le_plus_l/
 qed-.
 
-lemma lsubr_fwd_ldrop2_bind: ∀L1,L2. L1 ⫃ L2 →
-                             ∀I,K2,W,s,i. ⇩[s, 0, i] L2 ≡ K2.ⓑ{I}W →
-                             (∃∃K1. K1 ⫃ K2 & ⇩[s, 0, i] L1 ≡ K1.ⓑ{I}W) ∨
-                             ∃∃K1,V. K1 ⫃ K2 & ⇩[s, 0, i] L1 ≡ K1.ⓓⓝW.V & I = Abst.
+lemma lsubr_fwd_drop2_bind: ∀L1,L2. L1 ⫃ L2 →
+                            ∀I,K2,W,s,i. ⇩[s, 0, i] L2 ≡ K2.ⓑ{I}W →
+                            (∃∃K1. K1 ⫃ K2 & ⇩[s, 0, i] L1 ≡ K1.ⓑ{I}W) ∨
+                            ∃∃K1,V. K1 ⫃ K2 & ⇩[s, 0, i] L1 ≡ K1.ⓓⓝW.V & I = Abst.
 #L1 #L2 #H elim H -L1 -L2
 [ #L #I #K2 #W #s #i #H
-  elim (ldrop_inv_atom1 … H) -H #H destruct
+  elim (drop_inv_atom1 … H) -H #H destruct
 | #J #L1 #L2 #V #HL12 #IHL12 #I #K2 #W #s #i #H
-  elim (ldrop_inv_O1_pair1 … H) -H * #Hi #HLK2 destruct [ -IHL12 | -HL12 ]
-  [ /3 width=3 by ldrop_pair, ex2_intro, or_introl/
+  elim (drop_inv_O1_pair1 … H) -H * #Hi #HLK2 destruct [ -IHL12 | -HL12 ]
+  [ /3 width=3 by drop_pair, ex2_intro, or_introl/
   | elim (IHL12 … HLK2) -IHL12 -HLK2 *
-    /4 width=4 by ldrop_drop_lt, ex3_2_intro, ex2_intro, or_introl, or_intror/
+    /4 width=4 by drop_drop_lt, ex3_2_intro, ex2_intro, or_introl, or_intror/
   ]
 | #L1 #L2 #V1 #V2 #HL12 #IHL12 #I #K2 #W #s #i #H
-  elim (ldrop_inv_O1_pair1 … H) -H * #Hi #HLK2 destruct [ -IHL12 | -HL12 ]
-  [ /3 width=4 by ldrop_pair, ex3_2_intro, or_intror/
+  elim (drop_inv_O1_pair1 … H) -H * #Hi #HLK2 destruct [ -IHL12 | -HL12 ]
+  [ /3 width=4 by drop_pair, ex3_2_intro, or_intror/
   | elim (IHL12 … HLK2) -IHL12 -HLK2 *
-    /4 width=4 by ldrop_drop_lt, ex3_2_intro, ex2_intro, or_introl, or_intror/
+    /4 width=4 by drop_drop_lt, ex3_2_intro, ex2_intro, or_introl, or_intror/
   ]
 ]
 qed-.
 
-lemma lsubr_fwd_ldrop2_abbr: ∀L1,L2. L1 ⫃ L2 →
-                             ∀K2,V,s,i. ⇩[s, 0, i] L2 ≡ K2.ⓓV →
-                             ∃∃K1. K1 ⫃ K2 & ⇩[s, 0, i] L1 ≡ K1.ⓓV.
-#L1 #L2 #HL12 #K2 #V #s #i #HLK2 elim (lsubr_fwd_ldrop2_bind … HL12 … HLK2) -L2 // *
+lemma lsubr_fwd_drop2_abbr: ∀L1,L2. L1 ⫃ L2 →
+                            ∀K2,V,s,i. ⇩[s, 0, i] L2 ≡ K2.ⓓV →
+                            ∃∃K1. K1 ⫃ K2 & ⇩[s, 0, i] L1 ≡ K1.ⓓV.
+#L1 #L2 #HL12 #K2 #V #s #i #HLK2 elim (lsubr_fwd_drop2_bind … HL12 … HLK2) -L2 // *
 #K1 #W #_ #_ #H destruct
 qed-.

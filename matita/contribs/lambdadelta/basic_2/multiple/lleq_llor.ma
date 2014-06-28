@@ -27,8 +27,8 @@ lapply (llpx_sn_frees_trans … H1R H2R … H1) -H1R -H2R #HR
 elim (llpx_sn_llpx_sn_alt … H1) -H1 #HL12 #IH1
 elim H2 -H2 #_ #HL1 #IH2
 @lleq_intro_alt // #I2 #I #K2 #K #V2 #V #i #Hi #HnT #HLK2 #HLK
-lapply (ldrop_fwd_length_lt2 … HLK) #HiL
-elim (ldrop_O1_lt (Ⓕ) L1 i) // -HiL #I1 #K1 #V1 #HLK1
+lapply (drop_fwd_length_lt2 … HLK) #HiL
+elim (drop_O1_lt (Ⓕ) L1 i) // -HiL #I1 #K1 #V1 #HLK1
 elim (IH1 … HLK1 HLK2) -IH1 /2 width=1 by/ #H #_ destruct
 elim (IH2 … HLK1 HLK2 HLK) -IH2 -HLK1 -HLK2 -HLK * /2 width=1 by conj/ #H
 [ elim (ylt_yle_false … H) -H //

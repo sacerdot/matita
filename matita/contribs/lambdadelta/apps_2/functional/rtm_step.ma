@@ -18,7 +18,7 @@ include "apps_2/functional/rtm.ma".
 
 (* transitions *)
 inductive rtm_step: relation rtm ≝
-| rtm_ldrop : ∀G,u,E,I,t,D,V,S,i.
+| rtm_drop : ∀G,u,E,I,t,D,V,S,i.
               rtm_step (mk_rtm G u (E. ④{I} {t, D, V}) S (#(i + 1)))
                        (mk_rtm G u E S (#i))
 | rtm_ldelta: ∀G,u,E,t,D,V,S.

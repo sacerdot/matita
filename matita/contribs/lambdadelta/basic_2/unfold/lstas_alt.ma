@@ -47,10 +47,10 @@ lemma lstasa_step_dx: ∀h,G,L,T1,T,l. ⦃G, L⦄ ⊢ T1 ••*[h, l] T →
 [ /2 width=1 by sta_lstasa/
 | #G #L #l #k #X #H >(sta_inv_sort1 … H) -X >commutative_plus //
 | #G #L #K #V #W #U #i #l #HLK #_ #HWU #IHVW #U2 #HU2
-  lapply (ldrop_fwd_drop2 … HLK) #H
+  lapply (drop_fwd_drop2 … HLK) #H
   elim (sta_inv_lift1 … HU2 … H … HWU) -H -U /3 width=6 by lstasa_ldef/
 | #G #L #K #W #V #V0 #U #i #l #HLK #HWl0 #_ #HVU #IHWV #U2 #HU2
-  lapply (ldrop_fwd_drop2 … HLK) #H
+  lapply (drop_fwd_drop2 … HLK) #H
   elim (sta_inv_lift1 … HU2 … H … HVU) -H -U /3 width=8 by lstasa_ldec/
 | #a #I #G #L #V #T1 #U1 #l #_ #IHTU1 #X #H
   elim (sta_inv_bind1 … H) -H #U #HU1 #H destruct /3 width=1 by lstasa_bind/

@@ -39,7 +39,7 @@ lemma lstas_inv_lref1: ∀h,G,L,U,i,l. ⦃G, L⦄ ⊢ #i •*[h, l+1] U →
 #h #G #L #U #i #l #H elim (lstas_inv_step_sn … H) -H
 #X #H #HXU elim (sta_inv_lref1 … H) -H
 * #K #V #W #HLK #HVW #HWX
-lapply (ldrop_fwd_drop2 … HLK) #H0LK
+lapply (drop_fwd_drop2 … HLK) #H0LK
 elim (lstas_inv_lift1 … HXU … H0LK … HWX) -H0LK -X
 /4 width=8 by lstas_step_sn, ex4_4_intro, ex3_3_intro, or_introl, or_intror/
 qed-.
@@ -67,7 +67,7 @@ lemma lstas_ldef: ∀h,G,L,K,V,i. ⇩[i] L ≡ K.ⓓV →
                   ∀W,l. ⦃G, K⦄ ⊢ V •*[h, l+1] W →
                   ∀U. ⇧[0, i+1] W ≡ U → ⦃G, L⦄ ⊢ #i •*[h, l+1] U.
 #h #G #L #K #V #i #HLK #W #l #HVW #U #HWU
-lapply (ldrop_fwd_drop2 … HLK)
+lapply (drop_fwd_drop2 … HLK)
 elim (lstas_inv_step_sn … HVW) -HVW #W0
 elim (lift_total W0 0 (i+1)) /3 width=12 by lstas_step_sn, sta_ldef, lstas_lift/
 qed.
@@ -76,6 +76,6 @@ lemma lstas_ldec: ∀h,G,L,K,W,i. ⇩[i] L ≡ K.ⓛW → ∀V0. ⦃G, K⦄ ⊢ 
                   ∀V,l. ⦃G, K⦄ ⊢ W •*[h, l] V →
                   ∀U. ⇧[0, i+1] V ≡ U → ⦃G, L⦄ ⊢ #i •*[h, l+1] U.
 #h #G #L #K #W #i #HLK #V0 #HWV0 #V #l #HWV #U #HVU
-lapply (ldrop_fwd_drop2 … HLK) #H
+lapply (drop_fwd_drop2 … HLK) #H
 elim (lift_total W 0 (i+1)) /3 width=12 by lstas_step_sn, sta_ldec, lstas_lift/
 qed.

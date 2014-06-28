@@ -28,7 +28,7 @@ theorem cpy_conf_eq: ∀G,L,T0,T1,d1,e1. ⦃G, L⦄ ⊢ T0 ▶[d1, e1] T1 →
   elim (cpy_inv_lref1 … H) -H
   [ #HX destruct /3 width=7 by cpy_subst, ex2_intro/
   | -Hd1 -Hde1 * #I2 #K2 #V2 #_ #_ #HLK2 #HVT2
-    lapply (ldrop_mono … HLK1 … HLK2) -HLK1 -HLK2 #H destruct
+    lapply (drop_mono … HLK1 … HLK2) -HLK1 -HLK2 #H destruct
     >(lift_mono … HVT1 … HVT2) -HVT1 -HVT2 /2 width=3 by ex2_intro/
   ]
 | #a #I #G #L #V0 #V1 #T0 #T1 #d1 #e1 #_ #_ #IHV01 #IHT01 #X #d2 #e2 #HX

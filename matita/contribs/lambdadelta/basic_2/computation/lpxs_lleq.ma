@@ -14,7 +14,7 @@
 
 include "basic_2/reduction/lpx_lleq.ma".
 include "basic_2/computation/cpxs_leq.ma".
-include "basic_2/computation/lpxs_ldrop.ma".
+include "basic_2/computation/lpxs_drop.ma".
 include "basic_2/computation/lpxs_cpxs.ma".
 
 (* SN EXTENDED PARALLEL COMPUTATION FOR LOCAL ENVIRONMENTS ******************)
@@ -37,7 +37,7 @@ lemma lpxs_lleq_fqu_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2,
 [ #I #G1 #L1 #V1 #X #H1 #H2 elim (lpxs_inv_pair2 … H1) -H1
   #K0 #V0 #H1KL1 #_ #H destruct
   elim (lleq_inv_lref_ge_dx … H2 ? I L1 V1) -H2 //
-  #K1 #H #H2KL1 lapply (ldrop_inv_O2 … H) -H #H destruct
+  #K1 #H #H2KL1 lapply (drop_inv_O2 … H) -H #H destruct
   /2 width=4 by fqu_lref_O, ex3_intro/
 | * [ #a ] #I #G1 #L1 #V1 #T1 #K1 #HLK1 #H
   [ elim (lleq_inv_bind … H)
@@ -48,12 +48,12 @@ lemma lpxs_lleq_fqu_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2,
 | #I #G1 #L1 #V1 #T1 #K1 #HLK1 #H elim (lleq_inv_flat … H) -H
   /2 width=4 by fqu_flat_dx, ex3_intro/
 | #G1 #L1 #L #T1 #U1 #e #HL1 #HTU1 #K1 #H1KL1 #H2KL1
-  elim (ldrop_O1_le (Ⓕ) (e+1) K1)
+  elim (drop_O1_le (Ⓕ) (e+1) K1)
   [ #K #HK1 lapply (lleq_inv_lift_le … H2KL1 … HK1 HL1 … HTU1 ?) -H2KL1 //
-    #H2KL elim (lpxs_ldrop_trans_O1 … H1KL1 … HL1) -L1
-    #K0 #HK10 #H1KL lapply (ldrop_mono … HK10 … HK1) -HK10 #H destruct
+    #H2KL elim (lpxs_drop_trans_O1 … H1KL1 … HL1) -L1
+    #K0 #HK10 #H1KL lapply (drop_mono … HK10 … HK1) -HK10 #H destruct
     /3 width=4 by fqu_drop, ex3_intro/
-  | lapply (ldrop_fwd_length_le2 … HL1) -L -T1 -g
+  | lapply (drop_fwd_length_le2 … HL1) -L -T1 -g
     lapply (lleq_fwd_length … H2KL1) //
   ]
 ]
@@ -93,9 +93,9 @@ elim (fqus_inv_gen … H) -H
 ]
 qed-.
 
-fact leq_lpxs_trans_lleq_aux: ∀h,g,G,L1,L0,d,e. L1 ≃[d, e] L0 → e = ∞ →
+fact leq_lpxs_trans_lleq_aux: ∀h,g,G,L1,L0,d,e. L1 ⩬[d, e] L0 → e = ∞ →
                               ∀L2. ⦃G, L0⦄ ⊢ ➡*[h, g] L2 →
-                              ∃∃L. L ≃[d, e] L2 & ⦃G, L1⦄ ⊢ ➡*[h, g] L &
+                              ∃∃L. L ⩬[d, e] L2 & ⦃G, L1⦄ ⊢ ➡*[h, g] L &
                                    (∀T. L0 ≡[T, d] L2 ↔ L1 ≡[T, d] L).
 #h #g #G #L1 #L0 #d #e #H elim H -L1 -L0 -d -e
 [ #d #e #_ #L2 #H >(lpxs_inv_atom1 … H) -H
@@ -117,8 +117,8 @@ fact leq_lpxs_trans_lleq_aux: ∀h,g,G,L1,L0,d,e. L1 ≃[d, e] L0 → e = ∞ �
 ]
 qed-.
 
-lemma leq_lpxs_trans_lleq: ∀h,g,G,L1,L0,d. L1 ≃[d, ∞] L0 →
+lemma leq_lpxs_trans_lleq: ∀h,g,G,L1,L0,d. L1 ⩬[d, ∞] L0 →
                            ∀L2. ⦃G, L0⦄ ⊢ ➡*[h, g] L2 →
-                           ∃∃L. L ≃[d, ∞] L2 & ⦃G, L1⦄ ⊢ ➡*[h, g] L &
+                           ∃∃L. L ⩬[d, ∞] L2 & ⦃G, L1⦄ ⊢ ➡*[h, g] L &
                                 (∀T. L0 ≡[T, d] L2 ↔ L1 ≡[T, d] L).
 /2 width=1 by leq_lpxs_trans_lleq_aux/ qed-.

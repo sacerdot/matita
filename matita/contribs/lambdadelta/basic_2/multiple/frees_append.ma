@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/ldrop_append.ma".
+include "basic_2/substitution/drop_append.ma".
 include "basic_2/multiple/frees.ma".
 
 (* CONTEXT-SENSITIVE FREE VARIABLES *****************************************)
@@ -23,8 +23,8 @@ lemma frees_append: ∀L2,U,d,i. L2 ⊢ i ϵ 𝐅*[d]⦃U⦄ → i ≤ |L2| →
                     ∀L1. L1 @@ L2 ⊢ i ϵ 𝐅*[d]⦃U⦄.
 #L2 #U #d #i #H elim H -L2 -U -d -i /3 width=2 by frees_eq/
 #I #L2 #K2 #U #W #d #i #j #Hdj #Hji #HnU #HLK2 #_ #IHW #Hi #L1
-lapply (ldrop_fwd_length_minus2 … HLK2) normalize #H0
-lapply (ldrop_O1_append_sn_le … HLK2 … L1) -HLK2
+lapply (drop_fwd_length_minus2 … HLK2) normalize #H0
+lapply (drop_O1_append_sn_le … HLK2 … L1) -HLK2
 [ -I -L1 -K2 -U -W -d /3 width=3 by lt_to_le, lt_to_le_to_lt/
 | #HLK2 @(frees_be … HnU HLK2) // -HnU -HLK2 @IHW -IHW
   >(minus_plus_m_m (|K2|) 1) >H0 -H0 /2 width=1 by monotonic_le_minus_l2/
@@ -37,9 +37,9 @@ fact frees_inv_append_aux: ∀L,U,d,i. L ⊢ i ϵ 𝐅*[d]⦃U⦄ → ∀L1,L2. 
                            i ≤ |L2| → L2 ⊢ i ϵ 𝐅*[d]⦃U⦄.
 #L #U #d #i #H elim H -L -U -d -i /3 width=2 by frees_eq/
 #Z #L #Y #U #X #d #i #j #Hdj #Hji #HnU #HLY #_ #IHW #L1 #L2 #H #Hi destruct
-elim (ldrop_O1_lt (Ⓕ) L2 j) [2: -Z -Y -L1 -X -U -d /2 width=3 by lt_to_le_to_lt/ ]
-#I #K2 #W #HLK2 lapply (ldrop_fwd_length_minus2 … HLK2) normalize #H0
-lapply (ldrop_O1_inv_append1_le … HLY … HLK2) -HLY
+elim (drop_O1_lt (Ⓕ) L2 j) [2: -Z -Y -L1 -X -U -d /2 width=3 by lt_to_le_to_lt/ ]
+#I #K2 #W #HLK2 lapply (drop_fwd_length_minus2 … HLK2) normalize #H0
+lapply (drop_O1_inv_append1_le … HLY … HLK2) -HLY
 [ -Z -I -Y -K2 -L1 -X -U -W -d /3 width=3 by lt_to_le, lt_to_le_to_lt/
 | normalize #H destruct
   @(frees_be … HnU HLK2) -HnU -HLK2 // @IHW -IHW //

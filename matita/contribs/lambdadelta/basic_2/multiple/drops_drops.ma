@@ -12,18 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reduction/lpx_ldrop.ma".
-include "basic_2/computation/lpxs.ma".
+include "basic_2/multiple/drops_drop.ma".
 
-(* SN EXTENDED PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS *******************)
+(* ITERATED LOCAL ENVIRONMENT SLICING ***************************************)
 
-(* Properies on local environment slicing ***********************************)
+(* Main properties **********************************************************)
 
-lemma lpxs_ldrop_conf: ∀h,g,G. dropable_sn (lpxs h g G).
-/3 width=3 by dropable_sn_TC, lpx_ldrop_conf/ qed-.
-
-lemma ldrop_lpxs_trans: ∀h,g,G. dedropable_sn (lpxs h g G).
-/3 width=3 by dedropable_sn_TC, ldrop_lpx_trans/ qed-.
-
-lemma lpxs_ldrop_trans_O1: ∀h,g,G. dropable_dx (lpxs h g G).
-/3 width=3 by dropable_dx_TC, lpx_ldrop_trans_O1/ qed-.
+(* Basic_1: was: drop1_trans *)
+theorem drops_trans: ∀L,L2,s,des2. ⇩*[s, des2] L ≡ L2 → ∀L1,des1. ⇩*[s, des1] L1 ≡ L →
+                     ⇩*[s, des2 @@ des1] L1 ≡ L2.
+#L #L2 #s #des2 #H elim H -L -L2 -des2 /3 width=3 by drops_cons/
+qed-.

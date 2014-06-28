@@ -12,25 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/ldrop_ldrop.ma".
-include "basic_2/multiple/ldrops.ma".
+include "basic_2/computation/lsubc_drop.ma".
 
-(* ITERATED LOCAL ENVIRONMENT SLICING ***************************************)
+(* LOCAL ENVIRONMENT REFINEMENT FOR ABSTRACT CANDIDATES OF REDUCIBILITY *****)
 
-(* Properties concerning basic local environment slicing ********************)
+(* Properties concerning generic local environment slicing ******************)
 
-lemma ldrops_ldrop_trans: ∀L1,L,des. ⇩*[Ⓕ, des] L1 ≡ L → ∀L2,i. ⇩[i] L ≡ L2 →
-                          ∃∃L0,des0,i0. ⇩[i0] L1 ≡ L0 & ⇩*[Ⓕ, des0] L0 ≡ L2 &
-                                        @⦃i, des⦄ ≡ i0 & des ▭ i ≡ des0.
-#L1 #L #des #H elim H -L1 -L -des
-[ /2 width=7 by ldrops_nil, minuss_nil, at_nil, ex4_3_intro/
-| #L1 #L0 #L #des #d #e #_ #HL0 #IHL0 #L2 #i #HL2
-  elim (lt_or_ge i d) #Hid
-  [ elim (ldrop_trans_le … HL0 … HL2) -L /2 width=2 by lt_to_le/
-    #L #HL0 #HL2 elim (IHL0 … HL0) -L0 /3 width=7 by ldrops_cons, minuss_lt, at_lt, ex4_3_intro/
-  | lapply (ldrop_trans_ge … HL0 … HL2 ?) -L // #HL02
-    elim (IHL0 … HL02) -L0 /3 width=7 by minuss_ge, at_ge, ex4_3_intro/
-  ]
+(* Basic_1: was: csubc_drop1_conf_rev *)
+lemma drops_lsubc_trans: ∀RR,RS,RP.
+                         acp RR RS RP → acr RR RS RP (λG,L,T. RP G L T) →
+                         ∀G,L1,K1,des. ⇩*[Ⓕ, des] L1 ≡ K1 → ∀K2. G ⊢ K1 ⫃[RP] K2 →
+                         ∃∃L2. G ⊢ L1 ⫃[RP] L2 & ⇩*[Ⓕ, des] L2 ≡ K2.
+#RR #RS #RP #Hacp #Hacr #G #L1 #K1 #des #H elim H -L1 -K1 -des
+[ /2 width=3 by drops_nil, ex2_intro/
+| #L1 #L #K1 #des #d #e #_ #HLK1 #IHL #K2 #HK12
+  elim (drop_lsubc_trans … Hacp Hacr … HLK1 … HK12) -Hacp -Hacr -K1 #K #HLK #HK2
+  elim (IHL … HLK) -IHL -HLK /3 width=5 by drops_cons, ex2_intro/
 ]
 qed-.
-

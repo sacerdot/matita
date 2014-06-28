@@ -25,7 +25,7 @@ lemma lsubsv_snv_trans: ∀h,g,G,L2,T. ⦃G, L2⦄ ⊢ T ¡[h, g] →
                         ∀L1. G ⊢ L1 ¡⫃[h, g] L2 → ⦃G, L1⦄ ⊢ T ¡[h, g].
 #h #g #G #L2 #T #H elim H -G -L2 -T //
 [ #I #G #L2 #K2 #V #i #HLK2 #_ #IHV #L1 #HL12
-  elim (lsubsv_ldrop_O1_trans … HL12 … HLK2) -L2 #X #H #HLK1
+  elim (lsubsv_drop_O1_trans … HL12 … HLK2) -L2 #X #H #HLK1
   elim (lsubsv_inv_pair2 … H) -H * #K1
   [ #HK12 #H destruct /3 width=5 by snv_lref/
   | #W #l #H1V #H1W #HWV #_ #HWl #_ #_ #H1 #H2 destruct -IHV

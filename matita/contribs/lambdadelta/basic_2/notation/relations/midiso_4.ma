@@ -12,18 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reduction/lpr_ldrop.ma".
-include "basic_2/computation/lprs.ma".
+(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-(* SN PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS ****************************)
-
-(* Properies on local environment slicing ***********************************)
-
-lemma lprs_ldrop_conf: ∀G. dropable_sn (lprs G).
-/3 width=3 by dropable_sn_TC, lpr_ldrop_conf/ qed-.
-
-lemma ldrop_lprs_trans: ∀G. dedropable_sn (lprs G).
-/3 width=3 by dedropable_sn_TC, ldrop_lpr_trans/ qed-.
-
-lemma lprs_ldrop_trans_O1: ∀G. dropable_dx (lprs G).
-/3 width=3 by dropable_dx_TC, lpr_ldrop_trans_O1/ qed-.
+notation "hvbox( L1 ⩬ break [ term 46 d , break term 46 e ] break term 46 L2 )"
+   non associative with precedence 45
+   for @{ 'MidIso $d $e $L1 $L2 }.

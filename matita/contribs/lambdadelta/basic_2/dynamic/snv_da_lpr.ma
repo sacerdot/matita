@@ -33,19 +33,19 @@ fact da_cpr_lpr_aux: ∀h,g,G0,L0,T0.
 | #i #HG0 #HL0 #HT0 #H1 #l #H2 #X3 #H3 #L2 #HL12 destruct -IH3 -IH2
   elim (snv_inv_lref … H1) -H1 #I0 #K0 #X0 #H #HX0
   elim (da_inv_lref … H2) -H2 * #K1 [ #V1 | #W1 #l1 ] #HLK1 [ #HV1 | #HW1 #H ] destruct
-  lapply (ldrop_mono … H … HLK1) -H #H destruct
+  lapply (drop_mono … H … HLK1) -H #H destruct
   elim (cpr_inv_lref1 … H3) -H3
   [1,3: #H destruct
     lapply (fqup_lref … G1 … HLK1)
-    elim (lpr_ldrop_conf … HLK1 … HL12) -HLK1 -HL12 #X #H #HLK2
+    elim (lpr_drop_conf … HLK1 … HL12) -HLK1 -HL12 #X #H #HLK2
     elim (lpr_inv_pair1 … H) -H #K2 #V2 #HK12 #HV12 #H destruct
     /4 width=10 by da_ldef, da_ldec, fqup_fpbg/
   |2,4: * #K0 #V0 #W0 #H #HVW0 #HW0
-    lapply (ldrop_mono … H … HLK1) -H #H destruct
+    lapply (drop_mono … H … HLK1) -H #H destruct
     lapply (fqup_lref … G1 … HLK1)
-    elim (lpr_ldrop_conf … HLK1 … HL12) -HLK1 -HL12 #X #H #HLK2
+    elim (lpr_drop_conf … HLK1 … HL12) -HLK1 -HL12 #X #H #HLK2
     elim (lpr_inv_pair1 … H) -H #K2 #V2 #HK12 #_ #H destruct
-    lapply (ldrop_fwd_drop2 … HLK2) -V2
+    lapply (drop_fwd_drop2 … HLK2) -V2
     /4 width=8 by da_lift, fqup_fpbg/
   ]
 | #p #_ #_ #HT0 #H1 destruct -IH3 -IH2 -IH1
@@ -57,7 +57,7 @@ fact da_cpr_lpr_aux: ∀h,g,G0,L0,T0.
   [ #V2 #T2 #HV12 #HT12 #H destruct
     /4 width=9 by da_bind, fqup_fpbg, lpr_pair/
   | #T2 #HT12 #HT2 #H1 #H2 destruct
-    /4 width=11 by da_inv_lift, fqup_fpbg, lpr_pair, ldrop_drop/
+    /4 width=11 by da_inv_lift, fqup_fpbg, lpr_pair, drop_drop/
   ]
 | #V1 #T1 #HG0 #HL0 #HT0 #H1 #l #H2 #X3 #H3 #L2 #HL12 destruct
   elim (snv_inv_appl … H1) -H1 #b0 #W1 #W0 #T0 #l0 #HV1 #HT1 #Hl0 #HVW1 #HW10 #HT10

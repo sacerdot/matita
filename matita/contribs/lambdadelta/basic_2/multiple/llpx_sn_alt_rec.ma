@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/substitution/lift_neg.ma".
-include "basic_2/substitution/ldrop_ldrop.ma".
+include "basic_2/substitution/drop_drop.ma".
 include "basic_2/multiple/llpx_sn.ma".
 
 (* LAZY SN POINTWISE EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS ****)
@@ -84,8 +84,8 @@ lemma llpx_sn_alt_r_inv_bind: ∀R,a,I,L1,L2,V,T,d. llpx_sn_alt_r R d (ⓑ{a,I}V
 [ elim (IH … HLK1 HLK2) -IH -HLK1 -HLK2
   /3 width=9 by nlift_bind_sn, and3_intro/
 | lapply (yle_inv_succ1 … Hdi) -Hdi * #Hdi #Hi
-  lapply (ldrop_inv_drop1_lt … HLK1 ?) -HLK1 /2 width=1 by ylt_O/ #HLK1
-  lapply (ldrop_inv_drop1_lt … HLK2 ?) -HLK2 /2 width=1 by ylt_O/ #HLK2
+  lapply (drop_inv_drop1_lt … HLK1 ?) -HLK1 /2 width=1 by ylt_O/ #HLK1
+  lapply (drop_inv_drop1_lt … HLK2 ?) -HLK2 /2 width=1 by ylt_O/ #HLK2
   elim (IH … HLK1 HLK2) -IH -HLK1 -HLK2 /2 width=1 by and3_intro/
   @nlift_bind_dx <plus_minus_m_m /2 width=2 by ylt_O/
 ]
@@ -107,8 +107,8 @@ lemma llpx_sn_alt_r_fwd_lref: ∀R,L1,L2,d,i. llpx_sn_alt_r R d (#i) L1 L2 →
 #R #L1 #L2 #d #i #H elim (llpx_sn_alt_r_inv_alt … H) -H
 #HL12 #IH elim (lt_or_ge i (|L1|)) /3 width=1 by or3_intro0, conj/
 elim (ylt_split i d) /3 width=1 by or3_intro1/
-#Hdi #HL1 elim (ldrop_O1_lt (Ⓕ) … HL1)
-#I1 #K1 #V1 #HLK1 elim (ldrop_O1_lt (Ⓕ) L2 i) //
+#Hdi #HL1 elim (drop_O1_lt (Ⓕ) … HL1)
+#I1 #K1 #V1 #HLK1 elim (drop_O1_lt (Ⓕ) L2 i) //
 #I2 #K2 #V2 #HLK2 elim (IH … HLK1 HLK2) -IH
 /3 width=9 by nlift_lref_be_SO, or3_intro2, ex5_5_intro/
 qed-.
@@ -135,7 +135,7 @@ lemma llpx_sn_alt_r_free: ∀R,L1,L2,d,i. |L1| ≤ i → |L2| ≤ i → |L1| = |
                           llpx_sn_alt_r R d (#i) L1 L2.
 #R #L1 #L2 #d #i #HL1 #_ #HL12 @llpx_sn_alt_r_intro_alt // -HL12
 #I1 #I2 #K1 #K2 #V1 #V2 #j #_ #H #HLK1 elim (H (#(i-1))) -H
-lapply (ldrop_fwd_length_lt2 … HLK1) -HLK1
+lapply (drop_fwd_length_lt2 … HLK1) -HLK1
 /3 width=3 by lift_lref_ge_minus, lt_to_le_to_lt/
 qed.
 
@@ -145,12 +145,12 @@ lemma llpx_sn_alt_r_lref: ∀R,I,L1,L2,K1,K2,V1,V2,d,i. d ≤ yinj i →
                           llpx_sn_alt_r R d (#i) L1 L2.
 #R #I #L1 #L2 #K1 #K2 #V1 #V2 #d #i #Hdi #HLK1 #HLK2 #HK12 #HV12 @llpx_sn_alt_r_intro_alt
 [ lapply (llpx_sn_alt_r_fwd_length … HK12) -HK12 #HK12
-  @(ldrop_fwd_length_eq2 … HLK1 HLK2) normalize //
+  @(drop_fwd_length_eq2 … HLK1 HLK2) normalize //
 | #Z1 #Z2 #Y1 #Y2 #X1 #X2 #j #Hdj #H #HLY1 #HLY2
   elim (lt_or_eq_or_gt i j) #Hij destruct
   [ elim (H (#i)) -H /2 width=1 by lift_lref_lt/
-  | lapply (ldrop_mono … HLY1 … HLK1) -HLY1 -HLK1 #H destruct
-    lapply (ldrop_mono … HLY2 … HLK2) -HLY2 -HLK2 #H destruct /2 width=1 by and3_intro/
+  | lapply (drop_mono … HLY1 … HLK1) -HLY1 -HLK1 #H destruct
+    lapply (drop_mono … HLY2 … HLK2) -HLY2 -HLK2 #H destruct /2 width=1 by and3_intro/
   | elim (H (#(i-1))) -H /2 width=1 by lift_lref_ge_minus/
   ]
 ]
@@ -181,7 +181,7 @@ elim (llpx_sn_alt_r_inv_alt … HT) -HT #_ #IHT
 #I1 #I2 #K1 #K2 #V1 #V2 #i #Hdi #HnVT #HLK1 #HLK2
 elim (nlift_inv_bind … HnVT) -HnVT #H
 [ elim (IHV … HLK1 … HLK2) -IHV /2 width=2 by and3_intro/
-| elim IHT -IHT /2 width=12 by ldrop_drop, yle_succ, and3_intro/
+| elim IHT -IHT /2 width=12 by drop_drop, yle_succ, and3_intro/
 ]
 qed.
 
@@ -201,7 +201,7 @@ theorem llpx_sn_alt_r_inv_lpx_sn: ∀R,T,L1,L2,d. llpx_sn_alt_r R d T L1 L2 → 
   #HL12 elim (llpx_sn_alt_r_fwd_lref … H) -H
   [ * /2 width=1 by llpx_sn_free/
   | /2 width=1 by llpx_sn_skip/
-  | * /4 width=9 by llpx_sn_lref, ldrop_fwd_rfw/
+  | * /4 width=9 by llpx_sn_lref, drop_fwd_rfw/
   ]
 | #a #I #V #T #Hn #L2 #d #H elim (llpx_sn_alt_r_inv_bind … H) -H
   /3 width=1 by llpx_sn_bind/

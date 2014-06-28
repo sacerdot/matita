@@ -103,7 +103,7 @@ theorem cpys_antisym_eq: ∀G,L1,T1,T2,d,e. ⦃G, L1⦄ ⊢ T1 ▶*[d, e] T2 →
     lapply (cpys_weak … HW2 0 (i+1) ? ?) -HW2 //
     [ >yplus_O1 >yplus_O1 /3 width=1 by ylt_fwd_le, ylt_inj/ ] -Hi
     #HW2 >(cpys_inv_lift1_eq … HW2) -HW2 //
-  | elim (ldrop_O1_le (Ⓕ) … Hi) -Hi #K2 #HLK2
+  | elim (drop_O1_le (Ⓕ) … Hi) -Hi #K2 #HLK2
     elim (cpys_inv_lift1_ge_up … HW2 … HLK2 … HVW2 ? ? ?) -HW2 -HLK2 -HVW2
     /2 width=1 by ylt_fwd_le_succ, yle_succ_dx/ -Hdi -Hide
     #X #_ #H elim (lift_inv_lref2_be … H) -H //

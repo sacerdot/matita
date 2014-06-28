@@ -24,7 +24,7 @@ lemma cnr_lref_abst: ∀G,L,K,V,i. ⇩[i] L ≡ K. ⓛV → ⦃G, L⦄ ⊢ ➡ �
 #G #L #K #V #i #HLK #X #H
 elim (cpr_inv_lref1 … H) -H // *
 #K0 #V1 #V2 #HLK0 #_ #_
-lapply (ldrop_mono … HLK … HLK0) -L #H destruct
+lapply (drop_mono … HLK … HLK0) -L #H destruct
 qed.
 
 (* Relocation properties ****************************************************)

@@ -51,7 +51,7 @@ elim (cpx_inv_abbr1 … H1) -H1 *
   | -IHV -HLV1 * #H destruct /3 width=1 by cpx_cpxs/
   ]
 | -IHV -IHT -H2
-  /3 width=8 by csx_cpx_trans, csx_inv_lift, ldrop_drop/
+  /3 width=8 by csx_cpx_trans, csx_inv_lift, drop_drop/
 ]
 qed.
 
@@ -96,17 +96,17 @@ elim (cpx_inv_appl1 … HL) -HL *
       | * #_ #H elim H //
       ]
     | -H -HVT #H
-      lapply (cpx_lift … HLV10 (L.ⓓV) (Ⓣ) … HV12 … HV04) -HLV10 -HV12 /2 width=1 by ldrop_drop/ #HV24
+      lapply (cpx_lift … HLV10 (L.ⓓV) (Ⓣ) … HV12 … HV04) -HLV10 -HV12 /2 width=1 by drop_drop/ #HV24
       @(IHVT … H … HV04) -IHVT /4 width=1 by cpx_cpxs, cpx_bind, cpx_flat/
     ]
   | -H -IHVT #T0 #HLT0 #HT0 #H0 destruct
     lapply (csx_cpx_trans … HVT (ⓐV2.T0) ?) /2 width=1 by cpx_flat/ -T #HVT0
     lapply (csx_inv_lift … L … (Ⓣ) … 1 HVT0 ? ? ?) -HVT0
-    /3 width=5 by csx_cpx_trans, cpx_pair_sn, ldrop_drop, lift_flat/
+    /3 width=5 by csx_cpx_trans, cpx_pair_sn, drop_drop, lift_flat/
   ]
 | -HV -HV12 -HVT -IHVT -H #b #V0 #W0 #W1 #T0 #T1 #_ #_ #_ #H destruct
 | -IHVT -H #b #V0 #V3 #W0 #W1 #T0 #T1 #HLV10 #HV03 #HLW01 #HLT01 #H1 #H2 destruct
-  lapply (cpx_lift … HLV10 (L. ⓓW0) … HV12 … HV03) -HLV10 -HV12 -HV03 /2 width=2 by ldrop_drop/ #HLV23
+  lapply (cpx_lift … HLV10 (L. ⓓW0) … HV12 … HV03) -HLV10 -HV12 -HV03 /2 width=2 by drop_drop/ #HLV23
   @csx_abbr /2 width=3 by csx_cpx_trans/ -HV
   @(csx_lpx_conf … (L.ⓓW0)) /2 width=1 by lpx_pair/ -W1
   /4 width=5 by csx_cpxs_trans, cpx_cpxs, cpx_flat/
@@ -119,7 +119,7 @@ lemma csx_appl_theta: ∀h,g,a,V1,V2. ⇧[0, 1] V1 ≡ V2 →
 
 (* Basic_1: was just: sn3_appl_appl *)
 lemma csx_appl_simple_tstc: ∀h,g,G,L,V. ⦃G, L⦄ ⊢ ⬊*[h, g] V → ∀T1. ⦃G, L⦄ ⊢ ⬊*[h, g] T1 →
-                            (∀T2. ⦃G, L⦄ ⊢ T1 ➡*[h, g] T2 → (T1 ≃ T2 → ⊥) → ⦃G, L⦄ ⊢ ⬊*[h, g] ⓐV.T2) →
+                            (∀T2. ⦃G, L⦄ ⊢ T1 ➡*[h, g] T2 → (T1 ≂ T2 → ⊥) → ⦃G, L⦄ ⊢ ⬊*[h, g] ⓐV.T2) →
                             𝐒⦃T1⦄ → ⦃G, L⦄ ⊢ ⬊*[h, g] ⓐV.T1.
 #h #g #G #L #V #H @(csx_ind … H) -V #V #_ #IHV #T1 #H @(csx_ind … H) -T1 #T1 #H1T1 #IHT1 #H2T1 #H3T1
 @csx_intro #X #HL #H

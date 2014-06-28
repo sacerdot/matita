@@ -108,7 +108,7 @@ lemma lpr_cpr_trans: ∀G. s_r_transitive … (cpr G) (λ_. lpr G).
 #G #L2 #T1 #T2 #HT12 elim HT12 -G -L2 -T1 -T2
 [ /2 width=3 by/
 | #G #L2 #K2 #V0 #V2 #W2 #i #HLK2 #_ #HVW2 #IHV02 #L1 #HL12
-  elim (lpr_ldrop_trans_O1 … HL12 … HLK2) -L2 #X #HLK1 #H
+  elim (lpr_drop_trans_O1 … HL12 … HLK2) -L2 #X #HLK1 #H
   elim (lpr_inv_pair2 … H) -H #K1 #V1 #HK12 #HV10 #H destruct
   /4 width=6 by cprs_strap2, cprs_delta/
 |3,7: /4 width=1 by lpr_pair, cprs_bind, cprs_beta/

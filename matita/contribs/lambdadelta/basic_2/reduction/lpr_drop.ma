@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/lpx_sn_ldrop.ma".
+include "basic_2/substitution/lpx_sn_drop.ma".
 include "basic_2/substitution/fquq_alt.ma".
 include "basic_2/reduction/cpr_lift.ma".
 include "basic_2/reduction/lpr.ma".
@@ -22,14 +22,14 @@ include "basic_2/reduction/lpr.ma".
 (* Properies on local environment slicing ***********************************)
 
 (* Basic_1: includes: wcpr0_drop *)
-lemma lpr_ldrop_conf: ∀G. dropable_sn (lpr G).
+lemma lpr_drop_conf: ∀G. dropable_sn (lpr G).
 /3 width=6 by lpx_sn_deliftable_dropable, cpr_inv_lift1/ qed-.
 
 (* Basic_1: includes: wcpr0_drop_back *)
-lemma ldrop_lpr_trans: ∀G. dedropable_sn (lpr G).
+lemma drop_lpr_trans: ∀G. dedropable_sn (lpr G).
 /3 width=10 by lpx_sn_liftable_dedropable, cpr_lift/ qed-.
 
-lemma lpr_ldrop_trans_O1: ∀G. dropable_dx (lpr G).
+lemma lpr_drop_trans_O1: ∀G. dropable_dx (lpr G).
 /2 width=3 by lpx_sn_dropable/ qed-.
 
 (* Properties on context-sensitive parallel reduction for terms *************)
@@ -81,7 +81,7 @@ lemma fqu_lpr_trans: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T2⦄
   #K2 #W2 #HLK2 #HVW2 #H destruct
   /3 width=5 by fqu_fquq, cpr_pair_sn, fqu_bind_dx, ex3_2_intro/
 | #G #L1 #K1 #T1 #U1 #e #HLK1 #HTU1 #K2 #HK12
-  elim (ldrop_lpr_trans … HLK1 … HK12) -HK12
+  elim (drop_lpr_trans … HLK1 … HK12) -HK12
   /3 width=7 by fqu_drop, ex3_2_intro/
 ]
 qed-.

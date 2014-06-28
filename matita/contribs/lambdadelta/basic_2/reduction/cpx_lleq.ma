@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/multiple/lleq_ldrop.ma".
+include "basic_2/multiple/lleq_drop.ma".
 include "basic_2/reduction/cpx_llpx_sn.ma".
 
 (* CONTEXT-SENSITIVE EXTENDED PARALLEL REDUCTION FOR TERMS ******************)

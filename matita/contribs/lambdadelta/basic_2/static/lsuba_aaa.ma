@@ -24,7 +24,7 @@ lemma lsuba_aaa_conf: ∀G,L1,V,A. ⦃G, L1⦄ ⊢ V ⁝ A →
 #G #L1 #V #A #H elim H -G -L1 -V -A
 [ //
 | #I #G #L1 #K1 #V #A #i #HLK1 #HV #IHV #L2 #HL12
-  elim (lsuba_ldrop_O1_conf … HL12 … HLK1) -L1 #X #H #HLK2
+  elim (lsuba_drop_O1_conf … HL12 … HLK1) -L1 #X #H #HLK2
   elim (lsuba_inv_pair1 … H) -H * #K2
   [ #HK12 #H destruct /3 width=5 by aaa_lref/
   | #W0 #V0 #A0 #HV0 #HW0 #_ #H1 #H2 #H3 destruct
@@ -42,7 +42,7 @@ lemma lsuba_aaa_trans: ∀G,L2,V,A. ⦃G, L2⦄ ⊢ V ⁝ A →
 #G #L2 #V #A #H elim H -G -L2 -V -A
 [ //
 | #I #G #L2 #K2 #V #A #i #HLK2 #H1V #IHV #L1 #HL12
-  elim (lsuba_ldrop_O1_trans … HL12 … HLK2) -L2 #X #H #HLK1
+  elim (lsuba_drop_O1_trans … HL12 … HLK2) -L2 #X #H #HLK1
   elim (lsuba_inv_pair2 … H) -H * #K1
   [ #HK12 #H destruct /3 width=5 by aaa_lref/
   | #V0 #A0 #HV0 #H2V #_ #H1 #H2 destruct

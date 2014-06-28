@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/multiple/llpx_sn_ldrop.ma".
+include "basic_2/multiple/llpx_sn_drop.ma".
 include "basic_2/multiple/lleq.ma".
 
 (* LAZY EQUIVALENCE FOR LOCAL ENVIRONMENTS **********************************)

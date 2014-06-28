@@ -41,7 +41,7 @@ lemma lsuby_cpysa_trans: ∀G,d,e. lsub_trans … (cpysa d e G) (lsuby d e).
 #G #d #e #L1 #T1 #T2 #H elim H -G -L1 -T1 -T2 -d -e
 [ //
 | #I #G #L1 #K1 #V1 #V2 #W2 #i #d #e #Hdi #Hide #HLK1 #_ #HVW2 #IHV12 #L2 #HL12
-  elim (lsuby_ldrop_trans_be … HL12 … HLK1) -HL12 -HLK1 /3 width=7 by cpysa_subst/
+  elim (lsuby_drop_trans_be … HL12 … HLK1) -HL12 -HLK1 /3 width=7 by cpysa_subst/
 | /4 width=1 by lsuby_succ, cpysa_bind/
 | /3 width=1 by cpysa_flat/
 ]
@@ -58,7 +58,7 @@ lemma cpysa_cpy_trans: ∀G,L,T1,T,d,e. ⦃G, L⦄ ⊢ T1 ▶▶*[d, e] T →
 [ #I #G #L #d #e #X #H
   elim (cpy_inv_atom1 … H) -H // * /2 width=7 by cpysa_subst/
 | #I #G #L #K #V1 #V2 #W2 #i #d #e #Hdi #Hide #HLK #_ #HVW2 #IHV12 #T2 #H
-  lapply (ldrop_fwd_drop2 … HLK) #H0LK
+  lapply (drop_fwd_drop2 … HLK) #H0LK
   lapply (cpy_weak … H 0 (d+e) ? ?) -H // #H
   elim (cpy_inv_lift1_be … H … H0LK … HVW2) -H -H0LK -HVW2
   /3 width=7 by cpysa_subst, ylt_fwd_le_succ/

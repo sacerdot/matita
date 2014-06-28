@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/ldrop.ma".
+include "basic_2/substitution/drop.ma".
 include "basic_2/substitution/lpx_sn.ma".
 
 (* SN POINTWISE EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS *********)
@@ -47,7 +47,7 @@ elim (IH I1 I2 K1 K2 V1 V2 0) //
 #H #HV12 destruct @(ex3_2_intro … K2 V2) // -HV12
 @conj // -HK12
 #J1 #J2 #L1 #L2 #W1 #W2 #i #HKL1 #HKL2 elim (IH J1 J2 L1 L2 W1 W2 (i+1)) -IH
-/2 width=1 by ldrop_drop, conj/
+/2 width=1 by drop_drop, conj/
 qed-.
 
 lemma lpx_sn_alt_inv_atom2: ∀R,L1. lpx_sn_alt R L1 (⋆) → L1 = ⋆.
@@ -64,14 +64,14 @@ elim (IH I1 I2 K1 K2 V1 V2 0) //
 #H #HV12 destruct @(ex3_2_intro … K1 V1) // -HV12
 @conj // -HK12
 #J1 #J2 #L1 #L2 #W1 #W2 #i #HKL1 #HKL2 elim (IH J1 J2 L1 L2 W1 W2 (i+1)) -IH
-/2 width=1 by ldrop_drop, conj/
+/2 width=1 by drop_drop, conj/
 qed-.
 
 (* Basic properties *********************************************************)
 
 lemma lpx_sn_alt_atom: ∀R. lpx_sn_alt R (⋆) (⋆).
 #R @conj //
-#I1 #I2 #K1 #K2 #V1 #V2 #i #HLK1 elim (ldrop_inv_atom1 … HLK1) -HLK1
+#I1 #I2 #K1 #K2 #V1 #V2 #i #HLK1 elim (drop_inv_atom1 … HLK1) -HLK1
 #H destruct
 qed.
 
@@ -82,10 +82,10 @@ lemma lpx_sn_alt_pair: ∀R,I,L1,L2,V1,V2.
 #HL12 #IH @conj normalize //
 #I1 #I2 #K1 #K2 #W1 #W2 #i @(nat_ind_plus … i) -i
 [ #HLK1 #HLK2
-  lapply (ldrop_inv_O2 … HLK1) -HLK1 #H destruct
-  lapply (ldrop_inv_O2 … HLK2) -HLK2 #H destruct
+  lapply (drop_inv_O2 … HLK1) -HLK1 #H destruct
+  lapply (drop_inv_O2 … HLK2) -HLK2 #H destruct
   /2 width=1 by conj/
-| -HL12 -HV12 /3 width=6 by ldrop_inv_drop1/
+| -HL12 -HV12 /3 width=6 by drop_inv_drop1/
 ]
 qed.
 

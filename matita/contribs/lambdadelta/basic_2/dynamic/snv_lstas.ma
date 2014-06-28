@@ -32,12 +32,12 @@ fact snv_lstas_aux: ∀h,g,G0,L0,T0.
   [ lapply (lstas_inv_O … H2) -H2 #H destruct // ]
   elim (snv_inv_lref … H1) -H1 #I0 #K0 #X0 #HLK0 #HX0
   elim (da_inv_lref … Hl1) -Hl1 * #K1 [ #V1 | #W1 #l ] #HLK1 [ #Hl1 | #Hl #H ]
-  lapply (ldrop_mono … HLK0 … HLK1) -HLK0 #H0 destruct
+  lapply (drop_mono … HLK0 … HLK1) -HLK0 #H0 destruct
   elim (lstas_inv_lref1 … H2) -H2 * #K0 #Y0 #X0 [2,4: #Y1 ] #HLK0 [1,2: #HY01 ] #HYX0 #HX0
-  lapply (ldrop_mono … HLK0 … HLK1) -HLK0 #H destruct
+  lapply (drop_mono … HLK0 … HLK1) -HLK0 #H destruct
   [ lapply (le_plus_to_le_r … Hl21) -Hl21 #Hl21 ]
   lapply (fqup_lref … G1 … HLK1) #H
-  lapply (ldrop_fwd_drop2 … HLK1) -HLK1 /4 width=8 by fqup_fpbg, snv_lift/
+  lapply (drop_fwd_drop2 … HLK1) -HLK1 /4 width=8 by fqup_fpbg, snv_lift/
 | #p #HG0 #HL0 #HT0 #H1 #l1 #l2 #Hl21 #Hl1 #X #H2 destruct -IH4 -IH3 -IH2 -IH1
   elim (snv_inv_gref … H1)
 | #a #I #V1 #T1 #HG0 #HL0 #HT0 #H1 #l1 #l2 #Hl21 #Hl1 #X #H2 destruct -IH4 -IH3 -IH2

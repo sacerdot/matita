@@ -14,7 +14,7 @@
 
 include "basic_2/multiple/frees_leq.ma".
 include "basic_2/multiple/frees_lift.ma".
-include "basic_2/reduction/lpx_ldrop.ma".
+include "basic_2/reduction/lpx_drop.ma".
 
 (* SN EXTENDED PARALLEL REDUCTION FOR LOCAL ENVIRONMENTS ********************)
 
@@ -30,12 +30,12 @@ lemma lpx_cpx_frees_trans: ∀h,g,G,L1,U1,U2. ⦃G, L1⦄ ⊢ U1 ➡[h, g] U2 �
 | #j #HG #HL #HU #U2 #H1 #L2 #HL12 #i #H2 elim (cpx_inv_lref1 … H1) -H1
   [ #H destruct elim (frees_inv_lref … H2) -H2 //
     * #I #K2 #W2 #Hj #Hji #HLK2 #HW2
-    elim (lpx_ldrop_trans_O1 … HL12 … HLK2) -HL12 #Y #HLK1 #H
+    elim (lpx_drop_trans_O1 … HL12 … HLK2) -HL12 #Y #HLK1 #H
     elim (lpx_inv_pair2 … H) -H #K1 #W1 #HK12 #HW12 #H destruct
     /4 width=11 by frees_lref_be, fqup_lref/
   | * #I #K1 #W1 #W0 #HLK1 #HW10 #HW0U2
-    lapply (ldrop_fwd_drop2 … HLK1) #H0
-    elim (lpx_ldrop_conf … H0 … HL12) -H0 -HL12 #K2 #HK12 #HLK2
+    lapply (drop_fwd_drop2 … HLK1) #H0
+    elim (lpx_drop_conf … H0 … HL12) -H0 -HL12 #K2 #HK12 #HLK2
     elim (lt_or_ge i (j+1)) #Hji
     [ -IH elim (frees_inv_lift_be … H2 … HLK2 … HW0U2) /2 width=1 by monotonic_pred/
     | lapply (frees_inv_lift_ge … H2 … HLK2 … HW0U2 ?) -L2 -U2 // <minus_plus destruct
@@ -51,7 +51,7 @@ lemma lpx_cpx_frees_trans: ∀h,g,G,L1,U1,U2. ⦃G, L1⦄ ⊢ U1 ➡[h, g] U2 �
     /4 width=7 by frees_bind_dx_O, frees_bind_sn, lpx_pair/
   | #U2 #HU12 #HXU2 #H1 #H2 destruct
     lapply (frees_lift_ge … Hi (L2.ⓓW1) (Ⓕ) … HXU2 ?)
-    /4 width=7 by frees_bind_dx_O, lpx_pair, ldrop_drop/
+    /4 width=7 by frees_bind_dx_O, lpx_pair, drop_drop/
   ]
 | #I #W1 #X1 #HG #HL #HU #X2 #HX2 #L2 #HL12 #i #Hi destruct
   elim (cpx_inv_flat1 … HX2) -HX2 *
@@ -72,7 +72,7 @@ lemma lpx_cpx_frees_trans: ∀h,g,G,L1,U1,U2. ⦃G, L1⦄ ⊢ U1 ➡[h, g] U2 �
     [ /4 width=7 by frees_flat_dx, frees_bind_sn/
     | elim (frees_inv_flat … Hi) -Hi
       [ #HW0 lapply (frees_inv_lift_ge … HW0 L2 (Ⓕ) … HW20 ?) -W0
-        /3 width=7 by frees_flat_sn, ldrop_drop/
+        /3 width=7 by frees_flat_sn, drop_drop/
       | /5 width=7 by frees_bind_dx_O, frees_flat_dx, lpx_pair/
       ]
     ]

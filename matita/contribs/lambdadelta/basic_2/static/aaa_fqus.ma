@@ -23,7 +23,7 @@ lemma aaa_fqu_conf: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T2⦄ 
                     ∀A1. ⦃G1, L1⦄ ⊢ T1 ⁝ A1 → ∃A2. ⦃G2, L2⦄ ⊢ T2 ⁝ A2.
 #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2
 [ #I #G #L #T #A #H elim (aaa_inv_lref … H) -H
-  #J #K #V #H #HA lapply (ldrop_inv_O2 … H) -H
+  #J #K #V #H #HA lapply (drop_inv_O2 … H) -H
   #H destruct /2 width=2 by ex_intro/
 | * [ #a ] * #G #L #V #T #X #H
   [ elim (aaa_inv_abbr … H)

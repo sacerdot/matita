@@ -24,12 +24,12 @@ lemma da_sta_conf: ∀h,g,G,L,T,U. ⦃G, L⦄ ⊢ T •[h] U →
   lapply (da_inv_sort … H) -H /3 width=1 by da_sort, deg_next/
 | #G #L #K #V #U #W #i #HLK #_ #HWU #IHVW #l #H
   elim (da_inv_lref … H) -H * #K0 #V0 [| #l0] #HLK0 #HV0
-  lapply (ldrop_mono … HLK0 … HLK) -HLK0 #H destruct
-  lapply (ldrop_fwd_drop2 … HLK) -HLK /3 width=8 by da_lift/
+  lapply (drop_mono … HLK0 … HLK) -HLK0 #H destruct
+  lapply (drop_fwd_drop2 … HLK) -HLK /3 width=8 by da_lift/
 | #G #L #K #W #V #U #i #HLK #_ #HWU #IHWV #l #H
   elim (da_inv_lref … H) -H * #K0 #V0 [| #l0] #HLK0 #HV0 [| #H0 ]
-  lapply (ldrop_mono … HLK0 … HLK) -HLK0 #H destruct
-  lapply (ldrop_fwd_drop2 … HLK) -HLK /3 width=8 by da_lift/
+  lapply (drop_mono … HLK0 … HLK) -HLK0 #H destruct
+  lapply (drop_fwd_drop2 … HLK) -HLK /3 width=8 by da_lift/
 | #a #I #G #L #V #T #U #_ #IHTU #l #H
   lapply (da_inv_bind … H) -H /3 width=1 by da_bind/
 | #G #L #V #T #U #_ #IHTU #l #H

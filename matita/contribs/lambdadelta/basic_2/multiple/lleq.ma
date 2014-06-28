@@ -78,13 +78,13 @@ lemma lleq_fwd_lref: ∀L1,L2,d,i. L1 ≡[#i, d] L2 →
 * /3 width=7 by or3_intro2, ex4_4_intro/
 qed-.
 
-lemma lleq_fwd_ldrop_sn: ∀L1,L2,T,d. L1 ≡[d, T] L2 → ∀K1,i. ⇩[i] L1 ≡ K1 →
+lemma lleq_fwd_drop_sn: ∀L1,L2,T,d. L1 ≡[d, T] L2 → ∀K1,i. ⇩[i] L1 ≡ K1 →
                          ∃K2. ⇩[i] L2 ≡ K2.
-/2 width=7 by llpx_sn_fwd_ldrop_sn/ qed-.
+/2 width=7 by llpx_sn_fwd_drop_sn/ qed-.
 
-lemma lleq_fwd_ldrop_dx: ∀L1,L2,T,d. L1 ≡[d, T] L2 → ∀K2,i. ⇩[i] L2 ≡ K2 →
+lemma lleq_fwd_drop_dx: ∀L1,L2,T,d. L1 ≡[d, T] L2 → ∀K2,i. ⇩[i] L2 ≡ K2 →
                          ∃K1. ⇩[i] L1 ≡ K1.
-/2 width=7 by llpx_sn_fwd_ldrop_dx/ qed-.
+/2 width=7 by llpx_sn_fwd_drop_dx/ qed-.
 
 lemma lleq_fwd_bind_sn: ∀a,I,L1,L2,V,T,d.
                         L1 ≡[ⓑ{a,I}V.T, d] L2 → L1 ≡[V, d] L2.

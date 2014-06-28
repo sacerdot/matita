@@ -15,7 +15,7 @@
 include "basic_2/notation/relations/atomicarity_4.ma".
 include "basic_2/grammar/aarity.ma".
 include "basic_2/grammar/genv.ma".
-include "basic_2/substitution/ldrop.ma".
+include "basic_2/substitution/drop.ma".
 
 (* ATONIC ARITY ASSIGNMENT ON TERMS *****************************************)
 

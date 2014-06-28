@@ -67,7 +67,7 @@ lemma csx_applv_delta: ∀h,g,I,G,L,K,V1,i. ⇩[i] L ≡ K.ⓑ{I}V1 →
                        ∀V2. ⇧[0, i + 1] V1 ≡ V2 →
                        ∀Vs. ⦃G, L⦄ ⊢ ⬊*[h, g] (ⒶVs.V2) → ⦃G, L⦄ ⊢ ⬊*[h, g] (ⒶVs.#i).
 #h #g #I #G #L #K #V1 #i #HLK #V2 #HV12 #Vs elim Vs -Vs
-[ /4 width=12 by csx_inv_lift, csx_lref_bind, ldrop_fwd_drop2/
+[ /4 width=12 by csx_inv_lift, csx_lref_bind, drop_fwd_drop2/
 | #V #Vs #IHV #H1T
   lapply (csx_fwd_pair_sn … H1T) #HV
   lapply (csx_fwd_flat_dx … H1T) #H2T

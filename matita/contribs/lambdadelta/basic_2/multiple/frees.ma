@@ -15,7 +15,7 @@
 include "ground_2/ynat/ynat_plus.ma".
 include "basic_2/notation/relations/freestar_4.ma".
 include "basic_2/substitution/lift_neg.ma".
-include "basic_2/substitution/ldrop.ma".
+include "basic_2/substitution/drop.ma".
 
 (* CONTEXT-SENSITIVE FREE VARIABLES *****************************************)
 
@@ -61,7 +61,7 @@ qed-.
 
 lemma frees_inv_lref_free: ∀L,d,j,i. L ⊢ i ϵ 𝐅*[d]⦃#j⦄ → |L| ≤ j → j = i.
 #L #d #j #i #H #Hj elim (frees_inv_lref … H) -H //
-* #I #K #W #_ #_ #HLK lapply (ldrop_fwd_length_lt2 … HLK) -I
+* #I #K #W #_ #_ #HLK lapply (drop_fwd_length_lt2 … HLK) -I
 #H elim (lt_refl_false j) /2 width=3 by lt_to_le_to_lt/
 qed-.
 
@@ -91,7 +91,7 @@ lemma frees_inv_bind: ∀a,I,L,W,U,d,i. L ⊢ i ϵ 𝐅*[d]⦃ⓑ{a,I}W.U⦄ →
 | * #I #K #W #j #Hdj #Hji #HnX #HLK #HW elim (nlift_inv_bind … HnX) -HnX
   [ /4 width=9 by frees_be, or_introl/
   | #HnT @or_intror @(frees_be … HnT) -HnT
-    [4,5,6: /2 width=1 by ldrop_drop, yle_succ, lt_minus_to_plus/
+    [4,5,6: /2 width=1 by drop_drop, yle_succ, lt_minus_to_plus/
     |7: >minus_plus_plus_l //
     |*: skip
     ]
@@ -132,7 +132,7 @@ lemma frees_bind_dx: ∀a,I,L,W,U,d,i. L.ⓑ{I}W ⊢ i+1 ϵ 𝐅*[⫯d]⦃U⦄ �
   elim (yle_inv_succ1 … Hdj) -Hdj <yminus_SO2 #Hyj #H
   lapply (ylt_O … H) -H #Hj
   >(plus_minus_m_m j 1) in HnU; // <minus_le_minus_minus_comm in HW;
-  /4 width=9 by frees_be, nlift_bind_dx, ldrop_inv_drop1_lt, lt_plus_to_minus/
+  /4 width=9 by frees_be, nlift_bind_dx, drop_inv_drop1_lt, lt_plus_to_minus/
 ]
 qed.
 

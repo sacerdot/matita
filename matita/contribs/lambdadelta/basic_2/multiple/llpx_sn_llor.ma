@@ -27,8 +27,8 @@ lemma llpx_sn_llor_fwd_sn: ∀R. (∀L. reflexive … (R L)) →
 elim (llpx_sn_llpx_sn_alt … H1) -H1 #HL12 #IH1
 elim H2 -H2 #_ #HL1 #IH2
 @lpx_sn_intro_alt // #I1 #I #K1 #K #V1 #V #i #HLK1 #HLK
-lapply (ldrop_fwd_length_lt2 … HLK) #HiL
-elim (ldrop_O1_lt (Ⓕ) L2 i) // -HiL -HL1 -HL12 #I2 #K2 #V2 #HLK2
+lapply (drop_fwd_length_lt2 … HLK) #HiL
+elim (drop_O1_lt (Ⓕ) L2 i) // -HiL -HL1 -HL12 #I2 #K2 #V2 #HLK2
 elim (IH2 … HLK1 HLK2 HLK) -IH2 -HLK * /2 width=1 by conj/
 #HnT #H1 #H2 elim (IH1 … HnT … HLK1 HLK2) -IH1 -HnT -HLK1 -HLK2 /2 width=1 by conj/
 qed-.

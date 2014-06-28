@@ -108,12 +108,12 @@ qed.
 
 lemma cnx_lref_free: ∀h,g,G,L,i. |L| ≤ i → ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃#i⦄.
 #h #g #G #L #i #Hi #X #H elim (cpx_inv_lref1 … H) -H // *
-#I #K #V1 #V2 #HLK lapply (ldrop_fwd_length_lt2 … HLK) -HLK
+#I #K #V1 #V2 #HLK lapply (drop_fwd_length_lt2 … HLK) -HLK
 #H elim (lt_refl_false i) /2 width=3 by lt_to_le_to_lt/
 qed.
 
 lemma cnx_lref_atom: ∀h,g,G,L,i. ⇩[i] L ≡ ⋆ → ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃#i⦄.
-#h #g #G #L #i #HL @cnx_lref_free >(ldrop_fwd_length … HL) -HL //
+#h #g #G #L #i #HL @cnx_lref_free >(drop_fwd_length … HL) -HL //
 qed.
 
 lemma cnx_abst: ∀h,g,a,G,L,W,T. ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃W⦄ → ⦃G, L.ⓛW⦄ ⊢ ➡[h, g] 𝐍⦃T⦄ →

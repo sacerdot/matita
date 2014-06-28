@@ -30,28 +30,28 @@ lemma lsubsv_lstas_trans: ∀h,g,G,L2,T,U2,l1. ⦃G, L2⦄ ⊢ T •*[h, l1] U2 
 [1,2: /2 width=3 by ex2_intro/
 | #G #L2 #K2 #X #Y #U #i #l1 #HLK2 #_ #HYU #IHXY #l2 #Hl12 #Hl2 #L1 #HL12
   elim (da_inv_lref … Hl2) -Hl2 * #K0 #V0 [| #l0 ] #HK0 #HV0
-  lapply (ldrop_mono … HK0 … HLK2) -HK0 #H destruct
-  elim (lsubsv_ldrop_O1_trans … HL12 … HLK2) -L2 #X #H #HLK1
+  lapply (drop_mono … HK0 … HLK2) -HK0 #H destruct
+  elim (lsubsv_drop_O1_trans … HL12 … HLK2) -L2 #X #H #HLK1
   elim (lsubsv_inv_pair2 … H) -H * #K1 [ | -HYU -IHXY -HLK1 ]
   [ #HK12 #H destruct
     elim (IHXY … Hl12 HV0 … HK12) -K2 -l2 #T #HXT #HTY
-    lapply (ldrop_fwd_drop2 … HLK1) #H
+    lapply (drop_fwd_drop2 … HLK1) #H
     elim (lift_total T 0 (i+1))
     /3 width=12 by lstas_ldef, cpcs_lift, ex2_intro/
   | #V #l0 #_ #_ #_ #_ #_ #_ #_ #H destruct
   ]
 | #G #L2 #K2 #X #Y #Y0 #U #i #l1 #HLK2 #HXY0 #_ #HYU #IHXY #l2 #Hl12 #Hl2 #L1 #HL12
   elim (da_inv_lref … Hl2) -Hl2 * #K0 #V0 [| #l0 ] #HK0 #HV0 [| #H1 ]
-  lapply (ldrop_mono … HK0 … HLK2) -HK0 #H2 destruct
+  lapply (drop_mono … HK0 … HLK2) -HK0 #H2 destruct
   lapply (le_plus_to_le_r … Hl12) -Hl12 #Hl12
-  elim (lsubsv_ldrop_O1_trans … HL12 … HLK2) -L2 #X #H #HLK1
+  elim (lsubsv_drop_O1_trans … HL12 … HLK2) -L2 #X #H #HLK1
   elim (lsubsv_inv_pair2 … H) -H * #K1
   [ #HK12 #H destruct
     lapply (lsubsv_fwd_lsubd … HK12) #H
     lapply (lsubd_da_trans … HV0 … H) -H #H
     elim (da_inv_sta … H) -H
     elim (IHXY … Hl12 HV0 … HK12) -K2 -Hl12 #Y1
-    lapply (ldrop_fwd_drop2 … HLK1)
+    lapply (drop_fwd_drop2 … HLK1)
     elim (lift_total Y1 0 (i+1))
     /3 width=12 by lstas_ldec, cpcs_lift, ex2_intro/
   | #V #l #_ #_ #HVX #_ #HV #HX #HK12 #_ #H destruct
@@ -61,7 +61,7 @@ lemma lsubsv_lstas_trans: ∀h,g,G,L2,T,U2,l1. ⦃G, L2⦄ ⊢ T •*[h, l1] U2 
     elim (lstas_total … HVW (l1+1)) -W #W #HVW
     lapply (HVX … Hl12 HVW HXY0) -HVX -Hl12 -HXY0 #HWY0
     lapply (cpcs_trans … HWY0 … HY0) -Y0
-    lapply (ldrop_fwd_drop2 … HLK1)
+    lapply (drop_fwd_drop2 … HLK1)
     elim (lift_total W 0 (i+1))
     /4 width=12 by lstas_ldef, lstas_cast, cpcs_lift, ex2_intro/
   ]

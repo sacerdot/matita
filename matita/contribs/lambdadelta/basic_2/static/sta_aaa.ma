@@ -37,8 +37,8 @@ lemma sta_aaa_conf: ∀h,G,L. Conf3 … (aaa G L) (sta h G L).
   lapply (sta_inv_sort1 … H) -H #H destruct //
 | #I #G #L #K #V #B #i #HLK #HV #IHV #U #H
   elim (sta_inv_lref1 … H) -H * #K0 #V0 #W0 #HLK0 #HVW0 #HU
-  lapply (ldrop_mono … HLK0 … HLK) -HLK0 #H0 destruct
-  lapply (ldrop_fwd_drop2 … HLK) -HLK #HLK
+  lapply (drop_mono … HLK0 … HLK) -HLK0 #H0 destruct
+  lapply (drop_fwd_drop2 … HLK) -HLK #HLK
   @(aaa_lift … HLK … HU) -HU -L /2 width=2 by/
 | #a #G #L #V #T #B #A #HV #_ #_ #IHT #X #H
   elim (sta_inv_bind1 … H) -H #U #HTU #H destruct /3 width=2 by aaa_abbr/

@@ -34,14 +34,14 @@ lemma lcosx_O: ∀h,g,G,L. G ⊢ ~⬊*[h, g, 0] L.
 #h #g #G #L elim L /2 width=1 by lcosx_skip/
 qed.
 
-lemma lcosx_ldrop_trans_lt: ∀h,g,G,L,d. G ⊢ ~⬊*[h, g, d] L →
+lemma lcosx_drop_trans_lt: ∀h,g,G,L,d. G ⊢ ~⬊*[h, g, d] L →
                             ∀I,K,V,i. ⇩[i] L ≡ K.ⓑ{I}V → i < d →
                             G ⊢ ~⬊*[h, g, ⫰(d-i)] K ∧ G ⊢ ⬊*[h, g, V, ⫰(d-i)] K.
 #h #g #G #L #d #H elim H -L -d
-[ #d #J #K #V #i #H elim (ldrop_inv_atom1 … H) -H #H destruct
+[ #d #J #K #V #i #H elim (drop_inv_atom1 … H) -H #H destruct
 | #I #L #T #_ #_ #J #K #V #i #_ #H elim (ylt_yle_false … H) -H //
 | #I #L #T #d #HT #HL #IHL #J #K #V #i #H #Hid
-  elim (ldrop_inv_O1_pair1 … H) -H * #Hi #HLK destruct
+  elim (drop_inv_O1_pair1 … H) -H * #Hi #HLK destruct
   [ >ypred_succ /2 width=1 by conj/
   | lapply (ylt_pred … Hid ?) -Hid /2 width=1 by ylt_inj/ >ypred_succ #Hid
     elim (IHL … HLK ?) -IHL -HLK <yminus_inj >yminus_SO2 //

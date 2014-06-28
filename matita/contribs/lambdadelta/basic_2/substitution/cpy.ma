@@ -41,7 +41,7 @@ lemma lsuby_cpy_trans: ∀G,d,e. lsub_trans … (cpy d e G) (lsuby d e).
 #G #d #e #L1 #T1 #T2 #H elim H -G -L1 -T1 -T2 -d -e
 [ //
 | #I #G #L1 #K1 #V #W #i #d #e #Hdi #Hide #HLK1 #HVW #L2 #HL12
-  elim (lsuby_ldrop_trans_be … HL12 … HLK1) -HL12 -HLK1 /2 width=5 by cpy_subst/
+  elim (lsuby_drop_trans_be … HL12 … HLK1) -HL12 -HLK1 /2 width=5 by cpy_subst/
 | /4 width=1 by lsuby_succ, cpy_bind/
 | /3 width=1 by cpy_flat/
 ]
@@ -66,7 +66,7 @@ lemma cpy_full: ∀I,G,K,V,T1,L,d. ⇩[d] L ≡ K.ⓑ{I}V →
 | * [ #a ] #J #W1 #U1 #IHW1 #IHU1 #L #d #HLK
   elim (IHW1 … HLK) -IHW1 #W2 #W #HW12 #HW2
   [ elim (IHU1 (L.ⓑ{J}W1) (d+1)) -IHU1
-    /3 width=9 by cpy_bind, ldrop_drop, lift_bind, ex2_2_intro/
+    /3 width=9 by cpy_bind, drop_drop, lift_bind, ex2_2_intro/
   | elim (IHU1 … HLK) -IHU1 -HLK
     /3 width=8 by cpy_flat, lift_flat, ex2_2_intro/
   ]
@@ -87,7 +87,7 @@ lemma cpy_weak_top: ∀G,L,T1,T2,d,e.
                     ⦃G, L⦄ ⊢ T1 ▶[d, e] T2 → ⦃G, L⦄ ⊢ T1 ▶[d, |L| - d] T2.
 #G #L #T1 #T2 #d #e #H elim H -G -L -T1 -T2 -d -e //
 [ #I #G #L #K #V #W #i #d #e #Hdi #_ #HLK #HVW
-  lapply (ldrop_fwd_length_lt2 … HLK)
+  lapply (drop_fwd_length_lt2 … HLK)
   /4 width=5 by cpy_subst, ylt_yle_trans, ylt_inj/
 | #a #I #G #L #V1 #V2 normalize in match (|L.ⓑ{I}V2|); (**) (* |?| does not work *)
   /2 width=1 by cpy_bind/

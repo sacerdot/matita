@@ -52,7 +52,7 @@ lemma lsubr_cpr_trans: ∀G. lsub_trans … (cpr G) lsubr.
 #G #L1 #T1 #T2 #H elim H -G -L1 -T1 -T2
 [ //
 | #G #L1 #K1 #V1 #V2 #W2 #i #HLK1 #_ #HVW2 #IHV12 #L2 #HL12
-  elim (lsubr_fwd_ldrop2_abbr … HL12 … HLK1) -L1 *
+  elim (lsubr_fwd_drop2_abbr … HL12 … HLK1) -L1 *
   /3 width=6 by cpr_delta/
 |3,7: /4 width=1 by lsubr_bind, cpr_bind, cpr_beta/
 |4,6: /3 width=1 by cpr_flat, cpr_eps/
@@ -87,7 +87,7 @@ lemma cpr_delift: ∀G,K,V,T1,L,d. ⇩[d] L ≡ (K.ⓓV) →
   elim (lift_split … HVW i i) /3 width=6 by cpr_delta, ex2_2_intro/
 | * [ #a ] #I #W1 #U1 #IHW1 #IHU1 #L #d #HLK
   elim (IHW1 … HLK) -IHW1 #W2 #W #HW12 #HW2
-  [ elim (IHU1 (L. ⓑ{I}W1) (d+1)) -IHU1 /3 width=9 by ldrop_drop, cpr_bind, lift_bind, ex2_2_intro/
+  [ elim (IHU1 (L. ⓑ{I}W1) (d+1)) -IHU1 /3 width=9 by drop_drop, cpr_bind, lift_bind, ex2_2_intro/
   | elim (IHU1 … HLK) -IHU1 -HLK /3 width=8 by cpr_flat, lift_flat, ex2_2_intro/
   ]
 ]
