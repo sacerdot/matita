@@ -30,7 +30,9 @@ PRB_OPTS     := $(XOA_OPTS) -g
 ORIG         := . ./orig.sh 
 ORIGS        := basic_2/basic_1.orig
 
-TAGS := all xoa xoa2 orig elim deps top leaf stats tbls trim
+CONTRIB      := lambdadelta_2
+
+TAGS := all xoa xoa2 orig elim deps top leaf stats tbls trim contrib
 
 PACKAGES := ground_2 basic_2 apps_2
 
@@ -191,7 +193,7 @@ define SUMMARY_TEMPLATE
 	@printf '  SUMMARY $(1)\n'
 	@printf 'name "$$(basename $$(@F))"\n\n'                >  $$@
 	@printf 'table {\n'                                     >> $$@
-	@printf '   class "grey"   [ "category"\n'              >> $$@
+	@printf '   class "gray"   [ "category"\n'              >> $$@
 	@printf '      [ "objects" * ]\n'                       >> $$@
 	@printf '   ]\n'                                        >> $$@
 	@printf '   class "cyan"   [ "sizes"\n'                 >> $$@
@@ -232,6 +234,12 @@ TRIMS := $(MAS) $(TBLS) $(LDWS)
 	$(H)if diff $< $@ > /dev/null; then $(RM) $@; else echo "  TRIM $<" & mv $@ $<; fi
 
 trim: $(TRIMS:%=%.trimmed)
+
+# contrib ####################################################################
+
+contrib:
+	@echo "  TAR -czf $(CONTRIB).tar.gz root *.ma"
+	$(H)tar -czf $(CONTRIB).tar.gz root $(MAS)
 
 ##############################################################################
 

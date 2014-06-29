@@ -1,7 +1,7 @@
 name "ground_2_src"
 
 table {
-   class "grey"
+   class "gray"
    [ { "plane" * } {
         [ "files" * ]
      }

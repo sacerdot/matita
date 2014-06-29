@@ -96,12 +96,12 @@ elim (cpx_inv_appl1 … HL) -HL *
       | * #_ #H elim H //
       ]
     | -H -HVT #H
-      lapply (cpx_lift … HLV10 (L.ⓓV) (Ⓣ) … HV12 … HV04) -HLV10 -HV12 /2 width=1 by drop_drop/ #HV24
+      lapply (cpx_lift … HLV10 (L.ⓓV) (Ⓕ) … HV12 … HV04) -HLV10 -HV12 /2 width=1 by drop_drop/ #HV24
       @(IHVT … H … HV04) -IHVT /4 width=1 by cpx_cpxs, cpx_bind, cpx_flat/
     ]
   | -H -IHVT #T0 #HLT0 #HT0 #H0 destruct
     lapply (csx_cpx_trans … HVT (ⓐV2.T0) ?) /2 width=1 by cpx_flat/ -T #HVT0
-    lapply (csx_inv_lift … L … (Ⓣ) … 1 HVT0 ? ? ?) -HVT0
+    lapply (csx_inv_lift … L … (Ⓕ) … 1 HVT0 ? ? ?) -HVT0
     /3 width=5 by csx_cpx_trans, cpx_pair_sn, drop_drop, lift_flat/
   ]
 | -HV -HV12 -HVT -IHVT -H #b #V0 #W0 #W1 #T0 #T1 #_ #_ #_ #H destruct

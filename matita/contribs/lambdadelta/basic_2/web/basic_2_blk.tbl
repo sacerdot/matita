@@ -1,7 +1,7 @@
 name "basic_2_blk"
 
 table {
-   class "grey" [ { "domain" * } {
+   class "gray" [ { "domain" * } {
       [
          [ "block" ] [ "leader" ]
          [ "applicator (with →θ)*" ] [ "reduction" ] [ "→ζ *" ] [ "reference *" ]
