@@ -16,7 +16,7 @@ T,U,V,W: term
 X,Y,Z  : reserved: transient objet denoted by a capital letter
 
 a,b    : binder polarity
-c      : reserved: future use (lambda_delta 3)
+c      : reserved: future use (\lambda\delta 3)
 d      : relocation depth
 e      : relocation height
 f      :
@@ -30,7 +30,7 @@ o      :
 p,q    : global reference position
 r      : reduction kind parameter (true = ordinary, false = extended)
 s      : local dropping kind parameter (true = general, false = restricted)
-t,u    : local reference position level (de Bruijn's)
+t,u    : local reference position level (de Bruijn's) (RTM)
 v,w    :
 x,y,z  : reserved: transient objet denoted by a small letter
 
