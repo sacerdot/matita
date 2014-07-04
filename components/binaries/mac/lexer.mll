@@ -19,19 +19,22 @@ let OL  = "(*"
 let CL  = "*)" 
 let UNI = ['\x80'-'\xBF']+
 let SPC = ['\r' '\n' '\t' ' ']+
+let WRD = ['0'-'9' 'A'-'Z' 'a'-'z' '_']+
 let QT  = '"'
 
 rule token = parse
    | OL     { out "COM"; block lexbuf; token lexbuf                     }
    | QT     { out "STR"; O.count := !O.count + str lexbuf; token lexbuf }
    | SPC    { out "SPC"; incr O.count; token lexbuf                     }
-   | UNI    { out "UNI"; token lexbuf                                   }
+   | UNI    { out "UNI"; incr O.count; token lexbuf                     }
+   | WRD    { out "WRD"; incr O.count; token lexbuf                     }
    | _      { out "CHR"; incr O.count; token lexbuf                     }
    | eof    { out "EOF"                                                 }
 and str = parse
    | QT     { 2 }
    | "\\\"" { succ (str lexbuf)                                         }
-   | UNI    { str lexbuf                                                }
+   | UNI    { succ (str lexbuf)                                         }
+   | WRD    { succ (str lexbuf)                                         }
    | _      { succ (str lexbuf)                                         }
 and block = parse
    | CL     { ()                                                        }
