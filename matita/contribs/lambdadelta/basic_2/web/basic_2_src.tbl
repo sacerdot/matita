@@ -9,16 +9,23 @@ table {
         ]
      }
    ]
-(*
    class "wine"
    [ { "examples" * } {
+        [ { "" * } {
+             [ "ex_cpr_omega" * ]
+          }
+        ]
+     }
+   ]
+   class "magenta"
+   [ { "" * } {
         [ { "" * } {
              [ "" * ]
           }
         ]
      }
    ]
-   class "magenta"
+(*   
    [ { "higher order dynamic typing" * } {
         [ { "higher order native type assignment" * } {
              [ "ntas ( ⦃?,?⦄ ⊢ ? :* ? )" "nta_lift" * ]
