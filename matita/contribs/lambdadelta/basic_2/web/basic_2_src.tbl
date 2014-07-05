@@ -11,7 +11,7 @@ table {
    ]
    class "wine"
    [ { "examples" * } {
-        [ { "" * } {
+        [ { "terms with special features" * } {
              [ "ex_cpr_omega" * ]
           }
         ]

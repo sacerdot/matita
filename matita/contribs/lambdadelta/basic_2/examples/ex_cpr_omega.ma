@@ -18,24 +18,26 @@ include "basic_2/reduction/cpr.ma".
 
 (* A reduction cycle in two steps: the term Omega ***************************)
 
-definition Delta: term ≝ +ⓛ⋆0.ⓐ#0.#0.
+definition Delta: term → term ≝ λW. +ⓛW.ⓐ#0.#0.
 
-definition Omega1: term ≝ ⓐDelta.Delta.
+definition Omega1: term → term ≝ λW. ⓐ(Delta W).(Delta W).
 
-definition Omega2: term ≝ +ⓓⓝ⋆0.Delta.ⓐ#0.#0.
+definition Omega2: term → term ≝ λW. +ⓓⓝW.(Delta W).ⓐ#0.#0.
 
 (* Basic properties *********************************************************)
 
-lemma Delta_lift: ∀d,e. ⇧[d, e] Delta ≡ Delta.
+lemma Delta_lift: ∀W1,W2,d,e. ⇧[d, e] W1 ≡ W2 →
+                  ⇧[d, e] (Delta W1) ≡ (Delta W2).
 /4 width=1 by lift_flat, lift_bind, lift_lref_lt/ qed.
 
 (* Main properties **********************************************************)
 
-theorem cpr_Omega_12: ⦃⋆, ⋆⦄ ⊢ Omega1 ➡ Omega2.
+theorem cpr_Omega_12: ∀W. ⦃⋆, ⋆⦄ ⊢ Omega1 W ➡ Omega2 W.
 /2 width=1 by cpr_beta/ qed.
 
-theorem cpr_Omega_21: ⦃⋆, ⋆⦄ ⊢ Omega2 ➡ Omega1.
-@(cpr_zeta … Omega1) /2 width=1 by lift_flat/
-@cpr_flat @(cpr_delta … Delta ? 0)
-[3,5,8,10: // |4,9: /2 width=1 by cpr_eps/ |*: skip ]
+theorem cpr_Omega_21: ∀W. ⦃⋆, ⋆⦄ ⊢ Omega2 W ➡ Omega1 W.
+#W1 elim (lift_total W1 0 1) #W2 #HW12
+@(cpr_zeta … (Omega1 W2)) /3 width=1 by Delta_lift, lift_flat/
+@cpr_flat @(cpr_delta … (Delta W1) ? 0)
+[3,5,8,10: /2 width=2 by Delta_lift/ |4,9: /2 width=1 by cpr_eps/ |*: skip ]
 qed.
