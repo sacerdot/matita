@@ -44,7 +44,7 @@ lemma cpys_subst_Y2: ∀I,G,L,K,V,U1,i,d.
 @(cpys_subst … HLK … HU12) >yminus_Y_inj //
 qed.
 
-(* Advanced inverion lemmas *************************************************)
+(* Advanced inversion lemmas *************************************************)
 
 lemma cpys_inv_atom1: ∀I,G,L,T2,d,e. ⦃G, L⦄ ⊢ ⓪{I} ▶*[d, e] T2 →
                       T2 = ⓪{I} ∨

@@ -19,7 +19,7 @@ include "basic_2/dynamic/lsubsv_lstas.ma".
 (* Properties on decomposed extended parallel computation on terms **********)
 
 lemma lsubsv_cpds_trans: ∀h,g,G,L2,T1,T2. ⦃G, L2⦄ ⊢ T1 •*➡*[h, g] T2 →
-                         ∀L1. G ⊢ L1 ¡⫃[h, g] L2 →
+                         ∀L1. G ⊢ L1 ⫃¡[h, g] L2 →
                          ∃∃T. ⦃G, L1⦄ ⊢ T1 •*➡*[h, g] T & ⦃G, L1⦄ ⊢ T2 ➡* T.
 #h #g #G #L2 #T1 #T2 * #T #l1 #l2 #Hl21 #Hl1 #HT1 #HT2 #L1 #HL12
 lapply (lsubsv_cprs_trans … HL12 … HT2) -HT2 #HT2

@@ -18,7 +18,7 @@ include "basic_2/reduction/lpx.ma".
 
 (* SN EXTENDED PARALLEL REDUCTION FOR LOCAL ENVIRONMENTS ********************)
 
-(* Properies on local environment slicing ***********************************)
+(* Properties on local environment slicing ***********************************)
 
 lemma lpx_drop_conf: ∀h,g,G. dropable_sn (lpx h g G).
 /3 width=6 by lpx_sn_deliftable_dropable, cpx_inv_lift1/ qed-.

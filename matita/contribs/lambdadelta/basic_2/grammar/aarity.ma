@@ -27,10 +27,10 @@ inductive aarity: Type[0] ≝
   | APair: aarity → aarity → aarity (* binary aarity construction *)
 .
 
-interpretation "aarity construction (atomic)"
+interpretation "atomic arity construction (atomic)"
    'Item0 = AAtom.
 
-interpretation "aarity construction (binary)"
+interpretation "atomic arity construction (binary)"
    'SnItem2 A1 A2 = (APair A1 A2).
 
 (* Basic inversion lemmas ***************************************************)
@@ -39,7 +39,7 @@ lemma discr_apair_xy_x: ∀A,B. ②B. A = B → ⊥.
 #A #B elim B -B
 [ #H destruct
 | #Y #X #IHY #_ #H destruct
-  -H >e0 in e1; normalize (**) (* destruct: one quality is not simplified, the destucted equality is not erased *)
+  -H >e0 in e1; normalize (**) (* destruct: one quality is not simplified, the destructed equality is not erased *)
   /2 width=1/
 ]
 qed-.
@@ -48,7 +48,7 @@ lemma discr_tpair_xy_y: ∀B,A. ②B. A = A → ⊥.
 #B #A elim A -A
 [ #H destruct
 | #Y #X #_ #IHX #H destruct
-  -H (**) (* destruct: the destucted equality is not erased *)
+  -H (**) (* destruct: the destructed equality is not erased *)
   /2 width=1/
 ]
 qed-.

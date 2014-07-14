@@ -212,7 +212,7 @@ lemma cpy_inv_lift1_ge: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶[dt, et] U2 →
 ]
 qed-.
 
-(* Advancd inversion lemmas on relocation ***********************************)
+(* Advanced inversion lemmas on relocation ***********************************)
 
 lemma cpy_inv_lift1_ge_up: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶[dt, et] U2 →
                            ∀K,s,d,e. ⇩[s, d, e] L ≡ K → ∀T1. ⇧[d, e] T1 ≡ U1 →

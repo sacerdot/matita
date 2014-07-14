@@ -94,7 +94,7 @@ lemma sta_inv_lift1: ∀h,G. l_deliftable_sn (sta h G).
 ]
 qed-.
 
-(* Advanced forvard lemmas **************************************************)
+(* Advanced forward lemmas **************************************************)
 
 (* Basic_1: was: sty0_correct *)
 lemma sta_fwd_correct: ∀h,G,L,T,U. ⦃G, L⦄ ⊢ T •[h] U → ∃T0. ⦃G, L⦄ ⊢ U •[h] T0.

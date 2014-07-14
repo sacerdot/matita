@@ -16,4 +16,4 @@
 
 notation "hvbox( Ⓐ term 55 T1 . break term 55 T )"
  non associative with precedence 55
- for @{ 'SnApplV $T1 $T }.
+ for @{ 'SnApplStar $T1 $T }.

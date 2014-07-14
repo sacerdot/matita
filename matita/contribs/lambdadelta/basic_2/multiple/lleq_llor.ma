@@ -18,7 +18,7 @@ include "basic_2/multiple/lleq_alt.ma".
 
 (* LAZY EQUIVALENCE FOR LOCAL ENVIRONMENTS **********************************)
 
-(* Properties on poinwise union for local environments **********************)
+(* Properties on pointwise union for local environments **********************)
 
 lemma llpx_sn_llor_dx: ∀R. (s_r_confluent1 … R (llpx_sn R 0)) → (frees_trans R) →
                        ∀L1,L2,T,d. llpx_sn R d T L1 L2 → ∀L. L1 ⩖[T, d] L2 ≡ L → L2 ≡[T, d] L.

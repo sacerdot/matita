@@ -140,7 +140,7 @@ lemma plus_xSy_x_false: ∀y,x. x + S y = x → ⊥.
 
 (* Iterators ****************************************************************)
 
-(* Note: see also: lib/arithemetcs/bigops.ma *)
+(* Note: see also: lib/arithemetics/bigops.ma *)
 let rec iter (n:nat) (B:Type[0]) (op: B → B) (nil: B) ≝
   match n with
    [ O   ⇒ nil

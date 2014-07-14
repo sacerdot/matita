@@ -113,7 +113,7 @@ fact lstas_cpr_lpr_aux: ∀h,g,G0,L0,T0.
       @(cpcs_cpr_strap1 … (ⓐV2.ⓛ{b}W3.U3)) /2 width=1 by cpr_beta/
       /4 width=3 by cpcs_flat, cpcs_bind2, lpr_cpr_conf/
     | -U3
-      @(lsubsv_abbr … l) /3 width=7 by fqup_fpbg/
+      @(lsubsv_beta … l) /3 width=7 by fqup_fpbg/
       #W #W0 #l0 #Hl0 #HV2W #HW30
       lapply (lstas_sta_conf_pos … HV2W4 … HV2W) -HV2W #HW4W
       @(lstas_cpcs_lpr_aux … IH3 IH2 IH1 … Hl0 … HW4W … Hl0 … HW30 … HW43) //

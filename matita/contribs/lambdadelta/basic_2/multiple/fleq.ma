@@ -26,7 +26,7 @@ interpretation
    "lazy equivalence (closure)"
    'LazyEq d G1 L1 T1 G2 L2 T2 = (fleq d G1 L1 T1 G2 L2 T2).
 
-(* Basic_properties *********************************************************)
+(* Basic properties *********************************************************)
 
 lemma fleq_refl: ∀d. tri_reflexive … (fleq d).
 /2 width=1 by fleq_intro/ qed.

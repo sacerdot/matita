@@ -145,7 +145,7 @@ lemma llpx_sn_fwd_pair_sn: ∀R,I,L1,L2,V,T,d. llpx_sn R d (②{I}V.T) L1 L2 →
 #R * /2 width=4 by llpx_sn_fwd_flat_sn, llpx_sn_fwd_bind_sn/
 qed-.
 
-(* Basic_properties *********************************************************)
+(* Basic properties *********************************************************)
 
 lemma llpx_sn_refl: ∀R. (∀L. reflexive … (R L)) → ∀T,L,d. llpx_sn R d T L L.
 #R #HR #T #L @(f2_ind … rfw … L T) -L -T

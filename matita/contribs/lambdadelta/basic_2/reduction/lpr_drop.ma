@@ -19,7 +19,7 @@ include "basic_2/reduction/lpr.ma".
 
 (* SN PARALLEL REDUCTION FOR LOCAL ENVIRONMENTS *****************************)
 
-(* Properies on local environment slicing ***********************************)
+(* Properties on local environment slicing ***********************************)
 
 (* Basic_1: includes: wcpr0_drop *)
 lemma lpr_drop_conf: ∀G. dropable_sn (lpr G).

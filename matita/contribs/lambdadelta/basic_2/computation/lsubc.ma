@@ -21,7 +21,7 @@ include "basic_2/computation/acp_cr.ma".
 inductive lsubc (RP) (G): relation lenv ≝
 | lsubc_atom: lsubc RP G (⋆) (⋆)
 | lsubc_pair: ∀I,L1,L2,V. lsubc RP G L1 L2 → lsubc RP G (L1.ⓑ{I}V) (L2.ⓑ{I}V)
-| lsubc_abbr: ∀L1,L2,V,W,A. ⦃G, L1, V⦄ ϵ[RP] 〚A〛 → ⦃G, L1, W⦄ ϵ[RP] 〚A〛 → ⦃G, L2⦄ ⊢ W ⁝ A →
+| lsubc_beta: ∀L1,L2,V,W,A. ⦃G, L1, V⦄ ϵ[RP] 〚A〛 → ⦃G, L1, W⦄ ϵ[RP] 〚A〛 → ⦃G, L2⦄ ⊢ W ⁝ A →
               lsubc RP G L1 L2 → lsubc RP G (L1. ⓓⓝW.V) (L2.ⓛW)
 .
 

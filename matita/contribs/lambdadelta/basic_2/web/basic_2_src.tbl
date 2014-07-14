@@ -47,7 +47,7 @@ table {
         ]
 *)
         [ { "local env. ref. for stratified native validity" * } {
-             [ "lsubsv ( ? ⊢ ? ¡⫃[?,?] ? )" "lsubsv_lsuba" + "lsubsv_lsubd" + "lsubsv_lstas" + "lsubsv_cpds" + "lsubsv_cpcs" + "lsubsv_snv" * ]
+             [ "lsubsv ( ? ⊢ ? ⫃¡[?,?] ? )" "lsubsv_lsuba" + "lsubsv_lsubd" + "lsubsv_lstas" + "lsubsv_cpds" + "lsubsv_cpcs" + "lsubsv_snv" * ]
           }
         ]
         [ { "stratified native validity" * } {
@@ -185,7 +185,7 @@ table {
    class "grass"
    [ { "static typing" * } {
         [ { "local env. ref. for degree assignment" * } {
-             [ "lsubd ( ? ⊢ ? ▪⫃ ? )" "lsubd_da" + "lsubd_lsubd" * ]
+             [ "lsubd ( ? ⊢ ? ⫃▪[?,?] ? )" "lsubd_da" + "lsubd_lsubd" * ]
           }
         ]
         [ { "degree assignment" * } {
@@ -201,7 +201,7 @@ table {
           }
         ]
         [ { "local env. ref. for atomic arity assignment" * } {
-             [ "lsuba ( ? ⊢ ? ⁝⫃ ? )" "lsuba_aaa" + "lsuba_lsuba" * ]
+             [ "lsuba ( ? ⊢ ? ⫃⁝ ? )" "lsuba_aaa" + "lsuba_lsuba" * ]
           }
         ]
         [ { "atomic arity assignment" * } {
@@ -273,7 +273,7 @@ table {
           }
         ]
         [ { "local env. ref. for extended substitution" * } {
-             [ "lsuby ( ? ⊑×[?,?] ? )" "lsuby_lsuby" * ]
+             [ "lsuby ( ? ⊆[?,?] ? )" "lsuby_lsuby" * ]
           }
         ]
         [ { "pointwise extension of a relation" * } {

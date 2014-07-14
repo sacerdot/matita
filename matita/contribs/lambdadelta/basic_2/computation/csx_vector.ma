@@ -32,7 +32,7 @@ normalize // qed-.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma csx_fwd_applv: ∀h,g,G,L,T,Vs. ⦃G, L⦄ ⊢ ⬊*[h, g] Ⓐ Vs.T →
+lemma csx_fwd_appls: ∀h,g,G,L,T,Vs. ⦃G, L⦄ ⊢ ⬊*[h, g] Ⓐ Vs.T →
                      ⦃G, L⦄ ⊢ ⬊*[h, g] Vs ∧ ⦃G, L⦄ ⊢ ⬊*[h, g] T.
 #h #g #G #L #T #Vs elim Vs -Vs /2 width=1/
 #V #Vs #IHVs #HVs

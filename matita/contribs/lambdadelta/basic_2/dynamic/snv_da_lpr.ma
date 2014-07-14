@@ -77,7 +77,7 @@ fact da_cpr_lpr_aux: ∀h,g,G0,L0,T0.
     lapply (IH1 … HV1 … Hl0 … HV12 … HL12) -HV1 -Hl0 -HV12 [ /2 by fqup_fpbg/ ] #Hl0
     lapply (IH1 … Hl1 … HW2 … HL12) -Hl1 // /2 width=1 by fqup_fpbg/ -HW
     lapply (IH1 … HU1 … Hl … HU12 (L2.ⓛW2) ?) -IH1 -HU1 -Hl -HU12 [1,2: /2 by fqup_fpbg, lpr_pair/ ] -HL12 -HW2
-    /4 width=6 by da_bind, lsubd_da_trans, lsubd_abbr/
+    /4 width=6 by da_bind, lsubd_da_trans, lsubd_beta/
   | #b #V #V2 #W #W2 #U1 #U2 #HV1 #HV2 #HW2 #HU12 #H1 #H2 destruct -IH3 -IH2 -V -W0 -T0 -l0 -HV1 -HVW1
     elim (snv_inv_bind … HT1) -HT1 #_
     lapply (da_inv_bind … Hl) -Hl

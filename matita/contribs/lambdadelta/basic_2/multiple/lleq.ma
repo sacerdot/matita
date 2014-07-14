@@ -153,7 +153,7 @@ lemma lleq_bind_O: ∀a,I,L1,L2,V,T. L1 ≡[V, 0] L2 → L1.ⓑ{I}V ≡[T, 0] L2
                    L1 ≡[ⓑ{a,I}V.T, 0] L2.
 /2 width=1 by llpx_sn_bind_O/ qed-.
 
-(* Advancded properties on lazy pointwise exyensions ************************)
+(* Advanceded properties on lazy pointwise extensions ************************)
 
 lemma llpx_sn_lrefl: ∀R. (∀L. reflexive … (R L)) →
                      ∀L1,L2,T,d. L1 ≡[T, d] L2 → llpx_sn R d T L1 L2.

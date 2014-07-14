@@ -55,11 +55,11 @@ lemma lsubr_cpx_trans: ∀h,g,G. lsub_trans … (cpx h g G) lsubr.
 [ //
 | /2 width=2 by cpx_st/
 | #I #G #L1 #K1 #V1 #V2 #W2 #i #HLK1 #_ #HVW2 #IHV12 #L2 #HL12
-  elim (lsubr_fwd_drop2_bind … HL12 … HLK1) -HL12 -HLK1 *
+  elim (lsubr_fwd_drop2_pair … HL12 … HLK1) -HL12 -HLK1 *
   /4 width=7 by cpx_delta, cpx_ct/
-|4,9: /4 width=1 by cpx_bind, cpx_beta, lsubr_bind/
+|4,9: /4 width=1 by cpx_bind, cpx_beta, lsubr_pair/
 |5,7,8: /3 width=1 by cpx_flat, cpx_eps, cpx_ct/
-|6,10: /4 width=3 by cpx_zeta, cpx_theta, lsubr_bind/
+|6,10: /4 width=3 by cpx_zeta, cpx_theta, lsubr_pair/
 ]
 qed-.
 

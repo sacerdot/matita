@@ -91,7 +91,7 @@ lemma cprs_inv_appl1: ∀G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓐV1.T1 ➡* U2 →
   | #a #V2 #W #W2 #T #T2 #HV02 #HW2 #HT2 #H1 #H2 destruct
     lapply (cprs_strap1 … HV10 … HV02) -V0 #HV12
     lapply (lsubr_cpr_trans … HT2 (L.ⓓⓝW.V1) ?) -HT2
-    /5 width=5 by cprs_bind, cprs_flat_dx, cpr_cprs, lsubr_abst, ex2_3_intro, or3_intro1/
+    /5 width=5 by cprs_bind, cprs_flat_dx, cpr_cprs, lsubr_beta, ex2_3_intro, or3_intro1/
   | #a #V #V2 #W0 #W2 #T #T2 #HV0 #HV2 #HW02 #HT2 #H1 #H2 destruct
     /5 width=10 by cprs_flat_sn, cprs_bind_dx, cprs_strap1, ex4_5_intro, or3_intro2/
   ]

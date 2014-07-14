@@ -120,7 +120,7 @@ lemma length_inv_pos_sn_ltail: ∀L,d. d + 1 = |L| →
 elim (lpair_ltail L I V) /2 width=5 by ex2_3_intro/
 qed-.
 
-(* Basic_eliminators ********************************************************)
+(* Basic eliminators ********************************************************)
 
 (* Basic_1: was: c_tail_ind *)
 lemma lenv_ind_alt: ∀R:predicate lenv.

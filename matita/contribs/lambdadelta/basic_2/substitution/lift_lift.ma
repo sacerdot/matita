@@ -16,7 +16,7 @@ include "basic_2/substitution/lift.ma".
 
 (* BASIC TERM RELOCATION ****************************************************)
 
-(* Main properies ***********************************************************)
+(* Main properties ***********************************************************)
 
 (* Basic_1: was: lift_inj *)
 theorem lift_inj: ∀d,e,T1,U. ⇧[d,e] T1 ≡ U → ∀T2. ⇧[d,e] T2 ≡ U → T1 = T2.

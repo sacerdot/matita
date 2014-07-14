@@ -87,7 +87,7 @@ fact snv_cpr_lpr_aux: ∀h,g,G0,L0,T0.
     lapply (snv_sta_aux … IH4 … HlV2 … HV2W3)
     /3 width=5 by fpbg_fpbs_trans, fqup_fpbg, cpr_lpr_fpbs/ #HW3
     lapply (lsubsv_snv_trans … HT2 (L2.ⓓⓝW2.V2) ?) -HT2 /3 width=3 by snv_bind, snv_cast/
-    @(lsubsv_abbr … l) /3 width=7 by fqup_fpbg/ #W #W0 #l0 #Hl0 #HV2W #HW20
+    @(lsubsv_beta … l) /3 width=7 by fqup_fpbg/ #W #W0 #l0 #Hl0 #HV2W #HW20
     lapply (lstas_sta_conf_pos … HV2W3 … HV2W) -HV2W #HW3W
     @(lstas_cpcs_lpr_aux … IH1 IH2 IH3 … HlW3 … HW3W … HlW2 … HW20 … HW32) //
     [ /3 width=9 by fpbg_fpbs_trans, fqup_fpbg, cpr_lpr_sta_fpbs/

@@ -17,7 +17,7 @@ include "basic_2/substitution/lpx_sn.ma".
 
 (* SN POINTWISE EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS *********)
 
-(* Properies on dropping ****************************************************)
+(* Properties on dropping ****************************************************)
 
 lemma lpx_sn_drop_conf: ∀R,L1,L2. lpx_sn R L1 L2 →
                         ∀I,K1,V1,i. ⇩[i] L1 ≡ K1.ⓑ{I}V1 →

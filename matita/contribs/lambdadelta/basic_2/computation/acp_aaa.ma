@@ -69,7 +69,7 @@ theorem aacr_aaa_csubc_lifts: ∀RR,RS,RP.
   elim (drops_lsubc_trans … H1RP H2RP … HL32 … HL02) -L2 #L2 #HL32 #HL20
   lapply (aaa_lifts … L2 W3 … (des @@ des3) … HLWB) -HLWB /2 width=4 by drops_trans, lifts_trans/ #HLW2B
   @(IHA (L2. ⓛW3) … (des + 1 @@ des3 + 1)) -IHA 
-  /3 width=5 by lsubc_abbr, drops_trans, drops_skip, lifts_trans/
+  /3 width=5 by lsubc_beta, drops_trans, drops_skip, lifts_trans/
 | #G #L #V #T #B #A #_ #_ #IHB #IHA #L0 #des #HL0 #X #H #L2 #HL20
   elim (lifts_inv_flat1 … H) -H #V0 #T0 #HV0 #HT0 #H destruct
   /3 width=10 by drops_nil, lifts_nil/

@@ -19,7 +19,7 @@ include "basic_2/computation/fsb_alt.ma".
 
 (* "BIG TREE" STRONGLY NORMALIZING TERMS ************************************)
 
-(* Advanced propreties on context-senstive extended bormalizing terms *******)
+(* Advanced propreties on context-sensitive extended normalizing terms *******)
 
 lemma csx_fsb_fpbs: ∀h,g,G1,L1,T1. ⦃G1, L1⦄ ⊢ ⬊*[h, g] T1 →
                     ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄ → ⦃G2, L2⦄ ⊢ ⦥[h, g] T2.

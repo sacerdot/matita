@@ -20,7 +20,7 @@ include "basic_2/static/lsuba.ma".
 (* Properties concerning atomic arity assignment ****************************)
 
 lemma lsuba_aaa_conf: ∀G,L1,V,A. ⦃G, L1⦄ ⊢ V ⁝ A →
-                      ∀L2. G ⊢ L1 ⁝⫃ L2 → ⦃G, L2⦄ ⊢ V ⁝ A.
+                      ∀L2. G ⊢ L1 ⫃⁝ L2 → ⦃G, L2⦄ ⊢ V ⁝ A.
 #G #L1 #V #A #H elim H -G -L1 -V -A
 [ //
 | #I #G #L1 #K1 #V #A #i #HLK1 #HV #IHV #L2 #HL12
@@ -38,7 +38,7 @@ lemma lsuba_aaa_conf: ∀G,L1,V,A. ⦃G, L1⦄ ⊢ V ⁝ A →
 qed-.
 
 lemma lsuba_aaa_trans: ∀G,L2,V,A. ⦃G, L2⦄ ⊢ V ⁝ A →
-                       ∀L1. G ⊢ L1 ⁝⫃ L2 → ⦃G, L1⦄ ⊢ V ⁝ A.
+                       ∀L1. G ⊢ L1 ⫃⁝ L2 → ⦃G, L1⦄ ⊢ V ⁝ A.
 #G #L2 #V #A #H elim H -G -L2 -V -A
 [ //
 | #I #G #L2 #K2 #V #A #i #HLK2 #H1V #IHV #L1 #HL12

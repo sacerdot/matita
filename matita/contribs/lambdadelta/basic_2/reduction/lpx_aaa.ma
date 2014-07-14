@@ -55,7 +55,7 @@ lemma cpx_lpx_aaa_conf: ∀h,g,G,L1,T1,A. ⦃G, L1⦄ ⊢ T1 ⁝ A →
     lapply (IHV1 … HV12 … HL12) -IHV1 -HV12 #HV2
     lapply (IHT1 (ⓛ{b}W2.U2) … HL12) -IHT1 /2 width=1 by cpx_bind/ -L1 #H
     elim (aaa_inv_abst … H) -H #B0 #A0 #HW1 #HU2 #H destruct
-    /5 width=6 by lsuba_aaa_trans, lsuba_abbr, aaa_abbr, aaa_cast/
+    /5 width=6 by lsuba_aaa_trans, lsuba_beta, aaa_abbr, aaa_cast/
   | #b #V #V2 #W1 #W2 #U1 #U2 #HV1 #HV2 #HW12 #HU12 #H1 #H2 destruct
     lapply (aaa_lift G L2 … B … (L2.ⓓW2) … HV2) -HV2 /2 width=2 by drop_drop/ #HV2
     lapply (IHT1 (ⓓ{b}W2.U2) … HL12) -IHT1 /2 width=1 by cpx_bind/ -L1 #H

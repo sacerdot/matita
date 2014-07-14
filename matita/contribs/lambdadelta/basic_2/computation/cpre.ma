@@ -24,7 +24,7 @@ definition cpre: relation4 genv lenv term term ≝
 interpretation "evaluation for context-sensitive parallel reduction (term)"
    'PRedEval G L T1 T2 = (cpre G L T1 T2).
 
-(* Basic_properties *********************************************************)
+(* Basic properties *********************************************************)
 
 (* Basic_1: was just: nf2_sn3 *)
 lemma csx_cpre: ∀h,g,G,L,T1. ⦃G, L⦄ ⊢ ⬊*[h, g] T1 → ∃T2. ⦃G, L⦄ ⊢ T1 ➡* 𝐍⦃T2⦄.

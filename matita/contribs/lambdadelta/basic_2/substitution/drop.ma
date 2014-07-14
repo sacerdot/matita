@@ -321,7 +321,7 @@ lemma l_deliftable_sn_llstar: ∀R. l_deliftable_sn R →
 ]
 qed-.
 
-(* Basic forvard lemmas *****************************************************)
+(* Basic forward lemmas *****************************************************)
 
 (* Basic_1: was: drop_S *)
 lemma drop_fwd_drop2: ∀L1,I2,K2,V2,s,e. ⇩[s, O, e] L1 ≡ K2. ⓑ{I2} V2 →

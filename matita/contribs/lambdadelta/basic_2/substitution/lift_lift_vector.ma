@@ -17,7 +17,7 @@ include "basic_2/substitution/lift_vector.ma".
 
 (* BASIC TERM VECTOR RELOCATION *********************************************)
 
-(* Main properies ***********************************************************)
+(* Main properties ***********************************************************)
 
 theorem liftv_mono: ∀Ts,U1s,d,e. ⇧[d,e] Ts ≡ U1s →
                     ∀U2s:list term. ⇧[d,e] Ts ≡ U2s → U1s = U2s.

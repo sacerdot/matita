@@ -17,7 +17,7 @@ include "basic_2/computation/lpxs.ma".
 
 (* SN EXTENDED PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS *******************)
 
-(* Properies on local environment slicing ***********************************)
+(* Properties on local environment slicing ***********************************)
 
 lemma lpxs_drop_conf: ∀h,g,G. dropable_sn (lpxs h g G).
 /3 width=3 by dropable_sn_TC, lpx_drop_conf/ qed-.

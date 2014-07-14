@@ -17,7 +17,7 @@ include "basic_2/computation/lprs.ma".
 
 (* SN PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS ****************************)
 
-(* Properies on local environment slicing ***********************************)
+(* Properties on local environment slicing ***********************************)
 
 lemma lprs_drop_conf: ∀G. dropable_sn (lprs G).
 /3 width=3 by dropable_sn_TC, lpr_drop_conf/ qed-.

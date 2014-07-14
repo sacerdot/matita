@@ -49,7 +49,7 @@ elim (cpxs_inv_appl1 … H) -H *
 | #b #W0 #T0 #HT0 #HU
   elim (cpxs_inv_abst1 … HT0) -HT0 #W1 #T1 #HW1 #HT1 #H destruct
   lapply (lsubr_cpxs_trans … HT1 (L.ⓓⓝW.V) ?) -HT1
-  /5 width=3 by cpxs_trans, cpxs_bind, cpxs_pair_sn, lsubr_abst, or_intror/
+  /5 width=3 by cpxs_trans, cpxs_bind, cpxs_pair_sn, lsubr_beta, or_intror/
 | #b #V1 #V2 #V0 #T1 #_ #_ #HT1 #_
   elim (cpxs_inv_abst1 … HT1) -HT1 #W2 #T2 #_ #_ #H destruct
 ]

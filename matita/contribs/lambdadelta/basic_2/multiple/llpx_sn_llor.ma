@@ -18,7 +18,7 @@ include "basic_2/multiple/lleq_alt.ma".
 
 (* LAZY SN POINTWISE EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS ****)
 
-(* Inversion lemmas on poinwise union for local environments ****************)
+(* Inversion lemmas on pointwise union for local environments ****************)
 
 lemma llpx_sn_llor_fwd_sn: ∀R. (∀L. reflexive … (R L)) →
                            ∀L1,L2,T,d. llpx_sn R d T L1 L2 →

@@ -54,9 +54,9 @@ lemma lsubr_cpr_trans: ∀G. lsub_trans … (cpr G) lsubr.
 | #G #L1 #K1 #V1 #V2 #W2 #i #HLK1 #_ #HVW2 #IHV12 #L2 #HL12
   elim (lsubr_fwd_drop2_abbr … HL12 … HLK1) -L1 *
   /3 width=6 by cpr_delta/
-|3,7: /4 width=1 by lsubr_bind, cpr_bind, cpr_beta/
+|3,7: /4 width=1 by lsubr_pair, cpr_bind, cpr_beta/
 |4,6: /3 width=1 by cpr_flat, cpr_eps/
-|5,8: /4 width=3 by lsubr_bind, cpr_zeta, cpr_theta/
+|5,8: /4 width=3 by lsubr_pair, cpr_zeta, cpr_theta/
 ]
 qed-.
 
