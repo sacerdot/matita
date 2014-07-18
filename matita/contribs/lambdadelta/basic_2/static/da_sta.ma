@@ -51,6 +51,18 @@ lemma sta_da: ∀h,g,G,L,T,U. ⦃G, L⦄ ⊢ T •[h] U →
 ]
 qed-.
 
+lemma sta_da_ge: ∀h,G,L,T,U,l0. ⦃G, L⦄ ⊢ T •[h] U →
+                 ∃∃g,l. ⦃G, L⦄ ⊢ T ▪[h, g] l & l0 ≤ l.
+#h #G #L #T #U #l0 #H elim H -G -L -T -U
+[ /3 width=4 by da_sort, ex2_2_intro/
+| #G #L #K #V #W #W0 #i #HLK #_ #_ * /3 width=5 by da_ldef, ex2_2_intro/
+| #G #L #K #W #V #W0 #i #HLK #_ #_ * /4 width=5 by da_ldec, lt_to_le, le_S_S, ex2_2_intro/
+| #a #I #G #L #V #T #U #_ * /3 width=4 by da_bind, ex2_2_intro/
+| #G #L #V #T #U #_ * /3 width=4 by da_flat, ex2_2_intro/
+| #G #L #W #T #U #_ * /3 width=4 by da_flat, ex2_2_intro/
+]
+qed-.
+
 (* Inversion lrmmas on static type assignment for terms *********************)
 
 lemma da_inv_sta: ∀h,g,G,L,T,l. ⦃G, L⦄ ⊢ T ▪[h, g] l →

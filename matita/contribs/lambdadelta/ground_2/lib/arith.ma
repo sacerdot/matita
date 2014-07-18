@@ -138,6 +138,15 @@ lemma plus_xySz_x_false: ∀z,x,y. x + y + S z = x → ⊥.
 lemma plus_xSy_x_false: ∀y,x. x + S y = x → ⊥.
 /2 width=4 by plus_xySz_x_false/ qed-.
 
+(* Note this should go in nat.ma *)
+lemma discr_x_minus_xy: ∀x,y. x = x - y → x = 0 ∨ y = 0.
+#x @(nat_ind_plus … x) -x /2 width=1 by or_introl/
+#x #_ #y @(nat_ind_plus … y) -y /2 width=1 by or_intror/
+#y #_ >minus_plus_plus_l
+#H lapply (discr_plus_xy_minus_xz … H) -H
+#H destruct
+qed-.
+
 (* Iterators ****************************************************************)
 
 (* Note: see also: lib/arithemetics/bigops.ma *)

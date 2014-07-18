@@ -25,3 +25,16 @@ lemma lstas_da_conf: ∀h,g,G,L,T,U,l1. ⦃G, L⦄ ⊢ T •*[h, l1] U →
 #l1 #U #U0 #_ #HU0 #IHTU #l2 #HT
 <minus_plus /3 width=3 by da_sta_conf/
 qed-.
+
+(* Advanced inversion lemmas ************************************************)
+
+lemma lstas_inv_refl_pos: ∀h,G,L,T,l. ⦃G, L⦄ ⊢ T •*[h, l+1] T → ⊥.
+#h #G #L #T #l #H elim (lstas_inv_step_sn … H)
+#U #HTU #_ elim (sta_da_ge … (l+1) HTU) -U
+#g #l0 #HT #Hl0 lapply (lstas_da_conf … H … HT) -H
+#H0T lapply (da_mono … HT … H0T) -h -G -L -T
+#H elim (discr_x_minus_xy … H) -H
+[ #H destruct /2 width=3 by le_plus_xSy_O_false/
+| -Hl0 <plus_n_Sm #H destruct 
+]
+qed-.

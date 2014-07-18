@@ -20,5 +20,5 @@ include "basic_2/dynamic/lsubsv.ma".
 (* Forward lemmas on lenv refinement for degree assignment ******************)
 
 lemma lsubsv_fwd_lsubd: ∀h,g,G,L1,L2. G ⊢ L1 ⫃¡[h, g] L2 → G ⊢ L1 ⫃▪[h, g] L2.
-#h #g #G #L1 #L2 #H elim H -L1 -L2 // /2 width=1/ /2 width=3/
+#h #g #G #L1 #L2 #H elim H -L1 -L2 /2 width=3 by lsubd_pair, lsubd_beta/
 qed-.
