@@ -114,6 +114,5 @@ theorem csx_acp: ∀h,g. acp (cpx h g) (eq …) (csx h g).
 [ /3 width=13 by cnx_lift/
 | #G #L elim (deg_total h g 0) /3 width=8 by cnx_sort_iter, ex_intro/
 | /2 width=3 by csx_fwd_flat_dx/
-| /2 width=1 by csx_cast/
 ]
 qed.

@@ -32,15 +32,11 @@ definition CP1 ≝ λRR:relation4 genv lenv term term. λRS:relation term.
 definition CP2 ≝ λRP:relation3 genv lenv term.
                  ∀G,L,T,k. RP G L (ⓐ⋆k.T) → RP G L T.
 
-definition CP3 ≝ λRP:relation3 genv lenv term.
-                 ∀G,L,W,T. RP G L W → RP G L T → RP G L (ⓝW.T).
-
 (* requirements for abstract computation properties *)
 record acp (RR:relation4 genv lenv term term) (RS:relation term) (RP:relation3 genv lenv term) : Prop ≝
 { cp0: CP0 RR RS;
   cp1: CP1 RR RS;
-  cp2: CP2 RP;
-  cp3: CP3 RP
+  cp2: CP2 RP
 }.
 
 (* Basic properties *********************************************************)

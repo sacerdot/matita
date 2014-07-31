@@ -182,7 +182,7 @@ lapply (acr_lifts … HL0 … HW0 HW) -HW [ @(s0 … HCB) ] #HW0
 @(s6 … HCA … (◊) (◊)) //
 [ @(HA … HL0) //
 | lapply (s1 … HCB) -HCB #HCB
-  @(cp3 … H1RP) /2 width=1 by/
+  @(s7 … H2RP … (◊)) /2 width=1 by/
 ]
 qed.
 
