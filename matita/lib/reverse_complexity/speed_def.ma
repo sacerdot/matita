@@ -244,54 +244,6 @@ lemma g_lt : ∀h,i,x. min_input h i x = x →
 #h #i #x #H @le_S_S @(le_MaxI … i) /2 by min_input_to_lt/  
 qed.
 
-(*
-axiom ax1: ∀h,i.
-   (∃y.i < y ∧ (termb i y (h (S i) y)=true)) ∨ 
-    ∀y. i < y → (termb i y (h (S i) y)=false).
-
-lemma eventually_0: ∀h,u.∃nu.∀x. nu < x → 
-  max_{i ∈ [0,u[ | eqb (min_input h i x) x} (out i x (h (S i) x)) = 0.
-#h #u elim u
-  [%{0} normalize //
-  |#u0 * #nu0 #Hind cases (ax1 h u0) 
-    [* #x0 * #leu0x0 #Hx0 %{(max nu0 x0)}
-     #x #Hx >bigop_Sfalse
-      [>(minus_n_O u0) @Hind @(le_to_lt_to_lt … Hx) /2 by le_maxl/
-      |@not_eq_to_eqb_false % #Hf @(absurd (x ≤ x0)) 
-        [<Hf @true_to_le_min //
-        |@lt_to_not_le @(le_to_lt_to_lt … Hx) /2 by le_maxl/
-        ]
-      ]
-    |#H %{(max u0 nu0)} #x #Hx >bigop_Sfalse
-      [>(minus_n_O u0) @Hind @(le_to_lt_to_lt … Hx) @le_maxr //
-      |@not_eq_to_eqb_false >min_input_def
-       >(min_not_exists (λy.(termb (u0+0) y (h (S (u0+0)) y)))) 
-        [<plus_n_O <plus_n_Sm <plus_minus_m_m 
-          [% #H1 /2/ 
-          |@lt_to_le @(le_to_lt_to_lt … Hx) @le_maxl //
-          ]
-        |/2 by /
-        ]
-      ]
-    ]
-  ]
-qed.
-
-definition almost_equal ≝ λf,g:nat → nat. ∃nu.∀x. nu < x → f x = g x.
-
-definition almost_equal1 ≝ λf,g:nat → nat. ¬ ∀nu.∃x. nu < x ∧ f x ≠ g x.
-
-interpretation "almost equal" 'napart f g = (almost_equal f g). 
-
-lemma condition_1: ∀h,u.g h 0 ≈ g h u.
-#h #u cases (eventually_0 h u) #nu #H %{(max u nu)} #x #Hx @(eq_f ?? S)
->(bigop_sumI 0 u x (λi:ℕ.eqb (min_input h i x) x) nat  0 MaxA)
-  [>H // @(le_to_lt_to_lt …Hx) /2 by le_maxl/
-  |@lt_to_le @(le_to_lt_to_lt …Hx) /2 by le_maxr/
-  |//
-  ]
-qed. *)
-
 lemma max_neq0 : ∀a,b. max a b ≠ 0 → a ≠ 0 ∨ b ≠ 0.
 #a #b whd in match (max a b); cases (true_or_false (leb a b)) #Hcase >Hcase
   [#H %2 @H | #H %1 @H]  
@@ -349,7 +301,7 @@ whd in match (out ???); >termy >Hr
 qed.
 
 
-(********************** complexity ***********************)
+(********************************* complexity *********************************)
 
 (* We assume operations have a minimal structural complexity MSC. 
 For instance, for time complexity, MSC is equal to the size of input.
@@ -373,11 +325,6 @@ lemma ext_CF : ∀f,g,s. (∀n. f n = g n) → CF s f → CF s g.
 #f #g #s #Hext * #HO  * #i * #Hcode #HC % // %{i} %
   [#x cases (Hcode x) #a #H %{a} whd in match (total ??); <Hext @H | //] 
 qed.
-
-(* lemma ext_CF_total : ∀f,g,s. (∀n. f n = g n) → CF s (total f) → CF s (total g).
-#f #g #s #Hext * #HO * #i * #Hcode #HC % // %{i} % [2:@HC]
-#x cases (Hcode x) #a #H %{a} #m #leam >(H m leam) normalize @eq_f @Hext
-qed. *)
 
 lemma monotonic_CF: ∀s1,s2,f.(∀x. s1 x ≤  s2 x) → CF s1 f → CF s2 f.
 #s1 #s2 #f #H * #HO * #i * #Hcode #Hs1 % 
@@ -412,34 +359,8 @@ lemma CF_comp_ext: ∀f,g,h,sh,sf,sg. CF sg g → CF sf f →
   [#n normalize @Heq | @(CF_comp … H) //]
 qed.
 
-(*
-lemma CF_comp1: ∀f,g,s. CF s (total g) → CF s (total f) → 
-  CF s (total (f ∘ g)).
-#f #g #s #Hg #Hf @(timesc_CF … 2) @(monotonic_CF … (CF_comp … Hg Hf))
-*)
 
-(*
-axiom CF_comp_ext2: ∀f,g,h,sf,sh. CF sh (total g) → CF sf (total f) → 
-  (∀x.f(g x) = h x) → 
-  (∀x. sf (g x) ≤ sh x) → CF sh (total h). 
-
-lemma main_MSC: ∀h,f. CF h f → O h (λx.MSC (f x)). 
- 
-axiom CF_S: CF MSC S.
-axiom CF_fst: CF MSC fst.
-axiom CF_snd: CF MSC snd.
-
-lemma CF_compS: ∀h,f. CF h f → CF h (S ∘ f).
-#h #f #Hf @(CF_comp … Hf CF_S) @O_plus // @main_MSC //
-qed. 
-
-lemma CF_comp_fst: ∀h,f. CF h (total f) → CF h (total (fst ∘ f)).
-#h #f #Hf @(CF_comp … Hf CF_fst) @O_plus // @main_MSC //
-qed.
-
-lemma CF_comp_snd: ∀h,f. CF h (total f) → CF h (total (snd ∘ f)).
-#h #f #Hf @(CF_comp … Hf CF_snd) @O_plus // @main_MSC //
-qed. *)
+(**************************** primitive operations*****************************)
 
 definition id ≝ λx:nat.x.
 
@@ -458,20 +379,10 @@ lemma CF_snd: CF MSC snd.
 qed.
 
 (************************************** eqb ***********************************)
-(* definition btotal ≝ 
-  λf.λx:nat. match f x with [true ⇒ Some ? 0 |false ⇒ Some ? 1]. *)
   
 axiom CF_eqb: ∀h,f,g.
   CF h f → CF h g → CF h (λx.eqb (f x) (g x)).
 
-(* 
-axiom eqb_compl2: ∀h,f,g.
-  CF2 h (total2 f) → CF2 h (total2 g) → 
-    CF2 h (btotal2 (λx1,x2.eqb (f x1 x2) (g x1 x2))).
-
-axiom eqb_min_input_compl:∀h,x. 
-   CF (λi.∑_{y ∈ [S i,S x[ }(h i y))
-   (btotal (λi.eqb (min_input h i x) x)). *)
 (*********************************** maximum **********************************) 
 
 axiom CF_max: ∀a,b.∀p:nat →bool.∀f,ha,hb,hp,hf,s.
@@ -485,6 +396,9 @@ axiom CF_mu: ∀a,b.∀f:nat →bool.∀sa,sb,sf,s.
   CF sa a → CF sb b → CF sf f → 
   O s (λx.sa x + sb x + ∑_{i ∈[a x ,S(b x)[ }(sf 〈i,x〉)) →
   CF s (λx.μ_{i ∈[a x,b x] }(f 〈i,x〉)).
+  
+(************************************* smn ************************************)
+axiom smn: ∀f,s. CF s f → ∀x. CF (λy.s 〈x,y〉) (λy.f 〈x,y〉).
 
 (****************************** constructibility ******************************)
  
@@ -537,10 +451,7 @@ lemma CF_out: CF sU out_unary.
 #n whd in ⊢ (??%?); whd in  ⊢ (??(?%)?); >snd_pair % 
 qed.
 
-(*
-lemma CF_termb_comp: ∀f.CF (sU ∘ f) (termb_unary ∘ f).
-#f @(CF_comp … CF_termb) *)
-  
+
 (******************** complexity of g ********************)
 
 definition unary_g ≝ λh.λux. g h (fst ux) (snd ux).
@@ -595,14 +506,6 @@ qed.
 definition termb_aux ≝ λh.
   termb_unary ∘ λp.〈fst (snd p),〈fst p,h (S (fst (snd p))) (fst p)〉〉.
 
-(*
-lemma termb_aux : ∀h,p.
-  (λx:ℕ.termb (fst x) (fst (snd x)) (snd (snd x))) 
-    〈fst (snd p),〈fst p,h (S (fst (snd p))) (fst p)〉〉 =
-  termb (fst (snd p)) (fst p) (h (S (fst (snd p))) (fst p)) .
-#h #p normalize >fst_pair >snd_pair >fst_pair >snd_pair // 
-qed. *)
-
 lemma compl_g4 : ∀h,s1,s.
   (CF s1 
     (λp.termb (fst (snd p)) (fst p) (h (S (fst (snd p))) (fst p)))) →
@@ -614,9 +517,6 @@ lemma compl_g4 : ∀h,s1,s.
   [@CF_compS @CF_fst 
   |@CF_comp_snd @CF_snd
   |@(O_trans … HO) @O_plus [@O_plus @O_plus_l // | @O_plus_r //]
-(* @(ext_CF (btotal (termb_aux h)))
-  [#n normalize >fst_pair >snd_pair >fst_pair >snd_pair // ]
-@(CF_compb … CF_termb) *)
 qed.
 
 (************************* a couple of technical lemmas ***********************)
@@ -669,6 +569,8 @@ O (λx.(snd x - fst x)*s1 〈fst x,x〉) (λx.∑_{i ∈[fst x,snd x[ }(s1 〈i,
 @(transitive_le … (sigma_bound_decr …)) [2://] @Hs1 
 qed.
 
+(**************************** end of technical lemmas *************************)
+
 lemma compl_g5 : ∀h,s1.(∀n. monotonic ℕ le (λa:ℕ.s1 〈a,n〉)) →
   (CF s1 
     (λp.termb (fst (snd p)) (fst p) (h (S (fst (snd p))) (fst p)))) →
@@ -677,13 +579,6 @@ lemma compl_g5 : ∀h,s1.(∀n. monotonic ℕ le (λa:ℕ.s1 〈a,n〉)) →
 #h #s1 #Hmono #Hs1 @(compl_g4 … Hs1) @O_plus 
 [@O_plus_l // |@O_plus_r @coroll @Hmono]
 qed.
-
-(*
-axiom compl_g6: ∀h.
-  (* constructible (λx. h (fst x) (snd x)) → *)
-  (CF (λx. max (MSC x) (sU 〈fst (snd x),〈fst x,h (S (fst (snd x))) (fst x)〉〉))
-    (λp.termb (fst (snd p)) (fst p) (h (S (fst (snd p))) (fst p)))).
-*)
 
 lemma compl_g6: ∀h.
   constructible (λx. h (fst x) (snd x)) →
@@ -723,22 +618,6 @@ lemma compl_g6: ∀h.
     |@le_to_O #x @monotonic_sU // @(le_maxl … (le_n …)) ]
   ]
 qed.
-             
-(* definition faux1 ≝ λh.
-  (λx.MSC x + (snd (snd x)-fst x)*(λx.sU 〈fst (snd x),〈fst x,h (S (fst (snd x))) (fst x)〉〉) 〈snd (snd x),x〉).
-  
-(* complexity of min_input *)
-lemma compl_g7: ∀h. 
-  (∀x.MSC x≤h (S (fst (snd x))) (fst x)) →
-  constructible (λx. h (fst x) (snd x)) →
-  (∀n. monotonic ? le (h n)) → 
-  CF (λx.MSC x + (snd (snd x)-fst x)*sU 〈fst x,〈snd (snd x),h (S (fst x)) (snd (snd x))〉〉)
-    (λp:ℕ.min_input h (fst p) (snd (snd p))).
-#h #hle #hcostr #hmono @(monotonic_CF … (faux1 h))
-  [#n normalize >fst_pair >snd_pair //]
-@compl_g5 [2:@(compl_g6 h hcostr)] #n #x #y #lexy >fst_pair >snd_pair 
->fst_pair >snd_pair @monotonic_sU // @hmono @lexy
-qed.*)
 
 definition big : nat →nat ≝ λx. 
   let m ≝ max (fst x) (snd x) in 〈m,m〉.
@@ -755,7 +634,6 @@ definition faux2 ≝ λh.
   (λx.MSC x + (snd (snd x)-fst x)*
     (λx.sU 〈max (fst(snd x)) (snd(snd x)),〈fst x,h (S (fst (snd x))) (fst x)〉〉) 〈snd (snd x),x〉).
  
-(* proviamo con x *)
 lemma compl_g7: ∀h. 
   constructible (λx. h (fst x) (snd x)) →
   (∀n. monotonic ? le (h n)) → 
@@ -767,7 +645,6 @@ lemma compl_g7: ∀h.
 >fst_pair >snd_pair @monotonic_sU // @hmono @lexy
 qed.
 
-(* proviamo con x *)
 lemma compl_g71: ∀h. 
   constructible (λx. h (fst x) (snd x)) →
   (∀n. monotonic ? le (h n)) → 
@@ -780,11 +657,6 @@ cases (decidable_le (fst x) (snd(snd x)))
   |#Hlt >(minus_to_0 … (lt_to_le … )) [// | @not_le_to_lt @Hlt]
   ]
 qed.
-
-(*
-axiom compl_g8: ∀h.
-  CF (λx. sU 〈fst x,〈snd (snd x),h (S (fst x)) (snd (snd x))〉〉)
-    (λp:ℕ.out (fst p) (snd (snd p)) (h (S (fst p)) (snd (snd p)))). *)
 
 definition out_aux ≝ λh.
   out_unary ∘ λp.〈fst p,〈snd(snd p),h (S (fst p)) (snd (snd p))〉〉.
@@ -824,17 +696,6 @@ lemma compl_g8: ∀h.
     |@le_to_O #x @monotonic_sU [@(le_maxl … (le_n …))|//|//]
   ]
 qed.
-
-(*
-lemma compl_g81: ∀h.
-  (∀x.MSC x≤h (S (fst x)) (snd(snd x))) →
-  constructible (λx. h (fst x) (snd x)) →
-  CF (λx. sU 〈max (fst x) (snd x),〈snd (snd x),h (S (fst x)) (snd (snd x))〉〉)
-    (λp:ℕ.out (fst p) (snd (snd p)) (h (S (fst p)) (snd (snd p)))).
-#h #hle #hconstr @(monotonic_CF ???? (compl_g8 h hle hconstr)) #x @monotonic_sU // @(le_maxl … (le_n … )) 
-qed. *)
-
-(* axiom daemon : False. *)
 
 lemma compl_g9 : ∀h. 
   constructible (λx. h (fst x) (snd x)) →
@@ -890,7 +751,7 @@ qed.
 
 let rec h_of_aux (r:nat →nat) (c,d,b:nat) on d : nat ≝ 
   match d with 
-  [ O ⇒ c (* MSC 〈〈b,b〉,〈b,b〉〉 *)
+  [ O ⇒ c 
   | S d1 ⇒ (S d)*(MSC 〈〈b-d,b〉,〈b-d,b〉〉) +
      d*(S d)*sU 〈〈b-d,b〉,〈b,r (h_of_aux r c d1 b)〉〉].
 
@@ -998,14 +859,6 @@ lemma speed_compl: ∀r:nat →nat.
   ]
 qed.
 
-(* 
-lemma unary_g_def : ∀h,i,x. g h i x = unary_g h 〈i,x〉.
-#h #i #x whd in ⊢ (???%); >fst_pair >snd_pair %
-qed.  *)
-
-(* smn *)
-axiom smn: ∀f,s. CF s f → ∀x. CF (λy.s 〈x,y〉) (λy.f 〈x,y〉).
-
 lemma speed_compl_i: ∀r:nat →nat. 
   (∀x. x ≤ r x) → monotonic ? le r → constructible r →
   ∀i. CF (λx.h_of r 〈i,x〉) (λx.g (λi,x. r(h_of r 〈i,x〉)) i x).
@@ -1015,6 +868,7 @@ lemma speed_compl_i: ∀r:nat →nat.
 @smn @(ext_CF … (speed_compl r Hr Hmono Hconstr)) #n //
 qed.
 
+(**************************** the speedup theorem *****************************)
 theorem pseudo_speedup: 
   ∀r:nat →nat. (∀x. x ≤ r x) → monotonic ? le r → constructible r →
   ∃f.∀sf. CF sf f → ∃g,sg. f ≈ g ∧ CF sg g ∧ O sf (r ∘ sg).
