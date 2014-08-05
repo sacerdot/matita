@@ -51,7 +51,7 @@ table {
           }
         ]
         [ { "stratified native validity" * } {
-             [ "hsnv ( ⦃?,?⦄ ⊢ ? ¡[?,?,?] )" "hsnv_aaa" * 
+             [ "hsnv ( ⦃?,?⦄ ⊢ ? ¡[?,?,?] )" "hsnv_aaa" * ]
              [ "snv ( ⦃?,?⦄ ⊢ ? ¡[?,?] )" "snv_lift" + "snv_aaa" + "snv_da_lpr" + "snv_lstas" + "snv_lstas_lpr" + "snv_lpr" + "snv_cpes" + "snv_preserve" * ]
           }
         ]
