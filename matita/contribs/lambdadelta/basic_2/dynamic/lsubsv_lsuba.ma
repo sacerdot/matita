@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/equivalence/cpes_aaa.ma".
 include "basic_2/dynamic/snv_aaa.ma".
 include "basic_2/dynamic/lsubsv.ma".
 
@@ -21,11 +22,11 @@ include "basic_2/dynamic/lsubsv.ma".
 
 lemma lsubsv_fwd_lsuba: ∀h,g,G,L1,L2. G ⊢ L1 ⫃¡[h, g] L2 → G ⊢ L1 ⫃⁝ L2.
 #h #g #G #L1 #L2 #H elim H -L1 -L2 /2 width=1 by lsuba_pair/
-#L1 #L2 #W #V #l #H1W #HV #HVW #H2W #H1l #_ #_ #IHL12
-lapply (snv_scast … HV H1W HVW H1l) -HV -H1W -HVW -H1l #HV
+#L1 #L2 #W #V #l1 #H #_ #_ #_ #_ #IHL12
+elim (hsnv_inv_cast … H) -H #HW #HV #H
+lapply (H 0 ?) // -l1 #HWV
+elim (snv_fwd_aaa … HW) -HW #B #HW
 elim (snv_fwd_aaa … HV) -HV #A #HV
-elim (snv_fwd_aaa … H2W) -H2W #B #HW
-elim (aaa_inv_cast … HV) #HWA #_
-lapply (lsuba_aaa_trans … HW … IHL12) #HWB
-lapply (aaa_mono … HWB … HWA) -HWB -HWA #H destruct /2 width=3 by lsuba_beta/
+lapply (cpes_aaa_mono … HWV … HW … HV) #H destruct
+/4 width=5 by lsuba_aaa_conf, lsuba_beta, aaa_cast/
 qed-.

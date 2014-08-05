@@ -51,7 +51,8 @@ table {
           }
         ]
         [ { "stratified native validity" * } {
-             [ "snv ( ⦃?,?⦄ ⊢ ? ¡[?,?] )" "snv_lift" + "snv_aaa" + "snv_da_lpr" + "snv_lstas" + "snv_lstas_lpr" + "snv_lpr" + "snv_cpcs" + "snv_preserve" * ]
+             [ "hsnv ( ⦃?,?⦄ ⊢ ? ¡[?,?,?] )" "hsnv_aaa" * 
+             [ "snv ( ⦃?,?⦄ ⊢ ? ¡[?,?] )" "snv_lift" + "snv_aaa" + "snv_da_lpr" + "snv_lstas" + "snv_lstas_lpr" + "snv_lpr" + "snv_cpes" + "snv_preserve" * ]
           }
         ]
      }
@@ -59,7 +60,7 @@ table {
    class "blue"
    [ { "equivalence" * } {
         [ { "decomposed extended equivalence" * } {
-             [ "cpes ( ⦃?,?⦄ ⊢ ? •*⬌*[?,?] ? )" "cpes_cpds" * ]
+             [ "cpes ( ⦃?,?⦄ ⊢ ? •*⬌*[?,?,?,?] ? )" "cpes_aaa" + "cpes_cpcs" + "cpes_cpes" * ]
           }
         ]
         [ { "context-sensitive equivalence" * } {
@@ -105,7 +106,7 @@ table {
           }
         ]
         [ { "decomposed extended computation" * } {
-             [ "cpds ( ⦃?,?⦄ ⊢ ? •*➡*[?,?] ? )" "cpds_lift" + "cpds_aaa" + "cpds_cpds" * ]
+             [ "cpds ( ⦃?,?⦄ ⊢ ? •*➡*[?,?,?] ? )" "cpds_lift" + "cpds_aaa" + "cpds_cpds" * ]
           }
         ]
         [ { "context-sensitive extended computation" * } {

@@ -34,7 +34,8 @@ CONTRIB      := lambdadelta_2
 
 TAGS := all xoa xoa2 orig elim deps top leaf stats tbls trim contrib
 
-PACKAGES := ground_2 basic_2 apps_2
+PACKAGES  := ground_2 basic_2 apps_2 alpha_1
+XPACKAGES := ground_2 basic_2
 
 LDWS := $(shell find -name "*.ldw.xml")
 TBLS := $(shell find -name "*.tbl")
@@ -58,6 +59,14 @@ $(1)/$(1)_mac.txt: $$(MAS_$(1))
 endef
 
 $(foreach PKG, $(PACKAGES), $(eval $(call MAS_TEMPLATE,$(PKG))))
+
+# XMAS #######################################################################
+
+define XMAS_TEMPLATE
+  XMAS += $$(MAS_$(1))
+endef
+
+$(foreach PKG, $(XPACKAGES), $(eval $(call XMAS_TEMPLATE,$(PKG))))
 
 # xoa ########################################################################
 
@@ -239,7 +248,7 @@ trim: $(TRIMS:%=%.trimmed)
 
 contrib:
 	@echo "  TAR -czf $(CONTRIB).tar.gz root *.ma"
-	$(H)tar -czf $(CONTRIB).tar.gz root $(MAS)
+	$(H)tar -czf $(CONTRIB).tar.gz root $(XMAS)
 
 ##############################################################################
 

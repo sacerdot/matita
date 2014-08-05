@@ -12,9 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/cpds_cpds.ma".
 include "basic_2/dynamic/snv_aaa.ma".
-include "basic_2/dynamic/snv_cpcs.ma".
+include "basic_2/dynamic/snv_cpes.ma".
 include "basic_2/dynamic/lsubsv_lstas.ma".
 
 (* STRATIFIED NATIVE VALIDITY FOR TERMS *************************************)
@@ -76,56 +75,46 @@ fact lstas_cpr_lpr_aux: ∀h,g,G0,L0,T0.
     /5 width=8 by cpcs_cpr_strap1, cpcs_bind1, cpr_zeta, drop_drop, ex2_intro/
   ]
 | #V1 #T1 #HG0 #HL0 #HT0 #H1 #l1 #l2 #Hl21 #Hl1 #X2 #H2 #X3 #H3 #L2 #HL12 destruct
-  elim (snv_inv_appl … H1) -H1 #a #W1 #W10 #U10 #l0 #HV1 #HT1 #Hl0 #HVW1 #HW10 #HTU10
+  elim (snv_inv_appl … H1) -H1 #a #W1 #U1 #l0 #HV1 #HT1 #HVW1 #HTU1
   lapply (da_inv_flat … Hl1) -Hl1 #Hl1
-  elim (lstas_inv_appl1 … H2) -H2 #U1 #HTU1 #H destruct
+  elim (lstas_inv_appl1 … H2) -H2 #X #HT1U #H destruct
   elim (cpr_inv_appl1 … H3) -H3 *
-  [ #V2 #T2 #HV12 #HT12 #H destruct -a -l0 -W1 -W10 -U10 -HV1 -IH4 -IH3 -IH2
-    elim (IH1 … Hl1 … HTU1 … HT12 … HL12) -IH1 -Hl1 -HTU1
+  [ #V2 #T2 #HV12 #HT12 #H destruct -a -l0 -W1 -U1 -HV1 -IH4 -IH3 -IH2
+    elim (IH1 … Hl1 … HT1U … HT12 … HL12) -IH1 -Hl1 -HT1U
     /4 width=5 by fqup_fpbg, cpcs_flat, lpr_cpr_conf, lstas_appl, ex2_intro/
   | #b #V2 #W2 #W3 #T2 #T3 #HV12 #HW23 #HT23 #H1 #H2 destruct
     elim (snv_inv_bind … HT1) -HT1 #HW2 #HT2
     lapply (da_inv_bind … Hl1) -Hl1 #Hl1
-    elim (lstas_inv_bind1 … HTU1) -HTU1 #U2 #HTU2 #H destruct
-    elim (cpds_inv_abst1 … HTU10) -HTU10 #W0 #U0 #HW20 #_ #H destruct
-    lapply (cprs_div … HW10 … HW20) -W0 #HW12
-    lapply (da_sta_conf … HVW1 … Hl0) <minus_plus_m_m #H
-    elim (snv_fwd_da … HW2) #l #Hl
-    lapply (IH4 … HV1 … 1 … Hl0 W1 ?) /2 width=1 by fqup_fpbg, sta_lstas/ #HW1
-    lapply (da_cpcs_aux … IH3 IH2 … H … Hl … HW12) // -H
-    /3 width=5 by fpbg_fpbs_trans, fqup_fpbg, sta_fpbs/ #H destruct
-    lapply (IH3 … HV12 … HL12) /2 width=1 by fqup_fpbg/ #HV2
-    lapply (IH2 … Hl0 … HV12 … HL12) /2 width=1 by fqup_fpbg/ #HV2l
-    elim (IH1 … 1 … Hl0 … W1 … HV12 … HL12) /2 width=1 by fqup_fpbg, sta_lstas/ -HVW1 #W4 #H #HW14
-    lapply (lstas_inv_SO … H) #HV2W4
-    lapply (da_sta_conf … HV2W4 … HV2l) <minus_plus_m_m #HW4l
-    lapply (IH4 … HV2 … HV2l … H) -H /3 width=5 by fpbg_fpbs_trans, fqup_fpbg, cpr_lpr_fpbs/ #HW4
+    elim (lstas_inv_bind1 … HT1U) -HT1U #U #HT2U #H destruct
+    elim (cpds_inv_abst1 … HTU1) -HTU1 #W0 #U0 #HW20 #_ #H destruct -U0 -l0
+    elim (snv_fwd_da … HW2) #l0 #HW2l
+    lapply (cpds_div … W2 … 0 … HVW1) /2 width=3 by cprs_cpds/ -W0 #H21
+    elim (snv_fwd_da … HV1) #l #HV1l
+    elim (da_cpes_aux … IH4 IH3 IH2 … HW2l … HV1l … H21) /2 width=1 by fqup_fpbg/ #_ #H
+    <minus_n_O #H0 destruct >(plus_minus_m_m l 1) in HV1l; // -H #HV1l
+    lapply (cpes_cpr_lpr_aux … IH2 IH1 … H21 … HW23 … HV12 … HL12) -H21 /2 width=1 by fqup_fpbg/ #H32
     lapply (IH3 … HW23 … HL12) /2 width=1 by fqup_fpbg/ #HW3
-    lapply (IH2 … Hl … HW23 … HL12) /2 width=1 by fqup_fpbg/ #HW3l
-    elim (IH1 … Hl1 … HTU2 … HT23 (L2.ⓛW3)) -HTU2 /2 width=1 by fqup_fpbg, lpr_pair/ #U3 #HTU3 #HU23
-    lapply (cpcs_cpr_strap1 … HW12 … HW23) #H
-    lapply (lpr_cpcs_conf … HL12 … H) -H #H
-    lapply (cpcs_canc_sn … HW14 H) -H #HW43
+    lapply (IH3 … HV12 … HL12) /2 width=1 by fqup_fpbg/ #HV2
+    lapply (IH2 … HW2l … HW23 … HL12) /2 width=1 by fqup_fpbg/ -HW2 -HW2l #HW3l
+    lapply (IH2 … HV1l … HV12 … HL12) /2 width=1 by fqup_fpbg/ -HV1 -HV1l #HV2l
+    elim (IH1 … Hl1 … HT2U … HT23 (L2.ⓛW3)) -HT2U /2 width=1 by fqup_fpbg, lpr_pair/ #U3 #HTU3 #HU23
     elim (lsubsv_lstas_trans … g … HTU3 … Hl21 … (L2.ⓓⓝW3.V2)) -HTU3
-    [ #U4 #HT3U4 #HU43 -HW12 -HW3 -HW3l -W4 -IH2 -IH3 -IH4
+    [ #U4 #HT3U4 #HU43 -IH1 -IH2 -IH3 -IH4 -l -l1 -HW3 -HV2 -HT2
       @(ex2_intro … (ⓓ{b}ⓝW3.V2.U4)) /2 width=1 by lstas_bind/ -HT3U4
       @(cpcs_canc_dx … (ⓓ{b}ⓝW3.V2.U3)) /2 width=1 by cpcs_bind_dx/ -HU43
       @(cpcs_cpr_strap1 … (ⓐV2.ⓛ{b}W3.U3)) /2 width=1 by cpr_beta/
       /4 width=3 by cpcs_flat, cpcs_bind2, lpr_cpr_conf/
     | -U3
-      @(lsubsv_beta … l) /3 width=7 by fqup_fpbg/
-      #W #W0 #l0 #Hl0 #HV2W #HW30
-      lapply (lstas_sta_conf_pos … HV2W4 … HV2W) -HV2W #HW4W
-      @(lstas_cpcs_lpr_aux … IH3 IH2 IH1 … Hl0 … HW4W … Hl0 … HW30 … HW43) //
-      [ /3 width=9 by fpbg_fpbs_trans, fqup_fpbg, cpr_lpr_sta_fpbs/
-      | /3 width=5 by fpbg_fpbs_trans, fqup_fpbg, cpr_lpr_fpbs/
-      ]
+      @(lsubsv_beta … (l-1)) /3 width=7 by fqup_fpbg/
+      @hsnv_cast [1,2: // ] #l0 #Hl0
+      lapply (cpes_le_aux … IH4 IH3 IH2 IH1 … HW3l … HV2l … l0 … H32) -IH4 -IH3 -IH2 -IH1 -HW3l -HV2l -H32
+      /3 width=5 by fpbg_fpbs_trans, fqup_fpbg, cpr_lpr_fpbs, le_S_S/
     | -IH1 -IH3 -IH4 /3 width=9 by fqup_fpbg, lpr_pair/
     ]
-  | #b #V0 #V2 #W0 #W2 #T0 #T2 #HV10 #HV02 #HW02 #HT02 #H1 #H2 destruct -a -l0 -W1 -W10 -HV1 -IH4 -IH3 -IH2
+  | #b #V0 #V2 #W0 #W2 #T0 #T2 #HV10 #HV02 #HW02 #HT02 #H1 #H2 destruct -a -l0 -W1 -HV1 -IH4 -IH3 -IH2
     elim (snv_inv_bind … HT1) -HT1 #_ #HT0
     lapply (da_inv_bind … Hl1) -Hl1 #Hl1
-    elim (lstas_inv_bind1 … HTU1) -HTU1 #U0 #HTU0 #H destruct
+    elim (lstas_inv_bind1 … HT1U) -HT1U #U0 #HTU0 #H destruct
     elim (IH1 … Hl1 … HTU0 … HT02 (L2.ⓓW2)) -IH1 -Hl1 -HTU0 /2 width=1 by fqup_fpbg, lpr_pair/ -T0 #U2 #HTU2 #HU02
     lapply (lpr_cpr_conf … HL12 … HV10) -HV10 #HV10
     lapply (lpr_cpr_conf … HL12 … HW02) -L1 #HW02
@@ -136,15 +125,14 @@ fact lstas_cpr_lpr_aux: ∀h,g,G0,L0,T0.
   ]
 | #W1 #T1 #HG0 #HL0 #HT0 #H1 #l1 #l2 @(nat_ind_plus … l2) -l2 [ #_ | #l2 #_ #Hl21 ] #Hl1 #X2 #H2 #X3 #H3 #L2 #HL12 destruct -IH4 -IH3 -IH2
   [ lapply (lstas_inv_O … H2) -H2 #H destruct -IH1 -H1 -l1 /4 width=5 by lpr_cpcs_conf, cpr_cpcs_dx, ex2_intro/ ]
-  elim (snv_inv_cast … H1) -H1 #U1 #l #_ #HT1 #_ #_ #_ -U1 -l
+  elim (snv_inv_cast … H1) -H1 #U1 #_ #HT1 #_ #_ -U1
   lapply (da_inv_flat … Hl1) -Hl1 #Hl1
   lapply (lstas_inv_cast1 … H2) -H2 #HTU1
   elim (cpr_inv_cast1 … H3) -H3
   [ * #U2 #T2 #_ #HT12 #H destruct
     elim (IH1 … Hl1 … HTU1 … HT12 … HL12) -IH1 -Hl1 -HTU1 -HL12
     /3 width=3 by fqup_fpbg, lstas_cast, ex2_intro/
-  | #HT1X3
-    elim (IH1 … Hl1 … HTU1 … HT1X3 … HL12) -IH1 -Hl1 -HTU1 -HL12
+  | #HT1X3 elim (IH1 … Hl1 … HTU1 … HT1X3 … HL12) -IH1 -Hl1 -HTU1 -HL12
     /2 width=3 by fqup_fpbg, ex2_intro/
   ]
 ]

@@ -202,6 +202,14 @@ inductive ex6_7 (A0,A1,A2,A3,A4,A5,A6:Type[0]) (P0,P1,P2,P3,P4,P5:A0→A1→A2�
 
 interpretation "multiple existental quantifier (6, 7)" 'Ex P0 P1 P2 P3 P4 P5 = (ex6_7 ? ? ? ? ? ? ? P0 P1 P2 P3 P4 P5).
 
+(* multiple existental quantifier (7, 3) *)
+
+inductive ex7_3 (A0,A1,A2:Type[0]) (P0,P1,P2,P3,P4,P5,P6:A0→A1→A2→Prop) : Prop ≝
+   | ex7_3_intro: ∀x0,x1,x2. P0 x0 x1 x2 → P1 x0 x1 x2 → P2 x0 x1 x2 → P3 x0 x1 x2 → P4 x0 x1 x2 → P5 x0 x1 x2 → P6 x0 x1 x2 → ex7_3 ? ? ? ? ? ? ? ? ? ?
+.
+
+interpretation "multiple existental quantifier (7, 3)" 'Ex P0 P1 P2 P3 P4 P5 P6 = (ex7_3 ? ? ? P0 P1 P2 P3 P4 P5 P6).
+
 (* multiple existental quantifier (7, 4) *)
 
 inductive ex7_4 (A0,A1,A2,A3:Type[0]) (P0,P1,P2,P3,P4,P5,P6:A0→A1→A2→A3→Prop) : Prop ≝
@@ -218,6 +226,14 @@ inductive ex7_7 (A0,A1,A2,A3,A4,A5,A6:Type[0]) (P0,P1,P2,P3,P4,P5,P6:A0→A1→A
 
 interpretation "multiple existental quantifier (7, 7)" 'Ex P0 P1 P2 P3 P4 P5 P6 = (ex7_7 ? ? ? ? ? ? ? P0 P1 P2 P3 P4 P5 P6).
 
+(* multiple existental quantifier (8, 4) *)
+
+inductive ex8_4 (A0,A1,A2,A3:Type[0]) (P0,P1,P2,P3,P4,P5,P6,P7:A0→A1→A2→A3→Prop) : Prop ≝
+   | ex8_4_intro: ∀x0,x1,x2,x3. P0 x0 x1 x2 x3 → P1 x0 x1 x2 x3 → P2 x0 x1 x2 x3 → P3 x0 x1 x2 x3 → P4 x0 x1 x2 x3 → P5 x0 x1 x2 x3 → P6 x0 x1 x2 x3 → P7 x0 x1 x2 x3 → ex8_4 ? ? ? ? ? ? ? ? ? ? ? ?
+.
+
+interpretation "multiple existental quantifier (8, 4)" 'Ex P0 P1 P2 P3 P4 P5 P6 P7 = (ex8_4 ? ? ? ? P0 P1 P2 P3 P4 P5 P6 P7).
+
 (* multiple existental quantifier (8, 5) *)
 
 inductive ex8_5 (A0,A1,A2,A3,A4:Type[0]) (P0,P1,P2,P3,P4,P5,P6,P7:A0→A1→A2→A3→A4→Prop) : Prop ≝
@@ -225,22 +241,6 @@ inductive ex8_5 (A0,A1,A2,A3,A4:Type[0]) (P0,P1,P2,P3,P4,P5,P6,P7:A0→A1→A2�
 .
 
 interpretation "multiple existental quantifier (8, 5)" 'Ex P0 P1 P2 P3 P4 P5 P6 P7 = (ex8_5 ? ? ? ? ? P0 P1 P2 P3 P4 P5 P6 P7).
-
-(* multiple existental quantifier (9, 3) *)
-
-inductive ex9_3 (A0,A1,A2:Type[0]) (P0,P1,P2,P3,P4,P5,P6,P7,P8:A0→A1→A2→Prop) : Prop ≝
-   | ex9_3_intro: ∀x0,x1,x2. P0 x0 x1 x2 → P1 x0 x1 x2 → P2 x0 x1 x2 → P3 x0 x1 x2 → P4 x0 x1 x2 → P5 x0 x1 x2 → P6 x0 x1 x2 → P7 x0 x1 x2 → P8 x0 x1 x2 → ex9_3 ? ? ? ? ? ? ? ? ? ? ? ?
-.
-
-interpretation "multiple existental quantifier (9, 3)" 'Ex P0 P1 P2 P3 P4 P5 P6 P7 P8 = (ex9_3 ? ? ? P0 P1 P2 P3 P4 P5 P6 P7 P8).
-
-(* multiple existental quantifier (10, 4) *)
-
-inductive ex10_4 (A0,A1,A2,A3:Type[0]) (P0,P1,P2,P3,P4,P5,P6,P7,P8,P9:A0→A1→A2→A3→Prop) : Prop ≝
-   | ex10_4_intro: ∀x0,x1,x2,x3. P0 x0 x1 x2 x3 → P1 x0 x1 x2 x3 → P2 x0 x1 x2 x3 → P3 x0 x1 x2 x3 → P4 x0 x1 x2 x3 → P5 x0 x1 x2 x3 → P6 x0 x1 x2 x3 → P7 x0 x1 x2 x3 → P8 x0 x1 x2 x3 → P9 x0 x1 x2 x3 → ex10_4 ? ? ? ? ? ? ? ? ? ? ? ? ? ?
-.
-
-interpretation "multiple existental quantifier (10, 4)" 'Ex P0 P1 P2 P3 P4 P5 P6 P7 P8 P9 = (ex10_4 ? ? ? ? P0 P1 P2 P3 P4 P5 P6 P7 P8 P9).
 
 (* multiple disjunction connective (3) *)
 

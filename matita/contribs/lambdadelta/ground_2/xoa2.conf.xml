@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<helm_registry>
+  <section name="xoa">
+    <key name="output_dir">contribs/lambdadelta/</key>
+    <key name="objects">ground_2/xoa/xoa2</key>
+    <key name="notations">ground_2/notation/xoa2_notation</key>
+    <key name="include">basics/pts.ma</key>
+  </section>
+</helm_registry>

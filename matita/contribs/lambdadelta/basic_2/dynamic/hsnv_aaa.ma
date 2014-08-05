@@ -12,19 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/cpxs_aaa.ma".
-include "basic_2/equivalence/cpcs_cpcs.ma".
+include "basic_2/dynamic/snv_aaa.ma".
+include "basic_2/dynamic/hsnv.ma".
 
-(* CONTEXT-SENSITIVE PARALLEL EQUIVALENCE ON TERMS **************************)
+(* HIGHER ORDER STRATIFIED NATIVE VALIDITY FOR TERMS ************************)
 
-(* Main inversion lemmas about atomic arity assignment on terms *************)
+(* Advanced properties ******************************************************)
 
-theorem cpcs_aaa_mono: ∀G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬌* T2 →
-                       ∀A1. ⦃G, L⦄ ⊢ T1 ⁝ A1 → ∀A2. ⦃G, L⦄ ⊢ T2 ⁝ A2 →
-                       A1 = A2.
-#G #L #T1 #T2 #HT12 #A1 #HA1 #A2 #HA2
-elim (cpcs_inv_cprs … HT12) -HT12 #T #HT1 #HT2
-lapply (cprs_aaa_conf … HA1 … HT1) -T1 #HA1
-lapply (cprs_aaa_conf … HA2 … HT2) -T2 #HA2
-lapply (aaa_mono … HA1 … HA2) -L -T //
-qed-.
+lemma snv_hsnv_cast: ∀h,g,G,L,U,T. ⦃G, L⦄ ⊢ ⓝU.T ¡[h, g] → ⦃G, L⦄ ⊢ ⓝU.T ¡[h, g, 0].
+#h #g #G #L #U #T #H elim (snv_inv_cast … H) -H
+#U0 #HU #HT #HU0 #HTU0 @hsnv_cast // -HT
+#l #H <(le_n_O_to_eq … H) -l
+elim (snv_fwd_da … HU) -HU /3 width=3 by cprs_cpds, cpds_div/
+qed.

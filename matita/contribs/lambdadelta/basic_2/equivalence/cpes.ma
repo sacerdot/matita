@@ -12,36 +12,30 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/dpconvstar_6.ma".
-include "basic_2/static/da.ma".
-include "basic_2/unfold/lstas.ma".
-include "basic_2/equivalence/cpcs.ma".
+include "basic_2/notation/relations/dpconvstar_8.ma".
+include "basic_2/computation/cpds.ma".
 
 (* DECOMPOSED EXTENDED PARALLEL EQUIVALENCE FOR TERMS ***********************)
 
-definition cpes: ∀h. sd h → relation4 genv lenv term term ≝
-                 λh,g,G,L,T1,T2.
-                 ∃∃T,l1,l2. l2 ≤ l1 & ⦃G, L⦄ ⊢ T1 ▪[h, g] l1 & ⦃G, L⦄ ⊢ T1 •*[h, l2] T & ⦃G, L⦄ ⊢ T ⬌* T2.
+definition cpes: ∀h. sd h → nat → nat → relation4 genv lenv term term ≝
+                 λh,g,l1,l2,G,L,T1,T2.
+                 ∃∃T. ⦃G, L⦄ ⊢ T1 •*➡*[h, g, l1] T & ⦃G, L⦄ ⊢ T2 •*➡*[h, g, l2] T.
 
 interpretation "decomposed extended parallel equivalence (term)"
-   'DPConvStar h g G L T1 T2 = (cpes h g G L T1 T2).
+   'DPConvStar h g l1 l2 G L T1 T2 = (cpes h g l1 l2 G L T1 T2).
 
 (* Basic properties *********************************************************)
 
-lemma sta_cpcs_cpes: ∀h,g,G,L,T1,T,T2,l. ⦃G, L⦄ ⊢ T1 ▪[h, g] l+1 → ⦃G, L⦄ ⊢ T1 •[h] T →
-                     ⦃G, L⦄ ⊢ T ⬌* T2 → ⦃G, L⦄ ⊢ T1 •*⬌*[h, g] T2.
-/3 width=7 by sta_lstas, ex4_3_intro/ qed.
+lemma cpds_div: ∀h,g,G,L,T1,T2,T,l1,l2.
+                ⦃G, L⦄ ⊢ T1 •*➡*[h, g, l1] T → ⦃G, L⦄ ⊢ T2 •*➡*[h, g, l2] T →
+                ⦃G, L⦄ ⊢ T1 •*⬌*[h, g, l1, l2] T2.
+/2 width=3 by ex2_intro/ qed.
 
-lemma lstas_cpes: ∀h,g,G,L,T1,T2,l. ⦃G, L⦄ ⊢ T1 ▪[h, g] l → ⦃G, L⦄ ⊢ T1 •*[h, l] T2 → ⦃G, L⦄ ⊢ T1 •*⬌*[h, g] T2.
-/2 width=7 by ex4_3_intro/ qed.
+lemma cpes_refl_O_O: ∀h,g,G,L,T,l. ⦃G, L⦄ ⊢ T ▪[h, g] l →
+                     ⦃G, L⦄ ⊢ T •*⬌*[h, g, 0, 0] T.
+/3 width=3 by cpds_refl, cpds_div/ qed.
 
-lemma cpcs_cpes: ∀h,g,G,L,T1,T2,l.  ⦃G, L⦄ ⊢ T1 ▪[h, g] l → ⦃G, L⦄ ⊢ T1 ⬌* T2 → ⦃G, L⦄ ⊢ T1 •*⬌*[h, g] T2.
-/2 width=7 by lstar_O, ex4_3_intro/ qed.
-
-lemma cpes_refl: ∀h,g,G,L,T,l. ⦃G, L⦄ ⊢ T ▪[h, g] l → ⦃G, L⦄ ⊢ T •*⬌*[h, g] T.
-/2 width=2 by cpcs_cpes/ qed.
-
-lemma cpes_strap1: ∀h,g,G,L,T1,T,T2.
-                   ⦃G, L⦄ ⊢ T1 •*⬌*[h, g] T → ⦃G, L⦄ ⊢ T ⬌ T2 → ⦃G, L⦄ ⊢ T1 •*⬌*[h, g] T2.
-#h #g #G #L #T1 #T #T2 * /3 width=9 by cpcs_strap1, ex4_3_intro/
-qed.
+lemma cpes_sym: ∀h,g,G,L,T1,T2,l1,l2. ⦃G, L⦄ ⊢ T1 •*⬌*[h, g, l1, l2] T2 →
+                ⦃G, L⦄ ⊢ T2 •*⬌*[h, g, l2, l1] T1.
+#h #g #G #L #T1 #T2 #L1 #l2 * /2 width=3 by cpds_div/
+qed-.

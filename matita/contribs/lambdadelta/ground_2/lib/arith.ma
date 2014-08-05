@@ -19,6 +19,9 @@ include "ground_2/lib/star.ma".
 
 (* Equations ****************************************************************)
 
+lemma minus_plus_m_m_commutative: ∀n,m:nat. n = m + n - m.
+// qed-.
+
 (* Note: uses minus_minus_comm, minus_plus_m_m, commutative_plus, plus_minus *)
 lemma plus_minus_minus_be: ∀x,y,z. y ≤ z → z ≤ x → (x - z) + (z - y) = x - y.
 #x #z #y #Hzy #Hyx >plus_minus // >commutative_plus >plus_minus //

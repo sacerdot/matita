@@ -12,58 +12,59 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/da_sta.ma".
 include "basic_2/static/lsubd_da.ma".
 include "basic_2/unfold/lstas_alt.ma".
-include "basic_2/equivalence/cpcs_cpcs.ma".
+include "basic_2/equivalence/cpes_cpcs.ma".
 include "basic_2/dynamic/lsubsv_lsubd.ma".
 
 (* LOCAL ENVIRONMENT REFINEMENT FOR STRATIFIED NATIVE VALIDITY **************)
 
 (* Properties on nat-iterated static type assignment ************************)
 
-lemma lsubsv_lstas_trans: ∀h,g,G,L2,T,U2,l1. ⦃G, L2⦄ ⊢ T •*[h, l1] U2 →
-                          ∀l2. l1 ≤ l2 → ⦃G, L2⦄ ⊢ T ▪[h, g] l2 →
+lemma lsubsv_lstas_trans: ∀h,g,G,L2,T,U2,l2. ⦃G, L2⦄ ⊢ T •*[h, l2] U2 →
+                          ∀l1. l2 ≤ l1 → ⦃G, L2⦄ ⊢ T ▪[h, g] l1 →
                           ∀L1. G ⊢ L1 ⫃¡[h, g] L2 →
-                          ∃∃U1. ⦃G, L1⦄ ⊢ T •*[h, l1] U1 & ⦃G, L1⦄ ⊢ U1 ⬌* U2.
-#h #g #G #L2 #T #U #l1 #H @(lstas_ind_alt … H) -G -L2 -T -U -l1
+                          ∃∃U1. ⦃G, L1⦄ ⊢ T •*[h, l2] U1 & ⦃G, L1⦄ ⊢ U1 ⬌* U2.
+#h #g #G #L2 #T #U #l2 #H @(lstas_ind_alt … H) -G -L2 -T -U -l2
 [1,2: /2 width=3 by ex2_intro/
-| #G #L2 #K2 #X #Y #U #i #l1 #HLK2 #_ #HYU #IHXY #l2 #Hl12 #Hl2 #L1 #HL12
-  elim (da_inv_lref … Hl2) -Hl2 * #K0 #V0 [| #l0 ] #HK0 #HV0
+| #G #L2 #K2 #X #Y #U #i #l2 #HLK2 #_ #HYU #IHXY #l1 #Hl21 #Hl1 #L1 #HL12
+  elim (da_inv_lref … Hl1) -Hl1 * #K0 #V0 [| #l0 ] #HK0 #HV0
   lapply (drop_mono … HK0 … HLK2) -HK0 #H destruct
   elim (lsubsv_drop_O1_trans … HL12 … HLK2) -L2 #X #H #HLK1
   elim (lsubsv_inv_pair2 … H) -H * #K1 [ | -HYU -IHXY -HLK1 ]
   [ #HK12 #H destruct
-    elim (IHXY … Hl12 HV0 … HK12) -K2 -l2 #T #HXT #HTY
+    elim (IHXY … Hl21 HV0 … HK12) -K2 -l1 #T #HXT #HTY
     lapply (drop_fwd_drop2 … HLK1) #H
     elim (lift_total T 0 (i+1))
     /3 width=12 by lstas_ldef, cpcs_lift, ex2_intro/
-  | #V #l0 #_ #_ #_ #_ #_ #_ #_ #H destruct
+  | #V #l0 #_ #_ #_ #_ #_ #H destruct
   ]
-| #G #L2 #K2 #X #Y #Y0 #U #i #l1 #HLK2 #HXY0 #_ #HYU #IHXY #l2 #Hl12 #Hl2 #L1 #HL12
-  elim (da_inv_lref … Hl2) -Hl2 * #K0 #V0 [| #l0 ] #HK0 #HV0 [| #H1 ]
+| #G #L2 #K2 #X #Y #Y0 #U #i #l2 #HLK2 #HXY0 #_ #HYU #IHXY #l1 #Hl21 #Hl1 #L1 #HL12
+  elim (da_inv_lref … Hl1) -Hl1 * #K0 #V0 [| #l0 ] #HK0 #HV0 [| #H1 ]
   lapply (drop_mono … HK0 … HLK2) -HK0 #H2 destruct
-  lapply (le_plus_to_le_r … Hl12) -Hl12 #Hl12
+  lapply (le_plus_to_le_r … Hl21) -Hl21 #Hl21
   elim (lsubsv_drop_O1_trans … HL12 … HLK2) -L2 #X #H #HLK1
   elim (lsubsv_inv_pair2 … H) -H * #K1
   [ #HK12 #H destruct
     lapply (lsubsv_fwd_lsubd … HK12) #H
     lapply (lsubd_da_trans … HV0 … H) -H #H
     elim (da_inv_sta … H) -H
-    elim (IHXY … Hl12 HV0 … HK12) -K2 -Hl12 #Y1
+    elim (IHXY … Hl21 HV0 … HK12) -K2 -Hl21 #Y1
     lapply (drop_fwd_drop2 … HLK1)
     elim (lift_total Y1 0 (i+1))
     /3 width=12 by lstas_ldec, cpcs_lift, ex2_intro/
-  | #V #l #_ #_ #HVX #_ #HV #HX #HK12 #_ #H destruct
-    lapply (da_mono … HX … HV0) -HX #H destruct
-    elim (IHXY … Hl12 HV0 … HK12) -K2 #Y0 #HXY0 #HY0
+  | #V #l1 #HXV #_ #HV #HX #HK12 #_ #H destruct
+    lapply (da_mono … HV0 … HX) -HX #H destruct
+    elim (hsnv_inv_cast … HXV) -HXV #_ #_ #H
+    lapply (H … Hl21) -H #HXV
+    elim (IHXY … Hl21 HV0 … HK12) -K2 -Hl21 #Y0 #HXY0 #HY0
     elim (da_inv_sta … HV) -HV #W #HVW
-    elim (lstas_total … HVW (l1+1)) -W #W #HVW
-    lapply (HVX … Hl12 HVW HXY0) -HVX -Hl12 -HXY0 #HWY0
-    lapply (cpcs_trans … HWY0 … HY0) -Y0
-    lapply (drop_fwd_drop2 … HLK1)
+    elim (lstas_total … HVW (l2+1)) -W #W #HVW
+    lapply (cpes_inv_lstas_eq … HXV … HXY0 … HVW) -HXV -HXY0 #HY0W
+    lapply (cpcs_canc_sn … HY0W … HY0) -Y0 #HYW
     elim (lift_total W 0 (i+1))
-    /4 width=12 by lstas_ldef, lstas_cast, cpcs_lift, ex2_intro/
+    lapply (drop_fwd_drop2 … HLK1)
+    /4 width=12 by cpcs_lift, lstas_cast, lstas_ldef, ex2_intro/
   ]
 | #a #I #G #L2 #V2 #T2 #U2 #l1 #_ #IHTU2 #l2 #Hl12 #Hl2 #L1 #HL12
   lapply (da_inv_bind … Hl2) -Hl2 #Hl2

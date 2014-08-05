@@ -13,9 +13,8 @@
 (**************************************************************************)
 
 include "basic_2/static/lsubd_da.ma".
-include "basic_2/computation/cpds_cpds.ma".
 include "basic_2/dynamic/snv_aaa.ma".
-include "basic_2/dynamic/snv_cpcs.ma".
+include "basic_2/dynamic/snv_cpes.ma".
 
 (* STRATIFIED NATIVE VALIDITY FOR TERMS *************************************)
 
@@ -60,31 +59,30 @@ fact da_cpr_lpr_aux: ∀h,g,G0,L0,T0.
     /4 width=11 by da_inv_lift, fqup_fpbg, lpr_pair, drop_drop/
   ]
 | #V1 #T1 #HG0 #HL0 #HT0 #H1 #l #H2 #X3 #H3 #L2 #HL12 destruct
-  elim (snv_inv_appl … H1) -H1 #b0 #W1 #W0 #T0 #l0 #HV1 #HT1 #Hl0 #HVW1 #HW10 #HT10
+  elim (snv_inv_appl … H1) -H1 #b1 #W1 #U1 #l1 #HV1 #HT1 #HVW1 #HTU1
   lapply (da_inv_flat … H2) -H2 #Hl
   elim (cpr_inv_appl1 … H3) -H3 *
   [ #V2 #T2 #HV12 #HT12 #H destruct -IH3 -IH2 /4 width=7 by da_flat, fqup_fpbg/
-  | #b #V2 #W #W2 #U1 #U2 #HV12 #HW2 #HU12 #H1 #H2 destruct
-    elim (snv_inv_bind … HT1) -HT1 #HW #HU1
+  | #b #V2 #W #W2 #U #U2 #HV12 #HW2 #HU2 #H1 #H2 destruct
+    elim (snv_inv_bind … HT1) -HT1 #HW #HU
     lapply (da_inv_bind … Hl) -Hl #Hl
-    elim (cpds_inv_abst1 … HT10) -HT10 #W3 #U3 #HW3 #_ #H destruct -U3
-    lapply (cprs_div … HW3 … HW10) -W3 #HWW1
-    lapply (da_sta_conf … HVW1 … Hl0) <minus_plus_m_m #H
-    elim (snv_fwd_da … HW) #l1 #Hl1
-    lapply (IH3 … HV1 … 1 … Hl0 W1 ?) /2 width=2 by fqup_fpbg, sta_lstas/ #HW1
-    lapply (da_cpcs_aux … IH2 IH1 … Hl1 … H … HWW1) -H
-    /3 width=5 by fpbg_fpbs_trans, fqup_fpbg, sta_fpbs/ #H destruct
-    lapply (IH1 … HV1 … Hl0 … HV12 … HL12) -HV1 -Hl0 -HV12 [ /2 by fqup_fpbg/ ] #Hl0
-    lapply (IH1 … Hl1 … HW2 … HL12) -Hl1 // /2 width=1 by fqup_fpbg/ -HW
-    lapply (IH1 … HU1 … Hl … HU12 (L2.ⓛW2) ?) -IH1 -HU1 -Hl -HU12 [1,2: /2 by fqup_fpbg, lpr_pair/ ] -HL12 -HW2
+    elim (cpds_inv_abst1 … HTU1) -HTU1 #W3 #U3 #HW3 #_ #H destruct -U3 -l1
+    elim (snv_fwd_da … HV1) #l1 #Hl1
+    elim (snv_fwd_da … HW) #l0 #Hl0
+    lapply (cpds_div … W … 0 … HVW1) /2 width=2 by cprs_cpds/ -W3 #H
+    elim (da_cpes_aux … IH3 IH2 IH1 … Hl0 … Hl1 … H) -IH3 -IH2 -H /2 width=1 by fqup_fpbg/ #_ #H1
+    <minus_n_O #H destruct >(plus_minus_m_m l1 1) in Hl1; // -H1 #Hl1
+    lapply (IH1 … HV1 … Hl1 … HV12 … HL12) -HV1 -Hl1 -HV12 [ /2 by fqup_fpbg/ ]
+    lapply (IH1 … Hl0 … HW2 … HL12) -Hl0 /2 width=1 by fqup_fpbg/ -HW
+    lapply (IH1 … HU … Hl … HU2 (L2.ⓛW2) ?) -IH1 -HU -Hl -HU2 [1,2: /2 by fqup_fpbg, lpr_pair/ ] -HL12 -HW2
     /4 width=6 by da_bind, lsubd_da_trans, lsubd_beta/
-  | #b #V #V2 #W #W2 #U1 #U2 #HV1 #HV2 #HW2 #HU12 #H1 #H2 destruct -IH3 -IH2 -V -W0 -T0 -l0 -HV1 -HVW1
+  | #b #V0 #V2 #W #W2 #U #U2 #HV10 #HV02 #HW2 #HU2 #H1 #H2 destruct -IH3 -IH2 -b1 -V0 -W1 -U1 -l1 -HV1
     elim (snv_inv_bind … HT1) -HT1 #_
     lapply (da_inv_bind … Hl) -Hl
     /5 width=9 by da_bind, da_flat, fqup_fpbg, lpr_pair/
   ]
 | #W1 #T1 #HG0 #HL0 #HT0 #H1 #l #H2 #X3 #H3 #L2 #HL12 destruct -IH3 -IH2
-  elim (snv_inv_cast … H1) -H1 #U1 #l0 #HW1 #HT1 #Hl0 #HTU1 #HUW1
+  elim (snv_inv_cast … H1) -H1 #U1 #HW1 #HT1 #HWU1 #HTU1
   lapply (da_inv_flat … H2) -H2 #Hl
   elim (cpr_inv_cast1 … H3) -H3
   [ * #W2 #T2 #HW12 #HT12 #H destruct /4 width=7 by da_flat, fqup_fpbg/

@@ -1,0 +1,27 @@
+(* Advanced properties ******************************************************)
+
+lemma cpds_cpes_dx: ∀h,g,G,L,T1,T2,l. ⦃G, L⦄ ⊢ T1 •*➡*[h, g, l] T2 → ⦃G, L⦄ ⊢ T1 •*⬌*[h, g, l] T2.
+#h #g #G #L #T1 #T2 #l * /3 width=6 by cpcs_cprs_dx, ex4_2_intro/
+qed.
+
+(* Advanced inversion lemmas ************************************************)
+
+lemma cpes_inv_abst2: ∀h,g,a,G,L,W1,T1,T,l. ⦃G, L⦄ ⊢ T •*⬌*[h, g, l] ⓛ{a}W1.T1 →
+                      ∃∃W2,T2. ⦃G, L⦄ ⊢ T •*➡*[h, g, l] ⓛ{a}W2.T2 & ⦃G, L⦄ ⊢ ⓛ{a}W1.T1 ➡* ⓛ{a}W2.T2.
+#h #g #a #G #L #W1 #T1 #T #l2 * #T0 #l1 #Hl21 #HT #HT0 #H
+elim (cpcs_inv_abst2 … H) -H /3 width=6 by ex4_2_intro, ex2_2_intro/
+qed-.
+
+(****************************************************************************)
+
+lemma sta_cpcs_cpes: ∀h,g,G,L,T1,T,T2,l. ⦃G, L⦄ ⊢ T1 ▪[h, g] l+1 → ⦃G, L⦄ ⊢ T1 •[h] T →
+                     ⦃G, L⦄ ⊢ T ⬌* T2 → ⦃G, L⦄ ⊢ T1 •*⬌*[h, g, 1] T2.
+/3 width=6 by sta_lstas, ex4_2_intro/ qed.
+
+lemma lstas_cpes: ∀h,g,G,L,T1,T2,l. ⦃G, L⦄ ⊢ T1 ▪[h, g] l → ⦃G, L⦄ ⊢ T1 •*[h, l] T2 → ⦃G, L⦄ ⊢ T1 •*⬌*[h, g, l] T2.
+/2 width=6 by ex4_2_intro/ qed.
+                 
+lemma cpes_strap1: ∀h,g,G,L,T1,T,T2,l.
+                   ⦃G, L⦄ ⊢ T1 •*⬌*[h, g, l] T → ⦃G, L⦄ ⊢ T ⬌ T2 → ⦃G, L⦄ ⊢ T1 •*⬌*[h, g, l] T2.
+#h #g #G #L #T1 #T #T2 #l * /3 width=8 by cpcs_strap1, ex4_2_intro/
+qed.

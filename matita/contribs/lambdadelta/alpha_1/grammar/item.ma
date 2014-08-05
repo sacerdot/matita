@@ -12,22 +12,27 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/cpds.ma".
-include "basic_2/equivalence/cpcs_cpcs.ma".
-include "basic_2/equivalence/cpes.ma".
+(* THE FORMAL SYSTEM α: MATITA SOURCE FILES
+ * Initial invocation : - Patience on me to gain peace and perfection! -
+ * Developed since    : 2014 July 25
+ *)
 
-(* DECOMPOSED EXTENDED PARALLEL EQUIVALENCE FOR TERMS ***********************)
+include "ground_2/lib/bool.ma".
+include "ground_2/lib/arith.ma".
 
-(* Advanced properties ******************************************************)
+(* ITEMS ********************************************************************)
 
-lemma cpds_cpes_dx: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 •*➡*[h, g] T2 → ⦃G, L⦄ ⊢ T1 •*⬌*[h, g] T2.
-#h #g #G #L #T1 #T2 * /3 width=7 by cpcs_cprs_dx, ex4_3_intro/
-qed.
+(* unary items *)
+inductive item1: Type[0] ≝
+   | Char: nat → item1 (* character: starting at 0 *)
+   | LRef: nat → item1 (* reference by index: starting at 0 *)
+   | GRef: nat → item1 (* reference by position: starting at 0 *)
+   | Decl:       item1 (* global abstraction *)
+.
 
-(* Advanced inversion lemmas ************************************************)
-
-lemma cpes_inv_abst2: ∀h,g,a,G,L,W1,T1,T. ⦃G, L⦄ ⊢ T •*⬌*[h, g] ⓛ{a}W1.T1 →
-                      ∃∃W2,T2. ⦃G, L⦄ ⊢ T •*➡*[h, g] ⓛ{a}W2.T2 & ⦃G, L⦄ ⊢ ⓛ{a}W1.T1 ➡* ⓛ{a}W2.T2.
-#h #g #a #G #L #W1 #T1 #T * #T0 #l #l0 #Hl0 #Hl #HT0 #H
-elim (cpcs_inv_abst2 … H) -H /3 width=7 by ex4_3_intro, ex2_2_intro/
-qed-.
+(* binary items *)
+inductive item2: Type[0] ≝
+   | Abst:        item2 (* local abstraction *)
+   | Abbr: bool → item2 (* local (Ⓣ) or global (Ⓕ) abbreviation *)
+   | Proj: bool → item2 (* local (Ⓣ) or global (Ⓕ) projection *)
+.

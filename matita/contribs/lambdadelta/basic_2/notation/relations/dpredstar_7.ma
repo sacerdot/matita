@@ -12,19 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/cpxs_aaa.ma".
-include "basic_2/equivalence/cpcs_cpcs.ma".
+(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-(* CONTEXT-SENSITIVE PARALLEL EQUIVALENCE ON TERMS **************************)
-
-(* Main inversion lemmas about atomic arity assignment on terms *************)
-
-theorem cpcs_aaa_mono: ∀G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬌* T2 →
-                       ∀A1. ⦃G, L⦄ ⊢ T1 ⁝ A1 → ∀A2. ⦃G, L⦄ ⊢ T2 ⁝ A2 →
-                       A1 = A2.
-#G #L #T1 #T2 #HT12 #A1 #HA1 #A2 #HA2
-elim (cpcs_inv_cprs … HT12) -HT12 #T #HT1 #HT2
-lapply (cprs_aaa_conf … HA1 … HT1) -T1 #HA1
-lapply (cprs_aaa_conf … HA2 … HT2) -T2 #HA2
-lapply (aaa_mono … HA1 … HA2) -L -T //
-qed-.
+notation "hvbox( ⦃ term 46 G , break term 46 L ⦄ ⊢ break term 46 T1 • * ➡ * break [ term 46 h , break term 46 g , break term 46 l ] break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'DPRedStar $h $g $l $G $L $T1 $T2 }.

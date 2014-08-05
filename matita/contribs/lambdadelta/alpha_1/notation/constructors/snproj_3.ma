@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
+(* NOTATION FOR THE FORMAL SYSTEM α *****************************************)
 
-notation "hvbox( ⦃ term 46 G , break term 46 L ⦄ ⊢ break term 46 T1 • * ➡ * break [ term 46 h , break term 46 g ] break term 46 T2 )"
-   non associative with precedence 45
-   for @{ 'DPRedStar $h $g $G $L $T1 $T2 }.
+notation "hvbox( 𝛑 { term 46 a } break term 55 T1 . break term 55 T2 )"
+ non associative with precedence 55
+ for @{ 'SnProj $a $T1 $T2 }.

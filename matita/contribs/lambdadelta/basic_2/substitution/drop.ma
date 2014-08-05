@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/lib/bool.ma".
 include "ground_2/lib/lstar.ma".
 include "basic_2/notation/relations/rdrop_5.ma".
 include "basic_2/notation/relations/rdrop_4.ma".
