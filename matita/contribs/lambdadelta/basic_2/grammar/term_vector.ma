@@ -13,22 +13,22 @@
 (**************************************************************************)
 
 include "ground_2/lib/list.ma".
-include "basic_2/notation/functions/snappls_2.ma".
+include "basic_2/notation/functions/snapplvector_2.ma".
 include "basic_2/grammar/term_simple.ma".
 
 (* TERMS ********************************************************************)
 
-let rec appls Vs T on Vs ≝
+let rec applv Vs T on Vs ≝
   match Vs with
   [ nil        ⇒ T
-  | cons hd tl ⇒ ⓐhd. (appls tl T)
+  | cons hd tl ⇒ ⓐhd. (applv tl T)
   ].
 
 interpretation "application to vector (term)"
-   'SnApplStar Vs T = (appls Vs T).
+   'SnApplVector Vs T = (applv Vs T).
 
 (* properties concerning simple terms ***************************************)
 
-lemma appls_simple: ∀T,Vs.  𝐒⦃T⦄ → 𝐒⦃ⒶVs.T⦄.
+lemma applv_simple: ∀T,Vs.  𝐒⦃T⦄ → 𝐒⦃ⒶVs.T⦄.
 #T * //
 qed.

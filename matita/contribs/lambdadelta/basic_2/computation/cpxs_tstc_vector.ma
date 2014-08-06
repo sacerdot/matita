@@ -20,7 +20,7 @@ include "basic_2/computation/cpxs_tstc.ma".
 
 (* Vector form of forward lemmas involving same top term constructor ********)
 
-(* Basic_1: was just: nf2_iso_appls_lref *)
+(* Basic_1: was just: nf2_iso_applv_lref *)
 lemma cpxs_fwd_cnx_vector: ∀h,g,G,L,T.  𝐒⦃T⦄ → ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃T⦄ →
                            ∀Vs,U. ⦃G, L⦄ ⊢ ⒶVs.T ➡*[h, g] U → ⒶVs.T ≂ U.
 #h #g #G #L #T #H1T #H2T #Vs elim Vs -Vs [ @(cpxs_fwd_cnx … H2T) ] (**) (* /2 width=3 by cpxs_fwd_cnx/ does not work *)
@@ -29,10 +29,10 @@ elim (cpxs_inv_appl1 … H) -H *
 [ -IHVs #V0 #T0 #_ #_ #H destruct /2 width=1 by tstc_pair/
 | #a #W0 #T0 #HT0 #HU
   lapply (IHVs … HT0) -IHVs -HT0 #HT0
-  elim (tstc_inv_bind_appls_simple … HT0) //
+  elim (tstc_inv_bind_applv_simple … HT0) //
 | #a #V1 #V2 #V0 #T0 #HV1 #HV12 #HT0 #HU
   lapply (IHVs … HT0) -IHVs -HT0 #HT0
-  elim (tstc_inv_bind_appls_simple … HT0) //
+  elim (tstc_inv_bind_applv_simple … HT0) //
 ]
 qed-.
 
@@ -44,14 +44,14 @@ elim (cpxs_inv_appl1 … H) -H *
 [ -IHVs #V1 #T1 #_ #_ #H destruct /2 width=1 by tstc_pair, or_introl/
 | #a #W1 #T1 #HT1 #HU
   elim (IHVs … HT1) -IHVs -HT1 #HT1
-  [ elim (tstc_inv_bind_appls_simple … HT1) //
+  [ elim (tstc_inv_bind_applv_simple … HT1) //
   | @or_intror (**) (* explicit constructor *)
     @(cpxs_trans … HU) -U
     @(cpxs_strap1 … (ⓐV.ⓛ{a}W1.T1)) /3 width=1 by cpxs_flat_dx, cpr_cpx, cpr_beta/
   ]
 | #a #V1 #V2 #V3 #T1 #HV01 #HV12 #HT1 #HU
   elim (IHVs … HT1) -IHVs -HT1 #HT1
-  [ elim (tstc_inv_bind_appls_simple … HT1) //
+  [ elim (tstc_inv_bind_applv_simple … HT1) //
   | @or_intror (**) (* explicit constructor *)
     @(cpxs_trans … HU) -U
     @(cpxs_strap1 … (ⓐV1.ⓓ{a}V3.T1)) /3 width=3 by cpxs_flat, cpr_cpx, cpr_theta/
@@ -60,7 +60,7 @@ elim (cpxs_inv_appl1 … H) -H *
 qed-.
 
 
-(* Basic_1: was just: pr3_iso_appls_beta *)
+(* Basic_1: was just: pr3_iso_applv_beta *)
 lemma cpxs_fwd_beta_vector: ∀h,g,a,G,L,Vs,V,W,T,U. ⦃G, L⦄ ⊢ ⒶVs.ⓐV.ⓛ{a}W.T ➡*[h, g] U →
                             ⒶVs. ⓐV. ⓛ{a}W. T ≂ U ∨ ⦃G, L⦄ ⊢ ⒶVs.ⓓ{a}ⓝW.V.T ➡*[h, g] U.
 #h #g #a #G #L #Vs elim Vs -Vs /2 width=1 by cpxs_fwd_beta/
@@ -69,14 +69,14 @@ elim (cpxs_inv_appl1 … H) -H *
 [ -IHVs #V1 #T1 #_ #_ #H destruct /2 width=1 by tstc_pair, or_introl/
 | #b #W1 #T1 #HT1 #HU
   elim (IHVs … HT1) -IHVs -HT1 #HT1
-  [ elim (tstc_inv_bind_appls_simple … HT1) //
+  [ elim (tstc_inv_bind_applv_simple … HT1) //
   | @or_intror (**) (* explicit constructor *)
     @(cpxs_trans … HU) -U
     @(cpxs_strap1 … (ⓐV0.ⓛ{b}W1.T1)) /3 width=1 by cpxs_flat_dx, cpr_cpx, cpr_beta/
   ]
 | #b #V1 #V2 #V3 #T1 #HV01 #HV12 #HT1 #HU
   elim (IHVs … HT1) -IHVs -HT1 #HT1
-  [ elim (tstc_inv_bind_appls_simple … HT1) //
+  [ elim (tstc_inv_bind_applv_simple … HT1) //
   | @or_intror (**) (* explicit constructor *)
     @(cpxs_trans … HU) -U
     @(cpxs_strap1 … (ⓐV1.ⓓ{b}V3.T1)) /3 width=3 by cpxs_flat, cpr_cpx, cpr_theta/
@@ -94,14 +94,14 @@ elim (cpxs_inv_appl1 … H) -H *
 [ -IHVs #V0 #T0 #_ #_ #H destruct /2 width=1 by tstc_pair, or_introl/
 | #b #W0 #T0 #HT0 #HU
   elim (IHVs … HT0) -IHVs -HT0 #HT0
-  [ elim (tstc_inv_bind_appls_simple … HT0) //
+  [ elim (tstc_inv_bind_applv_simple … HT0) //
   | @or_intror -i (**) (* explicit constructor *)
     @(cpxs_trans … HU) -U
     @(cpxs_strap1 … (ⓐV.ⓛ{b}W0.T0)) /3 width=1 by cpxs_flat_dx, cpr_cpx, cpr_beta/
   ]
 | #b #V0 #V1 #V3 #T0 #HV0 #HV01 #HT0 #HU
   elim (IHVs … HT0) -IHVs -HT0 #HT0
-  [ elim (tstc_inv_bind_appls_simple … HT0) //
+  [ elim (tstc_inv_bind_applv_simple … HT0) //
   | @or_intror -i (**) (* explicit constructor *)
     @(cpxs_trans … HU) -U
     @(cpxs_strap1 … (ⓐV0.ⓓ{b}V3.T0)) /3 width=3 by cpxs_flat, cpr_cpx, cpr_theta/
@@ -109,7 +109,7 @@ elim (cpxs_inv_appl1 … H) -H *
 ]
 qed-.
 
-(* Basic_1: was just: pr3_iso_appls_abbr *)
+(* Basic_1: was just: pr3_iso_applv_abbr *)
 lemma cpxs_fwd_theta_vector: ∀h,g,G,L,V1s,V2s. ⇧[0, 1] V1s ≡ V2s →
                              ∀a,V,T,U. ⦃G, L⦄ ⊢ ⒶV1s.ⓓ{a}V.T ➡*[h, g] U →
                              ⒶV1s. ⓓ{a}V. T ≂ U ∨ ⦃G, L⦄ ⊢ ⓓ{a}V.ⒶV2s.T ➡*[h, g] U.
@@ -158,7 +158,7 @@ elim (cpxs_inv_appl1 … H) -H *
 ]
 qed-.
 
-(* Basic_1: was just: pr3_iso_appls_cast *)
+(* Basic_1: was just: pr3_iso_applv_cast *)
 lemma cpxs_fwd_cast_vector: ∀h,g,G,L,Vs,W,T,U. ⦃G, L⦄ ⊢ ⒶVs.ⓝW.T ➡*[h, g] U →
                             ∨∨ ⒶVs. ⓝW. T ≂ U
                              | ⦃G, L⦄ ⊢ ⒶVs.T ➡*[h, g] U
@@ -168,7 +168,7 @@ lemma cpxs_fwd_cast_vector: ∀h,g,G,L,Vs,W,T,U. ⦃G, L⦄ ⊢ ⒶVs.ⓝW.T ➡
 elim (cpxs_inv_appl1 … H) -H *
 [ -IHVs #V0 #T0 #_ #_ #H destruct /2 width=1 by tstc_pair, or3_intro0/
 | #b #W0 #T0 #HT0 #HU elim (IHVs … HT0) -IHVs -HT0 #HT0
-  [ elim (tstc_inv_bind_appls_simple … HT0) //
+  [ elim (tstc_inv_bind_applv_simple … HT0) //
   | @or3_intro1 -W (**) (* explicit constructor *)
     @(cpxs_trans … HU) -U
     @(cpxs_strap1 … (ⓐV.ⓛ{b}W0.T0)) /2 width=1 by cpxs_flat_dx, cpx_beta/
@@ -178,7 +178,7 @@ elim (cpxs_inv_appl1 … H) -H *
   ]
 | #b #V0 #V1 #V2 #T0 #HV0 #HV01 #HT0 #HU
   elim (IHVs … HT0) -IHVs -HT0 #HT0
-  [ elim (tstc_inv_bind_appls_simple … HT0) //
+  [ elim (tstc_inv_bind_applv_simple … HT0) //
   | @or3_intro1 -W (**) (* explicit constructor *)
     @(cpxs_trans … HU) -U
     @(cpxs_strap1 … (ⓐV0.ⓓ{b}V2.T0)) /2 width=3 by cpxs_flat, cpx_theta/

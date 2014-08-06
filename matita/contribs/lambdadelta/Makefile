@@ -247,7 +247,7 @@ trim: $(TRIMS:%=%.trimmed)
 # contrib ####################################################################
 
 contrib:
-	@echo "  TAR -czf $(CONTRIB).tar.gz root *.ma"
+	@echo "  TAR -czf $(CONTRIB).tar.gz root $(XPACKAGES)"
 	$(H)tar -czf $(CONTRIB).tar.gz root $(XMAS)
 
 ##############################################################################

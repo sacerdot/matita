@@ -140,5 +140,5 @@ qed-.
    pr1_head_1 pr1_head_2 pr1_comp
    clear_pr3_trans pr3_cflat pr3_gen_bind
    pr3_head_1 pr3_head_2 pr3_head_21 pr3_head_12
-   pr3_iso_appl_bind pr3_iso_appls_appl_bind pr3_iso_appls_bind
+   pr3_iso_appl_bind pr3_iso_applv_appl_bind pr3_iso_applv_bind
 *)

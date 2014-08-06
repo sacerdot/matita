@@ -14,7 +14,7 @@
 
 include "basic_2/static/lsubd_da.ma".
 include "basic_2/unfold/lstas_alt.ma".
-include "basic_2/equivalence/cpes_cpcs.ma".
+include "basic_2/equivalence/scpes_cpcs.ma".
 include "basic_2/dynamic/lsubsv_lsubd.ma".
 
 (* LOCAL ENVIRONMENT REFINEMENT FOR STRATIFIED NATIVE VALIDITY **************)
@@ -55,12 +55,12 @@ lemma lsubsv_lstas_trans: ∀h,g,G,L2,T,U2,l2. ⦃G, L2⦄ ⊢ T •*[h, l2] U2 
     /3 width=12 by lstas_ldec, cpcs_lift, ex2_intro/
   | #V #l1 #HXV #_ #HV #HX #HK12 #_ #H destruct
     lapply (da_mono … HV0 … HX) -HX #H destruct
-    elim (hsnv_inv_cast … HXV) -HXV #_ #_ #H
+    elim (shnv_inv_cast … HXV) -HXV #_ #_ #H
     lapply (H … Hl21) -H #HXV
     elim (IHXY … Hl21 HV0 … HK12) -K2 -Hl21 #Y0 #HXY0 #HY0
     elim (da_inv_sta … HV) -HV #W #HVW
     elim (lstas_total … HVW (l2+1)) -W #W #HVW
-    lapply (cpes_inv_lstas_eq … HXV … HXY0 … HVW) -HXV -HXY0 #HY0W
+    lapply (scpes_inv_lstas_eq … HXV … HXY0 … HVW) -HXV -HXY0 #HY0W
     lapply (cpcs_canc_sn … HY0W … HY0) -Y0 #HYW
     elim (lift_total W 0 (i+1))
     lapply (drop_fwd_drop2 … HLK1)

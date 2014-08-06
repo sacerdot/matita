@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/multiple/fqus_alt.ma".
-include "basic_2/computation/cpds_lift.ma".
+include "basic_2/computation/scpds_lift.ma".
 include "basic_2/dynamic/snv.ma".
 
 (* STRATIFIED NATIVE VALIDITY FOR TERMS *************************************)
@@ -40,12 +40,12 @@ lemma snv_lift: ∀h,g,G,K,T. ⦃G, K⦄ ⊢ T ¡[h, g] → ∀L,s,d,e. ⇩[s, d
   elim (lift_inv_flat1 … H) -H #W #U #HVW #HTU #H destruct
   elim (lift_total W0 d e) #W1 #HW01
   elim (lift_total U0 (d+1) e) #U1 #HU01
-  @(snv_appl … a … W1 … U1 l) [1,2,3: /2 width=10 by cpds_lift/ ] -IHV -IHT
-  @(cpds_lift … HTU0 … HLK … HTU) /2 width=1 by lift_bind/ (**) (* full auto raises typechecker failure *)
+  @(snv_appl … a … W1 … U1 l) [1,2,3: /2 width=10 by scpds_lift/ ] -IHV -IHT
+  @(scpds_lift … HTU0 … HLK … HTU) /2 width=1 by lift_bind/ (**) (* full auto raises typechecker failure *)
 | #G #K #V #T #U0 #_ #_ #HVU0 #HTU0 #IHV #IHT #L #s #d #e #HLK #X #H
   elim (lift_inv_flat1 … H) -H #W #U #HVW #HTU #H destruct
   elim (lift_total U0 d e)
-  /3 width=12 by snv_cast, cprs_lift, cpds_lift/
+  /3 width=12 by snv_cast, cprs_lift, scpds_lift/
 ]
 qed.
 
@@ -66,15 +66,15 @@ lemma snv_inv_lift: ∀h,g,G,L,U. ⦃G, L⦄ ⊢ U ¡[h, g] → ∀K,s,d,e. ⇩[
   /4 width=5 by snv_bind, drop_skip/
 | #a #G #L #W #W1 #U #U1 #l #_ #_ #HW1 #HU1 #IHW #IHU #K #s #d #e #HLK #X #H
   elim (lift_inv_flat2 … H) -H #V #T #HVW #HTU #H destruct
-  elim (cpds_inv_lift1 … HW1 … HLK … HVW) -HW1 #W0 #HW01 #HVW0  
-  elim (cpds_inv_lift1 … HU1 … HLK … HTU) -HU1 #X #H #HTU0
+  elim (scpds_inv_lift1 … HW1 … HLK … HVW) -HW1 #W0 #HW01 #HVW0  
+  elim (scpds_inv_lift1 … HU1 … HLK … HTU) -HU1 #X #H #HTU0
   elim (lift_inv_bind2 … H) -H #Y #U0 #HY #HU01 #H destruct
   lapply (lift_inj … HY … HW01) -HY #H destruct
   /3 width=6 by snv_appl/
 | #G #L #W #U #U1 #_ #_ #HWU1 #HU1 #IHW #IHU #K #s #d #e #HLK #X #H
   elim (lift_inv_flat2 … H) -H #V #T #HVW #HTU #H destruct
   elim (cprs_inv_lift1 … HWU1 … HLK … HVW) -HWU1 #U0 #HU01 #HVU0
-  elim (cpds_inv_lift1 … HU1 … HLK … HTU) -HU1 #X #HX #HTU0 
+  elim (scpds_inv_lift1 … HU1 … HLK … HTU) -HU1 #X #HX #HTU0 
   lapply (lift_inj … HX … HU01) -HX #H destruct
   /3 width=5 by snv_cast/
 ]

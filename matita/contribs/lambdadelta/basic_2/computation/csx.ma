@@ -129,5 +129,5 @@ lemma csx_fwd_flat: ∀h,g,I,G,L,V,T. ⦃G, L⦄ ⊢ ⬊*[h, g] ⓕ{I}V.T →
             sn3_cdelta
             sn3_gen_cflat sn3_cflat sn3_cpr3_trans sn3_shift sn3_change
             sn3_appl_cast sn3_appl_beta sn3_appl_lref sn3_appl_abbr
-            sn3_appl_appls sn3_bind sn3_appl_bind sn3_appls_bind
+            sn3_appl_applv sn3_bind sn3_appl_bind sn3_applv_bind
 *)

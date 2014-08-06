@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/dynamic/snv_lift.ma".
-include "basic_2/dynamic/snv_cpes.ma".
+include "basic_2/dynamic/snv_scpes.ma".
 
 (* STRATIFIED NATIVE VALIDITY FOR TERMS *************************************)
 
@@ -49,8 +49,8 @@ fact snv_lstas_aux: ∀h,g,G0,L0,T0.
   lapply (da_inv_flat … Hl1) -Hl1 #Hl1
   elim (lstas_inv_appl1 … H2) -H2 #T0 #HT10 #H destruct
   lapply (IH1 … HT1 … Hl1 … HT10) /2 width=1 by fqup_fpbg/ #HT0
-  lapply (lstas_cpds_aux … IH1 IH4 IH3 IH2 … Hl1 … HT10 … HTU1) -IH4 -IH3 -IH2 -IH1 /2 width=1 by fqup_fpbg/ -T1 -l1 #H
-  elim (cpes_inv_abst2 … H) -H /3 width=6 by snv_appl, cpds_cprs_trans/
+  lapply (lstas_scpds_aux … IH1 IH4 IH3 IH2 … Hl1 … HT10 … HTU1) -IH4 -IH3 -IH2 -IH1 /2 width=1 by fqup_fpbg/ -T1 -l1 #H
+  elim (scpes_inv_abst2 … H) -H /3 width=6 by snv_appl, scpds_cprs_trans/
 | #U1 #T1 #HG0 #HL0 #HT0 #H1 #l1 #l2 @(nat_ind_plus … l2) -l2 [ #_ | #l2 #_ #Hl21 ] #Hl1 #X #H2 destruct -IH4 -IH3 -IH2
   [ lapply (lstas_inv_O … H2) -H2 #H destruct // ]
   elim (snv_inv_cast … H1) -H1 

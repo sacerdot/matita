@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/lrsubeqv_5.ma".
-include "basic_2/dynamic/hsnv.ma".
+include "basic_2/dynamic/shnv.ma".
 
 (* LOCAL ENVIRONMENT REFINEMENT FOR STRATIFIED NATIVE VALIDITY **************)
 

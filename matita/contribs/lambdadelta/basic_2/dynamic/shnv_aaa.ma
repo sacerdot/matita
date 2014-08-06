@@ -13,15 +13,15 @@
 (**************************************************************************)
 
 include "basic_2/dynamic/snv_aaa.ma".
-include "basic_2/dynamic/hsnv.ma".
+include "basic_2/dynamic/shnv.ma".
 
-(* HIGHER ORDER STRATIFIED NATIVE VALIDITY FOR TERMS ************************)
+(* STRATIFIED HIGHER NATIVE VALIDITY FOR TERMS ******************************)
 
 (* Advanced properties ******************************************************)
 
-lemma snv_hsnv_cast: ∀h,g,G,L,U,T. ⦃G, L⦄ ⊢ ⓝU.T ¡[h, g] → ⦃G, L⦄ ⊢ ⓝU.T ¡[h, g, 0].
+lemma snv_shnv_cast: ∀h,g,G,L,U,T. ⦃G, L⦄ ⊢ ⓝU.T ¡[h, g] → ⦃G, L⦄ ⊢ ⓝU.T ¡[h, g, 0].
 #h #g #G #L #U #T #H elim (snv_inv_cast … H) -H
-#U0 #HU #HT #HU0 #HTU0 @hsnv_cast // -HT
+#U0 #HU #HT #HU0 #HTU0 @shnv_cast // -HT
 #l #H <(le_n_O_to_eq … H) -l
-elim (snv_fwd_da … HU) -HU /3 width=3 by cprs_cpds, cpds_div/
+elim (snv_fwd_da … HU) -HU /3 width=3 by cprs_scpds, scpds_div/
 qed.

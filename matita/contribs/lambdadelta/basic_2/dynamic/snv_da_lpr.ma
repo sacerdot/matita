@@ -14,7 +14,7 @@
 
 include "basic_2/static/lsubd_da.ma".
 include "basic_2/dynamic/snv_aaa.ma".
-include "basic_2/dynamic/snv_cpes.ma".
+include "basic_2/dynamic/snv_scpes.ma".
 
 (* STRATIFIED NATIVE VALIDITY FOR TERMS *************************************)
 
@@ -66,11 +66,11 @@ fact da_cpr_lpr_aux: ∀h,g,G0,L0,T0.
   | #b #V2 #W #W2 #U #U2 #HV12 #HW2 #HU2 #H1 #H2 destruct
     elim (snv_inv_bind … HT1) -HT1 #HW #HU
     lapply (da_inv_bind … Hl) -Hl #Hl
-    elim (cpds_inv_abst1 … HTU1) -HTU1 #W3 #U3 #HW3 #_ #H destruct -U3 -l1
+    elim (scpds_inv_abst1 … HTU1) -HTU1 #W3 #U3 #HW3 #_ #H destruct -U3 -l1
     elim (snv_fwd_da … HV1) #l1 #Hl1
     elim (snv_fwd_da … HW) #l0 #Hl0
-    lapply (cpds_div … W … 0 … HVW1) /2 width=2 by cprs_cpds/ -W3 #H
-    elim (da_cpes_aux … IH3 IH2 IH1 … Hl0 … Hl1 … H) -IH3 -IH2 -H /2 width=1 by fqup_fpbg/ #_ #H1
+    lapply (scpds_div … W … 0 … HVW1) /2 width=2 by cprs_scpds/ -W3 #H
+    elim (da_scpes_aux … IH3 IH2 IH1 … Hl0 … Hl1 … H) -IH3 -IH2 -H /2 width=1 by fqup_fpbg/ #_ #H1
     <minus_n_O #H destruct >(plus_minus_m_m l1 1) in Hl1; // -H1 #Hl1
     lapply (IH1 … HV1 … Hl1 … HV12 … HL12) -HV1 -Hl1 -HV12 [ /2 by fqup_fpbg/ ]
     lapply (IH1 … Hl0 … HW2 … HL12) -Hl0 /2 width=1 by fqup_fpbg/ -HW

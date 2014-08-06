@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/dynamic/snv_aaa.ma".
-include "basic_2/dynamic/snv_cpes.ma".
+include "basic_2/dynamic/snv_scpes.ma".
 include "basic_2/dynamic/lsubsv_lstas.ma".
 
 (* STRATIFIED NATIVE VALIDITY FOR TERMS *************************************)
@@ -86,13 +86,13 @@ fact lstas_cpr_lpr_aux: ∀h,g,G0,L0,T0.
     elim (snv_inv_bind … HT1) -HT1 #HW2 #HT2
     lapply (da_inv_bind … Hl1) -Hl1 #Hl1
     elim (lstas_inv_bind1 … HT1U) -HT1U #U #HT2U #H destruct
-    elim (cpds_inv_abst1 … HTU1) -HTU1 #W0 #U0 #HW20 #_ #H destruct -U0 -l0
+    elim (scpds_inv_abst1 … HTU1) -HTU1 #W0 #U0 #HW20 #_ #H destruct -U0 -l0
     elim (snv_fwd_da … HW2) #l0 #HW2l
-    lapply (cpds_div … W2 … 0 … HVW1) /2 width=3 by cprs_cpds/ -W0 #H21
+    lapply (scpds_div … W2 … 0 … HVW1) /2 width=3 by cprs_scpds/ -W0 #H21
     elim (snv_fwd_da … HV1) #l #HV1l
-    elim (da_cpes_aux … IH4 IH3 IH2 … HW2l … HV1l … H21) /2 width=1 by fqup_fpbg/ #_ #H
+    elim (da_scpes_aux … IH4 IH3 IH2 … HW2l … HV1l … H21) /2 width=1 by fqup_fpbg/ #_ #H
     <minus_n_O #H0 destruct >(plus_minus_m_m l 1) in HV1l; // -H #HV1l
-    lapply (cpes_cpr_lpr_aux … IH2 IH1 … H21 … HW23 … HV12 … HL12) -H21 /2 width=1 by fqup_fpbg/ #H32
+    lapply (scpes_cpr_lpr_aux … IH2 IH1 … H21 … HW23 … HV12 … HL12) -H21 /2 width=1 by fqup_fpbg/ #H32
     lapply (IH3 … HW23 … HL12) /2 width=1 by fqup_fpbg/ #HW3
     lapply (IH3 … HV12 … HL12) /2 width=1 by fqup_fpbg/ #HV2
     lapply (IH2 … HW2l … HW23 … HL12) /2 width=1 by fqup_fpbg/ -HW2 -HW2l #HW3l
@@ -106,8 +106,8 @@ fact lstas_cpr_lpr_aux: ∀h,g,G0,L0,T0.
       /4 width=3 by cpcs_flat, cpcs_bind2, lpr_cpr_conf/
     | -U3
       @(lsubsv_beta … (l-1)) /3 width=7 by fqup_fpbg/
-      @hsnv_cast [1,2: // ] #l0 #Hl0
-      lapply (cpes_le_aux … IH4 IH3 IH2 IH1 … HW3l … HV2l … l0 … H32) -IH4 -IH3 -IH2 -IH1 -HW3l -HV2l -H32
+      @shnv_cast [1,2: // ] #l0 #Hl0
+      lapply (scpes_le_aux … IH4 IH3 IH2 IH1 … HW3l … HV2l … l0 … H32) -IH4 -IH3 -IH2 -IH1 -HW3l -HV2l -H32
       /3 width=5 by fpbg_fpbs_trans, fqup_fpbg, cpr_lpr_fpbs, le_S_S/
     | -IH1 -IH3 -IH4 /3 width=9 by fqup_fpbg, lpr_pair/
     ]

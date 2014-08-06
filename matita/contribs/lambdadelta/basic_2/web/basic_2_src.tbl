@@ -47,12 +47,12 @@ table {
         ]
 *)
         [ { "local env. ref. for stratified native validity" * } {
-             [ "lsubsv ( ? ⊢ ? ⫃¡[?,?] ? )" "lsubsv_lsuba" + "lsubsv_lsubd" + "lsubsv_lstas" + "lsubsv_cpds" + "lsubsv_cpcs" + "lsubsv_snv" * ]
+             [ "lsubsv ( ? ⊢ ? ⫃¡[?,?] ? )" "lsubsv_lsuba" + "lsubsv_lsubd" + "lsubsv_lstas" + "lsubsv_scpds" + "lsubsv_cpcs" + "lsubsv_snv" * ]
           }
         ]
         [ { "stratified native validity" * } {
-             [ "hsnv ( ⦃?,?⦄ ⊢ ? ¡[?,?,?] )" "hsnv_aaa" * ]
-             [ "snv ( ⦃?,?⦄ ⊢ ? ¡[?,?] )" "snv_lift" + "snv_aaa" + "snv_da_lpr" + "snv_lstas" + "snv_lstas_lpr" + "snv_lpr" + "snv_cpes" + "snv_preserve" * ]
+             [ "shnv ( ⦃?,?⦄ ⊢ ? ¡[?,?,?] )" "shnv_aaa" * ]
+             [ "snv ( ⦃?,?⦄ ⊢ ? ¡[?,?] )" "snv_lift" + "snv_aaa" + "snv_da_lpr" + "snv_lstas" + "snv_lstas_lpr" + "snv_lpr" + "snv_scpes" + "snv_preserve" * ]
           }
         ]
      }
@@ -60,7 +60,7 @@ table {
    class "blue"
    [ { "equivalence" * } {
         [ { "decomposed extended equivalence" * } {
-             [ "cpes ( ⦃?,?⦄ ⊢ ? •*⬌*[?,?,?,?] ? )" "cpes_aaa" + "cpes_cpcs" + "cpes_cpes" * ]
+             [ "scpes ( ⦃?,?⦄ ⊢ ? •*⬌*[?,?,?,?] ? )" "scpes_aaa" + "scpes_cpcs" + "scpes_scpes" * ]
           }
         ]
         [ { "context-sensitive equivalence" * } {
@@ -106,7 +106,7 @@ table {
           }
         ]
         [ { "decomposed extended computation" * } {
-             [ "cpds ( ⦃?,?⦄ ⊢ ? •*➡*[?,?,?] ? )" "cpds_lift" + "cpds_aaa" + "cpds_cpds" * ]
+             [ "scpds ( ⦃?,?⦄ ⊢ ? •*➡*[?,?,?] ? )" "scpds_lift" + "scpds_aaa" + "scpds_scpds" * ]
           }
         ]
         [ { "context-sensitive extended computation" * } {
@@ -309,7 +309,7 @@ table {
         [ { "internal syntax" * } {
              [ "genv" * ]
              [ "lenv" "lenv_weight ( ♯{?} )" "lenv_length ( |?| )" "lenv_append ( ? @@ ? )" * ]
-             [ "term" "term_weight ( ♯{?} )" "term_simple ( 𝐒⦃?⦄ )" "term_vector" * ]
+             [ "term" "term_weight ( ♯{?} )" "term_simple ( 𝐒⦃?⦄ )" "term_vector ( Ⓐ?.? )" * ]
              [ "item" * ]
           }
         ]

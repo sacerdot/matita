@@ -53,3 +53,9 @@ theorem lstas_cpr_lpr: ∀h,g,G,L,T. IH_lstas_cpr_lpr h g G L T.
 qed-.
 
 (* Advanced preservation properties *****************************************)
+
+lemma snv_cprs_lpr: ∀h,g,G,L1,T1. ⦃G, L1⦄ ⊢ T1 ¡[h, g] →
+                    ∀T2. ⦃G, L1⦄ ⊢ T1 ➡* T2 → ∀L2. ⦃G, L1⦄ ⊢ ➡ L2 → ⦃G, L2⦄ ⊢ T2 ¡[h, g].
+#h #g #G #L1 #T1 #HT1 #T2 #H
+@(cprs_ind … H) -T2 /3 width=5 by snv_cpr_lpr/
+qed-.
