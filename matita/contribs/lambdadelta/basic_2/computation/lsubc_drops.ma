@@ -20,7 +20,7 @@ include "basic_2/computation/lsubc_drop.ma".
 
 (* Basic_1: was: csubc_drop1_conf_rev *)
 lemma drops_lsubc_trans: ∀RR,RS,RP.
-                         acp RR RS RP → acr RR RS RP (λG,L,T. RP G L T) →
+                         acp RR RS RP → acr RR RS RP RP →
                          ∀G,L1,K1,des. ⇩*[Ⓕ, des] L1 ≡ K1 → ∀K2. G ⊢ K1 ⫃[RP] K2 →
                          ∃∃L2. G ⊢ L1 ⫃[RP] L2 & ⇩*[Ⓕ, des] L2 ≡ K2.
 #RR #RS #RP #Hacp #Hacr #G #L1 #K1 #des #H elim H -L1 -K1 -des

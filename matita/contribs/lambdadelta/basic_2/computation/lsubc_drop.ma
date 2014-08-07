@@ -42,7 +42,7 @@ qed-.
 
 (* Basic_1: was: csubc_drop_conf_rev *)
 lemma drop_lsubc_trans: ∀RR,RS,RP.
-                        acp RR RS RP → acr RR RS RP (λG,L,T. RP G L T) →
+                        acp RR RS RP → acr RR RS RP RP →
                         ∀G,L1,K1,d,e. ⇩[Ⓕ, d, e] L1 ≡ K1 → ∀K2. G ⊢ K1 ⫃[RP] K2 →
                         ∃∃L2. G ⊢ L1 ⫃[RP] L2 & ⇩[Ⓕ, d, e] L2 ≡ K2.
 #RR #RS #RP #Hacp #Hacr #G #L1 #K1 #d #e #H elim H -L1 -K1 -d -e

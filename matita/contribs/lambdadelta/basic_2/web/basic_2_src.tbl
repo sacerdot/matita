@@ -101,7 +101,7 @@ table {
         [ { "\"big tree\" parallel computation" * } {
              [ "fpbg ( ⦃?,?,?⦄ >≡[?,?] ⦃?,?,?⦄ )" "fpbg_lift" + "fpbg_fleq" + "fpbg_fpbg" * ]
              [ "fpbc ( ⦃?,?,?⦄ ≻≡[?,?] ⦃?,?,?⦄ )" "fpbc_fleq" + "fpbc_fpbs" * ]
-             [ "fpbu ( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" "fpbu_lift" + "fpbu_lleq" "fpbu_fleq" * ]
+             [ "fpbu ( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" "fpbu_lift" + "fpbu_lleq" + "fpbu_fleq" * ]
              [ "fpbs ( ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "fpbs_alt ( ⦃?,?,?⦄ ≥≥[?,?] ⦃?,?,?⦄ )" "fpbs_lift" + "fpbs_fleq" + "fpbs_aaa" + "fpbs_fpbs" + "fpbs_ext" * ]
           }
         ]
@@ -140,7 +140,7 @@ table {
           }
         ]
         [ { "context-sensitive extended reduction" * } {
-             [ "lpx ( ⦃?,?⦄ ⊢ ➡[?,?] ? )" "lpx_drop" + "lpx_frees" "lpx_lleq" + "lpx_aaa" * ]
+             [ "lpx ( ⦃?,?⦄ ⊢ ➡[?,?] ? )" "lpx_drop" + "lpx_frees" + "lpx_lleq" + "lpx_aaa" * ]
              [ "cpx ( ⦃?,?⦄ ⊢ ? ➡[?,?] ? )" "cpx_leq" + "cpx_lift" + "cpx_llpx_sn" + "cpx_lleq" + "cpx_cix" * ]
           }
         ]
@@ -321,8 +321,8 @@ table {
    ]
 }
 
-class "component" { 0 }
+class "top"               { * }
 
-class "plane" { 1 }
+class "capitalize italic" { 0 }
 
-class "file" { 2 * }
+class "italic"            { 1 }

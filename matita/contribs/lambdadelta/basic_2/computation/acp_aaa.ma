@@ -24,7 +24,7 @@ include "basic_2/computation/lsubc_drops.ma".
 
 (* Basic_1: was: sc3_arity_csubc *)
 theorem aacr_aaa_csubc_lifts: ∀RR,RS,RP.
-                              acp RR RS RP → acr RR RS RP (λG,L,T. RP G L T) →
+                              acp RR RS RP → acr RR RS RP RP →
                               ∀G,L1,T,A. ⦃G, L1⦄ ⊢ T ⁝ A → ∀L0,des. ⇩*[Ⓕ, des] L0 ≡ L1 →
                               ∀T0. ⇧*[des] T ≡ T0 → ∀L2. G ⊢ L2 ⫃[RP] L0 →
                               ⦃G, L2, T0⦄ ϵ[RP] 〚A〛.
@@ -81,11 +81,11 @@ theorem aacr_aaa_csubc_lifts: ∀RR,RS,RP.
 qed.
 
 (* Basic_1: was: sc3_arity *)
-lemma aacr_aaa: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λG,L,T. RP G L T) →
+lemma aacr_aaa: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP RP →
                 ∀G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ⦃G, L, T⦄ ϵ[RP] 〚A〛.
 /2 width=8 by drops_nil, lifts_nil, aacr_aaa_csubc_lifts/ qed.
 
-lemma acp_aaa: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP (λG,L,T. RP G L T) →
+lemma acp_aaa: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP RP →
                ∀G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → RP G L T.
 #RR #RS #RP #H1RP #H2RP #G #L #T #A #HT
 lapply (aacr_acr … H1RP H2RP A) #HA

@@ -52,13 +52,14 @@ n: native type annotation
 
 NAMING CONVENTIONS FOR TRANSFORMATIONS AND RELATED FORMS
 
-- first letter
+- prefix and first letter
 
 b: bi contex-sensitive for local environments
 c: contex-sensitive for terms
 f: context-freee for closures
 l: sn contex-sensitive for local environments
 r: dx contex-sensitive for local environments
+s: stratified (prefix) 
 t: context-free for terms
 
 - second letter

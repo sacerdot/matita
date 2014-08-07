@@ -17,6 +17,8 @@ include "basic_2/multiple/drops.ma".
 
 (* ABSTRACT COMPUTATION PROPERTIES ******************************************)
 
+definition candidate: Type[0] ≝ relation3 genv lenv term.
+
 definition CP0 ≝ λRR:relation4 genv lenv term term. λRS:relation term.
                  ∀G,L0,L,T,T0,s,d,e. NF … (RR G L) RS T →
                  ⇩[s, d, e] L0 ≡ L → ⇧[d, e] T ≡ T0 → NF … (RR G L0) RS T0.
@@ -29,11 +31,11 @@ definition CP0s ≝ λRR:relation4 genv lenv term term. λRS:relation term.
 definition CP1 ≝ λRR:relation4 genv lenv term term. λRS:relation term.
                  ∀G,L. ∃k. NF … (RR G L) RS (⋆k).
 
-definition CP2 ≝ λRP:relation3 genv lenv term.
+definition CP2 ≝ λRP:candidate.
                  ∀G,L,T,k. RP G L (ⓐ⋆k.T) → RP G L T.
 
 (* requirements for abstract computation properties *)
-record acp (RR:relation4 genv lenv term term) (RS:relation term) (RP:relation3 genv lenv term) : Prop ≝
+record acp (RR:relation4 genv lenv term term) (RS:relation term) (RP:candidate) : Prop ≝
 { cp0: CP0 RR RS;
   cp1: CP1 RR RS;
   cp2: CP2 RP

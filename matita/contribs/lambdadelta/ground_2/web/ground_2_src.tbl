@@ -26,6 +26,6 @@ table {
    ]
 }
 
-class "plane" { 0 }
+class "top"    { * }
 
-class "file" { 1 * }
+class "italic" { 0 }

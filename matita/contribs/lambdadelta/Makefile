@@ -200,30 +200,30 @@ define SUMMARY_TEMPLATE
 
   $$(SUM_$(1)): $$(MAS_$(1)) $(1)/$(1)_probe.txt $(1)/$(1)_mac.txt
 	@printf '  SUMMARY $(1)\n'
-	@printf 'name "$$(basename $$(@F))"\n\n'                >  $$@
-	@printf 'table {\n'                                     >> $$@
-	@printf '   class "gray"   [ "category"\n'              >> $$@
-	@printf '      [ "objects" * ]\n'                       >> $$@
-	@printf '   ]\n'                                        >> $$@
-	@printf '   class "cyan"   [ "sizes"\n'                 >> $$@
-	@printf '      [ "files"      "$$(S4)" ]\n'             >> $$@
-	@printf '      [ "characters" "$$(word 1, $$(S1))" ]\n' >> $$@
-	@printf '      [ "nodes"      "$$(word 3, $$(S0))" ]\n' >> $$@
-	@printf '   ]\n'                                        >> $$@	
-	@printf '   class "green"  [ "propositions"\n'          >> $$@
-	@printf '      [ "theorems" "$$(P1)" ]\n'               >> $$@
-	@printf '      [ "lemmas"   "$$(P2)" ]\n'               >> $$@
-	@printf '      [ "total"    "$$(P3)" ]\n'               >> $$@
-	@printf '   ]\n'                                        >> $$@
-	@printf '   class "yellow" [ "concepts"\n'              >> $$@
-	@printf '      [ "declared" "$$(C1)" ]\n'               >> $$@
-	@printf '      [ "defined"  "$$(C2)" ]\n'               >> $$@
-	@printf '      [ "total"    "$$(C3)" ]\n'               >> $$@
-	@printf '   ]\n'                                        >> $$@
-	@printf '}\n\n'                                         >> $$@
-	@printf 'class "component" { 0 }\n\n'                   >> $$@
-	@printf 'class "plane"     { 1 } { 3 } { 5 }\n\n'       >> $$@
-	@printf 'class "number"    { 2 } { 4 } { 6 }\n'         >> $$@
+	@printf 'name "$$(basename $$(@F))"\n\n'                  >  $$@
+	@printf 'table {\n'                                       >> $$@
+	@printf '   class "gray"   [ "category"\n'                >> $$@
+	@printf '      [ "objects" * ]\n'                         >> $$@
+	@printf '   ]\n'                                          >> $$@
+	@printf '   class "cyan"   [ "sizes"\n'                   >> $$@
+	@printf '      [ "files"      "$$(S4)" ]\n'               >> $$@
+	@printf '      [ "characters" "$$(word 1, $$(S1))" ]\n'   >> $$@
+	@printf '      [ "nodes"      "$$(word 3, $$(S0))" ]\n'   >> $$@
+	@printf '   ]\n'                                          >> $$@	
+	@printf '   class "green"  [ "propositions"\n'            >> $$@
+	@printf '      [ "theorems" "$$(P1)" ]\n'                 >> $$@
+	@printf '      [ "lemmas"   "$$(P2)" ]\n'                 >> $$@
+	@printf '      [ "total"    "$$(P3)" ]\n'                 >> $$@
+	@printf '   ]\n'                                          >> $$@
+	@printf '   class "yellow" [ "concepts"\n'                >> $$@
+	@printf '      [ "declared" "$$(C1)" ]\n'                 >> $$@
+	@printf '      [ "defined"  "$$(C2)" ]\n'                 >> $$@
+	@printf '      [ "total"    "$$(C3)" ]\n'                 >> $$@
+	@printf '   ]\n'                                          >> $$@
+	@printf '}\n\n'                                           >> $$@
+	@printf 'class "capitalize italic" { 0 }\n\n'             >> $$@
+	@printf 'class "italic"            { 1 } { 3 } { 5 }\n\n' >> $$@
+	@printf 'class "right italic"      { 2 } { 4 } { 6 }\n'   >> $$@
 
 .PHONY: $$(SUM_$(1))
 endef

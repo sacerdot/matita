@@ -47,6 +47,6 @@ table {
    } ]
 }
 
-class "text" { 0 } { 2 * }
+class "top"    { * }
 
-class "plane" { 1 }
+class "italic" { 1 }

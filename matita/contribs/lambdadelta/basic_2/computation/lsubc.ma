@@ -50,8 +50,8 @@ fact lsubc_inv_pair1_aux: ∀RP,G,L1,L2. G ⊢ L1 ⫃[RP] L2 → ∀I,K1,X. L1 =
                                       L2 = K2. ⓛW & X = ⓝW.V & I = Abbr.
 #RP #G #L1 #L2 * -L1 -L2
 [ #I #K1 #V #H destruct
-| #J #L1 #L2 #V #HL12 #I #K1 #W #H destruct /3 width=3/
-| #L1 #L2 #V1 #W2 #A #HV1 #H1W2 #H2W2 #HL12 #I #K1 #V #H destruct /3 width=10/
+| #J #L1 #L2 #V #HL12 #I #K1 #W #H destruct /3 width=3 by ex2_intro, or_introl/
+| #L1 #L2 #V1 #W2 #A #HV1 #H1W2 #H2W2 #HL12 #I #K1 #V #H destruct /3 width=10 by ex7_4_intro, or_intror/
 ]
 qed-.
 
@@ -82,8 +82,8 @@ fact lsubc_inv_pair2_aux: ∀RP,G,L1,L2. G ⊢ L1 ⫃[RP] L2 → ∀I,K2,W. L2 =
                                     L1 = K1.ⓓⓝW.V & I = Abst.
 #RP #G #L1 #L2 * -L1 -L2
 [ #I #K2 #W #H destruct
-| #J #L1 #L2 #V #HL12 #I #K2 #W #H destruct /3 width=3/
-| #L1 #L2 #V1 #W2 #A #HV1 #H1W2 #H2W2 #HL12 #I #K2 #W #H destruct /3 width=8/
+| #J #L1 #L2 #V #HL12 #I #K2 #W #H destruct /3 width=3 by ex2_intro, or_introl/
+| #L1 #L2 #V1 #W2 #A #HV1 #H1W2 #H2W2 #HL12 #I #K2 #W #H destruct /3 width=8 by ex6_3_intro, or_intror/
 ]
 qed-.
 
@@ -99,7 +99,7 @@ lemma lsubc_inv_pair2: ∀RP,I,G,L1,K2,W. G ⊢ L1 ⫃[RP] K2.ⓑ{I} W →
 
 (* Basic_1: was just: csubc_refl *)
 lemma lsubc_refl: ∀RP,G,L. G ⊢ L ⫃[RP] L.
-#RP #G #L elim L -L // /2 width=1/
+#RP #G #L elim L -L /2 width=1 by lsubc_pair/
 qed.
 
 (* Basic_1: removed theorems 3:

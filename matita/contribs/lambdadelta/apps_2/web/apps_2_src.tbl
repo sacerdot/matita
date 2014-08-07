@@ -33,8 +33,8 @@ table {
    ]
 }
 
-class "component" { 0 }
+class "top"               { * }
 
-class "plane" { 1 }
+class "capitalize italic" { 0 }
 
-class "file" { 2 * }
+class "italic"            { 1 }

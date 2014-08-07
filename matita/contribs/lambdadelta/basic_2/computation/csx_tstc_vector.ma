@@ -21,7 +21,7 @@ include "basic_2/computation/csx_vector.ma".
 
 (* Advanced properties ******************************************************)
 
-(* Basic_1: was just: sn3_applv_lref *)
+(* Basic_1: was just: sn3_appls_lref *)
 lemma csx_applv_cnx: ∀h,g,G,L,T. 𝐒⦃T⦄ → ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃T⦄ →
                      ∀Vs. ⦃G, L⦄ ⊢ ⬊*[h, g] Vs → ⦃G, L⦄ ⊢ ⬊*[h, g] ⒶVs.T.
 #h #g #G #L #T #H1T #H2T #Vs elim Vs -Vs [ #_ @(cnx_csx … H2T) ] (**) (* /2 width=1/ does not work *)
@@ -48,7 +48,7 @@ elim (cpxs_fwd_sort_vector … H) -H #H
 ]
 qed.
 
-(* Basic_1: was just: sn3_applv_beta *)
+(* Basic_1: was just: sn3_appls_beta *)
 lemma csx_applv_beta: ∀h,g,a,G,L,Vs,V,W,T. ⦃G, L⦄ ⊢ ⬊*[h, g] ⒶVs.ⓓ{a}ⓝW.V.T →
                       ⦃G, L⦄ ⊢ ⬊*[h, g] ⒶVs. ⓐV.ⓛ{a}W.T.
 #h #g #a #G #L #Vs elim Vs -Vs /2 width=1 by csx_appl_beta/
@@ -80,7 +80,7 @@ lemma csx_applv_delta: ∀h,g,I,G,L,K,V1,i. ⇩[i] L ≡ K.ⓑ{I}V1 →
 ]
 qed.
 
-(* Basic_1: was just: sn3_applv_abbr *)
+(* Basic_1: was just: sn3_appls_abbr *)
 lemma csx_applv_theta: ∀h,g,a,G,L,V1s,V2s. ⇧[0, 1] V1s ≡ V2s →
                        ∀V,T. ⦃G, L⦄ ⊢ ⬊*[h, g] ⓓ{a}V.ⒶV2s.T →
                        ⦃G, L⦄ ⊢ ⬊*[h, g] ⒶV1s.ⓓ{a}V.T.
@@ -99,7 +99,7 @@ elim (cpxs_fwd_theta_vector … (V2@V2s) … H1) -H1 /2 width=1 by liftv_cons/ -
 ]
 qed.
 
-(* Basic_1: was just: sn3_applv_cast *)
+(* Basic_1: was just: sn3_appls_cast *)
 lemma csx_applv_cast: ∀h,g,G,L,Vs,W,T. ⦃G, L⦄ ⊢ ⬊*[h, g] ⒶVs.W → ⦃G, L⦄ ⊢ ⬊*[h, g] ⒶVs.T →
                       ⦃G, L⦄ ⊢ ⬊*[h, g] ⒶVs.ⓝW.T.
 #h #g #G #L #Vs elim Vs -Vs /2 width=1 by csx_cast/
@@ -116,7 +116,7 @@ elim (cpxs_fwd_cast_vector … H) -H #H
 ]
 qed.
 
-theorem csx_acr: ∀h,g. acr (cpx h g) (eq …) (csx h g) (λG,L,T. ⦃G, L⦄ ⊢ ⬊*[h, g] T).
+theorem csx_acr: ∀h,g. acr (cpx h g) (eq …) (csx h g) (csx h g).
 #h #g @mk_acr //
 [ /2 width=8 by csx_lift/
 | /3 width=1 by csx_applv_cnx/

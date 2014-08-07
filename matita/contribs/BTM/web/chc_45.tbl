@@ -14,8 +14,6 @@ table {
 }
 
 
-class "component" { 0 }
+class "capitalize italic" { 0 }
 
-class "text" { 1 }
-
-class "number" { 2 * }
+class "right italic" { 2 * }
