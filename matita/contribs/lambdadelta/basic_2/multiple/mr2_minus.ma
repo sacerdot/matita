@@ -13,9 +13,9 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/rminus_3.ma".
-include "basic_2/multiple/gr2.ma".
+include "basic_2/multiple/mr2.ma".
 
-(* GENERIC RELOCATION WITH PAIRS ********************************************)
+(* MULTIPLE RELOCATION WITH PAIRS *******************************************)
 
 inductive minuss: nat → relation (list2 nat nat) ≝
 | minuss_nil: ∀i. minuss i (⟠) (⟠)
@@ -25,7 +25,7 @@ inductive minuss: nat → relation (list2 nat nat) ≝
               minuss i ({d, e} @ des1) des2
 .
 
-interpretation "minus (generic relocation with pairs)"
+interpretation "minus (multiple relocation with pairs)"
    'RMinus des1 i des2 = (minuss i des1 des2).
 
 (* Basic inversion lemmas ***************************************************)

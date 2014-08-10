@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/reduction/cnx_lift.ma".
-include "basic_2/computation/acp.ma".
+include "basic_2/computation/gcp.ma".
 include "basic_2/computation/csx.ma".
 
 (* CONTEXT-SENSITIVE EXTENDED STRONGLY NORMALIZING TERMS ********************)
@@ -109,8 +109,8 @@ qed-.
 
 (* Main properties **********************************************************)
 
-theorem csx_acp: ∀h,g. acp (cpx h g) (eq …) (csx h g).
-#h #g @mk_acp
+theorem csx_gcp: ∀h,g. gcp (cpx h g) (eq …) (csx h g).
+#h #g @mk_gcp
 [ /3 width=13 by cnx_lift/
 | #G #L elim (deg_total h g 0) /3 width=8 by cnx_sort_iter, ex_intro/
 | /2 width=3 by csx_fwd_flat_dx/

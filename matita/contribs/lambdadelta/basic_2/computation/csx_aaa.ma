@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/acp_aaa.ma".
+include "basic_2/computation/gcp_aaa.ma".
 include "basic_2/computation/cpxs_aaa.ma".
-include "basic_2/computation/csx_tstc_vector.ma".
+include "basic_2/computation/csx_tsts_vector.ma".
 
 (* CONTEXT-SENSITIVE EXTENDED STRONGLY NORMALIZING TERMS ********************)
 
@@ -22,7 +22,7 @@ include "basic_2/computation/csx_tstc_vector.ma".
 
 theorem aaa_csx: ∀h,g,G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ⦃G, L⦄ ⊢ ⬊*[h, g] T.
 #h #g #G #L #T #A #H
-@(acp_aaa … (csx_acp h g) (csx_acr h g) … H)
+@(gcr_aaa … (csx_gcp h g) (csx_gcr h g) … H)
 qed.
 
 (* Advanced eliminators *****************************************************)

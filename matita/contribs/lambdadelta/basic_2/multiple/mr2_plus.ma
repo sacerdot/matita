@@ -12,20 +12,29 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/term_vector.ma".
-include "basic_2/grammar/tstc.ma".
+include "basic_2/multiple/mr2.ma".
 
-(* SAME TOP TERM CONSTRUCTOR ************************************************)
+(* MULTIPLE RELOCATION WITH PAIRS *******************************************)
 
-(* Advanced inversion lemmas ************************************************)
+let rec pluss (des:list2 nat nat) (i:nat) on des ≝ match des with
+[ nil2          ⇒ ⟠
+| cons2 d e des ⇒ {d + i, e} @ pluss des i
+].
 
-(* Basic_1: was only: iso_flats_lref_bind_false iso_flats_flat_bind_false *)
-lemma tstc_inv_bind_applv_simple: ∀a,I,Vs,V2,T1,T2. ⒶVs.T1 ≂ ⓑ{a,I} V2. T2 →
-                                  𝐒⦃T1⦄ → ⊥.
-#a #I #Vs #V2 #T1 #T2 #H
-elim (tstc_inv_pair2 … H) -H #V0 #T0
-elim Vs -Vs normalize
-[ #H destruct #H /2 width=5 by simple_inv_bind/
-| #V #Vs #_ #H destruct
+interpretation "plus (multiple relocation with pairs)"
+   'plus x y = (pluss x y).
+
+(* Basic inversion lemmas ***************************************************)
+
+lemma pluss_inv_nil2: ∀i,des. des + i = ⟠ → des = ⟠.
+#i * // normalize
+#d #e #des #H destruct
+qed.
+
+lemma pluss_inv_cons2: ∀i,d,e,des2,des. des + i = {d, e} @ des2 →
+                       ∃∃des1. des1 + i = des2 & des = {d - i, e} @ des1.
+#i #d #e #des2 * normalize
+[ #H destruct
+| #d1 #e1 #des1 #H destruct /2 width=3/
 ]
 qed-.

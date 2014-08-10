@@ -12,12 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/tstc.ma".
+include "basic_2/grammar/tsts.ma".
 include "basic_2/computation/lpxs_cpxs.ma".
 
 (* CONTEXT-SENSITIVE EXTENDED PARALLEL COMPUTATION ON TERMS *****************)
 
-(* Forward lemmas involving same top term constructor ***********************)
+(* Forward lemmas involving same top term structure *************************)
 
 lemma cpxs_fwd_cnx: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃T⦄ → ∀U. ⦃G, L⦄ ⊢ T ➡*[h, g] U → T ≂ U.
 #h #g #G #L #T #HT #U #H
@@ -32,7 +32,7 @@ elim (cpxs_inv_sort1 … H) -H #n #l generalize in match k; -k @(nat_ind_plus �
 | #n #IHn #k >plus_plus_comm_23 #Hnl #H destruct
   lapply (deg_next_SO … Hnl) -Hnl #Hnl
   elim (IHn … Hnl) -IHn
-  [ #H lapply (tstc_inv_atom1 … H) -H #H >H -H /2 width=1 by or_intror/
+  [ #H lapply (tsts_inv_atom1 … H) -H #H >H -H /2 width=1 by or_intror/
   | generalize in match Hnl; -Hnl @(nat_ind_plus … n) -n
     /4 width=3 by cpxs_strap2, cpx_st, or_intror/
   | >iter_SO >iter_n_Sm //
@@ -45,7 +45,7 @@ lemma cpxs_fwd_beta: ∀h,g,a,G,L,V,W,T,U. ⦃G, L⦄ ⊢ ⓐV.ⓛ{a}W.T ➡*[h,
                      ⓐV.ⓛ{a}W.T ≂ U ∨ ⦃G, L⦄ ⊢ ⓓ{a}ⓝW.V.T ➡*[h, g] U.
 #h #g #a #G #L #V #W #T #U #H
 elim (cpxs_inv_appl1 … H) -H *
-[ #V0 #T0 #_ #_ #H destruct /2 width=1 by tstc_pair, or_introl/
+[ #V0 #T0 #_ #_ #H destruct /2 width=1 by tsts_pair, or_introl/
 | #b #W0 #T0 #HT0 #HU
   elim (cpxs_inv_abst1 … HT0) -HT0 #W1 #T1 #HW1 #HT1 #H destruct
   lapply (lsubr_cpxs_trans … HT1 (L.ⓓⓝW.V) ?) -HT1
@@ -72,7 +72,7 @@ lemma cpxs_fwd_theta: ∀h,g,a,G,L,V1,V,T,U. ⦃G, L⦄ ⊢ ⓐV1.ⓓ{a}V.T ➡*
                       ⦃G, L⦄ ⊢ ⓓ{a}V.ⓐV2.T ➡*[h, g] U.
 #h #g #a #G #L #V1 #V #T #U #H #V2 #HV12
 elim (cpxs_inv_appl1 … H) -H *
-[ -HV12 #V0 #T0 #_ #_ #H destruct /2 width=1 by tstc_pair, or_introl/
+[ -HV12 #V0 #T0 #_ #_ #H destruct /2 width=1 by tsts_pair, or_introl/
 | #b #W #T0 #HT0 #HU
   elim (cpxs_inv_abbr1 … HT0) -HT0 *
   [ #V3 #T3 #_ #_ #H destruct
@@ -103,5 +103,5 @@ lemma cpxs_fwd_cast: ∀h,g,G,L,W,T,U. ⦃G, L⦄ ⊢ ⓝW.T ➡*[h, g] U →
                      ∨∨ ⓝW. T ≂ U | ⦃G, L⦄ ⊢ T ➡*[h, g] U | ⦃G, L⦄ ⊢ W ➡*[h, g] U.
 #h #g #G #L #W #T #U #H
 elim (cpxs_inv_cast1 … H) -H /2 width=1 by or3_intro1, or3_intro2/ *
-#W0 #T0 #_ #_ #H destruct /2 width=1 by tstc_pair, or3_intro0/
+#W0 #T0 #_ #_ #H destruct /2 width=1 by tsts_pair, or3_intro0/
 qed-.

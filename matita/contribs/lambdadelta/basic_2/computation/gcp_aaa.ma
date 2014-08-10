@@ -18,23 +18,23 @@ include "basic_2/static/aaa_lifts.ma".
 include "basic_2/static/aaa_aaa.ma".
 include "basic_2/computation/lsubc_drops.ma".
 
-(* ABSTRACT COMPUTATION PROPERTIES ******************************************)
+(* GENERIC COMPUTATION PROPERTIES *******************************************)
 
 (* Main properties **********************************************************)
 
 (* Basic_1: was: sc3_arity_csubc *)
-theorem aacr_aaa_csubc_lifts: ∀RR,RS,RP.
-                              acp RR RS RP → acr RR RS RP RP →
-                              ∀G,L1,T,A. ⦃G, L1⦄ ⊢ T ⁝ A → ∀L0,des. ⇩*[Ⓕ, des] L0 ≡ L1 →
-                              ∀T0. ⇧*[des] T ≡ T0 → ∀L2. G ⊢ L2 ⫃[RP] L0 →
-                              ⦃G, L2, T0⦄ ϵ[RP] 〚A〛.
+theorem acr_aaa_csubc_lifts: ∀RR,RS,RP.
+                             gcp RR RS RP → gcr RR RS RP RP →
+                             ∀G,L1,T,A. ⦃G, L1⦄ ⊢ T ⁝ A → ∀L0,des. ⇩*[Ⓕ, des] L0 ≡ L1 →
+                             ∀T0. ⇧*[des] T ≡ T0 → ∀L2. G ⊢ L2 ⫃[RP] L0 →
+                             ⦃G, L2, T0⦄ ϵ[RP] 〚A〛.
 #RR #RS #RP #H1RP #H2RP #G #L1 #T #A #H elim H -G -L1 -T -A
 [ #G #L #k #L0 #des #HL0 #X #H #L2 #HL20
   >(lifts_inv_sort1 … H) -H
-  lapply (aacr_acr … H1RP H2RP (⓪)) #HAtom
+  lapply (acr_gcr … H1RP H2RP (⓪)) #HAtom
   @(s4 … HAtom … (◊)) //
 | #I #G #L1 #K1 #V1 #B #i #HLK1 #HKV1B #IHB #L0 #des #HL01 #X #H #L2 #HL20
-  lapply (aacr_acr … H1RP H2RP B) #HB
+  lapply (acr_gcr … H1RP H2RP B) #HB
   elim (lifts_inv_lref1 … H) -H #i1 #Hi1 #H destruct
   lapply (drop_fwd_drop2 … HLK1) #HK1b
   elim (drops_drop_trans … HL01 … HLK1) #X #des1 #i0 #HL0 #H #Hi0 #Hdes1
@@ -58,13 +58,13 @@ theorem aacr_aaa_csubc_lifts: ∀RR,RS,RP.
   ]
 | #a #G #L #V #T #B #A #_ #_ #IHB #IHA #L0 #des #HL0 #X #H #L2 #HL20
   elim (lifts_inv_bind1 … H) -H #V0 #T0 #HV0 #HT0 #H destruct
-  lapply (aacr_acr … H1RP H2RP A) #HA
-  lapply (aacr_acr … H1RP H2RP B) #HB
+  lapply (acr_gcr … H1RP H2RP A) #HA
+  lapply (acr_gcr … H1RP H2RP B) #HB
   lapply (s1 … HB) -HB #HB
   @(s6 … HA … (◊) (◊)) /3 width=5 by lsubc_pair, drops_skip, liftv_nil/
 | #a #G #L #W #T #B #A #HLWB #_ #IHB #IHA #L0 #des #HL0 #X #H #L2 #HL02
   elim (lifts_inv_bind1 … H) -H #W0 #T0 #HW0 #HT0 #H destruct
-  @(aacr_abst  … H1RP H2RP) [ /2 width=5 by/ ]
+  @(acr_abst  … H1RP H2RP) [ /2 width=5 by/ ]
   #L3 #V3 #W3 #T3 #des3 #HL32 #HW03 #HT03 #H1B #H2B
   elim (drops_lsubc_trans … H1RP H2RP … HL32 … HL02) -L2 #L2 #HL32 #HL20
   lapply (aaa_lifts … L2 W3 … (des @@ des3) … HLWB) -HLWB /2 width=4 by drops_trans, lifts_trans/ #HLW2B
@@ -75,19 +75,19 @@ theorem aacr_aaa_csubc_lifts: ∀RR,RS,RP.
   /3 width=10 by drops_nil, lifts_nil/
 | #G #L #V #T #A #_ #_ #IH1A #IH2A #L0 #des #HL0 #X #H #L2 #HL20
   elim (lifts_inv_flat1 … H) -H #V0 #T0 #HV0 #HT0 #H destruct
-  lapply (aacr_acr … H1RP H2RP A) #HA
+  lapply (acr_gcr … H1RP H2RP A) #HA
   @(s7 … HA … (◊)) /2 width=5 by/
 ]
 qed.
 
 (* Basic_1: was: sc3_arity *)
-lemma aacr_aaa: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP RP →
-                ∀G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ⦃G, L, T⦄ ϵ[RP] 〚A〛.
-/2 width=8 by drops_nil, lifts_nil, aacr_aaa_csubc_lifts/ qed.
+lemma acr_aaa: ∀RR,RS,RP. gcp RR RS RP → gcr RR RS RP RP →
+               ∀G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ⦃G, L, T⦄ ϵ[RP] 〚A〛.
+/2 width=8 by drops_nil, lifts_nil, acr_aaa_csubc_lifts/ qed.
 
-lemma acp_aaa: ∀RR,RS,RP. acp RR RS RP → acr RR RS RP RP →
+lemma gcr_aaa: ∀RR,RS,RP. gcp RR RS RP → gcr RR RS RP RP →
                ∀G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → RP G L T.
 #RR #RS #RP #H1RP #H2RP #G #L #T #A #HT
-lapply (aacr_acr … H1RP H2RP A) #HA
-@(s1 … HA) /2 width=4 by aacr_aaa/
+lapply (acr_gcr … H1RP H2RP A) #HA
+@(s1 … HA) /2 width=4 by acr_aaa/
 qed.

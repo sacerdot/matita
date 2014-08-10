@@ -15,7 +15,7 @@
 include "basic_2/notation/relations/rdropstar_3.ma".
 include "basic_2/notation/relations/rdropstar_4.ma".
 include "basic_2/substitution/drop.ma".
-include "basic_2/multiple/gr2_minus.ma".
+include "basic_2/multiple/mr2_minus.ma".
 include "basic_2/multiple/lifts.ma".
 
 (* ITERATED LOCAL ENVIRONMENT SLICING ***************************************)

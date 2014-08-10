@@ -14,7 +14,7 @@
 
 include "basic_2/notation/relations/rliftstar_3.ma".
 include "basic_2/substitution/lift.ma".
-include "basic_2/multiple/gr2_plus.ma".
+include "basic_2/multiple/mr2_plus.ma".
 
 (* GENERIC TERM RELOCATION **************************************************)
 

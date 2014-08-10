@@ -12,13 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/tstc_vector.ma".
+include "basic_2/grammar/tsts_vector.ma".
 include "basic_2/substitution/lift_vector.ma".
-include "basic_2/computation/cpxs_tstc.ma".
+include "basic_2/computation/cpxs_tsts.ma".
 
 (* CONTEXT-SENSITIVE EXTENDED PARALLEL COMPUTATION ON TERMS *****************)
 
-(* Vector form of forward lemmas involving same top term constructor ********)
+(* Vector form of forward lemmas involving same top term structure **********)
 
 (* Basic_1: was just: nf2_iso_appls_lref *)
 lemma cpxs_fwd_cnx_vector: ∀h,g,G,L,T.  𝐒⦃T⦄ → ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃T⦄ →
@@ -26,13 +26,13 @@ lemma cpxs_fwd_cnx_vector: ∀h,g,G,L,T.  𝐒⦃T⦄ → ⦃G, L⦄ ⊢ ➡[h, 
 #h #g #G #L #T #H1T #H2T #Vs elim Vs -Vs [ @(cpxs_fwd_cnx … H2T) ] (**) (* /2 width=3 by cpxs_fwd_cnx/ does not work *)
 #V #Vs #IHVs #U #H
 elim (cpxs_inv_appl1 … H) -H *
-[ -IHVs #V0 #T0 #_ #_ #H destruct /2 width=1 by tstc_pair/
+[ -IHVs #V0 #T0 #_ #_ #H destruct /2 width=1 by tsts_pair/
 | #a #W0 #T0 #HT0 #HU
   lapply (IHVs … HT0) -IHVs -HT0 #HT0
-  elim (tstc_inv_bind_applv_simple … HT0) //
+  elim (tsts_inv_bind_applv_simple … HT0) //
 | #a #V1 #V2 #V0 #T0 #HV1 #HV12 #HT0 #HU
   lapply (IHVs … HT0) -IHVs -HT0 #HT0
-  elim (tstc_inv_bind_applv_simple … HT0) //
+  elim (tsts_inv_bind_applv_simple … HT0) //
 ]
 qed-.
 
@@ -41,17 +41,17 @@ lemma cpxs_fwd_sort_vector: ∀h,g,G,L,k,Vs,U. ⦃G, L⦄ ⊢ ⒶVs.⋆k ➡*[h,
 #h #g #G #L #k #Vs elim Vs -Vs /2 width=1 by cpxs_fwd_sort/
 #V #Vs #IHVs #U #H
 elim (cpxs_inv_appl1 … H) -H *
-[ -IHVs #V1 #T1 #_ #_ #H destruct /2 width=1 by tstc_pair, or_introl/
+[ -IHVs #V1 #T1 #_ #_ #H destruct /2 width=1 by tsts_pair, or_introl/
 | #a #W1 #T1 #HT1 #HU
   elim (IHVs … HT1) -IHVs -HT1 #HT1
-  [ elim (tstc_inv_bind_applv_simple … HT1) //
+  [ elim (tsts_inv_bind_applv_simple … HT1) //
   | @or_intror (**) (* explicit constructor *)
     @(cpxs_trans … HU) -U
     @(cpxs_strap1 … (ⓐV.ⓛ{a}W1.T1)) /3 width=1 by cpxs_flat_dx, cpr_cpx, cpr_beta/
   ]
 | #a #V1 #V2 #V3 #T1 #HV01 #HV12 #HT1 #HU
   elim (IHVs … HT1) -IHVs -HT1 #HT1
-  [ elim (tstc_inv_bind_applv_simple … HT1) //
+  [ elim (tsts_inv_bind_applv_simple … HT1) //
   | @or_intror (**) (* explicit constructor *)
     @(cpxs_trans … HU) -U
     @(cpxs_strap1 … (ⓐV1.ⓓ{a}V3.T1)) /3 width=3 by cpxs_flat, cpr_cpx, cpr_theta/
@@ -66,17 +66,17 @@ lemma cpxs_fwd_beta_vector: ∀h,g,a,G,L,Vs,V,W,T,U. ⦃G, L⦄ ⊢ ⒶVs.ⓐV.�
 #h #g #a #G #L #Vs elim Vs -Vs /2 width=1 by cpxs_fwd_beta/
 #V0 #Vs #IHVs #V #W #T #U #H
 elim (cpxs_inv_appl1 … H) -H *
-[ -IHVs #V1 #T1 #_ #_ #H destruct /2 width=1 by tstc_pair, or_introl/
+[ -IHVs #V1 #T1 #_ #_ #H destruct /2 width=1 by tsts_pair, or_introl/
 | #b #W1 #T1 #HT1 #HU
   elim (IHVs … HT1) -IHVs -HT1 #HT1
-  [ elim (tstc_inv_bind_applv_simple … HT1) //
+  [ elim (tsts_inv_bind_applv_simple … HT1) //
   | @or_intror (**) (* explicit constructor *)
     @(cpxs_trans … HU) -U
     @(cpxs_strap1 … (ⓐV0.ⓛ{b}W1.T1)) /3 width=1 by cpxs_flat_dx, cpr_cpx, cpr_beta/
   ]
 | #b #V1 #V2 #V3 #T1 #HV01 #HV12 #HT1 #HU
   elim (IHVs … HT1) -IHVs -HT1 #HT1
-  [ elim (tstc_inv_bind_applv_simple … HT1) //
+  [ elim (tsts_inv_bind_applv_simple … HT1) //
   | @or_intror (**) (* explicit constructor *)
     @(cpxs_trans … HU) -U
     @(cpxs_strap1 … (ⓐV1.ⓓ{b}V3.T1)) /3 width=3 by cpxs_flat, cpr_cpx, cpr_theta/
@@ -91,17 +91,17 @@ lemma cpxs_fwd_delta_vector: ∀h,g,I,G,L,K,V1,i. ⇩[i] L ≡ K.ⓑ{I}V1 →
 #h #g #I #G #L #K #V1 #i #HLK #V2 #HV12 #Vs elim Vs -Vs /2 width=5 by cpxs_fwd_delta/
 #V #Vs #IHVs #U #H -K -V1
 elim (cpxs_inv_appl1 … H) -H *
-[ -IHVs #V0 #T0 #_ #_ #H destruct /2 width=1 by tstc_pair, or_introl/
+[ -IHVs #V0 #T0 #_ #_ #H destruct /2 width=1 by tsts_pair, or_introl/
 | #b #W0 #T0 #HT0 #HU
   elim (IHVs … HT0) -IHVs -HT0 #HT0
-  [ elim (tstc_inv_bind_applv_simple … HT0) //
+  [ elim (tsts_inv_bind_applv_simple … HT0) //
   | @or_intror -i (**) (* explicit constructor *)
     @(cpxs_trans … HU) -U
     @(cpxs_strap1 … (ⓐV.ⓛ{b}W0.T0)) /3 width=1 by cpxs_flat_dx, cpr_cpx, cpr_beta/
   ]
 | #b #V0 #V1 #V3 #T0 #HV0 #HV01 #HT0 #HU
   elim (IHVs … HT0) -IHVs -HT0 #HT0
-  [ elim (tstc_inv_bind_applv_simple … HT0) //
+  [ elim (tsts_inv_bind_applv_simple … HT0) //
   | @or_intror -i (**) (* explicit constructor *)
     @(cpxs_trans … HU) -U
     @(cpxs_strap1 … (ⓐV0.ⓓ{b}V3.T0)) /3 width=3 by cpxs_flat, cpr_cpx, cpr_theta/
@@ -121,11 +121,11 @@ generalize in match V1a; -V1a
 elim HV12s -V1s -V2s /2 width=1 by cpxs_fwd_theta/
 #V1s #V2s #V1b #V2b #HV12b #_ #IHV12s #V1a #V2a #HV12a #V #T #U #H
 elim (cpxs_inv_appl1 … H) -H *
-[ -IHV12s -HV12a -HV12b #V0 #T0 #_ #_ #H destruct /2 width=1 by tstc_pair, or_introl/
+[ -IHV12s -HV12a -HV12b #V0 #T0 #_ #_ #H destruct /2 width=1 by tsts_pair, or_introl/
 | #b #W0 #T0 #HT0 #HU
   elim (IHV12s … HV12b … HT0) -IHV12s -HT0 #HT0
   [ -HV12a -HV12b -HU
-    elim (tstc_inv_pair1 … HT0) #V1 #T1 #H destruct
+    elim (tsts_inv_pair1 … HT0) #V1 #T1 #H destruct
   | @or_intror -V1s (**) (* explicit constructor *)
     @(cpxs_trans … HU) -U
     elim (cpxs_inv_abbr1 … HT0) -HT0 *
@@ -140,7 +140,7 @@ elim (cpxs_inv_appl1 … H) -H *
 | #b #V0a #Va #V0 #T0 #HV10a #HV0a #HT0 #HU
   elim (IHV12s … HV12b … HT0) -HV12b -IHV12s -HT0 #HT0
   [ -HV12a -HV10a -HV0a -HU
-    elim (tstc_inv_pair1 … HT0) #V1 #T1 #H destruct
+    elim (tsts_inv_pair1 … HT0) #V1 #T1 #H destruct
   | @or_intror -V1s -V1b (**) (* explicit constructor *)
     @(cpxs_trans … HU) -U
     elim (cpxs_inv_abbr1 … HT0) -HT0 *
@@ -166,9 +166,9 @@ lemma cpxs_fwd_cast_vector: ∀h,g,G,L,Vs,W,T,U. ⦃G, L⦄ ⊢ ⒶVs.ⓝW.T ➡
 #h #g #G #L #Vs elim Vs -Vs /2 width=1 by cpxs_fwd_cast/
 #V #Vs #IHVs #W #T #U #H
 elim (cpxs_inv_appl1 … H) -H *
-[ -IHVs #V0 #T0 #_ #_ #H destruct /2 width=1 by tstc_pair, or3_intro0/
+[ -IHVs #V0 #T0 #_ #_ #H destruct /2 width=1 by tsts_pair, or3_intro0/
 | #b #W0 #T0 #HT0 #HU elim (IHVs … HT0) -IHVs -HT0 #HT0
-  [ elim (tstc_inv_bind_applv_simple … HT0) //
+  [ elim (tsts_inv_bind_applv_simple … HT0) //
   | @or3_intro1 -W (**) (* explicit constructor *)
     @(cpxs_trans … HU) -U
     @(cpxs_strap1 … (ⓐV.ⓛ{b}W0.T0)) /2 width=1 by cpxs_flat_dx, cpx_beta/
@@ -178,7 +178,7 @@ elim (cpxs_inv_appl1 … H) -H *
   ]
 | #b #V0 #V1 #V2 #T0 #HV0 #HV01 #HT0 #HU
   elim (IHVs … HT0) -IHVs -HT0 #HT0
-  [ elim (tstc_inv_bind_applv_simple … HT0) //
+  [ elim (tsts_inv_bind_applv_simple … HT0) //
   | @or3_intro1 -W (**) (* explicit constructor *)
     @(cpxs_trans … HU) -U
     @(cpxs_strap1 … (ⓐV0.ⓓ{b}V2.T0)) /2 width=3 by cpxs_flat, cpx_theta/

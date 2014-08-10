@@ -15,7 +15,7 @@
 include "basic_2/grammar/genv.ma".
 include "basic_2/multiple/drops.ma".
 
-(* ABSTRACT COMPUTATION PROPERTIES ******************************************)
+(* GENERIC COMPUTATION PROPERTIES *******************************************)
 
 definition candidate: Type[0] ≝ relation3 genv lenv term.
 
@@ -34,8 +34,8 @@ definition CP1 ≝ λRR:relation4 genv lenv term term. λRS:relation term.
 definition CP2 ≝ λRP:candidate.
                  ∀G,L,T,k. RP G L (ⓐ⋆k.T) → RP G L T.
 
-(* requirements for abstract computation properties *)
-record acp (RR:relation4 genv lenv term term) (RS:relation term) (RP:candidate) : Prop ≝
+(* requirements for generic computation properties *)
+record gcp (RR:relation4 genv lenv term term) (RS:relation term) (RP:candidate) : Prop ≝
 { cp0: CP0 RR RS;
   cp1: CP1 RR RS;
   cp2: CP2 RP
@@ -44,7 +44,7 @@ record acp (RR:relation4 genv lenv term term) (RS:relation term) (RP:candidate) 
 (* Basic properties *********************************************************)
 
 (* Basic_1: was: nf2_lift1 *)
-lemma acp_lifts: ∀RR,RS. CP0 RR RS → CP0s RR RS.
+lemma gcp_lifts: ∀RR,RS. CP0 RR RS → CP0s RR RS.
 #RR #RS #HRR #G #L1 #L2 #s #des #H elim H -L1 -L2 -des
 [ #L #T1 #T2 #H #HT1
   <(lifts_inv_nil … H) -H //

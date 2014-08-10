@@ -27,10 +27,14 @@
          pp. 53-78].
    </body>
    <table name="basic_2_sum"/>
+
+   <subsection>Stage "B"</subsection>
    <news date="In progress.">
          Context-sensitive subject equivalence
          for native type assignment.
    </news>
+
+   <subsection>Stage "A": "Weakening the Applicability Condition"</subsection>
    <news date="2014 June 18.">
          Preservation of stratified native validity
          for context-sensitive computation on terms.

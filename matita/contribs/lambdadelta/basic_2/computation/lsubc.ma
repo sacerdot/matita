@@ -13,10 +13,11 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/lrsubeqc_4.ma".
+include "basic_2/static/lsubr.ma".
 include "basic_2/static/aaa.ma".
-include "basic_2/computation/acp_cr.ma".
+include "basic_2/computation/gcp_cr.ma".
 
-(* LOCAL ENVIRONMENT REFINEMENT FOR ABSTRACT CANDIDATES OF REDUCIBILITY *****)
+(* LOCAL ENVIRONMENT REFINEMENT FOR GENERIC REDUCIBILITY ********************)
 
 inductive lsubc (RP) (G): relation lenv ≝
 | lsubc_atom: lsubc RP G (⋆) (⋆)
@@ -26,7 +27,7 @@ inductive lsubc (RP) (G): relation lenv ≝
 .
 
 interpretation
-  "local environment refinement (abstract candidates of reducibility)"
+  "local environment refinement (generic reducibility)"
   'LRSubEqC RP G L1 L2 = (lsubc RP G L1 L2).
 
 (* Basic inversion lemmas ***************************************************)
@@ -94,6 +95,12 @@ lemma lsubc_inv_pair2: ∀RP,I,G,L1,K2,W. G ⊢ L1 ⫃[RP] K2.ⓑ{I} W →
                                  G ⊢ K1 ⫃[RP] K2 &
                                  L1 = K1.ⓓⓝW.V & I = Abst.
 /2 width=3 by lsubc_inv_pair2_aux/ qed-.
+
+(* Basic forward lemmas *****************************************************)
+
+lemma lsubc_fwd_lsubr: ∀RP,G,L1,L2. G ⊢ L1 ⫃[RP] L2 → L1 ⫃ L2.
+#RP #G #L1 #L2 #H elim H -L1 -L2 /2 width=1 by lsubr_pair, lsubr_beta/
+qed-.
 
 (* Basic properties *********************************************************)
 

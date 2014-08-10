@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/tstc_tstc.ma".
+include "basic_2/grammar/tsts_tsts.ma".
 include "basic_2/computation/cpxs_cpxs.ma".
 include "basic_2/computation/csx_alt.ma".
 include "basic_2/computation/csx_lift.ma".
@@ -118,7 +118,7 @@ lemma csx_appl_theta: ∀h,g,a,V1,V2. ⇧[0, 1] V1 ≡ V2 →
 /2 width=5 by csx_appl_theta_aux/ qed.
 
 (* Basic_1: was just: sn3_appl_appl *)
-lemma csx_appl_simple_tstc: ∀h,g,G,L,V. ⦃G, L⦄ ⊢ ⬊*[h, g] V → ∀T1. ⦃G, L⦄ ⊢ ⬊*[h, g] T1 →
+lemma csx_appl_simple_tsts: ∀h,g,G,L,V. ⦃G, L⦄ ⊢ ⬊*[h, g] V → ∀T1. ⦃G, L⦄ ⊢ ⬊*[h, g] T1 →
                             (∀T2. ⦃G, L⦄ ⊢ T1 ➡*[h, g] T2 → (T1 ≂ T2 → ⊥) → ⦃G, L⦄ ⊢ ⬊*[h, g] ⓐV.T2) →
                             𝐒⦃T1⦄ → ⦃G, L⦄ ⊢ ⬊*[h, g] ⓐV.T1.
 #h #g #G #L #V #H @(csx_ind … H) -V #V #_ #IHV #T1 #H @(csx_ind … H) -T1 #T1 #H1T1 #IHT1 #H2T1 #H3T1
@@ -130,8 +130,8 @@ elim (eq_false_inv_tpair_sn … H) -H
   @(csx_cpx_trans … (ⓐV0.T1)) /2 width=1 by cpx_flat/ -HLT10
   @IHV -IHV /4 width=3 by csx_cpx_trans, cpx_pair_sn/
 | -IHV -H1T1 -HLV0 * #H #H1T10 destruct
-  elim (tstc_dec T1 T0) #H2T10
-  [ @IHT1 -IHT1 /4 width=3 by cpxs_strap2, cpxs_strap1, tstc_canc_sn, simple_tstc_repl_dx/
+  elim (tsts_dec T1 T0) #H2T10
+  [ @IHT1 -IHT1 /4 width=3 by cpxs_strap2, cpxs_strap1, tsts_canc_sn, simple_tsts_repl_dx/
   | -IHT1 -H3T1 -H1T10 /3 width=1 by cpx_cpxs/
   ]
 ]

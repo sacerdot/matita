@@ -94,7 +94,7 @@ table {
         [ { "strongly normalizing extended computation" * } {
              [ "lcosx ( ? ⊢ ~⬊*[?,?,?] ? )" "lcosx_cpx" * ]
              [ "lsx ( ? ⊢ ⬊*[?,?,?,?] ? )" "lsx_alt ( ? ⊢ ⬊⬊*[?,?,?,?] ? )" "lsx_drop" + "lsx_lpx" + "lsx_lpxs" + "llsx_csx" * ]
-             [ "csx_vector ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csx_tstc_vector" + "csx_aaa" * ]
+             [ "csx_vector ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csx_tsts_vector" + "csx_aaa" * ]
              [ "csx ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csx_alt ( ⦃?,?⦄ ⊢ ⬊⬊*[?,?] ? )" "csx_lift" + "csx_lleq" + "csx_lpx" + "csx_lpxs" + "csx_fpbs" * ]
           }
         ]
@@ -111,7 +111,7 @@ table {
         ]
         [ { "context-sensitive extended computation" * } {
              [ "lpxs ( ⦃?,?⦄ ⊢ ➡*[?,?] ? )" "lpxs_drop" + "lpxs_lleq" + "lpxs_aaa" + "lpxs_cpxs" + "lpxs_lpxs" * ]
-             [ "cpxs ( ⦃?,?⦄ ⊢ ? ➡*[?,?] ? )" "cpxs_tstc" + "cpxs_tstc_vector" + "cpxs_leq" + "cpxs_lift" + "cpxs_lleq" + "cpxs_aaa" + "cpxs_cpxs" * ]
+             [ "cpxs ( ⦃?,?⦄ ⊢ ? ➡*[?,?] ? )" "cpxs_tsts" + "cpxs_tsts_vector" + "cpxs_leq" + "cpxs_lift" + "cpxs_lleq" + "cpxs_aaa" + "cpxs_cpxs" * ]
           }
         ]
         [ { "context-sensitive computation" * } {
@@ -119,12 +119,12 @@ table {
              [ "cprs ( ⦃?,?⦄ ⊢ ? ➡* ?)" "cprs_lift" + "cprs_cprs" * ]
           }
         ]
-        [ { "local env. ref. for abstract candidates of reducibility" * } {
+        [ { "local env. ref. for generic reducibility" * } {
              [ "lsubc ( ? ⊢ ? ⫃[?] ? )" "lsubc_drop" + "lsubc_drops" + "lsubc_lsuba" * ]
           }
         ]
-        [ { "support for abstract computation properties" * } {
-             [ "acp" "acp_cr ( ⦃?,?,?⦄ ϵ[?] 〚?〛 )" "acp_aaa" * ]
+        [ { "support for generic computation properties" * } {
+             [ "gcp" "gcp_cr ( ⦃?,?,?⦄ ϵ[?] 〚?〛 )" "gcp_aaa" * ]
           }
         ]
      }
@@ -252,8 +252,8 @@ table {
              [ "lifts ( ⇧*[?] ? ≡ ? )" "lifts_lift" + "lifts_lifts" * ]
           }
         ]
-        [ { "support for generic relocation" * } {
-             [ "gr2 ( @⦃?,?⦄ ≡ ? )" "gr2_plus ( ? + ? )" "gr2_minus ( ? ▭ ? ≡ ? )" "gr2_gr2" * ]
+        [ { "support for multiple relocation" * } {
+             [ "mr2 ( @⦃?,?⦄ ≡ ? )" "mr2_plus ( ? + ? )" "mr2_minus ( ? ▭ ? ≡ ? )" "mr2_mr2" * ]
           }
         ]
      }
@@ -298,8 +298,8 @@ table {
              [ "leq ( ? ⩬[?,?] ? )" "leq_leq" * ]
           }
         ]
-        [ { "same top term constructor" * } {
-             [ "tstc ( ? ≂ ? )" "tstc_tstc" + "tstc_vector" * ]
+        [ { "same top term structure" * } {
+             [ "tsts ( ? ≂ ? )" "tsts_tsts" + "tsts_vector" * ]
           }
         ]
         [ { "closures" * } {

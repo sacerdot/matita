@@ -15,7 +15,7 @@
 include "basic_2/notation/relations/rat_3.ma".
 include "basic_2/grammar/term_vector.ma".
 
-(* GENERIC RELOCATION WITH PAIRS ********************************************)
+(* MULTIPLE RELOCATION WITH PAIRS *******************************************)
 
 inductive at: list2 nat nat → relation nat ≝
 | at_nil: ∀i. at (⟠) i i
@@ -25,7 +25,7 @@ inductive at: list2 nat nat → relation nat ≝
           at des (i1 + e) i2 → at ({d, e} @ des) i1 i2
 .
 
-interpretation "application (generic relocation with pairs)"
+interpretation "application (multiple relocation with pairs)"
    'RAt i1 des i2 = (at des i1 i2).
 
 (* Basic inversion lemmas ***************************************************)
