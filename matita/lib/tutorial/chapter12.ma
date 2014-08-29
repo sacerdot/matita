@@ -631,6 +631,15 @@ theorem div_trace_to_diverging_trace':
  | #n #s #EQ destruct lapply (div_well_formed d n) /2 by div_well_formed, next_step/ ]
 qed.
 
+(* AGGIUNGERE SPIEGAZIONE SU PRODUTTIVITA' *)
+
+(* AGGIUNGERE SPIEGAZIONE SU CONFRONTO VALORI COINDUTTIVI *)
+
+(* AGGIUNGERE CONFRONTO CON TEORIA DELLE CATEGORIE *)
+
+(* AGGIUNGERE ESEMPI DI SEMANTICA OPERAZIONE BIG STEP PER LA DIVERGENZA;
+   DI PROPRIETA' DI SAFETY;
+   DI TOPOLOGIE COINDUTTIVAMENTE GENERATE? *)
 
 (* ################## COME SPIEGARLO QUI? ####################### *)
 
