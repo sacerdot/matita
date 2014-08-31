@@ -12,20 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/aaa_lift.ma".
-include "basic_2/static/da.ma".
+include "basic_2/static/sta_aaa.ma".
+include "basic_2/unfold/lstas.ma".
 
-(* DEGREE ASSIGNMENT FOR TERMS **********************************************)
+(* NAT-ITERATED STATIC TYPE ASSIGNMENT FOR TERMS ****************************)
 
 (* Properties on atomic arity assignment for terms **************************)
 
-lemma aaa_da: ∀h,g,G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ∃l. ⦃G, L⦄ ⊢ T ▪[h, g] l.
-#h #g #G #L #T #A #H elim H -G -L -T -A
-[ #G #L #k elim (deg_total h g k) /3 width=2 by da_sort, ex_intro/
-| * #G #L #K #V #B #i #HLK #_ * /3 width=5 by da_ldef, da_ldec, ex_intro/
-| #a #G #L #V #T #B #A #_ #_ #_ * /3 width=2 by da_bind, ex_intro/
-| #a #G #L #V #T #B #A #_ #_ #_ * /3 width=2 by da_bind, ex_intro/
-| #G #L #V #T #B #A #_ #_ #_ * /3 width=2 by da_flat, ex_intro/
-| #G #L #W #T #A #_ #_ #_ * /3 width=2 by da_flat, ex_intro/
-]
-qed-.
+lemma lstas_aaa_conf: ∀h,G,L,l. Conf3 … (aaa G L) (lstas h G L l).
+/3 width=6 by sta_aaa_conf, lstar_Conf3/ qed-.

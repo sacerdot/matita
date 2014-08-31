@@ -12,20 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/aaa_lift.ma".
-include "basic_2/static/da.ma".
+include "basic_2/static/da_sta.ma".
+include "basic_2/static/sta_aaa.ma".
 
 (* DEGREE ASSIGNMENT FOR TERMS **********************************************)
 
 (* Properties on atomic arity assignment for terms **************************)
 
 lemma aaa_da: ∀h,g,G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ∃l. ⦃G, L⦄ ⊢ T ▪[h, g] l.
-#h #g #G #L #T #A #H elim H -G -L -T -A
-[ #G #L #k elim (deg_total h g k) /3 width=2 by da_sort, ex_intro/
-| * #G #L #K #V #B #i #HLK #_ * /3 width=5 by da_ldef, da_ldec, ex_intro/
-| #a #G #L #V #T #B #A #_ #_ #_ * /3 width=2 by da_bind, ex_intro/
-| #a #G #L #V #T #B #A #_ #_ #_ * /3 width=2 by da_bind, ex_intro/
-| #G #L #V #T #B #A #_ #_ #_ * /3 width=2 by da_flat, ex_intro/
-| #G #L #W #T #A #_ #_ #_ * /3 width=2 by da_flat, ex_intro/
-]
+#h #g #G #L #T #A #H elim (aaa_sta h … H) -A /2 width=2 by sta_da/
 qed-.
