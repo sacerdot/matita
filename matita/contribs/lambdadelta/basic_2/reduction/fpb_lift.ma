@@ -20,6 +20,6 @@ include "basic_2/reduction/fpb.ma".
 (* Advanced properties ******************************************************)
 
 lemma sta_fpb: ∀h,g,G,L,T1,T2,l.
-                ⦃G, L⦄ ⊢ T1 ▪[h, g] l+1 → ⦃G, L⦄ ⊢ T1 •[h] T2 →
+                ⦃G, L⦄ ⊢ T1 ▪[h, g] l+1 → ⦃G, L⦄ ⊢ T1 •*[h, 1] T2 →
                 ⦃G, L, T1⦄ ≽[h, g] ⦃G, L, T2⦄.
 /3 width=4 by fpb_cpx, sta_cpx/ qed.

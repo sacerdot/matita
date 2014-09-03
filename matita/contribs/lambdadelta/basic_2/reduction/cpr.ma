@@ -15,6 +15,7 @@
 include "basic_2/notation/relations/pred_4.ma".
 include "basic_2/grammar/genv.ma".
 include "basic_2/static/lsubr.ma".
+include "basic_2/unfold/lstas.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL REDUCTION FOR TERMS ***************************)
 
@@ -92,6 +93,20 @@ lemma cpr_delift: ∀G,K,V,T1,L,d. ⇩[d] L ≡ (K.ⓓV) →
   ]
 ]
 qed-.
+
+fact lstas_cpr_aux: ∀h,G,L,T1,T2,l. ⦃G, L⦄ ⊢ T1 •*[h, l] T2 →
+                    l = 0 → ⦃G, L⦄ ⊢ T1 ➡ T2.
+#h #G #L #T1 #T2 #l #H elim H -G -L -T1 -T2 -l
+/3 width=1 by cpr_eps, cpr_flat, cpr_bind/
+[ #G #L #l #k #H0 destruct normalize //
+| #G #L #K #V1 #V2 #W2 #i #l #HLK #_ #HVW2 #IHV12 #H destruct
+  /3 width=6 by cpr_delta/
+| #G #L #K #V1 #V2 #W2 #i #l #_ #_ #_ #_ <plus_n_Sm #H destruct
+]
+qed-.
+
+lemma lstas_cpr: ∀h,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 •*[h, 0] T2 → ⦃G, L⦄ ⊢ T1 ➡ T2.
+/2 width=4 by lstas_cpr_aux/ qed.
 
 (* Basic inversion lemmas ***************************************************)
 

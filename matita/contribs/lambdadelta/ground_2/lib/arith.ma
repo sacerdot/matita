@@ -111,6 +111,9 @@ qed.
 
 (* Inversion & forward lemmas ***********************************************)
 
+lemma discr_plus_xy_y: ∀x,y. x + y = y → x = 0.
+// qed-.
+
 lemma lt_plus_SO_to_le: ∀x,y. x < y + 1 → x ≤ y.
 /2 width=1 by monotonic_pred/ qed-.
 
@@ -148,6 +151,10 @@ lemma discr_x_minus_xy: ∀x,y. x = x - y → x = 0 ∨ y = 0.
 #y #_ >minus_plus_plus_l
 #H lapply (discr_plus_xy_minus_xz … H) -H
 #H destruct
+qed-.
+
+lemma zero_eq_plus: ∀x,y. 0 = x + y → 0 = x ∧ 0 = y.
+* /2 width=1 by conj/ #x #y normalize #H destruct
 qed-.
 
 (* Iterators ****************************************************************)

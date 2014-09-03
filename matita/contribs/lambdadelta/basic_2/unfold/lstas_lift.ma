@@ -115,10 +115,6 @@ qed-.
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma zero_eq_plus: ∀x,y. 0 = x + y → 0 = x ∧ 0 = y.
-* /2 width=1 by conj/ #x #y normalize #H destruct
-qed-.
-
 lemma lstas_split_aux: ∀h,G,L,T1,T2,l. ⦃G, L⦄ ⊢ T1 •*[h, l] T2 → ∀l1,l2. l = l1 + l2 →
                        ∃∃T. ⦃G, L⦄ ⊢ T1 •*[h, l1] T & ⦃G, L⦄ ⊢ T •*[h, l2] T2.
 #h #G #L #T1 #T2 #l #H elim H -G -L -T1 -T2 -l
