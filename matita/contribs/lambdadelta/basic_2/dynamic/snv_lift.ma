@@ -45,7 +45,7 @@ lemma snv_lift: ∀h,g,G,K,T. ⦃G, K⦄ ⊢ T ¡[h, g] → ∀L,s,d,e. ⇩[s, d
 | #G #K #V #T #U0 #_ #_ #HVU0 #HTU0 #IHV #IHT #L #s #d #e #HLK #X #H
   elim (lift_inv_flat1 … H) -H #W #U #HVW #HTU #H destruct
   elim (lift_total U0 d e)
-  /3 width=12 by snv_cast, cprs_lift, scpds_lift/
+  /3 width=12 by snv_cast, scpds_lift/
 ]
 qed.
 
@@ -73,7 +73,7 @@ lemma snv_inv_lift: ∀h,g,G,L,U. ⦃G, L⦄ ⊢ U ¡[h, g] → ∀K,s,d,e. ⇩[
   /3 width=6 by snv_appl/
 | #G #L #W #U #U1 #_ #_ #HWU1 #HU1 #IHW #IHU #K #s #d #e #HLK #X #H
   elim (lift_inv_flat2 … H) -H #V #T #HVW #HTU #H destruct
-  elim (cprs_inv_lift1 … HWU1 … HLK … HVW) -HWU1 #U0 #HU01 #HVU0
+  elim (scpds_inv_lift1 … HWU1 … HLK … HVW) -HWU1 #U0 #HU01 #HVU0
   elim (scpds_inv_lift1 … HU1 … HLK … HTU) -HU1 #X #HX #HTU0 
   lapply (lift_inj … HX … HU01) -HX #H destruct
   /3 width=5 by snv_cast/

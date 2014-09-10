@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unfold/lstas_lstas.ma".
+include "basic_2/unfold/lstas_da.ma".
 include "basic_2/computation/lprs_cprs.ma".
 include "basic_2/computation/cpxs_cpxs.ma".
 include "basic_2/computation/scpds.ma".
@@ -22,13 +22,14 @@ include "basic_2/computation/scpds.ma".
 (* Advanced properties ******************************************************)
 
 lemma scpds_strap2: ∀h,g,G,L,T1,T,T2,l1,l. ⦃G, L⦄ ⊢ T1 ▪[h, g] l1+1 →
-                    ⦃G, L⦄ ⊢ T1 •[h] T → ⦃G, L⦄ ⊢ T •*➡*[h, g, l] T2 →
+                    ⦃G, L⦄ ⊢ T1 •*[h, 1] T → ⦃G, L⦄ ⊢ T •*➡*[h, g, l] T2 →
                     ⦃G, L⦄ ⊢ T1 •*➡*[h, g, l+1] T2.
 #h #g #G #L #T1 #T #T2 #l1 #l #Hl1 #HT1 *
 #T0 #l0 #Hl0 #HTl0 #HT0 #HT02
-lapply (da_sta_conf … HT1 … Hl1) <minus_plus_m_m #HTl1
+lapply (lstas_da_conf … HT1 … Hl1) <minus_plus_m_m #HTl1
 lapply (da_mono … HTl0 … HTl1) -HTl0 -HTl1 #H destruct
-/3 width=6 by lstas_step_sn, le_S_S, ex4_2_intro/
+lapply (lstas_trans … HT1 … HT0) -T >commutative_plus
+/3 width=6 by le_S_S, ex4_2_intro/
 qed.
 
 lemma scpds_cprs_trans: ∀h,g,G,L,T1,T,T2,l.

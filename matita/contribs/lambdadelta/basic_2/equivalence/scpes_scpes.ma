@@ -31,8 +31,8 @@ qed-.
 lemma scpes_refl: ∀h,g,G,L,T,l1,l2. l2 ≤ l1 → ⦃G, L⦄ ⊢ T ▪[h, g] l1 →
                   ⦃G, L⦄ ⊢ T •*⬌*[h, g, l2, l2] T.
 #h #g #G #L #T #l1 #l2 #Hl21 #Hl1
-elim (da_inv_sta … Hl1) #U #HTU
-elim (lstas_total … HTU l2) -U /3 width=3 by scpds_div, lstas_scpds/
+elim (da_lstas … Hl1 … l2) #U #HTU #_
+/3 width=3 by scpds_div, lstas_scpds/
 qed.
 
 lemma lstas_scpes_trans: ∀h,g,G,L,T1,l0,l1. ⦃G, L⦄ ⊢ T1 ▪[h, g] l0 → l1 ≤ l0 →
@@ -40,6 +40,17 @@ lemma lstas_scpes_trans: ∀h,g,G,L,T1,l0,l1. ⦃G, L⦄ ⊢ T1 ▪[h, g] l0 →
                          ∀T2,l,l2. ⦃G, L⦄ ⊢ T •*⬌*[h,g,l,l2] T2 → ⦃G, L⦄ ⊢ T1 •*⬌*[h,g,l1+l,l2] T2.
 #h #g #G #L #T1 #l0 #l1 #Hl0 #Hl10 #T #HT1 #T2 #l #l2 *
 /3 width=3 by scpds_div, lstas_scpds_trans/ qed-.
+
+(* Properties on parallel computation for terms *****************************)
+
+lemma cprs_scpds_div: ∀h,g,G,L,T1,T. ⦃G, L⦄ ⊢ T1 ➡* T →
+                      ∀l. ⦃G, L⦄ ⊢ T1 ▪[h, g] l →
+                      ∀T2,l2. ⦃G, L⦄ ⊢ T2 •*➡*[h, g, l2] T →
+                      ⦃G, L⦄⊢ T1 •*⬌*[h, g, 0, l2] T2.
+#h #g #G #L #T1 #T #HT1 #l #Hl elim (da_lstas … Hl 0)
+#X1 #HTX1 #_ elim (cprs_strip … HT1 X1) -HT1
+/3 width=5 by scpds_strap1, scpds_div, lstas_cpr, ex4_2_intro/
+qed.
 
 (* Main properties **********************************************************)
 

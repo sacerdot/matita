@@ -13,7 +13,6 @@
 (**************************************************************************)
 
 include "basic_2/static/da_aaa.ma".
-include "basic_2/unfold/lstas_lift.ma".
 include "basic_2/computation/csx_aaa.ma".
 include "basic_2/computation/scpds_aaa.ma".
 include "basic_2/dynamic/snv.ma".
@@ -33,7 +32,7 @@ lemma snv_fwd_aaa: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ T ¡[h, g] → ∃A. ⦃G, L⦄ 
   elim (aaa_inv_abst … H) -H #B0 #A #H1 #HU #H2 destruct
   lapply (aaa_mono … H1 … HW0) -W0 #H destruct /3 width=4 by aaa_appl, ex_intro/
 | #G #L #U #T #U0 #_ #_ #HU0 #HTU0 * #B #HU * #A #HT
-  lapply (cprs_aaa_conf … HU … HU0) -HU0 #HU0
+  lapply (scpds_aaa_conf … HU … HU0) -HU0 #HU0
   lapply (scpds_aaa_conf … HT … HTU0) -HTU0 #H
   lapply (aaa_mono … H … HU0) -U0 #H destruct /3 width=3 by aaa_cast, ex_intro/
 ]
@@ -49,12 +48,8 @@ lemma snv_fwd_da: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ T ¡[h, g] → ∃l. ⦃G, L⦄ �
 #h #g #G #L #T #H elim (snv_fwd_aaa … H) -H /2 width=2 by aaa_da/
 qed-.
 
-lemma snv_fwd_sta: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ T ¡[h, g] → ∃U. ⦃G, L⦄ ⊢ T •[h] U.
-#h #g #G #L #T #H elim (snv_fwd_aaa … H) -H /2 width=2 by aaa_sta/
-qed-.
-
-lemma snv_lstas_fwd_correct: ∀h,g,G,L,T1,T2,l. ⦃G, L⦄ ⊢ T1 ¡[h, g] → ⦃G, L⦄ ⊢ T1 •* [h, l] T2 →
-                             ∃U2. ⦃G, L⦄ ⊢ T2 •[h] U2.
-#h #g #G #L #T1 #T2 #l #HT1 #HT12
-elim (snv_fwd_sta … HT1) -HT1 /2 width=5 by lstas_fwd_correct/
+lemma snv_fwd_lstas: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ T ¡[h, g] →
+                     ∀l. ∃U. ⦃G, L⦄ ⊢ T •*[h, l] U.
+#h #g #G #L #T #H #l elim (snv_fwd_aaa … H) -H
+#A #HT elim (aaa_lstas h … HT l) -HT /2 width=2 by ex_intro/
 qed-.

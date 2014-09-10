@@ -12,6 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/static/lsubd_da.ma".
+include "basic_2/dynamic/lsubsv_lsubd.ma".
 include "basic_2/dynamic/lsubsv_lstas.ma".
 
 (* LOCAL ENVIRONMENT REFINEMENT FOR STRATIFIED NATIVE VALIDITY **************)

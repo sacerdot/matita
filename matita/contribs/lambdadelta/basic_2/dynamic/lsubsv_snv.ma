@@ -37,7 +37,8 @@ lemma lsubsv_snv_trans: ∀h,g,G,L2,T. ⦃G, L2⦄ ⊢ T ¡[h, g] →
   elim (cprs_conf … HWV0 … HW0) -W0
   /4 width=10 by snv_appl, scpds_cprs_trans, cprs_bind/
 | #G #L2 #U #T #U0 #_ #_ #HU0 #HTU0 #IHU #IHT #L1 #HL12
-  elim (lsubsv_scpds_trans … HTU0 … HL12) -HTU0
-  /4 width=5 by lsubsv_cprs_trans, snv_cast, cprs_trans/
+  elim (lsubsv_scpds_trans … HTU0 … HL12) -HTU0 #X0 #HTX0 #H1
+  elim (lsubsv_scpds_trans … HU0 … HL12) -HU0 #X #HUX #H2
+  elim (cprs_conf … H1 … H2) -U0 /3 width=5 by snv_cast, scpds_cprs_trans/
 ]
 qed-.

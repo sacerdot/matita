@@ -64,6 +64,17 @@ lemma cprs_cpxs: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡* T2 → ⦃G, L⦄ ⊢ 
 #h #g #G #L #T1 #T2 #H @(cprs_ind … H) -T2 /3 width=3 by cpxs_strap1, cpr_cpx/
 qed.
 
+lemma cpxs_sort: ∀h,g,G,L,k,l1. deg h g k l1 →
+                 ∀l2. l2 ≤ l1 → ⦃G, L⦄ ⊢ ⋆k ➡*[h, g] ⋆((next h)^l2 k).
+#h #g #G #L #k #l1 #Hkl1 #l2 @(nat_ind_plus … l2) -l2 /2 width=1 by cpx_cpxs/
+#l2 #IHl2 #Hl21 >iter_SO
+@(cpxs_strap1 … (⋆(iter l2 ℕ (next h) k)))
+[ /3 width=3 by lt_to_le/
+| @(cpx_st … (l1-l2-1)) <plus_minus_m_m
+  /2 width=1 by deg_iter, monotonic_le_minus_r/
+]
+qed.
+
 lemma cpxs_bind_dx: ∀h,g,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡[h, g] V2 →
                     ∀I,T1,T2. ⦃G, L. ⓑ{I}V1⦄ ⊢ T1 ➡*[h, g] T2 →
                     ∀a. ⦃G, L⦄ ⊢ ⓑ{a,I}V1.T1 ➡*[h, g] ⓑ{a,I}V2.T2.

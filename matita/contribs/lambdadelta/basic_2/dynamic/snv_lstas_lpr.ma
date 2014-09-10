@@ -30,32 +30,33 @@ fact lstas_cpr_lpr_aux: ∀h,g,G0,L0,T0.
 [ #k #_ #_ #_ #_ #l1 #l2 #_ #_ #X2 #H2 #X3 #H3 #L2 #_ -IH4 -IH3 -IH2 -IH1
   >(lstas_inv_sort1 … H2) -X2
   >(cpr_inv_sort1 … H3) -X3 /2 width=3 by ex2_intro/
-| #i #HG0 #HL0 #HT0 #H1 #l1 #l2 @(nat_ind_plus … l2) -l2 [ #_ | #l2 #_ #Hl21 ] #Hl1 #X2 #H2 #X3 #H3 #L2 #HL12 destruct -IH4 -IH3
-  [ lapply (lstas_inv_O … H2) -H2 #H destruct -IH1 -H1 -l1 /4 width=5 by lpr_cpcs_conf, cpr_cpcs_dx, ex2_intro/ ]
+| #i #HG0 #HL0 #HT0 #H1 #l1 #l2 #Hl21 #Hl1 #X2 #H2 #X3 #H3 #L2 #HL12 destruct -IH4 -IH3
   elim (snv_inv_lref … H1) -H1 #I0 #K0 #X0 #HK0 #HX0
-  elim (da_inv_lref … Hl1) -Hl1 * #K1 [ #V1 | #W1 #l0 ] #HLK1 [ #HVl1 | #HWl1 #H destruct ]
+  elim (da_inv_lref … Hl1) -Hl1 * #K1 [ #V1 | #W1 #l ] #HLK1 [ #HVl1 | #HWl1 #H destruct ]
   lapply (drop_mono … HK0 … HLK1) -HK0 #H destruct
-  elim (lstas_inv_lref1 … H2) -H2 * #K0 #V0 #W0 [2,4: #X0 ] #HK0 [1,2: #_ -X0 ] #HVW0 #HX2
+  elim (lstas_inv_lref1 … H2) -H2 * #K0 #V0 #X0 [3,6: #l0 ] #HK0 #HVX0 [1,2: #HX02 #H |3,5: #HX02 |4,6: #H1 #H2 ] destruct
   lapply (drop_mono … HK0 … HLK1) -HK0 #H destruct
-  [ lapply (le_plus_to_le_r … Hl21) -Hl21 #Hl21 ]
+  [ lapply (le_plus_to_le_r … Hl21) -Hl21 #Hl21 |3: -Hl21 ]
   lapply (fqup_lref … G1 … HLK1) #HKV1
   elim (lpr_drop_conf … HLK1 … HL12) -HL12 #X #H #HLK2
-  elim (lpr_inv_pair1 … H) -H #K2 [ #W2 | #V2 ] #HK12 [ #HW12 | #HV12 ] #H destruct
+  elim (lpr_inv_pair1 … H) -H #K2 [ #W2 | #W2 | #V2 ] #HK12 [ #HW12 | #HW12 | #HV12 ] #H destruct
   lapply (drop_fwd_drop2 … HLK2) #H2
   elim (cpr_inv_lref1 … H3) -H3
-  [1,3: #H destruct -HLK1
-  |2,4: * #K0 #V0 #X0 #H #HVX0 #HX0
-        lapply (drop_mono … H … HLK1) -H -HLK1 #H destruct
+  [1,3,5: #H destruct -HLK1
+  |2,4,6: * #K #V #X #H #HVX #HX3
+          lapply (drop_mono … H … HLK1) -H -HLK1 #H destruct
   ]
   [ lapply (IH2 … HWl1 … HW12 … HK12) /2 width=1 by fqup_fpbg/ -IH2 #H
-    elim (da_inv_sta … H) -H
-    elim (IH1 … HWl1 … HVW0 … HW12 … HK12) -IH1 -HVW0 /2 width=1 by fqup_fpbg/ #V2 #HWV2 #HV2
+    elim (da_lstas … H l0) -H
+    elim (IH1 … HWl1 … HVX0 … HW12 … HK12) -IH1 -HVX0 /2 width=1 by fqup_fpbg/ #V2 #HWV2 #HV2
     elim (lift_total V2 0 (i+1))
-    /3 width=12 by cpcs_lift, lstas_ldec, ex2_intro/
-  | elim (IH1 … HVl1 … HVW0 … HV12 … HK12) -IH1 -HVl1 -HVW0 -HV12 -HK12 -IH2 /2 width=1 by fqup_fpbg/ #W2 #HVW2 #HW02
+    /3 width=12 by cpcs_lift, lstas_succ, ex2_intro/
+  | elim (IH1 … HWl1 … HVX0 … HW12 … HK12) -IH1 -HVX0
+    /3 width=5 by fqup_fpbg, lstas_zero, ex2_intro/
+  | elim (IH1 … HVl1 … HVX0 … HV12 … HK12) -IH1 -HVl1 -HVX0 -HV12 -HK12 -IH2 /2 width=1 by fqup_fpbg/ #W2 #HVW2 #HW02
     elim (lift_total W2 0 (i+1))
     /4 width=12 by cpcs_lift, lstas_ldef, ex2_intro/
-  | elim (IH1 … HVl1 … HVW0 … HVX0 … HK12) -IH1 -HVl1 -HVW0 -HVX0 -HK12 -IH2 -V2 /2 width=1 by fqup_fpbg/ -l1 #W2 #HXW2 #HW02
+  | elim (IH1 … HVl1 … HVX0 … HVX … HK12) -IH1 -HVl1 -HVX0 -HVX -HK12 -IH2 -V2 /2 width=1 by fqup_fpbg/ -l1 #W2 #HXW2 #HW02
     elim (lift_total W2 0 (i+1))
     /3 width=12 by cpcs_lift, lstas_lift, ex2_intro/
   ]
@@ -88,7 +89,7 @@ fact lstas_cpr_lpr_aux: ∀h,g,G0,L0,T0.
     elim (lstas_inv_bind1 … HT1U) -HT1U #U #HT2U #H destruct
     elim (scpds_inv_abst1 … HTU1) -HTU1 #W0 #U0 #HW20 #_ #H destruct -U0 -l0
     elim (snv_fwd_da … HW2) #l0 #HW2l
-    lapply (scpds_div … W2 … 0 … HVW1) /2 width=3 by cprs_scpds/ -W0 #H21
+    lapply (cprs_scpds_div … HW20 … HW2l … HVW1) -W0 #H21
     elim (snv_fwd_da … HV1) #l #HV1l
     elim (da_scpes_aux … IH4 IH3 IH2 … HW2l … HV1l … H21) /2 width=1 by fqup_fpbg/ #_ #H
     <minus_n_O #H0 destruct >(plus_minus_m_m l 1) in HV1l; // -H #HV1l
@@ -123,8 +124,7 @@ fact lstas_cpr_lpr_aux: ∀h,g,G0,L0,T0.
     lapply (cpcs_cpr_strap1 … HU02 (ⓓ{b}W2.ⓐV2.U2) ?)
     /4 width=3 by lstas_appl, lstas_bind, cpr_theta, ex2_intro/
   ]
-| #W1 #T1 #HG0 #HL0 #HT0 #H1 #l1 #l2 @(nat_ind_plus … l2) -l2 [ #_ | #l2 #_ #Hl21 ] #Hl1 #X2 #H2 #X3 #H3 #L2 #HL12 destruct -IH4 -IH3 -IH2
-  [ lapply (lstas_inv_O … H2) -H2 #H destruct -IH1 -H1 -l1 /4 width=5 by lpr_cpcs_conf, cpr_cpcs_dx, ex2_intro/ ]
+| #W1 #T1 #HG0 #HL0 #HT0 #H1 #l1 #l2 #Hl21 #Hl1 #X2 #H2 #X3 #H3 #L2 #HL12 destruct -IH4 -IH3 -IH2
   elim (snv_inv_cast … H1) -H1 #U1 #_ #HT1 #_ #_ -U1
   lapply (da_inv_flat … Hl1) -Hl1 #Hl1
   lapply (lstas_inv_cast1 … H2) -H2 #HTU1

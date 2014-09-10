@@ -13,7 +13,6 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/pred_4.ma".
-include "basic_2/grammar/genv.ma".
 include "basic_2/static/lsubr.ma".
 include "basic_2/unfold/lstas.ma".
 

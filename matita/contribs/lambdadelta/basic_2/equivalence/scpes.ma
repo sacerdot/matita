@@ -31,10 +31,6 @@ lemma scpds_div: ∀h,g,G,L,T1,T2,T,l1,l2.
                  ⦃G, L⦄ ⊢ T1 •*⬌*[h, g, l1, l2] T2.
 /2 width=3 by ex2_intro/ qed.
 
-lemma scpes_refl_O_O: ∀h,g,G,L,T,l. ⦃G, L⦄ ⊢ T ▪[h, g] l →
-                      ⦃G, L⦄ ⊢ T •*⬌*[h, g, 0, 0] T.
-/3 width=3 by scpds_refl, scpds_div/ qed.
-
 lemma scpes_sym: ∀h,g,G,L,T1,T2,l1,l2. ⦃G, L⦄ ⊢ T1 •*⬌*[h, g, l1, l2] T2 →
                  ⦃G, L⦄ ⊢ T2 •*⬌*[h, g, l2, l1] T1.
 #h #g #G #L #T1 #T2 #L1 #l2 * /2 width=3 by scpds_div/

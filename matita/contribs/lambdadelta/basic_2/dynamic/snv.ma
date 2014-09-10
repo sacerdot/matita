@@ -25,7 +25,7 @@ inductive snv (h) (g): relation3 genv lenv term ≝
 | snv_appl: ∀a,G,L,V,W0,T,U0,l. snv h g G L V → snv h g G L T →
             ⦃G, L⦄ ⊢ V •*➡*[h, g, 1] W0 → ⦃G, L⦄ ⊢ T •*➡*[h, g, l] ⓛ{a}W0.U0 → snv h g G L (ⓐV.T)
 | snv_cast: ∀G,L,U,T,U0. snv h g G L U → snv h g G L T →
-            ⦃G, L⦄ ⊢ U ➡* U0 → ⦃G, L⦄ ⊢ T •*➡*[h, g, 1] U0 → snv h g G L (ⓝU.T)
+            ⦃G, L⦄ ⊢ U •*➡*[h, g, 0] U0 → ⦃G, L⦄ ⊢ T •*➡*[h, g, 1] U0 → snv h g G L (ⓝU.T)
 .
 
 interpretation "stratified native validity (term)"
@@ -95,7 +95,7 @@ lemma snv_inv_appl: ∀h,g,G,L,V,T. ⦃G, L⦄ ⊢ ⓐV.T ¡[h, g] →
 
 fact snv_inv_cast_aux: ∀h,g,G,L,X. ⦃G, L⦄ ⊢ X ¡[h, g] → ∀U,T. X = ⓝU.T →
                        ∃∃U0. ⦃G, L⦄ ⊢ U ¡[h, g] & ⦃G, L⦄ ⊢ T ¡[h, g] &
-                             ⦃G, L⦄ ⊢ U ➡* U0 & ⦃G, L⦄ ⊢ T •*➡*[h, g, 1] U0.
+                             ⦃G, L⦄ ⊢ U •*➡*[h, g, 0] U0 & ⦃G, L⦄ ⊢ T •*➡*[h, g, 1] U0.
 #h #g #G #L #X * -G -L -X
 [ #G #L #k #X1 #X2 #H destruct
 | #I #G #L #K #V #i #_ #_ #X1 #X2 #H destruct
@@ -107,5 +107,5 @@ qed-.
 
 lemma snv_inv_cast: ∀h,g,G,L,U,T. ⦃G, L⦄ ⊢ ⓝU.T ¡[h, g] →
                     ∃∃U0. ⦃G, L⦄ ⊢ U ¡[h, g] & ⦃G, L⦄ ⊢ T ¡[h, g] &
-                          ⦃G, L⦄ ⊢ U ➡* U0 & ⦃G, L⦄ ⊢ T •*➡*[h, g, 1] U0.
+                          ⦃G, L⦄ ⊢ U •*➡*[h, g, 0] U0 & ⦃G, L⦄ ⊢ T •*➡*[h, g, 1] U0.
 /2 width=3 by snv_inv_cast_aux/ qed-.

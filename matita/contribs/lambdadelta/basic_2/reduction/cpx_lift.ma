@@ -32,7 +32,7 @@ fact sta_cpx_aux: ∀h,g,G,L,T1,T2,l2,l1. ⦃G, L⦄ ⊢ T1 •*[h, l2] T2 → l
 | #G #L #K #V1 #V2 #i #_ #_ #_ #H destruct
 | #G #L #K #V1 #V2 #W2 #i #l2 #HLK #HV12 #HVW2 #_ #H0 #H
   lapply (discr_plus_xy_y … H0) -H0 #H0 destruct
-  elim (da_inv_lref … H) -H * #K0 #V0 [| #l1 ] #HLK0
+  elim (da_inv_lref … H) -H * #K0 #V0 [| #l0 ] #HLK0
   lapply (drop_mono … HLK0 … HLK) -HLK0 #H destruct
   /4 width=7 by cpx_delta, cpr_cpx, lstas_cpr/
 | /4 width=2 by cpx_bind, da_inv_bind/

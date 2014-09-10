@@ -43,6 +43,13 @@ lemma shnv_inv_cast: ∀h,g,G,L,U,T,l1. ⦃G, L⦄ ⊢ ⓝU.T ¡[h, g, l1] →
 
 lemma shnv_inv_snv: ∀h,g,G,L,T,l. ⦃G, L⦄ ⊢ T ¡[h, g, l] → ⦃G, L⦄ ⊢ T ¡[h, g].
 #h #g #G #L #T #l * -T
-#U #T #HU #HT #HUT elim (HUT 0) -HUT
-/3 width=3 by snv_cast, scpds_fwd_cprs/
+#U #T #HU #HT #HUT elim (HUT 0) -HUT /2 width=3 by snv_cast/
 qed-.
+
+(* Basic properties *********************************************************)
+
+lemma snv_shnv_cast: ∀h,g,G,L,U,T. ⦃G, L⦄ ⊢ ⓝU.T ¡[h, g] → ⦃G, L⦄ ⊢ ⓝU.T ¡[h, g, 0].
+#h #g #G #L #U #T #H elim (snv_inv_cast … H) -H
+#U0 #HU #HT #HU0 #HTU0 @shnv_cast // -HU -HT
+#l #H <(le_n_O_to_eq … H) -l /2 width=3 by scpds_div/
+qed.

@@ -160,10 +160,12 @@ lapply (lstas_da_conf … HTX … HTl) #HXl
 lapply (da_cprs_lpr_aux … IH3 IH2 … HXl … HXT2 L ?)
 [1,2,3: /3 width=8 by fpbg_fpbs_trans, lstas_fpbs/ ] #HTl2
 elim (le_or_ge l1 l2) #Hl12 >(eq_minus_O … Hl12)
-[ /5 width=3 by scpds_refl, lstas_conf_le, monotonic_le_minus_l, ex4_2_intro, ex2_intro/
-| lapply (lstas_conf_le … HTX … HT1) // #HXT1 -HT1
+[ elim (da_lstas … HTl2 0) #X2 #HTX2 #_ -IH4 -IH3 -IH2 -IH1 -H0 -HT -HTl -HXl
+  /5 width=6 by lstas_scpds, scpds_div, cprs_strap1, lstas_cpr, lstas_conf_le, monotonic_le_minus_l, ex4_2_intro/
+| elim (da_lstas … HTl1 0) #X1 #HTX1 #_
+  lapply (lstas_conf_le … HTX … HT1) // #HXT1 -HT1
   elim (lstas_cprs_lpr_aux … IH3 IH2 IH1 … HXl … HXT1 … HXT2 L) -IH3 -IH2 -IH1 -HXl -HXT1 -HXT2
-  /3 width=8 by cpcs_scpes, fpbg_fpbs_trans, lstas_fpbs, monotonic_le_minus_l/
+  /4 width=8 by cpcs_scpes, cpcs_cpr_conf, fpbg_fpbs_trans, lstas_fpbs, lstas_cpr, monotonic_le_minus_l/
 ]
 qed-.
 
@@ -177,11 +179,9 @@ fact scpes_le_aux: ∀h,g,G0,L0,T0.
                    ∀l11. ⦃G, L⦄ ⊢ T1 ▪[h, g] l11 → ∀l12. ⦃G, L⦄ ⊢ T2 ▪[h, g] l12 →
                    ∀l21,l22,l. l21 + l ≤ l11 → l22 + l ≤ l12 →
                    ⦃G, L⦄ ⊢ T1 •*⬌*[h, g, l21, l22] T2 → ⦃G, L⦄ ⊢ T1 •*⬌*[h, g, l21+l, l22+l] T2.
-#h #g #G0 #L0 #T0 #IH4 #IH3 #IH2 #IH1 #G #L #T1 #H01 #HT1 #T2 #H02 #HT2 #l11 #Hl11 #Hl12 #Hl12 #l21 #l22 #l #H1 #H2 * #T0 #HT10 #HT20 
-elim (da_inv_sta … Hl11) #X1 #HTX1
-elim (lstas_total … HTX1 (l21+l)) -X1 #X1 #HTX1
-elim (da_inv_sta … Hl12) #X2 #HTX2
-elim (lstas_total … HTX2 (l22+l)) -X2 #X2 #HTX2
+#h #g #G0 #L0 #T0 #IH4 #IH3 #IH2 #IH1 #G #L #T1 #H01 #HT1 #T2 #H02 #HT2 #l11 #Hl11 #Hl12 #Hl12 #l21 #l22 #l #H1 #H2 * #T0 #HT10 #HT20
+elim (da_lstas … Hl11 (l21+l)) #X1 #HTX1 #_
+elim (da_lstas … Hl12 (l22+l)) #X2 #HTX2 #_
 lapply (lstas_scpds_aux … IH4 IH3 IH2 IH1 … Hl11 … HTX1 … HT10) -HT10
 [1,2,3: // | >eq_minus_O [2: // ] <minus_plus_m_m_commutative #HX1 ]
 lapply (lstas_scpds_aux … IH4 IH3 IH2 IH1 … Hl12 … HTX2 … HT20) -HT20
@@ -195,5 +195,5 @@ qed-.
 
 lemma snv_cast_scpes: ∀h,g,G,L,U,T. ⦃G, L⦄ ⊢ U ¡[h, g] →  ⦃G, L⦄ ⊢ T ¡[h, g] →
                       ⦃G, L⦄ ⊢ U •*⬌*[h, g, 0, 1] T → ⦃G, L⦄ ⊢ ⓝU.T ¡[h, g].
-#h #g #G #L #U #T #HU #HT * /3 width=3 by snv_cast, scpds_fwd_cprs/
+#h #g #G #L #U #T #HU #HT * /2 width=3 by snv_cast/
 qed.

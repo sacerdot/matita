@@ -21,13 +21,13 @@ include "basic_2/equivalence/scpes.ma".
 (* Inversion lemmas on parallel equivalence for terms ***********************)
 
 lemma scpes_inv_lstas_eq: ∀h,g,G,L,T1,T2,l1,l2. ⦃G, L⦄ ⊢ T1 •*⬌*[h, g, l1, l2] T2 →
-                         ∀U1. ⦃G, L⦄ ⊢ T1 •*[h, l1] U1 →
-                         ∀U2. ⦃G, L⦄ ⊢ T2 •*[h, l2] U2 → ⦃G, L⦄ ⊢ U1 ⬌* U2.
+                          ∀U1. ⦃G, L⦄ ⊢ T1 •*[h, l1] U1 →
+                          ∀U2. ⦃G, L⦄ ⊢ T2 •*[h, l2] U2 → ⦃G, L⦄ ⊢ U1 ⬌* U2.
 #h #g #G #L #T1 #T2 #l1 #l2 * #T #HT1 #HT2 #U1 #HTU1 #U2 #HTU2
 /3 width=8 by scpds_inv_lstas_eq, cprs_div/
 qed-.
 
-(* Properties on parallel equivalence for terms ***********************)
+(* Properties on parallel equivalence for terms *****************************)
 
 lemma cpcs_scpes: ∀h,g,G,L,T1,l11. ⦃G, L⦄ ⊢ T1 ▪[h, g] l11 →
                   ∀U1,l12. l12 ≤ l11 → ⦃G, L⦄ ⊢ T1 •*[h, l12] U1 →

@@ -69,7 +69,7 @@ fact da_cpr_lpr_aux: ∀h,g,G0,L0,T0.
     elim (scpds_inv_abst1 … HTU1) -HTU1 #W3 #U3 #HW3 #_ #H destruct -U3 -l1
     elim (snv_fwd_da … HV1) #l1 #Hl1
     elim (snv_fwd_da … HW) #l0 #Hl0
-    lapply (scpds_div … W … 0 … HVW1) /2 width=2 by cprs_scpds/ -W3 #H
+    lapply (cprs_scpds_div … HW3 … Hl0 … 1 HVW1) -W3 #H
     elim (da_scpes_aux … IH3 IH2 IH1 … Hl0 … Hl1 … H) -IH3 -IH2 -H /2 width=1 by fqup_fpbg/ #_ #H1
     <minus_n_O #H destruct >(plus_minus_m_m l1 1) in Hl1; // -H1 #Hl1
     lapply (IH1 … HV1 … Hl1 … HV12 … HL12) -HV1 -Hl1 -HV12 [ /2 by fqup_fpbg/ ]
