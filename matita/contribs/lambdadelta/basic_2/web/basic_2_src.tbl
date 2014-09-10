@@ -12,7 +12,7 @@ table {
    class "wine"
    [ { "examples" * } {
         [ { "terms with special features" * } {
-             [ "ex_cpr_omega" * ]
+             [ "ex_sta_ldec" "ex_cpr_omega" * ]
           }
         ]
      }
