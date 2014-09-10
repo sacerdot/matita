@@ -506,6 +506,14 @@ coinductive stream (A: Type[0]) : Type[0] ≝
    snil: stream A
  | scons: A → stream A → stream A.
 
+(* The following lemma will be used to unblock blocked reductions, as
+ previously explained for eta_streamseq. *)
+lemma eta_stream:
+ ∀A:Type[0]. ∀s: stream A.
+  match s with [ snil ⇒ snil … | scons hd tl ⇒ scons … hd tl ] = s.
+ #A * //
+qed.
+
 (* The definition of trace based on streams is more natural than that based
  on sequences of optional states because there is no need of the invariant that
  a None state is followed only by None states (to represent a terminated
@@ -572,64 +580,85 @@ qed.
 axiom daemon: False.
 
 (* To complete the proof we need a final lemma: streamseqs extracted from
- well formed diverging streams are well formed too. *) 
+ well formed diverging streams are well formed too. The definition is mostly
+ interactive because we need to use the expansion lemma above to rewrite
+ the type of the scons branch. Otherwise, Matita rejects the term as ill-typed *) 
 let corec div_well_formed_co_mk_diverging_trace_to_div_trace (t : stream state) :
- ∀H:diverging' t. div_well_formed_co (mk_diverging_trace_to_div_trace' t H) ≝
- match t return λt. diverging' t → ?
+ ∀W:well_formed' t.
+  ∀H:diverging' t. div_well_formed_co (mk_diverging_trace_to_div_trace' t H) ≝
+ match t return λt. well_formed' t → diverging' t → ?
  with
- [ snil ⇒ λabs. ?
- | scons hd tl ⇒ λH. ? ].
+ [ snil ⇒ λ_.λabs. ?
+ | scons hd tl ⇒ λW.λH. ? ].
 [ cases (?:False) inversion abs #hd #tl #_ #eq destruct
 | cases (mk_diverging_trace_to_div_trace_expansion … H) #H' #eq
   lapply (sym_eq ??? … eq) #Req cases Req -Req -eq -H
-  cases tl in H';
-  [ #abs cases (?:False) inversion abs #hd #tl #_ #eq destruct
-  | -tl #hd2 #tl #H
-    cases (mk_diverging_trace_to_div_trace' … H) #H'
-    #eq lapply (sym_eq ??? … eq) #Req cases Req -Req
-    % [2: (*CSC: BIG BUG HERE*) cases daemon (* cases eq @div_well_formed_co_mk_diverging_trace_to_div_trace *)
-      | cases daemon ]]]
-qed.
+  cases tl in W H';
+  [ #_ #abs cases (?:False) inversion abs #hd #tl #_ #eq destruct
+  | -tl #hd2 #tl #W #H
+    cases (mk_diverging_trace_to_div_trace_expansion … H) #K #eq >eq
+    inversion W [ #s #_ #abs destruct ]
+    #hd1' #hd2' #tl' #eq1 #wf #eq2 lapply eq1
+    cut (hd=hd1' ∧ hd2 = hd2' ∧ tl=tl') [ cases daemon (* destruct /3/ *) ]
+    ** -eq2 ***
+    #eq1 %
+    [ @step_next //
+    | cases daemon (*<eq @div_well_formed_co_mk_diverging_trace_to_div_trace cases daemon (*//*) ]]]
+*) qed.
 
 theorem diverging_trace_to_div_trace':
  ∀t: trace'. diverging' t → ∃d: div_trace'.
   head_of_stream … t = Some … (head_of_streamseq … d).
  #t #H %
  [ %{(mk_diverging_trace_to_div_trace' … H)}
+   @div_well_formed_co_to_div_well_formed
+   @div_well_formed_co_mk_diverging_trace_to_div_trace
+   @(well_formed'' t)
  | cases t in H; * normalize // #abs cases (?:False) inversion abs
    [ #s #_ #eq destruct | #hd1 #hd2 #tl #_ #_ #eq destruct ]]
- 
-  #n  lapply (well_formed t n)
-   lapply (H n) cases (tr t n) normalize [ * #abs cases (abs …) // ]
-   * #o #k #_ lapply (H (S n)) -H
-   cases (tr t (S n)) normalize
-   [ * #abs cases (abs …) // ] * #o' #k' #_ #EQ lapply (EQ … (refl …)) -EQ
-     normalize cases k normalize [ #abs destruct ] #hd #tl #EQ destruct -EQ
-     @step_next >e0 // ]
- | lapply (H O) -H cases (tr t O) [ * #abs cases (abs …) // ] // ]
 qed.
 
 (* A stream can be extracted from a streamseq using corecursion. *)
 let corec stream_of_streamseq (A: Type[0]) (s: streamseq A) : stream A ≝
  match s with [ sscons hd tl ⇒ scons … hd (stream_of_streamseq … tl) ].
 
+(* We need again an expansion lemma to typecheck the proof that the resulting
+   stream is divergent. *)
+lemma stream_of_streamseq_expansion:
+ ∀A,hd,tl.
+  stream_of_streamseq A (sscons … hd tl) = scons … hd (stream_of_streamseq … tl).
+ #A #hd #tl <(eta_stream … (stream_of_streamseq …)) //
+qed.
+
 (* The proof that the resulting stream is diverging also need corecursion.*)
 let corec diverging_stream_of_streamseq (s: streamseq state) :
  diverging' (stream_of_streamseq … s) ≝
  match s return λs. diverging' (stream_of_streamseq … s)
- with [ sscons hd tl ⇒ mk_diverging' … ].
-  mk_diverging' hd (stream_of_streamseq … tl) (diverging_stream_of_streamseq tl) ].
- 
+ with [ sscons hd tl ⇒ ? ].
+ >stream_of_streamseq_expansion % //
+qed. 
+
+let corec well_formed_stream_of_streamseq (d: streamseq state) :
+ div_well_formed' … d → well_formed' (stream_of_streamseq state d) ≝
+ match d
+ return λd. div_well_formed' d → ?
+ with [ sscons hd1 tl ⇒
+  match tl return λtl. div_well_formed' (sscons … tl) → ?
+  with [ sscons hd2 tl2 ⇒ λH.? ]].
+ >stream_of_streamseq_expansion >stream_of_streamseq_expansion %2
+ [2: <stream_of_streamseq_expansion @well_formed_stream_of_streamseq
+   #n @(H (S n))
+ | @next_step @(H O) ]
+qed.
 
 theorem div_trace_to_diverging_trace':
  ∀d: div_trace'. ∃t: trace'. diverging' t ∧
   head_of_stream … t = Some … (head_of_streamseq … d).
  #d %{(mk_trace' (stream_of_streamseq … d) …)}
- [2: %
-   [  
-   [2: cases d * // ] #n % #abs destruct
- | #n #s #EQ destruct lapply (div_well_formed d n) /2 by div_well_formed, next_step/ ]
+ [ /2/ | % // cases d * // ]
 qed.
+
+(***** 
 
 (* AGGIUNGERE SPIEGAZIONE SU PRODUTTIVITA' *)
 
@@ -649,17 +678,3 @@ qed.
  match H p with
  [ inl _ ⇒ snil A
  | inr cpl ⇒ let 〈hd,p'〉 ≝ cpl in scons A hd (stream_coind A P H p') ]. *)
-
-(*lemma eta_streamseq:
- ∀A:Type[0]. ∀s: streamseq A.
-  s = match s with [ sscons hd tl ⇒ sscons … hd tl ].
- #A * //
-qed.
-
-lemma Rplus_streamseq_nf:
- ∀xhd,xtl,yhd,ytl.
-  Rplus_streamseq (sscons … xhd xtl) (sscons … yhd ytl) =
-   sscons … (xhd + yhd) (Rplus_streamseq xtl ytl).
- #xhd #xtl #yhd #ytl >(eta_streamseq Q (Rplus_streamseq …)) in ⊢ (??%?); //
-qed.*)
-
