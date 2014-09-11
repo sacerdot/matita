@@ -847,11 +847,83 @@ qed.
  we need to turn the type of sequences into a setoid. The two alternatives are
  actually equivalent with respect to this issue. *)
 
-(***** 
+(******* Generic construction principles *******)
+
+(* When an inductive type is defined Matita automatically
+  proves a generic elimination principle using a recursive definition. Later the
+  user can apply the generic eliminator in the middle of a proof, without the
+  need to make a lemma and prove it using a let rec.
+  
+  For example, the principle generated for a list is the following:
+  
+  ∀A:Type[0]. ∀P: A → Prop.
+   P (nil …) → (∀hd:A. ∀tl: list A. P tl → P (hd::tl)) →
+    ∀l:list A. P l
+  
+  Here the predicate P is dependent, i.e. it is not just a proposition, but
+  a proposition indexed by the list we are analysing.
+  
+  The corresponding non dependent principle is:
+  
+  ∀A:Type[0]. ∀P: Prop.
+   P → (∀hd:A. ∀tl: list A. P → P) →
+    ∀l:list A. P l
+
+  that we can rewrite up to currification as
+  
+  ∀A:Type[0]. ∀P: Prop.
+   ((unit + A × list A × P) → P) →
+    list A → P
+  
+  and, turning the recursor into an iterator, to the simpler form
+  
+  ∀A:Type[0]. ∀P: Prop.
+   ((unit + A × P) → P) →
+    list A → P
+  
+  Thinking of a list as the least fixpoint of the equation
+
+    list A = unit + A × list A
+
+  The above principle says that we can prove P as soon as we can prove P for
+  every possible shape of the list, replacing sublists (list A) with the
+  result P of recursive calls of the iterator.
+  
+  Streams are the greatest fixpoint of the same equation
+  
+    stream A = unit + A × stream A
+    
+  Dualizing the idea of a generic destructor for list, we obtain the type of the
+  generic constructor for streams:
+  
+  ∀A:Type[0]. ∀P: Prop.
+   (P → (unit + A × P)) →
+    P → stream A
+    
+  The above principle says that we can build a stream from a proof of P as soon
+  as we can observe from P what shape the stream has and what P will be used to
+  generate the reamining of the stream. The principle is indeed easily provable
+  in Matita. *)
+
+let corec stream_coind (A: Type[0]) (P: Prop) (H: P → Sum unit (A × P))
+ (p:P) : stream A ≝
+ match H p with
+ [ inl _ ⇒ snil A
+ | inr cpl ⇒ let 〈hd,p'〉 ≝ cpl in scons A hd (stream_coind A P H p') ].
+
+(* At the moment Matita does not automatically prove any generic construction
+ principle. One reason is that the type of the generated principles is less
+ informative than that for elimination principles. The problem is that in the
+ type theory of Matita it is not possible to generalize the above type to a
+ dependent version, to obtain the exact dual of the elimination principle.
+ In case of the elimination principle, the type P depends on the value of the
+ input, and the principle proves the dependent product ∀l: list A. P A.
+ In the case of the introduction principle, the output is P → list A.
+ To obtain a dependent version, we would need a dual of the dependent product
+ such that the type of the input is dependent on the value of the output: a
+ notion that is not even meaningful when the function is not injective. *)
 
 (* AGGIUNGERE SPIEGAZIONE SU PRODUTTIVITA' *)
-
-(* AGGIUNGERE CONFRONTO CON TEORIA DELLE CATEGORIE *)
 
 (* AGGIUNGERE ESEMPI DI SEMANTICA OPERAZIONE BIG STEP PER LA DIVERGENZA;
    DI PROPRIETA' DI SAFETY;
@@ -860,8 +932,3 @@ qed.
 (* ################## COME SPIEGARLO QUI? ####################### *)
 
 
-(*let corec stream_coind (A: Type[0]) (P: Prop) (H: P → Sum unit (A × P))
- (p:P) : stream A ≝
- match H p with
- [ inl _ ⇒ snil A
- | inr cpl ⇒ let 〈hd,p'〉 ≝ cpl in scons A hd (stream_coind A P H p') ]. *
