@@ -2,9 +2,8 @@
 Coinductive Types and Predicates
 *)
 
-include "arithmetics/nat.ma".
-include "basics/types.ma".
 include "basics/lists/list.ma".
+include "chapter12.ma".
 
 (* The only primitive data types of Matita are dependent products and universes.
 So far every other user defined data type has been an inductive type. An
@@ -50,6 +49,7 @@ definition seq : Type[0] → Type[0] ≝ λA:Type[0]. ℕ → A.
 (* First we axiomatize the relevant properties of rational numbers. *)
 axiom Q: Type[0].
 axiom Qdist: Q → Q → Q.
+axiom symmetric_Qdist: ∀x,y. Qdist x y = Qdist y x.
 axiom Qleq: Q → Q → Prop.
 interpretation "Qleq" 'leq x y = (Qleq x y).
 axiom transitive_Qleq: transitive … Qleq.
@@ -61,6 +61,7 @@ axiom Qdist_Qplus:
  ∀qa1,qb1,qa2,qb2. Qdist (qa1 + qa2) (qb1 + qb2) ≤ Qdist qa1 qb1 + Qdist qa2 qb2.
 axiom Qhalve: Q → Q.
 axiom Qplus_Qhalve_Qhalve: ∀q. Qhalve q + Qhalve q = q.
+axiom triangular_Qdist: ∀x,y,z. Qdist x z ≤ Qdist x y + Qdist y z.
 
 (* A sequence of rationals. *)
 definition Qseq: Type[0] ≝ seq Q.
@@ -69,13 +70,32 @@ definition Qseq: Type[0] ≝ seq Q.
 definition Cauchy: Qseq → Prop ≝
  λR:Qseq. ∀eps. ∃n. ∀i,j. n ≤ i → n ≤ j → Qdist (R i) (R j) ≤ eps.
 
-(* A real number is an equivalence class of Cauchy sequences. Here we just
-   define the carrier, omitting the necessary equivalence relation for the
-   quotient. *) 
-record R: Type[0] ≝
+(* A real number is an equivalence class of Cauchy sequences. In type theory
+ we can define R as a setoid whose carrier R_ is the type of Cauchy sequences. *)
+record R_: Type[0] ≝
  { r: Qseq
  ; isCauchy: Cauchy r
- }. 
+ }.
+
+(* Two sequences are equal when for every epsilon they are eventually pointwise
+ closer than epsilon. *)
+definition R : setoid ≝
+ mk_setoid R_
+  (mk_equivalence_relation …
+   (λr1,r2:R_. ∀eps. ∃n. ∀i. n ≤ i → Qdist (r r1 i) (r r2 i) ≤ eps) …).
+[ (* transitivity *) #x #y #z #H1 #H2 #eps cases (H1 (Qhalve eps)) #i -H1 #H1
+  cases (H2 (Qhalve eps)) #j -H2 #H2 %{(max i j)} #l #Hmax
+  <(Qplus_Qhalve_Qhalve eps) @transitive_Qleq
+  [3: @(Qleq_Qplus … (H1 l …) (H2 l …)) /2 by le_maxl,le_maxr/
+  |2: // ]
+| (* symmetry *) #x #y #H #eps cases (H eps) /3 by ex_intro/
+| (* reflexivity *) #x #eps cases (isCauchy x eps) /3 by ex_intro/ ]
+qed.
+
+unification hint 0 ≔ ;
+    X ≟ R
+(* ---------------------------------------- *) ⊢
+    R_ ≡ carrier R.
 
 (* The following coercion is used to write r n to extract the n-th approximation
  from the real number r *)
@@ -86,14 +106,28 @@ coercion R_to_fun : ∀r:R. ℕ → Q ≝ r on _r:R to ?.
  one: to obtain an approximation up to eps it is necessary to approximate both
  summands up to eps/2. The proof that the function is well defined w.r.t. the
  omitted equivalence relation is also omitted. *)
-definition Rplus: R → R → R ≝
- λr1,r2. mk_R (λn. r1 n + r2 n) ….
+definition Rplus_: R_ → R_ → R_ ≝
+ λr1,r2. mk_R_ (λn. r1 n + r2 n) ….
  #eps
  cases (isCauchy r1 (Qhalve eps)) #n1 #H1
  cases (isCauchy r2 (Qhalve eps)) #n2 #H2
  %{(max n1 n2)} #i #j #K1 #K2 @(transitive_Qleq … (Qdist_Qplus …))
  <(Qplus_Qhalve_Qhalve eps) @Qleq_Qplus [@H1 @le_maxl | @H2 @le_maxr]
  [2,6: @K1 |4,8: @K2]
+qed.
+
+(* We lift Rplus_ to a morphism by proving that it respects the equality for
+ real numbers. We closely follow the usual mathematical proof: to compute the
+ sum up to epsilon it is sufficient to fetch the arguments at precision
+ epsilon/2. *)
+definition Rplus: R ⤞ R ⤞ R ≝
+ mk_bin_morphism … Rplus_ ….
+ #x1 #x2 #y1 #y2 #Hx #Hy #eps
+ cases (Hx (Qhalve eps)) #i -Hx #Hx
+ cases (Hy (Qhalve eps)) #j -Hy #Hy
+ %{(max i j)} #l #Hmax <(Qplus_Qhalve_Qhalve eps) @transitive_Qleq
+ [3: @(Qleq_Qplus … (Hx l …) (Hy l …)) /2 by le_maxl,le_maxr/
+ |2: // ]
 qed.
 
 (* Example 3: traces of a program *)
@@ -329,13 +363,34 @@ definition Qstreamseq_nth ≝ streamseq_nth Q.
 definition Cauchy': Qstreamseq → Prop ≝
  λR:Qstreamseq. ∀eps. ∃n. ∀i,j. n ≤ i → n ≤ j → Qdist (Qstreamseq_nth R i) (Qstreamseq_nth R j) ≤ eps.
 
-(* A real number is an equivalence class of Cauchy sequences. Here we just
-   define the carrier, omitting the necessary equivalence relation for the
-   quotient. *) 
-record R': Type[0] ≝
+(* A real number is an equivalence class of Cauchy sequences. In type theory
+ we can define R' as a setoid whose carrier R_' is the type of Cauchy sequences. *)
+record R_': Type[0] ≝
  { r': Qstreamseq
  ; isCauchy': Cauchy' r'
- }. 
+ }.
+
+(* Two sequences are equal when for every epsilon they are eventually pointwise
+ closer than epsilon. The script is exactly the same already used when we
+ defined R using functions. *)
+definition R' : setoid ≝
+ mk_setoid R_'
+  (mk_equivalence_relation …
+   (λr1,r2:R_'. ∀eps. ∃n. ∀i. n ≤ i →
+    Qdist (Qstreamseq_nth (r' r1) i) (Qstreamseq_nth (r' r2) i) ≤ eps) …).
+[ (* transitivity *) #x #y #z #H1 #H2 #eps cases (H1 (Qhalve eps)) #i -H1 #H1
+  cases (H2 (Qhalve eps)) #j -H2 #H2 %{(max i j)} #l #Hmax
+  <(Qplus_Qhalve_Qhalve eps) @transitive_Qleq
+  [3: @(Qleq_Qplus … (H1 l …) (H2 l …)) /2 by le_maxl,le_maxr/
+  |2: // ]
+| (* symmetry *) #x #y #H #eps cases (H eps) /3 by ex_intro/
+| (* reflexivity *) #x #eps cases (isCauchy' x eps) /3 by ex_intro/ ]
+qed.
+
+unification hint 0 ≔ ;
+    X ≟ R'
+(* ---------------------------------------- *) ⊢
+    R_' ≡ carrier R'.
 
 (* The following coercion is used to write r n to extract the n-th approximation
  from the real number r *)
@@ -360,8 +415,8 @@ qed.
 
 (* The proof that the resulting sequence is Cauchy is exactly the same we
  used for sequences, up to two applications of the previous lemma. *)
-definition Rplus': R' → R' → R' ≝
- λr1,r2. mk_R' (Rplus_streamseq (r' r1) (r' r2)) ….
+definition Rplus_': R_' → R_' → R_' ≝
+ λr1,r2. mk_R_' (Rplus_streamseq (r' r1) (r' r2)) ….
  #eps
  cases (isCauchy' r1 (Qhalve eps)) #n1 #H1
  cases (isCauchy' r2 (Qhalve eps)) #n2 #H2
@@ -370,6 +425,19 @@ definition Rplus': R' → R' → R' ≝
  @(transitive_Qleq … (Qdist_Qplus …))
  <(Qplus_Qhalve_Qhalve eps) @Qleq_Qplus [@H1 @le_maxl | @H2 @le_maxr]
  [2,6: @K1 |4,8: @K2]
+qed.
+
+(* We lift Rplus_' to a morphism by proving that it respects the equality for
+ real numbers. The script is exactly the same we used to lift Rplus_, but for
+ two applications of Qstreamseq_nth_Rplus_streamseq. *)
+definition Rplus': R' ⤞ R' ⤞ R' ≝
+ mk_bin_morphism … Rplus_' ….
+ #x1 #x2 #y1 #y2 #Hx #Hy #eps
+ cases (Hx (Qhalve eps)) #i -Hx #Hx
+ cases (Hy (Qhalve eps)) #j -Hy #Hy
+ %{(max i j)} #l #Hmax <(Qplus_Qhalve_Qhalve eps) @transitive_Qleq
+ [3: @(Qleq_Qplus … (Hx l …) (Hy l …)) /2 by le_maxl,le_maxr/
+ |2: >Qstreamseq_nth_Rplus_streamseq >Qstreamseq_nth_Rplus_streamseq // ]
 qed.
 
 (***** Intermezzo: the dynamics of coinductive data ********)
@@ -658,11 +726,130 @@ theorem div_trace_to_diverging_trace':
  [ /2/ | % // cases d * // ]
 qed.
 
+(******** How to compare coinductive types *********)
+
+(* Inhabitants of inductive types are compared using Leibniz's equality that,
+ on closed terms, coincides with convertibility. Two closed inductive terms
+ are equal iff they reduce to the same normal form.
+ 
+ Because of the lazy evaluation of coinductively defined terms, conversion
+ does not behave as expected on inhabitants of coinductive types. For example,
+ the following two definitions, both in normal form, produce the same
+ streamseq 0,1,0,1,… but are not equal because the normal forms are
+ syntactically different. *)
+
+let corec zero_one_streamseq1: streamseq ℕ ≝
+ sscons … 0 (sscons … 1 zero_one_streamseq1).
+
+let corec one_zero_streamseq: streamseq ℕ ≝
+ sscons … 1 (sscons … 0 one_zero_streamseq).
+
+definition zero_one_streamseq2: streamseq ℕ ≝ sscons … 0 one_zero_streamseq. 
+
+(* In place of Leibniz equality, the right notion to compare coinductive terms
+ is bisimulation. Two terms t1,t2 are bisimilar if every observation on t1 can
+ be performed on t2 as well, and the observed subterms are co-recursively
+ bisimilar. In practice two coinductive terms are bisimilar if they are the same
+ constructor applied to bisimilar coinductive subterms.
+ 
+ We define bisimilarity for streamseqs using a coinductive predicate. *)
+coinductive ss_bisimilar (A: Type[0]) : streamseq A → streamseq A → Prop ≝
+ sscons_bisim:
+  ∀x,tl1,tl2.
+   ss_bisimilar … tl1 tl2 →
+    ss_bisimilar … (sscons … x tl1) (sscons … x tl2).
+
+(* The two streams above can be proved to be bisimilar. By using the
+ eta_streamseq trick twice, we expand both definitions once so to obtain the
+ new proof obligation 0,1,zero_one_streamseq1 = 0,1,zero_one_streamseq2.
+ Then we apply twice the sscons_bisim constructor to consume the leading 0 and 1,
+ finding again the original goal. Finally we conclude with the coinductive
+ hypothesis. The proof is productive because, after the two rewriting, it
+ reduces to two applications of the sscons_bisim constructor, immediately
+ followed by the recursive call. *)
+let corec zero_one_streamseq_eq: ss_bisimilar … zero_one_streamseq1 zero_one_streamseq2 ≝
+ ?.
+ <(eta_streamseq … zero_one_streamseq1) normalize
+ <(eta_streamseq … one_zero_streamseq) normalize
+ % % @zero_one_streamseq_eq
+qed.
+
+(* We can finally turn streamseqs into a setoid and lift every operation on
+ streamseqs to morphisms. We first prove reflexivity, symmetry and transitivity
+ of bisimulation because each proof must be given using let corec. *)
+let corec reflexive_ss_bisimilar (A: Type[0]): reflexive … (ss_bisimilar A) ≝ ?.
+ * #hd #tl % @reflexive_ss_bisimilar
+qed.
+
+let corec symmetric_ss_bisimilar (A: Type[0]): symmetric … (ss_bisimilar A) ≝ ?.
+ * #hd1 #tl1 * #hd2 #tl2 * #hd #tl1' #tl2' #H % @symmetric_ss_bisimilar @H
+qed.
+
+(* In the proof of transitivity we face a technical problem. After inverting one
+ of the bisimilarity hypothesis we are left with an equation of the form
+ sscons … hd1 tl1 = sscons … hd2 tl2 and we need to extract hd1 = hd2 and
+ tl1 = tl2 to conclude the proof. The destruct tactic does exactly this, but
+ it produces a proof term that is not recognized to be productive by Matita.
+ The trick is to cut the two equalities and to use destruct to prove them.
+ In this way the destruct tactic is used only in a side proof inside which there
+ is no recursive call, and the whole proof term is recognized to be productive. *)
+let corec transitive_ss_bisimilar (A: Type[0]): transitive … (ss_bisimilar A) ≝ ?.
+ * #hd1 #tl1 * #hd2 #tl2 * #hd3 #tl3
+ * #hd #tl1' #tl2' #H1
+ #H inversion H #hd' #tl1'' #tl2'' -H #H #EQ1 #_
+ cut (hd=hd' ∧ tl1''=tl2') [ destruct /2/ ] ** #EQ % @transitive_ss_bisimilar //
+qed.
+
+definition STREAMSEQ: Type[0] → setoid ≝
+ λA.
+  mk_setoid (streamseq A)
+   (mk_equivalence_relation … (ss_bisimilar A) …).
+ //
+qed.
+
+unification hint 0 ≔ A:Type[0];
+    X ≟ STREAMSEQ A
+(* ---------------------------------------- *) ⊢
+    streamseq A ≡ carrier X.
+
+(* As an example, we lift streamseq_nth to a morphism. *)
+definition STREAMSEQ_NTH: ∀A: Type[0]. STREAMSEQ A ⤞ (LEIBNIZ ℕ) ⤞ (LEIBNIZ A) ≝
+ λA. mk_bin_morphism ??? (streamseq_nth A) …. 
+ #x1 #x2 #n1 #n2 #bisim * lapply bisim -bisim lapply x2 -x2 lapply x1 -x1 -n2 elim n1
+ [ #x1 #x2 #H inversion H //
+ | #m #IH #x1 #x2 #H inversion H #hd #tl1 #tl2 #bisim #EQ1 #EQ2 destruct @IH //]
+qed.
+
+(* Working with setoids introduce technical complications that one would rather
+ avoid. The alternative encoding of streams via sequences doen not solve the
+ issue. Sequences are functions and, to capture the mathematical meaning of
+ equality for sequences, functions need to be compare using functional
+ extensionality. Two functions are extensionally equal when they are pointiwse
+ equal, i.e. they map equal inputs to the same outputs. Intensional equality of
+ functions, instead, just compares the two codes.
+ 
+ For example, the next two enumerations 0,1,2,… are extensionally, but not
+ intensionally equal. *)
+definition enum_N1: seq ℕ ≝ λi. i.
+definition enum_N2: seq ℕ ≝ λi. i+0.
+
+(* Functional extensionality is defined in the standard library of Matita as
+ follows. *)
+definition exteqF: ∀A,B:Type[0].∀f,g:A→B.Prop ≝
+λA,B.λf,g.∀a.f a = g a.
+
+(* The proof that the two sequences above are extensionally equal is trivial. *)
+lemma enum_N_equal: exteqF … enum_N1 enum_N2.
+ normalize //
+qed.
+
+(* Like for bisimulation, to work sistematically with functional extensionality
+ we need to turn the type of sequences into a setoid. The two alternatives are
+ actually equivalent with respect to this issue. *)
+
 (***** 
 
 (* AGGIUNGERE SPIEGAZIONE SU PRODUTTIVITA' *)
-
-(* AGGIUNGERE SPIEGAZIONE SU CONFRONTO VALORI COINDUTTIVI *)
 
 (* AGGIUNGERE CONFRONTO CON TEORIA DELLE CATEGORIE *)
 
@@ -677,4 +864,4 @@ qed.
  (p:P) : stream A ≝
  match H p with
  [ inl _ ⇒ snil A
- | inr cpl ⇒ let 〈hd,p'〉 ≝ cpl in scons A hd (stream_coind A P H p') ]. *)
+ | inr cpl ⇒ let 〈hd,p'〉 ≝ cpl in scons A hd (stream_coind A P H p') ]. *

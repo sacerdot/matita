@@ -446,7 +446,14 @@ qed.
  some other type T dependent over n the following equation should hold:
  f … (t … p x) = t … p (f … x) (i.e. transporting and applying f should commute
  because f should be insensitive too up to ≃ to the actual representation of the
- integral indexes). *) 
+ integral indexes).
+
+ Luckily enough, in practice types dependent overs setoids occur very rarely.
+ Most examples of dependent types are indexed over discrete objects, like
+ natural, integers and rationals, that admit an unique representation.
+ For continuity reasons, types dependent over real numbers can also be
+ represented as types dependent over a dense subset of the reals, like the
+ rational numbers. *)
 
 (****** Avoiding setoids *******)
 
