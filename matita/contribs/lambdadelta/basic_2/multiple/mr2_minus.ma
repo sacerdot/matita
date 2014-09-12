@@ -18,7 +18,7 @@ include "basic_2/multiple/mr2.ma".
 (* MULTIPLE RELOCATION WITH PAIRS *******************************************)
 
 inductive minuss: nat → relation (list2 nat nat) ≝
-| minuss_nil: ∀i. minuss i (⟠) (⟠)
+| minuss_nil: ∀i. minuss i (◊) (◊)
 | minuss_lt : ∀des1,des2,d,e,i. i < d → minuss i des1 des2 →
               minuss i ({d, e} @ des1) ({d - i, e} @ des2)
 | minuss_ge : ∀des1,des2,d,e,i. d ≤ i → minuss (e + i) des1 des2 →
@@ -30,7 +30,7 @@ interpretation "minus (multiple relocation with pairs)"
 
 (* Basic inversion lemmas ***************************************************)
 
-fact minuss_inv_nil1_aux: ∀des1,des2,i. des1 ▭ i ≡ des2 → des1 = ⟠ → des2 = ⟠.
+fact minuss_inv_nil1_aux: ∀des1,des2,i. des1 ▭ i ≡ des2 → des1 = ◊ → des2 = ◊.
 #des1 #des2 #i * -des1 -des2 -i
 [ //
 | #des1 #des2 #d #e #i #_ #_ #H destruct
@@ -38,7 +38,7 @@ fact minuss_inv_nil1_aux: ∀des1,des2,i. des1 ▭ i ≡ des2 → des1 = ⟠ →
 ]
 qed-.
 
-lemma minuss_inv_nil1: ∀des2,i. ⟠ ▭ i ≡ des2 → des2 = ⟠.
+lemma minuss_inv_nil1: ∀des2,i. ◊ ▭ i ≡ des2 → des2 = ◊.
 /2 width=4 by minuss_inv_nil1_aux/ qed-.
 
 fact minuss_inv_cons1_aux: ∀des1,des2,i. des1 ▭ i ≡ des2 →

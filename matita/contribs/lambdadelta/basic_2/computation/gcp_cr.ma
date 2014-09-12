@@ -116,14 +116,13 @@ qed.
 *)
 lemma acr_gcr: ∀RR,RS,RP. gcp RR RS RP → gcr RR RS RP RP →
                ∀A. gcr RR RS RP (acr RP A).
-#RR #RS #RP #H1RP #H2RP #A elim A -A normalize //
-#B #A #IHB #IHA @mk_gcr normalize
+#RR #RS #RP #H1RP #H2RP #A elim A -A //
+#B #A #IHB #IHA @mk_gcr
 [ /3 width=7 by drops_cons, lifts_cons/
 | #G #L #T #H
   elim (cp1 … H1RP G L) #k #HK
-  lapply (H ? (⋆k) ? (⟠) ? ? ?) -H
-  [3,5: // |2,4: skip
-  | @(s2 … IHB … (◊)) //
+  lapply (H L (⋆k) T (◊) ? ? ?) -H //
+  [ lapply (s2 … IHB G L (◊) … HK) //
   | #H @(cp2 … H1RP … k) @(s1 … IHA) //
   ]
 | #G #L #Vs #HVs #T #H1T #H2T #L0 #V0 #X #des #HL0 #H #HB
@@ -181,11 +180,11 @@ lapply (acr_gcr … H1RP H2RP A) #HCA
 lapply (acr_gcr … H1RP H2RP B) #HCB
 elim (lifts_inv_bind1 … H) -H #W0 #T0 #HW0 #HT0 #H destruct
 lapply (gcr_lifts … HL0 … HW0 HW) -HW [ @(s0 … HCB) ] #HW0
-@(s3 … HCA … (◊))
-@(s6 … HCA … (◊) (◊)) //
+lapply (s3 … HCA … a G L0 (◊)) #H @H -H
+lapply (s6 … HCA G L0 (◊) (◊) ?) // #H @H -H
 [ @(HA … HL0) //
 | lapply (s1 … HCB) -HCB #HCB
-  @(s7 … H2RP … (◊)) /2 width=1 by/
+  lapply (s7 … H2RP G L0 (◊)) /3 width=1 by/
 ]
 qed.
 

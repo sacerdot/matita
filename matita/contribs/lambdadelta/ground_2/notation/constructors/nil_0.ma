@@ -14,6 +14,6 @@
 
 (* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
 
-notation "⟠"
+notation "◊"
   non associative with precedence 46
-  for @{ 'Nil ? ? }.
+  for @{ 'Nil }.

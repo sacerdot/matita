@@ -19,7 +19,7 @@ include "basic_2/multiple/mr2_plus.ma".
 (* GENERIC TERM RELOCATION **************************************************)
 
 inductive lifts: list2 nat nat → relation term ≝
-| lifts_nil : ∀T. lifts (⟠) T T
+| lifts_nil : ∀T. lifts (◊) T T
 | lifts_cons: ∀T1,T,T2,des,d,e.
               ⇧[d,e] T1 ≡ T → lifts des T T2 → lifts ({d, e} @ des) T1 T2
 .
@@ -29,12 +29,12 @@ interpretation "generic relocation (term)"
 
 (* Basic inversion lemmas ***************************************************)
 
-fact lifts_inv_nil_aux: ∀T1,T2,des. ⇧*[des] T1 ≡ T2 → des = ⟠ → T1 = T2.
+fact lifts_inv_nil_aux: ∀T1,T2,des. ⇧*[des] T1 ≡ T2 → des = ◊ → T1 = T2.
 #T1 #T2 #des * -T1 -T2 -des //
 #T1 #T #T2 #d #e #des #_ #_ #H destruct
 qed-.
 
-lemma lifts_inv_nil: ∀T1,T2. ⇧*[⟠] T1 ≡ T2 → T1 = T2.
+lemma lifts_inv_nil: ∀T1,T2. ⇧*[◊] T1 ≡ T2 → T1 = T2.
 /2 width=3 by lifts_inv_nil_aux/ qed-.
 
 fact lifts_inv_cons_aux: ∀T1,T2,des. ⇧*[des] T1 ≡ T2 →

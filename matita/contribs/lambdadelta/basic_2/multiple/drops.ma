@@ -21,7 +21,7 @@ include "basic_2/multiple/lifts.ma".
 (* ITERATED LOCAL ENVIRONMENT SLICING ***************************************)
 
 inductive drops (s:bool): list2 nat nat → relation lenv ≝
-| drops_nil : ∀L. drops s (⟠) L L
+| drops_nil : ∀L. drops s (◊) L L
 | drops_cons: ∀L1,L,L2,des,d,e.
               drops s des L1 L → ⇩[s, d, e] L ≡ L2 → drops s ({d, e} @ des) L1 L2
 .
@@ -35,13 +35,13 @@ interpretation "iterated slicing (local environment) general"
 
 (* Basic inversion lemmas ***************************************************)
 
-fact drops_inv_nil_aux: ∀L1,L2,s,des. ⇩*[s, des] L1 ≡ L2 → des = ⟠ → L1 = L2.
+fact drops_inv_nil_aux: ∀L1,L2,s,des. ⇩*[s, des] L1 ≡ L2 → des = ◊ → L1 = L2.
 #L1 #L2 #s #des * -L1 -L2 -des //
 #L1 #L #L2 #d #e #des #_ #_ #H destruct
 qed-.
 
 (* Basic_1: was: drop1_gen_pnil *)
-lemma drops_inv_nil: ∀L1,L2,s. ⇩*[s, ⟠] L1 ≡ L2 → L1 = L2.
+lemma drops_inv_nil: ∀L1,L2,s. ⇩*[s, ◊] L1 ≡ L2 → L1 = L2.
 /2 width=4 by drops_inv_nil_aux/ qed-.
 
 fact drops_inv_cons_aux: ∀L1,L2,s,des. ⇩*[s, des] L1 ≡ L2 →

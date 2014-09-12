@@ -14,6 +14,6 @@
 
 (* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
 
-notation "◊"
-  non associative with precedence 46
-  for @{ 'Nil ? }.
+notation "hvbox( hd @ break tl )"
+  right associative with precedence 47
+  for @{ 'Cons $hd $tl }.

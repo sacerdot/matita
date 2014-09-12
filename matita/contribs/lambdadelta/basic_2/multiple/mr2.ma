@@ -18,7 +18,7 @@ include "basic_2/grammar/term_vector.ma".
 (* MULTIPLE RELOCATION WITH PAIRS *******************************************)
 
 inductive at: list2 nat nat → relation nat ≝
-| at_nil: ∀i. at (⟠) i i
+| at_nil: ∀i. at (◊) i i
 | at_lt : ∀des,d,e,i1,i2. i1 < d →
           at des i1 i2 → at ({d, e} @ des) i1 i2
 | at_ge : ∀des,d,e,i1,i2. d ≤ i1 →
@@ -30,7 +30,7 @@ interpretation "application (multiple relocation with pairs)"
 
 (* Basic inversion lemmas ***************************************************)
 
-fact at_inv_nil_aux: ∀des,i1,i2. @⦃i1, des⦄ ≡ i2 → des = ⟠ → i1 = i2.
+fact at_inv_nil_aux: ∀des,i1,i2. @⦃i1, des⦄ ≡ i2 → des = ◊ → i1 = i2.
 #des #i1 #i2 * -des -i1 -i2
 [ //
 | #des #d #e #i1 #i2 #_ #_ #H destruct
@@ -38,7 +38,7 @@ fact at_inv_nil_aux: ∀des,i1,i2. @⦃i1, des⦄ ≡ i2 → des = ⟠ → i1 = 
 ]
 qed-.
 
-lemma at_inv_nil: ∀i1,i2. @⦃i1, ⟠⦄ ≡ i2 → i1 = i2.
+lemma at_inv_nil: ∀i1,i2. @⦃i1, ◊⦄ ≡ i2 → i1 = i2.
 /2 width=3 by at_inv_nil_aux/ qed-.
 
 fact at_inv_cons_aux: ∀des,i1,i2. @⦃i1, des⦄ ≡ i2 →
