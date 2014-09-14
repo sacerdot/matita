@@ -12,20 +12,25 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/lsubc_drop.ma".
+include "basic_2/notation/relations/rajust_5.ma".
+include "basic_2/substitution/drop.ma".
 
-(* LOCAL ENVIRONMENT REFINEMENT FOR GENERIC REDUCIBILITY ********************)
+(* AJUSTMENT ****************************************************************)
 
-(* Properties concerning generic local environment slicing ******************)
+inductive fpa (s:bool): bi_relation lenv term ≝
+| fpa_fwd: ∀L,K,T,U,d,e. ⇩[s, d, e] L ≡ K → ⇧[d, e] T ≡ U → fpa s K T L U
+| fpa_bwd: ∀L,K,T,U,d,e. ⇩[s, d, e] L ≡ K → ⇧[d, e] T ≡ U → fpa s L U K T
+.
 
-(* Basic_1: was: csubc_drop1_conf_rev *)
-lemma drops_lsubc_trans: ∀RR,RS,RP. gcp RR RS RP →
-                         ∀G,L1,K1,des. ⇩*[Ⓕ, des] L1 ≡ K1 → ∀K2. G ⊢ K1 ⫃[RP] K2 →
-                         ∃∃L2. G ⊢ L1 ⫃[RP] L2 & ⇩*[Ⓕ, des] L2 ≡ K2.
-#RR #RS #RP #Hgcp #G #L1 #K1 #des #H elim H -L1 -K1 -des
-[ /2 width=3 by drops_nil, ex2_intro/
-| #L1 #L #K1 #des #d #e #_ #HLK1 #IHL #K2 #HK12
-  elim (drop_lsubc_trans … Hgcp … HLK1 … HK12) -Hgcp -K1 #K #HLK #HK2
-  elim (IHL … HLK) -IHL -HLK /3 width=5 by drops_cons, ex2_intro/
-]
-qed-.
+interpretation
+   "ajustment (restricted closure)"
+   'RAjust L1 T1 s L2 T2 = (fpa s L1 T1 L2 T2).
+
+(* Basic properties *********************************************************)
+
+lemma fpa_refl: ∀s. bi_reflexive … (fpa s).
+/2 width=4 by fpa_fwd/ qed.
+
+lemma fpa_sym: ∀s. bi_symmetric … (fpa s).
+#s #L1 #L2 #T1 #T2 * /2 width=4 by fpa_fwd, fpa_bwd/
+qed-. 

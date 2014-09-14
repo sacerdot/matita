@@ -118,9 +118,8 @@ qed.
 
 theorem csx_gcr: ∀h,g. gcr (cpx h g) (eq …) (csx h g) (csx h g).
 #h #g @mk_gcr //
-[ /2 width=8 by csx_lift/
-| /3 width=1 by csx_applv_cnx/
-|3,4,7: /2 width=1 by csx_applv_beta, csx_applv_sort, csx_applv_cast/
+[ /3 width=1 by csx_applv_cnx/
+|2,3,6: /2 width=1 by csx_applv_beta, csx_applv_sort, csx_applv_cast/
 | /2 width=7 by csx_applv_delta/
 | #G #L #V1s #V2s #HV12s #a #V #T #H #HV
   @(csx_applv_theta … HV12s) -HV12s

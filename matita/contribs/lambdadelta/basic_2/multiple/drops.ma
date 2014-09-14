@@ -16,7 +16,7 @@ include "basic_2/notation/relations/rdropstar_3.ma".
 include "basic_2/notation/relations/rdropstar_4.ma".
 include "basic_2/substitution/drop.ma".
 include "basic_2/multiple/mr2_minus.ma".
-include "basic_2/multiple/lifts.ma".
+include "basic_2/multiple/lifts_vector.ma".
 
 (* ITERATED LOCAL ENVIRONMENT SLICING ***************************************)
 
@@ -32,6 +32,19 @@ interpretation "iterated slicing (local environment) abstract"
 interpretation "iterated slicing (local environment) general"
    'RDropStar des T1 T2 = (drops true des T1 T2).
 *)
+
+definition l_liftable1: relation2 lenv term → predicate bool ≝
+                        λR,s. ∀K,T. R K T → ∀L,d,e. ⇩[s, d, e] L ≡ K →
+                        ∀U. ⇧[d, e] T ≡ U → R L U.
+
+definition l_liftables1: relation2 lenv term → predicate bool ≝
+                         λR,s. ∀L,K,des. ⇩*[s, des] L ≡ K →
+                         ∀T,U. ⇧*[des] T ≡ U → R K T → R L U.
+
+definition l_liftables1_all: relation2 lenv term → predicate bool ≝
+                             λR,s. ∀L,K,des. ⇩*[s, des] L ≡ K →
+                             ∀Ts,Us. ⇧*[des] Ts ≡ Us → 
+                             all … (R K) Ts → all … (R L) Us.
 
 (* Basic inversion lemmas ***************************************************)
 
@@ -91,6 +104,19 @@ lemma drops_skip: ∀L1,L2,s,des. ⇩*[s, des] L1 ≡ L2 → ∀V1,V2. ⇧*[des]
 | #L1 #L #L2 #des #d #e #_ #HL2 #IHL #V1 #V2 #H #I
   elim (lifts_inv_cons … H) -H /3 width=5 by drop_skip, drops_cons/
 ].
+qed.
+
+lemma l1_liftable_liftables: ∀R,s. l_liftable1 R s → l_liftables1 R s.
+#R #s #HR #L #K #des #H elim H -L -K -des
+[ #L #T #U #H #HT <(lifts_inv_nil … H) -H //
+| #L1 #L #L2 #des #d #e #_ #HL2 #IHL #T2 #T1 #H #HLT2
+  elim (lifts_inv_cons … H) -H /3 width=10 by/
+]
+qed.
+
+lemma l1_liftables_liftables_all: ∀R,s. l_liftables1 R s → l_liftables1_all R s.
+#R #s #HR #L #K #des #HLK #Ts #Us #H elim H -Ts -Us normalize //
+#Ts #Us #T #U #HTU #_ #IHTUs * /3 width=7 by conj/
 qed.
 
 (* Basic_1: removed theorems 1: drop1_getl_trans *)

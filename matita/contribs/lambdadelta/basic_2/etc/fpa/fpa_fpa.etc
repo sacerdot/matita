@@ -12,20 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/lsubc_drop.ma".
+include "basic_2/substitution/fpa.ma".
 
-(* LOCAL ENVIRONMENT REFINEMENT FOR GENERIC REDUCIBILITY ********************)
+(* AJUSTMENT ****************************************************************)
 
-(* Properties concerning generic local environment slicing ******************)
+(* Main properties **********************************************************)
 
-(* Basic_1: was: csubc_drop1_conf_rev *)
-lemma drops_lsubc_trans: ∀RR,RS,RP. gcp RR RS RP →
-                         ∀G,L1,K1,des. ⇩*[Ⓕ, des] L1 ≡ K1 → ∀K2. G ⊢ K1 ⫃[RP] K2 →
-                         ∃∃L2. G ⊢ L1 ⫃[RP] L2 & ⇩*[Ⓕ, des] L2 ≡ K2.
-#RR #RS #RP #Hgcp #G #L1 #K1 #des #H elim H -L1 -K1 -des
-[ /2 width=3 by drops_nil, ex2_intro/
-| #L1 #L #K1 #des #d #e #_ #HLK1 #IHL #K2 #HK12
-  elim (drop_lsubc_trans … Hgcp … HLK1 … HK12) -Hgcp -K1 #K #HLK #HK2
-  elim (IHL … HLK) -IHL -HLK /3 width=5 by drops_cons, ex2_intro/
-]
-qed-.
+theorem fpa_conf: ∀s. bi_confluent … (fpa s).
+/3 width=4 by fpa_sym, ex2_2_intro/ qed-.

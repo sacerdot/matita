@@ -23,52 +23,44 @@ include "basic_2/computation/lsubc_drops.ma".
 (* Main properties **********************************************************)
 
 (* Basic_1: was: sc3_arity_csubc *)
-theorem acr_aaa_csubc_lifts: ∀RR,RS,RP.
-                             gcp RR RS RP → gcr RR RS RP RP →
-                             ∀G,L1,T,A. ⦃G, L1⦄ ⊢ T ⁝ A → ∀L0,des. ⇩*[Ⓕ, des] L0 ≡ L1 →
-                             ∀T0. ⇧*[des] T ≡ T0 → ∀L2. G ⊢ L2 ⫃[RP] L0 →
-                             ⦃G, L2, T0⦄ ϵ[RP] 〚A〛.
+theorem acr_aaa_csubc: ∀RR,RS,RP.
+                       gcp RR RS RP → gcr RR RS RP RP →
+                       ∀G,L1,T,A. ⦃G, L1⦄ ⊢ T ⁝ A →
+                       ∀L2. G ⊢ L2 ⫃[RP] L1 → ⦃G, L2, T⦄ ϵ[RP] 〚A〛.
 #RR #RS #RP #H1RP #H2RP #G #L1 #T #A #H elim H -G -L1 -T -A
-[ #G #L #k #L0 #des #HL0 #X #H #L2 #HL20
-  >(lifts_inv_sort1 … H) -H
+[ #G #L1 #k #L2 #HL21
   lapply (acr_gcr … H1RP H2RP (⓪)) #HAtom
   lapply (s4 … HAtom G L2 (◊)) /2 width=1 by/
-| #I #G #L1 #K1 #V1 #B #i #HLK1 #HKV1B #IHB #L0 #des #HL01 #X #H #L2 #HL20
+| #I #G #L1 #K1 #V1 #B #i #HLK1 #HKV1B #IHB #L2 #HL21
   lapply (acr_gcr … H1RP H2RP B) #HB
-  elim (lifts_inv_lref1 … H) -H #i1 #Hi1 #H destruct
-  lapply (drop_fwd_drop2 … HLK1) #HK1b
-  elim (drops_drop_trans … HL01 … HLK1) #X #des1 #i0 #HL0 #H #Hi0 #Hdes1
-  >(at_mono … Hi1 … Hi0) -i1
-  elim (drops_inv_skip2 … Hdes1 … H) -des1 #K0 #V0 #des0 #Hdes0 #HK01 #HV10 #H destruct
-  elim (lsubc_drop_O1_trans … HL20 … HL0) -HL0 #X #HLK2 #H
+  elim (lsubc_drop_O1_trans … HL21 … HLK1) -L1 #X #HLK2 #H
   elim (lsubc_inv_pair2 … H) -H *
-  [ #K2 #HK20 #H destruct
-    elim (lift_total V0 0 (i0 +1)) #V #HV0
-    elim (lifts_lift_trans  … Hi0 … Hdes0 … HV10 … HV0) -HV10 #V2 #HV12 #HV2
-    lapply (s5 … HB ? G ? ? (◊) … HV0 HLK2) /3 width=7 by drops_cons, lifts_cons/ (* Note: uses IHB HL20 V2 HV0 *)
-  | -HLK1 -IHB -HL01 -HL20 -HK1b -Hi0 -Hdes0
-    #K2 #V2 #A2 #HKV2A #H1KV0A #H2KV0A #_ #H1 #H2 destruct
-    lapply (drop_fwd_drop2 … HLK2) #HLK2b
-    lapply (aaa_lifts … HK01 … HV10 HKV1B) -HKV1B -HK01 -HV10 #HKV0B
-    lapply (aaa_mono … H2KV0A … HKV0B) #H destruct -H2KV0A -HKV0B
-    elim (lift_total V0 0 (i0 +1)) #V3 #HV03
-    elim (lift_total V2 0 (i0 +1)) #V #HV2
-    lapply (s5 … HB ? G ? ? (◊) … (ⓝV3.V) … HLK2) /2 width=1 by lift_flat/
-    lapply (s7 … HB G L2 (◊)) /3 width=7 by gcr_lift/
+  [ #K2 #HK21 #H destruct -HKV1B
+    lapply (drop_fwd_drop2 … HLK2) #H
+    elim (lift_total V1 0 (i +1)) #V #HV1
+    lapply (s5 … HB ? G ? ? (◊) … HV1 HLK2) /3 width=7 by s0/
+  | #K2 #V2 #A2 #HVA2 #H1V1A2 #H2V1A2 #_ #H1 #H2 destruct -IHB
+    lapply (aaa_mono … H2V1A2 … HKV1B) #H destruct -H2V1A2 -HKV1B
+    lapply (drop_fwd_drop2 … HLK2) #H
+    elim (lift_total V1 0 (i +1)) #V3 #HV13
+    elim (lift_total V2 0 (i +1)) #V #HV2
+    lapply (s5 … HB ? G ? ? (◊) … (ⓝV3.V) … HLK2) /2 width=1 by lift_flat/ -HLK2 
+    lapply (s7 … HB G L2 (◊)) /3 width=7 by s0/
   ]
-| #a #G #L #V #T #B #A #_ #_ #IHB #IHA #L0 #des #HL0 #X #H #L2 #HL20
-  elim (lifts_inv_bind1 … H) -H #V0 #T0 #HV0 #HT0 #H destruct
+| #a #G #L1 #V #T #B #A #_ #_ #IHB #IHA #L2 #HL21
   lapply (acr_gcr … H1RP H2RP A) #HA
   lapply (acr_gcr … H1RP H2RP B) #HB
   lapply (s1 … HB) -HB #HB
-  lapply (s6 … HA G L2 (◊) (◊)) /4 width=5 by lsubc_pair, drops_skip, liftv_nil/
-| #a #G #L #W #T #B #A #HLWB #_ #IHB #IHA #L0 #des #HL0 #X #H #L2 #HL02
-  elim (lifts_inv_bind1 … H) -H #W0 #T0 #HW0 #HT0 #H destruct
-  @(acr_abst  … H1RP H2RP) /2 width=5 by/
+  lapply (s6 … HA G L2 (◊) (◊)) /4 width=1 by lsubc_pair/
+| #a #G #L1 #W #T #B #A #HLWB #_ #IHB #IHA #L2 #HL21
+  @(acr_abst  … H1RP H2RP) [ /2 width=5 by/ ]
   #L3 #V3 #W3 #T3 #des3 #HL32 #HW03 #HT03 #H1B #H2B
-  elim (drops_lsubc_trans … H1RP … HL32 … HL02) -L2 #L2 #HL32 #HL20
-  lapply (aaa_lifts … L2 W3 … (des @@ des3) … HLWB) -HLWB /2 width=4 by drops_trans, lifts_trans/ #HLW2B
-  @(IHA (L2. ⓛW3) … (des + 1 @@ des3 + 1)) -IHA
+  @(gcr_lifts … L2.ⓓⓝW.V3,T … HL32)
+  elim (drops_lsubc_trans … H1RP H2RP … HL32 … HL21) -L2 #L2 #HL32 #HL21
+  lapply (aaa_lifts … L2 W3 … des3 … HLWB) -HLWB /2 width=4 by drops_trans, lifts_trans/ #HLW2B
+  @(s0 
+  
+  @(IHA (L2. ⓛW3) … (des3 + 1)) -IHA
   /3 width=5 by lsubc_beta, drops_trans, drops_skip, lifts_trans/
 | #G #L #V #T #B #A #_ #_ #IHB #IHA #L0 #des #HL0 #X #H #L2 #HL20
   elim (lifts_inv_flat1 … H) -H #V0 #T0 #HV0 #HT0 #H destruct

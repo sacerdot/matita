@@ -111,8 +111,9 @@ qed-.
 
 theorem csx_gcp: ∀h,g. gcp (cpx h g) (eq …) (csx h g).
 #h #g @mk_gcp
-[ /3 width=13 by cnx_lift/
+[ normalize /3 width=13 by cnx_lift/
 | #G #L elim (deg_total h g 0) /3 width=8 by cnx_sort_iter, ex_intro/
+| /2 width=8 by csx_lift/
 | /2 width=3 by csx_fwd_flat_dx/
 ]
 qed.

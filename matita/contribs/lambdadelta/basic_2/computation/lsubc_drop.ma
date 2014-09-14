@@ -41,11 +41,10 @@ lemma lsubc_drop_O1_trans: ∀RP,G,L1,L2. G ⊢ L1 ⫃[RP] L2 → ∀K2,s,e. ⇩
 qed-.
 
 (* Basic_1: was: csubc_drop_conf_rev *)
-lemma drop_lsubc_trans: ∀RR,RS,RP.
-                        gcp RR RS RP → gcr RR RS RP RP →
+lemma drop_lsubc_trans: ∀RR,RS,RP. gcp RR RS RP →
                         ∀G,L1,K1,d,e. ⇩[Ⓕ, d, e] L1 ≡ K1 → ∀K2. G ⊢ K1 ⫃[RP] K2 →
                         ∃∃L2. G ⊢ L1 ⫃[RP] L2 & ⇩[Ⓕ, d, e] L2 ≡ K2.
-#RR #RS #RP #Hgcp #Hgcr #G #L1 #K1 #d #e #H elim H -L1 -K1 -d -e
+#RR #RS #RP #Hgcp #G #L1 #K1 #d #e #H elim H -L1 -K1 -d -e
 [ #d #e #He #X #H elim (lsubc_inv_atom1 … H) -H
   >He /2 width=3 by ex2_intro/
 | #L1 #I #V1 #X #H
@@ -63,9 +62,8 @@ lemma drop_lsubc_trans: ∀RR,RS,RP.
   | #K2 #V #W2 #A #HV2 #H1W2 #H2W2 #HK12 #H1 #H2 #H3 destruct
     elim (lift_inv_flat1 … HV21) -HV21 #W3 #V3 #HW23 #HV3 #H destruct
     elim (IHLK1 … HK12) #K #HL1K #HK2
-    lapply (acr_gcr … Hgcp Hgcr A) -Hgcp -Hgcr #HA
-    lapply (s0 … HA … HV2 … HLK1 HV3) -HV2
-    lapply (s0 … HA … H1W2 … HLK1 HW23) -H1W2
+    lapply (gcr_lift … Hgcp … HV2 … HLK1 … HV3) -HV2
+    lapply (gcr_lift … Hgcp … H1W2 … HLK1 … HW23) -H1W2
     /4 width=11 by lsubc_beta, aaa_lift, drop_skip, ex2_intro/
   ]
 ]
