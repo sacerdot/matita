@@ -210,9 +210,9 @@ qed-.
 (* Properties on basic slicing **********************************************)
 
 lemma lsuby_drop_trans_be: ∀L1,L2,d,e. L1 ⊆[d, e] L2 →
-                           ∀I2,K2,W,s,i. ⇩[s, 0, i] L2 ≡ K2.ⓑ{I2}W →
+                           ∀I2,K2,W,s,i. ⬇[s, 0, i] L2 ≡ K2.ⓑ{I2}W →
                            d ≤ i → i < d + e →
-                           ∃∃I1,K1. K1 ⊆[0, ⫰(d+e-i)] K2 & ⇩[s, 0, i] L1 ≡ K1.ⓑ{I1}W.
+                           ∃∃I1,K1. K1 ⊆[0, ⫰(d+e-i)] K2 & ⬇[s, 0, i] L1 ≡ K1.ⓑ{I1}W.
 #L1 #L2 #d #e #H elim H -L1 -L2 -d -e
 [ #L1 #d #e #J2 #K2 #W #s #i #H
   elim (drop_inv_atom1 … H) -H #H destruct

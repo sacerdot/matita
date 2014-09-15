@@ -22,7 +22,7 @@ include "basic_2/reduction/crr.ma".
 (* extended reducible terms *)
 inductive crx (h) (g) (G:genv): relation2 lenv term ≝
 | crx_sort   : ∀L,k,l. deg h g k (l+1) → crx h g G L (⋆k)
-| crx_delta  : ∀I,L,K,V,i. ⇩[i] L ≡ K.ⓑ{I}V → crx h g G L (#i)
+| crx_delta  : ∀I,L,K,V,i. ⬇[i] L ≡ K.ⓑ{I}V → crx h g G L (#i)
 | crx_appl_sn: ∀L,V,T. crx h g G L V → crx h g G L (ⓐV.T)
 | crx_appl_dx: ∀L,V,T. crx h g G L T → crx h g G L (ⓐV.T)
 | crx_ri2    : ∀I,L,V,T. ri2 I → crx h g G L (②{I}V.T)
@@ -64,7 +64,7 @@ lemma crx_inv_sort: ∀h,g,G,L,k. ⦃G, L⦄ ⊢ ➡[h, g] 𝐑⦃⋆k⦄ → �
 /2 width=5 by crx_inv_sort_aux/ qed-.
 
 fact crx_inv_lref_aux: ∀h,g,G,L,T,i. ⦃G, L⦄ ⊢ ➡[h, g] 𝐑⦃T⦄ → T = #i →
-                       ∃∃I,K,V. ⇩[i] L ≡ K.ⓑ{I}V.
+                       ∃∃I,K,V. ⬇[i] L ≡ K.ⓑ{I}V.
 #h #g #G #L #T #j * -L -T
 [ #L #k #l #_ #H destruct
 | #I #L #K #V #i #HLK #H destruct /2 width=4 by ex1_3_intro/
@@ -78,7 +78,7 @@ fact crx_inv_lref_aux: ∀h,g,G,L,T,i. ⦃G, L⦄ ⊢ ➡[h, g] 𝐑⦃T⦄ → 
 ]
 qed-.
 
-lemma crx_inv_lref: ∀h,g,G,L,i. ⦃G, L⦄ ⊢ ➡[h, g] 𝐑⦃#i⦄ → ∃∃I,K,V. ⇩[i] L ≡ K.ⓑ{I}V.
+lemma crx_inv_lref: ∀h,g,G,L,i. ⦃G, L⦄ ⊢ ➡[h, g] 𝐑⦃#i⦄ → ∃∃I,K,V. ⬇[i] L ≡ K.ⓑ{I}V.
 /2 width=6 by crx_inv_lref_aux/ qed-.
 
 fact crx_inv_gref_aux: ∀h,g,G,L,T,p. ⦃G, L⦄ ⊢ ➡[h, g] 𝐑⦃T⦄ → T = §p → ⊥.

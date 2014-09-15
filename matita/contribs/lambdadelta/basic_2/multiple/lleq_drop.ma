@@ -49,34 +49,34 @@ lemma lleq_llpx_sn_conf: ∀R. lleq_transitive R →
 (* Advanced inversion lemmas ************************************************)
 
 lemma lleq_inv_lref_ge_dx: ∀L1,L2,d,i. L1 ≡[#i, d] L2 → d ≤ i →
-                           ∀I,K2,V. ⇩[i] L2 ≡ K2.ⓑ{I}V →
-                           ∃∃K1. ⇩[i] L1 ≡ K1.ⓑ{I}V & K1 ≡[V, 0] K2.
+                           ∀I,K2,V. ⬇[i] L2 ≡ K2.ⓑ{I}V →
+                           ∃∃K1. ⬇[i] L1 ≡ K1.ⓑ{I}V & K1 ≡[V, 0] K2.
 #L1 #L2 #d #i #H #Hdi #I #K2 #V #HLK2 elim (llpx_sn_inv_lref_ge_dx … H … HLK2) -L2
 /2 width=3 by ex2_intro/
 qed-.
 
 lemma lleq_inv_lref_ge_sn: ∀L1,L2,d,i. L1 ≡[#i, d] L2 → d ≤ i →
-                           ∀I,K1,V. ⇩[i] L1 ≡ K1.ⓑ{I}V →
-                           ∃∃K2. ⇩[i] L2 ≡ K2.ⓑ{I}V & K1 ≡[V, 0] K2.
+                           ∀I,K1,V. ⬇[i] L1 ≡ K1.ⓑ{I}V →
+                           ∃∃K2. ⬇[i] L2 ≡ K2.ⓑ{I}V & K1 ≡[V, 0] K2.
 #L1 #L2 #d #i #H #Hdi #I1 #K1 #V #HLK1 elim (llpx_sn_inv_lref_ge_sn … H … HLK1) -L1
 /2 width=3 by ex2_intro/
 qed-.
 
 lemma lleq_inv_lref_ge_bi: ∀L1,L2,d,i. L1 ≡[#i, d] L2 → d ≤ i →
                            ∀I1,I2,K1,K2,V1,V2.
-                           ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 →
+                           ⬇[i] L1 ≡ K1.ⓑ{I1}V1 → ⬇[i] L2 ≡ K2.ⓑ{I2}V2 →
                            ∧∧ I1 = I2 & K1 ≡[V1, 0] K2 & V1 = V2.
 /2 width=8 by llpx_sn_inv_lref_ge_bi/ qed-.
 
 lemma lleq_inv_lref_ge: ∀L1,L2,d,i. L1 ≡[#i, d] L2 → d ≤ i →
-                        ∀I,K1,K2,V. ⇩[i] L1 ≡ K1.ⓑ{I}V → ⇩[i] L2 ≡ K2.ⓑ{I}V →
+                        ∀I,K1,K2,V. ⬇[i] L1 ≡ K1.ⓑ{I}V → ⬇[i] L2 ≡ K2.ⓑ{I}V →
                         K1 ≡[V, 0] K2.
 #L1 #L2 #d #i #HL12 #Hdi #I #K1 #K2 #V #HLK1 #HLK2
 elim (lleq_inv_lref_ge_bi … HL12 … HLK1 HLK2) //
 qed-.
 
 lemma lleq_inv_S: ∀L1,L2,T,d. L1 ≡[T, d+1] L2 →
-                  ∀I,K1,K2,V. ⇩[d] L1 ≡ K1.ⓑ{I}V → ⇩[d] L2 ≡ K2.ⓑ{I}V →
+                  ∀I,K1,K2,V. ⬇[d] L1 ≡ K1.ⓑ{I}V → ⬇[d] L2 ≡ K2.ⓑ{I}V →
                   K1 ≡[V, 0] K2 → L1 ≡[T, d] L2.
 /2 width=9 by llpx_sn_inv_S/ qed-.
 
@@ -87,17 +87,17 @@ lemma lleq_inv_bind_O: ∀a,I,L1,L2,V,T. L1 ≡[ⓑ{a,I}V.T, 0] L2 →
 (* Advanced forward lemmas **************************************************)
 
 lemma lleq_fwd_lref_dx: ∀L1,L2,d,i. L1 ≡[#i, d] L2 →
-                        ∀I,K2,V. ⇩[i] L2 ≡ K2.ⓑ{I}V →
+                        ∀I,K2,V. ⬇[i] L2 ≡ K2.ⓑ{I}V →
                         i < d ∨
-                        ∃∃K1. ⇩[i] L1 ≡ K1.ⓑ{I}V & K1 ≡[V, 0] K2 & d ≤ i.
+                        ∃∃K1. ⬇[i] L1 ≡ K1.ⓑ{I}V & K1 ≡[V, 0] K2 & d ≤ i.
 #L1 #L2 #d #i #H #I #K2 #V #HLK2 elim (llpx_sn_fwd_lref_dx … H … HLK2) -L2
 [ | * ] /3 width=3 by ex3_intro, or_intror, or_introl/
 qed-.
 
 lemma lleq_fwd_lref_sn: ∀L1,L2,d,i. L1 ≡[#i, d] L2 →
-                        ∀I,K1,V. ⇩[i] L1 ≡ K1.ⓑ{I}V →
+                        ∀I,K1,V. ⬇[i] L1 ≡ K1.ⓑ{I}V →
                         i < d ∨
-                        ∃∃K2. ⇩[i] L2 ≡ K2.ⓑ{I}V & K1 ≡[V, 0] K2 & d ≤ i.
+                        ∃∃K2. ⬇[i] L2 ≡ K2.ⓑ{I}V & K1 ≡[V, 0] K2 & d ≤ i.
 #L1 #L2 #d #i #H #I #K1 #V #HLK1 elim (llpx_sn_fwd_lref_sn … H … HLK1) -L1
 [ | * ] /3 width=3 by ex3_intro, or_intror, or_introl/
 qed-.
@@ -109,30 +109,30 @@ lemma lleq_fwd_bind_O_dx: ∀a,I,L1,L2,V,T. L1 ≡[ⓑ{a,I}V.T, 0] L2 →
 (* Properties on relocation *************************************************)
 
 lemma lleq_lift_le: ∀K1,K2,T,dt. K1 ≡[T, dt] K2 →
-                    ∀L1,L2,d,e. ⇩[Ⓕ, d, e] L1 ≡ K1 → ⇩[Ⓕ, d, e] L2 ≡ K2 →
-                    ∀U. ⇧[d, e] T ≡ U → dt ≤ d → L1 ≡[U, dt] L2.
+                    ∀L1,L2,d,e. ⬇[Ⓕ, d, e] L1 ≡ K1 → ⬇[Ⓕ, d, e] L2 ≡ K2 →
+                    ∀U. ⬆[d, e] T ≡ U → dt ≤ d → L1 ≡[U, dt] L2.
 /3 width=10 by llpx_sn_lift_le, lift_mono/ qed-.
 
 lemma lleq_lift_ge: ∀K1,K2,T,dt. K1 ≡[T, dt] K2 →
-                    ∀L1,L2,d,e. ⇩[Ⓕ, d, e] L1 ≡ K1 → ⇩[Ⓕ, d, e] L2 ≡ K2 →
-                    ∀U. ⇧[d, e] T ≡ U → d ≤ dt → L1 ≡[U, dt+e] L2.
+                    ∀L1,L2,d,e. ⬇[Ⓕ, d, e] L1 ≡ K1 → ⬇[Ⓕ, d, e] L2 ≡ K2 →
+                    ∀U. ⬆[d, e] T ≡ U → d ≤ dt → L1 ≡[U, dt+e] L2.
 /2 width=9 by llpx_sn_lift_ge/ qed-.
 
 (* Inversion lemmas on relocation *******************************************)
 
 lemma lleq_inv_lift_le: ∀L1,L2,U,dt. L1 ≡[U, dt] L2 →
-                        ∀K1,K2,d,e. ⇩[Ⓕ, d, e] L1 ≡ K1 → ⇩[Ⓕ, d, e] L2 ≡ K2 →
-                        ∀T. ⇧[d, e] T ≡ U → dt ≤ d → K1 ≡[T, dt] K2.
+                        ∀K1,K2,d,e. ⬇[Ⓕ, d, e] L1 ≡ K1 → ⬇[Ⓕ, d, e] L2 ≡ K2 →
+                        ∀T. ⬆[d, e] T ≡ U → dt ≤ d → K1 ≡[T, dt] K2.
 /3 width=10 by llpx_sn_inv_lift_le, ex2_intro/ qed-.
 
 lemma lleq_inv_lift_be: ∀L1,L2,U,dt. L1 ≡[U, dt] L2 →
-                        ∀K1,K2,d,e. ⇩[Ⓕ, d, e] L1 ≡ K1 → ⇩[Ⓕ, d, e] L2 ≡ K2 →
-                        ∀T. ⇧[d, e] T ≡ U → d ≤ dt → dt ≤ yinj d + e → K1 ≡[T, d] K2.
+                        ∀K1,K2,d,e. ⬇[Ⓕ, d, e] L1 ≡ K1 → ⬇[Ⓕ, d, e] L2 ≡ K2 →
+                        ∀T. ⬆[d, e] T ≡ U → d ≤ dt → dt ≤ yinj d + e → K1 ≡[T, d] K2.
 /2 width=11 by llpx_sn_inv_lift_be/ qed-.
 
 lemma lleq_inv_lift_ge: ∀L1,L2,U,dt. L1 ≡[U, dt] L2 →
-                        ∀K1,K2,d,e. ⇩[Ⓕ, d, e] L1 ≡ K1 → ⇩[Ⓕ, d, e] L2 ≡ K2 →
-                        ∀T. ⇧[d, e] T ≡ U → yinj d + e ≤ dt → K1 ≡[T, dt-e] K2.
+                        ∀K1,K2,d,e. ⬇[Ⓕ, d, e] L1 ≡ K1 → ⬇[Ⓕ, d, e] L2 ≡ K2 →
+                        ∀T. ⬆[d, e] T ≡ U → yinj d + e ≤ dt → K1 ≡[T, dt-e] K2.
 /2 width=9 by llpx_sn_inv_lift_ge/ qed-.
 
 (* Inversion lemmas on negated lazy quivalence for local environments *******)

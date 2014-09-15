@@ -21,7 +21,7 @@ inductive llpx_sn (R:relation3 lenv term term): relation4 ynat term lenv lenv �
 | llpx_sn_sort: ∀L1,L2,d,k. |L1| = |L2| → llpx_sn R d (⋆k) L1 L2
 | llpx_sn_skip: ∀L1,L2,d,i. |L1| = |L2| → yinj i < d → llpx_sn R d (#i) L1 L2
 | llpx_sn_lref: ∀I,L1,L2,K1,K2,V1,V2,d,i. d ≤ yinj i →
-                ⇩[i] L1 ≡ K1.ⓑ{I}V1 → ⇩[i] L2 ≡ K2.ⓑ{I}V2 →
+                ⬇[i] L1 ≡ K1.ⓑ{I}V1 → ⬇[i] L2 ≡ K2.ⓑ{I}V2 →
                 llpx_sn R (yinj 0) V1 K1 K2 → R K1 V1 V2 → llpx_sn R d (#i) L1 L2
 | llpx_sn_free: ∀L1,L2,d,i. |L1| ≤ i → |L2| ≤ i → |L1| = |L2| → llpx_sn R d (#i) L1 L2
 | llpx_sn_gref: ∀L1,L2,d,p. |L1| = |L2| → llpx_sn R d (§p) L1 L2
@@ -81,13 +81,13 @@ normalize //
 qed-.
 
 lemma llpx_sn_fwd_drop_sn: ∀R,L1,L2,T,d. llpx_sn R d T L1 L2 →
-                            ∀K1,i. ⇩[i] L1 ≡ K1 → ∃K2. ⇩[i] L2 ≡ K2.
+                            ∀K1,i. ⬇[i] L1 ≡ K1 → ∃K2. ⬇[i] L2 ≡ K2.
 #R #L1 #L2 #T #d #H #K1 #i #HLK1 lapply (llpx_sn_fwd_length … H) -H
 #HL12 lapply (drop_fwd_length_le2 … HLK1) -HLK1 /2 width=1 by drop_O1_le/
 qed-.
 
 lemma llpx_sn_fwd_drop_dx: ∀R,L1,L2,T,d. llpx_sn R d T L1 L2 →
-                            ∀K2,i. ⇩[i] L2 ≡ K2 → ∃K1. ⇩[i] L1 ≡ K1.
+                            ∀K2,i. ⬇[i] L2 ≡ K2 → ∃K1. ⬇[i] L1 ≡ K1.
 #R #L1 #L2 #T #d #H #K2 #i #HLK2 lapply (llpx_sn_fwd_length … H) -H
 #HL12 lapply (drop_fwd_length_le2 … HLK2) -HLK2 /2 width=1 by drop_O1_le/
 qed-.
@@ -95,8 +95,8 @@ qed-.
 fact llpx_sn_fwd_lref_aux: ∀R,L1,L2,X,d. llpx_sn R d X L1 L2 → ∀i. X = #i →
                            ∨∨ |L1| ≤ i ∧ |L2| ≤ i
                             | yinj i < d
-                            | ∃∃I,K1,K2,V1,V2. ⇩[i] L1 ≡ K1.ⓑ{I}V1 &
-                                               ⇩[i] L2 ≡ K2.ⓑ{I}V2 &
+                            | ∃∃I,K1,K2,V1,V2. ⬇[i] L1 ≡ K1.ⓑ{I}V1 &
+                                               ⬇[i] L2 ≡ K2.ⓑ{I}V2 &
                                                llpx_sn R (yinj 0) V1 K1 K2 &
                                                R K1 V1 V2 & d ≤ yinj i.
 #R #L1 #L2 #X #d * -L1 -L2 -X -d
@@ -114,8 +114,8 @@ qed-.
 lemma llpx_sn_fwd_lref: ∀R,L1,L2,d,i. llpx_sn R d (#i) L1 L2 →
                         ∨∨ |L1| ≤ i ∧ |L2| ≤ i
                          | yinj i < d
-                         | ∃∃I,K1,K2,V1,V2. ⇩[i] L1 ≡ K1.ⓑ{I}V1 &
-                                            ⇩[i] L2 ≡ K2.ⓑ{I}V2 &
+                         | ∃∃I,K1,K2,V1,V2. ⬇[i] L1 ≡ K1.ⓑ{I}V1 &
+                                            ⬇[i] L2 ≡ K2.ⓑ{I}V2 &
                                             llpx_sn R (yinj 0) V1 K1 K2 &
                                             R K1 V1 V2 & d ≤ yinj i.
 /2 width=3 by llpx_sn_fwd_lref_aux/ qed-.
@@ -163,7 +163,7 @@ lemma llpx_sn_Y: ∀R,T,L1,L2. |L1| = |L2| → llpx_sn R (∞) T L1 L2.
 @IH -IH // normalize /2 width=1 by eq_f2/
 qed-.
 
-lemma llpx_sn_ge_up: ∀R,L1,L2,U,dt. llpx_sn R dt U L1 L2 → ∀T,d,e. ⇧[d, e] T ≡ U →
+lemma llpx_sn_ge_up: ∀R,L1,L2,U,dt. llpx_sn R dt U L1 L2 → ∀T,d,e. ⬆[d, e] T ≡ U →
                      dt ≤ d + e → llpx_sn R d U L1 L2.
 #R #L1 #L2 #U #dt #H elim H -L1 -L2 -U -dt
 [ #L1 #L2 #dt #k #HL12 #X #d #e #H #_ >(lift_inv_sort2 … H) -H /2 width=1 by llpx_sn_sort/

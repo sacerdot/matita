@@ -35,7 +35,7 @@ qed.
 (* Advanced forward lemmas **************************************************)
 
 lemma lsx_fwd_lref_be: ∀h,g,I,G,L,d,i. d ≤ yinj i → G ⊢ ⬊*[h, g, #i, d] L →
-                       ∀K,V. ⇩[i] L ≡ K.ⓑ{I}V → G ⊢ ⬊*[h, g, V, 0] K.
+                       ∀K,V. ⬇[i] L ≡ K.ⓑ{I}V → G ⊢ ⬊*[h, g, V, 0] K.
 #h #g #I #G #L #d #i #Hdi #H @(lsx_ind … H) -L
 #L1 #_ #IHL1 #K1 #V #HLK1 @lsx_intro
 #K2 #HK12 #HnK12 lapply (drop_fwd_drop2 … HLK1)
@@ -49,8 +49,8 @@ qed-.
 (* Properties on relocation *************************************************)
 
 lemma lsx_lift_le: ∀h,g,G,K,T,U,dt,d,e. dt ≤ yinj d →
-                   ⇧[d, e] T ≡ U → G ⊢ ⬊*[h, g, T, dt] K →
-                   ∀L. ⇩[Ⓕ, d, e] L ≡ K → G ⊢ ⬊*[h, g, U, dt] L.
+                   ⬆[d, e] T ≡ U → G ⊢ ⬊*[h, g, T, dt] K →
+                   ∀L. ⬇[Ⓕ, d, e] L ≡ K → G ⊢ ⬊*[h, g, U, dt] L.
 #h #g #G #K #T #U #dt #d #e #Hdtd #HTU #H @(lsx_ind … H) -K
 #K1 #_ #IHK1 #L1 #HLK1 @lsx_intro
 #L2 #HL12 #HnU elim (lpx_drop_conf … HLK1 … HL12) -HL12
@@ -58,8 +58,8 @@ lemma lsx_lift_le: ∀h,g,G,K,T,U,dt,d,e. dt ≤ yinj d →
 qed-.
 
 lemma lsx_lift_ge: ∀h,g,G,K,T,U,dt,d,e. yinj d ≤ dt →
-                   ⇧[d, e] T ≡ U → G ⊢ ⬊*[h, g, T, dt] K →
-                   ∀L. ⇩[Ⓕ, d, e] L ≡ K → G ⊢ ⬊*[h, g, U, dt + e] L.
+                   ⬆[d, e] T ≡ U → G ⊢ ⬊*[h, g, T, dt] K →
+                   ∀L. ⬇[Ⓕ, d, e] L ≡ K → G ⊢ ⬊*[h, g, U, dt + e] L.
 #h #g #G #K #T #U #dt #d #e #Hddt #HTU #H @(lsx_ind … H) -K
 #K1 #_ #IHK1 #L1 #HLK1 @lsx_intro
 #L2 #HL12 #HnU elim (lpx_drop_conf … HLK1 … HL12) -HL12
@@ -69,8 +69,8 @@ qed-.
 (* Inversion lemmas on relocation *******************************************)
 
 lemma lsx_inv_lift_le: ∀h,g,G,L,T,U,dt,d,e. dt ≤ yinj d →
-                       ⇧[d, e] T ≡ U → G ⊢ ⬊*[h, g, U, dt] L →
-                       ∀K. ⇩[Ⓕ, d, e] L ≡ K → G ⊢ ⬊*[h, g, T, dt] K.
+                       ⬆[d, e] T ≡ U → G ⊢ ⬊*[h, g, U, dt] L →
+                       ∀K. ⬇[Ⓕ, d, e] L ≡ K → G ⊢ ⬊*[h, g, T, dt] K.
 #h #g #G #L #T #U #dt #d #e #Hdtd #HTU #H @(lsx_ind … H) -L
 #L1 #_ #IHL1 #K1 #HLK1 @lsx_intro
 #K2 #HK12 #HnT elim (drop_lpx_trans … HLK1 … HK12) -HK12
@@ -78,8 +78,8 @@ lemma lsx_inv_lift_le: ∀h,g,G,L,T,U,dt,d,e. dt ≤ yinj d →
 qed-.
 
 lemma lsx_inv_lift_be: ∀h,g,G,L,T,U,dt,d,e. yinj d ≤ dt → dt ≤ d + e →
-                       ⇧[d, e] T ≡ U → G ⊢ ⬊*[h, g, U, dt] L →
-                       ∀K. ⇩[Ⓕ, d, e] L ≡ K → G ⊢ ⬊*[h, g, T, d] K.
+                       ⬆[d, e] T ≡ U → G ⊢ ⬊*[h, g, U, dt] L →
+                       ∀K. ⬇[Ⓕ, d, e] L ≡ K → G ⊢ ⬊*[h, g, T, d] K.
 #h #g #G #L #T #U #dt #d #e #Hddt #Hdtde #HTU #H @(lsx_ind … H) -L
 #L1 #_ #IHL1 #K1 #HLK1 @lsx_intro
 #K2 #HK12 #HnT elim (drop_lpx_trans … HLK1 … HK12) -HK12
@@ -87,8 +87,8 @@ lemma lsx_inv_lift_be: ∀h,g,G,L,T,U,dt,d,e. yinj d ≤ dt → dt ≤ d + e →
 qed-.
 
 lemma lsx_inv_lift_ge: ∀h,g,G,L,T,U,dt,d,e. yinj d + yinj e ≤ dt →
-                       ⇧[d, e] T ≡ U → G ⊢ ⬊*[h, g, U, dt] L →
-                       ∀K. ⇩[Ⓕ, d, e] L ≡ K → G ⊢ ⬊*[h, g, T, dt-e] K.
+                       ⬆[d, e] T ≡ U → G ⊢ ⬊*[h, g, U, dt] L →
+                       ∀K. ⬇[Ⓕ, d, e] L ≡ K → G ⊢ ⬊*[h, g, T, dt-e] K.
 #h #g #G #L #T #U #dt #d #e #Hdedt #HTU #H @(lsx_ind … H) -L
 #L1 #_ #IHL1 #K1 #HLK1 @lsx_intro
 #K2 #HK12 #HnT elim (drop_lpx_trans … HLK1 … HK12) -HK12

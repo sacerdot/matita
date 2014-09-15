@@ -19,8 +19,8 @@ include "basic_2/static/aaa.ma".
 
 (* Properties on basic relocation *******************************************)
 
-lemma aaa_lift: ∀G,L1,T1,A. ⦃G, L1⦄ ⊢ T1 ⁝ A → ∀L2,s,d,e. ⇩[s, d, e] L2 ≡ L1 →
-                ∀T2. ⇧[d, e] T1 ≡ T2 → ⦃G, L2⦄ ⊢ T2 ⁝ A.
+lemma aaa_lift: ∀G,L1,T1,A. ⦃G, L1⦄ ⊢ T1 ⁝ A → ∀L2,s,d,e. ⬇[s, d, e] L2 ≡ L1 →
+                ∀T2. ⬆[d, e] T1 ≡ T2 → ⦃G, L2⦄ ⊢ T2 ⁝ A.
 #G #L1 #T1 #A #H elim H -G -L1 -T1 -A
 [ #G #L1 #k #L2 #s #d #e #_ #T2 #H
   >(lift_inv_sort1 … H) -H //
@@ -47,8 +47,8 @@ lemma aaa_lift: ∀G,L1,T1,A. ⦃G, L1⦄ ⊢ T1 ⁝ A → ∀L2,s,d,e. ⇩[s, d
 ]
 qed.
 
-lemma aaa_inv_lift: ∀G,L2,T2,A. ⦃G, L2⦄ ⊢ T2 ⁝ A → ∀L1,s,d,e. ⇩[s, d, e] L2 ≡ L1 →
-                    ∀T1. ⇧[d, e] T1 ≡ T2 → ⦃G, L1⦄ ⊢ T1 ⁝ A.
+lemma aaa_inv_lift: ∀G,L2,T2,A. ⦃G, L2⦄ ⊢ T2 ⁝ A → ∀L1,s,d,e. ⬇[s, d, e] L2 ≡ L1 →
+                    ∀T1. ⬆[d, e] T1 ≡ T2 → ⦃G, L1⦄ ⊢ T1 ⁝ A.
 #G #L2 #T2 #A #H elim H -G -L2 -T2 -A
 [ #G #L2 #k #L1 #s #d #e #_ #T1 #H
   >(lift_inv_sort2 … H) -H //

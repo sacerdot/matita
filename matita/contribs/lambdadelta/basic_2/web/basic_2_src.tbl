@@ -240,12 +240,12 @@ table {
           }
         ]
         [ { "iterated local env. slicing" * } {
-             [ "drops ( ⇩*[?,?] ? ≡ ? )" "drops_drop" + "drops_drops" * ]
+             [ "drops ( ⬇*[?,?] ? ≡ ? )" "drops_drop" + "drops_drops" * ]
           }
         ]
         [ { "generic term relocation" * } {
-             [ "lifts_vector ( ⇧*[?] ? ≡ ? )" "lifts_lift_vector" * ]
-             [ "lifts ( ⇧*[?] ? ≡ ? )" "lifts_lift" + "lifts_lifts" * ]
+             [ "lifts_vector ( ⬆*[?] ? ≡ ? )" "lifts_lift_vector" * ]
+             [ "lifts ( ⬆*[?] ? ≡ ? )" "lifts_lift" + "lifts_lifts" * ]
           }
         ]
         [ { "support for multiple relocation" * } {
@@ -262,7 +262,7 @@ table {
           }
         ]
         [ { "global env. slicing" * } {
-             [ "gget ( ⇩[?] ? ≡ ? )" "gget_gget" * ]
+             [ "gget ( ⬇[?] ? ≡ ? )" "gget_gget" * ]
           }
         ]
         [ { "contxt-sensitive extended ordinary substitution" * } {
@@ -278,12 +278,12 @@ table {
           }
         ]
         [ { "basic local env. slicing" * } {
-             [ "drop ( ⇩[?,?,?] ? ≡ ? )"  "drop_append" + "drop_leq" + "drop_drop" * ]
+             [ "drop ( ⬇[?,?,?] ? ≡ ? )"  "drop_append" + "drop_leq" + "drop_drop" * ]
           }
         ]
         [ { "basic term relocation" * } {
-             [ "lift_vector ( ⇧[?,?] ? ≡ ? )" "lift_lift_vector" * ]
-             [ "lift ( ⇧[?,?] ? ≡ ? )" "lift_neq" + "lift_lift" * ]
+             [ "lift_vector ( ⬆[?,?] ? ≡ ? )" "lift_lift_vector" * ]
+             [ "lift ( ⬆[?,?] ? ≡ ? )" "lift_neq" + "lift_lift" * ]
           }
         ]
      }

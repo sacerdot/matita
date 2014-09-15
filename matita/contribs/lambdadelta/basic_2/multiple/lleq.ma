@@ -36,7 +36,7 @@ lemma lleq_ind: ∀R:relation4 ynat term lenv lenv. (
                    ∀L1,L2,d,i. |L1| = |L2| → yinj i < d → R d (#i) L1 L2
                 ) → (
                    ∀I,L1,L2,K1,K2,V,d,i. d ≤ yinj i →
-                   ⇩[i] L1 ≡ K1.ⓑ{I}V → ⇩[i] L2 ≡ K2.ⓑ{I}V →
+                   ⬇[i] L1 ≡ K1.ⓑ{I}V → ⬇[i] L2 ≡ K2.ⓑ{I}V →
                    K1 ≡[V, yinj O] K2 → R (yinj O) V K1 K2 → R d (#i) L1 L2
                 ) → (
                    ∀L1,L2,d,i. |L1| = |L2| → |L1| ≤ i → |L2| ≤ i → R d (#i) L1 L2
@@ -71,19 +71,19 @@ lemma lleq_fwd_length: ∀L1,L2,T,d. L1 ≡[T, d] L2 → |L1| = |L2|.
 lemma lleq_fwd_lref: ∀L1,L2,d,i. L1 ≡[#i, d] L2 →
                      ∨∨ |L1| ≤ i ∧ |L2| ≤ i
                       | yinj i < d
-                      | ∃∃I,K1,K2,V. ⇩[i] L1 ≡ K1.ⓑ{I}V &
-                                     ⇩[i] L2 ≡ K2.ⓑ{I}V &
+                      | ∃∃I,K1,K2,V. ⬇[i] L1 ≡ K1.ⓑ{I}V &
+                                     ⬇[i] L2 ≡ K2.ⓑ{I}V &
                                       K1 ≡[V, yinj 0] K2 & d ≤ yinj i.
 #L1 #L2 #d #i #H elim (llpx_sn_fwd_lref … H) /2 width=1/
 * /3 width=7 by or3_intro2, ex4_4_intro/
 qed-.
 
-lemma lleq_fwd_drop_sn: ∀L1,L2,T,d. L1 ≡[d, T] L2 → ∀K1,i. ⇩[i] L1 ≡ K1 →
-                         ∃K2. ⇩[i] L2 ≡ K2.
+lemma lleq_fwd_drop_sn: ∀L1,L2,T,d. L1 ≡[d, T] L2 → ∀K1,i. ⬇[i] L1 ≡ K1 →
+                         ∃K2. ⬇[i] L2 ≡ K2.
 /2 width=7 by llpx_sn_fwd_drop_sn/ qed-.
 
-lemma lleq_fwd_drop_dx: ∀L1,L2,T,d. L1 ≡[d, T] L2 → ∀K2,i. ⇩[i] L2 ≡ K2 →
-                         ∃K1. ⇩[i] L1 ≡ K1.
+lemma lleq_fwd_drop_dx: ∀L1,L2,T,d. L1 ≡[d, T] L2 → ∀K2,i. ⬇[i] L2 ≡ K2 →
+                         ∃K1. ⬇[i] L1 ≡ K1.
 /2 width=7 by llpx_sn_fwd_drop_dx/ qed-.
 
 lemma lleq_fwd_bind_sn: ∀a,I,L1,L2,V,T,d.
@@ -111,7 +111,7 @@ lemma lleq_skip: ∀L1,L2,d,i. yinj i < d → |L1| = |L2| → L1 ≡[#i, d] L2.
 /2 width=1 by llpx_sn_skip/ qed.
 
 lemma lleq_lref: ∀I,L1,L2,K1,K2,V,d,i. d ≤ yinj i →
-                 ⇩[i] L1 ≡ K1.ⓑ{I}V → ⇩[i] L2 ≡ K2.ⓑ{I}V →
+                 ⬇[i] L1 ≡ K1.ⓑ{I}V → ⬇[i] L2 ≡ K2.ⓑ{I}V →
                  K1 ≡[V, 0] K2 → L1 ≡[#i, d] L2.
 /2 width=9 by llpx_sn_lref/ qed.
 
@@ -142,7 +142,7 @@ lemma lleq_sym: ∀d,T. symmetric … (lleq d T).
 qed-.
 
 lemma lleq_ge_up: ∀L1,L2,U,dt. L1 ≡[U, dt] L2 →
-                  ∀T,d,e. ⇧[d, e] T ≡ U →
+                  ∀T,d,e. ⬆[d, e] T ≡ U →
                   dt ≤ d + e → L1 ≡[U, d] L2.
 /2 width=6 by llpx_sn_ge_up/ qed-.
 

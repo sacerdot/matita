@@ -98,9 +98,9 @@ qed-.
 (* Basic forward lemmas *****************************************************)
 
 lemma cpys_fwd_up: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶*[dt, et] U2 →
-                   ∀T1,d,e. ⇧[d, e] T1 ≡ U1 →
+                   ∀T1,d,e. ⬆[d, e] T1 ≡ U1 →
                    d ≤ dt → d + e ≤ dt + et →
-                   ∃∃T2. ⦃G, L⦄ ⊢ U1 ▶*[d+e, dt+et-(d+e)] U2 & ⇧[d, e] T2 ≡ U2.
+                   ∃∃T2. ⦃G, L⦄ ⊢ U1 ▶*[d+e, dt+et-(d+e)] U2 & ⬆[d, e] T2 ≡ U2.
 #G #L #U1 #U2 #dt #et #H #T1 #d #e #HTU1 #Hddt #Hdedet @(cpys_ind … H) -U2
 [ /2 width=3 by ex2_intro/
 | -HTU1 #U #U2 #_ #HU2 * #T #HU1 #HTU
@@ -160,7 +160,7 @@ lemma cpys_inv_refl_O2: ∀G,L,T1,T2,d. ⦃G, L⦄ ⊢ T1 ▶*[d, 0] T2 → T1 =
 qed-.
 
 lemma cpys_inv_lift1_eq: ∀G,L,U1,U2. ∀d,e:nat.
-                         ⦃G, L⦄ ⊢ U1 ▶*[d, e] U2 → ∀T1. ⇧[d, e] T1 ≡ U1 → U1 = U2.
+                         ⦃G, L⦄ ⊢ U1 ▶*[d, e] U2 → ∀T1. ⬆[d, e] T1 ≡ U1 → U1 = U2.
 #G #L #U1 #U2 #d #e #H #T1 #HTU1 @(cpys_ind … H) -U2
 /2 width=7 by cpy_inv_lift1_eq/
 qed-.

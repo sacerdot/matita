@@ -39,11 +39,11 @@ definition S4 ≝ λRP,C:candidate.
                 ∀G,L,Vs. all … (RP G L) Vs → ∀k. C G L (ⒶVs.⋆k).
 
 definition S5 ≝ λC:candidate. ∀I,G,L,K,Vs,V1,V2,i.
-                C G L (ⒶVs.V2) → ⇧[0, i+1] V1 ≡ V2 →
-                ⇩[i] L ≡ K.ⓑ{I}V1 → C G L (ⒶVs.#i).
+                C G L (ⒶVs.V2) → ⬆[0, i+1] V1 ≡ V2 →
+                ⬇[i] L ≡ K.ⓑ{I}V1 → C G L (ⒶVs.#i).
 
 definition S6 ≝ λRP,C:candidate.
-                ∀G,L,V1s,V2s. ⇧[0, 1] V1s ≡ V2s →
+                ∀G,L,V1s,V2s. ⬆[0, 1] V1s ≡ V2s →
                 ∀a,V,T. C G (L.ⓓV) (ⒶV2s.T) → RP G L V → C G L (ⒶV1s.ⓓ{a}V.T).
 
 definition S7 ≝ λC:candidate.
@@ -63,7 +63,7 @@ record gcr (RR:relation4 genv lenv term term) (RS:relation term) (RP,C:candidate
 (* the functional construction for candidates *)
 definition cfun: candidate → candidate → candidate ≝
                  λC1,C2,G,K,T. ∀L,W,U,des.
-                 ⇩*[Ⓕ, des] L ≡ K → ⇧*[des] T ≡ U → C1 G L W → C2 G L (ⓐW.U).
+                 ⬇*[Ⓕ, des] L ≡ K → ⬆*[des] T ≡ U → C1 G L W → C2 G L (ⓐW.U).
 
 (* the reducibility candidate associated to an atomic arity *)
 let rec acr (RP:candidate) (A:aarity) on A: candidate ≝
@@ -148,7 +148,7 @@ qed.
 
 lemma acr_abst: ∀RR,RS,RP. gcp RR RS RP → gcr RR RS RP RP →
                 ∀a,G,L,W,T,A,B. ⦃G, L, W⦄ ϵ[RP] 〚B〛 → (
-                   ∀L0,V0,W0,T0,des. ⇩*[Ⓕ, des] L0 ≡ L → ⇧*[des] W ≡ W0 → ⇧*[des + 1] T ≡ T0 →
+                   ∀L0,V0,W0,T0,des. ⬇*[Ⓕ, des] L0 ≡ L → ⬆*[des] W ≡ W0 → ⬆*[des + 1] T ≡ T0 →
                                    ⦃G, L0, V0⦄ ϵ[RP] 〚B〛 → ⦃G, L0, W0⦄ ϵ[RP] 〚B〛 → ⦃G, L0.ⓓⓝW0.V0, T0⦄ ϵ[RP] 〚A〛
                 ) →
                 ⦃G, L, ⓛ{a}W.T⦄ ϵ[RP] 〚②B.A〛.

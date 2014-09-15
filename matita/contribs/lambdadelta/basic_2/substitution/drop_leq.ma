@@ -18,15 +18,15 @@ include "basic_2/substitution/drop.ma".
 (* BASIC SLICING FOR LOCAL ENVIRONMENTS *************************************)
 
 definition dedropable_sn: predicate (relation lenv) ≝
-                          λR. ∀L1,K1,s,d,e. ⇩[s, d, e] L1 ≡ K1 → ∀K2. R K1 K2 →
-                          ∃∃L2. R L1 L2 & ⇩[s, d, e] L2 ≡ K2 & L1 ⩬[d, e] L2.
+                          λR. ∀L1,K1,s,d,e. ⬇[s, d, e] L1 ≡ K1 → ∀K2. R K1 K2 →
+                          ∃∃L2. R L1 L2 & ⬇[s, d, e] L2 ≡ K2 & L1 ⩬[d, e] L2.
 
 (* Properties on equivalence ************************************************)
 
 lemma leq_drop_trans_be: ∀L1,L2,d,e. L1 ⩬[d, e] L2 →
-                         ∀I,K2,W,s,i. ⇩[s, 0, i] L2 ≡ K2.ⓑ{I}W →
+                         ∀I,K2,W,s,i. ⬇[s, 0, i] L2 ≡ K2.ⓑ{I}W →
                          d ≤ i → i < d + e →
-                         ∃∃K1. K1 ⩬[0, ⫰(d+e-i)] K2 & ⇩[s, 0, i] L1 ≡ K1.ⓑ{I}W.
+                         ∃∃K1. K1 ⩬[0, ⫰(d+e-i)] K2 & ⬇[s, 0, i] L1 ≡ K1.ⓑ{I}W.
 #L1 #L2 #d #e #H elim H -L1 -L2 -d -e
 [ #d #e #J #K2 #W #s #i #H
   elim (drop_inv_atom1 … H) -H #H destruct
@@ -51,16 +51,16 @@ lemma leq_drop_trans_be: ∀L1,L2,d,e. L1 ⩬[d, e] L2 →
 qed-.
 
 lemma leq_drop_conf_be: ∀L1,L2,d,e. L1 ⩬[d, e] L2 →
-                        ∀I,K1,W,s,i. ⇩[s, 0, i] L1 ≡ K1.ⓑ{I}W →
+                        ∀I,K1,W,s,i. ⬇[s, 0, i] L1 ≡ K1.ⓑ{I}W →
                         d ≤ i → i < d + e →
-                        ∃∃K2. K1 ⩬[0, ⫰(d+e-i)] K2 & ⇩[s, 0, i] L2 ≡ K2.ⓑ{I}W.
+                        ∃∃K2. K1 ⩬[0, ⫰(d+e-i)] K2 & ⬇[s, 0, i] L2 ≡ K2.ⓑ{I}W.
 #L1 #L2 #d #e #HL12 #I #K1 #W #s #i #HLK1 #Hdi #Hide
 elim (leq_drop_trans_be … (leq_sym … HL12) … HLK1) // -L1 -Hdi -Hide
 /3 width=3 by leq_sym, ex2_intro/
 qed-.
 
 lemma drop_O1_ex: ∀K2,i,L1. |L1| = |K2| + i →
-                  ∃∃L2. L1 ⩬[0, i] L2 & ⇩[i] L2 ≡ K2.
+                  ∃∃L2. L1 ⩬[0, i] L2 & ⬇[i] L2 ≡ K2.
 #K2 #i @(nat_ind_plus … i) -i
 [ /3 width=3 by leq_O2, ex2_intro/
 | #i #IHi #Y #Hi elim (drop_O1_lt (Ⓕ) Y 0) //
@@ -81,7 +81,7 @@ qed-.
 
 (* Inversion lemmas on equivalence ******************************************)
 
-lemma drop_O1_inj: ∀i,L1,L2,K. ⇩[i] L1 ≡ K → ⇩[i] L2 ≡ K → L1 ⩬[i, ∞] L2.
+lemma drop_O1_inj: ∀i,L1,L2,K. ⬇[i] L1 ≡ K → ⬇[i] L2 ≡ K → L1 ⩬[i, ∞] L2.
 #i @(nat_ind_plus … i) -i
 [ #L1 #L2 #K #H <(drop_inv_O2 … H) -K #H <(drop_inv_O2 … H) -L1 //
 | #i #IHi * [2: #L1 #I1 #V1 ] * [2,4: #L2 #I2 #V2 ] #K #HLK1 #HLK2 //

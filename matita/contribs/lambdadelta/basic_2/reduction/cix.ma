@@ -29,7 +29,7 @@ interpretation "irreducibility for context-sensitive extended reduction (term)"
 lemma cix_inv_sort: ∀h,g,G,L,k,l. deg h g k (l+1) → ⦃G, L⦄ ⊢ ➡[h, g] 𝐈⦃⋆k⦄ → ⊥.
 /3 width=2 by crx_sort/ qed-.
 
-lemma cix_inv_delta: ∀h,g,I,G,L,K,V,i. ⇩[i] L ≡ K.ⓑ{I}V → ⦃G, L⦄ ⊢ ➡[h, g] 𝐈⦃#i⦄ → ⊥.
+lemma cix_inv_delta: ∀h,g,I,G,L,K,V,i. ⬇[i] L ≡ K.ⓑ{I}V → ⦃G, L⦄ ⊢ ➡[h, g] 𝐈⦃#i⦄ → ⊥.
 /3 width=4 by crx_delta/ qed-.
 
 lemma cix_inv_ri2: ∀h,g,I,G,L,V,T. ri2 I → ⦃G, L⦄ ⊢ ➡[h, g] 𝐈⦃②{I}V.T⦄ → ⊥.

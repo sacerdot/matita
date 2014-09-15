@@ -22,12 +22,12 @@ include "basic_2/static/sh.ma".
 (* activate genv *)
 inductive lstas (h): nat → relation4 genv lenv term term ≝
 | lstas_sort: ∀G,L,l,k. lstas h l G L (⋆k) (⋆((next h)^l k))
-| lstas_ldef: ∀G,L,K,V,W,U,i,l. ⇩[i] L ≡ K.ⓓV → lstas h l G K V W →
-              ⇧[0, i+1] W ≡ U → lstas h l G L (#i) U
-| lstas_zero: ∀G,L,K,W,V,i. ⇩[i] L ≡ K.ⓛW → lstas h 0 G K W V →
+| lstas_ldef: ∀G,L,K,V,W,U,i,l. ⬇[i] L ≡ K.ⓓV → lstas h l G K V W →
+              ⬆[0, i+1] W ≡ U → lstas h l G L (#i) U
+| lstas_zero: ∀G,L,K,W,V,i. ⬇[i] L ≡ K.ⓛW → lstas h 0 G K W V →
               lstas h 0 G L (#i) (#i)
-| lstas_succ: ∀G,L,K,W,V,U,i,l. ⇩[i] L ≡ K.ⓛW → lstas h l G K W V →
-              ⇧[0, i+1] V ≡ U → lstas h (l+1) G L (#i) U
+| lstas_succ: ∀G,L,K,W,V,U,i,l. ⬇[i] L ≡ K.ⓛW → lstas h l G K W V →
+              ⬆[0, i+1] V ≡ U → lstas h (l+1) G L (#i) U
 | lstas_bind: ∀a,I,G,L,V,T,U,l. lstas h l G (L.ⓑ{I}V) T U →
               lstas h l G L (ⓑ{a,I}V.T) (ⓑ{a,I}V.U)
 | lstas_appl: ∀G,L,V,T,U,l. lstas h l G L T U → lstas h l G L (ⓐV.T) (ⓐV.U)
@@ -57,14 +57,14 @@ lemma lstas_inv_sort1: ∀h,G,L,X,k,l. ⦃G, L⦄ ⊢ ⋆k •*[h, l] X → X = 
 qed-.
 
 fact lstas_inv_lref1_aux: ∀h,G,L,T,U,l. ⦃G, L⦄ ⊢ T •*[h, l] U → ∀j. T = #j → ∨∨
-                          (∃∃K,V,W. ⇩[j] L ≡ K.ⓓV & ⦃G, K⦄ ⊢ V •*[h, l] W &
-                                    ⇧[0, j+1] W ≡ U
+                          (∃∃K,V,W. ⬇[j] L ≡ K.ⓓV & ⦃G, K⦄ ⊢ V •*[h, l] W &
+                                    ⬆[0, j+1] W ≡ U
                           ) |
-                          (∃∃K,W,V. ⇩[j] L ≡ K.ⓛW & ⦃G, K⦄ ⊢ W •*[h, 0] V & 
+                          (∃∃K,W,V. ⬇[j] L ≡ K.ⓛW & ⦃G, K⦄ ⊢ W •*[h, 0] V & 
                                     U = #j & l = 0
                           ) |
-                          (∃∃K,W,V,l0. ⇩[j] L ≡ K.ⓛW & ⦃G, K⦄ ⊢ W •*[h, l0] V &
-                                       ⇧[0, j+1] V ≡ U & l = l0+1
+                          (∃∃K,W,V,l0. ⬇[j] L ≡ K.ⓛW & ⦃G, K⦄ ⊢ W •*[h, l0] V &
+                                       ⬆[0, j+1] V ≡ U & l = l0+1
                           ).
 #h #G #L #T #U #l * -G -L -T -U -l
 [ #G #L #l #k #j #H destruct
@@ -78,23 +78,23 @@ fact lstas_inv_lref1_aux: ∀h,G,L,T,U,l. ⦃G, L⦄ ⊢ T •*[h, l] U → ∀j
 qed-.
 
 lemma lstas_inv_lref1: ∀h,G,L,X,i,l. ⦃G, L⦄ ⊢ #i •*[h, l] X → ∨∨
-                       (∃∃K,V,W. ⇩[i] L ≡ K.ⓓV & ⦃G, K⦄ ⊢ V •*[h, l] W &
-                                 ⇧[0, i+1] W ≡ X
+                       (∃∃K,V,W. ⬇[i] L ≡ K.ⓓV & ⦃G, K⦄ ⊢ V •*[h, l] W &
+                                 ⬆[0, i+1] W ≡ X
                        ) |
-                       (∃∃K,W,V. ⇩[i] L ≡ K.ⓛW & ⦃G, K⦄ ⊢ W •*[h, 0] V & 
+                       (∃∃K,W,V. ⬇[i] L ≡ K.ⓛW & ⦃G, K⦄ ⊢ W •*[h, 0] V & 
                                  X = #i & l = 0
                        ) |                      
-                       (∃∃K,W,V,l0. ⇩[i] L ≡ K.ⓛW & ⦃G, K⦄ ⊢ W •*[h, l0] V &
-                                    ⇧[0, i+1] V ≡ X & l = l0+1
+                       (∃∃K,W,V,l0. ⬇[i] L ≡ K.ⓛW & ⦃G, K⦄ ⊢ W •*[h, l0] V &
+                                    ⬆[0, i+1] V ≡ X & l = l0+1
                        ).
 /2 width=3 by lstas_inv_lref1_aux/
 qed-.
 
 lemma lstas_inv_lref1_O: ∀h,G,L,X,i. ⦃G, L⦄ ⊢ #i •*[h, 0] X →
-                         (∃∃K,V,W. ⇩[i] L ≡ K.ⓓV & ⦃G, K⦄ ⊢ V •*[h, 0] W &
-                                   ⇧[0, i+1] W ≡ X
+                         (∃∃K,V,W. ⬇[i] L ≡ K.ⓓV & ⦃G, K⦄ ⊢ V •*[h, 0] W &
+                                   ⬆[0, i+1] W ≡ X
                          ) ∨
-                         (∃∃K,W,V. ⇩[i] L ≡ K.ⓛW & ⦃G, K⦄ ⊢ W •*[h, 0] V & 
+                         (∃∃K,W,V. ⬇[i] L ≡ K.ⓛW & ⦃G, K⦄ ⊢ W •*[h, 0] V & 
                                    X = #i
                          ).
 #h #G #L #X #i #H elim (lstas_inv_lref1 … H) -H * /3 width=6 by ex3_3_intro, or_introl, or_intror/
@@ -103,11 +103,11 @@ qed-.
 
 (* Basic_1: was just: sty0_gen_lref *)
 lemma lstas_inv_lref1_S: ∀h,G,L,X,i,l. ⦃G, L⦄ ⊢ #i •*[h, l+1] X →
-                         (∃∃K,V,W. ⇩[i] L ≡ K.ⓓV & ⦃G, K⦄ ⊢ V •*[h, l+1] W &
-                                   ⇧[0, i+1] W ≡ X
+                         (∃∃K,V,W. ⬇[i] L ≡ K.ⓓV & ⦃G, K⦄ ⊢ V •*[h, l+1] W &
+                                   ⬆[0, i+1] W ≡ X
                          ) ∨                      
-                         (∃∃K,W,V. ⇩[i] L ≡ K.ⓛW & ⦃G, K⦄ ⊢ W •*[h, l] V &
-                                   ⇧[0, i+1] V ≡ X
+                         (∃∃K,W,V. ⬇[i] L ≡ K.ⓛW & ⦃G, K⦄ ⊢ W •*[h, l] V &
+                                   ⬆[0, i+1] V ≡ X
                          ).
 #h #G #L #X #i #l #H elim (lstas_inv_lref1 … H) -H * /3 width=6 by ex3_3_intro, or_introl, or_intror/
 #K #W #V #_ #_ #_ <plus_n_Sm #H destruct

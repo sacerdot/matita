@@ -19,8 +19,8 @@ include "basic_2/substitution/lift_vector.ma".
 
 (* Main properties ***********************************************************)
 
-theorem liftv_mono: ∀Ts,U1s,d,e. ⇧[d,e] Ts ≡ U1s →
-                    ∀U2s:list term. ⇧[d,e] Ts ≡ U2s → U1s = U2s.
+theorem liftv_mono: ∀Ts,U1s,d,e. ⬆[d,e] Ts ≡ U1s →
+                    ∀U2s:list term. ⬆[d,e] Ts ≡ U2s → U1s = U2s.
 #Ts #U1s #d #e #H elim H -Ts -U1s
 [ #U2s #H >(liftv_inv_nil1 … H) -H //
 | #Ts #U1s #T #U1 #HTU1 #_ #IHTU1s #X #H destruct

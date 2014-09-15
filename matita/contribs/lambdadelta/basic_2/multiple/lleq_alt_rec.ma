@@ -20,8 +20,8 @@ include "basic_2/multiple/lleq.ma".
 (* Alternative definition (recursive) ***************************************)
 
 theorem lleq_intro_alt_r: ∀L1,L2,T,d. |L1| = |L2| →
-                          (∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → (∀U. ⇧[i, 1] U ≡ T → ⊥) →
-                             ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 →
+                          (∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → (∀U. ⬆[i, 1] U ≡ T → ⊥) →
+                             ⬇[i] L1 ≡ K1.ⓑ{I1}V1 → ⬇[i] L2 ≡ K2.ⓑ{I2}V2 →
                              ∧∧ I1 = I2 & V1 = V2 & K1 ≡[V1, 0] K2
                           ) → L1 ≡[T, d] L2.
 #L1 #L2 #T #d #HL12 #IH @llpx_sn_intro_alt_r // -HL12
@@ -31,8 +31,8 @@ qed.
 
 theorem lleq_ind_alt_r: ∀S:relation4 ynat term lenv lenv.
                         (∀L1,L2,T,d. |L1| = |L2| → (
-                           ∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → (∀U. ⇧[i, 1] U ≡ T → ⊥) →
-                           ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 →
+                           ∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → (∀U. ⬆[i, 1] U ≡ T → ⊥) →
+                           ⬇[i] L1 ≡ K1.ⓑ{I1}V1 → ⬇[i] L2 ≡ K2.ⓑ{I2}V2 →
                            ∧∧ I1 = I2 & V1 = V2 & K1 ≡[V1, 0] K2 & S 0 V1 K1 K2
                         ) → S d T L1 L2) →
                         ∀L1,L2,T,d. L1 ≡[T, d] L2 → S d T L1 L2.
@@ -44,8 +44,8 @@ qed-.
 
 theorem lleq_inv_alt_r: ∀L1,L2,T,d. L1 ≡[T, d] L2 →
                         |L1| = |L2| ∧
-                        ∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → (∀U. ⇧[i, 1] U ≡ T → ⊥) →
-                        ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 →
+                        ∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → (∀U. ⬆[i, 1] U ≡ T → ⊥) →
+                        ⬇[i] L1 ≡ K1.ⓑ{I1}V1 → ⬇[i] L2 ≡ K2.ⓑ{I2}V2 →
                         ∧∧ I1 = I2 & V1 = V2 & K1 ≡[V1, 0] K2.
 #L1 #L2 #T #d #H elim (llpx_sn_inv_alt_r … H) -H
 #HL12 #IH @conj //

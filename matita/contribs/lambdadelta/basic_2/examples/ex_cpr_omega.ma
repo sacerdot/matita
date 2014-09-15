@@ -26,8 +26,8 @@ definition Omega2: term → term ≝ λW. +ⓓⓝW.(Delta W).ⓐ#0.#0.
 
 (* Basic properties *********************************************************)
 
-lemma Delta_lift: ∀W1,W2,d,e. ⇧[d, e] W1 ≡ W2 →
-                  ⇧[d, e] (Delta W1) ≡ (Delta W2).
+lemma Delta_lift: ∀W1,W2,d,e. ⬆[d, e] W1 ≡ W2 →
+                  ⬆[d, e] (Delta W1) ≡ (Delta W2).
 /4 width=1 by lift_flat, lift_bind, lift_lref_lt/ qed.
 
 (* Main properties **********************************************************)

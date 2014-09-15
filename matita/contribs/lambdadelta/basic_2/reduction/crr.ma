@@ -29,7 +29,7 @@ definition ib2: relation2 bool bind2 ≝
 (* activate genv *)
 (* reducible terms *)
 inductive crr (G:genv): relation2 lenv term ≝
-| crr_delta  : ∀L,K,V,i. ⇩[i] L ≡ K.ⓓV → crr G L (#i)
+| crr_delta  : ∀L,K,V,i. ⬇[i] L ≡ K.ⓓV → crr G L (#i)
 | crr_appl_sn: ∀L,V,T. crr G L V → crr G L (ⓐV.T)
 | crr_appl_dx: ∀L,V,T. crr G L T → crr G L (ⓐV.T)
 | crr_ri2    : ∀I,L,V,T. ri2 I → crr G L (②{I}V.T)
@@ -62,7 +62,7 @@ lemma crr_inv_sort: ∀G,L,k. ⦃G, L⦄ ⊢ ➡ 𝐑⦃⋆k⦄ → ⊥.
 /2 width=6 by crr_inv_sort_aux/ qed-.
 
 fact crr_inv_lref_aux: ∀G,L,T,i. ⦃G, L⦄ ⊢ ➡ 𝐑⦃T⦄ → T = #i →
-                       ∃∃K,V. ⇩[i] L ≡ K.ⓓV.
+                       ∃∃K,V. ⬇[i] L ≡ K.ⓓV.
 #G #L #T #j * -L -T
 [ #L #K #V #i #HLK #H destruct /2 width=3 by ex1_2_intro/
 | #L #V #T #_ #H destruct
@@ -75,7 +75,7 @@ fact crr_inv_lref_aux: ∀G,L,T,i. ⦃G, L⦄ ⊢ ➡ 𝐑⦃T⦄ → T = #i →
 ]
 qed-.
 
-lemma crr_inv_lref: ∀G,L,i. ⦃G, L⦄ ⊢ ➡ 𝐑⦃#i⦄ → ∃∃K,V. ⇩[i] L ≡ K.ⓓV.
+lemma crr_inv_lref: ∀G,L,i. ⦃G, L⦄ ⊢ ➡ 𝐑⦃#i⦄ → ∃∃K,V. ⬇[i] L ≡ K.ⓓV.
 /2 width=4 by crr_inv_lref_aux/ qed-.
 
 fact crr_inv_gref_aux: ∀G,L,T,p. ⦃G, L⦄ ⊢ ➡ 𝐑⦃T⦄ → T = §p → ⊥.

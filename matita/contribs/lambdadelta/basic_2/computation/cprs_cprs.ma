@@ -59,14 +59,14 @@ theorem cprs_beta: ∀a,G,L,V1,V2,W1,W2,T1,T2.
 qed.
 
 theorem cprs_theta_rc: ∀a,G,L,V1,V,V2,W1,W2,T1,T2.
-                       ⦃G, L⦄ ⊢ V1 ➡ V → ⇧[0, 1] V ≡ V2 → ⦃G, L.ⓓW1⦄ ⊢ T1 ➡* T2 →
+                       ⦃G, L⦄ ⊢ V1 ➡ V → ⬆[0, 1] V ≡ V2 → ⦃G, L.ⓓW1⦄ ⊢ T1 ➡* T2 →
                        ⦃G, L⦄ ⊢ W1 ➡* W2 → ⦃G, L⦄ ⊢ ⓐV1.ⓓ{a}W1.T1 ➡* ⓓ{a}W2.ⓐV2.T2.
 #a #G #L #V1 #V #V2 #W1 #W2 #T1 #T2 #HV1 #HV2 #HT12 #H @(cprs_ind … H) -W2
 /3 width=5 by cprs_trans, cprs_theta_dx, cprs_bind_dx/
 qed.
 
 theorem cprs_theta: ∀a,G,L,V1,V,V2,W1,W2,T1,T2.
-                    ⇧[0, 1] V ≡ V2 → ⦃G, L⦄ ⊢ W1 ➡* W2 → ⦃G, L.ⓓW1⦄ ⊢ T1 ➡* T2 →
+                    ⬆[0, 1] V ≡ V2 → ⦃G, L⦄ ⊢ W1 ➡* W2 → ⦃G, L.ⓓW1⦄ ⊢ T1 ➡* T2 →
                     ⦃G, L⦄ ⊢ V1 ➡* V → ⦃G, L⦄ ⊢ ⓐV1.ⓓ{a}W1.T1 ➡* ⓓ{a}W2.ⓐV2.T2.
 #a #G #L #V1 #V #V2 #W1 #W2 #T1 #T2 #HV2 #HW12 #HT12 #H @(cprs_ind_dx … H) -V1
 /3 width=3 by cprs_trans, cprs_theta_rc, cprs_flat_dx/
@@ -80,7 +80,7 @@ lemma cprs_inv_appl1: ∀G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓐV1.T1 ➡* U2 →
                                         U2 = ⓐV2. T2
                        | ∃∃a,W,T.       ⦃G, L⦄ ⊢ T1 ➡* ⓛ{a}W.T &
                                         ⦃G, L⦄ ⊢ ⓓ{a}ⓝW.V1.T ➡* U2
-                       | ∃∃a,V0,V2,V,T. ⦃G, L⦄ ⊢ V1 ➡* V0 & ⇧[0,1] V0 ≡ V2 &
+                       | ∃∃a,V0,V2,V,T. ⦃G, L⦄ ⊢ V1 ➡* V0 & ⬆[0,1] V0 ≡ V2 &
                                         ⦃G, L⦄ ⊢ T1 ➡* ⓓ{a}V.T &
                                         ⦃G, L⦄ ⊢ ⓓ{a}V.ⓐV2.T ➡* U2.
 #G #L #V1 #T1 #U2 #H @(cprs_ind … H) -U2 /3 width=5 by or3_intro0, ex3_2_intro/

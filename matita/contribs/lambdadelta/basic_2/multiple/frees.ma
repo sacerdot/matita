@@ -20,9 +20,9 @@ include "basic_2/substitution/drop.ma".
 (* CONTEXT-SENSITIVE FREE VARIABLES *****************************************)
 
 inductive frees: relation4 ynat lenv term nat ≝
-| frees_eq: ∀L,U,d,i. (∀T. ⇧[i, 1] T ≡ U → ⊥) → frees d L U i
+| frees_eq: ∀L,U,d,i. (∀T. ⬆[i, 1] T ≡ U → ⊥) → frees d L U i
 | frees_be: ∀I,L,K,U,W,d,i,j. d ≤ yinj j → j < i →
-            (∀T. ⇧[j, 1] T ≡ U → ⊥) → ⇩[j]L ≡ K.ⓑ{I}W →
+            (∀T. ⬆[j, 1] T ≡ U → ⊥) → ⬇[j]L ≡ K.ⓑ{I}W →
             frees 0 K W (i-j-1) → frees d L U i.
 
 interpretation
@@ -35,9 +35,9 @@ definition frees_trans: predicate (relation3 lenv term term) ≝
 (* Basic inversion lemmas ***************************************************)
 
 lemma frees_inv: ∀L,U,d,i. L ⊢ i ϵ 𝐅*[d]⦃U⦄ →
-                 (∀T. ⇧[i, 1] T ≡ U → ⊥) ∨
-                 ∃∃I,K,W,j. d ≤ yinj j & j < i & (∀T. ⇧[j, 1] T ≡ U → ⊥) &
-                            ⇩[j]L ≡ K.ⓑ{I}W & K ⊢ (i-j-1) ϵ 𝐅*[yinj 0]⦃W⦄.
+                 (∀T. ⬆[i, 1] T ≡ U → ⊥) ∨
+                 ∃∃I,K,W,j. d ≤ yinj j & j < i & (∀T. ⬆[j, 1] T ≡ U → ⊥) &
+                            ⬇[j]L ≡ K.ⓑ{I}W & K ⊢ (i-j-1) ϵ 𝐅*[yinj 0]⦃W⦄.
 #L #U #d #i * -L -U -d -i /4 width=9 by ex5_4_intro, or_intror, or_introl/
 qed-.
 
@@ -51,7 +51,7 @@ qed-.
 
 lemma frees_inv_lref: ∀L,d,j,i. L ⊢ i ϵ 𝐅*[d]⦃#j⦄ →
                       j = i ∨
-                      ∃∃I,K,W. d ≤ yinj j & j < i & ⇩[j] L ≡ K.ⓑ{I}W & K ⊢ (i-j-1) ϵ 𝐅*[yinj 0]⦃W⦄.
+                      ∃∃I,K,W. d ≤ yinj j & j < i & ⬇[j] L ≡ K.ⓑ{I}W & K ⊢ (i-j-1) ϵ 𝐅*[yinj 0]⦃W⦄.
 #L #d #x #i #H elim (frees_inv … H) -H
 [ /4 width=2 by nlift_inv_lref_be_SO, or_introl/
 | * #I #K #W #j #Hdj #Hji #Hnx #HLK #HW
@@ -76,7 +76,7 @@ lemma frees_inv_lref_ge: ∀L,d,j,i. L ⊢ i ϵ 𝐅*[d]⦃#j⦄ → i ≤ j →
 qed-.
 
 lemma frees_inv_lref_lt: ∀L,d,j,i.L ⊢ i ϵ 𝐅*[d]⦃#j⦄ → j < i →
-                         ∃∃I,K,W. d ≤ yinj j & ⇩[j] L ≡ K.ⓑ{I}W & K ⊢ (i-j-1) ϵ 𝐅*[yinj 0]⦃W⦄.
+                         ∃∃I,K,W. d ≤ yinj j & ⬇[j] L ≡ K.ⓑ{I}W & K ⊢ (i-j-1) ϵ 𝐅*[yinj 0]⦃W⦄.
 #L #d #j #i #H #Hji elim (frees_inv_lref … H) -H
 [ #H elim (lt_refl_false j) //
 | * /2 width=5 by ex3_3_intro/
@@ -114,7 +114,7 @@ qed-.
 lemma frees_lref_eq: ∀L,d,i. L ⊢ i ϵ 𝐅*[d]⦃#i⦄.
 /3 width=7 by frees_eq, lift_inv_lref2_be/ qed.
 
-lemma frees_lref_be: ∀I,L,K,W,d,i,j. d ≤ yinj j → j < i → ⇩[j]L ≡ K.ⓑ{I}W →
+lemma frees_lref_be: ∀I,L,K,W,d,i,j. d ≤ yinj j → j < i → ⬇[j]L ≡ K.ⓑ{I}W →
                      K ⊢ i-j-1 ϵ 𝐅*[0]⦃W⦄ → L ⊢ i ϵ 𝐅*[d]⦃#j⦄.
 /3 width=9 by frees_be, lift_inv_lref2_be/ qed.
 

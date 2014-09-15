@@ -21,19 +21,19 @@ include "basic_2/multiple/llpx_sn.ma".
 (* alternative definition of llpx_sn (recursive) *)
 inductive llpx_sn_alt_r (R:relation3 lenv term term): relation4 ynat term lenv lenv ≝
 | llpx_sn_alt_r_intro: ∀L1,L2,T,d.
-                       (∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → (∀U. ⇧[i, 1] U ≡ T → ⊥) →
-                          ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 → I1 = I2 ∧ R K1 V1 V2
+                       (∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → (∀U. ⬆[i, 1] U ≡ T → ⊥) →
+                          ⬇[i] L1 ≡ K1.ⓑ{I1}V1 → ⬇[i] L2 ≡ K2.ⓑ{I2}V2 → I1 = I2 ∧ R K1 V1 V2
                        ) →
-                       (∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → (∀U. ⇧[i, 1] U ≡ T → ⊥) →
-                          ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 → llpx_sn_alt_r R 0 V1 K1 K2
+                       (∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → (∀U. ⬆[i, 1] U ≡ T → ⊥) →
+                          ⬇[i] L1 ≡ K1.ⓑ{I1}V1 → ⬇[i] L2 ≡ K2.ⓑ{I2}V2 → llpx_sn_alt_r R 0 V1 K1 K2
                        ) → |L1| = |L2| → llpx_sn_alt_r R d T L1 L2
 .
 
 (* Compact definition of llpx_sn_alt_r **************************************)
 
 lemma llpx_sn_alt_r_intro_alt: ∀R,L1,L2,T,d. |L1| = |L2| →
-                               (∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → (∀U. ⇧[i, 1] U ≡ T → ⊥) →
-                                 ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 →
+                               (∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → (∀U. ⬆[i, 1] U ≡ T → ⊥) →
+                                 ⬇[i] L1 ≡ K1.ⓑ{I1}V1 → ⬇[i] L2 ≡ K2.ⓑ{I2}V2 →
                                  ∧∧ I1 = I2 & R K1 V1 V2 & llpx_sn_alt_r R 0 V1 K1 K2
                                ) → llpx_sn_alt_r R d T L1 L2.
 #R #L1 #L2 #T #d #HL12 #IH @llpx_sn_alt_r_intro // -HL12
@@ -43,8 +43,8 @@ qed.
 
 lemma llpx_sn_alt_r_ind_alt: ∀R. ∀S:relation4 ynat term lenv lenv.
                              (∀L1,L2,T,d. |L1| = |L2| → (
-                                ∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → (∀U. ⇧[i, 1] U ≡ T → ⊥) →
-                                ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 →
+                                ∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → (∀U. ⬆[i, 1] U ≡ T → ⊥) →
+                                ⬇[i] L1 ≡ K1.ⓑ{I1}V1 → ⬇[i] L2 ≡ K2.ⓑ{I2}V2 →
                                 ∧∧ I1 = I2 & R K1 V1 V2 & llpx_sn_alt_r R 0 V1 K1 K2 & S 0 V1 K1 K2
                              ) → S d T L1 L2) →
                              ∀L1,L2,T,d. llpx_sn_alt_r R d T L1 L2 → S d T L1 L2.
@@ -56,8 +56,8 @@ qed-.
 
 lemma llpx_sn_alt_r_inv_alt: ∀R,L1,L2,T,d. llpx_sn_alt_r R d T L1 L2 →
                              |L1| = |L2| ∧
-                             ∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → (∀U. ⇧[i, 1] U ≡ T → ⊥) →
-                               ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 →
+                             ∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → (∀U. ⬆[i, 1] U ≡ T → ⊥) →
+                               ⬇[i] L1 ≡ K1.ⓑ{I1}V1 → ⬇[i] L2 ≡ K2.ⓑ{I2}V2 →
                              ∧∧ I1 = I2 & R K1 V1 V2 & llpx_sn_alt_r R 0 V1 K1 K2.
 #R #L1 #L2 #T #d #H @(llpx_sn_alt_r_ind_alt … H) -L1 -L2 -T -d
 #L1 #L2 #T #d #HL12 #IH @conj // -HL12
@@ -100,8 +100,8 @@ qed-.
 lemma llpx_sn_alt_r_fwd_lref: ∀R,L1,L2,d,i. llpx_sn_alt_r R d (#i) L1 L2 →
                               ∨∨ |L1| ≤ i ∧ |L2| ≤ i
                                | yinj i < d
-                               | ∃∃I,K1,K2,V1,V2. ⇩[i] L1 ≡ K1.ⓑ{I}V1 &
-                                                  ⇩[i] L2 ≡ K2.ⓑ{I}V2 &
+                               | ∃∃I,K1,K2,V1,V2. ⬇[i] L1 ≡ K1.ⓑ{I}V1 &
+                                                  ⬇[i] L2 ≡ K2.ⓑ{I}V2 &
                                                   llpx_sn_alt_r R (yinj 0) V1 K1 K2 &
                                                   R K1 V1 V2 & d ≤ yinj i.
 #R #L1 #L2 #d #i #H elim (llpx_sn_alt_r_inv_alt … H) -H
@@ -140,7 +140,7 @@ lapply (drop_fwd_length_lt2 … HLK1) -HLK1
 qed.
 
 lemma llpx_sn_alt_r_lref: ∀R,I,L1,L2,K1,K2,V1,V2,d,i. d ≤ yinj i →
-                          ⇩[i] L1 ≡ K1.ⓑ{I}V1 → ⇩[i] L2 ≡ K2.ⓑ{I}V2 →
+                          ⬇[i] L1 ≡ K1.ⓑ{I}V1 → ⬇[i] L2 ≡ K2.ⓑ{I}V2 →
                           llpx_sn_alt_r R 0 V1 K1 K2 → R K1 V1 V2 →
                           llpx_sn_alt_r R d (#i) L1 L2.
 #R #I #L1 #L2 #K1 #K2 #V1 #V2 #d #i #Hdi #HLK1 #HLK2 #HK12 #HV12 @llpx_sn_alt_r_intro_alt
@@ -213,8 +213,8 @@ qed-.
 (* Alternative definition of llpx_sn (recursive) ****************************)
 
 lemma llpx_sn_intro_alt_r: ∀R,L1,L2,T,d. |L1| = |L2| →
-                           (∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → (∀U. ⇧[i, 1] U ≡ T → ⊥) →
-                              ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 →
+                           (∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → (∀U. ⬆[i, 1] U ≡ T → ⊥) →
+                              ⬇[i] L1 ≡ K1.ⓑ{I1}V1 → ⬇[i] L2 ≡ K2.ⓑ{I2}V2 →
                               ∧∧ I1 = I2 & R K1 V1 V2 & llpx_sn R 0 V1 K1 K2
                            ) → llpx_sn R d T L1 L2.
 #R #L1 #L2 #T #d #HL12 #IH @llpx_sn_alt_r_inv_lpx_sn
@@ -225,8 +225,8 @@ qed.
 
 lemma llpx_sn_ind_alt_r: ∀R. ∀S:relation4 ynat term lenv lenv.
                          (∀L1,L2,T,d. |L1| = |L2| → (
-                            ∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → (∀U. ⇧[i, 1] U ≡ T → ⊥) →
-                            ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 →
+                            ∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → (∀U. ⬆[i, 1] U ≡ T → ⊥) →
+                            ⬇[i] L1 ≡ K1.ⓑ{I1}V1 → ⬇[i] L2 ≡ K2.ⓑ{I2}V2 →
                             ∧∧ I1 = I2 & R K1 V1 V2 & llpx_sn R 0 V1 K1 K2 & S 0 V1 K1 K2
                          ) → S d T L1 L2) →
                          ∀L1,L2,T,d. llpx_sn R d T L1 L2 → S d T L1 L2.
@@ -239,8 +239,8 @@ qed-.
 
 lemma llpx_sn_inv_alt_r: ∀R,L1,L2,T,d. llpx_sn R d T L1 L2 →
                          |L1| = |L2| ∧
-                         ∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → (∀U. ⇧[i, 1] U ≡ T → ⊥) →
-                         ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 →
+                         ∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → (∀U. ⬆[i, 1] U ≡ T → ⊥) →
+                         ⬇[i] L1 ≡ K1.ⓑ{I1}V1 → ⬇[i] L2 ≡ K2.ⓑ{I2}V2 →
                          ∧∧ I1 = I2 & R K1 V1 V2 & llpx_sn R 0 V1 K1 K2.
 #R #L1 #L2 #T #d #H lapply (llpx_sn_lpx_sn_alt_r … H) -H
 #H elim (llpx_sn_alt_r_inv_alt … H) -H

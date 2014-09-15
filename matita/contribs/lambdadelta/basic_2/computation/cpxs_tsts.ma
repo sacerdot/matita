@@ -56,8 +56,8 @@ elim (cpxs_inv_appl1 … H) -H *
 qed-.
 
 (* Note: probably this is an inversion lemma *)
-lemma cpxs_fwd_delta: ∀h,g,I,G,L,K,V1,i. ⇩[i] L ≡ K.ⓑ{I}V1 →
-                      ∀V2. ⇧[0, i + 1] V1 ≡ V2 →
+lemma cpxs_fwd_delta: ∀h,g,I,G,L,K,V1,i. ⬇[i] L ≡ K.ⓑ{I}V1 →
+                      ∀V2. ⬆[0, i + 1] V1 ≡ V2 →
                       ∀U. ⦃G, L⦄ ⊢ #i ➡*[h, g] U →
                       #i ≂ U ∨ ⦃G, L⦄ ⊢ V2 ➡*[h, g] U.
 #h #g #I #G #L #K #V1 #i #HLK #V2 #HV12 #U #H
@@ -68,7 +68,7 @@ lapply (drop_mono … HLK0 … HLK) -HLK0 #H destruct
 qed-.
 
 lemma cpxs_fwd_theta: ∀h,g,a,G,L,V1,V,T,U. ⦃G, L⦄ ⊢ ⓐV1.ⓓ{a}V.T ➡*[h, g] U →
-                      ∀V2. ⇧[0, 1] V1 ≡ V2 → ⓐV1.ⓓ{a}V.T ≂ U ∨
+                      ∀V2. ⬆[0, 1] V1 ≡ V2 → ⓐV1.ⓓ{a}V.T ≂ U ∨
                       ⦃G, L⦄ ⊢ ⓓ{a}V.ⓐV2.T ➡*[h, g] U.
 #h #g #a #G #L #V1 #V #T #U #H #V2 #HV12
 elim (cpxs_inv_appl1 … H) -H *

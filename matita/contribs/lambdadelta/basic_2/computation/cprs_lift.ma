@@ -21,8 +21,8 @@ include "basic_2/computation/cprs.ma".
 
 (* Note: apparently this was missing in basic_1 *)
 lemma cprs_delta: ∀G,L,K,V,V2,i.
-                  ⇩[i] L ≡ K.ⓓV → ⦃G, K⦄ ⊢ V ➡* V2 →
-                  ∀W2. ⇧[0, i + 1] V2 ≡ W2 → ⦃G, L⦄ ⊢ #i ➡* W2.
+                  ⬇[i] L ≡ K.ⓓV → ⦃G, K⦄ ⊢ V ➡* V2 →
+                  ∀W2. ⬆[0, i + 1] V2 ≡ W2 → ⦃G, L⦄ ⊢ #i ➡* W2.
 #G #L #K #V #V2 #i #HLK #H elim H -V2 [ /3 width=6 by cpr_cprs, cpr_delta/ ]
 #V1 #V2 #_ #HV12 #IHV1 #W2 #HVW2
 lapply (drop_fwd_drop2 … HLK) -HLK #HLK
@@ -34,8 +34,8 @@ qed.
 (* Basic_1: was: pr3_gen_lref *)
 lemma cprs_inv_lref1: ∀G,L,T2,i. ⦃G, L⦄ ⊢ #i ➡* T2 →
                       T2 = #i ∨
-                      ∃∃K,V1,T1. ⇩[i] L ≡ K.ⓓV1 & ⦃G, K⦄ ⊢ V1 ➡* T1 &
-                                 ⇧[0, i + 1] T1 ≡ T2.
+                      ∃∃K,V1,T1. ⬇[i] L ≡ K.ⓓV1 & ⦃G, K⦄ ⊢ V1 ➡* T1 &
+                                 ⬆[0, i + 1] T1 ≡ T2.
 #G #L #T2 #i #H @(cprs_ind … H) -T2 /2 width=1 by or_introl/
 #T #T2 #_ #HT2 *
 [ #H destruct

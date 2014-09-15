@@ -34,7 +34,7 @@ lapply (H (⋆(next h k)) ?) -H /2 width=2 by cpx_st/ -L -l #H destruct -H -e0 (
 lapply (next_lt h k) >e1 -e1 #H elim (lt_refl_false … H)
 qed-.
 
-lemma cnx_inv_delta: ∀h,g,I,G,L,K,V,i. ⇩[i] L ≡ K.ⓑ{I}V → ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃#i⦄ → ⊥.
+lemma cnx_inv_delta: ∀h,g,I,G,L,K,V,i. ⬇[i] L ≡ K.ⓑ{I}V → ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃#i⦄ → ⊥.
 #h #g #I #G #L #K #V #i #HLK #H
 elim (lift_total V 0 (i+1)) #W #HVW
 lapply (H W ?) -H [ /3 width=7 by cpx_delta/ ] -HLK #H destruct
@@ -112,7 +112,7 @@ lemma cnx_lref_free: ∀h,g,G,L,i. |L| ≤ i → ⦃G, L⦄ ⊢ ➡[h, g] 𝐍�
 #H elim (lt_refl_false i) /2 width=3 by lt_to_le_to_lt/
 qed.
 
-lemma cnx_lref_atom: ∀h,g,G,L,i. ⇩[i] L ≡ ⋆ → ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃#i⦄.
+lemma cnx_lref_atom: ∀h,g,G,L,i. ⬇[i] L ≡ ⋆ → ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃#i⦄.
 #h #g #G #L #i #HL @cnx_lref_free >(drop_fwd_length … HL) -HL //
 qed.
 

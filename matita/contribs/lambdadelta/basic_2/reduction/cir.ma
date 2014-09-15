@@ -24,7 +24,7 @@ interpretation "irreducibility for context-sensitive reduction (term)"
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma cir_inv_delta: ∀G,L,K,V,i. ⇩[i] L ≡ K.ⓓV → ⦃G, L⦄ ⊢ ➡ 𝐈⦃#i⦄ → ⊥.
+lemma cir_inv_delta: ∀G,L,K,V,i. ⬇[i] L ≡ K.ⓓV → ⦃G, L⦄ ⊢ ➡ 𝐈⦃#i⦄ → ⊥.
 /3 width=3 by crr_delta/ qed-.
 
 lemma cir_inv_ri2: ∀I,G,L,V,T. ri2 I → ⦃G, L⦄ ⊢ ➡ 𝐈⦃②{I}V.T⦄ → ⊥.

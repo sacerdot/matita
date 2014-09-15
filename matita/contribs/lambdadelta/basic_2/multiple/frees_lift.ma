@@ -52,7 +52,7 @@ lemma frees_dec: ∀L,U,d,i. Decidable (frees d L U i).
 ]
 qed-.
 
-lemma frees_S: ∀L,U,d,i. L ⊢ i ϵ 𝐅*[yinj d]⦃U⦄ → ∀I,K,W. ⇩[d] L ≡ K.ⓑ{I}W →
+lemma frees_S: ∀L,U,d,i. L ⊢ i ϵ 𝐅*[yinj d]⦃U⦄ → ∀I,K,W. ⬇[d] L ≡ K.ⓑ{I}W →
                (K ⊢ i-d-1 ϵ 𝐅*[0]⦃W⦄ → ⊥) → L ⊢ i ϵ 𝐅*[⫯d]⦃U⦄.
 #L #U #d #i #H elim (frees_inv … H) -H /3 width=2 by frees_eq/
 * #I #K #W #j #Hdj #Hji #HnU #HLK #HW #I0 #K0 #W0 #HLK0 #HnW0
@@ -75,8 +75,8 @@ qed.
 (* Properties on relocation *************************************************)
 
 lemma frees_lift_ge: ∀K,T,d,i. K ⊢ i ϵ𝐅*[d]⦃T⦄ →
-                     ∀L,s,d0,e0. ⇩[s, d0, e0] L ≡ K →
-                     ∀U. ⇧[d0, e0] T ≡ U → d0 ≤ i →
+                     ∀L,s,d0,e0. ⬇[s, d0, e0] L ≡ K →
+                     ∀U. ⬆[d0, e0] T ≡ U → d0 ≤ i →
                      L ⊢ i+e0 ϵ 𝐅*[d]⦃U⦄.
 #K #T #d #i #H elim H -K -T -d -i
 [ #K #T #d #i #HnT #L #s #d0 #e0 #_ #U #HTU #Hd0i -K -s
@@ -103,8 +103,8 @@ qed.
 (* Inversion lemmas on relocation *******************************************)
 
 lemma frees_inv_lift_be: ∀L,U,d,i. L ⊢ i ϵ 𝐅*[d]⦃U⦄ →
-                         ∀K,s,d0,e0. ⇩[s, d0, e0+1] L ≡ K →
-                         ∀T. ⇧[d0, e0+1] T ≡ U → d0 ≤ i → i ≤ d0 + e0 → ⊥.
+                         ∀K,s,d0,e0. ⬇[s, d0, e0+1] L ≡ K →
+                         ∀T. ⬆[d0, e0+1] T ≡ U → d0 ≤ i → i ≤ d0 + e0 → ⊥.
 #L #U #d #i #H elim H -L -U -d -i
 [ #L #U #d #i #HnU #K #s #d0 #e0 #_ #T #HTU #Hd0i #Hide0
   elim (lift_split … HTU i e0) -HTU /2 width=2 by/
@@ -121,8 +121,8 @@ lemma frees_inv_lift_be: ∀L,U,d,i. L ⊢ i ϵ 𝐅*[d]⦃U⦄ →
 qed-.
 
 lemma frees_inv_lift_ge: ∀L,U,d,i. L ⊢ i ϵ 𝐅*[d]⦃U⦄ →
-                         ∀K,s,d0,e0. ⇩[s, d0, e0] L ≡ K →
-                         ∀T. ⇧[d0, e0] T ≡ U → d0 + e0 ≤ i →
+                         ∀K,s,d0,e0. ⬇[s, d0, e0] L ≡ K →
+                         ∀T. ⬆[d0, e0] T ≡ U → d0 + e0 ≤ i →
                          K ⊢ i-e0 ϵ𝐅*[d-yinj e0]⦃T⦄.
 #L #U #d #i #H elim H -L -U -d -i
 [ #L #U #d #i #HnU #K #s #d0 #e0 #HLK #T #HTU #Hde0i -L -s

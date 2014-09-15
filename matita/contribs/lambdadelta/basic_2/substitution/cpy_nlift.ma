@@ -21,10 +21,10 @@ include "basic_2/substitution/cpy.ma".
 (* Inversion lemmas on negated relocation ***********************************)
 
 lemma cpy_fwd_nlift2_ge: ∀G,L,U1,U2,d,e. ⦃G, L⦄ ⊢ U1 ▶[d, e] U2 →
-                         ∀i. d ≤ yinj i → (∀T2. ⇧[i, 1] T2 ≡ U2 → ⊥) →
-                         (∀T1. ⇧[i, 1] T1 ≡ U1 → ⊥) ∨
-                         ∃∃I,K,W,j. d ≤ yinj j & j < i & ⇩[j]L ≡ K.ⓑ{I}W &
-                                    (∀V. ⇧[i-j-1, 1] V ≡ W → ⊥) & (∀T1. ⇧[j, 1] T1 ≡ U1 → ⊥).
+                         ∀i. d ≤ yinj i → (∀T2. ⬆[i, 1] T2 ≡ U2 → ⊥) →
+                         (∀T1. ⬆[i, 1] T1 ≡ U1 → ⊥) ∨
+                         ∃∃I,K,W,j. d ≤ yinj j & j < i & ⬇[j]L ≡ K.ⓑ{I}W &
+                                    (∀V. ⬆[i-j-1, 1] V ≡ W → ⊥) & (∀T1. ⬆[j, 1] T1 ≡ U1 → ⊥).
 #G #L #U1 #U2 #d #e #H elim H -G -L -U1 -U2 -d -e
 [ /3 width=2 by or_introl/
 | #I #G #L #K #V #W #j #d #e #Hdj #Hjde #HLK #HVW #i #Hdi #HnW

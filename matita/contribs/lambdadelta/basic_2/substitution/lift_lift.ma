@@ -19,7 +19,7 @@ include "basic_2/substitution/lift.ma".
 (* Main properties ***********************************************************)
 
 (* Basic_1: was: lift_inj *)
-theorem lift_inj: ∀d,e,T1,U. ⇧[d,e] T1 ≡ U → ∀T2. ⇧[d,e] T2 ≡ U → T1 = T2.
+theorem lift_inj: ∀d,e,T1,U. ⬆[d,e] T1 ≡ U → ∀T2. ⬆[d,e] T2 ≡ U → T1 = T2.
 #d #e #T1 #U #H elim H -d -e -T1 -U
 [ #k #d #e #X #HX
   lapply (lift_inv_sort2 … HX) -HX //
@@ -37,10 +37,10 @@ theorem lift_inj: ∀d,e,T1,U. ⇧[d,e] T1 ≡ U → ∀T2. ⇧[d,e] T2 ≡ U �
 qed-.
 
 (* Basic_1: was: lift_gen_lift *)
-theorem lift_div_le: ∀d1,e1,T1,T. ⇧[d1, e1] T1 ≡ T →
-                     ∀d2,e2,T2. ⇧[d2 + e1, e2] T2 ≡ T →
+theorem lift_div_le: ∀d1,e1,T1,T. ⬆[d1, e1] T1 ≡ T →
+                     ∀d2,e2,T2. ⬆[d2 + e1, e2] T2 ≡ T →
                      d1 ≤ d2 →
-                     ∃∃T0. ⇧[d1, e1] T0 ≡ T2 & ⇧[d2, e2] T0 ≡ T1.
+                     ∃∃T0. ⬆[d1, e1] T0 ≡ T2 & ⬆[d2, e2] T0 ≡ T1.
 #d1 #e1 #T1 #T #H elim H -d1 -e1 -T1 -T
 [ #k #d1 #e1 #d2 #e2 #T2 #Hk #Hd12
   lapply (lift_inv_sort2 … Hk) -Hk #Hk destruct /3 width=3 by lift_sort, ex2_intro/
@@ -70,10 +70,10 @@ theorem lift_div_le: ∀d1,e1,T1,T. ⇧[d1, e1] T1 ≡ T →
 qed.
 
 (* Note: apparently this was missing in basic_1 *)
-theorem lift_div_be: ∀d1,e1,T1,T. ⇧[d1, e1] T1 ≡ T →
-                     ∀e,e2,T2. ⇧[d1 + e, e2] T2 ≡ T →
+theorem lift_div_be: ∀d1,e1,T1,T. ⬆[d1, e1] T1 ≡ T →
+                     ∀e,e2,T2. ⬆[d1 + e, e2] T2 ≡ T →
                      e ≤ e1 → e1 ≤ e + e2 →
-                     ∃∃T0. ⇧[d1, e] T0 ≡ T2 & ⇧[d1, e + e2 - e1] T0 ≡ T1.
+                     ∃∃T0. ⬆[d1, e] T0 ≡ T2 & ⬆[d1, e + e2 - e1] T0 ≡ T1.
 #d1 #e1 #T1 #T #H elim H -d1 -e1 -T1 -T
 [ #k #d1 #e1 #e #e2 #T2 #H >(lift_inv_sort2 … H) -H /2 width=3 by lift_sort, ex2_intro/
 | #i #d1 #e1 #Hid1 #e #e2 #T2 #H #He1 #He1e2
@@ -99,7 +99,7 @@ theorem lift_div_be: ∀d1,e1,T1,T. ⇧[d1, e1] T1 ≡ T →
 ]
 qed.
 
-theorem lift_mono: ∀d,e,T,U1. ⇧[d,e] T ≡ U1 → ∀U2. ⇧[d,e] T ≡ U2 → U1 = U2.
+theorem lift_mono: ∀d,e,T,U1. ⬆[d,e] T ≡ U1 → ∀U2. ⬆[d,e] T ≡ U2 → U1 = U2.
 #d #e #T #U1 #H elim H -d -e -T -U1
 [ #k #d #e #X #HX
   lapply (lift_inv_sort1 … HX) -HX //
@@ -117,9 +117,9 @@ theorem lift_mono: ∀d,e,T,U1. ⇧[d,e] T ≡ U1 → ∀U2. ⇧[d,e] T ≡ U2 �
 qed-.
 
 (* Basic_1: was: lift_free (left to right) *)
-theorem lift_trans_be: ∀d1,e1,T1,T. ⇧[d1, e1] T1 ≡ T →
-                       ∀d2,e2,T2. ⇧[d2, e2] T ≡ T2 →
-                       d1 ≤ d2 → d2 ≤ d1 + e1 → ⇧[d1, e1 + e2] T1 ≡ T2.
+theorem lift_trans_be: ∀d1,e1,T1,T. ⬆[d1, e1] T1 ≡ T →
+                       ∀d2,e2,T2. ⬆[d2, e2] T ≡ T2 →
+                       d1 ≤ d2 → d2 ≤ d1 + e1 → ⬆[d1, e1 + e2] T1 ≡ T2.
 #d1 #e1 #T1 #T #H elim H -d1 -e1 -T1 -T
 [ #k #d1 #e1 #d2 #e2 #T2 #HT2 #_ #_
   >(lift_inv_sort1 … HT2) -HT2 //
@@ -145,9 +145,9 @@ theorem lift_trans_be: ∀d1,e1,T1,T. ⇧[d1, e1] T1 ≡ T →
 qed.
 
 (* Basic_1: was: lift_d (right to left) *)
-theorem lift_trans_le: ∀d1,e1,T1,T. ⇧[d1, e1] T1 ≡ T →
-                       ∀d2,e2,T2. ⇧[d2, e2] T ≡ T2 → d2 ≤ d1 →
-                       ∃∃T0. ⇧[d2, e2] T1 ≡ T0 & ⇧[d1 + e2, e1] T0 ≡ T2.
+theorem lift_trans_le: ∀d1,e1,T1,T. ⬆[d1, e1] T1 ≡ T →
+                       ∀d2,e2,T2. ⬆[d2, e2] T ≡ T2 → d2 ≤ d1 →
+                       ∃∃T0. ⬆[d2, e2] T1 ≡ T0 & ⬆[d1 + e2, e1] T0 ≡ T2.
 #d1 #e1 #T1 #T #H elim H -d1 -e1 -T1 -T
 [ #k #d1 #e1 #d2 #e2 #X #HX #_
   >(lift_inv_sort1 … HX) -HX /2 width=3 by lift_sort, ex2_intro/
@@ -172,9 +172,9 @@ theorem lift_trans_le: ∀d1,e1,T1,T. ⇧[d1, e1] T1 ≡ T →
 qed.
 
 (* Basic_1: was: lift_d (left to right) *)
-theorem lift_trans_ge: ∀d1,e1,T1,T. ⇧[d1, e1] T1 ≡ T →
-                       ∀d2,e2,T2. ⇧[d2, e2] T ≡ T2 → d1 + e1 ≤ d2 →
-                       ∃∃T0. ⇧[d2 - e1, e2] T1 ≡ T0 & ⇧[d1, e1] T0 ≡ T2.
+theorem lift_trans_ge: ∀d1,e1,T1,T. ⬆[d1, e1] T1 ≡ T →
+                       ∀d2,e2,T2. ⬆[d2, e2] T ≡ T2 → d1 + e1 ≤ d2 →
+                       ∃∃T0. ⬆[d2 - e1, e2] T1 ≡ T0 & ⬆[d1, e1] T0 ≡ T2.
 #d1 #e1 #T1 #T #H elim H -d1 -e1 -T1 -T
 [ #k #d1 #e1 #d2 #e2 #X #HX #_
   >(lift_inv_sort1 … HX) -HX /2 width=3 by lift_sort, ex2_intro/
@@ -201,16 +201,16 @@ qed.
 
 (* Advanced properties ******************************************************)
 
-lemma lift_conf_O1: ∀T,T1,d1,e1. ⇧[d1, e1] T ≡ T1 → ∀T2,e2. ⇧[0, e2] T ≡ T2 →
-                    ∃∃T0. ⇧[0, e2] T1 ≡ T0 & ⇧[d1 + e2, e1] T2 ≡ T0.
+lemma lift_conf_O1: ∀T,T1,d1,e1. ⬆[d1, e1] T ≡ T1 → ∀T2,e2. ⬆[0, e2] T ≡ T2 →
+                    ∃∃T0. ⬆[0, e2] T1 ≡ T0 & ⬆[d1 + e2, e1] T2 ≡ T0.
 #T #T1 #d1 #e1 #HT1 #T2 #e2 #HT2
 elim (lift_total T1 0 e2) #T0 #HT10
 elim (lift_trans_le … HT1 … HT10) -HT1 // #X #HTX #HT20
 lapply (lift_mono … HTX … HT2) -T #H destruct /2 width=3 by ex2_intro/
 qed.
 
-lemma lift_conf_be: ∀T,T1,d,e1. ⇧[d, e1] T ≡ T1 → ∀T2,e2. ⇧[d, e2] T ≡ T2 →
-                    e1 ≤ e2 → ⇧[d + e1, e2 - e1] T1 ≡ T2.
+lemma lift_conf_be: ∀T,T1,d,e1. ⬆[d, e1] T ≡ T1 → ∀T2,e2. ⬆[d, e2] T ≡ T2 →
+                    e1 ≤ e2 → ⬆[d + e1, e2 - e1] T1 ≡ T2.
 #T #T1 #d #e1 #HT1 #T2 #e2 #HT2 #He12
 elim (lift_split … HT2 (d+e1) e1) -HT2 // #X #H
 >(lift_mono … H … HT1) -T //

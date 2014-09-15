@@ -63,7 +63,7 @@ lemma lsx_gref: ∀h,g,G,L,d,p. G ⊢ ⬊*[h, g, §p, d] L.
 qed.
 
 lemma lsx_ge_up: ∀h,g,G,L,T,U,dt,d,e. dt ≤ yinj d + yinj e →
-                 ⇧[d, e] T ≡ U → G ⊢ ⬊*[h, g, U, dt] L → G ⊢ ⬊*[h, g, U, d] L.
+                 ⬆[d, e] T ≡ U → G ⊢ ⬊*[h, g, U, dt] L → G ⊢ ⬊*[h, g, U, d] L.
 #h #g #G #L #T #U #dt #d #e #Hdtde #HTU #H @(lsx_ind … H) -L
 /5 width=7 by lsx_intro, lleq_ge_up/
 qed-.

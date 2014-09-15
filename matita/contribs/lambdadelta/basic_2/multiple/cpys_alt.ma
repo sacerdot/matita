@@ -21,8 +21,8 @@ include "basic_2/multiple/cpys_lift.ma".
 inductive cpysa: ynat → ynat → relation4 genv lenv term term ≝
 | cpysa_atom : ∀I,G,L,d,e. cpysa d e G L (⓪{I}) (⓪{I})
 | cpysa_subst: ∀I,G,L,K,V1,V2,W2,i,d,e. d ≤ yinj i → i < d+e →
-               ⇩[i] L ≡ K.ⓑ{I}V1 → cpysa 0 (⫰(d+e-i)) G K V1 V2 →
-               ⇧[0, i+1] V2 ≡ W2 → cpysa d e G L (#i) W2
+               ⬇[i] L ≡ K.ⓑ{I}V1 → cpysa 0 (⫰(d+e-i)) G K V1 V2 →
+               ⬆[0, i+1] V2 ≡ W2 → cpysa d e G L (#i) W2
 | cpysa_bind : ∀a,I,G,L,V1,V2,T1,T2,d,e.
                cpysa d e G L V1 V2 → cpysa (⫯d) e G (L.ⓑ{I}V1) T1 T2 →
                cpysa d e G L (ⓑ{a,I}V1.T1) (ⓑ{a,I}V2.T2)
@@ -85,8 +85,8 @@ qed-.
 lemma cpys_ind_alt: ∀R:ynat→ynat→relation4 genv lenv term term.
                     (∀I,G,L,d,e. R d e G L (⓪{I}) (⓪{I})) →
                     (∀I,G,L,K,V1,V2,W2,i,d,e. d ≤ yinj i → i < d + e →
-                     ⇩[i] L ≡ K.ⓑ{I}V1 → ⦃G, K⦄ ⊢ V1 ▶*[O, ⫰(d+e-i)] V2 →
-                     ⇧[O, i+1] V2 ≡ W2 → R O (⫰(d+e-i)) G K V1 V2 → R d e G L (#i) W2
+                     ⬇[i] L ≡ K.ⓑ{I}V1 → ⦃G, K⦄ ⊢ V1 ▶*[O, ⫰(d+e-i)] V2 →
+                     ⬆[O, i+1] V2 ≡ W2 → R O (⫰(d+e-i)) G K V1 V2 → R d e G L (#i) W2
                     ) →
                     (∀a,I,G,L,V1,V2,T1,T2,d,e. ⦃G, L⦄ ⊢ V1 ▶*[d, e] V2 →
                      ⦃G, L.ⓑ{I}V1⦄ ⊢ T1 ▶*[⫯d, e] T2 → R d e G L V1 V2 →

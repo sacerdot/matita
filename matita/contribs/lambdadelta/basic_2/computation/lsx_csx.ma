@@ -21,7 +21,7 @@ include "basic_2/computation/lcosx_cpx.ma".
 
 lemma lsx_lref_be_lpxs: ∀h,g,I,G,K1,V,i,d. d ≤ yinj i → ⦃G, K1⦄ ⊢ ⬊*[h, g] V →
                         ∀K2. G ⊢ ⬊*[h, g, V, 0] K2 → ⦃G, K1⦄ ⊢ ➡*[h, g] K2 →
-                        ∀L2. ⇩[i] L2 ≡ K2.ⓑ{I}V → G ⊢ ⬊*[h, g, #i, d] L2.
+                        ∀L2. ⬇[i] L2 ≡ K2.ⓑ{I}V → G ⊢ ⬊*[h, g, #i, d] L2.
 #h #g #I #G #K1 #V #i #d #Hdi #H @(csx_ind_alt … H) -V
 #V0 #_ #IHV0 #K2 #H @(lsx_ind … H) -K2
 #K0 #HK0 #IHK0 #HK10 #L0 #HLK0 @lsx_intro
@@ -37,7 +37,7 @@ qed.
 
 lemma lsx_lref_be: ∀h,g,I,G,K,V,i,d. d ≤ yinj i → ⦃G, K⦄ ⊢ ⬊*[h, g] V →
                    G ⊢ ⬊*[h, g, V, 0] K →
-                   ∀L. ⇩[i] L ≡ K.ⓑ{I}V → G ⊢ ⬊*[h, g, #i, d] L.
+                   ∀L. ⬇[i] L ≡ K.ⓑ{I}V → G ⊢ ⬊*[h, g, #i, d] L.
 /2 width=8 by lsx_lref_be_lpxs/ qed.
 
 (* Main properties **********************************************************)

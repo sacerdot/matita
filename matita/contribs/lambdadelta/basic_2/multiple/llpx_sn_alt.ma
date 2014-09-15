@@ -21,7 +21,7 @@ include "basic_2/multiple/llpx_sn_alt_rec.ma".
 definition llpx_sn_alt: relation3 lenv term term → relation4 ynat term lenv lenv ≝
                         λR,d,T,L1,L2. |L1| = |L2| ∧
                         (∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → L1 ⊢ i ϵ 𝐅*[d]⦃T⦄ →
-                           ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 →
+                           ⬇[i] L1 ≡ K1.ⓑ{I1}V1 → ⬇[i] L2 ≡ K2.ⓑ{I2}V2 →
                            I1 = I2 ∧ R K1 V1 V2
                         ).
 

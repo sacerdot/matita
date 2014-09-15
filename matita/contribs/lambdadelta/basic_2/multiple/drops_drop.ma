@@ -19,8 +19,8 @@ include "basic_2/multiple/drops.ma".
 
 (* Properties concerning basic local environment slicing ********************)
 
-lemma drops_drop_trans: ∀L1,L,des. ⇩*[Ⓕ, des] L1 ≡ L → ∀L2,i. ⇩[i] L ≡ L2 →
-                        ∃∃L0,des0,i0. ⇩[i0] L1 ≡ L0 & ⇩*[Ⓕ, des0] L0 ≡ L2 &
+lemma drops_drop_trans: ∀L1,L,des. ⬇*[Ⓕ, des] L1 ≡ L → ∀L2,i. ⬇[i] L ≡ L2 →
+                        ∃∃L0,des0,i0. ⬇[i0] L1 ≡ L0 & ⬇*[Ⓕ, des0] L0 ≡ L2 &
                                       @⦃i, des⦄ ≡ i0 & des ▭ i ≡ des0.
 #L1 #L #des #H elim H -L1 -L -des
 [ /2 width=7 by drops_nil, minuss_nil, at_nil, ex4_3_intro/

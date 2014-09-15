@@ -18,7 +18,7 @@ include "basic_2/substitution/gget.ma".
 
 (* Main properties **********************************************************)
 
-theorem gget_mono: ∀G,G1,e. ⇩[e] G ≡ G1 → ∀G2. ⇩[e] G ≡ G2 → G1 = G2.
+theorem gget_mono: ∀G,G1,e. ⬇[e] G ≡ G1 → ∀G2. ⬇[e] G ≡ G2 → G1 = G2.
 #G #G1 #e #H elim H -G -G1
 [ #G #He #G2 #H
   >(gget_inv_gt … H He) -H -He //
@@ -29,7 +29,7 @@ theorem gget_mono: ∀G,G1,e. ⇩[e] G ≡ G1 → ∀G2. ⇩[e] G ≡ G2 → G1 
 ]
 qed-.
 
-lemma gget_dec: ∀G1,G2,e. Decidable (⇩[e] G1 ≡ G2).
+lemma gget_dec: ∀G1,G2,e. Decidable (⬇[e] G1 ≡ G2).
 #G1 #G2 #e
 elim (gget_total e G1) #G #HG1
 elim (eq_genv_dec G G2) #HG2

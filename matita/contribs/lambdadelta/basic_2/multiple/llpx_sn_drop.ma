@@ -20,9 +20,9 @@ include "basic_2/multiple/llpx_sn_leq.ma".
 (* Advanced forward lemmas **************************************************)
 
 lemma llpx_sn_fwd_lref_dx: ∀R,L1,L2,d,i. llpx_sn R d (#i) L1 L2 →
-                           ∀I,K2,V2. ⇩[i] L2 ≡ K2.ⓑ{I}V2 →
+                           ∀I,K2,V2. ⬇[i] L2 ≡ K2.ⓑ{I}V2 →
                            i < d ∨
-                           ∃∃K1,V1. ⇩[i] L1 ≡ K1.ⓑ{I}V1 & llpx_sn R 0 V1 K1 K2 &
+                           ∃∃K1,V1. ⬇[i] L1 ≡ K1.ⓑ{I}V1 & llpx_sn R 0 V1 K1 K2 &
                                     R K1 V1 V2 & d ≤ i.
 #R #L1 #L2 #d #i #H #I #K2 #V2 #HLK2 elim (llpx_sn_fwd_lref … H) -H [ * || * ]
 [ #_ #H elim (lt_refl_false i)
@@ -36,9 +36,9 @@ lemma llpx_sn_fwd_lref_dx: ∀R,L1,L2,d,i. llpx_sn R d (#i) L1 L2 →
 qed-.
 
 lemma llpx_sn_fwd_lref_sn: ∀R,L1,L2,d,i. llpx_sn R d (#i) L1 L2 →
-                           ∀I,K1,V1. ⇩[i] L1 ≡ K1.ⓑ{I}V1 →
+                           ∀I,K1,V1. ⬇[i] L1 ≡ K1.ⓑ{I}V1 →
                            i < d ∨
-                           ∃∃K2,V2. ⇩[i] L2 ≡ K2.ⓑ{I}V2 & llpx_sn R 0 V1 K1 K2 &
+                           ∃∃K2,V2. ⬇[i] L2 ≡ K2.ⓑ{I}V2 & llpx_sn R 0 V1 K1 K2 &
                                     R K1 V1 V2 & d ≤ i.
 #R #L1 #L2 #d #i #H #I #K1 #V1 #HLK1 elim (llpx_sn_fwd_lref … H) -H [ * || * ]
 [ #H #_ elim (lt_refl_false i)
@@ -54,8 +54,8 @@ qed-.
 (* Advanced inversion lemmas ************************************************)
 
 lemma llpx_sn_inv_lref_ge_dx: ∀R,L1,L2,d,i. llpx_sn R d (#i) L1 L2 → d ≤ i →
-                              ∀I,K2,V2. ⇩[i] L2 ≡ K2.ⓑ{I}V2 →
-                              ∃∃K1,V1. ⇩[i] L1 ≡ K1.ⓑ{I}V1 &
+                              ∀I,K2,V2. ⬇[i] L2 ≡ K2.ⓑ{I}V2 →
+                              ∃∃K1,V1. ⬇[i] L1 ≡ K1.ⓑ{I}V1 &
                                        llpx_sn R 0 V1 K1 K2 & R K1 V1 V2.
 #R #L1 #L2 #d #i #H #Hdi #I #K2 #V2 #HLK2 elim (llpx_sn_fwd_lref_dx … H … HLK2) -L2
 [ #H elim (ylt_yle_false … H Hdi)
@@ -64,8 +64,8 @@ lemma llpx_sn_inv_lref_ge_dx: ∀R,L1,L2,d,i. llpx_sn R d (#i) L1 L2 → d ≤ i
 qed-.
 
 lemma llpx_sn_inv_lref_ge_sn: ∀R,L1,L2,d,i. llpx_sn R d (#i) L1 L2 → d ≤ i →
-                              ∀I,K1,V1. ⇩[i] L1 ≡ K1.ⓑ{I}V1 →
-                              ∃∃K2,V2. ⇩[i] L2 ≡ K2.ⓑ{I}V2 &
+                              ∀I,K1,V1. ⬇[i] L1 ≡ K1.ⓑ{I}V1 →
+                              ∃∃K2,V2. ⬇[i] L2 ≡ K2.ⓑ{I}V2 &
                                        llpx_sn R 0 V1 K1 K2 & R K1 V1 V2.
 #R #L1 #L2 #d #i #H #Hdi #I #K1 #V1 #HLK1 elim (llpx_sn_fwd_lref_sn … H … HLK1) -L1
 [ #H elim (ylt_yle_false … H Hdi)
@@ -75,7 +75,7 @@ qed-.
 
 lemma llpx_sn_inv_lref_ge_bi: ∀R,L1,L2,d,i. llpx_sn R d (#i) L1 L2 → d ≤ i →
                               ∀I1,I2,K1,K2,V1,V2.
-                              ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 →
+                              ⬇[i] L1 ≡ K1.ⓑ{I1}V1 → ⬇[i] L2 ≡ K2.ⓑ{I2}V2 →
                               ∧∧ I1 = I2 & llpx_sn R 0 V1 K1 K2 & R K1 V1 V2.
 #R #L1 #L2 #d #i #HL12 #Hdi #I1 #I2 #K1 #K2 #V1 #V2 #HLK1 #HLK2
 elim (llpx_sn_inv_lref_ge_sn … HL12 … HLK1) // -L1 -d
@@ -83,7 +83,7 @@ elim (llpx_sn_inv_lref_ge_sn … HL12 … HLK1) // -L1 -d
 qed-.
 
 fact llpx_sn_inv_S_aux: ∀R,L1,L2,T,d0. llpx_sn R d0 T L1 L2 → ∀d. d0 = d + 1 →
-                        ∀K1,K2,I,V1,V2. ⇩[d] L1 ≡ K1.ⓑ{I}V1 → ⇩[d] L2 ≡ K2.ⓑ{I}V2 →
+                        ∀K1,K2,I,V1,V2. ⬇[d] L1 ≡ K1.ⓑ{I}V1 → ⬇[d] L2 ≡ K2.ⓑ{I}V2 →
                         llpx_sn R 0 V1 K1 K2 → R K1 V1 V2 → llpx_sn R d T L1 L2.
 #R #L1 #L2 #T #d0 #H elim H -L1 -L2 -T -d0
 /2 width=1 by llpx_sn_gref, llpx_sn_free, llpx_sn_sort/
@@ -100,7 +100,7 @@ fact llpx_sn_inv_S_aux: ∀R,L1,L2,T,d0. llpx_sn R d0 T L1 L2 → ∀d. d0 = d +
 qed-.
 
 lemma llpx_sn_inv_S: ∀R,L1,L2,T,d. llpx_sn R (d + 1) T L1 L2 →
-                     ∀K1,K2,I,V1,V2. ⇩[d] L1 ≡ K1.ⓑ{I}V1 → ⇩[d] L2 ≡ K2.ⓑ{I}V2 →
+                     ∀K1,K2,I,V1,V2. ⬇[d] L1 ≡ K1.ⓑ{I}V1 → ⬇[d] L2 ≡ K2.ⓑ{I}V2 →
                      llpx_sn R 0 V1 K1 K2 → R K1 V1 V2 → llpx_sn R d T L1 L2.
 /2 width=9 by llpx_sn_inv_S_aux/ qed-.
 
@@ -171,8 +171,8 @@ qed-.
 
 lemma llpx_sn_lift_le: ∀R. l_liftable R →
                        ∀K1,K2,T,d0. llpx_sn R d0 T K1 K2 →
-                       ∀L1,L2,d,e. ⇩[Ⓕ, d, e] L1 ≡ K1 → ⇩[Ⓕ, d, e] L2 ≡ K2 →
-                       ∀U. ⇧[d, e] T ≡ U → d0 ≤ d → llpx_sn R d0 U L1 L2.
+                       ∀L1,L2,d,e. ⬇[Ⓕ, d, e] L1 ≡ K1 → ⬇[Ⓕ, d, e] L2 ≡ K2 →
+                       ∀U. ⬆[d, e] T ≡ U → d0 ≤ d → llpx_sn R d0 U L1 L2.
 #R #HR #K1 #K2 #T #d0 #H elim H -K1 -K2 -T -d0
 [ #K1 #K2 #d0 #k #HK12 #L1 #L2 #d #e #HLK1 #HLK2 #X #H #_ >(lift_inv_sort1 … H) -X
   lapply (drop_fwd_length_eq2 … HLK1 HLK2 HK12) -K1 -K2 -d
@@ -212,8 +212,8 @@ lemma llpx_sn_lift_le: ∀R. l_liftable R →
 qed-.
 
 lemma llpx_sn_lift_ge: ∀R,K1,K2,T,d0. llpx_sn R d0 T K1 K2 →
-                       ∀L1,L2,d,e. ⇩[Ⓕ, d, e] L1 ≡ K1 → ⇩[Ⓕ, d, e] L2 ≡ K2 →
-                       ∀U. ⇧[d, e] T ≡ U → d ≤ d0 → llpx_sn R (d0+e) U L1 L2.
+                       ∀L1,L2,d,e. ⬇[Ⓕ, d, e] L1 ≡ K1 → ⬇[Ⓕ, d, e] L2 ≡ K2 →
+                       ∀U. ⬆[d, e] T ≡ U → d ≤ d0 → llpx_sn R (d0+e) U L1 L2.
 #R #K1 #K2 #T #d0 #H elim H -K1 -K2 -T -d0
 [ #K1 #K2 #d0 #k #HK12 #L1 #L2 #d #e #HLK1 #HLK2 #X #H #_ >(lift_inv_sort1 … H) -X
   lapply (drop_fwd_length_eq2 … HLK1 HLK2 HK12) -K1 -K2 -d
@@ -254,8 +254,8 @@ qed-.
 
 lemma llpx_sn_inv_lift_le: ∀R. l_deliftable_sn R →
                            ∀L1,L2,U,d0. llpx_sn R d0 U L1 L2 →
-                           ∀K1,K2,d,e. ⇩[Ⓕ, d, e] L1 ≡ K1 → ⇩[Ⓕ, d, e] L2 ≡ K2 →
-                           ∀T. ⇧[d, e] T ≡ U → d0 ≤ d → llpx_sn R d0 T K1 K2.
+                           ∀K1,K2,d,e. ⬇[Ⓕ, d, e] L1 ≡ K1 → ⬇[Ⓕ, d, e] L2 ≡ K2 →
+                           ∀T. ⬆[d, e] T ≡ U → d0 ≤ d → llpx_sn R d0 T K1 K2.
 #R #HR #L1 #L2 #U #d0 #H elim H -L1 -L2 -U -d0
 [ #L1 #L2 #d0 #k #HL12 #K1 #K2 #d #e #HLK1 #HLK2 #X #H #_ >(lift_inv_sort2 … H) -X
   lapply (drop_fwd_length_eq1 … HLK1 HLK2 HL12) -L1 -L2 -d -e
@@ -298,8 +298,8 @@ lemma llpx_sn_inv_lift_le: ∀R. l_deliftable_sn R →
 qed-.
 
 lemma llpx_sn_inv_lift_be: ∀R,L1,L2,U,d0. llpx_sn R d0 U L1 L2 →
-                           ∀K1,K2,d,e. ⇩[Ⓕ, d, e] L1 ≡ K1 → ⇩[Ⓕ, d, e] L2 ≡ K2 →
-                           ∀T. ⇧[d, e] T ≡ U → d ≤ d0 → d0 ≤ yinj d + e → llpx_sn R d T K1 K2.
+                           ∀K1,K2,d,e. ⬇[Ⓕ, d, e] L1 ≡ K1 → ⬇[Ⓕ, d, e] L2 ≡ K2 →
+                           ∀T. ⬆[d, e] T ≡ U → d ≤ d0 → d0 ≤ yinj d + e → llpx_sn R d T K1 K2.
 #R #L1 #L2 #U #d0 #H elim H -L1 -L2 -U -d0
 [ #L1 #L2 #d0 #k #HL12 #K1 #K2 #d #e #HLK1 #HLK2 #X #H #_ #_ >(lift_inv_sort2 … H) -X
   lapply (drop_fwd_length_eq1 … HLK1 HLK2 HL12) -L1 -L2 -d0 -e
@@ -342,8 +342,8 @@ lemma llpx_sn_inv_lift_be: ∀R,L1,L2,U,d0. llpx_sn R d0 U L1 L2 →
 qed-.
 
 lemma llpx_sn_inv_lift_ge: ∀R,L1,L2,U,d0. llpx_sn R d0 U L1 L2 →
-                           ∀K1,K2,d,e. ⇩[Ⓕ, d, e] L1 ≡ K1 → ⇩[Ⓕ, d, e] L2 ≡ K2 →
-                           ∀T. ⇧[d, e] T ≡ U → yinj d + e ≤ d0 → llpx_sn R (d0-e) T K1 K2.
+                           ∀K1,K2,d,e. ⬇[Ⓕ, d, e] L1 ≡ K1 → ⬇[Ⓕ, d, e] L2 ≡ K2 →
+                           ∀T. ⬆[d, e] T ≡ U → yinj d + e ≤ d0 → llpx_sn R (d0-e) T K1 K2.
 #R #L1 #L2 #U #d0 #H elim H -L1 -L2 -U -d0
 [ #L1 #L2 #d0 #k #HL12 #K1 #K2 #d #e #HLK1 #HLK2 #X #H #_ >(lift_inv_sort2 … H) -X
   lapply (drop_fwd_length_eq1 … HLK1 HLK2 HL12) -L1 -L2 -d
@@ -389,20 +389,20 @@ qed-.
 (* Advanced inversion lemmas on relocation **********************************)
 
 lemma llpx_sn_inv_lift_O: ∀R,L1,L2,U. llpx_sn R 0 U L1 L2 →
-                          ∀K1,K2,e. ⇩[e] L1 ≡ K1 → ⇩[e] L2 ≡ K2 →
-                          ∀T. ⇧[0, e] T ≡ U → llpx_sn R 0 T K1 K2.
+                          ∀K1,K2,e. ⬇[e] L1 ≡ K1 → ⬇[e] L2 ≡ K2 →
+                          ∀T. ⬆[0, e] T ≡ U → llpx_sn R 0 T K1 K2.
 /2 width=11 by llpx_sn_inv_lift_be/ qed-.
 
 lemma llpx_sn_drop_conf_O: ∀R,L1,L2,U. llpx_sn R 0 U L1 L2 →
-                           ∀K1,e. ⇩[e] L1 ≡ K1 → ∀T. ⇧[0, e] T ≡ U →
-                           ∃∃K2. ⇩[e] L2 ≡ K2 & llpx_sn R 0 T K1 K2.
+                           ∀K1,e. ⬇[e] L1 ≡ K1 → ∀T. ⬆[0, e] T ≡ U →
+                           ∃∃K2. ⬇[e] L2 ≡ K2 & llpx_sn R 0 T K1 K2.
 #R #L1 #L2 #U #HU #K1 #e #HLK1 #T #HTU elim (llpx_sn_fwd_drop_sn … HU … HLK1)
 /3 width=10 by llpx_sn_inv_lift_O, ex2_intro/
 qed-.
 
 lemma llpx_sn_drop_trans_O: ∀R,L1,L2,U. llpx_sn R 0 U L1 L2 →
-                            ∀K2,e. ⇩[e] L2 ≡ K2 → ∀T. ⇧[0, e] T ≡ U →
-                            ∃∃K1. ⇩[e] L1 ≡ K1 & llpx_sn R 0 T K1 K2.
+                            ∀K2,e. ⬇[e] L2 ≡ K2 → ∀T. ⬆[0, e] T ≡ U →
+                            ∃∃K1. ⬇[e] L1 ≡ K1 & llpx_sn R 0 T K1 K2.
 #R #L1 #L2 #U #HU #K2 #e #HLK2 #T #HTU elim (llpx_sn_fwd_drop_dx … HU … HLK2)
 /3 width=10 by llpx_sn_inv_lift_O, ex2_intro/
 qed-.

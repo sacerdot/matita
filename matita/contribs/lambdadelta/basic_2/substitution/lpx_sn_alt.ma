@@ -21,7 +21,7 @@ include "basic_2/substitution/lpx_sn.ma".
 definition lpx_sn_alt: relation3 lenv term term → relation lenv ≝
                        λR,L1,L2. |L1| = |L2| ∧
                        (∀I1,I2,K1,K2,V1,V2,i.
-                          ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 →
+                          ⬇[i] L1 ≡ K1.ⓑ{I1}V1 → ⬇[i] L2 ≡ K2.ⓑ{I2}V2 →
                           I1 = I2 ∧ R K1 V1 V2
                        ).
 
@@ -110,7 +110,7 @@ qed-.
 
 lemma lpx_sn_intro_alt: ∀R,L1,L2. |L1| = |L2| →
                         (∀I1,I2,K1,K2,V1,V2,i.
-                           ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 →
+                           ⬇[i] L1 ≡ K1.ⓑ{I1}V1 → ⬇[i] L2 ≡ K2.ⓑ{I2}V2 →
                            I1 = I2 ∧ R K1 V1 V2
                         ) → lpx_sn R L1 L2.
 /4 width=4 by lpx_sn_alt_inv_lpx_sn, conj/ qed.
@@ -118,7 +118,7 @@ lemma lpx_sn_intro_alt: ∀R,L1,L2. |L1| = |L2| →
 lemma lpx_sn_inv_alt: ∀R,L1,L2. lpx_sn R L1 L2 →
                       |L1| = |L2| ∧
                       ∀I1,I2,K1,K2,V1,V2,i.
-                      ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 →
+                      ⬇[i] L1 ≡ K1.ⓑ{I1}V1 → ⬇[i] L2 ≡ K2.ⓑ{I2}V2 →
                       I1 = I2 ∧ R K1 V1 V2.
 #R #L1 #L2 #H lapply (lpx_sn_lpx_sn_alt … H) -H
 #H elim H -H /3 width=4 by conj/

@@ -24,7 +24,7 @@ inductive fquq: tri_relation genv lenv term ≝
 | fquq_bind_dx: ∀a,I,G,L,V,T. fquq G L (ⓑ{a,I}V.T) G (L.ⓑ{I}V) T
 | fquq_flat_dx: ∀I,G, L,V,T. fquq G L (ⓕ{I}V.T) G L T
 | fquq_drop   : ∀G,L,K,T,U,e.
-                ⇩[e] L ≡ K → ⇧[0, e] T ≡ U → fquq G L U G K T
+                ⬇[e] L ≡ K → ⬆[0, e] T ≡ U → fquq G L U G K T
 .
 
 interpretation

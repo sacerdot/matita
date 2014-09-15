@@ -24,8 +24,8 @@ include "basic_2/unfold/lstas.ma".
 inductive cpr: relation4 genv lenv term term ≝
 | cpr_atom : ∀I,G,L. cpr G L (⓪{I}) (⓪{I})
 | cpr_delta: ∀G,L,K,V,V2,W2,i.
-             ⇩[i] L ≡ K. ⓓV → cpr G K V V2 →
-             ⇧[0, i + 1] V2 ≡ W2 → cpr G L (#i) W2
+             ⬇[i] L ≡ K. ⓓV → cpr G K V V2 →
+             ⬆[0, i + 1] V2 ≡ W2 → cpr G L (#i) W2
 | cpr_bind : ∀a,I,G,L,V1,V2,T1,T2.
              cpr G L V1 V2 → cpr G (L.ⓑ{I}V1) T1 T2 →
              cpr G L (ⓑ{a,I}V1.T1) (ⓑ{a,I}V2.T2)
@@ -33,13 +33,13 @@ inductive cpr: relation4 genv lenv term term ≝
              cpr G L V1 V2 → cpr G L T1 T2 →
              cpr G L (ⓕ{I}V1.T1) (ⓕ{I}V2.T2)
 | cpr_zeta : ∀G,L,V,T1,T,T2. cpr G (L.ⓓV) T1 T →
-             ⇧[0, 1] T2 ≡ T → cpr G L (+ⓓV.T1) T2
+             ⬆[0, 1] T2 ≡ T → cpr G L (+ⓓV.T1) T2
 | cpr_eps  : ∀G,L,V,T1,T2. cpr G L T1 T2 → cpr G L (ⓝV.T1) T2
 | cpr_beta : ∀a,G,L,V1,V2,W1,W2,T1,T2.
              cpr G L V1 V2 → cpr G L W1 W2 → cpr G (L.ⓛW1) T1 T2 →
              cpr G L (ⓐV1.ⓛ{a}W1.T1) (ⓓ{a}ⓝW2.V2.T2)
 | cpr_theta: ∀a,G,L,V1,V,V2,W1,W2,T1,T2.
-             cpr G L V1 V → ⇧[0, 1] V ≡ V2 → cpr G L W1 W2 → cpr G (L.ⓓW1) T1 T2 →
+             cpr G L V1 V → ⬆[0, 1] V ≡ V2 → cpr G L W1 W2 → cpr G (L.ⓓW1) T1 T2 →
              cpr G L (ⓐV1.ⓓ{a}W1.T1) (ⓓ{a}W2.ⓐV2.T2)
 .
 
@@ -76,8 +76,8 @@ lemma cpr_pair_sn: ∀I,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡ V2 →
                    ∀T. ⦃G, L⦄ ⊢ ②{I}V1.T ➡ ②{I}V2.T.
 * /2 width=1 by cpr_bind, cpr_flat/ qed.
 
-lemma cpr_delift: ∀G,K,V,T1,L,d. ⇩[d] L ≡ (K.ⓓV) →
-                  ∃∃T2,T. ⦃G, L⦄ ⊢ T1 ➡ T2 & ⇧[d, 1] T ≡ T2.
+lemma cpr_delift: ∀G,K,V,T1,L,d. ⬇[d] L ≡ (K.ⓓV) →
+                  ∃∃T2,T. ⦃G, L⦄ ⊢ T1 ➡ T2 & ⬆[d, 1] T ≡ T2.
 #G #K #V #T1 elim T1 -T1
 [ * /2 width=4 by cpr_atom, lift_sort, lift_gref, ex2_2_intro/
   #i #L #d #HLK elim (lt_or_eq_or_gt i d)
@@ -111,8 +111,8 @@ lemma lstas_cpr: ∀h,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 •*[h, 0] T2 → ⦃G, L⦄ 
 
 fact cpr_inv_atom1_aux: ∀G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡ T2 → ∀I. T1 = ⓪{I} →
                         T2 = ⓪{I} ∨
-                        ∃∃K,V,V2,i. ⇩[i] L ≡ K. ⓓV & ⦃G, K⦄ ⊢ V ➡ V2 &
-                                    ⇧[O, i + 1] V2 ≡ T2 & I = LRef i.
+                        ∃∃K,V,V2,i. ⬇[i] L ≡ K. ⓓV & ⦃G, K⦄ ⊢ V ➡ V2 &
+                                    ⬆[O, i + 1] V2 ≡ T2 & I = LRef i.
 #G #L #T1 #T2 * -G -L -T1 -T2
 [ #I #G #L #J #H destruct /2 width=1 by or_introl/
 | #L #G #K #V #V2 #T2 #i #HLK #HV2 #HVT2 #J #H destruct /3 width=8 by ex4_4_intro, or_intror/
@@ -127,8 +127,8 @@ qed-.
 
 lemma cpr_inv_atom1: ∀I,G,L,T2. ⦃G, L⦄ ⊢ ⓪{I} ➡ T2 →
                      T2 = ⓪{I} ∨
-                     ∃∃K,V,V2,i. ⇩[i] L ≡ K. ⓓV & ⦃G, K⦄ ⊢ V ➡ V2 &
-                                 ⇧[O, i + 1] V2 ≡ T2 & I = LRef i.
+                     ∃∃K,V,V2,i. ⬇[i] L ≡ K. ⓓV & ⦃G, K⦄ ⊢ V ➡ V2 &
+                                 ⬆[O, i + 1] V2 ≡ T2 & I = LRef i.
 /2 width=3 by cpr_inv_atom1_aux/ qed-.
 
 (* Basic_1: includes: pr0_gen_sort pr2_gen_sort *)
@@ -141,8 +141,8 @@ qed-.
 (* Basic_1: includes: pr0_gen_lref pr2_gen_lref *)
 lemma cpr_inv_lref1: ∀G,L,T2,i. ⦃G, L⦄ ⊢ #i ➡ T2 →
                      T2 = #i ∨
-                     ∃∃K,V,V2. ⇩[i] L ≡ K. ⓓV & ⦃G, K⦄ ⊢ V ➡ V2 &
-                               ⇧[O, i + 1] V2 ≡ T2.
+                     ∃∃K,V,V2. ⬇[i] L ≡ K. ⓓV & ⦃G, K⦄ ⊢ V ➡ V2 &
+                               ⬆[O, i + 1] V2 ≡ T2.
 #G #L #T2 #i #H
 elim (cpr_inv_atom1 … H) -H /2 width=1 by or_introl/
 * #K #V #V2 #j #HLK #HV2 #HVT2 #H destruct /3 width=6 by ex3_3_intro, or_intror/
@@ -159,7 +159,7 @@ fact cpr_inv_bind1_aux: ∀G,L,U1,U2. ⦃G, L⦄ ⊢ U1 ➡ U2 →
                         ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡ V2 & ⦃G, L.ⓑ{I}V1⦄ ⊢ T1 ➡ T2 &
                                  U2 = ⓑ{a,I}V2.T2
                         ) ∨
-                        ∃∃T. ⦃G, L.ⓓV1⦄ ⊢ T1 ➡ T & ⇧[0, 1] U2 ≡ T &
+                        ∃∃T. ⦃G, L.ⓓV1⦄ ⊢ T1 ➡ T & ⬆[0, 1] U2 ≡ T &
                              a = true & I = Abbr.
 #G #L #U1 #U2 * -L -U1 -U2
 [ #I #G #L #b #J #W1 #U1 #H destruct
@@ -177,7 +177,7 @@ lemma cpr_inv_bind1: ∀a,I,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓑ{a,I}V1.T1 ➡ U2 �
                      ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡ V2 & ⦃G, L.ⓑ{I}V1⦄ ⊢ T1 ➡ T2 &
                               U2 = ⓑ{a,I}V2.T2
                      ) ∨
-                     ∃∃T. ⦃G, L.ⓓV1⦄ ⊢ T1 ➡ T & ⇧[0, 1] U2 ≡ T &
+                     ∃∃T. ⦃G, L.ⓓV1⦄ ⊢ T1 ➡ T & ⬆[0, 1] U2 ≡ T &
                           a = true & I = Abbr.
 /2 width=3 by cpr_inv_bind1_aux/ qed-.
 
@@ -186,7 +186,7 @@ lemma cpr_inv_abbr1: ∀a,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓓ{a}V1.T1 ➡ U2 → (
                      ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡ V2 & ⦃G, L. ⓓV1⦄ ⊢ T1 ➡ T2 &
                               U2 = ⓓ{a}V2.T2
                      ) ∨
-                     ∃∃T. ⦃G, L.ⓓV1⦄ ⊢ T1 ➡ T & ⇧[0, 1] U2 ≡ T & a = true.
+                     ∃∃T. ⦃G, L.ⓓV1⦄ ⊢ T1 ➡ T & ⬆[0, 1] U2 ≡ T & a = true.
 #a #G #L #V1 #T1 #U2 #H
 elim (cpr_inv_bind1 … H) -H *
 /3 width=5 by ex3_2_intro, ex3_intro, or_introl, or_intror/
@@ -211,7 +211,7 @@ fact cpr_inv_flat1_aux: ∀G,L,U,U2. ⦃G, L⦄ ⊢ U ➡ U2 →
                          | ∃∃a,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡ V2 & ⦃G, L⦄ ⊢ W1 ➡ W2 &
                                                ⦃G, L.ⓛW1⦄ ⊢ T1 ➡ T2 & U1 = ⓛ{a}W1.T1 &
                                                U2 = ⓓ{a}ⓝW2.V2.T2 & I = Appl
-                         | ∃∃a,V,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡ V & ⇧[0,1] V ≡ V2 &
+                         | ∃∃a,V,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡ V & ⬆[0,1] V ≡ V2 &
                                                  ⦃G, L⦄ ⊢ W1 ➡ W2 & ⦃G, L.ⓓW1⦄ ⊢ T1 ➡ T2 &
                                                  U1 = ⓓ{a}W1.T1 &
                                                  U2 = ⓓ{a}W2.ⓐV2.T2 & I = Appl.
@@ -234,7 +234,7 @@ lemma cpr_inv_flat1: ∀I,G,L,V1,U1,U2. ⦃G, L⦄ ⊢ ⓕ{I}V1.U1 ➡ U2 →
                       | ∃∃a,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡ V2 & ⦃G, L⦄ ⊢ W1 ➡ W2 &
                                             ⦃G, L.ⓛW1⦄ ⊢ T1 ➡ T2 & U1 = ⓛ{a}W1.T1 &
                                             U2 = ⓓ{a}ⓝW2.V2.T2 & I = Appl
-                      | ∃∃a,V,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡ V & ⇧[0,1] V ≡ V2 &
+                      | ∃∃a,V,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡ V & ⬆[0,1] V ≡ V2 &
                                               ⦃G, L⦄ ⊢ W1 ➡ W2 & ⦃G, L.ⓓW1⦄ ⊢ T1 ➡ T2 &
                                               U1 = ⓓ{a}W1.T1 &
                                               U2 = ⓓ{a}W2.ⓐV2.T2 & I = Appl.
@@ -247,7 +247,7 @@ lemma cpr_inv_appl1: ∀G,L,V1,U1,U2. ⦃G, L⦄ ⊢ ⓐV1.U1 ➡ U2 →
                       | ∃∃a,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡ V2 & ⦃G, L⦄ ⊢ W1 ➡ W2 &
                                             ⦃G, L.ⓛW1⦄ ⊢ T1 ➡ T2 &
                                             U1 = ⓛ{a}W1.T1 & U2 = ⓓ{a}ⓝW2.V2.T2
-                      | ∃∃a,V,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡ V & ⇧[0,1] V ≡ V2 &
+                      | ∃∃a,V,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡ V & ⬆[0,1] V ≡ V2 &
                                               ⦃G, L⦄ ⊢ W1 ➡ W2 & ⦃G, L.ⓓW1⦄ ⊢ T1 ➡ T2 &
                                               U1 = ⓓ{a}W1.T1 & U2 = ⓓ{a}W2.ⓐV2.T2.
 #G #L #V1 #U1 #U2 #H elim (cpr_inv_flat1 … H) -H *

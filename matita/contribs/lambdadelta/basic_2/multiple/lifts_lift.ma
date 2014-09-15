@@ -21,8 +21,8 @@ include "basic_2/multiple/lifts.ma".
 (* Properties concerning basic term relocation ******************************)
 
 (* Basic_1: was: lift1_xhg (right to left) *)
-lemma lifts_lift_trans_le: ∀T1,T,des. ⇧*[des] T1 ≡ T → ∀T2. ⇧[0, 1] T ≡ T2 →
-                           ∃∃T0. ⇧[0, 1] T1 ≡ T0 & ⇧*[des + 1] T0 ≡ T2.
+lemma lifts_lift_trans_le: ∀T1,T,des. ⬆*[des] T1 ≡ T → ∀T2. ⬆[0, 1] T ≡ T2 →
+                           ∃∃T0. ⬆[0, 1] T1 ≡ T0 & ⬆*[des + 1] T0 ≡ T2.
 #T1 #T #des #H elim H -T1 -T -des
 [ /2 width=3/
 | #T1 #T3 #T #des #d #e #HT13 #_ #IHT13 #T2 #HT2
@@ -34,9 +34,9 @@ qed-.
 (* Basic_1: was: lift1_free (right to left) *)
 lemma lifts_lift_trans: ∀des,i,i0. @⦃i, des⦄ ≡ i0 →
                         ∀des0. des + 1 ▭ i + 1 ≡ des0 + 1 →
-                        ∀T1,T0. ⇧*[des0] T1 ≡ T0 →
-                        ∀T2. ⇧[O, i0 + 1] T0 ≡ T2 →
-                        ∃∃T. ⇧[0, i + 1] T1 ≡ T & ⇧*[des] T ≡ T2.
+                        ∀T1,T0. ⬆*[des0] T1 ≡ T0 →
+                        ∀T2. ⬆[O, i0 + 1] T0 ≡ T2 →
+                        ∃∃T. ⬆[0, i + 1] T1 ≡ T & ⬆*[des] T ≡ T2.
 #des elim des -des normalize
 [ #i #x #H1 #des0 #H2 #T1 #T0 #HT10 #T2
   <(at_inv_nil … H1) -x #HT02

@@ -20,7 +20,7 @@ include "basic_2/static/da.ma".
 (* Properties on relocation *************************************************)
 
 lemma da_lift: ∀h,g,G,L1,T1,l. ⦃G, L1⦄ ⊢ T1 ▪[h, g] l →
-               ∀L2,s,d,e. ⇩[s, d, e] L2 ≡ L1 → ∀T2. ⇧[d, e] T1 ≡ T2 →
+               ∀L2,s,d,e. ⬇[s, d, e] L2 ≡ L1 → ∀T2. ⬆[d, e] T1 ≡ T2 →
                ⦃G, L2⦄ ⊢ T2 ▪[h, g] l.
 #h #g #G #L1 #T1 #l #H elim H -G -L1 -T1 -l
 [ #G #L1 #k #l #Hkl #L2 #s #d #e #_ #X #H
@@ -53,7 +53,7 @@ qed.
 (* Inversion lemmas on relocation *******************************************)
 
 lemma da_inv_lift: ∀h,g,G,L2,T2,l. ⦃G, L2⦄ ⊢ T2 ▪[h, g] l →
-                   ∀L1,s,d,e. ⇩[s, d, e] L2 ≡ L1 → ∀T1. ⇧[d, e] T1 ≡ T2 →
+                   ∀L1,s,d,e. ⬇[s, d, e] L2 ≡ L1 → ∀T1. ⬆[d, e] T1 ≡ T2 →
                    ⦃G, L1⦄ ⊢ T1 ▪[h, g] l.
 #h #g #G #L2 #T2 #l #H elim H -G -L2 -T2 -l
 [ #G #L2 #k #l #Hkl #L1 #s #d #e #_ #X #H

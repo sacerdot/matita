@@ -23,7 +23,7 @@ include "basic_2/multiple/lifts_vector.ma".
 inductive drops (s:bool): list2 nat nat → relation lenv ≝
 | drops_nil : ∀L. drops s (◊) L L
 | drops_cons: ∀L1,L,L2,des,d,e.
-              drops s des L1 L → ⇩[s, d, e] L ≡ L2 → drops s ({d, e} @ des) L1 L2
+              drops s des L1 L → ⬇[s, d, e] L ≡ L2 → drops s ({d, e} @ des) L1 L2
 .
 
 interpretation "iterated slicing (local environment) abstract"
@@ -34,32 +34,32 @@ interpretation "iterated slicing (local environment) general"
 *)
 
 definition l_liftable1: relation2 lenv term → predicate bool ≝
-                        λR,s. ∀K,T. R K T → ∀L,d,e. ⇩[s, d, e] L ≡ K →
-                        ∀U. ⇧[d, e] T ≡ U → R L U.
+                        λR,s. ∀K,T. R K T → ∀L,d,e. ⬇[s, d, e] L ≡ K →
+                        ∀U. ⬆[d, e] T ≡ U → R L U.
 
 definition l_liftables1: relation2 lenv term → predicate bool ≝
-                         λR,s. ∀L,K,des. ⇩*[s, des] L ≡ K →
-                         ∀T,U. ⇧*[des] T ≡ U → R K T → R L U.
+                         λR,s. ∀L,K,des. ⬇*[s, des] L ≡ K →
+                         ∀T,U. ⬆*[des] T ≡ U → R K T → R L U.
 
 definition l_liftables1_all: relation2 lenv term → predicate bool ≝
-                             λR,s. ∀L,K,des. ⇩*[s, des] L ≡ K →
-                             ∀Ts,Us. ⇧*[des] Ts ≡ Us → 
+                             λR,s. ∀L,K,des. ⬇*[s, des] L ≡ K →
+                             ∀Ts,Us. ⬆*[des] Ts ≡ Us → 
                              all … (R K) Ts → all … (R L) Us.
 
 (* Basic inversion lemmas ***************************************************)
 
-fact drops_inv_nil_aux: ∀L1,L2,s,des. ⇩*[s, des] L1 ≡ L2 → des = ◊ → L1 = L2.
+fact drops_inv_nil_aux: ∀L1,L2,s,des. ⬇*[s, des] L1 ≡ L2 → des = ◊ → L1 = L2.
 #L1 #L2 #s #des * -L1 -L2 -des //
 #L1 #L #L2 #d #e #des #_ #_ #H destruct
 qed-.
 
 (* Basic_1: was: drop1_gen_pnil *)
-lemma drops_inv_nil: ∀L1,L2,s. ⇩*[s, ◊] L1 ≡ L2 → L1 = L2.
+lemma drops_inv_nil: ∀L1,L2,s. ⬇*[s, ◊] L1 ≡ L2 → L1 = L2.
 /2 width=4 by drops_inv_nil_aux/ qed-.
 
-fact drops_inv_cons_aux: ∀L1,L2,s,des. ⇩*[s, des] L1 ≡ L2 →
+fact drops_inv_cons_aux: ∀L1,L2,s,des. ⬇*[s, des] L1 ≡ L2 →
                          ∀d,e,tl. des = {d, e} @ tl →
-                         ∃∃L. ⇩*[s, tl] L1 ≡ L & ⇩[s, d, e] L ≡ L2.
+                         ∃∃L. ⬇*[s, tl] L1 ≡ L & ⬇[s, d, e] L ≡ L2.
 #L1 #L2 #s #des * -L1 -L2 -des
 [ #L #d #e #tl #H destruct
 | #L1 #L #L2 #des #d #e #HT1 #HT2 #hd #he #tl #H destruct
@@ -68,15 +68,15 @@ fact drops_inv_cons_aux: ∀L1,L2,s,des. ⇩*[s, des] L1 ≡ L2 →
 qed-.
 
 (* Basic_1: was: drop1_gen_pcons *)
-lemma drops_inv_cons: ∀L1,L2,s,d,e,des. ⇩*[s, {d, e} @ des] L1 ≡ L2 →
-                      ∃∃L. ⇩*[s, des] L1 ≡ L & ⇩[s, d, e] L ≡ L2.
+lemma drops_inv_cons: ∀L1,L2,s,d,e,des. ⬇*[s, {d, e} @ des] L1 ≡ L2 →
+                      ∃∃L. ⬇*[s, des] L1 ≡ L & ⬇[s, d, e] L ≡ L2.
 /2 width=3 by drops_inv_cons_aux/ qed-.
 
 lemma drops_inv_skip2: ∀I,s,des,des2,i. des ▭ i ≡ des2 →
-                       ∀L1,K2,V2. ⇩*[s, des2] L1 ≡ K2. ⓑ{I} V2 →
+                       ∀L1,K2,V2. ⬇*[s, des2] L1 ≡ K2. ⓑ{I} V2 →
                        ∃∃K1,V1,des1. des + 1 ▭ i + 1 ≡ des1 + 1 &
-                                     ⇩*[s, des1] K1 ≡ K2 &
-                                     ⇧*[des1] V2 ≡ V1 &
+                                     ⬇*[s, des1] K1 ≡ K2 &
+                                     ⬆*[des1] V2 ≡ V1 &
                                      L1 = K1. ⓑ{I} V1.
 #I #s #des #des2 #i #H elim H -des -des2 -i
 [ #i #L1 #K2 #V2 #H
@@ -96,8 +96,8 @@ qed-.
 (* Basic properties *********************************************************)
 
 (* Basic_1: was: drop1_skip_bind *)
-lemma drops_skip: ∀L1,L2,s,des. ⇩*[s, des] L1 ≡ L2 → ∀V1,V2. ⇧*[des] V2 ≡ V1 →
-                  ∀I. ⇩*[s, des + 1] L1.ⓑ{I}V1 ≡ L2.ⓑ{I}V2.
+lemma drops_skip: ∀L1,L2,s,des. ⬇*[s, des] L1 ≡ L2 → ∀V1,V2. ⬆*[des] V2 ≡ V1 →
+                  ∀I. ⬇*[s, des + 1] L1.ⓑ{I}V1 ≡ L2.ⓑ{I}V2.
 #L1 #L2 #s #des #H elim H -L1 -L2 -des
 [ #L #V1 #V2 #HV12 #I
   >(lifts_inv_nil … HV12) -HV12 //

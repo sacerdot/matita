@@ -20,7 +20,7 @@ include "basic_2/multiple/frees.ma".
 definition llor: ynat → relation4 term lenv lenv lenv ≝ λd,T,L2,L1,L.
                  ∧∧ |L1| = |L2| & |L1| = |L|
                   & (∀I1,I2,I,K1,K2,K,V1,V2,V,i.
-                       ⇩[i] L1 ≡ K1.ⓑ{I1}V1 → ⇩[i] L2 ≡ K2.ⓑ{I2}V2 → ⇩[i] L ≡ K.ⓑ{I}V → ∨∨
+                       ⬇[i] L1 ≡ K1.ⓑ{I1}V1 → ⬇[i] L2 ≡ K2.ⓑ{I2}V2 → ⬇[i] L ≡ K.ⓑ{I}V → ∨∨
                        (∧∧ yinj i < d & I1 = I & V1 = V) |
                        (∧∧ (L1 ⊢ i ϵ 𝐅*[d]⦃T⦄ → ⊥) & I1 = I & V1 = V) |
                        (∧∧ d ≤ yinj i & L1 ⊢ i ϵ 𝐅*[d]⦃T⦄ & I2 = I & V2 = V)

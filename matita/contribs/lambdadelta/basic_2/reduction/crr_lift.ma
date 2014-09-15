@@ -19,8 +19,8 @@ include "basic_2/reduction/crr.ma".
 
 (* Properties on relocation *************************************************)
 
-lemma crr_lift: ∀G,K,T. ⦃G, K⦄ ⊢ ➡ 𝐑⦃T⦄ → ∀L,s,d,e. ⇩[s, d, e] L ≡ K →
-                ∀U. ⇧[d, e] T ≡ U → ⦃G, L⦄ ⊢ ➡ 𝐑⦃U⦄.
+lemma crr_lift: ∀G,K,T. ⦃G, K⦄ ⊢ ➡ 𝐑⦃T⦄ → ∀L,s,d,e. ⬇[s, d, e] L ≡ K →
+                ∀U. ⬆[d, e] T ≡ U → ⦃G, L⦄ ⊢ ➡ 𝐑⦃U⦄.
 #G #K #T #H elim H -K -T
 [ #K #K0 #V #i #HK0 #L #s #d #e #HLK #X #H
   elim (lift_inv_lref1 … H) -H * #Hid #H destruct
@@ -46,8 +46,8 @@ lemma crr_lift: ∀G,K,T. ⦃G, K⦄ ⊢ ➡ 𝐑⦃T⦄ → ∀L,s,d,e. ⇩[s, 
 ]
 qed.
 
-lemma crr_inv_lift: ∀G,L,U. ⦃G, L⦄ ⊢ ➡ 𝐑⦃U⦄ → ∀K,s,d,e. ⇩[s, d, e] L ≡ K →
-                    ∀T. ⇧[d, e] T ≡ U → ⦃G, K⦄ ⊢ ➡ 𝐑⦃T⦄.
+lemma crr_inv_lift: ∀G,L,U. ⦃G, L⦄ ⊢ ➡ 𝐑⦃U⦄ → ∀K,s,d,e. ⬇[s, d, e] L ≡ K →
+                    ∀T. ⬆[d, e] T ≡ U → ⦃G, K⦄ ⊢ ➡ 𝐑⦃T⦄.
 #G #L #U #H elim H -L -U
 [ #L #L0 #W #i #HK0 #K #s #d #e #HLK #X #H
   elim (lift_inv_lref2 … H) -H * #Hid #H destruct

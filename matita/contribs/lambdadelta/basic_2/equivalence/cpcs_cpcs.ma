@@ -59,8 +59,8 @@ elim (cprs_inv_abst1 … H2) -H2 #W0 #T0 #_ #_ #H destruct
 qed-.
 
 (* Basic_1: was: pc3_gen_lift *)
-lemma cpcs_inv_lift: ∀G,L,K,s,d,e. ⇩[s, d, e] L ≡ K →
-                     ∀T1,U1. ⇧[d, e] T1 ≡ U1 → ∀T2,U2. ⇧[d, e] T2 ≡ U2 →
+lemma cpcs_inv_lift: ∀G,L,K,s,d,e. ⬇[s, d, e] L ≡ K →
+                     ∀T1,U1. ⬆[d, e] T1 ≡ U1 → ∀T2,U2. ⬆[d, e] T2 ≡ U2 →
                      ⦃G, L⦄ ⊢ U1 ⬌* U2 → ⦃G, K⦄ ⊢ T1 ⬌* T2.
 #G #L #K #s #d #e #HLK #T1 #U1 #HTU1 #T2 #U2 #HTU2 #HU12
 elim (cpcs_inv_cprs … HU12) -HU12 #U #HU1 #HU2
@@ -150,8 +150,8 @@ lemma lsubr_cpcs_trans: ∀G,L1,T1,T2. ⦃G, L1⦄ ⊢ T1 ⬌* T2 →
 qed-.
 
 (* Basic_1: was: pc3_lift *)
-lemma cpcs_lift: ∀G,L,K,s,d,e. ⇩[s, d, e] L ≡ K →
-                 ∀T1,U1. ⇧[d, e] T1 ≡ U1 → ∀T2,U2. ⇧[d, e] T2 ≡ U2 →
+lemma cpcs_lift: ∀G,L,K,s,d,e. ⬇[s, d, e] L ≡ K →
+                 ∀T1,U1. ⬆[d, e] T1 ≡ U1 → ∀T2,U2. ⬆[d, e] T2 ≡ U2 →
                  ⦃G, K⦄ ⊢ T1 ⬌* T2 → ⦃G, L⦄ ⊢ U1 ⬌* U2.
 #G #L #K #s #d #e #HLK #T1 #U1 #HTU1 #T2 #U2 #HTU2 #HT12
 elim (cpcs_inv_cprs … HT12) -HT12 #T #HT1 #HT2

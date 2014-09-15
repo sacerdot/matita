@@ -35,7 +35,7 @@ lemma lcosx_O: ∀h,g,G,L. G ⊢ ~⬊*[h, g, 0] L.
 qed.
 
 lemma lcosx_drop_trans_lt: ∀h,g,G,L,d. G ⊢ ~⬊*[h, g, d] L →
-                            ∀I,K,V,i. ⇩[i] L ≡ K.ⓑ{I}V → i < d →
+                            ∀I,K,V,i. ⬇[i] L ≡ K.ⓑ{I}V → i < d →
                             G ⊢ ~⬊*[h, g, ⫰(d-i)] K ∧ G ⊢ ⬊*[h, g, V, ⫰(d-i)] K.
 #h #g #G #L #d #H elim H -L -d
 [ #d #J #K #V #i #H elim (drop_inv_atom1 … H) -H #H destruct

@@ -21,8 +21,8 @@ include "basic_2/computation/cpxs.ma".
 (* Advanced properties ******************************************************)
 
 lemma cpxs_delta: ∀h,g,I,G,L,K,V,V2,i.
-                  ⇩[i] L ≡ K.ⓑ{I}V → ⦃G, K⦄ ⊢ V ➡*[h, g] V2 →
-                  ∀W2. ⇧[0, i+1] V2 ≡ W2 → ⦃G, L⦄ ⊢ #i ➡*[h, g] W2.
+                  ⬇[i] L ≡ K.ⓑ{I}V → ⦃G, K⦄ ⊢ V ➡*[h, g] V2 →
+                  ∀W2. ⬆[0, i+1] V2 ≡ W2 → ⦃G, L⦄ ⊢ #i ➡*[h, g] W2.
 #h #g #I #G #L #K #V #V2 #i #HLK #H elim H -V2
 [ /3 width=9 by cpx_cpxs, cpx_delta/
 | #V1 lapply (drop_fwd_drop2 … HLK) -HLK
@@ -52,8 +52,8 @@ qed.
 
 lemma cpxs_inv_lref1: ∀h,g,G,L,T2,i. ⦃G, L⦄ ⊢ #i ➡*[h, g] T2 →
                       T2 = #i ∨
-                      ∃∃I,K,V1,T1. ⇩[i] L ≡ K.ⓑ{I}V1 & ⦃G, K⦄ ⊢ V1 ➡*[h, g] T1 &
-                                   ⇧[0, i+1] T1 ≡ T2.
+                      ∃∃I,K,V1,T1. ⬇[i] L ≡ K.ⓑ{I}V1 & ⦃G, K⦄ ⊢ V1 ➡*[h, g] T1 &
+                                   ⬆[0, i+1] T1 ≡ T2.
 #h #g #G #L #T2 #i #H @(cpxs_ind … H) -T2 /2 width=1 by or_introl/
 #T #T2 #_ #HT2 *
 [ #H destruct

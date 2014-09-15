@@ -20,8 +20,8 @@ include "basic_2/computation/lsubc_drop.ma".
 
 (* Basic_1: was: csubc_drop1_conf_rev *)
 lemma drops_lsubc_trans: ∀RR,RS,RP. gcp RR RS RP →
-                         ∀G,L1,K1,des. ⇩*[Ⓕ, des] L1 ≡ K1 → ∀K2. G ⊢ K1 ⫃[RP] K2 →
-                         ∃∃L2. G ⊢ L1 ⫃[RP] L2 & ⇩*[Ⓕ, des] L2 ≡ K2.
+                         ∀G,L1,K1,des. ⬇*[Ⓕ, des] L1 ≡ K1 → ∀K2. G ⊢ K1 ⫃[RP] K2 →
+                         ∃∃L2. G ⊢ L1 ⫃[RP] L2 & ⬇*[Ⓕ, des] L2 ≡ K2.
 #RR #RS #RP #Hgcp #G #L1 #K1 #des #H elim H -L1 -K1 -des
 [ /2 width=3 by drops_nil, ex2_intro/
 | #L1 #L #K1 #des #d #e #_ #HLK1 #IHL #K2 #HK12

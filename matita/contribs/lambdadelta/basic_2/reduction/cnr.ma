@@ -25,7 +25,7 @@ interpretation
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma cnr_inv_delta: ∀G,L,K,V,i. ⇩[i] L ≡ K.ⓓV → ⦃G, L⦄ ⊢ ➡ 𝐍⦃#i⦄ → ⊥.
+lemma cnr_inv_delta: ∀G,L,K,V,i. ⬇[i] L ≡ K.ⓓV → ⦃G, L⦄ ⊢ ➡ 𝐍⦃#i⦄ → ⊥.
 #G #L #K #V #i #HLK #H
 elim (lift_total V 0 (i+1)) #W #HVW
 lapply (H W ?) -H [ /3 width=6 by cpr_delta/ ] -HLK #H destruct
@@ -89,7 +89,7 @@ lemma cnr_lref_free: ∀G,L,i. |L| ≤ i → ⦃G, L⦄ ⊢ ➡ 𝐍⦃#i⦄.
 qed.
 
 (* Basic_1: was only: nf2_csort_lref *)
-lemma cnr_lref_atom: ∀G,L,i. ⇩[i] L ≡ ⋆ → ⦃G, L⦄ ⊢ ➡ 𝐍⦃#i⦄.
+lemma cnr_lref_atom: ∀G,L,i. ⬇[i] L ≡ ⋆ → ⦃G, L⦄ ⊢ ➡ 𝐍⦃#i⦄.
 #G #L #i #HL @cnr_lref_free >(drop_fwd_length … HL) -HL //
 qed.
 

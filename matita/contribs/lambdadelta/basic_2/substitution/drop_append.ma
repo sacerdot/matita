@@ -19,22 +19,22 @@ include "basic_2/substitution/drop.ma".
 
 (* Properties on append for local environments ******************************)
 
-fact drop_O1_append_sn_le_aux: ∀L1,L2,s,d,e. ⇩[s, d, e] L1 ≡ L2 →
+fact drop_O1_append_sn_le_aux: ∀L1,L2,s,d,e. ⬇[s, d, e] L1 ≡ L2 →
                                d = 0 → e ≤ |L1| →
-                               ∀L. ⇩[s, 0, e] L @@ L1 ≡ L @@ L2.
+                               ∀L. ⬇[s, 0, e] L @@ L1 ≡ L @@ L2.
 #L1 #L2 #s #d #e #H elim H -L1 -L2 -d -e normalize
 [2,3,4: /4 width=1 by drop_skip_lt, drop_drop, arith_b1, lt_minus_to_plus_r, monotonic_pred/ ]
 #d #e #_ #_ #H <(le_n_O_to_eq … H) -H //
 qed-.
 
-lemma drop_O1_append_sn_le: ∀L1,L2,s,e. ⇩[s, 0, e] L1 ≡ L2 → e ≤ |L1| →
-                            ∀L. ⇩[s, 0, e] L @@ L1 ≡ L @@ L2.
+lemma drop_O1_append_sn_le: ∀L1,L2,s,e. ⬇[s, 0, e] L1 ≡ L2 → e ≤ |L1| →
+                            ∀L. ⬇[s, 0, e] L @@ L1 ≡ L @@ L2.
 /2 width=3 by drop_O1_append_sn_le_aux/ qed.
 
 (* Inversion lemmas on append for local environments ************************)
 
-lemma drop_O1_inv_append1_ge: ∀K,L1,L2,s,e. ⇩[s, 0, e] L1 @@ L2 ≡ K →
-                              |L2| ≤ e → ⇩[s, 0, e - |L2|] L1 ≡ K.
+lemma drop_O1_inv_append1_ge: ∀K,L1,L2,s,e. ⬇[s, 0, e] L1 @@ L2 ≡ K →
+                              |L2| ≤ e → ⬇[s, 0, e - |L2|] L1 ≡ K.
 #K #L1 #L2 elim L2 -L2 normalize //
 #L2 #I #V #IHL2 #s #e #H #H1e
 elim (drop_inv_O1_pair1 … H) -H * #H2e #HL12 destruct
@@ -44,8 +44,8 @@ elim (drop_inv_O1_pair1 … H) -H * #H2e #HL12 destruct
 ]
 qed-.
 
-lemma drop_O1_inv_append1_le: ∀K,L1,L2,s,e. ⇩[s, 0, e] L1 @@ L2 ≡ K → e ≤ |L2| →
-                              ∀K2. ⇩[s, 0, e] L2 ≡ K2 → K = L1 @@ K2.
+lemma drop_O1_inv_append1_le: ∀K,L1,L2,s,e. ⬇[s, 0, e] L1 @@ L2 ≡ K → e ≤ |L2| →
+                              ∀K2. ⬇[s, 0, e] L2 ≡ K2 → K = L1 @@ K2.
 #K #L1 #L2 elim L2 -L2 normalize
 [ #s #e #H1 #H2 #K2 #H3 lapply (le_n_O_to_eq … H2) -H2
   #H2 elim (drop_inv_atom1 … H3) -H3 #H3 #_ destruct

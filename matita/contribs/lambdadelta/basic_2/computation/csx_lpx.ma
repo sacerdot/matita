@@ -76,7 +76,7 @@ qed-.
 lemma csx_appl_beta: ∀h,g,a,G,L,V,W,T. ⦃G, L⦄ ⊢ ⬊*[h, g] ⓓ{a}ⓝW.V.T → ⦃G, L⦄ ⊢ ⬊*[h, g] ⓐV.ⓛ{a}W.T.
 /2 width=3 by csx_appl_beta_aux/ qed.
 
-fact csx_appl_theta_aux: ∀h,g,a,G,L,U. ⦃G, L⦄ ⊢ ⬊*[h, g] U → ∀V1,V2. ⇧[0, 1] V1 ≡ V2 →
+fact csx_appl_theta_aux: ∀h,g,a,G,L,U. ⦃G, L⦄ ⊢ ⬊*[h, g] U → ∀V1,V2. ⬆[0, 1] V1 ≡ V2 →
                          ∀V,T. U = ⓓ{a}V.ⓐV2.T → ⦃G, L⦄ ⊢ ⬊*[h, g] ⓐV1.ⓓ{a}V.T.
 #h #g #a #G #L #X #H @(csx_ind_alt … H) -X #X #HVT #IHVT #V1 #V2 #HV12 #V #T #H destruct
 lapply (csx_fwd_pair_sn … HVT) #HV
@@ -113,7 +113,7 @@ elim (cpx_inv_appl1 … HL) -HL *
 ]
 qed-.
 
-lemma csx_appl_theta: ∀h,g,a,V1,V2. ⇧[0, 1] V1 ≡ V2 →
+lemma csx_appl_theta: ∀h,g,a,V1,V2. ⬆[0, 1] V1 ≡ V2 →
                       ∀G,L,V,T. ⦃G, L⦄ ⊢ ⬊*[h, g] ⓓ{a}V.ⓐV2.T → ⦃G, L⦄ ⊢ ⬊*[h, g] ⓐV1.ⓓ{a}V.T.
 /2 width=5 by csx_appl_theta_aux/ qed.
 

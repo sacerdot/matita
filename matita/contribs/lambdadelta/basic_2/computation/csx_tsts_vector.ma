@@ -63,8 +63,8 @@ elim (cpxs_fwd_beta_vector … H) -H #H
 ]
 qed.
 
-lemma csx_applv_delta: ∀h,g,I,G,L,K,V1,i. ⇩[i] L ≡ K.ⓑ{I}V1 →
-                       ∀V2. ⇧[0, i + 1] V1 ≡ V2 →
+lemma csx_applv_delta: ∀h,g,I,G,L,K,V1,i. ⬇[i] L ≡ K.ⓑ{I}V1 →
+                       ∀V2. ⬆[0, i + 1] V1 ≡ V2 →
                        ∀Vs. ⦃G, L⦄ ⊢ ⬊*[h, g] (ⒶVs.V2) → ⦃G, L⦄ ⊢ ⬊*[h, g] (ⒶVs.#i).
 #h #g #I #G #L #K #V1 #i #HLK #V2 #HV12 #Vs elim Vs -Vs
 [ /4 width=12 by csx_inv_lift, csx_lref_bind, drop_fwd_drop2/
@@ -81,7 +81,7 @@ lemma csx_applv_delta: ∀h,g,I,G,L,K,V1,i. ⇩[i] L ≡ K.ⓑ{I}V1 →
 qed.
 
 (* Basic_1: was just: sn3_appls_abbr *)
-lemma csx_applv_theta: ∀h,g,a,G,L,V1s,V2s. ⇧[0, 1] V1s ≡ V2s →
+lemma csx_applv_theta: ∀h,g,a,G,L,V1s,V2s. ⬆[0, 1] V1s ≡ V2s →
                        ∀V,T. ⦃G, L⦄ ⊢ ⬊*[h, g] ⓓ{a}V.ⒶV2s.T →
                        ⦃G, L⦄ ⊢ ⬊*[h, g] ⒶV1s.ⓓ{a}V.T.
 #h #g #a #G #L #V1s #V2s * -V1s -V2s /2 width=1 by/

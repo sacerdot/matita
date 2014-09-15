@@ -20,8 +20,8 @@ include "basic_2/substitution/lpx_sn.ma".
 (* Properties on dropping ****************************************************)
 
 lemma lpx_sn_drop_conf: ∀R,L1,L2. lpx_sn R L1 L2 →
-                        ∀I,K1,V1,i. ⇩[i] L1 ≡ K1.ⓑ{I}V1 →
-                        ∃∃K2,V2. ⇩[i] L2 ≡ K2.ⓑ{I}V2 & lpx_sn R K1 K2 & R K1 V1 V2.
+                        ∀I,K1,V1,i. ⬇[i] L1 ≡ K1.ⓑ{I}V1 →
+                        ∃∃K2,V2. ⬇[i] L2 ≡ K2.ⓑ{I}V2 & lpx_sn R K1 K2 & R K1 V1 V2.
 #R #L1 #L2 #H elim H -L1 -L2
 [ #I0 #K0 #V0 #i #H elim (drop_inv_atom1 … H) -H #H destruct
 | #I #K1 #K2 #V1 #V2 #HK12 #HV12 #IHK12 #I0 #K0 #V0 #i #H elim (drop_inv_O1_pair1 … H) * -H
@@ -33,8 +33,8 @@ lemma lpx_sn_drop_conf: ∀R,L1,L2. lpx_sn R L1 L2 →
 qed-.
 
 lemma lpx_sn_drop_trans: ∀R,L1,L2. lpx_sn R L1 L2 →
-                         ∀I,K2,V2,i. ⇩[i] L2 ≡ K2.ⓑ{I}V2 →
-                         ∃∃K1,V1. ⇩[i] L1 ≡ K1.ⓑ{I}V1 & lpx_sn R K1 K2 & R K1 V1 V2.
+                         ∀I,K2,V2,i. ⬇[i] L2 ≡ K2.ⓑ{I}V2 →
+                         ∃∃K1,V1. ⬇[i] L1 ≡ K1.ⓑ{I}V1 & lpx_sn R K1 K2 & R K1 V1 V2.
 #R #L1 #L2 #H elim H -L1 -L2
 [ #I0 #K0 #V0 #i #H elim (drop_inv_atom1 … H) -H #H destruct
 | #I #K1 #K2 #V1 #V2 #HK12 #HV12 #IHK12 #I0 #K0 #V0 #i #H elim (drop_inv_O1_pair1 … H) * -H
@@ -84,8 +84,8 @@ lemma lpx_sn_liftable_dedropable: ∀R. (∀L. reflexive ? (R L)) →
 ]
 qed-.
 
-fact lpx_sn_dropable_aux: ∀R,L2,K2,s,d,e. ⇩[s, d, e] L2 ≡ K2 → ∀L1. lpx_sn R L1 L2 →
-                          d = 0 → ∃∃K1. ⇩[s, 0, e] L1 ≡ K1 & lpx_sn R K1 K2.
+fact lpx_sn_dropable_aux: ∀R,L2,K2,s,d,e. ⬇[s, d, e] L2 ≡ K2 → ∀L1. lpx_sn R L1 L2 →
+                          d = 0 → ∃∃K1. ⬇[s, 0, e] L1 ≡ K1 & lpx_sn R K1 K2.
 #R #L2 #K2 #s #d #e #H elim H -L2 -K2 -d -e
 [ #d #e #He #X #H >(lpx_sn_inv_atom2 … H) -H 
   /4 width=3 by drop_atom, lpx_sn_atom, ex2_intro/

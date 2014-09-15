@@ -25,7 +25,7 @@ inductive fqu: tri_relation genv lenv term ≝
 | fqu_bind_dx: ∀a,I,G,L,V,T. fqu G L (ⓑ{a,I}V.T) G (L.ⓑ{I}V) T
 | fqu_flat_dx: ∀I,G,L,V,T. fqu G L (ⓕ{I}V.T) G L T
 | fqu_drop   : ∀G,L,K,T,U,e.
-               ⇩[e+1] L ≡ K → ⇧[0, e+1] T ≡ U → fqu G L U G K T
+               ⬇[e+1] L ≡ K → ⬆[0, e+1] T ≡ U → fqu G L U G K T
 .
 
 interpretation
@@ -35,7 +35,7 @@ interpretation
 (* Basic properties *********************************************************)
 
 lemma fqu_drop_lt: ∀G,L,K,T,U,e. 0 < e →
-                   ⇩[e] L ≡ K → ⇧[0, e] T ≡ U → ⦃G, L, U⦄ ⊐ ⦃G, K, T⦄.
+                   ⬇[e] L ≡ K → ⬆[0, e] T ≡ U → ⦃G, L, U⦄ ⊐ ⦃G, K, T⦄.
 #G #L #K #T #U #e #He >(plus_minus_m_m e 1) /2 width=3 by fqu_drop/
 qed.
 

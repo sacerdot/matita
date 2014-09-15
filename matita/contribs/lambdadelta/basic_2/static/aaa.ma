@@ -22,7 +22,7 @@ include "basic_2/substitution/drop.ma".
 (* activate genv *)
 inductive aaa: relation4 genv lenv term aarity ≝
 | aaa_sort: ∀G,L,k. aaa G L (⋆k) (⓪)
-| aaa_lref: ∀I,G,L,K,V,B,i. ⇩[i] L ≡ K. ⓑ{I}V → aaa G K V B → aaa G L (#i) B
+| aaa_lref: ∀I,G,L,K,V,B,i. ⬇[i] L ≡ K. ⓑ{I}V → aaa G K V B → aaa G L (#i) B
 | aaa_abbr: ∀a,G,L,V,T,B,A.
             aaa G L V B → aaa G (L.ⓓV) T A → aaa G L (ⓓ{a}V.T) A
 | aaa_abst: ∀a,G,L,V,T,B,A.
@@ -51,7 +51,7 @@ lemma aaa_inv_sort: ∀G,L,A,k. ⦃G, L⦄ ⊢ ⋆k ⁝ A → A = ⓪.
 /2 width=6 by aaa_inv_sort_aux/ qed-.
 
 fact aaa_inv_lref_aux: ∀G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ∀i. T = #i →
-                       ∃∃I,K,V. ⇩[i] L ≡ K.ⓑ{I} V & ⦃G, K⦄ ⊢ V ⁝ A.
+                       ∃∃I,K,V. ⬇[i] L ≡ K.ⓑ{I} V & ⦃G, K⦄ ⊢ V ⁝ A.
 #G #L #T #A * -G -L -T -A
 [ #G #L #k #i #H destruct
 | #I #G #L #K #V #B #j #HLK #HB #i #H destruct /2 width=5 by ex2_3_intro/
@@ -63,7 +63,7 @@ fact aaa_inv_lref_aux: ∀G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ∀i. T = #i →
 qed-.
 
 lemma aaa_inv_lref: ∀G,L,A,i. ⦃G, L⦄ ⊢ #i ⁝ A →
-                    ∃∃I,K,V. ⇩[i] L ≡ K. ⓑ{I} V & ⦃G, K⦄ ⊢ V ⁝ A.
+                    ∃∃I,K,V. ⬇[i] L ≡ K. ⓑ{I} V & ⦃G, K⦄ ⊢ V ⁝ A.
 /2 width=3 by aaa_inv_lref_aux/ qed-.
 
 fact aaa_inv_gref_aux: ∀G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ∀p. T = §p → ⊥.

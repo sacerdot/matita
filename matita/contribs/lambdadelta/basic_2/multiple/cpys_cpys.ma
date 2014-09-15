@@ -59,10 +59,10 @@ lemma cpys_split_up: ∀G,L,T1,T2,d,e. ⦃G, L⦄ ⊢ T1 ▶*[d, e] T2 →
 qed-.
 
 lemma cpys_inv_lift1_up: ∀G,L,U1,U2,dt,et. ⦃G, L⦄ ⊢ U1 ▶*[dt, et] U2 →
-                         ∀K,s,d,e. ⇩[s, d, e] L ≡ K → ∀T1. ⇧[d, e] T1 ≡ U1 →
+                         ∀K,s,d,e. ⬇[s, d, e] L ≡ K → ∀T1. ⬆[d, e] T1 ≡ U1 →
                          d ≤ dt → dt ≤ yinj d + e → yinj d + e ≤ dt + et →
                          ∃∃T2. ⦃G, K⦄ ⊢ T1 ▶*[d, dt + et - (yinj d + e)] T2 &
-                               ⇧[d, e] T2 ≡ U2.
+                               ⬆[d, e] T2 ≡ U2.
 #G #L #U1 #U2 #dt #et #HU12 #K #s #d #e #HLK #T1 #HTU1 #Hddt #Hdtde #Hdedet
 elim (cpys_split_up … HU12 (d + e)) -HU12 // -Hdedet #U #HU1 #HU2
 lapply (cpys_weak … HU1 d e ? ?) -HU1 // [ >ymax_pre_sn_comm // ] -Hddt -Hdtde #HU1

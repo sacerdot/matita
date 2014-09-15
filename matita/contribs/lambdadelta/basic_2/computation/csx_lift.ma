@@ -22,7 +22,7 @@ include "basic_2/computation/csx.ma".
 
 (* Basic_1: was just: sn3_lift *)
 lemma csx_lift: ∀h,g,G,L2,L1,T1,s,d,e. ⦃G, L1⦄ ⊢ ⬊*[h, g] T1 →
-                ∀T2. ⇩[s, d, e] L2 ≡ L1 → ⇧[d, e] T1 ≡ T2 → ⦃G, L2⦄ ⊢ ⬊*[h, g] T2.
+                ∀T2. ⬇[s, d, e] L2 ≡ L1 → ⬆[d, e] T1 ≡ T2 → ⦃G, L2⦄ ⊢ ⬊*[h, g] T2.
 #h #g #G #L2 #L1 #T1 #s #d #e #H elim H -T1 #T1 #_ #IHT1 #T2 #HL21 #HT12
 @csx_intro #T #HLT2 #HT2
 elim (cpx_inv_lift1 … HLT2 … HL21 … HT12) -HLT2 #T0 #HT0 #HLT10
@@ -32,7 +32,7 @@ qed.
 
 (* Basic_1: was just: sn3_gen_lift *)
 lemma csx_inv_lift: ∀h,g,G,L2,L1,T1,s,d,e. ⦃G, L1⦄ ⊢ ⬊*[h, g] T1 →
-                    ∀T2. ⇩[s, d, e] L1 ≡ L2 → ⇧[d, e] T2 ≡ T1 → ⦃G, L2⦄ ⊢ ⬊*[h, g] T2.
+                    ∀T2. ⬇[s, d, e] L1 ≡ L2 → ⬆[d, e] T2 ≡ T1 → ⦃G, L2⦄ ⊢ ⬊*[h, g] T2.
 #h #g #G #L2 #L1 #T1 #s #d #e #H elim H -T1 #T1 #_ #IHT1 #T2 #HL12 #HT21
 @csx_intro #T #HLT2 #HT2
 elim (lift_total T d e) #T0 #HT0
@@ -44,7 +44,7 @@ qed.
 (* Advanced inversion lemmas ************************************************)
 
 (* Basic_1: was: sn3_gen_def *)
-lemma csx_inv_lref_bind: ∀h,g,I,G,L,K,V,i. ⇩[i] L ≡ K.ⓑ{I}V →
+lemma csx_inv_lref_bind: ∀h,g,I,G,L,K,V,i. ⬇[i] L ≡ K.ⓑ{I}V →
                          ⦃G, L⦄ ⊢ ⬊*[h, g] #i → ⦃G, K⦄ ⊢ ⬊*[h, g] V.
 #h #g #I #G #L #K #V #i #HLK #Hi
 elim (lift_total V 0 (i+1))
@@ -54,7 +54,7 @@ qed-.
 (* Advanced properties ******************************************************)
 
 (* Basic_1: was just: sn3_abbr *)
-lemma csx_lref_bind: ∀h,g,I,G,L,K,V,i. ⇩[i] L ≡ K.ⓑ{I}V → ⦃G, K⦄ ⊢ ⬊*[h, g] V → ⦃G, L⦄ ⊢ ⬊*[h, g] #i.
+lemma csx_lref_bind: ∀h,g,I,G,L,K,V,i. ⬇[i] L ≡ K.ⓑ{I}V → ⦃G, K⦄ ⊢ ⬊*[h, g] V → ⦃G, L⦄ ⊢ ⬊*[h, g] #i.
 #h #g #I #G #L #K #V #i #HLK #HV
 @csx_intro #X #H #Hi
 elim (cpx_inv_lref1 … H) -H

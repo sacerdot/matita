@@ -78,9 +78,9 @@ lemma lsubr_fwd_length: ∀L1,L2. L1 ⫃ L2 → |L2| ≤ |L1|.
 qed-.
 
 lemma lsubr_fwd_drop2_pair: ∀L1,L2. L1 ⫃ L2 →
-                            ∀I,K2,W,s,i. ⇩[s, 0, i] L2 ≡ K2.ⓑ{I}W →
-                            (∃∃K1. K1 ⫃ K2 & ⇩[s, 0, i] L1 ≡ K1.ⓑ{I}W) ∨
-                            ∃∃K1,V. K1 ⫃ K2 & ⇩[s, 0, i] L1 ≡ K1.ⓓⓝW.V & I = Abst.
+                            ∀I,K2,W,s,i. ⬇[s, 0, i] L2 ≡ K2.ⓑ{I}W →
+                            (∃∃K1. K1 ⫃ K2 & ⬇[s, 0, i] L1 ≡ K1.ⓑ{I}W) ∨
+                            ∃∃K1,V. K1 ⫃ K2 & ⬇[s, 0, i] L1 ≡ K1.ⓓⓝW.V & I = Abst.
 #L1 #L2 #H elim H -L1 -L2
 [ #L #I #K2 #W #s #i #H
   elim (drop_inv_atom1 … H) -H #H destruct
@@ -100,8 +100,8 @@ lemma lsubr_fwd_drop2_pair: ∀L1,L2. L1 ⫃ L2 →
 qed-.
 
 lemma lsubr_fwd_drop2_abbr: ∀L1,L2. L1 ⫃ L2 →
-                            ∀K2,V,s,i. ⇩[s, 0, i] L2 ≡ K2.ⓓV →
-                            ∃∃K1. K1 ⫃ K2 & ⇩[s, 0, i] L1 ≡ K1.ⓓV.
+                            ∀K2,V,s,i. ⬇[s, 0, i] L2 ≡ K2.ⓓV →
+                            ∃∃K1. K1 ⫃ K2 & ⬇[s, 0, i] L1 ≡ K1.ⓓV.
 #L1 #L2 #HL12 #K2 #V #s #i #HLK2 elim (lsubr_fwd_drop2_pair … HL12 … HLK2) -L2 // *
 #K1 #W #_ #_ #H destruct
 qed-.
