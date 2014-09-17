@@ -62,7 +62,7 @@ expat \
 gdome2 \
 http \
 lablgtk2 \
-lablgtksourceview2.gtksourceview2 \
+lablgtk2.sourceview2 \
 mysql \
 netstring \
 ulex08 \
@@ -88,7 +88,7 @@ $FINDLIB_COMREQUIRES \
 FINDLIB_REQUIRES="\
 $FINDLIB_CREQUIRES \
 lablgtk2.glade \
-lablgtksourceview2.gtksourceview2 \
+lablgtk2.sourceview2 \
 "
 for r in $FINDLIB_LIBSREQUIRES $FINDLIB_REQUIRES
 do
