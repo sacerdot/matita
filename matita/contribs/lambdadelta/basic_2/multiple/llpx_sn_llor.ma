@@ -22,7 +22,7 @@ include "basic_2/multiple/lleq_alt.ma".
 
 lemma llpx_sn_llor_fwd_sn: ∀R. (∀L. reflexive … (R L)) →
                            ∀L1,L2,T,d. llpx_sn R d T L1 L2 →
-                           ∀L. L1 ⩖[T, d] L2 ≡ L → lpx_sn R L1 L.
+                           ∀L. L1 ⋓[T, d] L2 ≡ L → lpx_sn R L1 L.
 #R #HR #L1 #L2 #T #d #H1 #L #H2
 elim (llpx_sn_llpx_sn_alt … H1) -H1 #HL12 #IH1
 elim H2 -H2 #_ #HL1 #IH2

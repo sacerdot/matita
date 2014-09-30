@@ -33,7 +33,7 @@ interpretation
 (* Basic properties *********************************************************)
 
 (* Note: this can be proved by llor_skip *)
-lemma llor_atom: ∀T,d. ⋆ ⩖[T, d] ⋆ ≡ ⋆.
+lemma llor_atom: ∀T,d. ⋆ ⋓[T, d] ⋆ ≡ ⋆.
 #T #d @and3_intro //
 #I1 #I2 #I #K1 #K2 #K #V1 #V2 #V #i #HLK1
 elim (drop_inv_atom1 … HLK1) -HLK1 #H destruct

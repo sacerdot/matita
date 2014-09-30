@@ -21,7 +21,7 @@ include "basic_2/multiple/lleq_alt.ma".
 (* Properties on pointwise union for local environments **********************)
 
 lemma llpx_sn_llor_dx: ∀R. (s_r_confluent1 … R (llpx_sn R 0)) → (frees_trans R) →
-                       ∀L1,L2,T,d. llpx_sn R d T L1 L2 → ∀L. L1 ⩖[T, d] L2 ≡ L → L2 ≡[T, d] L.
+                       ∀L1,L2,T,d. llpx_sn R d T L1 L2 → ∀L. L1 ⋓[T, d] L2 ≡ L → L2 ≡[T, d] L.
 #R #H1R #H2R #L1 #L2 #T #d #H1 #L #H2
 lapply (llpx_sn_frees_trans … H1R H2R … H1) -H1R -H2R #HR
 elim (llpx_sn_llpx_sn_alt … H1) -H1 #HL12 #IH1
@@ -37,5 +37,5 @@ elim (IH2 … HLK1 HLK2 HLK) -IH2 -HLK1 -HLK2 -HLK * /2 width=1 by conj/ #H
 qed.
 
 lemma llpx_sn_llor_dx_sym: ∀R. (s_r_confluent1 … R (llpx_sn R 0)) → (frees_trans R) →
-                           ∀L1,L2,T,d. llpx_sn R d T L1 L2 → ∀L. L1 ⩖[T, d] L2 ≡ L → L ≡[T, d] L2.
+                           ∀L1,L2,T,d. llpx_sn R d T L1 L2 → ∀L. L1 ⋓[T, d] L2 ≡ L → L ≡[T, d] L2.
 /3 width=6 by llpx_sn_llor_dx, lleq_sym/ qed.

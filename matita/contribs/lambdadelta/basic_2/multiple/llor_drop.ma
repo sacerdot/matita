@@ -19,7 +19,7 @@ include "basic_2/multiple/llor_alt.ma".
 
 (* Advanced properties ******************************************************)
 
-lemma llor_skip: ∀L1,L2,U,d. |L1| = |L2| → yinj (|L1|) ≤ d → L1 ⩖[U, d] L2 ≡ L1.
+lemma llor_skip: ∀L1,L2,U,d. |L1| = |L2| → yinj (|L1|) ≤ d → L1 ⋓[U, d] L2 ≡ L1.
 #L1 #L2 #U #d #HL12 #Hd @and3_intro // -HL12
 #I1 #I2 #I #K1 #K2 #K #W1 #W2 #W #i #HLK1 #_ #HLK -L2 -K2
 lapply (drop_mono … HLK … HLK1) -HLK #H destruct
@@ -28,7 +28,7 @@ lapply (drop_fwd_length_lt2 … HLK1) -K1
 qed.
 
 (* Note: lemma 1400 concludes the "big tree" theorem *)
-lemma llor_total: ∀L1,L2,T,d. |L1| = |L2| → ∃L. L1 ⩖[T, d] L2 ≡ L.
+lemma llor_total: ∀L1,L2,T,d. |L1| = |L2| → ∃L. L1 ⋓[T, d] L2 ≡ L.
 #L1 @(lenv_ind_alt … L1) -L1
 [ #L2 #T #d #H >(length_inv_zero_sn … H) -L2 /2 width=2 by ex_intro/
 | #I1 #L1 #V1 #IHL1 #Y #T #d >ltail_length #H
