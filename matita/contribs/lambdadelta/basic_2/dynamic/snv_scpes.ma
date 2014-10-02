@@ -12,8 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/fpbs_lift.ma".
-include "basic_2/computation/fpbg_fleq.ma".
+include "basic_2/computation/fpbg_fpbs.ma".
 include "basic_2/equivalence/scpes_cpcs.ma".
 include "basic_2/equivalence/scpes_scpes.ma".
 include "basic_2/dynamic/snv.ma".

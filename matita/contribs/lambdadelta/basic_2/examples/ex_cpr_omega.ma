@@ -32,11 +32,11 @@ lemma Delta_lift: ∀W1,W2,d,e. ⬆[d, e] W1 ≡ W2 →
 
 (* Main properties **********************************************************)
 
-theorem cpr_Omega_12: ∀W. ⦃⋆, ⋆⦄ ⊢ Omega1 W ➡ Omega2 W.
+theorem cpr_Omega_12: ∀G,L,W. ⦃G, L⦄ ⊢ Omega1 W ➡ Omega2 W.
 /2 width=1 by cpr_beta/ qed.
 
-theorem cpr_Omega_21: ∀W. ⦃⋆, ⋆⦄ ⊢ Omega2 W ➡ Omega1 W.
-#W1 elim (lift_total W1 0 1) #W2 #HW12
+theorem cpr_Omega_21: ∀G,L,W. ⦃G, L⦄ ⊢ Omega2 W ➡ Omega1 W.
+#G #L #W1 elim (lift_total W1 0 1) #W2 #HW12
 @(cpr_zeta … (Omega1 W2)) /3 width=1 by Delta_lift, lift_flat/
 @cpr_flat @(cpr_delta … (Delta W1) ? 0)
 [3,5,8,10: /2 width=2 by Delta_lift/ |4,9: /2 width=1 by cpr_eps/ |*: skip ]

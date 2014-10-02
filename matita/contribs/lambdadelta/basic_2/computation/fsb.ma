@@ -13,10 +13,10 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/btsn_5.ma".
-include "basic_2/computation/fpbu.ma".
-include "basic_2/computation/csx_alt.ma".
+include "basic_2/reduction/fpbu.ma".
+include "basic_2/computation/csx.ma".
 
-(* "BIG TREE" STRONGLY NORMALIZING TERMS ************************************)
+(* "QRST" STRONGLY NORMALIZING TERMS ****************************************)
 
 inductive fsb (h) (g): relation3 genv lenv term ≝
 | fsb_intro: ∀G1,L1,T1. (
@@ -25,7 +25,7 @@ inductive fsb (h) (g): relation3 genv lenv term ≝
 .
 
 interpretation
-   "'big tree' strong normalization (closure)"
+   "'qrst' strong normalization (closure)"
    'BTSN h g G L T = (fsb h g G L T).
 
 (* Basic eliminators ********************************************************)
@@ -43,5 +43,5 @@ qed-.
 (* Basic inversion lemmas ***************************************************)
 
 lemma fsb_inv_csx: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ ⦥[h, g] T → ⦃G, L⦄ ⊢ ⬊*[h, g] T.
-#h #g #G #L #T #H elim H -G -L -T /5 width=1 by csx_intro_cpxs, fpbu_cpxs/
+#h #g #G #L #T #H elim H -G -L -T /5 width=1 by csx_intro, fpbu_cpx/
 qed-.

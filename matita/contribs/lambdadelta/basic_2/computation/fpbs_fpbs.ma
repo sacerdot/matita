@@ -14,7 +14,7 @@
 
 include "basic_2/computation/fpbs.ma".
 
-(* "BIG TREE" PARALLEL COMPUTATION FOR CLOSURES *****************************)
+(* "QRST" PARALLEL COMPUTATION FOR CLOSURES *********************************)
 
 (* Main properties **********************************************************)
 

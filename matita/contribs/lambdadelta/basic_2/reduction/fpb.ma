@@ -17,7 +17,7 @@ include "basic_2/substitution/fquq.ma".
 include "basic_2/multiple/lleq.ma".
 include "basic_2/reduction/lpx.ma".
 
-(* "BIG TREE" PARALLEL REDUCTION FOR CLOSURES *******************************)
+(* "QRST" PARALLEL REDUCTION FOR CLOSURES ***********************************)
 
 inductive fpb (h) (g) (G1) (L1) (T1): relation3 genv lenv term ≝
 | fpb_fquq: ∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊐⸮ ⦃G2, L2, T2⦄ → fpb h g G1 L1 T1 G2 L2 T2
@@ -27,7 +27,7 @@ inductive fpb (h) (g) (G1) (L1) (T1): relation3 genv lenv term ≝
 .
 
 interpretation
-   "'big tree' parallel reduction (closure)"
+   "'qrst' parallel reduction (closure)"
    'BTPRed h g G1 L1 T1 G2 L2 T2 = (fpb h g G1 L1 T1 G2 L2 T2).
 
 (* Basic properties *********************************************************)

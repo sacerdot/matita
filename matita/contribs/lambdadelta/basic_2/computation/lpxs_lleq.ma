@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/multiple/lleq_lleq.ma".
 include "basic_2/reduction/lpx_lleq.ma".
 include "basic_2/computation/cpxs_leq.ma".
 include "basic_2/computation/lpxs_drop.ma".
@@ -28,6 +29,22 @@ lemma lleq_lpxs_trans: ∀h,g,G,L2,K2. ⦃G, L2⦄ ⊢ ➡*[h, g] K2 →
 #K #K2 #_ #HK2 #IH #L1 #T #d #HT elim (IH … HT) -L2
 #L #HL1 #HT elim (lleq_lpx_trans … HK2 … HT) -K
 /3 width=3 by lpxs_strap1, ex2_intro/
+qed-.
+
+lemma lpxs_nlleq_inv_step_sn: ∀h,g,G,L1,L2,T,d. ⦃G, L1⦄ ⊢ ➡*[h, g] L2 → (L1 ≡[T, d] L2 → ⊥) →
+                              ∃∃L,L0. ⦃G, L1⦄ ⊢ ➡[h, g] L & L1 ≡[T, d] L → ⊥ & ⦃G, L⦄ ⊢ ➡*[h, g] L0 & L0 ≡[T, d] L2.
+#h #g #G #L1 #L2 #T #d #H @(lpxs_ind_dx … H) -L1
+[ #H elim H -H //
+| #L1 #L #H1 #H2 #IH2 #H12 elim (lleq_dec T L1 L d) #H
+  [ -H1 -H2 elim IH2 -IH2 /3 width=3 by lleq_trans/ -H12
+    #L0 #L3 #H1 #H2 #H3 #H4 lapply (lleq_nlleq_trans … H … H2) -H2
+    #H2 elim (lleq_lpx_trans … H1 … H) -L
+    #L #H1 #H lapply (nlleq_lleq_div … H … H2) -H2
+    #H2 elim (lleq_lpxs_trans … H3 … H) -L0
+    /3 width=8 by lleq_trans, ex4_2_intro/
+  | -H12 -IH2 /3 width=6 by ex4_2_intro/
+  ]
+]
 qed-.
 
 lemma lpxs_lleq_fqu_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T2⦄ →

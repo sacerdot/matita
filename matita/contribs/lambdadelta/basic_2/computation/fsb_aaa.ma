@@ -16,15 +16,15 @@ include "basic_2/computation/fpbs_aaa.ma".
 include "basic_2/computation/csx_aaa.ma".
 include "basic_2/computation/fsb_csx.ma".
 
-(* "BIG TREE" STRONGLY NORMALIZING TERMS ************************************)
+(* "QRST" STRONGLY NORMALIZING TERMS ****************************************)
 
 (* Main properties **********************************************************)
 
-(* Note: this is the "big tree" theorem ("small step" version) *)
+(* Note: this is the "big tree" theorem ("RST" version) *)
 theorem aaa_fsb: ∀h,g,G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ⦃G, L⦄ ⊢ ⦥[h, g] T.
 /3 width=2 by aaa_csx, csx_fsb/ qed.
 
-(* Note: this is the "big tree" theorem ("big step" version) *)
+(* Note: this is the "big tree" theorem ("QRST" version) *)
 theorem aaa_fsba: ∀h,g,G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ⦃G, L⦄ ⊢ ⦥⦥[h, g] T.
 /3 width=2 by fsb_fsba, aaa_fsb/ qed.
 
@@ -39,7 +39,7 @@ fact aaa_ind_fpbu_aux: ∀h,g. ∀R:relation3 genv lenv term.
 #h #g #R #IH #G #L #T #H @(csx_ind_fpbu … H) -G -L -T
 #G1 #L1 #T1 #H1 #IH1 #A1 #HTA1 @IH -IH //
 #G2 #L2 #T2 #H12 elim (fpbs_aaa_conf h g … G2 … L2 … T2 … HTA1) -A1
-/2 width=2 by fpbu_fwd_fpbs/
+/2 width=2 by fpbu_fpbs/
 qed-.
 
 lemma aaa_ind_fpbu: ∀h,g. ∀R:relation3 genv lenv term.

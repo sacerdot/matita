@@ -17,7 +17,7 @@ include "basic_2/static/aaa_lleq.ma".
 include "basic_2/reduction/lpx_aaa.ma".
 include "basic_2/reduction/fpb.ma".
 
-(* "BIG TREE" PARALLEL REDUCTION FOR CLOSURES *******************************)
+(* "QRST" PARALLEL REDUCTION FOR CLOSURES ***********************************)
 
 (* Properties on atomic arity assignment for terms **************************)
 

@@ -12,7 +12,7 @@ table {
    class "wine"
    [ { "examples" * } {
         [ { "terms with special features" * } {
-             [ "ex_sta_ldec" + "ex_cpr_omega" * ]
+             [ "ex_sta_ldec" + "ex_cpr_omega" + "ex_fpbg_refl" * ]
           }
         ]
      }
@@ -87,7 +87,7 @@ table {
              [ "cpre ( ⦃?,?⦄ ⊢ ➡* 𝐍⦃?⦄ )" "cpre_cpre" * ]
           }
         ]
-        [ { "strongly normalizing \"big tree\" computation" * } {
+        [ { "strongly normalizing qrst-computation" * } {
              [ "fsb ( ⦃?,?⦄ ⊢ ⦥[?,?] ? )" "fsb_alt ( ⦃?,?⦄ ⊢ ⦥⦥[?,?] ? )" "fsb_aaa" + "fsb_csx" * ]
           }
         ]
@@ -98,11 +98,9 @@ table {
              [ "csx ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csx_alt ( ⦃?,?⦄ ⊢ ⬊⬊*[?,?] ? )" "csx_lift" + "csx_lleq" + "csx_lpx" + "csx_lpxs" + "csx_fpbs" * ]
           }
         ]
-        [ { "\"big tree\" parallel computation" * } {
-             [ "fpbg ( ⦃?,?,?⦄ >≡[?,?] ⦃?,?,?⦄ )" "fpbg_lift" + "fpbg_fleq" + "fpbg_fpbg" * ]
-             [ "fpbc ( ⦃?,?,?⦄ ≻≡[?,?] ⦃?,?,?⦄ )" "fpbc_fleq" + "fpbc_fpbs" * ]
-             [ "fpbu ( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" "fpbu_lift" + "fpbu_lleq" + "fpbu_fleq" * ]
-             [ "fpbs ( ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "fpbs_alt ( ⦃?,?,?⦄ ≥≥[?,?] ⦃?,?,?⦄ )" "fpbs_lift" + "fpbs_fleq" + "fpbs_aaa" + "fpbs_fpbs" + "fpbs_ext" * ]
+        [ { "parallel qrst-computation" * } {
+             [ "fpbg ( ⦃?,?,?⦄ >≡[?,?] ⦃?,?,?⦄ )" "fpbg_lift" + "fpbg_fleq" + "fpbg_fpbs" + "fpbg_fpbg" * ]
+             [ "fpbs ( ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "fpbs_alt ( ⦃?,?,?⦄ ≥≥[?,?] ⦃?,?,?⦄ )" "fpbs_lift" + "fpbs_fleq" + "fpbs_aaa" + "fpbs_fpbu" + "fpbs_fpbc" + "fpbs_fpbs" * ]
           }
         ]
         [ { "decomposed extended computation" * } {
@@ -131,7 +129,9 @@ table {
    ]
    class "water"
    [ { "reduction" * } {
-        [ { "\"big tree\" parallel reduction" * } {
+        [ { "parallel qrst-reduction" * } {
+             [ "fpbc ( ⦃?,?,?⦄ ≻≡[?,?] ⦃?,?,?⦄ )" "fpbc_fleq" * ]
+             [ "fpbu ( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" "fpbu_lift" + "fpbu_lleq" + "fpbu_fleq" * ]
              [ "fpb ( ⦃?,?,?⦄ ≽[?,?] ⦃?,?,?⦄ )" "fpb_lift" + "fpb_aaa" * ]
           }
         ]

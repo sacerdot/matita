@@ -18,12 +18,12 @@ include "basic_2/reduction/fpb.ma".
 include "basic_2/computation/cpxs.ma".
 include "basic_2/computation/lpxs.ma".
 
-(* "BIG TREE" PARALLEL COMPUTATION FOR CLOSURES *****************************)
+(* "QRST" PARALLEL COMPUTATION FOR CLOSURES *********************************)
 
 definition fpbs: ∀h. sd h → tri_relation genv lenv term ≝
                  λh,g. tri_TC … (fpb h g).
 
-interpretation "'big tree' parallel computation (closure)"
+interpretation "'qrst' parallel computation (closure)"
    'BTPRedStar h g G1 L1 T1 G2 L2 T2 = (fpbs h g G1 L1 T1 G2 L2 T2).
 
 (* Basic eliminators ********************************************************)
@@ -149,6 +149,10 @@ lemma fqus_lpxs_fpbs: ∀h,g,G1,G2,L1,L,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐* ⦃G2, L
 lemma cpxs_fqus_lpxs_fpbs: ∀h,g,G1,G2,L1,L,L2,T1,T,T2. ⦃G1, L1⦄ ⊢ T1 ➡*[h, g] T →
                            ⦃G1, L1, T⦄ ⊐* ⦃G2, L, T2⦄ → ⦃G2, L⦄ ⊢ ➡*[h, g] L2 → ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
 /3 width=5 by cpxs_fqus_fpbs, fpbs_lpxs_trans/ qed.
+
+lemma lpxs_lleq_fpbs: ∀h,g,G,L1,L,L2,T. ⦃G, L1⦄ ⊢ ➡*[h, g] L →
+                      L ≡[T, 0] L2 → ⦃G, L1, T⦄ ≥[h, g] ⦃G, L2, T⦄.
+/3 width=3 by lpxs_fpbs_trans, lleq_fpbs/ qed.
 
 (* Note: this is used in the closure proof *)
 lemma cpr_lpr_fpbs: ∀h,g,G,L1,L2,T1,T2. ⦃G, L1⦄ ⊢ T1 ➡ T2 → ⦃G, L1⦄ ⊢ ➡ L2 →

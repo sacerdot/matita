@@ -15,7 +15,7 @@
 include "basic_2/multiple/fleq.ma".
 include "basic_2/computation/fpbs.ma".
 
-(* "BIG TREE" PARALLEL COMPUTATION FOR CLOSURES *****************************)
+(* "QRST" PARALLEL COMPUTATION FOR CLOSURES *********************************)
 
 (* Properties on lazy equivalence on closures *******************************)
 

@@ -15,7 +15,7 @@
 include "basic_2/reduction/cpx_lift.ma".
 include "basic_2/reduction/fpb.ma".
 
-(* "BIG TREE" PARALLEL REDUCTION FOR CLOSURES *******************************)
+(* "QRST" PARALLEL REDUCTION FOR CLOSURES ***********************************)
 
 (* Advanced properties ******************************************************)
 

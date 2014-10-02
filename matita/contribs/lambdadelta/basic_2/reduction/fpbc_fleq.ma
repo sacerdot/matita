@@ -13,10 +13,10 @@
 (**************************************************************************)
 
 include "basic_2/multiple/fleq_fleq.ma".
-include "basic_2/computation/fpbu_fleq.ma".
-include "basic_2/computation/fpbc.ma".
+include "basic_2/reduction/fpbu_fleq.ma".
+include "basic_2/reduction/fpbc.ma".
 
-(* SINGLE-STEP "BIG TREE" PROPER PARALLEL COMPUTATION FOR CLOSURES **********)
+(* "QRST" PROPER PARALLEL REDUCTION FOR CLOSURES ****************************)
 
 (* Properties on lazy equivalence on closures *******************************)
 

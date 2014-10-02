@@ -13,36 +13,33 @@
 (**************************************************************************)
 
 include "basic_2/multiple/fleq.ma".
+include "basic_2/reduction/fpbu.ma".
 include "basic_2/computation/fpbs_alt.ma".
-include "basic_2/computation/fpbu_lleq.ma".
 
-(* UNITARY "BIG TREE" PROPER PARALLEL COMPUTATION FOR CLOSURES **************)
+(* "QRST" PARALLEL COMPUTATION FOR CLOSURES *********************************)
 
-(* Properties on lazy equivalence for closures ******************************)
+(* Properties on extended context-sensitive parallel computation for terms **)
 
-lemma fleq_fpbu_trans: ∀h,g,F1,F2,K1,K2,T1,T2. ⦃F1, K1, T1⦄ ≡[0] ⦃F2, K2, T2⦄ →
-                       ∀G2,L2,U2. ⦃F2, K2, T2⦄ ≻[h, g] ⦃G2, L2, U2⦄ →
-                       ∃∃G1,L1,U1. ⦃F1, K1, T1⦄ ≻[h, g] ⦃G1, L1, U1⦄ & ⦃G1, L1, U1⦄ ≡[0] ⦃G2, L2, U2⦄.
-#h #g #F1 #F2 #K1 #K2 #T1 #T2 * -F2 -K2 -T2
-#K2 #HK12 #G2 #L2 #U2 #H12 elim (lleq_fpbu_trans … HK12 … H12) -K2
-/3 width=5 by fleq_intro, ex2_3_intro/
-qed-.
-
-lemma fpb_fpbu: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≽[h, g] ⦃G2, L2, T2⦄ →
-                ⦃G1, L1, T1⦄ ≡[0] ⦃G2, L2, T2⦄ ∨
-                ⦃G1, L1, T1⦄ ≻[h, g] ⦃G2, L2, T2⦄.
-#h #g #G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2
-[ #G2 #L2 #T2 #H elim (fquq_inv_gen … H) -H
-  [ /4 width=1 by fpbu_fqup, fqu_fqup, or_intror/
-  | * #H1 #H2 #H3 destruct /2 width=1 by or_introl/
-  ]
-| #T2 #HT12 elim (eq_term_dec T1 T2)
-  #HnT12 destruct /4 width=1 by fpbu_cpxs, cpx_cpxs, or_intror, or_introl/
-| #L2 #HL12 elim (lleq_dec … T1 L1 L2 0)
-  /4 width=3 by fpbu_lpxs, fleq_intro, lpx_lpxs, or_intror, or_introl/
-| /3 width=1 by fleq_intro, or_introl/ 
+lemma fpbs_cpx_trans_neq: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄ →
+                          ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡[h, g] U2 → (T2 = U2 → ⊥) →
+                          ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡[h, g] U1 & T1 = U1 → ⊥ & ⦃G1, L1, U1⦄ ≥[h, g] ⦃G2, L2, U2⦄.
+#h #g #G1 #G2 #L1 #L2 #T1 #T2 #H #U2 #HTU2 #HnTU2 elim (fpbs_inv_alt … H) -H
+#L00 #L0 #T0 #HT10 #H10 #HL00 #HL02 lapply (lleq_cpx_trans … HTU2 … HL02) -HTU2
+#HTU2 lapply (cpx_lleq_conf_sn … HTU2 … HL02) -HL02
+#HL02 lapply (lpxs_cpx_trans … HTU2 … HL00) -HTU2
+#HTU2 elim (fqus_cpxs_trans_neq … H10 … HTU2 HnTU2) -H10 -HTU2 -HnTU2
+#U0 #HTU0 #HnTU0 #HU02 elim (eq_term_dec T1 T0) #HnT10 destruct
+[ -HT10 elim (cpxs_neq_inv_step_sn … HTU0 HnTU0) -HTU0 -HnTU0
+| -HnTU0 elim (cpxs_neq_inv_step_sn … HT10 HnT10) -HT10 -HnT10
 ]
+/4 width=10 by fpbs_intro_alt, cpxs_trans, ex3_intro/
 qed-.
+
+(* Properties on "rst" proper parallel reduction on closures ****************)
+
+lemma fpbu_fpbs: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≻[h, g] ⦃G2, L2, T2⦄ →
+                 ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
+/3 width=1 by fpb_fpbs, fpbu_fwd_fpb/ qed.
 
 lemma fpbs_fpbu_sn: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄ →
                     ⦃G1, L1, T1⦄ ≡[0] ⦃G2, L2, T2⦄ ∨
@@ -57,13 +54,15 @@ lemma fpbs_fpbu_sn: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, 
 #h #g #G1 #G2 #L1 #L2 #T1 #T2 #H elim(fpbs_inv_alt … H) -H
 #L0 #L #T #HT1 #HT2 #HL0 #HL2 elim (eq_term_dec T1 T) #H destruct
 [ -HT1 elim (fqus_inv_gen … HT2) -HT2
-  [ /4 width=11 by fpbs_intro_alt, fpbu_fqup, ex2_3_intro, or_intror/
+  [ #H elim (fqup_inv_step_sn … H) -H
+    /4 width=11 by fpbs_intro_alt, fpbu_fqu, ex2_3_intro, or_intror/
   | * #HG #HL #HT destruct elim (lleq_dec T2 L0 L 0) #H
     [ /4 width=3 by fleq_intro, lleq_trans, or_introl/
-    | /5 width=5 by fpbu_lpxs, lleq_fpbs, ex2_3_intro, or_intror/
+    | elim (lpxs_nlleq_inv_step_sn … HL0 H) -HL0 -H
+      /5 width=7 by lpxs_lleq_fpbs, fpbu_lpx, lleq_trans, ex2_3_intro, or_intror/
     ]
   ]
 | elim (cpxs_neq_inv_step_sn … HT1 H) -HT1 -H
-  /5 width=11 by fpbs_intro_alt, fpbu_cpxs, cpx_cpxs, ex2_3_intro, or_intror/
+  /5 width=11 by fpbs_intro_alt, fpbu_cpx, ex2_3_intro, or_intror/
 ]
 qed-.

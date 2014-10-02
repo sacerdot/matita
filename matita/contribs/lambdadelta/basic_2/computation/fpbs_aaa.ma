@@ -15,7 +15,7 @@
 include "basic_2/reduction/fpb_aaa.ma".
 include "basic_2/computation/fpbs.ma".
 
-(* "BIG TREE" PARALLEL COMPUTATION FOR CLOSURES *****************************)
+(* "QRST" PARALLEL COMPUTATION FOR CLOSURES *********************************)
 
 (* Properties on atomic arity assignment for terms **************************)
 
