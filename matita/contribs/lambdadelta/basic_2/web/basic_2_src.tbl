@@ -100,7 +100,7 @@ table {
         ]
         [ { "parallel qrst-computation" * } {
              [ "fpbg ( ⦃?,?,?⦄ >≡[?,?] ⦃?,?,?⦄ )" "fpbg_lift" + "fpbg_fleq" + "fpbg_fpbs" + "fpbg_fpbg" * ]
-             [ "fpbs ( ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "fpbs_alt ( ⦃?,?,?⦄ ≥≥[?,?] ⦃?,?,?⦄ )" "fpbs_lift" + "fpbs_fleq" + "fpbs_aaa" + "fpbs_fpbu" + "fpbs_fpbc" + "fpbs_fpbs" * ]
+             [ "fpbs ( ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "fpbs_alt ( ⦃?,?,?⦄ ≥≥[?,?] ⦃?,?,?⦄ )" "fpbs_lift" + "fpbs_aaa" + "fpbs_fpb" + "fpbs_fpbs" * ]
           }
         ]
         [ { "decomposed extended computation" * } {
@@ -130,9 +130,8 @@ table {
    class "water"
    [ { "reduction" * } {
         [ { "parallel qrst-reduction" * } {
-             [ "fpbc ( ⦃?,?,?⦄ ≻≡[?,?] ⦃?,?,?⦄ )" "fpbc_fleq" * ]
-             [ "fpbu ( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" "fpbu_lift" + "fpbu_lleq" + "fpbu_fleq" * ]
-             [ "fpb ( ⦃?,?,?⦄ ≽[?,?] ⦃?,?,?⦄ )" "fpb_lift" + "fpb_aaa" * ]
+             [ "fpbq ( ⦃?,?,?⦄ ≽[?,?] ⦃?,?,?⦄ )" "fpbq_alt ( ⦃?,?,?⦄ ≽≽[?,?] ⦃?,?,?⦄ )" "fpbq_lift" + "fpbq_aaa" * ]
+             [ "fpb ( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" "fpb_lift" + "fpb_lleq" + "fpb_fleq" * ]
           }
         ]
         [ { "normal forms for context-sensitive extended reduction" * } {
