@@ -632,6 +632,10 @@ let smart_apply t unit_eq status g =
       | NCicEnvironment.ObjectNotFound s as e ->
           raise (Error (lazy "eq_coerc non yet defined",Some e))
       | Error _ as e -> debug_print (lazy "error"); raise e
+(* FG: for now we catch TypeCheckerFailure; to be understood *)  
+      | NCicTypeChecker.TypeCheckerFailure _ ->
+          debug_print (lazy "TypeCheckerFailure");
+          raise (Error (lazy "no proof found",None))
 ;;
 
 let compare_statuses ~past ~present =

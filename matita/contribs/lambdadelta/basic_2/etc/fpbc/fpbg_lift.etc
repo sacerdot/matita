@@ -12,14 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/multiple/fleq.ma".
-include "basic_2/computation/fpbs.ma".
+include "basic_2/reduction/fpbu_lift.ma".
+include "basic_2/computation/fpbg.ma".
 
 (* "QRST" PARALLEL COMPUTATION FOR CLOSURES *********************************)
 
-(* Properties on lazy equivalence on closures *******************************)
+(* Advanced properties ******************************************************)
 
-lemma fleq_fpbs: ∀h,g,G1,G2,L1,L2,T1,T2.
-                 ⦃G1, L1, T1⦄ ≡[0] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
-#h #g #G1 #G2 #L1 #L2 #T1 #T2 * /2 width=1 by lleq_fpbs/
-qed.
+lemma sta_fpbg: ∀h,g,G,L,T1,T2,l. ⦃G, L⦄ ⊢ T1 ▪[h, g] l+1 →
+                ⦃G, L⦄ ⊢ T1 •*[h, 1] T2 → ⦃G, L, T1⦄ >≡[h, g] ⦃G, L, T2⦄.
+/4 width=2 by fpbu_fpbg, sta_fpbu/ qed.

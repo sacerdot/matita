@@ -12,17 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/aaa_fqus.ma".
-include "basic_2/static/aaa_lleq.ma".
-include "basic_2/reduction/lpx_aaa.ma".
-include "basic_2/reduction/fpb.ma".
+(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-(* "QRST" PARALLEL REDUCTION FOR CLOSURES ***********************************)
-
-(* Properties on atomic arity assignment for terms **************************)
-
-lemma fpb_aaa_conf: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≽[h, g] ⦃G2, L2, T2⦄ →
-                    ∀A1. ⦃G1, L1⦄ ⊢ T1 ⁝ A1 → ∃A2. ⦃G2, L2⦄ ⊢ T2 ⁝ A2.
-#h #g #G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2
-/3 width=6 by aaa_lleq_conf, lpx_aaa_conf, cpx_aaa_conf, aaa_fquq_conf, ex_intro/
-qed-.
+notation "hvbox( ⦃ term 46 G1, break term 46 L1, break term 46 T1 ⦄ ≽ ≽ break [ term 46 h, break term 46 g ] break ⦃ term 46 G2, break term 46 L2 , break term 46 T2 ⦄ )"
+   non associative with precedence 45
+   for @{ 'BTPRedAlt $h $g $G1 $L1 $T1 $G2 $L2 $T2 }.

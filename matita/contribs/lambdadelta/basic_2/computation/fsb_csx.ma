@@ -12,6 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/computation/fpbs_fpb.ma".
+include "basic_2/computation/fpbs_fpbs.ma".
 include "basic_2/computation/csx_fpbs.ma".
 include "basic_2/computation/lsx_csx.ma".
 include "basic_2/computation/fsb_alt.ma".

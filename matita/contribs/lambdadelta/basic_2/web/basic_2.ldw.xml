@@ -44,11 +44,11 @@
          for context-sensitive computation on terms.
    </news>
    <news date="2014 June 9.">
-         strong qrst-normalization
+         Strong qrst-normalization
          for simply typed terms.
    </news>
    <news date="2014 April 16.">
-         lazy equivalence on local environments
+         Lazy equivalence on local environments
 	 addded as q-step to rst-computation on closures
          (anniversary milestone).
    </news>

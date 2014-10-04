@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/btsnalt_5.ma".
-include "basic_2/computation/fpbg_fpbg.ma".
+include "basic_2/computation/fpbg_fpbs.ma".
 include "basic_2/computation/fsb.ma".
 
 (* "QRST" STRONGLY NORMALIZING TERMS ****************************************)
@@ -53,15 +53,14 @@ qed-.
 theorem fsb_fsba: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ ⦥[h, g] T → ⦃G, L⦄ ⊢ ⦥⦥[h, g] T.
 #h #g #G #L #T #H @(fsb_ind_alt … H) -G -L -T
 #G1 #L1 #T1 #_ #IH @fsba_intro
-#G2 #L2 #T2 #H elim (fpbg_inv_fpbu_sn … H) -H
-/3 width=5 by fsba_fpbs_trans/
+#G2 #L2 #T2 * /3 width=5 by fsba_fpbs_trans/
 qed.
 
 (* Main inversion lemmas ****************************************************)
 
 theorem fsba_inv_fsb: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ ⦥⦥[h, g] T → ⦃G, L⦄ ⊢ ⦥[h, g] T.
 #h #g #G #L #T #H @(fsba_ind_alt … H) -G -L -T
-/5 width=1 by fsb_intro, fpbc_fpbg, fpbu_fpbc/
+/4 width=1 by fsb_intro, fpb_fpbg/
 qed-.
 
 (* Advanced properties ******************************************************)

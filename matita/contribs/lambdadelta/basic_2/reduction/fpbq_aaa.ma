@@ -12,23 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/fpns.ma".
-include "basic_2/computation/fpbg.ma".
+include "basic_2/static/aaa_fqus.ma".
+include "basic_2/static/aaa_lleq.ma".
+include "basic_2/reduction/lpx_aaa.ma".
+include "basic_2/reduction/fpbq.ma".
 
-(* GENEARAL "BIG TREE" PROPER PARALLEL COMPUTATION FOR CLOSURES *************)
+(* "QRST" PARALLEL REDUCTION FOR CLOSURES ***********************************)
 
-(* Properties on parallel computation for "big tree" normal forms ***********)
+(* Properties on atomic arity assignment for terms **************************)
 
-axiom fpns_fpbg_trans: ∀h,g,F1,F2,K1,K2,T1,T2. ⦃F1, K1, T1⦄  ⊢ ⋕➡*[h, g] ⦃F2, K2, T2⦄ →
-                       ∀G2,L2,U2. ⦃F2, K2, T2⦄ >[h, g] ⦃G2, L2, U2⦄ →
-                       ∃∃G1,L1,U1. ⦃F1, K1, T1⦄ >[h, g] ⦃G1, L1, U1⦄ & ⦃G1, L1, U1⦄  ⊢ ⋕➡*[h, g] ⦃G2, L2, U2⦄.
-(*
-#h #g #F1 #F2 #K1 #K2 #T1 #T2 * -F2 -K2 -T2
-#K2 #HK12 #HT1 #G2 #L2 #U2 * -G2 -L2 -U2
-[ /4 width=9 by fpbc_cpxs, fpns_intro, lpxs_cpxs_trans, lleq_cpxs_conf_dx, ex2_3_intro/
-|  #G2 #L2 #U2 #H12 elim (lpxs_lleq_fqup_trans … H12 … HK12 HT1) -K2
-  /3 width=5 by fpbc_fqup, fpns_intro, ex2_3_intro/
-| /5 width=5 by fpbc_lpxs, lpxs_trans, lleq_canc_sn, ex2_3_intro/
-]
+lemma fpbq_aaa_conf: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≽[h, g] ⦃G2, L2, T2⦄ →
+                     ∀A1. ⦃G1, L1⦄ ⊢ T1 ⁝ A1 → ∃A2. ⦃G2, L2⦄ ⊢ T2 ⁝ A2.
+#h #g #G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2
+/3 width=6 by aaa_lleq_conf, lpx_aaa_conf, cpx_aaa_conf, aaa_fquq_conf, ex_intro/
 qed-.
-*)

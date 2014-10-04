@@ -12,14 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/unfold/lstas_da.ma".
 include "basic_2/reduction/cpx_lift.ma".
 include "basic_2/reduction/fpb.ma".
 
-(* "QRST" PARALLEL REDUCTION FOR CLOSURES ***********************************)
+(* "RST" PROPER PARALLEL COMPUTATION FOR CLOSURES ***************************)
 
 (* Advanced properties ******************************************************)
 
-lemma sta_fpb: ∀h,g,G,L,T1,T2,l.
-                ⦃G, L⦄ ⊢ T1 ▪[h, g] l+1 → ⦃G, L⦄ ⊢ T1 •*[h, 1] T2 →
-                ⦃G, L, T1⦄ ≽[h, g] ⦃G, L, T2⦄.
-/3 width=4 by fpb_cpx, sta_cpx/ qed.
+lemma sta_fpb: ∀h,g,G,L,T1,T2,l. ⦃G, L⦄ ⊢ T1 ▪[h, g] l+1 →
+               ⦃G, L⦄ ⊢ T1 •*[h, 1] T2 → ⦃G, L, T1⦄ ≻[h, g] ⦃G, L, T2⦄.
+#h #g #G #L #T1 #T2 #l #HT1 #HT12 elim (eq_term_dec T1 T2)
+/3 width=2 by fpb_cpx, sta_cpx/ #H destruct
+elim (lstas_inv_refl_pos h G L T2 0) //
+qed.

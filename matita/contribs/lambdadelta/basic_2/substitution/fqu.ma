@@ -66,6 +66,20 @@ lemma fqu_fwd_length_lref1: ∀G1,G2,L1,L2,T2,i. ⦃G1, L1, #i⦄ ⊐ ⦃G2, L2,
 /2 width=7 by fqu_fwd_length_lref1_aux/
 qed-.
 
+(* Basic inversion lemmas ***************************************************)
+
+fact fqu_inv_eq_aux: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T2⦄ →
+                     G1 = G2 → |L1| = |L2| → T1 = T2 → ⊥.
+#G1 #G2 #L1 #L2 #T1 #T2 * -G1 -G2 -L1 -L2 -T1 -T2 normalize
+/2 width=4 by discr_tpair_xy_y, discr_tpair_xy_x, plus_xSy_x_false/
+#G #L #K #T #U #e #HLK #_ #_ #H #_ -G -T -U >(drop_fwd_length … HLK) in H; -L
+/2 width=4 by plus_xySz_x_false/
+qed-.
+
+lemma fqu_inv_eq: ∀G,L1,L2,T. ⦃G, L1, T⦄ ⊐ ⦃G, L2, T⦄ → |L1| = |L2| → ⊥.
+#G #L1 #L2 #T #H #H0 @(fqu_inv_eq_aux … H … H0) // (**) (* full auto fails *)
+qed-. 
+
 (* Advanced eliminators *****************************************************)
 
 lemma fqu_wf_ind: ∀R:relation3 …. (

@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reduction/fpb_lift.ma".
 include "basic_2/computation/cpxs_lift.ma".
 include "basic_2/computation/fpbs.ma".
 
@@ -27,11 +26,11 @@ lemma lstas_fpbs: ∀h,g,G,L,T1,T2,l2. ⦃G, L⦄ ⊢ T1 •*[h, l2] T2 →
 lemma sta_fpbs: ∀h,g,G,L,T,U,l.
                 ⦃G, L⦄ ⊢ T ▪[h, g] l+1 → ⦃G, L⦄ ⊢ T •*[h, 1] U →
                 ⦃G, L, T⦄ ≥[h, g] ⦃G, L, U⦄.
-/4 width=2 by fpb_fpbs, sta_fpb/ qed.
+/2 width=5 by lstas_fpbs/ qed.
 
 (* Note: this is used in the closure proof *)
 lemma cpr_lpr_sta_fpbs: ∀h,g,G,L1,L2,T1,T2,U2,l2.
                         ⦃G, L1⦄ ⊢ T1 ➡ T2 → ⦃G, L1⦄ ⊢ ➡ L2 →
                         ⦃G, L2⦄ ⊢ T2 ▪[h, g] l2+1 → ⦃G, L2⦄ ⊢ T2 •*[h, 1] U2 →
                         ⦃G, L1, T1⦄ ≥[h, g] ⦃G, L2, U2⦄.
-/4 width=5 by fpbs_strap1, cpr_lpr_fpbs, sta_cpx, fpb_cpx/ qed.
+/4 width=5 by fpbs_strap1, cpr_lpr_fpbs, sta_cpx, fpbq_cpx/ qed.

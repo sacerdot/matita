@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/btsn_5.ma".
-include "basic_2/reduction/fpbu.ma".
+include "basic_2/reduction/fpb.ma".
 include "basic_2/computation/csx.ma".
 
 (* "QRST" STRONGLY NORMALIZING TERMS ****************************************)
@@ -43,5 +43,5 @@ qed-.
 (* Basic inversion lemmas ***************************************************)
 
 lemma fsb_inv_csx: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ ⦥[h, g] T → ⦃G, L⦄ ⊢ ⬊*[h, g] T.
-#h #g #G #L #T #H elim H -G -L -T /5 width=1 by csx_intro, fpbu_cpx/
+#h #g #G #L #T #H elim H -G -L -T /5 width=1 by csx_intro, fpb_cpx/
 qed-.
