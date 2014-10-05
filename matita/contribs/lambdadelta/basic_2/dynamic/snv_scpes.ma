@@ -187,7 +187,7 @@ lapply (lstas_scpds_aux … IH4 IH3 IH2 IH1 … Hl12 … HTX2 … HT20) -HT20
 [1,2,3: // | >eq_minus_O [2: // ] <minus_plus_m_m_commutative #HX2 ]
 lapply (lstas_scpes_trans … Hl11 … HTX1 … HX1) [ // ] -Hl11 -HTX1 -HX1 -H1 #H1
 lapply (lstas_scpes_trans … Hl12 … HTX2 … HX2) [ // ] -Hl12 -HTX2 -HX2 -H2 #H2
-lapply (scpes_canc_dx … H1 … H2) // (**) (* full auto raises NTypeChecker failure *)
+/2 width=4 by scpes_canc_dx/ (**) (* full auto fails *)
 qed-.
 
 (* Advanced properties ******************************************************)

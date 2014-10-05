@@ -73,17 +73,17 @@ s: strongly normalizing form
 
 - third letter
 
-b: "big tree" reduction
+b: (q)rst-reduction
 c: conversion
-d: decomposed extended reduction
-e: decomposed extended conversion
+d: decomposed rt-reduction
+e: decomposed rt-conversion
 q: restricted reduction
 r: reduction
 s: substitution
 u: supclosure
 w: reserved for generic pointwise extension
-x: extended reduction
-y: extended substitution
+x: rt-reduction
+y: rt-substitution
 
 - forth letter (if present)
 

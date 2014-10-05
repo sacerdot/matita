@@ -59,7 +59,7 @@ table {
    ]
    class "blue"
    [ { "equivalence" * } {
-        [ { "decomposed extended equivalence" * } {
+        [ { "decomposed rt-equivalence" * } {
              [ "scpes ( ⦃?,?⦄ ⊢ ? •*⬌*[?,?,?,?] ? )" "scpes_aaa" + "scpes_cpcs" + "scpes_scpes" * ]
           }
         ]
@@ -79,7 +79,7 @@ table {
    ]
    class "cyan"
    [ { "computation" * } {
-        [ { "evaluation for context-sensitive extended reduction" * } {
+        [ { "evaluation for context-sensitive rt-reduction" * } {
              [ "cpxe ( ⦃?,?⦄ ⊢ ➡*[?,?] 𝐍⦃?⦄ )" * ]
           }
         ]
@@ -91,7 +91,7 @@ table {
              [ "fsb ( ⦃?,?⦄ ⊢ ⦥[?,?] ? )" "fsb_alt ( ⦃?,?⦄ ⊢ ⦥⦥[?,?] ? )" "fsb_aaa" + "fsb_csx" * ]
           }
         ]
-        [ { "strongly normalizing extended computation" * } {
+        [ { "strongly normalizing rt-computation" * } {
              [ "lcosx ( ? ⊢ ~⬊*[?,?,?] ? )" "lcosx_cpx" * ]
              [ "lsx ( ? ⊢ ⬊*[?,?,?,?] ? )" "lsx_alt ( ? ⊢ ⬊⬊*[?,?,?,?] ? )" "lsx_drop" + "lsx_lpx" + "lsx_lpxs" + "llsx_csx" * ]
              [ "csx_vector ( ⦃?,?⦄ ⊢ ⬊*[?,?] ? )" "csx_tsts_vector" + "csx_aaa" * ]
@@ -103,11 +103,11 @@ table {
              [ "fpbs ( ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "fpbs_alt ( ⦃?,?,?⦄ ≥≥[?,?] ⦃?,?,?⦄ )" "fpbs_lift" + "fpbs_aaa" + "fpbs_fpb" + "fpbs_fpbs" * ]
           }
         ]
-        [ { "decomposed extended computation" * } {
+        [ { "decomposed rt-computation" * } {
              [ "scpds ( ⦃?,?⦄ ⊢ ? •*➡*[?,?,?] ? )" "scpds_lift" + "scpds_aaa" + "scpds_scpds" * ]
           }
         ]
-        [ { "context-sensitive extended computation" * } {
+        [ { "context-sensitive rt-computation" * } {
              [ "lpxs ( ⦃?,?⦄ ⊢ ➡*[?,?] ? )" "lpxs_drop" + "lpxs_lleq" + "lpxs_aaa" + "lpxs_cpxs" + "lpxs_lpxs" * ]
              [ "cpxs ( ⦃?,?⦄ ⊢ ? ➡*[?,?] ? )" "cpxs_tsts" + "cpxs_tsts_vector" + "cpxs_leq" + "cpxs_lift" + "cpxs_lleq" + "cpxs_aaa" + "cpxs_cpxs" * ]
           }
@@ -134,20 +134,20 @@ table {
              [ "fpb ( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" "fpb_lift" + "fpb_lleq" + "fpb_fleq" * ]
           }
         ]
-        [ { "normal forms for context-sensitive extended reduction" * } {
+        [ { "normal forms for context-sensitive rt-reduction" * } {
              [ "cnx ( ⦃?,?⦄ ⊢ ➡[?,?] 𝐍⦃?⦄ )" "cnx_lift" + "cnx_crx" + "cnx_cix" * ]
           }
         ]
-        [ { "context-sensitive extended reduction" * } {
+        [ { "context-sensitive rt-reduction" * } {
              [ "lpx ( ⦃?,?⦄ ⊢ ➡[?,?] ? )" "lpx_drop" + "lpx_frees" + "lpx_lleq" + "lpx_aaa" * ]
              [ "cpx ( ⦃?,?⦄ ⊢ ? ➡[?,?] ? )" "cpx_leq" + "cpx_lift" + "cpx_llpx_sn" + "cpx_lleq" + "cpx_cix" * ]
           }
         ]
-        [ { "irreducible forms for context-sensitive extended reduction" * } {
+        [ { "irreducible forms for context-sensitive rt-reduction" * } {
              [ "cix ( ⦃?,?⦄ ⊢ ➡[?,?] 𝐈⦃?⦄ )" "cix_lift" * ]
           }
         ]
-        [ { "reducible forms for context-sensitive extended reduction" * } {
+        [ { "reducible forms for context-sensitive rt-reduction" * } {
              [ "crx ( ⦃?,?⦄ ⊢ ➡[?,?] 𝐑⦃?⦄ )" "crx_lift" * ]
           }
         ]
@@ -229,7 +229,7 @@ table {
              [ "frees ( ? ⊢ ? ϵ 𝐅*[?]⦃?⦄ )" "frees_append" + "frees_leq" + "frees_lift" * ]
           }
         ]
-        [ { "contxt-sensitive extended multiple substitution" * } {
+        [ { "contxt-sensitive multiple rt-substitution" * } {
              [ "cpys ( ⦃?,?⦄ ⊢ ? ▶*[?,?] ? )" "cpys_alt ( ⦃?,?⦄ ⊢ ? ▶▶*[?,?] ? )" "cpys_lift" + "cpys_cpys" * ]
           }
         ]
@@ -264,11 +264,11 @@ table {
              [ "gget ( ⬇[?] ? ≡ ? )" "gget_gget" * ]
           }
         ]
-        [ { "contxt-sensitive extended ordinary substitution" * } {
+        [ { "contxt-sensitive ordinary rt-substitution" * } {
              [ "cpy ( ⦃?,?⦄ ⊢ ? ▶[?,?] ? )" "cpy_lift" + "cpy_nlift" + "cpy_cpy" * ]
           }
         ]
-        [ { "local env. ref. for extended substitution" * } {
+        [ { "local env. ref. for rt-substitution" * } {
              [ "lsuby ( ? ⊆[?,?] ? )" "lsuby_lsuby" * ]
           }
         ]

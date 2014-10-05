@@ -62,12 +62,8 @@ qed-.
 
 theorem scpes_canc_sn: ∀h,g,G,L,T,T1,l,l1. ⦃G, L⦄ ⊢ T •*⬌*[h, g, l, l1] T1 →
                        ∀T2,l2. ⦃G, L⦄ ⊢ T •*⬌*[h, g, l, l2] T2 → ⦃G, L⦄ ⊢ T1 •*⬌*[h, g, l1, l2] T2.
-#h #g #G #L #T #T1 #l #l1 #HT1
-@scpes_trans /2 width=1 by scpes_sym/ (**) (* full auto raises NTypeChecker failure *)
-qed-.
+/3 width=4 by scpes_trans, scpes_sym/ qed-.
 
 theorem scpes_canc_dx: ∀h,g,G,L,T1,T,l1,l. ⦃G, L⦄ ⊢ T1 •*⬌*[h, g, l1, l] T →
                        ∀T2,l2. ⦃G, L⦄ ⊢ T2 •*⬌*[h, g, l2, l] T → ⦃G, L⦄ ⊢ T1 •*⬌*[h, g, l1, l2] T2.
-#h #g #G #L #T1 #T #l1 #l #HT1 #T2 #l2 #HT2
-@(scpes_trans … HT1) -T1 -l1 /2 width=1 by scpes_sym/ (**) (* full auto raises NTypeChecker failure *)
-qed-.
+/3 width=4 by scpes_trans, scpes_sym/ qed-.
