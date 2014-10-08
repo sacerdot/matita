@@ -23,7 +23,7 @@ include "basic_2/computation/fsb_alt.ma".
 (* Advanced propreties on context-sensitive extended normalizing terms ******)
 
 lemma csx_fsb_fpbs: ∀h,g,G1,L1,T1. ⦃G1, L1⦄ ⊢ ⬊*[h, g] T1 →
-                    ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄ → ⦃G2, L2⦄ ⊢ ⦥[h, g] T2.
+                    ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄ → ⦥[h, g] ⦃G2, L2, T2⦄.
 #h #g #G1 #L1 #T1 #H @(csx_ind … H) -T1
 #T1 #HT1 #IHc #G2 #L2 #T2 @(fqup_wf_ind … G2 L2 T2) -G2 -L2 -T2
 #G0 #L0 #T0 #IHu #H10 lapply (csx_fpbs_conf … H10) // -HT1
@@ -48,17 +48,17 @@ lemma csx_fsb_fpbs: ∀h,g,G1,L1,T1. ⦃G1, L1⦄ ⊢ ⬊*[h, g] T1 →
 ]
 qed.
 
-lemma csx_fsb: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ ⬊*[h, g] T → ⦃G, L⦄ ⊢ ⦥[h, g] T.
+lemma csx_fsb: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ ⬊*[h, g] T → ⦥[h, g] ⦃G, L, T⦄.
 /2 width=5 by csx_fsb_fpbs/ qed.
 
 (* Advanced eliminators *****************************************************)
 
-lemma csx_ind_fpbu: ∀h,g. ∀R:relation3 genv lenv term.
-                    (∀G1,L1,T1. ⦃G1, L1⦄ ⊢ ⬊*[h, g] T1 →
-                                (∀G2,L2,T2. ⦃G1, L1, T1⦄ ≻[h, g] ⦃G2, L2, T2⦄ → R G2 L2 T2) →
-                                R G1 L1 T1
-                    ) →
-                    ∀G,L,T. ⦃G, L⦄ ⊢ ⬊*[h, g] T → R G L T.
+lemma csx_ind_fpb: ∀h,g. ∀R:relation3 genv lenv term.
+                   (∀G1,L1,T1. ⦃G1, L1⦄ ⊢ ⬊*[h, g] T1 →
+                               (∀G2,L2,T2. ⦃G1, L1, T1⦄ ≻[h, g] ⦃G2, L2, T2⦄ → R G2 L2 T2) →
+                               R G1 L1 T1
+                   ) →
+                   ∀G,L,T. ⦃G, L⦄ ⊢ ⬊*[h, g] T → R G L T.
 /4 width=4 by fsb_inv_csx, csx_fsb, fsb_ind_alt/ qed-.
 
 lemma csx_ind_fpbg: ∀h,g. ∀R:relation3 genv lenv term.

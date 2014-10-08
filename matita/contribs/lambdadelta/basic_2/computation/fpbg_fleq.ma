@@ -61,9 +61,9 @@ qed-.
 
 (* Advanced properties of "qrst" parallel computation on closures ***********)
 
-lemma fpbs_fpbu_trans: ∀h,g,F1,F2,K1,K2,T1,T2. ⦃F1, K1, T1⦄ ≥[h, g] ⦃F2, K2, T2⦄ →
-                       ∀G2,L2,U2. ⦃F2, K2, T2⦄ ≻[h, g] ⦃G2, L2, U2⦄ →
-                       ∃∃G1,L1,U1. ⦃F1, K1, T1⦄ ≻[h, g] ⦃G1, L1, U1⦄ & ⦃G1, L1, U1⦄ ≥[h, g] ⦃G2, L2, U2⦄.
+lemma fpbs_fpb_trans: ∀h,g,F1,F2,K1,K2,T1,T2. ⦃F1, K1, T1⦄ ≥[h, g] ⦃F2, K2, T2⦄ →
+                      ∀G2,L2,U2. ⦃F2, K2, T2⦄ ≻[h, g] ⦃G2, L2, U2⦄ →
+                      ∃∃G1,L1,U1. ⦃F1, K1, T1⦄ ≻[h, g] ⦃G1, L1, U1⦄ & ⦃G1, L1, U1⦄ ≥[h, g] ⦃G2, L2, U2⦄.
 #h #g #F1 #F2 #K1 #K2 #T1 #T2 #H elim (fpbs_fpbg … H) -H
 [ #H12 #G2 #L2 #U2 #H2 elim (fleq_fpb_trans … H12 … H2) -F2 -K2 -T2
   /3 width=5 by fleq_fpbs, ex2_3_intro/
