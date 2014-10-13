@@ -42,45 +42,45 @@ qed-.
 
 (* Basic_1: was: pc3_refl *)
 lemma cpcs_refl: ∀G,L. reflexive … (cpcs G L).
-/2 width=1/ qed.
+/2 width=1 by inj/ qed.
 
 (* Basic_1: was: pc3_s *)
 lemma cpcs_sym: ∀G,L. symmetric … (cpcs G L).
-#G #L @TC_symmetric // qed.
+#G #L @TC_symmetric // qed-.
 
-lemma cpc_cpcs: ∀G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬌ T2 → ⦃G, L⦄ ⊢ T2 ⬌* T2.
-/2 width=1/ qed.
+lemma cpc_cpcs: ∀G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬌ T2 → ⦃G, L⦄ ⊢ T1 ⬌* T2.
+/2 width=1 by inj/ qed.
 
 lemma cpcs_strap1: ∀G,L,T1,T,T2. ⦃G, L⦄ ⊢ T1 ⬌* T → ⦃G, L⦄ ⊢ T ⬌ T2 → ⦃G, L⦄ ⊢ T1 ⬌* T2.
-#G #L @step qed.
+#G #L @step qed-.
 
 lemma cpcs_strap2: ∀G,L,T1,T,T2. ⦃G, L⦄ ⊢ T1 ⬌ T → ⦃G, L⦄ ⊢ T ⬌* T2 → ⦃G, L⦄ ⊢ T1 ⬌* T2.
-#G #L @TC_strap qed.
+#G #L @TC_strap qed-.
 
 (* Basic_1: was: pc3_pr2_r *)
 lemma cpr_cpcs_dx: ∀G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡ T2 → ⦃G, L⦄ ⊢ T1 ⬌* T2.
-/3 width=1/ qed.
+/3 width=1 by cpc_cpcs, or_introl/ qed.
 
 (* Basic_1: was: pc3_pr2_x *)
 lemma cpr_cpcs_sn: ∀G,L,T1,T2. ⦃G, L⦄ ⊢ T2 ➡ T1 → ⦃G, L⦄ ⊢ T1 ⬌* T2.
-/3 width=1/ qed.
+/3 width=1 by cpc_cpcs, or_intror/ qed.
 
 lemma cpcs_cpr_strap1: ∀G,L,T1,T. ⦃G, L⦄ ⊢ T1 ⬌* T → ∀T2. ⦃G, L⦄ ⊢ T ➡ T2 → ⦃G, L⦄ ⊢ T1 ⬌* T2.
-/3 width=3/ qed.
+/3 width=3 by cpcs_strap1, or_introl/ qed-.
 
 (* Basic_1: was: pc3_pr2_u *)
 lemma cpcs_cpr_strap2: ∀G,L,T1,T. ⦃G, L⦄ ⊢ T1 ➡ T → ∀T2. ⦃G, L⦄ ⊢ T ⬌* T2 → ⦃G, L⦄ ⊢ T1 ⬌* T2.
-/3 width=3/ qed.
+/3 width=3 by cpcs_strap2, or_introl/ qed-.
 
 lemma cpcs_cpr_div: ∀G,L,T1,T. ⦃G, L⦄ ⊢ T1 ⬌* T → ∀T2. ⦃G, L⦄ ⊢ T2 ➡ T → ⦃G, L⦄ ⊢ T1 ⬌* T2.
-/3 width=3/ qed.
+/3 width=3 by cpcs_strap1, or_intror/ qed-.
 
 lemma cpr_div: ∀G,L,T1,T. ⦃G, L⦄ ⊢ T1 ➡ T → ∀T2. ⦃G, L⦄ ⊢ T2 ➡ T → ⦃G, L⦄ ⊢ T1 ⬌* T2.
-/3 width=3/ qed-.
+/3 width=3 by cpr_cpcs_dx, cpcs_strap1, or_intror/ qed-.
 
 (* Basic_1: was: pc3_pr2_u2 *)
 lemma cpcs_cpr_conf: ∀G,L,T1,T. ⦃G, L⦄ ⊢ T ➡ T1 → ∀T2. ⦃G, L⦄ ⊢ T ⬌* T2 → ⦃G, L⦄ ⊢ T1 ⬌* T2.
-/3 width=3/ qed.
+/3 width=3 by cpcs_strap2, or_intror/ qed-.
 
 (* Basic_1: removed theorems 9:
             clear_pc3_trans pc3_ind_left

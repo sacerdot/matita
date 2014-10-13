@@ -38,7 +38,7 @@ lemma fqu_lpx_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T
 /3 width=5 by fqu_lref_O, fqu_pair_sn, fqu_flat_dx, lpx_pair, ex3_2_intro/
 [ #a #I #G2 #L2 #V2 #T2 #X #H elim (lpx_inv_pair1 … H) -H
   #K2 #W2 #HLK2 #HVW2 #H destruct
-  /3 width=5 by fqu_fquq, cpx_pair_sn, fqu_bind_dx, ex3_2_intro/
+  /3 width=5 by cpx_pair_sn, fqu_bind_dx, ex3_2_intro/
 | #G #L1 #K1 #T1 #U1 #e #HLK1 #HTU1 #K2 #HK12
   elim (drop_lpx_trans … HLK1 … HK12) -HK12
   /3 width=7 by fqu_drop, ex3_2_intro/
