@@ -28,14 +28,13 @@ interpretation "context-sensitive parallel equivalence (term)"
 lemma cpcs_ind: ∀G,L,T1. ∀R:predicate term. R T1 →
                 (∀T,T2. ⦃G, L⦄ ⊢ T1 ⬌* T → ⦃G, L⦄ ⊢ T ⬌ T2 → R T → R T2) →
                 ∀T2. ⦃G, L⦄ ⊢ T1 ⬌* T2 → R T2.
-#G #L #T1 #R #HT1 #IHT1 #T2 #HT12 @(TC_star_ind … HT1 IHT1 … HT12) //
+normalize /3 width=6 by TC_star_ind/
 qed-.
 
 lemma cpcs_ind_dx: ∀G,L,T2. ∀R:predicate term. R T2 →
                    (∀T1,T. ⦃G, L⦄ ⊢ T1 ⬌ T → ⦃G, L⦄ ⊢ T ⬌* T2 → R T → R T1) →
                    ∀T1. ⦃G, L⦄ ⊢ T1 ⬌* T2 → R T1.
-#G #L #T2 #R #HT2 #IHT2 #T1 #HT12
-@(TC_star_ind_dx … HT2 IHT2 … HT12) //
+normalize /3 width=6 by TC_star_ind_dx/
 qed-.
 
 (* Basic properties *********************************************************)
@@ -46,16 +45,18 @@ lemma cpcs_refl: ∀G,L. reflexive … (cpcs G L).
 
 (* Basic_1: was: pc3_s *)
 lemma cpcs_sym: ∀G,L. symmetric … (cpcs G L).
-#G #L @TC_symmetric // qed-.
+#G #L @TC_symmetric // qed-. (**) (* auto fails even after normalize *)
 
 lemma cpc_cpcs: ∀G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬌ T2 → ⦃G, L⦄ ⊢ T1 ⬌* T2.
 /2 width=1 by inj/ qed.
 
 lemma cpcs_strap1: ∀G,L,T1,T,T2. ⦃G, L⦄ ⊢ T1 ⬌* T → ⦃G, L⦄ ⊢ T ⬌ T2 → ⦃G, L⦄ ⊢ T1 ⬌* T2.
-#G #L @step qed-.
+normalize /2 width=3 by step/
+qed-.
 
 lemma cpcs_strap2: ∀G,L,T1,T,T2. ⦃G, L⦄ ⊢ T1 ⬌ T → ⦃G, L⦄ ⊢ T ⬌* T2 → ⦃G, L⦄ ⊢ T1 ⬌* T2.
-#G #L @TC_strap qed-.
+normalize /2 width=3 by TC_strap/
+qed-.
 
 (* Basic_1: was: pc3_pr2_r *)
 lemma cpr_cpcs_dx: ∀G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡ T2 → ⦃G, L⦄ ⊢ T1 ⬌* T2.
