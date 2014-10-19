@@ -134,6 +134,7 @@
           <keyword>on</keyword>
           <keyword>precedence</keyword>
           <keyword>qed</keyword>
+          <keyword>defined</keyword>
           <keyword>rec</keyword>
           <keyword>record</keyword>
           <keyword>return</keyword>

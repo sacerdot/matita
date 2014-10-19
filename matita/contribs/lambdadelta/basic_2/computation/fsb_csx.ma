@@ -18,7 +18,7 @@ include "basic_2/computation/csx_fpbs.ma".
 include "basic_2/computation/lsx_csx.ma".
 include "basic_2/computation/fsb_alt.ma".
 
-(* "QRST" STRONGLY NORMALIZING TERMS ****************************************)
+(* "QRST" STRONGLY NORMALIZING CLOSURES *************************************)
 
 (* Advanced propreties on context-sensitive extended normalizing terms ******)
 

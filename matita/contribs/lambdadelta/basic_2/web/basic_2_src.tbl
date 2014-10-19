@@ -12,7 +12,7 @@ table {
    class "wine"
    [ { "examples" * } {
         [ { "terms with special features" * } {
-             [ "ex_sta_ldec" + "ex_cpr_omega" + "ex_fpbg_refl" * ]
+             [ "ex_sta_ldec" + "ex_cpr_omega" + "ex_fpbg_refl" + "ex_snv_eta" * ]
           }
         ]
      }
@@ -52,7 +52,7 @@ table {
         ]
         [ { "stratified native validity" * } {
              [ "shnv ( ⦃?,?⦄ ⊢ ? ¡[?,?,?] )" * ]
-             [ "snv ( ⦃?,?⦄ ⊢ ? ¡[?,?] )" "snv_lift" + "snv_aaa" + "snv_da_lpr" + "snv_lstas" + "snv_lstas_lpr" + "snv_lpr" + "snv_scpes" + "snv_preserve" * ]
+             [ "snv ( ⦃?,?⦄ ⊢ ? ¡[?,?] )" "snv_lift" + "snv_aaa" + "snv_da_lpr" + "snv_lstas" + "snv_lstas_lpr" + "snv_lpr" + "snv_fsb" + "snv_scpes" + "snv_preserve" * ]
           }
         ]
      }

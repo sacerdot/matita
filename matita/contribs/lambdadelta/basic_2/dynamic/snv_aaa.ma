@@ -13,7 +13,6 @@
 (**************************************************************************)
 
 include "basic_2/static/da_aaa.ma".
-include "basic_2/computation/csx_aaa.ma".
 include "basic_2/computation/scpds_aaa.ma".
 include "basic_2/dynamic/snv.ma".
 
@@ -36,10 +35,6 @@ lemma snv_fwd_aaa: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ T ¡[h, g] → ∃A. ⦃G, L⦄ 
   lapply (scpds_aaa_conf … HT … HTU0) -HTU0 #H
   lapply (aaa_mono … H … HU0) -U0 #H destruct /3 width=3 by aaa_cast, ex_intro/
 ]
-qed-.
-
-lemma snv_fwd_csx: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ T ¡[h, g] → ⦃G, L⦄ ⊢ ⬊*[h, g] T.
-#h #g #G #L #T #H elim (snv_fwd_aaa … H) -H /2 width=2 by aaa_csx/
 qed-.
 
 (* Advanced forward lemmas **************************************************)

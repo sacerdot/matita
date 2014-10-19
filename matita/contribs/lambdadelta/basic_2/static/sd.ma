@@ -29,7 +29,7 @@ record sd (h:sh): Type[0] ≝ {
 definition deg_O: relation nat ≝ λk,l. l = 0.
 
 definition sd_O: ∀h. sd h ≝ λh. mk_sd h deg_O ….
-// /2 width=1/ /2 width=2/ qed.
+/2 width=2 by le_n_O_to_eq, le_n, ex_intro/ defined.
 
 inductive deg_SO (h:sh) (k:nat) (k0:nat): predicate nat ≝
 | deg_SO_pos : ∀l0. (next h)^l0 k0 = k → deg_SO h k k0 (l0 + 1)
@@ -46,7 +46,7 @@ fact deg_SO_inv_pos_aux: ∀h,k,k0,l0. deg_SO h k k0 l0 → ∀l. l0 = l + 1 →
 qed.
 
 lemma deg_SO_inv_pos: ∀h,k,k0,l0. deg_SO h k k0 (l0 + 1) → (next h)^l0 k0 = k.
-/2 width=3/ qed-.
+/2 width=3 by deg_SO_inv_pos_aux/ qed-.
 
 lemma deg_SO_refl: ∀h,k. deg_SO h k k 1.
 #h #k @(deg_SO_pos … 0 ?) //
@@ -62,24 +62,27 @@ lemma deg_SO_gt: ∀h,k1,k2. k1 < k2 → deg_SO h k1 k2 0.
   lapply (nexts_le h k2 l) #H2
   lapply (le_to_lt_to_lt … H2 H1) -h -l #H
   elim (lt_refl_false … H)
+]
 qed.
 
 definition sd_SO: ∀h. nat → sd h ≝ λh,k. mk_sd h (deg_SO h k) ….
 [ #k0
-  lapply (nexts_dec h k0 k) * [ * /3 width=2/ | /4 width=2/ ]
+  lapply (nexts_dec h k0 k) *
+  [ * /3 width=2 by deg_SO_pos, ex_intro/ | /4 width=2 by deg_SO_zero, ex_intro/ ]
 | #K0 #l1 #l2 * [ #l01 ] #H1 * [1,3: #l02 ] #H2 //
   [ < H2 in H1; -H2 #H
     lapply (nexts_inj … H) -H #H destruct //
-  | elim H1 /2 width=2/
-  | elim H2 /2 width=2/
+  | elim H1 /2 width=2 by ex_intro/
+  | elim H2 /2 width=2 by ex_intro/
   ]
 | #k0 #l0 *
-  [ #l #H destruct elim l -l normalize /2 width=1/
+  [ #l #H destruct elim l -l normalize
+    /2 width=1 by deg_SO_gt, deg_SO_pos, next_lt/
   | #H1 @deg_SO_zero * #l #H2 destruct
-    @H1 -H1 @(ex_intro … (S l)) /2 width=1/ (**) (* explicit constructor *)
+    @H1 -H1 @(ex_intro … (S l)) /2 width=1 by sym_eq/ (**) (* explicit constructor *)
   ]
 ]
-qed.
+defined.
 
 let rec sd_l (h:sh) (k:nat) (l:nat) on l : sd h ≝
    match l with
@@ -97,7 +100,7 @@ lemma deg_inv_pred: ∀h,g,k,l. deg h g (next h k) (l+1) → deg h g k (l+2).
 elim (deg_total h g k) #l0 #H0
 lapply (deg_next … H0) #H2
 lapply (deg_mono … H1 H2) -H1 -H2 #H
-<(associative_plus l 1 1) >H <plus_minus_m_m // /2 width=3 by transitive_le/
+<(associative_plus l 1 1) >H <plus_minus_m_m /2 width=3 by transitive_le/
 qed-.
 
 lemma deg_inv_prec: ∀h,g,k,l,l0. deg h g ((next h)^l k) (l0+1) → deg h g k (l+l0+1).
@@ -111,7 +114,7 @@ qed-.
 
 lemma deg_iter: ∀h,g,k,l1,l2. deg h g k l1 → deg h g ((next h)^l2 k) (l1-l2).
 #h #g #k #l1 #l2 @(nat_ind_plus … l2) -l2  [ <minus_n_O // ]
-#l2 #IHl2 #Hkl1 >iter_SO <minus_plus /3 width=1/
+#l2 #IHl2 #Hkl1 >iter_SO <minus_plus /3 width=1 by deg_next/
 qed.
 
 lemma deg_next_SO: ∀h,g,k,l. deg h g k (l+1) → deg h g (next h k) l.
@@ -124,5 +127,5 @@ lemma sd_l_SS: ∀h,k,l. sd_l h k (l + 2) = sd_l h (next h k) (l + 1).
 qed.
 
 lemma sd_l_correct: ∀h,l,k. deg h (sd_l h k l) k l.
-#h #l @(nat_ind_plus … l) -l // #l @(nat_ind_plus … l) -l // /3 width=1 by deg_inv_pred/
+#h #l @(nat_ind_plus … l) -l // #l @(nat_ind_plus … l) -l /3 width=1 by deg_inv_pred/
 qed.

@@ -16,7 +16,7 @@ include "basic_2/notation/relations/btsn_5.ma".
 include "basic_2/reduction/fpb.ma".
 include "basic_2/computation/csx.ma".
 
-(* "QRST" STRONGLY NORMALIZING TERMS ****************************************)
+(* "QRST" STRONGLY NORMALIZING CLOSURES *************************************)
 
 inductive fsb (h) (g): relation3 genv lenv term ≝
 | fsb_intro: ∀G1,L1,T1. (

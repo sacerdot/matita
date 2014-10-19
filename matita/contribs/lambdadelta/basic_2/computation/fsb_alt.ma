@@ -16,7 +16,7 @@ include "basic_2/notation/relations/btsnalt_5.ma".
 include "basic_2/computation/fpbg_fpbs.ma".
 include "basic_2/computation/fsb.ma".
 
-(* "QRST" STRONGLY NORMALIZING TERMS ****************************************)
+(* "QRST" STRONGLY NORMALIZING CLOSURES *************************************)
 
 (* Note: alternative definition of fsb *)
 inductive fsba (h) (g): relation3 genv lenv term ≝

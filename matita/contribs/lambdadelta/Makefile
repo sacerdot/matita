@@ -132,9 +132,10 @@ define STATS_TEMPLATE
   $$(STT_$(1)): P1  = $$(shell grep "^theorem " $$(MAS_$(1)) | wc -l)
   $$(STT_$(1)): P2  = $$(shell grep "^lemma " $$(MAS_$(1)) | wc -l)
   $$(STT_$(1)): P3  = $$(shell grep "^fact " $$(MAS_$(1)) | wc -l)
-  $$(STT_$(1)): P4  = $$(shell grep qed $$(MAS_$(1)) | wc -l)
+  $$(STT_$(1)): P4  = $$(shell grep "qed[.-]" $$(MAS_$(1)) | wc -l)
   $$(STT_$(1)): C1  = $$(shell grep "^inductive \|^record " $$(MAS_$(1)) | wc -l)
   $$(STT_$(1)): C2  = $$(shell grep "^definition \|^let rec " $$(MAS_$(1)) | wc -l)
+  $$(STT_$(1)): C3  = $$(shell grep "defined[.-]" $$(MAS_$(1)) | wc -l)  
   $$(STT_$(1)): M1  = $$(shell grep "^axiom " $$(MAS_$(1)) | wc -l)
   $$(STT_$(1)): M2  = $$(shell grep "$$(OPEN)\*[^*:]*$$$$" $$(MAS_$(1)) | wc -l)
   $$(STT_$(1)): M3  = $$(shell grep "(\*\*)" $$(MAS_$(1)) | wc -l)
@@ -164,7 +165,8 @@ $$(STT_$(1)): $$(MAS_$(1)) $(1)/$(1)_probe.txt $(1)/$(1)_mac.txt
 	@printf '\x1B[1;40;33m'
 	@printf '%-8s %6i' Declared $$(C1)
 	@printf '   %-8s %4i' Defined $$(C2)	
-	@printf '   %-29s' ''
+	@printf '   %-7s %7i' Proved $$(C3)
+	@printf '   %-11s' ''
 	@printf '\x1B[0m\n'
 	@printf '\x1B[1;40;31m'
 	@printf '%-8s %6i' Axioms $$(M1)

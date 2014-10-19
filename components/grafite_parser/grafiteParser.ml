@@ -507,6 +507,7 @@ EXTEND
 
   grafite_ncommand: [ [
       IDENT "qed" ;  i = index -> G.NQed (loc,i)
+    | IDENT "defined" ;  i = index -> G.NQed (loc,i) (* FG: presentational qed for definitions *)
     | nflavour = ntheorem_flavour; name = IDENT; SYMBOL ":"; typ = term;
       body = OPT [ SYMBOL <:unicode<def>> (* ≝ *); body = term -> body ] ->
         let attrs = `Provided, nflavour, `Regular in

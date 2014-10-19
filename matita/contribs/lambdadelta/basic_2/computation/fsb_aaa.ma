@@ -16,7 +16,7 @@ include "basic_2/computation/fpbs_aaa.ma".
 include "basic_2/computation/csx_aaa.ma".
 include "basic_2/computation/fsb_csx.ma".
 
-(* "QRST" STRONGLY NORMALIZING TERMS ****************************************)
+(* "QRST" STRONGLY NORMALIZING CLOSURES *************************************)
 
 (* Main properties **********************************************************)
 
