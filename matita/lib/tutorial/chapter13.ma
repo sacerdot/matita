@@ -104,8 +104,7 @@ coercion R_to_fun : ∀r:R. ℕ → Q ≝ r on _r:R to ?.
 (* Adding two real numbers just requires pointwise addition of the 
  approximations. The proof that the resulting sequence is Cauchy is the standard
  one: to obtain an approximation up to eps it is necessary to approximate both
- summands up to eps/2. The proof that the function is well defined w.r.t. the
- omitted equivalence relation is also omitted. *)
+ summands up to eps/2. *)
 definition Rplus_: R_ → R_ → R_ ≝
  λr1,r2. mk_R_ (λn. r1 n + r2 n) ….
  #eps
@@ -156,7 +155,7 @@ record div_trace: Type[0] ≝
  ; div_well_formed: ∀n. next (div_tr n) (div_tr (S n))
  }.
 
-(* The previous definition of trace is not very computable: we cannot write
+(* The previous definition of trace is not computable: we cannot write
  a program that given an initial state returns its trace. To write that function,
  we first write a computable version of next, called step. *)
 definition step: state → option state ≝

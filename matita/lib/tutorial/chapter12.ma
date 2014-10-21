@@ -72,7 +72,7 @@ definition Z: setoid ≝
  @(injective_plus_r … H4)
 qed.
 
-(* The two integers (0,1) and (1,2) are equal up to ≝, written
+(* The two integers (0,1) and (1,2) are equal up to ≃, written
    〈0,1〉 ≃ 〈1,2〉. Unfolding the notation, that corresponds to
    eqrel ? (eq_setoid ?) 〈0,1〉 〈1,2〉 which means that the two
    pairs are to be compare according to the equivalence relation
@@ -140,7 +140,7 @@ record morphism (I,O: setoid) : Type[0] ≝ {
  ; mor_proper: proper … mor_carr
  }.
 
-(* We introduce a notation for morhism using a long arrow. *)
+(* We introduce a notation for morphism using the symbols of an arrow followed by a dot. *)
 notation "hvbox(I break ⤞ O)"
   right associative with precedence 20
 for @{ 'morphism $I $O }.
@@ -150,7 +150,7 @@ interpretation "morphism" 'morphism I O = (morphism I O).
 (* By declaring mor_carr as a coercion it is possible to write f x for
    mor_carr f x in order to apply a morphism f to an argument. *)
 
-(* Example: oppositive of an integer number. We first implement the function
+(* Example: opposite of an integer number. We first implement the function
   over Z and then lift it to a morphism. The proof obligation is to prove
   properness. *)
 definition opp: Z → Z ≝ λc.〈\snd c,\fst c〉.
@@ -178,7 +178,7 @@ unification hint 0 ≔ x:Z ;
 
 (* Example: we state that opp is proper and we will prove it without using
  automation and without referring to OPP. When we apply the universal mor_proper
- property of morhisms, Matita looks for the morphism associate to opp x and
+ property of morphisms, Matita looks for the morphism associate to opp x and
  finds it thanks to the second unification hint above, completing the proof. *)
 example ex2: ∀x,y. x ≃ y → opp x ≃ opp y.
  #x #y #EQ @mor_proper @EQ
