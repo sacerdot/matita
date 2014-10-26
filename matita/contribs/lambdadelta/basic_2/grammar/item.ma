@@ -42,6 +42,12 @@ inductive item2: Type[0] ≝
   | Flat2: flat2 → item2        (* non-binding item *)
 .
 
+(* Basic inversion lemmas ***************************************************)
+
+fact destruct_sort_sort_aux: ∀k1,k2. Sort k1 = Sort k2 → k1 = k2.
+#k1 #k2 #H destruct //
+qed-.
+
 (* Basic properties *********************************************************)
 
 lemma eq_item0_dec: ∀I1,I2:item0. Decidable (I1 = I2).

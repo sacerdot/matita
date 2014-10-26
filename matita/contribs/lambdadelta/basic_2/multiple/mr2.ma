@@ -19,10 +19,10 @@ include "basic_2/grammar/term_vector.ma".
 
 inductive at: list2 nat nat → relation nat ≝
 | at_nil: ∀i. at (◊) i i
-| at_lt : ∀des,d,e,i1,i2. i1 < d →
-          at des i1 i2 → at ({d, e} @ des) i1 i2
-| at_ge : ∀des,d,e,i1,i2. d ≤ i1 →
-          at des (i1 + e) i2 → at ({d, e} @ des) i1 i2
+| at_lt : ∀des,l,m,i1,i2. i1 < l →
+          at des i1 i2 → at ({l, m} @ des) i1 i2
+| at_ge : ∀des,l,m,i1,i2. l ≤ i1 →
+          at des (i1 + m) i2 → at ({l, m} @ des) i1 i2
 .
 
 interpretation "application (multiple relocation with pairs)"
@@ -33,8 +33,8 @@ interpretation "application (multiple relocation with pairs)"
 fact at_inv_nil_aux: ∀des,i1,i2. @⦃i1, des⦄ ≡ i2 → des = ◊ → i1 = i2.
 #des #i1 #i2 * -des -i1 -i2
 [ //
-| #des #d #e #i1 #i2 #_ #_ #H destruct
-| #des #d #e #i1 #i2 #_ #_ #H destruct
+| #des #l #m #i1 #i2 #_ #_ #H destruct
+| #des #l #m #i1 #i2 #_ #_ #H destruct
 ]
 qed-.
 
@@ -42,33 +42,33 @@ lemma at_inv_nil: ∀i1,i2. @⦃i1, ◊⦄ ≡ i2 → i1 = i2.
 /2 width=3 by at_inv_nil_aux/ qed-.
 
 fact at_inv_cons_aux: ∀des,i1,i2. @⦃i1, des⦄ ≡ i2 →
-                      ∀d,e,des0. des = {d, e} @ des0 →
-                      i1 < d ∧ @⦃i1, des0⦄ ≡ i2 ∨
-                      d ≤ i1 ∧ @⦃i1 + e, des0⦄ ≡ i2.
+                      ∀l,m,des0. des = {l, m} @ des0 →
+                      i1 < l ∧ @⦃i1, des0⦄ ≡ i2 ∨
+                      l ≤ i1 ∧ @⦃i1 + m, des0⦄ ≡ i2.
 #des #i1 #i2 * -des -i1 -i2
-[ #i #d #e #des #H destruct
-| #des1 #d1 #e1 #i1 #i2 #Hid1 #Hi12 #d2 #e2 #des2 #H destruct /3 width=1 by or_introl, conj/
-| #des1 #d1 #e1 #i1 #i2 #Hdi1 #Hi12 #d2 #e2 #des2 #H destruct /3 width=1 by or_intror, conj/
+[ #i #l #m #des #H destruct
+| #des1 #l1 #m1 #i1 #i2 #Hil1 #Hi12 #l2 #m2 #des2 #H destruct /3 width=1 by or_introl, conj/
+| #des1 #l1 #m1 #i1 #i2 #Hli1 #Hi12 #l2 #m2 #des2 #H destruct /3 width=1 by or_intror, conj/
 ]
 qed-.
 
-lemma at_inv_cons: ∀des,d,e,i1,i2. @⦃i1, {d, e} @ des⦄ ≡ i2 →
-                   i1 < d ∧ @⦃i1, des⦄ ≡ i2 ∨
-                   d ≤ i1 ∧ @⦃i1 + e, des⦄ ≡ i2.
+lemma at_inv_cons: ∀des,l,m,i1,i2. @⦃i1, {l, m} @ des⦄ ≡ i2 →
+                   i1 < l ∧ @⦃i1, des⦄ ≡ i2 ∨
+                   l ≤ i1 ∧ @⦃i1 + m, des⦄ ≡ i2.
 /2 width=3 by at_inv_cons_aux/ qed-.
 
-lemma at_inv_cons_lt: ∀des,d,e,i1,i2. @⦃i1, {d, e} @ des⦄ ≡ i2 →
-                      i1 < d → @⦃i1, des⦄ ≡ i2.
-#des #d #e #i1 #e2 #H
-elim (at_inv_cons … H) -H * // #Hdi1 #_ #Hi1d
-lapply (le_to_lt_to_lt … Hdi1 Hi1d) -Hdi1 -Hi1d #Hd
-elim (lt_refl_false … Hd)
+lemma at_inv_cons_lt: ∀des,l,m,i1,i2. @⦃i1, {l, m} @ des⦄ ≡ i2 →
+                      i1 < l → @⦃i1, des⦄ ≡ i2.
+#des #l #m #i1 #m2 #H
+elim (at_inv_cons … H) -H * // #Hli1 #_ #Hi1l
+lapply (le_to_lt_to_lt … Hli1 Hi1l) -Hli1 -Hi1l #Hl
+elim (lt_refl_false … Hl)
 qed-.
 
-lemma at_inv_cons_ge: ∀des,d,e,i1,i2. @⦃i1, {d, e} @ des⦄ ≡ i2 →
-                      d ≤ i1 → @⦃i1 + e, des⦄ ≡ i2.
-#des #d #e #i1 #e2 #H
-elim (at_inv_cons … H) -H * // #Hi1d #_ #Hdi1
-lapply (le_to_lt_to_lt … Hdi1 Hi1d) -Hdi1 -Hi1d #Hd
-elim (lt_refl_false … Hd)
+lemma at_inv_cons_ge: ∀des,l,m,i1,i2. @⦃i1, {l, m} @ des⦄ ≡ i2 →
+                      l ≤ i1 → @⦃i1 + m, des⦄ ≡ i2.
+#des #l #m #i1 #m2 #H
+elim (at_inv_cons … H) -H * // #Hi1l #_ #Hli1
+lapply (le_to_lt_to_lt … Hli1 Hi1l) -Hli1 -Hi1l #Hl
+elim (lt_refl_false … Hl)
 qed-.

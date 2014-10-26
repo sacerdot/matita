@@ -19,10 +19,10 @@ include "basic_2/multiple/mr2.ma".
 
 inductive minuss: nat → relation (list2 nat nat) ≝
 | minuss_nil: ∀i. minuss i (◊) (◊)
-| minuss_lt : ∀des1,des2,d,e,i. i < d → minuss i des1 des2 →
-              minuss i ({d, e} @ des1) ({d - i, e} @ des2)
-| minuss_ge : ∀des1,des2,d,e,i. d ≤ i → minuss (e + i) des1 des2 →
-              minuss i ({d, e} @ des1) des2
+| minuss_lt : ∀des1,des2,l,m,i. i < l → minuss i des1 des2 →
+              minuss i ({l, m} @ des1) ({l - i, m} @ des2)
+| minuss_ge : ∀des1,des2,l,m,i. l ≤ i → minuss (m + i) des1 des2 →
+              minuss i ({l, m} @ des1) des2
 .
 
 interpretation "minus (multiple relocation with pairs)"
@@ -33,8 +33,8 @@ interpretation "minus (multiple relocation with pairs)"
 fact minuss_inv_nil1_aux: ∀des1,des2,i. des1 ▭ i ≡ des2 → des1 = ◊ → des2 = ◊.
 #des1 #des2 #i * -des1 -des2 -i
 [ //
-| #des1 #des2 #d #e #i #_ #_ #H destruct
-| #des1 #des2 #d #e #i #_ #_ #H destruct
+| #des1 #des2 #l #m #i #_ #_ #H destruct
+| #des1 #des2 #l #m #i #_ #_ #H destruct
 ]
 qed-.
 
@@ -42,35 +42,35 @@ lemma minuss_inv_nil1: ∀des2,i. ◊ ▭ i ≡ des2 → des2 = ◊.
 /2 width=4 by minuss_inv_nil1_aux/ qed-.
 
 fact minuss_inv_cons1_aux: ∀des1,des2,i. des1 ▭ i ≡ des2 →
-                           ∀d,e,des. des1 = {d, e} @ des →
-                           d ≤ i ∧ des ▭ e + i ≡ des2 ∨
-                           ∃∃des0. i < d & des ▭ i ≡ des0 &
-                                   des2 = {d - i, e} @ des0.
+                           ∀l,m,des. des1 = {l, m} @ des →
+                           l ≤ i ∧ des ▭ m + i ≡ des2 ∨
+                           ∃∃des0. i < l & des ▭ i ≡ des0 &
+                                   des2 = {l - i, m} @ des0.
 #des1 #des2 #i * -des1 -des2 -i
-[ #i #d #e #des #H destruct
-| #des1 #des #d1 #e1 #i1 #Hid1 #Hdes #d2 #e2 #des2 #H destruct /3 width=3 by ex3_intro, or_intror/
-| #des1 #des #d1 #e1 #i1 #Hdi1 #Hdes #d2 #e2 #des2 #H destruct /3 width=1 by or_introl, conj/
+[ #i #l #m #des #H destruct
+| #des1 #des #l1 #m1 #i1 #Hil1 #Hcs #l2 #m2 #des2 #H destruct /3 width=3 by ex3_intro, or_intror/
+| #des1 #des #l1 #m1 #i1 #Hli1 #Hcs #l2 #m2 #des2 #H destruct /3 width=1 by or_introl, conj/
 ]
 qed-.
 
-lemma minuss_inv_cons1: ∀des1,des2,d,e,i. {d, e} @ des1 ▭ i ≡ des2 →
-                        d ≤ i ∧ des1 ▭ e + i ≡ des2 ∨
-                        ∃∃des. i < d & des1 ▭ i ≡ des &
-                               des2 = {d - i, e} @ des.
+lemma minuss_inv_cons1: ∀des1,des2,l,m,i. {l, m} @ des1 ▭ i ≡ des2 →
+                        l ≤ i ∧ des1 ▭ m + i ≡ des2 ∨
+                        ∃∃des. i < l & des1 ▭ i ≡ des &
+                               des2 = {l - i, m} @ des.
 /2 width=3 by minuss_inv_cons1_aux/ qed-.
 
-lemma minuss_inv_cons1_ge: ∀des1,des2,d,e,i. {d, e} @ des1 ▭ i ≡ des2 →
-                           d ≤ i → des1 ▭ e + i ≡ des2.
-#des1 #des2 #d #e #i #H
-elim (minuss_inv_cons1 … H) -H * // #des #Hid #_ #_ #Hdi
-lapply (lt_to_le_to_lt … Hid Hdi) -Hid -Hdi #Hi
+lemma minuss_inv_cons1_ge: ∀des1,des2,l,m,i. {l, m} @ des1 ▭ i ≡ des2 →
+                           l ≤ i → des1 ▭ m + i ≡ des2.
+#des1 #des2 #l #m #i #H
+elim (minuss_inv_cons1 … H) -H * // #des #Hil #_ #_ #Hli
+lapply (lt_to_le_to_lt … Hil Hli) -Hil -Hli #Hi
 elim (lt_refl_false … Hi)
 qed-.
 
-lemma minuss_inv_cons1_lt: ∀des1,des2,d,e,i. {d, e} @ des1 ▭ i ≡ des2 →
-                           i < d →
-                           ∃∃des. des1 ▭ i ≡ des & des2 = {d - i, e} @ des.
-#des1 #des2 #d #e #i #H elim (minuss_inv_cons1 … H) -H * /2 width=3 by ex2_intro/
-#Hdi #_ #Hid lapply (lt_to_le_to_lt … Hid Hdi) -Hid -Hdi
+lemma minuss_inv_cons1_lt: ∀des1,des2,l,m,i. {l, m} @ des1 ▭ i ≡ des2 →
+                           i < l →
+                           ∃∃des. des1 ▭ i ≡ des & des2 = {l - i, m} @ des.
+#des1 #des2 #l #m #i #H elim (minuss_inv_cons1 … H) -H * /2 width=3 by ex2_intro/
+#Hli #_ #Hil lapply (lt_to_le_to_lt … Hil Hli) -Hil -Hli
 #Hi elim (lt_refl_false … Hi)
 qed-.

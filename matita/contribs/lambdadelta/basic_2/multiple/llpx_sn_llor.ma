@@ -21,9 +21,9 @@ include "basic_2/multiple/lleq_alt.ma".
 (* Inversion lemmas on pointwise union for local environments ****************)
 
 lemma llpx_sn_llor_fwd_sn: ∀R. (∀L. reflexive … (R L)) →
-                           ∀L1,L2,T,d. llpx_sn R d T L1 L2 →
-                           ∀L. L1 ⋓[T, d] L2 ≡ L → lpx_sn R L1 L.
-#R #HR #L1 #L2 #T #d #H1 #L #H2
+                           ∀L1,L2,T,l. llpx_sn R l T L1 L2 →
+                           ∀L. L1 ⋓[T, l] L2 ≡ L → lpx_sn R L1 L.
+#R #HR #L1 #L2 #T #l #H1 #L #H2
 elim (llpx_sn_llpx_sn_alt … H1) -H1 #HL12 #IH1
 elim H2 -H2 #_ #HL1 #IH2
 @lpx_sn_intro_alt // #I1 #I #K1 #K #V1 #V #i #HLK1 #HLK

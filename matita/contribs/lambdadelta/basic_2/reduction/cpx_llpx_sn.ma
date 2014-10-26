@@ -20,13 +20,13 @@ include "basic_2/reduction/cpx.ma".
 (* Properties on lazy sn pointwise extensions *******************************)
 
 (* Note: lemma 1000 *)
-lemma cpx_llpx_sn_conf: ∀R. (∀L. reflexive … (R L)) → l_liftable R → l_deliftable_sn R →
+lemma cpx_llpx_sn_conf: ∀R. (∀L. reflexive … (R L)) → d_liftable R → d_deliftable_sn R →
                         ∀h,g,G. s_r_confluent1 … (cpx h g G) (llpx_sn R 0).
 #R #H1R #H2R #H3R #h #g #G #Ls #T1 #T2 #H elim H -G -Ls -T1 -T2
 [ //
 | /3 width=4 by llpx_sn_fwd_length, llpx_sn_sort/
 | #I #G #Ls #Ks #V1s #V2s #W2s #i #HLKs #_ #HVW2s #IHV12s #Ld #H elim (llpx_sn_inv_lref_ge_sn … H … HLKs) // -H
-  #Kd #V1d #HLKd #HV1s #HV1sd
+  #Kd #V1l #HLKd #HV1s #HV1sd
   lapply (drop_fwd_drop2 … HLKs) -HLKs #HLKs
   lapply (drop_fwd_drop2 … HLKd) -HLKd #HLKd
   @(llpx_sn_lift_le … HLKs HLKd … HVW2s) -HLKs -HLKd -HVW2s /2 width=1 by/ (**) (* full auto too slow *)

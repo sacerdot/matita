@@ -23,12 +23,12 @@ definition nf ≝ λRR:relation4 genv lenv term term. λRS:relation term.
 definition candidate: Type[0] ≝ relation3 genv lenv term.
 
 definition CP0 ≝ λRR:relation4 genv lenv term term. λRS:relation term.
-                 ∀G. l_liftable1 (nf RR RS G) (Ⓕ).
+                 ∀G. d_liftable1 (nf RR RS G) (Ⓕ).
 
 definition CP1 ≝ λRR:relation4 genv lenv term term. λRS:relation term.
                  ∀G,L. ∃k. NF … (RR G L) RS (⋆k).
 
-definition CP2 ≝ λRP:candidate. ∀G. l_liftable1 (RP G) (Ⓕ).
+definition CP2 ≝ λRP:candidate. ∀G. d_liftable1 (RP G) (Ⓕ).
 
 definition CP3 ≝ λRP:candidate.
                  ∀G,L,T,k. RP G L (ⓐ⋆k.T) → RP G L T.
@@ -44,15 +44,15 @@ record gcp (RR:relation4 genv lenv term term) (RS:relation term) (RP:candidate) 
 (* Basic properties *********************************************************)
 
 (* Basic_1: was: nf2_lift1 *)
-lemma gcp0_lifts: ∀RR,RS,RP. gcp RR RS RP → ∀G. l_liftables1 (nf RR RS G) (Ⓕ).
-#RR #RS #RP #H #G @l1_liftable_liftables @(cp0 … H)
+lemma gcp0_lifts: ∀RR,RS,RP. gcp RR RS RP → ∀G. d_liftables1 (nf RR RS G) (Ⓕ).
+#RR #RS #RP #H #G @d1_liftable_liftables @(cp0 … H)
 qed.
 
-lemma gcp2_lifts: ∀RR,RS,RP. gcp RR RS RP → ∀G. l_liftables1 (RP G) (Ⓕ).
-#RR #RS #RP #H #G @l1_liftable_liftables @(cp2 … H)
+lemma gcp2_lifts: ∀RR,RS,RP. gcp RR RS RP → ∀G. d_liftables1 (RP G) (Ⓕ).
+#RR #RS #RP #H #G @d1_liftable_liftables @(cp2 … H)
 qed.
 
 (* Basic_1: was only: sns3_lifts1 *)
-lemma gcp2_lifts_all: ∀RR,RS,RP. gcp RR RS RP → ∀G. l_liftables1_all (RP G) (Ⓕ).
-#RR #RS #RP #H #G @l1_liftables_liftables_all /2 width=7 by gcp2_lifts/
+lemma gcp2_lifts_all: ∀RR,RS,RP. gcp RR RS RP → ∀G. d_liftables1_all (RP G) (Ⓕ).
+#RR #RS #RP #H #G @d1_liftables_liftables_all /2 width=7 by gcp2_lifts/
 qed.

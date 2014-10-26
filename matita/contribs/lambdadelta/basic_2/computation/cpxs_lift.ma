@@ -30,17 +30,17 @@ lemma cpxs_delta: ∀h,g,I,G,L,K,V,V2,i.
 ]
 qed.
 
-lemma lstas_cpxs: ∀h,g,G,L,T1,T2,l2. ⦃G, L⦄ ⊢ T1 •*[h, l2] T2 →
-                  ∀l1. ⦃G, L⦄ ⊢ T1 ▪[h, g] l1 → l2 ≤ l1 → ⦃G, L⦄ ⊢ T1 ➡*[h, g] T2.
-#h #g #G #L #T1 #T2 #l2 #H elim H -G -L -T1 -T2 -l2 //
+lemma lstas_cpxs: ∀h,g,G,L,T1,T2,d2. ⦃G, L⦄ ⊢ T1 •*[h, d2] T2 →
+                  ∀d1. ⦃G, L⦄ ⊢ T1 ▪[h, g] d1 → d2 ≤ d1 → ⦃G, L⦄ ⊢ T1 ➡*[h, g] T2.
+#h #g #G #L #T1 #T2 #d2 #H elim H -G -L -T1 -T2 -d2 //
 [ /3 width=3 by cpxs_sort, da_inv_sort/
-| #G #L #K #V1 #V2 #W2 #i #l2 #HLK #_ #HVW2 #IHV12 #l1 #H #Hl21
-  elim (da_inv_lref … H) -H * #K0 #V0 [| #l0 ] #HLK0
+| #G #L #K #V1 #V2 #W2 #i #d2 #HLK #_ #HVW2 #IHV12 #d1 #H #Hd21
+  elim (da_inv_lref … H) -H * #K0 #V0 [| #d0 ] #HLK0
   lapply (drop_mono … HLK0 … HLK) -HLK0 #H destruct /3 width=7 by cpxs_delta/
-| #G #L #K #V1 #V2 #W2 #i #l2 #HLK #_ #HVW2 #IHV12 #l1 #H #Hl21
-  elim (da_inv_lref … H) -H * #K0 #V0 [| #l0 ] #HLK0
+| #G #L #K #V1 #V2 #W2 #i #d2 #HLK #_ #HVW2 #IHV12 #d1 #H #Hd21
+  elim (da_inv_lref … H) -H * #K0 #V0 [| #d0 ] #HLK0
   lapply (drop_mono … HLK0 … HLK) -HLK0 #H destruct
-  #HV1 #H destruct lapply (le_plus_to_le_r … Hl21) -Hl21
+  #HV1 #H destruct lapply (le_plus_to_le_r … Hd21) -Hd21
   /3 width=7 by cpxs_delta/
 | /4 width=3 by cpxs_bind_dx, da_inv_bind/
 | /4 width=3 by cpxs_flat_dx, da_inv_flat/
@@ -68,11 +68,11 @@ qed-.
 
 (* Relocation properties ****************************************************)
 
-lemma cpxs_lift: ∀h,g,G. l_liftable (cpxs h g G).
-/3 width=10 by cpx_lift, cpxs_strap1, l_liftable_LTC/ qed.
+lemma cpxs_lift: ∀h,g,G. d_liftable (cpxs h g G).
+/3 width=10 by cpx_lift, cpxs_strap1, d_liftable_LTC/ qed.
 
-lemma cpxs_inv_lift1: ∀h,g,G. l_deliftable_sn (cpxs h g G).
-/3 width=6 by l_deliftable_sn_LTC, cpx_inv_lift1/
+lemma cpxs_inv_lift1: ∀h,g,G. d_deliftable_sn (cpxs h g G).
+/3 width=6 by d_deliftable_sn_LTC, cpx_inv_lift1/
 qed-.
 
 (* Properties on supclosure *************************************************)
@@ -95,8 +95,8 @@ lemma fquq_cpxs_trans: ∀h,g,G1,G2,L1,L2,T2,U2. ⦃G2, L2⦄ ⊢ T2 ➡*[h, g] 
 qed-.
 
 lemma fquq_lstas_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐⸮ ⦃G2, L2, T2⦄ →
-                        ∀U2,l1. ⦃G2, L2⦄ ⊢ T2 •*[h, l1] U2 →
-                        ∀l2. ⦃G2, L2⦄ ⊢ T2 ▪[h, g] l2 → l1 ≤ l2 →
+                        ∀U2,d1. ⦃G2, L2⦄ ⊢ T2 •*[h, d1] U2 →
+                        ∀d2. ⦃G2, L2⦄ ⊢ T2 ▪[h, g] d2 → d1 ≤ d2 →
                         ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡*[h, g] U1 & ⦃G1, L1, U1⦄ ⊐⸮ ⦃G2, L2, U2⦄.
 /3 width=5 by fquq_cpxs_trans, lstas_cpxs/ qed-.
 
@@ -118,7 +118,7 @@ lemma fqus_cpxs_trans: ∀h,g,G1,G2,L1,L2,T2,U2. ⦃G2, L2⦄ ⊢ T2 ➡*[h, g] 
 qed-.
 
 lemma fqus_lstas_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐* ⦃G2, L2, T2⦄ →
-                        ∀U2,l1. ⦃G2, L2⦄ ⊢ T2 •*[h, l1] U2 →
-                        ∀l2. ⦃G2, L2⦄ ⊢ T2 ▪[h, g] l2 → l1 ≤ l2 →
+                        ∀U2,d1. ⦃G2, L2⦄ ⊢ T2 •*[h, d1] U2 →
+                        ∀d2. ⦃G2, L2⦄ ⊢ T2 ▪[h, g] d2 → d1 ≤ d2 →
                         ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡*[h, g] U1 & ⦃G1, L1, U1⦄ ⊐* ⦃G2, L2, U2⦄.
 /3 width=6 by fqus_cpxs_trans, lstas_cpxs/ qed-.

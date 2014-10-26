@@ -56,11 +56,11 @@ lemma cnx_csx: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃T⦄ → ⦃G, L⦄
 
 lemma csx_sort: ∀h,g,G,L,k. ⦃G, L⦄ ⊢ ⬊*[h, g] ⋆k.
 #h #g #G #L #k elim (deg_total h g k)
-#l generalize in match k; -k @(nat_ind_plus … l) -l /3 width=6 by cnx_csx, cnx_sort/
-#l #IHl #k #Hkl lapply (deg_next_SO … Hkl) -Hkl
-#Hkl @csx_intro #X #H #HX elim (cpx_inv_sort1 … H) -H
+#d generalize in match k; -k @(nat_ind_plus … d) -d /3 width=6 by cnx_csx, cnx_sort/
+#d #IHd #k #Hkd lapply (deg_next_SO … Hkd) -Hkd
+#Hkd @csx_intro #X #H #HX elim (cpx_inv_sort1 … H) -H
 [ #H destruct elim HX //
-| -HX * #l0 #_ #H destruct -l0 /2 width=1 by/
+| -HX * #d0 #_ #H destruct -d0 /2 width=1 by/
 ]
 qed.
 

@@ -22,9 +22,9 @@ include "basic_2/dynamic/lsubsv.ma".
 
 lemma lsubsv_fwd_lsuba: ∀h,g,G,L1,L2. G ⊢ L1 ⫃¡[h, g] L2 → G ⊢ L1 ⫃⁝ L2.
 #h #g #G #L1 #L2 #H elim H -L1 -L2 /2 width=1 by lsuba_pair/
-#L1 #L2 #W #V #l1 #H #_ #_ #_ #_ #IHL12
+#L1 #L2 #W #V #d1 #H #_ #_ #_ #_ #IHL12
 elim (shnv_inv_cast … H) -H #HW #HV #H
-lapply (H 0 ?) // -l1 #HWV
+lapply (H 0 ?) // -d1 #HWV
 elim (snv_fwd_aaa … HW) -HW #B #HW
 elim (snv_fwd_aaa … HV) -HV #A #HV
 lapply (scpes_aaa_mono … HWV … HW … HV) #H destruct

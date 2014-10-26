@@ -35,21 +35,21 @@ interpretation "atomic arity construction (binary)"
 
 (* Basic inversion lemmas ***************************************************)
 
+fact destruct_apair_apair_aux: ∀A1,A2,B1,B2. ②B1.A1 = ②B2.A2 → B1 = B2 ∧ A1 = A2.
+#A1 #A2 #B1 #B2 #H destruct /2 width=1 by conj/
+qed-.
+
 lemma discr_apair_xy_x: ∀A,B. ②B. A = B → ⊥.
 #A #B elim B -B
 [ #H destruct
-| #Y #X #IHY #_ #H destruct
-  -H >e0 in e1; normalize (**) (* destruct: one quality is not simplified, the destructed equality is not erased *)
-  /2 width=1/
+| #Y #X #IHY #_ #H elim (destruct_apair_apair_aux … H) -H /2 width=1 by/ (**) (* destruct lemma needed *)
 ]
 qed-.
 
 lemma discr_tpair_xy_y: ∀B,A. ②B. A = A → ⊥.
 #B #A elim A -A
 [ #H destruct
-| #Y #X #_ #IHX #H destruct
-  -H (**) (* destruct: the destructed equality is not erased *)
-  /2 width=1/
+| #Y #X #_ #IHX #H elim (destruct_apair_apair_aux … H) -H /2 width=1 by/ (**) (* destruct lemma needed *)
 ]
 qed-.
 
@@ -57,16 +57,16 @@ qed-.
 
 lemma eq_aarity_dec: ∀A1,A2:aarity. Decidable (A1 = A2).
 #A1 elim A1 -A1
-[ #A2 elim A2 -A2 /2 width=1/
+[ #A2 elim A2 -A2 /2 width=1 by or_introl/
   #B2 #A2 #_ #_ @or_intror #H destruct
 | #B1 #A1 #IHB1 #IHA1 #A2 elim A2 -A2
   [ -IHB1 -IHA1 @or_intror #H destruct
   | #B2 #A2 #_ #_ elim (IHB1 B2) -IHB1
     [ #H destruct elim (IHA1 A2) -IHA1
-      [ #H destruct /2 width=1/
-      | #HA12 @or_intror #H destruct /2 width=1/
+      [ #H destruct /2 width=1 by or_introl/
+      | #HA12 @or_intror #H destruct /2 width=1 by/
       ]
-    | -IHA1 #HB12 @or_intror #H destruct /2 width=1/
+    | -IHA1 #HB12 @or_intror #H destruct /2 width=1 by/
     ]
   ]
 ]

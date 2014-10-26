@@ -19,23 +19,23 @@ include "basic_2/multiple/lleq.ma".
 
 (* Alternative definition (not recursive) ***********************************)
 
-theorem lleq_intro_alt: ∀L1,L2,T,d. |L1| = |L2| →
-                        (∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → L1 ⊢ i ϵ 𝐅*[d]⦃T⦄ →
+theorem lleq_intro_alt: ∀L1,L2,T,l. |L1| = |L2| →
+                        (∀I1,I2,K1,K2,V1,V2,i. l ≤ yinj i → L1 ⊢ i ϵ 𝐅*[l]⦃T⦄ →
                            ⬇[i] L1 ≡ K1.ⓑ{I1}V1 → ⬇[i] L2 ≡ K2.ⓑ{I2}V2 →
                            I1 = I2 ∧ V1 = V2
-                        ) → L1 ≡[T, d] L2.
-#L1 #L2 #T #d #HL12 #IH @llpx_sn_alt_inv_llpx_sn @conj // -HL12
-#I1 #I2 #K1 #K2 #V1 #V2 #i #Hid #HnT #HLK1 #HLK2
+                        ) → L1 ≡[T, l] L2.
+#L1 #L2 #T #l #HL12 #IH @llpx_sn_alt_inv_llpx_sn @conj // -HL12
+#I1 #I2 #K1 #K2 #V1 #V2 #i #Hil #HnT #HLK1 #HLK2
 @(IH … HnT HLK1 HLK2) -IH -HnT -HLK1 -HLK2 //
 qed.
 
-theorem lleq_inv_alt: ∀L1,L2,T,d. L1 ≡[T, d] L2 →
+theorem lleq_inv_alt: ∀L1,L2,T,l. L1 ≡[T, l] L2 →
                       |L1| = |L2| ∧
-                      ∀I1,I2,K1,K2,V1,V2,i. d ≤ yinj i → L1 ⊢ i ϵ 𝐅*[d]⦃T⦄ →
+                      ∀I1,I2,K1,K2,V1,V2,i. l ≤ yinj i → L1 ⊢ i ϵ 𝐅*[l]⦃T⦄ →
                       ⬇[i] L1 ≡ K1.ⓑ{I1}V1 → ⬇[i] L2 ≡ K2.ⓑ{I2}V2 →
                       I1 = I2 ∧ V1 = V2.
-#L1 #L2 #T #d #H elim (llpx_sn_llpx_sn_alt … H) -H
+#L1 #L2 #T #l #H elim (llpx_sn_llpx_sn_alt … H) -H
 #HL12 #IH @conj //
-#I1 #I2 #K1 #K2 #V1 #V2 #i #Hid #HnT #HLK1 #HLK2
+#I1 #I2 #K1 #K2 #V1 #V2 #i #Hil #HnT #HLK1 #HLK2
 @(IH … HnT HLK1 HLK2) -IH -HnT -HLK1 -HLK2 //
 qed-.

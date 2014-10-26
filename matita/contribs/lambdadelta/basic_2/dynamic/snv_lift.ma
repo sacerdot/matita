@@ -20,57 +20,57 @@ include "basic_2/dynamic/snv.ma".
 
 (* Relocation properties ****************************************************)
 
-lemma snv_lift: ∀h,g,G,K,T. ⦃G, K⦄ ⊢ T ¡[h, g] → ∀L,s,d,e. ⬇[s, d, e] L ≡ K →
-                ∀U. ⬆[d, e] T ≡ U → ⦃G, L⦄ ⊢ U ¡[h, g].
+lemma snv_lift: ∀h,g,G,K,T. ⦃G, K⦄ ⊢ T ¡[h, g] → ∀L,s,l,m. ⬇[s, l, m] L ≡ K →
+                ∀U. ⬆[l, m] T ≡ U → ⦃G, L⦄ ⊢ U ¡[h, g].
 #h #g #G #K #T #H elim H -G -K -T
-[ #G #K #k #L #s #d #e #_ #X #H
-  >(lift_inv_sort1 … H) -X -K -d -e //
-| #I #G #K #K0 #V #i #HK0 #_ #IHV #L #s #d #e #HLK #X #H
-  elim (lift_inv_lref1 … H) * #Hid #H destruct
+[ #G #K #k #L #s #l #m #_ #X #H
+  >(lift_inv_sort1 … H) -X -K -l -m //
+| #I #G #K #K0 #V #i #HK0 #_ #IHV #L #s #l #m #HLK #X #H
+  elim (lift_inv_lref1 … H) * #Hil #H destruct
   [ elim (drop_trans_le … HLK … HK0) -K /2 width=2 by lt_to_le/ #X #HL0 #H
-    elim (drop_inv_skip2 … H) -H /2 width=1 by lt_plus_to_minus_r/ -Hid #L0 #W #HLK0 #HVW #H destruct
+    elim (drop_inv_skip2 … H) -H /2 width=1 by lt_plus_to_minus_r/ -Hil #L0 #W #HLK0 #HVW #H destruct
     /3 width=9 by snv_lref/
   | lapply (drop_trans_ge … HLK … HK0 ?) -K
     /3 width=9 by snv_lref, drop_inv_gen/
   ]
-| #a #I #G #K #V #T #_ #_ #IHV #IHT #L #s #d #e #HLK #X #H
+| #a #I #G #K #V #T #_ #_ #IHV #IHT #L #s #l #m #HLK #X #H
   elim (lift_inv_bind1 … H) -H #W #U #HVW #HTU #H destruct
   /4 width=5 by snv_bind, drop_skip/
-| #a #G #K #V #W0 #T #U0 #l #_ #_ #HVW0 #HTU0 #IHV #IHT #L #s #d #e #HLK #X #H
+| #a #G #K #V #W0 #T #U0 #d #_ #_ #HVW0 #HTU0 #IHV #IHT #L #s #l #m #HLK #X #H
   elim (lift_inv_flat1 … H) -H #W #U #HVW #HTU #H destruct
-  elim (lift_total W0 d e)
-  elim (lift_total U0 (d+1) e)
+  elim (lift_total W0 l m)
+  elim (lift_total U0 (l+1) m)
   /4 width=17 by snv_appl, scpds_lift, lift_bind/
-| #G #K #V #T #U0 #_ #_ #HVU0 #HTU0 #IHV #IHT #L #s #d #e #HLK #X #H
+| #G #K #V #T #U0 #_ #_ #HVU0 #HTU0 #IHV #IHT #L #s #l #m #HLK #X #H
   elim (lift_inv_flat1 … H) -H #W #U #HVW #HTU #H destruct
-  elim (lift_total U0 d e)
+  elim (lift_total U0 l m)
   /3 width=12 by snv_cast, scpds_lift/
 ]
 qed.
 
-lemma snv_inv_lift: ∀h,g,G,L,U. ⦃G, L⦄ ⊢ U ¡[h, g] → ∀K,s,d,e. ⬇[s, d, e] L ≡ K →
-                    ∀T. ⬆[d, e] T ≡ U → ⦃G, K⦄ ⊢ T ¡[h, g].
+lemma snv_inv_lift: ∀h,g,G,L,U. ⦃G, L⦄ ⊢ U ¡[h, g] → ∀K,s,l,m. ⬇[s, l, m] L ≡ K →
+                    ∀T. ⬆[l, m] T ≡ U → ⦃G, K⦄ ⊢ T ¡[h, g].
 #h #g #G #L #U #H elim H -G -L -U
-[ #G #L #k #K #s #d #e #_ #X #H
-  >(lift_inv_sort2 … H) -X -L -d -e //
-| #I #G #L #L0 #W #i #HL0 #_ #IHW #K #s #d #e #HLK #X #H
-  elim (lift_inv_lref2 … H) * #Hid #H destruct
+[ #G #L #k #K #s #l #m #_ #X #H
+  >(lift_inv_sort2 … H) -X -L -l -m //
+| #I #G #L #L0 #W #i #HL0 #_ #IHW #K #s #l #m #HLK #X #H
+  elim (lift_inv_lref2 … H) * #Hil #H destruct
   [ elim (drop_conf_le … HLK … HL0) -L /2 width=2 by lt_to_le/ #X #HK0 #H
-    elim (drop_inv_skip1 … H) -H /2 width=1 by lt_plus_to_minus_r/ -Hid #K0 #V #HLK0 #HVW #H destruct
+    elim (drop_inv_skip1 … H) -H /2 width=1 by lt_plus_to_minus_r/ -Hil #K0 #V #HLK0 #HVW #H destruct
     /3 width=12 by snv_lref/
   | lapply (drop_conf_ge … HLK … HL0 ?) -L /3 width=9 by snv_lref/
   ]
-| #a #I #G #L #W #U #_ #_ #IHW #IHU #K #s #d #e #HLK #X #H
+| #a #I #G #L #W #U #_ #_ #IHW #IHU #K #s #l #m #HLK #X #H
   elim (lift_inv_bind2 … H) -H #V #T #HVW #HTU #H destruct
   /4 width=5 by snv_bind, drop_skip/
-| #a #G #L #W #W1 #U #U1 #l #_ #_ #HW1 #HU1 #IHW #IHU #K #s #d #e #HLK #X #H
+| #a #G #L #W #W1 #U #U1 #d #_ #_ #HW1 #HU1 #IHW #IHU #K #s #l #m #HLK #X #H
   elim (lift_inv_flat2 … H) -H #V #T #HVW #HTU #H destruct
   elim (scpds_inv_lift1 … HW1 … HLK … HVW) -HW1 #W0 #HW01 #HVW0
   elim (scpds_inv_lift1 … HU1 … HLK … HTU) -HU1 #X #H #HTU0
   elim (lift_inv_bind2 … H) -H #Y #U0 #HY #HU01 #H destruct
   lapply (lift_inj … HY … HW01) -HY #H destruct
   /3 width=6 by snv_appl/
-| #G #L #W #U #U1 #_ #_ #HWU1 #HU1 #IHW #IHU #K #s #d #e #HLK #X #H
+| #G #L #W #U #U1 #_ #_ #HWU1 #HU1 #IHW #IHU #K #s #l #m #HLK #X #H
   elim (lift_inv_flat2 … H) -H #V #T #HVW #HTU #H destruct
   elim (scpds_inv_lift1 … HWU1 … HLK … HVW) -HWU1 #U0 #HU01 #HVU0
   elim (scpds_inv_lift1 … HU1 … HLK … HTU) -HU1 #X #HX #HTU0 

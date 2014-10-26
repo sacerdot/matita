@@ -64,13 +64,13 @@ lemma cprs_cpxs: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡* T2 → ⦃G, L⦄ ⊢ 
 #h #g #G #L #T1 #T2 #H @(cprs_ind … H) -T2 /3 width=3 by cpxs_strap1, cpr_cpx/
 qed.
 
-lemma cpxs_sort: ∀h,g,G,L,k,l1. deg h g k l1 →
-                 ∀l2. l2 ≤ l1 → ⦃G, L⦄ ⊢ ⋆k ➡*[h, g] ⋆((next h)^l2 k).
-#h #g #G #L #k #l1 #Hkl1 #l2 @(nat_ind_plus … l2) -l2 /2 width=1 by cpx_cpxs/
-#l2 #IHl2 #Hl21 >iter_SO
-@(cpxs_strap1 … (⋆(iter l2 ℕ (next h) k)))
+lemma cpxs_sort: ∀h,g,G,L,k,d1. deg h g k d1 →
+                 ∀d2. d2 ≤ d1 → ⦃G, L⦄ ⊢ ⋆k ➡*[h, g] ⋆((next h)^d2 k).
+#h #g #G #L #k #d1 #Hkd1 #d2 @(nat_ind_plus … d2) -d2 /2 width=1 by cpx_cpxs/
+#d2 #IHd2 #Hd21 >iter_SO
+@(cpxs_strap1 … (⋆(iter d2 ℕ (next h) k)))
 [ /3 width=3 by lt_to_le/
-| @(cpx_st … (l1-l2-1)) <plus_minus_m_m
+| @(cpx_st … (d1-d2-1)) <plus_minus_m_m
   /2 width=1 by deg_iter, monotonic_le_minus_r/
 ]
 qed.
@@ -137,15 +137,15 @@ qed.
 (* Basic inversion lemmas ***************************************************)
 
 lemma cpxs_inv_sort1: ∀h,g,G,L,U2,k. ⦃G, L⦄ ⊢ ⋆k ➡*[h, g] U2 →
-                      ∃∃n,l. deg h g k (n+l) & U2 = ⋆((next h)^n k).
+                      ∃∃n,d. deg h g k (n+d) & U2 = ⋆((next h)^n k).
 #h #g #G #L #U2 #k #H @(cpxs_ind … H) -U2
-[ elim (deg_total h g k) #l #Hkl
-  @(ex2_2_intro … 0 … Hkl) -Hkl //
-| #U #U2 #_ #HU2 * #n #l #Hknl #H destruct
+[ elim (deg_total h g k) #d #Hkd
+  @(ex2_2_intro … 0 … Hkd) -Hkd //
+| #U #U2 #_ #HU2 * #n #d #Hknd #H destruct
   elim (cpx_inv_sort1 … HU2) -HU2
   [ #H destruct /2 width=4 by ex2_2_intro/
-  | * #l0 #Hkl0 #H destruct -l
-    @(ex2_2_intro … (n+1) l0) /2 width=1 by deg_inv_prec/ >iter_SO //
+  | * #d0 #Hkd0 #H destruct -d
+    @(ex2_2_intro … (n+1) d0) /2 width=1 by deg_inv_prec/ >iter_SO //
   ]
 ]
 qed-.

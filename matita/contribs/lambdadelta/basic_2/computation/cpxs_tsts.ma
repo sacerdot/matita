@@ -27,13 +27,13 @@ qed-.
 lemma cpxs_fwd_sort: ∀h,g,G,L,U,k. ⦃G, L⦄ ⊢ ⋆k ➡*[h, g] U →
                      ⋆k ≂ U ∨ ⦃G, L⦄ ⊢ ⋆(next h k) ➡*[h, g] U.
 #h #g #G #L #U #k #H
-elim (cpxs_inv_sort1 … H) -H #n #l generalize in match k; -k @(nat_ind_plus … n) -n
-[ #k #_ #H -l destruct /2 width=1 by or_introl/
-| #n #IHn #k >plus_plus_comm_23 #Hnl #H destruct
-  lapply (deg_next_SO … Hnl) -Hnl #Hnl
-  elim (IHn … Hnl) -IHn
+elim (cpxs_inv_sort1 … H) -H #n #d generalize in match k; -k @(nat_ind_plus … n) -n
+[ #k #_ #H -d destruct /2 width=1 by or_introl/
+| #n #IHn #k >plus_plus_comm_23 #Hnd #H destruct
+  lapply (deg_next_SO … Hnd) -Hnd #Hnd
+  elim (IHn … Hnd) -IHn
   [ #H lapply (tsts_inv_atom1 … H) -H #H >H -H /2 width=1 by or_intror/
-  | generalize in match Hnl; -Hnl @(nat_ind_plus … n) -n
+  | generalize in match Hnd; -Hnd @(nat_ind_plus … n) -n
     /4 width=3 by cpxs_strap2, cpx_st, or_intror/
   | >iter_SO >iter_n_Sm //
   ]

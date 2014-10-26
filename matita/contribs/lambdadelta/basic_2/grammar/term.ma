@@ -108,15 +108,19 @@ qed-.
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma destruct_tpair_tpair: ∀I1,I2,T1,T2,V1,V2. ②{I1}T1.V1 = ②{I2}T2.V2 →
-                            ∧∧T1 = T2 & I1 = I2 & V1 = V2.
+fact destruct_tatom_tatom_aux: ∀I1,I2. ⓪{I1} = ⓪{I2} → I1 = I2.
+#I1 #I2 #H destruct //
+qed-.
+
+fact destruct_tpair_tpair_aux: ∀I1,I2,T1,T2,V1,V2. ②{I1}T1.V1 = ②{I2}T2.V2 →
+                               ∧∧T1 = T2 & I1 = I2 & V1 = V2.
 #I1 #I2 #T1 #T2 #V1 #V2 #H destruct /2 width=1 by and3_intro/
 qed-.
 
 lemma discr_tpair_xy_x: ∀I,T,V. ②{I} V. T = V → ⊥.
 #I #T #V elim V -V
 [ #J #H destruct
-| #J #W #U #IHW #_ #H elim (destruct_tpair_tpair … H) -H /2 width=1 by/ (**) (* destruct lemma needed *)
+| #J #W #U #IHW #_ #H elim (destruct_tpair_tpair_aux … H) -H /2 width=1 by/ (**) (* destruct lemma needed *)
 ]
 qed-.
 
@@ -124,7 +128,7 @@ qed-.
 lemma discr_tpair_xy_y: ∀I,V,T. ②{I} V. T = T → ⊥.
 #I #V #T elim T -T
 [ #J #H destruct
-| #J #W #U #_ #IHU #H elim (destruct_tpair_tpair … H) -H /2 width=1 by/ (**) (* destruct lemma needed *)
+| #J #W #U #_ #IHU #H elim (destruct_tpair_tpair_aux … H) -H /2 width=1 by/ (**) (* destruct lemma needed *)
 ]
 qed-.
 

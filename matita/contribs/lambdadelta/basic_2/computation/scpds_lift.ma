@@ -21,15 +21,15 @@ include "basic_2/computation/scpds.ma".
 
 (* Relocation properties ****************************************************)
 
-lemma scpds_lift: ∀h,g,G,l. l_liftable (scpds h g l G).
-#h #g #G #l2 #K #T1 #T2 * #T #l1 #Hl21 #Hl1 #HT1 #HT2 #L #s #d #e
-elim (lift_total T d e)
+lemma scpds_lift: ∀h,g,G,d. d_liftable (scpds h g d G).
+#h #g #G #d2 #K #T1 #T2 * #T #d1 #Hd21 #Hd1 #HT1 #HT2 #L #s #l #m
+elim (lift_total T l m)
 /3 width=15 by cprs_lift, da_lift, lstas_lift, ex4_2_intro/
 qed.
 
-lemma scpds_inv_lift1: ∀h,g,G,l. l_deliftable_sn (scpds h g l G).
-#h #g #G #l2 #L #U1 #U2 * #U #l1 #Hl21 #Hl1 #HU1 #HU2 #K #s #d #e #HLK #T1 #HTU1
-lapply (da_inv_lift … Hl1 … HLK … HTU1) -Hl1 #Hl1
+lemma scpds_inv_lift1: ∀h,g,G,d. d_deliftable_sn (scpds h g d G).
+#h #g #G #d2 #L #U1 #U2 * #U #d1 #Hd21 #Hd1 #HU1 #HU2 #K #s #l #m #HLK #T1 #HTU1
+lapply (da_inv_lift … Hd1 … HLK … HTU1) -Hd1 #Hd1
 elim (lstas_inv_lift1 … HU1 … HLK … HTU1) -U1 #T #HTU #HT1
 elim (cprs_inv_lift1 … HU2 … HLK … HTU) -U -L
 /3 width=8 by ex4_2_intro, ex2_intro/

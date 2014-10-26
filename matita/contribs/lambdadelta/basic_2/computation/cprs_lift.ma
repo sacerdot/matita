@@ -51,10 +51,10 @@ qed-.
 (* Relocation properties ****************************************************)
 
 (* Basic_1: was: pr3_lift *)
-lemma cprs_lift: ∀G. l_liftable (cprs G).
-/3 width=10 by l_liftable_LTC, cpr_lift/ qed.
+lemma cprs_lift: ∀G. d_liftable (cprs G).
+/3 width=10 by d_liftable_LTC, cpr_lift/ qed.
 
 (* Basic_1: was: pr3_gen_lift *)
-lemma cprs_inv_lift1: ∀G. l_deliftable_sn (cprs G).
-/3 width=6 by l_deliftable_sn_LTC, cpr_inv_lift1/
+lemma cprs_inv_lift1: ∀G. d_deliftable_sn (cprs G).
+/3 width=6 by d_deliftable_sn_LTC, cpr_inv_lift1/
 qed-.

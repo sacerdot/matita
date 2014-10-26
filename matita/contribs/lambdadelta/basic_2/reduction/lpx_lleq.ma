@@ -15,9 +15,9 @@
 include "basic_2/multiple/llor_drop.ma".
 include "basic_2/multiple/llpx_sn_llor.ma".
 include "basic_2/multiple/llpx_sn_lpx_sn.ma".
-include "basic_2/multiple/lleq_leq.ma".
+include "basic_2/multiple/lleq_lreq.ma".
 include "basic_2/multiple/lleq_llor.ma".
-include "basic_2/reduction/cpx_leq.ma".
+include "basic_2/reduction/cpx_lreq.ma".
 include "basic_2/reduction/cpx_lleq.ma".
 include "basic_2/reduction/lpx_frees.ma".
 
@@ -27,14 +27,14 @@ include "basic_2/reduction/lpx_frees.ma".
 
 (* Note: contains a proof of llpx_cpx_conf *)
 lemma lleq_lpx_trans: ∀h,g,G,L2,K2. ⦃G, L2⦄ ⊢ ➡[h, g] K2 →
-                      ∀L1,T,d. L1 ≡[T, d] L2 →
-                      ∃∃K1. ⦃G, L1⦄ ⊢ ➡[h, g] K1 & K1 ≡[T, d] K2.
-#h #g #G #L2 #K2 #HLK2 #L1 #T #d #HL12
+                      ∀L1,T,l. L1 ≡[T, l] L2 →
+                      ∃∃K1. ⦃G, L1⦄ ⊢ ➡[h, g] K1 & K1 ≡[T, l] K2.
+#h #g #G #L2 #K2 #HLK2 #L1 #T #l #HL12
 lapply (lpx_fwd_length … HLK2) #H1
 lapply (lleq_fwd_length … HL12) #H2
-lapply (lpx_sn_llpx_sn … T … d HLK2) // -HLK2 #H
+lapply (lpx_sn_llpx_sn … T … l HLK2) // -HLK2 #H
 lapply (lleq_llpx_sn_trans … HL12 … H) /2 width=3 by lleq_cpx_trans/ -HL12 -H #H
-elim (llor_total L1 K2 T d) // -H1 -H2 #K1 #HLK1
+elim (llor_total L1 K2 T l) // -H1 -H2 #K1 #HLK1
 lapply (llpx_sn_llor_dx_sym … H … HLK1)
 [ /2 width=6 by cpx_frees_trans/
 | /3 width=10 by cpx_llpx_sn_conf, cpx_inv_lift1, cpx_lift/
@@ -59,8 +59,8 @@ lemma lpx_lleq_fqu_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, 
   /3 width=4 by lpx_pair, fqu_bind_dx, ex3_intro/
 | #I #G1 #L1 #V1 #T1 #K1 #HLK1 #H elim (lleq_inv_flat … H) -H
   /2 width=4 by fqu_flat_dx, ex3_intro/
-| #G1 #L1 #L #T1 #U1 #e #HL1 #HTU1 #K1 #H1KL1 #H2KL1
-  elim (drop_O1_le (Ⓕ) (e+1) K1)
+| #G1 #L1 #L #T1 #U1 #m #HL1 #HTU1 #K1 #H1KL1 #H2KL1
+  elim (drop_O1_le (Ⓕ) (m+1) K1)
   [ #K #HK1 lapply (lleq_inv_lift_le … H2KL1 … HK1 HL1 … HTU1 ?) -H2KL1 //
     #H2KL elim (lpx_drop_trans_O1 … H1KL1 … HL1) -L1
     #K0 #HK10 #H1KL lapply (drop_mono … HK10 … HK1) -HK10 #H destruct
@@ -105,32 +105,32 @@ elim (fqus_inv_gen … H) -H
 ]
 qed-.
 
-fact leq_lpx_trans_lleq_aux: ∀h,g,G,L1,L0,d,e. L1 ⩬[d, e] L0 → e = ∞ →
-                             ∀L2. ⦃G, L0⦄ ⊢ ➡[h, g] L2 →
-                             ∃∃L. L ⩬[d, e] L2 & ⦃G, L1⦄ ⊢ ➡[h, g] L &
-                                  (∀T. L0 ≡[T, d] L2 ↔ L1 ≡[T, d] L).
-#h #g #G #L1 #L0 #d #e #H elim H -L1 -L0 -d -e
-[ #d #e #_ #L2 #H >(lpx_inv_atom1 … H) -H
+fact lreq_lpx_trans_lleq_aux: ∀h,g,G,L1,L0,l,m. L1 ⩬[l, m] L0 → m = ∞ →
+                              ∀L2. ⦃G, L0⦄ ⊢ ➡[h, g] L2 →
+                              ∃∃L. L ⩬[l, m] L2 & ⦃G, L1⦄ ⊢ ➡[h, g] L &
+                                   (∀T. L0 ≡[T, l] L2 ↔ L1 ≡[T, l] L).
+#h #g #G #L1 #L0 #l #m #H elim H -L1 -L0 -l -m
+[ #l #m #_ #L2 #H >(lpx_inv_atom1 … H) -H
   /3 width=5 by ex3_intro, conj/
-| #I1 #I0 #L1 #L0 #V1 #V0 #_ #_ #He destruct
-| #I #L1 #L0 #V1 #e #HL10 #IHL10 #He #Y #H
+| #I1 #I0 #L1 #L0 #V1 #V0 #_ #_ #Hm destruct
+| #I #L1 #L0 #V1 #m #HL10 #IHL10 #Hm #Y #H
   elim (lpx_inv_pair1 … H) -H #L2 #V2 #HL02 #HV02 #H destruct
-  lapply (ysucc_inv_Y_dx … He) -He #He
+  lapply (ysucc_inv_Y_dx … Hm) -Hm #Hm
   elim (IHL10 … HL02) // -IHL10 -HL02 #L #HL2 #HL1 #IH
-  @(ex3_intro … (L.ⓑ{I}V2)) /3 width=3 by lpx_pair, leq_cpx_trans, leq_pair/
+  @(ex3_intro … (L.ⓑ{I}V2)) /3 width=3 by lpx_pair, lreq_cpx_trans, lreq_pair/
   #T elim (IH T) #HL0dx #HL0sn
-  @conj #H @(lleq_leq_repl … H) -H /3 width=1 by leq_sym, leq_pair_O_Y/
-| #I1 #I0 #L1 #L0 #V1 #V0 #d #e #HL10 #IHL10 #He #Y #H
+  @conj #H @(lleq_lreq_repl … H) -H /3 width=1 by lreq_sym, lreq_pair_O_Y/
+| #I1 #I0 #L1 #L0 #V1 #V0 #l #m #HL10 #IHL10 #Hm #Y #H
   elim (lpx_inv_pair1 … H) -H #L2 #V2 #HL02 #HV02 #H destruct
   elim (IHL10 … HL02) // -IHL10 -HL02 #L #HL2 #HL1 #IH
-  @(ex3_intro … (L.ⓑ{I1}V1)) /3 width=1 by lpx_pair, leq_succ/
+  @(ex3_intro … (L.ⓑ{I1}V1)) /3 width=1 by lpx_pair, lreq_succ/
   #T elim (IH T) #HL0dx #HL0sn
-  @conj #H @(lleq_leq_repl … H) -H /3 width=1 by leq_sym, leq_succ/
+  @conj #H @(lleq_lreq_repl … H) -H /3 width=1 by lreq_sym, lreq_succ/
 ]
 qed-.
 
-lemma leq_lpx_trans_lleq: ∀h,g,G,L1,L0,d. L1 ⩬[d, ∞] L0 →
-                          ∀L2. ⦃G, L0⦄ ⊢ ➡[h, g] L2 →
-                          ∃∃L. L ⩬[d, ∞] L2 & ⦃G, L1⦄ ⊢ ➡[h, g] L &
-                               (∀T. L0 ≡[T, d] L2 ↔ L1 ≡[T, d] L).
-/2 width=1 by leq_lpx_trans_lleq_aux/ qed-.
+lemma lreq_lpx_trans_lleq: ∀h,g,G,L1,L0,l. L1 ⩬[l, ∞] L0 →
+                           ∀L2. ⦃G, L0⦄ ⊢ ➡[h, g] L2 →
+                           ∃∃L. L ⩬[l, ∞] L2 & ⦃G, L1⦄ ⊢ ➡[h, g] L &
+                                (∀T. L0 ≡[T, l] L2 ↔ L1 ≡[T, l] L).
+/2 width=1 by lreq_lpx_trans_lleq_aux/ qed-.

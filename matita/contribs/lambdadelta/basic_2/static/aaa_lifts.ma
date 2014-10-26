@@ -24,7 +24,7 @@ lemma aaa_lifts: ∀G,L1,L2,T2,A,s,des. ⬇*[s, des] L2 ≡ L1 → ∀T1. ⬆*[d
 #G #L1 #L2 #T2 #A #s #des #H elim H -L1 -L2 -des
 [ #L #T1 #H #HT1
   <(lifts_inv_nil … H) -H //
-| #L1 #L #L2 #des #d #e #_ #HL2 #IHL1 #T1 #H #HT1
+| #L1 #L #L2 #des #l #m #_ #HL2 #IHL1 #T1 #H #HT1
   elim (lifts_inv_cons … H) -H /3 width=10 by aaa_lift/
 ]
 qed.

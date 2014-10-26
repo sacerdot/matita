@@ -79,14 +79,14 @@ interpretation
 (* Basic properties *********************************************************)
 
 (* Basic 1: was: sc3_lift *)
-lemma gcr_lift: ∀RR,RS,RP. gcp RR RS RP → ∀A,G. l_liftable1 (acr RP A G) (Ⓕ).
+lemma gcr_lift: ∀RR,RS,RP. gcp RR RS RP → ∀A,G. d_liftable1 (acr RP A G) (Ⓕ).
 #RR #RS #RP #H #A elim A -A
 /3 width=8 by cp2, drops_cons, lifts_cons/
 qed.
 
 (* Basic_1: was: sc3_lift1 *)
-lemma gcr_lifts: ∀RR,RS,RP. gcp RR RS RP → ∀A,G. l_liftables1 (acr RP A G) (Ⓕ).
-#RR #RS #RP #H #A #G @l1_liftable_liftables /2 width=7 by gcr_lift/
+lemma gcr_lifts: ∀RR,RS,RP. gcp RR RS RP → ∀A,G. d_liftables1 (acr RP A G) (Ⓕ).
+#RR #RS #RP #H #A #G @d1_liftable_liftables /2 width=7 by gcr_lift/
 qed.
 
 (* Basic_1: was:
@@ -120,11 +120,11 @@ lemma acr_gcr: ∀RR,RS,RP. gcp RR RS RP → gcr RR RS RP RP →
 | #I #G #L #K #Vs #V1 #V2 #i #HA #HV12 #HLK #L0 #V0 #X #des #HL0 #H #HB
   elim (lifts_inv_applv1 … H) -H #V0s #Y #HV0s #HY #H destruct
   elim (lifts_inv_lref1 … HY) -HY #i0 #Hi0 #H destruct
-  elim (drops_drop_trans … HL0 … HLK) #X #des0 #i1 #HL02 #H #Hi1 #Hdes0
+  elim (drops_drop_trans … HL0 … HLK) #X #des0 #i1 #HL02 #H #Hi1 #Hcs0
   >(at_mono … Hi1 … Hi0) in HL02; -i1 #HL02
-  elim (drops_inv_skip2 … Hdes0 … H) -H -des0 #L2 #W1 #des0 #Hdes0 #HLK #HVW1 #H destruct
+  elim (drops_inv_skip2 … Hcs0 … H) -H -des0 #L2 #W1 #des0 #Hcs0 #HLK #HVW1 #H destruct
   elim (lift_total W1 0 (i0 + 1)) #W2 #HW12
-  elim (lifts_lift_trans  … Hdes0 … HVW1 … HW12) // -Hdes0 -Hi0 #V3 #HV13 #HVW2
+  elim (lifts_lift_trans  … Hcs0 … HVW1 … HW12) // -Hcs0 -Hi0 #V3 #HV13 #HVW2
   >(lift_mono … HV13 … HV12) in HVW2; -V3 #HVW2
   @(s5 … IHA … (V0 @ V0s) … HW12 HL02) /3 width=5 by lifts_applv/
 | #G #L #V1s #V2s #HV12s #a #V #T #HA #HV #L0 #V10 #X #des #HL0 #H #HB

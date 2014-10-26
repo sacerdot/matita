@@ -109,7 +109,7 @@ table {
         ]
         [ { "context-sensitive rt-computation" * } {
              [ "lpxs ( ⦃?,?⦄ ⊢ ➡*[?,?] ? )" "lpxs_drop" + "lpxs_lleq" + "lpxs_aaa" + "lpxs_cpxs" + "lpxs_lpxs" * ]
-             [ "cpxs ( ⦃?,?⦄ ⊢ ? ➡*[?,?] ? )" "cpxs_tsts" + "cpxs_tsts_vector" + "cpxs_leq" + "cpxs_lift" + "cpxs_lleq" + "cpxs_aaa" + "cpxs_cpxs" * ]
+             [ "cpxs ( ⦃?,?⦄ ⊢ ? ➡*[?,?] ? )" "cpxs_tsts" + "cpxs_tsts_vector" + "cpxs_lreq" + "cpxs_lift" + "cpxs_lleq" + "cpxs_aaa" + "cpxs_cpxs" * ]
           }
         ]
         [ { "context-sensitive computation" * } {
@@ -140,7 +140,7 @@ table {
         ]
         [ { "context-sensitive rt-reduction" * } {
              [ "lpx ( ⦃?,?⦄ ⊢ ➡[?,?] ? )" "lpx_drop" + "lpx_frees" + "lpx_lleq" + "lpx_aaa" * ]
-             [ "cpx ( ⦃?,?⦄ ⊢ ? ➡[?,?] ? )" "cpx_leq" + "cpx_lift" + "cpx_llpx_sn" + "cpx_lleq" + "cpx_cix" * ]
+             [ "cpx ( ⦃?,?⦄ ⊢ ? ➡[?,?] ? )" "cpx_lreq" + "cpx_lift" + "cpx_llpx_sn" + "cpx_lleq" + "cpx_cix" * ]
           }
         ]
         [ { "irreducible forms for context-sensitive rt-reduction" * } {
@@ -214,11 +214,11 @@ table {
    [ { "multiple substitution" * } {
         [ { "lazy equivalence" * } {
              [ "fleq ( ⦃?,?,?⦄ ≡[?] ⦃?,?,?⦄ )" "fleq_fleq" * ]
-             [ "lleq ( ? ≡[?,?] ? )" "lleq_alt" + "lleq_alt_rec" + "lleq_leq" + "lleq_drop" + "lleq_fqus" + "lleq_llor" + "lleq_lleq" * ]
+             [ "lleq ( ? ≡[?,?] ? )" "lleq_alt" + "lleq_alt_rec" + "lleq_lreq" + "lleq_drop" + "lleq_fqus" + "lleq_llor" + "lleq_lleq" * ]
           }
         ]
         [ { "lazy pointwise extension of a relation" * } {
-             [ "llpx_sn" "llpx_sn_alt" + "llpx_sn_alt_rec" + "llpx_sn_tc" + "llpx_sn_leq" + "llpx_sn_drop" + "llpx_sn_lpx_sn" + "llpx_sn_frees" + "llpx_sn_llor" * ]
+             [ "llpx_sn" "llpx_sn_alt" + "llpx_sn_alt_rec" + "llpx_sn_tc" + "llpx_sn_lreq" + "llpx_sn_drop" + "llpx_sn_lpx_sn" + "llpx_sn_frees" + "llpx_sn_llor" * ]
           }
         ]
         [ { "pointwise union for local environments" * } {
@@ -226,7 +226,7 @@ table {
           }
         ]
         [ { "context-sensitive exclusion from free variables" * } {
-             [ "frees ( ? ⊢ ? ϵ 𝐅*[?]⦃?⦄ )" "frees_append" + "frees_leq" + "frees_lift" * ]
+             [ "frees ( ? ⊢ ? ϵ 𝐅*[?]⦃?⦄ )" "frees_append" + "frees_lreq" + "frees_lift" * ]
           }
         ]
         [ { "contxt-sensitive multiple rt-substitution" * } {
@@ -277,7 +277,7 @@ table {
           }
         ]
         [ { "basic local env. slicing" * } {
-             [ "drop ( ⬇[?,?,?] ? ≡ ? )"  "drop_append" + "drop_leq" + "drop_drop" * ]
+             [ "drop ( ⬇[?,?,?] ? ≡ ? )"  "drop_append" + "drop_lreq" + "drop_drop" * ]
           }
         ]
         [ { "basic term relocation" * } {
@@ -290,7 +290,7 @@ table {
    class "red"
    [ { "grammar" * } {
         [ { "equivalence for local environments" * } {
-             [ "leq ( ? ⩬[?,?] ? )" "leq_leq" * ]
+             [ "lreq ( ? ⩬[?,?] ? )" "lreq_lreq" * ]
           }
         ]
         [ { "same top term structure" * } {

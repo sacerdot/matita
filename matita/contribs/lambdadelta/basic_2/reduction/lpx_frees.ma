@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/multiple/frees_leq.ma".
+include "basic_2/multiple/frees_lreq.ma".
 include "basic_2/multiple/frees_lift.ma".
 include "basic_2/reduction/lpx_drop.ma".
 
@@ -26,7 +26,7 @@ lemma lpx_cpx_frees_trans: ∀h,g,G,L1,U1,U2. ⦃G, L1⦄ ⊢ U1 ➡[h, g] U2 �
 #h #g #G #L1 #U1 @(fqup_wf_ind_eq … G L1 U1) -G -L1 -U1
 #G0 #L0 #U0 #IH #G #L1 * *
 [ -IH #k #HG #HL #HU #U2 #H1 #L2 #_ #i #H2 elim (cpx_inv_sort1 … H1) -H1
-  [| * #l #_ ] #H destruct elim (frees_inv_sort … H2)
+  [| * #d #_ ] #H destruct elim (frees_inv_sort … H2)
 | #j #HG #HL #HU #U2 #H1 #L2 #HL12 #i #H2 elim (cpx_inv_lref1 … H1) -H1
   [ #H destruct elim (frees_inv_lref … H2) -H2 //
     * #I #K2 #W2 #Hj #Hji #HLK2 #HW2
@@ -63,7 +63,7 @@ lemma lpx_cpx_frees_trans: ∀h,g,G,L1,U1,U2. ⦃G, L1⦄ ⊢ U1 ➡[h, g] U2 �
     elim (frees_inv_bind … Hi) -Hi #Hi
     [ elim (frees_inv_flat … Hi) -Hi
       /4 width=7 by frees_flat_dx, frees_flat_sn, frees_bind_sn/
-    | lapply (leq_frees_trans … Hi (L2.ⓛV2) ?) /2 width=1 by leq_succ/ -Hi #HU2
+    | lapply (lreq_frees_trans … Hi (L2.ⓛV2) ?) /2 width=1 by lreq_succ/ -Hi #HU2
       lapply (frees_weak … HU2 0 ?) -HU2
       /5 width=7 by frees_bind_dx_O, frees_flat_dx, lpx_pair/
     ]

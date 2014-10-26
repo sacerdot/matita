@@ -19,7 +19,7 @@ include "basic_2/reduction/fpbq.ma".
 
 (* Advanced properties ******************************************************)
 
-lemma sta_fpbq: ∀h,g,G,L,T1,T2,l.
-                 ⦃G, L⦄ ⊢ T1 ▪[h, g] l+1 → ⦃G, L⦄ ⊢ T1 •*[h, 1] T2 →
+lemma sta_fpbq: ∀h,g,G,L,T1,T2,d.
+                 ⦃G, L⦄ ⊢ T1 ▪[h, g] d+1 → ⦃G, L⦄ ⊢ T1 •*[h, 1] T2 →
                  ⦃G, L, T1⦄ ≽[h, g] ⦃G, L, T2⦄.
 /3 width=4 by fpbq_cpx, sta_cpx/ qed.

@@ -33,20 +33,20 @@ lemma length_inv_zero_sn: ∀L. 0 = |L| → L = ⋆.
 * // #L #I #V normalize <plus_n_Sm #H destruct
 qed-.
 
-lemma length_inv_pos_dx: ∀d,L. |L| = d + 1 →
-                         ∃∃I,K,V. |K| = d & L = K. ⓑ{I}V.
-#d *
+lemma length_inv_pos_dx: ∀l,L. |L| = l + 1 →
+                         ∃∃I,K,V. |K| = l & L = K. ⓑ{I}V.
+#l *
 [ normalize <plus_n_Sm #H destruct
 | #K #I #V #H
-  lapply (injective_plus_l … H) -H /2 width=5/
+  lapply (injective_plus_l … H) -H /2 width=5 by ex2_3_intro/
 ]
 qed-.
 
-lemma length_inv_pos_sn: ∀d,L. d + 1 = |L| →
-                         ∃∃I,K,V. d = |K| & L = K. ⓑ{I}V.
-#d *
+lemma length_inv_pos_sn: ∀l,L. l + 1 = |L| →
+                         ∃∃I,K,V. l = |K| & L = K. ⓑ{I}V.
+#l *
 [ normalize <plus_n_Sm #H destruct
 | #K #I #V #H
-  lapply (injective_plus_l … H) -H /2 width=5/
+  lapply (injective_plus_l … H) -H /2 width=5 by ex2_3_intro/
 ]
 qed-.

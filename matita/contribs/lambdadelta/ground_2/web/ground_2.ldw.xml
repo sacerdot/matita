@@ -14,10 +14,10 @@
          pp. 53-78].
    </body>
    <table name="ground_2_sum"/>
-   <news date="2013 November 27.">
+   <news class="alpha" date="2013 November 27.">
          Natural numbers with infinity.
    </news>
-   <news date="2011 August 10.">
+   <news class="alpha" date="2011 August 10.">
          Specification starts.
    </news>
 
@@ -30,9 +30,5 @@
    </body>
    <table name="ground_2_src"/>
 
-   <section>Physical Structure of the Specification</section>
-   <body>The source files are grouped in directories,
-         one for each plane.
-   </body>
    <footer/>
 </page>

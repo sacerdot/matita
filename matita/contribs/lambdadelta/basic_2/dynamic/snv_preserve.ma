@@ -61,34 +61,34 @@ lemma snv_cprs_lpr: ∀h,g,G,L1,T1. ⦃G, L1⦄ ⊢ T1 ¡[h, g] →
 qed-.
 
 lemma da_cprs_lpr: ∀h,g,G,L1,T1. ⦃G, L1⦄ ⊢ T1 ¡[h, g] →
-                   ∀l. ⦃G, L1⦄ ⊢ T1 ▪[h, g] l →
-                   ∀T2. ⦃G, L1⦄ ⊢ T1 ➡* T2 → ∀L2. ⦃G, L1⦄ ⊢ ➡ L2 → ⦃G, L2⦄ ⊢ T2 ▪[h, g] l.
-#h #g #G #L1 #T1 #HT1 #l #Hl #T2 #H
+                   ∀d. ⦃G, L1⦄ ⊢ T1 ▪[h, g] d →
+                   ∀T2. ⦃G, L1⦄ ⊢ T1 ➡* T2 → ∀L2. ⦃G, L1⦄ ⊢ ➡ L2 → ⦃G, L2⦄ ⊢ T2 ▪[h, g] d.
+#h #g #G #L1 #T1 #HT1 #d #Hd #T2 #H
 @(cprs_ind … H) -T2 /3 width=6 by snv_cprs_lpr, da_cpr_lpr/
 qed-.
 
 lemma lstas_cprs_lpr: ∀h,g,G,L1,T1. ⦃G, L1⦄ ⊢ T1 ¡[h, g] →
-                      ∀l1,l2. l2 ≤ l1 → ⦃G, L1⦄ ⊢ T1 ▪[h, g] l1 →
-                      ∀U1. ⦃G, L1⦄ ⊢ T1 •*[h, l2] U1 →
+                      ∀d1,d2. d2 ≤ d1 → ⦃G, L1⦄ ⊢ T1 ▪[h, g] d1 →
+                      ∀U1. ⦃G, L1⦄ ⊢ T1 •*[h, d2] U1 →
                       ∀T2. ⦃G, L1⦄ ⊢ T1 ➡* T2 → ∀L2. ⦃G, L1⦄ ⊢ ➡ L2 →
-                      ∃∃U2. ⦃G, L2⦄ ⊢ T2 •*[h, l2] U2 & ⦃G, L2⦄ ⊢ U1 ⬌* U2.
-#h #g #G #L1 #T1 #HT1 #l1 #l2 #Hl21 #Hl1 #U1 #HTU1 #T2 #H
+                      ∃∃U2. ⦃G, L2⦄ ⊢ T2 •*[h, d2] U2 & ⦃G, L2⦄ ⊢ U1 ⬌* U2.
+#h #g #G #L1 #T1 #HT1 #d1 #d2 #Hd21 #Hd1 #U1 #HTU1 #T2 #H
 @(cprs_ind … H) -T2 [ /2 width=10 by lstas_cpr_lpr/ ]
 #T #T2 #HT1T #HTT2 #IHT1 #L2 #HL12
 elim (IHT1 L1) // -IHT1 #U #HTU #HU1
-elim (lstas_cpr_lpr … g … Hl21 … HTU … HTT2 … HL12) -HTU -HTT2
-[2,3: /2 width=7 by snv_cprs_lpr, da_cprs_lpr/ ] -T1 -T -l1
+elim (lstas_cpr_lpr … g … Hd21 … HTU … HTT2 … HL12) -HTU -HTT2
+[2,3: /2 width=7 by snv_cprs_lpr, da_cprs_lpr/ ] -T1 -T -d1
 /4 width=5 by lpr_cpcs_conf, cpcs_trans, ex2_intro/
 qed-.
 
 lemma lstas_cpcs_lpr: ∀h,g,G,L1,T1. ⦃G, L1⦄ ⊢ T1 ¡[h, g] →
-                      ∀l,l1. l ≤ l1 → ⦃G, L1⦄ ⊢ T1 ▪[h, g] l1 → ∀U1. ⦃G, L1⦄ ⊢ T1 •*[h, l] U1 →
+                      ∀d,d1. d ≤ d1 → ⦃G, L1⦄ ⊢ T1 ▪[h, g] d1 → ∀U1. ⦃G, L1⦄ ⊢ T1 •*[h, d] U1 →
                       ∀T2. ⦃G, L1⦄ ⊢ T2 ¡[h, g] →
-                      ∀l2. l ≤ l2 → ⦃G, L1⦄ ⊢ T2 ▪[h, g] l2 → ∀U2. ⦃G, L1⦄ ⊢ T2 •*[h, l] U2 →
+                      ∀d2. d ≤ d2 → ⦃G, L1⦄ ⊢ T2 ▪[h, g] d2 → ∀U2. ⦃G, L1⦄ ⊢ T2 •*[h, d] U2 →
                       ⦃G, L1⦄ ⊢ T1 ⬌* T2 → ∀L2. ⦃G, L1⦄ ⊢ ➡ L2 → ⦃G, L2⦄ ⊢ U1 ⬌* U2.
-#h #g #G #L1 #T1 #HT1 #l #l1 #Hl1 #HTl1 #U1 #HTU1 #T2 #HT2 #l2 #Hl2 #HTl2 #U2 #HTU2 #H #L2 #HL12
+#h #g #G #L1 #T1 #HT1 #d #d1 #Hd1 #HTd1 #U1 #HTU1 #T2 #HT2 #d2 #Hd2 #HTd2 #U2 #HTU2 #H #L2 #HL12
 elim (cpcs_inv_cprs … H) -H #T #H1 #H2
-elim (lstas_cprs_lpr … HT1 … Hl1 HTl1 … HTU1 … H1 … HL12) -T1 #W1 #H1 #HUW1
-elim (lstas_cprs_lpr … HT2 … Hl2 HTl2 … HTU2 … H2 … HL12) -T2 #W2 #H2 #HUW2
-lapply (lstas_mono … H1 … H2) -h -T -l #H destruct /2 width=3 by cpcs_canc_dx/
+elim (lstas_cprs_lpr … HT1 … Hd1 HTd1 … HTU1 … H1 … HL12) -T1 #W1 #H1 #HUW1
+elim (lstas_cprs_lpr … HT2 … Hd2 HTd2 … HTU2 … H2 … HL12) -T2 #W2 #H2 #HUW2
+lapply (lstas_mono … H1 … H2) -h -T -d #H destruct /2 width=3 by cpcs_canc_dx/
 qed-.

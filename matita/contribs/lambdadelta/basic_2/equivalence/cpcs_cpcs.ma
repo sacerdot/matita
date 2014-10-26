@@ -59,14 +59,14 @@ elim (cprs_inv_abst1 … H2) -H2 #W0 #T0 #_ #_ #H destruct
 qed-.
 
 (* Basic_1: was: pc3_gen_lift *)
-lemma cpcs_inv_lift: ∀G,L,K,s,d,e. ⬇[s, d, e] L ≡ K →
-                     ∀T1,U1. ⬆[d, e] T1 ≡ U1 → ∀T2,U2. ⬆[d, e] T2 ≡ U2 →
+lemma cpcs_inv_lift: ∀G,L,K,s,l,m. ⬇[s, l, m] L ≡ K →
+                     ∀T1,U1. ⬆[l, m] T1 ≡ U1 → ∀T2,U2. ⬆[l, m] T2 ≡ U2 →
                      ⦃G, L⦄ ⊢ U1 ⬌* U2 → ⦃G, K⦄ ⊢ T1 ⬌* T2.
-#G #L #K #s #d #e #HLK #T1 #U1 #HTU1 #T2 #U2 #HTU2 #HU12
+#G #L #K #s #l #m #HLK #T1 #U1 #HTU1 #T2 #U2 #HTU2 #HU12
 elim (cpcs_inv_cprs … HU12) -HU12 #U #HU1 #HU2
 elim (cprs_inv_lift1 … HU1 … HLK … HTU1) -U1 #T #HTU #HT1
 elim (cprs_inv_lift1 … HU2 … HLK … HTU2) -L -U2 #X #HXU
->(lift_inj … HXU … HTU) -X -U -d -e /2 width=3 by cprs_div/
+>(lift_inj … HXU … HTU) -X -U -l -m /2 width=3 by cprs_div/
 qed-.
 
 (* Advanced properties ******************************************************)
@@ -150,12 +150,12 @@ lemma lsubr_cpcs_trans: ∀G,L1,T1,T2. ⦃G, L1⦄ ⊢ T1 ⬌* T2 →
 qed-.
 
 (* Basic_1: was: pc3_lift *)
-lemma cpcs_lift: ∀G,L,K,s,d,e. ⬇[s, d, e] L ≡ K →
-                 ∀T1,U1. ⬆[d, e] T1 ≡ U1 → ∀T2,U2. ⬆[d, e] T2 ≡ U2 →
+lemma cpcs_lift: ∀G,L,K,s,l,m. ⬇[s, l, m] L ≡ K →
+                 ∀T1,U1. ⬆[l, m] T1 ≡ U1 → ∀T2,U2. ⬆[l, m] T2 ≡ U2 →
                  ⦃G, K⦄ ⊢ T1 ⬌* T2 → ⦃G, L⦄ ⊢ U1 ⬌* U2.
-#G #L #K #s #d #e #HLK #T1 #U1 #HTU1 #T2 #U2 #HTU2 #HT12
+#G #L #K #s #l #m #HLK #T1 #U1 #HTU1 #T2 #U2 #HTU2 #HT12
 elim (cpcs_inv_cprs … HT12) -HT12 #T #HT1 #HT2
-elim (lift_total T d e) /3 width=12 by cprs_div, cprs_lift/
+elim (lift_total T l m) /3 width=12 by cprs_div, cprs_lift/
 qed.
 
 lemma cpcs_strip: ∀G,L,T1,T. ⦃G, L⦄ ⊢ T ⬌* T1 → ∀T2. ⦃G, L⦄ ⊢ T ⬌ T2 →

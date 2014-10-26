@@ -21,24 +21,24 @@ include "basic_2/substitution/lift.ma".
 lemma nlift_lref_be_SO: ∀X,i. ⬆[i, 1] X ≡ #i → ⊥.
 /2 width=7 by lift_inv_lref2_be/ qed-.
 
-lemma nlift_bind_sn: ∀W,d,e. (∀V. ⬆[d, e] V ≡ W → ⊥) →
-                     ∀a,I,U. (∀X. ⬆[d, e] X ≡ ⓑ{a,I}W.U → ⊥).
-#W #d #e #HW #a #I #U #X #H elim (lift_inv_bind2 … H) -H /2 width=2 by/
+lemma nlift_bind_sn: ∀W,l,m. (∀V. ⬆[l, m] V ≡ W → ⊥) →
+                     ∀a,I,U. (∀X. ⬆[l, m] X ≡ ⓑ{a,I}W.U → ⊥).
+#W #l #m #HW #a #I #U #X #H elim (lift_inv_bind2 … H) -H /2 width=2 by/
 qed-.
 
-lemma nlift_bind_dx: ∀U,d,e. (∀T. ⬆[d+1, e] T ≡ U → ⊥) →
-                     ∀a,I,W. (∀X. ⬆[d, e] X ≡ ⓑ{a,I}W.U → ⊥).
-#U #d #e #HU #a #I #W #X #H elim (lift_inv_bind2 … H) -H /2 width=2 by/
+lemma nlift_bind_dx: ∀U,l,m. (∀T. ⬆[l+1, m] T ≡ U → ⊥) →
+                     ∀a,I,W. (∀X. ⬆[l, m] X ≡ ⓑ{a,I}W.U → ⊥).
+#U #l #m #HU #a #I #W #X #H elim (lift_inv_bind2 … H) -H /2 width=2 by/
 qed-.
 
-lemma nlift_flat_sn: ∀W,d,e. (∀V. ⬆[d, e] V ≡ W → ⊥) →
-                     ∀I,U. (∀X. ⬆[d, e] X ≡ ⓕ{I}W.U → ⊥).
-#W #d #e #HW #I #U #X #H elim (lift_inv_flat2 … H) -H /2 width=2 by/
+lemma nlift_flat_sn: ∀W,l,m. (∀V. ⬆[l, m] V ≡ W → ⊥) →
+                     ∀I,U. (∀X. ⬆[l, m] X ≡ ⓕ{I}W.U → ⊥).
+#W #l #m #HW #I #U #X #H elim (lift_inv_flat2 … H) -H /2 width=2 by/
 qed-.
 
-lemma nlift_flat_dx: ∀U,d,e. (∀T. ⬆[d, e] T ≡ U → ⊥) →
-                     ∀I,W. (∀X. ⬆[d, e] X ≡ ⓕ{I}W.U → ⊥).
-#U #d #e #HU #I #W #X #H elim (lift_inv_flat2 … H) -H /2 width=2 by/
+lemma nlift_flat_dx: ∀U,l,m. (∀T. ⬆[l, m] T ≡ U → ⊥) →
+                     ∀I,W. (∀X. ⬆[l, m] X ≡ ⓕ{I}W.U → ⊥).
+#U #l #m #HU #I #W #X #H elim (lift_inv_flat2 … H) -H /2 width=2 by/
 qed-.
 
 (* Inversion lemmas on negated basic relocation *****************************)
@@ -50,17 +50,17 @@ lemma nlift_inv_lref_be_SO: ∀i,j. (∀X. ⬆[i, 1] X ≡ #j → ⊥) → j = i
 ]
 qed-.
 
-lemma nlift_inv_bind: ∀a,I,W,U,d,e. (∀X. ⬆[d, e] X ≡ ⓑ{a,I}W.U → ⊥) →
-                      (∀V. ⬆[d, e] V ≡ W → ⊥) ∨ (∀T. ⬆[d+1, e] T ≡ U → ⊥).
-#a #I #W #U #d #e #H elim (is_lift_dec W d e)
+lemma nlift_inv_bind: ∀a,I,W,U,l,m. (∀X. ⬆[l, m] X ≡ ⓑ{a,I}W.U → ⊥) →
+                      (∀V. ⬆[l, m] V ≡ W → ⊥) ∨ (∀T. ⬆[l+1, m] T ≡ U → ⊥).
+#a #I #W #U #l #m #H elim (is_lift_dec W l m)
 [ * /4 width=2 by lift_bind, or_intror/
 | /4 width=2 by ex_intro, or_introl/
 ]
 qed-.
 
-lemma nlift_inv_flat: ∀I,W,U,d,e. (∀X. ⬆[d, e] X ≡ ⓕ{I}W.U → ⊥) →
-                      (∀V. ⬆[d, e] V ≡ W → ⊥) ∨ (∀T. ⬆[d, e] T ≡ U → ⊥).
-#I #W #U #d #e #H elim (is_lift_dec W d e)
+lemma nlift_inv_flat: ∀I,W,U,l,m. (∀X. ⬆[l, m] X ≡ ⓕ{I}W.U → ⊥) →
+                      (∀V. ⬆[l, m] V ≡ W → ⊥) ∨ (∀T. ⬆[l, m] T ≡ U → ⊥).
+#I #W #U #l #m #H elim (is_lift_dec W l m)
 [ * /4 width=2 by lift_flat, or_intror/
 | /4 width=2 by ex_intro, or_introl/
 ]

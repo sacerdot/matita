@@ -35,9 +35,9 @@ qed.
 
 lemma csx_applv_sort: ∀h,g,G,L,k,Vs. ⦃G, L⦄ ⊢ ⬊*[h, g] Vs → ⦃G, L⦄ ⊢ ⬊*[h, g] ⒶVs.⋆k.
 #h #g #G #L #k elim (deg_total h g k)
-#l generalize in match k; -k @(nat_ind_plus … l) -l [ /3 width=6 by csx_applv_cnx, cnx_sort, simple_atom/ ]
-#l #IHl #k #Hkl lapply (deg_next_SO … Hkl) -Hkl
-#Hkl #Vs elim Vs -Vs /2 width=1 by/
+#d generalize in match k; -k @(nat_ind_plus … d) -d [ /3 width=6 by csx_applv_cnx, cnx_sort, simple_atom/ ]
+#d #IHd #k #Hkd lapply (deg_next_SO … Hkd) -Hkd
+#Hkd #Vs elim Vs -Vs /2 width=1 by/
 #V #Vs #IHVs #HVVs
 elim (csxv_inv_cons … HVVs) #HV #HVs
 @csx_appl_simple_tsts /2 width=1 by applv_simple, simple_atom/ -IHVs -HV -HVs

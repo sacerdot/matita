@@ -20,14 +20,14 @@ include "basic_2/substitution/cpy.ma".
 
 (* Inversion lemmas on negated relocation ***********************************)
 
-lemma cpy_fwd_nlift2_ge: ∀G,L,U1,U2,d,e. ⦃G, L⦄ ⊢ U1 ▶[d, e] U2 →
-                         ∀i. d ≤ yinj i → (∀T2. ⬆[i, 1] T2 ≡ U2 → ⊥) →
+lemma cpy_fwd_nlift2_ge: ∀G,L,U1,U2,l,m. ⦃G, L⦄ ⊢ U1 ▶[l, m] U2 →
+                         ∀i. l ≤ yinj i → (∀T2. ⬆[i, 1] T2 ≡ U2 → ⊥) →
                          (∀T1. ⬆[i, 1] T1 ≡ U1 → ⊥) ∨
-                         ∃∃I,K,W,j. d ≤ yinj j & j < i & ⬇[j]L ≡ K.ⓑ{I}W &
+                         ∃∃I,K,W,j. l ≤ yinj j & j < i & ⬇[j]L ≡ K.ⓑ{I}W &
                                     (∀V. ⬆[i-j-1, 1] V ≡ W → ⊥) & (∀T1. ⬆[j, 1] T1 ≡ U1 → ⊥).
-#G #L #U1 #U2 #d #e #H elim H -G -L -U1 -U2 -d -e
+#G #L #U1 #U2 #l #m #H elim H -G -L -U1 -U2 -l -m
 [ /3 width=2 by or_introl/
-| #I #G #L #K #V #W #j #d #e #Hdj #Hjde #HLK #HVW #i #Hdi #HnW
+| #I #G #L #K #V #W #j #l #m #Hlj #Hjlm #HLK #HVW #i #Hli #HnW
   elim (lt_or_ge j i) #Hij
   [ @or_intror @(ex5_4_intro … HLK) // -HLK
     [ #X #HXV elim (lift_trans_le … HXV … HVW ?) -V //
@@ -37,15 +37,15 @@ lemma cpy_fwd_nlift2_ge: ∀G,L,U1,U2,d,e. ⦃G, L⦄ ⊢ U1 ▶[d, e] U2 →
   | elim (lift_split … HVW i j) -HVW //
     #X #_ #H elim HnW -HnW //
   ]
-| #a #I #G #L #W1 #W2 #U1 #U2 #d #e #_ #_ #IHW12 #IHU12 #i #Hdi #H elim (nlift_inv_bind … H) -H
+| #a #I #G #L #W1 #W2 #U1 #U2 #l #m #_ #_ #IHW12 #IHU12 #i #Hli #H elim (nlift_inv_bind … H) -H
   [ #HnW2 elim (IHW12 … HnW2) -IHW12 -HnW2 -IHU12 //
     [ /4 width=9 by nlift_bind_sn, or_introl/
     | * /5 width=9 by nlift_bind_sn, ex5_4_intro, or_intror/
     ]
   | #HnU2 elim (IHU12 … HnU2) -IHU12 -HnU2 -IHW12 /2 width=1 by yle_succ/
     [ /4 width=9 by nlift_bind_dx, or_introl/
-    | * #J #K #W #j #Hdj #Hji #HLK #HnW
-      elim (yle_inv_succ1 … Hdj) -Hdj #Hdj #Hj
+    | * #J #K #W #j #Hlj #Hji #HLK #HnW
+      elim (yle_inv_succ1 … Hlj) -Hlj #Hlj #Hj
       lapply (ylt_O … Hj) -Hj #Hj
       lapply (drop_inv_drop1_lt … HLK ?) // -HLK #HLK
       >(plus_minus_m_m j 1) in ⊢ (%→?); [2: /3 width=3 by yle_trans, yle_inv_inj/ ]
@@ -53,7 +53,7 @@ lemma cpy_fwd_nlift2_ge: ∀G,L,U1,U2,d,e. ⦃G, L⦄ ⊢ U1 ▶[d, e] U2 →
       /5 width=9 by nlift_bind_dx, monotonic_lt_pred, lt_plus_to_minus_r, ex5_4_intro, or_intror/
     ]
   ]
-| #I #G #L #W1 #W2 #U1 #U2 #d #e #_ #_ #IHW12 #IHU12 #i #Hdi #H elim (nlift_inv_flat … H) -H
+| #I #G #L #W1 #W2 #U1 #U2 #l #m #_ #_ #IHW12 #IHU12 #i #Hli #H elim (nlift_inv_flat … H) -H
   [ #HnW2 elim (IHW12 … HnW2) -IHW12 -HnW2 -IHU12 //
     [ /4 width=9 by nlift_flat_sn, or_introl/
     | * /5 width=9 by nlift_flat_sn, ex5_4_intro, or_intror/

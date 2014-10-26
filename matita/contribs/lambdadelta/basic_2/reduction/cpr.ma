@@ -76,31 +76,31 @@ lemma cpr_pair_sn: ∀I,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡ V2 →
                    ∀T. ⦃G, L⦄ ⊢ ②{I}V1.T ➡ ②{I}V2.T.
 * /2 width=1 by cpr_bind, cpr_flat/ qed.
 
-lemma cpr_delift: ∀G,K,V,T1,L,d. ⬇[d] L ≡ (K.ⓓV) →
-                  ∃∃T2,T. ⦃G, L⦄ ⊢ T1 ➡ T2 & ⬆[d, 1] T ≡ T2.
+lemma cpr_delift: ∀G,K,V,T1,L,l. ⬇[l] L ≡ (K.ⓓV) →
+                  ∃∃T2,T. ⦃G, L⦄ ⊢ T1 ➡ T2 & ⬆[l, 1] T ≡ T2.
 #G #K #V #T1 elim T1 -T1
 [ * /2 width=4 by cpr_atom, lift_sort, lift_gref, ex2_2_intro/
-  #i #L #d #HLK elim (lt_or_eq_or_gt i d)
-  #Hid [1,3: /3 width=4 by cpr_atom, lift_lref_ge_minus, lift_lref_lt, ex2_2_intro/ ]
+  #i #L #l #HLK elim (lt_or_eq_or_gt i l)
+  #Hil [1,3: /3 width=4 by cpr_atom, lift_lref_ge_minus, lift_lref_lt, ex2_2_intro/ ]
   destruct
   elim (lift_total V 0 (i+1)) #W #HVW
   elim (lift_split … HVW i i) /3 width=6 by cpr_delta, ex2_2_intro/
-| * [ #a ] #I #W1 #U1 #IHW1 #IHU1 #L #d #HLK
+| * [ #a ] #I #W1 #U1 #IHW1 #IHU1 #L #l #HLK
   elim (IHW1 … HLK) -IHW1 #W2 #W #HW12 #HW2
-  [ elim (IHU1 (L. ⓑ{I}W1) (d+1)) -IHU1 /3 width=9 by drop_drop, cpr_bind, lift_bind, ex2_2_intro/
+  [ elim (IHU1 (L. ⓑ{I}W1) (l+1)) -IHU1 /3 width=9 by drop_drop, cpr_bind, lift_bind, ex2_2_intro/
   | elim (IHU1 … HLK) -IHU1 -HLK /3 width=8 by cpr_flat, lift_flat, ex2_2_intro/
   ]
 ]
 qed-.
 
-fact lstas_cpr_aux: ∀h,G,L,T1,T2,l. ⦃G, L⦄ ⊢ T1 •*[h, l] T2 →
-                    l = 0 → ⦃G, L⦄ ⊢ T1 ➡ T2.
-#h #G #L #T1 #T2 #l #H elim H -G -L -T1 -T2 -l
+fact lstas_cpr_aux: ∀h,G,L,T1,T2,d. ⦃G, L⦄ ⊢ T1 •*[h, d] T2 →
+                    d = 0 → ⦃G, L⦄ ⊢ T1 ➡ T2.
+#h #G #L #T1 #T2 #d #H elim H -G -L -T1 -T2 -d
 /3 width=1 by cpr_eps, cpr_flat, cpr_bind/
-[ #G #L #l #k #H0 destruct normalize //
-| #G #L #K #V1 #V2 #W2 #i #l #HLK #_ #HVW2 #IHV12 #H destruct
+[ #G #L #d #k #H0 destruct normalize //
+| #G #L #K #V1 #V2 #W2 #i #d #HLK #_ #HVW2 #IHV12 #H destruct
   /3 width=6 by cpr_delta/
-| #G #L #K #V1 #V2 #W2 #i #l #_ #_ #_ #_ <plus_n_Sm #H destruct
+| #G #L #K #V1 #V2 #W2 #i #d #_ #_ #_ #_ <plus_n_Sm #H destruct
 ]
 qed-.
 

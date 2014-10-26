@@ -19,6 +19,6 @@ include "basic_2/computation/fpbg.ma".
 
 (* Advanced properties ******************************************************)
 
-lemma sta_fpbg: ∀h,g,G,L,T1,T2,l. ⦃G, L⦄ ⊢ T1 ▪[h, g] l+1 →
+lemma sta_fpbg: ∀h,g,G,L,T1,T2,d. ⦃G, L⦄ ⊢ T1 ▪[h, g] d+1 →
                 ⦃G, L⦄ ⊢ T1 •*[h, 1] T2 → ⦃G, L, T1⦄ >≡[h, g] ⦃G, L, T2⦄.
 /4 width=2 by fpb_fpbg, sta_fpb/ qed.

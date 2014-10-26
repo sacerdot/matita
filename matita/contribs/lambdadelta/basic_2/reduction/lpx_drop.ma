@@ -39,7 +39,7 @@ lemma fqu_lpx_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T
 [ #a #I #G2 #L2 #V2 #T2 #X #H elim (lpx_inv_pair1 … H) -H
   #K2 #W2 #HLK2 #HVW2 #H destruct
   /3 width=5 by cpx_pair_sn, fqu_bind_dx, ex3_2_intro/
-| #G #L1 #K1 #T1 #U1 #e #HLK1 #HTU1 #K2 #HK12
+| #G #L1 #K1 #T1 #U1 #m #HLK1 #HTU1 #K2 #HK12
   elim (drop_lpx_trans … HLK1 … HK12) -HK12
   /3 width=7 by fqu_drop, ex3_2_intro/
 ]
@@ -62,7 +62,7 @@ lemma lpx_fqu_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T
 [ #I #G1 #L1 #V1 #X #H elim (lpx_inv_pair2 … H) -H
   #K1 #W1 #HKL1 #HWV1 #H destruct elim (lift_total V1 0 1)
   /4 width=7 by cpx_delta, fqu_drop, drop_drop, ex3_2_intro/
-| #G #L1 #K1 #T1 #U1 #e #HLK1 #HTU1 #L0 #HL01
+| #G #L1 #K1 #T1 #U1 #m #HLK1 #HTU1 #L0 #HL01
   elim (lpx_drop_trans_O1 … HL01 … HLK1) -L1
   /3 width=5 by fqu_drop, ex3_2_intro/
 ]

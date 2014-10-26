@@ -28,8 +28,8 @@ definition ApplOmega3: term → nat → term ≝ λW,k. ⓐ⋆k.(ApplOmega1 W k)
 
 (* Basic properties *********************************************************)
 
-lemma ApplDelta_lift: ∀W1,W2,k,d,e. ⬆[d, e] W1 ≡ W2 →
-                      ⬆[d, e] (ApplDelta W1 k) ≡ (ApplDelta W2 k).
+lemma ApplDelta_lift: ∀W1,W2,k,l,m. ⬆[l, m] W1 ≡ W2 →
+                      ⬆[l, m] (ApplDelta W1 k) ≡ (ApplDelta W2 k).
 /5 width=1 by lift_flat, lift_bind, lift_lref_lt/ qed.
 
 lemma cpr_ApplOmega_12: ∀G,L,W,k. ⦃G, L⦄ ⊢ ApplOmega1 W k ➡ ApplOmega2 W k.

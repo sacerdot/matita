@@ -21,86 +21,82 @@
    <section>Summary of the Specification</section>
    <body>Here is a numerical acount of the specification's contents
          and its timeline.
-         Nodes are counted according to the "intrinsinc complexity measure"
-         [F. Guidi: "Procedural Representation of CIC Proof Terms"
-         Journal of Automated Reasoning 44(1-2), Springer (February 2010),
-         pp. 53-78].
    </body>
    <table name="basic_2_sum"/>
 
    <subsection>Stage "B"</subsection>
-   <news date="In progress.">
+   <news class="alpha" date="Ongoing.">
          Context-sensitive subject equivalence
          for native type assignment.
    </news>
 
    <subsection>Stage "A": "Weakening the Applicability Condition"</subsection>
-   <news date="2014 September 9.">
+   <news class="beta" date="2014 September 9.">
          Iterated static type assignment defined (more elegantly)
          as a primitive notion.
    </news>
-   <news date="2014 June 18.">
+   <news class="beta" date="2014 June 18.">
          Preservation of stratified native validity
          for context-sensitive computation on terms.
    </news>
-   <news date="2014 June 9.">
+   <news class="alpha" date="2014 June 9.">
          Strong qrst-normalization
          for simply typed terms.
    </news>
-   <news date="2014 April 16.">
+   <news class="alpha" date="2014 April 16.">
          Lazy equivalence on local environments
 	 addded as q-step to rst-computation on closures
          (anniversary milestone).
    </news>
-   <news date="2014 January 20.">
+   <news class="alpha" date="2014 January 20.">
          Parametrized slicing of local environments
 	 comprises both versions of this operation
 	 (one from basic_1, the other used in basic_2 till now).
    </news>
-   <news date="2013 August 7.">
+   <news class="alpha" date="2013 August 7.">
          Passive support for global environments.
    </news>
-   <news date="2013 July 27.">
+   <news class="alpha" date="2013 July 27.">
          Reaxiomatized β-reductum as in rt-reduction.
    </news>
-   <news date="2013 July 20.">
+   <news class="alpha" date="2013 July 20.">
          Context-sensitive strong rt-normalization
          for simply typed terms.
    </news>
-   <news date="2013 April 16.">
+   <news class="alpha" date="2013 April 16.">
          Reaxiomatized substitution and reduction
          commute with respect to subclosure
          (anniversary milestone).
    </news>
-   <news date="2013 March 16.">
+   <news class="alpha" date="2013 March 16.">
          Mutual recursive preservation of stratified native validity
          for rst-computation on closures.
    </news>
-   <news date="2012 October 16.">
+   <news class="alpha" date="2012 October 16.">
          Confluence for context-free parallel reduction on closures.
    </news>
-   <news date="2012 July 26.">
+   <news class="alpha" date="2012 July 26.">
          Term binders polarized to control ζ-reduction (not released).
    </news>
-   <news date="2012 April 16.">
+   <news class="alpha" date="2012 April 16.">
          Context-sensitive subject equivalence
          for atomic arity assignment
          (anniversary milestone).
    </news>
-   <news date="2012 March 15.">
+   <news class="alpha" date="2012 March 15.">
          Context-sensitive strong normalization
          for simply typed terms.
    </news>
-   <news date="2012 January 27.">
+   <news class="alpha" date="2012 January 27.">
          Support for abstract candidates of reducibility.
    </news>
-   <news date="2011 September 21.">
+   <news class="alpha" date="2011 September 21.">
          Confluence for context-sensitive parallel reduction on terms.
    </news>
-   <news date="2011 September 6.">
+   <news class="alpha" date="2011 September 6.">
          Confluence for context-free parallel reduction on terms.
    </news>
-   <news date="2011 April 17.">
+   <news class="alpha" date="2011 April 17.">
          Specification starts.
    </news>
 
@@ -113,9 +109,5 @@
    </body>
    <table name="basic_2_src"/>
 
-   <section>Physical Structure of the Specification</section>
-   <body>The source files are grouped in directories,
-         one for each component.
-   </body>
    <footer/>
 </page>

@@ -29,12 +29,12 @@ lemma csx_fsb_fpbs: ∀h,g,G1,L1,T1. ⦃G1, L1⦄ ⊢ ⬊*[h, g] T1 →
 #G0 #L0 #T0 #IHu #H10 lapply (csx_fpbs_conf … H10) // -HT1
 #HT0 generalize in match IHu; -IHu generalize in match H10; -H10
 @(lsx_ind … (csx_lsx … HT0 0)) -L0
-#L0 #_ #IHl #H10 #IHu @fsb_intro
-#G2 #L2 #T2 * -G2 -L2 -T2 [ -IHl -IHc | -IHu -IHl |  ]
+#L0 #_ #IHd #H10 #IHu @fsb_intro
+#G2 #L2 #T2 * -G2 -L2 -T2 [ -IHd -IHc | -IHu -IHd |  ]
 [ /4 width=5 by fpbs_fqup_trans, fqu_fqup/
 | #T2 #HT02 #HnT02 elim (fpbs_cpx_trans_neq … H10 … HT02 HnT02) -T0
   /3 width=4 by/
-| #L2 #HL02 #HnL02 @(IHl … HL02 HnL02) -IHl -HnL02 [ -IHu -IHc | ]
+| #L2 #HL02 #HnL02 @(IHd … HL02 HnL02) -IHd -HnL02 [ -IHu -IHc | ]
   [ /3 width=3 by fpbs_lpxs_trans, lpx_lpxs/
   | #G3 #L3 #T3 #H03 #_ elim (lpx_fqup_trans … H03 … HL02) -L2
     #L4 #T4 elim (eq_term_dec T0 T4) [ -IHc | -IHu ]

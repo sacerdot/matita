@@ -29,9 +29,9 @@ interpretation
 lemma fquqa_refl: tri_reflexive … fquqa.
 // qed.
 
-lemma fquqa_drop: ∀G,L,K,T,U,e.
-                  ⬇[e] L ≡ K → ⬆[0, e] T ≡ U → ⦃G, L, U⦄ ⊐⊐⸮ ⦃G, K, T⦄.
-#G #L #K #T #U #e #HLK #HTU elim (eq_or_gt e)
+lemma fquqa_drop: ∀G,L,K,T,U,m.
+                  ⬇[m] L ≡ K → ⬆[0, m] T ≡ U → ⦃G, L, U⦄ ⊐⊐⸮ ⦃G, K, T⦄.
+#G #L #K #T #U #m #HLK #HTU elim (eq_or_gt m)
 /3 width=5 by fqu_drop_lt, or_introl/ #H destruct
 >(drop_inv_O2 … HLK) -L >(lift_inv_O2 … HTU) -T //
 qed.

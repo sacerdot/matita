@@ -51,7 +51,7 @@ fact snv_cpr_lpr_aux: ∀h,g,G0,L0,T0.
     /4 width=10 by fqup_fpbg, snv_inv_lift, lpr_pair, drop_drop/
   ]
 | #V1 #T1 #HG0 #HL0 #HT0 #H1 #X #H2 #L2 #HL12 destruct
-  elim (snv_inv_appl … H1) -H1 #a #W1 #U1 #l0 #HV1 #HT1 #HVW1 #HTU1
+  elim (snv_inv_appl … H1) -H1 #a #W1 #U1 #d0 #HV1 #HT1 #HVW1 #HTU1
   elim (cpr_inv_appl1 … H2) -H2 *
   [ #V2 #T2 #HV12 #HT12 #H destruct -IH4
     lapply (IH1 … HV12 … HL12) /2 width=1 by fqup_fpbg/ #HV2
@@ -65,23 +65,23 @@ fact snv_cpr_lpr_aux: ∀h,g,G0,L0,T0.
     /2 width=7 by snv_appl, cprs_bind/
   | #b #V2 #W10 #W20 #T10 #T20 #HV12 #HW120 #HT120 #H1 #H2 destruct
     elim (snv_inv_bind … HT1) -HT1 #HW10 #HT10
-    elim (scpds_inv_abst1 … HTU1) -HTU1 #W30 #T30 #HW130 #_ #H destruct -T30 -l0
-    elim (snv_fwd_da … HV1) #l #HV1l
-    elim (snv_fwd_da … HW10) #l0 #HW10l
-    lapply (cprs_scpds_div … HW130 … HW10l … 1 HVW1) -W30 #HVW10
-    elim (da_scpes_aux … IH4 IH1 IH2 … HW10l … HV1l … HVW10) /2 width=1 by fqup_fpbg/
-    #_ #Hl <minus_n_O #H destruct >(plus_minus_m_m l 1) in HV1l; // -Hl #HV1l
+    elim (scpds_inv_abst1 … HTU1) -HTU1 #W30 #T30 #HW130 #_ #H destruct -T30 -d0
+    elim (snv_fwd_da … HV1) #d #HV1d
+    elim (snv_fwd_da … HW10) #d0 #HW10d
+    lapply (cprs_scpds_div … HW130 … HW10d … 1 HVW1) -W30 #HVW10
+    elim (da_scpes_aux … IH4 IH1 IH2 … HW10d … HV1d … HVW10) /2 width=1 by fqup_fpbg/
+    #_ #Hd <minus_n_O #H destruct >(plus_minus_m_m d 1) in HV1d; // -Hd #HV1d
     lapply (scpes_cpr_lpr_aux … IH2 IH3 … HVW10 … HW120 … HV12 … HL12) /2 width=1 by fqup_fpbg/ -HVW10 #HVW20
-    lapply (IH2 … HV1l … HV12 … HL12) /2 width=1 by fqup_fpbg/ -HV1l #HV2l
-    lapply (IH2 … HW10l … HW120 … HL12) /2 width=1 by fqup_fpbg/ -HW10l #HW20l
+    lapply (IH2 … HV1d … HV12 … HL12) /2 width=1 by fqup_fpbg/ -HV1d #HV2d
+    lapply (IH2 … HW10d … HW120 … HL12) /2 width=1 by fqup_fpbg/ -HW10d #HW20d
     lapply (IH1 … HV12 … HL12) /2 width=1 by fqup_fpbg/ #HV2
     lapply (IH1 … HW120 … HL12) /2 width=1 by fqup_fpbg/ -HW10 #HW20
     lapply (IH1 … HT10 … HT120 … (L2.ⓛW20) ?) /2 width=1 by fqup_fpbg, lpr_pair/ -HT10 #HT20
     @snv_bind /2 width=1 by snv_cast_scpes/
     @(lsubsv_snv_trans … HT20) -HT20
-    @(lsubsv_beta … (l-1)) //
-    @shnv_cast [1,2: // ] #l0 #Hl0
-    lapply (scpes_le_aux … IH4 IH1 IH2 IH3 … HW20l … HV2l … l0 … HVW20) -IH4 -IH3 -IH2 -IH1 -HW20l -HV2l -HVW20
+    @(lsubsv_beta … (d-1)) //
+    @shnv_cast [1,2: // ] #d0 #Hd0
+    lapply (scpes_le_aux … IH4 IH1 IH2 IH3 … HW20d … HV2d … d0 … HVW20) -IH4 -IH3 -IH2 -IH1 -HW20d -HV2d -HVW20
     /3 width=5 by fpbg_fpbs_trans, fqup_fpbg, cpr_lpr_fpbs, le_S_S/
   | #b #V0 #V2 #W0 #W2 #T0 #T2 #HV10 #HV02 #HW02 #HT02 #H1 #H2 destruct -IH4
     elim (snv_inv_bind … HT1) -HT1 #HW0 #HT0
@@ -106,8 +106,8 @@ fact snv_cpr_lpr_aux: ∀h,g,G0,L0,T0.
   elim (snv_inv_cast … H1) -H1 #U1 #HW1 #HT1 #HWU1 #HTU1
   elim (cpr_inv_cast1 … H2) -H2
   [ * #W2 #T2 #HW12 #HT12 #H destruct
-    elim (snv_fwd_da … HW1) #l #HW1l
-    lapply (scpds_div … HWU1 … HTU1) -U1 -l #HWT1
+    elim (snv_fwd_da … HW1) #d #HW1d
+    lapply (scpds_div … HWU1 … HTU1) -U1 -d #HWT1
     lapply (scpes_cpr_lpr_aux … IH2 IH3 … HWT1 … HW12 … HT12 … HL12) /2 width=1 by fqup_fpbg/
     lapply (IH1 … HW12 … HL12) /2 width=1 by fqup_fpbg/
     lapply (IH1 … HT12 … HL12) /2 width=1 by fqup_fpbg/ -L1

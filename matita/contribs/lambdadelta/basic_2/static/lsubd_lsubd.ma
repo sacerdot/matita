@@ -24,13 +24,13 @@ theorem lsubd_trans: ∀h,g,G. Transitive … (lsubd h g G).
 | #I #L1 #L #Y #HL1 #IHL1 #X #H
   elim (lsubd_inv_pair1 … H) -H * #L2
   [ #HL2 #H destruct /3 width=1/
-  | #W #V #l #HV #HW #HL2 #H1 #H2 #H3 destruct
+  | #W #V #d #HV #HW #HL2 #H1 #H2 #H3 destruct
     /3 width=3 by lsubd_beta, lsubd_da_trans/
   ]
-| #L1 #L #W #V #l #HV #HW #HL1 #IHL1 #X #H
+| #L1 #L #W #V #d #HV #HW #HL1 #IHL1 #X #H
   elim (lsubd_inv_pair1 … H) -H * #L2
   [ #HL2 #H destruct /3 width=5 by lsubd_beta, lsubd_da_conf/
-  | #W0 #V0 #l0 #_ #_ #_ #H destruct
+  | #W0 #V0 #d0 #_ #_ #_ #H destruct
   ]
 ]
 qed-.

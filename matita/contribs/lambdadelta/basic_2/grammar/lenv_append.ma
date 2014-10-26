@@ -36,7 +36,7 @@ interpretation "tail abbreviation (local environment)"
 interpretation "tail abstraction (local environment)"
    'SnAbst L T = (append (LPair LAtom Abst T) L).
 
-definition l_appendable_sn: predicate (lenv→relation term) ≝ λR.
+definition d_appendable_sn: predicate (lenv→relation term) ≝ λR.
                             ∀K,T1,T2. R K T1 T2 → ∀L. R (L @@ K) T1 T2.
 
 (* Basic properties *********************************************************)
@@ -75,7 +75,7 @@ lemma append_inj_sn: ∀K1,K2,L1,L2. L1 @@ K1 = L2 @@ K2 → |K1| = |K2| →
 | #K1 #I1 #V1 #IH * normalize
   [ #L1 #L2 #_ <plus_n_Sm #H destruct
   | #K2 #I2 #V2 #L1 #L2 #H1 #H2
-    elim (destruct_lpair_lpair … H1) -H1 #H1 #H3 #H4 destruct (**) (* destruct lemma needed *)
+    elim (destruct_lpair_lpair_aux … H1) -H1 #H1 #H3 #H4 destruct (**) (* destruct lemma needed *)
     elim (IH … H1) -IH -H1 /2 width=1 by conj/
   ]
 ]
@@ -94,7 +94,7 @@ lemma append_inj_dx: ∀K1,K2,L1,L2. L1 @@ K1 = L2 @@ K2 → |L1| = |L2| →
     normalize in H2; >append_length in H2; #H
     elim (plus_xySz_x_false … (sym_eq … H))
   | #K2 #I2 #V2 #L1 #L2 #H1 #H2
-    elim (destruct_lpair_lpair … H1) -H1 #H1 #H3 #H4 destruct (**) (* destruct lemma needed *)
+    elim (destruct_lpair_lpair_aux … H1) -H1 #H1 #H3 #H4 destruct (**) (* destruct lemma needed *)
     elim (IH … H1) -IH -H1 /2 width=1 by conj/
   ]
 ]
@@ -108,15 +108,15 @@ lemma append_inv_pair_dx: ∀I,L,K,V. L @@ K = L.ⓑ{I}V → K = ⋆.ⓑ{I}V.
 #I #L #K #V #H elim (append_inj_dx … (⋆.ⓑ{I}V) … H) //
 qed-.
 
-lemma length_inv_pos_dx_ltail: ∀L,d. |L| = d + 1 →
-                               ∃∃I,K,V. |K| = d & L = ⓑ{I}V.K.
-#Y #d #H elim (length_inv_pos_dx … H) -H #I #L #V #Hd #HLK destruct
+lemma length_inv_pos_dx_ltail: ∀L,l. |L| = l + 1 →
+                               ∃∃I,K,V. |K| = l & L = ⓑ{I}V.K.
+#Y #l #H elim (length_inv_pos_dx … H) -H #I #L #V #Hl #HLK destruct
 elim (lpair_ltail L I V) /2 width=5 by ex2_3_intro/
 qed-.
 
-lemma length_inv_pos_sn_ltail: ∀L,d. d + 1 = |L| →
-                               ∃∃I,K,V. d = |K| & L = ⓑ{I}V.K.
-#Y #d #H elim (length_inv_pos_sn … H) -H #I #L #V #Hd #HLK destruct
+lemma length_inv_pos_sn_ltail: ∀L,l. l + 1 = |L| →
+                               ∃∃I,K,V. l = |K| & L = ⓑ{I}V.K.
+#Y #l #H elim (length_inv_pos_sn … H) -H #I #L #V #Hl #HLK destruct
 elim (lpair_ltail L I V) /2 width=5 by ex2_3_intro/
 qed-.
 

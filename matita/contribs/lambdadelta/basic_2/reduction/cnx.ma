@@ -29,9 +29,11 @@ interpretation
 
 lemma cnx_inv_sort: ∀h,g,G,L,k. ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃⋆k⦄ → deg h g k 0.
 #h #g #G #L #k #H elim (deg_total h g k)
-#l @(nat_ind_plus … l) -l // #l #_ #Hkl
-lapply (H (⋆(next h k)) ?) -H /2 width=2 by cpx_st/ -L -l #H destruct -H -e0 (**) (* destruct does not remove some premises *)
-lapply (next_lt h k) >e1 -e1 #H elim (lt_refl_false … H)
+#d @(nat_ind_plus … d) -d // #d #_ #Hkd
+lapply (H (⋆(next h k)) ?) -H /2 width=2 by cpx_st/ -L -d #H
+lapply (destruct_tatom_tatom_aux … H) -H #H (**) (* destruct lemma needed *)
+lapply (destruct_sort_sort_aux … H) -H #H (**) (* destruct lemma needed *)
+lapply (next_lt h k) >H -H #H elim (lt_refl_false … H)
 qed-.
 
 lemma cnx_inv_delta: ∀h,g,I,G,L,K,V,i. ⬇[i] L ≡ K.ⓑ{I}V → ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃#i⦄ → ⊥.
@@ -97,13 +99,13 @@ qed-.
 (* Basic properties *********************************************************)
 
 lemma cnx_sort: ∀h,g,G,L,k. deg h g k 0 → ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃⋆k⦄.
-#h #g #G #L #k #Hk #X #H elim (cpx_inv_sort1 … H) -H // * #l #Hkl #_
-lapply (deg_mono … Hkl Hk) -h -L <plus_n_Sm #H destruct
+#h #g #G #L #k #Hk #X #H elim (cpx_inv_sort1 … H) -H // * #d #Hkd #_
+lapply (deg_mono … Hkd Hk) -h -L <plus_n_Sm #H destruct
 qed.
 
-lemma cnx_sort_iter: ∀h,g,G,L,k,l. deg h g k l → ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃⋆((next h)^l k)⦄.
-#h #g #G #L #k #l #Hkl
-lapply (deg_iter … l Hkl) -Hkl <minus_n_n /2 width=6 by cnx_sort/
+lemma cnx_sort_iter: ∀h,g,G,L,k,d. deg h g k d → ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃⋆((next h)^d k)⦄.
+#h #g #G #L #k #d #Hkd
+lapply (deg_iter … d Hkd) -Hkd <minus_n_n /2 width=6 by cnx_sort/
 qed.
 
 lemma cnx_lref_free: ∀h,g,G,L,i. |L| ≤ i → ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃#i⦄.

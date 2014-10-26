@@ -20,15 +20,15 @@ include "basic_2/multiple/llpx_sn.ma".
 (* Properties on pointwise extensions ***************************************)
 
 lemma lpx_sn_llpx_sn: ∀R. (∀L. reflexive … (R L)) →
-                      ∀T,L1,L2,d. lpx_sn R L1 L2 → llpx_sn R d T L1 L2.
+                      ∀T,L1,L2,l. lpx_sn R L1 L2 → llpx_sn R l T L1 L2.
 #R #HR #T #L1 @(f2_ind … rfw … L1 T) -L1 -T
 #n #IH #L1 * *
 [ -HR -IH /4 width=2 by lpx_sn_fwd_length, llpx_sn_sort/
 | -HR #i elim (lt_or_ge i (|L1|))
   [2: -IH /4 width=4 by lpx_sn_fwd_length, llpx_sn_free, le_repl_sn_conf_aux/ ]
-  #Hi #Hn #L2 #d elim (ylt_split i d) 
+  #Hi #Hn #L2 #l elim (ylt_split i l) 
   [ -n /3 width=2 by llpx_sn_skip, lpx_sn_fwd_length/ ]
-  #Hdi #HL12 elim (drop_O1_lt (Ⓕ) L1 i) //
+  #Hli #HL12 elim (drop_O1_lt (Ⓕ) L1 i) //
   #I #K1 #V1 #HLK1 elim (lpx_sn_drop_conf … HL12 … HLK1) -HL12
   /4 width=9 by llpx_sn_lref, drop_fwd_rfw/
 | -HR -IH /4 width=2 by lpx_sn_fwd_length, llpx_sn_gref/

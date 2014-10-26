@@ -22,8 +22,8 @@ include "basic_2/multiple/lifts_vector.ma".
 
 inductive drops (s:bool): list2 nat nat → relation lenv ≝
 | drops_nil : ∀L. drops s (◊) L L
-| drops_cons: ∀L1,L,L2,des,d,e.
-              drops s des L1 L → ⬇[s, d, e] L ≡ L2 → drops s ({d, e} @ des) L1 L2
+| drops_cons: ∀L1,L,L2,des,l,m.
+              drops s des L1 L → ⬇[s, l, m] L ≡ L2 → drops s ({l, m} @ des) L1 L2
 .
 
 interpretation "iterated slicing (local environment) abstract"
@@ -33,15 +33,15 @@ interpretation "iterated slicing (local environment) general"
    'RDropStar des T1 T2 = (drops true des T1 T2).
 *)
 
-definition l_liftable1: relation2 lenv term → predicate bool ≝
-                        λR,s. ∀K,T. R K T → ∀L,d,e. ⬇[s, d, e] L ≡ K →
-                        ∀U. ⬆[d, e] T ≡ U → R L U.
+definition d_liftable1: relation2 lenv term → predicate bool ≝
+                        λR,s. ∀K,T. R K T → ∀L,l,m. ⬇[s, l, m] L ≡ K →
+                        ∀U. ⬆[l, m] T ≡ U → R L U.
 
-definition l_liftables1: relation2 lenv term → predicate bool ≝
+definition d_liftables1: relation2 lenv term → predicate bool ≝
                          λR,s. ∀L,K,des. ⬇*[s, des] L ≡ K →
                          ∀T,U. ⬆*[des] T ≡ U → R K T → R L U.
 
-definition l_liftables1_all: relation2 lenv term → predicate bool ≝
+definition d_liftables1_all: relation2 lenv term → predicate bool ≝
                              λR,s. ∀L,K,des. ⬇*[s, des] L ≡ K →
                              ∀Ts,Us. ⬆*[des] Ts ≡ Us → 
                              all … (R K) Ts → all … (R L) Us.
@@ -50,7 +50,7 @@ definition l_liftables1_all: relation2 lenv term → predicate bool ≝
 
 fact drops_inv_nil_aux: ∀L1,L2,s,des. ⬇*[s, des] L1 ≡ L2 → des = ◊ → L1 = L2.
 #L1 #L2 #s #des * -L1 -L2 -des //
-#L1 #L #L2 #d #e #des #_ #_ #H destruct
+#L1 #L #L2 #l #m #des #_ #_ #H destruct
 qed-.
 
 (* Basic_1: was: drop1_gen_pnil *)
@@ -58,18 +58,18 @@ lemma drops_inv_nil: ∀L1,L2,s. ⬇*[s, ◊] L1 ≡ L2 → L1 = L2.
 /2 width=4 by drops_inv_nil_aux/ qed-.
 
 fact drops_inv_cons_aux: ∀L1,L2,s,des. ⬇*[s, des] L1 ≡ L2 →
-                         ∀d,e,tl. des = {d, e} @ tl →
-                         ∃∃L. ⬇*[s, tl] L1 ≡ L & ⬇[s, d, e] L ≡ L2.
+                         ∀l,m,tl. des = {l, m} @ tl →
+                         ∃∃L. ⬇*[s, tl] L1 ≡ L & ⬇[s, l, m] L ≡ L2.
 #L1 #L2 #s #des * -L1 -L2 -des
-[ #L #d #e #tl #H destruct
-| #L1 #L #L2 #des #d #e #HT1 #HT2 #hd #he #tl #H destruct
+[ #L #l #m #tl #H destruct
+| #L1 #L #L2 #des #l #m #HT1 #HT2 #l0 #m0 #tl #H destruct
   /2 width=3 by ex2_intro/
 ]
 qed-.
 
 (* Basic_1: was: drop1_gen_pcons *)
-lemma drops_inv_cons: ∀L1,L2,s,d,e,des. ⬇*[s, {d, e} @ des] L1 ≡ L2 →
-                      ∃∃L. ⬇*[s, des] L1 ≡ L & ⬇[s, d, e] L ≡ L2.
+lemma drops_inv_cons: ∀L1,L2,s,l,m,des. ⬇*[s, {l, m} @ des] L1 ≡ L2 →
+                      ∃∃L. ⬇*[s, des] L1 ≡ L & ⬇[s, l, m] L ≡ L2.
 /2 width=3 by drops_inv_cons_aux/ qed-.
 
 lemma drops_inv_skip2: ∀I,s,des,des2,i. des ▭ i ≡ des2 →
@@ -81,14 +81,14 @@ lemma drops_inv_skip2: ∀I,s,des,des2,i. des ▭ i ≡ des2 →
 #I #s #des #des2 #i #H elim H -des -des2 -i
 [ #i #L1 #K2 #V2 #H
   >(drops_inv_nil … H) -L1 /2 width=7 by lifts_nil, minuss_nil, ex4_3_intro, drops_nil/
-| #des #des2 #d #e #i #Hid #_ #IHdes2 #L1 #K2 #V2 #H
+| #des #des2 #l #m #i #Hil #_ #IHcs2 #L1 #K2 #V2 #H
   elim (drops_inv_cons … H) -H #L #HL1 #H
   elim (drop_inv_skip2 … H) -H /2 width=1 by lt_plus_to_minus_r/ #K #V >minus_plus #HK2 #HV2 #H destruct
-  elim (IHdes2 … HL1) -IHdes2 -HL1 #K1 #V1 #des1 #Hdes1 #HK1 #HV1 #X destruct
+  elim (IHcs2 … HL1) -IHcs2 -HL1 #K1 #V1 #des1 #Hcs1 #HK1 #HV1 #X destruct
   @(ex4_3_intro … K1 V1 … ) // [3,4: /2 width=7 by lifts_cons, drops_cons/ | skip ]
   normalize >plus_minus /3 width=1 by minuss_lt, lt_minus_to_plus/ (**) (* explicit constructors *)
-| #des #des2 #d #e #i #Hid #_ #IHdes2 #L1 #K2 #V2 #H
-  elim (IHdes2 … H) -IHdes2 -H #K1 #V1 #des1 #Hdes1 #HK1 #HV1 #X destruct
+| #des #des2 #l #m #i #Hil #_ #IHcs2 #L1 #K2 #V2 #H
+  elim (IHcs2 … H) -IHcs2 -H #K1 #V1 #des1 #Hcs1 #HK1 #HV1 #X destruct
   /4 width=7 by minuss_ge, ex4_3_intro, le_S_S/
 ]
 qed-.
@@ -101,20 +101,20 @@ lemma drops_skip: ∀L1,L2,s,des. ⬇*[s, des] L1 ≡ L2 → ∀V1,V2. ⬆*[des]
 #L1 #L2 #s #des #H elim H -L1 -L2 -des
 [ #L #V1 #V2 #HV12 #I
   >(lifts_inv_nil … HV12) -HV12 //
-| #L1 #L #L2 #des #d #e #_ #HL2 #IHL #V1 #V2 #H #I
+| #L1 #L #L2 #des #l #m #_ #HL2 #IHL #V1 #V2 #H #I
   elim (lifts_inv_cons … H) -H /3 width=5 by drop_skip, drops_cons/
 ].
 qed.
 
-lemma l1_liftable_liftables: ∀R,s. l_liftable1 R s → l_liftables1 R s.
+lemma d1_liftable_liftables: ∀R,s. d_liftable1 R s → d_liftables1 R s.
 #R #s #HR #L #K #des #H elim H -L -K -des
 [ #L #T #U #H #HT <(lifts_inv_nil … H) -H //
-| #L1 #L #L2 #des #d #e #_ #HL2 #IHL #T2 #T1 #H #HLT2
+| #L1 #L #L2 #des #l #m #_ #HL2 #IHL #T2 #T1 #H #HLT2
   elim (lifts_inv_cons … H) -H /3 width=10 by/
 ]
 qed.
 
-lemma l1_liftables_liftables_all: ∀R,s. l_liftables1 R s → l_liftables1_all R s.
+lemma d1_liftables_liftables_all: ∀R,s. d_liftables1 R s → d_liftables1_all R s.
 #R #s #HR #L #K #des #HLK #Ts #Us #H elim H -Ts -Us normalize //
 #Ts #Us #T #U #HTU #_ #IHTUs * /3 width=7 by conj/
 qed.

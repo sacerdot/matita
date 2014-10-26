@@ -19,18 +19,18 @@ include "basic_2/computation/fpbs.ma".
 
 (* Advanced properties ******************************************************)
 
-lemma lstas_fpbs: ∀h,g,G,L,T1,T2,l2. ⦃G, L⦄ ⊢ T1 •*[h, l2] T2 →
-                  ∀l1. l2 ≤ l1 → ⦃G, L⦄ ⊢ T1 ▪[h, g] l1 → ⦃G, L, T1⦄ ≥[h, g] ⦃G, L, T2⦄.
+lemma lstas_fpbs: ∀h,g,G,L,T1,T2,d2. ⦃G, L⦄ ⊢ T1 •*[h, d2] T2 →
+                  ∀d1. d2 ≤ d1 → ⦃G, L⦄ ⊢ T1 ▪[h, g] d1 → ⦃G, L, T1⦄ ≥[h, g] ⦃G, L, T2⦄.
 /3 width=5 by cpxs_fpbs, lstas_cpxs/ qed.
 
-lemma sta_fpbs: ∀h,g,G,L,T,U,l.
-                ⦃G, L⦄ ⊢ T ▪[h, g] l+1 → ⦃G, L⦄ ⊢ T •*[h, 1] U →
+lemma sta_fpbs: ∀h,g,G,L,T,U,d.
+                ⦃G, L⦄ ⊢ T ▪[h, g] d+1 → ⦃G, L⦄ ⊢ T •*[h, 1] U →
                 ⦃G, L, T⦄ ≥[h, g] ⦃G, L, U⦄.
 /2 width=5 by lstas_fpbs/ qed.
 
 (* Note: this is used in the closure proof *)
-lemma cpr_lpr_sta_fpbs: ∀h,g,G,L1,L2,T1,T2,U2,l2.
+lemma cpr_lpr_sta_fpbs: ∀h,g,G,L1,L2,T1,T2,U2,d2.
                         ⦃G, L1⦄ ⊢ T1 ➡ T2 → ⦃G, L1⦄ ⊢ ➡ L2 →
-                        ⦃G, L2⦄ ⊢ T2 ▪[h, g] l2+1 → ⦃G, L2⦄ ⊢ T2 •*[h, 1] U2 →
+                        ⦃G, L2⦄ ⊢ T2 ▪[h, g] d2+1 → ⦃G, L2⦄ ⊢ T2 •*[h, 1] U2 →
                         ⦃G, L1, T1⦄ ≥[h, g] ⦃G, L2, U2⦄.
 /4 width=5 by fpbs_strap1, cpr_lpr_fpbs, sta_cpx, fpbq_cpx/ qed.

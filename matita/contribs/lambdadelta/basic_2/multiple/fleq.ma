@@ -18,26 +18,26 @@ include "basic_2/multiple/lleq.ma".
 
 (* LAZY EQUIVALENCE FOR CLOSURES ********************************************)
 
-inductive fleq (d) (G) (L1) (T): relation3 genv lenv term ≝
-| fleq_intro: ∀L2. L1 ≡[T, d] L2 → fleq d G L1 T G L2 T
+inductive fleq (l) (G) (L1) (T): relation3 genv lenv term ≝
+| fleq_intro: ∀L2. L1 ≡[T, l] L2 → fleq l G L1 T G L2 T
 .
 
 interpretation
    "lazy equivalence (closure)"
-   'LazyEq d G1 L1 T1 G2 L2 T2 = (fleq d G1 L1 T1 G2 L2 T2).
+   'LazyEq l G1 L1 T1 G2 L2 T2 = (fleq l G1 L1 T1 G2 L2 T2).
 
 (* Basic properties *********************************************************)
 
-lemma fleq_refl: ∀d. tri_reflexive … (fleq d).
+lemma fleq_refl: ∀l. tri_reflexive … (fleq l).
 /2 width=1 by fleq_intro/ qed.
 
-lemma fleq_sym: ∀d. tri_symmetric … (fleq d).
-#d #G1 #L1 #T1 #G2 #L2 #T2 * /3 width=1 by fleq_intro, lleq_sym/
+lemma fleq_sym: ∀l. tri_symmetric … (fleq l).
+#l #G1 #L1 #T1 #G2 #L2 #T2 * /3 width=1 by fleq_intro, lleq_sym/
 qed-.
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma fleq_inv_gen: ∀G1,G2,L1,L2,T1,T2,d. ⦃G1, L1, T1⦄ ≡[d] ⦃G2, L2, T2⦄ →
-                    ∧∧ G1 = G2 & L1 ≡[T1, d] L2 & T1 = T2.
-#G1 #G2 #L1 #L2 #T1 #T2 #d * -G2 -L2 -T2 /2 width=1 by and3_intro/
+lemma fleq_inv_gen: ∀G1,G2,L1,L2,T1,T2,l. ⦃G1, L1, T1⦄ ≡[l] ⦃G2, L2, T2⦄ →
+                    ∧∧ G1 = G2 & L1 ≡[T1, l] L2 & T1 = T2.
+#G1 #G2 #L1 #L2 #T1 #T2 #l * -G2 -L2 -T2 /2 width=1 by and3_intro/
 qed-.

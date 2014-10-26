@@ -25,7 +25,7 @@ lemma snv_fwd_aaa: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ T ¡[h, g] → ∃A. ⦃G, L⦄ 
 [ /2 width=2 by aaa_sort, ex_intro/
 | #I #G #L #K #V #i #HLK #_ * /3 width=6 by aaa_lref, ex_intro/
 | #a * #G #L #V #T #_ #_ * #B #HV * #A #HA /3 width=2 by aaa_abbr, aaa_abst, ex_intro/
-| #a #G #L #V #W0 #T #U0 #l #_ #_ #HVW0 #HTU0 * #B #HV * #X #HT
+| #a #G #L #V #W0 #T #U0 #d #_ #_ #HVW0 #HTU0 * #B #HV * #X #HT
   lapply (scpds_aaa_conf … HV … HVW0) -HVW0 #HW0
   lapply (scpds_aaa_conf … HT … HTU0) -HTU0 #H
   elim (aaa_inv_abst … H) -H #B0 #A #H1 #HU #H2 destruct
@@ -39,12 +39,12 @@ qed-.
 
 (* Advanced forward lemmas **************************************************)
 
-lemma snv_fwd_da: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ T ¡[h, g] → ∃l. ⦃G, L⦄ ⊢ T ▪[h, g] l.
+lemma snv_fwd_da: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ T ¡[h, g] → ∃d. ⦃G, L⦄ ⊢ T ▪[h, g] d.
 #h #g #G #L #T #H elim (snv_fwd_aaa … H) -H /2 width=2 by aaa_da/
 qed-.
 
 lemma snv_fwd_lstas: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ T ¡[h, g] →
-                     ∀l. ∃U. ⦃G, L⦄ ⊢ T •*[h, l] U.
-#h #g #G #L #T #H #l elim (snv_fwd_aaa … H) -H
-#A #HT elim (aaa_lstas h … HT l) -HT /2 width=2 by ex_intro/
+                     ∀d. ∃U. ⦃G, L⦄ ⊢ T •*[h, d] U.
+#h #g #G #L #T #H #d elim (snv_fwd_aaa … H) -H
+#A #HT elim (aaa_lstas h … HT d) -HT /2 width=2 by ex_intro/
 qed-.

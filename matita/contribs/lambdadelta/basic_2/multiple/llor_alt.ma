@@ -19,10 +19,10 @@ include "basic_2/multiple/llor.ma".
 
 (* Alternative definition ***************************************************)
 
-lemma llor_tail_frees: ∀L1,L2,L,U,d. L1 ⋓[U, d] L2 ≡ L → d ≤ yinj (|L1|) →
-                       ∀I1,W1. ⓑ{I1}W1.L1 ⊢ |L1| ϵ 𝐅*[d]⦃U⦄ →
-                       ∀I2,W2. ⓑ{I1}W1.L1 ⋓[U, d] ⓑ{I2}W2.L2 ≡ ⓑ{I2}W2.L.
-#L1 #L2 #L #U #d * #HL12 #HL1 #IH #Hd #I1 #W1 #HU #I2 #W2
+lemma llor_tail_frees: ∀L1,L2,L,U,l. L1 ⋓[U, l] L2 ≡ L → l ≤ yinj (|L1|) →
+                       ∀I1,W1. ⓑ{I1}W1.L1 ⊢ |L1| ϵ 𝐅*[l]⦃U⦄ →
+                       ∀I2,W2. ⓑ{I1}W1.L1 ⋓[U, l] ⓑ{I2}W2.L2 ≡ ⓑ{I2}W2.L.
+#L1 #L2 #L #U #l * #HL12 #HL1 #IH #Hl #I1 #W1 #HU #I2 #W2
 @and3_intro [1,2: >ltail_length /2 width=1 by le_S_S/ ]
 #J1 #J2 #J #K1 #K2 #K #V1 #V2 #V #i #HLK1 #HLK2 #HLK
 lapply (drop_fwd_length_lt2 … HLK1) >ltail_length #H
@@ -46,10 +46,10 @@ elim (le_to_or_lt_eq … H) -H #H
 ]
 qed.
 
-lemma llor_tail_cofrees: ∀L1,L2,L,U,d. L1 ⋓[U, d] L2 ≡ L →
-                         ∀I1,W1. (ⓑ{I1}W1.L1 ⊢ |L1| ϵ 𝐅*[d]⦃U⦄ → ⊥) →
-                         ∀I2,W2. ⓑ{I1}W1.L1 ⋓[U, d] ⓑ{I2}W2.L2 ≡ ⓑ{I1}W1.L.
-#L1 #L2 #L #U #d * #HL12 #HL1 #IH #I1 #W1 #HU #I2 #W2
+lemma llor_tail_cofrees: ∀L1,L2,L,U,l. L1 ⋓[U, l] L2 ≡ L →
+                         ∀I1,W1. (ⓑ{I1}W1.L1 ⊢ |L1| ϵ 𝐅*[l]⦃U⦄ → ⊥) →
+                         ∀I2,W2. ⓑ{I1}W1.L1 ⋓[U, l] ⓑ{I2}W2.L2 ≡ ⓑ{I1}W1.L.
+#L1 #L2 #L #U #l * #HL12 #HL1 #IH #I1 #W1 #HU #I2 #W2
 @and3_intro [1,2: >ltail_length /2 width=1 by le_S_S/ ]
 #J1 #J2 #J #K1 #K2 #K #V1 #V2 #V #i #HLK1 #HLK2 #HLK
 lapply (drop_fwd_length_lt2 … HLK1) >ltail_length #H

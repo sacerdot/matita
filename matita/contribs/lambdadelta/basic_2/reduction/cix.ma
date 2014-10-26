@@ -26,7 +26,7 @@ interpretation "irreducibility for context-sensitive extended reduction (term)"
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma cix_inv_sort: ∀h,g,G,L,k,l. deg h g k (l+1) → ⦃G, L⦄ ⊢ ➡[h, g] 𝐈⦃⋆k⦄ → ⊥.
+lemma cix_inv_sort: ∀h,g,G,L,k,d. deg h g k (d+1) → ⦃G, L⦄ ⊢ ➡[h, g] 𝐈⦃⋆k⦄ → ⊥.
 /3 width=2 by crx_sort/ qed-.
 
 lemma cix_inv_delta: ∀h,g,I,G,L,K,V,i. ⬇[i] L ≡ K.ⓑ{I}V → ⦃G, L⦄ ⊢ ➡[h, g] 𝐈⦃#i⦄ → ⊥.
@@ -69,12 +69,12 @@ lemma cix_inv_cir: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ ➡[h, g] 𝐈⦃T⦄ → ⦃G, 
 (* Basic properties *********************************************************)
 
 lemma cix_sort: ∀h,g,G,L,k. deg h g k 0 → ⦃G, L⦄ ⊢ ➡[h, g] 𝐈⦃⋆k⦄.
-#h #g #G #L #k #Hk #H elim (crx_inv_sort … H) -L #l #Hkl
-lapply (deg_mono … Hk Hkl) -h -k <plus_n_Sm #H destruct
+#h #g #G #L #k #Hk #H elim (crx_inv_sort … H) -L #d #Hkd
+lapply (deg_mono … Hk Hkd) -h -k <plus_n_Sm #H destruct
 qed.
 
 lemma tix_lref: ∀h,g,G,i. ⦃G, ⋆⦄ ⊢ ➡[h, g] 𝐈⦃#i⦄.
-#h #g #G #i #H elim (trx_inv_atom … H) -H #k #l #_ #H destruct
+#h #g #G #i #H elim (trx_inv_atom … H) -H #k #d #_ #H destruct
 qed.
 
 lemma cix_gref: ∀h,g,G,L,p. ⦃G, L⦄ ⊢ ➡[h, g] 𝐈⦃§p⦄.

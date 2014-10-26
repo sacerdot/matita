@@ -26,10 +26,10 @@ qed.
 
 (* Properties on relocation *************************************************)
 
-lemma cix_lift: ∀h,g,G,K,T. ⦃G, K⦄ ⊢ ➡[h, g] 𝐈⦃T⦄ → ∀L,s,d,e. ⬇[s, d, e] L ≡ K →
-                ∀U. ⬆[d, e] T ≡ U → ⦃G, L⦄ ⊢ ➡[h, g] 𝐈⦃U⦄.
+lemma cix_lift: ∀h,g,G,K,T. ⦃G, K⦄ ⊢ ➡[h, g] 𝐈⦃T⦄ → ∀L,s,l,m. ⬇[s, l, m] L ≡ K →
+                ∀U. ⬆[l, m] T ≡ U → ⦃G, L⦄ ⊢ ➡[h, g] 𝐈⦃U⦄.
 /3 width=8 by crx_inv_lift/ qed.
 
-lemma cix_inv_lift: ∀h,g,G,L,U. ⦃G, L⦄ ⊢ ➡[h, g] 𝐈⦃U⦄ → ∀K,s,d,e. ⬇[s, d, e] L ≡ K →
-                    ∀T. ⬆[d, e] T ≡ U → ⦃G, K⦄ ⊢ ➡[h, g] 𝐈⦃T⦄.
+lemma cix_inv_lift: ∀h,g,G,L,U. ⦃G, L⦄ ⊢ ➡[h, g] 𝐈⦃U⦄ → ∀K,s,l,m. ⬇[s, l, m] L ≡ K →
+                    ∀T. ⬆[l, m] T ≡ U → ⦃G, K⦄ ⊢ ➡[h, g] 𝐈⦃T⦄.
 /3 width=8 by crx_lift/ qed-.

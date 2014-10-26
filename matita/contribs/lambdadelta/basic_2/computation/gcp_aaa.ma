@@ -37,16 +37,16 @@ theorem acr_aaa_csubc_lifts: ∀RR,RS,RP.
   lapply (acr_gcr … H1RP H2RP B) #HB
   elim (lifts_inv_lref1 … H) -H #i1 #Hi1 #H destruct
   lapply (drop_fwd_drop2 … HLK1) #HK1b
-  elim (drops_drop_trans … HL01 … HLK1) #X #des1 #i0 #HL0 #H #Hi0 #Hdes1
+  elim (drops_drop_trans … HL01 … HLK1) #X #des1 #i0 #HL0 #H #Hi0 #Hcs1
   >(at_mono … Hi1 … Hi0) -i1
-  elim (drops_inv_skip2 … Hdes1 … H) -des1 #K0 #V0 #des0 #Hdes0 #HK01 #HV10 #H destruct
+  elim (drops_inv_skip2 … Hcs1 … H) -des1 #K0 #V0 #des0 #Hcs0 #HK01 #HV10 #H destruct
   elim (lsubc_drop_O1_trans … HL20 … HL0) -HL0 #X #HLK2 #H
   elim (lsubc_inv_pair2 … H) -H *
   [ #K2 #HK20 #H destruct
     elim (lift_total V0 0 (i0 +1)) #V #HV0
-    elim (lifts_lift_trans  … Hi0 … Hdes0 … HV10 … HV0) -HV10 #V2 #HV12 #HV2
+    elim (lifts_lift_trans  … Hi0 … Hcs0 … HV10 … HV0) -HV10 #V2 #HV12 #HV2
     lapply (s5 … HB ? G ? ? (◊) … HV0 HLK2) /3 width=7 by drops_cons, lifts_cons/ (* Note: uses IHB HL20 V2 HV0 *)
-  | -HLK1 -IHB -HL01 -HL20 -HK1b -Hi0 -Hdes0
+  | -HLK1 -IHB -HL01 -HL20 -HK1b -Hi0 -Hcs0
     #K2 #V2 #A2 #HKV2A #H1KV0A #H2KV0A #_ #H1 #H2 destruct
     lapply (drop_fwd_drop2 … HLK2) #HLK2b
     lapply (aaa_lifts … HK01 … HV10 HKV1B) -HKV1B -HK01 -HV10 #HKV0B

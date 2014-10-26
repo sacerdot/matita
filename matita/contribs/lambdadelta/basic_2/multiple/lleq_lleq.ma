@@ -18,22 +18,22 @@ include "basic_2/multiple/lleq_drop.ma".
 
 (* Main properties **********************************************************)
 
-theorem lleq_trans: ∀d,T. Transitive … (lleq d T).
+theorem lleq_trans: ∀l,T. Transitive … (lleq l T).
 /2 width=3 by lleq_llpx_sn_trans/ qed-.
 
-theorem lleq_canc_sn: ∀L,L1,L2,T,d. L ≡[d, T] L1→ L ≡[d, T] L2 → L1 ≡[d, T] L2.
+theorem lleq_canc_sn: ∀L,L1,L2,T,l. L ≡[l, T] L1→ L ≡[l, T] L2 → L1 ≡[l, T] L2.
 /3 width=3 by lleq_trans, lleq_sym/ qed-.
 
-theorem lleq_canc_dx: ∀L1,L2,L,T,d. L1 ≡[d, T] L → L2 ≡[d, T] L → L1 ≡[d, T] L2.
+theorem lleq_canc_dx: ∀L1,L2,L,T,l. L1 ≡[l, T] L → L2 ≡[l, T] L → L1 ≡[l, T] L2.
 /3 width=3 by lleq_trans, lleq_sym/ qed-.
 
 (* Advanced properies on negated lazy equivalence *****************************)
 
 (* Note: for use in auto, works with /4 width=8/ so lleq_canc_sn is preferred *) 
-lemma lleq_nlleq_trans: ∀d,T,L1,L. L1 ≡[T, d] L →
-                        ∀L2. (L ≡[T, d] L2 → ⊥) → (L1 ≡[T, d] L2 → ⊥).
+lemma lleq_nlleq_trans: ∀l,T,L1,L. L1 ≡[T, l] L →
+                        ∀L2. (L ≡[T, l] L2 → ⊥) → (L1 ≡[T, l] L2 → ⊥).
 /3 width=3 by lleq_canc_sn/ qed-.
 
-lemma nlleq_lleq_div: ∀d,T,L2,L. L2 ≡[T, d] L →
-                      ∀L1. (L1 ≡[T, d] L → ⊥) → (L1 ≡[T, d] L2 → ⊥).
+lemma nlleq_lleq_div: ∀l,T,L2,L. L2 ≡[T, l] L →
+                      ∀L1. (L1 ≡[T, l] L → ⊥) → (L1 ≡[T, l] L2 → ⊥).
 /3 width=3 by lleq_trans/ qed-.

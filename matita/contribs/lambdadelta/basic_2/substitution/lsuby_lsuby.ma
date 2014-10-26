@@ -18,15 +18,15 @@ include "basic_2/substitution/lsuby.ma".
 
 (* Main properties **********************************************************)
 
-theorem lsuby_trans: ∀d,e. Transitive … (lsuby d e).
-#d #e #L1 #L2 #H elim H -L1 -L2 -d -e
-[ #L1 #d #e #X #H lapply (lsuby_inv_atom1 … H) -H
+theorem lsuby_trans: ∀l,m. Transitive … (lsuby l m).
+#l #m #L1 #L2 #H elim H -L1 -L2 -l -m
+[ #L1 #l #m #X #H lapply (lsuby_inv_atom1 … H) -H
   #H destruct //
 | #I1 #I2 #L1 #L #V1 #V #_ #IHL1 #X #H elim (lsuby_inv_zero1 … H) -H //
   * #I2 #L2 #V2 #HL2 #H destruct /3 width=1 by lsuby_zero/
-| #I1 #I2 #L1 #L2 #V #e #_ #IHL1 #X #H elim (lsuby_inv_pair1 … H) -H //
+| #I1 #I2 #L1 #L2 #V #m #_ #IHL1 #X #H elim (lsuby_inv_pair1 … H) -H //
   * #I2 #L2 #HL2 #H destruct /3 width=1 by lsuby_pair/
-| #I1 #I2 #L1 #L2 #V1 #V2 #d #e #_ #IHL1 #X #H elim (lsuby_inv_succ1 … H) -H //
+| #I1 #I2 #L1 #L2 #V1 #V2 #l #m #_ #IHL1 #X #H elim (lsuby_inv_succ1 … H) -H //
   * #I2 #L2 #V2 #HL2 #H destruct /3 width=1 by lsuby_succ/
 ]
 qed-.
