@@ -45,7 +45,8 @@ lemma cpcs_refl: ∀G,L. reflexive … (cpcs G L).
 
 (* Basic_1: was: pc3_s *)
 lemma cpcs_sym: ∀G,L. symmetric … (cpcs G L).
-#G #L @TC_symmetric // qed-. (**) (* auto fails even after normalize *)
+normalize /3 width=1 by cpc_sym, TC_symmetric/
+qed-.
 
 lemma cpc_cpcs: ∀G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬌ T2 → ⦃G, L⦄ ⊢ T1 ⬌* T2.
 /2 width=1 by inj/ qed.

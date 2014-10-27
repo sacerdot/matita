@@ -244,7 +244,7 @@ fact cpr_conf_lpr_beta_beta:
 #a #G #L0 #V0 #W0 #T0 #IH #V1 #HV01 #W1 #HW01 #T1 #HT01
 #V2 #HV02 #W2 #HW02 #T2 #HT02 #L1 #HL01 #L2 #HL02
 elim (IH … HV01 … HV02 … HL01 … HL02) -HV01 -HV02 /2 width=1 by/ #V #HV1 #HV2
-elim (IH … HW01 … HW02 … HL01 … HL02) /2 width=1/ #W #HW1 #HW2
+elim (IH … HW01 … HW02 … HL01 … HL02) /2 width=1 by/ #W #HW1 #HW2
 elim (IH … HT01 … HT02 (L1.ⓛW1) … (L2.ⓛW2)) /2 width=1 by lpr_pair/ -L0 -V0 -W0 -T0 #T #HT1 #HT2
 lapply (lsubr_cpr_trans … HT1 (L1.ⓓⓝW1.V1) ?) -HT1 /2 width=1 by lsubr_beta/
 lapply (lsubr_cpr_trans … HT2 (L2.ⓓⓝW2.V2) ?) -HT2 /2 width=1 by lsubr_beta/

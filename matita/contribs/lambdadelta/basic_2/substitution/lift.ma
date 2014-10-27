@@ -309,7 +309,7 @@ lemma lift_lref_ge_minus: ∀l,m,i. l + m ≤ i → ⬆[l, m] #(i - m) ≡ #i.
 qed.
 
 lemma lift_lref_ge_minus_eq: ∀l,m,i,j. l + m ≤ i → j = i - m → ⬆[l, m] #j ≡ #i.
-/2 width=1/ qed-.
+/2 width=1 by lift_lref_ge_minus/ qed-.
 
 (* Basic_1: was: lift_r *)
 lemma lift_refl: ∀T,l. ⬆[l, 0] T ≡ T.
@@ -321,7 +321,8 @@ qed.
 
 lemma lift_total: ∀T1,l,m. ∃T2. ⬆[l,m] T1 ≡ T2.
 #T1 elim T1 -T1
-[ * #i /2 width=2/ #l #m elim (lt_or_ge i l) /3 width=2 by lift_lref_lt, lift_lref_ge, ex_intro/
+[ * #i /2 width=2 by lift_sort, lift_gref, ex_intro/
+  #l #m elim (lt_or_ge i l) /3 width=2 by lift_lref_lt, lift_lref_ge, ex_intro/
 | * [ #a ] #I #V1 #T1 #IHV1 #IHT1 #l #m
   elim (IHV1 l m) -IHV1 #V2 #HV12
   [ elim (IHT1 (l+1) m) -IHT1 /3 width=2 by lift_bind, ex_intro/
@@ -335,13 +336,13 @@ lemma lift_split: ∀l1,m2,T1,T2. ⬆[l1, m2] T1 ≡ T2 →
                   ∀l2,m1. l1 ≤ l2 → l2 ≤ l1 + m1 → m1 ≤ m2 →
                   ∃∃T. ⬆[l1, m1] T1 ≡ T & ⬆[l2, m2 - m1] T ≡ T2.
 #l1 #m2 #T1 #T2 #H elim H -l1 -m2 -T1 -T2
-[ /3 width=3/
+[ /3 width=3 by lift_sort, ex2_intro/
 | #i #l1 #m2 #Hil1 #l2 #m1 #Hl12 #_ #_
   lapply (lt_to_le_to_lt … Hil1 Hl12) -Hl12 #Hil2 /4 width=3 by lift_lref_lt, ex2_intro/
 | #i #l1 #m2 #Hil1 #l2 #m1 #_ #Hl21 #Hm12
   lapply (transitive_le … (i+m1) Hl21 ?) /2 width=1 by monotonic_le_plus_l/ -Hl21 #Hl21
   >(plus_minus_m_m m2 m1 ?) /3 width=3 by lift_lref_ge, ex2_intro/
-| /3 width=3/
+| /3 width=3 by lift_gref, ex2_intro/
 | #a #I #V1 #V2 #T1 #T2 #l1 #m2 #_ #_ #IHV #IHT #l2 #m1 #Hl12 #Hl21 #Hm12
   elim (IHV … Hl12 Hl21 Hm12) -IHV #V0 #HV0a #HV0b
   elim (IHT (l2+1) … ? ? Hm12) /3 width=5 by lift_bind, le_S_S, ex2_intro/
@@ -374,7 +375,7 @@ lemma is_lift_dec: ∀T2,l,m. Decidable (∃T1. ⬆[l,m] T1 ≡ T2).
     ]
   | elim (IHV2 l m) -IHV2
     [ * #V1 #HV12 elim (IHT2 l m) -IHT2
-      [ * #T1 #HT12 /4 width=2/
+      [ * #T1 #HT12 /4 width=2 by lift_flat, ex_intro, or_introl/
       | -V1 #HT2 @or_intror * #X #H
         elim (lift_inv_flat2 … H) -H /3 width=2 by ex_intro/
       ]

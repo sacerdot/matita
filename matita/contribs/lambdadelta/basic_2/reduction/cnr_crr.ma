@@ -25,16 +25,16 @@ lemma cnr_inv_crr: ∀G,L,T. ⦃G, L⦄ ⊢ ➡ 𝐑⦃T⦄ → ⦃G, L⦄ ⊢ �
 [ #L #K #V #i #HLK #H
   elim (cnr_inv_delta … HLK H)
 | #L #V #T #_ #IHV #H
-  elim (cnr_inv_appl … H) -H /2 width=1/
+  elim (cnr_inv_appl … H) -H /2 width=1 by/
 | #L #V #T #_ #IHT #H
-  elim (cnr_inv_appl … H) -H /2 width=1/
+  elim (cnr_inv_appl … H) -H /2 width=1 by/
 | #I #L #V #T * #H1 #H2 destruct
   [ elim (cnr_inv_zeta … H2)
   | elim (cnr_inv_eps … H2)
   ]
 |5,6: #a * [ elim a ] #L #V #T * #H1 #_ #IH #H2 destruct
-  [1,3: elim (cnr_inv_abbr … H2) -H2 /2 width=1/
-  |*: elim (cnr_inv_abst … H2) -H2 /2 width=1/
+  [1,3: elim (cnr_inv_abbr … H2) -H2 /2 width=1 by/
+  |*: elim (cnr_inv_abst … H2) -H2 /2 width=1 by/
   ]
 | #a #L #V #W #T #H
   elim (cnr_inv_appl … H) -H #_ #_ #H

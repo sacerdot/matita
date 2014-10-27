@@ -126,6 +126,6 @@ qed-.
 lemma lenv_ind_alt: ∀R:predicate lenv.
                     R (⋆) → (∀I,L,T. R L → R (ⓑ{I}T.L)) →
                     ∀L. R L.
-#R #IH1 #IH2 #L @(f_ind … length … L) -L #n #IHn * // -IH1
+#R #IH1 #IH2 #L @(f_ind … length … L) -L #x #IHx * // -IH1
 #L #I #V normalize #H destruct elim (lpair_ltail L I V) /3 width=1 by/
 qed-.

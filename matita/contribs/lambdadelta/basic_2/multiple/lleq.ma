@@ -74,7 +74,7 @@ lemma lleq_fwd_lref: ∀L1,L2,l,i. L1 ≡[#i, l] L2 →
                       | ∃∃I,K1,K2,V. ⬇[i] L1 ≡ K1.ⓑ{I}V &
                                      ⬇[i] L2 ≡ K2.ⓑ{I}V &
                                       K1 ≡[V, yinj 0] K2 & l ≤ yinj i.
-#L1 #L2 #l #i #H elim (llpx_sn_fwd_lref … H) /2 width=1/
+#L1 #L2 #l #i #H elim (llpx_sn_fwd_lref … H) /2 width=1 by or3_intro0, or3_intro1/
 * /3 width=7 by or3_intro2, ex4_4_intro/
 qed-.
 

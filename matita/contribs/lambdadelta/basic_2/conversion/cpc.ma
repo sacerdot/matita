@@ -27,14 +27,14 @@ interpretation
 (* Basic properties *********************************************************)
 
 lemma cpc_refl: ∀G,L. reflexive … (cpc G L).
-/2 width=1/ qed.
+/2 width=1 by or_intror/ qed.
 
 lemma cpc_sym: ∀G,L. symmetric … (cpc L G).
-#G #L #T1 #T2 * /2 width=1/
-qed.
+#G #L #T1 #T2 * /2 width=1 by or_introl, or_intror/
+qed-.
 
 (* Basic forward lemmas *****************************************************)
 
 lemma cpc_fwd_cpr: ∀G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬌ T2 → ∃∃T. ⦃G, L⦄ ⊢ T1 ➡ T & ⦃G, L⦄ ⊢ T2 ➡ T.
-#G #L #T1 #T2 * /2 width=3/
+#G #L #T1 #T2 * /2 width=3 by ex2_intro/
 qed-.

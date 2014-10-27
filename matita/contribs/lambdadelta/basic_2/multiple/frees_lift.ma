@@ -21,31 +21,31 @@ include "basic_2/multiple/frees.ma".
 
 lemma frees_dec: ∀L,U,l,i. Decidable (frees l L U i).
 #L #U @(f2_ind … rfw … L U) -L -U
-#n #IH #L * *
+#x #IH #L * *
 [ -IH /3 width=5 by frees_inv_sort, or_intror/
-| #j #Hn #l #i elim (lt_or_eq_or_gt i j) #Hji
-  [ -n @or_intror #H elim (lt_refl_false i)
+| #j #Hx #l #i elim (lt_or_eq_or_gt i j) #Hji
+  [ -x @or_intror #H elim (lt_refl_false i)
     lapply (frees_inv_lref_ge … H ?) -L -l /2 width=1 by lt_to_le/
-  | -n /2 width=1 by or_introl/
+  | -x /2 width=1 by or_introl/
   | elim (ylt_split j l) #Hli
-    [ -n @or_intror #H elim (lt_refl_false i)
+    [ -x @or_intror #H elim (lt_refl_false i)
       lapply (frees_inv_lref_skip … H ?) -L //
     | elim (lt_or_ge j (|L|)) #Hj
       [ elim (drop_O1_lt (Ⓕ) L j) // -Hj #I #K #W #HLK destruct
         elim (IH K W … 0 (i-j-1)) -IH [1,3: /3 width=5 by frees_lref_be, drop_fwd_rfw, or_introl/ ] #HnW
         @or_intror #H elim (frees_inv_lref_lt … H) // #Z #Y #X #_ #HLY -l
         lapply (drop_mono … HLY … HLK) -L #H destruct /2 width=1 by/  
-      | -n @or_intror #H elim (lt_refl_false i)
+      | -x @or_intror #H elim (lt_refl_false i)
         lapply (frees_inv_lref_free … H ?) -l //
       ]
     ]
   ]
 | -IH /3 width=5 by frees_inv_gref, or_intror/
-| #a #I #W #U #Hn #l #i destruct
+| #a #I #W #U #Hx #l #i destruct
   elim (IH L W … l i) [1,3: /3 width=1 by frees_bind_sn, or_introl/ ] #HnW
   elim (IH (L.ⓑ{I}W) U … (⫯l) (i+1)) -IH [1,3: /3 width=1 by frees_bind_dx, or_introl/ ] #HnU
   @or_intror #H elim (frees_inv_bind … H) -H /2 width=1 by/
-| #I #W #U #Hn #l #i destruct
+| #I #W #U #Hx #l #i destruct
   elim (IH L W … l i) [1,3: /3 width=1 by frees_flat_sn, or_introl/ ] #HnW
   elim (IH L U … l i) -IH [1,3: /3 width=1 by frees_flat_dx, or_introl/ ] #HnU
   @or_intror #H elim (frees_inv_flat … H) -H /2 width=1 by/

@@ -43,7 +43,7 @@ qed-.
 
 lemma cir_inv_appl: ∀G,L,V,T. ⦃G, L⦄ ⊢ ➡ 𝐈⦃ⓐV.T⦄ →
                     ∧∧ ⦃G, L⦄ ⊢ ➡ 𝐈⦃V⦄ & ⦃G, L⦄ ⊢ ➡ 𝐈⦃T⦄ & 𝐒⦃T⦄.
-#G #L #V #T #HVT @and3_intro /3 width=1/
+#G #L #V #T #HVT @and3_intro /3 width=1 by crr_appl_sn, crr_appl_dx/
 generalize in match HVT; -HVT elim T -T //
 * // #a * #U #T #_ #_ #H elim H -H /2 width=1 by crr_beta, crr_theta/
 qed-.

@@ -34,9 +34,9 @@ normalize // qed-.
 
 lemma csx_fwd_applv: ∀h,g,G,L,T,Vs. ⦃G, L⦄ ⊢ ⬊*[h, g] Ⓐ Vs.T →
                      ⦃G, L⦄ ⊢ ⬊*[h, g] Vs ∧ ⦃G, L⦄ ⊢ ⬊*[h, g] T.
-#h #g #G #L #T #Vs elim Vs -Vs /2 width=1/
+#h #g #G #L #T #Vs elim Vs -Vs /2 width=1 by conj/
 #V #Vs #IHVs #HVs
 lapply (csx_fwd_pair_sn … HVs) #HV
 lapply (csx_fwd_flat_dx … HVs) -HVs #HVs
-elim (IHVs HVs) -IHVs -HVs /3 width=1/
+elim (IHVs HVs) -IHVs -HVs /3 width=1 by conj/
 qed-.

@@ -52,12 +52,12 @@ lemma cprs_refl: ∀G,L,T. ⦃G, L⦄ ⊢ T ➡* T.
 
 lemma cprs_strap1: ∀G,L,T1,T,T2.
                    ⦃G, L⦄ ⊢ T1 ➡* T → ⦃G, L⦄ ⊢ T ➡ T2 → ⦃G, L⦄ ⊢ T1 ➡* T2.
-normalize /2 width=3 by step/ qed.
+normalize /2 width=3 by step/ qed-.
 
 (* Basic_1: was: pr3_step *)
 lemma cprs_strap2: ∀G,L,T1,T,T2.
                    ⦃G, L⦄ ⊢ T1 ➡ T → ⦃G, L⦄ ⊢ T ➡* T2 → ⦃G, L⦄ ⊢ T1 ➡* T2.
-normalize /2 width=3 by TC_strap/ qed.
+normalize /2 width=3 by TC_strap/ qed-.
 
 lemma lsubr_cprs_trans: ∀G. lsub_trans … (cprs G) lsubr.
 /3 width=5 by lsubr_cpr_trans, LTC_lsub_trans/
@@ -122,7 +122,7 @@ qed-.
 (* Basic_1: was: pr3_gen_cast *)
 lemma cprs_inv_cast1: ∀G,L,W1,T1,U2. ⦃G, L⦄ ⊢ ⓝW1.T1 ➡* U2 → ⦃G, L⦄ ⊢ T1 ➡* U2 ∨
                       ∃∃W2,T2. ⦃G, L⦄ ⊢ W1 ➡* W2 & ⦃G, L⦄ ⊢ T1 ➡* T2 & U2 = ⓝW2.T2.
-#G #L #W1 #T1 #U2 #H @(cprs_ind … H) -U2 /3 width=5/
+#G #L #W1 #T1 #U2 #H @(cprs_ind … H) -U2 /3 width=5 by ex3_2_intro, or_intror/
 #U2 #U #_ #HU2 * /3 width=3 by cprs_strap1, or_introl/ *
 #W #T #HW1 #HT1 #H destruct
 elim (cpr_inv_cast1 … HU2) -HU2 /3 width=3 by cprs_strap1, or_introl/ *

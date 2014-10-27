@@ -264,7 +264,7 @@ lemma cpr_inv_appl1_simple: ∀G,L,V1,T1,U. ⦃G, L⦄ ⊢ ⓐV1. T1 ➡ U → �
                                      U = ⓐV2. T2.
 #G #L #V1 #T1 #U #H #HT1
 elim (cpr_inv_appl1 … H) -H *
-[ /2 width=5/
+[ /2 width=5 by ex3_2_intro/
 | #a #V2 #W1 #W2 #U1 #U2 #_ #_ #_ #H #_ destruct
   elim (simple_inv_bind … HT1)
 | #a #V #V2 #W1 #W2 #U1 #U2 #_ #_ #_ #_ #H #_ destruct

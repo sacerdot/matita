@@ -16,9 +16,9 @@ include "basic_2/multiple/mr2.ma".
 
 (* MULTIPLE RELOCATION WITH PAIRS *******************************************)
 
-let rec pluss (des:list2 nat nat) (i:nat) on des ≝ match des with
+let rec pluss (cs:list2 nat nat) (i:nat) on cs ≝ match cs with
 [ nil2          ⇒ ◊
-| cons2 l m des ⇒ {l + i, m} @ pluss des i
+| cons2 l m cs ⇒ {l + i, m} @ pluss cs i
 ].
 
 interpretation "plus (multiple relocation with pairs)"
@@ -26,15 +26,15 @@ interpretation "plus (multiple relocation with pairs)"
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma pluss_inv_nil2: ∀i,des. des + i = ◊ → des = ◊.
+lemma pluss_inv_nil2: ∀i,cs. cs + i = ◊ → cs = ◊.
 #i * // normalize
-#l #m #des #H destruct
+#l #m #cs #H destruct
 qed.
 
-lemma pluss_inv_cons2: ∀i,l,m,des2,des. des + i = {l, m} @ des2 →
-                       ∃∃des1. des1 + i = des2 & des = {l - i, m} @ des1.
-#i #l #m #des2 * normalize
+lemma pluss_inv_cons2: ∀i,l,m,cs2,cs. cs + i = {l, m} @ cs2 →
+                       ∃∃cs1. cs1 + i = cs2 & cs = {l - i, m} @ cs1.
+#i #l #m #cs2 * normalize
 [ #H destruct
-| #l1 #m1 #des1 #H destruct /2 width=3/
+| #l1 #m1 #cs1 #H destruct /2 width=3 by ex2_intro/
 ]
 qed-.

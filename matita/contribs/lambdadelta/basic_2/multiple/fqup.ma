@@ -98,12 +98,12 @@ lemma fqup_wf_ind: ∀R:relation3 …. (
                       ∀G1,L1,T1. (∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊐+ ⦃G2, L2, T2⦄ → R G2 L2 T2) →
                       R G1 L1 T1
                    ) → ∀G1,L1,T1. R G1 L1 T1.
-#R #HR @(f3_ind … fw) #n #IHn #G1 #L1 #T1 #H destruct /4 width=1 by fqup_fwd_fw/
+#R #HR @(f3_ind … fw) #x #IHx #G1 #L1 #T1 #H destruct /4 width=1 by fqup_fwd_fw/
 qed-.
 
 lemma fqup_wf_ind_eq: ∀R:relation3 …. (
                          ∀G1,L1,T1. (∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊐+ ⦃G2, L2, T2⦄ → R G2 L2 T2) →
                          ∀G2,L2,T2. G1 = G2 → L1 = L2 → T1 = T2 → R G2 L2 T2
                       ) → ∀G1,L1,T1. R G1 L1 T1.
-#R #HR @(f3_ind … fw) #n #IHn #G1 #L1 #T1 #H destruct /4 width=7 by fqup_fwd_fw/
+#R #HR @(f3_ind … fw) #x #IHx #G1 #L1 #T1 #H destruct /4 width=7 by fqup_fwd_fw/
 qed-.

@@ -119,7 +119,7 @@ lemma cpx_inv_lift1: ∀h,g,G. d_deliftable_sn (cpx h g G).
   elim (IHU12 … HLK … HTU1) -U1 -HLK /3 width=5 by cpx_flat, lift_flat, ex2_intro/
 | #G #L #V #U1 #U #U2 #_ #HU2 #IHU1 #K #s #l #m #HLK #X #H
   elim (lift_inv_bind2 … H) -H #W1 #T1 #HWV1 #HTU1 #H destruct
-  elim (IHU1 (K.ⓓW1) s … HTU1) /2 width=1/ -L -U1 #T #HTU #HT1
+  elim (IHU1 (K.ⓓW1) s … HTU1) /2 width=1 by drop_skip/ -L -U1 #T #HTU #HT1
   elim (lift_div_le … HU2 … HTU) -U /3 width=5 by cpx_zeta, ex2_intro/
 | #G #L #V #U1 #U2 #_ #IHU12 #K #s #l #m #HLK #X #H
   elim (lift_inv_flat2 … H) -H #W1 #T1 #HWV1 #HTU1 #H destruct

@@ -195,17 +195,17 @@ qed.
 (* Main inversion lemmas ****************************************************)
 
 theorem llpx_sn_alt_r_inv_lpx_sn: ∀R,T,L1,L2,l. llpx_sn_alt_r R l T L1 L2 → llpx_sn R l T L1 L2.
-#R #T #L1 @(f2_ind … rfw … L1 T) -L1 -T #n #IH #L1 * *
+#R #T #L1 @(f2_ind … rfw … L1 T) -L1 -T #x #IH #L1 * *
 [1,3: /3 width=4 by llpx_sn_alt_r_fwd_length, llpx_sn_gref, llpx_sn_sort/
-| #i #Hn #L2 #l #H lapply (llpx_sn_alt_r_fwd_length … H)
+| #i #Hx #L2 #l #H lapply (llpx_sn_alt_r_fwd_length … H)
   #HL12 elim (llpx_sn_alt_r_fwd_lref … H) -H
   [ * /2 width=1 by llpx_sn_free/
   | /2 width=1 by llpx_sn_skip/
   | * /4 width=9 by llpx_sn_lref, drop_fwd_rfw/
   ]
-| #a #I #V #T #Hn #L2 #l #H elim (llpx_sn_alt_r_inv_bind … H) -H
+| #a #I #V #T #Hx #L2 #l #H elim (llpx_sn_alt_r_inv_bind … H) -H
   /3 width=1 by llpx_sn_bind/
-| #I #V #T #Hn #L2 #l #H elim (llpx_sn_alt_r_inv_flat … H) -H
+| #I #V #T #Hx #L2 #l #H elim (llpx_sn_alt_r_inv_flat … H) -H
   /3 width=1 by llpx_sn_flat/
 ]
 qed-.

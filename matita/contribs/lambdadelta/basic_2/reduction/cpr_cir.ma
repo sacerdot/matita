@@ -38,7 +38,7 @@ lemma cpr_fwd_cir: ∀G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡ T2 → ⦃G, L⦄ ⊢ ➡
 | #G #L #V1 #T1 #T #T2 #_ #_ #_ #H
   elim (cir_inv_ri2 … H) /2 width=1 by or_introl/
 | #G #L #V1 #T1 #T2 #_ #_ #H
-  elim (cir_inv_ri2 … H) /2 width=1/
+  elim (cir_inv_ri2 … H) /2 width=1 by/
 | #a #G #L #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #_ #_ #_ #H
   elim (cir_inv_appl … H) -H #_ #_ #H
   elim (simple_inv_bind … H)

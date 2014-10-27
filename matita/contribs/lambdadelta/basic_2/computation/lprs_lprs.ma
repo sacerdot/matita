@@ -28,4 +28,4 @@ theorem lprs_conf: ∀G. confluent2 … (lprs G) (lprs G).
 /3 width=3 by TC_confluent2, lpr_conf/ qed-.
 
 theorem lprs_trans: ∀G. Transitive … (lprs G).
-/2 width=3/ qed-.
+/2 width=3 by trans_TC/ qed-.

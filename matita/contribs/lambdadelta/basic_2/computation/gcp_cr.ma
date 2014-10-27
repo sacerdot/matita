@@ -62,8 +62,8 @@ record gcr (RR:relation4 genv lenv term term) (RS:relation term) (RP,C:candidate
 
 (* the functional construction for candidates *)
 definition cfun: candidate → candidate → candidate ≝
-                 λC1,C2,G,K,T. ∀L,W,U,des.
-                 ⬇*[Ⓕ, des] L ≡ K → ⬆*[des] T ≡ U → C1 G L W → C2 G L (ⓐW.U).
+                 λC1,C2,G,K,T. ∀L,W,U,cs.
+                 ⬇*[Ⓕ, cs] L ≡ K → ⬆*[cs] T ≡ U → C1 G L W → C2 G L (ⓐW.U).
 
 (* the reducibility candidate associated to an atomic arity *)
 let rec acr (RP:candidate) (A:aarity) on A: candidate ≝
@@ -102,44 +102,44 @@ lemma acr_gcr: ∀RR,RS,RP. gcp RR RS RP → gcr RR RS RP RP →
   [ lapply (s2 … IHB G L (◊) … HK) //
   | /3 width=6 by s1, cp3/
   ]
-| #G #L #Vs #HVs #T #H1T #H2T #L0 #V0 #X #des #HL0 #H #HB
+| #G #L #Vs #HVs #T #H1T #H2T #L0 #V0 #X #cs #HL0 #H #HB
   elim (lifts_inv_applv1 … H) -H #V0s #T0 #HV0s #HT0 #H destruct
   lapply (s1 … IHB … HB) #HV0
   @(s2 … IHA … (V0 @ V0s))
   /3 width=14 by gcp2_lifts_all, gcp2_lifts, gcp0_lifts, lifts_simple_dx, conj/
-| #a #G #L #Vs #U #T #W #HA #L0 #V0 #X #des #HL0 #H #HB
+| #a #G #L #Vs #U #T #W #HA #L0 #V0 #X #cs #HL0 #H #HB
   elim (lifts_inv_applv1 … H) -H #V0s #Y #HV0s #HY #H destruct
   elim (lifts_inv_flat1 … HY) -HY #U0 #X #HU0 #HX #H destruct
   elim (lifts_inv_bind1 … HX) -HX #W0 #T0 #HW0 #HT0 #H destruct
   @(s3 … IHA … (V0 @ V0s)) /5 width=6 by lifts_applv, lifts_flat, lifts_bind/
-| #G #L #Vs #HVs #k #L0 #V0 #X #des #HL0 #H #HB
+| #G #L #Vs #HVs #k #L0 #V0 #X #cs #HL0 #H #HB
   elim (lifts_inv_applv1 … H) -H #V0s #Y #HV0s #HY #H destruct
   >(lifts_inv_sort1 … HY) -Y
   lapply (s1 … IHB … HB) #HV0
   @(s4 … IHA … (V0 @ V0s)) /3 width=7 by gcp2_lifts_all, conj/
-| #I #G #L #K #Vs #V1 #V2 #i #HA #HV12 #HLK #L0 #V0 #X #des #HL0 #H #HB
+| #I #G #L #K #Vs #V1 #V2 #i #HA #HV12 #HLK #L0 #V0 #X #cs #HL0 #H #HB
   elim (lifts_inv_applv1 … H) -H #V0s #Y #HV0s #HY #H destruct
   elim (lifts_inv_lref1 … HY) -HY #i0 #Hi0 #H destruct
-  elim (drops_drop_trans … HL0 … HLK) #X #des0 #i1 #HL02 #H #Hi1 #Hcs0
+  elim (drops_drop_trans … HL0 … HLK) #X #cs0 #i1 #HL02 #H #Hi1 #Hcs0
   >(at_mono … Hi1 … Hi0) in HL02; -i1 #HL02
-  elim (drops_inv_skip2 … Hcs0 … H) -H -des0 #L2 #W1 #des0 #Hcs0 #HLK #HVW1 #H destruct
+  elim (drops_inv_skip2 … Hcs0 … H) -H -cs0 #L2 #W1 #cs0 #Hcs0 #HLK #HVW1 #H destruct
   elim (lift_total W1 0 (i0 + 1)) #W2 #HW12
   elim (lifts_lift_trans  … Hcs0 … HVW1 … HW12) // -Hcs0 -Hi0 #V3 #HV13 #HVW2
   >(lift_mono … HV13 … HV12) in HVW2; -V3 #HVW2
   @(s5 … IHA … (V0 @ V0s) … HW12 HL02) /3 width=5 by lifts_applv/
-| #G #L #V1s #V2s #HV12s #a #V #T #HA #HV #L0 #V10 #X #des #HL0 #H #HB
+| #G #L #V1s #V2s #HV12s #a #V #T #HA #HV #L0 #V10 #X #cs #HL0 #H #HB
   elim (lifts_inv_applv1 … H) -H #V10s #Y #HV10s #HY #H destruct
   elim (lifts_inv_bind1 … HY) -HY #V0 #T0 #HV0 #HT0 #H destruct
   elim (lift_total V10 0 1) #V20 #HV120
   elim (liftv_total 0 1 V10s) #V20s #HV120s
   @(s6 … IHA … (V10 @ V10s) (V20 @ V20s)) /3 width=7 by gcp2_lifts, liftv_cons/
-  @(HA … (des + 1)) /2 width=2 by drops_skip/
+  @(HA … (cs + 1)) /2 width=2 by drops_skip/
   [ @lifts_applv //
     elim (liftsv_liftv_trans_le … HV10s … HV120s) -V10s #V10s #HV10s #HV120s
     >(liftv_mono … HV12s … HV10s) -V1s //
   | @(gcr_lift … H1RP … HB … HV120) /2 width=2 by drop_drop/
   ]
-| #G #L #Vs #T #W #HA #HW #L0 #V0 #X #des #HL0 #H #HB
+| #G #L #Vs #T #W #HA #HW #L0 #V0 #X #cs #HL0 #H #HB
   elim (lifts_inv_applv1 … H) -H #V0s #Y #HV0s #HY #H destruct
   elim (lifts_inv_flat1 … HY) -HY #W0 #T0 #HW0 #HT0 #H destruct
   @(s7 … IHA … (V0 @ V0s)) /3 width=5 by lifts_applv/
@@ -148,11 +148,11 @@ qed.
 
 lemma acr_abst: ∀RR,RS,RP. gcp RR RS RP → gcr RR RS RP RP →
                 ∀a,G,L,W,T,A,B. ⦃G, L, W⦄ ϵ[RP] 〚B〛 → (
-                   ∀L0,V0,W0,T0,des. ⬇*[Ⓕ, des] L0 ≡ L → ⬆*[des] W ≡ W0 → ⬆*[des + 1] T ≡ T0 →
+                   ∀L0,V0,W0,T0,cs. ⬇*[Ⓕ, cs] L0 ≡ L → ⬆*[cs] W ≡ W0 → ⬆*[cs + 1] T ≡ T0 →
                                    ⦃G, L0, V0⦄ ϵ[RP] 〚B〛 → ⦃G, L0, W0⦄ ϵ[RP] 〚B〛 → ⦃G, L0.ⓓⓝW0.V0, T0⦄ ϵ[RP] 〚A〛
                 ) →
                 ⦃G, L, ⓛ{a}W.T⦄ ϵ[RP] 〚②B.A〛.
-#RR #RS #RP #H1RP #H2RP #a #G #L #W #T #A #B #HW #HA #L0 #V0 #X #des #HL0 #H #HB
+#RR #RS #RP #H1RP #H2RP #a #G #L #W #T #A #B #HW #HA #L0 #V0 #X #cs #HL0 #H #HB
 lapply (acr_gcr … H1RP H2RP A) #HCA
 lapply (acr_gcr … H1RP H2RP B) #HCB
 elim (lifts_inv_bind1 … H) -H #W0 #T0 #HW0 #HT0 #H destruct

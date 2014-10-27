@@ -25,6 +25,6 @@ theorem liftv_mono: ∀Ts,U1s,l,m. ⬆[l,m] Ts ≡ U1s →
 [ #U2s #H >(liftv_inv_nil1 … H) -H //
 | #Ts #U1s #T #U1 #HTU1 #_ #IHTU1s #X #H destruct
   elim (liftv_inv_cons1 … H) -H #U2 #U2s #HTU2 #HTU2s #H destruct
-  >(lift_mono … HTU1 … HTU2) -T /3 width=1/
+  >(lift_mono … HTU1 … HTU2) -T /3 width=1 by eq_f/
 ]
 qed.

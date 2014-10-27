@@ -128,9 +128,9 @@ lemma llpx_sn_bind_repl_O: ∀R,I,L1,L2,V1,V2,T. llpx_sn R 0 T (L1.ⓑ{I}V1) (L2
 lemma llpx_sn_dec: ∀R. (∀L,T1,T2. Decidable (R L T1 T2)) →
                    ∀T,L1,L2,l. Decidable (llpx_sn R l T L1 L2).
 #R #HR #T #L1 @(f2_ind … rfw … L1 T) -L1 -T
-#n #IH #L1 * *
-[ #k #Hn #L2 elim (eq_nat_dec (|L1|) (|L2|)) /3 width=1 by or_introl, llpx_sn_sort/
-| #i #Hn #L2 elim (eq_nat_dec (|L1|) (|L2|))
+#x #IH #L1 * *
+[ #k #Hx #L2 elim (eq_nat_dec (|L1|) (|L2|)) /3 width=1 by or_introl, llpx_sn_sort/
+| #i #Hx #L2 elim (eq_nat_dec (|L1|) (|L2|))
   [ #HL12 #l elim (ylt_split i l) /3 width=1 by llpx_sn_skip, or_introl/
     #Hli elim (lt_or_ge i (|L1|)) #HiL1
     elim (lt_or_ge i (|L2|)) #HiL2 /3 width=1 by or_introl, llpx_sn_free/
@@ -152,19 +152,19 @@ lemma llpx_sn_dec: ∀R. (∀L,T1,T2. Decidable (R L T1 T2)) →
     lapply (drop_mono … HLY2 … HLK2) -HLY2 -HLK2
     #H #H0 destruct /2 width=1 by/
   ]
-| #p #Hn #L2 elim (eq_nat_dec (|L1|) (|L2|)) /3 width=1 by or_introl, llpx_sn_gref/
-| #a #I #V #T #Hn #L2 #l destruct
+| #p #Hx #L2 elim (eq_nat_dec (|L1|) (|L2|)) /3 width=1 by or_introl, llpx_sn_gref/
+| #a #I #V #T #Hx #L2 #l destruct
   elim (IH L1 V … L2 l) /2 width=1 by/
   elim (IH (L1.ⓑ{I}V) T … (L2.ⓑ{I}V) (⫯l)) -IH /3 width=1 by or_introl, llpx_sn_bind/
   #H1 #H2 @or_intror
   #H elim (llpx_sn_inv_bind … H) -H /2 width=1 by/
-| #I #V #T #Hn #L2 #l destruct
+| #I #V #T #Hx #L2 #l destruct
   elim (IH L1 V … L2 l) /2 width=1 by/
   elim (IH L1 T … L2 l) -IH /3 width=1 by or_introl, llpx_sn_flat/
   #H1 #H2 @or_intror
   #H elim (llpx_sn_inv_flat … H) -H /2 width=1 by/
 ]
--n /4 width=4 by llpx_sn_fwd_length, or_intror/
+-x /4 width=4 by llpx_sn_fwd_length, or_intror/
 qed-.
 
 (* Properties on relocation *************************************************)

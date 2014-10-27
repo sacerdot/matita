@@ -26,13 +26,13 @@ theorem da_mono: ∀h,g,G,L,T,d1. ⦃G, L⦄ ⊢ T ▪[h, g] d1 →
   >(deg_mono … Hkd2 … Hkd1) -h -k -d2 //
 | #G #L #K #V #i #d1 #HLK #_ #IHV #d2 #H
   elim (da_inv_lref … H) -H * #K0 #V0 [| #d0 ] #HLK0 #HV0 [| #Hd0 ]
-  lapply (drop_mono … HLK0 … HLK) -HLK -HLK0 #H destruct /2 width=1/
+  lapply (drop_mono … HLK0 … HLK) -HLK -HLK0 #H destruct /2 width=1 by/
 | #G #L #K #W #i #d1 #HLK #_ #IHW #d2 #H
   elim (da_inv_lref … H) -H * #K0 #W0 [| #d0 ] #HLK0 #HW0 [| #Hd0 ]
-  lapply (drop_mono … HLK0 … HLK) -HLK -HLK0 #H destruct /3 width=1/
+  lapply (drop_mono … HLK0 … HLK) -HLK -HLK0 #H destruct /3 width=1 by eq_f/
 | #a #I #G #L #V #T #d1 #_ #IHT #d2 #H
-  lapply (da_inv_bind … H) -H /2 width=1/
+  lapply (da_inv_bind … H) -H /2 width=1 by/
 | #I #G #L #V #T #d1 #_ #IHT #d2 #H
-  lapply (da_inv_flat … H) -H /2 width=1/
+  lapply (da_inv_flat … H) -H /2 width=1 by/
 ]
 qed-.

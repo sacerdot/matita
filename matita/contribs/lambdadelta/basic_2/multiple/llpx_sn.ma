@@ -149,17 +149,17 @@ qed-.
 
 lemma llpx_sn_refl: ∀R. (∀L. reflexive … (R L)) → ∀T,L,l. llpx_sn R l T L L.
 #R #HR #T #L @(f2_ind … rfw … L T) -L -T
-#n #IH #L * * /3 width=1 by llpx_sn_sort, llpx_sn_gref, llpx_sn_bind, llpx_sn_flat/
-#i #Hn elim (lt_or_ge i (|L|)) /2 width=1 by llpx_sn_free/
+#x #IH #L * * /3 width=1 by llpx_sn_sort, llpx_sn_gref, llpx_sn_bind, llpx_sn_flat/
+#i #Hx elim (lt_or_ge i (|L|)) /2 width=1 by llpx_sn_free/
 #HiL #l elim (ylt_split i l) /2 width=1 by llpx_sn_skip/
 elim (drop_O1_lt … HiL) -HiL destruct /4 width=9 by llpx_sn_lref, drop_fwd_rfw/
 qed-.
 
 lemma llpx_sn_Y: ∀R,T,L1,L2. |L1| = |L2| → llpx_sn R (∞) T L1 L2.
 #R #T #L1 @(f2_ind … rfw … L1 T) -L1 -T
-#n #IH #L1 * * /3 width=1 by llpx_sn_sort, llpx_sn_skip, llpx_sn_gref, llpx_sn_flat/
-#a #I #V1 #T1 #Hn #L2 #HL12
-@llpx_sn_bind /2 width=1/ (**) (* explicit constructor *)
+#x #IH #L1 * * /3 width=1 by llpx_sn_sort, llpx_sn_skip, llpx_sn_gref, llpx_sn_flat/
+#a #I #V1 #T1 #Hx #L2 #HL12
+@llpx_sn_bind /2 width=1 by/ (**) (* explicit constructor *)
 @IH -IH // normalize /2 width=1 by eq_f2/
 qed-.
 

@@ -43,16 +43,16 @@ qed-.
 (* Basic properties *********************************************************)
 
 lemma lpr_lprs: ∀G,L1,L2. ⦃G, L1⦄ ⊢ ➡ L2 → ⦃G, L1⦄ ⊢ ➡* L2.
-/2 width=1/ qed.
+/2 width=1 by inj/ qed.
 
 lemma lprs_refl: ∀G,L. ⦃G, L⦄ ⊢ ➡* L.
-/2 width=1/ qed.
+/2 width=1 by lpr_lprs/ qed.
 
 lemma lprs_strap1: ∀G,L1,L,L2. ⦃G, L1⦄ ⊢ ➡* L → ⦃G, L⦄ ⊢ ➡ L2 → ⦃G, L1⦄ ⊢ ➡* L2.
-/2 width=3/ qed.
+/2 width=3 by step/ qed-.
 
 lemma lprs_strap2: ∀G,L1,L,L2. ⦃G, L1⦄ ⊢ ➡ L → ⦃G, L⦄ ⊢ ➡* L2 → ⦃G, L1⦄ ⊢ ➡* L2.
-/2 width=3/ qed.
+/2 width=3 by TC_strap/ qed-.
 
 lemma lprs_pair_refl: ∀G,L1,L2. ⦃G, L1⦄ ⊢ ➡* L2 → ∀I,V. ⦃G, L1.ⓑ{I}V⦄ ⊢ ➡* L2.ⓑ{I}V.
 /2 width=1 by TC_lpx_sn_pair_refl/ qed.

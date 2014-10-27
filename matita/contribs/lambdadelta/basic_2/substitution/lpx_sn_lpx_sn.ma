@@ -35,11 +35,11 @@ qed-.
 
 theorem lpx_sn_conf: ∀R1,R2. lpx_sn_confluent R1 R2 →
                      confluent2 … (lpx_sn R1) (lpx_sn R2).
-#R1 #R2 #HR12 #L0 @(f_ind … length … L0) -L0 #n #IH *
-[ #_ #X1 #H1 #X2 #H2 -n
+#R1 #R2 #HR12 #L0 @(f_ind … length … L0) -L0 #x #IH *
+[ #_ #X1 #H1 #X2 #H2 -x
   >(lpx_sn_inv_atom1 … H1) -X1
   >(lpx_sn_inv_atom1 … H2) -X2 /2 width=3 by lpx_sn_atom, ex2_intro/
-| #L0 #I #V0 #Hn #X1 #H1 #X2 #H2 destruct
+| #L0 #I #V0 #Hx #X1 #H1 #X2 #H2 destruct
   elim (lpx_sn_inv_pair1 … H1) -H1 #L1 #V1 #HL01 #HV01 #H destruct
   elim (lpx_sn_inv_pair1 … H2) -H2 #L2 #V2 #HL02 #HV02 #H destruct
   elim (IH … HL01 … HL02) -IH normalize // #L #HL1 #HL2

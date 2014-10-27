@@ -23,7 +23,7 @@ theorem lsubd_trans: ∀h,g,G. Transitive … (lsubd h g G).
 [ #X #H >(lsubd_inv_atom1 … H) -H //
 | #I #L1 #L #Y #HL1 #IHL1 #X #H
   elim (lsubd_inv_pair1 … H) -H * #L2
-  [ #HL2 #H destruct /3 width=1/
+  [ #HL2 #H destruct /3 width=1 by lsubd_pair/
   | #W #V #d #HV #HW #HL2 #H1 #H2 #H3 destruct
     /3 width=3 by lsubd_beta, lsubd_da_trans/
   ]

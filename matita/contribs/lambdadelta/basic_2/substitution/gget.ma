@@ -74,7 +74,7 @@ lemma gget_total: ∀m,G1. ∃G2. ⬇[m] G1 ≡ G2.
 #m #G1 elim G1 -G1 /3 width=2 by gget_gt, ex_intro/
 #I #V #G1 * #G2 #HG12
 elim (lt_or_eq_or_gt m (|G1|)) #Hm
-[ /3 width=2/
+[ /3 width=2 by gget_lt, ex_intro/
 | destruct /3 width=2 by gget_eq, ex_intro/
 | @ex_intro [2: @gget_gt normalize /2 width=1 by/ | skip ] (**) (* explicit constructor *)
 ]
