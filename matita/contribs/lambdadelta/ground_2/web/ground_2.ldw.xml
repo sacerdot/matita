@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <page xmlns="http://lambdadelta.info/"
-      description = "background for \lambda\delta version 2"
-      title = "background for \lambda\delta version 2"
+      description = "\lambda\delta home page"
+      title = "\lambda\delta home page"
       head = "cic:/matita/lambdadelta/ground_2/ (background for λδ version 2)"
 >
-   <section>Summary of the Specification</section>
+   <sitemap name="sitemap"/>
+
+   <section4 name="summary">Summary of the Specification</section4>
    <body>Here is a numerical acount of the specification's contents
          and its timeline.
-         Nodes are counted according to the "intrinsinc complexity measure"
-         [F. Guidi: "Procedural Representation of CIC Proof Terms"
-         Journal of Automated Reasoning 44(1-2), Springer (February 2010),
-         pp. 53-78].
    </body>
    <table name="ground_2_sum"/>
    <news class="alpha" date="2013 November 27.">
@@ -21,12 +19,8 @@
          Specification starts.
    </news>
 
-   <section>Logical Structure of the Specification</section>
-   <body>The source files are grouped in planes
-         according to the following table.
-         Notation files covering the whole specification are provided.
-         The notation for the relations or functions introduced in each file
-         is shown in parentheses (? are placeholders).
+   <section4 name="structure">Logical Structure of the Specification</section4>
+   <body>This table reports the specification's components and their planes.
    </body>
    <table name="ground_2_src"/>
 

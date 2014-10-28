@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <page xmlns="http://lambdadelta.info/"
-      description = "applications of \lambda\delta version 2"
-      title = "applications of \lambda\delta version 2"
+      description = "\lambda\delta home page"
+      title = "\lambda\delta home page"
       head = "cic:/matita/lambdadelta/apps_2/ (applications of λδ version 2)"
 >
-   <section>Contents of the Specification</section>
+   <sitemap name="sitemap"/>
+
+   <section4 name="contents">Contents of the Specification</section4>
    <body>This specification comprises a collection of checked
          applications of λδ version 2.
          In particular it contains the components below.
@@ -21,7 +23,7 @@
       <rlink to="implementation.html#helena">Helena 0.8</rlink>.
    </topitem>
 
-   <section>Summary of the Specification</section>
+   <section4 name="summary">Summary of the Specification</section4>
    <body>Here is a numerical acount of the specification's contents
          and its timeline.
    </body>
@@ -37,12 +39,8 @@
          The MLTT1 component is started.
    </news>
 
-   <section>Logical Structure of the Specification</section>
-   <body>The source files are grouped in planes and components
-         according to the following table.
-         Each component contains its own notation file.
-         The notation for the relations or functions introduced in each file
-         is shown in parentheses (? are placeholders).
+   <section4 name="structure">Logical Structure of the Specification</section4>
+   <body>This table reports the specification's components and their planes.
    </body>
    <table name="apps_2_src"/>
 

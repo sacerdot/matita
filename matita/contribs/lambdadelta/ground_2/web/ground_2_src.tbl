@@ -2,30 +2,47 @@ name "ground_2_src"
 
 table {
    class "gray"
-   [ { "plane" * } {
-        [ "files" * ]
+   [ { "component" * } {
+        [ { "plane" * } {
+             [ "files" * ]
+          }
+        ]
      }
    ]
    class "yellow"
    [ { "natural numbers with infinity" * } {
-        [ "ynat ( ∞ )" "ynat_pred ( ⫰? )" "ynat_succ ( ⫯? )"
-          "ynat_le ( ?≤? )" "ynat_lt ( ?&lt;? )"
-          "ynat_minus ( ? - ? )" "ynat_plus ( ? + ? )"
-          "ynat_max" "ynat_min" * ]
+        [ { "" * } {
+           [ "ynat ( ∞ )" "ynat_pred ( ⫰? )" "ynat_succ ( ⫯? )"
+             "ynat_le ( ? ≤ ? )" "ynat_lt ( ? &lt; ? )"
+             "ynat_minus ( ? - ? )" "ynat_plus ( ? + ? )"
+             "ynat_max" "ynat_min" *
+           ]
+          }
+        ]
      }
    ]
    class "orange"
    [ { "extensions to the library" * } {
-        [ "arith.ma ( ?^? )" * ]
+        [ { "" * } {
+             [ "star" "lstar" "bool ( Ⓕ ) ( Ⓣ )" "arith ( ?^? )"
+               "list ( ◊ ) ( ? @ ? ) ( {?,?} @ ? ) ( ? @@ ? ) ( |?| )" *
+             ]
+          }
+        ]
      }
    ]
    class "red"
    [ { "generated logical decomposables" * } {
-        [ "xoa ( ∃∃ ) ( ∨∨ ) ( ∧∧ )" "xoa_props ( ⊥ ) ( ⊤ )" * ]
+        [ { "" * } {
+             [ "xoa ( ∃∃ ) ( ∨∨ ) ( ∧∧ )" "xoa_props ( ⊥ ) ( ⊤ )" * ]
+          }
+        ]
      }
    ]
 }
 
-class "top"    { * }
+class "top"               { * }
 
-class "italic" { 0 }
+class "capitalize italic" { 0 }
+
+class "italic"            { 1 }

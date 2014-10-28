@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <page xmlns="http://lambdadelta.info/"
-      description = "\lambda\delta version 2"
-      title = "\lambda\delta version 2"
-      head = "cic:/matita/lambdadelta/basic_2/ (λδ version 2)"
+      description = "\lambda\delta home page"
+      title = "\lambda\delta home page"
+      head = "cic:/matita/lambdadelta/basic_2/ (core λδ version 2)"
 >
+   <sitemap name="sitemap"/>
 <!--   
    <section>System's Syntax and Behavior</section>
    <body>This is a summary of the "block structure"
@@ -18,19 +19,22 @@
    </body>
 -->
 
-   <section>Summary of the Specification</section>
+   <section4 name="summary">Summary of the Specification</section4>
    <body>Here is a numerical acount of the specification's contents
          and its timeline.
    </body>
    <table name="basic_2_sum"/>
 
-   <subsection>Stage "B"</subsection>
+   <subsection name="B">Stage "B"</subsection>
    <news class="alpha" date="Ongoing.">
          Context-sensitive subject equivalence
          for native type assignment.
    </news>
 
-   <subsection>Stage "A": "Weakening the Applicability Condition"</subsection>
+   <subsection name="A">Stage "A": "Extending the Applicability Condition"</subsection>
+   <news class="gamma" date="2014 October 28.">
+         λδ version 2A is released.
+   </news>
    <news class="beta" date="2014 September 9.">
          Iterated static type assignment defined (more elegantly)
          as a primitive notion.
@@ -100,12 +104,8 @@
          Specification starts.
    </news>
 
-   <section>Logical Structure of the Specification</section>
-   <body>The source files are grouped in planes and components
-         according to the following table.
-         Notation files covering the whole specification are provided.
-         The notation for the relations or functions introduced in each file
-         is shown in parentheses (? are placeholders).
+   <section4 name="structure">Logical Structure of the Specification</section4>
+   <body>This table reports the specification's components and their planes.
    </body>
    <table name="basic_2_src"/>
 
