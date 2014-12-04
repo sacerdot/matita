@@ -53,7 +53,7 @@ while the other point reaches the end of b* and must go back through b*a:
 
 *)
 
-definition pmove ≝ λS:DeqSet.λx:S.λe:pre S. move ? x (\fst e).
+definition pmove ≝ λS:DeqSet.λx:S.λe:pre S. move ? x (fst … e).
 
 lemma pmove_def : ∀S:DeqSet.∀x:S.∀i:pitem S.∀b. 
   pmove ? x 〈i,b〉 = move ? x i.
@@ -68,7 +68,7 @@ qed.
 prove by induction on the item. *)
 
 lemma same_kernel: ∀S:DeqSet.∀a:S.∀i:pitem S.
-  |\fst (move ? a i)| = |i|.
+  |fst … (move ? a i)| = |i|.
 #S #a #i elim i //
   [#i1 #i2 #H1 #H2 >move_cat >erase_odot //
   |#i1 #i2 #H1 #H2 >move_plus whd in ⊢ (??%%); // 
@@ -111,34 +111,34 @@ notation > "x ↦* E" non associative with precedence 60 for @{moves ? $x $E}.
 let rec moves (S : DeqSet) w e on w : pre S ≝
  match w with
   [ nil ⇒ e
-  | cons x w' ⇒ w' ↦* (move S x (\fst e))]. 
+  | cons x w' ⇒ w' ↦* (move S x (fst … e))]. 
 
 lemma moves_empty: ∀S:DeqSet.∀e:pre S. 
   moves ? [ ] e = e.
 // qed.
 
 lemma moves_cons: ∀S:DeqSet.∀a:S.∀w.∀e:pre S. 
-  moves ? (a::w)  e = moves ? w (move S a (\fst e)).
+  moves ? (a::w)  e = moves ? w (move S a (fst … e)).
 // qed.
 
 lemma moves_left : ∀S,a,w,e. 
-  moves S (w@(a::[])) e = move S a (\fst (moves S w e)). 
+  moves S (w@(a::[])) e = move S a (fst … (moves S w e)). 
 #S #a #w elim w // #x #tl #Hind #e >moves_cons >moves_cons //
 qed.
 
 lemma not_epsilon_sem: ∀S:DeqSet.∀a:S.∀w: word S. ∀e:pre S. 
-  iff ((a::w) ∈ e) ((a::w) ∈ \fst e).
+  ((a::w) ∈ e) ↔ ((a::w) ∈ (fst (pitem S) bool e)).
 #S #a #w * #i #b cases b normalize 
   [% /2/ * // #H destruct |% normalize /2/]
 qed.
 
 lemma same_kernel_moves: ∀S:DeqSet.∀w.∀e:pre S.
-  |\fst (moves ? w e)| = |\fst e|.
+  |fst … (moves ? w e)| = |fst … e|.
 #S #w elim w //
 qed.
 
 theorem decidable_sem: ∀S:DeqSet.∀w: word S. ∀e:pre S. 
-   (\snd (moves ? w e) = true) ↔ \sem{e} w.
+   (snd … (moves ? w e) = true) ↔ \sem{e} w.
 #S #w elim w 
  [* #i #b >moves_empty cases b % /2/
  |#a #w1 #Hind #e >moves_cons
