@@ -204,6 +204,20 @@ notation "\P H" non associative with precedence 90
 notation "\b H" non associative with precedence 90 
   for @{(proj2 … (eqb_true ???) $H)}. 
   
+lemma eqb_false: ∀S:DeqSet.∀a,b:S. 
+  (eqb ? a b) = false ↔ a ≠ b.
+#S #a #b % #H 
+  [@(not_to_not … not_eq_true_false) #H1 <H @sym_eq @(\b H1)
+  |cases (true_or_false (eqb ? a b)) // #H1 @False_ind @(absurd … (\P H1) H)
+  ]
+qed.
+ 
+notation "\Pf H" non associative with precedence 90 
+  for @{(proj1 … (eqb_false ???) $H)}. 
+
+notation "\bf H" non associative with precedence 90 
+  for @{(proj2 … (eqb_false ???) $H)}. 
+
 (****************************** Unification hints *****************************)
 
 (* Suppose now to write an expression of the following kind:
