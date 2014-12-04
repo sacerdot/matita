@@ -49,21 +49,21 @@ Let us come to the formalized definitions:
 *)
 
 definition pre_concat_r ≝ λS:DeqSet.λi:pitem S.λe:pre S.
-  match e with [ mk_Prod i1 b ⇒ 〈i · i1, b〉].
+  match e with [ pair i1 b ⇒ 〈i · i1, b〉].
  
 notation "i ◃ e" left associative with precedence 60 for @{'lhd $i $e}.
 interpretation "pre_concat_r" 'lhd i e = (pre_concat_r ? i e).
 
 lemma eq_to_ex_eq: ∀S.∀A,B:word S → Prop. 
-  A = B → A =1 B. 
+  A = B → A ≐ B. 
 #S #A #B #H >H #x % // qed.
 
-(* The behaviour of ◃ is summarized by the following, easy lemma: *)
+(* The behaoviour of ◃ is summarized by the following, easy lemma: *)
 
 lemma sem_pre_concat_r : ∀S,i.∀e:pre S.
-  \sem{i ◃ e} =1 \sem{i} · \sem{|fst \dots e|} ∪ \sem{e}.
+  \sem{i ◃ e} \doteq \sem{i} · \sem{|fst \dots e|} ∪ \sem{e}.
 #S #i * #i1 #b1 cases b1 [2: @eq_to_ex_eq //] 
->sem_pre_true >sem_cat >sem_pre_true /2/ 
+>sem_pre_true >sem_cat >sem_pre_true whd in match (fst ???); // 
 qed.
  
 (* The definition of $•(-)$ (eclose) and ▹ (pre_concat_l) are mutually recursive.
@@ -74,7 +74,7 @@ pres. *)
 
 definition pre_concat_l ≝ λS:DeqSet.λbcast:∀S:DeqSet.pitem S → pre S.λe1:pre S.λi2:pitem S.
   match e1 with 
-  [ mk_Prod i1 b1 ⇒ match b1 with 
+  [ pair i1 b1 ⇒ match b1 with 
     [ true ⇒ (i1 ◃ (bcast ? i2)) 
     | false ⇒ 〈i1 · i2,false〉
     ]
@@ -131,7 +131,7 @@ in the obvious way. *)
 
 definition lift ≝ λS.λf:pitem S →pre S.λe:pre S. 
   match e with 
-  [ mk_Prod i b ⇒ 〈fst \dots (f i), snd \dots (f i) ∨ b〉].
+  [ pair i b ⇒ 〈fst \dots (f i), snd \dots (f i) ∨ b〉].
   
 definition preclose ≝ λS. lift S (eclose S). 
 interpretation "preclose" 'eclose x = (preclose ? x).
@@ -158,7 +158,7 @@ sem_bullet     \sem{•i} =1 \sem{i} ∪ \sem{|i|}
 The proof of sem_oplus is straightforward. *)
 
 lemma sem_oplus: ∀S:DeqSet.∀e1,e2:pre S.
-  \sem{e1 ⊕ e2} =1 \sem{e1} ∪ \sem{e2}. 
+  \sem{e1 ⊕ e2} ≐ \sem{e1} ∪ \sem{e2}. 
 #S * #i1 #b1 * #i2 #b2 #w %
   [cases b1 cases b2 normalize /2/ * /3/ * /3/
   |cases b1 cases b2 normalize /2/ * /3/ * /3/
@@ -180,8 +180,8 @@ lemma LcatE : ∀S.∀e1,e2:pitem S.
 // qed.
 
 lemma sem_pcl_aux : ∀S.∀e1:pre S.∀i2:pitem S.
-   \sem{•i2} =1  \sem{i2} ∪ \sem{|i2|} →
-   \sem{e1 ▹ i2} =1  \sem{e1} · \sem{|i2|} ∪ \sem{i2}.
+   \sem{•i2} ≐ \sem{i2} ∪ \sem{|i2|} →
+   \sem{e1 ▹ i2} ≐ \sem{e1} · \sem{|i2|} ∪ \sem{i2}.
 #S * #i1 #b1 #i2 cases b1
   [2:#th >pcl_false >sem_pre_false >sem_pre_false >sem_cat /2/
   |#H >pcl_true >sem_pre_true @(eqP_trans … (sem_pre_concat_r …))
@@ -192,7 +192,7 @@ lemma sem_pcl_aux : ∀S.∀e1:pre S.∀i2:pitem S.
 qed.
   
 lemma minus_eps_pre_aux: ∀S.∀e:pre S.∀i:pitem S.∀A. 
- \sem{e} =1 \sem{i} ∪ A → \sem{fst \dots e} =1 \sem{i} ∪ (A - {[ ]}).
+ \sem{e} ≐ \sem{i} ∪ A → \sem{fst \dots e} ≐ \sem{i} ∪ (A - {[ ]}).
 #S #e #i #A #seme
 @eqP_trans [|@minus_eps_pre]
 @eqP_trans [||@eqP_union_r [|@eqP_sym @minus_eps_item]]
@@ -200,7 +200,7 @@ lemma minus_eps_pre_aux: ∀S.∀e:pre S.∀i:pitem S.∀A.
 @eqP_substract_r //
 qed.
 
-theorem sem_bull: ∀S:DeqSet. ∀i:pitem S.  \sem{•i} =1 \sem{i} ∪ \sem{|i|}.
+theorem sem_bull: ∀S:DeqSet. ∀i:pitem S.  \sem{•i} ≐ \sem{i} ∪ \sem{|i|}.
 #S #e elim e 
   [#w normalize % [/2/ | * //]
   |/2/ 
@@ -253,7 +253,7 @@ lemma forget_blank: ∀S.∀e:re S.|blank S e| = e.
 #S #e elim e normalize //
 qed.
 
-lemma sem_blank: ∀S.∀e:re S.\sem{blank S e} =1 ∅.
+lemma sem_blank: ∀S.∀e:re S.\sem{blank S e} ≐ ∅.
 #S #e elim e 
   [1,2:@eq_to_ex_eq // 
   |#s @eq_to_ex_eq //
@@ -270,7 +270,7 @@ lemma sem_blank: ∀S.∀e:re S.\sem{blank S e} =1 ∅.
 qed.
    
 theorem re_embedding: ∀S.∀e:re S. 
-  \sem{•(blank S e)} =1 \sem{e}.
+  \sem{•(blank S e)} ≐ \sem{e}.
 #S #e @eqP_trans [|@sem_bull] >forget_blank 
 @eqP_trans [|@eqP_union_r [|@sem_blank]]
 @eqP_trans [|@union_comm] @union_empty_r.
@@ -302,14 +302,15 @@ qed.
   
 lemma erase_odot:∀S.∀e1,e2:pre S.
   |fst \dots (e1 ⊙ e2)| = |fst \dots e1| · (|fst \dots e2|).
-#S * #i1 * * #i2 #b2 // >odot_true_b >erase_dot //  
+#S * #i1 * * #i2 #b2 // >odot_true_b >erase_dot 
+whd in match (fst ???) in ⊢ (???%); whd in match (fst ???) in ⊢ (???%);//  
 qed.
 
 (* Let us come to the star operation: *)
 
 definition lk ≝ λS:DeqSet.λe:pre S.
   match e with 
-  [ mk_Prod i1 b1 ⇒
+  [ pair i1 b1 ⇒
     match b1 with 
     [true ⇒ 〈(fst \dots (eclose ? i1))^*, true〉
     |false ⇒ 〈i1^*,false〉
@@ -330,15 +331,15 @@ lemma ostar_false: ∀S.∀i:pitem S.
   
 lemma erase_ostar: ∀S.∀e:pre S.
   |fst \dots (e^⊛)| = |fst \dots e|^*.
-#S * #i * // qed.
+#S * #i * whd in match (fst ???) in ⊢ (???%); // qed.
 
 lemma sem_odot_true: ∀S:DeqSet.∀e1:pre S.∀i. 
-  \sem{e1 ⊙ 〈i,true〉} =1 \sem{e1 ▹ i} ∪ { [ ] }.
+  \sem{e1 ⊙ 〈i,true〉} ≐ \sem{e1 ▹ i} ∪ { [ ] }.
 #S #e1 #i 
 cut (e1 ⊙ 〈i,true〉 = 〈fst \dots (e1 ▹ i), snd \dots(e1 ▹ i) ∨ true〉) [//]
 #H >H cases (e1 ▹ i) #i1 #b1 cases b1 
   [>sem_pre_true @eqP_trans [||@eqP_sym @union_assoc]
-   @eqP_union_l /2/ 
+   @eqP_union_l #w normalize % [/2/|* //] 
   |/2/
   ]
 qed.
@@ -354,7 +355,7 @@ qed.
 of ⊙ and ⊛. *)
 
 lemma sem_odot: 
-  ∀S.∀e1,e2: pre S. \sem{e1 ⊙ e2} =1 \sem{e1}· \sem{|fst \dots e2|} ∪ \sem{e2}.
+  ∀S.∀e1,e2: pre S. \sem{e1 ⊙ e2} ≐ \sem{e1}· \sem{|fst \dots e2|} ∪ \sem{e2}.
 #S #e1 * #i2 * 
   [>sem_pre_true 
    @eqP_trans [|@sem_odot_true]
@@ -364,7 +365,7 @@ lemma sem_odot:
 qed.
 
 theorem sem_ostar: ∀S.∀e:pre S. 
-  \sem{e^⊛} =1  \sem{e} · \sem{|fst \dots e|}^*.
+  \sem{e^⊛} ≐  \sem{e} · \sem{|fst \dots e|}^*.
 #S * #i #b cases b
   [>sem_pre_true >sem_pre_true >sem_star >erase_bull
    @eqP_trans [|@eqP_union_r[|@cat_ext_l [|@minus_eps_pre_aux //]]]

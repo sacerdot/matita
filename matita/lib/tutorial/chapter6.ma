@@ -89,6 +89,41 @@ lemma eqP_union_l: ∀U.∀A,B,C:U →Prop.
   B ≐ C  → A ∪ B ≐ A ∪ C.
 #U #A #B #C #eqBC #a @iff_or_l @eqBC qed.
 
+lemma eqP_substract_r: ∀U.∀A,B,C:U →Prop. 
+  A ≐ C  → A - B ≐ C - B.
+#U #A #B #C #eqAB #a @iff_and_r @eqAB qed.
+  
+lemma eqP_substract_l: ∀U.∀A,B,C:U →Prop. 
+  B ≐ C  → A - B ≐ A - C.
+#U #A #B #C #eqBC #a @iff_and_l /2/ qed.
+
+(* set equalities *)
+lemma union_empty_r: ∀U.∀A:U→Prop. 
+  A ∪ ∅ ≐ A.
+#U #A #w % [* // normalize #abs @False_ind /2/ | /2/]
+qed.
+
+lemma union_comm : ∀U.∀A,B:U →Prop. 
+  A ∪ B ≐ B ∪ A.
+#U #A #B #a % * /2/ qed. 
+
+lemma union_assoc: ∀U.∀A,B,C:U → Prop. 
+  A ∪ B ∪ C ≐ A ∪ (B ∪ C).
+#S #A #B #C #w % [* [* /3/ | /3/] | * [/3/ | * /3/]
+qed.  
+
+(*distributivities *)
+
+lemma distribute_intersect : ∀U.∀A,B,C:U→Prop. 
+  (A ∪ B) ∩ C ≐ (A ∩ C) ∪ (B ∩ C).
+#U #A #B #C #w % [* * /3/ | * * /3/] 
+qed.
+  
+lemma distribute_substract : ∀U.∀A,B,C:U→Prop. 
+  (A ∪ B) - C ≐ (A - C) ∪ (B - C).
+#U #A #B #C #w % [* * /3/ | * * /3/] 
+qed.
+
 (************************ Sets with decidable equality ************************)
 
 (* We say that a property P:A → Prop over a datatype A is decidable when we have 
