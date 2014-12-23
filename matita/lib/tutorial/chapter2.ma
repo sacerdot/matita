@@ -383,7 +383,7 @@ inductive Pari : nat → Prop ≝
 definition natPari ≝ Sub nat Pari.
 
 definition addPari: natPari → natPari → natPari.
-* #a #Ha * #b #Hb check mk_Sub @(mk_Sub … (add a b))  
+* #a #Ha * #b #Hb @(mk_Sub … (add a b))  
 elim Ha
   [normalize @Hb
   |#x #Hx #Hind normalize @pari2 @Hind
