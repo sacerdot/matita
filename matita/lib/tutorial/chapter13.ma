@@ -3,7 +3,7 @@ Coinductive Types and Predicates
 *)
 
 include "basics/lists/list.ma".
-include "chapter12.ma".
+include "tutorial/chapter12.ma".
 
 (* The only primitive data types of Matita are dependent products and universes.
 So far every other user defined data type has been an inductive type. An

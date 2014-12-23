@@ -192,8 +192,107 @@ with the pit state. *)
 
 definition pit_pre ≝ λS.λi.〈blank S (|i|), false〉. 
 
-(* The following function compute the list of characters occurring in a given
-item i. *)
+(* The following "occur" function compute the list of characters occurring in a 
+given item i. We first define a special append function that appends two lists 
+avoiding repetitions, and prove a few properties of it.
+*)
+
+let rec unique_append (S:DeqSet) (l1,l2: list S) on l1 ≝
+  match l1 with
+  [ nil ⇒ l2
+  | cons a tl ⇒ 
+     let r ≝ unique_append S tl l2 in
+     if memb S a r then r else a::r
+  ].
+  
+lemma memb_unique_append: ∀S,a,l1,l2. 
+memb S a (unique_append S l1 l2) = true →
+  memb S a l1= true ∨ memb S a l2 = true.
+#S #a #l1 elim l1 normalize [#l2 #H %2 //] 
+#b #tl #Hind #l2 cases (true_or_false … (a==b)) #Hab >Hab normalize /2/
+cases (memb S b (unique_append S tl l2)) normalize 
+  [@Hind | >Hab normalize @Hind]   
+qed. 
+
+lemma unique_append_elim: ∀S:DeqSet.∀P: S → Prop.∀l1,l2. 
+(∀x. memb S x l1 = true → P x) → (∀x. memb S x l2 = true → P x) →
+∀x. memb S x (unique_append S l1 l2) = true → P x. 
+#S #P #l1 #l2 #Hl1 #Hl2 #x #membx cases (memb_unique_append … membx)
+/2/ 
+qed.
+
+lemma unique_append_unique: ∀S,l1,l2. uniqueb S l2 = true →
+  uniqueb S (unique_append S l1 l2) = true.
+#S #l1 elim l1 normalize // #a #tl #Hind #l2 #uniquel2
+cases (true_or_false … (memb S a (unique_append S tl l2))) 
+#H >H normalize [@Hind //] >H normalize @Hind //
+qed.
+
+definition sublist ≝ 
+  λS,l1,l2.∀a. memb S a l1 = true → memb S a l2 = true.
+
+lemma memb_exists: ∀S,a,l.memb S a l = true → 
+  ∃l1,l2.l=l1@(a::l2).
+#S #a #l elim l [normalize #abs @False_ind /2/]
+#b #tl #Hind #H cases (orb_true_l … H)
+  [#eqba @(ex_intro … (nil S)) @(ex_intro … tl) >(\P eqba) //
+  |#mem_tl cases (Hind mem_tl) #l1 * #l2 #eqtl
+   @(ex_intro … (b::l1)) @(ex_intro … l2) >eqtl //
+  ]
+qed.
+
+lemma sublist_length: ∀S,l1,l2. 
+ uniqueb S l1 = true → sublist S l1 l2 → |l1| ≤ |l2|.
+#S #l1 elim l1 // 
+#a #tl #Hind #l2 #unique #sub
+cut (∃l3,l4.l2=l3@(a::l4)) [@memb_exists @sub normalize >(\b (refl … a)) //]
+* #l3 * #l4 #eql2 >eql2 >length_append normalize 
+applyS le_S_S <length_append @Hind [@(andb_true_r … unique)]
+>eql2 in sub; #sub #x #membx 
+cases (memb_append … (sub x (orb_true_r2 … membx)))
+  [#membxl3 @memb_append_l1 //
+  |#membxal4 cases (orb_true_l … membxal4)
+    [#eqxa @False_ind lapply (andb_true_l … unique)
+     <(\P eqxa) >membx normalize /2/ |#membxl4 @memb_append_l2 //
+    ]
+  ]
+qed.
+
+lemma sublist_unique_append_l1: 
+  ∀S,l1,l2. sublist S l1 (unique_append S l1 l2).
+#S #l1 elim l1 normalize [#l2 #S #abs @False_ind /2/]
+#x #tl #Hind #l2 #a 
+normalize cases (true_or_false … (a==x)) #eqax >eqax 
+[<(\P eqax) cases (true_or_false (memb S a (unique_append S tl l2)))
+  [#H >H normalize // | #H >H normalize >(\b (refl … a)) //]
+|cases (memb S x (unique_append S tl l2)) normalize 
+  [/2/ |>eqax normalize /2/]
+]
+qed.
+
+lemma sublist_unique_append_l2: 
+  ∀S,l1,l2. sublist S l2 (unique_append S l1 l2).
+#S #l1 elim l1 [normalize //] #x #tl #Hind normalize 
+#l2 #a cases (memb S x (unique_append S tl l2)) normalize
+[@Hind | cases (a==x) normalize // @Hind]
+qed.
+
+lemma decidable_sublist:∀S,l1,l2. 
+  (sublist S l1 l2) ∨ ¬(sublist S l1 l2).
+#S #l1 #l2 elim l1 
+  [%1 #a normalize in ⊢ (%→?); #abs @False_ind /2/
+  |#a #tl * #subtl 
+    [cases (true_or_false (memb S a l2)) #memba
+      [%1 whd #x #membx cases (orb_true_l … membx)
+        [#eqax >(\P eqax) // |@subtl]
+      |%2 @(not_to_not … (eqnot_to_noteq … true memba)) #H1 @H1 normalize
+       >(\b (refl … a)) //
+      ]
+    |%2 @(not_to_not … subtl) #H1 #x #H2 @H1 normalize cases (x==a) 
+     normalize //
+    ] 
+  ]
+qed.
 
 let rec occur (S: DeqSet) (i: re S) on i ≝  
   match i with
@@ -203,6 +302,8 @@ let rec occur (S: DeqSet) (i: re S) on i ≝
   | o e1 e2 ⇒ unique_append ? (occur S e1) (occur S e2) 
   | c e1 e2 ⇒ unique_append ? (occur S e1) (occur S e2) 
   | k e ⇒ occur S e].
+  
+
 
 (* If a symbol a does not occur in i, then move(i,a) gets to the
 pit state. *)
@@ -223,7 +324,7 @@ qed.
 
 (* We cannot escape form the pit state. *)
 
-lemma move_pit: ∀S,a,i. move S a (\fst (pit_pre S i)) = pit_pre S i.
+lemma move_pit: ∀S,a,i. move S a (fst ?? (pit_pre S i)) = pit_pre S i.
 #S #a #i elim i //
   [#i1 #i2 #Hind1 #Hind2 >move_cat >Hind1 >Hind2 // 
   |#i1 #i2 #Hind1 #Hind2 >move_plus >Hind1 >Hind2 // 
@@ -232,17 +333,17 @@ lemma move_pit: ∀S,a,i. move S a (\fst (pit_pre S i)) = pit_pre S i.
 qed. 
 
 lemma moves_pit: ∀S,w,i. moves S w (pit_pre S i) = pit_pre S i.
-#S #w #i elim w // 
-qed. 
+#S #w #i elim w // #a #w1 #H normalize >move_pit @H 
+qed.  
  
 (* If any character in w does not occur in i, then moves(i,w) gets
 to the pit state. *)
 
-lemma to_pit: ∀S,w,e. ¬ sublist S w (occur S (|\fst e|)) →
- moves S w e = pit_pre S (\fst e).
+lemma to_pit: ∀S,w,e. ¬ sublist S w (occur S (|fst ?? e|)) →
+ moves S w e = pit_pre S (fst ?? e).
 #S #w elim w
   [#e * #H @False_ind @H normalize #a #abs @False_ind /2/
-  |#a #tl #Hind #e #H cases (true_or_false (memb S a (occur S (|\fst e|))))
+  |#a #tl #Hind #e #H cases (true_or_false (memb S a (occur S (|fst ?? e|))))
     [#Htrue >moves_cons whd in ⊢ (???%); <(same_kernel … a) 
      @Hind >same_kernel @(not_to_not … H) #H1 #b #memb cases (orb_true_l … memb)
       [#H2 >(\P H2) // |#H2 @H1 //]

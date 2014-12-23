@@ -297,14 +297,14 @@ lemma true_to_epsilon : ∀S.∀e:pre S. snd … e = true → ϵ ∈ e.
 #S * #i #b #btrue normalize in btrue; >btrue %2 // 
 qed.
 
-lemma minus_eps_item: ∀S.∀i:pitem S. \sem{i} ≐ \sem{i}-{[ ]}.
+lemma minus_eps_item: ∀S.∀i:pitem S. \sem{i} ≐ \sem{i}-{ϵ}.
 #S #i #w % 
   [#H whd % // normalize @(not_to_not … (not_epsilon_lp …i)) //
   |* //
   ]
 qed.
 
-lemma minus_eps_pre: ∀S.∀e:pre S. \sem{fst ?? e} ≐ \sem{e}-{[ ]}.
+lemma minus_eps_pre: ∀S.∀e:pre S. \sem{fst ?? e} ≐ \sem{e}-{ϵ}.
 #S * #i * 
   [>sem_pre_true normalize in ⊢ (??%?); #w % 
     [/3/ | * * // #H1 #H2 @False_ind @(absurd …H1 H2)]

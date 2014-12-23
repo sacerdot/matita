@@ -206,7 +206,7 @@ them in turn, in a way that will be described at the end of this section.
 
 (********************************** Predicates ********************************)
 
-(*I nstead of working with functions, it is sometimes convenient to work with
+(* Instead of working with functions, it is sometimes convenient to work with
 predicates. For instance, instead of defining a function computing the opposite 
 bank, we could declare a predicate stating when two banks are opposite to each 
 other. Only two cases are possible, leading naturally to the following 

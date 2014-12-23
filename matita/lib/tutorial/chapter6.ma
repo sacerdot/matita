@@ -343,6 +343,20 @@ let rec memb (S:DeqSet) (x:S) (l: list S) on l  ≝
   | cons a tl ⇒ (x == a) ∨ memb S x tl
   ].
   
+lemma memb_hd: ∀S,a,l. memb S a (a::l) = true.
+#S #a #l normalize >(proj2 … (eqb_true S …) (refl S a)) //
+qed.
+
+lemma memb_cons: ∀S,a,b,l. 
+  memb S a l = true → memb S a (b::l) = true.
+#S #a #b #l normalize cases (a==b) normalize // 
+qed.
+
+lemma memb_single: ∀S,a,x. memb S a [x] = true → a = x.
+#S #a #x normalize cases (true_or_false … (a==x)) #H
+  [#_ >(\P H) // |>H normalize #abs @False_ind /2/]
+qed.
+
 let rec uniqueb (S:DeqSet) l on l : bool ≝
   match l with 
   [ nil ⇒ true
@@ -405,7 +419,7 @@ lemma memb_map_to_exists: ∀A,B:DeqSet.∀f:A→B.∀l,b.
 #A #B #f #l elim l 
   [#b normalize #H destruct (H) 
   |#a #tl #Hind #b #H cases (orb_true_l … H) 
-    [#eqb @(ex_intro … a) <(\P eqb) % // normalize >(\b (refl ? a)) //
+    [#eqb @(ex_intro … a) <(\P eqb) % // 
     |#memb cases (Hind … memb) #a * #mema #eqb
      @(ex_intro … a) /3/
     ]

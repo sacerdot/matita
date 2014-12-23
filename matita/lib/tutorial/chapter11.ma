@@ -2,20 +2,20 @@
 Regular Expressions Equivalence
 *)
 
-include "tutorial/chapter9.ma".
+include "tutorial/chapter10.ma".
 
 (* We say that two pres 〈i_1,b_1〉 and 〈i_1,b_1〉 are {\em cofinal} if and 
 only if b_1 = b_2. *)
 
 definition cofinal ≝ λS.λp:(pre S)×(pre S). 
-  \snd (\fst p) = \snd (\snd p).
+  snd ?? (fst ?? p) = snd ?? (snd ?? p).
 
 (* As a corollary of decidable_sem, we have that two expressions
 e1 and e2 are equivalent iff for any word w the states reachable 
 through w are cofinal. *)
 
 theorem equiv_sem: ∀S:DeqSet.∀e1,e2:pre S. 
-  \sem{e1} =1 \sem{e2} ↔ ∀w.cofinal ? 〈moves ? w e1,moves ? w e2〉.
+  \sem{e1} ≐ \sem{e2} ↔ ∀w.cofinal ? 〈moves ? w e1,moves ? w e2〉.
 #S #e1 #e2 % 
 [#same_sem #w 
   cut (∀b1,b2. iff (b1 = true) (b2 = true) → (b1 = b2)) 
@@ -31,7 +31,7 @@ of S. Instead of requiring S to be finite, we may restrict the analysis
 to characters occurring in the given pres. *)
 
 definition occ ≝ λS.λe1,e2:pre S. 
-  unique_append ? (occur S (|\fst e1|)) (occur S (|\fst e2|)).
+  unique_append ? (occur S (|fst ?? e1|)) (occur S (|fst ?? e2|)).
 
 lemma occ_enough: ∀S.∀e1,e2:pre S.
 (∀w.(sublist S w (occ S e1 e2))→ cofinal ? 〈moves ? w e1,moves ? w e2〉)
@@ -48,7 +48,7 @@ occurring the given regular expressions. *)
 
 lemma equiv_sem_occ: ∀S.∀e1,e2:pre S.
 (∀w.(sublist S w (occ S e1 e2))→ cofinal ? 〈moves ? w e1,moves ? w e2〉)
-→ \sem{e1}=1\sem{e2}.
+→ \sem{e1} ≐ \sem{e2}.
 #S #e1 #e2 #H @(proj2 … (equiv_sem …)) @occ_enough #w @H 
 qed.
 
@@ -61,11 +61,11 @@ w.r.t. moves, and all its members are cofinal.
 *)
 
 definition sons ≝ λS:DeqSet.λl:list S.λp:(pre S)×(pre S). 
- map ?? (λa.〈move S a (\fst (\fst p)),move S a (\fst (\snd p))〉) l.
+ map ?? (λa.〈move S a (fst … (fst … p)),move S a (fst … (snd … p))〉) l.
 
 lemma memb_sons: ∀S,l.∀p,q:(pre S)×(pre S). memb ? p (sons ? l q) = true →
-  ∃a.(move ? a (\fst (\fst q)) = \fst p ∧
-      move ? a (\fst (\snd q)) = \snd p).
+  ∃a.(move ? a (fst … (fst … q)) = fst … p ∧
+      move ? a (fst … (snd … q)) = snd … p).
 #S #l elim l [#p #q normalize in ⊢ (%→?); #abs @False_ind /2/] 
 #a #tl #Hind #p #q #H cases (orb_true_l … H) -H
   [#H @(ex_intro … a) >(\P H) /2/ |#H @Hind @H]
@@ -74,16 +74,27 @@ qed.
 definition is_bisim ≝ λS:DeqSet.λl:list ?.λalpha:list S.
   ∀p:(pre S)×(pre S). memb ? p l = true → cofinal ? p ∧ (sublist ? (sons ? alpha p) l).
 
+(* We define an elimination principle for lists working on the tail, that we
+be used in the sequel *)
+
+lemma list_elim_left: ∀S.∀P:list S → Prop. P (nil S) →
+(∀a.∀tl.P tl → P (tl@[a])) → ∀l. P l.
+#S #P #Pnil #Pstep #l <(reverse_reverse … l) 
+generalize in match (reverse S l); #l elim l //
+#a #tl #H >reverse_cons @Pstep //
+qed.
+
 (* Using lemma equiv_sem_occ it is easy to prove the following result: *)
 
 lemma bisim_to_sem: ∀S:DeqSet.∀l:list ?.∀e1,e2: pre S. 
-  is_bisim S l (occ S e1 e2) → memb ?〈e1,e2〉 l = true → \sem{e1}=1\sem{e2}.
+  is_bisim S l (occ S e1 e2) → memb ?〈e1,e2〉 l = true → \sem{e1} ≐ \sem{e2}.
 #S #l #e1 #e2 #Hbisim #Hmemb @equiv_sem_occ 
 #w #Hsub @(proj1 … (Hbisim 〈moves S w e1,moves S w e2〉 ?))
 lapply Hsub @(list_elim_left … w) [//]
 #a #w1 #Hind #Hsub >moves_left >moves_left @(proj2 …(Hbisim …(Hind ?)))
   [#x #Hx @Hsub @memb_append_l1 //
-  |cut (memb S a (occ S e1 e2) = true) [@Hsub @memb_append_l2 //] #occa 
+  |cut (memb S a (occ S e1 e2) = true) 
+    [@Hsub @memb_append_l2 normalize >(\b (refl … a)) //] #occa 
    @(memb_map … occa)
   ]
 qed.
@@ -120,7 +131,7 @@ let rec bisim S l n (frontier,visited: list ?) on n ≝
     match frontier with
     [ nil ⇒ 〈true,visited〉
     | cons hd tl ⇒
-      if beqb (\snd (\fst hd)) (\snd (\snd hd)) then
+      if beqb (snd … (fst … hd)) (snd … (snd … hd)) then
         bisim S l m (unique_append ? (filter ? (λx.notb (memb ? x (hd::visited))) 
         (sons S l hd)) tl) (hd::visited)
       else 〈false,visited〉
@@ -143,7 +154,7 @@ lemma unfold_bisim: ∀S,l,n.∀frontier,visited: list ?.
     match frontier with
     [ nil ⇒ 〈true,visited〉
     | cons hd tl ⇒
-      if beqb (\snd (\fst hd)) (\snd (\snd hd)) then
+      if beqb (snd … (fst … hd)) (snd … (snd … hd)) then
         bisim S l m (unique_append ? (filter ? (λx.notb(memb ? x (hd::visited))) 
           (sons S l hd)) tl) (hd::visited)
       else 〈false,visited〉
@@ -162,7 +173,7 @@ lemma bisim_end: ∀Sig,l,m.∀visited: list ?.
 qed.
 
 lemma bisim_step_true: ∀Sig,l,m.∀p.∀frontier,visited: list ?.
-beqb (\snd (\fst p)) (\snd (\snd p)) = true →
+beqb (snd … (fst … p)) (snd … (snd … p)) = true →
   bisim Sig l (S m) (p::frontier) visited = 
   bisim Sig l m (unique_append ? (filter ? (λx.notb(memb ? x (p::visited))) 
     (sons Sig l p)) frontier) (p::visited).
@@ -170,7 +181,7 @@ beqb (\snd (\fst p)) (\snd (\snd p)) = true →
 qed.
 
 lemma bisim_step_false: ∀Sig,l,m.∀p.∀frontier,visited: list ?.
-beqb (\snd (\fst p)) (\snd (\snd p)) = false →
+beqb (snd … (fst ?? p)) (snd ?? (snd ?? p)) = false →
   bisim Sig l (S m) (p::frontier) visited = 〈false,visited〉.
 #Sig #l #m #p #frontier #visited #test >unfold_bisim whd in ⊢ (??%?); >test // 
 qed.
@@ -206,7 +217,7 @@ definition pre_enum ≝ λS.λi:re S.
   compose ??? (λi,b.〈i,b〉) ( pitem_enum S i) (true::false::[]).
   
 lemma pre_enum_complete : ∀S.∀e:pre S.
-  memb ? e (pre_enum S (|\fst e|)) = true.
+  memb ? e (pre_enum S (|fst ?? e|)) = true.
 #S * #i #b @(memb_compose (DeqItem S) DeqBool ? (λi,b.〈i,b〉))
 // cases b normalize //
 qed.
@@ -215,15 +226,16 @@ definition space_enum ≝ λS.λi1,i2: re S.
   compose ??? (λe1,e2.〈e1,e2〉) ( pre_enum S i1) (pre_enum S i2).
 
 lemma space_enum_complete : ∀S.∀e1,e2: pre S.
-  memb ? 〈e1,e2〉 ( space_enum S (|\fst e1|) (|\fst e2|)) = true.
-#S #e1 #e2 @(memb_compose … (λi,b.〈i,b〉))
-// qed.
+  memb ? 〈e1,e2〉 ( space_enum S (|fst ?? e1|) (|fst ?? e2|)) = true.
+#S #e1 #e2 @(memb_compose ?? (DeqProd (DeqProd ??) (DeqProd ??)) (λi,b.〈i,b〉))
+// qed. 
 
-definition all_reachable ≝ λS.λe1,e2: pre S.λl: list ?.
+definition all_reachable ≝ λS.λe1,e2:pre S.
+λl: list (DeqProd (DeqProd ??) (DeqProd ??)).
 uniqueb ? l = true ∧ 
   ∀p. memb ? p l = true → 
-    ∃w.(moves S w e1 = \fst p) ∧ (moves S w e2 = \snd p). 
-
+    ∃w.(moves S w e1 = fst ?? p) ∧ (moves S w e2 = snd ?? p).
+    
 definition disjoint ≝ λS:DeqSet.λl1,l2.
   ∀p:S. memb S p l1 = true →  memb S p l2 = false.
         
@@ -232,25 +244,48 @@ that at each call of bisim the two lists visited and frontier only contain
 nodes reachable from 〈e_1,e_2〉, hence it is absurd to suppose to meet a pair 
 which is not cofinal. *)
 
-lemma bisim_correct: ∀S.∀e1,e2:pre S.\sem{e1}=1\sem{e2} → 
+(* we first prove a few auxiliary results *)
+lemma memb_filter_memb: ∀S,f,a,l. 
+  memb S a (filter S f l) = true → memb S a l = true.
+#S #f #a #l elim l [normalize //] #b #tl #Hind normalize (cases (f b)) normalize 
+cases (a==b) normalize // @Hind
+qed.
+  
+lemma filter_true: ∀S,f,a,l. 
+  memb S a (filter S f l) = true → f a = true.
+#S #f #a #l elim l [normalize #H @False_ind /2/] #b #tl #Hind 
+cases (true_or_false (f b)) #H normalize >H normalize [2:@Hind]
+cases (true_or_false (a==b)) #eqab [#_ >(\P eqab) // | >eqab normalize @Hind]
+qed. 
+
+lemma memb_filter_l: ∀S,f,x,l. (f x = true) → memb S x l = true →
+memb S x (filter ? f l) = true.
+#S #f #x #l #fx elim l normalize //
+#b #tl #Hind cases (true_or_false (x==b)) #eqxb
+  [<(\P eqxb) >(\b (refl … x)) >fx normalize >(\b (refl … x)) normalize //
+  |>eqxb cases (f b) normalize [>eqxb normalize @Hind| @Hind]
+  ]
+qed. 
+
+lemma bisim_correct: ∀S.∀e1,e2:pre S.\sem{e1} ≐ \sem{e2} → 
  ∀l,n.∀frontier,visited:list ((pre S)×(pre S)).
- |space_enum S (|\fst e1|) (|\fst e2|)| < n + |visited|→
+ |space_enum S (|fst ?? e1|) (|fst ?? e2|)| < n + |visited|→
  all_reachable S e1 e2 visited →  
  all_reachable S e1 e2 frontier →
  disjoint ? frontier visited →
- \fst (bisim S l n frontier visited) = true.
+ fst ?? (bisim S l n frontier visited) = true.
 #Sig #e1 #e2 #same #l #n elim n 
   [#frontier #visited #abs * #unique #H @False_ind @(absurd … abs)
    @le_to_not_lt @sublist_length // * #e11 #e21 #membp 
-   cut ((|\fst e11| = |\fst e1|) ∧ (|\fst e21| = |\fst e2|))
+   cut ((|fst ?? e11| = |fst ?? e1|) ∧ (|fst ?? e21| = |fst ?? e2|))
    [|* #H1 #H2 <H1 <H2 @space_enum_complete]
-   cases (H … membp) #w * #we1 #we2 <we1 <we2 % >same_kernel_moves //    
+   cases (H … membp) #w * normalize #we1 #we2 <we1 <we2 % >same_kernel_moves //    
   |#m #HI * [#visited #vinv #finv >bisim_end //]
    #p #front_tl #visited #Hn * #u_visited #r_visited * #u_frontier #r_frontier 
    #disjoint
-   cut (∃w.(moves ? w e1 = \fst p) ∧ (moves ? w e2 = \snd p)) 
+   cut (∃w.(moves ? w e1 = fst ?? p) ∧ (moves ? w e2 = snd ?? p)) 
     [@(r_frontier … (memb_hd … ))] #rp
-   cut (beqb (\snd (\fst p)) (\snd (\snd p)) = true)
+   cut (beqb (snd ?? (fst ?? p)) (snd ?? (snd ?? p)) = true)
     [cases rp #w * #fstp #sndp <fstp <sndp @(\b ?) 
      @(proj1 … (equiv_sem … )) @same] #ptest 
    >(bisim_step_true … ptest) @HI -HI 
@@ -261,12 +296,13 @@ lemma bisim_correct: ∀S.∀e1,e2:pre S.\sem{e1}=1\sem{e2} →
      |whd % [@unique_append_unique @(andb_true_r … u_frontier)]
       @unique_append_elim #q #H
        [cases (memb_sons … (memb_filter_memb … H)) -H
+       
         #a * #m1 #m2 cases rp #w1 * #mw1 #mw2 @(ex_intro … (w1@(a::[])))
         >moves_left >moves_left >mw1 >mw2 >m1 >m2 % // 
        |@r_frontier @memb_cons //
        ]
      |@unique_append_elim #q #H
-       [@injective_notb @(memb_filter_true … H)
+       [@injective_notb @(filter_true … H)
        |cut ((q==p) = false) 
          [|#Hpq whd in ⊢ (??%?); >Hpq @disjoint @memb_cons //]
         cases (andb_true … u_frontier) #notp #_ @(\bf ?) 
@@ -281,7 +317,7 @@ and the sons of visited are either in visited or in the frontier; since
 at the end frontier is empty, visited is hence a bisimulation. *)
 
 definition all_true ≝ λS.λl.∀p:(pre S) × (pre S). memb ? p l = true → 
-  (beqb (\snd (\fst p)) (\snd (\snd p)) = true).
+  (beqb (snd ?? (fst ?? p)) (snd ?? (snd ?? p)) = true).
 
 definition sub_sons ≝ λS,l,l1,l2.∀x:(pre S) × (pre S). 
 memb ? x l1 = true → sublist ? (sons ? l x) l2. 
@@ -299,7 +335,7 @@ lemma bisim_complete:
      -Hind #vis #vis_res #allv #H normalize in  ⊢ (%→?);
      #H1 destruct % #p 
       [#membp % [@(\P ?) @allv //| @H //]|#H1 @H1]
-    |#hd cases (true_or_false (beqb (\snd (\fst hd)) (\snd (\snd hd))))
+    |#hd cases (true_or_false (beqb (snd ?? (fst ?? hd)) (snd ?? (snd ?? hd))))
       [|(* case head of the frontier is non ok (absurd) *)
        #H #tl #vis #vis_res #allv >(bisim_step_false … H) #_ #H1 destruct]
      (* frontier = hd:: tl and hd is ok *)
@@ -324,8 +360,8 @@ lemma bisim_complete:
         was already visited form the case xa is new *)
        cases (true_or_false … (memb ? xa (x::visited)))
         [(* xa visited - trivial *) #membxa @memb_append_l2 //
-        |(* xa new *) #membxa @memb_append_l1 @sublist_unique_append_l1 @memb_filter_l
-          [>membxa //|//]
+        |(* xa new *) #membxa @memb_append_l1 @sublist_unique_append_l1 
+         @memb_filter_l [>membxa //|//]
         ]
       |(* case x in visited *)
        #H1 #xa #membxa cases (memb_append … (subH x … H1 … membxa))  
@@ -347,15 +383,15 @@ the same language. *)
 definition equiv ≝ λSig.λre1,re2:re Sig. 
   let e1 ≝ •(blank ? re1) in
   let e2 ≝ •(blank ? re2) in
-  let n ≝ S (length ? (space_enum Sig (|\fst e1|) (|\fst e2|))) in
+  let n ≝ S (length ? (space_enum Sig (|fst ?? e1|) (|fst ?? e2|))) in
   let sig ≝ (occ Sig e1 e2) in
   (bisim ? sig n (〈e1,e2〉::[]) []).
 
 theorem euqiv_sem : ∀Sig.∀e1,e2:re Sig.
-   \fst (equiv ? e1 e2) = true ↔ \sem{e1} =1 \sem{e2}.
+   fst ?? (equiv ? e1 e2) = true ↔ \sem{e1} ≐ \sem{e2}.
 #Sig #re1 #re2 %
   [#H @eqP_trans [|@eqP_sym @re_embedding] @eqP_trans [||@re_embedding]
-   cut (equiv ? re1 re2 = 〈true,\snd (equiv ? re1 re2)〉)
+   cut (equiv ? re1 re2 = 〈true,snd ?? (equiv ? re1 re2)〉)
      [<H //] #Hcut
    cases (bisim_complete … Hcut) 
      [2,3: #p whd in ⊢ ((??%?)→?); #abs @False_ind /2/] 
@@ -393,5 +429,5 @@ definition exp7 ≝ a · a^* · b^*.
 definition exp8 ≝ a·a·a·a·a·a·a·a·(a^* ).
 definition exp9 ≝ (a·a·a + a·a·a·a·a)^*.
 
-example ex1 : \fst (equiv ? (exp8+exp9) exp9) = true.
+example ex1 : fst ?? (equiv ? (exp8+exp9) exp9) = true.
 normalize // qed.
