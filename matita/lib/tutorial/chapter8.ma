@@ -270,8 +270,8 @@ lemma sem_star_w : ∀S.∀i:pitem S.∀w.
 (* Below are a few, simple, semantic properties of items. In particular:
 - not_epsilon_item : ∀S:DeqSet.∀i:pitem S. ¬ (\sem{i} ϵ).
 - epsilon_pre : ∀S.∀e:pre S. (\sem{i} ϵ) ↔ (\snd e = true).
-- minus_eps_item: ∀S.∀i:pitem S. \sem{i} =1 \sem{i}-{[ ]}.
-- minus_eps_pre: ∀S.∀e:pre S. \sem{\fst e} =1 \sem{e}-{[ ]}.
+- minus_eps_item: ∀S.∀i:pitem S. \sem{i} ≐ \sem{i}-{[ ]}.
+- minus_eps_pre: ∀S.∀e:pre S. \sem{\fst e} ≐ \sem{e}-{[ ]}.
 The first property is proved by a simple induction on $i$; the other
 results are easy corollaries. We need an auxiliary lemma first. *)
 

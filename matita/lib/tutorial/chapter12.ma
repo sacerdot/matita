@@ -50,7 +50,7 @@ record setoid : Type[1] ≝ {
 (* Note that carrier has been defined as a coercion so that when S is a setoid
  we can write x:S in place of x: carrier S. *)
 
-(* We use the notation ≃ for the equality over setoid elements. *)
+(* We use the notation ≃ for the equality on setoid elements. *)
 notation "hvbox(n break ≃ m)"
   non associative with precedence 45
 for @{ 'congruent $n $m }.
