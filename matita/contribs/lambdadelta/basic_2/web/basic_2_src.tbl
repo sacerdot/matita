@@ -229,7 +229,7 @@ table {
              [ "frees ( ? ⊢ ? ϵ 𝐅*[?]⦃?⦄ )" "frees_append" + "frees_lreq" + "frees_lift" * ]
           }
         ]
-        [ { "contxt-sensitive multiple rt-substitution" * } {
+        [ { "context-sensitive multiple rt-substitution" * } {
              [ "cpys ( ⦃?,?⦄ ⊢ ? ▶*[?,?] ? )" "cpys_alt ( ⦃?,?⦄ ⊢ ? ▶▶*[?,?] ? )" "cpys_lift" + "cpys_cpys" * ]
           }
         ]
@@ -264,7 +264,7 @@ table {
              [ "gget ( ⬇[?] ? ≡ ? )" "gget_gget" * ]
           }
         ]
-        [ { "contxt-sensitive ordinary rt-substitution" * } {
+        [ { "context-sensitive ordinary rt-substitution" * } {
              [ "cpy ( ⦃?,?⦄ ⊢ ? ▶[?,?] ? )" "cpy_lift" + "cpy_nlift" + "cpy_cpy" * ]
           }
         ]

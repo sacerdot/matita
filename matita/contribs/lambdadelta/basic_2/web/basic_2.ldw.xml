@@ -20,7 +20,7 @@
 -->
 
    <section4 name="summary">Summary of the Specification</section4>
-   <body>Here is a numerical acount of the specification's contents
+   <body>Here is a numerical account of the specification's contents
          and its timeline.
    </body>
    <table name="basic_2_sum"/>
@@ -49,7 +49,7 @@
    </news>
    <news class="alpha" date="2014 April 16.">
          Lazy equivalence on local environments
-	 addded as q-step to rst-computation on closures
+	 added as q-step to rst-computation on closures
          (anniversary milestone).
    </news>
    <news class="alpha" date="2014 January 20.">
