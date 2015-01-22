@@ -9,7 +9,7 @@ table {
         ]
      }
    ]
-   class "yellow"
+   class "grass"
    [ { "natural numbers with infinity" * } {
         [ { "" * } {
            [ "ynat ( ∞ )" "ynat_pred ( ⫰? )" "ynat_succ ( ⫯? )"
@@ -21,7 +21,7 @@ table {
         ]
      }
    ]
-   class "orange"
+   class "yellow"
    [ { "extensions to the library" * } {
         [ { "" * } {
              [ "star" "lstar" "bool ( Ⓕ ) ( Ⓣ )" "arith ( ?^? )"
@@ -31,10 +31,18 @@ table {
         ]
      }
    ]
-   class "red"
+   class "orange"
    [ { "generated logical decomposables" * } {
         [ { "" * } {
              [ "xoa ( ∃∃ ) ( ∨∨ ) ( ∧∧ )" "xoa_props ( ⊥ ) ( ⊤ )" * ]
+          }
+        ]
+     }
+   ]
+   class "red"
+   [ { "" * } {
+        [ { "" * } {
+             [ * ]
           }
         ]
      }
