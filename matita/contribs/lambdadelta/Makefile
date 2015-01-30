@@ -40,9 +40,6 @@ XPACKAGES := ground_2 basic_2
 LDWS := $(shell find -name "*.ldw.xml")
 TBLS := $(shell find -name "*.tbl")
 
-all:
-	../../matitac.opt
-
 # MAS ########################################################################
 
 define MAS_TEMPLATE
@@ -59,6 +56,10 @@ $(1)/$(1)_mac.txt: $$(MAS_$(1))
 endef
 
 $(foreach PKG, $(PACKAGES), $(eval $(call MAS_TEMPLATE,$(PKG))))
+
+all:
+	@echo "  MATITAC $(PACKAGES)"
+	$(H)../../matitac.opt $(MAS)
 
 # XMAS #######################################################################
 

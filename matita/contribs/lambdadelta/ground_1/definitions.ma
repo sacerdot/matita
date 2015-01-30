@@ -14,9 +14,9 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Ground-1/types/defs.ma".
+include "ground_1/types/defs.ma".
 
-include "Ground-1/blt/defs.ma".
+include "ground_1/blt/defs.ma".
 
-include "Ground-1/plist/defs.ma".
+include "ground_1/plist/defs.ma".
 

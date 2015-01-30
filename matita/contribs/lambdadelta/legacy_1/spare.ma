@@ -14,5 +14,5 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Legacy-1/theory.ma".
+include "legacy_1/theory.ma".
 

@@ -14,9 +14,9 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Legacy-1/preamble.ma".
+include "legacy_1/preamble.ma".
 
-inductive eq (A: Set) (x: A): A \to Prop \def
+inductive eq (A: Type[0]) (x: A): A \to Prop \def
 | refl_equal: eq A x x.
 
 inductive True: Prop \def
@@ -29,10 +29,10 @@ inductive or (A: Prop) (B: Prop): Prop \def
 | or_introl: A \to (or A B)
 | or_intror: B \to (or A B).
 
-inductive ex (A: Set) (P: A \to Prop): Prop \def
+inductive ex (A: Type[0]) (P: A \to Prop): Prop \def
 | ex_intro: \forall (x: A).((P x) \to (ex A P)).
 
-inductive ex2 (A: Set) (P: A \to Prop) (Q: A \to Prop): Prop \def
+inductive ex2 (A: Type[0]) (P: A \to Prop) (Q: A \to Prop): Prop \def
 | ex_intro2: \forall (x: A).((P x) \to ((Q x) \to (ex2 A P Q))).
 
 definition not:
@@ -40,11 +40,11 @@ definition not:
 \def
  \lambda (A: Prop).(A \to False).
 
-inductive bool: Set \def
+inductive bool: Type[0] \def
 | true: bool
 | false: bool.
 
-inductive nat: Set \def
+inductive nat: Type[0] \def
 | O: nat
 | S: nat \to nat.
 
@@ -68,32 +68,26 @@ definition pred:
 \def
  \lambda (n: nat).(match n with [O \Rightarrow O | (S u) \Rightarrow u]).
 
-definition plus:
- nat \to (nat \to nat)
-\def
- let rec plus (n: nat) on n: (nat \to nat) \def (\lambda (m: nat).(match n 
-with [O \Rightarrow m | (S p) \Rightarrow (S (plus p m))])) in plus.
+let rec plus (n: nat) on n: nat \to nat \def \lambda (m: nat).(match n with 
+[O \Rightarrow m | (S p) \Rightarrow (S (plus p m))]).
 
-definition minus:
- nat \to (nat \to nat)
-\def
- let rec minus (n: nat) on n: (nat \to nat) \def (\lambda (m: nat).(match n 
-with [O \Rightarrow O | (S k) \Rightarrow (match m with [O \Rightarrow (S k) 
-| (S l) \Rightarrow (minus k l)])])) in minus.
+let rec minus (n: nat) on n: nat \to nat \def \lambda (m: nat).(match n with 
+[O \Rightarrow O | (S k) \Rightarrow (match m with [O \Rightarrow (S k) | (S 
+l) \Rightarrow (minus k l)])]).
 
-inductive Acc (A: Set) (R: A \to (A \to Prop)): A \to Prop \def
+inductive Acc (A: Type[0]) (R: A \to (A \to Prop)): A \to Prop \def
 | Acc_intro: \forall (x: A).(((\forall (y: A).((R y x) \to (Acc A R y)))) \to 
 (Acc A R x)).
 
 definition well_founded:
- \forall (A: Set).(((A \to (A \to Prop))) \to Prop)
+ \forall (A: Type[0]).(((A \to (A \to Prop))) \to Prop)
 \def
- \lambda (A: Set).(\lambda (R: ((A \to (A \to Prop)))).(\forall (a: A).(Acc A 
-R a))).
+ \lambda (A: Type[0]).(\lambda (R: ((A \to (A \to Prop)))).(\forall (a: 
+A).(Acc A R a))).
 
 definition ltof:
- \forall (A: Set).(((A \to nat)) \to (A \to (A \to Prop)))
+ \forall (A: Type[0]).(((A \to nat)) \to (A \to (A \to Prop)))
 \def
- \lambda (A: Set).(\lambda (f: ((A \to nat))).(\lambda (a: A).(\lambda (b: 
-A).(lt (f a) (f b))))).
+ \lambda (A: Type[0]).(\lambda (f: ((A \to nat))).(\lambda (a: A).(\lambda 
+(b: A).(lt (f a) (f b))))).
 

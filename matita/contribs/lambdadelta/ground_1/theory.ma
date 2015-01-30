@@ -14,13 +14,13 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Ground-1/ext/tactics.ma".
+include "ground_1/ext/tactics.ma".
 
-include "Ground-1/ext/arith.ma".
+include "ground_1/types/props.ma".
 
-include "Ground-1/types/props.ma".
+include "ground_1/ext/arith.ma".
 
-include "Ground-1/blt/props.ma".
+include "ground_1/blt/props.ma".
 
-include "Ground-1/plist/props.ma".
+include "ground_1/plist/props.ma".
 

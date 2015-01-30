@@ -14,5 +14,5 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Ground-1/theory.ma".
+include "ground_1/theory.ma".
 

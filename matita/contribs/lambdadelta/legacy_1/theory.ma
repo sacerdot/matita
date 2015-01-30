@@ -14,5 +14,5 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Legacy-1/coq/props.ma".
+include "legacy_1/coq/props.ma".
 

@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Ground-1/plist/defs.ma".
+include "ground_1/plist/defs.ma".
 
 theorem papp_ss:
  \forall (is1: PList).(\forall (is2: PList).(eq PList (papp (Ss is1) (Ss 
@@ -28,7 +28,4 @@ nat).(\lambda (p: PList).(\lambda (H: ((\forall (is2: PList).(eq PList (papp
 (Ss (papp p is2)) (\lambda (p0: PList).(eq PList (PCons n (S n0) p0) (PCons n 
 (S n0) (Ss (papp p is2))))) (refl_equal PList (PCons n (S n0) (Ss (papp p 
 is2)))) (papp (Ss p) (Ss is2)) (H is2))))))) is1).
-(* COMMENTS
-Initial nodes: 151
-END *)
 
