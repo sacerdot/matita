@@ -261,34 +261,6 @@ let rec domain_of_term ?(loc = HExtlib.dummy_floc) ~context = function
       let where_dom =
         domain_of_term ~loc ~context:(string_of_name var :: context) where in
       body_dom @ type_dom @ where_dom
-  | Ast.LetRec (kind, defs, where) ->
-      let add_defs context =
-        List.fold_left
-          (fun acc (_, (var, _), _, _) -> string_of_name var :: acc
-          ) context defs in
-      let where_dom = domain_of_term ~loc ~context:(add_defs context) where in
-      let defs_dom =
-        List.fold_left
-          (fun dom (params, (_, typ), body, _) ->
-            let context' =
-             add_defs
-              (List.fold_left
-                (fun acc (var,_) -> string_of_name var :: acc)
-                context params)
-            in
-            List.rev
-             (snd
-               (List.fold_left
-                (fun (context,res) (var,ty) ->
-                  string_of_name var :: context,
-                  domain_of_term_option ~loc ~context ty @ res)
-                (add_defs context,[]) params))
-            @ dom
-            @ domain_of_term_option ~loc ~context:context' typ
-            @ domain_of_term ~loc ~context:context' body
-          ) [] defs
-      in
-      defs_dom @ where_dom
   | Ast.Ident (name, subst) ->
       (try
         (* the next line can raise Not_found *)
@@ -330,6 +302,10 @@ and domain_of_term_option ~loc ~context = function
 
 let domain_of_term ~context term = 
  uniq_domain (domain_of_term ~context term)
+
+let domain_of_term_option ~context = function
+   | None      -> []
+   | Some term -> domain_of_term ~context term
 
 let domain_of_obj ~context ast =
  assert (context = []);
@@ -376,6 +352,33 @@ let domain_of_obj ~context ast =
           (fun (context,res) (name,ty,_,_) ->
             Some name::context, res @ domain_of_term context ty
           ) (context_w_types,[]) fields)
+   | Ast.LetRec (kind, defs, _) ->
+       let add_defs context =
+         List.fold_left
+           (fun acc (_, (var, _), _, _) -> string_of_name var :: acc
+           ) context defs in
+       let defs_dom =
+         List.fold_left
+           (fun dom (params, (_, typ), body, _) ->
+             let context' =
+              add_defs
+               (List.fold_left
+                 (fun acc (var,_) -> string_of_name var :: acc)
+                 context params)
+             in
+             List.rev
+              (snd
+                (List.fold_left
+                 (fun (context,res) (var,ty) ->
+                   string_of_name var :: context,
+                   domain_of_term_option ~context ty @ res)
+                 (add_defs context,[]) params))
+             @ dom
+             @ domain_of_term_option ~context:context' typ
+             @ domain_of_term ~context:context' body
+           ) [] defs
+      in
+      defs_dom
 
 let domain_of_obj ~context obj = 
  uniq_domain (domain_of_obj ~context obj)

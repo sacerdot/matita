@@ -214,6 +214,7 @@ let pp_ast0 status t k =
               ];
             break;
             k t ])
+(*
     | Ast.LetRec (rec_kind, funs, where) ->
         let rec_op =
           match rec_kind with `Inductive -> "rec" | `CoInductive -> "corec"
@@ -261,6 +262,7 @@ let pp_ast0 status t k =
           ((hvbox false false
             (fst_row :: List.flatten tl_rows
              @ [ break; keyword "in"; break; k where ])))
+*)
     | Ast.Implicit `JustOne -> builtin_symbol "?"
     | Ast.Implicit `Vector -> builtin_symbol "…"
     | Ast.Meta (n, l) ->
@@ -594,9 +596,11 @@ let instantiate_level2 status env term =
           List.map (aux_branch env) patterns)
     | Ast.LetIn (var, t1, t3) ->
         Ast.LetIn (aux_capture_var env var, aux env t1, aux env t3)
+(*    
     | Ast.LetRec (kind, definitions, body) ->
         Ast.LetRec (kind, List.map (aux_definition env) definitions,
           aux env body)
+*)    
     | Ast.Uri (name, None) -> Ast.Uri (name, None)
     | Ast.Uri (name, Some substs) ->
         Ast.Uri (name, Some (aux_substs env substs))

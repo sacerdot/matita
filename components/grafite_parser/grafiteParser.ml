@@ -59,21 +59,8 @@ let add_raw_attribute ~text t = N.AttributedTerm (`Raw text, t)
 let default_associativity = Gramext.NonA
         
 let mk_rec_corec ind_kind defs loc = 
-  let name,ty = 
-    match defs with
-    | (params,(N.Ident (name, None), ty),_,_) :: _ ->
-        let ty = match ty with Some ty -> ty | None -> N.Implicit `JustOne in
-        let ty =
-         List.fold_right
-          (fun var ty -> N.Binder (`Pi,var,ty)
-          ) params ty
-        in
-         name,ty
-    | _ -> assert false 
-  in
-  let body = N.Ident (name,None) in
-   let attrs = `Provided, `Definition, `Regular in 
-   (loc, N.Theorem(name, ty, Some (N.LetRec (ind_kind, defs, body)), attrs))
+ let attrs = `Provided, `Definition, `Regular in
+  (loc, N.LetRec (ind_kind, defs, attrs))
 
 let nmk_rec_corec ind_kind defs loc index = 
  let loc,t = mk_rec_corec ind_kind defs loc in
@@ -255,6 +242,7 @@ EXTEND
    | IDENT "width"
    | IDENT "size"
    | IDENT "nohyps"
+(*   | IDENT "timeout" *)
    ]
 ];
   auto_params: [

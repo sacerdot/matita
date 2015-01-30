@@ -62,7 +62,7 @@ type 'term capture_variable = 'term * 'term option
 
 (** To be increased each time the term type below changes, used for "safe"
  * marshalling *)
-let magic = 6
+let magic = 7
 
 type term =
   (* CIC AST *)
@@ -76,8 +76,6 @@ type term =
       (* what to match, inductive type, out type, <pattern,action> list *)
   | Cast of term * term
   | LetIn of term capture_variable * term * term  (* name, body, where *)
-  | LetRec of induction_kind * (term capture_variable list * term capture_variable * term * int) list * term
-      (* (params, name, body, decreasing arg) list, where *)
   | Ident of string * subst list option
       (* literal, substitutions.
       * Some [] -> user has given an empty explicit substitution list 
@@ -187,6 +185,8 @@ type 'term obj =
        *)
   | Record of 'term capture_variable list * string * 'term * (string * 'term * bool * int) list
       (** left parameters, name, type, fields *)
+  | LetRec of induction_kind * ('term capture_variable list * 'term capture_variable * 'term * int) list * NCic.f_attr
+      (* (params, name, body, decreasing arg) list, attributes *)
 
 (** {2 Standard precedences} *)
 
@@ -194,4 +194,3 @@ let let_in_prec = 10
 let binder_prec = 20
 let apply_prec = 70
 let simple_prec = 90
-

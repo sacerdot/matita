@@ -308,7 +308,6 @@ let interpretate_term_and_interpretate_term_option (status: #NCic.status)
         in
         let cic_body = aux ~localize loc (cic_name :: context) body in
         NCic.LetIn (cic_name, cic_typ, cic_def, cic_body)
-    | NotationPt.LetRec (_kind, _defs, _body) -> NCic.Implicit `Term
     | NotationPt.Ident _
     | NotationPt.Uri _
     | NotationPt.NRef _ when is_path -> raise Disambiguate.PathNotWellFormed
@@ -435,47 +434,11 @@ let interpretate_obj status
       | None,_ ->
           NCic.Constant ([],name,Some (NCic.Implicit `Term),ty',attrs)
       | Some bo,_ ->
-        (match bo with
-         | NotationPt.LetRec (kind, defs, _) ->
-             let inductive = kind = `Inductive in
-             let _,obj_context =
-               List.fold_left
-                 (fun (i,acc) (_,(name,_),_,k) -> 
-                  (i+1, 
-                    (ncic_name_of_ident name, NReference.reference_of_spec uri 
-                     (if inductive then NReference.Fix (i,k,0)
-                      else NReference.CoFix i)) :: acc))
-                 (0,[]) defs
-             in
-             let inductiveFuns =
-               List.map
-                 (fun (params, (name, typ), body, decr_idx) ->
-                   let add_binders kind t =
-                    List.fold_right
-                     (fun var t -> 
-                        NotationPt.Binder (kind, var, t)) params t
-                   in
-                   let cic_body =
-                     interpretate_term status
-                       ~obj_context ~context ~env ~uri:None ~is_path:false
-                       (add_binders `Lambda body) 
-                   in
-                   let cic_type =
-                     interpretate_term_option status
-                       ~obj_context:[]
-                       ~context ~env ~uri:None ~is_path:false `Type
-                       (HExtlib.map_option (add_binders `Pi) typ)
-                   in
-                   ([],ncic_name_of_ident name, decr_idx, cic_type, cic_body))
-                 defs
-             in
-             NCic.Fixpoint (inductive,inductiveFuns,attrs)
-         | bo -> 
-             let bo = 
-               interpretate_term status
-                ~obj_context:[] ~context:[] ~env ~uri:None ~is_path:false bo
-             in
-             NCic.Constant ([],name,Some bo,ty',attrs)))
+          let bo = 
+            interpretate_term status
+             ~obj_context:[] ~context:[] ~env ~uri:None ~is_path:false bo
+          in
+          NCic.Constant ([],name,Some bo,ty',attrs))
  | NotationPt.Inductive (params,tyl) ->
     let context,params =
      let context,res =
@@ -586,6 +549,42 @@ let interpretate_obj status
      let attrs = `Provided, `Record field_names in
      uri, height, [], [], 
      NCic.Inductive (true,leftno,tyl,attrs)
+ | NotationPt.LetRec (kind, defs, attrs) ->
+     let inductive = kind = `Inductive in
+     let _,obj_context =
+       List.fold_left
+         (fun (i,acc) (_,(name,_),_,k) -> 
+          (i+1, 
+            (ncic_name_of_ident name, NReference.reference_of_spec uri 
+             (if inductive then NReference.Fix (i,k,0)
+              else NReference.CoFix i)) :: acc))
+         (0,[]) defs
+     in
+     let inductiveFuns =
+       List.map
+         (fun (params, (name, typ), body, decr_idx) ->
+           let add_binders kind t =
+            List.fold_right
+             (fun var t -> 
+                NotationPt.Binder (kind, var, t)) params t
+           in
+           let cic_body =
+             interpretate_term status
+               ~obj_context ~context ~env ~uri:None ~is_path:false
+               (add_binders `Lambda body) 
+           in
+           let cic_type =
+             interpretate_term_option status
+               ~obj_context:[]
+               ~context ~env ~uri:None ~is_path:false `Type
+               (HExtlib.map_option (add_binders `Pi) typ)
+           in
+           ([],ncic_name_of_ident name, decr_idx, cic_type, cic_body))
+         defs
+     in
+     let height = (* XXX calculate *) 0 in
+     uri, height, [], [], 
+     NCic.Fixpoint (inductive,inductiveFuns,attrs)
 ;;
 
 let disambiguate_term (status: #NCicCoercion.status) ~context ~metasenv ~subst

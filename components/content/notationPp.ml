@@ -116,28 +116,6 @@ let rec pp_term (status : #NCic.status) ?(pp_parens = true) t =
 (*           (pp_term ~pp_parens:true t2) *)
           (pp_term ~pp_parens:true t1)
           (pp_term ~pp_parens:true t3)
-    | Ast.LetRec (kind, definitions, term) ->
-	let rec get_guard i = function
-	   | []                   -> (*assert false*) Ast.Implicit `JustOne
-	   | [term, _] when i = 1 -> term
-	   | _ :: tl              -> get_guard (pred i) tl
-	in
-	let map (params, (id,typ), body, i) =
-         let typ =
-          match typ with
-             None -> Ast.Implicit `JustOne
-           | Some typ -> typ
-         in
-	   sprintf "%s %s on %s: %s \\def %s" 
-	      (pp_term ~pp_parens:false term)
-	      (String.concat " " (List.map (pp_capture_variable pp_term) params))
-	      (pp_term ~pp_parens:false (get_guard i params))
-	      (pp_term typ) (pp_term body)
-	in
-	sprintf "let %s %s in %s"
-          (match kind with `Inductive -> "rec" | `CoInductive -> "corec")
-          (String.concat " and " (List.map map definitions))
-          (pp_term term)
     | Ast.Ident (name, Some []) | Ast.Ident (name, None)
     | Ast.Uri (name, Some []) | Ast.Uri (name, None) -> name
     | Ast.NRef nref -> NReference.string_of_reference nref
@@ -328,6 +306,27 @@ let pp_obj pp_term = function
  | Ast.Record (params,name,ty,fields) ->
     "record " ^ name ^ " " ^ pp_params pp_term params ^ ": " ^ pp_term ty ^ 
     " \\def {" ^ pp_fields pp_term fields ^ "\n}"
+ | Ast.LetRec (kind, definitions, _) ->
+    let rec get_guard i = function
+       | []                   -> assert false (* Ast.Implicit `JustOne *)
+       | [term, _] when i = 1 -> term
+       | _ :: tl              -> get_guard (pred i) tl
+    in
+    let map (params, (id,typ), body, i) =
+     let typ =
+      match typ with
+         None -> assert false (* Ast.Implicit `JustOne *)
+       | Some typ -> typ
+     in
+       sprintf "%s %s on %s: %s \\def %s" 
+	  (pp_term id)
+	  (String.concat " " (List.map (pp_capture_variable pp_term) params))
+	  (pp_term (get_guard i params))
+	  (pp_term typ) (pp_term body)
+    in
+    sprintf "let %s %s"
+      (match kind with `Inductive -> "rec" | `CoInductive -> "corec")
+      (String.concat " and " (List.map map definitions))
 
 let rec pp_value (status: #NCic.status) = function
   | Env.TermValue t -> sprintf "$%s$" (pp_term status t)

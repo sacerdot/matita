@@ -130,9 +130,10 @@ let mk_elim status uri leftno it (outsort,suffix) pragma =
                List.map (function name -> name, None) args in
  let recno = List.length final_params in
  let where = recno - 1 in
+ let attrs = `Generated, `Definition, pragma in
  let res =
   NotationPt.LetRec (`Inductive,
-   [final_params, (rec_name,ty), bo, where], rec_name)
+   [final_params, (rec_name,ty), bo, where], attrs)
  in
 (*
   prerr_endline
@@ -166,9 +167,7 @@ let mk_elim status uri leftno it (outsort,suffix) pragma =
      (function x::_ -> x | _ -> assert false) 80 
      (NotationPres.mpres_of_box boxml)));
 *)
-  let attrs = `Generated, `Definition, pragma in
-  NotationPt.Theorem
-   (srec_name, NotationPt.Implicit `JustOne, Some res, attrs)
+  res
 ;;
 
 let ast_of_sort s =
@@ -299,18 +298,17 @@ let mk_projection status leftno tyname consname consty (projname,_,_) i =
  in
  let params,bo = aux [] consty leftno in
  let pprojname = mk_id projname in
+ let attrs = `Generated, `Definition, `Projection in
  let res =
   NotationPt.LetRec (`Inductive,
-   [params, (pprojname,None), bo, leftno], pprojname) in
+   [params, (pprojname,None), bo, leftno], attrs) in
 (* prerr_endline
    (BoxPp.render_to_string
      ~map_unicode_to_tex:false
      (function x::_ -> x | _ -> assert false)
      80 (NotationPres.render (fun _ -> None)
      (TermContentPres.pp_ast res)));*)
-  let attrs = `Generated, `Definition, `Projection in
-  NotationPt.Theorem
-   (projname, NotationPt.Implicit `JustOne, Some res, attrs)
+   res
 ;;
 
 let mk_projections status (_,_,_,_,obj) =
