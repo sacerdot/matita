@@ -55,7 +55,7 @@ inductive le (n: nat): nat \to Prop \def
 definition lt:
  nat \to (nat \to Prop)
 \def
- \lambda (n: nat).(\lambda (m: nat).(le (S n) m)).
+ \lambda (n: nat).(\lambda (m: nat).(let TMP_1 \def (S n) in (le TMP_1 m))).
 
 definition IsSucc:
  nat \to Prop
@@ -69,7 +69,8 @@ definition pred:
  \lambda (n: nat).(match n with [O \Rightarrow O | (S u) \Rightarrow u]).
 
 let rec plus (n: nat) on n: nat \to nat \def \lambda (m: nat).(match n with 
-[O \Rightarrow m | (S p) \Rightarrow (S (plus p m))]).
+[O \Rightarrow m | (S p) \Rightarrow (let TMP_2 \def (plus p m) in (S 
+TMP_2))]).
 
 let rec minus (n: nat) on n: nat \to nat \def \lambda (m: nat).(match n with 
 [O \Rightarrow O | (S k) \Rightarrow (match m with [O \Rightarrow (S k) | (S 
@@ -89,5 +90,6 @@ definition ltof:
  \forall (A: Type[0]).(((A \to nat)) \to (A \to (A \to Prop)))
 \def
  \lambda (A: Type[0]).(\lambda (f: ((A \to nat))).(\lambda (a: A).(\lambda 
-(b: A).(lt (f a) (f b))))).
+(b: A).(let TMP_4 \def (f a) in (let TMP_3 \def (f b) in (lt TMP_4 
+TMP_3)))))).
 
