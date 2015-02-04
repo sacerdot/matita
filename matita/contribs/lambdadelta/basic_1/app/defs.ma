@@ -14,18 +14,12 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/C/defs.ma".
+include "basic_1/C/defs.ma".
 
-definition cbk:
- C \to nat
-\def
- let rec cbk (c: C) on c: nat \def (match c with [(CSort m) \Rightarrow m | 
-(CHead c0 _ _) \Rightarrow (cbk c0)]) in cbk.
+let rec cbk (c: C) on c: nat \def match c with [(CSort m) \Rightarrow m | 
+(CHead c0 _ _) \Rightarrow (cbk c0)].
 
-definition app1:
- C \to (T \to T)
-\def
- let rec app1 (c: C) on c: (T \to T) \def (\lambda (t: T).(match c with 
-[(CSort _) \Rightarrow t | (CHead c0 k u) \Rightarrow (app1 c0 (THead k u 
-t))])) in app1.
+let rec app1 (c: C) on c: T \to T \def \lambda (t: T).(match c with [(CSort 
+_) \Rightarrow t | (CHead c0 k u) \Rightarrow (let TMP_1 \def (THead k u t) 
+in (app1 c0 TMP_1))]).
 

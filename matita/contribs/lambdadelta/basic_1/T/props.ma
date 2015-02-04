@@ -62,3 +62,16 @@ TMP_9 \def (tweight t1) in (let TMP_10 \def (plus TMP_8 TMP_9) in (let TMP_11
 in (let TMP_14 \def (le_plus_trans TMP_11 TMP_12 TMP_13 H) in (le_S TMP_7 
 TMP_10 TMP_14)))))))))))))) in (T_ind TMP_2 TMP_4 TMP_6 TMP_15 t))))).
 
+theorem tle_r:
+ \forall (t: T).(tle t t)
+\def
+ \lambda (t: T).(let TMP_3 \def (\lambda (t0: T).(let TMP_1 \def (tweight t0) 
+in (let TMP_2 \def (tweight t0) in (le TMP_1 TMP_2)))) in (let TMP_5 \def 
+(\lambda (_: nat).(let TMP_4 \def (S O) in (le_n TMP_4))) in (let TMP_7 \def 
+(\lambda (_: nat).(let TMP_6 \def (S O) in (le_n TMP_6))) in (let TMP_12 \def 
+(\lambda (_: K).(\lambda (t0: T).(\lambda (_: (le (tweight t0) (tweight 
+t0))).(\lambda (t1: T).(\lambda (_: (le (tweight t1) (tweight t1))).(let 
+TMP_8 \def (tweight t0) in (let TMP_9 \def (tweight t1) in (let TMP_10 \def 
+(plus TMP_8 TMP_9) in (let TMP_11 \def (S TMP_10) in (le_n TMP_11)))))))))) 
+in (T_ind TMP_3 TMP_5 TMP_7 TMP_12 t))))).
+

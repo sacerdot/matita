@@ -48,9 +48,3 @@ definition tlt:
  \lambda (t1: T).(\lambda (t2: T).(let TMP_1 \def (weight t1) in (let TMP_2 
 \def (weight t2) in (lt TMP_1 TMP_2)))).
 
-definition tle:
- T \to (T \to Prop)
-\def
- \lambda (t1: T).(\lambda (t2: T).(let TMP_1 \def (tweight t1) in (let TMP_2 
-\def (tweight t2) in (le TMP_1 TMP_2)))).
-
