@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/T/defs.ma".
+include "basic_1/T/defs.ma".
 
 inductive iso: T \to (T \to Prop) \def
 | iso_sort: \forall (n1: nat).(\forall (n2: nat).(iso (TSort n1) (TSort n2)))

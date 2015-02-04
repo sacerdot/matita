@@ -44,7 +44,14 @@ let main_compiler () =
          prerr_endline ("Too many roots found:\n\t" ^ String.concat "\n\t" roots);
          prerr_endline ("\nEnter one of these directories and retry");
          exit 1);
-    | _ -> targets
+    | _ ->
+      let map targets file =
+          if HExtlib.is_dir file then
+             let files = HExtlib.find ~test:(fun path -> Filename.check_suffix path ".ma") file in
+             files @ targets
+          else file :: targets
+      in
+      List.fold_left map [] (List.rev targets)
   in
   (* must be called after init since args are set by cmdline parsing *)
   let system_mode =  Helm_registry.get_bool "matita.system" in
