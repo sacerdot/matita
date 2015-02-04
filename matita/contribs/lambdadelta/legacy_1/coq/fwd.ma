@@ -31,7 +31,7 @@ theorem land_rect:
 P))) \to ((land A B) \to P))))
 \def
  \lambda (A: Prop).(\lambda (B: Prop).(\lambda (P: Type[0]).(\lambda (f: ((A 
-\to (B \to P)))).(\lambda (a: (land A B)).(match a in land with [(conj x x0) 
+\to (B \to P)))).(\lambda (a: (land A B)).(match a with [(conj x x0) 
 \Rightarrow (f x x0)]))))).
 
 theorem land_ind:
@@ -45,7 +45,7 @@ theorem or_ind:
 (((B \to P)) \to ((or A B) \to P)))))
 \def
  \lambda (A: Prop).(\lambda (B: Prop).(\lambda (P: Prop).(\lambda (f: ((A \to 
-P))).(\lambda (f0: ((B \to P))).(\lambda (o: (or A B)).(match o in or with 
+P))).(\lambda (f0: ((B \to P))).(\lambda (o: (or A B)).(match o with 
 [(or_introl x) \Rightarrow (f x) | (or_intror x) \Rightarrow (f0 x)])))))).
 
 theorem ex_ind:
@@ -54,7 +54,7 @@ Prop).(((\forall (x: A).((P x) \to P0))) \to ((ex A P) \to P0))))
 \def
  \lambda (A: Type[0]).(\lambda (P: ((A \to Prop))).(\lambda (P0: 
 Prop).(\lambda (f: ((\forall (x: A).((P x) \to P0)))).(\lambda (e: (ex A 
-P)).(match e in ex with [(ex_intro x x0) \Rightarrow (f x x0)]))))).
+P)).(match e with [(ex_intro x x0) \Rightarrow (f x x0)]))))).
 
 theorem ex2_ind:
  \forall (A: Type[0]).(\forall (P: ((A \to Prop))).(\forall (Q: ((A \to 
@@ -63,8 +63,8 @@ Prop))).(\forall (P0: Prop).(((\forall (x: A).((P x) \to ((Q x) \to P0))))
 \def
  \lambda (A: Type[0]).(\lambda (P: ((A \to Prop))).(\lambda (Q: ((A \to 
 Prop))).(\lambda (P0: Prop).(\lambda (f: ((\forall (x: A).((P x) \to ((Q x) 
-\to P0))))).(\lambda (e: (ex2 A P Q)).(match e in ex2 with [(ex_intro2 x x0 
-x1) \Rightarrow (f x x0 x1)])))))).
+\to P0))))).(\lambda (e: (ex2 A P Q)).(match e with [(ex_intro2 x x0 x1) 
+\Rightarrow (f x x0 x1)])))))).
 
 theorem eq_rect:
  \forall (A: Type[0]).(\forall (x: A).(\forall (P: ((A \to Type[0]))).((P x) 
@@ -72,7 +72,7 @@ theorem eq_rect:
 \def
  \lambda (A: Type[0]).(\lambda (x: A).(\lambda (P: ((A \to 
 Type[0]))).(\lambda (f: (P x)).(\lambda (y: A).(\lambda (e: (eq A x 
-y)).(match e in eq with [refl_equal \Rightarrow f])))))).
+y)).(match e with [refl_equal \Rightarrow f])))))).
 
 theorem eq_ind:
  \forall (A: Type[0]).(\forall (x: A).(\forall (P: ((A \to Prop))).((P x) \to 
@@ -83,13 +83,13 @@ x P))).
 
 let rec le_ind (n: nat) (P: (nat \to Prop)) (f: P n) (f0: (\forall (m: 
 nat).((le n m) \to ((P m) \to (P (S m)))))) (n0: nat) (l: le n n0) on l: P n0 
-\def match l in le with [le_n \Rightarrow f | (le_S m l0) \Rightarrow (let 
-TMP_5 \def ((le_ind n P f f0) m l0) in (f0 m l0 TMP_5))].
+\def match l with [le_n \Rightarrow f | (le_S m l0) \Rightarrow (let TMP_1 
+\def ((le_ind n P f f0) m l0) in (f0 m l0 TMP_1))].
 
 let rec Acc_ind (A: Type[0]) (R: (A \to (A \to Prop))) (P: (A \to Prop)) (f: 
 (\forall (x: A).(((\forall (y: A).((R y x) \to (Acc A R y)))) \to (((\forall 
 (y: A).((R y x) \to (P y)))) \to (P x))))) (a: A) (a0: Acc A R a) on a0: P a 
-\def match a0 in Acc with [(Acc_intro x a1) \Rightarrow (let TMP_7 \def 
-(\lambda (y: A).(\lambda (r: (R y x)).(let TMP_6 \def (a1 y r) in ((Acc_ind A 
-R P f) y TMP_6)))) in (f x a1 TMP_7))].
+\def match a0 with [(Acc_intro x a1) \Rightarrow (let TMP_2 \def (\lambda (y: 
+A).(\lambda (r: (R y x)).(let TMP_1 \def (a1 y r) in ((Acc_ind A R P f) y 
+TMP_1)))) in (f x a1 TMP_2))].
 

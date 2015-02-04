@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/T/defs.ma".
+include "basic_1/T/defs.ma".
 
 definition s:
  K \to (nat \to nat)

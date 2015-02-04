@@ -35,7 +35,7 @@ inductive T: Type[0] \def
 | THead: K \to (T \to (T \to T)).
 
 let rec tweight (t: T) on t: nat \def match t with [(TSort _) \Rightarrow (S 
-O) | (TLRef _) \Rightarrow (S O) | (THead _ u t0) \Rightarrow (let TMP_1824 
-\def (tweight u) in (let TMP_1823 \def (tweight t0) in (let TMP_1825 \def 
-(plus TMP_1824 TMP_1823) in (S TMP_1825))))].
+O) | (TLRef _) \Rightarrow (S O) | (THead _ u t0) \Rightarrow (let TMP_1 \def 
+(tweight u) in (let TMP_2 \def (tweight t0) in (let TMP_3 \def (plus TMP_1 
+TMP_2) in (S TMP_3))))].
 

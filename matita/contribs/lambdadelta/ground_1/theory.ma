@@ -16,6 +16,8 @@
 
 include "ground_1/ext/tactics.ma".
 
+include "ground_1/types/fwd.ma".
+
 include "ground_1/types/props.ma".
 
 include "ground_1/ext/arith.ma".

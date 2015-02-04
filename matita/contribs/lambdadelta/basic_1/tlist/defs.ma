@@ -14,34 +14,26 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/T/defs.ma".
+include "basic_1/T/defs.ma".
 
-inductive TList: Set \def
+inductive TList: Type[0] \def
 | TNil: TList
 | TCons: T \to (TList \to TList).
 
-definition THeads:
- K \to (TList \to (T \to T))
-\def
- let rec THeads (k: K) (us: TList) on us: (T \to T) \def (\lambda (t: 
-T).(match us with [TNil \Rightarrow t | (TCons u ul) \Rightarrow (THead k u 
-(THeads k ul t))])) in THeads.
+let rec THeads (k: K) (us: TList) on us: T \to T \def \lambda (t: T).(match 
+us with [TNil \Rightarrow t | (TCons u ul) \Rightarrow (let TMP_1 \def 
+(THeads k ul t) in (THead k u TMP_1))]).
 
-definition TApp:
- TList \to (T \to TList)
-\def
- let rec TApp (ts: TList) on ts: (T \to TList) \def (\lambda (v: T).(match ts 
-with [TNil \Rightarrow (TCons v TNil) | (TCons t ts0) \Rightarrow (TCons t 
-(TApp ts0 v))])) in TApp.
+let rec TApp (ts: TList) on ts: T \to TList \def \lambda (v: T).(match ts 
+with [TNil \Rightarrow (TCons v TNil) | (TCons t ts0) \Rightarrow (let TMP_1 
+\def (TApp ts0 v) in (TCons t TMP_1))]).
 
-definition tslen:
- TList \to nat
-\def
- let rec tslen (ts: TList) on ts: nat \def (match ts with [TNil \Rightarrow O 
-| (TCons _ ts0) \Rightarrow (S (tslen ts0))]) in tslen.
+let rec tslen (ts: TList) on ts: nat \def match ts with [TNil \Rightarrow O | 
+(TCons _ ts0) \Rightarrow (let TMP_1 \def (tslen ts0) in (S TMP_1))].
 
 definition tslt:
  TList \to (TList \to Prop)
 \def
- \lambda (ts1: TList).(\lambda (ts2: TList).(lt (tslen ts1) (tslen ts2))).
+ \lambda (ts1: TList).(\lambda (ts2: TList).(let TMP_1 \def (tslen ts1) in 
+(let TMP_2 \def (tslen ts2) in (lt TMP_1 TMP_2)))).
 

@@ -38,6 +38,6 @@ theorem xinduction:
 (x: A).((eq A t x) \to (P x)))) \to (P t))))
 \def
  \lambda (A: Type[0]).(\lambda (t: A).(\lambda (P: ((A \to Prop))).(\lambda 
-(H: ((\forall (x: A).((eq A t x) \to (P x))))).(let TMP_2 \def (refl_equal A 
-t) in (H t TMP_2))))).
+(H: ((\forall (x: A).((eq A t x) \to (P x))))).(let TMP_1 \def (refl_equal A 
+t) in (H t TMP_1))))).
 

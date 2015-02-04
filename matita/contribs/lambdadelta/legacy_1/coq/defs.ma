@@ -69,8 +69,8 @@ definition pred:
  \lambda (n: nat).(match n with [O \Rightarrow O | (S u) \Rightarrow u]).
 
 let rec plus (n: nat) on n: nat \to nat \def \lambda (m: nat).(match n with 
-[O \Rightarrow m | (S p) \Rightarrow (let TMP_2 \def (plus p m) in (S 
-TMP_2))]).
+[O \Rightarrow m | (S p) \Rightarrow (let TMP_1 \def (plus p m) in (S 
+TMP_1))]).
 
 let rec minus (n: nat) on n: nat \to nat \def \lambda (m: nat).(match n with 
 [O \Rightarrow O | (S k) \Rightarrow (match m with [O \Rightarrow (S k) | (S 
@@ -90,6 +90,6 @@ definition ltof:
  \forall (A: Type[0]).(((A \to nat)) \to (A \to (A \to Prop)))
 \def
  \lambda (A: Type[0]).(\lambda (f: ((A \to nat))).(\lambda (a: A).(\lambda 
-(b: A).(let TMP_4 \def (f a) in (let TMP_3 \def (f b) in (lt TMP_4 
-TMP_3)))))).
+(b: A).(let TMP_1 \def (f a) in (let TMP_2 \def (f b) in (lt TMP_1 
+TMP_2)))))).
 
