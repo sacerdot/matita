@@ -1232,7 +1232,7 @@ h d t) in (let TMP_6 \def (lifts h d t0) in (let TMP_7 \def (TCons TMP_5
 TMP_6) in (let H1 \def (eq_ind TList TNil TMP_4 I TMP_7 H0) in (let TMP_8 
 \def (TCons t t0) in (let TMP_9 \def (eq TList TNil TMP_8) in (False_ind 
 TMP_9 H1)))))))))))))) in (TList_ind TMP_2 TMP_3 TMP_10 ts))))) in (let 
-TMP_53 \def (\lambda (t: T).(\lambda (t0: TList).(\lambda (H: ((\forall (ts: 
+TMP_52 \def (\lambda (t: T).(\lambda (t0: TList).(\lambda (H: ((\forall (ts: 
 TList).(\forall (h: nat).(\forall (d: nat).((eq TList (lifts h d t0) (lifts h 
 d ts)) \to (eq TList t0 ts))))))).(\lambda (ts: TList).(let TMP_13 \def 
 (\lambda (t1: TList).(\forall (h: nat).(\forall (d: nat).((eq TList (lifts h 
@@ -1244,29 +1244,28 @@ TMP_14 \def (lift h d t) in (let TMP_15 \def (lifts h d t0) in (let TMP_16
 with [TNil \Rightarrow False | (TCons _ _) \Rightarrow True])) in (let H1 
 \def (eq_ind TList TMP_16 TMP_17 I TNil H0) in (let TMP_18 \def (TCons t t0) 
 in (let TMP_19 \def (eq TList TMP_18 TNil) in (False_ind TMP_19 H1))))))))))) 
-in (let TMP_52 \def (\lambda (t1: T).(\lambda (t2: TList).(\lambda (_: 
+in (let TMP_51 \def (\lambda (t1: T).(\lambda (t2: TList).(\lambda (_: 
 ((\forall (h: nat).(\forall (d: nat).((eq TList (TCons (lift h d t) (lifts h 
 d t0)) (lifts h d t2)) \to (eq TList (TCons t t0) t2)))))).(\lambda (h: 
 nat).(\lambda (d: nat).(\lambda (H1: (eq TList (TCons (lift h d t) (lifts h d 
 t0)) (TCons (lift h d t1) (lifts h d t2)))).(let TMP_27 \def (\lambda (e: 
-TList).(match e with [TNil \Rightarrow (let TMP_25 \def lref_map in (let 
-TMP_26 \def (\lambda (x: nat).(plus x h)) in (TMP_25 TMP_26 d t))) | (TCons 
-t3 _) \Rightarrow t3])) in (let TMP_28 \def (lift h d t) in (let TMP_29 \def 
-(lifts h d t0) in (let TMP_30 \def (TCons TMP_28 TMP_29) in (let TMP_31 \def 
-(lift h d t1) in (let TMP_32 \def (lifts h d t2) in (let TMP_33 \def (TCons 
-TMP_31 TMP_32) in (let H2 \def (f_equal TList T TMP_27 TMP_30 TMP_33 H1) in 
-(let TMP_37 \def (\lambda (e: TList).(match e with [TNil \Rightarrow (let 
-TMP_36 \def lifts in (TMP_36 h d t0)) | (TCons _ t3) \Rightarrow t3])) in 
-(let TMP_38 \def (lift h d t) in (let TMP_39 \def (lifts h d t0) in (let 
-TMP_40 \def (TCons TMP_38 TMP_39) in (let TMP_41 \def (lift h d t1) in (let 
-TMP_42 \def (lifts h d t2) in (let TMP_43 \def (TCons TMP_41 TMP_42) in (let 
-H3 \def (f_equal TList TList TMP_37 TMP_40 TMP_43 H1) in (let TMP_51 \def 
-(\lambda (H4: (eq T (lift h d t) (lift h d t1))).(let TMP_46 \def (\lambda 
-(t3: T).(let TMP_44 \def (TCons t t0) in (let TMP_45 \def (TCons t3 t2) in 
-(eq TList TMP_44 TMP_45)))) in (let TMP_47 \def (refl_equal T t) in (let 
-TMP_48 \def (H t2 h d H3) in (let TMP_49 \def (f_equal2 T TList TList TCons t 
-t t0 t2 TMP_47 TMP_48) in (let TMP_50 \def (lift_inj t t1 h d H4) in (eq_ind 
-T t TMP_46 TMP_49 t1 TMP_50))))))) in (TMP_51 H2)))))))))))))))))))))))) in 
-(TList_ind TMP_13 TMP_20 TMP_52 ts)))))))) in (TList_ind TMP_1 TMP_11 TMP_53 
-xs)))).
+TList).(match e with [TNil \Rightarrow (let TMP_26 \def (\lambda (x: 
+nat).(plus x h)) in (lref_map TMP_26 d t)) | (TCons t3 _) \Rightarrow t3])) 
+in (let TMP_28 \def (lift h d t) in (let TMP_29 \def (lifts h d t0) in (let 
+TMP_30 \def (TCons TMP_28 TMP_29) in (let TMP_31 \def (lift h d t1) in (let 
+TMP_32 \def (lifts h d t2) in (let TMP_33 \def (TCons TMP_31 TMP_32) in (let 
+H2 \def (f_equal TList T TMP_27 TMP_30 TMP_33 H1) in (let TMP_36 \def 
+(\lambda (e: TList).(match e with [TNil \Rightarrow (lifts h d t0) | (TCons _ 
+t3) \Rightarrow t3])) in (let TMP_37 \def (lift h d t) in (let TMP_38 \def 
+(lifts h d t0) in (let TMP_39 \def (TCons TMP_37 TMP_38) in (let TMP_40 \def 
+(lift h d t1) in (let TMP_41 \def (lifts h d t2) in (let TMP_42 \def (TCons 
+TMP_40 TMP_41) in (let H3 \def (f_equal TList TList TMP_36 TMP_39 TMP_42 H1) 
+in (let TMP_50 \def (\lambda (H4: (eq T (lift h d t) (lift h d t1))).(let 
+TMP_45 \def (\lambda (t3: T).(let TMP_43 \def (TCons t t0) in (let TMP_44 
+\def (TCons t3 t2) in (eq TList TMP_43 TMP_44)))) in (let TMP_46 \def 
+(refl_equal T t) in (let TMP_47 \def (H t2 h d H3) in (let TMP_48 \def 
+(f_equal2 T TList TList TCons t t t0 t2 TMP_46 TMP_47) in (let TMP_49 \def 
+(lift_inj t t1 h d H4) in (eq_ind T t TMP_45 TMP_48 t1 TMP_49))))))) in 
+(TMP_50 H2)))))))))))))))))))))))) in (TList_ind TMP_13 TMP_20 TMP_51 
+ts)))))))) in (TList_ind TMP_1 TMP_11 TMP_52 xs)))).
 

@@ -77,8 +77,8 @@ theorem eq_ind_r:
 (\forall (y: A).((eq A y x) \to (P y))))))
 \def
  \lambda (A: Type[0]).(\lambda (x: A).(\lambda (P: ((A \to Prop))).(\lambda 
-(H: (P x)).(\lambda (y: A).(\lambda (H0: (eq A y x)).(match (sym_eq A y x H0) 
-with [refl_equal \Rightarrow H])))))).
+(H: (P x)).(\lambda (y: A).(\lambda (H0: (eq A y x)).(let TMP_1 \def (sym_eq 
+A y x H0) in (match TMP_1 with [refl_equal \Rightarrow H]))))))).
 
 theorem trans_eq:
  \forall (A: Type[0]).(\forall (x: A).(\forall (y: A).(\forall (z: A).((eq A 

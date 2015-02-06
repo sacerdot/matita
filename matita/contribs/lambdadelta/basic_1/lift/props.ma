@@ -121,28 +121,27 @@ t1))).(\lambda (P: Prop).(let TMP_14 \def (\lambda (e: T).(match e with
 \def (THead k0 t0 t1) in (let TMP_21 \def (lift h d TMP_20) in (let TMP_22 
 \def (THead k v TMP_21) in (let TMP_23 \def (THead k0 t0 t1) in (let H3 \def 
 (f_equal T T TMP_19 TMP_22 TMP_23 H1) in (let TMP_54 \def (\lambda (e: 
-T).(match e with [(TSort _) \Rightarrow (let TMP_43 \def lref_map in (let 
-TMP_44 \def (\lambda (x: nat).(plus x h)) in (let TMP_45 \def (TMP_43 TMP_44 
-d t0) in (let TMP_50 \def lref_map in (let TMP_51 \def (\lambda (x: 
-nat).(plus x h)) in (let TMP_52 \def (s k0 d) in (let TMP_53 \def (TMP_50 
-TMP_51 TMP_52 t1) in (THead k0 TMP_45 TMP_53)))))))) | (TLRef _) \Rightarrow 
-(let TMP_28 \def lref_map in (let TMP_29 \def (\lambda (x: nat).(plus x h)) 
-in (let TMP_30 \def (TMP_28 TMP_29 d t0) in (let TMP_35 \def lref_map in (let 
-TMP_36 \def (\lambda (x: nat).(plus x h)) in (let TMP_37 \def (s k0 d) in 
-(let TMP_38 \def (TMP_35 TMP_36 TMP_37 t1) in (THead k0 TMP_30 TMP_38)))))))) 
-| (THead _ _ t2) \Rightarrow t2])) in (let TMP_55 \def (THead k0 t0 t1) in 
-(let TMP_56 \def (lift h d TMP_55) in (let TMP_57 \def (THead k v TMP_56) in 
-(let TMP_58 \def (THead k0 t0 t1) in (let H4 \def (f_equal T T TMP_54 TMP_57 
-TMP_58 H1) in (let TMP_70 \def (\lambda (_: (eq T v t0)).(\lambda (H6: (eq K 
-k k0)).(let TMP_59 \def (\lambda (k1: K).(\forall (v0: T).(\forall (h0: 
-nat).(\forall (d0: nat).((eq T (THead k1 v0 (lift h0 d0 t1)) t1) \to (\forall 
-(P0: Prop).P0)))))) in (let H7 \def (eq_ind K k TMP_59 H0 k0 H6) in (let 
-TMP_60 \def (THead k0 t0 t1) in (let TMP_61 \def (lift h d TMP_60) in (let 
-TMP_62 \def (\lambda (t2: T).(eq T t2 t1)) in (let TMP_63 \def (lift h d t0) 
-in (let TMP_64 \def (s k0 d) in (let TMP_65 \def (lift h TMP_64 t1) in (let 
-TMP_66 \def (THead k0 TMP_63 TMP_65) in (let TMP_67 \def (lift_head k0 t0 t1 
-h d) in (let H8 \def (eq_ind T TMP_61 TMP_62 H4 TMP_66 TMP_67) in (let TMP_68 
-\def (lift h d t0) in (let TMP_69 \def (s k0 d) in (H7 TMP_68 h TMP_69 H8 
+T).(match e with [(TSort _) \Rightarrow (let TMP_44 \def (\lambda (x: 
+nat).(plus x h)) in (let TMP_45 \def (lref_map TMP_44 d t0) in (let TMP_51 
+\def (\lambda (x: nat).(plus x h)) in (let TMP_52 \def (s k0 d) in (let 
+TMP_53 \def (lref_map TMP_51 TMP_52 t1) in (THead k0 TMP_45 TMP_53)))))) | 
+(TLRef _) \Rightarrow (let TMP_29 \def (\lambda (x: nat).(plus x h)) in (let 
+TMP_30 \def (lref_map TMP_29 d t0) in (let TMP_36 \def (\lambda (x: 
+nat).(plus x h)) in (let TMP_37 \def (s k0 d) in (let TMP_38 \def (lref_map 
+TMP_36 TMP_37 t1) in (THead k0 TMP_30 TMP_38)))))) | (THead _ _ t2) 
+\Rightarrow t2])) in (let TMP_55 \def (THead k0 t0 t1) in (let TMP_56 \def 
+(lift h d TMP_55) in (let TMP_57 \def (THead k v TMP_56) in (let TMP_58 \def 
+(THead k0 t0 t1) in (let H4 \def (f_equal T T TMP_54 TMP_57 TMP_58 H1) in 
+(let TMP_70 \def (\lambda (_: (eq T v t0)).(\lambda (H6: (eq K k k0)).(let 
+TMP_59 \def (\lambda (k1: K).(\forall (v0: T).(\forall (h0: nat).(\forall 
+(d0: nat).((eq T (THead k1 v0 (lift h0 d0 t1)) t1) \to (\forall (P0: 
+Prop).P0)))))) in (let H7 \def (eq_ind K k TMP_59 H0 k0 H6) in (let TMP_60 
+\def (THead k0 t0 t1) in (let TMP_61 \def (lift h d TMP_60) in (let TMP_62 
+\def (\lambda (t2: T).(eq T t2 t1)) in (let TMP_63 \def (lift h d t0) in (let 
+TMP_64 \def (s k0 d) in (let TMP_65 \def (lift h TMP_64 t1) in (let TMP_66 
+\def (THead k0 TMP_63 TMP_65) in (let TMP_67 \def (lift_head k0 t0 t1 h d) in 
+(let H8 \def (eq_ind T TMP_61 TMP_62 H4 TMP_66 TMP_67) in (let TMP_68 \def 
+(lift h d t0) in (let TMP_69 \def (s k0 d) in (H7 TMP_68 h TMP_69 H8 
 P)))))))))))))))) in (let TMP_71 \def (TMP_70 H3) in (TMP_71 
 H2))))))))))))))))))))))))))))))) in (T_ind TMP_1 TMP_7 TMP_13 TMP_72 t)))))).
 

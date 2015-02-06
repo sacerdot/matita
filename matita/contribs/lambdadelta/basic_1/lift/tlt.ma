@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "basic_1/lift/fwd.ma".
+include "basic_1/lift/props.ma".
 
 include "basic_1/tlt/props.ma".
 
