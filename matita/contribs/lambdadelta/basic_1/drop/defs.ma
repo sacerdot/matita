@@ -14,11 +14,11 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/C/defs.ma".
+include "basic_1/C/defs.ma".
 
-include "Basic-1/lift/defs.ma".
+include "basic_1/lift/defs.ma".
 
-include "Basic-1/r/defs.ma".
+include "basic_1/r/defs.ma".
 
 inductive drop: nat \to (nat \to (C \to (C \to Prop))) \def
 | drop_refl: \forall (c: C).(drop O O c c)
