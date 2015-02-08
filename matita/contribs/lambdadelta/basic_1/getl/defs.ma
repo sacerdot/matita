@@ -14,9 +14,9 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/drop/defs.ma".
+include "basic_1/drop/defs.ma".
 
-include "Basic-1/clear/defs.ma".
+include "basic_1/clear/defs.ma".
 
 inductive getl (h: nat) (c1: C) (c2: C): Prop \def
 | getl_intro: \forall (e: C).((drop h O c1 e) \to ((clear e c2) \to (getl h 

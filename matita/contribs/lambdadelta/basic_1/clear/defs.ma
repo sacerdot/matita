@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/C/defs.ma".
+include "basic_1/C/defs.ma".
 
 inductive clear: C \to (C \to Prop) \def
 | clear_bind: \forall (b: B).(\forall (e: C).(\forall (u: T).(clear (CHead e 
