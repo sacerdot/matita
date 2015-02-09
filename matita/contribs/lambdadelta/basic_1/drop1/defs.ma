@@ -14,9 +14,9 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/drop/defs.ma".
+include "basic_1/drop/defs.ma".
 
-include "Basic-1/lift1/defs.ma".
+include "basic_1/lift1/defs.ma".
 
 inductive drop1: PList \to (C \to (C \to Prop)) \def
 | drop1_nil: \forall (c: C).(drop1 PNil c c)
@@ -24,12 +24,10 @@ inductive drop1: PList \to (C \to (C \to Prop)) \def
 nat).((drop h d c1 c2) \to (\forall (c3: C).(\forall (hds: PList).((drop1 hds 
 c2 c3) \to (drop1 (PCons h d hds) c1 c3)))))))).
 
-definition ptrans:
- PList \to (nat \to PList)
-\def
- let rec ptrans (hds: PList) on hds: (nat \to PList) \def (\lambda (i: 
+let rec ptrans (hds: PList) on hds: nat \to PList \def \lambda (i: 
 nat).(match hds with [PNil \Rightarrow PNil | (PCons h d hds0) \Rightarrow 
-(let j \def (trans hds0 i) in (let q \def (ptrans hds0 i) in (match (blt j d) 
-with [true \Rightarrow (PCons h (minus d (S j)) q) | false \Rightarrow 
-q])))])) in ptrans.
+(let j \def (trans hds0 i) in (let q \def (ptrans hds0 i) in (let TMP_1 \def 
+(blt j d) in (match TMP_1 with [true \Rightarrow (let TMP_2 \def (S j) in 
+(let TMP_3 \def (minus d TMP_2) in (PCons h TMP_3 q))) | false \Rightarrow 
+q]))))]).
 
