@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/lift/defs.ma".
+include "basic_1/lift/defs.ma".
 
 inductive subst0: nat \to (T \to (T \to (T \to Prop))) \def
 | subst0_lref: \forall (v: T).(\forall (i: nat).(subst0 i v (TLRef i) (lift 
