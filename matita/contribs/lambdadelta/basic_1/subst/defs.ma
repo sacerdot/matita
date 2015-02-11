@@ -14,14 +14,13 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/lift/defs.ma".
+include "basic_1/lift/defs.ma".
 
-definition subst:
- nat \to (T \to (T \to T))
-\def
- let rec subst (d: nat) (v: T) (t: T) on t: T \def (match t with [(TSort n) 
-\Rightarrow (TSort n) | (TLRef i) \Rightarrow (match (blt i d) with [true 
-\Rightarrow (TLRef i) | false \Rightarrow (match (blt d i) with [true 
-\Rightarrow (TLRef (pred i)) | false \Rightarrow (lift d O v)])]) | (THead k 
-u t0) \Rightarrow (THead k (subst d v u) (subst (s k d) v t0))]) in subst.
+let rec subst (d: nat) (v: T) (t: T) on t: T \def match t with [(TSort n) 
+\Rightarrow (TSort n) | (TLRef i) \Rightarrow (let TMP_4 \def (blt i d) in 
+(match TMP_4 with [true \Rightarrow (TLRef i) | false \Rightarrow (let TMP_5 
+\def (blt d i) in (match TMP_5 with [true \Rightarrow (let TMP_6 \def (pred 
+i) in (TLRef TMP_6)) | false \Rightarrow (lift d O v)]))])) | (THead k u t0) 
+\Rightarrow (let TMP_1 \def (subst d v u) in (let TMP_2 \def (s k d) in (let 
+TMP_3 \def (subst TMP_2 v t0) in (THead k TMP_1 TMP_3))))].
 

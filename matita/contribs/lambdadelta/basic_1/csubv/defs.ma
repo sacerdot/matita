@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/C/defs.ma".
+include "basic_1/C/defs.ma".
 
 inductive csubv: C \to (C \to Prop) \def
 | csubv_sort: \forall (n: nat).(csubv (CSort n) (CSort n))
