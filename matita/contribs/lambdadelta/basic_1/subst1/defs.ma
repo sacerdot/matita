@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/subst0/defs.ma".
+include "basic_1/subst0/defs.ma".
 
 inductive subst1 (i: nat) (v: T) (t1: T): T \to Prop \def
 | subst1_refl: subst1 i v t1 t1

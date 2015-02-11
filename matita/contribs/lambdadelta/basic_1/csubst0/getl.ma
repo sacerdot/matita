@@ -14,11 +14,11 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/csubst0/clear.ma".
+include "basic_1/csubst0/clear.ma".
 
-include "Basic-1/csubst0/drop.ma".
+include "basic_1/csubst0/drop.ma".
 
-include "Basic-1/getl/fwd.ma".
+include "basic_1/getl/fwd.ma".
 
 theorem csubst0_getl_ge:
  \forall (i: nat).(\forall (n: nat).((le i n) \to (\forall (c1: C).(\forall 
@@ -102,9 +102,6 @@ H4 (CHead x1 (Flat x0) x3) H10) in (getl_intro i c2 e (CHead x2 (Flat x0) x4)
 H11 (clear_flat x2 e (csubst0_clear_O x1 x2 v H13 e (clear_gen_flat x0 x1 e 
 x3 H14)) x0 x4)))))))))))) H9)) H8)) n H5)))) (\lambda (H5: (lt n 
 i)).(le_lt_false i n H H5 (getl n c2 e))))))) H2)))))))))).
-(* COMMENTS
-Initial nodes: 1525
-END *)
 
 theorem csubst0_getl_lt:
  \forall (i: nat).(\forall (n: nat).((lt n i) \to (\forall (c1: C).(\forall 
@@ -1020,9 +1017,6 @@ v e1 e2)))))) x5 x6 x7 x8 x9 (refl_equal C (CHead x6 (Bind x5) x8))
 (getl_intro n c2 (CHead x7 (Bind x5) x9) (CHead x2 (Flat f) x4) H12 
 (clear_flat x2 (CHead x7 (Bind x5) x9) H20 f x4)) H21 H22)) e H19)))))))))) 
 H18)) H17)))))))) x0 H8 H9 H10 H11))))))))))) H6)) H5))))) H2)))))))))).
-(* COMMENTS
-Initial nodes: 17179
-END *)
 
 theorem csubst0_getl_ge_back:
  \forall (i: nat).(\forall (n: nat).((le i n) \to (\forall (c1: C).(\forall 
@@ -1106,9 +1100,6 @@ H4 (CHead x2 (Flat x0) x4) H10) in (getl_intro i c1 e (CHead x1 (Flat x0) x3)
 H11 (clear_flat x1 e (csubst0_clear_O_back x1 x2 v H13 e (clear_gen_flat x0 
 x2 e x4 H14)) x0 x3)))))))))))) H9)) H8)) n H5)))) (\lambda (H5: (lt n 
 i)).(le_lt_false i n H H5 (getl n c1 e))))))) H2)))))))))).
-(* COMMENTS
-Initial nodes: 1525
-END *)
 
 theorem csubst0_getl_lt_back:
  \forall (n: nat).(\forall (i: nat).((lt n i) \to (\forall (c1: C).(\forall 
@@ -1151,7 +1142,4 @@ n c1 e2) (ex2 C (\lambda (e1: C).(csubst0 (minus i n) v e1 e2)) (\lambda (e1:
 C).(getl n c1 e1))) (ex_intro2 C (\lambda (e1: C).(csubst0 (minus i n) v e1 
 e2)) (\lambda (e1: C).(getl n c1 e1)) x1 H11 (getl_intro n c1 x1 x0 H8 
 H12)))))) H10)) H9)))))) H6)) H5)))))) H2)))))))))).
-(* COMMENTS
-Initial nodes: 801
-END *)
 

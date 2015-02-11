@@ -14,9 +14,9 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/subst0/defs.ma".
+include "basic_1/subst0/defs.ma".
 
-include "Basic-1/C/defs.ma".
+include "basic_1/C/defs.ma".
 
 inductive csubst0: nat \to (T \to (C \to (C \to Prop))) \def
 | csubst0_snd: \forall (k: K).(\forall (i: nat).(\forall (v: T).(\forall (u1: 

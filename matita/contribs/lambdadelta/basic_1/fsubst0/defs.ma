@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/csubst0/defs.ma".
+include "basic_1/csubst0/defs.ma".
 
 inductive fsubst0 (i: nat) (v: T) (c1: C) (t1: T): C \to (T \to Prop) \def
 | fsubst0_snd: \forall (t2: T).((subst0 i v t1 t2) \to (fsubst0 i v c1 t1 c1 
