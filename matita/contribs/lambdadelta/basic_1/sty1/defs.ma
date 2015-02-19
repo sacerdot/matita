@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/sty0/defs.ma".
+include "basic_1/sty0/defs.ma".
 
 inductive sty1 (g: G) (c: C) (t1: T): T \to Prop \def
 | sty1_sty0: \forall (t2: T).((sty0 g c t1 t2) \to (sty1 g c t1 t2))

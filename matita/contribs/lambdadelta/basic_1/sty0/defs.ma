@@ -14,9 +14,9 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/G/defs.ma".
+include "basic_1/G/defs.ma".
 
-include "Basic-1/getl/defs.ma".
+include "basic_1/getl/defs.ma".
 
 inductive sty0 (g: G): C \to (T \to (T \to Prop)) \def
 | sty0_sort: \forall (c: C).(\forall (n: nat).(sty0 g c (TSort n) (TSort 

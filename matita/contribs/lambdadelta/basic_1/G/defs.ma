@@ -14,9 +14,9 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/preamble.ma".
+include "basic_1/preamble.ma".
 
-record G : Set \def {
+record G : Type[0] \def {
  next: (nat \to nat);
  next_lt: (\forall (n: nat).(lt n (next n)))
 }.
