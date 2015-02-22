@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/aplus/defs.ma".
+include "basic_1/aplus/defs.ma".
 
 inductive leq (g: G): A \to (A \to Prop) \def
 | leq_sort: \forall (h1: nat).(\forall (h2: nat).(\forall (n1: nat).(\forall 

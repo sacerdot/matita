@@ -14,9 +14,9 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/A/defs.ma".
+include "basic_1/A/defs.ma".
 
-include "Basic-1/G/defs.ma".
+include "basic_1/G/defs.ma".
 
 definition gz:
  G

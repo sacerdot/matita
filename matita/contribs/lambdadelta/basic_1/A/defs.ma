@@ -14,9 +14,9 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/preamble.ma".
+include "basic_1/preamble.ma".
 
-inductive A: Set \def
+inductive A: Type[0] \def
 | ASort: nat \to (nat \to A)
 | AHead: A \to (A \to A).
 

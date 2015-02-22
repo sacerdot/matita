@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/A/defs.ma".
+include "basic_1/A/defs.ma".
 
 inductive aprem: nat \to (A \to (A \to Prop)) \def
 | aprem_zero: \forall (a1: A).(\forall (a2: A).(aprem O (AHead a1 a2) a1))

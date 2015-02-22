@@ -14,17 +14,15 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/A/defs.ma".
+include "basic_1/A/defs.ma".
 
-definition lweight:
- A \to nat
-\def
- let rec lweight (a: A) on a: nat \def (match a with [(ASort _ _) \Rightarrow 
-O | (AHead a1 a2) \Rightarrow (S (plus (lweight a1) (lweight a2)))]) in 
-lweight.
+let rec lweight (a: A) on a: nat \def match a with [(ASort _ _) \Rightarrow O 
+| (AHead a1 a2) \Rightarrow (let TMP_1 \def (lweight a1) in (let TMP_2 \def 
+(lweight a2) in (let TMP_3 \def (plus TMP_1 TMP_2) in (S TMP_3))))].
 
 definition llt:
  A \to (A \to Prop)
 \def
- \lambda (a1: A).(\lambda (a2: A).(lt (lweight a1) (lweight a2))).
+ \lambda (a1: A).(\lambda (a2: A).(let TMP_1 \def (lweight a1) in (let TMP_2 
+\def (lweight a2) in (lt TMP_1 TMP_2)))).
 

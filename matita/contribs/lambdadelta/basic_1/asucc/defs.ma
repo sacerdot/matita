@@ -14,15 +14,12 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/A/defs.ma".
+include "basic_1/A/defs.ma".
 
-include "Basic-1/G/defs.ma".
+include "basic_1/G/defs.ma".
 
-definition asucc:
- G \to (A \to A)
-\def
- let rec asucc (g: G) (l: A) on l: A \def (match l with [(ASort n0 n) 
-\Rightarrow (match n0 with [O \Rightarrow (ASort O (next g n)) | (S h) 
-\Rightarrow (ASort h n)]) | (AHead a1 a2) \Rightarrow (AHead a1 (asucc g 
-a2))]) in asucc.
+let rec asucc (g: G) (l: A) on l: A \def match l with [(ASort n0 n) 
+\Rightarrow (match n0 with [O \Rightarrow (let TMP_2 \def (next g n) in 
+(ASort O TMP_2)) | (S h) \Rightarrow (ASort h n)]) | (AHead a1 a2) 
+\Rightarrow (let TMP_1 \def (asucc g a2) in (AHead a1 TMP_1))].
 
