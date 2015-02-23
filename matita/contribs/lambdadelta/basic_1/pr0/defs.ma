@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/subst0/defs.ma".
+include "basic_1/subst0/defs.ma".
 
 inductive pr0: T \to (T \to Prop) \def
 | pr0_refl: \forall (t: T).(pr0 t t)
