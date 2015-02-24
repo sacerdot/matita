@@ -14,9 +14,9 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/pr0/defs.ma".
+include "basic_1/pr0/defs.ma".
 
-include "Basic-1/C/defs.ma".
+include "basic_1/C/defs.ma".
 
 inductive wcpr0: C \to (C \to Prop) \def
 | wcpr0_refl: \forall (c: C).(wcpr0 c c)

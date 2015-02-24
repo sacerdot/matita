@@ -14,19 +14,13 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/pr2/defs.ma".
+include "basic_1/pr2/fwd.ma".
 
-include "Basic-1/pr0/subst1.ma".
+include "basic_1/pr0/subst1.ma".
 
-include "Basic-1/pr0/fwd.ma".
+include "basic_1/csubst1/getl.ma".
 
-include "Basic-1/csubst1/getl.ma".
-
-include "Basic-1/csubst1/fwd.ma".
-
-include "Basic-1/subst1/subst1.ma".
-
-include "Basic-1/getl/drop.ma".
+include "basic_1/subst1/subst1.ma".
 
 theorem pr2_delta1:
  \forall (c: C).(\forall (d: C).(\forall (u: T).(\forall (i: nat).((getl i c 
@@ -39,9 +33,6 @@ T).(\lambda (H0: (pr0 t1 t2)).(\lambda (t: T).(\lambda (H1: (subst1 i u t2
 t)).(subst1_ind i u t2 (\lambda (t0: T).(pr2 c t1 t0)) (pr2_free c t1 t2 H0) 
 (\lambda (t0: T).(\lambda (H2: (subst0 i u t2 t0)).(pr2_delta c d u i H t1 t2 
 H0 t0 H2))) t H1)))))))))).
-(* COMMENTS
-Initial nodes: 111
-END *)
 
 theorem pr2_subst1:
  \forall (c: C).(\forall (e: C).(\forall (v: T).(\forall (i: nat).((getl i c 
@@ -90,13 +81,12 @@ H11 \def (eq_ind_r nat i0 (\lambda (n: nat).(subst0 n u t4 t)) H4 i H10) in
 Abbr) u))) H7 i H10) in (let H13 \def (eq_ind C (CHead e (Bind Abbr) v) 
 (\lambda (c1: C).(getl i c c1)) H (CHead d (Bind Abbr) u) (getl_mono c (CHead 
 e (Bind Abbr) v) i H (CHead d (Bind Abbr) u) H12)) in (let H14 \def (f_equal 
-C C (\lambda (e0: C).(match e0 in C return (\lambda (_: C).C) with [(CSort _) 
-\Rightarrow e | (CHead c1 _ _) \Rightarrow c1])) (CHead e (Bind Abbr) v) 
-(CHead d (Bind Abbr) u) (getl_mono c (CHead e (Bind Abbr) v) i H (CHead d 
-(Bind Abbr) u) H12)) in ((let H15 \def (f_equal C T (\lambda (e0: C).(match 
-e0 in C return (\lambda (_: C).T) with [(CSort _) \Rightarrow v | (CHead _ _ 
-t0) \Rightarrow t0])) (CHead e (Bind Abbr) v) (CHead d (Bind Abbr) u) 
-(getl_mono c (CHead e (Bind Abbr) v) i H (CHead d (Bind Abbr) u) H12)) in 
+C C (\lambda (e0: C).(match e0 with [(CSort _) \Rightarrow e | (CHead c1 _ _) 
+\Rightarrow c1])) (CHead e (Bind Abbr) v) (CHead d (Bind Abbr) u) (getl_mono 
+c (CHead e (Bind Abbr) v) i H (CHead d (Bind Abbr) u) H12)) in ((let H15 \def 
+(f_equal C T (\lambda (e0: C).(match e0 with [(CSort _) \Rightarrow v | 
+(CHead _ _ t0) \Rightarrow t0])) (CHead e (Bind Abbr) v) (CHead d (Bind Abbr) 
+u) (getl_mono c (CHead e (Bind Abbr) v) i H (CHead d (Bind Abbr) u) H12)) in 
 (\lambda (H16: (eq C e d)).(let H17 \def (eq_ind_r T u (\lambda (t0: T).(getl 
 i c (CHead d (Bind Abbr) t0))) H13 v H15) in (let H18 \def (eq_ind_r T u 
 (\lambda (t0: T).(subst0 i t0 t4 t)) H11 v H15) in (let H19 \def (eq_ind_r C 
@@ -109,9 +99,6 @@ T).(subst1 i v t w2)) x0 (pr2_delta1 c e v i H19 w1 x H8 x0 H21) H20))))
 (subst1_confluence_eq t4 t v i (subst1_single i v t4 t H18) x H9))))))) 
 H14)))))))))) (pr0_subst1 t3 t4 H3 v w1 i H6 v (pr0_refl v))) c0 
 H5))))))))))))))) y t1 t2 H1))) H0)))))))).
-(* COMMENTS
-Initial nodes: 1311
-END *)
 
 theorem pr2_gen_cabbr:
  \forall (c: C).(\forall (t1: T).(\forall (t2: T).((pr2 c t1 t2) \to (\forall 
@@ -229,13 +216,12 @@ T).(subst1 n u0 t (lift (S O) n x2))) (\lambda (x2: T).(pr2 a x1 x2)))) (let
 H17 \def (eq_ind C (CHead d (Bind Abbr) u) (\lambda (c1: C).(getl i c0 c1)) 
 H0 (CHead e (Bind Abbr) u0) (getl_mono c0 (CHead d (Bind Abbr) u) i H0 (CHead 
 e (Bind Abbr) u0) H16)) in (let H18 \def (f_equal C C (\lambda (e0: C).(match 
-e0 in C return (\lambda (_: C).C) with [(CSort _) \Rightarrow d | (CHead c1 _ 
-_) \Rightarrow c1])) (CHead d (Bind Abbr) u) (CHead e (Bind Abbr) u0) 
-(getl_mono c0 (CHead d (Bind Abbr) u) i H0 (CHead e (Bind Abbr) u0) H16)) in 
-((let H19 \def (f_equal C T (\lambda (e0: C).(match e0 in C return (\lambda 
-(_: C).T) with [(CSort _) \Rightarrow u | (CHead _ _ t0) \Rightarrow t0])) 
-(CHead d (Bind Abbr) u) (CHead e (Bind Abbr) u0) (getl_mono c0 (CHead d (Bind 
-Abbr) u) i H0 (CHead e (Bind Abbr) u0) H16)) in (\lambda (H20: (eq C d 
+e0 with [(CSort _) \Rightarrow d | (CHead c1 _ _) \Rightarrow c1])) (CHead d 
+(Bind Abbr) u) (CHead e (Bind Abbr) u0) (getl_mono c0 (CHead d (Bind Abbr) u) 
+i H0 (CHead e (Bind Abbr) u0) H16)) in ((let H19 \def (f_equal C T (\lambda 
+(e0: C).(match e0 with [(CSort _) \Rightarrow u | (CHead _ _ t0) \Rightarrow 
+t0])) (CHead d (Bind Abbr) u) (CHead e (Bind Abbr) u0) (getl_mono c0 (CHead d 
+(Bind Abbr) u) i H0 (CHead e (Bind Abbr) u0) H16)) in (\lambda (H20: (eq C d 
 e)).(let H21 \def (eq_ind_r T u0 (\lambda (t0: T).(getl i c0 (CHead e (Bind 
 Abbr) t0))) H17 u H19) in (let H22 \def (eq_ind_r T u0 (\lambda (t0: 
 T).(subst1 i t0 t4 (lift (S O) i x0))) H13 u H19) in (let H23 \def (eq_ind_r 
@@ -266,16 +252,14 @@ x3)).(let H17 \def (eq_ind T x2 (\lambda (t0: T).(subst1 d0 u0 t t0)) H13
 (lift (S O) d0 x3) H15) in (ex_intro2 T (\lambda (x4: T).(subst1 d0 u0 t 
 (lift (S O) d0 x4))) (\lambda (x4: T).(pr2 a x1 x4)) x3 H17 (pr2_delta1 a d u 
 (minus i (S O)) (getl_drop_conf_ge i (CHead d (Bind Abbr) u) a0 
-(csubst1_getl_ge d0 i (le_S_n d0 i (le_S (S d0) i H12)) c0 a0 u0 H4 (CHead d 
-(Bind Abbr) u) H0) a (S O) d0 H5 (eq_ind_r nat (plus (S O) d0) (\lambda (n: 
-nat).(le n i)) H12 (plus d0 (S O)) (plus_sym d0 (S O)))) x1 x0 H10 x3 
-H16)))))) (subst1_gen_lift_ge u x0 x2 i (S O) d0 H14 (eq_ind_r nat (plus (S 
-O) d0) (\lambda (n: nat).(le n i)) H12 (plus d0 (S O)) (plus_sym d0 (S 
-O)))))))) (subst1_confluence_neq t4 t u i (subst1_single i u t4 t H2) (lift 
-(S O) d0 x0) u0 d0 H11 (sym_not_eq nat d0 i (lt_neq d0 i H12)))))))))) 
-(pr0_gen_lift x1 x (S O) d0 H7))))) (pr0_subst1 t3 t4 H1 u0 (lift (S O) d0 
-x1) d0 H6 u0 (pr0_refl u0))))))))))))))))))))))) c t1 t2 H)))).
-(* COMMENTS
-Initial nodes: 3757
-END *)
+(csubst1_getl_ge d0 i (le_S_n d0 i (le_S_n (S d0) (S i) (le_S (S (S d0)) (S 
+i) (le_n_S (S d0) i H12)))) c0 a0 u0 H4 (CHead d (Bind Abbr) u) H0) a (S O) 
+d0 H5 (eq_ind_r nat (plus (S O) d0) (\lambda (n: nat).(le n i)) H12 (plus d0 
+(S O)) (plus_sym d0 (S O)))) x1 x0 H10 x3 H16)))))) (subst1_gen_lift_ge u x0 
+x2 i (S O) d0 H14 (eq_ind_r nat (plus (S O) d0) (\lambda (n: nat).(le n i)) 
+H12 (plus d0 (S O)) (plus_sym d0 (S O)))))))) (subst1_confluence_neq t4 t u i 
+(subst1_single i u t4 t H2) (lift (S O) d0 x0) u0 d0 H11 (sym_not_eq nat d0 i 
+(lt_neq d0 i H12)))))))))) (pr0_gen_lift x1 x (S O) d0 H7))))) (pr0_subst1 t3 
+t4 H1 u0 (lift (S O) d0 x1) d0 H6 u0 (pr0_refl u0))))))))))))))))))))))) c t1 
+t2 H)))).
 
