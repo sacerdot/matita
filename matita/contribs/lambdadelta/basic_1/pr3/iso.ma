@@ -14,11 +14,11 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/pr3/fwd.ma".
+include "basic_1/pr3/props.ma".
 
-include "Basic-1/iso/props.ma".
+include "basic_1/iso/props.ma".
 
-include "Basic-1/tlist/props.ma".
+include "basic_1/tlist/fwd.ma".
 
 theorem pr3_iso_appls_abbr:
  \forall (c: C).(\forall (d: C).(\forall (w: T).(\forall (i: nat).((getl i c 
@@ -56,20 +56,19 @@ T).(\lambda (v: T).(pr3 d0 u v)))) (\lambda (_: C).(\lambda (_: T).(\lambda
 i) O x2) (\lambda (t: T).(pr3 c (lift (S i) O w) t)) (let H8 \def (eq_ind C 
 (CHead d (Bind Abbr) w) (\lambda (c0: C).(getl i c c0)) H (CHead x0 (Bind 
 Abbr) x1) (getl_mono c (CHead d (Bind Abbr) w) i H (CHead x0 (Bind Abbr) x1) 
-H4)) in (let H9 \def (f_equal C C (\lambda (e: C).(match e in C return 
-(\lambda (_: C).C) with [(CSort _) \Rightarrow d | (CHead c0 _ _) \Rightarrow 
-c0])) (CHead d (Bind Abbr) w) (CHead x0 (Bind Abbr) x1) (getl_mono c (CHead d 
-(Bind Abbr) w) i H (CHead x0 (Bind Abbr) x1) H4)) in ((let H10 \def (f_equal 
-C T (\lambda (e: C).(match e in C return (\lambda (_: C).T) with [(CSort _) 
-\Rightarrow w | (CHead _ _ t) \Rightarrow t])) (CHead d (Bind Abbr) w) (CHead 
-x0 (Bind Abbr) x1) (getl_mono c (CHead d (Bind Abbr) w) i H (CHead x0 (Bind 
-Abbr) x1) H4)) in (\lambda (H11: (eq C d x0)).(let H12 \def (eq_ind_r T x1 
-(\lambda (t: T).(getl i c (CHead x0 (Bind Abbr) t))) H8 w H10) in (let H13 
-\def (eq_ind_r T x1 (\lambda (t: T).(pr3 x0 t x2)) H5 w H10) in (let H14 \def 
-(eq_ind_r C x0 (\lambda (c0: C).(getl i c (CHead c0 (Bind Abbr) w))) H12 d 
-H11) in (let H15 \def (eq_ind_r C x0 (\lambda (c0: C).(pr3 c0 w x2)) H13 d 
-H11) in (pr3_lift c d (S i) O (getl_drop Abbr c d w i H14) w x2 H15))))))) 
-H9))) u2 H6)))))))) H3)) H2))))) (\lambda (t: T).(\lambda (t0: 
+H4)) in (let H9 \def (f_equal C C (\lambda (e: C).(match e with [(CSort _) 
+\Rightarrow d | (CHead c0 _ _) \Rightarrow c0])) (CHead d (Bind Abbr) w) 
+(CHead x0 (Bind Abbr) x1) (getl_mono c (CHead d (Bind Abbr) w) i H (CHead x0 
+(Bind Abbr) x1) H4)) in ((let H10 \def (f_equal C T (\lambda (e: C).(match e 
+with [(CSort _) \Rightarrow w | (CHead _ _ t) \Rightarrow t])) (CHead d (Bind 
+Abbr) w) (CHead x0 (Bind Abbr) x1) (getl_mono c (CHead d (Bind Abbr) w) i H 
+(CHead x0 (Bind Abbr) x1) H4)) in (\lambda (H11: (eq C d x0)).(let H12 \def 
+(eq_ind_r T x1 (\lambda (t: T).(getl i c (CHead x0 (Bind Abbr) t))) H8 w H10) 
+in (let H13 \def (eq_ind_r T x1 (\lambda (t: T).(pr3 x0 t x2)) H5 w H10) in 
+(let H14 \def (eq_ind_r C x0 (\lambda (c0: C).(getl i c (CHead c0 (Bind Abbr) 
+w))) H12 d H11) in (let H15 \def (eq_ind_r C x0 (\lambda (c0: C).(pr3 c0 w 
+x2)) H13 d H11) in (pr3_lift c d (S i) O (getl_drop Abbr c d w i H14) w x2 
+H15))))))) H9))) u2 H6)))))))) H3)) H2))))) (\lambda (t: T).(\lambda (t0: 
 TList).(\lambda (H0: ((\forall (u2: T).((pr3 c (THeads (Flat Appl) t0 (TLRef 
 i)) u2) \to ((((iso (THeads (Flat Appl) t0 (TLRef i)) u2) \to (\forall (P: 
 Prop).P))) \to (pr3 c (THeads (Flat Appl) t0 (lift (S i) O w)) 
@@ -199,9 +198,6 @@ u2 (pr3_t (THead (Bind x0) x5 (THead (Flat Appl) (lift (S O) O x4) x3))
 c x1 x5 H9 (Bind x0) (THead (Flat Appl) (lift (S O) O x4) x2) (THead (Flat 
 Appl) (lift (S O) O x4) x3) (pr3_thin_dx (CHead c (Bind x0) x5) x2 x3 H10 
 (lift (S O) O x4) Appl)) u2 H7)))))))))))))) H4)) H3)))))))) vs)))))).
-(* COMMENTS
-Initial nodes: 3759
-END *)
 
 theorem pr3_iso_appls_cast:
  \forall (c: C).(\forall (v: T).(\forall (t: T).(\forall (vs: TList).(let u1 
@@ -362,9 +358,6 @@ O) O x4) x3)) (THead (Bind x0) x1 (THead (Flat Appl) (lift (S O) O x4) x2)) c
 (pr3_head_12 c x1 x5 H8 (Bind x0) (THead (Flat Appl) (lift (S O) O x4) x2) 
 (THead (Flat Appl) (lift (S O) O x4) x3) (pr3_thin_dx (CHead c (Bind x0) x5) 
 x2 x3 H9 (lift (S O) O x4) Appl)) u2 H6)))))))))))))) H3)) H2)))))))) vs)))).
-(* COMMENTS
-Initial nodes: 3297
-END *)
 
 theorem pr3_iso_appl_bind:
  \forall (b: B).((not (eq B b Abst)) \to (\forall (v1: T).(\forall (v2: 
@@ -450,59 +443,44 @@ T).(\lambda (_: T).(pr3 c v2 u3))) (\lambda (_: T).(\lambda (t2: T).(pr3
 (lift (S O) O v1) t)) (THead (Bind Abbr) x2 x3)) (\lambda (x4: T).(\lambda 
 (x5: T).(\lambda (H10: (eq T (THead (Bind Abst) x0 x1) (THead (Bind b) x4 
 x5))).(\lambda (H11: (pr3 c v2 x4)).(\lambda (H12: (pr3 (CHead c (Bind b) v2) 
-t x5)).(let H13 \def (f_equal T B (\lambda (e: T).(match e in T return 
-(\lambda (_: T).B) with [(TSort _) \Rightarrow Abst | (TLRef _) \Rightarrow 
-Abst | (THead k _ _) \Rightarrow (match k in K return (\lambda (_: K).B) with 
-[(Bind b0) \Rightarrow b0 | (Flat _) \Rightarrow Abst])])) (THead (Bind Abst) 
-x0 x1) (THead (Bind b) x4 x5) H10) in ((let H14 \def (f_equal T T (\lambda 
-(e: T).(match e in T return (\lambda (_: T).T) with [(TSort _) \Rightarrow x0 
-| (TLRef _) \Rightarrow x0 | (THead _ t0 _) \Rightarrow t0])) (THead (Bind 
-Abst) x0 x1) (THead (Bind b) x4 x5) H10) in ((let H15 \def (f_equal T T 
-(\lambda (e: T).(match e in T return (\lambda (_: T).T) with [(TSort _) 
-\Rightarrow x1 | (TLRef _) \Rightarrow x1 | (THead _ _ t0) \Rightarrow t0])) 
-(THead (Bind Abst) x0 x1) (THead (Bind b) x4 x5) H10) in (\lambda (H16: (eq T 
-x0 x4)).(\lambda (H17: (eq B Abst b)).(let H18 \def (eq_ind_r T x5 (\lambda 
-(t0: T).(pr3 (CHead c (Bind b) v2) t t0)) H12 x1 H15) in (let H19 \def 
-(eq_ind_r T x4 (\lambda (t0: T).(pr3 c v2 t0)) H11 x0 H16) in (let H20 \def 
-(eq_ind_r B b (\lambda (b0: B).(pr3 (CHead c (Bind b0) v2) t x1)) H18 Abst 
-H17) in (let H21 \def (eq_ind_r B b (\lambda (b0: B).(not (eq B b0 Abst))) H 
-Abst H17) in (eq_ind B Abst (\lambda (b0: B).(pr3 c (THead (Bind b0) v2 
-(THead (Flat Appl) (lift (S O) O v1) t)) (THead (Bind Abbr) x2 x3))) (let H22 
-\def (match (H21 (refl_equal B Abst)) in False return (\lambda (_: 
-False).(pr3 c (THead (Bind Abst) v2 (THead (Flat Appl) (lift (S O) O v1) t)) 
-(THead (Bind Abbr) x2 x3))) with []) in H22) b H17)))))))) H14)) H13))))))) 
-H9)) (\lambda (H9: (pr3 (CHead c (Bind b) v2) t (lift (S O) O (THead (Bind 
-Abst) x0 x1)))).(pr3_t (THead (Bind b) v2 (THead (Flat Appl) (lift (S O) O 
-x2) (lift (S O) O (THead (Bind Abst) x0 x1)))) (THead (Bind b) v2 (THead 
-(Flat Appl) (lift (S O) O v1) t)) c (pr3_head_2 c v2 (THead (Flat Appl) (lift 
-(S O) O v1) t) (THead (Flat Appl) (lift (S O) O x2) (lift (S O) O (THead 
-(Bind Abst) x0 x1))) (Bind b) (pr3_flat (CHead c (Bind b) v2) (lift (S O) O 
-v1) (lift (S O) O x2) (pr3_lift (CHead c (Bind b) v2) c (S O) O (drop_drop 
-(Bind b) O c c (drop_refl c) v2) v1 x2 H5) t (lift (S O) O (THead (Bind Abst) 
-x0 x1)) H9 Appl)) (THead (Bind Abbr) x2 x3) (eq_ind T (lift (S O) O (THead 
-(Flat Appl) x2 (THead (Bind Abst) x0 x1))) (\lambda (t0: T).(pr3 c (THead 
-(Bind b) v2 t0) (THead (Bind Abbr) x2 x3))) (pr3_sing c (THead (Bind Abbr) x2 
-x1) (THead (Bind b) v2 (lift (S O) O (THead (Flat Appl) x2 (THead (Bind Abst) 
-x0 x1)))) (pr2_free c (THead (Bind b) v2 (lift (S O) O (THead (Flat Appl) x2 
-(THead (Bind Abst) x0 x1)))) (THead (Bind Abbr) x2 x1) (pr0_zeta b H (THead 
-(Flat Appl) x2 (THead (Bind Abst) x0 x1)) (THead (Bind Abbr) x2 x1) (pr0_beta 
-x0 x2 x2 (pr0_refl x2) x1 x1 (pr0_refl x1)) v2)) (THead (Bind Abbr) x2 x3) 
-(pr3_head_12 c x2 x2 (pr3_refl c x2) (Bind Abbr) x1 x3 (H7 Abbr x2))) (THead 
-(Flat Appl) (lift (S O) O x2) (lift (S O) O (THead (Bind Abst) x0 x1))) 
-(lift_flat Appl x2 (THead (Bind Abst) x0 x1) (S O) O)))) H8))) u2 H4))))))))) 
-H3)) (\lambda (H3: (ex6_6 B T T T T T (\lambda (b0: B).(\lambda (_: 
-T).(\lambda (_: T).(\lambda (_: T).(\lambda (_: T).(\lambda (_: T).(not (eq B 
-b0 Abst)))))))) (\lambda (b0: B).(\lambda (y1: T).(\lambda (z1: T).(\lambda 
-(_: T).(\lambda (_: T).(\lambda (_: T).(pr3 c (THead (Bind b) v2 t) (THead 
-(Bind b0) y1 z1)))))))) (\lambda (b0: B).(\lambda (_: T).(\lambda (_: 
-T).(\lambda (z2: T).(\lambda (u3: T).(\lambda (y2: T).(pr3 c (THead (Bind b0) 
-y2 (THead (Flat Appl) (lift (S O) O u3) z2)) u2))))))) (\lambda (_: 
-B).(\lambda (_: T).(\lambda (_: T).(\lambda (_: T).(\lambda (u3: T).(\lambda 
-(_: T).(pr3 c v1 u3))))))) (\lambda (_: B).(\lambda (y1: T).(\lambda (_: 
-T).(\lambda (_: T).(\lambda (_: T).(\lambda (y2: T).(pr3 c y1 y2))))))) 
-(\lambda (b0: B).(\lambda (_: T).(\lambda (z1: T).(\lambda (z2: T).(\lambda 
-(_: T).(\lambda (y2: T).(pr3 (CHead c (Bind b0) y2) z1 z2))))))))).(ex6_6_ind 
-B T T T T T (\lambda (b0: B).(\lambda (_: T).(\lambda (_: T).(\lambda (_: 
+t x5)).(let H13 \def (f_equal T B (\lambda (e: T).(match e with [(TSort _) 
+\Rightarrow Abst | (TLRef _) \Rightarrow Abst | (THead k _ _) \Rightarrow 
+(match k with [(Bind b0) \Rightarrow b0 | (Flat _) \Rightarrow Abst])])) 
+(THead (Bind Abst) x0 x1) (THead (Bind b) x4 x5) H10) in ((let H14 \def 
+(f_equal T T (\lambda (e: T).(match e with [(TSort _) \Rightarrow x0 | (TLRef 
+_) \Rightarrow x0 | (THead _ t0 _) \Rightarrow t0])) (THead (Bind Abst) x0 
+x1) (THead (Bind b) x4 x5) H10) in ((let H15 \def (f_equal T T (\lambda (e: 
+T).(match e with [(TSort _) \Rightarrow x1 | (TLRef _) \Rightarrow x1 | 
+(THead _ _ t0) \Rightarrow t0])) (THead (Bind Abst) x0 x1) (THead (Bind b) x4 
+x5) H10) in (\lambda (H16: (eq T x0 x4)).(\lambda (H17: (eq B Abst b)).(let 
+H18 \def (eq_ind_r T x5 (\lambda (t0: T).(pr3 (CHead c (Bind b) v2) t t0)) 
+H12 x1 H15) in (let H19 \def (eq_ind_r T x4 (\lambda (t0: T).(pr3 c v2 t0)) 
+H11 x0 H16) in (let H20 \def (eq_ind_r B b (\lambda (b0: B).(pr3 (CHead c 
+(Bind b0) v2) t x1)) H18 Abst H17) in (let H21 \def (eq_ind_r B b (\lambda 
+(b0: B).(not (eq B b0 Abst))) H Abst H17) in (eq_ind B Abst (\lambda (b0: 
+B).(pr3 c (THead (Bind b0) v2 (THead (Flat Appl) (lift (S O) O v1) t)) (THead 
+(Bind Abbr) x2 x3))) (let H22 \def (match (H21 (refl_equal B Abst)) in False 
+with []) in H22) b H17)))))))) H14)) H13))))))) H9)) (\lambda (H9: (pr3 
+(CHead c (Bind b) v2) t (lift (S O) O (THead (Bind Abst) x0 x1)))).(pr3_t 
+(THead (Bind b) v2 (THead (Flat Appl) (lift (S O) O x2) (lift (S O) O (THead 
+(Bind Abst) x0 x1)))) (THead (Bind b) v2 (THead (Flat Appl) (lift (S O) O v1) 
+t)) c (pr3_head_2 c v2 (THead (Flat Appl) (lift (S O) O v1) t) (THead (Flat 
+Appl) (lift (S O) O x2) (lift (S O) O (THead (Bind Abst) x0 x1))) (Bind b) 
+(pr3_flat (CHead c (Bind b) v2) (lift (S O) O v1) (lift (S O) O x2) (pr3_lift 
+(CHead c (Bind b) v2) c (S O) O (drop_drop (Bind b) O c c (drop_refl c) v2) 
+v1 x2 H5) t (lift (S O) O (THead (Bind Abst) x0 x1)) H9 Appl)) (THead (Bind 
+Abbr) x2 x3) (eq_ind T (lift (S O) O (THead (Flat Appl) x2 (THead (Bind Abst) 
+x0 x1))) (\lambda (t0: T).(pr3 c (THead (Bind b) v2 t0) (THead (Bind Abbr) x2 
+x3))) (pr3_sing c (THead (Bind Abbr) x2 x1) (THead (Bind b) v2 (lift (S O) O 
+(THead (Flat Appl) x2 (THead (Bind Abst) x0 x1)))) (pr2_free c (THead (Bind 
+b) v2 (lift (S O) O (THead (Flat Appl) x2 (THead (Bind Abst) x0 x1)))) (THead 
+(Bind Abbr) x2 x1) (pr0_zeta b H (THead (Flat Appl) x2 (THead (Bind Abst) x0 
+x1)) (THead (Bind Abbr) x2 x1) (pr0_beta x0 x2 x2 (pr0_refl x2) x1 x1 
+(pr0_refl x1)) v2)) (THead (Bind Abbr) x2 x3) (pr3_head_12 c x2 x2 (pr3_refl 
+c x2) (Bind Abbr) x1 x3 (H7 Abbr x2))) (THead (Flat Appl) (lift (S O) O x2) 
+(lift (S O) O (THead (Bind Abst) x0 x1))) (lift_flat Appl x2 (THead (Bind 
+Abst) x0 x1) (S O) O)))) H8))) u2 H4))))))))) H3)) (\lambda (H3: (ex6_6 B T T 
+T T T (\lambda (b0: B).(\lambda (_: T).(\lambda (_: T).(\lambda (_: 
 T).(\lambda (_: T).(\lambda (_: T).(not (eq B b0 Abst)))))))) (\lambda (b0: 
 B).(\lambda (y1: T).(\lambda (z1: T).(\lambda (_: T).(\lambda (_: T).(\lambda 
 (_: T).(pr3 c (THead (Bind b) v2 t) (THead (Bind b0) y1 z1)))))))) (\lambda 
@@ -513,54 +491,64 @@ O u3) z2)) u2))))))) (\lambda (_: B).(\lambda (_: T).(\lambda (_: T).(\lambda
 B).(\lambda (y1: T).(\lambda (_: T).(\lambda (_: T).(\lambda (_: T).(\lambda 
 (y2: T).(pr3 c y1 y2))))))) (\lambda (b0: B).(\lambda (_: T).(\lambda (z1: 
 T).(\lambda (z2: T).(\lambda (_: T).(\lambda (y2: T).(pr3 (CHead c (Bind b0) 
-y2) z1 z2))))))) (pr3 c (THead (Bind b) v2 (THead (Flat Appl) (lift (S O) O 
-v1) t)) u2) (\lambda (x0: B).(\lambda (x1: T).(\lambda (x2: T).(\lambda (x3: 
-T).(\lambda (x4: T).(\lambda (x5: T).(\lambda (H4: (not (eq B x0 
-Abst))).(\lambda (H5: (pr3 c (THead (Bind b) v2 t) (THead (Bind x0) x1 
-x2))).(\lambda (H6: (pr3 c (THead (Bind x0) x5 (THead (Flat Appl) (lift (S O) 
-O x4) x3)) u2)).(\lambda (H7: (pr3 c v1 x4)).(\lambda (H8: (pr3 c x1 
-x5)).(\lambda (H9: (pr3 (CHead c (Bind x0) x5) x2 x3)).(pr3_t (THead (Bind 
-x0) x5 (THead (Flat Appl) (lift (S O) O x4) x3)) (THead (Bind b) v2 (THead 
-(Flat Appl) (lift (S O) O v1) t)) c (let H_x \def (pr3_gen_bind b H c v2 t 
-(THead (Bind x0) x1 x2) H5) in (let H10 \def H_x in (or_ind (ex3_2 T T 
-(\lambda (u3: T).(\lambda (t2: T).(eq T (THead (Bind x0) x1 x2) (THead (Bind 
-b) u3 t2)))) (\lambda (u3: T).(\lambda (_: T).(pr3 c v2 u3))) (\lambda (_: 
-T).(\lambda (t2: T).(pr3 (CHead c (Bind b) v2) t t2)))) (pr3 (CHead c (Bind 
-b) v2) t (lift (S O) O (THead (Bind x0) x1 x2))) (pr3 c (THead (Bind b) v2 
-(THead (Flat Appl) (lift (S O) O v1) t)) (THead (Bind x0) x5 (THead (Flat 
-Appl) (lift (S O) O x4) x3))) (\lambda (H11: (ex3_2 T T (\lambda (u3: 
-T).(\lambda (t2: T).(eq T (THead (Bind x0) x1 x2) (THead (Bind b) u3 t2)))) 
-(\lambda (u3: T).(\lambda (_: T).(pr3 c v2 u3))) (\lambda (_: T).(\lambda 
-(t2: T).(pr3 (CHead c (Bind b) v2) t t2))))).(ex3_2_ind T T (\lambda (u3: 
-T).(\lambda (t2: T).(eq T (THead (Bind x0) x1 x2) (THead (Bind b) u3 t2)))) 
-(\lambda (u3: T).(\lambda (_: T).(pr3 c v2 u3))) (\lambda (_: T).(\lambda 
-(t2: T).(pr3 (CHead c (Bind b) v2) t t2))) (pr3 c (THead (Bind b) v2 (THead 
-(Flat Appl) (lift (S O) O v1) t)) (THead (Bind x0) x5 (THead (Flat Appl) 
-(lift (S O) O x4) x3))) (\lambda (x6: T).(\lambda (x7: T).(\lambda (H12: (eq 
-T (THead (Bind x0) x1 x2) (THead (Bind b) x6 x7))).(\lambda (H13: (pr3 c v2 
-x6)).(\lambda (H14: (pr3 (CHead c (Bind b) v2) t x7)).(let H15 \def (f_equal 
-T B (\lambda (e: T).(match e in T return (\lambda (_: T).B) with [(TSort _) 
-\Rightarrow x0 | (TLRef _) \Rightarrow x0 | (THead k _ _) \Rightarrow (match 
-k in K return (\lambda (_: K).B) with [(Bind b0) \Rightarrow b0 | (Flat _) 
-\Rightarrow x0])])) (THead (Bind x0) x1 x2) (THead (Bind b) x6 x7) H12) in 
-((let H16 \def (f_equal T T (\lambda (e: T).(match e in T return (\lambda (_: 
-T).T) with [(TSort _) \Rightarrow x1 | (TLRef _) \Rightarrow x1 | (THead _ t0 
-_) \Rightarrow t0])) (THead (Bind x0) x1 x2) (THead (Bind b) x6 x7) H12) in 
-((let H17 \def (f_equal T T (\lambda (e: T).(match e in T return (\lambda (_: 
-T).T) with [(TSort _) \Rightarrow x2 | (TLRef _) \Rightarrow x2 | (THead _ _ 
-t0) \Rightarrow t0])) (THead (Bind x0) x1 x2) (THead (Bind b) x6 x7) H12) in 
-(\lambda (H18: (eq T x1 x6)).(\lambda (H19: (eq B x0 b)).(let H20 \def 
-(eq_ind_r T x7 (\lambda (t0: T).(pr3 (CHead c (Bind b) v2) t t0)) H14 x2 H17) 
-in (let H21 \def (eq_ind_r T x6 (\lambda (t0: T).(pr3 c v2 t0)) H13 x1 H18) 
-in (let H22 \def (eq_ind B x0 (\lambda (b0: B).(pr3 (CHead c (Bind b0) x5) x2 
-x3)) H9 b H19) in (let H23 \def (eq_ind B x0 (\lambda (b0: B).(not (eq B b0 
-Abst))) H4 b H19) in (eq_ind_r B b (\lambda (b0: B).(pr3 c (THead (Bind b) v2 
-(THead (Flat Appl) (lift (S O) O v1) t)) (THead (Bind b0) x5 (THead (Flat 
-Appl) (lift (S O) O x4) x3)))) (pr3_head_21 c v2 x5 (pr3_t x1 v2 c H21 x5 H8) 
-(Bind b) (THead (Flat Appl) (lift (S O) O v1) t) (THead (Flat Appl) (lift (S 
-O) O x4) x3) (pr3_flat (CHead c (Bind b) v2) (lift (S O) O v1) (lift (S O) O 
-x4) (pr3_lift (CHead c (Bind b) v2) c (S O) O (drop_drop (Bind b) O c c 
-(drop_refl c) v2) v1 x4 H7) t x3 (pr3_t x2 t (CHead c (Bind b) v2) H20 x3 
+y2) z1 z2))))))))).(ex6_6_ind B T T T T T (\lambda (b0: B).(\lambda (_: 
+T).(\lambda (_: T).(\lambda (_: T).(\lambda (_: T).(\lambda (_: T).(not (eq B 
+b0 Abst)))))))) (\lambda (b0: B).(\lambda (y1: T).(\lambda (z1: T).(\lambda 
+(_: T).(\lambda (_: T).(\lambda (_: T).(pr3 c (THead (Bind b) v2 t) (THead 
+(Bind b0) y1 z1)))))))) (\lambda (b0: B).(\lambda (_: T).(\lambda (_: 
+T).(\lambda (z2: T).(\lambda (u3: T).(\lambda (y2: T).(pr3 c (THead (Bind b0) 
+y2 (THead (Flat Appl) (lift (S O) O u3) z2)) u2))))))) (\lambda (_: 
+B).(\lambda (_: T).(\lambda (_: T).(\lambda (_: T).(\lambda (u3: T).(\lambda 
+(_: T).(pr3 c v1 u3))))))) (\lambda (_: B).(\lambda (y1: T).(\lambda (_: 
+T).(\lambda (_: T).(\lambda (_: T).(\lambda (y2: T).(pr3 c y1 y2))))))) 
+(\lambda (b0: B).(\lambda (_: T).(\lambda (z1: T).(\lambda (z2: T).(\lambda 
+(_: T).(\lambda (y2: T).(pr3 (CHead c (Bind b0) y2) z1 z2))))))) (pr3 c 
+(THead (Bind b) v2 (THead (Flat Appl) (lift (S O) O v1) t)) u2) (\lambda (x0: 
+B).(\lambda (x1: T).(\lambda (x2: T).(\lambda (x3: T).(\lambda (x4: 
+T).(\lambda (x5: T).(\lambda (H4: (not (eq B x0 Abst))).(\lambda (H5: (pr3 c 
+(THead (Bind b) v2 t) (THead (Bind x0) x1 x2))).(\lambda (H6: (pr3 c (THead 
+(Bind x0) x5 (THead (Flat Appl) (lift (S O) O x4) x3)) u2)).(\lambda (H7: 
+(pr3 c v1 x4)).(\lambda (H8: (pr3 c x1 x5)).(\lambda (H9: (pr3 (CHead c (Bind 
+x0) x5) x2 x3)).(pr3_t (THead (Bind x0) x5 (THead (Flat Appl) (lift (S O) O 
+x4) x3)) (THead (Bind b) v2 (THead (Flat Appl) (lift (S O) O v1) t)) c (let 
+H_x \def (pr3_gen_bind b H c v2 t (THead (Bind x0) x1 x2) H5) in (let H10 
+\def H_x in (or_ind (ex3_2 T T (\lambda (u3: T).(\lambda (t2: T).(eq T (THead 
+(Bind x0) x1 x2) (THead (Bind b) u3 t2)))) (\lambda (u3: T).(\lambda (_: 
+T).(pr3 c v2 u3))) (\lambda (_: T).(\lambda (t2: T).(pr3 (CHead c (Bind b) 
+v2) t t2)))) (pr3 (CHead c (Bind b) v2) t (lift (S O) O (THead (Bind x0) x1 
+x2))) (pr3 c (THead (Bind b) v2 (THead (Flat Appl) (lift (S O) O v1) t)) 
+(THead (Bind x0) x5 (THead (Flat Appl) (lift (S O) O x4) x3))) (\lambda (H11: 
+(ex3_2 T T (\lambda (u3: T).(\lambda (t2: T).(eq T (THead (Bind x0) x1 x2) 
+(THead (Bind b) u3 t2)))) (\lambda (u3: T).(\lambda (_: T).(pr3 c v2 u3))) 
+(\lambda (_: T).(\lambda (t2: T).(pr3 (CHead c (Bind b) v2) t 
+t2))))).(ex3_2_ind T T (\lambda (u3: T).(\lambda (t2: T).(eq T (THead (Bind 
+x0) x1 x2) (THead (Bind b) u3 t2)))) (\lambda (u3: T).(\lambda (_: T).(pr3 c 
+v2 u3))) (\lambda (_: T).(\lambda (t2: T).(pr3 (CHead c (Bind b) v2) t t2))) 
+(pr3 c (THead (Bind b) v2 (THead (Flat Appl) (lift (S O) O v1) t)) (THead 
+(Bind x0) x5 (THead (Flat Appl) (lift (S O) O x4) x3))) (\lambda (x6: 
+T).(\lambda (x7: T).(\lambda (H12: (eq T (THead (Bind x0) x1 x2) (THead (Bind 
+b) x6 x7))).(\lambda (H13: (pr3 c v2 x6)).(\lambda (H14: (pr3 (CHead c (Bind 
+b) v2) t x7)).(let H15 \def (f_equal T B (\lambda (e: T).(match e with 
+[(TSort _) \Rightarrow x0 | (TLRef _) \Rightarrow x0 | (THead k _ _) 
+\Rightarrow (match k with [(Bind b0) \Rightarrow b0 | (Flat _) \Rightarrow 
+x0])])) (THead (Bind x0) x1 x2) (THead (Bind b) x6 x7) H12) in ((let H16 \def 
+(f_equal T T (\lambda (e: T).(match e with [(TSort _) \Rightarrow x1 | (TLRef 
+_) \Rightarrow x1 | (THead _ t0 _) \Rightarrow t0])) (THead (Bind x0) x1 x2) 
+(THead (Bind b) x6 x7) H12) in ((let H17 \def (f_equal T T (\lambda (e: 
+T).(match e with [(TSort _) \Rightarrow x2 | (TLRef _) \Rightarrow x2 | 
+(THead _ _ t0) \Rightarrow t0])) (THead (Bind x0) x1 x2) (THead (Bind b) x6 
+x7) H12) in (\lambda (H18: (eq T x1 x6)).(\lambda (H19: (eq B x0 b)).(let H20 
+\def (eq_ind_r T x7 (\lambda (t0: T).(pr3 (CHead c (Bind b) v2) t t0)) H14 x2 
+H17) in (let H21 \def (eq_ind_r T x6 (\lambda (t0: T).(pr3 c v2 t0)) H13 x1 
+H18) in (let H22 \def (eq_ind B x0 (\lambda (b0: B).(pr3 (CHead c (Bind b0) 
+x5) x2 x3)) H9 b H19) in (let H23 \def (eq_ind B x0 (\lambda (b0: B).(not (eq 
+B b0 Abst))) H4 b H19) in (eq_ind_r B b (\lambda (b0: B).(pr3 c (THead (Bind 
+b) v2 (THead (Flat Appl) (lift (S O) O v1) t)) (THead (Bind b0) x5 (THead 
+(Flat Appl) (lift (S O) O x4) x3)))) (pr3_head_21 c v2 x5 (pr3_t x1 v2 c H21 
+x5 H8) (Bind b) (THead (Flat Appl) (lift (S O) O v1) t) (THead (Flat Appl) 
+(lift (S O) O x4) x3) (pr3_flat (CHead c (Bind b) v2) (lift (S O) O v1) (lift 
+(S O) O x4) (pr3_lift (CHead c (Bind b) v2) c (S O) O (drop_drop (Bind b) O c 
+c (drop_refl c) v2) v1 x4 H7) t x3 (pr3_t x2 t (CHead c (Bind b) v2) H20 x3 
 (pr3_pr3_pr3_t c v2 x1 H21 x2 x3 (Bind b) (pr3_pr3_pr3_t c x1 x5 H8 x2 x3 
 (Bind b) H22))) Appl)) x0 H19)))))))) H16)) H15))))))) H11)) (\lambda (H11: 
 (pr3 (CHead c (Bind b) v2) t (lift (S O) O (THead (Bind x0) x1 x2)))).(pr3_t 
@@ -587,9 +575,6 @@ H8 (Bind x0) (THead (Flat Appl) (lift (S O) O x4) x2) (THead (Flat Appl)
 O) O x4) Appl))) (THead (Flat Appl) (lift (S O) O x4) (lift (S O) O (THead 
 (Bind x0) x1 x2))) (lift_flat Appl x4 (THead (Bind x0) x1 x2) (S O) O)))) 
 H10))) u2 H6))))))))))))) H3)) H2)))))))))).
-(* COMMENTS
-Initial nodes: 4805
-END *)
 
 theorem pr3_iso_appls_appl_bind:
  \forall (b: B).((not (eq B b Abst)) \to (\forall (v: T).(\forall (u: 
@@ -758,9 +743,6 @@ Appl) (lift (S O) O x4) x2)) c (pr3_head_12 c x1 x5 H9 (Bind x0) (THead (Flat
 Appl) (lift (S O) O x4) x2) (THead (Flat Appl) (lift (S O) O x4) x3) 
 (pr3_thin_dx (CHead c (Bind x0) x5) x2 x3 H10 (lift (S O) O x4) Appl)) u2 
 H7)))))))))))))) H4)) H3))))))))) vs)))))).
-(* COMMENTS
-Initial nodes: 3571
-END *)
 
 theorem pr3_iso_appls_bind:
  \forall (b: B).((not (eq B b Abst)) \to (\forall (vs: TList).(\forall (u: 
@@ -841,9 +823,6 @@ t) t0))) (iso_head t1 t1 (THeads (Flat Appl) ts0 (THead (Flat Appl) t (THead
 (Flat Appl) (TApp (lifts (S O) O ts) (lift (S O) O t)) t0) (theads_tapp (Flat 
 Appl) (lift (S O) O t) t0 (lifts (S O) O ts))) (lifts (S O) O (TApp ts t)) 
 (lifts_tapp (S O) O t ts))))))))))) vs))).
-(* COMMENTS
-Initial nodes: 1681
-END *)
 
 theorem pr3_iso_beta:
  \forall (v: T).(\forall (w: T).(\forall (t: T).(let u1 \def (THead (Flat 
@@ -915,16 +894,15 @@ u3))) (\lambda (_: T).(\lambda (t2: T).(\forall (b: B).(\forall (u: T).(pr3
 (x4: T).(\lambda (x5: T).(\lambda (H8: (eq T (THead (Bind Abst) x0 x1) (THead 
 (Bind Abst) x4 x5))).(\lambda (H9: (pr3 c w x4)).(\lambda (H10: ((\forall (b: 
 B).(\forall (u: T).(pr3 (CHead c (Bind b) u) t x5))))).(let H11 \def (f_equal 
-T T (\lambda (e: T).(match e in T return (\lambda (_: T).T) with [(TSort _) 
-\Rightarrow x0 | (TLRef _) \Rightarrow x0 | (THead _ t0 _) \Rightarrow t0])) 
-(THead (Bind Abst) x0 x1) (THead (Bind Abst) x4 x5) H8) in ((let H12 \def 
-(f_equal T T (\lambda (e: T).(match e in T return (\lambda (_: T).T) with 
-[(TSort _) \Rightarrow x1 | (TLRef _) \Rightarrow x1 | (THead _ _ t0) 
-\Rightarrow t0])) (THead (Bind Abst) x0 x1) (THead (Bind Abst) x4 x5) H8) in 
-(\lambda (H13: (eq T x0 x4)).(let H14 \def (eq_ind_r T x5 (\lambda (t0: 
-T).(\forall (b: B).(\forall (u: T).(pr3 (CHead c (Bind b) u) t t0)))) H10 x1 
-H12) in (let H15 \def (eq_ind_r T x4 (\lambda (t0: T).(pr3 c w t0)) H9 x0 
-H13) in (pr3_t (THead (Bind Abbr) x2 x3) (THead (Bind Abbr) v t) c 
+T T (\lambda (e: T).(match e with [(TSort _) \Rightarrow x0 | (TLRef _) 
+\Rightarrow x0 | (THead _ t0 _) \Rightarrow t0])) (THead (Bind Abst) x0 x1) 
+(THead (Bind Abst) x4 x5) H8) in ((let H12 \def (f_equal T T (\lambda (e: 
+T).(match e with [(TSort _) \Rightarrow x1 | (TLRef _) \Rightarrow x1 | 
+(THead _ _ t0) \Rightarrow t0])) (THead (Bind Abst) x0 x1) (THead (Bind Abst) 
+x4 x5) H8) in (\lambda (H13: (eq T x0 x4)).(let H14 \def (eq_ind_r T x5 
+(\lambda (t0: T).(\forall (b: B).(\forall (u: T).(pr3 (CHead c (Bind b) u) t 
+t0)))) H10 x1 H12) in (let H15 \def (eq_ind_r T x4 (\lambda (t0: T).(pr3 c w 
+t0)) H9 x0 H13) in (pr3_t (THead (Bind Abbr) x2 x3) (THead (Bind Abbr) v t) c 
 (pr3_head_12 c v x2 H4 (Bind Abbr) t x3 (pr3_t x1 t (CHead c (Bind Abbr) x2) 
 (H14 Abbr x2) x3 (H6 Abbr x2))) u2 H3))))) H11))))))) H7)))))))))) H2)) 
 (\lambda (H2: (ex6_6 B T T T T T (\lambda (b: B).(\lambda (_: T).(\lambda (_: 
@@ -964,30 +942,25 @@ u3))) (\lambda (_: T).(\lambda (t2: T).(\forall (b: B).(\forall (u: T).(pr3
 (x6: T).(\lambda (x7: T).(\lambda (H10: (eq T (THead (Bind x0) x1 x2) (THead 
 (Bind Abst) x6 x7))).(\lambda (H11: (pr3 c w x6)).(\lambda (H12: ((\forall 
 (b: B).(\forall (u: T).(pr3 (CHead c (Bind b) u) t x7))))).(let H13 \def 
-(f_equal T B (\lambda (e: T).(match e in T return (\lambda (_: T).B) with 
-[(TSort _) \Rightarrow x0 | (TLRef _) \Rightarrow x0 | (THead k _ _) 
-\Rightarrow (match k in K return (\lambda (_: K).B) with [(Bind b) 
+(f_equal T B (\lambda (e: T).(match e with [(TSort _) \Rightarrow x0 | (TLRef 
+_) \Rightarrow x0 | (THead k _ _) \Rightarrow (match k with [(Bind b) 
 \Rightarrow b | (Flat _) \Rightarrow x0])])) (THead (Bind x0) x1 x2) (THead 
 (Bind Abst) x6 x7) H10) in ((let H14 \def (f_equal T T (\lambda (e: T).(match 
-e in T return (\lambda (_: T).T) with [(TSort _) \Rightarrow x1 | (TLRef _) 
-\Rightarrow x1 | (THead _ t0 _) \Rightarrow t0])) (THead (Bind x0) x1 x2) 
-(THead (Bind Abst) x6 x7) H10) in ((let H15 \def (f_equal T T (\lambda (e: 
-T).(match e in T return (\lambda (_: T).T) with [(TSort _) \Rightarrow x2 | 
-(TLRef _) \Rightarrow x2 | (THead _ _ t0) \Rightarrow t0])) (THead (Bind x0) 
-x1 x2) (THead (Bind Abst) x6 x7) H10) in (\lambda (H16: (eq T x1 
-x6)).(\lambda (H17: (eq B x0 Abst)).(let H18 \def (eq_ind_r T x7 (\lambda 
-(t0: T).(\forall (b: B).(\forall (u: T).(pr3 (CHead c (Bind b) u) t t0)))) 
-H12 x2 H15) in (let H19 \def (eq_ind_r T x6 (\lambda (t0: T).(pr3 c w t0)) 
-H11 x1 H16) in (let H20 \def (eq_ind B x0 (\lambda (b: B).(pr3 (CHead c (Bind 
-b) x5) x2 x3)) H8 Abst H17) in (let H21 \def (eq_ind B x0 (\lambda (b: 
+e with [(TSort _) \Rightarrow x1 | (TLRef _) \Rightarrow x1 | (THead _ t0 _) 
+\Rightarrow t0])) (THead (Bind x0) x1 x2) (THead (Bind Abst) x6 x7) H10) in 
+((let H15 \def (f_equal T T (\lambda (e: T).(match e with [(TSort _) 
+\Rightarrow x2 | (TLRef _) \Rightarrow x2 | (THead _ _ t0) \Rightarrow t0])) 
+(THead (Bind x0) x1 x2) (THead (Bind Abst) x6 x7) H10) in (\lambda (H16: (eq 
+T x1 x6)).(\lambda (H17: (eq B x0 Abst)).(let H18 \def (eq_ind_r T x7 
+(\lambda (t0: T).(\forall (b: B).(\forall (u: T).(pr3 (CHead c (Bind b) u) t 
+t0)))) H12 x2 H15) in (let H19 \def (eq_ind_r T x6 (\lambda (t0: T).(pr3 c w 
+t0)) H11 x1 H16) in (let H20 \def (eq_ind B x0 (\lambda (b: B).(pr3 (CHead c 
+(Bind b) x5) x2 x3)) H8 Abst H17) in (let H21 \def (eq_ind B x0 (\lambda (b: 
 B).(pr3 c (THead (Bind b) x5 (THead (Flat Appl) (lift (S O) O x4) x3)) u2)) 
 H5 Abst H17) in (let H22 \def (eq_ind B x0 (\lambda (b: B).(not (eq B b 
 Abst))) H3 Abst H17) in (let H23 \def (match (H22 (refl_equal B Abst)) in 
-False return (\lambda (_: False).(pr3 c (THead (Bind Abbr) v t) u2)) with []) 
-in H23))))))))) H14)) H13))))))) H9)))))))))))))) H2)) H1)))))))).
-(* COMMENTS
-Initial nodes: 2459
-END *)
+False with []) in H23))))))))) H14)) H13))))))) H9)))))))))))))) H2)) 
+H1)))))))).
 
 theorem pr3_iso_appls_beta:
  \forall (us: TList).(\forall (v: T).(\forall (w: T).(\forall (t: T).(let u1 
@@ -1149,7 +1122,4 @@ O) O x4) x3)) (THead (Bind x0) x1 (THead (Flat Appl) (lift (S O) O x4) x2)) c
 (pr3_head_12 c x1 x5 H8 (Bind x0) (THead (Flat Appl) (lift (S O) O x4) x2) 
 (THead (Flat Appl) (lift (S O) O x4) x3) (pr3_thin_dx (CHead c (Bind x0) x5) 
 x2 x3 H9 (lift (S O) O x4) Appl)) u2 H6)))))))))))))) H3)) H2)))))))))))) us).
-(* COMMENTS
-Initial nodes: 3345
-END *)
 

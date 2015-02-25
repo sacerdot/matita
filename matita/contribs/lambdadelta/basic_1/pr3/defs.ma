@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/pr2/defs.ma".
+include "basic_1/pr2/defs.ma".
 
 inductive pr3 (c: C): T \to (T \to Prop) \def
 | pr3_refl: \forall (t: T).(pr3 c t t)
