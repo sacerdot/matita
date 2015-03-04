@@ -14,9 +14,9 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/leq/defs.ma".
+include "basic_1/leq/defs.ma".
 
-include "Basic-1/getl/defs.ma".
+include "basic_1/getl/defs.ma".
 
 inductive arity (g: G): C \to (T \to (A \to Prop)) \def
 | arity_sort: \forall (c: C).(\forall (n: nat).(arity g c (TSort n) (ASort O 

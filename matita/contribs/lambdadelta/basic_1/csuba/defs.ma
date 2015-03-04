@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/arity/defs.ma".
+include "basic_1/arity/defs.ma".
 
 inductive csuba (g: G): C \to (C \to Prop) \def
 | csuba_sort: \forall (n: nat).(csuba g (CSort n) (CSort n))

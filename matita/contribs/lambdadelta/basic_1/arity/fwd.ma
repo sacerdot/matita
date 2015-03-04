@@ -14,11 +14,52 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/arity/defs.ma".
+include "basic_1/arity/defs.ma".
 
-include "Basic-1/leq/asucc.ma".
+include "basic_1/leq/asucc.ma".
 
-include "Basic-1/getl/drop.ma".
+include "basic_1/getl/drop.ma".
+
+let rec arity_ind (g: G) (P: (C \to (T \to (A \to Prop)))) (f: (\forall (c: 
+C).(\forall (n: nat).(P c (TSort n) (ASort O n))))) (f0: (\forall (c: 
+C).(\forall (d: C).(\forall (u: T).(\forall (i: nat).((getl i c (CHead d 
+(Bind Abbr) u)) \to (\forall (a: A).((arity g d u a) \to ((P d u a) \to (P c 
+(TLRef i) a)))))))))) (f1: (\forall (c: C).(\forall (d: C).(\forall (u: 
+T).(\forall (i: nat).((getl i c (CHead d (Bind Abst) u)) \to (\forall (a: 
+A).((arity g d u (asucc g a)) \to ((P d u (asucc g a)) \to (P c (TLRef i) 
+a)))))))))) (f2: (\forall (b: B).((not (eq B b Abst)) \to (\forall (c: 
+C).(\forall (u: T).(\forall (a1: A).((arity g c u a1) \to ((P c u a1) \to 
+(\forall (t: T).(\forall (a2: A).((arity g (CHead c (Bind b) u) t a2) \to ((P 
+(CHead c (Bind b) u) t a2) \to (P c (THead (Bind b) u t) a2))))))))))))) (f3: 
+(\forall (c: C).(\forall (u: T).(\forall (a1: A).((arity g c u (asucc g a1)) 
+\to ((P c u (asucc g a1)) \to (\forall (t: T).(\forall (a2: A).((arity g 
+(CHead c (Bind Abst) u) t a2) \to ((P (CHead c (Bind Abst) u) t a2) \to (P c 
+(THead (Bind Abst) u t) (AHead a1 a2)))))))))))) (f4: (\forall (c: 
+C).(\forall (u: T).(\forall (a1: A).((arity g c u a1) \to ((P c u a1) \to 
+(\forall (t: T).(\forall (a2: A).((arity g c t (AHead a1 a2)) \to ((P c t 
+(AHead a1 a2)) \to (P c (THead (Flat Appl) u t) a2))))))))))) (f5: (\forall 
+(c: C).(\forall (u: T).(\forall (a: A).((arity g c u (asucc g a)) \to ((P c u 
+(asucc g a)) \to (\forall (t: T).((arity g c t a) \to ((P c t a) \to (P c 
+(THead (Flat Cast) u t) a)))))))))) (f6: (\forall (c: C).(\forall (t: 
+T).(\forall (a1: A).((arity g c t a1) \to ((P c t a1) \to (\forall (a2: 
+A).((leq g a1 a2) \to (P c t a2))))))))) (c: C) (t: T) (a: A) (a0: arity g c 
+t a) on a0: P c t a \def match a0 with [(arity_sort c0 n) \Rightarrow (f c0 
+n) | (arity_abbr c0 d u i g0 a1 a2) \Rightarrow (f0 c0 d u i g0 a1 a2 
+((arity_ind g P f f0 f1 f2 f3 f4 f5 f6) d u a1 a2)) | (arity_abst c0 d u i g0 
+a1 a2) \Rightarrow (f1 c0 d u i g0 a1 a2 ((arity_ind g P f f0 f1 f2 f3 f4 f5 
+f6) d u (asucc g a1) a2)) | (arity_bind b n c0 u a1 a2 t0 a3 a4) \Rightarrow 
+(f2 b n c0 u a1 a2 ((arity_ind g P f f0 f1 f2 f3 f4 f5 f6) c0 u a1 a2) t0 a3 
+a4 ((arity_ind g P f f0 f1 f2 f3 f4 f5 f6) (CHead c0 (Bind b) u) t0 a3 a4)) | 
+(arity_head c0 u a1 a2 t0 a3 a4) \Rightarrow (f3 c0 u a1 a2 ((arity_ind g P f 
+f0 f1 f2 f3 f4 f5 f6) c0 u (asucc g a1) a2) t0 a3 a4 ((arity_ind g P f f0 f1 
+f2 f3 f4 f5 f6) (CHead c0 (Bind Abst) u) t0 a3 a4)) | (arity_appl c0 u a1 a2 
+t0 a3 a4) \Rightarrow (f4 c0 u a1 a2 ((arity_ind g P f f0 f1 f2 f3 f4 f5 f6) 
+c0 u a1 a2) t0 a3 a4 ((arity_ind g P f f0 f1 f2 f3 f4 f5 f6) c0 t0 (AHead a1 
+a3) a4)) | (arity_cast c0 u a1 a2 t0 a3) \Rightarrow (f5 c0 u a1 a2 
+((arity_ind g P f f0 f1 f2 f3 f4 f5 f6) c0 u (asucc g a1) a2) t0 a3 
+((arity_ind g P f f0 f1 f2 f3 f4 f5 f6) c0 t0 a1 a3)) | (arity_repl c0 t0 a1 
+a2 a3 l) \Rightarrow (f6 c0 t0 a1 a2 ((arity_ind g P f f0 f1 f2 f3 f4 f5 f6) 
+c0 t0 a1 a2) a3 l)].
 
 theorem arity_gen_sort:
  \forall (g: G).(\forall (c: C).(\forall (n: nat).(\forall (a: A).((arity g c 
@@ -30,49 +71,46 @@ c t a)) (\lambda (_: T).(leq g a (ASort O n))) (\lambda (y: T).(\lambda (H0:
 (arity g c y a)).(arity_ind g (\lambda (_: C).(\lambda (t: T).(\lambda (a0: 
 A).((eq T t (TSort n)) \to (leq g a0 (ASort O n)))))) (\lambda (_: 
 C).(\lambda (n0: nat).(\lambda (H1: (eq T (TSort n0) (TSort n))).(let H2 \def 
-(f_equal T nat (\lambda (e: T).(match e in T return (\lambda (_: T).nat) with 
-[(TSort n1) \Rightarrow n1 | (TLRef _) \Rightarrow n0 | (THead _ _ _) 
-\Rightarrow n0])) (TSort n0) (TSort n) H1) in (eq_ind_r nat n (\lambda (n1: 
-nat).(leq g (ASort O n1) (ASort O n))) (leq_refl g (ASort O n)) n0 H2))))) 
-(\lambda (c0: C).(\lambda (d: C).(\lambda (u: T).(\lambda (i: nat).(\lambda 
-(_: (getl i c0 (CHead d (Bind Abbr) u))).(\lambda (a0: A).(\lambda (_: (arity 
-g d u a0)).(\lambda (_: (((eq T u (TSort n)) \to (leq g a0 (ASort O 
-n))))).(\lambda (H4: (eq T (TLRef i) (TSort n))).(let H5 \def (eq_ind T 
-(TLRef i) (\lambda (ee: T).(match ee in T return (\lambda (_: T).Prop) with 
+(f_equal T nat (\lambda (e: T).(match e with [(TSort n1) \Rightarrow n1 | 
+(TLRef _) \Rightarrow n0 | (THead _ _ _) \Rightarrow n0])) (TSort n0) (TSort 
+n) H1) in (eq_ind_r nat n (\lambda (n1: nat).(leq g (ASort O n1) (ASort O 
+n))) (leq_refl g (ASort O n)) n0 H2))))) (\lambda (c0: C).(\lambda (d: 
+C).(\lambda (u: T).(\lambda (i: nat).(\lambda (_: (getl i c0 (CHead d (Bind 
+Abbr) u))).(\lambda (a0: A).(\lambda (_: (arity g d u a0)).(\lambda (_: (((eq 
+T u (TSort n)) \to (leq g a0 (ASort O n))))).(\lambda (H4: (eq T (TLRef i) 
+(TSort n))).(let H5 \def (eq_ind T (TLRef i) (\lambda (ee: T).(match ee with 
 [(TSort _) \Rightarrow False | (TLRef _) \Rightarrow True | (THead _ _ _) 
 \Rightarrow False])) I (TSort n) H4) in (False_ind (leq g a0 (ASort O n)) 
 H5))))))))))) (\lambda (c0: C).(\lambda (d: C).(\lambda (u: T).(\lambda (i: 
 nat).(\lambda (_: (getl i c0 (CHead d (Bind Abst) u))).(\lambda (a0: 
 A).(\lambda (_: (arity g d u (asucc g a0))).(\lambda (_: (((eq T u (TSort n)) 
 \to (leq g (asucc g a0) (ASort O n))))).(\lambda (H4: (eq T (TLRef i) (TSort 
-n))).(let H5 \def (eq_ind T (TLRef i) (\lambda (ee: T).(match ee in T return 
-(\lambda (_: T).Prop) with [(TSort _) \Rightarrow False | (TLRef _) 
-\Rightarrow True | (THead _ _ _) \Rightarrow False])) I (TSort n) H4) in 
-(False_ind (leq g a0 (ASort O n)) H5))))))))))) (\lambda (b: B).(\lambda (_: 
-(not (eq B b Abst))).(\lambda (c0: C).(\lambda (u: T).(\lambda (a1: 
-A).(\lambda (_: (arity g c0 u a1)).(\lambda (_: (((eq T u (TSort n)) \to (leq 
-g a1 (ASort O n))))).(\lambda (t: T).(\lambda (a2: A).(\lambda (_: (arity g 
-(CHead c0 (Bind b) u) t a2)).(\lambda (_: (((eq T t (TSort n)) \to (leq g a2 
-(ASort O n))))).(\lambda (H6: (eq T (THead (Bind b) u t) (TSort n))).(let H7 
-\def (eq_ind T (THead (Bind b) u t) (\lambda (ee: T).(match ee in T return 
-(\lambda (_: T).Prop) with [(TSort _) \Rightarrow False | (TLRef _) 
-\Rightarrow False | (THead _ _ _) \Rightarrow True])) I (TSort n) H6) in 
-(False_ind (leq g a2 (ASort O n)) H7)))))))))))))) (\lambda (c0: C).(\lambda 
-(u: T).(\lambda (a1: A).(\lambda (_: (arity g c0 u (asucc g a1))).(\lambda 
-(_: (((eq T u (TSort n)) \to (leq g (asucc g a1) (ASort O n))))).(\lambda (t: 
-T).(\lambda (a2: A).(\lambda (_: (arity g (CHead c0 (Bind Abst) u) t 
-a2)).(\lambda (_: (((eq T t (TSort n)) \to (leq g a2 (ASort O n))))).(\lambda 
-(H5: (eq T (THead (Bind Abst) u t) (TSort n))).(let H6 \def (eq_ind T (THead 
-(Bind Abst) u t) (\lambda (ee: T).(match ee in T return (\lambda (_: T).Prop) 
-with [(TSort _) \Rightarrow False | (TLRef _) \Rightarrow False | (THead _ _ 
-_) \Rightarrow True])) I (TSort n) H5) in (False_ind (leq g (AHead a1 a2) 
-(ASort O n)) H6)))))))))))) (\lambda (c0: C).(\lambda (u: T).(\lambda (a1: 
-A).(\lambda (_: (arity g c0 u a1)).(\lambda (_: (((eq T u (TSort n)) \to (leq 
-g a1 (ASort O n))))).(\lambda (t: T).(\lambda (a2: A).(\lambda (_: (arity g 
-c0 t (AHead a1 a2))).(\lambda (_: (((eq T t (TSort n)) \to (leq g (AHead a1 
-a2) (ASort O n))))).(\lambda (H5: (eq T (THead (Flat Appl) u t) (TSort 
-n))).(let H6 \def (eq_ind T (THead (Flat Appl) u t) (\lambda (ee: T).(match 
-ee in T return (\lambda (_: T).Prop) with [(TSort _) \Rightarrow False | 
+n))).(let H5 \def (eq_ind T (TLRef i) (\lambda (ee: T).(match ee with [(TSort 
+_) \Rightarrow False | (TLRef _) \Rightarrow True | (THead _ _ _) \Rightarrow 
+False])) I (TSort n) H4) in (False_ind (leq g a0 (ASort O n)) H5))))))))))) 
+(\lambda (b: B).(\lambda (_: (not (eq B b Abst))).(\lambda (c0: C).(\lambda 
+(u: T).(\lambda (a1: A).(\lambda (_: (arity g c0 u a1)).(\lambda (_: (((eq T 
+u (TSort n)) \to (leq g a1 (ASort O n))))).(\lambda (t: T).(\lambda (a2: 
+A).(\lambda (_: (arity g (CHead c0 (Bind b) u) t a2)).(\lambda (_: (((eq T t 
+(TSort n)) \to (leq g a2 (ASort O n))))).(\lambda (H6: (eq T (THead (Bind b) 
+u t) (TSort n))).(let H7 \def (eq_ind T (THead (Bind b) u t) (\lambda (ee: 
+T).(match ee with [(TSort _) \Rightarrow False | (TLRef _) \Rightarrow False 
+| (THead _ _ _) \Rightarrow True])) I (TSort n) H6) in (False_ind (leq g a2 
+(ASort O n)) H7)))))))))))))) (\lambda (c0: C).(\lambda (u: T).(\lambda (a1: 
+A).(\lambda (_: (arity g c0 u (asucc g a1))).(\lambda (_: (((eq T u (TSort 
+n)) \to (leq g (asucc g a1) (ASort O n))))).(\lambda (t: T).(\lambda (a2: 
+A).(\lambda (_: (arity g (CHead c0 (Bind Abst) u) t a2)).(\lambda (_: (((eq T 
+t (TSort n)) \to (leq g a2 (ASort O n))))).(\lambda (H5: (eq T (THead (Bind 
+Abst) u t) (TSort n))).(let H6 \def (eq_ind T (THead (Bind Abst) u t) 
+(\lambda (ee: T).(match ee with [(TSort _) \Rightarrow False | (TLRef _) 
+\Rightarrow False | (THead _ _ _) \Rightarrow True])) I (TSort n) H5) in 
+(False_ind (leq g (AHead a1 a2) (ASort O n)) H6)))))))))))) (\lambda (c0: 
+C).(\lambda (u: T).(\lambda (a1: A).(\lambda (_: (arity g c0 u a1)).(\lambda 
+(_: (((eq T u (TSort n)) \to (leq g a1 (ASort O n))))).(\lambda (t: 
+T).(\lambda (a2: A).(\lambda (_: (arity g c0 t (AHead a1 a2))).(\lambda (_: 
+(((eq T t (TSort n)) \to (leq g (AHead a1 a2) (ASort O n))))).(\lambda (H5: 
+(eq T (THead (Flat Appl) u t) (TSort n))).(let H6 \def (eq_ind T (THead (Flat 
+Appl) u t) (\lambda (ee: T).(match ee with [(TSort _) \Rightarrow False | 
 (TLRef _) \Rightarrow False | (THead _ _ _) \Rightarrow True])) I (TSort n) 
 H5) in (False_ind (leq g a2 (ASort O n)) H6)))))))))))) (\lambda (c0: 
 C).(\lambda (u: T).(\lambda (a0: A).(\lambda (_: (arity g c0 u (asucc g 
@@ -80,21 +118,17 @@ a0))).(\lambda (_: (((eq T u (TSort n)) \to (leq g (asucc g a0) (ASort O
 n))))).(\lambda (t: T).(\lambda (_: (arity g c0 t a0)).(\lambda (_: (((eq T t 
 (TSort n)) \to (leq g a0 (ASort O n))))).(\lambda (H5: (eq T (THead (Flat 
 Cast) u t) (TSort n))).(let H6 \def (eq_ind T (THead (Flat Cast) u t) 
-(\lambda (ee: T).(match ee in T return (\lambda (_: T).Prop) with [(TSort _) 
-\Rightarrow False | (TLRef _) \Rightarrow False | (THead _ _ _) \Rightarrow 
-True])) I (TSort n) H5) in (False_ind (leq g a0 (ASort O n)) H6))))))))))) 
-(\lambda (c0: C).(\lambda (t: T).(\lambda (a1: A).(\lambda (H1: (arity g c0 t 
-a1)).(\lambda (H2: (((eq T t (TSort n)) \to (leq g a1 (ASort O 
-n))))).(\lambda (a2: A).(\lambda (H3: (leq g a1 a2)).(\lambda (H4: (eq T t 
-(TSort n))).(let H5 \def (f_equal T T (\lambda (e: T).e) t (TSort n) H4) in 
-(let H6 \def (eq_ind T t (\lambda (t0: T).((eq T t0 (TSort n)) \to (leq g a1 
-(ASort O n)))) H2 (TSort n) H5) in (let H7 \def (eq_ind T t (\lambda (t0: 
-T).(arity g c0 t0 a1)) H1 (TSort n) H5) in (leq_trans g a2 a1 (leq_sym g a1 
-a2 H3) (ASort O n) (H6 (refl_equal T (TSort n))))))))))))))) c y a H0))) 
-H))))).
-(* COMMENTS
-Initial nodes: 1235
-END *)
+(\lambda (ee: T).(match ee with [(TSort _) \Rightarrow False | (TLRef _) 
+\Rightarrow False | (THead _ _ _) \Rightarrow True])) I (TSort n) H5) in 
+(False_ind (leq g a0 (ASort O n)) H6))))))))))) (\lambda (c0: C).(\lambda (t: 
+T).(\lambda (a1: A).(\lambda (H1: (arity g c0 t a1)).(\lambda (H2: (((eq T t 
+(TSort n)) \to (leq g a1 (ASort O n))))).(\lambda (a2: A).(\lambda (H3: (leq 
+g a1 a2)).(\lambda (H4: (eq T t (TSort n))).(let H5 \def (f_equal T T 
+(\lambda (e: T).e) t (TSort n) H4) in (let H6 \def (eq_ind T t (\lambda (t0: 
+T).((eq T t0 (TSort n)) \to (leq g a1 (ASort O n)))) H2 (TSort n) H5) in (let 
+H7 \def (eq_ind T t (\lambda (t0: T).(arity g c0 t0 a1)) H1 (TSort n) H5) in 
+(leq_trans g a2 a1 (leq_sym g a1 a2 H3) (ASort O n) (H6 (refl_equal T (TSort 
+n))))))))))))))) c y a H0))) H))))).
 
 theorem arity_gen_lref:
  \forall (g: G).(\forall (c: C).(\forall (i: nat).(\forall (a: A).((arity g c 
@@ -116,52 +150,50 @@ C).(\lambda (t: T).(\lambda (a0: A).((eq T t (TLRef i)) \to (or (ex2_2 C T
 C).(\lambda (u: T).(getl i c0 (CHead d (Bind Abst) u)))) (\lambda (d: 
 C).(\lambda (u: T).(arity g d u (asucc g a0)))))))))) (\lambda (c0: 
 C).(\lambda (n: nat).(\lambda (H1: (eq T (TSort n) (TLRef i))).(let H2 \def 
-(eq_ind T (TSort n) (\lambda (ee: T).(match ee in T return (\lambda (_: 
-T).Prop) with [(TSort _) \Rightarrow True | (TLRef _) \Rightarrow False | 
-(THead _ _ _) \Rightarrow False])) I (TLRef i) H1) in (False_ind (or (ex2_2 C 
-T (\lambda (d: C).(\lambda (u: T).(getl i c0 (CHead d (Bind Abbr) u)))) 
-(\lambda (d: C).(\lambda (u: T).(arity g d u (ASort O n))))) (ex2_2 C T 
-(\lambda (d: C).(\lambda (u: T).(getl i c0 (CHead d (Bind Abst) u)))) 
-(\lambda (d: C).(\lambda (u: T).(arity g d u (asucc g (ASort O n))))))) 
-H2))))) (\lambda (c0: C).(\lambda (d: C).(\lambda (u: T).(\lambda (i0: 
-nat).(\lambda (H1: (getl i0 c0 (CHead d (Bind Abbr) u))).(\lambda (a0: 
-A).(\lambda (H2: (arity g d u a0)).(\lambda (_: (((eq T u (TLRef i)) \to (or 
-(ex2_2 C T (\lambda (d0: C).(\lambda (u0: T).(getl i d (CHead d0 (Bind Abbr) 
-u0)))) (\lambda (d0: C).(\lambda (u0: T).(arity g d0 u0 a0)))) (ex2_2 C T 
-(\lambda (d0: C).(\lambda (u0: T).(getl i d (CHead d0 (Bind Abst) u0)))) 
-(\lambda (d0: C).(\lambda (u0: T).(arity g d0 u0 (asucc g 
-a0))))))))).(\lambda (H4: (eq T (TLRef i0) (TLRef i))).(let H5 \def (f_equal 
-T nat (\lambda (e: T).(match e in T return (\lambda (_: T).nat) with [(TSort 
-_) \Rightarrow i0 | (TLRef n) \Rightarrow n | (THead _ _ _) \Rightarrow i0])) 
-(TLRef i0) (TLRef i) H4) in (let H6 \def (eq_ind nat i0 (\lambda (n: 
-nat).(getl n c0 (CHead d (Bind Abbr) u))) H1 i H5) in (or_introl (ex2_2 C T 
-(\lambda (d0: C).(\lambda (u0: T).(getl i c0 (CHead d0 (Bind Abbr) u0)))) 
-(\lambda (d0: C).(\lambda (u0: T).(arity g d0 u0 a0)))) (ex2_2 C T (\lambda 
-(d0: C).(\lambda (u0: T).(getl i c0 (CHead d0 (Bind Abst) u0)))) (\lambda 
-(d0: C).(\lambda (u0: T).(arity g d0 u0 (asucc g a0))))) (ex2_2_intro C T 
-(\lambda (d0: C).(\lambda (u0: T).(getl i c0 (CHead d0 (Bind Abbr) u0)))) 
-(\lambda (d0: C).(\lambda (u0: T).(arity g d0 u0 a0))) d u H6 H2))))))))))))) 
-(\lambda (c0: C).(\lambda (d: C).(\lambda (u: T).(\lambda (i0: nat).(\lambda 
-(H1: (getl i0 c0 (CHead d (Bind Abst) u))).(\lambda (a0: A).(\lambda (H2: 
-(arity g d u (asucc g a0))).(\lambda (_: (((eq T u (TLRef i)) \to (or (ex2_2 
-C T (\lambda (d0: C).(\lambda (u0: T).(getl i d (CHead d0 (Bind Abbr) u0)))) 
-(\lambda (d0: C).(\lambda (u0: T).(arity g d0 u0 (asucc g a0))))) (ex2_2 C T 
-(\lambda (d0: C).(\lambda (u0: T).(getl i d (CHead d0 (Bind Abst) u0)))) 
-(\lambda (d0: C).(\lambda (u0: T).(arity g d0 u0 (asucc g (asucc g 
-a0)))))))))).(\lambda (H4: (eq T (TLRef i0) (TLRef i))).(let H5 \def (f_equal 
-T nat (\lambda (e: T).(match e in T return (\lambda (_: T).nat) with [(TSort 
-_) \Rightarrow i0 | (TLRef n) \Rightarrow n | (THead _ _ _) \Rightarrow i0])) 
-(TLRef i0) (TLRef i) H4) in (let H6 \def (eq_ind nat i0 (\lambda (n: 
-nat).(getl n c0 (CHead d (Bind Abst) u))) H1 i H5) in (or_intror (ex2_2 C T 
-(\lambda (d0: C).(\lambda (u0: T).(getl i c0 (CHead d0 (Bind Abbr) u0)))) 
-(\lambda (d0: C).(\lambda (u0: T).(arity g d0 u0 a0)))) (ex2_2 C T (\lambda 
-(d0: C).(\lambda (u0: T).(getl i c0 (CHead d0 (Bind Abst) u0)))) (\lambda 
-(d0: C).(\lambda (u0: T).(arity g d0 u0 (asucc g a0))))) (ex2_2_intro C T 
-(\lambda (d0: C).(\lambda (u0: T).(getl i c0 (CHead d0 (Bind Abst) u0)))) 
-(\lambda (d0: C).(\lambda (u0: T).(arity g d0 u0 (asucc g a0)))) d u H6 
-H2))))))))))))) (\lambda (b: B).(\lambda (_: (not (eq B b Abst))).(\lambda 
-(c0: C).(\lambda (u: T).(\lambda (a1: A).(\lambda (_: (arity g c0 u 
-a1)).(\lambda (_: (((eq T u (TLRef i)) \to (or (ex2_2 C T (\lambda (d: 
+(eq_ind T (TSort n) (\lambda (ee: T).(match ee with [(TSort _) \Rightarrow 
+True | (TLRef _) \Rightarrow False | (THead _ _ _) \Rightarrow False])) I 
+(TLRef i) H1) in (False_ind (or (ex2_2 C T (\lambda (d: C).(\lambda (u: 
+T).(getl i c0 (CHead d (Bind Abbr) u)))) (\lambda (d: C).(\lambda (u: 
+T).(arity g d u (ASort O n))))) (ex2_2 C T (\lambda (d: C).(\lambda (u: 
+T).(getl i c0 (CHead d (Bind Abst) u)))) (\lambda (d: C).(\lambda (u: 
+T).(arity g d u (asucc g (ASort O n))))))) H2))))) (\lambda (c0: C).(\lambda 
+(d: C).(\lambda (u: T).(\lambda (i0: nat).(\lambda (H1: (getl i0 c0 (CHead d 
+(Bind Abbr) u))).(\lambda (a0: A).(\lambda (H2: (arity g d u a0)).(\lambda 
+(_: (((eq T u (TLRef i)) \to (or (ex2_2 C T (\lambda (d0: C).(\lambda (u0: 
+T).(getl i d (CHead d0 (Bind Abbr) u0)))) (\lambda (d0: C).(\lambda (u0: 
+T).(arity g d0 u0 a0)))) (ex2_2 C T (\lambda (d0: C).(\lambda (u0: T).(getl i 
+d (CHead d0 (Bind Abst) u0)))) (\lambda (d0: C).(\lambda (u0: T).(arity g d0 
+u0 (asucc g a0))))))))).(\lambda (H4: (eq T (TLRef i0) (TLRef i))).(let H5 
+\def (f_equal T nat (\lambda (e: T).(match e with [(TSort _) \Rightarrow i0 | 
+(TLRef n) \Rightarrow n | (THead _ _ _) \Rightarrow i0])) (TLRef i0) (TLRef 
+i) H4) in (let H6 \def (eq_ind nat i0 (\lambda (n: nat).(getl n c0 (CHead d 
+(Bind Abbr) u))) H1 i H5) in (or_introl (ex2_2 C T (\lambda (d0: C).(\lambda 
+(u0: T).(getl i c0 (CHead d0 (Bind Abbr) u0)))) (\lambda (d0: C).(\lambda 
+(u0: T).(arity g d0 u0 a0)))) (ex2_2 C T (\lambda (d0: C).(\lambda (u0: 
+T).(getl i c0 (CHead d0 (Bind Abst) u0)))) (\lambda (d0: C).(\lambda (u0: 
+T).(arity g d0 u0 (asucc g a0))))) (ex2_2_intro C T (\lambda (d0: C).(\lambda 
+(u0: T).(getl i c0 (CHead d0 (Bind Abbr) u0)))) (\lambda (d0: C).(\lambda 
+(u0: T).(arity g d0 u0 a0))) d u H6 H2))))))))))))) (\lambda (c0: C).(\lambda 
+(d: C).(\lambda (u: T).(\lambda (i0: nat).(\lambda (H1: (getl i0 c0 (CHead d 
+(Bind Abst) u))).(\lambda (a0: A).(\lambda (H2: (arity g d u (asucc g 
+a0))).(\lambda (_: (((eq T u (TLRef i)) \to (or (ex2_2 C T (\lambda (d0: 
+C).(\lambda (u0: T).(getl i d (CHead d0 (Bind Abbr) u0)))) (\lambda (d0: 
+C).(\lambda (u0: T).(arity g d0 u0 (asucc g a0))))) (ex2_2 C T (\lambda (d0: 
+C).(\lambda (u0: T).(getl i d (CHead d0 (Bind Abst) u0)))) (\lambda (d0: 
+C).(\lambda (u0: T).(arity g d0 u0 (asucc g (asucc g a0)))))))))).(\lambda 
+(H4: (eq T (TLRef i0) (TLRef i))).(let H5 \def (f_equal T nat (\lambda (e: 
+T).(match e with [(TSort _) \Rightarrow i0 | (TLRef n) \Rightarrow n | (THead 
+_ _ _) \Rightarrow i0])) (TLRef i0) (TLRef i) H4) in (let H6 \def (eq_ind nat 
+i0 (\lambda (n: nat).(getl n c0 (CHead d (Bind Abst) u))) H1 i H5) in 
+(or_intror (ex2_2 C T (\lambda (d0: C).(\lambda (u0: T).(getl i c0 (CHead d0 
+(Bind Abbr) u0)))) (\lambda (d0: C).(\lambda (u0: T).(arity g d0 u0 a0)))) 
+(ex2_2 C T (\lambda (d0: C).(\lambda (u0: T).(getl i c0 (CHead d0 (Bind Abst) 
+u0)))) (\lambda (d0: C).(\lambda (u0: T).(arity g d0 u0 (asucc g a0))))) 
+(ex2_2_intro C T (\lambda (d0: C).(\lambda (u0: T).(getl i c0 (CHead d0 (Bind 
+Abst) u0)))) (\lambda (d0: C).(\lambda (u0: T).(arity g d0 u0 (asucc g a0)))) 
+d u H6 H2))))))))))))) (\lambda (b: B).(\lambda (_: (not (eq B b 
+Abst))).(\lambda (c0: C).(\lambda (u: T).(\lambda (a1: A).(\lambda (_: (arity 
+g c0 u a1)).(\lambda (_: (((eq T u (TLRef i)) \to (or (ex2_2 C T (\lambda (d: 
 C).(\lambda (u0: T).(getl i c0 (CHead d (Bind Abbr) u0)))) (\lambda (d: 
 C).(\lambda (u0: T).(arity g d u0 a1)))) (ex2_2 C T (\lambda (d: C).(\lambda 
 (u0: T).(getl i c0 (CHead d (Bind Abst) u0)))) (\lambda (d: C).(\lambda (u0: 
@@ -173,71 +205,69 @@ T).(arity g d u0 a2)))) (ex2_2 C T (\lambda (d: C).(\lambda (u0: T).(getl i
 (CHead c0 (Bind b) u) (CHead d (Bind Abst) u0)))) (\lambda (d: C).(\lambda 
 (u0: T).(arity g d u0 (asucc g a2))))))))).(\lambda (H6: (eq T (THead (Bind 
 b) u t) (TLRef i))).(let H7 \def (eq_ind T (THead (Bind b) u t) (\lambda (ee: 
-T).(match ee in T return (\lambda (_: T).Prop) with [(TSort _) \Rightarrow 
-False | (TLRef _) \Rightarrow False | (THead _ _ _) \Rightarrow True])) I 
-(TLRef i) H6) in (False_ind (or (ex2_2 C T (\lambda (d: C).(\lambda (u0: 
-T).(getl i c0 (CHead d (Bind Abbr) u0)))) (\lambda (d: C).(\lambda (u0: 
-T).(arity g d u0 a2)))) (ex2_2 C T (\lambda (d: C).(\lambda (u0: T).(getl i 
-c0 (CHead d (Bind Abst) u0)))) (\lambda (d: C).(\lambda (u0: T).(arity g d u0 
-(asucc g a2)))))) H7)))))))))))))) (\lambda (c0: C).(\lambda (u: T).(\lambda 
-(a1: A).(\lambda (_: (arity g c0 u (asucc g a1))).(\lambda (_: (((eq T u 
-(TLRef i)) \to (or (ex2_2 C T (\lambda (d: C).(\lambda (u0: T).(getl i c0 
-(CHead d (Bind Abbr) u0)))) (\lambda (d: C).(\lambda (u0: T).(arity g d u0 
-(asucc g a1))))) (ex2_2 C T (\lambda (d: C).(\lambda (u0: T).(getl i c0 
-(CHead d (Bind Abst) u0)))) (\lambda (d: C).(\lambda (u0: T).(arity g d u0 
-(asucc g (asucc g a1)))))))))).(\lambda (t: T).(\lambda (a2: A).(\lambda (_: 
-(arity g (CHead c0 (Bind Abst) u) t a2)).(\lambda (_: (((eq T t (TLRef i)) 
-\to (or (ex2_2 C T (\lambda (d: C).(\lambda (u0: T).(getl i (CHead c0 (Bind 
-Abst) u) (CHead d (Bind Abbr) u0)))) (\lambda (d: C).(\lambda (u0: T).(arity 
-g d u0 a2)))) (ex2_2 C T (\lambda (d: C).(\lambda (u0: T).(getl i (CHead c0 
-(Bind Abst) u) (CHead d (Bind Abst) u0)))) (\lambda (d: C).(\lambda (u0: 
-T).(arity g d u0 (asucc g a2))))))))).(\lambda (H5: (eq T (THead (Bind Abst) 
-u t) (TLRef i))).(let H6 \def (eq_ind T (THead (Bind Abst) u t) (\lambda (ee: 
-T).(match ee in T return (\lambda (_: T).Prop) with [(TSort _) \Rightarrow 
-False | (TLRef _) \Rightarrow False | (THead _ _ _) \Rightarrow True])) I 
-(TLRef i) H5) in (False_ind (or (ex2_2 C T (\lambda (d: C).(\lambda (u0: 
-T).(getl i c0 (CHead d (Bind Abbr) u0)))) (\lambda (d: C).(\lambda (u0: 
-T).(arity g d u0 (AHead a1 a2))))) (ex2_2 C T (\lambda (d: C).(\lambda (u0: 
-T).(getl i c0 (CHead d (Bind Abst) u0)))) (\lambda (d: C).(\lambda (u0: 
-T).(arity g d u0 (asucc g (AHead a1 a2))))))) H6)))))))))))) (\lambda (c0: 
-C).(\lambda (u: T).(\lambda (a1: A).(\lambda (_: (arity g c0 u a1)).(\lambda 
+T).(match ee with [(TSort _) \Rightarrow False | (TLRef _) \Rightarrow False 
+| (THead _ _ _) \Rightarrow True])) I (TLRef i) H6) in (False_ind (or (ex2_2 
+C T (\lambda (d: C).(\lambda (u0: T).(getl i c0 (CHead d (Bind Abbr) u0)))) 
+(\lambda (d: C).(\lambda (u0: T).(arity g d u0 a2)))) (ex2_2 C T (\lambda (d: 
+C).(\lambda (u0: T).(getl i c0 (CHead d (Bind Abst) u0)))) (\lambda (d: 
+C).(\lambda (u0: T).(arity g d u0 (asucc g a2)))))) H7)))))))))))))) (\lambda 
+(c0: C).(\lambda (u: T).(\lambda (a1: A).(\lambda (_: (arity g c0 u (asucc g 
+a1))).(\lambda (_: (((eq T u (TLRef i)) \to (or (ex2_2 C T (\lambda (d: 
+C).(\lambda (u0: T).(getl i c0 (CHead d (Bind Abbr) u0)))) (\lambda (d: 
+C).(\lambda (u0: T).(arity g d u0 (asucc g a1))))) (ex2_2 C T (\lambda (d: 
+C).(\lambda (u0: T).(getl i c0 (CHead d (Bind Abst) u0)))) (\lambda (d: 
+C).(\lambda (u0: T).(arity g d u0 (asucc g (asucc g a1)))))))))).(\lambda (t: 
+T).(\lambda (a2: A).(\lambda (_: (arity g (CHead c0 (Bind Abst) u) t 
+a2)).(\lambda (_: (((eq T t (TLRef i)) \to (or (ex2_2 C T (\lambda (d: 
+C).(\lambda (u0: T).(getl i (CHead c0 (Bind Abst) u) (CHead d (Bind Abbr) 
+u0)))) (\lambda (d: C).(\lambda (u0: T).(arity g d u0 a2)))) (ex2_2 C T 
+(\lambda (d: C).(\lambda (u0: T).(getl i (CHead c0 (Bind Abst) u) (CHead d 
+(Bind Abst) u0)))) (\lambda (d: C).(\lambda (u0: T).(arity g d u0 (asucc g 
+a2))))))))).(\lambda (H5: (eq T (THead (Bind Abst) u t) (TLRef i))).(let H6 
+\def (eq_ind T (THead (Bind Abst) u t) (\lambda (ee: T).(match ee with 
+[(TSort _) \Rightarrow False | (TLRef _) \Rightarrow False | (THead _ _ _) 
+\Rightarrow True])) I (TLRef i) H5) in (False_ind (or (ex2_2 C T (\lambda (d: 
+C).(\lambda (u0: T).(getl i c0 (CHead d (Bind Abbr) u0)))) (\lambda (d: 
+C).(\lambda (u0: T).(arity g d u0 (AHead a1 a2))))) (ex2_2 C T (\lambda (d: 
+C).(\lambda (u0: T).(getl i c0 (CHead d (Bind Abst) u0)))) (\lambda (d: 
+C).(\lambda (u0: T).(arity g d u0 (asucc g (AHead a1 a2))))))) H6)))))))))))) 
+(\lambda (c0: C).(\lambda (u: T).(\lambda (a1: A).(\lambda (_: (arity g c0 u 
+a1)).(\lambda (_: (((eq T u (TLRef i)) \to (or (ex2_2 C T (\lambda (d: 
+C).(\lambda (u0: T).(getl i c0 (CHead d (Bind Abbr) u0)))) (\lambda (d: 
+C).(\lambda (u0: T).(arity g d u0 a1)))) (ex2_2 C T (\lambda (d: C).(\lambda 
+(u0: T).(getl i c0 (CHead d (Bind Abst) u0)))) (\lambda (d: C).(\lambda (u0: 
+T).(arity g d u0 (asucc g a1))))))))).(\lambda (t: T).(\lambda (a2: 
+A).(\lambda (_: (arity g c0 t (AHead a1 a2))).(\lambda (_: (((eq T t (TLRef 
+i)) \to (or (ex2_2 C T (\lambda (d: C).(\lambda (u0: T).(getl i c0 (CHead d 
+(Bind Abbr) u0)))) (\lambda (d: C).(\lambda (u0: T).(arity g d u0 (AHead a1 
+a2))))) (ex2_2 C T (\lambda (d: C).(\lambda (u0: T).(getl i c0 (CHead d (Bind 
+Abst) u0)))) (\lambda (d: C).(\lambda (u0: T).(arity g d u0 (asucc g (AHead 
+a1 a2)))))))))).(\lambda (H5: (eq T (THead (Flat Appl) u t) (TLRef i))).(let 
+H6 \def (eq_ind T (THead (Flat Appl) u t) (\lambda (ee: T).(match ee with 
+[(TSort _) \Rightarrow False | (TLRef _) \Rightarrow False | (THead _ _ _) 
+\Rightarrow True])) I (TLRef i) H5) in (False_ind (or (ex2_2 C T (\lambda (d: 
+C).(\lambda (u0: T).(getl i c0 (CHead d (Bind Abbr) u0)))) (\lambda (d: 
+C).(\lambda (u0: T).(arity g d u0 a2)))) (ex2_2 C T (\lambda (d: C).(\lambda 
+(u0: T).(getl i c0 (CHead d (Bind Abst) u0)))) (\lambda (d: C).(\lambda (u0: 
+T).(arity g d u0 (asucc g a2)))))) H6)))))))))))) (\lambda (c0: C).(\lambda 
+(u: T).(\lambda (a0: A).(\lambda (_: (arity g c0 u (asucc g a0))).(\lambda 
 (_: (((eq T u (TLRef i)) \to (or (ex2_2 C T (\lambda (d: C).(\lambda (u0: 
 T).(getl i c0 (CHead d (Bind Abbr) u0)))) (\lambda (d: C).(\lambda (u0: 
-T).(arity g d u0 a1)))) (ex2_2 C T (\lambda (d: C).(\lambda (u0: T).(getl i 
-c0 (CHead d (Bind Abst) u0)))) (\lambda (d: C).(\lambda (u0: T).(arity g d u0 
-(asucc g a1))))))))).(\lambda (t: T).(\lambda (a2: A).(\lambda (_: (arity g 
-c0 t (AHead a1 a2))).(\lambda (_: (((eq T t (TLRef i)) \to (or (ex2_2 C T 
+T).(arity g d u0 (asucc g a0))))) (ex2_2 C T (\lambda (d: C).(\lambda (u0: 
+T).(getl i c0 (CHead d (Bind Abst) u0)))) (\lambda (d: C).(\lambda (u0: 
+T).(arity g d u0 (asucc g (asucc g a0)))))))))).(\lambda (t: T).(\lambda (_: 
+(arity g c0 t a0)).(\lambda (_: (((eq T t (TLRef i)) \to (or (ex2_2 C T 
 (\lambda (d: C).(\lambda (u0: T).(getl i c0 (CHead d (Bind Abbr) u0)))) 
-(\lambda (d: C).(\lambda (u0: T).(arity g d u0 (AHead a1 a2))))) (ex2_2 C T 
-(\lambda (d: C).(\lambda (u0: T).(getl i c0 (CHead d (Bind Abst) u0)))) 
-(\lambda (d: C).(\lambda (u0: T).(arity g d u0 (asucc g (AHead a1 
-a2)))))))))).(\lambda (H5: (eq T (THead (Flat Appl) u t) (TLRef i))).(let H6 
-\def (eq_ind T (THead (Flat Appl) u t) (\lambda (ee: T).(match ee in T return 
-(\lambda (_: T).Prop) with [(TSort _) \Rightarrow False | (TLRef _) 
+(\lambda (d: C).(\lambda (u0: T).(arity g d u0 a0)))) (ex2_2 C T (\lambda (d: 
+C).(\lambda (u0: T).(getl i c0 (CHead d (Bind Abst) u0)))) (\lambda (d: 
+C).(\lambda (u0: T).(arity g d u0 (asucc g a0))))))))).(\lambda (H5: (eq T 
+(THead (Flat Cast) u t) (TLRef i))).(let H6 \def (eq_ind T (THead (Flat Cast) 
+u t) (\lambda (ee: T).(match ee with [(TSort _) \Rightarrow False | (TLRef _) 
 \Rightarrow False | (THead _ _ _) \Rightarrow True])) I (TLRef i) H5) in 
 (False_ind (or (ex2_2 C T (\lambda (d: C).(\lambda (u0: T).(getl i c0 (CHead 
-d (Bind Abbr) u0)))) (\lambda (d: C).(\lambda (u0: T).(arity g d u0 a2)))) 
+d (Bind Abbr) u0)))) (\lambda (d: C).(\lambda (u0: T).(arity g d u0 a0)))) 
 (ex2_2 C T (\lambda (d: C).(\lambda (u0: T).(getl i c0 (CHead d (Bind Abst) 
-u0)))) (\lambda (d: C).(\lambda (u0: T).(arity g d u0 (asucc g a2)))))) 
-H6)))))))))))) (\lambda (c0: C).(\lambda (u: T).(\lambda (a0: A).(\lambda (_: 
-(arity g c0 u (asucc g a0))).(\lambda (_: (((eq T u (TLRef i)) \to (or (ex2_2 
-C T (\lambda (d: C).(\lambda (u0: T).(getl i c0 (CHead d (Bind Abbr) u0)))) 
-(\lambda (d: C).(\lambda (u0: T).(arity g d u0 (asucc g a0))))) (ex2_2 C T 
-(\lambda (d: C).(\lambda (u0: T).(getl i c0 (CHead d (Bind Abst) u0)))) 
-(\lambda (d: C).(\lambda (u0: T).(arity g d u0 (asucc g (asucc g 
-a0)))))))))).(\lambda (t: T).(\lambda (_: (arity g c0 t a0)).(\lambda (_: 
-(((eq T t (TLRef i)) \to (or (ex2_2 C T (\lambda (d: C).(\lambda (u0: 
-T).(getl i c0 (CHead d (Bind Abbr) u0)))) (\lambda (d: C).(\lambda (u0: 
-T).(arity g d u0 a0)))) (ex2_2 C T (\lambda (d: C).(\lambda (u0: T).(getl i 
-c0 (CHead d (Bind Abst) u0)))) (\lambda (d: C).(\lambda (u0: T).(arity g d u0 
-(asucc g a0))))))))).(\lambda (H5: (eq T (THead (Flat Cast) u t) (TLRef 
-i))).(let H6 \def (eq_ind T (THead (Flat Cast) u t) (\lambda (ee: T).(match 
-ee in T return (\lambda (_: T).Prop) with [(TSort _) \Rightarrow False | 
-(TLRef _) \Rightarrow False | (THead _ _ _) \Rightarrow True])) I (TLRef i) 
-H5) in (False_ind (or (ex2_2 C T (\lambda (d: C).(\lambda (u0: T).(getl i c0 
-(CHead d (Bind Abbr) u0)))) (\lambda (d: C).(\lambda (u0: T).(arity g d u0 
-a0)))) (ex2_2 C T (\lambda (d: C).(\lambda (u0: T).(getl i c0 (CHead d (Bind 
-Abst) u0)))) (\lambda (d: C).(\lambda (u0: T).(arity g d u0 (asucc g a0)))))) 
+u0)))) (\lambda (d: C).(\lambda (u0: T).(arity g d u0 (asucc g a0)))))) 
 H6))))))))))) (\lambda (c0: C).(\lambda (t: T).(\lambda (a1: A).(\lambda (H1: 
 (arity g c0 t a1)).(\lambda (H2: (((eq T t (TLRef i)) \to (or (ex2_2 C T 
 (\lambda (d: C).(\lambda (u: T).(getl i c0 (CHead d (Bind Abbr) u)))) 
@@ -293,9 +323,6 @@ T).(arity g d u a2)))) (ex2_2 C T (\lambda (d: C).(\lambda (u: T).(getl i c0
 (CHead d (Bind Abst) u)))) (\lambda (d: C).(\lambda (u: T).(arity g d u 
 (asucc g a2)))) x0 x1 H10 (arity_repl g x0 x1 (asucc g a1) H11 (asucc g a2) 
 (asucc_repl g a1 a2 H3)))))))) H9)) H8))))))))))))) c y a H0))) H))))).
-(* COMMENTS
-Initial nodes: 3853
-END *)
 
 theorem arity_gen_bind:
  \forall (b: B).((not (eq B b Abst)) \to (\forall (g: G).(\forall (c: 
@@ -313,138 +340,130 @@ T).(\lambda (H1: (arity g c y a2)).(arity_ind g (\lambda (c0: C).(\lambda
 (a1: A).(arity g c0 u a1)) (\lambda (_: A).(arity g (CHead c0 (Bind b) u) t 
 a))))))) (\lambda (c0: C).(\lambda (n: nat).(\lambda (H2: (eq T (TSort n) 
 (THead (Bind b) u t))).(let H3 \def (eq_ind T (TSort n) (\lambda (ee: 
-T).(match ee in T return (\lambda (_: T).Prop) with [(TSort _) \Rightarrow 
-True | (TLRef _) \Rightarrow False | (THead _ _ _) \Rightarrow False])) I 
-(THead (Bind b) u t) H2) in (False_ind (ex2 A (\lambda (a1: A).(arity g c0 u 
-a1)) (\lambda (_: A).(arity g (CHead c0 (Bind b) u) t (ASort O n)))) H3))))) 
-(\lambda (c0: C).(\lambda (d: C).(\lambda (u0: T).(\lambda (i: nat).(\lambda 
-(_: (getl i c0 (CHead d (Bind Abbr) u0))).(\lambda (a: A).(\lambda (_: (arity 
-g d u0 a)).(\lambda (_: (((eq T u0 (THead (Bind b) u t)) \to (ex2 A (\lambda 
-(a1: A).(arity g d u a1)) (\lambda (_: A).(arity g (CHead d (Bind b) u) t 
-a)))))).(\lambda (H5: (eq T (TLRef i) (THead (Bind b) u t))).(let H6 \def 
-(eq_ind T (TLRef i) (\lambda (ee: T).(match ee in T return (\lambda (_: 
-T).Prop) with [(TSort _) \Rightarrow False | (TLRef _) \Rightarrow True | 
-(THead _ _ _) \Rightarrow False])) I (THead (Bind b) u t) H5) in (False_ind 
+T).(match ee with [(TSort _) \Rightarrow True | (TLRef _) \Rightarrow False | 
+(THead _ _ _) \Rightarrow False])) I (THead (Bind b) u t) H2) in (False_ind 
 (ex2 A (\lambda (a1: A).(arity g c0 u a1)) (\lambda (_: A).(arity g (CHead c0 
-(Bind b) u) t a))) H6))))))))))) (\lambda (c0: C).(\lambda (d: C).(\lambda 
-(u0: T).(\lambda (i: nat).(\lambda (_: (getl i c0 (CHead d (Bind Abst) 
-u0))).(\lambda (a: A).(\lambda (_: (arity g d u0 (asucc g a))).(\lambda (_: 
-(((eq T u0 (THead (Bind b) u t)) \to (ex2 A (\lambda (a1: A).(arity g d u 
+(Bind b) u) t (ASort O n)))) H3))))) (\lambda (c0: C).(\lambda (d: 
+C).(\lambda (u0: T).(\lambda (i: nat).(\lambda (_: (getl i c0 (CHead d (Bind 
+Abbr) u0))).(\lambda (a: A).(\lambda (_: (arity g d u0 a)).(\lambda (_: (((eq 
+T u0 (THead (Bind b) u t)) \to (ex2 A (\lambda (a1: A).(arity g d u a1)) 
+(\lambda (_: A).(arity g (CHead d (Bind b) u) t a)))))).(\lambda (H5: (eq T 
+(TLRef i) (THead (Bind b) u t))).(let H6 \def (eq_ind T (TLRef i) (\lambda 
+(ee: T).(match ee with [(TSort _) \Rightarrow False | (TLRef _) \Rightarrow 
+True | (THead _ _ _) \Rightarrow False])) I (THead (Bind b) u t) H5) in 
+(False_ind (ex2 A (\lambda (a1: A).(arity g c0 u a1)) (\lambda (_: A).(arity 
+g (CHead c0 (Bind b) u) t a))) H6))))))))))) (\lambda (c0: C).(\lambda (d: 
+C).(\lambda (u0: T).(\lambda (i: nat).(\lambda (_: (getl i c0 (CHead d (Bind 
+Abst) u0))).(\lambda (a: A).(\lambda (_: (arity g d u0 (asucc g a))).(\lambda 
+(_: (((eq T u0 (THead (Bind b) u t)) \to (ex2 A (\lambda (a1: A).(arity g d u 
 a1)) (\lambda (_: A).(arity g (CHead d (Bind b) u) t (asucc g 
 a))))))).(\lambda (H5: (eq T (TLRef i) (THead (Bind b) u t))).(let H6 \def 
-(eq_ind T (TLRef i) (\lambda (ee: T).(match ee in T return (\lambda (_: 
-T).Prop) with [(TSort _) \Rightarrow False | (TLRef _) \Rightarrow True | 
-(THead _ _ _) \Rightarrow False])) I (THead (Bind b) u t) H5) in (False_ind 
-(ex2 A (\lambda (a1: A).(arity g c0 u a1)) (\lambda (_: A).(arity g (CHead c0 
-(Bind b) u) t a))) H6))))))))))) (\lambda (b0: B).(\lambda (H2: (not (eq B b0 
-Abst))).(\lambda (c0: C).(\lambda (u0: T).(\lambda (a1: A).(\lambda (H3: 
-(arity g c0 u0 a1)).(\lambda (H4: (((eq T u0 (THead (Bind b) u t)) \to (ex2 A 
-(\lambda (a3: A).(arity g c0 u a3)) (\lambda (_: A).(arity g (CHead c0 (Bind 
-b) u) t a1)))))).(\lambda (t0: T).(\lambda (a0: A).(\lambda (H5: (arity g 
-(CHead c0 (Bind b0) u0) t0 a0)).(\lambda (H6: (((eq T t0 (THead (Bind b) u 
-t)) \to (ex2 A (\lambda (a3: A).(arity g (CHead c0 (Bind b0) u0) u a3)) 
-(\lambda (_: A).(arity g (CHead (CHead c0 (Bind b0) u0) (Bind b) u) t 
-a0)))))).(\lambda (H7: (eq T (THead (Bind b0) u0 t0) (THead (Bind b) u 
-t))).(let H8 \def (f_equal T B (\lambda (e: T).(match e in T return (\lambda 
-(_: T).B) with [(TSort _) \Rightarrow b0 | (TLRef _) \Rightarrow b0 | (THead 
-k _ _) \Rightarrow (match k in K return (\lambda (_: K).B) with [(Bind b1) 
+(eq_ind T (TLRef i) (\lambda (ee: T).(match ee with [(TSort _) \Rightarrow 
+False | (TLRef _) \Rightarrow True | (THead _ _ _) \Rightarrow False])) I 
+(THead (Bind b) u t) H5) in (False_ind (ex2 A (\lambda (a1: A).(arity g c0 u 
+a1)) (\lambda (_: A).(arity g (CHead c0 (Bind b) u) t a))) H6))))))))))) 
+(\lambda (b0: B).(\lambda (H2: (not (eq B b0 Abst))).(\lambda (c0: 
+C).(\lambda (u0: T).(\lambda (a1: A).(\lambda (H3: (arity g c0 u0 
+a1)).(\lambda (H4: (((eq T u0 (THead (Bind b) u t)) \to (ex2 A (\lambda (a3: 
+A).(arity g c0 u a3)) (\lambda (_: A).(arity g (CHead c0 (Bind b) u) t 
+a1)))))).(\lambda (t0: T).(\lambda (a0: A).(\lambda (H5: (arity g (CHead c0 
+(Bind b0) u0) t0 a0)).(\lambda (H6: (((eq T t0 (THead (Bind b) u t)) \to (ex2 
+A (\lambda (a3: A).(arity g (CHead c0 (Bind b0) u0) u a3)) (\lambda (_: 
+A).(arity g (CHead (CHead c0 (Bind b0) u0) (Bind b) u) t a0)))))).(\lambda 
+(H7: (eq T (THead (Bind b0) u0 t0) (THead (Bind b) u t))).(let H8 \def 
+(f_equal T B (\lambda (e: T).(match e with [(TSort _) \Rightarrow b0 | (TLRef 
+_) \Rightarrow b0 | (THead k _ _) \Rightarrow (match k with [(Bind b1) 
 \Rightarrow b1 | (Flat _) \Rightarrow b0])])) (THead (Bind b0) u0 t0) (THead 
-(Bind b) u t) H7) in ((let H9 \def (f_equal T T (\lambda (e: T).(match e in T 
-return (\lambda (_: T).T) with [(TSort _) \Rightarrow u0 | (TLRef _) 
-\Rightarrow u0 | (THead _ t1 _) \Rightarrow t1])) (THead (Bind b0) u0 t0) 
-(THead (Bind b) u t) H7) in ((let H10 \def (f_equal T T (\lambda (e: 
-T).(match e in T return (\lambda (_: T).T) with [(TSort _) \Rightarrow t0 | 
-(TLRef _) \Rightarrow t0 | (THead _ _ t1) \Rightarrow t1])) (THead (Bind b0) 
-u0 t0) (THead (Bind b) u t) H7) in (\lambda (H11: (eq T u0 u)).(\lambda (H12: 
-(eq B b0 b)).(let H13 \def (eq_ind T t0 (\lambda (t1: T).((eq T t1 (THead 
-(Bind b) u t)) \to (ex2 A (\lambda (a3: A).(arity g (CHead c0 (Bind b0) u0) u 
-a3)) (\lambda (_: A).(arity g (CHead (CHead c0 (Bind b0) u0) (Bind b) u) t 
-a0))))) H6 t H10) in (let H14 \def (eq_ind T t0 (\lambda (t1: T).(arity g 
-(CHead c0 (Bind b0) u0) t1 a0)) H5 t H10) in (let H15 \def (eq_ind T u0 
-(\lambda (t1: T).((eq T t (THead (Bind b) u t)) \to (ex2 A (\lambda (a3: 
-A).(arity g (CHead c0 (Bind b0) t1) u a3)) (\lambda (_: A).(arity g (CHead 
-(CHead c0 (Bind b0) t1) (Bind b) u) t a0))))) H13 u H11) in (let H16 \def 
-(eq_ind T u0 (\lambda (t1: T).(arity g (CHead c0 (Bind b0) t1) t a0)) H14 u 
-H11) in (let H17 \def (eq_ind T u0 (\lambda (t1: T).((eq T t1 (THead (Bind b) 
-u t)) \to (ex2 A (\lambda (a3: A).(arity g c0 u a3)) (\lambda (_: A).(arity g 
-(CHead c0 (Bind b) u) t a1))))) H4 u H11) in (let H18 \def (eq_ind T u0 
-(\lambda (t1: T).(arity g c0 t1 a1)) H3 u H11) in (let H19 \def (eq_ind B b0 
-(\lambda (b1: B).((eq T t (THead (Bind b) u t)) \to (ex2 A (\lambda (a3: 
-A).(arity g (CHead c0 (Bind b1) u) u a3)) (\lambda (_: A).(arity g (CHead 
-(CHead c0 (Bind b1) u) (Bind b) u) t a0))))) H15 b H12) in (let H20 \def 
-(eq_ind B b0 (\lambda (b1: B).(arity g (CHead c0 (Bind b1) u) t a0)) H16 b 
-H12) in (let H21 \def (eq_ind B b0 (\lambda (b1: B).(not (eq B b1 Abst))) H2 
-b H12) in (ex_intro2 A (\lambda (a3: A).(arity g c0 u a3)) (\lambda (_: 
-A).(arity g (CHead c0 (Bind b) u) t a0)) a1 H18 H20))))))))))))) H9)) 
-H8)))))))))))))) (\lambda (c0: C).(\lambda (u0: T).(\lambda (a1: A).(\lambda 
-(H2: (arity g c0 u0 (asucc g a1))).(\lambda (H3: (((eq T u0 (THead (Bind b) u 
-t)) \to (ex2 A (\lambda (a3: A).(arity g c0 u a3)) (\lambda (_: A).(arity g 
-(CHead c0 (Bind b) u) t (asucc g a1))))))).(\lambda (t0: T).(\lambda (a0: 
-A).(\lambda (H4: (arity g (CHead c0 (Bind Abst) u0) t0 a0)).(\lambda (H5: 
-(((eq T t0 (THead (Bind b) u t)) \to (ex2 A (\lambda (a3: A).(arity g (CHead 
-c0 (Bind Abst) u0) u a3)) (\lambda (_: A).(arity g (CHead (CHead c0 (Bind 
-Abst) u0) (Bind b) u) t a0)))))).(\lambda (H6: (eq T (THead (Bind Abst) u0 
-t0) (THead (Bind b) u t))).(let H7 \def (f_equal T B (\lambda (e: T).(match e 
-in T return (\lambda (_: T).B) with [(TSort _) \Rightarrow Abst | (TLRef _) 
-\Rightarrow Abst | (THead k _ _) \Rightarrow (match k in K return (\lambda 
-(_: K).B) with [(Bind b0) \Rightarrow b0 | (Flat _) \Rightarrow Abst])])) 
-(THead (Bind Abst) u0 t0) (THead (Bind b) u t) H6) in ((let H8 \def (f_equal 
-T T (\lambda (e: T).(match e in T return (\lambda (_: T).T) with [(TSort _) 
+(Bind b) u t) H7) in ((let H9 \def (f_equal T T (\lambda (e: T).(match e with 
+[(TSort _) \Rightarrow u0 | (TLRef _) \Rightarrow u0 | (THead _ t1 _) 
+\Rightarrow t1])) (THead (Bind b0) u0 t0) (THead (Bind b) u t) H7) in ((let 
+H10 \def (f_equal T T (\lambda (e: T).(match e with [(TSort _) \Rightarrow t0 
+| (TLRef _) \Rightarrow t0 | (THead _ _ t1) \Rightarrow t1])) (THead (Bind 
+b0) u0 t0) (THead (Bind b) u t) H7) in (\lambda (H11: (eq T u0 u)).(\lambda 
+(H12: (eq B b0 b)).(let H13 \def (eq_ind T t0 (\lambda (t1: T).((eq T t1 
+(THead (Bind b) u t)) \to (ex2 A (\lambda (a3: A).(arity g (CHead c0 (Bind 
+b0) u0) u a3)) (\lambda (_: A).(arity g (CHead (CHead c0 (Bind b0) u0) (Bind 
+b) u) t a0))))) H6 t H10) in (let H14 \def (eq_ind T t0 (\lambda (t1: 
+T).(arity g (CHead c0 (Bind b0) u0) t1 a0)) H5 t H10) in (let H15 \def 
+(eq_ind T u0 (\lambda (t1: T).((eq T t (THead (Bind b) u t)) \to (ex2 A 
+(\lambda (a3: A).(arity g (CHead c0 (Bind b0) t1) u a3)) (\lambda (_: 
+A).(arity g (CHead (CHead c0 (Bind b0) t1) (Bind b) u) t a0))))) H13 u H11) 
+in (let H16 \def (eq_ind T u0 (\lambda (t1: T).(arity g (CHead c0 (Bind b0) 
+t1) t a0)) H14 u H11) in (let H17 \def (eq_ind T u0 (\lambda (t1: T).((eq T 
+t1 (THead (Bind b) u t)) \to (ex2 A (\lambda (a3: A).(arity g c0 u a3)) 
+(\lambda (_: A).(arity g (CHead c0 (Bind b) u) t a1))))) H4 u H11) in (let 
+H18 \def (eq_ind T u0 (\lambda (t1: T).(arity g c0 t1 a1)) H3 u H11) in (let 
+H19 \def (eq_ind B b0 (\lambda (b1: B).((eq T t (THead (Bind b) u t)) \to 
+(ex2 A (\lambda (a3: A).(arity g (CHead c0 (Bind b1) u) u a3)) (\lambda (_: 
+A).(arity g (CHead (CHead c0 (Bind b1) u) (Bind b) u) t a0))))) H15 b H12) in 
+(let H20 \def (eq_ind B b0 (\lambda (b1: B).(arity g (CHead c0 (Bind b1) u) t 
+a0)) H16 b H12) in (let H21 \def (eq_ind B b0 (\lambda (b1: B).(not (eq B b1 
+Abst))) H2 b H12) in (ex_intro2 A (\lambda (a3: A).(arity g c0 u a3)) 
+(\lambda (_: A).(arity g (CHead c0 (Bind b) u) t a0)) a1 H18 H20))))))))))))) 
+H9)) H8)))))))))))))) (\lambda (c0: C).(\lambda (u0: T).(\lambda (a1: 
+A).(\lambda (H2: (arity g c0 u0 (asucc g a1))).(\lambda (H3: (((eq T u0 
+(THead (Bind b) u t)) \to (ex2 A (\lambda (a3: A).(arity g c0 u a3)) (\lambda 
+(_: A).(arity g (CHead c0 (Bind b) u) t (asucc g a1))))))).(\lambda (t0: 
+T).(\lambda (a0: A).(\lambda (H4: (arity g (CHead c0 (Bind Abst) u0) t0 
+a0)).(\lambda (H5: (((eq T t0 (THead (Bind b) u t)) \to (ex2 A (\lambda (a3: 
+A).(arity g (CHead c0 (Bind Abst) u0) u a3)) (\lambda (_: A).(arity g (CHead 
+(CHead c0 (Bind Abst) u0) (Bind b) u) t a0)))))).(\lambda (H6: (eq T (THead 
+(Bind Abst) u0 t0) (THead (Bind b) u t))).(let H7 \def (f_equal T B (\lambda 
+(e: T).(match e with [(TSort _) \Rightarrow Abst | (TLRef _) \Rightarrow Abst 
+| (THead k _ _) \Rightarrow (match k with [(Bind b0) \Rightarrow b0 | (Flat 
+_) \Rightarrow Abst])])) (THead (Bind Abst) u0 t0) (THead (Bind b) u t) H6) 
+in ((let H8 \def (f_equal T T (\lambda (e: T).(match e with [(TSort _) 
 \Rightarrow u0 | (TLRef _) \Rightarrow u0 | (THead _ t1 _) \Rightarrow t1])) 
 (THead (Bind Abst) u0 t0) (THead (Bind b) u t) H6) in ((let H9 \def (f_equal 
-T T (\lambda (e: T).(match e in T return (\lambda (_: T).T) with [(TSort _) 
-\Rightarrow t0 | (TLRef _) \Rightarrow t0 | (THead _ _ t1) \Rightarrow t1])) 
-(THead (Bind Abst) u0 t0) (THead (Bind b) u t) H6) in (\lambda (H10: (eq T u0 
-u)).(\lambda (H11: (eq B Abst b)).(let H12 \def (eq_ind T t0 (\lambda (t1: 
-T).((eq T t1 (THead (Bind b) u t)) \to (ex2 A (\lambda (a3: A).(arity g 
-(CHead c0 (Bind Abst) u0) u a3)) (\lambda (_: A).(arity g (CHead (CHead c0 
-(Bind Abst) u0) (Bind b) u) t a0))))) H5 t H9) in (let H13 \def (eq_ind T t0 
-(\lambda (t1: T).(arity g (CHead c0 (Bind Abst) u0) t1 a0)) H4 t H9) in (let 
-H14 \def (eq_ind T u0 (\lambda (t1: T).((eq T t (THead (Bind b) u t)) \to 
-(ex2 A (\lambda (a3: A).(arity g (CHead c0 (Bind Abst) t1) u a3)) (\lambda 
-(_: A).(arity g (CHead (CHead c0 (Bind Abst) t1) (Bind b) u) t a0))))) H12 u 
-H10) in (let H15 \def (eq_ind T u0 (\lambda (t1: T).(arity g (CHead c0 (Bind 
-Abst) t1) t a0)) H13 u H10) in (let H16 \def (eq_ind T u0 (\lambda (t1: 
-T).((eq T t1 (THead (Bind b) u t)) \to (ex2 A (\lambda (a3: A).(arity g c0 u 
-a3)) (\lambda (_: A).(arity g (CHead c0 (Bind b) u) t (asucc g a1)))))) H3 u 
-H10) in (let H17 \def (eq_ind T u0 (\lambda (t1: T).(arity g c0 t1 (asucc g 
-a1))) H2 u H10) in (let H18 \def (eq_ind_r B b (\lambda (b0: B).((eq T t 
-(THead (Bind b0) u t)) \to (ex2 A (\lambda (a3: A).(arity g (CHead c0 (Bind 
-Abst) u) u a3)) (\lambda (_: A).(arity g (CHead (CHead c0 (Bind Abst) u) 
-(Bind b0) u) t a0))))) H14 Abst H11) in (let H19 \def (eq_ind_r B b (\lambda 
-(b0: B).((eq T u (THead (Bind b0) u t)) \to (ex2 A (\lambda (a3: A).(arity g 
-c0 u a3)) (\lambda (_: A).(arity g (CHead c0 (Bind b0) u) t (asucc g a1)))))) 
-H16 Abst H11) in (let H20 \def (eq_ind_r B b (\lambda (b0: B).(not (eq B b0 
-Abst))) H Abst H11) in (eq_ind B Abst (\lambda (b0: B).(ex2 A (\lambda (a3: 
-A).(arity g c0 u a3)) (\lambda (_: A).(arity g (CHead c0 (Bind b0) u) t 
-(AHead a1 a0))))) (let H21 \def (match (H20 (refl_equal B Abst)) in False 
-return (\lambda (_: False).(ex2 A (\lambda (a3: A).(arity g c0 u a3)) 
-(\lambda (_: A).(arity g (CHead c0 (Bind Abst) u) t (AHead a1 a0))))) with 
-[]) in H21) b H11))))))))))))) H8)) H7)))))))))))) (\lambda (c0: C).(\lambda 
-(u0: T).(\lambda (a1: A).(\lambda (_: (arity g c0 u0 a1)).(\lambda (_: (((eq 
-T u0 (THead (Bind b) u t)) \to (ex2 A (\lambda (a3: A).(arity g c0 u a3)) 
-(\lambda (_: A).(arity g (CHead c0 (Bind b) u) t a1)))))).(\lambda (t0: 
-T).(\lambda (a0: A).(\lambda (_: (arity g c0 t0 (AHead a1 a0))).(\lambda (_: 
-(((eq T t0 (THead (Bind b) u t)) \to (ex2 A (\lambda (a3: A).(arity g c0 u 
-a3)) (\lambda (_: A).(arity g (CHead c0 (Bind b) u) t (AHead a1 
-a0))))))).(\lambda (H6: (eq T (THead (Flat Appl) u0 t0) (THead (Bind b) u 
-t))).(let H7 \def (eq_ind T (THead (Flat Appl) u0 t0) (\lambda (ee: T).(match 
-ee in T return (\lambda (_: T).Prop) with [(TSort _) \Rightarrow False | 
-(TLRef _) \Rightarrow False | (THead k _ _) \Rightarrow (match k in K return 
-(\lambda (_: K).Prop) with [(Bind _) \Rightarrow False | (Flat _) \Rightarrow 
-True])])) I (THead (Bind b) u t) H6) in (False_ind (ex2 A (\lambda (a3: 
-A).(arity g c0 u a3)) (\lambda (_: A).(arity g (CHead c0 (Bind b) u) t a0))) 
-H7)))))))))))) (\lambda (c0: C).(\lambda (u0: T).(\lambda (a: A).(\lambda (_: 
-(arity g c0 u0 (asucc g a))).(\lambda (_: (((eq T u0 (THead (Bind b) u t)) 
-\to (ex2 A (\lambda (a1: A).(arity g c0 u a1)) (\lambda (_: A).(arity g 
-(CHead c0 (Bind b) u) t (asucc g a))))))).(\lambda (t0: T).(\lambda (_: 
-(arity g c0 t0 a)).(\lambda (_: (((eq T t0 (THead (Bind b) u t)) \to (ex2 A 
+T T (\lambda (e: T).(match e with [(TSort _) \Rightarrow t0 | (TLRef _) 
+\Rightarrow t0 | (THead _ _ t1) \Rightarrow t1])) (THead (Bind Abst) u0 t0) 
+(THead (Bind b) u t) H6) in (\lambda (H10: (eq T u0 u)).(\lambda (H11: (eq B 
+Abst b)).(let H12 \def (eq_ind T t0 (\lambda (t1: T).((eq T t1 (THead (Bind 
+b) u t)) \to (ex2 A (\lambda (a3: A).(arity g (CHead c0 (Bind Abst) u0) u 
+a3)) (\lambda (_: A).(arity g (CHead (CHead c0 (Bind Abst) u0) (Bind b) u) t 
+a0))))) H5 t H9) in (let H13 \def (eq_ind T t0 (\lambda (t1: T).(arity g 
+(CHead c0 (Bind Abst) u0) t1 a0)) H4 t H9) in (let H14 \def (eq_ind T u0 
+(\lambda (t1: T).((eq T t (THead (Bind b) u t)) \to (ex2 A (\lambda (a3: 
+A).(arity g (CHead c0 (Bind Abst) t1) u a3)) (\lambda (_: A).(arity g (CHead 
+(CHead c0 (Bind Abst) t1) (Bind b) u) t a0))))) H12 u H10) in (let H15 \def 
+(eq_ind T u0 (\lambda (t1: T).(arity g (CHead c0 (Bind Abst) t1) t a0)) H13 u 
+H10) in (let H16 \def (eq_ind T u0 (\lambda (t1: T).((eq T t1 (THead (Bind b) 
+u t)) \to (ex2 A (\lambda (a3: A).(arity g c0 u a3)) (\lambda (_: A).(arity g 
+(CHead c0 (Bind b) u) t (asucc g a1)))))) H3 u H10) in (let H17 \def (eq_ind 
+T u0 (\lambda (t1: T).(arity g c0 t1 (asucc g a1))) H2 u H10) in (let H18 
+\def (eq_ind_r B b (\lambda (b0: B).((eq T t (THead (Bind b0) u t)) \to (ex2 
+A (\lambda (a3: A).(arity g (CHead c0 (Bind Abst) u) u a3)) (\lambda (_: 
+A).(arity g (CHead (CHead c0 (Bind Abst) u) (Bind b0) u) t a0))))) H14 Abst 
+H11) in (let H19 \def (eq_ind_r B b (\lambda (b0: B).((eq T u (THead (Bind 
+b0) u t)) \to (ex2 A (\lambda (a3: A).(arity g c0 u a3)) (\lambda (_: 
+A).(arity g (CHead c0 (Bind b0) u) t (asucc g a1)))))) H16 Abst H11) in (let 
+H20 \def (eq_ind_r B b (\lambda (b0: B).(not (eq B b0 Abst))) H Abst H11) in 
+(eq_ind B Abst (\lambda (b0: B).(ex2 A (\lambda (a3: A).(arity g c0 u a3)) 
+(\lambda (_: A).(arity g (CHead c0 (Bind b0) u) t (AHead a1 a0))))) (let H21 
+\def (match (H20 (refl_equal B Abst)) in False with []) in H21) b 
+H11))))))))))))) H8)) H7)))))))))))) (\lambda (c0: C).(\lambda (u0: 
+T).(\lambda (a1: A).(\lambda (_: (arity g c0 u0 a1)).(\lambda (_: (((eq T u0 
+(THead (Bind b) u t)) \to (ex2 A (\lambda (a3: A).(arity g c0 u a3)) (\lambda 
+(_: A).(arity g (CHead c0 (Bind b) u) t a1)))))).(\lambda (t0: T).(\lambda 
+(a0: A).(\lambda (_: (arity g c0 t0 (AHead a1 a0))).(\lambda (_: (((eq T t0 
+(THead (Bind b) u t)) \to (ex2 A (\lambda (a3: A).(arity g c0 u a3)) (\lambda 
+(_: A).(arity g (CHead c0 (Bind b) u) t (AHead a1 a0))))))).(\lambda (H6: (eq 
+T (THead (Flat Appl) u0 t0) (THead (Bind b) u t))).(let H7 \def (eq_ind T 
+(THead (Flat Appl) u0 t0) (\lambda (ee: T).(match ee with [(TSort _) 
+\Rightarrow False | (TLRef _) \Rightarrow False | (THead k _ _) \Rightarrow 
+(match k with [(Bind _) \Rightarrow False | (Flat _) \Rightarrow True])])) I 
+(THead (Bind b) u t) H6) in (False_ind (ex2 A (\lambda (a3: A).(arity g c0 u 
+a3)) (\lambda (_: A).(arity g (CHead c0 (Bind b) u) t a0))) H7)))))))))))) 
+(\lambda (c0: C).(\lambda (u0: T).(\lambda (a: A).(\lambda (_: (arity g c0 u0 
+(asucc g a))).(\lambda (_: (((eq T u0 (THead (Bind b) u t)) \to (ex2 A 
 (\lambda (a1: A).(arity g c0 u a1)) (\lambda (_: A).(arity g (CHead c0 (Bind 
-b) u) t a)))))).(\lambda (H6: (eq T (THead (Flat Cast) u0 t0) (THead (Bind b) 
-u t))).(let H7 \def (eq_ind T (THead (Flat Cast) u0 t0) (\lambda (ee: 
-T).(match ee in T return (\lambda (_: T).Prop) with [(TSort _) \Rightarrow 
-False | (TLRef _) \Rightarrow False | (THead k _ _) \Rightarrow (match k in K 
-return (\lambda (_: K).Prop) with [(Bind _) \Rightarrow False | (Flat _) 
+b) u) t (asucc g a))))))).(\lambda (t0: T).(\lambda (_: (arity g c0 t0 
+a)).(\lambda (_: (((eq T t0 (THead (Bind b) u t)) \to (ex2 A (\lambda (a1: 
+A).(arity g c0 u a1)) (\lambda (_: A).(arity g (CHead c0 (Bind b) u) t 
+a)))))).(\lambda (H6: (eq T (THead (Flat Cast) u0 t0) (THead (Bind b) u 
+t))).(let H7 \def (eq_ind T (THead (Flat Cast) u0 t0) (\lambda (ee: T).(match 
+ee with [(TSort _) \Rightarrow False | (TLRef _) \Rightarrow False | (THead k 
+_ _) \Rightarrow (match k with [(Bind _) \Rightarrow False | (Flat _) 
 \Rightarrow True])])) I (THead (Bind b) u t) H6) in (False_ind (ex2 A 
 (\lambda (a1: A).(arity g c0 u a1)) (\lambda (_: A).(arity g (CHead c0 (Bind 
 b) u) t a))) H7))))))))))) (\lambda (c0: C).(\lambda (t0: T).(\lambda (a1: 
@@ -465,9 +484,6 @@ b) u) t a0))) (\lambda (x: A).(\lambda (H10: (arity g c0 u x)).(\lambda (H11:
 c0 u a3)) (\lambda (_: A).(arity g (CHead c0 (Bind b) u) t a0)) x H10 
 (arity_repl g (CHead c0 (Bind b) u) t a1 H11 a0 H4))))) H9))))))))))))) c y 
 a2 H1))) H0)))))))).
-(* COMMENTS
-Initial nodes: 3365
-END *)
 
 theorem arity_gen_abst:
  \forall (g: G).(\forall (c: C).(\forall (u: T).(\forall (t: T).(\forall (a: 
@@ -488,58 +504,55 @@ A).(\lambda (a2: A).(eq A a0 (AHead a1 a2)))) (\lambda (a1: A).(\lambda (_:
 A).(arity g c0 u (asucc g a1)))) (\lambda (_: A).(\lambda (a2: A).(arity g 
 (CHead c0 (Bind Abst) u) t a2)))))))) (\lambda (c0: C).(\lambda (n: 
 nat).(\lambda (H1: (eq T (TSort n) (THead (Bind Abst) u t))).(let H2 \def 
-(eq_ind T (TSort n) (\lambda (ee: T).(match ee in T return (\lambda (_: 
-T).Prop) with [(TSort _) \Rightarrow True | (TLRef _) \Rightarrow False | 
-(THead _ _ _) \Rightarrow False])) I (THead (Bind Abst) u t) H1) in 
-(False_ind (ex3_2 A A (\lambda (a1: A).(\lambda (a2: A).(eq A (ASort O n) 
-(AHead a1 a2)))) (\lambda (a1: A).(\lambda (_: A).(arity g c0 u (asucc g 
-a1)))) (\lambda (_: A).(\lambda (a2: A).(arity g (CHead c0 (Bind Abst) u) t 
-a2)))) H2))))) (\lambda (c0: C).(\lambda (d: C).(\lambda (u0: T).(\lambda (i: 
-nat).(\lambda (_: (getl i c0 (CHead d (Bind Abbr) u0))).(\lambda (a0: 
-A).(\lambda (_: (arity g d u0 a0)).(\lambda (_: (((eq T u0 (THead (Bind Abst) 
-u t)) \to (ex3_2 A A (\lambda (a1: A).(\lambda (a2: A).(eq A a0 (AHead a1 
-a2)))) (\lambda (a1: A).(\lambda (_: A).(arity g d u (asucc g a1)))) (\lambda 
-(_: A).(\lambda (a2: A).(arity g (CHead d (Bind Abst) u) t a2))))))).(\lambda 
-(H4: (eq T (TLRef i) (THead (Bind Abst) u t))).(let H5 \def (eq_ind T (TLRef 
-i) (\lambda (ee: T).(match ee in T return (\lambda (_: T).Prop) with [(TSort 
-_) \Rightarrow False | (TLRef _) \Rightarrow True | (THead _ _ _) \Rightarrow 
-False])) I (THead (Bind Abst) u t) H4) in (False_ind (ex3_2 A A (\lambda (a1: 
-A).(\lambda (a2: A).(eq A a0 (AHead a1 a2)))) (\lambda (a1: A).(\lambda (_: 
-A).(arity g c0 u (asucc g a1)))) (\lambda (_: A).(\lambda (a2: A).(arity g 
-(CHead c0 (Bind Abst) u) t a2)))) H5))))))))))) (\lambda (c0: C).(\lambda (d: 
-C).(\lambda (u0: T).(\lambda (i: nat).(\lambda (_: (getl i c0 (CHead d (Bind 
-Abst) u0))).(\lambda (a0: A).(\lambda (_: (arity g d u0 (asucc g 
-a0))).(\lambda (_: (((eq T u0 (THead (Bind Abst) u t)) \to (ex3_2 A A 
-(\lambda (a1: A).(\lambda (a2: A).(eq A (asucc g a0) (AHead a1 a2)))) 
+(eq_ind T (TSort n) (\lambda (ee: T).(match ee with [(TSort _) \Rightarrow 
+True | (TLRef _) \Rightarrow False | (THead _ _ _) \Rightarrow False])) I 
+(THead (Bind Abst) u t) H1) in (False_ind (ex3_2 A A (\lambda (a1: 
+A).(\lambda (a2: A).(eq A (ASort O n) (AHead a1 a2)))) (\lambda (a1: 
+A).(\lambda (_: A).(arity g c0 u (asucc g a1)))) (\lambda (_: A).(\lambda 
+(a2: A).(arity g (CHead c0 (Bind Abst) u) t a2)))) H2))))) (\lambda (c0: 
+C).(\lambda (d: C).(\lambda (u0: T).(\lambda (i: nat).(\lambda (_: (getl i c0 
+(CHead d (Bind Abbr) u0))).(\lambda (a0: A).(\lambda (_: (arity g d u0 
+a0)).(\lambda (_: (((eq T u0 (THead (Bind Abst) u t)) \to (ex3_2 A A (\lambda 
+(a1: A).(\lambda (a2: A).(eq A a0 (AHead a1 a2)))) (\lambda (a1: A).(\lambda 
+(_: A).(arity g d u (asucc g a1)))) (\lambda (_: A).(\lambda (a2: A).(arity g 
+(CHead d (Bind Abst) u) t a2))))))).(\lambda (H4: (eq T (TLRef i) (THead 
+(Bind Abst) u t))).(let H5 \def (eq_ind T (TLRef i) (\lambda (ee: T).(match 
+ee with [(TSort _) \Rightarrow False | (TLRef _) \Rightarrow True | (THead _ 
+_ _) \Rightarrow False])) I (THead (Bind Abst) u t) H4) in (False_ind (ex3_2 
+A A (\lambda (a1: A).(\lambda (a2: A).(eq A a0 (AHead a1 a2)))) (\lambda (a1: 
+A).(\lambda (_: A).(arity g c0 u (asucc g a1)))) (\lambda (_: A).(\lambda 
+(a2: A).(arity g (CHead c0 (Bind Abst) u) t a2)))) H5))))))))))) (\lambda 
+(c0: C).(\lambda (d: C).(\lambda (u0: T).(\lambda (i: nat).(\lambda (_: (getl 
+i c0 (CHead d (Bind Abst) u0))).(\lambda (a0: A).(\lambda (_: (arity g d u0 
+(asucc g a0))).(\lambda (_: (((eq T u0 (THead (Bind Abst) u t)) \to (ex3_2 A 
+A (\lambda (a1: A).(\lambda (a2: A).(eq A (asucc g a0) (AHead a1 a2)))) 
 (\lambda (a1: A).(\lambda (_: A).(arity g d u (asucc g a1)))) (\lambda (_: 
 A).(\lambda (a2: A).(arity g (CHead d (Bind Abst) u) t a2))))))).(\lambda 
 (H4: (eq T (TLRef i) (THead (Bind Abst) u t))).(let H5 \def (eq_ind T (TLRef 
-i) (\lambda (ee: T).(match ee in T return (\lambda (_: T).Prop) with [(TSort 
-_) \Rightarrow False | (TLRef _) \Rightarrow True | (THead _ _ _) \Rightarrow 
-False])) I (THead (Bind Abst) u t) H4) in (False_ind (ex3_2 A A (\lambda (a1: 
-A).(\lambda (a2: A).(eq A a0 (AHead a1 a2)))) (\lambda (a1: A).(\lambda (_: 
-A).(arity g c0 u (asucc g a1)))) (\lambda (_: A).(\lambda (a2: A).(arity g 
-(CHead c0 (Bind Abst) u) t a2)))) H5))))))))))) (\lambda (b: B).(\lambda (H1: 
-(not (eq B b Abst))).(\lambda (c0: C).(\lambda (u0: T).(\lambda (a1: 
-A).(\lambda (H2: (arity g c0 u0 a1)).(\lambda (H3: (((eq T u0 (THead (Bind 
-Abst) u t)) \to (ex3_2 A A (\lambda (a2: A).(\lambda (a3: A).(eq A a1 (AHead 
-a2 a3)))) (\lambda (a2: A).(\lambda (_: A).(arity g c0 u (asucc g a2)))) 
-(\lambda (_: A).(\lambda (a3: A).(arity g (CHead c0 (Bind Abst) u) t 
-a3))))))).(\lambda (t0: T).(\lambda (a2: A).(\lambda (H4: (arity g (CHead c0 
-(Bind b) u0) t0 a2)).(\lambda (H5: (((eq T t0 (THead (Bind Abst) u t)) \to 
-(ex3_2 A A (\lambda (a3: A).(\lambda (a4: A).(eq A a2 (AHead a3 a4)))) 
-(\lambda (a3: A).(\lambda (_: A).(arity g (CHead c0 (Bind b) u0) u (asucc g 
-a3)))) (\lambda (_: A).(\lambda (a4: A).(arity g (CHead (CHead c0 (Bind b) 
-u0) (Bind Abst) u) t a4))))))).(\lambda (H6: (eq T (THead (Bind b) u0 t0) 
-(THead (Bind Abst) u t))).(let H7 \def (f_equal T B (\lambda (e: T).(match e 
-in T return (\lambda (_: T).B) with [(TSort _) \Rightarrow b | (TLRef _) 
-\Rightarrow b | (THead k _ _) \Rightarrow (match k in K return (\lambda (_: 
-K).B) with [(Bind b0) \Rightarrow b0 | (Flat _) \Rightarrow b])])) (THead 
-(Bind b) u0 t0) (THead (Bind Abst) u t) H6) in ((let H8 \def (f_equal T T 
-(\lambda (e: T).(match e in T return (\lambda (_: T).T) with [(TSort _) 
-\Rightarrow u0 | (TLRef _) \Rightarrow u0 | (THead _ t1 _) \Rightarrow t1])) 
-(THead (Bind b) u0 t0) (THead (Bind Abst) u t) H6) in ((let H9 \def (f_equal 
-T T (\lambda (e: T).(match e in T return (\lambda (_: T).T) with [(TSort _) 
+i) (\lambda (ee: T).(match ee with [(TSort _) \Rightarrow False | (TLRef _) 
+\Rightarrow True | (THead _ _ _) \Rightarrow False])) I (THead (Bind Abst) u 
+t) H4) in (False_ind (ex3_2 A A (\lambda (a1: A).(\lambda (a2: A).(eq A a0 
+(AHead a1 a2)))) (\lambda (a1: A).(\lambda (_: A).(arity g c0 u (asucc g 
+a1)))) (\lambda (_: A).(\lambda (a2: A).(arity g (CHead c0 (Bind Abst) u) t 
+a2)))) H5))))))))))) (\lambda (b: B).(\lambda (H1: (not (eq B b 
+Abst))).(\lambda (c0: C).(\lambda (u0: T).(\lambda (a1: A).(\lambda (H2: 
+(arity g c0 u0 a1)).(\lambda (H3: (((eq T u0 (THead (Bind Abst) u t)) \to 
+(ex3_2 A A (\lambda (a2: A).(\lambda (a3: A).(eq A a1 (AHead a2 a3)))) 
+(\lambda (a2: A).(\lambda (_: A).(arity g c0 u (asucc g a2)))) (\lambda (_: 
+A).(\lambda (a3: A).(arity g (CHead c0 (Bind Abst) u) t a3))))))).(\lambda 
+(t0: T).(\lambda (a2: A).(\lambda (H4: (arity g (CHead c0 (Bind b) u0) t0 
+a2)).(\lambda (H5: (((eq T t0 (THead (Bind Abst) u t)) \to (ex3_2 A A 
+(\lambda (a3: A).(\lambda (a4: A).(eq A a2 (AHead a3 a4)))) (\lambda (a3: 
+A).(\lambda (_: A).(arity g (CHead c0 (Bind b) u0) u (asucc g a3)))) (\lambda 
+(_: A).(\lambda (a4: A).(arity g (CHead (CHead c0 (Bind b) u0) (Bind Abst) u) 
+t a4))))))).(\lambda (H6: (eq T (THead (Bind b) u0 t0) (THead (Bind Abst) u 
+t))).(let H7 \def (f_equal T B (\lambda (e: T).(match e with [(TSort _) 
+\Rightarrow b | (TLRef _) \Rightarrow b | (THead k _ _) \Rightarrow (match k 
+with [(Bind b0) \Rightarrow b0 | (Flat _) \Rightarrow b])])) (THead (Bind b) 
+u0 t0) (THead (Bind Abst) u t) H6) in ((let H8 \def (f_equal T T (\lambda (e: 
+T).(match e with [(TSort _) \Rightarrow u0 | (TLRef _) \Rightarrow u0 | 
+(THead _ t1 _) \Rightarrow t1])) (THead (Bind b) u0 t0) (THead (Bind Abst) u 
+t) H6) in ((let H9 \def (f_equal T T (\lambda (e: T).(match e with [(TSort _) 
 \Rightarrow t0 | (TLRef _) \Rightarrow t0 | (THead _ _ t1) \Rightarrow t1])) 
 (THead (Bind b) u0 t0) (THead (Bind Abst) u t) H6) in (\lambda (H10: (eq T u0 
 u)).(\lambda (H11: (eq B b Abst)).(let H12 \def (eq_ind T t0 (\lambda (t1: 
@@ -567,26 +580,22 @@ A a2 (AHead a3 a4)))) (\lambda (a3: A).(\lambda (_: A).(arity g (CHead c0
 H19 \def (eq_ind B b (\lambda (b0: B).(arity g (CHead c0 (Bind b0) u) t a2)) 
 H15 Abst H11) in (let H20 \def (eq_ind B b (\lambda (b0: B).(not (eq B b0 
 Abst))) H1 Abst H11) in (let H21 \def (match (H20 (refl_equal B Abst)) in 
-False return (\lambda (_: False).(ex3_2 A A (\lambda (a3: A).(\lambda (a4: 
-A).(eq A a2 (AHead a3 a4)))) (\lambda (a3: A).(\lambda (_: A).(arity g c0 u 
-(asucc g a3)))) (\lambda (_: A).(\lambda (a4: A).(arity g (CHead c0 (Bind 
-Abst) u) t a4))))) with []) in H21))))))))))))) H8)) H7)))))))))))))) 
-(\lambda (c0: C).(\lambda (u0: T).(\lambda (a1: A).(\lambda (H1: (arity g c0 
-u0 (asucc g a1))).(\lambda (H2: (((eq T u0 (THead (Bind Abst) u t)) \to 
-(ex3_2 A A (\lambda (a2: A).(\lambda (a3: A).(eq A (asucc g a1) (AHead a2 
-a3)))) (\lambda (a2: A).(\lambda (_: A).(arity g c0 u (asucc g a2)))) 
-(\lambda (_: A).(\lambda (a3: A).(arity g (CHead c0 (Bind Abst) u) t 
-a3))))))).(\lambda (t0: T).(\lambda (a2: A).(\lambda (H3: (arity g (CHead c0 
-(Bind Abst) u0) t0 a2)).(\lambda (H4: (((eq T t0 (THead (Bind Abst) u t)) \to 
-(ex3_2 A A (\lambda (a3: A).(\lambda (a4: A).(eq A a2 (AHead a3 a4)))) 
-(\lambda (a3: A).(\lambda (_: A).(arity g (CHead c0 (Bind Abst) u0) u (asucc 
-g a3)))) (\lambda (_: A).(\lambda (a4: A).(arity g (CHead (CHead c0 (Bind 
-Abst) u0) (Bind Abst) u) t a4))))))).(\lambda (H5: (eq T (THead (Bind Abst) 
-u0 t0) (THead (Bind Abst) u t))).(let H6 \def (f_equal T T (\lambda (e: 
-T).(match e in T return (\lambda (_: T).T) with [(TSort _) \Rightarrow u0 | 
-(TLRef _) \Rightarrow u0 | (THead _ t1 _) \Rightarrow t1])) (THead (Bind 
-Abst) u0 t0) (THead (Bind Abst) u t) H5) in ((let H7 \def (f_equal T T 
-(\lambda (e: T).(match e in T return (\lambda (_: T).T) with [(TSort _) 
+False with []) in H21))))))))))))) H8)) H7)))))))))))))) (\lambda (c0: 
+C).(\lambda (u0: T).(\lambda (a1: A).(\lambda (H1: (arity g c0 u0 (asucc g 
+a1))).(\lambda (H2: (((eq T u0 (THead (Bind Abst) u t)) \to (ex3_2 A A 
+(\lambda (a2: A).(\lambda (a3: A).(eq A (asucc g a1) (AHead a2 a3)))) 
+(\lambda (a2: A).(\lambda (_: A).(arity g c0 u (asucc g a2)))) (\lambda (_: 
+A).(\lambda (a3: A).(arity g (CHead c0 (Bind Abst) u) t a3))))))).(\lambda 
+(t0: T).(\lambda (a2: A).(\lambda (H3: (arity g (CHead c0 (Bind Abst) u0) t0 
+a2)).(\lambda (H4: (((eq T t0 (THead (Bind Abst) u t)) \to (ex3_2 A A 
+(\lambda (a3: A).(\lambda (a4: A).(eq A a2 (AHead a3 a4)))) (\lambda (a3: 
+A).(\lambda (_: A).(arity g (CHead c0 (Bind Abst) u0) u (asucc g a3)))) 
+(\lambda (_: A).(\lambda (a4: A).(arity g (CHead (CHead c0 (Bind Abst) u0) 
+(Bind Abst) u) t a4))))))).(\lambda (H5: (eq T (THead (Bind Abst) u0 t0) 
+(THead (Bind Abst) u t))).(let H6 \def (f_equal T T (\lambda (e: T).(match e 
+with [(TSort _) \Rightarrow u0 | (TLRef _) \Rightarrow u0 | (THead _ t1 _) 
+\Rightarrow t1])) (THead (Bind Abst) u0 t0) (THead (Bind Abst) u t) H5) in 
+((let H7 \def (f_equal T T (\lambda (e: T).(match e with [(TSort _) 
 \Rightarrow t0 | (TLRef _) \Rightarrow t0 | (THead _ _ t1) \Rightarrow t1])) 
 (THead (Bind Abst) u0 t0) (THead (Bind Abst) u t) H5) in (\lambda (H8: (eq T 
 u0 u)).(let H9 \def (eq_ind T t0 (\lambda (t1: T).((eq T t1 (THead (Bind 
@@ -621,77 +630,73 @@ A).(\lambda (a4: A).(eq A (AHead a1 a2) (AHead a3 a4)))) (\lambda (a3:
 A).(\lambda (_: A).(arity g c0 u (asucc g a3)))) (\lambda (_: A).(\lambda 
 (a4: A).(arity g (CHead c0 (Bind Abst) u) t a4))))))).(\lambda (H5: (eq T 
 (THead (Flat Appl) u0 t0) (THead (Bind Abst) u t))).(let H6 \def (eq_ind T 
-(THead (Flat Appl) u0 t0) (\lambda (ee: T).(match ee in T return (\lambda (_: 
-T).Prop) with [(TSort _) \Rightarrow False | (TLRef _) \Rightarrow False | 
-(THead k _ _) \Rightarrow (match k in K return (\lambda (_: K).Prop) with 
-[(Bind _) \Rightarrow False | (Flat _) \Rightarrow True])])) I (THead (Bind 
-Abst) u t) H5) in (False_ind (ex3_2 A A (\lambda (a3: A).(\lambda (a4: A).(eq 
-A a2 (AHead a3 a4)))) (\lambda (a3: A).(\lambda (_: A).(arity g c0 u (asucc g 
-a3)))) (\lambda (_: A).(\lambda (a4: A).(arity g (CHead c0 (Bind Abst) u) t 
-a4)))) H6)))))))))))) (\lambda (c0: C).(\lambda (u0: T).(\lambda (a0: 
-A).(\lambda (_: (arity g c0 u0 (asucc g a0))).(\lambda (_: (((eq T u0 (THead 
-(Bind Abst) u t)) \to (ex3_2 A A (\lambda (a1: A).(\lambda (a2: A).(eq A 
-(asucc g a0) (AHead a1 a2)))) (\lambda (a1: A).(\lambda (_: A).(arity g c0 u 
-(asucc g a1)))) (\lambda (_: A).(\lambda (a2: A).(arity g (CHead c0 (Bind 
-Abst) u) t a2))))))).(\lambda (t0: T).(\lambda (_: (arity g c0 t0 
-a0)).(\lambda (_: (((eq T t0 (THead (Bind Abst) u t)) \to (ex3_2 A A (\lambda 
-(a1: A).(\lambda (a2: A).(eq A a0 (AHead a1 a2)))) (\lambda (a1: A).(\lambda 
-(_: A).(arity g c0 u (asucc g a1)))) (\lambda (_: A).(\lambda (a2: A).(arity 
-g (CHead c0 (Bind Abst) u) t a2))))))).(\lambda (H5: (eq T (THead (Flat Cast) 
-u0 t0) (THead (Bind Abst) u t))).(let H6 \def (eq_ind T (THead (Flat Cast) u0 
-t0) (\lambda (ee: T).(match ee in T return (\lambda (_: T).Prop) with [(TSort 
-_) \Rightarrow False | (TLRef _) \Rightarrow False | (THead k _ _) 
-\Rightarrow (match k in K return (\lambda (_: K).Prop) with [(Bind _) 
-\Rightarrow False | (Flat _) \Rightarrow True])])) I (THead (Bind Abst) u t) 
-H5) in (False_ind (ex3_2 A A (\lambda (a1: A).(\lambda (a2: A).(eq A a0 
-(AHead a1 a2)))) (\lambda (a1: A).(\lambda (_: A).(arity g c0 u (asucc g 
-a1)))) (\lambda (_: A).(\lambda (a2: A).(arity g (CHead c0 (Bind Abst) u) t 
-a2)))) H6))))))))))) (\lambda (c0: C).(\lambda (t0: T).(\lambda (a1: 
-A).(\lambda (H1: (arity g c0 t0 a1)).(\lambda (H2: (((eq T t0 (THead (Bind 
-Abst) u t)) \to (ex3_2 A A (\lambda (a2: A).(\lambda (a3: A).(eq A a1 (AHead 
-a2 a3)))) (\lambda (a2: A).(\lambda (_: A).(arity g c0 u (asucc g a2)))) 
-(\lambda (_: A).(\lambda (a3: A).(arity g (CHead c0 (Bind Abst) u) t 
-a3))))))).(\lambda (a2: A).(\lambda (H3: (leq g a1 a2)).(\lambda (H4: (eq T 
-t0 (THead (Bind Abst) u t))).(let H5 \def (f_equal T T (\lambda (e: T).e) t0 
-(THead (Bind Abst) u t) H4) in (let H6 \def (eq_ind T t0 (\lambda (t1: 
-T).((eq T t1 (THead (Bind Abst) u t)) \to (ex3_2 A A (\lambda (a3: 
-A).(\lambda (a4: A).(eq A a1 (AHead a3 a4)))) (\lambda (a3: A).(\lambda (_: 
-A).(arity g c0 u (asucc g a3)))) (\lambda (_: A).(\lambda (a4: A).(arity g 
-(CHead c0 (Bind Abst) u) t a4)))))) H2 (THead (Bind Abst) u t) H5) in (let H7 
-\def (eq_ind T t0 (\lambda (t1: T).(arity g c0 t1 a1)) H1 (THead (Bind Abst) 
-u t) H5) in (let H8 \def (H6 (refl_equal T (THead (Bind Abst) u t))) in 
-(ex3_2_ind A A (\lambda (a3: A).(\lambda (a4: A).(eq A a1 (AHead a3 a4)))) 
-(\lambda (a3: A).(\lambda (_: A).(arity g c0 u (asucc g a3)))) (\lambda (_: 
-A).(\lambda (a4: A).(arity g (CHead c0 (Bind Abst) u) t a4))) (ex3_2 A A 
-(\lambda (a3: A).(\lambda (a4: A).(eq A a2 (AHead a3 a4)))) (\lambda (a3: 
-A).(\lambda (_: A).(arity g c0 u (asucc g a3)))) (\lambda (_: A).(\lambda 
-(a4: A).(arity g (CHead c0 (Bind Abst) u) t a4)))) (\lambda (x0: A).(\lambda 
-(x1: A).(\lambda (H9: (eq A a1 (AHead x0 x1))).(\lambda (H10: (arity g c0 u 
-(asucc g x0))).(\lambda (H11: (arity g (CHead c0 (Bind Abst) u) t x1)).(let 
-H12 \def (eq_ind A a1 (\lambda (a0: A).(leq g a0 a2)) H3 (AHead x0 x1) H9) in 
-(let H13 \def (eq_ind A a1 (\lambda (a0: A).(arity g c0 (THead (Bind Abst) u 
-t) a0)) H7 (AHead x0 x1) H9) in (let H_x \def (leq_gen_head1 g x0 x1 a2 H12) 
-in (let H14 \def H_x in (ex3_2_ind A A (\lambda (a3: A).(\lambda (_: A).(leq 
-g x0 a3))) (\lambda (_: A).(\lambda (a4: A).(leq g x1 a4))) (\lambda (a3: 
-A).(\lambda (a4: A).(eq A a2 (AHead a3 a4)))) (ex3_2 A A (\lambda (a3: 
+(THead (Flat Appl) u0 t0) (\lambda (ee: T).(match ee with [(TSort _) 
+\Rightarrow False | (TLRef _) \Rightarrow False | (THead k _ _) \Rightarrow 
+(match k with [(Bind _) \Rightarrow False | (Flat _) \Rightarrow True])])) I 
+(THead (Bind Abst) u t) H5) in (False_ind (ex3_2 A A (\lambda (a3: 
 A).(\lambda (a4: A).(eq A a2 (AHead a3 a4)))) (\lambda (a3: A).(\lambda (_: 
 A).(arity g c0 u (asucc g a3)))) (\lambda (_: A).(\lambda (a4: A).(arity g 
-(CHead c0 (Bind Abst) u) t a4)))) (\lambda (x2: A).(\lambda (x3: A).(\lambda 
-(H15: (leq g x0 x2)).(\lambda (H16: (leq g x1 x3)).(\lambda (H17: (eq A a2 
-(AHead x2 x3))).(let H18 \def (f_equal A A (\lambda (e: A).e) a2 (AHead x2 
-x3) H17) in (eq_ind_r A (AHead x2 x3) (\lambda (a0: A).(ex3_2 A A (\lambda 
-(a3: A).(\lambda (a4: A).(eq A a0 (AHead a3 a4)))) (\lambda (a3: A).(\lambda 
-(_: A).(arity g c0 u (asucc g a3)))) (\lambda (_: A).(\lambda (a4: A).(arity 
-g (CHead c0 (Bind Abst) u) t a4))))) (ex3_2_intro A A (\lambda (a3: 
-A).(\lambda (a4: A).(eq A (AHead x2 x3) (AHead a3 a4)))) (\lambda (a3: 
-A).(\lambda (_: A).(arity g c0 u (asucc g a3)))) (\lambda (_: A).(\lambda 
-(a4: A).(arity g (CHead c0 (Bind Abst) u) t a4))) x2 x3 (refl_equal A (AHead 
-x2 x3)) (arity_repl g c0 u (asucc g x0) H10 (asucc g x2) (asucc_repl g x0 x2 
-H15)) (arity_repl g (CHead c0 (Bind Abst) u) t x1 H11 x3 H16)) a2 H18))))))) 
+(CHead c0 (Bind Abst) u) t a4)))) H6)))))))))))) (\lambda (c0: C).(\lambda 
+(u0: T).(\lambda (a0: A).(\lambda (_: (arity g c0 u0 (asucc g a0))).(\lambda 
+(_: (((eq T u0 (THead (Bind Abst) u t)) \to (ex3_2 A A (\lambda (a1: 
+A).(\lambda (a2: A).(eq A (asucc g a0) (AHead a1 a2)))) (\lambda (a1: 
+A).(\lambda (_: A).(arity g c0 u (asucc g a1)))) (\lambda (_: A).(\lambda 
+(a2: A).(arity g (CHead c0 (Bind Abst) u) t a2))))))).(\lambda (t0: 
+T).(\lambda (_: (arity g c0 t0 a0)).(\lambda (_: (((eq T t0 (THead (Bind 
+Abst) u t)) \to (ex3_2 A A (\lambda (a1: A).(\lambda (a2: A).(eq A a0 (AHead 
+a1 a2)))) (\lambda (a1: A).(\lambda (_: A).(arity g c0 u (asucc g a1)))) 
+(\lambda (_: A).(\lambda (a2: A).(arity g (CHead c0 (Bind Abst) u) t 
+a2))))))).(\lambda (H5: (eq T (THead (Flat Cast) u0 t0) (THead (Bind Abst) u 
+t))).(let H6 \def (eq_ind T (THead (Flat Cast) u0 t0) (\lambda (ee: T).(match 
+ee with [(TSort _) \Rightarrow False | (TLRef _) \Rightarrow False | (THead k 
+_ _) \Rightarrow (match k with [(Bind _) \Rightarrow False | (Flat _) 
+\Rightarrow True])])) I (THead (Bind Abst) u t) H5) in (False_ind (ex3_2 A A 
+(\lambda (a1: A).(\lambda (a2: A).(eq A a0 (AHead a1 a2)))) (\lambda (a1: 
+A).(\lambda (_: A).(arity g c0 u (asucc g a1)))) (\lambda (_: A).(\lambda 
+(a2: A).(arity g (CHead c0 (Bind Abst) u) t a2)))) H6))))))))))) (\lambda 
+(c0: C).(\lambda (t0: T).(\lambda (a1: A).(\lambda (H1: (arity g c0 t0 
+a1)).(\lambda (H2: (((eq T t0 (THead (Bind Abst) u t)) \to (ex3_2 A A 
+(\lambda (a2: A).(\lambda (a3: A).(eq A a1 (AHead a2 a3)))) (\lambda (a2: 
+A).(\lambda (_: A).(arity g c0 u (asucc g a2)))) (\lambda (_: A).(\lambda 
+(a3: A).(arity g (CHead c0 (Bind Abst) u) t a3))))))).(\lambda (a2: 
+A).(\lambda (H3: (leq g a1 a2)).(\lambda (H4: (eq T t0 (THead (Bind Abst) u 
+t))).(let H5 \def (f_equal T T (\lambda (e: T).e) t0 (THead (Bind Abst) u t) 
+H4) in (let H6 \def (eq_ind T t0 (\lambda (t1: T).((eq T t1 (THead (Bind 
+Abst) u t)) \to (ex3_2 A A (\lambda (a3: A).(\lambda (a4: A).(eq A a1 (AHead 
+a3 a4)))) (\lambda (a3: A).(\lambda (_: A).(arity g c0 u (asucc g a3)))) 
+(\lambda (_: A).(\lambda (a4: A).(arity g (CHead c0 (Bind Abst) u) t a4)))))) 
+H2 (THead (Bind Abst) u t) H5) in (let H7 \def (eq_ind T t0 (\lambda (t1: 
+T).(arity g c0 t1 a1)) H1 (THead (Bind Abst) u t) H5) in (let H8 \def (H6 
+(refl_equal T (THead (Bind Abst) u t))) in (ex3_2_ind A A (\lambda (a3: 
+A).(\lambda (a4: A).(eq A a1 (AHead a3 a4)))) (\lambda (a3: A).(\lambda (_: 
+A).(arity g c0 u (asucc g a3)))) (\lambda (_: A).(\lambda (a4: A).(arity g 
+(CHead c0 (Bind Abst) u) t a4))) (ex3_2 A A (\lambda (a3: A).(\lambda (a4: 
+A).(eq A a2 (AHead a3 a4)))) (\lambda (a3: A).(\lambda (_: A).(arity g c0 u 
+(asucc g a3)))) (\lambda (_: A).(\lambda (a4: A).(arity g (CHead c0 (Bind 
+Abst) u) t a4)))) (\lambda (x0: A).(\lambda (x1: A).(\lambda (H9: (eq A a1 
+(AHead x0 x1))).(\lambda (H10: (arity g c0 u (asucc g x0))).(\lambda (H11: 
+(arity g (CHead c0 (Bind Abst) u) t x1)).(let H12 \def (eq_ind A a1 (\lambda 
+(a0: A).(leq g a0 a2)) H3 (AHead x0 x1) H9) in (let H13 \def (eq_ind A a1 
+(\lambda (a0: A).(arity g c0 (THead (Bind Abst) u t) a0)) H7 (AHead x0 x1) 
+H9) in (let H_x \def (leq_gen_head1 g x0 x1 a2 H12) in (let H14 \def H_x in 
+(ex3_2_ind A A (\lambda (a3: A).(\lambda (_: A).(leq g x0 a3))) (\lambda (_: 
+A).(\lambda (a4: A).(leq g x1 a4))) (\lambda (a3: A).(\lambda (a4: A).(eq A 
+a2 (AHead a3 a4)))) (ex3_2 A A (\lambda (a3: A).(\lambda (a4: A).(eq A a2 
+(AHead a3 a4)))) (\lambda (a3: A).(\lambda (_: A).(arity g c0 u (asucc g 
+a3)))) (\lambda (_: A).(\lambda (a4: A).(arity g (CHead c0 (Bind Abst) u) t 
+a4)))) (\lambda (x2: A).(\lambda (x3: A).(\lambda (H15: (leq g x0 
+x2)).(\lambda (H16: (leq g x1 x3)).(\lambda (H17: (eq A a2 (AHead x2 
+x3))).(let H18 \def (f_equal A A (\lambda (e: A).e) a2 (AHead x2 x3) H17) in 
+(eq_ind_r A (AHead x2 x3) (\lambda (a0: A).(ex3_2 A A (\lambda (a3: 
+A).(\lambda (a4: A).(eq A a0 (AHead a3 a4)))) (\lambda (a3: A).(\lambda (_: 
+A).(arity g c0 u (asucc g a3)))) (\lambda (_: A).(\lambda (a4: A).(arity g 
+(CHead c0 (Bind Abst) u) t a4))))) (ex3_2_intro A A (\lambda (a3: A).(\lambda 
+(a4: A).(eq A (AHead x2 x3) (AHead a3 a4)))) (\lambda (a3: A).(\lambda (_: 
+A).(arity g c0 u (asucc g a3)))) (\lambda (_: A).(\lambda (a4: A).(arity g 
+(CHead c0 (Bind Abst) u) t a4))) x2 x3 (refl_equal A (AHead x2 x3)) 
+(arity_repl g c0 u (asucc g x0) H10 (asucc g x2) (asucc_repl g x0 x2 H15)) 
+(arity_repl g (CHead c0 (Bind Abst) u) t x1 H11 x3 H16)) a2 H18))))))) 
 H14)))))))))) H8))))))))))))) c y a H0))) H)))))).
-(* COMMENTS
-Initial nodes: 4265
-END *)
 
 theorem arity_gen_appl:
  \forall (g: G).(\forall (c: C).(\forall (u: T).(\forall (t: T).(\forall (a2: 
@@ -707,116 +712,108 @@ a2))))) (\lambda (y: T).(\lambda (H0: (arity g c y a2)).(arity_ind g (\lambda
 \to (ex2 A (\lambda (a1: A).(arity g c0 u a1)) (\lambda (a1: A).(arity g c0 t 
 (AHead a1 a)))))))) (\lambda (c0: C).(\lambda (n: nat).(\lambda (H1: (eq T 
 (TSort n) (THead (Flat Appl) u t))).(let H2 \def (eq_ind T (TSort n) (\lambda 
-(ee: T).(match ee in T return (\lambda (_: T).Prop) with [(TSort _) 
-\Rightarrow True | (TLRef _) \Rightarrow False | (THead _ _ _) \Rightarrow 
-False])) I (THead (Flat Appl) u t) H1) in (False_ind (ex2 A (\lambda (a1: 
-A).(arity g c0 u a1)) (\lambda (a1: A).(arity g c0 t (AHead a1 (ASort O 
-n))))) H2))))) (\lambda (c0: C).(\lambda (d: C).(\lambda (u0: T).(\lambda (i: 
-nat).(\lambda (_: (getl i c0 (CHead d (Bind Abbr) u0))).(\lambda (a: 
-A).(\lambda (_: (arity g d u0 a)).(\lambda (_: (((eq T u0 (THead (Flat Appl) 
-u t)) \to (ex2 A (\lambda (a1: A).(arity g d u a1)) (\lambda (a1: A).(arity g 
-d t (AHead a1 a))))))).(\lambda (H4: (eq T (TLRef i) (THead (Flat Appl) u 
-t))).(let H5 \def (eq_ind T (TLRef i) (\lambda (ee: T).(match ee in T return 
-(\lambda (_: T).Prop) with [(TSort _) \Rightarrow False | (TLRef _) 
-\Rightarrow True | (THead _ _ _) \Rightarrow False])) I (THead (Flat Appl) u 
-t) H4) in (False_ind (ex2 A (\lambda (a1: A).(arity g c0 u a1)) (\lambda (a1: 
-A).(arity g c0 t (AHead a1 a)))) H5))))))))))) (\lambda (c0: C).(\lambda (d: 
+(ee: T).(match ee with [(TSort _) \Rightarrow True | (TLRef _) \Rightarrow 
+False | (THead _ _ _) \Rightarrow False])) I (THead (Flat Appl) u t) H1) in 
+(False_ind (ex2 A (\lambda (a1: A).(arity g c0 u a1)) (\lambda (a1: A).(arity 
+g c0 t (AHead a1 (ASort O n))))) H2))))) (\lambda (c0: C).(\lambda (d: 
+C).(\lambda (u0: T).(\lambda (i: nat).(\lambda (_: (getl i c0 (CHead d (Bind 
+Abbr) u0))).(\lambda (a: A).(\lambda (_: (arity g d u0 a)).(\lambda (_: (((eq 
+T u0 (THead (Flat Appl) u t)) \to (ex2 A (\lambda (a1: A).(arity g d u a1)) 
+(\lambda (a1: A).(arity g d t (AHead a1 a))))))).(\lambda (H4: (eq T (TLRef 
+i) (THead (Flat Appl) u t))).(let H5 \def (eq_ind T (TLRef i) (\lambda (ee: 
+T).(match ee with [(TSort _) \Rightarrow False | (TLRef _) \Rightarrow True | 
+(THead _ _ _) \Rightarrow False])) I (THead (Flat Appl) u t) H4) in 
+(False_ind (ex2 A (\lambda (a1: A).(arity g c0 u a1)) (\lambda (a1: A).(arity 
+g c0 t (AHead a1 a)))) H5))))))))))) (\lambda (c0: C).(\lambda (d: 
 C).(\lambda (u0: T).(\lambda (i: nat).(\lambda (_: (getl i c0 (CHead d (Bind 
 Abst) u0))).(\lambda (a: A).(\lambda (_: (arity g d u0 (asucc g a))).(\lambda 
 (_: (((eq T u0 (THead (Flat Appl) u t)) \to (ex2 A (\lambda (a1: A).(arity g 
 d u a1)) (\lambda (a1: A).(arity g d t (AHead a1 (asucc g a)))))))).(\lambda 
 (H4: (eq T (TLRef i) (THead (Flat Appl) u t))).(let H5 \def (eq_ind T (TLRef 
-i) (\lambda (ee: T).(match ee in T return (\lambda (_: T).Prop) with [(TSort 
-_) \Rightarrow False | (TLRef _) \Rightarrow True | (THead _ _ _) \Rightarrow 
-False])) I (THead (Flat Appl) u t) H4) in (False_ind (ex2 A (\lambda (a1: 
-A).(arity g c0 u a1)) (\lambda (a1: A).(arity g c0 t (AHead a1 a)))) 
-H5))))))))))) (\lambda (b: B).(\lambda (_: (not (eq B b Abst))).(\lambda (c0: 
-C).(\lambda (u0: T).(\lambda (a1: A).(\lambda (_: (arity g c0 u0 
-a1)).(\lambda (_: (((eq T u0 (THead (Flat Appl) u t)) \to (ex2 A (\lambda 
-(a3: A).(arity g c0 u a3)) (\lambda (a3: A).(arity g c0 t (AHead a3 
-a1))))))).(\lambda (t0: T).(\lambda (a0: A).(\lambda (_: (arity g (CHead c0 
-(Bind b) u0) t0 a0)).(\lambda (_: (((eq T t0 (THead (Flat Appl) u t)) \to 
-(ex2 A (\lambda (a3: A).(arity g (CHead c0 (Bind b) u0) u a3)) (\lambda (a3: 
-A).(arity g (CHead c0 (Bind b) u0) t (AHead a3 a0))))))).(\lambda (H6: (eq T 
-(THead (Bind b) u0 t0) (THead (Flat Appl) u t))).(let H7 \def (eq_ind T 
-(THead (Bind b) u0 t0) (\lambda (ee: T).(match ee in T return (\lambda (_: 
-T).Prop) with [(TSort _) \Rightarrow False | (TLRef _) \Rightarrow False | 
-(THead k _ _) \Rightarrow (match k in K return (\lambda (_: K).Prop) with 
-[(Bind _) \Rightarrow True | (Flat _) \Rightarrow False])])) I (THead (Flat 
-Appl) u t) H6) in (False_ind (ex2 A (\lambda (a3: A).(arity g c0 u a3)) 
-(\lambda (a3: A).(arity g c0 t (AHead a3 a0)))) H7)))))))))))))) (\lambda 
-(c0: C).(\lambda (u0: T).(\lambda (a1: A).(\lambda (_: (arity g c0 u0 (asucc 
-g a1))).(\lambda (_: (((eq T u0 (THead (Flat Appl) u t)) \to (ex2 A (\lambda 
-(a3: A).(arity g c0 u a3)) (\lambda (a3: A).(arity g c0 t (AHead a3 (asucc g 
-a1)))))))).(\lambda (t0: T).(\lambda (a0: A).(\lambda (_: (arity g (CHead c0 
-(Bind Abst) u0) t0 a0)).(\lambda (_: (((eq T t0 (THead (Flat Appl) u t)) \to 
-(ex2 A (\lambda (a3: A).(arity g (CHead c0 (Bind Abst) u0) u a3)) (\lambda 
-(a3: A).(arity g (CHead c0 (Bind Abst) u0) t (AHead a3 a0))))))).(\lambda 
-(H5: (eq T (THead (Bind Abst) u0 t0) (THead (Flat Appl) u t))).(let H6 \def 
-(eq_ind T (THead (Bind Abst) u0 t0) (\lambda (ee: T).(match ee in T return 
-(\lambda (_: T).Prop) with [(TSort _) \Rightarrow False | (TLRef _) 
-\Rightarrow False | (THead k _ _) \Rightarrow (match k in K return (\lambda 
-(_: K).Prop) with [(Bind _) \Rightarrow True | (Flat _) \Rightarrow 
-False])])) I (THead (Flat Appl) u t) H5) in (False_ind (ex2 A (\lambda (a3: 
-A).(arity g c0 u a3)) (\lambda (a3: A).(arity g c0 t (AHead a3 (AHead a1 
-a0))))) H6)))))))))))) (\lambda (c0: C).(\lambda (u0: T).(\lambda (a1: 
-A).(\lambda (H1: (arity g c0 u0 a1)).(\lambda (H2: (((eq T u0 (THead (Flat 
+i) (\lambda (ee: T).(match ee with [(TSort _) \Rightarrow False | (TLRef _) 
+\Rightarrow True | (THead _ _ _) \Rightarrow False])) I (THead (Flat Appl) u 
+t) H4) in (False_ind (ex2 A (\lambda (a1: A).(arity g c0 u a1)) (\lambda (a1: 
+A).(arity g c0 t (AHead a1 a)))) H5))))))))))) (\lambda (b: B).(\lambda (_: 
+(not (eq B b Abst))).(\lambda (c0: C).(\lambda (u0: T).(\lambda (a1: 
+A).(\lambda (_: (arity g c0 u0 a1)).(\lambda (_: (((eq T u0 (THead (Flat 
 Appl) u t)) \to (ex2 A (\lambda (a3: A).(arity g c0 u a3)) (\lambda (a3: 
 A).(arity g c0 t (AHead a3 a1))))))).(\lambda (t0: T).(\lambda (a0: 
-A).(\lambda (H3: (arity g c0 t0 (AHead a1 a0))).(\lambda (H4: (((eq T t0 
-(THead (Flat Appl) u t)) \to (ex2 A (\lambda (a3: A).(arity g c0 u a3)) 
-(\lambda (a3: A).(arity g c0 t (AHead a3 (AHead a1 a0)))))))).(\lambda (H5: 
-(eq T (THead (Flat Appl) u0 t0) (THead (Flat Appl) u t))).(let H6 \def 
-(f_equal T T (\lambda (e: T).(match e in T return (\lambda (_: T).T) with 
+A).(\lambda (_: (arity g (CHead c0 (Bind b) u0) t0 a0)).(\lambda (_: (((eq T 
+t0 (THead (Flat Appl) u t)) \to (ex2 A (\lambda (a3: A).(arity g (CHead c0 
+(Bind b) u0) u a3)) (\lambda (a3: A).(arity g (CHead c0 (Bind b) u0) t (AHead 
+a3 a0))))))).(\lambda (H6: (eq T (THead (Bind b) u0 t0) (THead (Flat Appl) u 
+t))).(let H7 \def (eq_ind T (THead (Bind b) u0 t0) (\lambda (ee: T).(match ee 
+with [(TSort _) \Rightarrow False | (TLRef _) \Rightarrow False | (THead k _ 
+_) \Rightarrow (match k with [(Bind _) \Rightarrow True | (Flat _) 
+\Rightarrow False])])) I (THead (Flat Appl) u t) H6) in (False_ind (ex2 A 
+(\lambda (a3: A).(arity g c0 u a3)) (\lambda (a3: A).(arity g c0 t (AHead a3 
+a0)))) H7)))))))))))))) (\lambda (c0: C).(\lambda (u0: T).(\lambda (a1: 
+A).(\lambda (_: (arity g c0 u0 (asucc g a1))).(\lambda (_: (((eq T u0 (THead 
+(Flat Appl) u t)) \to (ex2 A (\lambda (a3: A).(arity g c0 u a3)) (\lambda 
+(a3: A).(arity g c0 t (AHead a3 (asucc g a1)))))))).(\lambda (t0: T).(\lambda 
+(a0: A).(\lambda (_: (arity g (CHead c0 (Bind Abst) u0) t0 a0)).(\lambda (_: 
+(((eq T t0 (THead (Flat Appl) u t)) \to (ex2 A (\lambda (a3: A).(arity g 
+(CHead c0 (Bind Abst) u0) u a3)) (\lambda (a3: A).(arity g (CHead c0 (Bind 
+Abst) u0) t (AHead a3 a0))))))).(\lambda (H5: (eq T (THead (Bind Abst) u0 t0) 
+(THead (Flat Appl) u t))).(let H6 \def (eq_ind T (THead (Bind Abst) u0 t0) 
+(\lambda (ee: T).(match ee with [(TSort _) \Rightarrow False | (TLRef _) 
+\Rightarrow False | (THead k _ _) \Rightarrow (match k with [(Bind _) 
+\Rightarrow True | (Flat _) \Rightarrow False])])) I (THead (Flat Appl) u t) 
+H5) in (False_ind (ex2 A (\lambda (a3: A).(arity g c0 u a3)) (\lambda (a3: 
+A).(arity g c0 t (AHead a3 (AHead a1 a0))))) H6)))))))))))) (\lambda (c0: 
+C).(\lambda (u0: T).(\lambda (a1: A).(\lambda (H1: (arity g c0 u0 
+a1)).(\lambda (H2: (((eq T u0 (THead (Flat Appl) u t)) \to (ex2 A (\lambda 
+(a3: A).(arity g c0 u a3)) (\lambda (a3: A).(arity g c0 t (AHead a3 
+a1))))))).(\lambda (t0: T).(\lambda (a0: A).(\lambda (H3: (arity g c0 t0 
+(AHead a1 a0))).(\lambda (H4: (((eq T t0 (THead (Flat Appl) u t)) \to (ex2 A 
+(\lambda (a3: A).(arity g c0 u a3)) (\lambda (a3: A).(arity g c0 t (AHead a3 
+(AHead a1 a0)))))))).(\lambda (H5: (eq T (THead (Flat Appl) u0 t0) (THead 
+(Flat Appl) u t))).(let H6 \def (f_equal T T (\lambda (e: T).(match e with 
 [(TSort _) \Rightarrow u0 | (TLRef _) \Rightarrow u0 | (THead _ t1 _) 
 \Rightarrow t1])) (THead (Flat Appl) u0 t0) (THead (Flat Appl) u t) H5) in 
-((let H7 \def (f_equal T T (\lambda (e: T).(match e in T return (\lambda (_: 
-T).T) with [(TSort _) \Rightarrow t0 | (TLRef _) \Rightarrow t0 | (THead _ _ 
-t1) \Rightarrow t1])) (THead (Flat Appl) u0 t0) (THead (Flat Appl) u t) H5) 
-in (\lambda (H8: (eq T u0 u)).(let H9 \def (eq_ind T t0 (\lambda (t1: T).((eq 
-T t1 (THead (Flat Appl) u t)) \to (ex2 A (\lambda (a3: A).(arity g c0 u a3)) 
-(\lambda (a3: A).(arity g c0 t (AHead a3 (AHead a1 a0))))))) H4 t H7) in (let 
-H10 \def (eq_ind T t0 (\lambda (t1: T).(arity g c0 t1 (AHead a1 a0))) H3 t 
-H7) in (let H11 \def (eq_ind T u0 (\lambda (t1: T).((eq T t1 (THead (Flat 
+((let H7 \def (f_equal T T (\lambda (e: T).(match e with [(TSort _) 
+\Rightarrow t0 | (TLRef _) \Rightarrow t0 | (THead _ _ t1) \Rightarrow t1])) 
+(THead (Flat Appl) u0 t0) (THead (Flat Appl) u t) H5) in (\lambda (H8: (eq T 
+u0 u)).(let H9 \def (eq_ind T t0 (\lambda (t1: T).((eq T t1 (THead (Flat 
 Appl) u t)) \to (ex2 A (\lambda (a3: A).(arity g c0 u a3)) (\lambda (a3: 
-A).(arity g c0 t (AHead a3 a1)))))) H2 u H8) in (let H12 \def (eq_ind T u0 
-(\lambda (t1: T).(arity g c0 t1 a1)) H1 u H8) in (ex_intro2 A (\lambda (a3: 
-A).(arity g c0 u a3)) (\lambda (a3: A).(arity g c0 t (AHead a3 a0))) a1 H12 
-H10))))))) H6)))))))))))) (\lambda (c0: C).(\lambda (u0: T).(\lambda (a: 
-A).(\lambda (_: (arity g c0 u0 (asucc g a))).(\lambda (_: (((eq T u0 (THead 
-(Flat Appl) u t)) \to (ex2 A (\lambda (a1: A).(arity g c0 u a1)) (\lambda 
-(a1: A).(arity g c0 t (AHead a1 (asucc g a)))))))).(\lambda (t0: T).(\lambda 
-(_: (arity g c0 t0 a)).(\lambda (_: (((eq T t0 (THead (Flat Appl) u t)) \to 
-(ex2 A (\lambda (a1: A).(arity g c0 u a1)) (\lambda (a1: A).(arity g c0 t 
-(AHead a1 a))))))).(\lambda (H5: (eq T (THead (Flat Cast) u0 t0) (THead (Flat 
-Appl) u t))).(let H6 \def (eq_ind T (THead (Flat Cast) u0 t0) (\lambda (ee: 
-T).(match ee in T return (\lambda (_: T).Prop) with [(TSort _) \Rightarrow 
-False | (TLRef _) \Rightarrow False | (THead k _ _) \Rightarrow (match k in K 
-return (\lambda (_: K).Prop) with [(Bind _) \Rightarrow False | (Flat f) 
-\Rightarrow (match f in F return (\lambda (_: F).Prop) with [Appl \Rightarrow 
-False | Cast \Rightarrow True])])])) I (THead (Flat Appl) u t) H5) in 
-(False_ind (ex2 A (\lambda (a1: A).(arity g c0 u a1)) (\lambda (a1: A).(arity 
-g c0 t (AHead a1 a)))) H6))))))))))) (\lambda (c0: C).(\lambda (t0: 
-T).(\lambda (a1: A).(\lambda (H1: (arity g c0 t0 a1)).(\lambda (H2: (((eq T 
-t0 (THead (Flat Appl) u t)) \to (ex2 A (\lambda (a3: A).(arity g c0 u a3)) 
-(\lambda (a3: A).(arity g c0 t (AHead a3 a1))))))).(\lambda (a0: A).(\lambda 
-(H3: (leq g a1 a0)).(\lambda (H4: (eq T t0 (THead (Flat Appl) u t))).(let H5 
-\def (f_equal T T (\lambda (e: T).e) t0 (THead (Flat Appl) u t) H4) in (let 
-H6 \def (eq_ind T t0 (\lambda (t1: T).((eq T t1 (THead (Flat Appl) u t)) \to 
+A).(arity g c0 t (AHead a3 (AHead a1 a0))))))) H4 t H7) in (let H10 \def 
+(eq_ind T t0 (\lambda (t1: T).(arity g c0 t1 (AHead a1 a0))) H3 t H7) in (let 
+H11 \def (eq_ind T u0 (\lambda (t1: T).((eq T t1 (THead (Flat Appl) u t)) \to 
 (ex2 A (\lambda (a3: A).(arity g c0 u a3)) (\lambda (a3: A).(arity g c0 t 
-(AHead a3 a1)))))) H2 (THead (Flat Appl) u t) H5) in (let H7 \def (eq_ind T 
-t0 (\lambda (t1: T).(arity g c0 t1 a1)) H1 (THead (Flat Appl) u t) H5) in 
-(let H8 \def (H6 (refl_equal T (THead (Flat Appl) u t))) in (ex2_ind A 
-(\lambda (a3: A).(arity g c0 u a3)) (\lambda (a3: A).(arity g c0 t (AHead a3 
-a1))) (ex2 A (\lambda (a3: A).(arity g c0 u a3)) (\lambda (a3: A).(arity g c0 
-t (AHead a3 a0)))) (\lambda (x: A).(\lambda (H9: (arity g c0 u x)).(\lambda 
-(H10: (arity g c0 t (AHead x a1))).(ex_intro2 A (\lambda (a3: A).(arity g c0 
-u a3)) (\lambda (a3: A).(arity g c0 t (AHead a3 a0))) x H9 (arity_repl g c0 t 
-(AHead x a1) H10 (AHead x a0) (leq_head g x x (leq_refl g x) a1 a0 H3)))))) 
-H8))))))))))))) c y a2 H0))) H)))))).
-(* COMMENTS
-Initial nodes: 2277
-END *)
+(AHead a3 a1)))))) H2 u H8) in (let H12 \def (eq_ind T u0 (\lambda (t1: 
+T).(arity g c0 t1 a1)) H1 u H8) in (ex_intro2 A (\lambda (a3: A).(arity g c0 
+u a3)) (\lambda (a3: A).(arity g c0 t (AHead a3 a0))) a1 H12 H10))))))) 
+H6)))))))))))) (\lambda (c0: C).(\lambda (u0: T).(\lambda (a: A).(\lambda (_: 
+(arity g c0 u0 (asucc g a))).(\lambda (_: (((eq T u0 (THead (Flat Appl) u t)) 
+\to (ex2 A (\lambda (a1: A).(arity g c0 u a1)) (\lambda (a1: A).(arity g c0 t 
+(AHead a1 (asucc g a)))))))).(\lambda (t0: T).(\lambda (_: (arity g c0 t0 
+a)).(\lambda (_: (((eq T t0 (THead (Flat Appl) u t)) \to (ex2 A (\lambda (a1: 
+A).(arity g c0 u a1)) (\lambda (a1: A).(arity g c0 t (AHead a1 
+a))))))).(\lambda (H5: (eq T (THead (Flat Cast) u0 t0) (THead (Flat Appl) u 
+t))).(let H6 \def (eq_ind T (THead (Flat Cast) u0 t0) (\lambda (ee: T).(match 
+ee with [(TSort _) \Rightarrow False | (TLRef _) \Rightarrow False | (THead k 
+_ _) \Rightarrow (match k with [(Bind _) \Rightarrow False | (Flat f) 
+\Rightarrow (match f with [Appl \Rightarrow False | Cast \Rightarrow 
+True])])])) I (THead (Flat Appl) u t) H5) in (False_ind (ex2 A (\lambda (a1: 
+A).(arity g c0 u a1)) (\lambda (a1: A).(arity g c0 t (AHead a1 a)))) 
+H6))))))))))) (\lambda (c0: C).(\lambda (t0: T).(\lambda (a1: A).(\lambda 
+(H1: (arity g c0 t0 a1)).(\lambda (H2: (((eq T t0 (THead (Flat Appl) u t)) 
+\to (ex2 A (\lambda (a3: A).(arity g c0 u a3)) (\lambda (a3: A).(arity g c0 t 
+(AHead a3 a1))))))).(\lambda (a0: A).(\lambda (H3: (leq g a1 a0)).(\lambda 
+(H4: (eq T t0 (THead (Flat Appl) u t))).(let H5 \def (f_equal T T (\lambda 
+(e: T).e) t0 (THead (Flat Appl) u t) H4) in (let H6 \def (eq_ind T t0 
+(\lambda (t1: T).((eq T t1 (THead (Flat Appl) u t)) \to (ex2 A (\lambda (a3: 
+A).(arity g c0 u a3)) (\lambda (a3: A).(arity g c0 t (AHead a3 a1)))))) H2 
+(THead (Flat Appl) u t) H5) in (let H7 \def (eq_ind T t0 (\lambda (t1: 
+T).(arity g c0 t1 a1)) H1 (THead (Flat Appl) u t) H5) in (let H8 \def (H6 
+(refl_equal T (THead (Flat Appl) u t))) in (ex2_ind A (\lambda (a3: A).(arity 
+g c0 u a3)) (\lambda (a3: A).(arity g c0 t (AHead a3 a1))) (ex2 A (\lambda 
+(a3: A).(arity g c0 u a3)) (\lambda (a3: A).(arity g c0 t (AHead a3 a0)))) 
+(\lambda (x: A).(\lambda (H9: (arity g c0 u x)).(\lambda (H10: (arity g c0 t 
+(AHead x a1))).(ex_intro2 A (\lambda (a3: A).(arity g c0 u a3)) (\lambda (a3: 
+A).(arity g c0 t (AHead a3 a0))) x H9 (arity_repl g c0 t (AHead x a1) H10 
+(AHead x a0) (leq_head g x x (leq_refl g x) a1 a0 H3)))))) H8))))))))))))) c 
+y a2 H0))) H)))))).
 
 theorem arity_gen_cast:
  \forall (g: G).(\forall (c: C).(\forall (u: T).(\forall (t: T).(\forall (a: 
@@ -831,16 +828,15 @@ A).(\lambda (H: (arity g c (THead (Flat Cast) u t) a)).(insert_eq T (THead
 A).((eq T t0 (THead (Flat Cast) u t)) \to (land (arity g c0 u (asucc g a0)) 
 (arity g c0 t a0)))))) (\lambda (c0: C).(\lambda (n: nat).(\lambda (H1: (eq T 
 (TSort n) (THead (Flat Cast) u t))).(let H2 \def (eq_ind T (TSort n) (\lambda 
-(ee: T).(match ee in T return (\lambda (_: T).Prop) with [(TSort _) 
-\Rightarrow True | (TLRef _) \Rightarrow False | (THead _ _ _) \Rightarrow 
-False])) I (THead (Flat Cast) u t) H1) in (False_ind (land (arity g c0 u 
-(asucc g (ASort O n))) (arity g c0 t (ASort O n))) H2))))) (\lambda (c0: 
-C).(\lambda (d: C).(\lambda (u0: T).(\lambda (i: nat).(\lambda (_: (getl i c0 
-(CHead d (Bind Abbr) u0))).(\lambda (a0: A).(\lambda (_: (arity g d u0 
-a0)).(\lambda (_: (((eq T u0 (THead (Flat Cast) u t)) \to (land (arity g d u 
-(asucc g a0)) (arity g d t a0))))).(\lambda (H4: (eq T (TLRef i) (THead (Flat 
-Cast) u t))).(let H5 \def (eq_ind T (TLRef i) (\lambda (ee: T).(match ee in T 
-return (\lambda (_: T).Prop) with [(TSort _) \Rightarrow False | (TLRef _) 
+(ee: T).(match ee with [(TSort _) \Rightarrow True | (TLRef _) \Rightarrow 
+False | (THead _ _ _) \Rightarrow False])) I (THead (Flat Cast) u t) H1) in 
+(False_ind (land (arity g c0 u (asucc g (ASort O n))) (arity g c0 t (ASort O 
+n))) H2))))) (\lambda (c0: C).(\lambda (d: C).(\lambda (u0: T).(\lambda (i: 
+nat).(\lambda (_: (getl i c0 (CHead d (Bind Abbr) u0))).(\lambda (a0: 
+A).(\lambda (_: (arity g d u0 a0)).(\lambda (_: (((eq T u0 (THead (Flat Cast) 
+u t)) \to (land (arity g d u (asucc g a0)) (arity g d t a0))))).(\lambda (H4: 
+(eq T (TLRef i) (THead (Flat Cast) u t))).(let H5 \def (eq_ind T (TLRef i) 
+(\lambda (ee: T).(match ee with [(TSort _) \Rightarrow False | (TLRef _) 
 \Rightarrow True | (THead _ _ _) \Rightarrow False])) I (THead (Flat Cast) u 
 t) H4) in (False_ind (land (arity g c0 u (asucc g a0)) (arity g c0 t a0)) 
 H5))))))))))) (\lambda (c0: C).(\lambda (d: C).(\lambda (u0: T).(\lambda (i: 
@@ -848,34 +844,32 @@ nat).(\lambda (_: (getl i c0 (CHead d (Bind Abst) u0))).(\lambda (a0:
 A).(\lambda (_: (arity g d u0 (asucc g a0))).(\lambda (_: (((eq T u0 (THead 
 (Flat Cast) u t)) \to (land (arity g d u (asucc g (asucc g a0))) (arity g d t 
 (asucc g a0)))))).(\lambda (H4: (eq T (TLRef i) (THead (Flat Cast) u 
-t))).(let H5 \def (eq_ind T (TLRef i) (\lambda (ee: T).(match ee in T return 
-(\lambda (_: T).Prop) with [(TSort _) \Rightarrow False | (TLRef _) 
-\Rightarrow True | (THead _ _ _) \Rightarrow False])) I (THead (Flat Cast) u 
-t) H4) in (False_ind (land (arity g c0 u (asucc g a0)) (arity g c0 t a0)) 
-H5))))))))))) (\lambda (b: B).(\lambda (_: (not (eq B b Abst))).(\lambda (c0: 
-C).(\lambda (u0: T).(\lambda (a1: A).(\lambda (_: (arity g c0 u0 
-a1)).(\lambda (_: (((eq T u0 (THead (Flat Cast) u t)) \to (land (arity g c0 u 
-(asucc g a1)) (arity g c0 t a1))))).(\lambda (t0: T).(\lambda (a2: 
-A).(\lambda (_: (arity g (CHead c0 (Bind b) u0) t0 a2)).(\lambda (_: (((eq T 
-t0 (THead (Flat Cast) u t)) \to (land (arity g (CHead c0 (Bind b) u0) u 
-(asucc g a2)) (arity g (CHead c0 (Bind b) u0) t a2))))).(\lambda (H6: (eq T 
-(THead (Bind b) u0 t0) (THead (Flat Cast) u t))).(let H7 \def (eq_ind T 
-(THead (Bind b) u0 t0) (\lambda (ee: T).(match ee in T return (\lambda (_: 
-T).Prop) with [(TSort _) \Rightarrow False | (TLRef _) \Rightarrow False | 
-(THead k _ _) \Rightarrow (match k in K return (\lambda (_: K).Prop) with 
-[(Bind _) \Rightarrow True | (Flat _) \Rightarrow False])])) I (THead (Flat 
-Cast) u t) H6) in (False_ind (land (arity g c0 u (asucc g a2)) (arity g c0 t 
-a2)) H7)))))))))))))) (\lambda (c0: C).(\lambda (u0: T).(\lambda (a1: 
-A).(\lambda (_: (arity g c0 u0 (asucc g a1))).(\lambda (_: (((eq T u0 (THead 
-(Flat Cast) u t)) \to (land (arity g c0 u (asucc g (asucc g a1))) (arity g c0 
-t (asucc g a1)))))).(\lambda (t0: T).(\lambda (a2: A).(\lambda (_: (arity g 
-(CHead c0 (Bind Abst) u0) t0 a2)).(\lambda (_: (((eq T t0 (THead (Flat Cast) 
-u t)) \to (land (arity g (CHead c0 (Bind Abst) u0) u (asucc g a2)) (arity g 
-(CHead c0 (Bind Abst) u0) t a2))))).(\lambda (H5: (eq T (THead (Bind Abst) u0 
-t0) (THead (Flat Cast) u t))).(let H6 \def (eq_ind T (THead (Bind Abst) u0 
-t0) (\lambda (ee: T).(match ee in T return (\lambda (_: T).Prop) with [(TSort 
-_) \Rightarrow False | (TLRef _) \Rightarrow False | (THead k _ _) 
-\Rightarrow (match k in K return (\lambda (_: K).Prop) with [(Bind _) 
+t))).(let H5 \def (eq_ind T (TLRef i) (\lambda (ee: T).(match ee with [(TSort 
+_) \Rightarrow False | (TLRef _) \Rightarrow True | (THead _ _ _) \Rightarrow 
+False])) I (THead (Flat Cast) u t) H4) in (False_ind (land (arity g c0 u 
+(asucc g a0)) (arity g c0 t a0)) H5))))))))))) (\lambda (b: B).(\lambda (_: 
+(not (eq B b Abst))).(\lambda (c0: C).(\lambda (u0: T).(\lambda (a1: 
+A).(\lambda (_: (arity g c0 u0 a1)).(\lambda (_: (((eq T u0 (THead (Flat 
+Cast) u t)) \to (land (arity g c0 u (asucc g a1)) (arity g c0 t 
+a1))))).(\lambda (t0: T).(\lambda (a2: A).(\lambda (_: (arity g (CHead c0 
+(Bind b) u0) t0 a2)).(\lambda (_: (((eq T t0 (THead (Flat Cast) u t)) \to 
+(land (arity g (CHead c0 (Bind b) u0) u (asucc g a2)) (arity g (CHead c0 
+(Bind b) u0) t a2))))).(\lambda (H6: (eq T (THead (Bind b) u0 t0) (THead 
+(Flat Cast) u t))).(let H7 \def (eq_ind T (THead (Bind b) u0 t0) (\lambda 
+(ee: T).(match ee with [(TSort _) \Rightarrow False | (TLRef _) \Rightarrow 
+False | (THead k _ _) \Rightarrow (match k with [(Bind _) \Rightarrow True | 
+(Flat _) \Rightarrow False])])) I (THead (Flat Cast) u t) H6) in (False_ind 
+(land (arity g c0 u (asucc g a2)) (arity g c0 t a2)) H7)))))))))))))) 
+(\lambda (c0: C).(\lambda (u0: T).(\lambda (a1: A).(\lambda (_: (arity g c0 
+u0 (asucc g a1))).(\lambda (_: (((eq T u0 (THead (Flat Cast) u t)) \to (land 
+(arity g c0 u (asucc g (asucc g a1))) (arity g c0 t (asucc g 
+a1)))))).(\lambda (t0: T).(\lambda (a2: A).(\lambda (_: (arity g (CHead c0 
+(Bind Abst) u0) t0 a2)).(\lambda (_: (((eq T t0 (THead (Flat Cast) u t)) \to 
+(land (arity g (CHead c0 (Bind Abst) u0) u (asucc g a2)) (arity g (CHead c0 
+(Bind Abst) u0) t a2))))).(\lambda (H5: (eq T (THead (Bind Abst) u0 t0) 
+(THead (Flat Cast) u t))).(let H6 \def (eq_ind T (THead (Bind Abst) u0 t0) 
+(\lambda (ee: T).(match ee with [(TSort _) \Rightarrow False | (TLRef _) 
+\Rightarrow False | (THead k _ _) \Rightarrow (match k with [(Bind _) 
 \Rightarrow True | (Flat _) \Rightarrow False])])) I (THead (Flat Cast) u t) 
 H5) in (False_ind (land (arity g c0 u (asucc g (AHead a1 a2))) (arity g c0 t 
 (AHead a1 a2))) H6)))))))))))) (\lambda (c0: C).(\lambda (u0: T).(\lambda 
@@ -885,51 +879,46 @@ a1))))).(\lambda (t0: T).(\lambda (a2: A).(\lambda (_: (arity g c0 t0 (AHead
 a1 a2))).(\lambda (_: (((eq T t0 (THead (Flat Cast) u t)) \to (land (arity g 
 c0 u (asucc g (AHead a1 a2))) (arity g c0 t (AHead a1 a2)))))).(\lambda (H5: 
 (eq T (THead (Flat Appl) u0 t0) (THead (Flat Cast) u t))).(let H6 \def 
-(eq_ind T (THead (Flat Appl) u0 t0) (\lambda (ee: T).(match ee in T return 
-(\lambda (_: T).Prop) with [(TSort _) \Rightarrow False | (TLRef _) 
-\Rightarrow False | (THead k _ _) \Rightarrow (match k in K return (\lambda 
-(_: K).Prop) with [(Bind _) \Rightarrow False | (Flat f) \Rightarrow (match f 
-in F return (\lambda (_: F).Prop) with [Appl \Rightarrow True | Cast 
-\Rightarrow False])])])) I (THead (Flat Cast) u t) H5) in (False_ind (land 
-(arity g c0 u (asucc g a2)) (arity g c0 t a2)) H6)))))))))))) (\lambda (c0: 
-C).(\lambda (u0: T).(\lambda (a0: A).(\lambda (H1: (arity g c0 u0 (asucc g 
-a0))).(\lambda (H2: (((eq T u0 (THead (Flat Cast) u t)) \to (land (arity g c0 
-u (asucc g (asucc g a0))) (arity g c0 t (asucc g a0)))))).(\lambda (t0: 
-T).(\lambda (H3: (arity g c0 t0 a0)).(\lambda (H4: (((eq T t0 (THead (Flat 
-Cast) u t)) \to (land (arity g c0 u (asucc g a0)) (arity g c0 t 
-a0))))).(\lambda (H5: (eq T (THead (Flat Cast) u0 t0) (THead (Flat Cast) u 
-t))).(let H6 \def (f_equal T T (\lambda (e: T).(match e in T return (\lambda 
-(_: T).T) with [(TSort _) \Rightarrow u0 | (TLRef _) \Rightarrow u0 | (THead 
-_ t1 _) \Rightarrow t1])) (THead (Flat Cast) u0 t0) (THead (Flat Cast) u t) 
-H5) in ((let H7 \def (f_equal T T (\lambda (e: T).(match e in T return 
-(\lambda (_: T).T) with [(TSort _) \Rightarrow t0 | (TLRef _) \Rightarrow t0 
-| (THead _ _ t1) \Rightarrow t1])) (THead (Flat Cast) u0 t0) (THead (Flat 
-Cast) u t) H5) in (\lambda (H8: (eq T u0 u)).(let H9 \def (eq_ind T t0 
+(eq_ind T (THead (Flat Appl) u0 t0) (\lambda (ee: T).(match ee with [(TSort 
+_) \Rightarrow False | (TLRef _) \Rightarrow False | (THead k _ _) 
+\Rightarrow (match k with [(Bind _) \Rightarrow False | (Flat f) \Rightarrow 
+(match f with [Appl \Rightarrow True | Cast \Rightarrow False])])])) I (THead 
+(Flat Cast) u t) H5) in (False_ind (land (arity g c0 u (asucc g a2)) (arity g 
+c0 t a2)) H6)))))))))))) (\lambda (c0: C).(\lambda (u0: T).(\lambda (a0: 
+A).(\lambda (H1: (arity g c0 u0 (asucc g a0))).(\lambda (H2: (((eq T u0 
+(THead (Flat Cast) u t)) \to (land (arity g c0 u (asucc g (asucc g a0))) 
+(arity g c0 t (asucc g a0)))))).(\lambda (t0: T).(\lambda (H3: (arity g c0 t0 
+a0)).(\lambda (H4: (((eq T t0 (THead (Flat Cast) u t)) \to (land (arity g c0 
+u (asucc g a0)) (arity g c0 t a0))))).(\lambda (H5: (eq T (THead (Flat Cast) 
+u0 t0) (THead (Flat Cast) u t))).(let H6 \def (f_equal T T (\lambda (e: 
+T).(match e with [(TSort _) \Rightarrow u0 | (TLRef _) \Rightarrow u0 | 
+(THead _ t1 _) \Rightarrow t1])) (THead (Flat Cast) u0 t0) (THead (Flat Cast) 
+u t) H5) in ((let H7 \def (f_equal T T (\lambda (e: T).(match e with [(TSort 
+_) \Rightarrow t0 | (TLRef _) \Rightarrow t0 | (THead _ _ t1) \Rightarrow 
+t1])) (THead (Flat Cast) u0 t0) (THead (Flat Cast) u t) H5) in (\lambda (H8: 
+(eq T u0 u)).(let H9 \def (eq_ind T t0 (\lambda (t1: T).((eq T t1 (THead 
+(Flat Cast) u t)) \to (land (arity g c0 u (asucc g a0)) (arity g c0 t a0)))) 
+H4 t H7) in (let H10 \def (eq_ind T t0 (\lambda (t1: T).(arity g c0 t1 a0)) 
+H3 t H7) in (let H11 \def (eq_ind T u0 (\lambda (t1: T).((eq T t1 (THead 
+(Flat Cast) u t)) \to (land (arity g c0 u (asucc g (asucc g a0))) (arity g c0 
+t (asucc g a0))))) H2 u H8) in (let H12 \def (eq_ind T u0 (\lambda (t1: 
+T).(arity g c0 t1 (asucc g a0))) H1 u H8) in (conj (arity g c0 u (asucc g 
+a0)) (arity g c0 t a0) H12 H10))))))) H6))))))))))) (\lambda (c0: C).(\lambda 
+(t0: T).(\lambda (a1: A).(\lambda (H1: (arity g c0 t0 a1)).(\lambda (H2: 
+(((eq T t0 (THead (Flat Cast) u t)) \to (land (arity g c0 u (asucc g a1)) 
+(arity g c0 t a1))))).(\lambda (a2: A).(\lambda (H3: (leq g a1 a2)).(\lambda 
+(H4: (eq T t0 (THead (Flat Cast) u t))).(let H5 \def (f_equal T T (\lambda 
+(e: T).e) t0 (THead (Flat Cast) u t) H4) in (let H6 \def (eq_ind T t0 
 (\lambda (t1: T).((eq T t1 (THead (Flat Cast) u t)) \to (land (arity g c0 u 
-(asucc g a0)) (arity g c0 t a0)))) H4 t H7) in (let H10 \def (eq_ind T t0 
-(\lambda (t1: T).(arity g c0 t1 a0)) H3 t H7) in (let H11 \def (eq_ind T u0 
-(\lambda (t1: T).((eq T t1 (THead (Flat Cast) u t)) \to (land (arity g c0 u 
-(asucc g (asucc g a0))) (arity g c0 t (asucc g a0))))) H2 u H8) in (let H12 
-\def (eq_ind T u0 (\lambda (t1: T).(arity g c0 t1 (asucc g a0))) H1 u H8) in 
-(conj (arity g c0 u (asucc g a0)) (arity g c0 t a0) H12 H10))))))) 
-H6))))))))))) (\lambda (c0: C).(\lambda (t0: T).(\lambda (a1: A).(\lambda 
-(H1: (arity g c0 t0 a1)).(\lambda (H2: (((eq T t0 (THead (Flat Cast) u t)) 
-\to (land (arity g c0 u (asucc g a1)) (arity g c0 t a1))))).(\lambda (a2: 
-A).(\lambda (H3: (leq g a1 a2)).(\lambda (H4: (eq T t0 (THead (Flat Cast) u 
-t))).(let H5 \def (f_equal T T (\lambda (e: T).e) t0 (THead (Flat Cast) u t) 
-H4) in (let H6 \def (eq_ind T t0 (\lambda (t1: T).((eq T t1 (THead (Flat 
-Cast) u t)) \to (land (arity g c0 u (asucc g a1)) (arity g c0 t a1)))) H2 
-(THead (Flat Cast) u t) H5) in (let H7 \def (eq_ind T t0 (\lambda (t1: 
-T).(arity g c0 t1 a1)) H1 (THead (Flat Cast) u t) H5) in (let H8 \def (H6 
-(refl_equal T (THead (Flat Cast) u t))) in (land_ind (arity g c0 u (asucc g 
-a1)) (arity g c0 t a1) (land (arity g c0 u (asucc g a2)) (arity g c0 t a2)) 
-(\lambda (H9: (arity g c0 u (asucc g a1))).(\lambda (H10: (arity g c0 t 
-a1)).(conj (arity g c0 u (asucc g a2)) (arity g c0 t a2) (arity_repl g c0 u 
-(asucc g a1) H9 (asucc g a2) (asucc_repl g a1 a2 H3)) (arity_repl g c0 t a1 
-H10 a2 H3)))) H8))))))))))))) c y a H0))) H)))))).
-(* COMMENTS
-Initial nodes: 2147
-END *)
+(asucc g a1)) (arity g c0 t a1)))) H2 (THead (Flat Cast) u t) H5) in (let H7 
+\def (eq_ind T t0 (\lambda (t1: T).(arity g c0 t1 a1)) H1 (THead (Flat Cast) 
+u t) H5) in (let H8 \def (H6 (refl_equal T (THead (Flat Cast) u t))) in 
+(land_ind (arity g c0 u (asucc g a1)) (arity g c0 t a1) (land (arity g c0 u 
+(asucc g a2)) (arity g c0 t a2)) (\lambda (H9: (arity g c0 u (asucc g 
+a1))).(\lambda (H10: (arity g c0 t a1)).(conj (arity g c0 u (asucc g a2)) 
+(arity g c0 t a2) (arity_repl g c0 u (asucc g a1) H9 (asucc g a2) (asucc_repl 
+g a1 a2 H3)) (arity_repl g c0 t a1 H10 a2 H3)))) H8))))))))))))) c y a H0))) 
+H)))))).
 
 theorem arity_gen_appls:
  \forall (g: G).(\forall (c: C).(\forall (t: T).(\forall (vs: TList).(\forall 
@@ -952,9 +941,6 @@ a2))).(let H_x \def (H (AHead x a2) H3) in (let H4 \def H_x in (ex_ind A
 (\lambda (a: A).(arity g c t a)) (ex A (\lambda (a: A).(arity g c t a))) 
 (\lambda (x0: A).(\lambda (H5: (arity g c t x0)).(ex_intro A (\lambda (a: 
 A).(arity g c t a)) x0 H5))) H4)))))) H1))))))) vs)))).
-(* COMMENTS
-Initial nodes: 341
-END *)
 
 theorem arity_gen_lift:
  \forall (g: G).(\forall (c1: C).(\forall (t: T).(\forall (a: A).(\forall (h: 
@@ -1157,7 +1143,149 @@ A).(\lambda (_: (arity g c t0 a1)).(\lambda (H2: ((\forall (x: nat).(\forall
 a2)).(\lambda (x: nat).(\lambda (x0: T).(\lambda (H4: (eq T t0 (lift h x 
 x0))).(\lambda (c2: C).(\lambda (H5: (drop h x c c2)).(arity_repl g c2 x0 a1 
 (H2 x x0 H4 c2 H5) a2 H3))))))))))))) c1 y a H0))))) H))))))).
-(* COMMENTS
-Initial nodes: 4693
-END *)
+
+theorem arity_mono:
+ \forall (g: G).(\forall (c: C).(\forall (t: T).(\forall (a1: A).((arity g c 
+t a1) \to (\forall (a2: A).((arity g c t a2) \to (leq g a1 a2)))))))
+\def
+ \lambda (g: G).(\lambda (c: C).(\lambda (t: T).(\lambda (a1: A).(\lambda (H: 
+(arity g c t a1)).(arity_ind g (\lambda (c0: C).(\lambda (t0: T).(\lambda (a: 
+A).(\forall (a2: A).((arity g c0 t0 a2) \to (leq g a a2)))))) (\lambda (c0: 
+C).(\lambda (n: nat).(\lambda (a2: A).(\lambda (H0: (arity g c0 (TSort n) 
+a2)).(leq_sym g a2 (ASort O n) (arity_gen_sort g c0 n a2 H0)))))) (\lambda 
+(c0: C).(\lambda (d: C).(\lambda (u: T).(\lambda (i: nat).(\lambda (H0: (getl 
+i c0 (CHead d (Bind Abbr) u))).(\lambda (a: A).(\lambda (_: (arity g d u 
+a)).(\lambda (H2: ((\forall (a2: A).((arity g d u a2) \to (leq g a 
+a2))))).(\lambda (a2: A).(\lambda (H3: (arity g c0 (TLRef i) a2)).(let H4 
+\def (arity_gen_lref g c0 i a2 H3) in (or_ind (ex2_2 C T (\lambda (d0: 
+C).(\lambda (u0: T).(getl i c0 (CHead d0 (Bind Abbr) u0)))) (\lambda (d0: 
+C).(\lambda (u0: T).(arity g d0 u0 a2)))) (ex2_2 C T (\lambda (d0: 
+C).(\lambda (u0: T).(getl i c0 (CHead d0 (Bind Abst) u0)))) (\lambda (d0: 
+C).(\lambda (u0: T).(arity g d0 u0 (asucc g a2))))) (leq g a a2) (\lambda 
+(H5: (ex2_2 C T (\lambda (d0: C).(\lambda (u0: T).(getl i c0 (CHead d0 (Bind 
+Abbr) u0)))) (\lambda (d0: C).(\lambda (u0: T).(arity g d0 u0 
+a2))))).(ex2_2_ind C T (\lambda (d0: C).(\lambda (u0: T).(getl i c0 (CHead d0 
+(Bind Abbr) u0)))) (\lambda (d0: C).(\lambda (u0: T).(arity g d0 u0 a2))) 
+(leq g a a2) (\lambda (x0: C).(\lambda (x1: T).(\lambda (H6: (getl i c0 
+(CHead x0 (Bind Abbr) x1))).(\lambda (H7: (arity g x0 x1 a2)).(let H8 \def 
+(eq_ind C (CHead d (Bind Abbr) u) (\lambda (c1: C).(getl i c0 c1)) H0 (CHead 
+x0 (Bind Abbr) x1) (getl_mono c0 (CHead d (Bind Abbr) u) i H0 (CHead x0 (Bind 
+Abbr) x1) H6)) in (let H9 \def (f_equal C C (\lambda (e: C).(match e with 
+[(CSort _) \Rightarrow d | (CHead c1 _ _) \Rightarrow c1])) (CHead d (Bind 
+Abbr) u) (CHead x0 (Bind Abbr) x1) (getl_mono c0 (CHead d (Bind Abbr) u) i H0 
+(CHead x0 (Bind Abbr) x1) H6)) in ((let H10 \def (f_equal C T (\lambda (e: 
+C).(match e with [(CSort _) \Rightarrow u | (CHead _ _ t0) \Rightarrow t0])) 
+(CHead d (Bind Abbr) u) (CHead x0 (Bind Abbr) x1) (getl_mono c0 (CHead d 
+(Bind Abbr) u) i H0 (CHead x0 (Bind Abbr) x1) H6)) in (\lambda (H11: (eq C d 
+x0)).(let H12 \def (eq_ind_r T x1 (\lambda (t0: T).(getl i c0 (CHead x0 (Bind 
+Abbr) t0))) H8 u H10) in (let H13 \def (eq_ind_r T x1 (\lambda (t0: T).(arity 
+g x0 t0 a2)) H7 u H10) in (let H14 \def (eq_ind_r C x0 (\lambda (c1: C).(getl 
+i c0 (CHead c1 (Bind Abbr) u))) H12 d H11) in (let H15 \def (eq_ind_r C x0 
+(\lambda (c1: C).(arity g c1 u a2)) H13 d H11) in (H2 a2 H15))))))) H9))))))) 
+H5)) (\lambda (H5: (ex2_2 C T (\lambda (d0: C).(\lambda (u0: T).(getl i c0 
+(CHead d0 (Bind Abst) u0)))) (\lambda (d0: C).(\lambda (u0: T).(arity g d0 u0 
+(asucc g a2)))))).(ex2_2_ind C T (\lambda (d0: C).(\lambda (u0: T).(getl i c0 
+(CHead d0 (Bind Abst) u0)))) (\lambda (d0: C).(\lambda (u0: T).(arity g d0 u0 
+(asucc g a2)))) (leq g a a2) (\lambda (x0: C).(\lambda (x1: T).(\lambda (H6: 
+(getl i c0 (CHead x0 (Bind Abst) x1))).(\lambda (_: (arity g x0 x1 (asucc g 
+a2))).(let H8 \def (eq_ind C (CHead d (Bind Abbr) u) (\lambda (c1: C).(getl i 
+c0 c1)) H0 (CHead x0 (Bind Abst) x1) (getl_mono c0 (CHead d (Bind Abbr) u) i 
+H0 (CHead x0 (Bind Abst) x1) H6)) in (let H9 \def (eq_ind C (CHead d (Bind 
+Abbr) u) (\lambda (ee: C).(match ee with [(CSort _) \Rightarrow False | 
+(CHead _ k _) \Rightarrow (match k with [(Bind b) \Rightarrow (match b with 
+[Abbr \Rightarrow True | Abst \Rightarrow False | Void \Rightarrow False]) | 
+(Flat _) \Rightarrow False])])) I (CHead x0 (Bind Abst) x1) (getl_mono c0 
+(CHead d (Bind Abbr) u) i H0 (CHead x0 (Bind Abst) x1) H6)) in (False_ind 
+(leq g a a2) H9))))))) H5)) H4)))))))))))) (\lambda (c0: C).(\lambda (d: 
+C).(\lambda (u: T).(\lambda (i: nat).(\lambda (H0: (getl i c0 (CHead d (Bind 
+Abst) u))).(\lambda (a: A).(\lambda (_: (arity g d u (asucc g a))).(\lambda 
+(H2: ((\forall (a2: A).((arity g d u a2) \to (leq g (asucc g a) 
+a2))))).(\lambda (a2: A).(\lambda (H3: (arity g c0 (TLRef i) a2)).(let H4 
+\def (arity_gen_lref g c0 i a2 H3) in (or_ind (ex2_2 C T (\lambda (d0: 
+C).(\lambda (u0: T).(getl i c0 (CHead d0 (Bind Abbr) u0)))) (\lambda (d0: 
+C).(\lambda (u0: T).(arity g d0 u0 a2)))) (ex2_2 C T (\lambda (d0: 
+C).(\lambda (u0: T).(getl i c0 (CHead d0 (Bind Abst) u0)))) (\lambda (d0: 
+C).(\lambda (u0: T).(arity g d0 u0 (asucc g a2))))) (leq g a a2) (\lambda 
+(H5: (ex2_2 C T (\lambda (d0: C).(\lambda (u0: T).(getl i c0 (CHead d0 (Bind 
+Abbr) u0)))) (\lambda (d0: C).(\lambda (u0: T).(arity g d0 u0 
+a2))))).(ex2_2_ind C T (\lambda (d0: C).(\lambda (u0: T).(getl i c0 (CHead d0 
+(Bind Abbr) u0)))) (\lambda (d0: C).(\lambda (u0: T).(arity g d0 u0 a2))) 
+(leq g a a2) (\lambda (x0: C).(\lambda (x1: T).(\lambda (H6: (getl i c0 
+(CHead x0 (Bind Abbr) x1))).(\lambda (_: (arity g x0 x1 a2)).(let H8 \def 
+(eq_ind C (CHead d (Bind Abst) u) (\lambda (c1: C).(getl i c0 c1)) H0 (CHead 
+x0 (Bind Abbr) x1) (getl_mono c0 (CHead d (Bind Abst) u) i H0 (CHead x0 (Bind 
+Abbr) x1) H6)) in (let H9 \def (eq_ind C (CHead d (Bind Abst) u) (\lambda 
+(ee: C).(match ee with [(CSort _) \Rightarrow False | (CHead _ k _) 
+\Rightarrow (match k with [(Bind b) \Rightarrow (match b with [Abbr 
+\Rightarrow False | Abst \Rightarrow True | Void \Rightarrow False]) | (Flat 
+_) \Rightarrow False])])) I (CHead x0 (Bind Abbr) x1) (getl_mono c0 (CHead d 
+(Bind Abst) u) i H0 (CHead x0 (Bind Abbr) x1) H6)) in (False_ind (leq g a a2) 
+H9))))))) H5)) (\lambda (H5: (ex2_2 C T (\lambda (d0: C).(\lambda (u0: 
+T).(getl i c0 (CHead d0 (Bind Abst) u0)))) (\lambda (d0: C).(\lambda (u0: 
+T).(arity g d0 u0 (asucc g a2)))))).(ex2_2_ind C T (\lambda (d0: C).(\lambda 
+(u0: T).(getl i c0 (CHead d0 (Bind Abst) u0)))) (\lambda (d0: C).(\lambda 
+(u0: T).(arity g d0 u0 (asucc g a2)))) (leq g a a2) (\lambda (x0: C).(\lambda 
+(x1: T).(\lambda (H6: (getl i c0 (CHead x0 (Bind Abst) x1))).(\lambda (H7: 
+(arity g x0 x1 (asucc g a2))).(let H8 \def (eq_ind C (CHead d (Bind Abst) u) 
+(\lambda (c1: C).(getl i c0 c1)) H0 (CHead x0 (Bind Abst) x1) (getl_mono c0 
+(CHead d (Bind Abst) u) i H0 (CHead x0 (Bind Abst) x1) H6)) in (let H9 \def 
+(f_equal C C (\lambda (e: C).(match e with [(CSort _) \Rightarrow d | (CHead 
+c1 _ _) \Rightarrow c1])) (CHead d (Bind Abst) u) (CHead x0 (Bind Abst) x1) 
+(getl_mono c0 (CHead d (Bind Abst) u) i H0 (CHead x0 (Bind Abst) x1) H6)) in 
+((let H10 \def (f_equal C T (\lambda (e: C).(match e with [(CSort _) 
+\Rightarrow u | (CHead _ _ t0) \Rightarrow t0])) (CHead d (Bind Abst) u) 
+(CHead x0 (Bind Abst) x1) (getl_mono c0 (CHead d (Bind Abst) u) i H0 (CHead 
+x0 (Bind Abst) x1) H6)) in (\lambda (H11: (eq C d x0)).(let H12 \def 
+(eq_ind_r T x1 (\lambda (t0: T).(getl i c0 (CHead x0 (Bind Abst) t0))) H8 u 
+H10) in (let H13 \def (eq_ind_r T x1 (\lambda (t0: T).(arity g x0 t0 (asucc g 
+a2))) H7 u H10) in (let H14 \def (eq_ind_r C x0 (\lambda (c1: C).(getl i c0 
+(CHead c1 (Bind Abst) u))) H12 d H11) in (let H15 \def (eq_ind_r C x0 
+(\lambda (c1: C).(arity g c1 u (asucc g a2))) H13 d H11) in (asucc_inj g a a2 
+(H2 (asucc g a2) H15)))))))) H9))))))) H5)) H4)))))))))))) (\lambda (b: 
+B).(\lambda (H0: (not (eq B b Abst))).(\lambda (c0: C).(\lambda (u: 
+T).(\lambda (a2: A).(\lambda (_: (arity g c0 u a2)).(\lambda (_: ((\forall 
+(a3: A).((arity g c0 u a3) \to (leq g a2 a3))))).(\lambda (t0: T).(\lambda 
+(a3: A).(\lambda (_: (arity g (CHead c0 (Bind b) u) t0 a3)).(\lambda (H4: 
+((\forall (a4: A).((arity g (CHead c0 (Bind b) u) t0 a4) \to (leq g a3 
+a4))))).(\lambda (a0: A).(\lambda (H5: (arity g c0 (THead (Bind b) u t0) 
+a0)).(let H6 \def (arity_gen_bind b H0 g c0 u t0 a0 H5) in (ex2_ind A 
+(\lambda (a4: A).(arity g c0 u a4)) (\lambda (_: A).(arity g (CHead c0 (Bind 
+b) u) t0 a0)) (leq g a3 a0) (\lambda (x: A).(\lambda (_: (arity g c0 u 
+x)).(\lambda (H8: (arity g (CHead c0 (Bind b) u) t0 a0)).(H4 a0 H8)))) 
+H6))))))))))))))) (\lambda (c0: C).(\lambda (u: T).(\lambda (a2: A).(\lambda 
+(_: (arity g c0 u (asucc g a2))).(\lambda (H1: ((\forall (a3: A).((arity g c0 
+u a3) \to (leq g (asucc g a2) a3))))).(\lambda (t0: T).(\lambda (a3: 
+A).(\lambda (_: (arity g (CHead c0 (Bind Abst) u) t0 a3)).(\lambda (H3: 
+((\forall (a4: A).((arity g (CHead c0 (Bind Abst) u) t0 a4) \to (leq g a3 
+a4))))).(\lambda (a0: A).(\lambda (H4: (arity g c0 (THead (Bind Abst) u t0) 
+a0)).(let H5 \def (arity_gen_abst g c0 u t0 a0 H4) in (ex3_2_ind A A (\lambda 
+(a4: A).(\lambda (a5: A).(eq A a0 (AHead a4 a5)))) (\lambda (a4: A).(\lambda 
+(_: A).(arity g c0 u (asucc g a4)))) (\lambda (_: A).(\lambda (a5: A).(arity 
+g (CHead c0 (Bind Abst) u) t0 a5))) (leq g (AHead a2 a3) a0) (\lambda (x0: 
+A).(\lambda (x1: A).(\lambda (H6: (eq A a0 (AHead x0 x1))).(\lambda (H7: 
+(arity g c0 u (asucc g x0))).(\lambda (H8: (arity g (CHead c0 (Bind Abst) u) 
+t0 x1)).(eq_ind_r A (AHead x0 x1) (\lambda (a: A).(leq g (AHead a2 a3) a)) 
+(leq_head g a2 x0 (asucc_inj g a2 x0 (H1 (asucc g x0) H7)) a3 x1 (H3 x1 H8)) 
+a0 H6)))))) H5))))))))))))) (\lambda (c0: C).(\lambda (u: T).(\lambda (a2: 
+A).(\lambda (_: (arity g c0 u a2)).(\lambda (_: ((\forall (a3: A).((arity g 
+c0 u a3) \to (leq g a2 a3))))).(\lambda (t0: T).(\lambda (a3: A).(\lambda (_: 
+(arity g c0 t0 (AHead a2 a3))).(\lambda (H3: ((\forall (a4: A).((arity g c0 
+t0 a4) \to (leq g (AHead a2 a3) a4))))).(\lambda (a0: A).(\lambda (H4: (arity 
+g c0 (THead (Flat Appl) u t0) a0)).(let H5 \def (arity_gen_appl g c0 u t0 a0 
+H4) in (ex2_ind A (\lambda (a4: A).(arity g c0 u a4)) (\lambda (a4: A).(arity 
+g c0 t0 (AHead a4 a0))) (leq g a3 a0) (\lambda (x: A).(\lambda (_: (arity g 
+c0 u x)).(\lambda (H7: (arity g c0 t0 (AHead x a0))).(ahead_inj_snd g a2 a3 x 
+a0 (H3 (AHead x a0) H7))))) H5))))))))))))) (\lambda (c0: C).(\lambda (u: 
+T).(\lambda (a: A).(\lambda (_: (arity g c0 u (asucc g a))).(\lambda (_: 
+((\forall (a2: A).((arity g c0 u a2) \to (leq g (asucc g a) a2))))).(\lambda 
+(t0: T).(\lambda (_: (arity g c0 t0 a)).(\lambda (H3: ((\forall (a2: 
+A).((arity g c0 t0 a2) \to (leq g a a2))))).(\lambda (a2: A).(\lambda (H4: 
+(arity g c0 (THead (Flat Cast) u t0) a2)).(let H5 \def (arity_gen_cast g c0 u 
+t0 a2 H4) in (land_ind (arity g c0 u (asucc g a2)) (arity g c0 t0 a2) (leq g 
+a a2) (\lambda (_: (arity g c0 u (asucc g a2))).(\lambda (H7: (arity g c0 t0 
+a2)).(H3 a2 H7))) H5)))))))))))) (\lambda (c0: C).(\lambda (t0: T).(\lambda 
+(a2: A).(\lambda (_: (arity g c0 t0 a2)).(\lambda (H1: ((\forall (a3: 
+A).((arity g c0 t0 a3) \to (leq g a2 a3))))).(\lambda (a3: A).(\lambda (H2: 
+(leq g a2 a3)).(\lambda (a0: A).(\lambda (H3: (arity g c0 t0 a0)).(leq_trans 
+g a3 a2 (leq_sym g a2 a3 H2) a0 (H1 a0 H3))))))))))) c t a1 H))))).
 
