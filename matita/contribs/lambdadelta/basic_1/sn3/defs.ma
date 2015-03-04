@@ -14,16 +14,13 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/pr3/defs.ma".
+include "basic_1/pr3/defs.ma".
 
 inductive sn3 (c: C): T \to Prop \def
 | sn3_sing: \forall (t1: T).(((\forall (t2: T).((((eq T t1 t2) \to (\forall 
 (P: Prop).P))) \to ((pr3 c t1 t2) \to (sn3 c t2))))) \to (sn3 c t1)).
 
-definition sns3:
- C \to (TList \to Prop)
-\def
- let rec sns3 (c: C) (ts: TList) on ts: Prop \def (match ts with [TNil 
-\Rightarrow True | (TCons t ts0) \Rightarrow (land (sn3 c t) (sns3 c ts0))]) 
-in sns3.
+let rec sns3 (c: C) (ts: TList) on ts: Prop \def match ts with [TNil 
+\Rightarrow True | (TCons t ts0) \Rightarrow (let TMP_1 \def (sn3 c t) in 
+(let TMP_2 \def (sns3 c ts0) in (land TMP_1 TMP_2)))].
 

@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/C/defs.ma".
+include "basic_1/C/defs.ma".
 
 definition ex2_c:
  C
@@ -24,5 +24,6 @@ definition ex2_c:
 definition ex2_t:
  T
 \def
- THead (Flat Appl) (TSort O) (TSort O).
+ let TMP_1 \def (Flat Appl) in (let TMP_2 \def (TSort O) in (let TMP_3 \def 
+(TSort O) in (THead TMP_1 TMP_2 TMP_3))).
 
