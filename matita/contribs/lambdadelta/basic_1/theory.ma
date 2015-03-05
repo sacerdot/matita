@@ -14,29 +14,27 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/subst0/tlt.ma".
+include "basic_1/subst0/tlt.ma".
 
-include "Basic-1/subst/props.ma".
+include "basic_1/subst/props.ma".
 
-include "Basic-1/sty1/cnt.ma".
+include "basic_1/sty1/cnt.ma".
 
-include "Basic-1/ex0/props.ma".
+include "basic_1/ex0/props.ma".
 
-include "Basic-1/wcpr0/fwd.ma".
+include "basic_1/pr3/wcpr0.ma".
 
-include "Basic-1/pr3/wcpr0.ma".
+include "basic_1/ex2/props.ma".
 
-include "Basic-1/ex2/props.ma".
+include "basic_1/ex1/props.ma".
 
-include "Basic-1/ex1/props.ma".
+include "basic_1/ty3/sty0.ma".
 
-include "Basic-1/ty3/sty0.ma".
+include "basic_1/csubt/csuba.ma".
 
-include "Basic-1/csubt/csuba.ma".
+include "basic_1/ty3/fwd_nf2.ma".
 
-include "Basic-1/ty3/fwd_nf2.ma".
+include "basic_1/ty3/nf2.ma".
 
-include "Basic-1/ty3/nf2.ma".
-
-include "Basic-1/wf3/props.ma".
+include "basic_1/wf3/props.ma".
 

@@ -1,3 +1,12 @@
+# new ########################################################################
+
+s_le_gen s_lt_gen
+r_arith2 r_arith3 r_arith4 r_arith5 r_arith6 r_arith7 
+tle tle_r
+cle_r cle_head cle_trans_head cle_flt_trans
+lift_tle lift_free_sym
+subst0_gen_lift_rev_ge
+
 # waiting ####################################################################
 
 aplus/props aplus_reg_r
@@ -240,3 +249,4 @@ wf3/ty3 wf3_pc3_conf
 wf3/ty3 wf3_ty3_conf
 
 # check ######################################################################
+

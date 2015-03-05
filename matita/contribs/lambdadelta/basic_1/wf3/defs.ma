@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/ty3/defs.ma".
+include "basic_1/ty3/defs.ma".
 
 inductive wf3 (g: G): C \to (C \to Prop) \def
 | wf3_sort: \forall (m: nat).(wf3 g (CSort m) (CSort m))

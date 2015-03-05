@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/theory.ma".
+include "basic_1/theory.ma".
 
 axiom pc3_gen_appls_sort_abst:
  \forall (c: C).(\forall (vs: TList).(\forall (w: T).(\forall (u: T).(\forall 
