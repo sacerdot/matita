@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/sc3/defs.ma".
+include "basic_1/sc3/defs.ma".
 
 inductive csubc (g: G): C \to (C \to Prop) \def
 | csubc_sort: \forall (n: nat).(csubc g (CSort n) (CSort n))
