@@ -14,7 +14,7 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/ty3/pr3.ma".
+include "basic_1/ty3/pr3.ma".
 
 theorem ty3_cred_pr2:
  \forall (g: G).(\forall (c: C).(\forall (v1: T).(\forall (v2: T).((pr2 c v1 
@@ -40,9 +40,6 @@ c0) t1 t2 H1 (Bind b)) t0 (pr0_refl t0)) d u (S i) (getl_clear_bind b (CHead
 c0 (Bind b) t2) c0 t2 (clear_bind b c0 t2) (CHead d (Bind Abbr) u) i H0) 
 (CHead c0 (Bind b) t) (csubst0_snd_bind b i u t2 t H2 c0)))))))))))))))) c v1 
 v2 H))))).
-(* COMMENTS
-Initial nodes: 383
-END *)
 
 theorem ty3_cred_pr3:
  \forall (g: G).(\forall (c: C).(\forall (v1: T).(\forall (v2: T).((pr3 c v1 
@@ -60,9 +57,6 @@ B).(\forall (t4: T).(\forall (t5: T).((ty3 g (CHead c (Bind b) t2) t4 t5) \to
 (ty3 g (CHead c (Bind b) t3) t4 t5))))))).(\lambda (b: B).(\lambda (t0: 
 T).(\lambda (t4: T).(\lambda (H3: (ty3 g (CHead c (Bind b) t1) t0 t4)).(H2 b 
 t0 t4 (ty3_cred_pr2 g c t1 t2 H0 b t0 t4 H3)))))))))))) v1 v2 H))))).
-(* COMMENTS
-Initial nodes: 215
-END *)
 
 theorem ty3_gen_lift:
  \forall (g: G).(\forall (c: C).(\forall (t1: T).(\forall (x: T).(\forall (h: 
@@ -175,9 +169,9 @@ T).(ty3 g e t0 t2)))) (ex_intro2 T (\lambda (t2: T).(pc3 c0 (lift h x1 t2)
 x1 h) n (le_plus_r x1 h) H8))) (plus h (S (minus n h))) (plus_n_Sm h (minus n 
 h))) (lift h x1 (lift (S (minus n h)) O t)) (lift_free t (S (minus n h)) h O 
 x1 (le_trans x1 (S (minus n h)) (plus O (S (minus n h))) (le_S_minus x1 h n 
-H8) (le_n (plus O (S (minus n h))))) (le_O_n x1))) (ty3_abbr g (minus n h) e 
-d0 u (getl_drop_conf_ge n (CHead d0 (Bind Abbr) u) c0 H1 e h x1 H5 H8) t H2)) 
-x0 H9))) H7)) H6)))))))))))))))) (\lambda (n: nat).(\lambda (c0: C).(\lambda 
+H8) (le_plus_r O (S (minus n h)))) (le_O_n x1))) (ty3_abbr g (minus n h) e d0 
+u (getl_drop_conf_ge n (CHead d0 (Bind Abbr) u) c0 H1 e h x1 H5 H8) t H2)) x0 
+H9))) H7)) H6)))))))))))))))) (\lambda (n: nat).(\lambda (c0: C).(\lambda 
 (d0: C).(\lambda (u: T).(\lambda (H1: (getl n c0 (CHead d0 (Bind Abst) 
 u))).(\lambda (t: T).(\lambda (H2: (ty3 g d0 u t)).(\lambda (H3: ((\forall 
 (x0: T).(\forall (x1: nat).((eq T u (lift h x1 x0)) \to (\forall (e: 
@@ -245,7 +239,7 @@ O u) (lift (S n) O u))) (pc3_refl c0 (lift (S n) O u)) (plus h (minus n h))
 (le_plus_minus h n (le_trans h (plus x1 h) n (le_plus_r x1 h) H8))) (plus h 
 (S (minus n h))) (plus_n_Sm h (minus n h))) (lift h x1 (lift (S (minus n h)) 
 O u)) (lift_free u (S (minus n h)) h O x1 (le_trans x1 (S (minus n h)) (plus 
-O (S (minus n h))) (le_S_minus x1 h n H8) (le_n (plus O (S (minus n h))))) 
+O (S (minus n h))) (le_S_minus x1 h n H8) (le_plus_r O (S (minus n h)))) 
 (le_O_n x1))) (ty3_abst g (minus n h) e d0 u (getl_drop_conf_ge n (CHead d0 
 (Bind Abst) u) c0 H1 e h x1 H5 H8) t H2)) x0 H9))) H7)) H6)))))))))))))))) 
 (\lambda (c0: C).(\lambda (u: T).(\lambda (t: T).(\lambda (H1: (ty3 g c0 u 
@@ -448,9 +442,6 @@ Cast) x5 x2)) (lift_flat Cast x5 x2 h x1)) (ty3_cast g e x3 x2 (ty3_conv g e
 x2 x5 H21 x3 x4 H18 (pc3_gen_lift c0 x4 x2 h x1 H17 e H6)) x5 H21))))) 
 H19))))) H16)))) t3 H8))))) x0 H7)))))) (lift_gen_flat Cast t3 t2 x0 h x1 
 H5))))))))))))))) c y x H0))))) H))))))).
-(* COMMENTS
-Initial nodes: 9781
-END *)
 
 theorem ty3_tred:
  \forall (g: G).(\forall (c: C).(\forall (u: T).(\forall (t1: T).((ty3 g c u 
@@ -461,9 +452,6 @@ t1) \to (\forall (t2: T).((pr3 c t1 t2) \to (ty3 g c u t2)))))))
 (\lambda (t: T).(ty3 g c t1 t)) (ty3 g c u t2) (\lambda (x: T).(\lambda (H1: 
 (ty3 g c t1 x)).(let H_y \def (ty3_sred_pr3 c t1 t2 H0 g x H1) in (ty3_conv g 
 c t2 x H_y u t1 H (pc3_pr3_r c t1 t2 H0))))) (ty3_correct g c u t1 H)))))))).
-(* COMMENTS
-Initial nodes: 121
-END *)
 
 theorem ty3_sconv_pc3:
  \forall (g: G).(\forall (c: C).(\forall (u1: T).(\forall (t1: T).((ty3 g c 
@@ -477,9 +465,6 @@ u2 t2)).(\lambda (H1: (pc3 c u1 u2)).(let H2 \def H1 in (ex2_ind T (\lambda
 T).(\lambda (H3: (pr3 c u1 x)).(\lambda (H4: (pr3 c u2 x)).(let H_y \def 
 (ty3_sred_pr3 c u2 x H4 g t2 H0) in (let H_y0 \def (ty3_sred_pr3 c u1 x H3 g 
 t1 H) in (ty3_unique g c x t1 H_y0 t2 H_y)))))) H2)))))))))).
-(* COMMENTS
-Initial nodes: 141
-END *)
 
 theorem ty3_sred_back:
  \forall (g: G).(\forall (c: C).(\forall (t1: T).(\forall (t0: T).((ty3 g c 
@@ -492,9 +477,6 @@ t) \to (ty3 g c t1 t)))))))))
 t3)) (ty3 g c t1 t) (\lambda (x: T).(\lambda (H2: (ty3 g c t x)).(ty3_conv g 
 c t x H2 t1 t0 H (ty3_unique g c t2 t0 (ty3_sred_pr3 c t1 t2 H0 g t0 H) t 
 H1)))) (ty3_correct g c t2 t H1)))))))))).
-(* COMMENTS
-Initial nodes: 137
-END *)
 
 theorem ty3_sconv:
  \forall (g: G).(\forall (c: C).(\forall (u1: T).(\forall (t1: T).((ty3 g c 
@@ -507,7 +489,4 @@ u2 t2)).(\lambda (H1: (pc3 c u1 u2)).(let H2 \def H1 in (ex2_ind T (\lambda
 (t: T).(pr3 c u1 t)) (\lambda (t: T).(pr3 c u2 t)) (ty3 g c u1 t2) (\lambda 
 (x: T).(\lambda (H3: (pr3 c u1 x)).(\lambda (H4: (pr3 c u2 x)).(ty3_sred_back 
 g c u1 t1 H x H3 t2 (ty3_sred_pr3 c u2 x H4 g t2 H0))))) H2)))))))))).
-(* COMMENTS
-Initial nodes: 129
-END *)
 

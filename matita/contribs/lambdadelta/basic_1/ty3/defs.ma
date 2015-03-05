@@ -14,9 +14,9 @@
 
 (* This file was automatically generated: do not edit *********************)
 
-include "Basic-1/G/defs.ma".
+include "basic_1/G/defs.ma".
 
-include "Basic-1/pc3/defs.ma".
+include "basic_1/pc3/defs.ma".
 
 inductive ty3 (g: G): C \to (T \to (T \to Prop)) \def
 | ty3_conv: \forall (c: C).(\forall (t2: T).(\forall (t: T).((ty3 g c t2 t) 
