@@ -23,6 +23,5 @@ definition nf2:
 t2)))).
 
 let rec nfs2 (c: C) (ts: TList) on ts: Prop \def match ts with [TNil 
-\Rightarrow True | (TCons t ts0) \Rightarrow (let TMP_1 \def (nf2 c t) in 
-(let TMP_2 \def (nfs2 c ts0) in (land TMP_1 TMP_2)))].
+\Rightarrow True | (TCons t ts0) \Rightarrow (land (nf2 c t) (nfs2 c ts0))].
 

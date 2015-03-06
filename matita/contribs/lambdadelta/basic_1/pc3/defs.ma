@@ -19,9 +19,8 @@ include "basic_1/pr3/defs.ma".
 definition pc3:
  C \to (T \to (T \to Prop))
 \def
- \lambda (c: C).(\lambda (t1: T).(\lambda (t2: T).(let TMP_1 \def (\lambda 
-(t: T).(pr3 c t1 t)) in (let TMP_2 \def (\lambda (t: T).(pr3 c t2 t)) in (ex2 
-T TMP_1 TMP_2))))).
+ \lambda (c: C).(\lambda (t1: T).(\lambda (t2: T).(ex2 T (\lambda (t: T).(pr3 
+c t1 t)) (\lambda (t: T).(pr3 c t2 t))))).
 
 inductive pc3_left (c: C): T \to (T \to Prop) \def
 | pc3_left_r: \forall (t: T).(pc3_left c t t)

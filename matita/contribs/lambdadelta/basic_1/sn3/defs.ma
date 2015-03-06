@@ -21,6 +21,5 @@ inductive sn3 (c: C): T \to Prop \def
 (P: Prop).P))) \to ((pr3 c t1 t2) \to (sn3 c t2))))) \to (sn3 c t1)).
 
 let rec sns3 (c: C) (ts: TList) on ts: Prop \def match ts with [TNil 
-\Rightarrow True | (TCons t ts0) \Rightarrow (let TMP_1 \def (sn3 c t) in 
-(let TMP_2 \def (sns3 c ts0) in (land TMP_1 TMP_2)))].
+\Rightarrow True | (TCons t ts0) \Rightarrow (land (sn3 c t) (sns3 c ts0))].
 

@@ -24,6 +24,5 @@ definition ex2_c:
 definition ex2_t:
  T
 \def
- let TMP_1 \def (Flat Appl) in (let TMP_2 \def (TSort O) in (let TMP_3 \def 
-(TSort O) in (THead TMP_1 TMP_2 TMP_3))).
+ THead (Flat Appl) (TSort O) (TSort O).
 

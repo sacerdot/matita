@@ -83,13 +83,12 @@ x P))).
 
 let rec le_ind (n: nat) (P: (nat \to Prop)) (f: P n) (f0: (\forall (m: 
 nat).((le n m) \to ((P m) \to (P (S m)))))) (n0: nat) (l: le n n0) on l: P n0 
-\def match l with [le_n \Rightarrow f | (le_S m l0) \Rightarrow (let TMP_1 
-\def ((le_ind n P f f0) m l0) in (f0 m l0 TMP_1))].
+\def match l with [le_n \Rightarrow f | (le_S m l0) \Rightarrow (f0 m l0 
+((le_ind n P f f0) m l0))].
 
 let rec Acc_ind (A: Type[0]) (R: (A \to (A \to Prop))) (P: (A \to Prop)) (f: 
 (\forall (x: A).(((\forall (y: A).((R y x) \to (Acc A R y)))) \to (((\forall 
 (y: A).((R y x) \to (P y)))) \to (P x))))) (a: A) (a0: Acc A R a) on a0: P a 
-\def match a0 with [(Acc_intro x a1) \Rightarrow (let TMP_2 \def (\lambda (y: 
-A).(\lambda (r: (R y x)).(let TMP_1 \def (a1 y r) in ((Acc_ind A R P f) y 
-TMP_1)))) in (f x a1 TMP_2))].
+\def match a0 with [(Acc_intro x a1) \Rightarrow (f x a1 (\lambda (y: 
+A).(\lambda (r: (R y x)).((Acc_ind A R P f) y (a1 y r)))))].
 

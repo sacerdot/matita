@@ -23,7 +23,6 @@ A).(\forall (a2: A).((leqz a1 a2) \to ((P a1 a2) \to (\forall (a3:
 A).(\forall (a4: A).((leqz a3 a4) \to ((P a3 a4) \to (P (AHead a1 a3) (AHead 
 a2 a4))))))))))) (a: A) (a0: A) (l: leqz a a0) on l: P a a0 \def match l with 
 [(leqz_sort h1 h2 n1 n2 e) \Rightarrow (f h1 h2 n1 n2 e) | (leqz_head a1 a2 
-l0 a3 a4 l1) \Rightarrow (let TMP_1 \def ((leqz_ind P f f0) a1 a2 l0) in (let 
-TMP_2 \def ((leqz_ind P f f0) a3 a4 l1) in (f0 a1 a2 l0 TMP_1 a3 a4 l1 
-TMP_2)))].
+l0 a3 a4 l1) \Rightarrow (f0 a1 a2 l0 ((leqz_ind P f f0) a1 a2 l0) a3 a4 l1 
+((leqz_ind P f f0) a3 a4 l1))].
 

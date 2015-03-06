@@ -19,13 +19,11 @@ include "basic_1/C/defs.ma".
 definition fweight:
  C \to (T \to nat)
 \def
- \lambda (c: C).(\lambda (t: T).(let TMP_1 \def (cweight c) in (let TMP_2 
-\def (tweight t) in (plus TMP_1 TMP_2)))).
+ \lambda (c: C).(\lambda (t: T).(plus (cweight c) (tweight t))).
 
 definition flt:
  C \to (T \to (C \to (T \to Prop)))
 \def
- \lambda (c1: C).(\lambda (t1: T).(\lambda (c2: C).(\lambda (t2: T).(let 
-TMP_1 \def (fweight c1 t1) in (let TMP_2 \def (fweight c2 t2) in (lt TMP_1 
-TMP_2)))))).
+ \lambda (c1: C).(\lambda (t1: T).(\lambda (c2: C).(\lambda (t2: T).(lt 
+(fweight c1 t1) (fweight c2 t2))))).
 

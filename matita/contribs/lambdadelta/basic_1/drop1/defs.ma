@@ -26,8 +26,7 @@ c2 c3) \to (drop1 (PCons h d hds) c1 c3)))))))).
 
 let rec ptrans (hds: PList) on hds: nat \to PList \def \lambda (i: 
 nat).(match hds with [PNil \Rightarrow PNil | (PCons h d hds0) \Rightarrow 
-(let j \def (trans hds0 i) in (let q \def (ptrans hds0 i) in (let TMP_1 \def 
-(blt j d) in (match TMP_1 with [true \Rightarrow (let TMP_2 \def (S j) in 
-(let TMP_3 \def (minus d TMP_2) in (PCons h TMP_3 q))) | false \Rightarrow 
-q]))))]).
+(let j \def (trans hds0 i) in (let q \def (ptrans hds0 i) in (match (blt j d) 
+with [true \Rightarrow (PCons h (minus d (S j)) q) | false \Rightarrow 
+q])))]).
 

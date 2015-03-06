@@ -35,13 +35,11 @@ inductive T: Type[0] \def
 | THead: K \to (T \to (T \to T)).
 
 let rec tweight (t: T) on t: nat \def match t with [(TSort _) \Rightarrow (S 
-O) | (TLRef _) \Rightarrow (S O) | (THead _ u t0) \Rightarrow (let TMP_1 \def 
-(tweight u) in (let TMP_2 \def (tweight t0) in (let TMP_3 \def (plus TMP_1 
-TMP_2) in (S TMP_3))))].
+O) | (TLRef _) \Rightarrow (S O) | (THead _ u t0) \Rightarrow (S (plus 
+(tweight u) (tweight t0)))].
 
 definition tle:
  T \to (T \to Prop)
 \def
- \lambda (t1: T).(\lambda (t2: T).(let TMP_1 \def (tweight t1) in (let TMP_2 
-\def (tweight t2) in (le TMP_1 TMP_2)))).
+ \lambda (t1: T).(\lambda (t2: T).(le (tweight t1) (tweight t2))).
 

@@ -21,22 +21,19 @@ inductive C: Type[0] \def
 | CHead: C \to (K \to (T \to C)).
 
 let rec cweight (c: C) on c: nat \def match c with [(CSort _) \Rightarrow O | 
-(CHead c0 _ t) \Rightarrow (let TMP_1 \def (cweight c0) in (let TMP_2 \def 
-(tweight t) in (plus TMP_1 TMP_2)))].
+(CHead c0 _ t) \Rightarrow (plus (cweight c0) (tweight t))].
 
 definition clt:
  C \to (C \to Prop)
 \def
- \lambda (c1: C).(\lambda (c2: C).(let TMP_1 \def (cweight c1) in (let TMP_2 
-\def (cweight c2) in (lt TMP_1 TMP_2)))).
+ \lambda (c1: C).(\lambda (c2: C).(lt (cweight c1) (cweight c2))).
 
 definition cle:
  C \to (C \to Prop)
 \def
- \lambda (c1: C).(\lambda (c2: C).(let TMP_1 \def (cweight c1) in (let TMP_2 
-\def (cweight c2) in (le TMP_1 TMP_2)))).
+ \lambda (c1: C).(\lambda (c2: C).(le (cweight c1) (cweight c2))).
 
 let rec CTail (k: K) (t: T) (c: C) on c: C \def match c with [(CSort n) 
-\Rightarrow (let TMP_2 \def (CSort n) in (CHead TMP_2 k t)) | (CHead d h u) 
-\Rightarrow (let TMP_1 \def (CTail k t d) in (CHead TMP_1 h u))].
+\Rightarrow (CHead (CSort n) k t) | (CHead d h u) \Rightarrow (CHead (CTail k 
+t d) h u)].
 

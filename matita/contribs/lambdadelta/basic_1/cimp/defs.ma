@@ -20,7 +20,6 @@ definition cimp:
  C \to (C \to Prop)
 \def
  \lambda (c1: C).(\lambda (c2: C).(\forall (b: B).(\forall (d1: C).(\forall 
-(w: T).(\forall (h: nat).((getl h c1 (CHead d1 (Bind b) w)) \to (let TMP_3 
-\def (\lambda (d2: C).(let TMP_1 \def (Bind b) in (let TMP_2 \def (CHead d2 
-TMP_1 w) in (getl h c2 TMP_2)))) in (ex C TMP_3)))))))).
+(w: T).(\forall (h: nat).((getl h c1 (CHead d1 (Bind b) w)) \to (ex C 
+(\lambda (d2: C).(getl h c2 (CHead d2 (Bind b) w)))))))))).
 

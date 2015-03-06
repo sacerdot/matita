@@ -17,5 +17,5 @@
 include "basic_1/asucc/defs.ma".
 
 let rec aplus (g: G) (a: A) (n: nat) on n: A \def match n with [O \Rightarrow 
-a | (S n0) \Rightarrow (let TMP_1 \def (aplus g a n0) in (asucc g TMP_1))].
+a | (S n0) \Rightarrow (asucc g (aplus g a n0))].
 
