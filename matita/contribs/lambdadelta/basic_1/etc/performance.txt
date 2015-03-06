@@ -1,0 +1,9 @@
+full validation of lambdadelta_1 on "monica"
+
+date: ven  6 mar 2015, 20.31.46, CET
+
+command: time ../../matitac.opt basic_1
+
+real    4m39.904s
+user    3m58.580s
+sys     0m11.473s
