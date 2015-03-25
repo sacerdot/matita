@@ -12,16 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/ynat/ynat_lt.ma".
 include "basic_2/notation/relations/rat_3.ma".
 include "basic_2/grammar/term_vector.ma".
 
 (* MULTIPLE RELOCATION WITH PAIRS *******************************************)
 
-inductive at: list2 nat nat → relation nat ≝
+inductive at: list2 ynat nat → relation nat ≝
 | at_nil: ∀i. at (◊) i i
-| at_lt : ∀cs,l,m,i1,i2. i1 < l →
+| at_lt : ∀cs,l,m,i1,i2. yinj i1 < l →
           at cs i1 i2 → at ({l, m} @ cs) i1 i2
-| at_ge : ∀cs,l,m,i1,i2. l ≤ i1 →
+| at_ge : ∀cs,l,m,i1,i2. l ≤ yinj i1 →
           at cs (i1 + m) i2 → at ({l, m} @ cs) i1 i2
 .
 
@@ -61,14 +62,12 @@ lemma at_inv_cons_lt: ∀cs,l,m,i1,i2. @⦃i1, {l, m} @ cs⦄ ≡ i2 →
                       i1 < l → @⦃i1, cs⦄ ≡ i2.
 #cs #l #m #i1 #m2 #H
 elim (at_inv_cons … H) -H * // #Hli1 #_ #Hi1l
-lapply (le_to_lt_to_lt … Hli1 Hi1l) -Hli1 -Hi1l #Hl
-elim (lt_refl_false … Hl)
+elim (ylt_yle_false … Hi1l Hli1)
 qed-.
 
 lemma at_inv_cons_ge: ∀cs,l,m,i1,i2. @⦃i1, {l, m} @ cs⦄ ≡ i2 →
                       l ≤ i1 → @⦃i1 + m, cs⦄ ≡ i2.
 #cs #l #m #i1 #m2 #H
 elim (at_inv_cons … H) -H * // #Hi1l #_ #Hli1
-lapply (le_to_lt_to_lt … Hli1 Hi1l) -Hli1 -Hi1l #Hl
-elim (lt_refl_false … Hl)
+elim (ylt_yle_false … Hi1l Hli1)
 qed-.

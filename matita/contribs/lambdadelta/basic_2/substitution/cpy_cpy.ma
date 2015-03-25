@@ -85,7 +85,8 @@ theorem cpy_trans_ge: ∀G,L,T1,T0,l,m. ⦃G, L⦄ ⊢ T1 ▶[l, m] T0 →
   elim (cpy_inv_atom1 … H) -H
   [ #H destruct //
   | * #J #K #V #i #Hl2i #Hilm2 #HLK #HVT2 #H destruct
-    lapply (ylt_yle_trans … (l+m) … Hilm2) /2 width=5 by cpy_subst, monotonic_yle_plus_dx/
+    lapply (ylt_yle_trans … (l+m) … Hilm2)
+    /2 width=5 by cpy_subst, monotonic_yle_plus_sn/
   ]
 | #I #G #L #K #V #V2 #i #l #m #Hli #Hilm #HLK #HVW #T2 #HVT2 #Hm
   lapply (cpy_weak … HVT2 0 (i+1) ? ?) -HVT2 /3 width=1 by yle_plus_dx2_trans, yle_succ/

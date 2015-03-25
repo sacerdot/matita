@@ -18,7 +18,7 @@ include "basic_2/multiple/mr2_plus.ma".
 
 (* GENERIC TERM RELOCATION **************************************************)
 
-inductive lifts: list2 nat nat → relation term ≝
+inductive lifts: list2 ynat nat → relation term ≝
 | lifts_nil : ∀T. lifts (◊) T T
 | lifts_cons: ∀T1,T,T2,cs,l,m.
               ⬆[l,m] T1 ≡ T → lifts cs T T2 → lifts ({l, m} @ cs) T1 T2

@@ -33,14 +33,14 @@ theorem llpx_sn_llpx_sn_alt: ∀R,T,L1,L2,l. llpx_sn R l T L1 L2 → llpx_sn_alt
 #HL12 #IHU @conj //
 #I1 #I2 #K1 #K2 #V1 #V2 #i #Hli #H #HLK1 #HLK2 elim (frees_inv … H) -H
 [ -x #HnU elim (IHU … HnU HLK1 HLK2) -IHU -HnU -HLK1 -HLK2 /2 width=1 by conj/
-| * #J1 #K10 #W10 #j #Hlj #Hji #HnU #HLK10 #HnW10 destruct
+| * #J1 #K10 #W10 #j #Hlj #Hji #HnU #HLK10 <yminus_SO2 >yminus_inj >yminus_inj #HnW10 destruct
   lapply (drop_fwd_drop2 … HLK10) #H
-  lapply (drop_conf_ge … H … HLK1 ?) -H /2 width=1 by lt_to_le/ <minus_plus #HK10
+  lapply (drop_conf_ge … H … HLK1 ?) -H /2 width=1 by ylt_fwd_le_succ1/ <minus_plus #HK10
   elim (drop_O1_lt (Ⓕ) L2 j) [2: <HL12 /2 width=5 by drop_fwd_length_lt2/ ] #J2 #K20 #W20 #HLK20
   lapply (drop_fwd_drop2 … HLK20) #H
-  lapply (drop_conf_ge … H … HLK2 ?) -H /2 width=1 by lt_to_le/ <minus_plus #HK20
-  elim (IHx K10 W10 … K20 0) -IHx -HL12 /3 width=6 by drop_fwd_rfw/
-  elim (IHU … HnU HLK10 HLK20) -IHU -HnU -HLK10 -HLK20 //
+  lapply (drop_conf_ge … H … HLK2 ?) -H /2 width=1 by ylt_fwd_le_succ1/ <minus_plus #HK20
+  elim (IHx K10 W10 … K20 0 ?) -IHx -HL12 /3 width=6 by drop_fwd_rfw/
+  elim (IHU … HnU HLK10 HLK20) -IHU -HnU -HLK10 -HLK20 /2 width=6 by/
 ]
 qed.
 
@@ -55,8 +55,9 @@ lapply (drop_fwd_drop2 … HLK2) -HLK2 #H2
 @conj [ @(drop_fwd_length_eq1 … H1 H2) // ] -HL12
 #Z1 #Z2 #Y1 #Y2 #X1 #X2 #j #_
 >(minus_plus_m_m j (i+1)) in ⊢ (%→?); >commutative_plus <minus_plus
+<yminus_inj <yminus_inj >yminus_SO2 
 #HnV1 #HKY1 #HKY2 (**) (* full auto too slow *)
 lapply (drop_trans_ge … H1 … HKY1 ?) -H1 -HKY1 // #HLY1
 lapply (drop_trans_ge … H2 … HKY2 ?) -H2 -HKY2 // #HLY2
-/4 width=14 by frees_be, yle_plus_dx2_trans, yle_succ_dx/
+/4 width=9 by frees_be, yle_plus_dx2_trans, yle_succ_dx, ylt_inj/
 qed-.

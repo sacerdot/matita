@@ -28,7 +28,7 @@ theorem drop_mono: ∀L,L1,s1,l,m. ⬇[s1, l, m] L ≡ L1 →
 | #I #L #K #V #m #_ #IHLK #L2 #s2 #H
   lapply (drop_inv_drop1 … H) -H /2 width=2 by/
 | #I #L #K1 #T #V1 #l #m #_ #HVT1 #IHLK1 #X #s2 #H
-  elim (drop_inv_skip1 … H) -H // <minus_plus_m_m #K2 #V2 #HLK2 #HVT2 #H destruct
+  elim (drop_inv_skip1 … H) -H // >ypred_succ #K2 #V2 #HLK2 #HVT2 #H destruct
   >(lift_inj … HVT1 … HVT2) -HVT1 -HVT2
   >(IHLK1 … HLK2) -IHLK1 -HLK2 //
 ]
@@ -42,21 +42,25 @@ theorem drop_conf_ge: ∀L,L1,s1,l1,m1. ⬇[s1, l1, m1] L ≡ L1 →
 [ #l #m #_ #L2 #s2 #m2 #H #_ elim (drop_inv_atom1 … H) -H
   #H #Hm destruct
   @drop_atom #H >Hm // (**) (* explicit constructor *)
-| #I #L #K #V #m #_ #IHLK #L2 #s2 #m2 #H #Hm2
-  lapply (drop_inv_drop1_lt … H ?) -H /2 width=2 by ltn_to_ltO/ #HL2
-  <minus_plus >minus_minus_comm /3 width=1 by monotonic_pred/
+| #I #L #K #V #m #_ #IHLK #L2 #s2 #m2 #H >yplus_O1 <yplus_inj #Hm2
+  lapply (drop_inv_drop1_lt … H ?) -H /3 width=2 by yle_inv_inj, ltn_to_ltO/ #HL2
+  lapply (yle_plus1_to_minus_inj2 … Hm2) -Hm2 #Hm2
+  <minus_plus >minus_minus_comm @IHLK //
 | #I #L #K #V1 #V2 #l #m #_ #_ #IHLK #L2 #s2 #m2 #H #Hlmm2
-  lapply (transitive_le 1 … Hlmm2) // #Hm2
-  lapply (drop_inv_drop1_lt … H ?) -H // -Hm2 #HL2
-  lapply (transitive_le (1+m) … Hlmm2) // #Hmm2
-  @drop_drop_lt >minus_minus_comm /3 width=1 by lt_minus_to_plus_r, monotonic_le_minus_r, monotonic_pred/ (**) (* explicit constructor *)
+  lapply (yle_plus1_to_minus_inj2 … Hlmm2) #Hlm2m
+  lapply (ylt_yle_trans 0 … Hlm2m ?) // -Hlm2m #Hm2m
+  >yplus_succ1 in Hlmm2; #Hlmm2
+  elim (yle_inv_succ1 … Hlmm2) -Hlmm2 #Hlmm2 #Hm2
+  lapply (drop_inv_drop1_lt … H ?) -H /2 width=1 by ylt_inv_inj/ -Hm2 #HL2
+  @drop_drop_lt /2 width=1 by ylt_inv_inj/ >minus_minus_comm
+  <yminus_SO2 in Hlmm2; /2 width=1 by/
 ]
 qed.
-
+(*
 (* Note: apparently this was missing in basic_1 *)
-theorem drop_conf_be: ∀L0,L1,s1,l1,m1. ⬇[s1, l1, m1] L0 ≡ L1 →
+theorem drop_conf_be: ∀L0,L1,s1,l1,m1. ⬇[s1, yinj l1, m1] L0 ≡ L1 →
                       ∀L2,m2. ⬇[m2] L0 ≡ L2 → l1 ≤ m2 → m2 ≤ l1 + m1 →
-                      ∃∃L. ⬇[s1, 0, l1 + m1 - m2] L2 ≡ L & ⬇[l1] L1 ≡ L.
+                      ∃∃L. ⬇[s1, yinj 0, l1 + m1 - m2] L2 ≡ L & ⬇[l1] L1 ≡ L.
 #L0 #L1 #s1 #l1 #m1 #H elim H -L0 -L1 -l1 -m1
 [ #l1 #m1 #Hm1 #L2 #m2 #H #Hl1 #_ elim (drop_inv_atom1 … H) -H #H #Hm2 destruct
   >(Hm2 ?) in Hl1; // -Hm2 #Hl1 <(le_n_O_to_eq … Hl1) -l1
@@ -77,7 +81,7 @@ theorem drop_conf_be: ∀L0,L1,s1,l1,m1. ⬇[s1, l1, m1] L0 ≡ L1 →
   elim (IHLK0 … HL02) -L0 /3 width=3 by drop_drop, monotonic_pred, ex2_intro/
 ]
 qed-.
-
+*)
 (* Note: apparently this was missing in basic_1 *)
 theorem drop_conf_le: ∀L0,L1,s1,l1,m1. ⬇[s1, l1, m1] L0 ≡ L1 →
                       ∀L2,s2,m2. ⬇[s2, 0, m2] L0 ≡ L2 → m2 ≤ l1 →
@@ -86,17 +90,19 @@ theorem drop_conf_le: ∀L0,L1,s1,l1,m1. ⬇[s1, l1, m1] L0 ≡ L1 →
 [ #l1 #m1 #Hm1 #L2 #s2 #m2 #H elim (drop_inv_atom1 … H) -H
   #H #Hm2 #_ destruct /4 width=3 by drop_atom, ex2_intro/
 | #I #K0 #V0 #L2 #s2 #m2 #H1 #H2
-  lapply (le_n_O_to_eq … H2) -H2 #H destruct
+  lapply (yle_inv_O2  … H2) -H2 #H destruct
   lapply (drop_inv_pair1 … H1) -H1 #H destruct /2 width=3 by drop_pair, ex2_intro/
 | #I #K0 #K1 #V0 #m1 #HK01 #_ #L2 #s2 #m2 #H1 #H2
-  lapply (le_n_O_to_eq … H2) -H2 #H destruct
+  lapply (yle_inv_O2 … H2) -H2 #H destruct
   lapply (drop_inv_pair1 … H1) -H1 #H destruct /3 width=3 by drop_drop, ex2_intro/
 | #I #K0 #K1 #V0 #V1 #l1 #m1 #HK01 #HV10 #IHK01 #L2 #s2 #m2 #H #Hm2l1
   elim (drop_inv_O1_pair1 … H) -H *
   [ -IHK01 -Hm2l1 #H1 #H2 destruct /3 width=5 by drop_pair, drop_skip, ex2_intro/
   | -HK01 -HV10 #Hm2 #HK0L2
-    elim (IHK01 … HK0L2) -IHK01 -HK0L2 /2 width=1 by monotonic_pred/
-    >minus_le_minus_minus_comm /3 width=3 by drop_drop_lt, ex2_intro/
+    lapply (yle_inv_succ2 … Hm2l1) -Hm2l1 <yminus_SO2 #Hm2l1
+    elim (IHK01 … HK0L2) -IHK01 -HK0L2 //
+    <yminus_inj >yplus_minus_assoc_comm_inj /2 width=1 by yle_inj/
+    >yplus_SO2 /3 width=3 by drop_drop_lt, ex2_intro/  
   ]
 ]
 qed-.
@@ -111,10 +117,11 @@ theorem drop_trans_ge: ∀L1,L,s1,l1,m1. ⬇[s1, l1, m1] L1 ≡ L →
 | /2 width=1 by drop_gen/
 | /3 width=1 by drop_drop/
 | #I #L1 #L2 #V1 #V2 #l #m #_ #_ #IHL12 #L #m2 #H #Hlm2
-  lapply (lt_to_le_to_lt 0 … Hlm2) // #Hm2
+  elim (yle_inv_succ1 … Hlm2) -Hlm2 #Hlm2 #Hm2
+  lapply (ylt_O … Hm2) -Hm2 #Hm2
   lapply (lt_to_le_to_lt … (m + m2) Hm2 ?) // #Hmm2
   lapply (drop_inv_drop1_lt … H ?) -H // #HL2
-  @drop_drop_lt // >le_plus_minus /3 width=1 by monotonic_pred/
+  @drop_drop_lt // >le_plus_minus <yminus_SO2 in Hlm2; /2 width=1 by/
 ]
 qed.
 
@@ -125,9 +132,9 @@ theorem drop_trans_le: ∀L1,L,s1,l1,m1. ⬇[s1, l1, m1] L1 ≡ L →
 #L1 #L #s1 #l1 #m1 #H elim H -L1 -L -l1 -m1
 [ #l1 #m1 #Hm1 #L2 #s2 #m2 #H #_ elim (drop_inv_atom1 … H) -H
   #H #Hm2 destruct /4 width=3 by drop_atom, ex2_intro/
-| #I #K #V #L2 #s2 #m2 #HL2 #H lapply (le_n_O_to_eq … H) -H
+| #I #K #V #L2 #s2 #m2 #HL2 #H lapply (yle_inv_O2 … H) -H
   #H destruct /2 width=3 by drop_pair, ex2_intro/
-| #I #L1 #L2 #V #m #_ #IHL12 #L #s2 #m2 #HL2 #H lapply (le_n_O_to_eq … H) -H
+| #I #L1 #L2 #V #m #_ #IHL12 #L #s2 #m2 #HL2 #H lapply (yle_inv_O2 … H) -H
   #H destruct elim (IHL12 … HL2) -IHL12 -HL2 //
   #L0 #H #HL0 lapply (drop_inv_O2 … H) -H #H destruct
   /3 width=5 by drop_pair, drop_drop, ex2_intro/
@@ -135,7 +142,9 @@ theorem drop_trans_le: ∀L1,L,s1,l1,m1. ⬇[s1, l1, m1] L1 ≡ L →
   elim (drop_inv_O1_pair1 … H) -H *
   [ -Hm2l -IHL12 #H1 #H2 destruct /3 width=5 by drop_pair, drop_skip, ex2_intro/
   | -HL12 -HV12 #Hm2 #HL2
-    elim (IHL12 … HL2) -L2 [ >minus_le_minus_minus_comm // /3 width=3 by drop_drop_lt, ex2_intro/ | /2 width=1 by monotonic_pred/ ]
+    lapply (yle_inv_succ2 … Hm2l) -Hm2l <yminus_SO2 #Hm2l
+    elim (IHL12 … HL2) -L2 //
+    <yminus_inj >yplus_minus_assoc_comm_inj /3 width=3 by drop_drop_lt, yle_inj, ex2_intro/
   ]
 ]
 qed-.
@@ -154,12 +163,12 @@ qed-.
 (* Basic_1: was: drop_conf_lt *)
 lemma drop_conf_lt: ∀L,L1,s1,l1,m1. ⬇[s1, l1, m1] L ≡ L1 →
                     ∀I,K2,V2,s2,m2. ⬇[s2, 0, m2] L ≡ K2.ⓑ{I}V2 →
-                    m2 < l1 → let l ≝ l1 - m2 - 1 in
+                    m2 < l1 → let l ≝ ⫰(l1 - m2) in
                     ∃∃K1,V1. ⬇[s2, 0, m2] L1 ≡ K1.ⓑ{I}V1 &
                              ⬇[s1, l, m1] K2 ≡ K1 & ⬆[l, m1] V1 ≡ V2.
 #L #L1 #s1 #l1 #m1 #H1 #I #K2 #V2 #s2 #m2 #H2 #Hm2l1
-elim (drop_conf_le … H1 … H2) -L /2 width=2 by lt_to_le/ #K #HL1K #HK2
-elim (drop_inv_skip1 … HK2) -HK2 /2 width=1 by lt_plus_to_minus_r/
+elim (drop_conf_le … H1 … H2) -L /2 width=2 by ylt_fwd_le/ #K #HL1K #HK2
+elim (drop_inv_skip1 … HK2) -HK2 /2 width=1 by ylt_to_minus/
 #K1 #V1 #HK21 #HV12 #H destruct /2 width=5 by ex3_2_intro/
 qed-.
 
@@ -170,8 +179,9 @@ lemma drop_trans_lt: ∀L1,L,s1,l1,m1. ⬇[s1, l1, m1] L1 ≡ L →
                      ∃∃L0,V0. ⬇[s2, 0, m2] L1 ≡ L0.ⓑ{I}V0 &
                               ⬇[s1, l, m1] L0 ≡ L2 & ⬆[l, m1] V2 ≡ V0.
 #L1 #L #s1 #l1 #m1 #HL1 #I #L2 #V2 #s2 #m2 #HL2 #Hl21
-elim (drop_trans_le … HL1 … HL2) -L /2 width=1 by lt_to_le/ #L0 #HL10 #HL02
-elim (drop_inv_skip2 … HL02) -HL02 /2 width=1 by lt_plus_to_minus_r/ #L #V1 #HL2 #HV21 #H destruct /2 width=5 by ex3_2_intro/
+elim (drop_trans_le … HL1 … HL2) -L /2 width=1 by ylt_fwd_le/ #L0 #HL10 #HL02
+elim (drop_inv_skip2 … HL02) -HL02 /2 width=1 by ylt_to_minus/
+#L #V1 #HL2 #HV21 #H destruct /2 width=5 by ex3_2_intro/
 qed-.
 
 lemma drop_trans_ge_comm: ∀L1,L,L2,s1,l1,m1,m2.
@@ -188,7 +198,7 @@ lemma drop_conf_div: ∀I1,L,K,V1,m1. ⬇[m1] L ≡ K.ⓑ{I1}V1 →
 elim (le_or_ge m1 m2) #Hm
 [ lapply (drop_conf_ge … HLK1 … HLK2 ?)
 | lapply (drop_conf_ge … HLK2 … HLK1 ?)
-] -HLK1 -HLK2 // #HK
+] -HLK1 -HLK2 /2 width=1 by yle_inj/ #HK
 lapply (drop_fwd_length_minus2 … HK) #H
 elim (discr_minus_x_xy … H) -H
 [1,3: normalize <plus_n_Sm #H destruct ]
@@ -199,7 +209,7 @@ qed-.
 
 (* Advanced forward lemmas **************************************************)
 
-lemma drop_fwd_be: ∀L,K,s,l,m,i. ⬇[s, l, m] L ≡ K → |K| ≤ i → i < l → |L| ≤ i.
+lemma drop_fwd_be: ∀L,K,s,l,m,i. ⬇[s, l, m] L ≡ K → |K| ≤ i → yinj i < l → |L| ≤ i.
 #L #K #s #l #m #i #HLK #HK #Hl elim (lt_or_ge i (|L|)) //
 #HL elim (drop_O1_lt (Ⓕ) … HL) #I #K0 #V #HLK0 -HL
 elim (drop_conf_lt … HLK … HLK0) // -HLK -HLK0 -Hl

@@ -29,7 +29,7 @@ lemma cnr_inv_delta: ∀G,L,K,V,i. ⬇[i] L ≡ K.ⓓV → ⦃G, L⦄ ⊢ ➡ �
 #G #L #K #V #i #HLK #H
 elim (lift_total V 0 (i+1)) #W #HVW
 lapply (H W ?) -H [ /3 width=6 by cpr_delta/ ] -HLK #H destruct
-elim (lift_inv_lref2_be … HVW) -HVW //
+elim (lift_inv_lref2_be … HVW) -HVW /2 width=1 by ylt_inj/
 qed-.
 
 lemma cnr_inv_abst: ∀a,G,L,V,T. ⦃G, L⦄ ⊢ ➡ 𝐍⦃ⓛ{a}V.T⦄ → ⦃G, L⦄ ⊢ ➡ 𝐍⦃V⦄ ∧ ⦃G, L.ⓛV⦄ ⊢ ➡ 𝐍⦃T⦄.

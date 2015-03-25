@@ -36,10 +36,10 @@ lemma lpx_cpx_frees_trans: ∀h,g,G,L1,U1,U2. ⦃G, L1⦄ ⊢ U1 ➡[h, g] U2 �
   | * #I #K1 #W1 #W0 #HLK1 #HW10 #HW0U2
     lapply (drop_fwd_drop2 … HLK1) #H0
     elim (lpx_drop_conf … H0 … HL12) -H0 -HL12 #K2 #HK12 #HLK2
-    elim (lt_or_ge i (j+1)) #Hji
-    [ -IH elim (frees_inv_lift_be … H2 … HLK2 … HW0U2) /2 width=1 by monotonic_pred/
-    | lapply (frees_inv_lift_ge … H2 … HLK2 … HW0U2 ?) -L2 -U2 // <minus_plus destruct
-      /4 width=11 by frees_lref_be, fqup_lref/
+    elim (ylt_split i (j+1)) >yplus_SO2 #Hji
+    [ -IH elim (frees_inv_lift_be … H2 … HLK2 … HW0U2) /2 width=1 by ylt_fwd_succ2/
+    | lapply (frees_inv_lift_ge … H2 … HLK2 … HW0U2 ?) -L2 -U2 // destruct
+      /4 width=11 by frees_lref_be, fqup_lref, yle_succ1_inj/
     ]
   ]
 | -IH #p #HG #HL #HU #U2 #H1 >(cpx_inv_gref1 … H1) -H1 destruct

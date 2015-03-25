@@ -24,15 +24,24 @@ definition yminus: ynat → ynat → ynat ≝ λx,y. match y with
 
 interpretation "ynat minus" 'minus x y = (yminus x y).
 
+lemma yminus_O2: ∀m:ynat. m - 0 = m.
+// qed.
+
+lemma yminus_S2: ∀m:ynat. ∀n:nat. m - S n = ⫰(m - n).
+// qed.
+
+lemma yminus_Y2: ∀m. m - (∞) = 0.
+// qed.
+
 (* Basic properties *********************************************************)
 
-lemma yminus_inj: ∀n,m. yinj m - yinj n = yinj (m - n).
-#n elim n -n /2 width=3 by trans_eq/
+lemma yminus_inj: ∀m,n. yinj m - yinj n = yinj (m - n).
+#m #n elim n -n //
+#n #IH >yminus_S2 >IH -IH >eq_minus_S_pred //
 qed.
 
 lemma yminus_Y_inj: ∀n. ∞ - yinj n = ∞.
-#n elim n -n // normalize
-#n #IHn >IHn //
+#n elim n -n //
 qed.
 
 lemma yminus_O1: ∀x:ynat. 0 - x = 0.
@@ -51,6 +60,10 @@ lemma yminus_SO2: ∀m. m - 1 = ⫰m.
 * //
 qed.
 
+lemma yminus_pred1: ∀x,y. ⫰x - y = ⫰(x-y).
+#x * // #y elim y -y //
+qed.
+
 lemma yminus_pred: ∀n,m. 0 < m → 0 < n → ⫰m - ⫰n = m - n.
 * // #n *
 [ #m #Hm #Hn >yminus_inj >yminus_inj
@@ -62,9 +75,7 @@ qed-.
 (* Properties on successor **************************************************)
 
 lemma yminus_succ: ∀n,m. ⫯m - ⫯n = m - n.
-* // #n * [2: >yminus_Y_inj // ]
-#m >yminus_inj //
-qed.
+* // qed.
 
 lemma yminus_succ1_inj: ∀n:nat. ∀m:ynat. n ≤ m → ⫯m - n = ⫯(m - n).
 #n *
@@ -102,6 +113,15 @@ lemma monotonic_yle_minus_dx: ∀x,y. x ≤ y → ∀z. x - z ≤ y - z.
 qed.
 
 (* Properties on strict order ***********************************************)
+
+lemma ylt_to_minus: ∀x,y:ynat. x < y → 0 < y - x.
+#x #y #H elim H -x -y /3 width=1 by ylt_inj, lt_plus_to_minus_r/
+qed.
+
+lemma yminus_to_lt: ∀x,y:ynat. 0 < y - x → x < y.
+* [2: #y #H elim (ylt_yle_false … H) // ]
+#m * /4 width=1 by ylt_inv_inj, ylt_inj, lt_minus_to_plus_r/
+qed-.
 
 lemma monotonic_ylt_minus_dx: ∀x,y:ynat. x < y → ∀z:nat. z ≤ x → x - z < y - z.
 #x #y * -x -y

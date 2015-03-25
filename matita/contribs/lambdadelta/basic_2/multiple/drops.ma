@@ -20,7 +20,7 @@ include "basic_2/multiple/lifts_vector.ma".
 
 (* ITERATED LOCAL ENVIRONMENT SLICING ***************************************)
 
-inductive drops (s:bool): list2 nat nat → relation lenv ≝
+inductive drops (s:bool): list2 ynat nat → relation lenv ≝
 | drops_nil : ∀L. drops s (◊) L L
 | drops_cons: ∀L1,L,L2,cs,l,m.
               drops s cs L1 L → ⬇[s, l, m] L ≡ L2 → drops s ({l, m} @ cs) L1 L2
@@ -83,13 +83,15 @@ lemma drops_inv_skip2: ∀I,s,cs,cs2,i. cs ▭ i ≡ cs2 →
   >(drops_inv_nil … H) -L1 /2 width=7 by lifts_nil, minuss_nil, ex4_3_intro, drops_nil/
 | #cs #cs2 #l #m #i #Hil #_ #IHcs2 #L1 #K2 #V2 #H
   elim (drops_inv_cons … H) -H #L #HL1 #H
-  elim (drop_inv_skip2 … H) -H /2 width=1 by lt_plus_to_minus_r/ #K #V >minus_plus #HK2 #HV2 #H destruct
+  elim (drop_inv_skip2 … H) -H /2 width=1 by ylt_to_minus/ #K #V <yminus_succ2 #HK2 #HV2 #H destruct
   elim (IHcs2 … HL1) -IHcs2 -HL1 #K1 #V1 #cs1 #Hcs1 #HK1 #HV1 #X destruct
   @(ex4_3_intro … K1 V1 … ) // [3,4: /2 width=7 by lifts_cons, drops_cons/ | skip ]
-  normalize >plus_minus /3 width=1 by minuss_lt, lt_minus_to_plus/ (**) (* explicit constructors *)
+  >pluss_SO2 >pluss_SO2
+  >yminus_succ2 >ylt_inv_O1 /2 width=1 by ylt_to_minus/ <yminus_succ >commutative_plus (**) (* <yminus_succ1_inj does not work *)
+  /3 width=1 by minuss_lt, ylt_succ/
 | #cs #cs2 #l #m #i #Hil #_ #IHcs2 #L1 #K2 #V2 #H
   elim (IHcs2 … H) -IHcs2 -H #K1 #V1 #cs1 #Hcs1 #HK1 #HV1 #X destruct
-  /4 width=7 by minuss_ge, ex4_3_intro, le_S_S/
+  /4 width=7 by minuss_ge, yle_succ, ex4_3_intro/
 ]
 qed-.
 

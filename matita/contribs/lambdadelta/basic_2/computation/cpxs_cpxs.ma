@@ -133,7 +133,8 @@ lemma fqu_cpxs_trans_neq: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, 
 [ #I #G #L #V1 #V2 #HV12 #_ elim (lift_total V2 0 1)
   #U2 #HVU2 @(ex3_intro … U2)
   [1,3: /3 width=7 by fqu_drop, cpxs_delta, drop_pair, drop_drop/
-  | #H destruct /2 width=7 by lift_inv_lref2_be/
+  | #H destruct 
+    lapply (lift_inv_lref2_be … HVU2 ? ?) -HVU2 //
   ]
 | #I #G #L #V1 #T #V2 #HV12 #H @(ex3_intro … (②{I}V2.T))
   [1,3: /2 width=4 by fqu_pair_sn, cpxs_pair_sn/

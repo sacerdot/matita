@@ -17,7 +17,7 @@ include "basic_2/substitution/lift.ma".
 
 (* BASIC TERM VECTOR RELOCATION *********************************************)
 
-inductive liftv (l,m:nat) : relation (list term) ≝
+inductive liftv (l) (m): relation (list term) ≝
 | liftv_nil : liftv l m (◊) (◊)
 | liftv_cons: ∀T1s,T2s,T1,T2.
               ⬆[l, m] T1 ≡ T2 → liftv l m T1s T2s →

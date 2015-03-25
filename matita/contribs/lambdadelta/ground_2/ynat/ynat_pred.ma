@@ -26,9 +26,13 @@ definition ypred: ynat → ynat ≝ λm. match m with
 
 interpretation "ynat predecessor" 'Predecessor m = (ypred m).
 
-(* Properties ***************************************************************)
+lemma ypred_O: ⫰0 = 0.
+// qed.
 
-lemma ypred_inj_rew: ∀m:nat. ⫰m = pred m.
+lemma ypred_S: ∀m:nat. ⫰(S m) = m.
+// qed.
+
+lemma ypred_Y: (⫰∞) = ∞.
 // qed.
 
 (* Inversion lemmas *********************************************************)

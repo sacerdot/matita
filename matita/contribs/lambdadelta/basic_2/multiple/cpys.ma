@@ -159,8 +159,8 @@ lemma cpys_inv_refl_O2: ∀G,L,T1,T2,l. ⦃G, L⦄ ⊢ T1 ▶*[l, 0] T2 → T1 =
 #T #T2 #_ #HT2 #IHT1 <(cpy_inv_refl_O2 … HT2) -HT2 //
 qed-.
 
-lemma cpys_inv_lift1_eq: ∀G,L,U1,U2. ∀l,m:nat.
-                         ⦃G, L⦄ ⊢ U1 ▶*[l, m] U2 → ∀T1. ⬆[l, m] T1 ≡ U1 → U1 = U2.
+lemma cpys_inv_lift1_eq: ∀G,L,U1,U2,l,m.
+                         ⦃G, L⦄ ⊢ U1 ▶*[l, yinj m] U2 → ∀T1. ⬆[l, m] T1 ≡ U1 → U1 = U2.
 #G #L #U1 #U2 #l #m #H #T1 #HTU1 @(cpys_ind … H) -U2
 /2 width=7 by cpy_inv_lift1_eq/
 qed-.

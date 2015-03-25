@@ -61,7 +61,7 @@ lemma cpysa_cpy_trans: ∀G,L,T1,T,l,m. ⦃G, L⦄ ⊢ T1 ▶▶*[l, m] T →
   lapply (drop_fwd_drop2 … HLK) #H0LK
   lapply (cpy_weak … H 0 (l+m) ? ?) -H // #H
   elim (cpy_inv_lift1_be … H … H0LK … HVW2) -H -H0LK -HVW2
-  /3 width=7 by cpysa_subst, ylt_fwd_le_succ/
+  /3 width=7 by cpysa_subst, ylt_fwd_le_succ1/
 | #a #I #G #L #V1 #V #T1 #T #l #m #_ #_ #IHV1 #IHT1 #X #H
   elim (cpy_inv_bind1 … H) -H #V2 #T2 #HV2 #HT2 #H destruct
   /5 width=5 by cpysa_bind, lsuby_cpy_trans, lsuby_succ/

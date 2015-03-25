@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/ynat/ynat_max.ma".
 include "basic_2/substitution/drop_drop.ma".
 include "basic_2/multiple/fqus_alt.ma".
 include "basic_2/static/da.ma".
@@ -56,11 +57,11 @@ lemma cpx_lift: ∀h,g,G. d_liftable (cpx h g G).
   >(lift_inv_sort1 … H2) -U2 /2 width=2 by cpx_st/
 | #I #G #K #KV #V #V2 #W2 #i #HKV #HV2 #HVW2 #IHV2 #L #s #l #m #HLK #U1 #H #U2 #HWU2
   elim (lift_inv_lref1 … H) * #Hil #H destruct
-  [ elim (lift_trans_ge … HVW2 … HWU2) -W2 // <minus_plus #W2 #HVW2 #HWU2
-    elim (drop_trans_le … HLK … HKV) -K /2 width=2 by lt_to_le/ #X #HLK #H
-    elim (drop_inv_skip2 … H) -H /2 width=1 by lt_plus_to_minus_r/ -Hil
+  [ elim (lift_trans_ge … HVW2 … HWU2) -W2 /2 width=1 by ylt_fwd_le_succ1/ #W2 #HVW2 #HWU2
+    elim (drop_trans_le … HLK … HKV) -K /2 width=2 by ylt_fwd_le/ #X #HLK #H
+    elim (drop_inv_skip2 … H) -H /2 width=1 by ylt_to_minus/ -Hil
     #K #Y #HKV #HVY #H destruct /3 width=10 by cpx_delta/
-  | lapply (lift_trans_be … HVW2 … HWU2 ? ?) -W2 /2 width=1 by le_S/ >plus_plus_comm_23 #HVU2
+  | lapply (lift_trans_be … HVW2 … HWU2 ? ?) -W2 /2 width=1 by yle_succ_dx/ >plus_plus_comm_23 #HVU2
     lapply (drop_trans_ge_comm … HLK … HKV ?) -K /3 width=7 by cpx_delta, drop_inv_gen/
   ]
 | #a #I #G #K #V1 #V2 #T1 #T2 #_ #_ #IHV12 #IHT12 #L #s #l #m #HLK #U1 #H1 #U2 #H2
@@ -103,10 +104,11 @@ lemma cpx_inv_lift1: ∀h,g,G. d_deliftable_sn (cpx h g G).
   elim (lift_inv_lref2 … H) -H * #Hil #H destruct
   [ elim (drop_conf_lt … HLK … HLV) -L // #L #U #HKL #HLV #HUV
     elim (IHV2 … HLV … HUV) -V #U2 #HUV2 #HU2
-    elim (lift_trans_le … HUV2 … HVW2) -V2 // >minus_plus <plus_minus_m_m /3 width=9 by cpx_delta, ex2_intro/
-  | elim (le_inv_plus_l … Hil) #Hlim #Hmi
+    elim (lift_trans_le … HUV2 … HVW2) -V2 // <yminus_succ2 <yplus_inj >yplus_SO2 >ymax_pre_sn /3 width=9 by cpx_delta, ylt_fwd_le_succ1, ex2_intro/
+  | elim (yle_inv_plus_inj2 … Hil) #Hlim #Hmi
+    lapply (yle_inv_inj … Hmi) -Hmi #Hmi
     lapply (drop_conf_ge … HLK … HLV ?) -L // #HKLV
-    elim (lift_split … HVW2 l (i - m + 1)) -HVW2 /3 width=1 by le_S, le_S_S/ -Hil -Hlim
+    elim (lift_split … HVW2 l (i - m + 1)) -HVW2 /3 width=1 by yle_succ, yle_pred_sn, le_S_S/ -Hil -Hlim
     #V1 #HV1 >plus_minus // <minus_minus /2 width=1 by le_S/ <minus_n_n <plus_n_O /3 width=9 by cpx_delta, ex2_intro/
   ]
 | #a #I #G #L #V1 #V2 #U1 #U2 #_ #_ #IHV12 #IHU12 #K #s #l #m #HLK #X #H
@@ -210,7 +212,8 @@ lemma fqu_cpx_trans_neq: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L
 [ #I #G #L #V1 #V2 #HV12 #_ elim (lift_total V2 0 1)
   #U2 #HVU2 @(ex3_intro … U2)
   [1,3: /3 width=7 by fqu_drop, cpx_delta, drop_pair, drop_drop/
-  | #H destruct /2 width=7 by lift_inv_lref2_be/
+  | #H destruct
+    lapply (lift_inv_lref2_be … HVU2 ? ?) -HVU2 //
   ]
 | #I #G #L #V1 #T #V2 #HV12 #H @(ex3_intro … (②{I}V2.T))
   [1,3: /2 width=4 by fqu_pair_sn, cpx_pair_sn/

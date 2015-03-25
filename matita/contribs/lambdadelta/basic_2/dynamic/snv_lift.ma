@@ -27,8 +27,8 @@ lemma snv_lift: ∀h,g,G,K,T. ⦃G, K⦄ ⊢ T ¡[h, g] → ∀L,s,l,m. ⬇[s, l
   >(lift_inv_sort1 … H) -X -K -l -m //
 | #I #G #K #K0 #V #i #HK0 #_ #IHV #L #s #l #m #HLK #X #H
   elim (lift_inv_lref1 … H) * #Hil #H destruct
-  [ elim (drop_trans_le … HLK … HK0) -K /2 width=2 by lt_to_le/ #X #HL0 #H
-    elim (drop_inv_skip2 … H) -H /2 width=1 by lt_plus_to_minus_r/ -Hil #L0 #W #HLK0 #HVW #H destruct
+  [ elim (drop_trans_le … HLK … HK0) -K /2 width=2 by ylt_fwd_le/ #X #HL0 #H
+    elim (drop_inv_skip2 … H) -H /2 width=1 by ylt_to_minus/ -Hil #L0 #W #HLK0 #HVW #H destruct
     /3 width=9 by snv_lref/
   | lapply (drop_trans_ge … HLK … HK0 ?) -K
     /3 width=9 by snv_lref, drop_inv_gen/
@@ -55,8 +55,8 @@ lemma snv_inv_lift: ∀h,g,G,L,U. ⦃G, L⦄ ⊢ U ¡[h, g] → ∀K,s,l,m. ⬇[
   >(lift_inv_sort2 … H) -X -L -l -m //
 | #I #G #L #L0 #W #i #HL0 #_ #IHW #K #s #l #m #HLK #X #H
   elim (lift_inv_lref2 … H) * #Hil #H destruct
-  [ elim (drop_conf_le … HLK … HL0) -L /2 width=2 by lt_to_le/ #X #HK0 #H
-    elim (drop_inv_skip1 … H) -H /2 width=1 by lt_plus_to_minus_r/ -Hil #K0 #V #HLK0 #HVW #H destruct
+  [ elim (drop_conf_le … HLK … HL0) -L /2 width=2 by ylt_fwd_le/ #X #HK0 #H
+    elim (drop_inv_skip1 … H) -H /2 width=1 by ylt_to_minus/ -Hil #K0 #V #HLK0 #HVW #H destruct
     /3 width=12 by snv_lref/
   | lapply (drop_conf_ge … HLK … HL0 ?) -L /3 width=9 by snv_lref/
   ]

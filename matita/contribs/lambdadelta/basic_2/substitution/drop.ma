@@ -23,13 +23,13 @@ include "basic_2/substitution/lift.ma".
 (* BASIC SLICING FOR LOCAL ENVIRONMENTS *************************************)
 
 (* Basic_1: includes: drop_skip_bind *)
-inductive drop (s:bool): relation4 nat nat lenv lenv ≝
+inductive drop (s:bool): relation4 ynat nat lenv lenv ≝
 | drop_atom: ∀l,m. (s = Ⓕ → m = 0) → drop s l m (⋆) (⋆)
 | drop_pair: ∀I,L,V. drop s 0 0 (L.ⓑ{I}V) (L.ⓑ{I}V)
 | drop_drop: ∀I,L1,L2,V,m. drop s 0 m L1 L2 → drop s 0 (m+1) (L1.ⓑ{I}V) L2
 | drop_skip: ∀I,L1,L2,V1,V2,l,m.
              drop s l m L1 L2 → ⬆[l, m] V2 ≡ V1 →
-             drop s (l+1) m (L1.ⓑ{I}V1) (L2.ⓑ{I}V2)
+             drop s (⫯l) m (L1.ⓑ{I}V1) (L2.ⓑ{I}V2)
 .
 
 interpretation
@@ -42,7 +42,7 @@ interpretation
 *)
 interpretation
    "basic slicing (local environment) lget"
-   'RDrop m L1 L2 = (drop false O m L1 L2).
+   'RDrop m L1 L2 = (drop false (yinj O) m L1 L2).
 
 definition d_liftable: predicate (lenv → relation term) ≝
                        λR. ∀K,T1,T2. R K T1 T2 → ∀L,s,l,m. ⬇[s, l, m] L ≡ K →
@@ -77,7 +77,7 @@ qed-.
 lemma drop_inv_atom1: ∀L2,s,l,m. ⬇[s, l, m] ⋆ ≡ L2 → L2 = ⋆ ∧ (s = Ⓕ → m = 0).
 /2 width=4 by drop_inv_atom1_aux/ qed-.
 
-fact drop_inv_O1_pair1_aux: ∀L1,L2,s,l,m. ⬇[s, l, m] L1 ≡ L2 → l = 0 →
+fact drop_inv_O1_pair1_aux: ∀L1,L2,s,l,m. ⬇[s, l, m] L1 ≡ L2 → l = yinj 0 →
                             ∀K,I,V. L1 = K.ⓑ{I}V →
                             (m = 0 ∧ L2 = K.ⓑ{I}V) ∨
                             (0 < m ∧ ⬇[s, l, m-1] K ≡ L2).
@@ -85,13 +85,13 @@ fact drop_inv_O1_pair1_aux: ∀L1,L2,s,l,m. ⬇[s, l, m] L1 ≡ L2 → l = 0 →
 [ #l #m #_ #_ #K #J #W #H destruct
 | #I #L #V #_ #K #J #W #HX destruct /3 width=1 by or_introl, conj/
 | #I #L1 #L2 #V #m #HL12 #_ #K #J #W #H destruct /3 width=1 by or_intror, conj/
-| #I #L1 #L2 #V1 #V2 #l #m #_ #_ >commutative_plus normalize #H destruct
+| #I #L1 #L2 #V1 #V2 #l #m #_ #_ #H elim (ysucc_inv_O_dx … H)
 ]
 qed-.
 
-lemma drop_inv_O1_pair1: ∀I,K,L2,V,s,m. ⬇[s, 0, m] K. ⓑ{I} V ≡ L2 →
+lemma drop_inv_O1_pair1: ∀I,K,L2,V,s,m. ⬇[s, yinj 0, m] K. ⓑ{I} V ≡ L2 →
                          (m = 0 ∧ L2 = K.ⓑ{I}V) ∨
-                         (0 < m ∧ ⬇[s, 0, m-1] K ≡ L2).
+                         (0 < m ∧ ⬇[s, yinj 0, m-1] K ≡ L2).
 /2 width=3 by drop_inv_O1_pair1_aux/ qed-.
 
 lemma drop_inv_pair1: ∀I,K,L2,V,s. ⬇[s, 0, 0] K.ⓑ{I}V ≡ L2 → L2 = K.ⓑ{I}V.
@@ -102,7 +102,7 @@ qed-.
 
 (* Basic_1: was: drop_gen_drop *)
 lemma drop_inv_drop1_lt: ∀I,K,L2,V,s,m.
-                         ⬇[s, 0, m] K.ⓑ{I}V ≡ L2 → 0 < m → ⬇[s, 0, m-1] K ≡ L2.
+                         ⬇[s, yinj 0, m] K.ⓑ{I}V ≡ L2 → 0 < m → ⬇[s, yinj 0, m-1] K ≡ L2.
 #I #K #L2 #V #s #m #H #Hm
 elim (drop_inv_O1_pair1 … H) -H * // #H destruct
 elim (lt_refl_false … Hm)
@@ -115,27 +115,27 @@ qed-.
 
 fact drop_inv_skip1_aux: ∀L1,L2,s,l,m. ⬇[s, l, m] L1 ≡ L2 → 0 < l →
                          ∀I,K1,V1. L1 = K1.ⓑ{I}V1 →
-                         ∃∃K2,V2. ⬇[s, l-1, m] K1 ≡ K2 &
-                                  ⬆[l-1, m] V2 ≡ V1 &
+                         ∃∃K2,V2. ⬇[s, ⫰l, m] K1 ≡ K2 &
+                                  ⬆[⫰l, m] V2 ≡ V1 &
                                    L2 = K2.ⓑ{I}V2.
 #L1 #L2 #s #l #m * -L1 -L2 -l -m
 [ #l #m #_ #_ #J #K1 #W1 #H destruct
-| #I #L #V #H elim (lt_refl_false … H)
-| #I #L1 #L2 #V #m #_ #H elim (lt_refl_false … H)
+| #I #L #V #H elim (ylt_yle_false … H) -H //
+| #I #L1 #L2 #V #m #_ #H elim (ylt_yle_false … H) -H //
 | #I #L1 #L2 #V1 #V2 #l #m #HL12 #HV21 #_ #J #K1 #W1 #H destruct /2 width=5 by ex3_2_intro/
 ]
 qed-.
 
 (* Basic_1: was: drop_gen_skip_l *)
 lemma drop_inv_skip1: ∀I,K1,V1,L2,s,l,m. ⬇[s, l, m] K1.ⓑ{I}V1 ≡ L2 → 0 < l →
-                      ∃∃K2,V2. ⬇[s, l-1, m] K1 ≡ K2 &
-                               ⬆[l-1, m] V2 ≡ V1 &
+                      ∃∃K2,V2. ⬇[s, ⫰l, m] K1 ≡ K2 &
+                               ⬆[⫰l, m] V2 ≡ V1 &
                                L2 = K2.ⓑ{I}V2.
 /2 width=3 by drop_inv_skip1_aux/ qed-.
 
-lemma drop_inv_O1_pair2: ∀I,K,V,s,m,L1. ⬇[s, 0, m] L1 ≡ K.ⓑ{I}V →
+lemma drop_inv_O1_pair2: ∀I,K,V,s,m,L1. ⬇[s, yinj 0, m] L1 ≡ K.ⓑ{I}V →
                          (m = 0 ∧ L1 = K.ⓑ{I}V) ∨
-                         ∃∃I1,K1,V1. ⬇[s, 0, m-1] K1 ≡ K.ⓑ{I}V & L1 = K1.ⓑ{I1}V1 & 0 < m.
+                         ∃∃I1,K1,V1. ⬇[s, yinj 0, m-1] K1 ≡ K.ⓑ{I}V & L1 = K1.ⓑ{I1}V1 & 0 < m.
 #I #K #V #s #m *
 [ #H elim (drop_inv_atom1 … H) -H #H destruct
 | #L1 #I1 #V1 #H
@@ -148,24 +148,24 @@ qed-.
 
 fact drop_inv_skip2_aux: ∀L1,L2,s,l,m. ⬇[s, l, m] L1 ≡ L2 → 0 < l →
                          ∀I,K2,V2. L2 = K2.ⓑ{I}V2 →
-                         ∃∃K1,V1. ⬇[s, l-1, m] K1 ≡ K2 &
-                                  ⬆[l-1, m] V2 ≡ V1 &
+                         ∃∃K1,V1. ⬇[s, ⫰l, m] K1 ≡ K2 &
+                                  ⬆[⫰l, m] V2 ≡ V1 &
                                   L1 = K1.ⓑ{I}V1.
 #L1 #L2 #s #l #m * -L1 -L2 -l -m
 [ #l #m #_ #_ #J #K2 #W2 #H destruct
-| #I #L #V #H elim (lt_refl_false … H)
-| #I #L1 #L2 #V #m #_ #H elim (lt_refl_false … H)
+| #I #L #V #H elim (ylt_yle_false … H) -H //
+| #I #L1 #L2 #V #m #_ #H elim (ylt_yle_false … H) -H //
 | #I #L1 #L2 #V1 #V2 #l #m #HL12 #HV21 #_ #J #K2 #W2 #H destruct /2 width=5 by ex3_2_intro/
 ]
 qed-.
 
 (* Basic_1: was: drop_gen_skip_r *)
 lemma drop_inv_skip2: ∀I,L1,K2,V2,s,l,m. ⬇[s, l, m] L1 ≡ K2.ⓑ{I}V2 → 0 < l →
-                      ∃∃K1,V1. ⬇[s, l-1, m] K1 ≡ K2 & ⬆[l-1, m] V2 ≡ V1 &
+                      ∃∃K1,V1. ⬇[s, ⫰l, m] K1 ≡ K2 & ⬆[⫰l, m] V2 ≡ V1 &
                                L1 = K1.ⓑ{I}V1.
 /2 width=3 by drop_inv_skip2_aux/ qed-.
 
-lemma drop_inv_O1_gt: ∀L,K,m,s. ⬇[s, 0, m] L ≡ K → |L| < m →
+lemma drop_inv_O1_gt: ∀L,K,m,s. ⬇[s, yinj 0, m] L ≡ K → |L| < m →
                       s = Ⓣ ∧ K = ⋆.
 #L elim L -L [| #L #Z #X #IHL ] #K #m #s #H normalize in ⊢ (?%?→?); #H1m
 [ elim (drop_inv_atom1 … H) -H elim s -s /2 width=1 by conj/
@@ -177,26 +177,45 @@ lemma drop_inv_O1_gt: ∀L,K,m,s. ⬇[s, 0, m] L ≡ K → |L| < m →
 ]
 qed-.
 
+lemma drop_inv_Y1: ∀L,K,m,s. ⬇[s, ∞, m] L ≡ K →
+                   L = K ∧ (s = Ⓕ → m = 0).
+#L elim L -L
+[ #Y #m #s #H elim (drop_inv_atom1 … H) -H /3 width=1 by conj/
+| #L #I #V #IHL #Y #m #s #H elim (drop_inv_skip1 … H) -H //
+  #K #W #HLK #HWV #H destruct
+  lapply (lift_inv_Y1 … HWV) -HWV #H destruct
+  elim (IHL … HLK) -IHL -HLK /3 width=1 by conj/
+]
+qed-.
+
 (* Basic properties *********************************************************)
 
 lemma drop_refl_atom_O2: ∀s,l. ⬇[s, l, O] ⋆ ≡ ⋆.
 /2 width=1 by drop_atom/ qed.
 
+lemma drop_Y1: ∀m,s. (s = Ⓕ → m = 0) → ∀L. ⬇[s, ∞, m] L ≡ L.
+#m #s #H #L elim L -L /3 width=3 by drop_atom, drop_skip/
+qed.
+
 (* Basic_1: was by definition: drop_refl *)
 lemma drop_refl: ∀L,l,s. ⬇[s, l, 0] L ≡ L.
 #L elim L -L //
-#L #I #V #IHL #l #s @(nat_ind_plus … l) -l /2 width=1 by drop_pair, drop_skip/
+#L #I #V #IHL #x #s elim (ynat_cases x)
+[ #H destruct //
+| * #l #H destruct /2 width=1 by drop_skip/
+]
 qed.
 
 lemma drop_drop_lt: ∀I,L1,L2,V,s,m.
-                    ⬇[s, 0, m-1] L1 ≡ L2 → 0 < m → ⬇[s, 0, m] L1.ⓑ{I}V ≡ L2.
+                    ⬇[s, yinj 0, m-1] L1 ≡ L2 → 0 < m → ⬇[s, yinj 0, m] L1.ⓑ{I}V ≡ L2.
 #I #L1 #L2 #V #s #m #HL12 #Hm >(plus_minus_m_m m 1) /2 width=1 by drop_drop/
 qed.
 
 lemma drop_skip_lt: ∀I,L1,L2,V1,V2,s,l,m.
-                    ⬇[s, l-1, m] L1 ≡ L2 → ⬆[l-1, m] V2 ≡ V1 → 0 < l →
+                    ⬇[s, ⫰l, m] L1 ≡ L2 → ⬆[⫰l, m] V2 ≡ V1 → 0 < l →
                     ⬇[s, l, m] L1. ⓑ{I} V1 ≡ L2.ⓑ{I}V2.
-#I #L1 #L2 #V1 #V2 #s #l #m #HL12 #HV21 #Hl >(plus_minus_m_m l 1) /2 width=1 by drop_skip/
+#I #L1 #L2 #V1 #V2 #s #l #m #HL12 #HV21 #Hl <(ylt_inv_O1 … Hl) -Hl 
+/2 width=1 by drop_skip/
 qed.
 
 lemma drop_O1_le: ∀s,m,L. m ≤ |L| → ∃K. ⬇[s, 0, m] L ≡ K.
@@ -215,8 +234,8 @@ lemma drop_O1_lt: ∀s,L,m. m < |L| → ∃∃I,K,V. ⬇[s, 0, m] L ≡ K.ⓑ{I}
 ]
 qed-.
 
-lemma drop_O1_pair: ∀L,K,m,s. ⬇[s, 0, m] L ≡ K → m ≤ |L| → ∀I,V.
-                    ∃∃J,W. ⬇[s, 0, m] L.ⓑ{I}V ≡ K.ⓑ{J}W.
+lemma drop_O1_pair: ∀L,K,m,s. ⬇[s, yinj 0, m] L ≡ K → m ≤ |L| → ∀I,V.
+                    ∃∃J,W. ⬇[s, yinj 0, m] L.ⓑ{I}V ≡ K.ⓑ{J}W.
 #L elim L -L [| #L #Z #X #IHL ] #K #m #s #H normalize #Hm #I #V
 [ elim (drop_inv_atom1 … H) -H #H <(le_n_O_to_eq … Hm) -m
   #Hs destruct /2 width=3 by ex1_2_intro/
@@ -336,27 +355,32 @@ lemma drop_fwd_drop2: ∀L1,I2,K2,V2,s,m. ⬇[s, O, m] L1 ≡ K2. ⓑ{I2} V2 →
 qed-.
 
 lemma drop_fwd_length_ge: ∀L1,L2,l,m,s. ⬇[s, l, m] L1 ≡ L2 → |L1| ≤ l → |L2| = |L1|.
-#L1 #L2 #l #m #s #H elim H -L1 -L2 -l -m // normalize
-[ #I #L1 #L2 #V #m #_ #_ #H elim (le_plus_xSy_O_false … H)
-| /4 width=2 by le_plus_to_le_r, eq_f/
+#L1 #L2 #l #m #s #H elim H -L1 -L2 -l -m //
+[ #I #L1 #L2 #V #m #_ #_ #H elim (ylt_yle_false … H) -H normalize //
+| #I #L1 #L2 #V1 #V2 #l #m #_ #_ #IH <yplus_inj >yplus_SO2 #H
+  lapply (yle_inv_succ … H) -H #H normalize /3 width=1 by eq_f2/
 ]
 qed-.
 
 lemma drop_fwd_length_le_le: ∀L1,L2,l,m,s. ⬇[s, l, m] L1 ≡ L2 → l ≤ |L1| → m ≤ |L1| - l → |L2| = |L1| - m.
-#L1 #L2 #l #m #s #H elim H -L1 -L2 -l -m // normalize
-[ /3 width=2 by le_plus_to_le_r/
-| #I #L1 #L2 #V1 #V2 #l #m #_ #_ #IHL12 >minus_plus_plus_l
-  #Hl #Hm lapply (le_plus_to_le_r … Hl) -Hl
-  #Hl >IHL12 // -L2 >plus_minus /2 width=3 by transitive_le/
+#L1 #L2 #l #m #s #H elim H -L1 -L2 -l -m //
+[ #I #L1 #L2 #V #m #_ <yplus_inj normalize #IH #_
+  >minus_plus_plus_l <yplus_inj >yplus_SO2 /3 width=1 by yle_inv_succ/
+| #I #L1 #L2 #V1 #V2 #l #m #_ #_ #IHL12 <yplus_inj >yplus_SO2 #H
+  lapply (yle_inv_succ … H) -H #Hl1 >yminus_succ #Hml1 normalize
+  <plus_minus /3 width=3 by yle_trans, yle_inv_inj, eq_f2/
 ]
 qed-.
 
-lemma drop_fwd_length_le_ge: ∀L1,L2,l,m,s. ⬇[s, l, m] L1 ≡ L2 → l ≤ |L1| → |L1| - l ≤ m → |L2| = l.
-#L1 #L2 #l #m #s #H elim H -L1 -L2 -l -m normalize
-[ /2 width=1 by le_n_O_to_eq/
-| #I #L #V #_ <minus_n_O #H elim (le_plus_xSy_O_false … H)
-| /3 width=2 by le_plus_to_le_r/
-| /4 width=2 by le_plus_to_le_r, eq_f/
+lemma drop_fwd_length_le_ge: ∀L1,L2,l,m,s. ⬇[s, l, m] L1 ≡ L2 → l ≤ |L1| → |L1| - l ≤ m → yinj (|L2|) = l.
+#L1 #L2 #l #m #s #H elim H -L1 -L2 -l -m
+[ #l #m #_ #H #_ normalize /2 width=1 by yle_inv_O2/
+| #I #L #V #_ normalize <yplus_inj #H elim (ylt_yle_false … H) -H //
+| #I #L1 #L2 #V #m #_ >yminus_inj >yminus_inj <minus_n_O <minus_n_O #IH #_ normalize
+  /3 width=2 by yle_inv_monotonic_plus_dx/
+| #I #L1 #L2 #V1 #v2 #l #m #_ #_ #IH
+  <yplus_inj <yplus_inj >yplus_SO2 >yplus_SO2 >yminus_succ
+  /4 width=1 by yle_inv_succ, eq_f/
 ]
 qed-.
 
@@ -461,8 +485,8 @@ fact drop_inv_FT_aux: ∀L1,L2,s,l,m. ⬇[s, l, m] L1 ≡ L2 →
 | #I #L #V #J #K #W #H destruct //
 | #I #L1 #L2 #V #m #_ #IHL12 #J #K #W #H1 #H2 destruct
   /3 width=1 by drop_drop/
-| #I #L1 #L2 #V1 #V2 #l #m #_ #_ #_ #J #K #W #_ #_
-  <plus_n_Sm #H destruct
+| #I #L1 #L2 #V1 #V2 #l #m #_ #_ #_ #J #K #W #_ #_ #H
+  elim (ysucc_inv_O_dx … H)
 ]
 qed-.
 

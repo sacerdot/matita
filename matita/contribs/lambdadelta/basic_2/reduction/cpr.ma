@@ -81,7 +81,7 @@ lemma cpr_delift: ∀G,K,V,T1,L,l. ⬇[l] L ≡ (K.ⓓV) →
 #G #K #V #T1 elim T1 -T1
 [ * /2 width=4 by cpr_atom, lift_sort, lift_gref, ex2_2_intro/
   #i #L #l #HLK elim (lt_or_eq_or_gt i l)
-  #Hil [1,3: /3 width=4 by cpr_atom, lift_lref_ge_minus, lift_lref_lt, ex2_2_intro/ ]
+  #Hil [1,3: /4 width=4 by lift_lref_ge_minus, lift_lref_lt, ylt_inj, yle_inj, ex2_2_intro/ ]
   destruct
   elim (lift_total V 0 (i+1)) #W #HVW
   elim (lift_split … HVW i i) /3 width=6 by cpr_delta, ex2_2_intro/
@@ -97,8 +97,7 @@ fact lstas_cpr_aux: ∀h,G,L,T1,T2,d. ⦃G, L⦄ ⊢ T1 •*[h, d] T2 →
                     d = 0 → ⦃G, L⦄ ⊢ T1 ➡ T2.
 #h #G #L #T1 #T2 #d #H elim H -G -L -T1 -T2 -d
 /3 width=1 by cpr_eps, cpr_flat, cpr_bind/
-[ #G #L #d #k #H0 destruct normalize //
-| #G #L #K #V1 #V2 #W2 #i #d #HLK #_ #HVW2 #IHV12 #H destruct
+[ #G #L #K #V1 #V2 #W2 #i #d #HLK #_ #HVW2 #IHV12 #H destruct
   /3 width=6 by cpr_delta/
 | #G #L #K #V1 #V2 #W2 #i #d #_ #_ #_ #_ <plus_n_Sm #H destruct
 ]

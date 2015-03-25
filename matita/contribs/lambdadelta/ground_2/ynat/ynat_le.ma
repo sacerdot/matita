@@ -60,6 +60,22 @@ qed-.
 lemma yle_inv_Y1: ∀n. ∞ ≤ n → n = ∞.
 /2 width=3 by yle_inv_Y1_aux/ qed-.
 
+(* Basic properties *********************************************************)
+
+lemma le_O1: ∀n:ynat. 0 ≤ n.
+* /2 width=1 by yle_inj/
+qed.
+
+lemma yle_refl: reflexive … yle.
+* /2 width=1 by le_n, yle_inj/
+qed.
+
+lemma yle_split: ∀x,y:ynat. x ≤ y ∨ y ≤ x.
+* /2 width=1 by or_intror/
+#x * /2 width=1 by or_introl/
+#y elim (le_or_ge x y) /3 width=1 by yle_inj, or_introl, or_intror/
+qed-.
+
 (* Inversion lemmas on successor ********************************************)
 
 fact yle_inv_succ1_aux: ∀x,y. x ≤ y → ∀m. x = ⫯m → m ≤ ⫰y ∧ ⫯⫰y = y.
@@ -78,20 +94,11 @@ lemma yle_inv_succ: ∀m,n. ⫯m ≤ ⫯n → m ≤ n.
 #m #n #H elim (yle_inv_succ1 … H) -H //
 qed-.
 
-(* Basic properties *********************************************************)
-
-lemma le_O1: ∀n:ynat. 0 ≤ n.
-* /2 width=1 by yle_inj/
-qed.
-
-lemma yle_refl: reflexive … yle.
-* /2 width=1 by le_n, yle_inj/
-qed.
-
-lemma yle_split: ∀x,y:ynat. x ≤ y ∨ y ≤ x.
-* /2 width=1 by or_intror/
-#x * /2 width=1 by or_introl/
-#y elim (le_or_ge x y) /3 width=1 by yle_inj, or_introl, or_intror/
+lemma yle_inv_succ2: ∀x,y. x ≤ ⫯y → ⫰x ≤ y.
+#x #y #Hxy elim (ynat_cases x)
+[ #H destruct //
+| * #m #H destruct /2 width=1 by yle_inv_succ/
+]
 qed-.
 
 (* Properties on predecessor ************************************************)
@@ -122,7 +129,14 @@ lemma yle_refl_S_dx: ∀x. x ≤ ⫯x.
 
 lemma yle_refl_SP_dx: ∀x. x ≤ ⫯⫰x.
 * // * //
-qed. 
+qed.
+
+lemma yle_succ2: ∀x,y. ⫰x ≤ y → x ≤ ⫯y.
+#x #y #Hxy elim (ynat_cases x)
+[ #H destruct //
+| * #m #H destruct /2 width=1 by yle_succ/
+]
+qed-.
 
 (* Main properties **********************************************************)
 

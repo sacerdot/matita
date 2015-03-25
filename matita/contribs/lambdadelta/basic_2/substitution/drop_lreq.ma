@@ -37,7 +37,7 @@ lemma lreq_drop_trans_be: ∀L1,L2,l,m. L1 ⩬[l, m] L2 →
   [ #_ destruct >ypred_succ
     /2 width=3 by drop_pair, ex2_intro/
   | lapply (ylt_inv_O1 i ?) /2 width=1 by ylt_inj/
-    #H <H -H #H lapply (ylt_inv_succ … H) -H
+    #H <H -H #H lapply (ylt_inv_succ … H) -H <yminus_SO2
     #Him elim (IHL12 … HLK1) -IHL12 -HLK1 // -Him
     >yminus_succ <yminus_inj /3 width=3 by drop_drop_lt, ex2_intro/
   ]

@@ -30,8 +30,8 @@ lemma ylt_fwd_gen: ∀x,y. x < y → ∃m. x = yinj m.
 #x #y * -x -y /2 width=2 by ex_intro/
 qed-.
 
-lemma ylt_fwd_le_succ: ∀x,y. x < y → ⫯x ≤ y.
-#x #y * -x -y /2 width=1 by yle_inj/
+lemma ylt_fwd_lt_O1: ∀x,y:ynat. x < y → 0 < y.
+#x #y #H elim H -x -y /3 width=2 by ylt_inj, ltn_to_ltO/
 qed-.
 
 (* Basic inversion lemmas ***************************************************)
@@ -102,6 +102,10 @@ lemma ylt_fwd_le_succ1: ∀m,n. m < n → ⫯m ≤ n.
 #m #n * -m -n /2 width=1 by yle_inj/
 qed-.
 
+lemma ylt_fwd_le_pred2: ∀x,y:ynat. x < y → x ≤ ⫰y.
+#x #y #H elim H -x -y /3 width=1 by yle_inj, monotonic_pred/
+qed-.
+
 lemma ylt_fwd_le: ∀m:ynat. ∀n:ynat. m < n → m ≤ n.
 #m #n * -m -n /3 width=1 by lt_to_le, yle_inj/
 qed-.
@@ -139,9 +143,13 @@ lemma ylt_succ: ∀m,n. m < n → ⫯m < ⫯n.
 #m #n #H elim H -m -n /3 width=1 by ylt_inj, le_S_S/
 qed.
 
+lemma yle_succ1_inj: ∀x,y. ⫯yinj x ≤ y → x < y.
+#x * /3 width=1 by yle_inv_inj, ylt_inj/
+qed.
+
 (* Properties on order ******************************************************)
 
-lemma yle_split_eq: ∀m:ynat. ∀n:ynat. m ≤ n → m < n ∨ m = n.
+lemma yle_split_eq: ∀m,n:ynat. m ≤ n → m < n ∨ m = n.
 #m #n * -m -n
 [ #m #n #Hmn elim (le_to_or_lt_eq … Hmn) -Hmn
   /3 width=1 by or_introl, ylt_inj/
@@ -149,10 +157,15 @@ lemma yle_split_eq: ∀m:ynat. ∀n:ynat. m ≤ n → m < n ∨ m = n.
 ]
 qed-.
 
-lemma ylt_split: ∀m,n:ynat. m < n ∨ n ≤ m..
+lemma ylt_split: ∀m,n:ynat. m < n ∨ n ≤ m.
 #m #n elim (yle_split m n) /2 width=1 by or_intror/
 #H elim (yle_split_eq … H) -H /2 width=1 by or_introl, or_intror/
-qed-. 
+qed-.
+
+lemma ylt_split_eq: ∀m,n:ynat. ∨∨ m < n | n = m | n < m.
+#m #n elim (ylt_split m n) /2 width=1 by or3_intro0/
+#H elim (yle_split_eq … H) -H /2 width=1 by or3_intro1, or3_intro2/
+qed-.
 
 lemma ylt_yle_trans: ∀x:ynat. ∀y:ynat. ∀z:ynat. y ≤ z → x < y → x < z.
 #x #y #z * -y -z

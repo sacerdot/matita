@@ -58,7 +58,7 @@ fact lcosx_inv_succ_aux: ∀h,g,G,L,x. G ⊢ ~⬊*[h, g, x] L → ∀l. x = ⫯l
                                   G ⊢ ⬊*[h, g, V, l] K.
 #h #g #G #L #l * -L -l /2 width=1 by or_introl/
 [ #I #L #T #_ #x #H elim (ysucc_inv_O_sn … H)
-| #I #L #T #l #HT #HL #x #H <(ysucc_inj … H) -x
+| #I #L #T #l #HT #HL #x #H <(ysucc_inv_inj … H) -x
   /3 width=6 by ex3_3_intro, or_intror/
 ]
 qed-.

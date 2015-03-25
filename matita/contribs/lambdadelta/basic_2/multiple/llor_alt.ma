@@ -36,8 +36,8 @@ elim (le_to_or_lt_eq … H) -H #H
   lapply (drop_O1_inv_append1_le … HLK … HLY) /2 width=1 by lt_to_le/ -HLK normalize #H destruct
   elim (IH … HLY1 HLY2 HLY) -IH -HLY1 -HLY2 -HLY *
   [ /3 width=1 by and3_intro, or3_intro0/
-  | /6 width=2 by frees_inv_append, lt_to_le, or3_intro1, and3_intro/
-  | /5 width=1 by frees_append, lt_to_le, or3_intro2, and4_intro/
+  | /7 width=2 by frees_inv_append, yle_inj, lt_to_le, or3_intro1, and3_intro/
+  | /6 width=1 by frees_append, yle_inj, lt_to_le, or3_intro2, and4_intro/
   ]
 | -IH -HLK1 destruct
   lapply (drop_O1_inv_append1_le … HLK2 … (⋆) ?) // -HLK2 normalize #H destruct
@@ -63,8 +63,8 @@ elim (le_to_or_lt_eq … H) -H #H
   lapply (drop_O1_inv_append1_le … HLK … HLY) /2 width=1 by lt_to_le/ -HLK normalize #H destruct
   elim (IH … HLY1 HLY2 HLY) -IH -HLY1 -HLY2 -HLY *
   [ /3 width=1 by and3_intro, or3_intro0/
-  | /6 width=2 by frees_inv_append, lt_to_le, or3_intro1, and3_intro/
-  | /5 width=1 by frees_append, lt_to_le, or3_intro2, and4_intro/
+  | /7 width=2 by frees_inv_append, yle_inj, lt_to_le, or3_intro1, and3_intro/
+  | /6 width=1 by frees_append, yle_inj, lt_to_le, or3_intro2, and4_intro/
   ]
 | -IH -HLK2 destruct
   lapply (drop_O1_inv_append1_le … HLK1 … (⋆) ?) // -HLK1 normalize #H destruct

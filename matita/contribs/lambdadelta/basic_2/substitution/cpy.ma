@@ -58,7 +58,7 @@ lemma cpy_full: ∀I,G,K,V,T1,L,l. ⬇[l] L ≡ K.ⓑ{I}V →
 [ * #i #L #l #HLK
   /2 width=4 by lift_sort, lift_gref, ex2_2_intro/
   elim (lt_or_eq_or_gt i l) #Hil
-  /3 width=4 by lift_lref_ge_minus, lift_lref_lt, ex2_2_intro/
+  /4 width=4 by lift_lref_ge_minus, lift_lref_lt, ex2_2_intro, ylt_inj, yle_inj/ (**) (* was /3 width=4/ without inj *)
   destruct
   elim (lift_total V 0 (i+1)) #W #HVW
   elim (lift_split … HVW i i)
@@ -90,6 +90,7 @@ lemma cpy_weak_top: ∀G,L,T1,T2,l,m.
   lapply (drop_fwd_length_lt2 … HLK)
   /4 width=5 by cpy_subst, ylt_yle_trans, ylt_inj/
 | #a #I #G #L #V1 #V2 normalize in match (|L.ⓑ{I}V2|); (**) (* |?| does not work *)
+  <yplus_inj >yplus_SO2 >yminus_succ
   /2 width=1 by cpy_bind/
 | /2 width=1 by cpy_flat/
 ]
@@ -155,9 +156,9 @@ lemma cpy_fwd_up: ∀G,L,U1,U2,lt,mt. ⦃G, L⦄ ⊢ U1 ▶[lt, mt] U2 →
 | #I #G #L #K #V #W #i #lt #mt #Hlti #Hilmt #HLK #HVW #T1 #l #m #H #Hllt #Hlmlmt
   elim (lift_inv_lref2 … H) -H * #Hil #H destruct [ -V -Hilmt -Hlmlmt | -Hlti -Hllt ]
   [ elim (ylt_yle_false … Hllt) -Hllt /3 width=3 by yle_ylt_trans, ylt_inj/
-  | elim (le_inv_plus_l … Hil) #Hlim #Hmi
-    elim (lift_split … HVW l (i-m+1) ? ? ?) [2,3,4: /2 width=1 by le_S_S, le_S/ ] -Hlim
-    #T2 #_ >plus_minus // <minus_minus /2 width=1 by le_S/ <minus_n_n <plus_n_O #H -Hmi
+  | elim (yle_inv_plus_inj2 … Hil) #Hlim #Hmi
+    elim (lift_split … HVW l (i-m+1) ? ? ?) [2,3,4: /2 width=1 by yle_succ_dx, le_S_S/ ] -Hlim
+    #T2 #_ >plus_minus /2 width=1 by yle_inv_inj/ <minus_minus /3 width=1 by le_S, yle_inv_inj/ <minus_n_n <plus_n_O #H -Hmi
     @(ex2_intro … H) -H @(cpy_subst … HLK HVW) /2 width=1 by yle_inj/ >ymax_pre_sn_comm // (**) (* explicit constructor *)
   ]
 | #a #I #G #L #W1 #W2 #U1 #U2 #lt #mt #_ #_ #IHW12 #IHU12 #X #l #m #H #Hllt #Hlmlmt

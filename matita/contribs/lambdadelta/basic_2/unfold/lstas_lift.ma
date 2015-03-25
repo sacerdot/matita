@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/ynat/ynat_max.ma".
 include "basic_2/substitution/drop_drop.ma".
 include "basic_2/unfold/lstas.ma".
 
@@ -27,30 +28,30 @@ lemma lstas_lift: ∀h,G,d. d_liftable (lstas h G d).
   >(lift_inv_sort1 … H2) -X2 //
 | #G #L1 #K1 #V1 #W1 #W #i #d #HLK1 #_ #HW1 #IHVW1 #L2 #s #l #m #HL21 #X #H #U2 #HWU2
   elim (lift_inv_lref1 … H) * #Hil #H destruct
-  [ elim (lift_trans_ge … HW1 … HWU2) -W // #W2 #HW12 #HWU2
-    elim (drop_trans_le … HL21 … HLK1) -L1 /2 width=2 by lt_to_le/ #X #HLK2 #H
-    elim (drop_inv_skip2 … H) -H /2 width=1 by lt_plus_to_minus_r/ -Hil #K2 #V2 #HK21 #HV12 #H destruct
+  [ elim (lift_trans_ge … HW1 … HWU2) -W /2 width=1 by ylt_fwd_le_succ1/ #W2 #HW12 #HWU2
+    elim (drop_trans_le … HL21 … HLK1) -L1 /2 width=2 by ylt_fwd_le/ #X #HLK2 #H
+    elim (drop_inv_skip2 … H) -H /2 width=1 by ylt_to_minus/ -Hil #K2 #V2 #HK21 #HV12 #H destruct
     /3 width=9 by lstas_ldef/
-  | lapply (lift_trans_be … HW1 … HWU2 ? ?) -W /2 width=1 by le_S/ #HW1U2
+  | lapply (lift_trans_be … HW1 … HWU2 ? ?) -W /2 width=1 by yle_succ_dx/ #HW1U2
     lapply (drop_trans_ge … HL21 … HLK1 ?) -L1 /3 width=9 by lstas_ldef, drop_inv_gen/
   ]
 | #G #L1 #K1 #V1 #W1 #i #HLK1 #_ #IHVW1 #L2 #s #l #m #HL21 #X #H #U2 #HWU2
   >(lift_mono … HWU2 … H) -U2
   elim (lift_inv_lref1 … H) * #Hil #H destruct
   [ elim (lift_total W1 (l-i-1) m) #W2 #HW12
-    elim (drop_trans_le … HL21 … HLK1) -L1 /2 width=2 by lt_to_le/ #X #HLK2 #H
-    elim (drop_inv_skip2 … H) -H /2 width=1 by lt_plus_to_minus_r/ -Hil #K2 #V2 #HK21 #HV12 #H destruct
+    elim (drop_trans_le … HL21 … HLK1) -L1 /2 width=2 by ylt_fwd_le/ #X #HLK2 #H
+    elim (drop_inv_skip2 … H) -H /2 width=1 by ylt_to_minus/ -Hil #K2 #V2 #HK21 #HV12 #H destruct
     /3 width=10 by lstas_zero/
   | lapply (drop_trans_ge … HL21 … HLK1 ?) -L1
     /3 width=10 by lstas_zero, drop_inv_gen/
   ]
 | #G #L1 #K1 #W1 #V1 #W #i #d #HLK1 #_ #HW1 #IHWV1 #L2 #s #l #m #HL21 #X #H #U2 #HWU2
   elim (lift_inv_lref1 … H) * #Hil #H destruct
-  [ elim (lift_trans_ge … HW1 … HWU2) -W // <minus_plus #W #HW1 #HWU2
-    elim (drop_trans_le … HL21 … HLK1) -L1 /2 width=2 by lt_to_le/ #X #HLK2 #H
-    elim (drop_inv_skip2 … H) -H /2 width=1 by lt_plus_to_minus_r/ -Hil #K2 #W2 #HK21 #HW12 #H destruct
+  [ elim (lift_trans_ge … HW1 … HWU2) -W /2 width=1 by ylt_fwd_le_succ1/ #W #HW1 #HWU2
+    elim (drop_trans_le … HL21 … HLK1) -L1 /2 width=2 by ylt_fwd_le/ #X #HLK2 #H
+    elim (drop_inv_skip2 … H) -H /2 width=1 by ylt_to_minus/ -Hil #K2 #W2 #HK21 #HW12 #H destruct
     /3 width=9 by lstas_succ/
-  | lapply (lift_trans_be … HW1 … HWU2 ? ?) -W /2 width=1 by le_S/ #HW1U2
+  | lapply (lift_trans_be … HW1 … HWU2 ? ?) -W /2 width=1 by yle_succ_dx/ #HW1U2
     lapply (drop_trans_ge … HL21 … HLK1 ?) -L1 /3 width=9 by lstas_succ, drop_inv_gen/
   ]
 | #a #I #G #L1 #V1 #T1 #U1 #d #_ #IHTU1 #L2 #s #l #m #HL21 #X1 #H1 #X2 #H2
@@ -77,11 +78,11 @@ lemma lstas_inv_lift1: ∀h,G,d. d_deliftable_sn (lstas h G d).
   elim (lift_inv_lref2 … H) * #Hil #H destruct [ -HVW2 | -IHVW2 ]
   [ elim (drop_conf_lt … HL21 … HLK2) -L2 // #K1 #V1 #HLK1 #HK21 #HV12
     elim (IHVW2 … HK21 … HV12) -K2 -V2 #W1 #HW12 #HVW1
-    elim (lift_trans_le … HW12 … HW2) -W2 // >minus_plus <plus_minus_m_m /3 width=8 by lstas_ldef, ex2_intro/
+    elim (lift_trans_le … HW12 … HW2) -W2 // <yminus_succ2 <yplus_inj >yplus_SO2 >ymax_pre_sn /3 width=8 by lstas_ldef, ylt_fwd_le_succ1, ex2_intro/
   | lapply (drop_conf_ge … HL21 … HLK2 ?) -L2 // #HL1K2
-    elim (le_inv_plus_l … Hil) -Hil #Hlim #mi
-    elim (lift_split … HW2 l (i-m+1)) -HW2 /2 width=1 by le_S_S, le_S/
-    #W0 #HW20 <le_plus_minus_comm // >minus_minus_m_m /3 width=8 by lstas_ldef, le_S, ex2_intro/
+    elim (yle_inv_plus_inj2 … Hil) -Hil #Hlim #mi
+    elim (lift_split … HW2 l (i-m+1)) -HW2 /2 width=1 by yle_succ_dx, le_S_S/
+    #W0 #HW20 <le_plus_minus_comm /2 width=1 by yle_inv_inj/ >minus_minus_m_m /3 width=8 by lstas_ldef, yle_inv_inj, le_S, ex2_intro/
   ]
 | #G #L2 #K2 #W2 #V2 #i #HLK2 #HWV2 #IHWV2 #L1 #s #l #m #HL21 #X #H
   elim (lift_inv_lref2 … H) * #Hil #H destruct [ -HWV2 | -IHWV2 ]
@@ -95,11 +96,11 @@ lemma lstas_inv_lift1: ∀h,G,d. d_deliftable_sn (lstas h G d).
   elim (lift_inv_lref2 … H) * #Hil #H destruct [ -HWV2 | -IHWV2 ]
   [ elim (drop_conf_lt … HL21 … HLK2) -L2 // #K1 #W1 #HLK1 #HK21 #HW12
     elim (IHWV2 … HK21 … HW12) -K2 #V1 #HV12 #HWV1
-    elim (lift_trans_le … HV12 … HW2) -W2 // >minus_plus <plus_minus_m_m /3 width=8 by lstas_succ, ex2_intro/
+    elim (lift_trans_le … HV12 … HW2) -W2 // <yminus_succ2 <yplus_inj >yplus_SO2 >ymax_pre_sn /3 width=8 by lstas_succ, ylt_fwd_le_succ1, ex2_intro/
   | lapply (drop_conf_ge … HL21 … HLK2 ?) -L2 // #HL1K2
-    elim (le_inv_plus_l … Hil) -Hil #Hlim #mi
-    elim (lift_split … HW2 l (i-m+1)) -HW2 /2 width=1 by le_S_S, le_S/
-    #W0 #HW20 <le_plus_minus_comm // >minus_minus_m_m /3 width=8 by lstas_succ, le_S, ex2_intro/
+    elim (yle_inv_plus_inj2  … Hil) -Hil #Hlim #mi
+    elim (lift_split … HW2 l (i-m+1)) -HW2 /2 width=1 by yle_succ_dx, le_S_S/
+    #W0 #HW20 <le_plus_minus_comm /2 width=1 by yle_inv_inj/ >minus_minus_m_m /3 width=8 by lstas_succ, yle_inv_inj, le_S, ex2_intro/
   ]
 | #a #I #G #L2 #V2 #T2 #U2 #d #_ #IHTU2 #L1 #s #l #m #HL21 #X #H
   elim (lift_inv_bind2 … H) -H #V1 #T1 #HV12 #HT12 #H destruct

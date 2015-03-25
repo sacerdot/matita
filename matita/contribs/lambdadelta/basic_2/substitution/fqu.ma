@@ -40,7 +40,7 @@ lemma fqu_drop_lt: ∀G,L,K,T,U,m. 0 < m →
 qed.
 
 lemma fqu_lref_S_lt: ∀I,G,L,V,i. 0 < i → ⦃G, L.ⓑ{I}V, #i⦄ ⊐ ⦃G, L, #(i-1)⦄.
-/3 width=3 by fqu_drop, drop_drop, lift_lref_ge_minus/
+/4 width=3 by fqu_drop, drop_drop, lift_lref_ge_minus, yle_inj/
 qed.
 
 (* Basic forward lemmas *****************************************************)

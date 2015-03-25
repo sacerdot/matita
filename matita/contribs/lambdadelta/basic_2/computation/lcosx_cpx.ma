@@ -28,7 +28,7 @@ lemma lsx_cpx_trans_lcosx: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[h, g] T2 →
 #h #g #G #L #T1 #T2 #H elim H -G -L -T1 -T2 //
 [ #I #G #L #K #V1 #V2 #W2 #i #HLK #_ #HVW2 #IHV12 #l #HL #H
   elim (ylt_split i l) #Hli [ -H | -HL ]
-  [ <(ymax_pre_sn l (⫯i)) /2 width=1 by ylt_fwd_le_succ/
+  [ <(ymax_pre_sn l (⫯i)) /2 width=1 by ylt_fwd_le_succ1/
     elim (lcosx_drop_trans_lt … HL … HLK) // -HL -Hli
     lapply (drop_fwd_drop2 … HLK) -HLK /3 width=7 by lsx_lift_ge/
   | lapply (lsx_fwd_lref_be … H … HLK) // -H -Hli
@@ -42,8 +42,9 @@ lemma lsx_cpx_trans_lcosx: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[h, g] T2 →
 | #I #G #L #V1 #V2 #T1 #T2 #_ #_ #IHV12 #IHT12 #l #HL #H
   elim (lsx_inv_flat … H) -H /3 width=1 by lsx_flat/
 | #G #L #V #U1 #U2 #T2 #_ #HTU2 #IHU12 #l #HL #H
-  elim (lsx_inv_bind … H) -H
-  /4 width=9 by lcosx_pair, lsx_inv_lift_ge, drop_drop/
+  elim (lsx_inv_bind … H) -H #HV #HU1
+  <(ypred_succ l) <yminus_SO2
+  /4 width=7 by lcosx_pair, lsx_inv_lift_ge, drop_drop/
 | #G #L #V #T1 #T2 #_ #IHT12 #l #HL #H
   elim (lsx_inv_flat … H) -H /2 width=1 by/
 | #G #L #V1 #V2 #T #_ #IHV12 #l #HL #H
@@ -57,7 +58,7 @@ lemma lsx_cpx_trans_lcosx: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[h, g] T2 →
   elim (lsx_inv_flat … H) -H #HV1 #H
   elim (lsx_inv_bind … H) -H #HW1 #HT1
   @lsx_bind /2 width=1 by/ (**) (* explicit constructor *)
-  @lsx_flat [ /3 width=7 by lsx_lift_ge, drop_drop/ ]
+  @lsx_flat [ <yplus_SO2 /3 width=7 by lsx_lift_ge, drop_drop/ ]
   @(lsx_lreq_conf … (L.ⓓW1)) /3 width=1 by lcosx_pair, lreq_succ/
 ]
 qed-.

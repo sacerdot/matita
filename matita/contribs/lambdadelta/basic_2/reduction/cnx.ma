@@ -40,7 +40,7 @@ lemma cnx_inv_delta: ∀h,g,I,G,L,K,V,i. ⬇[i] L ≡ K.ⓑ{I}V → ⦃G, L⦄ �
 #h #g #I #G #L #K #V #i #HLK #H
 elim (lift_total V 0 (i+1)) #W #HVW
 lapply (H W ?) -H [ /3 width=7 by cpx_delta/ ] -HLK #H destruct
-elim (lift_inv_lref2_be … HVW) -HVW //
+elim (lift_inv_lref2_be … HVW) -HVW /2 width=1 by ylt_inj/
 qed-.
 
 lemma cnx_inv_abst: ∀h,g,a,G,L,V,T. ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃ⓛ{a}V.T⦄ →

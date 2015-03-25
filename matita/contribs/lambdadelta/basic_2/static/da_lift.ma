@@ -27,16 +27,16 @@ lemma da_lift: ∀h,g,G,L1,T1,d. ⦃G, L1⦄ ⊢ T1 ▪[h, g] d →
   >(lift_inv_sort1 … H) -X /2 width=1 by da_sort/
 | #G #L1 #K1 #V1 #i #d #HLK1 #_ #IHV1 #L2 #s #l #m #HL21 #X #H
   elim (lift_inv_lref1 … H) * #Hil #H destruct
-  [ elim (drop_trans_le … HL21 … HLK1) -L1 /2 width=2 by lt_to_le/ #X #HLK2 #H
-    elim (drop_inv_skip2 … H) -H /2 width=1 by lt_plus_to_minus_r/ -Hil #K2 #V2 #HK21 #HV12 #H destruct
+  [ elim (drop_trans_le … HL21 … HLK1) -L1 /2 width=2 by ylt_fwd_le/ #X #HLK2 #H
+    elim (drop_inv_skip2 … H) -H /2 width=1 by ylt_to_minus/ -Hil #K2 #V2 #HK21 #HV12 #H destruct
     /3 width=9 by da_ldef/
   | lapply (drop_trans_ge … HL21 … HLK1 ?) -L1
     /3 width=8 by da_ldef, drop_inv_gen/
   ]
 | #G #L1 #K1 #W1 #i #d #HLK1 #_ #IHW1 #L2 #s #l #m #HL21 #X #H
   elim (lift_inv_lref1 … H) * #Hil #H destruct
-  [ elim (drop_trans_le … HL21 … HLK1) -L1 /2 width=2 by lt_to_le/ #X #HLK2 #H
-    elim (drop_inv_skip2 … H) -H /2 width=1 by lt_plus_to_minus_r/ -Hil #K2 #W2 #HK21 #HW12 #H destruct
+  [ elim (drop_trans_le … HL21 … HLK1) -L1 /2 width=2 by ylt_fwd_le/ #X #HLK2 #H
+    elim (drop_inv_skip2 … H) -H /2 width=1 by ylt_to_minus/ -Hil #K2 #W2 #HK21 #HW12 #H destruct
     /3 width=8 by da_ldec/
   | lapply (drop_trans_ge … HL21 … HLK1 ?) -L1
     /3 width=8 by da_ldec, drop_inv_gen/

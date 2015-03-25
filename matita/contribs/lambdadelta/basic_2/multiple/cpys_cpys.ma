@@ -60,8 +60,8 @@ qed-.
 
 lemma cpys_inv_lift1_up: ∀G,L,U1,U2,lt,mt. ⦃G, L⦄ ⊢ U1 ▶*[lt, mt] U2 →
                          ∀K,s,l,m. ⬇[s, l, m] L ≡ K → ∀T1. ⬆[l, m] T1 ≡ U1 →
-                         l ≤ lt → lt ≤ yinj l + m → yinj l + m ≤ lt + mt →
-                         ∃∃T2. ⦃G, K⦄ ⊢ T1 ▶*[l, lt + mt - (yinj l + m)] T2 &
+                         l ≤ lt → lt ≤ l + m → l + m ≤ lt + mt →
+                         ∃∃T2. ⦃G, K⦄ ⊢ T1 ▶*[l, lt + mt - (l + m)] T2 &
                                ⬆[l, m] T2 ≡ U2.
 #G #L #U1 #U2 #lt #mt #HU12 #K #s #l #m #HLK #T1 #HTU1 #Hllt #Hltlm #Hlmlmt
 elim (cpys_split_up … HU12 (l + m)) -HU12 // -Hlmlmt #U #HU1 #HU2
@@ -105,8 +105,8 @@ theorem cpys_antisym_eq: ∀G,L1,T1,T2,l,m. ⦃G, L1⦄ ⊢ T1 ▶*[l, m] T2 →
     #HW2 >(cpys_inv_lift1_eq … HW2) -HW2 //
   | elim (drop_O1_le (Ⓕ) … Hi) -Hi #K2 #HLK2
     elim (cpys_inv_lift1_ge_up … HW2 … HLK2 … HVW2 ? ? ?) -HW2 -HLK2 -HVW2
-    /2 width=1 by ylt_fwd_le_succ, yle_succ_dx/ -Hli -Hilm
-    #X #_ #H elim (lift_inv_lref2_be … H) -H //
+    /2 width=1 by ylt_fwd_le_succ1, yle_succ_dx/ -Hli -Hilm
+    #X #_ #H elim (lift_inv_lref2_be … H) -H /2 width=1 by ylt_inj/
   ]
 | #a #I #G #L1 #V1 #V2 #T1 #T2 #l #m #_ #_ #IHV12 #IHT12 #L2 #H elim (cpys_inv_bind1 … H) -H
   #V #T #HV2 #HT2 #H destruct

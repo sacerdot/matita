@@ -25,6 +25,12 @@ definition ysucc: ynat → ynat ≝ λm. match m with
 
 interpretation "ynat successor" 'Successor m = (ysucc m).
 
+lemma ysucc_inj: ∀m:nat. ⫯m = S m.
+// qed.
+
+lemma ysucc_Y: ⫯(∞) = ∞.
+// qed.
+
 (* Properties ***************************************************************)
 
 lemma ypred_succ: ∀m. ⫰⫯m = m.
@@ -45,12 +51,12 @@ qed.
 
 (* Inversion lemmas *********************************************************)
 
-lemma ysucc_inj: ∀m,n. ⫯m = ⫯n → m = n.
+lemma ysucc_inv_inj: ∀m,n. ⫯m = ⫯n → m = n.
 #m #n #H <(ypred_succ m) <(ypred_succ n) //
 qed-.
 
 lemma ysucc_inv_refl: ∀m. ⫯m = m → m = ∞.
-* // normalize
+* //
 #m #H lapply (yinj_inj … H) -H (**) (* destruct lemma needed *)
 #H elim (lt_refl_false m) //
 qed-.

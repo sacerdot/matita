@@ -18,15 +18,15 @@ include "basic_2/substitution/lift.ma".
 
 (* Properties on negated basic relocation ***********************************)
 
-lemma nlift_lref_be_SO: ∀X,i. ⬆[i, 1] X ≡ #i → ⊥.
-/2 width=7 by lift_inv_lref2_be/ qed-.
+lemma nlift_lref_be_SO: ∀X,i. ⬆[yinj i, 1] X ≡ #i → ⊥.
+/3 width=7 by lift_inv_lref2_be, ylt_inj/ qed-.
 
 lemma nlift_bind_sn: ∀W,l,m. (∀V. ⬆[l, m] V ≡ W → ⊥) →
                      ∀a,I,U. (∀X. ⬆[l, m] X ≡ ⓑ{a,I}W.U → ⊥).
 #W #l #m #HW #a #I #U #X #H elim (lift_inv_bind2 … H) -H /2 width=2 by/
 qed-.
 
-lemma nlift_bind_dx: ∀U,l,m. (∀T. ⬆[l+1, m] T ≡ U → ⊥) →
+lemma nlift_bind_dx: ∀U,l,m. (∀T. ⬆[⫯l, m] T ≡ U → ⊥) →
                      ∀a,I,W. (∀X. ⬆[l, m] X ≡ ⓑ{a,I}W.U → ⊥).
 #U #l #m #HU #a #I #W #X #H elim (lift_inv_bind2 … H) -H /2 width=2 by/
 qed-.
@@ -43,15 +43,16 @@ qed-.
 
 (* Inversion lemmas on negated basic relocation *****************************)
 
-lemma nlift_inv_lref_be_SO: ∀i,j. (∀X. ⬆[i, 1] X ≡ #j → ⊥) → j = i.
+lemma nlift_inv_lref_be_SO: ∀i,j. (∀X. ⬆[i, 1] X ≡ #j → ⊥) → yinj j = i.
+* [2: #j #H elim H -H // ]
 #i #j elim (lt_or_eq_or_gt i j) // #Hij #H
-[ elim (H (#(j-1))) -H /2 width=1 by lift_lref_ge_minus/
-| elim (H (#j)) -H /2 width=1 by lift_lref_lt/
+[ elim (H (#(j-1))) -H /3 width=1 by lift_lref_ge_minus, yle_inj/
+| elim (H (#j)) -H /3 width=1 by lift_lref_lt, ylt_inj/
 ]
 qed-.
 
 lemma nlift_inv_bind: ∀a,I,W,U,l,m. (∀X. ⬆[l, m] X ≡ ⓑ{a,I}W.U → ⊥) →
-                      (∀V. ⬆[l, m] V ≡ W → ⊥) ∨ (∀T. ⬆[l+1, m] T ≡ U → ⊥).
+                      (∀V. ⬆[l, m] V ≡ W → ⊥) ∨ (∀T. ⬆[⫯l, m] T ≡ U → ⊥).
 #a #I #W #U #l #m #H elim (is_lift_dec W l m)
 [ * /4 width=2 by lift_bind, or_intror/
 | /4 width=2 by ex_intro, or_introl/

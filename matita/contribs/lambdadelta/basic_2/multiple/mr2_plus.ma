@@ -12,17 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/ynat/ynat_plus.ma".
 include "basic_2/multiple/mr2.ma".
 
 (* MULTIPLE RELOCATION WITH PAIRS *******************************************)
 
-let rec pluss (cs:list2 nat nat) (i:nat) on cs ≝ match cs with
+let rec pluss (cs:list2 ynat nat) (i:nat) on cs ≝ match cs with
 [ nil2          ⇒ ◊
 | cons2 l m cs ⇒ {l + i, m} @ pluss cs i
 ].
 
 interpretation "plus (multiple relocation with pairs)"
    'plus x y = (pluss x y).
+
+(* Basic properties *********************************************************)
+
+lemma pluss_SO2: ∀l,m,cs. ({l, m} @ cs) + 1 = {⫯l, m} @ cs + 1.
+// qed.
 
 (* Basic inversion lemmas ***************************************************)
 
@@ -33,8 +39,9 @@ qed.
 
 lemma pluss_inv_cons2: ∀i,l,m,cs2,cs. cs + i = {l, m} @ cs2 →
                        ∃∃cs1. cs1 + i = cs2 & cs = {l - i, m} @ cs1.
-#i #l #m #cs2 * normalize
-[ #H destruct
-| #l1 #m1 #cs1 #H destruct /2 width=3 by ex2_intro/
+#i #l #m #cs2 *
+[ normalize #H destruct
+| #l1 #m1 #cs1 whd in ⊢ (??%?→?); #H destruct
+  >yplus_minus_inj /2 width=3 by ex2_intro/
 ]
 qed-.

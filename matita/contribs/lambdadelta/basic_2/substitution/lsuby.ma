@@ -224,7 +224,7 @@ lemma lsuby_drop_trans_be: ∀L1,L2,l,m. L1 ⊆[l, m] L2 →
     /2 width=4 by drop_pair, ex2_2_intro/
   | lapply (ylt_inv_O1 i ?) /2 width=1 by ylt_inj/
     #H <H -H #H lapply (ylt_inv_succ … H) -H
-    #Him elim (IHL12 … HLK1) -IHL12 -HLK1 // -Him
+    #Him elim (IHL12 … HLK1) -IHL12 -HLK1 [2: <yminus_inj ] // -Him
     >yminus_succ <yminus_inj /3 width=4 by drop_drop_lt, ex2_2_intro/
   ]
 | #I1 #I2 #L1 #L2 #V1 #V2 #l #m #_ #IHL12 #J2 #K2 #W #s #i #HLK2 #Hli

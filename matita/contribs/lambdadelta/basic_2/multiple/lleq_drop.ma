@@ -127,12 +127,12 @@ lemma lleq_inv_lift_le: ∀L1,L2,U,lt. L1 ≡[U, lt] L2 →
 
 lemma lleq_inv_lift_be: ∀L1,L2,U,lt. L1 ≡[U, lt] L2 →
                         ∀K1,K2,l,m. ⬇[Ⓕ, l, m] L1 ≡ K1 → ⬇[Ⓕ, l, m] L2 ≡ K2 →
-                        ∀T. ⬆[l, m] T ≡ U → l ≤ lt → lt ≤ yinj l + m → K1 ≡[T, l] K2.
+                        ∀T. ⬆[l, m] T ≡ U → l ≤ lt → lt ≤ l + m → K1 ≡[T, l] K2.
 /2 width=11 by llpx_sn_inv_lift_be/ qed-.
 
 lemma lleq_inv_lift_ge: ∀L1,L2,U,lt. L1 ≡[U, lt] L2 →
                         ∀K1,K2,l,m. ⬇[Ⓕ, l, m] L1 ≡ K1 → ⬇[Ⓕ, l, m] L2 ≡ K2 →
-                        ∀T. ⬆[l, m] T ≡ U → yinj l + m ≤ lt → K1 ≡[T, lt-m] K2.
+                        ∀T. ⬆[l, m] T ≡ U → l + m ≤ lt → K1 ≡[T, lt-m] K2.
 /2 width=9 by llpx_sn_inv_lift_ge/ qed-.
 
 (* Inversion lemmas on negated lazy quivalence for local environments *******)

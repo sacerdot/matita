@@ -17,6 +17,14 @@ include "ground_2/lib/star.ma".
 
 (* ARITHMETICAL PROPERTIES **************************************************)
 
+(* Iota equations ***********************************************************)
+
+lemma pred_O: pred 0 = 0.
+normalize // qed.
+
+lemma pred_S: ∀m. pred (S m) = m.
+// qed.
+
 (* Equations ****************************************************************)
 
 lemma minus_plus_m_m_commutative: ∀n,m:nat. n = m + n - m.
@@ -167,6 +175,12 @@ let rec iter (n:nat) (B:Type[0]) (op: B → B) (nil: B) ≝
    ].
 
 interpretation "iterated function" 'exp op n = (iter n ? op).
+
+lemma iter_O: ∀B:Type[0]. ∀f:B→B.∀b. f^0 b = b.
+// qed.
+
+lemma iter_S: ∀B:Type[0]. ∀f:B→B.∀b,l. f^(S l) b = f (f^l b).
+// qed.
 
 lemma iter_SO: ∀B:Type[0]. ∀f:B→B. ∀b,l. f^(l+1) b = f (f^l b).
 #B #f #b #l >commutative_plus //

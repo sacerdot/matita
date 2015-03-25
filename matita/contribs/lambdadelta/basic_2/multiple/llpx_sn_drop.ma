@@ -275,7 +275,7 @@ lemma llpx_sn_inv_lift_le: ∀R. d_deliftable_sn R →
     /3 width=10 by llpx_sn_lref/
   | lapply (drop_conf_ge … HLK1 … HLK11 ?) // -L1
     lapply (drop_conf_ge … HLK2 … HLK22 ?) // -L2 -Hil0
-    elim (le_inv_plus_l … Hil) -Hil /4 width=9 by llpx_sn_lref, yle_trans, yle_inj/ (**) (* slow *)
+    elim (yle_inv_plus_inj2 … Hil) -Hil /4 width=9 by llpx_sn_lref, yle_trans, yle_inj/ (**) (* slow *)
   ]
 | #L1 #L2 #l0 #i #HL1 #HL2 #HL12 #K1 #K2 #l #m #HLK1 #HLK2 #X #H #Hl0 elim (lift_inv_lref2 … H) -H
   * #_ #H destruct
@@ -299,7 +299,7 @@ qed-.
 
 lemma llpx_sn_inv_lift_be: ∀R,L1,L2,U,l0. llpx_sn R l0 U L1 L2 →
                            ∀K1,K2,l,m. ⬇[Ⓕ, l, m] L1 ≡ K1 → ⬇[Ⓕ, l, m] L2 ≡ K2 →
-                           ∀T. ⬆[l, m] T ≡ U → l ≤ l0 → l0 ≤ yinj l + m → llpx_sn R l T K1 K2.
+                           ∀T. ⬆[l, m] T ≡ U → l ≤ l0 → l0 ≤ l + m → llpx_sn R l T K1 K2.
 #R #L1 #L2 #U #l0 #H elim H -L1 -L2 -U -l0
 [ #L1 #L2 #l0 #k #HL12 #K1 #K2 #l #m #HLK1 #HLK2 #X #H #_ #_ >(lift_inv_sort2 … H) -X
   lapply (drop_fwd_length_eq1 … HLK1 HLK2 HL12) -L1 -L2 -l0 -m
@@ -317,7 +317,7 @@ lemma llpx_sn_inv_lift_be: ∀R,L1,L2,U,l0. llpx_sn R l0 U L1 L2 →
     /3 width=3 by ylt_yle_trans, ylt_inj/
   | lapply (drop_conf_ge … HLK1 … HLK11 ?) // -L1
     lapply (drop_conf_ge … HLK2 … HLK22 ?) // -L2 -Hil0 -Hl0 -Hl0m
-    elim (le_inv_plus_l … Hil) -Hil /3 width=9 by llpx_sn_lref, yle_inj/
+    elim (yle_inv_plus_inj2 … Hil) -Hil /3 width=9 by llpx_sn_lref, yle_inj/
   ]
 | #L1 #L2 #l0 #i #HL1 #HL2 #HL12 #K1 #K2 #l #m #HLK1 #HLK2 #X #H #Hl0 #Hl0m elim (lift_inv_lref2 … H) -H
   * #_ #H destruct
@@ -333,7 +333,7 @@ lemma llpx_sn_inv_lift_be: ∀R,L1,L2,U,l0. llpx_sn R l0 U L1 L2 →
   lapply (drop_fwd_length_eq1 … HLK1 HLK2 HL12) -L1 -L2 -l0 -m
   /2 width=1 by llpx_sn_gref/
 | #a #I #L1 #L2 #W #U #l0 #_ #_ #IHW #IHU #K1 #K2 #l #m #HLK1 #HLK2 #X #H #Hl0 #Hl0m elim (lift_inv_bind2 … H) -H
-  >commutative_plus #V #T #HVW #HTU #H destruct
+  #V #T #HVW #HTU #H destruct
   @llpx_sn_bind [ /2 width=5 by/ ] -IHW (**) (* explicit constructor *)
   @(IHU … HTU) -IHU -HTU /2 width=1 by drop_skip, yle_succ/
 | #I #L1 #L2 #W #U #l0 #_ #_ #IHW #IHU #K1 #K2 #l #m #HLK1 #HLK2 #X #H #Hl0 #Hl0m elim (lift_inv_flat2 … H) -H
@@ -343,7 +343,7 @@ qed-.
 
 lemma llpx_sn_inv_lift_ge: ∀R,L1,L2,U,l0. llpx_sn R l0 U L1 L2 →
                            ∀K1,K2,l,m. ⬇[Ⓕ, l, m] L1 ≡ K1 → ⬇[Ⓕ, l, m] L2 ≡ K2 →
-                           ∀T. ⬆[l, m] T ≡ U → yinj l + m ≤ l0 → llpx_sn R (l0-m) T K1 K2.
+                           ∀T. ⬆[l, m] T ≡ U → l + m ≤ l0 → llpx_sn R (l0-m) T K1 K2.
 #R #L1 #L2 #U #l0 #H elim H -L1 -L2 -U -l0
 [ #L1 #L2 #l0 #k #HL12 #K1 #K2 #l #m #HLK1 #HLK2 #X #H #_ >(lift_inv_sort2 … H) -X
   lapply (drop_fwd_length_eq1 … HLK1 HLK2 HL12) -L1 -L2 -l
@@ -352,8 +352,8 @@ lemma llpx_sn_inv_lift_ge: ∀R,L1,L2,U,l0. llpx_sn R l0 U L1 L2 →
   * #Hil #H destruct [ -Hil0 | -Hlml0 ]
   lapply (drop_fwd_length_eq1 … HLK1 HLK2 HL12) -L1 -L2
   [ /4 width=3 by llpx_sn_skip, yle_plus1_to_minus_inj2, ylt_yle_trans, ylt_inj/
-  | elim (le_inv_plus_l … Hil) -Hil #_
-    /4 width=1 by llpx_sn_skip, monotonic_ylt_minus_dx, yle_inj/
+  | elim (yle_inv_plus_inj2 … Hil) -Hil
+    /3 width=1 by llpx_sn_skip, monotonic_ylt_minus_dx/
   ]
 | #I #L1 #L2 #K11 #K22 #W1 #W2 #l0 #i #Hil0 #HLK11 #HLK22 #HK12 #HW12 #_ #K1 #K2 #l #m #HLK1 #HLK2 #X #H #Hlml0 elim (lift_inv_lref2 … H) -H
   * #Hil #H destruct

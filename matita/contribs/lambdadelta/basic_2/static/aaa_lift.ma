@@ -26,8 +26,8 @@ lemma aaa_lift: ∀G,L1,T1,A. ⦃G, L1⦄ ⊢ T1 ⁝ A → ∀L2,s,l,m. ⬇[s, l
   >(lift_inv_sort1 … H) -H //
 | #I #G #L1 #K1 #V1 #B #i #HLK1 #_ #IHB #L2 #s #l #m #HL21 #T2 #H
   elim (lift_inv_lref1 … H) -H * #Hil #H destruct
-  [ elim (drop_trans_le … HL21 … HLK1) -L1 /2 width=2 by lt_to_le/ #X #HLK2 #H
-    elim (drop_inv_skip2 … H) -H /2 width=1 by lt_plus_to_minus_r/ -Hil #K2 #V2 #HK21 #HV12 #H destruct
+  [ elim (drop_trans_le … HL21 … HLK1) -L1 /2 width=2 by ylt_fwd_le/ #X #HLK2 #H
+    elim (drop_inv_skip2 … H) -H /2 width=1 by ylt_to_minus/ -Hil #K2 #V2 #HK21 #HV12 #H destruct
     /3 width=9 by aaa_lref/
   | lapply (drop_trans_ge … HL21 … HLK1 ?) -L1
     /3 width=9 by aaa_lref, drop_inv_gen/
