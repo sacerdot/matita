@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/ynat/ynat_minus.ma".
+include "ground_2/ynat/ynat_lt.ma".
 
 (* NATURAL NUMBERS WITH INFINITY ********************************************)
 
@@ -80,6 +80,43 @@ lemma yplus_comm_23: ∀x,y,z. x + z + y = x + y + z.
 #x #y #z >yplus_assoc //
 qed.
 
+lemma yplus_comm_24: ∀x1,x2,x3,x4. x1 + x4 + x3 + x2 = x1 + x2 + x3 + x4.
+#x1 #x2 #x3 #x4
+>yplus_assoc >yplus_assoc >yplus_assoc >yplus_assoc
+/2 width=1 by eq_f2/
+qed.
+
+lemma yplus_assoc_23: ∀x1,x2,x3,x4. x1 + x2 + (x3 + x4) = x1 + (x2 + x3) + x4.  
+#x1 #x2 #x3 #x4 >yplus_assoc >yplus_assoc
+/2 width=1 by eq_f2/
+qed.
+
+(* Inversion lemmas on successor *********************************************)
+
+lemma yplus_inv_succ_lt_dx: ∀x,y,z. 0 < y → x + y = ⫯z → x + ⫰y = z.
+#x #y #z #H <(ylt_inv_O1 y) // >yplus_succ2
+/2 width=1 by ysucc_inv_inj/
+qed-.
+
+lemma yplus_inv_succ_lt_sn: ∀x,y,z. 0 < x → x + y = ⫯z → ⫰x + y = z.
+#x #y #z #H <(ylt_inv_O1 x) // >yplus_succ1
+/2 width=1 by ysucc_inv_inj/
+
+qed-.
+
+(* Inversion lemmas on order ************************************************)
+
+lemma yle_inv_plus_dx: ∀x,y. x ≤ y → ∃z. x + z = y.
+#x #y #H elim H -x -y /2 width=2 by ex_intro/
+#m #n #H @(ex_intro … (yinj (n-m))) (**) (* explicit constructor *)
+/3 width=1 by plus_minus, eq_f/
+qed-.
+
+lemma yle_inv_plus_sn: ∀x,y. x ≤ y → ∃z. z + x = y.
+#x #y #H elim (yle_inv_plus_dx … H) -H
+/2 width=2 by ex_intro/
+qed-.
+
 (* Basic inversion lemmas ***************************************************)
 
 lemma yplus_inv_inj: ∀z,y,x. x + y = yinj z →
@@ -87,6 +124,59 @@ lemma yplus_inv_inj: ∀z,y,x. x + y = yinj z →
 #z * [2: normalize #x #H destruct ]
 #y * [2: >yplus_Y1 #H destruct ]
 /3 width=5 by yinj_inj, ex3_2_intro/
+qed-.
+
+lemma yplus_inv_O: ∀x,y:ynat. x + y = 0 → x = 0 ∧ y = 0.
+#x #y #H elim (yplus_inv_inj … H) -H
+#m * /2 width=1 by conj/ #n <plus_n_Sm #H destruct
+qed-.
+
+lemma discr_yplus_xy_x: ∀x,y. x + y = x → x = ∞ ∨ y = 0.
+* /2 width=1 by or_introl/
+#x elim x -x /2 width=1 by or_intror/
+#x #IHx * [2: >yplus_Y2 #H destruct ]
+#y <ysucc_inj >yplus_succ1 #H
+lapply (ysucc_inv_inj … H) -H #H
+elim (IHx … H) -IHx -H /2 width=1 by or_introl, or_intror/
+qed-.
+
+lemma discr_yplus_x_xy: ∀x,y. x = x + y → x = ∞ ∨ y = 0.
+/2 width=1 by discr_yplus_xy_x/ qed-.
+
+lemma yplus_inv_monotonic_dx_inj: ∀z,x,y. x + yinj z = y + yinj z → x = y.
+#z @(nat_ind_plus … z) -z /3 width=2 by ysucc_inv_inj/
+qed-.
+
+lemma yplus_inv_monotonic_dx: ∀z,x,y. z < ∞ → x + z = y + z → x = y.
+#z #x #y #H elim (ylt_inv_Y2 … H) -H /2 width=2 by yplus_inv_monotonic_dx_inj/ 
+qed-.
+
+lemma yplus_inv_Y2: ∀x,y. x + y = ∞ → x = ∞ ∨ y = ∞.
+* /2 width=1 by or_introl/ #x * // #y >yplus_inj #H destruct 
+qed-.
+
+lemma yplus_inv_monotonic_23: ∀z,x1,x2,y1,y2. z < ∞ →
+                              x1 + z + y1 = x2 + z + y2 → x1 + y1 = x2 + y2. 
+#z #x1 #x2 #y1 #y2 #Hz #H @(yplus_inv_monotonic_dx z) //
+>yplus_comm_23 >H -H //
+qed-.
+
+(* Inversion lemmas on strict_order *****************************************)
+
+lemma ylt_inv_plus_Y: ∀x,y. x + y < ∞ → x < ∞ ∧ y < ∞.
+#x #y #H elim (ylt_inv_Y2 … H) -H
+#z #H elim (yplus_inv_inj … H) -H /2 width=1 by conj/
+qed-.
+
+lemma ylt_inv_plus_sn: ∀x,y. x < y → ∃∃z. ⫯z + x = y & x < ∞.
+#x #y #H elim (ylt_inv_le … H) -H
+#Hx #H elim (yle_inv_plus_sn … H) -H
+/2 width=2 by ex2_intro/
+qed-.
+
+lemma ylt_inv_plus_dx: ∀x,y. x < y → ∃∃z. x + ⫯z = y & x < ∞.
+#x #y #H elim (ylt_inv_plus_sn … H) -H
+#z >yplus_comm /2 width=2 by ex2_intro/
 qed-.
 
 (* Properties on order ******************************************************)
@@ -118,6 +208,11 @@ lemma monotonic_yle_plus: ∀x1,y1. x1 ≤ y1 → ∀x2,y2. x2 ≤ y2 →
                           x1 + x2 ≤ y1 + y2.
 /3 width=3 by monotonic_yle_plus_dx, monotonic_yle_plus_sn, yle_trans/ qed.
 
+lemma ylt_plus_Y: ∀x,y. x < ∞ → y < ∞ → x + y < ∞.
+#x #y #Hx elim (ylt_inv_Y2 … Hx) -Hx
+#m #Hm #Hy elim (ylt_inv_Y2 … Hy) -Hy //
+qed.
+
 (* Forward lemmas on order **************************************************)
 
 lemma yle_fwd_plus_sn2: ∀x,y,z. x + y ≤ z → y ≤ z.
@@ -126,17 +221,25 @@ lemma yle_fwd_plus_sn2: ∀x,y,z. x + y ≤ z → y ≤ z.
 lemma yle_fwd_plus_sn1: ∀x,y,z. x + y ≤ z → x ≤ z.
 /2 width=3 by yle_trans/ qed-.
 
-lemma yle_inv_monotonic_plus_dx: ∀x,y:ynat.∀z:nat. x + z ≤ y + z → x ≤ y.
+lemma yle_inv_monotonic_plus_dx_inj: ∀x,y:ynat.∀z:nat. x + z ≤ y + z → x ≤ y.
 #x #y #z elim z -z /3 width=1 by yle_inv_succ/
 qed-.
 
-lemma yle_inv_monotonic_plus_sn: ∀x,y:ynat.∀z:nat. z + x ≤ z + y → x ≤ y.
-/2 width=2 by yle_inv_monotonic_plus_dx/ qed-.
+lemma yle_inv_monotonic_plus_sn_inj: ∀x,y:ynat.∀z:nat. z + x ≤ z + y → x ≤ y.
+/2 width=2 by yle_inv_monotonic_plus_dx_inj/ qed-.
+
+lemma yle_inv_monotonic_plus_dx: ∀x,y,z. z < ∞ → x + z ≤ y + z → x ≤ y.
+#x #y #z #Hz elim (ylt_inv_Y2 … Hz) -Hz #m #H destruct
+/2 width=2 by yle_inv_monotonic_plus_sn_inj/
+qed-.
+
+lemma yle_inv_monotonic_plus_sn: ∀x,y,z. z < ∞ → z + x ≤ z + y → x ≤ y.
+/2 width=3 by yle_inv_monotonic_plus_dx/ qed-.
 
 lemma yle_fwd_plus_ge: ∀m1,m2:nat. m2 ≤ m1 → ∀n1,n2:ynat. m1 + n1 ≤ m2 + n2 → n1 ≤ n2.
 #m1 #m2 #Hm12 #n1 #n2 #H
 lapply (monotonic_yle_plus … Hm12 … H) -Hm12 -H
-/2 width=2 by yle_inv_monotonic_plus_sn/
+/2 width=2 by yle_inv_monotonic_plus_sn_inj/
 qed-.
 
 lemma yle_fwd_plus_ge_inj: ∀m1:nat. ∀m2,n1,n2:ynat. m2 ≤ m1 → m1 + n1 ≤ m2 + n2 → n1 ≤ n2.
@@ -148,6 +251,37 @@ lemma yle_fwd_plus_yge: ∀n2,m1:ynat. ∀n1,m2:nat. m2 ≤ m1 → m1 + n1 ≤ m
 * // #n2 * /2 width=4 by yle_fwd_plus_ge_inj/
 qed-.
 
+(* Properties on strict order ***********************************************)
+
+lemma ylt_plus_dx1_trans: ∀x,z. z < x → ∀y. z < x + y.
+/2 width=3 by ylt_yle_trans/ qed.
+
+lemma ylt_plus_dx2_trans: ∀y,z. z < y → ∀x. z < x + y.
+/2 width=3 by ylt_yle_trans/ qed.
+
+lemma monotonic_ylt_plus_dx_inj: ∀x,y. x < y → ∀z:nat. x + yinj z < y + yinj z.
+#x #y #Hxy #z elim z -z /3 width=1 by ylt_succ/
+qed.
+
+lemma monotonic_ylt_plus_sn_inj: ∀x,y. x < y → ∀z:nat. yinj z + x < yinj z + y.
+/2 width=1 by monotonic_ylt_plus_dx_inj/ qed.
+
+lemma monotonic_ylt_plus_dx: ∀x,y. x < y → ∀z. z < ∞ → x + z < y + z.
+#x #y #Hxy #z #Hz elim (ylt_inv_Y2 … Hz) -Hz
+#m #H destruct /2 width=1 by monotonic_ylt_plus_dx_inj/
+qed.  
+
+lemma monotonic_ylt_plus_sn: ∀x,y. x < y → ∀z. z < ∞ → z + x < z + y.
+/2 width=1 by monotonic_ylt_plus_dx/ qed.
+
+lemma monotonic_ylt_plus_inj: ∀m1,m2. m1 < m2 → ∀n1,n2. yinj n1 ≤ n2 → m1 + n1 < m2 + n2.
+/3 width=3 by monotonic_ylt_plus_sn_inj, monotonic_yle_plus_sn, ylt_yle_trans/
+qed.
+
+lemma monotonic_ylt_plus: ∀m1,m2. m1 < m2 → ∀n1. n1 < ∞ → ∀n2. n1 ≤ n2 → m1 + n1 < m2 + n2.
+#m1 #m2 #Hm12 #n1 #H elim (ylt_inv_Y2 … H) -H #m #H destruct /2 width=1 by monotonic_ylt_plus_inj/
+qed.
+
 (* Forward lemmas on strict order *******************************************)
 
 lemma ylt_inv_monotonic_plus_dx: ∀x,y,z. x + z < y + z → x < y.
@@ -156,20 +290,15 @@ lemma ylt_inv_monotonic_plus_dx: ∀x,y,z. x + z < y + z → x < y.
 /4 width=3 by ylt_inv_inj, ylt_inj, lt_plus_to_lt_l/
 qed-.
 
-(* Properties on strict order ***********************************************)
-
-lemma ylt_plus_dx1_trans: ∀x,z. z < x → ∀y. z < x + yinj y.
-/2 width=3 by ylt_yle_trans/ qed.
-
-lemma ylt_plus_dx2_trans: ∀y,z. z < y → ∀x. z < yinj x + y.
-/2 width=3 by ylt_yle_trans/ qed.
-
-lemma monotonic_ylt_plus_dx: ∀x,y. x < y → ∀z:nat. x + yinj z < y + yinj z.
-#x #y #Hxy #z elim z -z /3 width=1 by ylt_succ/
-qed.
-
-lemma monotonic_ylt_plus_sn: ∀x,y. x < y → ∀z:nat. yinj z + x < yinj z + y.
-/2 width=1 by monotonic_ylt_plus_dx/ qed.
+lemma ylt_fwd_plus_ge: ∀m1,m2. m2 ≤ m1 → ∀n1,n2. m1 + n1 < m2 + n2 → n1 < n2.
+#m1 #m2 #Hm12 #n1 #n2 #H elim (ylt_fwd_gen … H)
+#x #H0 elim (yplus_inv_inj … H0) -H0
+#y #z #_ #H2 #H3 destruct -x
+elim (yle_inv_inj2 … Hm12)
+#x #_ #H0 destruct
+lapply (monotonic_ylt_plus … H … Hm12) -H -Hm12
+/2 width=2 by ylt_inv_monotonic_plus_dx/
+qed-.
 
 (* Properties on predeccessor ***********************************************)
 
@@ -181,82 +310,3 @@ qed-.
 
 lemma yplus_pred2: ∀x,y:ynat. 0 < y → x + ⫰y = ⫰(x+y).
 /2 width=1 by yplus_pred1/ qed-.
-
-(* Properties on minus ******************************************************)
-
-lemma yplus_minus_inj: ∀m:ynat. ∀n:nat. m + n - n = m.
-#m #n elim n -n //
-#n #IHn >(yplus_succ2 m n) >(yminus_succ … n) //
-qed.
-
-lemma yplus_minus: ∀m,n. m + n - n ≤ m.
-#m * //
-qed.
-
-lemma yminus_plus2: ∀z,y,x:ynat. x - (y + z) = x - y - z.
-* // #z * [2: >yplus_Y1 >yminus_O1 // ] #y *
-[ #x >yplus_inj >yminus_inj >yminus_inj >yminus_inj /2 width=1 by eq_f/
-| >yplus_inj >yminus_Y_inj //
-]
-qed.
-
-(* Forward lemmas on minus **************************************************)
-
-lemma yle_plus1_to_minus_inj2: ∀x,z:ynat. ∀y:nat. x + y ≤ z → x ≤ z - y.
-#x #z #y #H lapply (monotonic_yle_minus_dx … H y) -H //
-qed-.
-
-lemma yle_plus1_to_minus_inj1: ∀x,z:ynat. ∀y:nat. y + x ≤ z → x ≤ z - y.
-/2 width=1 by yle_plus1_to_minus_inj2/ qed-.
-
-lemma yle_plus2_to_minus_inj2: ∀x,y:ynat. ∀z:nat. x ≤ y + z → x - z ≤ y.
-/2 width=1 by monotonic_yle_minus_dx/ qed-.
-
-lemma yle_plus2_to_minus_inj1: ∀x,y:ynat. ∀z:nat. x ≤ z + y → x - z ≤ y.
-/2 width=1 by yle_plus2_to_minus_inj2/ qed-.
-
-lemma yplus_minus_assoc_inj: ∀x:nat. ∀y,z:ynat. x ≤ y → z + (y - x) = z + y - x.
-#x *
-[ #y * // #z >yminus_inj >yplus_inj >yplus_inj
-  /4 width=1 by yle_inv_inj, plus_minus, eq_f/
-| >yminus_Y_inj //
-]
-qed-.
-
-lemma yplus_minus_assoc_comm_inj: ∀x:nat. ∀y,z:ynat. x ≤ y → z - (y - x) = z + x - y.
-#x *
-[ #y *
-  [ #z >yminus_inj >yminus_inj >yplus_inj >yminus_inj
-    /4 width=1 by yle_inv_inj, minus_le_minus_minus_comm, eq_f/
-  | >yminus_inj >yminus_Y_inj //
-  ]
-| >yminus_Y_inj //
-]
-qed-.
-
-lemma yplus_minus_comm_inj: ∀y:nat. ∀x,z:ynat. y ≤ x → x + z - y = x - y + z.
-#y * // #x * //
-#z #Hxy >yplus_inj >yminus_inj <plus_minus
-/2 width=1 by yle_inv_inj/
-qed-.
-
-lemma ylt_plus1_to_minus_inj2: ∀x,z:ynat. ∀y:nat. x + y < z → x < z - y.
-#x #z #y #H lapply (monotonic_ylt_minus_dx … H y ?) -H //
-qed-.
-
-lemma ylt_plus1_to_minus_inj1: ∀x,z:ynat. ∀y:nat. y + x < z → x < z - y.
-/2 width=1 by ylt_plus1_to_minus_inj2/ qed-.
-
-lemma ylt_plus2_to_minus_inj2: ∀x,y:ynat. ∀z:nat. z ≤ x → x < y + z → x - z < y.
-/2 width=1 by monotonic_ylt_minus_dx/ qed-.
-
-lemma ylt_plus2_to_minus_inj1: ∀x,y:ynat. ∀z:nat. z ≤ x → x < z + y → x - z < y.
-/2 width=1 by ylt_plus2_to_minus_inj2/ qed-.
-
-(* Inversion lemmas on minus ************************************************)
-
-lemma yle_inv_plus_inj2: ∀x,z:ynat. ∀y:nat. x + y ≤ z → x ≤ z - y ∧ y ≤ z.
-/3 width=3 by yle_plus1_to_minus_inj2, yle_trans, conj/ qed-.
-
-lemma yle_inv_plus_inj1: ∀x,z:ynat. ∀y:nat. y + x ≤ z → x ≤ z - y ∧ y ≤ z.
-/2 width=1 by yle_inv_plus_inj2/ qed-.

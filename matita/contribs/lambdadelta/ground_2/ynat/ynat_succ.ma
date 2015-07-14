@@ -88,3 +88,11 @@ qed-.
 
 lemma ysucc_inv_O_dx: ∀m. ⫯m = 0 → ⊥.
 /2 width=2 by ysucc_inv_O_sn/ qed-.
+
+(* Eliminators **************************************************************)
+
+lemma ynat_ind: ∀R:predicate ynat.
+                R 0 → (∀n:nat. R n → R (⫯n)) → R (∞) →
+                ∀x. R x.
+#R #H1 #H2 #H3 * // #n elim n -n /2 width=1 by/
+qed-.

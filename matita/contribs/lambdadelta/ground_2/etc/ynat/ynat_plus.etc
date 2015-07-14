@@ -1,0 +1,4 @@
+
+lemma pippo: ∀x,y. x + y ≤ x → x = ∞ ∨ y = 0.
+/3 width=1 by discr_yplus_xy_x, yle_antisym/ qed-.
+

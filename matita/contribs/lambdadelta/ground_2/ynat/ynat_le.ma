@@ -60,6 +60,11 @@ qed-.
 lemma yle_inv_Y1: ∀n. ∞ ≤ n → n = ∞.
 /2 width=3 by yle_inv_Y1_aux/ qed-.
 
+lemma yle_antisym: ∀y,x. x ≤ y → y ≤ x → x = y.
+#x #y #H elim H -x -y
+/4 width=1 by yle_inv_Y1, yle_inv_inj, le_to_le_to_eq, eq_f/
+qed-.
+
 (* Basic properties *********************************************************)
 
 lemma le_O1: ∀n:ynat. 0 ≤ n.

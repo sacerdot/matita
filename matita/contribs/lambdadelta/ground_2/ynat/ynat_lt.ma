@@ -59,6 +59,11 @@ lemma ylt_inv_Y1: ∀n. ∞ < n → ⊥.
 #y #H destruct
 qed-.
 
+lemma ylt_inv_Y2: ∀x:ynat. x < ∞ → ∃n. x = yinj n.
+* /2 width=2 by ex_intro/
+#H elim (ylt_inv_Y1 … H)
+qed-.
+
 lemma ylt_inv_O1: ∀n. 0 < n → ⫯⫰n = n.
 * // #n #H lapply (ylt_inv_inj … H) -H normalize
 /3 width=1 by S_pred, eq_f/
@@ -96,7 +101,7 @@ qed-.
 lemma ylt_fwd_succ2: ∀m,n. m < ⫯n → m ≤ n.
 /2 width=3 by ylt_fwd_succ2_aux/ qed-.
 
-(* inversion and forward lemmas on yle **************************************)
+(* inversion and forward lemmas on order ************************************)
 
 lemma ylt_fwd_le_succ1: ∀m,n. m < n → ⫯m ≤ n.
 #m #n * -m -n /2 width=1 by yle_inj/
@@ -119,10 +124,14 @@ lemma ylt_yle_false: ∀m:ynat. ∀n:ynat. m < n → n ≤ m → ⊥.
 ]
 qed-.
 
+lemma ylt_inv_le: ∀x,y. x < y → x < ∞ ∧ ⫯x ≤ y.
+#x #y #H elim H -x -y /3 width=1 by yle_inj, conj/
+qed-.
+
 (* Basic properties *********************************************************)
 
-lemma ylt_O: ∀x. ⫯⫰(yinj x) = yinj x → 0 < x.
-* /2 width=1 by/ normalize
+lemma ylt_O1: ∀x. ⫯⫰x = x → 0 < x.
+* // * /2 width=1 by ylt_inj/ normalize
 #H destruct
 qed.
 
@@ -142,6 +151,9 @@ qed.
 lemma ylt_succ: ∀m,n. m < n → ⫯m < ⫯n.
 #m #n #H elim H -m -n /3 width=1 by ylt_inj, le_S_S/
 qed.
+
+lemma ylt_succ_Y: ∀x. x < ∞ → ⫯x < ∞.
+* /2 width=1 by/ qed.
 
 lemma yle_succ1_inj: ∀x,y. ⫯yinj x ≤ y → x < y.
 #x * /3 width=1 by yle_inv_inj, ylt_inj/
@@ -183,6 +195,15 @@ lemma yle_ylt_trans: ∀x:ynat. ∀y:ynat. ∀z:ynat. y < z → x ≤ y → x < 
 ]
 qed-.
 
+lemma yle_inv_succ1_lt: ∀x,y. ⫯x ≤ y → 0 < y ∧ x ≤ ⫰y.
+#x #y #H elim (yle_inv_succ1 … H) -H /3 width=1 by ylt_O1, conj/
+qed-.
+
+lemma yle_lt: ∀x,y. x < ∞ → ⫯x ≤ y → x < y.
+#x * // #y #H elim (ylt_inv_Y2 … H) -H #n #H destruct
+/3 width=1 by ylt_inj, yle_inv_inj/
+qed-.
+
 (* Main properties **********************************************************)
 
 theorem ylt_trans: Transitive … ylt.
@@ -192,4 +213,42 @@ theorem ylt_trans: Transitive … ylt.
   /3 width=3 by transitive_lt, ylt_inj/ (**) (* full auto too slow *)
 | #x #z #H elim (ylt_yle_false … H) //
 ]
+qed-.
+
+(* Elimination principles ***************************************************)
+
+fact ynat_ind_lt_le_aux: ∀R:predicate ynat.
+                         (∀y. (∀x. x < y → R x) → R y) →
+                         ∀y:nat. ∀x. x ≤ y → R x.
+#R #IH #y elim y -y
+[ #x #H >(yle_inv_O2 … H) -x
+  @IH -IH #x #H elim (ylt_yle_false … H) -H //
+| /5 width=3 by ylt_yle_trans, ylt_fwd_succ2/
+]
+qed-.
+
+fact ynat_ind_lt_aux: ∀R:predicate ynat.
+                      (∀y. (∀x. x < y → R x) → R y) →
+                      ∀y:nat. R y.
+/4 width=2 by ynat_ind_lt_le_aux/ qed-.
+
+lemma ynat_ind_lt: ∀R:predicate ynat.
+                   (∀y. (∀x. x < y → R x) → R y) →
+                   ∀y. R y.
+#R #IH * /4 width=1 by ynat_ind_lt_aux/
+@IH #x #H elim (ylt_inv_Y2 … H) -H
+#n #H destruct /4 width=1 by ynat_ind_lt_aux/
+qed-.
+
+fact ynat_f_ind_aux: ∀A. ∀f:A→ynat. ∀R:predicate A.
+                     (∀x. (∀a. f a < x → R a) → ∀a. f a = x → R a) →
+                     ∀x,a. f a = x → R a.
+#A #f #R #IH #x @(ynat_ind_lt … x) -x
+/3 width=3 by/
+qed-.
+
+lemma ynat_f_ind: ∀A. ∀f:A→ynat. ∀R:predicate A.
+                  (∀x. (∀a. f a < x → R a) → ∀a. f a = x → R a) → ∀a. R a.
+#A #f #R #IH #a
+@(ynat_f_ind_aux … IH) -IH [2: // | skip ]
 qed-.
