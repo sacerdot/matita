@@ -15,7 +15,7 @@ val srcs: NUri.UriSet.t ref
 
 val remove: string list ref
 
-val exclude: NCic.generated list ref
+val exclude: NCic.source list ref
 
 val net: int ref
 

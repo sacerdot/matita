@@ -263,6 +263,7 @@ let ppsubst status ~formatter ~metasenv ?(use_subst=true) subst =
 let string_of_generated = function
   | `Generated -> "Generated"
   | `Provided -> "Provided"
+  | `Implied -> "Implied"
 ;;
 
 let string_of_flavour = function

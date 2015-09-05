@@ -58,12 +58,12 @@ let add_raw_attribute ~text t = N.AttributedTerm (`Raw text, t)
 
 let default_associativity = Gramext.NonA
         
-let mk_rec_corec ind_kind defs loc = 
- let attrs = `Provided, `Definition, `Regular in
+let mk_rec_corec src ind_kind defs loc = 
+ let attrs = src, `Definition, `Regular in
   (loc, N.LetRec (ind_kind, defs, attrs))
 
-let nmk_rec_corec ind_kind defs loc index = 
- let loc,t = mk_rec_corec ind_kind defs loc in
+let nmk_rec_corec src ind_kind defs loc index = 
+ let loc,t = mk_rec_corec src ind_kind defs loc in
   G.NObj (loc,t,index)
 
 (*
@@ -493,34 +493,41 @@ EXTEND
 
   index: [[ b = OPT SYMBOL "-" -> match b with None -> true | _ -> false ]];
 
+  source: [[
+     src = OPT IDENT "implied" ->
+        match src with None -> `Provided | _ -> `Implied
+  ]];
+
   grafite_ncommand: [ [
       IDENT "qed" ;  i = index -> G.NQed (loc,i)
     | IDENT "defined" ;  i = index -> G.NQed (loc,i) (* FG: presentational qed for definitions *)
-    | nflavour = ntheorem_flavour; name = IDENT; SYMBOL ":"; typ = term;
+    | src = source; nflavour = ntheorem_flavour; name = IDENT; SYMBOL ":"; typ = term;
       body = OPT [ SYMBOL <:unicode<def>> (* ≝ *); body = term -> body ] ->
-        let attrs = `Provided, nflavour, `Regular in
+        let attrs = src, nflavour, `Regular in
 	G.NObj (loc, N.Theorem (name, typ, body, attrs),true)
-    | nflavour = ntheorem_flavour; name = IDENT; SYMBOL <:unicode<def>> (* ≝ *);
+    | src = source; nflavour = ntheorem_flavour; name = IDENT; SYMBOL <:unicode<def>> (* ≝ *);
       body = term ->
-        let attrs = `Provided, nflavour, `Regular in
+        let attrs = src, nflavour, `Regular in
         G.NObj (loc, 
           N.Theorem(name, N.Implicit `JustOne, Some body, attrs),
           true)
-    | IDENT "axiom"; i = index; name = IDENT; SYMBOL ":"; typ = term ->
-        let attrs = `Provided, `Axiom, `Regular in
+    | src = source; IDENT "axiom"; i = index; name = IDENT; SYMBOL ":"; typ = term ->
+        let attrs = src, `Axiom, `Regular in
 	G.NObj (loc, N.Theorem (name, typ, None, attrs),i)
     | IDENT "discriminator" ; indty = tactic_term -> G.NDiscriminator (loc,indty)
     | IDENT "inverter"; name = IDENT; IDENT "for" ; indty = tactic_term ;
       paramspec = OPT inverter_param_list ; 
       outsort = OPT [ SYMBOL ":" ; outsort = term -> outsort ] -> 
         G.NInverter (loc,name,indty,paramspec,outsort)
-    | LETCOREC ; defs = let_codefs -> 
-        nmk_rec_corec `CoInductive defs loc true
-    | LETREC ; defs = let_defs -> 
-        nmk_rec_corec `Inductive defs loc true
+    | src = source; LETCOREC ; defs = let_codefs -> 
+        nmk_rec_corec src `CoInductive defs loc true
+    | src = source; LETREC ; defs = let_defs -> 
+        nmk_rec_corec src `Inductive defs loc true
+(* FG: no source since no i_attr in N.Inductive *)
     | IDENT "inductive"; spec = inductive_spec ->
         let (params, ind_types) = spec in
         G.NObj (loc, N.Inductive (params, ind_types),true)
+(* FG: no source since no i_attr in N.Inductive *)
     | IDENT "coinductive"; spec = inductive_spec ->
         let (params, ind_types) = spec in
         let ind_types = (* set inductive flags to false (coinductive) *)
@@ -548,6 +555,7 @@ EXTEND
         "to"; target = term -> t,ty,(id,source),target ] ->
           let compose = compose = None in
           G.NCoercion(loc,name,compose,spec)
+(* FG: no source since no i_attr in N.Record *)
     | IDENT "record" ; (params,name,ty,fields) = record_spec ->
         G.NObj (loc, N.Record (params,name,ty,fields),true)
     | IDENT "copy" ; s = IDENT; IDENT "from"; u = URI; "with"; 

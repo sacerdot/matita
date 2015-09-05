@@ -46,9 +46,11 @@ let scan_from devel =
 
 let set_g () = O.exclude := `Generated :: !O.exclude
 
+let set_i () = O.exclude := `Implied :: !O.exclude
+
 let set_p () = O.exclude := `Provided :: !O.exclude
 
-let out_i () = E.out_int !O.net
+let out_c () = E.out_int !O.net
 
 let out_on () = E.out_length !O.objs
 
@@ -67,10 +69,11 @@ let clear () =
    D.objects (); O.clear ()
 
 let _ =
-   let help = "Usage: probe [ -X | <configuration file> | -gp | HELM (base)uri | -i | -on | os | -sn | -ss  ]*" in
+   let help = "Usage: probe [ -X | <configuration file> | -gip | HELM (base)uri | -c | -on | os | -sn | -ss  ]*" in
    let help_X  = " Clear configuration, options and counters" in
+   let help_c  = " Print the total intrinsic complexity" in
    let help_g  = " Exclude generated objects" in
-   let help_i  = " Print the total intrinsic size" in
+   let help_i  = " Exclude implied objects" in
    let help_p  = " Exclude provided objects" in
    let help_on = " Print the number of objects" in
    let help_os = " Print the list of objects" in
@@ -78,8 +81,9 @@ let _ =
    let help_ss = " Print the list of sources" in
    A.parse [
       "-X" , A.Unit clear, help_X;
+      "-c" , A.Unit out_c, help_c;
       "-g" , A.Unit set_g, help_g;
-      "-i" , A.Unit out_i, help_i;
+      "-i" , A.Unit set_i, help_i;
       "-on", A.Unit out_on, help_on;
       "-os", A.Unit out_os, help_os;
       "-p" , A.Unit set_p, help_p;      
