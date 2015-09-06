@@ -18,7 +18,7 @@ include "basic_1/pr2/props.ma".
 
 include "basic_1/clen/getl.ma".
 
-theorem pr2_gen_ctail:
+lemma pr2_gen_ctail:
  \forall (k: K).(\forall (c: C).(\forall (u: T).(\forall (t1: T).(\forall 
 (t2: T).((pr2 (CTail k u c) t1 t2) \to (or (pr2 c t1 t2) (ex3 T (\lambda (_: 
 T).(eq K k (Bind Abbr))) (\lambda (t: T).(pr0 t1 t)) (\lambda (t: T).(subst0 
@@ -76,7 +76,7 @@ t))) (ex3_intro T (\lambda (_: T).(eq K (Bind Abbr) (Bind Abbr))) (\lambda
 (refl_equal K (Bind Abbr)) H2 H13)) k H9)))))))) H7)) H6))))))))))))))) y t1 
 t2 H0))) H)))))).
 
-theorem pr2_gen_cbind:
+lemma pr2_gen_cbind:
  \forall (b: B).(\forall (c: C).(\forall (v: T).(\forall (t1: T).(\forall 
 (t2: T).((pr2 (CHead c (Bind b) v) t1 t2) \to (pr2 c (THead (Bind b) v t1) 
 (THead (Bind b) v t2)))))))
@@ -129,7 +129,7 @@ nat i (S j))) (\lambda (j: nat).(getl j c (CHead d (Bind Abbr) u))) (pr2 c
 Abbr) u) x H9) t3 t4 H2 t H11))))))) H7)) H6))))))))))))))) y t1 t2 H0))) 
 H)))))).
 
-theorem pr2_gen_cflat:
+lemma pr2_gen_cflat:
  \forall (f: F).(\forall (c: C).(\forall (v: T).(\forall (t1: T).(\forall 
 (t2: T).((pr2 (CHead c (Flat f) v) t1 t2) \to (pr2 c t1 t2))))))
 \def

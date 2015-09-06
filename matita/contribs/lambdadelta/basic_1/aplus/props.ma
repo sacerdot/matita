@@ -20,7 +20,7 @@ include "basic_1/A/fwd.ma".
 
 include "basic_1/next_plus/props.ma".
 
-theorem aplus_reg_r:
+lemma aplus_reg_r:
  \forall (g: G).(\forall (a1: A).(\forall (a2: A).(\forall (h1: nat).(\forall 
 (h2: nat).((eq A (aplus g a1 h1) (aplus g a2 h2)) \to (\forall (h: nat).(eq A 
 (aplus g a1 (plus h h1)) (aplus g a2 (plus h h2)))))))))
@@ -32,7 +32,7 @@ nat).(nat_ind (\lambda (n: nat).(eq A (aplus g a1 (plus n h1)) (aplus g a2
 h1)) (aplus g a2 (plus n h2)))).(f_equal2 G A A asucc g g (aplus g a1 (plus n 
 h1)) (aplus g a2 (plus n h2)) (refl_equal G g) H0))) h))))))).
 
-theorem aplus_assoc:
+lemma aplus_assoc:
  \forall (g: G).(\forall (a: A).(\forall (h1: nat).(\forall (h2: nat).(eq A 
 (aplus g (aplus g a h1) h2) (aplus g a (plus h1 h2))))))
 \def
@@ -51,7 +51,7 @@ n0) (asucc g (aplus g a (plus n n0))))).(eq_ind nat (S (plus n n0)) (\lambda
 n0) (asucc g (aplus g a (plus n n0))) (refl_equal G g) H0) (plus n (S n0)) 
 (plus_n_Sm n n0)))) h2)))) h1))).
 
-theorem aplus_asucc:
+lemma aplus_asucc:
  \forall (g: G).(\forall (h: nat).(\forall (a: A).(eq A (aplus g (asucc g a) 
 h) (asucc g (aplus g a h)))))
 \def
@@ -60,7 +60,7 @@ h) (asucc g (aplus g a h)))))
 (refl_equal A (asucc g (aplus g a h))) (aplus g (aplus g a (S O)) h) 
 (aplus_assoc g a (S O) h)))).
 
-theorem aplus_sort_O_S_simpl:
+lemma aplus_sort_O_S_simpl:
  \forall (g: G).(\forall (n: nat).(\forall (k: nat).(eq A (aplus g (ASort O 
 n) (S k)) (aplus g (ASort O (next g n)) k))))
 \def
@@ -69,7 +69,7 @@ g (ASort O n)) k) (\lambda (a: A).(eq A a (aplus g (ASort O (next g n)) k)))
 (refl_equal A (aplus g (ASort O (next g n)) k)) (asucc g (aplus g (ASort O n) 
 k)) (aplus_asucc g k (ASort O n))))).
 
-theorem aplus_sort_S_S_simpl:
+lemma aplus_sort_S_S_simpl:
  \forall (g: G).(\forall (n: nat).(\forall (h: nat).(\forall (k: nat).(eq A 
 (aplus g (ASort (S h) n) (S k)) (aplus g (ASort h n) k)))))
 \def
@@ -78,7 +78,7 @@ A (aplus g (asucc g (ASort (S h) n)) k) (\lambda (a: A).(eq A a (aplus g
 (ASort h n) k))) (refl_equal A (aplus g (ASort h n) k)) (asucc g (aplus g 
 (ASort (S h) n) k)) (aplus_asucc g k (ASort (S h) n)))))).
 
-theorem aplus_asort_O_simpl:
+lemma aplus_asort_O_simpl:
  \forall (g: G).(\forall (h: nat).(\forall (n: nat).(eq A (aplus g (ASort O 
 n) h) (ASort O (next_plus g n h)))))
 \def
@@ -93,7 +93,7 @@ g n0)) n) (ASort O n1))) (H (next g n0)) (next g (next_plus g n0 n))
 (next_plus_next g n0 n)) (asucc g (aplus g (ASort O n0) n)) (aplus_asucc g n 
 (ASort O n0)))))) h)).
 
-theorem aplus_asort_le_simpl:
+lemma aplus_asort_le_simpl:
  \forall (g: G).(\forall (h: nat).(\forall (k: nat).(\forall (n: nat).((le h 
 k) \to (eq A (aplus g (ASort k n) h) (ASort (minus k h) n))))))
 \def
@@ -120,7 +120,7 @@ A).(eq A a (ASort (minus (S n) (S h0)) n0))) (H n n0 (le_S_n h0 n H1)) (asucc
 g (aplus g (ASort (S n) n0) h0)) (aplus_asucc g h0 (ASort (S n) n0))))))) 
 k)))) h)).
 
-theorem aplus_asort_simpl:
+lemma aplus_asort_simpl:
  \forall (g: G).(\forall (h: nat).(\forall (k: nat).(\forall (n: nat).(eq A 
 (aplus g (ASort k n) h) (ASort (minus k h) (next_plus g n (minus h k)))))))
 \def
@@ -147,7 +147,7 @@ n) (ASort (minus k h) (next_plus g n n0)))) (refl_equal A (ASort (minus k h)
 (next_plus g n O))) (minus h k) (O_minus h k H)) (aplus g (ASort k n) h) 
 (aplus_asort_le_simpl g h k n H))))))).
 
-theorem aplus_ahead_simpl:
+lemma aplus_ahead_simpl:
  \forall (g: G).(\forall (h: nat).(\forall (a1: A).(\forall (a2: A).(eq A 
 (aplus g (AHead a1 a2) h) (AHead a1 (aplus g a2 h))))))
 \def
@@ -163,7 +163,7 @@ A).(\lambda (a2: A).(eq_ind A (aplus g (asucc g (AHead a1 a2)) n) (\lambda
 a2)) (asucc g (aplus g (AHead a1 a2) n)) (aplus_asucc g n (AHead a1 a2))))))) 
 h)).
 
-theorem aplus_asucc_false:
+lemma aplus_asucc_false:
  \forall (g: G).(\forall (a: A).(\forall (h: nat).((eq A (aplus g (asucc g a) 
 h) a) \to (\forall (P: Prop).P))))
 \def
@@ -209,7 +209,7 @@ a1)) h) (\lambda (a2: A).(eq A a2 (AHead a0 a1))) H1 (AHead a0 (aplus g
 (asucc g a1) h) | (AHead _ a2) \Rightarrow a2])) (AHead a0 (aplus g (asucc g 
 a1) h)) (AHead a0 a1) H2) in (H0 h H3 P)))))))))) a)).
 
-theorem aplus_inj:
+lemma aplus_inj:
  \forall (g: G).(\forall (h1: nat).(\forall (h2: nat).(\forall (a: A).((eq A 
 (aplus g a h1) (aplus g a h2)) \to (eq nat h1 h2)))))
 \def

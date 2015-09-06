@@ -16,17 +16,17 @@
 
 include "basic_1/pc3/props.ma".
 
-let rec pc3_left_ind (c: C) (P: (T \to (T \to Prop))) (f: (\forall (t: T).(P 
-t t))) (f0: (\forall (t1: T).(\forall (t2: T).((pr2 c t1 t2) \to (\forall 
-(t3: T).((pc3_left c t2 t3) \to ((P t2 t3) \to (P t1 t3)))))))) (f1: (\forall 
-(t1: T).(\forall (t2: T).((pr2 c t1 t2) \to (\forall (t3: T).((pc3_left c t1 
-t3) \to ((P t1 t3) \to (P t2 t3)))))))) (t: T) (t0: T) (p: pc3_left c t t0) 
-on p: P t t0 \def match p with [(pc3_left_r t1) \Rightarrow (f t1) | 
-(pc3_left_ur t1 t2 p0 t3 p1) \Rightarrow (f0 t1 t2 p0 t3 p1 ((pc3_left_ind c 
-P f f0 f1) t2 t3 p1)) | (pc3_left_ux t1 t2 p0 t3 p1) \Rightarrow (f1 t1 t2 p0 
-t3 p1 ((pc3_left_ind c P f f0 f1) t1 t3 p1))].
+implied let rec pc3_left_ind (c: C) (P: (T \to (T \to Prop))) (f: (\forall 
+(t: T).(P t t))) (f0: (\forall (t1: T).(\forall (t2: T).((pr2 c t1 t2) \to 
+(\forall (t3: T).((pc3_left c t2 t3) \to ((P t2 t3) \to (P t1 t3)))))))) (f1: 
+(\forall (t1: T).(\forall (t2: T).((pr2 c t1 t2) \to (\forall (t3: 
+T).((pc3_left c t1 t3) \to ((P t1 t3) \to (P t2 t3)))))))) (t: T) (t0: T) (p: 
+pc3_left c t t0) on p: P t t0 \def match p with [(pc3_left_r t1) \Rightarrow 
+(f t1) | (pc3_left_ur t1 t2 p0 t3 p1) \Rightarrow (f0 t1 t2 p0 t3 p1 
+((pc3_left_ind c P f f0 f1) t2 t3 p1)) | (pc3_left_ux t1 t2 p0 t3 p1) 
+\Rightarrow (f1 t1 t2 p0 t3 p1 ((pc3_left_ind c P f f0 f1) t1 t3 p1))].
 
-theorem pc3_ind_left__pc3_left_pr3:
+fact pc3_ind_left__pc3_left_pr3:
  \forall (c: C).(\forall (t1: T).(\forall (t2: T).((pr3 c t1 t2) \to 
 (pc3_left c t1 t2))))
 \def
@@ -36,7 +36,7 @@ t2)).(pr3_ind c (\lambda (t: T).(\lambda (t0: T).(pc3_left c t t0))) (\lambda
 c t3 t0)).(\lambda (t4: T).(\lambda (_: (pr3 c t0 t4)).(\lambda (H2: 
 (pc3_left c t0 t4)).(pc3_left_ur c t3 t0 H0 t4 H2))))))) t1 t2 H)))).
 
-theorem pc3_ind_left__pc3_left_trans:
+fact pc3_ind_left__pc3_left_trans:
  \forall (c: C).(\forall (t1: T).(\forall (t2: T).((pc3_left c t1 t2) \to 
 (\forall (t3: T).((pc3_left c t2 t3) \to (pc3_left c t1 t3))))))
 \def
@@ -53,7 +53,7 @@ t3 H0 t5 (H2 t5 H3)))))))))) (\lambda (t0: T).(\lambda (t3: T).(\lambda (H0:
 t5))))).(\lambda (t5: T).(\lambda (H3: (pc3_left c t4 t5)).(pc3_left_ux c t0 
 t3 H0 t5 (H2 t5 H3)))))))))) t1 t2 H)))).
 
-theorem pc3_ind_left__pc3_left_sym:
+fact pc3_ind_left__pc3_left_sym:
  \forall (c: C).(\forall (t1: T).(\forall (t2: T).((pc3_left c t1 t2) \to 
 (pc3_left c t2 t1))))
 \def
@@ -68,7 +68,7 @@ T).(\lambda (t3: T).(\lambda (H0: (pr2 c t0 t3)).(\lambda (t4: T).(\lambda
 t0)).(pc3_ind_left__pc3_left_trans c t4 t0 H2 t3 (pc3_left_ur c t0 t3 H0 t3 
 (pc3_left_r c t3))))))))) t1 t2 H)))).
 
-theorem pc3_ind_left__pc3_left_pc3:
+fact pc3_ind_left__pc3_left_pc3:
  \forall (c: C).(\forall (t1: T).(\forall (t2: T).((pc3 c t1 t2) \to 
 (pc3_left c t1 t2))))
 \def
@@ -79,7 +79,7 @@ x)).(\lambda (H2: (pr3 c t2 x)).(pc3_ind_left__pc3_left_trans c t1 x
 (pc3_ind_left__pc3_left_pr3 c t1 x H1) t2 (pc3_ind_left__pc3_left_sym c t2 x 
 (pc3_ind_left__pc3_left_pr3 c t2 x H2)))))) H0))))).
 
-theorem pc3_ind_left__pc3_pc3_left:
+fact pc3_ind_left__pc3_pc3_left:
  \forall (c: C).(\forall (t1: T).(\forall (t2: T).((pc3_left c t1 t2) \to 
 (pc3 c t1 t2))))
 \def
@@ -92,7 +92,7 @@ T).(\lambda (t3: T).(\lambda (H0: (pr2 c t0 t3)).(\lambda (t4: T).(\lambda
 (_: (pc3_left c t0 t4)).(\lambda (H2: (pc3 c t0 t4)).(pc3_t t0 c t3 
 (pc3_pr2_x c t3 t0 H0) t4 H2))))))) t1 t2 H)))).
 
-theorem pc3_ind_left:
+lemma pc3_ind_left:
  \forall (c: C).(\forall (P: ((T \to (T \to Prop)))).(((\forall (t: T).(P t 
 t))) \to (((\forall (t1: T).(\forall (t2: T).((pr2 c t1 t2) \to (\forall (t3: 
 T).((pc3 c t2 t3) \to ((P t2 t3) \to (P t1 t3)))))))) \to (((\forall (t1: 

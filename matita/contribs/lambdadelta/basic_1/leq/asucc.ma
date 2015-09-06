@@ -16,7 +16,7 @@
 
 include "basic_1/leq/props.ma".
 
-theorem asucc_repl:
+lemma asucc_repl:
  \forall (g: G).(\forall (a1: A).(\forall (a2: A).((leq g a1 a2) \to (leq g 
 (asucc g a1) (asucc g a2)))))
 \def
@@ -96,7 +96,7 @@ h4) n2) k))) (aplus g (ASort (S h3) n1) k) H2) (aplus g (ASort h4 n2) k)
 (leq g a5 a6)).(\lambda (H3: (leq g (asucc g a5) (asucc g a6))).(leq_head g 
 a3 a4 H0 (asucc g a5) (asucc g a6) H3))))))))) a1 a2 H)))).
 
-theorem asucc_inj:
+lemma asucc_inj:
  \forall (g: G).(\forall (a1: A).(\forall (a2: A).((leq g (asucc g a1) (asucc 
 g a2)) \to (leq g a1 a2))))
 \def
@@ -306,7 +306,7 @@ _ a5) \Rightarrow a5])) (AHead a3 (asucc g a4)) (AHead x0 x1) H7) in (\lambda
 (\lambda (a5: A).(leq g a a5)) H5 a3 H10) in (leq_head g a a3 H12 a0 a4 (H0 
 a4 H11)))))) H8))))))) H4)))))))) a2)))))) a1)).
 
-theorem leq_asucc:
+lemma leq_asucc:
  \forall (g: G).(\forall (a: A).(ex A (\lambda (a0: A).(leq g a (asucc g 
 a0)))))
 \def
@@ -322,7 +322,7 @@ g x))).(ex_intro A (\lambda (a2: A).(leq g (AHead a0 a1) (asucc g a2)))
 (AHead a0 x) (leq_head g a0 a0 (leq_refl g a0) a1 (asucc g x) H2)))) H1)))))) 
 a)).
 
-theorem leq_ahead_asucc_false:
+lemma leq_ahead_asucc_false:
  \forall (g: G).(\forall (a1: A).(\forall (a2: A).((leq g (AHead a1 a2) 
 (asucc g a1)) \to (\forall (P: Prop).P))))
 \def
@@ -374,7 +374,7 @@ x1 (\lambda (a3: A).(leq g a2 a3)) H4 (asucc g a0) H7) in (let H10 \def
 (eq_ind_r A x0 (\lambda (a3: A).(leq g (AHead a a0) a3)) H3 a H8) in 
 (leq_ahead_false_1 g a a0 H10 P))))) H6))))))) H2)))))))))) a1)).
 
-theorem leq_asucc_false:
+lemma leq_asucc_false:
  \forall (g: G).(\forall (a: A).((leq g (asucc g a) a) \to (\forall (P: 
 Prop).P)))
 \def

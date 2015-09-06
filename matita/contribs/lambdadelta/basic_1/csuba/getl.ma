@@ -20,7 +20,7 @@ include "basic_1/csuba/clear.ma".
 
 include "basic_1/getl/clear.ma".
 
-theorem csuba_getl_abbr:
+lemma csuba_getl_abbr:
  \forall (g: G).(\forall (c1: C).(\forall (d1: C).(\forall (u: T).(\forall 
 (i: nat).((getl i c1 (CHead d1 (Bind Abbr) u)) \to (\forall (c2: C).((csuba g 
 c1 c2) \to (ex2 C (\lambda (d2: C).(getl i c2 (CHead d2 (Bind Abbr) u))) 
@@ -134,7 +134,7 @@ x9)).(ex_intro2 C (\lambda (d2: C).(getl (S n) c2 (CHead d2 (Bind Abbr) u)))
 x9 (Bind Abbr) u) n H22) H23)))) H21)))))))) H17)))))) H14))))))) H11)))))))) 
 i) H7))))) k H3 H4))))))) x H1 H2)))) H0))))))).
 
-theorem csuba_getl_abst:
+lemma csuba_getl_abst:
  \forall (g: G).(\forall (c1: C).(\forall (d1: C).(\forall (u1: T).(\forall 
 (i: nat).((getl i c1 (CHead d1 (Bind Abst) u1)) \to (\forall (c2: C).((csuba 
 g c1 c2) \to (or (ex2 C (\lambda (d2: C).(getl i c2 (CHead d2 (Bind Abst) 
@@ -468,7 +468,7 @@ c2 x7 x8 H20 (CHead x9 (Bind Abbr) x10) n H23) H24 H25 H26))))))))) H22))
 H21)))))))) H17)))))) H14))))))) H11)))))))) i) H7))))) k H3 H4))))))) x H1 
 H2)))) H0))))))).
 
-theorem csuba_getl_abst_rev:
+lemma csuba_getl_abst_rev:
  \forall (g: G).(\forall (c1: C).(\forall (d1: C).(\forall (u: T).(\forall 
 (i: nat).((getl i c1 (CHead d1 (Bind Abst) u)) \to (\forall (c2: C).((csuba g 
 c2 c1) \to (or (ex2 C (\lambda (d2: C).(getl i c2 (CHead d2 (Bind Abst) u))) 
@@ -694,7 +694,7 @@ T).(csuba g d2 d1))) x9 x10 (getl_clear_bind x6 c2 x7 x8 H20 (CHead x9 (Bind
 Void) x10) n H23) H24)))))) H22)) H21)))))))) H17)))))) H14))))))) 
 H11)))))))) i) H7))))) k H3 H4))))))) x H1 H2)))) H0))))))).
 
-theorem csuba_getl_abbr_rev:
+lemma csuba_getl_abbr_rev:
  \forall (g: G).(\forall (c1: C).(\forall (d1: C).(\forall (u1: T).(\forall 
 (i: nat).((getl i c1 (CHead d1 (Bind Abbr) u1)) \to (\forall (c2: C).((csuba 
 g c2 c1) \to (or3 (ex2 C (\lambda (d2: C).(getl i c2 (CHead d2 (Bind Abbr) 

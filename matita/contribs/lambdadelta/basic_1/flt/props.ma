@@ -18,7 +18,7 @@ include "basic_1/flt/defs.ma".
 
 include "basic_1/C/props.ma".
 
-theorem flt_thead_sx:
+lemma flt_thead_sx:
  \forall (k: K).(\forall (c: C).(\forall (u: T).(\forall (t: T).(flt c u c 
 (THead k u t)))))
 \def
@@ -26,7 +26,7 @@ theorem flt_thead_sx:
 (tweight u) (S (plus (tweight u) (tweight t))) (cweight c) (le_n_S (tweight 
 u) (plus (tweight u) (tweight t)) (le_plus_l (tweight u) (tweight t))))))).
 
-theorem flt_thead_dx:
+lemma flt_thead_dx:
  \forall (k: K).(\forall (c: C).(\forall (u: T).(\forall (t: T).(flt c t c 
 (THead k u t)))))
 \def
@@ -34,7 +34,7 @@ theorem flt_thead_dx:
 (tweight t) (S (plus (tweight u) (tweight t))) (cweight c) (le_n_S (tweight 
 t) (plus (tweight u) (tweight t)) (le_plus_r (tweight u) (tweight t))))))).
 
-theorem flt_shift:
+lemma flt_shift:
  \forall (k: K).(\forall (c: C).(\forall (u: T).(\forall (t: T).(flt (CHead c 
 k u) t c (THead k u t)))))
 \def
@@ -48,14 +48,14 @@ t))) (plus_assoc_l (cweight c) (tweight u) (tweight t))) (plus (cweight c) (S
 (plus (tweight u) (tweight t)))) (plus_n_Sm (cweight c) (plus (tweight u) 
 (tweight t))))))).
 
-theorem flt_arith0:
+lemma flt_arith0:
  \forall (k: K).(\forall (c: C).(\forall (t: T).(\forall (i: nat).(flt c t 
 (CHead c k t) (TLRef i)))))
 \def
  \lambda (_: K).(\lambda (c: C).(\lambda (t: T).(\lambda (_: 
 nat).(lt_x_plus_x_Sy (plus (cweight c) (tweight t)) O)))).
 
-theorem flt_arith1:
+lemma flt_arith1:
  \forall (k1: K).(\forall (c1: C).(\forall (c2: C).(\forall (t1: T).((cle 
 (CHead c1 k1 t1) c2) \to (\forall (k2: K).(\forall (t2: T).(\forall (i: 
 nat).(flt c1 t1 (CHead c2 k2 t2) (TLRef i)))))))))
@@ -70,7 +70,7 @@ nat).(lt (cweight c2) n)) (le_lt_n_Sm (cweight c2) (plus (cweight c2)
 (tweight t2)) (S O)) (plus_sym (plus (cweight c2) (tweight t2)) (S 
 O))))))))))).
 
-theorem flt_arith2:
+lemma flt_arith2:
  \forall (c1: C).(\forall (c2: C).(\forall (t1: T).(\forall (i: nat).((flt c1 
 t1 c2 (TLRef i)) \to (\forall (k2: K).(\forall (t2: T).(\forall (j: nat).(flt 
 c1 t1 (CHead c2 k2 t2) (TLRef j)))))))))
@@ -82,7 +82,7 @@ c1 t1 (CHead c2 k2 t2) (TLRef j)))))))))
 t2)) (S O)) H (le_plus_plus (cweight c2) (plus (cweight c2) (tweight t2)) (S 
 O) (S O) (le_plus_l (cweight c2) (tweight t2)) (le_n (S O))))))))))).
 
-theorem cle_flt_trans:
+lemma cle_flt_trans:
  \forall (c1: C).(\forall (c2: C).((cle c1 c2) \to (\forall (c3: C).(\forall 
 (u2: T).(\forall (u3: T).((flt c2 u2 c3 u3) \to (flt c1 u2 c3 u3)))))))
 \def

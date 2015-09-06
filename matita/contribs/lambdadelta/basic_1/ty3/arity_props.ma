@@ -18,7 +18,7 @@ include "basic_1/ty3/arity.ma".
 
 include "basic_1/sc3/arity.ma".
 
-theorem ty3_predicative:
+lemma ty3_predicative:
  \forall (g: G).(\forall (c: C).(\forall (v: T).(\forall (t: T).(\forall (u: 
 T).((ty3 g c (THead (Bind Abst) v t) u) \to ((pc3 c u v) \to (\forall (P: 
 Prop).P)))))))
@@ -80,7 +80,7 @@ c u2 (asucc g x1) (arity_gen_lift g (CHead c (Bind Abst) w) u2 (asucc g x1)
 H11)) P)))) H9)))))) H6))))))) H3)))) (ty3_correct g (CHead c (Bind Abst) w) 
 t (lift (S O) O u2) H0))))))))))).
 
-theorem ty3_acyclic:
+lemma ty3_acyclic:
  \forall (g: G).(\forall (c: C).(\forall (t: T).(\forall (u: T).((ty3 g c t 
 u) \to ((pc3 c u t) \to (\forall (P: Prop).P))))))
 \def
@@ -92,7 +92,7 @@ u) \to ((pc3 c u t) \to (\forall (P: Prop).P))))))
 c t x)).(\lambda (H3: (arity g c t (asucc g x))).(leq_asucc_false g x 
 (arity_mono g c t (asucc g x) H3 x H2) P)))) H1)))))))))).
 
-theorem ty3_sn3:
+lemma ty3_sn3:
  \forall (g: G).(\forall (c: C).(\forall (t: T).(\forall (u: T).((ty3 g c t 
 u) \to (sn3 c t)))))
 \def

@@ -18,7 +18,7 @@ include "basic_1/nf2/props.ma".
 
 include "basic_1/drop1/fwd.ma".
 
-theorem nf2_lift1:
+lemma nf2_lift1:
  \forall (e: C).(\forall (hds: PList).(\forall (c: C).(\forall (t: T).((drop1 
 hds c e) \to ((nf2 e t) \to (nf2 c (lift1 hds t)))))))
 \def

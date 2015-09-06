@@ -20,12 +20,12 @@ include "basic_1/leq/asucc.ma".
 
 include "basic_1/getl/drop.ma".
 
-let rec arity_ind (g: G) (P: (C \to (T \to (A \to Prop)))) (f: (\forall (c: 
-C).(\forall (n: nat).(P c (TSort n) (ASort O n))))) (f0: (\forall (c: 
-C).(\forall (d: C).(\forall (u: T).(\forall (i: nat).((getl i c (CHead d 
-(Bind Abbr) u)) \to (\forall (a: A).((arity g d u a) \to ((P d u a) \to (P c 
-(TLRef i) a)))))))))) (f1: (\forall (c: C).(\forall (d: C).(\forall (u: 
-T).(\forall (i: nat).((getl i c (CHead d (Bind Abst) u)) \to (\forall (a: 
+implied let rec arity_ind (g: G) (P: (C \to (T \to (A \to Prop)))) (f: 
+(\forall (c: C).(\forall (n: nat).(P c (TSort n) (ASort O n))))) (f0: 
+(\forall (c: C).(\forall (d: C).(\forall (u: T).(\forall (i: nat).((getl i c 
+(CHead d (Bind Abbr) u)) \to (\forall (a: A).((arity g d u a) \to ((P d u a) 
+\to (P c (TLRef i) a)))))))))) (f1: (\forall (c: C).(\forall (d: C).(\forall 
+(u: T).(\forall (i: nat).((getl i c (CHead d (Bind Abst) u)) \to (\forall (a: 
 A).((arity g d u (asucc g a)) \to ((P d u (asucc g a)) \to (P c (TLRef i) 
 a)))))))))) (f2: (\forall (b: B).((not (eq B b Abst)) \to (\forall (c: 
 C).(\forall (u: T).(\forall (a1: A).((arity g c u a1) \to ((P c u a1) \to 
@@ -61,7 +61,7 @@ a3) a4)) | (arity_cast c0 u a1 a2 t0 a3) \Rightarrow (f5 c0 u a1 a2
 a2 a3 l) \Rightarrow (f6 c0 t0 a1 a2 ((arity_ind g P f f0 f1 f2 f3 f4 f5 f6) 
 c0 t0 a1 a2) a3 l)].
 
-theorem arity_gen_sort:
+lemma arity_gen_sort:
  \forall (g: G).(\forall (c: C).(\forall (n: nat).(\forall (a: A).((arity g c 
 (TSort n) a) \to (leq g a (ASort O n))))))
 \def
@@ -130,7 +130,7 @@ H7 \def (eq_ind T t (\lambda (t0: T).(arity g c0 t0 a1)) H1 (TSort n) H5) in
 (leq_trans g a2 a1 (leq_sym g a1 a2 H3) (ASort O n) (H6 (refl_equal T (TSort 
 n))))))))))))))) c y a H0))) H))))).
 
-theorem arity_gen_lref:
+lemma arity_gen_lref:
  \forall (g: G).(\forall (c: C).(\forall (i: nat).(\forall (a: A).((arity g c 
 (TLRef i) a) \to (or (ex2_2 C T (\lambda (d: C).(\lambda (u: T).(getl i c 
 (CHead d (Bind Abbr) u)))) (\lambda (d: C).(\lambda (u: T).(arity g d u a)))) 
@@ -324,7 +324,7 @@ T).(arity g d u a2)))) (ex2_2 C T (\lambda (d: C).(\lambda (u: T).(getl i c0
 (asucc g a2)))) x0 x1 H10 (arity_repl g x0 x1 (asucc g a1) H11 (asucc g a2) 
 (asucc_repl g a1 a2 H3)))))))) H9)) H8))))))))))))) c y a H0))) H))))).
 
-theorem arity_gen_bind:
+lemma arity_gen_bind:
  \forall (b: B).((not (eq B b Abst)) \to (\forall (g: G).(\forall (c: 
 C).(\forall (u: T).(\forall (t: T).(\forall (a2: A).((arity g c (THead (Bind 
 b) u t) a2) \to (ex2 A (\lambda (a1: A).(arity g c u a1)) (\lambda (_: 
@@ -485,7 +485,7 @@ c0 u a3)) (\lambda (_: A).(arity g (CHead c0 (Bind b) u) t a0)) x H10
 (arity_repl g (CHead c0 (Bind b) u) t a1 H11 a0 H4))))) H9))))))))))))) c y 
 a2 H1))) H0)))))))).
 
-theorem arity_gen_abst:
+lemma arity_gen_abst:
  \forall (g: G).(\forall (c: C).(\forall (u: T).(\forall (t: T).(\forall (a: 
 A).((arity g c (THead (Bind Abst) u t) a) \to (ex3_2 A A (\lambda (a1: 
 A).(\lambda (a2: A).(eq A a (AHead a1 a2)))) (\lambda (a1: A).(\lambda (_: 
@@ -698,7 +698,7 @@ A).(arity g c0 u (asucc g a3)))) (\lambda (_: A).(\lambda (a4: A).(arity g
 (arity_repl g (CHead c0 (Bind Abst) u) t x1 H11 x3 H16)) a2 H18))))))) 
 H14)))))))))) H8))))))))))))) c y a H0))) H)))))).
 
-theorem arity_gen_appl:
+lemma arity_gen_appl:
  \forall (g: G).(\forall (c: C).(\forall (u: T).(\forall (t: T).(\forall (a2: 
 A).((arity g c (THead (Flat Appl) u t) a2) \to (ex2 A (\lambda (a1: A).(arity 
 g c u a1)) (\lambda (a1: A).(arity g c t (AHead a1 a2)))))))))
@@ -815,7 +815,7 @@ A).(arity g c0 t (AHead a3 a0))) x H9 (arity_repl g c0 t (AHead x a1) H10
 (AHead x a0) (leq_head g x x (leq_refl g x) a1 a0 H3)))))) H8))))))))))))) c 
 y a2 H0))) H)))))).
 
-theorem arity_gen_cast:
+lemma arity_gen_cast:
  \forall (g: G).(\forall (c: C).(\forall (u: T).(\forall (t: T).(\forall (a: 
 A).((arity g c (THead (Flat Cast) u t) a) \to (land (arity g c u (asucc g a)) 
 (arity g c t a)))))))
@@ -920,7 +920,7 @@ a1))).(\lambda (H10: (arity g c0 t a1)).(conj (arity g c0 u (asucc g a2))
 g a1 a2 H3)) (arity_repl g c0 t a1 H10 a2 H3)))) H8))))))))))))) c y a H0))) 
 H)))))).
 
-theorem arity_gen_appls:
+lemma arity_gen_appls:
  \forall (g: G).(\forall (c: C).(\forall (t: T).(\forall (vs: TList).(\forall 
 (a2: A).((arity g c (THeads (Flat Appl) vs t) a2) \to (ex A (\lambda (a: 
 A).(arity g c t a))))))))
@@ -942,7 +942,7 @@ a2))).(let H_x \def (H (AHead x a2) H3) in (let H4 \def H_x in (ex_ind A
 (\lambda (x0: A).(\lambda (H5: (arity g c t x0)).(ex_intro A (\lambda (a: 
 A).(arity g c t a)) x0 H5))) H4)))))) H1))))))) vs)))).
 
-theorem arity_gen_lift:
+lemma arity_gen_lift:
  \forall (g: G).(\forall (c1: C).(\forall (t: T).(\forall (a: A).(\forall (h: 
 nat).(\forall (d: nat).((arity g c1 (lift h d t) a) \to (\forall (c2: 
 C).((drop h d c1 c2) \to (arity g c2 t a)))))))))

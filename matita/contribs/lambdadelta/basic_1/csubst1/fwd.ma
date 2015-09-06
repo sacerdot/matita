@@ -22,7 +22,7 @@ include "basic_1/subst1/defs.ma".
 
 include "basic_1/s/fwd.ma".
 
-theorem csubst1_ind:
+implied lemma csubst1_ind:
  \forall (i: nat).(\forall (v: T).(\forall (c1: C).(\forall (P: ((C \to 
 Prop))).((P c1) \to (((\forall (c2: C).((csubst0 i v c1 c2) \to (P c2)))) \to 
 (\forall (c: C).((csubst1 i v c1 c) \to (P c))))))))
@@ -33,7 +33,7 @@ c2) \to (P c2))))).(\lambda (c: C).(\lambda (c0: (csubst1 i v c1 c)).(match
 c0 with [csubst1_refl \Rightarrow f | (csubst1_sing x x0) \Rightarrow (f0 x 
 x0)])))))))).
 
-theorem csubst1_gen_head:
+lemma csubst1_gen_head:
  \forall (k: K).(\forall (c1: C).(\forall (x: C).(\forall (u1: T).(\forall 
 (v: T).(\forall (i: nat).((csubst1 (s k i) v (CHead c1 k u1) x) \to (ex3_2 T 
 C (\lambda (u2: T).(\lambda (c2: C).(eq C x (CHead c2 k u2)))) (\lambda (u2: 

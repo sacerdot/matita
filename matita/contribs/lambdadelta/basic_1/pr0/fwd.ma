@@ -18,40 +18,41 @@ include "basic_1/pr0/defs.ma".
 
 include "basic_1/subst0/fwd.ma".
 
-let rec pr0_ind (P: (T \to (T \to Prop))) (f: (\forall (t: T).(P t t))) (f0: 
-(\forall (u1: T).(\forall (u2: T).((pr0 u1 u2) \to ((P u1 u2) \to (\forall 
-(t1: T).(\forall (t2: T).((pr0 t1 t2) \to ((P t1 t2) \to (\forall (k: K).(P 
-(THead k u1 t1) (THead k u2 t2)))))))))))) (f1: (\forall (u: T).(\forall (v1: 
-T).(\forall (v2: T).((pr0 v1 v2) \to ((P v1 v2) \to (\forall (t1: T).(\forall 
-(t2: T).((pr0 t1 t2) \to ((P t1 t2) \to (P (THead (Flat Appl) v1 (THead (Bind 
-Abst) u t1)) (THead (Bind Abbr) v2 t2)))))))))))) (f2: (\forall (b: B).((not 
-(eq B b Abst)) \to (\forall (v1: T).(\forall (v2: T).((pr0 v1 v2) \to ((P v1 
-v2) \to (\forall (u1: T).(\forall (u2: T).((pr0 u1 u2) \to ((P u1 u2) \to 
-(\forall (t1: T).(\forall (t2: T).((pr0 t1 t2) \to ((P t1 t2) \to (P (THead 
-(Flat Appl) v1 (THead (Bind b) u1 t1)) (THead (Bind b) u2 (THead (Flat Appl) 
-(lift (S O) O v2) t2)))))))))))))))))) (f3: (\forall (u1: T).(\forall (u2: 
-T).((pr0 u1 u2) \to ((P u1 u2) \to (\forall (t1: T).(\forall (t2: T).((pr0 t1 
-t2) \to ((P t1 t2) \to (\forall (w: T).((subst0 O u2 t2 w) \to (P (THead 
-(Bind Abbr) u1 t1) (THead (Bind Abbr) u2 w))))))))))))) (f4: (\forall (b: 
-B).((not (eq B b Abst)) \to (\forall (t1: T).(\forall (t2: T).((pr0 t1 t2) 
-\to ((P t1 t2) \to (\forall (u: T).(P (THead (Bind b) u (lift (S O) O t1)) 
-t2))))))))) (f5: (\forall (t1: T).(\forall (t2: T).((pr0 t1 t2) \to ((P t1 
-t2) \to (\forall (u: T).(P (THead (Flat Cast) u t1) t2))))))) (t: T) (t0: T) 
-(p: pr0 t t0) on p: P t t0 \def match p with [(pr0_refl t1) \Rightarrow (f 
-t1) | (pr0_comp u1 u2 p0 t1 t2 p1 k) \Rightarrow (f0 u1 u2 p0 ((pr0_ind P f 
-f0 f1 f2 f3 f4 f5) u1 u2 p0) t1 t2 p1 ((pr0_ind P f f0 f1 f2 f3 f4 f5) t1 t2 
-p1) k) | (pr0_beta u v1 v2 p0 t1 t2 p1) \Rightarrow (f1 u v1 v2 p0 ((pr0_ind 
-P f f0 f1 f2 f3 f4 f5) v1 v2 p0) t1 t2 p1 ((pr0_ind P f f0 f1 f2 f3 f4 f5) t1 
-t2 p1)) | (pr0_upsilon b n v1 v2 p0 u1 u2 p1 t1 t2 p2) \Rightarrow (f2 b n v1 
-v2 p0 ((pr0_ind P f f0 f1 f2 f3 f4 f5) v1 v2 p0) u1 u2 p1 ((pr0_ind P f f0 f1 
-f2 f3 f4 f5) u1 u2 p1) t1 t2 p2 ((pr0_ind P f f0 f1 f2 f3 f4 f5) t1 t2 p2)) | 
-(pr0_delta u1 u2 p0 t1 t2 p1 w s0) \Rightarrow (f3 u1 u2 p0 ((pr0_ind P f f0 
-f1 f2 f3 f4 f5) u1 u2 p0) t1 t2 p1 ((pr0_ind P f f0 f1 f2 f3 f4 f5) t1 t2 p1) 
-w s0) | (pr0_zeta b n t1 t2 p0 u) \Rightarrow (f4 b n t1 t2 p0 ((pr0_ind P f 
-f0 f1 f2 f3 f4 f5) t1 t2 p0) u) | (pr0_tau t1 t2 p0 u) \Rightarrow (f5 t1 t2 
-p0 ((pr0_ind P f f0 f1 f2 f3 f4 f5) t1 t2 p0) u)].
+implied let rec pr0_ind (P: (T \to (T \to Prop))) (f: (\forall (t: T).(P t 
+t))) (f0: (\forall (u1: T).(\forall (u2: T).((pr0 u1 u2) \to ((P u1 u2) \to 
+(\forall (t1: T).(\forall (t2: T).((pr0 t1 t2) \to ((P t1 t2) \to (\forall 
+(k: K).(P (THead k u1 t1) (THead k u2 t2)))))))))))) (f1: (\forall (u: 
+T).(\forall (v1: T).(\forall (v2: T).((pr0 v1 v2) \to ((P v1 v2) \to (\forall 
+(t1: T).(\forall (t2: T).((pr0 t1 t2) \to ((P t1 t2) \to (P (THead (Flat 
+Appl) v1 (THead (Bind Abst) u t1)) (THead (Bind Abbr) v2 t2)))))))))))) (f2: 
+(\forall (b: B).((not (eq B b Abst)) \to (\forall (v1: T).(\forall (v2: 
+T).((pr0 v1 v2) \to ((P v1 v2) \to (\forall (u1: T).(\forall (u2: T).((pr0 u1 
+u2) \to ((P u1 u2) \to (\forall (t1: T).(\forall (t2: T).((pr0 t1 t2) \to ((P 
+t1 t2) \to (P (THead (Flat Appl) v1 (THead (Bind b) u1 t1)) (THead (Bind b) 
+u2 (THead (Flat Appl) (lift (S O) O v2) t2)))))))))))))))))) (f3: (\forall 
+(u1: T).(\forall (u2: T).((pr0 u1 u2) \to ((P u1 u2) \to (\forall (t1: 
+T).(\forall (t2: T).((pr0 t1 t2) \to ((P t1 t2) \to (\forall (w: T).((subst0 
+O u2 t2 w) \to (P (THead (Bind Abbr) u1 t1) (THead (Bind Abbr) u2 
+w))))))))))))) (f4: (\forall (b: B).((not (eq B b Abst)) \to (\forall (t1: 
+T).(\forall (t2: T).((pr0 t1 t2) \to ((P t1 t2) \to (\forall (u: T).(P (THead 
+(Bind b) u (lift (S O) O t1)) t2))))))))) (f5: (\forall (t1: T).(\forall (t2: 
+T).((pr0 t1 t2) \to ((P t1 t2) \to (\forall (u: T).(P (THead (Flat Cast) u 
+t1) t2))))))) (t: T) (t0: T) (p: pr0 t t0) on p: P t t0 \def match p with 
+[(pr0_refl t1) \Rightarrow (f t1) | (pr0_comp u1 u2 p0 t1 t2 p1 k) 
+\Rightarrow (f0 u1 u2 p0 ((pr0_ind P f f0 f1 f2 f3 f4 f5) u1 u2 p0) t1 t2 p1 
+((pr0_ind P f f0 f1 f2 f3 f4 f5) t1 t2 p1) k) | (pr0_beta u v1 v2 p0 t1 t2 
+p1) \Rightarrow (f1 u v1 v2 p0 ((pr0_ind P f f0 f1 f2 f3 f4 f5) v1 v2 p0) t1 
+t2 p1 ((pr0_ind P f f0 f1 f2 f3 f4 f5) t1 t2 p1)) | (pr0_upsilon b n v1 v2 p0 
+u1 u2 p1 t1 t2 p2) \Rightarrow (f2 b n v1 v2 p0 ((pr0_ind P f f0 f1 f2 f3 f4 
+f5) v1 v2 p0) u1 u2 p1 ((pr0_ind P f f0 f1 f2 f3 f4 f5) u1 u2 p1) t1 t2 p2 
+((pr0_ind P f f0 f1 f2 f3 f4 f5) t1 t2 p2)) | (pr0_delta u1 u2 p0 t1 t2 p1 w 
+s0) \Rightarrow (f3 u1 u2 p0 ((pr0_ind P f f0 f1 f2 f3 f4 f5) u1 u2 p0) t1 t2 
+p1 ((pr0_ind P f f0 f1 f2 f3 f4 f5) t1 t2 p1) w s0) | (pr0_zeta b n t1 t2 p0 
+u) \Rightarrow (f4 b n t1 t2 p0 ((pr0_ind P f f0 f1 f2 f3 f4 f5) t1 t2 p0) u) 
+| (pr0_tau t1 t2 p0 u) \Rightarrow (f5 t1 t2 p0 ((pr0_ind P f f0 f1 f2 f3 f4 
+f5) t1 t2 p0) u)].
 
-theorem pr0_gen_sort:
+lemma pr0_gen_sort:
  \forall (x: T).(\forall (n: nat).((pr0 (TSort n) x) \to (eq T x (TSort n))))
 \def
  \lambda (x: T).(\lambda (n: nat).(\lambda (H: (pr0 (TSort n) x)).(insert_eq 
@@ -110,7 +111,7 @@ T).(\lambda (H3: (eq T (THead (Flat Cast) u t1) (TSort n))).(let H4 \def
 True])) I (TSort n) H3) in (False_ind (eq T t2 (THead (Flat Cast) u t1)) 
 H4)))))))) y x H0))) H))).
 
-theorem pr0_gen_lref:
+lemma pr0_gen_lref:
  \forall (x: T).(\forall (n: nat).((pr0 (TLRef n) x) \to (eq T x (TLRef n))))
 \def
  \lambda (x: T).(\lambda (n: nat).(\lambda (H: (pr0 (TLRef n) x)).(insert_eq 
@@ -169,7 +170,7 @@ T).(\lambda (H3: (eq T (THead (Flat Cast) u t1) (TLRef n))).(let H4 \def
 True])) I (TLRef n) H3) in (False_ind (eq T t2 (THead (Flat Cast) u t1)) 
 H4)))))))) y x H0))) H))).
 
-theorem pr0_gen_abst:
+lemma pr0_gen_abst:
  \forall (u1: T).(\forall (t1: T).(\forall (x: T).((pr0 (THead (Bind Abst) u1 
 t1) x) \to (ex3_2 T T (\lambda (u2: T).(\lambda (t2: T).(eq T x (THead (Bind 
 Abst) u2 t2)))) (\lambda (u2: T).(\lambda (_: T).(pr0 u1 u2))) (\lambda (_: 
@@ -323,7 +324,7 @@ T).(\lambda (t3: T).(eq T t2 (THead (Bind Abst) u2 t3)))) (\lambda (u2:
 T).(\lambda (_: T).(pr0 u1 u2))) (\lambda (_: T).(\lambda (t3: T).(pr0 t1 
 t3)))) H4)))))))) y x H0))) H)))).
 
-theorem pr0_gen_appl:
+lemma pr0_gen_appl:
  \forall (u1: T).(\forall (t1: T).(\forall (x: T).((pr0 (THead (Flat Appl) u1 
 t1) x) \to (or3 (ex3_2 T T (\lambda (u2: T).(\lambda (t2: T).(eq T x (THead 
 (Flat Appl) u2 t2)))) (\lambda (u2: T).(\lambda (_: T).(pr0 u1 u2))) (\lambda 
@@ -1088,7 +1089,7 @@ T).(\lambda (v2: T).(\lambda (_: T).(pr0 y1 v2))))))) (\lambda (_:
 B).(\lambda (_: T).(\lambda (z1: T).(\lambda (_: T).(\lambda (_: T).(\lambda 
 (t3: T).(pr0 z1 t3))))))))) H4)))))))) y x H0))) H)))).
 
-theorem pr0_gen_cast:
+lemma pr0_gen_cast:
  \forall (u1: T).(\forall (t1: T).(\forall (x: T).((pr0 (THead (Flat Cast) u1 
 t1) x) \to (or (ex3_2 T T (\lambda (u2: T).(\lambda (t2: T).(eq T x (THead 
 (Flat Cast) u2 t2)))) (\lambda (u2: T).(\lambda (_: T).(pr0 u1 u2))) (\lambda 
@@ -1248,7 +1249,7 @@ T).(pr0 t t2)) H1 t1 H5) in (or_intror (ex3_2 T T (\lambda (u2: T).(\lambda
 T).(pr0 u1 u2))) (\lambda (_: T).(\lambda (t3: T).(pr0 t1 t3)))) (pr0 t1 t2) 
 H8))))) H4)))))))) y x H0))) H)))).
 
-theorem pr0_gen_lift:
+lemma pr0_gen_lift:
  \forall (t1: T).(\forall (x: T).(\forall (h: nat).(\forall (d: nat).((pr0 
 (lift h d t1) x) \to (ex2 T (\lambda (t2: T).(eq T x (lift h d t2))) (\lambda 
 (t2: T).(pr0 t1 t2)))))))

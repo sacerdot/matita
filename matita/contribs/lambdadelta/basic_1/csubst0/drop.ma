@@ -18,7 +18,7 @@ include "basic_1/csubst0/fwd.ma".
 
 include "basic_1/drop/fwd.ma".
 
-theorem csubst0_drop_gt:
+lemma csubst0_drop_gt:
  \forall (n: nat).(\forall (i: nat).((lt i n) \to (\forall (c1: C).(\forall 
 (c2: C).(\forall (v: T).((csubst0 i v c1 c2) \to (\forall (e: C).((drop n O 
 c1 e) \to (drop n O c2 e)))))))))
@@ -160,7 +160,7 @@ f) n0 x1 e (H13 x1 v H9 e H12) x0)))) H15)) (lt_gen_xS x2 n0 H14)))))) k
 (drop_gen_drop k c e t n0 H3) H10 H11))) c2 H7)))))))) H5)) H4))))))))))) 
 c1)))))) n).
 
-theorem csubst0_drop_gt_back:
+lemma csubst0_drop_gt_back:
  \forall (n: nat).(\forall (i: nat).((lt i n) \to (\forall (c1: C).(\forall 
 (c2: C).(\forall (v: T).((csubst0 i v c1 c2) \to (\forall (e: C).((drop n O 
 c2 e) \to (drop n O c1 e)))))))))
@@ -297,7 +297,7 @@ x))).(\lambda (_: (lt x n0)).(drop_drop (Flat f) n0 c e (H13 x1 v H9 e H15)
 t)))) H16)) (lt_gen_xS x2 n0 H14)))))) k H11 H12 (drop_gen_drop k x1 e x0 n0 
 H10)))))))))))) H5)) H4))))))))))) c1)))))) n).
 
-theorem csubst0_drop_lt:
+lemma csubst0_drop_lt:
  \forall (n: nat).(\forall (i: nat).((lt n i) \to (\forall (c1: C).(\forall 
 (c2: C).(\forall (v: T).((csubst0 i v c1 c2) \to (\forall (e: C).((drop n O 
 c1 e) \to (or4 (drop n O c2 e) (ex3_4 K C T T (\lambda (k: K).(\lambda (e0: 
@@ -2291,7 +2291,7 @@ x6 x7 (refl_equal C (CHead x4 x3 x6)) (drop_drop (Flat f) n0 x1 (CHead x5 x3
 x7) H17 x0) H18 H19)) e H16)))))))))) H15)) H14)))))) k (drop_gen_drop k c e 
 t n0 H2) H9 H10) i H5))) c2 H6)))))))) H4)) H3))))))))))) c1)))))) n).
 
-theorem csubst0_drop_eq:
+lemma csubst0_drop_eq:
  \forall (n: nat).(\forall (c1: C).(\forall (c2: C).(\forall (v: T).((csubst0 
 n v c1 c2) \to (\forall (e: C).((drop n O c1 e) \to (or4 (drop n O c2 e) 
 (ex3_4 F C T T (\lambda (f: F).(\lambda (e0: C).(\lambda (u: T).(\lambda (_: 
@@ -4191,7 +4191,7 @@ C).(\lambda (_: T).(\lambda (_: T).(csubst0 O v e1 e2)))))) x3 x4 x5 x6 x7
 (Flat x3) x7) H16 x0) H17 H18)) e H15)))))))))) H14)) H13)))))))) k 
 (drop_gen_drop k c e t n0 H1) H4) c2 H5)))))))) H3)) H2))))))))))) c1)))) n).
 
-theorem csubst0_drop_eq_back:
+lemma csubst0_drop_eq_back:
  \forall (n: nat).(\forall (c1: C).(\forall (c2: C).(\forall (v: T).((csubst0 
 n v c1 c2) \to (\forall (e: C).((drop n O c2 e) \to (or4 (drop n O c1 e) 
 (ex3_4 F C T T (\lambda (f: F).(\lambda (e0: C).(\lambda (_: T).(\lambda (u2: 
@@ -6039,7 +6039,7 @@ C).(\lambda (_: T).(\lambda (_: T).(csubst0 O v e1 e2)))))) x3 x4 x5 x6 x7
 (Flat x3) x6) H17 t) H18 H19)) e H16))))))))))) H15)) H14)))))))) k H4 
 (drop_gen_drop k x1 e x0 n0 H8)))))))))) H3)) H2))))))))))) c1)))) n).
 
-theorem csubst0_drop_lt_back:
+lemma csubst0_drop_lt_back:
  \forall (n: nat).(\forall (i: nat).((lt n i) \to (\forall (c1: C).(\forall 
 (c2: C).(\forall (v: T).((csubst0 i v c1 c2) \to (\forall (e2: C).((drop n O 
 c2 e2) \to (or (drop n O c1 e2) (ex2 C (\lambda (e1: C).(csubst0 (minus i n) 

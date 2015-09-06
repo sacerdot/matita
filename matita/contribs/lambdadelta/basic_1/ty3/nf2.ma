@@ -28,7 +28,7 @@ T).(\forall (i: nat).((getl i c (CHead d (Bind Abst) wi)) \to (\forall (vs:
 TList).((pc3 c (THeads (Flat Appl) vs (lift (S i) O wi)) (THead (Bind Abst) w 
 u)) \to False)))))))).
 
-theorem ty3_nf2_inv_abst_premise_csort:
+lemma ty3_nf2_inv_abst_premise_csort:
  \forall (w: T).(\forall (u: T).(\forall (m: nat).(ty3_nf2_inv_abst_premise 
 (CSort m) w u)))
 \def
@@ -38,7 +38,7 @@ wi))).(\lambda (vs: TList).(\lambda (_: (pc3 (CSort m) (THeads (Flat Appl) vs
 (lift (S i) O wi)) (THead (Bind Abst) w u))).(getl_gen_sort m i (CHead d 
 (Bind Abst) wi) H False))))))))).
 
-theorem ty3_nf2_inv_all:
+lemma ty3_nf2_inv_all:
  \forall (g: G).(\forall (c: C).(\forall (t: T).(\forall (u: T).((ty3 g c t 
 u) \to ((nf2 c t) \to (or3 (ex3_2 T T (\lambda (w: T).(\lambda (u0: T).(eq T 
 t (THead (Bind Abst) w u0)))) (\lambda (w: T).(\lambda (_: T).(nf2 c w))) 
@@ -61,7 +61,7 @@ TList).(\lambda (i: nat).(nf2 c (TLRef i)))))) (\lambda (x: A).(\lambda (H2:
 (arity g c t x)).(\lambda (_: (arity g c u (asucc g x))).(arity_nf2_inv_all g 
 c t x H2 H0)))) H1)))))))).
 
-theorem ty3_nf2_inv_sort:
+lemma ty3_nf2_inv_sort:
  \forall (g: G).(\forall (c: C).(\forall (t: T).(\forall (m: nat).((ty3 g c t 
 (TSort m)) \to ((nf2 c t) \to (or (ex2 nat (\lambda (n: nat).(eq T t (TSort 
 n))) (\lambda (n: nat).(eq nat m (next g n)))) (ex3_2 TList nat (\lambda (ws: 
@@ -173,7 +173,7 @@ nat).(nfs2 c ws))) (\lambda (_: TList).(\lambda (i: nat).(nf2 c (TLRef i))))
 x0 x1 (refl_equal T (THeads (Flat Appl) x0 (TLRef x1))) H4 H5)) t H3))))))) 
 H2)) H1)))))))).
 
-theorem ty3_nf2_gen__ty3_nf2_inv_abst_aux:
+fact ty3_nf2_gen__ty3_nf2_inv_abst_aux:
  \forall (c: C).(\forall (w1: T).(\forall (u1: T).((ty3_nf2_inv_abst_premise 
 c w1 u1) \to (\forall (t: T).(\forall (w2: T).(\forall (u2: T).((pc3 c (THead 
 (Flat Appl) t (THead (Bind Abst) w2 u2)) (THead (Bind Abst) w1 u1)) \to 
@@ -193,7 +193,7 @@ wi))).(\lambda (vs: TList).(\lambda (H2: (pc3 c (THeads (Flat Appl) vs (lift
 vs (lift (S i) O wi)) (THead (Bind Abst) w2 u2) H2 t Appl) (THead (Bind Abst) 
 w1 u1) H0))))))))))))))).
 
-theorem ty3_nf2_inv_abst:
+lemma ty3_nf2_inv_abst:
  \forall (g: G).(\forall (c: C).(\forall (t: T).(\forall (w: T).(\forall (u: 
 T).((ty3 g c t (THead (Bind Abst) w u)) \to ((nf2 c t) \to ((nf2 c w) \to 
 ((ty3_nf2_inv_abst_premise c w u) \to (ex4_2 T T (\lambda (v: T).(\lambda (_: 

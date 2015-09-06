@@ -16,7 +16,7 @@
 
 include "basic_1/wf3/getl.ma".
 
-theorem wf3_pr2_conf:
+lemma wf3_pr2_conf:
  \forall (g: G).(\forall (c1: C).(\forall (t1: T).(\forall (t2: T).((pr2 c1 
 t1 t2) \to (\forall (c2: C).((wf3 g c1 c2) \to (\forall (u: T).((ty3 g c1 t1 
 u) \to (pr2 c2 t1 t2)))))))))
@@ -41,7 +41,7 @@ g c2 H3 x H6) in (let H7 \def H_x0 in (ex2_ind C (\lambda (d2: C).(getl i c2
 (_: (wf3 g d x0)).(pr2_delta c2 x0 u i H8 t3 t4 H1 t H2)))) H7))))) 
 H5)))))))))))))))))) c1 t1 t2 H))))).
 
-theorem wf3_pr3_conf:
+lemma wf3_pr3_conf:
  \forall (g: G).(\forall (c1: C).(\forall (t1: T).(\forall (t2: T).((pr3 c1 
 t1 t2) \to (\forall (c2: C).((wf3 g c1 c2) \to (\forall (u: T).((ty3 g c1 t1 
 u) \to (pr3 c2 t1 t2)))))))))
@@ -58,7 +58,7 @@ c2) \to (\forall (u: T).((ty3 g c1 t3 u) \to (pr3 c2 t3 t5))))))).(\lambda
 t4 u)).(pr3_sing c2 t3 t4 (wf3_pr2_conf g c1 t4 t3 H0 c2 H3 u H4) t5 (H2 c2 
 H3 u (ty3_sred_pr2 c1 t4 t3 H0 g u H4))))))))))))) t1 t2 H))))).
 
-theorem wf3_pc3_conf:
+lemma wf3_pc3_conf:
  \forall (g: G).(\forall (c1: C).(\forall (t1: T).(\forall (t2: T).((pc3 c1 
 t1 t2) \to (\forall (c2: C).((wf3 g c1 c2) \to (\forall (u1: T).((ty3 g c1 t1 
 u1) \to (\forall (u2: T).((ty3 g c1 t2 u2) \to (pc3 c2 t1 t2)))))))))))
@@ -72,7 +72,7 @@ c1 t2 u2)).(let H3 \def H in (ex2_ind T (\lambda (t: T).(pr3 c1 t1 t))
 g c1 t1 x H4 c2 H0 u1 H1) t2 (wf3_pr3_conf g c1 t2 x H5 c2 H0 u2 H2))))) 
 H3)))))))))))).
 
-theorem wf3_ty3_conf:
+lemma wf3_ty3_conf:
  \forall (g: G).(\forall (c1: C).(\forall (t1: T).(\forall (t2: T).((ty3 g c1 
 t1 t2) \to (\forall (c2: C).((wf3 g c1 c2) \to (ty3 g c2 t1 t2)))))))
 \def

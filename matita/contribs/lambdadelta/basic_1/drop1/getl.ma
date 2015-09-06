@@ -18,7 +18,7 @@ include "basic_1/drop1/fwd.ma".
 
 include "basic_1/getl/drop.ma".
 
-theorem drop1_getl_trans:
+lemma drop1_getl_trans:
  \forall (hds: PList).(\forall (c1: C).(\forall (c2: C).((drop1 hds c2 c1) 
 \to (\forall (b: B).(\forall (e1: C).(\forall (v: T).(\forall (i: nat).((getl 
 i c1 (CHead e1 (Bind b) v)) \to (ex2 C (\lambda (e2: C).(drop1 (ptrans hds i) 

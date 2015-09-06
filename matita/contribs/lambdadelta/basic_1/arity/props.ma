@@ -16,7 +16,7 @@
 
 include "basic_1/arity/fwd.ma".
 
-theorem node_inh:
+lemma node_inh:
  \forall (g: G).(\forall (n: nat).(\forall (k: nat).(ex_2 C T (\lambda (c: 
 C).(\lambda (t: T).(arity g c t (ASort k n)))))))
 \def
@@ -33,7 +33,7 @@ C).(\lambda (t: T).(arity g c t (ASort (S n0) n)))) (CHead x0 (Bind Abst) x1)
 (TLRef O) (arity_abst g (CHead x0 (Bind Abst) x1) x0 x1 O (getl_refl Abst x0 
 x1) (ASort (S n0) n) H1))))) H0)))) k))).
 
-theorem arity_lift:
+lemma arity_lift:
  \forall (g: G).(\forall (c2: C).(\forall (t: T).(\forall (a: A).((arity g c2 
 t a) \to (\forall (c1: C).(\forall (h: nat).(\forall (d: nat).((drop h d c1 
 c2) \to (arity g c1 (lift h d t) a)))))))))
@@ -155,7 +155,7 @@ C).(\lambda (h: nat).(\lambda (d: nat).(\lambda (H3: (drop h d c1
 c)).(arity_repl g c1 (lift h d t0) a1 (H1 c1 h d H3) a2 H2)))))))))))) c2 t a 
 H))))).
 
-theorem arity_repellent:
+lemma arity_repellent:
  \forall (g: G).(\forall (c: C).(\forall (w: T).(\forall (t: T).(\forall (a1: 
 A).((arity g (CHead c (Bind Abst) w) t a1) \to (\forall (a2: A).((arity g c 
 (THead (Bind Abst) w t) a2) \to ((leq g a1 a2) \to (\forall (P: 
@@ -210,7 +210,7 @@ a)) (arity_repl g c (THeads (Flat Appl) t1 u) (AHead x0 (asucc g a)) H7
 g a) (asucc g a) (leq_refl g (asucc g a)))) (asucc g (AHead x a)) (leq_refl g 
 (asucc g (AHead x a)))) H4))))) H5))))) H2)))))))) vs))))).
 
-theorem arity_appls_abbr:
+lemma arity_appls_abbr:
  \forall (g: G).(\forall (c: C).(\forall (d: C).(\forall (v: T).(\forall (i: 
 nat).((getl i c (CHead d (Bind Abbr) v)) \to (\forall (vs: TList).(\forall 
 (a: A).((arity g c (THeads (Flat Appl) vs (lift (S i) O v)) a) \to (arity g c 

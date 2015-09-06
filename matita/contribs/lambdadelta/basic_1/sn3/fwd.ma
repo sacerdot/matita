@@ -18,16 +18,16 @@ include "basic_1/sn3/defs.ma".
 
 include "basic_1/pr3/props.ma".
 
-let rec sn3_ind (c: C) (P: (T \to Prop)) (f: (\forall (t1: T).(((\forall (t2: 
-T).((((eq T t1 t2) \to (\forall (P0: Prop).P0))) \to ((pr3 c t1 t2) \to (sn3 
-c t2))))) \to (((\forall (t2: T).((((eq T t1 t2) \to (\forall (P0: 
-Prop).P0))) \to ((pr3 c t1 t2) \to (P t2))))) \to (P t1))))) (t: T) (s0: sn3 
-c t) on s0: P t \def match s0 with [(sn3_sing t1 s1) \Rightarrow (f t1 s1 
-(\lambda (t2: T).(\lambda (p: (((eq T t1 t2) \to (\forall (P0: 
-Prop).P0)))).(\lambda (p0: (pr3 c t1 t2)).((sn3_ind c P f) t2 (s1 t2 p 
-p0))))))].
+implied let rec sn3_ind (c: C) (P: (T \to Prop)) (f: (\forall (t1: 
+T).(((\forall (t2: T).((((eq T t1 t2) \to (\forall (P0: Prop).P0))) \to ((pr3 
+c t1 t2) \to (sn3 c t2))))) \to (((\forall (t2: T).((((eq T t1 t2) \to 
+(\forall (P0: Prop).P0))) \to ((pr3 c t1 t2) \to (P t2))))) \to (P t1))))) 
+(t: T) (s0: sn3 c t) on s0: P t \def match s0 with [(sn3_sing t1 s1) 
+\Rightarrow (f t1 s1 (\lambda (t2: T).(\lambda (p: (((eq T t1 t2) \to 
+(\forall (P0: Prop).P0)))).(\lambda (p0: (pr3 c t1 t2)).((sn3_ind c P f) t2 
+(s1 t2 p p0))))))].
 
-theorem sn3_gen_bind:
+lemma sn3_gen_bind:
  \forall (b: B).(\forall (c: C).(\forall (u: T).(\forall (t: T).((sn3 c 
 (THead (Bind b) u t)) \to (land (sn3 c u) (sn3 (CHead c (Bind b) u) t))))))
 \def
@@ -79,7 +79,7 @@ in (land_ind (sn3 c x) (sn3 (CHead c (Bind b) x) t2) (sn3 (CHead c (Bind b)
 x) t2) (\lambda (_: (sn3 c x)).(\lambda (H10: (sn3 (CHead c (Bind b) x) 
 t2)).H10)) H8))))))))))))))) y H0))))) H))))).
 
-theorem sn3_gen_flat:
+lemma sn3_gen_flat:
  \forall (f: F).(\forall (c: C).(\forall (u: T).(\forall (t: T).((sn3 c 
 (THead (Flat f) u t)) \to (land (sn3 c u) (sn3 c t))))))
 \def
@@ -127,7 +127,7 @@ H7 x f) x t2 (refl_equal T (THead (Flat f) x t2))) in (land_ind (sn3 c x)
 (sn3 c t2) (sn3 c t2) (\lambda (_: (sn3 c x)).(\lambda (H10: (sn3 c 
 t2)).H10)) H8))))))))))))))) y H0))))) H))))).
 
-theorem sn3_gen_head:
+lemma sn3_gen_head:
  \forall (k: K).(\forall (c: C).(\forall (u: T).(\forall (t: T).((sn3 c 
 (THead k u t)) \to (sn3 c u)))))
 \def
@@ -142,7 +142,7 @@ F).(\lambda (c: C).(\lambda (u: T).(\lambda (t: T).(\lambda (H: (sn3 c (THead
 (land_ind (sn3 c u) (sn3 c t) (sn3 c u) (\lambda (H1: (sn3 c u)).(\lambda (_: 
 (sn3 c t)).H1)) H0)))))))) k).
 
-theorem sn3_gen_cflat:
+lemma sn3_gen_cflat:
  \forall (f: F).(\forall (c: C).(\forall (u: T).(\forall (t: T).((sn3 (CHead 
 c (Flat f) u) t) \to (sn3 c t)))))
 \def
@@ -156,7 +156,7 @@ t1 t2) \to (\forall (P: Prop).P))) \to ((pr3 (CHead c (Flat f) u) t1 t2) \to
 \to (\forall (P: Prop).P)))).(\lambda (H3: (pr3 c t1 t2)).(H1 t2 H2 
 (pr3_cflat c t1 t2 H3 f u))))))))) t H))))).
 
-theorem sn3_gen_lift:
+lemma sn3_gen_lift:
  \forall (c1: C).(\forall (t: T).(\forall (h: nat).(\forall (d: nat).((sn3 c1 
 (lift h d t)) \to (\forall (c2: C).((drop h d c1 c2) \to (sn3 c2 t)))))))
 \def

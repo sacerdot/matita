@@ -16,7 +16,7 @@
 
 include "ground_1/blt/defs.ma".
 
-theorem lt_blt:
+lemma lt_blt:
  \forall (x: nat).(\forall (y: nat).((lt y x) \to (eq bool (blt y x) true)))
 \def
  \lambda (x: nat).(nat_ind (\lambda (n: nat).(\forall (y: nat).((lt y n) \to 
@@ -35,7 +35,7 @@ true)) (\lambda (n0: nat).(\lambda (_: (((lt n0 (S n)) \to (eq bool (match n0
 with [O \Rightarrow true | (S m) \Rightarrow (blt m n)]) true)))).(\lambda 
 (H1: (lt (S n0) (S n))).(H n0 (le_S_n (S n0) n H1))))) y)))) x).
 
-theorem le_bge:
+lemma le_bge:
  \forall (x: nat).(\forall (y: nat).((le x y) \to (eq bool (blt y x) false)))
 \def
  \lambda (x: nat).(nat_ind (\lambda (n: nat).(\forall (y: nat).((le n y) \to 
@@ -54,7 +54,7 @@ in (False_ind ((le (S n) m) \to (eq bool (blt O (S n)) false)) H3)) H1))]) in
 (eq bool (blt n0 (S n)) false)))).(\lambda (H1: (le (S n) (S n0))).(H n0 
 (le_S_n n n0 H1))))) y)))) x).
 
-theorem blt_lt:
+lemma blt_lt:
  \forall (x: nat).(\forall (y: nat).((eq bool (blt y x) true) \to (lt y x)))
 \def
  \lambda (x: nat).(nat_ind (\lambda (n: nat).(\forall (y: nat).((eq bool (blt 
@@ -71,7 +71,7 @@ nat).(\lambda (_: (((eq bool (match n0 with [O \Rightarrow true | (S m)
 \Rightarrow (blt m n)]) true) \to (lt n0 (S n))))).(\lambda (H1: (eq bool 
 (blt n0 n) true)).(lt_n_S n0 n (H n0 H1))))) y)))) x).
 
-theorem bge_le:
+lemma bge_le:
  \forall (x: nat).(\forall (y: nat).((eq bool (blt y x) false) \to (le x y)))
 \def
  \lambda (x: nat).(nat_ind (\lambda (n: nat).(\forall (y: nat).((eq bool (blt 

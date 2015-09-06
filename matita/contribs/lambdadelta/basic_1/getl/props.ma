@@ -20,7 +20,7 @@ include "basic_1/clear/props.ma".
 
 include "basic_1/drop/props.ma".
 
-theorem getl_refl:
+lemma getl_refl:
  \forall (b: B).(\forall (c: C).(\forall (u: T).(getl O (CHead c (Bind b) u) 
 (CHead c (Bind b) u))))
 \def
@@ -28,7 +28,7 @@ theorem getl_refl:
 b) u) (CHead c (Bind b) u) (CHead c (Bind b) u) (drop_refl (CHead c (Bind b) 
 u)) (clear_bind b c u)))).
 
-theorem getl_head:
+lemma getl_head:
  \forall (k: K).(\forall (h: nat).(\forall (c: C).(\forall (e: C).((getl (r k 
 h) c e) \to (\forall (u: T).(getl (S h) (CHead c k u) e))))))
 \def
@@ -39,7 +39,7 @@ C).(clear e0 e)) (getl (S h) (CHead c k u) e) (\lambda (x: C).(\lambda (H1:
 (drop (r k h) O c x)).(\lambda (H2: (clear x e)).(getl_intro (S h) (CHead c k 
 u) e x (drop_drop k h c x H1 u) H2)))) H0))))))).
 
-theorem getl_flat:
+lemma getl_flat:
  \forall (c: C).(\forall (e: C).(\forall (h: nat).((getl h c e) \to (\forall 
 (f: F).(\forall (u: T).(getl h (CHead c (Flat f) u) e))))))
 \def
@@ -56,7 +56,7 @@ x)).(\lambda (H2: (clear x e)).(nat_ind (\lambda (n: nat).((drop n O c x) \to
 (S h0) O c x)).(getl_intro (S h0) (CHead c (Flat f) u) e x (drop_drop (Flat 
 f) h0 c x H3 u) H2)))) h H1)))) H0))))))).
 
-theorem getl_ctail:
+lemma getl_ctail:
  \forall (b: B).(\forall (c: C).(\forall (d: C).(\forall (u: T).(\forall (i: 
 nat).((getl i c (CHead d (Bind b) u)) \to (\forall (k: K).(\forall (v: 
 T).(getl i (CTail k v c) (CHead (CTail k v d) (Bind b) u)))))))))

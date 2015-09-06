@@ -26,7 +26,7 @@ include "basic_1/pc3/wcpr0.ma".
 
 include "basic_1/pc1/props.ma".
 
-theorem ty3_sred_wcpr0_pr0:
+lemma ty3_sred_wcpr0_pr0:
  \forall (g: G).(\forall (c1: C).(\forall (t1: T).(\forall (t: T).((ty3 g c1 
 t1 t) \to (\forall (c2: C).((wcpr0 c1 c2) \to (\forall (t2: T).((pr0 t1 t2) 
 \to (ty3 g c2 t2 t)))))))))
@@ -621,7 +621,7 @@ t6 (sym_eq T t6 t4 H12))) t5 (sym_eq T t5 t2 H11))) u (sym_eq T u t3 H10)))
 H9)) H8 H6)))]) in (H6 (refl_equal T (THead (Flat Cast) t3 t2)) (refl_equal T 
 t4))))))))))))))) c1 t1 t H))))).
 
-theorem ty3_sred_pr0:
+lemma ty3_sred_pr0:
  \forall (t1: T).(\forall (t2: T).((pr0 t1 t2) \to (\forall (g: G).(\forall 
 (c: C).(\forall (t: T).((ty3 g c t1 t) \to (ty3 g c t2 t)))))))
 \def
@@ -629,7 +629,7 @@ theorem ty3_sred_pr0:
 G).(\lambda (c: C).(\lambda (t: T).(\lambda (H0: (ty3 g c t1 
 t)).(ty3_sred_wcpr0_pr0 g c t1 t H0 c (wcpr0_refl c) t2 H))))))).
 
-theorem ty3_sred_pr1:
+lemma ty3_sred_pr1:
  \forall (t1: T).(\forall (t2: T).((pr1 t1 t2) \to (\forall (g: G).(\forall 
 (c: C).(\forall (t: T).((ty3 g c t1 t) \to (ty3 g c t2 t)))))))
 \def
@@ -643,7 +643,7 @@ C).(\forall (t: T).((ty3 g c t3 t) \to (ty3 g c t5 t))))))).(\lambda (g:
 G).(\lambda (c: C).(\lambda (t: T).(\lambda (H3: (ty3 g c t4 t)).(H2 g c t 
 (ty3_sred_pr0 t4 t3 H0 g c t H3)))))))))))) t1 t2 H))).
 
-theorem ty3_sred_pr2:
+lemma ty3_sred_pr2:
  \forall (c: C).(\forall (t1: T).(\forall (t2: T).((pr2 c t1 t2) \to (\forall 
 (g: G).(\forall (t: T).((ty3 g c t1 t) \to (ty3 g c t2 t)))))))
 \def
@@ -660,7 +660,7 @@ G).(\lambda (t0: T).(\lambda (H3: (ty3 g c0 t3 t0)).(ty3_subst0 g c0 t4 t0
 (ty3_sred_wcpr0_pr0 g c0 t3 t0 H3 c0 (wcpr0_refl c0) t4 H1) d u i H0 t 
 H2)))))))))))))) c t1 t2 H)))).
 
-theorem ty3_sred_pr3:
+lemma ty3_sred_pr3:
  \forall (c: C).(\forall (t1: T).(\forall (t2: T).((pr3 c t1 t2) \to (\forall 
 (g: G).(\forall (t: T).((ty3 g c t1 t) \to (ty3 g c t2 t)))))))
 \def

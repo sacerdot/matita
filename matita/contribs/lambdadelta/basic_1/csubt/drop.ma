@@ -18,7 +18,7 @@ include "basic_1/csubt/fwd.ma".
 
 include "basic_1/drop/fwd.ma".
 
-theorem csubt_drop_flat:
+lemma csubt_drop_flat:
  \forall (g: G).(\forall (f: F).(\forall (n: nat).(\forall (c1: C).(\forall 
 (c2: C).((csubt g c1 c2) \to (\forall (d1: C).(\forall (u: T).((drop n O c1 
 (CHead d1 (Flat f) u)) \to (ex2 C (\lambda (d2: C).(csubt g d1 d2)) (\lambda 
@@ -116,7 +116,7 @@ u0))) x H6 (drop_drop (Bind Abbr) n0 c3 (CHead x (Flat f) u0) H7 u))))) (H c0
 c3 H1 d1 u0 (drop_gen_drop (Bind Abst) c0 (CHead d1 (Flat f) u0) t n0 
 H5)))))))))))))) c1 c2 H0)))))) n))).
 
-theorem csubt_drop_abbr:
+lemma csubt_drop_abbr:
  \forall (g: G).(\forall (n: nat).(\forall (c1: C).(\forall (c2: C).((csubt g 
 c1 c2) \to (\forall (d1: C).(\forall (u: T).((drop n O c1 (CHead d1 (Bind 
 Abbr) u)) \to (ex2 C (\lambda (d2: C).(csubt g d1 d2)) (\lambda (d2: C).(drop 
@@ -215,7 +215,7 @@ d1 x)).(\lambda (H7: (drop n0 O c3 (CHead x (Bind Abbr) u0))).(ex_intro2 C
 (CHead x (Bind Abbr) u0) H7 u))))) (H c0 c3 H1 d1 u0 (drop_gen_drop (Bind 
 Abst) c0 (CHead d1 (Bind Abbr) u0) t n0 H5)))))))))))))) c1 c2 H0)))))) n)).
 
-theorem csubt_drop_abst:
+lemma csubt_drop_abst:
  \forall (g: G).(\forall (n: nat).(\forall (c1: C).(\forall (c2: C).((csubt g 
 c1 c2) \to (\forall (d1: C).(\forall (t: T).((drop n O c1 (CHead d1 (Bind 
 Abst) t)) \to (or (ex2 C (\lambda (d2: C).(csubt g d1 d2)) (\lambda (d2: 

@@ -18,7 +18,7 @@ include "basic_1/arity/fwd.ma".
 
 include "basic_1/cimp/props.ma".
 
-theorem arity_cimp_conf:
+lemma arity_cimp_conf:
  \forall (g: G).(\forall (c1: C).(\forall (t: T).(\forall (a: A).((arity g c1 
 t a) \to (\forall (c2: C).((cimp c1 c2) \to (arity g c2 t a)))))))
 \def

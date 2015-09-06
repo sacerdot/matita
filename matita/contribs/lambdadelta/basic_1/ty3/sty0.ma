@@ -18,7 +18,7 @@ include "basic_1/ty3/pr3_props.ma".
 
 include "basic_1/sty0/fwd.ma".
 
-theorem ty3_sty0:
+lemma ty3_sty0:
  \forall (g: G).(\forall (c: C).(\forall (u: T).(\forall (t1: T).((ty3 g c u 
 t1) \to (\forall (t2: T).((sty0 g c u t2) \to (ty3 g c u t2)))))))
 \def

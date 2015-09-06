@@ -16,9 +16,9 @@
 
 include "basic_1/wf3/defs.ma".
 
-let rec wf3_ind (g: G) (P: (C \to (C \to Prop))) (f: (\forall (m: nat).(P 
-(CSort m) (CSort m)))) (f0: (\forall (c1: C).(\forall (c2: C).((wf3 g c1 c2) 
-\to ((P c1 c2) \to (\forall (u: T).(\forall (t: T).((ty3 g c1 u t) \to 
+implied let rec wf3_ind (g: G) (P: (C \to (C \to Prop))) (f: (\forall (m: 
+nat).(P (CSort m) (CSort m)))) (f0: (\forall (c1: C).(\forall (c2: C).((wf3 g 
+c1 c2) \to ((P c1 c2) \to (\forall (u: T).(\forall (t: T).((ty3 g c1 u t) \to 
 (\forall (b: B).(P (CHead c1 (Bind b) u) (CHead c2 (Bind b) u))))))))))) (f1: 
 (\forall (c1: C).(\forall (c2: C).((wf3 g c1 c2) \to ((P c1 c2) \to (\forall 
 (u: T).(((\forall (t: T).((ty3 g c1 u t) \to False))) \to (\forall (b: B).(P 
@@ -31,7 +31,7 @@ f2) c1 c2 w0) u t t0 b) | (wf3_void c1 c2 w0 u f3 b) \Rightarrow (f1 c1 c2 w0
 ((wf3_ind g P f f0 f1 f2) c1 c2 w0) u f3 b) | (wf3_flat c1 c2 w0 u f3) 
 \Rightarrow (f2 c1 c2 w0 ((wf3_ind g P f f0 f1 f2) c1 c2 w0) u f3)].
 
-theorem wf3_gen_sort1:
+lemma wf3_gen_sort1:
  \forall (g: G).(\forall (x: C).(\forall (m: nat).((wf3 g (CSort m) x) \to 
 (eq C x (CSort m)))))
 \def
@@ -63,7 +63,7 @@ H4 \def (eq_ind C (CHead c1 (Flat f) u) (\lambda (ee: C).(match ee with
 [(CSort _) \Rightarrow False | (CHead _ _ _) \Rightarrow True])) I (CSort m) 
 H3) in (False_ind (eq C c2 (CHead c1 (Flat f) u)) H4))))))))) y x H0))) H)))).
 
-theorem wf3_gen_bind1:
+lemma wf3_gen_bind1:
  \forall (g: G).(\forall (c1: C).(\forall (x: C).(\forall (v: T).(\forall (b: 
 B).((wf3 g (CHead c1 (Bind b) v) x) \to (or (ex3_2 C T (\lambda (c2: 
 C).(\lambda (_: T).(eq C x (CHead c2 (Bind b) v)))) (\lambda (c2: C).(\lambda 
@@ -191,7 +191,7 @@ C c2 (CHead c3 (Bind Void) (TSort O)))) (\lambda (c3: C).(wf3 g c1 c3))
 (\lambda (_: C).(\forall (w: T).((ty3 g c1 v w) \to False))))) H4))))))))) y 
 x H0))) H)))))).
 
-theorem wf3_gen_flat1:
+lemma wf3_gen_flat1:
  \forall (g: G).(\forall (c1: C).(\forall (x: C).(\forall (v: T).(\forall (f: 
 F).((wf3 g (CHead c1 (Flat f) v) x) \to (wf3 g c1 x))))))
 \def
@@ -235,7 +235,7 @@ C).((eq C c (CHead c1 (Flat f) v)) \to (wf3 g c1 c2))) H2 c1 H8) in (let H10
 \def (eq_ind C c0 (\lambda (c: C).(wf3 g c c2)) H1 c1 H8) in H10))))) H5)) 
 H4))))))))) y x H0))) H)))))).
 
-theorem wf3_gen_head2:
+lemma wf3_gen_head2:
  \forall (g: G).(\forall (x: C).(\forall (c: C).(\forall (v: T).(\forall (k: 
 K).((wf3 g x (CHead c k v)) \to (ex B (\lambda (b: B).(eq K k (Bind b)))))))))
 \def

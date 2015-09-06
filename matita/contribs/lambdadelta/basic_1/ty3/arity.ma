@@ -20,7 +20,7 @@ include "basic_1/arity/pr3.ma".
 
 include "basic_1/asucc/fwd.ma".
 
-theorem ty3_arity:
+lemma ty3_arity:
  \forall (g: G).(\forall (c: C).(\forall (t1: T).(\forall (t2: T).((ty3 g c 
 t1 t2) \to (ex2 A (\lambda (a1: A).(arity g c t1 a1)) (\lambda (a1: A).(arity 
 g c t2 (asucc g a1))))))))

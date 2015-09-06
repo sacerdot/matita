@@ -22,7 +22,7 @@ include "basic_1/getl/clear.ma".
 
 include "basic_1/getl/drop.ma".
 
-theorem pr2_ind:
+implied lemma pr2_ind:
  \forall (P: ((C \to (T \to (T \to Prop))))).(((\forall (c: C).(\forall (t1: 
 T).(\forall (t2: T).((pr0 t1 t2) \to (P c t1 t2)))))) \to (((\forall (c: 
 C).(\forall (d: C).(\forall (u: T).(\forall (i: nat).((getl i c (CHead d 
@@ -40,7 +40,7 @@ T).(\lambda (p: (pr2 c t t0)).(match p with [(pr2_free x x0 x1 x2)
 \Rightarrow (f x x0 x1 x2) | (pr2_delta x x0 x1 x2 x3 x4 x5 x6 x7 x8) 
 \Rightarrow (f0 x x0 x1 x2 x3 x4 x5 x6 x7 x8)]))))))).
 
-theorem pr2_gen_sort:
+lemma pr2_gen_sort:
  \forall (c: C).(\forall (x: T).(\forall (n: nat).((pr2 c (TSort n) x) \to 
 (eq T x (TSort n)))))
 \def
@@ -62,7 +62,7 @@ t2)) H2 (TSort n) H4) in (eq_ind_r T (TSort n) (\lambda (t0: T).(eq T t t0))
 (pr0_gen_sort t2 n H5)) in (subst0_gen_sort u t i n H6 (eq T t (TSort n)))) 
 t1 H4))))))))))))) c y x H0))) H)))).
 
-theorem pr2_gen_lref:
+lemma pr2_gen_lref:
  \forall (c: C).(\forall (x: T).(\forall (n: nat).((pr2 c (TLRef n) x) \to 
 (or (eq T x (TLRef n)) (ex2_2 C T (\lambda (d: C).(\lambda (u: T).(getl n c 
 (CHead d (Bind Abbr) u)))) (\lambda (_: C).(\lambda (u: T).(eq T x (lift (S 
@@ -112,7 +112,7 @@ Abbr) u0)))) (\lambda (_: C).(\lambda (u0: T).(eq T (lift (S n) O u) (lift (S
 n) O u0)))) d u H9 (refl_equal T (lift (S n) O u))))) t H8))) 
 (subst0_gen_lref u t i n H6))) t1 H4))))))))))))) c y x H0))) H)))).
 
-theorem pr2_gen_abst:
+lemma pr2_gen_abst:
  \forall (c: C).(\forall (u1: T).(\forall (t1: T).(\forall (x: T).((pr2 c 
 (THead (Bind Abst) u1 t1) x) \to (ex3_2 T T (\lambda (u2: T).(\lambda (t2: 
 T).(eq T x (THead (Bind Abst) u2 t2)))) (\lambda (u2: T).(\lambda (_: T).(pr2 
@@ -234,7 +234,7 @@ H12) (\lambda (b: B).(\lambda (u0: T).(pr2_delta (CHead c0 (Bind b) u0) d u
 H13)))) t H11)))))) H10)) (subst0_gen_head (Bind Abst) u x0 x1 t i H9)))))))) 
 (pr0_gen_abst u1 t1 t2 H5)))))))))))))) c y x H0))) H))))).
 
-theorem pr2_gen_cast:
+lemma pr2_gen_cast:
  \forall (c: C).(\forall (u1: T).(\forall (t1: T).(\forall (x: T).((pr2 c 
 (THead (Flat Cast) u1 t1) x) \to (or (ex3_2 T T (\lambda (u2: T).(\lambda 
 (t2: T).(eq T x (THead (Flat Cast) u2 t2)))) (\lambda (u2: T).(\lambda (_: 
@@ -366,7 +366,7 @@ u2))) (\lambda (_: T).(\lambda (t3: T).(pr2 c0 t1 t3)))) (pr2 c0 t1 t)
 (pr2_delta c0 d u i H1 t1 t2 H6 t H3))) (pr0_gen_cast u1 t1 t2 
 H5)))))))))))))) c y x H0))) H))))).
 
-theorem pr2_gen_csort:
+lemma pr2_gen_csort:
  \forall (t1: T).(\forall (t2: T).(\forall (n: nat).((pr2 (CSort n) t1 t2) 
 \to (pr0 t1 t2))))
 \def
@@ -383,7 +383,7 @@ t3 t4)).(\lambda (t: T).(\lambda (_: (subst0 i u t4 t)).(\lambda (H4: (eq C c
 (Bind Abbr) u))) H1 (CSort n) H4) in (getl_gen_sort n i (CHead d (Bind Abbr) 
 u) H5 (pr0 t3 t)))))))))))))) y t1 t2 H0))) H)))).
 
-theorem pr2_gen_appl:
+lemma pr2_gen_appl:
  \forall (c: C).(\forall (u1: T).(\forall (t1: T).(\forall (x: T).((pr2 c 
 (THead (Flat Appl) u1 t1) x) \to (or3 (ex3_2 T T (\lambda (u2: T).(\lambda 
 (t2: T).(eq T x (THead (Flat Appl) u2 t2)))) (\lambda (u2: T).(\lambda (_: 
@@ -2728,7 +2728,7 @@ H19)))))) H18)) (subst0_gen_head (Flat Appl) u (lift (S O) O x3) x5 x7 (s
 (Flat Appl) (lift (S O) O x3) x5) t i H13)) t1 H8)))))))))))))) H6)) 
 (pr0_gen_appl u1 t1 t2 H5)))))))))))))) c y x H0))) H))))).
 
-theorem pr2_gen_lift:
+lemma pr2_gen_lift:
  \forall (c: C).(\forall (t1: T).(\forall (x: T).(\forall (h: nat).(\forall 
 (d: nat).((pr2 c (lift h d t1) x) \to (\forall (e: C).((drop h d c e) \to 
 (ex2 T (\lambda (t2: T).(eq T x (lift h d t2))) (\lambda (t2: T).(pr2 e t1 

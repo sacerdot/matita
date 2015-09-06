@@ -20,7 +20,7 @@ include "basic_1/pc3/subst1.ma".
 
 include "basic_1/getl/getl.ma".
 
-theorem ty3_gen_cabbr:
+lemma ty3_gen_cabbr:
  \forall (g: G).(\forall (c: C).(\forall (t1: T).(\forall (t2: T).((ty3 g c 
 t1 t2) \to (\forall (e: C).(\forall (u: T).(\forall (d: nat).((getl d c 
 (CHead e (Bind Abbr) u)) \to (\forall (a0: C).((csubst1 d u c a0) \to 
@@ -554,7 +554,7 @@ O) d x1) d H9 (Flat Cast) t4 (lift (S O) d x0) H8) (lift (S O) d (THead (Flat
 Cast) x1 x0)) (lift_flat Cast x1 x0 (S O) d)) (ty3_cast g a x2 x0 H15 x1 
 H10)))))))) H11))))))) H7)))))))))))))))))) c t1 t2 H))))).
 
-theorem ty3_gen_cvoid:
+lemma ty3_gen_cvoid:
  \forall (g: G).(\forall (c: C).(\forall (t1: T).(\forall (t2: T).((ty3 g c 
 t1 t2) \to (\forall (e: C).(\forall (u: T).(\forall (d: nat).((getl d c 
 (CHead e (Bind Void) u)) \to (\forall (a: C).((drop (S O) d c a) \to (ex3_2 T 

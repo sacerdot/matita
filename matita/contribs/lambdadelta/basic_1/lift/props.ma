@@ -20,14 +20,14 @@ include "basic_1/s/props.ma".
 
 include "basic_1/T/fwd.ma".
 
-theorem lift_sort:
+lemma lift_sort:
  \forall (n: nat).(\forall (h: nat).(\forall (d: nat).(eq T (lift h d (TSort 
 n)) (TSort n))))
 \def
  \lambda (n: nat).(\lambda (_: nat).(\lambda (_: nat).(refl_equal T (TSort 
 n)))).
 
-theorem lift_lref_lt:
+lemma lift_lref_lt:
  \forall (n: nat).(\forall (h: nat).(\forall (d: nat).((lt n d) \to (eq T 
 (lift h d (TLRef n)) (TLRef n)))))
 \def
@@ -36,7 +36,7 @@ d)).(eq_ind bool true (\lambda (b: bool).(eq T (TLRef (match b with [true
 \Rightarrow n | false \Rightarrow (plus n h)])) (TLRef n))) (refl_equal T 
 (TLRef n)) (blt n d) (sym_eq bool (blt n d) true (lt_blt d n H)))))).
 
-theorem lift_lref_ge:
+lemma lift_lref_ge:
  \forall (n: nat).(\forall (h: nat).(\forall (d: nat).((le d n) \to (eq T 
 (lift h d (TLRef n)) (TLRef (plus n h))))))
 \def
@@ -46,7 +46,7 @@ n)).(eq_ind bool false (\lambda (b: bool).(eq T (TLRef (match b with [true
 (refl_equal T (TLRef (plus n h))) (blt n d) (sym_eq bool (blt n d) false 
 (le_bge d n H)))))).
 
-theorem lift_head:
+lemma lift_head:
  \forall (k: K).(\forall (u: T).(\forall (t: T).(\forall (h: nat).(\forall 
 (d: nat).(eq T (lift h d (THead k u t)) (THead k (lift h d u) (lift h (s k d) 
 t)))))))
@@ -54,7 +54,7 @@ t)))))))
  \lambda (k: K).(\lambda (u: T).(\lambda (t: T).(\lambda (h: nat).(\lambda 
 (d: nat).(refl_equal T (THead k (lift h d u) (lift h (s k d) t))))))).
 
-theorem lift_bind:
+lemma lift_bind:
  \forall (b: B).(\forall (u: T).(\forall (t: T).(\forall (h: nat).(\forall 
 (d: nat).(eq T (lift h d (THead (Bind b) u t)) (THead (Bind b) (lift h d u) 
 (lift h (S d) t)))))))
@@ -62,7 +62,7 @@ theorem lift_bind:
  \lambda (b: B).(\lambda (u: T).(\lambda (t: T).(\lambda (h: nat).(\lambda 
 (d: nat).(refl_equal T (THead (Bind b) (lift h d u) (lift h (S d) t))))))).
 
-theorem lift_flat:
+lemma lift_flat:
  \forall (f: F).(\forall (u: T).(\forall (t: T).(\forall (h: nat).(\forall 
 (d: nat).(eq T (lift h d (THead (Flat f) u t)) (THead (Flat f) (lift h d u) 
 (lift h d t)))))))
@@ -70,7 +70,7 @@ theorem lift_flat:
  \lambda (f: F).(\lambda (u: T).(\lambda (t: T).(\lambda (h: nat).(\lambda 
 (d: nat).(refl_equal T (THead (Flat f) (lift h d u) (lift h d t))))))).
 
-theorem thead_x_lift_y_y:
+lemma thead_x_lift_y_y:
  \forall (k: K).(\forall (t: T).(\forall (v: T).(\forall (h: nat).(\forall 
 (d: nat).((eq T (THead k v (lift h d t)) t) \to (\forall (P: Prop).P))))))
 \def
@@ -112,7 +112,7 @@ T).(eq T t2 t1)) H4 (THead k0 (lift h d t0) (lift h (s k0 d) t1)) (lift_head
 k0 t0 t1 h d)) in (H7 (lift h d t0) h (s k0 d) H8 P)))))) H3)) H2)))))))))))) 
 t)).
 
-theorem lift_r:
+lemma lift_r:
  \forall (t: T).(\forall (d: nat).(eq T (lift O d t) t))
 \def
  \lambda (t: T).(T_ind (\lambda (t0: T).(\forall (d: nat).(eq T (lift O d t0) 
@@ -132,7 +132,7 @@ t1)) (\lambda (t2: T).(eq T t2 (THead k t0 t1))) (sym_eq T (THead k t0 t1)
 t0) t0 (lift O (s k d) t1) t1 (refl_equal K k) (H d) (H0 (s k d))))) (lift O 
 d (THead k t0 t1)) (lift_head k t0 t1 O d)))))))) t).
 
-theorem lift_lref_gt:
+lemma lift_lref_gt:
  \forall (d: nat).(\forall (n: nat).((lt d n) \to (eq T (lift (S O) d (TLRef 
 (pred n))) (TLRef n))))
 \def
@@ -145,7 +145,7 @@ theorem lift_lref_gt:
 (pred n) (eq_ind nat n (\lambda (n0: nat).(le (S d) n0)) H (S (pred n)) 
 (S_pred n d H))))))).
 
-theorem lift_tle:
+lemma lift_tle:
  \forall (t: T).(\forall (h: nat).(\forall (d: nat).(tle t (lift h d t))))
 \def
  \lambda (t: T).(T_ind (\lambda (t0: T).(\forall (h: nat).(\forall (d: 
@@ -162,7 +162,7 @@ nat).(plus x h)) (s k d) t1))) (le_plus_plus (tweight t0) (tweight (lref_map
 (\lambda (x: nat).(plus x h)) d t0)) (tweight t1) (tweight (lref_map (\lambda 
 (x: nat).(plus x h)) (s k d) t1)) H_y H_y0))))))))))) t).
 
-theorem lifts_tapp:
+lemma lifts_tapp:
  \forall (h: nat).(\forall (d: nat).(\forall (v: T).(\forall (vs: TList).(eq 
 TList (lifts h d (TApp vs v)) (TApp (lifts h d vs) (lift h d v))))))
 \def
@@ -176,7 +176,7 @@ t0) (lift h d v)) (\lambda (t1: TList).(eq TList (TCons (lift h d t) t1)
 (TCons (lift h d t) (TApp (lifts h d t0) (lift h d v)))) (lifts h d (TApp t0 
 v)) H)))) vs)))).
 
-theorem lift_free:
+lemma lift_free:
  \forall (t: T).(\forall (h: nat).(\forall (k: nat).(\forall (d: 
 nat).(\forall (e: nat).((le e (plus d h)) \to ((le d e) \to (eq T (lift k e 
 (lift h d t)) (lift (plus k h) d t))))))))
@@ -233,7 +233,7 @@ k e (plus d h) H1) (plus (s k d) h) (s_plus k d h)) (s_le k d e H2))) (lift
 h (s k d) t1) k0 e)) (lift h d (THead k t0 t1)) (lift_head k t0 t1 h 
 d))))))))))))) t).
 
-theorem lift_free_sym:
+lemma lift_free_sym:
  \forall (t: T).(\forall (h: nat).(\forall (k: nat).(\forall (d: 
 nat).(\forall (e: nat).((le e (plus d h)) \to ((le d e) \to (eq T (lift k e 
 (lift h d t)) (lift (plus h k) d t))))))))
@@ -243,7 +243,7 @@ nat).(\lambda (e: nat).(\lambda (H: (le e (plus d h))).(\lambda (H0: (le d
 e)).(eq_ind_r nat (plus k h) (\lambda (n: nat).(eq T (lift k e (lift h d t)) 
 (lift n d t))) (lift_free t h k d e H H0) (plus h k) (plus_sym h k)))))))).
 
-theorem lift_d:
+lemma lift_d:
  \forall (t: T).(\forall (h: nat).(\forall (k: nat).(\forall (d: 
 nat).(\forall (e: nat).((le e d) \to (eq T (lift h (plus k d) (lift k e t)) 
 (lift k e (lift h d t))))))))

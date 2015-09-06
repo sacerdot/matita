@@ -18,7 +18,7 @@ include "basic_1/pc3/props.ma".
 
 include "basic_1/wcpr0/getl.ma".
 
-theorem pc3_wcpr0__pc3_wcpr0_t_aux:
+fact pc3_wcpr0__pc3_wcpr0_t_aux:
  \forall (c1: C).(\forall (c2: C).((wcpr0 c1 c2) \to (\forall (k: K).(\forall 
 (u: T).(\forall (t1: T).(\forall (t2: T).((pr3 (CHead c1 k u) t1 t2) \to (pc3 
 (CHead c2 k u) t1 t2))))))))
@@ -54,7 +54,7 @@ H14)))))) (pr0_subst0_fwd u0 t0 t i H7 x1 H12))))))) (wcpr0_getl (CHead c1 k
 u) (CHead c2 k u) (wcpr0_comp c1 c2 H u u (pr0_refl u) k) i d u0 (Bind Abbr) 
 H9)))))))))))))) y t4 t3 H4))) H1) t5 H3))))))) t1 t2 H0)))))))).
 
-theorem pc3_wcpr0_t:
+lemma pc3_wcpr0_t:
  \forall (c1: C).(\forall (c2: C).((wcpr0 c1 c2) \to (\forall (t1: 
 T).(\forall (t2: T).((pr3 c1 t1 t2) \to (pc3 c2 t1 t2))))))
 \def
@@ -74,7 +74,7 @@ u2) t2 t)) (pc3 (CHead c3 k u2) t1 t2) (\lambda (x: T).(\lambda (H5: (pr3
 (pc3_s (CHead c3 k u2) x t2 (pc3_wcpr0__pc3_wcpr0_t_aux c0 c3 H0 k u2 t2 x 
 H6)))))) H4))))))))))))) c1 c2 H))).
 
-theorem pc3_wcpr0:
+lemma pc3_wcpr0:
  \forall (c1: C).(\forall (c2: C).((wcpr0 c1 c2) \to (\forall (t1: 
 T).(\forall (t2: T).((pc3 c1 t1 t2) \to (pc3 c2 t1 t2))))))
 \def

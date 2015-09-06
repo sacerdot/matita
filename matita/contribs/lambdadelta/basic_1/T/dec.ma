@@ -16,7 +16,7 @@
 
 include "basic_1/T/fwd.ma".
 
-theorem terms_props__bind_dec:
+fact terms_props__bind_dec:
  \forall (b1: B).(\forall (b2: B).(or (eq B b1 b2) ((eq B b1 b2) \to (\forall 
 (P: Prop).P))))
 \def
@@ -55,7 +55,7 @@ Void \Rightarrow True])) I Abst H) in (False_ind P H0))))) (or_introl (eq B
 Void Void) ((eq B Void Void) \to (\forall (P: Prop).P)) (refl_equal B Void)) 
 b2)) b1).
 
-theorem bind_dec_not:
+lemma bind_dec_not:
  \forall (b1: B).(\forall (b2: B).(or (eq B b1 b2) (not (eq B b1 b2))))
 \def
  \lambda (b1: B).(\lambda (b2: B).(let H_x \def (terms_props__bind_dec b1 b2) 
@@ -65,7 +65,7 @@ b2)).(or_introl (eq B b1 b2) ((eq B b1 b2) \to False) H0)) (\lambda (H0:
 (((eq B b1 b2) \to (\forall (P: Prop).P)))).(or_intror (eq B b1 b2) ((eq B b1 
 b2) \to False) (\lambda (H1: (eq B b1 b2)).(H0 H1 False)))) H)))).
 
-theorem terms_props__flat_dec:
+fact terms_props__flat_dec:
  \forall (f1: F).(\forall (f2: F).(or (eq F f1 f2) ((eq F f1 f2) \to (\forall 
 (P: Prop).P))))
 \def
@@ -85,7 +85,7 @@ Prop).P)) (\lambda (H: (eq F Cast Appl)).(\lambda (P: Prop).(let H0 \def
 Cast) ((eq F Cast Cast) \to (\forall (P: Prop).P)) (refl_equal F Cast)) f2)) 
 f1).
 
-theorem terms_props__kind_dec:
+fact terms_props__kind_dec:
  \forall (k1: K).(\forall (k2: K).(or (eq K k1 k2) ((eq K k1 k2) \to (\forall 
 (P: Prop).P))))
 \def
@@ -130,7 +130,7 @@ f) (Flat f0) H1) in (let H3 \def (eq_ind_r F f0 (\lambda (f1: F).((eq F f f1)
 \to (\forall (P0: Prop).P0))) H0 f H2) in (H3 (refl_equal F f) P))))))) H)))) 
 k2))) k1).
 
-theorem term_dec:
+lemma term_dec:
  \forall (t1: T).(\forall (t2: T).(or (eq T t1 t2) ((eq T t1 t2) \to (\forall 
 (P: Prop).P))))
 \def
@@ -272,7 +272,7 @@ H13 \def (eq_ind_r T t3 (\lambda (t5: T).(or (eq T (THead k t t0) t5) ((eq T
 (THead k t t0) t5) \to (\forall (P0: Prop).P0)))) H1 t H9) in (H12 
 (refl_equal T t) P))))))) H7)) H6)))))) H3)))))))) t2))))))) t1).
 
-theorem binder_dec:
+lemma binder_dec:
  \forall (t: T).(or (ex_3 B T T (\lambda (b: B).(\lambda (w: T).(\lambda (u: 
 T).(eq T t (THead (Bind b) w u)))))) (\forall (b: B).(\forall (w: T).(\forall 
 (u: T).((eq T t (THead (Bind b) w u)) \to (\forall (P: Prop).P))))))
@@ -336,7 +336,7 @@ t1) (\lambda (ee: T).(match ee with [(TSort _) \Rightarrow False | (TLRef _)
 \Rightarrow False | (Flat _) \Rightarrow True])])) I (THead (Bind b) w u) H1) 
 in (False_ind P H2))))))))))))) k)) t).
 
-theorem abst_dec:
+lemma abst_dec:
  \forall (u: T).(\forall (v: T).(or (ex T (\lambda (t: T).(eq T u (THead 
 (Bind Abst) v t)))) (\forall (t: T).((eq T u (THead (Bind Abst) v t)) \to 
 (\forall (P: Prop).P)))))

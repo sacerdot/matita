@@ -16,7 +16,7 @@
 
 include "basic_1/ty3/arity.ma".
 
-theorem csubt_csuba:
+lemma csubt_csuba:
  \forall (g: G).(\forall (c1: C).(\forall (c2: C).((csubt g c1 c2) \to (csuba 
 g c1 c2))))
 \def

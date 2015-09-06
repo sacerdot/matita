@@ -16,7 +16,7 @@
 
 include "basic_1/clear/fwd.ma".
 
-theorem clear_clear:
+lemma clear_clear:
  \forall (c1: C).(\forall (c2: C).((clear c1 c2) \to (clear c2 c2)))
 \def
  \lambda (c1: C).(C_ind (\lambda (c: C).(\forall (c2: C).((clear c c2) \to 
@@ -51,7 +51,7 @@ c (Bind b) t) c3)) (clear_bind b c t) c2 (clear_gen_bind b c c2 t H3)))))
 (\lambda (f: F).(\lambda (H2: (clear (CHead c (Flat f) t) c0)).(clear_flat c 
 c2 (H c0 (clear_gen_flat f c c0 t H2) c2 H1) f t))) k H0))))))))) c1).
 
-theorem clear_ctail:
+lemma clear_ctail:
  \forall (b: B).(\forall (c1: C).(\forall (c2: C).(\forall (u2: T).((clear c1 
 (CHead c2 (Bind b) u2)) \to (\forall (k: K).(\forall (u1: T).(clear (CTail k 
 u1 c1) (CHead (CTail k u1 c2) (Bind b) u2))))))))

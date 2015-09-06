@@ -18,7 +18,7 @@ include "basic_1/pr3/fwd.ma".
 
 include "basic_1/pr2/subst1.ma".
 
-theorem pr3_subst1:
+lemma pr3_subst1:
  \forall (c: C).(\forall (e: C).(\forall (v: T).(\forall (i: nat).((getl i c 
 (CHead e (Bind Abbr) v)) \to (\forall (t1: T).(\forall (t2: T).((pr3 c t1 t2) 
 \to (\forall (w1: T).((subst1 i v t1 w1) \to (ex2 T (\lambda (w2: T).(pr3 c 
@@ -45,7 +45,7 @@ t5 x0)).(ex_intro2 T (\lambda (w2: T).(pr3 c w1 w2)) (\lambda (w2: T).(subst1
 i v t5 w2)) x0 (pr3_sing c x w1 H5 x0 H7) H8)))) (H3 x H6))))) (pr2_subst1 c 
 e v i H t4 t3 H1 w1 H4)))))))))) t1 t2 H0)))))))).
 
-theorem pr3_gen_cabbr:
+lemma pr3_gen_cabbr:
  \forall (c: C).(\forall (t1: T).(\forall (t2: T).((pr3 c t1 t2) \to (\forall 
 (e: C).(\forall (u: T).(\forall (d: nat).((getl d c (CHead e (Bind Abbr) u)) 
 \to (\forall (a0: C).((csubst1 d u c a0) \to (\forall (a: C).((drop (S O) d 

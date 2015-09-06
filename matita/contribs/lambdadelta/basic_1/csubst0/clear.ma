@@ -20,7 +20,7 @@ include "basic_1/csubst0/fwd.ma".
 
 include "basic_1/clear/fwd.ma".
 
-theorem csubst0_clear_O:
+lemma csubst0_clear_O:
  \forall (c1: C).(\forall (c2: C).(\forall (v: T).((csubst0 O v c1 c2) \to 
 (\forall (c: C).((clear c1 c) \to (clear c2 c))))))
 \def
@@ -101,7 +101,7 @@ O H9) in (let H11 \def (eq_ind_r nat x2 (\lambda (n: nat).(subst0 n v t x0))
 H6 O H9) in (clear_flat x1 c0 (H x1 v H10 c0 (clear_gen_flat f c c0 t H8)) f 
 x0)))))) k H1 H4) c2 H5)))))))) H3)) H2))))))))))) c1).
 
-theorem csubst0_clear_O_back:
+lemma csubst0_clear_O_back:
  \forall (c1: C).(\forall (c2: C).(\forall (v: T).((csubst0 O v c1 c2) \to 
 (\forall (c: C).((clear c2 c) \to (clear c1 c))))))
 \def
@@ -183,7 +183,7 @@ v c x1)) H7 O H9) in (let H12 \def (eq_ind_r nat x2 (\lambda (n: nat).(subst0
 n v t x0)) H6 O H9) in (clear_flat c c0 (H x1 v H11 c0 (clear_gen_flat f x1 
 c0 x0 H10)) f t)))))) k H4 H8))))))))) H3)) H2))))))))))) c1).
 
-theorem csubst0_clear_S:
+lemma csubst0_clear_S:
  \forall (c1: C).(\forall (c2: C).(\forall (v: T).(\forall (i: nat).((csubst0 
 (S i) v c1 c2) \to (\forall (c: C).((clear c1 c) \to (or4 (clear c2 c) (ex3_4 
 B C T T (\lambda (b: B).(\lambda (e: C).(\lambda (u1: T).(\lambda (_: T).(eq 
@@ -1022,7 +1022,7 @@ T).(\lambda (_: T).(csubst0 i v e1 e2)))))) x3 x4 x5 x6 x7 H15 (clear_flat x1
 (CHead x5 (Bind x3) x7) H16 f x0) H17 H18))))))))))) H14)) H13)))))))) k H1 
 H4) c2 H5)))))))) H3)) H2)))))))))))) c1).
 
-theorem csubst0_clear_trans:
+lemma csubst0_clear_trans:
  \forall (c1: C).(\forall (c2: C).(\forall (v: T).(\forall (i: nat).((csubst0 
 i v c1 c2) \to (\forall (e2: C).((clear c2 e2) \to (or (clear c1 e2) (ex2 C 
 (\lambda (e1: C).(csubst0 i v e1 e2)) (\lambda (e1: C).(clear c1 e1))))))))))

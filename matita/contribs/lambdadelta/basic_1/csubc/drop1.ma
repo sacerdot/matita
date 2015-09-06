@@ -16,7 +16,7 @@
 
 include "basic_1/csubc/drop.ma".
 
-theorem drop1_csubc_trans:
+lemma drop1_csubc_trans:
  \forall (g: G).(\forall (hds: PList).(\forall (c2: C).(\forall (e2: 
 C).((drop1 hds c2 e2) \to (\forall (e1: C).((csubc g e2 e1) \to (ex2 C 
 (\lambda (c1: C).(drop1 hds c1 e1)) (\lambda (c1: C).(csubc g c2 c1)))))))))
@@ -50,7 +50,7 @@ x1 x0)).(\lambda (H10: (csubc g c2 x1)).(ex_intro2 C (\lambda (c1: C).(drop1
 (PCons n n0 p) c1 e1)) (\lambda (c1: C).(csubc g c2 c1)) x1 (drop1_cons x1 x0 
 n n0 H9 e1 p H6) H10)))) H8)))))) H5)))))) H2)))))))))))) hds)).
 
-theorem csubc_drop1_conf_rev:
+lemma csubc_drop1_conf_rev:
  \forall (g: G).(\forall (hds: PList).(\forall (c2: C).(\forall (e2: 
 C).((drop1 hds c2 e2) \to (\forall (e1: C).((csubc g e1 e2) \to (ex2 C 
 (\lambda (c1: C).(drop1 hds c1 e1)) (\lambda (c1: C).(csubc g c1 c2)))))))))

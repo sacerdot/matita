@@ -18,7 +18,7 @@ include "basic_1/wf3/ty3.ma".
 
 include "basic_1/app/defs.ma".
 
-theorem wf3_total:
+lemma wf3_total:
  \forall (g: G).(\forall (c1: C).(ex C (\lambda (c2: C).(wf3 g c1 c2))))
 \def
  \lambda (g: G).(\lambda (c1: C).(C_ind (\lambda (c: C).(ex C (\lambda (c2: 
@@ -41,7 +41,7 @@ False)))).(ex_intro C (\lambda (c2: C).(wf3 g (CHead c (Bind b) t) c2))
 (f: F).(ex_intro C (\lambda (c2: C).(wf3 g (CHead c (Flat f) t) c2)) x 
 (wf3_flat g c x H1 t f))) k))) H0)))))) c1)).
 
-theorem ty3_shift1:
+lemma ty3_shift1:
  \forall (g: G).(\forall (c: C).((wf3 g c c) \to (\forall (t1: T).(\forall 
 (t2: T).((ty3 g c t1 t2) \to (ty3 g (CSort (cbk c)) (app1 c t1) (app1 c 
 t2)))))))
@@ -123,7 +123,7 @@ False | (Flat _) \Rightarrow True])) I (Bind x) H9) in (False_ind (ty3 g
 (CSort (cbk c1)) (app1 c1 (THead (Flat f) u t1)) (app1 c1 (THead (Flat f) u 
 t2))) H10)))) H8)))))))))))))))) y c H0))) H))).
 
-theorem wf3_idem:
+lemma wf3_idem:
  \forall (g: G).(\forall (c1: C).(\forall (c2: C).((wf3 g c1 c2) \to (wf3 g 
 c2 c2))))
 \def
@@ -139,7 +139,7 @@ c4 H1 (TSort O) (TSort (next g O)) (ty3_sort g c4 O) Void)))))))) (\lambda
 (c3: C).(\lambda (c4: C).(\lambda (_: (wf3 g c3 c4)).(\lambda (H1: (wf3 g c4 
 c4)).(\lambda (_: T).(\lambda (_: F).H1)))))) c1 c2 H)))).
 
-theorem wf3_ty3:
+lemma wf3_ty3:
  \forall (g: G).(\forall (c1: C).(\forall (t: T).(\forall (u: T).((ty3 g c1 t 
 u) \to (ex2 C (\lambda (c2: C).(wf3 g c1 c2)) (\lambda (c2: C).(ty3 g c2 t 
 u)))))))

@@ -18,7 +18,7 @@ include "basic_1/subst1/defs.ma".
 
 include "basic_1/subst0/fwd.ma".
 
-theorem subst1_ind:
+implied lemma subst1_ind:
  \forall (i: nat).(\forall (v: T).(\forall (t1: T).(\forall (P: ((T \to 
 Prop))).((P t1) \to (((\forall (t2: T).((subst0 i v t1 t2) \to (P t2)))) \to 
 (\forall (t: T).((subst1 i v t1 t) \to (P t))))))))
@@ -29,7 +29,7 @@ t2) \to (P t2))))).(\lambda (t: T).(\lambda (s0: (subst1 i v t1 t)).(match s0
 with [subst1_refl \Rightarrow f | (subst1_single x x0) \Rightarrow (f0 x 
 x0)])))))))).
 
-theorem subst1_gen_sort:
+lemma subst1_gen_sort:
  \forall (v: T).(\forall (x: T).(\forall (i: nat).(\forall (n: nat).((subst1 
 i v (TSort n) x) \to (eq T x (TSort n))))))
 \def
@@ -39,7 +39,7 @@ t (TSort n))) (refl_equal T (TSort n)) (\lambda (t2: T).(\lambda (H0: (subst0
 i v (TSort n) t2)).(subst0_gen_sort v t2 i n H0 (eq T t2 (TSort n))))) x 
 H))))).
 
-theorem subst1_gen_lref:
+lemma subst1_gen_lref:
  \forall (v: T).(\forall (x: T).(\forall (i: nat).(\forall (n: nat).((subst1 
 i v (TLRef n) x) \to (or (eq T x (TLRef n)) (land (eq nat n i) (eq T x (lift 
 (S n) O v))))))))
@@ -56,7 +56,7 @@ nat n i)).(\lambda (H2: (eq T t2 (lift (S n) O v))).(or_intror (eq T t2
 (eq T t2 (lift (S n) O v)) H1 H2)))) (subst0_gen_lref v t2 i n H0)))) x 
 H))))).
 
-theorem subst1_gen_head:
+lemma subst1_gen_head:
  \forall (k: K).(\forall (v: T).(\forall (u1: T).(\forall (t1: T).(\forall 
 (x: T).(\forall (i: nat).((subst1 i v (THead k u1 t1) x) \to (ex3_2 T T 
 (\lambda (u2: T).(\lambda (t2: T).(eq T x (THead k u2 t2)))) (\lambda (u2: 
@@ -116,7 +116,7 @@ i v u1 u2))) (\lambda (_: T).(\lambda (t3: T).(subst1 (s k i) v t1 t3))) x0
 x1 H2 (subst1_single i v u1 x0 H3) (subst1_single (s k i) v t1 x1 H4))))))) 
 H1)) (subst0_gen_head k v u1 t1 t2 i H0)))) x H))))))).
 
-theorem subst1_gen_lift_lt:
+lemma subst1_gen_lift_lt:
  \forall (u: T).(\forall (t1: T).(\forall (x: T).(\forall (i: nat).(\forall 
 (h: nat).(\forall (d: nat).((subst1 i (lift h d u) (lift h (S (plus i d)) t1) 
 x) \to (ex2 T (\lambda (t2: T).(eq T x (lift h (S (plus i d)) t2))) (\lambda 
@@ -139,7 +139,7 @@ t2 (lift h (S (plus i d)) t3))) (\lambda (t3: T).(subst1 i u t1 t3)) x0 H1
 (subst1_single i u t1 x0 H2))))) (subst0_gen_lift_lt u t1 t2 i h d H0)))) x 
 H))))))).
 
-theorem subst1_gen_lift_eq:
+lemma subst1_gen_lift_eq:
  \forall (t: T).(\forall (u: T).(\forall (x: T).(\forall (h: nat).(\forall 
 (d: nat).(\forall (i: nat).((le d i) \to ((lt i (plus d h)) \to ((subst1 i u 
 (lift h d t) x) \to (eq T x (lift h d t))))))))))
@@ -151,7 +151,7 @@ h))).(\lambda (H1: (subst1 i u (lift h d t) x)).(subst1_ind i u (lift h d t)
 (t2: T).(\lambda (H2: (subst0 i u (lift h d t) t2)).(subst0_gen_lift_false t 
 u t2 h d i H H0 H2 (eq T t2 (lift h d t))))) x H1))))))))).
 
-theorem subst1_gen_lift_ge:
+lemma subst1_gen_lift_ge:
  \forall (u: T).(\forall (t1: T).(\forall (x: T).(\forall (i: nat).(\forall 
 (h: nat).(\forall (d: nat).((subst1 i u (lift h d t1) x) \to ((le (plus d h) 
 i) \to (ex2 T (\lambda (t2: T).(eq T x (lift h d t2))) (\lambda (t2: 

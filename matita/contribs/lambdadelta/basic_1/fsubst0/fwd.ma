@@ -16,7 +16,7 @@
 
 include "basic_1/fsubst0/defs.ma".
 
-theorem fsubst0_ind:
+implied lemma fsubst0_ind:
  \forall (i: nat).(\forall (v: T).(\forall (c1: C).(\forall (t1: T).(\forall 
 (P: ((C \to (T \to Prop)))).(((\forall (t2: T).((subst0 i v t1 t2) \to (P c1 
 t2)))) \to (((\forall (c2: C).((csubst0 i v c1 c2) \to (P c2 t1)))) \to 
@@ -33,7 +33,7 @@ C).(\lambda (t: T).(\lambda (f2: (fsubst0 i v c1 t1 c t)).(match f2 with
 [(fsubst0_snd x x0) \Rightarrow (f x x0) | (fsubst0_fst x x0) \Rightarrow (f0 
 x x0) | (fsubst0_both x x0 x1 x2) \Rightarrow (f1 x x0 x1 x2)]))))))))))).
 
-theorem fsubst0_gen_base:
+lemma fsubst0_gen_base:
  \forall (c1: C).(\forall (c2: C).(\forall (t1: T).(\forall (t2: T).(\forall 
 (v: T).(\forall (i: nat).((fsubst0 i v c1 t1 c2 t2) \to (or3 (land (eq C c1 
 c2) (subst0 i v t1 t2)) (land (eq T t1 t2) (csubst0 i v c1 c2)) (land (subst0 

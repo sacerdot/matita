@@ -16,7 +16,7 @@
 
 include "basic_1/csubc/csuba.ma".
 
-theorem csubc_arity_conf:
+lemma csubc_arity_conf:
  \forall (g: G).(\forall (c1: C).(\forall (c2: C).((csubc g c1 c2) \to 
 (\forall (t: T).(\forall (a: A).((arity g c1 t a) \to (arity g c2 t a)))))))
 \def
@@ -24,7 +24,7 @@ theorem csubc_arity_conf:
 c2)).(\lambda (t: T).(\lambda (a: A).(\lambda (H0: (arity g c1 t 
 a)).(csuba_arity g c1 t a H0 c2 (csubc_csuba g c1 c2 H)))))))).
 
-theorem csubc_arity_trans:
+lemma csubc_arity_trans:
  \forall (g: G).(\forall (c1: C).(\forall (c2: C).((csubc g c1 c2) \to 
 ((csubv c1 c2) \to (\forall (t: T).(\forall (a: A).((arity g c2 t a) \to 
 (arity g c1 t a))))))))

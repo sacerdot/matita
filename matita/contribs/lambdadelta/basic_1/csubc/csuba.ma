@@ -18,7 +18,7 @@ include "basic_1/csubc/fwd.ma".
 
 include "basic_1/sc3/props.ma".
 
-theorem csubc_csuba:
+lemma csubc_csuba:
  \forall (g: G).(\forall (c1: C).(\forall (c2: C).((csubc g c1 c2) \to (csuba 
 g c1 c2))))
 \def

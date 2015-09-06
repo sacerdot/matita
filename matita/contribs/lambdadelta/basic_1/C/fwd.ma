@@ -16,19 +16,19 @@
 
 include "basic_1/C/defs.ma".
 
-let rec C_rect (P: (C \to Type[0])) (f: (\forall (n: nat).(P (CSort n)))) 
-(f0: (\forall (c: C).((P c) \to (\forall (k: K).(\forall (t: T).(P (CHead c k 
-t))))))) (c: C) on c: P c \def match c with [(CSort n) \Rightarrow (f n) | 
-(CHead c0 k t) \Rightarrow (f0 c0 ((C_rect P f f0) c0) k t)].
+implied let rec C_rect (P: (C \to Type[0])) (f: (\forall (n: nat).(P (CSort 
+n)))) (f0: (\forall (c: C).((P c) \to (\forall (k: K).(\forall (t: T).(P 
+(CHead c k t))))))) (c: C) on c: P c \def match c with [(CSort n) \Rightarrow 
+(f n) | (CHead c0 k t) \Rightarrow (f0 c0 ((C_rect P f f0) c0) k t)].
 
-theorem C_ind:
+implied lemma C_ind:
  \forall (P: ((C \to Prop))).(((\forall (n: nat).(P (CSort n)))) \to 
 (((\forall (c: C).((P c) \to (\forall (k: K).(\forall (t: T).(P (CHead c k 
 t))))))) \to (\forall (c: C).(P c))))
 \def
  \lambda (P: ((C \to Prop))).(C_rect P).
 
-theorem clt_wf__q_ind:
+fact clt_wf__q_ind:
  \forall (P: ((C \to Prop))).(((\forall (n: nat).((\lambda (P0: ((C \to 
 Prop))).(\lambda (n0: nat).(\forall (c: C).((eq nat (cweight c) n0) \to (P0 
 c))))) P n))) \to (\forall (c: C).(P c)))
@@ -39,7 +39,7 @@ Prop))).(\lambda (H: ((\forall (n: nat).(\forall (c: C).((eq nat (cweight c)
 n) \to (P c)))))).(\lambda (c: C).(H (cweight c) c (refl_equal nat (cweight 
 c)))))).
 
-theorem clt_wf_ind:
+lemma clt_wf_ind:
  \forall (P: ((C \to Prop))).(((\forall (c: C).(((\forall (d: C).((clt d c) 
 \to (P d)))) \to (P c)))) \to (\forall (c: C).(P c)))
 \def

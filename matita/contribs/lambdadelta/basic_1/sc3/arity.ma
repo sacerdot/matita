@@ -22,7 +22,7 @@ include "basic_1/csubc/drop1.ma".
 
 include "basic_1/csubc/props.ma".
 
-theorem sc3_arity_csubc:
+lemma sc3_arity_csubc:
  \forall (g: G).(\forall (c1: C).(\forall (t: T).(\forall (a: A).((arity g c1 
 t a) \to (\forall (d1: C).(\forall (is: PList).((drop1 is d1 c1) \to (\forall 
 (c2: C).((csubc g d1 c2) \to (sc3 g a c2 (lift1 is t)))))))))))
@@ -303,7 +303,7 @@ a2)).(\lambda (d1: C).(\lambda (is: PList).(\lambda (H3: (drop1 is d1
 c)).(\lambda (c2: C).(\lambda (H4: (csubc g d1 c2)).(sc3_repl g a1 c2 (lift1 
 is t0) (H1 d1 is H3 c2 H4) a2 H2))))))))))))) c1 t a H))))).
 
-theorem sc3_arity:
+lemma sc3_arity:
  \forall (g: G).(\forall (c: C).(\forall (t: T).(\forall (a: A).((arity g c t 
 a) \to (sc3 g a c t)))))
 \def

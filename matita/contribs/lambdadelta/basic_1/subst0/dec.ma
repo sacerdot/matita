@@ -18,7 +18,7 @@ include "basic_1/subst0/defs.ma".
 
 include "basic_1/lift/props.ma".
 
-theorem dnf_dec2:
+lemma dnf_dec2:
  \forall (t: T).(\forall (d: nat).(or (\forall (w: T).(ex T (\lambda (v: 
 T).(subst0 d w t (lift (S O) d v))))) (ex T (\lambda (v: T).(eq T t (lift (S 
 O) d v))))))
@@ -148,7 +148,7 @@ x) (lift (S O) (s k d) x0)) (\lambda (t2: T).(eq T (THead k (lift (S O) d x)
 (S O) (s k d) x0))) (lift (S O) d (THead k x x0)) (lift_head k x x0 (S O) 
 d)))) t0 H3) t1 H6))) H5)) H4))))) H2)) H1))))))))) t).
 
-theorem dnf_dec:
+lemma dnf_dec:
  \forall (w: T).(\forall (t: T).(\forall (d: nat).(ex T (\lambda (v: T).(or 
 (subst0 d w t (lift (S O) d v)) (eq T t (lift (S O) d v)))))))
 \def

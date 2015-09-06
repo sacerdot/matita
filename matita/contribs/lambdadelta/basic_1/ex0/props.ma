@@ -20,7 +20,7 @@ include "basic_1/leq/fwd.ma".
 
 include "basic_1/aplus/props.ma".
 
-theorem aplus_gz_le:
+lemma aplus_gz_le:
  \forall (k: nat).(\forall (h: nat).(\forall (n: nat).((le h k) \to (eq A 
 (aplus gz (ASort h n) k) (ASort O (plus (minus k h) n))))))
 \def
@@ -53,7 +53,7 @@ A).(eq A a (aplus gz (ASort n n0) k0))) (refl_equal A (aplus gz (ASort n n0)
 k0)) (asucc gz (aplus gz (ASort (S n) n0) k0)) (aplus_asucc gz k0 (ASort (S 
 n) n0))) (ASort O (plus (minus k0 n) n0)) (IH n n0 H_y))))))) h)))) k).
 
-theorem aplus_gz_ge:
+lemma aplus_gz_ge:
  \forall (n: nat).(\forall (k: nat).(\forall (h: nat).((le k h) \to (eq A 
 (aplus gz (ASort h n) k) (ASort (minus h k) n)))))
 \def
@@ -80,7 +80,7 @@ k0) (\lambda (a: A).(eq A (asucc gz (aplus gz (ASort (S n0) n) k0)) a))
 gz (aplus gz (ASort (S n0) n) k0)) (aplus_asucc gz k0 (ASort (S n0) n))) 
 (ASort (minus n0 k0) n) (IH n0 H_y)))))) h)))) k)).
 
-theorem next_plus_gz:
+lemma next_plus_gz:
  \forall (n: nat).(\forall (h: nat).(eq nat (next_plus gz n h) (plus h n)))
 \def
  \lambda (n: nat).(\lambda (h: nat).(nat_ind (\lambda (n0: nat).(eq nat 
@@ -88,7 +88,7 @@ theorem next_plus_gz:
 nat).(\lambda (H: (eq nat (next_plus gz n n0) (plus n0 n))).(f_equal nat nat 
 S (next_plus gz n n0) (plus n0 n) H))) h)).
 
-theorem leqz_leq:
+lemma leqz_leq:
  \forall (a1: A).(\forall (a2: A).((leq gz a1 a2) \to (leqz a1 a2)))
 \def
  \lambda (a1: A).(\lambda (a2: A).(\lambda (H: (leq gz a1 a2)).(leq_ind gz 
@@ -153,7 +153,7 @@ A).(\lambda (a3: A).(\lambda (_: (leq gz a0 a3)).(\lambda (H1: (leqz a0
 a3)).(\lambda (a4: A).(\lambda (a5: A).(\lambda (_: (leq gz a4 a5)).(\lambda 
 (H3: (leqz a4 a5)).(leqz_head a0 a3 H1 a4 a5 H3))))))))) a1 a2 H))).
 
-theorem leq_leqz:
+lemma leq_leqz:
  \forall (a1: A).(\forall (a2: A).((leqz a1 a2) \to (leq gz a1 a2)))
 \def
  \lambda (a1: A).(\lambda (a2: A).(\lambda (H: (leqz a1 a2)).(leqz_ind 

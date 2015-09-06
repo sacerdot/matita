@@ -18,7 +18,7 @@ include "basic_1/csuba/fwd.ma".
 
 include "basic_1/drop/fwd.ma".
 
-theorem csuba_drop_abbr:
+lemma csuba_drop_abbr:
  \forall (i: nat).(\forall (c1: C).(\forall (d1: C).(\forall (u: T).((drop i 
 O c1 (CHead d1 (Bind Abbr) u)) \to (\forall (g: G).(\forall (c2: C).((csuba g 
 c1 c2) \to (ex2 C (\lambda (d2: C).(drop i O c2 (CHead d2 (Bind Abbr) u))) 
@@ -184,7 +184,7 @@ d1 d2)) x (drop_drop (Flat f) n x0 (CHead x (Bind Abbr) u) H9 x1) H10))))
 H8)) c2 H6))))) H5)))))) k H2 (drop_gen_drop k c (CHead d1 (Bind Abbr) u) t n 
 H1)))))))))))) c1)))) i).
 
-theorem csuba_drop_abst:
+lemma csuba_drop_abst:
  \forall (i: nat).(\forall (c1: C).(\forall (d1: C).(\forall (u1: T).((drop i 
 O c1 (CHead d1 (Bind Abst) u1)) \to (\forall (g: G).(\forall (c2: C).((csuba 
 g c1 c2) \to (or (ex2 C (\lambda (d2: C).(drop i O c2 (CHead d2 (Bind Abst) 
@@ -798,7 +798,7 @@ A).(arity g d2 u2 a)))) x2 x3 x4 (drop_drop (Flat f) n x0 (CHead x2 (Bind
 Abbr) x3) H10 x1) H11 H12 H13))))))))) H9)) H8)) c2 H6))))) H5)))))) k H2 
 (drop_gen_drop k c (CHead d1 (Bind Abst) u1) t n H1)))))))))))) c1)))) i).
 
-theorem csuba_drop_abst_rev:
+lemma csuba_drop_abst_rev:
  \forall (i: nat).(\forall (c1: C).(\forall (d1: C).(\forall (u: T).((drop i 
 O c1 (CHead d1 (Bind Abst) u)) \to (\forall (g: G).(\forall (c2: C).((csuba g 
 c2 c1) \to (or (ex2 C (\lambda (d2: C).(drop i O c2 (CHead d2 (Bind Abst) 
@@ -1304,7 +1304,7 @@ Void) u2)))) (\lambda (d2: C).(\lambda (_: T).(csuba g d2 d1))) x2 x3
 H8)) c2 H6))))) H5)))))) k H2 (drop_gen_drop k c (CHead d1 (Bind Abst) u) t n 
 H1)))))))))))) c1)))) i).
 
-theorem csuba_drop_abbr_rev:
+lemma csuba_drop_abbr_rev:
  \forall (i: nat).(\forall (c1: C).(\forall (d1: C).(\forall (u1: T).((drop i 
 O c1 (CHead d1 (Bind Abbr) u1)) \to (\forall (g: G).(\forall (c2: C).((csuba 
 g c2 c1) \to (or3 (ex2 C (\lambda (d2: C).(drop i O c2 (CHead d2 (Bind Abbr) 

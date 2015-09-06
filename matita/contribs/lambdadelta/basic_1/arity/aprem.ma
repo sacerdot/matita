@@ -20,7 +20,7 @@ include "basic_1/arity/cimp.ma".
 
 include "basic_1/aprem/props.ma".
 
-theorem arity_aprem:
+lemma arity_aprem:
  \forall (g: G).(\forall (c: C).(\forall (t: T).(\forall (a: A).((arity g c t 
 a) \to (\forall (i: nat).(\forall (b: A).((aprem i a b) \to (ex2_3 C T nat 
 (\lambda (d: C).(\lambda (_: T).(\lambda (j: nat).(drop (plus i j) O d c)))) 

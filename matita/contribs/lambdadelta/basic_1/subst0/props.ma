@@ -16,7 +16,7 @@
 
 include "basic_1/subst0/fwd.ma".
 
-theorem subst0_refl:
+lemma subst0_refl:
  \forall (u: T).(\forall (t: T).(\forall (d: nat).((subst0 d u t t) \to 
 (\forall (P: Prop).P))))
 \def
@@ -73,7 +73,7 @@ t2)) H5 t1 H7) in (let H10 \def (eq_ind_r T x0 (\lambda (t2: T).(subst0 d u
 t0 t2)) H4 t0 H8) in (H d H10 P))))) H6))))))) H2)) (subst0_gen_head k u t0 
 t1 (THead k t0 t1) d H1)))))))))) t)).
 
-theorem subst0_lift_lt:
+lemma subst0_lift_lt:
  \forall (t1: T).(\forall (t2: T).(\forall (u: T).(\forall (i: nat).((subst0 
 i u t1 t2) \to (\forall (d: nat).((lt i d) \to (\forall (h: nat).(subst0 i 
 (lift h (minus d (S i)) u) (lift h d t1) (lift h d t2)))))))))
@@ -143,7 +143,7 @@ k i0) (lift h n v) (lift h (s k d) t0) (lift h (s k d) t3))) (H5 (s k d)
 (THead k u2 t3)) (lift_head k u2 t3 h d)) (lift h d (THead k u1 t0)) 
 (lift_head k u1 t0 h d))))))))))))))))) i u t1 t2 H))))).
 
-theorem subst0_lift_ge:
+lemma subst0_lift_ge:
  \forall (t1: T).(\forall (t2: T).(\forall (u: T).(\forall (i: nat).(\forall 
 (h: nat).((subst0 i u t1 t2) \to (\forall (d: nat).((le d i) \to (subst0 
 (plus i h) u (lift h d t1) (lift h d t2)))))))))
@@ -201,7 +201,7 @@ h) (H1 d H4) k (lift h (s k d) t0) (lift h (s k d) t3) (H5 (s k d) (s_le k d
 i0 H4))) (lift h d (THead k u2 t3)) (lift_head k u2 t3 h d)) (lift h d (THead 
 k u1 t0)) (lift_head k u1 t0 h d)))))))))))))))) i u t1 t2 H)))))).
 
-theorem subst0_lift_ge_S:
+lemma subst0_lift_ge_S:
  \forall (t1: T).(\forall (t2: T).(\forall (u: T).(\forall (i: nat).((subst0 
 i u t1 t2) \to (\forall (d: nat).((le d i) \to (subst0 (S i) u (lift (S O) d 
 t1) (lift (S O) d t2))))))))
@@ -213,7 +213,7 @@ t2))) (subst0_lift_ge t1 t2 u i (S O) H d H0) (S i) (eq_ind_r nat (plus (S O)
 i) (\lambda (n: nat).(eq nat n (S i))) (le_antisym (plus (S O) i) (S i) (le_n 
 (S i)) (le_n (plus (S O) i))) (plus i (S O)) (plus_sym i (S O)))))))))).
 
-theorem subst0_lift_ge_s:
+lemma subst0_lift_ge_s:
  \forall (t1: T).(\forall (t2: T).(\forall (u: T).(\forall (i: nat).((subst0 
 i u t1 t2) \to (\forall (d: nat).((le d i) \to (\forall (b: B).(subst0 (s 
 (Bind b) i) u (lift (S O) d t1) (lift (S O) d t2)))))))))

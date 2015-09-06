@@ -18,7 +18,7 @@ include "basic_1/cimp/defs.ma".
 
 include "basic_1/getl/getl.ma".
 
-theorem cimp_flat_sx:
+lemma cimp_flat_sx:
  \forall (f: F).(\forall (c: C).(\forall (v: T).(cimp (CHead c (Flat f) v) 
 c)))
 \def
@@ -36,7 +36,7 @@ b) w))))))).(\lambda (H0: (getl (S h0) (CHead c (Flat f) v) (CHead d1 (Bind
 b) w))).(ex_intro C (\lambda (d2: C).(getl (S h0) c (CHead d2 (Bind b) w))) 
 d1 (getl_gen_S (Flat f) c (CHead d1 (Bind b) w) v h0 H0))))) h H)))))))).
 
-theorem cimp_flat_dx:
+lemma cimp_flat_dx:
  \forall (f: F).(\forall (c: C).(\forall (v: T).(cimp c (CHead c (Flat f) 
 v))))
 \def
@@ -45,7 +45,7 @@ C).(\lambda (w: T).(\lambda (h: nat).(\lambda (H: (getl h c (CHead d1 (Bind
 b) w))).(ex_intro C (\lambda (d2: C).(getl h (CHead c (Flat f) v) (CHead d2 
 (Bind b) w))) d1 (getl_flat c (CHead d1 (Bind b) w) h H f v))))))))).
 
-theorem cimp_bind:
+lemma cimp_bind:
  \forall (c1: C).(\forall (c2: C).((cimp c1 c2) \to (\forall (b: B).(\forall 
 (v: T).(cimp (CHead c1 (Bind b) v) (CHead c2 (Bind b) v))))))
 \def
@@ -86,7 +86,7 @@ C).(getl h0 c2 (CHead d2 (Bind b0) w))) (ex C (\lambda (d2: C).(getl (S h0)
 (CHead c2 (Bind b) v) (CHead d2 (Bind b0) w))) x (getl_head (Bind b) h0 c2 
 (CHead x (Bind b0) w) H3 v)))) H2)))))) h H0)))))))))).
 
-theorem cimp_getl_conf:
+lemma cimp_getl_conf:
  \forall (c1: C).(\forall (c2: C).((cimp c1 c2) \to (\forall (b: B).(\forall 
 (d1: C).(\forall (w: T).(\forall (i: nat).((getl i c1 (CHead d1 (Bind b) w)) 
 \to (ex2 C (\lambda (d2: C).(cimp d1 d2)) (\lambda (d2: C).(getl i c2 (CHead 

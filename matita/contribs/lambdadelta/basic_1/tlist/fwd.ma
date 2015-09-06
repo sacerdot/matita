@@ -16,7 +16,7 @@
 
 include "basic_1/tlist/props.ma".
 
-theorem tslt_wf__q_ind:
+fact tslt_wf__q_ind:
  \forall (P: ((TList \to Prop))).(((\forall (n: nat).((\lambda (P0: ((TList 
 \to Prop))).(\lambda (n0: nat).(\forall (ts: TList).((eq nat (tslen ts) n0) 
 \to (P0 ts))))) P n))) \to (\forall (ts: TList).(P ts)))
@@ -27,7 +27,7 @@ Prop))).(\lambda (H: ((\forall (n: nat).(\forall (ts: TList).((eq nat (tslen
 ts) n) \to (P ts)))))).(\lambda (ts: TList).(H (tslen ts) ts (refl_equal nat 
 (tslen ts)))))).
 
-theorem tslt_wf_ind:
+lemma tslt_wf_ind:
  \forall (P: ((TList \to Prop))).(((\forall (ts2: TList).(((\forall (ts1: 
 TList).((tslt ts1 ts2) \to (P ts1)))) \to (P ts2)))) \to (\forall (ts: 
 TList).(P ts)))
@@ -45,7 +45,7 @@ m))))).(\lambda (ts0: TList).(\lambda (H1: (eq nat (tslen ts0) n0)).(let H2
 H1) in (H ts0 (\lambda (ts1: TList).(\lambda (H3: (lt (tslen ts1) (tslen 
 ts0))).(H2 (tslen ts1) H3 ts1 (refl_equal nat (tslen ts1))))))))))))) ts)))).
 
-theorem tlist_ind_rev:
+lemma tlist_ind_rev:
  \forall (P: ((TList \to Prop))).((P TNil) \to (((\forall (ts: 
 TList).(\forall (t: T).((P ts) \to (P (TApp ts t)))))) \to (\forall (ts: 
 TList).(P ts))))

@@ -20,7 +20,7 @@ include "basic_1/csubv/fwd.ma".
 
 include "basic_1/drop/fwd.ma".
 
-theorem csubv_drop_conf:
+lemma csubv_drop_conf:
  \forall (c1: C).(\forall (c2: C).((csubv c1 c2) \to (\forall (e1: 
 C).(\forall (h: nat).((drop h O c1 e1) \to (ex2 C (\lambda (e2: C).(csubv e1 
 e2)) (\lambda (e2: C).(drop h O c2 e2))))))))

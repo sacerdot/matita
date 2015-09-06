@@ -16,7 +16,7 @@
 
 include "basic_1/s/defs.ma".
 
-theorem s_S:
+lemma s_S:
  \forall (k: K).(\forall (i: nat).(eq nat (s k (S i)) (S (s k i))))
 \def
  \lambda (k: K).(K_ind (\lambda (k0: K).(\forall (i: nat).(eq nat (s k0 (S 
@@ -24,7 +24,7 @@ i)) (S (s k0 i))))) (\lambda (b: B).(\lambda (i: nat).(refl_equal nat (S (s
 (Bind b) i))))) (\lambda (f: F).(\lambda (i: nat).(refl_equal nat (S (s (Flat 
 f) i))))) k).
 
-theorem s_plus:
+lemma s_plus:
  \forall (k: K).(\forall (i: nat).(\forall (j: nat).(eq nat (s k (plus i j)) 
 (plus (s k i) j))))
 \def
@@ -34,7 +34,7 @@ nat).(eq nat (s k0 (plus i j)) (plus (s k0 i) j))))) (\lambda (b: B).(\lambda
 (\lambda (f: F).(\lambda (i: nat).(\lambda (j: nat).(refl_equal nat (plus (s 
 (Flat f) i) j))))) k).
 
-theorem s_plus_sym:
+lemma s_plus_sym:
  \forall (k: K).(\forall (i: nat).(\forall (j: nat).(eq nat (s k (plus i j)) 
 (plus i (s k j)))))
 \def
@@ -45,7 +45,7 @@ nat n (plus i (S j)))) (refl_equal nat (plus i (S j))) (S (plus i j))
 (plus_n_Sm i j))))) (\lambda (f: F).(\lambda (i: nat).(\lambda (j: 
 nat).(refl_equal nat (plus i (s (Flat f) j)))))) k).
 
-theorem s_minus:
+lemma s_minus:
  \forall (k: K).(\forall (i: nat).(\forall (j: nat).((le j i) \to (eq nat (s 
 k (minus i j)) (minus (s k i) j)))))
 \def
@@ -57,7 +57,7 @@ j))) (refl_equal nat (minus (S i) j)) (S (minus i j)) (minus_Sn_m i j H))))))
 (\lambda (f: F).(\lambda (i: nat).(\lambda (j: nat).(\lambda (_: (le j 
 i)).(refl_equal nat (minus (s (Flat f) i) j)))))) k).
 
-theorem minus_s_s:
+lemma minus_s_s:
  \forall (k: K).(\forall (i: nat).(\forall (j: nat).(eq nat (minus (s k i) (s 
 k j)) (minus i j))))
 \def
@@ -67,7 +67,7 @@ B).(\lambda (i: nat).(\lambda (j: nat).(refl_equal nat (minus i j)))))
 (\lambda (_: F).(\lambda (i: nat).(\lambda (j: nat).(refl_equal nat (minus i 
 j))))) k).
 
-theorem s_le:
+lemma s_le:
  \forall (k: K).(\forall (i: nat).(\forall (j: nat).((le i j) \to (le (s k i) 
 (s k j)))))
 \def
@@ -76,7 +76,7 @@ nat).((le i j) \to (le (s k0 i) (s k0 j)))))) (\lambda (_: B).(\lambda (i:
 nat).(\lambda (j: nat).(\lambda (H: (le i j)).(le_n_S i j H))))) (\lambda (_: 
 F).(\lambda (i: nat).(\lambda (j: nat).(\lambda (H: (le i j)).H)))) k).
 
-theorem s_lt:
+lemma s_lt:
  \forall (k: K).(\forall (i: nat).(\forall (j: nat).((lt i j) \to (lt (s k i) 
 (s k j)))))
 \def
@@ -85,7 +85,7 @@ nat).((lt i j) \to (lt (s k0 i) (s k0 j)))))) (\lambda (_: B).(\lambda (i:
 nat).(\lambda (j: nat).(\lambda (H: (lt i j)).(lt_n_S i j H))))) (\lambda (_: 
 F).(\lambda (i: nat).(\lambda (j: nat).(\lambda (H: (lt i j)).H)))) k).
 
-theorem s_inc:
+lemma s_inc:
  \forall (k: K).(\forall (i: nat).(le i (s k i)))
 \def
  \lambda (k: K).(K_ind (\lambda (k0: K).(\forall (i: nat).(le i (s k0 i)))) 
@@ -94,14 +94,14 @@ theorem s_inc:
 (S (S (s (Bind b) i))) (le_n (S (S (s (Bind b) i)))))))))) (\lambda (f: 
 F).(\lambda (i: nat).(le_n (s (Flat f) i)))) k).
 
-theorem s_arith0:
+lemma s_arith0:
  \forall (k: K).(\forall (i: nat).(eq nat (minus (s k i) (s k O)) i))
 \def
  \lambda (k: K).(\lambda (i: nat).(eq_ind_r nat (minus i O) (\lambda (n: 
 nat).(eq nat n i)) (eq_ind nat i (\lambda (n: nat).(eq nat n i)) (refl_equal 
 nat i) (minus i O) (minus_n_O i)) (minus (s k i) (s k O)) (minus_s_s k i O))).
 
-theorem s_arith1:
+lemma s_arith1:
  \forall (b: B).(\forall (i: nat).(eq nat (minus (s (Bind b) i) (S O)) i))
 \def
  \lambda (_: B).(\lambda (i: nat).(eq_ind nat i (\lambda (n: nat).(eq nat n 

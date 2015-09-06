@@ -16,10 +16,10 @@
 
 include "basic_1/csubv/defs.ma".
 
-let rec csubv_ind (P: (C \to (C \to Prop))) (f: (\forall (n: nat).(P (CSort 
-n) (CSort n)))) (f0: (\forall (c1: C).(\forall (c2: C).((csubv c1 c2) \to ((P 
-c1 c2) \to (\forall (v1: T).(\forall (v2: T).(P (CHead c1 (Bind Void) v1) 
-(CHead c2 (Bind Void) v2))))))))) (f1: (\forall (c1: C).(\forall (c2: 
+implied let rec csubv_ind (P: (C \to (C \to Prop))) (f: (\forall (n: nat).(P 
+(CSort n) (CSort n)))) (f0: (\forall (c1: C).(\forall (c2: C).((csubv c1 c2) 
+\to ((P c1 c2) \to (\forall (v1: T).(\forall (v2: T).(P (CHead c1 (Bind Void) 
+v1) (CHead c2 (Bind Void) v2))))))))) (f1: (\forall (c1: C).(\forall (c2: 
 C).((csubv c1 c2) \to ((P c1 c2) \to (\forall (b1: B).((not (eq B b1 Void)) 
 \to (\forall (b2: B).(\forall (v1: T).(\forall (v2: T).(P (CHead c1 (Bind b1) 
 v1) (CHead c2 (Bind b2) v2)))))))))))) (f2: (\forall (c1: C).(\forall (c2: 

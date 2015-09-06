@@ -18,10 +18,10 @@ include "basic_1/csubst0/defs.ma".
 
 include "basic_1/C/fwd.ma".
 
-let rec csubst0_ind (P: (nat \to (T \to (C \to (C \to Prop))))) (f: (\forall 
-(k: K).(\forall (i: nat).(\forall (v: T).(\forall (u1: T).(\forall (u2: 
-T).((subst0 i v u1 u2) \to (\forall (c: C).(P (s k i) v (CHead c k u1) (CHead 
-c k u2)))))))))) (f0: (\forall (k: K).(\forall (i: nat).(\forall (c1: 
+implied let rec csubst0_ind (P: (nat \to (T \to (C \to (C \to Prop))))) (f: 
+(\forall (k: K).(\forall (i: nat).(\forall (v: T).(\forall (u1: T).(\forall 
+(u2: T).((subst0 i v u1 u2) \to (\forall (c: C).(P (s k i) v (CHead c k u1) 
+(CHead c k u2)))))))))) (f0: (\forall (k: K).(\forall (i: nat).(\forall (c1: 
 C).(\forall (c2: C).(\forall (v: T).((csubst0 i v c1 c2) \to ((P i v c1 c2) 
 \to (\forall (u: T).(P (s k i) v (CHead c1 k u) (CHead c2 k u))))))))))) (f1: 
 (\forall (k: K).(\forall (i: nat).(\forall (v: T).(\forall (u1: T).(\forall 
@@ -34,7 +34,7 @@ v c4 ((csubst0_ind P f f0 f1) i v c2 c3 c4) u) | (csubst0_both k i v u1 u2 s0
 c2 c3 c4) \Rightarrow (f1 k i v u1 u2 s0 c2 c3 c4 ((csubst0_ind P f f0 f1) i 
 v c2 c3 c4))].
 
-theorem csubst0_gen_sort:
+lemma csubst0_gen_sort:
  \forall (x: C).(\forall (v: T).(\forall (i: nat).(\forall (n: nat).((csubst0 
 i v (CSort n) x) \to (\forall (P: Prop).P)))))
 \def
@@ -61,7 +61,7 @@ c1 k u1) (CSort n))).(let H5 \def (eq_ind C (CHead c1 k u1) (\lambda (ee:
 C).(match ee with [(CSort _) \Rightarrow False | (CHead _ _ _) \Rightarrow 
 True])) I (CSort n) H4) in (False_ind P H5))))))))))))) i v y x H0))) H)))))).
 
-theorem csubst0_gen_head:
+lemma csubst0_gen_head:
  \forall (k: K).(\forall (c1: C).(\forall (x: C).(\forall (u1: T).(\forall 
 (v: T).(\forall (i: nat).((csubst0 i v (CHead c1 k u1) x) \to (or3 (ex3_2 T 
 nat (\lambda (_: T).(\lambda (j: nat).(eq nat i (s k j)))) (\lambda (u2: 
@@ -274,7 +274,7 @@ C).(\lambda (j: nat).(csubst0 j v0 c1 c3)))) u2 c2 i0 (refl_equal nat (s k
 i0)) (refl_equal C (CHead c2 k u2)) H12 H11)) k0 H8))))))) H6)) 
 H5))))))))))))) i v y x H0))) H))))))).
 
-theorem csubst0_gen_S_bind_2:
+lemma csubst0_gen_S_bind_2:
  \forall (b: B).(\forall (x: C).(\forall (c2: C).(\forall (v: T).(\forall 
 (v2: T).(\forall (i: nat).((csubst0 (S i) v x (CHead c2 (Bind b) v2)) \to 
 (or3 (ex2 T (\lambda (v1: T).(subst0 i v v1 v2)) (\lambda (v1: T).(eq C x 

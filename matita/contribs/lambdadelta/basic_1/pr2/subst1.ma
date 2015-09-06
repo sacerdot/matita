@@ -22,7 +22,7 @@ include "basic_1/csubst1/getl.ma".
 
 include "basic_1/subst1/subst1.ma".
 
-theorem pr2_delta1:
+lemma pr2_delta1:
  \forall (c: C).(\forall (d: C).(\forall (u: T).(\forall (i: nat).((getl i c 
 (CHead d (Bind Abbr) u)) \to (\forall (t1: T).(\forall (t2: T).((pr0 t1 t2) 
 \to (\forall (t: T).((subst1 i u t2 t) \to (pr2 c t1 t))))))))))
@@ -34,7 +34,7 @@ t)).(subst1_ind i u t2 (\lambda (t0: T).(pr2 c t1 t0)) (pr2_free c t1 t2 H0)
 (\lambda (t0: T).(\lambda (H2: (subst0 i u t2 t0)).(pr2_delta c d u i H t1 t2 
 H0 t0 H2))) t H1)))))))))).
 
-theorem pr2_subst1:
+lemma pr2_subst1:
  \forall (c: C).(\forall (e: C).(\forall (v: T).(\forall (i: nat).((getl i c 
 (CHead e (Bind Abbr) v)) \to (\forall (t1: T).(\forall (t2: T).((pr2 c t1 t2) 
 \to (\forall (w1: T).((subst1 i v t1 w1) \to (ex2 T (\lambda (w2: T).(pr2 c 
@@ -100,7 +100,7 @@ T).(subst1 i v t w2)) x0 (pr2_delta1 c e v i H19 w1 x H8 x0 H21) H20))))
 H14)))))))))) (pr0_subst1 t3 t4 H3 v w1 i H6 v (pr0_refl v))) c0 
 H5))))))))))))))) y t1 t2 H1))) H0)))))))).
 
-theorem pr2_gen_cabbr:
+lemma pr2_gen_cabbr:
  \forall (c: C).(\forall (t1: T).(\forall (t2: T).((pr2 c t1 t2) \to (\forall 
 (e: C).(\forall (u: T).(\forall (d: nat).((getl d c (CHead e (Bind Abbr) u)) 
 \to (\forall (a0: C).((csubst1 d u c a0) \to (\forall (a: C).((drop (S O) d 

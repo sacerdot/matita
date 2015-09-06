@@ -16,7 +16,7 @@
 
 include "basic_1/ty3/pr3.ma".
 
-theorem ty3_cred_pr2:
+lemma ty3_cred_pr2:
  \forall (g: G).(\forall (c: C).(\forall (v1: T).(\forall (v2: T).((pr2 c v1 
 v2) \to (\forall (b: B).(\forall (t1: T).(\forall (t2: T).((ty3 g (CHead c 
 (Bind b) v1) t1 t2) \to (ty3 g (CHead c (Bind b) v2) t1 t2)))))))))
@@ -41,7 +41,7 @@ c0 (Bind b) t2) c0 t2 (clear_bind b c0 t2) (CHead d (Bind Abbr) u) i H0)
 (CHead c0 (Bind b) t) (csubst0_snd_bind b i u t2 t H2 c0)))))))))))))))) c v1 
 v2 H))))).
 
-theorem ty3_cred_pr3:
+lemma ty3_cred_pr3:
  \forall (g: G).(\forall (c: C).(\forall (v1: T).(\forall (v2: T).((pr3 c v1 
 v2) \to (\forall (b: B).(\forall (t1: T).(\forall (t2: T).((ty3 g (CHead c 
 (Bind b) v1) t1 t2) \to (ty3 g (CHead c (Bind b) v2) t1 t2)))))))))
@@ -58,7 +58,7 @@ B).(\forall (t4: T).(\forall (t5: T).((ty3 g (CHead c (Bind b) t2) t4 t5) \to
 T).(\lambda (t4: T).(\lambda (H3: (ty3 g (CHead c (Bind b) t1) t0 t4)).(H2 b 
 t0 t4 (ty3_cred_pr2 g c t1 t2 H0 b t0 t4 H3)))))))))))) v1 v2 H))))).
 
-theorem ty3_gen_lift:
+lemma ty3_gen_lift:
  \forall (g: G).(\forall (c: C).(\forall (t1: T).(\forall (x: T).(\forall (h: 
 nat).(\forall (d: nat).((ty3 g c (lift h d t1) x) \to (\forall (e: C).((drop 
 h d c e) \to (ex2 T (\lambda (t2: T).(pc3 c (lift h d t2) x)) (\lambda (t2: 
@@ -443,7 +443,7 @@ x2 x5 H21 x3 x4 H18 (pc3_gen_lift c0 x4 x2 h x1 H17 e H6)) x5 H21)))))
 H19))))) H16)))) t3 H8))))) x0 H7)))))) (lift_gen_flat Cast t3 t2 x0 h x1 
 H5))))))))))))))) c y x H0))))) H))))))).
 
-theorem ty3_tred:
+lemma ty3_tred:
  \forall (g: G).(\forall (c: C).(\forall (u: T).(\forall (t1: T).((ty3 g c u 
 t1) \to (\forall (t2: T).((pr3 c t1 t2) \to (ty3 g c u t2)))))))
 \def
@@ -466,7 +466,7 @@ T).(\lambda (H3: (pr3 c u1 x)).(\lambda (H4: (pr3 c u2 x)).(let H_y \def
 (ty3_sred_pr3 c u2 x H4 g t2 H0) in (let H_y0 \def (ty3_sred_pr3 c u1 x H3 g 
 t1 H) in (ty3_unique g c x t1 H_y0 t2 H_y)))))) H2)))))))))).
 
-theorem ty3_sred_back:
+lemma ty3_sred_back:
  \forall (g: G).(\forall (c: C).(\forall (t1: T).(\forall (t0: T).((ty3 g c 
 t1 t0) \to (\forall (t2: T).((pr3 c t1 t2) \to (\forall (t: T).((ty3 g c t2 
 t) \to (ty3 g c t1 t)))))))))

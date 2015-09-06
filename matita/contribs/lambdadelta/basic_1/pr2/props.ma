@@ -18,7 +18,7 @@ include "basic_1/pr2/fwd.ma".
 
 include "basic_1/pr0/subst0.ma".
 
-theorem pr2_thin_dx:
+lemma pr2_thin_dx:
  \forall (c: C).(\forall (t1: T).(\forall (t2: T).((pr2 c t1 t2) \to (\forall 
 (u: T).(\forall (f: F).(pr2 c (THead (Flat f) u t1) (THead (Flat f) u 
 t2)))))))
@@ -36,7 +36,7 @@ H0 (THead (Flat f) u t0) (THead (Flat f) u t3) (pr0_comp u u (pr0_refl u) t0
 t3 H1 (Flat f)) (THead (Flat f) u t) (subst0_snd (Flat f) u0 t t3 i H2 
 u)))))))))))) c t1 t2 H)))))).
 
-theorem pr2_head_1:
+lemma pr2_head_1:
  \forall (c: C).(\forall (u1: T).(\forall (u2: T).((pr2 c u1 u2) \to (\forall 
 (k: K).(\forall (t: T).(pr2 c (THead k u1 t) (THead k u2 t)))))))
 \def
@@ -52,7 +52,7 @@ t0)).(pr2_delta c0 d u i H0 (THead k t1 t) (THead k t2 t) (pr0_comp t1 t2 H1
 t t (pr0_refl t) k) (THead k t0 t) (subst0_fst u t0 t2 i H2 t k)))))))))))) c 
 u1 u2 H)))))).
 
-theorem pr2_head_2:
+lemma pr2_head_2:
  \forall (c: C).(\forall (u: T).(\forall (t1: T).(\forall (t2: T).(\forall 
 (k: K).((pr2 (CHead c k u) t1 t2) \to (pr2 c (THead k u t1) (THead k u 
 t2)))))))
@@ -141,7 +141,7 @@ c d u0 (r (Flat f) n) (getl_gen_S (Flat f) c (CHead d (Bind Abbr) u0) u n H6)
 H3 (Flat f)) (THead (Flat f) u t) (subst0_snd (Flat f) u0 t t4 (r (Flat f) n) 
 H4 u))))))))))))) i)))))) k) y t1 t2 H0))) H)))))).
 
-theorem clear_pr2_trans:
+lemma clear_pr2_trans:
  \forall (c2: C).(\forall (t1: T).(\forall (t2: T).((pr2 c2 t1 t2) \to 
 (\forall (c1: C).((clear c1 c2) \to (pr2 c1 t1 t2))))))
 \def
@@ -156,7 +156,7 @@ t4)).(\lambda (t: T).(\lambda (H2: (subst0 i u t4 t)).(\lambda (c1:
 C).(\lambda (H3: (clear c1 c)).(pr2_delta c1 d u i (clear_getl_trans i c 
 (CHead d (Bind Abbr) u) H0 c1 H3) t3 t4 H1 t H2))))))))))))) c2 t1 t2 H)))).
 
-theorem pr2_cflat:
+lemma pr2_cflat:
  \forall (c: C).(\forall (t1: T).(\forall (t2: T).((pr2 c t1 t2) \to (\forall 
 (f: F).(\forall (v: T).(pr2 (CHead c (Flat f) v) t1 t2))))))
 \def
@@ -171,7 +171,7 @@ u))).(\lambda (t3: T).(\lambda (t4: T).(\lambda (H1: (pr0 t3 t4)).(\lambda
 i (getl_flat c0 (CHead d (Bind Abbr) u) i H0 f v) t3 t4 H1 t H2))))))))))) c 
 t1 t2 H)))))).
 
-theorem pr2_ctail:
+lemma pr2_ctail:
  \forall (c: C).(\forall (t1: T).(\forall (t2: T).((pr2 c t1 t2) \to (\forall 
 (k: K).(\forall (u: T).(pr2 (CTail k u c) t1 t2))))))
 \def
@@ -185,7 +185,7 @@ T).(\lambda (t4: T).(\lambda (H1: (pr0 t3 t4)).(\lambda (t: T).(\lambda (H2:
 (subst0 i u0 t4 t)).(pr2_delta (CTail k u c0) (CTail k u d) u0 i (getl_ctail 
 Abbr c0 d u0 i H0 k u) t3 t4 H1 t H2))))))))))) c t1 t2 H)))))).
 
-theorem pr2_change:
+lemma pr2_change:
  \forall (b: B).((not (eq B b Abbr)) \to (\forall (c: C).(\forall (v1: 
 T).(\forall (t1: T).(\forall (t2: T).((pr2 (CHead c (Bind b) v1) t1 t2) \to 
 (\forall (v2: T).(pr2 (CHead c (Bind b) v2) t1 t2))))))))
@@ -233,7 +233,7 @@ nat).(\lambda (_: (((getl i0 (CHead c (Bind b) v1) (CHead d (Bind Abbr) u))
 (CHead d (Bind Abbr) u) v1 i0 H7) v2) t3 t4 H3 t H8))))) i H6 H4))))))))))))) 
 y t1 t2 H1))) H0)))))))).
 
-theorem pr2_lift:
+lemma pr2_lift:
  \forall (c: C).(\forall (e: C).(\forall (h: nat).(\forall (d: nat).((drop h 
 d c e) \to (\forall (t1: T).(\forall (t2: T).((pr2 e t1 t2) \to (pr2 c (lift 
 h d t1) (lift h d t2)))))))))
@@ -274,7 +274,7 @@ h))))) H13)))))))) H8))) (\lambda (H7: (le d i)).(pr2_delta c d0 u (plus i h)
 (lift h d t4) (pr0_lift t3 t4 H3 h d) (lift h d t) (subst0_lift_ge t4 t u i h 
 H4 d H7)))))))))))))))) y t1 t2 H1))) H0)))))))).
 
-theorem pr2_gen_abbr:
+lemma pr2_gen_abbr:
  \forall (c: C).(\forall (u1: T).(\forall (t1: T).(\forall (x: T).((pr2 c 
 (THead (Bind Abbr) u1 t1) x) \to (or (ex3_2 T T (\lambda (u2: T).(\lambda 
 (t2: T).(eq T x (THead (Bind Abbr) u2 t2)))) (\lambda (u2: T).(\lambda (_: 
@@ -824,7 +824,7 @@ B).(\forall (u0: T).(pr2 (CHead c0 (Bind b) u0) t1 (lift (S O) O t))))
 H6 (lift (S O) O t) (subst0_lift_ge_S t2 t u i H3 O (le_O_n i))))))) 
 (pr0_gen_abbr u1 t1 t2 H5)))))))))))))) c y x H0))) H))))).
 
-theorem pr2_gen_void:
+lemma pr2_gen_void:
  \forall (c: C).(\forall (u1: T).(\forall (t1: T).(\forall (x: T).((pr2 c 
 (THead (Bind Void) u1 t1) x) \to (or (ex3_2 T T (\lambda (u2: T).(\lambda 
 (t2: T).(eq T x (THead (Bind Void) u2 t2)))) (\lambda (u2: T).(\lambda (_: 

@@ -20,7 +20,7 @@ include "basic_1/pc3/nf2.ma".
 
 include "basic_1/nf2/fwd.ma".
 
-theorem ty3_gen_appl_nf2:
+lemma ty3_gen_appl_nf2:
  \forall (g: G).(\forall (c: C).(\forall (w: T).(\forall (v: T).(\forall (x: 
 T).((ty3 g c (THead (Flat Appl) w v) x) \to (ex4_2 T T (\lambda (u: 
 T).(\lambda (t: T).(pc3 c (THead (Flat Appl) w (THead (Bind Abst) u t)) x))) 
@@ -86,7 +86,7 @@ x6) H16)) (ty3_conv g c x5 x3 (ty3_sred_pr3 c x0 x5 H13 g x3 H6) w x0 H2
 (pc3_pr3_r c x0 x5 H13)) H15)))))))) H11))))) H8)))))) H5))))) H3)))))))) 
 (ty3_gen_appl g c w v x H))))))).
 
-theorem ty3_inv_lref_nf2_pc3:
+lemma ty3_inv_lref_nf2_pc3:
  \forall (g: G).(\forall (c: C).(\forall (u1: T).(\forall (i: nat).((ty3 g c 
 (TLRef i) u1) \to ((nf2 c (TLRef i)) \to (\forall (u2: T).((nf2 c u2) \to 
 ((pc3 c u1 u2) \to (ex T (\lambda (u: T).(eq T u2 (lift (S i) O u))))))))))))
@@ -195,7 +195,7 @@ ee with [(TSort _) \Rightarrow False | (TLRef _) \Rightarrow False | (THead _
 _ _) \Rightarrow True])) I (TLRef i) H5) in (False_ind (ex T (\lambda (u: 
 T).(eq T u2 (lift (S i) O u)))) H9))))))))))))))) c y u1 H0))) H))))).
 
-theorem ty3_inv_lref_nf2:
+lemma ty3_inv_lref_nf2:
  \forall (g: G).(\forall (c: C).(\forall (u: T).(\forall (i: nat).((ty3 g c 
 (TLRef i) u) \to ((nf2 c (TLRef i)) \to ((nf2 c u) \to (ex T (\lambda (u0: 
 T).(eq T u (lift (S i) O u0))))))))))
@@ -204,7 +204,7 @@ T).(eq T u (lift (S i) O u0))))))))))
 (H: (ty3 g c (TLRef i) u)).(\lambda (H0: (nf2 c (TLRef i))).(\lambda (H1: 
 (nf2 c u)).(ty3_inv_lref_nf2_pc3 g c u i H H0 u H1 (pc3_refl c u)))))))).
 
-theorem ty3_inv_appls_lref_nf2:
+lemma ty3_inv_appls_lref_nf2:
  \forall (g: G).(\forall (c: C).(\forall (vs: TList).(\forall (u1: 
 T).(\forall (i: nat).((ty3 g c (THeads (Flat Appl) vs (TLRef i)) u1) \to 
 ((nf2 c (TLRef i)) \to ((nf2 c u1) \to (ex2 T (\lambda (u: T).(nf2 c (lift (S 
@@ -262,7 +262,7 @@ i) O u))) u1)) x H12 (pc3_t (THead (Flat Appl) t (THead (Bind Abst) x0 x1)) c
 (THeads (Flat Appl) t0 (lift (S i) O x)) (THead (Bind Abst) x0 x1) H13 t 
 Appl) u1 H4))))) H11))))) H8)))))))) H3))))))))))) vs))).
 
-theorem ty3_inv_lref_lref_nf2:
+lemma ty3_inv_lref_lref_nf2:
  \forall (g: G).(\forall (c: C).(\forall (i: nat).(\forall (j: nat).((ty3 g c 
 (TLRef i) (TLRef j)) \to ((nf2 c (TLRef i)) \to ((nf2 c (TLRef j)) \to (lt i 
 j)))))))

@@ -16,7 +16,7 @@
 
 include "basic_1/getl/props.ma".
 
-theorem getl_dec:
+lemma getl_dec:
  \forall (c: C).(\forall (i: nat).(or (ex_3 C B T (\lambda (e: C).(\lambda 
 (b: B).(\lambda (v: T).(getl i c (CHead e (Bind b) v)))))) (\forall (d: 
 C).((getl i c d) \to (\forall (P: Prop).P)))))

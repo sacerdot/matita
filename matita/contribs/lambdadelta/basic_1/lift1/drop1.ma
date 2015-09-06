@@ -18,7 +18,7 @@ include "basic_1/lift/props.ma".
 
 include "basic_1/drop1/defs.ma".
 
-theorem lift1_lift1:
+lemma lift1_lift1:
  \forall (is1: PList).(\forall (is2: PList).(\forall (t: T).(eq T (lift1 is1 
 (lift1 is2 t)) (lift1 (papp is1 is2) t))))
 \def
@@ -31,7 +31,7 @@ t))))) (\lambda (is2: PList).(\lambda (t: T).(refl_equal T (lift1 is2 t))))
 T T lift n n n0 n0 (lift1 p (lift1 is2 t)) (lift1 (papp p is2) t) (refl_equal 
 nat n) (refl_equal nat n0) (H is2 t)))))))) is1).
 
-theorem lift1_xhg:
+lemma lift1_xhg:
  \forall (hds: PList).(\forall (t: T).(eq T (lift1 (Ss hds) (lift (S O) O t)) 
 (lift (S O) O (lift1 hds t))))
 \def
@@ -49,7 +49,7 @@ nat).(eq T (lift h n (lift (S O) O (lift1 p t))) (lift (S O) O (lift h d
 p t))) (lift_d (lift1 p t) h (S O) d O (le_O_n d))) (S d) (refl_equal nat (S 
 d))) (lift1 (Ss p) (lift (S O) O t)) (H t))))))) hds).
 
-theorem lifts1_xhg:
+lemma lifts1_xhg:
  \forall (hds: PList).(\forall (ts: TList).(eq TList (lifts1 (Ss hds) (lifts 
 (S O) O ts)) (lifts (S O) O (lifts1 hds ts))))
 \def
@@ -66,7 +66,7 @@ t0))))) (refl_equal TList (TCons (lift (S O) O (lift1 hds t)) (lifts (S O) O
 (lifts1 hds t0)))) (lifts1 (Ss hds) (lifts (S O) O t0)) H) (lift1 (Ss hds) 
 (lift (S O) O t)) (lift1_xhg hds t))))) ts)).
 
-theorem lift1_free:
+lemma lift1_free:
  \forall (hds: PList).(\forall (i: nat).(\forall (t: T).(eq T (lift1 hds 
 (lift (S i) O t)) (lift (S (trans hds i)) O (lift1 (ptrans hds i) t)))))
 \def

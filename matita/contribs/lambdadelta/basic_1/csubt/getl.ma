@@ -20,7 +20,7 @@ include "basic_1/csubt/drop.ma".
 
 include "basic_1/getl/clear.ma".
 
-theorem csubt_getl_abbr:
+lemma csubt_getl_abbr:
  \forall (g: G).(\forall (c1: C).(\forall (d1: C).(\forall (u: T).(\forall 
 (n: nat).((getl n c1 (CHead d1 (Bind Abbr) u)) \to (\forall (c2: C).((csubt g 
 c1 c2) \to (ex2 C (\lambda (d2: C).(csubt g d1 d2)) (\lambda (d2: C).(getl n 
@@ -134,7 +134,7 @@ d2)) (\lambda (d2: C).(getl (S n0) c2 (CHead d2 (Bind Abbr) u))) x9 H22
 H21)))))))) H17))))) H14))))))) H11)))))))) n) H7))))) k H3 H4))))))) x H1 
 H2)))) H0))))))).
 
-theorem csubt_getl_abst:
+lemma csubt_getl_abst:
  \forall (g: G).(\forall (c1: C).(\forall (d1: C).(\forall (t: T).(\forall 
 (n: nat).((getl n c1 (CHead d1 (Bind Abst) t)) \to (\forall (c2: C).((csubt g 
 c1 c2) \to (or (ex2 C (\lambda (d2: C).(csubt g d1 d2)) (\lambda (d2: 

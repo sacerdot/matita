@@ -16,9 +16,9 @@
 
 include "basic_1/csubt/defs.ma".
 
-let rec csubt_ind (g: G) (P: (C \to (C \to Prop))) (f: (\forall (n: nat).(P 
-(CSort n) (CSort n)))) (f0: (\forall (c1: C).(\forall (c2: C).((csubt g c1 
-c2) \to ((P c1 c2) \to (\forall (k: K).(\forall (u: T).(P (CHead c1 k u) 
+implied let rec csubt_ind (g: G) (P: (C \to (C \to Prop))) (f: (\forall (n: 
+nat).(P (CSort n) (CSort n)))) (f0: (\forall (c1: C).(\forall (c2: C).((csubt 
+g c1 c2) \to ((P c1 c2) \to (\forall (k: K).(\forall (u: T).(P (CHead c1 k u) 
 (CHead c2 k u))))))))) (f1: (\forall (c1: C).(\forall (c2: C).((csubt g c1 
 c2) \to ((P c1 c2) \to (\forall (b: B).((not (eq B b Void)) \to (\forall (u1: 
 T).(\forall (u2: T).(P (CHead c1 (Bind Void) u1) (CHead c2 (Bind b) 
@@ -32,7 +32,7 @@ t) \to (P (CHead c1 (Bind Abst) t) (CHead c2 (Bind Abbr) u))))))))))) (c: C)
 (csubt_abst c2 c3 c4 u t t0 t1) \Rightarrow (f2 c2 c3 c4 ((csubt_ind g P f f0 
 f1 f2) c2 c3 c4) u t t0 t1)].
 
-theorem csubt_gen_abbr:
+lemma csubt_gen_abbr:
  \forall (g: G).(\forall (e1: C).(\forall (c2: C).(\forall (v: T).((csubt g 
 (CHead e1 (Bind Abbr) v) c2) \to (ex2 C (\lambda (e2: C).(eq C c2 (CHead e2 
 (Bind Abbr) v))) (\lambda (e2: C).(csubt g e1 e2)))))))
@@ -95,7 +95,7 @@ I (CHead e1 (Bind Abbr) v) H5) in (False_ind (ex2 C (\lambda (e2: C).(eq C
 (CHead c3 (Bind Abbr) u) (CHead e2 (Bind Abbr) v))) (\lambda (e2: C).(csubt g 
 e1 e2))) H6))))))))))) y c2 H0))) H))))).
 
-theorem csubt_gen_abst:
+lemma csubt_gen_abst:
  \forall (g: G).(\forall (e1: C).(\forall (c2: C).(\forall (v1: T).((csubt g 
 (CHead e1 (Bind Abst) v1) c2) \to (or (ex2 C (\lambda (e2: C).(eq C c2 (CHead 
 e2 (Bind Abst) v1))) (\lambda (e2: C).(csubt g e1 e2))) (ex4_2 C T (\lambda 
@@ -218,7 +218,7 @@ C).(\lambda (v2: T).(ty3 g e1 v2 v1))) (\lambda (e2: C).(\lambda (v2: T).(ty3
 g e2 v2 v1))) c3 u (refl_equal C (CHead c3 (Bind Abbr) u)) H13 H11 
 H9))))))))) H6))))))))))) y c2 H0))) H))))).
 
-theorem csubt_gen_flat:
+lemma csubt_gen_flat:
  \forall (g: G).(\forall (e1: C).(\forall (c2: C).(\forall (v: T).(\forall 
 (f: F).((csubt g (CHead e1 (Flat f) v) c2) \to (ex2 C (\lambda (e2: C).(eq C 
 c2 (CHead e2 (Flat f) v))) (\lambda (e2: C).(csubt g e1 e2))))))))
@@ -278,7 +278,7 @@ H5) in (False_ind (ex2 C (\lambda (e2: C).(eq C (CHead c3 (Bind Abbr) u)
 (CHead e2 (Flat f) v))) (\lambda (e2: C).(csubt g e1 e2))) H6))))))))))) y c2 
 H0))) H)))))).
 
-theorem csubt_gen_bind:
+lemma csubt_gen_bind:
  \forall (g: G).(\forall (b1: B).(\forall (e1: C).(\forall (c2: C).(\forall 
 (v1: T).((csubt g (CHead e1 (Bind b1) v1) c2) \to (ex2_3 B C T (\lambda (b2: 
 B).(\lambda (e2: C).(\lambda (v2: T).(eq C c2 (CHead e2 (Bind b2) v2))))) 

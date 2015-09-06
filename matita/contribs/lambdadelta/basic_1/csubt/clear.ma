@@ -18,7 +18,7 @@ include "basic_1/csubt/fwd.ma".
 
 include "basic_1/clear/fwd.ma".
 
-theorem csubt_clear_conf:
+lemma csubt_clear_conf:
  \forall (g: G).(\forall (c1: C).(\forall (c2: C).((csubt g c1 c2) \to 
 (\forall (e1: C).((clear c1 e1) \to (ex2 C (\lambda (e2: C).(csubt g e1 e2)) 
 (\lambda (e2: C).(clear c2 e2))))))))

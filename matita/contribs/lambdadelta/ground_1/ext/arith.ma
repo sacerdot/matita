@@ -16,7 +16,7 @@
 
 include "ground_1/preamble.ma".
 
-theorem nat_dec:
+lemma nat_dec:
  \forall (n1: nat).(\forall (n2: nat).(or (eq nat n1 n2) ((eq nat n1 n2) \to 
 (\forall (P: Prop).P))))
 \def
@@ -54,7 +54,7 @@ Prop).P0))) H1 n H3) in (let H5 \def (eq_ind_r nat n0 (\lambda (n3: nat).(or
 (eq nat (S n) n3) ((eq nat (S n) n3) \to (\forall (P0: Prop).P0)))) H0 n H3) 
 in (H4 (refl_equal nat n) P)))))))) (H n0)))) n2)))) n1).
 
-theorem simpl_plus_r:
+lemma simpl_plus_r:
  \forall (n: nat).(\forall (m: nat).(\forall (p: nat).((eq nat (plus m n) 
 (plus p n)) \to (eq nat m p))))
 \def
@@ -64,18 +64,18 @@ theorem simpl_plus_r:
 nat).(eq nat n0 (plus n p))) (plus_sym p n) (plus m n) H) (plus n m) 
 (plus_sym n m)))))).
 
-theorem minus_Sx_Sy:
+lemma minus_Sx_Sy:
  \forall (x: nat).(\forall (y: nat).(eq nat (minus (S x) (S y)) (minus x y)))
 \def
  \lambda (x: nat).(\lambda (y: nat).(refl_equal nat (minus x y))).
 
-theorem minus_plus_r:
+lemma minus_plus_r:
  \forall (m: nat).(\forall (n: nat).(eq nat (minus (plus m n) n) m))
 \def
  \lambda (m: nat).(\lambda (n: nat).(eq_ind_r nat (plus n m) (\lambda (n0: 
 nat).(eq nat (minus n0 n) m)) (minus_plus n m) (plus m n) (plus_sym m n))).
 
-theorem plus_permute_2_in_3:
+lemma plus_permute_2_in_3:
  \forall (x: nat).(\forall (y: nat).(\forall (z: nat).(eq nat (plus (plus x 
 y) z) (plus (plus x z) y))))
 \def
@@ -86,7 +86,7 @@ nat (plus (plus x z) y) (\lambda (n: nat).(eq nat n (plus (plus x z) y)))
 (refl_equal nat (plus (plus x z) y)) (plus x (plus z y)) (plus_assoc_r x z 
 y)) (plus y z) (plus_sym y z)) (plus (plus x y) z) (plus_assoc_r x y z)))).
 
-theorem plus_permute_2_in_3_assoc:
+lemma plus_permute_2_in_3_assoc:
  \forall (n: nat).(\forall (h: nat).(\forall (k: nat).(eq nat (plus (plus n 
 h) k) (plus n (plus k h)))))
 \def
@@ -96,7 +96,7 @@ nat (plus (plus n k) h) (\lambda (n0: nat).(eq nat (plus (plus n k) h) n0))
 (refl_equal nat (plus (plus n k) h)) (plus n (plus k h)) (plus_assoc_l n k 
 h)) (plus (plus n h) k) (plus_permute_2_in_3 n h k)))).
 
-theorem plus_O:
+lemma plus_O:
  \forall (x: nat).(\forall (y: nat).((eq nat (plus x y) O) \to (land (eq nat 
 x O) (eq nat y O))))
 \def
@@ -111,13 +111,13 @@ y) (\lambda (e: nat).(match e with [O \Rightarrow False | (S _) \Rightarrow
 True])) I O H1) in (False_ind (land (eq nat (S n) O) (eq nat y O)) H2)))]) in 
 (H1 (refl_equal nat O))))))) x).
 
-theorem minus_Sx_SO:
+lemma minus_Sx_SO:
  \forall (x: nat).(eq nat (minus (S x) (S O)) x)
 \def
  \lambda (x: nat).(eq_ind nat x (\lambda (n: nat).(eq nat n x)) (refl_equal 
 nat x) (minus x O) (minus_n_O x)).
 
-theorem nat_dec_neg:
+lemma nat_dec_neg:
  \forall (i: nat).(\forall (j: nat).(or (not (eq nat i j)) (eq nat i j)))
 \def
  \lambda (i: nat).(nat_ind (\lambda (n: nat).(\forall (j: nat).(or (not (eq 
@@ -136,7 +136,7 @@ n) (S n0)) (not_eq_S n n0 H1))) (\lambda (H1: (eq nat n n0)).(or_intror (not
 (eq nat (S n) (S n0))) (eq nat (S n) (S n0)) (f_equal nat nat S n n0 H1))) (H 
 n0)))) j)))) i).
 
-theorem neq_eq_e:
+lemma neq_eq_e:
  \forall (i: nat).(\forall (j: nat).(\forall (P: Prop).((((not (eq nat i j)) 
 \to P)) \to ((((eq nat i j) \to P)) \to P))))
 \def
@@ -144,7 +144,7 @@ theorem neq_eq_e:
 (eq nat i j)) \to P))).(\lambda (H0: (((eq nat i j) \to P))).(let o \def 
 (nat_dec_neg i j) in (or_ind (not (eq nat i j)) (eq nat i j) P H H0 o)))))).
 
-theorem le_false:
+lemma le_false:
  \forall (m: nat).(\forall (n: nat).(\forall (P: Prop).((le m n) \to ((le (S 
 n) m) \to P))))
 \def
@@ -173,13 +173,13 @@ O)))))) (\lambda (n1: nat).(\lambda (_: ((\forall (P: Prop).((le (S n) n1)
 (S n1))).(\lambda (H2: (le (S (S n1)) (S n))).(H n1 P (le_S_n n n1 H1) 
 (le_S_n (S n1) n H2))))))) n0)))) m).
 
-theorem le_Sx_x:
+lemma le_Sx_x:
  \forall (x: nat).((le (S x) x) \to (\forall (P: Prop).P))
 \def
  \lambda (x: nat).(\lambda (H: (le (S x) x)).(\lambda (P: Prop).(let H0 \def 
 le_Sn_n in (False_ind P (H0 x H))))).
 
-theorem le_n_pred:
+lemma le_n_pred:
  \forall (n: nat).(\forall (m: nat).((le n m) \to (le (pred n) (pred m))))
 \def
  \lambda (n: nat).(\lambda (m: nat).(\lambda (H: (le n m)).(le_ind n (\lambda 
@@ -187,7 +187,7 @@ theorem le_n_pred:
 nat).(\lambda (_: (le n m0)).(\lambda (H1: (le (pred n) (pred m0))).(le_trans 
 (pred n) (pred m0) m0 H1 (le_pred_n m0))))) m H))).
 
-theorem minus_le:
+lemma minus_le:
  \forall (x: nat).(\forall (y: nat).(le (minus x y) x))
 \def
  \lambda (x: nat).(nat_ind (\lambda (n: nat).(\forall (y: nat).(le (minus n 
@@ -197,7 +197,7 @@ y) n))) (\lambda (_: nat).(le_O_n O)) (\lambda (n: nat).(\lambda (H:
 nat).(\lambda (_: (le (match n0 with [O \Rightarrow (S n) | (S l) \Rightarrow 
 (minus n l)]) (S n))).(le_S (minus n n0) n (H n0)))) y)))) x).
 
-theorem le_plus_minus_sym:
+lemma le_plus_minus_sym:
  \forall (n: nat).(\forall (m: nat).((le n m) \to (eq nat m (plus (minus m n) 
 n))))
 \def
@@ -205,7 +205,7 @@ n))))
 (plus n (minus m n)) (\lambda (n0: nat).(eq nat m n0)) (le_plus_minus n m H) 
 (plus (minus m n) n) (plus_sym (minus m n) n)))).
 
-theorem le_minus_minus:
+lemma le_minus_minus:
  \forall (x: nat).(\forall (y: nat).((le x y) \to (\forall (z: nat).((le y z) 
 \to (le (minus y x) (minus z x))))))
 \def
@@ -215,7 +215,7 @@ nat).(\lambda (H0: (le y z)).(simpl_le_plus_l x (minus y x) (minus z x)
 z (\lambda (n: nat).(le y n)) H0 (plus x (minus z x)) (le_plus_minus_r x z 
 (le_trans x y z H H0))) (plus x (minus y x)) (le_plus_minus_r x y H))))))).
 
-theorem le_minus_plus:
+lemma le_minus_plus:
  \forall (z: nat).(\forall (x: nat).((le z x) \to (\forall (y: nat).(eq nat 
 (minus (plus x y) z) (plus (minus x z) y)))))
 \def
@@ -246,7 +246,7 @@ nat).(\lambda (_: (((le (S z0) n) \to (\forall (y: nat).(eq nat (minus (plus
 n y) (S z0)) (plus (minus n (S z0)) y)))))).(\lambda (H1: (le (S z0) (S 
 n))).(\lambda (y: nat).(H n (le_S_n z0 n H1) y))))) x)))) z).
 
-theorem le_minus:
+lemma le_minus:
  \forall (x: nat).(\forall (z: nat).(\forall (y: nat).((le (plus x y) z) \to 
 (le x (minus z y)))))
 \def
@@ -255,14 +255,14 @@ x y) z)).(eq_ind nat (minus (plus x y) y) (\lambda (n: nat).(le n (minus z
 y))) (le_minus_minus y (plus x y) (le_plus_r x y) z H) x (minus_plus_r x 
 y))))).
 
-theorem le_trans_plus_r:
+lemma le_trans_plus_r:
  \forall (x: nat).(\forall (y: nat).(\forall (z: nat).((le (plus x y) z) \to 
 (le y z))))
 \def
  \lambda (x: nat).(\lambda (y: nat).(\lambda (z: nat).(\lambda (H: (le (plus 
 x y) z)).(le_trans y (plus x y) z (le_plus_r x y) H)))).
 
-theorem lt_x_O:
+lemma lt_x_O:
  \forall (x: nat).((lt x O) \to (\forall (P: Prop).P))
 \def
  \lambda (x: nat).(\lambda (H: (le (S x) O)).(\lambda (P: Prop).(let H_y \def 
@@ -270,7 +270,7 @@ theorem lt_x_O:
 ee with [O \Rightarrow True | (S _) \Rightarrow False])) I (S x) H_y) in 
 (False_ind P H0))))).
 
-theorem le_gen_S:
+lemma le_gen_S:
  \forall (m: nat).(\forall (x: nat).((le (S m) x) \to (ex2 nat (\lambda (n: 
 nat).(eq nat x (S n))) (\lambda (n: nat).(le m n)))))
 \def
@@ -286,14 +286,14 @@ m0)).(ex_intro2 nat (\lambda (n: nat).(eq nat (S m0) (S n))) (\lambda (n:
 nat).(le m n)) m0 (refl_equal nat (S m0)) (le_S_n m m0 (le_S (S m) m0 H2)))) 
 x H1 H0))]) in (H0 (refl_equal nat x))))).
 
-theorem lt_x_plus_x_Sy:
+lemma lt_x_plus_x_Sy:
  \forall (x: nat).(\forall (y: nat).(lt x (plus x (S y))))
 \def
  \lambda (x: nat).(\lambda (y: nat).(eq_ind_r nat (plus (S y) x) (\lambda (n: 
 nat).(lt x n)) (le_S_n (S x) (S (plus y x)) (le_n_S (S x) (S (plus y x)) 
 (le_n_S x (plus y x) (le_plus_r y x)))) (plus x (S y)) (plus_sym x (S y)))).
 
-theorem simpl_lt_plus_r:
+lemma simpl_lt_plus_r:
  \forall (p: nat).(\forall (n: nat).(\forall (m: nat).((lt (plus n p) (plus m 
 p)) \to (lt n m))))
 \def
@@ -303,7 +303,7 @@ n p) (plus m p))).(simpl_lt_plus_l n m p (let H0 \def (eq_ind nat (plus n p)
 H1 \def (eq_ind nat (plus m p) (\lambda (n0: nat).(lt (plus p n) n0)) H0 
 (plus p m) (plus_sym m p)) in H1)))))).
 
-theorem minus_x_Sy:
+lemma minus_x_Sy:
  \forall (x: nat).(\forall (y: nat).((lt y x) \to (eq nat (minus x y) (S 
 (minus x (S y))))))
 \def
@@ -326,14 +326,14 @@ n))).(eq_ind nat n (\lambda (n0: nat).(eq nat (S n) (S n0))) (refl_equal nat
 (H1: (lt (S n0) (S n))).(let H2 \def (le_S_n (S n0) n H1) in (H n0 H2))))) 
 y)))) x).
 
-theorem lt_plus_minus:
+lemma lt_plus_minus:
  \forall (x: nat).(\forall (y: nat).((lt x y) \to (eq nat y (S (plus x (minus 
 y (S x)))))))
 \def
  \lambda (x: nat).(\lambda (y: nat).(\lambda (H: (lt x y)).(le_plus_minus (S 
 x) y H))).
 
-theorem lt_plus_minus_r:
+lemma lt_plus_minus_r:
  \forall (x: nat).(\forall (y: nat).((lt x y) \to (eq nat y (S (plus (minus y 
 (S x)) x)))))
 \def
@@ -341,14 +341,14 @@ theorem lt_plus_minus_r:
 (plus x (minus y (S x))) (\lambda (n: nat).(eq nat y (S n))) (lt_plus_minus x 
 y H) (plus (minus y (S x)) x) (plus_sym (minus y (S x)) x)))).
 
-theorem minus_x_SO:
+lemma minus_x_SO:
  \forall (x: nat).((lt O x) \to (eq nat x (S (minus x (S O)))))
 \def
  \lambda (x: nat).(\lambda (H: (lt O x)).(eq_ind nat (minus x O) (\lambda (n: 
 nat).(eq nat x n)) (eq_ind nat x (\lambda (n: nat).(eq nat x n)) (refl_equal 
 nat x) (minus x O) (minus_n_O x)) (S (minus x (S O))) (minus_x_Sy x O H))).
 
-theorem le_x_pred_y:
+lemma le_x_pred_y:
  \forall (y: nat).(\forall (x: nat).((lt x y) \to (le x (pred y))))
 \def
  \lambda (y: nat).(nat_ind (\lambda (n: nat).(\forall (x: nat).((lt x n) \to 
@@ -363,14 +363,14 @@ True])) I O H1) in (False_ind ((le (S x) m) \to (le x O)) H2)) H0))]) in (H0
 x n) \to (le x (pred n)))))).(\lambda (x: nat).(\lambda (H0: (lt x (S 
 n))).(le_S_n x n H0))))) y).
 
-theorem lt_le_minus:
+lemma lt_le_minus:
  \forall (x: nat).(\forall (y: nat).((lt x y) \to (le x (minus y (S O)))))
 \def
  \lambda (x: nat).(\lambda (y: nat).(\lambda (H: (lt x y)).(le_minus x y (S 
 O) (eq_ind_r nat (plus (S O) x) (\lambda (n: nat).(le n y)) H (plus x (S O)) 
 (plus_sym x (S O)))))).
 
-theorem lt_le_e:
+lemma lt_le_e:
  \forall (n: nat).(\forall (d: nat).(\forall (P: Prop).((((lt n d) \to P)) 
 \to ((((le d n) \to P)) \to P))))
 \def
@@ -378,7 +378,7 @@ theorem lt_le_e:
 d) \to P))).(\lambda (H0: (((le d n) \to P))).(let H1 \def (le_or_lt d n) in 
 (or_ind (le d n) (lt n d) P H0 H H1)))))).
 
-theorem lt_eq_e:
+lemma lt_eq_e:
  \forall (x: nat).(\forall (y: nat).(\forall (P: Prop).((((lt x y) \to P)) 
 \to ((((eq nat x y) \to P)) \to ((le x y) \to P)))))
 \def
@@ -386,7 +386,7 @@ theorem lt_eq_e:
 y) \to P))).(\lambda (H0: (((eq nat x y) \to P))).(\lambda (H1: (le x 
 y)).(or_ind (lt x y) (eq nat x y) P H H0 (le_lt_or_eq x y H1))))))).
 
-theorem lt_eq_gt_e:
+lemma lt_eq_gt_e:
  \forall (x: nat).(\forall (y: nat).(\forall (P: Prop).((((lt x y) \to P)) 
 \to ((((eq nat x y) \to P)) \to ((((lt y x) \to P)) \to P)))))
 \def
@@ -395,7 +395,7 @@ y) \to P))).(\lambda (H0: (((eq nat x y) \to P))).(\lambda (H1: (((lt y x)
 \to P))).(lt_le_e x y P H (\lambda (H2: (le y x)).(lt_eq_e y x P H1 (\lambda 
 (H3: (eq nat y x)).(H0 (sym_eq nat y x H3))) H2)))))))).
 
-theorem lt_gen_xS:
+lemma lt_gen_xS:
  \forall (x: nat).(\forall (n: nat).((lt x (S n)) \to (or (eq nat x O) (ex2 
 nat (\lambda (m: nat).(eq nat x (S m))) (\lambda (m: nat).(lt m n))))))
 \def
@@ -411,21 +411,21 @@ nat).(\lambda (H0: (lt (S n) (S n0))).(or_intror (eq nat (S n) O) (ex2 nat
 (ex_intro2 nat (\lambda (m: nat).(eq nat (S n) (S m))) (\lambda (m: nat).(lt 
 m n0)) n (refl_equal nat (S n)) (le_S_n (S n) n0 H0))))))) x).
 
-theorem le_lt_false:
+lemma le_lt_false:
  \forall (x: nat).(\forall (y: nat).((le x y) \to ((lt y x) \to (\forall (P: 
 Prop).P))))
 \def
  \lambda (x: nat).(\lambda (y: nat).(\lambda (H: (le x y)).(\lambda (H0: (lt 
 y x)).(\lambda (P: Prop).(False_ind P (le_not_lt x y H H0)))))).
 
-theorem lt_neq:
+lemma lt_neq:
  \forall (x: nat).(\forall (y: nat).((lt x y) \to (not (eq nat x y))))
 \def
  \lambda (x: nat).(\lambda (y: nat).(\lambda (H: (lt x y)).(\lambda (H0: (eq 
 nat x y)).(let H1 \def (eq_ind nat x (\lambda (n: nat).(lt n y)) H y H0) in 
 (lt_n_n y H1))))).
 
-theorem arith0:
+lemma arith0:
  \forall (h2: nat).(\forall (d2: nat).(\forall (n: nat).((le (plus d2 h2) n) 
 \to (\forall (h1: nat).(le (plus d2 h1) (minus (plus n h1) h2))))))
 \def
@@ -440,7 +440,7 @@ h2) (\lambda (n0: nat).(le n0 (minus (plus n h1) h2))) (le_minus_minus h2
 d2)) (plus h2 (plus d2 h1)) (plus_assoc_l h2 d2 h1))) (plus d2 h1) 
 (minus_plus h2 (plus d2 h1))))))).
 
-theorem O_minus:
+lemma O_minus:
  \forall (x: nat).(\forall (y: nat).((le x y) \to (eq nat (minus x y) O)))
 \def
  \lambda (x: nat).(nat_ind (\lambda (n: nat).(\forall (y: nat).((le n y) \to 
@@ -458,7 +458,7 @@ nat).(\lambda (_: (((le (S x0) n) \to (eq nat (match n with [O \Rightarrow (S
 x0) | (S l) \Rightarrow (minus x0 l)]) O)))).(\lambda (H1: (le (S x0) (S 
 n))).(H n (le_S_n x0 n H1))))) y)))) x).
 
-theorem minus_minus:
+lemma minus_minus:
  \forall (z: nat).(\forall (x: nat).(\forall (y: nat).((le z x) \to ((le z y) 
 \to ((eq nat (minus x z) (minus y z)) \to (eq nat x y))))))
 \def
@@ -497,7 +497,7 @@ H2) in (False_ind (eq nat (S x0) O) H4))))) (le_gen_S z0 O H0)))))) (\lambda
 nat (minus (S x0) (S z0)) (minus (S y0) (S z0)))).(f_equal nat nat S x0 y0 
 (IH x0 y0 (le_S_n z0 x0 H) (le_S_n z0 y0 H0) H1))))))) y)))) x)))) z).
 
-theorem plus_plus:
+lemma plus_plus:
  \forall (z: nat).(\forall (x1: nat).(\forall (x2: nat).(\forall (y1: 
 nat).(\forall (y2: nat).((le x1 z) \to ((le x2 z) \to ((eq nat (plus (minus z 
 x1) y1) (plus (minus z x2) y2)) \to (eq nat (plus x1 y2) (plus x2 y1)))))))))
@@ -572,7 +572,7 @@ x2) y1) (plus (minus z0 x4) y2))).(f_equal nat nat S (plus x2 y2) (plus x4
 y1) (IH x2 x4 y1 y2 (le_S_n x2 z0 H) (le_S_n x4 z0 H0) H1))))))))) x3)))) 
 x1)))) z).
 
-theorem le_S_minus:
+lemma le_S_minus:
  \forall (d: nat).(\forall (h: nat).(\forall (n: nat).((le (plus d h) n) \to 
 (le d (S (minus n h))))))
 \def
@@ -582,7 +582,7 @@ d h) n)).(let H0 \def (le_trans d (plus d h) n (le_plus_l d h) H) in (let H1
 (le_plus_minus_sym h n (le_trans h (plus d h) n (le_plus_r d h) H))) in (le_S 
 d (minus n h) (le_minus d n h H))))))).
 
-theorem lt_x_pred_y:
+lemma lt_x_pred_y:
  \forall (x: nat).(\forall (y: nat).((lt x (pred y)) \to (lt (S x) y)))
 \def
  \lambda (x: nat).(\lambda (y: nat).(nat_ind (\lambda (n: nat).((lt x (pred 

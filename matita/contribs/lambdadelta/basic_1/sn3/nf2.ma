@@ -20,7 +20,7 @@ include "basic_1/nf2/dec.ma".
 
 include "basic_1/nf2/pr3.ma".
 
-theorem sn3_nf2:
+lemma sn3_nf2:
  \forall (c: C).(\forall (t: T).((nf2 c t) \to (sn3 c t)))
 \def
  \lambda (c: C).(\lambda (t: T).(\lambda (H: (nf2 c t)).(sn3_sing c t 
@@ -31,7 +31,7 @@ in (let H3 \def (eq_ind_r T t2 (\lambda (t0: T).((eq T t t0) \to (\forall (P:
 Prop).P))) H0 t H_y) in (eq_ind T t (\lambda (t0: T).(sn3 c t0)) (H3 
 (refl_equal T t) (sn3 c t)) t2 H_y)))))))))).
 
-theorem nf2_sn3:
+lemma nf2_sn3:
  \forall (c: C).(\forall (t: T).((sn3 c t) \to (ex2 T (\lambda (u: T).(pr3 c 
 t u)) (\lambda (u: T).(nf2 c u)))))
 \def

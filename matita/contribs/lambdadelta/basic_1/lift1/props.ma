@@ -18,7 +18,7 @@ include "basic_1/lift1/defs.ma".
 
 include "basic_1/lift/props.ma".
 
-theorem lift1_sort:
+lemma lift1_sort:
  \forall (n: nat).(\forall (is: PList).(eq T (lift1 is (TSort n)) (TSort n)))
 \def
  \lambda (n: nat).(\lambda (is: PList).(PList_ind (\lambda (p: PList).(eq T 
@@ -27,7 +27,7 @@ nat).(\lambda (n1: nat).(\lambda (p: PList).(\lambda (H: (eq T (lift1 p
 (TSort n)) (TSort n))).(eq_ind_r T (TSort n) (\lambda (t: T).(eq T (lift n0 
 n1 t) (TSort n))) (refl_equal T (TSort n)) (lift1 p (TSort n)) H))))) is)).
 
-theorem lift1_lref:
+lemma lift1_lref:
  \forall (hds: PList).(\forall (i: nat).(eq T (lift1 hds (TLRef i)) (TLRef 
 (trans hds i))))
 \def
@@ -41,7 +41,7 @@ T (lift n n0 t) (TLRef (match (blt (trans p i) n0) with [true \Rightarrow
 (TLRef (match (blt (trans p i) n0) with [true \Rightarrow (trans p i) | false 
 \Rightarrow (plus (trans p i) n)]))) (lift1 p (TLRef i)) (H i))))))) hds).
 
-theorem lift1_bind:
+lemma lift1_bind:
  \forall (b: B).(\forall (hds: PList).(\forall (u: T).(\forall (t: T).(eq T 
 (lift1 hds (THead (Bind b) u t)) (THead (Bind b) (lift1 hds u) (lift1 (Ss 
 hds) t))))))
@@ -62,7 +62,7 @@ n0 (lift1 p u)) (lift n (S n0) (lift1 (Ss p) t))) (\lambda (t0: T).(eq T t0
 (lift_bind b (lift1 p u) (lift1 (Ss p) t) n n0)) (lift1 p (THead (Bind b) u 
 t)) (H u t)))))))) hds)).
 
-theorem lift1_flat:
+lemma lift1_flat:
  \forall (f: F).(\forall (hds: PList).(\forall (u: T).(\forall (t: T).(eq T 
 (lift1 hds (THead (Flat f) u t)) (THead (Flat f) (lift1 hds u) (lift1 hds 
 t))))))
@@ -82,7 +82,7 @@ n n0 (lift1 p u)) (lift n n0 (lift1 p t))))) (refl_equal T (THead (Flat f)
 (lift1 p u) (lift1 p t))) (lift_flat f (lift1 p u) (lift1 p t) n n0)) (lift1 
 p (THead (Flat f) u t)) (H u t)))))))) hds)).
 
-theorem lift1_cons_tail:
+lemma lift1_cons_tail:
  \forall (t: T).(\forall (h: nat).(\forall (d: nat).(\forall (hds: PList).(eq 
 T (lift1 (PConsTail hds h d) t) (lift1 hds (lift h d t))))))
 \def
@@ -95,7 +95,7 @@ t)) (\lambda (t0: T).(eq T (lift n n0 t0) (lift n n0 (lift1 p (lift h d
 t))))) (refl_equal T (lift n n0 (lift1 p (lift h d t)))) (lift1 (PConsTail p 
 h d) t) H))))) hds)))).
 
-theorem lifts1_flat:
+lemma lifts1_flat:
  \forall (f: F).(\forall (hds: PList).(\forall (t: T).(\forall (ts: 
 TList).(eq T (lift1 hds (THeads (Flat f) ts t)) (THeads (Flat f) (lifts1 hds 
 ts) (lift1 hds t))))))
@@ -115,7 +115,7 @@ f) (lifts1 hds t1) (lift1 hds t)))) (lift1 hds (THeads (Flat f) t1 t)) H)
 (lift1 hds (THead (Flat f) t0 (THeads (Flat f) t1 t))) (lift1_flat f hds t0 
 (THeads (Flat f) t1 t)))))) ts)))).
 
-theorem lifts1_nil:
+lemma lifts1_nil:
  \forall (ts: TList).(eq TList (lifts1 PNil ts) ts)
 \def
  \lambda (ts: TList).(TList_ind (\lambda (t: TList).(eq TList (lifts1 PNil t) 
@@ -124,7 +124,7 @@ t)) (refl_equal TList TNil) (\lambda (t: T).(\lambda (t0: TList).(\lambda (H:
 TList (TCons t t1) (TCons t t0))) (refl_equal TList (TCons t t0)) (lifts1 
 PNil t0) H)))) ts).
 
-theorem lifts1_cons:
+lemma lifts1_cons:
  \forall (h: nat).(\forall (d: nat).(\forall (hds: PList).(\forall (ts: 
 TList).(eq TList (lifts1 (PCons h d hds) ts) (lifts h d (lifts1 hds ts))))))
 \def

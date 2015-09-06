@@ -18,7 +18,7 @@ include "basic_1/getl/drop.ma".
 
 include "basic_1/getl/clear.ma".
 
-theorem getl_conf_le:
+lemma getl_conf_le:
  \forall (i: nat).(\forall (a: C).(\forall (c: C).((getl i c a) \to (\forall 
 (e: C).(\forall (h: nat).((getl h c e) \to ((le h i) \to (getl (minus i h) e 
 a))))))))

@@ -22,7 +22,7 @@ include "basic_1/subst1/props.ma".
 
 include "basic_1/drop/props.ma".
 
-theorem csubst1_getl_ge:
+lemma csubst1_getl_ge:
  \forall (i: nat).(\forall (n: nat).((le i n) \to (\forall (c1: C).(\forall 
 (c2: C).(\forall (v: T).((csubst1 i v c1 c2) \to (\forall (e: C).((getl n c1 
 e) \to (getl n c2 e)))))))))
@@ -34,7 +34,7 @@ c2)).(csubst1_ind i v c1 (\lambda (c: C).(\forall (e: C).((getl n c1 e) \to
 (c3: C).(\lambda (H1: (csubst0 i v c1 c3)).(\lambda (e: C).(\lambda (H2: 
 (getl n c1 e)).(csubst0_getl_ge i n H c1 c3 v H1 e H2))))) c2 H0))))))).
 
-theorem csubst1_getl_lt:
+lemma csubst1_getl_lt:
  \forall (i: nat).(\forall (n: nat).((lt n i) \to (\forall (c1: C).(\forall 
 (c2: C).(\forall (v: T).((csubst1 i v c1 c2) \to (\forall (e1: C).((getl n c1 
 e1) \to (ex2 C (\lambda (e2: C).(csubst1 (minus i n) v e1 e2)) (\lambda (e2: 
@@ -137,7 +137,7 @@ x0) x3) e2)) (\lambda (e2: C).(getl n c3 e2)) (CHead x2 (Bind x0) x4)
 x0) x4) (csubst0_both_bind x0 (minus i (S n)) v x3 x4 H7 x1 x2 H8)) H6) e1 
 H5)))))))))) H4)) H3)) (minus i n) (minus_x_Sy i n H)))))) c2 H0))))))).
 
-theorem csubst1_getl_ge_back:
+lemma csubst1_getl_ge_back:
  \forall (i: nat).(\forall (n: nat).((le i n) \to (\forall (c1: C).(\forall 
 (c2: C).(\forall (v: T).((csubst1 i v c1 c2) \to (\forall (e: C).((getl n c2 
 e) \to (getl n c1 e)))))))))
@@ -149,7 +149,7 @@ c2)).(csubst1_ind i v c1 (\lambda (c: C).(\forall (e: C).((getl n c e) \to
 (c3: C).(\lambda (H1: (csubst0 i v c1 c3)).(\lambda (e: C).(\lambda (H2: 
 (getl n c3 e)).(csubst0_getl_ge_back i n H c1 c3 v H1 e H2))))) c2 H0))))))).
 
-theorem getl_csubst1:
+lemma getl_csubst1:
  \forall (d: nat).(\forall (c: C).(\forall (e: C).(\forall (u: T).((getl d c 
 (CHead e (Bind Abbr) u)) \to (ex2_2 C C (\lambda (a0: C).(\lambda (_: 
 C).(csubst1 d u c a0))) (\lambda (a0: C).(\lambda (a: C).(drop (S O) d a0 

@@ -20,7 +20,7 @@ include "basic_1/fsubst0/fwd.ma".
 
 include "basic_1/csubst0/getl.ma".
 
-theorem pc3_pr2_fsubst0:
+lemma pc3_pr2_fsubst0:
  \forall (c1: C).(\forall (t1: T).(\forall (t: T).((pr2 c1 t1 t) \to (\forall 
 (i: nat).(\forall (u: T).(\forall (c2: C).(\forall (t2: T).((fsubst0 i u c1 
 t1 c2 t2) \to (\forall (e: C).((getl i c1 (CHead e (Bind Abbr) u)) \to (pc3 
@@ -332,7 +332,7 @@ t2 (pr0_refl t2) t5 H4) t0 (pc3_pr2_r c0 t2 t0 (pr2_delta c0 d u i
 (csubst0_getl_ge i0 i H7 c c0 u0 H5 (CHead d (Bind Abbr) u) H0) t2 t3 H1 t0 
 H2))))))))))) c2 t4 H3)))))))))))))))) c1 t1 t H)))).
 
-theorem pc3_pr2_fsubst0_back:
+lemma pc3_pr2_fsubst0_back:
  \forall (c1: C).(\forall (t: T).(\forall (t1: T).((pr2 c1 t t1) \to (\forall 
 (i: nat).(\forall (u: T).(\forall (c2: C).(\forall (t2: T).((fsubst0 i u c1 
 t1 c2 t2) \to (\forall (e: C).((getl i c1 (CHead e (Bind Abbr) u)) \to (pc3 
@@ -633,7 +633,7 @@ H2) t5 (pc3_pr2_r c0 t0 t5 (pr2_delta c0 e u0 i0 (csubst0_getl_ge i0 i0 (le_n
 i0) c c0 u0 H5 (CHead e (Bind Abbr) u0) H6) t0 t0 (pr0_refl t0) t5 
 H4))))))))))) c2 t4 H3)))))))))))))))) c1 t t1 H)))).
 
-theorem pc3_fsubst0:
+lemma pc3_fsubst0:
  \forall (c1: C).(\forall (t1: T).(\forall (t: T).((pc3 c1 t1 t) \to (\forall 
 (i: nat).(\forall (u: T).(\forall (c2: C).(\forall (t2: T).((fsubst0 i u c1 
 t1 c2 t2) \to (\forall (e: C).((getl i c1 (CHead e (Bind Abbr) u)) \to (pc3 

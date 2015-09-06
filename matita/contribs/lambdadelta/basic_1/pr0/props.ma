@@ -18,7 +18,7 @@ include "basic_1/pr0/fwd.ma".
 
 include "basic_1/subst0/props.ma".
 
-theorem pr0_lift:
+lemma pr0_lift:
  \forall (t1: T).(\forall (t2: T).((pr0 t1 t2) \to (\forall (h: nat).(\forall 
 (d: nat).(pr0 (lift h d t1) (lift h d t2))))))
 \def
@@ -128,7 +128,7 @@ d u) (lift h (s (Flat Cast) d) t3)) (\lambda (t: T).(pr0 t (lift h d t4)))
 (lift h d (THead (Flat Cast) u t3)) (lift_head (Flat Cast) u t3 h d))))))))) 
 t1 t2 H))).
 
-theorem pr0_gen_abbr:
+lemma pr0_gen_abbr:
  \forall (u1: T).(\forall (t1: T).(\forall (x: T).((pr0 (THead (Bind Abbr) u1 
 t1) x) \to (or (ex3_2 T T (\lambda (u2: T).(\lambda (t2: T).(eq T x (THead 
 (Bind Abbr) u2 t2)))) (\lambda (u2: T).(\lambda (_: T).(pr0 u1 u2))) (\lambda 
@@ -358,7 +358,7 @@ T).(\lambda (t3: T).(or (pr0 t1 t3) (ex2 T (\lambda (y0: T).(pr0 t1 y0))
 (\lambda (y0: T).(subst0 O u2 y0 t3))))))) (pr0 t1 (lift (S O) O t2))) 
 H4)))))))) y x H0))) H)))).
 
-theorem pr0_gen_void:
+lemma pr0_gen_void:
  \forall (u1: T).(\forall (t1: T).(\forall (x: T).((pr0 (THead (Bind Void) u1 
 t1) x) \to (or (ex3_2 T T (\lambda (u2: T).(\lambda (t2: T).(eq T x (THead 
 (Bind Void) u2 t2)))) (\lambda (u2: T).(\lambda (_: T).(pr0 u1 u2))) (\lambda 

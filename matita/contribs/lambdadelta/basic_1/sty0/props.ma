@@ -18,7 +18,7 @@ include "basic_1/sty0/fwd.ma".
 
 include "basic_1/getl/drop.ma".
 
-theorem sty0_lift:
+lemma sty0_lift:
  \forall (g: G).(\forall (e: C).(\forall (t1: T).(\forall (t2: T).((sty0 g e 
 t1 t2) \to (\forall (c: C).(\forall (h: nat).(\forall (d: nat).((drop h d c 
 e) \to (sty0 g c (lift h d t1) (lift h d t2))))))))))
@@ -163,7 +163,7 @@ h d H4) (lift h (s (Flat Cast) d) t3) (lift h (s (Flat Cast) d) t4) (H3 c0 h
 Cast) v2 t4 h d)) (lift h d (THead (Flat Cast) v1 t3)) (lift_head (Flat Cast) 
 v1 t3 h d))))))))))))))) e t1 t2 H))))).
 
-theorem sty0_correct:
+lemma sty0_correct:
  \forall (g: G).(\forall (c: C).(\forall (t1: T).(\forall (t: T).((sty0 g c 
 t1 t) \to (ex T (\lambda (t2: T).(sty0 g c t t2)))))))
 \def

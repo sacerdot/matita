@@ -18,15 +18,15 @@ include "basic_1/clear/defs.ma".
 
 include "basic_1/C/fwd.ma".
 
-let rec clear_ind (P: (C \to (C \to Prop))) (f: (\forall (b: B).(\forall (e: 
-C).(\forall (u: T).(P (CHead e (Bind b) u) (CHead e (Bind b) u)))))) (f0: 
-(\forall (e: C).(\forall (c: C).((clear e c) \to ((P e c) \to (\forall (f0: 
-F).(\forall (u: T).(P (CHead e (Flat f0) u) c)))))))) (c: C) (c0: C) (c1: 
-clear c c0) on c1: P c c0 \def match c1 with [(clear_bind b e u) \Rightarrow 
-(f b e u) | (clear_flat e c2 c3 f1 u) \Rightarrow (f0 e c2 c3 ((clear_ind P f 
-f0) e c2 c3) f1 u)].
+implied let rec clear_ind (P: (C \to (C \to Prop))) (f: (\forall (b: 
+B).(\forall (e: C).(\forall (u: T).(P (CHead e (Bind b) u) (CHead e (Bind b) 
+u)))))) (f0: (\forall (e: C).(\forall (c: C).((clear e c) \to ((P e c) \to 
+(\forall (f0: F).(\forall (u: T).(P (CHead e (Flat f0) u) c)))))))) (c: C) 
+(c0: C) (c1: clear c c0) on c1: P c c0 \def match c1 with [(clear_bind b e u) 
+\Rightarrow (f b e u) | (clear_flat e c2 c3 f1 u) \Rightarrow (f0 e c2 c3 
+((clear_ind P f f0) e c2 c3) f1 u)].
 
-theorem clear_gen_sort:
+lemma clear_gen_sort:
  \forall (x: C).(\forall (n: nat).((clear (CSort n) x) \to (\forall (P: 
 Prop).P)))
 \def
@@ -44,7 +44,7 @@ H4 \def (eq_ind C (CHead e (Flat f) u) (\lambda (ee: C).(match ee with
 [(CSort _) \Rightarrow False | (CHead _ _ _) \Rightarrow True])) I (CSort n) 
 H3) in (False_ind P H4))))))))) y x H0))) H)))).
 
-theorem clear_gen_bind:
+lemma clear_gen_bind:
  \forall (b: B).(\forall (e: C).(\forall (x: C).(\forall (u: T).((clear 
 (CHead e (Bind b) u) x) \to (eq C x (CHead e (Bind b) u))))))
 \def
@@ -76,7 +76,7 @@ with [(CSort _) \Rightarrow False | (CHead _ k _) \Rightarrow (match k with
 b) u) H3) in (False_ind (eq C c (CHead e0 (Flat f) u0)) H4))))))))) y x H0))) 
 H))))).
 
-theorem clear_gen_flat:
+lemma clear_gen_flat:
  \forall (f: F).(\forall (e: C).(\forall (x: C).(\forall (u: T).((clear 
 (CHead e (Flat f) u) x) \to (clear e x)))))
 \def
@@ -106,7 +106,7 @@ e (Flat f) u)) \to (clear e c))) H2 e H8) in (let H10 \def (eq_ind C e0
 (\lambda (c0: C).(clear c0 c)) H1 e H8) in H10))))) H5)) H4))))))))) y x 
 H0))) H))))).
 
-theorem clear_gen_flat_r:
+lemma clear_gen_flat_r:
  \forall (f: F).(\forall (x: C).(\forall (e: C).(\forall (u: T).((clear x 
 (CHead e (Flat f) u)) \to (\forall (P: Prop).P)))))
 \def
@@ -127,7 +127,7 @@ u)) \to P)) H2 (CHead e (Flat f) u) H3) in (let H5 \def (eq_ind C c (\lambda
 (c0: C).(clear e0 c0)) H1 (CHead e (Flat f) u) H3) in (H4 (refl_equal C 
 (CHead e (Flat f) u)))))))))))) x y H0))) H)))))).
 
-theorem clear_gen_all:
+lemma clear_gen_all:
  \forall (c1: C).(\forall (c2: C).((clear c1 c2) \to (ex_3 B C T (\lambda (b: 
 B).(\lambda (e: C).(\lambda (u: T).(eq C c2 (CHead e (Bind b) u))))))))
 \def
@@ -173,7 +173,7 @@ H3))))) (\lambda (f: F).(\lambda (H2: (clear (CHead c0 (Flat f) t)
 c1)).(\lambda (H3: (clear (CHead c0 (Flat f) t) c2)).(H c1 (clear_gen_flat f 
 c0 c1 t H2) c2 (clear_gen_flat f c0 c2 t H3))))) k H0 H1))))))))) c).
 
-theorem clear_cle:
+lemma clear_cle:
  \forall (c1: C).(\forall (c2: C).((clear c1 c2) \to (cle c2 c1)))
 \def
  \lambda (c1: C).(C_ind (\lambda (c: C).(\forall (c2: C).((clear c c2) \to 

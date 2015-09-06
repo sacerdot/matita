@@ -20,7 +20,7 @@ include "basic_1/pc1/defs.ma".
 
 include "basic_1/pr3/pr1.ma".
 
-theorem pc3_pc1:
+lemma pc3_pc1:
  \forall (t1: T).(\forall (t2: T).((pc1 t1 t2) \to (\forall (c: C).(pc3 c t1 
 t2))))
 \def

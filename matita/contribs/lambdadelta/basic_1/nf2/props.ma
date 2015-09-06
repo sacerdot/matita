@@ -18,14 +18,14 @@ include "basic_1/nf2/defs.ma".
 
 include "basic_1/pr2/fwd.ma".
 
-theorem nf2_sort:
+lemma nf2_sort:
  \forall (c: C).(\forall (n: nat).(nf2 c (TSort n)))
 \def
  \lambda (c: C).(\lambda (n: nat).(\lambda (t2: T).(\lambda (H: (pr2 c (TSort 
 n) t2)).(eq_ind_r T (TSort n) (\lambda (t: T).(eq T (TSort n) t)) (refl_equal 
 T (TSort n)) t2 (pr2_gen_sort c t2 n H))))).
 
-theorem nf2_csort_lref:
+lemma nf2_csort_lref:
  \forall (n: nat).(\forall (i: nat).(nf2 (CSort n) (TLRef i)))
 \def
  \lambda (n: nat).(\lambda (i: nat).(\lambda (t2: T).(\lambda (H: (pr2 (CSort 
@@ -84,7 +84,7 @@ b) u0) t x1))))).(eq_ind_r T (THead (Bind Abst) x0 x1) (\lambda (t0: T).(eq T
 u x0 t x1 (refl_equal K (Bind Abst)) (H x0 H4) (H0 x1 (H5 Abst u))) t2 
 H3)))))) H2)))))))).
 
-theorem nfs2_tapp:
+lemma nfs2_tapp:
  \forall (c: C).(\forall (t: T).(\forall (ts: TList).((nfs2 c (TApp ts t)) 
 \to (land (nfs2 c ts) (nf2 c t)))))
 \def
@@ -102,7 +102,7 @@ t1)) (nf2 c t)) (\lambda (H5: (nfs2 c t1)).(\lambda (H6: (nf2 c t)).(conj
 (land (nf2 c t0) (nfs2 c t1)) (nf2 c t) (conj (nf2 c t0) (nfs2 c t1) H2 H5) 
 H6))) H4))))) H1)))))) ts))).
 
-theorem nf2_appls_lref:
+lemma nf2_appls_lref:
  \forall (c: C).(\forall (i: nat).((nf2 c (TLRef i)) \to (\forall (vs: 
 TList).((nfs2 c vs) \to (nf2 c (THeads (Flat Appl) vs (TLRef i)))))))
 \def
@@ -263,7 +263,7 @@ theorem nf2_appl_lref:
 nat).(\lambda (H0: (nf2 c (TLRef i))).(let H_y \def (nf2_appls_lref c i H0 
 (TCons u TNil)) in (H_y (conj (nf2 c u) True H I))))))).
 
-theorem nf2_lref_abst:
+lemma nf2_lref_abst:
  \forall (c: C).(\forall (e: C).(\forall (u: T).(\forall (i: nat).((getl i c 
 (CHead e (Bind Abst) u)) \to (nf2 c (TLRef i))))))
 \def
@@ -291,7 +291,7 @@ _) \Rightarrow False])])) I (CHead x0 (Bind Abbr) x1) (getl_mono c (CHead e
 (Bind Abst) u) i H (CHead x0 (Bind Abbr) x1) H3)) in (False_ind (eq T (TLRef 
 i) (lift (S i) O x1)) H6))) t2 H4))))) H2)) H1)))))))).
 
-theorem nf2_lift:
+lemma nf2_lift:
  \forall (d: C).(\forall (t: T).((nf2 d t) \to (\forall (c: C).(\forall (h: 
 nat).(\forall (i: nat).((drop h i c d) \to (nf2 c (lift h i t))))))))
 \def

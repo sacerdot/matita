@@ -18,7 +18,7 @@ include "basic_1/asucc/defs.ma".
 
 include "basic_1/A/fwd.ma".
 
-theorem asucc_gen_sort:
+lemma asucc_gen_sort:
  \forall (g: G).(\forall (h: nat).(\forall (n: nat).(\forall (a: A).((eq A 
 (ASort h n) (asucc g a)) \to (ex_2 nat nat (\lambda (h0: nat).(\lambda (n0: 
 nat).(eq A a (ASort h0 n0)))))))))
@@ -41,7 +41,7 @@ n0)))))))).(\lambda (H1: (eq A (ASort h n) (asucc g (AHead a0 a1)))).(let H2
 H1) in (False_ind (ex_2 nat nat (\lambda (h0: nat).(\lambda (n0: nat).(eq A 
 (AHead a0 a1) (ASort h0 n0))))) H2))))))) a)))).
 
-theorem asucc_gen_head:
+lemma asucc_gen_head:
  \forall (g: G).(\forall (a1: A).(\forall (a2: A).(\forall (a: A).((eq A 
 (AHead a1 a2) (asucc g a)) \to (ex2 A (\lambda (a0: A).(eq A a (AHead a1 
 a0))) (\lambda (a0: A).(eq A a2 (asucc g a0))))))))

@@ -18,7 +18,7 @@ include "basic_1/nf2/defs.ma".
 
 include "basic_1/pr3/pr3.ma".
 
-theorem nf2_pr3_unfold:
+lemma nf2_pr3_unfold:
  \forall (c: C).(\forall (t1: T).(\forall (t2: T).((pr3 c t1 t2) \to ((nf2 c 
 t1) \to (eq T t1 t2)))))
 \def

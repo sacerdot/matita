@@ -36,7 +36,7 @@ include "basic_1/drop1/props.ma".
 
 include "basic_1/lift1/drop1.ma".
 
-theorem sc3_arity_gen:
+lemma sc3_arity_gen:
  \forall (g: G).(\forall (c: C).(\forall (t: T).(\forall (a: A).((sc3 g a c 
 t) \to (arity g c t a)))))
 \def
@@ -57,7 +57,7 @@ g c t (AHead a0 a1))).(\lambda (_: ((\forall (d: C).(\forall (w: T).((sc3 g
 a0 d w) \to (\forall (is: PList).((drop1 is d c) \to (sc3 g a1 d (THead (Flat 
 Appl) w (lift1 is t)))))))))).H3)) H2))))))) a)))).
 
-theorem sc3_repl:
+lemma sc3_repl:
  \forall (g: G).(\forall (a1: A).(\forall (c: C).(\forall (t: T).((sc3 g a1 c 
 t) \to (\forall (a2: A).((leq g a1 a2) \to (sc3 g a2 c t)))))))
 \def
@@ -124,7 +124,7 @@ Appl) w (lift1 is t)) (H6 d w (H1 x0 (llt_repl g a x0 H8 (AHead a a0)
 (llt_head_sx a a0)) d w H12 a (leq_sym g a x0 H8)) is H13) x1 H9))))))) a3 
 H11))))))) H7))))) H4)))))))))))) a2)) a1)).
 
-theorem sc3_lift:
+lemma sc3_lift:
  \forall (g: G).(\forall (a: A).(\forall (e: C).(\forall (t: T).((sc3 g a e 
 t) \to (\forall (c: C).(\forall (h: nat).(\forall (d: nat).((drop h d c e) 
 \to (sc3 g a c (lift h d t))))))))))
@@ -167,7 +167,7 @@ is d0 c)).(let H_y \def (H5 d0 w H6 (PConsTail is h d)) in (eq_ind T (lift1
 t0))) (H_y (drop1_cons_tail c e h d H2 is d0 H7)) (lift1 is (lift h d t)) 
 (lift1_cons_tail t h d is))))))))))) H3))))))))))))) a)).
 
-theorem sc3_lift1:
+lemma sc3_lift1:
  \forall (g: G).(\forall (e: C).(\forall (a: A).(\forall (hds: 
 PList).(\forall (c: C).(\forall (t: T).((sc3 g a e t) \to ((drop1 hds c e) 
 \to (sc3 g a c (lift1 hds t)))))))))
@@ -187,7 +187,7 @@ e)) (sc3 g a c (lift n n0 (lift1 p t))) (\lambda (x: C).(\lambda (H3: (drop n
 n0 c x)).(\lambda (H4: (drop1 p x e)).(sc3_lift g a x (lift1 p t) (H x t H0 
 H4) c n n0 H3)))) H2))))))))))) hds)))).
 
-theorem sc3_abbr:
+lemma sc3_abbr:
  \forall (g: G).(\forall (a: A).(\forall (vs: TList).(\forall (i: 
 nat).(\forall (d: C).(\forall (v: T).(\forall (c: C).((sc3 g a c (THeads 
 (Flat Appl) vs (lift (S i) O v))) \to ((getl i c (CHead d (Bind Abbr) v)) \to 
@@ -371,7 +371,7 @@ is t vs))) (lift1 is (THead (Flat Cast) u t)) (lift1_flat Cast is u t))
 (lift1 is (THeads (Flat Appl) vs (THead (Flat Cast) u t))) (lifts1_flat Appl 
 is (THead (Flat Cast) u t) vs))))))))))) H6)))) H3)))))))))))) a)).
 
-theorem sc3_props__sc3_sn3_abst:
+fact sc3_props__sc3_sn3_abst:
  \forall (g: G).(\forall (a: A).(land (\forall (c: C).(\forall (t: T).((sc3 g 
 a c t) \to (sn3 c t)))) (\forall (vs: TList).(\forall (i: nat).(let t \def 
 (THeads (Flat Appl) vs (TLRef i)) in (\forall (c: C).((arity g c t a) \to 
@@ -500,7 +500,7 @@ vs)) (H7 d w H4) (sns3_lifts1 c is d H5 vs H3))) (lift1 is (TLRef i))
 (lift1_lref is i)) (lift1 is (THeads (Flat Appl) vs (TLRef i))) (lifts1_flat 
 Appl is (TLRef i) vs))))) H9)))) H6))))))))))))))))))) a)).
 
-theorem sc3_sn3:
+lemma sc3_sn3:
  \forall (g: G).(\forall (a: A).(\forall (c: C).(\forall (t: T).((sc3 g a c 
 t) \to (sn3 c t)))))
 \def
@@ -516,7 +516,7 @@ C).((arity g c0 (THeads (Flat Appl) vs (TLRef i)) a) \to ((nf2 c0 (TLRef i))
 \to ((sns3 c0 vs) \to (sc3 g a c0 (THeads (Flat Appl) vs (TLRef 
 i))))))))))).(H1 c t H))) H0))))))).
 
-theorem sc3_abst:
+lemma sc3_abst:
  \forall (g: G).(\forall (a: A).(\forall (vs: TList).(\forall (c: C).(\forall 
 (i: nat).((arity g c (THeads (Flat Appl) vs (TLRef i)) a) \to ((nf2 c (TLRef 
 i)) \to ((sns3 c vs) \to (sc3 g a c (THeads (Flat Appl) vs (TLRef i))))))))))

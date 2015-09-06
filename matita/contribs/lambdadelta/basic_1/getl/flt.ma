@@ -18,7 +18,7 @@ include "basic_1/getl/fwd.ma".
 
 include "basic_1/flt/props.ma".
 
-theorem getl_flt:
+lemma getl_flt:
  \forall (b: B).(\forall (c: C).(\forall (e: C).(\forall (u: T).(\forall (i: 
 nat).((getl i c (CHead e (Bind b) u)) \to (flt e u c (TLRef i)))))))
 \def

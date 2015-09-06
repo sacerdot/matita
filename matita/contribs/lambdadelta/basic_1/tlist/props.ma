@@ -16,7 +16,7 @@
 
 include "basic_1/tlist/defs.ma".
 
-theorem theads_tapp:
+lemma theads_tapp:
  \forall (k: K).(\forall (v: T).(\forall (t: T).(\forall (vs: TList).(eq T 
 (THeads k (TApp vs v) t) (THeads k vs (THead k v t))))))
 \def
@@ -28,7 +28,7 @@ v t)))).(eq_ind T (THeads k (TApp t1 v) t) (\lambda (t2: T).(eq T (THead k t0
 (THeads k (TApp t1 v) t)) (THead k t0 t2))) (refl_equal T (THead k t0 (THeads 
 k (TApp t1 v) t))) (THeads k t1 (THead k v t)) H)))) vs)))).
 
-theorem tcons_tapp_ex:
+lemma tcons_tapp_ex:
  \forall (ts1: TList).(\forall (t1: T).(ex2_2 TList T (\lambda (ts2: 
 TList).(\lambda (t2: T).(eq TList (TCons t1 ts1) (TApp ts2 t2)))) (\lambda 
 (ts2: TList).(\lambda (_: T).(eq nat (tslen ts1) (tslen ts2))))))

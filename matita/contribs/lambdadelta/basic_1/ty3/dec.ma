@@ -22,7 +22,7 @@ include "basic_1/getl/dec.ma".
 
 include "basic_1/flt/fwd.ma".
 
-theorem ty3_inference:
+lemma ty3_inference:
  \forall (g: G).(\forall (c: C).(\forall (t1: T).(or (ex T (\lambda (t2: 
 T).(ty3 g c t1 t2))) (\forall (t2: T).((ty3 g c t1 t2) \to False)))))
 \def

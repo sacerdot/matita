@@ -20,7 +20,7 @@ include "basic_1/nf2/iso.ma".
 
 include "basic_1/pr3/iso.ma".
 
-theorem sn3_pr3_trans:
+lemma sn3_pr3_trans:
  \forall (c: C).(\forall (t1: T).((sn3 c t1) \to (\forall (t2: T).((pr3 c t1 
 t2) \to (sn3 c t2)))))
 \def
@@ -40,7 +40,7 @@ H3 t2 H6) in (let H9 \def (eq_ind_r T t3 (\lambda (t: T).(pr3 c t2 t)) H2 t2
 H6) in (H0 t0 H8 H7))))) (\lambda (H6: (((eq T t2 t3) \to (\forall (P: 
 Prop).P)))).(H1 t3 H6 H2 t0 H4)) H5)))))))))))) t1 H))).
 
-theorem sn3_pr2_intro:
+lemma sn3_pr2_intro:
  \forall (c: C).(\forall (t1: T).(((\forall (t2: T).((((eq T t1 t2) \to 
 (\forall (P: Prop).P))) \to ((pr2 c t1 t2) \to (sn3 c t2))))) \to (sn3 c t1)))
 \def
@@ -135,7 +135,7 @@ H11))) H15))))) H13))) t2 H9))))))) H8)) (\lambda (H8: (pr2 c t0
 t2)).(sn3_pr3_trans c t0 (sn3_sing c t0 H3) t2 (pr3_pr2 c t0 t2 H8))) 
 H7))))))))) t H2)))))) u H))).
 
-theorem sn3_cflat:
+lemma sn3_cflat:
  \forall (c: C).(\forall (t: T).((sn3 c t) \to (\forall (f: F).(\forall (u: 
 T).(sn3 (CHead c (Flat f) u) t)))))
 \def
@@ -149,7 +149,7 @@ F).(\lambda (u: T).(sn3_ind c (\lambda (t0: T).(sn3 (CHead c (Flat f) u) t0))
 Prop).P)))).(\lambda (H3: (pr2 (CHead c (Flat f) u) t1 t2)).(H1 t2 H2 
 (pr3_pr2 c t1 t2 (pr2_gen_cflat f c u t1 t2 H3)))))))))) t H))))).
 
-theorem sn3_shift:
+lemma sn3_shift:
  \forall (b: B).(\forall (c: C).(\forall (v: T).(\forall (t: T).((sn3 c 
 (THead (Bind b) v t)) \to (sn3 (CHead c (Bind b) v) t)))))
 \def
@@ -159,7 +159,7 @@ H0 \def H_x in (land_ind (sn3 c v) (sn3 (CHead c (Bind b) v) t) (sn3 (CHead c
 (Bind b) v) t) (\lambda (_: (sn3 c v)).(\lambda (H2: (sn3 (CHead c (Bind b) 
 v) t)).H2)) H0))))))).
 
-theorem sn3_change:
+lemma sn3_change:
  \forall (b: B).((not (eq B b Abbr)) \to (\forall (c: C).(\forall (v1: 
 T).(\forall (t: T).((sn3 (CHead c (Bind b) v1) t) \to (\forall (v2: T).(sn3 
 (CHead c (Bind b) v2) t)))))))
@@ -177,7 +177,7 @@ Prop).P)))).(\lambda (H4: (pr2 (CHead c (Bind b) v2) t1 t2)).(H2 t2 H3
 (pr3_pr2 (CHead c (Bind b) v1) t1 t2 (pr2_change b H c v2 t1 t2 H4 
 v1)))))))))) t H0))))))).
 
-theorem sn3_gen_def:
+lemma sn3_gen_def:
  \forall (c: C).(\forall (d: C).(\forall (v: T).(\forall (i: nat).((getl i c 
 (CHead d (Bind Abbr) v)) \to ((sn3 c (TLRef i)) \to (sn3 d v))))))
 \def
@@ -188,7 +188,7 @@ i))).(sn3_gen_lift c v (S i) O (sn3_pr3_trans c (TLRef i) H0 (lift (S i) O v)
 i) (pr0_refl (TLRef i)) (lift (S i) O v) (subst0_lref v i)))) d (getl_drop 
 Abbr c d v i H))))))).
 
-theorem sn3_cdelta:
+lemma sn3_cdelta:
  \forall (v: T).(\forall (t: T).(\forall (i: nat).(((\forall (w: T).(ex T 
 (\lambda (u: T).(subst0 i w t u))))) \to (\forall (c: C).(\forall (d: 
 C).((getl i c (CHead d (Bind Abbr) v)) \to ((sn3 c t) \to (sn3 d v))))))))
@@ -242,7 +242,7 @@ v0))))))).(\lambda (c: C).(\lambda (d: C).(\lambda (H6: (getl i0 c (CHead d
 (sn3_gen_head k c u1 t1 H7) in (H3 c d H6 H_y))))))))))))))))) i v t x H1))) 
 H0)))))).
 
-theorem sn3_cpr3_trans:
+lemma sn3_cpr3_trans:
  \forall (c: C).(\forall (u1: T).(\forall (u2: T).((pr3 c u1 u2) \to (\forall 
 (k: K).(\forall (t: T).((sn3 (CHead c k u1) t) \to (sn3 (CHead c k u2) 
 t)))))))
@@ -661,7 +661,7 @@ x0) (THead (Bind x1) x2 x3) H14) in (\lambda (H23: (eq T t2 x2)).(\lambda
 False with []) in H29) x1 H24)))))))) H21)) H20)) t3 H15)))))))))))))) H12)) 
 H11))))))))) w H4))))))))))) y H0))))) H)))).
 
-theorem sn3_appl_lref:
+lemma sn3_appl_lref:
  \forall (c: C).(\forall (i: nat).((nf2 c (TLRef i)) \to (\forall (v: 
 T).((sn3 c v) \to (sn3 c (THead (Flat Appl) v (TLRef i)))))))
 \def
@@ -780,7 +780,7 @@ T).(match ee with [(TSort _) \Rightarrow False | (TLRef _) \Rightarrow True |
 (False_ind (sn3 c (THead (Bind x0) x5 (THead (Flat Appl) (lift (S O) O x4) 
 x3))) H14)) t2 H9)))))))))))))) H6)) H5))))))))) v H0))))).
 
-theorem sn3_appl_abbr:
+lemma sn3_appl_abbr:
  \forall (c: C).(\forall (d: C).(\forall (w: T).(\forall (i: nat).((getl i c 
 (CHead d (Bind Abbr) w)) \to (\forall (v: T).((sn3 c (THead (Flat Appl) v 
 (lift (S i) O w))) \to (sn3 c (THead (Flat Appl) v (TLRef i)))))))))
@@ -2099,7 +2099,7 @@ theorem sn3_appl_appls:
 Appl) v2 u2))))))).(sn3_appl_appl v1 (THeads (Flat Appl) vs t1) c H v2 H0 
 H1))))))))).
 
-theorem sn3_appls_lref:
+lemma sn3_appls_lref:
  \forall (c: C).(\forall (i: nat).((nf2 c (TLRef i)) \to (\forall (us: 
 TList).((sns3 c us) \to (sn3 c (THeads (Flat Appl) us (TLRef i)))))))
 \def
@@ -2284,7 +2284,7 @@ Appl) v (THead (Bind Abst) w t))) u2) \to (\forall (P: Prop).P)))).(let H8
 t))) H1 (THead (Flat Appl) u u2) (pr3_thin_dx c (THeads (Flat Appl) (TCons t0 
 t1) (THead (Bind Abbr) v t)) u2 H8 u Appl))))))))) H3)))))))))) us0))) us)))).
 
-theorem sn3_lift:
+lemma sn3_lift:
  \forall (d: C).(\forall (t: T).((sn3 d t) \to (\forall (c: C).(\forall (h: 
 nat).(\forall (i: nat).((drop h i c d) \to (sn3 c (lift h i t))))))))
 \def
@@ -2310,7 +2310,7 @@ H11 \def (eq_ind_r T x (\lambda (t0: T).(pr2 d t1 t0)) H7 t1 H9) in (H10
 (refl_equal T (lift h i t1)) P))))) (pr3_pr2 d t1 x H7) c h i H2) t2 H6))))) 
 H5))))))))))))) t H))).
 
-theorem sn3_abbr:
+lemma sn3_abbr:
  \forall (c: C).(\forall (d: C).(\forall (v: T).(\forall (i: nat).((getl i c 
 (CHead d (Bind Abbr) v)) \to ((sn3 d v) \to (sn3 c (TLRef i)))))))
 \def
@@ -2348,7 +2348,7 @@ Abbr) t))) H8 v H10) in (eq_ind T v (\lambda (t: T).(sn3 c (lift (S i) O t)))
 v))) H12 d H11) in (sn3_lift d v H0 c (S i) O (getl_drop Abbr c d v i H13))) 
 x1 H10)))) H9))) t2 H6)))))) H4)) H3))))))))))).
 
-theorem sn3_appls_abbr:
+lemma sn3_appls_abbr:
  \forall (c: C).(\forall (d: C).(\forall (w: T).(\forall (i: nat).((getl i c 
 (CHead d (Bind Abbr) w)) \to (\forall (vs: TList).((sn3 c (THeads (Flat Appl) 
 vs (lift (S i) O w))) \to (sn3 c (THeads (Flat Appl) vs (TLRef i)))))))))
@@ -2387,7 +2387,7 @@ Appl) (TCons t t0) (lift (S i) O w))) H2 (THead (Flat Appl) v u2)
 (pr3_iso_appls_abbr c d w i H (TCons t t0) u2 H6 H7) v Appl)))))))) 
 H3)))))))) vs0))) vs)))))).
 
-theorem sns3_lifts:
+lemma sns3_lifts:
  \forall (c: C).(\forall (d: C).(\forall (h: nat).(\forall (i: nat).((drop h 
 i c d) \to (\forall (ts: TList).((sns3 d ts) \to (sns3 c (lifts h i ts))))))))
 \def

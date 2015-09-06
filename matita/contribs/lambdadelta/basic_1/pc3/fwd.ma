@@ -16,7 +16,7 @@
 
 include "basic_1/pc3/props.ma".
 
-theorem pc3_gen_sort:
+lemma pc3_gen_sort:
  \forall (c: C).(\forall (m: nat).(\forall (n: nat).((pc3 c (TSort m) (TSort 
 n)) \to (eq nat m n))))
 \def
@@ -30,7 +30,7 @@ H2) (TSort m) (pr3_gen_sort c x m H1)) in (let H4 \def (f_equal T nat
 \Rightarrow m | (THead _ _ _) \Rightarrow m])) (TSort m) (TSort n) H3) in 
 H4))))) H0))))).
 
-theorem pc3_gen_abst:
+lemma pc3_gen_abst:
  \forall (c: C).(\forall (u1: T).(\forall (u2: T).(\forall (t1: T).(\forall 
 (t2: T).((pc3 c (THead (Bind Abst) u1 t1) (THead (Bind Abst) u2 t2)) \to 
 (land (pc3 c u1 u2) (\forall (b: B).(\forall (u: T).(pc3 (CHead c (Bind b) u) 
@@ -73,7 +73,7 @@ u2) (\forall (b: B).(\forall (u: T).(pc3 (CHead c (Bind b) u) t1 t2)))
 (CHead c (Bind b) u) t1 x1 (H15 b u) t2 (H6 b u))))))))) H12)))))))) 
 H7))))))) H3))))) H0))))))).
 
-theorem pc3_gen_abst_shift:
+lemma pc3_gen_abst_shift:
  \forall (c: C).(\forall (u: T).(\forall (t1: T).(\forall (t2: T).((pc3 c 
 (THead (Bind Abst) u t1) (THead (Bind Abst) u t2)) \to (pc3 (CHead c (Bind 
 Abst) u) t1 t2)))))
@@ -86,7 +86,7 @@ Abst) u) t1 t2)))))
 ((\forall (b: B).(\forall (u0: T).(pc3 (CHead c (Bind b) u0) t1 t2))))).(H2 
 Abst u))) H0))))))).
 
-theorem pc3_gen_lift:
+lemma pc3_gen_lift:
  \forall (c: C).(\forall (t1: T).(\forall (t2: T).(\forall (h: nat).(\forall 
 (d: nat).((pc3 c (lift h d t1) (lift h d t2)) \to (\forall (e: C).((drop h d 
 c e) \to (pc3 e t1 t2))))))))
@@ -107,7 +107,7 @@ T).(eq T t (lift h d x0))) H5 (lift h d x1) H8) in (let H11 \def (eq_ind T x1
 (\lambda (t: T).(pr3 e t1 t)) H9 x0 (lift_inj x1 x0 h d H10)) in (pc3_pr3_t e 
 t1 x0 H11 t2 H6)))))) H7))))) H4))))) H1))))))))).
 
-theorem pc3_gen_not_abst:
+lemma pc3_gen_not_abst:
  \forall (b: B).((not (eq B b Abst)) \to (\forall (c: C).(\forall (t1: 
 T).(\forall (t2: T).(\forall (u1: T).(\forall (u2: T).((pc3 c (THead (Bind b) 
 u1 t1) (THead (Bind Abst) u2 t2)) \to (pc3 (CHead c (Bind b) u1) t1 (lift (S 
@@ -226,7 +226,7 @@ u1) t1 (lift (S O) O t))) H5 (THead (Bind Abst) x0 x1) H7) in (pc3_pr3_t
 t2) (THead (Bind Abst) x0 x1) (pr3_head_12 c u2 x0 H8 (Bind Abst) t2 x1 (H9 
 Abst x0)))))))))) H6))) H4))))) H1))))))))) b).
 
-theorem pc3_gen_lift_abst:
+lemma pc3_gen_lift_abst:
  \forall (c: C).(\forall (t: T).(\forall (t2: T).(\forall (u2: T).(\forall 
 (h: nat).(\forall (d: nat).((pc3 c (lift h d t) (THead (Bind Abst) u2 t2)) 
 \to (\forall (e: C).((drop h d c e) \to (ex3_2 T T (\lambda (u1: T).(\lambda 
@@ -281,7 +281,7 @@ T).(\lambda (t1: T).(\forall (b: B).(\forall (u: T).(pr3 (CHead c (Bind b) u)
 t2 (lift h (S d) t1)))))) x3 x4 H17 H16 H15))))))))) (lift_gen_bind Abst x1 
 x2 x0 h d H11)))))))) H7))))) H4))))) H1)))))))))).
 
-theorem pc3_gen_sort_abst:
+lemma pc3_gen_sort_abst:
  \forall (c: C).(\forall (u: T).(\forall (t: T).(\forall (n: nat).((pc3 c 
 (TSort n) (THead (Bind Abst) u t)) \to (\forall (P: Prop).P)))))
 \def

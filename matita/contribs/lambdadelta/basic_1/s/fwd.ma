@@ -16,7 +16,7 @@
 
 include "basic_1/s/defs.ma".
 
-theorem s_inj:
+lemma s_inj:
  \forall (k: K).(\forall (i: nat).(\forall (j: nat).((eq nat (s k i) (s k j)) 
 \to (eq nat i j))))
 \def
@@ -26,7 +26,7 @@ B).(\lambda (i: nat).(\lambda (j: nat).(\lambda (H: (eq nat (s (Bind b) i) (s
 (Bind b) j))).(eq_add_S i j H))))) (\lambda (f: F).(\lambda (i: nat).(\lambda 
 (j: nat).(\lambda (H: (eq nat (s (Flat f) i) (s (Flat f) j))).H)))) k).
 
-theorem s_le_gen:
+lemma s_le_gen:
  \forall (k: K).(\forall (i: nat).(\forall (j: nat).((le (s k i) (s k j)) \to 
 (le i j))))
 \def
@@ -36,7 +36,7 @@ nat).(\lambda (j: nat).(\lambda (H: (le (s (Bind b) i) (s (Bind b)
 j))).(le_S_n i j H))))) (\lambda (f: F).(\lambda (i: nat).(\lambda (j: 
 nat).(\lambda (H: (le (s (Flat f) i) (s (Flat f) j))).H)))) k).
 
-theorem s_lt_gen:
+lemma s_lt_gen:
  \forall (k: K).(\forall (i: nat).(\forall (j: nat).((lt (s k i) (s k j)) \to 
 (lt i j))))
 \def

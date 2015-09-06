@@ -22,7 +22,7 @@ include "basic_1/pr2/fwd.ma".
 
 include "basic_1/arity/fwd.ma".
 
-theorem ex2_nf2:
+lemma ex2_nf2:
  nf2 ex2_c ex2_t
 \def
  \lambda (t2: T).(\lambda (H: (pr2 (CSort O) (THead (Flat Appl) (TSort O) 
@@ -130,7 +130,7 @@ False])) I (THead (Bind x0) x1 x2) H3) in (False_ind (eq T (THead (Flat Appl)
 (TSort O) (TSort O)) (THead (Bind x0) x5 (THead (Flat Appl) (lift (S O) O 
 (TSort O)) x3))) H9)) t2 H8))))))))))))))) H1)) H0))).
 
-theorem ex2_arity:
+lemma ex2_arity:
  \forall (g: G).(\forall (a: A).((arity g ex2_c ex2_t a) \to (\forall (P: 
 Prop).P)))
 \def

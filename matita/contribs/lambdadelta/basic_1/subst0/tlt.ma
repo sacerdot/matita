@@ -18,7 +18,7 @@ include "basic_1/subst0/fwd.ma".
 
 include "basic_1/lift/tlt.ma".
 
-theorem subst0_weight_le:
+lemma subst0_weight_le:
  \forall (u: T).(\forall (t: T).(\forall (z: T).(\forall (d: nat).((subst0 d 
 u t z) \to (\forall (f: ((nat \to nat))).(\forall (g: ((nat \to 
 nat))).(((\forall (m: nat).(le (f m) (g m)))) \to ((lt (weight_map f (lift (S 
@@ -220,7 +220,7 @@ nat))).(\lambda (H4: ((\forall (m: nat).(le (f0 m) (g m))))).(\lambda (H5:
 (weight_map f0 u2) (weight_map g u1) (weight_map f0 t2) (weight_map g t1) (H1 
 f0 g H4 H5) (H3 f0 g H4 H5)))))))))))) k)))))))) d u t z H))))).
 
-theorem subst0_weight_lt:
+lemma subst0_weight_lt:
  \forall (u: T).(\forall (t: T).(\forall (z: T).(\forall (d: nat).((subst0 d 
 u t z) \to (\forall (f: ((nat \to nat))).(\forall (g: ((nat \to 
 nat))).(((\forall (m: nat).(le (f m) (g m)))) \to ((lt (weight_map f (lift (S 
@@ -423,7 +423,7 @@ f0 u2) (weight_map f0 t2)) (plus (weight_map g u1) (weight_map g t1))
 (weight_map g t1) (H1 f0 g H4 H5) (H3 f0 g H4 H5)))))))))))) k)))))))) d u t 
 z H))))).
 
-theorem subst0_tlt_head:
+lemma subst0_tlt_head:
  \forall (u: T).(\forall (t: T).(\forall (z: T).((subst0 O u t z) \to (tlt 
 (THead (Bind Abbr) u z) (THead (Bind Abbr) u t)))))
 \def
@@ -447,7 +447,7 @@ nat).O) u)))) (le_n (S (weight_map (\lambda (_: nat).O) u))) (lift O O u)
 (_: nat).O) u))) (lift (S O) O u)) (lift_weight_add_O (S (weight_map (\lambda 
 (_: nat).O) u)) u O (\lambda (_: nat).O))))))))).
 
-theorem subst0_tlt:
+lemma subst0_tlt:
  \forall (u: T).(\forall (t: T).(\forall (z: T).((subst0 O u t z) \to (tlt z 
 (THead (Bind Abbr) u t)))))
 \def

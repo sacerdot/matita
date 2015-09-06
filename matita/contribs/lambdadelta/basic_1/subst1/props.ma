@@ -39,7 +39,7 @@ k u1 t1) (THead k t2 t))) (subst1_single i v (THead k u1 t1) (THead k t2 t1)
 i) v t1 t3)).(subst1_single i v (THead k u1 t1) (THead k t2 t3) (subst0_both 
 v u1 t2 i H0 k t1 t3 H2)))) t0 H1))))))) u2 H))))).
 
-theorem subst1_lift_lt:
+lemma subst1_lift_lt:
  \forall (t1: T).(\forall (t2: T).(\forall (u: T).(\forall (i: nat).((subst1 
 i u t1 t2) \to (\forall (d: nat).((lt i d) \to (\forall (h: nat).(subst1 i 
 (lift h (minus d (S i)) u) (lift h d t1) (lift h d t2)))))))))
@@ -54,7 +54,7 @@ nat).(\lambda (H1: (lt i d)).(\lambda (h: nat).(subst1_single i (lift h
 (minus d (S i)) u) (lift h d t1) (lift h d t3) (subst0_lift_lt t1 t3 u i H0 d 
 H1 h))))))) t2 H))))).
 
-theorem subst1_lift_ge:
+lemma subst1_lift_ge:
  \forall (t1: T).(\forall (t2: T).(\forall (u: T).(\forall (i: nat).(\forall 
 (h: nat).((subst1 i u t1 t2) \to (\forall (d: nat).((le d i) \to (subst1 
 (plus i h) u (lift h d t1) (lift h d t2)))))))))
@@ -67,7 +67,7 @@ d t))))) (\lambda (d: nat).(\lambda (_: (le d i)).(subst1_refl (plus i h) u
 (d: nat).(\lambda (H1: (le d i)).(subst1_single (plus i h) u (lift h d t1) 
 (lift h d t3) (subst0_lift_ge t1 t3 u i h H0 d H1)))))) t2 H)))))).
 
-theorem subst1_ex:
+lemma subst1_ex:
  \forall (u: T).(\forall (t1: T).(\forall (d: nat).(ex T (\lambda (t2: 
 T).(subst1 d u t1 (lift (S O) d t2))))))
 \def
@@ -107,7 +107,7 @@ d) x0)) (\lambda (t2: T).(subst1 d u (THead k t t0) t2)) (subst1_head u t
 (lift (S O) d x) d H2 k t0 (lift (S O) (s k d) x0) H4) (lift (S O) d (THead k 
 x x0)) (lift_head k x x0 (S O) d))))) H3))))) H1))))))))) t1)).
 
-theorem subst1_lift_S:
+lemma subst1_lift_S:
  \forall (u: T).(\forall (i: nat).(\forall (h: nat).((le h i) \to (subst1 i 
 (TLRef h) (lift (S h) (S i) u) (lift (S h) i u)))))
 \def

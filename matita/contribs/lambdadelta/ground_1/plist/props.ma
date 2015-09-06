@@ -16,7 +16,7 @@
 
 include "ground_1/plist/defs.ma".
 
-theorem papp_ss:
+lemma papp_ss:
  \forall (is1: PList).(\forall (is2: PList).(eq PList (papp (Ss is1) (Ss 
 is2)) (Ss (papp is1 is2))))
 \def

@@ -16,9 +16,9 @@
 
 include "basic_1/csuba/defs.ma".
 
-let rec csuba_ind (g: G) (P: (C \to (C \to Prop))) (f: (\forall (n: nat).(P 
-(CSort n) (CSort n)))) (f0: (\forall (c1: C).(\forall (c2: C).((csuba g c1 
-c2) \to ((P c1 c2) \to (\forall (k: K).(\forall (u: T).(P (CHead c1 k u) 
+implied let rec csuba_ind (g: G) (P: (C \to (C \to Prop))) (f: (\forall (n: 
+nat).(P (CSort n) (CSort n)))) (f0: (\forall (c1: C).(\forall (c2: C).((csuba 
+g c1 c2) \to ((P c1 c2) \to (\forall (k: K).(\forall (u: T).(P (CHead c1 k u) 
 (CHead c2 k u))))))))) (f1: (\forall (c1: C).(\forall (c2: C).((csuba g c1 
 c2) \to ((P c1 c2) \to (\forall (b: B).((not (eq B b Void)) \to (\forall (u1: 
 T).(\forall (u2: T).(P (CHead c1 (Bind Void) u1) (CHead c2 (Bind b) 
@@ -32,7 +32,7 @@ u) \Rightarrow (f0 c2 c3 c4 ((csuba_ind g P f f0 f1 f2) c2 c3 c4) k u) |
 f1 f2) c2 c3 c4) b n u1 u2) | (csuba_abst c2 c3 c4 t a a0 u a1) \Rightarrow 
 (f2 c2 c3 c4 ((csuba_ind g P f f0 f1 f2) c2 c3 c4) t a a0 u a1)].
 
-theorem csuba_gen_abbr:
+lemma csuba_gen_abbr:
  \forall (g: G).(\forall (d1: C).(\forall (c: C).(\forall (u: T).((csuba g 
 (CHead d1 (Bind Abbr) u) c) \to (ex2 C (\lambda (d2: C).(eq C c (CHead d2 
 (Bind Abbr) u))) (\lambda (d2: C).(csuba g d1 d2)))))))
@@ -95,7 +95,7 @@ _) \Rightarrow False])])) I (CHead d1 (Bind Abbr) u) H5) in (False_ind (ex2 C
 (\lambda (d2: C).(eq C (CHead c2 (Bind Abbr) u0) (CHead d2 (Bind Abbr) u))) 
 (\lambda (d2: C).(csuba g d1 d2))) H6)))))))))))) y c H0))) H))))).
 
-theorem csuba_gen_void:
+lemma csuba_gen_void:
  \forall (g: G).(\forall (d1: C).(\forall (c: C).(\forall (u1: T).((csuba g 
 (CHead d1 (Bind Void) u1) c) \to (ex2_3 B C T (\lambda (b: B).(\lambda (d2: 
 C).(\lambda (u2: T).(eq C c (CHead d2 (Bind b) u2))))) (\lambda (_: 
@@ -178,7 +178,7 @@ C).(\lambda (u2: T).(eq C (CHead c2 (Bind Abbr) u) (CHead d2 (Bind b) u2)))))
 (\lambda (_: B).(\lambda (d2: C).(\lambda (_: T).(csuba g d1 d2))))) 
 H6)))))))))))) y c H0))) H))))).
 
-theorem csuba_gen_abst:
+lemma csuba_gen_abst:
  \forall (g: G).(\forall (d1: C).(\forall (c: C).(\forall (u1: T).((csuba g 
 (CHead d1 (Bind Abst) u1) c) \to (or (ex2 C (\lambda (d2: C).(eq C c (CHead 
 d2 (Bind Abst) u1))) (\lambda (d2: C).(csuba g d1 d2))) (ex4_3 C T A (\lambda 
@@ -318,7 +318,7 @@ g d1 u1 (asucc g a0))))) (\lambda (d2: C).(\lambda (u2: T).(\lambda (a0:
 A).(arity g d2 u2 a0)))) c2 u a (refl_equal C (CHead c2 (Bind Abbr) u)) H12 
 H10 H4)))))))) H6)))))))))))) y c H0))) H))))).
 
-theorem csuba_gen_flat:
+lemma csuba_gen_flat:
  \forall (g: G).(\forall (d1: C).(\forall (c: C).(\forall (u1: T).(\forall 
 (f: F).((csuba g (CHead d1 (Flat f) u1) c) \to (ex2_2 C T (\lambda (d2: 
 C).(\lambda (u2: T).(eq C c (CHead d2 (Flat f) u2)))) (\lambda (d2: 
@@ -386,7 +386,7 @@ H5) in (False_ind (ex2_2 C T (\lambda (d2: C).(\lambda (u2: T).(eq C (CHead
 c2 (Bind Abbr) u) (CHead d2 (Flat f) u2)))) (\lambda (d2: C).(\lambda (_: 
 T).(csuba g d1 d2)))) H6)))))))))))) y c H0))) H)))))).
 
-theorem csuba_gen_bind:
+lemma csuba_gen_bind:
  \forall (g: G).(\forall (b1: B).(\forall (e1: C).(\forall (c2: C).(\forall 
 (v1: T).((csuba g (CHead e1 (Bind b1) v1) c2) \to (ex2_3 B C T (\lambda (b2: 
 B).(\lambda (e2: C).(\lambda (v2: T).(eq C c2 (CHead e2 (Bind b2) v2))))) 
@@ -492,7 +492,7 @@ v2))))) (\lambda (_: B).(\lambda (e2: C).(\lambda (_: T).(csuba g e1 e2))))
 Abbr c3 u (refl_equal C (CHead c3 (Bind Abbr) u)) H14))))))))) H7)) 
 H6)))))))))))) y c2 H0))) H)))))).
 
-theorem csuba_gen_abst_rev:
+lemma csuba_gen_abst_rev:
  \forall (g: G).(\forall (d1: C).(\forall (c: C).(\forall (u: T).((csuba g c 
 (CHead d1 (Bind Abst) u)) \to (or (ex2 C (\lambda (d2: C).(eq C c (CHead d2 
 (Bind Abst) u))) (\lambda (d2: C).(csuba g d2 d1))) (ex2_2 C T (\lambda (d2: 
@@ -596,7 +596,7 @@ u))) (\lambda (d2: C).(csuba g d2 d1))) (ex2_2 C T (\lambda (d2: C).(\lambda
 (u2: T).(eq C (CHead c1 (Bind Abst) t) (CHead d2 (Bind Void) u2)))) (\lambda 
 (d2: C).(\lambda (_: T).(csuba g d2 d1))))) H6)))))))))))) c y H0))) H))))).
 
-theorem csuba_gen_void_rev:
+lemma csuba_gen_void_rev:
  \forall (g: G).(\forall (d1: C).(\forall (c: C).(\forall (u: T).((csuba g c 
 (CHead d1 (Bind Void) u)) \to (ex2 C (\lambda (d2: C).(eq C c (CHead d2 (Bind 
 Void) u))) (\lambda (d2: C).(csuba g d2 d1)))))))
@@ -667,7 +667,7 @@ _) \Rightarrow False])])) I (CHead d1 (Bind Void) u) H5) in (False_ind (ex2 C
 (\lambda (d2: C).(eq C (CHead c1 (Bind Abst) t) (CHead d2 (Bind Void) u))) 
 (\lambda (d2: C).(csuba g d2 d1))) H6)))))))))))) c y H0))) H))))).
 
-theorem csuba_gen_abbr_rev:
+lemma csuba_gen_abbr_rev:
  \forall (g: G).(\forall (d1: C).(\forall (c: C).(\forall (u1: T).((csuba g c 
 (CHead d1 (Bind Abbr) u1)) \to (or3 (ex2 C (\lambda (d2: C).(eq C c (CHead d2 
 (Bind Abbr) u1))) (\lambda (d2: C).(csuba g d2 d1))) (ex4_3 C T A (\lambda 
@@ -851,7 +851,7 @@ d2 d1)))) (\lambda (d2: C).(\lambda (u2: T).(\lambda (a0: A).(arity g d2 u2
 u1 a0)))) c1 t a (refl_equal C (CHead c1 (Bind Abst) t)) H12 H3 H10)))))))) 
 H6)))))))))))) c y H0))) H))))).
 
-theorem csuba_gen_flat_rev:
+lemma csuba_gen_flat_rev:
  \forall (g: G).(\forall (d1: C).(\forall (c: C).(\forall (u1: T).(\forall 
 (f: F).((csuba g c (CHead d1 (Flat f) u1)) \to (ex2_2 C T (\lambda (d2: 
 C).(\lambda (u2: T).(eq C c (CHead d2 (Flat f) u2)))) (\lambda (d2: 
@@ -919,7 +919,7 @@ H5) in (False_ind (ex2_2 C T (\lambda (d2: C).(\lambda (u2: T).(eq C (CHead
 c1 (Bind Abst) t) (CHead d2 (Flat f) u2)))) (\lambda (d2: C).(\lambda (_: 
 T).(csuba g d2 d1)))) H6)))))))))))) c y H0))) H)))))).
 
-theorem csuba_gen_bind_rev:
+lemma csuba_gen_bind_rev:
  \forall (g: G).(\forall (b1: B).(\forall (e1: C).(\forall (c2: C).(\forall 
 (v1: T).((csuba g c2 (CHead e1 (Bind b1) v1)) \to (ex2_3 B C T (\lambda (b2: 
 B).(\lambda (e2: C).(\lambda (v2: T).(eq C c2 (CHead e2 (Bind b2) v2))))) 

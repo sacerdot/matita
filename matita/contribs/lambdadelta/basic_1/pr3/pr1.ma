@@ -18,7 +18,7 @@ include "basic_1/pr3/defs.ma".
 
 include "basic_1/pr1/fwd.ma".
 
-theorem pr3_pr1:
+lemma pr3_pr1:
  \forall (t1: T).(\forall (t2: T).((pr1 t1 t2) \to (\forall (c: C).(pr3 c t1 
 t2))))
 \def

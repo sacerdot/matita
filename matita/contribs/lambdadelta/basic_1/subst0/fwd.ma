@@ -18,26 +18,26 @@ include "basic_1/subst0/defs.ma".
 
 include "basic_1/lift/fwd.ma".
 
-let rec subst0_ind (P: (nat \to (T \to (T \to (T \to Prop))))) (f: (\forall 
-(v: T).(\forall (i: nat).(P i v (TLRef i) (lift (S i) O v))))) (f0: (\forall 
-(v: T).(\forall (u2: T).(\forall (u1: T).(\forall (i: nat).((subst0 i v u1 
-u2) \to ((P i v u1 u2) \to (\forall (t: T).(\forall (k: K).(P i v (THead k u1 
-t) (THead k u2 t))))))))))) (f1: (\forall (k: K).(\forall (v: T).(\forall 
-(t2: T).(\forall (t1: T).(\forall (i: nat).((subst0 (s k i) v t1 t2) \to ((P 
-(s k i) v t1 t2) \to (\forall (u: T).(P i v (THead k u t1) (THead k u 
-t2))))))))))) (f2: (\forall (v: T).(\forall (u1: T).(\forall (u2: T).(\forall 
-(i: nat).((subst0 i v u1 u2) \to ((P i v u1 u2) \to (\forall (k: K).(\forall 
-(t1: T).(\forall (t2: T).((subst0 (s k i) v t1 t2) \to ((P (s k i) v t1 t2) 
-\to (P i v (THead k u1 t1) (THead k u2 t2)))))))))))))) (n: nat) (t: T) (t0: 
-T) (t1: T) (s0: subst0 n t t0 t1) on s0: P n t t0 t1 \def match s0 with 
-[(subst0_lref v i) \Rightarrow (f v i) | (subst0_fst v u2 u1 i s1 t2 k) 
-\Rightarrow (f0 v u2 u1 i s1 ((subst0_ind P f f0 f1 f2) i v u1 u2 s1) t2 k) | 
-(subst0_snd k v t2 t3 i s1 u) \Rightarrow (f1 k v t2 t3 i s1 ((subst0_ind P f 
-f0 f1 f2) (s k i) v t3 t2 s1) u) | (subst0_both v u1 u2 i s1 k t2 t3 s2) 
-\Rightarrow (f2 v u1 u2 i s1 ((subst0_ind P f f0 f1 f2) i v u1 u2 s1) k t2 t3 
-s2 ((subst0_ind P f f0 f1 f2) (s k i) v t2 t3 s2))].
+implied let rec subst0_ind (P: (nat \to (T \to (T \to (T \to Prop))))) (f: 
+(\forall (v: T).(\forall (i: nat).(P i v (TLRef i) (lift (S i) O v))))) (f0: 
+(\forall (v: T).(\forall (u2: T).(\forall (u1: T).(\forall (i: nat).((subst0 
+i v u1 u2) \to ((P i v u1 u2) \to (\forall (t: T).(\forall (k: K).(P i v 
+(THead k u1 t) (THead k u2 t))))))))))) (f1: (\forall (k: K).(\forall (v: 
+T).(\forall (t2: T).(\forall (t1: T).(\forall (i: nat).((subst0 (s k i) v t1 
+t2) \to ((P (s k i) v t1 t2) \to (\forall (u: T).(P i v (THead k u t1) (THead 
+k u t2))))))))))) (f2: (\forall (v: T).(\forall (u1: T).(\forall (u2: 
+T).(\forall (i: nat).((subst0 i v u1 u2) \to ((P i v u1 u2) \to (\forall (k: 
+K).(\forall (t1: T).(\forall (t2: T).((subst0 (s k i) v t1 t2) \to ((P (s k 
+i) v t1 t2) \to (P i v (THead k u1 t1) (THead k u2 t2)))))))))))))) (n: nat) 
+(t: T) (t0: T) (t1: T) (s0: subst0 n t t0 t1) on s0: P n t t0 t1 \def match 
+s0 with [(subst0_lref v i) \Rightarrow (f v i) | (subst0_fst v u2 u1 i s1 t2 
+k) \Rightarrow (f0 v u2 u1 i s1 ((subst0_ind P f f0 f1 f2) i v u1 u2 s1) t2 
+k) | (subst0_snd k v t2 t3 i s1 u) \Rightarrow (f1 k v t2 t3 i s1 
+((subst0_ind P f f0 f1 f2) (s k i) v t3 t2 s1) u) | (subst0_both v u1 u2 i s1 
+k t2 t3 s2) \Rightarrow (f2 v u1 u2 i s1 ((subst0_ind P f f0 f1 f2) i v u1 u2 
+s1) k t2 t3 s2 ((subst0_ind P f f0 f1 f2) (s k i) v t2 t3 s2))].
 
-theorem subst0_gen_sort:
+lemma subst0_gen_sort:
  \forall (v: T).(\forall (x: T).(\forall (i: nat).(\forall (n: nat).((subst0 
 i v (TSort n) x) \to (\forall (P: Prop).P)))))
 \def
@@ -71,7 +71,7 @@ n)) \to P))).(\lambda (H5: (eq T (THead k u1 t1) (TSort n))).(let H6 \def
 True])) I (TSort n) H5) in (False_ind P H6)))))))))))))) i v y x H0))) 
 H)))))).
 
-theorem subst0_gen_lref:
+lemma subst0_gen_lref:
  \forall (v: T).(\forall (x: T).(\forall (i: nat).(\forall (n: nat).((subst0 
 i v (TLRef n) x) \to (land (eq nat n i) (eq T x (lift (S n) O v)))))))
 \def
@@ -113,7 +113,7 @@ False | (TLRef _) \Rightarrow False | (THead _ _ _) \Rightarrow True])) I
 (TLRef n) H5) in (False_ind (land (eq nat n i0) (eq T (THead k u2 t2) (lift 
 (S n) O v0))) H6)))))))))))))) i v y x H0))) H))))).
 
-theorem subst0_gen_head:
+lemma subst0_gen_head:
  \forall (k: K).(\forall (v: T).(\forall (u1: T).(\forall (t1: T).(\forall 
 (x: T).(\forall (i: nat).((subst0 i v (THead k u1 t1) x) \to (or3 (ex2 T 
 (\lambda (u2: T).(eq T x (THead k u2 t1))) (\lambda (u2: T).(subst0 i v u1 
@@ -309,7 +309,7 @@ T).(\lambda (t3: T).(subst0 (s k i0) v0 t1 t3))) u2 t2 (refl_equal T (THead k
 u2 t2)) H16 H14)))) k0 H10)))))))) H7)) H6)))))))))))))) i v y x H0))) 
 H))))))).
 
-theorem subst0_gen_lift_lt:
+lemma subst0_gen_lift_lt:
  \forall (u: T).(\forall (t1: T).(\forall (x: T).(\forall (i: nat).(\forall 
 (h: nat).(\forall (d: nat).((subst0 i (lift h d u) (lift h (S (plus i d)) t1) 
 x) \to (ex2 T (\lambda (t2: T).(eq T x (lift h (S (plus i d)) t2))) (\lambda 
@@ -492,7 +492,7 @@ i h d H5))))) (H0 x1 (s k i) h d H8)))) x H4)))))) H3)) (subst0_gen_head k
 (lift h d u) (lift h (S (plus i d)) t) (lift h (s k (S (plus i d))) t0) x i 
 H2))))))))))))) t1)).
 
-theorem subst0_gen_lift_false:
+lemma subst0_gen_lift_false:
  \forall (t: T).(\forall (u: T).(\forall (x: T).(\forall (h: nat).(\forall 
 (d: nat).(\forall (i: nat).((le d i) \to ((lt i (plus d h)) \to ((subst0 i u 
 (lift h d t) x) \to (\forall (P: Prop).P)))))))))
@@ -563,7 +563,7 @@ t0) x0)).(\lambda (_: (subst0 (s k i) u (lift h (s k d) t1) x1)).(H u x0 h d
 i H1 H2 H7 P)))))) H5)) (subst0_gen_head k u (lift h d t0) (lift h (s k d) 
 t1) x i H4))))))))))))))))) t).
 
-theorem subst0_gen_lift_ge:
+lemma subst0_gen_lift_ge:
  \forall (u: T).(\forall (t1: T).(\forall (x: T).(\forall (i: nat).(\forall 
 (h: nat).(\forall (d: nat).((subst0 i u (lift h d t1) x) \to ((le (plus d h) 
 i) \to (ex2 T (\lambda (t2: T).(eq T x (lift h d t2))) (\lambda (t2: 
@@ -719,7 +719,7 @@ nat (s k (plus d h)) (\lambda (n: nat).(le n (s k i))) (s_le k (plus d h) i
 H2) (plus (s k d) h) (s_plus k d h)))) x H5)))))) H4)) (subst0_gen_head k u 
 (lift h d t) (lift h (s k d) t0) x i H3)))))))))))))) t1)).
 
-theorem subst0_gen_lift_rev_ge:
+lemma subst0_gen_lift_rev_ge:
  \forall (t1: T).(\forall (v: T).(\forall (u2: T).(\forall (i: nat).(\forall 
 (h: nat).(\forall (d: nat).((subst0 i v t1 (lift h d u2)) \to ((le (plus d h) 
 i) \to (ex2 T (\lambda (u1: T).(subst0 (minus i h) v u1 u2)) (\lambda (u1: 

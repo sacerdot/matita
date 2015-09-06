@@ -18,7 +18,7 @@ include "basic_1/pr3/props.ma".
 
 include "basic_1/wcpr0/getl.ma".
 
-theorem pr3_wcpr0_t:
+lemma pr3_wcpr0_t:
  \forall (c1: C).(\forall (c2: C).((wcpr0 c2 c1) \to (\forall (t1: 
 T).(\forall (t2: T).((pr3 c1 t1 t2) \to (pr3 c2 t1 t2))))))
 \def

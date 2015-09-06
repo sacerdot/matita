@@ -22,7 +22,7 @@ include "basic_1/T/dec.ma".
 
 include "basic_1/T/props.ma".
 
-theorem nf0_dec:
+lemma nf0_dec:
  \forall (t1: T).(or (\forall (t2: T).((pr0 t1 t2) \to (eq T t1 t2))) (ex2 T 
 (\lambda (t2: T).((eq T t1 t2) \to (\forall (P: Prop).P))) (\lambda (t2: 
 T).(pr0 t1 t2))))

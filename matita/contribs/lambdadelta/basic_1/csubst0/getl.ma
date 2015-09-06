@@ -20,7 +20,7 @@ include "basic_1/csubst0/drop.ma".
 
 include "basic_1/getl/fwd.ma".
 
-theorem csubst0_getl_ge:
+lemma csubst0_getl_ge:
  \forall (i: nat).(\forall (n: nat).((le i n) \to (\forall (c1: C).(\forall 
 (c2: C).(\forall (v: T).((csubst0 i v c1 c2) \to (\forall (e: C).((getl n c1 
 e) \to (getl n c2 e)))))))))
@@ -103,7 +103,7 @@ H11 (clear_flat x2 e (csubst0_clear_O x1 x2 v H13 e (clear_gen_flat x0 x1 e
 x3 H14)) x0 x4)))))))))))) H9)) H8)) n H5)))) (\lambda (H5: (lt n 
 i)).(le_lt_false i n H H5 (getl n c2 e))))))) H2)))))))))).
 
-theorem csubst0_getl_lt:
+lemma csubst0_getl_lt:
  \forall (i: nat).(\forall (n: nat).((lt n i) \to (\forall (c1: C).(\forall 
 (c2: C).(\forall (v: T).((csubst0 i v c1 c2) \to (\forall (e: C).((getl n c1 
 e) \to (or4 (getl n c2 e) (ex3_4 B C T T (\lambda (b: B).(\lambda (e0: 
@@ -1018,7 +1018,7 @@ v e1 e2)))))) x5 x6 x7 x8 x9 (refl_equal C (CHead x6 (Bind x5) x8))
 (clear_flat x2 (CHead x7 (Bind x5) x9) H20 f x4)) H21 H22)) e H19)))))))))) 
 H18)) H17)))))))) x0 H8 H9 H10 H11))))))))))) H6)) H5))))) H2)))))))))).
 
-theorem csubst0_getl_ge_back:
+lemma csubst0_getl_ge_back:
  \forall (i: nat).(\forall (n: nat).((le i n) \to (\forall (c1: C).(\forall 
 (c2: C).(\forall (v: T).((csubst0 i v c1 c2) \to (\forall (e: C).((getl n c2 
 e) \to (getl n c1 e)))))))))
@@ -1101,7 +1101,7 @@ H11 (clear_flat x1 e (csubst0_clear_O_back x1 x2 v H13 e (clear_gen_flat x0
 x2 e x4 H14)) x0 x3)))))))))))) H9)) H8)) n H5)))) (\lambda (H5: (lt n 
 i)).(le_lt_false i n H H5 (getl n c1 e))))))) H2)))))))))).
 
-theorem csubst0_getl_lt_back:
+lemma csubst0_getl_lt_back:
  \forall (n: nat).(\forall (i: nat).((lt n i) \to (\forall (c1: C).(\forall 
 (c2: C).(\forall (v: T).((csubst0 i v c1 c2) \to (\forall (e2: C).((getl n c2 
 e2) \to (or (getl n c1 e2) (ex2 C (\lambda (e1: C).(csubst0 (minus i n) v e1 

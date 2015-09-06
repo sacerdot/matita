@@ -16,7 +16,7 @@
 
 include "basic_1/drop/fwd.ma".
 
-theorem drop_skip_bind:
+lemma drop_skip_bind:
  \forall (h: nat).(\forall (d: nat).(\forall (c: C).(\forall (e: C).((drop h 
 d c e) \to (\forall (b: B).(\forall (u: T).(drop h (S d) (CHead c (Bind b) 
 (lift h d u)) (CHead e (Bind b) u))))))))
@@ -26,7 +26,7 @@ d c e) \to (\forall (b: B).(\forall (u: T).(drop h (S d) (CHead c (Bind b)
 d) (\lambda (n: nat).(drop h (S d) (CHead c (Bind b) (lift h n u)) (CHead e 
 (Bind b) u))) (drop_skip (Bind b) h d c e H u) d (refl_equal nat d)))))))).
 
-theorem drop_skip_flat:
+lemma drop_skip_flat:
  \forall (h: nat).(\forall (d: nat).(\forall (c: C).(\forall (e: C).((drop h 
 (S d) c e) \to (\forall (f: F).(\forall (u: T).(drop h (S d) (CHead c (Flat 
 f) (lift h (S d) u)) (CHead e (Flat f) u))))))))
@@ -37,7 +37,7 @@ f) d) (\lambda (n: nat).(drop h (S d) (CHead c (Flat f) (lift h n u)) (CHead
 e (Flat f) u))) (drop_skip (Flat f) h d c e H u) (S d) (refl_equal nat (S 
 d))))))))).
 
-theorem drop_ctail:
+lemma drop_ctail:
  \forall (c1: C).(\forall (c2: C).(\forall (d: nat).(\forall (h: nat).((drop 
 h d c1 c2) \to (\forall (k: K).(\forall (u: T).(drop h d (CTail k u c1) 
 (CTail k u c2))))))))

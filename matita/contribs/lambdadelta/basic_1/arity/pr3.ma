@@ -26,7 +26,7 @@ include "basic_1/pr0/props.ma".
 
 include "basic_1/arity/subst0.ma".
 
-theorem arity_sred_wcpr0_pr0:
+lemma arity_sred_wcpr0_pr0:
  \forall (g: G).(\forall (c1: C).(\forall (t1: T).(\forall (a: A).((arity g 
 c1 t1 a) \to (\forall (c2: C).((wcpr0 c1 c2) \to (\forall (t2: T).((pr0 t1 
 t2) \to (arity g c2 t2 a)))))))))
@@ -527,7 +527,7 @@ a2)).(\lambda (c2: C).(\lambda (H3: (wcpr0 c c2)).(\lambda (t2: T).(\lambda
 (H4: (pr0 t t2)).(arity_repl g c2 t2 a1 (H1 c2 H3 t2 H4) a2 H2)))))))))))) c1 
 t1 a H))))).
 
-theorem arity_sred_wcpr0_pr1:
+lemma arity_sred_wcpr0_pr1:
  \forall (t1: T).(\forall (t2: T).((pr1 t1 t2) \to (\forall (g: G).(\forall 
 (c1: C).(\forall (a: A).((arity g c1 t1 a) \to (\forall (c2: C).((wcpr0 c1 
 c2) \to (arity g c2 t2 a)))))))))
@@ -546,7 +546,7 @@ a))))))))).(\lambda (g: G).(\lambda (c1: C).(\lambda (a: A).(\lambda (H3:
 (arity_sred_wcpr0_pr0 g c1 t4 a H3 c2 H4 t3 H0) c2 (wcpr0_refl 
 c2)))))))))))))) t1 t2 H))).
 
-theorem arity_sred_pr2:
+lemma arity_sred_pr2:
  \forall (c: C).(\forall (t1: T).(\forall (t2: T).((pr2 c t1 t2) \to (\forall 
 (g: G).(\forall (a: A).((arity g c t1 a) \to (arity g c t2 a)))))))
 \def
@@ -563,7 +563,7 @@ G).(\lambda (a: A).(\lambda (H3: (arity g c0 t3 a)).(arity_subst0 g c0 t4 a
 (arity_sred_wcpr0_pr0 g c0 t3 a H3 c0 (wcpr0_refl c0) t4 H1) d u i H0 t 
 H2)))))))))))))) c t1 t2 H)))).
 
-theorem arity_sred_pr3:
+lemma arity_sred_pr3:
  \forall (c: C).(\forall (t1: T).(\forall (t2: T).((pr3 c t1 t2) \to (\forall 
 (g: G).(\forall (a: A).((arity g c t1 a) \to (arity g c t2 a)))))))
 \def

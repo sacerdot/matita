@@ -18,7 +18,7 @@ include "basic_1/pr0/props.ma".
 
 include "basic_1/subst0/subst0.ma".
 
-theorem pr0_subst0_back:
+lemma pr0_subst0_back:
  \forall (u2: T).(\forall (t1: T).(\forall (t2: T).(\forall (i: nat).((subst0 
 i u2 t1 t2) \to (\forall (u1: T).((pr0 u1 u2) \to (ex2 T (\lambda (t: 
 T).(subst0 i u1 t1 t)) (\lambda (t: T).(pr0 t t2)))))))))
@@ -69,7 +69,7 @@ t3) t)) (\lambda (t: T).(pr0 t (THead k u3 t4)))) (\lambda (x0: T).(\lambda
 t4))) (THead k x0 x) (subst0_both u0 u1 x0 i0 H7 k t3 x H5) (pr0_comp x0 u3 
 H8 x t4 H6 k))))) (H1 u0 H4))))) (H3 u0 H4))))))))))))))) i u2 t1 t2 H))))).
 
-theorem pr0_subst0_fwd:
+lemma pr0_subst0_fwd:
  \forall (u2: T).(\forall (t1: T).(\forall (t2: T).(\forall (i: nat).((subst0 
 i u2 t1 t2) \to (\forall (u1: T).((pr0 u2 u1) \to (ex2 T (\lambda (t: 
 T).(subst0 i u1 t1 t)) (\lambda (t: T).(pr0 t2 t)))))))))

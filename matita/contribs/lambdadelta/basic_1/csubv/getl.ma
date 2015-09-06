@@ -20,7 +20,7 @@ include "basic_1/csubv/drop.ma".
 
 include "basic_1/getl/fwd.ma".
 
-theorem csubv_getl_conf:
+lemma csubv_getl_conf:
  \forall (c1: C).(\forall (c2: C).((csubv c1 c2) \to (\forall (b1: 
 B).(\forall (d1: C).(\forall (v1: T).(\forall (i: nat).((getl i c1 (CHead d1 
 (Bind b1) v1)) \to (ex2_3 B C T (\lambda (_: B).(\lambda (d2: C).(\lambda (_: 
@@ -53,7 +53,7 @@ B C T (\lambda (_: B).(\lambda (d2: C).(\lambda (_: T).(csubv d1 d2))))
 b2) v2))))) x1 x2 x3 H8 (getl_intro i c2 (CHead x2 (Bind x1) x3) x0 H6 
 H9))))))) H7)))))) H4)))))) H1))))))))).
 
-theorem csubv_getl_conf_void:
+lemma csubv_getl_conf_void:
  \forall (c1: C).(\forall (c2: C).((csubv c1 c2) \to (\forall (d1: 
 C).(\forall (v1: T).(\forall (i: nat).((getl i c1 (CHead d1 (Bind Void) v1)) 
 \to (ex2_2 C T (\lambda (d2: C).(\lambda (_: T).(csubv d1 d2))) (\lambda (d2: 

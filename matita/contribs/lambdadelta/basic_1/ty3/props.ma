@@ -18,7 +18,7 @@ include "basic_1/ty3/fwd.ma".
 
 include "basic_1/pc3/fwd.ma".
 
-theorem ty3_lift:
+lemma ty3_lift:
  \forall (g: G).(\forall (e: C).(\forall (t1: T).(\forall (t2: T).((ty3 g e 
 t1 t2) \to (\forall (c: C).(\forall (d: nat).(\forall (h: nat).((drop h d c 
 e) \to (ty3 g c (lift h d t1) (lift h d t2))))))))))
@@ -185,7 +185,7 @@ H4)) (lift h d (THead (Flat Cast) t4 t3)) (lift_head (Flat Cast) t4 t3 h d))
 (lift h d (THead (Flat Cast) t3 t0)) (lift_head (Flat Cast) t3 t0 h 
 d)))))))))))))) e t1 t2 H))))).
 
-theorem ty3_correct:
+lemma ty3_correct:
  \forall (g: G).(\forall (c: C).(\forall (t1: T).(\forall (t2: T).((ty3 g c 
 t1 t2) \to (ex T (\lambda (t: T).(ty3 g c t2 t)))))))
 \def
@@ -415,7 +415,7 @@ t2)).(\lambda (H7: (ty3 g c0 t2 x0)).(pc3_t (THead (Flat Cast) x0 t2) c0
 (THead (Flat Cast) t3 t2) (pc3_head_1 c0 t3 x0 (H3 x0 H7) (Flat Cast) t2) t4 
 H5))))) (ty3_gen_cast g c0 t0 t2 t4 H4)))))))))))) c u t1 H))))).
 
-theorem ty3_gen_abst_abst:
+lemma ty3_gen_abst_abst:
  \forall (g: G).(\forall (c: C).(\forall (u: T).(\forall (t1: T).(\forall 
 (t2: T).((ty3 g c (THead (Bind Abst) u t1) (THead (Bind Abst) u t2)) \to (ex2 
 T (\lambda (w: T).(ty3 g c u w)) (\lambda (_: T).(ty3 g (CHead c (Bind Abst) 
@@ -446,7 +446,7 @@ c u w)) (\lambda (_: T).(ty3 g (CHead c (Bind Abst) u) t1 t2)) x3 H5
 Abst c u t2 x H0)))) (ty3_correct g c (THead (Bind Abst) u t1) (THead (Bind 
 Abst) u t2) H))))))).
 
-theorem ty3_typecheck:
+lemma ty3_typecheck:
  \forall (g: G).(\forall (c: C).(\forall (t: T).(\forall (v: T).((ty3 g c t 
 v) \to (ex T (\lambda (u: T).(ty3 g c (THead (Flat Cast) v t) u)))))))
 \def
@@ -457,7 +457,7 @@ c v x)).(ex_intro T (\lambda (u: T).(ty3 g c (THead (Flat Cast) v t) u))
 (THead (Flat Cast) x v) (ty3_cast g c t v H x H0)))) (ty3_correct g c t v 
 H)))))).
 
-theorem ty3_getl_subst0:
+lemma ty3_getl_subst0:
  \forall (g: G).(\forall (c: C).(\forall (t: T).(\forall (u: T).((ty3 g c t 
 u) \to (\forall (v0: T).(\forall (t0: T).(\forall (i: nat).((subst0 i v0 t 
 t0) \to (\forall (b: B).(\forall (d: C).(\forall (v: T).((getl i c (CHead d 

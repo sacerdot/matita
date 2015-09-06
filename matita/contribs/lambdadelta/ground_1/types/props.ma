@@ -16,7 +16,7 @@
 
 include "ground_1/types/defs.ma".
 
-theorem ex2_sym:
+lemma ex2_sym:
  \forall (A: Type[0]).(\forall (P: ((A \to Prop))).(\forall (Q: ((A \to 
 Prop))).((ex2 A (\lambda (x: A).(P x)) (\lambda (x: A).(Q x))) \to (ex2 A 
 (\lambda (x: A).(Q x)) (\lambda (x: A).(P x))))))

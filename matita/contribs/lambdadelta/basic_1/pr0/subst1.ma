@@ -18,7 +18,7 @@ include "basic_1/pr0/subst0.ma".
 
 include "basic_1/subst1/fwd.ma".
 
-theorem pr0_delta1:
+lemma pr0_delta1:
  \forall (u1: T).(\forall (u2: T).((pr0 u1 u2) \to (\forall (t1: T).(\forall 
 (t2: T).((pr0 t1 t2) \to (\forall (w: T).((subst1 O u2 t2 w) \to (pr0 (THead 
 (Bind Abbr) u1 t1) (THead (Bind Abbr) u2 w)))))))))
@@ -30,7 +30,7 @@ Abbr) u1 t1) (THead (Bind Abbr) u2 t))) (pr0_comp u1 u2 H t1 t2 H0 (Bind
 Abbr)) (\lambda (t0: T).(\lambda (H2: (subst0 O u2 t2 t0)).(pr0_delta u1 u2 H 
 t1 t2 H0 t0 H2))) w H1)))))))).
 
-theorem pr0_subst1_back:
+lemma pr0_subst1_back:
  \forall (u2: T).(\forall (t1: T).(\forall (t2: T).(\forall (i: nat).((subst1 
 i u2 t1 t2) \to (\forall (u1: T).((pr0 u1 u2) \to (ex2 T (\lambda (t: 
 T).(subst1 i u1 t1 t)) (\lambda (t: T).(pr0 t t2)))))))))
@@ -48,7 +48,7 @@ T).(subst1 i u1 t1 t)) (\lambda (t: T).(pr0 t t0))) (\lambda (x: T).(\lambda
 T).(subst1 i u1 t1 t)) (\lambda (t: T).(pr0 t t0)) x (subst1_single i u1 t1 x 
 H2) H3)))) (pr0_subst0_back u2 t1 t0 i H0 u1 H1)))))) t2 H))))).
 
-theorem pr0_subst1_fwd:
+lemma pr0_subst1_fwd:
  \forall (u2: T).(\forall (t1: T).(\forall (t2: T).(\forall (i: nat).((subst1 
 i u2 t1 t2) \to (\forall (u1: T).((pr0 u2 u1) \to (ex2 T (\lambda (t: 
 T).(subst1 i u1 t1 t)) (\lambda (t: T).(pr0 t2 t)))))))))

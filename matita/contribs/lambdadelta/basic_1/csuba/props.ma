@@ -18,7 +18,7 @@ include "basic_1/csuba/defs.ma".
 
 include "basic_1/C/fwd.ma".
 
-theorem csuba_refl:
+lemma csuba_refl:
  \forall (g: G).(\forall (c: C).(csuba g c c))
 \def
  \lambda (g: G).(\lambda (c: C).(C_ind (\lambda (c0: C).(csuba g c0 c0)) 

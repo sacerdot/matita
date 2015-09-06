@@ -16,7 +16,7 @@
 
 include "basic_1/next_plus/defs.ma".
 
-theorem next_plus_assoc:
+lemma next_plus_assoc:
  \forall (g: G).(\forall (n: nat).(\forall (h1: nat).(\forall (h2: nat).(eq 
 nat (next_plus g (next_plus g n h1) h2) (next_plus g n (plus h1 h2))))))
 \def
@@ -36,7 +36,7 @@ n1)) (next g (next_plus g n n2)))) (f_equal nat nat (next g) (next_plus g
 (next g (next_plus g n n0)) n1) (next g (next_plus g n (plus n0 n1))) H0) 
 (plus n0 (S n1)) (plus_n_Sm n0 n1)))) h2)))) h1))).
 
-theorem next_plus_next:
+lemma next_plus_next:
  \forall (g: G).(\forall (n: nat).(\forall (h: nat).(eq nat (next_plus g 
 (next g n) h) (next g (next_plus g n h)))))
 \def
@@ -45,7 +45,7 @@ g n (plus (S O) h)) (\lambda (n0: nat).(eq nat n0 (next g (next_plus g n
 h)))) (refl_equal nat (next g (next_plus g n h))) (next_plus g (next_plus g n 
 (S O)) h) (next_plus_assoc g n (S O) h)))).
 
-theorem next_plus_lt:
+lemma next_plus_lt:
  \forall (g: G).(\forall (h: nat).(\forall (n: nat).(lt n (next_plus g (next 
 g n) h))))
 \def

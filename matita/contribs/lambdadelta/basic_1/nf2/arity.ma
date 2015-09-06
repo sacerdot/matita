@@ -18,7 +18,7 @@ include "basic_1/nf2/fwd.ma".
 
 include "basic_1/arity/subst0.ma".
 
-theorem arity_nf2_inv_all:
+lemma arity_nf2_inv_all:
  \forall (g: G).(\forall (c: C).(\forall (t: T).(\forall (a: A).((arity g c t 
 a) \to ((nf2 c t) \to (or3 (ex3_2 T T (\lambda (w: T).(\lambda (u: T).(eq T t 
 (THead (Bind Abst) w u)))) (\lambda (w: T).(\lambda (_: T).(nf2 c w))) 

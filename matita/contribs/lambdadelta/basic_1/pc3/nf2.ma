@@ -18,7 +18,7 @@ include "basic_1/pc3/defs.ma".
 
 include "basic_1/nf2/pr3.ma".
 
-theorem pc3_nf2:
+lemma pc3_nf2:
  \forall (c: C).(\forall (t1: T).(\forall (t2: T).((pc3 c t1 t2) \to ((nf2 c 
 t1) \to ((nf2 c t2) \to (eq T t1 t2))))))
 \def
@@ -33,7 +33,7 @@ t2 t1 H5 H1) in (let H7 \def (eq_ind T t2 (\lambda (t: T).(pr3 c t t1)) H5 t1
 H_y0) in (eq_ind_r T t1 (\lambda (t: T).(eq T t1 t)) (refl_equal T t1) t2 
 H_y0))))))))) H2))))))).
 
-theorem pc3_nf2_unfold:
+lemma pc3_nf2_unfold:
  \forall (c: C).(\forall (t1: T).(\forall (t2: T).((pc3 c t1 t2) \to ((nf2 c 
 t2) \to (pr3 c t1 t2)))))
 \def

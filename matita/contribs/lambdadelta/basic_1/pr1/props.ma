@@ -22,7 +22,7 @@ include "basic_1/subst1/props.ma".
 
 include "basic_1/T/props.ma".
 
-theorem pr1_pr0:
+lemma pr1_pr0:
  \forall (t1: T).(\forall (t2: T).((pr0 t1 t2) \to (pr1 t1 t2)))
 \def
  \lambda (t1: T).(\lambda (t2: T).(\lambda (H: (pr0 t1 t2)).(pr1_sing t2 t1 H 
@@ -40,7 +40,7 @@ t3) \to (pr1 t1 t3)))))
 t5))))).(\lambda (t5: T).(\lambda (H3: (pr1 t4 t5)).(pr1_sing t0 t3 H0 t5 (H2 
 t5 H3)))))))))) t1 t2 H))).
 
-theorem pr1_head_1:
+lemma pr1_head_1:
  \forall (u1: T).(\forall (u2: T).((pr1 u1 u2) \to (\forall (t: T).(\forall 
 (k: K).(pr1 (THead k u1 t) (THead k u2 t))))))
 \def
@@ -52,7 +52,7 @@ t0 t) (THead k t1 t)))) (\lambda (t0: T).(pr1_refl (THead k t0 t))) (\lambda
 (THead k t2 t) (THead k t1 t) (pr0_comp t1 t2 H0 t t (pr0_refl t) k) (THead k 
 t3 t) H2))))))) u1 u2 H))))).
 
-theorem pr1_head_2:
+lemma pr1_head_2:
  \forall (t1: T).(\forall (t2: T).((pr1 t1 t2) \to (\forall (u: T).(\forall 
 (k: K).(pr1 (THead k u t1) (THead k u t2))))))
 \def
@@ -84,7 +84,7 @@ t1 t0) (THead k t3 t5))).(pr1_sing (THead k t1 t0) (THead k t1 t4) (pr0_comp
 t1 t1 (pr0_refl t1) t4 t0 H4 k) (THead k t3 t5) H6))))))) t u H3))))))))))) v 
 w H))).
 
-theorem pr1_eta:
+lemma pr1_eta:
  \forall (w: T).(\forall (u: T).(let t \def (THead (Bind Abst) w u) in 
 (\forall (v: T).((pr1 v w) \to (pr1 (THead (Bind Abst) v (THead (Flat Appl) 
 (TLRef O) (lift (S O) O t))) t)))))

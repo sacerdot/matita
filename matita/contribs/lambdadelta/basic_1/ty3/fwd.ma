@@ -18,8 +18,8 @@ include "basic_1/ty3/defs.ma".
 
 include "basic_1/pc3/props.ma".
 
-let rec ty3_ind (g: G) (P: (C \to (T \to (T \to Prop)))) (f: (\forall (c: 
-C).(\forall (t2: T).(\forall (t: T).((ty3 g c t2 t) \to ((P c t2 t) \to 
+implied let rec ty3_ind (g: G) (P: (C \to (T \to (T \to Prop)))) (f: (\forall 
+(c: C).(\forall (t2: T).(\forall (t: T).((ty3 g c t2 t) \to ((P c t2 t) \to 
 (\forall (u: T).(\forall (t1: T).((ty3 g c u t1) \to ((P c u t1) \to ((pc3 c 
 t1 t2) \to (P c u t2)))))))))))) (f0: (\forall (c: C).(\forall (m: nat).(P c 
 (TSort m) (TSort (next g m)))))) (f1: (\forall (n: nat).(\forall (c: 
@@ -54,15 +54,15 @@ t3 t4 ((ty3_ind g P f f0 f1 f2 f3 f4 f5) c0 v (THead (Bind Abst) u t3) t4)) |
 f1 f2 f3 f4 f5) c0 t2 t3 t4) t5 t6 ((ty3_ind g P f f0 f1 f2 f3 f4 f5) c0 t3 
 t5 t6))].
 
-let rec tys3_ind (g: G) (c: C) (P: (TList \to (T \to Prop))) (f: (\forall (u: 
-T).(\forall (u0: T).((ty3 g c u u0) \to (P TNil u))))) (f0: (\forall (t: 
-T).(\forall (u: T).((ty3 g c t u) \to (\forall (ts: TList).((tys3 g c ts u) 
-\to ((P ts u) \to (P (TCons t ts) u)))))))) (t: TList) (t0: T) (t1: tys3 g c 
-t t0) on t1: P t t0 \def match t1 with [(tys3_nil u u0 t2) \Rightarrow (f u 
-u0 t2) | (tys3_cons t2 u t3 ts t4) \Rightarrow (f0 t2 u t3 ts t4 ((tys3_ind g 
-c P f f0) ts u t4))].
+implied let rec tys3_ind (g: G) (c: C) (P: (TList \to (T \to Prop))) (f: 
+(\forall (u: T).(\forall (u0: T).((ty3 g c u u0) \to (P TNil u))))) (f0: 
+(\forall (t: T).(\forall (u: T).((ty3 g c t u) \to (\forall (ts: 
+TList).((tys3 g c ts u) \to ((P ts u) \to (P (TCons t ts) u)))))))) (t: 
+TList) (t0: T) (t1: tys3 g c t t0) on t1: P t t0 \def match t1 with 
+[(tys3_nil u u0 t2) \Rightarrow (f u u0 t2) | (tys3_cons t2 u t3 ts t4) 
+\Rightarrow (f0 t2 u t3 ts t4 ((tys3_ind g c P f f0) ts u t4))].
 
-theorem ty3_gen_sort:
+lemma ty3_gen_sort:
  \forall (g: G).(\forall (c: C).(\forall (x: T).(\forall (n: nat).((ty3 g c 
 (TSort n) x) \to (pc3 c (TSort (next g n)) x)))))
 \def
@@ -127,7 +127,7 @@ _) \Rightarrow False | (TLRef _) \Rightarrow False | (THead _ _ _)
 \Rightarrow True])) I (TSort n) H5) in (False_ind (pc3 c0 (TSort (next g n)) 
 (THead (Flat Cast) t0 t2)) H6))))))))))) c y x H0))) H))))).
 
-theorem ty3_gen_lref:
+lemma ty3_gen_lref:
  \forall (g: G).(\forall (c: C).(\forall (x: T).(\forall (n: nat).((ty3 g c 
 (TLRef n) x) \to (or (ex3_3 C T T (\lambda (_: C).(\lambda (_: T).(\lambda 
 (t: T).(pc3 c (lift (S n) O t) x)))) (\lambda (e: C).(\lambda (u: T).(\lambda 
@@ -417,7 +417,7 @@ C).(\lambda (u: T).(\lambda (_: T).(getl n c0 (CHead e (Bind Abst) u)))))
 (\lambda (e: C).(\lambda (u: T).(\lambda (t: T).(ty3 g e u t)))))) 
 H6))))))))))) c y x H0))) H))))).
 
-theorem ty3_gen_bind:
+lemma ty3_gen_bind:
  \forall (g: G).(\forall (b: B).(\forall (c: C).(\forall (u: T).(\forall (t1: 
 T).(\forall (x: T).((ty3 g c (THead (Bind b) u t1) x) \to (ex3_2 T T (\lambda 
 (t2: T).(\lambda (_: T).(pc3 c (THead (Bind b) u t2) x))) (\lambda (_: 
@@ -584,7 +584,7 @@ T (THead (Flat Cast) t2 t0) (\lambda (ee: T).(match ee with [(TSort _)
 (_: T).(\lambda (t: T).(ty3 g c0 u t))) (\lambda (t4: T).(\lambda (_: T).(ty3 
 g (CHead c0 (Bind b) u) t1 t4)))) H6))))))))))) c y x H0))) H))))))).
 
-theorem ty3_gen_appl:
+lemma ty3_gen_appl:
  \forall (g: G).(\forall (c: C).(\forall (w: T).(\forall (v: T).(\forall (x: 
 T).((ty3 g c (THead (Flat Appl) w v) x) \to (ex3_2 T T (\lambda (u: 
 T).(\lambda (t: T).(pc3 c (THead (Flat Appl) w (THead (Bind Abst) u t)) x))) 
@@ -744,7 +744,7 @@ t0 t2)))) (\lambda (u: T).(\lambda (t: T).(ty3 g c0 v (THead (Bind Abst) u
 t)))) (\lambda (u: T).(\lambda (_: T).(ty3 g c0 w u)))) H6))))))))))) c y x 
 H0))) H)))))).
 
-theorem ty3_gen_cast:
+lemma ty3_gen_cast:
  \forall (g: G).(\forall (c: C).(\forall (t1: T).(\forall (t2: T).(\forall 
 (x: T).((ty3 g c (THead (Flat Cast) t2 t1) x) \to (ex3 T (\lambda (t0: 
 T).(pc3 c (THead (Flat Cast) t0 t2) x)) (\lambda (_: T).(ty3 g c t1 t2)) 
@@ -873,7 +873,7 @@ T).(ty3 g c0 t1 t2)) (\lambda (t5: T).(ty3 g c0 t2 t5)) t4 (pc3_refl c0
 (THead (Flat Cast) t4 t2)) H14 H10))) t3 H8))))))) H6))))))))))) c y x H0))) 
 H)))))).
 
-theorem tys3_gen_nil:
+lemma tys3_gen_nil:
  \forall (g: G).(\forall (c: C).(\forall (u: T).((tys3 g c TNil u) \to (ex T 
 (\lambda (u0: T).(ty3 g c u u0))))))
 \def
@@ -892,7 +892,7 @@ TList).(match ee with [TNil \Rightarrow False | (TCons _ _) \Rightarrow
 True])) I TNil H4) in (False_ind (ex T (\lambda (u1: T).(ty3 g c u0 u1))) 
 H5))))))))) y u H0))) H)))).
 
-theorem tys3_gen_cons:
+lemma tys3_gen_cons:
  \forall (g: G).(\forall (c: C).(\forall (ts: TList).(\forall (t: T).(\forall 
 (u: T).((tys3 g c (TCons t ts) u) \to (land (ty3 g c t u) (tys3 g c ts 
 u)))))))

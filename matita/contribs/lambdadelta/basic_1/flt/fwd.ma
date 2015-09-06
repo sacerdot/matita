@@ -16,7 +16,7 @@
 
 include "basic_1/flt/defs.ma".
 
-theorem flt_wf__q_ind:
+fact flt_wf__q_ind:
  \forall (P: ((C \to (T \to Prop)))).(((\forall (n: nat).((\lambda (P0: ((C 
 \to (T \to Prop)))).(\lambda (n0: nat).(\forall (c: C).(\forall (t: T).((eq 
 nat (fweight c t) n0) \to (P0 c t)))))) P n))) \to (\forall (c: C).(\forall 
@@ -28,7 +28,7 @@ nat (fweight c t) n0) \to (P0 c t)))))) P n))) \to (\forall (c: C).(\forall
 C).(\forall (t: T).((eq nat (fweight c t) n) \to (P c t))))))).(\lambda (c: 
 C).(\lambda (t: T).(H (fweight c t) c t (refl_equal nat (fweight c t))))))).
 
-theorem flt_wf_ind:
+lemma flt_wf_ind:
  \forall (P: ((C \to (T \to Prop)))).(((\forall (c2: C).(\forall (t2: 
 T).(((\forall (c1: C).(\forall (t1: T).((flt c1 t1 c2 t2) \to (P c1 t1))))) 
 \to (P c2 t2))))) \to (\forall (c: C).(\forall (t: T).(P c t))))

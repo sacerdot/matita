@@ -18,7 +18,7 @@ include "basic_1/leq/fwd.ma".
 
 include "basic_1/aplus/props.ma".
 
-theorem leq_refl:
+lemma leq_refl:
  \forall (g: G).(\forall (a: A).(leq g a a))
 \def
  \lambda (g: G).(\lambda (a: A).(A_ind (\lambda (a0: A).(leq g a0 a0)) 
@@ -27,14 +27,14 @@ theorem leq_refl:
 a0)).(\lambda (a1: A).(\lambda (H0: (leq g a1 a1)).(leq_head g a0 a0 H a1 a1 
 H0))))) a)).
 
-theorem leq_eq:
+lemma leq_eq:
  \forall (g: G).(\forall (a1: A).(\forall (a2: A).((eq A a1 a2) \to (leq g a1 
 a2))))
 \def
  \lambda (g: G).(\lambda (a1: A).(\lambda (a2: A).(\lambda (H: (eq A a1 
 a2)).(eq_ind A a1 (\lambda (a: A).(leq g a1 a)) (leq_refl g a1) a2 H)))).
 
-theorem leq_sym:
+lemma leq_sym:
  \forall (g: G).(\forall (a1: A).(\forall (a2: A).((leq g a1 a2) \to (leq g 
 a2 a1))))
 \def
@@ -92,7 +92,7 @@ A).(\lambda (H6: (leq g a4 x0)).(\lambda (H7: (leq g a6 x1)).(\lambda (H8:
 a3 a5) a)) (leq_head g a3 x0 (H1 x0 H6) a5 x1 (H3 x1 H7)) a0 H9))))))) 
 H5))))))))))))) a1 a2 H)))).
 
-theorem leq_ahead_false_1:
+lemma leq_ahead_false_1:
  \forall (g: G).(\forall (a1: A).(\forall (a2: A).((leq g (AHead a1 a2) a1) 
 \to (\forall (P: Prop).P))))
 \def
@@ -139,7 +139,7 @@ g a2 x1)).(\lambda (H5: (eq A (AHead a a0) (AHead x0 x1))).(let H6 \def
 H4 a0 H7) in (let H10 \def (eq_ind_r A x0 (\lambda (a3: A).(leq g (AHead a 
 a0) a3)) H3 a H8) in (H a0 H10 P))))) H6))))))) H2)))))))))) a1)).
 
-theorem leq_ahead_false_2:
+lemma leq_ahead_false_2:
  \forall (g: G).(\forall (a2: A).(\forall (a1: A).((leq g (AHead a1 a2) a2) 
 \to (\forall (P: Prop).P))))
 \def

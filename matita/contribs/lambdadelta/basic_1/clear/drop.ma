@@ -18,7 +18,7 @@ include "basic_1/clear/fwd.ma".
 
 include "basic_1/drop/fwd.ma".
 
-theorem drop_clear:
+lemma drop_clear:
  \forall (c1: C).(\forall (c2: C).(\forall (i: nat).((drop (S i) O c1 c2) \to 
 (ex2_3 B C T (\lambda (b: B).(\lambda (e: C).(\lambda (v: T).(clear c1 (CHead 
 e (Bind b) v))))) (\lambda (_: B).(\lambda (e: C).(\lambda (_: T).(drop i O e 
@@ -63,7 +63,7 @@ B).(\lambda (e: C).(\lambda (_: T).(drop i O e c2)))) x0 x1 x2 (clear_flat c
 (CHead x1 (Bind x0) x2) H3 f t) H4)))))) H2)))) k (drop_gen_drop k c c2 t i 
 H0))))))))) c1).
 
-theorem drop_clear_O:
+lemma drop_clear_O:
  \forall (b: B).(\forall (c: C).(\forall (e1: C).(\forall (u: T).((clear c 
 (CHead e1 (Bind b) u)) \to (\forall (e2: C).(\forall (i: nat).((drop i O e1 
 e2) \to (drop (S i) O c e2))))))))
@@ -99,7 +99,7 @@ H3)))) (\lambda (f: F).(\lambda (H2: (clear (CHead c0 (Flat f) t) (CHead e1
 (Bind b) u))).(drop_drop (Flat f) i c0 e2 (H e1 u (clear_gen_flat f c0 (CHead 
 e1 (Bind b) u) t H2) e2 i H1) t))) k H0))))))))))) c)).
 
-theorem drop_clear_S:
+lemma drop_clear_S:
  \forall (x2: C).(\forall (x1: C).(\forall (h: nat).(\forall (d: nat).((drop 
 h (S d) x1 x2) \to (\forall (b: B).(\forall (c2: C).(\forall (u: T).((clear 
 x2 (CHead c2 (Bind b) u)) \to (ex2 C (\lambda (c1: C).(clear x1 (CHead c1 

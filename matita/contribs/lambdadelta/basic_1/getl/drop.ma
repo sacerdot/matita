@@ -18,7 +18,7 @@ include "basic_1/getl/props.ma".
 
 include "basic_1/clear/drop.ma".
 
-theorem getl_drop:
+lemma getl_drop:
  \forall (b: B).(\forall (c: C).(\forall (e: C).(\forall (u: T).(\forall (h: 
 nat).((getl h c (CHead e (Bind b) u)) \to (drop (S h) O c e))))))
 \def
@@ -58,7 +58,7 @@ t) (CHead e (Bind b) u))).(drop_drop k (S n) c0 e (eq_ind_r nat (S (r k n))
 (\lambda (n0: nat).(drop n0 O c0 e)) (H e u (r k n) (getl_gen_S k c0 (CHead e 
 (Bind b) u) t n H1)) (r k (S n)) (r_S k n)) t)))) h)))))))) c)).
 
-theorem getl_drop_conf_lt:
+lemma getl_drop_conf_lt:
  \forall (b: B).(\forall (c: C).(\forall (c0: C).(\forall (u: T).(\forall (i: 
 nat).((getl i c (CHead c0 (Bind b) u)) \to (\forall (e: C).(\forall (h: 
 nat).(\forall (d: nat).((drop h (S (plus i d)) c e) \to (ex3_2 T C (\lambda 
@@ -325,7 +325,7 @@ h d x3)) (getl_head k i0 x1 (CHead x4 (Bind b) x3) H23 x2) H24) u H22))))))))
 H21)))))) e H11))))))))) (drop_gen_skip_l c0 e t h (plus (S i0) d) k 
 H9))))))) i H1 H7 IHx)))) k0 H5 H6))))))) x H3 H4)))) H2)))))))))))))) c)).
 
-theorem getl_drop_conf_ge:
+lemma getl_drop_conf_ge:
  \forall (i: nat).(\forall (a: C).(\forall (c: C).((getl i c a) \to (\forall 
 (e: C).(\forall (h: nat).(\forall (d: nat).((drop h d c e) \to ((le (plus d 
 h) i) \to (getl (minus i h) e a)))))))))
@@ -338,7 +338,7 @@ a)) (getl (minus i h) e a) (\lambda (x: C).(\lambda (H3: (drop i O c
 x)).(\lambda (H4: (clear x a)).(getl_intro (minus i h) e a x (drop_conf_ge i 
 x c H3 e h d H0 H1) H4)))) H2)))))))))).
 
-theorem getl_conf_ge_drop:
+lemma getl_conf_ge_drop:
  \forall (b: B).(\forall (c1: C).(\forall (e: C).(\forall (u: T).(\forall (i: 
 nat).((getl i c1 (CHead e (Bind b) u)) \to (\forall (c2: C).((drop (S O) i c1 
 c2) \to (drop i O c2 e))))))))
@@ -351,7 +351,7 @@ u i H) c2 (S O) i H0 (eq_ind_r nat (plus (S O) i) (\lambda (n: nat).(le n (S
 i))) (le_n (S i)) (plus i (S O)) (plus_sym i (S O)))) i (minus_Sx_SO i)) in 
 H3)))))))).
 
-theorem getl_drop_conf_rev:
+lemma getl_drop_conf_rev:
  \forall (j: nat).(\forall (e1: C).(\forall (e2: C).((drop j O e1 e2) \to 
 (\forall (b: B).(\forall (c2: C).(\forall (v2: T).(\forall (i: nat).((getl i 
 c2 (CHead e2 (Bind b) v2)) \to (ex2 C (\lambda (c1: C).(drop j O c1 c2)) 
@@ -362,7 +362,7 @@ e2)).(\lambda (b: B).(\lambda (c2: C).(\lambda (v2: T).(\lambda (i:
 nat).(\lambda (H0: (getl i c2 (CHead e2 (Bind b) v2))).(drop_conf_rev j e1 e2 
 H c2 (S i) (getl_drop b c2 e2 v2 i H0)))))))))).
 
-theorem drop_getl_trans_lt:
+lemma drop_getl_trans_lt:
  \forall (i: nat).(\forall (d: nat).((lt i d) \to (\forall (c1: C).(\forall 
 (c2: C).(\forall (h: nat).((drop h d c1 c2) \to (\forall (b: B).(\forall (e2: 
 C).(\forall (v: T).((getl i c2 (CHead e2 (Bind b) v)) \to (ex2 C (\lambda 
@@ -396,7 +396,7 @@ d (S i)) v)) x0 H5 H9) H10)))) H8)))))) (drop_trans_le i d (le_S_n i d
 (le_S_n (S i) (S d) (le_S (S (S i)) (S d) (le_n_S (S i) d H)))) c1 c2 h H0 x 
 H3))))) H2)))))))))))).
 
-theorem drop_getl_trans_le:
+lemma drop_getl_trans_le:
  \forall (i: nat).(\forall (d: nat).((le i d) \to (\forall (c1: C).(\forall 
 (c2: C).(\forall (h: nat).((drop h d c1 c2) \to (\forall (e2: C).((getl i c2 
 e2) \to (ex3_2 C C (\lambda (e0: C).(\lambda (_: C).(drop i O c1 e0))) 
@@ -421,7 +421,7 @@ O c1 e0))) (\lambda (e0: C).(\lambda (e1: C).(drop h (minus d i) e0 e1)))
 (\lambda (_: C).(\lambda (e1: C).(clear e1 e2))) x0 x H6 H7 H4)))) H5))))) 
 H2)))))))))).
 
-theorem drop_getl_trans_ge:
+lemma drop_getl_trans_ge:
  \forall (i: nat).(\forall (c1: C).(\forall (c2: C).(\forall (d: 
 nat).(\forall (h: nat).((drop h d c1 c2) \to (\forall (e2: C).((getl i c2 e2) 
 \to ((le d i) \to (getl (plus i h) c1 e2)))))))))
@@ -434,7 +434,7 @@ C).(\lambda (H0: (getl i c2 e2)).(\lambda (H1: (le d i)).(let H2 \def
 C).(\lambda (H3: (drop i O c2 x)).(\lambda (H4: (clear x e2)).(getl_intro 
 (plus i h) c1 e2 x (drop_trans_ge i c1 c2 d h H x H3 H1) H4)))) H2)))))))))).
 
-theorem getl_drop_trans:
+lemma getl_drop_trans:
  \forall (c1: C).(\forall (c2: C).(\forall (h: nat).((getl h c1 c2) \to 
 (\forall (e2: C).(\forall (i: nat).((drop (S i) O c2 e2) \to (drop (S (plus i 
 h)) O c1 e2)))))))

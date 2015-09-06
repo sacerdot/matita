@@ -18,7 +18,7 @@ include "basic_1/csubc/fwd.ma".
 
 include "basic_1/sc3/props.ma".
 
-theorem csubc_drop_conf_O:
+lemma csubc_drop_conf_O:
  \forall (g: G).(\forall (c1: C).(\forall (e1: C).(\forall (h: nat).((drop h 
 O c1 e1) \to (\forall (c2: C).((csubc g c1 c2) \to (ex2 C (\lambda (e2: 
 C).(drop h O c2 e2)) (\lambda (e2: C).(csubc g e1 e2)))))))))
@@ -133,7 +133,7 @@ e1 x)).(ex_intro2 C (\lambda (e2: C).(drop (S n) O (CHead x1 (Bind x0) x2)
 e2)) (\lambda (e2: C).(csubc g e1 e2)) x (drop_drop (Bind x0) n x1 x H12 x2) 
 H13)))) H11))))) c2 H5)))))))) H4)) H3)))))))) h))))))) c1)).
 
-theorem drop_csubc_trans:
+lemma drop_csubc_trans:
  \forall (g: G).(\forall (c2: C).(\forall (e2: C).(\forall (d: nat).(\forall 
 (h: nat).((drop h d c2 e2) \to (\forall (e1: C).((csubc g e2 e1) \to (ex2 C 
 (\lambda (c1: C).(drop h d c1 e1)) (\lambda (c1: C).(csubc g c2 c1))))))))))
@@ -299,7 +299,7 @@ x2 x4) (csubc_void g c x H19 x2 H13 (lift h (r (Bind Void) n) x1) (lift h n
 x4)))))) H17))) k H12))) e1 H11)))))))) H10)) H9))) t H4))))))))) 
 (drop_gen_skip_l c e2 t h n k H1)))))))) d))))))) c2)).
 
-theorem csubc_drop_conf_rev:
+lemma csubc_drop_conf_rev:
  \forall (g: G).(\forall (c2: C).(\forall (e2: C).(\forall (d: nat).(\forall 
 (h: nat).((drop h d c2 e2) \to (\forall (e1: C).((csubc g e1 e2) \to (ex2 C 
 (\lambda (c1: C).(drop h d c1 e1)) (\lambda (c1: C).(csubc g c1 c2))))))))))

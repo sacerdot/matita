@@ -16,14 +16,14 @@
 
 include "basic_1/T/defs.ma".
 
-let rec T_rect (P: (T \to Type[0])) (f: (\forall (n: nat).(P (TSort n)))) 
-(f0: (\forall (n: nat).(P (TLRef n)))) (f1: (\forall (k: K).(\forall (t: 
-T).((P t) \to (\forall (t0: T).((P t0) \to (P (THead k t t0)))))))) (t: T) on 
-t: P t \def match t with [(TSort n) \Rightarrow (f n) | (TLRef n) \Rightarrow 
-(f0 n) | (THead k t0 t1) \Rightarrow (f1 k t0 ((T_rect P f f0 f1) t0) t1 
-((T_rect P f f0 f1) t1))].
+implied let rec T_rect (P: (T \to Type[0])) (f: (\forall (n: nat).(P (TSort 
+n)))) (f0: (\forall (n: nat).(P (TLRef n)))) (f1: (\forall (k: K).(\forall 
+(t: T).((P t) \to (\forall (t0: T).((P t0) \to (P (THead k t t0)))))))) (t: 
+T) on t: P t \def match t with [(TSort n) \Rightarrow (f n) | (TLRef n) 
+\Rightarrow (f0 n) | (THead k t0 t1) \Rightarrow (f1 k t0 ((T_rect P f f0 f1) 
+t0) t1 ((T_rect P f f0 f1) t1))].
 
-theorem T_ind:
+implied lemma T_ind:
  \forall (P: ((T \to Prop))).(((\forall (n: nat).(P (TSort n)))) \to 
 (((\forall (n: nat).(P (TLRef n)))) \to (((\forall (k: K).(\forall (t: T).((P 
 t) \to (\forall (t0: T).((P t0) \to (P (THead k t t0)))))))) \to (\forall (t: 
@@ -31,7 +31,7 @@ T).(P t)))))
 \def
  \lambda (P: ((T \to Prop))).(T_rect P).
 
-theorem thead_x_y_y:
+lemma thead_x_y_y:
  \forall (k: K).(\forall (v: T).(\forall (t: T).((eq T (THead k v t) t) \to 
 (\forall (P: Prop).P))))
 \def

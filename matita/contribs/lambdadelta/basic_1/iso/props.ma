@@ -18,7 +18,7 @@ include "basic_1/T/fwd.ma".
 
 include "basic_1/iso/fwd.ma".
 
-theorem iso_refl:
+lemma iso_refl:
  \forall (t: T).(iso t t)
 \def
  \lambda (t: T).(T_ind (\lambda (t0: T).(iso t0 t0)) (\lambda (n: 

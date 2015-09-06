@@ -22,19 +22,19 @@ include "basic_1/r/props.ma".
 
 include "basic_1/C/fwd.ma".
 
-let rec drop_ind (P: (nat \to (nat \to (C \to (C \to Prop))))) (f: (\forall 
-(c: C).(P O O c c))) (f0: (\forall (k: K).(\forall (h: nat).(\forall (c: 
-C).(\forall (e: C).((drop (r k h) O c e) \to ((P (r k h) O c e) \to (\forall 
-(u: T).(P (S h) O (CHead c k u) e))))))))) (f1: (\forall (k: K).(\forall (h: 
-nat).(\forall (d: nat).(\forall (c: C).(\forall (e: C).((drop h (r k d) c e) 
-\to ((P h (r k d) c e) \to (\forall (u: T).(P h (S d) (CHead c k (lift h (r k 
-d) u)) (CHead e k u))))))))))) (n: nat) (n0: nat) (c: C) (c0: C) (d: drop n 
-n0 c c0) on d: P n n0 c c0 \def match d with [(drop_refl c1) \Rightarrow (f 
-c1) | (drop_drop k h c1 e d0 u) \Rightarrow (f0 k h c1 e d0 ((drop_ind P f f0 
-f1) (r k h) O c1 e d0) u) | (drop_skip k h d0 c1 e d1 u) \Rightarrow (f1 k h 
-d0 c1 e d1 ((drop_ind P f f0 f1) h (r k d0) c1 e d1) u)].
+implied let rec drop_ind (P: (nat \to (nat \to (C \to (C \to Prop))))) (f: 
+(\forall (c: C).(P O O c c))) (f0: (\forall (k: K).(\forall (h: nat).(\forall 
+(c: C).(\forall (e: C).((drop (r k h) O c e) \to ((P (r k h) O c e) \to 
+(\forall (u: T).(P (S h) O (CHead c k u) e))))))))) (f1: (\forall (k: 
+K).(\forall (h: nat).(\forall (d: nat).(\forall (c: C).(\forall (e: C).((drop 
+h (r k d) c e) \to ((P h (r k d) c e) \to (\forall (u: T).(P h (S d) (CHead c 
+k (lift h (r k d) u)) (CHead e k u))))))))))) (n: nat) (n0: nat) (c: C) (c0: 
+C) (d: drop n n0 c c0) on d: P n n0 c c0 \def match d with [(drop_refl c1) 
+\Rightarrow (f c1) | (drop_drop k h c1 e d0 u) \Rightarrow (f0 k h c1 e d0 
+((drop_ind P f f0 f1) (r k h) O c1 e d0) u) | (drop_skip k h d0 c1 e d1 u) 
+\Rightarrow (f1 k h d0 c1 e d1 ((drop_ind P f f0 f1) h (r k d0) c1 e d1) u)].
 
-theorem drop_gen_sort:
+lemma drop_gen_sort:
  \forall (n: nat).(\forall (h: nat).(\forall (d: nat).(\forall (x: C).((drop 
 h d (CSort n) x) \to (and3 (eq C x (CSort n)) (eq nat h O) (eq nat d O))))))
 \def
@@ -65,7 +65,7 @@ with [(CSort _) \Rightarrow False | (CHead _ _ _) \Rightarrow True])) I
 k d0) u))) (eq nat h0 O) (eq nat (S d0) O)) H4))))))))))) h d y x H0))) 
 H))))).
 
-theorem drop_gen_refl:
+lemma drop_gen_refl:
  \forall (x: C).(\forall (e: C).((drop O O x e) \to (eq C x e)))
 \def
  \lambda (x: C).(\lambda (e: C).(\lambda (H: (drop O O x e)).(insert_eq nat O 
@@ -94,7 +94,7 @@ nat).(match ee with [O \Rightarrow False | (S _) \Rightarrow True])) I O H4)
 in (False_ind (eq C (CHead c k (lift (S d) (r k d) u)) (CHead e0 k u)) H9)) h 
 H6)))))))))))))) y y0 x e H1))) H0))) H))).
 
-theorem drop_gen_drop:
+lemma drop_gen_drop:
  \forall (k: K).(\forall (c: C).(\forall (x: C).(\forall (u: T).(\forall (h: 
 nat).((drop (S h) O (CHead c k u) x) \to (drop (r k h) O c x))))))
 \def
@@ -173,7 +173,7 @@ H18) in (let H22 \def (eq_ind nat (S d) (\lambda (ee: nat).(match ee with [O
 k h) (S d) c (CHead e k u0)) H22))) k0 H14))))))))) H12)) H11)))))))))))))))) 
 y1 y0 y x H2))) H1))) H0))) H)))))).
 
-theorem drop_gen_skip_r:
+lemma drop_gen_skip_r:
  \forall (c: C).(\forall (x: C).(\forall (u: T).(\forall (h: nat).(\forall 
 (d: nat).(\forall (k: K).((drop h (S d) x (CHead c k u)) \to (ex2 C (\lambda 
 (e: C).(eq C x (CHead e k (lift h (r k d) u)))) (\lambda (e: C).(drop h (r k 
@@ -250,7 +250,7 @@ C (CHead c0 k (lift h0 (r k d) u)) (CHead e0 k (lift h0 (r k d) u))))
 h0 (r k d) u))) H17) d0 H15)))) k0 H9))))) u0 H8)))) H7)) H6)))))))))))) h y0 
 x y H1))) H0))) H))))))).
 
-theorem drop_gen_skip_l:
+lemma drop_gen_skip_l:
  \forall (c: C).(\forall (x: C).(\forall (u: T).(\forall (h: nat).(\forall 
 (d: nat).(\forall (k: K).((drop h (S d) (CHead c k u) x) \to (ex3_2 C T 
 (\lambda (e: C).(\lambda (v: T).(eq C x (CHead e k v)))) (\lambda (_: 
@@ -366,7 +366,7 @@ u0 (refl_equal C (CHead e k u0)) (refl_equal T (lift h0 (r k d) u0)) H19) d0
 H17)))) u H13)) k0 H9))))))))) H7)) H6)))))))))))) h y0 y x H1))) H0))) 
 H))))))).
 
-theorem drop_S:
+lemma drop_S:
  \forall (b: B).(\forall (c: C).(\forall (e: C).(\forall (u: T).(\forall (h: 
 nat).((drop h O c (CHead e (Bind b) u)) \to (drop (S h) O c e))))))
 \def

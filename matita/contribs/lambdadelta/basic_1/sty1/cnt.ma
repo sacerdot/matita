@@ -18,7 +18,7 @@ include "basic_1/sty1/props.ma".
 
 include "basic_1/cnt/props.ma".
 
-theorem sty1_cnt:
+lemma sty1_cnt:
  \forall (g: G).(\forall (c: C).(\forall (t1: T).(\forall (t: T).((sty0 g c 
 t1 t) \to (ex2 T (\lambda (t2: T).(sty1 g c t1 t2)) (\lambda (t2: T).(cnt 
 t2)))))))

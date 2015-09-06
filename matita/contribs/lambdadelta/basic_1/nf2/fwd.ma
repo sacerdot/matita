@@ -22,7 +22,7 @@ include "basic_1/subst0/dec.ma".
 
 include "basic_1/T/props.ma".
 
-theorem nf2_gen_lref:
+lemma nf2_gen_lref:
  \forall (c: C).(\forall (d: C).(\forall (u: T).(\forall (i: nat).((getl i c 
 (CHead d (Bind Abbr) u)) \to ((nf2 c (TLRef i)) \to (\forall (P: Prop).P))))))
 \def
@@ -33,7 +33,7 @@ Prop).(lift_gen_lref_false (S i) O i (le_O_n i) (le_n (plus O (S i))) u (H0
 (lift (S i) O u) (pr2_delta c d u i H (TLRef i) (TLRef i) (pr0_refl (TLRef 
 i)) (lift (S i) O u) (subst0_lref u i))) P))))))).
 
-theorem nf2_gen_abst:
+lemma nf2_gen_abst:
  \forall (c: C).(\forall (u: T).(\forall (t: T).((nf2 c (THead (Bind Abst) u 
 t)) \to (land (nf2 c u) (nf2 (CHead c (Bind Abst) u) t)))))
 \def
@@ -55,7 +55,7 @@ T (\lambda (e: T).(match e with [(TSort _) \Rightarrow t | (TLRef _)
 (\lambda (t0: T).(pr2 (CHead c (Bind Abst) u) t t0)) H0 t H1) in (eq_ind T t 
 (\lambda (t0: T).(eq T t t0)) (refl_equal T t) t2 H1))))))))).
 
-theorem nf2_gen_cast:
+lemma nf2_gen_cast:
  \forall (c: C).(\forall (u: T).(\forall (t: T).((nf2 c (THead (Flat Cast) u 
 t)) \to (\forall (P: Prop).P))))
 \def
@@ -63,7 +63,7 @@ t)) \to (\forall (P: Prop).P))))
 (Flat Cast) u t))).(\lambda (P: Prop).(thead_x_y_y (Flat Cast) u t (H t 
 (pr2_free c (THead (Flat Cast) u t) t (pr0_tau t t (pr0_refl t) u))) P))))).
 
-theorem nf2_gen_beta:
+lemma nf2_gen_beta:
  \forall (c: C).(\forall (u: T).(\forall (v: T).(\forall (t: T).((nf2 c 
 (THead (Flat Appl) u (THead (Bind Abst) v t))) \to (\forall (P: Prop).P)))))
 \def
@@ -78,7 +78,7 @@ Prop).(let H0 \def (eq_ind T (THead (Flat Appl) u (THead (Bind Abst) v t))
 Abst) v t)) (THead (Bind Abbr) u t) (pr0_beta v u u (pr0_refl u) t t 
 (pr0_refl t))))) in (False_ind P H0))))))).
 
-theorem nf2_gen_flat:
+lemma nf2_gen_flat:
  \forall (f: F).(\forall (c: C).(\forall (u: T).(\forall (t: T).((nf2 c 
 (THead (Flat f) u t)) \to (land (nf2 c u) (nf2 c t))))))
 \def
@@ -95,7 +95,7 @@ _) \Rightarrow t | (TLRef _) \Rightarrow t | (THead _ _ t0) \Rightarrow t0]))
 (THead (Flat f) u t) (THead (Flat f) u t2) (H (THead (Flat f) u t2) 
 (pr2_head_2 c u t t2 (Flat f) (pr2_cflat c t t2 H0 f u)))) in H1)))))))).
 
-theorem nf2_gen__nf2_gen_aux:
+fact nf2_gen__nf2_gen_aux:
  \forall (b: B).(\forall (x: T).(\forall (u: T).(\forall (d: nat).((eq T 
 (THead (Bind b) u (lift (S O) d x)) x) \to (\forall (P: Prop).P)))))
 \def
@@ -136,7 +136,7 @@ t0)) (\lambda (t1: T).(eq T t1 t0)) H7 (THead (Bind b) (lift (S O) d t) (lift
 (S O) (S d) t0)) (lift_bind b t t0 (S O) d)) in (H0 (lift (S O) d t) (S d) H8 
 P)))))) H3)) H2))))))))))) x)).
 
-theorem nf2_gen_abbr:
+lemma nf2_gen_abbr:
  \forall (c: C).(\forall (u: T).(\forall (t: T).((nf2 c (THead (Bind Abbr) u 
 t)) \to (\forall (P: Prop).P))))
 \def
@@ -161,7 +161,7 @@ t0) t2) \to (eq T (THead (Bind Abbr) u t0) t2)))) H (lift (S O) O x) H2) in
 (S O) O x)) x (pr0_zeta Abbr not_abbr_abst x x (pr0_refl x) u))) P))) H1))) 
 H0))))))).
 
-theorem nf2_gen_void:
+lemma nf2_gen_void:
  \forall (c: C).(\forall (u: T).(\forall (t: T).((nf2 c (THead (Bind Void) u 
 (lift (S O) O t))) \to (\forall (P: Prop).P))))
 \def

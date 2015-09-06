@@ -16,9 +16,9 @@
 
 include "basic_1/csubc/defs.ma".
 
-let rec csubc_ind (g: G) (P: (C \to (C \to Prop))) (f: (\forall (n: nat).(P 
-(CSort n) (CSort n)))) (f0: (\forall (c1: C).(\forall (c2: C).((csubc g c1 
-c2) \to ((P c1 c2) \to (\forall (k: K).(\forall (v: T).(P (CHead c1 k v) 
+implied let rec csubc_ind (g: G) (P: (C \to (C \to Prop))) (f: (\forall (n: 
+nat).(P (CSort n) (CSort n)))) (f0: (\forall (c1: C).(\forall (c2: C).((csubc 
+g c1 c2) \to ((P c1 c2) \to (\forall (k: K).(\forall (v: T).(P (CHead c1 k v) 
 (CHead c2 k v))))))))) (f1: (\forall (c1: C).(\forall (c2: C).((csubc g c1 
 c2) \to ((P c1 c2) \to (\forall (b: B).((not (eq B b Void)) \to (\forall (u1: 
 T).(\forall (u2: T).(P (CHead c1 (Bind Void) u1) (CHead c2 (Bind b) 
@@ -32,7 +32,7 @@ v) \Rightarrow (f0 c2 c3 c4 ((csubc_ind g P f f0 f1 f2) c2 c3 c4) k v) |
 f1 f2) c2 c3 c4) b n u1 u2) | (csubc_abst c2 c3 c4 v a s0 w s1) \Rightarrow 
 (f2 c2 c3 c4 ((csubc_ind g P f f0 f1 f2) c2 c3 c4) v a s0 w s1)].
 
-theorem csubc_gen_sort_l:
+lemma csubc_gen_sort_l:
  \forall (g: G).(\forall (x: C).(\forall (n: nat).((csubc g (CSort n) x) \to 
 (eq C x (CSort n)))))
 \def
@@ -65,7 +65,7 @@ c1 (Bind Abst) v) (CSort n))).(let H6 \def (eq_ind C (CHead c1 (Bind Abst) v)
 \Rightarrow True])) I (CSort n) H5) in (False_ind (eq C (CHead c2 (Bind Abbr) 
 w) (CHead c1 (Bind Abst) v)) H6)))))))))))) y x H0))) H)))).
 
-theorem csubc_gen_head_l:
+lemma csubc_gen_head_l:
  \forall (g: G).(\forall (c1: C).(\forall (x: C).(\forall (v: T).(\forall (k: 
 K).((csubc g (CHead c1 k v) x) \to (or3 (ex2 C (\lambda (c2: C).(eq C x 
 (CHead c2 k v))) (\lambda (c2: C).(csubc g c1 c2))) (ex5_3 C T A (\lambda (_: 
@@ -348,7 +348,7 @@ g a0 c3 w0)))) c2 w a (refl_equal K (Bind Abst)) (refl_equal C (CHead c2
 (Bind Abbr) w)) H14 H12 H4)) k H9))))))))) H7)) H6)))))))))))) y x H0))) 
 H)))))).
 
-theorem csubc_gen_sort_r:
+lemma csubc_gen_sort_r:
  \forall (g: G).(\forall (x: C).(\forall (n: nat).((csubc g x (CSort n)) \to 
 (eq C x (CSort n)))))
 \def
@@ -381,7 +381,7 @@ c2 (Bind Abbr) w) (CSort n))).(let H6 \def (eq_ind C (CHead c2 (Bind Abbr) w)
 \Rightarrow True])) I (CSort n) H5) in (False_ind (eq C (CHead c1 (Bind Abst) 
 v) (CHead c2 (Bind Abbr) w)) H6)))))))))))) x y H0))) H)))).
 
-theorem csubc_gen_head_r:
+lemma csubc_gen_head_r:
  \forall (g: G).(\forall (c2: C).(\forall (x: C).(\forall (w: T).(\forall (k: 
 K).((csubc g x (CHead c2 k w)) \to (or3 (ex2 C (\lambda (c1: C).(eq C x 
 (CHead c1 k w))) (\lambda (c1: C).(csubc g c1 c2))) (ex5_3 C T A (\lambda (_: 

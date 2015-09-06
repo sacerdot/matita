@@ -22,7 +22,7 @@ include "basic_1/arity/fwd.ma".
 
 include "basic_1/csubv/getl.ma".
 
-theorem csuba_arity:
+lemma csuba_arity:
  \forall (g: G).(\forall (c1: C).(\forall (t: T).(\forall (a: A).((arity g c1 
 t a) \to (\forall (c2: C).((csuba g c1 c2) \to (arity g c2 t a)))))))
 \def
@@ -101,7 +101,7 @@ g c2 t0 a1))))).(\lambda (a2: A).(\lambda (H2: (leq g a1 a2)).(\lambda (c2:
 C).(\lambda (H3: (csuba g c c2)).(arity_repl g c2 t0 a1 (H1 c2 H3) a2 
 H2)))))))))) c1 t a H))))).
 
-theorem csuba_arity_rev:
+lemma csuba_arity_rev:
  \forall (g: G).(\forall (c1: C).(\forall (t: T).(\forall (a: A).((arity g c1 
 t a) \to (\forall (c2: C).((csuba g c2 c1) \to ((csubv c2 c1) \to (arity g c2 
 t a))))))))

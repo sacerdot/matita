@@ -20,7 +20,7 @@ include "basic_1/drop1/fwd.ma".
 
 include "basic_1/lift1/props.ma".
 
-theorem sns3_lifts1:
+lemma sns3_lifts1:
  \forall (e: C).(\forall (hds: PList).(\forall (c: C).((drop1 hds c e) \to 
 (\forall (ts: TList).((sns3 e ts) \to (sns3 c (lifts1 hds ts)))))))
 \def

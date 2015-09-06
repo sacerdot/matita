@@ -18,7 +18,7 @@ include "basic_1/csubc/drop.ma".
 
 include "basic_1/csubc/clear.ma".
 
-theorem csubc_getl_conf:
+lemma csubc_getl_conf:
  \forall (g: G).(\forall (c1: C).(\forall (e1: C).(\forall (i: nat).((getl i 
 c1 e1) \to (\forall (c2: C).((csubc g c1 c2) \to (ex2 C (\lambda (e2: 
 C).(getl i c2 e2)) (\lambda (e2: C).(csubc g e1 e2)))))))))

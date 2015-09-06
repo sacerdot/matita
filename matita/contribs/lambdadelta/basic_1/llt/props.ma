@@ -18,7 +18,7 @@ include "basic_1/llt/defs.ma".
 
 include "basic_1/leq/fwd.ma".
 
-theorem lweight_repl:
+lemma lweight_repl:
  \forall (g: G).(\forall (a1: A).(\forall (a2: A).((leq g a1 a2) \to (eq nat 
 (lweight a1) (lweight a2)))))
 \def
@@ -34,7 +34,7 @@ a0) (lweight a4)) (plus (lweight a3) (lweight a5)) (f_equal2 nat nat nat plus
 (lweight a0) (lweight a3) (lweight a4) (lweight a5) H1 H3)))))))))) a1 a2 
 H)))).
 
-theorem llt_repl:
+lemma llt_repl:
  \forall (g: G).(\forall (a1: A).(\forall (a2: A).((leq g a1 a2) \to (\forall 
 (a3: A).((llt a1 a3) \to (llt a2 a3))))))
 \def
@@ -51,13 +51,13 @@ a3) \to (llt a1 a3)))))
 a1) (lweight a2))).(\lambda (H0: (lt (lweight a2) (lweight a3))).(lt_trans 
 (lweight a1) (lweight a2) (lweight a3) H H0))))).
 
-theorem llt_head_sx:
+lemma llt_head_sx:
  \forall (a1: A).(\forall (a2: A).(llt a1 (AHead a1 a2)))
 \def
  \lambda (a1: A).(\lambda (a2: A).(le_n_S (lweight a1) (plus (lweight a1) 
 (lweight a2)) (le_plus_l (lweight a1) (lweight a2)))).
 
-theorem llt_head_dx:
+lemma llt_head_dx:
  \forall (a1: A).(\forall (a2: A).(llt a2 (AHead a1 a2)))
 \def
  \lambda (a1: A).(\lambda (a2: A).(le_n_S (lweight a2) (plus (lweight a1) 

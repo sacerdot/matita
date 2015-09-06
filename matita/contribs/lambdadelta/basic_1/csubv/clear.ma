@@ -18,7 +18,7 @@ include "basic_1/csubv/fwd.ma".
 
 include "basic_1/clear/fwd.ma".
 
-theorem csubv_clear_conf:
+lemma csubv_clear_conf:
  \forall (c1: C).(\forall (c2: C).((csubv c1 c2) \to (\forall (b1: 
 B).(\forall (d1: C).(\forall (v1: T).((clear c1 (CHead d1 (Bind b1) v1)) \to 
 (ex2_3 B C T (\lambda (_: B).(\lambda (d2: C).(\lambda (_: T).(csubv d1 
@@ -105,7 +105,7 @@ B C T (\lambda (_: B).(\lambda (d2: C).(\lambda (_: T).(csubv d1 d2))))
 v2) (CHead d2 (Bind b2) v3))))) x0 x1 x2 H4 (clear_flat c4 (CHead x1 (Bind 
 x0) x2) H5 f2 v2))))))) H3))))))))))))))) c1 c2 H))).
 
-theorem csubv_clear_conf_void:
+lemma csubv_clear_conf_void:
  \forall (c1: C).(\forall (c2: C).((csubv c1 c2) \to (\forall (d1: 
 C).(\forall (v1: T).((clear c1 (CHead d1 (Bind Void) v1)) \to (ex2_2 C T 
 (\lambda (d2: C).(\lambda (_: T).(csubv d1 d2))) (\lambda (d2: C).(\lambda 

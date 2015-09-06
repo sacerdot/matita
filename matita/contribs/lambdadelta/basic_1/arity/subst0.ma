@@ -26,7 +26,7 @@ include "basic_1/subst0/fwd.ma".
 
 include "basic_1/getl/getl.ma".
 
-theorem arity_gen_cvoid_subst0:
+lemma arity_gen_cvoid_subst0:
  \forall (g: G).(\forall (c: C).(\forall (t: T).(\forall (a: A).((arity g c t 
 a) \to (\forall (d: C).(\forall (u: T).(\forall (i: nat).((getl i c (CHead d 
 (Bind Void) u)) \to (\forall (w: T).(\forall (v: T).((subst0 i w t v) \to 
@@ -232,7 +232,7 @@ nat).(\lambda (H3: (getl i c0 (CHead d (Bind Void) u))).(\lambda (w:
 T).(\lambda (v: T).(\lambda (H4: (subst0 i w t0 v)).(\lambda (P: Prop).(H1 d 
 u i H3 w v H4 P)))))))))))))))) c t a H))))).
 
-theorem arity_gen_cvoid:
+lemma arity_gen_cvoid:
  \forall (g: G).(\forall (c: C).(\forall (t: T).(\forall (a: A).((arity g c t 
 a) \to (\forall (d: C).(\forall (u: T).(\forall (i: nat).((getl i c (CHead d 
 (Bind Void) u)) \to (ex T (\lambda (v: T).(eq T t (lift (S O) i v))))))))))))
@@ -253,7 +253,7 @@ x) (\lambda (t0: T).(ex T (\lambda (v: T).(eq T t0 (lift (S O) i v)))))
 (ex_intro T (\lambda (v: T).(eq T (lift (S O) i x) (lift (S O) i v))) x 
 (refl_equal T (lift (S O) i x))) t H3))) H2))) H1))))))))))).
 
-theorem arity_fsubst0:
+lemma arity_fsubst0:
  \forall (g: G).(\forall (c1: C).(\forall (t1: T).(\forall (a: A).((arity g 
 c1 t1 a) \to (\forall (d1: C).(\forall (u: T).(\forall (i: nat).((getl i c1 
 (CHead d1 (Bind Abbr) u)) \to (\forall (c2: C).(\forall (t2: T).((fsubst0 i u 
@@ -1101,7 +1101,7 @@ c c2))).(land_ind (subst0 i u t t2) (csubst0 i u c c2) (arity g c2 t2 a2)
 c2)).(arity_repl g c2 t2 a1 (H1 d1 u i H3 c2 t2 (fsubst0_both i u c t t2 H7 
 c2 H8)) a2 H2))) H6)) H5))))))))))))))))) c1 t1 a H))))).
 
-theorem arity_subst0:
+lemma arity_subst0:
  \forall (g: G).(\forall (c: C).(\forall (t1: T).(\forall (a: A).((arity g c 
 t1 a) \to (\forall (d: C).(\forall (u: T).(\forall (i: nat).((getl i c (CHead 
 d (Bind Abbr) u)) \to (\forall (t2: T).((subst0 i u t1 t2) \to (arity g c t2 

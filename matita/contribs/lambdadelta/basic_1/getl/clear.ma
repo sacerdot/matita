@@ -18,7 +18,7 @@ include "basic_1/getl/props.ma".
 
 include "basic_1/clear/drop.ma".
 
-theorem clear_getl_trans:
+lemma clear_getl_trans:
  \forall (i: nat).(\forall (c2: C).(\forall (c3: C).((getl i c2 c3) \to 
 (\forall (c1: C).((clear c1 c2) \to (getl i c1 c3))))))
 \def
@@ -48,7 +48,7 @@ H6) H7)))) H5))))) (\lambda (f: F).(\lambda (_: (getl (S n) (CHead c (Flat f)
 t) c3)).(\lambda (H4: (clear c1 (CHead c (Flat f) t))).(clear_gen_flat_r f c1 
 c t H4 (getl (S n) c1 c3))))) k H1 H2))))))))) c2)))) i).
 
-theorem getl_clear_trans:
+lemma getl_clear_trans:
  \forall (i: nat).(\forall (c1: C).(\forall (c2: C).((getl i c1 c2) \to 
 (\forall (c3: C).((clear c2 c3) \to (getl i c1 c3))))))
 \def
@@ -66,7 +66,7 @@ x0) x2) H5) in (eq_ind_r C (CHead x1 (Bind x0) x2) (\lambda (c: C).(getl i c1
 c)) (getl_intro i c1 (CHead x1 (Bind x0) x2) x H2 H6) c3 (clear_gen_bind x0 
 x1 c3 x2 H7)))))))) H4))))) H1))))))).
 
-theorem getl_clear_bind:
+lemma getl_clear_bind:
  \forall (b: B).(\forall (c: C).(\forall (e1: C).(\forall (v: T).((clear c 
 (CHead e1 (Bind b) v)) \to (\forall (e2: C).(\forall (n: nat).((getl n e1 e2) 
 \to (getl (S n) c e2))))))))
@@ -102,7 +102,7 @@ H3)))) (\lambda (f: F).(\lambda (H2: (clear (CHead c0 (Flat f) t) (CHead e1
 (Bind b) v))).(getl_flat c0 e2 (S n) (H e1 v (clear_gen_flat f c0 (CHead e1 
 (Bind b) v) t H2) e2 n H1) f t))) k H0))))))))))) c)).
 
-theorem getl_clear_conf:
+lemma getl_clear_conf:
  \forall (i: nat).(\forall (c1: C).(\forall (c3: C).((getl i c1 c3) \to 
 (\forall (c2: C).((clear c1 c2) \to (getl i c2 c3))))))
 \def

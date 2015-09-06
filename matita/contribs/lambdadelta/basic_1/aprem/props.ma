@@ -18,7 +18,7 @@ include "basic_1/aprem/fwd.ma".
 
 include "basic_1/leq/fwd.ma".
 
-theorem aprem_repl:
+lemma aprem_repl:
  \forall (g: G).(\forall (a1: A).(\forall (a2: A).((leq g a1 a2) \to (\forall 
 (i: nat).(\forall (b2: A).((aprem i a2 b2) \to (ex2 A (\lambda (b1: A).(leq g 
 b1 b2)) (\lambda (b1: A).(aprem i a1 b1)))))))))
@@ -56,7 +56,7 @@ A (\lambda (b1: A).(leq g b1 b2)) (\lambda (b1: A).(aprem (S i0) (AHead a0
 a4) b1)) x H7 (aprem_succ a4 x i0 H8 a0))))) H6))))))) i H4)))))))))))) a1 a2 
 H)))).
 
-theorem aprem_asucc:
+lemma aprem_asucc:
  \forall (g: G).(\forall (a1: A).(\forall (a2: A).(\forall (i: nat).((aprem i 
 a1 a2) \to (aprem i (asucc g a1) a2)))))
 \def

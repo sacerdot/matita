@@ -18,7 +18,7 @@ include "basic_1/cnt/fwd.ma".
 
 include "basic_1/lift/props.ma".
 
-theorem cnt_lift:
+lemma cnt_lift:
  \forall (t: T).((cnt t) \to (\forall (i: nat).(\forall (d: nat).(cnt (lift i 
 d t)))))
 \def

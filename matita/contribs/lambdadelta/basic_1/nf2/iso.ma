@@ -18,7 +18,7 @@ include "basic_1/nf2/pr3.ma".
 
 include "basic_1/iso/props.ma".
 
-theorem nf2_iso_appls_lref:
+lemma nf2_iso_appls_lref:
  \forall (c: C).(\forall (i: nat).((nf2 c (TLRef i)) \to (\forall (vs: 
 TList).(\forall (u: T).((pr3 c (THeads (Flat Appl) vs (TLRef i)) u) \to (iso 
 (THeads (Flat Appl) vs (TLRef i)) u))))))

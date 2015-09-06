@@ -20,7 +20,7 @@ include "basic_1/C/fwd.ma".
 
 include "basic_1/T/props.ma".
 
-theorem csubv_bind_same:
+lemma csubv_bind_same:
  \forall (c1: C).(\forall (c2: C).((csubv c1 c2) \to (\forall (b: B).(\forall 
 (v1: T).(\forall (v2: T).(csubv (CHead c1 (Bind b) v1) (CHead c2 (Bind b) 
 v2)))))))
@@ -32,7 +32,7 @@ T).(csubv_bind c1 c2 H Abbr not_abbr_void Abbr v1 v2))) (\lambda (v1:
 T).(\lambda (v2: T).(csubv_bind c1 c2 H Abst not_abst_void Abst v1 v2))) 
 (\lambda (v1: T).(\lambda (v2: T).(csubv_void c1 c2 H v1 v2))) b)))).
 
-theorem csubv_refl:
+lemma csubv_refl:
  \forall (c: C).(csubv c c)
 \def
  \lambda (c: C).(C_ind (\lambda (c0: C).(csubv c0 c0)) (\lambda (n: 

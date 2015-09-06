@@ -16,15 +16,15 @@
 
 include "basic_1/aprem/defs.ma".
 
-let rec aprem_ind (P: (nat \to (A \to (A \to Prop)))) (f: (\forall (a1: 
-A).(\forall (a2: A).(P O (AHead a1 a2) a1)))) (f0: (\forall (a2: A).(\forall 
-(a: A).(\forall (i: nat).((aprem i a2 a) \to ((P i a2 a) \to (\forall (a1: 
-A).(P (S i) (AHead a1 a2) a)))))))) (n: nat) (a: A) (a0: A) (a1: aprem n a 
-a0) on a1: P n a a0 \def match a1 with [(aprem_zero a2 a3) \Rightarrow (f a2 
-a3) | (aprem_succ a2 a3 i a4 a5) \Rightarrow (f0 a2 a3 i a4 ((aprem_ind P f 
-f0) i a2 a3 a4) a5)].
+implied let rec aprem_ind (P: (nat \to (A \to (A \to Prop)))) (f: (\forall 
+(a1: A).(\forall (a2: A).(P O (AHead a1 a2) a1)))) (f0: (\forall (a2: 
+A).(\forall (a: A).(\forall (i: nat).((aprem i a2 a) \to ((P i a2 a) \to 
+(\forall (a1: A).(P (S i) (AHead a1 a2) a)))))))) (n: nat) (a: A) (a0: A) 
+(a1: aprem n a a0) on a1: P n a a0 \def match a1 with [(aprem_zero a2 a3) 
+\Rightarrow (f a2 a3) | (aprem_succ a2 a3 i a4 a5) \Rightarrow (f0 a2 a3 i a4 
+((aprem_ind P f f0) i a2 a3 a4) a5)].
 
-theorem aprem_gen_sort:
+lemma aprem_gen_sort:
  \forall (x: A).(\forall (i: nat).(\forall (h: nat).(\forall (n: nat).((aprem 
 i (ASort h n) x) \to False))))
 \def
@@ -43,7 +43,7 @@ A (AHead a1 a2) (\lambda (ee: A).(match ee with [(ASort _ _) \Rightarrow
 False | (AHead _ _) \Rightarrow True])) I (ASort h n) H3) in (False_ind False 
 H4))))))))) i y x H0))) H))))).
 
-theorem aprem_gen_head_O:
+lemma aprem_gen_head_O:
  \forall (a1: A).(\forall (a2: A).(\forall (x: A).((aprem O (AHead a1 a2) x) 
 \to (eq A x a1))))
 \def
@@ -74,7 +74,7 @@ a)) H2 a2 H7) in (let H11 \def (eq_ind nat (S i) (\lambda (ee: nat).(match ee
 with [O \Rightarrow False | (S _) \Rightarrow True])) I O H4) in (False_ind 
 (eq A a a1) H11)))))) H6)))))))))) y0 y x H1))) H0))) H)))).
 
-theorem aprem_gen_head_S:
+lemma aprem_gen_head_S:
  \forall (a1: A).(\forall (a2: A).(\forall (x: A).(\forall (i: nat).((aprem 
 (S i) (AHead a1 a2) x) \to (aprem i a2 x)))))
 \def

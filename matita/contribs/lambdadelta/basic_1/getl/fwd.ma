@@ -20,7 +20,7 @@ include "basic_1/drop/fwd.ma".
 
 include "basic_1/clear/fwd.ma".
 
-theorem getl_ind:
+implied lemma getl_ind:
  \forall (h: nat).(\forall (c1: C).(\forall (c2: C).(\forall (P: 
 Prop).(((\forall (e: C).((drop h O c1 e) \to ((clear e c2) \to P)))) \to 
 ((getl h c1 c2) \to P)))))
@@ -30,7 +30,7 @@ Prop).(\lambda (f: ((\forall (e: C).((drop h O c1 e) \to ((clear e c2) \to
 P))))).(\lambda (g: (getl h c1 c2)).(match g with [(getl_intro x x0 x1) 
 \Rightarrow (f x x0 x1)])))))).
 
-theorem getl_gen_all:
+lemma getl_gen_all:
  \forall (c1: C).(\forall (c2: C).(\forall (i: nat).((getl i c1 c2) \to (ex2 
 C (\lambda (e: C).(drop i O c1 e)) (\lambda (e: C).(clear e c2))))))
 \def
@@ -40,7 +40,7 @@ C).(clear e c2))) (\lambda (e: C).(\lambda (H0: (drop i O c1 e)).(\lambda
 (H1: (clear e c2)).(ex_intro2 C (\lambda (e0: C).(drop i O c1 e0)) (\lambda 
 (e0: C).(clear e0 c2)) e H0 H1)))) H)))).
 
-theorem getl_gen_sort:
+lemma getl_gen_sort:
  \forall (n: nat).(\forall (h: nat).(\forall (x: C).((getl h (CSort n) x) \to 
 (\forall (P: Prop).P))))
 \def
@@ -54,7 +54,7 @@ e x)) P (\lambda (x0: C).(\lambda (H1: (drop h O (CSort n) x0)).(\lambda (H2:
 (CSort n) H3) in (clear_gen_sort x n H6 P))))) (drop_gen_sort n h O x0 
 H1))))) H0)))))).
 
-theorem getl_gen_O:
+lemma getl_gen_O:
  \forall (e: C).(\forall (x: C).((getl O e x) \to (clear e x)))
 \def
  \lambda (e: C).(\lambda (x: C).(\lambda (H: (getl O e x)).(let H0 \def 
@@ -63,7 +63,7 @@ theorem getl_gen_O:
 (drop O O e x0)).(\lambda (H2: (clear x0 x)).(let H3 \def (eq_ind_r C x0 
 (\lambda (c: C).(clear c x)) H2 e (drop_gen_refl e x0 H1)) in H3)))) H0)))).
 
-theorem getl_gen_S:
+lemma getl_gen_S:
  \forall (k: K).(\forall (c: C).(\forall (x: C).(\forall (u: T).(\forall (h: 
 nat).((getl (S h) (CHead c k u) x) \to (getl (r k h) c x))))))
 \def
@@ -74,7 +74,7 @@ k u) e)) (\lambda (e: C).(clear e x)) (getl (r k h) c x) (\lambda (x0:
 C).(\lambda (H1: (drop (S h) O (CHead c k u) x0)).(\lambda (H2: (clear x0 
 x)).(getl_intro (r k h) c x x0 (drop_gen_drop k c x0 u h H1) H2)))) H0))))))).
 
-theorem getl_gen_2:
+lemma getl_gen_2:
  \forall (c1: C).(\forall (c2: C).(\forall (i: nat).((getl i c1 c2) \to (ex_3 
 B C T (\lambda (b: B).(\lambda (c: C).(\lambda (v: T).(eq C c2 (CHead c (Bind 
 b) v)))))))))
@@ -96,7 +96,7 @@ B).(\lambda (c: C).(\lambda (v: T).(eq C (CHead x1 (Bind x0) x2) (CHead c
 (Bind b) v))))) x0 x1 x2 (refl_equal C (CHead x1 (Bind x0) x2))) c2 H4)))))) 
 H3))))) H0))))).
 
-theorem getl_gen_flat:
+lemma getl_gen_flat:
  \forall (f: F).(\forall (e: C).(\forall (d: C).(\forall (v: T).(\forall (i: 
 nat).((getl i (CHead e (Flat f) v) d) \to (getl i e d))))))
 \def
@@ -108,7 +108,7 @@ H)))) (\lambda (n: nat).(\lambda (_: (((getl n (CHead e (Flat f) v) d) \to
 (getl n e d)))).(\lambda (H0: (getl (S n) (CHead e (Flat f) v) 
 d)).(getl_gen_S (Flat f) e d v n H0)))) i))))).
 
-theorem getl_gen_bind:
+lemma getl_gen_bind:
  \forall (b: B).(\forall (e: C).(\forall (d: C).(\forall (v: T).(\forall (i: 
 nat).((getl i (CHead e (Bind b) v) d) \to (or (land (eq nat i O) (eq C d 
 (CHead e (Bind b) v))) (ex2 nat (\lambda (j: nat).(eq nat i (S j))) (\lambda 

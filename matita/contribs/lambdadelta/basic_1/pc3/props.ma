@@ -18,7 +18,7 @@ include "basic_1/pc3/defs.ma".
 
 include "basic_1/pr3/pr3.ma".
 
-theorem clear_pc3_trans:
+lemma clear_pc3_trans:
  \forall (c2: C).(\forall (t1: T).(\forall (t2: T).((pc3 c2 t1 t2) \to 
 (\forall (c1: C).((clear c1 c2) \to (pc3 c1 t1 t2))))))
 \def
@@ -30,7 +30,7 @@ x)).(ex_intro2 T (\lambda (t: T).(pr3 c1 t1 t)) (\lambda (t: T).(pr3 c1 t2
 t)) x (clear_pr3_trans c2 t1 x H2 c1 H0) (clear_pr3_trans c2 t2 x H3 c1 
 H0))))) H1))))))).
 
-theorem pc3_pr2_r:
+lemma pc3_pr2_r:
  \forall (c: C).(\forall (t1: T).(\forall (t2: T).((pr2 c t1 t2) \to (pc3 c 
 t1 t2))))
 \def
@@ -38,7 +38,7 @@ t1 t2))))
 t2)).(ex_intro2 T (\lambda (t: T).(pr3 c t1 t)) (\lambda (t: T).(pr3 c t2 t)) 
 t2 (pr3_pr2 c t1 t2 H) (pr3_refl c t2))))).
 
-theorem pc3_pr2_x:
+lemma pc3_pr2_x:
  \forall (c: C).(\forall (t1: T).(\forall (t2: T).((pr2 c t2 t1) \to (pc3 c 
 t1 t2))))
 \def
@@ -46,7 +46,7 @@ t1 t2))))
 t1)).(ex_intro2 T (\lambda (t: T).(pr3 c t1 t)) (\lambda (t: T).(pr3 c t2 t)) 
 t1 (pr3_refl c t1) (pr3_pr2 c t2 t1 H))))).
 
-theorem pc3_pr3_r:
+lemma pc3_pr3_r:
  \forall (c: C).(\forall (t1: T).(\forall (t2: T).((pr3 c t1 t2) \to (pc3 c 
 t1 t2))))
 \def
@@ -54,7 +54,7 @@ t1 t2))))
 t2)).(ex_intro2 T (\lambda (t: T).(pr3 c t1 t)) (\lambda (t: T).(pr3 c t2 t)) 
 t2 H (pr3_refl c t2))))).
 
-theorem pc3_pr3_x:
+lemma pc3_pr3_x:
  \forall (c: C).(\forall (t1: T).(\forall (t2: T).((pr3 c t2 t1) \to (pc3 c 
 t1 t2))))
 \def
@@ -62,7 +62,7 @@ t1 t2))))
 t1)).(ex_intro2 T (\lambda (t: T).(pr3 c t1 t)) (\lambda (t: T).(pr3 c t2 t)) 
 t1 (pr3_refl c t1) H)))).
 
-theorem pc3_pr3_t:
+lemma pc3_pr3_t:
  \forall (c: C).(\forall (t1: T).(\forall (t0: T).((pr3 c t1 t0) \to (\forall 
 (t2: T).((pr3 c t2 t0) \to (pc3 c t1 t2))))))
 \def
@@ -70,13 +70,13 @@ theorem pc3_pr3_t:
 t0)).(\lambda (t2: T).(\lambda (H0: (pr3 c t2 t0)).(ex_intro2 T (\lambda (t: 
 T).(pr3 c t1 t)) (\lambda (t: T).(pr3 c t2 t)) t0 H H0)))))).
 
-theorem pc3_refl:
+lemma pc3_refl:
  \forall (c: C).(\forall (t: T).(pc3 c t t))
 \def
  \lambda (c: C).(\lambda (t: T).(ex_intro2 T (\lambda (t0: T).(pr3 c t t0)) 
 (\lambda (t0: T).(pr3 c t t0)) t (pr3_refl c t) (pr3_refl c t))).
 
-theorem pc3_s:
+lemma pc3_s:
  \forall (c: C).(\forall (t2: T).(\forall (t1: T).((pc3 c t1 t2) \to (pc3 c 
 t2 t1))))
 \def
@@ -86,7 +86,7 @@ T).(pr3 c t2 t)) (pc3 c t2 t1) (\lambda (x: T).(\lambda (H1: (pr3 c t1
 x)).(\lambda (H2: (pr3 c t2 x)).(ex_intro2 T (\lambda (t: T).(pr3 c t2 t)) 
 (\lambda (t: T).(pr3 c t1 t)) x H2 H1)))) H0))))).
 
-theorem pc3_thin_dx:
+lemma pc3_thin_dx:
  \forall (c: C).(\forall (t1: T).(\forall (t2: T).((pc3 c t1 t2) \to (\forall 
 (u: T).(\forall (f: F).(pc3 c (THead (Flat f) u t1) (THead (Flat f) u 
 t2)))))))
@@ -100,7 +100,7 @@ x)).(\lambda (H2: (pr3 c t2 x)).(ex_intro2 T (\lambda (t: T).(pr3 c (THead
 (Flat f) u x) (pr3_thin_dx c t1 x H1 u f) (pr3_thin_dx c t2 x H2 u f))))) 
 H0))))))).
 
-theorem pc3_head_1:
+lemma pc3_head_1:
  \forall (c: C).(\forall (u1: T).(\forall (u2: T).((pc3 c u1 u2) \to (\forall 
 (k: K).(\forall (t: T).(pc3 c (THead k u1 t) (THead k u2 t)))))))
 \def
@@ -113,7 +113,7 @@ u2)).(\lambda (k: K).(\lambda (t: T).(let H0 \def H in (ex2_ind T (\lambda
 H1 k t t (pr3_refl (CHead c k x) t)) (pr3_head_12 c u2 x H2 k t t (pr3_refl 
 (CHead c k x) t)))))) H0))))))).
 
-theorem pc3_head_2:
+lemma pc3_head_2:
  \forall (c: C).(\forall (u: T).(\forall (t1: T).(\forall (t2: T).(\forall 
 (k: K).((pc3 (CHead c k u) t1 t2) \to (pc3 c (THead k u t1) (THead k u 
 t2)))))))
@@ -127,7 +127,7 @@ T (\lambda (t: T).(pr3 c (THead k u t1) t)) (\lambda (t: T).(pr3 c (THead k u
 t2) t)) (THead k u x) (pr3_head_12 c u u (pr3_refl c u) k t1 x H1) 
 (pr3_head_12 c u u (pr3_refl c u) k t2 x H2))))) H0))))))).
 
-theorem pc3_pr2_u:
+lemma pc3_pr2_u:
  \forall (c: C).(\forall (t2: T).(\forall (t1: T).((pr2 c t1 t2) \to (\forall 
 (t3: T).((pc3 c t2 t3) \to (pc3 c t1 t3))))))
 \def
@@ -154,7 +154,7 @@ x0)).(\lambda (H6: (pr3 c t2 x0)).(ex2_ind T (\lambda (t: T).(pr3 c x0 t))
 H5 x1 H7) t3 (pr3_t x t3 c H3 x1 H8))))) (pr3_confluence c t2 x0 H6 x H2))))) 
 H4))))) H1))))))).
 
-theorem pc3_pr2_u2:
+lemma pc3_pr2_u2:
  \forall (c: C).(\forall (t0: T).(\forall (t1: T).((pr2 c t0 t1) \to (\forall 
 (t2: T).((pc3 c t0 t2) \to (pc3 c t1 t2))))))
 \def
@@ -162,7 +162,7 @@ theorem pc3_pr2_u2:
 t1)).(\lambda (t2: T).(\lambda (H0: (pc3 c t0 t2)).(pc3_t t0 c t1 (pc3_pr2_x 
 c t1 t0 H) t2 H0)))))).
 
-theorem pc3_pr3_conf:
+lemma pc3_pr3_conf:
  \forall (c: C).(\forall (t: T).(\forall (t1: T).((pc3 c t t1) \to (\forall 
 (t2: T).((pr3 c t t2) \to (pc3 c t2 t1))))))
 \def
@@ -190,7 +190,7 @@ u2)).(\lambda (k: K).(\lambda (t1: T).(\lambda (t2: T).(\lambda (H0: (pc3
 (CHead c k u1) t1 t2)).(pc3_t (THead k u1 t2) c (THead k u1 t1) (pc3_head_2 c 
 u1 t1 t2 k H0) (THead k u2 t2) (pc3_head_1 c u1 u2 H k t2))))))))).
 
-theorem pc3_pr0_pr2_t:
+lemma pc3_pr0_pr2_t:
  \forall (u1: T).(\forall (u2: T).((pr0 u2 u1) \to (\forall (c: C).(\forall 
 (t1: T).(\forall (t2: T).(\forall (k: K).((pr2 (CHead c k u2) t1 t2) \to (pc3 
 (CHead c k u1) t1 t2))))))))
@@ -259,7 +259,7 @@ u))).(pc3_pr2_r (CHead c (Flat f) u1) t3 t (pr2_cflat c t3 t (pr2_delta c d u
 (r (Flat f) i0) H10 t3 t4 H3 t H9) f u1))))) k IHi (getl_gen_S k c (CHead d 
 (Bind Abbr) u) u2 i0 H8)))))) i H7 H4)))))))))))))) y t1 t2 H1))) H0)))))))).
 
-theorem pc3_pr2_pr2_t:
+lemma pc3_pr2_pr2_t:
  \forall (c: C).(\forall (u1: T).(\forall (u2: T).((pr2 c u2 u1) \to (\forall 
 (t1: T).(\forall (t2: T).(\forall (k: K).((pr2 (CHead c k u2) t1 t2) \to (pc3 
 (CHead c k u1) t1 t2))))))))
@@ -338,7 +338,7 @@ t6 (pr2_delta c0 d0 u0 (r (Flat f) i1) H12 t4 t5 H6 t6 H11) f t)))) k
 (getl_gen_S k c0 (CHead d0 (Bind Abbr) u0) t1 i1 H10)))))) i0 H9 
 H7))))))))))))) y t0 t3 H4))) H3))))))))))))))) c u2 u1 H)))).
 
-theorem pc3_pr2_pr3_t:
+lemma pc3_pr2_pr3_t:
  \forall (c: C).(\forall (u2: T).(\forall (t1: T).(\forall (t2: T).(\forall 
 (k: K).((pr3 (CHead c k u2) t1 t2) \to (\forall (u1: T).((pr2 c u2 u1) \to 
 (pc3 (CHead c k u1) t1 t2))))))))
@@ -354,7 +354,7 @@ T).(\lambda (H0: (pr2 (CHead c k u2) t3 t0)).(\lambda (t4: T).(\lambda (_:
 u1)).(pc3_t t0 (CHead c k u1) t3 (pc3_pr2_pr2_t c u1 u2 H3 t3 t0 k H0) t4 (H2 
 u1 H3)))))))))) t1 t2 H)))))).
 
-theorem pc3_pr3_pc3_t:
+lemma pc3_pr3_pc3_t:
  \forall (c: C).(\forall (u1: T).(\forall (u2: T).((pr3 c u2 u1) \to (\forall 
 (t1: T).(\forall (t2: T).(\forall (k: K).((pc3 (CHead c k u2) t1 t2) \to (pc3 
 (CHead c k u1) t1 t2))))))))
@@ -375,7 +375,7 @@ t0 t4) (\lambda (x: T).(\lambda (H5: (pr3 (CHead c k t1) t0 x)).(\lambda (H6:
 x k H5 t2 H0) t4 (pc3_s (CHead c k t2) x t4 (pc3_pr2_pr3_t c t1 t4 x k H6 t2 
 H0)))))) H4))))))))))))) u2 u1 H)))).
 
-theorem pc3_lift:
+lemma pc3_lift:
  \forall (c: C).(\forall (e: C).(\forall (h: nat).(\forall (d: nat).((drop h 
 d c e) \to (\forall (t1: T).(\forall (t2: T).((pc3 e t1 t2) \to (pc3 c (lift 
 h d t1) (lift h d t2)))))))))
@@ -388,7 +388,7 @@ T).(pr3 e t2 t)) (pc3 c (lift h d t1) (lift h d t2)) (\lambda (x: T).(\lambda
 (lift h d x) (pr3_lift c e h d H t1 x H2) (lift h d t2) (pr3_lift c e h d H 
 t2 x H3))))) H1))))))))).
 
-theorem pc3_eta:
+lemma pc3_eta:
  \forall (c: C).(\forall (t: T).(\forall (w: T).(\forall (u: T).((pc3 c t 
 (THead (Bind Abst) w u)) \to (\forall (v: T).((pc3 c v w) \to (pc3 c (THead 
 (Bind Abst) v (THead (Flat Appl) (TLRef O) (lift (S O) O t))) t)))))))

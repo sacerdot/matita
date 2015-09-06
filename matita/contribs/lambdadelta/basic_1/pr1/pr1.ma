@@ -18,7 +18,7 @@ include "basic_1/pr1/props.ma".
 
 include "basic_1/pr0/pr0.ma".
 
-theorem pr1_strip:
+lemma pr1_strip:
  \forall (t0: T).(\forall (t1: T).((pr1 t0 t1) \to (\forall (t2: T).((pr0 t0 
 t2) \to (ex2 T (\lambda (t: T).(pr1 t1 t)) (\lambda (t: T).(pr1 t2 t)))))))
 \def

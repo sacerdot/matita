@@ -18,7 +18,7 @@ include "basic_1/clen/defs.ma".
 
 include "basic_1/getl/props.ma".
 
-theorem getl_ctail_clen:
+lemma getl_ctail_clen:
  \forall (b: B).(\forall (t: T).(\forall (c: C).(ex nat (\lambda (n: 
 nat).(getl (clen c) (CTail (Bind b) t c) (CHead (CSort n) (Bind b) t))))))
 \def
@@ -42,7 +42,7 @@ F).(ex_intro nat (\lambda (n: nat).(getl (clen c0) (CHead (CTail (Bind b) t
 c0) (Flat f) t0) (CHead (CSort n) (Bind b) t))) x (getl_flat (CTail (Bind b) 
 t c0) (CHead (CSort x) (Bind b) t) (clen c0) H1 f t0))) k))) H0)))))) c))).
 
-theorem getl_gen_tail:
+lemma getl_gen_tail:
  \forall (k: K).(\forall (b: B).(\forall (u1: T).(\forall (u2: T).(\forall 
 (c2: C).(\forall (c1: C).(\forall (i: nat).((getl i (CTail k u1 c1) (CHead c2 
 (Bind b) u2)) \to (or (ex2 C (\lambda (e: C).(eq C c2 (CTail k u1 e))) 

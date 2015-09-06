@@ -16,7 +16,7 @@
 
 include "basic_1/llt/defs.ma".
 
-theorem llt_wf__q_ind:
+fact llt_wf__q_ind:
  \forall (P: ((A \to Prop))).(((\forall (n: nat).((\lambda (P0: ((A \to 
 Prop))).(\lambda (n0: nat).(\forall (a: A).((eq nat (lweight a) n0) \to (P0 
 a))))) P n))) \to (\forall (a: A).(P a)))
@@ -27,7 +27,7 @@ Prop))).(\lambda (H: ((\forall (n: nat).(\forall (a: A).((eq nat (lweight a)
 n) \to (P a)))))).(\lambda (a: A).(H (lweight a) a (refl_equal nat (lweight 
 a)))))).
 
-theorem llt_wf_ind:
+lemma llt_wf_ind:
  \forall (P: ((A \to Prop))).(((\forall (a2: A).(((\forall (a1: A).((llt a1 
 a2) \to (P a1)))) \to (P a2)))) \to (\forall (a: A).(P a)))
 \def

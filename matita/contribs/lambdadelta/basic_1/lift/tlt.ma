@@ -18,7 +18,7 @@ include "basic_1/lift/props.ma".
 
 include "basic_1/tlt/props.ma".
 
-theorem lift_weight_map:
+lemma lift_weight_map:
  \forall (t: T).(\forall (h: nat).(\forall (d: nat).(\forall (f: ((nat \to 
 nat))).(((\forall (m: nat).((le d m) \to (eq nat (f m) O)))) \to (eq nat 
 (weight_map f (lift h d t)) (weight_map f t))))))
@@ -106,7 +106,7 @@ t0)) (weight_map f (lift h d t1))) (plus (weight_map f t0) (weight_map f t1))
 (lift h d (THead (Flat f0) t0 t1)) (lift_head (Flat f0) t0 t1 h d))) 
 k)))))))))) t).
 
-theorem lift_weight:
+lemma lift_weight:
  \forall (t: T).(\forall (h: nat).(\forall (d: nat).(eq nat (weight (lift h d 
 t)) (weight t))))
 \def
@@ -114,7 +114,7 @@ t)) (weight t))))
 (\lambda (_: nat).O) (\lambda (m: nat).(\lambda (_: (le d m)).(refl_equal nat 
 O)))))).
 
-theorem lift_weight_add:
+lemma lift_weight_add:
  \forall (w: nat).(\forall (t: T).(\forall (h: nat).(\forall (d: 
 nat).(\forall (f: ((nat \to nat))).(\forall (g: ((nat \to nat))).(((\forall 
 (m: nat).((lt m d) \to (eq nat (g m) (f m))))) \to ((eq nat (g d) w) \to 
@@ -262,7 +262,7 @@ t0)) (weight_map f (lift h d t1))) (plus (weight_map g (lift (S h) d t0))
 (lift h d (THead (Flat f0) t0 t1)) (lift_head (Flat f0) t0 t1 h d))) 
 k))))))))))))) t)).
 
-theorem lift_weight_add_O:
+lemma lift_weight_add_O:
  \forall (w: nat).(\forall (t: T).(\forall (h: nat).(\forall (f: ((nat \to 
 nat))).(eq nat (weight_map f (lift h O t)) (weight_map (wadd f w) (lift (S h) 
 O t))))))
@@ -273,7 +273,7 @@ nat))).(lift_weight_add (minus (wadd f w O) O) t h O f (wadd f w) (\lambda
 (minus_n_O (wadd f w O)) (\lambda (m: nat).(\lambda (_: (le O m)).(refl_equal 
 nat (f m)))))))).
 
-theorem lift_tlt_dx:
+lemma lift_tlt_dx:
  \forall (k: K).(\forall (u: T).(\forall (t: T).(\forall (h: nat).(\forall 
 (d: nat).(tlt t (THead k u (lift h d t)))))))
 \def

@@ -20,7 +20,7 @@ include "basic_1/pr0/pr0.ma".
 
 include "basic_1/getl/fwd.ma".
 
-theorem pr2_confluence__pr2_free_free:
+fact pr2_confluence__pr2_free_free:
  \forall (c: C).(\forall (t0: T).(\forall (t1: T).(\forall (t2: T).((pr0 t0 
 t1) \to ((pr0 t0 t2) \to (ex2 T (\lambda (t: T).(pr2 c t1 t)) (\lambda (t: 
 T).(pr2 c t2 t))))))))
@@ -33,7 +33,7 @@ x)).(\lambda (H2: (pr0 t1 x)).(ex_intro2 T (\lambda (t: T).(pr2 c t1 t))
 (\lambda (t: T).(pr2 c t2 t)) x (pr2_free c t1 x H2) (pr2_free c t2 x H1))))) 
 (pr0_confluence t0 t2 H0 t1 H))))))).
 
-theorem pr2_confluence__pr2_free_delta:
+fact pr2_confluence__pr2_free_delta:
  \forall (c: C).(\forall (d: C).(\forall (t0: T).(\forall (t1: T).(\forall 
 (t2: T).(\forall (t4: T).(\forall (u: T).(\forall (i: nat).((pr0 t0 t1) \to 
 ((getl i c (CHead d (Bind Abbr) u)) \to ((pr0 t0 t4) \to ((subst0 i u t4 t2) 
@@ -59,7 +59,7 @@ T).(pr2 c t2 t)) x0 (pr2_delta c d u i H0 t1 x H4 x0 H7) (pr2_free c t2 x0
 H6))))) H5)) (pr0_subst0 t4 x H3 u t2 i H2 u (pr0_refl u)))))) 
 (pr0_confluence t0 t4 H1 t1 H))))))))))))).
 
-theorem pr2_confluence__pr2_delta_delta:
+fact pr2_confluence__pr2_delta_delta:
  \forall (c: C).(\forall (d: C).(\forall (d0: C).(\forall (t0: T).(\forall 
 (t1: T).(\forall (t2: T).(\forall (t3: T).(\forall (t4: T).(\forall (u: 
 T).(\forall (u0: T).(\forall (i: nat).(\forall (i0: nat).((getl i c (CHead d 

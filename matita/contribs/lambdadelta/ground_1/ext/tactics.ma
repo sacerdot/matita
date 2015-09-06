@@ -16,7 +16,7 @@
 
 include "ground_1/preamble.ma".
 
-theorem insert_eq:
+lemma insert_eq:
  \forall (S: Type[0]).(\forall (x: S).(\forall (P: ((S \to Prop))).(\forall 
 (G: ((S \to Prop))).(((\forall (y: S).((P y) \to ((eq S y x) \to (G y))))) 
 \to ((P x) \to (G x))))))
@@ -25,14 +25,14 @@ theorem insert_eq:
 (G: ((S \to Prop))).(\lambda (H: ((\forall (y: S).((P y) \to ((eq S y x) \to 
 (G y)))))).(\lambda (H0: (P x)).(H x H0 (refl_equal S x))))))).
 
-theorem unintro:
+lemma unintro:
  \forall (A: Type[0]).(\forall (a: A).(\forall (P: ((A \to Prop))).(((\forall 
 (x: A).(P x))) \to (P a))))
 \def
  \lambda (A: Type[0]).(\lambda (a: A).(\lambda (P: ((A \to Prop))).(\lambda 
 (H: ((\forall (x: A).(P x)))).(H a)))).
 
-theorem xinduction:
+lemma xinduction:
  \forall (A: Type[0]).(\forall (t: A).(\forall (P: ((A \to Prop))).(((\forall 
 (x: A).((eq A t x) \to (P x)))) \to (P t))))
 \def

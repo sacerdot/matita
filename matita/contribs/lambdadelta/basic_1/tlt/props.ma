@@ -18,7 +18,7 @@ include "basic_1/T/fwd.ma".
 
 include "basic_1/tlt/defs.ma".
 
-theorem wadd_le:
+lemma wadd_le:
  \forall (f: ((nat \to nat))).(\forall (g: ((nat \to nat))).(((\forall (n: 
 nat).(le (f n) (g n)))) \to (\forall (v: nat).(\forall (w: nat).((le v w) \to 
 (\forall (n: nat).(le (wadd f v n) (wadd g w n))))))))
@@ -29,7 +29,7 @@ nat).(\lambda (H0: (le v w)).(\lambda (n: nat).(nat_ind (\lambda (n0:
 nat).(le (wadd f v n0) (wadd g w n0))) H0 (\lambda (n0: nat).(\lambda (_: (le 
 (wadd f v n0) (wadd g w n0))).(H n0))) n))))))).
 
-theorem wadd_lt:
+lemma wadd_lt:
  \forall (f: ((nat \to nat))).(\forall (g: ((nat \to nat))).(((\forall (n: 
 nat).(le (f n) (g n)))) \to (\forall (v: nat).(\forall (w: nat).((lt v w) \to 
 (\forall (n: nat).(le (wadd f v n) (wadd g w n))))))))
@@ -41,14 +41,14 @@ nat).(le (wadd f v n0) (wadd g w n0))) (le_S_n v w (le_S_n (S v) (S w) (le_S
 (S (S v)) (S w) (le_n_S (S v) w H0)))) (\lambda (n0: nat).(\lambda (_: (le 
 (wadd f v n0) (wadd g w n0))).(H n0))) n))))))).
 
-theorem wadd_O:
+lemma wadd_O:
  \forall (n: nat).(eq nat (wadd (\lambda (_: nat).O) O n) O)
 \def
  \lambda (n: nat).(nat_ind (\lambda (n0: nat).(eq nat (wadd (\lambda (_: 
 nat).O) O n0) O)) (refl_equal nat O) (\lambda (n0: nat).(\lambda (_: (eq nat 
 (wadd (\lambda (_: nat).O) O n0) O)).(refl_equal nat O))) n).
 
-theorem weight_le:
+lemma weight_le:
  \forall (t: T).(\forall (f: ((nat \to nat))).(\forall (g: ((nat \to 
 nat))).(((\forall (n: nat).(le (f n) (g n)))) \to (le (weight_map f t) 
 (weight_map g t)))))
@@ -127,7 +127,7 @@ nat))).(\lambda (H1: ((\forall (n: nat).(le (f0 n) (g n))))).(le_n_S (plus
 t1)) (le_plus_plus (weight_map f0 t0) (weight_map g t0) (weight_map f0 t1) 
 (weight_map g t1) (H f0 g H1) (H0 f0 g H1))))))))))) k)) t).
 
-theorem weight_eq:
+lemma weight_eq:
  \forall (t: T).(\forall (f: ((nat \to nat))).(\forall (g: ((nat \to 
 nat))).(((\forall (n: nat).(eq nat (f n) (g n)))) \to (eq nat (weight_map f 
 t) (weight_map g t)))))
@@ -139,14 +139,14 @@ nat).(eq_ind_r nat (g n) (\lambda (n0: nat).(le n0 (g n))) (le_n (g n)) (f n)
 (H n)))) (weight_le t g f (\lambda (n: nat).(eq_ind_r nat (g n) (\lambda (n0: 
 nat).(le (g n) n0)) (le_n (g n)) (f n) (H n)))))))).
 
-theorem weight_add_O:
+lemma weight_add_O:
  \forall (t: T).(eq nat (weight_map (wadd (\lambda (_: nat).O) O) t) 
 (weight_map (\lambda (_: nat).O) t))
 \def
  \lambda (t: T).(weight_eq t (wadd (\lambda (_: nat).O) O) (\lambda (_: 
 nat).O) (\lambda (n: nat).(wadd_O n))).
 
-theorem weight_add_S:
+lemma weight_add_S:
  \forall (t: T).(\forall (m: nat).(le (weight_map (wadd (\lambda (_: nat).O) 
 O) t) (weight_map (wadd (\lambda (_: nat).O) (S m)) t)))
 \def
@@ -163,7 +163,7 @@ theorem tlt_trans:
 (weight v))).(\lambda (H0: (lt (weight v) (weight t))).(lt_trans (weight u) 
 (weight v) (weight t) H H0))))).
 
-theorem tlt_head_sx:
+lemma tlt_head_sx:
  \forall (k: K).(\forall (u: T).(\forall (t: T).(tlt u (THead k u t))))
 \def
  \lambda (k: K).(K_ind (\lambda (k0: K).(\forall (u: T).(\forall (t: T).(lt 
@@ -191,7 +191,7 @@ t))))) b)) (\lambda (_: F).(\lambda (u: T).(\lambda (t: T).(le_n_S
 (weight_map (\lambda (_: nat).O) t)) (le_plus_l (weight_map (\lambda (_: 
 nat).O) u) (weight_map (\lambda (_: nat).O) t)))))) k).
 
-theorem tlt_head_dx:
+lemma tlt_head_dx:
  \forall (k: K).(\forall (u: T).(\forall (t: T).(tlt t (THead k u t))))
 \def
  \lambda (k: K).(K_ind (\lambda (k0: K).(\forall (u: T).(\forall (t: T).(lt 

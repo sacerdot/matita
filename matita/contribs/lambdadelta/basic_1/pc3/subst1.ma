@@ -18,7 +18,7 @@ include "basic_1/pc3/props.ma".
 
 include "basic_1/pr3/subst1.ma".
 
-theorem pc3_gen_cabbr:
+lemma pc3_gen_cabbr:
  \forall (c: C).(\forall (t1: T).(\forall (t2: T).((pc3 c t1 t2) \to (\forall 
 (e: C).(\forall (u: T).(\forall (d: nat).((getl d c (CHead e (Bind Abbr) u)) 
 \to (\forall (a0: C).((csubst1 d u c a0) \to (\forall (a: C).((drop (S O) d 

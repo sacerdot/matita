@@ -18,7 +18,7 @@ include "basic_1/wf3/fwd.ma".
 
 include "basic_1/clear/fwd.ma".
 
-theorem wf3_clear_conf:
+lemma wf3_clear_conf:
  \forall (c1: C).(\forall (c: C).((clear c1 c) \to (\forall (g: G).(\forall 
 (c2: C).((wf3 g c1 c2) \to (wf3 g c c2))))))
 \def
@@ -32,7 +32,7 @@ c0 c2)))))).(\lambda (f: F).(\lambda (u: T).(\lambda (g: G).(\lambda (c2:
 C).(\lambda (H2: (wf3 g (CHead e (Flat f) u) c2)).(let H_y \def 
 (wf3_gen_flat1 g e c2 u f H2) in (H1 g c2 H_y))))))))))) c1 c H))).
 
-theorem clear_wf3_trans:
+lemma clear_wf3_trans:
  \forall (c1: C).(\forall (d1: C).((clear c1 d1) \to (\forall (g: G).(\forall 
 (d2: C).((wf3 g d1 d2) \to (ex2 C (\lambda (c2: C).(wf3 g c1 c2)) (\lambda 
 (c2: C).(clear c2 d2))))))))

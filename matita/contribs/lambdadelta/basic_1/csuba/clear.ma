@@ -18,7 +18,7 @@ include "basic_1/csuba/fwd.ma".
 
 include "basic_1/clear/fwd.ma".
 
-theorem csuba_clear_conf:
+lemma csuba_clear_conf:
  \forall (g: G).(\forall (c1: C).(\forall (c2: C).((csuba g c1 c2) \to 
 (\forall (e1: C).((clear c1 e1) \to (ex2 C (\lambda (e2: C).(csuba g e1 e2)) 
 (\lambda (e2: C).(clear c2 e2))))))))
@@ -69,7 +69,7 @@ e2)))) (ex_intro2 C (\lambda (e2: C).(csuba g (CHead c3 (Bind Abst) t) e2))
 u) (csuba_abst g c3 c4 H0 t a H2 u H3) (clear_bind Abbr c4 u)) e1 
 (clear_gen_bind Abst c3 e1 t H4))))))))))))) c1 c2 H)))).
 
-theorem csuba_clear_trans:
+lemma csuba_clear_trans:
  \forall (g: G).(\forall (c1: C).(\forall (c2: C).((csuba g c2 c1) \to 
 (\forall (e1: C).((clear c1 e1) \to (ex2 C (\lambda (e2: C).(csuba g e2 e1)) 
 (\lambda (e2: C).(clear c2 e2))))))))

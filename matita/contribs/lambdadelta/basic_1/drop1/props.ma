@@ -20,7 +20,7 @@ include "basic_1/drop/props.ma".
 
 include "basic_1/getl/defs.ma".
 
-theorem drop1_skip_bind:
+lemma drop1_skip_bind:
  \forall (b: B).(\forall (e: C).(\forall (hds: PList).(\forall (c: 
 C).(\forall (u: T).((drop1 hds c e) \to (drop1 (Ss hds) (CHead c (Bind b) 
 (lift1 hds u)) (CHead e (Bind b) u)))))))
@@ -43,7 +43,7 @@ e)).(drop1_cons (CHead c (Bind b) (lift n n0 (lift1 p u))) (CHead x (Bind b)
 (lift1 p u)) n (S n0) (drop_skip_bind n n0 c x H2 b (lift1 p u)) (CHead e 
 (Bind b) u) (Ss p) (H x u H3))))) H1)))))))))) hds))).
 
-theorem drop1_cons_tail:
+lemma drop1_cons_tail:
  \forall (c2: C).(\forall (c3: C).(\forall (h: nat).(\forall (d: nat).((drop 
 h d c2 c3) \to (\forall (hds: PList).(\forall (c1: C).((drop1 hds c1 c2) \to 
 (drop1 (PConsTail hds h d) c1 c3))))))))

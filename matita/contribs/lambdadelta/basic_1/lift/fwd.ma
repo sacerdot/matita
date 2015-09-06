@@ -16,7 +16,7 @@
 
 include "basic_1/lift/props.ma".
 
-theorem lift_gen_sort:
+lemma lift_gen_sort:
  \forall (h: nat).(\forall (d: nat).(\forall (n: nat).(\forall (t: T).((eq T 
 (TSort n) (lift h d t)) \to (eq T t (TSort n))))))
 \def
@@ -52,7 +52,7 @@ t0) (lift h (s k d) t1)) (lift_head k t0 t1 h d)) in (let H3 \def (eq_ind T
 (lift h d t0) (lift h (s k d) t1)) H2) in (False_ind (eq T (THead k t0 t1) 
 (TSort n)) H3))))))))) t)))).
 
-theorem lift_gen_lref:
+lemma lift_gen_lref:
  \forall (t: T).(\forall (d: nat).(\forall (h: nat).(\forall (i: nat).((eq T 
 (TLRef i) (lift h d t)) \to (or (land (lt i d) (eq T t (TLRef i))) (land (le 
 (plus d h) i) (eq T t (TLRef (minus i h)))))))))
@@ -109,7 +109,7 @@ k d) t1)) H2) in (False_ind (or (land (lt i d) (eq T (THead k t0 t1) (TLRef
 i))) (land (le (plus d h) i) (eq T (THead k t0 t1) (TLRef (minus i h))))) 
 H3)))))))))))) t).
 
-theorem lift_gen_lref_lt:
+lemma lift_gen_lref_lt:
  \forall (h: nat).(\forall (d: nat).(\forall (n: nat).((lt n d) \to (\forall 
 (t: T).((eq T (TLRef n) (lift h d t)) \to (eq T t (TLRef n)))))))
 \def
@@ -128,7 +128,7 @@ d h) n)).(\lambda (H4: (eq T t (TLRef (minus n h)))).(eq_ind_r T (TLRef
 T (TLRef (minus n h)) (TLRef n)) H3 (lt_le_S n (plus d h) (le_plus_trans (S 
 n) d h H))) t H4))) H2)) H1)))))))).
 
-theorem lift_gen_lref_false:
+lemma lift_gen_lref_false:
  \forall (h: nat).(\forall (d: nat).(\forall (n: nat).((le d n) \to ((lt n 
 (plus d h)) \to (\forall (t: T).((eq T (TLRef n) (lift h d t)) \to (\forall 
 (P: Prop).P)))))))
@@ -145,7 +145,7 @@ h))))).(land_ind (le (plus d h) n) (eq T t (TLRef (minus n h))) P (\lambda
 (H4: (le (plus d h) n)).(\lambda (_: (eq T t (TLRef (minus n h)))).(le_false 
 (plus d h) n P H4 H0))) H3)) H2)))))))))).
 
-theorem lift_gen_lref_ge:
+lemma lift_gen_lref_ge:
  \forall (h: nat).(\forall (d: nat).(\forall (n: nat).((le d n) \to (\forall 
 (t: T).((eq T (TLRef (plus n h)) (lift h d t)) \to (eq T t (TLRef n)))))))
 \def
@@ -167,7 +167,7 @@ h) h))) (eq T t (TLRef n)) (\lambda (_: (le (plus d h) (plus n h))).(\lambda
 h) h)) (\lambda (t0: T).(eq T t0 (TLRef n))) (f_equal nat T TLRef (minus 
 (plus n h) h) n (minus_plus_r n h)) t H4))) H2)) H1)))))))).
 
-theorem lift_gen_head:
+lemma lift_gen_head:
  \forall (k: K).(\forall (u: T).(\forall (t: T).(\forall (x: T).(\forall (h: 
 nat).(\forall (d: nat).((eq T (THead k u t) (lift h d x)) \to (ex3_2 T T 
 (\lambda (y: T).(\lambda (z: T).(eq T x (THead k y z)))) (\lambda (y: 
@@ -265,7 +265,7 @@ t1) (THead k y z)))) (\lambda (y: T).(\lambda (_: T).(eq T (lift h d t0)
 (lift h d t0)) (refl_equal T (lift h (s k d) t1))) u H6))) t H8))) k0 H7))))) 
 H4)) H3))))))))))) x)))).
 
-theorem lift_gen_bind:
+lemma lift_gen_bind:
  \forall (b: B).(\forall (u: T).(\forall (t: T).(\forall (x: T).(\forall (h: 
 nat).(\forall (d: nat).((eq T (THead (Bind b) u t) (lift h d x)) \to (ex3_2 T 
 T (\lambda (y: T).(\lambda (z: T).(eq T x (THead (Bind b) y z)))) (\lambda 
@@ -299,7 +299,7 @@ y)))) (\lambda (_: T).(\lambda (z: T).(eq T (lift h (S d) x1) (lift h (S d)
 z)))) x0 x1 (refl_equal T (THead (Bind b) x0 x1)) (refl_equal T (lift h d 
 x0)) (refl_equal T (lift h (S d) x1))) u H2) t H3) x H1)))))) H0))))))))).
 
-theorem lift_gen_flat:
+lemma lift_gen_flat:
  \forall (f: F).(\forall (u: T).(\forall (t: T).(\forall (x: T).(\forall (h: 
 nat).(\forall (d: nat).((eq T (THead (Flat f) u t) (lift h d x)) \to (ex3_2 T 
 T (\lambda (y: T).(\lambda (z: T).(eq T x (THead (Flat f) y z)))) (\lambda 
@@ -333,7 +333,7 @@ T).(eq T (lift h d x0) (lift h d y)))) (\lambda (_: T).(\lambda (z: T).(eq T
 (refl_equal T (lift h d x0)) (refl_equal T (lift h d x1))) u H2) t H3) x 
 H1)))))) H0))))))))).
 
-theorem lift_inj:
+lemma lift_inj:
  \forall (x: T).(\forall (t: T).(\forall (h: nat).(\forall (d: nat).((eq T 
 (lift h d x) (lift h d t)) \to (eq T x t)))))
 \def
@@ -396,7 +396,7 @@ x0))).(\lambda (H5: (eq T (lift h d t0) (lift h d x1))).(eq_ind_r T (THead
 (refl_equal K (Flat f)) (H x0 h d H4) (H0 x1 h d H5)))) t1 H3)))))) 
 (lift_gen_flat f (lift h d t) (lift h d t0) t1 h d H2)))))))))))) k)) x).
 
-theorem lift_gen_lift:
+lemma lift_gen_lift:
  \forall (t1: T).(\forall (x: T).(\forall (h1: nat).(\forall (h2: 
 nat).(\forall (d1: nat).(\forall (d2: nat).((le d1 d2) \to ((eq T (lift h1 d1 
 t1) (lift h2 (plus d2 h1) x)) \to (ex2 T (\lambda (t2: T).(eq T x (lift h1 d1 
@@ -592,7 +592,7 @@ H7)) t H9) x0 H8)))) (H x0 h1 h2 d1 d2 H1 H6)) x H5)))))) (lift_gen_flat f
 (lift h1 d1 t) (lift h1 d1 t0) x h2 (plus d2 h1) H4))))) k H2))))))))))))) 
 t1).
 
-theorem lifts_inj:
+lemma lifts_inj:
  \forall (xs: TList).(\forall (ts: TList).(\forall (h: nat).(\forall (d: 
 nat).((eq TList (lifts h d xs) (lifts h d ts)) \to (eq TList xs ts)))))
 \def

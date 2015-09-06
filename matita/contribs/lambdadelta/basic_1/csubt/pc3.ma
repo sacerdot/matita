@@ -18,7 +18,7 @@ include "basic_1/csubt/getl.ma".
 
 include "basic_1/pc3/left.ma".
 
-theorem csubt_pr2:
+lemma csubt_pr2:
  \forall (g: G).(\forall (c1: C).(\forall (t1: T).(\forall (t2: T).((pr2 c1 
 t1 t2) \to (\forall (c2: C).((csubt g c1 c2) \to (pr2 c2 t1 t2)))))))
 \def
@@ -36,7 +36,7 @@ i c2 (CHead d2 (Bind Abbr) u))) (pr2 c2 t3 t) (\lambda (x: C).(\lambda (_:
 (csubt g d x)).(\lambda (H6: (getl i c2 (CHead x (Bind Abbr) u))).(pr2_delta 
 c2 x u i H6 t3 t4 H1 t H2)))) H4)))))))))))))) c1 t1 t2 H))))).
 
-theorem csubt_pc3:
+lemma csubt_pc3:
  \forall (g: G).(\forall (c1: C).(\forall (t1: T).(\forall (t2: T).((pc3 c1 
 t1 t2) \to (\forall (c2: C).((csubt g c1 c2) \to (pc3 c2 t1 t2)))))))
 \def

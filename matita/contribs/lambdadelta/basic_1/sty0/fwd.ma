@@ -16,20 +16,20 @@
 
 include "basic_1/sty0/defs.ma".
 
-let rec sty0_ind (g: G) (P: (C \to (T \to (T \to Prop)))) (f: (\forall (c: 
-C).(\forall (n: nat).(P c (TSort n) (TSort (next g n)))))) (f0: (\forall (c: 
-C).(\forall (d: C).(\forall (v: T).(\forall (i: nat).((getl i c (CHead d 
-(Bind Abbr) v)) \to (\forall (w: T).((sty0 g d v w) \to ((P d v w) \to (P c 
-(TLRef i) (lift (S i) O w))))))))))) (f1: (\forall (c: C).(\forall (d: 
-C).(\forall (v: T).(\forall (i: nat).((getl i c (CHead d (Bind Abst) v)) \to 
-(\forall (w: T).((sty0 g d v w) \to ((P d v w) \to (P c (TLRef i) (lift (S i) 
-O v))))))))))) (f2: (\forall (b: B).(\forall (c: C).(\forall (v: T).(\forall 
-(t1: T).(\forall (t2: T).((sty0 g (CHead c (Bind b) v) t1 t2) \to ((P (CHead 
-c (Bind b) v) t1 t2) \to (P c (THead (Bind b) v t1) (THead (Bind b) v 
-t2)))))))))) (f3: (\forall (c: C).(\forall (v: T).(\forall (t1: T).(\forall 
-(t2: T).((sty0 g c t1 t2) \to ((P c t1 t2) \to (P c (THead (Flat Appl) v t1) 
-(THead (Flat Appl) v t2))))))))) (f4: (\forall (c: C).(\forall (v1: 
-T).(\forall (v2: T).((sty0 g c v1 v2) \to ((P c v1 v2) \to (\forall (t1: 
+implied let rec sty0_ind (g: G) (P: (C \to (T \to (T \to Prop)))) (f: 
+(\forall (c: C).(\forall (n: nat).(P c (TSort n) (TSort (next g n)))))) (f0: 
+(\forall (c: C).(\forall (d: C).(\forall (v: T).(\forall (i: nat).((getl i c 
+(CHead d (Bind Abbr) v)) \to (\forall (w: T).((sty0 g d v w) \to ((P d v w) 
+\to (P c (TLRef i) (lift (S i) O w))))))))))) (f1: (\forall (c: C).(\forall 
+(d: C).(\forall (v: T).(\forall (i: nat).((getl i c (CHead d (Bind Abst) v)) 
+\to (\forall (w: T).((sty0 g d v w) \to ((P d v w) \to (P c (TLRef i) (lift 
+(S i) O v))))))))))) (f2: (\forall (b: B).(\forall (c: C).(\forall (v: 
+T).(\forall (t1: T).(\forall (t2: T).((sty0 g (CHead c (Bind b) v) t1 t2) \to 
+((P (CHead c (Bind b) v) t1 t2) \to (P c (THead (Bind b) v t1) (THead (Bind 
+b) v t2)))))))))) (f3: (\forall (c: C).(\forall (v: T).(\forall (t1: 
+T).(\forall (t2: T).((sty0 g c t1 t2) \to ((P c t1 t2) \to (P c (THead (Flat 
+Appl) v t1) (THead (Flat Appl) v t2))))))))) (f4: (\forall (c: C).(\forall 
+(v1: T).(\forall (v2: T).((sty0 g c v1 v2) \to ((P c v1 v2) \to (\forall (t1: 
 T).(\forall (t2: T).((sty0 g c t1 t2) \to ((P c t1 t2) \to (P c (THead (Flat 
 Cast) v1 t1) (THead (Flat Cast) v2 t2)))))))))))) (c: C) (t: T) (t0: T) (s0: 
 sty0 g c t t0) on s0: P c t t0 \def match s0 with [(sty0_sort c0 n) 
@@ -43,7 +43,7 @@ t2 s1)) | (sty0_cast c0 v1 v2 s1 t1 t2 s2) \Rightarrow (f4 c0 v1 v2 s1
 ((sty0_ind g P f f0 f1 f2 f3 f4) c0 v1 v2 s1) t1 t2 s2 ((sty0_ind g P f f0 f1 
 f2 f3 f4) c0 t1 t2 s2))].
 
-theorem sty0_gen_sort:
+lemma sty0_gen_sort:
  \forall (g: G).(\forall (c: C).(\forall (x: T).(\forall (n: nat).((sty0 g c 
 (TSort n) x) \to (eq T x (TSort (next g n)))))))
 \def
@@ -95,7 +95,7 @@ T).(match ee with [(TSort _) \Rightarrow False | (TLRef _) \Rightarrow False
 (THead (Flat Cast) v2 t2) (TSort (next g n))) H6)))))))))))) c y x H0))) 
 H))))).
 
-theorem sty0_gen_lref:
+lemma sty0_gen_lref:
  \forall (g: G).(\forall (c: C).(\forall (x: T).(\forall (n: nat).((sty0 g c 
 (TLRef n) x) \to (or (ex3_3 C T T (\lambda (e: C).(\lambda (u: T).(\lambda 
 (_: T).(getl n c (CHead e (Bind Abbr) u))))) (\lambda (e: C).(\lambda (u: 
@@ -266,7 +266,7 @@ T).(\lambda (t: T).(sty0 g e u t)))) (\lambda (_: C).(\lambda (u: T).(\lambda
 (_: T).(eq T (THead (Flat Cast) v2 t2) (lift (S n) O u))))))) H6)))))))))))) 
 c y x H0))) H))))).
 
-theorem sty0_gen_bind:
+lemma sty0_gen_bind:
  \forall (g: G).(\forall (b: B).(\forall (c: C).(\forall (u: T).(\forall (t1: 
 T).(\forall (x: T).((sty0 g c (THead (Bind b) u t1) x) \to (ex2 T (\lambda 
 (t2: T).(sty0 g (CHead c (Bind b) u) t1 t2)) (\lambda (t2: T).(eq T x (THead 
@@ -365,7 +365,7 @@ H5) in (False_ind (ex2 T (\lambda (t3: T).(sty0 g (CHead c0 (Bind b) u) t1
 t3)) (\lambda (t3: T).(eq T (THead (Flat Cast) v2 t2) (THead (Bind b) u 
 t3)))) H6)))))))))))) c y x H0))) H))))))).
 
-theorem sty0_gen_appl:
+lemma sty0_gen_appl:
  \forall (g: G).(\forall (c: C).(\forall (u: T).(\forall (t1: T).(\forall (x: 
 T).((sty0 g c (THead (Flat Appl) u t1) x) \to (ex2 T (\lambda (t2: T).(sty0 g 
 c t1 t2)) (\lambda (t2: T).(eq T x (THead (Flat Appl) u t2)))))))))
@@ -446,7 +446,7 @@ True])])])) I (THead (Flat Appl) u t1) H5) in (False_ind (ex2 T (\lambda (t3:
 T).(sty0 g c0 t1 t3)) (\lambda (t3: T).(eq T (THead (Flat Cast) v2 t2) (THead 
 (Flat Appl) u t3)))) H6)))))))))))) c y x H0))) H)))))).
 
-theorem sty0_gen_cast:
+lemma sty0_gen_cast:
  \forall (g: G).(\forall (c: C).(\forall (v1: T).(\forall (t1: T).(\forall 
 (x: T).((sty0 g c (THead (Flat Cast) v1 t1) x) \to (ex3_2 T T (\lambda (v2: 
 T).(\lambda (_: T).(sty0 g c v1 v2))) (\lambda (_: T).(\lambda (t2: T).(sty0 

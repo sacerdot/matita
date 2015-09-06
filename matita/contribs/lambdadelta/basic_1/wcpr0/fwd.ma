@@ -16,15 +16,15 @@
 
 include "basic_1/wcpr0/defs.ma".
 
-let rec wcpr0_ind (P: (C \to (C \to Prop))) (f: (\forall (c: C).(P c c))) 
-(f0: (\forall (c1: C).(\forall (c2: C).((wcpr0 c1 c2) \to ((P c1 c2) \to 
+implied let rec wcpr0_ind (P: (C \to (C \to Prop))) (f: (\forall (c: C).(P c 
+c))) (f0: (\forall (c1: C).(\forall (c2: C).((wcpr0 c1 c2) \to ((P c1 c2) \to 
 (\forall (u1: T).(\forall (u2: T).((pr0 u1 u2) \to (\forall (k: K).(P (CHead 
 c1 k u1) (CHead c2 k u2))))))))))) (c: C) (c0: C) (w: wcpr0 c c0) on w: P c 
 c0 \def match w with [(wcpr0_refl c1) \Rightarrow (f c1) | (wcpr0_comp c1 c2 
 w0 u1 u2 p k) \Rightarrow (f0 c1 c2 w0 ((wcpr0_ind P f f0) c1 c2 w0) u1 u2 p 
 k)].
 
-theorem wcpr0_gen_sort:
+lemma wcpr0_gen_sort:
  \forall (x: C).(\forall (n: nat).((wcpr0 (CSort n) x) \to (eq C x (CSort 
 n))))
 \def
@@ -42,7 +42,7 @@ c1)))).(\lambda (u1: T).(\lambda (u2: T).(\lambda (_: (pr0 u1 u2)).(\lambda
 | (CHead _ _ _) \Rightarrow True])) I (CSort n) H4) in (False_ind (eq C 
 (CHead c2 k u2) (CHead c1 k u1)) H5))))))))))) y x H0))) H))).
 
-theorem wcpr0_gen_head:
+lemma wcpr0_gen_head:
  \forall (k: K).(\forall (c1: C).(\forall (x: C).(\forall (u1: T).((wcpr0 
 (CHead c1 k u1) x) \to (or (eq C x (CHead c1 k u1)) (ex3_2 C T (\lambda (c2: 
 C).(\lambda (u2: T).(eq C x (CHead c2 k u2)))) (\lambda (c2: C).(\lambda (_: 

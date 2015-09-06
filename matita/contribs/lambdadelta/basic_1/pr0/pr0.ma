@@ -20,7 +20,7 @@ include "basic_1/lift/tlt.ma".
 
 include "basic_1/tlt/fwd.ma".
 
-theorem pr0_confluence__pr0_cong_upsilon_refl:
+fact pr0_confluence__pr0_cong_upsilon_refl:
  \forall (b: B).((not (eq B b Abst)) \to (\forall (u0: T).(\forall (u3: 
 T).((pr0 u0 u3) \to (\forall (t4: T).(\forall (t5: T).((pr0 t4 t5) \to 
 (\forall (u2: T).(\forall (v2: T).(\forall (x: T).((pr0 u2 x) \to ((pr0 v2 x) 
@@ -40,7 +40,7 @@ t5 H1) (pr0_comp u3 u3 (pr0_refl u3) (THead (Flat Appl) (lift (S O) O v2) t5)
 O) O x) (pr0_lift v2 x H3 (S O) O) t5 t5 (pr0_refl t5) (Flat Appl)) (Bind 
 b))))))))))))))).
 
-theorem pr0_confluence__pr0_cong_upsilon_cong:
+fact pr0_confluence__pr0_cong_upsilon_cong:
  \forall (b: B).((not (eq B b Abst)) \to (\forall (u2: T).(\forall (v2: 
 T).(\forall (x: T).((pr0 u2 x) \to ((pr0 v2 x) \to (\forall (t2: T).(\forall 
 (t5: T).(\forall (x0: T).((pr0 t2 x0) \to ((pr0 t5 x0) \to (\forall (u5: 
@@ -62,7 +62,7 @@ Appl) (lift (S O) O v2) t5) (THead (Flat Appl) (lift (S O) O x) x0) (pr0_comp
 (lift (S O) O v2) (lift (S O) O x) (pr0_lift v2 x H1 (S O) O) t5 x0 H3 (Flat 
 Appl)) (Bind b))))))))))))))))))).
 
-theorem pr0_confluence__pr0_cong_upsilon_delta:
+fact pr0_confluence__pr0_cong_upsilon_delta:
  (not (eq B Abbr Abst)) \to (\forall (u5: T).(\forall (t2: T).(\forall (w: 
 T).((subst0 O u5 t2 w) \to (\forall (u2: T).(\forall (v2: T).(\forall (x: 
 T).((pr0 u2 x) \to ((pr0 v2 x) \to (\forall (t5: T).(\forall (x0: T).((pr0 t2 
@@ -103,7 +103,7 @@ O v2) (lift (S O) O x) (pr0_lift v2 x H2 (S O) O) t5 x0 H4 (Flat Appl))
 (lift (S O) O x))))))) H7)) (pr0_subst0 t2 x0 H3 u5 w O H0 x1 
 H5))))))))))))))))))).
 
-theorem pr0_confluence__pr0_cong_upsilon_zeta:
+fact pr0_confluence__pr0_cong_upsilon_zeta:
  \forall (b: B).((not (eq B b Abst)) \to (\forall (u0: T).(\forall (u3: 
 T).((pr0 u0 u3) \to (\forall (u2: T).(\forall (v2: T).(\forall (x0: T).((pr0 
 u2 x0) \to ((pr0 v2 x0) \to (\forall (x: T).(\forall (t3: T).(\forall (x1: 
@@ -125,7 +125,7 @@ Appl) x0 x1) (pr0_comp v2 x0 H2 x x1 H3 (Flat Appl)) u3)) (THead (Flat Appl)
 (lift (S O) O v2) (lift (S O) O x)) (lift_flat Appl v2 x (S O) 
 O)))))))))))))))).
 
-theorem pr0_confluence__pr0_cong_delta:
+fact pr0_confluence__pr0_cong_delta:
  \forall (u3: T).(\forall (t5: T).(\forall (w: T).((subst0 O u3 t5 w) \to 
 (\forall (u2: T).(\forall (x: T).((pr0 u2 x) \to ((pr0 u3 x) \to (\forall 
 (t3: T).(\forall (x0: T).((pr0 t3 x0) \to ((pr0 t5 x0) \to (ex2 T (\lambda 
@@ -151,7 +151,7 @@ x1)).(ex_intro2 T (\lambda (t: T).(pr0 (THead (Bind Abbr) u2 t3) t)) (\lambda
 u2 x H0 t3 x0 H2 x1 H6) (pr0_comp u3 x H1 w x1 H5 (Bind Abbr)))))) H4)) 
 (pr0_subst0 t5 x0 H3 u3 w O H x H1))))))))))))).
 
-theorem pr0_confluence__pr0_upsilon_upsilon:
+fact pr0_confluence__pr0_upsilon_upsilon:
  \forall (b: B).((not (eq B b Abst)) \to (\forall (v1: T).(\forall (v2: 
 T).(\forall (x0: T).((pr0 v1 x0) \to ((pr0 v2 x0) \to (\forall (u1: 
 T).(\forall (u2: T).(\forall (x1: T).((pr0 u1 x1) \to ((pr0 u2 x1) \to 
@@ -175,7 +175,7 @@ H3 (THead (Flat Appl) (lift (S O) O v2) t2) (THead (Flat Appl) (lift (S O) O
 x0) x2) (pr0_comp (lift (S O) O v2) (lift (S O) O x0) (pr0_lift v2 x0 H1 (S 
 O) O) t2 x2 H5 (Flat Appl)) (Bind b))))))))))))))))))).
 
-theorem pr0_confluence__pr0_delta_delta:
+fact pr0_confluence__pr0_delta_delta:
  \forall (u2: T).(\forall (t3: T).(\forall (w: T).((subst0 O u2 t3 w) \to 
 (\forall (u3: T).(\forall (t5: T).(\forall (w0: T).((subst0 O u3 t5 w0) \to 
 (\forall (x: T).((pr0 u2 x) \to ((pr0 u3 x) \to (\forall (x0: T).((pr0 t3 x0) 
@@ -244,7 +244,7 @@ w0 x1 H6 (Bind Abbr)))) (\lambda (H11: (subst0 O x x1 x2)).(ex_intro2 T
 x2 x O H10 x1 H7))))) H8)) (pr0_subst0 t3 x0 H3 u2 w O H x H1))))) H5)) 
 (pr0_subst0 t5 x0 H4 u3 w0 O H0 x H2))))))))))))))).
 
-theorem pr0_confluence__pr0_delta_tau:
+fact pr0_confluence__pr0_delta_tau:
  \forall (u2: T).(\forall (t3: T).(\forall (w: T).((subst0 O u2 t3 w) \to 
 (\forall (t4: T).((pr0 (lift (S O) O t4) t3) \to (\forall (t2: T).(ex2 T 
 (\lambda (t: T).(pr0 (THead (Bind Abbr) u2 w) t)) (\lambda (t: T).(pr0 t2 

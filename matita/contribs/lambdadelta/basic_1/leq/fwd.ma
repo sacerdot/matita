@@ -16,7 +16,7 @@
 
 include "basic_1/leq/defs.ma".
 
-let rec leq_ind (g: G) (P: (A \to (A \to Prop))) (f: (\forall (h1: 
+implied let rec leq_ind (g: G) (P: (A \to (A \to Prop))) (f: (\forall (h1: 
 nat).(\forall (h2: nat).(\forall (n1: nat).(\forall (n2: nat).(\forall (k: 
 nat).((eq A (aplus g (ASort h1 n1) k) (aplus g (ASort h2 n2) k)) \to (P 
 (ASort h1 n1) (ASort h2 n2))))))))) (f0: (\forall (a1: A).(\forall (a2: 
@@ -27,7 +27,7 @@ k e) \Rightarrow (f h1 h2 n1 n2 k e) | (leq_head a1 a2 l0 a3 a4 l1)
 \Rightarrow (f0 a1 a2 l0 ((leq_ind g P f f0) a1 a2 l0) a3 a4 l1 ((leq_ind g P 
 f f0) a3 a4 l1))].
 
-theorem leq_gen_sort1:
+lemma leq_gen_sort1:
  \forall (g: G).(\forall (h1: nat).(\forall (n1: nat).(\forall (a2: A).((leq 
 g (ASort h1 n1) a2) \to (ex2_3 nat nat nat (\lambda (n2: nat).(\lambda (h2: 
 nat).(\lambda (k: nat).(eq A (aplus g (ASort h1 n1) k) (aplus g (ASort h2 n2) 
@@ -82,7 +82,7 @@ n2))))))))).(\lambda (H5: (eq A (AHead a1 a4) (ASort h1 n1))).(let H6 \def
 (\lambda (n2: nat).(\lambda (h2: nat).(\lambda (_: nat).(eq A (AHead a3 a5) 
 (ASort h2 n2)))))) H6))))))))))) y a2 H0))) H))))).
 
-theorem leq_gen_head1:
+lemma leq_gen_head1:
  \forall (g: G).(\forall (a1: A).(\forall (a2: A).(\forall (a: A).((leq g 
 (AHead a1 a2) a) \to (ex3_2 A A (\lambda (a3: A).(\lambda (_: A).(leq g a1 
 a3))) (\lambda (_: A).(\lambda (a4: A).(leq g a2 a4))) (\lambda (a3: 
@@ -130,7 +130,7 @@ A).(leq g a1 a6))) (\lambda (_: A).(\lambda (a7: A).(leq g a2 a7))) (\lambda
 (a6: A).(\lambda (a7: A).(eq A (AHead a3 a5) (AHead a6 a7)))) a3 a5 H12 H10 
 (refl_equal A (AHead a3 a5))))))))) H6))))))))))) y a H0))) H))))).
 
-theorem leq_gen_sort2:
+lemma leq_gen_sort2:
  \forall (g: G).(\forall (h1: nat).(\forall (n1: nat).(\forall (a2: A).((leq 
 g a2 (ASort h1 n1)) \to (ex2_3 nat nat nat (\lambda (n2: nat).(\lambda (h2: 
 nat).(\lambda (k: nat).(eq A (aplus g (ASort h2 n2) k) (aplus g (ASort h1 n1) 
@@ -185,7 +185,7 @@ n2))))))))).(\lambda (H5: (eq A (AHead a3 a5) (ASort h1 n1))).(let H6 \def
 (\lambda (n2: nat).(\lambda (h2: nat).(\lambda (_: nat).(eq A (AHead a1 a4) 
 (ASort h2 n2)))))) H6))))))))))) a2 y H0))) H))))).
 
-theorem leq_gen_head2:
+lemma leq_gen_head2:
  \forall (g: G).(\forall (a1: A).(\forall (a2: A).(\forall (a: A).((leq g a 
 (AHead a1 a2)) \to (ex3_2 A A (\lambda (a3: A).(\lambda (_: A).(leq g a3 
 a1))) (\lambda (_: A).(\lambda (a4: A).(leq g a4 a2))) (\lambda (a3: 
@@ -233,7 +233,7 @@ A).(leq g a6 a1))) (\lambda (_: A).(\lambda (a7: A).(leq g a7 a2))) (\lambda
 (a6: A).(\lambda (a7: A).(eq A (AHead a0 a4) (AHead a6 a7)))) a0 a4 H12 H10 
 (refl_equal A (AHead a0 a4))))))))) H6))))))))))) a y H0))) H))))).
 
-theorem ahead_inj_snd:
+lemma ahead_inj_snd:
  \forall (g: G).(\forall (a1: A).(\forall (a2: A).(\forall (a3: A).(\forall 
 (a4: A).((leq g (AHead a1 a2) (AHead a3 a4)) \to (leq g a2 a4))))))
 \def

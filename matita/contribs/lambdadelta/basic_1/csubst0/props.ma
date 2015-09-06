@@ -16,7 +16,7 @@
 
 include "basic_1/csubst0/defs.ma".
 
-theorem csubst0_snd_bind:
+lemma csubst0_snd_bind:
  \forall (b: B).(\forall (i: nat).(\forall (v: T).(\forall (u1: T).(\forall 
 (u2: T).((subst0 i v u1 u2) \to (\forall (c: C).(csubst0 (S i) v (CHead c 
 (Bind b) u1) (CHead c (Bind b) u2))))))))
@@ -27,7 +27,7 @@ b) i) (\lambda (n: nat).(csubst0 n v (CHead c (Bind b) u1) (CHead c (Bind b)
 u2))) (csubst0_snd (Bind b) i v u1 u2 H c) (S i) (refl_equal nat (S 
 i))))))))).
 
-theorem csubst0_fst_bind:
+lemma csubst0_fst_bind:
  \forall (b: B).(\forall (i: nat).(\forall (c1: C).(\forall (c2: C).(\forall 
 (v: T).((csubst0 i v c1 c2) \to (\forall (u: T).(csubst0 (S i) v (CHead c1 
 (Bind b) u) (CHead c2 (Bind b) u))))))))

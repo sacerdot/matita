@@ -18,7 +18,7 @@ include "basic_1/wf3/clear.ma".
 
 include "basic_1/ty3/dec.ma".
 
-theorem wf3_getl_conf:
+lemma wf3_getl_conf:
  \forall (b: B).(\forall (i: nat).(\forall (c1: C).(\forall (d1: C).(\forall 
 (v: T).((getl i c1 (CHead d1 (Bind b) v)) \to (\forall (g: G).(\forall (c2: 
 C).((wf3 g c1 c2) \to (\forall (w: T).((ty3 g d1 v w) \to (ex2 C (\lambda 
@@ -139,7 +139,7 @@ C).(wf3 g d1 d2)) x (getl_head (Bind Void) n x0 (CHead x (Bind b) v) H12
 v H5 g c2 H_y w H3))))) k H2 (getl_gen_S k c (CHead d1 (Bind b) v) t n 
 H1)))))))))))))) c1)))) i)).
 
-theorem getl_wf3_trans:
+lemma getl_wf3_trans:
  \forall (i: nat).(\forall (c1: C).(\forall (d1: C).((getl i c1 d1) \to 
 (\forall (g: G).(\forall (d2: C).((wf3 g d1 d2) \to (ex2 C (\lambda (c2: 
 C).(wf3 g c1 c2)) (\lambda (c2: C).(getl i c2 d2)))))))))

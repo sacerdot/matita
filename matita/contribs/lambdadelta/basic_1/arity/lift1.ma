@@ -18,7 +18,7 @@ include "basic_1/arity/props.ma".
 
 include "basic_1/drop1/fwd.ma".
 
-theorem arity_lift1:
+lemma arity_lift1:
  \forall (g: G).(\forall (a: A).(\forall (c2: C).(\forall (hds: 
 PList).(\forall (c1: C).(\forall (t: T).((drop1 hds c1 c2) \to ((arity g c2 t 
 a) \to (arity g c1 (lift1 hds t) a))))))))

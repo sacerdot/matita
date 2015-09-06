@@ -18,7 +18,7 @@ include "basic_1/iso/defs.ma".
 
 include "basic_1/tlist/defs.ma".
 
-theorem iso_ind:
+implied lemma iso_ind:
  \forall (P: ((T \to (T \to Prop)))).(((\forall (n1: nat).(\forall (n2: 
 nat).(P (TSort n1) (TSort n2))))) \to (((\forall (i1: nat).(\forall (i2: 
 nat).(P (TLRef i1) (TLRef i2))))) \to (((\forall (v1: T).(\forall (v2: 
@@ -35,7 +35,7 @@ nat).(\forall (n2: nat).(P (TSort n1) (TSort n2)))))).(\lambda (f0: ((\forall
 (f x x0) | (iso_lref x x0) \Rightarrow (f0 x x0) | (iso_head x x0 x1 x2 x3) 
 \Rightarrow (f1 x x0 x1 x2 x3)]))))))).
 
-theorem iso_gen_sort:
+lemma iso_gen_sort:
  \forall (u2: T).(\forall (n1: nat).((iso (TSort n1) u2) \to (ex nat (\lambda 
 (n2: nat).(eq T u2 (TSort n2))))))
 \def
@@ -60,7 +60,7 @@ K).(\lambda (H1: (eq T (THead k v1 t1) (TSort n1))).(let H2 \def (eq_ind T
 n1) H1) in (False_ind (ex nat (\lambda (n2: nat).(eq T (THead k v2 t2) (TSort 
 n2)))) H2)))))))) y u2 H0))) H))).
 
-theorem iso_gen_lref:
+lemma iso_gen_lref:
  \forall (u2: T).(\forall (n1: nat).((iso (TLRef n1) u2) \to (ex nat (\lambda 
 (n2: nat).(eq T u2 (TLRef n2))))))
 \def
@@ -85,7 +85,7 @@ ee with [(TSort _) \Rightarrow False | (TLRef _) \Rightarrow False | (THead _
 _ _) \Rightarrow True])) I (TLRef n1) H1) in (False_ind (ex nat (\lambda (n2: 
 nat).(eq T (THead k v2 t2) (TLRef n2)))) H2)))))))) y u2 H0))) H))).
 
-theorem iso_gen_head:
+lemma iso_gen_head:
  \forall (k: K).(\forall (v1: T).(\forall (t1: T).(\forall (u2: T).((iso 
 (THead k v1 t1) u2) \to (ex_2 T T (\lambda (v2: T).(\lambda (t2: T).(eq T u2 
 (THead k v2 t2)))))))))
@@ -121,7 +121,7 @@ k1 v2 t2) (THead k v3 t3)))))) (ex_2_intro T T (\lambda (v3: T).(\lambda (t3:
 T).(eq T (THead k v2 t2) (THead k v3 t3)))) v2 t2 (refl_equal T (THead k v2 
 t2))) k0 H6)))) H3)) H2)))))))) y u2 H0))) H))))).
 
-theorem iso_flats_lref_bind_false:
+lemma iso_flats_lref_bind_false:
  \forall (f: F).(\forall (b: B).(\forall (i: nat).(\forall (v: T).(\forall 
 (t: T).(\forall (vs: TList).((iso (THeads (Flat f) vs (TLRef i)) (THead (Bind 
 b) v t)) \to (\forall (P: Prop).P)))))))
@@ -149,7 +149,7 @@ v t) (\lambda (ee: T).(match ee with [(TSort _) \Rightarrow False | (TLRef _)
 \Rightarrow True | (Flat _) \Rightarrow False])])) I (THead (Flat f) x0 x1) 
 H2) in (False_ind P H3))))) H1)))))))) vs)))))).
 
-theorem iso_flats_flat_bind_false:
+lemma iso_flats_flat_bind_false:
  \forall (f1: F).(\forall (f2: F).(\forall (b: B).(\forall (v: T).(\forall 
 (v2: T).(\forall (t: T).(\forall (t2: T).(\forall (vs: TList).((iso (THeads 
 (Flat f1) vs (THead (Flat f2) v2 t2)) (THead (Bind b) v t)) \to (\forall (P: 

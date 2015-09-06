@@ -18,7 +18,7 @@ include "basic_1/wcpr0/fwd.ma".
 
 include "basic_1/getl/props.ma".
 
-theorem wcpr0_drop:
+lemma wcpr0_drop:
  \forall (c1: C).(\forall (c2: C).((wcpr0 c1 c2) \to (\forall (h: 
 nat).(\forall (e1: C).(\forall (u1: T).(\forall (k: K).((drop h O c1 (CHead 
 e1 k u1)) \to (ex3_2 C T (\lambda (e2: C).(\lambda (u2: T).(drop h O c2 
@@ -116,7 +116,7 @@ e1 e2))) (\lambda (_: C).(\lambda (u3: T).(pr0 u0 u3))) x0 x1 (drop_drop
 (Flat f) n c4 (CHead x0 k0 x1) H6 u2) H7 H8)))))) H5))))))))) k) h)))))))))) 
 c1 c2 H))).
 
-theorem wcpr0_drop_back:
+lemma wcpr0_drop_back:
  \forall (c1: C).(\forall (c2: C).((wcpr0 c2 c1) \to (\forall (h: 
 nat).(\forall (e1: C).(\forall (u1: T).(\forall (k: K).((drop h O c1 (CHead 
 e1 k u1)) \to (ex3_2 C T (\lambda (e2: C).(\lambda (u2: T).(drop h O c2 
@@ -214,7 +214,7 @@ e2 e1))) (\lambda (_: C).(\lambda (u3: T).(pr0 u3 u0))) x0 x1 (drop_drop
 (Flat f) n c3 (CHead x0 k0 x1) H6 u1) H7 H8)))))) H5))))))))) k) h)))))))))) 
 c2 c1 H))).
 
-theorem wcpr0_getl:
+lemma wcpr0_getl:
  \forall (c1: C).(\forall (c2: C).((wcpr0 c1 c2) \to (\forall (h: 
 nat).(\forall (e1: C).(\forall (u1: T).(\forall (k: K).((getl h c1 (CHead e1 
 k u1)) \to (ex3_2 C T (\lambda (e2: C).(\lambda (u2: T).(getl h c2 (CHead e2 
@@ -330,7 +330,7 @@ e2))) (\lambda (_: C).(\lambda (u3: T).(pr0 u0 u3))) x0 x1 (getl_head (Flat
 f) n c4 (CHead x0 k0 x1) H6 u2) H7 H8)))))) H5))))))))) k) h)))))))))) c1 c2 
 H))).
 
-theorem wcpr0_getl_back:
+lemma wcpr0_getl_back:
  \forall (c1: C).(\forall (c2: C).((wcpr0 c2 c1) \to (\forall (h: 
 nat).(\forall (e1: C).(\forall (u1: T).(\forall (k: K).((getl h c1 (CHead e1 
 k u1)) \to (ex3_2 C T (\lambda (e2: C).(\lambda (u2: T).(getl h c2 (CHead e2 

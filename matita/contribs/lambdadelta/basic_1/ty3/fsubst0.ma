@@ -20,7 +20,7 @@ include "basic_1/pc3/fsubst0.ma".
 
 include "basic_1/getl/getl.ma".
 
-theorem ty3_fsubst0:
+lemma ty3_fsubst0:
  \forall (g: G).(\forall (c1: C).(\forall (t1: T).(\forall (t: T).((ty3 g c1 
 t1 t) \to (\forall (i: nat).(\forall (u: T).(\forall (c2: C).(\forall (t2: 
 T).((fsubst0 i u c1 t1 c2 t2) \to (\forall (e: C).((getl i c1 (CHead e (Bind 
@@ -949,7 +949,7 @@ i H10 t0) c3 H6) e H7)))) (ty3_correct g c3 t3 t0 (H3 i u c3 t3 (fsubst0_fst
 i u c t3 c3 H6) e H7))) t5 H9)))))) H8)) (subst0_gen_head (Flat Cast) u t3 t2 
 t5 i H5)))))))) c2 t4 H4)))))))))))))) c1 t1 t H))))).
 
-theorem ty3_csubst0:
+lemma ty3_csubst0:
  \forall (g: G).(\forall (c1: C).(\forall (t1: T).(\forall (t2: T).((ty3 g c1 
 t1 t2) \to (\forall (e: C).(\forall (u: T).(\forall (i: nat).((getl i c1 
 (CHead e (Bind Abbr) u)) \to (\forall (c2: C).((csubst0 i u c1 c2) \to (ty3 g 
@@ -961,7 +961,7 @@ nat).(\lambda (H0: (getl i c1 (CHead e (Bind Abbr) u))).(\lambda (c2:
 C).(\lambda (H1: (csubst0 i u c1 c2)).(ty3_fsubst0 g c1 t1 t2 H i u c2 t1 
 (fsubst0_fst i u c1 t1 c2 H1) e H0))))))))))).
 
-theorem ty3_subst0:
+lemma ty3_subst0:
  \forall (g: G).(\forall (c: C).(\forall (t1: T).(\forall (t: T).((ty3 g c t1 
 t) \to (\forall (e: C).(\forall (u: T).(\forall (i: nat).((getl i c (CHead e 
 (Bind Abbr) u)) \to (\forall (t2: T).((subst0 i u t1 t2) \to (ty3 g c t2 

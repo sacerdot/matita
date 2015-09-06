@@ -18,14 +18,14 @@ include "basic_1/subst/defs.ma".
 
 include "basic_1/subst0/fwd.ma".
 
-theorem subst_sort:
+lemma subst_sort:
  \forall (v: T).(\forall (d: nat).(\forall (k: nat).(eq T (subst d v (TSort 
 k)) (TSort k))))
 \def
  \lambda (_: T).(\lambda (_: nat).(\lambda (k: nat).(refl_equal T (TSort 
 k)))).
 
-theorem subst_lref_lt:
+lemma subst_lref_lt:
  \forall (v: T).(\forall (d: nat).(\forall (i: nat).((lt i d) \to (eq T 
 (subst d v (TLRef i)) (TLRef i)))))
 \def
@@ -35,7 +35,7 @@ d)).(eq_ind_r bool true (\lambda (b: bool).(eq T (match b with [true
 \Rightarrow (TLRef (pred i)) | false \Rightarrow (lift d O v)])]) (TLRef i))) 
 (refl_equal T (TLRef i)) (blt i d) (lt_blt d i H))))).
 
-theorem subst_lref_eq:
+lemma subst_lref_eq:
  \forall (v: T).(\forall (i: nat).(eq T (subst i v (TLRef i)) (lift i O v)))
 \def
  \lambda (v: T).(\lambda (i: nat).(eq_ind_r bool false (\lambda (b: bool).(eq 
@@ -43,7 +43,7 @@ T (match b with [true \Rightarrow (TLRef i) | false \Rightarrow (match b with
 [true \Rightarrow (TLRef (pred i)) | false \Rightarrow (lift i O v)])]) (lift 
 i O v))) (refl_equal T (lift i O v)) (blt i i) (le_bge i i (le_n i)))).
 
-theorem subst_lref_gt:
+lemma subst_lref_gt:
  \forall (v: T).(\forall (d: nat).(\forall (i: nat).((lt d i) \to (eq T 
 (subst d v (TLRef i)) (TLRef (pred i))))))
 \def
@@ -56,7 +56,7 @@ i)).(eq_ind_r bool false (\lambda (b: bool).(eq T (match b with [true
 i)))) (refl_equal T (TLRef (pred i))) (blt d i) (lt_blt i d H)) (blt i d) 
 (le_bge d i (lt_le_weak d i H)))))).
 
-theorem subst_head:
+lemma subst_head:
  \forall (k: K).(\forall (w: T).(\forall (u: T).(\forall (t: T).(\forall (d: 
 nat).(eq T (subst d w (THead k u t)) (THead k (subst d w u) (subst (s k d) w 
 t)))))))
@@ -64,7 +64,7 @@ t)))))))
  \lambda (k: K).(\lambda (w: T).(\lambda (u: T).(\lambda (t: T).(\lambda (d: 
 nat).(refl_equal T (THead k (subst d w u) (subst (s k d) w t))))))).
 
-theorem subst_lift_SO:
+lemma subst_lift_SO:
  \forall (v: T).(\forall (t: T).(\forall (d: nat).(eq T (subst d v (lift (S 
 O) d t)) t)))
 \def
@@ -103,7 +103,7 @@ d) t1)) t1 (refl_equal K k) (H d) (H0 (s k d))))) (subst d v (THead k (lift
 (S O) (s k d) t1) d)) (lift (S O) d (THead k t0 t1)) (lift_head k t0 t1 (S O) 
 d)))))))) t)).
 
-theorem subst_subst0:
+lemma subst_subst0:
  \forall (v: T).(\forall (t1: T).(\forall (t2: T).(\forall (d: nat).((subst0 
 d v t1 t2) \to (eq T (subst d v t1) (subst d v t2))))))
 \def

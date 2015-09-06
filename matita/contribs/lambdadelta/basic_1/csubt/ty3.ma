@@ -20,7 +20,7 @@ include "basic_1/csubt/props.ma".
 
 include "basic_1/ty3/fwd.ma".
 
-theorem csubt_ty3:
+lemma csubt_ty3:
  \forall (g: G).(\forall (c1: C).(\forall (t1: T).(\forall (t2: T).((ty3 g c1 
 t1 t2) \to (\forall (c2: C).((csubt g c1 c2) \to (ty3 g c2 t1 t2)))))))
 \def
@@ -86,7 +86,7 @@ T).(\lambda (_: (ty3 g c t3 t4)).(\lambda (H3: ((\forall (c2: C).((csubt g c
 c2) \to (ty3 g c2 t3 t4))))).(\lambda (c2: C).(\lambda (H4: (csubt g c 
 c2)).(ty3_cast g c2 t0 t3 (H1 c2 H4) t4 (H3 c2 H4)))))))))))) c1 t1 t2 H))))).
 
-theorem csubt_ty3_ld:
+lemma csubt_ty3_ld:
  \forall (g: G).(\forall (c: C).(\forall (u: T).(\forall (v: T).((ty3 g c u 
 v) \to (\forall (t1: T).(\forall (t2: T).((ty3 g (CHead c (Bind Abst) v) t1 
 t2) \to (ty3 g (CHead c (Bind Abbr) u) t1 t2))))))))

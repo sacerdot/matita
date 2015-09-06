@@ -18,7 +18,7 @@ include "basic_1/csubc/defs.ma".
 
 include "basic_1/sc3/props.ma".
 
-theorem csubc_refl:
+lemma csubc_refl:
  \forall (g: G).(\forall (c: C).(csubc g c c))
 \def
  \lambda (g: G).(\lambda (c: C).(C_ind (\lambda (c0: C).(csubc g c0 c0)) 

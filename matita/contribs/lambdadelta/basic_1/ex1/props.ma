@@ -28,14 +28,14 @@ include "basic_1/arity/defs.ma".
 
 include "basic_1/leq/props.ma".
 
-theorem ex1__leq_sort_SS:
+fact ex1__leq_sort_SS:
  \forall (g: G).(\forall (k: nat).(\forall (n: nat).(leq g (ASort k n) (asucc 
 g (asucc g (ASort (S (S k)) n))))))
 \def
  \lambda (g: G).(\lambda (k: nat).(\lambda (n: nat).(leq_refl g (asucc g 
 (asucc g (ASort (S (S k)) n)))))).
 
-theorem ex1_arity:
+lemma ex1_arity:
  \forall (g: G).(arity g ex1_c ex1_t (ASort O O))
 \def
  \lambda (g: G).(arity_appl g (CHead (CHead (CHead (CSort O) (Bind Abst) 
@@ -67,7 +67,7 @@ O))) (ex1__leq_sort_SS g O O))) (TSort O) (ASort O O) (arity_sort g (CHead
 (CHead (CHead (CHead (CSort O) (Bind Abst) (TSort O)) (Bind Abst) (TSort O)) 
 (Bind Abst) (TLRef O)) (Bind Abst) (TLRef (S (S O)))) O))).
 
-theorem ex1_ty3:
+lemma ex1_ty3:
  \forall (g: G).(\forall (u: T).((ty3 g ex1_c ex1_t u) \to (\forall (P: 
 Prop).P)))
 \def
