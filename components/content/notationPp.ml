@@ -275,6 +275,11 @@ let pp_fields pp_term fields =
       pp_term ty)
     fields)
 
+let string_of_source = function
+   | `Provided  -> ""
+   | `Implied   -> "implied "
+   | `Generated -> "generated "
+
 let pp_obj pp_term = function
  | Ast.Inductive (params, types) ->
     let pp_constructors constructors =
@@ -295,8 +300,9 @@ let pp_obj pp_term = function
             (pp_term typ) (pp_constructors constructors)
         in
         fst_typ_pp ^ String.concat "" (List.map pp_type tl))
- | Ast.Theorem (name, typ, body,(_,flavour,_)) ->
-    sprintf "%s %s:\n %s\n%s"
+ | Ast.Theorem (name, typ, body,(source, flavour, _)) ->
+    sprintf "%s%s %s:\n %s\n%s"
+      (string_of_source source)
       (NCicPp.string_of_flavour flavour)
       name
       (pp_term typ)
@@ -306,7 +312,7 @@ let pp_obj pp_term = function
  | Ast.Record (params,name,ty,fields) ->
     "record " ^ name ^ " " ^ pp_params pp_term params ^ ": " ^ pp_term ty ^ 
     " \\def {" ^ pp_fields pp_term fields ^ "\n}"
- | Ast.LetRec (kind, definitions, _) ->
+ | Ast.LetRec (kind, definitions, (source, _, _)) ->
     let rec get_guard i = function
        | []                   -> assert false (* Ast.Implicit `JustOne *)
        | [term, _] when i = 1 -> term
@@ -324,7 +330,8 @@ let pp_obj pp_term = function
 	  (pp_term (get_guard i params))
 	  (pp_term typ) (pp_term body)
     in
-    sprintf "let %s %s"
+    sprintf "%slet %s %s"
+      (string_of_source source)
       (match kind with `Inductive -> "rec" | `CoInductive -> "corec")
       (String.concat " and " (List.map map definitions))
 
