@@ -25,7 +25,7 @@ MAC_OPTS     :=
 
 PRB_DIR      := ../../../components/binaries/probe
 PRB          := probe.native
-PRB_OPTS     := $(XOA_OPTS) -g 
+PRB_OPTS     := $(XOA_OPTS) -g -i
 
 ORIG         := . ./orig.sh 
 ORIGS        := basic_2/basic_1.orig
@@ -52,7 +52,7 @@ define MAS_TEMPLATE
 
 $(1)/$(1)_probe.txt: $$(MAS_$(1))
 	@echo "  PROBE $(1)"
-	$$(H)$$(PRB_DIR)/$$(PRB) $$(PRB_OPTS) $(1) -sn -on -i > $$@
+	$$(H)$$(PRB_DIR)/$$(PRB) $$(PRB_OPTS) $(1) -sn -on -c > $$@
 
 $(1)/$(1)_mac.txt: $$(MAS_$(1))
 	@echo "  MAC $(1)"
