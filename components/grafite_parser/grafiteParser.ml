@@ -66,6 +66,12 @@ let nmk_rec_corec src ind_kind defs loc index =
  let loc,t = mk_rec_corec src ind_kind defs loc in
   G.NObj (loc,t,index)
 
+let shift_vars binder (vars, ty) bo =
+   let map var bo = N.Binder (binder, (var, ty), bo) in
+   List.fold_right map vars bo
+
+let shift_params binder params bo = 
+   List.fold_right (shift_vars binder) params bo
 (*
 let nnon_punct_of_punct = function
   | G.Skip loc -> G.NSkip loc
@@ -501,12 +507,20 @@ EXTEND
   grafite_ncommand: [ [
       IDENT "qed" ;  i = index -> G.NQed (loc,i)
     | IDENT "defined" ;  i = index -> G.NQed (loc,i) (* FG: presentational qed for definitions *)
-    | src = source; nflavour = ntheorem_flavour; name = IDENT; SYMBOL ":"; typ = term;
+    | src = source; nflavour = ntheorem_flavour; name = IDENT;
+      params = LIST0 protected_binder_vars; SYMBOL ":"; typ = term; (* FG: params added *)
       body = OPT [ SYMBOL <:unicode<def>> (* ≝ *); body = term -> body ] ->
+        let typ = shift_params `Forall params typ in
+        let body = match body with
+           | Some bo -> Some (shift_params `Lambda params bo)
+           | None    -> None
+        in
         let attrs = src, nflavour, `Regular in
 	G.NObj (loc, N.Theorem (name, typ, body, attrs),true)
-    | src = source; nflavour = ntheorem_flavour; name = IDENT; SYMBOL <:unicode<def>> (* ≝ *);
+    | src = source; nflavour = ntheorem_flavour; name = IDENT;
+      params = LIST0 protected_binder_vars; SYMBOL <:unicode<def>> (* ≝ *); (* FG: params added *)
       body = term ->
+        let body = shift_params `Lambda params body in
         let attrs = src, nflavour, `Regular in
         G.NObj (loc, 
           N.Theorem(name, N.Implicit `JustOne, Some body, attrs),
