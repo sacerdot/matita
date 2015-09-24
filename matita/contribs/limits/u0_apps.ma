@@ -12,14 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* Project started Wed Oct 12, 2005 ***************************************)
-(* Project taken over by "formal_topology" and restarted Mon Apr 6, 2009 **)
-(* Project taken over by "lambdadelta" and restarted Sun Sept 20, 2015 ****)
+include "preamble.ma".
 
-include "basics/logic.ma".
-include "../lambdadelta/ground_2/notation/xoa/false_0.ma".
-include "../lambdadelta/ground_2/notation/xoa/true_0.ma".
+(* APPLICATIONS *******************************************************)
 
-interpretation "logical false" 'false = False.
+definition u0_i: ∀T:Type[0]. T → T ≝
+                 λT,a. a.
 
-interpretation "logical true" 'true = True.
+definition u0_k: ∀T,U:Type[0]. T → U → T ≝
+                 λT,U,a,b. a.
+
+definition u0_s: ∀T,U1,U2:Type[0]. (T → U1 → U2) → (T → U1) → (T → U2) ≝
+                 λT,U1,U2,f,g,a. f a (g a).

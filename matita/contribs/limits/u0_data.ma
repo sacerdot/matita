@@ -12,33 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "Class/defs.ma".
+include "u0_class.ma".
 
-(* CLASSES:
-   - Here we prove the standard properties of the equality.
-*)
+(* CLASSES FROM DATA TYPES ********************************************)
 
-theorem ceq_cin_fw: ∀C,c1,c2. ceq C c1 c2 → cin ? c1 → cin ? c2.
-intros 4; elim H; clear H c1 c2; autobatch.
-qed.
+definition u0_data: Type[0] → u0_class ≝
+                    λT. mk_u0_class T (u0_full T) (eq T).
 
-theorem ceq_cin_bw: ∀C,c1,c2. ceq C c1 c2 → cin ? c2 → cin ? c1.
-intros 4; elim H; clear H c1 c2; autobatch.
-qed.
+(* Basic properties ***************************************************)
 
-theorem ceq_trans: ∀C,c1,c2. ceq C c1 c2 → ∀c3. ceq ? c2 c3 → ceq ? c1 c3.
-intros 4; elim H; clear H c1 c2; autobatch.
-qed.
-
-theorem ceq_sym: ∀ C,c1,c2. ceq C c1 c2 → ceq ? c2 c1.
-intros; elim H; clear H c1 c2; autobatch.
-qed.
-
-theorem ceq_conf: ∀C,c1,c2. ceq C c1 c2 → ∀c3. ceq ? c1 c3 → ceq ? c2 c3.
-intros; autobatch.
-qed.
-
-theorem ceq_repl: ∀C,c1,c2. ceq C c1 c2 →
-                  ∀d1. ceq ? c1 d1 → ∀d2. ceq ? c2 d2 → ceq ? d1 d2.
-intros; autobatch.
-qed.
+lemma u0_class_data: ∀T. is_u0_class (u0_data T).
+/2 width=1 by mk_is_u0_class/ qed.

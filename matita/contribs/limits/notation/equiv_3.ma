@@ -12,14 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* Project started Wed Oct 12, 2005 ***************************************)
-(* Project taken over by "formal_topology" and restarted Mon Apr 6, 2009 **)
-(* Project taken over by "lambdadelta" and restarted Sun Sept 20, 2015 ****)
+(* NOTATION (equivalence relation) ************************************)
 
-include "basics/logic.ma".
-include "../lambdadelta/ground_2/notation/xoa/false_0.ma".
-include "../lambdadelta/ground_2/notation/xoa/true_0.ma".
+notation > "hvbox(a break ∼ term 46 b)"
+  non associative with precedence 45
+  for @{ 'Equiv ? $a $b }.
 
-interpretation "logical false" 'false = False.
-
-interpretation "logical true" 'true = True.
+notation < "hvbox(term 46 a break maction (∼) (∼\sub t) term 46 b)"
+  non associative with precedence 45
+  for @{ 'Equiv $t $a $b }.

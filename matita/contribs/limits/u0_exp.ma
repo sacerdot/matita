@@ -12,30 +12,24 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "preamble.ma".
+include "u0_class.ma".
 
-(* RELATIONS **********************************************************)
+(* EXPONENTIAL CLASS **************************************************)
 
-definition u0_predicate1: Type[0] → Type[1] ≝ λT.T → Prop.
+definition u0_exp_eq (D,C): u0_predicate2 (u0_fun D C) ≝
+                     λf,g. (u0_xeq … (u0_class_in D) … (u0_class_eq C) f g).
 
-definition u0_predicate2: Type[0] → Type[1] ≝ λT.T → u0_predicate1 T.
+definition u0_exp (D,C): u0_class ≝
+                  mk_u0_class (u0_fun D C) (is_u0_fun …) (u0_exp_eq D C).
 
-definition u1_predicate1: Type[1] → Type[2] ≝ λT.T → Prop.
+definition u0_proj1 (D1,D2): u0_fun D1 (u0_exp D2 D1) ≝
+                    mk_u0_fun … (λa. mk_u0_fun … (u0_k … a)).
 
-definition u0_quantifier: Type[0] → Type[2] ≝ λT. u1_predicate1 (u0_predicate1 T).
+(* Basic properties ***************************************************)
 
-record is_u0_reflexive (T:Type[0]) (All:u0_quantifier T) (R:u0_predicate2 T): Prop ≝
-{
-   u0_refl: All (λa. R a a)
-}.
+lemma u0_class_exp: ∀D,C. is_u0_class C → is_u0_class (u0_exp D C).
+/4 width=7 by mk_is_u0_class, u0_class_refl, u0_class_repl, u0_fun_hom1/ qed.
 
-record can_u0_replace1 (T:Type[0]) (All:u0_quantifier T) (Q:u0_predicate2 T) (R:u0_predicate1 T): Prop ≝
-{
-   u0_repl1: All (λa. R a → All (λb. Q b a → R b))
-}.
-(*
-record can_u0_replac2 (T:Type[0]) (All:u0_quantifier T) (Q:u0_predicate2 T) (R:u0_predicate2 T): Prop ≝
-{
-   u0_reflexivity: All (λa. R a a)
-}.
-*)
+lemma u0_fun_proj1: ∀D2,D1. is_u0_class D1 → is_u0_fun … (u0_proj1 D1 D2).
+#D2 #D1 #HD1 @mk_is_u0_fun /3 width=1 by mk_is_u0_fun, u0_class_refl/
+qed.
