@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
+(* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
 
-notation "hvbox( @ ⦃ term 46 T1 , break term 46 f ⦄ ≡ break term 46 T2 )"
+notation "hvbox( T1 ▭ break term 46 T2 ≡ break term 46 T )"
    non associative with precedence 45
-   for @{ 'RAt $T1 $f $T2 }.
+   for @{ 'RMinus $T1 $T2 $T }.

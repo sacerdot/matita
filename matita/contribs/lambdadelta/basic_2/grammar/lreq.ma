@@ -57,13 +57,16 @@ lemma lreq_refl: ∀L,l,m. L ⩬[l, m] L.
 #Hm destruct /2 width=1 by lreq_zero, lreq_pair/
 qed.
 
-lemma lreq_O2: ∀L1,L2,l. |L1| = |L2| → L1 ⩬[l, yinj 0] L2.
+lemma lreq_O2: ∀L1,L2,l. |L1| = |L2| → L1 ⩬[l, 0] L2.
 #L1 elim L1 -L1 [| #L1 #I1 #V1 #IHL1 ]
-* // [1,3: #L2 #I2 #V2 ] #l normalize
-[1,3: <plus_n_Sm #H destruct ]
-#H lapply (injective_plus_l … H) -H #HL12
-elim (ynat_cases l) /3 width=1 by lreq_zero/
-* /3 width=1 by lreq_succ/
+* // [1,3: #L2 #I2 #V2 ] #l
+[ #H elim (ysucc_inv_O_sn … H)
+| >length_pair >length_pair #H
+  lapply (ysucc_inv_inj … H) -H #HL12
+  elim (ynat_cases l) /3 width=1 by lreq_zero/
+  * /3 width=1 by lreq_succ/
+| #H elim (ysucc_inv_O_dx … H)
+]
 qed.
 
 lemma lreq_sym: ∀l,m. symmetric … (lreq l m).
@@ -168,14 +171,14 @@ qed-.
 
 lemma lreq_inv_succ2: ∀I2,K2,L1,V2,l,m. L1 ⩬[l, m] K2.ⓑ{I2}V2 → 0 < l →
                       ∃∃I1,K1,V1. K1 ⩬[⫰l, m] K2 & L1 = K1.ⓑ{I1}V1.
-#I2 #K2 #L1 #V2 #l #m #H #Hl elim (lreq_inv_succ1 … (lreq_sym … H)) -H 
+#I2 #K2 #L1 #V2 #l #m #H #Hl elim (lreq_inv_succ1 … (lreq_sym … H)) -H
 /3 width=5 by lreq_sym, ex2_3_intro/
 qed-.
 
 (* Basic forward lemmas *****************************************************)
 
 lemma lreq_fwd_length: ∀L1,L2,l,m. L1 ⩬[l, m] L2 → |L1| = |L2|.
-#L1 #L2 #l #m #H elim H -L1 -L2 -l -m normalize //
+#L1 #L2 #l #m #H elim H -L1 -L2 -l -m //
 qed-.
 
 (* Advanced inversion lemmas ************************************************)

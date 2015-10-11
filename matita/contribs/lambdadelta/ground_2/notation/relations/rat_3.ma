@@ -12,32 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/notation/functions/predecessor_1.ma".
-include "ground_2/lib/arith.ma".
-include "ground_2/ynat/ynat.ma".
+(* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
 
-(* NATURAL NUMBERS WITH INFINITY ********************************************)
-
-(* the predecessor function *)
-definition ypred: ynat → ynat ≝ λm. match m with
-[ yinj m ⇒ ⫰m
-| Y      ⇒ Y
-].
-
-interpretation "ynat predecessor" 'Predecessor m = (ypred m).
-
-lemma ypred_O: ⫰(yinj 0) = yinj 0.
-// qed.
-
-lemma ypred_S: ∀m:nat. ⫰(⫯m) = yinj m.
-// qed.
-
-lemma ypred_Y: (⫰∞) = ∞.
-// qed.
-
-(* Inversion lemmas *********************************************************)
-
-lemma ypred_inv_refl: ∀m:ynat. ⫰m = m → m = 0 ∨ m = ∞.
-* // #m #H lapply (yinj_inj … H) -H (**) (* destruct lemma needed *)
-/4 width=1 by pred_inv_refl, or_introl, eq_f/
-qed-.
+notation "hvbox( @ ⦃ term 46 T1 , break term 46 f ⦄ ≡ break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'RAt $T1 $f $T2 }.

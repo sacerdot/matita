@@ -12,8 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
+include "ground_2/lib/bool.ma".
+include "ground_2/lib/list.ma".
 
-notation "hvbox( T1 ▭ break term 46 T2 ≡ break term 46 T )"
-   non associative with precedence 45
-   for @{ 'RMinus $T1 $T2 $T }.
+(* RELOCATION TRACE *********************************************************)
+
+definition trace: Type[0] ≝ list bool.

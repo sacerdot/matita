@@ -9,6 +9,15 @@ table {
         ]
      }
    ]
+   class "green"
+   [ { "multiple relocation" * } {
+        [ { "" * } {
+             [ "trace" "trace_at ( @⦃?,?⦄ ≡ ? )" "trace_after ( ? ⊚ ? ≡ ? )" "trace_sor ( ? ⋓ ? ≡ ? )" * ]
+             [ "mr2" "mr2_at ( @⦃?,?⦄ ≡ ? )" "mr2_plus ( ? + ? )" "mr2_minus ( ? ▭ ? ≡ ? )" * ]
+          }
+        ]
+     }
+   ]
    class "grass"
    [ { "natural numbers with infinity" * } {
         [ { "" * } {
@@ -23,7 +32,7 @@ table {
    class "yellow"
    [ { "extensions to the library" * } {
         [ { "" * } {
-             [ "star" "lstar" "bool ( Ⓕ ) ( Ⓣ )" "arith ( ?^? )"
+             [ "star" "lstar" "bool ( Ⓕ ) ( Ⓣ )" "arith ( ?^? ) ( ⫯? ) ( ⫰? )"
                "list ( ◊ ) ( ? @ ? ) ( {?,?} @ ? ) ( ? @@ ? ) ( |?| )" *
              ]
           }

@@ -12,32 +12,22 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/notation/functions/predecessor_1.ma".
-include "ground_2/lib/arith.ma".
-include "ground_2/ynat/ynat.ma".
+include "ground_2/notation/relations/runion_3.ma".
+include "ground_2/relocation/trace.ma".
 
-(* NATURAL NUMBERS WITH INFINITY ********************************************)
+(* RELOCATION TRACE *********************************************************)
 
-(* the predecessor function *)
-definition ypred: ynat → ynat ≝ λm. match m with
-[ yinj m ⇒ ⫰m
-| Y      ⇒ Y
-].
+inductive sor: relation3 trace trace trace ≝
+   | sor_empty: sor (◊) (◊) (◊)
+   | sor_inh  : ∀cs1,cs2,cs. sor cs1 cs2 cs →
+                ∀b1,b2. sor (b1 @ cs1) (b2 @ cs2) ((b1 ∨ b2) @ cs).
 
-interpretation "ynat predecessor" 'Predecessor m = (ypred m).
+interpretation
+   "union (trace)"
+   'RUnion L1 L2 L = (sor L2 L1 L).
 
-lemma ypred_O: ⫰(yinj 0) = yinj 0.
-// qed.
+(* Basic properties *********************************************************)
 
-lemma ypred_S: ∀m:nat. ⫰(⫯m) = yinj m.
-// qed.
-
-lemma ypred_Y: (⫰∞) = ∞.
-// qed.
-
-(* Inversion lemmas *********************************************************)
-
-lemma ypred_inv_refl: ∀m:ynat. ⫰m = m → m = 0 ∨ m = ∞.
-* // #m #H lapply (yinj_inj … H) -H (**) (* destruct lemma needed *)
-/4 width=1 by pred_inv_refl, or_introl, eq_f/
+lemma sor_sym: ∀cs1,cs2,cs. cs1 ⋓ cs2 ≡ cs → cs2 ⋓ cs1 ≡ cs.
+#cs1 #cs2 #cs #H elim H -cs1 -cs2 -cs /2 width=1 by sor_inh/
 qed-.

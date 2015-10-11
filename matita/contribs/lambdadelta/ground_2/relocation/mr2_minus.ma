@@ -12,17 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/ynat/ynat_minus.ma".
-include "basic_2/notation/relations/rminus_3.ma".
-include "basic_2/multiple/mr2.ma".
+include "ground_2/notation/relations/rminus_3.ma".
+include "ground_2/relocation/mr2.ma".
 
 (* MULTIPLE RELOCATION WITH PAIRS *******************************************)
 
-inductive minuss: nat → relation (list2 ynat nat) ≝
+inductive minuss: nat → relation mr2 ≝
 | minuss_nil: ∀i. minuss i (◊) (◊)
-| minuss_lt : ∀cs1,cs2,l,m,i. yinj i < l → minuss i cs1 cs2 →
+| minuss_lt : ∀cs1,cs2,l,m,i. i < l → minuss i cs1 cs2 →
               minuss i ({l, m} @ cs1) ({l - i, m} @ cs2)
-| minuss_ge : ∀cs1,cs2,l,m,i. l ≤ yinj i → minuss (m + i) cs1 cs2 →
+| minuss_ge : ∀cs1,cs2,l,m,i. l ≤ i → minuss (m + i) cs1 cs2 →
               minuss i ({l, m} @ cs1) cs2
 .
 
@@ -64,12 +63,12 @@ lemma minuss_inv_cons1_ge: ∀cs1,cs2,l,m,i. {l, m} @ cs1 ▭ i ≡ cs2 →
                            l ≤ i → cs1 ▭ m + i ≡ cs2.
 #cs1 #cs2 #l #m #i #H
 elim (minuss_inv_cons1 … H) -H * // #cs #Hil #_ #_ #Hli
-elim (ylt_yle_false … Hil Hli)
+elim (lt_le_false … Hil Hli)
 qed-.
 
 lemma minuss_inv_cons1_lt: ∀cs1,cs2,l,m,i. {l, m} @ cs1 ▭ i ≡ cs2 →
                            i < l →
                            ∃∃cs. cs1 ▭ i ≡ cs & cs2 = {l - i, m} @ cs.
 #cs1 #cs2 #l #m #i #H elim (minuss_inv_cons1 … H) -H * /2 width=3 by ex2_intro/
-#Hli #_ #Hil elim (ylt_yle_false … Hil Hli)
+#Hli #_ #Hil elim (lt_le_false … Hil Hli)
 qed-.

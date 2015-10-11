@@ -83,7 +83,7 @@ qed-.
 
 (* Inversion lemmas on successor ********************************************)
 
-fact yle_inv_succ1_aux: ∀x,y. x ≤ y → ∀m. x = ⫯m → m ≤ ⫰y ∧ ⫯⫰y = y.
+fact yle_inv_succ1_aux: ∀x,y:ynat. x ≤ y → ∀m. x = ⫯m → m ≤ ⫰y ∧ ⫯⫰y = y.
 #x #y * -x -y
 [ #x #y #Hxy #m #H elim (ysucc_inv_inj_sn … H) -H
   #n #H1 #H2 destruct elim (le_inv_S1 … Hxy) -Hxy
@@ -92,7 +92,7 @@ fact yle_inv_succ1_aux: ∀x,y. x ≤ y → ∀m. x = ⫯m → m ≤ ⫰y ∧ �
 ]
 qed-.
 
-lemma yle_inv_succ1: ∀m,y. ⫯m ≤ y → m ≤ ⫰y ∧ ⫯⫰y = y.
+lemma yle_inv_succ1: ∀m,y:ynat. ⫯m ≤ y → m ≤ ⫰y ∧ ⫯⫰y = y.
 /2 width=3 by yle_inv_succ1_aux/ qed-.
 
 lemma yle_inv_succ: ∀m,n. ⫯m ≤ ⫯n → m ≤ n.

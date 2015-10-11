@@ -52,8 +52,8 @@ qed-.
 
 lemma eq_item0_dec: ∀I1,I2:item0. Decidable (I1 = I2).
 * #i1 * #i2 [2,3,4,6,7,8: @or_intror #H destruct ]
-elim (eq_nat_dec i1 i2) /2 width=1 by or_introl/
-#Hni12 @or_intror #H destruct /2 width=1 by/ 
+[2: elim (eq_nat_dec i1 i2) |1,3: elim (eq_nat_dec i1 i2) ] /2 width=1 by or_introl/
+#Hni12 @or_intror #H destruct /2 width=1 by/
 qed-.
 
 (* Basic_1: was: bind_dec *)

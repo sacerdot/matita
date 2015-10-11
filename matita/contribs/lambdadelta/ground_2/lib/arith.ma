@@ -12,10 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/notation/functions/successor_1.ma".
+include "ground_2/notation/functions/predecessor_1.ma".
 include "arithmetics/nat.ma".
 include "ground_2/lib/star.ma".
 
 (* ARITHMETICAL PROPERTIES **************************************************)
+
+interpretation "nat successor" 'Successor m = (S m).
+
+interpretation "nat predecessor" 'Predecessor m = (pred m).
 
 (* Iota equations ***********************************************************)
 
@@ -132,6 +138,9 @@ qed-.
 lemma lt_zero_false: ∀n. n < 0 → ⊥.
 #n #H elim (lt_to_not_le … H) -H /2 width=1 by/
 qed-.
+
+lemma lt_le_false: ∀x,y. x < y → y ≤ x → ⊥.
+/3 width=4 by lt_refl_false, lt_to_le_to_lt/ qed-.
 
 lemma pred_inv_refl: ∀m. pred m = m → m = 0.
 * // normalize #m #H elim (lt_refl_false m) //

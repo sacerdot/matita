@@ -12,6 +12,9 @@
          and its timeline.
    </body>
    <table name="ground_2_sum"/>
+   <news class="alpha" date="2015 October 11.">
+         Multiple relocation with lists of booleans.
+   </news>
    <news class="alpha" date="2013 November 27.">
          Natural numbers with infinity.
    </news>

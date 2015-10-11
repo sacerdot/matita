@@ -19,13 +19,13 @@ include "ground_2/ynat/ynat_pred.ma".
 
 (* the successor function *)
 definition ysucc: ynat → ynat ≝ λm. match m with
-[ yinj m ⇒ S m
+[ yinj m ⇒ ⫯m
 | Y      ⇒ Y
 ].
 
 interpretation "ynat successor" 'Successor m = (ysucc m).
 
-lemma ysucc_inj: ∀m:nat. ⫯m = S m.
+lemma ysucc_inj: ∀m:nat. ⫯(yinj m) = yinj (⫯m).
 // qed.
 
 lemma ysucc_Y: ⫯(∞) = ∞.
@@ -36,7 +36,7 @@ lemma ysucc_Y: ⫯(∞) = ∞.
 lemma ypred_succ: ∀m. ⫰⫯m = m.
 * // qed.
 
-lemma ynat_cases: ∀n:ynat. n = 0 ∨ ∃m. n = ⫯m.
+lemma ynat_cases: ∀n:ynat. n = 0 ∨ ∃m:ynat. n = ⫯m.
 *
 [ * /2 width=1 by or_introl/
   #n @or_intror @(ex_intro … n) // (**) (* explicit constructor *)
@@ -86,7 +86,7 @@ lemma ysucc_inv_O_sn: ∀m. yinj 0 = ⫯m → ⊥. (**) (* explicit coercion *)
 #n #_ #H destruct
 qed-.
 
-lemma ysucc_inv_O_dx: ∀m. ⫯m = 0 → ⊥.
+lemma ysucc_inv_O_dx: ∀m:ynat. ⫯m = 0 → ⊥.
 /2 width=2 by ysucc_inv_O_sn/ qed-.
 
 (* Eliminators **************************************************************)

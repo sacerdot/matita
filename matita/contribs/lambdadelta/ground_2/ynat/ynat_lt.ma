@@ -64,14 +64,14 @@ lemma ylt_inv_Y2: ∀x:ynat. x < ∞ → ∃n. x = yinj n.
 #H elim (ylt_inv_Y1 … H)
 qed-.
 
-lemma ylt_inv_O1: ∀n. 0 < n → ⫯⫰n = n.
+lemma ylt_inv_O1: ∀n:ynat. 0 < n → ⫯⫰n = n.
 * // #n #H lapply (ylt_inv_inj … H) -H normalize
 /3 width=1 by S_pred, eq_f/
 qed-.
 
 (* Inversion lemmas on successor ********************************************)
 
-fact ylt_inv_succ1_aux: ∀x,y. x < y → ∀m. x = ⫯m → m < ⫰y ∧ ⫯⫰y = y.
+fact ylt_inv_succ1_aux: ∀x,y:ynat. x < y → ∀m. x = ⫯m → m < ⫰y ∧ ⫯⫰y = y.
 #x #y * -x -y
 [ #x #y #Hxy #m #H elim (ysucc_inv_inj_sn … H) -H
   #n #H1 #H2 destruct elim (le_inv_S1 … Hxy) -Hxy
@@ -81,7 +81,7 @@ fact ylt_inv_succ1_aux: ∀x,y. x < y → ∀m. x = ⫯m → m < ⫰y ∧ ⫯⫰
 ]
 qed-.
 
-lemma ylt_inv_succ1: ∀m,y. ⫯m < y → m < ⫰y ∧ ⫯⫰y = y.
+lemma ylt_inv_succ1: ∀m,y:ynat. ⫯m < y → m < ⫰y ∧ ⫯⫰y = y.
 /2 width=3 by ylt_inv_succ1_aux/ qed-.
 
 lemma ylt_inv_succ: ∀m,n. ⫯m < ⫯n → m < n.
@@ -130,14 +130,14 @@ qed-.
 
 (* Basic properties *********************************************************)
 
-lemma ylt_O1: ∀x. ⫯⫰x = x → 0 < x.
+lemma ylt_O1: ∀x:ynat. ⫯⫰x = x → 0 < x.
 * // * /2 width=1 by ylt_inj/ normalize
 #H destruct
 qed.
 
 (* Properties on predecessor ************************************************)
 
-lemma ylt_pred: ∀m,n. m < n → 0 < m → ⫰m < ⫰n.
+lemma ylt_pred: ∀m,n:ynat. m < n → 0 < m → ⫰m < ⫰n.
 #m #n * -m -n
 /4 width=1 by ylt_inv_inj, ylt_inj, monotonic_lt_pred/
 qed.
@@ -155,8 +155,12 @@ qed.
 lemma ylt_succ_Y: ∀x. x < ∞ → ⫯x < ∞.
 * /2 width=1 by/ qed.
 
-lemma yle_succ1_inj: ∀x,y. ⫯yinj x ≤ y → x < y.
+lemma yle_succ1_inj: ∀x. ∀y:ynat. ⫯yinj x ≤ y → x < y.
 #x * /3 width=1 by yle_inv_inj, ylt_inj/
+qed.
+
+lemma ylt_succ2_refl: ∀x,y:ynat. x < y → x < ⫯x.
+#x #y #H elim (ylt_fwd_gen … H) -y /2 width=1 by ylt_inj/
 qed.
 
 (* Properties on order ******************************************************)
@@ -195,7 +199,7 @@ lemma yle_ylt_trans: ∀x:ynat. ∀y:ynat. ∀z:ynat. y < z → x ≤ y → x < 
 ]
 qed-.
 
-lemma yle_inv_succ1_lt: ∀x,y. ⫯x ≤ y → 0 < y ∧ x ≤ ⫰y.
+lemma yle_inv_succ1_lt: ∀x,y:ynat. ⫯x ≤ y → 0 < y ∧ x ≤ ⫰y.
 #x #y #H elim (yle_inv_succ1 … H) -H /3 width=1 by ylt_O1, conj/
 qed-.
 

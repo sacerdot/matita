@@ -93,12 +93,12 @@ qed.
 
 (* Inversion lemmas on successor *********************************************)
 
-lemma yplus_inv_succ_lt_dx: ∀x,y,z. 0 < y → x + y = ⫯z → x + ⫰y = z.
+lemma yplus_inv_succ_lt_dx: ∀x,y,z:ynat. 0 < y → x + y = ⫯z → x + ⫰y = z.
 #x #y #z #H <(ylt_inv_O1 y) // >yplus_succ2
 /2 width=1 by ysucc_inv_inj/
 qed-.
 
-lemma yplus_inv_succ_lt_sn: ∀x,y,z. 0 < x → x + y = ⫯z → ⫰x + y = z.
+lemma yplus_inv_succ_lt_sn: ∀x,y,z:ynat. 0 < x → x + y = ⫯z → ⫰x + y = z.
 #x #y #z #H <(ylt_inv_O1 x) // >yplus_succ1
 /2 width=1 by ysucc_inv_inj/
 
