@@ -32,6 +32,12 @@ qed-.
 lemma commutative_orb: commutative … orb.
 * * // qed.
 
+lemma orb_true_dx: ∀b. (b ∨ Ⓣ) = Ⓣ.
+* // qed.
+
+lemma orb_true_sn: ∀b. (Ⓣ ∨ b) = Ⓣ.
+// qed.
+
 lemma eq_bool_dec: ∀b1,b2:bool. Decidable (b1 = b2).
 * * /2 width=1 by or_introl/
 @or_intror #H destruct

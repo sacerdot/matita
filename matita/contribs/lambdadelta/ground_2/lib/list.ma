@@ -14,8 +14,6 @@
 
 include "ground_2/notation/constructors/nil_0.ma".
 include "ground_2/notation/constructors/cons_2.ma".
-include "ground_2/notation/constructors/cons_3.ma".
-include "ground_2/notation/functions/append_2.ma".
 include "ground_2/lib/arith.ma".
 
 (* LISTS ********************************************************************)
@@ -30,7 +28,7 @@ interpretation "cons (list)" 'Cons hd tl = (cons ? hd tl).
 
 let rec length (A:Type[0]) (l:list A) on l ≝ match l with
 [ nil      ⇒ 0
-| cons _ l ⇒ length A l + 1
+| cons _ l ⇒ ⫯(length A l)
 ].
 
 interpretation "length (list)"
@@ -42,26 +40,29 @@ let rec all A (R:predicate A) (l:list A) on l ≝
   | cons hd tl ⇒ R hd ∧ all A R tl
   ].
 
-inductive list2 (A1,A2:Type[0]) : Type[0] :=
-  | nil2 : list2 A1 A2
-  | cons2: A1 → A2 → list2 A1 A2 → list2 A1 A2.
+(* Basic properties on length ***********************************************)
 
-interpretation "nil (list of pairs)" 'Nil = (nil2 ? ?).
+lemma length_nil (A:Type[0]): |nil A| = 0.
+// qed.
 
-interpretation "cons (list of pairs)" 'Cons hd1 hd2 tl = (cons2 ? ? hd1 hd2 tl).
+lemma length_cons (A:Type[0]) (l:list A) (a:A): |a@l| = ⫯|l|.
+// qed.
 
-let rec append2 (A1,A2:Type[0]) (l1,l2:list2 A1 A2) on l1 ≝ match l1 with
-[ nil2           ⇒ l2
-| cons2 a1 a2 tl ⇒ {a1, a2} @ append2 A1 A2 tl l2
-].
+(* Basic inversion lemmas on length *****************************************)
 
-interpretation "append (list of pairs)"
-   'Append l1 l2 = (append2 ? ? l1 l2).
+lemma length_inv_zero_dx (A:Type[0]) (l:list A): |l| = 0 → l = ◊.
+#A * // #a #l >length_cons #H destruct
+qed-.
 
-let rec length2 (A1,A2:Type[0]) (l:list2 A1 A2) on l ≝ match l with
-[ nil2        ⇒ 0
-| cons2 _ _ l ⇒ length2 A1 A2 l + 1
-].
+lemma length_inv_zero_sn (A:Type[0]) (l:list A): 0 = |l| → l = ◊.
+/2 width=1 by length_inv_zero_dx/ qed-.
 
-interpretation "length (list of pairs)"
-   'card l = (length2 ? ? l).
+lemma length_inv_succ_dx (A:Type[0]) (l:list A) (x): |l| = ⫯x →
+                         ∃∃tl,a. x = |tl| & l = a @ tl.
+#A * /2 width=4 by ex2_2_intro/
+>length_nil #x #H destruct
+qed-.
+
+lemma length_inv_succ_sn (A:Type[0]) (l:list A) (x): ⫯x = |l| →
+                         ∃∃tl,a. x = |tl| & l = a @ tl.
+/2 width=1 by length_inv_succ_dx/ qed.

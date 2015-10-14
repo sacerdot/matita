@@ -27,6 +27,21 @@ inductive after: relation3 trace trace trace ≝
 interpretation "composition (trace)"
    'RAfter cs1 cs2 cs = (after cs1 cs2 cs).
 
+(* Basic properties *********************************************************)
+
+lemma after_length: ∀cs1,cs2. ∥cs1∥ = |cs2| →
+                    ∃∃cs. cs1 ⊚ cs2 ≡ cs & |cs| = |cs1| & ∥cs∥ = ∥cs2∥.
+#cs1 elim cs1 -cs1
+[ #cs2 #H >(length_inv_zero_sn … H) -cs2 /2 width=4 by after_empty, ex3_intro/
+| * #cs1 #IH #cs2 #Hcs
+  [ elim (length_inv_succ_sn … Hcs) -Hcs
+    #tl #b #Hcs #H destruct
+  ]
+  elim (IH … Hcs) -IH -Hcs
+  #cs #Hcs #H1 #H2 [ @(ex3_intro … (b@cs)) | @(ex3_intro … (Ⓕ@cs)) ] /2 width=1 by after_true, after_false, colength_cons/
+]  
+qed-.
+
 (* Basic inversion lemmas ***************************************************)
 
 fact after_inv_empty1_aux: ∀cs1,cs2,cs. cs1 ⊚ cs2 ≡ cs → cs1 = ◊ →
@@ -98,12 +113,19 @@ lemma after_inv_inh3: ∀cs1,cs2,tl,b. cs1 ⊚ cs2 ≡ b @ tl →
                       ∃∃tl1.  cs1 = Ⓕ @ tl1 & b = Ⓕ & tl1 ⊚ cs2 ≡ tl.
 /2 width=3 by after_inv_inh3_aux/ qed-.
 
+lemma after_inv_length: ∀cs1,cs2,cs. cs1 ⊚ cs2 ≡ cs →
+                        ∧∧ ∥cs1∥ = |cs2| & |cs| = |cs1| & ∥cs∥ = ∥cs2∥.
+#cs1 #cs2 #cs #H elim H -cs1 -cs2 -cs /2 width=1 by and3_intro/
+#cs1 #cs2 #cs #_ [ * ] * /2 width=1 by and3_intro/
+qed-.
+
 (* Basic forward lemmas *****************************************************)
 
 lemma after_at_fwd: ∀cs1,cs2,cs. cs2 ⊚ cs1 ≡ cs → ∀i1,i. @⦃i1, cs⦄ ≡ i →
                     ∃∃i2. @⦃i1, cs1⦄ ≡ i2 & @⦃i2, cs2⦄ ≡ i.
 #cs1 #cs2 #cs #H elim H -cs1 -cs2 -cs
-[ #i1 #i #H elim (at_inv_empty … H)
+[ #i1 #i #H elim (at_inv_empty … H) -H
+  #H1 #H2 destruct /2 width=3 by at_empty, ex2_intro/  
 | #cs1 #cs2 #cs #_ * #IH #i1 #i #H
   [ elim (at_inv_true … H) -H *
     [ -IH #H1 #H2 destruct /2 width=3 by at_zero, ex2_intro/
@@ -123,7 +145,8 @@ qed-.
 lemma after_fwd_at: ∀cs1,cs2,cs. cs2 ⊚ cs1 ≡ cs → ∀i1,i2. @⦃i1, cs1⦄ ≡ i2 →
                     ∃∃i. @⦃i2, cs2⦄ ≡ i & @⦃i1, cs⦄ ≡ i.
 #cs1 #cs2 #cs #H elim H -cs1 -cs2 -cs
-[ #i1 #i2 #H elim (at_inv_empty … H)
+[ #i1 #i2 #H elim (at_inv_empty … H) -H
+  #H1 #H2 destruct /2 width=3 by at_empty, ex2_intro/
 | #cs1 #cs2 #cs #_ * #IH #i1 #i2 #H
   [ elim (at_inv_true … H) -H *
     [ -IH #H1 #H2 destruct /2 width=3 by at_zero, ex2_intro/

@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/lib/list2.ma".
+(* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
 
-(* MULTIPLE RELOCATION WITH PAIRS *******************************************)
-
-definition mr2: Type[0] ≝ list2 nat nat.
+notation "hvbox( 𝐈 ⦃ term 46 f ⦄ )"
+   non associative with precedence 45
+   for @{ 'IsId $f }.
