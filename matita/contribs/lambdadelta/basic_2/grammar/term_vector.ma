@@ -27,6 +27,14 @@ let rec applv Vs T on Vs ≝
 interpretation "application to vector (term)"
    'SnApplVector Vs T = (applv Vs T).
 
+(* Basic properties *********************************************************)
+
+lemma applv_nil: ∀T. Ⓐ ◊.T = T.
+// qed.
+
+lemma applv_cons: ∀V,Vs,T. Ⓐ V@Vs.T = ⓐV.ⒶVs.T.
+// qed.
+
 (* properties concerning simple terms ***************************************)
 
 lemma applv_simple: ∀T,Vs.  𝐒⦃T⦄ → 𝐒⦃ⒶVs.T⦄.
