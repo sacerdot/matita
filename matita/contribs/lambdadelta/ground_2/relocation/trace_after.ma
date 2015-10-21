@@ -125,7 +125,7 @@ lemma after_at_fwd: ∀cs1,cs2,cs. cs2 ⊚ cs1 ≡ cs → ∀i1,i. @⦃i1, cs⦄
                     ∃∃i2. @⦃i1, cs1⦄ ≡ i2 & @⦃i2, cs2⦄ ≡ i.
 #cs1 #cs2 #cs #H elim H -cs1 -cs2 -cs
 [ #i1 #i #H elim (at_inv_empty … H) -H
-  #H1 #H2 destruct /2 width=3 by at_empty, ex2_intro/  
+  #H1 #H2 destruct /2 width=3 by at_empty, ex2_intro/
 | #cs1 #cs2 #cs #_ * #IH #i1 #i #H
   [ elim (at_inv_true … H) -H *
     [ -IH #H1 #H2 destruct /2 width=3 by at_zero, ex2_intro/
@@ -142,8 +142,8 @@ lemma after_at_fwd: ∀cs1,cs2,cs. cs2 ⊚ cs1 ≡ cs → ∀i1,i. @⦃i1, cs⦄
 ]
 qed-.
 
-lemma after_fwd_at: ∀cs1,cs2,cs. cs2 ⊚ cs1 ≡ cs → ∀i1,i2. @⦃i1, cs1⦄ ≡ i2 →
-                    ∃∃i. @⦃i2, cs2⦄ ≡ i & @⦃i1, cs⦄ ≡ i.
+lemma after_at1_fwd: ∀cs1,cs2,cs. cs2 ⊚ cs1 ≡ cs → ∀i1,i2. @⦃i1, cs1⦄ ≡ i2 →
+                     ∃∃i. @⦃i2, cs2⦄ ≡ i & @⦃i1, cs⦄ ≡ i.
 #cs1 #cs2 #cs #H elim H -cs1 -cs2 -cs
 [ #i1 #i2 #H elim (at_inv_empty … H) -H
   #H1 #H2 destruct /2 width=3 by at_empty, ex2_intro/
@@ -159,6 +159,37 @@ lemma after_fwd_at: ∀cs1,cs2,cs. cs2 ⊚ cs1 ≡ cs → ∀i1,i2. @⦃i1, cs1�
   ]
 | #cs1 #cs2 #cs #_ #IH #i1 #i2 #H elim (IH … H) -IH -H
   /3 width=3 by at_false, ex2_intro/
+]
+qed-.
+
+lemma after_fwd_at: ∀cs1,cs2,cs. cs2 ⊚ cs1 ≡ cs →
+                    ∀i1,i2,i. @⦃i1, cs1⦄ ≡ i2 → @⦃i2, cs2⦄ ≡ i → @⦃i1, cs⦄ ≡ i.
+#cs1 #cs2 #cs #Hcs #i1 #i2 #i #Hi1 #Hi2 elim (after_at1_fwd … Hcs … Hi1) -cs1
+#j #H #Hj >(at_mono … Hi2 … H) -i2 //
+qed-.
+
+lemma after_fwd_at1: ∀cs1,cs2,cs. cs2 ⊚ cs1 ≡ cs →
+                     ∀i1,i2,i. @⦃i1, cs⦄ ≡ i → @⦃i2, cs2⦄ ≡ i → @⦃i1, cs1⦄ ≡ i2.
+#cs1 #cs2 #cs #Hcs #i1 #i2 #i #Hi1 #Hi2 elim (after_at_fwd … Hcs … Hi1) -cs
+#j1 #Hij1 #H >(at_inj … Hi2 … H) -i //
+qed-.
+
+lemma after_fwd_at2: ∀cs1,cs2,cs. cs2 ⊚ cs1 ≡ cs →
+                     ∀i1,i2,i. @⦃i1, cs⦄ ≡ i → @⦃i1, cs1⦄ ≡ i2 → @⦃i2, cs2⦄ ≡ i.
+#cs1 #cs2 #cs #H elim H -cs1 -cs2 -cs
+[ #i1 #i2 #i #Hi #Hi1 elim (at_inv_empty … Hi1) -Hi1 //
+| #cs1 #cs2 #cs #_ * #IH #i1 #i2 #i #Hi #Hi1
+  [ elim (at_inv_true … Hi1) -Hi1 *
+    [ -IH #H1 #H2 destruct >(at_inv_true_zero_sn … Hi) -i //
+    | #j1 #j2 #H1 #H2 #Hj12 destruct elim (at_inv_true_succ_sn … Hi) -Hi
+      #j #H #Hj1 destruct /3 width=3 by at_succ/
+    ]
+  | elim (at_inv_false … Hi1) -Hi1
+    #j2 #H #Hj2 destruct elim (at_inv_false … Hi) -Hi
+    #j #H #Hj destruct /3 width=3 by at_succ/
+  ]
+| #cs1 #cs2 #cs #_ #IH #i1 #i2 #i #Hi #Hi2 elim (at_inv_false … Hi) -Hi
+  #j #H #Hj destruct /3 width=3 by at_false/
 ]
 qed-.
 

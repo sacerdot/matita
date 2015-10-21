@@ -181,7 +181,7 @@ lemma at_monotonic: ∀cs,i1,i2. @⦃i1, cs⦄ ≡ i2 → ∀j1. j1 < i1 →
 ]
 qed-.
 
-lemma at_at_dec: ∀cs,i1,i2. Decidable (@⦃i1, cs⦄ ≡ i2).
+lemma at_dec: ∀cs,i1,i2. Decidable (@⦃i1, cs⦄ ≡ i2).
 #cs elim cs -cs [ | * #cs #IH ]
 [ * [2: #i1 ] * [2,4: #i2 ]
   [4: /2 width=1 by at_empty, or_introl/
@@ -198,6 +198,27 @@ lemma at_at_dec: ∀cs,i1,i2. Decidable (@⦃i1, cs⦄ ≡ i2).
   [ elim (IH i1 i2) -IH
     /4 width=1 by at_inv_false_S, at_false, or_introl, or_intror/
   | -IH /3 width=3 by at_inv_false_O, or_intror/
+  ]
+]
+qed-.
+
+lemma is_at_dec: ∀cs,i2. Decidable (∃i1. @⦃i1, cs⦄ ≡ i2).
+#cs elim cs -cs
+[ * /3 width=2 by ex_intro, or_introl/
+  #i2 @or_intror * /2 width=3 by at_inv_empty_succ_dx/
+| * #cs #IH * [2,4: #i2 ]
+  [ elim (IH i2) -IH
+    [ * /4 width=2 by at_succ, ex_intro, or_introl/
+    | #H @or_intror * #x #Hx
+      elim (at_inv_true_succ_dx … Hx) -Hx
+      /3 width=2 by ex_intro/
+    ]
+  | elim (IH i2) -IH
+    [ * /4 width=2 by at_false, ex_intro, or_introl/
+    | #H @or_intror * /4 width=2 by at_inv_false_S, ex_intro/ 
+    ]
+  | /3 width=2 by at_zero, ex_intro, or_introl/
+  | @or_intror * /2 width=3 by at_inv_false_O/
   ]
 ]
 qed-.
