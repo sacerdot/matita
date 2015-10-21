@@ -125,10 +125,7 @@ leq/props leq_trans
 leq/props leq_ahead_false_1
 leq/props leq_ahead_false_2
 lift1/fwd lift1_cons_tail
-lift1/fwd lifts1_nil
-lift1/fwd lifts1_cons
 lift/props lifts_tapp
-lift/props lifts_inj
 llt/props lweight_repl
 llt/props llt_repl
 llt/props llt_trans

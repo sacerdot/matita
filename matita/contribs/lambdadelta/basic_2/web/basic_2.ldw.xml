@@ -32,8 +32,14 @@
    </news>
 
    <subsection name="A">Stage "A": "Extending the Applicability Condition"</subsection>
+   <news class="alpha" date="2015 October 9.">
+         λδ version 2A2 is started.
+   </news>
+   <news class="delta" date="2015 August 27.">
+         λδ version 2A1 appears too complex and is dismissed.
+   </news>
    <news class="gamma" date="2014 October 28.">
-         λδ version 2A is released.
+         λδ version 2A1 is released.
    </news>
    <news class="beta" date="2014 September 9.">
          Iterated static type assignment defined (more elegantly)
@@ -101,7 +107,7 @@
          Confluence for context-free parallel reduction on terms.
    </news>
    <news class="alpha" date="2011 April 17.">
-         Specification starts.
+         λδ version 2 is started.
    </news>
 
    <section4 name="structure">Logical Structure of the Specification</section4>
