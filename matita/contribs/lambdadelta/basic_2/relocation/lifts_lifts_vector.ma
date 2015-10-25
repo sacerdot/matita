@@ -15,7 +15,7 @@
 include "basic_2/relocation/lifts_lifts.ma".
 include "basic_2/relocation/lifts_vector.ma".
 
-(* GENERIC TERM VECTOR RELOCATION *******************************************)
+(* GENERIC RELOCATION FOR TERM VECTORS *************************************)
 
 (* Main properties **********************************************************)
 

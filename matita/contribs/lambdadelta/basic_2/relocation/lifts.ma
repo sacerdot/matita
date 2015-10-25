@@ -16,7 +16,7 @@ include "ground_2/relocation/trace_isid.ma".
 include "basic_2/notation/relations/rliftstar_3.ma".
 include "basic_2/grammar/term.ma".
 
-(* GENERIC TERM RELOCATION **************************************************)
+(* GENERIC RELOCATION FOR TERMS *********************************************)
 
 (* Basic_1: includes:
             lift_sort lift_lref_lt lift_lref_ge lift_bind lift_flat
@@ -334,11 +334,11 @@ lemma is_lifts_dec: ∀T2,t. Decidable (∃T1. ⬆*[t] T1 ≡ T2).
 ]
 qed-.
 
-(* Basic_2A1: removed theorems 17:
-              lifts_inv_nil lifts_inv_cons lifts_total
+(* Basic_2A1: removed theorems 14:
+              lifts_inv_nil lifts_inv_cons
               lift_inv_Y1 lift_inv_Y2 lift_inv_lref_Y1 lift_inv_lref_Y2 lift_lref_Y lift_Y1
               lift_lref_lt_eq lift_lref_ge_eq lift_lref_plus lift_lref_pred
-              lift_lref_ge_minus lift_lref_ge_minus_eq lift_total lift_refl
+              lift_lref_ge_minus lift_lref_ge_minus_eq
 *)
 (* Basic_1: removed theorems 8:
             lift_lref_gt            

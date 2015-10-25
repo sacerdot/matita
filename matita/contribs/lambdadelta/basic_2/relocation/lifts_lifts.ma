@@ -14,7 +14,7 @@
 
 include "basic_2/relocation/lifts.ma".
 
-(* GENERIC RELOCATION *******************************************************)
+(* GENERIC RELOCATION FOR TERMS *********************************************)
 
 (* Main properties **********************************************************)
 

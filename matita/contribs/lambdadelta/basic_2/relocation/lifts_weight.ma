@@ -15,7 +15,7 @@
 include "basic_2/grammar/term_weight.ma".
 include "basic_2/relocation/lifts.ma".
 
-(* GENERIC TERM RELOCATION **************************************************)
+(* GENERIC RELOCATION FOR TERMS *********************************************)
 
 (* Forward lemmas on weight for terms ***************************************)
 

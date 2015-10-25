@@ -15,7 +15,7 @@
 include "basic_2/grammar/term_vector.ma".
 include "basic_2/relocation/lifts.ma".
 
-(* GENERIC TERM VECTOR RELOCATION *******************************************)
+(* GENERIC RELOCATION FOR TERM VECTORS *************************************)
 
 (* Basic_2A1: includes: liftv_nil liftv_cons *)
 inductive liftsv (t:trace) : relation (list term) ≝
