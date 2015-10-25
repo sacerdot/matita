@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/ynat/ynat_plus.ma".
 include "basic_2/notation/relations/lrsubeq_4.ma".
 include "basic_2/substitution/drop.ma".
 
@@ -57,10 +56,11 @@ lemma lsuby_refl: ∀L,l,m. L ⊆[l, m] L.
 #Hm destruct /2 width=1 by lsuby_zero, lsuby_pair/
 qed.
 
-lemma lsuby_O2: ∀L2,L1,l. |L2| ≤ |L1| → L1 ⊆[l, yinj 0] L2.
-#L2 elim L2 -L2 // #L2 #I2 #V2 #IHL2 * normalize
-[ #l #H elim (le_plus_xSy_O_false … H)
-| #L1 #I1 #V1 #l #H lapply (le_plus_to_le_r … H) -H #HL12
+lemma lsuby_O2: ∀L2,L1,l. |L2| ≤ |L1| → L1 ⊆[l, 0] L2.
+#L2 elim L2 -L2 // #L2 #I2 #V2 #IHL2 *
+[ #l #H elim (ylt_yle_false … H) -H //
+| #L1 #I1 #V1 #l
+ #H lapply (yle_inv_succ … H) -H #HL12
  elim (ynat_cases l) /3 width=1 by lsuby_zero/
  * /3 width=1 by lsuby_succ/
 ]
@@ -70,9 +70,9 @@ lemma lsuby_sym: ∀l,m,L1,L2. L1 ⊆[l, m] L2 → |L1| = |L2| → L2 ⊆[l, m] 
 #l #m #L1 #L2 #H elim H -l -m -L1 -L2
 [ #L1 #l #m #H >(length_inv_zero_dx … H) -L1 //
 | /2 width=1 by lsuby_O2/
-| #I1 #I2 #L1 #L2 #V #m #_ #IHL12 #H lapply (injective_plus_l … H)
+| #I1 #I2 #L1 #L2 #V #m #_ #IHL12 #H lapply (ysucc_inv_inj … H) -H
   /3 width=1 by lsuby_pair/
-| #I1 #I2 #L1 #L2 #V1 #V2 #l #m #_ #IHL12 #H lapply (injective_plus_l … H)
+| #I1 #I2 #L1 #L2 #V1 #V2 #l #m #_ #IHL12 #H lapply (ysucc_inv_inj … H) -H
   /3 width=1 by lsuby_succ/
 ]
 qed-.
@@ -204,34 +204,33 @@ lemma lsuby_inv_succ2: ∀I2,K2,L1,V2,l,m. L1 ⊆[l, m] K2.ⓑ{I2}V2 → 0 < l �
 (* Basic forward lemmas *****************************************************)
 
 lemma lsuby_fwd_length: ∀L1,L2,l,m. L1 ⊆[l, m] L2 → |L2| ≤ |L1|.
-#L1 #L2 #l #m #H elim H -L1 -L2 -l -m normalize /2 width=1 by le_S_S/
+#L1 #L2 #l #m #H elim H -L1 -L2 -l -m /2 width=1 by yle_succ/
 qed-.
 
 (* Properties on basic slicing **********************************************)
 
 lemma lsuby_drop_trans_be: ∀L1,L2,l,m. L1 ⊆[l, m] L2 →
                            ∀I2,K2,W,s,i. ⬇[s, 0, i] L2 ≡ K2.ⓑ{I2}W →
-                           l ≤ i → i < l + m →
-                           ∃∃I1,K1. K1 ⊆[0, ⫰(l+m-i)] K2 & ⬇[s, 0, i] L1 ≡ K1.ⓑ{I1}W.
+                           l ≤ i → ∀m0. i + ⫯m0 = l + m →
+                           ∃∃I1,K1. K1 ⊆[0, m0] K2 & ⬇[s, 0, i] L1 ≡ K1.ⓑ{I1}W.
 #L1 #L2 #l #m #H elim H -L1 -L2 -l -m
 [ #L1 #l #m #J2 #K2 #W #s #i #H
   elim (drop_inv_atom1 … H) -H #H destruct
-| #I1 #I2 #L1 #L2 #V1 #V2 #_ #_ #J2 #K2 #W #s #i #_ #_ #H
-  elim (ylt_yle_false … H) //
-| #I1 #I2 #L1 #L2 #V #m #HL12 #IHL12 #J2 #K2 #W #s #i #H #_ >yplus_O1
+| #I1 #I2 #L1 #L2 #V1 #V2 #_ #_ #J2 #K2 #W #s #i #_ #_ #m0
+  >yplus_O2 >yplus_succ2 #H elim (ysucc_inv_O_dx … H)
+| #I1 #I2 #L1 #L2 #V #m #HL12 #IHL12 #J2 #K2 #W #s #i #H #_ #m0
+  >yplus_succ2 >yplus_succ2 #H0 lapply (ysucc_inv_inj … H0) -H0
   elim (drop_inv_O1_pair1 … H) -H * #Hi #HLK1 [ -IHL12 | -HL12 ]
-  [ #_ destruct -I2 >ypred_succ
-    /2 width=4 by drop_pair, ex2_2_intro/
-  | lapply (ylt_inv_O1 i ?) /2 width=1 by ylt_inj/
-    #H <H -H #H lapply (ylt_inv_succ … H) -H
-    #Him elim (IHL12 … HLK1) -IHL12 -HLK1 [2: <yminus_inj ] // -Him
-    >yminus_succ <yminus_inj /3 width=4 by drop_drop_lt, ex2_2_intro/
+  [ destruct -I2 /2 width=4 by drop_pair, ex2_2_intro/
+  | lapply (ylt_inv_O1 … Hi)
+    #H <H -H <yplus_succ_swap #Him elim (IHL12 … HLK1 … Him) -IHL12 -HLK1 -Him
+    /3 width=4 by drop_drop_lt, ex2_2_intro/
   ]
-| #I1 #I2 #L1 #L2 #V1 #V2 #l #m #_ #IHL12 #J2 #K2 #W #s #i #HLK2 #Hli
-  elim (yle_inv_succ1 … Hli) -Hli
-  #Hli #Hi <Hi >yplus_succ1 #H lapply (ylt_inv_succ … H) -H
-  #Hilm lapply (drop_inv_drop1_lt … HLK2 ?) -HLK2 /2 width=1 by ylt_O/
-  #HLK1 elim (IHL12 … HLK1) -IHL12 -HLK1 <yminus_inj >yminus_SO2
-  /4 width=4 by ylt_O, drop_drop_lt, ex2_2_intro/
+| #I1 #I2 #L1 #L2 #V1 #V2 #l #m #_ #IHL12 #J2 #K2 #W #s #i #HLK2 #Hli #m0
+  elim (yle_inv_succ1 … Hli) -Hli #Hli #Hi
+  lapply (drop_inv_drop1_lt … HLK2 ?) -HLK2 /2 width=1 by ylt_O1/ #HLK2
+  >yplus_succ1 >yplus_succ2 #H lapply (ysucc_inv_inj … H) -H
+  <Hi <yplus_succ_swap #H elim (IHL12 … HLK2 … H) -IHL12 -HLK2 -H
+  /3 width=4 by drop_drop, ex2_2_intro/
 ]
 qed-.

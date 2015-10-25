@@ -31,9 +31,8 @@ lemma fquqa_refl: tri_reflexive … fquqa.
 
 lemma fquqa_drop: ∀G,L,K,T,U,m.
                   ⬇[m] L ≡ K → ⬆[0, m] T ≡ U → ⦃G, L, U⦄ ⊐⊐⸮ ⦃G, K, T⦄.
-#G #L #K #T #U #m #HLK #HTU elim (eq_or_gt m)
-/3 width=5 by fqu_drop_lt, or_introl/ #H destruct
->(drop_inv_O2 … HLK) -L >(lift_inv_O2 … HTU) -T //
+#G #L #K #T #U #m @(ynat_ind … m) -m /3 width=3 by fqu_drop, or_introl/
+#HLK #HTU >(drop_inv_O2 … HLK) -L >(lift_inv_O2 … HTU) -T //
 qed.
 
 (* Main properties **********************************************************)

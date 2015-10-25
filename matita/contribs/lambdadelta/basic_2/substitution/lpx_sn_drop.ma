@@ -71,14 +71,12 @@ lemma lpx_sn_liftable_dedropable: ∀R. (∀L. reflexive ? (R L)) →
   #K2 #V2 #HK12 #HV12 #H destruct
   lapply (lpx_sn_fwd_length … HK12)
   #H @(ex3_intro … (K2.ⓑ{I}V2)) (**) (* explicit constructor *)
-  /3 width=1 by lpx_sn_pair, monotonic_le_plus_l/
-  @lreq_O2 normalize //
+  /3 width=1 by lpx_sn_pair, lreq_O2/
 | #I #L1 #K1 #V1 #m #_ #IHLK1 #K2 #HK12 elim (IHLK1 … HK12) -K1
   /3 width=5 by drop_drop, lreq_pair, lpx_sn_pair, ex3_intro/
 | #I #L1 #K1 #V1 #W1 #l #m #HLK1 #HWV1 #IHLK1 #X #H
   elim (lpx_sn_inv_pair1 … H) -H #K2 #W2 #HK12 #HW12 #H destruct
-  elim (lift_total W2 l m) #V2 #HWV2
-  lapply (H2R … HW12 … HLK1 … HWV1 … HWV2) -W1
+  elim (H2R … HW12 … HLK1 … HWV1) -W1
   elim (IHLK1 … HK12) -K1
   /3 width=6 by drop_skip, lreq_succ, lpx_sn_pair, ex3_intro/
 ]

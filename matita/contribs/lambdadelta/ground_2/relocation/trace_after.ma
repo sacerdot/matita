@@ -110,8 +110,20 @@ qed-.
 
 lemma after_inv_inh3: ∀cs1,cs2,tl,b. cs1 ⊚ cs2 ≡ b @ tl →
                       (∃∃tl1,tl2. cs1 = Ⓣ @ tl1 & cs2 = b @ tl2 & tl1 ⊚ tl2 ≡ tl) ∨
-                      ∃∃tl1.  cs1 = Ⓕ @ tl1 & b = Ⓕ & tl1 ⊚ cs2 ≡ tl.
+                      ∃∃tl1. cs1 = Ⓕ @ tl1 & b = Ⓕ & tl1 ⊚ cs2 ≡ tl.
 /2 width=3 by after_inv_inh3_aux/ qed-.
+
+lemma after_inv_true3: ∀cs1,cs2,tl. cs1 ⊚ cs2 ≡ Ⓣ @ tl →
+                       ∃∃tl1,tl2. cs1 = Ⓣ @ tl1 & cs2 = Ⓣ @ tl2 & tl1 ⊚ tl2 ≡ tl.
+#cs1 #cs2 #tl #H elim (after_inv_inh3 … H) -H // *
+#tl1 #_ #H destruct
+qed-. 
+
+lemma after_inv_false3: ∀cs1,cs2,tl. cs1 ⊚ cs2 ≡ Ⓕ @ tl →
+                        (∃∃tl1,tl2. cs1 = Ⓣ @ tl1 & cs2 = Ⓕ @ tl2 & tl1 ⊚ tl2 ≡ tl) ∨
+                        ∃∃tl1. cs1 = Ⓕ @ tl1 & tl1 ⊚ cs2 ≡ tl.
+#cs1 #cs2 #tl #H elim (after_inv_inh3 … H) -H /2 width=1 by or_introl/ * /3 width=3 by ex2_intro, or_intror/
+qed-.
 
 lemma after_inv_length: ∀cs1,cs2,cs. cs1 ⊚ cs2 ≡ cs →
                         ∧∧ ∥cs1∥ = |cs2| & |cs| = |cs1| & ∥cs∥ = ∥cs2∥.

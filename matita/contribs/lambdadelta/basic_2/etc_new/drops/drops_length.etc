@@ -1,0 +1,152 @@
+include "basic_2/grammar/lenv_length.ma".
+
+lemma drop_inv_O1_gt: ∀L,K,m,s. ⬇[s, 0, m] L ≡ K → |L| < m →
+                      s = Ⓣ ∧ K = ⋆.
+#L elim L -L [| #L #Z #X #IHL ] #K #m #s #H normalize in ⊢ (?%?→?); #H1m
+[ elim (drop_inv_atom1 … H) -H elim s -s /2 width=1 by conj/
+  #_ #Hs lapply (Hs ?) // -Hs #H destruct elim (ylt_yle_false … H1m) -H1m //
+| elim (drop_inv_O1_pair1 … H) -H * #H2m #HLK destruct
+  [ elim (ylt_yle_false … H1m) -H1m //
+  | elim (IHL … HLK) -IHL -HLK /2 width=1 by ylt_pred, conj/
+  ]
+]
+qed-.
+
+lemma drop_O1_le: ∀s,m,L. m ≤ |L| → ∃K. ⬇[s, 0, m] L ≡ K.
+#s #m @(ynat_ind … m) -m /2 width=2 by ex_intro/
+[ #m #IHm *
+  [ #H elim (ylt_yle_false … H) -H //
+  | #L #I #V #H elim (IHm L) -IHm /3 width=2 by drop_drop, yle_inv_succ, ex_intro/
+  ]
+| #L #H elim (ylt_yle_false … H) -H //
+]
+qed-.
+
+lemma drop_O1_lt: ∀s,L,m. m < |L| → ∃∃I,K,V. ⬇[s, 0, m] L ≡ K.ⓑ{I}V.
+#s #L elim L -L
+[ #m #H elim (ylt_yle_false … H) -H //
+| #L #I #V #IHL #m @(ynat_ind … m) -m /2 width=4 by drop_pair, ex1_3_intro/
+  [ #m #_#H elim (IHL m) -IHL /3 width=4 by drop_drop, ylt_inv_succ, ex1_3_intro/
+  | #H elim (ylt_yle_false … H) -H //
+  ]
+]
+qed-.
+
+lemma drop_O1_pair: ∀L,K,m,s. ⬇[s, 0, m] L ≡ K → m ≤ |L| → ∀I,V.
+                    ∃∃J,W. ⬇[s, 0, m] L.ⓑ{I}V ≡ K.ⓑ{J}W.
+#L elim L -L [| #L #Z #X #IHL ] #K #m #s #H #Hm #I #V
+[ elim (drop_inv_atom1 … H) -H #H >(yle_inv_O2 … Hm) -m
+  #Hs destruct /2 width=3 by ex1_2_intro/
+| elim (drop_inv_O1_pair1 … H) -H * #Hm #HLK destruct /2 width=3 by ex1_2_intro/
+  elim (IHL … HLK … Z X) -IHL -HLK
+  /3 width=3 by yle_pred, drop_drop_lt, ex1_2_intro/
+]
+qed-.
+
+lemma drop_O1_ge: ∀L,m. |L| ≤ m → ⬇[Ⓣ, 0, m] L ≡ ⋆.
+#L elim L -L [ #m #_ @drop_atom #H destruct ]
+#L #I #V #IHL #m @(ynat_ind … m) -m //
+[ #H elim (ylt_yle_false … H) -H /2 width=1 by ylt_inj/
+| /4 width=1 by drop_drop, yle_inv_succ/
+]
+qed.
+
+lemma drop_O1_eq: ∀L,s. ⬇[s, 0, |L|] L ≡ ⋆.
+#L elim L -L /2 width=1 by drop_drop/
+qed.
+
+lemma drop_fwd_length_ge: ∀L1,L2,l,m,s. ⬇[s, l, m] L1 ≡ L2 → |L1| ≤ l → |L2| = |L1|.
+#L1 #L2 #l #m #s #H elim H -L1 -L2 -l -m //
+[ #I #L1 #L2 #V #m #_ #_ #H elim (ylt_yle_false … H) -H //
+| #I #L1 #L2 #V1 #V2 #l #m #_ #_ #IH #H
+  lapply (yle_inv_succ … H) -H #H 
+  >length_pair >length_pair /3 width=1 by eq_f/
+]
+qed-.
+
+lemma drop_fwd_length_le_le: ∀L1,L2,l,m,s. ⬇[s, l, m] L1 ≡ L2 → 
+                             ∀l0. l + m + l0 = |L1| → |L2| = l + l0.
+#L1 #L2 #l #m #s #H elim H -L1 -L2 -l -m //
+[ #l #m #Hm #l0 #H elim (yplus_inv_O … H) -H
+  #H #H0 elim (yplus_inv_O … H) -H
+  #H1 #_ destruct //
+| #I #L1 #L2 #V #m #_ >yplus_O1 >yplus_O1 #IH #l0
+  /3 width=1 by ysucc_inv_inj/
+| #I #L1 #L2 #V1 #V2 #l #m #_ #_ #IHL12 #l0 >yplus_succ1 >yplus_succ1 #H
+  lapply (ysucc_inv_inj … H) -H #Hl1
+  >yplus_succ1 /3 width=1 by eq_f/
+]
+qed-.
+
+lemma drop_fwd_length_le_ge: ∀L1,L2,l,m,s. ⬇[s, l, m] L1 ≡ L2 → l ≤ |L1| → |L1| ≤ l + m → |L2| = l.
+#L1 #L2 #l #m #s #H elim H -L1 -L2 -l -m
+[ #l #m #_ #H #_ /2 width=1 by yle_inv_O2/
+| #I #L #V #_ #H elim (ylt_yle_false … H) -H //
+| #I #L1 #L2 #V #m #_ >yplus_O1 >yplus_O1
+  /3 width=1 by yle_inv_succ/
+| #I #L1 #L2 #V1 #v2 #l #m #_ #_ #IH
+  >yplus_SO2 >yplus_SO2
+  /4 width=1 by yle_inv_succ, eq_f/
+]
+qed-.
+
+lemma drop_fwd_length: ∀L1,L2,l,m. ⬇[Ⓕ, l, m] L1 ≡ L2 → |L1| = |L2| + m.
+#L1 #L2 #l #m #H elim H -L1 -L2 -l -m //
+#l #m #H >H -m //
+qed-.
+
+lemma drop_fwd_length_le2: ∀L1,L2,l,m. ⬇[Ⓕ, l, m] L1 ≡ L2 → m ≤ |L1|.
+#L1 #L2 #l #m #H lapply (drop_fwd_length … H) -H //
+qed-.
+
+lemma drop_fwd_length_le4: ∀L1,L2,l,m. ⬇[Ⓕ, l, m] L1 ≡ L2 → |L2| ≤ |L1|.
+#L1 #L2 #l #m #H lapply (drop_fwd_length … H) -H //
+qed-.
+
+lemma drop_fwd_length_lt2: ∀L1,I2,K2,V2,l,m.
+                           ⬇[Ⓕ, l, m] L1 ≡ K2. ⓑ{I2} V2 → m < |L1|.
+#L1 #I2 #K2 #V2 #l #m #H
+lapply (drop_fwd_Y2 … H) #Hm
+lapply (drop_fwd_length … H) -l #H <(yplus_O2 m) >H -L1
+/2 width=1 by monotonic_ylt_plus_sn/
+qed-.
+
+lemma drop_fwd_length_lt4: ∀L1,L2,l,m. ⬇[Ⓕ, l, m] L1 ≡ L2 → 0 < m → |L2| < |L1|.
+#L1 #L2 #l #m #H
+lapply (drop_fwd_Y2 … H) #Hm
+lapply (drop_fwd_length … H) -l
+/2 width=1 by monotonic_ylt_plus_sn/
+qed-.
+
+lemma drop_fwd_length_eq1: ∀L1,L2,K1,K2,l,m. ⬇[Ⓕ, l, m] L1 ≡ K1 → ⬇[Ⓕ, l, m] L2 ≡ K2 →
+                           |L1| = |L2| → |K1| = |K2|.
+#L1 #L2 #K1 #K2 #l #m #HLK1 #HLK2 #HL12
+lapply (drop_fwd_Y2 … HLK1) #Hm
+lapply (drop_fwd_length … HLK1) -HLK1
+lapply (drop_fwd_length … HLK2) -HLK2
+#H #H0 >H in HL12; -H >H0 -H0 #H
+@(yplus_inv_monotonic_dx … H) -H // (**) (* auto fails *)
+qed-.
+
+lemma drop_fwd_length_eq2: ∀L1,L2,K1,K2,l,m. ⬇[Ⓕ, l, m] L1 ≡ K1 → ⬇[Ⓕ, l, m] L2 ≡ K2 →
+                           |K1| = |K2| → |L1| = |L2|.
+#L1 #L2 #K1 #K2 #l #m #HLK1 #HLK2 #HL12
+lapply (drop_fwd_length … HLK1) -HLK1
+lapply (drop_fwd_length … HLK2) -HLK2 //
+qed-.
+
+lemma drop_inv_length_eq: ∀L1,L2,l,m. ⬇[Ⓕ, l, m] L1 ≡ L2 →
+                          |L1| = |L2| → m = 0.
+#L1 #L2 #l #m #H #HL12 lapply (drop_fwd_length … H) -H
+>HL12 -L1 #H elim (discr_yplus_x_xy … H) -H //
+#H elim (ylt_yle_false (|L2|) (∞)) //
+qed-.
+
+lemma drop_fwd_be: ∀L,K,s,l,m,i. ⬇[s, l, m] L ≡ K → |K| ≤ i → i < l → |L| ≤ i.
+#L #K #s #l #m #i #HLK #HK #Hl elim (ylt_split i (|L|)) //
+#HL elim (drop_O1_lt (Ⓕ) … HL) #I #K0 #V #HLK0 -HL
+elim (ylt_inv_plus_sn … Hl) -Hl #l0 #H0
+elim (drop_conf_lt … HLK … HLK0 … H0) -HLK -HLK0 -H0
+#K1 #V1 #HK1 #_ #_ lapply (drop_fwd_length_lt2 … HK1) -I -K1 -V1
+#H elim (ylt_yle_false … H) -H //
+qed-.

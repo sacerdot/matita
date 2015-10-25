@@ -12,8 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
+include "basic_2/relocation/lifts_vector.ma".
+include "basic_2/relocation/drops.ma".
 
-notation "hvbox( ⬇ [ term 46 l , break term 46 m ] break term 46 L1 ≡ break term 46 L2 )"
-   non associative with precedence 45
-   for @{ 'RDrop $l $m $L1 $L2 }.
+(* GENERAL SLICING FOR LOCAL ENVIRONMENTS ***********************************)
+
+definition d_liftable1_all: relation2 lenv term → predicate bool ≝
+                            λR,s. ∀L,K,t. ⬇*[s, t] L ≡ K →
+                            ∀Ts,Us. ⬆*[t] Ts ≡ Us →
+                            all … (R K) Ts → all … (R L) Us.
+
+(* Properties on general relocation for term vectors ************************)
+
+(* Basic_2A1: was: d1_liftables_liftables_all *)
+lemma d1_liftable_liftable_all: ∀R,s. d_liftable1 R s → d_liftable1_all R s.
+#R #s #HR #L #K #t #HLK #Ts #Us #H elim H -Ts -Us normalize //
+#Ts #Us #T #U #HTU #_ #IHTUs * /3 width=7 by conj/
+qed.

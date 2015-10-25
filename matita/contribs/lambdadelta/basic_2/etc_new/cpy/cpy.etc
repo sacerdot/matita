@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/ynat/ynat_max.ma".
 include "basic_2/notation/relations/psubst_6.ma".
 include "basic_2/grammar/genv.ma".
 include "basic_2/substitution/lsuby.ma".
@@ -22,8 +21,8 @@ include "basic_2/substitution/lsuby.ma".
 (* activate genv *)
 inductive cpy: ynat → ynat → relation4 genv lenv term term ≝
 | cpy_atom : ∀I,G,L,l,m. cpy l m G L (⓪{I}) (⓪{I})
-| cpy_subst: ∀I,G,L,K,V,W,i,l,m. l ≤ yinj i → i < l+m →
-             ⬇[i] L ≡ K.ⓑ{I}V → ⬆[0, i+1] V ≡ W → cpy l m G L (#i) W
+| cpy_subst: ∀I,G,L,K,V,W,i,l,m. l ≤ i → i < l+m →
+             ⬇[i] L ≡ K.ⓑ{I}V → ⬆[0, ⫯i] V ≡ W → cpy l m G L (#i) W
 | cpy_bind : ∀a,I,G,L,V1,V2,T1,T2,l,m.
              cpy l m G L V1 V2 → cpy (⫯l) m G (L.ⓑ{I}V1) T1 T2 →
              cpy l m G L (ⓑ{a,I}V1.T1) (ⓑ{a,I}V2.T2)
@@ -41,7 +40,8 @@ lemma lsuby_cpy_trans: ∀G,l,m. lsub_trans … (cpy l m G) (lsuby l m).
 #G #l #m #L1 #T1 #T2 #H elim H -G -L1 -T1 -T2 -l -m
 [ //
 | #I #G #L1 #K1 #V #W #i #l #m #Hli #Hilm #HLK1 #HVW #L2 #HL12
-  elim (lsuby_drop_trans_be … HL12 … HLK1) -HL12 -HLK1 /2 width=5 by cpy_subst/
+  elim (ylt_inv_plus_dx … Hilm) #m0 #H0 #_  
+  elim (lsuby_drop_trans_be … HL12 … HLK1 … H0) -HL12 -HLK1 -H0 /2 width=5 by cpy_subst/
 | /4 width=1 by lsuby_succ, cpy_bind/
 | /3 width=1 by cpy_flat/
 ]
@@ -57,15 +57,14 @@ lemma cpy_full: ∀I,G,K,V,T1,L,l. ⬇[l] L ≡ K.ⓑ{I}V →
 #I #G #K #V #T1 elim T1 -T1
 [ * #i #L #l #HLK
   /2 width=4 by lift_sort, lift_gref, ex2_2_intro/
-  elim (lt_or_eq_or_gt i l) #Hil
-  /4 width=4 by lift_lref_ge_minus, lift_lref_lt, ex2_2_intro, ylt_inj, yle_inj/ (**) (* was /3 width=4/ without inj *)
-  destruct
-  elim (lift_total V 0 (i+1)) #W #HVW
-  elim (lift_split … HVW i i)
-  /4 width=5 by cpy_subst, ylt_inj, ex2_2_intro/
+  elim (ylt_split_eq i l) /3 width=4 by lift_lref_pred, lift_lref_lt, ex2_2_intro/
+  #H destruct lapply (drop_fwd_Y2 … HLK) #Hi
+  elim (lift_total (⫯i) … V 0) /2 width=1 by ylt_succ/
+  #W #HVW elim (lift_split … HVW i i … 1)
+  /4 width=6 by cpy_subst, monotonic_ylt_plus_sn, ex2_2_intro/
 | * [ #a ] #J #W1 #U1 #IHW1 #IHU1 #L #l #HLK
   elim (IHW1 … HLK) -IHW1 #W2 #W #HW12 #HW2
-  [ elim (IHU1 (L.ⓑ{J}W1) (l+1)) -IHU1
+  [ elim (IHU1 (L.ⓑ{J}W1) (⫯l)) -IHU1
     /3 width=9 by cpy_bind, drop_drop, lift_bind, ex2_2_intro/
   | elim (IHU1 … HLK) -IHU1 -HLK
     /3 width=8 by cpy_flat, lift_flat, ex2_2_intro/
@@ -82,61 +81,51 @@ lemma cpy_weak: ∀G,L,T1,T2,l1,m1. ⦃G, L⦄ ⊢ T1 ▶[l1, m1] T2 →
 | /3 width=1 by cpy_flat/
 ]
 qed-.
-
+(*
 lemma cpy_weak_top: ∀G,L,T1,T2,l,m.
-                    ⦃G, L⦄ ⊢ T1 ▶[l, m] T2 → ⦃G, L⦄ ⊢ T1 ▶[l, |L| - l] T2.
-#G #L #T1 #T2 #l #m #H elim H -G -L -T1 -T2 -l -m //
-[ #I #G #L #K #V #W #i #l #m #Hli #_ #HLK #HVW
-  lapply (drop_fwd_length_lt2 … HLK)
-  /4 width=5 by cpy_subst, ylt_yle_trans, ylt_inj/
-| #a #I #G #L #V1 #V2 normalize in match (|L.ⓑ{I}V2|); (**) (* |?| does not work *)
-  <yplus_inj >yplus_SO2 >yminus_succ
-  /2 width=1 by cpy_bind/
-| /2 width=1 by cpy_flat/
-]
-qed-.
+                    ⦃G, L⦄ ⊢ T1 ▶[l, m] T2 → ⦃G, L⦄ ⊢ T1 ▶[l, ∞] T2.
+/2 width=5 by cpy_weak/ qed-.
 
 lemma cpy_weak_full: ∀G,L,T1,T2,l,m.
-                     ⦃G, L⦄ ⊢ T1 ▶[l, m] T2 → ⦃G, L⦄ ⊢ T1 ▶[0, |L|] T2.
-#G #L #T1 #T2 #l #m #HT12
-lapply (cpy_weak … HT12 0 (l + m) ? ?) -HT12
-/2 width=2 by cpy_weak_top/
-qed-.
-
-lemma cpy_split_up: ∀G,L,T1,T2,l,m. ⦃G, L⦄ ⊢ T1 ▶[l, m] T2 → ∀i. i ≤ l + m →
-                    ∃∃T. ⦃G, L⦄ ⊢ T1 ▶[l, i-l] T & ⦃G, L⦄ ⊢ T ▶[i, l+m-i] T2.
+                     ⦃G, L⦄ ⊢ T1 ▶[l, m] T2 → ⦃G, L⦄ ⊢ T1 ▶[0, ∞] T2.
+/2 width=5 by cpy_weak/ qed-.
+*)
+lemma cpy_split_up: ∀G,L,T1,T2,l,m. ⦃G, L⦄ ⊢ T1 ▶[l, m] T2 → 
+                    ∀i,m2. i + m2 = l + m →
+                    ∀m1. i ≤ l + m1 →
+                    ∃∃T. ⦃G, L⦄ ⊢ T1 ▶[l, m1] T & ⦃G, L⦄ ⊢ T ▶[i, m2] T2.
 #G #L #T1 #T2 #l #m #H elim H -G -L -T1 -T2 -l -m
 [ /2 width=3 by ex2_intro/
-| #I #G #L #K #V #W #i #l #m #Hli #Hilm #HLK #HVW #j #Hjlm
-  elim (ylt_split i j) [ -Hilm -Hjlm | -Hli ]
+| #I #G #L #K #V #W #i #l #m #Hli #Hilm #HLK #HVW #j #m2 #H2 #m1 #H1
+  elim (ylt_split i j) [ -Hilm -H2 | -Hli ]
   /4 width=9 by cpy_subst, ylt_yle_trans, ex2_intro/
-| #a #I #G #L #V1 #V2 #T1 #T2 #l #m #_ #_ #IHV12 #IHT12 #i #Hilm
-  elim (IHV12 i) -IHV12 // #V
-  elim (IHT12 (i+1)) -IHT12 /2 width=1 by yle_succ/ -Hilm
-  >yplus_SO2 >yplus_succ1 #T #HT1 #HT2
-  lapply (lsuby_cpy_trans … HT2 (L.ⓑ{I}V) ?) -HT2
+| #a #I #G #L #V1 #V2 #T1 #T2 #l #m #_ #_ #IHV12 #IHT12 #i #m2 #H2 #m1 #H1
+  elim (IHV12 … H2 … H1) -IHV12 #V
+  elim (IHT12 (⫯i) … m2 … m1) -IHT12 /2 width=1 by yle_succ/ -H2 -H1
+  #T #HT1 #HT2 lapply (lsuby_cpy_trans … HT2 (L.ⓑ{I}V) ?) -HT2
   /3 width=5 by lsuby_succ, ex2_intro, cpy_bind/
-| #I #G #L #V1 #V2 #T1 #T2 #l #m #_ #_ #IHV12 #IHT12 #i #Hilm
-  elim (IHV12 i) -IHV12 // elim (IHT12 i) -IHT12 // -Hilm
+| #I #G #L #V1 #V2 #T1 #T2 #l #m #_ #_ #IHV12 #IHT12 #i #m2 #H2 #m1 #H1
+  elim (IHV12 … H2 … H1) -IHV12 elim (IHT12 … H2 … H1) -IHT12 -H2 -H1
   /3 width=5 by ex2_intro, cpy_flat/
 ]
 qed-.
 
-lemma cpy_split_down: ∀G,L,T1,T2,l,m. ⦃G, L⦄ ⊢ T1 ▶[l, m] T2 → ∀i. i ≤ l + m →
-                      ∃∃T. ⦃G, L⦄ ⊢ T1 ▶[i, l+m-i] T & ⦃G, L⦄ ⊢ T ▶[l, i-l] T2.
+lemma cpy_split_down: ∀G,L,T1,T2,l,m. ⦃G, L⦄ ⊢ T1 ▶[l, m] T2 →
+                      ∀m1,m2. m = m1 + m2 →
+                      ∃∃T. ⦃G, L⦄ ⊢ T1 ▶[l+m2, m1] T & ⦃G, L⦄ ⊢ T ▶[l, m2] T2.
 #G #L #T1 #T2 #l #m #H elim H -G -L -T1 -T2 -l -m
 [ /2 width=3 by ex2_intro/
-| #I #G #L #K #V #W #i #l #m #Hli #Hilm #HLK #HVW #j #Hjlm
-  elim (ylt_split i j) [ -Hilm -Hjlm | -Hli ]
-  /4 width=9 by cpy_subst, ylt_yle_trans, ex2_intro/
-| #a #I #G #L #V1 #V2 #T1 #T2 #l #m #_ #_ #IHV12 #IHT12 #i #Hilm
-  elim (IHV12 i) -IHV12 // #V
-  elim (IHT12 (i+1)) -IHT12 /2 width=1 by yle_succ/ -Hilm
-  >yplus_SO2 >yplus_succ1 #T #HT1 #HT2
+| #I #G #L #K #V #W #i #l #m #Hli #Hilm #HLK #HVW #m1 #m2 #H destruct
+  elim (ylt_split i (l+m2)) [ -Hilm | -Hli ]
+  /3 width=9 by cpy_subst, ex2_intro/
+| #a #I #G #L #V1 #V2 #T1 #T2 #l #m #_ #_ #IHV12 #IHT12 #m1 #m2 #H destruct
+  elim (IHV12 m1 m2) -IHV12 // #V
+  elim (IHT12 m1 m2) -IHT12 //
+  >yplus_succ1 #T #HT1 #HT2
   lapply (lsuby_cpy_trans … HT2 (L.ⓑ{I}V) ?) -HT2
   /3 width=5 by lsuby_succ, ex2_intro, cpy_bind/
-| #I #G #L #V1 #V2 #T1 #T2 #l #m #_ #_ #IHV12 #IHT12 #i #Hilm
-  elim (IHV12 i) -IHV12 // elim (IHT12 i) -IHT12 // -Hilm
+| #I #G #L #V1 #V2 #T1 #T2 #l #m #_ #_ #IHV12 #IHT12 #m1 #m2 #H destruct
+  elim (IHV12 m1 m2) -IHV12 // elim (IHT12 m1 m2) -IHT12 //
   /3 width=5 by ex2_intro, cpy_flat/
 ]
 qed-.
@@ -157,7 +146,7 @@ lemma cpy_fwd_up: ∀G,L,U1,U2,lt,mt. ⦃G, L⦄ ⊢ U1 ▶[lt, mt] U2 →
   elim (lift_inv_lref2 … H) -H * #Hil #H destruct [ -V -Hilmt -Hlmlmt | -Hlti -Hllt ]
   [ elim (ylt_yle_false … Hllt) -Hllt /3 width=3 by yle_ylt_trans, ylt_inj/
   | elim (yle_inv_plus_inj2 … Hil) #Hlim #Hmi
-    elim (lift_split … HVW l (i-m+1) ? ? ?) [2,3,4: /2 width=1 by yle_succ_dx, le_S_S/ ] -Hlim
+    elim (lift_split … HVW l (⫯(i-m)) ? ? ?) [2,3,4: /2 width=1 by yle_succ_dx, le_S_S/ ] -Hlim
     #T2 #_ >plus_minus /2 width=1 by yle_inv_inj/ <minus_minus /3 width=1 by le_S, yle_inv_inj/ <minus_n_n <plus_n_O #H -Hmi
     @(ex2_intro … H) -H @(cpy_subst … HLK HVW) /2 width=1 by yle_inj/ >ymax_pre_sn_comm // (**) (* explicit constructor *)
   ]
@@ -185,7 +174,7 @@ fact cpy_inv_atom1_aux: ∀G,L,T1,T2,l,m. ⦃G, L⦄ ⊢ T1 ▶[l, m] T2 → ∀
                         T2 = ⓪{J} ∨
                         ∃∃I,K,V,i. l ≤ yinj i & i < l + m &
                                    ⬇[i] L ≡ K.ⓑ{I}V &
-                                   ⬆[O, i+1] V ≡ T2 &
+                                   ⬆[O, ⫯i] V ≡ T2 &
                                    J = LRef i.
 #G #L #T1 #T2 #l #m * -G -L -T1 -T2 -l -m
 [ #I #G #L #l #m #J #H destruct /2 width=1 by or_introl/
@@ -199,7 +188,7 @@ lemma cpy_inv_atom1: ∀I,G,L,T2,l,m. ⦃G, L⦄ ⊢ ⓪{I} ▶[l, m] T2 →
                      T2 = ⓪{I} ∨
                      ∃∃J,K,V,i. l ≤ yinj i & i < l + m &
                                 ⬇[i] L ≡ K.ⓑ{J}V &
-                                ⬆[O, i+1] V ≡ T2 &
+                                ⬆[O, ⫯i] V ≡ T2 &
                                 I = LRef i.
 /2 width=4 by cpy_inv_atom1_aux/ qed-.
 
@@ -215,7 +204,7 @@ lemma cpy_inv_lref1: ∀G,L,T2,i,l,m. ⦃G, L⦄ ⊢ #i ▶[l, m] T2 →
                      T2 = #i ∨
                      ∃∃I,K,V. l ≤ i & i < l + m &
                               ⬇[i] L ≡ K.ⓑ{I}V &
-                              ⬆[O, i+1] V ≡ T2.
+                              ⬆[O, ⫯i] V ≡ T2.
 #G #L #T2 #i #l #m #H
 elim (cpy_inv_atom1 … H) -H /2 width=1 by or_introl/
 * #I #K #V #j #Hlj #Hjlm #HLK #HVT2 #H destruct /3 width=5 by ex4_3_intro, or_intror/

@@ -85,5 +85,5 @@ qed-.
 (* Basic forward lemmas *****************************************************)
 
 lemma lpx_sn_fwd_length: ∀R,L1,L2. lpx_sn R L1 L2 → |L1| = |L2|.
-#R #L1 #L2 #H elim H -L1 -L2 normalize //
+#R #L1 #L2 #H elim H -L1 -L2 //
 qed-.

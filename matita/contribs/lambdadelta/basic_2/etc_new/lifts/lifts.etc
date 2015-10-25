@@ -1,0 +1,29 @@
+(* Basic_1: was: lift_r *)
+lemma lift_refl: ∀T,l. ⬆[l, 0] T ≡ T.
+#T elim T -T
+[ * #i // #l elim (lt_or_ge i l) /2 width=1 by lift_lref_lt,
+lift_lref_ge/
+| * /2 width=1 by lift_bind, lift_flat/
+]
+qed.
+
+lemma lift_total: ∀T1,l,m. ∃T2. ⬆[l,m] T1 ≡ T2.
+#T1 elim T1 -T1
+[ * #i /2 width=2 by lift_sort, lift_gref, ex_intro/
+  #l #m elim (lt_or_ge i l) /3 width=2 by lift_lref_lt, lift_lref_ge,
+ex_intro/
+| * [ #a ] #I #V1 #T1 #IHV1 #IHT1 #l #m
+  elim (IHV1 l m) -IHV1 #V2 #HV12
+  [ elim (IHT1 (l+1) m) -IHT1 /3 width=2 by lift_bind, ex_intro/
+  | elim (IHT1 l m) -IHT1 /3 width=2 by lift_flat, ex_intro/
+  ]
+]
+qed.
+
+lemma liftv_total: ∀l,m. ∀T1s:list term. ∃T2s. ⬆[l, m] T1s ≡ T2s.
+#l #m #T1s elim T1s -T1s
+[ /2 width=2 by liftv_nil, ex_intro/
+| #T1 #T1s * #T2s #HT12s
+  elim (lift_total T1 l m) /3 width=2 by liftv_cons, ex_intro/
+]
+qed-.

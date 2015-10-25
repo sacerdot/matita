@@ -46,7 +46,7 @@ lemma lpx_sn_alt_inv_pair1: ∀R,I,L2,K1,V1. lpx_sn_alt R (K1.ⓑ{I}V1) L2 →
 elim (IH I1 I2 K1 K2 V1 V2 0) //
 #H #HV12 destruct @(ex3_2_intro … K2 V2) // -HV12
 @conj // -HK12
-#J1 #J2 #L1 #L2 #W1 #W2 #i #HKL1 #HKL2 elim (IH J1 J2 L1 L2 W1 W2 (i+1)) -IH
+#J1 #J2 #L1 #L2 #W1 #W2 #i #HKL1 #HKL2 elim (IH J1 J2 L1 L2 W1 W2 (⫯i)) -IH
 /2 width=1 by drop_drop, conj/
 qed-.
 
@@ -63,7 +63,7 @@ lemma lpx_sn_alt_inv_pair2: ∀R,I,L1,K2,V2. lpx_sn_alt R L1 (K2.ⓑ{I}V2) →
 elim (IH I1 I2 K1 K2 V1 V2 0) //
 #H #HV12 destruct @(ex3_2_intro … K1 V1) // -HV12
 @conj // -HK12
-#J1 #J2 #L1 #L2 #W1 #W2 #i #HKL1 #HKL2 elim (IH J1 J2 L1 L2 W1 W2 (i+1)) -IH
+#J1 #J2 #L1 #L2 #W1 #W2 #i #HKL1 #HKL2 elim (IH J1 J2 L1 L2 W1 W2 (⫯i)) -IH
 /2 width=1 by drop_drop, conj/
 qed-.
 
@@ -79,13 +79,15 @@ lemma lpx_sn_alt_pair: ∀R,I,L1,L2,V1,V2.
                        lpx_sn_alt R L1 L2 → R L1 V1 V2 →
                        lpx_sn_alt R (L1.ⓑ{I}V1) (L2.ⓑ{I}V2).
 #R #I #L1 #L2 #V1 #V2 #H #HV12 elim H -H
-#HL12 #IH @conj normalize //
-#I1 #I2 #K1 #K2 #W1 #W2 #i @(nat_ind_plus … i) -i
+#HL12 #IH @conj //
+#I1 #I2 #K1 #K2 #W1 #W2 #i @(ynat_ind … i) -i
 [ #HLK1 #HLK2
   lapply (drop_inv_O2 … HLK1) -HLK1 #H destruct
   lapply (drop_inv_O2 … HLK2) -HLK2 #H destruct
   /2 width=1 by conj/
 | -HL12 -HV12 /3 width=6 by drop_inv_drop1/
+| #H lapply (drop_fwd_Y2 … H) -H
+  #H elim (ylt_yle_false … H) -H //
 ]
 qed.
 

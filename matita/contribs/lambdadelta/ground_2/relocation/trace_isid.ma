@@ -58,24 +58,43 @@ qed-.
 
 (* Properties on composition ************************************************)
 
-lemma isid_after_sn: ∀cs1,cs2. cs1 ⊚ cs2 ≡ cs2 →  𝐈⦃cs1⦄ .
+lemma isid_after_sn: ∀cs2. ∃∃cs1. 𝐈⦃cs1⦄ & cs1 ⊚ cs2 ≡ cs2.
+#cs2 elim cs2 -cs2 /2 width=3 by after_empty, ex2_intro/
+#b #cs2 * /3 width=3 by isid_true, after_true, ex2_intro/
+qed-.
+
+lemma isid_after_dx: ∀cs1. ∃∃cs2. 𝐈⦃cs2⦄ & cs1 ⊚ cs2 ≡ cs1.
+#cs1 elim cs1 -cs1 /2 width=3 by after_empty, ex2_intro/
+* #cs1 * /3 width=3 by isid_true, after_true, after_false, ex2_intro/
+qed-.
+
+lemma after_isid_sn: ∀cs1,cs2. cs1 ⊚ cs2 ≡ cs2 → 𝐈⦃cs1⦄ .
 #cs1 #cs2 #H elim (after_inv_length … H) -H //
 qed.
 
-lemma isid_after_dx: ∀cs1,cs2. cs1 ⊚ cs2 ≡ cs1 →  𝐈⦃cs2⦄ .
+lemma after_isid_dx: ∀cs1,cs2. cs1 ⊚ cs2 ≡ cs1 → 𝐈⦃cs2⦄ .
 #cs1 #cs2 #H elim (after_inv_length … H) -H //
 qed.
 
 (* Inversion lemmas on composition ******************************************)
 
-lemma isid_inv_after_sn: ∀cs1,cs2,cs. cs1 ⊚ cs2 ≡ cs →  𝐈⦃cs1⦄ → cs = cs2.
+lemma after_isid_inv_sn: ∀cs1,cs2,cs. cs1 ⊚ cs2 ≡ cs → 𝐈⦃cs1⦄ → cs = cs2.
 #cs1 #cs2 #cs #H elim H -cs1 -cs2 -cs //
 #cs1 #cs2 #cs #_ [ #b ] #IH #H
 [ >IH -IH // | elim (isid_inv_false … H) ]
 qed-.
 
-lemma isid_inv_after_dx: ∀cs1,cs2,cs. cs1 ⊚ cs2 ≡ cs →  𝐈⦃cs2⦄ → cs = cs1.
+lemma after_isid_inv_dx: ∀cs1,cs2,cs. cs1 ⊚ cs2 ≡ cs → 𝐈⦃cs2⦄ → cs = cs1.
 #cs1 #cs2 #cs #H elim H -cs1 -cs2 -cs //
 #cs1 #cs2 #cs #_ [ #b ] #IH #H
 [ elim (isid_inv_cons … H) -H #H >IH -IH // | >IH -IH // ]
+qed-.
+
+lemma after_inv_isid3: ∀t1,t2,t. t1 ⊚ t2 ≡ t → 𝐈⦃t⦄ → 𝐈⦃t1⦄ ∧ 𝐈⦃t2⦄.
+#t1 #t2 #t #H elim H -t1 -t2 -t
+[ /2 width=1 by conj/
+| #t1 #t2 #t #_ #b #IHt #H elim (isid_inv_cons … H) -H
+  #Ht #H elim (IHt Ht) -t /2 width=1 by isid_true, conj/
+| #t1 #t2 #t #_ #_ #H elim (isid_inv_false … H)
+]
 qed-.
