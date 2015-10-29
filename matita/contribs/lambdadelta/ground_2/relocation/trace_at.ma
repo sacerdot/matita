@@ -139,7 +139,7 @@ lemma at_inv_le: ∀cs,i1,i2. @⦃i1, cs⦄ ≡ i2 → i1 ≤ ∥cs∥ ∧ i2 �
 #cs #i1 #i2 #_ * /3 width=1 by le_S_S, conj/ 
 qed-.
 
-lemma at_inv_gt1: ∀cs,i1,i2. @⦃i1, cs⦄ ≡ i2 → ∥cs∥  < i1 → ⊥.
+lemma at_inv_gt1: ∀cs,i1,i2. @⦃i1, cs⦄ ≡ i2 → ∥cs∥ < i1 → ⊥.
 #cs #i1 #i2 #H elim (at_inv_le … H) -H /2 width=4 by lt_le_false/
 qed-.
 

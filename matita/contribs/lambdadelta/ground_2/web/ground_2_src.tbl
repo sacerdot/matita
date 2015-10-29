@@ -12,7 +12,8 @@ table {
    class "green"
    [ { "multiple relocation" * } {
         [ { "" * } {
-             [ "trace ( ∥?∥ )" "trace_at ( @⦃?,?⦄ ≡ ? )" "trace_after ( ? ⊚ ? ≡ ? )" "trace_isid ( 𝐈⦃?⦄ )" "trace_sor ( ? ⋓ ? ≡ ? )" * ]
+             [ "trace ( ∥?∥ )" "trace_at ( @⦃?,?⦄ ≡ ? )" "trace_after ( ? ⊚ ? ≡ ? )" "trace_isid ( 𝐈⦃?⦄ )" "trace_isun ( 𝐔⦃?⦄ )"
+               "trace_sle ( ? ⊆ ? )" "trace_sor ( ? ⋓ ? ≡ ? )" "trace_snot ( ∁ ? )" * ]
              [ "mr2" "mr2_at ( @⦃?,?⦄ ≡ ? )" "mr2_plus ( ? + ? )" "mr2_minus ( ? ▭ ? ≡ ? )" * ]
           }
         ]

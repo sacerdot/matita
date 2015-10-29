@@ -12,15 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/notation/relations/isid_1.ma".
+include "ground_2/notation/relations/isidentity_1.ma".
 include "ground_2/relocation/trace_after.ma".
+include "ground_2/relocation/trace_sle.ma".
 
 (* RELOCATION TRACE *********************************************************)
 
 definition isid: predicate trace ≝ λcs. ∥cs∥ = |cs|.
 
 interpretation "test for identity (trace)"
-   'IsId cs = (isid cs).
+   'IsIdentity cs = (isid cs).
+
+definition t_reflexive: ∀S:Type[0]. predicate (trace → relation S) ≝
+                        λS,R. ∀a. ∃∃t. 𝐈⦃t⦄ & R t a a.
 
 (* Basic properties *********************************************************)
 
@@ -96,5 +100,15 @@ lemma after_inv_isid3: ∀t1,t2,t. t1 ⊚ t2 ≡ t → 𝐈⦃t⦄ → 𝐈⦃t1
 | #t1 #t2 #t #_ #b #IHt #H elim (isid_inv_cons … H) -H
   #Ht #H elim (IHt Ht) -t /2 width=1 by isid_true, conj/
 | #t1 #t2 #t #_ #_ #H elim (isid_inv_false … H)
+]
+qed-.
+
+(* Forward on inclusion *****************************************************)
+
+lemma sle_isid1_fwd: ∀t1,t2. t1 ⊆ t2 → 𝐈⦃t1⦄ → t1 = t2.
+#t1 #t2 #H elim H -t1 -t2 //
+[ #t1 #t2 #_ #IH #H lapply (isid_inv_true … H) -H
+  #HT1 @eq_f2 // @IH @HT1 (**) (* full auto fails *)
+| #t1 #t2 #b #_ #_ #H elim (isid_inv_false … H)
 ]
 qed-.

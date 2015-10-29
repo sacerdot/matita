@@ -145,7 +145,11 @@ let eval_nmacro include_paths (buffer : GText.buffer) status unparsed_text parse
         try List.assoc "depth" a
         with Not_found -> ""
       in
-      let trace = "/"^(if int_of_string depth > 1 then depth else "")^" by " in
+      let width = 
+        try List.assoc "width" a
+        with Not_found -> ""
+      in
+      let trace = "/"^(if int_of_string depth > 1 then depth ^ " width=" ^ width else "")^" by " in
       let thms = 
         match !trace_ref with
         | [] -> ""
