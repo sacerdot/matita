@@ -1,0 +1,12 @@
+\newcommand*\Next[1]{\def\TMP{#1}\ifx\TMP\empty\let\next=\relax\else\ #1\let\next=\Next\fi\next}
+
+\newcommand*\Prop{PROP}
+\newcommand*\Crop[1]{CROP}
+\newcommand*\Type[1]{TYPE}
+\newcommand*\LRef[1]{(L #1)}
+\newcommand*\GRef{G}
+\newcommand*\Abbr[3]{(D #1 #2 #3) }
+\newcommand*\Abst[2]{(I #1 #2) }
+\newcommand*\Prod[2]{(P #1 #2) }
+\newcommand*\Appl{(A)\Next}
+\newcommand*\Case[3]{(C #1 #2 #3)\Next}
