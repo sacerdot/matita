@@ -23,8 +23,12 @@ let empty = [Free ""]
 
 let newline = [Free "%\n"]
 
+let group s = Group s
+
 let arg s = Group [Free s]
 
 let mk_rev_args riss =
-   L.rev_map (fun t -> Group t) (empty :: riss)
- 
+   L.rev_map group (empty :: riss)
+
+let mk_segs us =
+   L.rev_map arg ("" :: (L.rev us))

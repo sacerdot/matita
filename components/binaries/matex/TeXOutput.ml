@@ -17,7 +17,7 @@ module T = TeX
 
 (* internal functions *******************************************************)
 
-let special = "_"
+let special = "\\{}$&#^_~%" (* LaTeX reserves these characters *)
 
 let quote c =
    if S.contains special c then '.' else c

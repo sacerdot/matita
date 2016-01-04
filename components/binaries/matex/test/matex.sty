@@ -1,12 +1,16 @@
-\newcommand*\Next[1]{\def\TMP{#1}\ifx\TMP\empty\let\next=\relax\else\ #1\let\next=\Next\fi\next}
+\newcommand*\Skip[1]{}
+\newcommand*\Next[2]{\def\TMP{#2}\ifx\TMP\empty\let\next=\Skip\else #1{#2}\let\next=\Next\fi\next #1}
+
+\newcommand*\Visit[1]{ #1}
 
 \newcommand*\Prop{PROP}
 \newcommand*\Crop[1]{CROP}
 \newcommand*\Type[1]{TYPE}
 \newcommand*\LRef[1]{(L #1)}
-\newcommand*\GRef{G}
+\newcommand*\GRef[2]{(G #2)\Next\Skip}
+\newcommand*\IRef[1]{(J #1)\Next\Skip}
 \newcommand*\Abbr[3]{(D #1 #2 #3) }
 \newcommand*\Abst[2]{(I #1 #2) }
 \newcommand*\Prod[2]{(P #1 #2) }
-\newcommand*\Appl{(A)\Next}
-\newcommand*\Case[3]{(C #1 #2 #3)\Next}
+\newcommand*\Appl{(A)\Next\Visit}
+\newcommand*\Case[3]{(C #1 #2 #3)\Next\Visit}

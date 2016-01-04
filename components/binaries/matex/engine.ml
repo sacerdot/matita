@@ -58,40 +58,61 @@ let proc_sort = function
    | C.Type [`CProp, u] -> [T.Macro "Crop"; T.arg (U.string_of_uri u)]
    | C.Type _           -> malformed "1"
 
-let proc_gref r = T.Macro "GRef"
+let proc_gref ss = function
+   | C.Constant _             , R.Decl          ->
+      T.Macro "GRef" :: T.mk_segs ("type" :: ss)
+   | C.Constant _             , R.Def _         ->
+      T.Macro "GRef" :: T.mk_segs ("body" :: ss)
+   | C.Inductive (_, _, us, _), R.Ind (_, i, _) -> 
+      let _, name, _, _ = L.nth us i in
+      T.Macro "IRef" :: T.mk_segs (name :: ss)
+   | C.Inductive (_, _, us, _), R.Con (i, j, _) ->
+      let _, _, _, ts = L.nth us i in
+      let _, name, _ = L.nth ts (pred j) in
+      T.Macro "IRef" :: T.mk_segs (name :: ss)
+   | C.Fixpoint (_, ts, _)    , R.Fix (i, _, _) ->
+      let _, name, _, _, _ = L.nth ts i in
+      T.Macro "IRef" :: T.mk_segs (name :: ss)
+   | C.Fixpoint (_, ts, _)    , R.CoFix i       ->
+      let _, name, _, _, _ = L.nth ts i in
+      T.Macro "IRef" :: T.mk_segs (name :: ss)
+   | _                                          ->
+      malformed "2"
 
 let rec proc_term c = function
    | C.Appl []
    | C.Meta _
-   | C.Implicit _         -> malformed "2" 
-   | C.Rel m              ->
+   | C.Implicit _          -> malformed "3" 
+   | C.Rel m               ->
       let name = L.nth c (m-1) in
       [T.Macro "LRef"; T.arg name]
-   | C.Appl ts            ->
+   | C.Appl ts             ->
       let riss = L.rev_map (proc_term c) ts in
       T.Macro "Appl" :: T.mk_rev_args riss
-  | C.Prod (s, w, t)      ->
+  | C.Prod (s, w, t)       ->
       let s = alpha c s in
       let is_w = proc_term c w in
       let is_t = proc_term (s::c) t in
       T.Macro "Prod" :: T.arg s :: T.Group is_w :: is_t
-  | C.Lambda (s, w, t)    -> 
+  | C.Lambda (s, w, t)     -> 
       let s = alpha c s in
       let is_w = proc_term c w in
       let is_t = proc_term (s::c) t in
       T.Macro "Abst" :: T.arg s :: T.Group is_w :: is_t
-  | C.LetIn (s, w, v, t)  -> 
+  | C.LetIn (s, w, v, t)   -> 
       let s = alpha c s in
       let is_w = proc_term c w in
       let is_v = proc_term c v in
       let is_t = proc_term (s::c) t in
       T.Macro "Abbr" :: T.arg s :: T.Group is_w :: T.Group is_v :: is_t
-  | C.Sort s              ->
+  | C.Sort s               ->
       proc_sort s
-  | C.Const r             ->
-      [proc_gref r]
-  | C.Match (w, u, v, ts) ->
-      let is_w = [proc_gref w] in
+  | C.Const (R.Ref (u, r)) ->
+      let ss = segments_of_uri u in
+      let _, _, _, _, obj = E.get_checked_obj status u in  
+      proc_gref ss (obj, r)
+  | C.Match (w, u, v, ts)  ->
+      let is_w = proc_term c (C.Const w) in
       let is_u = proc_term c u in
       let is_v = proc_term c v in
       let riss = L.rev_map (proc_term c) ts in
@@ -100,7 +121,7 @@ let rec proc_term c = function
 let proc_term c t = try proc_term c t with
    | E.ObjectNotFound _ 
    | Failure "nth" 
-   | Invalid_argument "List.nth" -> malformed "3"
+   | Invalid_argument "List.nth" -> malformed "4"
 
 let open_out_tex s =
    open_out (F.concat !G.out_dir (s ^ T.file_ext))
