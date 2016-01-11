@@ -1,16 +1,37 @@
-\newcommand*\Skip[1]{}
-\newcommand*\Next[2]{\def\TMP{#2}\ifx\TMP\empty\let\next=\Skip\else #1{#2}\let\next=\Next\fi\next #1}
+\makeatletter
 
-\newcommand*\Visit[1]{ #1}
+\newcommand*\setlabel[1]{\protected@edef\@currentlabel{#1}}
 
-\newcommand*\Prop{PROP}
-\newcommand*\Crop[1]{CROP}
-\newcommand*\Type[1]{TYPE}
-\newcommand*\LRef[1]{(L #1)}
-\newcommand*\GRef[2]{(G #2)\Next\Skip}
-\newcommand*\IRef[1]{(J #1)\Next\Skip}
-\newcommand*\Abbr[3]{(D #1 #2 #3) }
-\newcommand*\Abst[2]{(I #1 #2) }
-\newcommand*\Prod[2]{(P #1 #2) }
-\newcommand*\Appl{(A)\Next\Visit}
-\newcommand*\Case[3]{(C #1 #2 #3)\Next\Visit}
+\newtheorem{prop}{Proposition}
+
+\newcommand*\ObjLabel[1]{\label{obj:#1}}
+\newcommand*\ObjRef[1]{\ref{obj:#1}}
+
+\newcommand*\Object[3]{\begin{prop}[#1]\hfil\\\setlabel{#1}\ObjLabel{#2}#3\end{prop}}
+
+\newcommand*\@skip[2]{}
+\newcommand*\Next[3]{\def\@tmp{#3}\ifx\@tmp\empty #2\let\next=\@skip\else #1{#3}\let\next=\Next\fi\next #1#2}
+
+\newcommand*\@proc[1]{ #1}
+
+\newcommand*\PROP{PROP}
+\newcommand*\CROP[1]{CROP}
+\newcommand*\TYPE[1]{TYPE}
+\newcommand*\LREF[2]{#1}
+\newcommand*\GREF[2]{#1}
+\newcommand*\ABBR[3]{(D #1 #2 #3) }
+\newcommand*\ABST[2]{(I #1 #2) }
+\newcommand*\PROD[2]{(P #1 #2) }
+\newcommand*\APPL{(A)\Next\@proc\relax}
+\newcommand*\CASE[3]{(C #1 #2 #3)\Next\@proc\relax}
+
+\def\@arg#1{, #1}
+\def\@stop{.\vskip10pt}
+
+\newcommand*\DECL[3]{\textbf{#1} : #3\vskip10pt}
+\newcommand*\PRIM{}
+\newcommand*\BODY[1]{is #1\vskip10pt}
+\newcommand*\STEP[1]{by #1\Next\@arg\@stop}
+\newcommand*\DEST[1]{by cases on #1\Next\@arg\@stop}
+
+\makeatother

@@ -7,10 +7,11 @@ include ../Makefile.common
 
 REGISTRY = $(RT_BASE_DIR)/matita.conf.xml
 
-OBJ = cic:/matita/lambdadelta/basic_1/pr0/pr0/pr0_confluence.con
+OBJS = cic:/matita/lambdadelta/basic_1/pr0/pr0/pr0_confluence.con\
+       cic:/matita/lambdadelta/basic_1/pr0/defs/pr0_ind.con
 
 test:
-	@echo MaTeX $(OBJ)
-	$(H)./matex.native -O test $(REGISTRY) $(OBJ)
+	@echo MaTeX: $(OBJS:cic:/matita/lambdadelta/basic_1/pr0/%.con=%)
+	$(H)./matex.native -O test -t -p $(REGISTRY) $(OBJS)
 
 .PHONY: test

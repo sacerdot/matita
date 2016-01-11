@@ -13,19 +13,25 @@ module L = List
 module P = Printf
 module S = String
 
+module X = Ground
 module T = TeX
 
 (* internal functions *******************************************************)
 
 let special = "\\{}$&#^_~%" (* LaTeX reserves these characters *)
 
-let quote c =
-   if S.contains special c then '.' else c
+let special = [
+   '_', "\\_";
+]
+
+let quote s c = try s ^ L.assoc c special with
+   | Not_found -> s ^ S.make 1 c 
 
 let rec out_item och = function
-   | T.Free s  -> P.fprintf och "%s" (S.map quote s)
-   | T.Macro s -> P.fprintf och "\\%s" s
-   | T.Group t -> P.fprintf och "%%\n{%a}" out_text t
+   | T.Free s  -> P.fprintf och "%s" s
+   | T.Text s  -> P.fprintf och "%s" (X.fold_string quote "" s)
+   | T.Macro s -> P.fprintf och "\\%s%%\n" s
+   | T.Group t -> P.fprintf och "{%a}%%\n" out_text t
 
 (* interface functions ******************************************************)
 

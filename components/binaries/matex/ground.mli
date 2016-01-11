@@ -9,30 +9,20 @@
      \ /   This software is distributed as is, NO WARRANTY.     
       V_______________________________________________________________ *)
 
-module L = List
+exception Error of string
 
-module X = Ground
+val error: string -> 'a
 
-type item = Free  of string  (* free text *)
-          | Text  of string  (* quoted text *)
-          | Macro of string  (* macro *)
-          | Group of text    (* group *)
-         
-and text = item list         (* structured text *)
+val log: string -> unit
 
-let file_ext = ".tex"
+val segments_of_string: string list -> int -> string -> string list
 
-let group s = Group s
+val rev_concat: string -> string -> string list -> string
 
-let arg s = Group [Text s]
+val fold_string: ('a -> char -> 'a) -> 'a -> string -> 'a
 
-let free s = Group [Free s]
+val rev_neg_filter : ('a -> bool) -> 'a list -> 'a list -> 'a list
 
-let mk_segs us =
-   L.rev_map arg ("" :: (L.rev us))
+val foldi_left: (int -> 'a -> 'b -> 'a) -> int -> 'a -> 'b list -> 'a 
 
-let mk_rev_args riss =
-   L.rev_map group ([] :: riss)
-
-let rev_mk_args iss is =
-   free "" :: X.rev_map_append group iss is
+val rev_map_append: ('a -> 'b) -> 'a list -> 'b list -> 'b list

@@ -1,13 +1,26 @@
 \documentclass{article}
 
+\usepackage[bookmarks=false,ps2pdf]{hyperref}
+\usepackage[american]{babel}
 \usepackage{matex}
 
 \begin{document}
 
+\input{matita.lambdadelta.basic_1.pr0.defs.pr0_ind.pr0_ind.type.tex}
+
+\bigskip
+
+\input{matita.lambdadelta.basic_1.pr0.defs.pr0_ind.pr0_ind.body.tex}
+
+\bigskip
+
 \input{matita.lambdadelta.basic_1.pr0.pr0.pr0_confluence.type}
 
-% \bigskip
+\bigskip
 
-% \input{matita.lambdadelta.basic_1.pr0.pr0.pr0_confluence.body}
+\input{matita.lambdadelta.basic_1.pr0.pr0.pr0_confluence.body}
+
+\ObjRef{pr0_ind}
+\ObjRef{pr0_confluence}
 
 \end{document}

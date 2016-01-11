@@ -9,30 +9,10 @@
      \ /   This software is distributed as is, NO WARRANTY.     
       V_______________________________________________________________ *)
 
-module L = List
+val not_prop1: NCic.context -> NCic.term -> bool
 
-module X = Ground
+val not_prop2: NCic.context -> NCic.term -> bool
 
-type item = Free  of string  (* free text *)
-          | Text  of string  (* quoted text *)
-          | Macro of string  (* macro *)
-          | Group of text    (* group *)
-         
-and text = item list         (* structured text *)
+val process_top_term: string -> NCic.term -> NCic.term
 
-let file_ext = ".tex"
-
-let group s = Group s
-
-let arg s = Group [Text s]
-
-let free s = Group [Free s]
-
-let mk_segs us =
-   L.rev_map arg ("" :: (L.rev us))
-
-let mk_rev_args riss =
-   L.rev_map group ([] :: riss)
-
-let rev_mk_args iss is =
-   free "" :: X.rev_map_append group iss is
+val process_obj: NCic.obj_kind -> NCic.obj_kind

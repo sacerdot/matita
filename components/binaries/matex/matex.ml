@@ -15,31 +15,26 @@ module F = Filename
 module U = NUri
 module R = Helm_registry
 module L = Librarian
-module B = NCicLibrary
-module C = NCicTypeChecker
-module H = HLog
 
+module X = Ground
 module G = Options
 module E = Engine
 module O = TeXOutput
+module K = Kernel
 
 let help_O = "<dir> Set this output directory"
 let help_X = " Clear configuration and options"
+let help_p = " omit types (default: no)"
+let help_t = " Test anticipation (default: no)"
 
 let help   = ""
 
 (* internal functions *******************************************************)
 
-let trusted _ = true
-
-let no_log _ _ = ()
-
 let init registry =
    R.load_from registry; 
    if !G.no_init then begin
-      B.init (); 
-      C.set_trust trusted;
-      H.set_log_callback no_log;
+      K.init ();
       G.no_init := false;
    end
 
@@ -47,10 +42,10 @@ let is_registry s =
    F.check_suffix s ".conf.xml"
 
 let no_init () =
-   failwith "MaTeX: registry not initialized" 
+   failwith "MaTeX: main: registry not initialized" 
 
 let malformed s =
-   failwith ("MaTeX: malformed argument: " ^ s)
+   failwith ("MaTeX: main: malformed argument: " ^ s)
 
 let process s =
    if is_registry s then init s
@@ -59,7 +54,12 @@ let process s =
    else malformed s
 
 let main =
+try
    A.parse [
       "-O", A.String ((:=) G.out_dir), help_O;
       "-X", A.Unit G.clear, help_X;
+      "-p", A.Set G.no_types, help_p;
+      "-t", A.Set G.test, help_t;
    ] process help
+with
+   | X.Error s -> X.log s

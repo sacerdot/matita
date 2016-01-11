@@ -11,7 +11,8 @@
 
 module F = Filename
 
-module R  = Helm_registry
+module R = Helm_registry
+module P = NCicPp
 
 (* internal *****************************************************************)
 
@@ -19,13 +20,30 @@ let default_no_init = true
 
 let default_out_dir = F.current_dir_name
 
+let default_proc_id = "H"
+
+let default_test = false
+
+let default_no_types = false
+
 (* interface ****************************************************************)
+
+let status = new P.status
 
 let no_init = ref default_no_init
 
-let out_dir = ref default_out_dir
+let out_dir = ref default_out_dir   (* directory of generated files *)
+
+let proc_id = ref default_proc_id   (* identifer of anticipations *)
+
+let test = ref default_test         (* test anticipation *)
+
+let no_types = ref default_no_types (* omit types *)
 
 let clear () =
    R.clear ();
    no_init := default_no_init;
-   out_dir := default_out_dir
+   out_dir := default_out_dir;
+   proc_id := default_proc_id;
+   test := default_test;
+   no_types := default_no_types

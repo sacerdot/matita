@@ -9,8 +9,16 @@
      \ /   This software is distributed as is, NO WARRANTY.     
       V_______________________________________________________________ *)
 
+val status: NCicPp.status
+
 val no_init: bool ref
 
 val out_dir: string ref
+
+val proc_id: string ref
+
+val test: bool ref 
+
+val no_types: bool ref 
 
 val clear: unit -> unit
