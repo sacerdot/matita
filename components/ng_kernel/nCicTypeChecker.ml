@@ -391,7 +391,7 @@ let rec typeof (status:#NCic.status) ~subst ~metasenv context term =
          match List.nth context (n - 1) with
          | (_,C.Decl ty) -> S.lift status n ty
          | (_,C.Def (_,ty)) -> S.lift status n ty
-        with Failure _ -> 
+        with Failure _ | Invalid_argument _ -> 
           raise (TypeCheckerFailure (lazy ("unbound variable " ^ string_of_int n
             ^" under: " ^ status#ppcontext ~metasenv ~subst context))))
     | C.Sort s -> 

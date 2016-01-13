@@ -106,6 +106,9 @@ lemma monotonic_lt_pred: ∀m,n. m < n → O < m → pred m < pred n.
 @le_S_S_to_le >S_pred /2 width=3 by transitive_lt/
 qed.
 
+lemma lt_S_S: ∀x,y. x < y → ⫯x < ⫯y.
+/2 width=1 by le_S_S/ qed.
+
 lemma arith_j: ∀x,y,z. x-y-1 ≤ x-(y-z)-1.
 /3 width=1 by monotonic_le_minus_l, monotonic_le_minus_r/ qed.
 
@@ -172,6 +175,19 @@ qed-.
 
 lemma zero_eq_plus: ∀x,y. 0 = x + y → 0 = x ∧ 0 = y.
 * /2 width=1 by conj/ #x #y normalize #H destruct
+qed-.
+
+lemma lt_S_S_to_lt: ∀x,y. ⫯x < ⫯y → x < y.
+/2 width=1 by le_S_S_to_le/ qed-.
+
+lemma lt_elim: ∀R:relation nat.
+               (∀n2. R O (⫯n2)) →
+               (∀n1,n2. R n1 n2 → R (⫯n1) (⫯n2)) →
+               ∀n2,n1. n1 < n2 → R n1 n2.
+#R #IH1 #IH2 #n2 elim n2 -n2
+[ #n1 #H elim (lt_le_false … H) -H //
+| #n2 #IH * /4 width=1 by lt_S_S_to_lt/
+]
 qed-.
 
 (* Iterators ****************************************************************)
