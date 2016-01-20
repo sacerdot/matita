@@ -47,8 +47,8 @@ qed.
 (* Basic inversion lemmas on at *********************************************)
 
 fact at_inv_xOx_aux: ∀t,i1,i2. @⦃i1, t⦄ ≡ i2 → ∀u. t = 0 @ u →
-                    (i1 = 0 ∧ i2 = 0) ∨
-                    ∃∃j1,j2. @⦃j1, u⦄ ≡ j2 & i1 = ⫯j1 & i2 = ⫯j2.
+                     (i1 = 0 ∧ i2 = 0) ∨
+                     ∃∃j1,j2. @⦃j1, u⦄ ≡ j2 & i1 = ⫯j1 & i2 = ⫯j2.
 #t #i1 #i2 * -t -i1 -i2
 [ /3 width=1 by or_introl, conj/
 | #t #i1 #i2 #Hi #u #H destruct /3 width=5 by ex3_2_intro, or_intror/
@@ -57,8 +57,8 @@ fact at_inv_xOx_aux: ∀t,i1,i2. @⦃i1, t⦄ ≡ i2 → ∀u. t = 0 @ u →
 qed-.
 
 lemma at_inv_xOx: ∀t,i1,i2. @⦃i1, 0 @ t⦄ ≡ i2 →
-                 (i1 = 0 ∧ i2 = 0) ∨
-                 ∃∃j1,j2. @⦃j1, t⦄ ≡ j2 & i1 = ⫯j1 & i2 = ⫯j2.
+                  (i1 = 0 ∧ i2 = 0) ∨
+                  ∃∃j1,j2. @⦃j1, t⦄ ≡ j2 & i1 = ⫯j1 & i2 = ⫯j2.
 /2 width=3 by at_inv_xOx_aux/ qed-.
 
 lemma at_inv_OOx: ∀t,i. @⦃0, 0 @ t⦄ ≡ i → i = 0.
@@ -218,6 +218,9 @@ theorem at_inj: ∀t,i1,i. @⦃i1, t⦄ ≡ i → ∀i2. @⦃i2, t⦄ ≡ i → 
 #Hi elim (lt_le_false i i) /2 width=6 by at_monotonic/
 qed-.
 
+lemma at_inv_total: ∀t,i1,i2. @⦃i1, t⦄ ≡ i2 → i2 = t@❴i1❵.
+/2 width=4 by at_mono/ qed-.
+
 (* Advanced properties on at ************************************************)
 
 (* Note: see also: trace_at/at_dec *)
@@ -242,3 +245,8 @@ qed-.
 lemma is_at_dec: ∀t,i2. Decidable (∃i1. @⦃i1, t⦄ ≡ i2).
 #t #i2 @(is_at_dec_le ? ? (⫯i2)) /2 width=4 by lt_le_false/
 qed-.
+
+(* Advanced properties on apply *********************************************)
+
+fact apply_inj_aux: ∀t,i,i1,i2. i = t@❴i1❵ → i = t@❴i2❵ → i1 = i2.
+/2 width=4 by at_inj/ qed-.

@@ -12,7 +12,7 @@ table {
    class "green"
    [ { "multiple relocation" * } {
         [ { "" * } {
-             [ "nstream" "nstream_at ( ?@❴?❵ ) ( @⦃?,?⦄ ≡ ? )" * ]
+             [ "nstream" "nstream_at ( ?@❴?❵ ) ( @⦃?,?⦄ ≡ ? )" "nstream_after ( ? ∘ ? ) ( ? ⊚ ? ≡ ? )" * ]
              [ "trace ( ∥?∥ )" "trace_at ( @⦃?,?⦄ ≡ ? )" "trace_after ( ? ⊚ ? ≡ ? )" "trace_isid ( 𝐈⦃?⦄ )" "trace_isun ( 𝐔⦃?⦄ )"
                "trace_sle ( ? ⊆ ? )" "trace_sor ( ? ⋓ ? ≡ ? )" "trace_snot ( ∁ ? )" * ]
              [ "mr2" "mr2_at ( @⦃?,?⦄ ≡ ? )" "mr2_plus ( ? + ? )" "mr2_minus ( ? ▭ ? ≡ ? )" * ]
@@ -34,10 +34,10 @@ table {
    class "yellow"
    [ { "extensions to the library" * } {
         [ { "" * } {
-             [ "star" "lstar" "bool ( Ⓕ ) ( Ⓣ )" "arith ( ?^? ) ( ⫯? ) ( ⫰? )"
-               "list ( ◊ ) ( ? @ ? ) ( |?| )" "list2 ( ◊ ) ( {?,?} @ ? ) ( ? @@ ? ) ( |?| )"
-               "stream ( ? @ ? ) ( ? ≐ ? )" "stream_hdtl" *
-             ]
+             [ "stream ( ? @ ? ) ( ? ≐ ? )" "stream_hdtl" * ]
+             [ "list ( ◊ ) ( ? @ ? ) ( |?| )" "list2 ( ◊ ) ( {?,?} @ ? ) ( ? @@ ? ) ( |?| )" * ]
+             [ "bool ( Ⓕ ) ( Ⓣ )" "arith ( ?^? ) ( ⫯? ) ( ⫰? )" * ]
+             [ "star" "lstar" * ]
           }
         ]
      }
