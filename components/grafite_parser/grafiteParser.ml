@@ -505,7 +505,8 @@ EXTEND
   ]];
 
   grafite_ncommand: [ [
-      IDENT "qed" ;  i = index -> G.NQed (loc,i)
+      lc = lexicon_command -> lc
+    | IDENT "qed" ;  i = index -> G.NQed (loc,i)
     | IDENT "defined" ;  i = index -> G.NQed (loc,i) (* FG: presentational qed for definitions *)
     | src = source; nflavour = ntheorem_flavour; name = IDENT;
       params = LIST0 protected_binder_vars; SYMBOL ":"; typ = term; (* FG: params added *)
@@ -576,7 +577,6 @@ EXTEND
       m = LIST0 [ u1 = URI; SYMBOL <:unicode<mapsto>>; u2 = URI -> u1,u2 ] ->
         G.NCopy (loc,s,NUri.uri_of_string u,
           List.map (fun a,b -> NUri.uri_of_string a, NUri.uri_of_string b) m)
-    | lc = lexicon_command -> lc
   ]];
 
   lexicon_command: [ [
