@@ -420,14 +420,15 @@ let corec after_mono: ∀t1,t2,x. t1 ⊚ t2 ≡ x → ∀y. t1 ⊚ t2 ≡ y → 
 * #a1 #t1 * #a2 #t2 * #c #x #Hx * #d #y #Hy
 cases (after_inv_apply … Hx) -Hx #Hc #Hx
 cases (after_inv_apply … Hy) -Hy #Hd #Hy
-/3 width=4 by eq_sec/
+/3 width=4 by eq_seq/
 qed-.
 
 let corec after_inj: ∀t1,x,t. t1 ⊚ x ≡ t → ∀y. t1 ⊚ y ≡ t → x ≐ y ≝ ?.
 * #a1 #t1 * #c #x * #a #t #Hx * #d #y #Hy
 cases (after_inv_apply … Hx) -Hx #Hc #Hx
 cases (after_inv_apply … Hy) -Hy #Hd
-cases (apply_inj_aux … Hc Hd) #Hy -a -d /3 width=4 by eq_sec/
+cases (apply_inj_aux … Hc Hd) //
+#Hy -a -d /3 width=4 by eq_seq/
 qed-.
 
 (* Main inversion lemmas on after *******************************************)

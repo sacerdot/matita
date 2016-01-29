@@ -157,7 +157,7 @@ qed-.
 lemma at_total: ∀i,t. @⦃i, t⦄ ≡ t@❴i❵.
 #i elim i -i
 [ * // | #i #IH * /3 width=1 by at_S1/ ]
-qed.  
+qed.
 
 (* Advanced forward lemmas on at ********************************************)
 
@@ -180,46 +180,76 @@ lemma at_increasing_strict: ∀t,b,i1,i2. @⦃i1, ⫯b @ t⦄ ≡ i2 →
 #j2 #Hj #H destruct /4 width=2 by conj, at_increasing, le_S_S/
 qed-.
 
+lemma at_fwd_id: ∀t,b,i. @⦃i, b@t⦄ ≡ i → b = 0.
+#t #b *
+[ #H <(at_inv_O1 … H) -t -b //
+| #i #H elim (at_inv_S1 … H) -H
+  #j #H #H0 destruct lapply (at_increasing … H) -H
+  #H lapply (eq_minus_O … H) -H //
+]
+qed.
+
 (* Main properties on at ****************************************************)
+
+lemma at_id_le: ∀i1,i2. i1 ≤ i2 → ∀t. @⦃i2, t⦄ ≡ i2 → @⦃i1, t⦄ ≡ i1.
+#i1 #i2 #H @(le_elim … H) -i1 -i2 [ #i2 | #i1 #i2 #IH ]
+* #b #t #H lapply (at_fwd_id … H)
+#H0 destruct /4 width=1 by at_S1, at_inv_SOS/
+qed-.
 
 let corec at_ext: ∀t1,t2. (∀i,i1,i2. @⦃i, t1⦄ ≡ i1 → @⦃i, t2⦄ ≡ i2 → i1 = i2) → t1 ≐ t2 ≝ ?.
 * #b1 #t1 * #b2 #t2 #Hi lapply (Hi 0 b1 b2 ? ?) //
-#H lapply (at_ext t1 t2 ?) /2 width=1 by eq_sec/ -at_ext
+#H lapply (at_ext t1 t2 ?) /2 width=1 by eq_seq/ -at_ext
 #j #j1 #j2 #H1 #H2 @(injective_plus_r … b2) /4 width=5 by at_S1, injective_S/ (**) (* full auto fails *)
 qed-.
 
-theorem at_monotonic: ∀i1,i2. i1 < i2 → ∀t,j1,j2. @⦃i1, t⦄ ≡ j1 → @⦃i2, t⦄ ≡ j2 → j1 < j2.
+theorem at_monotonic: ∀i1,i2. i1 < i2 → ∀t1,t2. t1 ≐ t2 → ∀j1,j2. @⦃i1, t1⦄ ≡ j1 → @⦃i2, t2⦄ ≡ j2 → j1 < j2.
 #i1 #i2 #H @(lt_elim … H) -i1 -i2
-[ #i2 *#b #t #j1 #j2 #H1 #H2 >(at_inv_O1 … H1) elim (at_inv_S1 … H2) -H2 -j1 //
-| #i1 #i2 #IH * #b #t #j1 #j2 #H1 #H2 elim (at_inv_S1 … H2) elim (at_inv_S1 … H1) -H1 -H2
-  #x1 #Hx1 #H1 #x2 #Hx2 #H2 destruct /4 width=3 by lt_S_S, monotonic_lt_plus_r/
+[ #i2 * #b1 #t1 * #b2 #t2 #H elim (eq_stream_inv_seq ????? H) -H
+  #H #Ht #j1 #j2 #H1 #H2 destruct
+  >(at_inv_O1 … H1) elim (at_inv_S1 … H2) -H2 -j1 //
+| #i1 #i2 #IH * #b1 #t1 * #b2 #t2 #H elim (eq_stream_inv_seq ????? H) -H
+  #H #Ht #j1 #j2 #H1 #H2 destruct
+  elim (at_inv_S1 … H2) elim (at_inv_S1 … H1) -H1 -H2
+  #x1 #Hx1 #H1 #x2 #Hx2 #H2 destruct /4 width=5 by lt_S_S, monotonic_lt_plus_r/
 ]
 qed-.
 
-theorem at_inv_monotonic: ∀t,i1,j1. @⦃i1, t⦄ ≡ j1 → ∀i2,j2. @⦃i2, t⦄ ≡ j2 → j2 < j1 → i2 < i1.
-#t #i1 #j1 #H elim H -t -i1 -j1
-[ #t #i2 #j2 #_ #H elim (lt_le_false … H) //
-| #t #i1 #j1 #_ #IH #i2 #j2 #H #Hj elim (at_inv_xOx … H) -H *
+theorem at_inv_monotonic: ∀t1,i1,j1. @⦃i1, t1⦄ ≡ j1 → ∀t2,i2,j2. @⦃i2, t2⦄ ≡ j2 → t1 ≐ t2 → j2 < j1 → i2 < i1.
+#t1 #i1 #j1 #H elim H -t1 -i1 -j1
+[ #t1 #t2 #i2 #j2 #_ #_ #H elim (lt_le_false … H) //
+| #t1 #i1 #j1 #_ #IH * #b2 #t2 #i2 #j2 #H #Ht #Hj elim (eq_stream_inv_seq ????? Ht) -Ht
+  #H0 #Ht destruct elim (at_inv_xOx … H) -H *
   [ #H1 #H2 destruct //
-  | #x2 #y2 #Hxy #H1 #H2 destruct /4 width=3 by lt_S_S_to_lt, lt_S_S/
+  | #x2 #y2 #Hxy #H1 #H2 destruct /4 width=5 by lt_S_S_to_lt, lt_S_S/
   ]
-| #t #b1 #i1 #j1 #_ #IH #i2 #j2 #H #Hj elim (at_inv_xSx … H) -H
-  #y2 #Hy #H destruct /3 width=3 by lt_S_S_to_lt/
+| #t1 #b1 #i1 #j1 #_ #IH * #b2 #t2 #i2 #j2 #H #Ht #Hj elim (eq_stream_inv_seq ????? Ht) -Ht
+  #H0 #Ht destruct elim (at_inv_xSx … H) -H
+  #y2 #Hy #H destruct /3 width=5 by eq_seq, lt_S_S_to_lt/
 ]
 qed-.
 
-theorem at_mono: ∀t,i,i1. @⦃i, t⦄ ≡ i1 → ∀i2. @⦃i, t⦄ ≡ i2 → i2 = i1.
-#t #i #i1 #H1 #i2 #H2 elim (lt_or_eq_or_gt i2 i1) //
-#Hi elim (lt_le_false i i) /2 width=6 by at_inv_monotonic/
+theorem at_mono: ∀t1,t2. t1 ≐ t2 → ∀i,i1. @⦃i, t1⦄ ≡ i1 → ∀i2. @⦃i, t2⦄ ≡ i2 → i2 = i1.
+#t1 #t2 #Ht #i #i1 #H1 #i2 #H2 elim (lt_or_eq_or_gt i2 i1) //
+#Hi elim (lt_le_false i i) /3 width=8 by at_inv_monotonic, eq_stream_sym/
 qed-.
 
-theorem at_inj: ∀t,i1,i. @⦃i1, t⦄ ≡ i → ∀i2. @⦃i2, t⦄ ≡ i → i1 = i2.
-#t #i1 #i #H1 #i2 #H2 elim (lt_or_eq_or_gt i2 i1) //
-#Hi elim (lt_le_false i i) /2 width=6 by at_monotonic/
+theorem at_inj: ∀t1,t2. t1 ≐ t2 → ∀i1,i. @⦃i1, t1⦄ ≡ i → ∀i2. @⦃i2, t2⦄ ≡ i → i1 = i2.
+#t1 #t2 #Ht #i1 #i #H1 #i2 #H2 elim (lt_or_eq_or_gt i2 i1) //
+#Hi elim (lt_le_false i i) /3 width=8 by at_monotonic, eq_stream_sym/
 qed-.
 
 lemma at_inv_total: ∀t,i1,i2. @⦃i1, t⦄ ≡ i2 → i2 = t@❴i1❵.
-/2 width=4 by at_mono/ qed-.
+/2 width=6 by at_mono/ qed-.
+
+lemma at_repl_back: ∀i1,i2. eq_stream_repl_back ? (λt. @⦃i1, t⦄ ≡ i2).
+#i1 #i2 #t1 #t2 #Ht #H1 lapply (at_total i1 t2)
+#H2 <(at_mono … Ht … H1 … H2) -t1 -i2 //
+qed-.
+
+lemma at_repl_fwd: ∀i1,i2. eq_stream_repl_fwd ? (λt. @⦃i1, t⦄ ≡ i2).
+#i1 #i2 @eq_stream_repl_sym /2 width=3 by at_repl_back/
+qed-.
 
 (* Advanced properties on at ************************************************)
 
@@ -228,7 +258,7 @@ lemma at_dec: ∀t,i1,i2. Decidable (@⦃i1, t⦄ ≡ i2).
 #t #i1 #i2 lapply (at_total i1 t)
 #Ht elim (eq_nat_dec i2 (t@❴i1❵))
 [ #H destruct /2 width=1 by or_introl/
-| /4 width=4 by at_mono, or_intror/
+| /4 width=6 by at_mono, or_intror/
 ]
 qed-.
 
@@ -248,5 +278,5 @@ qed-.
 
 (* Advanced properties on apply *********************************************)
 
-fact apply_inj_aux: ∀t,i,i1,i2. i = t@❴i1❵ → i = t@❴i2❵ → i1 = i2.
-/2 width=4 by at_inj/ qed-.
+fact apply_inj_aux: ∀t1,t2. t1 ≐ t2 → ∀i,i1,i2. i = t1@❴i1❵ → i = t2@❴i2❵ → i1 = i2.
+/2 width=6 by at_inj/ qed-.

@@ -190,6 +190,15 @@ lemma lt_elim: ∀R:relation nat.
 ]
 qed-.
 
+lemma le_elim: ∀R:relation nat.
+               (∀n2. R O (n2)) →
+               (∀n1,n2. R n1 n2 → R (⫯n1) (⫯n2)) →
+               ∀n1,n2. n1 ≤ n2 → R n1 n2.
+#R #IH1 #IH2 #n1 #n2 @(nat_elim2 … n1 n2) -n1 -n2
+/4 width=1 by monotonic_pred/ -IH1 -IH2
+#n1 #H elim (lt_le_false … H) -H //
+qed-.
+
 (* Iterators ****************************************************************)
 
 (* Note: see also: lib/arithemetics/bigops.ma *)
