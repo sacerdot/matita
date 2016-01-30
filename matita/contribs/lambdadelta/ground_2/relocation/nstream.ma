@@ -17,4 +17,4 @@ include "ground_2/lib/streams.ma".
 
 (* RELOCATION N-STREAM ******************************************************)
 
-definition nstream: Type[0] ≝ stream nat.
+definition rtmap: Type[0] ≝ stream nat.

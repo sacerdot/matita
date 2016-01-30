@@ -17,45 +17,53 @@ include "ground_2/relocation/nstream_at.ma".
 
 (* RELOCATION N-STREAM ******************************************************)
 
-definition push: nstream → nstream ≝ λt. 0@t.
+definition push: rtmap → rtmap ≝ λf. 0@f.
 
-interpretation "push (nstream)" 'Lift t = (push t).
+interpretation "push (nstream)" 'Lift f = (push f).
 
-definition next: nstream → nstream.
-* #a #t @(⫯a@t)
+definition next: rtmap → rtmap.
+* #a #f @(⫯a@f)
 qed.
 
-interpretation "next (nstream)" 'Successor t = (next t).
+interpretation "next (nstream)" 'Successor f = (next f).
 
 (* Basic properties on push *************************************************)
 
-lemma push_at_O: ∀t. @⦃0, ↑t⦄ ≡ 0.
+lemma push_at_O: ∀f. @⦃0, ↑f⦄ ≡ 0.
 // qed.
 
-lemma push_at_S: ∀t,i1,i2. @⦃i1, t⦄ ≡ i2 → @⦃⫯i1, ↑t⦄ ≡ ⫯i2.
+lemma push_at_S: ∀f,i1,i2. @⦃i1, f⦄ ≡ i2 → @⦃⫯i1, ↑f⦄ ≡ ⫯i2.
 /2 width=1 by at_S1/ qed.
 
 (* Basic inversion lemmas on push *******************************************)
 
-lemma push_inv_at_S: ∀t,i1,i2. @⦃⫯i1, ↑t⦄ ≡ ⫯i2 → @⦃i1, t⦄ ≡ i2.
+lemma push_inv_at_S: ∀f,i1,i2. @⦃⫯i1, ↑f⦄ ≡ ⫯i2 → @⦃i1, f⦄ ≡ i2.
 /2 width=1 by at_inv_SOS/ qed-.
 
 lemma injective_push: injective ? ? push.
-#t1 #t2 normalize #H destruct //
+#f1 #f2 normalize #H destruct //
+qed-.
+
+lemma discr_push_next: ∀f1,f2. ↑f1 = ⫯f2 → ⊥.
+#f1 * #n2 #f2 normalize #H destruct
+qed-.
+
+lemma discr_next_push: ∀f1,f2. ⫯f1 = ↑f2 → ⊥.
+* #n1 #f1 #f2 normalize #H destruct
 qed-.
 
 (* Basic properties on next *************************************************)
 
-lemma next_at: ∀t,i1,i2. @⦃i1, t⦄ ≡ i2 → @⦃i1, ⫯t⦄ ≡ ⫯i2.
+lemma next_at: ∀f,i1,i2. @⦃i1, f⦄ ≡ i2 → @⦃i1, ⫯f⦄ ≡ ⫯i2.
 * /2 width=1 by at_lift/
 qed.
 
 (* Basic inversion lemmas on next *******************************************)
 
-lemma next_inv_at: ∀t,i1,i2. @⦃i1, ⫯t⦄ ≡ ⫯i2 → @⦃i1, t⦄ ≡ i2.
+lemma next_inv_at: ∀f,i1,i2. @⦃i1, ⫯f⦄ ≡ ⫯i2 → @⦃i1, f⦄ ≡ i2.
 * /2 width=1 by at_inv_xSS/
 qed-.
 
 lemma injective_next: injective ? ? next.
-* #a1 #t1 * #a2 #t2 normalize #H destruct //
+* #a1 #f1 * #a2 #f2 normalize #H destruct //
 qed-.
