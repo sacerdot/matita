@@ -46,7 +46,7 @@ interpretation "term construction (binary)"
    'SnItem2 I T1 T2 = (TPair I T1 T2).
 
 interpretation "term binding construction (binary)"
-   'SnBind2 a I T1 T2 = (TPair (Bind2 a I) T1 T2).
+   'SnBind2 p I T1 T2 = (TPair (Bind2 p I) T1 T2).
 
 interpretation "term positive binding construction (binary)"
    'SnBind2Pos I T1 T2 = (TPair (Bind2 true I) T1 T2).
@@ -58,16 +58,16 @@ interpretation "term flat construction (binary)"
    'SnFlat2 I T1 T2 = (TPair (Flat2 I) T1 T2).
 
 interpretation "sort (term)"
-   'Star k = (TAtom (Sort k)).
+   'Star s = (TAtom (Sort s)).
 
 interpretation "local reference (term)"
    'LRef i = (TAtom (LRef i)).
 
 interpretation "global reference (term)"
-   'GRef p = (TAtom (GRef p)).
+   'GRef l = (TAtom (GRef l)).
 
 interpretation "abbreviation (term)"
-   'SnAbbr a T1 T2 = (TPair (Bind2 a Abbr) T1 T2).
+   'SnAbbr p T1 T2 = (TPair (Bind2 p Abbr) T1 T2).
 
 interpretation "positive abbreviation (term)"
    'SnAbbrPos T1 T2 = (TPair (Bind2 true Abbr) T1 T2).
@@ -76,7 +76,7 @@ interpretation "negative abbreviation (term)"
    'SnAbbrNeg T1 T2 = (TPair (Bind2 false Abbr) T1 T2).
 
 interpretation "abstraction (term)"
-   'SnAbst a T1 T2 = (TPair (Bind2 a Abst) T1 T2).
+   'SnAbst p T1 T2 = (TPair (Bind2 p Abst) T1 T2).
 
 interpretation "positive abstraction (term)"
    'SnAbstPos T1 T2 = (TPair (Bind2 true Abst) T1 T2).
@@ -117,7 +117,7 @@ fact destruct_tpair_tpair_aux: ∀I1,I2,T1,T2,V1,V2. ②{I1}T1.V1 = ②{I2}T2.V2
 #I1 #I2 #T1 #T2 #V1 #V2 #H destruct /2 width=1 by and3_intro/
 qed-.
 
-lemma discr_tpair_xy_x: ∀I,T,V. ②{I} V. T = V → ⊥.
+lemma discr_tpair_xy_x: ∀I,T,V. ②{I}V.T = V → ⊥.
 #I #T #V elim V -V
 [ #J #H destruct
 | #J #W #U #IHW #_ #H elim (destruct_tpair_tpair_aux … H) -H /2 width=1 by/ (**) (* destruct lemma needed *)
@@ -125,7 +125,7 @@ lemma discr_tpair_xy_x: ∀I,T,V. ②{I} V. T = V → ⊥.
 qed-.
 
 (* Basic_1: was: thead_x_y_y *)
-lemma discr_tpair_xy_y: ∀I,V,T. ②{I} V. T = T → ⊥.
+lemma discr_tpair_xy_y: ∀I,V,T. ②{I}V.T = T → ⊥.
 #I #V #T elim T -T
 [ #J #H destruct
 | #J #W #U #_ #IHU #H elim (destruct_tpair_tpair_aux … H) -H /2 width=1 by/ (**) (* destruct lemma needed *)
@@ -133,7 +133,7 @@ lemma discr_tpair_xy_y: ∀I,V,T. ②{I} V. T = T → ⊥.
 qed-.
 
 lemma eq_false_inv_tpair_sn: ∀I,V1,T1,V2,T2.
-                             (②{I} V1. T1 = ②{I} V2. T2 → ⊥) →
+                             (②{I}V1.T1 = ②{I}V2.T2 → ⊥) →
                              (V1 = V2 → ⊥) ∨ (V1 = V2 ∧ (T1 = T2 → ⊥)).
 #I #V1 #T1 #V2 #T2 #H
 elim (eq_term_dec V1 V2) /3 width=1 by or_introl/ #HV12 destruct
@@ -141,7 +141,7 @@ elim (eq_term_dec V1 V2) /3 width=1 by or_introl/ #HV12 destruct
 qed-.
 
 lemma eq_false_inv_tpair_dx: ∀I,V1,T1,V2,T2.
-                             (②{I} V1. T1 = ②{I} V2. T2 → ⊥) →
+                             (②{I} V1. T1 = ②{I}V2.T2 → ⊥) →
                              (T1 = T2 → ⊥) ∨ (T1 = T2 ∧ (V1 = V2 → ⊥)).
 #I #V1 #T1 #V2 #T2 #H
 elim (eq_term_dec T1 T2) /3 width=1 by or_introl/ #HT12 destruct

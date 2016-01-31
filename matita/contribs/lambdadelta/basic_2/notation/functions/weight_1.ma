@@ -14,6 +14,6 @@
 
 (* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-notation "hvbox( ♯ { term 46 x } )"
+notation "hvbox( ♯ { term 46 X } )"
  non associative with precedence 90
- for @{ 'Weight $x }.
+ for @{ 'Weight $X }.

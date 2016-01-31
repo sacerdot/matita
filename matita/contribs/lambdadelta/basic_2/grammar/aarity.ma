@@ -39,7 +39,7 @@ fact destruct_apair_apair_aux: ∀A1,A2,B1,B2. ②B1.A1 = ②B2.A2 → B1 = B2 �
 #A1 #A2 #B1 #B2 #H destruct /2 width=1 by conj/
 qed-.
 
-lemma discr_apair_xy_x: ∀A,B. ②B. A = B → ⊥.
+lemma discr_apair_xy_x: ∀A,B. ②B.A = B → ⊥.
 #A #B elim B -B
 [ #H destruct
 | #Y #X #IHY #_ #H elim (destruct_apair_apair_aux … H) -H /2 width=1 by/ (**) (* destruct lemma needed *)

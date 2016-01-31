@@ -44,8 +44,8 @@ inductive item2: Type[0] ≝
 
 (* Basic inversion lemmas ***************************************************)
 
-fact destruct_sort_sort_aux: ∀k1,k2. Sort k1 = Sort k2 → k1 = k2.
-#k1 #k2 #H destruct //
+fact destruct_sort_sort_aux: ∀s1,s2. Sort s1 = Sort s2 → s1 = s2.
+#s1 #s2 #H destruct //
 qed-.
 
 (* Basic properties *********************************************************)
@@ -70,9 +70,9 @@ qed-.
 
 (* Basic_1: was: kind_dec *)
 lemma eq_item2_dec: ∀I1,I2:item2. Decidable (I1 = I2).
-* [ #a1 ] #I1 * [1,3: #a2 ] #I2
+* [ #p1 ] #I1 * [1,3: #p2 ] #I2
 [2,3: @or_intror #H destruct
-| elim (eq_bool_dec a1 a2) #Ha
+| elim (eq_bool_dec p1 p2) #Hp
   [ elim (eq_bind2_dec I1 I2) /2 width=1 by or_introl/ #HI ]
   @or_intror #H destruct /2 width=1 by/
 | elim (eq_flat2_dec I1 I2) /2 width=1 by or_introl/ #HI

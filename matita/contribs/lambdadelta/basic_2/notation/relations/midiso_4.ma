@@ -14,6 +14,6 @@
 
 (* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-notation "hvbox( L1 ⩬ break [ term 46 l , break term 46 m ] break term 46 L2 )"
+notation "hvbox( L1 ⩬ break [ term 46 f , break term 46 m ] break term 46 L2 )"
    non associative with precedence 45
-   for @{ 'MidIso $l $m $L1 $L2 }.
+   for @{ 'MidIso $f $k $L1 $L2 }.

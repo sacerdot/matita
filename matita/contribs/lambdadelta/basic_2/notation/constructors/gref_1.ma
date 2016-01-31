@@ -14,6 +14,6 @@
 
 (* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-notation "hvbox( § term 90 p )"
+notation "hvbox( § term 90 l )"
  non associative with precedence 55
- for @{ 'GRef $p }.
+ for @{ 'GRef $l }.

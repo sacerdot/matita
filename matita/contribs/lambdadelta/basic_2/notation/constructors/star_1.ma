@@ -14,6 +14,6 @@
 
 (* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-notation "hvbox( ⋆ term 90 k )"
+notation "hvbox( ⋆ term 90 s )"
  non associative with precedence 55
- for @{ 'Star $k }.
+ for @{ 'Star $s }.

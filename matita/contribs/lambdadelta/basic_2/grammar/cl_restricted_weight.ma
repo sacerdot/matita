@@ -24,7 +24,7 @@ interpretation "weight (restricted closure)" 'Weight L T = (rfw L T).
 (* Basic properties *********************************************************)
 
 (* Basic_1: was: flt_shift *)
-lemma rfw_shift: ∀a,I,K,V,T. ♯{K.ⓑ{I}V, T} < ♯{K, ⓑ{a,I}V.T}.
+lemma rfw_shift: ∀p,I,K,V,T. ♯{K.ⓑ{I}V, T} < ♯{K, ⓑ{p,I}V.T}.
 normalize //
 qed.
 

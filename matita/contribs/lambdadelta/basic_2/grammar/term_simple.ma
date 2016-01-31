@@ -26,17 +26,17 @@ interpretation "simple (term)" 'Simple T = (simple T).
 
 (* Basic inversion lemmas ***************************************************)
 
-fact simple_inv_bind_aux: ∀T. 𝐒⦃T⦄ → ∀a,J,W,U. T = ⓑ{a,J} W. U → ⊥.
+fact simple_inv_bind_aux: ∀T. 𝐒⦃T⦄ → ∀p,J,W,U. T = ⓑ{p,J}W.U → ⊥.
 #T * -T
-[ #I #a #J #W #U #H destruct
+[ #I #p #J #W #U #H destruct
 | #I #V #T #a #J #W #U #H destruct
 ]
-qed.
+qed-.
 
-lemma simple_inv_bind: ∀a,I,V,T. 𝐒⦃ⓑ{a,I} V. T⦄ → ⊥.
+lemma simple_inv_bind: ∀p,I,V,T. 𝐒⦃ⓑ{p,I} V. T⦄ → ⊥.
 /2 width=7 by simple_inv_bind_aux/ qed-.
 
 lemma simple_inv_pair: ∀I,V,T.  𝐒⦃②{I}V.T⦄ → ∃J. I = Flat2 J.
-* /2 width=2 by ex_intro/ #a #I #V #T #H
-elim (simple_inv_bind … H)
+* /2 width=2 by ex_intro/
+#p #I #V #T #H elim (simple_inv_bind … H)
 qed-.

@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/ynat/ynat_lt.ma".
 include "basic_2/grammar/lenv.ma".
 
 (* LENGTH OF A LOCAL ENVIRONMENT ********************************************)
@@ -32,28 +31,26 @@ lemma length_atom: |⋆| = 0.
 lemma length_pair: ∀I,L,V. |L.ⓑ{I}V| = ⫯|L|.
 // qed.
 
-lemma length_inj: ∀L. |L| < ∞.
-#L elim L -L /2 width=1 by ylt_succ_Y/
-qed.
-
 (* Basic inversion lemmas ***************************************************)
 
 lemma length_inv_zero_dx: ∀L. |L| = 0 → L = ⋆.
 * // #L #I #V >length_pair
-#H elim (ysucc_inv_O_dx … H)
+#H destruct
 qed-.
 
-lemma length_inv_zero_sn: ∀L. yinj 0 = |L| → L = ⋆.
+lemma length_inv_zero_sn: ∀L. 0 = |L| → L = ⋆.
 /2 width=1 by length_inv_zero_dx/ qed-.
 
-lemma length_inv_pos_dx: ∀l,L. |L| = ⫯l →
-                         ∃∃I,K,V. |K| = l & L = K. ⓑ{I}V.
-#l * /3 width=5 by ysucc_inj, ex2_3_intro/
->length_atom #H elim (ysucc_inv_O_sn … H)
+lemma length_inv_pos_dx: ∀n,L. |L| = ⫯n →
+                         ∃∃I,K,V. |K| = n & L = K. ⓑ{I}V.
+#n * /3 width=5 by injective_S, ex2_3_intro/
+>length_atom #H destruct
 qed-.
 
-lemma length_inv_pos_sn: ∀l,L. ⫯l = |L| →
-                         ∃∃I,K,V. l = |K| & L = K. ⓑ{I}V.
+lemma length_inv_pos_sn: ∀n,L. ⫯n = |L| →
+                         ∃∃I,K,V. n = |K| & L = K. ⓑ{I}V.
 #l #L #H lapply (sym_eq ??? H) -H 
 #H elim (length_inv_pos_dx … H) -H /2 width=5 by ex2_3_intro/
 qed-.
+
+(* Basic_2A1: removed theorems 1: length_inj *)

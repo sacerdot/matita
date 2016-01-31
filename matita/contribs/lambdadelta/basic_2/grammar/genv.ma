@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/lib/list.ma".
+include "ground_2/lib/list2.ma".
 include "basic_2/notation/constructors/star_0.ma".
 include "basic_2/notation/constructors/dxbind2_3.ma".
 include "basic_2/notation/constructors/dxabbr_2.ma".

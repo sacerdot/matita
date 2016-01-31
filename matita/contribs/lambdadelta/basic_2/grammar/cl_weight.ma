@@ -26,7 +26,7 @@ interpretation "weight (closure)" 'Weight G L T = (fw G L T).
 (* Basic properties *********************************************************)
 
 (* Basic_1: was: flt_shift *)
-lemma fw_shift: ∀a,I,G,K,V,T. ♯{G, K.ⓑ{I}V, T} < ♯{G, K, ⓑ{a,I}V.T}.
+lemma fw_shift: ∀p,I,G,K,V,T. ♯{G, K.ⓑ{I}V, T} < ♯{G, K, ⓑ{p,I}V.T}.
 normalize //
 qed.
 
