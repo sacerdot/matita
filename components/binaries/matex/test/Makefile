@@ -6,7 +6,7 @@ UNLOG  = ./unlog.pl
 
 MAIN = test
 
-SOURCES = $(shell cat Make)
+SOURCES = $(shell cat Make) matex.sty
 
 all: $(MAIN).dvi 
 

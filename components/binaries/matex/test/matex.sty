@@ -2,17 +2,18 @@
 
 \newcommand*\setlabel[1]{\protected@edef\@currentlabel{#1}}
 
-\newtheorem{prop}{Proposition}
-
 \newcommand*\ObjLabel[1]{\label{obj:#1}}
 \newcommand*\ObjRef[1]{\ref{obj:#1}}
 
+\newtheorem{prop}{Proposition}
+
 \newcommand*\Object[3]{\begin{prop}[#1]\hfil\\\setlabel{#1}\ObjLabel{#2}#3\end{prop}}
 
-\newcommand*\@skip[2]{}
-\newcommand*\Next[3]{\def\@tmp{#3}\ifx\@tmp\empty #2\let\next=\@skip\else #1{#3}\let\next=\Next\fi\next #1#2}
+\newcommand*\ma@skip[4]{}
+\newcommand*\ma@next[5]{\def\ma@tmp{#5}\ifx\ma@tmp\empty #4\let\ma@tmp=\ma@skip\else #1#2{#5}\let\ma@tmp=\ma@next\fi\ma@tmp #3#2#3#4}
 
-\newcommand*\@proc[1]{ #1}
+\newcommand*\ma@space{ }
+\newcommand*\ma@arg[1]{#1}
 
 \newcommand*\PROP{PROP}
 \newcommand*\CROP[1]{CROP}
@@ -22,16 +23,17 @@
 \newcommand*\ABBR[3]{(D #1 #2 #3) }
 \newcommand*\ABST[2]{(I #1 #2) }
 \newcommand*\PROD[2]{(P #1 #2) }
-\newcommand*\APPL{(A)\Next\@proc\relax}
-\newcommand*\CASE[3]{(C #1 #2 #3)\Next\@proc\relax}
+\newcommand*\APPL{(A)\ma@next\ma@space\ma@arg\ma@space\relax}
+\newcommand*\CASE[3]{(C #1 #2 #3)\ma@next\ma@space\ma@arg\ma@space\relax}
 
-\def\@arg#1{, #1}
-\def\@stop{.\vskip10pt}
+\newcommand*\ma@with{ with }
+\newcommand*\ma@comma{, }
+\newcommand*\ma@stop{.\vskip10pt}
 
 \newcommand*\DECL[3]{\textbf{#1} : #3\vskip10pt}
 \newcommand*\PRIM{}
 \newcommand*\BODY[1]{is #1\vskip10pt}
-\newcommand*\STEP[1]{by #1\Next\@arg\@stop}
-\newcommand*\DEST[1]{by cases on #1\Next\@arg\@stop}
+\newcommand*\STEP[1]{by #1\ma@next\ma@with\ma@arg\ma@comma\ma@stop}
+\newcommand*\DEST[1]{by cases on #1\ma@next\ma@with\ma@arg\ma@comma\ma@stop}
 
 \makeatother
