@@ -28,15 +28,16 @@ module O = TeXOutput
 module A = Anticipate
 
 type status = {
-   g: string;   (* global object name *)
-   l: string;   (* local reference name *)
+   n: string;   (* reference name *)
    s: int list; (* scope *)
-   w: bool;     (* is first construction *)
 } 
 
 (* internal functions *******************************************************)
 
 let alpha c s = s
+
+let internal s =
+   X.error ("engine: malformed stack: " ^ s)
 
 let malformed s =
    X.error ("engine: malformed term: " ^ s)
@@ -84,7 +85,7 @@ let rec proc_term c = function
       let ss = K.segments_of_uri u in
       let _, _, _, _, obj = E.get_checked_obj G.status u in  
       let ss, name = K.name_of_reference ss (obj, r) in
-      [T.Macro "GREF"; T.arg name; T.free (X.rev_concat "." "type" ss)]
+      [T.Macro "GREF"; T.arg name; T.free (X.rev_map_concat X.id "." "type" ss)]
    | C.Match (w, u, v, ts)  ->
       let is_w = proc_term c (C.Const w) in
       let is_u = proc_term c u in
@@ -100,28 +101,41 @@ let proc_term c t = try proc_term c t with
 
 (* proof processing *)
 
-let init n = {
-   g = n; l = "_"; s = []; w = true
+let typeof c = function
+   | C.Appl [t]
+   | t          -> A.typeof c t
+
+let init () = {
+   n =  ""; s = [1]
 }
 
-let push st n = {st with
-   l = n; s = 1 :: st.s; w = true
+let push st n = {
+   n = n; s = 1 :: st.s;
 }
 
-let pop st = {st with
-   w = false; s = match st.s with [] -> [] | i :: tl -> succ i :: tl
+let next st = {
+   n = ""; s = match st.s with [] -> failwith "hd" | i :: tl -> succ i :: tl
 }
 
-let next st = {st with
-   w = false
-}
+let scope st =
+   X.rev_map_concat string_of_int "." "" (L.tl st.s)
+
+let mk_exit st ris =
+   if st.n <> "" || L.tl st.s = [] then ris else
+   T.free (scope st) :: T.Macro "EXIT" :: ris
 
 let mk_open st ris =
-   if st.w then T.Macro "PRIM" :: T.arg "" :: T.Macro "OPEN" :: ris else ris
+   if st.n = "" then ris else
+   T.free (scope st) :: T.free st.n :: T.arg st.n :: T.Macro "OPEN" :: ris
 
 let mk_dec w s ris =
    let w = if !G.no_types then [] else w in
    T.Group w :: T.free s :: T.arg s :: T.Macro "DECL" :: ris
+
+let mk_inferred st c t ris =
+   let u = typeof c t in
+   let is_u = proc_term c u in
+   mk_dec is_u st.n ris
 
 let rec proc_proof st ris c t = match t with
    | C.Appl []
@@ -138,31 +152,34 @@ let rec proc_proof st ris c t = match t with
       proc_proof (next st) (T.Macro "PRIM" :: mk_dec is_w s ris) (K.add_dec s w c) t
    | C.Appl ts              ->
       let rts = X.rev_neg_filter (A.not_prop2 c) [] ts in
-      let ris = T.Macro "STEP" :: ris in
+      let ris = T.Macro "STEP" :: mk_inferred st c t ris in
       let tts = L.rev_map (proc_term c) rts in
-      T.rev_mk_args tts ris
+      mk_exit st (T.rev_mk_args tts ris)
    | C.Match (w, u, v, ts) ->
       let rts = X.rev_neg_filter (A.not_prop2 c) [v] ts in
-      let ris = T.Macro "DEST" :: ris in
+      let ris = T.Macro "DEST" :: mk_inferred st c t ris in
       let tts = L.rev_map (proc_term c) rts in
-      T.rev_mk_args tts ris
+      mk_exit st (T.rev_mk_args tts ris)
    | C.LetIn (s, w, v, t)  -> 
       let s = alpha c s in
       let is_w = proc_term c w in
+      let ris = mk_open st ris in
       if A.not_prop1 c w then
          let is_v = proc_term c v in
          proc_proof (next st) (T.Group is_v :: T.Macro "BODY" :: mk_dec is_w s ris) (K.add_def s w v c) t
       else
          let ris_v = proc_proof (push st s) ris c v in
-         proc_proof (pop st) (mk_dec is_w s ris_v) (K.add_def s w v c) t
+         proc_proof (next st) ris_v (K.add_def s w v c) t
 
-let proc_proof c t = try proc_proof (init "") [] c t with 
+let proc_proof rs c t = try proc_proof (init ()) rs c t with 
    | E.ObjectNotFound _ 
    | Invalid_argument "List.nth"
-   | Failure "nth" 
+   | Failure "nth"
    | Failure "name_of_reference" -> malformed "P2"
    | V.TypeCheckerFailure s
    | V.AssertFailure s           -> malformed (Lazy.force s)
+   | Failure "hd"
+   | Failure "tl"                -> internal "P2"
 
 (* top level processing *)
 
@@ -173,20 +190,20 @@ let proc_top_body s t = proc_term [] t
 
 let proc_top_proof s t =
    let tt = A.process_top_term s t in (* anticipation *)
-   L.rev (proc_proof [] tt)
+   L.rev (T.arg "proof" :: T.Macro "end" :: proc_proof [T.arg "proof"; T.Macro "begin"] [] tt)
 
 let open_out_tex s =
    open_out (F.concat !G.out_dir (s ^ T.file_ext))
 
 let proc_pair s ss u xt =
-   let name = X.rev_concat "." "type" ss in
+   let name = X.rev_map_concat X.id "." "type" ss in
    let och = open_out_tex name in
    O.out_text och (proc_top_type s u);
    close_out och;
    match xt with
       | None   -> ()
       | Some t ->
-         let name = X.rev_concat "." "body" ss in
+         let name = X.rev_map_concat X.id "." "body" ss in
          let och = open_out_tex name in
          let text = if A.not_prop1 [] u then proc_top_body else proc_top_proof in
          O.out_text och (text s t);

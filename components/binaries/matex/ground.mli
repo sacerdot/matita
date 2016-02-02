@@ -15,9 +15,11 @@ val error: string -> 'a
 
 val log: string -> unit
 
+val id: 'a -> 'a
+
 val segments_of_string: string list -> int -> string -> string list
 
-val rev_concat: string -> string -> string list -> string
+val rev_map_concat: ('a -> string) -> string -> string -> 'a list -> string
 
 val fold_string: ('a -> char -> 'a) -> 'a -> string -> 'a
 

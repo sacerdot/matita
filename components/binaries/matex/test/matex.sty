@@ -1,3 +1,8 @@
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\ProvidesPackage{matex}[2015/12/21 MaTeX Package]
+\ExecuteOptions{}
+\ProcessOptions*
+
 \makeatletter
 
 \newcommand*\setlabel[1]{\protected@edef\@currentlabel{#1}}
@@ -6,6 +11,8 @@
 \newcommand*\ObjRef[1]{\ref{obj:#1}}
 
 \newtheorem{prop}{Proposition}
+\newenvironment{proof}{\setlength\parindent{0pt}}{}
+\newenvironment{ma@step}{}{\vskip0pt}
 
 \newcommand*\Object[3]{\begin{prop}[#1]\hfil\\\setlabel{#1}\ObjLabel{#2}#3\end{prop}}
 
@@ -29,12 +36,16 @@
 
 \newcommand*\ma@with{ with }
 \newcommand*\ma@comma{, }
-\newcommand*\ma@stop{.\vskip10pt}
+\newcommand*\ma@stop{.\end{ma@step}}
 
-\newcommand*\DECL[3]{\textbf{#1} : #3\vskip10pt}
-\newcommand*\PRIM{}
-\newcommand*\BODY[1]{is #1\vskip10pt}
-\newcommand*\STEP[1]{by #1\ma@next\ma@with\ma@arg\ma@comma\ma@stop}
-\newcommand*\DEST[1]{by cases on #1\ma@next\ma@with\ma@arg\ma@comma\ma@stop}
+\newcommand*\DECL[3]{\def\ma@tmp{#1}\begin{ma@step}\textbf{\ifx\ma@tmp\empty\_conlusion\else #1\fi} of type #3}
+\newcommand*\PRIM{\end{ma@step}}
+\newcommand*\BODY[1]{\\is #1\end{ma@step}}
+\newcommand*\STEP[1]{\\by #1\ma@next\ma@with\ma@arg\ma@comma\ma@stop}
+\newcommand*\DEST[1]{\\by cases on #1\ma@next\ma@with\ma@arg\ma@comma\ma@stop}
+\newcommand*\OPEN[3]{\begin{ma@step}\textbf{#1} is the following scope #3.\end{ma@step}}
+\newcommand*\EXIT[1]{\begin{ma@step}\textbf{end} of scope #1.\end{ma@step}}
 
 \makeatother
+
+\endinput

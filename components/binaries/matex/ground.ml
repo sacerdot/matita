@@ -17,16 +17,18 @@ exception Error of string
 
 (* interface functions ******************************************************)
 
+let id x = x
+
 let rec segments_of_string ss l s =
    match try Some (S.index s '/') with Not_found -> None with
       | None   -> s :: ss
       | Some i -> segments_of_string (S.sub s 0 i :: ss) (l-i-1) (S.sub s (i+1) (l-i-1))
 
-let rec rev_concat sep r = function
+let rec rev_map_concat map sep r = function
    | []                  -> r 
    | s :: ss             ->
-      if r = "" then rev_concat sep s ss else
-      rev_concat sep (s ^ sep ^ r) ss 
+      if r = "" then rev_map_concat map sep (map s) ss else
+      rev_map_concat map sep (map s ^ sep ^ r) ss 
 
 let fold_string map a s =
    let l = S.length s in
@@ -50,4 +52,4 @@ let rec rev_map_append map l r = match l with
 
 let error s = raise (Error s)
 
-let log s = P.eprintf "MaTeX: %s\n" s
+let log s = P.eprintf "MaTeX: %s\n%!" s

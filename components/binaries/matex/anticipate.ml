@@ -29,7 +29,9 @@ let malformed s =
 let ok s =
    X.log ("anticipate: ok " ^ s)
 
-let not_prop1 c u = match (K.whd c (K.typeof c u)) with
+let typeof c t = K.whd c (K.typeof c t)
+
+let not_prop1 c u = match typeof c u with
    | C.Sort (C.Prop) -> false
    | C.Sort _        -> true
    | _               -> malformed "1"
