@@ -28,8 +28,10 @@ module O = TeXOutput
 module A = Anticipate
 
 type status = {
-   n: string;   (* object name *)
+   g: string;   (* global object name *)
+   l: string;   (* local reference name *)
    s: int list; (* scope *)
+   w: bool;     (* is first construction *)
 } 
 
 (* internal functions *******************************************************)
@@ -99,12 +101,27 @@ let proc_term c t = try proc_term c t with
 (* proof processing *)
 
 let init n = {
-   n = n; s = [];
+   g = n; l = "_"; s = []; w = true
 }
 
-let mk_dec w s is =
+let push st n = {st with
+   l = n; s = 1 :: st.s; w = true
+}
+
+let pop st = {st with
+   w = false; s = match st.s with [] -> [] | i :: tl -> succ i :: tl
+}
+
+let next st = {st with
+   w = false
+}
+
+let mk_open st ris =
+   if st.w then T.Macro "PRIM" :: T.arg "" :: T.Macro "OPEN" :: ris else ris
+
+let mk_dec w s ris =
    let w = if !G.no_types then [] else w in
-   T.Group w :: T.free s :: T.arg s :: T.Macro "DECL" :: is
+   T.Group w :: T.free s :: T.arg s :: T.Macro "DECL" :: ris
 
 let rec proc_proof st ris c t = match t with
    | C.Appl []
@@ -117,7 +134,8 @@ let rec proc_proof st ris c t = match t with
    | C.Lambda (s, w, t)    -> 
       let s = alpha c s in
       let is_w = proc_term c w in
-      proc_proof st (T.Macro "PRIM" :: mk_dec is_w s ris) (K.add_dec s w c) t
+      let ris = mk_open st ris in
+      proc_proof (next st) (T.Macro "PRIM" :: mk_dec is_w s ris) (K.add_dec s w c) t
    | C.Appl ts              ->
       let rts = X.rev_neg_filter (A.not_prop2 c) [] ts in
       let ris = T.Macro "STEP" :: ris in
@@ -133,10 +151,10 @@ let rec proc_proof st ris c t = match t with
       let is_w = proc_term c w in
       if A.not_prop1 c w then
          let is_v = proc_term c v in
-         proc_proof st (T.Group is_v :: T.Macro "BODY" :: mk_dec is_w s ris) (K.add_def s w v c) t
+         proc_proof (next st) (T.Group is_v :: T.Macro "BODY" :: mk_dec is_w s ris) (K.add_def s w v c) t
       else
-         let ris_v = proc_proof st ris c v in
-         proc_proof st (mk_dec is_w s ris_v) (K.add_def s w v c) t
+         let ris_v = proc_proof (push st s) ris c v in
+         proc_proof (pop st) (mk_dec is_w s ris_v) (K.add_def s w v c) t
 
 let proc_proof c t = try proc_proof (init "") [] c t with 
    | E.ObjectNotFound _ 

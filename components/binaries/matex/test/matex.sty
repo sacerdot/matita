@@ -9,6 +9,7 @@
 
 \newcommand*\Object[3]{\begin{prop}[#1]\hfil\\\setlabel{#1}\ObjLabel{#2}#3\end{prop}}
 
+\newcommand*\ma@tmp{}
 \newcommand*\ma@skip[4]{}
 \newcommand*\ma@next[5]{\def\ma@tmp{#5}\ifx\ma@tmp\empty #4\let\ma@tmp=\ma@skip\else #1#2{#5}\let\ma@tmp=\ma@next\fi\ma@tmp #3#2#3#4}
 
