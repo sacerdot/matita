@@ -128,14 +128,14 @@ let mk_open st ris =
    if st.n = "" then ris else
    T.free (scope st) :: T.free st.n :: T.arg st.n :: T.Macro "OPEN" :: ris
 
-let mk_dec w s ris =
+let mk_dec kind w s ris =
    let w = if !G.no_types then [] else w in
-   T.Group w :: T.free s :: T.arg s :: T.Macro "DECL" :: ris
+   T.Group w :: T.free s :: T.arg s :: T.Macro kind :: ris
 
 let mk_inferred st c t ris =
    let u = typeof c t in
    let is_u = proc_term c u in
-   mk_dec is_u st.n ris
+   mk_dec "DECL" is_u st.n ris
 
 let rec proc_proof st ris c t = match t with
    | C.Appl []
@@ -149,7 +149,7 @@ let rec proc_proof st ris c t = match t with
       let s = alpha c s in
       let is_w = proc_term c w in
       let ris = mk_open st ris in
-      proc_proof (next st) (T.Macro "PRIM" :: mk_dec is_w s ris) (K.add_dec s w c) t
+      proc_proof (next st) (mk_dec "PRIM" is_w s ris) (K.add_dec s w c) t
    | C.Appl ts              ->
       let rts = X.rev_neg_filter (A.not_prop2 c) [] ts in
       let ris = T.Macro "STEP" :: mk_inferred st c t ris in
@@ -166,7 +166,8 @@ let rec proc_proof st ris c t = match t with
       let ris = mk_open st ris in
       if A.not_prop1 c w then
          let is_v = proc_term c v in
-         proc_proof (next st) (T.Group is_v :: T.Macro "BODY" :: mk_dec is_w s ris) (K.add_def s w v c) t
+         let ris = T.Group is_v :: T.Macro "BODY" :: mk_dec "DECL" is_w s ris in
+         proc_proof (next st) ris (K.add_def s w v c) t
       else
          let ris_v = proc_proof (push st s) ris c v in
          proc_proof (next st) ris_v (K.add_def s w v c) t

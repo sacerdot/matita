@@ -14,7 +14,6 @@
 
 include "ground_2/notation/functions/identity_0.ma".
 include "ground_2/notation/relations/isidentity_1.ma".
-include "ground_2/relocation/nstream_lift.ma".
 include "ground_2/relocation/nstream_after.ma".
 
 (* RELOCATION N-STREAM ******************************************************)
@@ -46,37 +45,37 @@ qed.
 
 (* Basic inversion lemmas on isid *******************************************)
 
-lemma isid_inv_seq: ∀f,a.  𝐈⦃a@f⦄ → 𝐈⦃f⦄ ∧ a = 0.
-#f #a normalize >id_unfold in ⊢ (???%→?);
+lemma isid_inv_seq: ∀f,n.  𝐈⦃n@f⦄ → 𝐈⦃f⦄ ∧ n = 0.
+#f #n normalize >id_unfold in ⊢ (???%→?);
 #H elim (eq_stream_inv_seq ????? H) -H /2 width=1 by conj/
 qed-.
 
 lemma isid_inv_push: ∀f. 𝐈⦃↑f⦄ → 𝐈⦃f⦄.
-* #a #f #H elim (isid_inv_seq … H) -H //
+* #n #f #H elim (isid_inv_seq … H) -H //
 qed-.
 
 lemma isid_inv_next: ∀f. 𝐈⦃⫯f⦄ → ⊥.
-* #a #f #H elim (isid_inv_seq … H) -H
+* #n #f #H elim (isid_inv_seq … H) -H
 #_ #H destruct
 qed-.
 
 (* inversion lemmas on at ***************************************************)
 
 let corec id_inv_at: ∀f. (∀i. @⦃i, f⦄ ≡ i) → f ≐ 𝐈𝐝 ≝ ?.
-* #a #f #Ht lapply (Ht 0)
+* #n #f #Ht lapply (Ht 0)
 #H lapply (at_inv_O1 … H) -H
 #H0 >id_unfold @eq_seq
-[ cases H0 -a //
+[ cases H0 -n //
 | @id_inv_at -id_inv_at
-  #i lapply (Ht (⫯i)) -Ht cases H0 -a
+  #i lapply (Ht (⫯i)) -Ht cases H0 -n
   #H elim (at_inv_SOx … H) -H //
 ]
 qed-.
 
 lemma isid_inv_at: ∀i,f. 𝐈⦃f⦄ → @⦃i, f⦄ ≡ i.
 #i elim i -i
-[ * #a #f #H elim (isid_inv_seq … H) -H //
-| #i #IH * #a #f #H elim (isid_inv_seq … H) -H
+[ * #n #f #H elim (isid_inv_seq … H) -H //
+| #i #IH * #n #f #H elim (isid_inv_seq … H) -H
   /3 width=1 by at_S1/
 ]
 qed-.
@@ -117,18 +116,15 @@ qed.
 (* Inversion lemmas on after ************************************************)
 
 let corec isid_after_sn: ∀f1,f2. 𝐈⦃f1⦄ → f1 ⊚ f2 ≡ f2 ≝ ?.
-* #a1 #f1 * * [ | #a2 ] #f2 #H cases (isid_inv_seq … H) -H
-#Ht1 #H1
-[ @(after_zero … H1) -H1 /2 width=1 by/
-| @(after_skip … H1) -H1 /2 width=5 by/
-]
+* #n1 #f1 * * [ | #n2 ] #f2 #H cases (isid_inv_seq … H) -H
+/3 width=7 by after_push, after_refl/
 qed-.
 
 let corec isid_after_dx: ∀f2,f1. 𝐈⦃f2⦄ → f1 ⊚ f2 ≡ f1 ≝ ?.
-* #a2 #f2 * *
+* #n2 #f2 * *
 [ #f1 #H cases (isid_inv_seq … H) -H
-  #Ht2 #H2 @(after_zero … H2) -H2 /2 width=1 by/
-| #a1 #f1 #H @(after_drop … a1 a1) /2 width=5 by/
+  /3 width=7 by after_refl/
+| #n1 #f1 #H @after_next [4,5: // |1,2: skip ] /2 width=1 by/
 ]
 qed-.
 

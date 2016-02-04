@@ -1,9 +1,20 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesPackage{matex}[2015/12/21 MaTeX Package]
+\ProvidesPackage{matex}[2016/02/03 MaTeX Package]
+\RequirePackage{xcolor}
 \ExecuteOptions{}
 \ProcessOptions*
 
 \makeatletter
+
+\definecolor{ma@black}{HTML}{000000}
+\definecolor{ma@blue}{HTML}{00005F}
+\definecolor{ma@purple}{HTML}{3F005F}
+
+\newcommand*\ma@fwd{ma@black}
+\newcommand*\ma@open{ma@blue}
+\newcommand*\ma@exit{ma@blue}
+\newcommand*\ma@prim{ma@purple}
+\newcommand*\ma@qed{ma@blue}
 
 \newcommand*\setlabel[1]{\protected@edef\@currentlabel{#1}}
 
@@ -12,7 +23,7 @@
 
 \newtheorem{prop}{Proposition}
 \newenvironment{proof}{\setlength\parindent{0pt}}{}
-\newenvironment{ma@step}{}{\vskip0pt}
+\newenvironment{ma@step}[1]{\color{#1}}{\\}
 
 \newcommand*\Object[3]{\begin{prop}[#1]\hfil\\\setlabel{#1}\ObjLabel{#2}#3\end{prop}}
 
@@ -37,14 +48,20 @@
 \newcommand*\ma@with{ with }
 \newcommand*\ma@comma{, }
 \newcommand*\ma@stop{.\end{ma@step}}
+\newcommand*\ma@head[4]{\def\ma@tmp{#4}%
+   \ifx\ma@tmp\empty\begin{ma@step}{#1}\textbf{#2}%
+   \else\begin{ma@step}{#3}\textbf{#4}%
+   \fi
+}
+\newcommand*\ma@tail{\ma@next\ma@with\ma@arg\ma@comma\ma@stop}
 
-\newcommand*\DECL[3]{\def\ma@tmp{#1}\begin{ma@step}\textbf{\ifx\ma@tmp\empty\_conlusion\else #1\fi} of type #3}
-\newcommand*\PRIM{\end{ma@step}}
-\newcommand*\BODY[1]{\\is #1\end{ma@step}}
-\newcommand*\STEP[1]{\\by #1\ma@next\ma@with\ma@arg\ma@comma\ma@stop}
-\newcommand*\DEST[1]{\\by cases on #1\ma@next\ma@with\ma@arg\ma@comma\ma@stop}
-\newcommand*\OPEN[3]{\begin{ma@step}\textbf{#1} is the following scope #3.\end{ma@step}}
-\newcommand*\EXIT[1]{\begin{ma@step}\textbf{end} of scope #1.\end{ma@step}}
+\newcommand*\EXIT[1]{\ma@head{}{}{\ma@exit}{end} of block #1\ma@stop}
+\newcommand*\OPEN[3]{\ma@head{}{}{\ma@open}{#1} is this block #3\ma@stop}
+\newcommand*\PRIM[3]{\ma@head{}{}{\ma@prim}{#1} will have type #3\ma@stop}
+\newcommand*\DECL[3]{\ma@head{\ma@qed}{\_QED}{\ma@fwd}{#1} has type #3\\}
+\newcommand*\BODY[1]{being #1\ma@stop}
+\newcommand*\STEP[1]{by #1\ma@tail}
+\newcommand*\DEST[1]{by cases on #1\ma@tail}
 
 \makeatother
 
