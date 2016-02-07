@@ -32,3 +32,9 @@ qed.
 lemma eq_stream_split (A) (t): (hd … t) @ (tl … t) ≐⦋A⦌ t.
 #A * //
 qed.
+
+lemma tln_eq_repl (A) (i): eq_stream_repl A (λt1,t2. tln … i t1 ≐ tln … i t2).
+#A #i elim i -i //
+#i #IH * #n1 #t1 * #n2 #t2 #H elim (eq_stream_inv_seq ????? H) -H
+/2 width=1 by/
+qed.

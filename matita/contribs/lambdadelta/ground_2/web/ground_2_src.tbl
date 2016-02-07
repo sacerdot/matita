@@ -10,23 +10,23 @@ table {
      }
    ]
    class "green"
-   [ { "multiple relocation" * } {
-        [ { "" * } {
-             [ "nstream" "nstream_lift ( ↑? ) ( ⫯? )" "nstream_at ( ?@❴?❵ ) ( @⦃?,?⦄ ≡ ? )" "nstream_after ( ? ∘ ? ) ( ? ⊚ ? ≡ ? )" "nstream_id ( 𝐈𝐝 ) ( 𝐈⦃?⦄ )" * ]
-             [ "trace ( ∥?∥ )" "trace_at ( @⦃?,?⦄ ≡ ? )" "trace_after ( ? ⊚ ? ≡ ? )" "trace_isid ( 𝐈⦃?⦄ )" "trace_isun ( 𝐔⦃?⦄ )"
-               "trace_sle ( ? ⊆ ? )" "trace_sor ( ? ⋓ ? ≡ ? )" "trace_snot ( ∁ ? )" * ]
-             [ "mr2" "mr2_at ( @⦃?,?⦄ ≡ ? )" "mr2_plus ( ? + ? )" "mr2_minus ( ? ▭ ? ≡ ? )" * ]
-          }
-        ]
-     }
-   ]
-   class "grass"
    [ { "natural numbers with infinity" * } {
         [ { "" * } {
            [ "ynat ( ∞ )" "ynat_pred ( ⫰? )" "ynat_succ ( ⫯? )"
              "ynat_le ( ? ≤ ? )" "ynat_lt ( ? &lt; ? )"
              "ynat_plus ( ? + ? )" *
            ]
+          }
+        ]
+     }
+   ]
+   class "grass"
+   [ { "multiple relocation" * } {
+        [ { "" * } {
+             [ "nstream" "nstream_lift ( ↑? ) ( ⫯? )" "nstream_at ( ?@❴?❵ ) ( @⦃?,?⦄ ≡ ? )" "nstream_after ( ? ∘ ? ) ( ? ⊚ ? ≡ ? )" "nstream_id ( 𝐈𝐝 ) ( 𝐈⦃?⦄ )" * ]
+             [ "trace ( ∥?∥ )" "trace_at ( @⦃?,?⦄ ≡ ? )" "trace_after ( ? ⊚ ? ≡ ? )" "trace_isid ( 𝐈⦃?⦄ )" "trace_isun ( 𝐔⦃?⦄ )"
+               "trace_sle ( ? ⊆ ? )" "trace_sor ( ? ⋓ ? ≡ ? )" "trace_snot ( ∁ ? )" * ]
+             [ "mr2" "mr2_at ( @⦃?,?⦄ ≡ ? )" "mr2_plus ( ? + ? )" "mr2_minus ( ? ▭ ? ≡ ? )" * ]
           }
         ]
      }

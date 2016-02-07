@@ -36,6 +36,12 @@ qed.
 
 (* Basic properties on isid *************************************************)
 
+lemma isid_eq_repl_back: eq_stream_repl_back … isid.
+/2 width=3 by eq_stream_canc_sn/ qed-.
+
+lemma isid_eq_repl_fwd: eq_stream_repl_fwd … isid.
+/3 width=3 by isid_eq_repl_back, eq_stream_repl_sym/ qed-.
+
 lemma isid_id: 𝐈⦃𝐈𝐝⦄.
 // qed.
 
@@ -58,6 +64,14 @@ lemma isid_inv_next: ∀f. 𝐈⦃⫯f⦄ → ⊥.
 * #n #f #H elim (isid_inv_seq … H) -H
 #_ #H destruct
 qed-.
+
+lemma isid_inv_gen: ∀f. 𝐈⦃f⦄ → ∃∃g. 𝐈⦃g⦄ & f = ↑g.
+* #n #f #H elim (isid_inv_seq … H) -H
+#Hf #H destruct /2 width=3 by ex2_intro/
+qed-.
+
+lemma isid_inv_eq_repl: ∀f1,f2. 𝐈⦃f1⦄ → 𝐈⦃f2⦄ → f1 ≐ f2.
+/2 width=3 by eq_stream_canc_dx/ qed-.
 
 (* inversion lemmas on at ***************************************************)
 
@@ -110,7 +124,7 @@ lemma after_isid_sn: ∀f2,f1,f. f2 ⊚ f1 ≡ f → f1 ≐ f → 𝐈⦃f2⦄.
 #i2 #i #Hi2 lapply (at_total i2 f1)
 #H0 lapply (at_increasing … H0)
 #Ht1 lapply (after_fwd_at2 … (f1@❴i2❵) … H0 … Ht)
-/3 width=7 by at_repl_back, at_mono, at_id_le/
+/3 width=7 by at_eq_repl_back, at_mono, at_id_le/
 qed.
 
 (* Inversion lemmas on after ************************************************)
@@ -129,11 +143,11 @@ let corec isid_after_dx: ∀f2,f1. 𝐈⦃f2⦄ → f1 ⊚ f2 ≡ f1 ≝ ?.
 qed-.
 
 lemma after_isid_inv_sn: ∀f1,f2,f. f1 ⊚ f2 ≡ f →  𝐈⦃f1⦄ → f2 ≐ f.
-/3 width=4 by isid_after_sn, after_mono/
+/3 width=8 by isid_after_sn, after_mono/
 qed-.
 
 lemma after_isid_inv_dx: ∀f1,f2,f. f1 ⊚ f2 ≡ f →  𝐈⦃f2⦄ → f1 ≐ f.
-/3 width=4 by isid_after_dx, after_mono/
+/3 width=8 by isid_after_dx, after_mono/
 qed-.
 (*
 lemma after_inv_isid3: ∀f1,f2,f. f1 ⊚ f2 ≡ f → 𝐈⦃t⦄ → 𝐈⦃t1⦄ ∧ 𝐈⦃t2⦄.

@@ -42,9 +42,6 @@ let internal s =
 let malformed s =
    X.error ("engine: malformed term: " ^ s)
 
-let not_supported () =
-   X.error "engine: object not supported"
-
 (* generic term processing *)
 
 let proc_sort = function
@@ -213,13 +210,20 @@ let proc_pair s ss u xt =
 let proc_fun ss (r, s, i, u, t) =
    proc_pair s (s :: ss) u (Some t)
 
+let proc_constructor ss (r, s, u) =
+   proc_pair s (s :: ss) u None
+
+let proc_type ss (r, s, u, cs) =
+   proc_pair s (s :: ss) u None;
+   L.iter (proc_constructor ss) cs
+
 let proc_obj u =
    let ss = K.segments_of_uri u in
    let _, _, _, _, obj = E.get_checked_obj G.status u in 
    match obj with 
       | C.Constant (_, s, xt, u, _) -> proc_pair s ss u xt
       | C.Fixpoint (_, fs, _)       -> L.iter (proc_fun ss) fs
-      | C.Inductive (_, _, _, _)    -> not_supported ()
+      | C.Inductive (_, _, ts, _)   -> L.iter (proc_type ss) ts
 
 (* interface functions ******************************************************)
 

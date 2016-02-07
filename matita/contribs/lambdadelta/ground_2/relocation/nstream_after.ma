@@ -419,19 +419,26 @@ qed-.
 
 (* Main inversion lemmas on after *******************************************)
 
-let corec after_mono: ∀f1,f2,x. f1 ⊚ f2 ≡ x → ∀y. f1 ⊚ f2 ≡ y → x ≐ y ≝ ?.
-* #n1 #f1 * #n2 #f2 * #n #x #Hx * #m #y #Hy
-cases (after_inv_apply … Hx) -Hx #Hn #Hx
-cases (after_inv_apply … Hy) -Hy #Hm #Hy
-/3 width=4 by eq_seq/
+let corec after_mono: ∀f1,f2,f,g1,g2,g. f1 ⊚ f2 ≡ f → g1 ⊚ g2 ≡ g →
+                      f1 ≐ g1 → f2 ≐ g2 → f ≐ g ≝ ?.
+* #n1 #f1 * #n2 #f2 * #n #f * #m1 #g1 * #m2 #g2 * #m #g #Hf #Hg #H1 #H2
+cases (after_inv_apply … Hf) -Hf #Hn #Hf
+cases (after_inv_apply … Hg) -Hg #Hm #Hg
+cases (eq_stream_inv_seq ????? H1) -H1
+cases (eq_stream_inv_seq ????? H2) -H2
+/4 width=8 by apply_eq_repl, tln_eq_repl, eq_seq/
 qed-.
 
-let corec after_inj: ∀f1,x,f. f1 ⊚ x ≡ f → ∀y. f1 ⊚ y ≡ f → x ≐ y ≝ ?.
-* #n1 #f1 * #n2 #x * #n #f #Hx * #m2 #y #Hy
-cases (after_inv_apply … Hx) -Hx #Hn2 #Hx
-cases (after_inv_apply … Hy) -Hy #Hm2
-cases (apply_inj_aux … Hn2 Hm2) -n -m2 /3 width=4 by eq_seq/
+let corec after_inj: ∀f1,f2,f,g1,g2,g. f1 ⊚ f2 ≡ f → g1 ⊚ g2 ≡ g →
+                     f1 ≐ g1 → f ≐ g → f2 ≐ g2 ≝ ?.
+* #n1 #f1 * #n2 #f2 * #n #f * #m1 #g1 * #m2 #g2 * #m #g #Hf #Hg #H1 #H2
+cases (after_inv_apply … Hf) -Hf #Hn #Hf
+cases (after_inv_apply … Hg) -Hg #Hm #Hg
+cases (eq_stream_inv_seq ????? H1) -H1 #Hnm1 #Hfg1
+cases (eq_stream_inv_seq ????? H2) -H2 #Hnm #Hfg
+lapply (apply_inj_aux … Hn Hm Hnm ?) -n -m
+/4 width=8 by tln_eq_repl, eq_seq/
 qed-.
 
 theorem after_inv_total: ∀f1,f2,f. f1 ⊚ f2 ≡ f → f1 ∘ f2 ≐ f.
-/2 width=4 by after_mono/ qed-.
+/2 width=8 by after_mono/ qed-.

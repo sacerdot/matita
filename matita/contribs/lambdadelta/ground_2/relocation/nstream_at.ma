@@ -40,6 +40,12 @@ interpretation "relational application (nstream)"
 
 (* Basic properties on apply ************************************************)
 
+lemma apply_eq_repl (i): eq_stream_repl … (λf1,f2. f1@❴i❵ = f2@❴i❵).
+#i elim i -i [2: #i #IH ] * #n1 #f1 * #n2 #f2 #H
+elim (eq_stream_inv_seq ????? H) -H normalize //
+#Hn #Hf /4 width=1 by eq_f2, eq_f/
+qed.
+
 lemma apply_S1: ∀f,n,i. (⫯n@f)@❴i❵ = ⫯((n@f)@❴i❵).
 #n #f * //
 qed.
@@ -251,13 +257,13 @@ qed-.
 lemma at_inv_total: ∀f,i1,i2. @⦃i1, f⦄ ≡ i2 → i2 = f@❴i1❵.
 /2 width=6 by at_mono/ qed-.
 
-lemma at_repl_back: ∀i1,i2. eq_stream_repl_back ? (λf. @⦃i1, f⦄ ≡ i2).
-#i1 #i2 #f1 #f2 #Ht #H1 lapply (at_total i1 f2)
-#H2 <(at_mono … Ht … H1 … H2) -f1 -i2 //
+lemma at_eq_repl_back: ∀i1,i2. eq_stream_repl_back ? (λf. @⦃i1, f⦄ ≡ i2).
+#i1 #i2 #f1 #H1 #f2 #Hf lapply (at_total i1 f2)
+#H2 <(at_mono … Hf … H1 … H2) -f1 -i2 //
 qed-.
 
-lemma at_repl_fwd: ∀i1,i2. eq_stream_repl_fwd ? (λf. @⦃i1, f⦄ ≡ i2).
-#i1 #i2 @eq_stream_repl_sym /2 width=3 by at_repl_back/
+lemma at_eq_repl_fwd: ∀i1,i2. eq_stream_repl_fwd ? (λf. @⦃i1, f⦄ ≡ i2).
+#i1 #i2 @eq_stream_repl_sym /2 width=3 by at_eq_repl_back/
 qed-.
 
 (* Advanced properties on at ************************************************)
@@ -287,5 +293,6 @@ qed-.
 
 (* Advanced properties on apply *********************************************)
 
-fact apply_inj_aux: ∀f1,f2. f1 ≐ f2 → ∀i,i1,i2. i = f1@❴i1❵ → i = f2@❴i2❵ → i1 = i2.
+fact apply_inj_aux: ∀f1,f2,j1,j2,i1,i2. j1 = f1@❴i1❵ → j2 = f2@❴i2❵ →
+                    j1 = j2 → f1 ≐ f2 → i1 = i2.
 /2 width=6 by at_inj/ qed-.

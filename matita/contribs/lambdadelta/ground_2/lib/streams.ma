@@ -31,11 +31,14 @@ coinductive eq_stream (A): relation (stream A) ≝
 interpretation "extensional equivalence (nstream)"
    'ExtEq A t1 t2 = (eq_stream A t1 t2).
 
+definition eq_stream_repl (A) (R:relation …) ≝
+                          ∀t1,t2. t1 ≐⦋A⦌ t2 → R t1 t2.
+
 definition eq_stream_repl_back (A) (R:predicate …) ≝
-                               ∀t1,t2. t1 ≐⦋A⦌ t2 → R t1 → R t2.
+                               ∀t1. R t1 → ∀t2. t1 ≐⦋A⦌ t2 → R t2.
 
 definition eq_stream_repl_fwd (A) (R:predicate …) ≝
-                              ∀t1,t2. t2 ≐⦋A⦌ t1 → R t1 → R t2.
+                              ∀t1. R t1 → ∀t2. t2 ≐⦋A⦌ t1 → R t2.
 
 (* Basic inversion lemmas ***************************************************)
 

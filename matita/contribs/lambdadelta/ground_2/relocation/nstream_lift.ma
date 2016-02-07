@@ -29,6 +29,14 @@ interpretation "next (nstream)" 'Successor f = (next f).
 
 (* Basic properties *********************************************************)
 
+lemma push_eq_repl: eq_stream_repl … (λf1,f2. ↑f1 ≐ ↑f2).
+/2 width=1 by eq_seq/ qed.
+
+lemma next_eq_repl: eq_stream_repl … (λf1,f2. ⫯f1 ≐ ⫯f2).
+* #n1 #f1 * #n2 #f2 #H elim (eq_stream_inv_seq ????? H) -H
+/2 width=1 by eq_seq/
+qed.
+
 lemma push_rew: ∀f. ↑f = 0@f.
 // qed.
 
@@ -70,4 +78,36 @@ qed-.
 
 lemma next_inv_seq_dx: ∀f,g,n. ⫯f = n@g → ∃∃m. n = ⫯m & f = m@g.
 * #m #f #g #n >next_rew #H destruct /2 width=3 by ex2_intro/
+qed-.
+
+lemma push_inv_dx: ∀x,f. x ≐ ↑f → ∃∃g. x = ↑g & g ≐ f.
+* #m #x #f #H elim (eq_stream_inv_seq ????? H) -H
+/2 width=3 by ex2_intro/
+qed-.
+
+lemma push_inv_sn: ∀f,x. ↑f ≐ x → ∃∃g. x = ↑g & f ≐ g.
+#f #x #H lapply (eq_stream_sym … H) -H
+#H elim (push_inv_dx … H) -H
+/3 width=3 by eq_stream_sym, ex2_intro/
+qed-.
+
+lemma push_inv_bi: ∀f,g. ↑f ≐ ↑g → f ≐ g.
+#f #g #H elim (push_inv_dx … H) -H
+#x #H #Hg lapply (injective_push … H) -H //
+qed-.
+
+lemma next_inv_dx: ∀x,f. x ≐ ⫯f → ∃∃g. x = ⫯g & g ≐ f.
+* #m #x * #n #f #H elim (eq_stream_inv_seq ????? H) -H
+/3 width=5 by eq_seq, ex2_intro/
+qed-.
+
+lemma next_inv_sn: ∀f,x. ⫯f ≐ x → ∃∃g. x = ⫯g & f ≐ g.
+#f #x #H lapply (eq_stream_sym … H) -H
+#H elim (next_inv_dx … H) -H
+/3 width=3 by eq_stream_sym, ex2_intro/
+qed-.
+
+lemma next_inv_bi: ∀f,g. ⫯f ≐ ⫯g → f ≐ g.
+#f #g #H elim (next_inv_dx … H) -H
+#x #H #Hg lapply (injective_next … H) -H //
 qed-.

@@ -121,7 +121,6 @@ try
 with
    | T.TypeCheckerFailure s
    | T.AssertFailure s           -> malformed (Lazy.force s)
-   | Invalid_argument "List.nth" -> malformed "4" (* to be removed *)
 
 let proc_fun c =
    let r, s, i, u, t = c in
