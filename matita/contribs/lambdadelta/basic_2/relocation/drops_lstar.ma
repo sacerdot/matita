@@ -22,9 +22,9 @@ include "basic_2/relocation/drops.ma".
 (* Basic_2A1: was: d_liftable_LTC *)
 lemma d2_liftable_LTC: ∀R. d_liftable2 R → d_liftable2 (LTC … R).
 #R #HR #K #T1 #T2 #H elim H -T2
-[ #T2 #HT12 #L #s #t #HLK #U1 #HTU1
+[ #T2 #HT12 #L #c #f #HLK #U1 #HTU1
   elim (HR … HT12 … HLK … HTU1) /3 width=3 by inj, ex2_intro/
-| #T #T2 #_ #HT2 #IHT1 #L #s #t #HLK #U1 #HTU1
+| #T #T2 #_ #HT2 #IHT1 #L #c #f #HLK #U1 #HTU1
   elim (IHT1 … HLK … HTU1) -T1 #U #HTU #HU1
   elim (HR … HT2 … HLK … HTU) -HR -K -T /3 width=5 by step, ex2_intro/
 ]
@@ -33,38 +33,29 @@ qed-.
 (* Basic_2A1: was: d_deliftable_sn_LTC *)
 lemma d2_deliftable_sn_LTC: ∀R. d_deliftable2_sn R → d_deliftable2_sn (LTC … R).
 #R #HR #L #U1 #U2 #H elim H -U2
-[ #U2 #HU12 #K #s #t #HLK #T1 #HTU1
+[ #U2 #HU12 #K #c #f #HLK #T1 #HTU1
   elim (HR … HU12 … HLK … HTU1) -HR -L -U1 /3 width=3 by inj, ex2_intro/
-| #U #U2 #_ #HU2 #IHU1 #K #s #t #HLK #T1 #HTU1
+| #U #U2 #_ #HU2 #IHU1 #K #c #f #HLK #T1 #HTU1
   elim (IHU1 … HLK … HTU1) -IHU1 -U1 #T #HTU #HT1
   elim (HR … HU2 … HLK … HTU) -HR -L -U /3 width=5 by step, ex2_intro/
 ]
 qed-.
 
-lemma dropable_sn_TC: ∀R. dropable_sn R → dropable_sn (TC … R).
-#R #HR #L1 #K1 #s #t #HLK1 #L2 #H elim H -L2
-[ #L2 #HL12 elim (HR … HLK1 … HL12) -HR -L1
+lemma dropable_sn_TC: ∀R. dropable_sn R → dropable_sn (LTC … R).
+#R #HR #L1 #K1 #c #f #HLK1 #L2 #u2 #H elim H -L2
+[ #L2 #HL12 #u1 #H elim (HR … HLK1 … HL12 … H) -HR -L1 -u2
   /3 width=3 by inj, ex2_intro/
-| #L #L2 #_ #HL2 * #K #HK1 #HLK elim (HR … HLK … HL2) -HR -L
+| #L #L2 #_ #HL2 #IH #u1 #H elim (IH … H) -IH
+  #K #HK1 #HLK elim (HR … HLK … HL2 … H) -HR -L -u2
   /3 width=3 by step, ex2_intro/
 ]
 qed-.
-(*
-lemma dropable_dx_TC: ∀R. dropable_dx R → dropable_dx (TC … R).
-#R #HR #L1 #L2 #H elim H -L2
-[ #L2 #HL12 #K2 #s #m #HLK2 elim (HR … HL12 … HLK2) -HR -L2
-  /3 width=3 by inj, ex2_intro/
-| #L #L2 #_ #HL2 #IHL1 #K2 #s #m #HLK2 elim (HR … HL2 … HLK2) -HR -L2
-  #K #HLK #HK2 elim (IHL1 … HLK) -L
-  /3 width=5 by step, ex2_intro/
-]
-qed-.
-*)
+
 (* Basic_2A1: was: d_liftable_llstar *)
 lemma d2_liftable_llstar: ∀R. d_liftable2 R → ∀d. d_liftable2 (llstar … R d).
 #R #HR #d #K #T1 #T2 #H @(lstar_ind_r … d T2 H) -d -T2
-[ #L #s #t #_ #U1 #HTU1 -HR -K -s /2 width=3 by ex2_intro/
-| #d #T #T2 #_ #HT2 #IHT1 #L #s #t #HLK #U1 #HTU1
+[ #L #c #f #_ #U1 #HTU1 -HR -K -c /2 width=3 by ex2_intro/
+| #d #T #T2 #_ #HT2 #IHT1 #L #c #f #HLK #U1 #HTU1
   elim (IHT1 … HLK … HTU1) -T1 #U #HTU #HU1
   elim (HR … HT2 … HLK … HTU) -T /3 width=5 by lstar_dx, ex2_intro/
 ]
@@ -75,7 +66,7 @@ lemma d2_deliftable_sn_llstar: ∀R. d_deliftable2_sn R →
                                ∀d. d_deliftable2_sn (llstar … R d).
 #R #HR #d #L #U1 #U2 #H @(lstar_ind_r … d U2 H) -d -U2
 [ /2 width=3 by lstar_O, ex2_intro/
-| #d #U #U2 #_ #HU2 #IHU1 #K #s #t #HLK #T1 #HTU1
+| #d #U #U2 #_ #HU2 #IHU1 #K #c #f #HLK #T1 #HTU1
   elim (IHU1 … HLK … HTU1) -IHU1 -U1 #T #HTU #HT1
   elim (HR … HU2 … HLK … HTU) -HR -L -U /3 width=5 by lstar_dx, ex2_intro/
 ]

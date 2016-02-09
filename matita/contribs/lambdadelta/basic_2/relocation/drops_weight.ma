@@ -21,30 +21,30 @@ include "basic_2/relocation/drops.ma".
 (* Forward lemmas on weight for local environments **************************)
 
 (* Basic_2A1: includes: drop_fwd_lw *)
-lemma drops_fwd_lw: ∀L1,L2,s,t. ⬇*[s, t] L1 ≡ L2 → ♯{L2} ≤ ♯{L1}.
-#L1 #L2 #s #t #H elim H -L1 -L2 -t //
+lemma drops_fwd_lw: ∀L1,L2,c,f. ⬇*[c, f] L1 ≡ L2 → ♯{L2} ≤ ♯{L1}.
+#L1 #L2 #c #f #H elim H -L1 -L2 -f //
 [ /2 width=3 by transitive_le/
-| #I #L1 #L2 #V1 #V2 #t #_ #HV21 #IHL12 normalize
+| #I #L1 #L2 #V1 #V2 #f #_ #HV21 #IHL12 normalize
   >(lifts_fwd_tw … HV21) -HV21 /2 width=1 by monotonic_le_plus_l/
 ]
 qed-.
 
 (* Basic_2A1: includes: drop_fwd_lw_lt *)
 (* Note: 𝐈⦃t⦄ → ⊥ is ∥l∥ < |L| *)
-lemma drops_fwd_lw_lt: ∀L1,L2,t. ⬇*[Ⓕ, t] L1 ≡ L2 →
-                       (𝐈⦃t⦄ → ⊥) → ♯{L2} < ♯{L1}.
-#L1 #L2 #t #H elim H -L1 -L2 -t
-[ #t #Ht #Hnt elim Hnt -Hnt /2 width=1 by/
+lemma drops_fwd_lw_lt: ∀L1,L2,f. ⬇*[Ⓣ, f] L1 ≡ L2 →
+                       (𝐈⦃f⦄ → ⊥) → ♯{L2} < ♯{L1}.
+#L1 #L2 #f #H elim H -L1 -L2 -f
+[ #f #Hf #Hnf elim Hnf -Hnf /2 width=1 by/
 | /3 width=3 by drops_fwd_lw, le_to_lt_to_lt/
-| #I #L1 #L2 #V1 #V2 #t #_ #HV21 #IHL12 #H normalize in ⊢ (?%%); -I
-  >(lifts_fwd_tw … HV21) -V2 /4 width=1 by monotonic_lt_plus_l/
+| #I #L1 #L2 #V1 #V2 #f #_ #HV21 #IHL12 #H normalize in ⊢ (?%%); -I
+  >(lifts_fwd_tw … HV21) -V2 /5 width=1 by isid_push, monotonic_lt_plus_l/
 ]
 qed-.
 
 (* Forward lemmas on restricted weight for closures *************************)
 
 (* Basic_2A1: includes: drop_fwd_rfw *)
-lemma drops_pair2_fwd_rfw: ∀I,L,K,V,s,t. ⬇*[s, t] L ≡ K.ⓑ{I}V → ∀T. ♯{K, V} < ♯{L, T}.
-#I #L #K #V #s #t #HLK lapply (drops_fwd_lw … HLK) -HLK
+lemma drops_pair2_fwd_rfw: ∀I,L,K,V,c,f. ⬇*[c, f] L ≡ K.ⓑ{I}V → ∀T. ♯{K, V} < ♯{L, T}.
+#I #L #K #V #c #f #HLK lapply (drops_fwd_lw … HLK) -HLK
 normalize in ⊢ (%→?→?%%); /3 width=3 by le_to_lt_to_lt/
 qed-.

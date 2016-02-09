@@ -15,24 +15,22 @@ S      : RTM stack
 T,U,V,W: term
 X,Y,Z  : reserved: transient objet denoted by a capital letter
 
-a,b    : binder polarity
-c      : relocation
+a,b    :
+c      : local dropping kind parameter (true = restricted, false = general)
 d      : term degree
 e      : reserved: future use (\lambda\delta 3)
-f      :
-g      : sort degree parameter
-h      : sort hierarchy parameter
-i,j    : local reference position index (de Bruijn's)
-k      : sort index
-l      : relocation depth
-m      : relocation height
+f,g    : local reference transforming map 
+h      : sort degree parameter
+i,j    : local reference depth (de Bruijn's)
+k,l    : global reference level
+m      : 
 n      : type iterations
-o      :
-p,q    : global reference position
+o      : sort hierarchy parameter
+p,q    : binder polarity
 r      : reduction kind parameter (true = ordinary, false = extended)
-s      : local dropping kind parameter (true = general, false = restricted)
-t,u    : local reference position level (de Bruijn's) (RTM)
-v,w    :
+s      : sort index
+t,u    :
+v,w    : local reference position level (de Bruijn's) (RTM)
 x,y,z  : reserved: transient objet denoted by a small letter
 
 NAMING CONVENTIONS FOR CONSTRUCTORS
@@ -65,6 +63,7 @@ t: context-free for terms
 
 - second letter
 
+e: reserved for generic entrywise extension
 i: irreducible form
 n: normal form
 p: reflexive parallel transformation
@@ -96,4 +95,3 @@ q: reflexive closure                           (question)
 r: proper multiple step (restricted)           (restricted)
 s: reflexive transitive closure                (star)
 u: proper single step (restricted)             (unit)
-x: reserved for generic pointwise extension
