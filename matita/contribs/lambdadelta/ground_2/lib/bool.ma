@@ -25,10 +25,6 @@ interpretation "boolean true" 'yes = true.
 
 (* Basic properties *********************************************************)
 
-lemma orb_false_r: ∀b1,b2:bool. (b1 ∨ b2) = false → b1 = false ∧ b2 = false.
-* normalize /2 width=1 by conj/ #b2 #H destruct
-qed-.
-
 lemma commutative_orb: commutative … orb.
 * * // qed.
 
@@ -38,7 +34,26 @@ lemma orb_true_dx: ∀b. (b ∨ Ⓣ) = Ⓣ.
 lemma orb_true_sn: ∀b. (Ⓣ ∨ b) = Ⓣ.
 // qed.
 
+lemma commutative_andb: commutative … andb.
+* * // qed.
+
+lemma andb_false_dx: ∀b. (b ∧ Ⓕ) = Ⓕ.
+* // qed.
+
+lemma andb_false_sn: ∀b. (Ⓕ ∧ b) = Ⓕ.
+// qed.
+
 lemma eq_bool_dec: ∀b1,b2:bool. Decidable (b1 = b2).
 * * /2 width=1 by or_introl/
 @or_intror #H destruct
+qed-.
+
+(* Basic inversion lemmas ***************************************************)
+
+lemma orb_inv_false_dx: ∀b1,b2:bool. (b1 ∨ b2) = Ⓕ → b1 = Ⓕ ∧ b2 = Ⓕ.
+* normalize /2 width=1 by conj/ #b2 #H destruct
+qed-.
+
+lemma andb_inv_true_dx: ∀b1,b2:bool. (b1 ∧ b2) = Ⓣ → b1 = Ⓣ ∧ b2 = Ⓣ.
+* normalize /2 width=1 by conj/ #b2 #H destruct
 qed-.

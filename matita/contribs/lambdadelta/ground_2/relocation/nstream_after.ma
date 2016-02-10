@@ -247,6 +247,22 @@ lemma after_inv_xxS: ∀g1,g2,f. g1 ⊚ g2 ≡ ⫯f →
                      ∃∃f1. f1 ⊚ g2 ≡ f & g1 = ⫯f1.
 /2 width=3 by after_inv_xxS_aux/ qed-.
 
+fact after_inv_Oxx_aux: ∀g1,g2,g. g1 ⊚ g2 ≡ g → ∀f1. g1 = ↑f1 →
+                        (∃∃f2,f. f1 ⊚ f2 ≡ f & g2 = ↑f2 & g = ↑f) ∨
+                        (∃∃f2,f. f1 ⊚ f2 ≡ f & g2 = ⫯f2 & g = ⫯f).
+#g1 * * [2: #m2 ] #g2 #g #Hg #f1 #H
+[  elim (after_inv_OSx_aux … Hg … H) -g1
+  /3 width=5 by or_intror, ex3_2_intro/
+| elim (after_inv_OOx_aux … Hg … H) -g1
+  /3 width=5 by or_introl, ex3_2_intro/
+]
+qed-.
+
+lemma after_inv_Oxx: ∀f1,g2,g. ↑f1 ⊚ g2 ≡ g →
+                     (∃∃f2,f. f1 ⊚ f2 ≡ f & g2 = ↑f2 & g = ↑f) ∨
+                     (∃∃f2,f. f1 ⊚ f2 ≡ f & g2 = ⫯f2 & g = ⫯f).
+/2 width=3 by after_inv_Oxx_aux/ qed-.
+
 fact after_inv_xOx_aux: ∀f1,g2,f,n1,n. n1@f1 ⊚ g2 ≡ n@f → ∀f2. g2 = ↑f2 →
                         f1 ⊚ f2 ≡ f ∧ n1 = n.
 #f1 #g2 #f #n1 elim n1 -n1
