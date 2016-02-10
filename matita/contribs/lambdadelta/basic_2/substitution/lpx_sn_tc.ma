@@ -54,7 +54,7 @@ lemma TC_lpx_sn_inv_atom2: ∀R,L1. TC … (lpx_sn R) L1 (⋆) → L1 = ⋆.
 ]
 qed-.
 
-lemma TC_lpx_sn_inv_pair2: ∀R. s_rs_transitive … R (λ_. lpx_sn R) →
+lemma TC_lpx_sn_inv_pair2: ∀R. c_rs_transitive … R (λ_. lpx_sn R) →
                            ∀I,L1,K2,V2. TC  … (lpx_sn R) L1 (K2.ⓑ{I}V2) →
                            ∃∃K1,V1. TC … (lpx_sn R) K1 K2 & LTC … R K1 V1 V2 & L1 = K1. ⓑ{I} V1.
 #R #HR #I #L1 #K2 #V2 #H @(TC_ind_dx … L1 H) -L1
@@ -65,7 +65,7 @@ lemma TC_lpx_sn_inv_pair2: ∀R. s_rs_transitive … R (λ_. lpx_sn R) →
 ]
 qed-.
 
-lemma TC_lpx_sn_ind: ∀R. s_rs_transitive … R (λ_. lpx_sn R) →
+lemma TC_lpx_sn_ind: ∀R. c_rs_transitive … R (λ_. lpx_sn R) →
                      ∀S:relation lenv.
                      S (⋆) (⋆) → (
                         ∀I,K1,K2,V1,V2.
@@ -88,7 +88,7 @@ lemma TC_lpx_sn_inv_atom1: ∀R,L2. TC … (lpx_sn R) (⋆) L2 → L2 = ⋆.
 ]
 qed-.
 
-fact TC_lpx_sn_inv_pair1_aux: ∀R. s_rs_transitive … R (λ_. lpx_sn R) →
+fact TC_lpx_sn_inv_pair1_aux: ∀R. c_rs_transitive … R (λ_. lpx_sn R) →
                               ∀L1,L2. TC … (lpx_sn R) L1 L2 →
                               ∀I,K1,V1. L1 = K1.ⓑ{I}V1 →
                               ∃∃K2,V2. TC … (lpx_sn R) K1 K2 & LTC … R K1 V1 V2 & L2 = K2. ⓑ{I} V2.
@@ -98,12 +98,12 @@ fact TC_lpx_sn_inv_pair1_aux: ∀R. s_rs_transitive … R (λ_. lpx_sn R) →
 ]
 qed-.
 
-lemma TC_lpx_sn_inv_pair1: ∀R. s_rs_transitive … R (λ_. lpx_sn R) →
+lemma TC_lpx_sn_inv_pair1: ∀R. c_rs_transitive … R (λ_. lpx_sn R) →
                            ∀I,K1,L2,V1. TC … (lpx_sn R) (K1.ⓑ{I}V1) L2 →
                            ∃∃K2,V2. TC … (lpx_sn R) K1 K2 & LTC … R K1 V1 V2 & L2 = K2. ⓑ{I} V2.
 /2 width=3 by TC_lpx_sn_inv_pair1_aux/ qed-.
 
-lemma TC_lpx_sn_inv_lpx_sn_LTC: ∀R. s_rs_transitive … R (λ_. lpx_sn R) →
+lemma TC_lpx_sn_inv_lpx_sn_LTC: ∀R. c_rs_transitive … R (λ_. lpx_sn R) →
                                 ∀L1,L2. TC … (lpx_sn R) L1 L2 →
                                 lpx_sn (LTC … R) L1 L2.
 /3 width=4 by TC_lpx_sn_ind, lpx_sn_pair/ qed-.
