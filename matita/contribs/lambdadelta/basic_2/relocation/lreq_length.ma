@@ -12,8 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
+include "basic_2/relocation/lexs_length.ma".
+include "basic_2/relocation/lreq.ma".
 
-notation "hvbox( L1 ≡ break [ term 46 T , break term 46 f ] break term 46 L2 )"
-   non associative with precedence 45
-   for @{ 'LazyEq $T $f $L1 $L2 }.
+(* RANGED EQUIVALENCE FOR LOCAL ENVIRONMENTS ********************************)
+
+(* Forward lemmas on length for local environments **************************)
+
+(* Basic_2A1: includes: lreq_fwd_length *)
+lemma lreq_fwd_length: ∀L1,L2,f. L1 ≡[f] L2 → |L1| = |L2|.
+/2 width=4 by lexs_fwd_length/ qed-.
