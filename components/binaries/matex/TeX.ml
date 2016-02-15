@@ -31,8 +31,8 @@ let free s = Group [Free s]
 let mk_segs us =
    L.rev_map arg ("" :: (L.rev us))
 
-let mk_rev_args riss =
-   L.rev_map group ([] :: riss)
+let mk_rev_args riss is =
+   X.rev_map_append group ([] :: riss) is
 
 let rev_mk_args iss is =
    free "" :: X.rev_map_append group iss is

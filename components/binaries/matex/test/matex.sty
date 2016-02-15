@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesPackage{matex}[2016/02/03 MaTeX Package]
+\ProvidesPackage{matex}[2016/02/15 MaTeX Package]
 \RequirePackage{xcolor}
 \ExecuteOptions{}
 \ProcessOptions*
@@ -21,11 +21,16 @@
 \newcommand*\ObjLabel[1]{\label{obj:#1}}
 \newcommand*\ObjRef[1]{\ref{obj:#1}}
 
-\newtheorem{prop}{Proposition}
-\newenvironment{proof}{\setlength\parindent{0pt}}{}
-\newenvironment{ma@step}[1]{\color{#1}}{\\}
+\newcommand*\ma@setlabel[2]{\setlabel{#1}\ObjLabel{#2}}
+\newcommand*\ma@thehead[2]{\textbf{#1 (#2)}\\}
+\newcommand*\ma@theneck[1]{\textsl{#1}\\}
 
-\newcommand*\Object[3]{\begin{prop}[#1]\hfil\\\setlabel{#1}\ObjLabel{#2}#3\end{prop}}
+\newenvironment{axiom}[2]{\ma@setlabel{#1}{#2}\ma@thehead{Axiom}{#1}}{}
+\newenvironment{declaration}[2]{\ma@setlabel{#1}{#2}\ma@thehead{Declaration}{#1}}{}
+\newenvironment{definition}[2]{}{}
+\newenvironment{proposition}[2]{\ma@setlabel{#1}{#2}\ma@thehead{Proposition}{#1}}{}
+\newenvironment{proof}[2]{\ma@theneck{Proof}}{}
+\newenvironment{ma@step}[1]{\color{#1}}{\\}
 
 \newcommand*\ma@tmp{}
 \newcommand*\ma@skip[4]{}
