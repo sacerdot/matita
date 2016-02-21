@@ -21,4 +21,8 @@ val test: bool ref
 
 val no_types: bool ref 
 
+val list_och: out_channel option ref 
+
 val clear: unit -> unit
+
+val close_list: unit -> unit

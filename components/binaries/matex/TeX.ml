@@ -17,6 +17,7 @@ type item = Free  of string  (* free text *)
           | Text  of string  (* quoted text *)
           | Macro of string  (* macro *)
           | Group of text    (* group *)
+          | Note  of string  (* comment *)
          
 and text = item list         (* structured text *)
 

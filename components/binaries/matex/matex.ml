@@ -24,6 +24,7 @@ module K = Kernel
 
 let help_O = "<dir> Set this output directory"
 let help_X = " Clear configuration and options"
+let help_l = "<file> Output the list of generated files in this file"
 let help_p = " omit types (default: no)"
 let help_t = " Test anticipation (default: no)"
 
@@ -47,6 +48,10 @@ let no_init () =
 let malformed s =
    failwith ("MaTeX: main: malformed argument: " ^ s)
 
+let set_list fname =
+   let file = F.concat !G.out_dir fname in
+   G.close_list (); G.list_och := Some (open_out file)
+
 let process s =
    if is_registry s then init s
    else if !G.no_init then no_init ()
@@ -54,12 +59,15 @@ let process s =
    else malformed s
 
 let main =
-try
+begin try
    A.parse [
       "-O", A.String ((:=) G.out_dir), help_O;
       "-X", A.Unit G.clear, help_X;
+      "-l", A.String set_list, help_l;
       "-p", A.Set G.no_types, help_p;
       "-t", A.Set G.test, help_t;
    ] process help
 with
    | X.Error s -> X.log s
+end;
+G.close_list ()

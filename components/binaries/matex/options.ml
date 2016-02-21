@@ -26,6 +26,8 @@ let default_test = false
 
 let default_no_types = false
 
+let default_list_och = None
+
 (* interface ****************************************************************)
 
 let status = new P.status
@@ -40,10 +42,17 @@ let test = ref default_test         (* test anticipation *)
 
 let no_types = ref default_no_types (* omit types *)
 
+let list_och = ref default_list_och (* output stream for list file *)
+
+let close_list () = match !list_och with
+   | None     -> ()
+   | Some och -> close_out och
+
 let clear () =
-   R.clear ();
+   R.clear (); close_list ();
    no_init := default_no_init;
    out_dir := default_out_dir;
    proc_id := default_proc_id;
    test := default_test;
-   no_types := default_no_types
+   no_types := default_no_types;
+   list_och := default_list_och

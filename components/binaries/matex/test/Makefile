@@ -6,7 +6,7 @@ UNLOG  = ./unlog.pl
 
 MAIN = test
 
-SOURCES = $(shell cat Make) matex.sty
+SOURCES = $(shell cat Make) $(shell cat Make.objs)
 
 all: $(MAIN).dvi 
 
@@ -36,3 +36,6 @@ $(MAIN).pdf: $(MAIN).ps
 
 $(MAIN).tar: $(MAIN).log
 	$(UNLOG) $< $@
+
+objs.tex:
+	@sed "s/\(.*\).tex/\\\\input{\1}/" Make.objs > $@

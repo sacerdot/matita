@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesPackage{matex}[2016/02/15 MaTeX Package]
+\ProvidesPackage{matex}[2016/02/21 MaTeX Package]
 \RequirePackage{xcolor}
 \ExecuteOptions{}
 \ProcessOptions*
@@ -17,20 +17,23 @@
 \newcommand*\ma@qed{ma@blue}
 
 \newcommand*\setlabel[1]{\protected@edef\@currentlabel{#1}}
+\newcommand*\neverindent{\setlength\parindent{0pt}}
 
 \newcommand*\ObjLabel[1]{\label{obj:#1}}
 \newcommand*\ObjRef[1]{\ref{obj:#1}}
+\newcommand*\ObjIncNode{}
+\newcommand*\ObjNode{}
 
 \newcommand*\ma@setlabel[2]{\setlabel{#1}\ObjLabel{#2}}
-\newcommand*\ma@thehead[2]{\textbf{#1 (#2)}\\}
-\newcommand*\ma@theneck[1]{\textsl{#1}\\}
+\newcommand*\ma@thehead[2]{\ObjIncNode\textbf{#1 \ObjNode(#2)}\neverindent\par}
+\newcommand*\ma@theneck[1]{\textsl{#1}\neverindent\par}
 
-\newenvironment{axiom}[2]{\ma@setlabel{#1}{#2}\ma@thehead{Axiom}{#1}}{}
-\newenvironment{declaration}[2]{\ma@setlabel{#1}{#2}\ma@thehead{Declaration}{#1}}{}
-\newenvironment{definition}[2]{}{}
-\newenvironment{proposition}[2]{\ma@setlabel{#1}{#2}\ma@thehead{Proposition}{#1}}{}
-\newenvironment{proof}[2]{\ma@theneck{Proof}}{}
-\newenvironment{ma@step}[1]{\color{#1}}{\\}
+\newenvironment{axiom}[2]{\ma@setlabel{#1}{#2}\ma@thehead{Axiom}{#1}}{\par}
+\newenvironment{declaration}[2]{\ma@setlabel{#1}{#2}\ma@thehead{Declaration}{#1}}{\par}
+\newenvironment{definition}[2]{}{\par}
+\newenvironment{proposition}[2]{\ma@setlabel{#1}{#2}\ma@thehead{Proposition}{#1}}{\par}
+\newenvironment{proof}[2]{\ma@theneck{Proof}}{\par}
+\newenvironment{ma@step}[1]{\color{#1}}{\par}
 
 \newcommand*\ma@tmp{}
 \newcommand*\ma@skip[4]{}
@@ -63,7 +66,7 @@
 \newcommand*\EXIT[1]{\ma@head{}{}{\ma@exit}{end} of block #1\ma@stop}
 \newcommand*\OPEN[3]{\ma@head{}{}{\ma@open}{#1} is this block #3\ma@stop}
 \newcommand*\PRIM[3]{\ma@head{}{}{\ma@prim}{#1} will have type #3\ma@stop}
-\newcommand*\DECL[3]{\ma@head{\ma@qed}{\_QED}{\ma@fwd}{#1} has type #3\\}
+\newcommand*\DECL[3]{\ma@head{\ma@qed}{\_QED}{\ma@fwd}{#1} has type #3\par}
 \newcommand*\BODY[1]{being #1\ma@stop}
 \newcommand*\STEP[1]{by #1\ma@tail}
 \newcommand*\DEST[1]{by cases on #1\ma@tail}

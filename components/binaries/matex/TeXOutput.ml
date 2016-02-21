@@ -32,6 +32,7 @@ let rec out_item och = function
    | T.Text s  -> P.fprintf och "%s" (X.fold_string quote "" s)
    | T.Macro s -> P.fprintf och "\\%s%%\n" s
    | T.Group t -> P.fprintf och "{%a}%%\n" out_text t
+   | T.Note s  -> P.fprintf och "%% %s\n" s
 
 (* interface functions ******************************************************)
 
