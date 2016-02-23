@@ -13,21 +13,13 @@
 (**************************************************************************)
 
 include "ground_2/notation/functions/identity_0.ma".
-include "ground_2/relocation/rtmap_eq.ma".
+include "ground_2/relocation/rtmap_isid.ma".
 
 (* RELOCATION N-STREAM ******************************************************)
 
-let corec id: rtmap ≝ ↑id.
+(* Specific inversion lemmas ************************************************)
 
-interpretation "identity (nstream)"
-   'Identity = (id).
-
-(* Basic properties *********************************************************)
-
-lemma id_rew: ↑𝐈𝐝 = 𝐈𝐝.
-<(stream_rew … (𝐈𝐝)) in ⊢ (???%); normalize //
-qed.
-
-lemma id_eq_rew: ↑𝐈𝐝 ≗ 𝐈𝐝.
-cases id_rew in ⊢ (??%); //
-qed.
+lemma isid_inv_seq: ∀f,n. 𝐈⦃n@f⦄ → 𝐈⦃f⦄ ∧ 0 = n.
+#f #n #H elim (isid_inv_gen … H) -H
+#g #Hg #H elim (push_inv_seq_dx … H) -H /2 width=1 by conj/
+qed-.

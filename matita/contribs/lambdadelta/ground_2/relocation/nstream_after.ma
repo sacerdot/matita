@@ -458,3 +458,44 @@ qed-.
 
 theorem after_inv_total: ∀f1,f2,f. f1 ⊚ f2 ≡ f → f1 ∘ f2 ≐ f.
 /2 width=8 by after_mono/ qed-.
+
+(* Properties on after ******************************************************)
+
+lemma after_isid_dx: ∀f2,f1,f. f2 ⊚ f1 ≡ f → f2 ≐ f → 𝐈⦃f1⦄.
+#f2 #f1 #f #Ht #H2 @isid_at_total
+#i1 #i2 #Hi12 elim (after_at1_fwd … Hi12 … Ht) -f1
+/3 width=6 by at_inj, eq_stream_sym/
+qed.
+
+lemma after_isid_sn: ∀f2,f1,f. f2 ⊚ f1 ≡ f → f1 ≐ f → 𝐈⦃f2⦄.
+#f2 #f1 #f #Ht #H1 @isid_at_total
+#i2 #i #Hi2 lapply (at_total i2 f1)
+#H0 lapply (at_increasing … H0)
+#Ht1 lapply (after_fwd_at2 … (f1@❴i2❵) … H0 … Ht)
+/3 width=7 by at_eq_repl_back, at_mono, at_id_le/
+qed.
+
+(* Inversion lemmas on after ************************************************)
+
+let corec isid_after_sn: ∀f1,f2. 𝐈⦃f1⦄ → f1 ⊚ f2 ≡ f2 ≝ ?.
+* #n1 #f1 * * [ | #n2 ] #f2 #H cases (isid_inv_seq … H) -H
+/3 width=7 by after_push, after_refl/
+qed-.
+
+let corec isid_after_dx: ∀f2,f1. 𝐈⦃f2⦄ → f1 ⊚ f2 ≡ f1 ≝ ?.
+* #n2 #f2 * *
+[ #f1 #H cases (isid_inv_seq … H) -H
+  /3 width=7 by after_refl/
+| #n1 #f1 #H @after_next [4,5: // |1,2: skip ] /2 width=1 by/
+]
+qed-.
+
+lemma after_isid_inv_sn: ∀f1,f2,f. f1 ⊚ f2 ≡ f →  𝐈⦃f1⦄ → f2 ≐ f.
+/3 width=8 by isid_after_sn, after_mono/
+qed-.
+
+lemma after_isid_inv_dx: ∀f1,f2,f. f1 ⊚ f2 ≡ f →  𝐈⦃f2⦄ → f1 ≐ f.
+/3 width=8 by isid_after_dx, after_mono/
+qed-.
+
+axiom after_inv_isid3: ∀f1,f2,f. f1 ⊚ f2 ≡ f → 𝐈⦃f⦄ → 𝐈⦃f1⦄ ∧ 𝐈⦃f2⦄.

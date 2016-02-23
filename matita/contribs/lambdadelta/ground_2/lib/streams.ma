@@ -42,19 +42,16 @@ definition eq_stream_repl_fwd (A) (R:predicate …) ≝
 
 (* Basic inversion lemmas ***************************************************)
 
-fact eq_stream_inv_seq_aux: ∀A,t1,t2. t1 ≐⦋A⦌ t2 →
-                            ∀u1,u2,a1,a2. t1 = a1@u1 → t2 = a2@u2 →
-                            a1 = a2 ∧ u1 ≐ u2.
+lemma eq_stream_inv_seq: ∀A,t1,t2. t1 ≐⦋A⦌ t2 →
+                         ∀u1,u2,a1,a2. a1@u1 = t1 → a2@u2 = t2 →
+                         u1 ≐ u2 ∧ a1 = a2.
 #A #t1 #t2 * -t1 -t2
 #t1 #t2 #b1 #b2 #Hb #Ht #u1 #u2 #a1 #a2 #H1 #H2 destruct /2 width=1 by conj/
 qed-.
 
-lemma eq_stream_inv_seq: ∀A,t1,t2,b1,b2. b1@t1 ≐⦋A⦌ b2@t2 → b1 = b2 ∧ t1 ≐ t2.
-/2 width=5 by eq_stream_inv_seq_aux/ qed-.
-
 (* Basic properties *********************************************************)
 
-lemma stream_expand (A) (t:stream A): t = match t with [ seq a u ⇒ a @ u ].
+lemma stream_rew (A) (t:stream A): match t with [ seq a u ⇒ a @ u ] = t.
 #A * //
 qed.
 
@@ -74,8 +71,8 @@ lemma eq_stream_repl_sym: ∀A,R. eq_stream_repl_back A R → eq_stream_repl_fwd
 
 let corec eq_stream_trans: ∀A. Transitive … (eq_stream A) ≝ ?.
 #A #t1 #t * -t1 -t
-#t1 #t #b1 #b #Hb1 #Ht1 * #b2 #t2 #H cases (eq_stream_inv_seq A … H) -H
-#Hb2 #Ht2 @eq_seq /2 width=3 by/
+#t1 #t #b1 #b * #Ht1 * #b2 #t2 #H cases (eq_stream_inv_seq A … H) -H -b
+/3 width=7 by eq_seq/
 qed-.
 
 theorem eq_stream_canc_sn: ∀A,t,t1,t2. t ≐ t1 → t ≐ t2 → t1 ≐⦋A⦌ t2.

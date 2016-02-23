@@ -12,22 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/notation/functions/identity_0.ma".
-include "ground_2/relocation/rtmap_eq.ma".
+(* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
 
-(* RELOCATION N-STREAM ******************************************************)
-
-let corec id: rtmap ≝ ↑id.
-
-interpretation "identity (nstream)"
-   'Identity = (id).
-
-(* Basic properties *********************************************************)
-
-lemma id_rew: ↑𝐈𝐝 = 𝐈𝐝.
-<(stream_rew … (𝐈𝐝)) in ⊢ (???%); normalize //
-qed.
-
-lemma id_eq_rew: ↑𝐈𝐝 ≗ 𝐈𝐝.
-cases id_rew in ⊢ (??%); //
-qed.
+notation "hvbox( f1 ≗ break term 46 f2 )"
+   non associative with precedence 45
+   for @{ 'FunExtEq $f1 $f2 }.
