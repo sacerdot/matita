@@ -34,6 +34,19 @@ lemma istot_inv_next: ∀g. 𝐓⦃g⦄ → ∀f. ⫯f = g → 𝐓⦃f⦄.
 #j #Hg elim (at_inv_xnx … Hg … H) -Hg -H /2 width=2 by ex_intro/
 qed-.
 
+(* Properties on tl *********************************************************)
+
+lemma istot_tl: ∀f. 𝐓⦃f⦄ → 𝐓⦃↓f⦄.
+#f cases (pn_split f) *
+#g * -f /2 width=3 by istot_inv_next, istot_inv_push/
+qed.
+
+(* Properties on minus ******************************************************)
+
+lemma istot_minus: ∀n,f. 𝐓⦃f⦄ → 𝐓⦃f-n⦄.
+#n elim n -n /3 width=1 by istot_tl/
+qed.
+
 (* Advanced forward lemmas on at ********************************************)
 
 let corec at_ext: ∀f1,f2. 𝐓⦃f1⦄ → 𝐓⦃f2⦄ →

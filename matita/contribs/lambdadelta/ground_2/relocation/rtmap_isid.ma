@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "ground_2/notation/relations/isidentity_1.ma".
-include "ground_2/relocation/rtmap_eq.ma".
+include "ground_2/relocation/rtmap_minus.ma".
 
 (* RELOCATION MAP ***********************************************************)
 

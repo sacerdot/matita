@@ -1,0 +1,59 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "ground_2/relocation/rtmap_tl.ma".
+
+(* RELOCATION MAP ***********************************************************)
+
+inductive le (f1): predicate rtmap ≝
+| le_eq: ∀f2. f1 ≗ f2 → le f1 f2
+| le_tl: ∀f2,g2. le f1 f2 → ↓g2 = f2 → le f1 g2
+.
+
+interpretation "less or equal to (rtmap)" 'leq x y = (le x y).
+
+(* Basic properties *********************************************************)
+
+lemma le_refl: reflexive … le.
+/2 width=1 by eq_refl, le_eq/ qed.
+
+lemma le_eq_repl_back_dx: ∀f1. eq_repl_back (λf2. f1 ≤ f2).
+#f #f1 #Hf1 elim Hf1 -f1
+/4 width=3 by le_tl, le_eq, tl_eq_repl, eq_trans/
+qed-.
+
+lemma le_eq_repl_fwd_dx: ∀f1. eq_repl_fwd (λf2. f1 ≤ f2).
+#f1 @eq_repl_sym /2 width=3 by le_eq_repl_back_dx/
+qed-.
+
+lemma le_eq_repl_back_sn: ∀f2. eq_repl_back (λf1. f1 ≤ f2).
+#f #f1 #Hf1 elim Hf1 -f
+/4 width=3 by le_tl, le_eq, tl_eq_repl, eq_canc_sn/
+qed-.
+
+lemma le_eq_repl_fwd_sn: ∀f2. eq_repl_fwd (λf1. f1 ≤ f2).
+#f2 @eq_repl_sym /2 width=3 by le_eq_repl_back_sn/
+qed-.
+
+lemma le_tl_comp: ∀f1,f2. f1 ≤ f2 → ∀g1,g2. ↓f1 = g1 → ↓f2 = g2 → g1 ≤ g2.
+#f1 #f2 #H elim H -f2
+/3 width=3 by le_tl, le_eq, tl_eq_repl/
+qed.
+
+(* Main properties **********************************************************)
+
+theorem le_trans: Transitive … le.
+#f1 #f #H elim H -f
+/4 width=5 by le_tl_comp, le_eq_repl_fwd_sn, le_tl/
+qed-.

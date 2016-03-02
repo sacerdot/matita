@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "ground_2/notation/relations/funexteq_2.ma".
-include "ground_2/relocation/nstream_lift.ma".
+include "ground_2/relocation/rtmap.ma".
 
 (* RELOCATION MAP ***********************************************************)
 
@@ -136,8 +136,8 @@ let corec eq_trans: Transitive … eq ≝ ?.
 /3 width=5 by eq_push, eq_next/
 qed-.
 
-theorem eq_canc_sn: ∀f,f1,f2. f ≗ f1 → f ≗ f2 → f1 ≗ f2.
+theorem eq_canc_sn: ∀f2. eq_repl_back (λf. f ≗ f2).
 /3 width=3 by eq_trans, eq_sym/ qed-.
 
-theorem eq_canc_dx: ∀f,f1,f2. f1 ≗ f → f2 ≗ f → f1 ≗ f2.
+theorem eq_canc_dx: ∀f1. eq_repl_fwd (λf. f1 ≗ f).
 /3 width=3 by eq_trans, eq_sym/ qed-.
