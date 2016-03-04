@@ -36,14 +36,14 @@ qed-.
 
 (* Properties on tl *********************************************************)
 
-lemma istot_tl: ∀f. 𝐓⦃f⦄ → 𝐓⦃↓f⦄.
+lemma istot_tl: ∀f. 𝐓⦃f⦄ → 𝐓⦃⫱f⦄.
 #f cases (pn_split f) *
 #g * -f /2 width=3 by istot_inv_next, istot_inv_push/
 qed.
 
-(* Properties on minus ******************************************************)
+(* Properties on tls ********************************************************)
 
-lemma istot_minus: ∀n,f. 𝐓⦃f⦄ → 𝐓⦃f-n⦄.
+lemma istot_tls: ∀n,f. 𝐓⦃f⦄ → 𝐓⦃⫱*[n]f⦄.
 #n elim n -n /3 width=1 by istot_tl/
 qed.
 

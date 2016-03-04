@@ -12,8 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/notation/functions/predecessor_1.ma".
-include "ground_2/lib/arith.ma".
 include "ground_2/ynat/ynat.ma".
 
 (* NATURAL NUMBERS WITH INFINITY ********************************************)

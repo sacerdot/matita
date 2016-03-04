@@ -16,7 +16,7 @@ include "ground_2/relocation/rtmap_eq.ma".
 
 (* RELOCATION N-STREAM ******************************************************)
 
-(* Specific properties on eq ************************************************)
+(* Specific properties ******************************************************)
 
 fact eq_inv_seq_aux: ∀f1,f2,n1,n2. n1@f1 ≗ n2@f2 → n1 = n2 ∧ f1 ≗ f2.
 #f1 #f2 #n1 #n2 @(nat_elim2 … n1 n2) -n1 -n2

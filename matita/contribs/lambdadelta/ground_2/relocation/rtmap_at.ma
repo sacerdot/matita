@@ -85,8 +85,6 @@ lemma at_inv_xnn: ∀f,i1,i2. @⦃i1, f⦄ ≡ i2 →
 #x2 #Hg * -i2 #H destruct //
 qed-.
 
-(* --------------------------------------------------------------------------*)
-
 lemma at_inv_pxp: ∀f,i1,i2. @⦃i1, f⦄ ≡ i2 → 0 = i1 → 0 = i2 → ∃g. ↑g = f.
 #f elim (pn_split … f) * /2 width=2 by ex_intro/
 #g #H #i1 #i2 #Hf #H1 #H2 cases (at_inv_xnp … Hf … H H2)
@@ -117,8 +115,7 @@ lemma at_inv_nxn: ∀f,i1,i2. @⦃i1, f⦄ ≡ i2 → ∀j1,j2. ⫯j1 = i1 → �
 /4 width=7 by at_inv_xnn, at_inv_npn, ex2_intro, or_intror, or_introl/
 qed-.
 
-(* --------------------------------------------------------------------------*)
-
+(* Note: the following inversion lemmas must be checked *)
 lemma at_inv_xpx: ∀f,i1,i2. @⦃i1, f⦄ ≡ i2 → ∀g. ↑g = f →
                   (0 = i1 ∧ 0 = i2) ∨
                   ∃∃j1,j2. @⦃j1, g⦄ ≡ j2 & ⫯j1 = i1 & ⫯j2 = i2.
@@ -270,9 +267,9 @@ theorem at_inj: ∀f,i1,i. @⦃i1, f⦄ ≡ i → ∀i2. @⦃i2, f⦄ ≡ i → 
 #Hi elim (lt_le_false i i) /3 width=6 by at_monotonic, eq_sym/
 qed-.
 
-(* Properties on minus ******************************************************)
+(* Properties on tls ********************************************************)
 
-lemma at_pxx_minus: ∀n,f. @⦃0, f⦄ ≡ n → @⦃0, f-n⦄ ≡ 0.
+lemma at_pxx_tls: ∀n,f. @⦃0, f⦄ ≡ n → @⦃0, ⫱*[n]f⦄ ≡ 0.
 #n elim n -n //
 #n #IH #f #Hf cases (at_inv_pxn … Hf) -Hf /2 width=3 by/
 qed.

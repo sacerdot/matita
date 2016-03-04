@@ -98,8 +98,6 @@ lemma apply_S1: ∀f,i. (⫯f)@❴i❵ = ⫯(f@❴i❵).
 qed.
 
 (* Main inversion lemmas ****************************************************)
-(*
-lemma apply_inj_aux: ∀f1,f2,j1,j2,i1,i2. f1@❴i1❵ = j1 → f2@❴i2❵ = j2 →
-                     j1 = j2 → f1 ≗ f2 → i1 = i2.
-/2 width=6 by at_inj/ qed-.
-*)
+
+theorem apply_inj: ∀f,i1,i2,j. f@❴i1❵ = j → f@❴i2❵ = j → i1 = i2.
+/2 width=4 by at_inj/ qed-.

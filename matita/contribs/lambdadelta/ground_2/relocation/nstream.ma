@@ -13,8 +13,7 @@
 (**************************************************************************)
 
 include "ground_2/notation/functions/lift_1.ma".
-include "ground_2/lib/arith.ma".
-include "ground_2/lib/streams.ma".
+include "ground_2/lib/streams_tls.ma".
 
 (* RELOCATION N-STREAM ******************************************************)
 
@@ -88,3 +87,11 @@ lemma iota_push: ∀R,a,b,f. a f = case_type0 R a b (↑f).
 lemma iota_next: ∀R,a,b,f. b f = case_type0 R a b (⫯f).
 #R #a #b * //
 qed.
+
+(* Specific properties ******************************************************)
+
+lemma tl_push: ∀f. f = ↓↑f.
+// qed.
+
+lemma tl_next: ∀f. ↓f = ↓⫯f.
+* // qed.

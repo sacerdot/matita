@@ -220,10 +220,10 @@ let corec after_mono: ∀f1,f2,x,y. f1 ⊚ f2 ≡ x → f1 ⊚ f2 ≡ y → x �
 ]
 qed-.
 
-(* Properties on minus ******************************************************)
+(* Properties on tls ********************************************************)
 
-lemma after_minus: ∀n,f1,f2,f. @⦃0, f1⦄ ≡ n → 
-                   f1 ⊚ f2 ≡ f → f1-n ⊚ f2 ≡ f-n.
+lemma after_tls: ∀n,f1,f2,f. @⦃0, f1⦄ ≡ n → 
+                 f1 ⊚ f2 ≡ f → ⫱*[n]f1 ⊚ f2 ≡ ⫱*[n]f.
 #n elim n -n //
 #n #IH #f1 #f2 #f #Hf1 #Hf cases (at_inv_pxn … Hf1) -Hf1 [ |*: // ]
 #g1 #Hg1 #H1 cases (after_inv_nxx … Hf … H1) -Hf /2 width=1 by/
@@ -385,8 +385,8 @@ cases (after_inv_pxx … H1f … H1) -H1f * #g21 #g #H1g #H21 #H
 | cases (after_inv_pxn … H2f … H1 H) -f1 -f #g22 #H2g #H22
   @(eq_next … H21 H22) -f21 -f22
 ]
-@(after_inj_O_aux (g1-n) … (g-n)) -after_inj_O_aux
-/2 width=1 by after_minus, istot_minus, at_pxx_minus/
+@(after_inj_O_aux (⫱*[n]g1) … (⫱*[n]g)) -after_inj_O_aux
+/2 width=1 by after_tls, istot_tls, at_pxx_tls/
 qed-.
 
 fact after_inj_aux: (∀f1. @⦃0, f1⦄ ≡ 0 → H_after_inj f1) →

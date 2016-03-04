@@ -12,28 +12,30 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/notation/functions/drop_1.ma".
-include "ground_2/lib/streams.ma".
-include "ground_2/lib/arith.ma".
+include "ground_2/notation/functions/droppreds_2.ma".
+include "ground_2/relocation/rtmap_tl.ma".
 
-(* STREAMS ******************************************************************)
+(* RELOCATION MAP ***********************************************************)
 
-definition hd (A:Type[0]): stream A → A ≝
-              λt. match t with [ seq a _ ⇒ a ].
+let rec tls (f:rtmap) (n:nat) on n: rtmap ≝ match n with
+[ O ⇒ f | S m ⇒ ⫱(tls f m) ].
 
-definition tl (A:Type[0]): stream A → stream A ≝
-              λt. match t with [ seq _ t ⇒ t ].
+interpretation "tls (rtmap)" 'DropPreds n f = (tls f n).
 
-interpretation "tail (streams)" 'Drop t = (tl ? t).
+(* Basic properties *********************************************************)
 
-(* basic properties *********************************************************)
-
-lemma hd_rew (A) (a) (t): a = hd A (a@t).
+lemma tls_rew_O: ∀f. f = ⫱*[0] f.
 // qed.
 
-lemma tl_rew (A) (a) (t): t = tl A (a@t).
+lemma tls_rew_S: ∀f,n. ⫱ ⫱*[n] f = ⫱*[⫯n] f.
 // qed.
 
-lemma eq_stream_split (A) (t): (hd … t) @ ↓t ≐⦋A⦌ t.
-#A * //
+lemma tls_eq_repl: ∀n. eq_repl (λf1,f2. ⫱*[n] f1 ≗ ⫱*[n] f2).
+#n elim n -n /3 width=1 by tl_eq_repl/
+qed.
+
+(* Advancedd properties *****************************************************)
+
+lemma tls_xn: ∀n,f. ⫱*[n] ⫱f = ⫱*[⫯n] f.
+#n elim n -n //
 qed.

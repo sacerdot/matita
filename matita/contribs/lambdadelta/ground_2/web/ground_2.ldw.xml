@@ -12,6 +12,9 @@
          and its timeline.
    </body>
    <table name="ground_2_sum"/>
+   <news class="alpha" date="2016 March 4.">
+         Platform-independent multiple relocation (rtmap).
+   </news>
    <news class="alpha" date="2016 January 20.">
          Multiple relocation with streams of naturals.
    </news>
@@ -19,7 +22,7 @@
          Multiple relocation with lists of booleans.
    </news>
    <news class="alpha" date="2013 November 27.">
-         Natural numbers with infinity.
+         Natural numbers with infinity (ynat).
    </news>
    <news class="alpha" date="2011 August 10.">
          Specification starts.

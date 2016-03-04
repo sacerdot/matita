@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/notation/functions/successor_1.ma".
 include "ground_2/ynat/ynat_pred.ma".
 
 (* NATURAL NUMBERS WITH INFINITY ********************************************)

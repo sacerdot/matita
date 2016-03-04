@@ -12,28 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/notation/functions/drop_1.ma".
-include "ground_2/lib/streams.ma".
-include "ground_2/lib/arith.ma".
+(* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
 
-(* STREAMS ******************************************************************)
-
-definition hd (A:Type[0]): stream A → A ≝
-              λt. match t with [ seq a _ ⇒ a ].
-
-definition tl (A:Type[0]): stream A → stream A ≝
-              λt. match t with [ seq _ t ⇒ t ].
-
-interpretation "tail (streams)" 'Drop t = (tl ? t).
-
-(* basic properties *********************************************************)
-
-lemma hd_rew (A) (a) (t): a = hd A (a@t).
-// qed.
-
-lemma tl_rew (A) (a) (t): t = tl A (a@t).
-// qed.
-
-lemma eq_stream_split (A) (t): (hd … t) @ ↓t ≐⦋A⦌ t.
-#A * //
-qed.
+notation "hvbox( ⫱ term 46 T )"
+   non associative with precedence 46
+   for @{ 'DropPred $T }.
