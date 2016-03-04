@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "ground_2/notation/functions/drop_1.ma".
-include "ground_2/lib/streams.ma".
+include "ground_2/lib/streams_eq.ma".
 include "ground_2/lib/arith.ma".
 
 (* STREAMS ******************************************************************)

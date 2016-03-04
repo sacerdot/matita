@@ -23,7 +23,7 @@ table {
    class "grass"
    [ { "multiple relocation" * } {
         [ { "" * } {
-             [ "rtmap" "rtmap_eq ( ? ≗ ? )" "rtmap_tl ( ↓? )" "rtmap_minus ( ? - ? )" "rtmap_isid ( 𝐈⦃?⦄ )" "rtmap_id" "rtmap_sle ( ? ⊆ ? )" "rtmap_sand ( ? ⋒ ? ≡ ? )" "rtmap_at ( @⦃?,?⦄ ≡ ? )" "rtmap_istot ( 𝐓⦃?⦄ )" "rtmap_after ( ? ⊚ ? ≡ ? )" * ]
+             [ "rtmap" "rtmap_eq ( ? ≗ ? )" "rtmap_tl ( ⫱? )" "rtmap_tls ( ⫱*[?]? )" "rtmap_isid ( 𝐈⦃?⦄ )" "rtmap_id" "rtmap_sle ( ? ⊆ ? )" "rtmap_sand ( ? ⋒ ? ≡ ? )" "rtmap_at ( @⦃?,?⦄ ≡ ? )" "rtmap_istot ( 𝐓⦃?⦄ )" "rtmap_after ( ? ⊚ ? ≡ ? )" * ]
              [ "nstream ( ↑? ) ( ⫯? )" "nstream_eq" "" "" "nstream_isid" "nstream_id ( 𝐈𝐝 )" "" "nstream_sand" "" "nstream_istot ( ?@❴?❵ )" "nstream_after ( ? ∘ ? )" * ]
 (*
              [ "trace ( ∥?∥ )" "trace_at ( @⦃?,?⦄ ≡ ? )" "trace_after ( ? ⊚ ? ≡ ? )" "trace_isid ( 𝐈⦃?⦄ )" "trace_isun ( 𝐔⦃?⦄ )"
@@ -37,7 +37,7 @@ table {
    class "yellow"
    [ { "extensions to the library" * } {
         [ { "" * } {
-             [ "stream ( ? @ ? ) ( ? ≐ ? )" "stream_hdtl" * ]
+             [ "stream ( ? @ ? )" "stream_eq ( ? ≐ ? )" "stream_hdtl ( ↓? )" "stream_tls ( ↓*[?]? )" * ]
              [ "list ( ◊ ) ( ? @ ? ) ( |?| )" "list2 ( ◊ ) ( {?,?} @ ? ) ( ? @@ ? ) ( |?| )" * ]
              [ "bool ( Ⓕ ) ( Ⓣ )" "arith ( ?^? ) ( ⫯? ) ( ⫰? )" * ]
              [ "star" "lstar" * ]

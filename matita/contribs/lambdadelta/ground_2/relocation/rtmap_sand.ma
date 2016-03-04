@@ -35,6 +35,5 @@ qed.
 let corec sand_sym: ∀f1,f2,f. f1 ⋒ f2 ≡ f → f2 ⋒ f1 ≡ f ≝ ?.
 #f1 #f2 #f * -f1 -f2 -f
 #f1 #f2 #f #g1 #g2 #g #Hf * * * -g1 -g2 -g
-[ @sand_pp | @sand_pn | @sand_np | @sand_nn ]
-[4,11,18,25: @sand_sym // |1,2,3,8,9,10,15,16,17,22,23,24: skip |*: // ]
+[ @sand_pp | @sand_pn | @sand_np | @sand_nn ] /2 width=7 by/
 qed-.
