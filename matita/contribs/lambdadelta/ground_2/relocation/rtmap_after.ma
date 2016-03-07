@@ -159,6 +159,47 @@ lemma after_inv_pxx: ∀g1,g2,g. g1 ⊚ g2 ≡ g → ∀f1. ↑f1 = g1 →
 ]
 qed-.
 
+(* Basic properties *********************************************************)
+
+let corec after_eq_repl_back_2:  ∀f1,f. eq_repl_back (λf2. f2 ⊚ f1 ≡ f) ≝ ?.
+#f1 #f #f2 * -f2 -f1 -f
+#f21 #f1 #f #g21 [1,2: #g1 ] #g #Hf #H21 [1,2: #H1 ] #H #g22 #H0
+[ cases (eq_inv_px …  H0 …  H21) -g21 /3 width=7 by after_refl/
+| cases (eq_inv_px …  H0 …  H21) -g21 /3 width=7 by after_push/
+| cases (eq_inv_nx …  H0 …  H21) -g21 /3 width=5 by after_next/ 
+]
+qed-.
+
+lemma after_eq_repl_fwd_2:  ∀f1,f. eq_repl_fwd (λf2. f2 ⊚ f1 ≡ f).
+#f1 #f @eq_repl_sym /2 width=3 by after_eq_repl_back_2/
+qed-.
+
+let corec after_eq_repl_back_1:  ∀f2,f. eq_repl_back (λf1. f2 ⊚ f1 ≡ f) ≝ ?.
+#f2 #f #f1 * -f2 -f1 -f
+#f2 #f11 #f #g2 [1,2: #g11 ] #g #Hf #H2 [1,2: #H11 ] #H #g2 #H0
+[ cases (eq_inv_px …  H0 …  H11) -g11 /3 width=7 by after_refl/
+| cases (eq_inv_nx …  H0 …  H11) -g11 /3 width=7 by after_push/
+| @(after_next … H2 H) /2 width=5 by/
+]
+qed-.
+
+lemma after_eq_repl_fwd_1:  ∀f2,f. eq_repl_fwd (λf1. f2 ⊚ f1 ≡ f).
+#f2 #f @eq_repl_sym /2 width=3 by after_eq_repl_back_1/
+qed-.
+
+let corec after_eq_repl_back_0:  ∀f1,f2. eq_repl_back (λf. f2 ⊚ f1 ≡ f) ≝ ?.
+#f2 #f1 #f * -f2 -f1 -f
+#f2 #f1 #f01 #g2 [1,2: #g1 ] #g01 #Hf01 #H2 [1,2: #H1 ] #H01 #g02 #H0
+[ cases (eq_inv_px …  H0 …  H01) -g01 /3 width=7 by after_refl/
+| cases (eq_inv_nx …  H0 …  H01) -g01 /3 width=7 by after_push/
+| cases (eq_inv_nx …  H0 …  H01) -g01 /3 width=5 by after_next/ 
+]
+qed-.
+
+lemma after_eq_repl_fwd_0:  ∀f2,f1. eq_repl_fwd (λf. f2 ⊚ f1 ≡ f).
+#f2 #f1 @eq_repl_sym /2 width=3 by after_eq_repl_back_0/
+qed-.
+
 (* Main properties **********************************************************)
 
 let corec after_trans1: ∀f0,f3,f4. f0 ⊚ f3 ≡ f4 →
@@ -219,6 +260,10 @@ let corec after_mono: ∀f1,f2,x,y. f1 ⊚ f2 ≡ x → f1 ⊚ f2 ≡ y → x �
 | cases (after_inv_nxx … Hy … H1) -g1 /3 width=8 by eq_next/
 ]
 qed-.
+
+lemma after_mono_eq: ∀f1,f2,f. f1 ⊚ f2 ≡ f → ∀g1,g2,g. g1 ⊚ g2 ≡ g →
+                     f1 ≗ g1 → f2 ≗ g2 → f ≗ g.
+/4 width=4 by after_mono, after_eq_repl_back_1, after_eq_repl_back_2/ qed-.
 
 (* Properties on tls ********************************************************)
 
