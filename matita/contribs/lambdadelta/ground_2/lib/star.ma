@@ -21,6 +21,12 @@ definition Decidable: Prop → Prop ≝ λR. R ∨ (R → ⊥).
 
 definition Transitive: ∀A. ∀R: relation A. Prop ≝ λA,R.
                        ∀a1,a0. R a1 a0 → ∀a2. R a0 a2 → R a1 a2.
+                       
+definition left_cancellable: ∀A. ∀R: relation A. Prop ≝ λA,R.
+                             ∀a0,a1. R a0 a1 → ∀a2. R a0 a2 → R a1 a2.
+
+definition right_cancellable: ∀A. ∀R: relation A. Prop ≝ λA,R.
+                              ∀a1,a0. R a1 a0 → ∀a2. R a2 a0 → R a1 a2.
 
 definition confluent2: ∀A. ∀R1,R2: relation A. Prop ≝ λA,R1,R2.
                        ∀a0,a1. R1 a0 a1 → ∀a2. R2 a0 a2 →
