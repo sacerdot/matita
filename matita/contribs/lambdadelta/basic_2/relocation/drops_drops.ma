@@ -27,9 +27,9 @@ theorem drops_conf: ∀L1,L,c1,f1. ⬇*[c1, f1] L1 ≡ L →
 [ #f1 #_ #L2 #c2 #f #HL2 #f2 #Hf12 elim (drops_inv_atom1 … HL2) -c1 -HL2
   #H #Hf destruct @drops_atom
   #H elim (after_inv_isid3 … Hf12) -Hf12 /2 width=1 by/
-| #I #K1 #K #V1 #f1 #_ #IH #L2 #c2 #f #HL2 #f2 #Hf elim (after_inv_Sxx … Hf) -Hf
+| #I #K1 #K #V1 #f1 #_ #IH #L2 #c2 #f #HL2 #f2 #Hf elim (after_inv_nxx … Hf) -Hf [2,3: // ]
   #g #Hg #H destruct /3 width=3 by drops_inv_drop1/
-| #I #K1 #K #V1 #V #f1 #_ #HV1 #IH #L2 #c2 #f #HL2 #f2 #Hf elim (after_inv_Oxx … Hf) -Hf *
+| #I #K1 #K #V1 #V #f1 #_ #HV1 #IH #L2 #c2 #f #HL2 #f2 #Hf elim (after_inv_pxx … Hf) -Hf [1,3: * |*:// ]
   #g2 #g #Hf #H1 #H2 destruct
   [ elim (drops_inv_skip1 … HL2) -HL2 /3 width=6 by drops_skip, lifts_div/
   | /4 width=3 by drops_inv_drop1, drops_drop/
@@ -49,9 +49,9 @@ theorem drops_trans: ∀L1,L,c1,f1. ⬇*[c1, f1] L1 ≡ L →
   #H #Hf2 destruct @drops_atom #H elim (andb_inv_true_dx … H) -H
   #H1 #H2 lapply (after_isid_inv_sn … Hf ?) -Hf
   /3 width=3 by isid_eq_repl_back/
-| #I #K1 #K #V1 #f1 #_ #IH #L2 #c2 #f2 #HL2 #f #Hf elim (after_inv_Sxx … Hf) -Hf
+| #I #K1 #K #V1 #f1 #_ #IH #L2 #c2 #f2 #HL2 #f #Hf elim (after_inv_nxx … Hf) -Hf
   /3 width=3 by drops_drop/
-| #I #K1 #K #V1 #V #f1 #_ #HV1 #IH #L2 #c2 #f2 #HL2 #f #Hf elim (after_inv_Oxx … Hf) -Hf *
+| #I #K1 #K #V1 #V #f1 #_ #HV1 #IH #L2 #c2 #f2 #HL2 #f #Hf elim (after_inv_pxx … Hf) -Hf [1,3: * |*: // ]
   #g2 #g #Hg #H1 #H2 destruct
   [ elim (drops_inv_skip1 … HL2) -HL2 /3 width=6 by drops_skip, lifts_trans/
   | /4 width=3 by drops_inv_drop1, drops_drop/
@@ -64,7 +64,7 @@ qed-.
 (* Basic_2A1: includes: drop_mono *)
 lemma drops_mono: ∀L,L1,c1,f. ⬇*[c1, f] L ≡ L1 →
                   ∀L2,c2. ⬇*[c2, f] L ≡ L2 → L1 = L2.
-#L #L1 #c1 #f lapply (isid_after_dx 𝐈𝐝 f ?)
+#L #L1 #c1 #f lapply (isid_after_dx 𝐈𝐝 … f)
 /3 width=8 by drops_conf, drops_fwd_isid/
 qed-.
 

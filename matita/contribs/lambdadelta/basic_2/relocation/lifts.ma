@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/relocation/nstream_id.ma".
+include "ground_2/relocation/nstream_after.ma".
 include "basic_2/notation/relations/rliftstar_3.ma".
 include "basic_2/grammar/term.ma".
 
@@ -264,20 +264,20 @@ qed-.
 
 (* Basic properties *********************************************************)
 
-lemma lifts_eq_repl_back: ∀T1,T2. eq_stream_repl_back … (λf. ⬆*[f] T1 ≡ T2).
+lemma lifts_eq_repl_back: ∀T1,T2. eq_repl_back … (λf. ⬆*[f] T1 ≡ T2).
 #T1 #T2 #f1 #H elim H -T1 -T2 -f1
-/4 width=3 by lifts_flat, lifts_bind, lifts_lref, at_eq_repl_back, push_eq_repl/
+/4 width=5 by lifts_flat, lifts_bind, lifts_lref, at_eq_repl_back, eq_push/
 qed-.
 
-lemma lifts_eq_repl_fwd: ∀T1,T2. eq_stream_repl_fwd … (λf. ⬆*[f] T1 ≡ T2).
-#T1 #T2 @eq_stream_repl_sym /2 width=3 by lifts_eq_repl_back/ (**) (* full auto fails *)
+lemma lifts_eq_repl_fwd: ∀T1,T2. eq_repl_fwd … (λf. ⬆*[f] T1 ≡ T2).
+#T1 #T2 @eq_repl_sym /2 width=3 by lifts_eq_repl_back/ (**) (* full auto fails *)
 qed-.
 
 (* Basic_1: includes: lift_r *)
 (* Basic_2A1: includes: lift_refl *)
 lemma lifts_refl: ∀T,f. 𝐈⦃f⦄ → ⬆*[f] T ≡ T.
 #T elim T -T *
-/4 width=1 by lifts_flat, lifts_bind, lifts_lref, isid_inv_at, isid_push/
+/4 width=3 by lifts_flat, lifts_bind, lifts_lref, isid_inv_at, isid_push/
 qed.
 
 (* Basic_2A1: includes: lift_total *)
@@ -333,7 +333,7 @@ qed-.
 lemma is_lifts_dec: ∀T2,f. Decidable (∃T1. ⬆*[f] T1 ≡ T2).
 #T1 elim T1 -T1
 [ * [1,3: /3 width=2 by lifts_sort, lifts_gref, ex_intro, or_introl/ ]
-  #i2 #f elim (is_at_dec f i2)
+  #i2 #f elim (is_at_dec f i2) //
   [ * /4 width=3 by lifts_lref, ex_intro, or_introl/
   | #H @or_intror *
     #X #HX elim (lifts_inv_lref2 … HX) -HX

@@ -109,30 +109,30 @@ lemma lleq_fwd_bind_O_dx: ∀a,I,L1,L2,V,T. L1 ≡[ⓑ{a,I}V.T, 0] L2 →
 (* Properties on relocation *************************************************)
 
 lemma lleq_lift_le: ∀K1,K2,T,lt. K1 ≡[T, lt] K2 →
-                    ∀L1,L2,l,m. ⬇[Ⓕ, l, m] L1 ≡ K1 → ⬇[Ⓕ, l, m] L2 ≡ K2 →
-                    ∀U. ⬆[l, m] T ≡ U → lt ≤ l → L1 ≡[U, lt] L2.
+                    ∀L1,L2,l,k. ⬇[Ⓕ, l, k] L1 ≡ K1 → ⬇[Ⓕ, l, k] L2 ≡ K2 →
+                    ∀U. ⬆[l, k] T ≡ U → lt ≤ l → L1 ≡[U, lt] L2.
 /3 width=10 by llpx_sn_lift_le, lift_mono/ qed-.
 
 lemma lleq_lift_ge: ∀K1,K2,T,lt. K1 ≡[T, lt] K2 →
-                    ∀L1,L2,l,m. ⬇[Ⓕ, l, m] L1 ≡ K1 → ⬇[Ⓕ, l, m] L2 ≡ K2 →
-                    ∀U. ⬆[l, m] T ≡ U → l ≤ lt → L1 ≡[U, lt+m] L2.
+                    ∀L1,L2,l,k. ⬇[Ⓕ, l, k] L1 ≡ K1 → ⬇[Ⓕ, l, k] L2 ≡ K2 →
+                    ∀U. ⬆[l, k] T ≡ U → l ≤ lt → L1 ≡[U, lt+k] L2.
 /2 width=9 by llpx_sn_lift_ge/ qed-.
 
 (* Inversion lemmas on relocation *******************************************)
 
 lemma lleq_inv_lift_le: ∀L1,L2,U,lt. L1 ≡[U, lt] L2 →
-                        ∀K1,K2,l,m. ⬇[Ⓕ, l, m] L1 ≡ K1 → ⬇[Ⓕ, l, m] L2 ≡ K2 →
-                        ∀T. ⬆[l, m] T ≡ U → lt ≤ l → K1 ≡[T, lt] K2.
+                        ∀K1,K2,l,k. ⬇[Ⓕ, l, k] L1 ≡ K1 → ⬇[Ⓕ, l, k] L2 ≡ K2 →
+                        ∀T. ⬆[l, k] T ≡ U → lt ≤ l → K1 ≡[T, lt] K2.
 /3 width=10 by llpx_sn_inv_lift_le, ex2_intro/ qed-.
 
 lemma lleq_inv_lift_be: ∀L1,L2,U,lt. L1 ≡[U, lt] L2 →
-                        ∀K1,K2,l,m. ⬇[Ⓕ, l, m] L1 ≡ K1 → ⬇[Ⓕ, l, m] L2 ≡ K2 →
-                        ∀T. ⬆[l, m] T ≡ U → l ≤ lt → lt ≤ l + m → K1 ≡[T, l] K2.
+                        ∀K1,K2,l,k. ⬇[Ⓕ, l, k] L1 ≡ K1 → ⬇[Ⓕ, l, k] L2 ≡ K2 →
+                        ∀T. ⬆[l, k] T ≡ U → l ≤ lt → lt ≤ l + k → K1 ≡[T, l] K2.
 /2 width=11 by llpx_sn_inv_lift_be/ qed-.
 
 lemma lleq_inv_lift_ge: ∀L1,L2,U,lt. L1 ≡[U, lt] L2 →
-                        ∀K1,K2,l,m. ⬇[Ⓕ, l, m] L1 ≡ K1 → ⬇[Ⓕ, l, m] L2 ≡ K2 →
-                        ∀T. ⬆[l, m] T ≡ U → l + m ≤ lt → K1 ≡[T, lt-m] K2.
+                        ∀K1,K2,l,k. ⬇[Ⓕ, l, k] L1 ≡ K1 → ⬇[Ⓕ, l, k] L2 ≡ K2 →
+                        ∀T. ⬆[l, k] T ≡ U → l + k ≤ lt → K1 ≡[T, lt-k] K2.
 /2 width=9 by llpx_sn_inv_lift_ge/ qed-.
 
 (* Inversion lemmas on negated lazy quivalence for local environments *******)

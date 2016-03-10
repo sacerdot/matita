@@ -27,10 +27,10 @@ interpretation
 
 (* Basic properties *********************************************************)
 
-lemma lreq_eq_repl_back: ∀L1,L2. eq_stream_repl_back … (λf. L1 ≡[f] L2).
+lemma lreq_eq_repl_back: ∀L1,L2. eq_repl_back … (λf. L1 ≡[f] L2).
 /2 width=3 by lexs_eq_repl_back/ qed-.
 
-lemma lreq_eq_repl_fwd: ∀L1,L2. eq_stream_repl_fwd … (λf. L1 ≡[f] L2).
+lemma lreq_eq_repl_fwd: ∀L1,L2. eq_repl_fwd … (λf. L1 ≡[f] L2).
 /2 width=3 by lexs_eq_repl_fwd/ qed-.
 
 lemma sle_lreq_trans: ∀L1,L2,f2. L1 ≡[f2] L2 →
@@ -88,7 +88,7 @@ lemma lreq_inv_next: ∀I1,I2,L1,L2,V1,V2,f.
 lemma lreq_inv_push: ∀I1,I2,L1,L2,V1,V2,f.
                      L1.ⓑ{I1}V1 ≡[↑f] (L2.ⓑ{I2}V2) →
                      L1 ≡[f] L2 ∧ I1 = I2.
-#I1 #I2 #L1 #L2 #V1 #V2 #f #H elim (lexs_inv_push … H) -H /2 width=1 by conj/  
+#I1 #I2 #L1 #L2 #V1 #V2 #f #H elim (lexs_inv_push … H) -H /2 width=1 by conj/
 qed-.
 
 (* Basic_2A1: removed theorems 5:

@@ -31,7 +31,7 @@ definition lleq_transitive: predicate (relation3 lenv term term) ≝
 (* Basic inversion lemmas ***************************************************)
 
 lemma lleq_ind: ∀R:relation4 ynat term lenv lenv. (
-                   ∀L1,L2,l,k. |L1| = |L2| → R l (⋆k) L1 L2
+                   ∀L1,L2,l,s. |L1| = |L2| → R l (⋆s) L1 L2
                 ) → (
                    ∀L1,L2,l,i. |L1| = |L2| → yinj i < l → R l (#i) L1 L2
                 ) → (
@@ -104,7 +104,7 @@ lemma lleq_fwd_flat_dx: ∀I,L1,L2,V,T,l.
 
 (* Basic properties *********************************************************)
 
-lemma lleq_sort: ∀L1,L2,l,k. |L1| = |L2| → L1 ≡[⋆k, l] L2.
+lemma lleq_sort: ∀L1,L2,l,s. |L1| = |L2| → L1 ≡[⋆s, l] L2.
 /2 width=1 by llpx_sn_sort/ qed.
 
 lemma lleq_skip: ∀L1,L2,l,i. yinj i < l → |L1| = |L2| → L1 ≡[#i, l] L2.
@@ -142,8 +142,8 @@ lemma lleq_sym: ∀l,T. symmetric … (lleq l T).
 qed-.
 
 lemma lleq_ge_up: ∀L1,L2,U,lt. L1 ≡[U, lt] L2 →
-                  ∀T,l,m. ⬆[l, m] T ≡ U →
-                  lt ≤ l + m → L1 ≡[U, l] L2.
+                  ∀T,l,k. ⬆[l, k] T ≡ U →
+                  lt ≤ l + k → L1 ≡[U, l] L2.
 /2 width=6 by llpx_sn_ge_up/ qed-.
 
 lemma lleq_ge: ∀L1,L2,T,l1. L1 ≡[T, l1] L2 → ∀l2. l1 ≤ l2 → L1 ≡[T, l2] L2.

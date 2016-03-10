@@ -114,9 +114,9 @@ qed-.
 
 (* Basic properties *********************************************************)
 
-lemma llpx_sn_alt_r_sort: ∀R,L1,L2,l,k. |L1| = |L2| → llpx_sn_alt_r R l (⋆k) L1 L2.
-#R #L1 #L2 #l #k #HL12 @llpx_sn_alt_r_intro_alt // -HL12
-#I1 #I2 #K1 #K2 #V1 #V2 #i #_ #H elim (H (⋆k)) //
+lemma llpx_sn_alt_r_sort: ∀R,L1,L2,l,s. |L1| = |L2| → llpx_sn_alt_r R l (⋆s) L1 L2.
+#R #L1 #L2 #l #s #HL12 @llpx_sn_alt_r_intro_alt // -HL12
+#I1 #I2 #K1 #K2 #V1 #V2 #i #_ #H elim (H (⋆s)) //
 qed.
 
 lemma llpx_sn_alt_r_gref: ∀R,L1,L2,l,p. |L1| = |L2| → llpx_sn_alt_r R l (§p) L1 L2.

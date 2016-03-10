@@ -19,8 +19,8 @@ include "basic_2/grammar/lreq.ma".
 
 (* Main properties **********************************************************)
 
-theorem lreq_trans: ∀l,m. Transitive … (lreq l m).
-#l #m #L1 #L2 #H elim H -L1 -L2 -l -m
+theorem lreq_trans: ∀f. Transitive … (lreq f).
+#f #L1 #L2 #H elim H -L1 -L2 -l -m
 [ #l #m #X #H lapply (lreq_inv_atom1 … H) -H
   #H destruct //
 | #I1 #I #L1 #L #V1 #V #_ #IHL1 #X #H elim (lreq_inv_zero1 … H) -H

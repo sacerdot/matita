@@ -54,7 +54,7 @@ lapply (drop_fwd_drop2 … HLK1) #H1
 lapply (drop_fwd_drop2 … HLK2) -HLK2 #H2
 @conj [ @(drop_fwd_length_eq1 … H1 H2) // ] -HL12
 #Z1 #Z2 #Y1 #Y2 #X1 #X2 #j #_
->(minus_plus_m_m j (i+1)) in ⊢ (%→?); >commutative_plus <minus_plus
+>(minus_plus_k_k j (i+1)) in ⊢ (%→?); >commutative_plus <minus_plus
 <yminus_inj <yminus_inj >yminus_SO2 
 #HnV1 #HKY1 #HKY2 (**) (* full auto too slow *)
 lapply (drop_trans_ge … H1 … HKY1 ?) -H1 -HKY1 // #HLY1

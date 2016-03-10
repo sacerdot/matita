@@ -42,11 +42,11 @@ lemma d2_deliftable_sn_LTC: ∀R. d_deliftable2_sn R → d_deliftable2_sn (LTC �
 qed-.
 
 lemma dropable_sn_TC: ∀R. dropable_sn R → dropable_sn (LTC … R).
-#R #HR #L1 #K1 #c #f #HLK1 #L2 #u2 #H elim H -L2
-[ #L2 #HL12 #u1 #H elim (HR … HLK1 … HL12 … H) -HR -L1 -u2
+#R #HR #L1 #K1 #c #f #HLK1 #L2 #f2 #H elim H -L2
+[ #L2 #HL12 #f1 #H elim (HR … HLK1 … HL12 … H) -HR -L1 -f2
   /3 width=3 by inj, ex2_intro/
-| #L #L2 #_ #HL2 #IH #u1 #H elim (IH … H) -IH
-  #K #HK1 #HLK elim (HR … HLK … HL2 … H) -HR -L -u2
+| #L #L2 #_ #HL2 #IH #f1 #H elim (IH … H) -IH
+  #K #HK1 #HLK elim (HR … HLK … HL2 … H) -HR -L -f2
   /3 width=3 by step, ex2_intro/
 ]
 qed-.

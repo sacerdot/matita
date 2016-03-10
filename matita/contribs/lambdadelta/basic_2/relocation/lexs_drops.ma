@@ -12,25 +12,27 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/lpx_sn.ma".
+include "basic_2/relocation/lexs.ma".
 include "basic_2/relocation/drops.ma".
 
-(* SN POINTWISE EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS *********)
+(* GENERAL ENTRYWISE EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS ****)
 
-(* Properties on general slicing for local environments *********************)
-
-lemma lpx_sn_deliftable_dropable: ∀R. (∀b. d_deliftable2_sn (R b)) → dropable_sn (lpx_sn R).
-#R #HR #L1 #K1 #c #t #H elim H -L1 -K1 -t
-[ #t #Ht #X #u2 #H #u1 #Hu elim (lpx_sn_inv_atom1 … H) -H
-  #H1 #H2 destruct elim (after_inv_empty3 … Hu) -Hu
-  #H1 #H2 destruct /3 width=3 by drops_atom, lpx_sn_atom, ex2_intro/
-| #I #L1 #K1 #V1 #t #_ #IH #X #u2 #H #u1 #Hu elim (lpx_sn_inv_pair1 … H) -H
-  #L2 #V2 #y2 #x2 #HL #HV #H1 #H2 destruct elim (after_inv_false1 … Hu) -Hu
-  #u #H1 #Hu destruct elim (IH … HL … Hu) -L1 /3 width=3 by drops_drop, ex2_intro/
-| #I #L1 #K1 #V1 #W1 #t #HLK #HWV #IHLK #X #u2 #H #u1 #Hu elim (lpx_sn_inv_pair1 … H) -H
-  #L2 #V2 #y2 #x2 #HL #HV #H1 #H2 destruct elim (after_inv_true1 … Hu) -Hu
-  #y1 #y #x1 #H1 #H2 #Hu destruct elim (HR … HV … HLK … HWV) -V1
-  elim (IHLK … HL … Hu) -L1 /3 width=5 by drops_skip, lpx_sn_pair, ex2_intro/
+(* Basic_2A1: includes: lpx_sn_deliftable_dropable *)
+lemma lexs_deliftable_dropable: ∀RN,RP. d_deliftable2_sn RN → d_deliftable2_sn RP →
+                                dropable_sn (lexs RN RP).
+#RN #RP #HN #HP #L1 #K1 #c #f #H elim H -L1 -K1 -f
+[ #f #Hf #X #f2 #H #f1 #Hf2 >(lexs_inv_atom1 … H) -X
+  /4 width=3 by lexs_atom, drops_atom, ex2_intro/
+| #I #L1 #K1 #V1 #f #_ #IH #X #f2 #H #f1 #Hf2 elim (after_inv_nxx … Hf2) -Hf2 [2,3: // ]
+  #g2 #Hg2 #H2 destruct elim (lexs_inv_next1 … H) -H
+  #L2 #V2 #HL12 #HV12 #H destruct elim (IH … HL12 … Hg2) -g2
+  /3 width=3 by drops_drop, ex2_intro/
+| #I #L1 #K1 #V1 #W1 #f #HLK #HWV #IH #X #f2 #H #f1 #Hf2 elim (after_inv_pxx … Hf2) -Hf2 [1,3:* |*: // ]
+  #g1 #g2 #Hg2 #H1 #H2 destruct
+  [ elim (lexs_inv_push1 … H) | elim (lexs_inv_next1 … H) ] -H
+  #L2 #V2 #HL12 #HV12 #H destruct elim (IH … HL12 … Hg2) -g2
+  [ elim (HP … HV12 … HLK … HWV) | elim (HN … HV12 … HLK … HWV) ] -V1
+  /3 width=5 by lexs_next, lexs_push, drops_skip, ex2_intro/
 ]
 qed-.
 (*

@@ -37,9 +37,9 @@ lemma fqup_strap2: ∀G1,G,G2,L1,L,L2,T1,T,T2.
                    ⦃G1, L1, T1⦄ ⊐+ ⦃G2, L2, T2⦄.
 /2 width=5 by tri_TC_strap/ qed.
 
-lemma fqup_drop: ∀G1,G2,L1,K1,K2,T1,T2,U1,m. ⬇[m] L1 ≡ K1 → ⬆[0, m] T1 ≡ U1 →
+lemma fqup_drop: ∀G1,G2,L1,K1,K2,T1,T2,U1,k. ⬇[k] L1 ≡ K1 → ⬆[0, k] T1 ≡ U1 →
                   ⦃G1, K1, T1⦄ ⊐+ ⦃G2, K2, T2⦄ → ⦃G1, L1, U1⦄ ⊐+ ⦃G2, K2, T2⦄.
-#G1 #G2 #L1 #K1 #K2 #T1 #T2 #U1 #m #HLK1 #HTU1 #HT12 elim (eq_or_gt … m) #H destruct
+#G1 #G2 #L1 #K1 #K2 #T1 #T2 #U1 #k #HLK1 #HTU1 #HT12 elim (eq_or_gt … k) #H destruct
 [ >(drop_inv_O2 … HLK1) -L1 <(lift_inv_O2 … HTU1) -U1 //
 | /3 width=5 by fqup_strap2, fqu_drop_lt/
 ]

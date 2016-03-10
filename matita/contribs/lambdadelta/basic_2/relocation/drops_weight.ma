@@ -37,7 +37,7 @@ lemma drops_fwd_lw_lt: ∀L1,L2,f. ⬇*[Ⓣ, f] L1 ≡ L2 →
 [ #f #Hf #Hnf elim Hnf -Hnf /2 width=1 by/
 | /3 width=3 by drops_fwd_lw, le_to_lt_to_lt/
 | #I #L1 #L2 #V1 #V2 #f #_ #HV21 #IHL12 #H normalize in ⊢ (?%%); -I
-  >(lifts_fwd_tw … HV21) -V2 /5 width=1 by isid_push, monotonic_lt_plus_l/
+  >(lifts_fwd_tw … HV21) -V2 /5 width=3 by isid_push, monotonic_lt_plus_l/
 ]
 qed-.
 

@@ -12,11 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/relocation/nstream_sle.ma".
+include "ground_2/relocation/rtmap_sle.ma".
 include "basic_2/notation/relations/relationstar_5.ma".
 include "basic_2/grammar/lenv.ma".
 
 (* GENERAL ENTRYWISE EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS ****)
+
+definition relation5 : Type[0] → Type[0] → Type[0] → Type[0] → Type[0] → Type[0]
+≝ λA,B,C,D,E.A→B→C→D→E→Prop.
+
+definition relation6 : Type[0] → Type[0] → Type[0] → Type[0] → Type[0] → Type[0] → Type[0]
+≝ λA,B,C,D,E,F.A→B→C→D→E→F→Prop.
 
 (* Basic_2A1: includes: lpx_sn_atom lpx_sn_pair *)
 inductive lexs (RN,RP:relation3 lenv term term): rtmap → relation lenv ≝
@@ -31,6 +37,19 @@ inductive lexs (RN,RP:relation3 lenv term term): rtmap → relation lenv ≝
 
 interpretation "general entrywise extension (local environment)"
    'RelationStar RN RP f L1 L2 = (lexs RN RP f L1 L2).
+
+definition lpx_sn_confluent: relation6 (relation3 lenv term term)
+                                       (relation3 lenv term term) … ≝
+                             λR1,R2,RN1,RP1,RN2,RP2.
+                             ∀f,L0,T0,T1. R1 L0 T0 T1 → ∀T2. R2 L0 T0 T2 →
+                             ∀L1. L0 ⦻*[RN1, RP1, f] L1 → ∀L2. L0 ⦻*[RN2, RP2, f] L2 →
+                             ∃∃T. R2 L1 T1 T & R1 L2 T2 T.
+
+definition lexs_transitive: relation4 (relation3 lenv term term)
+                                      (relation3 lenv term term) … ≝
+                            λR1,R2,RN,RP.
+                            ∀f,L1,T1,T. R1 L1 T1 T → ∀L2. L1 ⦻*[RN, RP, f] L2 →
+                            ∀T2. R2 L2 T T2 → R1 L1 T1 T2.
 
 (* Basic inversion lemmas ***************************************************)
 
@@ -128,16 +147,16 @@ qed-.
 
 (* Basic properties *********************************************************)
 
-lemma lexs_eq_repl_back: ∀RN,RP,L1,L2. eq_stream_repl_back … (λf. L1 ⦻*[RN, RP, f] L2).
+lemma lexs_eq_repl_back: ∀RN,RP,L1,L2. eq_repl_back … (λf. L1 ⦻*[RN, RP, f] L2).
 #RN #RP #L1 #L2 #f1 #H elim H -L1 -L2 -f1 //
 #I #L1 #L2 #V1 #v2 #f1 #_ #HV #IH #f2 #H
-[ elim (next_inv_sn … H) -H /3 width=1 by lexs_next/
-| elim (push_inv_sn … H) -H /3 width=1 by lexs_push/
+[ elim (eq_inv_nx … H) -H /3 width=3 by lexs_next/
+| elim (eq_inv_px … H) -H /3 width=3 by lexs_push/
 ]
 qed-.
 
-lemma lexs_eq_repl_fwd: ∀RN,RP,L1,L2. eq_stream_repl_fwd … (λf. L1 ⦻*[RN, RP, f] L2).
-#RN #RP #L1 #L2 @eq_stream_repl_sym /2 width=3 by lexs_eq_repl_back/ (**) (* full auto fails *)
+lemma lexs_eq_repl_fwd: ∀RN,RP,L1,L2. eq_repl_fwd … (λf. L1 ⦻*[RN, RP, f] L2).
+#RN #RP #L1 #L2 @eq_repl_sym /2 width=3 by lexs_eq_repl_back/ (**) (* full auto fails *)
 qed-.
 
 (* Note: fexs_sym and fexs_trans hold, but lexs_sym and lexs_trans do not  *)
@@ -156,9 +175,9 @@ lemma sle_lexs_trans: ∀RN,RP. (∀L,T1,T2. RN L T1 T2 → RP L T1 T2) →
 #RN #RP #HR #L1 #L2 #f2 #H elim H -L1 -L2 -f2 //
 #I #L1 #L2 #V1 #V2 #f2 #_ #HV12 #IH
 [ * * [2: #n1 ] ] #f1 #H
-[ /4 width=5 by lexs_next, sle_inv_SS_aux/
-| /4 width=5 by lexs_push, sle_inv_OS_aux/
-| elim (sle_inv_xO_aux … H) -H [3: // |2: skip ]
+[ /4 width=5 by lexs_next, sle_inv_nn/
+| /4 width=5 by lexs_push, sle_inv_pn/
+| elim (sle_inv_xp … H) -H [2,3: // ]
   #g1 #H #H1 destruct /3 width=5 by lexs_push/
 ]
 qed-.
@@ -169,9 +188,9 @@ lemma sle_lexs_conf: ∀RN,RP. (∀L,T1,T2. RP L T1 T2 → RN L T1 T2) →
 #RN #RP #HR #L1 #L2 #f2 #H elim H -L1 -L2 -f2 //
 #I #L1 #L2 #V1 #V2 #f1 #_ #HV12 #IH
 [2: * * [2: #n2 ] ] #f2 #H
-[ /4 width=5 by lexs_next, sle_inv_OS_aux/
-| /4 width=5 by lexs_push, sle_inv_OO_aux/
-| elim (sle_inv_Sx_aux … H) -H [3: // |2: skip ]
+[ /4 width=5 by lexs_next, sle_inv_pn/
+| /4 width=5 by lexs_push, sle_inv_pp/
+| elim (sle_inv_nx … H) -H [2,3: // ]
   #g2 #H #H2 destruct /3 width=5 by lexs_next/
 ]
 qed-.
