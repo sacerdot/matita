@@ -18,7 +18,7 @@ include "ground_2/relocation/rtmap_istot.ma".
 
 (* RELOCATION N-STREAM ******************************************************)
 
-let rec apply (i: nat) on i: rtmap → nat ≝ ?.
+rec definition apply (i: nat) on i: rtmap → nat ≝ ?.
 * #n #f cases i -i
 [ @n
 | #i lapply (apply i f) -apply -i -f

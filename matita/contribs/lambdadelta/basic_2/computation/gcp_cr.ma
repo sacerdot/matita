@@ -66,7 +66,7 @@ definition cfun: candidate → candidate → candidate ≝
                  ⬇*[Ⓕ, cs] L ≡ K → ⬆*[cs] T ≡ U → C1 G L W → C2 G L (ⓐW.U).
 
 (* the reducibility candidate associated to an atomic arity *)
-let rec acr (RP:candidate) (A:aarity) on A: candidate ≝
+rec definition acr (RP:candidate) (A:aarity) on A: candidate ≝
 match A with
 [ AAtom     ⇒ RP
 | APair B A ⇒ cfun (acr RP B) (acr RP A)

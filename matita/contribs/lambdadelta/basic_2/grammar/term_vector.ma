@@ -18,7 +18,7 @@ include "basic_2/grammar/term_simple.ma".
 
 (* TERMS ********************************************************************)
 
-let rec applv Vs T on Vs ≝
+rec definition applv Vs T on Vs ≝
   match Vs with
   [ nil        ⇒ T
   | cons hd tl ⇒ ⓐhd. (applv tl T)

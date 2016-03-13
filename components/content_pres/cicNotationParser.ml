@@ -657,7 +657,8 @@ EXTEND
         args = LIST1 arg;
         index_name = OPT [ "on"; id = single_arg -> id ];
         ty = OPT [ SYMBOL ":" ; p = term -> p ];
-        SYMBOL <:unicode<def>> (* ≝ *); body = term ->
+        opt_body = OPT [ SYMBOL <:unicode<def>> (* ≝ *); body = term -> body ] ->
+          let body = match opt_body with Some body -> body | None -> Ast.Implicit `JustOne in
           let rec position_of name p = function 
             | [] -> None, p
             | n :: _ when n = name -> Some p, p
@@ -695,7 +696,8 @@ EXTEND
         name = single_arg;
         args = LIST0 arg;
         ty = OPT [ SYMBOL ":" ; p = term -> p ];
-        SYMBOL <:unicode<def>> (* ≝ *); body = term ->
+        opt_body = OPT [ SYMBOL <:unicode<def>> (* ≝ *); body = term -> body ] ->
+          let body = match opt_body with Some body -> body | None -> Ast.Implicit `JustOne in
           let args =
            List.concat
             (List.map

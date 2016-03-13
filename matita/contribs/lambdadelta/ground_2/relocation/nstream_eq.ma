@@ -32,7 +32,7 @@ lemma eq_inv_seq: ∀g1,g2. g1 ≗ g2 → ∀f1,f2,n1,n2. n1@f1 = g1 → n2@f2 =
                   n1 = n2 ∧ f1 ≗ f2.
 /2 width=1 by eq_inv_seq_aux/ qed-.
 
-let corec nstream_eq: ∀f1,f2. f1 ≗ f2 → f1 ≐ f2 ≝ ?.
+corec lemma nstream_eq: ∀f1,f2. f1 ≗ f2 → f1 ≐ f2.
 * #n1 #f1 * #n2 #f2 #Hf cases (eq_inv_gen … Hf) -Hf *
 #g1 #g2 #Hg #H1 #H2
 [ cases (push_inv_seq_dx … H1) -H1 * -n1 #H1
@@ -45,7 +45,7 @@ let corec nstream_eq: ∀f1,f2. f1 ≗ f2 → f1 ≐ f2 ≝ ?.
 ]
 qed-.
 
-let corec nstream_inv_eq: ∀f1,f2. f1 ≐ f2 → f1 ≗ f2 ≝ ?.
+corec lemma nstream_inv_eq: ∀f1,f2. f1 ≐ f2 → f1 ≗ f2.
 * #n1 #f1 * #n2 #f2 #H cases (eq_stream_inv_seq ??? H) -H [2,3,4,5,6,7: // ]
 #Hf * -n2 cases n1 -n1 /3 width=5 by eq_push/
 #n @eq_next /3 width=5 by eq_seq/

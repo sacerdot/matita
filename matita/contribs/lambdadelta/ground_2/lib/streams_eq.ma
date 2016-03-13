@@ -44,11 +44,11 @@ qed-.
 
 (* Basic properties *********************************************************)
 
-let corec eq_stream_refl: ∀A. reflexive … (eq_stream A) ≝ ?.
+corec lemma eq_stream_refl: ∀A. reflexive … (eq_stream A).
 #A * #b #t @eq_seq //
 qed.
 
-let corec eq_stream_sym: ∀A. symmetric … (eq_stream A) ≝ ?.
+corec lemma eq_stream_sym: ∀A. symmetric … (eq_stream A).
 #A #t1 #t2 * -t1 -t2
 #t1 #t2 #b1 #b2 #Hb #Ht @eq_seq /2 width=1 by/
 qed-.
@@ -58,7 +58,7 @@ lemma eq_stream_repl_sym: ∀A,R. eq_stream_repl_back A R → eq_stream_repl_fwd
 
 (* Main properties **********************************************************)
 
-let corec eq_stream_trans: ∀A. Transitive … (eq_stream A) ≝ ?.
+corec theorem eq_stream_trans: ∀A. Transitive … (eq_stream A).
 #A #t1 #t * -t1 -t
 #t1 #t #b1 #b * #Ht1 * #b2 #t2 #H cases (eq_stream_inv_seq A … H) -H -b
 /3 width=7 by eq_seq/

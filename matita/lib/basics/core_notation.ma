@@ -109,7 +109,7 @@ notation < "hvbox(term 46 n break ≅ \sub p term 46 m)"
   non associative with precedence 45
 for @{ 'congruent $n $m $p }.
 
-(* other notations **********************************************************)
+(* pairs, projections *******************************************************)
 
 notation "hvbox(\langle term 19 a, break term 19 b\rangle)" 
 with precedence 90 for @{ 'pair $a $b}.
@@ -126,6 +126,8 @@ notation < "\snd \nbsp term 90 x \nbsp term 90 y" with precedence 69 for @{'pi2b
 notation > "\fst" with precedence 90 for @{'pi1}.
 notation > "\snd" with precedence 90 for @{'pi2}.
 
+(* implication **************************************************************)
+
 notation "hvbox(a break \to b)" 
   right associative with precedence 20
 for @{ \forall $_:$a.$b }.
@@ -133,6 +135,8 @@ for @{ \forall $_:$a.$b }.
 notation < "hvbox(a break \to b)" 
   right associative with precedence 20
 for @{ \Pi $_:$a.$b }.
+
+(* orders *******************************************************************)
 
 notation "hvbox(a break \leq b)" 
   non associative with precedence 45
@@ -150,6 +154,8 @@ notation "hvbox(a break \gt b)"
   non associative with precedence 45
 for @{ 'gt $a $b }.
 
+(* negated equality *********************************************************)
+
 notation > "hvbox(a break \neq b)" 
   non associative with precedence 45
 for @{ 'neq ? $a $b }.
@@ -157,6 +163,8 @@ for @{ 'neq ? $a $b }.
 notation < "hvbox(a break maction (\neq) (\neq\sub t) b)" 
   non associative with precedence 45
 for @{ 'neq $t $a $b }.
+
+(* negated orders ***********************************************************)
 
 notation "hvbox(a break \nleq b)" 
   non associative with precedence 45
@@ -174,6 +182,8 @@ notation "hvbox(a break \ngtr b)"
   non associative with precedence 45
 for @{ 'ngtr $a $b }.
 
+(* divides, negated divides *************************************************)
+
 notation "hvbox(a break \divides b)"
   non associative with precedence 45
 for @{ 'divides $a $b }.
@@ -181,6 +191,8 @@ for @{ 'divides $a $b }.
 notation "hvbox(a break \ndivides b)"
   non associative with precedence 45
 for @{ 'ndivides $a $b }.
+
+(* arithmetics **************************************************************)
 
 notation "hvbox(a break + b)" 
   left associative with precedence 55
@@ -225,6 +237,8 @@ notation "\sqrt a"
   non associative with precedence 65
 for @{ 'sqrt $a }.
 
+(* logical connectives ******************************************************)
+
 notation "hvbox(a break \lor b)" 
   left associative with precedence 30
 for @{ 'or $a $b }.
@@ -245,6 +259,7 @@ notation "hvbox(a break \leftrightarrow b)"
   left associative with precedence 25
 for @{ 'iff $a $b }.
 
+(* subsets ******************************************************************)
 
 notation "hvbox(\Omega \sup term 90 A)" non associative with precedence 90
 for @{ 'powerset $A }.
@@ -282,6 +297,8 @@ notation "hvbox(a break ∪ b)" left associative with precedence 55
 for @{ 'union $a $b }. (* \cup *)
 
 notation "hvbox({ term 19 a })" with precedence 90 for @{ 'singl $a}.
+
+(* other notations **********************************************************)
 
 notation "hvbox(a break \approx b)" non associative with precedence 45 
   for @{ 'napart $a $b}.

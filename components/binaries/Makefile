@@ -2,8 +2,9 @@ H=@
 
 #CSC: saturate is broken after the huge refactoring of auto/paramodulation
 #CSC: by Andrea
-#BINARIES=extractor  table_creator  utilities saturate
-#BINARIES=transcript
+#BINARIES=extractor  table_creator  utilities saturate transcript
+#FG: my binaries
+BINARIES=mac matex matitadep probe xoa
 
 all: $(BINARIES:%=rec@all@%) 
 opt: $(BINARIES:%=rec@opt@%)

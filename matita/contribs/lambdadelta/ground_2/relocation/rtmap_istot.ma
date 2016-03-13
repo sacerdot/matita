@@ -47,10 +47,11 @@ lemma istot_tls: ∀n,f. 𝐓⦃f⦄ → 𝐓⦃⫱*[n]f⦄.
 #n elim n -n /3 width=1 by istot_tl/
 qed.
 
-(* Advanced forward lemmas on at ********************************************)
+(* Main forward lemmas on at ************************************************)
 
-let corec at_ext: ∀f1,f2. 𝐓⦃f1⦄ → 𝐓⦃f2⦄ →
-                  (∀i,i1,i2. @⦃i, f1⦄ ≡ i1 → @⦃i, f2⦄ ≡ i2 → i1 = i2) → f1 ≗ f2 ≝ ?.
+corec theorem at_ext: ∀f1,f2. 𝐓⦃f1⦄ → 𝐓⦃f2⦄ →
+                      (∀i,i1,i2. @⦃i, f1⦄ ≡ i1 → @⦃i, f2⦄ ≡ i2 → i1 = i2) →
+                      f1 ≗ f2.
 #f1 cases (pn_split f1) * #g1 #H1
 #f2 cases (pn_split f2) * #g2 #H2
 #Hf1 #Hf2 #Hi
@@ -69,7 +70,7 @@ let corec at_ext: ∀f1,f2. 𝐓⦃f1⦄ → 𝐓⦃f2⦄ →
 ]
 qed-.
 
-(* Main properties on at ****************************************************)
+(* Advanced properties on at ************************************************)
 
 lemma at_dec: ∀f,i1,i2. 𝐓⦃f⦄ → Decidable (@⦃i1, f⦄ ≡ i2).
 #f #i1 #i2 #Hf lapply (Hf i1) -Hf *
@@ -79,7 +80,8 @@ lemma at_dec: ∀f,i1,i2. 𝐓⦃f⦄ → Decidable (@⦃i1, f⦄ ≡ i2).
 ]
 qed-.
 
-lemma is_at_dec_le: ∀f,i2,i. 𝐓⦃f⦄ → (∀i1. i1 + i ≤ i2 → @⦃i1, f⦄ ≡ i2 → ⊥) → Decidable (∃i1. @⦃i1, f⦄ ≡ i2).
+lemma is_at_dec_le: ∀f,i2,i. 𝐓⦃f⦄ → (∀i1. i1 + i ≤ i2 → @⦃i1, f⦄ ≡ i2 → ⊥) →
+                    Decidable (∃i1. @⦃i1, f⦄ ≡ i2).
 #f #i2 #i #Hf elim i -i
 [ #Ht @or_intror * /3 width=3 by at_increasing/
 | #i #IH #Ht elim (at_dec f (i2-i) i2) /3 width=2 by ex_intro, or_introl/

@@ -183,7 +183,7 @@ qed-.
 
 (* Basic properties *********************************************************)
 
-let corec at_eq_repl_back: ∀i1,i2. eq_repl_back (λf. @⦃i1, f⦄ ≡ i2) ≝ ?.
+corec lemma at_eq_repl_back: ∀i1,i2. eq_repl_back (λf. @⦃i1, f⦄ ≡ i2).
 #i1 #i2 #f1 #H1 cases H1 -f1 -i1 -i2
 [ #f1 #g1 #j1 #j2 #H #H1 #H2 #f2 #H12 cases (eq_inv_px … H12 … H) -g1 /2 width=2 by at_refl/
 | #f1 #i1 #i2 #Hf1 #g1 #j1 #j2 #H #H1 #H2 #f2 #H12 cases (eq_inv_px … H12 … H) -g1 /3 width=7 by at_push/
@@ -286,9 +286,9 @@ qed.
 lemma isid_inv_at_mono: ∀f,i1,i2. 𝐈⦃f⦄ → @⦃i1, f⦄ ≡ i2 → i1 = i2.
 /3 width=6 by isid_inv_at, at_mono/ qed-.
 
-(* Advancedd properties on isid *********************************************)
+(* Advanced properties on isid **********************************************)
 
-let corec isid_at: ∀f. (∀i. @⦃i, f⦄ ≡ i) → 𝐈⦃f⦄ ≝ ?.
+corec lemma isid_at: ∀f. (∀i. @⦃i, f⦄ ≡ i) → 𝐈⦃f⦄.
 #f #Hf lapply (Hf 0)
 #H cases (at_fwd_id_ex … H) -H
 #g #H @(isid_push … H) /3 width=7 by at_inv_npn/

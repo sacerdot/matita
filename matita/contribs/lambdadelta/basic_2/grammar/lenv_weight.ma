@@ -17,7 +17,7 @@ include "basic_2/grammar/lenv.ma".
 
 (* WEIGHT OF A LOCAL ENVIRONMENT ********************************************)
 
-let rec lw L ≝ match L with
+rec definition lw L ≝ match L with
 [ LAtom       ⇒ 0
 | LPair L _ V ⇒ lw L + ♯{V}
 ].

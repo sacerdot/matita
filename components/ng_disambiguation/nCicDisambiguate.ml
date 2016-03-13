@@ -439,7 +439,7 @@ let interpretate_obj status
              ~obj_context:[] ~context:[] ~env ~uri:None ~is_path:false bo
           in
           NCic.Constant ([],name,Some bo,ty',attrs))
- | NotationPt.Inductive (params,tyl) ->
+ | NotationPt.Inductive (params,tyl,source) ->
     let context,params =
      let context,res =
       List.fold_left
@@ -492,10 +492,10 @@ let interpretate_obj status
       ) tyl
     in
      let height = (* XXX calculate *) 0 in
-     let attrs = `Provided, `Regular in
+     let attrs = source, `Regular in
      uri, height, [], [], 
      NCic.Inductive (inductive,leftno,tyl,attrs)
- | NotationPt.Record (params,name,ty,fields) ->
+ | NotationPt.Record (params,name,ty,fields,source) ->
     let context,params =
      let context,res =
       List.fold_left
@@ -546,7 +546,7 @@ let interpretate_obj status
     let tyl = [relevance,name,ty',[relevance,"mk_" ^ name,con']] in
     let field_names = List.map (fun (x,_,y,z) -> x,y,z) fields in
      let height = (* XXX calculate *) 0 in
-     let attrs = `Provided, `Record field_names in
+     let attrs = source, `Record field_names in
      uri, height, [], [], 
      NCic.Inductive (true,leftno,tyl,attrs)
  | NotationPt.LetRec (kind, defs, attrs) ->

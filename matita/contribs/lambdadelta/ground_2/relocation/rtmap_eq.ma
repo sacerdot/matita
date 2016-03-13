@@ -36,12 +36,12 @@ definition eq_repl_fwd (R:predicate …) ≝
 
 (* Basic properties *********************************************************)
 
-let corec eq_refl: reflexive … eq ≝ ?.
+corec lemma eq_refl: reflexive … eq.
 #f cases (pn_split f) *
 #g #Hg [ @(eq_push … Hg Hg) | @(eq_next … Hg Hg) ] -Hg //
 qed.
 
-let corec eq_sym: symmetric … eq ≝ ?.
+corec lemma eq_sym: symmetric … eq.
 #f1 #f2 * -f1 -f2
 #f1 #f2 #g1 #g2 #Hf #H1 #H2
 [ @(eq_push … H2 H1) | @(eq_next … H2 H1) ] -g2 -g1 /2 width=1 by/
@@ -129,7 +129,7 @@ qed-.
 
 (* Main properties **********************************************************)
 
-let corec eq_trans: Transitive … eq ≝ ?.
+corec theorem eq_trans: Transitive … eq.
 #f1 #f * -f1 -f
 #f1 #f #g1 #g #Hf1 #H1 #H #f2 #Hf2
 [ cases (eq_inv_px … Hf2 … H) | cases (eq_inv_nx … Hf2 … H) ] -g

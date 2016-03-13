@@ -248,8 +248,8 @@ let disambiguate_nobj status ?baseuri (text,prefix_len,obj) =
    in
    let name = 
      match obj with
-     | NotationPt.Inductive (_,(name,_,_,_)::_)
-     | NotationPt.Record (_,name,_,_) -> name ^ ".ind"
+     | NotationPt.Inductive (_,(name,_,_,_)::_,_)
+     | NotationPt.Record (_,name,_,_,_) -> name ^ ".ind"
      | NotationPt.Theorem (name,_,_,_) -> name ^ ".con"
      | NotationPt.LetRec (_,(_,(NotationPt.Ident (name, None),_),_,_)::_,_) -> name ^ ".con"
      | NotationPt.LetRec _

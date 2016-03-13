@@ -25,7 +25,7 @@ interpretation "push (nstream)" 'Lift f = (push f).
 
 definition next: rtmap → rtmap.
 * #n #f @(⫯n@f)
-qed.
+defined.
 
 interpretation "next (nstream)" 'Successor f = (next f).
 

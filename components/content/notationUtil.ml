@@ -362,21 +362,21 @@ let freshen_obj obj =
   let freshen_capture_variable (n, t) = freshen_term n, HExtlib.map_option freshen_term t in 
   let freshen_capture_variables = List.map freshen_capture_variable in
   match obj with
-  | NotationPt.Inductive (params, indtypes) ->
+  | NotationPt.Inductive (params, indtypes, attrs) ->
       let indtypes =
         List.map
           (fun (n, co, ty, ctors) -> (n, co, ty, freshen_name_ty ctors))
           indtypes
       in
-      NotationPt.Inductive (freshen_capture_variables params, indtypes)
+      NotationPt.Inductive (freshen_capture_variables params, indtypes, attrs)
   | NotationPt.Theorem (n, t, ty_opt, attrs) ->
       let ty_opt =
         match ty_opt with None -> None | Some ty -> Some (freshen_term ty)
       in
       NotationPt.Theorem (n, freshen_term t, ty_opt, attrs)
-  | NotationPt.Record (params, n, ty, fields) ->
+  | NotationPt.Record (params, n, ty, fields, attrs) ->
       NotationPt.Record (freshen_capture_variables params, n,
-        freshen_term ty, freshen_name_ty_b fields)
+        freshen_term ty, freshen_name_ty_b fields, attrs)
   | NotationPt.LetRec (kind, definitions, attrs) ->
       let definitions =
         List.map

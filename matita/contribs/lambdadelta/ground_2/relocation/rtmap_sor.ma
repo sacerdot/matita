@@ -73,12 +73,12 @@ qed-.
 
 (* Basic properties *********************************************************)
 
-let corec sor_refl: ∀f. f ⋓ f ≡ f ≝ ?.
+corec lemma sor_refl: ∀f. f ⋓ f ≡ f.
 #f cases (pn_split f) * #g #H
 [ @(sor_pp … H H H) | @(sor_nn … H H H) ] -H //
 qed.
 
-let corec sor_sym: ∀f1,f2,f. f1 ⋓ f2 ≡ f → f2 ⋓ f1 ≡ f ≝ ?.
+corec lemma sor_sym: ∀f1,f2,f. f1 ⋓ f2 ≡ f → f2 ⋓ f1 ≡ f.
 #f1 #f2 #f * -f1 -f2 -f
 #f1 #f2 #f #g1 #g2 #g #Hf * * * -g1 -g2 -g
 [ @sor_pp | @sor_pn | @sor_np | @sor_nn ] /2 width=7 by/

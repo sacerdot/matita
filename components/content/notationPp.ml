@@ -281,7 +281,7 @@ let string_of_source = function
    | `Generated -> "generated "
 
 let pp_obj pp_term = function
- | Ast.Inductive (params, types) ->
+ | Ast.Inductive (params, types, source) ->
     let pp_constructors constructors =
       String.concat "\n"
         (List.map (fun (name, typ) -> sprintf "| %s: %s" name (pp_term typ))
@@ -295,7 +295,8 @@ let pp_obj pp_term = function
     | [] -> assert false
     | (name, inductive, typ, constructors) :: tl ->
         let fst_typ_pp =
-          sprintf "%sinductive %s%s: %s \\def\n%s"
+          sprintf "%s%sinductive %s%s: %s \\def\n%s"
+            (string_of_source source)
             (if inductive then "" else "co") name (pp_params pp_term params)
             (pp_term typ) (pp_constructors constructors)
         in
@@ -309,7 +310,8 @@ let pp_obj pp_term = function
       (match body with
       | None -> ""
       | Some body -> "\\def\n " ^ pp_term body)
- | Ast.Record (params,name,ty,fields) ->
+ | Ast.Record (params,name,ty,fields, source) ->
+    string_of_source source ^
     "record " ^ name ^ " " ^ pp_params pp_term params ^ ": " ^ pp_term ty ^ 
     " \\def {" ^ pp_fields pp_term fields ^ "\n}"
  | Ast.LetRec (kind, definitions, (source, _, _)) ->

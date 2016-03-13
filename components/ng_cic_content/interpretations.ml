@@ -646,9 +646,9 @@ let nmap_obj0 status ~idref (_, _, metasenv, subst, kind) =
 	    | None    -> None
 	 in
 	 N.Theorem (n, ty, xbo, attrs)
-      | NCic.Inductive (is_ind, lno, itl, (_, `Regular)) ->      
+      | NCic.Inductive (is_ind, lno, itl, (src, `Regular)) ->      
          let captures, context = build_captures lno itl in
-	 N.Inductive (captures, List.map (build_inductive is_ind lno context) itl)
+	 N.Inductive (captures, List.map (build_inductive is_ind lno context) itl, src)
       | _ -> assert false  (* NCic.Fixpoint (is_rec, ifl, _) -> *)
 
 let nmap_obj status = with_idrefs nmap_obj0 status

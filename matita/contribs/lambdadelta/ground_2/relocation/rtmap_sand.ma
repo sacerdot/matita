@@ -73,12 +73,12 @@ qed-.
 
 (* Basic properties *********************************************************)
 
-let corec sand_refl: ∀f. f ⋒ f ≡ f ≝ ?.
+corec lemma sand_refl: ∀f. f ⋒ f ≡ f.
 #f cases (pn_split f) * #g #H
 [ @(sand_pp … H H H) | @(sand_nn … H H H) ] -H //
 qed.
 
-let corec sand_sym: ∀f1,f2,f. f1 ⋒ f2 ≡ f → f2 ⋒ f1 ≡ f ≝ ?.
+corec lemma sand_sym: ∀f1,f2,f. f1 ⋒ f2 ≡ f → f2 ⋒ f1 ≡ f.
 #f1 #f2 #f * -f1 -f2 -f
 #f1 #f2 #f #g1 #g2 #g #Hf * * * -g1 -g2 -g
 [ @sand_pp | @sand_pn | @sand_np | @sand_nn ] /2 width=7 by/

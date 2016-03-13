@@ -161,7 +161,7 @@ qed-.
 
 (* Basic properties *********************************************************)
 
-let corec after_eq_repl_back_2:  ∀f1,f. eq_repl_back (λf2. f2 ⊚ f1 ≡ f) ≝ ?.
+corec lemma after_eq_repl_back_2: ∀f1,f. eq_repl_back (λf2. f2 ⊚ f1 ≡ f).
 #f1 #f #f2 * -f2 -f1 -f
 #f21 #f1 #f #g21 [1,2: #g1 ] #g #Hf #H21 [1,2: #H1 ] #H #g22 #H0
 [ cases (eq_inv_px …  H0 …  H21) -g21 /3 width=7 by after_refl/
@@ -170,11 +170,11 @@ let corec after_eq_repl_back_2:  ∀f1,f. eq_repl_back (λf2. f2 ⊚ f1 ≡ f) �
 ]
 qed-.
 
-lemma after_eq_repl_fwd_2:  ∀f1,f. eq_repl_fwd (λf2. f2 ⊚ f1 ≡ f).
+lemma after_eq_repl_fwd_2: ∀f1,f. eq_repl_fwd (λf2. f2 ⊚ f1 ≡ f).
 #f1 #f @eq_repl_sym /2 width=3 by after_eq_repl_back_2/
 qed-.
 
-let corec after_eq_repl_back_1:  ∀f2,f. eq_repl_back (λf1. f2 ⊚ f1 ≡ f) ≝ ?.
+corec lemma after_eq_repl_back_1: ∀f2,f. eq_repl_back (λf1. f2 ⊚ f1 ≡ f).
 #f2 #f #f1 * -f2 -f1 -f
 #f2 #f11 #f #g2 [1,2: #g11 ] #g #Hf #H2 [1,2: #H11 ] #H #g2 #H0
 [ cases (eq_inv_px …  H0 …  H11) -g11 /3 width=7 by after_refl/
@@ -183,11 +183,11 @@ let corec after_eq_repl_back_1:  ∀f2,f. eq_repl_back (λf1. f2 ⊚ f1 ≡ f) �
 ]
 qed-.
 
-lemma after_eq_repl_fwd_1:  ∀f2,f. eq_repl_fwd (λf1. f2 ⊚ f1 ≡ f).
+lemma after_eq_repl_fwd_1: ∀f2,f. eq_repl_fwd (λf1. f2 ⊚ f1 ≡ f).
 #f2 #f @eq_repl_sym /2 width=3 by after_eq_repl_back_1/
 qed-.
 
-let corec after_eq_repl_back_0:  ∀f1,f2. eq_repl_back (λf. f2 ⊚ f1 ≡ f) ≝ ?.
+corec lemma after_eq_repl_back_0: ∀f1,f2. eq_repl_back (λf. f2 ⊚ f1 ≡ f).
 #f2 #f1 #f * -f2 -f1 -f
 #f2 #f1 #f01 #g2 [1,2: #g1 ] #g01 #Hf01 #H2 [1,2: #H1 ] #H01 #g02 #H0
 [ cases (eq_inv_px …  H0 …  H01) -g01 /3 width=7 by after_refl/
@@ -196,15 +196,15 @@ let corec after_eq_repl_back_0:  ∀f1,f2. eq_repl_back (λf. f2 ⊚ f1 ≡ f) �
 ]
 qed-.
 
-lemma after_eq_repl_fwd_0:  ∀f2,f1. eq_repl_fwd (λf. f2 ⊚ f1 ≡ f).
+lemma after_eq_repl_fwd_0: ∀f2,f1. eq_repl_fwd (λf. f2 ⊚ f1 ≡ f).
 #f2 #f1 @eq_repl_sym /2 width=3 by after_eq_repl_back_0/
 qed-.
 
 (* Main properties **********************************************************)
 
-let corec after_trans1: ∀f0,f3,f4. f0 ⊚ f3 ≡ f4 →
-                        ∀f1,f2. f1 ⊚ f2 ≡ f0 →
-                        ∀f. f2 ⊚ f3 ≡ f → f1 ⊚ f ≡ f4 ≝ ?.
+corec theorem after_trans1: ∀f0,f3,f4. f0 ⊚ f3 ≡ f4 →
+                            ∀f1,f2. f1 ⊚ f2 ≡ f0 →
+                            ∀f. f2 ⊚ f3 ≡ f → f1 ⊚ f ≡ f4.
 #f0 #f3 #f4 * -f0 -f3 -f4 #f0 #f3 #f4 #g0 [1,2: #g3 ] #g4
 [ #Hf4 #H0 #H3 #H4 #g1 #g2 #Hg0 #g #Hg
   cases (after_inv_xxp … Hg0 … H0) -g0
@@ -226,9 +226,9 @@ let corec after_trans1: ∀f0,f3,f4. f0 ⊚ f3 ≡ f4 →
 ]
 qed-.
 
-let corec after_trans2: ∀f1,f0,f4. f1 ⊚ f0 ≡ f4 →
-                        ∀f2, f3. f2 ⊚ f3 ≡ f0 →
-                        ∀f. f1 ⊚ f2 ≡ f → f ⊚ f3 ≡ f4 ≝ ?.
+corec theorem after_trans2: ∀f1,f0,f4. f1 ⊚ f0 ≡ f4 →
+                            ∀f2, f3. f2 ⊚ f3 ≡ f0 →
+                            ∀f. f1 ⊚ f2 ≡ f → f ⊚ f3 ≡ f4.
 #f1 #f0 #f4 * -f1 -f0 -f4 #f1 #f0 #f4 #g1 [1,2: #g0 ] #g4
 [ #Hf4 #H1 #H0 #H4 #g2 #g3 #Hg0 #g #Hg
   cases (after_inv_xxp … Hg0 … H0) -g0
@@ -252,7 +252,7 @@ qed-.
 
 (* Main inversion lemmas on after *******************************************)
 
-let corec after_mono: ∀f1,f2,x,y. f1 ⊚ f2 ≡ x → f1 ⊚ f2 ≡ y → x ≗ y ≝ ?.
+corec theorem after_mono: ∀f1,f2,x,y. f1 ⊚ f2 ≡ x → f1 ⊚ f2 ≡ y → x ≗ y.
 #f1 #f2 #x #y * -f1 -f2 -x
 #f1 #f2 #x #g1 [1,2: #g2 ] #g #Hx #H1 [1,2: #H2 ] #H0x #Hy
 [ cases (after_inv_ppx … Hy … H1 H2) -g1 -g2 /3 width=8 by eq_push/
@@ -276,12 +276,12 @@ qed.
 
 (* Inversion lemmas on isid *************************************************)
 
-let corec isid_after_sn: ∀f1. 𝐈⦃f1⦄ → ∀f2. f1 ⊚ f2 ≡ f2 ≝ ?.
+corec lemma isid_after_sn: ∀f1. 𝐈⦃f1⦄ → ∀f2. f1 ⊚ f2 ≡ f2.
 #f1 * -f1 #f1 #g1 #Hf1 #H1 #f2 cases (pn_split f2) * #g2 #H2
 /3 width=7 by after_push, after_refl/
 qed-.
 
-let corec isid_after_dx: ∀f2. 𝐈⦃f2⦄ → ∀f1. f1 ⊚ f2 ≡ f1 ≝ ?.
+corec lemma isid_after_dx: ∀f2. 𝐈⦃f2⦄ → ∀f1. f1 ⊚ f2 ≡ f1.
 #f2 * -f2 #f2 #g2 #Hf2 #H2 #f1 cases (pn_split f1) * #g1 #H1
 [ /3 width=7 by after_refl/
 | @(after_next … H1 H1) /3 width=3 by isid_push/
@@ -296,14 +296,14 @@ lemma after_isid_inv_dx: ∀f1,f2,f. f1 ⊚ f2 ≡ f →  𝐈⦃f2⦄ → f1 �
 /3 width=6 by isid_after_dx, after_mono/
 qed-.
 
-let corec after_fwd_isid1: ∀f1,f2,f. f1 ⊚ f2 ≡ f → 𝐈⦃f⦄ → 𝐈⦃f1⦄ ≝ ?.
+corec lemma after_fwd_isid1: ∀f1,f2,f. f1 ⊚ f2 ≡ f → 𝐈⦃f⦄ → 𝐈⦃f1⦄.
 #f1 #f2 #f * -f1 -f2 -f
 #f1 #f2 #f #g1 [1,2: #g2 ] #g #Hf #H1 [1,2: #H2 ] #H0 #H
 [ /4 width=6 by isid_inv_push, isid_push/ ]
 cases (isid_inv_next … H … H0)
 qed-.
 
-let corec after_fwd_isid2: ∀f1,f2,f. f1 ⊚ f2 ≡ f → 𝐈⦃f⦄ → 𝐈⦃f2⦄ ≝ ?.
+corec lemma after_fwd_isid2: ∀f1,f2,f. f1 ⊚ f2 ≡ f → 𝐈⦃f⦄ → 𝐈⦃f2⦄.
 #f1 #f2 #f * -f1 -f2 -f
 #f1 #f2 #f #g1 [1,2: #g2 ] #g #Hf #H1 [1,2: #H2 ] #H0 #H
 [ /4 width=6 by isid_inv_push, isid_push/ ]
@@ -419,7 +419,7 @@ lemma after_fwd_isid_dx: ∀f2,f1,f.  𝐓⦃f⦄ → f2 ⊚ f1 ≡ f → f2 ≗
 /3 width=8 by at_inj, at_eq_repl_back/
 qed-.
 
-let corec after_inj_O_aux: ∀f1. @⦃0, f1⦄ ≡ 0 → H_after_inj f1 ≝ ?.
+corec fact after_inj_O_aux: ∀f1. @⦃0, f1⦄ ≡ 0 → H_after_inj f1.
 #f1 #H1f1 #H2f1 #f #f21 #f22 #H1f #H2f
 cases (at_inv_pxp … H1f1) -H1f1 [ |*: // ] #g1 #H1
 lapply (istot_inv_push … H2f1 … H1) -H2f1 #H2g1

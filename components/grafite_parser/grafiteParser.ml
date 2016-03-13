@@ -58,12 +58,12 @@ let add_raw_attribute ~text t = N.AttributedTerm (`Raw text, t)
 
 let default_associativity = Gramext.NonA
         
-let mk_rec_corec src ind_kind defs loc = 
- let attrs = src, `Definition, `Regular in
+let mk_rec_corec src flavour ind_kind defs loc = 
+ let attrs = src, flavour, `Regular in
   (loc, N.LetRec (ind_kind, defs, attrs))
 
-let nmk_rec_corec src ind_kind defs loc index = 
- let loc,t = mk_rec_corec src ind_kind defs loc in
+let nmk_rec_corec src flavour ind_kind defs loc index = 
+ let loc,t = mk_rec_corec src flavour ind_kind defs loc in
   G.NObj (loc,t,index)
 
 let shift_vars binder (vars, ty) bo =
@@ -529,27 +529,33 @@ EXTEND
     | src = source; IDENT "axiom"; i = index; name = IDENT; SYMBOL ":"; typ = term ->
         let attrs = src, `Axiom, `Regular in
 	G.NObj (loc, N.Theorem (name, typ, None, attrs),i)
-    | IDENT "discriminator" ; indty = tactic_term -> G.NDiscriminator (loc,indty)
-    | IDENT "inverter"; name = IDENT; IDENT "for" ; indty = tactic_term ;
-      paramspec = OPT inverter_param_list ; 
-      outsort = OPT [ SYMBOL ":" ; outsort = term -> outsort ] -> 
-        G.NInverter (loc,name,indty,paramspec,outsort)
-    | src = source; LETCOREC ; defs = let_codefs -> 
-        nmk_rec_corec src `CoInductive defs loc true
-    | src = source; LETREC ; defs = let_defs -> 
-        nmk_rec_corec src `Inductive defs loc true
-(* FG: no source since no i_attr in N.Inductive *)
-    | IDENT "inductive"; spec = inductive_spec ->
+    | src = source; IDENT "inductive"; spec = inductive_spec ->
         let (params, ind_types) = spec in
-        G.NObj (loc, N.Inductive (params, ind_types),true)
-(* FG: no source since no i_attr in N.Inductive *)
-    | IDENT "coinductive"; spec = inductive_spec ->
+        G.NObj (loc, N.Inductive (params, ind_types, src),true)
+    | src = source; IDENT "coinductive"; spec = inductive_spec ->
         let (params, ind_types) = spec in
         let ind_types = (* set inductive flags to false (coinductive) *)
           List.map (fun (name, _, term, ctors) -> (name, false, term, ctors))
             ind_types
         in
-        G.NObj (loc, N.Inductive (params, ind_types),true)
+        G.NObj (loc, N.Inductive (params, ind_types, src),true)
+    | src = source; IDENT "record" ; (params,name,ty,fields) = record_spec ->
+        G.NObj (loc, N.Record (params,name,ty,fields,src),true)
+(* FG: new syntax for inductive/coinductive definitions and statements *)
+    | src = source; IDENT "rec"; nflavour = ntheorem_flavour; defs = let_defs -> 
+        nmk_rec_corec src nflavour `Inductive defs loc true
+    | src = source; IDENT "corec"; nflavour = ntheorem_flavour; defs = let_codefs ->
+        nmk_rec_corec src nflavour `CoInductive defs loc true
+(**)
+    | LETCOREC ; defs = let_codefs -> 
+        nmk_rec_corec `Provided `Definition `CoInductive defs loc true
+    | LETREC ; defs = let_defs -> 
+        nmk_rec_corec `Provided `Definition `Inductive defs loc true
+    | IDENT "discriminator" ; indty = tactic_term -> G.NDiscriminator (loc,indty)
+    | IDENT "inverter"; name = IDENT; IDENT "for" ; indty = tactic_term ;
+      paramspec = OPT inverter_param_list ; 
+      outsort = OPT [ SYMBOL ":" ; outsort = term -> outsort ] -> 
+        G.NInverter (loc,name,indty,paramspec,outsort)
     | IDENT "universe"; IDENT "constraint"; u1 = tactic_term; 
         SYMBOL <:unicode<lt>> ; u2 = tactic_term ->
         let urify = function 
@@ -570,9 +576,6 @@ EXTEND
         "to"; target = term -> t,ty,(id,source),target ] ->
           let compose = compose = None in
           G.NCoercion(loc,name,compose,spec)
-(* FG: no source since no i_attr in N.Record *)
-    | IDENT "record" ; (params,name,ty,fields) = record_spec ->
-        G.NObj (loc, N.Record (params,name,ty,fields),true)
     | IDENT "copy" ; s = IDENT; IDENT "from"; u = URI; "with"; 
       m = LIST0 [ u1 = URI; SYMBOL <:unicode<mapsto>>; u2 = URI -> u1,u2 ] ->
         G.NCopy (loc,s,NUri.uri_of_string u,

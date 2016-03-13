@@ -220,7 +220,7 @@ qed-.
 (* Iterators ****************************************************************)
 
 (* Note: see also: lib/arithemetics/bigops.ma *)
-let rec iter (n:nat) (B:Type[0]) (op: B → B) (nil: B) ≝
+rec definition iter (n:nat) (B:Type[0]) (op: B → B) (nil: B) ≝
   match n with
    [ O   ⇒ nil
    | S k ⇒ op (iter k B op nil)
@@ -249,7 +249,7 @@ qed.
 (* Trichotomy operator ******************************************************)
 
 (* Note: this is "if eqb n1 n2 then a2 else if leb n1 n2 then a1 else a3" *)
-let rec tri (A:Type[0]) n1 n2 a1 a2 a3 on n1 : A ≝
+rec definition tri (A:Type[0]) n1 n2 a1 a2 a3 on n1 : A ≝
   match n1 with
   [ O    ⇒ match n2 with [ O ⇒ a2 | S n2 ⇒ a1 ]
   | S n1 ⇒ match n2 with [ O ⇒ a3 | S n2 ⇒ tri A n1 n2 a1 a2 a3 ]

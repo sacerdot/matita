@@ -62,7 +62,7 @@ type 'term capture_variable = 'term * 'term option
 
 (** To be increased each time the term type below changes, used for "safe"
  * marshalling *)
-let magic = 7
+let magic = 8
 
 type term =
   (* CIC AST *)
@@ -173,7 +173,7 @@ type cic_appl_pattern =
 type 'term inductive_type = string * bool * 'term * (string * 'term) list
 
 type 'term obj =
-  | Inductive of 'term capture_variable list * 'term inductive_type list
+  | Inductive of 'term capture_variable list * 'term inductive_type list * NCic.source
       (** parameters, list of loc * mutual inductive types *)
   | Theorem of string * 'term * 'term option * NCic.c_attr
       (** name, type, body, attributes
@@ -183,7 +183,7 @@ type 'term obj =
        *   will be given in proof editing mode using the tactical language,
        *   unless the flavour is an Axiom
        *)
-  | Record of 'term capture_variable list * string * 'term * (string * 'term * bool * int) list
+  | Record of 'term capture_variable list * string * 'term * (string * 'term * bool * int) list * NCic.source
       (** left parameters, name, type, fields *)
   | LetRec of induction_kind * ('term capture_variable list * 'term capture_variable * 'term * int) list * NCic.f_attr
       (* (params, name, body, decreasing arg) list, attributes *)

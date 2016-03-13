@@ -17,7 +17,7 @@ include "ground_2/relocation/rtmap_after.ma".
 
 (* RELOCATION N-STREAM ******************************************************)
 
-let corec compose: rtmap → rtmap → rtmap ≝ ?.
+corec definition compose: rtmap → rtmap → rtmap.
 #f1 * #n2 #f2 @(seq … (f1@❴n2❵)) @(compose ? f2) -compose -f2
 @(↓*[⫯n2] f1)
 defined.
@@ -81,7 +81,7 @@ lemma after_apply: ∀n2,f1,f2,f. (↓*[⫯n2] f1) ⊚ f2 ≡ f → f1 ⊚ n2@f2
 ]
 qed-.
 
-let corec after_total_aux: ∀f1,f2,f. f1 ∘ f2 = f → f1 ⊚ f2 ≡ f ≝ ?.
+corec lemma after_total_aux: ∀f1,f2,f. f1 ∘ f2 = f → f1 ⊚ f2 ≡ f.
 * #n1 #f1 * #n2 #f2 * #n #f cases n1 -n1
 [ cases n2 -n2
   [ #H cases (compose_inv_O2 … H) -H /3 width=7 by after_refl, eq_f2/

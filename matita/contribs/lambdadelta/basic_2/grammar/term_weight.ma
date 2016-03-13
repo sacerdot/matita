@@ -17,7 +17,7 @@ include "basic_2/grammar/term.ma".
 
 (* WEIGHT OF A TERM *********************************************************)
 
-let rec tw T ≝ match T with
+rec definition tw T ≝ match T with
 [ TAtom _     ⇒ 1
 | TPair _ V T ⇒ tw V + tw T + 1
 ].

@@ -17,7 +17,7 @@ include "ground_2/relocation/rtmap_eq.ma".
 
 (* RELOCATION N-STREAM ******************************************************)
 
-let corec id: rtmap ≝ ↑id.
+corec definition id: rtmap ≝ ↑id.
 
 interpretation "identity (nstream)"
    'Identity = (id).

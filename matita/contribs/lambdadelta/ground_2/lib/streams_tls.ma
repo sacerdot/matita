@@ -17,9 +17,9 @@ include "ground_2/lib/streams_hdtl.ma".
 
 (* STREAMS ******************************************************************)
 
-let rec tls (A:Type[0]) (n:nat) on n: stream A → stream A ≝ ?.
+rec definition tls (A:Type[0]) (n:nat) on n: stream A → stream A ≝ ?.
 cases n -n [ #t @t | #n #t @tl @(tls … n t) ]
-qed.
+defined.
 
 interpretation "recursive tail (strams)" 'Drops n f = (tls ? n f).
 

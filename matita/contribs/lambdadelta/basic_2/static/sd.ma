@@ -84,7 +84,7 @@ definition sd_SO: ∀h. nat → sd h ≝ λh,k. mk_sd h (deg_SO h k) ….
 ]
 defined.
 
-let rec sd_d (h:sh) (k:nat) (d:nat) on d : sd h ≝
+rec definition sd_d (h:sh) (k:nat) (d:nat) on d : sd h ≝
    match d with
    [ O   ⇒ sd_O h
    | S d ⇒ match d with

@@ -315,7 +315,7 @@ let domain_of_obj ~context ast =
       @ (match bo with
           None -> []
         | Some bo -> domain_of_term [] bo)
-   | Ast.Inductive (params,tyl) ->
+   | Ast.Inductive (params,tyl,_) ->
       let context, dom = 
        List.fold_left
         (fun (context, dom) (var, ty) ->
@@ -335,7 +335,7 @@ let domain_of_obj ~context ast =
                List.map
                 (fun (_,ty) -> domain_of_term context_w_types ty) cl))
                 tyl)
-   | Ast.Record (params,var,ty,fields) ->
+   | Ast.Record (params,var,ty,fields,_) ->
       let context, dom = 
        List.fold_left
         (fun (context, dom) (var, ty) ->

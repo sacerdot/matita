@@ -16,7 +16,7 @@ include "ground_2/relocation/mr2.ma".
 
 (* MULTIPLE RELOCATION WITH PAIRS *******************************************)
 
-let rec pluss (cs:mr2) (i:nat) on cs ≝ match cs with
+rec definition pluss (cs:mr2) (i:nat) on cs ≝ match cs with
 [ nil2         ⇒ ◊
 | cons2 l m cs ⇒ {l + i, m} @ pluss cs i
 ].

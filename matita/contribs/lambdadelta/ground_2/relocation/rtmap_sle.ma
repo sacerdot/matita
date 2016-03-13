@@ -67,7 +67,7 @@ qed-.
 
 (* properties on isid *******************************************************)
 
-let corec sle_isid_sn: ∀f1. 𝐈⦃f1⦄ → ∀f2. f1 ⊆ f2 ≝ ?.
+corec lemma sle_isid_sn: ∀f1. 𝐈⦃f1⦄ → ∀f2. f1 ⊆ f2.
 #f1 * -f1
 #f1 #g1 #Hf1 #H1 #f2 cases (pn_split f2) *
 /3 width=5 by sle_weak, sle_push/
@@ -75,7 +75,7 @@ qed.
 
 (* inversion lemmas on isid *************************************************)
 
-let corec sle_inv_isid_dx: ∀f1,f2. f1 ⊆ f2 → 𝐈⦃f2⦄ → 𝐈⦃f1⦄ ≝ ?.
+corec lemma sle_inv_isid_dx: ∀f1,f2. f1 ⊆ f2 → 𝐈⦃f2⦄ → 𝐈⦃f1⦄.
 #f1 #f2 * -f1 -f2
 #f1 #f2 #g1 #g2 #Hf * * #H
 [2,3: elim (isid_inv_next … H) // ]

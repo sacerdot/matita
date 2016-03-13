@@ -26,7 +26,7 @@ interpretation "nil (list)" 'Nil = (nil ?).
 
 interpretation "cons (list)" 'Cons hd tl = (cons ? hd tl).
 
-let rec length (A:Type[0]) (l:list A) on l ≝ match l with
+rec definition length (A:Type[0]) (l:list A) on l ≝ match l with
 [ nil      ⇒ 0
 | cons _ l ⇒ ⫯(length A l)
 ].
@@ -34,7 +34,7 @@ let rec length (A:Type[0]) (l:list A) on l ≝ match l with
 interpretation "length (list)"
    'card l = (length ? l).
 
-let rec all A (R:predicate A) (l:list A) on l ≝
+rec definition all A (R:predicate A) (l:list A) on l ≝
   match l with
   [ nil        ⇒ ⊤
   | cons hd tl ⇒ R hd ∧ all A R tl

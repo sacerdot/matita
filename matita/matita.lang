@@ -84,7 +84,6 @@
          <keyword>definition</keyword>
          <keyword>inductive</keyword>
          <keyword>coinductive</keyword>
-         <keyword>let</keyword>
          <keyword>fact</keyword>
 	 <keyword>lemma</keyword>
          <keyword>remark</keyword>
