@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "ground_2/lib/lstar.ma".
+include "basic_2/relocation/lreq_lreq.ma".
 include "basic_2/relocation/drops.ma".
 
 (* GENERAL SLICING FOR LOCAL ENVIRONMENTS ***********************************)
@@ -69,5 +70,25 @@ lemma d2_deliftable_sn_llstar: ∀R. d_deliftable2_sn R →
 | #d #U #U2 #_ #HU2 #IHU1 #K #c #f #HLK #T1 #HTU1
   elim (IHU1 … HLK … HTU1) -IHU1 -U1 #T #HTU #HT1
   elim (HR … HU2 … HLK … HTU) -HR -L -U /3 width=5 by lstar_dx, ex2_intro/
+]
+qed-.
+
+lemma dropable_dx_TC: ∀R. dropable_dx R → dropable_dx (LTC … R).
+#R #HR #L1 #L2 #f2 #H elim H -L2
+[ #L2 #HL12 #K2 #c #f #HLK2 #Hf #f1 #Hf2 elim (HR … HL12 … HLK2 … Hf … Hf2) -HR -L2 -f2 -Hf
+  /3 width=3 by inj, ex2_intro/
+| #L #L2 #_ #HL2 #IHL1 #K2 #c #f #HLK2 #Hf #f1 #Hf2 elim (HR … HL2 … HLK2 … Hf … Hf2) -HR -L2
+  #K #HLK #HK2 elim (IHL1 … HLK … Hf … Hf2) -L -f2 -Hf
+  /3 width=5 by step, ex2_intro/
+]
+qed-.
+
+lemma dedropable_sn_TC: ∀R. dedropable_sn R → dedropable_sn (LTC … R).
+#R #HR #L1 #K1 #c #f #HLK1 #K2 #f1 #H elim H -K2
+[ #K2 #HK12 #f2 #Hf elim (HR … HLK1 … HK12 … Hf) -HR -K1 -f1
+  /3 width=4 by inj, ex3_intro/
+| #K #K2 #_ #HK2 #IH #f2 #Hf elim (IH … Hf) -IH -K1
+  #L #H1L1 #HLK #H2L1 elim (HR … HLK … HK2 … Hf) -HR -K -f1
+  /3 width=6 by lreq_trans, step, ex3_intro/
 ]
 qed-.

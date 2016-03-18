@@ -12,14 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/lenv_length.ma".
-include "basic_2/relocation/lexs.ma".
+include "basic_2/relocation/drops.ma".
 
-(* GENERAL ENTRYWISE EXTENSION OF CONTEXT-SENSITIVE REALTIONS FOR TERMS *****)
+(* GENERAL SLICING FOR LOCAL ENVIRONMENTS ***********************************)
 
-(* Forward lemmas on length for local environments **************************)
+(* Properties on context sensitive equivalence for terms ********************)
 
-(* Basic_2A1: includes: lpx_sn_fwd_length *)
-lemma lexs_fwd_length: ∀RN,RP,L1,L2,f. L1 ⦻*[RN, RP, f] L2 → |L1| = |L2|.
-#RM #RP #L1 #L2 #f #H elim H -L1 -L2 -f //
+lemma ceq_lift: d_liftable2 ceq.
+/2 width=3 by ex2_intro/ qed-.
+
+lemma ceq_inv_lift: d_deliftable2_sn ceq.
+/2 width=3 by ex2_intro/ qed-.
+
+(* Note: cfull_inv_lift does not hold *)
+lemma cfull_lift: d_liftable2 cfull.
+#K #T1 #T2 #_ #L #c #f #_ #U1 #_ -K -T1 -c
+elim (lifts_total T2 f) /2 width=3 by ex2_intro/
 qed-.

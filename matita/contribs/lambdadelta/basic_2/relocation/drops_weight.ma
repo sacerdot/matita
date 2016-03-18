@@ -30,7 +30,6 @@ lemma drops_fwd_lw: ∀L1,L2,c,f. ⬇*[c, f] L1 ≡ L2 → ♯{L2} ≤ ♯{L1}.
 qed-.
 
 (* Basic_2A1: includes: drop_fwd_lw_lt *)
-(* Note: 𝐈⦃t⦄ → ⊥ is ∥l∥ < |L| *)
 lemma drops_fwd_lw_lt: ∀L1,L2,f. ⬇*[Ⓣ, f] L1 ≡ L2 →
                        (𝐈⦃f⦄ → ⊥) → ♯{L2} < ♯{L1}.
 #L1 #L2 #f #H elim H -L1 -L2 -f
@@ -47,4 +46,11 @@ qed-.
 lemma drops_pair2_fwd_rfw: ∀I,L,K,V,c,f. ⬇*[c, f] L ≡ K.ⓑ{I}V → ∀T. ♯{K, V} < ♯{L, T}.
 #I #L #K #V #c #f #HLK lapply (drops_fwd_lw … HLK) -HLK
 normalize in ⊢ (%→?→?%%); /3 width=3 by le_to_lt_to_lt/
+qed-.
+
+(* Advanced inversion lemma *************************************************)
+
+lemma drops_inv_x_pair_xy: ∀I,L,V,c,f. ⬇*[c,f] L ≡ L.ⓑ{I}V → ⊥.
+#I #L #V #c #f #H lapply (drops_fwd_lw … H) -c -f
+/2 width=4 by lt_le_false/ (**) (* full auto is a bit slow: 19s *)
 qed-.

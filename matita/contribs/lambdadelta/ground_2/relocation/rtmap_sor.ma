@@ -73,6 +73,39 @@ qed-.
 
 (* Basic properties *********************************************************)
 
+corec lemma sor_eq_repl_back1: ∀f2,f. eq_repl_back … (λf1. f1 ⋓ f2 ≡ f).
+#f2 #f #f1 * -f1 -f2 -f
+#f1 #f2 #f #g1 #g2 #g #Hf #H1 #H2 #H0 #x #Hx
+try cases (eq_inv_px … Hx … H1) try cases (eq_inv_nx … Hx … H1) -g1
+/3 width=7 by sor_pp, sor_np, sor_pn, sor_nn/
+qed-.
+
+lemma sor_eq_repl_fwd1: ∀f2,f. eq_repl_fwd … (λf1. f1 ⋓ f2 ≡ f).
+#f2 #f @eq_repl_sym /2 width=3 by sor_eq_repl_back1/
+qed-.
+
+corec lemma sor_eq_repl_back2: ∀f1,f. eq_repl_back … (λf2. f1 ⋓ f2 ≡ f).
+#f1 #f #f2 * -f1 -f2 -f
+#f1 #f2 #f #g1 #g2 #g #Hf #H #H2 #H0 #x #Hx
+try cases (eq_inv_px … Hx … H2) try cases (eq_inv_nx … Hx … H2) -g2
+/3 width=7 by sor_pp, sor_np, sor_pn, sor_nn/
+qed-.
+
+lemma sor_eq_repl_fwd2: ∀f1,f. eq_repl_fwd … (λf2. f1 ⋓ f2 ≡ f).
+#f1 #f @eq_repl_sym /2 width=3 by sor_eq_repl_back2/
+qed-.
+
+corec lemma sor_eq_repl_back3: ∀f1,f2. eq_repl_back … (λf. f1 ⋓ f2 ≡ f).
+#f1 #f2 #f * -f1 -f2 -f
+#f1 #f2 #f #g1 #g2 #g #Hf #H #H2 #H0 #x #Hx
+try cases (eq_inv_px … Hx … H0) try cases (eq_inv_nx … Hx … H0) -g
+/3 width=7 by sor_pp, sor_np, sor_pn, sor_nn/
+qed-.
+
+lemma sor_eq_repl_fwd3: ∀f1,f2. eq_repl_fwd … (λf. f1 ⋓ f2 ≡ f).
+#f1 #f2 @eq_repl_sym /2 width=3 by sor_eq_repl_back3/
+qed-.
+
 corec lemma sor_refl: ∀f. f ⋓ f ≡ f.
 #f cases (pn_split f) * #g #H
 [ @(sor_pp … H H H) | @(sor_nn … H H H) ] -H //

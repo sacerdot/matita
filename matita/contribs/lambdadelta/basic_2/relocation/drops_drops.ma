@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/relocation/lifts_lifts.ma".
-include "basic_2/relocation/drops.ma".
+include "basic_2/relocation/drops_weight.ma".
 
 (* GENERAL SLICING FOR LOCAL ENVIRONMENTS ***********************************)
 
@@ -59,6 +59,29 @@ theorem drops_trans: ∀L1,L,c1,f1. ⬇*[c1, f1] L1 ≡ L →
 ]
 qed-.
 
+theorem drops_conf_div: ∀L,K,f1. ⬇*[Ⓣ,f1] L ≡ K → ∀f2. ⬇*[Ⓣ,f2] L ≡ K →
+                        𝐔⦃f1⦄ → 𝐔⦃f2⦄ → f1 ≗ f2.
+#L #K #f1 #H elim H -L -K -f1
+[ #f1 #Hf1 #f2 #Hf2 elim (drops_inv_atom1 … Hf2) -Hf2
+  /3 width=1 by isid_inv_eq_repl/
+| #I #L #K #V #f1 #Hf1 #IH #f2 elim (pn_split f2) *
+  #g2 #H2 #Hf2 #HU1 #HU2 destruct
+  [ elim (drops_inv_skip1 … Hf2) -IH -HU1 -Hf2 #Y2 #X2 #HY2 #_ #H destruct
+    lapply (drops_fwd_isid … HY2 ?) -HY2 /2 width=3 by isuni_inv_push/ -HU2
+    #H destruct elim (drops_inv_x_pair_xy … Hf1)
+  | /4 width=5 by drops_inv_drop1, isuni_inv_next, eq_next/
+  ]
+| #I #L #K #V #W #f1 #Hf1 #_ #IH #f2 elim (pn_split f2) *
+  #g2 #H2 #Hf2 #HU1 #HU2 destruct
+  [ elim (drops_inv_skip1 … Hf2) -Hf2 #Y2 #X2 #HY2 #_ #H destruct -Hf1
+    /4 width=5 by isuni_fwd_push, eq_push/
+  | lapply (drops_inv_drop1 … Hf2) -Hf2 -IH -HU2 #Hg2
+    lapply (drops_fwd_isid … Hf1 ?) -Hf1 /2 width=3 by isuni_inv_push/ -HU1
+    #H destruct elim (drops_inv_x_pair_xy … Hg2)
+  ]
+]
+qed-.
+
 (* Advanced properties ******************************************************)
 
 (* Basic_2A1: includes: drop_mono *)
@@ -87,4 +110,18 @@ lemma drops_trans_skip2: ∀L1,L,c1,f1. ⬇*[c1, f1] L1 ≡ L →
 #L1 #L #c1 #f1 #H1 #I #K2 #V2 #c2 #f2 #H2 #f #Hf
 lapply (drops_trans … H1 … H2 … Hf) -L -Hf
 #H elim (drops_inv_skip2 … H) -H /2 width=5 by ex3_2_intro/
+qed-.
+
+(* Basic_2A1: includes: drops_conf_div *)
+lemma drops_conf_div_pair: ∀I1,I2,L,K,V1,V2,f1,f2.
+                           ⬇*[Ⓣ,f1] L ≡ K.ⓑ{I1}V1 → ⬇*[Ⓣ,f2] L ≡ K.ⓑ{I2}V2 →
+                           𝐔⦃f1⦄ → 𝐔⦃f2⦄ → ∧∧ f1 ≗ f2 & I1 = I2 & V1 = V2.
+#I1 #I2 #L #K #V1 #V2 #f1 #f2 #Hf1 #Hf2 #HU1 #HU2
+lapply (drops_isuni_fwd_drop2 … Hf1) // #H1
+lapply (drops_isuni_fwd_drop2 … Hf2) // #H2
+lapply (drops_conf_div … H1 … H2 ??) /2 width=3 by isuni_next/ -H1 -H2 -HU1 -HU2 #H
+lapply (eq_inv_nn … H ????) -H [5: |*: // ] #H12
+lapply (drops_eq_repl_back … Hf1 … H12) -Hf1 #H0
+lapply (drops_mono … H0 … Hf2) -L #H
+destruct /2 width=1 by and3_intro/
 qed-.

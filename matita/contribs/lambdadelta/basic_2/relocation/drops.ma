@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/rdropstar_4.ma".
-include "basic_2/grammar/lenv.ma".
+include "basic_2/relocation/lreq.ma".
 include "basic_2/relocation/lifts.ma".
 
 (* GENERAL SLICING FOR LOCAL ENVIRONMENTS ***********************************)
@@ -51,6 +51,17 @@ definition dropable_sn: predicate (rtmap → relation lenv) ≝
                         λR. ∀L1,K1,c,f. ⬇*[c, f] L1 ≡ K1 → ∀L2,f2. R f2 L1 L2 →
                         ∀f1. f ⊚ f1 ≡ f2 →
                         ∃∃K2. R f1 K1 K2 & ⬇*[c, f] L2 ≡ K2.
+
+definition dropable_dx: predicate (rtmap → relation lenv) ≝
+                        λR. ∀L1,L2,f2. R f2 L1 L2 →
+                        ∀K2,c,f. ⬇*[c, f] L2 ≡ K2 →  𝐔⦃f⦄ →
+                        ∀f1. f ⊚ f1 ≡ f2 → 
+                        ∃∃K1. ⬇*[c, f] L1 ≡ K1 & R f1 K1 K2.
+
+definition dedropable_sn: predicate (rtmap → relation lenv) ≝
+                          λR. ∀L1,K1,c,f. ⬇*[c, f] L1 ≡ K1 → ∀K2,f1. R f1 K1 K2 →
+                          ∀f2. f ⊚ f1 ≡ f2 →
+                          ∃∃L2. R f2 L1 L2 & ⬇*[c, f] L2 ≡ K2 & L1 ≡[f] L2.
 
 (* Basic inversion lemmas ***************************************************)
 
@@ -156,6 +167,15 @@ qed-.
 
 (* Basic forward lemmas *****************************************************)
 
+(* Basic_1: includes: drop_gen_refl *)
+(* Basic_2A1: includes: drop_inv_O2 *)
+lemma drops_fwd_isid: ∀L1,L2,c,f. ⬇*[c, f] L1 ≡ L2 → 𝐈⦃f⦄ → L1 = L2.
+#L1 #L2 #c #f #H elim H -L1 -L2 -f //
+[ #I #L1 #L2 #V #f #_ #_ #H elim (isid_inv_next … H) //
+| /5 width=5 by isid_inv_push, lifts_fwd_isid, eq_f3, sym_eq/
+]
+qed-.
+
 fact drops_fwd_drop2_aux: ∀X,Y,c,f2. ⬇*[c, f2] X ≡ Y → ∀I,K,V. Y = K.ⓑ{I}V →
                           ∃∃f1,f. 𝐈⦃f1⦄ & f2 ⊚ ⫯f1 ≡ f & ⬇*[c, f] X ≡ K.
 #X #Y #c #f2 #H elim H -X -Y -f2
@@ -167,8 +187,6 @@ fact drops_fwd_drop2_aux: ∀X,Y,c,f2. ⬇*[c, f2] X ≡ Y → ∀I,K,V. Y = K.�
 ]
 qed-.
 
-(* Basic_1: includes: drop_S *)
-(* Basic_2A1: includes: drop_fwd_drop2 *)
 lemma drops_fwd_drop2: ∀I,X,K,V,c,f2. ⬇*[c, f2] X ≡ K.ⓑ{I}V →
                        ∃∃f1,f. 𝐈⦃f1⦄ & f2 ⊚ ⫯f1 ≡ f & ⬇*[c, f] X ≡ K.
 /2 width=5 by drops_fwd_drop2_aux/ qed-.
@@ -180,14 +198,10 @@ lemma drops_after_fwd_drop2: ∀I,X,K,V,c,f2. ⬇*[c, f2] X ≡ K.ⓑ{I}V →
 /3 width=5 by drops_eq_repl_back, isid_inv_eq_repl, eq_next/
 qed-.
 
-(* Basic_1: includes: drop_gen_refl *)
-(* Basic_2A1: includes: drop_inv_O2 *)
-lemma drops_fwd_isid: ∀L1,L2,c,f. ⬇*[c, f] L1 ≡ L2 → 𝐈⦃f⦄ → L1 = L2.
-#L1 #L2 #c #f #H elim H -L1 -L2 -f //
-[ #I #L1 #L2 #V #f #_ #_ #H elim (isid_inv_next … H) //
-| /5 width=5 by isid_inv_push, lifts_fwd_isid, eq_f3, sym_eq/
-]
-qed-.
+(* Basic_1: was: drop_S *)
+(* Basic_2A1: was: drop_fwd_drop2 *)
+lemma drops_isuni_fwd_drop2: ∀I,X,K,V,c,f. 𝐔⦃f⦄ → ⬇*[c, f] X ≡ K.ⓑ{I}V → ⬇*[c, ⫯f] X ≡ K.
+/3 width=7 by drops_after_fwd_drop2, after_isid_isuni/ qed-.
 
 (* Basic_2A1: removed theorems 14:
               drops_inv_nil drops_inv_cons d1_liftable_liftables

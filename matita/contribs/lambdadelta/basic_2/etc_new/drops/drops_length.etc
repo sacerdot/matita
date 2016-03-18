@@ -150,3 +150,24 @@ elim (drop_conf_lt … HLK … HLK0 … H0) -HLK -HLK0 -H0
 #K1 #V1 #HK1 #_ #_ lapply (drop_fwd_length_lt2 … HK1) -I -K1 -V1
 #H elim (ylt_yle_false … H) -H //
 qed-.
+
+lemma pippo: ∀L1,L2,t1. ⬇*[Ⓕ, t1] L1 ≡ L2 → ∀t2. ⬇*[Ⓕ, t2] L1 ≡ L2 →
+|t1| + ∥t2∥ = ∥t1∥ + |t2|.
+#L1 #L2 #t1 #H elim H -L1 -L2 -t1
+[ #t1 #Ht1 #t2 #H elim (drops_inv_atom1 … H) -H
+  #_ #Ht2 >Ht1 -Ht1 // >Ht2 -Ht2 //
+| #I #L1 #L2 #V #t1 #_ #IH #t2 #H normalize 
+
+lemma drop_O1_ex: ∀K2,i,L1. |L1| = |K2| + i →
+                  ∃∃L2. L1 ⩬[0, i] L2 & ⬇[i] L2 ≡ K2.
+#K2 #i @(ynat_ind … i) -i
+[ /3 width=3 by lreq_O2, ex2_intro/
+| #i #IHi #Y >yplus_succ2 #Hi
+  elim (drop_O1_lt (Ⓕ) Y 0) [2: >Hi // ]
+  #I #L1 #V #H lapply (drop_inv_O2 … H) -H #H destruct
+  >length_pair in Hi; #H lapply (ysucc_inv_inj … H) -H
+  #HL1K2 elim (IHi L1) -IHi // -HL1K2
+  /3 width=5 by lreq_pair, drop_drop, ex2_intro/
+| #L1 >yplus_Y2 #H elim (ylt_yle_false (|L1|) (∞)) //
+]
+qed-.

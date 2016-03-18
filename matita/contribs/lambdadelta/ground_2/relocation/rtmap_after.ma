@@ -14,6 +14,7 @@
 
 include "ground_2/notation/relations/rafter_3.ma".
 include "ground_2/relocation/rtmap_istot.ma".
+include "ground_2/relocation/rtmap_isuni.ma".
 
 (* RELOCATION MAP ***********************************************************)
 
@@ -312,6 +313,13 @@ qed-.
 
 lemma after_inv_isid3: ∀f1,f2,f. f1 ⊚ f2 ≡ f → 𝐈⦃f⦄ → 𝐈⦃f1⦄ ∧ 𝐈⦃f2⦄.
 /3 width=4 by after_fwd_isid2, after_fwd_isid1, conj/ qed-.
+
+(* Properties on isuni ******************************************************)
+
+lemma after_isid_isuni: ∀f1,f2. 𝐈⦃f2⦄ → 𝐔⦃f1⦄ → f1 ⊚ ⫯f2 ≡ ⫯f1.
+#f1 #f2 #Hf2 #H elim H -H
+/5 width=7 by isid_after_dx, after_eq_repl_back_2, after_next, after_push, eq_push_inv_isid/
+qed.
 
 (* Forward lemmas on at *****************************************************)
 

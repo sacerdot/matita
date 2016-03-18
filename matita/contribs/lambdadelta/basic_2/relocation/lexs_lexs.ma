@@ -17,7 +17,7 @@ include "ground_2/relocation/rtmap_sor.ma".
 include "basic_2/grammar/lenv_weight.ma".
 include "basic_2/relocation/lexs.ma".
 
-(* GENERAL ENTRYWISE EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS ****)
+(* GENERAL ENTRYWISE EXTENSION OF CONTEXT-SENSITIVE REALTIONS FOR TERMS *****)
 
 (* Main properties **********************************************************)
 
@@ -58,7 +58,7 @@ theorem lexs_conf: ∀RN1,RP1,RN2,RP2.
 ]
 qed-.
 
-theorem lexs_canc_sx: ∀RN,RP,f. Transitive … (lexs RN RP f) →
+theorem lexs_canc_sn: ∀RN,RP,f. Transitive … (lexs RN RP f) →
                                 symmetric … (lexs RN RP f) →
                                 left_cancellable … (lexs RN RP f).
 /3 width=3 by/ qed-.
