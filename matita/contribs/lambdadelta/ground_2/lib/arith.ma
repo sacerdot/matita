@@ -23,6 +23,10 @@ interpretation "nat successor" 'Successor m = (S m).
 
 interpretation "nat predecessor" 'Predecessor m = (pred m).
 
+interpretation "nat min" 'and x y = (min x y).
+
+interpretation "nat max" 'or x y = (max x y).
+
 (* Iota equations ***********************************************************)
 
 lemma pred_O: pred 0 = 0.
@@ -30,6 +34,17 @@ normalize // qed.
 
 lemma pred_S: ∀m. pred (S m) = m.
 // qed.
+
+lemma max_O1: ∀n. n = (0 ∨ n).
+// qed.
+
+lemma max_O2: ∀n. n = (n ∨ 0).
+// qed.
+
+lemma max_SS: ∀n1,n2. ⫯(n1∨n2) = (⫯n1 ∨ ⫯n2).
+#n1 #n2 elim (decidable_le n1 n2) #H normalize
+[ >(le_to_leb_true … H) | >(not_le_to_leb_false … H) ] -H //
+qed.
 
 (* Equations ****************************************************************)
 
@@ -111,6 +126,12 @@ lemma lt_S_S: ∀x,y. x < y → ⫯x < ⫯y.
 
 lemma lt_S: ∀n,m. n < m → n < ⫯m.
 /2 width=1 by le_S/ qed.
+
+lemma max_S1_le_S: ∀n1,n2,n. (n1 ∨ n2) ≤ n → (⫯n1 ∨ n2) ≤ ⫯n.
+/4 width=2 by to_max, le_maxr, le_S_S, le_S/ qed-.
+
+lemma max_S2_le_S: ∀n1,n2,n. (n1 ∨ n2) ≤ n → (n1 ∨ ⫯n2) ≤ ⫯n.
+/2 width=1 by max_S1_le_S/ qed-.
 
 lemma arith_j: ∀x,y,z. x-y-1 ≤ x-(y-z)-1.
 /3 width=1 by monotonic_le_minus_l, monotonic_le_minus_r/ qed.
