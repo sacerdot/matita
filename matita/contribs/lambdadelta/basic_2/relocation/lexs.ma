@@ -145,6 +145,13 @@ lemma lexs_inv_push: ∀RN,RP,I1,I2,L1,L2,V1,V2,f.
 #L0 #V0 #HL10 #HV10 #H destruct /2 width=1 by and3_intro/
 qed-.
 
+lemma lexs_inv_tl: ∀RN,RP,I,L1,L2,V1,V2,f. L1 ⦻*[RN, RP, ⫱f] L2 →
+                   RN L1 V1 V2 → RP L1 V1 V2 → 
+                   L1.ⓑ{I}V1 ⦻*[RN, RP, f] L2.ⓑ{I}V2.
+#RN #RP #I #L2 #L2 #V1 #V2 #f elim (pn_split f) *
+/2 width=1 by lexs_next, lexs_push/
+qed-.
+
 (* Basic properties *********************************************************)
 
 lemma lexs_eq_repl_back: ∀RN,RP,L1,L2. eq_repl_back … (λf. L1 ⦻*[RN, RP, f] L2).

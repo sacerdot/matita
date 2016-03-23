@@ -155,6 +155,9 @@ qed.
 lemma discr_plus_xy_y: ∀x,y. x + y = y → x = 0.
 // qed-.
 
+lemma discr_plus_x_xy: ∀x,y. x = x + y → y = 0.
+/2 width=2 by le_plus_minus_comm/ qed-.
+
 lemma lt_plus_SO_to_le: ∀x,y. x < y + 1 → x ≤ y.
 /2 width=1 by monotonic_pred/ qed-.
 

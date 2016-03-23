@@ -24,8 +24,8 @@ let unsupported protocol =
 let missing path =
    failwith (P.sprintf "probe: missing path: %s" path)
 
-let unrooted path =
-   failwith (P.sprintf "probe: missing root: %s" path)
+let unrooted path roots =
+   failwith (P.sprintf "probe: missing root: %s (found roots: %u)" path (L.length roots))
 
 let out_int i = P.printf "%u\n" i
 
@@ -50,8 +50,8 @@ let get_uri str =
       | [root] -> 
          let buri = L.assoc "baseuri" (B.load_root_file root) in         
 	 F.concat bdir file, F.concat buri file
-      | _      -> 
-         if bdir = F.current_dir_name || bdir = F.dir_sep then unrooted dir else
+      | roots  ->
+         if bdir = F.current_dir_name || bdir = F.dir_sep then unrooted dir roots else
 	 aux (F.dirname bdir) (F.concat (F.basename bdir) file)
    in
    aux dir file

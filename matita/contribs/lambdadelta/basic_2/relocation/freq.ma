@@ -12,32 +12,39 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/lazyeq_7.ma".
+include "basic_2/notation/relations/lazyeq_6.ma".
 include "basic_2/grammar/genv.ma".
-include "basic_2/multiple/lleq.ma".
+include "basic_2/relocation/frees_weight.ma".
+include "basic_2/relocation/frees_lreq.ma".
 
 (* LAZY EQUIVALENCE FOR CLOSURES ********************************************)
 
-inductive fleq (l) (G) (L1) (T): relation3 genv lenv term ≝
-| fleq_intro: ∀L2. L1 ≡[T, l] L2 → fleq l G L1 T G L2 T
+inductive freq (G) (L1) (T): relation3 genv lenv term ≝
+| fleq_intro: ∀L2,f. L1 ⊢ 𝐅*⦃T⦄ ≡ f → L1 ≡[f] L2 → freq G L1 T G L2 T
 .
 
 interpretation
-   "lazy equivalence (closure)"
-   'LazyEq l G1 L1 T1 G2 L2 T2 = (fleq l G1 L1 T1 G2 L2 T2).
+   "ranged equivalence (closure)"
+   'LazyEq G1 L1 T1 G2 L2 T2 = (freq G1 L1 T1 G2 L2 T2).
 
 (* Basic properties *********************************************************)
 
-lemma fleq_refl: ∀l. tri_reflexive … (fleq l).
-/2 width=1 by fleq_intro/ qed.
+lemma freq_refl: tri_reflexive … freq.
+#G #L #T elim (frees_total L T) /2 width=3 by fleq_intro/
+qed.
 
-lemma fleq_sym: ∀l. tri_symmetric … (fleq l).
-#l #G1 #L1 #T1 #G2 #L2 #T2 * /3 width=1 by fleq_intro, lleq_sym/
+lemma freq_sym: tri_symmetric … freq.
+#G1 #L1 #T1 #G2 #L2 #T2 * /4 width=3 by fleq_intro, frees_lreq_conf, lreq_sym/
 qed-.
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma fleq_inv_gen: ∀G1,G2,L1,L2,T1,T2,l. ⦃G1, L1, T1⦄ ≡[l] ⦃G2, L2, T2⦄ →
-                    ∧∧ G1 = G2 & L1 ≡[T1, l] L2 & T1 = T2.
-#G1 #G2 #L1 #L2 #T1 #T2 #l * -G2 -L2 -T2 /2 width=1 by and3_intro/
+lemma freq_inv_gen: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≡ ⦃G2, L2, T2⦄ →
+                    ∃∃f. G1 = G2 & L1 ⊢ 𝐅*⦃T1⦄ ≡ f & L1 ≡[f] L2 & T1 = T2.
+#G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2 /2 width=3 by ex4_intro/
 qed-.
+
+(* Basic_2A1: removed theorems 6:
+              fleq_refl fleq_sym fleq_inv_gen
+              fleq_trans fleq_canc_sn fleq_canc_dx
+*)

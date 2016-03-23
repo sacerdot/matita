@@ -40,11 +40,21 @@ interpretation
 
 (* Basic inversion lemmas ***************************************************)
 
+fact frees_inv_atom_aux: ∀L,X,f. L ⊢ 𝐅*⦃X⦄ ≡ f → ∀J. L = ⋆ → X = ⓪{J} → 𝐈⦃f⦄.
+#L #X #f #H elim H -L -X -f /3 width=3 by isid_push/
+[5,6: #I #L #V #T [ #p ] #f1 #f2 #f #_ #_ #_ #_ #_ #J #_ #H destruct
+|*: #I #L #V [1,3,4: #x ] #f #_ #_ #J #H destruct
+]
+qed-.
+
+lemma frees_inv_atom: ∀I,f. ⋆ ⊢ 𝐅*⦃⓪{I}⦄ ≡ f → 𝐈⦃f⦄.
+/2 width=6 by frees_inv_atom_aux/ qed-.
+
 fact frees_inv_sort_aux: ∀L,X,f. L ⊢ 𝐅*⦃X⦄ ≡ f → ∀x. X = ⋆x → 𝐈⦃f⦄.
 #L #X #f #H elim H -L -X -f /3 width=3 by isid_push/
 [ #_ #L #V #f #_ #_ #x #H destruct
 | #_ #L #_ #i #f #_ #_ #x #H destruct
-| #I #L #V #T #a #f1 #f2 #f #_ #_ #_ #_ #_ #x #H destruct
+| #I #L #V #T #p #f1 #f2 #f #_ #_ #_ #_ #_ #x #H destruct
 | #I #L #V #T #f1 #f2 #f #_ #_ #_ #_ #_ #x #H destruct
 ]
 qed-.
@@ -56,12 +66,12 @@ fact frees_inv_gref_aux: ∀L,X,f. L ⊢ 𝐅*⦃X⦄ ≡ f → ∀x. X = §x �
 #L #X #f #H elim H -L -X -f /3 width=3 by isid_push/
 [ #_ #L #V #f #_ #_ #x #H destruct
 | #_ #L #_ #i #f #_ #_ #x #H destruct
-| #I #L #V #T #a #f1 #f2 #f #_ #_ #_ #_ #_ #x #H destruct
+| #I #L #V #T #p #f1 #f2 #f #_ #_ #_ #_ #_ #x #H destruct
 | #I #L #V #T #f1 #f2 #f #_ #_ #_ #_ #_ #x #H destruct
 ]
 qed-.
 
-lemma frees_inv_gref: ∀L,p,f. L ⊢ 𝐅*⦃§p⦄ ≡ f → 𝐈⦃f⦄.
+lemma frees_inv_gref: ∀L,l,f. L ⊢ 𝐅*⦃§l⦄ ≡ f → 𝐈⦃f⦄.
 /2 width=5 by frees_inv_gref_aux/ qed-.
 
 fact frees_inv_zero_aux: ∀L,X,f. L ⊢ 𝐅*⦃X⦄ ≡ f → X = #0 →
@@ -72,8 +82,8 @@ fact frees_inv_zero_aux: ∀L,X,f. L ⊢ 𝐅*⦃X⦄ ≡ f → X = #0 →
 | #I #L #V #s #f #_ #H destruct
 | /3 width=7 by ex3_4_intro, or_intror/
 | #I #L #V #i #f #_ #H destruct
-| #I #L #V #p #f #_ #H destruct
-| #I #L #V #T #a #f1 #f2 #f #_ #_ #_ #H destruct
+| #I #L #V #l #f #_ #H destruct
+| #I #L #V #T #p #f1 #f2 #f #_ #_ #_ #H destruct
 | #I #L #V #T #f1 #f2 #f #_ #_ #_ #H destruct
 ]
 qed-.
@@ -91,8 +101,8 @@ fact frees_inv_lref_aux: ∀L,X,f. L ⊢ 𝐅*⦃X⦄ ≡ f → ∀j. X = #(⫯j
 | #I #L #V #s #f #_ #j #H destruct
 | #I #L #V #f #_ #j #H destruct
 | #I #L #V #i #f #Ht #j #H destruct /3 width=7 by ex3_4_intro, or_intror/
-| #I #L #V #p #f #_ #j #H destruct
-| #I #L #V #T #a #f1 #f2 #f #_ #_ #_ #j #H destruct
+| #I #L #V #l #f #_ #j #H destruct
+| #I #L #V #T #p #f1 #f2 #f #_ #_ #_ #j #H destruct
 | #I #L #V #T #f1 #f2 #f #_ #_ #_ #j #H destruct
 ]
 qed-.
@@ -109,8 +119,8 @@ fact frees_inv_bind_aux: ∀L,X,f. L ⊢ 𝐅*⦃X⦄ ≡ f → ∀I,V,T,a. X = 
 | #I #L #V #s #f #_ #J #W #U #b #H destruct
 | #I #L #V #f #_ #J #W #U #b #H destruct
 | #I #L #V #i #f #_ #J #W #U #b #H destruct
-| #I #L #V #p #f #_ #J #W #U #b #H destruct
-| #I #L #V #T #a #f1 #f2 #f #HV #HT #Hf #J #W #U #b #H destruct /2 width=5 by ex3_2_intro/
+| #I #L #V #l #f #_ #J #W #U #b #H destruct
+| #I #L #V #T #p #f1 #f2 #f #HV #HT #Hf #J #W #U #b #H destruct /2 width=5 by ex3_2_intro/
 | #I #L #V #T #f1 #f2 #f #_ #_ #_ #J #W #U #b #H destruct
 ]
 qed-.
@@ -126,8 +136,8 @@ fact frees_inv_flat_aux: ∀L,X,f. L ⊢ 𝐅*⦃X⦄ ≡ f → ∀I,V,T. X = �
 | #I #L #V #s #f #_ #J #W #U #H destruct
 | #I #L #V #f #_ #J #W #U #H destruct
 | #I #L #V #i #f #_ #J #W #U #H destruct
-| #I #L #V #p #f #_ #J #W #U #H destruct
-| #I #L #V #T #a #f1 #f2 #f #_ #_ #_ #J #W #U #H destruct
+| #I #L #V #l #f #_ #J #W #U #H destruct
+| #I #L #V #T #p #f1 #f2 #f #_ #_ #_ #J #W #U #H destruct
 | #I #L #V #T #f1 #f2 #f #HV #HT #Hf #J #W #U #H destruct /2 width=5 by ex3_2_intro/
 ]
 qed-.
@@ -135,6 +145,13 @@ qed-.
 lemma frees_inv_flat: ∀I,L,V,T,f. L ⊢ 𝐅*⦃ⓕ{I}V.T⦄ ≡ f →
                       ∃∃f1,f2. L ⊢ 𝐅*⦃V⦄ ≡ f1 & L ⊢ 𝐅*⦃T⦄ ≡ f2 & f1 ⋓ f2 ≡ f.
 /2 width=4 by frees_inv_flat_aux/ qed-.
+
+(* Basic forward lemmas ****************************************************)
+
+lemma frees_fwd_isfin: ∀L,T,f. L ⊢ 𝐅*⦃T⦄ ≡ f → 𝐅⦃f⦄.
+#L #T #f #H elim H -L -T -f
+/3 width=5 by sor_isfin, isfin_isid, isfin_tl, isfin_push, isfin_next/
+qed-.
 
 (* Basic properties ********************************************************)
 
@@ -147,7 +164,7 @@ lemma frees_eq_repl_back: ∀L,T. eq_repl_back … (λf. L ⊢ 𝐅*⦃T⦄ ≡ 
   elim (eq_inv_nx … Hf12) -Hf12 /3 width=3 by frees_zero/
 | #I #L #V #i #f1 #_ #IH #f2 #Hf12
   elim (eq_inv_px … Hf12) -Hf12 /3 width=3 by frees_lref/
-| #I #L #V #p #f1 #_ #IH #f2 #Hf12
+| #I #L #V #l #f1 #_ #IH #f2 #Hf12
   elim (eq_inv_px … Hf12) -Hf12 /3 width=3 by frees_gref/
 | /3 width=7 by frees_bind, sor_eq_repl_back3/
 | /3 width=7 by frees_flat, sor_eq_repl_back3/

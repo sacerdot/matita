@@ -58,6 +58,22 @@ lemma fcla_inv_xp: ∀g,m. 𝐂⦃g⦄ ≡ m → 0 = m → 𝐈⦃g⦄.
 #g #m #_ #_ #H destruct
 qed-.
 
+lemma fcla_inv_isid: ∀f,n. 𝐂⦃f⦄ ≡ n → 𝐈⦃f⦄ → 0 = n.
+#f #n #H elim H -f -n /3 width=3 by isid_inv_push/
+#f #n #_ #_ #H elim (isid_inv_next … H) -H //  
+qed-.
+
+(* Main forward lemmas ******************************************************)
+
+theorem fcla_mono: ∀f,n1. 𝐂⦃f⦄ ≡ n1 → ∀n2. 𝐂⦃f⦄ ≡ n2 → n1 = n2.
+#f #n #H elim H -f -n
+[ /2 width=3 by fcla_inv_isid/
+| /3 width=3 by fcla_inv_px/
+| #f #n1 #_ #IH #n2 #H elim (fcla_inv_nx … H) -H [2,3 : // ]
+  #g #Hf #H destruct /3 width=1 by eq_f/
+]
+qed-.
+
 (* Basic properties *********************************************************)
 
 lemma fcla_eq_repl_back: ∀n. eq_repl_back … (λf. 𝐂⦃f⦄ ≡ n).

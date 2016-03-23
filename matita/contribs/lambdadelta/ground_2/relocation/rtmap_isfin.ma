@@ -23,26 +23,6 @@ definition isfin: predicate rtmap ≝
 interpretation "test for finite colength (rtmap)"
    'IsFinite f = (isfin f).
 
-(* Basic properties *********************************************************)
-
-lemma isfin_isid: ∀f. 𝐈⦃f⦄ → 𝐅⦃f⦄.
-/3 width=2 by fcla_isid, ex_intro/ qed.
-
-lemma isfin_push: ∀f. 𝐅⦃f⦄ → 𝐅⦃↑f⦄.
-#f * /3 width=2 by fcla_push, ex_intro/
-qed.
-
-lemma isfin_next: ∀f. 𝐅⦃f⦄ → 𝐅⦃⫯f⦄.
-#f * /3 width=2 by fcla_next, ex_intro/
-qed.
-
-lemma isfin_eq_repl_back: eq_repl_back … isfin.
-#f1 * /3 width=4 by fcla_eq_repl_back, ex_intro/
-qed-.
-
-lemma isfin_eq_repl_fwd: eq_repl_fwd … isfin.
-/3 width=3 by isfin_eq_repl_back, eq_repl_sym/ qed-.
-
 (* Basic eliminators ********************************************************)
 
 lemma isfin_ind (R:predicate rtmap): (∀f.  𝐈⦃f⦄ → R f) →
@@ -65,3 +45,28 @@ qed-.
 lemma isfin_fwd_push: ∀g. 𝐅⦃g⦄ → ∀f. ↑f = g → 𝐅⦃f⦄.
 #g * /3 width=4 by fcla_inv_px, ex_intro/
 qed-.
+
+(* Basic properties *********************************************************)
+
+lemma isfin_eq_repl_back: eq_repl_back … isfin.
+#f1 * /3 width=4 by fcla_eq_repl_back, ex_intro/
+qed-.
+
+lemma isfin_eq_repl_fwd: eq_repl_fwd … isfin.
+/3 width=3 by isfin_eq_repl_back, eq_repl_sym/ qed-.
+
+lemma isfin_isid: ∀f. 𝐈⦃f⦄ → 𝐅⦃f⦄.
+/3 width=2 by fcla_isid, ex_intro/ qed.
+
+lemma isfin_push: ∀f. 𝐅⦃f⦄ → 𝐅⦃↑f⦄.
+#f * /3 width=2 by fcla_push, ex_intro/
+qed.
+
+lemma isfin_next: ∀f. 𝐅⦃f⦄ → 𝐅⦃⫯f⦄.
+#f * /3 width=2 by fcla_next, ex_intro/
+qed.
+
+lemma isfin_tl: ∀f. 𝐅⦃f⦄ → 𝐅⦃⫱f⦄.
+#f elim (pn_split f) * #g #H #Hf destruct
+/3 width=3 by isfin_fwd_push, isfin_inv_next/
+qed.

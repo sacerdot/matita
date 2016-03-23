@@ -1329,7 +1329,7 @@ let typecheck_obj status (uri,height,metasenv,subst,kind) =
              (guarded_by_constructors status ~subst ~metasenv types bo r_uri r_len len)
              then
                raise (TypeCheckerFailure
-                (lazy "CoFix: not guarded by constructors"))
+                (lazy ("CoFix: not guarded by constructors: " ^ status#ppobj (uri,height,metasenv,subst,kind))))
         ) fl dfl
 ;;
 

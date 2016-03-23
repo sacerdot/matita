@@ -91,6 +91,9 @@ lemma lreq_inv_push: ∀I1,I2,L1,L2,V1,V2,f.
 #I1 #I2 #L1 #L2 #V1 #V2 #f #H elim (lexs_inv_push … H) -H /2 width=1 by conj/
 qed-.
 
+lemma lreq_inv_tl: ∀I,L1,L2,V,f. L1 ≡[⫱f] L2 → L1.ⓑ{I}V ≡[f] L2.ⓑ{I}V.
+/2 width=1 by lexs_inv_tl/ qed-.
+
 (* Basic_2A1: removed theorems 5:
               lreq_pair_lt lreq_succ_lt lreq_pair_O_Y lreq_O2 lreq_inv_O_Y
 *)

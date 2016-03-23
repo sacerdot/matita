@@ -176,3 +176,17 @@ lemma sor_isfin: ∀f1,f2. 𝐅⦃f1⦄ → 𝐅⦃f2⦄ → ∀f. f1 ⋓ f2 ≡
 #f1 #f2 #Hf1 #Hf2 #f #Hf elim (sor_isfin_ex … Hf1 … Hf2) -Hf1 -Hf2
 /3 width=6 by sor_mono, isfin_eq_repl_back/
 qed-.
+
+(* Inversion lemmas on inclusion ********************************************)
+
+corec lemma sor_inv_sle_sn: ∀f1,f2,f. f1 ⋓ f2 ≡ f → f1 ⊆ f.
+#f1 #f2 #f * -f1 -f2 -f
+#f1 #f2 #f #g1 #g2 #g #Hf #H1 #H2 #H0
+/3 width=5 by sle_push, sle_next, sle_weak/
+qed-.
+
+corec lemma sor_inv_sle_dx: ∀f1,f2,f. f1 ⋓ f2 ≡ f → f2 ⊆ f.
+#f1 #f2 #f * -f1 -f2 -f
+#f1 #f2 #f #g1 #g2 #g #Hf #H1 #H2 #H0
+/3 width=5 by sle_push, sle_next, sle_weak/
+qed-.
