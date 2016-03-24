@@ -25,6 +25,10 @@ let status = new P.status
 let malformed () =
    failwith "probe: malformed term"
 
+let add_attr n (_, xf, _) = O.add_xflavour n (xf:>O.def_xflavour)
+
+let add_ind n = O.add_xflavour n `Inductive
+
 let rec set_list c ts cts =
    let map cts t = (c, t) :: cts in
    L.fold_left map cts ts
@@ -74,13 +78,17 @@ let rec scan_term a = function
 let scan_obj u a = 
    let _, _, _, _, obj = E.get_checked_obj status u in 
    match obj with
-      | C.Constant (_, _, None, t, _)     ->
+      | C.Constant (_, _, None, t, m)     ->
+         add_attr 1 m;
          scan_term (succ a) [[], t]
-      | C.Constant (_, _, Some t0, t1, _) ->
+      | C.Constant (_, _, Some t0, t1, m) ->
+         add_attr 1 m;
          scan_term (succ a) (set_list [] [t0; t1] [])
-      | C.Fixpoint (_, rfs, _)            ->
+      | C.Fixpoint (_, rfs, m)            ->
+         add_attr (L.length rfs) m;
          scan_term (a + L.length rfs) (set_funs [] rfs [])
       | C.Inductive (_, _, its, _)        ->
+         add_ind (L.length its);
 	 let cts = L.fold_left (set_type []) [] its in
          scan_term (a + L.length cts) cts
 

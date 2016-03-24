@@ -9,6 +9,14 @@
      \ /   This software is distributed as is, NO WARRANTY.     
       V_______________________________________________________________ *)
 
+type def_xflavour = [ NCic.def_flavour
+                    | `Inductive
+                    ]
+
+val add_xflavour: int -> def_xflavour -> unit 
+
+val iter_xflavours: (int -> unit) -> unit
+
 val objs: NUri.UriSet.t ref
 
 val srcs: NUri.UriSet.t ref

@@ -52,6 +52,8 @@ let set_p () = O.exclude := `Provided :: !O.exclude
 
 let out_c () = E.out_int !O.net
 
+let out_f () = O.iter_xflavours E.out_int
+
 let out_on () = E.out_length !O.objs
 
 let out_os () = E.out_uris !O.objs
@@ -69,10 +71,11 @@ let clear () =
    D.objects (); O.clear ()
 
 let _ =
-   let help = "Usage: probe [ -X | <configuration file> | -gip | HELM (base)uri | -c | -on | os | -sn | -ss  ]*" in
+   let help = "Usage: probe [ -X | <configuration file> | -gip | HELM (base)uri | -cf | -on | os | -sn | -ss  ]*" in
    let help_X  = " Clear configuration, options and counters" in
    let help_c  = " Print the total intrinsic complexity" in
    let help_g  = " Exclude generated objects" in
+   let help_f  = " Print the number of objects grouped by flavour" in
    let help_i  = " Exclude implied objects" in
    let help_p  = " Exclude provided objects" in
    let help_on = " Print the number of objects" in
@@ -82,6 +85,7 @@ let _ =
    A.parse [
       "-X" , A.Unit clear, help_X;
       "-c" , A.Unit out_c, help_c;
+      "-f" , A.Unit out_f, help_f;
       "-g" , A.Unit set_g, help_g;
       "-i" , A.Unit set_i, help_i;
       "-on", A.Unit out_on, help_on;
