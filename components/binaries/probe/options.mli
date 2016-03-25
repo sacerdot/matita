@@ -27,6 +27,10 @@ val exclude: NCic.source list ref
 
 val net: int ref
 
+val chars: int ref
+
+val debug_lexer: bool ref
+
 val no_devel: bool ref
 
 val no_init: bool ref

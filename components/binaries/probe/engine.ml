@@ -18,6 +18,8 @@ module US = U.UriSet
 module B  = Librarian
 module H  = HExtlib
 
+module M = MacLexer
+
 let unsupported protocol =
    failwith (P.sprintf "probe: unsupported protocol: %s" protocol)
 
@@ -55,3 +57,9 @@ let get_uri str =
 	 aux (F.dirname bdir) (F.concat (F.basename bdir) file)
    in
    aux dir file
+
+let mac fname =
+   let ich = open_in fname in
+   let lexbuf = Lexing.from_channel ich in
+   M.token lexbuf; close_in ich
+

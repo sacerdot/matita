@@ -26,6 +26,8 @@ let chop_extension file =
    try F.chop_extension file
    with Invalid_argument("Filename.chop_extension") -> file
 
+let script devel = chop_extension devel ^ ".ma"
+
 let src_exists path = !O.no_devel || Y.file_exists path
 
 let is_obj base path = 
@@ -43,7 +45,7 @@ let is_dir base path =
    H.is_dir (F.concat base path)
 
 let is_script devel =
-   src_exists (chop_extension devel ^ ".ma")
+   src_exists (script devel)
 
 let mk_file path =
    if F.check_suffix path "/" then S.sub path 0 (pred (S.length path))
@@ -57,7 +59,8 @@ let add_obj path =
 let add_src devel path =
    let path = F.chop_extension path in   
    let str = F.concat "cic:" path ^ "/" in
-   O.srcs := US.add (U.uri_of_string str) !O.srcs
+   O.srcs := US.add (U.uri_of_string str) !O.srcs;
+   E.mac (script devel)
 
 let add_remove base path =
    O.remove := F.concat base path :: !O.remove

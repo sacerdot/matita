@@ -15,6 +15,8 @@ val out_length: NUri.UriSet.t -> unit
 
 val out_uris: NUri.UriSet.t -> unit
 
+val mac: string -> unit
+
 val is_registry: string -> bool
 
 val get_uri: string -> string * string

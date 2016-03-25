@@ -50,15 +50,17 @@ let set_i () = O.exclude := `Implied :: !O.exclude
 
 let set_p () = O.exclude := `Provided :: !O.exclude
 
-let out_c () = E.out_int !O.net
-
 let out_f () = O.iter_xflavours E.out_int
+
+let out_oc () = E.out_int !O.net
 
 let out_on () = E.out_length !O.objs
 
 let out_os () = E.out_uris !O.objs
 
-let out_sn () = E.out_length !O.srcs 
+let out_sc () = E.out_int !O.chars
+
+let out_sn () = E.out_length !O.srcs
 
 let out_ss () = E.out_uris !O.srcs
 
@@ -71,26 +73,30 @@ let clear () =
    D.objects (); O.clear ()
 
 let _ =
-   let help = "Usage: probe [ -X | <configuration file> | -gip | HELM (base)uri | -cf | -on | os | -sn | -ss  ]*" in
+   let help = "Usage: probe [ -LX | <configuration file> | -gip | <HELM (base)uri> | -f | -oc | -on | -os | -sc | -sn | -ss  ]*" in
+   let help_L  = " Activate lexer debugging" in
    let help_X  = " Clear configuration, options and counters" in
-   let help_c  = " Print the total intrinsic complexity" in
-   let help_g  = " Exclude generated objects" in
    let help_f  = " Print the number of objects grouped by flavour" in
+   let help_g  = " Exclude generated objects" in
    let help_i  = " Exclude implied objects" in
-   let help_p  = " Exclude provided objects" in
+   let help_oc = " Print the total intrinsic complexity (objects)" in
    let help_on = " Print the number of objects" in
    let help_os = " Print the list of objects" in
+   let help_p  = " Exclude provided objects" in
+   let help_sc = " Print the total extrinsic complexity (sources)" in
    let help_sn = " Print the number of sources" in
    let help_ss = " Print the list of sources" in
    A.parse [
-      "-X" , A.Unit clear, help_X;
-      "-c" , A.Unit out_c, help_c;
-      "-f" , A.Unit out_f, help_f;
-      "-g" , A.Unit set_g, help_g;
-      "-i" , A.Unit set_i, help_i;
+      "-L" , A.Set O.debug_lexer, help_L;
+      "-X" , A.Unit clear , help_X;
+      "-f" , A.Unit out_f , help_f;
+      "-g" , A.Unit set_g , help_g;
+      "-i" , A.Unit set_i , help_i;
+      "-oc", A.Unit out_oc, help_oc;
       "-on", A.Unit out_on, help_on;
       "-os", A.Unit out_os, help_os;
-      "-p" , A.Unit set_p, help_p;      
+      "-p" , A.Unit set_p , help_p;      
+      "-sc", A.Unit out_sc, help_sc;
       "-sn", A.Unit out_sn, help_sn;
       "-ss", A.Unit out_ss, help_ss;
    ] process help;

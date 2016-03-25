@@ -30,6 +30,10 @@ let default_exclude = []
 
 let default_net = 0
 
+let default_chars = 0
+
+let default_debug_lexer = false
+
 let default_no_devel = true
 
 let default_no_init = true
@@ -47,6 +51,10 @@ let remove = ref default_remove
 let exclude = ref default_exclude
 
 let net = ref default_net
+
+let chars = ref default_chars
+
+let debug_lexer = ref default_debug_lexer
 
 let no_devel = ref default_no_devel
 
@@ -74,4 +82,5 @@ let clear () =
    R.clear (); A.iteri clear_slot slot;
    objs := default_objs; srcs := default_srcs; remove := default_remove;
    exclude := default_exclude; net := default_net;
+   chars := default_chars; debug_lexer := default_debug_lexer;
    no_devel := default_no_devel; no_init := default_no_init

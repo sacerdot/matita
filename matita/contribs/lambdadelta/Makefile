@@ -52,7 +52,7 @@ define MAS_TEMPLATE
 
 $(1)/$(1)_probe.txt: $$(MAS_$(1))
 	@echo "  PROBE $(1)"
-	$$(H)$$(PRB_DIR)/$$(PRB) $$(PRB_OPTS) $(1) -sn -on -c > $$@
+	$$(H)$$(PRB_DIR)/$$(PRB) $$(PRB_OPTS) $(1) -sn -sc -on -oc -f > $$@
 
 $(1)/$(1)_mac.txt: $$(MAS_$(1))
 	@echo "  MAC $(1)"
@@ -192,16 +192,17 @@ define SUMMARY_TEMPLATE
   SUMS     += $$(SUM_$(1))
 
   $$(SUM_$(1)): S0 = $$(shell cat $(1)/$(1)_probe.txt)
-  $$(SUM_$(1)): S1 = $$(shell cat $(1)/$(1)_mac.txt)
-  $$(SUM_$(1)): S4 = $$(shell ls $$(MAS_$(1)) | wc -l)
-  $$(SUM_$(1)): C1 = $$(shell grep "^inductive \|^record " $$(MAS_$(1)) | wc -l)
-  $$(SUM_$(1)): C2 = $$(shell grep "^definition \|^let rec " $$(MAS_$(1)) | wc -l)
-  $$(SUM_$(1)): C3 = $$(shell grep "^inductive \|^record \|^definition \|^let rec " $$(MAS_$(1)) | wc -l)
-  $$(SUM_$(1)): P1 = $$(shell grep "^theorem " $$(MAS_$(1)) | wc -l)
-  $$(SUM_$(1)): P2 = $$(shell grep "^lemma " $$(MAS_$(1)) | wc -l)
-  $$(SUM_$(1)): P3 = $$(shell grep "^lemma \|^theorem " $$(MAS_$(1)) | wc -l)
+  $$(SUM_$(1)): S1 = $$(word 1, $$(S0))
+  $$(SUM_$(1)): S2 = $$(word 2, $$(S0))
+  $$(SUM_$(1)): S4 = $$(word 4, $$(S0))
+  $$(SUM_$(1)): C1 = $$(word 5, $$(S0))
+  $$(SUM_$(1)): C2 = $$(word 7, $$(S0))
+  $$(SUM_$(1)): C3 = $$(shell echo "$$(C1)+$$(C2)"|bc)
+  $$(SUM_$(1)): P1 = $$(word 10, $$(S0))
+  $$(SUM_$(1)): P2 = $$(word 9, $$(S0))
+  $$(SUM_$(1)): P3 = $$(shell echo "$$(P1)+$$(P2)"|bc)
 
-  $$(SUM_$(1)): $$(MAS_$(1)) $(1)/$(1)_probe.txt $(1)/$(1)_mac.txt
+  $$(SUM_$(1)): $$(MAS_$(1)) $(1)/$(1)_probe.txt
 	@printf '  SUMMARY $(1)\n'
 	@printf 'name "$$(basename $$(@F))"\n\n'                  >  $$@
 	@printf 'table {\n'                                       >> $$@
@@ -209,9 +210,9 @@ define SUMMARY_TEMPLATE
 	@printf '      [ "objects" * ]\n'                         >> $$@
 	@printf '   ]\n'                                          >> $$@
 	@printf '   class "cyan"   [ "sizes"\n'                   >> $$@
-	@printf '      [ "files"      "$$(S4)" ]\n'               >> $$@
-	@printf '      [ "characters" "$$(word 1, $$(S1))" ]\n'   >> $$@
-	@printf '      [ "nodes"      "$$(word 3, $$(S0))" ]\n'   >> $$@
+	@printf '      [ "files"      "$$(S1)" ]\n'               >> $$@
+	@printf '      [ "characters" "$$(S2)" ]\n'               >> $$@
+	@printf '      [ "nodes"      "$$(S4)" ]\n'               >> $$@
 	@printf '   ]\n'                                          >> $$@	
 	@printf '   class "green"  [ "propositions"\n'            >> $$@
 	@printf '      [ "theorems" "$$(P1)" ]\n'                 >> $$@

@@ -24,11 +24,11 @@ let QT  = '"'
 
 rule token = parse
    | OL     { out "COM"; block lexbuf; token lexbuf                     }
-   | QT     { out "STR"; O.count := !O.count + str lexbuf; token lexbuf }
-   | SPC    { out "SPC"; incr O.count; token lexbuf                     }
-   | UNI    { out "UNI"; incr O.count; token lexbuf                     }
-   | WRD    { out "WRD"; incr O.count; token lexbuf                     }
-   | _      { out "CHR"; incr O.count; token lexbuf                     }
+   | QT     { out "STR"; O.chars := !O.chars + str lexbuf; token lexbuf }
+   | SPC    { out "SPC"; incr O.chars; token lexbuf                     }
+   | UNI    { out "UNI"; incr O.chars; token lexbuf                     }
+   | WRD    { out "WRD"; incr O.chars; token lexbuf                     }
+   | _      { out "CHR"; incr O.chars; token lexbuf                     }
    | eof    { out "EOF"                                                 }
 and str = parse
    | QT     { 2 }
