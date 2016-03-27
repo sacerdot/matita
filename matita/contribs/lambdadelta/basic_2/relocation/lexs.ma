@@ -16,7 +16,7 @@ include "ground_2/relocation/rtmap_sle.ma".
 include "basic_2/notation/relations/relationstar_5.ma".
 include "basic_2/grammar/lenv.ma".
 
-(* GENERAL ENTRYWISE EXTENSION OF CONTEXT-SENSITIVE REALTIONS FOR TERMS *****)
+(* GENERIC ENTRYWISE EXTENSION OF CONTEXT-SENSITIVE REALTIONS FOR TERMS *****)
 
 definition relation5 : Type[0] → Type[0] → Type[0] → Type[0] → Type[0] → Type[0]
 ≝ λA,B,C,D,E.A→B→C→D→E→Prop.

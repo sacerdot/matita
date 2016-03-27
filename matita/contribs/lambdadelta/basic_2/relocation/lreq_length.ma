@@ -17,7 +17,7 @@ include "basic_2/relocation/lreq.ma".
 
 (* RANGED EQUIVALENCE FOR LOCAL ENVIRONMENTS ********************************)
 
-(* Forward lemmas on length for local environments **************************)
+(* Forward lemmas with length for local environments ************************)
 
 (* Basic_2A1: includes: lreq_fwd_length *)
 lemma lreq_fwd_length: ∀L1,L2,f. L1 ≡[f] L2 → |L1| = |L2|.

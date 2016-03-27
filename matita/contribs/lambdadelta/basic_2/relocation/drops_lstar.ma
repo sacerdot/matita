@@ -16,9 +16,9 @@ include "ground_2/lib/lstar.ma".
 include "basic_2/relocation/lreq_lreq.ma".
 include "basic_2/relocation/drops.ma".
 
-(* GENERAL SLICING FOR LOCAL ENVIRONMENTS ***********************************)
+(* GENERIC SLICING FOR LOCAL ENVIRONMENTS ***********************************)
 
-(* Properties on reflexive and transitive closure ***************************)
+(* Properties with reflexive and transitive closure *************************)
 
 (* Basic_2A1: was: d_liftable_LTC *)
 lemma d2_liftable_LTC: ∀R. d_liftable2 R → d_liftable2 (LTC … R).

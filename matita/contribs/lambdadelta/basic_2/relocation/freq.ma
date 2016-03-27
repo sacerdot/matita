@@ -17,7 +17,7 @@ include "basic_2/grammar/genv.ma".
 include "basic_2/relocation/frees_weight.ma".
 include "basic_2/relocation/frees_lreq.ma".
 
-(* LAZY EQUIVALENCE FOR CLOSURES ********************************************)
+(* RANGED EQUIVALENCE FOR CLOSURES ******************************************)
 
 inductive freq (G) (L1) (T): relation3 genv lenv term ≝
 | fleq_intro: ∀L2,f. L1 ⊢ 𝐅*⦃T⦄ ≡ f → L1 ≡[f] L2 → freq G L1 T G L2 T

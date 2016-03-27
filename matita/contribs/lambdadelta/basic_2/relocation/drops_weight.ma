@@ -16,9 +16,9 @@ include "basic_2/grammar/cl_restricted_weight.ma".
 include "basic_2/relocation/lifts_weight.ma".
 include "basic_2/relocation/drops.ma".
 
-(* GENERAL SLICING FOR LOCAL ENVIRONMENTS ***********************************)
+(* GENERIC SLICING FOR LOCAL ENVIRONMENTS ***********************************)
 
-(* Forward lemmas on weight for local environments **************************)
+(* Forward lemmas with weight for local environments ************************)
 
 (* Basic_2A1: includes: drop_fwd_lw *)
 lemma drops_fwd_lw: ∀L1,L2,c,f. ⬇*[c, f] L1 ≡ L2 → ♯{L2} ≤ ♯{L1}.
@@ -40,7 +40,7 @@ lemma drops_fwd_lw_lt: ∀L1,L2,f. ⬇*[Ⓣ, f] L1 ≡ L2 →
 ]
 qed-.
 
-(* Forward lemmas on restricted weight for closures *************************)
+(* Forward lemmas with restricted weight for closures ***********************)
 
 (* Basic_2A1: includes: drop_fwd_rfw *)
 lemma drops_pair2_fwd_rfw: ∀I,L,K,V,c,f. ⬇*[c, f] L ≡ K.ⓑ{I}V → ∀T. ♯{K, V} < ♯{L, T}.

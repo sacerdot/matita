@@ -14,9 +14,9 @@
 
 include "basic_2/relocation/drops.ma".
 
-(* GENERAL SLICING FOR LOCAL ENVIRONMENTS ***********************************)
+(* GENERIC SLICING FOR LOCAL ENVIRONMENTS ***********************************)
 
-(* Properties on general entrywise extension of context-sensitive relations *)
+(* Properties with entrywise extension of context-sensitive relations *******)
 
 (* Basic_2A1: includes: lpx_sn_deliftable_dropable *)
 lemma lexs_deliftable_dropable: ∀RN,RP. d_deliftable2_sn RN → d_deliftable2_sn RP →

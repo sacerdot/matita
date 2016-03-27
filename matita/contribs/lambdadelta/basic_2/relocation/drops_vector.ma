@@ -15,14 +15,14 @@
 include "basic_2/relocation/lifts_vector.ma".
 include "basic_2/relocation/drops.ma".
 
-(* GENERAL SLICING FOR LOCAL ENVIRONMENTS ***********************************)
+(* GENERIC SLICING FOR LOCAL ENVIRONMENTS ***********************************)
 
 definition d_liftable1_all: relation2 lenv term → predicate bool ≝
                             λR,c. ∀L,K,f. ⬇*[c, f] L ≡ K →
                             ∀Ts,Us. ⬆*[f] Ts ≡ Us →
                             all … (R K) Ts → all … (R L) Us.
 
-(* Properties on general relocation for term vectors ************************)
+(* Properties with generic relocation for term vectors **********************)
 
 (* Basic_2A1: was: d1_liftables_liftables_all *)
 lemma d1_liftable_liftable_all: ∀R,c. d_liftable1 R c → d_liftable1_all R c.

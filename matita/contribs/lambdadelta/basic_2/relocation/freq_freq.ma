@@ -16,7 +16,7 @@ include "basic_2/relocation/lreq_lreq.ma".
 include "basic_2/relocation/frees_frees.ma".
 include "basic_2/relocation/freq.ma".
 
-(* LAZY EQUIVALENCE FOR CLOSURES  *******************************************)
+(* RANGED EQUIVALENCE FOR CLOSURES  *****************************************)
 
 (* Main properties **********************************************************)
 

@@ -14,9 +14,9 @@
 
 include "basic_2/relocation/drops.ma".
 
-(* GENERAL SLICING FOR LOCAL ENVIRONMENTS ***********************************)
+(* GENERIC SLICING FOR LOCAL ENVIRONMENTS ***********************************)
 
-(* Properties on context sensitive equivalence for terms ********************)
+(* Properties with context-sensitive equivalence for terms ******************)
 
 lemma ceq_lift: d_liftable2 ceq.
 /2 width=3 by ex2_intro/ qed-.

@@ -17,7 +17,7 @@ include "ground_2/relocation/rtmap_sor.ma".
 include "basic_2/grammar/lenv_weight.ma".
 include "basic_2/relocation/lexs.ma".
 
-(* GENERAL ENTRYWISE EXTENSION OF CONTEXT-SENSITIVE REALTIONS FOR TERMS *****)
+(* GENERIC ENTRYWISE EXTENSION OF CONTEXT-SENSITIVE REALTIONS FOR TERMS *****)
 
 (* Main properties **********************************************************)
 

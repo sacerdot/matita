@@ -12,11 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/relocation/rtmap_isfin.ma".
 include "basic_2/grammar/lenv_length.ma".
 include "basic_2/relocation/drops.ma".
 
-(* GENERAL SLICING FOR LOCAL ENVIRONMENTS ***********************************)
+(* GENERIC SLICING FOR LOCAL ENVIRONMENTS ***********************************)
 
 (* Forward lemmas with length for local environments ************************)
 

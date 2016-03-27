@@ -15,7 +15,7 @@
 include "basic_2/relocation/lifts_lifts.ma".
 include "basic_2/relocation/drops_weight.ma".
 
-(* GENERAL SLICING FOR LOCAL ENVIRONMENTS ***********************************)
+(* GENERIC SLICING FOR LOCAL ENVIRONMENTS ***********************************)
 
 (* Main properties **********************************************************)
 

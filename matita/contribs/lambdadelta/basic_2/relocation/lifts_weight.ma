@@ -17,7 +17,7 @@ include "basic_2/relocation/lifts.ma".
 
 (* GENERIC RELOCATION FOR TERMS *********************************************)
 
-(* Forward lemmas on weight for terms ***************************************)
+(* Forward lemmas with weight for terms *************************************)
 
 (* Basic_2A1: includes: lift_fwd_tw *)
 lemma lifts_fwd_tw: ∀T1,T2,f. ⬆*[f] T1 ≡ T2 → ♯{T1} = ♯{T2}.

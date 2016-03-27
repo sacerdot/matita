@@ -12,11 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/relocation/rtmap_isfin.ma".
 include "basic_2/notation/relations/rdropstar_4.ma".
 include "basic_2/relocation/lreq.ma".
 include "basic_2/relocation/lifts.ma".
 
-(* GENERAL SLICING FOR LOCAL ENVIRONMENTS ***********************************)
+(* GENERIC SLICING FOR LOCAL ENVIRONMENTS ***********************************)
 
 (* Basic_1: includes: drop_skip_bind drop1_skip_bind *)
 (* Basic_2A1: includes: drop_atom drop_pair drop_drop drop_skip
@@ -202,6 +203,13 @@ qed-.
 (* Basic_2A1: was: drop_fwd_drop2 *)
 lemma drops_isuni_fwd_drop2: ∀I,X,K,V,c,f. 𝐔⦃f⦄ → ⬇*[c, f] X ≡ K.ⓑ{I}V → ⬇*[c, ⫯f] X ≡ K.
 /3 width=7 by drops_after_fwd_drop2, after_isid_isuni/ qed-.
+
+(* forward lemmas with test for finite colength *****************************)
+
+lemma drops_fwd_isfin: ∀L1,L2,f. ⬇*[Ⓣ, f] L1 ≡ L2 → 𝐅⦃f⦄.
+#L1 #L2 #f #H elim H -L1 -L2 -f
+/3 width=1 by isfin_next, isfin_push, isfin_isid/
+qed-.
 
 (* Basic_2A1: removed theorems 14:
               drops_inv_nil drops_inv_cons d1_liftable_liftables

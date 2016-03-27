@@ -17,7 +17,7 @@ include "basic_2/relocation/lifts.ma".
 
 (* GENERIC RELOCATION FOR TERMS *********************************************)
 
-(* Forward lemmas on simple terms *******************************************)
+(* Forward lemmas with simple terms *****************************************)
 
 (* Basic_2A1: includes: lift_simple_dx *)
 lemma lifts_simple_dx: ∀T1,T2,f. ⬆*[f] T1 ≡ T2 → 𝐒⦃T1⦄ → 𝐒⦃T2⦄.

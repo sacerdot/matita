@@ -31,10 +31,12 @@
          for native type assignment.
    </news>
 
-   <subsection name="A">Stage "A": "Extending the Applicability Condition"</subsection>
+   <subsection name="A2">Stage "A2": "Extending the Applicability Condition"</subsection>
    <news class="alpha" date="2015 October 9.">
          λδ version 2A2 is started.
    </news>
+
+   <subsection name="A1">Stage "A1": "Extending the Applicability Condition"</subsection>
    <news class="delta" date="2015 August 27.">
          λδ version 2A1 appears too complex and is dismissed.
    </news>

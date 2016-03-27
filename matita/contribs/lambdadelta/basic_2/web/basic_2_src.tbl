@@ -9,6 +9,7 @@ table {
         ]
      }
    ]
+(*
    class "wine"
    [ { "examples" * } {
         [ { "terms with special features" * } {
@@ -210,25 +211,7 @@ table {
         ]
      }
    ]
-   class "yellow"
-   [ { "multiple substitution" * } {
-        [ { "lazy equivalence" * } {
-             [ "fleq ( ⦃?,?,?⦄ ≡[?] ⦃?,?,?⦄ )" "fleq_fleq" * ]
-             [ "lleq ( ? ≡[?,?] ? )" "lleq_alt" + "lleq_alt_rec" + "lleq_lreq" + "lleq_drop" + "lleq_fqus" + "lleq_llor" + "lleq_lleq" * ]
-          }
-        ]
-        [ { "lazy pointwise extension of a relation" * } {
-             [ "llpx_sn" "llpx_sn_alt" + "llpx_sn_alt_rec" + "llpx_sn_tc" + "llpx_sn_lreq" + "llpx_sn_drop" + "llpx_sn_lpx_sn" + "llpx_sn_frees" + "llpx_sn_llor" * ]
-          }
-        ]
-        [ { "pointwise union for local environments" * } {
-             [ "llor ( ? ⋓[?,?] ? ≡ ? )" "llor_alt" + "llor_drop" * ]
-          }
-        ]
-        [ { "context-sensitive exclusion from free variables" * } {
-             [ "frees ( ? ⊢ ? ϵ 𝐅*[?]⦃?⦄ )" "frees_append" + "frees_lreq" + "frees_lift" * ]
-          }
-        ]
+
         [ { "context-sensitive multiple rt-substitution" * } {
              [ "cpys ( ⦃?,?⦄ ⊢ ? ▶*[?,?] ? )" "cpys_alt ( ⦃?,?⦄ ⊢ ? ▶▶*[?,?] ? )" "cpys_lift" + "cpys_cpys" * ]
           }
@@ -238,23 +221,18 @@ table {
              [ "fqup ( ⦃?,?,?⦄ ⊐+ ⦃?,?,?⦄ )" "fqup_fqup" * ]
           }
         ]
-        [ { "iterated local env. slicing" * } {
-             [ "drops ( ⬇*[?,?] ? ≡ ? )" "drops_drop" + "drops_drops" * ]
-          }
-        ]
-        [ { "generic term relocation" * } {
-             [ "lifts_vector ( ⬆*[?] ? ≡ ? )" "lifts_lift_vector" * ]
-             [ "lifts ( ⬆*[?] ? ≡ ? )" "lifts_lift" + "lifts_lifts" * ]
+        [ { "pointwise union for local environments" * } {
+             [ "llor ( ? ⋓[?,?] ? ≡ ? )" "llor_alt" + "llor_drop" * ]
           }
         ]
         [ { "support for multiple relocation" * } {
              [ "mr2 ( @⦃?,?⦄ ≡ ? )" "mr2_plus ( ? + ? )" "mr2_minus ( ? ▭ ? ≡ ? )" "mr2_mr2" * ]
           }
         ]
-     }
-   ]
-   class "orange"
-   [ { "substitution" * } {
+        [ { "lazy pointwise extension of a relation" * } {
+             [ "llpx_sn" "llpx_sn_alt" + "llpx_sn_alt_rec" + "llpx_sn_tc" + "llpx_sn_lreq" + "llpx_sn_drop" + "llpx_sn_lpx_sn" + "llpx_sn_frees" + "llpx_sn_llor" * ]
+          }
+        ]
         [ { "structural successor for closures" * } {
              [ "fquq ( ⦃?,?,?⦄ ⊐⸮ ⦃?,?,?⦄ )" "fquq_alt ( ⦃?,?,?⦄ ⊐⊐⸮ ⦃?,?,?⦄ )" * ]
              [ "fqu ( ⦃?,?,?⦄ ⊐ ⦃?,?,?⦄ )" * ]
@@ -276,21 +254,50 @@ table {
              [ "lpx_sn" "lpx_sn_alt" + "lpx_sn_tc" + "lpx_sn_drop" + "lpx_sn_lpx_sn" * ]
           }
         ]
-        [ { "basic local env. slicing" * } {
-             [ "drop ( ⬇[?,?,?] ? ≡ ? )"  "drop_append" + "drop_lreq" + "drop_drop" * ]
+             [ "lleq ( ? ≡[?,?] ? )" "lleq_alt" + "lleq_alt_rec" + "lleq_lreq" + "lleq_drop" + "lleq_fqus" + "lleq_llor" + "lleq_lleq" * ]
+*)
+   class "yellow"
+   [ { "relocation" * } {
+        [ { "ranged equivalence for closures" * } {
+             [ "freq ( ⦃?,?,?⦄ ≡ ⦃?,?,?⦄ )" "freq_freq" * ]
           }
         ]
-        [ { "basic term relocation" * } {
-             [ "lift_vector ( ⬆[?,?] ? ≡ ? )" "lift_lift_vector" * ]
-             [ "lift ( ⬆[?,?] ? ≡ ? )" "lift_neq" + "lift_lift" * ]
+        [ { "context-sensitive free variables" * } {
+             [ "frees ( ? ⊢ 𝐅*⦃?⦄ ≡ ? )" "frees_weight" + "frees_lreq" + "frees_frees" * ]
+          }
+        ]
+        [ { "generic slicing for local environments" * } {
+             [ "drops_vector ( ⬇*[?,?] ? ≡ ? )" * ]
+             [ "drops ( ⬇*[?,?] ? ≡ ? )" "drops_lstar" + "drops_weight" + "drops_length" + "drops_ceq" + "drops_lexs" + "drops_lreq" + "drops_drops" * ]
+          }
+        ]
+        [ { "generic relocation for terms" * } {
+             [ "lifts_vector ( ⬆*[?] ? ≡ ? )" "lifts_lift_vector" * ]
+             [ "lifts ( ⬆*[?] ? ≡ ? )" "lifts_simple" + "lifts_weight" + "lifts_lifts" * ]
+          }
+        ]
+        [ { "ranged equivalence for local environments" * } {
+             [ "lreq ( ? ≡[?] ? )" "lreq_length" + "lreq_lreq" * ]
+          }
+        ]
+        [ { "generic entrywise extension of context-sensitive relations for terma" * } {
+             [ "lexs ( ? ⦻*[?,?,?] ? )" "lexs_length" + "lexs_lexs" * ]
+          }
+        ]
+     }
+   ]
+   class "orange"
+   [ { "" * } {
+        [ { "" * } {
+             [ * ]
           }
         ]
      }
    ]
    class "red"
    [ { "grammar" * } {
-        [ { "equivalence for local environments" * } {
-             [ "lreq ( ? ⩬[?,?] ? )" "lreq_lreq" * ]
+        [ { "context-sensitive equivalences for terms" * } {
+             [ "ceq" "ceq_ceq" * ]
           }
         ]
         [ { "same top term structure" * } {

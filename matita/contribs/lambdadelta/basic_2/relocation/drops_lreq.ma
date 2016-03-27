@@ -15,9 +15,9 @@
 include "basic_2/relocation/drops_ceq.ma".
 include "basic_2/relocation/drops_lexs.ma".
 
-(* GENERAL SLICING FOR LOCAL ENVIRONMENTS ***********************************)
+(* GENERIC SLICING FOR LOCAL ENVIRONMENTS ***********************************)
 
-(* Properties on ranged equivalence for local environments ******************)
+(* Properties with ranged equivalence for local environments ****************)
 
 lemma lreq_dedropable: dedropable_sn lreq.
 @lexs_liftable_dedropable

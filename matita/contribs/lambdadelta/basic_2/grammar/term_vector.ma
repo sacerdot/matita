@@ -29,14 +29,14 @@ interpretation "application to vector (term)"
 
 (* Basic properties *********************************************************)
 
-lemma applv_nil: ∀T. Ⓐ ◊.T = T.
+lemma applv_nil: ∀T. Ⓐ◊.T = T.
 // qed.
 
-lemma applv_cons: ∀V,Vs,T. Ⓐ V@Vs.T = ⓐV.ⒶVs.T.
+lemma applv_cons: ∀V,Vs,T. ⒶV@Vs.T = ⓐV.ⒶVs.T.
 // qed.
 
-(* properties concerning simple terms ***************************************)
+(* Properties with simple terms *********************************************)
 
-lemma applv_simple: ∀T,Vs.  𝐒⦃T⦄ → 𝐒⦃ⒶVs.T⦄.
+lemma applv_simple: ∀T,Vs. 𝐒⦃T⦄ → 𝐒⦃ⒶVs.T⦄.
 #T * //
 qed.

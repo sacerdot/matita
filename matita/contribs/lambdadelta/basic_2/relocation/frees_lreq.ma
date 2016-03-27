@@ -17,7 +17,7 @@ include "basic_2/relocation/frees.ma".
 
 (* CONTEXT-SENSITIVE FREE VARIABLES *****************************************)
 
-(* Properties on ranged equivalence for local environments ******************)
+(* Properties with ranged equivalence for local environments ****************)
 
 lemma frees_lreq_conf: ∀L1,T,f. L1 ⊢ 𝐅*⦃T⦄ ≡ f → ∀L2. L1 ≡[f] L2 → L2 ⊢ 𝐅*⦃T⦄ ≡ f.
 #L1 #T #f #H elim H -L1 -T -f
