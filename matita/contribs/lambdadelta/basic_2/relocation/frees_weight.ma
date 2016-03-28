@@ -20,6 +20,7 @@ include "basic_2/relocation/frees.ma".
 
 (* Advanced properties ******************************************************)
 
+(* Notes: this replaces lemma 1400 concluding the "big tree" theorem *)
 lemma frees_total: ∀L,T. ∃f. L ⊢ 𝐅*⦃T⦄ ≡ f.
 @(f2_ind … rfw) #n #IH #L *
 [ cases L -L /3 width=2 by frees_atom, ex_intro/
