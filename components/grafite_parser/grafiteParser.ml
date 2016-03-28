@@ -500,7 +500,7 @@ EXTEND
   index: [[ b = OPT SYMBOL "-" -> match b with None -> true | _ -> false ]];
 
   source: [[
-     src = OPT IDENT "implied" ->
+     src = OPT [ IDENT "implied" ] ->
         match src with None -> `Provided | _ -> `Implied
   ]];
 
