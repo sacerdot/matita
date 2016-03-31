@@ -14,7 +14,7 @@
 
 include "ground_2/notation/relations/rafter_3.ma".
 include "ground_2/relocation/rtmap_istot.ma".
-include "ground_2/relocation/rtmap_isuni.ma".
+include "ground_2/relocation/rtmap_uni.ma".
 
 (* RELOCATION MAP ***********************************************************)
 
@@ -251,7 +251,7 @@ corec theorem after_trans2: ∀f1,f0,f4. f1 ⊚ f0 ≡ f4 →
 ]
 qed-.
 
-(* Main inversion lemmas on after *******************************************)
+(* Main inversion lemmas ****************************************************)
 
 corec theorem after_mono: ∀f1,f2,x,y. f1 ⊚ f2 ≡ x → f1 ⊚ f2 ≡ y → x ≗ y.
 #f1 #f2 #x #y * -f1 -f2 -x
@@ -379,6 +379,43 @@ lemma after_fwd_at1: ∀i,i2,i1,f,f2. @⦃i1, f⦄ ≡ i → @⦃i2, f2⦄ ≡ i
 | elim (at_inv_xxp … Hf) -Hf // #g #H01 #H00
   elim (at_inv_xxp … Hf2) -Hf2 // #g2 #H21 #H20
   elim (after_inv_pxp … Hf1 … H20 H00) -f2 -f /3 width=2 by at_refl/
+]
+qed-.
+
+(* Properties with at *******************************************************)
+
+lemma after_isuni_dx: ∀i2,i1,f2. @⦃i1, f2⦄ ≡ i2 →
+                      ∀f. f2 ⊚ 𝐔❴i1❵ ≡ f → 𝐔❴i2❵ ⊚ ⫱*[i2] f2 ≡ f.
+#i2 elim i2 -i2
+[ #i1 #f2 #Hf2 #f #Hf
+  elim (at_inv_xxp … Hf2) -Hf2 // #g2 #H1 #H2 destruct
+  lapply (after_isid_inv_dx … Hf ?) -Hf
+  /3 width=3 by isid_after_sn, after_eq_repl_back_0/
+| #i2 #IH #i1 #f2 #Hf2 #f #Hf
+  elim (at_inv_xxn … Hf2) -Hf2 [1,3: * |*: // ]
+  [ #g2 #j1 #Hg2 #H1 #H2 destruct
+    elim (after_inv_pnx … Hf) -Hf [ |*: // ] #g #Hg #H destruct
+    /3 width=5 by after_next/
+  | #g2 #Hg2 #H2 destruct
+    elim (after_inv_nxx … Hf) -Hf [2,3: // ] #g #Hg #H destruct
+    /3 width=5 by after_next/
+  ]
+]
+qed.
+
+lemma after_isuni_sn: ∀i2,i1,f2. @⦃i1, f2⦄ ≡ i2 →
+                      ∀f. 𝐔❴i2❵ ⊚ ⫱*[i2] f2 ≡ f → f2 ⊚ 𝐔❴i1❵ ≡ f.
+#i2 elim i2 -i2
+[ #i1 #f2 #Hf2 #f #Hf
+  elim (at_inv_xxp … Hf2) -Hf2 // #g2 #H1 #H2 destruct
+  lapply (after_isid_inv_sn … Hf ?) -Hf
+  /3 width=3 by isid_after_dx, after_eq_repl_back_0/
+| #i2 #IH #i1 #f2 #Hf2 #f #Hf
+  elim (after_inv_nxx … Hf) -Hf [2,3: // ] #g #Hg #H destruct
+  elim (at_inv_xxn … Hf2) -Hf2 [1,3: * |*: // ]
+  [ #g2 #j1 #Hg2 #H1 #H2 destruct /3 width=7 by after_push/
+  | #g2 #Hg2 #H2 destruct /3 width=5 by after_next/
+  ]
 ]
 qed-.
 

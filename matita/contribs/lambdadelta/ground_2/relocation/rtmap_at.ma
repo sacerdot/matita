@@ -274,6 +274,25 @@ lemma at_pxx_tls: ∀n,f. @⦃0, f⦄ ≡ n → @⦃0, ⫱*[n]f⦄ ≡ 0.
 #n #IH #f #Hf cases (at_inv_pxn … Hf) -Hf /2 width=3 by/
 qed.
 
+lemma at_tls: ∀i2,f. ↑⫱*[⫯i2]f ≗ ⫱*[i2]f → ∃i1. @⦃i1, f⦄ ≡ i2.
+#i2 elim i2 -i2
+[ /4 width=4 by at_eq_repl_back, at_refl, ex_intro/
+| #i2 #IH #f <tls_xn <tls_xn in ⊢ (??%→?); #H
+  elim (IH … H) -IH -H #i1 #Hf
+  elim (pn_split f) * #g #Hg destruct /3 width=8 by at_push, at_next, ex_intro/  
+]
+qed-.
+
+(* Inversion lemmas with tls ************************************************)
+
+lemma at_inv_tls: ∀i2,i1,f. @⦃i1, f⦄ ≡ i2 → ↑⫱*[⫯i2]f ≗ ⫱*[i2]f.
+#i2 elim i2 -i2
+[ #i1 #f #Hf elim (at_inv_xxp … Hf) -Hf // #g #H1 #H destruct
+  /2 width=1 by eq_refl/
+| #i2 #IH #i1 #f #Hf elim (at_inv_xxn … Hf) -Hf [1,3: * |*: // ] /2 width=2 by/
+]
+qed-.
+
 (* Advanced inversion lemmas on isid ****************************************)
 
 lemma isid_inv_at: ∀i,f. 𝐈⦃f⦄ → @⦃i, f⦄ ≡ i.

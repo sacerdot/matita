@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "ground_2/notation/relations/isuniform_1.ma".
-include "ground_2/relocation/rtmap_isid.ma".
+include "ground_2/relocation/rtmap_isfin.ma".
 
 (* RELOCATION MAP ***********************************************************)
 
@@ -39,7 +39,18 @@ lemma isuni_inv_next: ∀g. 𝐔⦃g⦄ → ∀f. ⫯f = g → 𝐔⦃f⦄.
 ]
 qed-.
 
+lemma isuni_split: ∀g. 𝐔⦃g⦄ → (∃∃f. 𝐈⦃f⦄ & ↑f = g) ∨ (∃∃f.𝐔⦃f⦄ & ⫯f = g).
+#g #H elim (pn_split g) * #f #Hf
+/4 width=3 by isuni_inv_next, isuni_inv_push, or_introl, or_intror, ex2_intro/
+qed-.
+
 (* basic forward lemmas *****************************************************)
 
 lemma isuni_fwd_push: ∀g. 𝐔⦃g⦄ → ∀f. ↑f = g → 𝐔⦃f⦄.
 /3 width=3 by isuni_inv_push, isuni_isid/ qed-.
+
+(* Forward lemmas with test for finite colength *****************************)
+
+lemma isuni_fwd_isfin: ∀f. 𝐔⦃f⦄ → 𝐅⦃f⦄.
+#f #H elim H -f /3 width=1 by isfin_next, isfin_isid/
+qed-.
