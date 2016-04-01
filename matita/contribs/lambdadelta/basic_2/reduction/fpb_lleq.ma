@@ -21,10 +21,10 @@ include "basic_2/reduction/fpb.ma".
 
 (* Properties on lazy equivalence for local environments ********************)
 
-lemma lleq_fpb_trans: ∀h,g,F,K1,K2,T. K1 ≡[T, 0] K2 →
-                      ∀G,L2,U. ⦃F, K2, T⦄ ≻[h, g] ⦃G, L2, U⦄ →
-                      ∃∃L1. ⦃F, K1, T⦄ ≻[h, g] ⦃G, L1, U⦄ & L1 ≡[U, 0] L2.
-#h #g #F #K1 #K2 #T #HT #G #L2 #U * -G -L2 -U
+lemma lleq_fpb_trans: ∀h,o,F,K1,K2,T. K1 ≡[T, 0] K2 →
+                      ∀G,L2,U. ⦃F, K2, T⦄ ≻[h, o] ⦃G, L2, U⦄ →
+                      ∃∃L1. ⦃F, K1, T⦄ ≻[h, o] ⦃G, L1, U⦄ & L1 ≡[U, 0] L2.
+#h #o #F #K1 #K2 #T #HT #G #L2 #U * -G -L2 -U
 [ #G #L2 #U #H2 elim (lleq_fqu_trans … H2 … HT) -K2
   /3 width=3 by fpb_fqu, ex2_intro/
 | /4 width=10 by fpb_cpx, cpx_lleq_conf_sn, lleq_cpx_trans, ex2_intro/

@@ -183,20 +183,14 @@ table {
         ]
      }
    ]
-   class "grass"
+*)
+   class "green"
    [ { "static typing" * } {
-        [ { "local env. ref. for degree assignment" * } {
-             [ "lsubd ( ? ⊢ ? ⫃▪[?,?] ? )" "lsubd_da" + "lsubd_lsubd" * ]
-          }
-        ]
-        [ { "degree assignment" * } {
-             [ "da ( ⦃?,?⦄ ⊢ ? ▪[?,?] ? )" "da_lift" + "da_aaa" + "da_da" * ]
-          }
-        ]
         [ { "parameters" * } {
              [ "sh" "sd" * ]
           }
         ]
+(*
         [ { "local env. ref. for atomic arity assignment" * } {
              [ "lsuba ( ? ⊢ ? ⫃⁝ ? )" "lsuba_aaa" + "lsuba_lsuba" * ]
           }
@@ -205,13 +199,107 @@ table {
              [ "aaa ( ⦃?,?⦄ ⊢ ? ⁝ ? )" "aaa_lift" + "aaa_lifts" + "aaa_fqus" + "aaa_lleq" + "aaa_aaa" * ]
           }
         ]
-        [ { "restricted local env. ref." * } {
-             [ "lsubr ( ? ⫃ ? )" "lsubr_lsubr" * ]
+*)
+        [ { "restricted ref. for local env." * } {
+             [ "lsubr ( ? ⫃ ? )" "lsubr_length" + "lsubr_drops" + "lsubr_lsubr" * ]
+          }
+        ]
+        [ { "ranged equivalence for closures" * } {
+             [ "freq ( ⦃?,?,?⦄ ≡ ⦃?,?,?⦄ )" "freq_freq" * ]
+          }
+        ]
+        [ { "context-sensitive free variables" * } {
+             [ "frees ( ? ⊢ 𝐅*⦃?⦄ ≡ ? )" "frees_weight" + "frees_lreq" + "frees_frees" * ]
           }
         ]
      }
    ]
+   class "grass"
+   [ { "s-computation" * } {
+        [ { "" * } {
+             [ * ]
+          }
+        ]
+     }
+   ]
+   class "yellow"
+   [ { "s-transition" * } {
+        [ { "structural successor for closures" * } {
+             [ "fquq ( ⦃?,?,?⦄ ⊐⸮ ⦃?,?,?⦄ )" "fquq_length" + "fquq_weight" * ]
+             [ "fqu ( ⦃?,?,?⦄ ⊐ ⦃?,?,?⦄ )" "fqu_length" + "fqu_weight" * ]
+          }
+        ]
+     }
+   ]
+   class "orange"
+   [ { "relocation" * } {
+        [ { "generic slicing for local environments" * } {
+             [ "drops_vector ( ⬇*[?,?] ? ≡ ? )" * ]
+             [ "drops ( ⬇*[?,?] ? ≡ ? )" "drops_lstar" + "drops_weight" + "drops_length" + "drops_ceq" + "drops_lexs" + "drops_lreq" + "drops_drops" * ]
+          }
+        ]
+        [ { "generic relocation for terms" * } {
+             [ "lifts_vector ( ⬆*[?] ? ≡ ? )" "lifts_lifts_vector" * ]
+             [ "lifts ( ⬆*[?] ? ≡ ? )" "lifts_simple" + "lifts_weight" + "lifts_lifts" * ]
+          }
+        ]
+        [ { "ranged equivalence for local environments" * } {
+             [ "lreq ( ? ≡[?] ? )" "lreq_length" + "lreq_lreq" * ]
+          }
+        ]
+        [ { "generic entrywise extension of context-sensitive relations for terma" * } {
+             [ "lexs ( ? ⦻*[?,?,?] ? )" "lexs_length" + "lexs_lexs" * ]
+          }
+        ]
+     }
+   ]
+   class "red"
+   [ { "grammar" * } {
+        [ { "append for local environments" * } {
+             [ "append ( ? @@ ? )" "append_length" * ]
+          }
+        ]
+        [ { "context-sensitive equivalences for terms" * } {
+             [ "ceq" "ceq_ceq" * ]
+          }
+        ]
+        [ { "same top term structure" * } {
+             [ "tsts ( ? ≂ ? )" "tsts_tsts" + "tsts_vector" * ]
+          }
+        ]
+        [ { "closures" * } {
+             [ "cl_weight ( ♯{?,?,?} )" "cl_restricted_weight ( ♯{?,?} )" * ]
+          }
+        ]
+        [ { "internal syntax" * } {
+             [ "genv" * ]
+             [ "lenv" "lenv_weight ( ♯{?} )" "lenv_length ( |?| )" * ]
+             [ "term" "term_weight ( ♯{?} )" "term_simple ( 𝐒⦃?⦄ )" "term_vector ( Ⓐ?.? )" * ]
+             [ "item" * ]
+          }
+        ]
+        [ { "external syntax" * } {
+             [ "aarity" * ]
+          }
+        ]
+     }
+   ]
+}
 
+class "top"               { * }
+
+class "capitalize italic" { 0 }
+
+class "italic"            { 1 }
+(*
+        [ { "local env. ref. for degree assignment" * } {
+             [ "lsubd ( ? ⊢ ? ⫃▪[?,?] ? )" "lsubd_da" + "lsubd_lsubd" * ]
+          }
+        ]
+        [ { "degree assignment" * } {
+             [ "da ( ⦃?,?⦄ ⊢ ? ▪[?,?] ? )" "da_lift" + "da_aaa" + "da_da" * ]
+          }
+        ]
         [ { "context-sensitive multiple rt-substitution" * } {
              [ "cpys ( ⦃?,?⦄ ⊢ ? ▶*[?,?] ? )" "cpys_alt ( ⦃?,?⦄ ⊢ ? ▶▶*[?,?] ? )" "cpys_lift" + "cpys_cpys" * ]
           }
@@ -225,17 +313,8 @@ table {
              [ "llor ( ? ⋓[?,?] ? ≡ ? )" "llor_alt" + "llor_drop" * ]
           }
         ]
-        [ { "support for multiple relocation" * } {
-             [ "mr2 ( @⦃?,?⦄ ≡ ? )" "mr2_plus ( ? + ? )" "mr2_minus ( ? ▭ ? ≡ ? )" "mr2_mr2" * ]
-          }
-        ]
         [ { "lazy pointwise extension of a relation" * } {
              [ "llpx_sn" "llpx_sn_alt" + "llpx_sn_alt_rec" + "llpx_sn_tc" + "llpx_sn_lreq" + "llpx_sn_drop" + "llpx_sn_lpx_sn" + "llpx_sn_frees" + "llpx_sn_llor" * ]
-          }
-        ]
-        [ { "structural successor for closures" * } {
-             [ "fquq ( ⦃?,?,?⦄ ⊐⸮ ⦃?,?,?⦄ )" "fquq_alt ( ⦃?,?,?⦄ ⊐⊐⸮ ⦃?,?,?⦄ )" * ]
-             [ "fqu ( ⦃?,?,?⦄ ⊐ ⦃?,?,?⦄ )" * ]
           }
         ]
         [ { "global env. slicing" * } {
@@ -256,75 +335,3 @@ table {
         ]
              [ "lleq ( ? ≡[?,?] ? )" "lleq_alt" + "lleq_alt_rec" + "lleq_lreq" + "lleq_drop" + "lleq_fqus" + "lleq_llor" + "lleq_lleq" * ]
 *)
-   class "yellow"
-   [ { "relocation" * } {
-        [ { "ranged equivalence for closures" * } {
-             [ "freq ( ⦃?,?,?⦄ ≡ ⦃?,?,?⦄ )" "freq_freq" * ]
-          }
-        ]
-        [ { "context-sensitive free variables" * } {
-             [ "frees ( ? ⊢ 𝐅*⦃?⦄ ≡ ? )" "frees_weight" + "frees_lreq" + "frees_frees" * ]
-          }
-        ]
-        [ { "generic slicing for local environments" * } {
-             [ "drops_vector ( ⬇*[?,?] ? ≡ ? )" * ]
-             [ "drops ( ⬇*[?,?] ? ≡ ? )" "drops_lstar" + "drops_weight" + "drops_length" + "drops_ceq" + "drops_lexs" + "drops_lreq" + "drops_drops" * ]
-          }
-        ]
-        [ { "generic relocation for terms" * } {
-             [ "lifts_vector ( ⬆*[?] ? ≡ ? )" "lifts_lift_vector" * ]
-             [ "lifts ( ⬆*[?] ? ≡ ? )" "lifts_simple" + "lifts_weight" + "lifts_lifts" * ]
-          }
-        ]
-        [ { "ranged equivalence for local environments" * } {
-             [ "lreq ( ? ≡[?] ? )" "lreq_length" + "lreq_lreq" * ]
-          }
-        ]
-        [ { "generic entrywise extension of context-sensitive relations for terma" * } {
-             [ "lexs ( ? ⦻*[?,?,?] ? )" "lexs_length" + "lexs_lexs" * ]
-          }
-        ]
-     }
-   ]
-   class "orange"
-   [ { "" * } {
-        [ { "" * } {
-             [ * ]
-          }
-        ]
-     }
-   ]
-   class "red"
-   [ { "grammar" * } {
-        [ { "context-sensitive equivalences for terms" * } {
-             [ "ceq" "ceq_ceq" * ]
-          }
-        ]
-        [ { "same top term structure" * } {
-             [ "tsts ( ? ≂ ? )" "tsts_tsts" + "tsts_vector" * ]
-          }
-        ]
-        [ { "closures" * } {
-             [ "cl_weight ( ♯{?,?,?} )" "cl_restricted_weight ( ♯{?,?} )" * ]
-          }
-        ]
-        [ { "internal syntax" * } {
-             [ "genv" * ]
-             [ "lenv" "lenv_weight ( ♯{?} )" "lenv_length ( |?| )" "lenv_append ( ? @@ ? )" * ]
-             [ "term" "term_weight ( ♯{?} )" "term_simple ( 𝐒⦃?⦄ )" "term_vector ( Ⓐ?.? )" * ]
-             [ "item" * ]
-          }
-        ]
-        [ { "external syntax" * } {
-             [ "aarity" * ]
-          }
-        ]
-     }
-   ]
-}
-
-class "top"               { * }
-
-class "capitalize italic" { 0 }
-
-class "italic"            { 1 }

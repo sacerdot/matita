@@ -66,3 +66,6 @@ lemma discr_lpair_x_xy: ∀I,V,L. L = L.ⓑ{I}V → ⊥.
   elim (destruct_lpair_lpair_aux … H) -H #H1 #H2 #H3 destruct /2 width=1 by/ (**) (* destruct lemma needed *)
 ]
 qed-.
+
+lemma discr_lpair_xy_x: ∀I,V,L. L.ⓑ{I}V = L→ ⊥.
+/2 width=4 by discr_lpair_x_xy/ qed-.

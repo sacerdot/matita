@@ -20,12 +20,12 @@ include "basic_2/reduction/lpx_drop.ma".
 
 (* Properties on context-sensitive free variables ***************************)
 
-lemma lpx_cpx_frees_trans: ∀h,g,G,L1,U1,U2. ⦃G, L1⦄ ⊢ U1 ➡[h, g] U2 →
-                           ∀L2. ⦃G, L1⦄ ⊢ ➡[h, g] L2 →
+lemma lpx_cpx_frees_trans: ∀h,o,G,L1,U1,U2. ⦃G, L1⦄ ⊢ U1 ➡[h, o] U2 →
+                           ∀L2. ⦃G, L1⦄ ⊢ ➡[h, o] L2 →
                            ∀i. L2 ⊢ i ϵ 𝐅*[0]⦃U2⦄ → L1 ⊢ i ϵ 𝐅*[0]⦃U1⦄.
-#h #g #G #L1 #U1 @(fqup_wf_ind_eq … G L1 U1) -G -L1 -U1
+#h #o #G #L1 #U1 @(fqup_wf_ind_eq … G L1 U1) -G -L1 -U1
 #G0 #L0 #U0 #IH #G #L1 * *
-[ -IH #k #HG #HL #HU #U2 #H1 #L2 #_ #i #H2 elim (cpx_inv_sort1 … H1) -H1
+[ -IH #s #HG #HL #HU #U2 #H1 #L2 #_ #i #H2 elim (cpx_inv_sort1 … H1) -H1
   [| * #d #_ ] #H destruct elim (frees_inv_sort … H2)
 | #j #HG #HL #HU #U2 #H1 #L2 #HL12 #i #H2 elim (cpx_inv_lref1 … H1) -H1
   [ #H destruct elim (frees_inv_lref … H2) -H2 //
@@ -80,9 +80,9 @@ lemma lpx_cpx_frees_trans: ∀h,g,G,L1,U1,U2. ⦃G, L1⦄ ⊢ U1 ➡[h, g] U2 �
 ]
 qed-.
 
-lemma cpx_frees_trans: ∀h,g,G. frees_trans (cpx h g G).
+lemma cpx_frees_trans: ∀h,o,G. frees_trans (cpx h o G).
 /2 width=8 by lpx_cpx_frees_trans/ qed-.
 
-lemma lpx_frees_trans: ∀h,g,G,L1,L2. ⦃G, L1⦄ ⊢ ➡[h, g] L2 →
+lemma lpx_frees_trans: ∀h,o,G,L1,L2. ⦃G, L1⦄ ⊢ ➡[h, o] L2 →
                        ∀U,i. L2 ⊢ i ϵ 𝐅*[0]⦃U⦄ → L1 ⊢ i ϵ 𝐅*[0]⦃U⦄.
 /2 width=8 by lpx_cpx_frees_trans/ qed-.

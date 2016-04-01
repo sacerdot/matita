@@ -16,4 +16,4 @@
 
 notation "hvbox( ⦃ term 46 G1, break term 46 L1, break term 46 T1 ⦄ ≥ break [ term 46 o, break term 46 h ] break ⦃ term 46 G2, break term 46 L2 , break term 46 T2 ⦄ )"
    non associative with precedence 45
-   for @{ 'BTPRedStar $o $h $G1 $L1 $T1 $G2 $L2 $T2 }.
+   for @{ 'BTPRedStar $h $o $G1 $L1 $T1 $G2 $L2 $T2 }.

@@ -12,20 +12,29 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/aaa_lift.ma".
-include "basic_2/static/da.ma".
+include "basic_2/notation/relations/suptermopt_6.ma".
+include "basic_2/s_transition/fqu.ma".
 
-(* DEGREE ASSIGNMENT FOR TERMS **********************************************)
+(* OPTIONAL SUPCLOSURE ******************************************************)
 
-(* Properties on atomic arity assignment for terms **************************)
+(* Basic_2A1: was: fquqa *)
+(* Basic_2A1: includes: fquq_inv_gen *)
+definition fquq: tri_relation genv lenv term ≝ tri_RC … fqu.
 
-lemma aaa_da: ∀h,g,G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ∃d. ⦃G, L⦄ ⊢ T ▪[h, g] d.
-#h #g #G #L #T #A #H elim H -G -L -T -A
-[ #G #L #k elim (deg_total h g k) /3 width=2 by da_sort, ex_intro/
-| * #G #L #K #V #B #i #HLK #_ * /3 width=5 by da_ldef, da_ldec, ex_intro/
-| #a #G #L #V #T #B #A #_ #_ #_ * /3 width=2 by da_bind, ex_intro/
-| #a #G #L #V #T #B #A #_ #_ #_ * /3 width=2 by da_bind, ex_intro/
-| #G #L #V #T #B #A #_ #_ #_ * /3 width=2 by da_flat, ex_intro/
-| #G #L #W #T #A #_ #_ #_ * /3 width=2 by da_flat, ex_intro/
-]
-qed-.
+interpretation
+   "optional structural successor (closure)"
+   'SupTermOpt G1 L1 T1 G2 L2 T2 = (fquq G1 L1 T1 G2 L2 T2).
+
+(* Basic properties *********************************************************)
+
+(* Basic_2A1: includes: fquqa_refl *)
+lemma fquq_refl: tri_reflexive … fquq.
+// qed.
+
+lemma fqu_fquq: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ⊐⸮ ⦃G2, L2, T2⦄.
+/2 width=1 by or_introl/ qed.
+
+(* Basic_2A1: removed theorems 8:
+              fquq_lref_O fquq_pair_sn fquq_bind_dx fquq_flat_dx fquq_drop
+              fquqa_drop fquq_fquqa fquqa_inv_fquq
+*)

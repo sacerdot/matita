@@ -20,9 +20,9 @@ include "basic_2/reduction/fpb.ma".
 
 (* Advanced properties ******************************************************)
 
-lemma sta_fpb: ∀h,g,G,L,T1,T2,d. ⦃G, L⦄ ⊢ T1 ▪[h, g] d+1 →
-               ⦃G, L⦄ ⊢ T1 •*[h, 1] T2 → ⦃G, L, T1⦄ ≻[h, g] ⦃G, L, T2⦄.
-#h #g #G #L #T1 #T2 #d #HT1 #HT12 elim (eq_term_dec T1 T2)
+lemma sta_fpb: ∀h,o,G,L,T1,T2,d. ⦃G, L⦄ ⊢ T1 ▪[h, o] d+1 →
+               ⦃G, L⦄ ⊢ T1 •*[h, 1] T2 → ⦃G, L, T1⦄ ≻[h, o] ⦃G, L, T2⦄.
+#h #o #G #L #T1 #T2 #d #HT1 #HT12 elim (eq_term_dec T1 T2)
 /3 width=2 by fpb_cpx, sta_cpx/ #H destruct
 elim (lstas_inv_refl_pos h G L T2 0) //
 qed.

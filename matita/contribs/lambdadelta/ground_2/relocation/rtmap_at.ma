@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "ground_2/notation/relations/rat_3.ma".
-include "ground_2/relocation/rtmap_id.ma".
+include "ground_2/relocation/rtmap_uni.ma".
 
 (* RELOCATION MAP ***********************************************************)
 
@@ -320,3 +320,9 @@ lemma id_inv_at: ∀f. (∀i. @⦃i, f⦄ ≡ i) → 𝐈𝐝 ≗ f.
 
 lemma id_at: ∀i. @⦃i, 𝐈𝐝⦄ ≡ i.
 /2 width=1 by isid_inv_at/ qed.
+
+(* Properties with uniform relocations **************************************)
+
+lemma at_uni: ∀n,i. @⦃i,𝐔❴n❵⦄ ≡ n+i.
+#n elim n -n /2 width=5 by at_next/
+qed.

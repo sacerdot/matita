@@ -1,0 +1,16 @@
+(* Removed theorems *********************************************************)
+
+lemma fquqa_drop: ∀G,L,K,T,U,k.
+                  ⬇[k] L ≡ K → ⬆[0, k] T ≡ U → ⦃G, L, U⦄ ⊐⊐⸮ ⦃G, K, T⦄.
+#G #L #K #T #U #k @(ynat_ind … k) -k /3 width=3 by fqu_drop, or_introl/
+#HLK #HTU >(drop_inv_O2 … HLK) -L >(lift_inv_O2 … HTU) -T //
+qed.
+
+inductive fquq: tri_relation genv lenv term ≝
+| fquq_lref_O : ∀I,G,L,V. fquq G (L.ⓑ{I}V) (#0) G L V
+| fquq_pair_sn: ∀I,G,L,V,T. fquq G L (②{I}V.T) G L V
+| fquq_bind_dx: ∀a,I,G,L,V,T. fquq G L (ⓑ{a,I}V.T) G (L.ⓑ{I}V) T
+| fquq_flat_dx: ∀I,G, L,V,T. fquq G L (ⓕ{I}V.T) G L T
+| fquq_drop   : ∀G,L,K,T,U,k.
+                ⬇[k] L ≡ K → ⬆[0, k] T ≡ U → fquq G L U G K T
+.

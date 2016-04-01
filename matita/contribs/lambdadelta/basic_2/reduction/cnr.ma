@@ -77,8 +77,8 @@ qed-.
 (* Basic properties *********************************************************)
 
 (* Basic_1: was: nf2_sort *)
-lemma cnr_sort: ∀G,L,k. ⦃G, L⦄ ⊢ ➡ 𝐍⦃⋆k⦄.
-#G #L #k #X #H
+lemma cnr_sort: ∀G,L,s. ⦃G, L⦄ ⊢ ➡ 𝐍⦃⋆s⦄.
+#G #L #s #X #H
 >(cpr_inv_sort1 … H) //
 qed.
 

@@ -45,8 +45,8 @@ interpretation
 
 (* Basic inversion lemmas ***************************************************)
 
-fact crr_inv_sort_aux: ∀G,L,T,k. ⦃G, L⦄ ⊢ ➡ 𝐑⦃T⦄ → T = ⋆k → ⊥.
-#G #L #T #k0 * -L -T
+fact crr_inv_sort_aux: ∀G,L,T,s. ⦃G, L⦄ ⊢ ➡ 𝐑⦃T⦄ → T = ⋆s → ⊥.
+#G #L #T #s0 * -L -T
 [ #L #K #V #i #HLK #H destruct
 | #L #V #T #_ #H destruct
 | #L #V #T #_ #H destruct
@@ -58,7 +58,7 @@ fact crr_inv_sort_aux: ∀G,L,T,k. ⦃G, L⦄ ⊢ ➡ 𝐑⦃T⦄ → T = ⋆k �
 ]
 qed-.
 
-lemma crr_inv_sort: ∀G,L,k. ⦃G, L⦄ ⊢ ➡ 𝐑⦃⋆k⦄ → ⊥.
+lemma crr_inv_sort: ∀G,L,s. ⦃G, L⦄ ⊢ ➡ 𝐑⦃⋆s⦄ → ⊥.
 /2 width=6 by crr_inv_sort_aux/ qed-.
 
 fact crr_inv_lref_aux: ∀G,L,T,i. ⦃G, L⦄ ⊢ ➡ 𝐑⦃T⦄ → T = #i →

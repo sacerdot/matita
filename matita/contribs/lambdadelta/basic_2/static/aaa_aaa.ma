@@ -21,7 +21,7 @@ include "basic_2/static/aaa.ma".
 
 theorem aaa_mono: ∀G,L,T,A1. ⦃G, L⦄ ⊢ T ⁝ A1 → ∀A2. ⦃G, L⦄ ⊢ T ⁝ A2 → A1 = A2.
 #G #L #T #A1 #H elim H -G -L -T -A1
-[ #G #L #k #A2 #H
+[ #G #L #s #A2 #H
   >(aaa_inv_sort … H) -H //
 | #I1 #G #L #K1 #V1 #B #i #HLK1 #_ #IHA1 #A2 #H
   elim (aaa_inv_lref … H) -H #I2 #K2 #V2 #HLK2 #HA2

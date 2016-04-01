@@ -14,7 +14,6 @@
 
 include "ground_2/notation/relations/rafter_3.ma".
 include "ground_2/relocation/rtmap_istot.ma".
-include "ground_2/relocation/rtmap_uni.ma".
 
 (* RELOCATION MAP ***********************************************************)
 

@@ -19,7 +19,7 @@ include "ground_2/lib/arith.ma".
 (* sort hierarchy specification *)
 record sh: Type[0] ≝ {
    next   : nat → nat;     (* next sort in the hierarchy *)
-   next_lt: ∀k. k < next k (* strict monotonicity condition *)
+   next_lt: ∀s. s < next s (* strict monotonicity condition *)
 }.
 
 definition sh_N: sh ≝ mk_sh S ….
@@ -27,18 +27,18 @@ definition sh_N: sh ≝ mk_sh S ….
 
 (* Basic properties *********************************************************)
 
-lemma nexts_le: ∀h,k,d. k ≤ (next h)^d k.
-#h #k #d elim d -d // normalize #d #IHd
-lapply (next_lt h ((next h)^d k)) #H
-lapply (le_to_lt_to_lt … IHd H) -IHd -H /2 width=2 by lt_to_le/
+lemma nexts_le: ∀h,s,n. s ≤ (next h)^n s.
+#h #s #n elim n -n // normalize #n #IH
+lapply (next_lt h ((next h)^n s)) #H
+lapply (le_to_lt_to_lt … IH H) -IH -H /2 width=2 by lt_to_le/
 qed.
 
-lemma nexts_lt: ∀h,k,d. k < (next h)^(d+1) k.
-#h #k #d >iter_SO
-lapply (nexts_le h k d) #H
+lemma nexts_lt: ∀h,s,n. s < (next h)^(⫯n) s.
+#h #s #n normalize
+lapply (nexts_le h s n) #H
 @(le_to_lt_to_lt … H) //
 qed.
 
-axiom nexts_dec: ∀h,k1,k2. Decidable (∃d. (next h)^d k1 = k2).
+axiom nexts_dec: ∀h,s1,s2. Decidable (∃n. (next h)^n s1 = s2).
 
-axiom nexts_inj: ∀h,k,d1,d2. (next h)^d1 k = (next h)^d2 k → d1 = d2.
+axiom nexts_inj: ∀h,s,n1,n2. (next h)^n1 s = (next h)^n2 s → n1 = n2.

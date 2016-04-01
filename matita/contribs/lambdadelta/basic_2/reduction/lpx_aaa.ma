@@ -21,11 +21,11 @@ include "basic_2/reduction/lpx_drop.ma".
 (* Properties on atomic arity assignment for terms **************************)
 
 (* Note: lemma 500 *)
-lemma cpx_lpx_aaa_conf: ∀h,g,G,L1,T1,A. ⦃G, L1⦄ ⊢ T1 ⁝ A →
-                        ∀T2. ⦃G, L1⦄ ⊢ T1 ➡[h, g] T2 →
-                        ∀L2. ⦃G, L1⦄ ⊢ ➡[h, g] L2 → ⦃G, L2⦄ ⊢ T2 ⁝ A.
-#h #g #G #L1 #T1 #A #H elim H -G -L1 -T1 -A
-[ #g #L1 #k #X #H
+lemma cpx_lpx_aaa_conf: ∀h,o,G,L1,T1,A. ⦃G, L1⦄ ⊢ T1 ⁝ A →
+                        ∀T2. ⦃G, L1⦄ ⊢ T1 ➡[h, o] T2 →
+                        ∀L2. ⦃G, L1⦄ ⊢ ➡[h, o] L2 → ⦃G, L2⦄ ⊢ T2 ⁝ A.
+#h #o #G #L1 #T1 #A #H elim H -G -L1 -T1 -A
+[ #o #L1 #s #X #H
   elim (cpx_inv_sort1 … H) -H // * //
 | #I #G #L1 #K1 #V1 #B #i #HLK1 #_ #IHV1 #X #H #L2 #HL12
   elim (cpx_inv_lref1 … H) -H
@@ -70,10 +70,10 @@ lemma cpx_lpx_aaa_conf: ∀h,g,G,L1,T1,A. ⦃G, L1⦄ ⊢ T1 ⁝ A →
 ]
 qed-.
 
-lemma cpx_aaa_conf: ∀h,g,G,L,T1,A. ⦃G, L⦄ ⊢ T1 ⁝ A → ∀T2. ⦃G, L⦄ ⊢ T1 ➡[h, g] T2 → ⦃G, L⦄ ⊢ T2 ⁝ A.
+lemma cpx_aaa_conf: ∀h,o,G,L,T1,A. ⦃G, L⦄ ⊢ T1 ⁝ A → ∀T2. ⦃G, L⦄ ⊢ T1 ➡[h, o] T2 → ⦃G, L⦄ ⊢ T2 ⁝ A.
 /2 width=7 by cpx_lpx_aaa_conf/ qed-.
 
-lemma lpx_aaa_conf: ∀h,g,G,L1,T,A. ⦃G, L1⦄ ⊢ T ⁝ A → ∀L2. ⦃G, L1⦄ ⊢ ➡[h, g] L2 → ⦃G, L2⦄ ⊢ T ⁝ A.
+lemma lpx_aaa_conf: ∀h,o,G,L1,T,A. ⦃G, L1⦄ ⊢ T ⁝ A → ∀L2. ⦃G, L1⦄ ⊢ ➡[h, o] L2 → ⦃G, L2⦄ ⊢ T ⁝ A.
 /2 width=7 by cpx_lpx_aaa_conf/ qed-.
 
 lemma cpr_aaa_conf: ∀G,L,T1,A. ⦃G, L⦄ ⊢ T1 ⁝ A → ∀T2. ⦃G, L⦄ ⊢ T1 ➡ T2 → ⦃G, L⦄ ⊢ T2 ⁝ A.

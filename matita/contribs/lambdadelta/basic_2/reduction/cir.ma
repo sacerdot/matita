@@ -58,7 +58,7 @@ qed-.
 
 (* Basic properties *********************************************************)
 
-lemma cir_sort: ∀G,L,k. ⦃G, L⦄ ⊢ ➡ 𝐈⦃⋆k⦄.
+lemma cir_sort: ∀G,L,s. ⦃G, L⦄ ⊢ ➡ 𝐈⦃⋆s⦄.
 /2 width=4 by crr_inv_sort/ qed.
 
 lemma cir_gref: ∀G,L,p. ⦃G, L⦄ ⊢ ➡ 𝐈⦃§p⦄.

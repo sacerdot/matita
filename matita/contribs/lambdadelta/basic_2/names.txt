@@ -20,12 +20,12 @@ c      : local dropping kind parameter (true = restricted, false = general)
 d      : term degree
 e      : reserved: future use (\lambda\delta 3)
 f,g    : local reference transforming map 
-h      : sort degree parameter
+h      : sort hierarchy parameter
 i,j    : local reference depth (de Bruijn's)
 k,l    : global reference level
 m      : 
 n      : type iterations
-o      : sort hierarchy parameter
+o      : sort degree parameter
 p,q    : binder polarity
 r      : reduction kind parameter (true = ordinary, false = extended)
 s      : sort index

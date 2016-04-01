@@ -131,8 +131,8 @@ lemma cpr_inv_atom1: ∀I,G,L,T2. ⦃G, L⦄ ⊢ ⓪{I} ➡ T2 →
 /2 width=3 by cpr_inv_atom1_aux/ qed-.
 
 (* Basic_1: includes: pr0_gen_sort pr2_gen_sort *)
-lemma cpr_inv_sort1: ∀G,L,T2,k. ⦃G, L⦄ ⊢ ⋆k ➡ T2 → T2 = ⋆k.
-#G #L #T2 #k #H
+lemma cpr_inv_sort1: ∀G,L,T2,s. ⦃G, L⦄ ⊢ ⋆s ➡ T2 → T2 = ⋆s.
+#G #L #T2 #s #H
 elim (cpr_inv_atom1 … H) -H //
 * #K #V #V2 #i #_ #_ #_ #H destruct
 qed-.

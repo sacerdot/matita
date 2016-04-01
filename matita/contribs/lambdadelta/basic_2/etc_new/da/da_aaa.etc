@@ -12,8 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
+include "basic_2/static/aaa_lift.ma".
+include "basic_2/static/da.ma".
 
-notation "hvbox( ⬇ * [ term 46 m ] break term 46 L1 ≡ break term 46 L2 )"
-   non associative with precedence 45
-   for @{ 'RDropStar $m $L1 $L2 }.
+(* DEGREE ASSIGNMENT FOR TERMS **********************************************)
+
+(* Properties on atomic arity assignment for terms **************************)
+
+lemma aaa_da: ∀h,o,G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ∃d. ⦃G, L⦄ ⊢ T ▪[h, o] d.
+#h #o #G #L #T #A #H elim H -G -L -T -A
+[ #G #L #s elim (deg_total h o s) /3 width=2 by da_sort, ex_intro/
+| * #G #L #K #V #B #i #HLK #_ * /3 width=5 by da_ldef, da_ldec, ex_intro/
+| #a #G #L #V #T #B #A #_ #_ #_ * /3 width=2 by da_bind, ex_intro/
+| #a #G #L #V #T #B #A #_ #_ #_ * /3 width=2 by da_bind, ex_intro/
+| #G #L #V #T #B #A #_ #_ #_ * /3 width=2 by da_flat, ex_intro/
+| #G #L #W #T #A #_ #_ #_ * /3 width=2 by da_flat, ex_intro/
+]
+qed-.

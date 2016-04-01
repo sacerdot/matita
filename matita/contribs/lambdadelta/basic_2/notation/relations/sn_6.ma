@@ -16,4 +16,4 @@
 
 notation "hvbox( G ⊢ ⬊ * break [ term 46 o , break term 46 h , break term 46 T , break term 46 f ] break term 46 L )"
    non associative with precedence 45
-   for @{ 'SN $o $h $T $f $G $L }.
+   for @{ 'SN $h $o $T $f $G $L }.

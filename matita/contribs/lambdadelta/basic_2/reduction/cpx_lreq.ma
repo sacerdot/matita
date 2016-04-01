@@ -19,8 +19,8 @@ include "basic_2/reduction/cpx.ma".
 
 (* Properties on equivalence for local environments *************************)
 
-lemma lreq_cpx_trans: ∀h,g,G. lsub_trans … (cpx h g G) (lreq 0 (∞)).
-#h #g #G #L1 #T1 #T2 #H elim H -G -L1 -T1 -T2
+lemma lreq_cpx_trans: ∀h,o,G. lsub_trans … (cpx h o G) (lreq 0 (∞)).
+#h #o #G #L1 #T1 #T2 #H elim H -G -L1 -T1 -T2
 [ //
 | /2 width=2 by cpx_st/
 | #I #G #L1 #K1 #V1 #V2 #W2 #i #HLK1 #_ #HVW2 #IHV12 #L2 #HL12

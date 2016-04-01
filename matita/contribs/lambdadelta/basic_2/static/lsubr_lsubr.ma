@@ -14,7 +14,7 @@
 
 include "basic_2/static/lsubr.ma".
 
-(* RESTRICTED LOCAL ENVIRONMENT REFINEMENT **********************************)
+(* RESTRICTED REFINEMENT FOR LOCAL ENVIRONMENTS *****************************)
 
 (* Auxiliary inversion lemmas ***********************************************)
 

@@ -12,19 +12,25 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/multiple/drops.ma".
-include "basic_2/static/aaa_lift.ma".
+include "basic_2/grammar/cl_weight.ma".
+include "basic_2/relocation/lifts_weight.ma".
+include "basic_2/s_transition/fqu.ma".
 
-(* ATONIC ARITY ASSIGNMENT ON TERMS *****************************************)
+(* SUPCLOSURE ***************************************************************)
 
-(* Properties concerning generic relocation *********************************)
+(* Forward lemmas with weight for closures **********************************)
 
-lemma aaa_lifts: ∀G,L1,L2,T2,A,s,cs. ⬇*[s, cs] L2 ≡ L1 → ∀T1. ⬆*[cs] T1 ≡ T2 →
-                 ⦃G, L1⦄ ⊢ T1 ⁝ A → ⦃G, L2⦄ ⊢ T2 ⁝ A.
-#G #L1 #L2 #T2 #A #s #cs #H elim H -L1 -L2 -cs
-[ #L #T1 #H #HT1
-  <(lifts_inv_nil … H) -H //
-| #L1 #L #L2 #cs #l #m #_ #HL2 #IHL1 #T1 #H #HT1
-  elim (lifts_inv_cons … H) -H /3 width=10 by aaa_lift/
-]
-qed.
+lemma fqu_fwd_fw: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T2⦄ → ♯{G2, L2, T2} < ♯{G1, L1, T1}.
+#G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2 //
+#I #G #L #V #T #U #HTU normalize in ⊢ (?%%); -I
+<(lifts_fwd_tw … HTU) -U /3 width=1 by monotonic_lt_plus_r, monotonic_lt_plus_l/
+qed-.
+
+(* Advanced eliminators *****************************************************)
+
+lemma fqu_wf_ind: ∀R:relation3 …. (
+                     ∀G1,L1,T1. (∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T2⦄ → R G2 L2 T2) →
+		                 R G1 L1 T1
+		              ) → ∀G1,L1,T1. R G1 L1 T1.
+#R #HR @(f3_ind … fw) #x #IHx #G1 #L1 #T1 #H destruct /4 width=1 by fqu_fwd_fw/
+qed-.

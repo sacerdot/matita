@@ -172,6 +172,10 @@ qed-.
 lemma lt_le_false: ∀x,y. x < y → y ≤ x → ⊥.
 /3 width=4 by lt_refl_false, lt_to_le_to_lt/ qed-.
 
+lemma succ_inv_refl_sn: ∀x. ⫯x = x → ⊥.
+#x #H @(lt_le_false x (⫯x)) //
+qed-.
+
 lemma lt_inv_O1: ∀n. 0 < n → ∃m. ⫯m = n.
 * /2 width=2 by ex_intro/
 #H cases (lt_le_false … H) -H //

@@ -19,9 +19,9 @@ include "basic_2/static/lsubd.ma".
 
 (* Properties on degree assignment ******************************************)
 
-lemma lsubd_da_trans: ∀h,g,G,L2,T,d. ⦃G, L2⦄ ⊢ T ▪[h, g] d →
-                      ∀L1. G ⊢ L1 ⫃▪[h, g] L2 → ⦃G, L1⦄ ⊢ T ▪[h, g] d.
-#h #g #G #L2 #T #d #H elim H -G -L2 -T -d
+lemma lsubd_da_trans: ∀h,o,G,L2,T,d. ⦃G, L2⦄ ⊢ T ▪[h, o] d →
+                      ∀L1. G ⊢ L1 ⫃▪[h, o] L2 → ⦃G, L1⦄ ⊢ T ▪[h, o] d.
+#h #o #G #L2 #T #d #H elim H -G -L2 -T -d
 [ /2 width=1 by da_sort/
 | #G #L2 #K2 #V #i #d #HLK2 #_ #IHV #L1 #HL12
   elim (lsubd_drop_O1_trans … HL12 … HLK2) -L2 #X #H #HLK1
@@ -41,9 +41,9 @@ lemma lsubd_da_trans: ∀h,g,G,L2,T,d. ⦃G, L2⦄ ⊢ T ▪[h, g] d →
 ]
 qed-.
 
-lemma lsubd_da_conf: ∀h,g,G,L1,T,d. ⦃G, L1⦄ ⊢ T ▪[h, g] d →
-                     ∀L2. G ⊢ L1 ⫃▪[h, g] L2 → ⦃G, L2⦄ ⊢ T ▪[h, g] d.
-#h #g #G #L1 #T #d #H elim H -G -L1 -T -d
+lemma lsubd_da_conf: ∀h,o,G,L1,T,d. ⦃G, L1⦄ ⊢ T ▪[h, o] d →
+                     ∀L2. G ⊢ L1 ⫃▪[h, o] L2 → ⦃G, L2⦄ ⊢ T ▪[h, o] d.
+#h #o #G #L1 #T #d #H elim H -G -L1 -T -d
 [ /2 width=1 by da_sort/
 | #G #L1 #K1 #V #i #d #HLK1 #HV #IHV #L2 #HL12
   elim (lsubd_drop_O1_conf … HL12 … HLK1) -L1 #X #H #HLK2

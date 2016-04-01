@@ -19,10 +19,10 @@ include "basic_2/reduction/cpx.ma".
 
 (* Advanced forward lemmas on irreducibility ********************************)
 
-lemma cpx_fwd_cix: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[h, g] T2 → ⦃G, L⦄ ⊢ ➡[h, g] 𝐈⦃T1⦄ → T2 = T1.
-#h #g #G #L #T1 #T2 #H elim H -G -L -T1 -T2
+lemma cpx_fwd_cix: ∀h,o,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[h, o] T2 → ⦃G, L⦄ ⊢ ➡[h, o] 𝐈⦃T1⦄ → T2 = T1.
+#h #o #G #L #T1 #T2 #H elim H -G -L -T1 -T2
 [ //
-| #G #L #k #d #Hkd #H elim (cix_inv_sort … Hkd H)
+| #G #L #s #d #Hkd #H elim (cix_inv_sort … Hkd H)
 | #I #G #L #K #V1 #V2 #W2 #i #HLK #_ #HVW2 #IHV12 #H
   elim (cix_inv_delta … HLK) //
 | #a * #G #L #V1 #V2 #T1 #T2 #_ #_ #IHV1 #IHT1 #H
