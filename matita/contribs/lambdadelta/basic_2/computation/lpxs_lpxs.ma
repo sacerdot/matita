@@ -18,5 +18,5 @@ include "basic_2/computation/lpxs.ma".
 
 (* Main properties **********************************************************)
 
-theorem lpxs_trans: ∀h,g,G. Transitive … (lpxs h g G).
+theorem lpxs_trans: ∀h,o,G. Transitive … (lpxs h o G).
 /2 width=3 by trans_TC/ qed-.

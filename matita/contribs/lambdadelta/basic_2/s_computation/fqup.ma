@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/suptermplus_6.ma".
-include "basic_2/substitution/fqu.ma".
+include "basic_2/s_transition/fqu.ma".
 
 (* PLUS-ITERATED SUPCLOSURE *************************************************)
 
@@ -36,17 +36,6 @@ lemma fqup_strap2: ∀G1,G,G2,L1,L,L2,T1,T,T2.
                    ⦃G1, L1, T1⦄ ⊐ ⦃G, L, T⦄ → ⦃G, L, T⦄ ⊐+ ⦃G2, L2, T2⦄ →
                    ⦃G1, L1, T1⦄ ⊐+ ⦃G2, L2, T2⦄.
 /2 width=5 by tri_TC_strap/ qed.
-
-lemma fqup_drop: ∀G1,G2,L1,K1,K2,T1,T2,U1,k. ⬇[k] L1 ≡ K1 → ⬆[0, k] T1 ≡ U1 →
-                  ⦃G1, K1, T1⦄ ⊐+ ⦃G2, K2, T2⦄ → ⦃G1, L1, U1⦄ ⊐+ ⦃G2, K2, T2⦄.
-#G1 #G2 #L1 #K1 #K2 #T1 #T2 #U1 #k #HLK1 #HTU1 #HT12 elim (eq_or_gt … k) #H destruct
-[ >(drop_inv_O2 … HLK1) -L1 <(lift_inv_O2 … HTU1) -U1 //
-| /3 width=5 by fqup_strap2, fqu_drop_lt/
-]
-qed-.
-
-lemma fqup_lref: ∀I,G,L,K,V,i. ⬇[i] L ≡ K.ⓑ{I}V → ⦃G, L, #i⦄ ⊐+ ⦃G, K, V⦄.
-/3 width=6 by fqu_lref_O, fqu_fqup, lift_lref_ge, fqup_drop/ qed.
 
 lemma fqup_pair_sn: ∀I,G,L,V,T. ⦃G, L, ②{I}V.T⦄ ⊐+ ⦃G, L, V⦄.
 /2 width=1 by fqu_pair_sn, fqu_fqup/ qed.
@@ -84,26 +73,4 @@ lemma fqup_ind_dx: ∀G2,L2,T2. ∀R:relation3 ….
 @(tri_TC_ind_dx … IH1 IH2 G1 L1 T1 H)
 qed-.
 
-(* Basic forward lemmas *****************************************************)
-
-lemma fqup_fwd_fw: ∀G1,G2,L1,L2,T1,T2.
-                   ⦃G1, L1, T1⦄ ⊐+ ⦃G2, L2, T2⦄ → ♯{G2, L2, T2} < ♯{G1, L1, T1}.
-#G1 #G2 #L1 #L2 #T1 #T2 #H @(fqup_ind … H) -G2 -L2 -T2
-/3 width=3 by fqu_fwd_fw, transitive_lt/
-qed-.
-
-(* Advanced eliminators *****************************************************)
-
-lemma fqup_wf_ind: ∀R:relation3 …. (
-                      ∀G1,L1,T1. (∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊐+ ⦃G2, L2, T2⦄ → R G2 L2 T2) →
-                      R G1 L1 T1
-                   ) → ∀G1,L1,T1. R G1 L1 T1.
-#R #HR @(f3_ind … fw) #x #IHx #G1 #L1 #T1 #H destruct /4 width=1 by fqup_fwd_fw/
-qed-.
-
-lemma fqup_wf_ind_eq: ∀R:relation3 …. (
-                         ∀G1,L1,T1. (∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊐+ ⦃G2, L2, T2⦄ → R G2 L2 T2) →
-                         ∀G2,L2,T2. G1 = G2 → L1 = L2 → T1 = T2 → R G2 L2 T2
-                      ) → ∀G1,L1,T1. R G1 L1 T1.
-#R #HR @(f3_ind … fw) #x #IHx #G1 #L1 #T1 #H destruct /4 width=7 by fqup_fwd_fw/
-qed-.
+(* Basic_2A1: removed theorems 1: fqup_drop *)

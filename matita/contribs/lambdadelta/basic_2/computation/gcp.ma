@@ -26,12 +26,12 @@ definition CP0 ≝ λRR:relation4 genv lenv term term. λRS:relation term.
                  ∀G. d_liftable1 (nf RR RS G) (Ⓕ).
 
 definition CP1 ≝ λRR:relation4 genv lenv term term. λRS:relation term.
-                 ∀G,L. ∃k. NF … (RR G L) RS (⋆k).
+                 ∀G,L. ∃s. NF … (RR G L) RS (⋆s).
 
 definition CP2 ≝ λRP:candidate. ∀G. d_liftable1 (RP G) (Ⓕ).
 
 definition CP3 ≝ λRP:candidate.
-                 ∀G,L,T,k. RP G L (ⓐ⋆k.T) → RP G L T.
+                 ∀G,L,T,s. RP G L (ⓐ⋆s.T) → RP G L T.
 
 (* requirements for generic computation properties *)
 record gcp (RR:relation4 genv lenv term term) (RS:relation term) (RP:candidate) : Prop ≝

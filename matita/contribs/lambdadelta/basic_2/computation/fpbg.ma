@@ -19,21 +19,21 @@ include "basic_2/computation/fpbs.ma".
 (* "QRST" PROPER PARALLEL COMPUTATION FOR CLOSURES **************************)
 
 definition fpbg: ∀h. sd h → tri_relation genv lenv term ≝
-                 λh,g,G1,L1,T1,G2,L2,T2.
-                 ∃∃G,L,T. ⦃G1, L1, T1⦄ ≻[h, g] ⦃G, L, T⦄ & ⦃G, L, T⦄ ≥[h, g] ⦃G2, L2, T2⦄.
+                 λh,o,G1,L1,T1,G2,L2,T2.
+                 ∃∃G,L,T. ⦃G1, L1, T1⦄ ≻[h, o] ⦃G, L, T⦄ & ⦃G, L, T⦄ ≥[h, o] ⦃G2, L2, T2⦄.
 
 interpretation "'qrst' proper parallel computation (closure)"
-   'LazyBTPRedStarProper h g G1 L1 T1 G2 L2 T2 = (fpbg h g G1 L1 T1 G2 L2 T2).
+   'LazyBTPRedStarProper h o G1 L1 T1 G2 L2 T2 = (fpbg h o G1 L1 T1 G2 L2 T2).
 
 (* Basic properties *********************************************************)
 
-lemma fpb_fpbg: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≻[h, g] ⦃G2, L2, T2⦄ →
-                ⦃G1, L1, T1⦄ >≡[h, g] ⦃G2, L2, T2⦄.
+lemma fpb_fpbg: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≻[h, o] ⦃G2, L2, T2⦄ →
+                ⦃G1, L1, T1⦄ >≡[h, o] ⦃G2, L2, T2⦄.
 /2 width=5 by ex2_3_intro/ qed.
 
-lemma fpbg_fpbq_trans: ∀h,g,G1,G,G2,L1,L,L2,T1,T,T2.
-                       ⦃G1, L1, T1⦄ >≡[h, g] ⦃G, L, T⦄ → ⦃G, L, T⦄ ≽[h, g] ⦃G2, L2, T2⦄ →
-                       ⦃G1, L1, T1⦄ >≡[h, g] ⦃G2, L2, T2⦄.
-#h #g #G1 #G #G2 #L1 #L #L2 #T1 #T #T2 *
+lemma fpbg_fpbq_trans: ∀h,o,G1,G,G2,L1,L,L2,T1,T,T2.
+                       ⦃G1, L1, T1⦄ >≡[h, o] ⦃G, L, T⦄ → ⦃G, L, T⦄ ≽[h, o] ⦃G2, L2, T2⦄ →
+                       ⦃G1, L1, T1⦄ >≡[h, o] ⦃G2, L2, T2⦄.
+#h #o #G1 #G #G2 #L1 #L #L2 #T1 #T #T2 *
 /3 width=9 by fpbs_strap1, ex2_3_intro/
 qed-.

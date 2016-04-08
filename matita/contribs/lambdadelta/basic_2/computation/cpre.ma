@@ -27,8 +27,8 @@ interpretation "evaluation for context-sensitive parallel reduction (term)"
 (* Basic properties *********************************************************)
 
 (* Basic_1: was just: nf2_sn3 *)
-lemma csx_cpre: ∀h,g,G,L,T1. ⦃G, L⦄ ⊢ ⬊*[h, g] T1 → ∃T2. ⦃G, L⦄ ⊢ T1 ➡* 𝐍⦃T2⦄.
-#h #g #G #L #T1 #H @(csx_ind … H) -T1
+lemma csx_cpre: ∀h,o,G,L,T1. ⦃G, L⦄ ⊢ ⬊*[h, o] T1 → ∃T2. ⦃G, L⦄ ⊢ T1 ➡* 𝐍⦃T2⦄.
+#h #o #G #L #T1 #H @(csx_ind … H) -T1
 #T1 #_ #IHT1 elim (cnr_dec G L T1) /3 width=3 by ex_intro, conj/
 * #T #H1T1 #H2T1 elim (IHT1 … H2T1) -IHT1 -H2T1 /2 width=2 by cpr_cpx/
 #T2 * /4 width=3 by cprs_strap2, ex_intro, conj/

@@ -20,14 +20,14 @@ include "basic_2/computation/csx_lpx.ma".
 
 (* Advanced properties ******************************************************)
 
-lemma csx_fpb_conf: ∀h,g,G1,L1,T1. ⦃G1, L1⦄ ⊢ ⬊*[h, g] T1 →
-                    ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≽[h, g] ⦃G2, L2, T2⦄ → ⦃G2, L2⦄ ⊢ ⬊*[h, g] T2.
-#h #g #G1 #L1 #T1 #HT1 #G2 #L2 #T2 *
+lemma csx_fpb_conf: ∀h,o,G1,L1,T1. ⦃G1, L1⦄ ⊢ ⬊*[h, o] T1 →
+                    ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≽[h, o] ⦃G2, L2, T2⦄ → ⦃G2, L2⦄ ⊢ ⬊*[h, o] T2.
+#h #o #G1 #L1 #T1 #HT1 #G2 #L2 #T2 *
 /2 width=5 by csx_cpx_trans, csx_fquq_conf, csx_lpx_conf, csx_lleq_conf/
 qed-.
 
-lemma csx_fpbs_conf: ∀h,g,G1,L1,T1. ⦃G1, L1⦄ ⊢ ⬊*[h, g] T1 →
-                     ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄ → ⦃G2, L2⦄ ⊢ ⬊*[h, g] T2.
-#h #g #G1 #L1 #T1 #HT1 #G2 #L2 #T2 #H @(fpbs_ind … H) -G2 -L2 -T2
+lemma csx_fpbs_conf: ∀h,o,G1,L1,T1. ⦃G1, L1⦄ ⊢ ⬊*[h, o] T1 →
+                     ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄ → ⦃G2, L2⦄ ⊢ ⬊*[h, o] T2.
+#h #o #G1 #L1 #T1 #HT1 #G2 #L2 #T2 #H @(fpbs_ind … H) -G2 -L2 -T2
 /2 width=5 by csx_fpb_conf/
 qed-.

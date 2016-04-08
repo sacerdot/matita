@@ -18,30 +18,30 @@ include "basic_2/computation/csx.ma".
 
 (* "QRST" STRONGLY NORMALIZING CLOSURES *************************************)
 
-inductive fsb (h) (g): relation3 genv lenv term ≝
+inductive fsb (h) (o): relation3 genv lenv term ≝
 | fsb_intro: ∀G1,L1,T1. (
-                ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≻[h, g] ⦃G2, L2, T2⦄ → fsb h g G2 L2 T2
-             ) → fsb h g G1 L1 T1
+                ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≻[h, o] ⦃G2, L2, T2⦄ → fsb h o G2 L2 T2
+             ) → fsb h o G1 L1 T1
 .
 
 interpretation
    "'qrst' strong normalization (closure)"
-   'BTSN h g G L T = (fsb h g G L T).
+   'BTSN h o G L T = (fsb h o G L T).
 
 (* Basic eliminators ********************************************************)
 
-lemma fsb_ind_alt: ∀h,g. ∀R: relation3 …. (
-                      ∀G1,L1,T1. ⦥[h,g] ⦃G1, L1, T1⦄ → (
-                         ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≻[h, g] ⦃G2, L2, T2⦄ → R G2 L2 T2
+lemma fsb_ind_alt: ∀h,o. ∀R: relation3 …. (
+                      ∀G1,L1,T1. ⦥[h,o] ⦃G1, L1, T1⦄ → (
+                         ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≻[h, o] ⦃G2, L2, T2⦄ → R G2 L2 T2
                       ) → R G1 L1 T1
                    ) →
-                   ∀G,L,T. ⦥[h, g] ⦃G, L, T⦄ → R G L T.
-#h #g #R #IH #G #L #T #H elim H -G -L -T
+                   ∀G,L,T. ⦥[h, o] ⦃G, L, T⦄ → R G L T.
+#h #o #R #IH #G #L #T #H elim H -G -L -T
 /4 width=1 by fsb_intro/
 qed-.
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma fsb_inv_csx: ∀h,g,G,L,T. ⦥[h, g] ⦃G, L, T⦄ → ⦃G, L⦄ ⊢ ⬊*[h, g] T.
-#h #g #G #L #T #H elim H -G -L -T /5 width=1 by csx_intro, fpb_cpx/
+lemma fsb_inv_csx: ∀h,o,G,L,T. ⦥[h, o] ⦃G, L, T⦄ → ⦃G, L⦄ ⊢ ⬊*[h, o] T.
+#h #o #G #L #T #H elim H -G -L -T /5 width=1 by csx_intro, fpb_cpx/
 qed-.

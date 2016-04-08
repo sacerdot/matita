@@ -1,3 +1,4 @@
+
 (**************************************************************************)
 (*       ___                                                              *)
 (*      ||M||                                                             *)
@@ -295,8 +296,9 @@ elim (IHV1 f) -IHV1 #V2 #HV12
 ]
 qed-.
 
-lemma lift_SO: ∀i. ⬆*[1] #i ≡ #(⫯i).
-/2 width=1 by lifts_lref/ qed.
+lemma lift_lref_uni: ∀l,i. ⬆*[l] #i ≡ #(l+i).
+#l elim l -l /2 width=1 by lifts_lref/
+qed.
 
 (* Basic_1: includes: lift_free (right to left) *)
 (* Basic_2A1: includes: lift_split *)

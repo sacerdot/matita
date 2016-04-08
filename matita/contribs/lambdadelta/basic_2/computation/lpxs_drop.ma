@@ -19,11 +19,11 @@ include "basic_2/computation/lpxs.ma".
 
 (* Properties on local environment slicing ***********************************)
 
-lemma lpxs_drop_conf: ∀h,g,G. dropable_sn (lpxs h g G).
+lemma lpxs_drop_conf: ∀h,o,G. dropable_sn (lpxs h o G).
 /3 width=3 by dropable_sn_TC, lpx_drop_conf/ qed-.
 
-lemma drop_lpxs_trans: ∀h,g,G. dedropable_sn (lpxs h g G).
+lemma drop_lpxs_trans: ∀h,o,G. dedropable_sn (lpxs h o G).
 /3 width=3 by dedropable_sn_TC, drop_lpx_trans/ qed-.
 
-lemma lpxs_drop_trans_O1: ∀h,g,G. dropable_dx (lpxs h g G).
+lemma lpxs_drop_trans_O1: ∀h,o,G. dropable_dx (lpxs h o G).
 /3 width=3 by dropable_dx_TC, lpx_drop_trans_O1/ qed-.

@@ -21,19 +21,19 @@ include "basic_2/computation/lsubc.ma".
 
 (* Basic_1: was: csubc_drop_conf_O *)
 (* Note: the constant 0 can not be generalized *)
-lemma lsubc_drop_O1_trans: ∀RP,G,L1,L2. G ⊢ L1 ⫃[RP] L2 → ∀K2,s,m. ⬇[s, 0, m] L2 ≡ K2 →
-                           ∃∃K1. ⬇[s, 0, m] L1 ≡ K1 & G ⊢ K1 ⫃[RP] K2.
+lemma lsubc_drop_O1_trans: ∀RP,G,L1,L2. G ⊢ L1 ⫃[RP] L2 → ∀K2,c,k. ⬇[c, 0, k] L2 ≡ K2 →
+                           ∃∃K1. ⬇[c, 0, k] L1 ≡ K1 & G ⊢ K1 ⫃[RP] K2.
 #RP #G #L1 #L2 #H elim H -L1 -L2
-[ #X #s #m #H elim (drop_inv_atom1 … H) -H /4 width=3 by drop_atom, ex2_intro/
-| #I #L1 #L2 #V #_ #IHL12 #X #s #m #H
+[ #X #c #k #H elim (drop_inv_atom1 … H) -H /4 width=3 by drop_atom, ex2_intro/
+| #I #L1 #L2 #V #_ #IHL12 #X #c #k #H
   elim (drop_inv_O1_pair1 … H) -H * #Hm #H destruct
-  [ elim (IHL12 L2 s 0) -IHL12 // #X #H <(drop_inv_O2 … H) -H
+  [ elim (IHL12 L2 c 0) -IHL12 // #X #H <(drop_inv_O2 … H) -H
     /3 width=3 by lsubc_pair, drop_pair, ex2_intro/
   | elim (IHL12 … H) -L2 /3 width=3 by drop_drop_lt, ex2_intro/
   ]
-| #L1 #L2 #V #W #A #HV #H1W #H2W #_ #IHL12 #X #s #m #H
+| #L1 #L2 #V #W #A #HV #H1W #H2W #_ #IHL12 #X #c #k #H
   elim (drop_inv_O1_pair1 … H) -H * #Hm #H destruct
-  [ elim (IHL12 L2 s 0) -IHL12 // #X #H <(drop_inv_O2 … H) -H
+  [ elim (IHL12 L2 c 0) -IHL12 // #X #H <(drop_inv_O2 … H) -H
     /3 width=8 by lsubc_beta, drop_pair, ex2_intro/
   | elim (IHL12 … H) -L2 /3 width=3 by drop_drop_lt, ex2_intro/
   ]
@@ -42,10 +42,10 @@ qed-.
 
 (* Basic_1: was: csubc_drop_conf_rev *)
 lemma drop_lsubc_trans: ∀RR,RS,RP. gcp RR RS RP →
-                        ∀G,L1,K1,l,m. ⬇[Ⓕ, l, m] L1 ≡ K1 → ∀K2. G ⊢ K1 ⫃[RP] K2 →
-                        ∃∃L2. G ⊢ L1 ⫃[RP] L2 & ⬇[Ⓕ, l, m] L2 ≡ K2.
-#RR #RS #RP #Hgcp #G #L1 #K1 #l #m #H elim H -L1 -K1 -l -m
-[ #l #m #Hm #X #H elim (lsubc_inv_atom1 … H) -H
+                        ∀G,L1,K1,l,k. ⬇[Ⓕ, l, k] L1 ≡ K1 → ∀K2. G ⊢ K1 ⫃[RP] K2 →
+                        ∃∃L2. G ⊢ L1 ⫃[RP] L2 & ⬇[Ⓕ, l, k] L2 ≡ K2.
+#RR #RS #RP #Hgcp #G #L1 #K1 #l #k #H elim H -L1 -K1 -l -k
+[ #l #k #Hm #X #H elim (lsubc_inv_atom1 … H) -H
   >Hm /2 width=3 by ex2_intro/
 | #L1 #I #V1 #X #H
   elim (lsubc_inv_pair1 … H) -H *
@@ -53,9 +53,9 @@ lemma drop_lsubc_trans: ∀RR,RS,RP. gcp RR RS RP →
   | #K1 #V #W1 #A #HV1 #H1W1 #H2W1 #HLK1 #H1 #H2 #H3 destruct
     /3 width=4 by lsubc_beta, drop_pair, ex2_intro/
   ]
-| #I #L1 #K1 #V1 #m #_ #IHLK1 #K2 #HK12
+| #I #L1 #K1 #V1 #k #_ #IHLK1 #K2 #HK12
   elim (IHLK1 … HK12) -K1 /3 width=5 by lsubc_pair, drop_drop, ex2_intro/
-| #I #L1 #K1 #V1 #V2 #l #m #HLK1 #HV21 #IHLK1 #X #H
+| #I #L1 #K1 #V1 #V2 #l #k #HLK1 #HV21 #IHLK1 #X #H
   elim (lsubc_inv_pair1 … H) -H *
   [ #K2 #HK12 #H destruct
     elim (IHLK1 … HK12) -K1 /3 width=5 by lsubc_pair, drop_skip, ex2_intro/

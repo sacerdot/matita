@@ -19,10 +19,10 @@ include "basic_2/computation/lcosx_cpx.ma".
 
 (* Advanced properties ******************************************************)
 
-lemma lsx_lref_be_lpxs: ∀h,g,I,G,K1,V,i,l. l ≤ yinj i → ⦃G, K1⦄ ⊢ ⬊*[h, g] V →
-                        ∀K2. G ⊢ ⬊*[h, g, V, 0] K2 → ⦃G, K1⦄ ⊢ ➡*[h, g] K2 →
-                        ∀L2. ⬇[i] L2 ≡ K2.ⓑ{I}V → G ⊢ ⬊*[h, g, #i, l] L2.
-#h #g #I #G #K1 #V #i #l #Hli #H @(csx_ind_alt … H) -V
+lemma lsx_lref_be_lpxs: ∀h,o,I,G,K1,V,i,l. l ≤ yinj i → ⦃G, K1⦄ ⊢ ⬊*[h, o] V →
+                        ∀K2. G ⊢ ⬊*[h, o, V, 0] K2 → ⦃G, K1⦄ ⊢ ➡*[h, o] K2 →
+                        ∀L2. ⬇[i] L2 ≡ K2.ⓑ{I}V → G ⊢ ⬊*[h, o, #i, l] L2.
+#h #o #I #G #K1 #V #i #l #Hli #H @(csx_ind_alt … H) -V
 #V0 #_ #IHV0 #K2 #H @(lsx_ind … H) -K2
 #K0 #HK0 #IHK0 #HK10 #L0 #HLK0 @lsx_intro
 #L2 #HL02 #HnL02 elim (lpx_drop_conf … HLK0 … HL02) -HL02
@@ -35,15 +35,15 @@ elim (eq_term_dec V0 V2) #HnV02 destruct [ -IHV0 -HV02 -HK0 | -IHK0 -HnL02 -HLK0
 ]
 qed.
 
-lemma lsx_lref_be: ∀h,g,I,G,K,V,i,l. l ≤ yinj i → ⦃G, K⦄ ⊢ ⬊*[h, g] V →
-                   G ⊢ ⬊*[h, g, V, 0] K →
-                   ∀L. ⬇[i] L ≡ K.ⓑ{I}V → G ⊢ ⬊*[h, g, #i, l] L.
+lemma lsx_lref_be: ∀h,o,I,G,K,V,i,l. l ≤ yinj i → ⦃G, K⦄ ⊢ ⬊*[h, o] V →
+                   G ⊢ ⬊*[h, o, V, 0] K →
+                   ∀L. ⬇[i] L ≡ K.ⓑ{I}V → G ⊢ ⬊*[h, o, #i, l] L.
 /2 width=8 by lsx_lref_be_lpxs/ qed.
 
 (* Main properties **********************************************************)
 
-theorem csx_lsx: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ ⬊*[h, g] T → ∀l. G ⊢ ⬊*[h, g, T, l] L.
-#h #g #G #L #T @(fqup_wf_ind_eq … G L T) -G -L -T
+theorem csx_lsx: ∀h,o,G,L,T. ⦃G, L⦄ ⊢ ⬊*[h, o] T → ∀l. G ⊢ ⬊*[h, o, T, l] L.
+#h #o #G #L #T @(fqup_wf_ind_eq … G L T) -G -L -T
 #Z #Y #X #IH #G #L * * //
 [ #i #HG #HL #HT #H #l destruct
   elim (lt_or_ge i (|L|)) /2 width=1 by lsx_lref_free/

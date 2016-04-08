@@ -12,11 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/multiple/fqus.ma".
+include "basic_2/s_computation/fqup.ma".
 
-(* STAR-ITERATED SUPCLOSURE *************************************************)
+(* PLUS-ITERATED SUPCLOSURE *************************************************)
 
 (* Main properties **********************************************************)
 
-theorem fqus_trans: tri_transitive … fqus.
+theorem fqup_trans: tri_transitive … fqup.
 /2 width=5 by tri_TC_transitive/ qed-.

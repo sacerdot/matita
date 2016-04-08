@@ -20,39 +20,39 @@ include "basic_2/computation/csx_tsts_vector.ma".
 
 (* Main properties on atomic arity assignment *******************************)
 
-theorem aaa_csx: ∀h,g,G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ⦃G, L⦄ ⊢ ⬊*[h, g] T.
-#h #g #G #L #T #A #H
-@(gcr_aaa … (csx_gcp h g) (csx_gcr h g) … H)
+theorem aaa_csx: ∀h,o,G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ⦃G, L⦄ ⊢ ⬊*[h, o] T.
+#h #o #G #L #T #A #H
+@(gcr_aaa … (csx_gcp h o) (csx_gcr h o) … H)
 qed.
 
 (* Advanced eliminators *****************************************************)
 
-fact aaa_ind_csx_aux: ∀h,g,G,L,A. ∀R:predicate term.
+fact aaa_ind_csx_aux: ∀h,o,G,L,A. ∀R:predicate term.
                       (∀T1. ⦃G, L⦄ ⊢ T1 ⁝ A →
-                            (∀T2. ⦃G, L⦄ ⊢ T1 ➡[h, g] T2 → (T1 = T2 → ⊥) → R T2) → R T1
+                            (∀T2. ⦃G, L⦄ ⊢ T1 ➡[h, o] T2 → (T1 = T2 → ⊥) → R T2) → R T1
                       ) →
-                      ∀T. ⦃G, L⦄ ⊢ ⬊*[h, g] T → ⦃G, L⦄ ⊢ T ⁝ A → R T.
-#h #g #G #L #A #R #IH #T #H @(csx_ind … H) -T /4 width=5 by cpx_aaa_conf/
+                      ∀T. ⦃G, L⦄ ⊢ ⬊*[h, o] T → ⦃G, L⦄ ⊢ T ⁝ A → R T.
+#h #o #G #L #A #R #IH #T #H @(csx_ind … H) -T /4 width=5 by cpx_aaa_conf/
 qed-.
 
-lemma aaa_ind_csx: ∀h,g,G,L,A. ∀R:predicate term.
+lemma aaa_ind_csx: ∀h,o,G,L,A. ∀R:predicate term.
                    (∀T1. ⦃G, L⦄ ⊢ T1 ⁝ A →
-                         (∀T2. ⦃G, L⦄ ⊢ T1 ➡[h, g] T2 → (T1 = T2 → ⊥) → R T2) → R T1
+                         (∀T2. ⦃G, L⦄ ⊢ T1 ➡[h, o] T2 → (T1 = T2 → ⊥) → R T2) → R T1
                    ) →
                    ∀T. ⦃G, L⦄ ⊢ T ⁝ A → R T.
 /5 width=9 by aaa_ind_csx_aux, aaa_csx/ qed-.
 
-fact aaa_ind_csx_alt_aux: ∀h,g,G,L,A. ∀R:predicate term.
+fact aaa_ind_csx_alt_aux: ∀h,o,G,L,A. ∀R:predicate term.
                           (∀T1. ⦃G, L⦄ ⊢ T1 ⁝ A →
-                                (∀T2. ⦃G, L⦄ ⊢ T1 ➡*[h, g] T2 → (T1 = T2 → ⊥) → R T2) → R T1
+                                (∀T2. ⦃G, L⦄ ⊢ T1 ➡*[h, o] T2 → (T1 = T2 → ⊥) → R T2) → R T1
                           ) →
-                          ∀T. ⦃G, L⦄ ⊢ ⬊*[h, g] T → ⦃G, L⦄ ⊢ T ⁝ A → R T.
-#h #g #G #L #A #R #IH #T #H @(csx_ind_alt … H) -T /4 width=5 by cpxs_aaa_conf/
+                          ∀T. ⦃G, L⦄ ⊢ ⬊*[h, o] T → ⦃G, L⦄ ⊢ T ⁝ A → R T.
+#h #o #G #L #A #R #IH #T #H @(csx_ind_alt … H) -T /4 width=5 by cpxs_aaa_conf/
 qed-.
 
-lemma aaa_ind_csx_alt: ∀h,g,G,L,A. ∀R:predicate term.
+lemma aaa_ind_csx_alt: ∀h,o,G,L,A. ∀R:predicate term.
                        (∀T1. ⦃G, L⦄ ⊢ T1 ⁝ A →
-                             (∀T2. ⦃G, L⦄ ⊢ T1 ➡*[h, g] T2 → (T1 = T2 → ⊥) → R T2) → R T1
+                             (∀T2. ⦃G, L⦄ ⊢ T1 ➡*[h, o] T2 → (T1 = T2 → ⊥) → R T2) → R T1
                        ) →
                        ∀T. ⦃G, L⦄ ⊢ T ⁝ A → R T.
 /5 width=9 by aaa_ind_csx_alt_aux, aaa_csx/ qed-.

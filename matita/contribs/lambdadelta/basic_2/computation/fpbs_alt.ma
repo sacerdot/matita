@@ -22,19 +22,19 @@ include "basic_2/computation/fpbs.ma".
 
 (* Note: alternative definition of fpbs *)
 definition fpbsa: ∀h. sd h → tri_relation genv lenv term ≝
-                  λh,g,G1,L1,T1,G2,L2,T2.
-                  ∃∃L0,L,T. ⦃G1, L1⦄ ⊢ T1 ➡*[h, g] T &
+                  λh,o,G1,L1,T1,G2,L2,T2.
+                  ∃∃L0,L,T. ⦃G1, L1⦄ ⊢ T1 ➡*[h, o] T &
                          ⦃G1, L1, T⦄ ⊐* ⦃G2, L0, T2⦄ &
-                         ⦃G2, L0⦄ ⊢ ➡*[h, g] L & L ≡[T2, 0] L2.
+                         ⦃G2, L0⦄ ⊢ ➡*[h, o] L & L ≡[T2, 0] L2.
 
 interpretation "'big tree' parallel computation (closure) alternative"
-   'BTPRedStarAlt h g G1 L1 T1 G2 L2 T2 = (fpbsa h g G1 L1 T1 G2 L2 T2).
+   'BTPRedStarAlt h o G1 L1 T1 G2 L2 T2 = (fpbsa h o G1 L1 T1 G2 L2 T2).
 
 (* Basic properties *********************************************************)
 
-lemma fpb_fpbsa_trans: ∀h,g,G1,G,L1,L,T1,T. ⦃G1, L1, T1⦄ ≽[h, g] ⦃G, L, T⦄ →
-                       ∀G2,L2,T2. ⦃G, L, T⦄ ≥≥[h, g] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥≥[h, g] ⦃G2, L2, T2⦄.
-#h #g #G1 #G #L1 #L #T1 #T * -G -L -T [ #G #L #T #HG1 | #T #HT1 | #L #HL1 | #L #HL1 ]
+lemma fpb_fpbsa_trans: ∀h,o,G1,G,L1,L,T1,T. ⦃G1, L1, T1⦄ ≽[h, o] ⦃G, L, T⦄ →
+                       ∀G2,L2,T2. ⦃G, L, T⦄ ≥≥[h, o] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥≥[h, o] ⦃G2, L2, T2⦄.
+#h #o #G1 #G #L1 #L #T1 #T * -G -L -T [ #G #L #T #HG1 | #T #HT1 | #L #HL1 | #L #HL1 ]
 #G2 #L2 #T2 * #L00 #L0 #T0 #HT0 #HG2 #HL00 #HL02
 [ elim (fquq_cpxs_trans … HT0 … HG1) -T
   /3 width=7 by fqus_strap2, ex4_3_intro/
@@ -52,31 +52,31 @@ qed-.
 
 (* Main properties **********************************************************)
 
-theorem fpbs_fpbsa: ∀h,g,G1,G2,L1,L2,T1,T2.
-                    ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥≥[h, g] ⦃G2, L2, T2⦄.
-#h #g #G1 #G2 #L1 #L2 #T1 #T2 #H @(fpbs_ind_dx … H) -G1 -L1 -T1
+theorem fpbs_fpbsa: ∀h,o,G1,G2,L1,L2,T1,T2.
+                    ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥≥[h, o] ⦃G2, L2, T2⦄.
+#h #o #G1 #G2 #L1 #L2 #T1 #T2 #H @(fpbs_ind_dx … H) -G1 -L1 -T1
 /2 width=7 by fpb_fpbsa_trans, ex4_3_intro/
 qed.
 
 (* Main inversion lemmas ****************************************************)
 
-theorem fpbsa_inv_fpbs: ∀h,g,G1,G2,L1,L2,T1,T2.
-                        ⦃G1, L1, T1⦄ ≥≥[h, g] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
-#h #g #G1 #G2 #L1 #L2 #T1 #T2 *
+theorem fpbsa_inv_fpbs: ∀h,o,G1,G2,L1,L2,T1,T2.
+                        ⦃G1, L1, T1⦄ ≥≥[h, o] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄.
+#h #o #G1 #G2 #L1 #L2 #T1 #T2 *
 /3 width=5 by cpxs_fqus_lpxs_fpbs, fpbs_strap1, fpbq_lleq/
 qed-.
 
 (* Advanced properties ******************************************************)
 
-lemma fpbs_intro_alt: ∀h,g,G1,G2,L1,L0,L,L2,T1,T,T2.
-                      ⦃G1, L1⦄ ⊢ T1 ➡*[h, g] T → ⦃G1, L1, T⦄ ⊐* ⦃G2, L0, T2⦄ →
-                      ⦃G2, L0⦄ ⊢ ➡*[h, g] L → L ≡[T2, 0] L2 →  ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄ .
+lemma fpbs_intro_alt: ∀h,o,G1,G2,L1,L0,L,L2,T1,T,T2.
+                      ⦃G1, L1⦄ ⊢ T1 ➡*[h, o] T → ⦃G1, L1, T⦄ ⊐* ⦃G2, L0, T2⦄ →
+                      ⦃G2, L0⦄ ⊢ ➡*[h, o] L → L ≡[T2, 0] L2 →  ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄ .
 /3 width=7 by fpbsa_inv_fpbs, ex4_3_intro/ qed.
 
 (* Advanced inversion lemmas *************************************************)
 
-lemma fpbs_inv_alt: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄ →
-                    ∃∃L0,L,T. ⦃G1, L1⦄ ⊢ T1 ➡*[h, g] T &
+lemma fpbs_inv_alt: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄ →
+                    ∃∃L0,L,T. ⦃G1, L1⦄ ⊢ T1 ➡*[h, o] T &
                               ⦃G1, L1, T⦄ ⊐* ⦃G2, L0, T2⦄ &
-                              ⦃G2, L0⦄ ⊢ ➡*[h, g] L & L ≡[T2, 0] L2.
+                              ⦃G2, L0⦄ ⊢ ➡*[h, o] L & L ≡[T2, 0] L2.
 /2 width=1 by  fpbs_fpbsa/ qed-.

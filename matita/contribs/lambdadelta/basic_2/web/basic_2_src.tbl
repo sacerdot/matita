@@ -216,8 +216,9 @@ table {
    ]
    class "grass"
    [ { "s-computation" * } {
-        [ { "" * } {
-             [ * ]
+        [ { "iterated structural successor for closures" * } {
+             [ "fqus ( ⦃?,?,?⦄ ⊐* ⦃?,?,?⦄ )" "fqus_weight" + "fqus_drops" + "fqus_fqup" + "fqus_fqus" * ]
+             [ "fqup ( ⦃?,?,?⦄ ⊐+ ⦃?,?,?⦄ )" "fqup_weight" + "fqup_drops" + "fqup_fqup" * ]
           }
         ]
      }
@@ -302,11 +303,6 @@ class "italic"            { 1 }
         ]
         [ { "context-sensitive multiple rt-substitution" * } {
              [ "cpys ( ⦃?,?⦄ ⊢ ? ▶*[?,?] ? )" "cpys_alt ( ⦃?,?⦄ ⊢ ? ▶▶*[?,?] ? )" "cpys_lift" + "cpys_cpys" * ]
-          }
-        ]
-        [ { "iterated structural successor for closures" * } {
-             [ "fqus ( ⦃?,?,?⦄ ⊐* ⦃?,?,?⦄ )" "fqus_alt" + "fqus_fqus" * ]
-             [ "fqup ( ⦃?,?,?⦄ ⊐+ ⦃?,?,?⦄ )" "fqup_fqup" * ]
           }
         ]
         [ { "pointwise union for local environments" * } {

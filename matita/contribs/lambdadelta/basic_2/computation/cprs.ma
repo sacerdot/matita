@@ -113,8 +113,8 @@ qed.
 (* Basic inversion lemmas ***************************************************)
 
 (* Basic_1: was: pr3_gen_sort *)
-lemma cprs_inv_sort1: ∀G,L,U2,k. ⦃G, L⦄ ⊢ ⋆k ➡* U2 → U2 = ⋆k.
-#G #L #U2 #k #H @(cprs_ind … H) -U2 //
+lemma cprs_inv_sort1: ∀G,L,U2,s. ⦃G, L⦄ ⊢ ⋆s ➡* U2 → U2 = ⋆s.
+#G #L #U2 #s #H @(cprs_ind … H) -U2 //
 #U2 #U #_ #HU2 #IHU2 destruct
 >(cpr_inv_sort1 … HU2) -HU2 //
 qed-.

@@ -19,12 +19,12 @@ include "basic_2/computation/csx.ma".
 
 (* Properties on lazy equivalence for local environments ********************)
 
-lemma csx_lleq_conf: ∀h,g,G,L1,T. ⦃G, L1⦄ ⊢ ⬊*[h, g] T →
-                     ∀L2. L1 ≡[T, 0] L2 → ⦃G, L2⦄ ⊢ ⬊*[h, g] T.
-#h #g #G #L1 #T #H @(csx_ind … H) -T
+lemma csx_lleq_conf: ∀h,o,G,L1,T. ⦃G, L1⦄ ⊢ ⬊*[h, o] T →
+                     ∀L2. L1 ≡[T, 0] L2 → ⦃G, L2⦄ ⊢ ⬊*[h, o] T.
+#h #o #G #L1 #T #H @(csx_ind … H) -T
 /4 width=6 by csx_intro, cpx_lleq_conf_dx, lleq_cpx_trans/
 qed-.
 
-lemma csx_lleq_trans: ∀h,g,G,L1,L2,T.
-                      L1 ≡[T, 0] L2 → ⦃G, L2⦄ ⊢ ⬊*[h, g] T → ⦃G, L1⦄ ⊢ ⬊*[h, g] T.
+lemma csx_lleq_trans: ∀h,o,G,L1,L2,T.
+                      L1 ≡[T, 0] L2 → ⦃G, L2⦄ ⊢ ⬊*[h, o] T → ⦃G, L1⦄ ⊢ ⬊*[h, o] T.
 /3 width=3 by csx_lleq_conf, lleq_sym/ qed-.

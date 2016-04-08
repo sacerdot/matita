@@ -19,62 +19,62 @@ include "basic_2/computation/cpxs_lift.ma".
 
 (* Main properties **********************************************************)
 
-theorem cpxs_trans: ∀h,g,G,L. Transitive … (cpxs h g G L).
+theorem cpxs_trans: ∀h,o,G,L. Transitive … (cpxs h o G L).
 normalize /2 width=3 by trans_TC/ qed-.
 
-theorem cpxs_bind: ∀h,g,a,I,G,L,V1,V2,T1,T2. ⦃G, L.ⓑ{I}V1⦄ ⊢ T1 ➡*[h, g] T2 →
-                   ⦃G, L⦄ ⊢ V1 ➡*[h, g] V2 →
-                   ⦃G, L⦄ ⊢ ⓑ{a,I}V1.T1 ➡*[h, g] ⓑ{a,I}V2.T2.
-#h #g #a #I #G #L #V1 #V2 #T1 #T2 #HT12 #H @(cpxs_ind … H) -V2
+theorem cpxs_bind: ∀h,o,a,I,G,L,V1,V2,T1,T2. ⦃G, L.ⓑ{I}V1⦄ ⊢ T1 ➡*[h, o] T2 →
+                   ⦃G, L⦄ ⊢ V1 ➡*[h, o] V2 →
+                   ⦃G, L⦄ ⊢ ⓑ{a,I}V1.T1 ➡*[h, o] ⓑ{a,I}V2.T2.
+#h #o #a #I #G #L #V1 #V2 #T1 #T2 #HT12 #H @(cpxs_ind … H) -V2
 /3 width=5 by cpxs_trans, cpxs_bind_dx/
 qed.
 
-theorem cpxs_flat: ∀h,g,I,G,L,V1,V2,T1,T2. ⦃G, L⦄ ⊢ T1 ➡*[h, g] T2 →
-                   ⦃G, L⦄ ⊢ V1 ➡*[h, g] V2 →
-                   ⦃G, L⦄ ⊢ ⓕ{I}V1.T1 ➡*[h, g] ⓕ{I}V2.T2.
-#h #g #I #G #L #V1 #V2 #T1 #T2 #HT12 #H @(cpxs_ind … H) -V2
+theorem cpxs_flat: ∀h,o,I,G,L,V1,V2,T1,T2. ⦃G, L⦄ ⊢ T1 ➡*[h, o] T2 →
+                   ⦃G, L⦄ ⊢ V1 ➡*[h, o] V2 →
+                   ⦃G, L⦄ ⊢ ⓕ{I}V1.T1 ➡*[h, o] ⓕ{I}V2.T2.
+#h #o #I #G #L #V1 #V2 #T1 #T2 #HT12 #H @(cpxs_ind … H) -V2
 /3 width=5 by cpxs_trans, cpxs_flat_dx/
 qed.
 
-theorem cpxs_beta_rc: ∀h,g,a,G,L,V1,V2,W1,W2,T1,T2.
-                      ⦃G, L⦄ ⊢ V1 ➡[h, g] V2 → ⦃G, L.ⓛW1⦄ ⊢ T1 ➡*[h, g] T2 → ⦃G, L⦄ ⊢ W1 ➡*[h, g] W2 →
-                      ⦃G, L⦄ ⊢ ⓐV1.ⓛ{a}W1.T1 ➡*[h, g] ⓓ{a}ⓝW2.V2.T2.
-#h #g #a #G #L #V1 #V2 #W1 #W2 #T1 #T2 #HV12 #HT12 #H @(cpxs_ind … H) -W2
+theorem cpxs_beta_rc: ∀h,o,a,G,L,V1,V2,W1,W2,T1,T2.
+                      ⦃G, L⦄ ⊢ V1 ➡[h, o] V2 → ⦃G, L.ⓛW1⦄ ⊢ T1 ➡*[h, o] T2 → ⦃G, L⦄ ⊢ W1 ➡*[h, o] W2 →
+                      ⦃G, L⦄ ⊢ ⓐV1.ⓛ{a}W1.T1 ➡*[h, o] ⓓ{a}ⓝW2.V2.T2.
+#h #o #a #G #L #V1 #V2 #W1 #W2 #T1 #T2 #HV12 #HT12 #H @(cpxs_ind … H) -W2
 /4 width=5 by cpxs_trans, cpxs_beta_dx, cpxs_bind_dx, cpx_pair_sn/
 qed.
 
-theorem cpxs_beta: ∀h,g,a,G,L,V1,V2,W1,W2,T1,T2.
-                   ⦃G, L.ⓛW1⦄ ⊢ T1 ➡*[h, g] T2 → ⦃G, L⦄ ⊢ W1 ➡*[h, g] W2 → ⦃G, L⦄ ⊢ V1 ➡*[h, g] V2 →
-                   ⦃G, L⦄ ⊢ ⓐV1.ⓛ{a}W1.T1 ➡*[h, g] ⓓ{a}ⓝW2.V2.T2.
-#h #g #a #G #L #V1 #V2 #W1 #W2 #T1 #T2 #HT12 #HW12 #H @(cpxs_ind … H) -V2
+theorem cpxs_beta: ∀h,o,a,G,L,V1,V2,W1,W2,T1,T2.
+                   ⦃G, L.ⓛW1⦄ ⊢ T1 ➡*[h, o] T2 → ⦃G, L⦄ ⊢ W1 ➡*[h, o] W2 → ⦃G, L⦄ ⊢ V1 ➡*[h, o] V2 →
+                   ⦃G, L⦄ ⊢ ⓐV1.ⓛ{a}W1.T1 ➡*[h, o] ⓓ{a}ⓝW2.V2.T2.
+#h #o #a #G #L #V1 #V2 #W1 #W2 #T1 #T2 #HT12 #HW12 #H @(cpxs_ind … H) -V2
 /4 width=5 by cpxs_trans, cpxs_beta_rc, cpxs_bind_dx, cpx_flat/
 qed.
 
-theorem cpxs_theta_rc: ∀h,g,a,G,L,V1,V,V2,W1,W2,T1,T2.
-                       ⦃G, L⦄ ⊢ V1 ➡[h, g] V → ⬆[0, 1] V ≡ V2 →
-                       ⦃G, L.ⓓW1⦄ ⊢ T1 ➡*[h, g] T2 → ⦃G, L⦄ ⊢ W1 ➡*[h, g] W2 →
-                       ⦃G, L⦄ ⊢ ⓐV1.ⓓ{a}W1.T1 ➡*[h, g] ⓓ{a}W2.ⓐV2.T2.
-#h #g #a #G #L #V1 #V #V2 #W1 #W2 #T1 #T2 #HV1 #HV2 #HT12 #H @(cpxs_ind … H) -W2
+theorem cpxs_theta_rc: ∀h,o,a,G,L,V1,V,V2,W1,W2,T1,T2.
+                       ⦃G, L⦄ ⊢ V1 ➡[h, o] V → ⬆[0, 1] V ≡ V2 →
+                       ⦃G, L.ⓓW1⦄ ⊢ T1 ➡*[h, o] T2 → ⦃G, L⦄ ⊢ W1 ➡*[h, o] W2 →
+                       ⦃G, L⦄ ⊢ ⓐV1.ⓓ{a}W1.T1 ➡*[h, o] ⓓ{a}W2.ⓐV2.T2.
+#h #o #a #G #L #V1 #V #V2 #W1 #W2 #T1 #T2 #HV1 #HV2 #HT12 #H @(cpxs_ind … H) -W2
 /3 width=5 by cpxs_trans, cpxs_theta_dx, cpxs_bind_dx/
 qed.
 
-theorem cpxs_theta: ∀h,g,a,G,L,V1,V,V2,W1,W2,T1,T2.
-                    ⬆[0, 1] V ≡ V2 → ⦃G, L⦄ ⊢ W1 ➡*[h, g] W2 →
-                    ⦃G, L.ⓓW1⦄ ⊢ T1 ➡*[h, g] T2 → ⦃G, L⦄ ⊢ V1 ➡*[h, g] V →
-                    ⦃G, L⦄ ⊢ ⓐV1.ⓓ{a}W1.T1 ➡*[h, g] ⓓ{a}W2.ⓐV2.T2.
-#h #g #a #G #L #V1 #V #V2 #W1 #W2 #T1 #T2 #HV2 #HW12 #HT12 #H @(TC_ind_dx … V1 H) -V1
+theorem cpxs_theta: ∀h,o,a,G,L,V1,V,V2,W1,W2,T1,T2.
+                    ⬆[0, 1] V ≡ V2 → ⦃G, L⦄ ⊢ W1 ➡*[h, o] W2 →
+                    ⦃G, L.ⓓW1⦄ ⊢ T1 ➡*[h, o] T2 → ⦃G, L⦄ ⊢ V1 ➡*[h, o] V →
+                    ⦃G, L⦄ ⊢ ⓐV1.ⓓ{a}W1.T1 ➡*[h, o] ⓓ{a}W2.ⓐV2.T2.
+#h #o #a #G #L #V1 #V #V2 #W1 #W2 #T1 #T2 #HV2 #HW12 #HT12 #H @(TC_ind_dx … V1 H) -V1
 /3 width=5 by cpxs_trans, cpxs_theta_rc, cpxs_flat_dx/
 qed.
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma cpxs_inv_appl1: ∀h,g,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓐV1.T1 ➡*[h, g] U2 →
-                      ∨∨ ∃∃V2,T2.       ⦃G, L⦄ ⊢ V1 ➡*[h, g] V2 & ⦃G, L⦄ ⊢ T1 ➡*[h, g] T2 &
+lemma cpxs_inv_appl1: ∀h,o,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓐV1.T1 ➡*[h, o] U2 →
+                      ∨∨ ∃∃V2,T2.       ⦃G, L⦄ ⊢ V1 ➡*[h, o] V2 & ⦃G, L⦄ ⊢ T1 ➡*[h, o] T2 &
                                         U2 = ⓐV2. T2
-                       | ∃∃a,W,T.       ⦃G, L⦄ ⊢ T1 ➡*[h, g] ⓛ{a}W.T & ⦃G, L⦄ ⊢ ⓓ{a}ⓝW.V1.T ➡*[h, g] U2
-                       | ∃∃a,V0,V2,V,T. ⦃G, L⦄ ⊢ V1 ➡*[h, g] V0 & ⬆[0,1] V0 ≡ V2 &
-                                        ⦃G, L⦄ ⊢ T1 ➡*[h, g] ⓓ{a}V.T & ⦃G, L⦄ ⊢ ⓓ{a}V.ⓐV2.T ➡*[h, g] U2.
-#h #g #G #L #V1 #T1 #U2 #H @(cpxs_ind … H) -U2 [ /3 width=5 by or3_intro0, ex3_2_intro/ ]
+                       | ∃∃a,W,T.       ⦃G, L⦄ ⊢ T1 ➡*[h, o] ⓛ{a}W.T & ⦃G, L⦄ ⊢ ⓓ{a}ⓝW.V1.T ➡*[h, o] U2
+                       | ∃∃a,V0,V2,V,T. ⦃G, L⦄ ⊢ V1 ➡*[h, o] V0 & ⬆[0,1] V0 ≡ V2 &
+                                        ⦃G, L⦄ ⊢ T1 ➡*[h, o] ⓓ{a}V.T & ⦃G, L⦄ ⊢ ⓓ{a}V.ⓐV2.T ➡*[h, o] U2.
+#h #o #G #L #V1 #T1 #U2 #H @(cpxs_ind … H) -U2 [ /3 width=5 by or3_intro0, ex3_2_intro/ ]
 #U #U2 #_ #HU2 * *
 [ #V0 #T0 #HV10 #HT10 #H destruct
   elim (cpx_inv_appl1 … HU2) -HU2 *
@@ -93,8 +93,8 @@ qed-.
 
 (* Properties on sn extended parallel reduction for local environments ******)
 
-lemma lpx_cpx_trans: ∀h,g,G. s_r_transitive … (cpx h g G) (λ_.lpx h g G).
-#h #g #G #L2 #T1 #T2 #HT12 elim HT12 -G -L2 -T1 -T2
+lemma lpx_cpx_trans: ∀h,o,G. c_r_transitive … (cpx h o G) (λ_.lpx h o G).
+#h #o #G #L2 #T1 #T2 #HT12 elim HT12 -G -L2 -T1 -T2
 [ /2 width=3 by/
 | /3 width=2 by cpx_cpxs, cpx_st/
 | #I #G #L2 #K2 #V0 #V2 #W2 #i #HLK2 #_ #HVW2 #IHV02 #L1 #HL12
@@ -108,28 +108,28 @@ lemma lpx_cpx_trans: ∀h,g,G. s_r_transitive … (cpx h g G) (λ_.lpx h g G).
 ]
 qed-.
 
-lemma cpx_bind2: ∀h,g,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡[h, g] V2 →
-                 ∀I,T1,T2. ⦃G, L.ⓑ{I}V2⦄ ⊢ T1 ➡[h, g] T2 →
-                 ∀a. ⦃G, L⦄ ⊢ ⓑ{a,I}V1.T1 ➡*[h, g] ⓑ{a,I}V2.T2.
+lemma cpx_bind2: ∀h,o,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡[h, o] V2 →
+                 ∀I,T1,T2. ⦃G, L.ⓑ{I}V2⦄ ⊢ T1 ➡[h, o] T2 →
+                 ∀a. ⦃G, L⦄ ⊢ ⓑ{a,I}V1.T1 ➡*[h, o] ⓑ{a,I}V2.T2.
 /4 width=5 by lpx_cpx_trans, cpxs_bind_dx, lpx_pair/ qed.
 
 (* Advanced properties ******************************************************)
 
-lemma lpx_cpxs_trans: ∀h,g,G. s_rs_transitive … (cpx h g G) (λ_.lpx h g G).
-#h #g #G @s_r_trans_LTC1 /2 width=3 by lpx_cpx_trans/ (**) (* full auto fails *)
+lemma lpx_cpxs_trans: ∀h,o,G. c_rs_transitive … (cpx h o G) (λ_.lpx h o G).
+#h #o #G @c_r_trans_LTC1 /2 width=3 by lpx_cpx_trans/ (**) (* full auto fails *)
 qed-.
 
-lemma cpxs_bind2_dx: ∀h,g,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡[h, g] V2 →
-                     ∀I,T1,T2. ⦃G, L.ⓑ{I}V2⦄ ⊢ T1 ➡*[h, g] T2 →
-                     ∀a. ⦃G, L⦄ ⊢ ⓑ{a,I}V1.T1 ➡*[h, g] ⓑ{a,I}V2.T2.
+lemma cpxs_bind2_dx: ∀h,o,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡[h, o] V2 →
+                     ∀I,T1,T2. ⦃G, L.ⓑ{I}V2⦄ ⊢ T1 ➡*[h, o] T2 →
+                     ∀a. ⦃G, L⦄ ⊢ ⓑ{a,I}V1.T1 ➡*[h, o] ⓑ{a,I}V2.T2.
 /4 width=5 by lpx_cpxs_trans, cpxs_bind_dx, lpx_pair/ qed.
 
 (* Properties on supclosure *************************************************)
 
-lemma fqu_cpxs_trans_neq: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T2⦄ →
-                          ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡*[h, g] U2 → (T2 = U2 → ⊥) →
-                          ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡*[h, g] U1 & T1 = U1 → ⊥ & ⦃G1, L1, U1⦄ ⊐ ⦃G2, L2, U2⦄.
-#h #g #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2
+lemma fqu_cpxs_trans_neq: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T2⦄ →
+                          ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡*[h, o] U2 → (T2 = U2 → ⊥) →
+                          ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡*[h, o] U1 & T1 = U1 → ⊥ & ⦃G1, L1, U1⦄ ⊐ ⦃G2, L2, U2⦄.
+#h #o #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2
 [ #I #G #L #V1 #V2 #HV12 #_ elim (lift_total V2 0 1)
   #U2 #HVU2 @(ex3_intro … U2)
   [1,3: /3 width=7 by fqu_drop, cpxs_delta, drop_pair, drop_drop/
@@ -148,27 +148,27 @@ lemma fqu_cpxs_trans_neq: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, 
   [1,3: /2 width=4 by fqu_flat_dx, cpxs_flat/
   | #H0 destruct /2 width=1 by/
   ]
-| #G #L #K #T1 #U1 #m #HLK #HTU1 #T2 #HT12 #H elim (lift_total T2 0 (m+1))
+| #G #L #K #T1 #U1 #k #HLK #HTU1 #T2 #HT12 #H elim (lift_total T2 0 (k+1))
   #U2 #HTU2 @(ex3_intro … U2)
   [1,3: /2 width=10 by cpxs_lift, fqu_drop/
   | #H0 destruct /3 width=5 by lift_inj/
 ]
 qed-.
 
-lemma fquq_cpxs_trans_neq: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐⸮ ⦃G2, L2, T2⦄ →
-                           ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡*[h, g] U2 → (T2 = U2 → ⊥) →
-                           ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡*[h, g] U1 & T1 = U1 → ⊥ & ⦃G1, L1, U1⦄ ⊐⸮ ⦃G2, L2, U2⦄.
-#h #g #G1 #G2 #L1 #L2 #T1 #T2 #H12 #U2 #HTU2 #H elim (fquq_inv_gen … H12) -H12
+lemma fquq_cpxs_trans_neq: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐⸮ ⦃G2, L2, T2⦄ →
+                           ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡*[h, o] U2 → (T2 = U2 → ⊥) →
+                           ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡*[h, o] U1 & T1 = U1 → ⊥ & ⦃G1, L1, U1⦄ ⊐⸮ ⦃G2, L2, U2⦄.
+#h #o #G1 #G2 #L1 #L2 #T1 #T2 #H12 #U2 #HTU2 #H elim (fquq_inv_gen … H12) -H12
 [ #H12 elim (fqu_cpxs_trans_neq … H12 … HTU2 H) -T2
   /3 width=4 by fqu_fquq, ex3_intro/
 | * #HG #HL #HT destruct /3 width=4 by ex3_intro/
 ]
 qed-.
 
-lemma fqup_cpxs_trans_neq: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐+ ⦃G2, L2, T2⦄ →
-                           ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡*[h, g] U2 → (T2 = U2 → ⊥) →
-                           ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡*[h, g] U1 & T1 = U1 → ⊥ & ⦃G1, L1, U1⦄ ⊐+ ⦃G2, L2, U2⦄.
-#h #g #G1 #G2 #L1 #L2 #T1 #T2 #H @(fqup_ind_dx … H) -G1 -L1 -T1
+lemma fqup_cpxs_trans_neq: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐+ ⦃G2, L2, T2⦄ →
+                           ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡*[h, o] U2 → (T2 = U2 → ⊥) →
+                           ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡*[h, o] U1 & T1 = U1 → ⊥ & ⦃G1, L1, U1⦄ ⊐+ ⦃G2, L2, U2⦄.
+#h #o #G1 #G2 #L1 #L2 #T1 #T2 #H @(fqup_ind_dx … H) -G1 -L1 -T1
 [ #G1 #L1 #T1 #H12 #U2 #HTU2 #H elim (fqu_cpxs_trans_neq … H12 … HTU2 H) -T2
   /3 width=4 by fqu_fqup, ex3_intro/
 | #G #G1 #L #L1 #T #T1 #H1 #_ #IH12 #U2 #HTU2 #H elim (IH12 … HTU2 H) -T2
@@ -177,10 +177,10 @@ lemma fqup_cpxs_trans_neq: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐+ ⦃G2
 ]
 qed-.
 
-lemma fqus_cpxs_trans_neq: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐* ⦃G2, L2, T2⦄ →
-                           ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡*[h, g] U2 → (T2 = U2 → ⊥) →
-                           ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡*[h, g] U1 & T1 = U1 → ⊥ & ⦃G1, L1, U1⦄ ⊐* ⦃G2, L2, U2⦄.
-#h #g #G1 #G2 #L1 #L2 #T1 #T2 #H12 #U2 #HTU2 #H elim (fqus_inv_gen … H12) -H12
+lemma fqus_cpxs_trans_neq: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐* ⦃G2, L2, T2⦄ →
+                           ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡*[h, o] U2 → (T2 = U2 → ⊥) →
+                           ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡*[h, o] U1 & T1 = U1 → ⊥ & ⦃G1, L1, U1⦄ ⊐* ⦃G2, L2, U2⦄.
+#h #o #G1 #G2 #L1 #L2 #T1 #T2 #H12 #U2 #HTU2 #H elim (fqus_inv_gen … H12) -H12
 [ #H12 elim (fqup_cpxs_trans_neq … H12 … HTU2 H) -T2
   /3 width=4 by fqup_fqus, ex3_intro/
 | * #HG #HL #HT destruct /3 width=4 by ex3_intro/

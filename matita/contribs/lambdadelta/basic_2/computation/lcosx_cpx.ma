@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/ynat/ynat_max.ma".
 include "basic_2/computation/lsx_drop.ma".
 include "basic_2/computation/lsx_lpx.ma".
 include "basic_2/computation/lsx_lpxs.ma".
@@ -22,10 +21,10 @@ include "basic_2/computation/lcosx.ma".
 
 (* Properties on extended context-sensitive parallel reduction for term *****)
 
-lemma lsx_cpx_trans_lcosx: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[h, g] T2 →
-                           ∀l. G ⊢ ~⬊*[h, g, l] L →
-                           G ⊢ ⬊*[h, g, T1, l] L → G ⊢ ⬊*[h, g, T2, l] L.
-#h #g #G #L #T1 #T2 #H elim H -G -L -T1 -T2 //
+lemma lsx_cpx_trans_lcosx: ∀h,o,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[h, o] T2 →
+                           ∀l. G ⊢ ~⬊*[h, o, l] L →
+                           G ⊢ ⬊*[h, o, T1, l] L → G ⊢ ⬊*[h, o, T2, l] L.
+#h #o #G #L #T1 #T2 #H elim H -G -L -T1 -T2 //
 [ #I #G #L #K #V1 #V2 #W2 #i #HLK #_ #HVW2 #IHV12 #l #HL #H
   elim (ylt_split i l) #Hli [ -H | -HL ]
   [ <(ymax_pre_sn l (⫯i)) /2 width=1 by ylt_fwd_le_succ1/
@@ -63,6 +62,6 @@ lemma lsx_cpx_trans_lcosx: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[h, g] T2 →
 ]
 qed-.
 
-lemma lsx_cpx_trans_O: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[h, g] T2 →
-                       G ⊢ ⬊*[h, g, T1, 0] L → G ⊢ ⬊*[h, g, T2, 0] L.
+lemma lsx_cpx_trans_O: ∀h,o,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[h, o] T2 →
+                       G ⊢ ⬊*[h, o, T1, 0] L → G ⊢ ⬊*[h, o, T2, 0] L.
 /2 width=3 by lsx_cpx_trans_lcosx/ qed-.

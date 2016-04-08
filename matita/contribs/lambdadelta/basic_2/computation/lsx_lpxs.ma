@@ -19,11 +19,11 @@ include "basic_2/computation/lsx_alt.ma".
 
 (* Advanced properties ******************************************************)
 
-fact lsx_bind_lpxs_aux: ∀h,g,a,I,G,L1,V,l. G ⊢ ⬊*[h, g, V, l] L1 →
-                        ∀Y,T. G ⊢ ⬊*[h, g, T, ⫯l] Y →
-                        ∀L2. Y = L2.ⓑ{I}V → ⦃G, L1⦄ ⊢ ➡*[h, g] L2 →
-                        G ⊢ ⬊*[h, g, ⓑ{a,I}V.T, l] L2.
-#h #g #a #I #G #L1 #V #l #H @(lsx_ind_alt … H) -L1
+fact lsx_bind_lpxs_aux: ∀h,o,a,I,G,L1,V,l. G ⊢ ⬊*[h, o, V, l] L1 →
+                        ∀Y,T. G ⊢ ⬊*[h, o, T, ⫯l] Y →
+                        ∀L2. Y = L2.ⓑ{I}V → ⦃G, L1⦄ ⊢ ➡*[h, o] L2 →
+                        G ⊢ ⬊*[h, o, ⓑ{a,I}V.T, l] L2.
+#h #o #a #I #G #L1 #V #l #H @(lsx_ind_alt … H) -L1
 #L1 #HL1 #IHL1 #Y #T #H @(lsx_ind_alt … H) -Y
 #Y #HY #IHY #L2 #H #HL12 destruct @lsx_intro_alt
 #L0 #HL20 lapply (lpxs_trans … HL12 … HL20)
@@ -36,15 +36,15 @@ fact lsx_bind_lpxs_aux: ∀h,g,a,I,G,L1,V,l. G ⊢ ⬊*[h, g, V, l] L1 →
 ]
 qed-.
 
-lemma lsx_bind: ∀h,g,a,I,G,L,V,l. G ⊢ ⬊*[h, g, V, l] L →
-                ∀T. G ⊢ ⬊*[h, g, T, ⫯l] L.ⓑ{I}V →
-                G ⊢ ⬊*[h, g, ⓑ{a,I}V.T, l] L.
+lemma lsx_bind: ∀h,o,a,I,G,L,V,l. G ⊢ ⬊*[h, o, V, l] L →
+                ∀T. G ⊢ ⬊*[h, o, T, ⫯l] L.ⓑ{I}V →
+                G ⊢ ⬊*[h, o, ⓑ{a,I}V.T, l] L.
 /2 width=3 by lsx_bind_lpxs_aux/ qed.
 
-lemma lsx_flat_lpxs: ∀h,g,I,G,L1,V,l. G ⊢ ⬊*[h, g, V, l] L1 →
-                     ∀L2,T. G ⊢ ⬊*[h, g, T, l] L2 → ⦃G, L1⦄ ⊢ ➡*[h, g] L2 →
-                     G ⊢ ⬊*[h, g, ⓕ{I}V.T, l] L2.
-#h #g #I #G #L1 #V #l #H @(lsx_ind_alt … H) -L1
+lemma lsx_flat_lpxs: ∀h,o,I,G,L1,V,l. G ⊢ ⬊*[h, o, V, l] L1 →
+                     ∀L2,T. G ⊢ ⬊*[h, o, T, l] L2 → ⦃G, L1⦄ ⊢ ➡*[h, o] L2 →
+                     G ⊢ ⬊*[h, o, ⓕ{I}V.T, l] L2.
+#h #o #I #G #L1 #V #l #H @(lsx_ind_alt … H) -L1
 #L1 #HL1 #IHL1 #L2 #T #H @(lsx_ind_alt … H) -L2
 #L2 #HL2 #IHL2 #HL12 @lsx_intro_alt
 #L0 #HL20 lapply (lpxs_trans … HL12 … HL20)
@@ -57,6 +57,6 @@ lemma lsx_flat_lpxs: ∀h,g,I,G,L1,V,l. G ⊢ ⬊*[h, g, V, l] L1 →
 ]
 qed-.
 
-lemma lsx_flat: ∀h,g,I,G,L,V,l. G ⊢ ⬊*[h, g, V, l] L →
-                ∀T. G ⊢ ⬊*[h, g, T, l] L → G ⊢ ⬊*[h, g, ⓕ{I}V.T, l] L.
+lemma lsx_flat: ∀h,o,I,G,L,V,l. G ⊢ ⬊*[h, o, V, l] L →
+                ∀T. G ⊢ ⬊*[h, o, T, l] L → G ⊢ ⬊*[h, o, ⓕ{I}V.T, l] L.
 /2 width=3 by lsx_flat_lpxs/ qed.

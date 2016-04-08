@@ -320,6 +320,24 @@ lemma after_isid_isuni: ∀f1,f2. 𝐈⦃f2⦄ → 𝐔⦃f1⦄ → f1 ⊚ ⫯f2
 /5 width=7 by isid_after_dx, after_eq_repl_back_2, after_next, after_push, eq_push_inv_isid/
 qed.
 
+lemma after_uni_next2: ∀f2. 𝐔⦃f2⦄ → ∀f1,f. ⫯f2 ⊚ f1 ≡ f → f2 ⊚ ⫯f1 ≡ f.
+#f2 #H elim H -f2
+[ #f2 #Hf2 #f1 #f #Hf
+  elim (after_inv_nxx … Hf) -Hf [2,3: // ] #g #Hg #H0 destruct
+  /4 width=7 by after_isid_inv_sn, isid_after_sn, after_eq_repl_back_0, eq_next/
+| #f2 #_ #g2 #H2 #IH #f1 #f #Hf
+  elim (after_inv_nxx … Hf) -Hf [2,3: // ] #g #Hg #H0 destruct
+  /3 width=5 by after_next/
+]
+qed.
+
+(* Properties on uni ********************************************************)
+
+lemma after_uni: ∀n1,n2. 𝐔❴n1❵ ⊚ 𝐔❴n2❵ ≡ 𝐔❴n1+n2❵.
+@nat_elim2
+/4 width=5 by after_uni_next2, isid_after_sn, isid_after_dx, after_next/
+qed.
+
 (* Forward lemmas on at *****************************************************)
 
 lemma after_at_fwd: ∀i,i1,f. @⦃i1, f⦄ ≡ i → ∀f2,f1. f2 ⊚ f1 ≡ f →

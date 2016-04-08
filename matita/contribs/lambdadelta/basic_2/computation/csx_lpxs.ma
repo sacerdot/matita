@@ -19,7 +19,7 @@ include "basic_2/computation/lpxs.ma".
 
 (* Properties on sn extended parallel computation for local environments ****)
 
-lemma csx_lpxs_conf: ∀h,g,G,L1,L2. ⦃G, L1⦄ ⊢ ➡*[h, g] L2 →
-                     ∀T. ⦃G, L1⦄ ⊢ ⬊*[h, g] T → ⦃G, L2⦄ ⊢ ⬊*[h, g] T.
-#h #g #G #L1 #L2 #H @(lpxs_ind … H) -L2 /3 by lpxs_strap1, csx_lpx_conf/
+lemma csx_lpxs_conf: ∀h,o,G,L1,L2. ⦃G, L1⦄ ⊢ ➡*[h, o] L2 →
+                     ∀T. ⦃G, L1⦄ ⊢ ⬊*[h, o] T → ⦃G, L2⦄ ⊢ ⬊*[h, o] T.
+#h #o #G #L1 #L2 #H @(lpxs_ind … H) -L2 /3 by lpxs_strap1, csx_lpx_conf/
 qed-.

@@ -238,6 +238,16 @@ lemma drops_inv_skip2: ∀I,X,K2,V2,c,f. ⬇*[c, ↑f] X ≡ K2.ⓑ{I}V2 →
 
 (* Inversion lemmas with test for uniformity ********************************)
 
+lemma drops_inv_isuni: ∀L1,L2,f. ⬇*[Ⓣ, f] L1 ≡ L2 → 𝐔⦃f⦄ →
+                       (𝐈⦃f⦄ ∧ L2 = L1) ∨
+                       ∃∃I,K,V,g. ⬇*[Ⓣ, g] K ≡ L2 & L1 = K.ⓑ{I}V & f = ⫯g.
+#L1 #L2 #f * -L1 -L2 -f
+[ /4 width=1 by or_introl, conj/
+| /4 width=7 by ex3_4_intro, or_intror/
+| /7 width=6 by drops_fwd_isid, lifts_fwd_isid, isuni_inv_push, isid_push, or_introl, conj, eq_f3, sym_eq/
+]
+qed-.
+
 (* Basic_2A1: was: drop_inv_O1_pair1 *)
 lemma drops_inv_pair1_isuni: ∀I,K,L2,V,c,f. 𝐔⦃f⦄ → ⬇*[c, f] K.ⓑ{I}V ≡ L2 →
                              (𝐈⦃f⦄ ∧ L2 = K.ⓑ{I}V) ∨
@@ -266,6 +276,16 @@ qed-.
 lemma drops_inv_pair2_isuni_next: ∀I,K,V,c,f,L1. 𝐔⦃f⦄ → ⬇*[c, ⫯f] L1 ≡ K.ⓑ{I}V →
                                   ∃∃I1,K1,V1. ⬇*[c, f] K1 ≡ K.ⓑ{I}V & L1 = K1.ⓑ{I1}V1.
 #I #K #V #c #f #L1 #Hf #H elim (drops_inv_pair2_isuni … H) -H /2 width=3 by isuni_next/ -Hf *
+[ #H elim (isid_inv_next … H) -H //
+| /2 width=5 by ex2_3_intro/
+]
+qed-. 
+
+(* Inversion lemmas with uniform relocations ********************************)
+
+lemma drops_inv_succ: ∀L1,L2,l. ⬇*[⫯l] L1 ≡ L2 →
+                      ∃∃I,K,V. ⬇*[l] K ≡ L2 & L1 = K.ⓑ{I}V.
+#L1 #L2 #l #H elim (drops_inv_isuni … H) -H // *
 [ #H elim (isid_inv_next … H) -H //
 | /2 width=5 by ex2_3_intro/
 ]

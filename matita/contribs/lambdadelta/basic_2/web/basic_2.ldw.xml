@@ -3,6 +3,7 @@
 <page xmlns="http://lambdadelta.info/"
       description = "\lambda\delta home page"
       title = "\lambda\delta home page"
+      logo = "crux"
       head = "cic:/matita/lambdadelta/basic_2/ (core λδ version 2)"
 >
    <sitemap name="sitemap"/>
@@ -32,6 +33,11 @@
    </news>
 
    <subsection name="A2">Stage "A2": "Extending the Applicability Condition"</subsection>
+
+   <news class="alpha" date="2016 March 25.">
+         Relocation with reference transforming maps (rtmap).
+   </news>
+
    <news class="alpha" date="2015 October 9.">
          λδ version 2A2 is started.
    </news>

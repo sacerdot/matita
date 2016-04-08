@@ -22,9 +22,9 @@ include "basic_2/computation/csx_vector.ma".
 (* Advanced properties ******************************************************)
 
 (* Basic_1: was just: sn3_appls_lref *)
-lemma csx_applv_cnx: ∀h,g,G,L,T. 𝐒⦃T⦄ → ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃T⦄ →
-                     ∀Vs. ⦃G, L⦄ ⊢ ⬊*[h, g] Vs → ⦃G, L⦄ ⊢ ⬊*[h, g] ⒶVs.T.
-#h #g #G #L #T #H1T #H2T #Vs elim Vs -Vs [ #_ @(cnx_csx … H2T) ] (**) (* /2 width=1/ does not work *)
+lemma csx_applv_cnx: ∀h,o,G,L,T. 𝐒⦃T⦄ → ⦃G, L⦄ ⊢ ➡[h, o] 𝐍⦃T⦄ →
+                     ∀Vs. ⦃G, L⦄ ⊢ ⬊*[h, o] Vs → ⦃G, L⦄ ⊢ ⬊*[h, o] ⒶVs.T.
+#h #o #G #L #T #H1T #H2T #Vs elim Vs -Vs [ #_ @(cnx_csx … H2T) ] (**) (* /2 width=1/ does not work *)
 #V #Vs #IHV #H
 elim (csxv_inv_cons … H) -H #HV #HVs
 @csx_appl_simple_tsts /2 width=1 by applv_simple/ -IHV -HV -HVs
@@ -33,10 +33,10 @@ lapply (cpxs_fwd_cnx_vector … H) -H // -H1T -H2T #H
 elim (H0) -H0 //
 qed.
 
-lemma csx_applv_sort: ∀h,g,G,L,k,Vs. ⦃G, L⦄ ⊢ ⬊*[h, g] Vs → ⦃G, L⦄ ⊢ ⬊*[h, g] ⒶVs.⋆k.
-#h #g #G #L #k elim (deg_total h g k)
-#d generalize in match k; -k @(nat_ind_plus … d) -d [ /3 width=6 by csx_applv_cnx, cnx_sort, simple_atom/ ]
-#d #IHd #k #Hkd lapply (deg_next_SO … Hkd) -Hkd
+lemma csx_applv_sort: ∀h,o,G,L,s,Vs. ⦃G, L⦄ ⊢ ⬊*[h, o] Vs → ⦃G, L⦄ ⊢ ⬊*[h, o] ⒶVs.⋆s.
+#h #o #G #L #s elim (deg_total h o s)
+#d generalize in match s; -s @(nat_ind_plus … d) -d [ /3 width=6 by csx_applv_cnx, cnx_sort, simple_atom/ ]
+#d #IHd #s #Hkd lapply (deg_next_SO … Hkd) -Hkd
 #Hkd #Vs elim Vs -Vs /2 width=1 by/
 #V #Vs #IHVs #HVVs
 elim (csxv_inv_cons … HVVs) #HV #HVs
@@ -44,14 +44,14 @@ elim (csxv_inv_cons … HVVs) #HV #HVs
 #X #H #H0
 elim (cpxs_fwd_sort_vector … H) -H #H
 [ elim H0 -H0 //
-| -H0 @(csx_cpxs_trans … (Ⓐ(V@Vs).⋆(next h k))) /2 width=1 by cpxs_flat_dx/
+| -H0 @(csx_cpxs_trans … (Ⓐ(V@Vs).⋆(next h s))) /2 width=1 by cpxs_flat_dx/
 ]
 qed.
 
 (* Basic_1: was just: sn3_appls_beta *)
-lemma csx_applv_beta: ∀h,g,a,G,L,Vs,V,W,T. ⦃G, L⦄ ⊢ ⬊*[h, g] ⒶVs.ⓓ{a}ⓝW.V.T →
-                      ⦃G, L⦄ ⊢ ⬊*[h, g] ⒶVs. ⓐV.ⓛ{a}W.T.
-#h #g #a #G #L #Vs elim Vs -Vs /2 width=1 by csx_appl_beta/
+lemma csx_applv_beta: ∀h,o,a,G,L,Vs,V,W,T. ⦃G, L⦄ ⊢ ⬊*[h, o] ⒶVs.ⓓ{a}ⓝW.V.T →
+                      ⦃G, L⦄ ⊢ ⬊*[h, o] ⒶVs. ⓐV.ⓛ{a}W.T.
+#h #o #a #G #L #Vs elim Vs -Vs /2 width=1 by csx_appl_beta/
 #V0 #Vs #IHV #V #W #T #H1T
 lapply (csx_fwd_pair_sn … H1T) #HV0
 lapply (csx_fwd_flat_dx … H1T) #H2T
@@ -63,10 +63,10 @@ elim (cpxs_fwd_beta_vector … H) -H #H
 ]
 qed.
 
-lemma csx_applv_delta: ∀h,g,I,G,L,K,V1,i. ⬇[i] L ≡ K.ⓑ{I}V1 →
+lemma csx_applv_delta: ∀h,o,I,G,L,K,V1,i. ⬇[i] L ≡ K.ⓑ{I}V1 →
                        ∀V2. ⬆[0, i + 1] V1 ≡ V2 →
-                       ∀Vs. ⦃G, L⦄ ⊢ ⬊*[h, g] (ⒶVs.V2) → ⦃G, L⦄ ⊢ ⬊*[h, g] (ⒶVs.#i).
-#h #g #I #G #L #K #V1 #i #HLK #V2 #HV12 #Vs elim Vs -Vs
+                       ∀Vs. ⦃G, L⦄ ⊢ ⬊*[h, o] (ⒶVs.V2) → ⦃G, L⦄ ⊢ ⬊*[h, o] (ⒶVs.#i).
+#h #o #I #G #L #K #V1 #i #HLK #V2 #HV12 #Vs elim Vs -Vs
 [ /4 width=12 by csx_inv_lift, csx_lref_bind, drop_fwd_drop2/
 | #V #Vs #IHV #H1T
   lapply (csx_fwd_pair_sn … H1T) #HV
@@ -81,28 +81,28 @@ lemma csx_applv_delta: ∀h,g,I,G,L,K,V1,i. ⬇[i] L ≡ K.ⓑ{I}V1 →
 qed.
 
 (* Basic_1: was just: sn3_appls_abbr *)
-lemma csx_applv_theta: ∀h,g,a,G,L,V1s,V2s. ⬆[0, 1] V1s ≡ V2s →
-                       ∀V,T. ⦃G, L⦄ ⊢ ⬊*[h, g] ⓓ{a}V.ⒶV2s.T →
-                       ⦃G, L⦄ ⊢ ⬊*[h, g] ⒶV1s.ⓓ{a}V.T.
-#h #g #a #G #L #V1s #V2s * -V1s -V2s /2 width=1 by/
-#V1s #V2s #V1 #V2 #HV12 #H
+lemma csx_applv_theta: ∀h,o,a,G,L,V1c,V2c. ⬆[0, 1] V1c ≡ V2c →
+                       ∀V,T. ⦃G, L⦄ ⊢ ⬊*[h, o] ⓓ{a}V.ⒶV2c.T →
+                       ⦃G, L⦄ ⊢ ⬊*[h, o] ⒶV1c.ⓓ{a}V.T.
+#h #o #a #G #L #V1c #V2c * -V1c -V2c /2 width=1 by/
+#V1c #V2c #V1 #V2 #HV12 #H
 generalize in match HV12; -HV12 generalize in match V2; -V2 generalize in match V1; -V1
-elim H -V1s -V2s /2 width=3 by csx_appl_theta/
-#V1s #V2s #V1 #V2 #HV12 #HV12s #IHV12s #W1 #W2 #HW12 #V #T #H
+elim H -V1c -V2c /2 width=3 by csx_appl_theta/
+#V1c #V2c #V1 #V2 #HV12 #HV12c #IHV12c #W1 #W2 #HW12 #V #T #H
 lapply (csx_appl_theta … HW12 … H) -H -HW12 #H
 lapply (csx_fwd_pair_sn … H) #HW1
 lapply (csx_fwd_flat_dx … H) #H1
-@csx_appl_simple_tsts /2 width=3 by simple_flat/ -IHV12s -HW1 -H1 #X #H1 #H2
-elim (cpxs_fwd_theta_vector … (V2@V2s) … H1) -H1 /2 width=1 by liftv_cons/ -HV12s -HV12
+@csx_appl_simple_tsts /2 width=3 by simple_flat/ -IHV12c -HW1 -H1 #X #H1 #H2
+elim (cpxs_fwd_theta_vector … (V2@V2c) … H1) -H1 /2 width=1 by liftv_cons/ -HV12c -HV12
 [ -H #H elim H2 -H2 //
 | -H2 /3 width=5 by csx_cpxs_trans, cpxs_flat_dx/
 ]
 qed.
 
 (* Basic_1: was just: sn3_appls_cast *)
-lemma csx_applv_cast: ∀h,g,G,L,Vs,W,T. ⦃G, L⦄ ⊢ ⬊*[h, g] ⒶVs.W → ⦃G, L⦄ ⊢ ⬊*[h, g] ⒶVs.T →
-                      ⦃G, L⦄ ⊢ ⬊*[h, g] ⒶVs.ⓝW.T.
-#h #g #G #L #Vs elim Vs -Vs /2 width=1 by csx_cast/
+lemma csx_applv_cast: ∀h,o,G,L,Vs,W,T. ⦃G, L⦄ ⊢ ⬊*[h, o] ⒶVs.W → ⦃G, L⦄ ⊢ ⬊*[h, o] ⒶVs.T →
+                      ⦃G, L⦄ ⊢ ⬊*[h, o] ⒶVs.ⓝW.T.
+#h #o #G #L #Vs elim Vs -Vs /2 width=1 by csx_cast/
 #V #Vs #IHV #W #T #H1W #H1T
 lapply (csx_fwd_pair_sn … H1W) #HV
 lapply (csx_fwd_flat_dx … H1W) #H2W
@@ -116,13 +116,13 @@ elim (cpxs_fwd_cast_vector … H) -H #H
 ]
 qed.
 
-theorem csx_gcr: ∀h,g. gcr (cpx h g) (eq …) (csx h g) (csx h g).
-#h #g @mk_gcr //
+theorem csx_gcr: ∀h,o. gcr (cpx h o) (eq …) (csx h o) (csx h o).
+#h #o @mk_gcr //
 [ /3 width=1 by csx_applv_cnx/
 |2,3,6: /2 width=1 by csx_applv_beta, csx_applv_sort, csx_applv_cast/
 | /2 width=7 by csx_applv_delta/
-| #G #L #V1s #V2s #HV12s #a #V #T #H #HV
-  @(csx_applv_theta … HV12s) -HV12s
+| #G #L #V1c #V2c #HV12c #a #V #T #H #HV
+  @(csx_applv_theta … HV12c) -HV12c
   @csx_abbr //
 ]
 qed.

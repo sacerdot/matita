@@ -21,15 +21,15 @@ include "basic_2/computation/csx_lift.ma".
 
 (* Advanced properties ******************************************************)
 
-lemma csx_lpx_conf: ∀h,g,G,L1,L2. ⦃G, L1⦄ ⊢ ➡[h, g] L2 →
-                    ∀T. ⦃G, L1⦄ ⊢ ⬊*[h, g] T → ⦃G, L2⦄ ⊢ ⬊*[h, g] T.
-#h #g #G #L1 #L2 #HL12 #T #H @(csx_ind_alt … H) -T
+lemma csx_lpx_conf: ∀h,o,G,L1,L2. ⦃G, L1⦄ ⊢ ➡[h, o] L2 →
+                    ∀T. ⦃G, L1⦄ ⊢ ⬊*[h, o] T → ⦃G, L2⦄ ⊢ ⬊*[h, o] T.
+#h #o #G #L1 #L2 #HL12 #T #H @(csx_ind_alt … H) -T
 /4 width=3 by csx_intro, lpx_cpx_trans/
 qed-.
 
-lemma csx_abst: ∀h,g,a,G,L,W. ⦃G, L⦄ ⊢ ⬊*[h, g] W →
-                ∀T. ⦃G, L.ⓛW⦄ ⊢ ⬊*[h, g] T → ⦃G, L⦄ ⊢ ⬊*[h, g] ⓛ{a}W.T.
-#h #g #a #G #L #W #HW @(csx_ind … HW) -W #W #_ #IHW #T #HT @(csx_ind … HT) -T #T #HT #IHT
+lemma csx_abst: ∀h,o,a,G,L,W. ⦃G, L⦄ ⊢ ⬊*[h, o] W →
+                ∀T. ⦃G, L.ⓛW⦄ ⊢ ⬊*[h, o] T → ⦃G, L⦄ ⊢ ⬊*[h, o] ⓛ{a}W.T.
+#h #o #a #G #L #W #HW @(csx_ind … HW) -W #W #_ #IHW #T #HT @(csx_ind … HT) -T #T #HT #IHT
 @csx_intro #X #H1 #H2
 elim (cpx_inv_abst1 … H1) -H1
 #W0 #T0 #HLW0 #HLT0 #H destruct
@@ -40,9 +40,9 @@ elim (eq_false_inv_tpair_sn … H2) -H2
 ]
 qed.
 
-lemma csx_abbr: ∀h,g,a,G,L,V. ⦃G, L⦄ ⊢ ⬊*[h, g] V →
-                ∀T. ⦃G, L.ⓓV⦄ ⊢ ⬊*[h, g] T → ⦃G, L⦄ ⊢ ⬊*[h, g] ⓓ{a}V. T.
-#h #g #a #G #L #V #HV elim HV -V #V #_ #IHV #T #HT @(csx_ind_alt … HT) -T #T #HT #IHT
+lemma csx_abbr: ∀h,o,a,G,L,V. ⦃G, L⦄ ⊢ ⬊*[h, o] V →
+                ∀T. ⦃G, L.ⓓV⦄ ⊢ ⬊*[h, o] T → ⦃G, L⦄ ⊢ ⬊*[h, o] ⓓ{a}V. T.
+#h #o #a #G #L #V #HV elim HV -V #V #_ #IHV #T #HT @(csx_ind_alt … HT) -T #T #HT #IHT
 @csx_intro #X #H1 #H2
 elim (cpx_inv_abbr1 … H1) -H1 *
 [ #V1 #T1 #HLV1 #HLT1 #H destruct
@@ -55,9 +55,9 @@ elim (cpx_inv_abbr1 … H1) -H1 *
 ]
 qed.
 
-fact csx_appl_beta_aux: ∀h,g,a,G,L,U1. ⦃G, L⦄ ⊢ ⬊*[h, g] U1 →
-                        ∀V,W,T1. U1 = ⓓ{a}ⓝW.V.T1 → ⦃G, L⦄ ⊢ ⬊*[h, g] ⓐV.ⓛ{a}W.T1.
-#h #g #a #G #L #X #H @(csx_ind … H) -X
+fact csx_appl_beta_aux: ∀h,o,a,G,L,U1. ⦃G, L⦄ ⊢ ⬊*[h, o] U1 →
+                        ∀V,W,T1. U1 = ⓓ{a}ⓝW.V.T1 → ⦃G, L⦄ ⊢ ⬊*[h, o] ⓐV.ⓛ{a}W.T1.
+#h #o #a #G #L #X #H @(csx_ind … H) -X
 #X #HT1 #IHT1 #V #W #T1 #H1 destruct
 @csx_intro #X #H1 #H2
 elim (cpx_inv_appl1 … H1) -H1 *
@@ -73,12 +73,12 @@ elim (cpx_inv_appl1 … H1) -H1 *
 qed-.
 
 (* Basic_1: was just: sn3_beta *)
-lemma csx_appl_beta: ∀h,g,a,G,L,V,W,T. ⦃G, L⦄ ⊢ ⬊*[h, g] ⓓ{a}ⓝW.V.T → ⦃G, L⦄ ⊢ ⬊*[h, g] ⓐV.ⓛ{a}W.T.
+lemma csx_appl_beta: ∀h,o,a,G,L,V,W,T. ⦃G, L⦄ ⊢ ⬊*[h, o] ⓓ{a}ⓝW.V.T → ⦃G, L⦄ ⊢ ⬊*[h, o] ⓐV.ⓛ{a}W.T.
 /2 width=3 by csx_appl_beta_aux/ qed.
 
-fact csx_appl_theta_aux: ∀h,g,a,G,L,U. ⦃G, L⦄ ⊢ ⬊*[h, g] U → ∀V1,V2. ⬆[0, 1] V1 ≡ V2 →
-                         ∀V,T. U = ⓓ{a}V.ⓐV2.T → ⦃G, L⦄ ⊢ ⬊*[h, g] ⓐV1.ⓓ{a}V.T.
-#h #g #a #G #L #X #H @(csx_ind_alt … H) -X #X #HVT #IHVT #V1 #V2 #HV12 #V #T #H destruct
+fact csx_appl_theta_aux: ∀h,o,a,G,L,U. ⦃G, L⦄ ⊢ ⬊*[h, o] U → ∀V1,V2. ⬆[0, 1] V1 ≡ V2 →
+                         ∀V,T. U = ⓓ{a}V.ⓐV2.T → ⦃G, L⦄ ⊢ ⬊*[h, o] ⓐV1.ⓓ{a}V.T.
+#h #o #a #G #L #X #H @(csx_ind_alt … H) -X #X #HVT #IHVT #V1 #V2 #HV12 #V #T #H destruct
 lapply (csx_fwd_pair_sn … HVT) #HV
 lapply (csx_fwd_bind_dx … HVT) -HVT #HVT
 @csx_intro #X #HL #H
@@ -113,15 +113,15 @@ elim (cpx_inv_appl1 … HL) -HL *
 ]
 qed-.
 
-lemma csx_appl_theta: ∀h,g,a,V1,V2. ⬆[0, 1] V1 ≡ V2 →
-                      ∀G,L,V,T. ⦃G, L⦄ ⊢ ⬊*[h, g] ⓓ{a}V.ⓐV2.T → ⦃G, L⦄ ⊢ ⬊*[h, g] ⓐV1.ⓓ{a}V.T.
+lemma csx_appl_theta: ∀h,o,a,V1,V2. ⬆[0, 1] V1 ≡ V2 →
+                      ∀G,L,V,T. ⦃G, L⦄ ⊢ ⬊*[h, o] ⓓ{a}V.ⓐV2.T → ⦃G, L⦄ ⊢ ⬊*[h, o] ⓐV1.ⓓ{a}V.T.
 /2 width=5 by csx_appl_theta_aux/ qed.
 
 (* Basic_1: was just: sn3_appl_appl *)
-lemma csx_appl_simple_tsts: ∀h,g,G,L,V. ⦃G, L⦄ ⊢ ⬊*[h, g] V → ∀T1. ⦃G, L⦄ ⊢ ⬊*[h, g] T1 →
-                            (∀T2. ⦃G, L⦄ ⊢ T1 ➡*[h, g] T2 → (T1 ≂ T2 → ⊥) → ⦃G, L⦄ ⊢ ⬊*[h, g] ⓐV.T2) →
-                            𝐒⦃T1⦄ → ⦃G, L⦄ ⊢ ⬊*[h, g] ⓐV.T1.
-#h #g #G #L #V #H @(csx_ind … H) -V #V #_ #IHV #T1 #H @(csx_ind … H) -T1 #T1 #H1T1 #IHT1 #H2T1 #H3T1
+lemma csx_appl_simple_tsts: ∀h,o,G,L,V. ⦃G, L⦄ ⊢ ⬊*[h, o] V → ∀T1. ⦃G, L⦄ ⊢ ⬊*[h, o] T1 →
+                            (∀T2. ⦃G, L⦄ ⊢ T1 ➡*[h, o] T2 → (T1 ≂ T2 → ⊥) → ⦃G, L⦄ ⊢ ⬊*[h, o] ⓐV.T2) →
+                            𝐒⦃T1⦄ → ⦃G, L⦄ ⊢ ⬊*[h, o] ⓐV.T1.
+#h #o #G #L #V #H @(csx_ind … H) -V #V #_ #IHV #T1 #H @(csx_ind … H) -T1 #T1 #H1T1 #IHT1 #H2T1 #H3T1
 @csx_intro #X #HL #H
 elim (cpx_inv_appl1_simple … HL) -HL //
 #V0 #T0 #HLV0 #HLT10 #H0 destruct

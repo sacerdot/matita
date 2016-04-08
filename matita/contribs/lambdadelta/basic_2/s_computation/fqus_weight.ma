@@ -12,23 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/predeval_6.ma".
-include "basic_2/computation/cpxs.ma".
-include "basic_2/computation/csx.ma".
+include "basic_2/s_transition/fquq_weight.ma".
+include "basic_2/s_computation/fqus.ma".
 
-(* EVALUATION FOR CONTEXT-SENSITIVE EXTENDED PARALLEL REDUCTION ON TERMS ****)
+(* STAR-ITERATED SUPCLOSURE *************************************************)
 
-definition cpxe: ∀h. sd h → relation4 genv lenv term term ≝
-                 λh,o,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡*[h, o] T2 ∧ ⦃G, L⦄ ⊢ ➡[h, o] 𝐍⦃T2⦄.
+(* Forward lemmas with weight for closures **********************************)
 
-interpretation "evaluation for context-sensitive extended parallel reduction (term)"
-   'PRedEval h o G L T1 T2 = (cpxe h o G L T1 T2).
-
-(* Basic properties *********************************************************)
-
-lemma csx_cpxe: ∀h,o,G,L,T1. ⦃G, L⦄ ⊢ ⬊*[h, o] T1 → ∃T2. ⦃G, L⦄ ⊢ T1 ➡*[h, o] 𝐍⦃T2⦄.
-#h #o #G #L #T1 #H @(csx_ind … H) -T1
-#T1 #_ #IHT1 elim (cnx_dec h o G L T1) /3 width=3 by ex_intro, conj/
-* #T #H1T1 #H2T1 elim (IHT1 … H1T1 H2T1) -IHT1 -H2T1
-#T2 * /4 width=3 by cpxs_strap2, ex_intro, conj/
+lemma fqus_fwd_fw: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐* ⦃G2, L2, T2⦄ → ♯{G2, L2, T2} ≤ ♯{G1, L1, T1}.
+#G1 #G2 #L1 #L2 #T1 #T2 #H @(fqus_ind … H) -L2 -T2
+/3 width=3 by fquq_fwd_fw, transitive_le/
 qed-.

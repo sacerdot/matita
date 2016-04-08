@@ -19,10 +19,10 @@ include "basic_2/computation/fpbs_alt.ma".
 
 (* Properties on extended context-sensitive parallel computation for terms **)
 
-lemma fpbs_cpx_trans_neq: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄ →
-                          ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡[h, g] U2 → (T2 = U2 → ⊥) →
-                          ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡[h, g] U1 & T1 = U1 → ⊥ & ⦃G1, L1, U1⦄ ≥[h, g] ⦃G2, L2, U2⦄.
-#h #g #G1 #G2 #L1 #L2 #T1 #T2 #H #U2 #HTU2 #HnTU2 elim (fpbs_inv_alt … H) -H
+lemma fpbs_cpx_trans_neq: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄ →
+                          ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡[h, o] U2 → (T2 = U2 → ⊥) →
+                          ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡[h, o] U1 & T1 = U1 → ⊥ & ⦃G1, L1, U1⦄ ≥[h, o] ⦃G2, L2, U2⦄.
+#h #o #G1 #G2 #L1 #L2 #T1 #T2 #H #U2 #HTU2 #HnTU2 elim (fpbs_inv_alt … H) -H
 #L00 #L0 #T0 #HT10 #H10 #HL00 #HL02 lapply (lleq_cpx_trans … HTU2 … HL02) -HTU2
 #HTU2 lapply (cpx_lleq_conf_sn … HTU2 … HL02) -HL02
 #HL02 lapply (lpxs_cpx_trans … HTU2 … HL00) -HTU2
@@ -36,6 +36,6 @@ qed-.
 
 (* Properties on "rst" proper parallel reduction on closures ****************)
 
-lemma fpb_fpbs: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≻[h, g] ⦃G2, L2, T2⦄ →
-                ⦃G1, L1, T1⦄ ≥[h, g] ⦃G2, L2, T2⦄.
+lemma fpb_fpbs: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≻[h, o] ⦃G2, L2, T2⦄ →
+                ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄.
 /3 width=1 by fpbq_fpbs, fpb_fpbq/ qed.
