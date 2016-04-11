@@ -13,10 +13,9 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/lrsubeqa_3.ma".
-include "basic_2/static/lsubr.ma".
 include "basic_2/static/aaa.ma".
 
-(* LOCAL ENVIRONMENT REFINEMENT FOR ATOMIC ARITY ASSIGNMENT *****************)
+(* RESTRICTED REFINEMENT FOR ATOMIC ARITY ASSIGNMENT ************************)
 
 inductive lsuba (G:genv): relation lenv ≝
 | lsuba_atom: lsuba G (⋆) (⋆)
@@ -87,58 +86,8 @@ lemma lsuba_inv_pair2: ∀I,G,L1,K2,W. G ⊢ L1 ⫃⁝ K2.ⓑ{I}W →
                                  I = Abst & L1 = K1.ⓓⓝW.V.
 /2 width=3 by lsuba_inv_pair2_aux/ qed-.
 
-(* Basic forward lemmas *****************************************************)
-
-lemma lsuba_fwd_lsubr: ∀G,L1,L2. G ⊢ L1 ⫃⁝ L2 → L1 ⫃ L2.
-#G #L1 #L2 #H elim H -L1 -L2 /2 width=1 by lsubr_pair, lsubr_beta/
-qed-.
-
 (* Basic properties *********************************************************)
 
 lemma lsuba_refl: ∀G,L. G ⊢ L ⫃⁝ L.
 #G #L elim L -L /2 width=1 by lsuba_atom, lsuba_pair/
 qed.
-
-(* Note: the constant 0 cannot be generalized *)
-lemma lsuba_drop_O1_conf: ∀G,L1,L2. G ⊢ L1 ⫃⁝ L2 → ∀K1,c,k. ⬇[c, 0, k] L1 ≡ K1 →
-                          ∃∃K2. G ⊢ K1 ⫃⁝ K2 & ⬇[c, 0, k] L2 ≡ K2.
-#G #L1 #L2 #H elim H -L1 -L2
-[ /2 width=3 by ex2_intro/
-| #I #L1 #L2 #V #_ #IHL12 #K1 #c #k #H
-  elim (drop_inv_O1_pair1 … H) -H * #Hm #HLK1
-  [ destruct
-    elim (IHL12 L1 c 0) -IHL12 // #X #HL12 #H
-    <(drop_inv_O2 … H) in HL12; -H /3 width=3 by lsuba_pair, drop_pair, ex2_intro/
-  | elim (IHL12 … HLK1) -L1 /3 width=3 by drop_drop_lt, ex2_intro/
-  ]
-| #L1 #L2 #W #V #A #HV #HW #_ #IHL12 #K1 #c #k #H
-  elim (drop_inv_O1_pair1 … H) -H * #Hm #HLK1
-  [ destruct
-    elim (IHL12 L1 c 0) -IHL12 // #X #HL12 #H
-    <(drop_inv_O2 … H) in HL12; -H /3 width=3 by lsuba_beta, drop_pair, ex2_intro/
-  | elim (IHL12 … HLK1) -L1 /3 width=3 by drop_drop_lt, ex2_intro/
-  ]
-]
-qed-.
-
-(* Note: the constant 0 cannot be generalized *)
-lemma lsuba_drop_O1_trans: ∀G,L1,L2. G ⊢ L1 ⫃⁝ L2 → ∀K2,c,k. ⬇[c, 0, k] L2 ≡ K2 →
-                           ∃∃K1. G ⊢ K1 ⫃⁝ K2 & ⬇[c, 0, k] L1 ≡ K1.
-#G #L1 #L2 #H elim H -L1 -L2
-[ /2 width=3 by ex2_intro/
-| #I #L1 #L2 #V #_ #IHL12 #K2 #c #k #H
-  elim (drop_inv_O1_pair1 … H) -H * #Hm #HLK2
-  [ destruct
-    elim (IHL12 L2 c 0) -IHL12 // #X #HL12 #H
-    <(drop_inv_O2 … H) in HL12; -H /3 width=3 by lsuba_pair, drop_pair, ex2_intro/
-  | elim (IHL12 … HLK2) -L2 /3 width=3 by drop_drop_lt, ex2_intro/
-  ]
-| #L1 #L2 #W #V #A #HV #HW #_ #IHL12 #K2 #c #k #H
-  elim (drop_inv_O1_pair1 … H) -H * #Hm #HLK2
-  [ destruct
-    elim (IHL12 L2 c 0) -IHL12 // #X #HL12 #H
-    <(drop_inv_O2 … H) in HL12; -H /3 width=3 by lsuba_beta, drop_pair, ex2_intro/
-  | elim (IHL12 … HLK2) -L2 /3 width=3 by drop_drop_lt, ex2_intro/
-  ]
-]
-qed-.

@@ -15,7 +15,7 @@
 include "basic_2/static/aaa_aaa.ma".
 include "basic_2/static/lsuba.ma".
 
-(* LOCAL ENVIRONMENT REFINEMENT FOR ATOMIC ARITY ASSIGNMENT *****************)
+(* RESTRICTED REFINEMENT FOR ATOMIC ARITY ASSIGNMENT ************************)
 
 (* Properties concerning atomic arity assignment ****************************)
 

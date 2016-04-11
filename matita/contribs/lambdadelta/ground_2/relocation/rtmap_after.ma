@@ -401,8 +401,8 @@ qed-.
 
 (* Properties with at *******************************************************)
 
-lemma after_isuni_dx: ∀i2,i1,f2. @⦃i1, f2⦄ ≡ i2 →
-                      ∀f. f2 ⊚ 𝐔❴i1❵ ≡ f → 𝐔❴i2❵ ⊚ ⫱*[i2] f2 ≡ f.
+lemma after_uni_dx: ∀i2,i1,f2. @⦃i1, f2⦄ ≡ i2 →
+                    ∀f. f2 ⊚ 𝐔❴i1❵ ≡ f → 𝐔❴i2❵ ⊚ ⫱*[i2] f2 ≡ f.
 #i2 elim i2 -i2
 [ #i1 #f2 #Hf2 #f #Hf
   elim (at_inv_xxp … Hf2) -Hf2 // #g2 #H1 #H2 destruct
@@ -420,8 +420,8 @@ lemma after_isuni_dx: ∀i2,i1,f2. @⦃i1, f2⦄ ≡ i2 →
 ]
 qed.
 
-lemma after_isuni_sn: ∀i2,i1,f2. @⦃i1, f2⦄ ≡ i2 →
-                      ∀f. 𝐔❴i2❵ ⊚ ⫱*[i2] f2 ≡ f → f2 ⊚ 𝐔❴i1❵ ≡ f.
+lemma after_uni_sn: ∀i2,i1,f2. @⦃i1, f2⦄ ≡ i2 →
+                    ∀f. 𝐔❴i2❵ ⊚ ⫱*[i2] f2 ≡ f → f2 ⊚ 𝐔❴i1❵ ≡ f.
 #i2 elim i2 -i2
 [ #i1 #f2 #Hf2 #f #Hf
   elim (at_inv_xxp … Hf2) -Hf2 // #g2 #H1 #H2 destruct

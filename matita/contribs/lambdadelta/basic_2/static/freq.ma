@@ -14,8 +14,8 @@
 
 include "basic_2/notation/relations/lazyeq_6.ma".
 include "basic_2/grammar/genv.ma".
-include "basic_2/relocation/frees_weight.ma".
-include "basic_2/relocation/frees_lreq.ma".
+include "basic_2/static/frees_fqup.ma".
+include "basic_2/static/frees_lreq.ma".
 
 (* RANGED EQUIVALENCE FOR CLOSURES ******************************************)
 

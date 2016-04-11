@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/relocation/rtmap_isfin.ma".
 include "basic_2/notation/relations/rdropstar_3.ma".
 include "basic_2/notation/relations/rdropstar_4.ma".
 include "basic_2/relocation/lreq.ma".
@@ -84,6 +83,27 @@ lemma drops_eq_repl_fwd: ∀L1,L2,c. eq_repl_fwd … (λf. ⬇*[c, f] L1 ≡ L2)
 #L1 #L2 #c @eq_repl_sym /2 width=3 by drops_eq_repl_back/ (**) (* full auto fails *)
 qed-.
 
+lemma drops_inv_tls_at: ∀f,i1,i2. @⦃i1,f⦄ ≡ i2 →
+                        ∀c, L1,L2. ⬇*[c,⫱*[i2]f] L1 ≡ L2 →
+                        ⬇*[c,↑⫱*[⫯i2]f] L1 ≡ L2.
+/3 width=3 by drops_eq_repl_fwd, at_inv_tls/ qed-.
+
+(* Basic_2A1: includes: drop_FT *)
+lemma drops_TF: ∀L1,L2,f. ⬇*[Ⓣ, f] L1 ≡ L2 → ⬇*[Ⓕ, f] L1 ≡ L2.
+#L1 #L2 #f #H elim H -L1 -L2 -f
+/3 width=1 by drops_atom, drops_drop, drops_skip/
+qed.
+
+(* Basic_2A1: includes: drop_gen *)
+lemma drops_gen: ∀L1,L2,c,f. ⬇*[Ⓣ, f] L1 ≡ L2 → ⬇*[c, f] L1 ≡ L2.
+#L1 #L2 * /2 width=1 by drops_TF/
+qed-.
+
+(* Basic_2A1: includes: drop_T *)
+lemma drops_F: ∀L1,L2,c,f. ⬇*[c, f] L1 ≡ L2 → ⬇*[Ⓕ, f] L1 ≡ L2.
+#L1 #L2 * /2 width=1 by drops_TF/
+qed-.
+
 (* Basic_2A1: includes: drop_refl *)
 lemma drops_refl: ∀c,L,f. 𝐈⦃f⦄ → ⬇*[c, f] L ≡ L.
 #c #L elim L -L /2 width=1 by drops_atom/
@@ -112,20 +132,22 @@ lemma drops_split_trans: ∀L1,L2,f,c. ⬇*[c, f] L1 ≡ L2 → ∀f1,f2. f1 ⊚
 ]
 qed-.
 
-(* Basic_2A1: includes: drop_FT *)
-lemma drops_TF: ∀L1,L2,f. ⬇*[Ⓣ, f] L1 ≡ L2 → ⬇*[Ⓕ, f] L1 ≡ L2.
-#L1 #L2 #f #H elim H -L1 -L2 -f
-/3 width=1 by drops_atom, drops_drop, drops_skip/
-qed.
-
-(* Basic_2A1: includes: drop_gen *)
-lemma drops_gen: ∀L1,L2,c,f. ⬇*[Ⓣ, f] L1 ≡ L2 → ⬇*[c, f] L1 ≡ L2.
-#L1 #L2 * /2 width=1 by drops_TF/
-qed-.
-
-(* Basic_2A1: includes: drop_T *)
-lemma drops_F: ∀L1,L2,c,f. ⬇*[c, f] L1 ≡ L2 → ⬇*[Ⓕ, f] L1 ≡ L2.
-#L1 #L2 * /2 width=1 by drops_TF/
+lemma drops_split_div: ∀L1,L,f1,c. ⬇*[c, f1] L1 ≡ L → ∀f2,f. f1 ⊚ f2 ≡ f → 𝐔⦃f2⦄ →
+                       ∃∃L2. ⬇*[Ⓕ, f2] L ≡ L2 & ⬇*[Ⓕ, f] L1 ≡ L2.
+#L1 #L #f1 #c #H elim H -L1 -L -f1
+[ #f1 #Hc #f2 #f #Hf #Hf2 @(ex2_intro … (⋆)) @drops_atom #H destruct
+| #I #L1 #L #V #f1 #HL1 #IH #f2 #f #Hf #Hf2 elim (after_inv_nxx … Hf) -Hf [2,3: // ]
+  #g #Hg #H destruct elim (IH … Hg) -IH -Hg /3 width=5 by drops_drop, ex2_intro/
+| #I #L1 #L #V1 #V #f1 #HL1 #HV1 #IH #f2 #f #Hf #Hf2
+  elim (after_inv_pxx … Hf) -Hf [1,3: * |*: // ]
+  #g2 #g #Hg #H2 #H0 destruct 
+  [ lapply (isuni_inv_push … Hf2 ??) -Hf2 [1,2: // ] #Hg2 -IH
+    lapply (after_isid_inv_dx … Hg … Hg2) -Hg #Hg
+    /5 width=7 by drops_eq_repl_back, drops_F, drops_refl, drops_skip, lifts_eq_repl_back, isid_push, ex2_intro/
+  | lapply (isuni_inv_next … Hf2 ??) -Hf2 [1,2: // ] #Hg2 -HL1 -HV1
+    elim (IH … Hg) -f1 /3 width=3 by drops_drop, ex2_intro/
+  ]
+]
 qed-.
 
 (* Basic forward lemmas *****************************************************)
@@ -235,6 +257,39 @@ qed-.
 lemma drops_inv_skip2: ∀I,X,K2,V2,c,f. ⬇*[c, ↑f] X ≡ K2.ⓑ{I}V2 →
                        ∃∃K1,V1. ⬇*[c, f] K1 ≡ K2 & ⬆*[f] V2 ≡ V1 & X = K1.ⓑ{I}V1.
 /2 width=5 by drops_inv_skip2_aux/ qed-.
+
+fact drops_inv_TF_aux: ∀L1,L2,f. ⬇*[Ⓕ, f] L1 ≡ L2 → 𝐔⦃f⦄ →
+                       ∀I,K,V. L2 = K.ⓑ{I}V →
+                       ⬇*[Ⓣ, f] L1 ≡ K.ⓑ{I}V.
+#L1 #L2 #f #H elim H -L1 -L2 -f
+[ #f #_ #_ #J #K #W #H destruct
+| #I #L1 #L2 #V #f #_ #IH #Hf #J #K #W #H destruct
+  /4 width=3 by drops_drop, isuni_inv_next/
+| #I #L1 #L2 #V1 #V2 #f #HL12 #HV21 #_ #Hf #J #K #W #H destruct
+  lapply (isuni_inv_push … Hf ??) -Hf [1,2: // ] #Hf
+  <(drops_fwd_isid … HL12) -K // <(lifts_fwd_isid … HV21) -V1
+  /3 width=3 by drops_refl, isid_push/
+]
+qed-.
+
+(* Basic_2A1: includes: drop_inv_FT *)
+lemma drops_inv_TF: ∀I,L,K,V,f. ⬇*[Ⓕ, f] L ≡ K.ⓑ{I}V → 𝐔⦃f⦄ →
+                    ⬇*[Ⓣ, f] L ≡ K.ⓑ{I}V.
+/2 width=3 by drops_inv_TF_aux/ qed-.
+
+(* Advanced inversion lemmas ************************************************)
+
+(* Basic_2A1: includes: drop_inv_gen *)
+lemma drops_inv_gen: ∀I,L,K,V,c,f. ⬇*[c, f] L ≡ K.ⓑ{I}V → 𝐔⦃f⦄ →
+                     ⬇*[Ⓣ, f] L ≡ K.ⓑ{I}V.
+#I #L #K #V * /2 width=1 by drops_inv_TF/
+qed-.
+
+(* Basic_2A1: includes: drop_inv_T *)
+lemma drops_inv_F: ∀I,L,K,V,c,f. ⬇*[Ⓕ, f] L ≡ K.ⓑ{I}V → 𝐔⦃f⦄ →
+                   ⬇*[c, f] L ≡ K.ⓑ{I}V.
+#I #L #K #V * /2 width=1 by drops_inv_TF/
+qed-.
 
 (* Inversion lemmas with test for uniformity ********************************)
 

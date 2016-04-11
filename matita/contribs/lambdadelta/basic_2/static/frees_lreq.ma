@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/relocation/lreq.ma".
-include "basic_2/relocation/frees.ma".
+include "basic_2/static/frees.ma".
 
 (* CONTEXT-SENSITIVE FREE VARIABLES *****************************************)
 

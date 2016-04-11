@@ -13,8 +13,8 @@
 (**************************************************************************)
 
 include "basic_2/relocation/lreq_lreq.ma".
-include "basic_2/relocation/frees_frees.ma".
-include "basic_2/relocation/freq.ma".
+include "basic_2/static/frees_frees.ma".
+include "basic_2/static/freq.ma".
 
 (* RANGED EQUIVALENCE FOR CLOSURES  *****************************************)
 

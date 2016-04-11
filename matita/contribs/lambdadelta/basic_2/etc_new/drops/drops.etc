@@ -1,29 +1,2 @@
 lemma drop_inv_refl: ∀L,l,m. ⬇[Ⓕ, l, m] L ≡ L → m = 0.
 /2 width=5 by drop_inv_length_eq/ qed-.
-
-fact drop_inv_FT_aux: ∀L1,L2,s,l,m. ⬇[s, l, m] L1 ≡ L2 →
-                      ∀I,K,V. L2 = K.ⓑ{I}V → s = Ⓣ → l = 0 →
-                      ⬇[Ⓕ, l, m] L1 ≡ K.ⓑ{I}V.
-#L1 #L2 #s #l #m #H elim H -L1 -L2 -l -m
-[ #l #m #_ #J #K #W #H destruct
-| #I #L #V #J #K #W #H destruct //
-| #I #L1 #L2 #V #m #_ #IHL12 #J #K #W #H1 #H2 destruct
-  /3 width=1 by drop_drop/
-| #I #L1 #L2 #V1 #V2 #l #m #_ #_ #_ #J #K #W #_ #_ #H
-  elim (ysucc_inv_O_dx … H)
-]
-qed-.
-
-lemma drop_inv_FT: ∀I,L,K,V,m. ⬇[Ⓣ, 0, m] L ≡ K.ⓑ{I}V → ⬇[m] L ≡
-K.ⓑ{I}V.
-/2 width=5 by drop_inv_FT_aux/ qed.
-
-lemma drop_inv_gen: ∀I,L,K,V,s,m. ⬇[s, 0, m] L ≡ K.ⓑ{I}V → ⬇[m] L ≡
-K.ⓑ{I}V.
-#I #L #K #V * /2 width=1 by drop_inv_FT/
-qed-.
-
-lemma drop_inv_T: ∀I,L,K,V,s,m. ⬇[Ⓣ, 0, m] L ≡ K.ⓑ{I}V → ⬇[s, 0, m] L
-≡ K.ⓑ{I}V.
-#I #L #K #V * /2 width=1 by drop_inv_FT/
-qed-.
