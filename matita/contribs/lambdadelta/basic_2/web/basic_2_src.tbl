@@ -190,16 +190,14 @@ table {
              [ "sh" "sd" * ]
           }
         ]
-(*
-        [ { "local env. ref. for atomic arity assignment" * } {
-             [ "lsuba ( ? ⊢ ? ⫃⁝ ? )" "lsuba_aaa" + "lsuba_lsuba" * ]
+        [ { "restricted ref. for atomic arity assignment" * } {
+             [ "lsuba ( ? ⊢ ? ⫃⁝ ? )" "lsuba_drops" + "lsuba_lsubr" + "lsuba_aaa" + "lsuba_lsuba" * ]
           }
         ]
         [ { "atomic arity assignment" * } {
-             [ "aaa ( ⦃?,?⦄ ⊢ ? ⁝ ? )" "aaa_lift" + "aaa_lifts" + "aaa_fqus" + "aaa_lleq" + "aaa_aaa" * ]
+             [ "aaa ( ⦃?,?⦄ ⊢ ? ⁝ ? )" "aaa_drops" + "aaa_fqus" + (* "aaa_lleq" + *) "aaa_aaa" * ]
           }
         ]
-*)
         [ { "restricted ref. for local env." * } {
              [ "lsubr ( ? ⫃ ? )" "lsubr_length" + "lsubr_drops" + "lsubr_lsubr" * ]
           }

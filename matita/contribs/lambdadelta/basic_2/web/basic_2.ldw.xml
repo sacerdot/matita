@@ -34,6 +34,12 @@
 
    <subsection name="A2">Stage "A2": "Extending the Applicability Condition"</subsection>
 
+   <news class="alpha" date="2016 April 16.">
+         Grammatical component reconstructed:
+         grammar, relocation, s_transition, s_computation, static
+         (anniversary milestone).
+   </news>
+
    <news class="alpha" date="2016 March 25.">
          Relocation with reference transforming maps (rtmap).
    </news>

@@ -27,16 +27,20 @@ lemma lsubr_fwd_drops2_pair: ∀L1,L2. L1 ⫃ L2 →
 #L1 #L2 #H elim H -L1 -L2
 [ #L #I #K2 #W #c #f #_ #H
   elim (drops_inv_atom1 … H) -H #H destruct
-| #J #L1 #L2 #V #HL12 #IHL12 #I #K2 #W #c #f #Hf #H
-  elim (drops_inv_pair1_isuni … Hf H) -H * #g #HLK2 try #H destruct [ -IHL12 | -HL12 ]
-  [ /4 width=4 by drops_refl, ex2_intro, or_introl/
-  | elim (IHL12 … HLK2) -IHL12 -HLK2 /2 width=3 by isuni_inv_next/ *
+| #J #L1 #L2 #V #HL12 #IH #I #K2 #W #c #f #Hf #H
+  elim (drops_inv_pair1_isuni … Hf H) -Hf -H *
+  [ #Hf #H destruct -IH
+    /4 width=4 by drops_refl, ex2_intro, or_introl/
+  | #g #Hg #HLK2 #H destruct -HL12
+    elim (IH … Hg HLK2) -IH -Hg -HLK2 *
     /4 width=4 by drops_drop, ex3_2_intro, ex2_intro, or_introl, or_intror/
   ]
-| #L1 #L2 #V1 #V2 #HL12 #IHL12 #I #K2 #W #c #f #Hf #H
-  elim (drops_inv_pair1_isuni … Hf H) -H * #g #HLK2 try #H destruct [ -IHL12 | -HL12 ]
-  [ /4 width=4 by drops_refl, ex3_2_intro, or_intror/
-  | elim (IHL12 … HLK2) -IHL12 -HLK2 /2 width=3 by isuni_inv_next/ *
+| #L1 #L2 #V1 #V2 #HL12 #IH #I #K2 #W #c #f #Hf #H
+  elim (drops_inv_pair1_isuni … Hf H) -Hf -H *
+  [ #Hf #H destruct -IH
+    /4 width=4 by drops_refl, ex3_2_intro, or_intror/
+  | #g #Hg #HLK2 #H destruct -HL12
+    elim (IH … Hg HLK2) -IH -Hg -HLK2 *
     /4 width=4 by drops_drop, ex3_2_intro, ex2_intro, or_introl, or_intror/
   ]
 ]

@@ -294,11 +294,11 @@ qed-.
 (* Inversion lemmas with test for uniformity ********************************)
 
 lemma drops_inv_isuni: ∀L1,L2,f. ⬇*[Ⓣ, f] L1 ≡ L2 → 𝐔⦃f⦄ →
-                       (𝐈⦃f⦄ ∧ L2 = L1) ∨
-                       ∃∃I,K,V,g. ⬇*[Ⓣ, g] K ≡ L2 & L1 = K.ⓑ{I}V & f = ⫯g.
+                       (𝐈⦃f⦄ ∧ L1 = L2) ∨
+                       ∃∃I,K,V,g. ⬇*[Ⓣ, g] K ≡ L2 & 𝐔⦃g⦄ & L1 = K.ⓑ{I}V & f = ⫯g.
 #L1 #L2 #f * -L1 -L2 -f
 [ /4 width=1 by or_introl, conj/
-| /4 width=7 by ex3_4_intro, or_intror/
+| /4 width=8 by isuni_inv_next, ex4_4_intro, or_intror/
 | /7 width=6 by drops_fwd_isid, lifts_fwd_isid, isuni_inv_push, isid_push, or_introl, conj, eq_f3, sym_eq/
 ]
 qed-.
@@ -306,24 +306,24 @@ qed-.
 (* Basic_2A1: was: drop_inv_O1_pair1 *)
 lemma drops_inv_pair1_isuni: ∀I,K,L2,V,c,f. 𝐔⦃f⦄ → ⬇*[c, f] K.ⓑ{I}V ≡ L2 →
                              (𝐈⦃f⦄ ∧ L2 = K.ⓑ{I}V) ∨
-                             ∃∃g. ⬇*[c, g] K ≡ L2 & f = ⫯g.
+                             ∃∃g. 𝐔⦃g⦄ & ⬇*[c, g] K ≡ L2 & f = ⫯g.
 #I #K #L2 #V #c #f #Hf #H elim (isuni_split … Hf) -Hf * #g #Hg #H0 destruct
 [ lapply (drops_inv_skip1 … H) -H * #Y #X #HY #HX #H destruct
   <(drops_fwd_isid … HY Hg) -Y >(lifts_fwd_isid … HX Hg) -X
   /4 width=3 by isid_push, or_introl, conj/
-| lapply (drops_inv_drop1 … H) -H /3 width=3 by ex2_intro, or_intror/
+| lapply (drops_inv_drop1 … H) -H /3 width=4 by ex3_intro, or_intror/
 ]
 qed-.
 
 (* Basic_2A1: was: drop_inv_O1_pair2 *)
 lemma drops_inv_pair2_isuni: ∀I,K,V,c,f,L1. 𝐔⦃f⦄ → ⬇*[c, f] L1 ≡ K.ⓑ{I}V →
                              (𝐈⦃f⦄ ∧ L1 = K.ⓑ{I}V) ∨
-                             ∃∃I1,K1,V1,g. ⬇*[c, g] K1 ≡ K.ⓑ{I}V & L1 = K1.ⓑ{I1}V1 & f = ⫯g.
+                             ∃∃I1,K1,V1,g. 𝐔⦃g⦄ & ⬇*[c, g] K1 ≡ K.ⓑ{I}V & L1 = K1.ⓑ{I1}V1 & f = ⫯g.
 #I #K #V #c #f *
 [ #Hf #H elim (drops_inv_atom1 … H) -H #H destruct
 | #L1 #I1 #V1 #Hf #H elim (drops_inv_pair1_isuni … Hf H) -Hf -H *
   [ #Hf #H destruct /3 width=1 by or_introl, conj/
-  | /3 width=7 by ex3_4_intro, or_intror/
+  | /3 width=8 by ex4_4_intro, or_intror/
   ]
 ]
 qed-.

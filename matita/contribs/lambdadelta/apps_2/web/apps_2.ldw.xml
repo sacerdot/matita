@@ -3,6 +3,7 @@
 <page xmlns="http://lambdadelta.info/"
       description = "\lambda\delta home page"
       title = "\lambda\delta home page"
+      logo = "crux"
       head = "cic:/matita/lambdadelta/apps_2/ (applications of λδ version 2)"
 >
    <sitemap name="sitemap"/>
