@@ -195,15 +195,23 @@ table {
           }
         ]
         [ { "atomic arity assignment" * } {
-             [ "aaa ( ⦃?,?⦄ ⊢ ? ⁝ ? )" "aaa_drops" + "aaa_fqus" + (* "aaa_lleq" + *) "aaa_aaa" * ]
+             [ "aaa ( ⦃?,?⦄ ⊢ ? ⁝ ? )" "aaa_drops" + "aaa_fqus" + "aaa_lfeq" + "aaa_aaa" * ]
           }
         ]
         [ { "restricted ref. for local env." * } {
              [ "lsubr ( ? ⫃ ? )" "lsubr_length" + "lsubr_drops" + "lsubr_lsubr" * ]
           }
         ]
-        [ { "ranged equivalence for closures" * } {
-             [ "freq ( ⦃?,?,?⦄ ≡ ⦃?,?,?⦄ )" "freq_freq" * ]
+        [ { "equivalence for closures on referred entries" * } {
+             [ "ffeq ( ⦃?,?,?⦄ ≡ ⦃?,?,?⦄ )" "ffeq_freq" * ]
+          }
+        ]
+        [ { "equivalence for local environments on referred entries" * } {
+             [ "lfeq ( ? ≡[?] ? )" "lfeq_length" + "lfeq_lreq" + "lfeq_fqup" + "lfeq_lfeq" * ]
+          }
+        ]
+        [ { "generic extension on referred entries" * } {
+             [ "lfxs ( ? ⦻*[?,?] ? )" "lfxs_length" + "lfxs_fqup" + "lfxs_lfxs" * ]
           }
         ]
         [ { "context-sensitive free variables" * } {
@@ -246,7 +254,7 @@ table {
              [ "lreq ( ? ≡[?] ? )" "lreq_length" + "lreq_lreq" * ]
           }
         ]
-        [ { "generic entrywise extension of context-sensitive relations for terma" * } {
+        [ { "generic entrywise extension" * } {
              [ "lexs ( ? ⦻*[?,?,?] ? )" "lexs_length" + "lexs_lexs" * ]
           }
         ]

@@ -18,12 +18,6 @@ include "basic_2/grammar/lenv.ma".
 
 (* GENERIC ENTRYWISE EXTENSION OF CONTEXT-SENSITIVE REALTIONS FOR TERMS *****)
 
-definition relation5 : Type[0] → Type[0] → Type[0] → Type[0] → Type[0] → Type[0]
-≝ λA,B,C,D,E.A→B→C→D→E→Prop.
-
-definition relation6 : Type[0] → Type[0] → Type[0] → Type[0] → Type[0] → Type[0] → Type[0]
-≝ λA,B,C,D,E,F.A→B→C→D→E→F→Prop.
-
 (* Basic_2A1: includes: lpx_sn_atom lpx_sn_pair *)
 inductive lexs (RN,RP:relation3 lenv term term): rtmap → relation lenv ≝
 | lexs_atom: ∀f. lexs RN RP f (⋆) (⋆)
@@ -35,21 +29,21 @@ inductive lexs (RN,RP:relation3 lenv term term): rtmap → relation lenv ≝
              lexs RN RP (↑f) (L1.ⓑ{I}V1) (L2.ⓑ{I}V2)
 .
 
-interpretation "general entrywise extension (local environment)"
+interpretation "generic entrywise extension (local environment)"
    'RelationStar RN RP f L1 L2 = (lexs RN RP f L1 L2).
 
-definition lpx_sn_confluent: relation6 (relation3 lenv term term)
-                                       (relation3 lenv term term) … ≝
-                             λR1,R2,RN1,RP1,RN2,RP2.
-                             ∀f,L0,T0,T1. R1 L0 T0 T1 → ∀T2. R2 L0 T0 T2 →
-                             ∀L1. L0 ⦻*[RN1, RP1, f] L1 → ∀L2. L0 ⦻*[RN2, RP2, f] L2 →
-                             ∃∃T. R2 L1 T1 T & R1 L2 T2 T.
+definition lexs_confluent: relation6 (relation3 lenv term term)
+                                     (relation3 lenv term term) … ≝
+                           λR1,R2,RN1,RP1,RN2,RP2.
+                           ∀f,L0,T0,T1. R1 L0 T0 T1 → ∀T2. R2 L0 T0 T2 →
+                           ∀L1. L0 ⦻*[RN1, RP1, f] L1 → ∀L2. L0 ⦻*[RN2, RP2, f] L2 →
+                           ∃∃T. R2 L1 T1 T & R1 L2 T2 T.
 
-definition lexs_transitive: relation4 (relation3 lenv term term)
+definition lexs_transitive: relation5 (relation3 lenv term term)
                                       (relation3 lenv term term) … ≝
-                            λR1,R2,RN,RP.
+                            λR1,R2,R3,RN,RP.
                             ∀f,L1,T1,T. R1 L1 T1 T → ∀L2. L1 ⦻*[RN, RP, f] L2 →
-                            ∀T2. R2 L2 T T2 → R1 L1 T1 T2.
+                            ∀T2. R2 L2 T T2 → R3 L1 T1 T2.
 
 (* Basic inversion lemmas ***************************************************)
 
@@ -152,6 +146,17 @@ lemma lexs_inv_tl: ∀RN,RP,I,L1,L2,V1,V2,f. L1 ⦻*[RN, RP, ⫱f] L2 →
 /2 width=1 by lexs_next, lexs_push/
 qed-.
 
+(* Basic forward lemmas *****************************************************)
+
+lemma lexs_fwd_pair: ∀RN,RP,I1,I2,L1,L2,V1,V2,f. 
+                     L1.ⓑ{I1}V1 ⦻*[RN, RP, f] L2.ⓑ{I2}V2 →
+                     L1 ⦻*[RN, RP, ⫱f] L2 ∧ I1 = I2.
+#RN #RP #I1 #I2 #L2 #L2 #V1 #V2 #f #Hf
+elim (pn_split f) * #g #H destruct
+[ elim (lexs_inv_push … Hf) | elim (lexs_inv_next … Hf) ] -Hf
+/2 width=1 by conj/
+qed-.
+
 (* Basic properties *********************************************************)
 
 lemma lexs_eq_repl_back: ∀RN,RP,L1,L2. eq_repl_back … (λf. L1 ⦻*[RN, RP, f] L2).
@@ -209,11 +214,3 @@ lemma lexs_co: ∀RN1,RP1,RN2,RP2.
 #RN1 #RP1 #RN2 #RP2 #HRN #HRP #L1 #L2 #f #H elim H -L1 -L2 -f
 /3 width=1 by lexs_atom, lexs_next, lexs_push/
 qed-.
-
-(* Basic_2A1: removed theorems 17:
-              llpx_sn_inv_bind llpx_sn_inv_flat
-              llpx_sn_fwd_lref llpx_sn_fwd_pair_sn llpx_sn_fwd_length
-              llpx_sn_fwd_bind_sn llpx_sn_fwd_bind_dx llpx_sn_fwd_flat_sn llpx_sn_fwd_flat_dx
-              llpx_sn_refl llpx_sn_Y llpx_sn_bind_O llpx_sn_ge_up llpx_sn_ge llpx_sn_co
-              llpx_sn_fwd_drop_sn llpx_sn_fwd_drop_dx              
-*)

@@ -17,6 +17,12 @@ include "ground_2/xoa/xoa_props.ma".
 
 (* PROPERTIES OF RELATIONS **************************************************)
 
+definition relation5 : Type[0] → Type[0] → Type[0] → Type[0] → Type[0] → Type[0]
+≝ λA,B,C,D,E.A→B→C→D→E→Prop.
+
+definition relation6 : Type[0] → Type[0] → Type[0] → Type[0] → Type[0] → Type[0] → Type[0]
+≝ λA,B,C,D,E,F.A→B→C→D→E→F→Prop.
+
 definition Decidable: Prop → Prop ≝ λR. R ∨ (R → ⊥).
 
 definition Transitive: ∀A. ∀R: relation A. Prop ≝ λA,R.

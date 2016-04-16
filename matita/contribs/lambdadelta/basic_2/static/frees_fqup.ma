@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/relocation/rtmap_id.ma".
 include "basic_2/s_computation/fqup_weight.ma".
 include "basic_2/static/frees.ma".
 
