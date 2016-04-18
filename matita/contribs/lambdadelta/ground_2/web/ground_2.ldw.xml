@@ -13,6 +13,9 @@
          and its timeline.
    </body>
    <table name="ground_2_sum"/>
+   <news class="alpha" date="2016 April 18.">
+         Generic rt-transition counter (rtc).
+   </news>
    <news class="alpha" date="2016 March 4.">
          Platform-independent multiple relocation (rtmap).
    </news>
