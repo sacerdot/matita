@@ -380,7 +380,7 @@ let index_eq_for_auto status uri =
 ;; 
 
 let inject_constraint =
- let basic_eval_add_constraint (u1,u2) 
+ let basic_eval_add_constraint (acyclic,u1,u2) 
      ~refresh_uri_in_universe ~refresh_uri_in_term ~refresh_uri_in_reference
      ~alias_only status
  =
@@ -390,7 +390,7 @@ let inject_constraint =
     (* NCicLibrary.add_constraint adds the constraint to the NCicEnvironment
      * and also to the storage (for undo/redo). During inclusion of compiled
      * files the storage must not be touched. *)
-    NCicEnvironment.add_lt_constraint u1 u2;
+    NCicEnvironment.add_lt_constraint acyclic u1 u2;
     status
   else
    status
@@ -398,9 +398,9 @@ let inject_constraint =
   GrafiteTypes.Serializer.register#run "constraints" basic_eval_add_constraint 
 ;;
 
-let eval_add_constraint status u1 u2 = 
- let status = NCicLibrary.add_constraint status u1 u2 in
-  NCicLibrary.dump_obj status (inject_constraint (u1,u2))
+let eval_add_constraint status acyclic u1 u2 = 
+ let status = NCicLibrary.add_constraint status acyclic u1 u2 in
+  NCicLibrary.dump_obj status (inject_constraint (acyclic,u1,u2))
 ;;
 
 let eval_ng_tac tac =
@@ -939,8 +939,8 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
             eval_ncommand ~include_paths opts status
              ("",0,GrafiteAst.NQed(Stdpp.dummy_loc,false))
         | _ -> assert false)
-  | GrafiteAst.NUnivConstraint (loc,u1,u2) ->
-      eval_add_constraint status [`Type,u1] [`Type,u2]
+  | GrafiteAst.NUnivConstraint (loc,acyclic,u1,u2) ->
+      eval_add_constraint status acyclic [`Type,u1] [`Type,u2]
   (* ex lexicon commands *)
   | GrafiteAst.Interpretation (loc, dsc, (symbol, args), cic_appl_pattern) ->
      let cic_appl_pattern =

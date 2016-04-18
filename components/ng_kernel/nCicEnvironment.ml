@@ -155,11 +155,11 @@ let typeof_sort = function
   | C.Prop -> (C.Type [])
 ;;
 
-let add_lt_constraint a b = 
+let add_lt_constraint ~acyclic a b = 
   match a,b with
   | [`Type,a2],[`Type,b2] -> 
       if not (lt_path_uri [] a2 b2) then (
-        if lt_path_uri [] b2 a2 || NUri.eq a2 b2 then
+        if acyclic && (lt_path_uri [] b2 a2 || NUri.eq a2 b2) then
          (raise(BadConstraint(lazy("universe inconsistency adding "^
                     pp_constraint a2 b2
            ^ " to:\n" ^ pp_constraints ()))));

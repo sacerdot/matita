@@ -27,7 +27,8 @@ class virtual status :
 (* it also checks it and add it to the environment *)
 val add_obj: #status as 'status -> NCic.obj -> 'status
 val add_constraint: 
-  #status as 'status -> NCic.universe -> NCic.universe -> 'status
+  #status as 'status -> acyclic:bool ->
+  NCic.universe -> NCic.universe -> 'status
 val aliases_of: NUri.uri -> NReference.reference list
 val resolve: string -> NReference.reference list
 (*

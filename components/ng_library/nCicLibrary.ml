@@ -372,7 +372,7 @@ let add_obj status ((u,_,_,_,_) as orig_obj) =
   status#set_timestamp (!storage,!local_aliases)
 ;;
 
-let add_constraint status u1 u2 = 
+let add_constraint status ~acyclic u1 u2 = 
   if
    List.exists
     (function `Constr (u1',u2') when u1=u1' && u2=u2' -> true | _ -> false)
@@ -380,7 +380,7 @@ let add_constraint status u1 u2 =
   then
    (*CSC: raise an exception here! *)
    (prerr_endline "CANNOT ADD A CONSTRAINT TWICE"; assert false);
-  NCicEnvironment.add_lt_constraint u1 u2;
+  NCicEnvironment.add_lt_constraint ~acyclic u1 u2;
   storage := (`Constr (u1,u2)) :: !storage;
   status#set_timestamp (!storage,!local_aliases)
 ;;

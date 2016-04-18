@@ -556,8 +556,9 @@ EXTEND
       paramspec = OPT inverter_param_list ; 
       outsort = OPT [ SYMBOL ":" ; outsort = term -> outsort ] -> 
         G.NInverter (loc,name,indty,paramspec,outsort)
-    | IDENT "universe"; IDENT "constraint"; u1 = tactic_term; 
+    | IDENT "universe"; cyclic = OPT [ IDENT "cyclic" -> () ] ; IDENT "constraint"; u1 = tactic_term; 
         SYMBOL <:unicode<lt>> ; u2 = tactic_term ->
+        let acyclic = match cyclic with None -> true | Some () -> false in
         let urify = function 
           | NotationPt.AttributedTerm (_, NotationPt.Sort (`NType i)) ->
               NUri.uri_of_string ("cic:/matita/pts/Type"^i^".univ")
@@ -565,7 +566,7 @@ EXTEND
         in
         let u1 = urify u1 in
         let u2 = urify u2 in
-         G.NUnivConstraint (loc,u1,u2)
+         G.NUnivConstraint (loc,acyclic,u1,u2)
     | IDENT "unification"; IDENT "hint"; n = int; t = tactic_term ->
         G.UnificationHint (loc, t, n)
     | IDENT "coercion"; name = IDENT;

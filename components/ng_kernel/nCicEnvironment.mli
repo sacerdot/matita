@@ -62,7 +62,7 @@ val max: NCic.universe -> NCic.universe -> NCic.universe
 (* raise BadConstraints if the second arg. is an inferred universe or
  * if the added constraint gives circularity *)
 exception BadConstraint of string Lazy.t;;
-val add_lt_constraint: NCic.universe -> NCic.universe -> unit
+val add_lt_constraint: acyclic:bool -> NCic.universe -> NCic.universe -> unit
 val universe_eq: NCic.universe -> NCic.universe -> bool
 val universe_leq: NCic.universe -> NCic.universe -> bool
 val universe_lt: NCic.universe -> NCic.universe -> bool
