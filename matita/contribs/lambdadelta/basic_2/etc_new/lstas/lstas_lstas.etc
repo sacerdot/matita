@@ -21,7 +21,7 @@ include "basic_2/unfold/lstas_lift.ma".
 theorem lstas_trans: ∀h,G,L,T1,T,d1. ⦃G, L⦄ ⊢ T1 •*[h, d1] T →
                      ∀T2,d2. ⦃G, L⦄ ⊢ T •*[h, d2] T2 → ⦃G, L⦄ ⊢ T1 •*[h, d1+d2] T2.
 #h #G #L #T1 #T #d1 #H elim H -G -L -T1 -T -d1
-[ #G #L #d1 #k #X #d2 #H >(lstas_inv_sort1 … H) -X
+[ #G #L #d1 #s #X #d2 #H >(lstas_inv_sort1 … H) -X
   <iter_plus /2 width=1 by lstas_sort/
 | #G #L #K #V1 #V #U #i #d1 #HLK #_ #HVU #IHV1 #U2 #d2 #HU2
   lapply (drop_fwd_drop2 … HLK) #H0
@@ -45,7 +45,7 @@ qed-.
 (* Note: apparently this was missing in basic_1 *)
 theorem lstas_mono: ∀h,G,L,d. singlevalued … (lstas h d G L).
 #h #G #L #d #T #T1 #H elim H -G -L -T -T1 -d
-[ #G #L #d #k #X #H >(lstas_inv_sort1 … H) -X //
+[ #G #L #d #s #X #H >(lstas_inv_sort1 … H) -X //
 | #G #L #K #V #V1 #U1 #i #d #HLK #_ #HVU1 #IHV1 #X #H
   elim (lstas_inv_lref1 … H) -H *
   #K0 #V0 #W0 [3: #d0 ] #HLK0
@@ -108,7 +108,7 @@ theorem lstas_conf_le: ∀h,G,L,T,U1,d1. ⦃G, L⦄ ⊢ T •*[h, d1] U1 →
                        ∀U2,d2. d1 ≤ d2 → ⦃G, L⦄ ⊢ T •*[h, d2] U2 →
                        ⦃G, L⦄ ⊢ U1 •*[h, d2-d1] U2.
 #h #G #L #T #U1 #d1 #HTU1 #U2 #d2 #Hd12
->(plus_minus_m_m … Hd12) in ⊢ (%→?); -Hd12 >commutative_plus #H
+>(plus_minus_k_k … Hd12) in ⊢ (%→?); -Hd12 >commutative_plus #H
 elim (lstas_split … H) -H #U #HTU
 >(lstas_mono … HTU … HTU1) -T //
 qed-.
@@ -118,7 +118,7 @@ theorem lstas_conf: ∀h,G,L,T0,T1,d1. ⦃G, L⦄ ⊢ T0 •*[h, d1] T1 →
                     ∃∃T. ⦃G, L⦄ ⊢ T1 •*[h, d2] T & ⦃G, L⦄ ⊢ T2 •*[h, d1] T.
 #h #G #L #T0 #T1 #d1 #HT01 #T2 #d2 #HT02
 elim (lstas_lstas … HT01 (d1+d2)) #T #HT0
-lapply (lstas_conf_le … HT01 … HT0) // -HT01 <minus_plus_m_m_commutative
-lapply (lstas_conf_le … HT02 … HT0) // -T0 <minus_plus_m_m
+lapply (lstas_conf_le … HT01 … HT0) // -HT01 <minus_plus_k_k_commutative
+lapply (lstas_conf_le … HT02 … HT0) // -T0 <minus_plus_k_k
 /2 width=3 by ex2_intro/
 qed-.

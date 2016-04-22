@@ -20,8 +20,8 @@ include "basic_2/dynamic/snv.ma".
 
 (* Forward lemmas on atomic arity assignment for terms **********************)
 
-lemma snv_fwd_aaa: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ T ¡[h, g] → ∃A. ⦃G, L⦄ ⊢ T ⁝ A.
-#h #g #G #L #T #H elim H -G -L -T
+lemma snv_fwd_aaa: ∀h,o,G,L,T. ⦃G, L⦄ ⊢ T ¡[h, o] → ∃A. ⦃G, L⦄ ⊢ T ⁝ A.
+#h #o #G #L #T #H elim H -G -L -T
 [ /2 width=2 by aaa_sort, ex_intro/
 | #I #G #L #K #V #i #HLK #_ * /3 width=6 by aaa_lref, ex_intro/
 | #a * #G #L #V #T #_ #_ * #B #HV * #A #HA /3 width=2 by aaa_abbr, aaa_abst, ex_intro/
@@ -39,12 +39,12 @@ qed-.
 
 (* Advanced forward lemmas **************************************************)
 
-lemma snv_fwd_da: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ T ¡[h, g] → ∃d. ⦃G, L⦄ ⊢ T ▪[h, g] d.
-#h #g #G #L #T #H elim (snv_fwd_aaa … H) -H /2 width=2 by aaa_da/
+lemma snv_fwd_da: ∀h,o,G,L,T. ⦃G, L⦄ ⊢ T ¡[h, o] → ∃d. ⦃G, L⦄ ⊢ T ▪[h, o] d.
+#h #o #G #L #T #H elim (snv_fwd_aaa … H) -H /2 width=2 by aaa_da/
 qed-.
 
-lemma snv_fwd_lstas: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ T ¡[h, g] →
+lemma snv_fwd_lstas: ∀h,o,G,L,T. ⦃G, L⦄ ⊢ T ¡[h, o] →
                      ∀d. ∃U. ⦃G, L⦄ ⊢ T •*[h, d] U.
-#h #g #G #L #T #H #d elim (snv_fwd_aaa … H) -H
+#h #o #G #L #T #H #d elim (snv_fwd_aaa … H) -H
 #A #HT elim (aaa_lstas h … HT d) -HT /2 width=2 by ex_intro/
 qed-.

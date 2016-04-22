@@ -18,9 +18,9 @@ include "basic_2/dynamic/lsubsv_scpds.ma".
 
 (* Properties concerning stratified native validity *************************)
 
-lemma lsubsv_snv_trans: ∀h,g,G,L2,T. ⦃G, L2⦄ ⊢ T ¡[h, g] →
-                        ∀L1. G ⊢ L1 ⫃¡[h, g] L2 → ⦃G, L1⦄ ⊢ T ¡[h, g].
-#h #g #G #L2 #T #H elim H -G -L2 -T //
+lemma lsubsv_snv_trans: ∀h,o,G,L2,T. ⦃G, L2⦄ ⊢ T ¡[h, o] →
+                        ∀L1. G ⊢ L1 ⫃¡[h, o] L2 → ⦃G, L1⦄ ⊢ T ¡[h, o].
+#h #o #G #L2 #T #H elim H -G -L2 -T //
 [ #I #G #L2 #K2 #V #i #HLK2 #_ #IHV #L1 #HL12
   elim (lsubsv_drop_O1_trans … HL12 … HLK2) -L2 #X #H #HLK1
   elim (lsubsv_inv_pair2 … H) -H * #K1

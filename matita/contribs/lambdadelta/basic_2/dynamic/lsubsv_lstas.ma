@@ -19,11 +19,11 @@ include "basic_2/dynamic/lsubsv.ma".
 
 (* Properties on nat-iterated static type assignment ************************)
 
-lemma lsubsv_lstas_trans: ∀h,g,G,L2,T,U2,d2. ⦃G, L2⦄ ⊢ T •*[h, d2] U2 →
-                          ∀d1. d2 ≤ d1 → ⦃G, L2⦄ ⊢ T ▪[h, g] d1 →
-                          ∀L1. G ⊢ L1 ⫃¡[h, g] L2 →
+lemma lsubsv_lstas_trans: ∀h,o,G,L2,T,U2,d2. ⦃G, L2⦄ ⊢ T •*[h, d2] U2 →
+                          ∀d1. d2 ≤ d1 → ⦃G, L2⦄ ⊢ T ▪[h, o] d1 →
+                          ∀L1. G ⊢ L1 ⫃¡[h, o] L2 →
                           ∃∃U1. ⦃G, L1⦄ ⊢ T •*[h, d2] U1 & ⦃G, L1⦄ ⊢ U1 ⬌* U2.
-#h #g #G #L2 #T #U #d2 #H elim H -G -L2 -T -U -d2
+#h #o #G #L2 #T #U #d2 #H elim H -G -L2 -T -U -d2
 [ /2 width=3 by ex2_intro/
 | #G #L2 #K2 #V #W #U #i #d2 #HLK2 #_ #HWU #IHVW #d1 #Hd21 #Hd1 #L1 #HL12
   elim (da_inv_lref … Hd1) -Hd1 * #K0 #V0 [| #d0 ] #HK0 #HV0
@@ -91,8 +91,8 @@ lemma lsubsv_lstas_trans: ∀h,g,G,L2,T,U2,d2. ⦃G, L2⦄ ⊢ T •*[h, d2] U2 
 ]
 qed-.
 
-lemma lsubsv_sta_trans: ∀h,g,G,L2,T,U2. ⦃G, L2⦄ ⊢ T •*[h, 1] U2 →
-                        ∀d. ⦃G, L2⦄ ⊢ T ▪[h, g] d+1 →
-                        ∀L1. G ⊢ L1 ⫃¡[h, g] L2 →
+lemma lsubsv_sta_trans: ∀h,o,G,L2,T,U2. ⦃G, L2⦄ ⊢ T •*[h, 1] U2 →
+                        ∀d. ⦃G, L2⦄ ⊢ T ▪[h, o] d+1 →
+                        ∀L1. G ⊢ L1 ⫃¡[h, o] L2 →
                         ∃∃U1. ⦃G, L1⦄ ⊢ T •*[h, 1] U1 & ⦃G, L1⦄ ⊢ U1 ⬌* U2.
 /2 width=7 by lsubsv_lstas_trans/ qed-.

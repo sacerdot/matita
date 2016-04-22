@@ -30,20 +30,11 @@ record rtc: Type[0] ≝ {
 interpretation "constructor (rtc)"
    'Tuple ri rh ti th = (mk_rtc ri rh ti th).
 
-(* Note: for one structural step *)
-definition OO: rtc ≝ 〈0, 0, 0, 0〉.
-
 interpretation "one structural step (rtc)"
-   'ZeroZero = (OO).
-
-(* Note: for one r-step *)
-definition UO: rtc ≝ 〈0, 1, 0, 0〉.
+   'ZeroZero = (mk_rtc O O O O).
 
 interpretation "one r-step (rtc)"
-   'OneZero = (UO).
-
-(* Note: for one t-step *)
-definition OU: rtc ≝ 〈0, 0, 0, 1〉.
+   'OneZero = (mk_rtc O (S O) O O).
 
 interpretation "one t-step (rtc)"
-   'ZeroOne = (OU).
+   'ZeroOne = (mk_rtc O O O (S O)).

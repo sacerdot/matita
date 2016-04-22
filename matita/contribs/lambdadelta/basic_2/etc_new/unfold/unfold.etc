@@ -21,7 +21,7 @@ include "basic_2/substitution/drop.ma".
 
 (* activate genv *)
 inductive unfold: relation4 genv lenv term lenv ≝
-| unfold_sort: ∀G,L,k. unfold G L (⋆k) L
+| unfold_sort: ∀G,L,s. unfold G L (⋆s) L
 | unfold_lref: ∀I,G,L1,L2,K1,K2,V,i. ⬇[i] L1 ≡ K1. ⓑ{I}V →
                unfold G K1 V K2 → ⬇[Ⓣ, |L2|, i] L2 ≡ K2 →
                unfold G L1 (#i) (L1@@L2)

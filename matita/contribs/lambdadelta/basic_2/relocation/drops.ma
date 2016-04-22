@@ -34,7 +34,7 @@ inductive drops (c:bool): rtmap → relation lenv ≝
 interpretation "uniform slicing (local environment)"
    'RDropStar i L1 L2 = (drops true (uni i) L1 L2).
 
-interpretation "general slicing (local environment)"
+interpretation "generic slicing (local environment)"
    'RDropStar c f L1 L2 = (drops c f L1 L2).
 
 definition d_liftable1: relation2 lenv term → predicate bool ≝

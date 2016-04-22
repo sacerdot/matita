@@ -12,14 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/equivalence/cpcs_cpcs.ma".
-include "basic_2/dynamic/lsubsv.ma".
+include "basic_2/relocation/drops.ma".
+include "basic_2/rt_transition/cpg.ma".
 
-(* LOCAL ENVIRONMENT REFINEMENT FOR STRATIFIED NATIVE VALIDITY **************)
+(* CONTEXT-SENSITIVE GENERIC PARALLEL RT-TRANSITION FOR TERMS ***************)
 
-(* Properties on context-sensitive parallel equivalence for terms ***********)
+(* Properties with generic slicing for local environments *******************)
 
-lemma lsubsv_cpcs_trans: ∀h,o,G,L1,L2. G ⊢ L1 ⫃¡[h, o] L2 →
-                         ∀T1,T2. ⦃G, L2⦄ ⊢ T1 ⬌* T2 → ⦃G, L1⦄ ⊢ T1 ⬌* T2.
-/3 width=6 by lsubsv_fwd_lsubr, lsubr_cpcs_trans/
+(* Note: the main property of simple terms *)
+lemma cpg_inv_appl1_simple: ∀h,r,G,L,V1,T1,U. ⦃G, L⦄ ⊢ ⓐV1.T1 ➡[h, r] U → 𝐒⦃T1⦄ →
+                            ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡[h, r] V2 & ⦃G, L⦄ ⊢ T1 ➡[h, r] T2 &
+                                     U = ⓐV2.T2.
+#h #r #G #L #V1 #T1 #U #H #HT1
+elim (cpg_inv_appl1 … H) -H *
+[ /2 width=5 by ex3_2_intro/
+| #a #V2 #W1 #W2 #U1 #U2 #_ #_ #_ #H #_ destruct
+  elim (simple_inv_bind … HT1)
+| #a #V #V2 #W1 #W2 #U1 #U2 #_ #_ #_ #_ #H #_ destruct
+  elim (simple_inv_bind … HT1)
+]
 qed-.

@@ -22,3 +22,9 @@ definition shift (r:rtc): rtc ≝ match r with
 
 interpretation "shift (rtc)"
    'Drop r = (shift r).
+
+(* Basic properties *********************************************************)
+
+lemma shift_refl: ∀ri,ti. 〈ri, 0, ti, 0〉 = ↓〈ri, 0, ti, 0〉.
+normalize //
+qed.

@@ -20,13 +20,13 @@ include "basic_2/dynamic/snv_scpes.ma".
 
 (* Properties on degree assignment for terms ********************************)
 
-fact da_cpr_lpr_aux: ∀h,g,G0,L0,T0.
-                     (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, g] ⦃G1, L1, T1⦄ → IH_snv_lstas h g G1 L1 T1) →
-                     (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, g] ⦃G1, L1, T1⦄ → IH_snv_cpr_lpr h g G1 L1 T1) →
-                     (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, g] ⦃G1, L1, T1⦄ → IH_da_cpr_lpr h g G1 L1 T1) →
-                     ∀G1,L1,T1. G0 = G1 → L0 = L1 → T0 = T1 → IH_da_cpr_lpr h g G1 L1 T1.
-#h #g #G0 #L0 #T0 #IH3 #IH2 #IH1 #G1 #L1 * * [|||| * ]
-[ #k #_ #_ #_ #_ #d #H2 #X3 #H3 #L2 #_ -IH3 -IH2 -IH1
+fact da_cpr_lpr_aux: ∀h,o,G0,L0,T0.
+                     (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_snv_lstas h o G1 L1 T1) →
+                     (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_snv_cpr_lpr h o G1 L1 T1) →
+                     (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_da_cpr_lpr h o G1 L1 T1) →
+                     ∀G1,L1,T1. G0 = G1 → L0 = L1 → T0 = T1 → IH_da_cpr_lpr h o G1 L1 T1.
+#h #o #G0 #L0 #T0 #IH3 #IH2 #IH1 #G1 #L1 * * [|||| * ]
+[ #s #_ #_ #_ #_ #d #H2 #X3 #H3 #L2 #_ -IH3 -IH2 -IH1
   lapply (da_inv_sort … H2) -H2
   lapply (cpr_inv_sort1 … H3) -H3 #H destruct /2 width=1 by da_sort/
 | #i #HG0 #HL0 #HT0 #H1 #d #H2 #X3 #H3 #L2 #HL12 destruct -IH3 -IH2
@@ -71,7 +71,7 @@ fact da_cpr_lpr_aux: ∀h,g,G0,L0,T0.
     elim (snv_fwd_da … HW) #d0 #Hd0
     lapply (cprs_scpds_div … HW3 … Hd0 … 1 HVW1) -W3 #H
     elim (da_scpes_aux … IH3 IH2 IH1 … Hd0 … Hd1 … H) -IH3 -IH2 -H /2 width=1 by fqup_fpbg/ #_ #H1
-    <minus_n_O #H destruct >(plus_minus_m_m d1 1) in Hd1; // -H1 #Hd1
+    <minus_n_O #H destruct >(plus_minus_k_k d1 1) in Hd1; // -H1 #Hd1
     lapply (IH1 … HV1 … Hd1 … HV12 … HL12) -HV1 -Hd1 -HV12 [ /2 by fqup_fpbg/ ]
     lapply (IH1 … Hd0 … HW2 … HL12) -Hd0 /2 width=1 by fqup_fpbg/ -HW
     lapply (IH1 … HU … Hd … HU2 (L2.ⓛW2) ?) -IH1 -HU -Hd -HU2 [1,2: /2 by fqup_fpbg, lpr_pair/ ] -HL12 -HW2

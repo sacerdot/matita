@@ -20,10 +20,10 @@ include "basic_2/dynamic/lsubsv_lstas.ma".
 
 (* Properties on decomposed extended parallel computation on terms **********)
 
-lemma lsubsv_scpds_trans: ∀h,g,G,L2,T1,T2,d. ⦃G, L2⦄ ⊢ T1 •*➡*[h, g, d] T2 →
-                          ∀L1. G ⊢ L1 ⫃¡[h, g] L2 →
-                          ∃∃T. ⦃G, L1⦄ ⊢ T1 •*➡*[h, g, d] T & ⦃G, L1⦄ ⊢ T2 ➡* T.
-#h #g #G #L2 #T1 #T2 #d2 * #T #d1 #Hd21 #Hd1 #HT1 #HT2 #L1 #HL12
+lemma lsubsv_scpds_trans: ∀h,o,G,L2,T1,T2,d. ⦃G, L2⦄ ⊢ T1 •*➡*[h, o, d] T2 →
+                          ∀L1. G ⊢ L1 ⫃¡[h, o] L2 →
+                          ∃∃T. ⦃G, L1⦄ ⊢ T1 •*➡*[h, o, d] T & ⦃G, L1⦄ ⊢ T2 ➡* T.
+#h #o #G #L2 #T1 #T2 #d2 * #T #d1 #Hd21 #Hd1 #HT1 #HT2 #L1 #HL12
 lapply (lsubsv_cprs_trans … HL12 … HT2) -HT2 #HT2
 elim (lsubsv_lstas_trans … HT1 … Hd1 … HL12) // #T0 #HT10 #HT0
 lapply (cpcs_cprs_strap1 … HT0 … HT2) -T #HT02

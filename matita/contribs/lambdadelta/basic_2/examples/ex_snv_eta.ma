@@ -19,9 +19,9 @@ include "basic_2/dynamic/snv.ma".
 (* Extended validy (basic?_2) vs. restricted validity (basic_1) *************)
 
 (* extended validity of a closure, last arg of snv_appl > 1 *)
-lemma snv_extended: ∀h,g,a,G,L,k. ⦃G, L.ⓛ⋆k.ⓛⓛ{a}⋆k.⋆k.ⓛ#0⦄ ⊢ ⓐ#2.#0 ¡[h, g].
-#h #g #a #G #L #k elim (deg_total h g k)
-#d #Hd @(snv_appl … a … (⋆k) … (⋆k) (0+1+1))
+lemma snv_extended: ∀h,o,a,G,L,s. ⦃G, L.ⓛ⋆s.ⓛⓛ{a}⋆s.⋆s.ⓛ#0⦄ ⊢ ⓐ#2.#0 ¡[h, o].
+#h #o #a #G #L #s elim (deg_total h o s)
+#d #Hd @(snv_appl … a … (⋆s) … (⋆s) (0+1+1))
 [ /4 width=5 by snv_lref, drop_drop_lt/
 | /4 width=13 by snv_bind, snv_lref/
 | /5 width=6 by lstas_scpds, lstas_succ, da_ldec, da_sort, drop_drop_lt/
@@ -31,13 +31,13 @@ lemma snv_extended: ∀h,g,a,G,L,k. ⦃G, L.ⓛ⋆k.ⓛⓛ{a}⋆k.⋆k.ⓛ#0⦄ 
 qed.
 
 (* restricted validity of the η-expanded closure, last arg of snv_appl = 1 **)
-lemma snv_restricted: ∀h,g,a,G,L,k. ⦃G, L.ⓛ⋆k.ⓛⓛ{a}⋆k.⋆k.ⓛⓛ{a}⋆k.ⓐ#0.#1⦄ ⊢ ⓐ#2.#0 ¡[h, g].
-#h #g #a #G #L #k elim (deg_total h g k)
-#d #Hd @(snv_appl … a … (⋆k) … (ⓐ#0.#2) (0+1))
+lemma snv_restricted: ∀h,o,a,G,L,s. ⦃G, L.ⓛ⋆s.ⓛⓛ{a}⋆s.⋆s.ⓛⓛ{a}⋆s.ⓐ#0.#1⦄ ⊢ ⓐ#2.#0 ¡[h, o].
+#h #o #a #G #L #s elim (deg_total h o s)
+#d #Hd @(snv_appl … a … (⋆s) … (ⓐ#0.#2) (0+1))
 [ /4 width=5 by snv_lref, drop_drop_lt/
 | @snv_lref [4: // |1,2,3: skip ]
   @snv_bind //
-  @(snv_appl … a … (⋆k) … (⋆k) (0+1))
+  @(snv_appl … a … (⋆s) … (⋆s) (0+1))
   [ @snv_lref [4: // |1,2,3: skip ] //
   | @snv_lref [4: /2 width=1 by drop_drop_lt/ |1,2,3: skip ] @snv_bind //
   | @(lstas_scpds … (d+1)) /3 width=6 by da_sort, da_ldec, lstas_succ/

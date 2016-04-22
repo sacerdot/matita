@@ -12,14 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/equivalence/cpcs_cpcs.ma".
-include "basic_2/dynamic/lsubsv.ma".
+include "basic_2/relocation/drops.ma".
+include "basic_2/rt_transition/cpg.ma".
 
-(* LOCAL ENVIRONMENT REFINEMENT FOR STRATIFIED NATIVE VALIDITY **************)
+(* CONTEXT-SENSITIVE GENERIC PARALLEL RT-TRANSITION FOR TERMS ***************)
 
-(* Properties on context-sensitive parallel equivalence for terms ***********)
+(* Properties with length for local environments ****************************)
 
-lemma lsubsv_cpcs_trans: ∀h,o,G,L1,L2. G ⊢ L1 ⫃¡[h, o] L2 →
-                         ∀T1,T2. ⦃G, L2⦄ ⊢ T1 ⬌* T2 → ⦃G, L1⦄ ⊢ T1 ⬌* T2.
-/3 width=6 by lsubsv_fwd_lsubr, lsubr_cpcs_trans/
+lemma cpg_inv_lref1_ge: ∀h,r,G,L,T2,i. ⦃G, L⦄ ⊢ #i ➡[h, r] T2 → |L| ≤ i → T2 = #i.
+#h #r #G #L #T2 #i #H elim (cpg_inv_lref1 … H) -H // *
+#I #K #V1 #V2 #HLK #_ #_ #HL -h -G -V2 lapply (drop_fwd_length_lt2 … HLK) -K -I -V1
+#H elim (lt_refl_false i) /2 width=3 by lt_to_le_to_lt/
 qed-.

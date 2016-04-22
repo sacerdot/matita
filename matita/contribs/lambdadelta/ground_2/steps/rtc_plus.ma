@@ -24,3 +24,13 @@ definition plus (r1:rtc) (r2:rtc): rtc ≝ match r1 with [
 
 interpretation "plus (rtc)"
    'plus r1 r2 = (plus r1 r2).
+
+(* Basic properties *********************************************************)
+
+lemma plus_OO_r: ∀r. r = 𝟘𝟘 + r.
+* normalize //
+qed.
+
+lemma plus_r_OO: ∀r. r = r + 𝟘𝟘.
+* normalize //
+qed.

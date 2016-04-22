@@ -20,14 +20,14 @@ include "basic_2/dynamic/lsubsv_lstas.ma".
 
 (* Properties on sn parallel reduction for local environments ***************)
 
-fact lstas_cpr_lpr_aux: ∀h,g,G0,L0,T0.
-                        (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, g] ⦃G1, L1, T1⦄ → IH_snv_lstas h g G1 L1 T1) →
-                        (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, g] ⦃G1, L1, T1⦄ → IH_snv_cpr_lpr h g G1 L1 T1) →
-                        (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, g] ⦃G1, L1, T1⦄ → IH_da_cpr_lpr h g G1 L1 T1) →
-                        (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, g] ⦃G1, L1, T1⦄ → IH_lstas_cpr_lpr h g G1 L1 T1) →
-                        ∀G1,L1,T1. G0 = G1 → L0 = L1 → T0 = T1 → IH_lstas_cpr_lpr h g G1 L1 T1.
-#h #g #G0 #L0 #T0 #IH4 #IH3 #IH2 #IH1 #G1 #L1 * * [|||| * ]
-[ #k #_ #_ #_ #_ #d1 #d2 #_ #_ #X2 #H2 #X3 #H3 #L2 #_ -IH4 -IH3 -IH2 -IH1
+fact lstas_cpr_lpr_aux: ∀h,o,G0,L0,T0.
+                        (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_snv_lstas h o G1 L1 T1) →
+                        (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_snv_cpr_lpr h o G1 L1 T1) →
+                        (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_da_cpr_lpr h o G1 L1 T1) →
+                        (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_lstas_cpr_lpr h o G1 L1 T1) →
+                        ∀G1,L1,T1. G0 = G1 → L0 = L1 → T0 = T1 → IH_lstas_cpr_lpr h o G1 L1 T1.
+#h #o #G0 #L0 #T0 #IH4 #IH3 #IH2 #IH1 #G1 #L1 * * [|||| * ]
+[ #s #_ #_ #_ #_ #d1 #d2 #_ #_ #X2 #H2 #X3 #H3 #L2 #_ -IH4 -IH3 -IH2 -IH1
   >(lstas_inv_sort1 … H2) -X2
   >(cpr_inv_sort1 … H3) -X3 /2 width=3 by ex2_intro/
 | #i #HG0 #HL0 #HT0 #H1 #d1 #d2 #Hd21 #Hd1 #X2 #H2 #X3 #H3 #L2 #HL12 destruct -IH4 -IH3
@@ -92,14 +92,14 @@ fact lstas_cpr_lpr_aux: ∀h,g,G0,L0,T0.
     lapply (cprs_scpds_div … HW20 … HW2d … HVW1) -W0 #H21
     elim (snv_fwd_da … HV1) #d #HV1d
     elim (da_scpes_aux … IH4 IH3 IH2 … HW2d … HV1d … H21) /2 width=1 by fqup_fpbg/ #_ #H
-    <minus_n_O #H0 destruct >(plus_minus_m_m d 1) in HV1d; // -H #HV1d
+    <minus_n_O #H0 destruct >(plus_minus_k_k d 1) in HV1d; // -H #HV1d
     lapply (scpes_cpr_lpr_aux … IH2 IH1 … H21 … HW23 … HV12 … HL12) -H21 /2 width=1 by fqup_fpbg/ #H32
     lapply (IH3 … HW23 … HL12) /2 width=1 by fqup_fpbg/ #HW3
     lapply (IH3 … HV12 … HL12) /2 width=1 by fqup_fpbg/ #HV2
     lapply (IH2 … HW2d … HW23 … HL12) /2 width=1 by fqup_fpbg/ -HW2 -HW2d #HW3d
     lapply (IH2 … HV1d … HV12 … HL12) /2 width=1 by fqup_fpbg/ -HV1 -HV1d #HV2d
     elim (IH1 … Hd1 … HT2U … HT23 (L2.ⓛW3)) -HT2U /2 width=1 by fqup_fpbg, lpr_pair/ #U3 #HTU3 #HU23
-    elim (lsubsv_lstas_trans … g … HTU3 … Hd21 … (L2.ⓓⓝW3.V2)) -HTU3
+    elim (lsubsv_lstas_trans … o … HTU3 … Hd21 … (L2.ⓓⓝW3.V2)) -HTU3
     [ #U4 #HT3U4 #HU43 -IH1 -IH2 -IH3 -IH4 -d -d1 -HW3 -HV2 -HT2
       @(ex2_intro … (ⓓ{b}ⓝW3.V2.U4)) /2 width=1 by lstas_bind/ -HT3U4
       @(cpcs_canc_dx … (ⓓ{b}ⓝW3.V2.U3)) /2 width=1 by cpcs_bind_dx/ -HU43

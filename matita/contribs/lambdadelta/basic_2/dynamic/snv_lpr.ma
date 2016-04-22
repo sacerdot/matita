@@ -21,14 +21,14 @@ include "basic_2/dynamic/lsubsv_snv.ma".
 
 (* Properties on context-free parallel reduction for local environments *****)
 
-fact snv_cpr_lpr_aux: ∀h,g,G0,L0,T0.
-                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, g] ⦃G1, L1, T1⦄ → IH_snv_lstas h g G1 L1 T1) →
-                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, g] ⦃G1, L1, T1⦄ → IH_lstas_cpr_lpr h g G1 L1 T1) →
-                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, g] ⦃G1, L1, T1⦄ → IH_da_cpr_lpr h g G1 L1 T1) →
-                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, g] ⦃G1, L1, T1⦄ → IH_snv_cpr_lpr h g G1 L1 T1) →
-                      ∀G1,L1,T1. G0 = G1 → L0 = L1 → T0 = T1 → IH_snv_cpr_lpr h g G1 L1 T1.
-#h #g #G0 #L0 #T0 #IH4 #IH3 #IH2 #IH1 #G1 #L1 * * [|||| * ]
-[ #k #HG0 #HL0 #HT0 #H1 #X #H2 #L2 #_ destruct -IH4 -IH3 -IH2 -IH1 -H1
+fact snv_cpr_lpr_aux: ∀h,o,G0,L0,T0.
+                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_snv_lstas h o G1 L1 T1) →
+                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_lstas_cpr_lpr h o G1 L1 T1) →
+                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_da_cpr_lpr h o G1 L1 T1) →
+                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_snv_cpr_lpr h o G1 L1 T1) →
+                      ∀G1,L1,T1. G0 = G1 → L0 = L1 → T0 = T1 → IH_snv_cpr_lpr h o G1 L1 T1.
+#h #o #G0 #L0 #T0 #IH4 #IH3 #IH2 #IH1 #G1 #L1 * * [|||| * ]
+[ #s #HG0 #HL0 #HT0 #H1 #X #H2 #L2 #_ destruct -IH4 -IH3 -IH2 -IH1 -H1
   >(cpr_inv_sort1 … H2) -X //
 | #i #HG0 #HL0 #HT0 #H1 #X #H2 #L2 #HL12 destruct -IH4 -IH3 -IH2
   elim (snv_inv_lref … H1) -H1 #I #K1 #V1 #HLK1 #HV1
@@ -70,7 +70,7 @@ fact snv_cpr_lpr_aux: ∀h,g,G0,L0,T0.
     elim (snv_fwd_da … HW10) #d0 #HW10d
     lapply (cprs_scpds_div … HW130 … HW10d … 1 HVW1) -W30 #HVW10
     elim (da_scpes_aux … IH4 IH1 IH2 … HW10d … HV1d … HVW10) /2 width=1 by fqup_fpbg/
-    #_ #Hd <minus_n_O #H destruct >(plus_minus_m_m d 1) in HV1d; // -Hd #HV1d
+    #_ #Hd <minus_n_O #H destruct >(plus_minus_k_k d 1) in HV1d; // -Hd #HV1d
     lapply (scpes_cpr_lpr_aux … IH2 IH3 … HVW10 … HW120 … HV12 … HL12) /2 width=1 by fqup_fpbg/ -HVW10 #HVW20
     lapply (IH2 … HV1d … HV12 … HL12) /2 width=1 by fqup_fpbg/ -HV1d #HV2d
     lapply (IH2 … HW10d … HW120 … HL12) /2 width=1 by fqup_fpbg/ -HW10d #HW20d
