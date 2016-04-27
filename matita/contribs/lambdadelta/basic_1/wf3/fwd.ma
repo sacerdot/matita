@@ -16,7 +16,7 @@
 
 include "basic_1/wf3/defs.ma".
 
-implied let rec wf3_ind (g: G) (P: (C \to (C \to Prop))) (f: (\forall (m: 
+implied rec lemma wf3_ind (g: G) (P: (C \to (C \to Prop))) (f: (\forall (m: 
 nat).(P (CSort m) (CSort m)))) (f0: (\forall (c1: C).(\forall (c2: C).((wf3 g 
 c1 c2) \to ((P c1 c2) \to (\forall (u: T).(\forall (t: T).((ty3 g c1 u t) \to 
 (\forall (b: B).(P (CHead c1 (Bind b) u) (CHead c2 (Bind b) u))))))))))) (f1: 

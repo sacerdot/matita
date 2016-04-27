@@ -20,7 +20,7 @@ include "basic_1/leq/asucc.ma".
 
 include "basic_1/getl/drop.ma".
 
-implied let rec arity_ind (g: G) (P: (C \to (T \to (A \to Prop)))) (f: 
+implied rec lemma arity_ind (g: G) (P: (C \to (T \to (A \to Prop)))) (f: 
 (\forall (c: C).(\forall (n: nat).(P c (TSort n) (ASort O n))))) (f0: 
 (\forall (c: C).(\forall (d: C).(\forall (u: T).(\forall (i: nat).((getl i c 
 (CHead d (Bind Abbr) u)) \to (\forall (a: A).((arity g d u a) \to ((P d u a) 

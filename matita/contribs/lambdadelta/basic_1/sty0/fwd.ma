@@ -16,7 +16,7 @@
 
 include "basic_1/sty0/defs.ma".
 
-implied let rec sty0_ind (g: G) (P: (C \to (T \to (T \to Prop)))) (f: 
+implied rec lemma sty0_ind (g: G) (P: (C \to (T \to (T \to Prop)))) (f: 
 (\forall (c: C).(\forall (n: nat).(P c (TSort n) (TSort (next g n)))))) (f0: 
 (\forall (c: C).(\forall (d: C).(\forall (v: T).(\forall (i: nat).((getl i c 
 (CHead d (Bind Abbr) v)) \to (\forall (w: T).((sty0 g d v w) \to ((P d v w) 

@@ -16,14 +16,14 @@
 
 include "basic_1/drop1/defs.ma".
 
-implied let rec drop1_ind (P: (PList \to (C \to (C \to Prop)))) (f: (\forall 
-(c: C).(P PNil c c))) (f0: (\forall (c1: C).(\forall (c2: C).(\forall (h: 
-nat).(\forall (d: nat).((drop h d c1 c2) \to (\forall (c3: C).(\forall (hds: 
-PList).((drop1 hds c2 c3) \to ((P hds c2 c3) \to (P (PCons h d hds) c1 
-c3))))))))))) (p: PList) (c: C) (c0: C) (d: drop1 p c c0) on d: P p c c0 \def 
-match d with [(drop1_nil c1) \Rightarrow (f c1) | (drop1_cons c1 c2 h d0 d1 
-c3 hds d2) \Rightarrow (f0 c1 c2 h d0 d1 c3 hds d2 ((drop1_ind P f f0) hds c2 
-c3 d2))].
+implied rec lemma drop1_ind (P: (PList \to (C \to (C \to Prop)))) (f: 
+(\forall (c: C).(P PNil c c))) (f0: (\forall (c1: C).(\forall (c2: 
+C).(\forall (h: nat).(\forall (d: nat).((drop h d c1 c2) \to (\forall (c3: 
+C).(\forall (hds: PList).((drop1 hds c2 c3) \to ((P hds c2 c3) \to (P (PCons 
+h d hds) c1 c3))))))))))) (p: PList) (c: C) (c0: C) (d: drop1 p c c0) on d: P 
+p c c0 \def match d with [(drop1_nil c1) \Rightarrow (f c1) | (drop1_cons c1 
+c2 h d0 d1 c3 hds d2) \Rightarrow (f0 c1 c2 h d0 d1 c3 hds d2 ((drop1_ind P f 
+f0) hds c2 c3 d2))].
 
 lemma drop1_gen_pnil:
  \forall (c1: C).(\forall (c2: C).((drop1 PNil c1 c2) \to (eq C c1 c2)))

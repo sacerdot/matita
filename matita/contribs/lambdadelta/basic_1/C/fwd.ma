@@ -16,7 +16,7 @@
 
 include "basic_1/C/defs.ma".
 
-implied let rec C_rect (P: (C \to Type[0])) (f: (\forall (n: nat).(P (CSort 
+implied rec lemma C_rect (P: (C \to Type[0])) (f: (\forall (n: nat).(P (CSort 
 n)))) (f0: (\forall (c: C).((P c) \to (\forall (k: K).(\forall (t: T).(P 
 (CHead c k t))))))) (c: C) on c: P c \def match c with [(CSort n) \Rightarrow 
 (f n) | (CHead c0 k t) \Rightarrow (f0 c0 ((C_rect P f f0) c0) k t)].

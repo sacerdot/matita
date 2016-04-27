@@ -34,9 +34,9 @@ inductive T: Type[0] \def
 | TLRef: nat \to T
 | THead: K \to (T \to (T \to T)).
 
-let rec tweight (t: T) on t: nat \def match t with [(TSort _) \Rightarrow (S 
-O) | (TLRef _) \Rightarrow (S O) | (THead _ u t0) \Rightarrow (S (plus 
-(tweight u) (tweight t0)))].
+rec definition tweight (t: T) on t: nat \def match t with [(TSort _) 
+\Rightarrow (S O) | (TLRef _) \Rightarrow (S O) | (THead _ u t0) \Rightarrow 
+(S (plus (tweight u) (tweight t0)))].
 
 definition tle:
  T \to (T \to Prop)

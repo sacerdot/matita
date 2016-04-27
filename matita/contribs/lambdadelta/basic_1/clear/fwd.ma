@@ -18,7 +18,7 @@ include "basic_1/clear/defs.ma".
 
 include "basic_1/C/fwd.ma".
 
-implied let rec clear_ind (P: (C \to (C \to Prop))) (f: (\forall (b: 
+implied rec lemma clear_ind (P: (C \to (C \to Prop))) (f: (\forall (b: 
 B).(\forall (e: C).(\forall (u: T).(P (CHead e (Bind b) u) (CHead e (Bind b) 
 u)))))) (f0: (\forall (e: C).(\forall (c: C).((clear e c) \to ((P e c) \to 
 (\forall (f0: F).(\forall (u: T).(P (CHead e (Flat f0) u) c)))))))) (c: C) 

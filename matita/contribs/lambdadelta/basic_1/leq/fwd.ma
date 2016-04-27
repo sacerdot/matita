@@ -16,7 +16,7 @@
 
 include "basic_1/leq/defs.ma".
 
-implied let rec leq_ind (g: G) (P: (A \to (A \to Prop))) (f: (\forall (h1: 
+implied rec lemma leq_ind (g: G) (P: (A \to (A \to Prop))) (f: (\forall (h1: 
 nat).(\forall (h2: nat).(\forall (n1: nat).(\forall (n2: nat).(\forall (k: 
 nat).((eq A (aplus g (ASort h1 n1) k) (aplus g (ASort h2 n2) k)) \to (P 
 (ASort h1 n1) (ASort h2 n2))))))))) (f0: (\forall (a1: A).(\forall (a2: 

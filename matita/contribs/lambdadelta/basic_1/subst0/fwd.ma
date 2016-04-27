@@ -18,7 +18,7 @@ include "basic_1/subst0/defs.ma".
 
 include "basic_1/lift/fwd.ma".
 
-implied let rec subst0_ind (P: (nat \to (T \to (T \to (T \to Prop))))) (f: 
+implied rec lemma subst0_ind (P: (nat \to (T \to (T \to (T \to Prop))))) (f: 
 (\forall (v: T).(\forall (i: nat).(P i v (TLRef i) (lift (S i) O v))))) (f0: 
 (\forall (v: T).(\forall (u2: T).(\forall (u1: T).(\forall (i: nat).((subst0 
 i v u1 u2) \to ((P i v u1 u2) \to (\forall (t: T).(\forall (k: K).(P i v 

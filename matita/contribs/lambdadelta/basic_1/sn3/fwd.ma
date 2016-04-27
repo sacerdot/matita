@@ -18,7 +18,7 @@ include "basic_1/sn3/defs.ma".
 
 include "basic_1/pr3/props.ma".
 
-implied let rec sn3_ind (c: C) (P: (T \to Prop)) (f: (\forall (t1: 
+implied rec lemma sn3_ind (c: C) (P: (T \to Prop)) (f: (\forall (t1: 
 T).(((\forall (t2: T).((((eq T t1 t2) \to (\forall (P0: Prop).P0))) \to ((pr3 
 c t1 t2) \to (sn3 c t2))))) \to (((\forall (t2: T).((((eq T t1 t2) \to 
 (\forall (P0: Prop).P0))) \to ((pr3 c t1 t2) \to (P t2))))) \to (P t1))))) 

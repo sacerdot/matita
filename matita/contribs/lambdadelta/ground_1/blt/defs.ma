@@ -16,7 +16,7 @@
 
 include "ground_1/preamble.ma".
 
-let rec blt (m: nat) (n: nat) on n: bool \def match n with [O \Rightarrow 
-false | (S n0) \Rightarrow (match m with [O \Rightarrow true | (S m0) 
-\Rightarrow (blt m0 n0)])].
+rec definition blt (m: nat) (n: nat) on n: bool \def match n with [O 
+\Rightarrow false | (S n0) \Rightarrow (match m with [O \Rightarrow true | (S 
+m0) \Rightarrow (blt m0 n0)])].
 

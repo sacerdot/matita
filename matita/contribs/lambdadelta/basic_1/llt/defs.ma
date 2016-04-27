@@ -16,8 +16,9 @@
 
 include "basic_1/A/defs.ma".
 
-let rec lweight (a: A) on a: nat \def match a with [(ASort _ _) \Rightarrow O 
-| (AHead a1 a2) \Rightarrow (S (plus (lweight a1) (lweight a2)))].
+rec definition lweight (a: A) on a: nat \def match a with [(ASort _ _) 
+\Rightarrow O | (AHead a1 a2) \Rightarrow (S (plus (lweight a1) (lweight 
+a2)))].
 
 definition llt:
  A \to (A \to Prop)

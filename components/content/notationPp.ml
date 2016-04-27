@@ -314,7 +314,7 @@ let pp_obj pp_term = function
     string_of_source source ^
     "record " ^ name ^ " " ^ pp_params pp_term params ^ ": " ^ pp_term ty ^ 
     " \\def {" ^ pp_fields pp_term fields ^ "\n}"
- | Ast.LetRec (kind, definitions, (source, _, _)) ->
+ | Ast.LetRec (kind, definitions, (source, flavour, _)) ->
     let rec get_guard i = function
        | []                   -> assert false (* Ast.Implicit `JustOne *)
        | [term, _] when i = 1 -> term
@@ -332,9 +332,10 @@ let pp_obj pp_term = function
 	  (pp_term (get_guard i params))
 	  (pp_term typ) (pp_term body)
     in
-    sprintf "%slet %s %s"
+    sprintf "%s%s %s %s"
       (string_of_source source)
       (match kind with `Inductive -> "rec" | `CoInductive -> "corec")
+      (NCicPp.string_of_flavour flavour)
       (String.concat " and " (List.map map definitions))
 
 let rec pp_value (status: #NCic.status) = function

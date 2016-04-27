@@ -16,9 +16,10 @@
 
 include "basic_1/C/defs.ma".
 
-let rec cbk (c: C) on c: nat \def match c with [(CSort m) \Rightarrow m | 
-(CHead c0 _ _) \Rightarrow (cbk c0)].
+rec definition cbk (c: C) on c: nat \def match c with [(CSort m) \Rightarrow 
+m | (CHead c0 _ _) \Rightarrow (cbk c0)].
 
-let rec app1 (c: C) on c: T \to T \def \lambda (t: T).(match c with [(CSort 
-_) \Rightarrow t | (CHead c0 k u) \Rightarrow (app1 c0 (THead k u t))]).
+rec definition app1 (c: C) on c: T \to T \def \lambda (t: T).(match c with 
+[(CSort _) \Rightarrow t | (CHead c0 k u) \Rightarrow (app1 c0 (THead k u 
+t))]).
 

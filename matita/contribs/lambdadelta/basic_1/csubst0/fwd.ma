@@ -18,7 +18,7 @@ include "basic_1/csubst0/defs.ma".
 
 include "basic_1/C/fwd.ma".
 
-implied let rec csubst0_ind (P: (nat \to (T \to (C \to (C \to Prop))))) (f: 
+implied rec lemma csubst0_ind (P: (nat \to (T \to (C \to (C \to Prop))))) (f: 
 (\forall (k: K).(\forall (i: nat).(\forall (v: T).(\forall (u1: T).(\forall 
 (u2: T).((subst0 i v u1 u2) \to (\forall (c: C).(P (s k i) v (CHead c k u1) 
 (CHead c k u2)))))))))) (f0: (\forall (k: K).(\forall (i: nat).(\forall (c1: 

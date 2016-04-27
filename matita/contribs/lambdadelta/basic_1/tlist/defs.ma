@@ -20,16 +20,16 @@ inductive TList: Type[0] \def
 | TNil: TList
 | TCons: T \to (TList \to TList).
 
-let rec THeads (k: K) (us: TList) on us: T \to T \def \lambda (t: T).(match 
-us with [TNil \Rightarrow t | (TCons u ul) \Rightarrow (THead k u (THeads k 
-ul t))]).
+rec definition THeads (k: K) (us: TList) on us: T \to T \def \lambda (t: 
+T).(match us with [TNil \Rightarrow t | (TCons u ul) \Rightarrow (THead k u 
+(THeads k ul t))]).
 
-let rec TApp (ts: TList) on ts: T \to TList \def \lambda (v: T).(match ts 
-with [TNil \Rightarrow (TCons v TNil) | (TCons t ts0) \Rightarrow (TCons t 
+rec definition TApp (ts: TList) on ts: T \to TList \def \lambda (v: T).(match 
+ts with [TNil \Rightarrow (TCons v TNil) | (TCons t ts0) \Rightarrow (TCons t 
 (TApp ts0 v))]).
 
-let rec tslen (ts: TList) on ts: nat \def match ts with [TNil \Rightarrow O | 
-(TCons _ ts0) \Rightarrow (S (tslen ts0))].
+rec definition tslen (ts: TList) on ts: nat \def match ts with [TNil 
+\Rightarrow O | (TCons _ ts0) \Rightarrow (S (tslen ts0))].
 
 definition tslt:
  TList \to (TList \to Prop)

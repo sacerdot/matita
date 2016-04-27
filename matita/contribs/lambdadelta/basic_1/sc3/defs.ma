@@ -20,7 +20,7 @@ include "basic_1/arity/defs.ma".
 
 include "basic_1/drop1/defs.ma".
 
-let rec sc3 (g: G) (a: A) on a: C \to (T \to Prop) \def \lambda (c: 
+rec definition sc3 (g: G) (a: A) on a: C \to (T \to Prop) \def \lambda (c: 
 C).(\lambda (t: T).(match a with [(ASort h n) \Rightarrow (land (arity g c t 
 (ASort h n)) (sn3 c t)) | (AHead a1 a2) \Rightarrow (land (arity g c t (AHead 
 a1 a2)) (\forall (d: C).(\forall (w: T).((sc3 g a1 d w) \to (\forall (is: 

@@ -16,6 +16,6 @@
 
 include "basic_1/G/defs.ma".
 
-let rec next_plus (g: G) (n: nat) (i: nat) on i: nat \def match i with [O 
-\Rightarrow n | (S i0) \Rightarrow (next g (next_plus g n i0))].
+rec definition next_plus (g: G) (n: nat) (i: nat) on i: nat \def match i with 
+[O \Rightarrow n | (S i0) \Rightarrow (next g (next_plus g n i0))].
 

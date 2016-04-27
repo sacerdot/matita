@@ -16,7 +16,7 @@
 
 include "basic_1/aprem/defs.ma".
 
-implied let rec aprem_ind (P: (nat \to (A \to (A \to Prop)))) (f: (\forall 
+implied rec lemma aprem_ind (P: (nat \to (A \to (A \to Prop)))) (f: (\forall 
 (a1: A).(\forall (a2: A).(P O (AHead a1 a2) a1)))) (f0: (\forall (a2: 
 A).(\forall (a: A).(\forall (i: nat).((aprem i a2 a) \to ((P i a2 a) \to 
 (\forall (a1: A).(P (S i) (AHead a1 a2) a)))))))) (n: nat) (a: A) (a0: A) 

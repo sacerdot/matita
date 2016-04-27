@@ -16,7 +16,7 @@
 
 include "basic_1/csuba/defs.ma".
 
-implied let rec csuba_ind (g: G) (P: (C \to (C \to Prop))) (f: (\forall (n: 
+implied rec lemma csuba_ind (g: G) (P: (C \to (C \to Prop))) (f: (\forall (n: 
 nat).(P (CSort n) (CSort n)))) (f0: (\forall (c1: C).(\forall (c2: C).((csuba 
 g c1 c2) \to ((P c1 c2) \to (\forall (k: K).(\forall (u: T).(P (CHead c1 k u) 
 (CHead c2 k u))))))))) (f1: (\forall (c1: C).(\forall (c2: C).((csuba g c1 

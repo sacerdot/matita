@@ -16,7 +16,7 @@
 
 include "basic_1/ex0/defs.ma".
 
-implied let rec leqz_ind (P: (A \to (A \to Prop))) (f: (\forall (h1: 
+implied rec lemma leqz_ind (P: (A \to (A \to Prop))) (f: (\forall (h1: 
 nat).(\forall (h2: nat).(\forall (n1: nat).(\forall (n2: nat).((eq nat (plus 
 h1 n2) (plus h2 n1)) \to (P (ASort h1 n1) (ASort h2 n2)))))))) (f0: (\forall 
 (a1: A).(\forall (a2: A).((leqz a1 a2) \to ((P a1 a2) \to (\forall (a3: 

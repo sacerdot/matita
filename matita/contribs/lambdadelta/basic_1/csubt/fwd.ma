@@ -16,7 +16,7 @@
 
 include "basic_1/csubt/defs.ma".
 
-implied let rec csubt_ind (g: G) (P: (C \to (C \to Prop))) (f: (\forall (n: 
+implied rec lemma csubt_ind (g: G) (P: (C \to (C \to Prop))) (f: (\forall (n: 
 nat).(P (CSort n) (CSort n)))) (f0: (\forall (c1: C).(\forall (c2: C).((csubt 
 g c1 c2) \to ((P c1 c2) \to (\forall (k: K).(\forall (u: T).(P (CHead c1 k u) 
 (CHead c2 k u))))))))) (f1: (\forall (c1: C).(\forall (c2: C).((csubt g c1 

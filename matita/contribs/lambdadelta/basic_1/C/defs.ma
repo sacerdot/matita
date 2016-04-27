@@ -20,8 +20,8 @@ inductive C: Type[0] \def
 | CSort: nat \to C
 | CHead: C \to (K \to (T \to C)).
 
-let rec cweight (c: C) on c: nat \def match c with [(CSort _) \Rightarrow O | 
-(CHead c0 _ t) \Rightarrow (plus (cweight c0) (tweight t))].
+rec definition cweight (c: C) on c: nat \def match c with [(CSort _) 
+\Rightarrow O | (CHead c0 _ t) \Rightarrow (plus (cweight c0) (tweight t))].
 
 definition clt:
  C \to (C \to Prop)
@@ -33,7 +33,7 @@ definition cle:
 \def
  \lambda (c1: C).(\lambda (c2: C).(le (cweight c1) (cweight c2))).
 
-let rec CTail (k: K) (t: T) (c: C) on c: C \def match c with [(CSort n) 
-\Rightarrow (CHead (CSort n) k t) | (CHead d h u) \Rightarrow (CHead (CTail k 
-t d) h u)].
+rec definition CTail (k: K) (t: T) (c: C) on c: C \def match c with [(CSort 
+n) \Rightarrow (CHead (CSort n) k t) | (CHead d h u) \Rightarrow (CHead 
+(CTail k t d) h u)].
 

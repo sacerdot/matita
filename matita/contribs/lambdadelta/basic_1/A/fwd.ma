@@ -16,7 +16,7 @@
 
 include "basic_1/A/defs.ma".
 
-implied let rec A_rect (P: (A \to Type[0])) (f: (\forall (n: nat).(\forall 
+implied rec lemma A_rect (P: (A \to Type[0])) (f: (\forall (n: nat).(\forall 
 (n0: nat).(P (ASort n n0))))) (f0: (\forall (a: A).((P a) \to (\forall (a0: 
 A).((P a0) \to (P (AHead a a0))))))) (a: A) on a: P a \def match a with 
 [(ASort n n0) \Rightarrow (f n n0) | (AHead a0 a1) \Rightarrow (f0 a0 

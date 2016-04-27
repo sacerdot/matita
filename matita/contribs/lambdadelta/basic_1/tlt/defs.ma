@@ -22,8 +22,8 @@ definition wadd:
  \lambda (f: ((nat \to nat))).(\lambda (w: nat).(\lambda (n: nat).(match n 
 with [O \Rightarrow w | (S m) \Rightarrow (f m)]))).
 
-let rec weight_map (f: (nat \to nat)) (t: T) on t: nat \def match t with 
-[(TSort _) \Rightarrow O | (TLRef n) \Rightarrow (f n) | (THead k u t0) 
+rec definition weight_map (f: (nat \to nat)) (t: T) on t: nat \def match t 
+with [(TSort _) \Rightarrow O | (TLRef n) \Rightarrow (f n) | (THead k u t0) 
 \Rightarrow (match k with [(Bind b) \Rightarrow (match b with [Abbr 
 \Rightarrow (S (plus (weight_map f u) (weight_map (wadd f (S (weight_map f 
 u))) t0))) | Abst \Rightarrow (S (plus (weight_map f u) (weight_map (wadd f 

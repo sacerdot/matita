@@ -68,12 +68,12 @@ definition pred:
 \def
  \lambda (n: nat).(match n with [O \Rightarrow O | (S u) \Rightarrow u]).
 
-let rec plus (n: nat) on n: nat \to nat \def \lambda (m: nat).(match n with 
-[O \Rightarrow m | (S p) \Rightarrow (S (plus p m))]).
+rec definition plus (n: nat) on n: nat \to nat \def \lambda (m: nat).(match n 
+with [O \Rightarrow m | (S p) \Rightarrow (S (plus p m))]).
 
-let rec minus (n: nat) on n: nat \to nat \def \lambda (m: nat).(match n with 
-[O \Rightarrow O | (S k) \Rightarrow (match m with [O \Rightarrow (S k) | (S 
-l) \Rightarrow (minus k l)])]).
+rec definition minus (n: nat) on n: nat \to nat \def \lambda (m: nat).(match 
+n with [O \Rightarrow O | (S k) \Rightarrow (match m with [O \Rightarrow (S 
+k) | (S l) \Rightarrow (minus k l)])]).
 
 inductive Acc (A: Type[0]) (R: A \to (A \to Prop)): A \to Prop \def
 | Acc_intro: \forall (x: A).(((\forall (y: A).((R y x) \to (Acc A R y)))) \to 

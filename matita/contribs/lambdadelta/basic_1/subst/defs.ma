@@ -16,8 +16,8 @@
 
 include "basic_1/lift/defs.ma".
 
-let rec subst (d: nat) (v: T) (t: T) on t: T \def match t with [(TSort n) 
-\Rightarrow (TSort n) | (TLRef i) \Rightarrow (match (blt i d) with [true 
+rec definition subst (d: nat) (v: T) (t: T) on t: T \def match t with [(TSort 
+n) \Rightarrow (TSort n) | (TLRef i) \Rightarrow (match (blt i d) with [true 
 \Rightarrow (TLRef i) | false \Rightarrow (match (blt d i) with [true 
 \Rightarrow (TLRef (pred i)) | false \Rightarrow (lift d O v)])]) | (THead k 
 u t0) \Rightarrow (THead k (subst d v u) (subst (s k d) v t0))].

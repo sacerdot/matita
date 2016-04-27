@@ -22,6 +22,6 @@ definition nf2:
  \lambda (c: C).(\lambda (t1: T).(\forall (t2: T).((pr2 c t1 t2) \to (eq T t1 
 t2)))).
 
-let rec nfs2 (c: C) (ts: TList) on ts: Prop \def match ts with [TNil 
+rec definition nfs2 (c: C) (ts: TList) on ts: Prop \def match ts with [TNil 
 \Rightarrow True | (TCons t ts0) \Rightarrow (land (nf2 c t) (nfs2 c ts0))].
 

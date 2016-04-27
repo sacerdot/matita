@@ -16,7 +16,7 @@
 
 include "basic_1/T/defs.ma".
 
-implied let rec T_rect (P: (T \to Type[0])) (f: (\forall (n: nat).(P (TSort 
+implied rec lemma T_rect (P: (T \to Type[0])) (f: (\forall (n: nat).(P (TSort 
 n)))) (f0: (\forall (n: nat).(P (TLRef n)))) (f1: (\forall (k: K).(\forall 
 (t: T).((P t) \to (\forall (t0: T).((P t0) \to (P (THead k t t0)))))))) (t: 
 T) on t: P t \def match t with [(TSort n) \Rightarrow (f n) | (TLRef n) 

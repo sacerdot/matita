@@ -18,6 +18,6 @@ include "basic_1/C/defs.ma".
 
 include "basic_1/s/defs.ma".
 
-let rec clen (c: C) on c: nat \def match c with [(CSort _) \Rightarrow O | 
-(CHead c0 k _) \Rightarrow (s k (clen c0))].
+rec definition clen (c: C) on c: nat \def match c with [(CSort _) \Rightarrow 
+O | (CHead c0 k _) \Rightarrow (s k (clen c0))].
 

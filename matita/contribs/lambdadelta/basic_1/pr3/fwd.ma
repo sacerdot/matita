@@ -18,7 +18,7 @@ include "basic_1/pr3/defs.ma".
 
 include "basic_1/pr2/fwd.ma".
 
-implied let rec pr3_ind (c: C) (P: (T \to (T \to Prop))) (f: (\forall (t: 
+implied rec lemma pr3_ind (c: C) (P: (T \to (T \to Prop))) (f: (\forall (t: 
 T).(P t t))) (f0: (\forall (t2: T).(\forall (t1: T).((pr2 c t1 t2) \to 
 (\forall (t3: T).((pr3 c t2 t3) \to ((P t2 t3) \to (P t1 t3)))))))) (t: T) 
 (t0: T) (p: pr3 c t t0) on p: P t t0 \def match p with [(pr3_refl t1) 

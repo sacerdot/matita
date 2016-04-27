@@ -18,7 +18,7 @@ include "basic_1/pr0/defs.ma".
 
 include "basic_1/subst0/fwd.ma".
 
-implied let rec pr0_ind (P: (T \to (T \to Prop))) (f: (\forall (t: T).(P t 
+implied rec lemma pr0_ind (P: (T \to (T \to Prop))) (f: (\forall (t: T).(P t 
 t))) (f0: (\forall (u1: T).(\forall (u2: T).((pr0 u1 u2) \to ((P u1 u2) \to 
 (\forall (t1: T).(\forall (t2: T).((pr0 t1 t2) \to ((P t1 t2) \to (\forall 
 (k: K).(P (THead k u1 t1) (THead k u2 t2)))))))))))) (f1: (\forall (u: 

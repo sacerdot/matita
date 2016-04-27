@@ -22,7 +22,7 @@ include "basic_1/r/props.ma".
 
 include "basic_1/C/fwd.ma".
 
-implied let rec drop_ind (P: (nat \to (nat \to (C \to (C \to Prop))))) (f: 
+implied rec lemma drop_ind (P: (nat \to (nat \to (C \to (C \to Prop))))) (f: 
 (\forall (c: C).(P O O c c))) (f0: (\forall (k: K).(\forall (h: nat).(\forall 
 (c: C).(\forall (e: C).((drop (r k h) O c e) \to ((P (r k h) O c e) \to 
 (\forall (u: T).(P (S h) O (CHead c k u) e))))))))) (f1: (\forall (k: 

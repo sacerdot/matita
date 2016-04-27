@@ -16,7 +16,7 @@
 
 include "basic_1/pc3/props.ma".
 
-implied let rec pc3_left_ind (c: C) (P: (T \to (T \to Prop))) (f: (\forall 
+implied rec lemma pc3_left_ind (c: C) (P: (T \to (T \to Prop))) (f: (\forall 
 (t: T).(P t t))) (f0: (\forall (t1: T).(\forall (t2: T).((pr2 c t1 t2) \to 
 (\forall (t3: T).((pc3_left c t2 t3) \to ((P t2 t3) \to (P t1 t3)))))))) (f1: 
 (\forall (t1: T).(\forall (t2: T).((pr2 c t1 t2) \to (\forall (t3: 

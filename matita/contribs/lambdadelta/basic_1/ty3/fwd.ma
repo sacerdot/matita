@@ -18,14 +18,14 @@ include "basic_1/ty3/defs.ma".
 
 include "basic_1/pc3/props.ma".
 
-implied let rec ty3_ind (g: G) (P: (C \to (T \to (T \to Prop)))) (f: (\forall 
-(c: C).(\forall (t2: T).(\forall (t: T).((ty3 g c t2 t) \to ((P c t2 t) \to 
-(\forall (u: T).(\forall (t1: T).((ty3 g c u t1) \to ((P c u t1) \to ((pc3 c 
-t1 t2) \to (P c u t2)))))))))))) (f0: (\forall (c: C).(\forall (m: nat).(P c 
-(TSort m) (TSort (next g m)))))) (f1: (\forall (n: nat).(\forall (c: 
-C).(\forall (d: C).(\forall (u: T).((getl n c (CHead d (Bind Abbr) u)) \to 
-(\forall (t: T).((ty3 g d u t) \to ((P d u t) \to (P c (TLRef n) (lift (S n) 
-O t))))))))))) (f2: (\forall (n: nat).(\forall (c: C).(\forall (d: 
+implied rec lemma ty3_ind (g: G) (P: (C \to (T \to (T \to Prop)))) (f: 
+(\forall (c: C).(\forall (t2: T).(\forall (t: T).((ty3 g c t2 t) \to ((P c t2 
+t) \to (\forall (u: T).(\forall (t1: T).((ty3 g c u t1) \to ((P c u t1) \to 
+((pc3 c t1 t2) \to (P c u t2)))))))))))) (f0: (\forall (c: C).(\forall (m: 
+nat).(P c (TSort m) (TSort (next g m)))))) (f1: (\forall (n: nat).(\forall 
+(c: C).(\forall (d: C).(\forall (u: T).((getl n c (CHead d (Bind Abbr) u)) 
+\to (\forall (t: T).((ty3 g d u t) \to ((P d u t) \to (P c (TLRef n) (lift (S 
+n) O t))))))))))) (f2: (\forall (n: nat).(\forall (c: C).(\forall (d: 
 C).(\forall (u: T).((getl n c (CHead d (Bind Abst) u)) \to (\forall (t: 
 T).((ty3 g d u t) \to ((P d u t) \to (P c (TLRef n) (lift (S n) O 
 u))))))))))) (f3: (\forall (c: C).(\forall (u: T).(\forall (t: T).((ty3 g c u 
@@ -54,7 +54,7 @@ t3 t4 ((ty3_ind g P f f0 f1 f2 f3 f4 f5) c0 v (THead (Bind Abst) u t3) t4)) |
 f1 f2 f3 f4 f5) c0 t2 t3 t4) t5 t6 ((ty3_ind g P f f0 f1 f2 f3 f4 f5) c0 t3 
 t5 t6))].
 
-implied let rec tys3_ind (g: G) (c: C) (P: (TList \to (T \to Prop))) (f: 
+implied rec lemma tys3_ind (g: G) (c: C) (P: (TList \to (T \to Prop))) (f: 
 (\forall (u: T).(\forall (u0: T).((ty3 g c u u0) \to (P TNil u))))) (f0: 
 (\forall (t: T).(\forall (u: T).((ty3 g c t u) \to (\forall (ts: 
 TList).((tys3 g c ts u) \to ((P ts u) \to (P (TCons t ts) u)))))))) (t: 

@@ -20,6 +20,6 @@ inductive sn3 (c: C): T \to Prop \def
 | sn3_sing: \forall (t1: T).(((\forall (t2: T).((((eq T t1 t2) \to (\forall 
 (P: Prop).P))) \to ((pr3 c t1 t2) \to (sn3 c t2))))) \to (sn3 c t1)).
 
-let rec sns3 (c: C) (ts: TList) on ts: Prop \def match ts with [TNil 
+rec definition sns3 (c: C) (ts: TList) on ts: Prop \def match ts with [TNil 
 \Rightarrow True | (TCons t ts0) \Rightarrow (land (sn3 c t) (sns3 c ts0))].
 
