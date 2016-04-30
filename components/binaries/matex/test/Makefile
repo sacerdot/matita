@@ -6,7 +6,7 @@ UNLOG  = ./unlog.pl
 
 MAIN = test
 
-SOURCES = $(shell cat Make) $(shell cat Make.objs)
+SOURCES = $(shell cat Make) $(shell cat Make.srcs)
 
 all: $(MAIN).dvi 
 
@@ -38,4 +38,4 @@ $(MAIN).tar: $(MAIN).log
 	$(UNLOG) $< $@
 
 objs.tex:
-	@sed "s/\(.*\).tex/\\\\input{\1}/" Make.objs > $@
+	@sed "s/\(.*\).tex/\\\\input{\1}/" Make.srcs > $@

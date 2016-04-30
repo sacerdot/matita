@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<helm_registry>
+  <section name="matex.alpha">
+    <key name="type">matita.lambdadelta.basic_1.T.defs.B.B.type b I</key>
+    <key name="type">matita.lambdadelta.basic_1.T.defs.B.B.type ee I</key>
+    <key name="type">matita.lambdadelta.basic_1.T.defs.B.B.type x I</key>
+
+    <key name="type">matita.lambdadelta.basic_1.T.defs.F.F.type ee I</key>
+    <key name="type">matita.lambdadelta.basic_1.T.defs.F.F.type f I</key>
+    <key name="type">matita.lambdadelta.basic_1.T.defs.F.F.type x I</key>
+
+    <key name="type">matita.lambdadelta.basic_1.T.defs.K.K.type e I</key>
+    <key name="type">matita.lambdadelta.basic_1.T.defs.K.K.type ee I</key>
+    <key name="type">matita.lambdadelta.basic_1.T.defs.K.K.type k I</key>
+    <key name="type">matita.lambdadelta.basic_1.T.defs.K.K.type h I</key>
+    <key name="type">matita.lambdadelta.basic_1.T.defs.K.K.type x I</key>
+
+    <key name="type">matita.lambdadelta.basic_1.C.defs.C.C.type _ X</key>
+    <key name="type">matita.lambdadelta.basic_1.C.defs.C.C.type a X</key>
+    <key name="type">matita.lambdadelta.basic_1.C.defs.C.C.type c L</key>
+    <key name="type">matita.lambdadelta.basic_1.C.defs.C.C.type d L</key>
+    <key name="type">matita.lambdadelta.basic_1.C.defs.C.C.type e K</key>
+    <key name="type">matita.lambdadelta.basic_1.C.defs.C.C.type ee X</key>
+    <key name="type">matita.lambdadelta.basic_1.C.defs.C.C.type x X</key>
+    <key name="type">matita.lambdadelta.basic_1.C.defs.C.C.type y Y</key>
+
+    <key name="type">matita.lambdadelta.basic_1.T.defs.T.T.type _ X</key>
+    <key name="type">matita.lambdadelta.basic_1.T.defs.T.T.type e X</key>
+    <key name="type">matita.lambdadelta.basic_1.T.defs.T.T.type ee X</key>
+    <key name="type">matita.lambdadelta.basic_1.T.defs.T.T.type t T</key>
+    <key name="type">matita.lambdadelta.basic_1.T.defs.T.T.type u U</key>
+    <key name="type">matita.lambdadelta.basic_1.T.defs.T.T.type v V</key>
+    <key name="type">matita.lambdadelta.basic_1.T.defs.T.T.type w W</key>
+    <key name="type">matita.lambdadelta.basic_1.T.defs.T.T.type wi W</key>
+    <key name="type">matita.lambdadelta.basic_1.T.defs.T.T.type x X</key>
+    <key name="type">matita.lambdadelta.basic_1.T.defs.T.T.type y Y</key>
+    <key name="type">matita.lambdadelta.basic_1.T.defs.T.T.type z Z</key>
+
+    <key name="type">matita.lambdadelta.basic_1.tlist.defs.TList.TList.type _ Xs</key>
+    <key name="type">matita.lambdadelta.basic_1.tlist.defs.TList.TList.type e Xs</key>
+    <key name="type">matita.lambdadelta.basic_1.tlist.defs.TList.TList.type ee Xs</key>
+    <key name="type">matita.lambdadelta.basic_1.tlist.defs.TList.TList.type t Ts</key>
+    <key name="type">matita.lambdadelta.basic_1.tlist.defs.TList.TList.type ts Ts</key>
+    <key name="type">matita.lambdadelta.basic_1.tlist.defs.TList.TList.type ul Us</key>
+    <key name="type">matita.lambdadelta.basic_1.tlist.defs.TList.TList.type us Us</key>
+    <key name="type">matita.lambdadelta.basic_1.tlist.defs.TList.TList.type vs Vs</key>
+    <key name="type">matita.lambdadelta.basic_1.tlist.defs.TList.TList.type ws Ws</key>
+    <key name="type">matita.lambdadelta.basic_1.tlist.defs.TList.TList.type xs Xs</key>
+    <key name="type">matita.lambdadelta.basic_1.tlist.defs.TList.TList.type x Xs</key>
+    <key name="type">matita.lambdadelta.basic_1.tlist.defs.TList.TList.type y Ys</key>
+
+    <key name="type">matita.lambdadelta.basic_1.A.defs.A.A.type _ X</key>
+    <key name="type">matita.lambdadelta.basic_1.A.defs.A.A.type a A</key>
+    <key name="type">matita.lambdadelta.basic_1.A.defs.A.A.type b B</key>
+    <key name="type">matita.lambdadelta.basic_1.A.defs.A.A.type e X</key>
+    <key name="type">matita.lambdadelta.basic_1.A.defs.A.A.type ee X</key>
+    <key name="type">matita.lambdadelta.basic_1.A.defs.A.A.type l X</key>
+    <key name="type">matita.lambdadelta.basic_1.A.defs.A.A.type x X</key>
+    <key name="type">matita.lambdadelta.basic_1.A.defs.A.A.type y Y</key>
+
+    <key name="type">matita.lambdadelta.basic_1.G.defs.G.G.type g h</key>
+
+    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type _ x</key>
+    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type d' d</key>
+    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type d d</key>
+    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type e e</key>
+    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type ee e</key>
+    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type f f</key>
+    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type g g</key>
+    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type h h</key>
+    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type i i</key>
+    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type j j</key>
+    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type k k</key>
+    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type l l</key>
+    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type m m</key>
+    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type n n</key>
+    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type next f</key>
+    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type v v</key>
+    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type w w</key>
+    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type x x</key>
+    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type y y</key>
+
+    <key name="type">matita.lambdadelta.legacy_1.coq.defs.bool.bool.type b b</key>
+    <key name="type">matita.lambdadelta.legacy_1.coq.defs.bool.bool.type x x</key>
+
+    <key name="type">matita.lambdadelta.ground_1.plist.defs.PList.PList.type _ f</key>
+    <key name="type">matita.lambdadelta.ground_1.plist.defs.PList.PList.type e f</key>
+    <key name="type">matita.lambdadelta.ground_1.plist.defs.PList.PList.type ee f</key>
+    <key name="type">matita.lambdadelta.ground_1.plist.defs.PList.PList.type hds f</key>
+    <key name="type">matita.lambdadelta.ground_1.plist.defs.PList.PList.type is f</key>
+    <key name="type">matita.lambdadelta.ground_1.plist.defs.PList.PList.type p f</key>
+    <key name="type">matita.lambdadelta.ground_1.plist.defs.PList.PList.type q f</key>
+    <key name="type">matita.lambdadelta.ground_1.plist.defs.PList.PList.type y f</key>
+
+    <key name="type">Prop P R</key>
+    <key name="type">Prop Q R</key>
+
+    <key name="type">Type[cic:/matita/pts/Type0.univ] P S</key>
+
+    <key name="sort">Prop H H</key>
+    <key name="sort">Prop Hle H</key>
+    <key name="sort">Prop IH IH</key>
+    <key name="sort">Prop IHc IH</key>
+    <key name="sort">Prop IHd IH</key>
+    <key name="sort">Prop IHe IH</key>
+    <key name="sort">Prop IHh IH</key>
+    <key name="sort">Prop IHi IH</key>
+    <key name="sort">Prop IHj IH</key>
+    <key name="sort">Prop IHn IH</key>
+    <key name="sort">Prop IHx IH</key>
+    <key name="sort">Prop a H</key>
+    <key name="sort">Prop c H</key>
+    <key name="sort">Prop d H</key>
+    <key name="sort">Prop e H</key>
+    <key name="sort">Prop f H</key>
+    <key name="sort">Prop g H</key>
+    <key name="sort">Prop h H</key>
+    <key name="sort">Prop i H</key>
+    <key name="sort">Prop l H</key>
+    <key name="sort">Prop n H</key>
+    <key name="sort">Prop p H</key>
+    <key name="sort">Prop s H</key>
+    <key name="sort">Prop t H</key>
+    <key name="sort">Prop w H</key>
+    <key name="sort">Prop x H</key>
+
+    <key name="sort">Type[cic:/matita/pts/Type0.univ] f a</key>
+  </section>
+</helm_registry>

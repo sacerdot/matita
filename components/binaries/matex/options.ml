@@ -26,7 +26,11 @@ let default_test = false
 
 let default_no_types = false
 
+let default_log_alpha = false
+
 let default_list_och = None
+
+let default_alpha = []
 
 (* interface ****************************************************************)
 
@@ -34,15 +38,21 @@ let status = new P.status
 
 let no_init = ref default_no_init
 
-let out_dir = ref default_out_dir   (* directory of generated files *)
+let out_dir = ref default_out_dir     (* directory of generated files *)
 
-let proc_id = ref default_proc_id   (* identifer of anticipations *)
+let proc_id = ref default_proc_id     (* identifer of anticipations *)
 
-let test = ref default_test         (* test anticipation *)
+let test = ref default_test           (* test anticipation *)
 
-let no_types = ref default_no_types (* omit types *)
+let no_types = ref default_no_types   (* omit types *)
 
-let list_och = ref default_list_och (* output stream for list file *)
+let log_alpha = ref default_log_alpha (* log alpha-unconverted identifiers *)
+
+let list_och = ref default_list_och   (* output stream for list file *)
+
+let alpha_type = ref default_alpha    (* data of type-based alpha-conversion *)
+
+let alpha_sort = ref default_alpha    (* data of sort-based alpha-conversion *)
 
 let close_list () = match !list_och with
    | None     -> ()
@@ -55,4 +65,7 @@ let clear () =
    proc_id := default_proc_id;
    test := default_test;
    no_types := default_no_types;
-   list_och := default_list_och
+   log_alpha := default_log_alpha;
+   list_och := default_list_och;
+   alpha_type := default_alpha;
+   alpha_sort := default_alpha

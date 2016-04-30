@@ -6,19 +6,20 @@ REQUIRES = helm-ng_library
 include ../Makefile.common
 
 PROBE    = ../probe/probe.native
-REGISTRY = $(RT_BASE_DIR)/matita.conf.xml
+REGISTRY = $(RT_BASE_DIR)/matita.conf.xml test/basic_1.conf.xml
 OBJS     = Make.objs
+SRCS     = Make.srcs
 
 BASEURI = cic:/matita/lambdadelta/basic_1/
 
-test: test/$(OBJS)
+test: test/$(SRCS)
 
-$(OBJS):
+test/$(OBJS): $(REGISTRY)
 	@echo probe: $(BASEURI)
 	$(H)$(PROBE) $(REGISTRY) -g $(BASEURI) -os > $@
 
-test/$(OBJS): $(OBJS) ./matex.native
-	@echo MaTeX: processing $(OBJS)
-	$(H)./matex.native -O test -l $(OBJS) -t -p $(REGISTRY) `cat $<`
+test/$(SRCS): test/$(OBJS) $(REGISTRY) ./matex.native
+	@echo MaTeX: processing $<
+	$(H)./matex.native -O test -l $(SRCS) -p -a $(REGISTRY) `cat $<`
 
 .PHONY: test

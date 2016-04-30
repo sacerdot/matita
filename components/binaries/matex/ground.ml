@@ -19,6 +19,8 @@ exception Error of string
 
 let id x = x
 
+let id2 x y = x, y 
+
 let rec segments_of_string ss l s =
    match try Some (S.index s '/') with Not_found -> None with
       | None   -> s :: ss

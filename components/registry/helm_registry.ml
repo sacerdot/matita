@@ -115,6 +115,12 @@ let pair fst_unmarshaller snd_unmarshaller v =
   | [fst; snd] -> fst_unmarshaller fst, snd_unmarshaller snd
   | _ -> raise (Type_error "not a pair")
 
+(* FG *)
+let triple fst_unmarshaller snd_unmarshaller trd_unmarshaller v =
+  match Str.split spaces_rex v with
+  | [fst; snd; trd] -> fst_unmarshaller fst, snd_unmarshaller snd, trd_unmarshaller trd
+  | _ -> raise (Type_error "not a triple")
+
   (* escapes for xml configuration file *)
 let (escape, unescape) =
   let (in_enc, out_enc) = (`Enc_utf8, `Enc_utf8) in
@@ -209,6 +215,10 @@ let get_list registry unmarshaller key =
 (* FG *)
 let get_pair registry fst_unmarshaller snd_unmarshaller =
   get_typed registry (pair fst_unmarshaller snd_unmarshaller) 
+
+(* FG *)
+let get_triple registry fst_unmarshaller snd_unmarshaller trd_unmarshaller =
+  get_typed registry (triple fst_unmarshaller snd_unmarshaller trd_unmarshaller) 
 
 let set_list registry marshaller ~key ~value =
   (* since ocaml hash table are crazy... *)
@@ -413,6 +423,7 @@ let get_opt unmarshaller = get_opt default_registry unmarshaller
 let get_opt_default unmarshaller = get_opt_default default_registry unmarshaller
 let get_list unmarshaller = get_list default_registry unmarshaller
 let get_pair unmarshaller = get_pair default_registry unmarshaller
+let get_triple unmarshaller = get_triple default_registry unmarshaller
 let set_typed marshaller = set_typed default_registry marshaller
 let set_opt unmarshaller = set_opt default_registry unmarshaller
 let set_list marshaller = set_list default_registry marshaller

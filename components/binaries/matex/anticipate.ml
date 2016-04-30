@@ -29,15 +29,6 @@ let malformed s =
 let ok s =
    X.log ("anticipate: ok " ^ s)
 
-let typeof c t = K.whd c (K.typeof c t)
-
-let not_prop1 c u = match typeof c u with
-   | C.Sort (C.Prop) -> false
-   | C.Sort _        -> true
-   | _               -> malformed "1"
-
-let not_prop2 c t = not_prop1 c (K.typeof c t)
-
 let anticipate c v =
    incr fresh;
    let w = K.typeof c v in
@@ -48,7 +39,7 @@ let initial = None, []
 let proc_arg c i (d, rtts) t = match d with
    | Some _ -> d, (t :: rtts)
    | None   ->
-      if K.is_atomic t || not_prop2 c t then d, (t :: rtts) else
+      if K.is_atomic t || K.not_prop2 c t then d, (t :: rtts) else
       let s, w, v, tt = anticipate c t in
       Some (i, s, w, v), (tt :: rtts)
 
@@ -68,7 +59,7 @@ let rec proc_term c t = match t with
       let tt = shift_term (K.add_dec s w c) t in
       [], K.lambda s w tt
    | C.LetIn (s, w, v, t)     ->
-      if not_prop1 c w then
+      if K.not_prop1 c w then
          let dt, tt = proc_term (K.add_def s w v c) t in
          dt @ K.add_def s w v [], tt
       else
@@ -80,7 +71,7 @@ let rec proc_term c t = match t with
          let dt, tt = proc_term (K.add_def s w vv c) t in
          dt @ (K.add_def s w vv dv), tt
    | C.Appl [t]               -> proc_term c t
-   | C.Appl (C.Appl ts :: vs) -> proc_term c (C.Appl (ts @ vs))
+   | C.Appl (C.Appl ts :: vs) -> proc_term c (K.appl (ts @ vs))
    | C.Appl ts                -> proc_appl c t ts
    | C.Match (w, u, v, ts)    -> proc_case c t w u v ts
 
@@ -89,11 +80,11 @@ and proc_appl c t ts = match X.foldi_left (proc_arg c) 1 initial ts with
    | Some (i, s, w, v), rtts ->
       let ri = L.length rtts - i in
       let tts = X.foldi_left (lift_arg ri) 0 [] rtts in
-      proc_term c (K.letin s w v (C.Appl tts))
+      proc_term c (K.letin s w v (K.appl tts))
 
 and proc_case c t w u v ts = match X.foldi_left (proc_arg c) 1 initial ts with
    | None               , _    -> 
-      if K.is_atomic v || not_prop1 c (C.Const w) then [], t else
+      if K.is_atomic v || K.not_prop1 c (C.Const w) then [], t else
       let s, w0, v0, vv = anticipate c v in
       let u = K.lift K.fst_var 1 u in
       let ts = K.lifts K.fst_var 1 ts in
@@ -109,7 +100,7 @@ and shift_term c t =
    let d, tt = proc_term c t in
    K.shift tt d
 
-let shift_named s c t =
+let shift_named_term s c t =
 try
    fresh := 0;
    let tt = shift_term c t in
@@ -124,25 +115,21 @@ with
 
 let proc_fun c =
    let r, s, i, u, t = c in
-   if not_prop1 [] u then c else
-   r, s, i, u, shift_named s [] t
+   if K.not_prop1 [] u then c else
+   r, s, i, u, shift_named_term s [] t
 
 let proc_obj obj = match obj with
    | C.Inductive _
    | C.Constant (_, _, None, _, _)   -> obj
    | C.Constant (r, s, Some t, u, a) ->
-      if not_prop1 [] u then obj else 
-      let tt = shift_named s [] t in
+      if K.not_prop1 [] u then obj else 
+      let tt = shift_named_term s [] t in
       C.Constant (r, s, Some tt, u, a)
    | C.Fixpoint (b, cs, a)           ->
       C.Fixpoint (b, L.map proc_fun cs, a)
 
 (* interface functions ******************************************************)
 
-(* not_prop1 *) 
-
-(* not_prop2 *)
-
-let process_top_term s t = shift_named s [] t
+let process_top_term s t = shift_named_term s [] t
 
 let process_obj obj = proc_obj obj

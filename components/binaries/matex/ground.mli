@@ -17,6 +17,8 @@ val log: string -> unit
 
 val id: 'a -> 'a
 
+val id2: 'a -> 'b -> 'a * 'b
+
 val segments_of_string: string list -> int -> string -> string list
 
 val rev_map_concat: ('a -> string) -> string -> string -> 'a list -> string

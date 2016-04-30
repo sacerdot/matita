@@ -44,11 +44,15 @@ let init () =
    H.set_log_callback no_log;
    let u0 = mk_type_universe "0" in
    let u1 = mk_type_universe "1" in
-   E.add_lt_constraint u0 u1
+   E.add_lt_constraint ~acyclic:true u0 u1
 
 let fst_var = 1
 
 let snd_var = 2
+
+let appl ts = C.Appl ts
+
+let prod s w t = C.Prod (s, w, t)
 
 let lambda s w t = C.Lambda (s, w, t)
 
@@ -92,6 +96,17 @@ let whd c t =
 
 let typeof c t =
    K.typeof G.status [] [] c t
+
+let whd_typeof c t = whd c (typeof c t)
+
+let not_prop1 c u = match whd_typeof c u with
+   | C.Sort (C.Prop) -> false
+   | _               -> true
+
+let not_prop2 c t = not_prop1 c (typeof c t)
+
+let does_not_occur i c t =
+   K.does_not_occur G.status ~subst:[] c 0 i t
 
 let segments_of_uri u =
    let s = U.string_of_uri u in

@@ -24,20 +24,25 @@ module K = Kernel
 
 let help_O = "<dir> Set this output directory"
 let help_X = " Clear configuration and options"
+let help_a = " Log alpha-unconverted identifiers (default: no)"
 let help_l = "<file> Output the list of generated files in this file"
 let help_p = " omit types (default: no)"
-let help_t = " Test anticipation (default: no)"
+let help_t = " Test term transformations (default: no)"
 
 let help   = ""
 
 (* internal functions *******************************************************)
+
+let alpha_decode = R.triple R.string R.string R.string
 
 let init registry =
    R.load_from registry; 
    if !G.no_init then begin
       K.init ();
       G.no_init := false;
-   end
+   end;
+   G.alpha_type := R.get_list alpha_decode "matex.alpha.type";
+   G.alpha_sort := R.get_list alpha_decode "matex.alpha.sort"
 
 let is_registry s =
    F.check_suffix s ".conf.xml"
@@ -63,6 +68,7 @@ begin try
    A.parse [
       "-O", A.String ((:=) G.out_dir), help_O;
       "-X", A.Unit G.clear, help_X;
+      "-a", A.Set G.log_alpha, help_a;
       "-l", A.String set_list, help_l;
       "-p", A.Set G.no_types, help_p;
       "-t", A.Set G.test, help_t;
