@@ -15,8 +15,9 @@ S      : RTM stack
 T,U,V,W: term
 X,Y,Z  : reserved: transient objet denoted by a capital letter
 
-a,b    :
-c      : local dropping kind parameter (true = restricted, false = general)
+a      :
+b      : local dropping kind parameter (true = restricted, false = general)
+c      : rt-reduction count parameter
 d      : term degree
 e      : reserved: future use (\lambda\delta 3)
 f,g    : local reference transforming map 

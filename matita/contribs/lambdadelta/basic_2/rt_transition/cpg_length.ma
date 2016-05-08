@@ -19,8 +19,8 @@ include "basic_2/rt_transition/cpg.ma".
 
 (* Properties with length for local environments ****************************)
 
-lemma cpg_inv_lref1_ge: ∀h,r,G,L,T2,i. ⦃G, L⦄ ⊢ #i ➡[h, r] T2 → |L| ≤ i → T2 = #i.
-#h #r #G #L #T2 #i #H elim (cpg_inv_lref1 … H) -H // *
+lemma cpg_inv_lref1_ge: ∀h,c,G,L,T2,i. ⦃G, L⦄ ⊢ #i ➡[h, c] T2 → |L| ≤ i → T2 = #i.
+#h #c #G #L #T2 #i #H elim (cpg_inv_lref1 … H) -H // *
 #I #K #V1 #V2 #HLK #_ #_ #HL -h -G -V2 lapply (drop_fwd_length_lt2 … HLK) -K -I -V1
 #H elim (lt_refl_false i) /2 width=3 by lt_to_le_to_lt/
 qed-.

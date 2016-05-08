@@ -20,6 +20,6 @@ include "basic_2/relocation/lexs.ma".
 (* Forward lemmas with length for local environments ************************)
 
 (* Basic_2A1: includes: lpx_sn_fwd_length *)
-lemma lexs_fwd_length: ∀RN,RP,L1,L2,f. L1 ⦻*[RN, RP, f] L2 → |L1| = |L2|.
-#RM #RP #L1 #L2 #f #H elim H -L1 -L2 -f //
+lemma lexs_fwd_length: ∀RN,RP,f,L1,L2. L1 ⦻*[RN, RP, f] L2 → |L1| = |L2|.
+#RM #RP #f #L1 #L2 #H elim H -f -L1 -L2 //
 qed-.

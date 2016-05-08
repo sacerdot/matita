@@ -34,7 +34,7 @@ fact snv_lstas_aux: ∀h,o,G0,L0,T0.
   lapply (drop_mono … HLK0 … HLK1) -HLK0 #H0 destruct
   elim (lstas_inv_lref1 … H2) -H2 * #K #Y #X [3,6: #d ] #HLK #HYX [1,2: #HXT #H0 |3,5: #HXT |4,6: #H1 #H2 ]
   lapply (drop_mono … HLK … HLK1) -HLK #H destruct
-  [ lapply (le_plus_to_le_r … Hd21) -Hd21 #Hd21 |3: -Hd21 ]
+  [ lapply (le_plus_to_le_c … Hd21) -Hd21 #Hd21 |3: -Hd21 ]
   lapply (fqup_lref … G1 … HLK1) #H
   lapply (drop_fwd_drop2 … HLK1) /4 width=8 by snv_lift, snv_lref, fqup_fpbg/
 | #p #HG0 #HL0 #HT0 #H1 #d1 #d2 #Hd21 #Hd1 #X #H2 destruct -IH4 -IH3 -IH2 -IH1

@@ -43,7 +43,7 @@ lemma lstas_scpds_trans: ∀h,o,G,L,T1,T,T2,d1,d2,d.
 #h #o #G #L #T1 #T #T2 #d1 #d2 #d #Hd21 #HTd1 #HT1 * #T0 #d0 #Hd0 #HTd0 #HT0 #HT02
 lapply (lstas_da_conf … HT1 … HTd1) #HTd12
 lapply (da_mono … HTd12 … HTd0) -HTd12 -HTd0 #H destruct
-lapply (le_minus_to_plus_r … Hd21 Hd0) -Hd21 -Hd0
+lapply (le_minus_to_plus_c … Hd21 Hd0) -Hd21 -Hd0
 /3 width=7 by lstas_trans, ex4_2_intro/
 qed-.
 

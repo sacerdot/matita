@@ -48,14 +48,14 @@ lemma lprs_ind_alt: ∀G. ∀R:relation lenv.
 
 (* Properties on context-sensitive parallel computation for terms ***********)
 
-lemma lprs_cpr_trans: ∀G. c_r_transitive … (cpr G) (λ_. lprs G).
-/3 width=5 by c_r_trans_LTC2, lpr_cprs_trans/ qed-.
+lemma lprs_cpr_trans: ∀G. b_c_transitive … (cpr G) (λ_. lprs G).
+/3 width=5 by b_c_trans_LTC2, lpr_cprs_trans/ qed-.
 
 (* Basic_1: was just: pr3_pr3_pr3_t *)
 (* Note: alternative proof /3 width=5 by s_r_trans_LTC1, lprs_cpr_trans/ *)
-lemma lprs_cprs_trans: ∀G. c_rs_transitive … (cpr G) (λ_. lprs G).
-#G @c_r_to_c_rs_trans @c_r_trans_LTC2
-@c_rs_trans_TC1 /2 width=3 by lpr_cprs_trans/ (**) (* full auto too slow *)
+lemma lprs_cprs_trans: ∀G. b_rs_transitive … (cpr G) (λ_. lprs G).
+#G @b_c_to_b_rs_trans @b_c_trans_LTC2
+@b_rs_trans_TC1 /2 width=3 by lpr_cprs_trans/ (**) (* full auto too slow *)
 qed-.
 
 lemma lprs_cprs_conf_dx: ∀G,L0,T0,T1. ⦃G, L0⦄ ⊢ T0 ➡* T1 →

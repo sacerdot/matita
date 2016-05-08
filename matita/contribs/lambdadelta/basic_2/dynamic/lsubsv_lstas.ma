@@ -56,7 +56,7 @@ lemma lsubsv_lstas_trans: ∀h,o,G,L2,T,U2,d2. ⦃G, L2⦄ ⊢ T •*[h, d2] U2 
 | #G #L2 #K2 #V #W #U #i #d2 #HLK2 #_ #HWU #IHVW #d1 #Hd21 #Hd1 #L1 #HL12
   elim (da_inv_lref … Hd1) -Hd1 * #K0 #V0 [| #d0 ] #HK0 #HV0 [| #H1 ]
   lapply (drop_mono … HK0 … HLK2) -HK0 #H2 destruct
-  lapply (le_plus_to_le_r … Hd21) -Hd21 #Hd21
+  lapply (le_plus_to_le_c … Hd21) -Hd21 #Hd21
   elim (lsubsv_drop_O1_trans … HL12 … HLK2) -L2 #Y #H #HLK1
   elim (lsubsv_inv_pair2 … H) -H * #K1
   [ #HK12 #H destruct

@@ -116,21 +116,21 @@ qed-.
 
 (* Note: the constant 0 cannot be generalized *)
 lemma lsubsv_drop_O1_conf: ∀h,o,G,L1,L2. G ⊢ L1 ⫃¡[h, o] L2 →
-                           ∀K1,c,k. ⬇[c, 0, k] L1 ≡ K1 →
-                           ∃∃K2. G ⊢ K1 ⫃¡[h, o] K2 & ⬇[c, 0, k] L2 ≡ K2.
+                           ∀K1,b,k. ⬇[b, 0, k] L1 ≡ K1 →
+                           ∃∃K2. G ⊢ K1 ⫃¡[h, o] K2 & ⬇[b, 0, k] L2 ≡ K2.
 #h #o #G #L1 #L2 #H elim H -L1 -L2
 [ /2 width=3 by ex2_intro/
-| #I #L1 #L2 #V #_ #IHL12 #K1 #c #k #H
+| #I #L1 #L2 #V #_ #IHL12 #K1 #b #k #H
   elim (drop_inv_O1_pair1 … H) -H * #Hm #HLK1
   [ destruct
-    elim (IHL12 L1 c 0) -IHL12 // #X #HL12 #H
+    elim (IHL12 L1 b 0) -IHL12 // #X #HL12 #H
     <(drop_inv_O2 … H) in HL12; -H /3 width=3 by lsubsv_pair, drop_pair, ex2_intro/
   | elim (IHL12 … HLK1) -L1 /3 width=3 by drop_drop_lt, ex2_intro/
   ]
-| #L1 #L2 #W #V #d1 #HWV #HW #HVd1 #HWd1 #_ #IHL12 #K1 #c #k #H
+| #L1 #L2 #W #V #d1 #HWV #HW #HVd1 #HWd1 #_ #IHL12 #K1 #b #k #H
   elim (drop_inv_O1_pair1 … H) -H * #Hm #HLK1
   [ destruct
-    elim (IHL12 L1 c 0) -IHL12 // #X #HL12 #H
+    elim (IHL12 L1 b 0) -IHL12 // #X #HL12 #H
     <(drop_inv_O2 … H) in HL12; -H /3 width=4 by lsubsv_beta, drop_pair, ex2_intro/
   | elim (IHL12 … HLK1) -L1 /3 width=3 by drop_drop_lt, ex2_intro/
   ]
@@ -139,21 +139,21 @@ qed-.
 
 (* Note: the constant 0 cannot be generalized *)
 lemma lsubsv_drop_O1_trans: ∀h,o,G,L1,L2. G ⊢ L1 ⫃¡[h, o] L2 →
-                            ∀K2,c, k. ⬇[c, 0, k] L2 ≡ K2 →
-                            ∃∃K1. G ⊢ K1 ⫃¡[h, o] K2 & ⬇[c, 0, k] L1 ≡ K1.
+                            ∀K2,b, k. ⬇[b, 0, k] L2 ≡ K2 →
+                            ∃∃K1. G ⊢ K1 ⫃¡[h, o] K2 & ⬇[b, 0, k] L1 ≡ K1.
 #h #o #G #L1 #L2 #H elim H -L1 -L2
 [ /2 width=3 by ex2_intro/
-| #I #L1 #L2 #V #_ #IHL12 #K2 #c #k #H
+| #I #L1 #L2 #V #_ #IHL12 #K2 #b #k #H
   elim (drop_inv_O1_pair1 … H) -H * #Hm #HLK2
   [ destruct
-    elim (IHL12 L2 c 0) -IHL12 // #X #HL12 #H
+    elim (IHL12 L2 b 0) -IHL12 // #X #HL12 #H
     <(drop_inv_O2 … H) in HL12; -H /3 width=3 by lsubsv_pair, drop_pair, ex2_intro/
   | elim (IHL12 … HLK2) -L2 /3 width=3 by drop_drop_lt, ex2_intro/
   ]
-| #L1 #L2 #W #V #d1 #HWV #HW #HVd1 #HWd1 #_ #IHL12 #K2 #c #k #H
+| #L1 #L2 #W #V #d1 #HWV #HW #HVd1 #HWd1 #_ #IHL12 #K2 #b #k #H
   elim (drop_inv_O1_pair1 … H) -H * #Hm #HLK2
   [ destruct
-    elim (IHL12 L2 c 0) -IHL12 // #X #HL12 #H
+    elim (IHL12 L2 b 0) -IHL12 // #X #HL12 #H
     <(drop_inv_O2 … H) in HL12; -H /3 width=4 by lsubsv_beta, drop_pair, ex2_intro/
   | elim (IHL12 … HLK2) -L2 /3 width=3 by drop_drop_lt, ex2_intro/
   ]

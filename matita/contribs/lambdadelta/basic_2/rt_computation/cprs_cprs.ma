@@ -104,7 +104,7 @@ qed-.
 
 (* Basic_1: was just: pr3_pr2_pr2_t *)
 (* Basic_1: includes: pr3_pr0_pr2_t *)
-lemma lpr_cpr_trans: ∀G. c_r_transitive … (cpr G) (λ_. lpr G).
+lemma lpr_cpr_trans: ∀G. b_c_transitive … (cpr G) (λ_. lpr G).
 #G #L2 #T1 #T2 #HT12 elim HT12 -G -L2 -T1 -T2
 [ /2 width=3 by/
 | #G #L2 #K2 #V0 #V2 #W2 #i #HLK2 #_ #HVW2 #IHV02 #L1 #HL12
@@ -124,8 +124,8 @@ lemma cpr_bind2: ∀G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡ V2 → ∀I,T1,T2. ⦃G, L.
 (* Advanced properties ******************************************************)
 
 (* Basic_1: was only: pr3_pr2_pr3_t pr3_wcpr0_t *)
-lemma lpr_cprs_trans: ∀G. c_rs_transitive … (cpr G) (λ_. lpr G).
-#G @c_r_trans_LTC1 /2 width=3 by lpr_cpr_trans/ (**) (* full auto fails *)
+lemma lpr_cprs_trans: ∀G. b_rs_transitive … (cpr G) (λ_. lpr G).
+#G @b_c_trans_LTC1 /2 width=3 by lpr_cpr_trans/ (**) (* full auto fails *)
 qed-.
 
 (* Basic_1: was: pr3_strip *)

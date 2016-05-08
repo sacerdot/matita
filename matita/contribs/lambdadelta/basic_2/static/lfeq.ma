@@ -71,9 +71,9 @@ lemma lfeq_inv_lref: ∀Y1,Y2,i. Y1 ≡[#⫯i] Y2 →
 /3 width=8 by ex3_5_intro, or_introl, or_intror, conj/
 qed-.
 
-lemma lfeq_inv_bind: ∀I,L1,L2,V,T,p. L1 ≡[ⓑ{p,I}V.T] L2 →
+lemma lfeq_inv_bind: ∀p,I,L1,L2,V,T. L1 ≡[ⓑ{p,I}V.T] L2 →
                      L1 ≡[V] L2 ∧ L1.ⓑ{I}V ≡[T] L2.ⓑ{I}V.
-#I #L1 #L2 #V #T #p #H elim (lfxs_inv_bind … H) -H /2 width=3 by conj/
+#p #I #L1 #L2 #V #T #H elim (lfxs_inv_bind … H) -H /2 width=3 by conj/
 qed-.
 
 lemma lfeq_inv_flat: ∀I,L1,L2,V,T. L1 ≡[ⓕ{I}V.T] L2 →
@@ -104,10 +104,10 @@ lemma lfeq_inv_lref_pair_dx: ∀I,Y1,L2,V2,i. Y1 ≡[#⫯i] L2.ⓑ{I}V2 →
 
 (* Basic forward lemmas *****************************************************)
 
-lemma lfeq_fwd_bind_sn: ∀I,L1,L2,V,T,p. L1 ≡[ⓑ{p,I}V.T] L2 → L1 ≡[V] L2.
+lemma lfeq_fwd_bind_sn: ∀p,I,L1,L2,V,T. L1 ≡[ⓑ{p,I}V.T] L2 → L1 ≡[V] L2.
 /2 width=4 by lfxs_fwd_bind_sn/ qed-.
 
-lemma lfeq_fwd_bind_dx: ∀I,L1,L2,V,T,p.
+lemma lfeq_fwd_bind_dx: ∀p,I,L1,L2,V,T.
                         L1 ≡[ⓑ{p,I}V.T] L2 → L1.ⓑ{I}V ≡[T] L2.ⓑ{I}V.
 /2 width=2 by lfxs_fwd_bind_dx/ qed-.
 

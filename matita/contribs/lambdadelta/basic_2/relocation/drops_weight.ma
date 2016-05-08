@@ -21,21 +21,21 @@ include "basic_2/relocation/drops.ma".
 (* Forward lemmas with weight for local environments ************************)
 
 (* Basic_2A1: includes: drop_fwd_lw *)
-lemma drops_fwd_lw: ∀L1,L2,c,f. ⬇*[c, f] L1 ≡ L2 → ♯{L2} ≤ ♯{L1}.
-#L1 #L2 #c #f #H elim H -L1 -L2 -f //
+lemma drops_fwd_lw: ∀b,f,L1,L2. ⬇*[b, f] L1 ≡ L2 → ♯{L2} ≤ ♯{L1}.
+#b #f #L1 #L2 #H elim H -f -L1 -L2 //
 [ /2 width=3 by transitive_le/
-| #I #L1 #L2 #V1 #V2 #f #_ #HV21 #IHL12 normalize
+| #f #I #L1 #L2 #V1 #V2 #_ #HV21 #IHL12 normalize
   >(lifts_fwd_tw … HV21) -HV21 /2 width=1 by monotonic_le_plus_l/
 ]
 qed-.
 
 (* Basic_2A1: includes: drop_fwd_lw_lt *)
-lemma drops_fwd_lw_lt: ∀L1,L2,f. ⬇*[Ⓣ, f] L1 ≡ L2 →
+lemma drops_fwd_lw_lt: ∀f,L1,L2. ⬇*[Ⓣ, f] L1 ≡ L2 →
                        (𝐈⦃f⦄ → ⊥) → ♯{L2} < ♯{L1}.
-#L1 #L2 #f #H elim H -L1 -L2 -f
+#f #L1 #L2 #H elim H -f -L1 -L2
 [ #f #Hf #Hnf elim Hnf -Hnf /2 width=1 by/
 | /3 width=3 by drops_fwd_lw, le_to_lt_to_lt/
-| #I #L1 #L2 #V1 #V2 #f #_ #HV21 #IHL12 #H normalize in ⊢ (?%%); -I
+| #f #I #L1 #L2 #V1 #V2 #_ #HV21 #IHL12 #H normalize in ⊢ (?%%); -I
   >(lifts_fwd_tw … HV21) -V2 /5 width=3 by isid_push, monotonic_lt_plus_l/
 ]
 qed-.
@@ -43,14 +43,14 @@ qed-.
 (* Forward lemmas with restricted weight for closures ***********************)
 
 (* Basic_2A1: includes: drop_fwd_rfw *)
-lemma drops_pair2_fwd_rfw: ∀I,L,K,V,c,f. ⬇*[c, f] L ≡ K.ⓑ{I}V → ∀T. ♯{K, V} < ♯{L, T}.
-#I #L #K #V #c #f #HLK lapply (drops_fwd_lw … HLK) -HLK
+lemma drops_pair2_fwd_rfw: ∀b,f,I,L,K,V. ⬇*[b, f] L ≡ K.ⓑ{I}V → ∀T. ♯{K, V} < ♯{L, T}.
+#b #f #I #L #K #V #HLK lapply (drops_fwd_lw … HLK) -HLK
 normalize in ⊢ (%→?→?%%); /3 width=3 by le_to_lt_to_lt/
 qed-.
 
 (* Advanced inversion lemma *************************************************)
 
-lemma drops_inv_x_pair_xy: ∀I,L,V,c,f. ⬇*[c,f] L ≡ L.ⓑ{I}V → ⊥.
-#I #L #V #c #f #H lapply (drops_fwd_lw … H) -c -f
+lemma drops_inv_x_pair_xy: ∀b,f,I,L,V. ⬇*[b,f] L ≡ L.ⓑ{I}V → ⊥.
+#b #f #I #L #V #H lapply (drops_fwd_lw … H) -b -f
 /2 width=4 by lt_le_false/ (**) (* full auto is a bit slow: 19s *)
 qed-.

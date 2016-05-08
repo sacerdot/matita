@@ -19,17 +19,17 @@ include "basic_2/rt_transition/cpg.ma".
 
 (* Properties with restricted refinement for local environments *************)
 
-lemma lsubr_cpg_trans: ∀h,r,G. lsub_trans … (cpg h r G) lsubr.
-#h #r #G #L1 #T1 #T2 #H elim H -r -G -L1 -T1 -T2
+lemma lsubr_cpg_trans: ∀h,c,G. lsub_trans … (cpg h c G) lsubr.
+#h #c #G #L1 #T1 #T2 #H elim H -c -G -L1 -T1 -T2
 [ //
 | /2 width=2 by cpg_st/
-| #r #G #L1 #V1 #V2 #W2 #_ #HVW2 #IH #X #H
+| #c #G #L1 #V1 #V2 #W2 #_ #HVW2 #IH #X #H
   elim (lsubr_inv_abbr2 … H) -H #L2 #HL21 #H destruct
   /3 width=3 by cpg_delta/
-| #r #G #L1 #V1 #V2 #W2 #_ #HVW2 #IH #X #H
+| #c #G #L1 #V1 #V2 #W2 #_ #HVW2 #IH #X #H
   elim (lsubr_inv_abst2 … H) -H * #L2 [2: #V ] #HL21 #H destruct
   /4 width=3 by cpg_delta, cpg_lt, cpg_ct/
-| #r #I1 #G #L1 #V1 #T1 #U1 #i #_ #HTU1 #IH #X #H
+| #c #I1 #G #L1 #V1 #T1 #U1 #i #_ #HTU1 #IH #X #H
   elim (lsubr_fwd_pair2 … H) -H #I2 #L2 #V2 #HL21 #H destruct
   /3 width=3 by cpt_lref/
 |6,11: /4 width=1 by cpg_bind, cpg_beta, lsubr_pair/

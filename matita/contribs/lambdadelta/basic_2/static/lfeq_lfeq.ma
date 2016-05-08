@@ -21,7 +21,7 @@ include "basic_2/static/lfeq_lreq.ma".
 
 (* Main properties **********************************************************)
 
-theorem lfeq_bind: ∀I,L1,L2,V1,V2,T,p.
+theorem lfeq_bind: ∀p,I,L1,L2,V1,V2,T.
                    L1 ≡[V1] L2 → L1.ⓑ{I}V1 ≡[T] L2.ⓑ{I}V2 →
                    L1 ≡[ⓑ{p,I}V1.T] L2.
 /2 width=2 by lfxs_bind/ qed.

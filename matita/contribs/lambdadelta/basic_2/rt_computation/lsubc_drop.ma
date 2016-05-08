@@ -21,19 +21,19 @@ include "basic_2/computation/lsubc.ma".
 
 (* Basic_1: was: csubc_drop_conf_O *)
 (* Note: the constant 0 can not be generalized *)
-lemma lsubc_drop_O1_trans: ∀RP,G,L1,L2. G ⊢ L1 ⫃[RP] L2 → ∀K2,c,k. ⬇[c, 0, k] L2 ≡ K2 →
-                           ∃∃K1. ⬇[c, 0, k] L1 ≡ K1 & G ⊢ K1 ⫃[RP] K2.
+lemma lsubc_drop_O1_trans: ∀RP,G,L1,L2. G ⊢ L1 ⫃[RP] L2 → ∀K2,b,k. ⬇[b, 0, k] L2 ≡ K2 →
+                           ∃∃K1. ⬇[b, 0, k] L1 ≡ K1 & G ⊢ K1 ⫃[RP] K2.
 #RP #G #L1 #L2 #H elim H -L1 -L2
-[ #X #c #k #H elim (drop_inv_atom1 … H) -H /4 width=3 by drop_atom, ex2_intro/
-| #I #L1 #L2 #V #_ #IHL12 #X #c #k #H
+[ #X #b #k #H elim (drop_inv_atom1 … H) -H /4 width=3 by drop_atom, ex2_intro/
+| #I #L1 #L2 #V #_ #IHL12 #X #b #k #H
   elim (drop_inv_O1_pair1 … H) -H * #Hm #H destruct
-  [ elim (IHL12 L2 c 0) -IHL12 // #X #H <(drop_inv_O2 … H) -H
+  [ elim (IHL12 L2 b 0) -IHL12 // #X #H <(drop_inv_O2 … H) -H
     /3 width=3 by lsubc_pair, drop_pair, ex2_intro/
   | elim (IHL12 … H) -L2 /3 width=3 by drop_drop_lt, ex2_intro/
   ]
-| #L1 #L2 #V #W #A #HV #H1W #H2W #_ #IHL12 #X #c #k #H
+| #L1 #L2 #V #W #A #HV #H1W #H2W #_ #IHL12 #X #b #k #H
   elim (drop_inv_O1_pair1 … H) -H * #Hm #H destruct
-  [ elim (IHL12 L2 c 0) -IHL12 // #X #H <(drop_inv_O2 … H) -H
+  [ elim (IHL12 L2 b 0) -IHL12 // #X #H <(drop_inv_O2 … H) -H
     /3 width=8 by lsubc_beta, drop_pair, ex2_intro/
   | elim (IHL12 … H) -L2 /3 width=3 by drop_drop_lt, ex2_intro/
   ]

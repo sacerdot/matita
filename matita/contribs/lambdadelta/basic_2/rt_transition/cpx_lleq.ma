@@ -47,7 +47,7 @@ lemma cpx_lleq_conf: ∀h,o,G,L2,T1,T2. ⦃G, L2⦄ ⊢ T1 ➡[h, o] T2 →
                      ∀L1. L2 ≡[T1, 0] L1 → ⦃G, L1⦄ ⊢ T1 ➡[h, o] T2.
 /3 width=3 by lleq_cpx_trans, lleq_sym/ qed-.
 
-lemma cpx_lleq_conf_sn: ∀h,o,G. c_r_confluent1 … (cpx h o G) (lleq 0).
+lemma cpx_lleq_conf_sn: ∀h,o,G. b_c_confluent1 … (cpx h o G) (lleq 0).
 /3 width=6 by cpx_llpx_sn_conf, lift_mono, ex2_intro/ qed-.
 
 lemma cpx_lleq_conf_dx: ∀h,o,G,L2,T1,T2. ⦃G, L2⦄ ⊢ T1 ➡[h, o] T2 →

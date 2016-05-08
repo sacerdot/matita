@@ -36,7 +36,7 @@ fact lstas_cpr_lpr_aux: ∀h,o,G0,L0,T0.
   lapply (drop_mono … HK0 … HLK1) -HK0 #H destruct
   elim (lstas_inv_lref1 … H2) -H2 * #K0 #V0 #X0 [3,6: #d0 ] #HK0 #HVX0 [1,2: #HX02 #H |3,5: #HX02 |4,6: #H1 #H2 ] destruct
   lapply (drop_mono … HK0 … HLK1) -HK0 #H destruct
-  [ lapply (le_plus_to_le_r … Hd21) -Hd21 #Hd21 |3: -Hd21 ]
+  [ lapply (le_plus_to_le_c … Hd21) -Hd21 #Hd21 |3: -Hd21 ]
   lapply (fqup_lref … G1 … HLK1) #HKV1
   elim (lpr_drop_conf … HLK1 … HL12) -HL12 #X #H #HLK2
   elim (lpr_inv_pair1 … H) -H #K2 [ #W2 | #W2 | #V2 ] #HK12 [ #HW12 | #HW12 | #HV12 ] #H destruct

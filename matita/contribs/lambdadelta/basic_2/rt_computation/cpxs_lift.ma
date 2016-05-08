@@ -40,7 +40,7 @@ lemma lstas_cpxs: ∀h,o,G,L,T1,T2,d2. ⦃G, L⦄ ⊢ T1 •*[h, d2] T2 →
 | #G #L #K #V1 #V2 #W2 #i #d2 #HLK #_ #HVW2 #IHV12 #d1 #H #Hd21
   elim (da_inv_lref … H) -H * #K0 #V0 [| #d0 ] #HLK0
   lapply (drop_mono … HLK0 … HLK) -HLK0 #H destruct
-  #HV1 #H destruct lapply (le_plus_to_le_r … Hd21) -Hd21
+  #HV1 #H destruct lapply (le_plus_to_le_c … Hd21) -Hd21
   /3 width=7 by cpxs_delta/
 | /4 width=3 by cpxs_bind_dx, da_inv_bind/
 | /4 width=3 by cpxs_flat_dx, da_inv_flat/

@@ -21,9 +21,9 @@ include "basic_2/computation/csx.ma".
 (* Relocation properties ****************************************************)
 
 (* Basic_1: was just: sn3_lift *)
-lemma csx_lift: ∀h,o,G,L2,L1,T1,c,l,k. ⦃G, L1⦄ ⊢ ⬊*[h, o] T1 →
-                ∀T2. ⬇[c, l, k] L2 ≡ L1 → ⬆[l, k] T1 ≡ T2 → ⦃G, L2⦄ ⊢ ⬊*[h, o] T2.
-#h #o #G #L2 #L1 #T1 #c #l #k #H elim H -T1 #T1 #_ #IHT1 #T2 #HL21 #HT12
+lemma csx_lift: ∀h,o,G,L2,L1,T1,b,l,k. ⦃G, L1⦄ ⊢ ⬊*[h, o] T1 →
+                ∀T2. ⬇[b, l, k] L2 ≡ L1 → ⬆[l, k] T1 ≡ T2 → ⦃G, L2⦄ ⊢ ⬊*[h, o] T2.
+#h #o #G #L2 #L1 #T1 #b #l #k #H elim H -T1 #T1 #_ #IHT1 #T2 #HL21 #HT12
 @csx_intro #T #HLT2 #HT2
 elim (cpx_inv_lift1 … HLT2 … HL21 … HT12) -HLT2 #T0 #HT0 #HLT10
 @(IHT1 … HLT10) // -L1 -L2 #H destruct
@@ -31,9 +31,9 @@ elim (cpx_inv_lift1 … HLT2 … HL21 … HT12) -HLT2 #T0 #HT0 #HLT10
 qed.
 
 (* Basic_1: was just: sn3_gen_lift *)
-lemma csx_inv_lift: ∀h,o,G,L2,L1,T1,c,l,k. ⦃G, L1⦄ ⊢ ⬊*[h, o] T1 →
-                    ∀T2. ⬇[c, l, k] L1 ≡ L2 → ⬆[l, k] T2 ≡ T1 → ⦃G, L2⦄ ⊢ ⬊*[h, o] T2.
-#h #o #G #L2 #L1 #T1 #c #l #k #H elim H -T1 #T1 #_ #IHT1 #T2 #HL12 #HT21
+lemma csx_inv_lift: ∀h,o,G,L2,L1,T1,b,l,k. ⦃G, L1⦄ ⊢ ⬊*[h, o] T1 →
+                    ∀T2. ⬇[b, l, k] L1 ≡ L2 → ⬆[l, k] T2 ≡ T1 → ⦃G, L2⦄ ⊢ ⬊*[h, o] T2.
+#h #o #G #L2 #L1 #T1 #b #l #k #H elim H -T1 #T1 #_ #IHT1 #T2 #HL12 #HT21
 @csx_intro #T #HLT2 #HT2
 elim (lift_total T l k) #T0 #HT0
 lapply (cpx_lift … HLT2 … HL12 … HT21 … HT0) -HLT2 #HLT10

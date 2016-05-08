@@ -21,15 +21,15 @@ include "basic_2/reduction/cpx.ma".
 
 (* Note: lemma 1000 *)
 lemma cpx_llpx_sn_conf: ∀R. (∀L. reflexive … (R L)) → d_liftable R → d_deliftable_sn R →
-                        ∀h,o,G. c_r_confluent1 … (cpx h o G) (llpx_sn R 0).
+                        ∀h,o,G. b_c_confluent1 … (cpx h o G) (llpx_sn R 0).
 #R #H1R #H2R #H3R #h #o #G #Ls #T1 #T2 #H elim H -G -Ls -T1 -T2
 [ //
 | /3 width=4 by llpx_sn_fwd_length, llpx_sn_sort/
-| #I #G #Ls #Ks #V1c #V2c #W2c #i #HLKs #_ #HVW2c #IHV12c #Ld #H elim (llpx_sn_inv_lref_ge_sn … H … HLKs) // -H
-  #Kd #V1l #HLKd #HV1c #HV1sd
+| #I #G #Ls #Ks #V1b #V2b #W2b #i #HLKs #_ #HVW2b #IHV12b #Ld #H elim (llpx_sn_inv_lref_ge_sn … H … HLKs) // -H
+  #Kd #V1l #HLKd #HV1b #HV1sd
   lapply (drop_fwd_drop2 … HLKs) -HLKs #HLKs
   lapply (drop_fwd_drop2 … HLKd) -HLKd #HLKd
-  @(llpx_sn_lift_le … HLKs HLKd … HVW2c) -HLKs -HLKd -HVW2c /2 width=1 by/ (**) (* full auto too slow *)
+  @(llpx_sn_lift_le … HLKs HLKd … HVW2b) -HLKs -HLKd -HVW2b /2 width=1 by/ (**) (* full auto too slow *)
 | #a #I #G #Ls #V1 #V2 #T1 #T2 #_ #_ #IHV12 #IHT12 #Ld #H elim (llpx_sn_inv_bind_O … H) -H
   /4 width=5 by llpx_sn_bind_repl_SO, llpx_sn_bind/
 | #I #G #Ls #V1 #V2 #T1 #T2 #_ #_ #IHV12 #IHT12 #Ld #H elim (llpx_sn_inv_flat … H) -H

@@ -21,13 +21,13 @@ include "basic_2/static/lsubr.ma".
 
 (* Basic_2A1: includes: lsubr_fwd_drop2_pair *)
 lemma lsubr_fwd_drops2_pair: ∀L1,L2. L1 ⫃ L2 → 
-                             ∀I,K2,W,c,f. 𝐔⦃f⦄ → ⬇*[c, f] L2 ≡ K2.ⓑ{I}W →
-                             (∃∃K1. K1 ⫃ K2 & ⬇*[c, f] L1 ≡ K1.ⓑ{I}W) ∨
-                             ∃∃K1,V. K1 ⫃ K2 & ⬇*[c, f] L1 ≡ K1.ⓓⓝW.V & I = Abst.
+                             ∀b,f,I,K2,W. 𝐔⦃f⦄ → ⬇*[b, f] L2 ≡ K2.ⓑ{I}W →
+                             (∃∃K1. K1 ⫃ K2 & ⬇*[b, f] L1 ≡ K1.ⓑ{I}W) ∨
+                             ∃∃K1,V. K1 ⫃ K2 & ⬇*[b, f] L1 ≡ K1.ⓓⓝW.V & I = Abst.
 #L1 #L2 #H elim H -L1 -L2
-[ #L #I #K2 #W #c #f #_ #H
+[ #L #b #f #I #K2 #W #_ #H
   elim (drops_inv_atom1 … H) -H #H destruct
-| #J #L1 #L2 #V #HL12 #IH #I #K2 #W #c #f #Hf #H
+| #J #L1 #L2 #V #HL12 #IH #b #f #I #K2 #W  #Hf #H
   elim (drops_inv_pair1_isuni … Hf H) -Hf -H *
   [ #Hf #H destruct -IH
     /4 width=4 by drops_refl, ex2_intro, or_introl/
@@ -35,7 +35,7 @@ lemma lsubr_fwd_drops2_pair: ∀L1,L2. L1 ⫃ L2 →
     elim (IH … Hg HLK2) -IH -Hg -HLK2 *
     /4 width=4 by drops_drop, ex3_2_intro, ex2_intro, or_introl, or_intror/
   ]
-| #L1 #L2 #V1 #V2 #HL12 #IH #I #K2 #W #c #f #Hf #H
+| #L1 #L2 #V1 #V2 #HL12 #IH #b #f #I #K2 #W #Hf #H
   elim (drops_inv_pair1_isuni … Hf H) -Hf -H *
   [ #Hf #H destruct -IH
     /4 width=4 by drops_refl, ex3_2_intro, or_intror/
@@ -48,9 +48,9 @@ qed-.
 
 (* Basic_2A1: includes: lsubr_fwd_drop2_abbr *)
 lemma lsubr_fwd_drops2_abbr: ∀L1,L2. L1 ⫃ L2 →
-                             ∀K2,V,c,f.  𝐔⦃f⦄ → ⬇*[c, f] L2 ≡ K2.ⓓV →
-                             ∃∃K1. K1 ⫃ K2 & ⬇*[c, f] L1 ≡ K1.ⓓV.
-#L1 #L2 #HL12 #K2 #V #c #f #Hf #HLK2
+                             ∀b,f,K2,V.  𝐔⦃f⦄ → ⬇*[b, f] L2 ≡ K2.ⓓV →
+                             ∃∃K1. K1 ⫃ K2 & ⬇*[b, f] L1 ≡ K1.ⓓV.
+#L1 #L2 #HL12 #b #f #K2 #V #Hf #HLK2
 elim (lsubr_fwd_drops2_pair … HL12 … Hf HLK2) -L2 -Hf // *
 #K1 #W #_ #_ #H destruct
 qed-.

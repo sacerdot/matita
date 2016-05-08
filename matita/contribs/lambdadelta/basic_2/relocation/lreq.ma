@@ -33,7 +33,7 @@ lemma lreq_eq_repl_back: ∀L1,L2. eq_repl_back … (λf. L1 ≡[f] L2).
 lemma lreq_eq_repl_fwd: ∀L1,L2. eq_repl_fwd … (λf. L1 ≡[f] L2).
 /2 width=3 by lexs_eq_repl_fwd/ qed-.
 
-lemma sle_lreq_trans: ∀L1,L2,f2. L1 ≡[f2] L2 →
+lemma sle_lreq_trans: ∀f2,L1,L2. L1 ≡[f2] L2 →
                       ∀f1. f1 ⊆ f2 → L1 ≡[f1] L2.
 /2 width=3 by sle_lexs_trans/ qed-.
 
@@ -50,48 +50,48 @@ qed-.
 (* Basic inversion lemmas ***************************************************)
 
 (* Basic_2A1: includes: lreq_inv_atom1 *)
-lemma lreq_inv_atom1: ∀Y,f. ⋆ ≡[f] Y → Y = ⋆.
+lemma lreq_inv_atom1: ∀f,Y. ⋆ ≡[f] Y → Y = ⋆.
 /2 width=4 by lexs_inv_atom1/ qed-.
 
 (* Basic_2A1: includes: lreq_inv_pair1 *)
-lemma lreq_inv_next1: ∀J,K1,Y,W1,g. K1.ⓑ{J}W1 ≡[⫯g] Y →
+lemma lreq_inv_next1: ∀g,J,K1,Y,W1. K1.ⓑ{J}W1 ≡[⫯g] Y →
                       ∃∃K2. K1 ≡[g] K2 & Y = K2.ⓑ{J}W1.
-#J #K1 #Y #W1 #g #H elim (lexs_inv_next1 … H) -H /2 width=3 by ex2_intro/
+#g #J #K1 #Y #W1 #H elim (lexs_inv_next1 … H) -H /2 width=3 by ex2_intro/
 qed-.
 
 (* Basic_2A1: includes: lreq_inv_zero1 lreq_inv_succ1 *)
-lemma lreq_inv_push1: ∀J,K1,Y,W1,g. K1.ⓑ{J}W1 ≡[↑g] Y →
+lemma lreq_inv_push1: ∀g,J,K1,Y,W1. K1.ⓑ{J}W1 ≡[↑g] Y →
                       ∃∃K2,W2. K1 ≡[g] K2 & Y = K2.ⓑ{J}W2.
-#J #K1 #Y #W1 #g #H elim (lexs_inv_push1 … H) -H /2 width=4 by ex2_2_intro/ qed-.
+#g #J #K1 #Y #W1 #H elim (lexs_inv_push1 … H) -H /2 width=4 by ex2_2_intro/ qed-.
 
 (* Basic_2A1: includes: lreq_inv_atom2 *)
-lemma lreq_inv_atom2: ∀X,f. X ≡[f] ⋆ → X = ⋆.
+lemma lreq_inv_atom2: ∀f,X. X ≡[f] ⋆ → X = ⋆.
 /2 width=4 by lexs_inv_atom2/ qed-.
 
 (* Basic_2A1: includes: lreq_inv_pair2 *)
-lemma lreq_inv_next2: ∀J,X,K2,W2,g. X ≡[⫯g] K2.ⓑ{J}W2 →
+lemma lreq_inv_next2: ∀g,J,X,K2,W2. X ≡[⫯g] K2.ⓑ{J}W2 →
                       ∃∃K1. K1 ≡[g] K2 & X = K1.ⓑ{J}W2.
-#J #X #K2 #W2 #g #H elim (lexs_inv_next2 … H) -H /2 width=3 by ex2_intro/ qed-.
+#g #J #X #K2 #W2 #H elim (lexs_inv_next2 … H) -H /2 width=3 by ex2_intro/ qed-.
 
 (* Basic_2A1: includes: lreq_inv_zero2 lreq_inv_succ2 *)
-lemma lreq_inv_push2: ∀J,X,K2,W2,g. X ≡[↑g] K2.ⓑ{J}W2 →
+lemma lreq_inv_push2: ∀g,J,X,K2,W2. X ≡[↑g] K2.ⓑ{J}W2 →
                       ∃∃K1,W1. K1 ≡[g] K2 & X = K1.ⓑ{J}W1.
-#J #X #K2 #W2 #g #H elim (lexs_inv_push2 … H) -H /2 width=4 by ex2_2_intro/ qed-.
+#g #J #X #K2 #W2 #H elim (lexs_inv_push2 … H) -H /2 width=4 by ex2_2_intro/ qed-.
 
 (* Basic_2A1: includes: lreq_inv_pair *)
-lemma lreq_inv_next: ∀I1,I2,L1,L2,V1,V2,f.
+lemma lreq_inv_next: ∀f,I1,I2,L1,L2,V1,V2.
                      L1.ⓑ{I1}V1 ≡[⫯f] (L2.ⓑ{I2}V2) →
                      ∧∧ L1 ≡[f] L2 & V1 = V2 & I1 = I2.
 /2 width=1 by lexs_inv_next/ qed-.
 
 (* Basic_2A1: includes: lreq_inv_succ *)
-lemma lreq_inv_push: ∀I1,I2,L1,L2,V1,V2,f.
+lemma lreq_inv_push: ∀f,I1,I2,L1,L2,V1,V2.
                      L1.ⓑ{I1}V1 ≡[↑f] (L2.ⓑ{I2}V2) →
                      L1 ≡[f] L2 ∧ I1 = I2.
-#I1 #I2 #L1 #L2 #V1 #V2 #f #H elim (lexs_inv_push … H) -H /2 width=1 by conj/
+#f #I1 #I2 #L1 #L2 #V1 #V2 #H elim (lexs_inv_push … H) -H /2 width=1 by conj/
 qed-.
 
-lemma lreq_inv_tl: ∀I,L1,L2,V,f. L1 ≡[⫱f] L2 → L1.ⓑ{I}V ≡[f] L2.ⓑ{I}V.
+lemma lreq_inv_tl: ∀f,I,L1,L2,V. L1 ≡[⫱f] L2 → L1.ⓑ{I}V ≡[f] L2.ⓑ{I}V.
 /2 width=1 by lexs_inv_tl/ qed-.
 
 (* Basic_2A1: removed theorems 5:

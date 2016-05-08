@@ -20,6 +20,6 @@ include "basic_2/relocation/lifts.ma".
 (* Forward lemmas with weight for terms *************************************)
 
 (* Basic_2A1: includes: lift_fwd_tw *)
-lemma lifts_fwd_tw: ∀T1,T2,f. ⬆*[f] T1 ≡ T2 → ♯{T1} = ♯{T2}.
-#T1 #T2 #f #H elim H -T1 -T2 -f normalize //
+lemma lifts_fwd_tw: ∀f,T1,T2. ⬆*[f] T1 ≡ T2 → ♯{T1} = ♯{T2}.
+#f #T1 #T2 #H elim H -f -T1 -T2 normalize //
 qed-.

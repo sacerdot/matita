@@ -89,9 +89,9 @@ lemma lfxs_inv_lref: ∀R,Y1,Y2,i. Y1 ⦻*[R, #⫯i] Y2 →
 ]
 qed-.
 
-lemma lfxs_inv_bind: ∀R,I,L1,L2,V1,V2,T,p. L1 ⦻*[R, ⓑ{p,I}V1.T] L2 → R L1 V1 V2 →
+lemma lfxs_inv_bind: ∀R,p,I,L1,L2,V1,V2,T. L1 ⦻*[R, ⓑ{p,I}V1.T] L2 → R L1 V1 V2 →
                      L1 ⦻*[R, V1] L2 ∧ L1.ⓑ{I}V1 ⦻*[R, T] L2.ⓑ{I}V2.
-#R #I #L1 #L2 #V1 #V2 #T #p * #f #Hf #HL #HV elim (frees_inv_bind … Hf) -Hf
+#R #p #I #L1 #L2 #V1 #V2 #T * #f #Hf #HL #HV elim (frees_inv_bind … Hf) -Hf
 /6 width=6 by sle_lexs_trans, lexs_inv_tl, sor_inv_sle_dx, sor_inv_sle_sn, ex2_intro, conj/
 qed-.
 
@@ -141,14 +141,14 @@ qed-.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma lfxs_fwd_bind_sn: ∀R,I,L1,L2,V,T,p. L1 ⦻*[R, ⓑ{p,I}V.T] L2 → L1 ⦻*[R, V] L2.
-#R #I #L1 #L2 #V #T #p * #f #Hf #HL elim (frees_inv_bind … Hf) -Hf
+lemma lfxs_fwd_bind_sn: ∀R,p,I,L1,L2,V,T. L1 ⦻*[R, ⓑ{p,I}V.T] L2 → L1 ⦻*[R, V] L2.
+#R #p #I #L1 #L2 #V #T * #f #Hf #HL elim (frees_inv_bind … Hf) -Hf
 /4 width=6 by sle_lexs_trans, sor_inv_sle_sn, ex2_intro/
 qed-.
 
-lemma lfxs_fwd_bind_dx: ∀R,I,L1,L2,V1,V2,T,p. L1 ⦻*[R, ⓑ{p,I}V1.T] L2 →
+lemma lfxs_fwd_bind_dx: ∀R,p,I,L1,L2,V1,V2,T. L1 ⦻*[R, ⓑ{p,I}V1.T] L2 →
                         R L1 V1 V2 → L1.ⓑ{I}V1 ⦻*[R, T] L2.ⓑ{I}V2.
-#R #I #L1 #L2 #V1 #V2 #T #p #H #HV elim (lfxs_inv_bind … H HV) -H -HV //
+#R #p #I #L1 #L2 #V1 #V2 #T #H #HV elim (lfxs_inv_bind … H HV) -H -HV //
 qed-.
 
 lemma lfxs_fwd_flat_sn: ∀R,I,L1,L2,V,T. L1 ⦻*[R, ⓕ{I}V.T] L2 → L1 ⦻*[R, V] L2.

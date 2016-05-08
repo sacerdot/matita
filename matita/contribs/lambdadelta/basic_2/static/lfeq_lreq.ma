@@ -25,7 +25,7 @@ qed-.
 
 (* Properties with ranged equivalence for local environments ****************)
 
-lemma lreq_lfeq: ∀L1,L2,T,f. L1 ⊢ 𝐅*⦃T⦄ ≡ f → L1 ≡[f] L2 → L1 ≡[T] L2.
+lemma lreq_lfeq: ∀f,L1,L2,T. L1 ⊢ 𝐅*⦃T⦄ ≡ f → L1 ≡[f] L2 → L1 ≡[T] L2.
 /2 width=3 by ex2_intro/ qed.
 
 (* Advanced properties ******************************************************)

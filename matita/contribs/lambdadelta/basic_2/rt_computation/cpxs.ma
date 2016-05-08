@@ -71,7 +71,7 @@ lemma cpxs_sort: ∀h,o,G,L,s,d1. deg h o s d1 →
 @(cpxs_strap1 … (⋆(iter d2 ℕ (next h) s)))
 [ /3 width=3 by lt_to_le/
 | @(cpx_st … (d1-d2-1)) <plus_minus_k_k
-  /2 width=1 by deg_iter, monotonic_le_minus_r/
+  /2 width=1 by deg_iter, monotonic_le_minus_c/
 ]
 qed.
 

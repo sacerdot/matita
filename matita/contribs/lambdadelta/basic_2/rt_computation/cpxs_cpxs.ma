@@ -93,7 +93,7 @@ qed-.
 
 (* Properties on sn extended parallel reduction for local environments ******)
 
-lemma lpx_cpx_trans: ∀h,o,G. c_r_transitive … (cpx h o G) (λ_.lpx h o G).
+lemma lpx_cpx_trans: ∀h,o,G. b_c_transitive … (cpx h o G) (λ_.lpx h o G).
 #h #o #G #L2 #T1 #T2 #HT12 elim HT12 -G -L2 -T1 -T2
 [ /2 width=3 by/
 | /3 width=2 by cpx_cpxs, cpx_st/
@@ -115,8 +115,8 @@ lemma cpx_bind2: ∀h,o,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡[h, o] V2 →
 
 (* Advanced properties ******************************************************)
 
-lemma lpx_cpxs_trans: ∀h,o,G. c_rs_transitive … (cpx h o G) (λ_.lpx h o G).
-#h #o #G @c_r_trans_LTC1 /2 width=3 by lpx_cpx_trans/ (**) (* full auto fails *)
+lemma lpx_cpxs_trans: ∀h,o,G. b_rs_transitive … (cpx h o G) (λ_.lpx h o G).
+#h #o #G @b_c_trans_LTC1 /2 width=3 by lpx_cpx_trans/ (**) (* full auto fails *)
 qed-.
 
 lemma cpxs_bind2_dx: ∀h,o,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡[h, o] V2 →

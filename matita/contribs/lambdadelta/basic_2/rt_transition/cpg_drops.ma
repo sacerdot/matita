@@ -19,9 +19,9 @@ include "basic_2/rt_transition/cpg.ma".
 
 (* Properties with generic slicing for local environments *******************)
 
-lemma cpg_delift: ∀h,r,I,G,K,V,T1,L,l. ⬇*[i] L ≡ (K.ⓑ{I}V) →
+lemma cpg_delift: ∀c,h,I,G,K,V,T1,L,i. ⬇*[i] L ≡ (K.ⓑ{I}V) →
                   ∃∃T2,T. ⦃G, L⦄ ⊢ T1 ➡[h, 𝟘𝟘] T2 & ⬆*[↑1] T ≡ T2.
-#h #r #I #G #K #V #T1 elim T1 -T1
+#h #c #I #G #K #V #T1 elim T1 -T1
 [ * #i #L #l /2 width=4 by cpg_atom, lift_sort, lift_gref, ex2_2_intro/
   elim (lt_or_eq_or_gt i l) #Hil [1,3: /4 width=4 by cpg_atom, lift_lref_ge_minus, lift_lref_lt, ylt_inj, yle_inj, ex2_2_intro/ ]
   destruct
@@ -35,11 +35,11 @@ lemma cpg_delift: ∀h,r,I,G,K,V,T1,L,l. ⬇*[i] L ≡ (K.ⓑ{I}V) →
 ]
 qed-.
 
-lemma cpg_inv_lref1: ∀h,r,G,L,T2,i. ⦃G, L⦄ ⊢ #i ➡[h, r] T2 →
+lemma cpg_inv_lref1: ∀h,c,G,L,T2,i. ⦃G, L⦄ ⊢ #i ➡[h, c] T2 →
                      T2 = #i ∨
-                     ∃∃I,K,V,V2. ⬇[i] L ≡ K. ⓑ{I}V & ⦃G, K⦄ ⊢ V ➡[h, r] V2 &
+                     ∃∃I,K,V,V2. ⬇[i] L ≡ K. ⓑ{I}V & ⦃G, K⦄ ⊢ V ➡[h, c] V2 &
                                  ⬆[O, i+1] V2 ≡ T2.
-#h #r #G #L #T2 #i #H
+#h #c #G #L #T2 #i #H
 elim (cpg_inv_atom1 … H) -H /2 width=1 by or_introl/ *
 [ #s #d #_ #_ #H destruct
 | #I #K #V #V2 #j #HLK #HV2 #HVT2 #H destruct /3 width=7 by ex3_4_intro, or_intror/

@@ -21,10 +21,10 @@ include "basic_2/grammar/lenv.ma".
 (* Basic_2A1: includes: lpx_sn_atom lpx_sn_pair *)
 inductive lexs (RN,RP:relation3 lenv term term): rtmap → relation lenv ≝
 | lexs_atom: ∀f. lexs RN RP f (⋆) (⋆)
-| lexs_next: ∀I,L1,L2,V1,V2,f.
+| lexs_next: ∀f,I,L1,L2,V1,V2.
              lexs RN RP f L1 L2 → RN L1 V1 V2 →
              lexs RN RP (⫯f) (L1.ⓑ{I}V1) (L2.ⓑ{I}V2)
-| lexs_push: ∀I,L1,L2,V1,V2,f.
+| lexs_push: ∀f,I,L1,L2,V1,V2.
              lexs RN RP f L1 L2 → RP L1 V1 V2 →
              lexs RN RP (↑f) (L1.ⓑ{I}V1) (L2.ⓑ{I}V2)
 .
@@ -47,111 +47,111 @@ definition lexs_transitive: relation5 (relation3 lenv term term)
 
 (* Basic inversion lemmas ***************************************************)
 
-fact lexs_inv_atom1_aux: ∀RN,RP,X,Y,f. X ⦻*[RN, RP, f] Y → X = ⋆ → Y = ⋆.
-#RN #RP #X #Y #f * -X -Y -f //
-#I #L1 #L2 #V1 #V2 #f #_ #_ #H destruct
+fact lexs_inv_atom1_aux: ∀RN,RP,f,X,Y. X ⦻*[RN, RP, f] Y → X = ⋆ → Y = ⋆.
+#RN #RP #f #X #Y * -f -X -Y //
+#f #I #L1 #L2 #V1 #V2 #_ #_ #H destruct
 qed-.
 
 (* Basic_2A1: includes lpx_sn_inv_atom1 *)
-lemma lexs_inv_atom1: ∀RN,RP,Y,f. ⋆ ⦻*[RN, RP, f] Y → Y = ⋆.
+lemma lexs_inv_atom1: ∀RN,RP,f,Y. ⋆ ⦻*[RN, RP, f] Y → Y = ⋆.
 /2 width=6 by lexs_inv_atom1_aux/ qed-.
 
-fact lexs_inv_next1_aux: ∀RN,RP,X,Y,f. X ⦻*[RN, RP, f] Y → ∀J,K1,W1,g. X = K1.ⓑ{J}W1 → f = ⫯g →
+fact lexs_inv_next1_aux: ∀RN,RP,f,X,Y. X ⦻*[RN, RP, f] Y → ∀g,J,K1,W1. X = K1.ⓑ{J}W1 → f = ⫯g →
                          ∃∃K2,W2. K1 ⦻*[RN, RP, g] K2 & RN K1 W1 W2 & Y = K2.ⓑ{J}W2.
-#RN #RP #X #Y #f * -X -Y -f
-[ #f #J #K1 #W1 #g #H destruct
-| #I #L1 #L2 #V1 #V2 #f #HL #HV #J #K1 #W1 #g #H1 #H2 <(injective_next … H2) -g destruct
+#RN #RP #f #X #Y * -f -X -Y
+[ #f #g #J #K1 #W1 #H destruct
+| #f #I #L1 #L2 #V1 #V2 #HL #HV #g #J #K1 #W1 #H1 #H2 <(injective_next … H2) -g destruct
   /2 width=5 by ex3_2_intro/
-| #I #L1 #L2 #V1 #V2 #f #_ #_ #J #K1 #W1 #g #_ #H elim (discr_push_next … H)
+| #f #I #L1 #L2 #V1 #V2 #_ #_ #g #J #K1 #W1 #_ #H elim (discr_push_next … H)
 ]
 qed-.
 
 (* Basic_2A1: includes lpx_sn_inv_pair1 *)
-lemma lexs_inv_next1: ∀RN,RP,J,K1,Y,W1,g. K1.ⓑ{J}W1 ⦻*[RN, RP, ⫯g] Y →
+lemma lexs_inv_next1: ∀RN,RP,g,J,K1,Y,W1. K1.ⓑ{J}W1 ⦻*[RN, RP, ⫯g] Y →
                       ∃∃K2,W2. K1 ⦻*[RN, RP, g] K2 & RN K1 W1 W2 & Y = K2.ⓑ{J}W2.
 /2 width=7 by lexs_inv_next1_aux/ qed-.
 
 
-fact lexs_inv_push1_aux: ∀RN,RP,X,Y,f. X ⦻*[RN, RP, f] Y → ∀J,K1,W1,g. X = K1.ⓑ{J}W1 → f = ↑g →
+fact lexs_inv_push1_aux: ∀RN,RP,f,X,Y. X ⦻*[RN, RP, f] Y → ∀g,J,K1,W1. X = K1.ⓑ{J}W1 → f = ↑g →
                          ∃∃K2,W2. K1 ⦻*[RN, RP, g] K2 & RP K1 W1 W2 & Y = K2.ⓑ{J}W2.
-#RN #RP #X #Y #f * -X -Y -f
-[ #f #J #K1 #W1 #g #H destruct
-| #I #L1 #L2 #V1 #V2 #f #_ #_ #J #K1 #W1 #g #_ #H elim (discr_next_push … H)
-| #I #L1 #L2 #V1 #V2 #f #HL #HV #J #K1 #W1 #g #H1 #H2 <(injective_push … H2) -g destruct
+#RN #RP #f #X #Y * -f -X -Y
+[ #f #g #J #K1 #W1 #H destruct
+| #f #I #L1 #L2 #V1 #V2 #_ #_ #g #J #K1 #W1 #_ #H elim (discr_next_push … H)
+| #f #I #L1 #L2 #V1 #V2 #HL #HV #g #J #K1 #W1 #H1 #H2 <(injective_push … H2) -g destruct
   /2 width=5 by ex3_2_intro/
 ]
 qed-.
 
-lemma lexs_inv_push1: ∀RN,RP,J,K1,Y,W1,g. K1.ⓑ{J}W1 ⦻*[RN, RP, ↑g] Y →
+lemma lexs_inv_push1: ∀RN,RP,g,J,K1,Y,W1. K1.ⓑ{J}W1 ⦻*[RN, RP, ↑g] Y →
                       ∃∃K2,W2. K1 ⦻*[RN, RP, g] K2 & RP K1 W1 W2 & Y = K2.ⓑ{J}W2.
 /2 width=7 by lexs_inv_push1_aux/ qed-.
 
-fact lexs_inv_atom2_aux: ∀RN,RP,X,Y,f. X ⦻*[RN, RP, f] Y → Y = ⋆ → X = ⋆.
-#RN #RP #X #Y #f * -X -Y -f //
-#I #L1 #L2 #V1 #V2 #f #_ #_ #H destruct
+fact lexs_inv_atom2_aux: ∀RN,RP,f,X,Y. X ⦻*[RN, RP, f] Y → Y = ⋆ → X = ⋆.
+#RN #RP #f #X #Y * -f -X -Y //
+#f #I #L1 #L2 #V1 #V2 #_ #_ #H destruct
 qed-.
 
 (* Basic_2A1: includes lpx_sn_inv_atom2 *)
-lemma lexs_inv_atom2: ∀RN,RP,X,f. X ⦻*[RN, RP, f] ⋆ → X = ⋆.
+lemma lexs_inv_atom2: ∀RN,RP,f,X. X ⦻*[RN, RP, f] ⋆ → X = ⋆.
 /2 width=6 by lexs_inv_atom2_aux/ qed-.
 
-fact lexs_inv_next2_aux: ∀RN,RP,X,Y,f. X ⦻*[RN, RP, f] Y → ∀J,K2,W2,g. Y = K2.ⓑ{J}W2 → f = ⫯g →
+fact lexs_inv_next2_aux: ∀RN,RP,f,X,Y. X ⦻*[RN, RP, f] Y → ∀g,J,K2,W2. Y = K2.ⓑ{J}W2 → f = ⫯g →
                          ∃∃K1,W1. K1 ⦻*[RN, RP, g] K2 & RN K1 W1 W2 & X = K1.ⓑ{J}W1.
-#RN #RP #X #Y #f * -X -Y -f
-[ #f #J #K2 #W2 #g #H destruct
-| #I #L1 #L2 #V1 #V2 #f #HL #HV #J #K2 #W2 #g #H1 #H2 <(injective_next … H2) -g destruct
+#RN #RP #f #X #Y * -f -X -Y
+[ #f #g #J #K2 #W2 #H destruct
+| #f #I #L1 #L2 #V1 #V2 #HL #HV #g #J #K2 #W2 #H1 #H2 <(injective_next … H2) -g destruct
   /2 width=5 by ex3_2_intro/
-| #I #L1 #L2 #V1 #V2 #f #_ #_ #J #K2 #W2 #g #_ #H elim (discr_push_next … H)
+| #f #I #L1 #L2 #V1 #V2 #_ #_ #g #J #K2 #W2 #_ #H elim (discr_push_next … H)
 ]
 qed-.
 
 (* Basic_2A1: includes lpx_sn_inv_pair2 *)
-lemma lexs_inv_next2: ∀RN,RP,J,X,K2,W2,g. X ⦻*[RN, RP, ⫯g] K2.ⓑ{J}W2 →
+lemma lexs_inv_next2: ∀RN,RP,g,J,X,K2,W2. X ⦻*[RN, RP, ⫯g] K2.ⓑ{J}W2 →
                       ∃∃K1,W1. K1 ⦻*[RN, RP, g] K2 & RN K1 W1 W2 & X = K1.ⓑ{J}W1.
 /2 width=7 by lexs_inv_next2_aux/ qed-.
 
-fact lexs_inv_push2_aux: ∀RN,RP,X,Y,f. X ⦻*[RN, RP, f] Y → ∀J,K2,W2,g. Y = K2.ⓑ{J}W2 → f = ↑g →
+fact lexs_inv_push2_aux: ∀RN,RP,f,X,Y. X ⦻*[RN, RP, f] Y → ∀g,J,K2,W2. Y = K2.ⓑ{J}W2 → f = ↑g →
                          ∃∃K1,W1. K1 ⦻*[RN, RP, g] K2 & RP K1 W1 W2 & X = K1.ⓑ{J}W1.
-#RN #RP #X #Y #f * -X -Y -f
+#RN #RP #f #X #Y * -f -X -Y
 [ #f #J #K2 #W2 #g #H destruct
-| #I #L1 #L2 #V1 #V2 #f #_ #_ #J #K2 #W2 #g #_ #H elim (discr_next_push … H)
-| #I #L1 #L2 #V1 #V2 #f #HL #HV #J #K2 #W2 #g #H1 #H2 <(injective_push … H2) -g destruct
+| #f #I #L1 #L2 #V1 #V2 #_ #_ #g #J #K2 #W2 #_ #H elim (discr_next_push … H)
+| #f #I #L1 #L2 #V1 #V2 #HL #HV #g #J #K2 #W2 #H1 #H2 <(injective_push … H2) -g destruct
   /2 width=5 by ex3_2_intro/
 ]
 qed-.
 
-lemma lexs_inv_push2: ∀RN,RP,J,X,K2,W2,g. X ⦻*[RN, RP, ↑g] K2.ⓑ{J}W2 →
+lemma lexs_inv_push2: ∀RN,RP,g,J,X,K2,W2. X ⦻*[RN, RP, ↑g] K2.ⓑ{J}W2 →
                       ∃∃K1,W1. K1 ⦻*[RN, RP, g] K2 & RP K1 W1 W2 & X = K1.ⓑ{J}W1.
 /2 width=7 by lexs_inv_push2_aux/ qed-.
 
 (* Basic_2A1: includes lpx_sn_inv_pair *)
-lemma lexs_inv_next: ∀RN,RP,I1,I2,L1,L2,V1,V2,f.
+lemma lexs_inv_next: ∀RN,RP,f,I1,I2,L1,L2,V1,V2.
                      L1.ⓑ{I1}V1 ⦻*[RN, RP, ⫯f] (L2.ⓑ{I2}V2) →
                      ∧∧ L1 ⦻*[RN, RP, f] L2 & RN L1 V1 V2 & I1 = I2.
-#RN #RP #I1 #I2 #L1 #L2 #V1 #V2 #f #H elim (lexs_inv_next1 … H) -H
+#RN #RP #f #I1 #I2 #L1 #L2 #V1 #V2 #H elim (lexs_inv_next1 … H) -H
 #L0 #V0 #HL10 #HV10 #H destruct /2 width=1 by and3_intro/
 qed-.
 
-lemma lexs_inv_push: ∀RN,RP,I1,I2,L1,L2,V1,V2,f.
+lemma lexs_inv_push: ∀RN,RP,f,I1,I2,L1,L2,V1,V2.
                      L1.ⓑ{I1}V1 ⦻*[RN, RP, ↑f] (L2.ⓑ{I2}V2) →
                      ∧∧ L1 ⦻*[RN, RP, f] L2 & RP L1 V1 V2 & I1 = I2.
-#RN #RP #I1 #I2 #L1 #L2 #V1 #V2 #f #H elim (lexs_inv_push1 … H) -H
+#RN #RP #f #I1 #I2 #L1 #L2 #V1 #V2 #H elim (lexs_inv_push1 … H) -H
 #L0 #V0 #HL10 #HV10 #H destruct /2 width=1 by and3_intro/
 qed-.
 
-lemma lexs_inv_tl: ∀RN,RP,I,L1,L2,V1,V2,f. L1 ⦻*[RN, RP, ⫱f] L2 →
+lemma lexs_inv_tl: ∀RN,RP,f,I,L1,L2,V1,V2. L1 ⦻*[RN, RP, ⫱f] L2 →
                    RN L1 V1 V2 → RP L1 V1 V2 → 
                    L1.ⓑ{I}V1 ⦻*[RN, RP, f] L2.ⓑ{I}V2.
-#RN #RP #I #L2 #L2 #V1 #V2 #f elim (pn_split f) *
+#RN #RP #f #I #L2 #L2 #V1 #V2 elim (pn_split f) *
 /2 width=1 by lexs_next, lexs_push/
 qed-.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma lexs_fwd_pair: ∀RN,RP,I1,I2,L1,L2,V1,V2,f. 
+lemma lexs_fwd_pair: ∀RN,RP,f,I1,I2,L1,L2,V1,V2. 
                      L1.ⓑ{I1}V1 ⦻*[RN, RP, f] L2.ⓑ{I2}V2 →
                      L1 ⦻*[RN, RP, ⫱f] L2 ∧ I1 = I2.
-#RN #RP #I1 #I2 #L2 #L2 #V1 #V2 #f #Hf
+#RN #RP #f #I1 #I2 #L2 #L2 #V1 #V2 #Hf
 elim (pn_split f) * #g #H destruct
 [ elim (lexs_inv_push … Hf) | elim (lexs_inv_next … Hf) ] -Hf
 /2 width=1 by conj/
@@ -160,8 +160,8 @@ qed-.
 (* Basic properties *********************************************************)
 
 lemma lexs_eq_repl_back: ∀RN,RP,L1,L2. eq_repl_back … (λf. L1 ⦻*[RN, RP, f] L2).
-#RN #RP #L1 #L2 #f1 #H elim H -L1 -L2 -f1 //
-#I #L1 #L2 #V1 #v2 #f1 #_ #HV #IH #f2 #H
+#RN #RP #L1 #L2 #f1 #H elim H -f1 -L1 -L2 //
+#f1 #I #L1 #L2 #V1 #v2 #_ #HV #IH #f2 #H
 [ elim (eq_inv_nx … H) -H /3 width=3 by lexs_next/
 | elim (eq_inv_px … H) -H /3 width=3 by lexs_push/
 ]
@@ -182,10 +182,10 @@ lemma lexs_refl: ∀RN,RP,f.
 qed.
 
 lemma sle_lexs_trans: ∀RN,RP. (∀L,T1,T2. RN L T1 T2 → RP L T1 T2) →
-                      ∀L1,L2,f2. L1 ⦻*[RN, RP, f2] L2 →
+                      ∀f2,L1,L2. L1 ⦻*[RN, RP, f2] L2 →
                       ∀f1. f1 ⊆ f2 → L1 ⦻*[RN, RP, f1] L2.
-#RN #RP #HR #L1 #L2 #f2 #H elim H -L1 -L2 -f2 //
-#I #L1 #L2 #V1 #V2 #f2 #_ #HV12 #IH
+#RN #RP #HR #f2 #L1 #L2 #H elim H -f2 -L1 -L2 //
+#f2 #I #L1 #L2 #V1 #V2 #_ #HV12 #IH
 [ * * [2: #n1 ] ] #f1 #H
 [ /4 width=5 by lexs_next, sle_inv_nn/
 | /4 width=5 by lexs_push, sle_inv_pn/
@@ -195,10 +195,10 @@ lemma sle_lexs_trans: ∀RN,RP. (∀L,T1,T2. RN L T1 T2 → RP L T1 T2) →
 qed-.
 
 lemma sle_lexs_conf: ∀RN,RP. (∀L,T1,T2. RP L T1 T2 → RN L T1 T2) →
-                     ∀L1,L2,f1. L1 ⦻*[RN, RP, f1] L2 →
+                     ∀f1,L1,L2. L1 ⦻*[RN, RP, f1] L2 →
                      ∀f2. f1 ⊆ f2 → L1 ⦻*[RN, RP, f2] L2.
-#RN #RP #HR #L1 #L2 #f2 #H elim H -L1 -L2 -f2 //
-#I #L1 #L2 #V1 #V2 #f1 #_ #HV12 #IH
+#RN #RP #HR #f1 #L1 #L2 #H elim H -f1 -L1 -L2 //
+#f1 #I #L1 #L2 #V1 #V2 #_ #HV12 #IH
 [2: * * [2: #n2 ] ] #f2 #H
 [ /4 width=5 by lexs_next, sle_inv_pn/
 | /4 width=5 by lexs_push, sle_inv_pp/
@@ -210,7 +210,7 @@ qed-.
 lemma lexs_co: ∀RN1,RP1,RN2,RP2.
                (∀L1,T1,T2. RN1 L1 T1 T2 → RN2 L1 T1 T2) →
                (∀L1,T1,T2. RP1 L1 T1 T2 → RP2 L1 T1 T2) →
-               ∀L1,L2,f. L1 ⦻*[RN1, RP1, f] L2 → L1 ⦻*[RN2, RP2, f] L2.
-#RN1 #RP1 #RN2 #RP2 #HRN #HRP #L1 #L2 #f #H elim H -L1 -L2 -f
+               ∀f,L1,L2. L1 ⦻*[RN1, RP1, f] L2 → L1 ⦻*[RN2, RP2, f] L2.
+#RN1 #RP1 #RN2 #RP2 #HRN #HRP #f #L1 #L2 #H elim H -f -L1 -L2
 /3 width=1 by lexs_atom, lexs_next, lexs_push/
 qed-.

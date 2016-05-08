@@ -19,10 +19,10 @@ include "basic_2/static/lfxs.ma".
 
 (* Main properties ******************************************************)
 
-theorem lfxs_bind: ∀R,I,L1,L2,V1,V2,T,p.
+theorem lfxs_bind: ∀R,p,I,L1,L2,V1,V2,T.
                    L1 ⦻*[R, V1] L2 → L1.ⓑ{I}V1 ⦻*[R, T] L2.ⓑ{I}V2 →
                    L1 ⦻*[R, ⓑ{p,I}V1.T] L2.
-#R #I #L1 #L2 #V1 #V2 #T #p * #f1 #HV #Hf1 * #f2 #HT #Hf2
+#R #p #I #L1 #L2 #V1 #V2 #T * #f1 #HV #Hf1 * #f2 #HT #Hf2
 elim (lexs_fwd_pair … Hf2) -Hf2 #Hf2 #_ elim (sor_isfin_ex f1 (⫱f2))
 /3 width=7 by frees_fwd_isfin, frees_bind, lexs_join, isfin_tl, ex2_intro/
 qed.

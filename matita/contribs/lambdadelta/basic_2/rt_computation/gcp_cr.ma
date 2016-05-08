@@ -43,21 +43,21 @@ definition S5 ≝ λC:candidate. ∀I,G,L,K,Vs,V1,V2,i.
                 ⬇[i] L ≡ K.ⓑ{I}V1 → C G L (ⒶVs.#i).
 
 definition S6 ≝ λRP,C:candidate.
-                ∀G,L,V1c,V2c. ⬆[0, 1] V1c ≡ V2c →
-                ∀a,V,T. C G (L.ⓓV) (ⒶV2c.T) → RP G L V → C G L (ⒶV1c.ⓓ{a}V.T).
+                ∀G,L,V1b,V2b. ⬆[0, 1] V1b ≡ V2b →
+                ∀a,V,T. C G (L.ⓓV) (ⒶV2b.T) → RP G L V → C G L (ⒶV1b.ⓓ{a}V.T).
 
 definition S7 ≝ λC:candidate.
                 ∀G,L,Vs,T,W. C G L (ⒶVs.T) → C G L (ⒶVs.W) → C G L (ⒶVs.ⓝW.T).
 
 (* requirements for the generic reducibility candidate *)
 record gcr (RR:relation4 genv lenv term term) (RS:relation term) (RP,C:candidate) : Prop ≝
-{ c1: S1 RP C;
-  c2: S2 RR RS RP C;
-  c3: S3 C;
-  c4: S4 RP C;
-  c5: S5 C;
-  c6: S6 RP C;
-  c7: S7 C
+{ b1: S1 RP C;
+  b2: S2 RR RS RP C;
+  b3: S3 C;
+  b4: S4 RP C;
+  b5: S5 C;
+  b6: S6 RP C;
+  b7: S7 C
 }.
 
 (* the functional construction for candidates *)
@@ -99,26 +99,26 @@ lemma acr_gcr: ∀RR,RS,RP. gcp RR RS RP → gcr RR RS RP RP →
 [ #G #L #T #H
   elim (cp1 … H1RP G L) #s #HK
   lapply (H L (⋆s) T (◊) ? ? ?) -H //
-  [ lapply (c2 … IHB G L (◊) … HK) //
-  | /3 width=6 by c1, cp3/
+  [ lapply (b2 … IHB G L (◊) … HK) //
+  | /3 width=6 by b1, cp3/
   ]
 | #G #L #Vs #HVs #T #H1T #H2T #L0 #V0 #X #cs #HL0 #H #HB
-  elim (lifts_inv_applv1 … H) -H #V0c #T0 #HV0c #HT0 #H destruct
-  lapply (c1 … IHB … HB) #HV0
-  @(c2 … IHA … (V0 @ V0c))
+  elim (lifts_inv_applv1 … H) -H #V0b #T0 #HV0b #HT0 #H destruct
+  lapply (b1 … IHB … HB) #HV0
+  @(b2 … IHA … (V0 @ V0b))
   /3 width=14 by gcp2_lifts_all, gcp2_lifts, gcp0_lifts, lifts_simple_dx, conj/
 | #a #G #L #Vs #U #T #W #HA #L0 #V0 #X #cs #HL0 #H #HB
-  elim (lifts_inv_applv1 … H) -H #V0c #Y #HV0c #HY #H destruct
+  elim (lifts_inv_applv1 … H) -H #V0b #Y #HV0b #HY #H destruct
   elim (lifts_inv_flat1 … HY) -HY #U0 #X #HU0 #HX #H destruct
   elim (lifts_inv_bind1 … HX) -HX #W0 #T0 #HW0 #HT0 #H destruct
-  @(c3 … IHA … (V0 @ V0c)) /5 width=6 by lifts_applv, lifts_flat, lifts_bind/
+  @(b3 … IHA … (V0 @ V0b)) /5 width=6 by lifts_applv, lifts_flat, lifts_bind/
 | #G #L #Vs #HVs #s #L0 #V0 #X #cs #HL0 #H #HB
-  elim (lifts_inv_applv1 … H) -H #V0c #Y #HV0c #HY #H destruct
+  elim (lifts_inv_applv1 … H) -H #V0b #Y #HV0b #HY #H destruct
   >(lifts_inv_sort1 … HY) -Y
-  lapply (c1 … IHB … HB) #HV0
-  @(c4 … IHA … (V0 @ V0c)) /3 width=7 by gcp2_lifts_all, conj/
+  lapply (b1 … IHB … HB) #HV0
+  @(b4 … IHA … (V0 @ V0b)) /3 width=7 by gcp2_lifts_all, conj/
 | #I #G #L #K #Vs #V1 #V2 #i #HA #HV12 #HLK #L0 #V0 #X #cs #HL0 #H #HB
-  elim (lifts_inv_applv1 … H) -H #V0c #Y #HV0c #HY #H destruct
+  elim (lifts_inv_applv1 … H) -H #V0b #Y #HV0b #HY #H destruct
   elim (lifts_inv_lref1 … HY) -HY #i0 #Hi0 #H destruct
   elim (drops_drop_trans … HL0 … HLK) #X #cs0 #i1 #HL02 #H #Hi1 #Hcs0
   >(at_mono … Hi1 … Hi0) in HL02; -i1 #HL02
@@ -126,23 +126,23 @@ lemma acr_gcr: ∀RR,RS,RP. gcp RR RS RP → gcr RR RS RP RP →
   elim (lift_total W1 0 (i0 + 1)) #W2 #HW12
   elim (lifts_lift_trans  … Hcs0 … HVW1 … HW12) // -Hcs0 -Hi0 #V3 #HV13 #HVW2
   >(lift_mono … HV13 … HV12) in HVW2; -V3 #HVW2
-  @(c5 … IHA … (V0 @ V0c) … HW12 HL02) /3 width=5 by lifts_applv/
-| #G #L #V1c #V2c #HV12c #a #V #T #HA #HV #L0 #V10 #X #cs #HL0 #H #HB
-  elim (lifts_inv_applv1 … H) -H #V10c #Y #HV10c #HY #H destruct
+  @(b5 … IHA … (V0 @ V0b) … HW12 HL02) /3 width=5 by lifts_applv/
+| #G #L #V1b #V2b #HV12b #a #V #T #HA #HV #L0 #V10 #X #cs #HL0 #H #HB
+  elim (lifts_inv_applv1 … H) -H #V10b #Y #HV10b #HY #H destruct
   elim (lifts_inv_bind1 … HY) -HY #V0 #T0 #HV0 #HT0 #H destruct
   elim (lift_total V10 0 1) #V20 #HV120
-  elim (liftv_total 0 1 V10c) #V20c #HV120c
-  @(c6 … IHA … (V10 @ V10c) (V20 @ V20c)) /3 width=7 by gcp2_lifts, liftv_cons/
+  elim (liftv_total 0 1 V10b) #V20b #HV120b
+  @(b6 … IHA … (V10 @ V10b) (V20 @ V20b)) /3 width=7 by gcp2_lifts, liftv_cons/
   @(HA … (cs + 1)) /2 width=2 by drops_skip/
   [ @lifts_applv //
-    elim (liftsv_liftv_trans_le … HV10c … HV120c) -V10c #V10c #HV10c #HV120c
-    >(liftv_mono … HV12c … HV10c) -V1c //
+    elim (liftsv_liftv_trans_le … HV10b … HV120b) -V10b #V10b #HV10b #HV120b
+    >(liftv_mono … HV12b … HV10b) -V1b //
   | @(gcr_lift … H1RP … HB … HV120) /2 width=2 by drop_drop/
   ]
 | #G #L #Vs #T #W #HA #HW #L0 #V0 #X #cs #HL0 #H #HB
-  elim (lifts_inv_applv1 … H) -H #V0c #Y #HV0c #HY #H destruct
+  elim (lifts_inv_applv1 … H) -H #V0b #Y #HV0b #HY #H destruct
   elim (lifts_inv_flat1 … HY) -HY #W0 #T0 #HW0 #HT0 #H destruct
-  @(c7 … IHA … (V0 @ V0c)) /3 width=5 by lifts_applv/
+  @(b7 … IHA … (V0 @ V0b)) /3 width=5 by lifts_applv/
 ]
 qed.
 
@@ -157,11 +157,11 @@ lapply (acr_gcr … H1RP H2RP A) #HCA
 lapply (acr_gcr … H1RP H2RP B) #HCB
 elim (lifts_inv_bind1 … H) -H #W0 #T0 #HW0 #HT0 #H destruct
 lapply (gcr_lifts … H1RP … HL0 … HW0 HW) -HW #HW0
-lapply (c3 … HCA … a G L0 (◊)) #H @H -H
-lapply (c6 … HCA G L0 (◊) (◊) ?) // #H @H -H
+lapply (b3 … HCA … a G L0 (◊)) #H @H -H
+lapply (b6 … HCA G L0 (◊) (◊) ?) // #H @H -H
 [ @(HA … HL0) //
-| lapply (c1 … HCB) -HCB #HCB
-  lapply (c7 … H2RP G L0 (◊)) /3 width=1 by/
+| lapply (b1 … HCB) -HCB #HCB
+  lapply (b7 … H2RP G L0 (◊)) /3 width=1 by/
 ]
 qed.
 

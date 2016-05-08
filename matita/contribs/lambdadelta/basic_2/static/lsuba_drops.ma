@@ -22,18 +22,18 @@ include "basic_2/static/lsuba.ma".
 (* Note: the premise 𝐔⦃f⦄ cannot be removed *)
 (* Basic_2A1: includes: lsuba_drop_O1_conf *)
 lemma lsuba_drops_conf_isuni: ∀G,L1,L2. G ⊢ L1 ⫃⁝ L2 → 
-                              ∀K1,c,f. 𝐔⦃f⦄ → ⬇*[c, f] L1 ≡ K1 →
-                              ∃∃K2. G ⊢ K1 ⫃⁝ K2 & ⬇*[c, f] L2 ≡ K2.
+                              ∀b,f,K1. 𝐔⦃f⦄ → ⬇*[b, f] L1 ≡ K1 →
+                              ∃∃K2. G ⊢ K1 ⫃⁝ K2 & ⬇*[b, f] L2 ≡ K2.
 #G #L1 #L2 #H elim H -L1 -L2
 [ /2 width=3 by ex2_intro/
-| #I #L1 #L2 #V #HL12 #IH #K1 #c #f #Hf #H
+| #I #L1 #L2 #V #HL12 #IH #b #f #K1 #Hf #H
   elim (drops_inv_pair1_isuni … Hf H) -Hf -H *
   [ #Hf #H destruct -IH
     /3 width=3 by lsuba_pair, drops_refl, ex2_intro/
   | #g #Hg #HLK1 #H destruct -HL12
     elim (IH … Hg HLK1) -L1 -Hg /3 width=3 by drops_drop, ex2_intro/
   ]
-| #L1 #L2 #W #V #A #HV #HW #HL12 #IH #K1 #c #f #Hf #H
+| #L1 #L2 #W #V #A #HV #HW #HL12 #IH #b #f #K1 #Hf #H
   elim (drops_inv_pair1_isuni … Hf H) -Hf -H *
   [ #Hf #H destruct -IH
     /3 width=3 by drops_refl, lsuba_beta, ex2_intro/
@@ -46,18 +46,18 @@ qed-.
 (* Note: the premise 𝐔⦃f⦄ cannot be removed *)
 (* Basic_2A1: includes: lsuba_drop_O1_trans *)
 lemma lsuba_drop_O1_trans: ∀G,L1,L2. G ⊢ L1 ⫃⁝ L2 →
-                           ∀K2,c,f. 𝐔⦃f⦄ → ⬇*[c, f] L2 ≡ K2 →
-                           ∃∃K1. G ⊢ K1 ⫃⁝ K2 & ⬇*[c, f] L1 ≡ K1.
+                           ∀b,f,K2. 𝐔⦃f⦄ → ⬇*[b, f] L2 ≡ K2 →
+                           ∃∃K1. G ⊢ K1 ⫃⁝ K2 & ⬇*[b, f] L1 ≡ K1.
 #G #L1 #L2 #H elim H -L1 -L2
 [ /2 width=3 by ex2_intro/
-| #I #L1 #L2 #V #HL12 #IH #K2 #c #f #Hf #H
+| #I #L1 #L2 #V #HL12 #IH #b #f #K2 #Hf #H
   elim (drops_inv_pair1_isuni … Hf H) -Hf -H *
   [ #Hf #H destruct -IH
     /3 width=3 by lsuba_pair, drops_refl, ex2_intro/
   | #g #Hg #HLK2 #H destruct -HL12
     elim (IH … Hg HLK2) -L2 -Hg /3 width=3 by drops_drop, ex2_intro/
   ]
-| #L1 #L2 #W #V #A #HV #HW #HL12 #IH #K2 #c #f #Hf #H
+| #L1 #L2 #W #V #A #HV #HW #HL12 #IH #b #f #K2 #Hf #H
   elim (drops_inv_pair1_isuni … Hf H) -Hf -H *
   [ #Hf #H destruct -IH
     /3 width=3 by drops_refl, lsuba_beta, ex2_intro/
