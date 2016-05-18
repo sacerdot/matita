@@ -352,8 +352,8 @@
             <link linkend="interpretation">interpretation</link> that was active
             when the file <command>s</command> was compiled last time
             is made active. The same happens for declarations of
-            <link linkend="command_default">default definitions and
-            theorems</link> and disambiguation
+            <!-- <link linkend="command_default">default definitions and
+            theorems</link> and --> disambiguation
             hints (<link linkend="command_alias">aliases</link>).
             On the contrary, theorem and definitions declared in a file can be
            immediately used without including it.</para>
@@ -534,7 +534,6 @@
        </varlistentry>
      </variablelist>
    </para>
-   -->
  </sect1>
  <sect1 id="command_universe_constraints">
    <title>universe constraint</title>

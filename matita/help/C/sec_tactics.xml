@@ -11,7 +11,7 @@
   </sect1>
 
   <sect1 id="tac_apply">
-    <title>@</title>
+    <title>apply</title>
     <titleabbrev>@</titleabbrev>
     <para><userinput>@t</userinput></para>
     <para>
@@ -52,7 +52,7 @@
     </para>
   </sect1>
   <sect1 id="tac_auto">
-    <title>//</title>
+    <title>auto</title>
     <titleabbrev>//</titleabbrev>
     <para><userinput>/params/</userinput></para>
     <para>
@@ -94,7 +94,7 @@
     </para>
   </sect1>
   <sect1 id="tac_intro">
-    <title>#</title>
+    <title>intro</title>
     <titleabbrev>#</titleabbrev>
     <para><userinput>#H</userinput></para>
     <para>
@@ -132,7 +132,7 @@
     </para>
   </sect1>
   <sect1 id="tac_intro_clear">
-    <title>#_</title>
+    <title>intro_clear</title>
     <titleabbrev>#_</titleabbrev>
     <para><userinput>#_</userinput></para>
     <para>
@@ -168,7 +168,7 @@
     </para>
   </sect1>
   <sect1 id="macro_intro">
-    <title>##</title>
+    <title>macro_input</title>
     <titleabbrev>##</titleabbrev>
     <para><userinput>##</userinput></para>
     <para>
@@ -198,7 +198,7 @@
     </para>
   </sect1>
   <sect1 id="tac_clear">
-    <title>-</title>
+    <title>clear</title>
     <titleabbrev>-</titleabbrev>
     <para><userinput>-H</userinput></para>
     <para>
@@ -239,7 +239,7 @@
     </para>
   </sect1>
   <sect1 id="tac_constructor">
-    <title>%</title>
+    <title>constructor</title>
     <titleabbrev>%</titleabbrev>
     <para><userinput>%n {args}</userinput></para>
     <para>
@@ -279,7 +279,7 @@
     </para>
   </sect1>
   <sect1 id="tac_decompose">
-    <title>*</title>
+    <title>decompose</title>
     <titleabbrev>*</titleabbrev>
     <para><userinput>
      * as H
@@ -326,7 +326,7 @@
     </para>
   </sect1>
   <sect1 id="tac_rewrite">
-    <title>></title>
+    <title>rewrite</title>
     <titleabbrev>></titleabbrev>
     <para><userinput>> p patt</userinput></para>
     <para>
