@@ -1,0 +1,16 @@
+lemma cpg_delift: ∀c,h,I,G,K,V,T1,L,i. ⬇*[i] L ≡ (K.ⓑ{I}V) →
+                  ∃∃T2,T. ⦃G, L⦄ ⊢ T1 ➡[h, 𝟘𝟘] T2 & ⬆*[↑1] T ≡ T2.
+#h #c #I #G #K #V #T1 elim T1 -T1
+[ * #i #L #l /2 width=4 by cpg_atom, lift_sort, lift_gref, ex2_2_intro/
+  elim (lt_or_eq_or_gt i l) #Hil [1,3: /4 width=4 by cpg_atom, lift_lref_ge_minus, lift_lref_lt, ylt_inj, yle_inj, ex2_2_intro/ ]
+  destruct
+  elim (lift_total V 0 (i+1)) #W #HVW
+  elim (lift_split … HVW i i) /3 width=7 by cpg_delta, ex2_2_intro/
+| * [ #a ] #I #W1 #U1 #IHW1 #IHU1 #L #l #HLK
+  elim (IHW1 … HLK) -IHW1 #W2 #W #HW12 #HW2
+  [ elim (IHU1 (L. ⓑ{I} W1) (l+1)) -IHU1 /3 width=9 by cpg_bind, drop_drop, lift_bind, ex2_2_intro/
+  | elim (IHU1 … HLK) -IHU1 -HLK /3 width=8 by cpg_flat, lift_flat, ex2_2_intro/
+  ]
+]
+qed-.
+*)

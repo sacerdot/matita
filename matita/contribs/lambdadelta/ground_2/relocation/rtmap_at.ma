@@ -26,6 +26,10 @@ coinductive at: rtmap → relation nat ≝
 interpretation "relational application (rtmap)"
    'RAt i1 f i2 = (at f i1 i2).
 
+definition H_at_div: relation4 rtmap rtmap rtmap rtmap ≝ λf2,g2,f1,g1.
+                     ∀jf,jg,j. @⦃jf, f2⦄ ≡ j → @⦃jg, g2⦄ ≡ j →
+                     ∃∃j0. @⦃j0, f1⦄ ≡ jf & @⦃j0, g1⦄ ≡ jg.
+
 (* Basic inversion lemmas ***************************************************)
 
 lemma at_inv_ppx: ∀f,i1,i2. @⦃i1, f⦄ ≡ i2 → ∀g. 0 = i1 → ↑g = f → 0 = i2.
@@ -267,6 +271,45 @@ theorem at_inj: ∀f,i1,i. @⦃i1, f⦄ ≡ i → ∀i2. @⦃i2, f⦄ ≡ i → 
 #Hi elim (lt_le_false i i) /3 width=6 by at_monotonic, eq_sym/
 qed-.
 
+theorem at_div_comm: ∀f2,g2,f1,g1.
+                     H_at_div f2 g2 f1 g1 → H_at_div g2 f2 g1 f1.
+#f2 #g2 #f1 #g1 #IH #jg #jf #j #Hg #Hf
+elim (IH … Hf Hg) -IH -j /2 width=3 by ex2_intro/
+qed-.
+
+theorem at_div_pp: ∀f2,g2,f1,g1.
+                   H_at_div f2 g2 f1 g1 → H_at_div (↑f2) (↑g2) (↑f1) (↑g1).
+#f2 #g2 #f1 #g1 #IH #jf #jg #j #Hf #Hg
+elim (at_inv_xpx … Hf) -Hf [1,2: * |*: // ]
+[ #H1 #H2 destruct -IH
+  lapply (at_inv_xpp … Hg ???) -Hg [4: |*: // ] #H destruct
+  /3 width=3 by at_refl, ex2_intro/
+| #xf #i #Hf2 #H1 #H2 destruct
+  lapply (at_inv_xpn … Hg ????) -Hg [5: * |*: // ] #xg #Hg2 #H destruct
+  elim (IH … Hf2 Hg2) -IH -i /3 width=9 by at_push, ex2_intro/
+]
+qed-.
+
+theorem at_div_nn: ∀f2,g2,f1,g1.
+                   H_at_div f2 g2 f1 g1 → H_at_div (⫯f2) (⫯g2) (f1) (g1).
+#f2 #g2 #f1 #g1 #IH #jf #jg #j #Hf #Hg
+elim (at_inv_xnx … Hf) -Hf [ |*: // ] #i #Hf2 #H destruct
+lapply (at_inv_xnn … Hg ????) -Hg [5: |*: // ] #Hg2
+elim (IH … Hf2 Hg2) -IH -i /2 width=3 by ex2_intro/
+qed-.
+
+theorem at_div_np: ∀f2,g2,f1,g1.
+                   H_at_div f2 g2 f1 g1 → H_at_div (⫯f2) (↑g2) (f1) (⫯g1).
+#f2 #g2 #f1 #g1 #IH #jf #jg #j #Hf #Hg
+elim (at_inv_xnx … Hf) -Hf [ |*: // ] #i #Hf2 #H destruct
+lapply (at_inv_xpn … Hg ????) -Hg [5: * |*: // ] #xg #Hg2 #H destruct
+elim (IH … Hf2 Hg2) -IH -i /3 width=7 by at_next, ex2_intro/
+qed-.
+
+theorem at_div_pn: ∀f2,g2,f1,g1.
+                   H_at_div f2 g2 f1 g1 → H_at_div (↑f2) (⫯g2) (⫯f1) (g1).
+/4 width=6 by at_div_np, at_div_comm/ qed-.
+
 (* Properties on tls ********************************************************)
 
 lemma at_pxx_tls: ∀n,f. @⦃0, f⦄ ≡ n → @⦃0, ⫱*[n]f⦄ ≡ 0.
@@ -320,6 +363,22 @@ lemma id_inv_at: ∀f. (∀i. @⦃i, f⦄ ≡ i) → 𝐈𝐝 ≗ f.
 
 lemma id_at: ∀i. @⦃i, 𝐈𝐝⦄ ≡ i.
 /2 width=1 by isid_inv_at/ qed.
+
+(* Advanced forward lemmas on id ********************************************)
+
+lemma at_id_fwd: ∀i1,i2. @⦃i1, 𝐈𝐝⦄ ≡ i2 → i1 = i2.
+/2 width=4 by at_mono/ qed.
+
+(* Main properties on id ****************************************************)
+
+theorem at_div_id_dx: ∀f. H_at_div f 𝐈𝐝 𝐈𝐝 f.
+#f #jf #j0 #j #Hf #H0
+lapply (at_id_fwd … H0) -H0 #H destruct
+/2 width=3 by ex2_intro/
+qed-.
+
+theorem at_div_id_sn: ∀f. H_at_div 𝐈𝐝 f f 𝐈𝐝.
+/3 width=6 by at_div_id_dx, at_div_comm/ qed-.
 
 (* Properties with uniform relocations **************************************)
 

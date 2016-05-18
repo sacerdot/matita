@@ -31,7 +31,7 @@ theorem drops_conf: ∀b1,f1,L1,L. ⬇*[b1, f1] L1 ≡ L →
   #g #Hg #H destruct /3 width=3 by drops_inv_drop1/
 | #f1 #I #K1 #K #V1 #V #_ #HV1 #IH #b2 #f #L2 #HL2 #f2 #Hf elim (after_inv_pxx … Hf) -Hf [1,3: * |*:// ]
   #g2 #g #Hf #H1 #H2 destruct
-  [ elim (drops_inv_skip1 … HL2) -HL2 /3 width=6 by drops_skip, lifts_div/
+  [ elim (drops_inv_skip1 … HL2) -HL2 /3 width=6 by drops_skip, lifts_div3/
   | /4 width=3 by drops_inv_drop1, drops_drop/
   ]
 ]

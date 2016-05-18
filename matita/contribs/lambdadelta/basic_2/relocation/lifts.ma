@@ -208,6 +208,8 @@ lemma lifts_inv_flat2: ∀f:rtmap. ∀I,V2,T2,X. ⬆*[f] X ≡ ⓕ{I}V2.T2 →
                                 X = ⓕ{I}V1.T1.
 /2 width=3 by lifts_inv_flat2_aux/ qed-.
 
+(* Advanced inversion lemmas ************************************************)
+
 (* Basic_2A1: includes: lift_inv_pair_xy_x *)
 lemma lifts_inv_pair_xy_x: ∀f,I,V,T. ⬆*[f] ②{I}V.T ≡ V → ⊥.
 #f #J #V elim V -V
@@ -239,6 +241,10 @@ lemma lifts_inv_pair_xy_y: ∀I,T,V,f. ⬆*[f] ②{I}V.T ≡ T → ⊥.
   | elim (lifts_inv_flat2 … H) -H #V1 #T1 #_ #HT12 #H destruct /2 width=4 by/
   ]
 ]
+qed-.
+
+lemma lifts_inv_lref1_uni: ∀l,Y,i. ⬆*[l] #i ≡ Y → Y = #(l+i).
+#l #Y #i1 #H elim (lifts_inv_lref1 … H) -H /4 width=4 by at_mono, eq_f/
 qed-.
 
 (* Basic forward lemmas *****************************************************)
@@ -370,6 +376,11 @@ lemma is_lifts_dec: ∀T2,f. Decidable (∃T1. ⬆*[f] T1 ≡ T2).
   ]
 ]
 qed-.
+
+(* Properties with uniform relocation ***************************************)
+
+lemma lifts_uni: ∀n1,n2,T,U. ⬆*[𝐔❴n1❵∘𝐔❴n2❵] T ≡ U → ⬆*[n1+n2] T ≡ U.
+/3 width=4 by lifts_eq_repl_back, after_inv_total/ qed.
 
 (* Basic_2A1: removed theorems 14:
               lifts_inv_nil lifts_inv_cons

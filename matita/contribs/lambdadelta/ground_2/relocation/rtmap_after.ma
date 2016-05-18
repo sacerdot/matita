@@ -436,6 +436,50 @@ lemma after_uni_sn: ∀i2,i1,f2. @⦃i1, f2⦄ ≡ i2 →
 ]
 qed-.
 
+lemma after_uni_succ_dx: ∀i2,i1,f2. @⦃i1, f2⦄ ≡ i2 →
+                         ∀f. f2 ⊚ 𝐔❴⫯i1❵ ≡ f → 𝐔❴⫯i2❵ ⊚ ⫱*[⫯i2] f2 ≡ f.
+#i2 elim i2 -i2
+[ #i1 #f2 #Hf2 #f #Hf
+  elim (at_inv_xxp … Hf2) -Hf2 // #g2 #H1 #H2 destruct
+  elim (after_inv_pnx … Hf) -Hf [ |*: // ] #g #Hg #H
+  lapply (after_isid_inv_dx … Hg ?) -Hg
+  /4 width=5 by isid_after_sn, after_eq_repl_back_0, after_next/
+| #i2 #IH #i1 #f2 #Hf2 #f #Hf
+  elim (at_inv_xxn … Hf2) -Hf2 [1,3: * |*: // ]
+  [ #g2 #j1 #Hg2 #H1 #H2 destruct
+    elim (after_inv_pnx … Hf) -Hf [ |*: // ] #g #Hg #H destruct
+    /3 width=5 by after_next/
+  | #g2 #Hg2 #H2 destruct
+    elim (after_inv_nxx … Hf) -Hf [2,3: // ] #g #Hg #H destruct
+    /3 width=5 by after_next/
+  ]
+]
+qed.
+
+lemma after_uni_succ_sn: ∀i2,i1,f2. @⦃i1, f2⦄ ≡ i2 →
+                         ∀f. 𝐔❴⫯i2❵ ⊚ ⫱*[⫯i2] f2 ≡ f → f2 ⊚ 𝐔❴⫯i1❵ ≡ f.
+#i2 elim i2 -i2
+[ #i1 #f2 #Hf2 #f #Hf
+  elim (at_inv_xxp … Hf2) -Hf2 // #g2 #H1 #H2 destruct
+  elim (after_inv_nxx … Hf) -Hf [ |*: // ] #g #Hg #H destruct
+  lapply (after_isid_inv_sn … Hg ?) -Hg
+  /4 width=7 by isid_after_dx, after_eq_repl_back_0, after_push/
+| #i2 #IH #i1 #f2 #Hf2 #f #Hf
+  elim (after_inv_nxx … Hf) -Hf [2,3: // ] #g #Hg #H destruct
+  elim (at_inv_xxn … Hf2) -Hf2 [1,3: * |*: // ]
+  [ #g2 #j1 #Hg2 #H1 #H2 destruct <tls_xn in Hg; /3 width=7 by after_push/
+  | #g2 #Hg2 #H2 destruct <tls_xn in Hg; /3 width=5 by after_next/
+  ]
+]
+qed-.
+
+lemma after_uni_one_dx: ∀f2,f. ↑f2 ⊚ 𝐔❴⫯O❵ ≡ f → 𝐔❴⫯O❵ ⊚ f2 ≡ f.
+#f2 #f #H @(after_uni_succ_dx … (↑f2)) /2 width=3 by at_refl/
+qed.
+
+lemma after_uni_one_sn: ∀f1,f. 𝐔❴⫯O❵ ⊚ f1 ≡ f → ↑f1 ⊚ 𝐔❴⫯O❵ ≡ f.
+/3 width=3 by after_uni_succ_sn, at_refl/ qed-.
+
 (* Forward lemmas on istot **************************************************)
 
 lemma after_istot_fwd: ∀f2,f1,f. f2 ⊚ f1 ≡ f → 𝐓⦃f2⦄ → 𝐓⦃f1⦄ → 𝐓⦃f⦄.

@@ -19,8 +19,8 @@ include "basic_2/rt_transition/cpg.ma".
 
 (* Properties with restricted refinement for local environments *************)
 
-lemma lsubr_cpg_trans: ∀h,c,G. lsub_trans … (cpg h c G) lsubr.
-#h #c #G #L1 #T1 #T2 #H elim H -c -G -L1 -T1 -T2
+lemma lsubr_cpg_trans: ∀c,h,G. lsub_trans … (cpg h c G) lsubr.
+#c #h #G #L1 #T1 #T2 #H elim H -c -G -L1 -T1 -T2
 [ //
 | /2 width=2 by cpg_st/
 | #c #G #L1 #V1 #V2 #W2 #_ #HVW2 #IH #X #H

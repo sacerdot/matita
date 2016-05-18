@@ -129,6 +129,9 @@ lemma after_inv_const: ∀f1,f2,f,n2,n. n@f1 ⊚ n2@f2 ≡ n@f → f1 ⊚ f2 ≡
 ]
 qed-.
 
+lemma after_inv_total: ∀f1,f2,f. f1 ⊚ f2 ≡ f → f1 ∘ f2 ≗ f.
+/2 width=4 by after_mono/ qed-.
+
 (* Specific forward lemmas **************************************************)
 
 lemma after_fwd_hd: ∀f1,f2,f,n2,n. f1 ⊚ n2@f2 ≡ n@f → f1@❴n2❵ = n.
