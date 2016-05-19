@@ -128,15 +128,13 @@ table {
         ]
      }
    ]
+*)
    class "water"
-   [ { "reduction" * } {
+   [ { "rt-transition" * } {
+(*
         [ { "parallel qrst-reduction" * } {
              [ "fpbq ( ⦃?,?,?⦄ ≽[?,?] ⦃?,?,?⦄ )" "fpbq_alt ( ⦃?,?,?⦄ ≽≽[?,?] ⦃?,?,?⦄ )" "fpbq_lift" + "fpbq_aaa" * ]
              [ "fpb ( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" "fpb_lift" + "fpb_lleq" + "fpb_fleq" * ]
-          }
-        ]
-        [ { "normal forms for context-sensitive rt-reduction" * } {
-             [ "cnx ( ⦃?,?⦄ ⊢ ➡[?,?] 𝐍⦃?⦄ )" "cnx_lift" + "cnx_crx" + "cnx_cix" * ]
           }
         ]
         [ { "context-sensitive rt-reduction" * } {
@@ -144,46 +142,18 @@ table {
              [ "cpx ( ⦃?,?⦄ ⊢ ? ➡[?,?] ? )" "cpx_lreq" + "cpx_lift" + "cpx_llpx_sn" + "cpx_lleq" + "cpx_cix" * ]
           }
         ]
-        [ { "irreducible forms for context-sensitive rt-reduction" * } {
-             [ "cix ( ⦃?,?⦄ ⊢ ➡[?,?] 𝐈⦃?⦄ )" "cix_lift" * ]
-          }
-        ]
-        [ { "reducible forms for context-sensitive rt-reduction" * } {
-             [ "crx ( ⦃?,?⦄ ⊢ ➡[?,?] 𝐑⦃?⦄ )" "crx_lift" * ]
-          }
-        ]
-        [ { "normal forms for context-sensitive reduction" * } {
-             [ "cnr ( ⦃?,?⦄ ⊢ ➡ 𝐍⦃?⦄ )" "cnr_lift" + "cnr_crr" + "cnr_cir" * ]
-          }
-        ]
         [ { "context-sensitive reduction" * } {
              [ "lpr ( ⦃?,?⦄ ⊢ ➡ ? )" "lpr_drop" + "lpr_lpr" * ]
              [ "cpr ( ⦃?,?⦄ ⊢ ? ➡ ? )" "cpr_lift" + "cpr_llpx_sn" + "cpr_cir" * ]
           }
         ]
-        [ { "irreducible forms for context-sensitive reduction" * } {
-             [ "cir ( ⦃?,?⦄ ⊢ ➡ 𝐈⦃?⦄ )" "cir_lift" * ]
-          }
-        ]
-        [ { "reducible forms for context-sensitive reduction" * } {
-             [ "crr ( ⦃?,?⦄ ⊢ ➡ 𝐑⦃?⦄ )" "crr_lift" * ]
-          }
-        ]
-     }
-   ]
-   class "green"
-   [ { "unfold" * } {
-        [ { "unfold" * } {
-             [ "unfold ( ⦃?,?⦄ ⊢ ? ⧫* ? )" * ]
-          }
-        ]
-        [ { "iterated static type assignment" * } {
-             [ "lstas ( ⦃?,?⦄ ⊢ ? •*[?,?] ? )" "lstas_lift" + "lstas_llpx_sn.ma" + "lstas_aaa" + "lstas_da" + "lstas_lstas" * ]
-          }
-        ]
-     }
-   ]
 *)
+        [ { "counted context-sensitive rt-transition" * } {
+             [ "cpg ( ⦃?,?⦄ ⊢ ? ➡[?,?] ? )" "cpg_simple" + "cpg_drops" + "cpg_lsubr" * ]
+          }
+        ]
+     }
+   ]
    class "green"
    [ { "static typing" * } {
         [ { "parameters" * } {
@@ -299,6 +269,38 @@ class "capitalize italic" { 0 }
 
 class "italic"            { 1 }
 (*
+        [ { "normal forms for context-sensitive rt-reduction" * } {
+             [ "cnx ( ⦃?,?⦄ ⊢ ➡[?,?] 𝐍⦃?⦄ )" "cnx_lift" + "cnx_crx" + "cnx_cix" * ]
+          }
+        ]
+        [ { "irreducible forms for context-sensitive rt-reduction" * } {
+             [ "cix ( ⦃?,?⦄ ⊢ ➡[?,?] 𝐈⦃?⦄ )" "cix_lift" * ]
+          }
+        ]
+        [ { "reducible forms for context-sensitive rt-reduction" * } {
+             [ "crx ( ⦃?,?⦄ ⊢ ➡[?,?] 𝐑⦃?⦄ )" "crx_lift" * ]
+          }
+        ]
+        [ { "normal forms for context-sensitive reduction" * } {
+             [ "cnr ( ⦃?,?⦄ ⊢ ➡ 𝐍⦃?⦄ )" "cnr_lift" + "cnr_crr" + "cnr_cir" * ]
+          }
+        ]
+        [ { "irreducible forms for context-sensitive reduction" * } {
+             [ "cir ( ⦃?,?⦄ ⊢ ➡ 𝐈⦃?⦄ )" "cir_lift" * ]
+          }
+        ]
+        [ { "reducible forms for context-sensitive reduction" * } {
+             [ "crr ( ⦃?,?⦄ ⊢ ➡ 𝐑⦃?⦄ )" "crr_lift" * ]
+          }
+        ]
+        [ { "unfold" * } {
+             [ "unfold ( ⦃?,?⦄ ⊢ ? ⧫* ? )" * ]
+          }
+        ]
+        [ { "iterated static type assignment" * } {
+             [ "lstas ( ⦃?,?⦄ ⊢ ? •*[?,?] ? )" "lstas_lift" + "lstas_llpx_sn.ma" + "lstas_aaa" + "lstas_da" + "lstas_lstas" * ]
+          }
+        ]
         [ { "local env. ref. for degree assignment" * } {
              [ "lsubd ( ? ⊢ ? ⫃▪[?,?] ? )" "lsubd_da" + "lsubd_lsubd" * ]
           }

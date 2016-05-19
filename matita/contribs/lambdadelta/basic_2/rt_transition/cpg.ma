@@ -27,7 +27,7 @@ inductive cpg (h): rtc → relation4 genv lenv term term ≝
 | cpg_atom : ∀I,G,L. cpg h (𝟘𝟘) G L (⓪{I}) (⓪{I})
 | cpg_ess  : ∀G,L,s. cpg h (𝟘𝟙) G L (⋆s) (⋆(next h s))
 | cpg_delta: ∀c,G,L,V1,V2,W2. cpg h c G L V1 V2 →
-             ⬆*[1] V2 ≡ W2 → cpg h (↓c) G (L.ⓓV1) (#0) W2
+             ⬆*[1] V2 ≡ W2 → cpg h c G (L.ⓓV1) (#0) W2
 | cpg_ell  : ∀c,G,L,V1,V2,W2. cpg h c G L V1 V2 →
              ⬆*[1] V2 ≡ W2 → cpg h ((↓c)+𝟘𝟙) G (L.ⓛV1) (#0) W2
 | cpg_lref : ∀c,I,G,L,V,T,U,i. cpg h c G L (#i) T → 
@@ -73,7 +73,7 @@ fact cpg_inv_atom1_aux: ∀c,h,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[c, h] T2 → ∀
                         ∨∨ T2 = ⓪{J} ∧ c = 𝟘𝟘 
                          | ∃∃s. J = Sort s & T2 = ⋆(next h s) & c = 𝟘𝟙
                          | ∃∃cV,K,V1,V2. ⦃G, K⦄ ⊢ V1 ➡[cV, h] V2 & ⬆*[1] V2 ≡ T2 &
-                                         L = K.ⓓV1 & J = LRef 0 & c = ↓cV
+                                         L = K.ⓓV1 & J = LRef 0 & c = cV
                          | ∃∃cV,K,V1,V2. ⦃G, K⦄ ⊢ V1 ➡[cV, h] V2 & ⬆*[1] V2 ≡ T2 &
                                          L = K.ⓛV1 & J = LRef 0 & c = (↓cV)+𝟘𝟙
                          | ∃∃I,K,V,T,i. ⦃G, K⦄ ⊢ #i ➡[c, h] T & ⬆*[1] T ≡ T2 &
@@ -98,7 +98,7 @@ lemma cpg_inv_atom1: ∀c,h,J,G,L,T2. ⦃G, L⦄ ⊢ ⓪{J} ➡[c, h] T2 →
                      ∨∨ T2 = ⓪{J} ∧ c = 𝟘𝟘 
                       | ∃∃s. J = Sort s & T2 = ⋆(next h s) & c = 𝟘𝟙
                       | ∃∃cV,K,V1,V2. ⦃G, K⦄ ⊢ V1 ➡[cV, h] V2 & ⬆*[1] V2 ≡ T2 &
-                                      L = K.ⓓV1 & J = LRef 0 & c = ↓cV
+                                      L = K.ⓓV1 & J = LRef 0 & c = cV
                       | ∃∃cV,K,V1,V2. ⦃G, K⦄ ⊢ V1 ➡[cV, h] V2 & ⬆*[1] V2 ≡ T2 &
                                       L = K.ⓛV1 & J = LRef 0 & c = (↓cV)+𝟘𝟙
                       | ∃∃I,K,V,T,i. ⦃G, K⦄ ⊢ #i ➡[c, h] T & ⬆*[1] T ≡ T2 &
@@ -118,7 +118,7 @@ qed-.
 lemma cpg_inv_zero1: ∀c,h,G,L,T2. ⦃G, L⦄ ⊢ #0 ➡[c, h] T2 →
                      ∨∨ (T2 = #0 ∧ c = 𝟘𝟘)
                       | ∃∃cV,K,V1,V2. ⦃G, K⦄ ⊢ V1 ➡[cV, h] V2 & ⬆*[1] V2 ≡ T2 &
-                                      L = K.ⓓV1 & c = ↓cV
+                                      L = K.ⓓV1 & c = cV
                       | ∃∃cV,K,V1,V2. ⦃G, K⦄ ⊢ V1 ➡[cV, h] V2 & ⬆*[1] V2 ≡ T2 &
                                       L = K.ⓛV1 & c = (↓cV)+𝟘𝟙.
 #c #h #G #L #T2 #H

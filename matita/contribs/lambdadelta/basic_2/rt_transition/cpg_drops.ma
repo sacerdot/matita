@@ -22,7 +22,7 @@ include "basic_2/rt_transition/cpg.ma".
 (* Advanced properties ******************************************************)
 
 lemma cpg_delta_drops: ∀c,h,G,K,V,V2,i,L,T2. ⬇*[i] L ≡ K.ⓓV → ⦃G, K⦄ ⊢ V ➡[c, h] V2 →
-                       ⬆*[⫯i] V2 ≡ T2 →  ⦃G, L⦄ ⊢ #i ➡[↓c, h] T2.
+                       ⬆*[⫯i] V2 ≡ T2 →  ⦃G, L⦄ ⊢ #i ➡[c, h] T2.
 #c #h #G #K #V #V2 #i elim i -i
 [ #L #T2 #HLK lapply (drops_fwd_isid … HLK ?) // #H destruct /3 width=3 by cpg_delta/
 | #i #IH #L0 #T0 #H0 #HV2 #HVT2
@@ -46,7 +46,7 @@ qed.
 lemma cpg_inv_lref1_drops: ∀c,h,G,i,L,T2. ⦃G, L⦄ ⊢ #i ➡[c, h] T2 →
                            ∨∨ T2 = #i ∧ c = 𝟘𝟘
                             | ∃∃cV,K,V,V2. ⬇*[i] L ≡ K.ⓓV & ⦃G, K⦄ ⊢ V ➡[cV, h] V2 &
-                                           ⬆*[⫯i] V2 ≡ T2 & c = ↓cV
+                                           ⬆*[⫯i] V2 ≡ T2 & c = cV
                             | ∃∃cV,K,V,V2. ⬇*[i] L ≡ K.ⓛV & ⦃G, K⦄ ⊢ V ➡[cV, h] V2 &
                                            ⬆*[⫯i] V2 ≡ T2 & c = (↓cV) + 𝟘𝟙.
 #c #h #G #i elim i -i
