@@ -12,293 +12,202 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/pred_6.ma".
-include "basic_2/static/sd.ma".
-include "basic_2/reduction/cpr.ma".
+include "basic_2/notation/relations/pred_5.ma".
+include "basic_2/rt_transition/cpg.ma".
 
-(* CONTEXT-SENSITIVE EXTENDED PARALLEL REDUCTION FOR TERMS ******************)
+(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL REDUCTION FOR TERMS *****************)
 
-(* avtivate genv *)
-inductive cpx (h) (o): relation4 genv lenv term term ≝
-| cpx_atom : ∀I,G,L. cpx h o G L (⓪{I}) (⓪{I})
-| cpx_st   : ∀G,L,s,d. deg h o s (d+1) → cpx h o G L (⋆s) (⋆(next h s))
-| cpx_delta: ∀I,G,L,K,V,V2,W2,i.
-             ⬇[i] L ≡ K.ⓑ{I}V → cpx h o G K V V2 →
-             ⬆[0, i+1] V2 ≡ W2 → cpx h o G L (#i) W2
-| cpx_bind : ∀a,I,G,L,V1,V2,T1,T2.
-             cpx h o G L V1 V2 → cpx h o G (L.ⓑ{I}V1) T1 T2 →
-             cpx h o G L (ⓑ{a,I}V1.T1) (ⓑ{a,I}V2.T2)
-| cpx_flat : ∀I,G,L,V1,V2,T1,T2.
-             cpx h o G L V1 V2 → cpx h o G L T1 T2 →
-             cpx h o G L (ⓕ{I}V1.T1) (ⓕ{I}V2.T2)
-| cpx_zeta : ∀G,L,V,T1,T,T2. cpx h o G (L.ⓓV) T1 T →
-             ⬆[0, 1] T2 ≡ T → cpx h o G L (+ⓓV.T1) T2
-| cpx_eps  : ∀G,L,V,T1,T2. cpx h o G L T1 T2 → cpx h o G L (ⓝV.T1) T2
-| cpx_ct   : ∀G,L,V1,V2,T. cpx h o G L V1 V2 → cpx h o G L (ⓝV1.T) V2
-| cpx_beta : ∀a,G,L,V1,V2,W1,W2,T1,T2.
-             cpx h o G L V1 V2 → cpx h o G L W1 W2 → cpx h o G (L.ⓛW1) T1 T2 →
-             cpx h o G L (ⓐV1.ⓛ{a}W1.T1) (ⓓ{a}ⓝW2.V2.T2)
-| cpx_theta: ∀a,G,L,V1,V,V2,W1,W2,T1,T2.
-             cpx h o G L V1 V → ⬆[0, 1] V ≡ V2 → cpx h o G L W1 W2 →
-             cpx h o G (L.ⓓW1) T1 T2 →
-             cpx h o G L (ⓐV1.ⓓ{a}W1.T1) (ⓓ{a}W2.ⓐV2.T2)
-.
+definition cpx (h): relation4 genv lenv term term ≝
+                    λG,L,T1,T2. ∃c. ⦃G, L⦄ ⊢ T1 ➡[c, h] T2.
 
 interpretation
-   "context-sensitive extended parallel reduction (term)"
-   'PRed h o G L T1 T2 = (cpx h o G L T1 T2).
+   "uncounted context-sensitive parallel reduction (term)"
+   'PRed h G L T1 T2 = (cpx h G L T1 T2).
 
 (* Basic properties *********************************************************)
 
-lemma lsubr_cpx_trans: ∀h,o,G. lsub_trans … (cpx h o G) lsubr.
-#h #o #G #L1 #T1 #T2 #H elim H -G -L1 -T1 -T2
-[ //
-| /2 width=2 by cpx_st/
-| #I #G #L1 #K1 #V1 #V2 #W2 #i #HLK1 #_ #HVW2 #IHV12 #L2 #HL12
-  elim (lsubr_fwd_drop2_pair … HL12 … HLK1) -HL12 -HLK1 *
-  /4 width=7 by cpx_delta, cpx_ct/
-|4,9: /4 width=1 by cpx_bind, cpx_beta, lsubr_pair/
-|5,7,8: /3 width=1 by cpx_flat, cpx_eps, cpx_ct/
-|6,10: /4 width=3 by cpx_zeta, cpx_theta, lsubr_pair/
-]
-qed-.
+lemma cpx_atom: ∀h,I,G,L. ⦃G, L⦄ ⊢ ⓪{I} ➡[h] ⓪{I}.
+/2 width=2 by cpg_atom, ex_intro/ qed.
 
-(* Note: this is "∀h,g,L. reflexive … (cpx h g L)" *)
-lemma cpx_refl: ∀h,o,G,T,L. ⦃G, L⦄ ⊢ T ➡[h, o] T.
-#h #o #G #T elim T -T // * /2 width=1 by cpx_bind, cpx_flat/
+(* Basic_2A1: was: cpx_st *)
+lemma cpx_ess: ∀h,G,L,s. ⦃G, L⦄ ⊢ ⋆s ➡[h] ⋆(next h s).
+/2 width=2 by cpg_ess, ex_intro/ qed.
+
+lemma cpx_delta: ∀h,I,G,K,V1,V2,W2. ⦃G, K⦄ ⊢ V1 ➡[h] V2 →
+                 ⬆*[1] V2 ≡ W2 → ⦃G, K.ⓑ{I}V1⦄ ⊢ #0 ➡[h] W2.
+#h * #G #K #V1 #V2 #W2 *
+/3 width=4 by cpg_delta, cpg_ell, ex_intro/
 qed.
 
-lemma cpr_cpx: ∀h,o,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡ T2 → ⦃G, L⦄ ⊢ T1 ➡[h, o] T2.
-#h #o #G #L #T1 #T2 #H elim H -L -T1 -T2
-/2 width=7 by cpx_delta, cpx_bind, cpx_flat, cpx_zeta, cpx_eps, cpx_beta, cpx_theta/
+lemma cpx_lref: ∀h,I,G,K,V,T,U,i. ⦃G, K⦄ ⊢ #i ➡[h] T →
+                ⬆*[1] T ≡ U → ⦃G, K.ⓑ{I}V⦄ ⊢ #⫯i ➡[h] U.
+#h #I #G #K #V #T #U #i *
+/3 width=4 by cpg_lref, ex_intro/
 qed.
 
-lemma cpx_pair_sn: ∀h,o,I,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡[h, o] V2 →
-                   ∀T. ⦃G, L⦄ ⊢ ②{I}V1.T ➡[h, o] ②{I}V2.T.
-#h #o * /2 width=1 by cpx_bind, cpx_flat/
+lemma cpx_bind: ∀h,p,I,G,L,V1,V2,T1,T2.
+                 ⦃G, L⦄ ⊢ V1 ➡[h] V2 → ⦃G, L.ⓑ{I}V1⦄ ⊢ T1 ➡[h] T2 →
+                 ⦃G, L⦄ ⊢ ⓑ{p,I}V1.T1 ➡[h] ⓑ{p,I}V2.T2.
+#h #p #I #G #L #V1 #V2 #T1 #T2 * #cV #HV12 *
+/3 width=2 by cpg_bind, ex_intro/
 qed.
 
-lemma cpx_delift: ∀h,o,I,G,K,V,T1,L,l. ⬇[l] L ≡ (K.ⓑ{I}V) →
-                  ∃∃T2,T.  ⦃G, L⦄ ⊢ T1 ➡[h, o] T2 & ⬆[l, 1] T ≡ T2.
-#h #o #I #G #K #V #T1 elim T1 -T1
-[ * #i #L #l /2 width=4 by cpx_atom, lift_sort, lift_gref, ex2_2_intro/
-  elim (lt_or_eq_or_gt i l) #Hil [1,3: /4 width=4 by cpx_atom, lift_lref_ge_minus, lift_lref_lt, ylt_inj, yle_inj, ex2_2_intro/ ]
-  destruct
-  elim (lift_total V 0 (i+1)) #W #HVW
-  elim (lift_split … HVW i i) /3 width=7 by cpx_delta, ex2_2_intro/
-| * [ #a ] #I #W1 #U1 #IHW1 #IHU1 #L #l #HLK
-  elim (IHW1 … HLK) -IHW1 #W2 #W #HW12 #HW2
-  [ elim (IHU1 (L. ⓑ{I} W1) (l+1)) -IHU1 /3 width=9 by cpx_bind, drop_drop, lift_bind, ex2_2_intro/
-  | elim (IHU1 … HLK) -IHU1 -HLK /3 width=8 by cpx_flat, lift_flat, ex2_2_intro/
-  ]
-]
-qed-.
+lemma cpx_flat: ∀h,I,G,L,V1,V2,T1,T2.
+                 ⦃G, L⦄ ⊢ V1 ➡[h] V2 → ⦃G, L⦄ ⊢ T1 ➡[h] T2 →
+                 ⦃G, L⦄ ⊢ ⓕ{I}V1.T1 ➡[h] ⓕ{I}V2.T2.
+#h #I #G #L #V1 #V2 #T1 #T2 * #cV #HV12 *
+/3 width=2 by cpg_flat, ex_intro/
+qed.
+
+lemma cpx_zeta: ∀h,G,L,V,T1,T,T2. ⦃G, L.ⓓV⦄ ⊢ T1 ➡[h] T →
+                ⬆*[1] T2 ≡ T → ⦃G, L⦄ ⊢ +ⓓV.T1 ➡[h] T2.
+#h #G #L #V #T1 #T #T2 *
+/3 width=4 by cpg_zeta, ex_intro/
+qed.
+
+lemma cpx_eps: ∀h,G,L,V,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[h] T2 → ⦃G, L⦄ ⊢ ⓝV.T1 ➡[h] T2.
+#h #G #L #V #T1 #T2 *
+/3 width=2 by cpg_eps, ex_intro/
+qed.
+
+(* Basic_2A1: was: cpx_ct *)
+lemma cpx_ee: ∀h,G,L,V1,V2,T. ⦃G, L⦄ ⊢ V1 ➡[h] V2 → ⦃G, L⦄ ⊢ ⓝV1.T ➡[h] V2.
+#h #G #L #V1 #V2 #T *
+/3 width=2 by cpg_ee, ex_intro/
+qed.
+
+lemma cpx_beta: ∀h,p,G,L,V1,V2,W1,W2,T1,T2.
+                ⦃G, L⦄ ⊢ V1 ➡[h] V2 → ⦃G, L⦄ ⊢ W1 ➡[h] W2 → ⦃G, L.ⓛW1⦄ ⊢ T1 ➡[h] T2 →
+                ⦃G, L⦄ ⊢ ⓐV1.ⓛ{p}W1.T1 ➡[h] ⓓ{p}ⓝW2.V2.T2.
+#h #p #G #L #V1 #V2 #W1 #W2 #T1 #T2 * #cV #HV12 * #cW #HW12 * 
+/3 width=2 by cpg_beta, ex_intro/
+qed.
+
+lemma cpx_theta: ∀h,p,G,L,V1,V,V2,W1,W2,T1,T2.
+                 ⦃G, L⦄ ⊢ V1 ➡[h] V → ⬆*[1] V ≡ V2 → ⦃G, L⦄ ⊢ W1 ➡[h] W2 →
+                 ⦃G, L.ⓓW1⦄ ⊢ T1 ➡[h] T2 →
+                 ⦃G, L⦄ ⊢ ⓐV1.ⓓ{p}W1.T1 ➡[h] ⓓ{p}W2.ⓐV2.T2.
+#h #p #G #L #V1 #V #V2 #W1 #W2 #T1 #T2 * #cV #HV1 #HV2 * #cW #HW12 * 
+/3 width=4 by cpg_theta, ex_intro/
+qed.
+
+lemma cpx_refl: ∀h,G,L. reflexive … (cpx h G L).
+/2 width=2 by ex_intro/ qed.
+
+lemma cpx_pair_sn: ∀h,I,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 →
+                   ∀T. ⦃G, L⦄ ⊢ ②{I}V1.T ➡[h] ②{I}V2.T.
+#h #I #G #L #V1 #V2 *
+/3 width=2 by cpg_pair_sn, ex_intro/
+qed.
 
 (* Basic inversion lemmas ***************************************************)
 
-fact cpx_inv_atom1_aux: ∀h,o,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[h, o] T2 → ∀J. T1 = ⓪{J} →
-                        ∨∨ T2 = ⓪{J}
-                         | ∃∃s,d. deg h o s (d+1) & T2 = ⋆(next h s) & J = Sort s
-                         | ∃∃I,K,V,V2,i. ⬇[i] L ≡ K.ⓑ{I}V & ⦃G, K⦄ ⊢ V ➡[h, o] V2 &
-                                         ⬆[O, i+1] V2 ≡ T2 & J = LRef i.
-#G #h #o #L #T1 #T2 * -L -T1 -T2
-[ #I #G #L #J #H destruct /2 width=1 by or3_intro0/
-| #G #L #s #d #Hkd #J #H destruct /3 width=5 by or3_intro1, ex3_2_intro/
-| #I #G #L #K #V #V2 #T2 #i #HLK #HV2 #HVT2 #J #H destruct /3 width=9 by or3_intro2, ex4_5_intro/
-| #a #I #G #L #V1 #V2 #T1 #T2 #_ #_ #J #H destruct
-| #I #G #L #V1 #V2 #T1 #T2 #_ #_ #J #H destruct
-| #G #L #V #T1 #T #T2 #_ #_ #J #H destruct
-| #G #L #V #T1 #T2 #_ #J #H destruct
-| #G #L #V1 #V2 #T #_ #J #H destruct
-| #a #G #L #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #J #H destruct
-| #a #G #L #V1 #V #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #_ #J #H destruct
-]
-qed-.
-
-lemma cpx_inv_atom1: ∀h,o,J,G,L,T2. ⦃G, L⦄ ⊢ ⓪{J} ➡[h, o] T2 →
+lemma cpx_inv_atom1: ∀h,J,G,L,T2. ⦃G, L⦄ ⊢ ⓪{J} ➡[h] T2 →
                      ∨∨ T2 = ⓪{J}
-                      | ∃∃s,d. deg h o s (d+1) & T2 = ⋆(next h s) & J = Sort s
-                      | ∃∃I,K,V,V2,i. ⬇[i] L ≡ K.ⓑ{I}V & ⦃G, K⦄ ⊢ V ➡[h, o] V2 &
-                                      ⬆[O, i+1] V2 ≡ T2 & J = LRef i.
-/2 width=3 by cpx_inv_atom1_aux/ qed-.
-
-lemma cpx_inv_sort1: ∀h,o,G,L,T2,s. ⦃G, L⦄ ⊢ ⋆s ➡[h, o] T2 → T2 = ⋆s ∨
-                     ∃∃d. deg h o s (d+1) & T2 = ⋆(next h s).
-#h #o #G #L #T2 #s #H
-elim (cpx_inv_atom1 … H) -H /2 width=1 by or_introl/ *
-[ #s0 #d0 #Hkd0 #H1 #H2 destruct /3 width=4 by ex2_intro, or_intror/
-| #I #K #V #V2 #i #_ #_ #_ #H destruct
-]
+                      | ∃∃s. T2 = ⋆(next h s) & J = Sort s
+                      | ∃∃I,K,V1,V2. ⦃G, K⦄ ⊢ V1 ➡[h] V2 & ⬆*[1] V2 ≡ T2 &
+                                     L = K.ⓑ{I}V1 & J = LRef 0
+                      | ∃∃I,K,V,T,i. ⦃G, K⦄ ⊢ #i ➡[h] T & ⬆*[1] T ≡ T2 &
+                                     L = K.ⓑ{I}V & J = LRef (⫯i).
+#h #J #G #L #T2 * #c #H elim (cpg_inv_atom1 … H) -H *
+/4 width=9 by or4_intro0, or4_intro1, or4_intro2, or4_intro3, ex4_5_intro, ex4_4_intro, ex2_intro, ex_intro/
 qed-.
 
-lemma cpx_inv_lref1: ∀h,o,G,L,T2,i. ⦃G, L⦄ ⊢ #i ➡[h, o] T2 →
-                     T2 = #i ∨
-                     ∃∃I,K,V,V2. ⬇[i] L ≡ K. ⓑ{I}V & ⦃G, K⦄ ⊢ V ➡[h, o] V2 &
-                                 ⬆[O, i+1] V2 ≡ T2.
-#h #o #G #L #T2 #i #H
-elim (cpx_inv_atom1 … H) -H /2 width=1 by or_introl/ *
-[ #s #d #_ #_ #H destruct
-| #I #K #V #V2 #j #HLK #HV2 #HVT2 #H destruct /3 width=7 by ex3_4_intro, or_intror/
-]
+lemma cpx_inv_sort1: ∀h,G,L,T2,s. ⦃G, L⦄ ⊢ ⋆s ➡[h] T2 →
+                     T2 = ⋆s ∨ T2 = ⋆(next h s).
+#h #G #L #T2 #s * #c #H elim (cpg_inv_sort1 … H) -H *
+/2 width=1 by or_introl, or_intror/
 qed-.
 
-lemma cpx_inv_lref1_ge: ∀h,o,G,L,T2,i. ⦃G, L⦄ ⊢ #i ➡[h, o] T2 → |L| ≤ i → T2 = #i.
-#h #o #G #L #T2 #i #H elim (cpx_inv_lref1 … H) -H // *
-#I #K #V1 #V2 #HLK #_ #_ #HL -h -G -V2 lapply (drop_fwd_length_lt2 … HLK) -K -I -V1
-#H elim (lt_refl_false i) /2 width=3 by lt_to_le_to_lt/
+lemma cpx_inv_zero1: ∀h,G,L,T2. ⦃G, L⦄ ⊢ #0 ➡[h] T2 →
+                     T2 = #0 ∨
+                     ∃∃I,K,V1,V2. ⦃G, K⦄ ⊢ V1 ➡[h] V2 & ⬆*[1] V2 ≡ T2 &
+                                  L = K.ⓑ{I}V1.
+#h #G #L #T2 * #c #H elim (cpg_inv_zero1 … H) -H *
+/4 width=7 by ex3_4_intro, ex_intro, or_introl, or_intror/
 qed-.
 
-lemma cpx_inv_gref1: ∀h,o,G,L,T2,p.  ⦃G, L⦄ ⊢ §p ➡[h, o] T2 → T2 = §p.
-#h #o #G #L #T2 #p #H
-elim (cpx_inv_atom1 … H) -H // *
-[ #s #d #_ #_ #H destruct
-| #I #K #V #V2 #i #_ #_ #_ #H destruct
-]
+lemma cpx_inv_lref1: ∀h,G,L,T2,i. ⦃G, L⦄ ⊢ #⫯i ➡[h] T2 →
+                     T2 = #(⫯i) ∨
+                     ∃∃I,K,V,T. ⦃G, K⦄ ⊢ #i ➡[h] T & ⬆*[1] T ≡ T2 & L = K.ⓑ{I}V.
+#h #G #L #T2 #i * #c #H elim (cpg_inv_lref1 … H) -H *
+/4 width=7 by ex3_4_intro, ex_intro, or_introl, or_intror/
 qed-.
 
-fact cpx_inv_bind1_aux: ∀h,o,G,L,U1,U2. ⦃G, L⦄ ⊢ U1 ➡[h, o] U2 →
-                        ∀a,J,V1,T1. U1 = ⓑ{a,J}V1.T1 → (
-                        ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡[h, o] V2 & ⦃G, L.ⓑ{J}V1⦄ ⊢ T1 ➡[h, o] T2 &
-                                 U2 = ⓑ{a,J}V2.T2
-                        ) ∨
-                        ∃∃T. ⦃G, L.ⓓV1⦄ ⊢ T1 ➡[h, o] T & ⬆[0, 1] U2 ≡ T &
-                             a = true & J = Abbr.
-#h #o #G #L #U1 #U2 * -L -U1 -U2
-[ #I #G #L #b #J #W #U1 #H destruct
-| #G #L #s #d #_ #b #J #W #U1 #H destruct
-| #I #G #L #K #V #V2 #W2 #i #_ #_ #_ #b #J #W #U1 #H destruct
-| #a #I #G #L #V1 #V2 #T1 #T2 #HV12 #HT12 #b #J #W #U1 #H destruct /3 width=5 by ex3_2_intro, or_introl/
-| #I #G #L #V1 #V2 #T1 #T2 #_ #_ #b #J #W #U1 #H destruct
-| #G #L #V #T1 #T #T2 #HT1 #HT2 #b #J #W #U1 #H destruct /3 width=3 by ex4_intro, or_intror/
-| #G #L #V #T1 #T2 #_ #b #J #W #U1 #H destruct
-| #G #L #V1 #V2 #T #_ #b #J #W #U1 #H destruct
-| #a #G #L #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #b #J #W #U1 #H destruct
-| #a #G #L #V1 #V #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #_ #b #J #W #U1 #H destruct
-]
+lemma cpx_inv_gref1: ∀h,G,L,T2,l. ⦃G, L⦄ ⊢ §l ➡[h] T2 → T2 = §l.
+#h #G #L #T2 #l * #c #H elim (cpg_inv_gref1 … H) -H //
 qed-.
 
-lemma cpx_inv_bind1: ∀h,o,a,I,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓑ{a,I}V1.T1 ➡[h, o] U2 → (
-                     ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡[h, o] V2 & ⦃G, L.ⓑ{I}V1⦄ ⊢ T1 ➡[h, o] T2 &
-                              U2 = ⓑ{a,I} V2. T2
+lemma cpx_inv_bind1: ∀h,p,I,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓑ{p,I}V1.T1 ➡[h] U2 → (
+                     ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 & ⦃G, L.ⓑ{I}V1⦄ ⊢ T1 ➡[h] T2 &
+                              U2 = ⓑ{p,I}V2.T2
                      ) ∨
-                     ∃∃T. ⦃G, L.ⓓV1⦄ ⊢ T1 ➡[h, o] T & ⬆[0, 1] U2 ≡ T &
-                          a = true & I = Abbr.
-/2 width=3 by cpx_inv_bind1_aux/ qed-.
+                     ∃∃T. ⦃G, L.ⓓV1⦄ ⊢ T1 ➡[h] T & ⬆*[1] U2 ≡ T &
+                          p = true & I = Abbr.
+#h #p #I #G #L #V1 #T1 #U2 * #c #H elim (cpg_inv_bind1 … H) -H *
+/4 width=5 by ex4_intro, ex3_2_intro, ex_intro, or_introl, or_intror/
+qed-.
 
-lemma cpx_inv_abbr1: ∀h,o,a,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓓ{a}V1.T1 ➡[h, o] U2 → (
-                     ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡[h, o] V2 & ⦃G, L.ⓓV1⦄ ⊢ T1 ➡[h, o] T2 &
-                              U2 = ⓓ{a} V2. T2
+lemma cpx_inv_abbr1: ∀h,p,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓓ{p}V1.T1 ➡[h] U2 → (
+                     ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 & ⦃G, L.ⓓV1⦄ ⊢ T1 ➡[h] T2 &
+                              U2 = ⓓ{p}V2.T2
                      ) ∨
-                     ∃∃T. ⦃G, L.ⓓV1⦄ ⊢ T1 ➡[h, o] T & ⬆[0, 1] U2 ≡ T & a = true.
-#h #o #a #G #L #V1 #T1 #U2 #H
-elim (cpx_inv_bind1 … H) -H * /3 width=5 by ex3_2_intro, ex3_intro, or_introl, or_intror/
+                     ∃∃T. ⦃G, L.ⓓV1⦄ ⊢ T1 ➡[h] T & ⬆*[1] U2 ≡ T & p = true.
+#h #p #G #L #V1 #T1 #U2 * #c #H elim (cpg_inv_abbr1 … H) -H *
+/4 width=5 by ex3_2_intro, ex3_intro, ex_intro, or_introl, or_intror/
 qed-.
 
-lemma cpx_inv_abst1: ∀h,o,a,G,L,V1,T1,U2.  ⦃G, L⦄ ⊢ ⓛ{a}V1.T1 ➡[h, o] U2 →
-                     ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡[h, o] V2 &  ⦃G, L.ⓛV1⦄ ⊢ T1 ➡[h, o] T2 &
-                              U2 = ⓛ{a} V2. T2.
-#h #o #a #G #L #V1 #T1 #U2 #H
-elim (cpx_inv_bind1 … H) -H *
-[ /3 width=5 by ex3_2_intro/
-| #T #_ #_ #_ #H destruct
-]
+lemma cpx_inv_abst1: ∀h,p,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓛ{p}V1.T1 ➡[h] U2 →
+                     ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 & ⦃G, L.ⓛV1⦄ ⊢ T1 ➡[h] T2 &
+                              U2 = ⓛ{p}V2.T2.
+#h #p #G #L #V1 #T1 #U2 * #c #H elim (cpg_inv_abst1 … H) -H
+/3 width=5 by ex3_2_intro, ex_intro/
 qed-.
 
-fact cpx_inv_flat1_aux: ∀h,o,G,L,U,U2. ⦃G, L⦄ ⊢ U ➡[h, o] U2 →
-                        ∀J,V1,U1. U = ⓕ{J}V1.U1 →
-                        ∨∨ ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡[h, o] V2 & ⦃G, L⦄ ⊢ U1 ➡[h, o] T2 &
-                                    U2 = ⓕ{J}V2.T2
-                         | (⦃G, L⦄ ⊢ U1 ➡[h, o] U2 ∧ J = Cast)
-                         | (⦃G, L⦄ ⊢ V1 ➡[h, o] U2 ∧ J = Cast)
-                         | ∃∃a,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡[h, o] V2 & ⦃G, L⦄ ⊢ W1 ➡[h, o] W2 &
-                                               ⦃G, L.ⓛW1⦄ ⊢ T1 ➡[h, o] T2 &
-                                               U1 = ⓛ{a}W1.T1 &
-                                               U2 = ⓓ{a}ⓝW2.V2.T2 & J = Appl
-                         | ∃∃a,V,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡[h, o] V & ⬆[0,1] V ≡ V2 &
-                                                 ⦃G, L⦄ ⊢ W1 ➡[h, o] W2 & ⦃G, L.ⓓW1⦄ ⊢ T1 ➡[h, o] T2 &
-                                                 U1 = ⓓ{a}W1.T1 &
-                                                 U2 = ⓓ{a}W2.ⓐV2.T2 & J = Appl.
-#h #o #G #L #U #U2 * -L -U -U2
-[ #I #G #L #J #W #U1 #H destruct
-| #G #L #s #d #_ #J #W #U1 #H destruct
-| #I #G #L #K #V #V2 #W2 #i #_ #_ #_ #J #W #U1 #H destruct
-| #a #I #G #L #V1 #V2 #T1 #T2 #_ #_ #J #W #U1 #H destruct
-| #I #G #L #V1 #V2 #T1 #T2 #HV12 #HT12 #J #W #U1 #H destruct /3 width=5 by or5_intro0, ex3_2_intro/
-| #G #L #V #T1 #T #T2 #_ #_ #J #W #U1 #H destruct
-| #G #L #V #T1 #T2 #HT12 #J #W #U1 #H destruct /3 width=1 by or5_intro1, conj/
-| #G #L #V1 #V2 #T #HV12 #J #W #U1 #H destruct /3 width=1 by or5_intro2, conj/
-| #a #G #L #V1 #V2 #W1 #W2 #T1 #T2 #HV12 #HW12 #HT12 #J #W #U1 #H destruct /3 width=11 by or5_intro3, ex6_6_intro/
-| #a #G #L #V1 #V #V2 #W1 #W2 #T1 #T2 #HV1 #HV2 #HW12 #HT12 #J #W #U1 #H destruct /3 width=13 by or5_intro4, ex7_7_intro/
-]
+lemma cpx_inv_flat1: ∀h,I,G,L,V1,U1,U2. ⦃G, L⦄ ⊢ ⓕ{I}V1.U1 ➡[h] U2 →
+                     ∨∨ ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 & ⦃G, L⦄ ⊢ U1 ➡[h] T2 &
+                                 U2 = ⓕ{I}V2.T2
+                      | (⦃G, L⦄ ⊢ U1 ➡[h] U2 ∧ I = Cast)
+                      | (⦃G, L⦄ ⊢ V1 ➡[h] U2 ∧ I = Cast)
+                      | ∃∃p,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 & ⦃G, L⦄ ⊢ W1 ➡[h] W2 &
+                                            ⦃G, L.ⓛW1⦄ ⊢ T1 ➡[h] T2 &
+                                            U1 = ⓛ{p}W1.T1 &
+                                            U2 = ⓓ{p}ⓝW2.V2.T2 & I = Appl
+                      | ∃∃p,V,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V & ⬆*[1] V ≡ V2 &
+                                              ⦃G, L⦄ ⊢ W1 ➡[h] W2 & ⦃G, L.ⓓW1⦄ ⊢ T1 ➡[h] T2 &
+                                              U1 = ⓓ{p}W1.T1 &
+                                              U2 = ⓓ{p}W2.ⓐV2.T2 & I = Appl.
+#h #I #G #L #V1 #U1 #U2 * #c #H elim (cpg_inv_flat1 … H) -H *
+/4 width=14 by or5_intro0, or5_intro1, or5_intro2, or5_intro3, or5_intro4, ex7_7_intro, ex6_6_intro, ex3_2_intro, ex_intro, conj/
 qed-.
 
-lemma cpx_inv_flat1: ∀h,o,I,G,L,V1,U1,U2. ⦃G, L⦄ ⊢ ⓕ{I}V1.U1 ➡[h, o] U2 →
-                     ∨∨ ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡[h, o] V2 & ⦃G, L⦄ ⊢ U1 ➡[h, o] T2 &
-                                 U2 = ⓕ{I} V2. T2
-                      | (⦃G, L⦄ ⊢ U1 ➡[h, o] U2 ∧ I = Cast)
-                      | (⦃G, L⦄ ⊢ V1 ➡[h, o] U2 ∧ I = Cast)
-                      | ∃∃a,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡[h, o] V2 & ⦃G, L⦄ ⊢ W1 ➡[h, o] W2 &
-                                            ⦃G, L.ⓛW1⦄ ⊢ T1 ➡[h, o] T2 &
-                                            U1 = ⓛ{a}W1.T1 &
-                                            U2 = ⓓ{a}ⓝW2.V2.T2 & I = Appl
-                      | ∃∃a,V,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡[h, o] V & ⬆[0,1] V ≡ V2 &
-                                              ⦃G, L⦄ ⊢ W1 ➡[h, o] W2 & ⦃G, L.ⓓW1⦄ ⊢ T1 ➡[h, o] T2 &
-                                              U1 = ⓓ{a}W1.T1 &
-                                              U2 = ⓓ{a}W2.ⓐV2.T2 & I = Appl.
-/2 width=3 by cpx_inv_flat1_aux/ qed-.
-
-lemma cpx_inv_appl1: ∀h,o,G,L,V1,U1,U2. ⦃G, L⦄ ⊢ ⓐ V1.U1 ➡[h, o] U2 →
-                     ∨∨ ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡[h, o] V2 & ⦃G, L⦄ ⊢ U1 ➡[h, o] T2 &
-                                 U2 = ⓐ V2. T2
-                      | ∃∃a,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡[h, o] V2 & ⦃G, L⦄ ⊢ W1 ➡[h, o] W2 &
-                                            ⦃G, L.ⓛW1⦄ ⊢ T1 ➡[h, o] T2 &
-                                            U1 = ⓛ{a}W1.T1 & U2 = ⓓ{a}ⓝW2.V2.T2
-                      | ∃∃a,V,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡[h, o] V & ⬆[0,1] V ≡ V2 &
-                                              ⦃G, L⦄ ⊢ W1 ➡[h, o] W2 & ⦃G, L.ⓓW1⦄ ⊢ T1 ➡[h, o] T2 &
-                                              U1 = ⓓ{a}W1.T1 & U2 = ⓓ{a}W2. ⓐV2. T2.
-#h #o #G #L #V1 #U1 #U2 #H elim (cpx_inv_flat1 … H) -H *
-[ /3 width=5 by or3_intro0, ex3_2_intro/
-|2,3: #_ #H destruct
-| /3 width=11 by or3_intro1, ex5_6_intro/
-| /3 width=13 by or3_intro2, ex6_7_intro/
-]
+lemma cpx_inv_appl1: ∀h,G,L,V1,U1,U2. ⦃G, L⦄ ⊢ ⓐ V1.U1 ➡[h] U2 →
+                     ∨∨ ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 & ⦃G, L⦄ ⊢ U1 ➡[h] T2 &
+                                 U2 = ⓐV2.T2
+                      | ∃∃p,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 & ⦃G, L⦄ ⊢ W1 ➡[h] W2 &
+                                            ⦃G, L.ⓛW1⦄ ⊢ T1 ➡[h] T2 &
+                                            U1 = ⓛ{p}W1.T1 & U2 = ⓓ{p}ⓝW2.V2.T2
+                      | ∃∃p,V,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V & ⬆*[1] V ≡ V2 &
+                                              ⦃G, L⦄ ⊢ W1 ➡[h] W2 & ⦃G, L.ⓓW1⦄ ⊢ T1 ➡[h] T2 &
+                                              U1 = ⓓ{p}W1.T1 & U2 = ⓓ{p}W2.ⓐV2.T2.
+#h #G #L #V1 #U1 #U2 * #c #H elim (cpg_inv_appl1 … H) -H *
+/4 width=13 by or3_intro0, or3_intro1, or3_intro2, ex6_7_intro, ex5_6_intro, ex3_2_intro, ex_intro/
 qed-.
 
-(* Note: the main property of simple terms *)
-lemma cpx_inv_appl1_simple: ∀h,o,G,L,V1,T1,U. ⦃G, L⦄ ⊢ ⓐV1.T1 ➡[h, o] U → 𝐒⦃T1⦄ →
-                            ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡[h, o] V2 & ⦃G, L⦄ ⊢ T1 ➡[h, o] T2 &
-                                     U = ⓐV2.T2.
-#h #o #G #L #V1 #T1 #U #H #HT1
-elim (cpx_inv_appl1 … H) -H *
-[ /2 width=5 by ex3_2_intro/
-| #a #V2 #W1 #W2 #U1 #U2 #_ #_ #_ #H #_ destruct
-  elim (simple_inv_bind … HT1)
-| #a #V #V2 #W1 #W2 #U1 #U2 #_ #_ #_ #_ #H #_ destruct
-  elim (simple_inv_bind … HT1)
-]
-qed-.
-
-lemma cpx_inv_cast1: ∀h,o,G,L,V1,U1,U2. ⦃G, L⦄ ⊢ ⓝV1.U1 ➡[h, o] U2 →
-                     ∨∨ ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡[h, o] V2 & ⦃G, L⦄ ⊢ U1 ➡[h, o] T2 &
-                                 U2 = ⓝ V2. T2
-                      | ⦃G, L⦄ ⊢ U1 ➡[h, o] U2
-                      | ⦃G, L⦄ ⊢ V1 ➡[h, o] U2.
-#h #o #G #L #V1 #U1 #U2 #H elim (cpx_inv_flat1 … H) -H *
-[ /3 width=5 by or3_intro0, ex3_2_intro/
-|2,3: /2 width=1 by or3_intro1, or3_intro2/
-| #a #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #_ #_ #H destruct
-| #a #V #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #_ #_ #_ #H destruct
-]
+lemma cpx_inv_cast1: ∀h,G,L,V1,U1,U2. ⦃G, L⦄ ⊢ ⓝV1.U1 ➡[h] U2 →
+                     ∨∨ ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 & ⦃G, L⦄ ⊢ U1 ➡[h] T2 &
+                                 U2 = ⓝV2.T2
+                      | ⦃G, L⦄ ⊢ U1 ➡[h] U2
+                      | ⦃G, L⦄ ⊢ V1 ➡[h] U2.
+#h #G #L #V1 #U1 #U2 * #c #H elim (cpg_inv_cast1 … H) -H *
+/4 width=5 by or3_intro0, or3_intro1, or3_intro2, ex3_2_intro, ex_intro/
 qed-.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma cpx_fwd_bind1_minus: ∀h,o,I,G,L,V1,T1,T. ⦃G, L⦄ ⊢ -ⓑ{I}V1.T1 ➡[h, o] T → ∀b.
-                           ∃∃V2,T2. ⦃G, L⦄ ⊢ ⓑ{b,I}V1.T1 ➡[h, o] ⓑ{b,I}V2.T2 &
+lemma cpx_fwd_bind1_minus: ∀h,I,G,L,V1,T1,T. ⦃G, L⦄ ⊢ -ⓑ{I}V1.T1 ➡[h] T → ∀p.
+                           ∃∃V2,T2. ⦃G, L⦄ ⊢ ⓑ{p,I}V1.T1 ➡[h] ⓑ{p,I}V2.T2 &
                                     T = -ⓑ{I}V2.T2.
-#h #o #I #G #L #V1 #T1 #T #H #b
-elim (cpx_inv_bind1 … H) -H *
-[ #V2 #T2 #HV12 #HT12 #H destruct /3 width=4 by cpx_bind, ex2_2_intro/
-| #T2 #_ #_ #H destruct
-]
+#h #I #G #L #V1 #T1 #T * #c #H #p elim (cpg_fwd_bind1_minus … H p) -H
+/3 width=4 by ex2_2_intro, ex_intro/
 qed-.

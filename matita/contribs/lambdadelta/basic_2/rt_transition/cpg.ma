@@ -20,7 +20,7 @@ include "basic_2/grammar/genv.ma".
 include "basic_2/relocation/lifts.ma".
 include "basic_2/static/sh.ma".
 
-(* CONTEXT-SENSITIVE GENERIC PARALLEL RT-TRANSITION FOR TERMS ***************)
+(* COUNTED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS ***************)
 
 (* avtivate genv *)
 inductive cpg (h): rtc → relation4 genv lenv term term ≝
@@ -52,7 +52,7 @@ inductive cpg (h): rtc → relation4 genv lenv term term ≝
 .
 
 interpretation
-   "context-sensitive generic parallel rt-transition (term)"
+   "counted context-sensitive parallel rt-transition (term)"
    'PRed c h G L T1 T2 = (cpg h c G L T1 T2).
 
 (* Basic properties *********************************************************)
@@ -266,10 +266,10 @@ qed-.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma cpg_fwd_bind1_minus: ∀c,h,I,G,L,V1,T1,T. ⦃G, L⦄ ⊢ -ⓑ{I}V1.T1 ➡[c, h] T → ∀b.
-                           ∃∃V2,T2. ⦃G, L⦄ ⊢ ⓑ{b,I}V1.T1 ➡[c, h] ⓑ{b,I}V2.T2 &
+lemma cpg_fwd_bind1_minus: ∀c,h,I,G,L,V1,T1,T. ⦃G, L⦄ ⊢ -ⓑ{I}V1.T1 ➡[c, h] T → ∀p.
+                           ∃∃V2,T2. ⦃G, L⦄ ⊢ ⓑ{p,I}V1.T1 ➡[c, h] ⓑ{p,I}V2.T2 &
                                     T = -ⓑ{I}V2.T2.
-#c #h #I #G #L #V1 #T1 #T #H #b elim (cpg_inv_bind1 … H) -H *
+#c #h #I #G #L #V1 #T1 #T #H #p elim (cpg_inv_bind1 … H) -H *
 [ #cV #cT #V2 #T2 #HV12 #HT12 #H1 #H2 destruct /3 width=4 by cpg_bind, ex2_2_intro/
 | #c #T2 #_ #_ #H destruct
 ]

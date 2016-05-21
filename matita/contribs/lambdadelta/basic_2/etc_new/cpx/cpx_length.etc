@@ -1,0 +1,1 @@
+lemma cpx_inv_lref1_ge: ∀h,G,L,T2,i. ⦃G, L⦄ ⊢ #i ➡[h] T2 → |L| ≤ i → T2 = #i.

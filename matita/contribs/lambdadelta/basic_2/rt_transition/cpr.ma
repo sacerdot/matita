@@ -48,6 +48,11 @@ interpretation "context-sensitive parallel reduction (term)"
 
 (* Basic properties *********************************************************)
 
+lemma cpr_cpx: ∀h,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡ T2 → ⦃G, L⦄ ⊢ T1 ➡[h] T2.
+#h #o #G #L #T1 #T2 #H elim H -L -T1 -T2
+/2 width=7 by cpx_delta, cpx_bind, cpx_flat, cpx_zeta, cpx_eps, cpx_beta, cpx_theta/
+qed.
+
 lemma lsubr_cpr_trans: ∀G. lsub_trans … (cpr G) lsubr.
 #G #L1 #T1 #T2 #H elim H -G -L1 -T1 -T2
 [ //

@@ -12,8 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
+include "basic_2/rt_transition/cpg_simple.ma".
+include "basic_2/rt_transition/cpx.ma".
 
-notation "hvbox( ⦃ term 46 G , break term 46 L ⦄ ⊢ break term 46 T1 ➡ break term 46 T2 )"
-   non associative with precedence 45
-   for @{ 'PRed $G $L $T1 $T2 }.
+(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL REDUCTION FOR TERMS *****************)
+
+lemma cpx_inv_appl1_simple: ∀h,G,L,V1,T1,U. ⦃G, L⦄ ⊢ ⓐV1.T1 ➡[h] U → 𝐒⦃T1⦄ →
+                            ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 & ⦃G, L⦄ ⊢ T1 ➡[h] T2 &
+                                     U = ⓐV2.T2.
+#h #G #L #V1 #T1 #U * #c #H #HT1 elim (cpg_inv_appl1_simple … H) -H
+/3 width=5 by ex3_2_intro, ex_intro/
+qed-.

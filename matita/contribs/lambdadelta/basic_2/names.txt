@@ -78,13 +78,13 @@ b: (q)rst-reduction
 c: conversion
 d: decomposed rt-reduction
 e: decomposed rt-conversion
-g: generic rt-transition
+g: counted rt-transition (generic)
 q: restricted reduction
 r: reduction
 s: substitution
 u: supclosure
 w: reserved for generic pointwise extension
-x: rt-reduction
+x: uncounted rt-transition (extended)
 y: rt-substitution
 
 - forth letter (if present)

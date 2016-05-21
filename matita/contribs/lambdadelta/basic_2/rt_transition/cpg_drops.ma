@@ -17,7 +17,7 @@ include "basic_2/s_computation/fqup_weight.ma".
 include "basic_2/s_computation/fqup_drops.ma".
 include "basic_2/rt_transition/cpg.ma".
 
-(* CONTEXT-SENSITIVE GENERIC PARALLEL RT-TRANSITION FOR TERMS ***************)
+(* COUNTED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS ***************)
 
 (* Advanced properties ******************************************************)
 
@@ -58,6 +58,23 @@ lemma cpg_inv_lref1_drops: ∀c,h,G,i,L,T2. ⦃G, L⦄ ⊢ #i ➡[c, h] T2 →
   #cV #L #W #W2 #HKL #HW2 #HWV2 #H destruct
   lapply (lifts_trans … HWV2 … HVT2 ??) -V2
   /4 width=8 by drops_drop, ex4_4_intro, or3_intro2, or3_intro1/
+]
+qed-.
+
+lemma cpg_inv_atom1_drops: ∀c,h,I,G,L,T2. ⦃G, L⦄ ⊢ ⓪{I} ➡[c, h] T2 →
+                           ∨∨ T2 = ⓪{I} ∧ c = 𝟘𝟘
+                            | ∃∃s. T2 = ⋆(next h s) & I = Sort s & c = 𝟘𝟙
+                            | ∃∃cV,i,K,V,V2. ⬇*[i] L ≡ K.ⓓV & ⦃G, K⦄ ⊢ V ➡[cV, h] V2 &
+                                             ⬆*[⫯i] V2 ≡ T2 & I = LRef i & c = cV
+                            | ∃∃cV,i,K,V,V2. ⬇*[i] L ≡ K.ⓛV & ⦃G, K⦄ ⊢ V ➡[cV, h] V2 &
+                                             ⬆*[⫯i] V2 ≡ T2 & I = LRef i & c = (↓cV) + 𝟘𝟙.
+#c #h * #n #G #L #T2 #H
+[ elim (cpg_inv_sort1 … H) -H *
+  /3 width=3 by or4_intro0, or4_intro1, ex3_intro, conj/
+| elim (cpg_inv_lref1_drops … H) -H *
+  /3 width=10 by or4_intro0, or4_intro2, or4_intro3, ex5_5_intro, conj/
+| elim (cpg_inv_gref1 … H) -H
+  /3 width=1 by or4_intro0, conj/
 ]
 qed-.
 
@@ -135,7 +152,7 @@ qed-.
 
 (* Inversion lemmas with generic slicing for local environments *************)
 
-lemma cpg_inv_lift1: ∀c,h,G. d_deliftable2_sn (cpg h c G).
+lemma cpg_inv_lifts1: ∀c,h,G. d_deliftable2_sn (cpg h c G).
 #c #h #G #L #U generalize in match c; -c
 @(fqup_wf_ind_eq … G L U) -G -L -U #G0 #L0 #U0 #IH #G #L * *
 [ #s #HG #HL #HU #c #X2 #H2 #b #f #K #HLK #X1 #H1 destruct -IH

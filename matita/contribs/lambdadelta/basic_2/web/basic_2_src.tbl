@@ -148,6 +148,10 @@ table {
           }
         ]
 *)
+        [ { "uncounted context-sensitive rt-transition" * } {
+             [ "cpx ( ⦃?,?⦄ ⊢ ? ➡[?] ? )" "cpx_simple" + "cpx_drops" + "cpx_lsubr" * ]
+          }
+        ]
         [ { "counted context-sensitive rt-transition" * } {
              [ "cpg ( ⦃?,?⦄ ⊢ ? ➡[?,?] ? )" "cpg_simple" + "cpg_drops" + "cpg_lsubr" * ]
           }
