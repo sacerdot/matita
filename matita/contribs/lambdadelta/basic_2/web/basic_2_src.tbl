@@ -149,11 +149,11 @@ table {
         ]
 *)
         [ { "uncounted context-sensitive rt-transition" * } {
-             [ "cpx ( ⦃?,?⦄ ⊢ ? ➡[?] ? )" "cpx_simple" + "cpx_drops" + "cpx_lsubr" * ]
+             [ "cpx ( ⦃?,?⦄ ⊢ ? ⬈[?] ? )" "cpx_simple" + "cpx_drops" + "cpx_lsubr" * ]
           }
         ]
         [ { "counted context-sensitive rt-transition" * } {
-             [ "cpg ( ⦃?,?⦄ ⊢ ? ➡[?,?] ? )" "cpg_simple" + "cpg_drops" + "cpg_lsubr" * ]
+             [ "cpg ( ⦃?,?⦄ ⊢ ? ⬈[?,?] ? )" "cpg_simple" + "cpg_drops" + "cpg_lsubr" * ]
           }
         ]
      }
@@ -215,8 +215,8 @@ table {
    class "orange"
    [ { "relocation" * } {
         [ { "generic slicing for local environments" * } {
-             [ "drops_vector ( ⬇*[?,?] ? ≡ ? )" * ]
-             [ "drops ( ⬇*[?,?] ? ≡ ? )" "drops_lstar" + "drops_weight" + "drops_length" + "drops_ceq" + "drops_lexs" + "drops_lreq" + "drops_drops" * ]
+             [ "drops_vector ( ⬇*[?,?] ? ≡ ? ) ( ⬇*[?] ? ≡ ? )" * ]
+             [ "drops ( ⬇*[?,?] ? ≡ ? ) ( ⬇*[?] ? ≡ ? )" "drops_lstar" + "drops_weight" + "drops_length" + "drops_ceq" + "drops_lexs" + "drops_lreq" + "drops_drops" * ]
           }
         ]
         [ { "generic relocation for terms" * } {

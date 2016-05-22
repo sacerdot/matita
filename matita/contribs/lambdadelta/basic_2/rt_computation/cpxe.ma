@@ -19,14 +19,14 @@ include "basic_2/computation/csx.ma".
 (* EVALUATION FOR CONTEXT-SENSITIVE EXTENDED PARALLEL REDUCTION ON TERMS ****)
 
 definition cpxe: ∀h. sd h → relation4 genv lenv term term ≝
-                 λh,o,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡*[h, o] T2 ∧ ⦃G, L⦄ ⊢ ➡[h, o] 𝐍⦃T2⦄.
+                 λh,o,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬈*[h, o] T2 ∧ ⦃G, L⦄ ⊢ ⬈[h, o] 𝐍⦃T2⦄.
 
 interpretation "evaluation for context-sensitive extended parallel reduction (term)"
    'PRedEval h o G L T1 T2 = (cpxe h o G L T1 T2).
 
 (* Basic properties *********************************************************)
 
-lemma csx_cpxe: ∀h,o,G,L,T1. ⦃G, L⦄ ⊢ ⬊*[h, o] T1 → ∃T2. ⦃G, L⦄ ⊢ T1 ➡*[h, o] 𝐍⦃T2⦄.
+lemma csx_cpxe: ∀h,o,G,L,T1. ⦃G, L⦄ ⊢ ⬊*[h, o] T1 → ∃T2. ⦃G, L⦄ ⊢ T1 ⬈*[h, o] 𝐍⦃T2⦄.
 #h #o #G #L #T1 #H @(csx_ind … H) -T1
 #T1 #_ #IHT1 elim (cnx_dec h o G L T1) /3 width=3 by ex_intro, conj/
 * #T #H1T1 #H2T1 elim (IHT1 … H1T1 H2T1) -IHT1 -H2T1

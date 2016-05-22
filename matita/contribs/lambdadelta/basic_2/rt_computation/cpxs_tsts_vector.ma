@@ -21,8 +21,8 @@ include "basic_2/computation/cpxs_tsts.ma".
 (* Vector form of forward lemmas involving same top term structure **********)
 
 (* Basic_1: was just: nf2_iso_appls_lref *)
-lemma cpxs_fwd_cnx_vector: ∀h,o,G,L,T.  𝐒⦃T⦄ → ⦃G, L⦄ ⊢ ➡[h, o] 𝐍⦃T⦄ →
-                           ∀Vs,U. ⦃G, L⦄ ⊢ ⒶVs.T ➡*[h, o] U → ⒶVs.T ≂ U.
+lemma cpxs_fwd_cnx_vector: ∀h,o,G,L,T.  𝐒⦃T⦄ → ⦃G, L⦄ ⊢ ⬈[h, o] 𝐍⦃T⦄ →
+                           ∀Vs,U. ⦃G, L⦄ ⊢ ⒶVs.T ⬈*[h, o] U → ⒶVs.T ≂ U.
 #h #o #G #L #T #H1T #H2T #Vs elim Vs -Vs [ @(cpxs_fwd_cnx … H2T) ] (**) (* /2 width=3 by cpxs_fwd_cnx/ does not work *)
 #V #Vs #IHVs #U #H
 elim (cpxs_inv_appl1 … H) -H *
@@ -36,8 +36,8 @@ elim (cpxs_inv_appl1 … H) -H *
 ]
 qed-.
 
-lemma cpxs_fwd_sort_vector: ∀h,o,G,L,s,Vs,U. ⦃G, L⦄ ⊢ ⒶVs.⋆s ➡*[h, o] U →
-                            ⒶVs.⋆s ≂ U ∨ ⦃G, L⦄ ⊢ ⒶVs.⋆(next h s) ➡*[h, o] U.
+lemma cpxs_fwd_sort_vector: ∀h,o,G,L,s,Vs,U. ⦃G, L⦄ ⊢ ⒶVs.⋆s ⬈*[h, o] U →
+                            ⒶVs.⋆s ≂ U ∨ ⦃G, L⦄ ⊢ ⒶVs.⋆(next h s) ⬈*[h, o] U.
 #h #o #G #L #s #Vs elim Vs -Vs /2 width=1 by cpxs_fwd_sort/
 #V #Vs #IHVs #U #H
 elim (cpxs_inv_appl1 … H) -H *
@@ -61,8 +61,8 @@ qed-.
 
 
 (* Basic_1: was just: pr3_iso_appls_beta *)
-lemma cpxs_fwd_beta_vector: ∀h,o,a,G,L,Vs,V,W,T,U. ⦃G, L⦄ ⊢ ⒶVs.ⓐV.ⓛ{a}W.T ➡*[h, o] U →
-                            ⒶVs. ⓐV. ⓛ{a}W. T ≂ U ∨ ⦃G, L⦄ ⊢ ⒶVs.ⓓ{a}ⓝW.V.T ➡*[h, o] U.
+lemma cpxs_fwd_beta_vector: ∀h,o,a,G,L,Vs,V,W,T,U. ⦃G, L⦄ ⊢ ⒶVs.ⓐV.ⓛ{a}W.T ⬈*[h, o] U →
+                            ⒶVs. ⓐV. ⓛ{a}W. T ≂ U ∨ ⦃G, L⦄ ⊢ ⒶVs.ⓓ{a}ⓝW.V.T ⬈*[h, o] U.
 #h #o #a #G #L #Vs elim Vs -Vs /2 width=1 by cpxs_fwd_beta/
 #V0 #Vs #IHVs #V #W #T #U #H
 elim (cpxs_inv_appl1 … H) -H *
@@ -86,8 +86,8 @@ qed-.
 
 lemma cpxs_fwd_delta_vector: ∀h,o,I,G,L,K,V1,i. ⬇[i] L ≡ K.ⓑ{I}V1 →
                              ∀V2. ⬆[0, i + 1] V1 ≡ V2 →
-                             ∀Vs,U. ⦃G, L⦄ ⊢ ⒶVs.#i ➡*[h, o] U →
-                             ⒶVs.#i ≂ U ∨ ⦃G, L⦄ ⊢ ⒶVs.V2 ➡*[h, o] U.
+                             ∀Vs,U. ⦃G, L⦄ ⊢ ⒶVs.#i ⬈*[h, o] U →
+                             ⒶVs.#i ≂ U ∨ ⦃G, L⦄ ⊢ ⒶVs.V2 ⬈*[h, o] U.
 #h #o #I #G #L #K #V1 #i #HLK #V2 #HV12 #Vs elim Vs -Vs /2 width=5 by cpxs_fwd_delta/
 #V #Vs #IHVs #U #H -K -V1
 elim (cpxs_inv_appl1 … H) -H *
@@ -111,8 +111,8 @@ qed-.
 
 (* Basic_1: was just: pr3_iso_appls_abbr *)
 lemma cpxs_fwd_theta_vector: ∀h,o,G,L,V1b,V2b. ⬆[0, 1] V1b ≡ V2b →
-                             ∀a,V,T,U. ⦃G, L⦄ ⊢ ⒶV1b.ⓓ{a}V.T ➡*[h, o] U →
-                             ⒶV1b. ⓓ{a}V. T ≂ U ∨ ⦃G, L⦄ ⊢ ⓓ{a}V.ⒶV2b.T ➡*[h, o] U.
+                             ∀a,V,T,U. ⦃G, L⦄ ⊢ ⒶV1b.ⓓ{a}V.T ⬈*[h, o] U →
+                             ⒶV1b. ⓓ{a}V. T ≂ U ∨ ⦃G, L⦄ ⊢ ⓓ{a}V.ⒶV2b.T ⬈*[h, o] U.
 #h #o #G #L #V1b #V2b * -V1b -V2b /3 width=1 by or_intror/
 #V1b #V2b #V1a #V2a #HV12a #HV12b #a
 generalize in match HV12a; -HV12a
@@ -159,10 +159,10 @@ elim (cpxs_inv_appl1 … H) -H *
 qed-.
 
 (* Basic_1: was just: pr3_iso_appls_cast *)
-lemma cpxs_fwd_cast_vector: ∀h,o,G,L,Vs,W,T,U. ⦃G, L⦄ ⊢ ⒶVs.ⓝW.T ➡*[h, o] U →
+lemma cpxs_fwd_cast_vector: ∀h,o,G,L,Vs,W,T,U. ⦃G, L⦄ ⊢ ⒶVs.ⓝW.T ⬈*[h, o] U →
                             ∨∨ ⒶVs. ⓝW. T ≂ U
-                             | ⦃G, L⦄ ⊢ ⒶVs.T ➡*[h, o] U
-                             | ⦃G, L⦄ ⊢ ⒶVs.W ➡*[h, o] U.
+                             | ⦃G, L⦄ ⊢ ⒶVs.T ⬈*[h, o] U
+                             | ⦃G, L⦄ ⊢ ⒶVs.W ⬈*[h, o] U.
 #h #o #G #L #Vs elim Vs -Vs /2 width=1 by cpxs_fwd_cast/
 #V #Vs #IHVs #W #T #U #H
 elim (cpxs_inv_appl1 … H) -H *

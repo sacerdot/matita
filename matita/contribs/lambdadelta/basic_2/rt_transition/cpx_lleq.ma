@@ -15,12 +15,12 @@
 include "basic_2/multiple/lleq_drop.ma".
 include "basic_2/reduction/cpx_llpx_sn.ma".
 
-(* CONTEXT-SENSITIVE EXTENDED PARALLEL REDUCTION FOR TERMS ******************)
+(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS *************)
 
 (* Properties on lazy equivalence for local environments ********************)
 
-lemma lleq_cpx_trans: ∀h,o,G,L2,T1,T2. ⦃G, L2⦄ ⊢ T1 ➡[h, o] T2 →
-                      ∀L1. L1 ≡[T1, 0] L2 → ⦃G, L1⦄ ⊢ T1 ➡[h, o] T2.
+lemma lleq_cpx_trans: ∀h,o,G,L2,T1,T2. ⦃G, L2⦄ ⊢ T1 ⬈[h, o] T2 →
+                      ∀L1. L1 ≡[T1, 0] L2 → ⦃G, L1⦄ ⊢ T1 ⬈[h, o] T2.
 #h #o #G #L2 #T1 #T2 #H elim H -G -L2 -T1 -T2 /2 width=2 by cpx_st/
 [ #I #G #L2 #K2 #V1 #V2 #W2 #i #HLK2 #_ #HVW2 #IHV12 #L1 #H elim (lleq_fwd_lref_dx … H … HLK2) -L2
   [ #H elim (ylt_yle_false … H) //
@@ -43,13 +43,13 @@ lemma lleq_cpx_trans: ∀h,o,G,L2,T1,T2. ⦃G, L2⦄ ⊢ T1 ➡[h, o] T2 →
 ]
 qed-.
 
-lemma cpx_lleq_conf: ∀h,o,G,L2,T1,T2. ⦃G, L2⦄ ⊢ T1 ➡[h, o] T2 →
-                     ∀L1. L2 ≡[T1, 0] L1 → ⦃G, L1⦄ ⊢ T1 ➡[h, o] T2.
+lemma cpx_lleq_conf: ∀h,o,G,L2,T1,T2. ⦃G, L2⦄ ⊢ T1 ⬈[h, o] T2 →
+                     ∀L1. L2 ≡[T1, 0] L1 → ⦃G, L1⦄ ⊢ T1 ⬈[h, o] T2.
 /3 width=3 by lleq_cpx_trans, lleq_sym/ qed-.
 
 lemma cpx_lleq_conf_sn: ∀h,o,G. b_c_confluent1 … (cpx h o G) (lleq 0).
 /3 width=6 by cpx_llpx_sn_conf, lift_mono, ex2_intro/ qed-.
 
-lemma cpx_lleq_conf_dx: ∀h,o,G,L2,T1,T2. ⦃G, L2⦄ ⊢ T1 ➡[h, o] T2 →
+lemma cpx_lleq_conf_dx: ∀h,o,G,L2,T1,T2. ⦃G, L2⦄ ⊢ T1 ⬈[h, o] T2 →
                         ∀L1. L1 ≡[T1, 0] L2 → L1 ≡[T2, 0] L2.
 /4 width=6 by cpx_lleq_conf_sn, lleq_sym/ qed-.

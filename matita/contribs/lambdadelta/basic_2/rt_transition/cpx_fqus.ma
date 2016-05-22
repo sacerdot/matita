@@ -12,11 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
+(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS *************)
+
 (* Properties on supclosure *************************************************)
 
 lemma fqu_cpx_trans: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T2⦄ →
-                     ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡[h, o] U2 →
-                     ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡[h, o] U1 & ⦃G1, L1, U1⦄ ⊐ ⦃G2, L2, U2⦄.
+                     ∀U2. ⦃G2, L2⦄ ⊢ T2 ⬈[h, o] U2 →
+                     ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ⬈[h, o] U1 & ⦃G1, L1, U1⦄ ⊐ ⦃G2, L2, U2⦄.
 #h #o #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2 
 /3 width=3 by fqu_pair_sn, fqu_bind_dx, fqu_flat_dx, cpx_pair_sn, cpx_bind, cpx_flat, ex2_intro/
 [ #I #G #L #V2 #U2 #HVU2
@@ -29,8 +31,8 @@ lemma fqu_cpx_trans: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T
 qed-.
 
 lemma fquq_cpx_trans: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐⸮ ⦃G2, L2, T2⦄ →
-                      ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡[h, o] U2 →
-                      ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡[h, o] U1 & ⦃G1, L1, U1⦄ ⊐⸮ ⦃G2, L2, U2⦄.
+                      ∀U2. ⦃G2, L2⦄ ⊢ T2 ⬈[h, o] U2 →
+                      ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ⬈[h, o] U1 & ⦃G1, L1, U1⦄ ⊐⸮ ⦃G2, L2, U2⦄.
 #h #o #G1 #G2 #L1 #L2 #T1 #T2 #H #U2 #HTU2 elim (fquq_inv_gen … H) -H
 [ #HT12 elim (fqu_cpx_trans … HT12 … HTU2) /3 width=3 by fqu_fquq, ex2_intro/
 | * #H1 #H2 #H3 destruct /2 width=3 by ex2_intro/
@@ -38,8 +40,8 @@ lemma fquq_cpx_trans: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐⸮ ⦃G2, L
 qed-.
 
 lemma fqup_cpx_trans: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐+ ⦃G2, L2, T2⦄ →
-                      ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡[h, o] U2 →
-                      ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡[h, o] U1 & ⦃G1, L1, U1⦄ ⊐+ ⦃G2, L2, U2⦄.
+                      ∀U2. ⦃G2, L2⦄ ⊢ T2 ⬈[h, o] U2 →
+                      ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ⬈[h, o] U1 & ⦃G1, L1, U1⦄ ⊐+ ⦃G2, L2, U2⦄.
 #h #o #G1 #G2 #L1 #L2 #T1 #T2 #H @(fqup_ind … H) -G2 -L2 -T2
 [ #G2 #L2 #T2 #H12 #U2 #HTU2 elim (fqu_cpx_trans … H12 … HTU2) -T2
   /3 width=3 by fqu_fqup, ex2_intro/
@@ -50,8 +52,8 @@ lemma fqup_cpx_trans: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐+ ⦃G2, L2,
 qed-.
 
 lemma fqus_cpx_trans: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐* ⦃G2, L2, T2⦄ →
-                      ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡[h, o] U2 →
-                      ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡[h, o] U1 & ⦃G1, L1, U1⦄ ⊐* ⦃G2, L2, U2⦄.
+                      ∀U2. ⦃G2, L2⦄ ⊢ T2 ⬈[h, o] U2 →
+                      ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ⬈[h, o] U1 & ⦃G1, L1, U1⦄ ⊐* ⦃G2, L2, U2⦄.
 #h #o #G1 #G2 #L1 #L2 #T1 #T2 #H #U2 #HTU2 elim (fqus_inv_gen … H) -H
 [ #HT12 elim (fqup_cpx_trans … HT12 … HTU2) /3 width=3 by fqup_fqus, ex2_intro/
 | * #H1 #H2 #H3 destruct /2 width=3 by ex2_intro/
@@ -59,8 +61,8 @@ lemma fqus_cpx_trans: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐* ⦃G2, L2,
 qed-.
 
 lemma fqu_cpx_trans_neq: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T2⦄ →
-                         ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡[h, o] U2 → (T2 = U2 → ⊥) →
-                         ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡[h, o] U1 & T1 = U1 → ⊥ & ⦃G1, L1, U1⦄ ⊐ ⦃G2, L2, U2⦄.
+                         ∀U2. ⦃G2, L2⦄ ⊢ T2 ⬈[h, o] U2 → (T2 = U2 → ⊥) →
+                         ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ⬈[h, o] U1 & T1 = U1 → ⊥ & ⦃G1, L1, U1⦄ ⊐ ⦃G2, L2, U2⦄.
 #h #o #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2
 [ #I #G #L #V1 #V2 #HV12 #_ elim (lift_total V2 0 1)
   #U2 #HVU2 @(ex3_intro … U2)
@@ -88,8 +90,8 @@ lemma fqu_cpx_trans_neq: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L
 qed-.
 
 lemma fquq_cpx_trans_neq: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐⸮ ⦃G2, L2, T2⦄ →
-                          ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡[h, o] U2 → (T2 = U2 → ⊥) →
-                          ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡[h, o] U1 & T1 = U1 → ⊥ & ⦃G1, L1, U1⦄ ⊐⸮ ⦃G2, L2, U2⦄.
+                          ∀U2. ⦃G2, L2⦄ ⊢ T2 ⬈[h, o] U2 → (T2 = U2 → ⊥) →
+                          ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ⬈[h, o] U1 & T1 = U1 → ⊥ & ⦃G1, L1, U1⦄ ⊐⸮ ⦃G2, L2, U2⦄.
 #h #o #G1 #G2 #L1 #L2 #T1 #T2 #H12 #U2 #HTU2 #H elim (fquq_inv_gen … H12) -H12
 [ #H12 elim (fqu_cpx_trans_neq … H12 … HTU2 H) -T2
   /3 width=4 by fqu_fquq, ex3_intro/
@@ -98,8 +100,8 @@ lemma fquq_cpx_trans_neq: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐⸮ ⦃G
 qed-.
 
 lemma fqup_cpx_trans_neq: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐+ ⦃G2, L2, T2⦄ →
-                          ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡[h, o] U2 → (T2 = U2 → ⊥) →
-                          ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡[h, o] U1 & T1 = U1 → ⊥ & ⦃G1, L1, U1⦄ ⊐+ ⦃G2, L2, U2⦄.
+                          ∀U2. ⦃G2, L2⦄ ⊢ T2 ⬈[h, o] U2 → (T2 = U2 → ⊥) →
+                          ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ⬈[h, o] U1 & T1 = U1 → ⊥ & ⦃G1, L1, U1⦄ ⊐+ ⦃G2, L2, U2⦄.
 #h #o #G1 #G2 #L1 #L2 #T1 #T2 #H @(fqup_ind_dx … H) -G1 -L1 -T1
 [ #G1 #L1 #T1 #H12 #U2 #HTU2 #H elim (fqu_cpx_trans_neq … H12 … HTU2 H) -T2
   /3 width=4 by fqu_fqup, ex3_intro/
@@ -110,8 +112,8 @@ lemma fqup_cpx_trans_neq: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐+ ⦃G2,
 qed-.
 
 lemma fqus_cpx_trans_neq: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐* ⦃G2, L2, T2⦄ →
-                          ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡[h, o] U2 → (T2 = U2 → ⊥) →
-                          ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡[h, o] U1 & T1 = U1 → ⊥ & ⦃G1, L1, U1⦄ ⊐* ⦃G2, L2, U2⦄.
+                          ∀U2. ⦃G2, L2⦄ ⊢ T2 ⬈[h, o] U2 → (T2 = U2 → ⊥) →
+                          ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ⬈[h, o] U1 & T1 = U1 → ⊥ & ⦃G1, L1, U1⦄ ⊐* ⦃G2, L2, U2⦄.
 #h #o #G1 #G2 #L1 #L2 #T1 #T2 #H12 #U2 #HTU2 #H elim (fqus_inv_gen … H12) -H12
 [ #H12 elim (fqup_cpx_trans_neq … H12 … HTU2 H) -T2
   /3 width=4 by fqup_fqus, ex3_intro/

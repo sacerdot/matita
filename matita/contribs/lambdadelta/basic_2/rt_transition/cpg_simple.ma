@@ -20,8 +20,8 @@ include "basic_2/rt_transition/cpg.ma".
 (* Properties with simple terms *********************************************)
 
 (* Note: the main property of simple terms *)
-lemma cpg_inv_appl1_simple: ∀c,h,G,L,V1,T1,U. ⦃G, L⦄ ⊢ ⓐV1.T1 ➡[c, h] U → 𝐒⦃T1⦄ →
-                            ∃∃cV,cT,V2,T2. ⦃G, L⦄ ⊢ V1 ➡[cV, h] V2 & ⦃G, L⦄ ⊢ T1 ➡[cT, h] T2 &
+lemma cpg_inv_appl1_simple: ∀c,h,G,L,V1,T1,U. ⦃G, L⦄ ⊢ ⓐV1.T1 ⬈[c, h] U → 𝐒⦃T1⦄ →
+                            ∃∃cV,cT,V2,T2. ⦃G, L⦄ ⊢ V1 ⬈[cV, h] V2 & ⦃G, L⦄ ⊢ T1 ⬈[cT, h] T2 &
                                            U = ⓐV2.T2 & c = (↓cV)+cT.
 #c #h #G #L #V1 #T1 #U #H #HT1 elim (cpg_inv_appl1 … H) -H *
 [ /2 width=8 by ex4_4_intro/

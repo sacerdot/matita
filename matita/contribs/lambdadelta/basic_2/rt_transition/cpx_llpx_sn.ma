@@ -15,7 +15,7 @@
 include "basic_2/multiple/llpx_sn_drop.ma".
 include "basic_2/reduction/cpx.ma".
 
-(* CONTEXT-SENSITIVE EXTENDED PARALLEL REDUCTION FOR TERMS ******************)
+(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS *************)
 
 (* Properties on lazy sn pointwise extensions *******************************)
 
