@@ -25,8 +25,9 @@ module K = Kernel
 let help_O = "<dir> Set this output directory"
 let help_X = " Clear configuration and options"
 let help_a = " Log alpha-unconverted identifiers (default: no)"
+let help_g = " Global alpha-conversion (default: no)"
 let help_l = "<file> Output the list of generated files in this file"
-let help_p = " omit types (default: no)"
+let help_p = " Omit types (default: no)"
 let help_t = " Test term transformations (default: no)"
 
 let help   = ""
@@ -69,6 +70,7 @@ begin try
       "-O", A.String ((:=) G.out_dir), help_O;
       "-X", A.Unit G.clear, help_X;
       "-a", A.Set G.log_alpha, help_a;
+      "-g", A.Set G.global_alpha, help_g;
       "-l", A.String set_list, help_l;
       "-p", A.Set G.no_types, help_p;
       "-t", A.Set G.test, help_t;

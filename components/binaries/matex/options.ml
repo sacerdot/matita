@@ -26,6 +26,8 @@ let default_test = false
 
 let default_no_types = false
 
+let default_global_alpha = false
+
 let default_log_alpha = false
 
 let default_list_och = None
@@ -34,25 +36,34 @@ let default_alpha = []
 
 (* interface ****************************************************************)
 
+let dno_id = "_"                            (* identifier for not-occurring premises *)
+
+let nan = -1                                (* not a number *)
+
 let status = new P.status
 
 let no_init = ref default_no_init
 
-let out_dir = ref default_out_dir     (* directory of generated files *)
+let out_dir = ref default_out_dir           (* directory of generated files *)
 
-let proc_id = ref default_proc_id     (* identifer of anticipations *)
+let proc_id = ref default_proc_id           (* identifer for anticipations *)
 
-let test = ref default_test           (* test anticipation *)
+let test = ref default_test                 (* test anticipation *)
 
-let no_types = ref default_no_types   (* omit types *)
+let no_types = ref default_no_types         (* omit types *)
 
-let log_alpha = ref default_log_alpha (* log alpha-unconverted identifiers *)
+let global_alpha = ref default_global_alpha (* log alpha-unconverted identifiers *)
 
-let list_och = ref default_list_och   (* output stream for list file *)
+let log_alpha = ref default_log_alpha       (* log alpha-unconverted identifiers *)
 
-let alpha_type = ref default_alpha    (* data of type-based alpha-conversion *)
+let list_och = ref default_list_och         (* output stream for list file *)
 
-let alpha_sort = ref default_alpha    (* data of sort-based alpha-conversion *)
+let alpha_type = ref default_alpha          (* data of type-based alpha-conversion *)
+
+let alpha_sort = ref default_alpha          (* data of sort-based alpha-conversion *)
+
+let is_global_id s =
+   !global_alpha && s <> dno_id
 
 let close_list () = match !list_och with
    | None     -> ()
@@ -65,6 +76,7 @@ let clear () =
    proc_id := default_proc_id;
    test := default_test;
    no_types := default_no_types;
+   global_alpha := default_global_alpha;
    log_alpha := default_log_alpha;
    list_och := default_list_och;
    alpha_type := default_alpha;

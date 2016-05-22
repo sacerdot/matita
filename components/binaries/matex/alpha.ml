@@ -13,6 +13,7 @@ module L = List
 module P = Printf
 module S = Scanf
 module N = String
+module H = Hashtbl
 
 module U = NUri
 module C = NCic
@@ -24,9 +25,15 @@ module X = Ground
 module G = Options
 module K = Kernel
 
-let dno = "_" (* does not occur *)
+type global = (string, int) H.t
 
-let nan = -1  (* not a number *)
+type local = (string * int) list
+
+type status = {
+   g: global;    (* global context for alpha-conversion *)
+   d: local;     (* local context for alpha-conversion *)
+   c: C.context; (* local context for kernel calls *)
+}
 
 (* internal functions *******************************************************)
 
@@ -35,6 +42,10 @@ let malformed s =
 
 let ok s =
    X.log ("alpha: ok " ^ s)
+
+let init () = {
+   g = H.create 11; d = []; c = [];
+}
 
 let rec trim r =
    let r1, r2 = S.sscanf r "%s@_%s" X.id2 in
@@ -48,7 +59,7 @@ let split s =
    let i, l = aux (N.length s) 0 in
    let s1, s2 = N.sub s 0 i, N.sub s i l in
    let s1 = if s1 = "" then "_" else s1 in 
-   s1, if l = 0 then nan else int_of_string s2
+   s1, if l = 0 then G.nan else int_of_string s2
 
 let rec strip = function
    | C.Appl (t :: _) 
@@ -94,59 +105,70 @@ let rec get r = function
    | (h, d) :: tl ->
       if fst r = h && snd r <= d then h, succ d else get r tl
 
-let alpha d c s w t =
-   if K.does_not_occur K.fst_var c t then dno, nan else
-   let r, i = split (trim s) in
-   get (type_check r c w, i) d
-
 let mk_name (s, i) =
    if i < 0 then s else P.sprintf "%s%u" s i
 
+let local_alpha st s w t =
+   if K.does_not_occur K.fst_var st.c t then G.dno_id, G.nan else
+   let r, i = split (trim s) in
+   get (type_check r st.c w, i) st.d
+
+let global_apha st s =
+try 
+   let i = H.find st.g s in
+   H.replace st.g s (succ i);
+   P.sprintf "%s.%u" s i
+with Not_found ->
+   H.add st.g s 0;
+   s
+
+let alpha st s w t =
+   let r = local_alpha st s w t in
+   let s = mk_name r in
+   r, if G.is_global_id s then global_apha st s else s
+
 let add_name r d = r :: d
 
-let rec proc_term d c t = match t with
+let rec proc_term st t = match t with
    | C.Meta _
    | C.Implicit _             
    | C.Sort _
    | C.Rel _
    | C.Const _             -> t
    | C.Appl ts             ->
-      let tts = proc_terms d c ts in
+      let tts = proc_terms st ts in
       K.appl tts
    | C.Match (w, u, v, ts) ->
-      let uu = proc_term d c u in
-      let vv = proc_term d c v in
-      let tts = proc_terms d c ts in
+      let uu = proc_term st u in
+      let vv = proc_term st v in
+      let tts = proc_terms st ts in
       K.case w uu vv tts
    | C.Prod (s, w, t)    -> 
-      let rr = alpha d c s w t in
-      let ss = mk_name rr in
-      let ww = proc_term d c w in
-      let tt = proc_term (add_name rr d) (K.add_dec ss w c) t in
+      let rr, ss = alpha st s w t in
+      let ww = proc_term st w in
+      let tt = proc_term {st with d=add_name rr st.d; c=K.add_dec ss w st.c} t in
       K.prod ss ww tt
    | C.Lambda (s, w, t)    -> 
-      let rr = alpha d c s w t in
-      let ss = mk_name rr in
-      let ww = proc_term d c w in
-      let tt = proc_term (add_name rr d) (K.add_dec ss w c) t in
+      let rr, ss = alpha st s w t in
+      let ww = proc_term st w in
+      let tt = proc_term {st with d=add_name rr st.d; c=K.add_dec ss w st.c} t in
       K.lambda ss ww tt
    | C.LetIn (s, w, v, t)  ->
-      let rr = alpha d c s w t in
-      let ss = mk_name rr in
-      let ww = proc_term d c w in
-      let vv = proc_term d c v in
-      let tt = proc_term (add_name rr d) (K.add_def ss w v c) t in
+      let rr, ss = alpha st s w t in
+      let ww = proc_term st w in
+      let vv = proc_term st v in
+      let tt = proc_term {st with d=add_name rr st.d; c=K.add_def ss w v st.c} t in
       K.letin ss ww vv tt
 
-and proc_terms d c ts =
-   let rtts = L.rev_map (proc_term d c) ts in
+and proc_terms st ts =
+   let rtts = L.rev_map (proc_term st) ts in
    L.rev rtts
 
-let proc_named_term s d c t =
+let proc_named_term s st t =
 try
-   let tt = proc_term d c t in
+   let tt = proc_term st t in
    if !G.test then begin
-      let _ = K.typeof c tt in
+      let _ = K.typeof st.c tt in
       ok s
    end;
    tt
@@ -156,4 +178,5 @@ with
 
 (* interface functions ******************************************************)
 
-let process_top_term s t = proc_named_term s [] [] t
+let process_top_term s t = proc_named_term s (init ()) t
+

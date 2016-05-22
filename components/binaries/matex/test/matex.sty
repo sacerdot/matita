@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesPackage{matex}[2016/04/28 MaTeX Package]
+\ProvidesPackage{matex}[2016/05/22 MaTeX Package]
 \RequirePackage{xcolor}
 \ExecuteOptions{}
 \ProcessOptions*
@@ -23,54 +23,63 @@
 %\newcommand*\ObjRef[1]{\hyperlink{obj:#1}{\ref*{obj:#1}}}
 %\newcommand*\ma@setlabel[2]{\setlabel{#1}\ObjLabel{#2}}
 
-\newcommand*\ma@settarget[2]{\hypertarget{obj:#2}{}}
+\newcommand*\ma@settarget[2]{\hypertarget{obj:#2}{#1}}
 \newcommand*\ma@setlink[2]{\hyperlink{obj:#2}{#1}}
 
 \newcommand*\ObjIncNode{}
 \newcommand*\ObjNode{}
 
-\newcommand*\ma@thehead[2]{\ObjIncNode\textbf{#1 \ObjNode(#2)}\neverindent\par}
+\newcommand*\ma@thehead[3]{\ObjIncNode\textbf{#1 \ObjNode(\ma@settarget{#2}{#3})}\neverindent\par}
 \newcommand*\ma@theneck[1]{\textsl{#1}\neverindent\par}
 
-\newenvironment{axiom}[2]{\ma@settarget{#1}{#2}\ma@thehead{Axiom}{#1}}{\par}
-\newenvironment{declaration}[2]{\ma@settarget{#1}{#2}\ma@thehead{Declaration}{#1}}{\par}
+\newenvironment{axiom}[2]{\ma@thehead{Axiom}{#1}{#2}}{\par}
+\newenvironment{declaration}[2]{\ma@thehead{Declaration}{#1}{#2}}{\par}
 \newenvironment{definition}[2]{}{\par}
-\newenvironment{proposition}[2]{\ma@settarget{#1}{#2}\ma@thehead{Proposition}{#1}}{\par}
+\newenvironment{proposition}[2]{\ma@thehead{Proposition}{#1}{#2}}{\par}
 \newenvironment{proof}[2]{\ma@theneck{Proof}}{\par}
 \newenvironment{ma@step}[1]{\color{#1}}{\par}
 
 \newcommand*\ma@tmp{}
 \newcommand*\ma@skip[4]{}
-\newcommand*\ma@next[5]{\def\ma@tmp{#5}\ifx\ma@tmp\empty #4\let\ma@tmp=\ma@skip\else #1#2{#5}\let\ma@tmp=\ma@next\fi\ma@tmp #3#2#3#4}
+\newcommand*\ma@next[5]{\def\ma@tmp{#5}%
+   \ifx\ma@tmp\empty #4\let\ma@tmp=\ma@skip\else #1#2{#5}\let\ma@tmp=\ma@next\fi
+   \ma@tmp #3#2#3#4%
+}
 
 \newcommand*\ma@space{ }
 \newcommand*\ma@arg[1]{#1}
 
+\newcommand*\ma@setopttarget[2]{\def\ma@tmp{#2}%
+   \ifx\ma@tmp\empty #1\else\ma@settarget{#1}{#2}\fi
+}
+
 \newcommand*\PROP{PROP}
 \newcommand*\CROP[1]{CROP}
 \newcommand*\TYPE[1]{TYPE}
-\newcommand*\LREF[2]{#1}
+\newcommand*\LREF[2]{\def\ma@tmp{#2}%
+   \ifx\ma@tmp\empty #1\else\ma@setlink{#1}{#2}\fi
+}
 \newcommand*\GREF[2]{\ma@setlink{#1}{#2}}
-\newcommand*\ABBR[3]{(D #1 #2 #3) }
-\newcommand*\ABST[2]{(I #1 #2) }
-\newcommand*\PROD[2]{(P #1 #2) }
+\newcommand*\ABBR[4]{(D \ma@setopttarget{#1}{#2} #3 #4) }
+\newcommand*\ABST[3]{(I \ma@setopttarget{#1}{#2} #3) }
+\newcommand*\PROD[3]{(P \ma@setopttarget{#1}{#2} #3) }
 \newcommand*\APPL{(A)\ma@next\ma@space\ma@arg\ma@space\relax}
 \newcommand*\CASE[3]{(C #1 #2 #3)\ma@next\ma@space\ma@arg\ma@space\relax}
 
 \newcommand*\ma@with{ with }
 \newcommand*\ma@comma{, }
 \newcommand*\ma@stop{.\end{ma@step}}
-\newcommand*\ma@head[4]{\def\ma@tmp{#4}%
-   \ifx\ma@tmp\empty\begin{ma@step}{#1}\textbf{#2}%
-   \else\begin{ma@step}{#3}\textbf{#4}%
+\newcommand*\ma@head[6]{\def\ma@tmp{#5}%
+   \ifx\ma@tmp\empty\begin{ma@step}{#1}\textbf{\ma@setopttarget{#2}{#3}}%
+   \else\begin{ma@step}{#4}\textbf{\ma@setopttarget{#5}{#6}}%
    \fi
 }
 \newcommand*\ma@tail{\ma@next\ma@with\ma@arg\ma@comma\ma@stop}
 
-\newcommand*\EXIT[1]{\ma@head{}{}{\ma@exit}{end} of block #1\ma@stop}
-\newcommand*\OPEN[3]{\ma@head{}{}{\ma@open}{#1} is this block #3\ma@stop}
-\newcommand*\PRIM[3]{\ma@head{}{}{\ma@prim}{#1} will have type #3\ma@stop}
-\newcommand*\DECL[3]{\ma@head{\ma@qed}{\_QED}{\ma@fwd}{#1} has type #3\par}
+\newcommand*\EXIT[1]{\ma@head{}{}{}{\ma@exit}{end}{} of block #1\ma@stop}
+\newcommand*\OPEN[3]{\ma@head{}{}{}{\ma@open}{#1}{#2} is this block #3\ma@stop}
+\newcommand*\PRIM[3]{\ma@head{}{}{}{\ma@prim}{#1}{#2} will have type #3\ma@stop}
+\newcommand*\DECL[3]{\ma@head{\ma@qed}{\_QED}{}{\ma@fwd}{#1}{#2} has type #3\par}
 \newcommand*\BODY[1]{being #1\ma@stop}
 \newcommand*\STEP[1]{by #1\ma@tail}
 \newcommand*\DEST[1]{by cases on #1\ma@tail}

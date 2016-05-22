@@ -29,8 +29,10 @@ module A = Anticipate
 module N = Alpha
 
 type status = {
+   i: string;   (* item name *)
    n: string;   (* reference name *)
    s: int list; (* scope *)
+   c: C.context (* context for kernel calls *)
 } 
 
 (* internal functions *******************************************************)
@@ -43,50 +45,53 @@ let malformed s =
 
 (* generic term processing *)
 
-let proc_sort is = function
+let mk_ptr st name = 
+   if G.is_global_id name then P.sprintf "%s.%s" st.i name else ""
+
+let proc_sort st is = function
    | C.Prop             -> T.Macro "PROP" :: is
    | C.Type [`Type, u]  -> T.Macro "TYPE" :: T.arg (U.string_of_uri u) :: is
    | C.Type [`CProp, u] -> T.Macro "CROP" :: T.arg (U.string_of_uri u) :: is
    | C.Type _           -> malformed "T1"
 
-let rec proc_term is c = function
+let rec proc_term st is = function
    | C.Appl []
    | C.Meta _
    | C.Implicit _           -> malformed "T2" 
    | C.Rel m                ->
-      let name = K.resolve_lref c m in
-      T.Macro "LREF" :: T.arg name :: T.free name :: is
+      let name = K.resolve_lref st.c m in
+      T.Macro "LREF" :: T.arg name :: T.free (mk_ptr st name) :: is
    | C.Appl ts              ->
-      let riss = L.rev_map (proc_term [] c) ts in
+      let riss = L.rev_map (proc_term st []) ts in
       T.Macro "APPL" :: T.mk_rev_args riss is
    | C.Prod (s, w, t)       ->
-      let is_w = proc_term [] c w in
-      let is_t = proc_term is (K.add_dec s w c) t in
-      T.Macro "PROD" :: T.arg s :: T.Group is_w :: is_t
+      let is_w = proc_term st [] w in
+      let is_t = proc_term {st with c=K.add_dec s w st.c} is t in
+      T.Macro "PROD" :: T.arg s :: T.free (mk_ptr st s) :: T.Group is_w :: is_t
    | C.Lambda (s, w, t)     -> 
-      let is_w = proc_term [] c w in
-      let is_t = proc_term is (K.add_dec s w c) t in
-      T.Macro "ABST" :: T.arg s :: T.Group is_w :: is_t
+      let is_w = proc_term st [] w in
+      let is_t = proc_term {st with c=K.add_dec s w st.c} is t in
+      T.Macro "ABST" :: T.arg s :: T.free (mk_ptr st s) :: T.Group is_w :: is_t
    | C.LetIn (s, w, v, t)   ->
-      let is_w = proc_term [] c w in
-      let is_v = proc_term [] c v in
-      let is_t = proc_term is (K.add_def s w v c) t in
-      T.Macro "ABBR" :: T.arg s :: T.Group is_w :: T.Group is_v :: is_t
+      let is_w = proc_term st [] w in
+      let is_v = proc_term st [] v in
+      let is_t = proc_term {st with c=K.add_def s w v st.c} is t in
+      T.Macro "ABBR" :: T.arg s :: T.free (mk_ptr st s) :: T.Group is_w :: T.Group is_v :: is_t
    | C.Sort s               ->
-      proc_sort is s
+      proc_sort st is s
    | C.Const (R.Ref (u, r)) ->
       let ss = K.segments_of_uri u in
       let _, _, _, _, obj = E.get_checked_obj G.status u in  
       let ss, name = K.name_of_reference ss (obj, r) in
       T.Macro "GREF" :: T.arg name :: T.free (X.rev_map_concat X.id "." "type" ss) :: is
    | C.Match (w, u, v, ts)  ->
-      let is_w = proc_term [] c (C.Const w) in
-      let is_u = proc_term [] c u in
-      let is_v = proc_term [] c v in
-      let riss = L.rev_map (proc_term [] c) ts in
+      let is_w = proc_term st [] (C.Const w) in
+      let is_u = proc_term st [] u in
+      let is_v = proc_term st [] v in
+      let riss = L.rev_map (proc_term st []) ts in
       T.Macro "CASE" :: T.Group is_w :: T.Group is_u :: T.Group is_v :: T.mk_rev_args riss is
 
-let proc_term is c t = try proc_term is c t with
+let proc_term st is t = try proc_term st is t with
    | E.ObjectNotFound _ 
    | Invalid_argument "List.nth"
    | Failure "nth" 
@@ -94,19 +99,21 @@ let proc_term is c t = try proc_term is c t with
 
 (* proof processing *)
 
-let typeof c = function
+let typeof st = function
    | C.Appl [t]
-   | t          -> K.whd_typeof c t
+   | t          -> K.whd_typeof st.c t
 
-let init () = {
-   n =  ""; s = [1]
+let init i = {
+   i = i;
+   n =  ""; s = [1]; c = [];
 }
 
-let push st n = {
+let push st n = {st with
    n = n; s = 1 :: st.s;
 }
 
-let next st = {
+let next st f = {st with
+   c = f st.c;
    n = ""; s = match st.s with [] -> failwith "hd" | i :: tl -> succ i :: tl
 }
 
@@ -119,51 +126,51 @@ let mk_exit st ris =
 
 let mk_open st ris =
    if st.n = "" then ris else
-   T.free (scope st) :: T.free st.n :: T.arg st.n :: T.Macro "OPEN" :: ris
+   T.free (scope st) :: T.free (mk_ptr st st.n) :: T.arg st.n :: T.Macro "OPEN" :: ris
 
-let mk_dec kind w s ris =
+let mk_dec st kind w s ris =
    let w = if !G.no_types then [] else w in
-   T.Group w :: T.free s :: T.arg s :: T.Macro kind :: ris
+   T.Group w :: T.free (mk_ptr st s) :: T.arg s :: T.Macro kind :: ris
 
-let mk_inferred st c t ris =
-   let u = typeof c t in
-   let is_u = proc_term [] c u in
-   mk_dec "DECL" is_u st.n ris
+let mk_inferred st t ris =
+   let u = typeof st t in
+   let is_u = proc_term st [] u in
+   mk_dec st "DECL" is_u st.n ris
 
-let rec proc_proof st ris c t = match t with
+let rec proc_proof st ris t = match t with
    | C.Appl []
    | C.Meta _
    | C.Implicit _  
    | C.Sort _
    | C.Prod _              -> malformed "P1"
    | C.Const _
-   | C.Rel _               -> proc_proof st ris c (C.Appl [t])
+   | C.Rel _               -> proc_proof st ris (C.Appl [t])
    | C.Lambda (s, w, t)    ->
-      let is_w = proc_term [] c w in
+      let is_w = proc_term st [] w in
       let ris = mk_open st ris in
-      proc_proof (next st) (mk_dec "PRIM" is_w s ris) (K.add_dec s w c) t
+      proc_proof (next st (K.add_dec s w)) (mk_dec st "PRIM" is_w s ris) t
    | C.Appl (t0 :: ts)     ->
-      let rts = X.rev_neg_filter (K.not_prop2 c) [t0] ts in
-      let ris = T.Macro "STEP" :: mk_inferred st c t ris in
-      let tts = L.rev_map (proc_term [] c) rts in
+      let rts = X.rev_neg_filter (K.not_prop2 st.c) [t0] ts in
+      let ris = T.Macro "STEP" :: mk_inferred st t ris in
+      let tts = L.rev_map (proc_term st []) rts in
       mk_exit st (T.rev_mk_args tts ris)
    | C.Match (w, u, v, ts) ->
-      let rts = X.rev_neg_filter (K.not_prop2 c) [v] ts in
-      let ris = T.Macro "DEST" :: mk_inferred st c t ris in
-      let tts = L.rev_map (proc_term [] c) rts in
+      let rts = X.rev_neg_filter (K.not_prop2 st.c) [v] ts in
+      let ris = T.Macro "DEST" :: mk_inferred st t ris in
+      let tts = L.rev_map (proc_term st []) rts in
       mk_exit st (T.rev_mk_args tts ris)
    | C.LetIn (s, w, v, t)  -> 
-      let is_w = proc_term [] c w in
+      let is_w = proc_term st [] w in
       let ris = mk_open st ris in
-      if K.not_prop1 c w then
-         let is_v = proc_term [] c v in
-         let ris = T.Group is_v :: T.Macro "BODY" :: mk_dec "DECL" is_w s ris in
-         proc_proof (next st) ris (K.add_def s w v c) t
+      if K.not_prop1 st.c w then
+         let is_v = proc_term st [] v in
+         let ris = T.Group is_v :: T.Macro "BODY" :: mk_dec st "DECL" is_w s ris in
+         proc_proof (next st (K.add_def s w v)) ris t
       else
-         let ris_v = proc_proof (push st s) ris c v in
-         proc_proof (next st) ris_v (K.add_def s w v c) t
+         let ris_v = proc_proof (push st s) ris v in
+         proc_proof (next st (K.add_def s w v)) ris_v t
 
-let proc_proof rs c t = try proc_proof (init ()) rs c t with 
+let proc_proof st rs t = try proc_proof st rs t with 
    | E.ObjectNotFound _ 
    | Invalid_argument "List.nth"
    | Failure "nth"
@@ -178,15 +185,17 @@ let proc_proof rs c t = try proc_proof (init ()) rs c t with
 let note = T.Note "This file was automatically generated by MaTeX: do not edit"
 
 let proc_item item s ss t =
+   let st = init ss in
    let tt = N.process_top_term s t in (* alpha-conversion *)
    let is = [T.Macro "end"; T.arg item] in
-   note :: T.Macro "begin" :: T.arg item :: T.arg s :: T.free ss :: proc_term is [] tt
+   note :: T.Macro "begin" :: T.arg item :: T.arg s :: T.free ss :: proc_term st is tt
 
 let proc_top_proof s ss t =
+   let st = init ss in
    let t0 = A.process_top_term s t in  (* anticipation *)
    let tt = N.process_top_term s t0 in (* alpha-conversion *)
    let ris = [T.free ss; T.arg s; T.arg "proof"; T.Macro "begin"; note] in
-   L.rev (T.arg "proof" :: T.Macro "end" :: proc_proof ris [] tt)
+   L.rev (T.arg "proof" :: T.Macro "end" :: proc_proof st ris tt)
 
 let open_out_tex s =
    let fname = s ^ T.file_ext in

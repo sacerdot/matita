@@ -9,6 +9,10 @@
      \ /   This software is distributed as is, NO WARRANTY.     
       V_______________________________________________________________ *)
 
+val dno_id: string
+
+val nan: int
+
 val status: NCicPp.status
 
 val no_init: bool ref
@@ -21,6 +25,8 @@ val test: bool ref
 
 val no_types: bool ref 
 
+val global_alpha: bool ref
+
 val log_alpha: bool ref
 
 val list_och: out_channel option ref 
@@ -32,3 +38,5 @@ val alpha_sort: (string * string * string) list ref
 val clear: unit -> unit
 
 val close_list: unit -> unit
+
+val is_global_id: string -> bool
