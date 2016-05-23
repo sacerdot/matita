@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<helm_registry>
+<!--
+matita.lambdadelta.legacy_1.coq.defs.eq.eq.type
+matita.lambdadelta.legacy_1.coq.defs.ex2.ex2.type
+matita.lambdadelta.legacy_1.coq.defs.ex.ex.type
+matita.lambdadelta.legacy_1.coq.defs.land.land.type
+matita.lambdadelta.legacy_1.coq.defs.le.le.type
+matita.lambdadelta.legacy_1.coq.defs.lt.type
+matita.lambdadelta.legacy_1.coq.defs.minus.minus.type
+matita.lambdadelta.legacy_1.coq.defs.nat.S.type
+matita.lambdadelta.legacy_1.coq.defs.not.type
+matita.lambdadelta.legacy_1.coq.defs.or.or.type
+matita.lambdadelta.legacy_1.coq.defs.plus.plus.type
+matita.lambdadelta.legacy_1.coq.defs.pred.type
+-->
+</helm_registry>

@@ -36,6 +36,8 @@ let help   = ""
 
 let alpha_decode = R.triple R.string R.string R.string
 
+let macro_decode = R.triple R.string R.string R.int
+
 let init registry =
    R.load_from registry; 
    if !G.no_init then begin
@@ -43,7 +45,8 @@ let init registry =
       G.no_init := false;
    end;
    G.alpha_type := R.get_list alpha_decode "matex.alpha.type";
-   G.alpha_sort := R.get_list alpha_decode "matex.alpha.sort"
+   G.alpha_sort := R.get_list alpha_decode "matex.alpha.sort";
+   G.macro      := R.get_list macro_decode "matex.macro"
 
 let is_registry s =
    F.check_suffix s ".conf.xml"

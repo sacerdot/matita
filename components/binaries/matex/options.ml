@@ -34,6 +34,8 @@ let default_list_och = None
 
 let default_alpha = []
 
+let default_macro = []
+
 (* interface ****************************************************************)
 
 let dno_id = "_"                            (* identifier for not-occurring premises *)
@@ -58,9 +60,11 @@ let log_alpha = ref default_log_alpha       (* log alpha-unconverted identifiers
 
 let list_och = ref default_list_och         (* output stream for list file *)
 
-let alpha_type = ref default_alpha          (* data of type-based alpha-conversion *)
+let alpha_type = ref default_alpha          (* data for type-based alpha-conversion *)
 
-let alpha_sort = ref default_alpha          (* data of sort-based alpha-conversion *)
+let alpha_sort = ref default_alpha          (* data for sort-based alpha-conversion *)
+
+let macro = ref default_macro               (* data eta-conversion and macro rendering *)
 
 let is_global_id s =
    !global_alpha && s <> dno_id
@@ -80,4 +84,5 @@ let clear () =
    log_alpha := default_log_alpha;
    list_och := default_list_och;
    alpha_type := default_alpha;
-   alpha_sort := default_alpha
+   alpha_sort := default_alpha;
+   macro := default_macro

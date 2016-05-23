@@ -43,10 +43,28 @@ let internal s =
 let malformed s =
    X.error ("engine: malformed term: " ^ s)
 
+let missing s =
+   X.log ("engine: missing macro for " ^ s)
+
 (* generic term processing *)
 
 let mk_ptr st name = 
    if G.is_global_id name then P.sprintf "%s.%s" st.i name else ""
+
+let get_macro s =
+   let rec aux = function
+      | []                        -> "", G.nan
+      | (r, m, a) :: _ when r = s -> m, a
+      | _ :: tl                   -> aux tl
+   in
+   aux !G.macro
+
+let get_head = function
+   | C.Const c :: ts ->
+      let s, _ = K.resolve_reference c in
+      let macro, arity = get_macro s in
+      if arity = L.length ts then  Some (macro, ts) else begin missing s; None end 
+   | _               -> None
 
 let proc_sort st is = function
    | C.Prop             -> T.Macro "PROP" :: is
@@ -62,8 +80,12 @@ let rec proc_term st is = function
       let name = K.resolve_lref st.c m in
       T.Macro "LREF" :: T.arg name :: T.free (mk_ptr st name) :: is
    | C.Appl ts              ->
+      let macro, ts = match get_head ts with
+         | Some (macro, ts) -> macro, ts
+         | None             -> "APPL", ts
+      in
       let riss = L.rev_map (proc_term st []) ts in
-      T.Macro "APPL" :: T.mk_rev_args riss is
+      T.Macro macro :: T.mk_rev_args riss is
    | C.Prod (s, w, t)       ->
       let is_w = proc_term st [] w in
       let is_t = proc_term {st with c=K.add_dec s w st.c} is t in
@@ -79,11 +101,9 @@ let rec proc_term st is = function
       T.Macro "ABBR" :: T.arg s :: T.free (mk_ptr st s) :: T.Group is_w :: T.Group is_v :: is_t
    | C.Sort s               ->
       proc_sort st is s
-   | C.Const (R.Ref (u, r)) ->
-      let ss = K.segments_of_uri u in
-      let _, _, _, _, obj = E.get_checked_obj G.status u in  
-      let ss, name = K.name_of_reference ss (obj, r) in
-      T.Macro "GREF" :: T.arg name :: T.free (X.rev_map_concat X.id "." "type" ss) :: is
+   | C.Const c              ->
+      let s, name = K.resolve_reference c in
+      T.Macro "GREF" :: T.arg name :: T.free s :: is
    | C.Match (w, u, v, ts)  ->
       let is_w = proc_term st [] (C.Const w) in
       let is_u = proc_term st [] u in

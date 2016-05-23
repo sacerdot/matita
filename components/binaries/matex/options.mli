@@ -35,6 +35,8 @@ val alpha_type: (string * string * string) list ref
 
 val alpha_sort: (string * string * string) list ref
 
+val macro: (string * string * int) list ref
+
 val clear: unit -> unit
 
 val close_list: unit -> unit

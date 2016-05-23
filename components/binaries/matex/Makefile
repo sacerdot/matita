@@ -6,7 +6,8 @@ REQUIRES = helm-ng_library
 include ../Makefile.common
 
 PROBE    = ../probe/probe.native
-REGISTRY = $(RT_BASE_DIR)/matita.conf.xml test/basic_1.conf.xml
+REGISTRY = $(RT_BASE_DIR)/matita.conf.xml \
+           test/legacy_1.conf.xml test/ground_1.conf.xml test/basic_1.conf.xml
 OBJS     = Make.objs
 SRCS     = Make.srcs
 

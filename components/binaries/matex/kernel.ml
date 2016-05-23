@@ -116,7 +116,7 @@ let segments_of_uri u =
    let s = S.sub s (i+2) (l-i-2) in
    X.segments_of_string [] (l-i-2) s
 
-let name_of_reference ss = function
+let names_of_reference ss = function
    | C.Constant (_, name, _, _, _), R.Decl      ->
       ss, name
    | C.Constant (_, name, _, _, _), R.Def _     ->
@@ -136,3 +136,10 @@ let name_of_reference ss = function
       (name :: ss), name
    | _                                          ->
       failwith "name_of_reference"
+
+let resolve_reference = function
+   | R.Ref (u, r) ->
+      let ss = segments_of_uri u in
+      let _, _, _, _, obj = E.get_checked_obj G.status u in  
+      let ss, name = names_of_reference ss (obj, r) in
+      X.rev_map_concat X.id "." "type" ss, name

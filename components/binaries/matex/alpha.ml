@@ -73,11 +73,9 @@ let get_constant c t = match strip (K.whd c t) with
       P.sprintf "Type[%s]" (U.string_of_uri u)
    | C.Sort (C.Type [`CProp, u]) ->
       P.sprintf "CProp[%s]" (U.string_of_uri u)
-   | C.Const (R.Ref (u, r))      ->
-      let ss = K.segments_of_uri u in
-      let _, _, _, _, obj = E.get_checked_obj G.status u in  
-      let ss, _ = K.name_of_reference ss (obj, r) in
-      X.rev_map_concat X.id "." "type" ss
+   | C.Const c                   ->
+      let s, _ = K.resolve_reference c in
+      s
    | _                           -> ""
 
 let read l s r =
@@ -173,6 +171,7 @@ try
    end;
    tt
 with
+   | E.ObjectNotFound s 
    | T.TypeCheckerFailure s
    | T.AssertFailure s           -> malformed (Lazy.force s)
 
