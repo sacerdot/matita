@@ -21,7 +21,7 @@ definition cpx (h): relation4 genv lenv term term ≝
                     λG,L,T1,T2. ∃c. ⦃G, L⦄ ⊢ T1 ⬈[c, h] T2.
 
 interpretation
-   "uncounted context-sensitive parallel reduction (term)"
+   "uncounted context-sensitive parallel rt-transition (term)"
    'PRedTy h G L T1 T2 = (cpx h G L T1 T2).
 
 (* Basic properties *********************************************************)

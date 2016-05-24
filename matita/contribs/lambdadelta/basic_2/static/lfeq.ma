@@ -67,19 +67,15 @@ lemma lfeq_inv_lref: ∀Y1,Y2,i. Y1 ≡[#⫯i] Y2 →
                      (Y1 = ⋆ ∧ Y2 = ⋆) ∨ 
                      ∃∃I,L1,L2,V1,V2. L1 ≡[#i] L2 &
                                       Y1 = L1.ⓑ{I}V1 & Y2 = L2.ⓑ{I}V2.
-#Y1 #Y2 #i #H elim (lfxs_inv_lref … H) -H *
-/3 width=8 by ex3_5_intro, or_introl, or_intror, conj/
-qed-.
+/2 width=1 by lfxs_inv_lref/ qed-.
 
 lemma lfeq_inv_bind: ∀p,I,L1,L2,V,T. L1 ≡[ⓑ{p,I}V.T] L2 →
                      L1 ≡[V] L2 ∧ L1.ⓑ{I}V ≡[T] L2.ⓑ{I}V.
-#p #I #L1 #L2 #V #T #H elim (lfxs_inv_bind … H) -H /2 width=3 by conj/
-qed-.
+/2 width=2 by lfxs_inv_bind/ qed-.
 
 lemma lfeq_inv_flat: ∀I,L1,L2,V,T. L1 ≡[ⓕ{I}V.T] L2 →
                      L1 ≡[V] L2 ∧ L1 ≡[T] L2.
-#I #L1 #L2 #V #T #H elim (lfxs_inv_flat … H) -H /2 width=3 by conj/
-qed-.
+/2 width=2 by lfxs_inv_flat/ qed-.
 
 (* Advanced inversion lemmas ************************************************)
 

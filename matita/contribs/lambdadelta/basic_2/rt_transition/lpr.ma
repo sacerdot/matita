@@ -56,6 +56,10 @@ lemma lpr_pair: ∀I,G,K1,K2,V1,V2. ⦃G, K1⦄ ⊢ ➡ K2 → ⦃G, K1⦄ ⊢ V
 lemma lpr_fwd_length: ∀G,L1,L2. ⦃G, L1⦄ ⊢ ➡ L2 → |L1| = |L2|.
 /2 width=2 by lpx_sn_fwd_length/ qed-.
 
+lemma lpr_lpx: ∀h,o,G,L1,L2. ⦃G, L1⦄ ⊢ ➡ L2 → ⦃G, L1⦄ ⊢ ➡[h, o] L2.
+#h #o #G #L1 #L2 #H elim H -L1 -L2 /3 width=1 by lpx_pair, cpr_cpx/
+qed.
+
 (* Basic_1: removed theorems 3: wcpr0_getl wcpr0_getl_back
                                 pr0_subst1_back
 *)
