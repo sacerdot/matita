@@ -99,6 +99,7 @@ dist_export: dist/configure
 	(cd $(DISTDIR) && find . -name .depend.opt -exec rm \{\} \;)
 	(cd $(DISTDIR) && rm -rf $(CLEAN_ON_DIST))
 	cp $< $(DISTDIR)/configure
+	cp dist/configure.ac $(DISTDIR)/configure.ac 
 	cp -r $(EXTRA_DIST) $(DISTDIR)
 	cp -r $(EXTRA_DIST_matita) $(DISTDIR)/matita
 	# distribute HTML version of the manual
