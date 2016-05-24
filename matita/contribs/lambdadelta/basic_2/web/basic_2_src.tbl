@@ -138,8 +138,8 @@ table {
           }
         ]
         [ { "context-sensitive rt-reduction" * } {
-             [ "lpx ( ⦃?,?⦄ ⊢ ➡[?,?] ? )" "lpx_drop" + "lpx_frees" + "lpx_lleq" + "lpx_aaa" * ]
-             [ "cpx ( ⦃?,?⦄ ⊢ ? ➡[?,?] ? )" "cpx_lreq" + "cpx_lift" + "cpx_llpx_sn" + "cpx_lleq" + "cpx_cix" * ]
+             [ "lpx_drop" + "lpx_frees" + "lpx_lleq" + "lpx_aaa" * ]
+             [ "cpx_lreq" + "cpx_fqus" + "cpx_llpx_sn" + "cpx_lleq" * ]
           }
         ]
         [ { "context-sensitive reduction" * } {
@@ -149,6 +149,7 @@ table {
         ]
 *)
         [ { "uncounted context-sensitive rt-transition" * } {
+             [ "lfpx ( ⦃?,?⦄ ⊢ ⬈[?,?] ? )" "lfpx_length" + "lfpx_fqup" * ]
              [ "cpx ( ⦃?,?⦄ ⊢ ? ⬈[?] ? )" "cpx_simple" + "cpx_drops" + "cpx_lsubr" * ]
           }
         ]
