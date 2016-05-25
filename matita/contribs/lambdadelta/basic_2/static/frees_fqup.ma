@@ -19,7 +19,7 @@ include "basic_2/static/frees.ma".
 
 (* Advanced properties ******************************************************)
 
-(* Notes: this replaces lemma 1400 concluding the "big tree" theorem *)
+(* Note: this replaces lemma 1400 concluding the "big tree" theorem *)
 lemma frees_total: ∀L,T. ∃f. L ⊢ 𝐅*⦃T⦄ ≡ f.
 #L #T @(fqup_wf_ind_eq … (⋆) L T) -L -T
 #G0 #L0 #T0 #IH #G #L *
