@@ -280,6 +280,9 @@ corec lemma sor_isid_dx: ∀f2. 𝐈⦃f2⦄ → ∀f1. f1 ⋓ f2 ≡ f1.
 /3 width=7 by sor_pp, sor_np/
 qed.
 
+lemma sor_isid: ∀f1,f2,f. 𝐈⦃f1⦄ → 𝐈⦃f2⦄ → 𝐈⦃f⦄ → f1 ⋓ f2 ≡ f.
+/4 width=3 by sor_eq_repl_back2, sor_eq_repl_back1, isid_inv_eq_repl/ qed.
+
 (* Inversion lemmas on test for identity ************************************)
 
 lemma sor_isid_inv_sn: ∀f1,f2,f. f1 ⋓ f2 ≡ f → 𝐈⦃f1⦄ → f2 ≗ f.

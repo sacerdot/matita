@@ -74,3 +74,18 @@ corec lemma eq_push_inv_isid: ∀f. 𝐈⦃f⦄ → ↑f ≗ f.
 #f #g #Hf #Hg @(eq_push … Hg) [2: @eq_push_inv_isid // | skip ]
 @eq_f //
 qed-.
+
+(* Properties with tail *****************************************************)
+
+lemma isid_tl: ∀f. 𝐈⦃f⦄ → 𝐈⦃⫱f⦄.
+#f cases (pn_split f) * #g * -f #H
+[ /2 width=3 by isid_inv_push/
+| elim (isid_inv_next … H) -H //
+]
+qed.
+
+(* Properties with iterated tail ********************************************)
+
+lemma isid_tls: ∀n,g. 𝐈⦃g⦄ → 𝐈⦃⫱*[n]g⦄.
+#n elim n -n /3 width=1 by isid_tl/
+qed.

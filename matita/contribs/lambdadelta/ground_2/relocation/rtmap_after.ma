@@ -13,7 +13,6 @@
 (**************************************************************************)
 
 include "ground_2/notation/relations/rafter_3.ma".
-include "ground_2/relocation/rtmap_sor.ma".
 include "ground_2/relocation/rtmap_istot.ma".
 
 (* RELOCATION MAP ***********************************************************)
@@ -339,32 +338,6 @@ lemma after_uni: ∀n1,n2. 𝐔❴n1❵ ⊚ 𝐔❴n2❵ ≡ 𝐔❴n1+n2❵.
 /4 width=5 by after_uni_next2, after_isid_sn, after_isid_dx, after_next/
 qed.
 
-(* Inversion lemmas on sor **************************************************)
-
-lemma sor_isid: ∀f1,f2,f. 𝐈⦃f1⦄ → 𝐈⦃f2⦄ → 𝐈⦃f⦄ → f1 ⋓ f2 ≡ f.
-/4 width=3 by sor_eq_repl_back2, sor_eq_repl_back1, isid_inv_eq_repl/ qed.
-(*
-lemma after_inv_sor: ∀f. 𝐅⦃f⦄ → ∀f2,f1. f2 ⊚ f1 ≡ f → ∀fa,fb. fa ⋓ fb ≡ f →
-                     ∃∃f1a,f1b. f2 ⊚ f1a ≡ fa & f2 ⊚ f1b ≡ fb & f1a ⋓ f1b ≡ f1.
-@isfin_ind
-[ #f #Hf #f2 #f1 #H1f #fa #fb #H2f
-  elim (after_inv_isid3 … H1f) -H1f //
-  elim (sor_inv_isid3 … H2f) -H2f //
-  /3 width=5 by ex3_2_intro, after_isid_sn, sor_isid/
-| #f #_ #IH #f2 #f1 #H1 #fa #fb #H2
-  elim (after_inv_xxp … H1) -H1 [ |*: // ] #g2 #g1 #H1f
-  elim (sor_inv_xxp … H2) -H2 [ |*: // ] #ga #gb #H2f
-  elim (IH … H1f … H2f) -f /3 width=11 by sor_pp, after_refl, ex3_2_intro/
-| #f #_ #IH #f2 #f1 #H1 #fa #fb #H2
-  elim (sor_inv_xxn … H2) -H2 [1,3,4: * |*: // ] #ga #gb #H2f
-  elim (after_inv_xxn … H1) -H1 [1,3,5,7,9,11: * |*: // ] #g2 [1,3,5: #g1 ] #H1f
-  elim (IH … H1f … H2f) -f
-  /3 width=11 by sor_np, sor_pn, sor_nn, after_refl, after_push, after_next, ex3_2_intro/
-  #x1a #x1b #H39 #H40 #H41 #H42 #H43 #H44
-  [ @ex3_2_intro
-    [3: /2 width=7 by after_next/ | skip
-    |5: @H41 | skip  
-*)
 (* Forward lemmas on at *****************************************************)
 
 lemma after_at_fwd: ∀i,i1,f. @⦃i1, f⦄ ≡ i → ∀f2,f1. f2 ⊚ f1 ≡ f →
