@@ -249,6 +249,14 @@ qed-.
 
 (* Basic forward lemmas *****************************************************)
 
+lemma lifts_fwd_atom2: ∀f,I,X. ⬆*[f] X ≡ ⓪{I} → ∃J. X = ⓪{J}. 
+#f * #n #X #H
+[ lapply (lifts_inv_sort2 … H)
+| elim (lifts_inv_lref2 … H)
+| lapply (lifts_inv_gref2 … H)
+] -H /2 width=2 by ex_intro/
+qed-.
+
 (* Basic_2A1: includes: lift_inv_O2 *)
 lemma lifts_fwd_isid: ∀f,T1,T2. ⬆*[f] T1 ≡ T2 → 𝐈⦃f⦄ → T1 = T2.
 #f #T1 #T2 #H elim H -f -T1 -T2

@@ -275,6 +275,16 @@ lemma coafter_mono_eq: ∀f1,f2,f. f1 ~⊚ f2 ≡ f → ∀g1,g2,g. g1 ~⊚ g2 �
                        f1 ≗ g1 → f2 ≗ g2 → f ≗ g.
 /4 width=4 by coafter_mono, coafter_eq_repl_back1, coafter_eq_repl_back2/ qed-.
 
+(* Inversion lemmas with tail ***********************************************)
+
+lemma coafter_inv_tl0: ∀g2,g1,g. g2 ~⊚ g1 ≡ ⫱g →
+                       ∃∃f1. ↑g2 ~⊚ f1 ≡ g & ⫱f1 = g1.
+#g1 #g2 #g elim (pn_split g) * #f #H0 #H destruct
+[ /3 width=7 by coafter_refl, ex2_intro/
+| @(ex2_intro … (⫯g2)) /2 width=7 by coafter_push/ (**) (* full auto fails *)
+]
+qed-.
+
 (* Properties on tls ********************************************************)
 
 lemma coafter_tls: ∀n,f1,f2,f. @⦃0, f1⦄ ≡ n →

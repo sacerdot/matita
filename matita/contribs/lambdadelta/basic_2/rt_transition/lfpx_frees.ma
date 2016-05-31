@@ -11,22 +11,39 @@
 (*        v         GNU General Public License Version 2                  *)
 (*                                                                        *)
 (**************************************************************************)
-
+(*
 include "basic_2/multiple/frees_lreq.ma".
 include "basic_2/multiple/frees_lift.ma".
-include "basic_2/reduction/lpx_drop.ma".
+*)
+include "basic_2/s_computation/fqup_weight.ma".
+include "basic_2/rt_transition/cpx_drops.ma".
+include "basic_2/rt_transition/lfpx.ma".
 
-(* SN EXTENDED PARALLEL REDUCTION FOR LOCAL ENVIRONMENTS ********************)
+(* UNCOUNTED PARALLEL RT-TRANSITION FOR LOCAL ENV.S ON REFERRED ENTRIES *****)
 
-(* Properties on context-sensitive free variables ***************************)
+(* Properties with context-sensitive free variables ***************************)
 
-lemma lpx_cpx_frees_trans: ∀h,o,G,L1,U1,U2. ⦃G, L1⦄ ⊢ U1 ➡[h, o] U2 →
-                           ∀L2. ⦃G, L1⦄ ⊢ ➡[h, o] L2 →
-                           ∀i. L2 ⊢ i ϵ 𝐅*[0]⦃U2⦄ → L1 ⊢ i ϵ 𝐅*[0]⦃U1⦄.
-#h #o #G #L1 #U1 @(fqup_wf_ind_eq … G L1 U1) -G -L1 -U1
+lemma lpx_cpx_frees_fwd_sge: ∀h,G,L1,U1,U2. ⦃G, L1⦄ ⊢ U1 ⬈[h] U2 →
+                             ∀L2. ⦃G, L1⦄ ⊢ ⬈[h, U1] L2 →
+                             ∀g1. L1 ⊢ 𝐅*⦃U1⦄ ≡ g1 → ∀g2. L2 ⊢ 𝐅*⦃U2⦄ ≡ g2 →
+                             g2 ⊆ g1.
+#h #G #L1 #U1 @(fqup_wf_ind_eq … G L1 U1) -G -L1 -U1
 #G0 #L0 #U0 #IH #G #L1 * *
-[ -IH #s #HG #HL #HU #U2 #H1 #L2 #_ #i #H2 elim (cpx_inv_sort1 … H1) -H1
-  [| * #d #_ ] #H destruct elim (frees_inv_sort … H2)
+[ #s #HG #HL #HU #U2 #H0 #L2 #_ #g1 #H1 #g2 #H2 -IH -G0 -L0 -U0
+  elim (cpx_inv_sort1 … H0) -H0 #H destruct
+  /3 width=3 by frees_inv_sort, sle_isid_sn/
+| #i #HG #HL #HU #U2 #H0 #L2 #HL12 #g1 #H1 #g2 #H2 destruct
+  elim (cpx_inv_lref1_drops … H0) -H0
+  [ #H destruct
+    lapply (frees_inv_lref … H1) -H1 #Hg1
+    lapply (frees_inv_sort … H2) -H2 #Hg2 /2 width=1 by sle_isid_sn/  
+
+
+
+| #l #HG #HL #HU #U2 #H0 #L2 #_ #g1 #H1 #g2 #H2 -IH -G0 -L0 -U0
+  lapply (cpx_inv_gref1 … H0) -H0 #H destruct
+  /3 width=3 by frees_inv_gref, sle_isid_sn/
+  
 | #j #HG #HL #HU #U2 #H1 #L2 #HL12 #i #H2 elim (cpx_inv_lref1 … H1) -H1
   [ #H destruct elim (frees_inv_lref … H2) -H2 //
     * #I #K2 #W2 #Hj #Hji #HLK2 #HW2

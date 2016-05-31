@@ -69,6 +69,10 @@ definition dedropable_sn: predicate (rtmap → relation lenv) ≝
 
 (* Basic properties *********************************************************)
 
+lemma drops_atom_F: ∀f. ⬇*[Ⓕ, f] ⋆ ≡ ⋆.
+#f @drops_atom #H destruct
+qed.
+
 lemma drops_eq_repl_back: ∀b,L1,L2. eq_repl_back … (λf. ⬇*[b, f] L1 ≡ L2).
 #b #L1 #L2 #f1 #H elim H -f1 -L1 -L2
 [ /4 width=3 by drops_atom, isid_eq_repl_back/
@@ -168,7 +172,7 @@ fact drops_fwd_drop2_aux: ∀b,f2,X,Y. ⬇*[b, f2] X ≡ Y → ∀I,K,V. Y = K.�
 | #f2 #I #L1 #L2 #V #_ #IHL #J #K #W #H elim (IHL … H) -IHL
   /3 width=7 by after_next, ex3_2_intro, drops_drop/
 | #f2 #I #L1 #L2 #V1 #V2 #HL #_ #_ #J #K #W #H destruct
-  lapply (isid_after_dx 𝐈𝐝 … f2) /3 width=9 by after_push, ex3_2_intro, drops_drop/
+  lapply (after_isid_dx 𝐈𝐝 … f2) /3 width=9 by after_push, ex3_2_intro, drops_drop/
 ]
 qed-.
 
@@ -343,7 +347,16 @@ lemma drops_inv_succ: ∀l,L1,L2. ⬇*[⫯l] L1 ≡ L2 →
 [ #H elim (isid_inv_next … H) -H //
 | /2 width=5 by ex2_3_intro/
 ]
-qed-. 
+qed-.
+
+(* Properties with uniform relocations **************************************)
+
+lemma drops_uni_ex: ∀L,i. ⬇*[Ⓕ, 𝐔❴i❵] L ≡ ⋆ ∨ ∃∃I,K,V. ⬇*[i] L ≡ K.ⓑ{I}V.
+#L elim L -L /2 width=1 by or_introl/
+#L #I #V #IH * /4 width=4 by drops_refl, ex1_3_intro, or_intror/
+#i elim (IH i) -IH /3 width=1 by drops_drop, or_introl/
+* /4 width=4 by drops_drop, ex1_3_intro, or_intror/
+qed-.  
 
 (* Basic_2A1: removed theorems 12:
               drops_inv_nil drops_inv_cons d1_liftable_liftables

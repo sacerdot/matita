@@ -70,3 +70,9 @@ lemma isfin_tl: ∀f. 𝐅⦃f⦄ → 𝐅⦃⫱f⦄.
 #f elim (pn_split f) * #g #H #Hf destruct
 /3 width=3 by isfin_fwd_push, isfin_inv_next/
 qed.
+
+(* Inversion lemmas with tail ***********************************************)
+
+lemma isfin_inv_tl: ∀f. 𝐅⦃⫱f⦄ → 𝐅⦃f⦄.
+#f elim (pn_split f) * /2 width=1 by isfin_next, isfin_push/   
+qed-.

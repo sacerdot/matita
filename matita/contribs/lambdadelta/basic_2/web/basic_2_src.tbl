@@ -190,7 +190,7 @@ table {
           }
         ]
         [ { "context-sensitive free variables" * } {
-             [ "frees ( ? ⊢ 𝐅*⦃?⦄ ≡ ? )" "frees_weight" + "frees_lreq" + "frees_frees" * ]
+             [ "frees ( ? ⊢ 𝐅*⦃?⦄ ≡ ? )" "frees_weight" + "frees_lreq" + "frees_drops" + "frees_frees" * ]
           }
         ]
      }

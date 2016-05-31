@@ -330,6 +330,25 @@ lemma sor_fcla: ∀f1,n1. 𝐂⦃f1⦄ ≡ n1 → ∀f2,n2. 𝐂⦃f2⦄ ≡ n2 
 /4 width=6 by sor_mono, fcla_eq_repl_back, ex3_intro/
 qed-.
 
+(* Forward lemmas with finite colength **************************************)
+
+lemma sor_fwd_fcla_sn_ex: ∀f,n. 𝐂⦃f⦄ ≡ n → ∀f1,f2. f1 ⋓ f2 ≡ f →
+                          ∃∃n1.  𝐂⦃f1⦄ ≡ n1 & n1 ≤ n.
+#f #n #H elim H -f -n
+[ /4 width=4 by sor_fwd_isid1, fcla_isid, ex2_intro/
+| #f #n #_ #IH #f1 #f2 #H
+  elim (sor_inv_xxp … H) -H [ |*: // ] #g1 #g2 #Hf #H1 #H2 destruct
+  elim (IH … Hf) -f /3 width=3 by fcla_push, ex2_intro/
+| #f #n #_ #IH #f1 #f2 #H
+  elim (sor_inv_xxn … H) -H [1,3,4: * |*: // ] #g1 #g2 #Hf #H1 #H2 destruct
+  elim (IH … Hf) -f /3 width=3 by fcla_push, fcla_next, le_S_S, le_S, ex2_intro/
+]
+qed-.
+
+lemma sor_fwd_fcla_dx_ex: ∀f,n. 𝐂⦃f⦄ ≡ n → ∀f1,f2. f1 ⋓ f2 ≡ f →
+                          ∃∃n2.  𝐂⦃f2⦄ ≡ n2 & n2 ≤ n.
+/3 width=4 by sor_fwd_fcla_sn_ex, sor_sym/ qed-.
+
 (* Properties on test for finite colength ***********************************)
 
 lemma sor_isfin_ex: ∀f1,f2. 𝐅⦃f1⦄ → 𝐅⦃f2⦄ → ∃∃f. f1 ⋓ f2 ≡ f & 𝐅⦃f⦄.
@@ -341,6 +360,23 @@ lemma sor_isfin: ∀f1,f2. 𝐅⦃f1⦄ → 𝐅⦃f2⦄ → ∀f. f1 ⋓ f2 ≡
 #f1 #f2 #Hf1 #Hf2 #f #Hf elim (sor_isfin_ex … Hf1 … Hf2) -Hf1 -Hf2
 /3 width=6 by sor_mono, isfin_eq_repl_back/
 qed-.
+
+(* Forward lemmas with test for finite colength *****************************)
+
+lemma sor_fwd_isfin_sn: ∀f. 𝐅⦃f⦄ → ∀f1,f2. f1 ⋓ f2 ≡ f → 𝐅⦃f1⦄.
+#f * #n #Hf #f1 #f2 #H
+elim (sor_fwd_fcla_sn_ex … Hf … H) -f -f2 /2 width=2 by ex_intro/
+qed-.
+
+lemma sor_fwd_isfin_dx: ∀f. 𝐅⦃f⦄ → ∀f1,f2. f1 ⋓ f2 ≡ f → 𝐅⦃f2⦄.
+#f * #n #Hf #f1 #f2 #H
+elim (sor_fwd_fcla_dx_ex … Hf … H) -f -f1 /2 width=2 by ex_intro/
+qed-.
+
+(* Inversion lemmas with test for finite colength ***************************)
+
+lemma sor_inv_isfin3: ∀f1,f2,f. f1 ⋓ f2 ≡ f → 𝐅⦃f⦄ → 𝐅⦃f1⦄ ∧ 𝐅⦃f2⦄.
+/3 width=4 by sor_fwd_isfin_dx, sor_fwd_isfin_sn, conj/ qed-.
 
 (* Inversion lemmas on inclusion ********************************************)
 

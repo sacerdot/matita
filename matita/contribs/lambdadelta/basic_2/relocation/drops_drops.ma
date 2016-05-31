@@ -87,7 +87,7 @@ qed-.
 (* Basic_2A1: includes: drop_mono *)
 lemma drops_mono: ∀b1,f,L,L1. ⬇*[b1, f] L ≡ L1 →
                   ∀b2,L2. ⬇*[b2, f] L ≡ L2 → L1 = L2.
-#b1 #f #L #L1 lapply (isid_after_dx 𝐈𝐝 … f)
+#b1 #f #L #L1 lapply (after_isid_dx 𝐈𝐝 … f)
 /3 width=8 by drops_conf, drops_fwd_isid/
 qed-.
 
@@ -124,4 +124,10 @@ lapply (eq_inv_nn … H ????) -H [5: |*: // ] #H12
 lapply (drops_eq_repl_back … Hf1 … H12) -Hf1 #H0
 lapply (drops_mono … H0 … Hf2) -L #H
 destruct /2 width=1 by and3_intro/
+qed-.
+
+lemma drops_inv_uni: ∀L,i. ⬇*[Ⓕ, 𝐔❴i❵] L ≡ ⋆ → ∀I,K,V. ⬇*[i] L ≡ K.ⓑ{I}V → ⊥.
+#L #i #H1 #I #K #V #H2
+lapply (drops_F … H2) -H2 #H2
+lapply (drops_mono … H2 … H1) -L -i #H destruct
 qed-.
