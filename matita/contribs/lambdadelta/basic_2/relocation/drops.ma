@@ -282,6 +282,18 @@ lemma drops_inv_TF: ∀f,I,L,K,V. ⬇*[Ⓕ, f] L ≡ K.ⓑ{I}V → 𝐔⦃f⦄ �
 
 (* Advanced inversion lemmas ************************************************)
 
+lemma drops_inv_atom2: ∀b,L,f. ⬇*[b,f] L ≡ ⋆ →
+                       ∃∃n,f1. ⬇*[b,𝐔❴n❵] L ≡ ⋆ & 𝐔❴n❵ ⊚ f1 ≡ f.
+#b #L elim L -L
+[ /3 width=4 by drops_atom, after_isid_sn, ex2_2_intro/
+| #L #I #V #IH #f #H elim (pn_split f) * #g #H0 destruct
+  [ elim (drops_inv_skip1 … H) -H #K #W #_ #_ #H destruct
+  | lapply (drops_inv_drop1 … H) -H #HL
+    elim (IH … HL) -IH -HL /3 width=8 by drops_drop, after_next, ex2_2_intro/
+  ]
+]
+qed-.
+
 (* Basic_2A1: includes: drop_inv_gen *)
 lemma drops_inv_gen: ∀b,f,I,L,K,V. ⬇*[b, f] L ≡ K.ⓑ{I}V → 𝐔⦃f⦄ →
                      ⬇*[Ⓣ, f] L ≡ K.ⓑ{I}V.

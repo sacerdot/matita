@@ -385,3 +385,8 @@ theorem at_div_id_sn: ∀f. H_at_div 𝐈𝐝 f f 𝐈𝐝.
 lemma at_uni: ∀n,i. @⦃i,𝐔❴n❵⦄ ≡ n+i.
 #n elim n -n /2 width=5 by at_next/
 qed.
+
+(* Inversion lemmas with uniform relocations ********************************)
+
+lemma at_inv_uni: ∀n,i,j. @⦃i,𝐔❴n❵⦄ ≡ j → j = n+i.
+/2 width=4 by at_mono/ qed-.

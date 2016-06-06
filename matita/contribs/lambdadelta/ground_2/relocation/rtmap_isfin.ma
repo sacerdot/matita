@@ -74,5 +74,11 @@ qed.
 (* Inversion lemmas with tail ***********************************************)
 
 lemma isfin_inv_tl: ∀f. 𝐅⦃⫱f⦄ → 𝐅⦃f⦄.
-#f elim (pn_split f) * /2 width=1 by isfin_next, isfin_push/   
+#f elim (pn_split f) * /2 width=1 by isfin_next, isfin_push/
+qed-.
+
+(* Inversion lemmas with tls ********************************************************)
+
+lemma isfin_inv_tls: ∀n,f. 𝐅⦃⫱*[n]f⦄ → 𝐅⦃f⦄.
+#n elim n -n /3 width=1 by isfin_inv_tl/
 qed-.

@@ -210,6 +210,28 @@ lemma lifts_inv_flat2: ∀f:rtmap. ∀I,V2,T2,X. ⬆*[f] X ≡ ⓕ{I}V2.T2 →
 
 (* Advanced inversion lemmas ************************************************)
 
+lemma lifts_inv_atom1: ∀f,I,Y. ⬆*[f] ⓪{I} ≡ Y →
+                       ∨∨ ∃∃s. I = Sort s & Y = ⋆s
+                        | ∃∃i,j. @⦃i, f⦄ ≡ j & I = LRef i & Y = #j
+                        | ∃∃l. I = GRef l & Y = §l.
+#f * #n #Y #H
+[ lapply (lifts_inv_sort1 … H)
+| elim (lifts_inv_lref1 … H)
+| lapply (lifts_inv_gref1 … H)
+] -H /3 width=5 by or3_intro0, or3_intro1, or3_intro2, ex3_2_intro, ex2_intro/
+qed-.
+
+lemma lifts_inv_atom2: ∀f,I,X. ⬆*[f] X ≡ ⓪{I} →
+                       ∨∨ ∃∃s. X = ⋆s & I = Sort s
+                        | ∃∃i,j. @⦃i, f⦄ ≡ j & X = #i & I = LRef j
+                        | ∃∃l. X = §l & I = GRef l.
+#f * #n #X #H
+[ lapply (lifts_inv_sort2 … H)
+| elim (lifts_inv_lref2 … H)
+| lapply (lifts_inv_gref2 … H)
+] -H /3 width=5 by or3_intro0, or3_intro1, or3_intro2, ex3_2_intro, ex2_intro/
+qed-.
+
 (* Basic_2A1: includes: lift_inv_pair_xy_x *)
 lemma lifts_inv_pair_xy_x: ∀f,I,V,T. ⬆*[f] ②{I}V.T ≡ V → ⊥.
 #f #J #V elim V -V
@@ -248,14 +270,6 @@ lemma lifts_inv_lref1_uni: ∀l,Y,i. ⬆*[l] #i ≡ Y → Y = #(l+i).
 qed-.
 
 (* Basic forward lemmas *****************************************************)
-
-lemma lifts_fwd_atom2: ∀f,I,X. ⬆*[f] X ≡ ⓪{I} → ∃J. X = ⓪{J}. 
-#f * #n #X #H
-[ lapply (lifts_inv_sort2 … H)
-| elim (lifts_inv_lref2 … H)
-| lapply (lifts_inv_gref2 … H)
-] -H /2 width=2 by ex_intro/
-qed-.
 
 (* Basic_2A1: includes: lift_inv_O2 *)
 lemma lifts_fwd_isid: ∀f,T1,T2. ⬆*[f] T1 ≡ T2 → 𝐈⦃f⦄ → T1 = T2.
