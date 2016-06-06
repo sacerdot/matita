@@ -30,6 +30,8 @@ let default_global_alpha = false
 
 let default_log_alpha = false
 
+let default_log_missing = false
+
 let default_list_och = None
 
 let default_alpha = []
@@ -58,13 +60,15 @@ let global_alpha = ref default_global_alpha (* log alpha-unconverted identifiers
 
 let log_alpha = ref default_log_alpha       (* log alpha-unconverted identifiers *)
 
+let log_missing = ref default_log_missing   (* log missing notational macros *)
+
 let list_och = ref default_list_och         (* output stream for list file *)
 
 let alpha_type = ref default_alpha          (* data for type-based alpha-conversion *)
 
 let alpha_sort = ref default_alpha          (* data for sort-based alpha-conversion *)
 
-let macro = ref default_macro               (* data eta-conversion and macro rendering *)
+let macro_gref = ref default_macro          (* data eta-conversion and constant rendering *)
 
 let is_global_id s =
    !global_alpha && s <> dno_id
@@ -82,7 +86,8 @@ let clear () =
    no_types := default_no_types;
    global_alpha := default_global_alpha;
    log_alpha := default_log_alpha;
+   log_missing := default_log_missing;
    list_och := default_list_och;
    alpha_type := default_alpha;
    alpha_sort := default_alpha;
-   macro := default_macro
+   macro_gref := default_macro

@@ -27,6 +27,7 @@ let help_X = " Clear configuration and options"
 let help_a = " Log alpha-unconverted identifiers (default: no)"
 let help_g = " Global alpha-conversion (default: no)"
 let help_l = "<file> Output the list of generated files in this file"
+let help_m = " Log missing notational macros (default: no)"
 let help_p = " Omit types (default: no)"
 let help_t = " Test term transformations (default: no)"
 
@@ -46,7 +47,7 @@ let init registry =
    end;
    G.alpha_type := R.get_list alpha_decode "matex.alpha.type";
    G.alpha_sort := R.get_list alpha_decode "matex.alpha.sort";
-   G.macro      := R.get_list macro_decode "matex.macro"
+   G.macro_gref := R.get_list macro_decode "matex.notation.const"
 
 let is_registry s =
    F.check_suffix s ".conf.xml"
@@ -75,6 +76,7 @@ begin try
       "-a", A.Set G.log_alpha, help_a;
       "-g", A.Set G.global_alpha, help_g;
       "-l", A.String set_list, help_l;
+      "-m", A.Set G.log_missing, help_m;
       "-p", A.Set G.no_types, help_p;
       "-t", A.Set G.test, help_t;
    ] process help

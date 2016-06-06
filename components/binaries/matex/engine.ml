@@ -51,19 +51,22 @@ let missing s =
 let mk_ptr st name = 
    if G.is_global_id name then P.sprintf "%s.%s" st.i name else ""
 
-let get_macro s =
+let get_macro s l =
    let rec aux = function
-      | []                        -> "", G.nan
-      | (r, m, a) :: _ when r = s -> m, a
-      | _ :: tl                   -> aux tl
+      | []                                 -> ""
+      | (r, m, a) :: _ when r = s && a = l -> m
+      | _ :: tl                            -> aux tl
    in
-   aux !G.macro
+   aux !G.macro_gref
 
 let get_head = function
    | C.Const c :: ts ->
       let s, _ = K.resolve_reference c in
-      let macro, arity = get_macro s in
-      if arity = L.length ts then  Some (macro, ts) else begin missing s; None end 
+      let macro = get_macro s (L.length ts) in
+      if macro <> "" then Some (macro, s, ts) else begin 
+         if !G.log_missing then missing s;
+         None
+      end 
    | _               -> None
 
 let proc_sort st is = function
@@ -80,16 +83,20 @@ let rec proc_term st is = function
       let name = K.resolve_lref st.c m in
       T.Macro "LREF" :: T.arg name :: T.free (mk_ptr st name) :: is
    | C.Appl ts              ->
-      let macro, ts = match get_head ts with
-         | Some (macro, ts) -> macro, ts
-         | None             -> "APPL", ts
-      in
-      let riss = L.rev_map (proc_term st []) ts in
-      T.Macro macro :: T.mk_rev_args riss is
+      begin match get_head ts with
+         | Some (macro, s, ts) ->
+            let riss = L.rev_map (proc_term st []) ts in
+            T.Macro macro :: T.free s :: T.mk_rev_args riss is
+         | None                ->
+            let riss = L.rev_map (proc_term st []) ts in
+            T.Macro "APPL" :: T.mk_rev_args riss is
+      end
    | C.Prod (s, w, t)       ->
       let is_w = proc_term st [] w in
-      let is_t = proc_term {st with c=K.add_dec s w st.c} is t in
-      T.Macro "PROD" :: T.arg s :: T.free (mk_ptr st s) :: T.Group is_w :: is_t
+      let c = K.add_dec s w st.c in
+      let is_t = proc_term {st with c=c} is t in
+      let macro = if K.not_prop1 c t then "PROD" else "FALL" in
+      T.Macro macro :: T.arg s :: T.free (mk_ptr st s) :: T.Group is_w :: is_t
    | C.Lambda (s, w, t)     -> 
       let is_w = proc_term st [] w in
       let is_t = proc_term {st with c=K.add_dec s w st.c} is t in
@@ -149,7 +156,7 @@ let mk_open st ris =
    T.free (scope st) :: T.free (mk_ptr st st.n) :: T.arg st.n :: T.Macro "OPEN" :: ris
 
 let mk_dec st kind w s ris =
-   let w = if !G.no_types then [] else w in
+   let w = if !G.no_types then [T.Macro "NONE"] else w in
    T.Group w :: T.free (mk_ptr st s) :: T.arg s :: T.Macro kind :: ris
 
 let mk_inferred st t ris =

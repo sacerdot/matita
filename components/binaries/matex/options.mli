@@ -29,13 +29,15 @@ val global_alpha: bool ref
 
 val log_alpha: bool ref
 
+val log_missing: bool ref
+
 val list_och: out_channel option ref 
 
 val alpha_type: (string * string * string) list ref
 
 val alpha_sort: (string * string * string) list ref
 
-val macro: (string * string * int) list ref
+val macro_gref: (string * string * int) list ref
 
 val clear: unit -> unit
 
