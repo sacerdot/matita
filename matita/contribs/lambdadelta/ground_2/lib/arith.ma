@@ -35,6 +35,9 @@ normalize // qed.
 lemma pred_S: ∀m. pred (S m) = m.
 // qed.
 
+lemma plus_S1: ∀x,y. ⫯(x+y) = (⫯x) + y.
+// qed.
+
 lemma max_O1: ∀n. n = (0 ∨ n).
 // qed.
 

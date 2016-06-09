@@ -278,6 +278,17 @@ lemma coafter_mono_eq: ∀f1,f2,f. f1 ~⊚ f2 ≡ f → ∀g1,g2,g. g1 ~⊚ g2 �
                        f1 ≗ g1 → f2 ≗ g2 → f ≗ g.
 /4 width=4 by coafter_mono, coafter_eq_repl_back1, coafter_eq_repl_back2/ qed-.
 
+(* Inversion lemmas with pushs **********************************************)
+
+lemma coafter_fwd_pushs: ∀n,g2,g1,g. g2 ~⊚ g1 ≡ g → @⦃0, g2⦄ ≡ n →
+                         ∃f. ↑*[n]f = g.
+#n elim n -n /2 width=2 by ex_intro/
+#n #IH #g2 #g1 #g #Hg #Hg2
+cases (at_inv_pxn … Hg2) -Hg2 [ |*: // ] #f2 #Hf2 #H2
+cases (coafter_inv_nxx … Hg … H2) -Hg -H2 #f #Hf #H0 destruct
+elim (IH … Hf Hf2) -g1 -g2 -f2 /2 width=2 by ex_intro/
+qed-.
+
 (* Inversion lemmas with tail ***********************************************)
 
 lemma coafter_inv_tl1: ∀g2,g1,g. g2 ~⊚ ⫱g1 ≡ g →
@@ -303,8 +314,45 @@ lemma coafter_tls: ∀n,f1,f2,f. @⦃0, f1⦄ ≡ n →
 #n elim n -n //
 #n #IH #f1 #f2 #f #Hf1 #Hf
 cases (at_inv_pxn … Hf1) -Hf1 [ |*: // ] #g1 #Hg1 #H1
-cases (coafter_inv_nxx … Hf … H1) -Hf /2 width=1 by/
+cases (coafter_inv_nxx … Hf … H1) -Hf #g #Hg #H0 destruct
+<tls_xn <tls_xn /2 width=1 by/
 qed.
+
+lemma coafter_tls_succ: ∀g2,g1,g. g2 ~⊚ g1 ≡ g →
+                        ∀n. @⦃0, g2⦄ ≡ n → ⫱*[⫯n]g2 ~⊚ ⫱g1 ≡ ⫱*[⫯n]g.
+#g2 #g1 #g #Hg #n #Hg2
+lapply (coafter_tls … Hg2 … Hg) -Hg #Hg
+lapply (at_pxx_tls … Hg2) -Hg2 #H
+elim (at_inv_pxp … H) -H [ |*: // ] #f2 #H2
+elim (coafter_inv_pxx … Hg … H2) -Hg * #f1 #f #Hf #H1 #H0 destruct
+<tls_S <tls_S <H2 <H0 -g2 -g -n //
+qed.
+
+lemma coafter_fwd_xpx_pushs: ∀g2,f1,g,n. g2 ~⊚ ↑f1 ≡ g → @⦃0, g2⦄ ≡ n →
+                             ∃f. ↑*[⫯n]f = g.
+#g2 #g1 #g #n #Hg #Hg2
+elim (coafter_fwd_pushs … Hg Hg2) #f #H0 destruct
+lapply (coafter_tls … Hg2 Hg) -Hg <tls_pushs #Hf
+lapply (at_pxx_tls … Hg2) -Hg2 #H
+elim (at_inv_pxp … H) -H [ |*: // ] #f2 #H2
+elim (coafter_inv_pxx … Hf … H2) -Hf -H2 * #f1 #g #_ #H1 #H0 destruct
+[ /2 width=2 by ex_intro/
+| elim (discr_next_push … H1)
+] 
+qed-.
+
+lemma coafter_fwd_xnx_pushs: ∀g2,f1,g,n. g2 ~⊚ ⫯f1 ≡ g → @⦃0, g2⦄ ≡ n →
+                             ∃f. ↑*[n] ⫯f = g.
+#g2 #g1 #g #n #Hg #Hg2
+elim (coafter_fwd_pushs … Hg Hg2) #f #H0 destruct
+lapply (coafter_tls … Hg2 Hg) -Hg <tls_pushs #Hf
+lapply (at_pxx_tls … Hg2) -Hg2 #H
+elim (at_inv_pxp … H) -H [ |*: // ] #f2 #H2
+elim (coafter_inv_pxx … Hf … H2) -Hf -H2 * #f1 #g #_ #H1 #H0 destruct
+[ elim (discr_push_next … H1)
+| /2 width=2 by ex_intro/
+] 
+qed-.
 
 (* Properties on isid *******************************************************)
 

@@ -314,7 +314,9 @@ theorem at_div_pn: ∀f2,g2,f1,g1.
 
 lemma at_pxx_tls: ∀n,f. @⦃0, f⦄ ≡ n → @⦃0, ⫱*[n]f⦄ ≡ 0.
 #n elim n -n //
-#n #IH #f #Hf cases (at_inv_pxn … Hf) -Hf /2 width=3 by/
+#n #IH #f #Hf
+cases (at_inv_pxn … Hf) -Hf [ |*: // ] #g #Hg #H0 destruct
+<tls_xn /2 width=1 by/
 qed.
 
 lemma at_tls: ∀i2,f. ↑⫱*[⫯i2]f ≗ ⫱*[i2]f → ∃i1. @⦃i1, f⦄ ≡ i2.
@@ -328,11 +330,29 @@ qed-.
 
 (* Inversion lemmas with tls ************************************************)
 
+lemma at_inv_nxx: ∀n,g,i1,j2. @⦃⫯i1, g⦄ ≡ j2 → @⦃0, g⦄ ≡ n →
+                  ∃∃i2. @⦃i1, ⫱*[⫯n]g⦄ ≡ i2 & ⫯(n+i2) = j2.
+#n elim n -n
+[ #g #i1 #j2 #Hg #H
+  elim (at_inv_pxp … H) -H [ |*: // ] #f #H0
+  elim (at_inv_npx … Hg … H0) -Hg [ |*: // ] #x2 #Hf #H2 destruct
+  /2 width=3 by ex2_intro/
+| #n #IH #g #i1 #j2 #Hg #H
+  elim (at_inv_pxn … H) -H [ |*: // ] #f #Hf2 #H0
+  elim (at_inv_xnx … Hg … H0) -Hg #x2 #Hf1 #H2 destruct
+  elim (IH … Hf1 Hf2) -IH -Hf1 -Hf2 #i2 #Hf #H2 destruct
+  /2 width=3 by ex2_intro/
+]
+qed-.
+
 lemma at_inv_tls: ∀i2,i1,f. @⦃i1, f⦄ ≡ i2 → ↑⫱*[⫯i2]f ≗ ⫱*[i2]f.
 #i2 elim i2 -i2
 [ #i1 #f #Hf elim (at_inv_xxp … Hf) -Hf // #g #H1 #H destruct
   /2 width=1 by eq_refl/
-| #i2 #IH #i1 #f #Hf elim (at_inv_xxn … Hf) -Hf [1,3: * |*: // ] /2 width=2 by/
+| #i2 #IH #i1 #f #Hf
+  elim (at_inv_xxn … Hf) -Hf [1,3: * |*: // ]
+  [ #g #j1 #Hg #H1 #H2 | #g #Hg #Ho ] destruct
+  <tls_xn /2 width=2 by/
 ]
 qed-.
 

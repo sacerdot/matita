@@ -27,7 +27,7 @@ interpretation "weight (closure)" 'Weight G L T = (fw G L T).
 
 (* Basic_1: was: flt_shift *)
 lemma fw_shift: ∀p,I,G,K,V,T. ♯{G, K.ⓑ{I}V, T} < ♯{G, K, ⓑ{p,I}V.T}.
-normalize //
+normalize /2 width=1 by monotonic_le_plus_r/
 qed.
 
 lemma fw_tpair_sn: ∀I,G,L,V,T. ♯{G, L, V} < ♯{G, L, ②{I}V.T}.

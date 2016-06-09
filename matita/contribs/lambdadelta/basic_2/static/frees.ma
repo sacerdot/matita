@@ -185,13 +185,14 @@ lemma frees_gref_gen: ∀f,L,p. 𝐈⦃f⦄ → L ⊢ 𝐅*⦃§p⦄ ≡ f.
 /4 width=3 by frees_eq_repl_back, frees_gref, frees_atom, eq_push_inv_isid/
 qed.
 
-(* Basic_2A1: removed theorems 27:
+(* Basic_2A1: removed theorems 30:
               frees_eq frees_be frees_inv
               frees_inv_sort frees_inv_gref frees_inv_lref frees_inv_lref_free
               frees_inv_lref_skip frees_inv_lref_ge frees_inv_lref_lt
               frees_inv_bind frees_inv_flat frees_inv_bind_O
               frees_lref_eq frees_lref_be frees_weak
               frees_bind_sn frees_bind_dx frees_flat_sn frees_flat_dx
+              frees_lift_ge frees_inv_lift_be frees_inv_lift_ge 
               lreq_frees_trans frees_lreq_conf
               llor_atom llor_skip llor_total
               llor_tail_frees llor_tail_cofrees

@@ -46,6 +46,7 @@ qed-.
 (* Properties with generic slicing for local environments *******************)
 
 (* Basic_2A1: includes: aaa_lift *)
+(* Note: it should use drops_split_trans_pair2 *)
 lemma aaa_lifts: ∀G,L1,T1,A. ⦃G, L1⦄ ⊢ T1 ⁝ A → ∀b,f,L2. ⬇*[b, f] L2 ≡ L1 →
                  ∀T2. ⬆*[f] T1 ≡ T2 → ⦃G, L2⦄ ⊢ T2 ⁝ A.
 @fqup_wf_ind_eq #G0 #L0 #T0 #IH #G #L1 * *
@@ -57,7 +58,7 @@ lemma aaa_lifts: ∀G,L1,T1,A. ⦃G, L1⦄ ⊢ T1 ⁝ A → ∀b,f,L2. ⬇*[b, f
   elim (lifts_inv_lref1 … HX) -HX #i2 #Hf #H destruct
   lapply (drops_trans … HL21 … HLK1 ??) -HL21 [1,2: // ] #H
   elim (drops_split_trans … H) -H [ |*: /2 width=6 by after_uni_dx/ ] #Y #HLK2 #HY
-  lapply (drops_inv_tls_at … Hf … HY) -HY #HY -Hf
+  lapply (drops_tls_at … Hf … HY) -HY #HY -Hf
   elim (drops_inv_skip2 … HY) -HY #K2 #V2 #HK21 #HV12 #H destruct
   /4 width=12 by aaa_lref_drops, fqup_lref, drops_inv_gen/
 | #l #HG #HL #HT #A #H #b #f #L2 #HL21 #X #HX -b -f -IH
@@ -95,7 +96,7 @@ lemma aaa_inv_lifts: ∀G,L2,T2,A. ⦃G, L2⦄ ⊢ T2 ⁝ A → ∀b,f,L1. ⬇*[
   elim (lifts_inv_lref2 … HX) -HX #i1 #Hf #H destruct
   lapply (drops_split_div … HL21 (𝐔❴i1❵) ???) -HL21 [4: * |*: // ] #Y #HLK1 #HY
   lapply (drops_conf … HLK2 … HY ??) -HY [1,2: /2 width=6 by after_uni_dx/ ] #HY
-  lapply (drops_inv_tls_at … Hf … HY) -HY #HY -Hf
+  lapply (drops_tls_at … Hf … HY) -HY #HY -Hf
   elim (drops_inv_skip1 … HY) -HY #K1 #V1 #HK21 #HV12 #H destruct
   /4 width=12 by aaa_lref_drops, fqup_lref, drops_inv_F/
 | #l #HG #HL #HT #A #H #b #f #L1 #HL21 #X #HX -IH -b -f

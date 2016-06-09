@@ -34,7 +34,7 @@ lemma pushs_eq_repl: ∀n. eq_repl (λf1,f2. ↑*[n] f1 ≗ ↑*[n] f2).
 #n elim n -n /3 width=5 by eq_push/
 qed.
 
-(* Advancedd properties *****************************************************)
+(* Advanced properties ******************************************************)
 
 lemma pushs_xn: ∀n,f. ↑*[n] ↑f = ↑*[⫯n] f.
 #n elim n -n //

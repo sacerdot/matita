@@ -270,8 +270,10 @@ lemma after_mono_eq: ∀f1,f2,f. f1 ⊚ f2 ≡ f → ∀g1,g2,g. g1 ⊚ g2 ≡ g
 lemma after_tls: ∀n,f1,f2,f. @⦃0, f1⦄ ≡ n → 
                  f1 ⊚ f2 ≡ f → ⫱*[n]f1 ⊚ f2 ≡ ⫱*[n]f.
 #n elim n -n //
-#n #IH #f1 #f2 #f #Hf1 #Hf cases (at_inv_pxn … Hf1) -Hf1 [ |*: // ]
-#g1 #Hg1 #H1 cases (after_inv_nxx … Hf … H1) -Hf /2 width=1 by/
+#n #IH #f1 #f2 #f #Hf1 #Hf
+cases (at_inv_pxn … Hf1) -Hf1 [ |*: // ] #g1 #Hg1 #H1
+cases (after_inv_nxx … Hf … H1) -Hf #g #Hg #H0 destruct
+<tls_xn <tls_xn /2 width=1 by/
 qed.
 
 (* Properties on isid *******************************************************)
@@ -412,10 +414,10 @@ lemma after_uni_dx: ∀i2,i1,f2. @⦃i1, f2⦄ ≡ i2 →
   elim (at_inv_xxn … Hf2) -Hf2 [1,3: * |*: // ]
   [ #g2 #j1 #Hg2 #H1 #H2 destruct
     elim (after_inv_pnx … Hf) -Hf [ |*: // ] #g #Hg #H destruct
-    /3 width=5 by after_next/
+    <tls_xn /3 width=5 by after_next/
   | #g2 #Hg2 #H2 destruct
     elim (after_inv_nxx … Hf) -Hf [2,3: // ] #g #Hg #H destruct
-    /3 width=5 by after_next/
+    <tls_xn /3 width=5 by after_next/
   ]
 ]
 qed.
@@ -448,10 +450,10 @@ lemma after_uni_succ_dx: ∀i2,i1,f2. @⦃i1, f2⦄ ≡ i2 →
   elim (at_inv_xxn … Hf2) -Hf2 [1,3: * |*: // ]
   [ #g2 #j1 #Hg2 #H1 #H2 destruct
     elim (after_inv_pnx … Hf) -Hf [ |*: // ] #g #Hg #H destruct
-    /3 width=5 by after_next/
+    <tls_xn /3 width=5 by after_next/
   | #g2 #Hg2 #H2 destruct
     elim (after_inv_nxx … Hf) -Hf [2,3: // ] #g #Hg #H destruct
-    /3 width=5 by after_next/
+    <tls_xn /3 width=5 by after_next/
   ]
 ]
 qed.

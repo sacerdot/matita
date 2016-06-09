@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/relocation/rtmap_pushs.ma".
 include "ground_2/relocation/rtmap_coafter.ma".
 include "basic_2/relocation/drops_drops.ma".
 include "basic_2/static/frees.ma".
@@ -38,6 +37,30 @@ lemma frees_lref_pair: ∀f,K,V. K ⊢ 𝐅*⦃V⦄ ≡ f →
 ]
 qed.
 
+lemma frees_sort_pushs: ∀f,K,s. K ⊢ 𝐅*⦃⋆s⦄ ≡ f →
+                        ∀i,L. ⬇*[i] L ≡ K → L ⊢ 𝐅*⦃⋆s⦄ ≡ ↑*[i] f.
+#f #K #s #Hf #i elim i -i
+[ #L #H lapply (drops_fwd_isid … H ?) -H //
+| #i #IH #L #H elim (drops_inv_succ … H) -H /3 width=1 by frees_sort/
+]
+qed.
+
+lemma frees_lref_pushs: ∀f,K,j. K ⊢ 𝐅*⦃#j⦄ ≡ f →
+                        ∀i,L. ⬇*[i] L ≡ K → L ⊢ 𝐅*⦃#(i+j)⦄ ≡ ↑*[i] f.
+#f #K #j #Hf #i elim i -i
+[ #L #H lapply (drops_fwd_isid … H ?) -H //
+| #i #IH #L #H elim (drops_inv_succ … H) -H /3 width=1 by frees_lref/
+]
+qed.
+
+lemma frees_gref_pushs: ∀f,K,l. K ⊢ 𝐅*⦃§l⦄ ≡ f →
+                        ∀i,L. ⬇*[i] L ≡ K → L ⊢ 𝐅*⦃§l⦄ ≡ ↑*[i] f.
+#f #K #l #Hf #i elim i -i
+[ #L #H lapply (drops_fwd_isid … H ?) -H //
+| #i #IH #L #H elim (drops_inv_succ … H) -H /3 width=1 by frees_gref/
+]
+qed.
+
 (* Advanced inversion lemmas ************************************************)
 
 lemma frees_inv_lref_drops: ∀i,f,L. L ⊢ 𝐅*⦃#i⦄ ≡ f →
@@ -58,28 +81,6 @@ qed-.
 
 (* Properties with generic slicing for local environments *******************)
 
-axiom coafter_inv_xpx: ∀g2,f1,g. g2 ~⊚ ↑f1 ≡ g → ∀n. @⦃0, g2⦄ ≡ n →
-                       ∃∃f2,f. f2 ~⊚ f1 ≡ f & ⫱*[n]g2 = ↑f2 & ⫱*[n]g = ↑f.
-(*
-#g2 #g1 #g #Hg #n #Hg2
-lapply (coafter_tls … Hg2 … Hg) -Hg #Hg
-lapply (at_pxx_tls … Hg2) -Hg2 #H
-elim (at_inv_pxp … H) -H [ |*: // ] #f2 #H2
-elim (coafter_inv_pxx … Hg … H2) -Hg * #f1 #f #Hf #H1 #H0 destruct   
-<tls_rew_S <tls_rew_S <H2 <H0 -g2 -g -n //
-qed.
-*)
-
-lemma coafter_tls_succ: ∀g2,g1,g. g2 ~⊚ g1 ≡ g →
-                        ∀n. @⦃0, g2⦄ ≡ n → ⫱*[⫯n]g2 ~⊚ ⫱g1 ≡ ⫱*[⫯n]g.
-#g2 #g1 #g #Hg #n #Hg2
-lapply (coafter_tls … Hg2 … Hg) -Hg #Hg
-lapply (at_pxx_tls … Hg2) -Hg2 #H
-elim (at_inv_pxp … H) -H [ |*: // ] #f2 #H2
-elim (coafter_inv_pxx … Hg … H2) -Hg * #f1 #f #Hf #H1 #H0 destruct   
-<tls_rew_S <tls_rew_S <H2 <H0 -g2 -g -n //
-qed.
-
 lemma frees_lifts: ∀b,f1,K,T. K ⊢ 𝐅*⦃T⦄ ≡ f1 →
                    ∀f,L. ⬇*[b, f] L ≡ K → ∀U. ⬆*[f] T ≡ U →
                    ∀f2. f ~⊚ f1 ≡ f2 → L ⊢ 𝐅*⦃U⦄ ≡ f2.
@@ -96,40 +97,38 @@ lemma frees_lifts: ∀b,f1,K,T. K ⊢ 𝐅*⦃T⦄ ≡ f1 →
 | #f1 #I #K #V #s #_ #IH #Hf1 #f #L #H1 #U #H2 #f2 #H3
   lapply (isfin_fwd_push … Hf1 ??) -Hf1 [3: |*: // ] #Hf1
   lapply (lifts_inv_sort1 … H2) -H2 #H destruct
-  lapply (at_total 0 f) #H
-  elim (drops_split_trans … H1) -H1
-  [5: @(after_uni_dx … H) /2 width=1 by after_isid_dx/ |2,3: skip
-  |4: // ] #X #HLX #HXK
-  lapply (drops_inv_tls_at … H … HXK) -HXK #HXK
-  elim (drops_inv_skip2 … HXK) -HXK
-  #Y #W #HYK #HVW #H0 destruct
-(*  
-    
-  elim (coafter_inv_xpx … H3 ??) -H3 [ |*: // ] #g2 #g #Hg #H2 #H0 
-  lapply (IH … Hg) -IH -Hg
-  [1,5: // | skip
-  | 
-  |6: #H 
-*)
-
+  elim (drops_split_trans_pair2 … H1) -H1 [ |*: // ] #Y #W #HLY #HYK #_
+  elim (coafter_fwd_xpx_pushs … H3) [ |*: // ] #g2 #H2 destruct
   lapply (coafter_tls_succ … H3 ??) -H3 [3: |*: // ] #H3
-  lapply (IH … HYK … H3) -IH -H3 -HYK
-  [1,3: // | skip ]
-  #H lapply (frees_sort … H)
-   
-   ]
-
-  
-  elim (coafter_inv_xxp … H3) -H3 [1,3: * |*: // ]
-  [ #g #g1 #Hf2 #H #H0 destruct
-    elim (drops_inv_skip1 … H1) -H1 #K #V #HLK #_ #H destruct
-  | #g #Hf2 #H destruct
-    lapply (drops_inv_drop1 … H1) -H1
-  ] /3 width=4 by frees_sort/
-
-|
-|
-|
+  lapply (IH … HYK … H3) -IH -H3 -HYK [1,3: // | skip ]
+  /3 width=5 by drops_isuni_fwd_drop2, frees_sort_pushs/
+| #f1 #I #K #V #_ #IH #Hf1 #f #L #H1 #U #H2 #f2 #H3
+  lapply (isfin_inv_next … Hf1 ??) -Hf1 [3: |*: // ] #Hf1
+  lapply (lifts_inv_lref1 … H2) -H2 * #j #Hf #H destruct
+  elim (drops_split_trans_pair2 … H1) -H1 [ |*: // ] #Y #W #HLY #HYK #HVW
+  elim (coafter_fwd_xnx_pushs … H3) [ |*: // ] #g2 #H2 destruct
+  lapply (coafter_tls_succ … H3 ??) -H3 [3: |*: // ]
+  <tls_S in ⊢ (???%→?); <tls_pushs <tl_next_rew <tl_next_rew #H3
+  lapply (IH … HYK … HVW … H3) -IH -H3 -HYK -HVW //
+  /2 width=5 by frees_lref_pair/
+| #f1 #I #K #V #i #_ #IH #Hf1 #f #L #H1 #U #H2 #f2 #H3
+  lapply (isfin_fwd_push … Hf1 ??) -Hf1 [3: |*: // ] #Hf1
+  lapply (lifts_inv_lref1 … H2) -H2 * #x #Hf #H destruct
+  elim (at_inv_nxx … Hf) -Hf [ |*: // ] #j #Hf #H destruct
+  elim (drops_split_trans_pair2 … H1) -H1 [ |*: // ] #Y #W #HLY #HYK #_
+  elim (coafter_fwd_xpx_pushs … H3) [ |*: // ] #g2 #H2 destruct
+  lapply (coafter_tls_succ … H3 ??) -H3 [3: |*: // ] <tls_pushs #H3
+  lapply (drops_isuni_fwd_drop2 … HLY) -HLY // #HLY
+  lapply (IH … HYK … H3) -IH -H3 -HYK [4: |*: /2 width=2 by lifts_lref/ ]
+  >plus_S1 /2 width=3 by frees_lref_pushs/ (**) (* full auto fails *)
+| #f1 #I #K #V #l #_ #IH #Hf1 #f #L #H1 #U #H2 #f2 #H3
+  lapply (isfin_fwd_push … Hf1 ??) -Hf1 [3: |*: // ] #Hf1
+  lapply (lifts_inv_gref1 … H2) -H2 #H destruct
+  elim (drops_split_trans_pair2 … H1) -H1 [ |*: // ] #Y #W #HLY #HYK #_
+  elim (coafter_fwd_xpx_pushs … H3) [ |*: // ] #g2 #H2 destruct
+  lapply (coafter_tls_succ … H3 ??) -H3 [3: |*: // ] #H3
+  lapply (IH … HYK … H3) -IH -H3 -HYK [1,3: // | skip ]
+  /3 width=5 by drops_isuni_fwd_drop2, frees_gref_pushs/
 | #f1V #f1T #f1 #p #I #K #V #T #_ #_ #H1f1 #IHV #IHT #H2f1 #f #L #H1 #Y #H2 #f2 #H3
   elim (sor_inv_isfin3 … H1f1) // #Hf1V #H
   lapply (isfin_inv_tl … H) -H
@@ -142,6 +141,7 @@ lemma frees_lifts: ∀b,f1,K,T. K ⊢ 𝐅*⦃T⦄ ≡ f1 →
   elim (coafter_sor … H3 … H1f1)
   /3 width=5 by coafter_isfin2_fwd, frees_flat/
 ]
+qed-.
 
 (* Inversion lemmas with generic slicing for local environments *************)
 

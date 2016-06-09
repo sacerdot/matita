@@ -80,6 +80,7 @@ qed-.
 
 (* Properties with generic slicing for local environments *******************)
 
+(* Note: it should use drops_split_trans_pair2 *)
 lemma cpg_lifts: ∀c,h,G. d_liftable2 (cpg h c G).
 #c #h #G #K #T generalize in match c; -c
 @(fqup_wf_ind_eq … G K T) -G -K -T #G0 #K0 #T0 #IH #G #K * *
@@ -94,7 +95,7 @@ lemma cpg_lifts: ∀c,h,G. d_liftable2 (cpg h c G).
   elim (lifts_inv_lref1 … H1) -H1 #i2 #Hf #H destruct
   lapply (drops_trans … HLK … HK0 ??) -HLK [3,6: |*: // ] #H
   elim (drops_split_trans … H) -H [1,6: |*: /2 width=6 by after_uni_dx/ ] #Y #HL0 #HY
-  lapply (drops_inv_tls_at … Hf … HY) -HY #HY
+  lapply (drops_tls_at … Hf … HY) -HY #HY
   elim (drops_inv_skip2 … HY) -HY #L0 #W #HLK0 #HVW #H destruct
   elim (IH … HV2 … HLK0 … HVW) -IH /2 width=2 by fqup_lref/ -K -K0 -V #W2 #HVW2 #HW2
   elim (lifts_total W2 (𝐔❴⫯i2❵)) #U2 #HWU2
@@ -166,7 +167,7 @@ lemma cpg_inv_lifts1: ∀c,h,G. d_deliftable2_sn (cpg h c G).
   elim (lifts_inv_lref2 … H1) -H1 #i1 #Hf #H destruct
   lapply (drops_split_div … HLK (𝐔❴i1❵) ???) -HLK [4,8: * |*: // ] #Y0 #HK0 #HLY0
   lapply (drops_conf … HL0 … HLY0 ??) -HLY0 [3,6: |*: /2 width=6 by after_uni_dx/ ] #HLY0
-  lapply (drops_inv_tls_at … Hf … HLY0) -HLY0 #HLY0
+  lapply (drops_tls_at … Hf … HLY0) -HLY0 #HLY0
   elim (drops_inv_skip1 … HLY0) -HLY0 #K0 #V #HLK0 #HVW #H destruct
   elim (IH … HW2 … HLK0 … HVW) -IH /2 width=2 by fqup_lref/ -L -L0 -W #V2 #HVW2 #HV2
   lapply (lifts_trans … HVW2 … HWU2 ??) -W2 [3,6: |*: // ] #HVU2
