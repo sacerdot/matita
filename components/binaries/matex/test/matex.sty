@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesPackage{matex}[2016/06/05 MaTeX Package]
+\ProvidesPackage{matex}[2016/06/12 MaTeX Package]
 \RequirePackage{xcolor}
 \RequirePackage{stix}
 \ExecuteOptions{}
@@ -14,6 +14,8 @@
 \newcommand*\ma@fall{\mathord\forall}
 \newcommand*\ma@impl{\mathrel\supset}
 \newcommand*\ma@case{\mathrel\questeq}
+\newcommand*\ma@caze{\mathrel\mapsto}
+\newcommand*\ma@pair{\mathbin\mapsto}
 
 \definecolor{ma@black}{HTML}{000000}
 \definecolor{ma@blue}{HTML}{00005F}
@@ -69,6 +71,7 @@
 \newcommand*\ma@cm{\ma@thop{,}}
 \newcommand*\ma@or{\mathbin\vert}
 \newcommand*\ma@cp{)\allowbreak}
+\newcommand*\ma@qm{\mathord{?}}
 \newcommand*\ma@arg[1]{#1}
 \newcommand*\ma@args{(\ma@next\relax\ma@arg\ma@cm\ma@cp}
 \newcommand*\ma@cases{\ma@next\relax\ma@arg\ma@or\relax}
@@ -90,8 +93,9 @@
    (\ma@fall\ma@setopttarget{#1}{#2}\ma@cast #3)\ma@bind\fi
 }
 \newcommand*\APPL[1]{#1\ma@args}
-\newcommand*\CASE[3]{(#3\ma@cast #1)\ma@case\ma@cases}
-\newcommand*\NONE{\mathrm{(omitted)}}
+\newcommand*\CASE[3]{#3\ma@case\ma@cases}
+\newcommand*\CAZE[3]{#3\ma@caze(\ma@qm\ma@cast #2)\ma@cases}
+\newcommand*\PAIR[2]{#1\ma@pair #2}
 
 \newcommand*\ma@term[1]{$#1$}
 \newcommand*\ma@with{ with }
@@ -103,11 +107,14 @@
    \fi
 }
 \newcommand*\ma@tail{\ma@next\ma@with\ma@term\ma@comma\ma@stop}
+\newcommand*\ma@type[1]{\def\ma@tmp{#1}%
+   \ifx\ma@tmp\empty\mathrm{(omitted)}\else #1\fi
+}
 
 \newcommand*\EXIT[1]{\ma@head{\ma@exit}{end}{}{}{}{} of block #1\ma@stop}
 \newcommand*\OPEN[3]{\ma@head{}{}{}{\ma@open}{#1}{#2} is this block #3\ma@stop}
-\newcommand*\PRIM[3]{\ma@head{}{}{}{\ma@prim}{#1}{#2} will have type $#3$\ma@stop}
-\newcommand*\DECL[3]{\ma@head{\ma@qed}{\_QED}{}{\ma@fwd}{#1}{#2} has type $#3$\par}
+\newcommand*\PRIM[3]{\ma@head{}{}{}{\ma@prim}{#1}{#2} will have type $\ma@type{#3}$\ma@stop}
+\newcommand*\DECL[3]{\ma@head{\ma@qed}{\_QED}{}{\ma@fwd}{#1}{#2} has type $\ma@type{#3}$\par}
 \newcommand*\BODY[1]{being $#1$\ma@stop}
 \newcommand*\STEP[1]{by $#1$\ma@tail}
 \newcommand*\DEST[1]{by cases on $#1$\ma@tail}

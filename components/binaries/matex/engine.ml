@@ -48,6 +48,16 @@ let missing s =
 
 (* generic term processing *)
 
+let rec rename s = function
+   | []                        -> s
+   | (s1, s2) :: _ when s1 = s -> s2
+   | _ :: tl                   -> rename s tl
+
+let mk_lname s = s
+
+let mk_gname s =
+   rename s !G.alpha_gref
+
 let mk_ptr st name = 
    if G.is_global_id name then P.sprintf "%s.%s" st.i name else ""
 
@@ -80,8 +90,8 @@ let rec proc_term st is = function
    | C.Meta _
    | C.Implicit _           -> malformed "T2" 
    | C.Rel m                ->
-      let name = K.resolve_lref st.c m in
-      T.Macro "LREF" :: T.arg name :: T.free (mk_ptr st name) :: is
+      let s = K.resolve_lref st.c m in
+      T.Macro "LREF" :: T.arg (mk_lname s) :: T.free (mk_ptr st s) :: is
    | C.Appl ts              ->
       begin match get_head ts with
          | Some (macro, s, ts) ->
@@ -96,27 +106,34 @@ let rec proc_term st is = function
       let c = K.add_dec s w st.c in
       let is_t = proc_term {st with c=c} is t in
       let macro = if K.not_prop1 c t then "PROD" else "FALL" in
-      T.Macro macro :: T.arg s :: T.free (mk_ptr st s) :: T.Group is_w :: is_t
+      T.Macro macro :: T.arg (mk_lname s) :: T.free (mk_ptr st s) :: T.Group is_w :: is_t
    | C.Lambda (s, w, t)     -> 
       let is_w = proc_term st [] w in
       let is_t = proc_term {st with c=K.add_dec s w st.c} is t in
-      T.Macro "ABST" :: T.arg s :: T.free (mk_ptr st s) :: T.Group is_w :: is_t
+      T.Macro "ABST" :: T.arg (mk_lname s) :: T.free (mk_ptr st s) :: T.Group is_w :: is_t
    | C.LetIn (s, w, v, t)   ->
       let is_w = proc_term st [] w in
       let is_v = proc_term st [] v in
       let is_t = proc_term {st with c=K.add_def s w v st.c} is t in
-      T.Macro "ABBR" :: T.arg s :: T.free (mk_ptr st s) :: T.Group is_w :: T.Group is_v :: is_t
+      T.Macro "ABBR" :: T.arg (mk_lname s) :: T.free (mk_ptr st s) :: T.Group is_w :: T.Group is_v :: is_t
    | C.Sort s               ->
       proc_sort st is s
    | C.Const c              ->
       let s, name = K.resolve_reference c in
-      T.Macro "GREF" :: T.arg name :: T.free s :: is
+      T.Macro "GREF" :: T.arg (mk_gname name) :: T.free s :: is
    | C.Match (w, u, v, ts)  ->
       let is_w = proc_term st [] (C.Const w) in
       let is_u = proc_term st [] u in
       let is_v = proc_term st [] v in
-      let riss = L.rev_map (proc_term st []) ts in
-      T.Macro "CASE" :: T.Group is_w :: T.Group is_u :: T.Group is_v :: T.mk_rev_args riss is
+      let riss = X.rev_mapi (proc_case st [] w) K.fst_con ts in
+      let macro = if ts = [] then "CAZE" else "CASE" in
+      T.Macro macro :: T.Group is_w :: T.Group is_u :: T.Group is_v :: T.mk_rev_args riss is
+
+and proc_case st is w i t =
+   let v = R.mk_constructor i w in
+   let is_v = proc_term st [] (C.Const v) in
+   let is_t = proc_term st [] t in
+   T.Macro "PAIR" :: T.Group is_v :: T.Group is_t :: is
 
 let proc_term st is t = try proc_term st is t with
    | E.ObjectNotFound _ 
@@ -153,11 +170,11 @@ let mk_exit st ris =
 
 let mk_open st ris =
    if st.n = "" then ris else
-   T.free (scope st) :: T.free (mk_ptr st st.n) :: T.arg st.n :: T.Macro "OPEN" :: ris
+   T.free (scope st) :: T.free (mk_ptr st st.n) :: T.arg (mk_lname st.n) :: T.Macro "OPEN" :: ris
 
 let mk_dec st kind w s ris =
-   let w = if !G.no_types then [T.Macro "NONE"] else w in
-   T.Group w :: T.free (mk_ptr st s) :: T.arg s :: T.Macro kind :: ris
+   let w = if !G.no_types then [] else w in
+   T.Group w :: T.free (mk_ptr st s) :: T.arg (mk_lname s) :: T.Macro kind :: ris
 
 let mk_inferred st t ris =
    let u = typeof st t in
@@ -215,13 +232,13 @@ let proc_item item s ss t =
    let st = init ss in
    let tt = N.process_top_term s t in (* alpha-conversion *)
    let is = [T.Macro "end"; T.arg item] in
-   note :: T.Macro "begin" :: T.arg item :: T.arg s :: T.free ss :: proc_term st is tt
+   note :: T.Macro "begin" :: T.arg item :: T.arg (mk_gname s) :: T.free ss :: proc_term st is tt
 
 let proc_top_proof s ss t =
    let st = init ss in
    let t0 = A.process_top_term s t in  (* anticipation *)
    let tt = N.process_top_term s t0 in (* alpha-conversion *)
-   let ris = [T.free ss; T.arg s; T.arg "proof"; T.Macro "begin"; note] in
+   let ris = [T.free ss; T.arg (mk_gname s); T.arg "proof"; T.Macro "begin"; note] in
    L.rev (T.arg "proof" :: T.Macro "end" :: proc_proof st ris tt)
 
 let open_out_tex s =

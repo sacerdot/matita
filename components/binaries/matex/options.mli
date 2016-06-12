@@ -37,6 +37,8 @@ val alpha_type: (string * string * string) list ref
 
 val alpha_sort: (string * string * string) list ref
 
+val alpha_gref: (string * string) list ref
+
 val macro_gref: (string * string * int) list ref
 
 val clear: unit -> unit

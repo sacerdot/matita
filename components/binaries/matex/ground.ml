@@ -48,6 +48,10 @@ let rec foldi_left mapi i a = function
    | []       -> a
    | hd :: tl -> foldi_left mapi (succ i) (mapi i a hd) tl
 
+let rec rev_mapi mapi i l =
+   let map i a hd = mapi i hd :: a in
+   foldi_left map i [] l
+
 let rec rev_map_append map l r = match l with
    | []       -> r
    | hd :: tl -> rev_map_append map tl (map hd :: r)

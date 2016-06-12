@@ -125,6 +125,47 @@
     <key name="sort">Prop x H</key>
 
     <key name="sort">Type[cic:/matita/pts/Type0.univ] f a</key>
+
+    <key name="gref">clt_wf__q_ind q_ind_aux</key>
+
+    <key name="gref">ex1__leq_sort_SS leq_sort_SS_aux</key>
+
+    <key name="gref">flt_wf__q_ind q_ind_aux</key>
+
+    <key name="gref">llt_wf__q_ind q_ind_aux</key>
+
+    <key name="gref">nf2_gen__nf2_gen_aux nf2_gen_aux</key>
+
+    <key name="gref">pc3_ind_left__pc3_left_pc3 pc3_left_pc3_aux</key>
+    <key name="gref">pc3_ind_left__pc3_left_pr3 pc3_left_pr3_aux</key>
+    <key name="gref">pc3_ind_left__pc3_left_sym pc3_left_sym_aux</key>
+    <key name="gref">pc3_ind_left__pc3_left_trans pc3_left_trans_aux</key>
+    <key name="gref">pc3_ind_left__pc3_pc3_left pc3_pc3_left_aux</key>
+    <key name="gref">pc3_wcpr0__pc3_wcpr0_t_aux pc3_wcpr0_t_aux</key>
+
+    <key name="gref">pr0_confluence__pr0_cong_delta pr0_cong_delta_aux</key>
+    <key name="gref">pr0_confluence__pr0_cong_upsilon_cong pr0_cong_upsilon_cong_aux</key>
+    <key name="gref">pr0_confluence__pr0_cong_upsilon_delta pr0_cong_upsilon_delta_aux</key>
+    <key name="gref">pr0_confluence__pr0_cong_upsilon_refl pr0_cong_upsilon_refl_aux</key>
+    <key name="gref">pr0_confluence__pr0_cong_upsilon_zeta pr0_cong_upsilon_zeta_aux</key>
+    <key name="gref">pr0_confluence__pr0_delta_delta pr0_delta_delta_aux</key>
+    <key name="gref">pr0_confluence__pr0_delta_tau pr0_delta_tau_aux</key>
+    <key name="gref">pr0_confluence__pr0_upsilon_upsilon pr0_upsilon_upsilon_aux</key>
+
+    <key name="gref">pr2_confluence__pr2_delta_delta pr2_delta_delta_aux</key>
+    <key name="gref">pr2_confluence__pr2_free_delta pr2_free_delta_aux</key>
+    <key name="gref">pr2_confluence__pr2_free_free pr2_free_free_aux</key>
+
+    <key name="gref">sc3_props__sc3_sn3_abst sc3_sn3_abst_aux</key>
+
+    <key name="gref">terms_props__bind_dec bind_dec_aux</key>
+    <key name="gref">terms_props__flat_dec flat_dec_aux</key>
+    <key name="gref">terms_props__kind_dec kind_dec_aux</key>
+
+    <key name="gref">tlt_wf__q_ind q_ind_aux</key>
+    <key name="gref">tslt_wf__q_ind q_ind_aux</key>
+    <key name="gref">ty3_nf2_gen__ty3_nf2_inv_abst_aux ty3_nf2_inv_abst_aux</key>
+
   </section>
 <!--
 matita.lambdadelta.basic_1.A.defs.A.AHead.type

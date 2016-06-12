@@ -46,9 +46,11 @@ let init () =
    let u1 = mk_type_universe "1" in
    E.add_lt_constraint ~acyclic:true u0 u1
 
-let fst_var = 1
+let fst_var = 1 (* first variable *)
 
-let snd_var = 2
+let snd_var = 2 (* second variable *)
+
+let fst_con = 1 (* first constructor *)
 
 let appl ts = C.Appl ts
 

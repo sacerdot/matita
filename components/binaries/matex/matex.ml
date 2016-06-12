@@ -37,6 +37,8 @@ let help   = ""
 
 let alpha_decode = R.triple R.string R.string R.string
 
+let const_decode = R.pair R.string R.string
+
 let macro_decode = R.triple R.string R.string R.int
 
 let init registry =
@@ -47,6 +49,7 @@ let init registry =
    end;
    G.alpha_type := R.get_list alpha_decode "matex.alpha.type";
    G.alpha_sort := R.get_list alpha_decode "matex.alpha.sort";
+   G.alpha_gref := R.get_list const_decode "matex.alpha.gref";
    G.macro_gref := R.get_list macro_decode "matex.notation.const"
 
 let is_registry s =

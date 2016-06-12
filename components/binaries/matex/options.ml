@@ -68,6 +68,8 @@ let alpha_type = ref default_alpha          (* data for type-based alpha-convers
 
 let alpha_sort = ref default_alpha          (* data for sort-based alpha-conversion *)
 
+let alpha_gref = ref default_alpha          (* data for constant renaming *)
+
 let macro_gref = ref default_macro          (* data eta-conversion and constant rendering *)
 
 let is_global_id s =
@@ -90,4 +92,5 @@ let clear () =
    list_och := default_list_och;
    alpha_type := default_alpha;
    alpha_sort := default_alpha;
+   alpha_gref := default_alpha;
    macro_gref := default_macro

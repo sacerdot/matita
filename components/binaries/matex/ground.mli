@@ -29,4 +29,6 @@ val rev_neg_filter : ('a -> bool) -> 'a list -> 'a list -> 'a list
 
 val foldi_left: (int -> 'a -> 'b -> 'a) -> int -> 'a -> 'b list -> 'a 
 
+val rev_mapi: (int -> 'b -> 'a) -> int -> 'b list -> 'a list
+
 val rev_map_append: ('a -> 'b) -> 'a list -> 'b list -> 'b list
