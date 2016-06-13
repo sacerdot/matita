@@ -64,6 +64,10 @@ val are_all_occurrences_positive:
  #NCic.status -> subst:NCic.substitution -> NCic.context -> NUri.uri -> int ->
   int -> int -> int -> NCic.term -> bool
 
+(* does_not_occur ... n nn t
+ * detects the Rels m of t in the range n < m <= nn
+ * recursively delta-expanding the Rels m of t in the range 0 < m <= n
+ *)
 val does_not_occur :
  #NCic.status -> subst:NCic.substitution -> NCic.context -> int -> int ->
   NCic.term -> bool
