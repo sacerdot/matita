@@ -134,6 +134,7 @@ val float:        string -> float
 val bool:         string -> bool
 val pair:         (string -> 'a) -> (string -> 'b) -> string -> 'a * 'b
 val triple:       (string -> 'a) -> (string -> 'b) -> (string -> 'c) -> string -> 'a * 'b * 'c
+val quad:         (string -> 'a) -> (string -> 'b) -> (string -> 'c) -> (string -> 'd) -> string -> 'a * 'b * 'c * 'd
 
 (** {3 Typed getters} *)
 
@@ -153,6 +154,9 @@ val get_pair: (string -> 'a) -> (string -> 'b) -> string -> 'a * 'b
 
   (** decode values which are blank separated list of values, of length 3 *)
 val get_triple: (string -> 'a) -> (string -> 'b) -> (string -> 'c) -> string -> 'a * 'b * 'c
+
+  (** decode values which are blank separated list of values, of length 4 *)
+val get_quad: (string -> 'a) -> (string -> 'b) -> (string -> 'c) -> (string -> 'd) -> string -> 'a * 'b * 'c * 'd
 
 (** {4 Shorthands} *)
 

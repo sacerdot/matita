@@ -39,7 +39,7 @@ let alpha_decode = R.triple R.string R.string R.string
 
 let const_decode = R.pair R.string R.string
 
-let macro_decode = R.triple R.string R.string R.int
+let macro_decode = R.quad R.string R.string R.int R.int
 
 let init registry =
    R.load_from registry; 

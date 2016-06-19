@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesPackage{legacy_1}[2016/06/06 Notation for "cic:/matita/lambdadelta/legacy_1/"]
+\ProvidesPackage{legacy_1}[2016/06/19 Notation for "cic:/matita/lambdadelta/legacy_1/"]
 \RequirePackage{matex}
 \RequirePackage{fdsymbol}
 \ExecuteOptions{}
@@ -17,16 +17,17 @@
 \newcommand*\ld@eq[1]{\setrellink{=}{#1}}
 \newcommand*\ld@le[1]{\setrellink{\le}{#1}}
 \newcommand*\ld@lt[1]{\setrellink{<}{#1}}
-\newcommand*\ld@minus[1]{\setbinlink{+}{#1}}
+\newcommand*\ld@minus[1]{\setbinlink{-}{#1}}
 \newcommand*\ld@lnot[1]{\setoplink{\lnot}{#1}}
-\newcommand*\ld@plus[1]{\setbinlink{-}{#1}}
+\newcommand*\ld@plus[1]{\setbinlink{+}{#1}}
 \newcommand*\ld@pred[1]{\setoplink{\downspoon}{#1}}
 \newcommand*\ld@succ[1]{\setoplink{\upspoon}{#1}}
 
-\newcommand*\LAndB[3]{#2\ld@land{#1}#3}
-\newcommand*\LOrB[3]{#2\ld@lor{#1}#3}
-\newcommand*\LExAA[3]{\ld@lex{#1}#3}
-\newcommand*\LExBA[4]{\ld@lex{#1}#3\ld@and{#1}#4}
+\newcommand*\ld@list[2]{\ma@list\relax\ma@arg{#1{#2}}\relax}
+
+\newcommand*\LAnd[1]{\ld@list\ld@land{#1}}
+\newcommand*\LOr[1]{\ld@list\ld@lor{#1}}
+\newcommand*\LEx[1]{\ld@lex{#1}\ma@list\relax\ma@skip\relax{\ld@list\ld@and{#1}}}
 
 \newcommand*\EQ[4]{#3\ld@eq{#1}#4}
 \newcommand*\LE[3]{#2\ld@le{#1}#3}

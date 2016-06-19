@@ -56,6 +56,13 @@ let rec rev_map_append map l r = match l with
    | []       -> r
    | hd :: tl -> rev_map_append map tl (map hd :: r)
 
+let rec split_at x = function
+   | l when x <= 0 -> [], l
+   | []       -> [], []
+   | hd :: tl -> 
+      let l1, l2 = split_at (pred x) tl in
+      hd :: l1, l2
+
 let error s = raise (Error s)
 
 let log s = P.eprintf "MaTeX: %s\n%!" s

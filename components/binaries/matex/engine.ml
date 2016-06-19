@@ -63,17 +63,20 @@ let mk_ptr st name =
 
 let get_macro s l =
    let rec aux = function
-      | []                                 -> ""
-      | (r, m, a) :: _ when r = s && a = l -> m
-      | _ :: tl                            -> aux tl
+      | []                                    -> "", 0
+      | (r, m, a, x) :: _ when r = s && a = l -> m, x
+      | _ :: tl                               -> aux tl
    in
    aux !G.macro_gref
 
 let get_head = function
    | C.Const c :: ts ->
       let s, _ = K.resolve_reference c in
-      let macro = get_macro s (L.length ts) in
-      if macro <> "" then Some (macro, s, ts) else begin 
+      let macro, x = get_macro s (L.length ts) in
+      if macro <> "" then
+         let ts1, ts2 = X.split_at x ts in
+         Some (macro, s, ts1, ts2)
+      else begin 
          if !G.log_missing then missing s;
          None
       end 
@@ -94,12 +97,17 @@ let rec proc_term st is = function
       T.Macro "LREF" :: T.arg (mk_lname s) :: T.free (mk_ptr st s) :: is
    | C.Appl ts              ->
       begin match get_head ts with
-         | Some (macro, s, ts) ->
-            let riss = L.rev_map (proc_term st []) ts in
-            T.Macro macro :: T.free s :: T.mk_rev_args riss is
-         | None                ->
+         | None                      ->
             let riss = L.rev_map (proc_term st []) ts in
             T.Macro "APPL" :: T.mk_rev_args riss is
+         | Some (macro, s, [], ts)
+         | Some (macro, s, ts, [])   ->
+            let riss = L.rev_map (proc_term st []) ts in
+            T.Macro macro :: T.free s :: T.mk_rev_args riss is
+         | Some (macro, s, ts1, ts2) ->
+            let riss1 = L.rev_map (proc_term st []) ts1 in
+            let riss2 = L.rev_map (proc_term st []) ts2 in
+            T.Macro macro :: T.free s :: T.mk_rev_args riss1 (T.mk_rev_args riss2 is)
       end
    | C.Prod (s, w, t)       ->
       let is_w = proc_term st [] w in

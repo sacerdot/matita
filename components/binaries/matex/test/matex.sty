@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesPackage{matex}[2016/06/12 MaTeX Package]
+\ProvidesPackage{matex}[2016/06/19 MaTeX Package]
 \RequirePackage{xcolor}
 \RequirePackage{stix}
 \ExecuteOptions{}
@@ -47,6 +47,9 @@
 \newcommand*\setoplink[2]{\mathop{\ma@setlink{#1}{#2}}}
 \newcommand*\setbinlink[2]{\mathbin{\ma@setlink{#1}{#2}}}
 \newcommand*\setrellink[2]{\mathrel{\ma@setlink{#1}{#2}}}
+\newcommand*\setopenlink[2]{\mathopen{\ma@setlink{#1}{#2}}}
+\newcommand*\setcloselink[2]{\mathclose{\ma@setlink{#1}{#2}}}
+\newcommand*\setpunctlink[2]{\mathpunct{\ma@setlink{#1}{#2}}}
 
 \newcommand*\ObjIncNode{}
 \newcommand*\ObjNode{}
@@ -62,20 +65,21 @@
 \newenvironment{ma@step}[1]{\color{#1}}{\par}
 
 \newcommand*\ma@tmp{}
-\newcommand*\ma@skip[4]{}
-\newcommand*\ma@next[5]{\def\ma@tmp{#5}%
-   \ifx\ma@tmp\empty #4\let\ma@tmp=\ma@skip\else #1#2{#5}\let\ma@tmp=\ma@next\fi
-   \ma@tmp #3#2#3#4%
+\newcommand*\ma@last[4]{#4}
+\newcommand*\ma@list[5]{\def\ma@tmp{#5}%
+   \ifx\ma@tmp\empty\let\ma@tmp=\ma@last\else #1#2{#5}\let\ma@tmp=\ma@list\fi
+   \ma@tmp{#3}{#2}{#3}{#4}%
 }
-\newcommand*\ma@thop[1]{\mathop{#1}\allowbreak}
+\newcommand*\ma@thop[1]{\mathpunct{#1}\allowbreak}
 \newcommand*\ma@cm{\ma@thop{,}}
 \newcommand*\ma@or{\mathbin\vert}
 \newcommand*\ma@cp{)\allowbreak}
 \newcommand*\ma@qm{\mathord{?}}
 \newcommand*\ma@arg[1]{#1}
-\newcommand*\ma@args{(\ma@next\relax\ma@arg\ma@cm\ma@cp}
-\newcommand*\ma@cases{\ma@next\relax\ma@arg\ma@or\relax}
+\newcommand*\ma@args{(\ma@list\relax\ma@arg\ma@cm\ma@cp}
+\newcommand*\ma@cases{\ma@list\relax\ma@arg\ma@or\relax}
 \newcommand*\ma@bind{\ma@thop{}}
+\newcommand*\ma@skip[1]{}
 
 \newcommand*\PROP{\mathord\mathrm{PROP}}
 \newcommand*\CROP[1]{\mathord\mathrm{CROP}}
@@ -106,7 +110,7 @@
    \else\begin{ma@step}{#4}$\mathbf{\ma@setopttarget{#5}{#6}}$%
    \fi
 }
-\newcommand*\ma@tail{\ma@next\ma@with\ma@term\ma@comma\ma@stop}
+\newcommand*\ma@tail{\ma@list\ma@with\ma@term\ma@comma\ma@stop}
 \newcommand*\ma@type[1]{\def\ma@tmp{#1}%
    \ifx\ma@tmp\empty\mathrm{(omitted)}\else #1\fi
 }

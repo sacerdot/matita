@@ -70,7 +70,7 @@ let alpha_sort = ref default_alpha          (* data for sort-based alpha-convers
 
 let alpha_gref = ref default_alpha          (* data for constant renaming *)
 
-let macro_gref = ref default_macro          (* data eta-conversion and constant rendering *)
+let macro_gref = ref default_macro          (* data for eta-conversion and constant rendering *)
 
 let is_global_id s =
    !global_alpha && s <> dno_id
