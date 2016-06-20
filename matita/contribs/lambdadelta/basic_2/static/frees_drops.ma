@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/relocation/rtmap_coafter.ma".
 include "basic_2/relocation/drops_drops.ma".
 include "basic_2/static/frees.ma".
 

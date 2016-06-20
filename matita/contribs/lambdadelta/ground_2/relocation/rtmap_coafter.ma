@@ -14,7 +14,7 @@
 
 include "ground_2/notation/relations/rcoafter_3.ma".
 include "ground_2/relocation/rtmap_sor.ma".
-include "ground_2/relocation/rtmap_istot.ma".
+include "ground_2/relocation/rtmap_after.ma".
 
 (* RELOCATION MAP ***********************************************************)
 
@@ -213,56 +213,6 @@ lemma coafter_eq_repl_fwd0: ∀f2,f1. eq_repl_fwd (λf. f2 ~⊚ f1 ≡ f).
 #f2 #f1 @eq_repl_sym /2 width=3 by coafter_eq_repl_back0/
 qed-.
 
-(* Main properties **********************************************************)
-(*
-corec theorem coafter_trans1: ∀f0,f3,f4. f0 ~⊚ f3 ≡ f4 →
-                            ∀f1,f2. f1 ~⊚ f2 ≡ f0 →
-                            ∀f. f2 ~⊚ f3 ≡ f → f1 ~⊚ f ≡ f4.
-#f0 #f3 #f4 * -f0 -f3 -f4 #f0 #f3 #f4 #g0 [1,2: #g3 ] #g4
-[ #Hf4 #H0 #H3 #H4 #g1 #g2 #Hg0 #g #Hg
-  cases (coafter_inv_xxp … Hg0 … H0) -g0
-  #f1 #f2 #Hf0 #H1 #H2
-  cases (coafter_inv_ppx … Hg … H2 H3) -g2 -g3
-  #f #Hf #H /3 width=7 by coafter_refl/
-| #Hf4 #H0 #H3 #H4 #g1 #g2 #Hg0 #g #Hg
-  cases (coafter_inv_xxp … Hg0 … H0) -g0
-  #f1 #f2 #Hf0 #H1 #H2
-  cases (coafter_inv_pnx … Hg … H2 H3) -g2 -g3
-  #f #Hf #H /3 width=7 by coafter_push/
-| #Hf4 #H0 #H4 #g1 #g2 #Hg0 #g #Hg
-  cases (coafter_inv_xxn … Hg0 … H0) -g0 *
-  [ #f1 #f2 #Hf0 #H1 #H2
-    cases (coafter_inv_nxx … Hg … H2) -g2
-    #f #Hf #H /3 width=7 by coafter_push/
-  | #f1 #Hf0 #H1 /3 width=6 by coafter_next/
-  ]
-]
-qed-.
-
-corec theorem coafter_trans2: ∀f1,f0,f4. f1 ~⊚ f0 ≡ f4 →
-                            ∀f2, f3. f2 ~⊚ f3 ≡ f0 →
-                            ∀f. f1 ~⊚ f2 ≡ f → f ~⊚ f3 ≡ f4.
-#f1 #f0 #f4 * -f1 -f0 -f4 #f1 #f0 #f4 #g1 [1,2: #g0 ] #g4
-[ #Hf4 #H1 #H0 #H4 #g2 #g3 #Hg0 #g #Hg
-  cases (coafter_inv_xxp … Hg0 … H0) -g0
-  #f2 #f3 #Hf0 #H2 #H3
-  cases (coafter_inv_ppx … Hg … H1 H2) -g1 -g2
-  #f #Hf #H /3 width=7 by coafter_refl/
-| #Hf4 #H1 #H0 #H4 #g2 #g3 #Hg0 #g #Hg
-  cases (coafter_inv_xxn … Hg0 … H0) -g0 *
-  [ #f2 #f3 #Hf0 #H2 #H3
-    cases (coafter_inv_ppx … Hg … H1 H2) -g1 -g2
-    #f #Hf #H /3 width=7 by coafter_push/
-  | #f2 #Hf0 #H2
-    cases (coafter_inv_pnx … Hg … H1 H2) -g1 -g2
-    #f #Hf #H /3 width=6 by coafter_next/
-  ]
-| #Hf4 #H1 #H4 #f2 #f3 #Hf0 #g #Hg
-  cases (coafter_inv_nxx … Hg … H1) -g1
-  #f #Hg #H /3 width=6 by coafter_next/
-]
-qed-.
-*)
 (* Main inversion lemmas ****************************************************)
 
 corec theorem coafter_mono: ∀f1,f2,x,y. f1 ~⊚ f2 ≡ x → f1 ~⊚ f2 ≡ y → x ≗ y.
@@ -726,3 +676,54 @@ lemma coafter_sor: ∀f. 𝐅⦃f⦄ → ∀f2. 𝐓⦃f2⦄ → ∀f1. f2 ~⊚ 
   /3 width=11 by coafter_refl, coafter_push, sor_np, sor_pn, sor_nn, ex3_2_intro/
 ]
 qed-.
+
+(* Properties with after ****************************************************)
+(*
+corec theorem coafter_trans1: ∀f0,f3,f4. f0 ~⊚ f3 ≡ f4 →
+                            ∀f1,f2. f1 ~⊚ f2 ≡ f0 →
+                            ∀f. f2 ~⊚ f3 ≡ f → f1 ~⊚ f ≡ f4.
+#f0 #f3 #f4 * -f0 -f3 -f4 #f0 #f3 #f4 #g0 [1,2: #g3 ] #g4
+[ #Hf4 #H0 #H3 #H4 #g1 #g2 #Hg0 #g #Hg
+  cases (coafter_inv_xxp … Hg0 … H0) -g0
+  #f1 #f2 #Hf0 #H1 #H2
+  cases (coafter_inv_ppx … Hg … H2 H3) -g2 -g3
+  #f #Hf #H /3 width=7 by coafter_refl/
+| #Hf4 #H0 #H3 #H4 #g1 #g2 #Hg0 #g #Hg
+  cases (coafter_inv_xxp … Hg0 … H0) -g0
+  #f1 #f2 #Hf0 #H1 #H2
+  cases (coafter_inv_pnx … Hg … H2 H3) -g2 -g3
+  #f #Hf #H /3 width=7 by coafter_push/
+| #Hf4 #H0 #H4 #g1 #g2 #Hg0 #g #Hg
+  cases (coafter_inv_xxn … Hg0 … H0) -g0 *
+  [ #f1 #f2 #Hf0 #H1 #H2
+    cases (coafter_inv_nxx … Hg … H2) -g2
+    #f #Hf #H /3 width=7 by coafter_push/
+  | #f1 #Hf0 #H1 /3 width=6 by coafter_next/
+  ]
+]
+qed-.
+
+corec theorem coafter_trans2: ∀f1,f0,f4. f1 ~⊚ f0 ≡ f4 →
+                            ∀f2, f3. f2 ~⊚ f3 ≡ f0 →
+                            ∀f. f1 ~⊚ f2 ≡ f → f ~⊚ f3 ≡ f4.
+#f1 #f0 #f4 * -f1 -f0 -f4 #f1 #f0 #f4 #g1 [1,2: #g0 ] #g4
+[ #Hf4 #H1 #H0 #H4 #g2 #g3 #Hg0 #g #Hg
+  cases (coafter_inv_xxp … Hg0 … H0) -g0
+  #f2 #f3 #Hf0 #H2 #H3
+  cases (coafter_inv_ppx … Hg … H1 H2) -g1 -g2
+  #f #Hf #H /3 width=7 by coafter_refl/
+| #Hf4 #H1 #H0 #H4 #g2 #g3 #Hg0 #g #Hg
+  cases (coafter_inv_xxn … Hg0 … H0) -g0 *
+  [ #f2 #f3 #Hf0 #H2 #H3
+    cases (coafter_inv_ppx … Hg … H1 H2) -g1 -g2
+    #f #Hf #H /3 width=7 by coafter_push/
+  | #f2 #Hf0 #H2
+    cases (coafter_inv_pnx … Hg … H1 H2) -g1 -g2
+    #f #Hf #H /3 width=6 by coafter_next/
+  ]
+| #Hf4 #H1 #H4 #f2 #f3 #Hf0 #g #Hg
+  cases (coafter_inv_nxx … Hg … H1) -g1
+  #f #Hg #H /3 width=6 by coafter_next/
+]
+qed-.
+*)

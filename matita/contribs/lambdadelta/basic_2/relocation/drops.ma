@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/relocation/rtmap_coafter.ma".
 include "basic_2/notation/relations/rdropstar_3.ma".
 include "basic_2/notation/relations/rdropstar_4.ma".
 include "basic_2/relocation/lreq.ma".
@@ -53,18 +54,18 @@ definition d_deliftable2_sn: predicate (lenv → relation term) ≝
 
 definition dropable_sn: predicate (rtmap → relation lenv) ≝
                         λR. ∀b,f,L1,K1. ⬇*[b, f] L1 ≡ K1 → ∀f2,L2. R f2 L1 L2 →
-                        ∀f1. f ⊚ f1 ≡ f2 →
+                        ∀f1. f ~⊚ f1 ≡ f2 →
                         ∃∃K2. R f1 K1 K2 & ⬇*[b, f] L2 ≡ K2.
 
 definition dropable_dx: predicate (rtmap → relation lenv) ≝
                         λR. ∀f2,L1,L2. R f2 L1 L2 →
                         ∀b,f,K2. ⬇*[b, f] L2 ≡ K2 →  𝐔⦃f⦄ →
-                        ∀f1. f ⊚ f1 ≡ f2 → 
+                        ∀f1. f ~⊚ f1 ≡ f2 → 
                         ∃∃K1. ⬇*[b, f] L1 ≡ K1 & R f1 K1 K2.
 
 definition dedropable_sn: predicate (rtmap → relation lenv) ≝
                           λR. ∀b,f,L1,K1. ⬇*[b, f] L1 ≡ K1 → ∀f1,K2. R f1 K1 K2 →
-                          ∀f2. f ⊚ f1 ≡ f2 →
+                          ∀f2. f ~⊚ f1 ≡ f2 →
                           ∃∃L2. R f2 L1 L2 & ⬇*[b, f] L2 ≡ K2 & L1 ≡[f] L2.
 
 (* Basic properties *********************************************************)
