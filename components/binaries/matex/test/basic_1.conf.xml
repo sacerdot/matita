@@ -1,96 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <helm_registry>
+  <section name="devel">
+    <key name="basic1">matita.lambdadelta.basic_1</key>
+  </section>
   <section name="matex.alpha">
-    <key name="type">matita.lambdadelta.basic_1.T.defs.B.B.type b I</key>
-    <key name="type">matita.lambdadelta.basic_1.T.defs.B.B.type ee I</key>
-    <key name="type">matita.lambdadelta.basic_1.T.defs.B.B.type x I</key>
+    <key name="type">$(devel.basic1).T.defs.B.B.type b I</key>
+    <key name="type">$(devel.basic1).T.defs.B.B.type ee I</key>
+    <key name="type">$(devel.basic1).T.defs.B.B.type x I</key>
 
-    <key name="type">matita.lambdadelta.basic_1.T.defs.F.F.type ee I</key>
-    <key name="type">matita.lambdadelta.basic_1.T.defs.F.F.type f I</key>
-    <key name="type">matita.lambdadelta.basic_1.T.defs.F.F.type x I</key>
+    <key name="type">$(devel.basic1).T.defs.F.F.type ee I</key>
+    <key name="type">$(devel.basic1).T.defs.F.F.type f I</key>
+    <key name="type">$(devel.basic1).T.defs.F.F.type x I</key>
 
-    <key name="type">matita.lambdadelta.basic_1.T.defs.K.K.type e I</key>
-    <key name="type">matita.lambdadelta.basic_1.T.defs.K.K.type ee I</key>
-    <key name="type">matita.lambdadelta.basic_1.T.defs.K.K.type k I</key>
-    <key name="type">matita.lambdadelta.basic_1.T.defs.K.K.type h I</key>
-    <key name="type">matita.lambdadelta.basic_1.T.defs.K.K.type x I</key>
+    <key name="type">$(devel.basic1).T.defs.K.K.type e I</key>
+    <key name="type">$(devel.basic1).T.defs.K.K.type ee I</key>
+    <key name="type">$(devel.basic1).T.defs.K.K.type k I</key>
+    <key name="type">$(devel.basic1).T.defs.K.K.type h I</key>
+    <key name="type">$(devel.basic1).T.defs.K.K.type x I</key>
 
-    <key name="type">matita.lambdadelta.basic_1.C.defs.C.C.type _ X</key>
-    <key name="type">matita.lambdadelta.basic_1.C.defs.C.C.type a X</key>
-    <key name="type">matita.lambdadelta.basic_1.C.defs.C.C.type c L</key>
-    <key name="type">matita.lambdadelta.basic_1.C.defs.C.C.type d L</key>
-    <key name="type">matita.lambdadelta.basic_1.C.defs.C.C.type e K</key>
-    <key name="type">matita.lambdadelta.basic_1.C.defs.C.C.type ee X</key>
-    <key name="type">matita.lambdadelta.basic_1.C.defs.C.C.type x X</key>
-    <key name="type">matita.lambdadelta.basic_1.C.defs.C.C.type y Y</key>
+    <key name="type">$(devel.basic1).C.defs.C.C.type _ X</key>
+    <key name="type">$(devel.basic1).C.defs.C.C.type a X</key>
+    <key name="type">$(devel.basic1).C.defs.C.C.type c L</key>
+    <key name="type">$(devel.basic1).C.defs.C.C.type d L</key>
+    <key name="type">$(devel.basic1).C.defs.C.C.type e K</key>
+    <key name="type">$(devel.basic1).C.defs.C.C.type ee X</key>
+    <key name="type">$(devel.basic1).C.defs.C.C.type x X</key>
+    <key name="type">$(devel.basic1).C.defs.C.C.type y Y</key>
 
-    <key name="type">matita.lambdadelta.basic_1.T.defs.T.T.type _ X</key>
-    <key name="type">matita.lambdadelta.basic_1.T.defs.T.T.type e X</key>
-    <key name="type">matita.lambdadelta.basic_1.T.defs.T.T.type ee X</key>
-    <key name="type">matita.lambdadelta.basic_1.T.defs.T.T.type t T</key>
-    <key name="type">matita.lambdadelta.basic_1.T.defs.T.T.type u U</key>
-    <key name="type">matita.lambdadelta.basic_1.T.defs.T.T.type v V</key>
-    <key name="type">matita.lambdadelta.basic_1.T.defs.T.T.type w W</key>
-    <key name="type">matita.lambdadelta.basic_1.T.defs.T.T.type wi W</key>
-    <key name="type">matita.lambdadelta.basic_1.T.defs.T.T.type x X</key>
-    <key name="type">matita.lambdadelta.basic_1.T.defs.T.T.type y Y</key>
-    <key name="type">matita.lambdadelta.basic_1.T.defs.T.T.type z Z</key>
+    <key name="type">$(devel.basic1).T.defs.T.T.type _ X</key>
+    <key name="type">$(devel.basic1).T.defs.T.T.type e X</key>
+    <key name="type">$(devel.basic1).T.defs.T.T.type ee X</key>
+    <key name="type">$(devel.basic1).T.defs.T.T.type t T</key>
+    <key name="type">$(devel.basic1).T.defs.T.T.type u U</key>
+    <key name="type">$(devel.basic1).T.defs.T.T.type v V</key>
+    <key name="type">$(devel.basic1).T.defs.T.T.type w W</key>
+    <key name="type">$(devel.basic1).T.defs.T.T.type wi W</key>
+    <key name="type">$(devel.basic1).T.defs.T.T.type x X</key>
+    <key name="type">$(devel.basic1).T.defs.T.T.type y Y</key>
+    <key name="type">$(devel.basic1).T.defs.T.T.type z Z</key>
 
-    <key name="type">matita.lambdadelta.basic_1.tlist.defs.TList.TList.type _ Xs</key>
-    <key name="type">matita.lambdadelta.basic_1.tlist.defs.TList.TList.type e Xs</key>
-    <key name="type">matita.lambdadelta.basic_1.tlist.defs.TList.TList.type ee Xs</key>
-    <key name="type">matita.lambdadelta.basic_1.tlist.defs.TList.TList.type t Ts</key>
-    <key name="type">matita.lambdadelta.basic_1.tlist.defs.TList.TList.type ts Ts</key>
-    <key name="type">matita.lambdadelta.basic_1.tlist.defs.TList.TList.type ul Us</key>
-    <key name="type">matita.lambdadelta.basic_1.tlist.defs.TList.TList.type us Us</key>
-    <key name="type">matita.lambdadelta.basic_1.tlist.defs.TList.TList.type vs Vs</key>
-    <key name="type">matita.lambdadelta.basic_1.tlist.defs.TList.TList.type ws Ws</key>
-    <key name="type">matita.lambdadelta.basic_1.tlist.defs.TList.TList.type xs Xs</key>
-    <key name="type">matita.lambdadelta.basic_1.tlist.defs.TList.TList.type x Xs</key>
-    <key name="type">matita.lambdadelta.basic_1.tlist.defs.TList.TList.type y Ys</key>
+    <key name="type">$(devel.basic1).tlist.defs.TList.TList.type _ Xs</key>
+    <key name="type">$(devel.basic1).tlist.defs.TList.TList.type e Xs</key>
+    <key name="type">$(devel.basic1).tlist.defs.TList.TList.type ee Xs</key>
+    <key name="type">$(devel.basic1).tlist.defs.TList.TList.type t Ts</key>
+    <key name="type">$(devel.basic1).tlist.defs.TList.TList.type ts Ts</key>
+    <key name="type">$(devel.basic1).tlist.defs.TList.TList.type ul Us</key>
+    <key name="type">$(devel.basic1).tlist.defs.TList.TList.type us Us</key>
+    <key name="type">$(devel.basic1).tlist.defs.TList.TList.type vs Vs</key>
+    <key name="type">$(devel.basic1).tlist.defs.TList.TList.type ws Ws</key>
+    <key name="type">$(devel.basic1).tlist.defs.TList.TList.type xs Xs</key>
+    <key name="type">$(devel.basic1).tlist.defs.TList.TList.type x Xs</key>
+    <key name="type">$(devel.basic1).tlist.defs.TList.TList.type y Ys</key>
 
-    <key name="type">matita.lambdadelta.basic_1.A.defs.A.A.type _ X</key>
-    <key name="type">matita.lambdadelta.basic_1.A.defs.A.A.type a A</key>
-    <key name="type">matita.lambdadelta.basic_1.A.defs.A.A.type b B</key>
-    <key name="type">matita.lambdadelta.basic_1.A.defs.A.A.type e X</key>
-    <key name="type">matita.lambdadelta.basic_1.A.defs.A.A.type ee X</key>
-    <key name="type">matita.lambdadelta.basic_1.A.defs.A.A.type l X</key>
-    <key name="type">matita.lambdadelta.basic_1.A.defs.A.A.type x X</key>
-    <key name="type">matita.lambdadelta.basic_1.A.defs.A.A.type y Y</key>
+    <key name="type">$(devel.basic1).A.defs.A.A.type _ X</key>
+    <key name="type">$(devel.basic1).A.defs.A.A.type a A</key>
+    <key name="type">$(devel.basic1).A.defs.A.A.type b B</key>
+    <key name="type">$(devel.basic1).A.defs.A.A.type e X</key>
+    <key name="type">$(devel.basic1).A.defs.A.A.type ee X</key>
+    <key name="type">$(devel.basic1).A.defs.A.A.type l X</key>
+    <key name="type">$(devel.basic1).A.defs.A.A.type x X</key>
+    <key name="type">$(devel.basic1).A.defs.A.A.type y Y</key>
 
-    <key name="type">matita.lambdadelta.basic_1.G.defs.G.G.type g h</key>
+    <key name="type">$(devel.basic1).G.defs.G.G.type g h</key>
 
-    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type _ x</key>
-    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type d' d</key>
-    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type d d</key>
-    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type e e</key>
-    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type ee e</key>
-    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type f f</key>
-    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type g g</key>
-    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type h h</key>
-    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type i i</key>
-    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type j j</key>
-    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type k k</key>
-    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type l l</key>
-    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type m m</key>
-    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type n n</key>
-    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type next f</key>
-    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type v v</key>
-    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type w w</key>
-    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type x x</key>
-    <key name="type">matita.lambdadelta.legacy_1.coq.defs.nat.nat.type y y</key>
+    <key name="type">$(devel.legacy1).coq.defs.nat.nat.type _ x</key>
+    <key name="type">$(devel.legacy1).coq.defs.nat.nat.type d' d</key>
+    <key name="type">$(devel.legacy1).coq.defs.nat.nat.type d d</key>
+    <key name="type">$(devel.legacy1).coq.defs.nat.nat.type e e</key>
+    <key name="type">$(devel.legacy1).coq.defs.nat.nat.type ee e</key>
+    <key name="type">$(devel.legacy1).coq.defs.nat.nat.type f f</key>
+    <key name="type">$(devel.legacy1).coq.defs.nat.nat.type g g</key>
+    <key name="type">$(devel.legacy1).coq.defs.nat.nat.type h h</key>
+    <key name="type">$(devel.legacy1).coq.defs.nat.nat.type i i</key>
+    <key name="type">$(devel.legacy1).coq.defs.nat.nat.type j j</key>
+    <key name="type">$(devel.legacy1).coq.defs.nat.nat.type k k</key>
+    <key name="type">$(devel.legacy1).coq.defs.nat.nat.type l l</key>
+    <key name="type">$(devel.legacy1).coq.defs.nat.nat.type m m</key>
+    <key name="type">$(devel.legacy1).coq.defs.nat.nat.type n n</key>
+    <key name="type">$(devel.legacy1).coq.defs.nat.nat.type next f</key>
+    <key name="type">$(devel.legacy1).coq.defs.nat.nat.type v v</key>
+    <key name="type">$(devel.legacy1).coq.defs.nat.nat.type w w</key>
+    <key name="type">$(devel.legacy1).coq.defs.nat.nat.type x x</key>
+    <key name="type">$(devel.legacy1).coq.defs.nat.nat.type y y</key>
 
-    <key name="type">matita.lambdadelta.legacy_1.coq.defs.bool.bool.type b b</key>
-    <key name="type">matita.lambdadelta.legacy_1.coq.defs.bool.bool.type x x</key>
+    <key name="type">$(devel.legacy1).coq.defs.bool.bool.type b b</key>
+    <key name="type">$(devel.legacy1).coq.defs.bool.bool.type x x</key>
 
-    <key name="type">matita.lambdadelta.ground_1.plist.defs.PList.PList.type _ f</key>
-    <key name="type">matita.lambdadelta.ground_1.plist.defs.PList.PList.type e f</key>
-    <key name="type">matita.lambdadelta.ground_1.plist.defs.PList.PList.type ee f</key>
-    <key name="type">matita.lambdadelta.ground_1.plist.defs.PList.PList.type hds f</key>
-    <key name="type">matita.lambdadelta.ground_1.plist.defs.PList.PList.type is f</key>
-    <key name="type">matita.lambdadelta.ground_1.plist.defs.PList.PList.type p f</key>
-    <key name="type">matita.lambdadelta.ground_1.plist.defs.PList.PList.type q f</key>
-    <key name="type">matita.lambdadelta.ground_1.plist.defs.PList.PList.type y f</key>
+    <key name="type">$(devel.ground1).plist.defs.PList.PList.type _ f</key>
+    <key name="type">$(devel.ground1).plist.defs.PList.PList.type e f</key>
+    <key name="type">$(devel.ground1).plist.defs.PList.PList.type ee f</key>
+    <key name="type">$(devel.ground1).plist.defs.PList.PList.type hds f</key>
+    <key name="type">$(devel.ground1).plist.defs.PList.PList.type is f</key>
+    <key name="type">$(devel.ground1).plist.defs.PList.PList.type p f</key>
+    <key name="type">$(devel.ground1).plist.defs.PList.PList.type q f</key>
+    <key name="type">$(devel.ground1).plist.defs.PList.PList.type y f</key>
 
     <key name="type">Prop P R</key>
     <key name="type">Prop Q R</key>
@@ -165,96 +168,109 @@
     <key name="gref">tlt_wf__q_ind q_ind_aux</key>
     <key name="gref">tslt_wf__q_ind q_ind_aux</key>
     <key name="gref">ty3_nf2_gen__ty3_nf2_inv_abst_aux ty3_nf2_inv_abst_aux</key>
-
   </section>
+  <section name="matex.notation">
 <!--
-matita.lambdadelta.basic_1.A.defs.A.AHead.type
-matita.lambdadelta.basic_1.A.defs.A.ASort.type
-matita.lambdadelta.basic_1.A.fwd.A_rect.A_rect.type
-matita.lambdadelta.basic_1.aplus.defs.aplus.aplus.type
-matita.lambdadelta.basic_1.app.defs.app1.app1.type
-matita.lambdadelta.basic_1.app.defs.cbk.cbk.type
-matita.lambdadelta.basic_1.aprem.defs.aprem.aprem.type
-matita.lambdadelta.basic_1.arity.defs.arity.arity.type
-matita.lambdadelta.basic_1.asucc.defs.asucc.asucc.type
-matita.lambdadelta.basic_1.C.defs.C.CHead.type
-matita.lambdadelta.basic_1.C.defs.C.CSort.type
-matita.lambdadelta.basic_1.C.defs.cle.type
-matita.lambdadelta.basic_1.C.defs.clt.type
-matita.lambdadelta.basic_1.C.defs.CTail.CTail.type
-matita.lambdadelta.basic_1.C.defs.cweight.cweight.type
-matita.lambdadelta.basic_1.C.fwd.C_rect.C_rect.type
-matita.lambdadelta.basic_1.cimp.defs.cimp.type
-matita.lambdadelta.basic_1.clear.defs.clear.clear.type
-matita.lambdadelta.basic_1.clen.defs.clen.clen.type
-matita.lambdadelta.basic_1.cnt.defs.cnt.cnt.type
-matita.lambdadelta.basic_1.csuba.defs.csuba.csuba.type
-matita.lambdadelta.basic_1.csubc.defs.csubc.csubc.type
-matita.lambdadelta.basic_1.csubst0.defs.csubst0.csubst0.type
-matita.lambdadelta.basic_1.csubst1.defs.csubst1.csubst1.type
-matita.lambdadelta.basic_1.csubt.defs.csubt.csubt.type
-matita.lambdadelta.basic_1.csubv.defs.csubv.csubv.type
-matita.lambdadelta.basic_1.drop1.defs.drop1.drop1.type
-matita.lambdadelta.basic_1.drop1.defs.ptrans.ptrans.type
-matita.lambdadelta.basic_1.drop.defs.drop.drop.type
-matita.lambdadelta.basic_1.ex0.defs.leqz.leqz.type
-matita.lambdadelta.basic_1.flt.defs.flt.type
-matita.lambdadelta.basic_1.flt.defs.fweight.type
-matita.lambdadelta.basic_1.fsubst0.defs.fsubst0.fsubst0.type
-matita.lambdadelta.basic_1.G.defs.G.mk_G.type
-matita.lambdadelta.basic_1.G.defs.next.next.type
-matita.lambdadelta.basic_1.getl.defs.getl.getl.type
-matita.lambdadelta.basic_1.iso.defs.iso.iso.type
-matita.lambdadelta.basic_1.leq.defs.leq.leq.type
-matita.lambdadelta.basic_1.lift1.defs.lift1.lift1.type
-matita.lambdadelta.basic_1.lift1.defs.lifts1.lifts1.type
-matita.lambdadelta.basic_1.lift1.defs.trans.trans.type
-matita.lambdadelta.basic_1.lift.defs.lifts.lifts.type
-matita.lambdadelta.basic_1.lift.defs.lift.type
-matita.lambdadelta.basic_1.lift.defs.lref_map.lref_map.type
-matita.lambdadelta.basic_1.llt.defs.llt.type
-matita.lambdadelta.basic_1.llt.defs.lweight.lweight.type
-matita.lambdadelta.basic_1.next_plus.defs.next_plus.next_plus.type
-matita.lambdadelta.basic_1.nf2.defs.nf2.type
-matita.lambdadelta.basic_1.nf2.defs.nfs2.nfs2.type
-matita.lambdadelta.basic_1.pc1.defs.pc1.type
-matita.lambdadelta.basic_1.pc3.defs.pc3_left.pc3_left.type
-matita.lambdadelta.basic_1.pc3.defs.pc3.type
-matita.lambdadelta.basic_1.pr0.defs.pr0.pr0.type
-matita.lambdadelta.basic_1.pr1.defs.pr1.pr1.type
-matita.lambdadelta.basic_1.pr2.defs.pr2.pr2.type
-matita.lambdadelta.basic_1.pr3.defs.pr3.pr3.type
-matita.lambdadelta.basic_1.r.defs.r.type
-matita.lambdadelta.basic_1.sc3.defs.sc3.sc3.type
-matita.lambdadelta.basic_1.s.defs.s.type
-matita.lambdadelta.basic_1.sn3.defs.sn3.sn3.type
-matita.lambdadelta.basic_1.sn3.defs.sns3.sns3.type
-matita.lambdadelta.basic_1.sty0.defs.sty0.sty0.type
-matita.lambdadelta.basic_1.sty1.defs.sty1.sty1.type
-matita.lambdadelta.basic_1.subst0.defs.subst0.subst0.type
-matita.lambdadelta.basic_1.subst1.defs.subst1.subst1.type
-matita.lambdadelta.basic_1.subst.defs.subst.subst.type
-matita.lambdadelta.basic_1.T.defs.K.Bind.type
-matita.lambdadelta.basic_1.T.defs.K.Flat.type
-matita.lambdadelta.basic_1.T.defs.tle.type
-matita.lambdadelta.basic_1.T.defs.T.THead.type
-matita.lambdadelta.basic_1.T.defs.T.TLRef.type
-matita.lambdadelta.basic_1.T.defs.T.TSort.type
-matita.lambdadelta.basic_1.T.defs.tweight.tweight.type
-matita.lambdadelta.basic_1.T.fwd.T_rect.T_rect.type
-matita.lambdadelta.basic_1.tlist.defs.TApp.TApp.type
-matita.lambdadelta.basic_1.tlist.defs.THeads.THeads.type
-matita.lambdadelta.basic_1.tlist.defs.TList.TCons.type
-matita.lambdadelta.basic_1.tlist.defs.tslen.tslen.type
-matita.lambdadelta.basic_1.tlist.defs.tslt.type
-matita.lambdadelta.basic_1.tlt.defs.tlt.type
-matita.lambdadelta.basic_1.tlt.defs.wadd.type
-matita.lambdadelta.basic_1.tlt.defs.weight_map.weight_map.type
-matita.lambdadelta.basic_1.tlt.defs.weight.type
-matita.lambdadelta.basic_1.ty3.defs.ty3.ty3.type
-matita.lambdadelta.basic_1.ty3.defs.tys3.tys3.type
-matita.lambdadelta.basic_1.ty3.nf2.ty3_nf2_inv_abst_premise.type
-matita.lambdadelta.basic_1.wcpr0.defs.wcpr0.wcpr0.type
-matita.lambdadelta.basic_1.wf3.defs.wf3.wf3.type
+$(devel.basic1).A.defs.A.AHead.type 0</key>
+$(devel.basic1).A.defs.A.ASort.type 0</key>
+$(devel.basic1).A.fwd.A_rect.A_rect.type 0</key>
+$(devel.basic1).aplus.defs.aplus.aplus.type 0</key>
+$(devel.basic1).app.defs.app1.app1.type 0</key>
+$(devel.basic1).app.defs.cbk.cbk.type 0</key>
+$(devel.basic1).aprem.defs.aprem.aprem.type 0</key>
+$(devel.basic1).arity.defs.arity.arity.type 0</key>
+$(devel.basic1).asucc.defs.asucc.asucc.type 0</key>
+$(devel.basic1).C.defs.C.CHead.type 0</key>
+$(devel.basic1).C.defs.C.CSort.type 0</key>
+$(devel.basic1).C.defs.cle.type 0</key>
+$(devel.basic1).C.defs.clt.type 0</key>
+$(devel.basic1).C.defs.CTail.CTail.type 0</key>
+$(devel.basic1).C.defs.cweight.cweight.type 0</key>
+$(devel.basic1).C.fwd.C_rect.C_rect.type 0</key>
+$(devel.basic1).cimp.defs.cimp.type 0</key>
+$(devel.basic1).clear.defs.clear.clear.type 0</key>
+$(devel.basic1).clen.defs.clen.clen.type 0</key>
+$(devel.basic1).cnt.defs.cnt.cnt.type 0</key>
+$(devel.basic1).csuba.defs.csuba.csuba.type 0</key>
+$(devel.basic1).csubc.defs.csubc.csubc.type 0</key>
+$(devel.basic1).csubst0.defs.csubst0.csubst0.type 0</key>
+$(devel.basic1).csubst1.defs.csubst1.csubst1.type 0</key>
+$(devel.basic1).csubt.defs.csubt.csubt.type 0</key>
+$(devel.basic1).csubv.defs.csubv.csubv.type 0</key>
 -->
+    <key name="const">$(devel.basic1).drop1.defs.drop1.drop1.type DropS 2 0</key>
+<!--
+$(devel.basic1).drop1.defs.ptrans.ptrans.type 0</key>
+-->
+    <key name="const">$(devel.basic1).drop.defs.drop.drop.type Drop 3 0</key>
+<!--
+$(devel.basic1).ex0.defs.leqz.leqz.type 0</key>
+$(devel.basic1).flt.defs.flt.type 0</key>
+$(devel.basic1).flt.defs.fweight.type 0</key>
+$(devel.basic1).fsubst0.defs.fsubst0.fsubst0.type 0</key>
+$(devel.basic1).G.defs.G.mk_G.type 0</key>
+$(devel.basic1).G.defs.next.next.type 0</key>
+$(devel.basic1).getl.defs.getl.getl.type 0</key>
+$(devel.basic1).iso.defs.iso.iso.type 0</key>
+$(devel.basic1).leq.defs.leq.leq.type 0</key>
+-->
+    <key name="const">$(devel.basic1).lift1.defs.lift1.lift1.type FunLiftS 2 0</key>
+    <key name="const">$(devel.basic1).lift1.defs.lifts1.lifts1.type FunLiftS 2 0</key>
+<!--
+$(devel.basic1).lift1.defs.trans.trans.type 0</key>
+-->
+    <key name="const">$(devel.basic1).lift.defs.lifts.lifts.type FunLift 3 0</key>
+    <key name="const">$(devel.basic1).lift.defs.lift.type FunLift 3 0</key>
+<!--
+$(devel.basic1).lift.defs.lref_map.lref_map.type 0</key>
+$(devel.basic1).llt.defs.llt.type 0</key>
+$(devel.basic1).llt.defs.lweight.lweight.type 0</key>
+$(devel.basic1).next_plus.defs.next_plus.next_plus.type 0</key>
+$(devel.basic1).nf2.defs.nf2.type 0</key>
+$(devel.basic1).nf2.defs.nfs2.nfs2.type 0</key>
+$(devel.basic1).pc1.defs.pc1.type 0</key>
+$(devel.basic1).pc3.defs.pc3_left.pc3_left.type 0</key>
+$(devel.basic1).pc3.defs.pc3.type 0</key>
+$(devel.basic1).pr0.defs.pr0.pr0.type 0</key>
+$(devel.basic1).pr1.defs.pr1.pr1.type 0</key>
+$(devel.basic1).pr2.defs.pr2.pr2.type 0</key>
+$(devel.basic1).pr3.defs.pr3.pr3.type 0</key>
+$(devel.basic1).r.defs.r.type 0</key>
+$(devel.basic1).sc3.defs.sc3.sc3.type 0</key>
+$(devel.basic1).s.defs.s.type 0</key>
+$(devel.basic1).sn3.defs.sn3.sn3.type 0</key>
+$(devel.basic1).sn3.defs.sns3.sns3.type 0</key>
+$(devel.basic1).sty0.defs.sty0.sty0.type 0</key>
+$(devel.basic1).sty1.defs.sty1.sty1.type 0</key>
+$(devel.basic1).subst0.defs.subst0.subst0.type 0</key>
+$(devel.basic1).subst1.defs.subst1.subst1.type 0</key>
+$(devel.basic1).subst.defs.subst.subst.type 0</key>
+$(devel.basic1).T.defs.K.Bind.type 0</key>
+$(devel.basic1).T.defs.K.Flat.type 0</key>
+$(devel.basic1).T.defs.tle.type 0</key>
+$(devel.basic1).T.defs.T.THead.type 0</key>
+$(devel.basic1).T.defs.T.TLRef.type 0</key>
+$(devel.basic1).T.defs.T.TSort.type 0</key>
+$(devel.basic1).T.defs.tweight.tweight.type 0</key>
+$(devel.basic1).T.fwd.T_rect.T_rect.type 0</key>
+-->
+    <key name="const">$(devel.basic1).tlist.defs.TApp.TApp.type RevConsA 2 0</key>
+<!--
+$(devel.basic1).tlist.defs.THeads.THeads.type 0</key>
+-->
+    <key name="const">$(devel.basic1).tlist.defs.TList.TCons.type ConsA 2 0</key>
+<!--
+$(devel.basic1).tlist.defs.tslen.tslen.type 0</key>
+$(devel.basic1).tlist.defs.tslt.type 0</key>
+$(devel.basic1).tlt.defs.tlt.type 0</key>
+$(devel.basic1).tlt.defs.wadd.type 0</key>
+$(devel.basic1).tlt.defs.weight_map.weight_map.type 0</key>
+$(devel.basic1).tlt.defs.weight.type 0</key>
+$(devel.basic1).ty3.defs.ty3.ty3.type 0</key>
+$(devel.basic1).ty3.defs.tys3.tys3.type 0</key>
+$(devel.basic1).ty3.nf2.ty3_nf2_inv_abst_premise.type 0</key>
+$(devel.basic1).wcpr0.defs.wcpr0.wcpr0.type 0</key>
+$(devel.basic1).wf3.defs.wf3.wf3.type 0</key>
+-->
+  </section>
 </helm_registry>

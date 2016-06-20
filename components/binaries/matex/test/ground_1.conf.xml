@@ -1,29 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <helm_registry>
+  <section name="devel">
+    <key name="ground1">matita.lambdadelta.ground_1</key>
+  </section>
   <section name="matex.notation">
-    <key name="const">matita.lambdadelta.ground_1.types.defs.ex_2.ex_2.type LEx 3 2</key>
-    <key name="const">matita.lambdadelta.ground_1.types.defs.ex_3.ex_3.type LEx 4 3</key>
-    <key name="const">matita.lambdadelta.ground_1.types.defs.ex2_2.ex2_2.type LEx 4 2</key>
-    <key name="const">matita.lambdadelta.ground_1.types.defs.ex2_3.ex2_3.type LEx 5 3</key>
-    <key name="const">matita.lambdadelta.ground_1.types.defs.ex3.ex3.type LEx 4 1</key>
-    <key name="const">matita.lambdadelta.ground_1.types.defs.ex3_2.ex3_2.type LEx 5 2</key>
-    <key name="const">matita.lambdadelta.ground_1.types.defs.ex3_3.ex3_3.type LEx 6 3</key>
-    <key name="const">matita.lambdadelta.ground_1.types.defs.ex3_4.ex3_4.type LEx 7 4</key>
-    <key name="const">matita.lambdadelta.ground_1.types.defs.ex4.ex4.type LEx 5 1</key>
-    <key name="const">matita.lambdadelta.ground_1.types.defs.ex4_2.ex4_2.type LEx 6 2</key>
-    <key name="const">matita.lambdadelta.ground_1.types.defs.ex4_3.ex4_3.type LEx 7 3</key>
-    <key name="const">matita.lambdadelta.ground_1.types.defs.ex4_4.ex4_4.type LEx 8 4</key>
-    <key name="const">matita.lambdadelta.ground_1.types.defs.ex4_5.ex4_5.type LEx 9 5</key>
-    <key name="const">matita.lambdadelta.ground_1.types.defs.ex5_3.ex5_3.type LEx 8 3</key>
-    <key name="const">matita.lambdadelta.ground_1.types.defs.ex6_6.ex6_6.type LEx 12 6</key>
-    <key name="const">matita.lambdadelta.ground_1.types.defs.and3.and3.type LAnd 3 0</key>
-    <key name="const">matita.lambdadelta.ground_1.types.defs.or3.or3.type LOr 3 0</key>
-    <key name="const">matita.lambdadelta.ground_1.types.defs.or4.or4.type LOr 4 0</key>
+    <key name="const">$(devel.ground1).types.defs.ex_2.ex_2.type LEx 3 2</key>
+    <key name="const">$(devel.ground1).types.defs.ex_3.ex_3.type LEx 4 3</key>
+    <key name="const">$(devel.ground1).types.defs.ex2_2.ex2_2.type LEx 4 2</key>
+    <key name="const">$(devel.ground1).types.defs.ex2_3.ex2_3.type LEx 5 3</key>
+    <key name="const">$(devel.ground1).types.defs.ex3.ex3.type LEx 4 1</key>
+    <key name="const">$(devel.ground1).types.defs.ex3_2.ex3_2.type LEx 5 2</key>
+    <key name="const">$(devel.ground1).types.defs.ex3_3.ex3_3.type LEx 6 3</key>
+    <key name="const">$(devel.ground1).types.defs.ex3_4.ex3_4.type LEx 7 4</key>
+    <key name="const">$(devel.ground1).types.defs.ex4.ex4.type LEx 5 1</key>
+    <key name="const">$(devel.ground1).types.defs.ex4_2.ex4_2.type LEx 6 2</key>
+    <key name="const">$(devel.ground1).types.defs.ex4_3.ex4_3.type LEx 7 3</key>
+    <key name="const">$(devel.ground1).types.defs.ex4_4.ex4_4.type LEx 8 4</key>
+    <key name="const">$(devel.ground1).types.defs.ex4_5.ex4_5.type LEx 9 5</key>
+    <key name="const">$(devel.ground1).types.defs.ex5_3.ex5_3.type LEx 8 3</key>
+    <key name="const">$(devel.ground1).types.defs.ex6_6.ex6_6.type LEx 12 6</key>
+    <key name="const">$(devel.ground1).types.defs.and3.and3.type LAnd 3 0</key>
+    <key name="const">$(devel.ground1).types.defs.or3.or3.type LOr 3 0</key>
+    <key name="const">$(devel.ground1).types.defs.or4.or4.type LOr 4 0</key>
 
-    <key name="const">matita.lambdadelta.ground_1.blt.defs.blt.blt.type FunLt 2 0</key>
-    <key name="const">matita.lambdadelta.ground_1.plist.defs.papp.papp.type Append 2 0</key>
-    <key name="const">matita.lambdadelta.ground_1.plist.defs.PConsTail.PConsTail.type RevConsB 3 0</key>
-    <key name="const">matita.lambdadelta.ground_1.plist.defs.PList.PCons.type ConsB 3 0</key>
-    <key name="const">matita.lambdadelta.ground_1.plist.defs.Ss.Ss.type Succ 1 0</key>
+    <key name="const">$(devel.ground1).blt.defs.blt.blt.type FunLt 2 0</key>
+    <key name="const">$(devel.ground1).plist.defs.papp.papp.type Append 2 0</key>
+    <key name="const">$(devel.ground1).plist.defs.PConsTail.PConsTail.type RevConsB 3 0</key>
+    <key name="const">$(devel.ground1).plist.defs.PList.PCons.type ConsB 3 0</key>
+    <key name="const">$(devel.ground1).plist.defs.Ss.Ss.type Succ 1 0</key>
   </section>
 </helm_registry>

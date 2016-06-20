@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <helm_registry>
+  <section name="devel">
+    <key name="legacy1">matita.lambdadelta.legacy_1</key>
+  </section>
   <section name="matex.notation">
-    <key name="const">matita.lambdadelta.legacy_1.coq.defs.ex.ex.type LEx 2 1</key>
-    <key name="const">matita.lambdadelta.legacy_1.coq.defs.ex2.ex2.type LEx 3 1</key>
-    <key name="const">matita.lambdadelta.legacy_1.coq.defs.land.land.type LAnd 2 0</key>
-    <key name="const">matita.lambdadelta.legacy_1.coq.defs.or.or.type LOr 2 0</key>
+    <key name="const">$(devel.legacy1).coq.defs.ex.ex.type LEx 2 1</key>
+    <key name="const">$(devel.legacy1).coq.defs.ex2.ex2.type LEx 3 1</key>
+    <key name="const">$(devel.legacy1).coq.defs.land.land.type LAnd 2 0</key>
+    <key name="const">$(devel.legacy1).coq.defs.or.or.type LOr 2 0</key>
 
-    <key name="const">matita.lambdadelta.legacy_1.coq.defs.eq.eq.type EQ 3 0</key>
-    <key name="const">matita.lambdadelta.legacy_1.coq.defs.le.le.type LE 2 0</key>
-    <key name="const">matita.lambdadelta.legacy_1.coq.defs.lt.type LT 2 0</key>
-    <key name="const">matita.lambdadelta.legacy_1.coq.defs.minus.minus.type Minus 2 0</key>
-    <key name="const">matita.lambdadelta.legacy_1.coq.defs.nat.S.type Succ 1 0</key>
-    <key name="const">matita.lambdadelta.legacy_1.coq.defs.not.type LNot 1 0</key>
-    <key name="const">matita.lambdadelta.legacy_1.coq.defs.plus.plus.type Plus 2 0</key>
-    <key name="const">matita.lambdadelta.legacy_1.coq.defs.pred.type Pred 1 0</key>
+    <key name="const">$(devel.legacy1).coq.defs.eq.eq.type EQ 3 0</key>
+    <key name="const">$(devel.legacy1).coq.defs.le.le.type LE 2 0</key>
+    <key name="const">$(devel.legacy1).coq.defs.lt.type LT 2 0</key>
+    <key name="const">$(devel.legacy1).coq.defs.minus.minus.type Minus 2 0</key>
+    <key name="const">$(devel.legacy1).coq.defs.nat.S.type Succ 1 0</key>
+    <key name="const">$(devel.legacy1).coq.defs.not.type LNot 1 0</key>
+    <key name="const">$(devel.legacy1).coq.defs.plus.plus.type Plus 2 0</key>
+    <key name="const">$(devel.legacy1).coq.defs.pred.type Pred 1 0</key>
   </section>
 </helm_registry>

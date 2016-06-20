@@ -1,7 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesPackage{legacy_1}[2016/06/19 Notation for "cic:/matita/lambdadelta/legacy_1/"]
 \RequirePackage{matex}
-\RequirePackage{fdsymbol}
 \ExecuteOptions{}
 \ProcessOptions*
 
@@ -20,8 +19,8 @@
 \newcommand*\ld@minus[1]{\setbinlink{-}{#1}}
 \newcommand*\ld@lnot[1]{\setoplink{\lnot}{#1}}
 \newcommand*\ld@plus[1]{\setbinlink{+}{#1}}
-\newcommand*\ld@pred[1]{\setoplink{\downspoon}{#1}}
-\newcommand*\ld@succ[1]{\setoplink{\upspoon}{#1}}
+\newcommand*\ld@pred[1]{\setoplink{\midcir}{#1}}
+\newcommand*\ld@succ[1]{\setoplink{\cirmid}{#1}}
 
 \newcommand*\ld@list[2]{\ma@list\relax\ma@arg{#1{#2}}\relax}
 
