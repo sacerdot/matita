@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesPackage{legacy_1}[2016/06/19 Notation for "cic:/matita/lambdadelta/legacy_1/"]
+\ProvidesPackage{legacy_1}[2016/06/21 Notation for "cic:/matita/lambdadelta/legacy_1/"]
 \RequirePackage{matex}
 \ExecuteOptions{}
 \ProcessOptions*
@@ -8,19 +8,19 @@
 
 \makeatletter
 
-\newcommand*\ld@and[1]{\setbinlink{\&}{#1}}
+\newcommand*\ld@and[1]{\setbinlink{\&}{#1}{}}
 \newcommand*\ld@lex[1]{\setordlink{\exists}{#1}}
-\newcommand*\ld@land[1]{\setrellink{\land}{#1}}
-\newcommand*\ld@lor[1]{\setrellink{\lor}{#1}}
+\newcommand*\ld@land[1]{\setrellink{\land}{#1}{}}
+\newcommand*\ld@lor[1]{\setrellink{\lor}{#1}{}}
 
-\newcommand*\ld@eq[1]{\setrellink{=}{#1}}
-\newcommand*\ld@le[1]{\setrellink{\le}{#1}}
-\newcommand*\ld@lt[1]{\setrellink{<}{#1}}
-\newcommand*\ld@minus[1]{\setbinlink{-}{#1}}
-\newcommand*\ld@lnot[1]{\setoplink{\lnot}{#1}}
-\newcommand*\ld@plus[1]{\setbinlink{+}{#1}}
-\newcommand*\ld@pred[1]{\setoplink{\midcir}{#1}}
-\newcommand*\ld@succ[1]{\setoplink{\cirmid}{#1}}
+\newcommand*\ld@eq[1]{\setrellink{=}{#1}{}}
+\newcommand*\ld@le[1]{\setrellink{\le}{#1}{}}
+\newcommand*\ld@lt[1]{\setrellink{<}{#1}{}}
+\newcommand*\ld@minus[1]{\setbinlink{-}{#1}{}}
+\newcommand*\ld@lnot[1]{\setoplink{\lnot}{#1}{}}
+\newcommand*\ld@plus[1]{\setbinlink{+}{#1}{}}
+\newcommand*\ld@pred[1]{\setoplink{\midcir}{#1}{}}
+\newcommand*\ld@succ[1]{\setoplink{\cirmid}{#1}{}}
 
 \newcommand*\ld@list[2]{\ma@list\relax\ma@arg{#1{#2}}\relax}
 

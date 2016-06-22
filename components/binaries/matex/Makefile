@@ -21,6 +21,6 @@ test/$(OBJS): $(REGISTRY)
 
 test/$(SRCS): test/$(OBJS) $(REGISTRY) ./matex.native
 	@echo MaTeX: processing $<
-	$(H)./matex.native -O test -l $(SRCS) -p -g -a $(REGISTRY) `cat $<`
+	$(H)./matex.native -O test -l $(SRCS) -a -g -p $(REGISTRY) `cat $<`
 
 .PHONY: test

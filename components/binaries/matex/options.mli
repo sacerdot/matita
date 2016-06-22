@@ -21,9 +21,11 @@ val out_dir: string ref
 
 val proc_id: string ref
 
-val test: bool ref 
+val check: bool ref 
 
 val no_types: bool ref 
+
+val no_proofs: bool ref 
 
 val global_alpha: bool ref
 

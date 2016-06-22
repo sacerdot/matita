@@ -25,7 +25,7 @@
 
     <key name="const">$(devel.ground1).blt.defs.blt.blt.type FunLt 2 0</key>
     <key name="const">$(devel.ground1).plist.defs.papp.papp.type Append 2 0</key>
-    <key name="const">$(devel.ground1).plist.defs.PConsTail.PConsTail.type RevConsB 3 0</key>
+    <key name="const">$(devel.ground1).plist.defs.PConsTail.PConsTail.type CoConsB 3 0</key>
     <key name="const">$(devel.ground1).plist.defs.PList.PCons.type ConsB 3 0</key>
     <key name="const">$(devel.ground1).plist.defs.Ss.Ss.type Succ 1 0</key>
   </section>

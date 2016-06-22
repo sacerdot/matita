@@ -165,7 +165,7 @@ and proc_terms st ts =
 let proc_named_term s st t =
 try
    let tt = proc_term st t in
-   if !G.test then begin
+   if !G.check then begin
       let _ = K.typeof st.c tt in
       ok s
    end;

@@ -43,8 +43,8 @@ let internal s =
 let malformed s =
    X.error ("engine: malformed term: " ^ s)
 
-let missing s =
-   X.log ("engine: missing macro for " ^ s)
+let missing s l =
+   X.log (P.sprintf "engine: missing macro for %s (%u)" s l)
 
 (* generic term processing *)
 
@@ -72,13 +72,16 @@ let get_macro s l =
 let get_head = function
    | C.Const c :: ts ->
       let s, _ = K.resolve_reference c in
-      let macro, x = get_macro s (L.length ts) in
-      if macro <> "" then
-         let ts1, ts2 = X.split_at x ts in
-         Some (macro, s, ts1, ts2)
-      else begin 
-         if !G.log_missing then missing s;
-         None
+      let l = L.length ts in
+      let macro, x = get_macro s l in
+      begin match macro with      
+         | ""     -> 
+            if !G.log_missing then missing s l;
+            None
+         | "APPL" -> None
+         | _      -> 
+            let ts1, ts2 = X.split_at x ts in
+            Some (macro, s, ts1, ts2) 
       end 
    | _               -> None
 
@@ -243,6 +246,7 @@ let proc_item item s ss t =
    note :: T.Macro "begin" :: T.arg item :: T.arg (mk_gname s) :: T.free ss :: proc_term st is tt
 
 let proc_top_proof s ss t =
+   if !G.no_proofs then [] else
    let st = init ss in
    let t0 = A.process_top_term s t in  (* anticipation *)
    let tt = N.process_top_term s t0 in (* alpha-conversion *)

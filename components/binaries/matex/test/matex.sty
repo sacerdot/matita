@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesPackage{matex}[2016/06/19 MaTeX Package]
+\ProvidesPackage{matex}[2016/06/21 MaTeX Package]
 \RequirePackage{xcolor}
-\RequirePackage{stix}
+\RequirePackage[lcgreekalpha]{stix}
 \ExecuteOptions{}
 \ProcessOptions*
 
@@ -44,12 +44,12 @@
 }
 
 \newcommand*\setordlink[2]{\mathord{\ma@setlink{#1}{#2}}}
-\newcommand*\setoplink[2]{\mathop{\ma@setlink{#1}{#2}}}
-\newcommand*\setbinlink[2]{\mathbin{\ma@setlink{#1}{#2}}}
-\newcommand*\setrellink[2]{\mathrel{\ma@setlink{#1}{#2}}}
 \newcommand*\setopenlink[2]{\mathopen{\ma@setlink{#1}{#2}}}
 \newcommand*\setcloselink[2]{\mathclose{\ma@setlink{#1}{#2}}}
 \newcommand*\setpunctlink[2]{\mathpunct{\ma@setlink{#1}{#2}}}
+\newcommand*\setoplink[3]{\mathop{\ma@setlink{#1}{#2}#3}}
+\newcommand*\setbinlink[3]{\mathbin{\ma@setlink{#1}{#2}#3}}
+\newcommand*\setrellink[3]{\mathrel{\ma@setlink{#1}{#2}#3}}
 
 \newcommand*\ObjIncNode{}
 \newcommand*\ObjNode{}

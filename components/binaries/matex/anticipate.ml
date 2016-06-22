@@ -104,7 +104,7 @@ let shift_named_term s c t =
 try
    fresh := 0;
    let tt = shift_term c t in
-   if !G.test then begin
+   if !G.check then begin
       let _ = K.typeof c tt in
       ok s
    end;

@@ -22,9 +22,11 @@ let default_out_dir = F.current_dir_name
 
 let default_proc_id = "H"
 
-let default_test = false
+let default_check = false
 
 let default_no_types = false
+
+let default_no_proofs = false
 
 let default_global_alpha = false
 
@@ -52,9 +54,11 @@ let out_dir = ref default_out_dir           (* directory of generated files *)
 
 let proc_id = ref default_proc_id           (* identifer for anticipations *)
 
-let test = ref default_test                 (* test anticipation *)
+let check = ref default_check               (* check transformations *)
 
 let no_types = ref default_no_types         (* omit types *)
+
+let no_proofs = ref default_no_proofs       (* omit proofs *)
 
 let global_alpha = ref default_global_alpha (* log alpha-unconverted identifiers *)
 
@@ -84,8 +88,9 @@ let clear () =
    no_init := default_no_init;
    out_dir := default_out_dir;
    proc_id := default_proc_id;
-   test := default_test;
+   check := default_check;
    no_types := default_no_types;
+   no_proofs := default_no_proofs;
    global_alpha := default_global_alpha;
    log_alpha := default_log_alpha;
    log_missing := default_log_missing;

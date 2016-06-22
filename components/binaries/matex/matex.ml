@@ -25,11 +25,12 @@ module K = Kernel
 let help_O = "<dir> Set this output directory"
 let help_X = " Clear configuration and options"
 let help_a = " Log alpha-unconverted identifiers (default: no)"
+let help_c = " Check term transformations (default: no)"
 let help_g = " Global alpha-conversion (default: no)"
 let help_l = "<file> Output the list of generated files in this file"
 let help_m = " Log missing notational macros (default: no)"
-let help_p = " Omit types (default: no)"
-let help_t = " Test term transformations (default: no)"
+let help_p = " Omit proofs (default: no)"
+let help_t = " Omit types (default: no)"
 
 let help   = ""
 
@@ -77,11 +78,12 @@ begin try
       "-O", A.String ((:=) G.out_dir), help_O;
       "-X", A.Unit G.clear, help_X;
       "-a", A.Set G.log_alpha, help_a;
+      "-c", A.Set G.check, help_c;
       "-g", A.Set G.global_alpha, help_g;
       "-l", A.String set_list, help_l;
       "-m", A.Set G.log_missing, help_m;
-      "-p", A.Set G.no_types, help_p;
-      "-t", A.Set G.test, help_t;
+      "-p", A.Set G.no_proofs, help_p;
+      "-t", A.Set G.no_types, help_t;
    ] process help
 with
    | X.Error s -> X.log s
