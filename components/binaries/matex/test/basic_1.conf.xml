@@ -180,7 +180,9 @@ $(devel.basic1).aplus.defs.aplus.aplus.type 0</key>
     <key name="const">$(devel.basic1).app.defs.cbk.cbk.type Level 1 0</key>
 <!--
 $(devel.basic1).aprem.defs.aprem.aprem.type 0</key>
-$(devel.basic1).arity.defs.arity.arity.type 0</key>
+-->
+    <key name="const">$(devel.basic1).arity.defs.arity.arity.type Arity 4 0</key>
+<!--
 $(devel.basic1).asucc.defs.asucc.asucc.type 0</key>
 $(devel.basic1).C.defs.C.CHead.type 0</key>
 -->
@@ -236,27 +238,23 @@ $(devel.basic1).lift1.defs.trans.trans.type 0</key>
     <key name="const">$(devel.basic1).llt.defs.lweight.lweight.type WeightA 1 0</key>
 <!--
 $(devel.basic1).next_plus.defs.next_plus.next_plus.type 0</key>
-$(devel.basic1).nf2.defs.nf2.type 0</key>
-$(devel.basic1).nf2.defs.nfs2.nfs2.type 0</key>
-$(devel.basic1).pc1.defs.pc1.type 0</key>
-$(devel.basic1).pc3.defs.pc3_left.pc3_left.type 0</key>
-$(devel.basic1).pc3.defs.pc3.type 0</key>
-$(devel.basic1).pr0.defs.pr0.pr0.type 0</key>
-$(devel.basic1).pr1.defs.pr1.pr1.type 0</key>
-$(devel.basic1).pr2.defs.pr2.pr2.type 0</key>
-$(devel.basic1).pr3.defs.pr3.pr3.type 0</key>
 -->
+    <key name="const">$(devel.basic1).nf2.defs.nf2.type RNormal 2 0</key>
+    <key name="const">$(devel.basic1).nf2.defs.nfs2.nfs2.type RNormal 2 0</key>
+    <key name="const">$(devel.basic1).pc1.defs.pc1.type Convert 3 0</key>
+    <key name="const">$(devel.basic1).pc3.defs.pc3_left.pc3_left.type CoConvertS 3 0</key>
+    <key name="const">$(devel.basic1).pc3.defs.pc3.type ConvertS 3 0</key>
+    <key name="const">$(devel.basic1).pr0.defs.pr0.pr0.type RStep 2 0</key>
+    <key name="const">$(devel.basic1).pr1.defs.pr1.pr1.type RStepS 2 0</key>
+    <key name="const">$(devel.basic1).pr2.defs.pr2.pr2.type RStepA 3 0</key>
+    <key name="const">$(devel.basic1).pr3.defs.pr3.pr3.type RStepSA 3 0</key>
     <key name="const">$(devel.basic1).r.defs.r.type FunW 2 0</key>
-<!--
-$(devel.basic1).sc3.defs.sc3.sc3.type 0</key>
--->
+    <key name="const">$(devel.basic1).sc3.defs.sc3.sc3.type RCandidate 4 0</key>
     <key name="const">$(devel.basic1).s.defs.s.type FunV 2 0</key>
-<!--
-$(devel.basic1).sn3.defs.sn3.sn3.type 0</key>
-$(devel.basic1).sn3.defs.sns3.sns3.type 0</key>
-$(devel.basic1).sty0.defs.sty0.sty0.type 0</key>
-$(devel.basic1).sty1.defs.sty1.sty1.type 0</key>
--->
+    <key name="const">$(devel.basic1).sn3.defs.sn3.sn3.type RStrong 2 0</key>
+    <key name="const">$(devel.basic1).sn3.defs.sns3.sns3.type RStrong 2 0</key>
+    <key name="const">$(devel.basic1).sty0.defs.sty0.sty0.type TStep 4 0</key>
+    <key name="const">$(devel.basic1).sty1.defs.sty1.sty1.type TStepS 4 0</key>
     <key name="const">$(devel.basic1).subst0.defs.subst0.subst0.type Subst 4 0</key>
     <key name="const">$(devel.basic1).subst1.defs.subst1.subst1.type SubstS 4 0</key>
     <key name="const">$(devel.basic1).subst.defs.subst.subst.type FunSubstS 3 0</key>
@@ -285,12 +283,12 @@ $(devel.basic1).tlist.defs.THeads.THeads.type 0</key>
     <key name="const">$(devel.basic1).tlt.defs.wadd.type CoConsA 2 0</key>
     <key name="const">$(devel.basic1).tlt.defs.weight_map.weight_map.type CoWeightB 2 0</key>
     <key name="const">$(devel.basic1).tlt.defs.weight.type CoWeightA 1 0</key>
+    <key name="const">$(devel.basic1).ty3.defs.ty3.ty3.type Type 4 0</key>
+    <key name="const">$(devel.basic1).ty3.defs.tys3.tys3.type Type 4 0</key>
 <!--
-$(devel.basic1).ty3.defs.ty3.ty3.type 0</key>
-$(devel.basic1).ty3.defs.tys3.tys3.type 0</key>
 $(devel.basic1).ty3.nf2.ty3_nf2_inv_abst_premise.type 0</key>
-$(devel.basic1).wcpr0.defs.wcpr0.wcpr0.type 0</key>
-$(devel.basic1).wf3.defs.wf3.wf3.type 0</key>
 -->
+    <key name="const">$(devel.basic1).wcpr0.defs.wcpr0.wcpr0.type RStep 2 0</key>
+    <key name="const">$(devel.basic1).wf3.defs.wf3.wf3.type Valid 3 0</key>
   </section>
 </helm_registry>

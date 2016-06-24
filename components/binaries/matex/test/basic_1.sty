@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesPackage{basic_1}[2016/06/21 Notation for "cic:/matita/lambdadelta/basic_1/"]
+\ProvidesPackage{basic_1}[2016/06/24 Notation for "cic:/matita/lambdadelta/basic_1/"]
 \RequirePackage{legacy_1}
 \RequirePackage{ground_1}
 \ExecuteOptions{}
@@ -13,7 +13,12 @@
 \newcommand*\ld@cb[1]{\mathopen{]}}
 \newcommand*\ld@oB[1]{\mathopen{\lBrack}}
 \newcommand*\ld@cB[1]{\mathopen{\rBrack}}
+\newcommand*\ld@env[1]{\mathrel{\vdash}}
 
+\newcommand*\ld@arity[2]{\setrellink{\mathsf{arity}}{#1}{#2}}
+\newcommand*\ld@coconverts[1]{\setrellink{\mathsf{convert}_{\mathord\oplusrhrim}^*}{#1}{}}
+\newcommand*\ld@convert[1]{\setrellink{\mathsf{convert}}{#1}{}}
+\newcommand*\ld@converts[1]{\setrellink{\mathsf{convert}^*}{#1}{}}
 \newcommand*\ld@coweight[1]{\setoplink{\equivVvert}{#1}{}}
 \newcommand*\ld@drop[2]{\setoplink{\Downarrow}{#1}{#2}}
 \newcommand*\ld@drops[2]{\setoplink{\Downarrow^*}{#1}{#2}}
@@ -22,6 +27,7 @@
 \newcommand*\ld@funlifts[2]{\setoplink{\uparrow^*}{#1}{}}
 \newcommand*\ld@funv[2]{\setoplink{\mathsf{v}}{#1}{#2}}
 \newcommand*\ld@funw[2]{\setoplink{\mathsf{w}}{#1}{#2}}
+\newcommand*\ld@in[1]{\setrellink{\in}{#1}{}}
 \newcommand*\ld@leaf[1]{\setoplink{\star}{#1}{}}
 \newcommand*\ld@length@open[1]{\setopenlink{\vert}{#1}}
 \newcommand*\ld@length@close[1]{\setcloselink{\vert}{#1}}
@@ -29,19 +35,32 @@
 \newcommand*\ld@level[1]{\setoplink{\mathsf{level}}{#1}{}}
 \newcommand*\ld@lref[1]{\setoplink{\#}{#1}{}}
 \newcommand*\ld@next[2]{\setoplink{\mathsf{next}}{#1}{#2}}
+\newcommand*\ld@rcandidate[2]{\setoplink{\mathsf{r\_candidate}}{#1}{#2}}
+\newcommand*\ld@rnormal[1]{\setoplink{\mathsf{r\_normal}}{#1}{}}
+\newcommand*\ld@rstep[1]{\setrellink{\mathsf{r\_step}}{#1}{}}
+\newcommand*\ld@rsteps[1]{\setrellink{\mathsf{r\_step^*}}{#1}{}}
+\newcommand*\ld@rstrong[1]{\setoplink{\mathsf{r\_strong}}{#1}{}}
 \newcommand*\ld@sametop[1]{\setrellink{\eqsim}{#1}{}}
 \newcommand*\ld@shift[1]{\setordlink{.}{#1}}
 \newcommand*\ld@subst[1]{\setbinlink{/}{#1}{}}
 \newcommand*\ld@substs[1]{\setbinlink{/^*}{#1}{}}
 \newcommand*\ld@to[1]{\setrellink{\rightarrow}{#1}{}}
+\newcommand*\ld@tstep[2]{\setrellink{\mathsf{t\_step}}{#1}{#2}}
+\newcommand*\ld@tsteps[2]{\setrellink{\mathsf{t\_step^*}}{#1}{#2}}
+\newcommand*\ld@type[2]{\setrellink{\mathsf{type}}{#1}{#2}}
+\newcommand*\ld@valid[2]{\setoplink{\mathsf{valid}}{#1}{#2}}
 \newcommand*\ld@weight[1]{\setoplink{\equalparallel}{#1}{}}
 
 \newcommand*\ld@tuple@a[2]{\ld@oa{#1}#2\ld@ca{#1}}
 
+\newcommand*\Arity[5]{#3\ld@env{#1}#4\ld@arity{#1}{\ld@tuple@a{#1}{#2}}#5}
 \newcommand*\AtomA[2]{\ld@leaf{#1}#2}
 \newcommand*\AtomB[3]{\ld@leaf{#1}\ld@tuple@b{#1}{#2}{#3}}
 \newcommand*\CoConsA[3]{#2\ld@cocons{#1}#3}
+\newcommand*\CoConvertS[4]{#2\ld@env{#1}#3\ld@coconverts{#1}#4}
 \newcommand*\ConsA[3]{#2\ld@cons{#1}#3}
+\newcommand*\Convert[4]{#2\ld@env{#1}#3\ld@convert{#1}#4}
+\newcommand*\ConvertS[4]{#2\ld@env{#1}#3\ld@converts{#1}#4}
 \newcommand*\CoWeightA[2]{\ld@coweight{#1}\ld@tuple@a{#1}{#2}}
 \newcommand*\CoWeightB[3]{\ld@coweight{#1}\ld@tuple@b{#1}{#2}{#3}}
 \newcommand*\Drop[3]{\ld@drop{#1}{}#2\ld@eq{#1}#3}
@@ -61,12 +80,23 @@
 \newcommand*\LRef[2]{\ld@lref{#1}#2}
 \newcommand*\LTB[5]{\ld@tuple@b{#1}{#2}{#3}\ld@lt{#1}\ld@tuple@b{#1}{#4}{#5}}
 \newcommand*\Next[3]{\ld@next{#1}{\ld@tuple@a{#1}{#2}}#3}
+\newcommand*\RCandidate[5]{\ld@tuple@b{#1}{#3}{#4}\ld@in{#1}\ld@rcandidate{#1}{\ld@tuple@a{#1}{#2}}#5}
+\newcommand*\RNormal[3]{#2\ld@env{#1}\ld@rnormal{#1}#3}
+\newcommand*\RStep[3]{#2\ld@rstep{#1}#3}
+\newcommand*\RStepA[4]{#2\ld@env{#1}#3\ld@rstep{#1}#4}
+\newcommand*\RStepS[3]{#2\ld@rsteps{#1}#3}
+\newcommand*\RStepSA[4]{#2\ld@env{#1}#3\ld@rsteps{#1}#4}
+\newcommand*\RStrong[3]{#2\ld@env{#1}\ld@rstrong{#1}#3}
 \newcommand*\SameTop[3]{#2\ld@sametop{#1}#3}
 \newcommand*\Shift[3]{#2\ld@shift{#1}#3}
 \newcommand*\Subst[5]{\mathop{\ld@oB{#1}#3\ld@subst{#1}#2\ld@cB{#1}}#4\ld@eq{#1}#5}
 \newcommand*\SubstB[7]{\mathop{\ld@oB{#1}#3\ld@subst{#1}#2\ld@cB{#1}}\ld@tuple@b{#1}{#4}{#5}\ld@eq{#1}\ld@tuple@b{#1}{#6}{#7}}
 \newcommand*\SubstS[5]{\mathop{\ld@oB{#1}#3\ld@substs{#1}#2\ld@cB{#1}}#4\ld@eq{#1}#5}
 \newcommand*\To[3]{#2\ld@to{#1}#3}
+\newcommand*\TStep[5]{#3\ld@env{#1}#4\ld@tstep{#1}{\ld@tuple@a{#1}{#2}}#5}
+\newcommand*\TStepS[5]{#3\ld@env{#1}#4\ld@tsteps{#1}{\ld@tuple@a{#1}{#2}}#5}
+\newcommand*\Type[5]{#3\ld@env{#1}#4\ld@type{#1}{\ld@tuple@a{#1}{#2}}#5}
+\newcommand*\Valid[4]{\ld@valid{#1}{\ld@tuple@a{#1}{#2}}#3\ld@eq{#1}#4}
 \newcommand*\WeightA[2]{\ld@weight{#1}\ld@tuple@a{#1}{#2}}
 \newcommand*\WeightB[3]{\ld@weight{#1}\ld@tuple@b{#1}{#2}{#3}}
 
