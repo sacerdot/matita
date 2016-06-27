@@ -12,8 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/relocation/nstream_coafter.ma".
 include "basic_2/relocation/drops_drops.ma".
-include "basic_2/static/frees.ma".
+include "basic_2/static/frees_frees.ma".
 
 (* CONTEXT-SENSITIVE FREE VARIABLES *****************************************)
 
@@ -141,6 +142,13 @@ lemma frees_lifts: ∀b,f1,K,T. K ⊢ 𝐅*⦃T⦄ ≡ f1 →
   /3 width=5 by coafter_isfin2_fwd, frees_flat/
 ]
 qed-.
+
+(* Forward lemmas with generic slicing for local environments ***************)
+
+lemma frees_fwd_coafter: ∀b,f2,L,U. L ⊢ 𝐅*⦃U⦄ ≡ f2 →
+                         ∀f,K. ⬇*[b, f] L ≡ K → ∀T. ⬆*[f] T ≡ U →
+                         ∀f1. K ⊢ 𝐅*⦃T⦄ ≡ f1 → f ~⊚ f1 ≡ f2.
+/4 width=11 by frees_lifts, frees_mono, coafter_eq_repl_back0/ qed-.
 
 (* Inversion lemmas with generic slicing for local environments *************)
 

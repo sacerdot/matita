@@ -19,13 +19,16 @@ include "basic_2/relocation/drops_lexs.ma".
 
 (* Properties with ranged equivalence for local environments ****************)
 
-lemma lreq_dedropable: dedropable_sn lreq.
-@lexs_liftable_dedropable
+lemma lreq_co_dedropable: co_dedropable_sn lreq.
+@lexs_liftable_co_dedropable
 /2 width=6 by cfull_lift, ceq_lift, cfull_refl, ceq_refl/
 qed-.
 
-lemma lreq_dropable: ∀RN,RP. dropable_dx (lexs RN RP).
-@lexs_dropable qed-.
+lemma lreq_co_dropable_sn: co_dropable_sn lreq.
+@lexs_co_dropable_sn qed-.
+
+lemma lreq_co_dropable_dx: co_dropable_dx lreq.
+@lexs_co_dropable_dx qed-.
 
 (* Basic_2A1: includes: lreq_drop_trans_be *)
 lemma lreq_drops_trans_next: ∀f2,L1,L2. L1 ≡[f2] L2 →
@@ -50,7 +53,7 @@ qed-.
 lemma drops_lreq_trans_next: ∀f1,K1,K2. K1 ≡[f1] K2 →
                              ∀b,f,I,L1,V. ⬇*[b,f] L1.ⓑ{I}V ≡ K1 →
                              ∀f2. f ~⊚ f1 ≡ ⫯f2 →
-                             ∃∃L2. ⬇*[b,f] L2.ⓑ{I}V ≡ K2 & L1 ≡[f2] L2 & L1.ⓑ{I}V≡[f]L2.ⓑ{I}V.
+                             ∃∃L2. ⬇*[b,f] L2.ⓑ{I}V ≡ K2 & L1 ≡[f2] L2 & L1.ⓑ{I}V ≡[f] L2.ⓑ{I}V.
 #f1 #K1 #K2 #HK12 #b #f #I #L1 #V #HLK1 #f2 #Hf2
 elim (drops_lexs_trans_next … HK12 … HLK1 … Hf2) -f1 -K1
 /2 width=6 by cfull_lift, ceq_lift, cfull_refl, ceq_refl, ex3_intro/

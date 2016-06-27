@@ -149,7 +149,7 @@ table {
         ]
 *)
         [ { "uncounted context-sensitive rt-transition" * } {
-             [ "lfpx ( ⦃?,?⦄ ⊢ ⬈[?,?] ? )" "lfpx_length" + "lfpx_fqup" * ]
+             [ "lfpx ( ⦃?,?⦄ ⊢ ⬈[?,?] ? )" "lfpx_length" + "lfpx_drops" + "lfpx_fqup" * ]
              [ "cpx ( ⦃?,?⦄ ⊢ ? ⬈[?] ? )" "cpx_simple" + "cpx_drops" + "cpx_lsubr" * ]
           }
         ]
@@ -186,7 +186,7 @@ table {
           }
         ]
         [ { "generic extension on referred entries" * } {
-             [ "lfxs ( ? ⦻*[?,?] ? )" "lfxs_length" + "lfxs_fqup" + "lfxs_lfxs" * ]
+             [ "lfxs ( ? ⦻*[?,?] ? )" "lfxs_length" + "lfxs_drops" + "lfxs_fqup" + "lfxs_lfxs" * ]
           }
         ]
         [ { "context-sensitive free variables" * } {

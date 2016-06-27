@@ -24,7 +24,7 @@ lemma ceq_lift: d_liftable2 ceq.
 lemma ceq_inv_lift: d_deliftable2_sn ceq.
 /2 width=3 by ex2_intro/ qed-.
 
-(* Note: cfull_inv_lift does not hold *)
+(* Note: d_deliftable2_sn cfull does not hold *)
 lemma cfull_lift: d_liftable2 cfull.
 #K #T1 #T2 #_ #b #f #L #_ #U1 #_ -K -T1 -b
 elim (lifts_total T2 f) /2 width=3 by ex2_intro/

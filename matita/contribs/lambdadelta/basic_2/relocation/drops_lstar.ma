@@ -42,9 +42,9 @@ lemma d2_deliftable_sn_LTC: ∀R. d_deliftable2_sn R → d_deliftable2_sn (LTC �
 ]
 qed-.
 
-lemma dropable_sn_TC: ∀R. dropable_sn R → dropable_sn (LTC … R).
-#R #HR #b #f #L1 #K1 #HLK1 #f2 #L2 #H elim H -L2
-[ #L2 #HL12 #f1 #H elim (HR … HLK1 … HL12 … H) -HR -f2 -L1
+lemma co_dropable_sn_TC: ∀R. co_dropable_sn R → co_dropable_sn (LTC … R).
+#R #HR #b #f #L1 #K1 #HLK1 #Hf #f2 #L2 #H elim H -L2
+[ #L2 #HL12 #f1 #H elim (HR … HLK1 … Hf … HL12 … H) -HR -Hf -f2 -L1
   /3 width=3 by inj, ex2_intro/
 | #L #L2 #_ #HL2 #IH #f1 #H elim (IH … H) -IH
   #K #HK1 #HLK elim (HR … HLK … HL2 … H) -HR -f2 -L
@@ -73,7 +73,7 @@ lemma d2_deliftable_sn_llstar: ∀R. d_deliftable2_sn R →
 ]
 qed-.
 
-lemma dropable_dx_TC: ∀R. dropable_dx R → dropable_dx (LTC … R).
+lemma co_dropable_dx_TC: ∀R. co_dropable_dx R → co_dropable_dx (LTC … R).
 #R #HR #f2 #L1 #L2 #H elim H -L2
 [ #L2 #HL12 #b #f #K2 #HLK2 #Hf #f1 #Hf2 elim (HR … HL12 … HLK2 … Hf … Hf2) -HR -Hf -f2 -L2
   /3 width=3 by inj, ex2_intro/
@@ -83,7 +83,7 @@ lemma dropable_dx_TC: ∀R. dropable_dx R → dropable_dx (LTC … R).
 ]
 qed-.
 
-lemma dedropable_sn_TC: ∀R. dedropable_sn R → dedropable_sn (LTC … R).
+lemma co_dedropable_sn_TC: ∀R. co_dedropable_sn R → co_dedropable_sn (LTC … R).
 #R #HR #b #f #L1 #K1 #HLK1 #f1 #K2 #H elim H -K2
 [ #K2 #HK12 #f2 #Hf elim (HR … HLK1 … HK12 … Hf) -HR -f1 -K1
   /3 width=4 by inj, ex3_intro/

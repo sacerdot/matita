@@ -12,19 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/lpx_sn_drop.ma".
+include "basic_2/static/lfxs_drops.ma".
 include "basic_2/rt_transition/cpx_drops.ma".
 include "basic_2/rt_transition/lfpx.ma".
 
 (* UNCOUNTED PARALLEL RT-TRANSITION FOR LOCAL ENV.S ON REFERRED ENTRIES *****)
 
-(* Properties on local environment slicing ***********************************)
+(* Properties with generic slicing for local environments *******************)
 
-lemma lpx_drop_conf: ∀h,o,G. dropable_sn (lpx h o G).
-/3 width=6 by lpx_sn_deliftable_dropable, cpx_inv_lift1/ qed-.
+lemma drops_lfpx_trans: ∀h,G. dedropable_sn (cpx h G).
+/3 width=6 by lfxs_liftable_dedropable, cpx_lifts/ qed-.
 
-lemma drop_lpx_trans: ∀h,o,G. dedropable_sn (lpx h o G).
-/3 width=10 by lpx_sn_liftable_dedropable, cpx_lift/ qed-.
+(* Inversion lemmas with generic slicing for local environments *************)
 
-lemma lpx_drop_trans_O1: ∀h,o,G. dropable_dx (lpx h o G).
-/2 width=3 by lpx_sn_dropable/ qed-.
+lemma lfpx_drops_conf: ∀h,G. dropable_sn (cpx h G).
+/2 width=5 by lfxs_dropable_sn/ qed-.
+
+lemma lfpx_drops_trans: ∀h,G. dropable_dx (cpx h G).
+/2 width=5 by lfxs_dropable_dx/ qed-.

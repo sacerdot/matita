@@ -611,7 +611,7 @@ elim (Hg1 0) #n #Hn
 qed-.
 
 fact coafter_isfin2_fwd_aux: (∀f1. @⦃0, f1⦄ ≡ 0 → H_coafter_isfin2_fwd f1) →
-                            ∀i2,f1. @⦃0, f1⦄ ≡ i2 → H_coafter_isfin2_fwd f1.
+                             ∀i2,f1. @⦃0, f1⦄ ≡ i2 → H_coafter_isfin2_fwd f1.
 #H0 #i2 elim i2 -i2 /2 width=1 by/ -H0
 #i2 #IH #f1 #H1f1 #f2 #Hf2 #H2f1 #f #Hf
 elim (at_inv_pxn … H1f1) -H1f1 [ |*: // ] #g1 #Hg1 #H1

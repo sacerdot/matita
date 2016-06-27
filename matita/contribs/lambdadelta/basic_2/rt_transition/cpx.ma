@@ -46,15 +46,15 @@ lemma cpx_lref: ∀h,I,G,K,V,T,U,i. ⦃G, K⦄ ⊢ #i ⬈[h] T →
 qed.
 
 lemma cpx_bind: ∀h,p,I,G,L,V1,V2,T1,T2.
-                 ⦃G, L⦄ ⊢ V1 ⬈[h] V2 → ⦃G, L.ⓑ{I}V1⦄ ⊢ T1 ⬈[h] T2 →
-                 ⦃G, L⦄ ⊢ ⓑ{p,I}V1.T1 ⬈[h] ⓑ{p,I}V2.T2.
+                ⦃G, L⦄ ⊢ V1 ⬈[h] V2 → ⦃G, L.ⓑ{I}V1⦄ ⊢ T1 ⬈[h] T2 →
+                ⦃G, L⦄ ⊢ ⓑ{p,I}V1.T1 ⬈[h] ⓑ{p,I}V2.T2.
 #h #p #I #G #L #V1 #V2 #T1 #T2 * #cV #HV12 *
 /3 width=2 by cpg_bind, ex_intro/
 qed.
 
 lemma cpx_flat: ∀h,I,G,L,V1,V2,T1,T2.
-                 ⦃G, L⦄ ⊢ V1 ⬈[h] V2 → ⦃G, L⦄ ⊢ T1 ⬈[h] T2 →
-                 ⦃G, L⦄ ⊢ ⓕ{I}V1.T1 ⬈[h] ⓕ{I}V2.T2.
+                ⦃G, L⦄ ⊢ V1 ⬈[h] V2 → ⦃G, L⦄ ⊢ T1 ⬈[h] T2 →
+                ⦃G, L⦄ ⊢ ⓕ{I}V1.T1 ⬈[h] ⓕ{I}V2.T2.
 #h #I #G #L #V1 #V2 #T1 #T2 * #cV #HV12 *
 /3 width=2 by cpg_flat, ex_intro/
 qed.
