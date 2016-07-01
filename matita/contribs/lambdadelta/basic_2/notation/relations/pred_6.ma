@@ -12,29 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/notation/constructors/tuple_4.ma".
-include "ground_2/notation/constructors/zerozero_0.ma".
-include "ground_2/notation/constructors/zeroone_0.ma".
-include "ground_2/notation/constructors/onezero_0.ma".
-include "ground_2/lib/arith.ma".
+(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-(* RT-TRANSITION COUNTER ****************************************************)
-
-record rtc: Type[0] ≝ {
-   ri: nat; (* Note: inner r-steps *)
-   rs: nat; (* Note: spine r-steps *)
-   ti: nat; (* Note: inner t-steps *)
-   ts: nat  (* Note: spine t-steps *)
-}.
-
-interpretation "constructor (rtc)"
-   'Tuple ri rs ti ts = (mk_rtc ri rs ti ts).
-
-interpretation "one structural step (rtc)"
-   'ZeroZero = (mk_rtc O O O O).
-
-interpretation "one r-step (rtc)"
-   'OneZero = (mk_rtc O (S O) O O).
-
-interpretation "one t-step (rtc)"
-   'ZeroOne = (mk_rtc O O O (S O)).
+notation "hvbox( ⦃ term 46 G, break term 46 L ⦄ ⊢ break term 46 T1 ➡ break [ term 46 n, break term 46 h ] break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'PRed $n $h $G $L $T1 $T2 }.

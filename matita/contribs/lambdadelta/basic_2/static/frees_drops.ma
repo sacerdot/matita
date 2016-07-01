@@ -49,7 +49,8 @@ lemma frees_lref_pushs: ∀f,K,j. K ⊢ 𝐅*⦃#j⦄ ≡ f →
                         ∀i,L. ⬇*[i] L ≡ K → L ⊢ 𝐅*⦃#(i+j)⦄ ≡ ↑*[i] f.
 #f #K #j #Hf #i elim i -i
 [ #L #H lapply (drops_fwd_isid … H ?) -H //
-| #i #IH #L #H elim (drops_inv_succ … H) -H /3 width=1 by frees_lref/
+| #i #IH #L #H elim (drops_inv_succ … H) -H
+  #I #Y #V #HYK #H destruct /3 width=1 by frees_lref/
 ]
 qed.
 

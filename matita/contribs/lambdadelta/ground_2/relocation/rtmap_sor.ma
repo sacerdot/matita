@@ -316,11 +316,11 @@ lemma sor_fcla_ex: ∀f1,n1. 𝐂⦃f1⦄ ≡ n1 → ∀f2,n2. 𝐂⦃f2⦄ ≡ 
                    ∃∃f,n. f1 ⋓ f2 ≡ f & 𝐂⦃f⦄ ≡ n & (n1 ∨ n2) ≤ n & n ≤ n1 + n2.
 #f1 #n1 #Hf1 elim Hf1 -f1 -n1 /3 width=6 by sor_isid_sn, ex4_2_intro/
 #f1 #n1 #Hf1 #IH #f2 #n2 * -f2 -n2 /3 width=6 by fcla_push, fcla_next, ex4_2_intro, sor_isid_dx/
-#f2 #n2 #Hf2 elim (IH … Hf2) -IH -Hf2 -Hf1
-[ /3 width=7 by fcla_push, sor_pp, ex4_2_intro/
-| /3 width=7 by fcla_next, sor_pn, max_S2_le_S, le_S_S, ex4_2_intro/
-| /3 width=7 by fcla_next, sor_np, max_S1_le_S, le_S_S, ex4_2_intro/
+#f2 #n2 #Hf2 elim (IH … Hf2) -IH -Hf2 -Hf1 [2,4: #f #n <plus_n_Sm ] (**) (* full auto fails *)
+[ /3 width=7 by fcla_next, sor_pn, max_S2_le_S, le_S_S, ex4_2_intro/
 | /4 width=7 by fcla_next, sor_nn, le_S, le_S_S, ex4_2_intro/
+| /3 width=7 by fcla_push, sor_pp, ex4_2_intro/
+| /3 width=7 by fcla_next, sor_np, max_S1_le_S, le_S_S, ex4_2_intro/
 ]
 qed-.
 

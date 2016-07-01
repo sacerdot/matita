@@ -1,3 +1,4 @@
+
 (**************************************************************************)
 (*       ___                                                              *)
 (*      ||M||                                                             *)
@@ -336,8 +337,8 @@ qed.
 (* Properties on uni ********************************************************)
 
 lemma after_uni: ∀n1,n2. 𝐔❴n1❵ ⊚ 𝐔❴n2❵ ≡ 𝐔❴n1+n2❵.
-@nat_elim2
-/4 width=5 by after_uni_next2, after_isid_sn, after_isid_dx, after_next/
+@nat_elim2 [3: #n #m <plus_n_Sm ] (**) (* full auto fails *)
+/4 width=5 by after_uni_next2, after_isid_dx, after_isid_sn, after_next/
 qed.
 
 (* Forward lemmas on at *****************************************************)

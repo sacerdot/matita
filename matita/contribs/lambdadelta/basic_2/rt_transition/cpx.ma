@@ -26,9 +26,6 @@ interpretation
 
 (* Basic properties *********************************************************)
 
-lemma cpx_atom: ∀h,I,G,L. ⦃G, L⦄ ⊢ ⓪{I} ⬈[h] ⓪{I}.
-/2 width=2 by cpg_atom, ex_intro/ qed.
-
 (* Basic_2A1: was: cpx_st *)
 lemma cpx_ess: ∀h,G,L,s. ⦃G, L⦄ ⊢ ⋆s ⬈[h] ⋆(next h s).
 /2 width=2 by cpg_ess, ex_intro/ qed.
@@ -91,6 +88,7 @@ lemma cpx_theta: ∀h,p,G,L,V1,V,V2,W1,W2,T1,T2.
 /3 width=4 by cpg_theta, ex_intro/
 qed.
 
+(* Basic_2A1: includes: cpx_atom *)
 lemma cpx_refl: ∀h,G,L. reflexive … (cpx h G L).
 /2 width=2 by ex_intro/ qed.
 

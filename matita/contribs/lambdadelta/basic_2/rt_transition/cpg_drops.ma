@@ -32,7 +32,7 @@ lemma cpg_delta_drops: ∀c,h,G,K,V,V2,i,L,T2. ⬇*[i] L ≡ K.ⓓV → ⦃G, K�
 qed.
 
 lemma cpg_ell_drops: ∀c,h,G,K,V,V2,i,L,T2. ⬇*[i] L ≡ K.ⓛV → ⦃G, K⦄ ⊢ V ⬈[c, h] V2 →
-                     ⬆*[⫯i] V2 ≡ T2 →  ⦃G, L⦄ ⊢ #i ⬈[(↓c)+𝟘𝟙, h] T2.
+                     ⬆*[⫯i] V2 ≡ T2 →  ⦃G, L⦄ ⊢ #i ⬈[c+𝟘𝟙, h] T2.
 #c #h #G #K #V #V2 #i elim i -i
 [ #L #T2 #HLK lapply (drops_fwd_isid … HLK ?) // #H destruct /3 width=3 by cpg_ell/
 | #i #IH #L0 #T0 #H0 #HV2 #HVT2
@@ -48,7 +48,7 @@ lemma cpg_inv_lref1_drops: ∀c,h,G,i,L,T2. ⦃G, L⦄ ⊢ #i ⬈[c, h] T2 →
                             | ∃∃cV,K,V,V2. ⬇*[i] L ≡ K.ⓓV & ⦃G, K⦄ ⊢ V ⬈[cV, h] V2 &
                                            ⬆*[⫯i] V2 ≡ T2 & c = cV
                             | ∃∃cV,K,V,V2. ⬇*[i] L ≡ K.ⓛV & ⦃G, K⦄ ⊢ V ⬈[cV, h] V2 &
-                                           ⬆*[⫯i] V2 ≡ T2 & c = (↓cV) + 𝟘𝟙.
+                                           ⬆*[⫯i] V2 ≡ T2 & c = cV + 𝟘𝟙.
 #c #h #G #i elim i -i
 [ #L #T2 #H elim (cpg_inv_zero1 … H) -H * /3 width=1 by or3_intro0, conj/
   /4 width=8 by drops_refl, ex4_4_intro, or3_intro2, or3_intro1/
@@ -67,7 +67,7 @@ lemma cpg_inv_atom1_drops: ∀c,h,I,G,L,T2. ⦃G, L⦄ ⊢ ⓪{I} ⬈[c, h] T2 �
                             | ∃∃cV,i,K,V,V2. ⬇*[i] L ≡ K.ⓓV & ⦃G, K⦄ ⊢ V ⬈[cV, h] V2 &
                                              ⬆*[⫯i] V2 ≡ T2 & I = LRef i & c = cV
                             | ∃∃cV,i,K,V,V2. ⬇*[i] L ≡ K.ⓛV & ⦃G, K⦄ ⊢ V ⬈[cV, h] V2 &
-                                             ⬆*[⫯i] V2 ≡ T2 & I = LRef i & c = (↓cV) + 𝟘𝟙.
+                                             ⬆*[⫯i] V2 ≡ T2 & I = LRef i & c = cV + 𝟘𝟙.
 #c #h * #n #G #L #T2 #H
 [ elim (cpg_inv_sort1 … H) -H *
   /3 width=3 by or4_intro0, or4_intro1, ex3_intro, conj/

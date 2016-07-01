@@ -51,6 +51,9 @@ qed.
 
 (* Equations ****************************************************************)
 
+lemma plus_SO: ∀n. n + 1 = ⫯n.
+// qed.
+
 lemma minus_plus_m_m_commutative: ∀n,m:nat. n = m + n - m.
 // qed-.
 
@@ -154,6 +157,9 @@ lemma arith_k_dx: ∀z,x,y,n. z < x → y ≤ x+n → y-z-1 ≤ x-z-1+n.
 qed.
 
 (* Inversion & forward lemmas ***********************************************)
+
+lemma plus_inv_O3: ∀x,y. x + y = 0 → x = 0 ∧ y = 0.
+/2 width=1 by plus_le_0/ qed-.
 
 lemma discr_plus_xy_y: ∀x,y. x + y = y → x = 0.
 // qed-.

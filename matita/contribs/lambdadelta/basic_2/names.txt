@@ -79,6 +79,7 @@ c: conversion
 d: decomposed rt-reduction
 e: decomposed rt-conversion
 g: counted rt-transition (generic)
+m: semi-counted rt-transition (mixed)
 q: restricted reduction
 r: reduction
 s: substitution

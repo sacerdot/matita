@@ -210,6 +210,14 @@ inductive ex6_7 (A0,A1,A2,A3,A4,A5,A6:Type[0]) (P0,P1,P2,P3,P4,P5:A0→A1→A2�
 
 interpretation "multiple existental quantifier (6, 7)" 'Ex P0 P1 P2 P3 P4 P5 = (ex6_7 ? ? ? ? ? ? ? P0 P1 P2 P3 P4 P5).
 
+(* multiple existental quantifier (6, 8) *)
+
+inductive ex6_8 (A0,A1,A2,A3,A4,A5,A6,A7:Type[0]) (P0,P1,P2,P3,P4,P5:A0→A1→A2→A3→A4→A5→A6→A7→Prop) : Prop ≝
+   | ex6_8_intro: ∀x0,x1,x2,x3,x4,x5,x6,x7. P0 x0 x1 x2 x3 x4 x5 x6 x7 → P1 x0 x1 x2 x3 x4 x5 x6 x7 → P2 x0 x1 x2 x3 x4 x5 x6 x7 → P3 x0 x1 x2 x3 x4 x5 x6 x7 → P4 x0 x1 x2 x3 x4 x5 x6 x7 → P5 x0 x1 x2 x3 x4 x5 x6 x7 → ex6_8 ? ? ? ? ? ? ? ? ? ? ? ? ? ?
+.
+
+interpretation "multiple existental quantifier (6, 8)" 'Ex P0 P1 P2 P3 P4 P5 = (ex6_8 ? ? ? ? ? ? ? ? P0 P1 P2 P3 P4 P5).
+
 (* multiple existental quantifier (6, 9) *)
 
 inductive ex6_9 (A0,A1,A2,A3,A4,A5,A6,A7,A8:Type[0]) (P0,P1,P2,P3,P4,P5:A0→A1→A2→A3→A4→A5→A6→A7→A8→Prop) : Prop ≝

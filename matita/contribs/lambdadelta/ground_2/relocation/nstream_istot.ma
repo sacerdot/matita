@@ -48,7 +48,8 @@ lemma at_istot: ∀f. 𝐓⦃f⦄.
 /2 width=2 by ex_intro/ qed.
 
 lemma at_plus2: ∀f,i1,i,n,m. @⦃i1, n@f⦄ ≡ i → @⦃i1, (m+n)@f⦄ ≡ m+i.
-#f #i1 #i #n #m #H elim m -m /2 width=5 by at_next/
+#f #i1 #i #n #m #H elim m -m //
+#m <plus_S1 /2 width=5 by at_next/ (**) (* full auto fails *)
 qed.
 
 (* Specific inversion lemmas on at ******************************************)
