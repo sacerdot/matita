@@ -262,10 +262,14 @@ let open_out_tex s =
    open_out (F.concat !G.out_dir fname)
 
 let proc_pair s ss u = function
-   | None   -> 
+   | None   ->
+      let text_u =
+         if K.not_prop1 [] u then proc_item "assumption"
+         else proc_item "axiom" 
+      in
       let name = X.rev_map_concat X.id "." "type" ss in
       let och = open_out_tex name in
-         O.out_text och (proc_item "axiom" s name u);
+         O.out_text och (text_u s name u);
       close_out och
    | Some t ->
       let text_u, text_t =
