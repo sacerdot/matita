@@ -63,7 +63,9 @@ let mk_ptr st name =
 
 let get_macro s l =
    let rec aux = function
-      | []                                    -> "", 0
+      | []                                    -> 
+         if !G.log_missing then missing s l;
+         "", 0
       | (r, m, a, x) :: _ when r = s && a = l -> m, x
       | _ :: tl                               -> aux tl
    in
@@ -75,9 +77,7 @@ let get_head = function
       let l = L.length ts in
       let macro, x = get_macro s l in
       begin match macro with      
-         | ""     -> 
-            if !G.log_missing then missing s l;
-            None
+         | ""
          | "APPL" -> None
          | _      -> 
             let ts1, ts2 = X.split_at x ts in
@@ -131,7 +131,11 @@ let rec proc_term st is = function
       proc_sort st is s
    | C.Const c              ->
       let s, name = K.resolve_reference c in
-      T.Macro "GREF" :: T.arg (mk_gname name) :: T.free s :: is
+      let macro, _ = get_macro s 0 in
+      if macro = "" || macro = "APPL" then
+         T.Macro "GREF" :: T.arg (mk_gname name) :: T.free s :: is
+      else
+         T.Macro macro :: T.free s :: is
    | C.Match (w, u, v, ts)  ->
       let is_w = proc_term st [] (C.Const w) in
       let is_u = proc_term st [] u in

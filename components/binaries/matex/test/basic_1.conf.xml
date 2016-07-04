@@ -168,13 +168,12 @@
     <key name="gref">tlt_wf__q_ind q_ind_aux</key>
     <key name="gref">tslt_wf__q_ind q_ind_aux</key>
     <key name="gref">ty3_nf2_gen__ty3_nf2_inv_abst_aux ty3_nf2_inv_abst_aux</key>
+    <key name="gref">ty3_nf2_inv_abst_premise H_ty3_nf2_inv_abst</key>
   </section>
   <section name="matex.notation">
     <key name="const">$(devel.basic1).A.defs.A.AHead.type To 2 0</key>
     <key name="const">$(devel.basic1).A.defs.A.ASort.type AtomB 2 0</key>
-<!--
-$(devel.basic1).A.fwd.A_rect.A_rect.type 0</key>
--->
+    <key name="const">$(devel.basic1).A.fwd.A_rect.A_rect.type APPL 4 0</key>
     <key name="const">$(devel.basic1).aplus.defs.aplus.aplus.type PlusA 3 0</key>
     <key name="const">$(devel.basic1).app.defs.app1.app1.type Shift 2 0</key>
     <key name="const">$(devel.basic1).app.defs.cbk.cbk.type Level 1 0</key>
@@ -187,9 +186,7 @@ $(devel.basic1).A.fwd.A_rect.A_rect.type 0</key>
     <key name="const">$(devel.basic1).C.defs.clt.type LT 2 0</key>
     <key name="const">$(devel.basic1).C.defs.CTail.CTail.type THead 3 0</key>
     <key name="const">$(devel.basic1).C.defs.cweight.cweight.type WeightA 1 0</key>
-<!--
-$(devel.basic1).C.fwd.C_rect.C_rect.type 0</key>
--->
+    <key name="const">$(devel.basic1).C.fwd.C_rect.C_rect.type APPL 4 0</key>
     <key name="const">$(devel.basic1).cimp.defs.cimp.type SubEq 2 0</key>
     <key name="const">$(devel.basic1).clear.defs.clear.clear.type Drop 2 0</key>
     <key name="const">$(devel.basic1).clen.defs.clen.clen.type Length 1 0</key>
@@ -247,9 +244,7 @@ $(devel.basic1).C.fwd.C_rect.C_rect.type 0</key>
     <key name="const">$(devel.basic1).T.defs.T.TLRef.type LRef 1 0</key>
     <key name="const">$(devel.basic1).T.defs.T.TSort.type AtomA 1 0</key>
     <key name="const">$(devel.basic1).T.defs.tweight.tweight.type WeightA 1 0</key>
-<!--
-$(devel.basic1).T.fwd.T_rect.T_rect.type 0</key>
--->
+    <key name="const">$(devel.basic1).T.fwd.T_rect.T_rect.type APPL 5 0</key>
     <key name="const">$(devel.basic1).tlist.defs.TApp.TApp.type CoConsA 2 0</key>
     <key name="const">$(devel.basic1).tlist.defs.THeads.THeads.type THead 3 0</key>
     <key name="const">$(devel.basic1).tlist.defs.TList.TCons.type ConsA 2 0</key>
@@ -261,9 +256,7 @@ $(devel.basic1).T.fwd.T_rect.T_rect.type 0</key>
     <key name="const">$(devel.basic1).tlt.defs.weight.type CoWeightA 1 0</key>
     <key name="const">$(devel.basic1).ty3.defs.ty3.ty3.type Type 4 0</key>
     <key name="const">$(devel.basic1).ty3.defs.tys3.tys3.type Type 4 0</key>
-<!--
-$(devel.basic1).ty3.nf2.ty3_nf2_inv_abst_premise.type 0</key>
--->
+    <key name="const">$(devel.basic1).ty3.nf2.ty3_nf2_inv_abst_premise.type APPL 3 0</key>
     <key name="const">$(devel.basic1).wcpr0.defs.wcpr0.wcpr0.type RStep 2 0</key>
     <key name="const">$(devel.basic1).wf3.defs.wf3.wf3.type Valid 3 0</key>
   </section>

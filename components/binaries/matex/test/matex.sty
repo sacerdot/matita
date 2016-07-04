@@ -73,7 +73,7 @@
 \newenvironment{assumption}[2]{\ma@thehead{Assumption}{has type}{#1}{#2}$}{$\par}
 \newenvironment{axiom}[2]{\ma@thehead{Axiom}{states}{#1}{#2}$}{$\par}
 \newenvironment{declaration}[2]{\ma@thehead{Definition}{of type}{#1}{#2}$}{$\par}
-\newenvironment{definition}[2]{\ma@theneck{is defined as}$}{$\par}
+\newenvironment{definition}[2]{\ma@theneck{is defined as}$}{$.\par}
 \newenvironment{proposition}[2]{\ma@thehead{Proposition}{stating}{#1}{#2}$}{$\par}
 \newenvironment{proof}[2]{\ma@theneck{is proved by}}{\par}
 \newenvironment{ma@step}[1]{\color{#1}}{\par}
@@ -126,8 +126,8 @@
 
 \newcommand*\EXIT[1]{\ma@head{\ma@exit}{end}{}{}{}{} of block #1\ma@stop}
 \newcommand*\OPEN[3]{\ma@head{}{}{}{\ma@open}{#1}{#2} is this block #3\ma@stop}
-\newcommand*\PRIM[3]{\ma@head{}{}{}{\ma@prim}{#1}{#2} will have type $\ma@type{#3}$\ma@stop}
-\newcommand*\DECL[3]{\ma@head{\ma@qed}{\_QED}{}{\ma@fwd}{#1}{#2} has type $\ma@type{#3}$\par}
+\newcommand*\PRIM[3]{\ma@head{}{}{}{\ma@prim}{#1}{#2} will have type: $\ma@type{#3}$\ma@stop}
+\newcommand*\DECL[3]{\ma@head{\ma@qed}{\_QED}{}{\ma@fwd}{#1}{#2} has type: $\ma@type{#3}$\par}
 \newcommand*\BODY[1]{being $#1$\ma@stop}
 \newcommand*\STEP[1]{by $#1$\ma@tail}
 \newcommand*\DEST[1]{by cases on $#1$\ma@tail}

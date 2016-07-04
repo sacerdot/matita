@@ -6,7 +6,7 @@ UNLOG  = ./unlog.pl
 
 MAIN = test
 
-SOURCES = $(shell cat Make) $(shell cat Make.srcs)
+SOURCES = $(shell cat Make) $(shell cat Make.srcs) Makefile
 
 all: $(MAIN).dvi 
 
