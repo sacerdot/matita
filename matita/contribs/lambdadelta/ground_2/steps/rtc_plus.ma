@@ -27,10 +27,11 @@ interpretation "plus (rtc)"
 
 (* Basic properties *********************************************************)
 
-lemma plus_rew: ∀ri1,ri2,rs1,rs2,ti1,ti2,ts1,ts2. 
-                〈ri1+ri2, rs1+rs2, ti1+ti2, ts1+ts2〉 =
-                plus (〈ri1,rs1,ti1,ts1〉) (〈ri2,rs2,ti2,ts2〉).
-// qed. (**) (* disambiguation of plus fails *)
+(**) (* plus is not disambiguated parentheses *) 
+lemma plus_rew: ∀ri1,ri2,rs1,rs2,ti1,ti2,ts1,ts2.
+                 〈ri1+ri2, rs1+rs2, ti1+ti2, ts1+ts2〉 =
+                 (〈ri1,rs1,ti1,ts1〉) + (〈ri2,rs2,ti2,ts2〉).
+// qed.
 
 lemma plus_O_dx: ∀c. c = c + 𝟘𝟘.
 * #ri #rs #ti #ts <plus_rew //

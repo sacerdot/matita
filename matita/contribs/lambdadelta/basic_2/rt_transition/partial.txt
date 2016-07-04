@@ -2,3 +2,4 @@ cpg.ma cpg_simple.ma cpg_drops.ma cpg_lsubr.ma
 cpx.ma cpx_simple.ma cpx_drops.ma cpx_lsubr.ma
 lfpx.ma lfpx_length.ma lfpx_drops.ma lfpx_fqup.ma 
 cpm.ma
+cpr.ma

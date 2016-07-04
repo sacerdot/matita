@@ -158,6 +158,10 @@ qed.
 
 (* Inversion & forward lemmas ***********************************************)
 
+lemma max_inv_O3: ∀x,y. (x ∨ y) = 0 → 0 = x ∧ 0 = y.
+/4 width=2 by le_maxr, le_maxl, le_n_O_to_eq, conj/
+qed-.
+
 lemma plus_inv_O3: ∀x,y. x + y = 0 → x = 0 ∧ y = 0.
 /2 width=1 by plus_le_0/ qed-.
 

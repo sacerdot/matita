@@ -1,0 +1,87 @@
+(* Basic_1: includes: pr2_delta1 *)
+| cpr_delta: ∀G,L,K,V,V2,W2,i.
+             ⬇[i] L ≡ K. ⓓV → cpr G K V V2 →
+             ⬆[0, i + 1] V2 ≡ W2 → cpr G L (#i) W2
+
+lemma cpr_cpx: ∀h,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡ T2 → ⦃G, L⦄ ⊢ T1 ➡[h] T2.
+#h #o #G #L #T1 #T2 #H elim H -L -T1 -T2
+/2 width=7 by cpx_delta, cpx_bind, cpx_flat, cpx_zeta, cpx_eps, cpx_beta, cpx_theta/
+qed.
+
+lemma lsubr_cpr_trans: ∀G. lsub_trans … (cpr G) lsubr.
+#G #L1 #T1 #T2 #H elim H -G -L1 -T1 -T2
+[ //
+| #G #L1 #K1 #V1 #V2 #W2 #i #HLK1 #_ #HVW2 #IHV12 #L2 #HL12
+  elim (lsubr_fwd_drop2_abbr … HL12 … HLK1) -L1 *
+  /3 width=6 by cpr_delta/
+|3,7: /4 width=1 by lsubr_pair, cpr_bind, cpr_beta/
+|4,6: /3 width=1 by cpr_flat, cpr_eps/
+|5,8: /4 width=3 by lsubr_pair, cpr_zeta, cpr_theta/
+]
+qed-.
+
+(* Basic_1: was by definition: pr2_free *)
+lemma tpr_cpr: ∀G,T1,T2. ⦃G, ⋆⦄ ⊢ T1 ➡ T2 → ∀L. ⦃G, L⦄ ⊢ T1 ➡ T2.
+#G #T1 #T2 #HT12 #L
+lapply (lsubr_cpr_trans … HT12 L ?) //
+qed.
+
+lemma cpr_delift: ∀G,K,V,T1,L,l. ⬇[l] L ≡ (K.ⓓV) →
+                  ∃∃T2,T. ⦃G, L⦄ ⊢ T1 ➡ T2 & ⬆[l, 1] T ≡ T2.
+#G #K #V #T1 elim T1 -T1
+[ * /2 width=4 by cpr_atom, lift_sort, lift_gref, ex2_2_intro/
+  #i #L #l #HLK elim (lt_or_eq_or_gt i l)
+  #Hil [1,3: /4 width=4 by lift_lref_ge_minus, lift_lref_lt, ylt_inj, yle_inj, ex2_2_intro/ ]
+  destruct
+  elim (lift_total V 0 (i+1)) #W #HVW
+  elim (lift_split … HVW i i) /3 width=6 by cpr_delta, ex2_2_intro/
+| * [ #a ] #I #W1 #U1 #IHW1 #IHU1 #L #l #HLK
+  elim (IHW1 … HLK) -IHW1 #W2 #W #HW12 #HW2
+  [ elim (IHU1 (L. ⓑ{I}W1) (l+1)) -IHU1 /3 width=9 by drop_drop, cpr_bind, lift_bind, ex2_2_intro/
+  | elim (IHU1 … HLK) -IHU1 -HLK /3 width=8 by cpr_flat, lift_flat, ex2_2_intro/
+  ]
+]
+qed-.
+
+fact lstas_cpr_aux: ∀h,G,L,T1,T2,d. ⦃G, L⦄ ⊢ T1 •*[h, d] T2 →
+                    d = 0 → ⦃G, L⦄ ⊢ T1 ➡ T2.
+#h #G #L #T1 #T2 #d #H elim H -G -L -T1 -T2 -d
+/3 width=1 by cpr_eps, cpr_flat, cpr_bind/
+[ #G #L #K #V1 #V2 #W2 #i #d #HLK #_ #HVW2 #IHV12 #H destruct
+  /3 width=6 by cpr_delta/
+| #G #L #K #V1 #V2 #W2 #i #d #_ #_ #_ #_ <plus_n_Sm #H destruct
+]
+qed-.
+
+lemma lstas_cpr: ∀h,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 •*[h, 0] T2 → ⦃G, L⦄ ⊢ T1 ➡ T2.
+/2 width=4 by lstas_cpr_aux/ qed.
+
+lemma cpr_inv_atom1: ∀I,G,L,T2. ⦃G, L⦄ ⊢ ⓪{I} ➡ T2 →
+                     T2 = ⓪{I} ∨
+                     ∃∃K,V,V2,i. ⬇[i] L ≡ K. ⓓV & ⦃G, K⦄ ⊢ V ➡ V2 &
+                                 ⬆[O, i + 1] V2 ≡ T2 & I = LRef i.
+/2 width=3 by cpr_inv_atom1_aux/ qed-.
+
+(* Basic_1: includes: pr0_gen_lref pr2_gen_lref *)
+lemma cpr_inv_lref1: ∀G,L,T2,i. ⦃G, L⦄ ⊢ #i ➡ T2 →
+                     T2 = #i ∨
+                     ∃∃K,V,V2. ⬇[i] L ≡ K. ⓓV & ⦃G, K⦄ ⊢ V ➡ V2 &
+                               ⬆[O, i + 1] V2 ≡ T2.
+#G #L #T2 #i #H
+elim (cpr_inv_atom1 … H) -H /2 width=1 by or_introl/
+* #K #V #V2 #j #HLK #HV2 #HVT2 #H destruct /3 width=6 by ex3_3_intro, or_intror/
+qed-.
+
+(* Note: the main property of simple terms *)
+lemma cpr_inv_appl1_simple: ∀G,L,V1,T1,U. ⦃G, L⦄ ⊢ ⓐV1. T1 ➡ U → 𝐒⦃T1⦄ →
+                            ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡ V2 & ⦃G, L⦄ ⊢ T1 ➡ T2 &
+                                     U = ⓐV2. T2.
+#G #L #V1 #T1 #U #H #HT1
+elim (cpr_inv_appl1 … H) -H *
+[ /2 width=5 by ex3_2_intro/
+| #a #V2 #W1 #W2 #U1 #U2 #_ #_ #_ #H #_ destruct
+  elim (simple_inv_bind … HT1)
+| #a #V #V2 #W1 #W2 #U1 #U2 #_ #_ #_ #_ #H #_ destruct
+  elim (simple_inv_bind … HT1)
+]
+qed-.

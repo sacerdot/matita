@@ -53,6 +53,7 @@ lemma cpm_lref: ∀n,h,I,G,K,V,T,U,i. ⦃G, K⦄ ⊢ #i ➡[n, h] T →
 /3 width=5 by cpg_lref, ex2_intro/
 qed.
 
+(* Basic_2A1: includes: cpr_bind *)
 lemma cpm_bind: ∀n,h,p,I,G,L,V1,V2,T1,T2.
                 ⦃G, L⦄ ⊢ V1 ➡[h] V2 → ⦃G, L.ⓑ{I}V1⦄ ⊢ T1 ➡[n, h] T2 →
                 ⦃G, L⦄ ⊢ ⓑ{p,I}V1.T1 ➡[n, h] ⓑ{p,I}V2.T2.
@@ -60,6 +61,9 @@ lemma cpm_bind: ∀n,h,p,I,G,L,V1,V2,T1,T2.
 /5 width=5 by cpg_bind, isrt_plus_O1, isr_shift, ex2_intro/
 qed.
 
+(* Note: cpr_flat: does not hold in basic_1 *)
+(* Basic_1: includes: pr2_thin_dx *)
+(* Basic_2A1: includes: cpr_flat *)
 lemma cpm_flat: ∀n,h,I,G,L,V1,V2,T1,T2.
                 ⦃G, L⦄ ⊢ V1 ➡[h] V2 → ⦃G, L⦄ ⊢ T1 ➡[n, h] T2 →
                 ⦃G, L⦄ ⊢ ⓕ{I}V1.T1 ➡[n, h] ⓕ{I}V2.T2.
@@ -67,12 +71,14 @@ lemma cpm_flat: ∀n,h,I,G,L,V1,V2,T1,T2.
 /5 width=5 by isrt_plus_O1, isr_shift, cpg_flat, ex2_intro/
 qed.
 
+(* Basic_2A1: includes: cpr_zeta *)
 lemma cpm_zeta: ∀n,h,G,L,V,T1,T,T2. ⦃G, L.ⓓV⦄ ⊢ T1 ➡[n, h] T →
                 ⬆*[1] T2 ≡ T → ⦃G, L⦄ ⊢ +ⓓV.T1 ➡[n, h] T2.
 #n #h #G #L #V #T1 #T #T2 *
 /3 width=5 by cpg_zeta, isrt_plus_O2, ex2_intro/
 qed.
 
+(* Basic_2A1: includes: cpr_eps *)
 lemma cpm_eps: ∀n,h,G,L,V,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[n, h] T2 → ⦃G, L⦄ ⊢ ⓝV.T1 ➡[n, h] T2.
 #n #h #G #L #V #T1 #T2 *
 /3 width=3 by cpg_eps, isrt_plus_O2, ex2_intro/
@@ -83,6 +89,7 @@ lemma cpm_ee: ∀n,h,G,L,V1,V2,T. ⦃G, L⦄ ⊢ V1 ➡[n, h] V2 → ⦃G, L⦄ 
 /3 width=3 by cpg_ee, isrt_succ, ex2_intro/
 qed.
 
+(* Basic_2A1: includes: cpr_beta *)
 lemma cpm_beta: ∀n,h,p,G,L,V1,V2,W1,W2,T1,T2.
                 ⦃G, L⦄ ⊢ V1 ➡[h] V2 → ⦃G, L⦄ ⊢ W1 ➡[h] W2 → ⦃G, L.ⓛW1⦄ ⊢ T1 ➡[n, h] T2 →
                 ⦃G, L⦄ ⊢ ⓐV1.ⓛ{p}W1.T1 ➡[n, h] ⓓ{p}ⓝW2.V2.T2.
@@ -90,6 +97,7 @@ lemma cpm_beta: ∀n,h,p,G,L,V1,V2,W1,W2,T1,T2.
 /6 width=7 by cpg_beta, isrt_plus_O2, isrt_plus, isr_shift, ex2_intro/
 qed.
 
+(* Basic_2A1: includes: cpr_theta *)
 lemma cpm_theta: ∀n,h,p,G,L,V1,V,V2,W1,W2,T1,T2.
                  ⦃G, L⦄ ⊢ V1 ➡[h] V → ⬆*[1] V ≡ V2 → ⦃G, L⦄ ⊢ W1 ➡[h] W2 →
                  ⦃G, L.ⓓW1⦄ ⊢ T1 ➡[n, h] T2 →
@@ -100,10 +108,12 @@ qed.
 
 (* Basic properties on r-transition *****************************************)
 
+(* Basic_1: includes by definition: pr0_refl *)
 (* Basic_2A1: includes: cpr_atom *)
 lemma cpr_refl: ∀h,G,L. reflexive … (cpm 0 h G L).
 /2 width=3 by ex2_intro/ qed.
 
+(* Basic_1: was: pr2_head_1 *)
 lemma cpr_pair_sn: ∀h,I,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 →
                    ∀T. ⦃G, L⦄ ⊢ ②{I}V1.T ➡[h] ②{I}V2.T.
 #h #I #G #L #V1 #V2 *
@@ -173,6 +183,7 @@ lemma cpm_inv_gref1: ∀n,h,G,L,T2,l. ⦃G, L⦄ ⊢ §l ➡[n, h] T2 → T2 = �
 #H1 #H2 destruct /3 width=1 by isrt_inv_00, conj/ 
 qed-.
 
+(* Basic_2A1: includes: cpr_inv_bind1 *)
 lemma cpm_inv_bind1: ∀n,h,p,I,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓑ{p,I}V1.T1 ➡[n, h] U2 → (
                      ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 & ⦃G, L.ⓑ{I}V1⦄ ⊢ T1 ➡[n, h] T2 &
                               U2 = ⓑ{p,I}V2.T2
@@ -189,6 +200,8 @@ lemma cpm_inv_bind1: ∀n,h,p,I,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓑ{p,I}V1.T1 ➡[n
 ]
 qed-.
 
+(* Basic_1: includes: pr0_gen_abbr pr2_gen_abbr *)
+(* Basic_2A1: includes: cpr_inv_abbr1 *)
 lemma cpm_inv_abbr1: ∀n,h,p,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓓ{p}V1.T1 ➡[n, h] U2 → (
                      ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 & ⦃G, L.ⓓV1⦄ ⊢ T1 ➡[n, h] T2 &
                               U2 = ⓓ{p}V2.T2
@@ -204,6 +217,8 @@ lemma cpm_inv_abbr1: ∀n,h,p,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓓ{p}V1.T1 ➡[n, h]
 ]
 qed-.
 
+(* Basic_1: includes: pr0_gen_abst pr2_gen_abst *)
+(* Basic_2A1: includes: cpr_inv_abst1 *)
 lemma cpm_inv_abst1: ∀n,h,p,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓛ{p}V1.T1 ➡[n, h] U2 →
                      ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 & ⦃G, L.ⓛV1⦄ ⊢ T1 ➡[n, h] T2 &
                               U2 = ⓛ{p}V2.T2.
@@ -254,6 +269,8 @@ lemma cpm_inv_flat1: ∀n,h,I,G,L,V1,U1,U2. ⦃G, L⦄ ⊢ ⓕ{I}V1.U1 ➡[n, h]
 ]
 qed-.
 
+(* Basic_1: includes: pr0_gen_appl pr2_gen_appl *)
+(* Basic_2A1: includes: cpr_inv_appl1 *)
 lemma cpm_inv_appl1: ∀n,h,G,L,V1,U1,U2. ⦃G, L⦄ ⊢ ⓐ V1.U1 ➡[n, h] U2 →
                      ∨∨ ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 & ⦃G, L⦄ ⊢ U1 ➡[n, h] T2 &
                                  U2 = ⓐV2.T2
@@ -305,6 +322,7 @@ qed-.
 
 (* Basic forward lemmas *****************************************************)
 
+(* Basic_2A1: includes: cpr_fwd_bind1_minus *)
 lemma cpm_fwd_bind1_minus: ∀n,h,I,G,L,V1,T1,T. ⦃G, L⦄ ⊢ -ⓑ{I}V1.T1 ➡[n, h] T → ∀p.
                            ∃∃V2,T2. ⦃G, L⦄ ⊢ ⓑ{p,I}V1.T1 ➡[n, h] ⓑ{p,I}V2.T2 &
                                     T = -ⓑ{I}V2.T2.
