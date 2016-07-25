@@ -96,6 +96,20 @@ qed.
 lemma arith_i: ∀x,y,z. y < x → x+z-y-1 = x-y-1+z.
 /2 width=1 by plus_minus/ qed-.
 
+lemma idempotent_max: ∀n:nat. n = (n ∨ n).
+#n normalize >le_to_leb_true //
+qed.
+
+lemma associative_max: associative … max.
+#x #y #z normalize
+@(leb_elim x y) normalize #Hxy
+@(leb_elim y z) normalize #Hyz //
+[1,2: >le_to_leb_true /2 width=3 by transitive_le/
+| >not_le_to_leb_false /4 width=3 by lt_to_not_le, not_le_to_lt, transitive_lt/
+  >not_le_to_leb_false //
+]
+qed.
+
 (* Properties ***************************************************************)
 
 lemma eq_nat_dec: ∀n1,n2:nat. Decidable (n1 = n2).

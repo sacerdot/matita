@@ -36,6 +36,10 @@ lemma max_O_dx: ∀c. c = (c ∨ 𝟘𝟘).
 * #ri #rs #ti #ts <max_rew //
 qed.
 
+lemma max_idem: ∀c. c = (c ∨ c).
+* #ri #rs #ti #ts <max_rew //
+qed.
+
 (* Basic inversion properties ***********************************************)
 
 lemma max_inv_dx: ∀ri,rs,ti,ts,c1,c2. 〈ri,rs,ti,ts〉 = (c1 ∨ c2) →
@@ -45,6 +49,13 @@ lemma max_inv_dx: ∀ri,rs,ti,ts,c1,c2. 〈ri,rs,ti,ts〉 = (c1 ∨ c2) →
 #ri #rs #ti #ts * #ri1 #rs1 #ti1 #ts1 * #ri2 #rs2 #ti2 #ts2
 <max_rew #H destruct /2 width=14 by ex6_8_intro/
 qed-.
+
+(* Main Properties **********************************************************)
+
+theorem max_assoc: associative … max.
+* #ri1 #rs1 #ti1 #ts1 * #ri2 #rs2 #ti2 #ts2 * #ri3 #rs3 #ti3 #ts3
+<max_rew <max_rew //
+qed.
 
 (* Properties with test for constrained rt-transition counter ***************)
 
@@ -76,9 +87,8 @@ lapply (isrt_mono … Hn2 H2) -c2 #H destruct //
 qed-.
 
 (* Properties with shift ****************************************************)
-(*
-lemma max_shift: ∀c1,c2. (↓c1) ∨ (↓c2) = ↓(c1∨c2).
+
+lemma max_shift: ∀c1,c2. ((↓c1) ∨ (↓c2)) = ↓(c1∨c2).
 * #ri1 #rs1 #ti1 #ts1 * #ri2 #rs2 #ti2 #ts2
 <shift_rew <shift_rew <shift_rew <max_rew //
 qed.
-*)

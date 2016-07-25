@@ -18,14 +18,14 @@ include "ground_2/steps/rtc_isrt.ma".
 (* RT-TRANSITION COUNTER ****************************************************)
 
 definition shift (c:rtc): rtc ≝ match c with
-[ mk_rtc ri rs ti ts ⇒ 〈ri+rs, 0, ti+ts, 0〉 ].
+[ mk_rtc ri rs ti ts ⇒ 〈ri∨rs, 0, ti∨ts, 0〉 ].
 
 interpretation "shift (rtc)"
    'Drop c = (shift c).
 
 (* Basic properties *********************************************************)
 
-lemma shift_rew: ∀ri,rs,ti,ts. 〈ri+rs, 0, ti+ts, 0〉 = ↓〈ri, rs, ti, ts〉.
+lemma shift_rew: ∀ri,rs,ti,ts. 〈ri∨rs, 0, ti∨ts, 0〉 = ↓〈ri, rs, ti, ts〉.
 normalize //
 qed.
 
@@ -35,7 +35,7 @@ lemma shift_O: 𝟘𝟘 = ↓𝟘𝟘.
 (* Basic inversion properties ***********************************************)
 
 lemma shift_inv_dx: ∀ri,rs,ti,ts,c. 〈ri, rs, ti, ts〉 = ↓c →
-                    ∃∃ri0,rs0,ti0,ts0. ri0+rs0 = ri & 0 = rs & ti0+ts0 = ti & 0 = ts &
+                    ∃∃ri0,rs0,ti0,ts0. (ri0∨rs0) = ri & 0 = rs & (ti0∨ts0) = ti & 0 = ts &
                                        〈ri0, rs0, ti0, ts0〉 = c.
 #ri #rs #ti #ts * #ri0 #rs0 #ti0 #ts0 <shift_rew #H destruct
 /2 width=7 by ex5_4_intro/
@@ -52,7 +52,7 @@ qed.
 lemma isrt_inv_shift: ∀n,c. 𝐑𝐓⦃n, ↓c⦄ → 𝐑𝐓⦃0, c⦄ ∧ 0 = n.
 #n #c * #ri #rs #H
 elim (shift_inv_dx … H) -H #rt0 #rs0 #ti0 #ts0 #_ #_ #H1 #H2 #H3
-elim (plus_inv_O3 … H1) -H1 /3 width=3 by ex1_2_intro, conj/
+elim (max_inv_O3 … H1) -H1 /3 width=3 by ex1_2_intro, conj/
 qed-.
 
 lemma isr_inv_shift: ∀c. 𝐑𝐓⦃0, ↓c⦄ → 𝐑𝐓⦃0, c⦄.

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/steps/rtc_shift.ma".
+include "ground_2/steps/rtc_isrt.ma".
 
 (* RT-TRANSITION COUNTER ****************************************************)
 
@@ -93,10 +93,3 @@ elim (isrt_inv_plus … H) -H #n1 #n2 #Hn1 #Hn2 #H destruct
 lapply (isrt_mono … Hn2 H2) -c2 #H destruct
 /2 width=3 by ex2_intro/
 qed-.
-
-(* Properties with shift ****************************************************)
-
-lemma plus_shift: ∀c1,c2. (↓c1) + (↓c2) = ↓(c1+c2).
-* #ri1 #rs1 #ti1 #ts1 * #ri2 #rs2 #ti2 #ts2
-<shift_rew <shift_rew <shift_rew <plus_rew //
-qed.

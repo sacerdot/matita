@@ -12,7 +12,7 @@ table {
    class "water"
    [ { "generic rt-transition counter" * } {
         [ { "" * } {
-             [ "rtc ( 〈?,?,?,?〉 ) ( 𝟘𝟘 ) ( 𝟙𝟘 ) ( 𝟘𝟙 )" "rtc_isrc ( 𝐑𝐓⦃?, ?⦄ )" "rtc_shift ( ↓? )" "rtc_plus ( ? + ? )" * ]
+             [ "rtc ( 〈?,?,?,?〉 ) ( 𝟘𝟘 ) ( 𝟙𝟘 ) ( 𝟘𝟙 )" "rtc_isrc ( 𝐑𝐓⦃?, ?⦄ )" "rtc_shift ( ↓? )" "rtc_max ( ? ∨ ? )" "rtc_plus ( ? + ? )" * ]
           }
         ]
      }

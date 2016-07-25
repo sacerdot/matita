@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/steps/rtc_max.ma".
 include "ground_2/steps/rtc_plus.ma".
 include "basic_2/notation/relations/predty_6.ma".
 include "basic_2/grammar/lenv.ma".
@@ -33,21 +34,21 @@ inductive cpg (h): rtc → relation4 genv lenv term term ≝
              ⬆*[1] T ≡ U → cpg h c G (L.ⓑ{I}V) (#⫯i) U
 | cpg_bind : ∀cV,cT,p,I,G,L,V1,V2,T1,T2.
              cpg h cV G L V1 V2 → cpg h cT G (L.ⓑ{I}V1) T1 T2 →
-             cpg h ((↓cV)+cT) G L (ⓑ{p,I}V1.T1) (ⓑ{p,I}V2.T2)
+             cpg h ((↓cV)∨cT) G L (ⓑ{p,I}V1.T1) (ⓑ{p,I}V2.T2)
 | cpg_flat : ∀cV,cT,I,G,L,V1,V2,T1,T2.
              cpg h cV G L V1 V2 → cpg h cT G L T1 T2 →
-             cpg h ((↓cV)+cT) G L (ⓕ{I}V1.T1) (ⓕ{I}V2.T2)
+             cpg h ((↓cV)∨cT) G L (ⓕ{I}V1.T1) (ⓕ{I}V2.T2)
 | cpg_zeta : ∀c,G,L,V,T1,T,T2. cpg h c G (L.ⓓV) T1 T →
              ⬆*[1] T2 ≡ T → cpg h (c+𝟙𝟘) G L (+ⓓV.T1) T2
 | cpg_eps  : ∀c,G,L,V,T1,T2. cpg h c G L T1 T2 → cpg h (c+𝟙𝟘) G L (ⓝV.T1) T2
 | cpg_ee   : ∀c,G,L,V1,V2,T. cpg h c G L V1 V2 → cpg h (c+𝟘𝟙) G L (ⓝV1.T) V2
 | cpg_beta : ∀cV,cW,cT,p,G,L,V1,V2,W1,W2,T1,T2.
              cpg h cV G L V1 V2 → cpg h cW G L W1 W2 → cpg h cT G (L.ⓛW1) T1 T2 →
-             cpg h ((↓cV)+(↓cW)+cT+𝟙𝟘) G L (ⓐV1.ⓛ{p}W1.T1) (ⓓ{p}ⓝW2.V2.T2)
+             cpg h (((↓cV)∨(↓cW)∨cT)+𝟙𝟘) G L (ⓐV1.ⓛ{p}W1.T1) (ⓓ{p}ⓝW2.V2.T2)
 | cpg_theta: ∀cV,cW,cT,p,G,L,V1,V,V2,W1,W2,T1,T2.
              cpg h cV G L V1 V → ⬆*[1] V ≡ V2 → cpg h cW G L W1 W2 →
              cpg h cT G (L.ⓓW1) T1 T2 →
-             cpg h ((↓cV)+(↓cW)+cT+𝟙𝟘) G L (ⓐV1.ⓓ{p}W1.T1) (ⓓ{p}W2.ⓐV2.T2)
+             cpg h (((↓cV)∨(↓cW)∨cT)+𝟙𝟘) G L (ⓐV1.ⓓ{p}W1.T1) (ⓓ{p}W2.ⓐV2.T2)
 .
 
 interpretation
@@ -151,7 +152,7 @@ qed-.
 fact cpg_inv_bind1_aux: ∀c,h,G,L,U,U2. ⦃G, L⦄ ⊢ U ⬈[c, h] U2 →
                         ∀p,J,V1,U1. U = ⓑ{p,J}V1.U1 → (
                         ∃∃cV,cT,V2,T2. ⦃G, L⦄ ⊢ V1 ⬈[cV, h] V2 & ⦃G, L.ⓑ{J}V1⦄ ⊢ U1 ⬈[cT, h] T2 &
-                                       U2 = ⓑ{p,J}V2.T2 & c = (↓cV)+cT
+                                       U2 = ⓑ{p,J}V2.T2 & c = ((↓cV)∨cT)
                         ) ∨
                         ∃∃cT,T. ⦃G, L.ⓓV1⦄ ⊢ U1 ⬈[cT, h] T & ⬆*[1] U2 ≡ T &
                                 p = true & J = Abbr & c = cT+𝟙𝟘.
@@ -173,7 +174,7 @@ qed-.
 
 lemma cpg_inv_bind1: ∀c,h,p,I,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓑ{p,I}V1.T1 ⬈[c, h] U2 → (
                      ∃∃cV,cT,V2,T2. ⦃G, L⦄ ⊢ V1 ⬈[cV, h] V2 & ⦃G, L.ⓑ{I}V1⦄ ⊢ T1 ⬈[cT, h] T2 &
-                                    U2 = ⓑ{p,I}V2.T2 & c = (↓cV)+cT
+                                    U2 = ⓑ{p,I}V2.T2 & c = ((↓cV)∨cT)
                      ) ∨
                      ∃∃cT,T. ⦃G, L.ⓓV1⦄ ⊢ T1 ⬈[cT, h] T & ⬆*[1] U2 ≡ T &
                              p = true & I = Abbr & c = cT+𝟙𝟘.
@@ -181,7 +182,7 @@ lemma cpg_inv_bind1: ∀c,h,p,I,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓑ{p,I}V1.T1 ⬈[c
 
 lemma cpg_inv_abbr1: ∀c,h,p,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓓ{p}V1.T1 ⬈[c, h] U2 → (
                      ∃∃cV,cT,V2,T2. ⦃G, L⦄ ⊢ V1 ⬈[cV, h] V2 & ⦃G, L.ⓓV1⦄ ⊢ T1 ⬈[cT, h] T2 &
-                                    U2 = ⓓ{p}V2.T2 & c = (↓cV)+cT
+                                    U2 = ⓓ{p}V2.T2 & c = ((↓cV)∨cT)
                      ) ∨
                      ∃∃cT,T. ⦃G, L.ⓓV1⦄ ⊢ T1 ⬈[cT, h] T & ⬆*[1] U2 ≡ T &
                              p = true & c = cT+𝟙𝟘.
@@ -191,7 +192,7 @@ qed-.
 
 lemma cpg_inv_abst1: ∀c,h,p,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓛ{p}V1.T1 ⬈[c, h] U2 →
                      ∃∃cV,cT,V2,T2. ⦃G, L⦄ ⊢ V1 ⬈[cV, h] V2 & ⦃G, L.ⓛV1⦄ ⊢ T1 ⬈[cT, h] T2 &
-                                    U2 = ⓛ{p}V2.T2 & c = (↓cV)+cT.
+                                    U2 = ⓛ{p}V2.T2 & c = ((↓cV)∨cT).
 #c #h #p #G #L #V1 #T1 #U2 #H elim (cpg_inv_bind1 … H) -H * 
 [ /3 width=8 by ex4_4_intro/
 | #c #T #_ #_ #_ #H destruct
@@ -201,13 +202,13 @@ qed-.
 fact cpg_inv_flat1_aux: ∀c,h,G,L,U,U2. ⦃G, L⦄ ⊢ U ⬈[c, h] U2 →
                         ∀J,V1,U1. U = ⓕ{J}V1.U1 →
                         ∨∨ ∃∃cV,cT,V2,T2. ⦃G, L⦄ ⊢ V1 ⬈[cV, h] V2 & ⦃G, L⦄ ⊢ U1 ⬈[cT, h] T2 &
-                                          U2 = ⓕ{J}V2.T2 & c = (↓cV)+cT
+                                          U2 = ⓕ{J}V2.T2 & c = ((↓cV)∨cT)
                          | ∃∃cT. ⦃G, L⦄ ⊢ U1 ⬈[cT, h] U2 & J = Cast & c = cT+𝟙𝟘
                          | ∃∃cV. ⦃G, L⦄ ⊢ V1 ⬈[cV, h] U2 & J = Cast & c = cV+𝟘𝟙
                          | ∃∃cV,cW,cT,p,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ⬈[cV, h] V2 & ⦃G, L⦄ ⊢ W1 ⬈[cW, h] W2 & ⦃G, L.ⓛW1⦄ ⊢ T1 ⬈[cT, h] T2 &
-                                                        J = Appl & U1 = ⓛ{p}W1.T1 & U2 = ⓓ{p}ⓝW2.V2.T2 & c = (↓cV)+(↓cW)+cT+𝟙𝟘
+                                                        J = Appl & U1 = ⓛ{p}W1.T1 & U2 = ⓓ{p}ⓝW2.V2.T2 & c = ((↓cV)∨(↓cW)∨cT)+𝟙𝟘
                          | ∃∃cV,cW,cT,p,V,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ⬈[cV, h] V & ⬆*[1] V ≡ V2 & ⦃G, L⦄ ⊢ W1 ⬈[cW, h] W2 & ⦃G, L.ⓓW1⦄ ⊢ T1 ⬈[cT, h] T2 &
-                                                          J = Appl & U1 = ⓓ{p}W1.T1 & U2 = ⓓ{p}W2.ⓐV2.T2 & c = (↓cV)+(↓cW)+cT+𝟙𝟘.
+                                                          J = Appl & U1 = ⓓ{p}W1.T1 & U2 = ⓓ{p}W2.ⓐV2.T2 & c = ((↓cV)∨(↓cW)∨cT)+𝟙𝟘.
 #c #h #G #L #U #U2 * -c -G -L -U -U2
 [ #I #G #L #J #W #U1 #H destruct
 | #G #L #s #J #W #U1 #H destruct
@@ -226,22 +227,22 @@ qed-.
 
 lemma cpg_inv_flat1: ∀c,h,I,G,L,V1,U1,U2. ⦃G, L⦄ ⊢ ⓕ{I}V1.U1 ⬈[c, h] U2 →
                      ∨∨ ∃∃cV,cT,V2,T2. ⦃G, L⦄ ⊢ V1 ⬈[cV, h] V2 & ⦃G, L⦄ ⊢ U1 ⬈[cT, h] T2 &
-                                       U2 = ⓕ{I}V2.T2 & c = (↓cV)+cT
+                                       U2 = ⓕ{I}V2.T2 & c = ((↓cV)∨cT)
                       | ∃∃cT. ⦃G, L⦄ ⊢ U1 ⬈[cT, h] U2 & I = Cast & c = cT+𝟙𝟘
                       | ∃∃cV. ⦃G, L⦄ ⊢ V1 ⬈[cV, h] U2 & I = Cast & c = cV+𝟘𝟙
                       | ∃∃cV,cW,cT,p,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ⬈[cV, h] V2 & ⦃G, L⦄ ⊢ W1 ⬈[cW, h] W2 & ⦃G, L.ⓛW1⦄ ⊢ T1 ⬈[cT, h] T2 &
-                                                     I = Appl & U1 = ⓛ{p}W1.T1 & U2 = ⓓ{p}ⓝW2.V2.T2 & c = (↓cV)+(↓cW)+cT+𝟙𝟘
+                                                     I = Appl & U1 = ⓛ{p}W1.T1 & U2 = ⓓ{p}ⓝW2.V2.T2 & c = ((↓cV)∨(↓cW)∨cT)+𝟙𝟘
                       | ∃∃cV,cW,cT,p,V,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ⬈[cV, h] V & ⬆*[1] V ≡ V2 & ⦃G, L⦄ ⊢ W1 ⬈[cW, h] W2 & ⦃G, L.ⓓW1⦄ ⊢ T1 ⬈[cT, h] T2 &
-                                                       I = Appl & U1 = ⓓ{p}W1.T1 & U2 = ⓓ{p}W2.ⓐV2.T2 & c = (↓cV)+(↓cW)+cT+𝟙𝟘.
+                                                       I = Appl & U1 = ⓓ{p}W1.T1 & U2 = ⓓ{p}W2.ⓐV2.T2 & c = ((↓cV)∨(↓cW)∨cT)+𝟙𝟘.
 /2 width=3 by cpg_inv_flat1_aux/ qed-.
 
 lemma cpg_inv_appl1: ∀c,h,G,L,V1,U1,U2. ⦃G, L⦄ ⊢ ⓐV1.U1 ⬈[c, h] U2 →
                      ∨∨ ∃∃cV,cT,V2,T2. ⦃G, L⦄ ⊢ V1 ⬈[cV, h] V2 & ⦃G, L⦄ ⊢ U1 ⬈[cT, h] T2 &
-                                       U2 = ⓐV2.T2 & c = (↓cV)+cT
+                                       U2 = ⓐV2.T2 & c = ((↓cV)∨cT)
                       | ∃∃cV,cW,cT,p,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ⬈[cV, h] V2 & ⦃G, L⦄ ⊢ W1 ⬈[cW, h] W2 & ⦃G, L.ⓛW1⦄ ⊢ T1 ⬈[cT, h] T2 &
-                                                     U1 = ⓛ{p}W1.T1 & U2 = ⓓ{p}ⓝW2.V2.T2 & c = (↓cV)+(↓cW)+cT+𝟙𝟘
+                                                     U1 = ⓛ{p}W1.T1 & U2 = ⓓ{p}ⓝW2.V2.T2 & c = ((↓cV)∨(↓cW)∨cT)+𝟙𝟘
                       | ∃∃cV,cW,cT,p,V,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ⬈[cV, h] V & ⬆*[1] V ≡ V2 & ⦃G, L⦄ ⊢ W1 ⬈[cW, h] W2 & ⦃G, L.ⓓW1⦄ ⊢ T1 ⬈[cT, h] T2 &
-                                                       U1 = ⓓ{p}W1.T1 & U2 = ⓓ{p}W2.ⓐV2.T2 & c = (↓cV)+(↓cW)+cT+𝟙𝟘.
+                                                       U1 = ⓓ{p}W1.T1 & U2 = ⓓ{p}W2.ⓐV2.T2 & c = ((↓cV)∨(↓cW)∨cT)+𝟙𝟘.
 #c #h #G #L #V1 #U1 #U2 #H elim (cpg_inv_flat1 … H) -H *
 [ /3 width=8 by or3_intro0, ex4_4_intro/
 |2,3: #c #_ #H destruct
@@ -252,7 +253,7 @@ qed-.
 
 lemma cpg_inv_cast1: ∀c,h,G,L,V1,U1,U2. ⦃G, L⦄ ⊢ ⓝV1.U1 ⬈[c, h] U2 →
                      ∨∨ ∃∃cV,cT,V2,T2. ⦃G, L⦄ ⊢ V1 ⬈[cV, h] V2 & ⦃G, L⦄ ⊢ U1 ⬈[cT, h] T2 &
-                                       U2 = ⓝV2.T2 & c = (↓cV)+cT
+                                       U2 = ⓝV2.T2 & c = ((↓cV)∨cT)
                       | ∃∃cT. ⦃G, L⦄ ⊢ U1 ⬈[cT, h] U2 & c = cT+𝟙𝟘
                       | ∃∃cV. ⦃G, L⦄ ⊢ V1 ⬈[cV, h] U2 & c = cV+𝟘𝟙.
 #c #h #G #L #V1 #U1 #U2 #H elim (cpg_inv_flat1 … H) -H *
