@@ -18,7 +18,7 @@ include "basic_2/rt_transition/cpg.ma".
 (* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS *************)
 
 definition cpx (h): relation4 genv lenv term term ≝
-                    λG,L,T1,T2. ∃c. ⦃G, L⦄ ⊢ T1 ⬈[c, h] T2.
+                    λG,L,T1,T2. ∃c. ⦃G, L⦄ ⊢ T1 ⬈[eq_f, c, h] T2.
 
 interpretation
    "uncounted context-sensitive parallel rt-transition (term)"
@@ -52,8 +52,8 @@ qed.
 lemma cpx_flat: ∀h,I,G,L,V1,V2,T1,T2.
                 ⦃G, L⦄ ⊢ V1 ⬈[h] V2 → ⦃G, L⦄ ⊢ T1 ⬈[h] T2 →
                 ⦃G, L⦄ ⊢ ⓕ{I}V1.T1 ⬈[h] ⓕ{I}V2.T2.
-#h #I #G #L #V1 #V2 #T1 #T2 * #cV #HV12 *
-/3 width=2 by cpg_flat, ex_intro/
+#h * #G #L #V1 #V2 #T1 #T2 * #cV #HV12 *
+/3 width=5 by cpg_appl, cpg_cast, ex_intro/
 qed.
 
 lemma cpx_zeta: ∀h,G,L,V,T1,T,T2. ⦃G, L.ⓓV⦄ ⊢ T1 ⬈[h] T →
@@ -90,12 +90,13 @@ qed.
 
 (* Basic_2A1: includes: cpx_atom *)
 lemma cpx_refl: ∀h,G,L. reflexive … (cpx h G L).
-/2 width=2 by ex_intro/ qed.
+/3 width=2 by cpg_refl, ex_intro/ qed.
+
+(* Advanced properties ******************************************************)
 
 lemma cpx_pair_sn: ∀h,I,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ⬈[h] V2 →
                    ∀T. ⦃G, L⦄ ⊢ ②{I}V1.T ⬈[h] ②{I}V2.T.
-#h #I #G #L #V1 #V2 *
-/3 width=2 by cpg_pair_sn, ex_intro/
+#h * /2 width=2 by cpx_flat, cpx_bind/
 qed.
 
 (* Basic inversion lemmas ***************************************************)
@@ -162,23 +163,6 @@ lemma cpx_inv_abst1: ∀h,p,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓛ{p}V1.T1 ⬈[h] U2 �
 /3 width=5 by ex3_2_intro, ex_intro/
 qed-.
 
-lemma cpx_inv_flat1: ∀h,I,G,L,V1,U1,U2. ⦃G, L⦄ ⊢ ⓕ{I}V1.U1 ⬈[h] U2 →
-                     ∨∨ ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ⬈[h] V2 & ⦃G, L⦄ ⊢ U1 ⬈[h] T2 &
-                                 U2 = ⓕ{I}V2.T2
-                      | (⦃G, L⦄ ⊢ U1 ⬈[h] U2 ∧ I = Cast)
-                      | (⦃G, L⦄ ⊢ V1 ⬈[h] U2 ∧ I = Cast)
-                      | ∃∃p,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ⬈[h] V2 & ⦃G, L⦄ ⊢ W1 ⬈[h] W2 &
-                                            ⦃G, L.ⓛW1⦄ ⊢ T1 ⬈[h] T2 &
-                                            U1 = ⓛ{p}W1.T1 &
-                                            U2 = ⓓ{p}ⓝW2.V2.T2 & I = Appl
-                      | ∃∃p,V,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ⬈[h] V & ⬆*[1] V ≡ V2 &
-                                              ⦃G, L⦄ ⊢ W1 ⬈[h] W2 & ⦃G, L.ⓓW1⦄ ⊢ T1 ⬈[h] T2 &
-                                              U1 = ⓓ{p}W1.T1 &
-                                              U2 = ⓓ{p}W2.ⓐV2.T2 & I = Appl.
-#h #I #G #L #V1 #U1 #U2 * #c #H elim (cpg_inv_flat1 … H) -H *
-/4 width=14 by or5_intro0, or5_intro1, or5_intro2, or5_intro3, or5_intro4, ex7_7_intro, ex6_6_intro, ex3_2_intro, ex_intro, conj/
-qed-.
-
 lemma cpx_inv_appl1: ∀h,G,L,V1,U1,U2. ⦃G, L⦄ ⊢ ⓐ V1.U1 ⬈[h] U2 →
                      ∨∨ ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ⬈[h] V2 & ⦃G, L⦄ ⊢ U1 ⬈[h] T2 &
                                  U2 = ⓐV2.T2
@@ -199,6 +183,29 @@ lemma cpx_inv_cast1: ∀h,G,L,V1,U1,U2. ⦃G, L⦄ ⊢ ⓝV1.U1 ⬈[h] U2 →
                       | ⦃G, L⦄ ⊢ V1 ⬈[h] U2.
 #h #G #L #V1 #U1 #U2 * #c #H elim (cpg_inv_cast1 … H) -H *
 /4 width=5 by or3_intro0, or3_intro1, or3_intro2, ex3_2_intro, ex_intro/
+qed-.
+
+(* Advanced inversion lemmas ************************************************)
+
+lemma cpx_inv_flat1: ∀h,I,G,L,V1,U1,U2. ⦃G, L⦄ ⊢ ⓕ{I}V1.U1 ⬈[h] U2 →
+                     ∨∨ ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ⬈[h] V2 & ⦃G, L⦄ ⊢ U1 ⬈[h] T2 &
+                                 U2 = ⓕ{I}V2.T2
+                      | (⦃G, L⦄ ⊢ U1 ⬈[h] U2 ∧ I = Cast)
+                      | (⦃G, L⦄ ⊢ V1 ⬈[h] U2 ∧ I = Cast)
+                      | ∃∃p,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ⬈[h] V2 & ⦃G, L⦄ ⊢ W1 ⬈[h] W2 &
+                                            ⦃G, L.ⓛW1⦄ ⊢ T1 ⬈[h] T2 &
+                                            U1 = ⓛ{p}W1.T1 &
+                                            U2 = ⓓ{p}ⓝW2.V2.T2 & I = Appl
+                      | ∃∃p,V,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ⬈[h] V & ⬆*[1] V ≡ V2 &
+                                              ⦃G, L⦄ ⊢ W1 ⬈[h] W2 & ⦃G, L.ⓓW1⦄ ⊢ T1 ⬈[h] T2 &
+                                              U1 = ⓓ{p}W1.T1 &
+                                              U2 = ⓓ{p}W2.ⓐV2.T2 & I = Appl.
+#h * #G #L #V1 #U1 #U2 #H
+[ elim (cpx_inv_appl1 … H) -H *
+  /3 width=14 by or5_intro0, or5_intro3, or5_intro4, ex7_7_intro, ex6_6_intro, ex3_2_intro/
+| elim (cpx_inv_cast1 … H) -H [ * ]
+  /3 width=14 by or5_intro0, or5_intro1, or5_intro2, ex3_2_intro, conj/
+] 
 qed-.
 
 (* Basic forward lemmas *****************************************************)

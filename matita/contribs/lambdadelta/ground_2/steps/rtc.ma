@@ -38,3 +38,29 @@ interpretation "one r-step (rtc)"
 
 interpretation "one t-step (rtc)"
    'ZeroOne = (mk_rtc O O O (S O)).
+
+definition eq_f: relation rtc ≝ λc1,c2. ⊤.
+
+inductive eq_t: relation rtc ≝
+| eq_t_intro: ∀ri1,ri2,rs1,rs2,ti,ts.
+              eq_t (〈ri1, rs1, ti, ts〉) (〈ri2, rs2, ti, ts〉)
+.
+
+(* Basic properties *********************************************************)
+
+lemma eq_t_refl: reflexive …  eq_t.
+* // qed.
+
+(* Basic inversion lemmas ***************************************************)
+
+fact eq_t_inv_dx_aux: ∀x,y. eq_t x y →
+                      ∀ri1,rs1,ti,ts. x = 〈ri1,rs1,ti,ts〉 →
+                      ∃∃ri2,rs2. y = 〈ri2,rs2,ti,ts〉.
+#x #y * -x -y
+#ri1 #ri #rs1 #rs #ti1 #ts1 #ri2 #rs2 #ti2 #ts2 #H destruct -ri2 -rs2
+/2 width=3 by ex1_2_intro/
+qed-.
+
+lemma eq_t_inv_dx: ∀ri1,rs1,ti,ts,y. eq_t (〈ri1,rs1,ti,ts〉) y →
+                   ∃∃ri2,rs2. y = 〈ri2,rs2,ti,ts〉.
+/2 width=5 by eq_t_inv_dx_aux/ qed-.

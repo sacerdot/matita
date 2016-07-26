@@ -16,6 +16,22 @@ include "basic_2/rt_transition/cpm.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL R-TRANSITION FOR TERMS ************************)
 
+(* Basic properties *********************************************************)
+
+(* Note: cpr_flat: does not hold in basic_1 *)
+(* Basic_1: includes: pr2_thin_dx *)
+lemma cpr_flat: ∀h,I,G,L,V1,V2,T1,T2.
+                ⦃G, L⦄ ⊢ V1 ➡[h] V2 → ⦃G, L⦄ ⊢ T1 ➡[h] T2 →
+                ⦃G, L⦄ ⊢ ⓕ{I}V1.T1 ➡[h] ⓕ{I}V2.T2.
+#h * /2 width=1 by cpm_cast, cpm_appl/
+qed. 
+
+(* Basic_1: was: pr2_head_1 *)
+lemma cpr_pair_sn: ∀h,I,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 →
+                   ∀T. ⦃G, L⦄ ⊢ ②{I}V1.T ➡[h] ②{I}V2.T.
+#h * /2 width=1 by cpm_bind, cpr_flat/
+qed.
+
 (* Basic inversion properties ***********************************************)
 
 lemma cpr_inv_atom1: ∀h,J,G,L,T2. ⦃G, L⦄ ⊢ ⓪{J} ➡[h] T2 →
@@ -56,6 +72,15 @@ lemma cpr_inv_gref1: ∀h,G,L,T2,l. ⦃G, L⦄ ⊢ §l ➡[h] T2 → T2 = §l.
 #h #G #L #T2 #l #H elim (cpm_inv_gref1 … H) -H //
 qed-.
 
+(* Basic_1: includes: pr0_gen_cast pr2_gen_cast *)
+lemma cpr_inv_cast1: ∀h,G,L,V1,U1,U2. ⦃G, L⦄ ⊢ ⓝ V1. U1 ➡[h] U2 → (
+                     ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 & ⦃G, L⦄ ⊢ U1 ➡[h] T2 &
+                              U2 = ⓝV2.T2
+                     ) ∨ ⦃G, L⦄ ⊢ U1 ➡[h] U2.
+#h #G #L #V1 #U1 #U2 #H elim (cpm_inv_cast1 … H) -H
+/2 width=1 by or_introl, or_intror/ * #n #_ #H destruct
+qed-.
+
 lemma cpr_inv_flat1: ∀h,I,G,L,V1,U1,U2. ⦃G, L⦄ ⊢ ⓕ{I}V1.U1 ➡[h] U2 →
                      ∨∨ ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 & ⦃G, L⦄ ⊢ U1 ➡[h] T2 &
                                  U2 = ⓕ{I}V2.T2
@@ -67,18 +92,12 @@ lemma cpr_inv_flat1: ∀h,I,G,L,V1,U1,U2. ⦃G, L⦄ ⊢ ⓕ{I}V1.U1 ➡[h] U2 �
                                               ⦃G, L⦄ ⊢ W1 ➡[h] W2 & ⦃G, L.ⓓW1⦄ ⊢ T1 ➡[h] T2 &
                                               U1 = ⓓ{p}W1.T1 &
                                               U2 = ⓓ{p}W2.ⓐV2.T2 & I = Appl.
-#h #I #G #L #V1 #U1 #U2 #H elim (cpm_inv_flat1 … H) -H *
-/3 width=13 by or4_intro0, or4_intro1, or4_intro2, or4_intro3, ex7_7_intro, ex6_6_intro, ex3_2_intro, conj/
-#n #_ #_ #H destruct
-qed-.
-
-(* Basic_1: includes: pr0_gen_cast pr2_gen_cast *)
-lemma cpr_inv_cast1: ∀h,G,L,V1,U1,U2. ⦃G, L⦄ ⊢ ⓝ V1. U1 ➡[h] U2 → (
-                     ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 & ⦃G, L⦄ ⊢ U1 ➡[h] T2 &
-                              U2 = ⓝV2.T2
-                     ) ∨ ⦃G, L⦄ ⊢ U1 ➡[h] U2.
-#h #G #L #V1 #U1 #U2 #H elim (cpm_inv_cast1 … H) -H
-/2 width=1 by or_introl, or_intror/ * #n #_ #H destruct
+#h * #G #L #V1 #U1 #U2 #H
+[ elim (cpm_inv_appl1 … H) -H *
+  /3 width=13 by or4_intro0, or4_intro2, or4_intro3, ex7_7_intro, ex6_6_intro, ex3_2_intro/
+| elim (cpr_inv_cast1 … H) -H [ * ]
+  /3 width=5 by or4_intro0, or4_intro1, ex3_2_intro, conj/
+]
 qed-.
 
 (* Basic_1: removed theorems 12:

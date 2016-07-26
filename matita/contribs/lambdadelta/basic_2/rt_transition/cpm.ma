@@ -20,7 +20,7 @@ include "basic_2/rt_transition/cpg.ma".
 
 (* Basic_2A1: includes: cpr *)
 definition cpm (n) (h): relation4 genv lenv term term ≝
-                        λG,L,T1,T2. ∃∃c. 𝐑𝐓⦃n, c⦄ & ⦃G, L⦄ ⊢ T1 ⬈[c, h] T2.
+                        λG,L,T1,T2. ∃∃c. 𝐑𝐓⦃n, c⦄ & ⦃G, L⦄ ⊢ T1 ⬈[eq_t, c, h] T2.
 
 interpretation
    "semi-counted context-sensitive parallel rt-transition (term)"
@@ -57,18 +57,22 @@ qed.
 lemma cpm_bind: ∀n,h,p,I,G,L,V1,V2,T1,T2.
                 ⦃G, L⦄ ⊢ V1 ➡[h] V2 → ⦃G, L.ⓑ{I}V1⦄ ⊢ T1 ➡[n, h] T2 →
                 ⦃G, L⦄ ⊢ ⓑ{p,I}V1.T1 ➡[n, h] ⓑ{p,I}V2.T2.
-#n #h #p #I #G #L #V1 #V2 #T1 #T2 * #riV #rhV #HV12 *
+#n #h #p #I #G #L #V1 #V2 #T1 #T2 * #cV #HcV #HV12 *
 /5 width=5 by cpg_bind, isrt_max_O1, isr_shift, ex2_intro/
 qed.
 
-(* Note: cpr_flat: does not hold in basic_1 *)
-(* Basic_1: includes: pr2_thin_dx *)
-(* Basic_2A1: includes: cpr_flat *)
-lemma cpm_flat: ∀n,h,I,G,L,V1,V2,T1,T2.
+lemma cpm_appl: ∀n,h,G,L,V1,V2,T1,T2.
                 ⦃G, L⦄ ⊢ V1 ➡[h] V2 → ⦃G, L⦄ ⊢ T1 ➡[n, h] T2 →
-                ⦃G, L⦄ ⊢ ⓕ{I}V1.T1 ➡[n, h] ⓕ{I}V2.T2.
-#n #h #I #G #L #V1 #V2 #T1 #T2 * #riV #rhV #HV12 *
-/5 width=5 by isrt_max_O1, isr_shift, cpg_flat, ex2_intro/
+                ⦃G, L⦄ ⊢ ⓐV1.T1 ➡[n, h] ⓐV2.T2.
+#n #h #G #L #V1 #V2 #T1 #T2 * #cV #HcV #HV12 *
+/5 width=5 by isrt_max_O1, isr_shift, cpg_appl, ex2_intro/
+qed.
+
+lemma cpm_cast: ∀n,h,G,L,U1,U2,T1,T2.
+                ⦃G, L⦄ ⊢ U1 ➡[n, h] U2 → ⦃G, L⦄ ⊢ T1 ➡[n, h] T2 →
+                ⦃G, L⦄ ⊢ ⓝU1.T1 ➡[n, h] ⓝU2.T2.
+#n #h #G #L #U1 #U2 #T1 #T2 * #cU #HcU #HU12 *
+/4 width=6 by cpg_cast, isrt_max_idem1, isrt_mono, ex2_intro/
 qed.
 
 (* Basic_2A1: includes: cpr_zeta *)
@@ -111,14 +115,7 @@ qed.
 (* Basic_1: includes by definition: pr0_refl *)
 (* Basic_2A1: includes: cpr_atom *)
 lemma cpr_refl: ∀h,G,L. reflexive … (cpm 0 h G L).
-/2 width=3 by ex2_intro/ qed.
-
-(* Basic_1: was: pr2_head_1 *)
-lemma cpr_pair_sn: ∀h,I,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 →
-                   ∀T. ⦃G, L⦄ ⊢ ②{I}V1.T ➡[h] ②{I}V2.T.
-#h #I #G #L #V1 #V2 *
-/3 width=3 by cpg_pair_sn, isr_shift, ex2_intro/
-qed.
+/3 width=3 by cpg_refl, ex2_intro/ qed.
 
 (* Basic inversion lemmas ***************************************************)
 
@@ -229,46 +226,6 @@ elim (isrt_inv_shift … HcV) -HcV #HcV #H destruct
 /3 width=5 by ex3_2_intro, ex2_intro/
 qed-.
 
-lemma cpm_inv_flat1: ∀n,h,I,G,L,V1,U1,U2. ⦃G, L⦄ ⊢ ⓕ{I}V1.U1 ➡[n, h] U2 →
-                     ∨∨ ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 & ⦃G, L⦄ ⊢ U1 ➡[n, h] T2 &
-                                 U2 = ⓕ{I}V2.T2
-                      | (⦃G, L⦄ ⊢ U1 ➡[n, h] U2 ∧ I = Cast)
-                      | ∃∃m. ⦃G, L⦄ ⊢ V1 ➡[m, h] U2 & I = Cast & n = ⫯m
-                      | ∃∃p,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 & ⦃G, L⦄ ⊢ W1 ➡[h] W2 &
-                                            ⦃G, L.ⓛW1⦄ ⊢ T1 ➡[n, h] T2 &
-                                            U1 = ⓛ{p}W1.T1 &
-                                            U2 = ⓓ{p}ⓝW2.V2.T2 & I = Appl
-                      | ∃∃p,V,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V & ⬆*[1] V ≡ V2 &
-                                              ⦃G, L⦄ ⊢ W1 ➡[h] W2 & ⦃G, L.ⓓW1⦄ ⊢ T1 ➡[n, h] T2 &
-                                              U1 = ⓓ{p}W1.T1 &
-                                              U2 = ⓓ{p}W2.ⓐV2.T2 & I = Appl.
-#n #h #I #G #L #V1 #U1 #U2 * #c #Hc #H elim (cpg_inv_flat1 … H) -H *
-[ #cV #cT #V2 #T2 #HV12 #HT12 #H1 #H2 destruct
-  elim (isrt_inv_max … Hc) -Hc #nV #nT #HcV #HcT #H destruct
-  elim (isrt_inv_shift … HcV) -HcV #HcV #H destruct
-  /4 width=5 by or5_intro0, ex3_2_intro, ex2_intro/
-| #cU #U12 #H1 #H2 destruct
-  /5 width=3 by isrt_inv_plus_O_dx, or5_intro1, conj, ex2_intro/
-| #cU #H12 #H1 #H2 destruct
-  elim (isrt_inv_plus_SO_dx … Hc) -Hc // #m #Hc #H destruct
-  /4 width=3 by or5_intro2, ex3_intro, ex2_intro/
-| #cV #cW #cT #p #V2 #W1 #W2 #T1 #T2 #HV12 #HW12 #HT12 #H1 #H2 #H3 #H4 destruct
-  lapply (isrt_inv_plus_O_dx … Hc ?) -Hc // #Hc
-  elim (isrt_inv_max … Hc) -Hc #n0 #nT #Hc #HcT #H destruct
-  elim (isrt_inv_max … Hc) -Hc #nV #nW #HcV #HcW #H destruct
-  elim (isrt_inv_shift … HcV) -HcV #HcV #H destruct
-  elim (isrt_inv_shift … HcW) -HcW #HcW #H destruct
-  /4 width=11 by or5_intro3, ex6_6_intro, ex2_intro/
-| #cV #cW #cT #p #V #V2 #W1 #W2 #T1 #T2 #HV1 #HV2 #HW12 #HT12 #H1 #H2 #H3 #H4 destruct
-  lapply (isrt_inv_plus_O_dx … Hc ?) -Hc // #Hc
-  elim (isrt_inv_max … Hc) -Hc #n0 #nT #Hc #HcT #H destruct
-  elim (isrt_inv_max … Hc) -Hc #nV #nW #HcV #HcW #H destruct
-  elim (isrt_inv_shift … HcV) -HcV #HcV #H destruct
-  elim (isrt_inv_shift … HcW) -HcW #HcW #H destruct
-  /4 width=13 by or5_intro4, ex7_7_intro, ex2_intro/
-]
-qed-.
-
 (* Basic_1: includes: pr0_gen_appl pr2_gen_appl *)
 (* Basic_2A1: includes: cpr_inv_appl1 *)
 lemma cpm_inv_appl1: ∀n,h,G,L,V1,U1,U2. ⦃G, L⦄ ⊢ ⓐ V1.U1 ➡[n, h] U2 →
@@ -303,14 +260,15 @@ lemma cpm_inv_appl1: ∀n,h,G,L,V1,U1,U2. ⦃G, L⦄ ⊢ ⓐ V1.U1 ➡[n, h] U2 
 qed-.
 
 lemma cpm_inv_cast1: ∀n,h,G,L,V1,U1,U2. ⦃G, L⦄ ⊢ ⓝV1.U1 ➡[n, h] U2 →
-                     ∨∨ ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 & ⦃G, L⦄ ⊢ U1 ➡[n,h] T2 &
+                     ∨∨ ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡[n, h] V2 & ⦃G, L⦄ ⊢ U1 ➡[n, h] T2 &
                                  U2 = ⓝV2.T2
                       | ⦃G, L⦄ ⊢ U1 ➡[n, h] U2
                       | ∃∃m. ⦃G, L⦄ ⊢ V1 ➡[m, h] U2 & n = ⫯m.
 #n #h #G #L #V1 #U1 #U2 * #c #Hc #H elim (cpg_inv_cast1 … H) -H *
-[ #cV #cT #V2 #T2 #HV12 #HT12 #H1 #H2 destruct
+[ #cV #cT #V2 #T2 #HV12 #HT12 #HcVT #H1 #H2 destruct
   elim (isrt_inv_max … Hc) -Hc #nV #nT #HcV #HcT #H destruct
-  elim (isrt_inv_shift … HcV) -HcV #HcV #H destruct
+  lapply (isrt_eq_t_trans … HcV HcVT) -HcVT #H
+  lapply (isrt_inj … H HcT) -H #H destruct <idempotent_max
   /4 width=5 by or3_intro0, ex3_2_intro, ex2_intro/
 | #cU #U12 #H destruct
   /4 width=3 by isrt_inv_plus_O_dx, or3_intro1, ex2_intro/

@@ -83,13 +83,13 @@ qed-.
 lemma isrt_inv_plus_O_dx: ∀n,c1,c2. 𝐑𝐓⦃n, c1 + c2⦄ → 𝐑𝐓⦃0, c2⦄ → 𝐑𝐓⦃n, c1⦄.
 #n #c1 #c2 #H #H2
 elim (isrt_inv_plus … H) -H #n1 #n2 #Hn1 #Hn2 #H destruct
-lapply (isrt_mono … Hn2 H2) -c2 #H destruct //
+lapply (isrt_inj … Hn2 H2) -c2 #H destruct //
 qed-.
 
 lemma isrt_inv_plus_SO_dx: ∀n,c1,c2. 𝐑𝐓⦃n, c1 + c2⦄ → 𝐑𝐓⦃1, c2⦄ →
                            ∃∃m. 𝐑𝐓⦃m, c1⦄ & n = ⫯m.
 #n #c1 #c2 #H #H2
 elim (isrt_inv_plus … H) -H #n1 #n2 #Hn1 #Hn2 #H destruct
-lapply (isrt_mono … Hn2 H2) -c2 #H destruct
+lapply (isrt_inj … Hn2 H2) -c2 #H destruct
 /2 width=3 by ex2_intro/
 qed-.
