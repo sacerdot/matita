@@ -60,7 +60,7 @@ qed-.
 (* Inversion lemmas with generic slicing for local environments *************)
 
 (* Basic_2A1: includes: cpx_inv_lift1 *)
-lemma cpx_inv_lift1: ∀h,G. d_deliftable2_sn (cpx h G).
+lemma cpx_inv_lifts: ∀h,G. d_deliftable2_sn (cpx h G).
 #h #G #L #U1 #U2 * #cU #HU12 #b #f #K #HLK #T1 #HTU1
 elim (cpg_inv_lifts1 … HU12 … HLK … HTU1) -L -U1
 /3 width=4 by ex2_intro, ex_intro/

@@ -12,13 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_transition/cpg_lsubr.ma".
-include "basic_2/rt_transition/cpx.ma".
+include "basic_2/rt_transition/cpg_simple.ma".
+include "basic_2/rt_transition/cpm.ma".
 
-(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS *************)
+(* T-BOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS ***************)
 
-(* Properties with restricted refinement for local environments *************)
+(* Properties with simple terms *********************************************)
 
-lemma lsubr_cpx_trans: ∀h,G. lsub_trans … (cpx h G) lsubr.
-#h #G #L1 #T1 #T2 * /3 width=4 by lsubr_cpg_trans, ex_intro/
+(* Basic_2A1: includes: cpr_inv_appl1_simple *)
+lemma cpm_inv_appl1_simple: ∀n,h,G,L,V1,T1,U. ⦃G, L⦄ ⊢ ⓐV1.T1 ➡[n, h] U → 𝐒⦃T1⦄ →
+                            ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 & ⦃G, L⦄ ⊢ T1 ➡[n, h] T2 &
+                                     U = ⓐV2.T2.
+#n #h #G #L #V1 #T1 #U * #c #Hc #H #HT1 elim (cpg_inv_appl1_simple … H HT1) -H -HT1
+#cV #cT #V2 #T2 #HV12 #HT12 #H1 #H2 destruct elim (isrt_inv_max … Hc) -Hc
+#nV #nT #HnV #HnT #H destruct elim (isrt_inv_shift … HnV) -HnV
+#HnV #H destruct /3 width=5 by ex3_2_intro, ex2_intro/
 qed-.

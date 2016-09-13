@@ -142,12 +142,13 @@ table {
              [ "cpx_lreq" + "cpx_fqus" + "cpx_llpx_sn" + "cpx_lleq" * ]
           }
         ]
-        [ { "context-sensitive reduction" * } {
-             [ "lpr ( ⦃?,?⦄ ⊢ ➡ ? )" "lpr_drop" + "lpr_lpr" * ]
-             [ "cpr ( ⦃?,?⦄ ⊢ ? ➡ ? )" "cpr_lift" + "cpr_llpx_sn" + "cpr_cir" * ]
+*)
+        [ { "t-bound context-sensitive rt-transition" * } {
+(*             [ "lpr ( ⦃?,?⦄ ⊢ ➡ ? )" "lpr_drop" + "lpr_lpr" * ] *)
+             [ "cpr ( ⦃?,?⦄ ⊢ ? ➡[?] ? )" "cpr_drops" (* + "cpr_llpx_sn" + "cpr_cir" *) * ]
+             [ "cpm ( ⦃?,?⦄ ⊢ ? ➡[?,?] ? )" "cpm_simple" + "cpm_drops" + "cpm_lsubr" + "cpm_cpx" * ]
           }
         ]
-*)
         [ { "uncounted context-sensitive rt-transition" * } {
              [ "lfpx ( ⦃?,?⦄ ⊢ ⬈[?,?] ? )" "lfpx_length" + "lfpx_drops" + "lfpx_fqup" * ]
              [ "cpx ( ⦃?,?⦄ ⊢ ? ⬈[?] ? )" "cpx_simple" + "cpx_drops" + "cpx_lsubr" * ]

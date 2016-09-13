@@ -12,13 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_transition/cpg_lsubr.ma".
 include "basic_2/rt_transition/cpx.ma".
+include "basic_2/rt_transition/cpm.ma".
 
-(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS *************)
+(* T-BOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS ***************)
 
-(* Properties with restricted refinement for local environments *************)
+(* Forward lemmas with uncounted context-sensitive rt-transition for terms **)
 
-lemma lsubr_cpx_trans: ∀h,G. lsub_trans … (cpx h G) lsubr.
-#h #G #L1 #T1 #T2 * /3 width=4 by lsubr_cpg_trans, ex_intro/
+(* Basic_2A1: includes: cpr_cpx *)
+lemma cpm_fwd_cpx: ∀n,h,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[n, h] T2 → ⦃G, L⦄ ⊢ T1 ⬈[h] T2.
+#n #h #G #L #T1 #T2 * #c #Hc #H elim H -L -T1 -T2
+/2 width=3 by cpx_theta, cpx_beta, cpx_ee, cpx_eps, cpx_zeta, cpx_flat, cpx_bind, cpx_lref, cpx_delta/
 qed-.
