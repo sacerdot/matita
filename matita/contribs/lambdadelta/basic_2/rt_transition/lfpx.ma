@@ -55,14 +55,14 @@ lemma lfpx_inv_atom_dx: ∀h,I,G,Y1. ⦃G, Y1⦄ ⊢ ⬈[h, ⓪{I}] ⋆ → Y1 =
 /2 width=3 by lfxs_inv_atom_dx/ qed-.
 
 lemma lfpx_inv_zero: ∀h,G,Y1,Y2. ⦃G, Y1⦄ ⊢ ⬈[h, #0] Y2 →
-                     (Y1 = ⋆ ∧ Y2 = ⋆) ∨ 
+                     (Y1 = ⋆ ∧ Y2 = ⋆) ∨
                      ∃∃I,L1,L2,V1,V2. ⦃G, L1⦄ ⊢ ⬈[h, V1] L2 &
                                       ⦃G, L1⦄ ⊢ V1 ⬈[h] V2 &
                                       Y1 = L1.ⓑ{I}V1 & Y2 = L2.ⓑ{I}V2.
 /2 width=1 by lfxs_inv_zero/ qed-.
 
 lemma lfpx_inv_lref: ∀h,G,Y1,Y2,i. ⦃G, Y1⦄ ⊢ ⬈[h, #⫯i] Y2 →
-                     (Y1 = ⋆ ∧ Y2 = ⋆) ∨ 
+                     (Y1 = ⋆ ∧ Y2 = ⋆) ∨
                      ∃∃I,L1,L2,V1,V2. ⦃G, L1⦄ ⊢ ⬈[h, #i] L2 &
                                       Y1 = L1.ⓑ{I}V1 & Y2 = L2.ⓑ{I}V2.
 /2 width=1 by lfxs_inv_lref/ qed-.
@@ -97,7 +97,7 @@ lemma lfpx_inv_lref_pair_dx: ∀h,I,G,Y1,L2,V2,i. ⦃G, Y1⦄ ⊢ ⬈[h, #⫯i] 
 
 (* Basic forward lemmas *****************************************************)
 
-lemma lfpx_fwd_bind_sn: ∀h,p,I,G,L1,L2,V,T. 
+lemma lfpx_fwd_bind_sn: ∀h,p,I,G,L1,L2,V,T.
                         ⦃G, L1⦄ ⊢ ⬈[h, ⓑ{p,I}V.T] L2 → ⦃G, L1⦄ ⊢ ⬈[h, V] L2.
 /2 width=4 by lfxs_fwd_bind_sn/ qed-.
 

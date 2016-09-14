@@ -1,37 +1,3 @@
-(**************************************************************************)
-(*       ___                                                              *)
-(*      ||M||                                                             *)
-(*      ||A||       A project by Andrea Asperti                           *)
-(*      ||T||                                                             *)
-(*      ||I||       Developers:                                           *)
-(*      ||T||         The HELM team.                                      *)
-(*      ||A||         http://helm.cs.unibo.it                             *)
-(*      \   /                                                             *)
-(*       \ /        This file is distributed under the terms of the       *)
-(*        v         GNU General Public License Version 2                  *)
-(*                                                                        *)
-(**************************************************************************)
-
-include "basic_2/substitution/lpx_sn_drop.ma".
-include "basic_2/substitution/fquq_alt.ma".
-include "basic_2/reduction/cpr_lift.ma".
-include "basic_2/reduction/lpr.ma".
-
-(* SN PARALLEL REDUCTION FOR LOCAL ENVIRONMENTS *****************************)
-
-(* Properties on local environment slicing ***********************************)
-
-(* Basic_1: includes: wcpr0_drop *)
-lemma lpr_drop_conf: ∀G. dropable_sn (lpr G).
-/3 width=6 by lpx_sn_deliftable_dropable, cpr_inv_lift1/ qed-.
-
-(* Basic_1: includes: wcpr0_drop_back *)
-lemma drop_lpr_trans: ∀G. dedropable_sn (lpr G).
-/3 width=10 by lpx_sn_liftable_dedropable, cpr_lift/ qed-.
-
-lemma lpr_drop_trans_O1: ∀G. dropable_dx (lpr G).
-/2 width=3 by lpx_sn_dropable/ qed-.
-
 (* Properties on context-sensitive parallel reduction for terms *************)
 
 lemma fqu_cpr_trans_dx: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T2⦄ →
