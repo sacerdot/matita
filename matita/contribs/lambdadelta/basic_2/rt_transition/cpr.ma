@@ -107,7 +107,3 @@ qed-.
             pr2_gen_csort pr2_gen_cflat pr2_gen_cbind
             pr2_gen_ctail pr2_ctail
 *)
-(* Basic_1: removed local theorems 4:
-            pr0_delta_eps pr0_cong_delta
-            pr2_free_free pr2_free_delta
-*)

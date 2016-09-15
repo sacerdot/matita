@@ -30,3 +30,11 @@ lemma lfpx_drops_conf: ∀h,G. dropable_sn (cpx h G).
 
 lemma lfpx_drops_trans: ∀h,G. dropable_dx (cpx h G).
 /2 width=5 by lfxs_dropable_dx/ qed-.
+
+lemma lfpx_inv_lref_sn: ∀h,G,L1,L2,i. ⦃G, L1⦄ ⊢ ⬈[h, #i] L2 → ∀I,K1,V1. ⬇*[i] L1 ≡ K1.ⓑ{I}V1 →
+                        ∃∃K2,V2. ⬇*[i] L2 ≡ K2.ⓑ{I}V2 & ⦃G, K1⦄ ⊢ ⬈[h, V1] K2 & ⦃G, K1⦄ ⊢ V1 ⬈[h] V2.
+/2 width=3 by lfxs_inv_lref_sn/ qed-.
+
+lemma lfpx_inv_lref_dx: ∀h,G,L1,L2,i. ⦃G, L1⦄ ⊢ ⬈[h, #i] L2 → ∀I,K2,V2. ⬇*[i] L2 ≡ K2.ⓑ{I}V2 →
+                        ∃∃K1,V1. ⬇*[i] L1 ≡ K1.ⓑ{I}V1 & ⦃G, K1⦄ ⊢ ⬈[h, V1] K2 & ⦃G, K1⦄ ⊢ V1 ⬈[h] V2.
+/2 width=3 by lfxs_inv_lref_dx/ qed-.

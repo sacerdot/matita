@@ -46,6 +46,12 @@ lemma lfpr_gref: ∀h,I,G,L1,L2,V1,V2,l.
                  ⦃G, L1⦄ ⊢ ➡[h, §l] L2 → ⦃G, L1.ⓑ{I}V1⦄ ⊢ ➡[h, §l] L2.ⓑ{I}V2.
 /2 width=1 by lfxs_gref/ qed.
 
+lemma lfpr_pair_repl_dx: ∀h,I,G,L1,L2,T,V,V1.
+                         ⦃G, L1.ⓑ{I}V⦄ ⊢ ➡[h, T] L2.ⓑ{I}V1 →
+                         ∀V2. ⦃G, L1⦄ ⊢ V ➡[h] V2 →
+                         ⦃G, L1.ⓑ{I}V⦄ ⊢ ➡[h, T] L2.ⓑ{I}V2.
+/2 width=2 by lfxs_pair_repl_dx/ qed-.
+
 (* Basic inversion lemmas ***************************************************)
 
 lemma lfpr_inv_atom_sn: ∀h,I,G,Y2. ⦃G, ⋆⦄ ⊢ ➡[h, ⓪{I}] Y2 → Y2 = ⋆.
@@ -117,14 +123,16 @@ lemma lfpr_fwd_pair_sn: ∀h,I,G,L1,L2,V,T.
                         ⦃G, L1⦄ ⊢ ➡[h, ②{I}V.T] L2 → ⦃G, L1⦄ ⊢ ➡[h, V] L2.
 /2 width=3 by lfxs_fwd_pair_sn/ qed-.
 
-(* Basic_2A1: removed theorems 11:
+(* Basic_2A1: removed theorems 14:
               lpr_inv_atom1 lpr_inv_pair1 lpr_inv_atom2 lpr_inv_pair2
               lpr_refl lpr_pair
               lpr_fwd_length lpr_lpx
               lpr_drop_conf drop_lpr_trans lpr_drop_trans_O1
+              cpr_conf_lpr lpr_cpr_conf_dx lpr_cpr_conf_sn
 *)
-(* Basic_1: removed theorems 7: wcpr0_gen_sort wcpr0_gen_head
-                                wcpr0_getl wcpr0_getl_back
-                                pr0_subst1_back
-                                wcpr0_drop wcpr0_drop_back
+(* Basic_1: removed theorems 7:
+            wcpr0_gen_sort wcpr0_gen_head
+            wcpr0_getl wcpr0_getl_back
+            pr0_subst1_back
+            wcpr0_drop wcpr0_drop_back
 *)

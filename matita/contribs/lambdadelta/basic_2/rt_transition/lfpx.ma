@@ -46,6 +46,12 @@ lemma lfpx_gref: ∀h,I,G,L1,L2,V1,V2,l.
                  ⦃G, L1⦄ ⊢ ⬈[h, §l] L2 → ⦃G, L1.ⓑ{I}V1⦄ ⊢ ⬈[h, §l] L2.ⓑ{I}V2.
 /2 width=1 by lfxs_gref/ qed.
 
+lemma lfpx_pair_repl_dx: ∀h,I,G,L1,L2,T,V,V1.
+                         ⦃G, L1.ⓑ{I}V⦄ ⊢ ⬈[h, T] L2.ⓑ{I}V1 →
+                         ∀V2. ⦃G, L1⦄ ⊢ V ⬈[h] V2 →
+                         ⦃G, L1.ⓑ{I}V⦄ ⊢ ⬈[h, T] L2.ⓑ{I}V2.
+/2 width=2 by lfxs_pair_repl_dx/ qed-.
+
 (* Basic inversion lemmas ***************************************************)
 
 lemma lfpx_inv_atom_sn: ∀h,I,G,Y2. ⦃G, ⋆⦄ ⊢ ⬈[h, ⓪{I}] Y2 → Y2 = ⋆.

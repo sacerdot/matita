@@ -17,7 +17,7 @@ include "basic_2/static/lfxs.ma".
 
 (* GENERIC EXTENSION ON REFERRED ENTRIES OF A CONTEXT-SENSITIVE REALTION ****)
 
-(* Main properties ******************************************************)
+(* Main properties **********************************************************)
 
 theorem lfxs_bind: ∀R,p,I,L1,L2,V1,V2,T.
                    L1 ⦻*[R, V1] L2 → L1.ⓑ{I}V1 ⦻*[R, T] L2.ⓑ{I}V2 →

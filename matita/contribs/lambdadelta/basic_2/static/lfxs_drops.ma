@@ -78,3 +78,17 @@ lemma lfxs_inv_lift_bi: ∀R,L1,L2,U. L1 ⦻*[R, U] L2 →
 elim (lfxs_dropable_sn … HLK1 … HL12 … HTU) -L1 -U // #Y #HK12 #HY
 lapply (drops_mono … HY … HLK2) -L2 -i #H destruct //
 qed-.
+
+lemma lfxs_inv_lref_sn: ∀R,L1,L2,i. L1 ⦻*[R, #i] L2 → ∀I,K1,V1. ⬇*[i] L1 ≡ K1.ⓑ{I}V1 →
+                        ∃∃K2,V2. ⬇*[i] L2 ≡ K2.ⓑ{I}V2 & K1 ⦻*[R, V1] K2 & R K1 V1 V2.
+#R #L1 #L2 #i #HL12 #I #K1 #V1 #HLK1 elim (lfxs_dropable_sn … HLK1 … HL12 (#0)) -HLK1 -HL12 //
+#Y #HY #HLK2 elim (lfxs_inv_zero_pair_sn … HY) -HY
+#K2 #V2 #HK12 #HV12 #H destruct /2 width=5 by ex3_2_intro/
+qed-.
+
+lemma lfxs_inv_lref_dx: ∀R,L1,L2,i. L1 ⦻*[R, #i] L2 → ∀I,K2,V2. ⬇*[i] L2 ≡ K2.ⓑ{I}V2 →
+                        ∃∃K1,V1. ⬇*[i] L1 ≡ K1.ⓑ{I}V1 & K1 ⦻*[R, V1] K2 & R K1 V1 V2.
+#R #L1 #L2 #i #HL12 #I #K2 #V2 #HLK2 elim (lfxs_dropable_dx … HL12 … HLK2 … (#0)) -HLK2 -HL12 //
+#Y #HLK1 #HY elim (lfxs_inv_zero_pair_dx … HY) -HY
+#K1 #V1 #HK12 #HV12 #H destruct /2 width=5 by ex3_2_intro/
+qed-.

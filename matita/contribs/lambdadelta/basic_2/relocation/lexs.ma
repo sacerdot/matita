@@ -181,6 +181,22 @@ lemma lexs_refl: ∀RN,RP,f.
 #L #I #V #IH * * /2 width=1 by lexs_next, lexs_push/
 qed.
 
+lemma lexs_pair_repl: ∀RN,RP,f,I,L1,L2,V1,V2.
+                      L1.ⓑ{I}V1 ⦻*[RN, RP, f] L2.ⓑ{I}V2 →
+                      ∀W1,W2. RN L1 W1 W2 → RP L1 W1 W2 →
+                      L1.ⓑ{I}W1 ⦻*[RN, RP, f] L2.ⓑ{I}W2.
+#RN #RP #f #I #L1 #L2 #V1 #V2 #HL12 #W1 #W2 #HN #HP
+elim (lexs_fwd_pair … HL12) -HL12 /2 width=1 by lexs_inv_tl/
+qed-.
+
+lemma lexs_co: ∀RN1,RP1,RN2,RP2.
+               (∀L1,T1,T2. RN1 L1 T1 T2 → RN2 L1 T1 T2) →
+               (∀L1,T1,T2. RP1 L1 T1 T2 → RP2 L1 T1 T2) →
+               ∀f,L1,L2. L1 ⦻*[RN1, RP1, f] L2 → L1 ⦻*[RN2, RP2, f] L2.
+#RN1 #RP1 #RN2 #RP2 #HRN #HRP #f #L1 #L2 #H elim H -f -L1 -L2
+/3 width=1 by lexs_atom, lexs_next, lexs_push/
+qed-.
+
 lemma sle_lexs_trans: ∀RN,RP. (∀L,T1,T2. RN L T1 T2 → RP L T1 T2) →
                       ∀f2,L1,L2. L1 ⦻*[RN, RP, f2] L2 →
                       ∀f1. f1 ⊆ f2 → L1 ⦻*[RN, RP, f1] L2.
@@ -205,12 +221,4 @@ lemma sle_lexs_conf: ∀RN,RP. (∀L,T1,T2. RP L T1 T2 → RN L T1 T2) →
 | elim (sle_inv_nx … H) -H [2,3: // ]
   #g2 #H #H2 destruct /3 width=5 by lexs_next/
 ]
-qed-.
-
-lemma lexs_co: ∀RN1,RP1,RN2,RP2.
-               (∀L1,T1,T2. RN1 L1 T1 T2 → RN2 L1 T1 T2) →
-               (∀L1,T1,T2. RP1 L1 T1 T2 → RP2 L1 T1 T2) →
-               ∀f,L1,L2. L1 ⦻*[RN1, RP1, f] L2 → L1 ⦻*[RN2, RP2, f] L2.
-#RN1 #RP1 #RN2 #RP2 #HRN #HRP #f #L1 #L2 #H elim H -f -L1 -L2
-/3 width=1 by lexs_atom, lexs_next, lexs_push/
 qed-.
