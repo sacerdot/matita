@@ -34,16 +34,17 @@
 
    <subsection name="A2">Stage "A2": "Extending the Applicability Condition"</subsection>
 
+   <news class="alpha" date="2016 September 15.">
+         Confluence for context-sensitive parallel r-transition on terms.
+   </news>
    <news class="alpha" date="2016 April 16.">
          Grammatical component reconstructed:
          grammar, relocation, s_transition, s_computation, static
          (anniversary milestone).
    </news>
-
    <news class="alpha" date="2016 March 25.">
          Relocation with reference transforming maps (rtmap).
    </news>
-
    <news class="alpha" date="2015 October 9.">
          λδ version 2A2 is started.
    </news>
