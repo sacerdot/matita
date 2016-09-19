@@ -298,7 +298,7 @@ lapply (lifts_mono … HX … HVU) -HX #H destruct
 /4 width=7 by cpm_bind, cpr_flat, ex2_intro/ (**) (* full auto not tried *)
 qed-.
 
-theorem cpr_conf_lfpr: ∀h,G. lfxs_confluent (cpm 0 h G) (cpm 0 h G) (cpm 0 h G) (cpm 0 h G).
+theorem cpr_conf_lfpr: ∀h,G. R_confluent_lfxs (cpm 0 h G) (cpm 0 h G) (cpm 0 h G) (cpm 0 h G).
 #h #G #L0 #T0 @(fqup_wf_ind_eq … G L0 T0) -G -L0 -T0 #G #L #T #IH #G0 #L0 * [| * ]
 [ #I0 #HG #HL #HT #T1 #H1 #T2 #H2 #L1 #HL01 #L2 #HL02 destruct
   elim (cpr_inv_atom1_drops … H1) -H1
@@ -371,13 +371,3 @@ lemma lfpr_cpr_conf_sn: ∀h,G,L0,T0,T1. ⦃G, L0⦄ ⊢ T0 ➡[h] T1 → ∀L1.
 #h #G #L0 #T0 #T1 #HT01 #L1 #HL01
 elim (cpr_conf_lfpr … HT01 T0 … L0 … HL01) /2 width=3 by ex2_intro/
 qed-.
-
-(* Main properties **********************************************************)
-
-(*
-
-theorem lpr_conf: ∀G. confluent … (lpr G).
-/3 width=6 by lpx_sn_conf, cpr_conf_lpr/
-qed-.
-
-*)

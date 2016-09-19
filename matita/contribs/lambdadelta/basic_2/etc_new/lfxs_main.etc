@@ -1,0 +1,25 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/static/lfxs_lfxs.ma".
+include "basic_2/static/frees_frees.ma".
+
+(* GENERIC EXTENSION ON REFERRED ENTRIES OF A CONTEXT-SENSITIVE REALTION ****)
+
+theorem lfxs_conf: ∀R. R_confluent_lfxs R R R R →
+                   ∀T. confluent … (lfxs R T).
+#R #H1R #T #L0 #L1 * #f1 #Hf1 #HL01 #L2 * #f #Hf #HL02
+lapply (frees_mono … Hf1 … Hf) -Hf1 #Hf12
+lapply (lexs_eq_repl_back … HL01 … Hf12) -f1 #HL01
+elim (lexs_conf … HL01 … HL02)  

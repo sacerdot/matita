@@ -1,0 +1,47 @@
+include "basic_2/notation/functions/droppreds_3.ma".
+include "basic_2/grammar/lenv_length.ma".
+
+axiom pred_minus: ∀x,y. y < x → ⫰(x - y) = x - ⫯y. 
+
+(*
+axiom drops_T_isuni_inv_refl: ∀n,L. ⬇*[n] L ≡ L → n = 0.
+
+lemma le_succ_trans: ∀m,n. ⫯m ≤ n → m ≤ n.
+/2 width=1 by lt_to_le/ qed-.
+*)
+
+lemma tls_pred: ∀f,n. 0 < n → ⫱*[n] f = ⫱ ⫱*[⫰n] f.
+#f #n #Hn >tls_S >S_pred //
+qed-.
+
+definition ltls (f): lenv → lenv → rtmap ≝ λL,K. ⫱*[|L|-|K|] f.
+
+interpretation "ltls (rtmap)" 'DropPreds L K f = (ltls f L K).
+
+lemma ltls_refl: ∀f,L1,L2. |L1| ≤ |L2| → ⫱*[L1, L2] f = f.
+#f #L1 #L2 #HL12 whd in ⊢ (??%?); >(eq_minus_O … HL12) -HL12 //
+qed.
+
+lemma ltls_pair2: ∀f,I,L1,L2,V. |L2| < |L1| → ⫱⫱*[L1, L2.ⓑ{I}V] f = ⫱*[L1, L2] f.
+#f #I #L1 #L2 #V #HL12 whd in ⊢ (??(?%)%); <pred_minus // <tls_pred //
+/2 width=1 by lt_plus_to_minus_r/
+qed-.
+
+lemma ltls_pair1_push: ∀f,I,L1,L2,V. |L2| ≤ |L1| → ⫱*[L1.ⓑ{I}V, L2] ↑f = ⫱*[L1, L2] f.
+#f #I #L1 #L2 #V #HL12 whd in ⊢ (??%%); >minus_Sn_m //
+qed.
+
+lemma ltls_pair1_next: ∀f,I,L1,L2,V. |L2| ≤ |L1| → ⫱*[L1.ⓑ{I}V, L2] ⫯f = ⫱*[L1, L2] f.
+#f #I #L1 #L2 #V #HL12 whd in ⊢ (??%%); >minus_Sn_m //
+qed.
+
+lemma ltls_sle_pair: ∀f1,f2,L1,L2. ⫱*[L2, L1] f2 ⊆ ⫱*[L1, L2] f1 →
+                     ∀I,V1. ⫱*[L2, L1.ⓑ{I}V1] f2 ⊆ ⫱*[L1.ⓑ{I}V1, L2] ⫯f1.
+#f1 #f2 #L1 #L2 elim (lt_or_ge (|L1|) (|L2|))
+[ #HL12 >ltls_refl in ⊢ (??%→?); /2 width=1 by lt_to_le/
+  #Hf21 #I #V1 >ltls_refl in ⊢ (??%); //
+  <(ltls_pair2 … I … V1 HL12) in Hf21; -HL12 /2 width=1 by sle_inv_tl1/
+| #HL21 >ltls_refl // #Hf21 #I #V1 >ltls_refl /2 width=1 by le_S/
+  >ltls_pair1_next //
+]
+qed.

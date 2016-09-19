@@ -26,12 +26,12 @@ definition lfxs (R) (T): relation lenv ≝
 interpretation "generic extension on referred entries (local environment)"
    'RelationStar R T L1 L2 = (lfxs R T L1 L2).
 
-definition lfxs_confluent: relation4 (relation3 lenv term term)
-                                     (relation3 lenv term term) … ≝
-                           λR1,R2,RP1,RP2.
-                           ∀L0,T0,T1. R1 L0 T0 T1 → ∀T2. R2 L0 T0 T2 →
-                           ∀L1. L0 ⦻*[RP1, T0] L1 → ∀L2. L0 ⦻*[RP2, T0] L2 →
-                           ∃∃T. R2 L1 T1 T & R1 L2 T2 T.
+definition R_confluent_lfxs: relation4 (relation3 lenv term term)
+                                       (relation3 lenv term term) … ≝
+                             λR1,R2,RP1,RP2.
+                             ∀L0,T0,T1. R1 L0 T0 T1 → ∀T2. R2 L0 T0 T2 →
+                             ∀L1. L0 ⦻*[RP1, T0] L1 → ∀L2. L0 ⦻*[RP2, T0] L2 →
+                             ∃∃T. R2 L1 T1 T & R1 L2 T2 T.
 
 (* Basic properties ***********************************************************)
 
@@ -72,6 +72,10 @@ lemma lfxs_co: ∀R1,R2. (∀L,T1,T2. R1 L T1 T2 → R2 L T1 T2) →
 #R1 #R2 #HR #L1 #L2 #T * /4 width=7 by lexs_co, ex2_intro/
 qed-.
 
+lemma pippo: ∀R1,R2,RP1,RP2. R_confluent_lfxs R1 R2 RP1 RP2 →
+             lexs_confluent R1 R2 RP1 cfull RP2 cfull.
+#R1 #R2 #RP1 #RP2 #HR #f #L0 #T0 #T1 #HT01 #T2 #HT02 #L1 #HL01 #L2 #HL02  
+
 (* Basic inversion lemmas ***************************************************)
 
 lemma lfxs_inv_atom_sn: ∀R,I,Y2. ⋆ ⦻*[R, ⓪{I}] Y2 → Y2 = ⋆.
@@ -80,6 +84,19 @@ qed-.
 
 lemma lfxs_inv_atom_dx: ∀R,I,Y1. Y1 ⦻*[R, ⓪{I}] ⋆ → Y1 = ⋆.
 #R #I #Y1 * /2 width=4 by lexs_inv_atom2/
+qed-.
+
+lemma lfxs_inv_sort: ∀R,Y1,Y2,s. Y1 ⦻*[R, ⋆s] Y2 →
+                     (Y1 = ⋆ ∧ Y2 = ⋆) ∨ 
+                     ∃∃I,L1,L2,V1,V2. L1 ⦻*[R, ⋆s] L2 &
+                                      Y1 = L1.ⓑ{I}V1 & Y2 = L2.ⓑ{I}V2.
+#R * [ | #Y1 #I #V1 ] #Y2 #s * #f #H1 #H2
+[ lapply (lexs_inv_atom1 … H2) -H2 /3 width=1 by or_introl, conj/
+| lapply (frees_inv_sort … H1) -H1 #Hf
+  elim (isid_inv_gen … Hf) -Hf #g #Hg #H destruct
+  elim (lexs_inv_push1 … H2) -H2 #L2 #V2 #H12 #_ #H destruct
+  /5 width=8 by frees_sort_gen, ex3_5_intro, ex2_intro, or_intror/
+]
 qed-.
 
 lemma lfxs_inv_zero: ∀R,Y1,Y2. Y1 ⦻*[R, #0] Y2 →
@@ -104,6 +121,19 @@ lemma lfxs_inv_lref: ∀R,Y1,Y2,i. Y1 ⦻*[R, #⫯i] Y2 →
 ]
 qed-.
 
+lemma lfxs_inv_gref: ∀R,Y1,Y2,l. Y1 ⦻*[R, §l] Y2 →
+                     (Y1 = ⋆ ∧ Y2 = ⋆) ∨ 
+                     ∃∃I,L1,L2,V1,V2. L1 ⦻*[R, §l] L2 &
+                                      Y1 = L1.ⓑ{I}V1 & Y2 = L2.ⓑ{I}V2.
+#R * [ | #Y1 #I #V1 ] #Y2 #l * #f #H1 #H2
+[ lapply (lexs_inv_atom1 … H2) -H2 /3 width=1 by or_introl, conj/
+| lapply (frees_inv_gref … H1) -H1 #Hf
+  elim (isid_inv_gen … Hf) -Hf #g #Hg #H destruct
+  elim (lexs_inv_push1 … H2) -H2 #L2 #V2 #H12 #_ #H destruct
+  /5 width=8 by frees_gref_gen, ex3_5_intro, ex2_intro, or_intror/
+]
+qed-.
+
 lemma lfxs_inv_bind: ∀R,p,I,L1,L2,V1,V2,T. L1 ⦻*[R, ⓑ{p,I}V1.T] L2 → R L1 V1 V2 →
                      L1 ⦻*[R, V1] L2 ∧ L1.ⓑ{I}V1 ⦻*[R, T] L2.ⓑ{I}V2.
 #R #p #I #L1 #L2 #V1 #V2 #T * #f #Hf #HL #HV elim (frees_inv_bind … Hf) -Hf
@@ -117,6 +147,22 @@ lemma lfxs_inv_flat: ∀R,I,L1,L2,V,T. L1 ⦻*[R, ⓕ{I}V.T] L2 →
 qed-.
 
 (* Advanced inversion lemmas ************************************************)
+
+lemma lfxs_inv_sort_pair_sn: ∀R,I,Y2,L1,V1,s. L1.ⓑ{I}V1 ⦻*[R, ⋆s] Y2 →
+                             ∃∃L2,V2. L1 ⦻*[R, ⋆s] L2 & Y2 = L2.ⓑ{I}V2.
+#R #I #Y2 #L1 #V1 #s #H elim (lfxs_inv_sort … H) -H *
+[ #H destruct
+| #J #Y1 #L2 #X1 #V2 #Hs #H1 #H2 destruct /2 width=4 by ex2_2_intro/
+]
+qed-.
+
+lemma lfxs_inv_sort_pair_dx: ∀R,I,Y1,L2,V2,s. Y1 ⦻*[R, ⋆s] L2.ⓑ{I}V2 →
+                             ∃∃L1,V1. L1 ⦻*[R, ⋆s] L2 & Y1 = L1.ⓑ{I}V1.
+#R #I #Y1 #L2 #V2 #s #H elim (lfxs_inv_sort … H) -H *
+[ #_ #H destruct
+| #J #L1 #Y2 #V1 #X2 #Hs #H1 #H2 destruct /2 width=4 by ex2_2_intro/
+]
+qed-.
 
 lemma lfxs_inv_zero_pair_sn: ∀R,I,Y2,L1,V1. L1.ⓑ{I}V1 ⦻*[R, #0] Y2 →
                              ∃∃L2,V2. L1 ⦻*[R, V1] L2 & R L1 V1 V2 &
@@ -151,6 +197,22 @@ lemma lfxs_inv_lref_pair_dx: ∀R,I,Y1,L2,V2,i. Y1 ⦻*[R, #⫯i] L2.ⓑ{I}V2 �
 #R #I #Y1 #L2 #V2 #i #H elim (lfxs_inv_lref … H) -H *
 [ #_ #H destruct
 | #J #L1 #Y2 #V1 #X2 #Hi #H1 #H2 destruct /2 width=4 by ex2_2_intro/
+]
+qed-.
+
+lemma lfxs_inv_gref_pair_sn: ∀R,I,Y2,L1,V1,l. L1.ⓑ{I}V1 ⦻*[R, §l] Y2 →
+                             ∃∃L2,V2. L1 ⦻*[R, §l] L2 & Y2 = L2.ⓑ{I}V2.
+#R #I #Y2 #L1 #V1 #l #H elim (lfxs_inv_gref … H) -H *
+[ #H destruct
+| #J #Y1 #L2 #X1 #V2 #Hl #H1 #H2 destruct /2 width=4 by ex2_2_intro/
+]
+qed-.
+
+lemma lfxs_inv_gref_pair_dx: ∀R,I,Y1,L2,V2,l. Y1 ⦻*[R, §l] L2.ⓑ{I}V2 →
+                             ∃∃L1,V1. L1 ⦻*[R, §l] L2 & Y1 = L1.ⓑ{I}V1.
+#R #I #Y1 #L2 #V2 #l #H elim (lfxs_inv_gref … H) -H *
+[ #_ #H destruct
+| #J #L1 #Y2 #V1 #X2 #Hl #H1 #H2 destruct /2 width=4 by ex2_2_intro/
 ]
 qed-.
 
