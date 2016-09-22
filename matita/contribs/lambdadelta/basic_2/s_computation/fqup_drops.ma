@@ -18,7 +18,7 @@ include "basic_2/s_computation/fqup.ma".
 (* PLUS-ITERATED SUPCLOSURE *************************************************)
 
 (* Properties with generic slicing for local environments *******************)
-
+(*
 lemma fqup_drops_succ: ∀G,K,T,l,L,U. ⬇*[⫯l] L ≡ K → ⬆*[⫯l] T ≡ U →
                        ⦃G, L, U⦄ ⊐+ ⦃G, K, T⦄.
 #G #K #T #l elim l -l
@@ -41,6 +41,6 @@ lemma fqup_drops_strap1: ∀G1,G2,L1,K1,K2,T1,T2,U1,l. ⬇*[l] L1 ≡ K1 → ⬆
 | /3 width=5 by fqup_strap1, fqup_drops_succ/
 ]
 qed-.
-
-lemma fqup_lref: ∀I,G,L,K,V,i. ⬇*[i] L ≡ K.ⓑ{I}V → ⦃G, L, #i⦄ ⊐+ ⦃G, K, V⦄.
-/2 width=6 by fqup_drops_strap1/ qed. 
+*)
+axiom fqup_lref: ∀I,G,L,K,V,i. ⬇*[i] L ≡ K.ⓑ{I}V → ⦃G, L, #i⦄ ⊐+ ⦃G, K, V⦄.
+(* /2 width=6 by fqup_drops_strap1/ qed. *)

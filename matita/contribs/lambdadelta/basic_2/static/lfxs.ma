@@ -72,10 +72,6 @@ lemma lfxs_co: ∀R1,R2. (∀L,T1,T2. R1 L T1 T2 → R2 L T1 T2) →
 #R1 #R2 #HR #L1 #L2 #T * /4 width=7 by lexs_co, ex2_intro/
 qed-.
 
-lemma pippo: ∀R1,R2,RP1,RP2. R_confluent_lfxs R1 R2 RP1 RP2 →
-             lexs_confluent R1 R2 RP1 cfull RP2 cfull.
-#R1 #R2 #RP1 #RP2 #HR #f #L0 #T0 #T1 #HT01 #T2 #HT02 #L1 #HL01 #L2 #HL02  
-
 (* Basic inversion lemmas ***************************************************)
 
 lemma lfxs_inv_atom_sn: ∀R,I,Y2. ⋆ ⦻*[R, ⓪{I}] Y2 → Y2 = ⋆.

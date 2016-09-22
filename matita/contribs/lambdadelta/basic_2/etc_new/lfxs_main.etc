@@ -23,3 +23,8 @@ theorem lfxs_conf: ∀R. R_confluent_lfxs R R R R →
 lapply (frees_mono … Hf1 … Hf) -Hf1 #Hf12
 lapply (lexs_eq_repl_back … HL01 … Hf12) -f1 #HL01
 elim (lexs_conf … HL01 … HL02)  
+
+lemma pippo: ∀R1,R2,RP1,RP2. R_confluent_lfxs R1 R2 RP1 RP2 →
+             lexs_confluent R1 R2 RP1 cfull RP2 cfull.
+#R1 #R2 #RP1 #RP2 #HR #f #L0 #T0 #T1 #HT01 #T2 #HT02 #L1 #HL01 #L2
+#HL02

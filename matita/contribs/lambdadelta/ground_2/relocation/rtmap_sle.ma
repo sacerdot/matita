@@ -25,6 +25,13 @@ coinductive sle: relation rtmap ≝
 interpretation "inclusion (rtmap)"
    'subseteq t1 t2 = (sle t1 t2).
 
+(* Basic properties *********************************************************)
+
+corec lemma sle_refl: ∀f. f ⊆ f.
+#f cases (pn_split f) * #g #H
+[ @(sle_push … H H) | @(sle_next … H H) ] -H //
+qed.
+
 (* Basic inversion lemmas ***************************************************)
 
 lemma sle_inv_xp: ∀g1,g2. g1 ⊆ g2 → ∀f2. ↑f2 = g2 →
@@ -65,7 +72,41 @@ lemma sle_inv_nn: ∀g1,g2. g1 ⊆ g2 → ∀f1,f2.  ⫯f1 = g1 → ⫯f2 = g2 �
 #x2 #H #Hx2 destruct lapply (injective_next … Hx2) -Hx2 //
 qed-.
 
-(* properties on isid *******************************************************)
+lemma sle_inv_px: ∀g1,g2. g1 ⊆ g2 → ∀f1. ↑f1 = g1 →
+                  (∃∃f2. f1 ⊆ f2 & ↑f2 = g2) ∨ ∃∃f2. f1 ⊆ f2 & ⫯f2 = g2.
+#g1 #g2 elim (pn_split g2) * #f2 #H2 #H #f1 #H1
+[ lapply (sle_inv_pp … H … H1 H2) | lapply (sle_inv_pn … H … H1 H2) ] -H -H1
+/3 width=3 by ex2_intro, or_introl, or_intror/
+qed-.
+
+(* Main properties **********************************************************)
+
+corec theorem sle_trans: Transitive … sle.
+#f1 #f * -f1 -f
+#f1 #f #g1 #g #Hf #H1 #H #g2 #H0
+[ cases (sle_inv_px … H0 … H) * |*: cases (sle_inv_nx … H0 … H) ] -g
+/3 width=5 by sle_push, sle_next, sle_weak/
+qed-.
+
+(* Properties with tail *****************************************************)
+
+lemma sle_px_tl: ∀g1,g2. g1 ⊆ g2 → ∀f1. ↑f1 = g1 → f1 ⊆ ⫱g2.
+#g1 #g2 #H #f1 #H1 elim (sle_inv_px … H … H1) -H -H1 * //
+qed.
+
+(* Inversion lemmas with tail ***********************************************)
+
+lemma sle_inv_tl_sn: ∀f1,f2. ⫱f1 ⊆ f2 → f1 ⊆ ⫯f2.
+#f1 elim (pn_split f1) * #g1 #H destruct
+/2 width=5 by sle_next, sle_weak/
+qed-.
+
+lemma sle_inv_tl_dx: ∀f1,f2. f1 ⊆ ⫱f2 → ↑f1 ⊆ f2.
+#f1 #f2 elim (pn_split f2) * #g2 #H destruct
+/2 width=5 by sle_push, sle_weak/
+qed-.
+
+(* Properties with isid *****************************************************)
 
 corec lemma sle_isid_sn: ∀f1. 𝐈⦃f1⦄ → ∀f2. f1 ⊆ f2.
 #f1 * -f1
@@ -73,7 +114,7 @@ corec lemma sle_isid_sn: ∀f1. 𝐈⦃f1⦄ → ∀f2. f1 ⊆ f2.
 /3 width=5 by sle_weak, sle_push/
 qed.
 
-(* inversion lemmas on isid *************************************************)
+(* Inversion lemmas with isid ***********************************************)
 
 corec lemma sle_inv_isid_dx: ∀f1,f2. f1 ⊆ f2 → 𝐈⦃f2⦄ → 𝐈⦃f1⦄.
 #f1 #f2 * -f1 -f2

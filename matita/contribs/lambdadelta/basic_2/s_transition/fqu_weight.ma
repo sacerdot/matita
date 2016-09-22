@@ -22,8 +22,8 @@ include "basic_2/s_transition/fqu.ma".
 
 lemma fqu_fwd_fw: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T2⦄ → ♯{G2, L2, T2} < ♯{G1, L1, T1}.
 #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2 //
-#I #G #L #V #T #U #HTU normalize in ⊢ (?%%); -I
-<(lifts_fwd_tw … HTU) -U /3 width=1 by monotonic_lt_plus_r, monotonic_lt_plus_l/
+#I #I1 #I2 #G #L #V #HI12 normalize in ⊢ (?%%); -I
+<(lifts_fwd_tw … HI12) -I1 /3 width=1 by monotonic_lt_plus_r, monotonic_lt_plus_l/
 qed-.
 
 (* Advanced eliminators *****************************************************)

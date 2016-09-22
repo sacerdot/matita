@@ -265,8 +265,26 @@ lemma lifts_inv_pair_xy_y: ∀I,T,V,f. ⬆*[f] ②{I}V.T ≡ T → ⊥.
 ]
 qed-.
 
+(* Inversion lemmas with uniform relocations ********************************)
+
 lemma lifts_inv_lref1_uni: ∀l,Y,i. ⬆*[l] #i ≡ Y → Y = #(l+i).
 #l #Y #i1 #H elim (lifts_inv_lref1 … H) -H /4 width=4 by at_mono, eq_f/
+qed-.
+
+lemma lifts_inv_lref2_uni: ∀l,X,i2. ⬆*[l] X ≡ #i2 →
+                           ∃∃i1. X = #i1 & i2 = l + i1.
+#l #X #i2 #H elim (lifts_inv_lref2 … H) -H
+/3 width=3 by at_inv_uni, ex2_intro/
+qed-.
+
+lemma lifts_inv_lref2_uni_ge: ∀l,X,i. ⬆*[l] X ≡ #(l + i) → X = #i.
+#l #X #i2 #H elim (lifts_inv_lref2_uni … H) -H
+#i1 #H1 #H2 destruct /4 width=2 by injective_plus_r, eq_f, sym_eq/
+qed-.
+
+lemma lifts_inv_lref2_uni_lt: ∀l,X,i. ⬆*[l] X ≡ #i → i < l → ⊥.
+#l #X #i2 #H elim (lifts_inv_lref2_uni … H) -H
+#i1 #_ #H1 #H2 destruct /2 width=4 by lt_le_false/
 qed-.
 
 (* Basic forward lemmas *****************************************************)
