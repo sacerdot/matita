@@ -15,6 +15,7 @@
 include "ground_2/relocation/rtmap_sand.ma".
 include "ground_2/relocation/rtmap_sor.ma".
 include "basic_2/relocation/lexs.ma".
+include "basic_2/relocation/drops.ma".
 
 (* GENERIC ENTRYWISE EXTENSION OF CONTEXT-SENSITIVE REALTIONS FOR TERMS *****)
 
@@ -42,27 +43,24 @@ theorem lexs_trans (RN) (RP) (f): lexs_transitive RN RN RN RN RP →
 /2 width=9 by lexs_trans_gen/ qed-.
 
 (* Basic_2A1: includes: lpx_sn_conf *)
-theorem lexs_conf (RN1) (RP1) (RN2) (RP2): lexs_confluent RN1 RN2 RN1 RP1 RN2 RP2 →
-                                           lexs_confluent RP1 RP2 RN1 RP1 RN2 RP2 →
-                                           ∀f. confluent2 … (lexs RN1 RP1 f) (lexs RN2 RP2 f).
-#RN1 #RP1 #RN2 #RP2 #HRN #HRP #f #L0
-generalize in match f; -f elim L0 -L0
-[ #f #L1 #HL01 #L2 #HL02 -HRN -HRP
-  lapply (lexs_inv_atom1 … HL01) -HL01 #H destruct
-  lapply (lexs_inv_atom1 … HL02) -HL02 #H destruct
-  /2 width=3 by ex2_intro/
-| #K0 #I #V0 #IH #f #L1 #HL01 #L2 #HL02
-  elim (pn_split f) * #g #H destruct
-  [ elim (lexs_inv_push1 … HL01) -HL01 #K1 #V1 #HK01 #HV01 #H destruct
-    elim (lexs_inv_push1 … HL02) -HL02 #K2 #V2 #HK02 #HV02 #H destruct
-    elim (IH … HK01 … HK02) -IH #K #HK1 #HK2
-    elim (HRP … HV01 … HV02 … HK01 … HK02) -HRP -HRN -K0 -V0
-    /3 width=5 by lexs_push, ex2_intro/
-  | elim (lexs_inv_next1 … HL01) -HL01 #K1 #V1 #HK01 #HV01 #H destruct
-    elim (lexs_inv_next1 … HL02) -HL02 #K2 #V2 #HK02 #HV02 #H destruct
-    elim (IH … HK01 … HK02) -IH #K #HK1 #HK2
-    elim (HRN … HV01 … HV02 … HK01 … HK02) -HRN -HRP -K0 -V0
-    /3 width=5 by lexs_next, ex2_intro/
+theorem lexs_conf (RN1) (RP1) (RN2) (RP2):
+                  ∀L,f.
+                  (∀g,I,K,V,n. ⬇*[n] L ≡ K.ⓑ{I}V →  ⫱*[n] f = ⫯g → lexs_pw_confluent2_R RN1 RN2 RN1 RP1 RN2 RP2 g K V) →
+                  (∀g,I,K,V,n. ⬇*[n] L ≡ K.ⓑ{I}V →  ⫱*[n] f = ↑g → lexs_pw_confluent2_R RP1 RP2 RN1 RP1 RN2 RP2 g K V) →
+                  pw_confluent2 … (lexs RN1 RP1 f) (lexs RN2 RP2 f) L.
+#RN1 #RP1 #RN2 #RP2 #L elim L -L
+[ #f #_ #_ #L1 #H1 #L2 #H2 >(lexs_inv_atom1 … H1) >(lexs_inv_atom1 … H2) -H2 -H1
+  /2 width=3 by lexs_atom, ex2_intro/
+| #L #I #V #IH #f elim (pn_split f) * #g #H destruct
+  #HN #HP #Y1 #H1 #Y2 #H2
+  [ elim (lexs_inv_push1 … H1) -H1 #L1 #V1 #HL1 #HV1 #H destruct
+    elim (lexs_inv_push1 … H2) -H2 #L2 #V2 #HL2 #HV2 #H destruct
+    elim (HP … 0 … HV1 … HV2 … HL1 … HL2) -HV1 -HV2 /2 width=2 by drops_refl/ #V #HV1 #HV2
+    elim (IH … HL1 … HL2) -IH -HL1 -HL2 /3 width=5 by drops_drop, lexs_push, ex2_intro/
+  | elim (lexs_inv_next1 … H1) -H1 #L1 #V1 #HL1 #HV1 #H destruct
+    elim (lexs_inv_next1 … H2) -H2 #L2 #V2 #HL2 #HV2 #H destruct
+    elim (HN … 0 … HV1 … HV2 … HL1 … HL2) -HV1 -HV2 /2 width=2 by drops_refl/ #V #HV1 #HV2
+    elim (IH … HL1 … HL2) -IH -HL1 -HL2 /3 width=5 by drops_drop, lexs_next, ex2_intro/
   ]
 ]
 qed-.

@@ -32,12 +32,14 @@ inductive lexs (RN,RP:relation3 lenv term term): rtmap → relation lenv ≝
 interpretation "generic entrywise extension (local environment)"
    'RelationStar RN RP f L1 L2 = (lexs RN RP f L1 L2).
 
-definition lexs_confluent: relation6 (relation3 lenv term term)
-                                     (relation3 lenv term term) … ≝
-                           λR1,R2,RN1,RP1,RN2,RP2.
-                           ∀f,L0,T0,T1. R1 L0 T0 T1 → ∀T2. R2 L0 T0 T2 →
-                           ∀L1. L0 ⦻*[RN1, RP1, f] L1 → ∀L2. L0 ⦻*[RN2, RP2, f] L2 →
-                           ∃∃T. R2 L1 T1 T & R1 L2 T2 T.
+definition lexs_pw_confluent2_R: relation3 lenv term term → relation3 lenv term term →
+                                 relation3 lenv term term → relation3 lenv term term →
+                                 relation3 lenv term term → relation3 lenv term term →
+                                 relation3 rtmap lenv term ≝
+                                 λR1,R2,RN1,RP1,RN2,RP2,f,L0,T0.
+                                 ∀T1. R1 L0 T0 T1 → ∀T2. R2 L0 T0 T2 →
+                                 ∀L1. L0 ⦻*[RN1, RP1, f] L1 → ∀L2. L0 ⦻*[RN2, RP2, f] L2 →
+                                 ∃∃T. R2 L1 T1 T & R1 L2 T2 T.
 
 definition lexs_transitive: relation5 (relation3 lenv term term)
                                       (relation3 lenv term term) … ≝

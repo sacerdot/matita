@@ -34,9 +34,12 @@ definition left_cancellable: ∀A. ∀R: relation A. Prop ≝ λA,R.
 definition right_cancellable: ∀A. ∀R: relation A. Prop ≝ λA,R.
                               ∀a1,a0. R a1 a0 → ∀a2. R a2 a0 → R a1 a2.
 
-definition confluent2: ∀A. ∀R1,R2: relation A. Prop ≝ λA,R1,R2.
-                       ∀a0,a1. R1 a0 a1 → ∀a2. R2 a0 a2 →
-                       ∃∃a. R2 a1 a & R1 a2 a.
+definition pw_confluent2: ∀A. relation A → relation A → predicate A ≝ λA,R1,R2,a0.
+                          ∀a1. R1 a0 a1 → ∀a2. R2 a0 a2 →
+                          ∃∃a. R2 a1 a & R1 a2 a.
+
+definition confluent2: ∀A. relation (relation A) ≝ λA,R1,R2.
+                       ∀a0. pw_confluent2 A R1 R2 a0.
 
 definition transitive2: ∀A. ∀R1,R2: relation A. Prop ≝ λA,R1,R2.
                         ∀a1,a0. R1 a1 a0 → ∀a2. R2 a0 a2 →
