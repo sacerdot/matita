@@ -279,6 +279,13 @@ lemma sor_tl: ∀f1,f2,f. f1 ⋓ f2 ≡ f → ⫱f1 ⋓ ⫱f2 ≡ ⫱f.
 ] -Hf #g #Hg #H destruct //
 qed.
 
+lemma sor_xxn_tl: ∀g1,g2,g. g1 ⋓ g2 ≡ g → ∀f. ⫯f = g →
+                  (∃∃f1,f2. f1 ⋓ f2 ≡ f & ⫯f1 = g1 & ⫱g2 = f2) ∨
+                  (∃∃f1,f2. f1 ⋓ f2 ≡ f & ⫱g1 = f1 & ⫯f2 = g2).
+#g1 #g2 #g #H #f #H0 elim (sor_inv_xxn … H … H0) -H -H0 *
+/3 width=5 by ex3_2_intro, or_introl, or_intror/
+qed-.
+
 (* Properties with iterated tail ********************************************)
 
 lemma sor_tls: ∀f1,f2,f. f1 ⋓ f2 ≡ f →

@@ -45,8 +45,8 @@ theorem lexs_trans (RN) (RP) (f): lexs_transitive RN RN RN RN RP →
 (* Basic_2A1: includes: lpx_sn_conf *)
 theorem lexs_conf (RN1) (RP1) (RN2) (RP2):
                   ∀L,f.
-                  (∀g,I,K,V,n. ⬇*[n] L ≡ K.ⓑ{I}V →  ⫱*[n] f = ⫯g → lexs_pw_confluent2_R RN1 RN2 RN1 RP1 RN2 RP2 g K V) →
-                  (∀g,I,K,V,n. ⬇*[n] L ≡ K.ⓑ{I}V →  ⫱*[n] f = ↑g → lexs_pw_confluent2_R RP1 RP2 RN1 RP1 RN2 RP2 g K V) →
+                  (∀g,I,K,V,n. ⬇*[n] L ≡ K.ⓑ{I}V → ⫯g = ⫱*[n] f → lexs_pw_confluent2_R RN1 RN2 RN1 RP1 RN2 RP2 g K V) →
+                  (∀g,I,K,V,n. ⬇*[n] L ≡ K.ⓑ{I}V → ↑g = ⫱*[n] f → lexs_pw_confluent2_R RP1 RP2 RN1 RP1 RN2 RP2 g K V) →
                   pw_confluent2 … (lexs RN1 RP1 f) (lexs RN2 RP2 f) L.
 #RN1 #RP1 #RN2 #RP2 #L elim L -L
 [ #f #_ #_ #L1 #H1 #L2 #H2 >(lexs_inv_atom1 … H1) >(lexs_inv_atom1 … H2) -H2 -H1
