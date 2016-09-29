@@ -88,10 +88,23 @@ corec theorem sle_trans: Transitive … sle.
 /3 width=5 by sle_push, sle_next, sle_weak/
 qed-.
 
+(* Properties with iteraded push ********************************************)
+
+lemma sle_pushs: ∀f1,f2. f1 ⊆ f2 → ∀i. ↑*[i] f1 ⊆ ↑*[i] f2.
+#f1 #f2 #Hf12 #i elim i -i /2 width=5 by sle_push/
+qed.
+
 (* Properties with tail *****************************************************)
 
 lemma sle_px_tl: ∀g1,g2. g1 ⊆ g2 → ∀f1. ↑f1 = g1 → f1 ⊆ ⫱g2.
 #g1 #g2 #H #f1 #H1 elim (sle_inv_px … H … H1) -H -H1 * //
+qed.
+
+lemma sle_tl: ∀f1,f2. f1 ⊆ f2 → ⫱f1 ⊆ ⫱f2.
+#f1 elim (pn_split f1) * #g1 #H1 #f2 #H
+[ lapply (sle_px_tl … H … H1) -H //
+| elim (sle_inv_nx … H … H1) -H //
+]
 qed.
 
 (* Inversion lemmas with tail ***********************************************)

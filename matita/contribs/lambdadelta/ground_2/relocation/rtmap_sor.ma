@@ -266,6 +266,19 @@ corec lemma sor_sym: ∀f1,f2,f. f1 ⋓ f2 ≡ f → f2 ⋓ f1 ≡ f.
 [ @sor_pp | @sor_pn | @sor_np | @sor_nn ] /2 width=7 by/
 qed-.
 
+(* Main properties **********************************************************)
+
+axiom monotonic_sle_sor: ∀f1,g1. f1 ⊆ g1 → ∀f2,g2. f2 ⊆ g2 →
+                         ∀f. f1 ⋓ f2 ≡ f → ∀g. g1 ⋓ g2 ≡ g → f ⊆ g.
+
+axiom sor_trans1: ∀f0,f3,f4. f0 ⋓ f3 ≡ f4 →
+                  ∀f1,f2. f1 ⋓ f2 ≡ f0 →
+                  ∀f. f2 ⋓ f3 ≡ f → f1 ⋓ f ≡ f4.
+
+axiom sor_trans2: ∀f1,f0,f4. f1 ⋓ f0 ≡ f4 →
+                  ∀f2, f3. f2 ⋓ f3 ≡ f0 →
+                  ∀f. f1 ⋓ f2 ≡ f → f ⋓ f3 ≡ f4.
+
 (* Properties with tail *****************************************************)
 
 lemma sor_tl: ∀f1,f2,f. f1 ⋓ f2 ≡ f → ⫱f1 ⋓ ⫱f2 ≡ ⫱f.

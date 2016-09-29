@@ -22,7 +22,7 @@ axiom frees_lexs_conf_sle: ∀RN,RP,f1,L1,T. L1 ⊢ 𝐅*⦃T⦄ ≡ f1 →
                            ∀L2. L1 ⦻*[RN, RP, f1] L2 →
                            ∃∃f2. L2 ⊢ 𝐅*⦃T⦄ ≡ f2 & f2 ⊆ f1.
 
-theorem lfxs_conf: ∀R. R_confluent_lfxs R R R R →
+theorem lfxs_conf: ∀R. R_confluent2_lfxs R R R R →
                    ∀T. confluent … (lfxs R T).
 #R #H1R #T #L0 #L1 * #f1 #Hf1 #HL01 #L2 * #f #Hf #HL02
 lapply (frees_mono … Hf1 … Hf) -Hf1 #Hf12

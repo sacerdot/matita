@@ -257,7 +257,7 @@ lemma coafter_inv_tl0: ∀g2,g1,g. g2 ~⊚ g1 ≡ ⫱g →
 ]
 qed-.
 
-(* Properties on tls ********************************************************)
+(* Properties with iterated tail ********************************************)
 
 lemma coafter_tls: ∀n,f1,f2,f. @⦃0, f1⦄ ≡ n →
                    f1 ~⊚ f2 ≡ f → ⫱*[n]f1 ~⊚ f2 ≡ ⫱*[n]f.
@@ -304,7 +304,7 @@ elim (coafter_inv_pxx … Hf … H2) -Hf -H2 * #f1 #g #_ #H1 #H0 destruct
 ] 
 qed-.
 
-(* Properties on isid *******************************************************)
+(* Properties with test for identity ****************************************)
 
 corec lemma coafter_isid_sn: ∀f1. 𝐈⦃f1⦄ → ∀f2. f1 ~⊚ f2 ≡ f2.
 #f1 * -f1 #f1 #g1 #Hf1 #H1 #f2 cases (pn_split f2) * #g2 #H2
@@ -318,13 +318,19 @@ corec lemma coafter_isid_dx: ∀f2,f. 𝐈⦃f2⦄ → 𝐈⦃f⦄ → ∀f1. f1
 ]
 qed.
 
-(* Inversion lemmas on isid *************************************************)
+(* Inversion lemmas with test for identity **********************************)
 
 lemma coafter_isid_inv_sn: ∀f1,f2,f. f1 ~⊚ f2 ≡ f → 𝐈⦃f1⦄ → f2 ≗ f.
 /3 width=6 by coafter_isid_sn, coafter_mono/ qed-.
 
 lemma coafter_isid_inv_dx: ∀f1,f2,f. f1 ~⊚ f2 ≡ f → 𝐈⦃f2⦄ → 𝐈⦃f⦄.
 /4 width=4 by eq_id_isid, coafter_isid_dx, coafter_mono/ qed-.
+
+(* Properties with uniform relocations **************************************)
+
+lemma coafter_uni_sn: ∀i,f. 𝐔❴i❵ ~⊚ f ≡ ↑*[i] f.
+#i elim i -i /2 width=5 by coafter_isid_sn, coafter_next/
+qed.
 (*
 (* Properties on isuni ******************************************************)
 
