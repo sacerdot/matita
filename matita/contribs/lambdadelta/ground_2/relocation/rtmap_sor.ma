@@ -432,10 +432,18 @@ corec lemma sor_inv_sle_dx: ∀f1,f2,f. f1 ⋓ f2 ≡ f → f2 ⊆ f.
 /3 width=5 by sle_push, sle_next, sle_weak/
 qed-.
 
+lemma sor_inv_sle_sn_trans: ∀f1,f2,f. f1 ⋓ f2 ≡ f → ∀g. g ⊆ f1 → g ⊆ f.
+/3 width=4 by sor_inv_sle_sn, sle_trans/ qed-.
+
+lemma sor_inv_sle_dx_trans: ∀f1,f2,f. f1 ⋓ f2 ≡ f → ∀g. g ⊆ f2 → g ⊆ f.
+/3 width=4 by sor_inv_sle_dx, sle_trans/ qed-.
+
 (* Properties with inclusion ************************************************)
 
-lemma sor_sle_sn: ∀f1,f2,f. f1 ⋓ f2 ≡ f → ∀g. g ⊆ f1 → g ⊆ f.
-/3 width=4 by sor_inv_sle_sn, sle_trans/ qed.
+corec lemma sor_sle_dx: ∀f1,f2. f1 ⊆ f2 → f1 ⋓ f2 ≡ f2.
+#f1 #f2 * -f1 -f2 /3 width=7 by sor_pp, sor_nn, sor_pn/
+qed.
 
-lemma sor_sle_dx: ∀f1,f2,f. f1 ⋓ f2 ≡ f → ∀g. g ⊆ f2 → g ⊆ f.
-/3 width=4 by sor_inv_sle_dx, sle_trans/ qed.
+corec lemma sor_sle_sn: ∀f1,f2. f1 ⊆ f2 → f2 ⋓ f1 ≡ f2.
+#f1 #f2 * -f1 -f2 /3 width=7 by sor_pp, sor_nn, sor_np/
+qed.

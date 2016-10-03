@@ -86,18 +86,18 @@ lemma frees_drops_next: ∀f1,L1,T1. L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 →
   elim (sor_xxn_tl … Hf1) [1,2: * |*: // ] -Hf1
   #gV1 #gT1 #Hg1
   [ -IHT1 #H1 #_ elim (IHV1 … HL12 … H1) -IHV1 -HL12 -H1
-    /3 width=6 by sor_sle_sn, ex2_intro/
+    /3 width=6 by sor_inv_sle_sn_trans, ex2_intro/
   | -IHV1 #_ >tls_xn #H2 elim (IHT1 … H2) -IHT1 -H2
-    /3 width=6 by drops_drop, sor_sle_dx, ex2_intro/
+    /3 width=6 by drops_drop, sor_inv_sle_dx_trans, ex2_intro/
   ]
 | #fV1 #fT1 #f1 #I1 #L1 #V1 #T1 #_ #_ #Hf1 #IHV1 #IHT1 #I2 #L2 #V2 #n #HL12 #g1 #Hgf1
   lapply (sor_tls … Hf1 n) -Hf1 <Hgf1 -Hgf1 #Hf1
   elim (sor_xxn_tl … Hf1) [1,2: * |*: // ] -Hf1
   #gV1 #gT1 #Hg1
   [ -IHT1 #H1 #_ elim (IHV1 … HL12 … H1) -IHV1 -HL12 -H1
-    /3 width=6 by sor_sle_sn, ex2_intro/
+    /3 width=6 by sor_inv_sle_sn_trans, ex2_intro/
   | -IHV1 #_ #H2 elim (IHT1 … HL12 … H2) -IHT1 -HL12 -H2
-    /3 width=6 by sor_sle_dx, ex2_intro/
+    /3 width=6 by sor_inv_sle_dx_trans, ex2_intro/
   ]
 ]
 qed-.

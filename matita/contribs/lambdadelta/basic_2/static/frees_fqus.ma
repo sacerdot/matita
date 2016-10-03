@@ -75,9 +75,9 @@ lemma frees_fqus_drops: ∀f1,G,L1,T1. L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 →
     lapply (drops_fwd_lw … HL12) -HL12 #HL12
     elim (lt_le_false … HL12) -HL12 //
   | -IHT elim (IHV … H12 … HL12) -IHV -H12 -HL12
-    /4 width=6 by sor_tls, sor_sle_sn, ex2_intro/
+    /4 width=6 by sor_tls, sor_inv_sle_sn_trans, ex2_intro/
   | -IHV elim (IHT … H12 I (⫯n)) -IHT -H12 /2 width=1 by drops_drop/ -HL12
-    <tls_xn /4 width=6 by ex2_intro, sor_tls, sor_sle_dx/
+    <tls_xn /4 width=6 by ex2_intro, sor_tls, sor_inv_sle_dx_trans/
   ]
 | #f1V #f1T #f1 #J #L1 #V #T #_ #_ #Hf1 #IHV #IHT #L2 #T2 #H12 #I #n #HL12
   elim (fqus_inv_flat1 … H12) -H12 [ * |*: #H12 ]
@@ -85,9 +85,9 @@ lemma frees_fqus_drops: ∀f1,G,L1,T1. L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 →
     lapply (drops_fwd_lw … HL12) -HL12 #HL12
     elim (lt_le_false … HL12) -HL12 //
   | -IHT elim (IHV … H12 … HL12) -IHV -H12 -HL12
-    /4 width=6 by sor_tls, sor_sle_sn, ex2_intro/
+    /4 width=6 by sor_tls, sor_inv_sle_sn_trans, ex2_intro/
   | -IHV elim (IHT … H12 … HL12) -IHT -H12 -HL12
-    /4 width=6 by ex2_intro, sor_tls, sor_sle_dx/
+    /4 width=6 by ex2_intro, sor_tls, sor_inv_sle_dx_trans/
   ]
 ]
 qed-.
