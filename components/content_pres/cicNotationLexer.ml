@@ -137,13 +137,14 @@ let regexp uri =
 let regexp nreference =
   "cic:/"                             (* schema *)
   uri_step ('/' uri_step)*            (* path *)
-  '.'
+  '#'
   ( "dec"
-  | "def" "(" number ")"
-  | "fix" "(" number "," number "," number ")"
-  | "cfx" "(" number ")"
-  | "ind" "(" number "," number "," number ")"
-  | "con" "(" number "," number "," number ")") (* ext + reference *)
+  | "def" ":" number ""
+  | "fix" ":" number ":" number ":" number
+  | "cfx" ":" number
+  | "ind" ":" number ":" number ":" number
+  | "con" ":" number ":" number ":" number
+  ) (* ext + reference *)
 
 let error lexbuf msg =
   let begin_cnum, end_cnum = Ulexing.loc lexbuf in
