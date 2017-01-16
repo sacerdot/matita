@@ -174,10 +174,6 @@ table {
              [ "aaa ( ⦃?,?⦄ ⊢ ? ⁝ ? )" "aaa_drops" + "aaa_fqus" + "aaa_lfeq" + "aaa_aaa" * ]
           }
         ]
-        [ { "restricted ref. for local env." * } {
-             [ "lsubr ( ? ⫃ ? )" "lsubr_length" + "lsubr_drops" + "lsubr_lsubr" * ]
-          }
-        ]
         [ { "equivalence for closures on referred entries" * } {
              [ "ffeq ( ⦃?,?,?⦄ ≡ ⦃?,?,?⦄ )" "ffeq_freq" * ]
           }
@@ -190,8 +186,16 @@ table {
              [ "lfxs ( ? ⦻*[?,?] ? )" "lfxs_length" + "lfxs_drops" + "lfxs_fqup" + "lfxs_lfxs" * ]
           }
         ]
+        [ { "restricted ref. for context-sensitive free variables" * } {
+             [ "lsubf ( ⦃?,?⦄ ⫃𝐅* ⦃?,?⦄ )" "lsubf_frees" * ]
+          }
+        ]        
         [ { "context-sensitive free variables" * } {
              [ "frees ( ? ⊢ 𝐅*⦃?⦄ ≡ ? )" "frees_weight" + "frees_lreq" + "frees_drops" + "frees_fqup" + "frees_fqus" + "frees_frees" * ]
+          }
+        ]
+        [ { "restricted ref. for local env." * } {
+             [ "lsubr ( ? ⫃ ? )" "lsubr_length" + "lsubr_drops" + "lsubr_lsubr" * ]
           }
         ]
      }

@@ -15,6 +15,8 @@
 include "basic_2/relocation/drops_lexs.ma".
 include "basic_2/s_computation/fqup_weight.ma".
 include "basic_2/static/frees_drops.ma".
+include "basic_2/static/lsubf_frees.ma".
+include "basic_2/static/lfxs.ma".
 include "basic_2/rt_transition/cpx_drops.ma".
 
 (* UNCOUNTED PARALLEL RT-TRANSITION FOR LOCAL ENV.S ON REFERRED ENTRIES *****)
@@ -40,10 +42,10 @@ axiom frees_pair_flat: ∀L,T,f1,I1,V1. L.ⓑ{I1}V1 ⊢ 𝐅*⦃T⦄ ≡ f1 →
                        ∀I0,I. L.ⓑ{I0}ⓕ{I}V1.V2 ⊢ 𝐅*⦃T⦄ ≡ f0.
 
 (* Basic_2A1: was: lpx_cpx_frees_trans *)
-lemma cpx_frees_trans_lexs: ∀h,G,L1,T1,f1. L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 →
-                            ∀L2. L1 ⦻*[cpx h G, cfull, f1] L2 →
-                            ∀T2. ⦃G, L1⦄ ⊢ T1 ⬈[h] T2 →
-                            ∃∃f2. L2 ⊢ 𝐅*⦃T2⦄ ≡ f2 & f2 ⊆ f1.
+lemma cpx_frees_conf_lfpx: ∀h,G,L1,T1,f1. L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 →
+                           ∀L2. L1 ⦻*[cpx h G, cfull, f1] L2 →
+                           ∀T2. ⦃G, L1⦄ ⊢ T1 ⬈[h] T2 →
+                           ∃∃f2. L2 ⊢ 𝐅*⦃T2⦄ ≡ f2 & f2 ⊆ f1.
 #h #G #L1 #T1 @(fqup_wf_ind_eq … G L1 T1) -G -L1 -T1
 #G0 #L0 #U0 #IH #G #L1 * *
 [ -IH #s #HG #HL #HU #g1 #H1 #L2 #_ #U2 #H0 destruct
@@ -121,13 +123,26 @@ lemma cpx_frees_trans_lexs: ∀h,G,L1,T1,f1. L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 →
     lapply (sle_lexs_trans … H2 gW1 ?) /2 width=2 by sor_inv_sle_sn/ #HL12W
     lapply (sle_lexs_trans … H2 (⫱gT1) ?) /2 width=2 by sor_inv_sle_dx/ -H2 #HL12T
     lapply (lexs_inv_tl … Abst … HL12T … HW12 ?) // -HL12T #HL12T
+    elim (sor_isfin_ex gV1 gW1) /2 width=3 by frees_fwd_isfin/ #g0 #Hg0 #_
+    lapply (sor_trans2 … Hg1 … HgT0 … Hg0) -Hg1 -HgT0 #Hg1
+    lapply (sor_sym … Hg0) -Hg0 #Hg0
     elim (IH … HgV1 … HL12V … HV12) // -HgV1 -HL12V -HV12 #gV2 #HgV2 #HgV21
     elim (IH … HgW1 … HL12W … HW12) // -HgW1 -HL12W -HW12 #gW2 #HgW2 #HgW21
     elim (IH … HgT1 … HL12T … HT12) // -IH -HgT1 -HL12T -HT12 #gT2 #HgT2 #HgT21
+    elim (sor_isfin_ex gV2 (⫱gT2)) /3 width=3 by frees_fwd_isfin, isfin_tl/ #gVT2 #HgVT2 #_
+    elim (lsubf_frees_trans … HgT2 (⫯gVT2) … (L2.ⓓⓝW2.V2))
+    [2: /4 width=3 by lsubf_refl, lsubf_beta, sor_inv_sle_dx, sle_inv_tl_sn/ ] -HgT2
+    #gT0 #HgT0 #HgT20
     elim (sor_isfin_ex gW2 gV2) /2 width=3 by frees_fwd_isfin/ #gV0 #HgV0 #H
-    elim (sor_isfin_ex gV0 (⫱gT2)) /3 width=3 by frees_fwd_isfin, isfin_tl/ -H #g2 #Hg2 #_
+    elim (sor_isfin_ex gV0 (⫱gT0)) /3 width=3 by frees_fwd_isfin, isfin_tl/ -H #g2 #Hg2 #_
     @(ex2_intro … g2)
-    [ @(frees_bind … Hg2) /2 width=5 by frees_flat/ ]
+    [ @(frees_bind … Hg2) /2 width=5 by frees_flat/
+    | -L2 @(sor_inv_sle … Hg2) -Hg2
+      [ /3 width=11 by sor_inv_sle_sn_trans, monotonic_sle_sor/
+      | @sle_xn_tl [2:|*: // ] @(sle_trans … HgT20) -HgT20
+        /4 width=8 by monotonic_sle_sor, sor_inv_sle_dx_trans, sle_tl, sle_next/
+      ] (**) (* full auto too slow *)
+    ]
   | #p #V2 #V #W1 #W2 #T1 #T2 #HV12 #HV2 #HW12 #HT12 #H0 #H1 #H destruct
     elim (frees_inv_bind … HgT0) -HgT0 #gW1 #gT1 #HgW1 #HgT1 #HgT0
     lapply (sle_lexs_trans … H2 gV1 ?) /2 width=2 by sor_inv_sle_sn/ #HL12V
@@ -149,10 +164,12 @@ lemma cpx_frees_trans_lexs: ∀h,G,L1,T1,f1. L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 →
     /4 width=10 by frees_flat, frees_bind, monotonic_sle_sor, sle_tl, ex2_intro/
   ]
 ]
+qed-.
 
-lemma cpx_frees_trans: ∀h,o,G. frees_trans (cpx h o G).
-/2 width=8 by lpx_cpx_frees_trans/ qed-.
+(* Basic_2A1: was: cpx_frees_trans *)
+lemma cpx_frees_conf: ∀h,G. R_frees_confluent (cpx h G).
+/3 width=7 by cpx_frees_conf_lfpx, lexs_refl/ qed-.
 
-lemma lpx_frees_trans: ∀h,o,G,L1,L2. ⦃G, L1⦄ ⊢ ➡[h, o] L2 →
-                       ∀U,i. L2 ⊢ i ϵ 𝐅*[0]⦃U⦄ → L1 ⊢ i ϵ 𝐅*[0]⦃U⦄.
-/2 width=8 by lpx_cpx_frees_trans/ qed-.
+(* Basic_2A1: was: lpx_frees_trans *)
+lemma lfpx_frees_conf: ∀h,G. lexs_frees_confluent (cpx h G) cfull.
+/2 width=7 by cpx_frees_conf_lfpx/ qed-.

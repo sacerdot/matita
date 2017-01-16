@@ -26,6 +26,17 @@ definition lfxs (R) (T): relation lenv ≝
 interpretation "generic extension on referred entries (local environment)"
    'RelationStar R T L1 L2 = (lfxs R T L1 L2).
 
+definition R_frees_confluent: predicate (relation3 lenv term term) ≝
+                              λRN.
+                              ∀f1,L,T1. L ⊢ 𝐅*⦃T1⦄ ≡ f1 → ∀T2. RN L T1 T2 →
+                              ∃∃f2. L ⊢ 𝐅*⦃T2⦄ ≡ f2 & f2 ⊆ f1.
+
+definition lexs_frees_confluent: relation (relation3 lenv term term) ≝
+                                 λRN,RP.
+                                 ∀f1,L1,T. L1 ⊢ 𝐅*⦃T⦄ ≡ f1 →
+                                 ∀L2. L1 ⦻*[RN, RP, f1] L2 →
+                                 ∃∃f2. L2 ⊢ 𝐅*⦃T⦄ ≡ f2 & f2 ⊆ f1.
+
 definition R_confluent2_lfxs: relation4 (relation3 lenv term term)
                                         (relation3 lenv term term) … ≝
                               λR1,R2,RP1,RP2.

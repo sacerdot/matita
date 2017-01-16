@@ -79,6 +79,13 @@ lemma sle_inv_px: ∀g1,g2. g1 ⊆ g2 → ∀f1. ↑f1 = g1 →
 /3 width=3 by ex2_intro, or_introl, or_intror/
 qed-.
 
+lemma sle_inv_xn: ∀g1,g2. g1 ⊆ g2 → ∀f2. ⫯f2 = g2 →
+                  (∃∃f1. f1 ⊆ f2 & ↑f1 = g1) ∨ ∃∃f1. f1 ⊆ f2 & ⫯f1 = g1.
+#g1 #g2 elim (pn_split g1) * #f1 #H1 #H #f2 #H2
+[ lapply (sle_inv_pn … H … H1 H2) | lapply (sle_inv_nn … H … H1 H2) ] -H -H2
+/3 width=3 by ex2_intro, or_introl, or_intror/
+qed-.
+
 (* Main properties **********************************************************)
 
 corec theorem sle_trans: Transitive … sle.
@@ -98,6 +105,10 @@ qed.
 
 lemma sle_px_tl: ∀g1,g2. g1 ⊆ g2 → ∀f1. ↑f1 = g1 → f1 ⊆ ⫱g2.
 #g1 #g2 #H #f1 #H1 elim (sle_inv_px … H … H1) -H -H1 * //
+qed.
+
+lemma sle_xn_tl: ∀g1,g2. g1 ⊆ g2 → ∀f2. ⫯f2 = g2 → ⫱g1 ⊆ f2.
+#g1 #g2 #H #f2 #H2 elim (sle_inv_xn … H … H2) -H -H2 * //
 qed.
 
 lemma sle_tl: ∀f1,f2. f1 ⊆ f2 → ⫱f1 ⊆ ⫱f2.

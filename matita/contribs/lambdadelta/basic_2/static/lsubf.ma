@@ -18,15 +18,11 @@ include "basic_2/static/frees.ma".
 (* RESTRICTED REFINEMENT FOR CONTEXT-SENSITIVE FREE VARIABLES ***************)
 
 inductive lsubf: relation4 lenv rtmap lenv rtmap ≝
-| lsubf_atom: ∀f. lsubf (⋆) f (⋆) f
-| lsubf_push: ∀f1,f2,I,L1,L2,V. lsubf L1 f1 L2 f2 →
-              lsubf (L1.ⓑ{I}V) (↑f1) (L2.ⓑ{I}V) (↑f2)
-| lsubf_next: ∀f1,f2,I,L1,L2,V. lsubf L1 f1 L2 f2 →
-              lsubf (L1.ⓑ{I}V) (⫯f1) (L2.ⓑ{I}V) (⫯f2)
-| lsubf_peta: ∀f1,f,f2,L1,L2,W,V. L1 ⊢ 𝐅*⦃V⦄ ≡ f → f2 ⋓ f ≡ f1 →
-              lsubf L1 f1 L2 f2 → lsubf (L1.ⓓⓝW.V) (↑f1) (L2.ⓛW) (↑f2)
-| lsubf_neta: ∀f1,f,f2,L1,L2,W,V. L1 ⊢ 𝐅*⦃V⦄ ≡ f → f2 ⋓ f ≡ f1 →
-              lsubf L1 f1 L2 f2 → lsubf (L1.ⓓⓝW.V) (⫯f1) (L2.ⓛW) (⫯f2)
+| lsubf_atom: ∀f1,f2. f2 ⊆ f1 → lsubf (⋆) f1 (⋆) f2
+| lsubf_pair: ∀f1,f2,I,L1,L2,V. lsubf L1 (⫱f1) L2 (⫱f2) → f2 ⊆ f1 →
+              lsubf (L1.ⓑ{I}V) f1 (L2.ⓑ{I}V) f2
+| lsubf_beta: ∀f,f1,f2,L1,L2,W,V. L1 ⊢ 𝐅*⦃V⦄ ≡ f → f ⋓ ⫱f2 ≡ ⫱f1 → f2 ⊆ f1 →
+              lsubf L1 (⫱f1) L2 (⫱f2) → lsubf (L1.ⓓⓝW.V) f1 (L2.ⓛW) f2
 .
 
 interpretation
@@ -36,126 +32,77 @@ interpretation
 (* Basic inversion lemmas ***************************************************)
 
 fact lsubf_inv_atom1_aux: ∀f1,f2,L1,L2. ⦃L1, f1⦄ ⫃𝐅* ⦃L2, f2⦄ → L1 = ⋆ →
-                          L2 = ⋆ ∧ f1 = f2.
+                          L2 = ⋆ ∧ f2 ⊆ f1.
 #f1 #f2 #L1 #L2 * -f1 -f2 -L1 -L2
 [ /2 width=1 by conj/
-| #f1 #f2 #I #L1 #L2 #V #_ #H destruct
-| #f1 #f2 #I #L1 #L2 #V #_ #H destruct
-| #f1 #f #f2 #L1 #L2 #W #V #_ #_ #_ #H destruct
-| #f1 #f #f2 #L1 #L2 #W #V #_ #_ #_ #H destruct
+| #f1 #f2 #I #L1 #L2 #V #_ #_ #H destruct
+| #f #f1 #f2 #L1 #L2 #W #V #_ #_ #_ #_ #H destruct
 ]
 qed-.
 
-lemma lsubf_inv_atom1: ∀f1,f2,L2. ⦃⋆, f1⦄ ⫃𝐅* ⦃L2, f2⦄ →
-                       L2 = ⋆ ∧ f1 = f2.
+lemma lsubf_inv_atom1: ∀f1,f2,L2. ⦃⋆, f1⦄ ⫃𝐅* ⦃L2, f2⦄ → L2 = ⋆ ∧ f2 ⊆ f1.
 /2 width=3 by lsubf_inv_atom1_aux/ qed-.
 
-fact lsubf_inv_push1_aux: ∀f1,f2,L1,L2. ⦃L1, f1⦄ ⫃𝐅* ⦃L2, f2⦄ →
-                          ∀g1,I,K1,X. f1 = ↑g1 → L1 = K1.ⓑ{I}X →
-                          (∃∃g2,K2. ⦃K1, g1⦄ ⫃𝐅* ⦃K2, g2⦄ & f2 = ↑g2 & L2 = K2.ⓑ{I}X) ∨
-                          ∃∃g,g2,K2,W,V. K1 ⊢ 𝐅*⦃V⦄ ≡ g & g2 ⋓ g ≡ g1 &
-                                         ⦃K1, g1⦄ ⫃𝐅* ⦃K2, g2⦄ & I = Abbr & f2 = ↑g2 & L2 = K2.ⓛW & X = ⓝW.V.
+fact lsubf_inv_pair1_aux: ∀f1,f2,L1,L2. ⦃L1, f1⦄ ⫃𝐅* ⦃L2, f2⦄ →
+                          ∀I,K1,X. L1 = K1.ⓑ{I}X →
+                          (∃∃K2. f2 ⊆ f1 & ⦃K1, ⫱f1⦄ ⫃𝐅* ⦃K2, ⫱f2⦄ & L2 = K2.ⓑ{I}X) ∨
+                          ∃∃f,K2,W,V. K1 ⊢ 𝐅*⦃V⦄ ≡ f & f ⋓ ⫱f2 ≡ ⫱f1 &
+                                      f2 ⊆ f1 & ⦃K1, ⫱f1⦄ ⫃𝐅* ⦃K2, ⫱f2⦄ & I = Abbr & L2 = K2.ⓛW & X = ⓝW.V.
 #f1 #f2 #L1 #L2 * -f1 -f2 -L1 -L2
-[ #f #g1 #J #K1 #X #_ #H destruct
-| #f1 #f2 #I #L1 #L2 #V #HL12 #g1 #J #K1 #X #H1 #H2 destruct
-  /3 width=5 by injective_push, ex3_2_intro, or_introl/
-| #f1 #f2 #I #L1 #L2 #V #_ #g1 #J #K1 #X #H elim (discr_next_push … H)
-| #f1 #f2 #f #L1 #L2 #W #V #Hf2 #Hf1 #HL12 #g1 #J #K1 #X #H1 #H2 destruct
-  /3 width=11 by injective_push, ex7_5_intro, or_intror/
-| #f1 #f2 #f #L1 #L2 #W #V #_ #_ #_ #g1 #J #K1 #X #H elim (discr_next_push … H)
+[ #f1 #f2 #_ #J #K1 #X #H destruct
+| #f1 #f2 #I #L1 #L2 #V #HL12 #H21 #J #K1 #X #H destruct
+  /3 width=3 by ex3_intro, or_introl/
+| #f #f1 #f2 #L1 #L2 #W #V #Hf #Hf1 #H21 #HL12 #J #K1 #X #H destruct
+  /3 width=11 by ex7_4_intro, or_intror/
 ]
 qed-.
 
-lemma lsubf_inv_push1: ∀g1,f2,I,K1,L2,X. ⦃K1.ⓑ{I}X, ↑g1⦄ ⫃𝐅* ⦃L2, f2⦄ →
-                       (∃∃g2,K2. ⦃K1, g1⦄ ⫃𝐅* ⦃K2, g2⦄ & f2 = ↑g2 & L2 = K2.ⓑ{I}X) ∨
-                       ∃∃g,g2,K2,W,V. K1 ⊢ 𝐅*⦃V⦄ ≡ g & g2 ⋓ g ≡ g1 &
-                                      ⦃K1, g1⦄ ⫃𝐅* ⦃K2, g2⦄ & I = Abbr & f2 = ↑g2 & L2 = K2.ⓛW & X = ⓝW.V.
-/2 width=5 by lsubf_inv_push1_aux/ qed-.
-
-fact lsubf_inv_next1_aux: ∀f1,f2,L1,L2. ⦃L1, f1⦄ ⫃𝐅* ⦃L2, f2⦄ →
-                          ∀g1,I,K1,X. f1 = ⫯g1 → L1 = K1.ⓑ{I}X →
-                          (∃∃g2,K2. ⦃K1, g1⦄ ⫃𝐅* ⦃K2, g2⦄ & f2 = ⫯g2 & L2 = K2.ⓑ{I}X) ∨
-                          ∃∃g,g2,K2,W,V. K1 ⊢ 𝐅*⦃V⦄ ≡ g & g2 ⋓ g ≡ g1 &
-                                         ⦃K1, g1⦄ ⫃𝐅* ⦃K2, g2⦄ & I = Abbr & f2 = ⫯g2 & L2 = K2.ⓛW & X = ⓝW.V.
-#f1 #f2 #L1 #L2 * -f1 -f2 -L1 -L2
-[ #f #g1 #J #K1 #X #_ #H destruct
-| #f1 #f2 #I #L1 #L2 #V #_ #g1 #J #K1 #X #H elim (discr_push_next … H)
-| #f1 #f2 #I #L1 #L2 #V #HL12 #g1 #J #K1 #X #H1 #H2 destruct
-  /3 width=5 by injective_next, ex3_2_intro, or_introl/
-| #f1 #f2 #f #L1 #L2 #W #V #_ #_ #_ #g1 #J #K1 #X #H elim (discr_push_next … H)
-| #f1 #f2 #f #L1 #L2 #W #V #Hf2 #Hf1 #HL12 #g1 #J #K1 #X #H1 #H2 destruct
-  /3 width=11 by injective_next, ex7_5_intro, or_intror/
-]
-qed-.
-
-lemma lsubf_inv_next1: ∀g1,f2,I,K1,L2,X. ⦃K1.ⓑ{I}X, ⫯g1⦄ ⫃𝐅* ⦃L2, f2⦄ →
-                       (∃∃g2,K2. ⦃K1, g1⦄ ⫃𝐅* ⦃K2, g2⦄ & f2 = ⫯g2 & L2 = K2.ⓑ{I}X) ∨
-                       ∃∃g,g2,K2,W,V. K1 ⊢ 𝐅*⦃V⦄ ≡ g & g2 ⋓ g ≡ g1 &
-                                      ⦃K1, g1⦄ ⫃𝐅* ⦃K2, g2⦄ & I = Abbr & f2 = ⫯g2 & L2 = K2.ⓛW & X = ⓝW.V.
-/2 width=5 by lsubf_inv_next1_aux/ qed-.
+lemma lsubf_inv_pair1: ∀f1,f2,I,K1,L2,X. ⦃K1.ⓑ{I}X, f1⦄ ⫃𝐅* ⦃L2, f2⦄ →
+                       (∃∃K2. f2 ⊆ f1 & ⦃K1, ⫱f1⦄ ⫃𝐅* ⦃K2, ⫱f2⦄ & L2 = K2.ⓑ{I}X) ∨
+                       ∃∃f,K2,W,V. K1 ⊢ 𝐅*⦃V⦄ ≡ f & f ⋓ ⫱f2 ≡ ⫱f1 &
+                                   f2 ⊆ f1 & ⦃K1, ⫱f1⦄ ⫃𝐅* ⦃K2, ⫱f2⦄ & I = Abbr & L2 = K2.ⓛW & X = ⓝW.V.
+/2 width=3 by lsubf_inv_pair1_aux/ qed-.
 
 fact lsubf_inv_atom2_aux: ∀f1,f2,L1,L2. ⦃L1, f1⦄ ⫃𝐅* ⦃L2, f2⦄ → L2 = ⋆ →
-                          L1 = ⋆ ∧ f1 = f2.
+                          L1 = ⋆ ∧ f2 ⊆ f1.
 #f1 #f2 #L1 #L2 * -f1 -f2 -L1 -L2
 [ /2 width=1 by conj/
-| #f1 #f2 #I #L1 #L2 #V #_ #H destruct
-| #f1 #f2 #I #L1 #L2 #V #_ #H destruct
-| #f1 #f #f2 #L1 #L2 #W #V #_ #_ #_ #H destruct
-| #f1 #f #f2 #L1 #L2 #W #V #_ #_ #_ #H destruct
+| #f1 #f2 #I #L1 #L2 #V #_ #_ #H destruct
+| #f #f1 #f2 #L1 #L2 #W #V #_ #_ #_ #_ #H destruct
 ]
 qed-.
 
-lemma lsubf_inv_atom2: ∀f1,f2,L1. ⦃L1, f1⦄ ⫃𝐅* ⦃⋆, f2⦄ →
-                       L1 = ⋆ ∧ f1 = f2.
+lemma lsubf_inv_atom2: ∀f1,f2,L1. ⦃L1, f1⦄ ⫃𝐅* ⦃⋆, f2⦄ → L1 = ⋆ ∧ f2 ⊆ f1.
 /2 width=3 by lsubf_inv_atom2_aux/ qed-.
 
-fact lsubf_inv_push2_aux: ∀f1,f2,L1,L2. ⦃L1, f1⦄ ⫃𝐅* ⦃L2, f2⦄ →
-                          ∀g2,I,K2,W. f2 = ↑g2 → L2 = K2.ⓑ{I}W →
-                          (∃∃g1,K1. ⦃K1, g1⦄ ⫃𝐅* ⦃K2, g2⦄ & f1 = ↑g1 & L1 = K1.ⓑ{I}W) ∨
-                          ∃∃g,g1,K1,V. K1 ⊢ 𝐅*⦃V⦄ ≡ g & g2 ⋓ g ≡ g1 &
-                                       ⦃K1, g1⦄ ⫃𝐅* ⦃K2, g2⦄ & I = Abst & f1 = ↑g1 & L1 = K1.ⓓⓝW.V.
+fact lsubf_inv_pair2_aux: ∀f1,f2,L1,L2. ⦃L1, f1⦄ ⫃𝐅* ⦃L2, f2⦄ →
+                          ∀I,K2,W. L2 = K2.ⓑ{I}W →
+                          (∃∃K1.f2 ⊆ f1 & ⦃K1, ⫱f1⦄ ⫃𝐅* ⦃K2, ⫱f2⦄ & L1 = K1.ⓑ{I}W) ∨
+                          ∃∃f,K1,V. K1 ⊢ 𝐅*⦃V⦄ ≡ f & f ⋓ ⫱f2 ≡ ⫱f1 &
+                                    f2 ⊆ f1 & ⦃K1, ⫱f1⦄ ⫃𝐅* ⦃K2, ⫱f2⦄ & I = Abst & L1 = K1.ⓓⓝW.V.
 #f1 #f2 #L1 #L2 * -f1 -f2 -L1 -L2
-[ #f #g2 #J #K2 #X #_ #H destruct
-| #f1 #f2 #I #L1 #L2 #V #HL12 #g2 #J #K2 #X #H1 #H2 destruct
-  /3 width=5 by injective_push, ex3_2_intro, or_introl/
-| #f1 #f2 #I #L1 #L2 #V #_ #g2 #J #K2 #X #H elim (discr_next_push … H)
-| #f1 #f2 #f #L1 #L2 #W #V #Hf2 #Hf1 #HL12 #g2 #J #K2 #X #H1 #H2 destruct
-  /3 width=9 by injective_push, ex6_4_intro, or_intror/
-| #f1 #f2 #f #L1 #L2 #W #V #_ #_ #_ #g2 #J #K2 #X #H elim (discr_next_push … H)
+[ #f1 #f2 #_ #J #K2 #X #H destruct
+| #f1 #f2 #I #L1 #L2 #V #HL12 #H21 #J #K2 #X #H destruct
+  /3 width=3 by ex3_intro, or_introl/
+| #f #f1 #f2 #L1 #L2 #W #V #Hf #Hf1 #H21 #HL12 #J #K2 #X #H destruct
+  /3 width=7 by ex6_3_intro, or_intror/
 ]
 qed-.
 
-lemma lsubf_inv_push2: ∀f1,g2,I,L1,K2,W. ⦃L1, f1⦄ ⫃𝐅* ⦃K2.ⓑ{I}W, ↑g2⦄ →
-                       (∃∃g1,K1. ⦃K1, g1⦄ ⫃𝐅* ⦃K2, g2⦄ & f1 = ↑g1 & L1 = K1.ⓑ{I}W) ∨
-                       ∃∃g,g1,K1,V. K1 ⊢ 𝐅*⦃V⦄ ≡ g & g2 ⋓ g ≡ g1 &
-                                    ⦃K1, g1⦄ ⫃𝐅* ⦃K2, g2⦄ & I = Abst & f1 = ↑g1 & L1 = K1.ⓓⓝW.V.
-/2 width=5 by lsubf_inv_push2_aux/ qed-.
+lemma lsubf_inv_pair2: ∀f1,f2,I,L1,K2,W. ⦃L1, f1⦄ ⫃𝐅* ⦃K2.ⓑ{I}W, f2⦄ →
+                       (∃∃K1.f2 ⊆ f1 & ⦃K1, ⫱f1⦄ ⫃𝐅* ⦃K2, ⫱f2⦄ & L1 = K1.ⓑ{I}W) ∨
+                       ∃∃f,K1,V. K1 ⊢ 𝐅*⦃V⦄ ≡ f & f ⋓ ⫱f2 ≡ ⫱f1 &
+                                 f2 ⊆ f1 & ⦃K1, ⫱f1⦄ ⫃𝐅* ⦃K2, ⫱f2⦄ & I = Abst & L1 = K1.ⓓⓝW.V.
+/2 width=5 by lsubf_inv_pair2_aux/ qed-.
 
-fact lsubf_inv_next2_aux: ∀f1,f2,L1,L2. ⦃L1, f1⦄ ⫃𝐅* ⦃L2, f2⦄ →
-                          ∀g2,I,K2,W. f2 = ⫯g2 → L2 = K2.ⓑ{I}W →
-                          (∃∃g1,K1. ⦃K1, g1⦄ ⫃𝐅* ⦃K2, g2⦄ & f1 = ⫯g1 & L1 = K1.ⓑ{I}W) ∨
-                          ∃∃g,g1,K1,V. K1 ⊢ 𝐅*⦃V⦄ ≡ g & g2 ⋓ g ≡ g1 &
-                                       ⦃K1, g1⦄ ⫃𝐅* ⦃K2, g2⦄ & I = Abst & f1 = ⫯g1 & L1 = K1.ⓓⓝW.V.
-#f1 #f2 #L1 #L2 * -f1 -f2 -L1 -L2
-[ #f #g2 #J #K2 #X #_ #H destruct
-| #f1 #f2 #I #L1 #L2 #V #_ #g2 #J #K2 #X #H elim (discr_push_next … H)
-| #f1 #f2 #I #L1 #L2 #V #HL12 #g2 #J #K2 #X #H1 #H2 destruct
-  /3 width=5 by injective_next, ex3_2_intro, or_introl/
-| #f1 #f2 #f #L1 #L2 #W #V #_ #_ #_ #g2 #J #K2 #X #H elim (discr_push_next … H)
-| #f1 #f2 #f #L1 #L2 #W #V #Hf2 #Hf1 #HL12 #g2 #J #K2 #X #H1 #H2 destruct
-  /3 width=9 by injective_next, ex6_4_intro, or_intror/
-]
+(* Basic forward lemmas *****************************************************)
+
+lemma lsubf_fwd_sle: ∀f1,f2,L1,L2. ⦃L1, f1⦄ ⫃𝐅* ⦃L2, f2⦄ → f2 ⊆ f1.
+#f1 #f2 #L1 #L2 * //
 qed-.
-
-lemma lsubf_inv_next2: ∀f1,g2,I,L1,K2,W. ⦃L1, f1⦄ ⫃𝐅* ⦃K2.ⓑ{I}W, ⫯g2⦄ →
-                       (∃∃g1,K1. ⦃K1, g1⦄ ⫃𝐅* ⦃K2, g2⦄ & f1 = ⫯g1 & L1 = K1.ⓑ{I}W) ∨
-                       ∃∃g,g1,K1,V. K1 ⊢ 𝐅*⦃V⦄ ≡ g & g2 ⋓ g ≡ g1 &
-                                    ⦃K1, g1⦄ ⫃𝐅* ⦃K2, g2⦄ & I = Abst & f1 = ⫯g1 & L1 = K1.ⓓⓝW.V.
-/2 width=5 by lsubf_inv_next2_aux/ qed-.
 
 (* Basic properties *********************************************************)
 
-lemma lsubf_refl: bi_reflexive … lsubf.
-#L elim L -L //
-#L #I #V #IH #f elim (pn_split f) * /2 width=1 by lsubf_push, lsubf_next/
+lemma lsubf_refl: ∀L,f1,f2. f2 ⊆ f1 → ⦃L, f1⦄ ⫃𝐅* ⦃L, f2⦄.
+#L elim L -L /4 width=1 by lsubf_atom, lsubf_pair, sle_tl/
 qed.

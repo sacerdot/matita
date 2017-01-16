@@ -13,7 +13,6 @@
 (**************************************************************************)
 
 include "basic_2/relocation/lreq_lreq.ma".
-include "basic_2/static/frees_frees.ma".
 include "basic_2/static/lfxs_lfxs.ma".
 include "basic_2/static/lfeq_lreq.ma".
 

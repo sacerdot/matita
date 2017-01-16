@@ -438,6 +438,8 @@ lemma sor_inv_sle_sn_trans: ∀f1,f2,f. f1 ⋓ f2 ≡ f → ∀g. g ⊆ f1 → g
 lemma sor_inv_sle_dx_trans: ∀f1,f2,f. f1 ⋓ f2 ≡ f → ∀g. g ⊆ f2 → g ⊆ f.
 /3 width=4 by sor_inv_sle_dx, sle_trans/ qed-.
 
+axiom sor_inv_sle: ∀f1,f2,f. f1 ⋓ f2 ≡ f → ∀g. f1 ⊆ g → f2 ⊆ g → f ⊆ g.
+
 (* Properties with inclusion ************************************************)
 
 corec lemma sor_sle_dx: ∀f1,f2. f1 ⊆ f2 → f1 ⋓ f2 ≡ f2.

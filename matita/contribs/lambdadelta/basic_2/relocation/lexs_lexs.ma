@@ -13,8 +13,6 @@
 (**************************************************************************)
 
 include "ground_2/relocation/rtmap_sand.ma".
-include "ground_2/relocation/rtmap_sor.ma".
-include "basic_2/relocation/lexs.ma".
 include "basic_2/relocation/drops.ma".
 
 (* GENERIC ENTRYWISE EXTENSION OF CONTEXT-SENSITIVE REALTIONS FOR TERMS *****)

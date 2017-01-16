@@ -58,39 +58,46 @@ lemma lsubr_inv_abst1: ∀K1,L2,W. K1.ⓛW ⫃ L2 →
                        L2 = ⋆ ∨ ∃∃K2. K1 ⫃ K2 & L2 = K2.ⓛW.
 /2 width=3 by lsubr_inv_abst1_aux/ qed-.
 
-fact lsubr_inv_abbr2_aux: ∀L1,L2. L1 ⫃ L2 → ∀K2,V. L2 = K2.ⓓV →
-                          ∃∃K1. K1 ⫃ K2 & L1 = K1.ⓓV.
+fact lsubr_inv_pair2_aux: ∀L1,L2. L1 ⫃ L2 → ∀I,K2,W. L2 = K2.ⓑ{I}W →
+                          (∃∃K1. K1 ⫃ K2 & L1 = K1.ⓑ{I}W) ∨
+                          ∃∃K1,V. K1 ⫃ K2 & L1 = K1.ⓓⓝW.V & I = Abst.
 #L1 #L2 * -L1 -L2
-[ #L #K2 #W #H destruct
-| #I #L1 #L2 #V #HL12 #K2 #W #H destruct /2 width=3 by ex2_intro/
-| #L1 #L2 #V1 #V2 #_ #K2 #W #H destruct
+[ #L #J #K2 #W #H destruct
+| #I #L1 #L2 #V #HL12 #J #K2 #W #H destruct /3 width=3 by ex2_intro, or_introl/
+| #L1 #L2 #V1 #V2 #HL12 #J #K2 #W #H destruct /3 width=4 by ex3_2_intro, or_intror/
 ]
 qed-.
 
+lemma lsubr_inv_pair2: ∀I,L1,K2,W. L1 ⫃ K2.ⓑ{I}W →
+                       (∃∃K1. K1 ⫃ K2 & L1 = K1.ⓑ{I}W) ∨
+                       ∃∃K1,V1. K1 ⫃ K2 & L1 = K1.ⓓⓝW.V1 & I = Abst.
+/2 width=3 by lsubr_inv_pair2_aux/ qed-.
+
+(* Advanced inversion lemmas ************************************************)
+
 lemma lsubr_inv_abbr2: ∀L1,K2,V. L1 ⫃ K2.ⓓV →
                        ∃∃K1. K1 ⫃ K2 & L1 = K1.ⓓV.
-/2 width=3 by lsubr_inv_abbr2_aux/ qed-.
-
-fact lsubr_inv_abst2_aux: ∀L1,L2. L1 ⫃ L2 → ∀K2,W. L2 = K2.ⓛW →
-                          (∃∃K1. K1 ⫃ K2 & L1 = K1.ⓛW) ∨
-                          ∃∃K1,V. K1 ⫃ K2 & L1 = K1.ⓓⓝW.V.
-#L1 #L2 * -L1 -L2
-[ #L #K2 #W #H destruct
-| #I #L1 #L2 #V #HL12 #K2 #W #H destruct /3 width=3 by ex2_intro, or_introl/
-| #L1 #L2 #V1 #V2 #HL12 #K2 #W #H destruct /3 width=4 by ex2_2_intro, or_intror/
+#L1 #K2 #V #H elim (lsubr_inv_pair2 … H) -H *
+[ #K1 #HK12 #H destruct /2 width=3 by ex2_intro/
+| #K1 #V1 #_ #_ #H destruct
 ]
 qed-.
 
 lemma lsubr_inv_abst2: ∀L1,K2,W. L1 ⫃ K2.ⓛW →
                        (∃∃K1. K1 ⫃ K2 & L1 = K1.ⓛW) ∨
                        ∃∃K1,V. K1 ⫃ K2 & L1 = K1.ⓓⓝW.V.
-/2 width=3 by lsubr_inv_abst2_aux/ qed-.
+#L1 #K2 #W #H elim (lsubr_inv_pair2 … H) -H *
+[ #K1 #HK12 #H destruct /3 width=3 by ex2_intro, or_introl/
+| #K1 #V1 #HK12 #H #_ destruct /3 width=4 by ex2_2_intro, or_intror/
+]
+qed-.
 
 (* Basic forward lemmas *****************************************************)
 
 lemma lsubr_fwd_pair2: ∀I2,L1,K2,V2. L1 ⫃ K2.ⓑ{I2}V2 →
                        ∃∃I1,K1,V1. K1 ⫃ K2 & L1 = K1.ⓑ{I1}V1.
-* #L1 #K2 #V2 #H
-[ elim (lsubr_inv_abbr2 … H) | elim (lsubr_inv_abst2 … H) * ] -H
-/2 width=5 by ex2_3_intro/
+#I2 #L1 #K2 #V2 #H elim (lsubr_inv_pair2 … H) -H *
+[ #K1 #HK12 #H destruct /3 width=5 by ex2_3_intro/
+| #K1 #V1 #HK12 #H1 #H2 destruct /3 width=5 by ex2_3_intro/
+]
 qed-.
