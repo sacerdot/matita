@@ -326,14 +326,15 @@ lemma coafter_isid_inv_sn: ∀f1,f2,f. f1 ~⊚ f2 ≡ f → 𝐈⦃f1⦄ → f2 
 lemma coafter_isid_inv_dx: ∀f1,f2,f. f1 ~⊚ f2 ≡ f → 𝐈⦃f2⦄ → 𝐈⦃f⦄.
 /4 width=4 by eq_id_isid, coafter_isid_dx, coafter_mono/ qed-.
 
-(* Properties with uniform relocations **************************************)
+(* Properties with test for uniform relocations *****************************)
 
-lemma coafter_uni_sn: ∀i,f. 𝐔❴i❵ ~⊚ f ≡ ↑*[i] f.
-#i elim i -i /2 width=5 by coafter_isid_sn, coafter_next/
+lemma coafter_isuni_isid: ∀f2. 𝐈⦃f2⦄ → ∀f1. 𝐔⦃f1⦄ → f1 ~⊚ f2 ≡ f2.
+#f #Hf #g #H elim H -g
+/3 width=5 by coafter_isid_sn, coafter_eq_repl_back0, coafter_next, eq_push_inv_isid/
 qed.
-(*
-(* Properties on isuni ******************************************************)
 
+
+(*
 lemma coafter_isid_isuni: ∀f1,f2. 𝐈⦃f2⦄ → 𝐔⦃f1⦄ → f1 ~⊚ ⫯f2 ≡ ⫯f1.
 #f1 #f2 #Hf2 #H elim H -H
 /5 width=7 by coafter_isid_dx, coafter_eq_repl_back2, coafter_next, coafter_push, eq_push_inv_isid/
@@ -349,9 +350,15 @@ lemma coafter_uni_next2: ∀f2. 𝐔⦃f2⦄ → ∀f1,f. ⫯f2 ~⊚ f1 ≡ f �
   /3 width=5 by coafter_next/
 ]
 qed.
+*)
 
-(* Properties on uni ********************************************************)
+(* Properties with uniform relocations **************************************)
 
+lemma coafter_uni_sn: ∀i,f. 𝐔❴i❵ ~⊚ f ≡ ↑*[i] f.
+#i elim i -i /2 width=5 by coafter_isid_sn, coafter_next/
+qed.
+
+(*
 lemma coafter_uni: ∀n1,n2. 𝐔❴n1❵ ~⊚ 𝐔❴n2❵ ≡ 𝐔❴n1+n2❵.
 @nat_elim2
 /4 width=5 by coafter_uni_next2, coafter_isid_sn, coafter_isid_dx, coafter_next/
@@ -360,7 +367,7 @@ qed.
 (* Forward lemmas on at *****************************************************)
 
 lemma coafter_at_fwd: ∀i,i1,f. @⦃i1, f⦄ ≡ i → ∀f2,f1. f2 ~⊚ f1 ≡ f →
-                    ∃∃i2. @⦃i1, f1⦄ ≡ i2 & @⦃i2, f2⦄ ≡ i.
+                      ∃∃i2. @⦃i1, f1⦄ ≡ i2 & @⦃i2, f2⦄ ≡ i.
 #i elim i -i [2: #i #IH ] #i1 #f #Hf #f2 #f1 #Hf21
 [ elim (at_inv_xxn … Hf) -Hf [1,3:* |*: // ]
   [1: #g #j1 #Hg #H0 #H |2,4: #g #Hg #H ]
@@ -377,7 +384,7 @@ lemma coafter_at_fwd: ∀i,i1,f. @⦃i1, f⦄ ≡ i → ∀f2,f1. f2 ~⊚ f1 ≡
 qed-.
 
 lemma coafter_fwd_at: ∀i,i2,i1,f1,f2. @⦃i1, f1⦄ ≡ i2 → @⦃i2, f2⦄ ≡ i →
-                    ∀f. f2 ~⊚ f1 ≡ f → @⦃i1, f⦄ ≡ i.
+                      ∀f. f2 ~⊚ f1 ≡ f → @⦃i1, f⦄ ≡ i.
 #i elim i -i [2: #i #IH ] #i2 #i1 #f1 #f2 #Hf1 #Hf2 #f #Hf
 [ elim (at_inv_xxn … Hf2) -Hf2 [1,3: * |*: // ]
   #g2 [ #j2 ] #Hg2 [ #H22 ] #H20
@@ -395,13 +402,13 @@ lemma coafter_fwd_at: ∀i,i2,i1,f1,f2. @⦃i1, f1⦄ ≡ i2 → @⦃i2, f2⦄ �
 qed-.
 
 lemma coafter_fwd_at2: ∀f,i1,i. @⦃i1, f⦄ ≡ i → ∀f1,i2. @⦃i1, f1⦄ ≡ i2 →
-                     ∀f2. f2 ~⊚ f1 ≡ f → @⦃i2, f2⦄ ≡ i.
+                       ∀f2. f2 ~⊚ f1 ≡ f → @⦃i2, f2⦄ ≡ i.
 #f #i1 #i #Hf #f1 #i2 #Hf1 #f2 #H elim (coafter_at_fwd … Hf … H) -f
 #j1 #H #Hf2 <(at_mono … Hf1 … H) -i1 -i2 //
 qed-.
 
 lemma coafter_fwd_at1: ∀i,i2,i1,f,f2. @⦃i1, f⦄ ≡ i → @⦃i2, f2⦄ ≡ i →
-                     ∀f1. f2 ~⊚ f1 ≡ f → @⦃i1, f1⦄ ≡ i2.
+                       ∀f1. f2 ~⊚ f1 ≡ f → @⦃i1, f1⦄ ≡ i2.
 #i elim i -i [2: #i #IH ] #i2 #i1 #f #f2 #Hf #Hf2 #f1 #Hf1
 [ elim (at_inv_xxn … Hf) -Hf [1,3: * |*: // ]
   #g [ #j1 ] #Hg [ #H01 ] #H00
@@ -421,7 +428,7 @@ qed-.
 (* Properties with at *******************************************************)
 
 lemma coafter_uni_dx: ∀i2,i1,f2. @⦃i1, f2⦄ ≡ i2 →
-                    ∀f. f2 ~⊚ 𝐔❴i1❵ ≡ f → 𝐔❴i2❵ ~⊚ ⫱*[i2] f2 ≡ f.
+                      ∀f. f2 ~⊚ 𝐔❴i1❵ ≡ f → 𝐔❴i2❵ ~⊚ ⫱*[i2] f2 ≡ f.
 #i2 elim i2 -i2
 [ #i1 #f2 #Hf2 #f #Hf
   elim (at_inv_xxp … Hf2) -Hf2 // #g2 #H1 #H2 destruct
@@ -440,7 +447,7 @@ lemma coafter_uni_dx: ∀i2,i1,f2. @⦃i1, f2⦄ ≡ i2 →
 qed.
 
 lemma coafter_uni_sn: ∀i2,i1,f2. @⦃i1, f2⦄ ≡ i2 →
-                    ∀f. 𝐔❴i2❵ ~⊚ ⫱*[i2] f2 ≡ f → f2 ~⊚ 𝐔❴i1❵ ≡ f.
+                      ∀f. 𝐔❴i2❵ ~⊚ ⫱*[i2] f2 ≡ f → f2 ~⊚ 𝐔❴i1❵ ≡ f.
 #i2 elim i2 -i2
 [ #i1 #f2 #Hf2 #f #Hf
   elim (at_inv_xxp … Hf2) -Hf2 // #g2 #H1 #H2 destruct
@@ -456,7 +463,7 @@ lemma coafter_uni_sn: ∀i2,i1,f2. @⦃i1, f2⦄ ≡ i2 →
 qed-.
 
 lemma coafter_uni_succ_dx: ∀i2,i1,f2. @⦃i1, f2⦄ ≡ i2 →
-                         ∀f. f2 ~⊚ 𝐔❴⫯i1❵ ≡ f → 𝐔❴⫯i2❵ ~⊚ ⫱*[⫯i2] f2 ≡ f.
+                           ∀f. f2 ~⊚ 𝐔❴⫯i1❵ ≡ f → 𝐔❴⫯i2❵ ~⊚ ⫱*[⫯i2] f2 ≡ f.
 #i2 elim i2 -i2
 [ #i1 #f2 #Hf2 #f #Hf
   elim (at_inv_xxp … Hf2) -Hf2 // #g2 #H1 #H2 destruct
@@ -476,7 +483,7 @@ lemma coafter_uni_succ_dx: ∀i2,i1,f2. @⦃i1, f2⦄ ≡ i2 →
 qed.
 
 lemma coafter_uni_succ_sn: ∀i2,i1,f2. @⦃i1, f2⦄ ≡ i2 →
-                         ∀f. 𝐔❴⫯i2❵ ~⊚ ⫱*[⫯i2] f2 ≡ f → f2 ~⊚ 𝐔❴⫯i1❵ ≡ f.
+                           ∀f. 𝐔❴⫯i2❵ ~⊚ ⫱*[⫯i2] f2 ≡ f → f2 ~⊚ 𝐔❴⫯i1❵ ≡ f.
 #i2 elim i2 -i2
 [ #i1 #f2 #Hf2 #f #Hf
   elim (at_inv_xxp … Hf2) -Hf2 // #g2 #H1 #H2 destruct

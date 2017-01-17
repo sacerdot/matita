@@ -13,7 +13,6 @@
 (**************************************************************************)
 
 include "basic_2/relocation/drops_lexs.ma".
-include "basic_2/s_computation/fqup_weight.ma".
 include "basic_2/static/frees_drops.ma".
 include "basic_2/static/lsubf_frees.ma".
 include "basic_2/static/lfxs.ma".
@@ -22,19 +21,6 @@ include "basic_2/rt_transition/cpx_drops.ma".
 (* UNCOUNTED PARALLEL RT-TRANSITION FOR LOCAL ENV.S ON REFERRED ENTRIES *****)
 
 (* Properties with context-sensitive free variables *************************)
-
-axiom pippo: ∀RN,RP,L1,i. ⬇*[Ⓕ, 𝐔❴i❵] L1 ≡ ⋆ → 
-             ∀f,L2. L1 ⦻*[RN, RP, f] L2 →
-             ⬇*[Ⓕ, 𝐔❴i❵] L2 ≡ ⋆.
-(*
-#RN #RP #L1 #i #H1 #f #L2 #H2
-lapply (lexs_co_dropable_sn … H1 … H2) // -HL1 -H2
-*)
-
-
-axiom frees_inv_lifts_SO: ∀b,f,L,U. L ⊢ 𝐅*⦃U⦄ ≡ f →
-                          ∀K. ⬇*[b, 𝐔❴1❵] L ≡ K → ∀T. ⬆*[1] T ≡ U →
-                          K ⊢ 𝐅*⦃T⦄ ≡ ⫱f.
 
 axiom frees_pair_flat: ∀L,T,f1,I1,V1. L.ⓑ{I1}V1 ⊢ 𝐅*⦃T⦄ ≡ f1 →
                        ∀f2,I2,V2. L.ⓑ{I2}V2 ⊢ 𝐅*⦃T⦄ ≡ f2 →
@@ -56,8 +42,8 @@ lemma cpx_frees_conf_lfpx: ∀h,G,L1,T1,f1. L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 →
   elim (frees_inv_lref_drops … H1) -H1 *
   [ -IH #HL1 #Hg1
     elim (cpx_inv_lref1_drops … H0) -H0
-    [ #H destruct lapply (pippo … HL1 … H2) -HL1 -H2
-      /3 width=3 by frees_lref_atom, sle_refl, ex2_intro/
+    [ #H destruct
+      /5 width=9 by frees_lref_atom, drops_atom2_lexs_conf, coafter_isuni_isid, sle_refl, ex2_intro/
     | * -H2 -Hg1 #I #K1 #V1 #V2 #HLK1
       lapply (drops_TF … HLK1) -HLK1 #HLK1
       lapply (drops_mono … HLK1 … HL1) -L1 #H destruct

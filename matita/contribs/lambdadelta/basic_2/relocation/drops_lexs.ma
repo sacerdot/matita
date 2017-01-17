@@ -152,3 +152,11 @@ elim (lexs_liftable_co_dedropable … H1RN H1RP H2RN H2RP … HLK1 … HK12 … 
 #X #HX #HLK2 #H1L12 elim (lexs_inv_push1 … HX) -HX
 #L2 #V2 #H2L12 #HV12 #H destruct /2 width=6 by ex4_2_intro/
 qed-.
+
+lemma drops_atom2_lexs_conf: ∀RN,RP,b,f1,L1. ⬇*[b, f1] L1 ≡ ⋆ → 𝐔⦃f1⦄ →
+                             ∀f,L2. L1 ⦻*[RN, RP, f] L2 →
+                             ∀f2. f1 ~⊚ f2 ≡f → ⬇*[b, f1] L2 ≡ ⋆.
+#RN #RP #b #f1 #L1 #H1 #Hf1 #f #L2 #H2 #f2 #H3
+elim (lexs_co_dropable_sn … H1 … H2 … H3) // -H1 -H2 -H3 -Hf1
+#L #H #HL2 lapply (lexs_inv_atom1 … H) -H //
+qed-.
