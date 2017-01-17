@@ -34,6 +34,9 @@
 
    <subsection name="A2">Stage "A2": "Extending the Applicability Condition"</subsection>
 
+   <news class="alpha" date="2017 January 17.">
+         Confluence for parallel r-transition on referred entries of local environments.
+   </news>
    <news class="alpha" date="2016 September 15.">
          Confluence for context-sensitive parallel r-transition on terms.
    </news>

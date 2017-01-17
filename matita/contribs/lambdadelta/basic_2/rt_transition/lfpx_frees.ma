@@ -22,11 +22,6 @@ include "basic_2/rt_transition/cpx_drops.ma".
 
 (* Properties with context-sensitive free variables *************************)
 
-axiom frees_pair_flat: ∀L,T,f1,I1,V1. L.ⓑ{I1}V1 ⊢ 𝐅*⦃T⦄ ≡ f1 →
-                       ∀f2,I2,V2. L.ⓑ{I2}V2 ⊢ 𝐅*⦃T⦄ ≡ f2 →
-                       ∀f0. f1 ⋓ f2 ≡ f0 →
-                       ∀I0,I. L.ⓑ{I0}ⓕ{I}V1.V2 ⊢ 𝐅*⦃T⦄ ≡ f0.
-
 (* Basic_2A1: was: lpx_cpx_frees_trans *)
 lemma cpx_frees_conf_lfpx: ∀h,G,L1,T1,f1. L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 →
                            ∀L2. L1 ⦻*[cpx h G, cfull, f1] L2 →
