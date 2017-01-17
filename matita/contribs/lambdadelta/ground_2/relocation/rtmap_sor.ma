@@ -323,6 +323,18 @@ qed.
 lemma sor_isid: ∀f1,f2,f. 𝐈⦃f1⦄ → 𝐈⦃f2⦄ → 𝐈⦃f⦄ → f1 ⋓ f2 ≡ f.
 /4 width=3 by sor_eq_repl_back2, sor_eq_repl_back1, isid_inv_eq_repl/ qed.
 
+(* Inversion lemmas with tail ***********************************************)
+
+lemma sor_inv_tl_sn: ∀f1,f2,f. ⫱f1 ⋓ f2 ≡ f → f1 ⋓ ⫯f2 ≡ ⫯f.
+#f1 #f2 #f elim (pn_split f1) *
+#g1 #H destruct /2 width=7 by sor_pn, sor_nn/
+qed-.
+
+lemma sor_inv_tl_dx: ∀f1,f2,f. f1 ⋓ ⫱f2 ≡ f → ⫯f1 ⋓ f2 ≡ ⫯f.
+#f1 #f2 #f elim (pn_split f2) *
+#g2 #H destruct /2 width=7 by sor_np, sor_nn/
+qed-.
+
 (* Inversion lemmas with test for identity **********************************)
 
 lemma sor_isid_inv_sn: ∀f1,f2,f. f1 ⋓ f2 ≡ f → 𝐈⦃f1⦄ → f2 ≗ f.

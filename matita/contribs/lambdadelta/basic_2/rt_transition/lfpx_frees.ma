@@ -131,8 +131,8 @@ lemma cpx_frees_conf_lfpx: ∀h,G,L1,T1,f1. L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 →
     elim (IH … HgT1 … HL12T … HT12) // -IH -HgT1 -HL12T -HT12 #gT2 #HgT2 #HgT21
     elim (sor_isfin_ex gV2 (⫱gT2)) /3 width=3 by frees_fwd_isfin, isfin_tl/ #gVT2 #HgVT2 #_
     elim (lsubf_frees_trans … HgT2 (⫯gVT2) … (L2.ⓓⓝW2.V2))
-    [2: /4 width=3 by lsubf_refl, lsubf_beta, sor_inv_sle_dx, sle_inv_tl_sn/ ] -HgT2
-    #gT0 #HgT0 #HgT20
+    [2: /4 width=4 by lsubf_refl, lsubf_beta, sor_inv_sle_dx, sor_inv_sle_sn, sle_inv_tl_sn/ ]
+    -HgT2 #gT0 #HgT0 #HgT20
     elim (sor_isfin_ex gW2 gV2) /2 width=3 by frees_fwd_isfin/ #gV0 #HgV0 #H
     elim (sor_isfin_ex gV0 (⫱gT0)) /3 width=3 by frees_fwd_isfin, isfin_tl/ -H #g2 #Hg2 #_
     @(ex2_intro … g2)
@@ -159,8 +159,8 @@ lemma cpx_frees_conf_lfpx: ∀h,G,L1,T1,f1. L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 →
     elim (sor_isfin_ex gW2 (⫱gV0)) /3 width=3 by frees_fwd_isfin, isfin_tl/ -H #g2 #Hg2 #_
     elim (sor_isfin_ex gW2 gV2) /2 width=3 by frees_fwd_isfin/ #g #Hg #_
     lapply (sor_trans2 … Hg2 … (⫱gT2) … Hg) /2 width=1 by sor_tl/ #Hg2
-    lapply (frees_lifts (Ⓣ) … HgV2 … (L2.ⓓW2) … HV2 ??) [4: |*: /3 width=3 by drops_refl, drops_drop/ ] -V2 #HgV
-    lapply (sor_sym … Hg) -Hg #Hg
+    lapply (frees_lifts (Ⓣ) … HgV2 … (L2.ⓓW2) … HV2 ??)
+    [4: lapply (sor_sym … Hg) |*: /3 width=3 by drops_refl, drops_drop/ ] -V2 (**) (* full auto too slow *)
     /4 width=10 by frees_flat, frees_bind, monotonic_sle_sor, sle_tl, ex2_intro/
   ]
 ]
