@@ -144,7 +144,7 @@ table {
         ]
 *)
         [ { "t-bound context-sensitive rt-transition" * } {
-             [ "lfpr ( ⦃?,?⦄ ⊢ ➡[?,?] ? )" "lfpr_length" + "lfpr_drops" + "lfpr_fqup" + "lfpr_lfpx" + "lfpr_lfpr" * ]
+             [ "lfpr ( ⦃?,?⦄ ⊢ ➡[?,?] ? )" "lfpr_length" + "lfpr_drops" + "lfpr_fqup" + "lfpr_frees" + "lfpr_lfpx" + "lfpr_lfpr" * ]
              [ "cpr ( ⦃?,?⦄ ⊢ ? ➡[?] ? )" "cpr_drops" (* + "cpr_llpx_sn" + "cpr_cir" *) * ]
              [ "cpm ( ⦃?,?⦄ ⊢ ? ➡[?,?] ? )" "cpm_simple" + "cpm_drops" + "cpm_lsubr" + "cpm_cpx" * ]
           }

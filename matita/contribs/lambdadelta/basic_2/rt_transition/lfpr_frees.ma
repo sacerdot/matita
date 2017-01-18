@@ -12,13 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_transition/lfpx.ma".
+include "basic_2/rt_transition/lfpx_frees.ma".
 include "basic_2/rt_transition/cpm_cpx.ma".
-include "basic_2/rt_transition/lfpr.ma".
 
 (* PARALLEL R-TRANSITION FOR LOCAL ENV.S ON REFERRED ENTRIES ****************)
 
-(* Fwd. lemmas with unc. rt-transition for local env.s on referred entries **)
+(* Properties with context-sensitive free variables *************************)
 
-lemma lfpr_fwd_lfpx: ∀h,T,G,L1,L2. ⦃G, L1⦄ ⊢ ➡[h, T] L2 → ⦃G, L1⦄ ⊢ ⬈[h, T] L2.
-/3 width=3 by cpm_fwd_cpx, lfxs_co/ qed-.
+lemma cpm_frees_conf: ∀n,h,G. R_frees_confluent (cpm n h G).
+/3 width=6 by cpm_fwd_cpx, cpx_frees_conf/ qed-.
+
+lemma lfpr_frees_conf: ∀h,G. lexs_frees_confluent (cpm 0 h G) cfull.
+/4 width=9 by cpm_fwd_cpx, lfpx_frees_conf, lexs_co/ qed-.

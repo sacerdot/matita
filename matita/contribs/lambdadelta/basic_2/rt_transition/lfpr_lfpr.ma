@@ -13,13 +13,12 @@
 (**************************************************************************)
 
 include "basic_2/static/lfxs_lfxs.ma".
-include "basic_2/rt_transition/lfpx_frees.ma".
 include "basic_2/rt_transition/cpm_lsubr.ma".
 include "basic_2/rt_transition/cpr.ma".
 include "basic_2/rt_transition/cpr_drops.ma".
 include "basic_2/rt_transition/lfpr_drops.ma".
 include "basic_2/rt_transition/lfpr_fqup.ma".
-include "basic_2/rt_transition/lfpr_lfpx.ma".
+include "basic_2/rt_transition/lfpr_frees.ma".
 
 (* PARALLEL R-TRANSITION FOR LOCAL ENV.S ON REFERRED ENTRIES ****************)
 
@@ -378,4 +377,4 @@ qed-.
 (* Main properties **********************************************************)
 
 theorem lfpr_conf: ∀h,G,T. confluent … (lfpr h G T).
-/4 width=6 by cpr_conf_lfpr, lfpx_frees_conf_fwd_lfpr, lfpx_frees_conf, lfxs_conf/ qed-.
+/3 width=6 by cpr_conf_lfpr, lfpr_frees_conf, lfxs_conf/ qed-.

@@ -19,10 +19,6 @@ DEP_DIR      := ../../../components/binaries/matitadep
 DEP          := matitadep.native
 DEP_OPTS     :=
 
-MAC_DIR      := ../../../components/binaries/mac
-MAC          := mac.native
-MAC_OPTS     :=
-
 PRB_DIR      := ../../../components/binaries/probe
 PRB          := probe.native
 PRB_OPTS     := $(XOA_OPTS) -g -i
@@ -53,10 +49,6 @@ define MAS_TEMPLATE
 $(1)/$(1)_probe.txt: $$(MAS_$(1))
 	@echo "  PROBE $(1)"
 	$$(H)$$(PRB_DIR)/$$(PRB) $$(PRB_OPTS) $(1) -sn -sc -on -oc -f > $$@
-
-$(1)/$(1)_mac.txt: $$(MAS_$(1))
-	@echo "  MAC $(1)"
-	$$(H)$$(MAC_DIR)/$$(MAC) $$(MAC_OPTS) $$^ > $$@
 endef
 
 $(foreach PKG, $(PACKAGES), $(eval $(call MAS_TEMPLATE,$(PKG))))
@@ -127,51 +119,54 @@ define STATS_TEMPLATE
   STT_$(1) := $(1).stats
   STTS     += $$(STT_$(1))
 
-  $$(STT_$(1)): S0  = $$(shell cat $(1)/$(1)_probe.txt)
-  $$(STT_$(1)): S1  = $$(shell cat $(1)/$(1)_mac.txt)
-  $$(STT_$(1)): S4  = $$(shell ls $$(MAS_$(1)) | wc -l)
-  $$(STT_$(1)): P1  = $$(shell grep "^theorem " $$(MAS_$(1)) | wc -l)
-  $$(STT_$(1)): P2  = $$(shell grep "^lemma " $$(MAS_$(1)) | wc -l)
-  $$(STT_$(1)): P3  = $$(shell grep "^fact " $$(MAS_$(1)) | wc -l)
-  $$(STT_$(1)): P4  = $$(shell grep "qed[.-]" $$(MAS_$(1)) | wc -l)
-  $$(STT_$(1)): C1  = $$(shell grep "^inductive \|^record " $$(MAS_$(1)) | wc -l)
-  $$(STT_$(1)): C2  = $$(shell grep "^definition \|^let rec " $$(MAS_$(1)) | wc -l)
-  $$(STT_$(1)): C3  = $$(shell grep "defined[.-]" $$(MAS_$(1)) | wc -l)  
-  $$(STT_$(1)): M1  = $$(shell grep "^axiom " $$(MAS_$(1)) | wc -l)
-  $$(STT_$(1)): M2  = $$(shell grep "$$(OPEN)\*[^*:]*$$$$" $$(MAS_$(1)) | wc -l)
-  $$(STT_$(1)): M3  = $$(shell grep "(\*\*)" $$(MAS_$(1)) | wc -l)
+  $$(STT_$(1)): C0 = $$(shell cat $(1)/$(1)_probe.txt)
+  $$(STT_$(1)): C2 = $$(word 2, $$(C0))
+  $$(STT_$(1)): C3 = $$(word 4, $$(C0))
+  $$(STT_$(1)): O1 = $$(shell ls $$(MAS_$(1)) | wc -l)
+  $$(STT_$(1)): O2 = $$(word 1, $$(C0))
+  $$(STT_$(1)): O3 = $$(word 3, $$(C0))
+  $$(STT_$(1)): P1 = $$(word 10, $$(C0))
+  $$(STT_$(1)): P2 = $$(word 9, $$(C0))
+  $$(STT_$(1)): P3 = $$(word 8, $$(C0))
+  $$(STT_$(1)): P4 = $$(shell grep "qed[.-]" $$(MAS_$(1)) | wc -l)
+  $$(STT_$(1)): D1 = $$(word 5, $$(C0))
+  $$(STT_$(1)): D2 = $$(word 7, $$(C0))
+  $$(STT_$(1)): D3 = $$(shell grep "defined[.-]" $$(MAS_$(1)) | wc -l)  
+  $$(STT_$(1)): M1 = $$(word 6, $$(C0))
+  $$(STT_$(1)): M2 = $$(shell grep "$$(OPEN)\*[^*:]*$$$$" $$(MAS_$(1)) | wc -l)
+  $$(STT_$(1)): M3 = $$(shell grep "(\*\*)" $$(MAS_$(1)) | wc -l)
 
-$$(STT_$(1)): $$(MAS_$(1)) $(1)/$(1)_probe.txt $(1)/$(1)_mac.txt
+$$(STT_$(1)): $$(MAS_$(1)) $(1)/$(1)_probe.txt
 	@printf '\x1B[1;40;37m'
-	@printf '%-15s %-47s' 'Statistics for:' $(1)
+	@printf '%-15s %-46s' 'Statistics for:' $(1)
 	@printf '\x1B[0m\n'
 	@printf '\x1B[1;40;35m'
-	@printf '%-8s %6i' Chars $$(word 1, $$(S1))
-	@printf '   %-8s %4i' Pages $$(word 2, $$(S1))
-	@printf '   %-7s %7i' Nodes $$(word 3, $$(S0))
+	@printf '%-12s' '' 
+	@printf '   %-8s %6i' Chars $$(C2)
+	@printf '   %-7s %7i' Nodes $$(C3)
 	@printf '   %-11s' ''
 	@printf '\x1B[0m\n'
 	@printf '\x1B[1;40;36m'
-	@printf '%-8s %6i' Files $$(S4)
-	@printf '   %-8s %4i' Sources $$(word 1, $$(S0))
-	@printf '   %-7s %7i' Objects $$(word 2, $$(S0))
+	@printf '%-8s %3i' Files $$(O1)
+	@printf '   %-8s %6i' Sources $$(O2)
+	@printf '   %-7s %7i' Objects $$(O3)
 	@printf '   %-11s' ''
 	@printf '\x1B[0m\n'	
 	@printf '\x1B[1;40;32m'
-	@printf '%-8s %6i' Theorems $$(P1)
-	@printf '   %-8s %4i' Lemmas $$(P2)
+	@printf '%-8s %3i' Theorems $$(P1)
+	@printf '   %-8s %6i' Lemmas $$(P2)
 	@printf '   %-7s %7i' Facts $$(P3)
 	@printf '   %-6s %4i' Proofs $$(P4)
 	@printf '\x1B[0m\n'	
 	@printf '\x1B[1;40;33m'
-	@printf '%-8s %6i' Declared $$(C1)
-	@printf '   %-8s %4i' Defined $$(C2)	
-	@printf '   %-7s %7i' Proved $$(C3)
+	@printf '%-8s %3i' Declared $$(D1)
+	@printf '   %-8s %6i' Defined $$(D2)	
+	@printf '   %-7s %7i' Proved $$(D3)
 	@printf '   %-11s' ''
 	@printf '\x1B[0m\n'
 	@printf '\x1B[1;40;31m'
-	@printf '%-8s %6i' Axioms $$(M1)
-	@printf '   %-8s %4i' Comments $$(M2)
+	@printf '%-8s %3i' Axioms $$(M1)
+	@printf '   %-8s %6i' Comments $$(M2)
 	@printf '   %-7s %7i' Marks $$(M3)
 	@printf '   %-11s' ''
 	@printf '\x1B[0m\n'
@@ -191,15 +186,15 @@ define SUMMARY_TEMPLATE
   SUM_$(1) := $(1)/web/$(1)_sum.tbl  
   SUMS     += $$(SUM_$(1))
 
-  $$(SUM_$(1)): S0 = $$(shell cat $(1)/$(1)_probe.txt)
-  $$(SUM_$(1)): S1 = $$(word 1, $$(S0))
-  $$(SUM_$(1)): S2 = $$(word 2, $$(S0))
-  $$(SUM_$(1)): S4 = $$(word 4, $$(S0))
-  $$(SUM_$(1)): C1 = $$(word 5, $$(S0))
-  $$(SUM_$(1)): C2 = $$(word 7, $$(S0))
+  $$(SUM_$(1)): C0 = $$(shell cat $(1)/$(1)_probe.txt)
+  $$(SUM_$(1)): S1 = $$(word 1, $$(C0))
+  $$(SUM_$(1)): S2 = $$(word 2, $$(C0))
+  $$(SUM_$(1)): S4 = $$(word 4, $$(C0))
+  $$(SUM_$(1)): C1 = $$(word 5, $$(C0))
+  $$(SUM_$(1)): C2 = $$(word 7, $$(C0))
   $$(SUM_$(1)): C3 = $$(shell echo "$$(C1)+$$(C2)"|bc)
-  $$(SUM_$(1)): P1 = $$(word 10, $$(S0))
-  $$(SUM_$(1)): P2 = $$(word 9, $$(S0))
+  $$(SUM_$(1)): P1 = $$(word 10, $$(C0))
+  $$(SUM_$(1)): P2 = $$(word 9, $$(C0))
   $$(SUM_$(1)): P3 = $$(shell echo "$$(P1)+$$(P2)"|bc)
 
   $$(SUM_$(1)): $$(MAS_$(1)) $(1)/$(1)_probe.txt
