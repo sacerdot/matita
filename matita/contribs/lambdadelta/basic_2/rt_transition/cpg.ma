@@ -264,6 +264,25 @@ lemma cpg_inv_cast1: ∀Rt,c,h,G,L,V1,U1,U2. ⦃G, L⦄ ⊢ ⓝV1.U1 ⬈[Rt, c, 
                       | ∃∃cV. ⦃G, L⦄ ⊢ V1 ⬈[Rt, cV, h] U2 & c = cV+𝟘𝟙.
 /2 width=3 by cpg_inv_cast1_aux/ qed-.
 
+(* Advanced inversion lemmas ************************************************)
+
+lemma cpg_inv_zero1_pair: ∀Rt,c,h,I,G,K,V1,T2. ⦃G, K.ⓑ{I}V1⦄ ⊢ #0 ⬈[Rt, c, h] T2 →
+                          ∨∨ (T2 = #0 ∧ c = 𝟘𝟘)
+                           | ∃∃cV,V2. ⦃G, K⦄ ⊢ V1 ⬈[Rt, cV, h] V2 & ⬆*[1] V2 ≡ T2 &
+                                      I = Abbr & c = cV
+                           | ∃∃cV,V2. ⦃G, K⦄ ⊢ V1 ⬈[Rt, cV, h] V2 & ⬆*[1] V2 ≡ T2 &
+                                      I = Abst & c = cV+𝟘𝟙.
+#Rt #c #h #I #G #K #V1 #T2 #H elim (cpg_inv_zero1 … H) -H /2 width=1 by or3_intro0/
+* #z #Y #X1 #X2 #HX12 #HXT2 #H1 #H2 destruct /3 width=5 by or3_intro1, or3_intro2, ex4_2_intro/
+qed-.
+
+lemma cpg_inv_lref1_pair: ∀Rt,c,h,I,G,K,V,T2,i. ⦃G, K.ⓑ{I}V⦄ ⊢ #⫯i ⬈[Rt, c, h] T2 →
+                          (T2 = #(⫯i) ∧ c = 𝟘𝟘) ∨
+                          ∃∃T. ⦃G, K⦄ ⊢ #i ⬈[Rt, c, h] T & ⬆*[1] T ≡ T2.
+#Rt #c #h #I #G #L #V #T2 #i #H elim (cpg_inv_lref1 … H) -H /2 width=1 by or_introl/
+* #Z #Y #X #T #HT #HT2 #H destruct /3 width=3 by ex2_intro, or_intror/
+qed-.
+
 (* Basic forward lemmas *****************************************************)
 
 lemma cpg_fwd_bind1_minus: ∀Rt,c,h,I,G,L,V1,T1,T. ⦃G, L⦄ ⊢ -ⓑ{I}V1.T1 ⬈[Rt, c, h] T → ∀p.

@@ -138,19 +138,19 @@ table {
           }
         ]
         [ { "context-sensitive rt-reduction" * } {
-             [ "lpx_lleq" + "lpx_aaa" * ]
+             [ "lpx_lleq" * ]
              [ "cpx_lreq" + "cpx_fqus" + "cpx_llpx_sn" + "cpx_lleq" * ]
           }
         ]
 *)
         [ { "t-bound context-sensitive rt-transition" * } {
-             [ "lfpr ( ⦃?,?⦄ ⊢ ➡[?,?] ? )" "lfpr_length" + "lfpr_drops" + "lfpr_fqup" + "lfpr_frees" + "lfpr_lfpx" + "lfpr_lfpr" * ]
+             [ "lfpr ( ⦃?,?⦄ ⊢ ➡[?,?] ? )" "lfpr_length" + "lfpr_drops" + "lfpr_fqup" + "lfpr_frees" + "lfpr_aaa" + "lfpr_lfpx" + "lfpr_lfpr" * ]
              [ "cpr ( ⦃?,?⦄ ⊢ ? ➡[?] ? )" "cpr_drops" (* + "cpr_llpx_sn" + "cpr_cir" *) * ]
              [ "cpm ( ⦃?,?⦄ ⊢ ? ➡[?,?] ? )" "cpm_simple" + "cpm_drops" + "cpm_lsubr" + "cpm_cpx" * ]
           }
         ]
         [ { "uncounted context-sensitive rt-transition" * } {
-             [ "lfpx ( ⦃?,?⦄ ⊢ ⬈[?,?] ? )" "lfpx_length" + "lfpx_drops" + "lfpx_fqup" + "lfpx_frees" * ]
+             [ "lfpx ( ⦃?,?⦄ ⊢ ⬈[?,?] ? )" "lfpx_length" + "lfpx_drops" + "lfpx_fqup" + "lfpx_frees" + "lfpx_aaa" * ]
              [ "cpx ( ⦃?,?⦄ ⊢ ? ⬈[?] ? )" "cpx_simple" + "cpx_drops" + "cpx_lsubr" * ]
           }
         ]

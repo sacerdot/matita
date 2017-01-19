@@ -1,6 +1,6 @@
 cpg.ma cpg_simple.ma cpg_drops.ma cpg_lsubr.ma
 cpx.ma cpx_simple.ma cpx_drops.ma cpx_lsubr.ma
-lfpx.ma lfpx_length.ma lfpx_drops.ma lfpx_fqup.ma lfpx_frees.ma 
+lfpx.ma lfpx_length.ma lfpx_drops.ma lfpx_fqup.ma lfpx_frees.ma lfpx_aaa.ma
 cpm.ma cpm_simple.ma cpm_drops.ma cpm_lsubr.ma cpm_cpx.ma
 cpr.ma cpr_drops.ma
-lfpr.ma lfpr_length.ma lfpr_drops.ma lfpr_fqup.ma lfpr_frees.ma lfpr_lfpx.ma lfpr_lfpr.ma
+lfpr.ma lfpr_length.ma lfpr_drops.ma lfpr_fqup.ma lfpr_frees.ma lfpr_aaa.ma lfpr_lfpx.ma lfpr_lfpr.ma

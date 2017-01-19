@@ -187,6 +187,20 @@ qed-.
 
 (* Advanced inversion lemmas ************************************************)
 
+lemma cpx_inv_zero1_pair: ∀h,I,G,K,V1,T2. ⦃G, K.ⓑ{I}V1⦄ ⊢ #0 ⬈[h] T2 →
+                          T2 = #0 ∨
+                          ∃∃V2. ⦃G, K⦄ ⊢ V1 ⬈[h] V2 & ⬆*[1] V2 ≡ T2.
+#h #I #G #L #V1 #T2 * #c #H elim (cpg_inv_zero1_pair … H) -H *
+/4 width=3 by ex2_intro, ex_intro, or_intror, or_introl/
+qed-.
+
+lemma cpx_inv_lref1_pair: ∀h,I,G,K,V,T2,i. ⦃G, K.ⓑ{I}V⦄ ⊢ #⫯i ⬈[h] T2 →
+                          T2 = #(⫯i) ∨
+                          ∃∃T. ⦃G, K⦄ ⊢ #i ⬈[h] T & ⬆*[1] T ≡ T2.
+#h #I #G #L #V #T2 #i * #c #H elim (cpg_inv_lref1_pair … H) -H *
+/4 width=3 by ex2_intro, ex_intro, or_introl, or_intror/
+qed-.
+
 lemma cpx_inv_flat1: ∀h,I,G,L,V1,U1,U2. ⦃G, L⦄ ⊢ ⓕ{I}V1.U1 ⬈[h] U2 →
                      ∨∨ ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ⬈[h] V2 & ⦃G, L⦄ ⊢ U1 ⬈[h] T2 &
                                  U2 = ⓕ{I}V2.T2
