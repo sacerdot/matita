@@ -172,6 +172,10 @@ qed.
 
 (* Inversion & forward lemmas ***********************************************)
 
+lemma nat_split: ∀x. x = 0 ∨ ∃y. ⫯y = x.
+* /3 width=2 by ex_intro, or_introl, or_intror/
+qed-.
+
 lemma max_inv_O3: ∀x,y. (x ∨ y) = 0 → 0 = x ∧ 0 = y.
 /4 width=2 by le_maxr, le_maxl, le_n_O_to_eq, conj/
 qed-.

@@ -1,0 +1,111 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/relocation/drops_weight.ma".
+include "basic_2/s_computation/fqup_weight.ma".
+include "basic_2/s_computation/fqus_weight.ma".
+include "basic_2/static/frees.ma".
+
+(* CONTEXT-SENSITIVE FREE VARIABLES *****************************************)
+
+(* Properties with star-iterated supclosure *********************************)
+
+(* Note: Restrict fqu_drop on atoms to prove frees_fqus_drops
+         Counterex: ⦃⋆, ⋆.ⓛ#0, ⓛ#1.#0⦄ ⊐ ⦃⋆, ⋆, ⓛ#0.#0⦄ ⊐ ⦃⋆, ⋆.ⓛ#0, #0⦄
+*)
+lemma frees_fqus_drops: ∀G,L1,T1,f1. L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 →
+                        ∀L2,T2. ⦃G, L1, T1⦄ ⊐* ⦃G, L2, T2⦄ →
+                        ∀I,n. ⬇*[n] L1 ≡ L2.ⓑ{I}T2 →
+                        ∃∃f2. L2 ⊢ 𝐅*⦃T2⦄ ≡ f2 & f2 ⊆ ⫱*[⫯n] f1.
+#G #L1 #T1 @(fqup_wf_ind_eq … G L1 T1) -G -L1 -T1
+#G0 #L0 #T0 #IH #G #L1 * *
+[ #s #HG #HL #HT #f1 #Hf1 #L2 #T2 #H12 #I #n #HL12 destruct
+  lapply (frees_inv_sort … Hf1) -Hf1 #Hf1
+  elim (fqus_inv_sort1 … H12) -H12 * [| elim (nat_split n) ]
+  [ -IH #H1 #H2 #H3 destruct
+    lapply (drops_fwd_lw … HL12) -HL12 #HL12
+    elim (lt_le_false … HL12) -HL12 //
+  | -IH #Hn #J #L #V #H12 #H destruct
+    lapply (drops_fwd_isid … HL12 ?) -HL12 // #H destruct
+    <(fqus_inv_refl_atom3 … H12) -H12
+    /3 width=3 by frees_sort_gen, sle_isid_sn, ex2_intro/
+  | * #m #Hn #J #L #V #H12 #H destruct
+    lapply (drops_inv_drop1 … HL12) -HL12 #HL12
+    elim (IH … H12 … HL12) -IH -H12 -HL12
+    /3 width=3 by frees_sort_gen, fqu_fqup, fqu_drop, lifts_sort, isid_tl, ex2_intro/
+  ]
+| #i #HG #HL #HT #f1 #Hf1 #L2 #T2 #H12 #I #n #HL12 destruct
+  elim (fqus_inv_lref1 … H12) -H12 * [|2,3: elim (nat_split n) ]
+  [ -IH #H1 #H2 #H3 destruct
+    lapply (drops_fwd_lw … HL12) -HL12 #HL12
+    elim (lt_le_false … HL12) -HL12 //
+  | -IH #Hn #J #L #V #H12 #H1 #H2 destruct
+    elim (frees_inv_zero_pair … Hf1) -Hf1 #g1 #Hg1 #H destruct
+    lapply (drops_fwd_isid … HL12 ?) -HL12 -H12 // #H destruct
+    /2 width=3 by sle_refl, ex2_intro/
+  | * #m #Hn #J #L #V #H12 #H1 #H2 destruct
+    elim (frees_inv_zero_pair … Hf1) -Hf1 #g1 #Hg1 #H destruct
+    lapply (drops_inv_drop1 … HL12) -HL12 #HL12
+    elim (IH … H12 … HL12) -IH -H12 -HL12
+    /2 width=3 by fqu_fqup, fqu_lref_O, ex2_intro/
+  | -IH #Hn #J #L #V #j #H12 #H1 #H2 destruct
+    elim (frees_inv_lref_pair … Hf1) -Hf1 #g1 #Hg1 #H destruct
+    lapply (drops_fwd_isid … HL12 ?) -HL12 // #H destruct
+    <(fqus_inv_refl_atom3 … H12) -H12 /2 width=3 by sle_refl, ex2_intro/
+  | * #m #Hn #J #L #V #j #H12 #H1 #H2 destruct
+    elim (frees_inv_lref_pair … Hf1) -Hf1 #g1 #Hg1 #H destruct
+    lapply (drops_inv_drop1 … HL12) -HL12 #HL12
+    elim (IH … H12 … HL12) -IH -H12 -HL12 /2 width=3 by fqu_fqup, ex2_intro/
+  ]
+| #l #HG #HL #HT #f1 #Hf1 #L2 #T2 #H12 #I #n #HL12 destruct
+  lapply (frees_inv_gref … Hf1) -Hf1 #Hf1
+  elim (fqus_inv_gref1 … H12) -H12 * [| elim (nat_split n) ]
+  [ -IH #H1 #H2 #H3 destruct
+    lapply (drops_fwd_lw … HL12) -HL12 #HL12
+    elim (lt_le_false … HL12) -HL12 //
+  | -IH #Hn #J #L #V #H12 #H destruct
+    lapply (drops_fwd_isid … HL12 ?) -HL12 // #H destruct
+    <(fqus_inv_refl_atom3 … H12) -H12
+    /3 width=3 by frees_gref_gen, sle_isid_sn, ex2_intro/
+  | * #m #Hn #J #L #V #H12 #H destruct
+    lapply (drops_inv_drop1 … HL12) -HL12 #HL12
+    elim (IH … H12 … HL12) -IH -H12 -HL12
+    /3 width=3 by frees_gref_gen, fqu_fqup, fqu_drop, lifts_sort, isid_tl, ex2_intro/
+  ]
+| #p #I #V1 #T1 #HG #HL #HT #f1 #Hf1 #L2 #T2 #H12 #I #n #HL12 destruct
+  elim (frees_inv_bind … Hf1) -Hf1 #f1V #f1T #Hf1V #Hf1T #Hf1
+  elim (fqus_inv_bind1 … H12) -H12
+  [ -IH -f1V -f1T * #H1 #H2 #H3 destruct
+    lapply (drops_fwd_lw … HL12) -HL12 #HL12
+    elim (lt_le_false … HL12) -HL12 //
+  | #H12 elim (IH … H12 … HL12) -IH -H12 -HL12
+    /4 width=6 by sor_tls, sor_inv_sle_sn_trans, ex2_intro/
+  | #H12 elim (IH … H12 I (⫯n)) -IH -H12 [|*: /2 width=3 by drops_drop, drops_refl/ ] -HL12
+    <tls_xn /4 width=6 by ex2_intro, sor_tls, sor_inv_sle_dx_trans/
+  | * #J #L #V #X1 #H12 #HXT1 #H destruct
+  ]
+| #I #V1 #T1 #HG #HL #HT #f1 #Hf1 #L2 #T2 #H12 #I #n #HL12 destruct
+  elim (frees_inv_flat … Hf1) -Hf1 #f1V #f1T #Hf1V #Hf1T #Hf1
+  elim (fqus_inv_flat1 … H12) -H12
+  [ -IH -f1V -f1T * #H1 #H2 #H3 destruct
+    lapply (drops_fwd_lw … HL12) -HL12 #HL12
+    elim (lt_le_false … HL12) -HL12 //
+  | #H12 elim (IH … H12 … HL12) -IH -H12 -HL12
+    /4 width=6 by sor_tls, sor_inv_sle_sn_trans, ex2_intro/
+  | #H12 elim (IH … H12 … HL12) -IH -H12 -HL12
+    /4 width=6 by ex2_intro, sor_tls, sor_inv_sle_dx_trans/
+  | * #J #L #V #X1 #H12 #HXT1 #H destruct 
+  ]
+]
+qed-.

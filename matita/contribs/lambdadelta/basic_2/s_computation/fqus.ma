@@ -64,56 +64,84 @@ lemma fqus_inv_fqu_sn: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐* ⦃G2, L2, T2
 * #HG #HL #HT #_ destruct //
 qed-.
 
+lemma fqus_inv_sort1: ∀G1,G2,L1,L2,T2,s. ⦃G1, L1, ⋆s⦄ ⊐* ⦃G2, L2, T2⦄ →
+                      (∧∧ G1 = G2 & L1 = L2 & ⋆s = T2) ∨
+                      ∃∃J,L,V. ⦃G1, L, ⋆s⦄ ⊐* ⦃G2, L2, T2⦄ & L1 = L.ⓑ{J}V.
+#G1 #G2 #L1 #L2 #T2 #s #H elim (fqus_inv_fqu_sn … H) -H * /3 width=1 by and3_intro, or_introl/
+#G #L #T #H elim (fqu_inv_sort1 … H) -H /3 width=5 by ex2_3_intro, or_intror/
+qed-.
+
+lemma fqus_inv_lref1: ∀G1,G2,L1,L2,T2,i. ⦃G1, L1, #i⦄ ⊐* ⦃G2, L2, T2⦄ →
+                      ∨∨ ∧∧ G1 = G2 & L1 = L2 & #i = T2
+                       | ∃∃J,L,V. ⦃G1, L, V⦄ ⊐* ⦃G2, L2, T2⦄ & L1 = L.ⓑ{J}V & i = 0
+                       | ∃∃J,L,V,j. ⦃G1, L, #j⦄ ⊐* ⦃G2, L2, T2⦄ & L1 = L.ⓑ{J}V & i = ⫯j.
+#G1 #G2 #L1 #L2 #T2 #i #H elim (fqus_inv_fqu_sn … H) -H * /3 width=1 by and3_intro, or3_intro0/
+#G #L #T #H elim (fqu_inv_lref1 … H) -H * /3 width=7 by or3_intro1, or3_intro2, ex3_4_intro, ex3_3_intro/
+qed-.
+
+lemma fqus_inv_gref1: ∀G1,G2,L1,L2,T2,l. ⦃G1, L1, §l⦄ ⊐* ⦃G2, L2, T2⦄ →
+                      (∧∧ G1 = G2 & L1 = L2 & §l = T2) ∨
+                      ∃∃J,L,V. ⦃G1, L, §l⦄ ⊐* ⦃G2, L2, T2⦄ & L1 = L.ⓑ{J}V.
+#G1 #G2 #L1 #L2 #T2 #l #H elim (fqus_inv_fqu_sn … H) -H * /3 width=1 by and3_intro, or_introl/
+#G #L #T #H elim (fqu_inv_gref1 … H) -H /3 width=5 by ex2_3_intro, or_intror/
+qed-.
+
+lemma fqus_inv_bind1: ∀p,I,G1,G2,L1,L2,V1,T1,T2. ⦃G1, L1, ⓑ{p,I}V1.T1⦄ ⊐* ⦃G2, L2, T2⦄ →
+                      ∨∨ ∧∧ G1 = G2 & L1 = L2 & ⓑ{p,I}V1.T1 = T2
+                       | ⦃G1, L1, V1⦄ ⊐* ⦃G2, L2, T2⦄
+                       | ⦃G1, L1.ⓑ{I}V1, T1⦄ ⊐* ⦃G2, L2, T2⦄
+                       | ∃∃J,L,V,T. ⦃G1, L, T⦄ ⊐* ⦃G2, L2, T2⦄ & ⬆*[1] T ≡ ⓑ{p,I}V1.T1 & L1 = L.ⓑ{J}V.
+#p #I #G1 #G2 #L1 #L2 #V1 #T1 #T2 #H elim (fqus_inv_fqu_sn … H) -H * /3 width=1 by and3_intro, or4_intro0/
+#G #L #T #H elim (fqu_inv_bind1 … H) -H *
+[3: #J #V ] #H1 #H2 #H3 #H destruct
+/3 width=7 by or4_intro1, or4_intro2, or4_intro3, ex3_4_intro/
+qed-.
+
+lemma fqus_inv_flat1: ∀I,G1,G2,L1,L2,V1,T1,T2. ⦃G1, L1, ⓕ{I}V1.T1⦄ ⊐* ⦃G2, L2, T2⦄ →
+                      ∨∨ ∧∧ G1 = G2 & L1 = L2 & ⓕ{I}V1.T1 = T2
+                       | ⦃G1, L1, V1⦄ ⊐* ⦃G2, L2, T2⦄
+                       | ⦃G1, L1, T1⦄ ⊐* ⦃G2, L2, T2⦄
+                       | ∃∃J,L,V,T. ⦃G1, L, T⦄ ⊐* ⦃G2, L2, T2⦄ & ⬆*[1] T ≡ ⓕ{I}V1.T1 & L1 = L.ⓑ{J}V.
+#I #G1 #G2 #L1 #L2 #V1 #T1 #T2 #H elim (fqus_inv_fqu_sn … H) -H * /3 width=1 by and3_intro, or4_intro0/
+#G #L #T #H elim (fqu_inv_flat1 … H) -H *
+[3: #J #V ] #H1 #H2 #H3 #H destruct
+/3 width=7 by or4_intro1, or4_intro2, or4_intro3, ex3_4_intro/
+qed-.
+
+(* Advanced inversion lemmas ************************************************)
+
 lemma fqus_inv_atom1: ∀I,G1,G2,L2,T2. ⦃G1, ⋆, ⓪{I}⦄ ⊐* ⦃G2, L2, T2⦄ →
                       ∧∧ G1 = G2 & ⋆ = L2 & ⓪{I} = T2.
 #I #G1 #G2 #L2 #T2 #H elim (fqus_inv_fqu_sn … H) -H * /2 width=1 by and3_intro/
 #G #L #T #H elim (fqu_inv_atom1 … H)
 qed-.
 
-lemma fqus_inv_sort1: ∀I,G1,G2,L1,L2,V1,T2,s. ⦃G1, L1.ⓑ{I}V1, ⋆s⦄ ⊐* ⦃G2, L2, T2⦄ →
-                      (∧∧ G1 = G2 & L1.ⓑ{I}V1 = L2 & ⋆s = T2) ∨ ⦃G1, L1, ⋆s⦄ ⊐* ⦃G2, L2, T2⦄.
+lemma fqus_inv_sort1_pair: ∀I,G1,G2,L1,L2,V1,T2,s. ⦃G1, L1.ⓑ{I}V1, ⋆s⦄ ⊐* ⦃G2, L2, T2⦄ →
+                           (∧∧ G1 = G2 & L1.ⓑ{I}V1 = L2 & ⋆s = T2) ∨ ⦃G1, L1, ⋆s⦄ ⊐* ⦃G2, L2, T2⦄.
 #I #G1 #G2 #L1 #L2 #V #T2 #s #H elim (fqus_inv_fqu_sn … H) -H * /3 width=1 by and3_intro, or_introl/
-#G #L #T #H elim (fqu_inv_sort1 … H) -H
+#G #L #T #H elim (fqu_inv_sort1_pair … H) -H
 #H1 #H2 #H3 #H destruct /2 width=1 by or_intror/
 qed-.
 
-lemma fqus_inv_zero1: ∀I,G1,G2,L1,L2,V1,T2. ⦃G1, L1.ⓑ{I}V1, #0⦄ ⊐* ⦃G2, L2, T2⦄ →
-                      (∧∧ G1 = G2 & L1.ⓑ{I}V1 = L2 & #0 = T2) ∨ ⦃G1, L1, V1⦄ ⊐* ⦃G2, L2, T2⦄.
+lemma fqus_inv_zero1_pair: ∀I,G1,G2,L1,L2,V1,T2. ⦃G1, L1.ⓑ{I}V1, #0⦄ ⊐* ⦃G2, L2, T2⦄ →
+                           (∧∧ G1 = G2 & L1.ⓑ{I}V1 = L2 & #0 = T2) ∨ ⦃G1, L1, V1⦄ ⊐* ⦃G2, L2, T2⦄.
 #I #G1 #G2 #L1 #L2 #V1 #T2 #H elim (fqus_inv_fqu_sn … H) -H * /3 width=1 by and3_intro, or_introl/
-#G #L #T #H elim (fqu_inv_zero1 … H) -H
+#G #L #T #H elim (fqu_inv_zero1_pair … H) -H
 #H1 #H2 #H3 #H destruct /2 width=1 by or_intror/
 qed-.
 
-lemma fqus_inv_lref1: ∀I,G1,G2,L1,L2,V1,T2,i. ⦃G1, L1.ⓑ{I}V1, #⫯i⦄ ⊐* ⦃G2, L2, T2⦄ →
-                      (∧∧ G1 = G2 & L1.ⓑ{I}V1 = L2 & #(⫯i) = T2) ∨ ⦃G1, L1, #i⦄ ⊐* ⦃G2, L2, T2⦄.
+lemma fqus_inv_lref1_pair: ∀I,G1,G2,L1,L2,V1,T2,i. ⦃G1, L1.ⓑ{I}V1, #⫯i⦄ ⊐* ⦃G2, L2, T2⦄ →
+                           (∧∧ G1 = G2 & L1.ⓑ{I}V1 = L2 & #(⫯i) = T2) ∨ ⦃G1, L1, #i⦄ ⊐* ⦃G2, L2, T2⦄.
 #I #G1 #G2 #L1 #L2 #V #T2 #i #H elim (fqus_inv_fqu_sn … H) -H * /3 width=1 by and3_intro, or_introl/
-#G #L #T #H elim (fqu_inv_lref1 … H) -H
+#G #L #T #H elim (fqu_inv_lref1_pair … H) -H
 #H1 #H2 #H3 #H destruct /2 width=1 by or_intror/
 qed-.
 
-lemma fqus_inv_gref1: ∀I,G1,G2,L1,L2,V1,T2,l. ⦃G1, L1.ⓑ{I}V1, §l⦄ ⊐* ⦃G2, L2, T2⦄ →
-                      (∧∧ G1 = G2 & L1.ⓑ{I}V1 = L2 & §l = T2) ∨ ⦃G1, L1, §l⦄ ⊐* ⦃G2, L2, T2⦄.
+lemma fqus_inv_gref1_pair: ∀I,G1,G2,L1,L2,V1,T2,l. ⦃G1, L1.ⓑ{I}V1, §l⦄ ⊐* ⦃G2, L2, T2⦄ →
+                           (∧∧ G1 = G2 & L1.ⓑ{I}V1 = L2 & §l = T2) ∨ ⦃G1, L1, §l⦄ ⊐* ⦃G2, L2, T2⦄.
 #I #G1 #G2 #L1 #L2 #V #T2 #l #H elim (fqus_inv_fqu_sn … H) -H * /3 width=1 by and3_intro, or_introl/
-#G #L #T #H elim (fqu_inv_gref1 … H) -H
+#G #L #T #H elim (fqu_inv_gref1_pair … H) -H
 #H1 #H2 #H3 #H destruct /2 width=1 by or_intror/
-qed-.
-
-lemma fqus_inv_bind1: ∀p,I,G1,G2,L1,L2,V1,T1,T2. ⦃G1, L1, ⓑ{p,I}V1.T1⦄ ⊐* ⦃G2, L2, T2⦄ →
-                      ∨∨ ∧∧ G1 = G2 & L1 = L2 & ⓑ{p,I}V1.T1 = T2
-                       | ⦃G1, L1, V1⦄ ⊐* ⦃G2, L2, T2⦄
-                       | ⦃G1, L1.ⓑ{I}V1, T1⦄ ⊐* ⦃G2, L2, T2⦄.
-#p #I #G1 #G2 #L1 #L2 #V1 #T1 #T2 #H elim (fqus_inv_fqu_sn … H) -H * /3 width=1 by and3_intro, or3_intro0/
-#G #L #T #H elim (fqu_inv_bind1 … H) -H *
-#H1 #H2 #H3 #H destruct /2 width=1 by or3_intro1, or3_intro2/
-qed-.
-
-lemma fqus_inv_flat1: ∀I,G1,G2,L1,L2,V1,T1,T2. ⦃G1, L1, ⓕ{I}V1.T1⦄ ⊐* ⦃G2, L2, T2⦄ →
-                      ∨∨ ∧∧ G1 = G2 & L1 = L2 & ⓕ{I}V1.T1 = T2
-                       | ⦃G1, L1, V1⦄ ⊐* ⦃G2, L2, T2⦄
-                       | ⦃G1, L1, T1⦄ ⊐* ⦃G2, L2, T2⦄.
-#I #G1 #G2 #L1 #L2 #V1 #T1 #T2 #H elim (fqus_inv_fqu_sn … H) -H * /3 width=1 by and3_intro, or3_intro0/
-#G #L #T #H elim (fqu_inv_flat1 … H) -H *
-#H1 #H2 #H3 #H destruct /2 width=1 by or3_intro1, or3_intro2/
 qed-.
 
 (* Basic_2A1: removed theorems 1: fqus_drop *)

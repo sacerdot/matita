@@ -146,6 +146,24 @@ lemma frees_inv_flat: ∀f,I,L,V,T. L ⊢ 𝐅*⦃ⓕ{I}V.T⦄ ≡ f →
                       ∃∃f1,f2. L ⊢ 𝐅*⦃V⦄ ≡ f1 & L ⊢ 𝐅*⦃T⦄ ≡ f2 & f1 ⋓ f2 ≡ f.
 /2 width=4 by frees_inv_flat_aux/ qed-.
 
+(* Advanced inversion lemmas ***********************************************)
+
+lemma frees_inv_zero_pair: ∀f,I,K,V. K.ⓑ{I}V ⊢ 𝐅*⦃#0⦄ ≡ f →
+                           ∃∃g. K ⊢ 𝐅*⦃V⦄ ≡ g & f = ⫯g.
+#f #I #K #V #H elim (frees_inv_zero … H) -H *
+[ #H destruct
+| #g #Z #Y #X #Hg #H1 #H2 destruct /3 width=3 by ex2_intro/  
+]
+qed-.
+
+lemma frees_inv_lref_pair: ∀f,I,K,V,i. K.ⓑ{I}V ⊢ 𝐅*⦃#(⫯i)⦄ ≡ f →
+                           ∃∃g. K ⊢ 𝐅*⦃#i⦄ ≡ g & f = ↑g.
+#f #I #K #V #i #H elim (frees_inv_lref … H) -H *
+[ #H destruct
+| #g #Z #Y #X #Hg #H1 #H2 destruct /3 width=3 by ex2_intro/  
+]
+qed-.
+
 (* Basic forward lemmas ****************************************************)
 
 lemma frees_fwd_isfin: ∀f,L,T. L ⊢ 𝐅*⦃T⦄ ≡ f → 𝐅⦃f⦄.
