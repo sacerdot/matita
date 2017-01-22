@@ -29,7 +29,7 @@ include "basic_2/notation/constructors/snabstpos_2.ma".
 include "basic_2/notation/constructors/snabstneg_2.ma".
 include "basic_2/notation/constructors/snappl_2.ma".
 include "basic_2/notation/constructors/sncast_2.ma".
-include "basic_2/grammar/item.ma".
+include "basic_2/syntax/item.ma".
 
 (* TERMS ********************************************************************)
 

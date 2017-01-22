@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/term_vector.ma".
-include "basic_2/grammar/genv.ma".
+include "basic_2/syntax/term_vector.ma".
+include "basic_2/syntax/genv.ma".
 include "apps_2/functional/notation.ma".
 
 (* REDUCTION AND TYPE MACHINE ***********************************************)

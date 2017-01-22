@@ -12,30 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/lib/list2.ma".
-include "basic_2/notation/constructors/star_0.ma".
-include "basic_2/notation/constructors/dxbind2_3.ma".
-include "basic_2/notation/constructors/dxabbr_2.ma".
-include "basic_2/notation/constructors/dxabst_2.ma".
-include "basic_2/grammar/term.ma".
+include "basic_2/syntax/tsts.ma".
 
-(* GLOBAL ENVIRONMENTS ******************************************************)
+(* SAME TOP TERM STRUCTURE **************************************************)
 
-(* global environments *)
-definition genv ≝ list2 bind2 term.
+(* Main properties **********************************************************)
 
-interpretation "sort (global environment)"
-   'Star = (nil2 bind2 term).
+(* Basic_1: was: iso_trans *)
+theorem tsts_trans: Transitive … tsts.
+#T1 #T * -T1 -T //
+#I #V1 #V #T1 #T #X #H
+elim (tsts_inv_pair1 … H) -H #V2 #T2 #H destruct //
+qed-.
 
-interpretation "global environment binding construction (binary)"
-   'DxBind2 L I T = (cons2 bind2 term I T L).
+theorem tsts_canc_sn: ∀T,T1. T ≂ T1 → ∀T2. T ≂ T2 → T1 ≂ T2.
+/3 width=3 by tsts_trans, tsts_sym/ qed-.
 
-interpretation "abbreviation (global environment)"
-   'DxAbbr L T = (cons2 bind2 term Abbr T L).
-
-interpretation "abstraction (global environment)"
-   'DxAbst L T = (cons2 bind2 term Abst T L).
-
-(* Basic properties *********************************************************)
-
-axiom eq_genv_dec: ∀G1,G2:genv. Decidable (G1 = G2).
+theorem tsts_canc_dx: ∀T1,T. T1 ≂ T → ∀T2. T2 ≂ T → T1 ≂ T2.
+/3 width=3 by tsts_trans, tsts_sym/ qed-.

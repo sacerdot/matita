@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/term_vector.ma".
+include "basic_2/syntax/term_vector.ma".
 include "basic_2/computation/csx.ma".
 
 (* CONTEXT-SENSITIVE EXTENDED STRONGLY NORMALIZING TERM VECTORS *************)

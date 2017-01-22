@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/topiso_2.ma".
-include "basic_2/grammar/term_simple.ma".
+include "basic_2/syntax/term_simple.ma".
 
 (* SAME TOP TERM STRUCTURE **************************************************)
 

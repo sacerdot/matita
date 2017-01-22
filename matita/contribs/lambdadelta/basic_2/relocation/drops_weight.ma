@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/cl_restricted_weight.ma".
+include "basic_2/syntax/cl_restricted_weight.ma".
 include "basic_2/relocation/lifts_weight.ma".
 include "basic_2/relocation/drops.ma".
 

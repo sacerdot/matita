@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/lenv_length.ma".
+include "basic_2/syntax/lenv_length.ma".
 include "basic_2/s_transition/fqu.ma".
 
 (* SUPCLOSURE ***************************************************************)

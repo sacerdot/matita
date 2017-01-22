@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/term_simple.ma".
+include "basic_2/syntax/term_simple.ma".
 include "basic_2/rt_transition/cpg.ma".
 
 (* COUNTED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS ***************)

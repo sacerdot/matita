@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/lenv.ma".
+include "basic_2/syntax/lenv.ma".
 
 (* CONTEXT-SENSITIVE EQUIVALENCES FOR TERMS *********************************)
 

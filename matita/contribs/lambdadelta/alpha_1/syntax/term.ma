@@ -26,7 +26,7 @@ include "alpha_1/notation/constructors/snabstneg_1.ma".
 include "alpha_1/notation/constructors/snproj_3.ma".
 include "alpha_1/notation/constructors/snprojpos_2.ma".
 include "alpha_1/notation/constructors/snprojneg_2.ma".
-include "alpha_1/grammar/item.ma".
+include "alpha_1/syntax/item.ma".
 
 (* TERMS ********************************************************************)
 

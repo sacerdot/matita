@@ -14,7 +14,7 @@
 
 include "ground_2/relocation/rtmap_sor.ma".
 include "basic_2/notation/relations/freestar_3.ma".
-include "basic_2/grammar/lenv.ma".
+include "basic_2/syntax/lenv.ma".
 
 (* CONTEXT-SENSITIVE FREE VARIABLES *****************************************)
 

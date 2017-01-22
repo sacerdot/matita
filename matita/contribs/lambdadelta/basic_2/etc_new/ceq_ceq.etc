@@ -12,8 +12,26 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
+include "basic_2/syntax/ceq.ma".
 
-notation "hvbox( ⦃ term 46 G, break term 46 L ⦄ ⊢ break term 46 T1 ➡ * break [ term 46 h , break term 46 o ] break term 46 T2 )"
-   non associative with precedence 45
-   for @{ 'PRedStar $h $o $G $L $T1 $T2 }.
+(* CONTEXT-SENSITIVE EQUIVALENCES FOR TERMS *********************************)
+
+(* Main properties **********************************************************)
+
+theorem ceq_trans (L): Transitive … (ceq L).
+// qed-.
+
+lemma ceq_canc_sn (L): left_cancellable … (ceq L).
+// qed-.
+
+lemma ceq_canc_dx (L): right_cancellable … (ceq L).
+// qed-.
+
+theorem cfull_trans (L): Transitive … (cfull L).
+// qed-.
+
+lemma cfull_canc_sn (L): left_cancellable … (cfull L).
+// qed-.
+
+lemma cfull_canc_dx (L): right_cancellable … (cfull L).
+// qed-.

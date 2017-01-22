@@ -14,6 +14,6 @@
 
 (* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-notation "hvbox( ⦃ term 46 G , break term 46 L ⦄ ⊢ break term 46 T1 • * ⬌ * break [ term 46 o , break term 46 h , break term 46 n1 , break term 46 n2 ] break term 46 T2 )"
+notation "hvbox( ⦃ term 46 G , break term 46 L ⦄ ⊢ break term 46 T1 • * ⬌ * break [ term 46 h , break term 46 o , break term 46 n1 , break term 46 n2 ] break term 46 T2 )"
    non associative with precedence 45
    for @{ 'DPConvStar $h $o $n1 $n2 $G $L $T1 $T2 }.

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/genv.ma".
+include "basic_2/syntax/genv.ma".
 include "basic_2/multiple/drops.ma".
 
 (* GENERIC COMPUTATION PROPERTIES *******************************************)

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/lenv_length.ma".
+include "basic_2/syntax/lenv_length.ma".
 include "basic_2/static/lsubr.ma".
 
 (* RESTRICTED REFINEMENT FOR LOCAL ENVIRONMENTS *****************************)

@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/lrsubeqc_2.ma".
-include "basic_2/grammar/lenv.ma".
+include "basic_2/syntax/lenv.ma".
 
 (* RESTRICTED REFINEMENT FOR LOCAL ENVIRONMENTS *****************************)
 

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/cl_weight.ma".
+include "basic_2/syntax/cl_weight.ma".
 include "basic_2/relocation/lifts_weight.ma".
 include "basic_2/s_transition/fqu.ma".
 

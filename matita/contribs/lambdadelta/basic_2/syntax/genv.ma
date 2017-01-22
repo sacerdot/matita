@@ -12,23 +12,30 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/term_weight.ma".
-include "basic_2/grammar/lenv.ma".
+include "ground_2/lib/list2.ma".
+include "basic_2/notation/constructors/star_0.ma".
+include "basic_2/notation/constructors/dxbind2_3.ma".
+include "basic_2/notation/constructors/dxabbr_2.ma".
+include "basic_2/notation/constructors/dxabst_2.ma".
+include "basic_2/syntax/term.ma".
 
-(* WEIGHT OF A LOCAL ENVIRONMENT ********************************************)
+(* GLOBAL ENVIRONMENTS ******************************************************)
 
-rec definition lw L ≝ match L with
-[ LAtom       ⇒ 0
-| LPair L _ V ⇒ lw L + ♯{V}
-].
+(* global environments *)
+definition genv ≝ list2 bind2 term.
 
-interpretation "weight (local environment)" 'Weight L = (lw L).
+interpretation "sort (global environment)"
+   'Star = (nil2 bind2 term).
+
+interpretation "global environment binding construction (binary)"
+   'DxBind2 L I T = (cons2 bind2 term I T L).
+
+interpretation "abbreviation (global environment)"
+   'DxAbbr L T = (cons2 bind2 term Abbr T L).
+
+interpretation "abstraction (global environment)"
+   'DxAbst L T = (cons2 bind2 term Abst T L).
 
 (* Basic properties *********************************************************)
 
-lemma lw_pair: ∀I,L,V. ♯{L} < ♯{L.ⓑ{I}V}.
-/3 width=1 by lt_plus_to_minus_r, monotonic_lt_plus_r/ qed.
-
-(* Basic_1: removed theorems 4: clt_cong clt_head clt_thead clt_wf_ind *)
-(* Basic_1: removed local theorems 1: clt_wf__q_ind *)
-(* Basic_1: note: clt_thead should be renamed clt_ctail *)
+axiom eq_genv_dec: ∀G1,G2:genv. Decidable (G1 = G2).

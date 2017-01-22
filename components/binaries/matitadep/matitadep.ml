@@ -14,10 +14,12 @@ let rec purge dname vdeps = match vdeps with
    | hd :: tl -> if hd = dname then tl else hd :: purge dname tl 
 
 let add fname =
+   if fname = "" then () else
    if Hashtbl.mem graph fname then () else
    Hashtbl.add graph fname {ddeps = []; rdeps = None}
 
 let add_ddep fname dname =
+   if dname = "" then () else
    let file = Hashtbl.find graph fname in
    Hashtbl.replace graph fname {file with ddeps = dname :: file.ddeps} 
 
@@ -104,7 +106,7 @@ let _ =
       if !show_top then top ();
       if !show_leaf then leaf ()   
    in
-   let help   = "" in
+   let help   = "matitadep [-clt | -d <int> ] < <file>" in
    let help_c = " Print the redundant and looping arcs of the dependences graph" in
    let help_d = "<flags>  Set these debug options" in
    let help_l = " Print the leaf nodes of the dependences graph" in

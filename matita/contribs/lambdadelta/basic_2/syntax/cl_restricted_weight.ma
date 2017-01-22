@@ -12,33 +12,35 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/functions/weight_3.ma".
-include "basic_2/grammar/lenv_weight.ma".
-include "basic_2/grammar/genv.ma".
+include "basic_2/notation/functions/weight_2.ma".
+include "basic_2/syntax/lenv_weight.ma".
 
-(* WEIGHT OF A CLOSURE ******************************************************)
+(* WEIGHT OF A RESTRICTED CLOSURE *******************************************)
 
-(* activate genv *)
-definition fw: genv → lenv → term → ? ≝ λG,L,T. ♯{L} + ♯{T}.
+definition rfw: lenv → term → ? ≝ λL,T. ♯{L} + ♯{T}.
 
-interpretation "weight (closure)" 'Weight G L T = (fw G L T).
+interpretation "weight (restricted closure)" 'Weight L T = (rfw L T).
 
 (* Basic properties *********************************************************)
 
 (* Basic_1: was: flt_shift *)
-lemma fw_shift: ∀p,I,G,K,V,T. ♯{G, K.ⓑ{I}V, T} < ♯{G, K, ⓑ{p,I}V.T}.
+lemma rfw_shift: ∀p,I,K,V,T. ♯{K.ⓑ{I}V, T} < ♯{K, ⓑ{p,I}V.T}.
 normalize /2 width=1 by monotonic_le_plus_r/
 qed.
 
-lemma fw_tpair_sn: ∀I,G,L,V,T. ♯{G, L, V} < ♯{G, L, ②{I}V.T}.
-normalize in ⊢ (?→?→?→?→?→?%%); //
+lemma rfw_tpair_sn: ∀I,L,V,T. ♯{L, V} < ♯{L, ②{I}V.T}.
+normalize in ⊢ (?→?→?→?→?%%); //
 qed.
 
-lemma fw_tpair_dx: ∀I,G,L,V,T. ♯{G, L, T} < ♯{G, L, ②{I}V.T}.
-normalize in ⊢ (?→?→?→?→?→?%%); //
+lemma rfw_tpair_dx: ∀I,L,V,T. ♯{L, T} < ♯{L, ②{I}V.T}.
+normalize in ⊢ (?→?→?→?→?%%); //
 qed.
 
-lemma fw_lpair_sn: ∀I,G,L,V,T. ♯{G, L, V} < ♯{G, L.ⓑ{I}V, T}.
+lemma rfw_lpair_sn: ∀I,L,V,T. ♯{L, V} < ♯{L.ⓑ{I}V, T}.
+normalize /3 width=1 by monotonic_lt_plus_l, monotonic_le_plus_r/
+qed.
+
+lemma rfw_lpair_dx: ∀I,L,V,T. ♯{L, T} < ♯{L.ⓑ{I}V, T}.
 normalize /3 width=1 by monotonic_lt_plus_l, monotonic_le_plus_r/
 qed.
 

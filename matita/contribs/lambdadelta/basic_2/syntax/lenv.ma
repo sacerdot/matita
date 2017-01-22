@@ -16,7 +16,7 @@ include "basic_2/notation/constructors/star_0.ma".
 include "basic_2/notation/constructors/dxbind2_3.ma".
 include "basic_2/notation/constructors/dxabbr_2.ma".
 include "basic_2/notation/constructors/dxabst_2.ma".
-include "basic_2/grammar/term.ma".
+include "basic_2/syntax/term.ma".
 
 (* LOCAL ENVIRONMENTS *******************************************************)
 
@@ -37,6 +37,10 @@ interpretation "abbreviation (local environment)"
 
 interpretation "abstraction (local environment)"
    'DxAbst L T = (LPair L Abst T).
+
+definition ceq: relation3 lenv term term ≝ λL,T1,T2. T1 = T2.
+
+definition cfull: relation3 lenv term term ≝ λL,T1,T2. ⊤.
 
 (* Basic properties *********************************************************)
 

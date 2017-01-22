@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/tsts_vector.ma".
+include "basic_2/syntax/tsts_vector.ma".
 include "basic_2/substitution/lift_vector.ma".
 include "basic_2/computation/cpxs_tsts.ma".
 

@@ -14,6 +14,6 @@
 
 (* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-notation "hvbox( T1 . break ⓛ T2 )"
+notation "hvbox( L . break ⓛ T1 )"
  left associative with precedence 49
- for @{ 'DxAbst $T1 $T2 }.
+ for @{ 'DxAbst $L $T1 }.

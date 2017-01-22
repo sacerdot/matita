@@ -15,7 +15,7 @@
 
 include "ground_2/relocation/nstream_after.ma".
 include "basic_2/notation/relations/rliftstar_3.ma".
-include "basic_2/grammar/term.ma".
+include "basic_2/syntax/term.ma".
 
 (* GENERIC RELOCATION FOR TERMS *********************************************)
 

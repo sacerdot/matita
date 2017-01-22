@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/ineint_5.ma".
-include "basic_2/grammar/aarity.ma".
+include "basic_2/syntax/aarity.ma".
 include "basic_2/multiple/mr2_mr2.ma".
 include "basic_2/multiple/lifts_lift_vector.ma".
 include "basic_2/multiple/drops_drop.ma".

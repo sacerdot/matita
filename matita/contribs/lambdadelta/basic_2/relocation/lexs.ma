@@ -14,7 +14,7 @@
 
 include "ground_2/relocation/rtmap_sle.ma".
 include "basic_2/notation/relations/relationstar_5.ma".
-include "basic_2/grammar/lenv.ma".
+include "basic_2/syntax/lenv.ma".
 
 (* GENERIC ENTRYWISE EXTENSION OF CONTEXT-SENSITIVE REALTIONS FOR TERMS *****)
 

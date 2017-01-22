@@ -162,10 +162,6 @@ table {
    ]
    class "green"
    [ { "static typing" * } {
-        [ { "parameters" * } {
-             [ "sh" "sd" * ]
-          }
-        ]
         [ { "restricted ref. for atomic arity assignment" * } {
              [ "lsuba ( ? ⊢ ? ⫃⁝ ? )" "lsuba_drops" + "lsuba_lsubr" + "lsuba_aaa" + "lsuba_lsuba" * ]
           }
@@ -241,13 +237,13 @@ table {
      }
    ]
    class "red"
-   [ { "grammar" * } {
+   [ { "syntax" * } {
         [ { "append for local environments" * } {
              [ "append ( ? @@ ? )" "append_length" * ]
           }
         ]
-        [ { "context-sensitive equivalences for terms" * } {
-             [ "ceq" "ceq_ceq" * ]
+        [ { "degree-based equivalence for terms" * } {
+             [ "deq ( ? ≡[?,?] ? ) " "deq_deq" * ]
           }
         ]
         [ { "same top term structure" * } {
@@ -255,17 +251,34 @@ table {
           }
         ]
         [ { "closures" * } {
-             [ "cl_weight ( ♯{?,?,?} )" "cl_restricted_weight ( ♯{?,?} )" * ]
+             [ "cl_weight ( ♯{?,?,?} )" * ]
+             [ "cl_restricted_weight ( ♯{?,?} )" * ]
           }
         ]
-        [ { "internal syntax" * } {
+        [ { "global environments" * } {
              [ "genv" * ]
-             [ "lenv" "lenv_weight ( ♯{?} )" "lenv_length ( |?| )" * ]
-             [ "term" "term_weight ( ♯{?} )" "term_simple ( 𝐒⦃?⦄ )" "term_vector ( Ⓐ?.? )" * ]
+          }
+        ]
+        [ { "local environments" * } {
+             [ "lenv_length ( |?| )" * ]
+             [ "lenv_weight ( ♯{?} )" * ]
+             [ "lenv" * ]
+          }
+        ]
+        [ { "terms" * } {
+             [ "term_vector ( Ⓐ?.? )" * ]
+             [ "term_simple ( 𝐒⦃?⦄ )"  * ]
+             [ "term_weight ( ♯{?} )" * ]
+             [ "term" * ]
+          }
+        ]
+        [ { "items" * } {
+             [ "item_sd" * ]
+             [ "item_sh" * ]
              [ "item" * ]
           }
         ]
-        [ { "external syntax" * } {
+        [ { "atomic arities" * } {
              [ "aarity" * ]
           }
         ]

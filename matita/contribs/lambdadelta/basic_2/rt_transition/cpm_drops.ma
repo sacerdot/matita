@@ -42,8 +42,8 @@ lemma cpm_inv_atom1_drops: ∀n,h,I,G,L,T2. ⦃G, L⦄ ⊢ ⓪{I} ➡[n, h] T2 �
                             | ∃∃s. T2 = ⋆(next h s) & I = Sort s & n = 1
                             | ∃∃K,V,V2,i. ⬇*[i] L ≡ K.ⓓV & ⦃G, K⦄ ⊢ V ➡[n, h] V2 &
                                           ⬆*[⫯i] V2 ≡ T2 & I = LRef i
-                            | ∃∃m,K,V,V2,i. ⬇*[i] L ≡ K.ⓛV & ⦃G, K⦄ ⊢ V ➡[m, h] V2 &
-                                            ⬆*[⫯i] V2 ≡ T2 & I = LRef i & n = ⫯m.
+                            | ∃∃k,K,V,V2,i. ⬇*[i] L ≡ K.ⓛV & ⦃G, K⦄ ⊢ V ➡[k, h] V2 &
+                                            ⬆*[⫯i] V2 ≡ T2 & I = LRef i & n = ⫯k.
 #n #h #I #G #L #T2 * #c #Hc #H elim (cpg_inv_atom1_drops … H) -H *
 [ #H1 #H2 destruct lapply (isrt_inv_00 … Hc) -Hc
   /3 width=1 by or4_intro0, conj/
@@ -61,8 +61,8 @@ lemma cpm_inv_lref1_drops: ∀n,h,G,L,T2,i. ⦃G, L⦄ ⊢ #i ➡[n, h] T2 →
                            ∨∨ T2 = #i ∧ n = 0
                             | ∃∃K,V,V2. ⬇*[i] L ≡ K. ⓓV & ⦃G, K⦄ ⊢ V ➡[n, h] V2 &
                                         ⬆*[⫯i] V2 ≡ T2
-                            | ∃∃m,K,V,V2. ⬇*[i] L ≡ K. ⓛV & ⦃G, K⦄ ⊢ V ➡[m, h] V2 &
-                                          ⬆*[⫯i] V2 ≡ T2 & n = ⫯m.
+                            | ∃∃k,K,V,V2. ⬇*[i] L ≡ K. ⓛV & ⦃G, K⦄ ⊢ V ➡[k, h] V2 &
+                                          ⬆*[⫯i] V2 ≡ T2 & n = ⫯k.
 #n #h #G #L #T2 #i * #c #Hc #H elim (cpg_inv_lref1_drops … H) -H *
 [ #H1 #H2 destruct lapply (isrt_inv_00 … Hc) -Hc
   /3 width=1 by or3_intro0, conj/

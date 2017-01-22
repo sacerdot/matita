@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/lenv_length.ma".
+include "basic_2/syntax/lenv_length.ma".
 include "basic_2/relocation/drops.ma".
 
 (* GENERIC SLICING FOR LOCAL ENVIRONMENTS ***********************************)
@@ -37,7 +37,7 @@ theorem drops_fwd_length_eq1: ∀b1,b2,f,L1,K1. ⬇*[b1, f] L1 ≡ K1 →
 | #f #I1 #L1 #K1 #V1 #V2 #_ #_ #IH #X2 #Y2 #HX #H elim (length_inv_succ_sn … H) -H
   #I2 #L2 #V2 #H12 #H destruct elim (drops_inv_skip1 … HX) -HX
   #K2 #W2 #HLK2 #_ #H destruct
-  lapply (IH … HLK2 H12) -f /2 width=1 by/ (**) (* full auto fails *)
+  lapply (IH … HLK2 H12) -f >length_pair >length_pair /2 width=1 by/ (**) (* full auto fails *)
 ]
 qed-.  
 
@@ -47,8 +47,8 @@ lemma drops_fwd_fcla: ∀f,L1,L2. ⬇*[Ⓣ, f] L1 ≡ L2 →
                       ∃∃n. 𝐂⦃f⦄ ≡ n & |L1| = |L2| + n.
 #f #L1 #L2 #H elim H -f -L1 -L2
 [ /4 width=3 by fcla_isid, ex2_intro/
-| #f #I #L1 #L2 #V #_ * /3 width=3 by fcla_next, ex2_intro, eq_f/
-| #f #I #L1 #L2 #V1 #V2 #_ #_ * /3 width=3 by fcla_push, ex2_intro/
+| #f #I #L1 #L2 #V #_ * >length_pair /3 width=3 by fcla_next, ex2_intro, eq_f/
+| #f #I #L1 #L2 #V1 #V2 #_ #_ * >length_pair >length_pair /3 width=3 by fcla_push, ex2_intro/
 ]
 qed-.
 
@@ -56,7 +56,7 @@ qed-.
 lemma drops_fcla_fwd: ∀f,L1,L2,n. ⬇*[Ⓣ, f] L1 ≡ L2 → 𝐂⦃f⦄ ≡ n →
                       |L1| = |L2| + n.
 #f #l1 #l2 #n #Hf #Hn elim (drops_fwd_fcla … Hf) -Hf
-#m #Hm #H <(fcla_mono … Hm … Hn) -f //
+#k #Hm #H <(fcla_mono … Hm … Hn) -f //
 qed-.
 
 lemma drops_fwd_fcla_le2: ∀f,L1,L2. ⬇*[Ⓣ, f] L1 ≡ L2 →
@@ -68,7 +68,7 @@ qed-.
 lemma drops_fcla_fwd_le2: ∀f,L1,L2,n. ⬇*[Ⓣ, f] L1 ≡ L2 → 𝐂⦃f⦄ ≡ n →
                           n ≤ |L1|.
 #f #L1 #L2 #n #H #Hn elim (drops_fwd_fcla_le2 … H) -H
-#m #Hm #H <(fcla_mono … Hm … Hn) -f //
+#k #Hm #H <(fcla_mono … Hm … Hn) -f //
 qed-.
 
 lemma drops_fwd_fcla_lt2: ∀f,L1,I2,K2,V2. ⬇*[Ⓣ, f] L1 ≡ K2.ⓑ{I2}V2 →
@@ -82,7 +82,7 @@ lemma drops_fcla_fwd_lt2: ∀f,L1,I2,K2,V2,n.
                           ⬇*[Ⓣ, f] L1 ≡ K2.ⓑ{I2}V2 → 𝐂⦃f⦄ ≡ n →
                           n < |L1|.
 #f #L1 #I2 #K2 #V2 #n #H #Hn elim (drops_fwd_fcla_lt2 … H) -H
-#m #Hm #H <(fcla_mono … Hm … Hn) -f //
+#k #Hm #H <(fcla_mono … Hm … Hn) -f //
 qed-.
 
 (* Basic_2A1: includes: drop_fwd_length_lt4 *)

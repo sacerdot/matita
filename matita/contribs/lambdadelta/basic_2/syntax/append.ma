@@ -16,7 +16,7 @@ include "ground_2/notation/functions/append_2.ma".
 include "basic_2/notation/functions/snbind2_3.ma".
 include "basic_2/notation/functions/snabbr_2.ma".
 include "basic_2/notation/functions/snabst_2.ma".
-include "basic_2/grammar/lenv.ma".
+include "basic_2/syntax/lenv.ma".
 
 (* APPEND FOR LOCAL ENVIRONMENTS ********************************************)
 

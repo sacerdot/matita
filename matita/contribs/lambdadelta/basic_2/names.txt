@@ -26,9 +26,9 @@ i,j    : local reference depth (de Bruijn's)
 k,l    : global reference level
 m      : 
 n      : type iterations
-o      : sort degree parameter
+o      : sort degree parameter (origin)
 p,q    : binder polarity
-r      : reduction kind parameter (true = ordinary, false = extended)
+r      :
 s      : sort index
 t,u    :
 v,w    : local reference position level (de Bruijn's) (RTM)

@@ -12,27 +12,31 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/functions/weight_1.ma".
-include "basic_2/grammar/term.ma".
+include "ground_2/lib/list.ma".
+include "basic_2/notation/functions/snapplvector_2.ma".
+include "basic_2/syntax/term_simple.ma".
 
-(* WEIGHT OF A TERM *********************************************************)
+(* TERMS ********************************************************************)
 
-rec definition tw T ≝ match T with
-[ TAtom _     ⇒ 1
-| TPair _ V T ⇒ tw V + tw T + 1
-].
+rec definition applv Vs T on Vs ≝
+  match Vs with
+  [ nil        ⇒ T
+  | cons hd tl ⇒ ⓐhd. (applv tl T)
+  ].
 
-interpretation "weight (term)" 'Weight T = (tw T).
+interpretation "application to vector (term)"
+   'SnApplVector Vs T = (applv Vs T).
 
 (* Basic properties *********************************************************)
 
-(* Basic_1: was: tweight_lt *)
-lemma tw_pos: ∀T. 1 ≤ ♯{T}.
-#T elim T -T //
-qed.
+lemma applv_nil: ∀T. Ⓐ◊.T = T.
+// qed.
 
-(* Basic_1: removed theorems 11:
-            wadd_le wadd_lt wadd_O weight_le weight_eq weight_add_O
-            weight_add_S tlt_trans tlt_head_sx tlt_head_dx tlt_wf_ind
-*)
-(* Basic_1: removed local theorems 1: q_ind *)
+lemma applv_cons: ∀V,Vs,T. ⒶV@Vs.T = ⓐV.ⒶVs.T.
+// qed.
+
+(* Properties with simple terms *********************************************)
+
+lemma applv_simple: ∀T,Vs. 𝐒⦃T⦄ → 𝐒⦃ⒶVs.T⦄.
+#T * //
+qed.

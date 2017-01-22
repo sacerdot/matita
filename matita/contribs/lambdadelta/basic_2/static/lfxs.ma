@@ -14,7 +14,6 @@
 
 include "ground_2/relocation/rtmap_id.ma".
 include "basic_2/notation/relations/relationstar_4.ma".
-include "basic_2/grammar/ceq.ma".
 include "basic_2/relocation/lexs.ma".
 include "basic_2/static/frees.ma".
 

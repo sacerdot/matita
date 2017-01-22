@@ -13,8 +13,8 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/supterm_6.ma".
-include "basic_2/grammar/lenv.ma".
-include "basic_2/grammar/genv.ma".
+include "basic_2/syntax/lenv.ma".
+include "basic_2/syntax/genv.ma".
 include "basic_2/relocation/lifts.ma".
 
 (* SUPCLOSURE ***************************************************************)

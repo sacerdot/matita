@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/lenv.ma".
+include "basic_2/syntax/lenv.ma".
 
 (* LENGTH OF A LOCAL ENVIRONMENT ********************************************)
 
@@ -44,8 +44,8 @@ lemma length_inv_zero_sn: ∀L. 0 = |L| → L = ⋆.
 (* Basic_2A1: was: length_inv_pos_dx *)
 lemma length_inv_succ_dx: ∀n,L. |L| = ⫯n →
                           ∃∃I,K,V. |K| = n & L = K. ⓑ{I}V.
-#n * /3 width=5 by injective_S, ex2_3_intro/
->length_atom #H destruct
+#n * [ >length_atom #H destruct ]
+#L #I #V >length_pair /3 width=5 by ex2_3_intro, injective_S/
 qed-.
 
 (* Basic_2A1: was: length_inv_pos_sn *)

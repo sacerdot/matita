@@ -13,9 +13,9 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/atomicarity_4.ma".
-include "basic_2/grammar/aarity.ma".
-include "basic_2/grammar/lenv.ma".
-include "basic_2/grammar/genv.ma".
+include "basic_2/syntax/aarity.ma".
+include "basic_2/syntax/lenv.ma".
+include "basic_2/syntax/genv.ma".
 
 (* ATONIC ARITY ASSIGNMENT FOR TERMS ****************************************)
 

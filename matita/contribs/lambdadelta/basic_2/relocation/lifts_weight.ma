@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/term_weight.ma".
+include "basic_2/syntax/term_weight.ma".
 include "basic_2/relocation/lifts.ma".
 
 (* GENERIC RELOCATION FOR TERMS *********************************************)

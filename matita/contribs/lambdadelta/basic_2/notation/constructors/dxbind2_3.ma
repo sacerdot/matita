@@ -14,10 +14,10 @@
 
 (* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-notation > "hvbox( T . break ②{ term 46 I } break term 47 T1 )"
+notation > "hvbox( L . break ②{ term 46 I } break term 47 T1 )"
  non associative with precedence 46
- for @{ 'DxBind2 $T $I $T1 }.
+ for @{ 'DxBind2 $L $I $T1 }.
 
-notation "hvbox( T . break ⓑ { term 46 I } break term 48 T1 )"
+notation "hvbox( L . break ⓑ { term 46 I } break term 48 T1 )"
  non associative with precedence 47
- for @{ 'DxBind2 $T $I $T1 }.
+ for @{ 'DxBind2 $L $I $T1 }.

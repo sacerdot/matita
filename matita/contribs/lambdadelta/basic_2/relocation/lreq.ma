@@ -13,7 +13,6 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/lazyeq_3.ma".
-include "basic_2/grammar/ceq.ma".
 include "basic_2/relocation/lexs.ma".
 
 (* RANGED EQUIVALENCE FOR LOCAL ENVIRONMENTS ********************************)

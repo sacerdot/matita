@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/lenv_length.ma".
-include "basic_2/grammar/append.ma".
+include "basic_2/syntax/lenv_length.ma".
+include "basic_2/syntax/append.ma".
 
 (* APPEND FOR LOCAL ENVIRONMENTS ********************************************)
 
@@ -40,14 +40,14 @@ qed-.
 
 (* Basic_2A1: was: length_inv_pos_dx_ltail *)
 lemma length_inv_succ_dx_ltail: ∀L,l. |L| = ⫯l →
-                               ∃∃I,K,V. |K| = l & L = ⓑ{I}V.K.
+                                ∃∃I,K,V. |K| = l & L = ⓑ{I}V.K.
 #Y #l #H elim (length_inv_succ_dx … H) -H #I #L #V #Hl #HLK destruct
 elim (lpair_ltail L I V) /2 width=5 by ex2_3_intro/
 qed-.
 
 (* Basic_2A1: was: length_inv_pos_sn_ltail *)
 lemma length_inv_succ_sn_ltail: ∀L,l. ⫯l = |L| →
-                               ∃∃I,K,V. l = |K| & L = ⓑ{I}V.K.
+                                ∃∃I,K,V. l = |K| & L = ⓑ{I}V.K.
 #Y #l #H elim (length_inv_succ_sn … H) -H #I #L #V #Hl #HLK destruct
 elim (lpair_ltail L I V) /2 width=5 by ex2_3_intro/
 qed-.
@@ -64,9 +64,9 @@ lemma append_inj_length_sn: ∀K1,K2,L1,L2. L1 @@ K1 = L2 @@ K2 → |K1| = |K2| 
 | #K1 #I1 #V1 #IH *
   [ #L1 #L2 #_ >length_atom >length_pair
     #H destruct
-  | #K2 #I2 #V2 #L1 #L2 #H1 #H2
+  | #K2 #I2 #V2 #L1 #L2 #H1 >length_pair >length_pair #H2
     elim (destruct_lpair_lpair_aux … H1) -H1 #H1 #H3 #H4 destruct (**) (* destruct lemma needed *)
-    elim (IH … H1) -IH -H1 /2 width=1 by conj/
+    elim (IH … H1) -IH -H1 /3 width=4 by conj/
   ]
 ]
 qed-.

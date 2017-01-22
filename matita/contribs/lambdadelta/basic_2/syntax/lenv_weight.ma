@@ -12,26 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/grammar/ceq.ma".
+include "basic_2/syntax/term_weight.ma".
+include "basic_2/syntax/lenv.ma".
 
-(* CONTEXT-SENSITIVE EQUIVALENCES FOR TERMS *********************************)
+(* WEIGHT OF A LOCAL ENVIRONMENT ********************************************)
 
-(* Main properties **********************************************************)
+rec definition lw L ≝ match L with
+[ LAtom       ⇒ 0
+| LPair L _ V ⇒ lw L + ♯{V}
+].
 
-theorem ceq_trans (L): Transitive … (ceq L).
-// qed-.
+interpretation "weight (local environment)" 'Weight L = (lw L).
 
-lemma ceq_canc_sn (L): left_cancellable … (ceq L).
-// qed-.
+(* Basic properties *********************************************************)
 
-lemma ceq_canc_dx (L): right_cancellable … (ceq L).
-// qed-.
+lemma lw_pair: ∀I,L,V. ♯{L} < ♯{L.ⓑ{I}V}.
+/3 width=1 by lt_plus_to_minus_r, monotonic_lt_plus_r/ qed.
 
-theorem cfull_trans (L): Transitive … (cfull L).
-// qed-.
-
-lemma cfull_canc_sn (L): left_cancellable … (cfull L).
-// qed-.
-
-lemma cfull_canc_dx (L): right_cancellable … (cfull L).
-// qed-.
+(* Basic_1: removed theorems 4: clt_cong clt_head clt_thead clt_wf_ind *)
+(* Basic_1: removed local theorems 1: clt_wf__q_ind *)
+(* Basic_1: note: clt_thead should be renamed clt_ctail *)
