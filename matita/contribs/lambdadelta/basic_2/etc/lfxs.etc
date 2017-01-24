@@ -100,7 +100,7 @@ lemma lfxs_inv_atom_dx: ∀R,I,Y1. Y1 ⦻*[R, ⓪{I}] ⋆ → Y1 = ⋆.
 qed-.
 
 lemma lfxs_inv_sort: ∀R,Y1,Y2,s. Y1 ⦻*[R, ⋆s] Y2 →
-                     (Y1 = ⋆ ∧ Y2 = ⋆) ∨
+                     (Y1 = ⋆ ∧ Y2 = ⋆) ∨ 
                      ∃∃I,L1,L2,V1,V2. L1 ⦻*[R, ⋆s] L2 &
                                       Y1 = L1.ⓑ{I}V1 & Y2 = L2.ⓑ{I}V2.
 #R * [ | #Y1 #I #V1 ] #Y2 #s * #f #H1 #H2
@@ -113,7 +113,7 @@ lemma lfxs_inv_sort: ∀R,Y1,Y2,s. Y1 ⦻*[R, ⋆s] Y2 →
 qed-.
 
 lemma lfxs_inv_zero: ∀R,Y1,Y2. Y1 ⦻*[R, #0] Y2 →
-                     (Y1 = ⋆ ∧ Y2 = ⋆) ∨
+                     (Y1 = ⋆ ∧ Y2 = ⋆) ∨ 
                      ∃∃I,L1,L2,V1,V2. L1 ⦻*[R, V1] L2 & R L1 V1 V2 &
                                       Y1 = L1.ⓑ{I}V1 & Y2 = L2.ⓑ{I}V2.
 #R #Y1 #Y2 * #f #H1 #H2 elim (frees_inv_zero … H1) -H1 *
@@ -124,7 +124,7 @@ lemma lfxs_inv_zero: ∀R,Y1,Y2. Y1 ⦻*[R, #0] Y2 →
 qed-.
 
 lemma lfxs_inv_lref: ∀R,Y1,Y2,i. Y1 ⦻*[R, #⫯i] Y2 →
-                     (Y1 = ⋆ ∧ Y2 = ⋆) ∨
+                     (Y1 = ⋆ ∧ Y2 = ⋆) ∨ 
                      ∃∃I,L1,L2,V1,V2. L1 ⦻*[R, #i] L2 &
                                       Y1 = L1.ⓑ{I}V1 & Y2 = L2.ⓑ{I}V2.
 #R #Y1 #Y2 #i * #f #H1 #H2 elim (frees_inv_lref … H1) -H1 *

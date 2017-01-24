@@ -12,12 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/lfxs_fqup.ma".
-include "basic_2/static/lfeq.ma".
+include "basic_2/syntax/tdeq.ma".
 
-(* EQUIVALENCE FOR LOCAL ENVIRONMENTS ON REFERRED ENTRIES *******************)
+(* DEGREE-BASED EQUIVALENCE ON TERMS ****************************************)
 
-(* Advanced properties ******************************************************)
+(* Main properties **********************************************************)
 
-lemma lfeq_refl: ∀T. reflexive … (lfeq T).
-/2 width=1 by lfxs_refl/ qed.
+theorem tdeq_trans: ∀h,o. Transitive … (tdeq h o).
+#h #o #T1 #T #H elim H -T1 -T
+[ #s1 #s #d #Hs1 #Hs #X #H
+  elim (tdeq_inv_sort1_deg … H … Hs) -s /2 width=3 by tdeq_sort/
+| #i1 #i #H <(tdeq_inv_lref1 … H) -H //
+| #l1 #l #H <(tdeq_inv_gref1 … H) -H //
+| #I #V1 #V #T1 #T #_ #_ #IHV #IHT #X #H destruct
+  elim (tdeq_inv_pair1 … H) -H /3 width=1 by tdeq_pair/
+]
+qed-.

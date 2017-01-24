@@ -167,15 +167,15 @@ table {
           }
         ]
         [ { "atomic arity assignment" * } {
-             [ "aaa ( ⦃?,?⦄ ⊢ ? ⁝ ? )" "aaa_drops" + "aaa_fqus" + "aaa_lfeq" + "aaa_aaa" * ]
+             [ "aaa ( ⦃?,?⦄ ⊢ ? ⁝ ? )" "aaa_drops" + "aaa_fqus" + "aaa_lfdeq" + "aaa_aaa" * ]
           }
         ]
-        [ { "equivalence for closures on referred entries" * } {
-             [ "ffeq ( ⦃?,?,?⦄ ≡ ⦃?,?,?⦄ )" "ffeq_freq" * ]
+        [ { "degree-based equivalence for closures on referred entries" * } {
+             [ "ffdeq ( ⦃?,?,?⦄ ≡[?,?] ⦃?,?,?⦄ )" "ffdeq_fqup" + "ffdeq_ffdeq" * ]
           }
         ]
-        [ { "equivalence for local environments on referred entries" * } {
-             [ "lfeq ( ? ≡[?] ? )" "lfeq_length" + "lfeq_lreq" + "lfeq_fqup" + "lfeq_lfeq" * ]
+        [ { "degree-based equivalence for local environments on referred entries" * } {
+             [ "lfdeq ( ? ≡[?,?,?] ? )" "lfdeq_length" + "lfdeq_fqup" + "lfdeq_lfdeq" * ]
           }
         ]
         [ { "generic extension on referred entries" * } {
@@ -187,7 +187,7 @@ table {
           }
         ]        
         [ { "context-sensitive free variables" * } {
-             [ "frees ( ? ⊢ 𝐅*⦃?⦄ ≡ ? )" "frees_weight" + "frees_lreq" + "frees_drops" + "frees_fqup" + "frees_frees" * ]
+             [ "frees ( ? ⊢ 𝐅*⦃?⦄ ≡ ? )" "frees_weight" + "frees_drops" + "frees_fqup" + "frees_frees" * ]
           }
         ]
         [ { "restricted ref. for local env." * } {

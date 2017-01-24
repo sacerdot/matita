@@ -35,7 +35,7 @@ theorem lfxs_flat: ∀R,I,L1,L2,V,T.
 #R #I #L1 #L2 #V #T * #f1 #HV #Hf1 * #f2 #HT #Hf2 elim (sor_isfin_ex f1 f2)
 /3 width=7 by frees_fwd_isfin, frees_flat, lexs_join, ex2_intro/
 qed.
-(*
+
 theorem lfxs_trans: ∀R. lexs_frees_confluent R cfull →
                     ∀T. Transitive … (lfxs R T).
 #R #H1R #T #L1 #L * #f1 #Hf1 #HL1 #L2 * #f2 #Hf2 #HL2
@@ -47,7 +47,7 @@ lapply (sle_lexs_trans … HL1 … H1) -HL1 // #Hl1
 
 /4 width=7 by lreq_trans, lexs_eq_repl_back, ex2_intro/
 qed-.
-*)
+
 theorem lfxs_conf: ∀R. lexs_frees_confluent R cfull →
                    R_confluent2_lfxs R R R R →
                    ∀T. confluent … (lfxs R T).

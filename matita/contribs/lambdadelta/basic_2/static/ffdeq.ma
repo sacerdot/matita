@@ -12,34 +12,31 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/lazyeq_6.ma".
-include "basic_2/static/lfeq_lreq.ma".
-include "basic_2/static/lfeq_fqup.ma".
+include "basic_2/notation/relations/lazyeq_8.ma".
+include "basic_2/syntax/genv.ma".
+include "basic_2/static/lfdeq_fqup.ma".
 
-(* EQUIVALENCE FOR CLOSURES ON REFERRED ENTRIES *****************************)
+(* DEGREE-BASED EQUIVALENCE FOR CLOSURES ON REFERRED ENTRIES ****************)
 
-inductive ffeq (G) (L1) (T): relation3 genv lenv term ≝
-| fleq_intro: ∀L2. L1 ≡[T] L2 → ffeq G L1 T G L2 T
+inductive ffdeq (h) (o) (G) (L1) (T): relation3 genv lenv term ≝
+| ffdeq_intro: ∀L2. L1 ≡[h, o, T] L2 → ffdeq h o G L1 T G L2 T
 .
 
 interpretation
-   "equivalence on referred entries (closure)"
-   'LazyEq G1 L1 T1 G2 L2 T2 = (ffeq G1 L1 T1 G2 L2 T2).
+   "degree-based equivalence on referred entries (closure)"
+   'LazyEq h o G1 L1 T1 G2 L2 T2 = (ffdeq h o G1 L1 T1 G2 L2 T2).
 
 (* Basic properties *********************************************************)
 
-lemma ffeq_refl: tri_reflexive … ffeq.
-/2 width=1 by fleq_intro/ qed.
-
-lemma ffeq_sym: tri_symmetric … ffeq.
-#G1 #G2 #L1 #L2 #T1 #T2 * -G1 -L1 -T1 /3 width=1 by fleq_intro, lfeq_sym/
+lemma ffdeq_sym: ∀h,o. tri_symmetric … (ffdeq h o).
+#h #o #G1 #G2 #L1 #L2 #T1 #T2 * -G1 -L1 -T1 /3 width=1 by ffdeq_intro, lfdeq_sym/
 qed-.
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma ffeq_inv_gen: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≡ ⦃G2, L2, T2⦄ →
-                    ∧∧ G1 = G2 & L1 ≡[T1] L2 & T1 = T2.
-#G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2 /2 width=1 by and3_intro/
+lemma ffdeq_inv_gen: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≡[h, o] ⦃G2, L2, T2⦄ →
+                     ∧∧ G1 = G2 & L1 ≡[h, o, T1] L2 & T1 = T2.
+#h #o #G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2 /2 width=1 by and3_intro/
 qed-.
 
 (* Basic_2A1: removed theorems 6:

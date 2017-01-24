@@ -12,12 +12,22 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/lfxs_length.ma".
-include "basic_2/static/lfeq.ma".
+include "basic_2/static/lfdeq_lfdeq.ma".
+include "basic_2/static/ffdeq.ma".
 
-(* EQUIVALENCE FOR LOCAL ENVIRONMENTS ON REFERRED ENTRIES *******************)
+(* DEGREE-BASED EQUIVALENCE FOR CLOSURES ON REFERRED ENTRIES ****************)
 
-(* Forward lemmas with length for local environments ************************)
+(* Main properties **********************************************************)
 
-lemma lfeq_fwd_length: ∀L1,L2,T. L1 ≡[T] L2 → |L1| = |L2|.
-/2 width=3 by lfxs_fwd_length/ qed-.
+theorem ffdeq_trans: ∀h,o. tri_transitive … (ffdeq h o).
+#h #o #G1 #G #L1 #L #T1 #T * -G -L -T
+#L #HL1 #G2 #L2 #T2 * -G2 -L2 -T2 /3 width=3 by ffdeq_intro, lfdeq_trans/
+qed-.
+
+theorem ffdeq_canc_sn: ∀h,o,G,G1,G2,L,L1,L2,T,T1,T2.
+                       ⦃G, L, T⦄ ≡[h, o] ⦃G1, L1, T1⦄→ ⦃G, L, T⦄ ≡[h, o] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≡[h, o] ⦃G2, L2, T2⦄.
+/3 width=5 by ffdeq_trans, ffdeq_sym/ qed-.
+
+theorem ffdeq_canc_dx: ∀h,o,G1,G2,G,L1,L2,L,T1,T2,T.
+                       ⦃G1, L1, T1⦄ ≡[h, o] ⦃G, L, T⦄ → ⦃G2, L2, T2⦄ ≡[h, o] ⦃G, L, T⦄ → ⦃G1, L1, T1⦄ ≡[h, o] ⦃G2, L2, T2⦄.
+/3 width=5 by ffdeq_trans, ffdeq_sym/ qed-.

@@ -12,19 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/syntax/deq.ma".
+include "basic_2/relocation/lexs_length.ma".
+include "basic_2/static/lfxs.ma".
 
-(* DEGREE-BASED EQUIVALENCE ON TERMS ****************************************)
+(* GENERIC EXTENSION ON REFERRED ENTRIES OF A CONTEXT-SENSITIVE REALTION ****)
 
-(* Main properties **********************************************************)
+(* Forward lemmas with length for local environments ************************)
 
-theorem deq_trans: ∀h,o. Transitive … (deq h o).
-#h #o #T1 #T #H elim H -T1 -T
-[ #s1 #s #d #Hs1 #Hs #X #H
-  elim (deq_inv_sort1_deg … H … Hs) -s /2 width=3 by deq_sort/
-| #i1 #i #H <(deq_inv_lref1 … H) -H //
-| #l1 #l #H <(deq_inv_gref1 … H) -H //
-| #I #V1 #V #T1 #T #_ #_ #IHV #IHT #X #H destruct
-  elim (deq_inv_pair1 … H) -H /3 width=1 by deq_pair/
-]
+lemma lfxs_fwd_length: ∀R,L1,L2,T. L1 ⦻*[R, T] L2 → |L1| = |L2|.
+#R #L1 #L2 #T * /2 width=4 by lexs_fwd_length/
 qed-.

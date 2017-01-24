@@ -12,8 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
+include "basic_2/static/lfdeq_fqup.ma".
+include "basic_2/static/ffdeq.ma".
 
-notation "hvbox( ⦃ term 46 G1, break term 46 L1, break term 46 T1 ⦄ ≡ break ⦃ term 46 G2, break term 46 L2 , break term 46 T2 ⦄ )"
-   non associative with precedence 45
-   for @{ 'LazyEq $G1 $L1 $T1 $G2 $L2 $T2 }.
+(* DEGREE-BASED EQUIVALENCE FOR CLOSURES ON REFERRED ENTRIES ****************)
+
+(* Advanced properties ******************************************************)
+
+lemma ffdeq_refl: ∀h,o. tri_reflexive … (ffdeq h o).
+/2 width=1 by ffdeq_intro/ qed.

@@ -173,15 +173,22 @@ lemma lexs_eq_repl_fwd: ∀RN,RP,L1,L2. eq_repl_fwd … (λf. L1 ⦻*[RN, RP, f]
 #RN #RP #L1 #L2 @eq_repl_sym /2 width=3 by lexs_eq_repl_back/ (**) (* full auto fails *)
 qed-.
 
-(* Note: fexs_sym and fexs_trans hold, but lexs_sym and lexs_trans do not  *)
 (* Basic_2A1: includes: lpx_sn_refl *)
-lemma lexs_refl: ∀RN,RP,f.
+lemma lexs_refl: ∀RN,RP.
                  (∀L. reflexive … (RN L)) →
                  (∀L. reflexive … (RP L)) →
-                 reflexive … (lexs RN RP f).
-#RN #RP #f #HRN #HRP #L generalize in match f; -f elim L -L //
+                 ∀f.reflexive … (lexs RN RP f).
+#RN #RP #HRN #HRP #f #L generalize in match f; -f elim L -L //
 #L #I #V #IH * * /2 width=1 by lexs_next, lexs_push/
 qed.
+
+lemma lexs_sym: ∀RN,RP.
+                (∀L1,L2,T1,T2. RN L1 T1 T2 → RN L2 T2 T1) →
+                (∀L1,L2,T1,T2. RP L1 T1 T2 → RP L2 T2 T1) →
+                ∀f. symmetric … (lexs RN RP f).
+#RN #RP #HRN #HRP #f #L1 #L2 #H elim H -L1 -L2 -f
+/3 width=2 by lexs_next, lexs_push/
+qed-.
 
 lemma lexs_pair_repl: ∀RN,RP,f,I,L1,L2,V1,V2.
                       L1.ⓑ{I}V1 ⦻*[RN, RP, f] L2.ⓑ{I}V2 →

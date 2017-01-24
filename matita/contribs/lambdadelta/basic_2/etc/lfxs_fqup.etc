@@ -12,22 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/lfeq_lfeq.ma".
-include "basic_2/static/ffeq.ma".
+include "basic_2/static/frees_fqup.ma".
+include "basic_2/static/lfxs.ma".
 
-(* EQUIVALENCE FOR CLOSURES ON REFERRED ENTRIES *****************************)
+(* GENERIC EXTENSION ON REFERRED ENTRIES OF A CONTEXT-SENSITIVE REALTION ****)
 
-(* Main properties **********************************************************)
+(* Advanced properties ******************************************************)
 
-theorem ffeq_trans: tri_transitive … ffeq.
-#G1 #G #L1 #L #T1 #T * -G -L -T
-#L #HL1 #G2 #L2 #T2 * -G2 -L2 -T2 /3 width=3 by fleq_intro, lfeq_trans/
-qed-.
-
-theorem ffeq_canc_sn: ∀G,G1,G2,L,L1,L2,T,T1,T2.
-                      ⦃G, L, T⦄ ≡ ⦃G1, L1, T1⦄→ ⦃G, L, T⦄ ≡ ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≡ ⦃G2, L2, T2⦄.
-/3 width=5 by ffeq_trans, ffeq_sym/ qed-.
-
-theorem ffeq_canc_dx: ∀G1,G2,G,L1,L2,L,T1,T2,T.
-                      ⦃G1, L1, T1⦄ ≡ ⦃G, L, T⦄ → ⦃G2, L2, T2⦄ ≡ ⦃G, L, T⦄ → ⦃G1, L1, T1⦄ ≡ ⦃G2, L2, T2⦄.
-/3 width=5 by ffeq_trans, ffeq_sym/ qed-.
+lemma lfxs_refl: ∀R. (∀L. reflexive … (R L)) → ∀L,T. L ⦻*[R, T] L.
+#R #HR #L #T elim (frees_total L T) /3 width=3 by lexs_refl, ex2_intro/
+qed.

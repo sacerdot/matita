@@ -12,25 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/frees_lreq.ma".
-include "basic_2/static/lfeq.ma".
+(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-(* EQUIVALENCE FOR LOCAL ENVIRONMENTS ON REFERRED ENTRIES *******************)
-
-(* Inversion lemmas with ranged equivalence for local environments **********)
-
-lemma lfeq_inv_lreq: ∀L1,L2,T. L1 ≡[T] L2 → ∃∃f. L1 ⊢ 𝐅*⦃T⦄ ≡ f & L1 ≡[f] L2.
-#L1 #L2 #T * /2 width=3 by ex2_intro/
-qed-.
-
-(* Properties with ranged equivalence for local environments ****************)
-
-lemma lreq_lfeq: ∀f,L1,L2,T. L1 ⊢ 𝐅*⦃T⦄ ≡ f → L1 ≡[f] L2 → L1 ≡[T] L2.
-/2 width=3 by ex2_intro/ qed.
-
-(* Advanced properties ******************************************************)
-
-lemma lfeq_sym: ∀T. symmetric … (lfeq T).
-#T #L1 #L2 #H elim (lfeq_inv_lreq … H) -H
-/3 width=3 by lreq_lfeq, frees_lreq_conf, lreq_sym/
-qed-.
+notation "hvbox( ⦃ term 46 G1, break term 46 L1, break term 46 T1 ⦄ ≡ [ break term 46 h , break term 46 o ] ⦃ break term 46 G2, break term 46 L2 , break term 46 T2 ⦄ )"
+   non associative with precedence 45
+   for @{ 'LazyEq $h $o $G1 $L1 $T1 $G2 $L2 $T2 }.
