@@ -139,7 +139,7 @@ table {
         ]
         [ { "context-sensitive rt-reduction" * } {
              [ "lpx_lleq" * ]
-             [ "cpx_lreq" + "cpx_fqus" + "cpx_llpx_sn" + "cpx_lleq" * ]
+             [ "cpx_lreq" + "cpx_llpx_sn" + "cpx_lleq" * ]
           }
         ]
 *)
@@ -151,7 +151,7 @@ table {
         ]
         [ { "uncounted context-sensitive rt-transition" * } {
              [ "lfpx ( ⦃?,?⦄ ⊢ ⬈[?,?] ? )" "lfpx_length" + "lfpx_drops" + "lfpx_fqup" + "lfpx_frees" + "lfpx_aaa" * ]
-             [ "cpx ( ⦃?,?⦄ ⊢ ? ⬈[?] ? )" "cpx_simple" + "cpx_drops" + "cpx_lsubr" * ]
+             [ "cpx ( ⦃?,?⦄ ⊢ ? ⬈[?] ? )" "cpx_simple" + "cpx_drops" + "cpx_fqus" + "cpx_lsubr" * ]
           }
         ]
         [ { "counted context-sensitive rt-transition" * } {
@@ -223,7 +223,7 @@ table {
         ]
         [ { "generic relocation for terms" * } {
              [ "lifts_vector ( ⬆*[?] ? ≡ ? )" "lifts_lifts_vector" * ]
-             [ "lifts ( ⬆*[?] ? ≡ ? )" "lifts_simple" + "lifts_weight" + "lifts_lifts" * ]
+             [ "lifts ( ⬆*[?] ? ≡ ? )" "lifts_simple" + "lifts_weight" + "lifts_tdeq" + "lifts_lifts" * ]
           }
         ]
         [ { "ranged equivalence for local environments" * } {

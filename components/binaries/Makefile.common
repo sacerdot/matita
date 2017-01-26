@@ -9,7 +9,7 @@ OCAMLOPTIONS = -linkpkg -thread -rectypes -package \"$(REQUIRES)\"
 OCAMLC = $(OCAMLFIND) ocamlc $(OCAMLOPTIONS) 
 OCAMLOPT = $(OCAMLFIND) opt $(OCAMLOPTIONS)
 
-all:
+opt:
 	@echo "  OCAMLBUILD $(EXEC).native" 
 	$(H)ocamlbuild -ocamlc "$(OCAMLC)" -ocamlopt "$(OCAMLOPT)" $(EXEC).native 
 

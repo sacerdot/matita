@@ -1,4 +1,6 @@
-let cols = int_of_string (Sys.getenv "COLUMNS")
+let cols =
+   try int_of_string (Sys.getenv "COLUMNS")
+   with Not_found -> failwith "environment variable COLUMNS not visible"
 
 let hl = ref []
 
@@ -52,3 +54,4 @@ let main =
    Array.fast_sort compare files;
    let c = Array.fold_left (write l) 0 files in
    if 0 < c && c < cols then print_newline ();
+

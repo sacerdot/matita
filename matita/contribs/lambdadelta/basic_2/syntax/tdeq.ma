@@ -103,6 +103,12 @@ lemma tdeq_inv_sort1_deg: ∀h,o,Y,s1. ⋆s1 ≡[h, o] Y → ∀d. deg h o s1 d 
 #s2 #x #Hx <(deg_mono h o … Hx … Hs1) -s1 -d /2 width=3 by ex2_intro/  
 qed-.
 
+lemma tdeq_inv_pair: ∀h,o,I,V1,V2,T1,T2. ②{I}V1.T1 ≡[h, o] ②{I}V2.T2 →
+                     V1 ≡[h, o] V2 ∧ T1 ≡[h, o] T2.
+#h #o #I #V1 #V2 #T1 #T2 #H elim (tdeq_inv_pair1 … H) -H
+#V0 #T0 #HV #HT #H destruct /2 width=1 by conj/
+qed-. 
+
 (* Basic forward lemmas *****************************************************)
 
 lemma tdeq_fwd_atom1: ∀h,o,I,Y. ⓪{I} ≡[h, o] Y → ∃J. Y = ⓪{J}.
