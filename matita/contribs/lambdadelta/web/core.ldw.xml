@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page xmlns="http://lambdadelta.info/"
+      description = "\lambda\delta home page"
+      title = "\lambda\delta home page"
+      logo = "crux"
+      head = "cic:/matita/lambdadelta/basic_2/ (core λδ version 2)"
+>
+   <sitemap name="sitemap"/>
+
+   <section15 name="summary">Summary of the Specification</section15>
+   <table name="core"/>
+
+   <footer/>
+</page>
