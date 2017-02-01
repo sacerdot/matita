@@ -131,27 +131,27 @@ table {
 *)
    class "water"
    [ { "rt-transition" * } {
-(*
-        [ { "parallel qrst-reduction" * } {
-             [ "fpbq ( ⦃?,?,?⦄ ≽[?,?] ⦃?,?,?⦄ )" "fpbq_alt ( ⦃?,?,?⦄ ≽≽[?,?] ⦃?,?,?⦄ )" "fpbq_lift" + "fpbq_aaa" * ]
-             [ "fpb ( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" "fpb_lift" + "fpb_lleq" + "fpb_fleq" * ]
+        [ { "parallel qrst-rtransition" * } {
+(*             [ "fpbq ( ⦃?,?,?⦄ ≽[?,?] ⦃?,?,?⦄ )" "fpbq_alt ( ⦃?,?,?⦄ ≽≽[?,?] ⦃?,?,?⦄ )"  + "fpbq_aaa" * ] *)
+             [ "fpb ( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" (* "fpb_lleq" + "fpb_fleq" *) * ]
           }
         ]
+(*
         [ { "context-sensitive rt-reduction" * } {
              [ "lpx_lleq" * ]
-             [ "cpx_lreq" + "cpx_llpx_sn" + "cpx_lleq" * ]
+             [   "cpx_lleq" * ]
           }
         ]
 *)
         [ { "t-bound context-sensitive rt-transition" * } {
              [ "lfpr ( ⦃?,?⦄ ⊢ ➡[?,?] ? )" "lfpr_length" + "lfpr_drops" + "lfpr_fqup" + "lfpr_frees" + "lfpr_aaa" + "lfpr_lfpx" + "lfpr_lfpr" * ]
-             [ "cpr ( ⦃?,?⦄ ⊢ ? ➡[?] ? )" "cpr_drops" (* + "cpr_llpx_sn" + "cpr_cir" *) * ]
-             [ "cpm ( ⦃?,?⦄ ⊢ ? ➡[?,?] ? )" "cpm_simple" + "cpm_drops" + "cpm_lsubr" + "cpm_cpx" * ]
+             [ "cpr ( ⦃?,?⦄ ⊢ ? ➡[?] ? )" "cpr_drops" * ]
+             [ "cpm ( ⦃?,?⦄ ⊢ ? ➡[?,?] ? )" "cpm_simple" + "cpm_drops" + "cpm_lsubr" + "cpm_lfxs" + "cpm_cpx" * ]
           }
         ]
         [ { "uncounted context-sensitive rt-transition" * } {
              [ "lfpx ( ⦃?,?⦄ ⊢ ⬈[?,?] ? )" "lfpx_length" + "lfpx_drops" + "lfpx_fqup" + "lfpx_frees" + "lfpx_aaa" * ]
-             [ "cpx ( ⦃?,?⦄ ⊢ ? ⬈[?] ? )" "cpx_simple" + "cpx_drops" + "cpx_fqus" + "cpx_lsubr" * ]
+             [ "cpx ( ⦃?,?⦄ ⊢ ? ⬈[?] ? )" "cpx_simple" + "cpx_drops" + "cpx_fqus" + "cpx_lsubr" + "cpx_lfxs" + "cpx_lfdeq" * ]
           }
         ]
         [ { "counted context-sensitive rt-transition" * } {
@@ -360,5 +360,6 @@ class "italic"            { 1 }
              [ "lpx_sn" "lpx_sn_alt" + "lpx_sn_tc" + "lpx_sn_drop" + "lpx_sn_lpx_sn" * ]
           }
         ]
+             [ "cpx_lreq" + "cpr_cir" + "fpb_lift" + "fpbq_lift" ]
              [ "lleq ( ? ≡[?,?] ? )" "lleq_alt" + "lleq_alt_rec" + "lleq_lreq" + "lleq_drop" + "lleq_fqus" + "lleq_llor" + "lleq_lleq" * ]
 *)

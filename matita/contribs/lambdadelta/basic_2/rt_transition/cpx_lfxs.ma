@@ -12,26 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/syntax/ceq.ma".
+include "basic_2/rt_transition/lfpx_frees.ma".
 
-(* CONTEXT-SENSITIVE EQUIVALENCES FOR TERMS *********************************)
+(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS *************)
 
-(* Main properties **********************************************************)
+(* Properties with generic extension on referred entries ********************)
 
-theorem ceq_trans (L): Transitive … (ceq L).
-// qed-.
-
-lemma ceq_canc_sn (L): left_cancellable … (ceq L).
-// qed-.
-
-lemma ceq_canc_dx (L): right_cancellable … (ceq L).
-// qed-.
-
-theorem cfull_trans (L): Transitive … (cfull L).
-// qed-.
-
-lemma cfull_canc_sn (L): left_cancellable … (cfull L).
-// qed-.
-
-lemma cfull_canc_dx (L): right_cancellable … (cfull L).
-// qed-.
+(* Note: lemma 1000 *)
+(* Basic_2A1: was just: cpx_llpx_sn_conf *)
+lemma cpx_lfxs_conf: ∀R,h,G. s_r_confluent1 … (cpx h G) (lfxs R).
+#R #h #G #L1 #T1 #T2 #H #L2 * #f1 #Hf1 elim (cpx_frees_conf … Hf1 … H) -T1
+/3 width=5 by sle_lexs_trans, ex2_intro/
+qed-.

@@ -14,7 +14,7 @@
 
 include "basic_2/notation/relations/lazyeq_8.ma".
 include "basic_2/syntax/genv.ma".
-include "basic_2/static/lfdeq_fqup.ma".
+include "basic_2/static/lfdeq.ma".
 
 (* DEGREE-BASED EQUIVALENCE FOR CLOSURES ON REFERRED ENTRIES ****************)
 

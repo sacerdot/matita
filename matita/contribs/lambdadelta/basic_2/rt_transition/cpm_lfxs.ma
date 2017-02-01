@@ -12,31 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/syntax/lenv.ma".
+include "basic_2/rt_transition/cpx_lfxs.ma".
+include "basic_2/rt_transition/cpm_cpx.ma".
 
-(* CONTEXT-SENSITIVE EQUIVALENCES FOR TERMS *********************************)
+(* CONTEXT-SENSITIVE PARALLEL REDUCTION FOR TERMS ***************************)
 
-definition ceq: relation3 lenv term term ≝ λL,T1,T2. T1 = T2.
+(* Properties with generic extension on referred entries ********************)
 
-definition cfull: relation3 lenv term term ≝ λL,T1,T2. ⊤.
-
-(* Basic properties *********************************************************)
-
-lemma ceq_refl (L): reflexive … (ceq L).
-// qed.
-
-lemma cfull_refl (L): reflexive … (cfull L).
-// qed.
-
-lemma ceq_sym (L): symmetric … (ceq L).
-// qed-.
-
-lemma cfull_sym (L): symmetric … (cfull L).
-// qed-.
-
-lemma cfull_top (R:relation3 lenv term term) (L) (T1) (T2):
-                R L T1 T2 → cfull L T1 T2.
-// qed-.
-
-lemma ceq_cfull (L) (T1) (T2): ceq L T1 T2 → cfull L T1 T2.
-// qed.
+(* Basic_2A1: was just: cpr_llpx_sn_conf *)
+lemma cpm_lfxs_conf: ∀R,n,h,G. s_r_confluent1 … (cpm n h G) (lfxs R).
+/3 width=5 by cpm_fwd_cpx, cpx_lfxs_conf/ qed-.
