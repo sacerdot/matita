@@ -103,11 +103,18 @@ lemma tdeq_inv_sort1_deg: ∀h,o,Y,s1. ⋆s1 ≡[h, o] Y → ∀d. deg h o s1 d 
 #s2 #x #Hx <(deg_mono h o … Hx … Hs1) -s1 -d /2 width=3 by ex2_intro/  
 qed-.
 
-lemma tdeq_inv_pair: ∀h,o,I,V1,V2,T1,T2. ②{I}V1.T1 ≡[h, o] ②{I}V2.T2 →
-                     V1 ≡[h, o] V2 ∧ T1 ≡[h, o] T2.
-#h #o #I #V1 #V2 #T1 #T2 #H elim (tdeq_inv_pair1 … H) -H
-#V0 #T0 #HV #HT #H destruct /2 width=1 by conj/
-qed-. 
+lemma tdeq_inv_pair: ∀h,o,I1,I2,V1,V2,T1,T2. ②{I1}V1.T1 ≡[h, o] ②{I2}V2.T2 →
+                     ∧∧ I1 = I2 & V1 ≡[h, o] V2 & T1 ≡[h, o] T2.
+#h #o #I1 #I2 #V1 #V2 #T1 #T2 #H elim (tdeq_inv_pair1 … H) -H
+#V0 #T0 #HV #HT #H destruct /2 width=1 by and3_intro/
+qed-.
+
+lemma tdeq_inv_pair_xy_y: ∀h,o,I,T,V. ②{I}V.T ≡[h, o] T → ⊥.
+#h #o #I #T elim T -T
+[ #J #V #H elim (tdeq_inv_pair1 … H) -H #X #Y #_ #_ #H destruct
+| #J #X #Y #_ #IHY #V #H elim (tdeq_inv_pair … H) -H #H #_ #HY destruct /2 width=2 by/
+]
+qed-.
 
 (* Basic forward lemmas *****************************************************)
 

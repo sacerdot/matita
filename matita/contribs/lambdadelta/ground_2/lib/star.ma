@@ -135,14 +135,14 @@ lemma TC_transitive2: ∀A,R1,R2.
 qed.
 
 definition NF: ∀A. relation A → relation A → predicate A ≝
-   λA,R,S,a1. ∀a2. R a1 a2 → S a2 a1.
+   λA,R,S,a1. ∀a2. R a1 a2 → S a1 a2.
 
 definition NF_dec: ∀A. relation A → relation A → Prop ≝
                    λA,R,S. ∀a1. NF A R S a1 ∨
-                   ∃∃a2. R … a1 a2 & (S a2 a1 → ⊥).
+                   ∃∃a2. R … a1 a2 & (S a1 a2 → ⊥).
 
 inductive SN (A) (R,S:relation A): predicate A ≝
-| SN_intro: ∀a1. (∀a2. R a1 a2 → (S a2 a1 → ⊥) → SN A R S a2) → SN A R S a1
+| SN_intro: ∀a1. (∀a2. R a1 a2 → (S a1 a2 → ⊥) → SN A R S a2) → SN A R S a1
 .
 
 lemma NF_to_SN: ∀A,R,S,a. NF A R S a → SN A R S a.
@@ -160,10 +160,10 @@ lemma SN_to_NF: ∀A,R,S. NF_dec A R S →
 qed-.
 
 definition NF_sn: ∀A. relation A → relation A → predicate A ≝
-   λA,R,S,a2. ∀a1. R a1 a2 → S a2 a1.
+   λA,R,S,a2. ∀a1. R a1 a2 → S a1 a2.
 
 inductive SN_sn (A) (R,S:relation A): predicate A ≝
-| SN_sn_intro: ∀a2. (∀a1. R a1 a2 → (S a2 a1 → ⊥) → SN_sn A R S a1) → SN_sn A R S a2
+| SN_sn_intro: ∀a2. (∀a1. R a1 a2 → (S a1 a2 → ⊥) → SN_sn A R S a1) → SN_sn A R S a2
 .
 
 lemma NF_to_SN_sn: ∀A,R,S,a. NF_sn A R S a → SN_sn A R S a.

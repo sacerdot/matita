@@ -78,8 +78,10 @@ table {
         ]
      }
    ]
+*)
    class "cyan"
-   [ { "computation" * } {
+   [ { "rt-computation" * } {
+(*
         [ { "evaluation for context-sensitive rt-reduction" * } {
              [ "cpxe ( ⦃?,?⦄ ⊢ ➡*[?,?] 𝐍⦃?⦄ )" * ]
           }
@@ -108,16 +110,21 @@ table {
              [ "scpds ( ⦃?,?⦄ ⊢ ? •*➡*[?,?,?] ? )" "scpds_lift" + "scpds_aaa" + "scpds_scpds" * ]
           }
         ]
-        [ { "context-sensitive rt-computation" * } {
-             [ "lpxs ( ⦃?,?⦄ ⊢ ➡*[?,?] ? )" "lpxs_drop" + "lpxs_lleq" + "lpxs_aaa" + "lpxs_cpxs" + "lpxs_lpxs" * ]
-             [ "cpxs ( ⦃?,?⦄ ⊢ ? ➡*[?,?] ? )" "cpxs_tsts" + "cpxs_tsts_vector" + "cpxs_lreq" + "cpxs_lift" + "cpxs_lleq" + "cpxs_aaa" + "cpxs_cpxs" * ]
-          }
-        ]
         [ { "context-sensitive computation" * } {
              [ "lprs ( ⦃?,?⦄ ⊢ ➡* ? )" "lprs_drop" + "lprs_cprs" + "lprs_lprs" * ]
              [ "cprs ( ⦃?,?⦄ ⊢ ? ➡* ?)" "cprs_lift" + "cprs_cprs" * ]
           }
         ]
+*)        
+        [ { "uncounted context-sensitive rt-transition" * } {
+(*
+             [ "lpxs ( ⦃?,?⦄ ⊢ ➡*[?,?] ? )" "lpxs_drop" + "lpxs_lleq" + "lpxs_aaa" + "lpxs_cpxs" + "lpxs_lpxs" * ]
+             [ "cpxs_tsts" + "cpxs_tsts_vector" + "cpxs_lreq" + "cpxs_lift" + "cpxs_lleq" + "cpxs_aaa" + "cpxs_cpxs" * ]
+*)
+             [ "cpxs ( ⦃?,?⦄ ⊢ ? ⬈*[?] ? )" * ] 
+          }
+        ]
+(*
         [ { "local env. ref. for generic reducibility" * } {
              [ "lsubc ( ? ⊢ ? ⫃[?] ? )" "lsubc_drop" + "lsubc_drops" + "lsubc_lsuba" * ]
           }
@@ -126,9 +133,9 @@ table {
              [ "gcp" "gcp_cr ( ⦃?,?,?⦄ ϵ[?] 〚?〛 )" "gcp_aaa" * ]
           }
         ]
+*)        
      }
    ]
-*)
    class "water"
    [ { "rt-transition" * } {
         [ { "parallel qrst-rtransition" * } {
@@ -150,6 +157,7 @@ table {
           }
         ]
         [ { "uncounted context-sensitive rt-transition" * } {
+             [ "cnx ( ⦃?,?⦄ ⊢ ⬈[?,?] 𝐍⦃?⦄ )" "cnx_simple" + "cnx_drops" * ]
              [ "lfpx ( ⦃?,?⦄ ⊢ ⬈[?,?] ? )" "lfpx_length" + "lfpx_drops" + "lfpx_fqup" + "lfpx_frees" + "lfpx_aaa" * ]
              [ "cpx ( ⦃?,?⦄ ⊢ ? ⬈[?] ? )" "cpx_simple" + "cpx_drops" + "cpx_fqus" + "cpx_lsubr" + "cpx_lfxs" + "cpx_lfdeq" * ]
           }
@@ -162,19 +170,13 @@ table {
    ]
    class "green"
    [ { "static typing" * } {
-        [ { "restricted ref. for atomic arity assignment" * } {
-             [ "lsuba ( ? ⊢ ? ⫃⁝ ? )" "lsuba_drops" + "lsuba_lsubr" + "lsuba_aaa" + "lsuba_lsuba" * ]
-          }
-        ]
         [ { "atomic arity assignment" * } {
+             [ "lsuba ( ? ⊢ ? ⫃⁝ ? )" "lsuba_drops" + "lsuba_lsubr" + "lsuba_aaa" + "lsuba_lsuba" * ]
              [ "aaa ( ⦃?,?⦄ ⊢ ? ⁝ ? )" "aaa_drops" + "aaa_fqus" + "aaa_lfdeq" + "aaa_aaa" * ]
           }
         ]
-        [ { "degree-based equivalence for closures on referred entries" * } {
+        [ { "degree-based equivalence on referred entries" * } {
              [ "ffdeq ( ⦃?,?,?⦄ ≡[?,?] ⦃?,?,?⦄ )" "ffdeq_fqup" + "ffdeq_ffdeq" * ]
-          }
-        ]
-        [ { "degree-based equivalence for local environments on referred entries" * } {
              [ "lfdeq ( ? ≡[?,?,?] ? )" "lfdeq_length" + "lfdeq_fqup" + "lfdeq_lfdeq" * ]
           }
         ]
@@ -182,11 +184,8 @@ table {
              [ "lfxs ( ? ⦻*[?,?] ? )" "lfxs_length" + "lfxs_drops" + "lfxs_fqup" + "lfxs_lfxs" * ]
           }
         ]
-        [ { "restricted ref. for context-sensitive free variables" * } {
-             [ "lsubf ( ⦃?,?⦄ ⫃𝐅* ⦃?,?⦄ )" "lsubf_frees" * ]
-          }
-        ]        
         [ { "context-sensitive free variables" * } {
+             [ "lsubf ( ⦃?,?⦄ ⫃𝐅* ⦃?,?⦄ )" "lsubf_frees" * ]
              [ "frees ( ? ⊢ 𝐅*⦃?⦄ ≡ ? )" "frees_weight" + "frees_drops" + "frees_fqup" + "frees_frees" * ]
           }
         ]
@@ -293,7 +292,7 @@ class "capitalize italic" { 0 }
 class "italic"            { 1 }
 (*
         [ { "normal forms for context-sensitive rt-reduction" * } {
-             [ "cnx ( ⦃?,?⦄ ⊢ ➡[?,?] 𝐍⦃?⦄ )" "cnx_lift" + "cnx_crx" + "cnx_cix" * ]
+             [ "cnx_crx" + "cnx_cix" * ]
           }
         ]
         [ { "irreducible forms for context-sensitive rt-reduction" * } {
