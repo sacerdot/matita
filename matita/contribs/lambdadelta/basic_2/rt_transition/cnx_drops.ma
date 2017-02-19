@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/relocation/lifts_tdeq.ma".
 include "basic_2/rt_transition/cpx_drops.ma".
 include "basic_2/rt_transition/cnx.ma".
 
@@ -24,6 +25,15 @@ lemma cnx_lref_atom: ∀h,o,G,L,i. ⬇*[i] L ≡ ⋆ → ⦃G, L⦄ ⊢ ⬈[h, o
 #I #K #V1 #V2 #HLK lapply (drops_mono … Hi … HLK) -L #H destruct
 qed.
 
+(* Basic_2A1: includes: cnx_lift *)
+lemma cnx_lifts: ∀h,o,G. d_liftable1 … (cnx h o G).
+#h #o #G #K #T #HT #b #f #L #HLK #U #HTU #U0 #H
+elim (cpx_inv_lifts … H … HLK … HTU) -b -L #T0 #HTU0 #HT0
+lapply (HT … HT0) -G -K #HT0
+elim (tdeq_lifts … HT0 … HTU) -T #X #HX #HU
+<(lifts_mono … HX … HTU0) -T0 //
+qed-.
+
 (* Inversion lemmas with generic slicing ************************************)
 
 (* Basic_2A1: was: cnx_inv_delta *)
@@ -35,23 +45,11 @@ lapply (H W ?) -H /2 width=7 by cpx_delta_drops/ -HLK
 /2 width=5 by lifts_inv_lref2_uni_lt/
 qed-.
 
-(*
-(* Relocation properties ****************************************************)
-
-lemma cnx_lift: ∀h,o,G,L0,L,T,T0,c,l,k. ⦃G, L⦄ ⊢ ➡[h, o] 𝐍⦃T⦄ → ⬇[c, l, k] L0 ≡ L →
-                ⬆[l, k] T ≡ T0 → ⦃G, L0⦄ ⊢ ➡[h, o] 𝐍⦃T0⦄.
-#h #o #G #L0 #L #T #T0 #c #l #k #HLT #HL0 #HT0 #X #H
-elim (cpx_inv_lift1 … H … HL0 … HT0) -L0 #T1 #HT10 #HT1
-<(HLT … HT1) in HT0; -L #HT0
->(lift_mono … HT10 … HT0) -T1 -X //
-qed.
-
-lemma cnx_inv_lift: ∀h,o,G,L0,L,T,T0,c,l,k. ⦃G, L0⦄ ⊢ ➡[h, o] 𝐍⦃T0⦄ → ⬇[c, l, k] L0 ≡ L →
-                    ⬆[l, k] T ≡ T0 → ⦃G, L⦄ ⊢ ➡[h, o] 𝐍⦃T⦄.
-#h #o #G #L0 #L #T #T0 #c #l #k #HLT0 #HL0 #HT0 #X #H
-elim (lift_total X l k) #X0 #HX0
-lapply (cpx_lift … H … HL0 … HT0 … HX0) -L #HTX0
->(HLT0 … HTX0) in HX0; -L0 -X0 #H
->(lift_inj … H … HT0) -T0 -X -l -k //
+(* Basic_2A1: includes: cnx_inv_lift *)
+lemma cnx_inv_lifts: ∀h,o,G. d_deliftable1 … (cnx h o G).
+#h #o #G #L #U #HU #b #f #K #HLK #T #HTU #T0 #H
+elim (cpx_lifts … H … HLK … HTU) -b -K #U0 #HTU0 #HU0
+lapply (HU … HU0) -G -L #HU0
+elim (tdeq_inv_lifts … HU0 … HTU) -U #X #HX #HT
+<(lifts_inj … HX … HTU0) -U0 //
 qed-.
-*)

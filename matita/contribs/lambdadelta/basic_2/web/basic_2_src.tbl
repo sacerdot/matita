@@ -124,12 +124,6 @@ table {
              [ "cpxs ( ⦃?,?⦄ ⊢ ? ⬈*[?] ? )" * ] 
           }
         ]
-        [ { "generic reducibility" * } {
-             [ "lsubc ( ? ⊢ ? ⫃[?] ? )" "lsubc_drop" + "lsubc_drops" + "lsubc_lsubr" + "lsubc_lsuba" * ]        
-             [ "gcp_cr ( ⦃?,?,?⦄ ϵ[?] 〚?〛 )" "gcp_aaa" * ]
-             [ "gcp" *] 
-          }
-        ]        
      }
    ]
    class "water"
@@ -166,6 +160,12 @@ table {
    ]
    class "green"
    [ { "static typing" * } {
+        [ { "generic reducibility" * } {
+             [ "lsubc ( ? ⊢ ? ⫃[?] ? )" "lsubc_drop" + "lsubc_drops" + "lsubc_lsubr" + "lsubc_lsuba" * ]        
+             [ "gcp_cr ( ⦃?,?,?⦄ ϵ[?] 〚?〛 )" "gcp_aaa" * ]
+             [ "gcp" *] 
+          }
+        ]
         [ { "atomic arity assignment" * } {
              [ "lsuba ( ? ⊢ ? ⫃⁝ ? )" "lsuba_drops" + "lsuba_lsubr" + "lsuba_aaa" + "lsuba_lsuba" * ]
              [ "aaa ( ⦃?,?⦄ ⊢ ? ⁝ ? )" "aaa_drops" + "aaa_fqus" + "aaa_lfdeq" + "aaa_aaa" * ]

@@ -17,7 +17,7 @@ include "basic_2/syntax/aarity.ma".
 include "basic_2/relocation/lifts_simple.ma".
 include "basic_2/relocation/lifts_lifts_vector.ma".
 include "basic_2/relocation/drops_drops.ma".
-include "basic_2/rt_computation/gcp.ma".
+include "basic_2/static/gcp.ma".
 
 (* GENERIC COMPUTATION PROPERTIES *******************************************)
 

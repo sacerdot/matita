@@ -14,7 +14,7 @@
 
 include "basic_2/notation/relations/lrsubeqc_4.ma".
 include "basic_2/static/aaa.ma".
-include "basic_2/rt_computation/gcp_cr.ma".
+include "basic_2/static/gcp_cr.ma".
 
 (* LOCAL ENVIRONMENT REFINEMENT FOR GENERIC REDUCIBILITY ********************)
 

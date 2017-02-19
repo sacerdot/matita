@@ -42,6 +42,10 @@ definition d_liftable1: predicate (relation2 lenv term) ≝
                         λR. ∀K,T. R K T → ∀b,f,L. ⬇*[b, f] L ≡ K →
                         ∀U. ⬆*[f] T ≡ U → R L U.
 
+definition d_deliftable1: predicate (relation2 lenv term) ≝
+                          λR. ∀L,U. R L U → ∀b,f,K. ⬇*[b, f] L ≡ K →
+                          ∀T. ⬆*[f] T ≡ U → R K T.
+
 definition d_liftable2: predicate (lenv → relation term) ≝
                         λR. ∀K,T1,T2. R K T1 T2 → ∀b,f,L. ⬇*[b, f] L ≡ K →
                         ∀U1. ⬆*[f] T1 ≡ U1 → 

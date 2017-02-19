@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/static/aaa_drops.ma".
-include "basic_2/rt_computation/lsubc.ma".
+include "basic_2/static/lsubc.ma".
 
 (* LOCAL ENVIRONMENT REFINEMENT FOR GENERIC REDUCIBILITY ********************)
 

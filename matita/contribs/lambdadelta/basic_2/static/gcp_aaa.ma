@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/static/aaa_aaa.ma".
-include "basic_2/rt_computation/lsubc_drops.ma".
+include "basic_2/static/lsubc_drops.ma".
 
 (* GENERIC COMPUTATION PROPERTIES *******************************************)
 
