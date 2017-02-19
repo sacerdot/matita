@@ -126,7 +126,8 @@ table {
         ]
         [ { "generic reducibility" * } {
              [ "lsubc ( ? ⊢ ? ⫃[?] ? )" "lsubc_drop" + "lsubc_drops" + "lsubc_lsubr" + "lsubc_lsuba" * ]        
-             [ "gcp" "gcp_cr ( ⦃?,?,?⦄ ϵ[?] 〚?〛 )" "gcp_aaa" * ]
+             [ "gcp_cr ( ⦃?,?,?⦄ ϵ[?] 〚?〛 )" "gcp_aaa" * ]
+             [ "gcp" *] 
           }
         ]        
      }

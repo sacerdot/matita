@@ -34,6 +34,9 @@
 
    <subsection name="A2">Stage "A2": "Extending the Applicability Condition"</subsection>
 
+   <news class="alpha" date="2017 February 19.">
+         Generic candidates of reducibility.
+   </news>
    <news class="alpha" date="2017 January 17.">
          Confluence for parallel r-transition on referred entries of local environments.
    </news>
@@ -116,7 +119,7 @@
          for simply typed terms.
    </news>
    <news class="alpha" date="2012 January 27.">
-         Support for abstract candidates of reducibility.
+         Generic candidates of reducibility.
    </news>
    <news class="alpha" date="2011 September 21.">
          Confluence for context-sensitive parallel reduction on terms.
