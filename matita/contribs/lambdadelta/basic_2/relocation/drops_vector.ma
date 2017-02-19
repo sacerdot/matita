@@ -17,15 +17,16 @@ include "basic_2/relocation/drops.ma".
 
 (* GENERIC SLICING FOR LOCAL ENVIRONMENTS ***********************************)
 
-definition d_liftable1_all: relation2 lenv term → predicate bool ≝
-                            λR,b. ∀f,L,K. ⬇*[b, f] L ≡ K →
-                            ∀Ts,Us. ⬆*[f] Ts ≡ Us →
-                            all … (R K) Ts → all … (R L) Us.
+definition d_liftable1_all: predicate (relation2 lenv term) ≝
+                            λR. ∀K,Ts. all … (R K) Ts →
+                            ∀b,f,L. ⬇*[b, f] L ≡ K →
+                            ∀Us. ⬆*[f] Ts ≡ Us → all … (R L) Us.
 
 (* Properties with generic relocation for term vectors **********************)
 
 (* Basic_2A1: was: d1_liftables_liftables_all *)
-lemma d1_liftable_liftable_all: ∀R,b. d_liftable1 R b → d_liftable1_all R b.
-#R #b #HR #f #L #K #HLK #Ts #Us #H elim H -Ts -Us normalize //
+lemma d1_liftable_liftable_all: ∀R. d_liftable1 R → d_liftable1_all R.
+#R #HR #K #Ts #HTs #b #f #L #HLK #Us #H
+generalize in match HTs; -HTs elim H -Ts -Us normalize //
 #Ts #Us #T #U #HTU #_ #IHTUs * /3 width=7 by conj/
 qed.

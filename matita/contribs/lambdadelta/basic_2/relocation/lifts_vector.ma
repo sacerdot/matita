@@ -122,4 +122,16 @@ lemma lifts_applv: ∀f:rtmap. ∀V1s,V2s. ⬆*[f] V1s ≡ V2s →
 #f #V1s #V2s #H elim H -V1s -V2s /3 width=1 by lifts_flat/
 qed.
 
+lemma liftsv_split_trans: ∀f,T1s,T2s. ⬆*[f] T1s ≡ T2s →
+                          ∀f1,f2. f2 ⊚ f1 ≡ f →
+                          ∃∃Ts. ⬆*[f1] T1s ≡ Ts & ⬆*[f2] Ts ≡ T2s.
+#f #T1s #T2s #H elim H -T1s -T2s
+[ /2 width=3 by liftsv_nil, ex2_intro/
+| #T1s #T2s #T1 #T2 #HT12 #_ #IH #f1 #f2 #Hf
+  elim (IH … Hf) -IH
+  elim (lifts_split_trans … HT12 … Hf) -HT12 -Hf
+  /3 width=5 by liftsv_cons, ex2_intro/
+]
+qed-.
+
 (* Basic_1: removed theorems 2: lifts1_nil lifts1_cons *)

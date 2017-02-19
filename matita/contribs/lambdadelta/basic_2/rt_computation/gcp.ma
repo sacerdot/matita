@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/syntax/genv.ma".
-include "basic_2/multiple/drops.ma".
+include "basic_2/relocation/drops_vector.ma".
 
 (* GENERIC COMPUTATION PROPERTIES *******************************************)
 
@@ -23,17 +23,20 @@ definition nf ≝ λRR:relation4 genv lenv term term. λRS:relation term.
 definition candidate: Type[0] ≝ relation3 genv lenv term.
 
 definition CP0 ≝ λRR:relation4 genv lenv term term. λRS:relation term.
-                 ∀G. d_liftable1 (nf RR RS G) (Ⓕ).
+                 ∀G. d_liftable1 (nf RR RS G).
 
 definition CP1 ≝ λRR:relation4 genv lenv term term. λRS:relation term.
                  ∀G,L. ∃s. NF … (RR G L) RS (⋆s).
 
-definition CP2 ≝ λRP:candidate. ∀G. d_liftable1 (RP G) (Ⓕ).
+definition CP2 ≝ λRP:candidate. ∀G. d_liftable1 (RP G).
 
 definition CP3 ≝ λRP:candidate.
                  ∀G,L,T,s. RP G L (ⓐ⋆s.T) → RP G L T.
 
 (* requirements for generic computation properties *)
+(* Basic_1: includes: nf2_lift1 *)
+(* Basic_2A1: includes: gcp0_lifts *)
+(* Basic_2A1: includes: gcp2_lifts *)
 record gcp (RR:relation4 genv lenv term term) (RS:relation term) (RP:candidate) : Prop ≝
 { cp0: CP0 RR RS;
   cp1: CP1 RR RS;
@@ -43,16 +46,7 @@ record gcp (RR:relation4 genv lenv term term) (RS:relation term) (RP:candidate) 
 
 (* Basic properties *********************************************************)
 
-(* Basic_1: was: nf2_lift1 *)
-lemma gcp0_lifts: ∀RR,RS,RP. gcp RR RS RP → ∀G. d_liftables1 (nf RR RS G) (Ⓕ).
-#RR #RS #RP #H #G @d1_liftable_liftables @(cp0 … H)
-qed.
-
-lemma gcp2_lifts: ∀RR,RS,RP. gcp RR RS RP → ∀G. d_liftables1 (RP G) (Ⓕ).
-#RR #RS #RP #H #G @d1_liftable_liftables @(cp2 … H)
-qed.
-
 (* Basic_1: was only: sns3_lifts1 *)
-lemma gcp2_lifts_all: ∀RR,RS,RP. gcp RR RS RP → ∀G. d_liftables1_all (RP G) (Ⓕ).
-#RR #RS #RP #H #G @d1_liftables_liftables_all /2 width=7 by gcp2_lifts/
-qed.
+(* Basic_2A1: was: gcp2_lifts_all *)
+lemma gcp2_all: ∀RR,RS,RP. gcp RR RS RP → ∀G. d_liftable1_all (RP G).
+/3 width=7 by cp2, d1_liftable_liftable_all/ qed.

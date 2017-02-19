@@ -20,9 +20,9 @@ include "basic_2/relocation/lifts.ma".
 
 (* Basic_1: includes: lift_gen_lift *)
 (* Basic_2A1: includes: lift_div_le lift_div_be *)
-theorem lift_div4: ∀f2,Tf,T. ⬆*[f2] Tf ≡ T → ∀g2,Tg. ⬆*[g2] Tg ≡ T →
-                   ∀f1,g1. H_at_div f2 g2 f1 g1 →
-                   ∃∃T0. ⬆*[f1] T0 ≡ Tf & ⬆*[g1] T0 ≡ Tg.
+theorem lifts_div4: ∀f2,Tf,T. ⬆*[f2] Tf ≡ T → ∀g2,Tg. ⬆*[g2] Tg ≡ T →
+                    ∀f1,g1. H_at_div f2 g2 f1 g1 →
+                    ∃∃T0. ⬆*[f1] T0 ≡ Tf & ⬆*[g1] T0 ≡ Tg.
 #f2 #Tf #T #H elim H -f2 -Tf -T
 [ #f2 #s #g2 #Tg #H #f1 #g1 #_
   lapply (lifts_inv_sort2 … H) -H #H destruct
@@ -49,7 +49,7 @@ qed-.
 lemma lifts_div4_one: ∀f,Tf,T. ⬆*[↑f] Tf ≡ T →
                       ∀T1. ⬆*[1] T1 ≡ T →
                       ∃∃T0. ⬆*[1] T0 ≡ Tf & ⬆*[f] T0 ≡ T1.
-/4 width=6 by lift_div4, at_div_id_dx, at_div_pn/ qed-.
+/4 width=6 by lifts_div4, at_div_id_dx, at_div_pn/ qed-.
 
 theorem lifts_div3: ∀f2,T,T2. ⬆*[f2] T2 ≡ T → ∀f,T1. ⬆*[f] T1 ≡ T →
                     ∀f1. f2 ⊚ f1 ≡ f → ⬆*[f1] T1 ≡ T2.

@@ -38,9 +38,9 @@ interpretation "uniform slicing (local environment)"
 interpretation "generic slicing (local environment)"
    'RDropStar b f L1 L2 = (drops b f L1 L2).
 
-definition d_liftable1: relation2 lenv term → predicate bool ≝
-                        λR,b. ∀f,L,K. ⬇*[b, f] L ≡ K →
-                        ∀T,U. ⬆*[f] T ≡ U → R K T → R L U.
+definition d_liftable1: predicate (relation2 lenv term) ≝
+                        λR. ∀K,T. R K T → ∀b,f,L. ⬇*[b, f] L ≡ K →
+                        ∀U. ⬆*[f] T ≡ U → R L U.
 
 definition d_liftable2: predicate (lenv → relation term) ≝
                         λR. ∀K,T1,T2. R K T1 T2 → ∀b,f,L. ⬇*[b, f] L ≡ K →
@@ -271,7 +271,7 @@ lemma drops_inv_pair2_isuni_next: ∀b,f,I,K,V,L1. 𝐔⦃f⦄ → ⬇*[b, ⫯f]
 [ #H elim (isid_inv_next … H) -H //
 | /2 width=5 by ex2_3_intro/
 ]
-qed-. 
+qed-.
 
 fact drops_inv_TF_aux: ∀f,L1,L2. ⬇*[Ⓕ, f] L1 ≡ L2 → 𝐔⦃f⦄ →
                        ∀I,K,V. L2 = K.ⓑ{I}V →

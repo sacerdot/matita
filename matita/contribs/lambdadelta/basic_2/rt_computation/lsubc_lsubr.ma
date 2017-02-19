@@ -12,15 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/lsuba.ma".
-include "basic_2/rt_computation/gcp_aaa.ma".
+include "basic_2/static/lsubr.ma".
+include "basic_2/rt_computation/lsubc.ma".
 
 (* LOCAL ENVIRONMENT REFINEMENT FOR GENERIC REDUCIBILITY ********************)
 
-(* Properties with lenv refinement for atomic arity assignment **************)
+(* Forward lemmas with restricted refinement for local environments *********)
 
-lemma lsuba_lsubc: ∀RR,RS,RP. gcp RR RS RP → gcr RR RS RP RP →
-                   ∀G,L1,L2. G ⊢ L1 ⫃⁝ L2 → G ⊢ L1 ⫃[RP] L2.
-#RR #RS #RP #H1RP #H2RP #G #L1 #L2 #H elim H -L1 -L2 /2 width=1 by lsubc_pair/
-#L1 #L2 #W #V #A #H elim (aaa_inv_cast … H) -H /3 width=4 by acr_aaa, lsubc_beta/
-qed.
+lemma lsubc_fwd_lsubr: ∀RP,G,L1,L2. G ⊢ L1 ⫃[RP] L2 → L1 ⫃ L2.
+#RP #G #L1 #L2 #H elim H -L1 -L2 /2 width=1 by lsubr_pair, lsubr_beta/
+qed-.

@@ -124,16 +124,11 @@ table {
              [ "cpxs ( ⦃?,?⦄ ⊢ ? ⬈*[?] ? )" * ] 
           }
         ]
-(*
-        [ { "local env. ref. for generic reducibility" * } {
-             [ "lsubc ( ? ⊢ ? ⫃[?] ? )" "lsubc_drop" + "lsubc_drops" + "lsubc_lsuba" * ]
-          }
-        ]
-        [ { "support for generic computation properties" * } {
+        [ { "generic reducibility" * } {
+             [ "lsubc ( ? ⊢ ? ⫃[?] ? )" "lsubc_drop" + "lsubc_drops" + "lsubc_lsubr" + "lsubc_lsuba" * ]        
              [ "gcp" "gcp_cr ( ⦃?,?,?⦄ ϵ[?] 〚?〛 )" "gcp_aaa" * ]
           }
-        ]
-*)        
+        ]        
      }
    ]
    class "water"

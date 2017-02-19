@@ -45,9 +45,9 @@ qed-.
 
 (* Note: the premise 𝐔⦃f⦄ cannot be removed *)
 (* Basic_2A1: includes: lsuba_drop_O1_trans *)
-lemma lsuba_drop_O1_trans: ∀G,L1,L2. G ⊢ L1 ⫃⁝ L2 →
-                           ∀b,f,K2. 𝐔⦃f⦄ → ⬇*[b, f] L2 ≡ K2 →
-                           ∃∃K1. G ⊢ K1 ⫃⁝ K2 & ⬇*[b, f] L1 ≡ K1.
+lemma lsuba_drops_trans_isuni: ∀G,L1,L2. G ⊢ L1 ⫃⁝ L2 →
+                               ∀b,f,K2. 𝐔⦃f⦄ → ⬇*[b, f] L2 ≡ K2 →
+                               ∃∃K1. G ⊢ K1 ⫃⁝ K2 & ⬇*[b, f] L1 ≡ K1.
 #G #L1 #L2 #H elim H -L1 -L2
 [ /2 width=3 by ex2_intro/
 | #I #L1 #L2 #V #HL12 #IH #b #f #K2 #Hf #H

@@ -13,9 +13,8 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/lrsubeqc_4.ma".
-include "basic_2/static/lsubr.ma".
 include "basic_2/static/aaa.ma".
-include "basic_2/computation/gcp_cr.ma".
+include "basic_2/rt_computation/gcp_cr.ma".
 
 (* LOCAL ENVIRONMENT REFINEMENT FOR GENERIC REDUCIBILITY ********************)
 
@@ -95,12 +94,6 @@ lemma lsubc_inv_pair2: ∀RP,I,G,L1,K2,W. G ⊢ L1 ⫃[RP] K2.ⓑ{I} W →
                                  G ⊢ K1 ⫃[RP] K2 &
                                  L1 = K1.ⓓⓝW.V & I = Abst.
 /2 width=3 by lsubc_inv_pair2_aux/ qed-.
-
-(* Basic forward lemmas *****************************************************)
-
-lemma lsubc_fwd_lsubr: ∀RP,G,L1,L2. G ⊢ L1 ⫃[RP] L2 → L1 ⫃ L2.
-#RP #G #L1 #L2 #H elim H -L1 -L2 /2 width=1 by lsubr_pair, lsubr_beta/
-qed-.
 
 (* Basic properties *********************************************************)
 
