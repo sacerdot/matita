@@ -1,1 +1,2 @@
 cpxs.ma
+csx.ma csx_cnx.ma

@@ -12,8 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
+(* STRONGLY NORMALIZING TERMS FOR UNCOUNTED PARALLEL RT-TRANSITION **********)
 
-notation "hvbox( ⦃ term 46 G, break term 46 L ⦄ ⊢ ⬊ * [ break term 46 h, break term 46 o ] break term 46 T )"
-   non associative with precedence 45
-   for @{ 'SN $h $o $G $L $T }.
+include "basic_2/rt_transition/cnx.ma".
+include "basic_2/rt_computation/csx.ma".
+
+(* Properties with normal terms for uncounted parallel rt-transition ********)
+
+(* Basic_1: was just: sn3_nf2 *)
+lemma cnx_csx: ∀h,o,G,L,T. ⦃G, L⦄ ⊢ ⬈[h, o] 𝐍⦃T⦄ → ⦃G, L⦄ ⊢ ⬈[h, o] 𝐒⦃T⦄.
+/2 width=1 by NF_to_SN/ qed.
