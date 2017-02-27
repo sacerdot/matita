@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesPackage{matex}[2016/07/03 MaTeX Package]
+\ProvidesPackage{matex}[2017/02/27 MaTeX Package]
 \RequirePackage{xcolor}
 \RequirePackage[lcgreekalpha]{stix}
 \ExecuteOptions{}
@@ -8,6 +8,11 @@
 \newcommand*\neverindent{\setlength\parindent{0pt}}
 
 \makeatletter
+
+\newcommand*\ma@sort{\mathrm}
+\newcommand*\ma@gref{\mathrm}
+\newcommand*\ma@lref{\mathrm}
+\newcommand*\ma@decl{\mathbf}
 
 \definecolor{ma@black}{HTML}{000000}
 \definecolor{ma@blue}{HTML}{00005F}
@@ -90,20 +95,20 @@
 \newcommand*\ma@bind{\ma@thop{}}
 \newcommand*\ma@skip[1]{}
 
-\newcommand*\PROP{\mathord\mathrm{PROP}}
-\newcommand*\CROP[1]{\mathord\mathrm{CROP}}
-\newcommand*\TYPE[1]{\mathord\mathrm{TYPE}}
-\newcommand*\LREF[2]{\ma@setoptlink{#1}{#2}}
-\newcommand*\GREF[2]{\ma@setoptlink{\mathrm{#1}}{#2}}
-\newcommand*\ABBR[4]{\ma@op\ma@setopttarget{#1}{#2}\ma@abbr #4\ma@cast #3\ma@cp\ma@bind}
-\newcommand*\ABST[3]{\ma@op\ma@setopttarget{#1}{#2}\ma@cast #3\ma@cp\ma@bind}
+\newcommand*\PROP{\mathord\ma@sort{PROP}}
+\newcommand*\CROP[1]{\mathord\ma@sort{CROP}}
+\newcommand*\TYPE[1]{\mathord\ma@sort{TYPE}}
+\newcommand*\LREF[2]{\ma@setoptlink{\ma@lref{#1}}{#2}}
+\newcommand*\GREF[2]{\ma@setoptlink{\ma@gref{#1}}{#2}}
+\newcommand*\ABBR[4]{\ma@op\ma@setopttarget{\ma@lref{#1}}{#2}\ma@abbr #4\ma@cast #3\ma@cp\ma@bind}
+\newcommand*\ABST[3]{\ma@op\ma@setopttarget{\ma@lref{#1}}{#2}\ma@cast #3\ma@cp\ma@bind}
 \newcommand*\PROD[3]{\def\ma@tmp{#2}%
    \ifx\ma@tmp\empty #3\ma@arrw\else
-   \ma@op\ma@prod\ma@setopttarget{#1}{#2}\ma@cast #3\ma@cp\ma@bind\fi
+   \ma@op\ma@prod\ma@setopttarget{\ma@lref{#1}}{#2}\ma@cast #3\ma@cp\ma@bind\fi
 }
 \newcommand*\FALL[3]{\def\ma@tmp{#2}%
    \ifx\ma@tmp\empty #3\ma@impl\else
-   \ma@op\ma@fall\ma@setopttarget{#1}{#2}\ma@cast #3\ma@cp\ma@bind\fi
+   \ma@op\ma@fall\ma@setopttarget{\ma@lref{#1}}{#2}\ma@cast #3\ma@cp\ma@bind\fi
 }
 \newcommand*\APPL[1]{#1\ma@args}
 \newcommand*\CASE[3]{#3\ma@case\ma@cases}
@@ -115,13 +120,13 @@
 \newcommand*\ma@comma{, }
 \newcommand*\ma@stop{.\end{ma@step}}
 \newcommand*\ma@head[6]{\def\ma@tmp{#5}%
-   \ifx\ma@tmp\empty\begin{ma@step}{#1}$\mathbf{\ma@setopttarget{#2}{#3}}$%
-   \else\begin{ma@step}{#4}$\mathbf{\ma@setopttarget{#5}{#6}}$%
+   \ifx\ma@tmp\empty\begin{ma@step}{#1}$\ma@setopttarget{\ma@decl{#2}}{#3}$%
+   \else\begin{ma@step}{#4}$\ma@setopttarget{\ma@decl{#5}}{#6}$%
    \fi
 }
 \newcommand*\ma@tail{\ma@list\ma@with\ma@term\ma@comma\ma@stop}
 \newcommand*\ma@type[1]{\def\ma@tmp{#1}%
-   \ifx\ma@tmp\empty\mathrm{(omitted)}\else #1\fi
+   \ifx\ma@tmp\empty\ma@gref{(omitted)}\else #1\fi
 }
 
 \newcommand*\EXIT[1]{\ma@head{\ma@exit}{end}{}{}{}{} of block #1\ma@stop}

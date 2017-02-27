@@ -40,6 +40,8 @@ let default_alpha = []
 
 let default_macro = []
 
+let default_sigs = []
+
 (* interface ****************************************************************)
 
 let dno_id = "_"                            (* identifier for not-occurring premises *)
@@ -76,6 +78,8 @@ let alpha_gref = ref default_alpha          (* data for constant renaming *)
 
 let macro_gref = ref default_macro          (* data for eta-conversion and constant rendering *)
 
+let sigs_gref = ref default_sigs            (* data for sigma-type rendering *)
+
 let is_global_id s =
    !global_alpha && s <> dno_id
 
@@ -98,4 +102,5 @@ let clear () =
    alpha_type := default_alpha;
    alpha_sort := default_alpha;
    alpha_gref := default_alpha;
-   macro_gref := default_macro
+   macro_gref := default_macro;
+   sigs_gref := default_sigs

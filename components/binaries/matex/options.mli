@@ -43,6 +43,8 @@ val alpha_gref: (string * string) list ref
 
 val macro_gref: (string * string * int * int) list ref
 
+val sigs_gref: (string * int * int) list ref
+
 val clear: unit -> unit
 
 val close_list: unit -> unit

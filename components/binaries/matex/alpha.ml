@@ -17,7 +17,6 @@ module H = Hashtbl
 
 module U = NUri
 module C = NCic
-module R = NReference
 module E = NCicEnvironment
 module T = NCicTypeChecker
 
@@ -115,7 +114,7 @@ let global_apha st s =
 try 
    let i = H.find st.g s in
    H.replace st.g s (succ i);
-   P.sprintf "%s.%u" s i
+   P.sprintf "%s_%u" s i
 with Not_found ->
    H.add st.g s 0;
    s
@@ -178,4 +177,3 @@ with
 (* interface functions ******************************************************)
 
 let process_top_term s t = proc_named_term s (init ()) t
-

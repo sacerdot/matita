@@ -26,6 +26,7 @@ module K = Kernel
 module T = TeX
 module O = TeXOutput
 module A = Anticipate
+module M = Meta
 module N = Alpha
 
 type status = {
