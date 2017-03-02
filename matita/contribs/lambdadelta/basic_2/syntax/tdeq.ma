@@ -168,3 +168,16 @@ lemma tdeq_dec: ∀h,o,T1,T2. Decidable (tdeq h o T1 T2).
   elim (tdeq_inv_pair … H) -H /2 width=1 by/
 ]
 qed-.
+
+(* Negated inversion lemmas *************************************************)
+
+lemma tdeq_false_inv_pair: ∀h,o,I1,I2,V1,V2,T1,T2.
+                           (②{I1}V1.T1 ≡[h, o] ②{I2}V2.T2 → ⊥) → 
+                           ∨∨ I1 = I2 → ⊥
+                           |  V1 ≡[h, o] V2 → ⊥
+                           |  (T1 ≡[h, o] T2 → ⊥).
+#h #o #I1 #I2 #V1 #V2 #T1 #T2 #H12
+elim (eq_item2_dec I1 I2) /3 width=1 by or3_intro0/ #H destruct
+elim (tdeq_dec h o V1 V2) /3 width=1 by or3_intro1/
+elim (tdeq_dec h o T1 T2) /4 width=1 by tdeq_pair, or3_intro2/
+qed-.

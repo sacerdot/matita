@@ -28,3 +28,13 @@ theorem tdeq_trans: ∀h,o. Transitive … (tdeq h o).
   elim (tdeq_inv_pair1 … H) -H /3 width=1 by tdeq_pair/
 ]
 qed-.
+
+theorem tdeq_canc_sn: ∀h,o. left_cancellable … (tdeq h o).
+/3 width=3 by tdeq_trans, tdeq_sym/ qed-.
+
+theorem tdeq_canc_dx: ∀h,o. right_cancellable … (tdeq h o).
+/3 width=3 by tdeq_trans, tdeq_sym/ qed-.
+
+theorem tdeq_repl: ∀h,o,T1,T2. T1 ≡[h, o] T2 →
+                   ∀U1. T1 ≡[h, o] U1 → ∀U2. T2 ≡[h, o] U2 → U1 ≡[h, o] U2.
+/3 width=3 by tdeq_canc_sn, tdeq_trans/ qed-.

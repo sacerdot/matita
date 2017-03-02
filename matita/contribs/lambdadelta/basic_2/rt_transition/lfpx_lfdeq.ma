@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/relocation/lifts_tdeq.ma".
-include "basic_2/static/lfdeq.ma".
+include "basic_2/static/lfdeq_fqup.ma".
 include "basic_2/rt_transition/lfpx.ma".
 
 (* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS *************)
@@ -100,6 +100,22 @@ lemma cpx_tdeq_conf_lexs: ∀h,o,G. R_confluent2_lfxs … (cpx h G) (cdeq h o) (
   /4 width=9 by cpx_theta, tdeq_pair, ex2_intro/ (* note: 2 tdeq_pair *)
 ]
 qed-.
+
+lemma cpx_tdeq_conf: ∀h,o,G,L,T0,T1. ⦃G, L⦄ ⊢ T0 ⬈[h] T1 →
+                     ∀T2. T0 ≡[h, o] T2 →
+                     ∃∃T. T1 ≡[h, o] T & ⦃G, L⦄ ⊢ T2 ⬈[h] T.
+#h #o #G #L #T0 #T1 #HT01 #T2 #HT02
+elim (cpx_tdeq_conf_lexs … HT01 … HT02 L … L) -HT01 -HT02
+/2 width=3 by lfxs_refl, ex2_intro/
+qed-.
+
+lemma tdeq_cpx_trans: ∀h,o,G,L,T2,T0. T2 ≡[h, o] T0 →
+                      ∀T1. ⦃G, L⦄ ⊢ T0 ⬈[h] T1 → 
+                      ∃∃T. ⦃G, L⦄ ⊢ T2 ⬈[h] T & T ≡[h, o] T1.
+#h #o #G #L #T2 #T0 #HT20 #T1 #HT01
+elim (cpx_tdeq_conf … HT01 T2) -HT01 /3 width=3 by tdeq_sym, ex2_intro/
+qed-.
+
 (*
 lemma cpx_lleq_conf: ∀h,o,G,L2,T1,T2. ⦃G, L2⦄ ⊢ T1 ⬈[h, o] T2 →
                      ∀L1. L2 ≡[T1, 0] L1 → ⦃G, L1⦄ ⊢ T1 ⬈[h, o] T2.

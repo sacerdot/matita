@@ -121,6 +121,7 @@ table {
              [ "lpxs ( ⦃?,?⦄ ⊢ ➡*[?,?] ? )" "lpxs_drop" + "lpxs_lleq" + "lpxs_aaa" + "lpxs_cpxs" + "lpxs_lpxs" * ]
              [ "cpxs_tsts" + "cpxs_tsts_vector" + "cpxs_lreq" + "cpxs_lift" + "cpxs_lleq" + "cpxs_aaa" + "cpxs_cpxs" * ]
 *)
+             [ "csx ( ⦃?,?⦄ ⊢ ⬈[?,?] 𝐒⦃?⦄ )" "csx_cnx" + "csx_csx" * ]
              [ "cpxs ( ⦃?,?⦄ ⊢ ? ⬈*[?] ? )" * ] 
           }
         ]
@@ -128,7 +129,7 @@ table {
    ]
    class "water"
    [ { "rt-transition" * } {
-        [ { "parallel qrst-rtransition" * } {
+        [ { "parallel qrst-transition" * } {
 (*             [ "fpbq ( ⦃?,?,?⦄ ≽[?,?] ⦃?,?,?⦄ )" "fpbq_alt ( ⦃?,?,?⦄ ≽≽[?,?] ⦃?,?,?⦄ )"  + "fpbq_aaa" * ] *)
              [ "fpb ( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" (* "fpb_lleq" + "fpb_fleq" *) * ]
           }
@@ -148,8 +149,8 @@ table {
         ]
         [ { "uncounted context-sensitive rt-transition" * } {
              [ "cnx ( ⦃?,?⦄ ⊢ ⬈[?,?] 𝐍⦃?⦄ )" "cnx_simple" + "cnx_drops" * ]
-             [ "lfpx ( ⦃?,?⦄ ⊢ ⬈[?,?] ? )" "lfpx_length" + "lfpx_drops" + "lfpx_fqup" + "lfpx_frees" + "lfpx_aaa" * ]
-             [ "cpx ( ⦃?,?⦄ ⊢ ? ⬈[?] ? )" "cpx_simple" + "cpx_drops" + "cpx_fqus" + "cpx_lsubr" + "cpx_lfxs" + "cpx_lfdeq" * ]
+             [ "lfpx ( ⦃?,?⦄ ⊢ ⬈[?,?] ? )" "lfpx_length" + "lfpx_drops" + "lfpx_fqup" + "lfpx_frees" + "lfpx_lfdeq" + "lfpx_aaa" * ]
+             [ "cpx ( ⦃?,?⦄ ⊢ ? ⬈[?] ? )" "cpx_simple" + "cpx_drops" + "cpx_fqus" + "cpx_lsubr" + "cpx_lfxs" * ]
           }
         ]
         [ { "counted context-sensitive rt-transition" * } {
@@ -161,7 +162,7 @@ table {
    class "green"
    [ { "static typing" * } {
         [ { "generic reducibility" * } {
-             [ "lsubc ( ? ⊢ ? ⫃[?] ? )" "lsubc_drop" + "lsubc_drops" + "lsubc_lsubr" + "lsubc_lsuba" * ]        
+             [ "lsubc ( ? ⊢ ? ⫃[?] ? )" "lsubc_drops" + "lsubc_lsubr" + "lsubc_lsuba" * ]        
              [ "gcp_cr ( ⦃?,?,?⦄ ϵ[?] 〚?〛 )" "gcp_aaa" * ]
              [ "gcp" *] 
           }
@@ -182,7 +183,7 @@ table {
         ]
         [ { "context-sensitive free variables" * } {
              [ "lsubf ( ⦃?,?⦄ ⫃𝐅* ⦃?,?⦄ )" "lsubf_frees" * ]
-             [ "frees ( ? ⊢ 𝐅*⦃?⦄ ≡ ? )" "frees_weight" + "frees_drops" + "frees_fqup" + "frees_frees" * ]
+             [ "frees ( ? ⊢ 𝐅*⦃?⦄ ≡ ? )" "frees_drops" + "frees_fqup" + "frees_frees" * ]
           }
         ]
         [ { "restricted ref. for local env." * } {

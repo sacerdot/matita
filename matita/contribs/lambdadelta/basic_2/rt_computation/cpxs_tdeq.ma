@@ -15,20 +15,9 @@
 include "basic_2/syntax/tdeq_tdeq.ma".
 include "basic_2/rt_computation/cpxs.ma".
 include "basic_2/rt_transition/cpx_lfdeq.ma".
-include "basic_2/static/lfdeq_fqup.ma".
 include "basic_2/rt_transition/lfpx_fqup.ma".
 
 (* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS ************)
-
-axiom tdeq_dec: ∀h,o,T1,T2. Decidable (tdeq h o T1 T2).
-
-axiom tdeq_canc_sn: ∀h,o. left_cancellable … (tdeq h o).
-
-lemma tdeq_cpx_trans: ∀h,o,U1,T1. U1 ≡[h, o] T1 → ∀G,L,T2. ⦃G, L⦄ ⊢ T1 ⬈[h] T2 → 
-                      ∃∃U2.  ⦃G, L⦄ ⊢ U1 ⬈[h] U2 & U2 ≡[h, o] T2.
-#h #o #U1 #T1 #HUT1 #G #L #T2 #HT12
-elim (cpx_tdeq_conf_lexs … o … HT12 … U1 … L … L) /3 width=3 by tdeq_sym, ex2_intro/
-qed-.
 
 lemma tdeq_cpxs_trans: ∀h,o,U1,T1. U1 ≡[h, o] T1 → ∀G,L,T2. ⦃G, L⦄ ⊢ T1 ⬈*[h] T2 → 
                        ∃∃U2.  ⦃G, L⦄ ⊢ U1 ⬈*[h] U2 & U2 ≡[h, o] T2.
