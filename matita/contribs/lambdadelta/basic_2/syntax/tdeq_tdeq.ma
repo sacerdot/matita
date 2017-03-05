@@ -38,3 +38,13 @@ theorem tdeq_canc_dx: ∀h,o. right_cancellable … (tdeq h o).
 theorem tdeq_repl: ∀h,o,T1,T2. T1 ≡[h, o] T2 →
                    ∀U1. T1 ≡[h, o] U1 → ∀U2. T2 ≡[h, o] U2 → U1 ≡[h, o] U2.
 /3 width=3 by tdeq_canc_sn, tdeq_trans/ qed-.
+
+(* Negated main properies ***************************************************)
+
+theorem tdeq_tdneq_trans: ∀h,o,T1,T. T1 ≡[h, o] T → ∀T2. (T ≡[h, o] T2 → ⊥) →
+                          T1 ≡[h, o] T2 → ⊥.
+/3 width=3 by tdeq_canc_sn/ qed-.
+
+theorem tndeq_tdeq_canc_dx: ∀h,o,T1,T. (T1 ≡[h, o] T → ⊥) → ∀T2. T2 ≡[h, o] T →
+                            T1 ≡[h, o] T2 → ⊥.
+/3 width=3 by tdeq_trans/ qed-.

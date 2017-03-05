@@ -1,2 +1,2 @@
-cpxs.ma
-csx.ma csx_cnx.ma csx_csx.ma
+cpxs.ma cpxs_tdeq.ma cpxs_cpxs.ma
+csx.ma csx_cnx.ma csx_cpxs.ma csx_csx.ma

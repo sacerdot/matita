@@ -13,11 +13,13 @@
 (**************************************************************************)
 
 include "basic_2/syntax/tdeq_tdeq.ma".
-include "basic_2/rt_computation/cpxs.ma".
-include "basic_2/rt_transition/cpx_lfdeq.ma".
 include "basic_2/rt_transition/lfpx_fqup.ma".
+include "basic_2/rt_transition/lfpx_lfdeq.ma".
+include "basic_2/rt_computation/cpxs.ma".
 
 (* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS ************)
+
+(* Properties with degree-based equivalence for terms ***********************)
 
 lemma tdeq_cpxs_trans: ∀h,o,U1,T1. U1 ≡[h, o] T1 → ∀G,L,T2. ⦃G, L⦄ ⊢ T1 ⬈*[h] T2 → 
                        ∃∃U2.  ⦃G, L⦄ ⊢ U1 ⬈*[h] U2 & U2 ≡[h, o] T2.
@@ -40,5 +42,3 @@ lemma cpxs_tdneq_inv_step_sn: ∀h,o,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬈*[h] T2 →
   ]
 ]
 qed-.
-
-(* Basic_2A1: removed theorems 1: cpxs_neq_inv_step_sn *)
