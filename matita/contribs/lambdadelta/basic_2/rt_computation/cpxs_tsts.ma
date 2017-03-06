@@ -13,38 +13,30 @@
 (**************************************************************************)
 
 include "basic_2/syntax/tsts.ma".
-include "basic_2/computation/lpxs_cpxs.ma".
+include "basic_2/rt_computation/lfpxs_cpxs.ma".
 
-(* CONTEXT-SENSITIVE EXTENDED PARALLEL COMPUTATION ON TERMS *****************)
+(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS ************)
 
-(* Forward lemmas involving same top term structure *************************)
-
+(* Forward lemmas with same top term structure ******************************)
+(*
 lemma cpxs_fwd_cnx: ∀h,o,G,L,T. ⦃G, L⦄ ⊢ ⬈[h, o] 𝐍⦃T⦄ → ∀U. ⦃G, L⦄ ⊢ T ⬈*[h, o] U → T ≂ U.
 #h #o #G #L #T #HT #U #H
 >(cpxs_inv_cnx1 … H HT) -G -L -T //
 qed-.
-
-lemma cpxs_fwd_sort: ∀h,o,G,L,U,s. ⦃G, L⦄ ⊢ ⋆s ⬈*[h, o] U →
-                     ⋆s ≂ U ∨ ⦃G, L⦄ ⊢ ⋆(next h s) ⬈*[h, o] U.
-#h #o #G #L #U #s #H
-elim (cpxs_inv_sort1 … H) -H #n #d generalize in match s; -s @(nat_ind_plus … n) -n
-[ #s #_ #H -d destruct /2 width=1 by or_introl/
-| #n #IHn #s >plus_plus_comm_23 #Hnd #H destruct
-  lapply (deg_next_SO … Hnd) -Hnd #Hnd
-  elim (IHn … Hnd) -IHn
-  [ #H lapply (tsts_inv_atom1 … H) -H #H >H -H /2 width=1 by or_intror/
-  | generalize in match Hnd; -Hnd @(nat_ind_plus … n) -n
-    /4 width=3 by cpxs_strap2, cpx_st, or_intror/
-  | >iter_SO >iter_n_Sm //
-  ]
+*)
+lemma cpxs_fwd_sort: ∀h,G,L,U,s. ⦃G, L⦄ ⊢ ⋆s ⬈*[h] U →
+                     ⋆s ≂ U ∨ ⦃G, L⦄ ⊢ ⋆(next h s) ⬈*[h] U.
+#h #G #L #U #s #H elim (cpxs_inv_sort1 … H) -H *
+[ #H destruct /2 width=1 by or_introl/
+| #n #H destruct
+  @or_intror >iter_S <(iter_n_Sm … (next h)) // (**)
 ]
 qed-.
 
 (* Basic_1: was just: pr3_iso_beta *)
-lemma cpxs_fwd_beta: ∀h,o,a,G,L,V,W,T,U. ⦃G, L⦄ ⊢ ⓐV.ⓛ{a}W.T ⬈*[h, o] U →
-                     ⓐV.ⓛ{a}W.T ≂ U ∨ ⦃G, L⦄ ⊢ ⓓ{a}ⓝW.V.T ⬈*[h, o] U.
-#h #o #a #G #L #V #W #T #U #H
-elim (cpxs_inv_appl1 … H) -H *
+lemma cpxs_fwd_beta: ∀h,p,G,L,V,W,T,U. ⦃G, L⦄ ⊢ ⓐV.ⓛ{p}W.T ⬈*[h] U →
+                     ⓐV.ⓛ{p}W.T ≂ U ∨ ⦃G, L⦄ ⊢ ⓓ{p}ⓝW.V.T ⬈*[h] U.
+#h #p #G #L #V #W #T #U #H elim (cpxs_inv_appl1 … H) -H *
 [ #V0 #T0 #_ #_ #H destruct /2 width=1 by tsts_pair, or_introl/
 | #b #W0 #T0 #HT0 #HU
   elim (cpxs_inv_abst1 … HT0) -HT0 #W1 #T1 #HW1 #HT1 #H destruct

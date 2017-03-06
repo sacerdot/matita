@@ -12,83 +12,52 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/relocation/rtmap_id.ma".
-include "basic_2/notation/relations/relationstar_4.ma".
-include "basic_2/relocation/lexs.ma".
-include "basic_2/static/frees.ma".
+include "basic_2/notation/relations/relationstarstar_4.ma".
+include "basic_2/static/lfxs.ma".
 
 (* GENERIC EXTENSION ON REFERRED ENTRIES OF A CONTEXT-SENSITIVE REALTION ****)
 
-definition lfxs (R) (T): relation lenv ≝
-                λL1,L2. ∃∃f. L1 ⊢ 𝐅*⦃T⦄ ≡ f & L1 ⦻*[R, cfull, f] L2.
+definition lfxss (R) (T): relation lenv ≝ TC … (lfxs R T).
 
-interpretation "generic extension on referred entries (local environment)"
-   'RelationStar R T L1 L2 = (lfxs R T L1 L2).
-
-definition R_frees_confluent: predicate (relation3 lenv term term) ≝
-                              λRN.
-                              ∀f1,L,T1. L ⊢ 𝐅*⦃T1⦄ ≡ f1 → ∀T2. RN L T1 T2 →
-                              ∃∃f2. L ⊢ 𝐅*⦃T2⦄ ≡ f2 & f2 ⊆ f1.
-
-definition lexs_frees_confluent: relation (relation3 lenv term term) ≝
-                                 λRN,RP.
-                                 ∀f1,L1,T. L1 ⊢ 𝐅*⦃T⦄ ≡ f1 →
-                                 ∀L2. L1 ⦻*[RN, RP, f1] L2 →
-                                 ∃∃f2. L2 ⊢ 𝐅*⦃T⦄ ≡ f2 & f2 ⊆ f1.
-
-definition R_confluent2_lfxs: relation4 (relation3 lenv term term)
-                                        (relation3 lenv term term) … ≝
-                              λR1,R2,RP1,RP2.
-                              ∀L0,T0,T1. R1 L0 T0 T1 → ∀T2. R2 L0 T0 T2 →
-                              ∀L1. L0 ⦻*[RP1, T0] L1 → ∀L2. L0 ⦻*[RP2, T0] L2 →
-                              ∃∃T. R2 L1 T1 T & R1 L2 T2 T.
+interpretation "tc of generic extension on referred entries (local environment)"
+   'RelationStarStar R T L1 L2 = (lfxss R T L1 L2).
 
 (* Basic properties ***********************************************************)
 
-lemma lfxs_atom: ∀R,I. ⋆ ⦻*[R, ⓪{I}] ⋆.
-/3 width=3 by lexs_atom, frees_atom, ex2_intro/
+lemma lfxss_atom: ∀R,I. ⋆ ⦻**[R, ⓪{I}] ⋆.
+/2 width=1 by inj/ qed.
+
+lemma lfxss_sort: ∀R,I,L1,L2,V1,V2,s.
+                  L1 ⦻**[R, ⋆s] L2 → L1.ⓑ{I}V1 ⦻**[R, ⋆s] L2.ⓑ{I}V2.
+#R #I #L1 #L2 #V1 #V2 #s #H elim H -L2
+/3 width=4 by lfxs_sort, step, inj/
 qed.
 
-lemma lfxs_sort: ∀R,I,L1,L2,V1,V2,s.
-                 L1 ⦻*[R, ⋆s] L2 → L1.ⓑ{I}V1 ⦻*[R, ⋆s] L2.ⓑ{I}V2.
-#R #I #L1 #L2 #V1 #V2 #s * /3 width=3 by lexs_push, frees_sort, ex2_intro/
+lemma lfxss_lref: ∀R,I,L1,L2,V1,V2,i.
+                  L1 ⦻**[R, #i] L2 → L1.ⓑ{I}V1 ⦻**[R, #⫯i] L2.ⓑ{I}V2.
+#R #I #L1 #L2 #V1 #V2 #i #H elim H -L2
+/3 width=4 by lfxs_lref, step, inj/
 qed.
 
-lemma lfxs_zero: ∀R,I,L1,L2,V1,V2. L1 ⦻*[R, V1] L2 →
-                 R L1 V1 V2 → L1.ⓑ{I}V1 ⦻*[R, #0] L2.ⓑ{I}V2.
-#R #I #L1 #L2 #V1 #V2 * /3 width=3 by lexs_next, frees_zero, ex2_intro/
+lemma lfxss_gref: ∀R,I,L1,L2,V1,V2,l.
+                  L1 ⦻**[R, §l] L2 → L1.ⓑ{I}V1 ⦻**[R, §l] L2.ⓑ{I}V2.
+#R #I #L1 #L2 #V1 #V2 #l #H elim H -L2
+/3 width=4 by lfxs_gref, step, inj/
 qed.
 
-lemma lfxs_lref: ∀R,I,L1,L2,V1,V2,i.
-                 L1 ⦻*[R, #i] L2 → L1.ⓑ{I}V1 ⦻*[R, #⫯i] L2.ⓑ{I}V2.
-#R #I #L1 #L2 #V1 #V2 #i * /3 width=3 by lexs_push, frees_lref, ex2_intro/
-qed.
-
-lemma lfxs_gref: ∀R,I,L1,L2,V1,V2,l.
-                 L1 ⦻*[R, §l] L2 → L1.ⓑ{I}V1 ⦻*[R, §l] L2.ⓑ{I}V2.
-#R #I #L1 #L2 #V1 #V2 #l * /3 width=3 by lexs_push, frees_gref, ex2_intro/
-qed.
-
-lemma lfxs_pair_repl_dx: ∀R,I,L1,L2,T,V,V1.
-                         L1.ⓑ{I}V ⦻*[R, T] L2.ⓑ{I}V1 →
-                         ∀V2. R L1 V V2 →
-                         L1.ⓑ{I}V ⦻*[R, T] L2.ⓑ{I}V2.
-#R #I #L1 #L2 #T #V #V1 * #f #Hf #HL12 #V2 #HR
-/3 width=5 by lexs_pair_repl, ex2_intro/
+lemma lfxss_sym: ∀R. lexs_frees_confluent R cfull →
+                 (∀L1,L2,T1,T2. R L1 T1 T2 → R L2 T2 T1) →
+                 ∀T. symmetric … (lfxss R T).
+#R #H1R #H2R #T #L1 #L2 #H elim H -L2
+/4 width=3 by lfxs_sym, TC_strap, inj/
 qed-.
 
-lemma lfxs_sym: ∀R. lexs_frees_confluent R cfull →
-                (∀L1,L2,T1,T2. R L1 T1 T2 → R L2 T2 T1) →
-                ∀T. symmetric … (lfxs R T).
-#R #H1R #H2R #T #L1 #L2 * #f1 #Hf1 #HL12 elim (H1R … Hf1 … HL12) -Hf1
-/4 width=5 by sle_lexs_trans, lexs_sym, ex2_intro/
+lemma lfxss_co: ∀R1,R2. (∀L,T1,T2. R1 L T1 T2 → R2 L T1 T2) →
+                ∀L1,L2,T. L1 ⦻**[R1, T] L2 → L1 ⦻**[R2, T] L2.
+#R1 #R2 #HR #L1 #L2 #T #H elim H -L2
+/4 width=5 by lfxs_co, step, inj/
 qed-.
-
-lemma lfxs_co: ∀R1,R2. (∀L,T1,T2. R1 L T1 T2 → R2 L T1 T2) →
-               ∀L1,L2,T. L1 ⦻*[R1, T] L2 → L1 ⦻*[R2, T] L2.
-#R1 #R2 #HR #L1 #L2 #T * /4 width=7 by lexs_co, ex2_intro/
-qed-.
-
+(*
 (* Basic inversion lemmas ***************************************************)
 
 lemma lfxs_inv_atom_sn: ∀R,I,Y2. ⋆ ⦻*[R, ⓪{I}] Y2 → Y2 = ⋆.
@@ -100,7 +69,7 @@ lemma lfxs_inv_atom_dx: ∀R,I,Y1. Y1 ⦻*[R, ⓪{I}] ⋆ → Y1 = ⋆.
 qed-.
 
 lemma lfxs_inv_sort: ∀R,Y1,Y2,s. Y1 ⦻*[R, ⋆s] Y2 →
-                     (Y1 = ⋆ ∧ Y2 = ⋆) ∨ 
+                     (Y1 = ⋆ ∧ Y2 = ⋆) ∨
                      ∃∃I,L1,L2,V1,V2. L1 ⦻*[R, ⋆s] L2 &
                                       Y1 = L1.ⓑ{I}V1 & Y2 = L2.ⓑ{I}V2.
 #R * [ | #Y1 #I #V1 ] #Y2 #s * #f #H1 #H2
@@ -113,7 +82,7 @@ lemma lfxs_inv_sort: ∀R,Y1,Y2,s. Y1 ⦻*[R, ⋆s] Y2 →
 qed-.
 
 lemma lfxs_inv_zero: ∀R,Y1,Y2. Y1 ⦻*[R, #0] Y2 →
-                     (Y1 = ⋆ ∧ Y2 = ⋆) ∨ 
+                     (Y1 = ⋆ ∧ Y2 = ⋆) ∨
                      ∃∃I,L1,L2,V1,V2. L1 ⦻*[R, V1] L2 & R L1 V1 V2 &
                                       Y1 = L1.ⓑ{I}V1 & Y2 = L2.ⓑ{I}V2.
 #R #Y1 #Y2 * #f #H1 #H2 elim (frees_inv_zero … H1) -H1 *
@@ -124,7 +93,7 @@ lemma lfxs_inv_zero: ∀R,Y1,Y2. Y1 ⦻*[R, #0] Y2 →
 qed-.
 
 lemma lfxs_inv_lref: ∀R,Y1,Y2,i. Y1 ⦻*[R, #⫯i] Y2 →
-                     (Y1 = ⋆ ∧ Y2 = ⋆) ∨ 
+                     (Y1 = ⋆ ∧ Y2 = ⋆) ∨
                      ∃∃I,L1,L2,V1,V2. L1 ⦻*[R, #i] L2 &
                                       Y1 = L1.ⓑ{I}V1 & Y2 = L2.ⓑ{I}V2.
 #R #Y1 #Y2 #i * #f #H1 #H2 elim (frees_inv_lref … H1) -H1 *
@@ -261,4 +230,5 @@ qed-.
               llpx_sn_fwd_bind_sn llpx_sn_fwd_bind_dx llpx_sn_fwd_flat_sn llpx_sn_fwd_flat_dx
               llpx_sn_refl llpx_sn_Y llpx_sn_bind_O llpx_sn_ge_up llpx_sn_ge llpx_sn_co
               llpx_sn_fwd_drop_sn llpx_sn_fwd_drop_dx              
+*)
 *)

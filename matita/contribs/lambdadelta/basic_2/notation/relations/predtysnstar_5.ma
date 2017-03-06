@@ -12,13 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/frees_fqup.ma".
-include "basic_2/static/lfxs.ma".
+(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-(* GENERIC EXTENSION ON REFERRED ENTRIES OF A CONTEXT-SENSITIVE REALTION ****)
-
-(* Advanced properties ******************************************************)
-
-lemma lfxs_refl: ∀R. (∀L. reflexive … (R L)) → ∀L,T. L ⦻*[R, T] L.
-#R #HR #L #T elim (frees_total L T) /3 width=3 by lexs_refl, ex2_intro/
-qed.
+notation "hvbox( ⦃ term 46 G, break term 46 L1 ⦄ ⊢ ⬈ * [ break term 46 h , break term 46 T ] break term 46 L2 )"
+   non associative with precedence 45
+   for @{ 'PRedTySnStar $h $T $G $L1 $L2 }.

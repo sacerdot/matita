@@ -10,7 +10,7 @@ table {
      }
    ]
 (*
-   class "orange"
+   class "yellow"
    [ { "MLTT1" * } {
         [ { "" * } {
              [ "genv_primitive" "judgment" * ]
@@ -19,7 +19,7 @@ table {
      }
    ]
 *)
-   class "red"
+   class "orange"
    [ { "functional" * } {
         [ { "reduction and type machine" * } {
              [ "rtm" "rtm_step ( ? ⇨ ? )" * ]
@@ -27,6 +27,14 @@ table {
         ]
         [ { "relocation" * } {
              [ "lift ( ↑[?,?] ? )" * ]
+          }
+        ]
+     }
+   ]
+   class "red"
+   [ { "examples" * } {
+        [ { "terms with special features" * } {
+             [ "ex_sta_ldec" + "ex_cpr_omega" + "ex_fpbg_refl" + "ex_snv_eta" * ]
           }
         ]
      }

@@ -13,27 +13,27 @@
 (**************************************************************************)
 
 include "basic_2/syntax/term_vector.ma".
-include "basic_2/computation/csx.ma".
+include "basic_2/rt_computation/csx.ma".
 
-(* CONTEXT-SENSITIVE EXTENDED STRONGLY NORMALIZING TERM VECTORS *************)
+(* STRONGLY NORMALIZING TERMS VECTORS FOR UNCOUNTED PARALLEL RT-TRANSITION **)
 
 definition csxv: ∀h. sd h → relation3 genv lenv (list term) ≝
                  λh,o,G,L. all … (csx h o G L).
 
 interpretation
-   "context-sensitive strong normalization (term vector)"
-   'SN h o G L Ts = (csxv h o G L Ts).
+   "strong normalization for uncounted context-sensitive parallel rt-transition (term vector)"
+   'PRedTyStrong h o G L Ts = (csxv h o G L Ts).
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma csxv_inv_cons: ∀h,o,G,L,T,Ts. ⦃G, L⦄ ⊢ ⬊*[h, o] T @ Ts →
-                     ⦃G, L⦄ ⊢ ⬊*[h, o] T ∧ ⦃G, L⦄ ⊢ ⬊*[h, o] Ts.
+lemma csxv_inv_cons: ∀h,o,G,L,T,Ts. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T@Ts⦄ →
+                     ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄ ∧ ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃Ts⦄.
 normalize // qed-.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma csx_fwd_applv: ∀h,o,G,L,T,Vs. ⦃G, L⦄ ⊢ ⬊*[h, o] Ⓐ Vs.T →
-                     ⦃G, L⦄ ⊢ ⬊*[h, o] Vs ∧ ⦃G, L⦄ ⊢ ⬊*[h, o] T.
+lemma csx_fwd_applv: ∀h,o,G,L,T,Vs. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃ⒶVs.T⦄ →
+                     ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃Vs⦄ ∧ ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄.
 #h #o #G #L #T #Vs elim Vs -Vs /2 width=1 by conj/
 #V #Vs #IHVs #HVs
 lapply (csx_fwd_pair_sn … HVs) #HV

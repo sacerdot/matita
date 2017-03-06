@@ -11,14 +11,6 @@ table {
    ]
 (*
    class "wine"
-   [ { "examples" * } {
-        [ { "terms with special features" * } {
-             [ "ex_sta_ldec" + "ex_cpr_omega" + "ex_fpbg_refl" + "ex_snv_eta" * ]
-          }
-        ]
-     }
-   ]
-   class "magenta"
    [ { "" * } {
         [ { "" * } {
              [ "" * ]
@@ -35,7 +27,7 @@ table {
      }
    ]
 *)
-   class "prune"
+   class "magenta"
    [ { "dynamic typing" * } {
 (*
         [ { "local env. ref. for native type assignment" * } {
@@ -58,7 +50,7 @@ table {
         ]
      }
    ]
-   class "blue"
+   class "prune"
    [ { "equivalence" * } {
         [ { "decomposed rt-equivalence" * } {
              [ "scpes ( ⦃?,?⦄ ⊢ ? •*⬌*[?,?,?,?] ? )" "scpes_aaa" + "scpes_cpcs" + "scpes_scpes" * ]
@@ -70,7 +62,7 @@ table {
         ]
      }
    ]
-   class "sky"
+   class "blue"
    [ { "conversion" * } {
         [ { "context-sensitive conversion" * } {
              [ "cpc ( ⦃?,?⦄ ⊢ ? ⬌ ? )" "cpc_cpc" * ]
@@ -79,7 +71,7 @@ table {
      }
    ]
 *)
-   class "cyan"
+   class "sky"
    [ { "rt-computation" * } {
 (*
         [ { "evaluation for context-sensitive rt-reduction" * } {
@@ -121,13 +113,15 @@ table {
              [ "lpxs ( ⦃?,?⦄ ⊢ ➡*[?,?] ? )" "lpxs_drop" + "lpxs_lleq" + "lpxs_aaa" + "lpxs_cpxs" + "lpxs_lpxs" * ]
              [ "cpxs_tsts" + "cpxs_tsts_vector" + "cpxs_lreq" + "cpxs_lift" + "cpxs_lleq" + "cpxs_aaa" + "cpxs_cpxs" * ]
 *)
+             [ "csx_vector ( ⦃?,?⦄ ⊢ ⬈*[?,?] 𝐒⦃?⦄ )"  * ]
              [ "csx ( ⦃?,?⦄ ⊢ ⬈*[?,?] 𝐒⦃?⦄ )" "csx_cnx" + "csx_cpxs" + "csx_csx" * ]
+             [ "lfpxs ( ⦃?,?⦄ ⊢ ⬈*[?,?] ? )" "lfpxs_length" + "lfpxs_fqup" * ]
              [ "cpxs ( ⦃?,?⦄ ⊢ ? ⬈*[?] ? )" "cpxs_tdeq" + "cpxs_cpxs" * ] 
           }
         ]
      }
    ]
-   class "water"
+   class "cyan"
    [ { "rt-transition" * } {
         [ { "parallel qrst-transition" * } {
 (*             [ "fpbq ( ⦃?,?,?⦄ ≽[?,?] ⦃?,?,?⦄ )" "fpbq_alt ( ⦃?,?,?⦄ ≽≽[?,?] ⦃?,?,?⦄ )"  + "fpbq_aaa" * ] *)
@@ -155,6 +149,14 @@ table {
         ]
         [ { "counted context-sensitive rt-transition" * } {
              [ "cpg ( ⦃?,?⦄ ⊢ ? ⬈[?,?] ? )" "cpg_simple" + "cpg_drops" + "cpg_lsubr" * ]
+          }
+        ]
+     }
+   ]
+   class "water"
+   [ { "iterated static typing" * } {
+        [ { "generic extension on referred entries" * } {
+             [ "lfxss ( ? ⦻**[?,?] ? )" * ]
           }
         ]
      }

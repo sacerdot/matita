@@ -12,13 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/lexs_length.ma".
-include "basic_2/static/lfxs.ma".
+(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-(* GENERIC EXTENSION ON REFERRED ENTRIES OF A CONTEXT-SENSITIVE REALTION ****)
-
-(* Forward lemmas with length for local environments ************************)
-
-lemma lfxs_fwd_length: ∀R,L1,L2,T. L1 ⦻*[R, T] L2 → |L1| = |L2|.
-#R #L1 #L2 #T * /2 width=4 by lexs_fwd_length/
-qed-.
+notation "hvbox( L1 ⦻ * * [ break term 46 R , break term 46 T ] break term 46 L2 )"
+   non associative with precedence 45
+   for @{ 'RelationStarStar $R $T $L1 $L2 }.

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reduction/cpr.ma".
+include "basic_2/rt_transition/cpr.ma".
 
 (* EXAMPLES *****************************************************************)
 
@@ -26,18 +26,16 @@ definition Omega2: term → term ≝ λW. +ⓓⓝW.(Delta W).ⓐ#0.#0.
 
 (* Basic properties *********************************************************)
 
-lemma Delta_lift: ∀W1,W2,l,k. ⬆[l, k] W1 ≡ W2 →
-                  ⬆[l, k] (Delta W1) ≡ (Delta W2).
-/4 width=1 by lift_flat, lift_bind, lift_lref_lt/ qed.
+lemma Delta_lifts: ∀W1,W2,f. ⬆*[f] W1 ≡ W2 →
+                   ⬆*[f] (Delta W1) ≡ (Delta W2).
+/4 width=1 by lifts_lref, lifts_bind, lifts_flat/ qed.
 
 (* Main properties **********************************************************)
 
-theorem cpr_Omega_12: ∀G,L,W. ⦃G, L⦄ ⊢ Omega1 W ➡ Omega2 W.
-/2 width=1 by cpr_beta/ qed.
+theorem cpr_Omega_12: ∀h,G,L,W. ⦃G, L⦄ ⊢ Omega1 W ➡[h] Omega2 W.
+/2 width=1 by cpm_beta/ qed.
 
-theorem cpr_Omega_21: ∀G,L,W. ⦃G, L⦄ ⊢ Omega2 W ➡ Omega1 W.
-#G #L #W1 elim (lift_total W1 0 1) #W2 #HW12
-@(cpr_zeta … (Omega1 W2)) /3 width=1 by Delta_lift, lift_flat/
-@cpr_flat @(cpr_delta … (Delta W1) ? 0)
-[3,5,8,10: /2 width=2 by Delta_lift/ |4,9: /2 width=1 by cpr_eps/ |*: skip ]
+theorem cpr_Omega_21: ∀h,G,L,W. ⦃G, L⦄ ⊢ Omega2 W ➡[h] Omega1 W.
+#h #G #L #W1 elim (lifts_total W1 (𝐔❴1❵))
+/5 width=5 by lifts_flat, cpm_zeta, cpm_eps, cpm_appl, cpm_delta, Delta_lifts/
 qed.
