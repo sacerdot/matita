@@ -43,7 +43,7 @@ definition R_confluent2_lfxs: relation4 (relation3 lenv term term)
                               ∀L1. L0 ⦻*[RP1, T0] L1 → ∀L2. L0 ⦻*[RP2, T0] L2 →
                               ∃∃T. R2 L1 T1 T & R1 L2 T2 T.
 
-(* Basic properties ***********************************************************)
+(* Basic properties *********************************************************)
 
 lemma lfxs_atom: ∀R,I. ⋆ ⦻*[R, ⓪{I}] ⋆.
 /3 width=3 by lexs_atom, frees_atom, ex2_intro/
