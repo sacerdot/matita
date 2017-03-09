@@ -23,12 +23,19 @@
       The validation algorithm for λδ as implemented in
       <rlink to="implementation.html#helena">Helena 0.8</rlink>.
    </topitem>
+   <topitem name="examples">
+      <notice class="alpha" notice="Examples."/>
+      Terms of λδ with special features.
+   </topitem>
 
    <section4 name="summary">Summary of the Specification</section4>
    <body>Here is a numerical account of the specification's contents
          and its timeline.
    </body>
    <table name="apps_2_sum"/>
+   <news class="alpha" date="2017 March 6.">
+         The Examples component is moved from the Core directory.
+   </news>
    <news class="alpha" date="2012 February 24.">
          The Applications directory is started.
    </news>

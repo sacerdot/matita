@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/relocation/drops_lstar.ma".
 include "basic_2/rt_transition/cpx_drops.ma".
 include "basic_2/rt_computation/cpxs.ma".
 
@@ -55,35 +56,67 @@ lemma cpxs_delta_drops: ∀h,I,G,L,K,V1,V2,i.
   elim (lifts_total V (𝐔❴⫯i❵)) #W #HVW
   elim (cpx_lifts … HV2 (Ⓣ) … L … HVW) -HV2
   [ #V0 #HV20 <(lifts_mono … HVW2 … HV20) -V2 -V0 /3 width=3 by cpxs_strap1/
-  | /2 width=3 by drops_isuni_fwd_drop2/ 
+  | /2 width=3 by drops_isuni_fwd_drop2/
   ]
 ]
 qed.
-(*
+
 (* Advanced inversion lemmas ************************************************)
 
-lemma cpxs_inv_lref1: ∀h,o,G,L,T2,i. ⦃G, L⦄ ⊢ #i ⬈*[h, o] T2 →
-                      T2 = #i ∨
-                      ∃∃I,K,V1,T1. ⬇[i] L ≡ K.ⓑ{I}V1 & ⦃G, K⦄ ⊢ V1 ⬈*[h, o] T1 &
-                                   ⬆[0, i+1] T1 ≡ T2.
-#h #o #G #L #T2 #i #H @(cpxs_ind … H) -T2 /2 width=1 by or_introl/
+lemma cpxs_inv_zero1: ∀h,G,L,T2. ⦃G, L⦄ ⊢ #0 ⬈*[h] T2 →
+                      T2 = #0 ∨
+                      ∃∃I,K,V1,V2. ⦃G, K⦄ ⊢ V1 ⬈*[h] V2 & ⬆*[1] V2 ≡ T2 &
+                                   L = K.ⓑ{I}V1.
+#h #G #L #T2 #H @(cpxs_ind … H) -T2 /2 width=1 by or_introl/
+#T #T2 #_ #HT2 *
+[ #H destruct
+  elim (cpx_inv_zero1 … HT2) -HT2 /2 width=1 by or_introl/
+  * /4 width=7 by cpx_cpxs, ex3_4_intro, or_intror/
+| * #I #K #V1 #T1 #HVT1 #HT1 #H destruct
+  elim (cpx_inv_lifts … HT2 (Ⓣ) … K … HT1) -T
+  /4 width=7 by cpxs_strap1, drops_refl, drops_drop, ex3_4_intro, or_intror/
+]
+qed-.
+
+lemma cpxs_inv_lref1: ∀h,G,L,T2,i. ⦃G, L⦄ ⊢ #⫯i ⬈*[h] T2 →
+                      T2 = #(⫯i) ∨
+                      ∃∃I,K,V,T. ⦃G, K⦄ ⊢ #i ⬈*[h] T & ⬆*[1] T ≡ T2 & L = K.ⓑ{I}V.
+#h #G #L #T2 #i #H @(cpxs_ind … H) -T2 /2 width=1 by or_introl/
 #T #T2 #_ #HT2 *
 [ #H destruct
   elim (cpx_inv_lref1 … HT2) -HT2 /2 width=1 by or_introl/
   * /4 width=7 by cpx_cpxs, ex3_4_intro, or_intror/
+| * #I #K #V1 #T1 #Hi #HT1 #H destruct
+  elim (cpx_inv_lifts … HT2 (Ⓣ) … K … HT1) -T
+  /4 width=7 by cpxs_strap1, drops_refl, drops_drop, ex3_4_intro, or_intror/
+]
+qed-.
+
+(* Basic_2A1: was: cpxs_inv_lref1 *)
+lemma cpxs_inv_lref1_drops: ∀h,G,L,T2,i. ⦃G, L⦄ ⊢ #i ⬈*[h] T2 →
+                            T2 = #i ∨
+                            ∃∃I,K,V1,T1. ⬇*[i] L ≡ K.ⓑ{I}V1 & ⦃G, K⦄ ⊢ V1 ⬈*[h] T1 &
+                                         ⬆*[⫯i] T1 ≡ T2.
+#h #G #L #T2 #i #H @(cpxs_ind … H) -T2 /2 width=1 by or_introl/
+#T #T2 #_ #HT2 *
+[ #H destruct
+  elim (cpx_inv_lref1_drops … HT2) -HT2 /2 width=1 by or_introl/
+  * /4 width=7 by cpx_cpxs, ex3_4_intro, or_intror/
 | * #I #K #V1 #T1 #HLK #HVT1 #HT1
-  lapply (drop_fwd_drop2 … HLK) #H0LK
-  elim (cpx_inv_lift1 … HT2 … H0LK … HT1) -H0LK -T
+  lapply (drops_isuni_fwd_drop2 … HLK) // #H0LK
+  elim (cpx_inv_lifts … HT2 … H0LK … HT1) -H0LK -T
   /4 width=7 by cpxs_strap1, ex3_4_intro, or_intror/
 ]
 qed-.
 
-(* Relocation properties ****************************************************)
+(* Properties with generic relocation ***************************************)
 
-lemma cpxs_lift: ∀h,o,G. d_liftable (cpxs h o G).
-/3 width=10 by cpx_lift, cpxs_strap1, d_liftable_LTC/ qed.
+(* Basic_2A1: includes: cpxs_lift *)
+lemma cpxs_lifts: ∀h,G. d_liftable2 (cpxs h G).
+/3 width=10 by cpx_lifts, cpxs_strap1, d2_liftable_LTC/ qed-.
 
-lemma cpxs_inv_lift1: ∀h,o,G. d_deliftable_sn (cpxs h o G).
-/3 width=6 by d_deliftable_sn_LTC, cpx_inv_lift1/
-qed-.
-*)
+(* Inversion lemmas with generic relocation *********************************)
+
+(* Basic_2A1: includes: cpxs_inv_lift1 *)
+lemma cpxs_inv_lifts: ∀h,G. d_deliftable2_sn (cpxs h G).
+/3 width=6 by d2_deliftable_sn_LTC, cpx_inv_lifts/ qed-.

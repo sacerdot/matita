@@ -155,8 +155,8 @@ table {
    ]
    class "water"
    [ { "iterated static typing" * } {
-        [ { "generic extension on referred entries" * } {
-             [ "lfxss ( ? ⦻**[?,?] ? )" * ]
+        [ { "iterated extension on referred entries" * } {
+             [ "tc_lfxs ( ? ⦻**[?,?] ? )" * ]
           }
         ]
      }
