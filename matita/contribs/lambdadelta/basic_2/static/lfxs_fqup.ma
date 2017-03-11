@@ -22,3 +22,11 @@ include "basic_2/static/lfxs.ma".
 lemma lfxs_refl: ∀R. (∀L. reflexive … (R L)) → ∀L,T. L ⦻*[R, T] L.
 #R #HR #L #T elim (frees_total L T) /3 width=3 by lexs_refl, ex2_intro/
 qed.
+
+lemma lfxs_pair: ∀R. (∀L. reflexive … (R L)) →
+                 ∀L,V1,V2. R L V1 V2 → ∀I,T. L.ⓑ{I}V1 ⦻*[R, T] L.ⓑ{I}V2.
+#R #HR #L #V1 #V2 #HV12 #I #T
+elim (frees_total (L.ⓑ{I}V1) T) #f #Hf
+elim (pn_split f) * #g #H destruct
+/4 width=3 by lexs_refl, lexs_next, lexs_push, ex2_intro/
+qed.

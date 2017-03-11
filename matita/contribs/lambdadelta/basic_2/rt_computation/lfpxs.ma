@@ -52,3 +52,7 @@ lemma lfpxs_inv_atom1: ∀h,G,L2.T. ⦃G, ⋆⦄ ⊢ ⬈*[h, T] L2 → L2 = ⋆.
 lemma lfpxs_inv_atom2: ∀h,G,L1,T. ⦃G, L1⦄ ⊢ ⬈*[h, T] ⋆ → L1 = ⋆.
 /2 width=2 by TC_lpx_sn_inv_atom2/ qed-.
 *)
+
+(* Basic_2A1: removed theorems 1:
+              lpxs_pair
+*)
