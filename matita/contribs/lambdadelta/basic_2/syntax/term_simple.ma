@@ -19,7 +19,7 @@ include "basic_2/syntax/term.ma".
 
 inductive simple: predicate term ≝
    | simple_atom: ∀I. simple (⓪{I})
-   | simple_flat: ∀I,V,T. simple (ⓕ{I} V. T)
+   | simple_flat: ∀I,V,T. simple (ⓕ{I}V.T)
 .
 
 interpretation "simple (term)" 'Simple T = (simple T).
@@ -36,7 +36,7 @@ qed-.
 lemma simple_inv_bind: ∀p,I,V,T. 𝐒⦃ⓑ{p,I} V. T⦄ → ⊥.
 /2 width=7 by simple_inv_bind_aux/ qed-.
 
-lemma simple_inv_pair: ∀I,V,T.  𝐒⦃②{I}V.T⦄ → ∃J. I = Flat2 J.
+lemma simple_inv_pair: ∀I,V,T. 𝐒⦃②{I}V.T⦄ → ∃J. I = Flat2 J.
 * /2 width=2 by ex_intro/
 #p #I #V #T #H elim (simple_inv_bind … H)
 qed-.

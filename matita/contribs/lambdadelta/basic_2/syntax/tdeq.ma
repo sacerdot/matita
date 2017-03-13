@@ -131,7 +131,7 @@ lemma tdeq_sym: ∀h,o. symmetric … (tdeq h o).
 /2 width=3 by tdeq_sort, tdeq_lref, tdeq_gref, tdeq_pair/
 qed-.
 
-lemma tdeq_dec: ∀h,o,T1,T2. Decidable (tdeq h o T1 T2).
+lemma tdeq_dec: ∀h,o,T1,T2. Decidable (T1 ≡[h, o] T2).
 #h #o #T1 elim T1 -T1 [ * #s1 | #I1 #V1 #T1 #IHV #IHT ] * [1,3,5,7: * #s2 |*: #I2 #V2 #T2 ]
 [ elim (deg_total h o s1) #d1 #H1
   elim (deg_total h o s2) #d2 #H2

@@ -24,7 +24,7 @@ theorem tdeq_trans: ∀h,o. Transitive … (tdeq h o).
   elim (tdeq_inv_sort1_deg … H … Hs) -s /2 width=3 by tdeq_sort/
 | #i1 #i #H <(tdeq_inv_lref1 … H) -H //
 | #l1 #l #H <(tdeq_inv_gref1 … H) -H //
-| #I #V1 #V #T1 #T #_ #_ #IHV #IHT #X #H destruct
+| #I #V1 #V #T1 #T #_ #_ #IHV #IHT #X #H
   elim (tdeq_inv_pair1 … H) -H /3 width=1 by tdeq_pair/
 ]
 qed-.

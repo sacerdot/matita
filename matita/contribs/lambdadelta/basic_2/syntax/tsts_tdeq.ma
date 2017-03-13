@@ -12,8 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
+include "basic_2/syntax/tdeq.ma".
+include "basic_2/syntax/tsts.ma".
 
-notation "hvbox( T1 ≂ break term 46 T2 )"
-   non associative with precedence 45
-   for @{ 'TopIso $T1 $T2 }.
+(* SAME TOP TERM STRUCTURE **************************************************)
+
+(* Properties with degree-based equivalence for terms ***********************)
+
+lemma tdeq_tsts: ∀h,o,T1,T2. T1 ≡[h, o] T2 → T1 ⩳[h, o] T2.
+#h #o #T1 #T2 * -T1 -T2 /2 width=3 by tsts_sort, tsts_pair/
+qed.
