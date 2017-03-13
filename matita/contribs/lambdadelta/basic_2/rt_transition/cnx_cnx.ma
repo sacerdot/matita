@@ -12,21 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/syntax/term_vector.ma".
-include "basic_2/syntax/tsts_simple.ma".
+include "basic_2/syntax/tdeq_tdeq.ma".
+include "basic_2/rt_transition/lfpx_lfdeq.ma".
+include "basic_2/rt_transition/cnx.ma".
 
-(* SAME TOP TERM STRUCTURE **************************************************)
+(* NORMAL TERMS FOR UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION ******)
 
-(* Advanced inversion lemmas with simple (neutral) terms ********************)
-(*
-(* Basic_1: was only: iso_flats_lref_bind_false iso_flats_flat_bind_false *)
-(* Basic_2A1: was: tsts_inv_bind_applv_simple *)
-lemma tsts_inv_applv_bind_simple: ∀h,o,p,I,Vs,V2,T1,T2. ⒶVs.T1 ⩳[h, o] ⓑ{p,I}V2.T2 →
-                                  𝐒⦃T1⦄ → ⊥.
-#h #o #p #I #Vs #V2 #T1 #T2 #H elim (tsts_inv_pair2 … H) -H
-#V0 #T0 elim Vs -Vs normalize
-[ #H destruct #H /2 width=5 by simple_inv_bind/
-| #V #Vs #_ #H destruct
-]
+(* Advanced properties ******************************************************)
+
+lemma cnx_tdeq_trans: ∀h,o,G,L,T1. ⦃G, L⦄ ⊢ ⬈[h, o] 𝐍⦃T1⦄ →
+                      ∀T2. T1 ≡[h, o] T2 → ⦃G, L⦄ ⊢ ⬈[h, o] 𝐍⦃T2⦄.
+#h #o #G #L #T1 #HT1 #T2 #HT12 #T #HT2
+elim (tdeq_cpx_trans … HT12 … HT2) -HT2 #T0 #HT10 #HT0
+lapply (HT1 … HT10) -HT1 -HT10 /2 width=5 by tdeq_repl/ (**) (* full auto fails *)
 qed-.
-*)

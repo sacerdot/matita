@@ -1,17 +1,8 @@
-lemma lsubr_cpxs_trans: ∀h,o,G. lsub_trans … (cpxs h o G) lsubr.
-/3 width=5 by lsubr_cpx_trans, LTC_lsub_trans/
-qed-.
 
 lemma cprs_cpxs: ∀h,o,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬈* T2 → ⦃G, L⦄ ⊢ T1 ⬈*[h] T2.
 #h #o #G #L #T1 #T2 #H @(cprs_ind … H) -T2 /3 width=3 by cpxs_strap1,
 cpr_cpx/
 qed.
-
-lemma cpxs_inv_cnx1: ∀h,o,G,L,T,U. ⦃G, L⦄ ⊢ T ⬈*[h] U → ⦃G, L⦄ ⊢ ⬈[h] 𝐍⦃T⦄ → T = U.
-#h #o #G #L #T #U #H @(cpxs_ind_dx … H) -T //
-#T0 #T #H1T0 #_ #IHT #H2T0
-lapply (H2T0 … H1T0) -H1T0 #H destruct /2 width=1 by/
-qed-.
 
 lemma cpxs_neq_inv_step_sn: ∀h,o,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬈*[h] T2 → (T1 = T2 → ⊥) →
                             ∃∃T. ⦃G, L⦄ ⊢ T1 ⬈[h] T & T1 = T → ⊥ & ⦃G, L⦄ ⊢ T ⬈*[h] T2.

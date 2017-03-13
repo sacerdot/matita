@@ -1,0 +1,11 @@
+fact tsts_inv_pair2_aux: ∀T1,T2. T1 ≂ T2 → ∀I,W2,U2. T2 = ②{I}W2.U2 →
+                         ∃∃W1,U1. T1 = ②{I}W1.U1.
+#T1 #T2 * -T1 -T2
+[ #J #I #W2 #U2 #H destruct
+| #J #V1 #V2 #T1 #T2 #I #W2 #U2 #H destruct /2 width=3 by ex1_2_intro/
+]
+qed-.
+
+lemma tsts_inv_pair2: ∀I,T1,W2,U2. T1 ≂ ②{I}W2.U2 →
+                      ∃∃W1,U1. T1 = ②{I}W1.U1.
+/2 width=5 by tsts_inv_pair2_aux/ qed-.

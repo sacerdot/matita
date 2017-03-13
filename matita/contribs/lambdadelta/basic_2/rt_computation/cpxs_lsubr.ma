@@ -12,21 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/syntax/term_vector.ma".
-include "basic_2/syntax/tsts_simple.ma".
+include "basic_2/rt_transition/cpx_lsubr.ma".
+include "basic_2/rt_computation/cpxs.ma".
 
-(* SAME TOP TERM STRUCTURE **************************************************)
+(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS ************)
 
-(* Advanced inversion lemmas with simple (neutral) terms ********************)
-(*
-(* Basic_1: was only: iso_flats_lref_bind_false iso_flats_flat_bind_false *)
-(* Basic_2A1: was: tsts_inv_bind_applv_simple *)
-lemma tsts_inv_applv_bind_simple: ∀h,o,p,I,Vs,V2,T1,T2. ⒶVs.T1 ⩳[h, o] ⓑ{p,I}V2.T2 →
-                                  𝐒⦃T1⦄ → ⊥.
-#h #o #p #I #Vs #V2 #T1 #T2 #H elim (tsts_inv_pair2 … H) -H
-#V0 #T0 elim Vs -Vs normalize
-[ #H destruct #H /2 width=5 by simple_inv_bind/
-| #V #Vs #_ #H destruct
-]
+(* Properties with restricted refinement for local environments *************)
+
+lemma lsubr_cpxs_trans: ∀h,G. lsub_trans … (cpxs h G) lsubr.
+/3 width=5 by lsubr_cpx_trans, LTC_lsub_trans/
 qed-.
-*)

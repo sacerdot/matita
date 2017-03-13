@@ -12,21 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/syntax/term_vector.ma".
-include "basic_2/syntax/tsts_simple.ma".
+include "basic_2/rt_transition/cnx_cnx.ma".
+include "basic_2/rt_computation/cpxs.ma".
 
-(* SAME TOP TERM STRUCTURE **************************************************)
+(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS ************)
 
-(* Advanced inversion lemmas with simple (neutral) terms ********************)
-(*
-(* Basic_1: was only: iso_flats_lref_bind_false iso_flats_flat_bind_false *)
-(* Basic_2A1: was: tsts_inv_bind_applv_simple *)
-lemma tsts_inv_applv_bind_simple: ∀h,o,p,I,Vs,V2,T1,T2. ⒶVs.T1 ⩳[h, o] ⓑ{p,I}V2.T2 →
-                                  𝐒⦃T1⦄ → ⊥.
-#h #o #p #I #Vs #V2 #T1 #T2 #H elim (tsts_inv_pair2 … H) -H
-#V0 #T0 elim Vs -Vs normalize
-[ #H destruct #H /2 width=5 by simple_inv_bind/
-| #V #Vs #_ #H destruct
-]
+(* Inversion lemmas with normal terms ***************************************)
+
+lemma cpxs_inv_cnx1: ∀h,o,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬈*[h] T2 → ⦃G, L⦄ ⊢ ⬈[h, o] 𝐍⦃T1⦄ →
+                     T1 ≡[h, o] T2.
+#h #o #G #L #T1 #T2 #H @(cpxs_ind_dx … H) -T1
+/5 width=8 by cnx_tdeq_trans, tdeq_trans/
 qed-.
-*)
