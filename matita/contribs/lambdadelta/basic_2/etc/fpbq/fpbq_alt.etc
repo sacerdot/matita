@@ -18,15 +18,6 @@ include "basic_2/reduction/fpbq.ma".
 
 (* "QRST" PARALLEL REDUCTION FOR CLOSURES ***********************************)
 
-(* alternative definition of fpbq *)
-definition fpbqa: ∀h. sd h → tri_relation genv lenv term ≝
-                  λh,o,G1,L1,T1,G2,L2,T2.
-                  ⦃G1, L1, T1⦄ ≡[0] ⦃G2, L2, T2⦄ ∨ ⦃G1, L1, T1⦄ ≻[h, o] ⦃G2, L2, T2⦄.
-
-interpretation
-   "'qrst' parallel reduction (closure) alternative"
-   'BTPRedAlt h o G1 L1 T1 G2 L2 T2 = (fpbqa h o G1 L1 T1 G2 L2 T2).
-
 (* Basic properties *********************************************************)
 
 lemma fleq_fpbq: ∀h,o,G1,G2,L1,L2,T1,T2.
@@ -39,30 +30,6 @@ lemma fpb_fpbq: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≻[h, o] ⦃G2, L2, 
 #h #o #G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2
 /3 width=1 by fpbq_fquq, fpbq_cpx, fpbq_lpx, fqu_fquq/
 qed.
-
-(* Main properties **********************************************************)
-
-theorem fpbq_fpbqa: ∀h,o,G1,G2,L1,L2,T1,T2.
-                    ⦃G1, L1, T1⦄ ≽[h, o] ⦃G2, L2, T2⦄ →
-                    ⦃G1, L1, T1⦄ ≽≽[h, o] ⦃G2, L2, T2⦄.
-#h #o #G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2
-[ #G2 #L2 #T2 #H elim (fquq_inv_gen … H) -H
-  [ /3 width=1 by fpb_fqu, or_intror/
-  | * #H1 #H2 #H3 destruct /2 width=1 by or_introl/
-  ]
-| #T2 #HT12 elim (eq_term_dec T1 T2)
-  #HnT12 destruct /4 width=1 by fpb_cpx, or_intror, or_introl/
-| #L2 #HL12 elim (lleq_dec … T1 L1 L2 0)
-  /4 width=1 by fpb_lpx, fleq_intro, or_intror, or_introl/
-| /3 width=1 by fleq_intro, or_introl/
-]
-qed.
-
-theorem fpbqa_inv_fpbq: ∀h,o,G1,G2,L1,L2,T1,T2.
-                        ⦃G1, L1, T1⦄ ≽≽[h, o] ⦃G2, L2, T2⦄ →
-                        ⦃G1, L1, T1⦄ ≽[h, o] ⦃G2, L2, T2⦄.
-#h #o #G1 #G2 #L1 #L2 #T1 #T2 * /2 width=1 by fleq_fpbq, fpb_fpbq/
-qed-.
 
 (* Advanced eliminators *****************************************************)
 

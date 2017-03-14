@@ -12,8 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
+include "basic_2/static/lfdeq.ma".
+include "basic_2/rt_transition/cpx_lfxs.ma".
 
-notation "hvbox( ⦃ term 46 G1, break term 46 L1, break term 46 T1 ⦄ ≽ [ break term 46 h, break term 46 o ] ⦃ break term 46 G2, break term 46 L2 , break term 46 T2 ⦄ )"
-   non associative with precedence 45
-   for @{ 'BTPRed $h $o $G1 $L1 $T1 $G2 $L2 $T2 }.
+(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS *************)
+
+(* Properties with degree-based equivalence for local environments **********)
+
+(* Basic_2A1: was just: cpx_lleq_conf_sn *)
+lemma cpx_lfdeq_conf_sn: ∀h,o,G. s_r_confluent1 … (cpx h G) (lfdeq h o).
+/3 width=6 by cpx_lfxs_conf/ qed-.
+
+(* Basic_2A1: was just: cpx_lleq_conf_dx *)
+lemma cpx_lfdeq_conf_dx: ∀h,o,G,L2,T1,T2. ⦃G, L2⦄ ⊢ T1 ⬈[h] T2 →
+                         ∀L1. L1 ≡[h, o, T1] L2 → L1 ≡[h, o, T2] L2.
+/4 width=4 by cpx_lfdeq_conf_sn, lfdeq_sym/ qed-.

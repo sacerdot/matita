@@ -13,16 +13,15 @@
 (**************************************************************************)
 
 include "basic_2/static/aaa_fqus.ma".
-include "basic_2/static/aaa_lleq.ma".
-include "basic_2/reduction/lpx_aaa.ma".
-include "basic_2/reduction/fpbq.ma".
+include "basic_2/rt_transition/lfpx_aaa.ma".
+include "basic_2/rt_transition/fpbq.ma".
 
-(* "QRST" PARALLEL REDUCTION FOR CLOSURES ***********************************)
+(* PARALLEL RST-TRANSITION FOR CLOSURES *************************************)
 
-(* Properties on atomic arity assignment for terms **************************)
+(* Properties with atomic arity assignment for terms ************************)
 
-lemma fpbq_aaa_conf: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≽[h, o] ⦃G2, L2, T2⦄ →
+lemma fpbq_aaa_conf: ∀h,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≽[h] ⦃G2, L2, T2⦄ →
                      ∀A1. ⦃G1, L1⦄ ⊢ T1 ⁝ A1 → ∃A2. ⦃G2, L2⦄ ⊢ T2 ⁝ A2.
-#h #o #G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2
-/3 width=6 by aaa_lleq_conf, lpx_aaa_conf, cpx_aaa_conf, aaa_fquq_conf, ex_intro/
+#h #G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2
+/3 width=6 by lfpx_aaa_conf, cpx_aaa_conf, aaa_fquq_conf, ex_intro/
 qed-.

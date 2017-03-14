@@ -12,31 +12,35 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/btpred_8.ma".
-include "basic_2/substitution/fquq.ma".
-include "basic_2/multiple/lleq.ma".
-include "basic_2/reduction/lpx.ma".
+include "basic_2/notation/relations/btpred_7.ma".
+include "basic_2/s_transition/fquq.ma".
+include "basic_2/rt_transition/lfpr_lfpx.ma".
 
-(* "QRST" PARALLEL REDUCTION FOR CLOSURES ***********************************)
+(* PARALLEL RST-TRANSITION FOR CLOSURES *************************************)
 
-inductive fpbq (h) (o) (G1) (L1) (T1): relation3 genv lenv term ≝
-| fpbq_fquq: ∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊐⸮ ⦃G2, L2, T2⦄ → fpbq h o G1 L1 T1 G2 L2 T2
-| fpbq_cpx : ∀T2. ⦃G1, L1⦄ ⊢ T1 ➡[h, o] T2 → fpbq h o G1 L1 T1 G1 L1 T2
-| fpbq_lpx : ∀L2. ⦃G1, L1⦄ ⊢ ➡[h, o] L2 → fpbq h o G1 L1 T1 G1 L2 T1
-| fpbq_lleq: ∀L2. L1 ≡[T1, 0] L2 → fpbq h o G1 L1 T1 G1 L2 T1
+(* Basic_2A1: includes: fpbq_lleq *)
+inductive fpbq (h) (G1) (L1) (T1): relation3 genv lenv term ≝
+| fpbq_fquq: ∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊐⸮ ⦃G2, L2, T2⦄ → fpbq h G1 L1 T1 G2 L2 T2
+| fpbq_cpx : ∀T2. ⦃G1, L1⦄ ⊢ T1 ⬈[h] T2 → fpbq h G1 L1 T1 G1 L1 T2
+| fpbq_lfpx: ∀L2. ⦃G1, L1⦄ ⊢ ⬈[h, T1] L2 → fpbq h G1 L1 T1 G1 L2 T1
 .
 
 interpretation
-   "'qrst' parallel reduction (closure)"
-   'BTPRed h o G1 L1 T1 G2 L2 T2 = (fpbq h o G1 L1 T1 G2 L2 T2).
+   "parallel rst-transition (closure)"
+   'BTPRed h G1 L1 T1 G2 L2 T2 = (fpbq h G1 L1 T1 G2 L2 T2).
 
 (* Basic properties *********************************************************)
 
-lemma fpbq_refl: ∀h,o. tri_reflexive … (fpbq h o).
+lemma fpbq_refl: ∀h. tri_reflexive … (fpbq h).
 /2 width=1 by fpbq_cpx/ qed.
 
-lemma cpr_fpbq: ∀h,o,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡ T2 → ⦃G, L, T1⦄ ≽[h, o] ⦃G, L, T2⦄. 
-/3 width=1 by fpbq_cpx, cpr_cpx/ qed.
+(* Basic_2A1: includes: cpr_fpbq *)
+lemma cpm_fpbq: ∀n,h,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[n, h] T2 → ⦃G, L, T1⦄ ≽[h] ⦃G, L, T2⦄. 
+/3 width=2 by fpbq_cpx, cpm_fwd_cpx/ qed.
 
-lemma lpr_fpbq: ∀h,o,G,L1,L2,T. ⦃G, L1⦄ ⊢ ➡ L2 → ⦃G, L1, T⦄ ≽[h, o] ⦃G, L2, T⦄.
-/3 width=1 by fpbq_lpx, lpr_lpx/ qed.
+lemma lfpr_fpbq: ∀h,G,L1,L2,T. ⦃G, L1⦄ ⊢ ➡[h, T] L2 → ⦃G, L1, T⦄ ≽[h] ⦃G, L2, T⦄.
+/3 width=1 by fpbq_lfpx, lfpr_fwd_lfpx/ qed.
+
+(* Basic_2A1: removed theorems 2:
+              fpbq_fpbqa fpbqa_inv_fpbq
+*)

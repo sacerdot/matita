@@ -123,18 +123,11 @@ table {
    ]
    class "cyan"
    [ { "rt-transition" * } {
-        [ { "parallel qrst-transition" * } {
-(*             [ "fpbq ( ⦃?,?,?⦄ ≽[?,?] ⦃?,?,?⦄ )" "fpbq_alt ( ⦃?,?,?⦄ ≽≽[?,?] ⦃?,?,?⦄ )"  + "fpbq_aaa" * ] *)
+        [ { "parallel rst-transition" * } {
+             [ "fpbq ( ⦃?,?,?⦄ ≽[?] ⦃?,?,?⦄ )" "fpbq_aaa" * ]
              [ "fpb ( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" (* "fpb_lleq" + "fpb_fleq" *) * ]
           }
         ]
-(*
-        [ { "context-sensitive rt-reduction" * } {
-             [ "lpx_lleq" * ]
-             [   "cpx_lleq" * ]
-          }
-        ]
-*)
         [ { "t-bound context-sensitive rt-transition" * } {
              [ "lfpr ( ⦃?,?⦄ ⊢ ➡[?,?] ? )" "lfpr_length" + "lfpr_drops" + "lfpr_fqup" + "lfpr_frees" + "lfpr_aaa" + "lfpr_lfpx" + "lfpr_lfpr" * ]
              [ "cpr ( ⦃?,?⦄ ⊢ ? ➡[?] ? )" "cpr_drops" * ]
@@ -142,7 +135,7 @@ table {
           }
         ]
         [ { "uncounted context-sensitive rt-transition" * } {
-             [ "cnx ( ⦃?,?⦄ ⊢ ⬈[?,?] 𝐍⦃?⦄ )" "cnx_simple" + "cnx_drops" *+ "cnx_cnx"  ]
+             [ "cnx ( ⦃?,?⦄ ⊢ ⬈[?,?] 𝐍⦃?⦄ )" "cnx_simple" + "cnx_drops" + "cnx_cnx" * ]
              [ "lfpx ( ⦃?,?⦄ ⊢ ⬈[?,?] ? )" "lfpx_length" + "lfpx_drops" + "lfpx_fqup" + "lfpx_frees" + "lfpx_lfdeq" + "lfpx_aaa" + "lfpx_lfpx" * ]
              [ "cpx ( ⦃?,?⦄ ⊢ ? ⬈[?] ? )" "cpx_simple" + "cpx_drops" + "cpx_fqus" + "cpx_lsubr" + "cpx_lfxs" * ]
           }

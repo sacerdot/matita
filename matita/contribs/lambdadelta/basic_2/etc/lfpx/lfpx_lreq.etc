@@ -1,0 +1,55 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/multiple/llor_drop.ma".
+include "basic_2/multiple/llpx_sn_llor.ma".
+include "basic_2/multiple/llpx_sn_lpx_sn.ma".
+include "basic_2/multiple/lleq_lreq.ma".
+include "basic_2/multiple/lleq_llor.ma".
+include "basic_2/reduction/cpx_lreq.ma".
+include "basic_2/reduction/cpx_lleq.ma".
+include "basic_2/reduction/lpx_frees.ma".
+
+(* SN EXTENDED PARALLEL REDUCTION FOR LOCAL ENVIRONMENTS ********************)
+
+
+fact lreq_lpx_trans_lleq_aux: ∀h,o,G,L1,L0,l,k. L1 ⩬[l, k] L0 → k = ∞ →
+                              ∀L2. ⦃G, L0⦄ ⊢ ➡[h, o] L2 →
+                              ∃∃L. L ⩬[l, k] L2 & ⦃G, L1⦄ ⊢ ➡[h, o] L &
+                                   (∀T. L0 ≡[T, l] L2 ↔ L1 ≡[T, l] L).
+#h #o #G #L1 #L0 #l #k #H elim H -L1 -L0 -l -k
+[ #l #k #_ #L2 #H >(lpx_inv_atom1 … H) -H
+  /3 width=5 by ex3_intro, conj/
+| #I1 #I0 #L1 #L0 #V1 #V0 #_ #_ #Hm destruct
+| #I #L1 #L0 #V1 #k #HL10 #IHL10 #Hm #Y #H
+  elim (lpx_inv_pair1 … H) -H #L2 #V2 #HL02 #HV02 #H destruct
+  lapply (ysucc_inv_Y_dx … Hm) -Hm #Hm
+  elim (IHL10 … HL02) // -IHL10 -HL02 #L #HL2 #HL1 #IH
+  @(ex3_intro … (L.ⓑ{I}V2)) /3 width=3 by lpx_pair, lreq_cpx_trans, lreq_pair/
+  #T elim (IH T) #HL0dx #HL0sn
+  @conj #H @(lleq_lreq_repl … H) -H /3 width=1 by lreq_sym, lreq_pair_O_Y/
+| #I1 #I0 #L1 #L0 #V1 #V0 #l #k #HL10 #IHL10 #Hm #Y #H
+  elim (lpx_inv_pair1 … H) -H #L2 #V2 #HL02 #HV02 #H destruct
+  elim (IHL10 … HL02) // -IHL10 -HL02 #L #HL2 #HL1 #IH
+  @(ex3_intro … (L.ⓑ{I1}V1)) /3 width=1 by lpx_pair, lreq_succ/
+  #T elim (IH T) #HL0dx #HL0sn
+  @conj #H @(lleq_lreq_repl … H) -H /3 width=1 by lreq_sym, lreq_succ/
+]
+qed-.
+
+lemma lreq_lpx_trans_lleq: ∀h,o,G,L1,L0,l. L1 ⩬[l, ∞] L0 →
+                           ∀L2. ⦃G, L0⦄ ⊢ ➡[h, o] L2 →
+                           ∃∃L. L ⩬[l, ∞] L2 & ⦃G, L1⦄ ⊢ ➡[h, o] L &
+                                (∀T. L0 ≡[T, l] L2 ↔ L1 ≡[T, l] L).
+/2 width=1 by lreq_lpx_trans_lleq_aux/ qed-.
