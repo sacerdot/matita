@@ -18,7 +18,7 @@ include "basic_2/syntax/tsts_simple.ma".
 (* SAME TOP TERM STRUCTURE **************************************************)
 
 (* Advanced inversion lemmas with simple (neutral) terms ********************)
-(*
+
 (* Basic_1: was only: iso_flats_lref_bind_false iso_flats_flat_bind_false *)
 (* Basic_2A1: was: tsts_inv_bind_applv_simple *)
 lemma tsts_inv_applv_bind_simple: ∀h,o,p,I,Vs,V2,T1,T2. ⒶVs.T1 ⩳[h, o] ⓑ{p,I}V2.T2 →
@@ -29,4 +29,3 @@ lemma tsts_inv_applv_bind_simple: ∀h,o,p,I,Vs,V2,T1,T2. ⒶVs.T1 ⩳[h, o] ⓑ
 | #V #Vs #_ #H destruct
 ]
 qed-.
-*)

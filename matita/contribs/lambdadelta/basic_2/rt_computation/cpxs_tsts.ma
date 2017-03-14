@@ -30,20 +30,6 @@ lemma cpxs_fwd_sort: ∀h,o,G,L,U,s. ⦃G, L⦄ ⊢ ⋆s ⬈*[h] U →
 ]
 qed-.
 
-(* Basic_1: was just: pr3_iso_beta *)
-lemma cpxs_fwd_beta: ∀h,o,p,G,L,V,W,T,U. ⦃G, L⦄ ⊢ ⓐV.ⓛ{p}W.T ⬈*[h] U →
-                     ⓐV.ⓛ{p}W.T ⩳[h, o] U ∨ ⦃G, L⦄ ⊢ ⓓ{p}ⓝW.V.T ⬈*[h] U.
-#h #o #p #G #L #V #W #T #U #H elim (cpxs_inv_appl1 … H) -H *
-[ #V0 #T0 #_ #_ #H destruct /2 width=1 by tsts_pair, or_introl/
-| #b #W0 #T0 #HT0 #HU
-  elim (cpxs_inv_abst1 … HT0) -HT0 #W1 #T1 #HW1 #HT1 #H destruct
-  lapply (lsubr_cpxs_trans … HT1 (L.ⓓⓝW.V) ?) -HT1
-  /5 width=3 by cpxs_trans, cpxs_bind, cpxs_pair_sn, lsubr_beta, or_intror/
-| #b #V1 #V2 #V0 #T1 #_ #_ #HT1 #_
-  elim (cpxs_inv_abst1 … HT1) -HT1 #W2 #T2 #_ #_ #H destruct
-]
-qed-.
-
 (* Note: probably this is an inversion lemma *)
 (* Basic_2A1: was: cpxs_fwd_delta *)
 lemma cpxs_fwd_delta_drops: ∀h,o,I,G,L,K,V1,i. ⬇*[i] L ≡ K.ⓑ{I}V1 →
@@ -56,6 +42,20 @@ elim (cpxs_inv_lref1_drops … H) -H /2 width=1 by or_introl/
 lapply (drops_mono … HLK0 … HLK) -HLK0 #H destruct
 elim (cpxs_lifts … HVU0 (Ⓣ) … L … HV12) -HVU0 -HV12 /2 width=3 by drops_isuni_fwd_drop2/ #X #H
 <(lifts_mono … HU0 … H) -U0 -X /2 width=1 by or_intror/
+qed-.
+
+(* Basic_1: was just: pr3_iso_beta *)
+lemma cpxs_fwd_beta: ∀h,o,p,G,L,V,W,T,U. ⦃G, L⦄ ⊢ ⓐV.ⓛ{p}W.T ⬈*[h] U →
+                     ⓐV.ⓛ{p}W.T ⩳[h, o] U ∨ ⦃G, L⦄ ⊢ ⓓ{p}ⓝW.V.T ⬈*[h] U.
+#h #o #p #G #L #V #W #T #U #H elim (cpxs_inv_appl1 … H) -H *
+[ #V0 #T0 #_ #_ #H destruct /2 width=1 by tsts_pair, or_introl/
+| #b #W0 #T0 #HT0 #HU
+  elim (cpxs_inv_abst1 … HT0) -HT0 #W1 #T1 #HW1 #HT1 #H destruct
+  lapply (lsubr_cpxs_trans … HT1 (L.ⓓⓝW.V) ?) -HT1
+  /5 width=3 by cpxs_trans, cpxs_bind, cpxs_pair_sn, lsubr_beta, or_intror/
+| #b #V1 #V2 #V0 #T1 #_ #_ #HT1 #_
+  elim (cpxs_inv_abst1 … HT1) -HT1 #W2 #T2 #_ #_ #H destruct
+]
 qed-.
 
 lemma cpxs_fwd_theta: ∀h,o,p,G,L,V1,V,T,U. ⦃G, L⦄ ⊢ ⓐV1.ⓓ{p}V.T ⬈*[h] U →

@@ -1,4 +1,4 @@
-cpxs.ma cpxs_tdeq.ma cpxs_tsts.ma cpxs_drops.ma cpxs_lsubr.ma cpxs_lfpx.ma cpxs_cnx.ma cpxs_cpxs.ma
+cpxs.ma cpxs_tdeq.ma cpxs_tsts.ma cpxs_tsts_vector.ma cpxs_drops.ma cpxs_lsubr.ma cpxs_lfpx.ma cpxs_cnx.ma cpxs_cpxs.ma
 lfpxs.ma lfpxs_fqup.ma lfpxs_cpxs.ma
 csx.ma csx_cnx.ma csx_cpxs.ma csx_csx.ma
 csx_vector.ma

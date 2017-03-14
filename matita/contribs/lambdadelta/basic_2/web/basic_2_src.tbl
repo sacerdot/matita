@@ -241,7 +241,7 @@ table {
           }
         ]
         [ { "same top term structure" * } {
-             [ "tsts ( ? ⩳[?,?] ? )" "tsts_simple" + "tsts_tdeq" + "tsts_tsts" + "tsts_vector" * ]
+             [ "tsts ( ? ⩳[?,?] ? )" "tsts_simple" + "tsts_tdeq" + "tsts_tsts" + "tsts_simple_vector" * ]
           }
         ]
         [ { "degree-based equivalence for terms" * } {

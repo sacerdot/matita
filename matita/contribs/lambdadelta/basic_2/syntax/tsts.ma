@@ -67,8 +67,8 @@ lemma tsts_inv_gref1: ∀h,o,Y,l. §l ⩳[h, o] Y → Y = §l.
 /2 width=5 by tsts_inv_gref1_aux/ qed-.
 
 fact tsts_inv_pair1_aux: ∀h,o,T1,T2. T1 ⩳[h, o] T2 →
-                         ∀I,W1,U1. T1 = ②{I}W1.U1 →
-                         ∃∃W2,U2. T2 = ②{I}W2.U2.
+                         ∀J,W1,U1. T1 = ②{J}W1.U1 →
+                         ∃∃W2,U2. T2 = ②{J}W2.U2.
 #h #o #T1 #T2 * -T1 -T2
 [ #s1 #s2 #d #_ #_ #J #W1 #U1 #H destruct
 | #i #J #W1 #U1 #H destruct
@@ -81,6 +81,21 @@ qed-.
 lemma tsts_inv_pair1: ∀h,o,J,W1,U1,T2. ②{J}W1.U1 ⩳[h, o] T2 →
                       ∃∃W2,U2. T2 = ②{J}W2. U2.
 /2 width=7 by tsts_inv_pair1_aux/ qed-.
+
+fact tsts_inv_pair2_aux: ∀h,o,T1,T2. T1 ⩳[h, o] T2 →
+                         ∀J,W2,U2. T2 = ②{J}W2.U2 →
+                         ∃∃W1,U1. T1 = ②{J}W1.U1.
+#h #o #T1 #T2 * -T1 -T2
+[ #s1 #s2 #d #_ #_ #J #W2 #U2 #H destruct
+| #i #J #W2 #U2 #H destruct
+| #l #J #W2 #U2 #H destruct
+| #I #V1 #V2 #T1 #T2 #J #W2 #U2 #H destruct /2 width=3 by ex1_2_intro/
+]
+qed-.
+
+lemma tsts_inv_pair2: ∀h,o,J,T1,W2,U2. T1 ⩳[h, o] ②{J}W2.U2 →
+                      ∃∃W1,U1. T1 = ②{J}W1.U1.
+/2 width=7 by tsts_inv_pair2_aux/ qed-.
 
 (* Advanced inversion lemmas ************************************************)
 
