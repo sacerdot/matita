@@ -125,11 +125,11 @@ table {
    [ { "rt-transition" * } {
         [ { "parallel rst-transition" * } {
              [ "fpbq ( ⦃?,?,?⦄ ≽[?] ⦃?,?,?⦄ )" "fpbq_aaa" * ]
-             [ "fpb ( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" "fpb_lfdeq" (* + "fpb_fleq" *) * ]
+             [ "fpb ( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" "fpb_lfdeq" * ]
           }
         ]
         [ { "t-bound context-sensitive rt-transition" * } {
-             [ "lfpr ( ⦃?,?⦄ ⊢ ➡[?,?] ? )" "lfpr_length" + "lfpr_drops" + "lfpr_fqup" + "lfpr_frees" + "lfpr_aaa" + "lfpr_lfpx" + "lfpr_lfpr" * ]
+             [ "lfpr ( ⦃?,?⦄ ⊢ ➡[?,?] ? )" "lfpr_length" + "lfpr_drops" + "lfpr_fquq" + "lfpr_fqup" + "lfpr_frees" + "lfpr_aaa" + "lfpr_lfpx" + "lfpr_lfpr" * ]
              [ "cpr ( ⦃?,?⦄ ⊢ ? ➡[?] ? )" "cpr_drops" * ]
              [ "cpm ( ⦃?,?⦄ ⊢ ? ➡[?,?] ? )" "cpm_simple" + "cpm_drops" + "cpm_lsubr" + "cpm_lfxs" + "cpm_cpx" * ]
           }

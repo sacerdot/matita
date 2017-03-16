@@ -34,6 +34,10 @@
 
    <subsection name="A2">Stage "A2": "Extending the Applicability Condition"</subsection>
 
+   <news class="alpha" date="2017 March 16.">
+         First behavioral component reconstructed:
+         rt_transition.
+   </news>
    <news class="alpha" date="2017 February 19.">
          Generic candidates of reducibility.
    </news>
@@ -44,8 +48,8 @@
          Confluence for context-sensitive parallel r-transition on terms.
    </news>
    <news class="alpha" date="2016 April 16.">
-         Grammatical component reconstructed:
-         grammar, relocation, s_transition, s_computation, static
+         Syntactic component reconstructed:
+         syntax, relocation, s_transition, s_computation, static
          (anniversary milestone).
    </news>
    <news class="alpha" date="2016 March 25.">

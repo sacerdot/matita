@@ -151,12 +151,13 @@ lemma lfpr_fwd_pair_sn: ∀h,I,G,L1,L2,V,T.
                         ⦃G, L1⦄ ⊢ ➡[h, ②{I}V.T] L2 → ⦃G, L1⦄ ⊢ ➡[h, V] L2.
 /2 width=3 by lfxs_fwd_pair_sn/ qed-.
 
-(* Basic_2A1: removed theorems 14:
+(* Basic_2A1: removed theorems 16:
               lpr_inv_atom1 lpr_inv_pair1 lpr_inv_atom2 lpr_inv_pair2
               lpr_refl lpr_pair
               lpr_fwd_length lpr_lpx
               lpr_drop_conf drop_lpr_trans lpr_drop_trans_O1
               cpr_conf_lpr lpr_cpr_conf_dx lpr_cpr_conf_sn
+              fqu_lpr_trans fquq_lpr_trans
 *)
 (* Basic_1: removed theorems 7:
             wcpr0_gen_sort wcpr0_gen_head
