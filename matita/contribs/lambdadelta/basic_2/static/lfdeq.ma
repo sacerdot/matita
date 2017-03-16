@@ -61,6 +61,18 @@ lemma frees_tdeq_conf_lexs: ∀h,o,f,L1,T1. L1 ⊢ 𝐅*⦃T1⦄ ≡ f → ∀T2
 ]
 qed-.
 
+lemma frees_tdeq_conf: ∀h,o,f,L,T1. L ⊢ 𝐅*⦃T1⦄ ≡ f →
+                       ∀T2. T1 ≡[h, o] T2 → L ⊢ 𝐅*⦃T2⦄ ≡ f.
+/3 width=7 by frees_tdeq_conf_lexs, lexs_refl/ qed-.
+
+lemma frees_lfdeq_conf_lexs: ∀h,o. lexs_frees_confluent (cdeq h o) cfull.
+/3 width=7 by frees_tdeq_conf_lexs, ex2_intro/ qed-.
+
+lemma tdeq_lfdeq_conf_sn: ∀h,o. s_r_confluent1 … (cdeq h o) (lfdeq h o).
+#h #o #L1 #T1 #T2 #HT12 #L2 *
+/3 width=5 by frees_tdeq_conf, ex2_intro/
+qed-.
+
 lemma lfdeq_sym: ∀h,o,T. symmetric … (lfdeq h o T).
 #h #o #T #L1 #L2 *
 /4 width=7 by frees_tdeq_conf_lexs, lfxs_sym, tdeq_sym, ex2_intro/
@@ -159,6 +171,10 @@ lemma lfdeq_fwd_flat_dx: ∀h,o,I,L1,L2,V,T. L1 ≡[h, o, ⓕ{I}V.T] L2 → L1 �
 
 lemma lfdeq_fwd_pair_sn: ∀h,o,I,L1,L2,V,T. L1 ≡[h, o, ②{I}V.T] L2 → L1 ≡[h, o, V] L2.
 /2 width=3 by lfxs_fwd_pair_sn/ qed-.
+
+lemma lfdeq_fwd_dx: ∀h,o,I,L1,K2,V2. ∀T:term. L1 ≡[h, o, T] K2.ⓑ{I}V2 →
+                    ∃∃K1,V1. L1 = K1.ⓑ{I}V1.
+/2 width=5 by lfxs_fwd_dx/ qed-.
 
 (* Basic_2A1: removed theorems 30: 
               lleq_ind lleq_inv_bind lleq_inv_flat lleq_fwd_length lleq_fwd_lref

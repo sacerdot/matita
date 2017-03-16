@@ -13,8 +13,10 @@
 (**************************************************************************)
 
 include "basic_2/relocation/lifts_tdeq.ma".
+include "basic_2/static/lfxs_lfxs.ma".
 include "basic_2/static/lfdeq_fqup.ma".
-include "basic_2/rt_transition/lfpx.ma".
+include "basic_2/rt_transition/lfpx_frees.ma".
+include "basic_2/rt_transition/lfpx.ma". (**) (* should be in lfpx_frees.ma *)
 
 (* UNCOUNTED PARALLEL RT-TRANSITION FOR LOCAL ENV.S ON REFERRED ENTRIES *****)
 
@@ -133,20 +135,16 @@ elim (cpx_lfdeq_conf … o … HT01 L2) -HT01
 /3 width=3 by lfdeq_sym, tdeq_sym, ex2_intro/
 qed-.
 
-include "basic_2/static/lfxs_lfxs.ma".
+lemma lfpx_lfdeq_conf: ∀h,o,G,T. confluent2 … (lfpx h G T) (lfdeq h o T).
+/3 width=6 by lfpx_frees_conf, cpx_tdeq_conf_lexs, frees_lfdeq_conf_lexs, lfxs_conf/ qed-.
 
-axiom lfpx_lfdeq_conf: ∀h,o,G,T. confluent2 … (lfpx h G T) (lfdeq h o T).
-(*
-#H1 #H2 #H3 #H4 #H5 #H6 #H7 #H8 #H9
-@lfxs_conf 
-*)
 (* Basic_2A1: was just: lleq_lpx_trans *)
 lemma lfdeq_lfpx_trans: ∀h,o,G,T,L2,K2. ⦃G, L2⦄ ⊢ ⬈[h, T] K2 →
                         ∀L1. L1 ≡[h, o, T] L2 →
                         ∃∃K1. ⦃G, L1⦄ ⊢ ⬈[h, T] K1 & K1 ≡[h, o, T] K2.
 #h #o #G #T #L2 #K2 #HLK2 #L1 #HL12
 elim (lfpx_lfdeq_conf … o … HLK2 L1)
-/3 width=3 by lfdeq_sym, ex2_intro/ 
+/3 width=3 by lfdeq_sym, ex2_intro/
 qed-.
 (*
 (* Properties with supclosure ***********************************************)

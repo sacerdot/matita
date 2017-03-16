@@ -70,9 +70,9 @@ elim (lexs_co_dropable_dx … HL12 … HLK2 … H2f) -L2
 qed-.
 
 (* Basic_2A1: was: llpx_sn_inv_lift_O *)
-lemma lfxs_inv_lift_bi: ∀R,L1,L2,U. L1 ⦻*[R, U] L2 →
-                        ∀K1,K2,i. ⬇*[i] L1 ≡ K1 → ⬇*[i] L2 ≡ K2 →
-                        ∀T. ⬆*[i] T ≡ U → K1 ⦻*[R, T] K2.
+lemma lfxs_inv_lifts_bi: ∀R,L1,L2,U. L1 ⦻*[R, U] L2 →
+                         ∀K1,K2,i. ⬇*[i] L1 ≡ K1 → ⬇*[i] L2 ≡ K2 →
+                         ∀T. ⬆*[i] T ≡ U → K1 ⦻*[R, T] K2.
 #R #L1 #L2 #U #HL12 #K1 #K2 #i #HLK1 #HLK2 #T #HTU
 elim (lfxs_dropable_sn … HLK1 … HL12 … HTU) -L1 -U // #Y #HK12 #HY
 lapply (drops_mono … HY … HLK2) -L2 -i #H destruct //

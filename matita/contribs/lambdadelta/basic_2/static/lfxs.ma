@@ -253,6 +253,13 @@ lemma lfxs_fwd_pair_sn: ∀R,I,L1,L2,V,T. L1 ⦻*[R, ②{I}V.T] L2 → L1 ⦻*[R
 #R * /2 width=4 by lfxs_fwd_flat_sn, lfxs_fwd_bind_sn/
 qed-.
 
+lemma lfxs_fwd_dx: ∀R,I,L1,K2,T,V2. L1 ⦻*[R, T] K2.ⓑ{I}V2 →
+                   ∃∃K1,V1. L1 = K1.ⓑ{I}V1.
+#R #I #L1 #K2 #T #V2 * #f elim (pn_split f) * #g #Hg #_ #Hf destruct
+[ elim (lexs_inv_push2 … Hf) | elim (lexs_inv_next2 … Hf) ] -Hf #K1 #V1 #_ #_ #H destruct
+/2 width=3 by ex1_2_intro/
+qed-.
+
 (* Basic_2A1: removed theorems 24:
               llpx_sn_sort llpx_sn_skip llpx_sn_lref llpx_sn_free llpx_sn_gref
               llpx_sn_bind llpx_sn_flat

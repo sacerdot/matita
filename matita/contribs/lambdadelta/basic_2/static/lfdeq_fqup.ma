@@ -21,3 +21,7 @@ include "basic_2/static/lfdeq.ma".
 
 lemma lfdeq_refl: ∀h,o,T. reflexive … (lfdeq h o T).
 /2 width=1 by lfxs_refl/ qed.
+
+lemma lfdeq_pair: ∀h,o,V1,V2. V1 ≡[h, o] V2 →
+                  ∀I,L. ∀T:term. L.ⓑ{I}V1 ≡[h, o, T] L.ⓑ{I}V2.
+/2 width=1 by lfxs_pair/ qed.
