@@ -49,6 +49,14 @@ definition deliftable2_sn: predicate (relation term) ≝
                            λR. ∀U1,U2. R U1 U2 → ∀f,T1. ⬆*[f] T1 ≡ U1 →
                            ∃∃T2. ⬆*[f] T2 ≡ U2 & R T1 T2.
 
+definition liftable2_bi: predicate (relation term) ≝
+                         λR. ∀T1,T2. R T1 T2 → ∀f,U1. ⬆*[f] T1 ≡ U1 → 
+                         ∀U2. ⬆*[f] T2 ≡ U2 → R U1 U2.
+
+definition deliftable2_bi: predicate (relation term) ≝
+                           λR. ∀U1,U2. R U1 U2 → ∀f,T1. ⬆*[f] T1 ≡ U1 →
+                           ∀T2. ⬆*[f] T2 ≡ U2 → R T1 T2.
+
 (* Basic inversion lemmas ***************************************************)
 
 fact lifts_inv_sort1_aux: ∀f,X,Y. ⬆*[f] X ≡ Y → ∀s. X = ⋆s → Y = ⋆s.

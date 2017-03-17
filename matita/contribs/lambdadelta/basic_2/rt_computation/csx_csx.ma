@@ -14,7 +14,7 @@
 
 include "basic_2/syntax/tdeq_tdeq.ma".
 include "basic_2/rt_transition/lfpx_lfdeq.ma".
-include "basic_2/rt_computation/csx.ma".
+include "basic_2/rt_computation/csx_drops.ma".
 
 (* STRONGLY NORMALIZING TERMS FOR UNCOUNTED PARALLEL RT-TRANSITION **********)
 
@@ -49,3 +49,27 @@ lemma csx_cast: ∀h,o,G,L,W. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃W⦄ →
 |*: /3 width=3 by csx_cpx_trans/
 ]
 qed.
+
+(* Basic_1: was just: sn3_abbr *)
+(* Basic_2A1: was: csx_lref_bind *)
+lemma csx_lref_drops: ∀h,o,I,G,L,K,V,i. ⬇*[i] L ≡ K.ⓑ{I}V →
+                      ⦃G, K⦄ ⊢ ⬈*[h, o] 𝐒⦃V⦄ → ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃#i⦄.
+#h #o #I #G #L #K #V #i #HLK #HV
+@csx_intro #X #H #Hi elim (cpx_inv_lref1_drops … H) -H
+[ #H destruct elim Hi //
+| -Hi * #I0 #K0 #V0 #V1 #HLK0 #HV01 #HV1
+  lapply (drops_mono … HLK0 … HLK) -HLK #H destruct
+  /3 width=8 by csx_lifts, csx_cpx_trans, drops_isuni_fwd_drop2/
+]
+qed.
+
+(* Advanced inversion lemmas ************************************************)
+
+(* Basic_1: was: sn3_gen_def *)
+(* Basic_2A1: was: csx_inv_lref_bind *)
+lemma csx_inv_lref_drops: ∀h,o,I,G,L,K,V,i. ⬇*[i] L ≡ K.ⓑ{I}V →
+                          ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃#i⦄ → ⦃G, K⦄ ⊢ ⬈*[h, o] 𝐒⦃V⦄.
+#h #o #I #G #L #K #V #i #HLK #Hi
+elim (lifts_total V (𝐔❴⫯i❵))
+/4 width=9 by csx_inv_lifts, csx_cpx_trans, cpx_delta_drops, drops_isuni_fwd_drop2/
+qed-.

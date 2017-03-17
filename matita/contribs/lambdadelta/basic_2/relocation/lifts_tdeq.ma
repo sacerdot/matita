@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/syntax/tdeq.ma".
-include "basic_2/relocation/lifts.ma".
+include "basic_2/relocation/lifts_lifts.ma".
 
 (* GENERIC RELOCATION FOR TERMS *********************************************)
 
@@ -38,6 +38,9 @@ lemma tdeq_lifts: ∀h,o. liftable2 (tdeq h o).
 ]
 qed-.
 
+lemma tdeq_lifts_bi: ∀h,o. liftable2_bi (tdeq h o).
+/3 width=6 by tdeq_lifts, liftable2_sn_bi/ qed-.
+
 (* Inversion lemmas with degree-based equivalence for terms *****************)
 
 lemma tdeq_inv_lifts: ∀h,o. deliftable2_sn (tdeq h o).
@@ -58,3 +61,6 @@ lemma tdeq_inv_lifts: ∀h,o. deliftable2_sn (tdeq h o).
   /3 width=5 by lifts_flat, tdeq_pair, ex2_intro/
 ]
 qed-.
+
+lemma tdeq_inv_lifts_bi: ∀h,o. deliftable2_bi (tdeq h o).
+/3 width=6 by tdeq_inv_lifts, deliftable2_sn_bi/ qed-.

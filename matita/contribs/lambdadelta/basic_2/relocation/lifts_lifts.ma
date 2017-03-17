@@ -116,3 +116,15 @@ lemma lifts_mono: ∀f,T,U1. ⬆*[f] T ≡ U1 → ∀U2. ⬆*[f] T ≡ U2 → U1
 #f #T #U1 #H1 #U2 #H2 lapply (after_isid_sn 𝐈𝐝  … f)
 /3 width=6 by lifts_conf, lifts_fwd_isid/
 qed-.
+
+lemma liftable2_sn_bi: ∀R. liftable2 R → liftable2_bi R.
+#R #HR #T1 #T2 #HT12 #f #U1 #HTU1 #U2 #HTU2
+elim (HR … HT12 … HTU1) -HR -T1 #X #HTX #HUX
+<(lifts_mono … HTX … HTU2) -T2 -U2 -f //
+qed-.
+
+lemma deliftable2_sn_bi: ∀R. deliftable2_sn R → deliftable2_bi R.
+#R #HR #U1 #U2 #HU12 #f #T1 #HTU1 #T2 #HTU2
+elim (HR … HU12 … HTU1) -HR -U1 #X #HUX #HTX
+<(lifts_inj … HUX … HTU2) -U2 -T2 -f //
+qed-.

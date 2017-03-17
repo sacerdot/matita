@@ -116,23 +116,3 @@ qed-.
 lemma csx_appl_theta: ∀h,o,a,V1,V2. ⬆[0, 1] V1 ≡ V2 →
                       ∀G,L,V,T. ⦃G, L⦄ ⊢ ⬊*[h, o] ⓓ{a}V.ⓐV2.T → ⦃G, L⦄ ⊢ ⬊*[h, o] ⓐV1.ⓓ{a}V.T.
 /2 width=5 by csx_appl_theta_aux/ qed.
-
-(* Basic_1: was just: sn3_appl_appl *)
-lemma csx_appl_simple_tsts: ∀h,o,G,L,V. ⦃G, L⦄ ⊢ ⬊*[h, o] V → ∀T1. ⦃G, L⦄ ⊢ ⬊*[h, o] T1 →
-                            (∀T2. ⦃G, L⦄ ⊢ T1 ➡*[h, o] T2 → (T1 ≂ T2 → ⊥) → ⦃G, L⦄ ⊢ ⬊*[h, o] ⓐV.T2) →
-                            𝐒⦃T1⦄ → ⦃G, L⦄ ⊢ ⬊*[h, o] ⓐV.T1.
-#h #o #G #L #V #H @(csx_ind … H) -V #V #_ #IHV #T1 #H @(csx_ind … H) -T1 #T1 #H1T1 #IHT1 #H2T1 #H3T1
-@csx_intro #X #HL #H
-elim (cpx_inv_appl1_simple … HL) -HL //
-#V0 #T0 #HLV0 #HLT10 #H0 destruct
-elim (eq_false_inv_tpair_sn … H) -H
-[ -IHT1 #HV0
-  @(csx_cpx_trans … (ⓐV0.T1)) /2 width=1 by cpx_flat/ -HLT10
-  @IHV -IHV /4 width=3 by csx_cpx_trans, cpx_pair_sn/
-| -IHV -H1T1 -HLV0 * #H #H1T10 destruct
-  elim (tsts_dec T1 T0) #H2T10
-  [ @IHT1 -IHT1 /4 width=3 by cpxs_strap2, cpxs_strap1, tsts_canc_sn, simple_tsts_repl_dx/
-  | -IHT1 -H3T1 -H1T10 /3 width=1 by cpx_cpxs/
-  ]
-]
-qed.
