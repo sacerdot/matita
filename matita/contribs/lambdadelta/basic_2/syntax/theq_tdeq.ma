@@ -13,12 +13,12 @@
 (**************************************************************************)
 
 include "basic_2/syntax/tdeq.ma".
-include "basic_2/syntax/tsts.ma".
+include "basic_2/syntax/theq.ma".
 
-(* SAME TOP TERM STRUCTURE **************************************************)
+(* HEAD EQUIVALENCE FOR TERMS ***********************************************)
 
 (* Properties with degree-based equivalence for terms ***********************)
 
-lemma tdeq_tsts: ∀h,o,T1,T2. T1 ≡[h, o] T2 → T1 ⩳[h, o] T2.
-#h #o #T1 #T2 * -T1 -T2 /2 width=3 by tsts_sort, tsts_pair/
+lemma tdeq_theq: ∀h,o,T1,T2. T1 ≡[h, o] T2 → T1 ⩳[h, o] T2.
+#h #o #T1 #T2 * -T1 -T2 /2 width=3 by theq_sort, theq_pair/
 qed.

@@ -12,26 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/syntax/tsts.ma".
+include "basic_2/syntax/term_vector.ma".
+include "basic_2/syntax/theq_simple.ma".
 
-(* SAME TOP TERM STRUCTURE **************************************************)
+(* HEAD EQUIVALENCE FOR TERMS ***********************************************)
 
-(* Main properties **********************************************************)
+(* Advanced inversion lemmas with simple (neutral) terms ********************)
 
-(* Basic_1: was: iso_trans *)
-theorem tsts_trans: ∀h,o. Transitive … (tsts h o).
-#h #o #T1 #T * -T1 -T
-[ #s1 #s #d #Hs1 #Hs #X #H
-  elim (tsts_inv_sort1_deg … H … Hs) -s /2 width=3 by tsts_sort/
-| #i1 #i #H <(tsts_inv_lref1 … H) -H //
-| #l1 #l #H <(tsts_inv_gref1 … H) -H //
-| #I #V1 #V #T1 #T #X #H
-  elim (tsts_inv_pair1 … H) -H #V2 #T2 #H destruct //
+(* Basic_1: was only: iso_flats_lref_bind_false iso_flats_flat_bind_false *)
+(* Basic_2A1: was: tsts_inv_bind_applv_simple *)
+lemma theq_inv_applv_bind_simple: ∀h,o,p,I,Vs,V2,T1,T2. ⒶVs.T1 ⩳[h, o] ⓑ{p,I}V2.T2 →
+                                  𝐒⦃T1⦄ → ⊥.
+#h #o #p #I #Vs #V2 #T1 #T2 #H elim (theq_inv_pair2 … H) -H
+#V0 #T0 elim Vs -Vs normalize
+[ #H destruct #H /2 width=5 by simple_inv_bind/
+| #V #Vs #_ #H destruct
 ]
 qed-.
-
-theorem tsts_canc_sn: ∀h,o. left_cancellable … (tsts h o).
-/3 width=3 by tsts_trans, tsts_sym/ qed-.
-
-theorem tsts_canc_dx: ∀h,o. right_cancellable … (tsts h o).
-/3 width=3 by tsts_trans, tsts_sym/ qed-.

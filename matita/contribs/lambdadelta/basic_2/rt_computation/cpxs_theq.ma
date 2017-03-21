@@ -12,14 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/syntax/tsts_tdeq.ma".
+include "basic_2/syntax/theq_tdeq.ma".
 include "basic_2/rt_computation/cpxs_lsubr.ma".
 include "basic_2/rt_computation/cpxs_cnx.ma".
 include "basic_2/rt_computation/lfpxs_cpxs.ma".
 
 (* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS ************)
 
-(* Forward lemmas with same top term structure ******************************)
+(* Forward lemmas with head equivalence for terms ***************************)
 
 lemma cpxs_fwd_sort: ∀h,o,G,L,U,s. ⦃G, L⦄ ⊢ ⋆s ⬈*[h] U →
                      ⋆s ⩳[h, o] U ∨ ⦃G, L⦄ ⊢ ⋆(next h s) ⬈*[h] U.
@@ -48,7 +48,7 @@ qed-.
 lemma cpxs_fwd_beta: ∀h,o,p,G,L,V,W,T,U. ⦃G, L⦄ ⊢ ⓐV.ⓛ{p}W.T ⬈*[h] U →
                      ⓐV.ⓛ{p}W.T ⩳[h, o] U ∨ ⦃G, L⦄ ⊢ ⓓ{p}ⓝW.V.T ⬈*[h] U.
 #h #o #p #G #L #V #W #T #U #H elim (cpxs_inv_appl1 … H) -H *
-[ #V0 #T0 #_ #_ #H destruct /2 width=1 by tsts_pair, or_introl/
+[ #V0 #T0 #_ #_ #H destruct /2 width=1 by theq_pair, or_introl/
 | #b #W0 #T0 #HT0 #HU
   elim (cpxs_inv_abst1 … HT0) -HT0 #W1 #T1 #HW1 #HT1 #H destruct
   lapply (lsubr_cpxs_trans … HT1 (L.ⓓⓝW.V) ?) -HT1
@@ -63,7 +63,7 @@ lemma cpxs_fwd_theta: ∀h,o,p,G,L,V1,V,T,U. ⦃G, L⦄ ⊢ ⓐV1.ⓓ{p}V.T ⬈*
                       ⦃G, L⦄ ⊢ ⓓ{p}V.ⓐV2.T ⬈*[h] U.
 #h #o #p #G #L #V1 #V #T #U #H #V2 #HV12
 elim (cpxs_inv_appl1 … H) -H *
-[ -HV12 #V0 #T0 #_ #_ #H destruct /2 width=1 by tsts_pair, or_introl/
+[ -HV12 #V0 #T0 #_ #_ #H destruct /2 width=1 by theq_pair, or_introl/
 | #q #W #T0 #HT0 #HU
   elim (cpxs_inv_abbr1 … HT0) -HT0 *
   [ #V3 #T3 #_ #_ #H destruct
@@ -95,9 +95,9 @@ lemma cpxs_fwd_cast: ∀h,o,G,L,W,T,U. ⦃G, L⦄ ⊢ ⓝW.T ⬈*[h] U →
                      ∨∨ ⓝW. T ⩳[h, o] U | ⦃G, L⦄ ⊢ T ⬈*[h] U | ⦃G, L⦄ ⊢ W ⬈*[h] U.
 #h #o #G #L #W #T #U #H
 elim (cpxs_inv_cast1 … H) -H /2 width=1 by or3_intro1, or3_intro2/ *
-#W0 #T0 #_ #_ #H destruct /2 width=1 by tsts_pair, or3_intro0/
+#W0 #T0 #_ #_ #H destruct /2 width=1 by theq_pair, or3_intro0/
 qed-.
 
 lemma cpxs_fwd_cnx: ∀h,o,G,L,T. ⦃G, L⦄ ⊢ ⬈[h, o] 𝐍⦃T⦄ →
                     ∀U. ⦃G, L⦄ ⊢ T ⬈*[h] U → T ⩳[h, o] U.
-/3 width=4 by cpxs_inv_cnx1, tdeq_tsts/ qed-.
+/3 width=4 by cpxs_inv_cnx1, tdeq_theq/ qed-.
