@@ -69,34 +69,30 @@ lapply (csx_fwd_bind_dx … HVT) -HVT #HVT
 elim (cpx_inv_appl1 … HL) -HL *
 [ -HV #V0 #Y #HLV10 #HL #H0 destruct
   elim (cpx_inv_abbr1 … HL) -HL *
-  [ #V3 #T3 #HV3 #HLT3 #H0 destruct
-    elim (lift_total V0 0 1) #V4 #HV04
-    elim (eq_term_dec (ⓓ{a}V.ⓐV2.T) (ⓓ{a}V3.ⓐV4.T3))
-    [ -IHVT #H0 destruct
-      elim (eq_false_inv_tpair_sn … H) -H
-      [ -HLV10 -HV3 -HLT3 -HVT
-        >(lift_inj … HV12 … HV04) -V4
-        #H elim H //
-      | * #_ #H elim H //
-      ]
-    | -H -HVT #H
-      lapply (cpx_lift … HLV10 (L.ⓓV) (Ⓕ) … HV12 … HV04) -HLV10 -HV12 /2 width=1 by drop_drop/ #HV24
-      @(IHVT … H … HV04) -IHVT /4 width=1 by cpx_cpxs, cpx_bind, cpx_flat/
+  [ -HVT #V3 #T3 #HV3 #HLT3 #H0 destruct
+    elim (cpx_lifts_sn … HLV10 (Ⓣ) … (L.ⓓV) … HV12) -HLV10 /3 width=1 by drops_refl, drops_drop/ #V4 #HV04 #HV24
+    elim (tdeq_dec h o (ⓓ{p}V.ⓐV2.T) (ⓓ{p}V3.ⓐV4.T3)) #H0
+    [ -IHVT -HV3 -HV24 -HLT3
+      elim (tdeq_inv_pair … H0) -H0 #_ #HV3 #H0
+      elim (tdeq_inv_pair … H0) -H0 #_ #HV24 #HT3
+      elim (tdneq_inv_pair … H) -H #H elim H -H -G -L
+      /3 width=6 by tdeq_inv_lifts_bi, tdeq_pair/
+    | -V1 @(IHVT … H0 … HV04) -o -V0 /4 width=1 by cpx_cpxs, cpx_flat, cpx_bind/
     ]
   | -H -IHVT #T0 #HLT0 #HT0 #H0 destruct
     lapply (csx_cpx_trans … HVT (ⓐV2.T0) ?) /2 width=1 by cpx_flat/ -T #HVT0
-    lapply (csx_inv_lift … L … (Ⓕ) … 1 HVT0 ? ? ?) -HVT0
-    /3 width=5 by csx_cpx_trans, cpx_pair_sn, drop_drop, lift_flat/
+    lapply (csx_inv_lifts … HVT0 (Ⓣ) … L ???) -HVT0
+    /3 width=5 by csx_cpx_trans, cpx_pair_sn, drops_refl, drops_drop, lifts_flat/
   ]
 | -HV -HV12 -HVT -IHVT -H #b #V0 #W0 #W1 #T0 #T1 #_ #_ #_ #H destruct
 | -IHVT -H #b #V0 #V3 #W0 #W1 #T0 #T1 #HLV10 #HV03 #HLW01 #HLT01 #H1 #H2 destruct
-  lapply (cpx_lift … HLV10 (L. ⓓW0) … HV12 … HV03) -HLV10 -HV12 -HV03 /2 width=2 by drop_drop/ #HLV23
+  lapply (cpx_lifts_bi … HLV10 (Ⓣ) … (L.ⓓW0) … HV12 … HV03) -HLV10 -HV12 -HV03 /3 width=1 by drops_refl, drops_drop/ #HLV23
   @csx_abbr /2 width=3 by csx_cpx_trans/ -HV
-  @(csx_lpx_conf … (L.ⓓW0)) /2 width=1 by lpx_pair/ -W1
+  @(csx_lfpx_conf … (L.ⓓW0)) /2 width=1 by lfpx_pair/ -W1
   /4 width=5 by csx_cpxs_trans, cpx_cpxs, cpx_flat/
 ]
 qed-.
 
-lemma csx_appl_theta: ∀h,o,a,V1,V2. ⬆[0, 1] V1 ≡ V2 →
-                      ∀G,L,V,T. ⦃G, L⦄ ⊢ ⬈*[h, o] ⓓ{a}V.ⓐV2.T → ⦃G, L⦄ ⊢ ⬈*[h, o] ⓐV1.ⓓ{a}V.T.
+lemma csx_appl_theta: ∀h,o,p,G,L,V,V2,T. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃ⓓ{p}V.ⓐV2.T⦄ →
+                      ∀V1. ⬆*[1] V1 ≡ V2 → ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃ⓐV1.ⓓ{p}V.T⦄.
 /2 width=5 by csx_appl_theta_aux/ qed.
