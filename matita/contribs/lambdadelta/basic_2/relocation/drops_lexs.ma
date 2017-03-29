@@ -41,8 +41,8 @@ lemma lexs_co_dropable_sn: ∀RN,RP. co_dropable_sn (lexs RN RP).
 qed-.
 
 (* Basic_2A1: includes: lpx_sn_liftable_dedropable *)
-lemma lexs_liftable_co_dedropable: ∀RN,RP. (∀L. reflexive ? (RN L)) → (∀L. reflexive ? (RP L)) →
-                                   d_liftable2 RN → d_liftable2 RP → co_dedropable_sn (lexs RN RP).
+lemma lexs_liftable_co_dedropable_sn: ∀RN,RP. (∀L. reflexive ? (RN L)) → (∀L. reflexive ? (RP L)) →
+                                      d_liftable2_sn RN → d_liftable2_sn RP → co_dedropable_sn (lexs RN RP).
 #RN #RP #H1RN #H1RP #H2RN #H2RP #b #f #L1 #K1 #H elim H -f -L1 -K1
 [ #f #Hf #X #f1 #H #f2 #Hf2 >(lexs_inv_atom1 … H) -X
   /4 width=4 by drops_atom, lexs_atom, ex3_intro/
@@ -130,25 +130,25 @@ elim (lexs_co_dropable_dx … HL12 … HLK1 … Hf … Hf2) -L2 -f2 -Hf
 qed-.
 
 lemma drops_lexs_trans_next: ∀RN,RP. (∀L. reflexive ? (RN L)) → (∀L. reflexive ? (RP L)) →
-                             d_liftable2 RN → d_liftable2 RP →
+                             d_liftable2_sn RN → d_liftable2_sn RP →
                              ∀f1,K1,K2. K1 ⦻*[RN, RP, f1] K2 →
                              ∀b,f,I,L1,V1. ⬇*[b,f] L1.ⓑ{I}V1 ≡ K1 →
                              ∀f2. f ~⊚ f1 ≡ ⫯f2 →
                              ∃∃L2,V2. ⬇*[b,f] L2.ⓑ{I}V2 ≡ K2 & L1 ⦻*[RN, RP, f2] L2 & RN L1 V1 V2 & L1.ⓑ{I}V1≡[f]L2.ⓑ{I}V2.
 #RN #RP #H1RN #H1RP #H2RN #H2RP #f1 #K1 #K2 #HK12 #b #f #I #L1 #V1 #HLK1 #f2 #Hf2
-elim (lexs_liftable_co_dedropable … H1RN H1RP H2RN H2RP … HLK1 … HK12 … Hf2) -K1 -f1 -H1RN -H1RP -H2RN -H2RP
+elim (lexs_liftable_co_dedropable_sn … H1RN H1RP H2RN H2RP … HLK1 … HK12 … Hf2) -K1 -f1 -H1RN -H1RP -H2RN -H2RP
 #X #HX #HLK2 #H1L12 elim (lexs_inv_next1 … HX) -HX
 #L2 #V2 #H2L12 #HV12 #H destruct /2 width=6 by ex4_2_intro/
 qed-.
 
 lemma drops_lexs_trans_push: ∀RN,RP. (∀L. reflexive ? (RN L)) → (∀L. reflexive ? (RP L)) →
-                             d_liftable2 RN → d_liftable2 RP →
+                             d_liftable2_sn RN → d_liftable2_sn RP →
                              ∀f1,K1,K2. K1 ⦻*[RN, RP, f1] K2 →
                              ∀b,f,I,L1,V1. ⬇*[b,f] L1.ⓑ{I}V1 ≡ K1 →
                              ∀f2. f ~⊚ f1 ≡ ↑f2 →
                              ∃∃L2,V2. ⬇*[b,f] L2.ⓑ{I}V2 ≡ K2 & L1 ⦻*[RN, RP, f2] L2 & RP L1 V1 V2 & L1.ⓑ{I}V1≡[f]L2.ⓑ{I}V2.
 #RN #RP #H1RN #H1RP #H2RN #H2RP #f1 #K1 #K2 #HK12 #b #f #I #L1 #V1 #HLK1 #f2 #Hf2
-elim (lexs_liftable_co_dedropable … H1RN H1RP H2RN H2RP … HLK1 … HK12 … Hf2) -K1 -f1 -H1RN -H1RP -H2RN -H2RP
+elim (lexs_liftable_co_dedropable_sn … H1RN H1RP H2RN H2RP … HLK1 … HK12 … Hf2) -K1 -f1 -H1RN -H1RP -H2RN -H2RP
 #X #HX #HLK2 #H1L12 elim (lexs_inv_push1 … HX) -HX
 #L2 #V2 #H2L12 #HV12 #H destruct /2 width=6 by ex4_2_intro/
 qed-.

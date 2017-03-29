@@ -21,7 +21,7 @@ include "basic_2/rt_transition/lfpr.ma".
 (* Properties with generic slicing for local environments *******************)
 
 lemma drops_lfpr_trans: ∀h,G. dedropable_sn (cpm 0 h G).
-/3 width=6 by lfxs_liftable_dedropable, cpm_lifts/ qed-.
+/3 width=6 by lfxs_liftable_dedropable_sn, cpm_lifts_sn/ qed-.
 
 (* Inversion lemmas with generic slicing for local environments *************)
 

@@ -81,7 +81,7 @@ qed-.
 (* Properties with generic slicing for local environments *******************)
 
 (* Note: it should use drops_split_trans_pair2 *)
-lemma cpg_lifts: ∀Rt. reflexive … Rt → ∀c,h,G. d_liftable2 (cpg Rt h c G).
+lemma cpg_lifts_sn: ∀Rt. reflexive … Rt → ∀c,h,G. d_liftable2_sn (cpg Rt h c G).
 #Rt #HRt #c #h #G #K #T generalize in match c; -c
 @(fqup_wf_ind_eq … G K T) -G -K -T #G0 #K0 #T0 #IH #G #K * *
 [ #s #HG #HK #HT #c #X2 #H2 #b #f #L #HLK #X1 #H1 destruct -IH
@@ -158,9 +158,12 @@ lemma cpg_lifts: ∀Rt. reflexive … Rt → ∀c,h,G. d_liftable2 (cpg Rt h c G
 ]
 qed-.
 
+lemma cpg_lifts_bi: ∀Rt. reflexive … Rt → ∀c,h,G. d_liftable2_bi (cpg Rt h c G).
+/3 width=9 by cpg_lifts_sn, d_liftable2_sn_bi/ qed-.
+
 (* Inversion lemmas with generic slicing for local environments *************)
 
-lemma cpg_inv_lifts1: ∀Rt. reflexive … Rt → ∀c,h,G. d_deliftable2_sn (cpg Rt h c G).
+lemma cpg_inv_lifts_sn: ∀Rt. reflexive … Rt → ∀c,h,G. d_deliftable2_sn (cpg Rt h c G).
 #Rt #HRt #c #h #G #L #U generalize in match c; -c
 @(fqup_wf_ind_eq … G L U) -G -L -U #G0 #L0 #U0 #IH #G #L * *
 [ #s #HG #HL #HU #c #X2 #H2 #b #f #K #HLK #X1 #H1 destruct -IH
@@ -232,3 +235,6 @@ lemma cpg_inv_lifts1: ∀Rt. reflexive … Rt → ∀c,h,G. d_deliftable2_sn (cp
   ]
 ]
 qed-.
+
+lemma cpg_inv_lifts_bi: ∀Rt. reflexive … Rt → ∀c,h,G. d_deliftable2_bi (cpg Rt h c G).
+/3 width=9 by cpg_inv_lifts_sn, d_deliftable2_sn_bi/ qed-.

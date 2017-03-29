@@ -117,7 +117,7 @@ lemma lifts_mono: ∀f,T,U1. ⬆*[f] T ≡ U1 → ∀U2. ⬆*[f] T ≡ U2 → U1
 /3 width=6 by lifts_conf, lifts_fwd_isid/
 qed-.
 
-lemma liftable2_sn_bi: ∀R. liftable2 R → liftable2_bi R.
+lemma liftable2_sn_bi: ∀R. liftable2_sn R → liftable2_bi R.
 #R #HR #T1 #T2 #HT12 #f #U1 #HTU1 #U2 #HTU2
 elim (HR … HT12 … HTU1) -HR -T1 #X #HTX #HUX
 <(lifts_mono … HTX … HTU2) -T2 -U2 -f //

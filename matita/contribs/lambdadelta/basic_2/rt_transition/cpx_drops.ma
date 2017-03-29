@@ -51,17 +51,23 @@ qed-.
 (* Properties with generic slicing for local environments *******************)
 
 (* Basic_2A1: includes: cpx_lift *)
-lemma cpx_lifts: ∀h,G. d_liftable2 (cpx h G).
+lemma cpx_lifts_sn: ∀h,G. d_liftable2_sn (cpx h G).
 #h #G #K #T1 #T2 * #cT #HT12 #b #f #L #HLK #U1 #HTU1
-elim (cpg_lifts … HT12 … HLK … HTU1) -K -T1
+elim (cpg_lifts_sn … HT12 … HLK … HTU1) -K -T1
 /3 width=4 by ex2_intro, ex_intro/
 qed-.
+
+lemma cpx_lifts_bi: ∀h,G. d_liftable2_bi (cpx h G).
+/3 width=9 by cpx_lifts_sn, d_liftable2_sn_bi/ qed-.
 
 (* Inversion lemmas with generic slicing for local environments *************)
 
 (* Basic_2A1: includes: cpx_inv_lift1 *)
-lemma cpx_inv_lifts: ∀h,G. d_deliftable2_sn (cpx h G).
+lemma cpx_inv_lifts_sn: ∀h,G. d_deliftable2_sn (cpx h G).
 #h #G #L #U1 #U2 * #cU #HU12 #b #f #K #HLK #T1 #HTU1
-elim (cpg_inv_lifts1 … HU12 … HLK … HTU1) -L -U1
+elim (cpg_inv_lifts_sn … HU12 … HLK … HTU1) -L -U1
 /3 width=4 by ex2_intro, ex_intro/
 qed-.
+
+lemma cpx_inv_lifts_bi: ∀h,G. d_deliftable2_bi (cpx h G).
+/3 width=9 by cpx_inv_lifts_sn, d_deliftable2_sn_bi/ qed-.

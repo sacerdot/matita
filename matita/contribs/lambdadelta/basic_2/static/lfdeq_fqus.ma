@@ -36,7 +36,7 @@ lemma fqu_tdeq_conf: ∀h,o,G1,G2,L1,L2,U1,T1. ⦃G1, L1, U1⦄ ⊐ ⦃G2, L2, T
   elim (tdeq_inv_pair1 … H) -H #W2 #U2 #_ #HU12 #H destruct
   /2 width=5 by fqu_flat_dx, ex3_2_intro/
 | #I #G #L #W #T1 #U1 #HTU1 #U2 #HU12
-  elim (tdeq_inv_lifts … HU12 … HTU1) -U1 #T2 #HTU2 #HT12
+  elim (tdeq_inv_lifts_sn … HU12 … HTU1) -U1 #T2 #HTU2 #HT12
   /3 width=5 by fqu_drop, ex3_2_intro/
 ]
 qed-.

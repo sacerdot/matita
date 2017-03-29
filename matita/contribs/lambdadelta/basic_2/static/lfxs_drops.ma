@@ -37,13 +37,13 @@ definition dropable_dx: predicate (relation3 lenv term term) ≝
 (* Properties with generic slicing for local environments *******************)
 
 (* Basic_2A1: includes: llpx_sn_lift_le llpx_sn_lift_ge *)
-lemma lfxs_liftable_dedropable: ∀R. (∀L. reflexive ? (R L)) →
-                                d_liftable2 R → dedropable_sn R.
+lemma lfxs_liftable_dedropable_sn: ∀R. (∀L. reflexive ? (R L)) →
+                                   d_liftable2_sn R → dedropable_sn R.
 #R #H1R #H2R #b #f #L1 #K1 #HLK1 #K2 #T * #f1 #Hf1 #HK12 #U #HTU
 elim (frees_total L1 U) #f2 #Hf2
 lapply (frees_fwd_coafter … Hf2 … HLK1 … HTU … Hf1) -HTU #Hf
-elim (lexs_liftable_co_dedropable … H1R … H2R … HLK1 … HK12 … Hf) -f1 -K1
-/3 width=6 by cfull_lift, ex3_intro, ex2_intro/
+elim (lexs_liftable_co_dedropable_sn … H1R … H2R … HLK1 … HK12 … Hf) -f1 -K1
+/3 width=6 by cfull_lift_sn, ex3_intro, ex2_intro/
 qed-.
 
 (* Inversion lemmas with generic slicing for local environments *************)

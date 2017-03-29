@@ -28,10 +28,8 @@ qed.
 (* Basic_2A1: includes: cnx_lift *)
 lemma cnx_lifts: ∀h,o,G. d_liftable1 … (cnx h o G).
 #h #o #G #K #T #HT #b #f #L #HLK #U #HTU #U0 #H
-elim (cpx_inv_lifts … H … HLK … HTU) -b -L #T0 #HTU0 #HT0
-lapply (HT … HT0) -G -K #HT0
-elim (tdeq_lifts … HT0 … HTU) -T #X #HX #HU
-<(lifts_mono … HX … HTU0) -T0 //
+elim (cpx_inv_lifts_sn … H … HLK … HTU) -b -L #T0 #HTU0 #HT0
+lapply (HT … HT0) -G -K /2 width=6 by tdeq_lifts_bi/
 qed-.
 
 (* Inversion lemmas with generic slicing ************************************)
@@ -48,8 +46,6 @@ qed-.
 (* Basic_2A1: includes: cnx_inv_lift *)
 lemma cnx_inv_lifts: ∀h,o,G. d_deliftable1 … (cnx h o G).
 #h #o #G #L #U #HU #b #f #K #HLK #T #HTU #T0 #H
-elim (cpx_lifts … H … HLK … HTU) -b -K #U0 #HTU0 #HU0
-lapply (HU … HU0) -G -L #HU0
-elim (tdeq_inv_lifts … HU0 … HTU) -U #X #HX #HT
-<(lifts_inj … HX … HTU0) -U0 //
+elim (cpx_lifts_sn … H … HLK … HTU) -b -K #U0 #HTU0 #HU0
+lapply (HU … HU0) -G -L /2 width=6 by tdeq_inv_lifts_bi/
 qed-.

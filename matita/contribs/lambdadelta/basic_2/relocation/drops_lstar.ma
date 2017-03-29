@@ -20,7 +20,7 @@ include "basic_2/relocation/lreq_lreq.ma".
 (* Properties with reflexive and transitive closure *************************)
 
 (* Basic_2A1: was: d_liftable_LTC *)
-lemma d2_liftable_LTC: ∀R. d_liftable2 R → d_liftable2 (LTC … R).
+lemma d2_liftable_sn_LTC: ∀R. d_liftable2_sn R → d_liftable2_sn (LTC … R).
 #R #HR #K #T1 #T2 #H elim H -T2
 [ #T2 #HT12 #b #f #L #HLK #U1 #HTU1
   elim (HR … HT12 … HLK … HTU1) /3 width=3 by inj, ex2_intro/
@@ -52,7 +52,7 @@ lemma co_dropable_sn_TC: ∀R. co_dropable_sn R → co_dropable_sn (LTC … R).
 qed-.
 
 (* Basic_2A1: was: d_liftable_llstar *)
-lemma d2_liftable_llstar: ∀R. d_liftable2 R → ∀d. d_liftable2 (llstar … R d).
+lemma d2_liftable_sn_llstar: ∀R. d_liftable2_sn R → ∀d. d_liftable2_sn (llstar … R d).
 #R #HR #d #K #T1 #T2 #H @(lstar_ind_r … d T2 H) -d -T2
 [ #b #f #L #_ #U1 #HTU1 -HR -b -K /2 width=3 by ex2_intro/
 | #l #T #T2 #_ #HT2 #IHT1 #b #f #L #HLK #U1 #HTU1

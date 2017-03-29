@@ -17,6 +17,20 @@ include "basic_2/relocation/drops_weight.ma".
 
 (* GENERIC SLICING FOR LOCAL ENVIRONMENTS ***********************************)
 
+(* Main properties on generic relocation ************************************)
+
+lemma d_liftable2_sn_bi: ∀R. d_liftable2_sn R → d_liftable2_bi R.
+#R #HR #K #T1 #T2 #HT12 #b #f #L #HLK #U1 #HTU1 #U2 #HTU2
+elim (HR … HT12 … HLK … HTU1) -HR -K -T1 #X #HTX #HUX
+<(lifts_mono … HTX … HTU2) -T2 -U2 -b -f //
+qed-.
+
+lemma d_deliftable2_sn_bi: ∀R. d_deliftable2_sn R → d_deliftable2_bi R.
+#R #HR #L #U1 #U2 #HU12 #b #f #K #HLK #T1 #HTU1 #T2 #HTU2
+elim (HR … HU12 … HLK … HTU1) -HR -L -U1 #X #HUX #HTX
+<(lifts_inj … HUX … HTU2) -U2 -T2 -b -f //
+qed-.
+
 (* Main properties **********************************************************)
 
 (* Basic_2A1: includes: drop_conf_ge drop_conf_be drop_conf_le *)

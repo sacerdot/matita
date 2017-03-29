@@ -46,21 +46,30 @@ definition d_deliftable1: predicate (relation2 lenv term) ≝
                           λR. ∀L,U. R L U → ∀b,f,K. ⬇*[b, f] L ≡ K →
                           ∀T. ⬆*[f] T ≡ U → R K T.
 
-definition d_liftable2: predicate (lenv → relation term) ≝
-                        λR. ∀K,T1,T2. R K T1 T2 → ∀b,f,L. ⬇*[b, f] L ≡ K →
-                        ∀U1. ⬆*[f] T1 ≡ U1 → 
-                        ∃∃U2. ⬆*[f] T2 ≡ U2 & R L U1 U2.
+definition d_liftable2_sn: predicate (lenv → relation term) ≝
+                           λR. ∀K,T1,T2. R K T1 T2 → ∀b,f,L. ⬇*[b, f] L ≡ K →
+                           ∀U1. ⬆*[f] T1 ≡ U1 → 
+                           ∃∃U2. ⬆*[f] T2 ≡ U2 & R L U1 U2.
 
 definition d_deliftable2_sn: predicate (lenv → relation term) ≝
                              λR. ∀L,U1,U2. R L U1 U2 → ∀b,f,K. ⬇*[b, f] L ≡ K →
                              ∀T1. ⬆*[f] T1 ≡ U1 →
                              ∃∃T2. ⬆*[f] T2 ≡ U2 & R K T1 T2.
 
+definition d_liftable2_bi: predicate (lenv → relation term) ≝
+                           λR. ∀K,T1,T2. R K T1 T2 → ∀b,f,L. ⬇*[b, f] L ≡ K →
+                           ∀U1. ⬆*[f] T1 ≡ U1 → 
+                           ∀U2. ⬆*[f] T2 ≡ U2 → R L U1 U2.
+
+definition d_deliftable2_bi: predicate (lenv → relation term) ≝
+                             λR. ∀L,U1,U2. R L U1 U2 → ∀b,f,K. ⬇*[b, f] L ≡ K →
+                             ∀T1. ⬆*[f] T1 ≡ U1 →
+                             ∀T2. ⬆*[f] T2 ≡ U2 → R K T1 T2.
+
 definition co_dropable_sn: predicate (rtmap → relation lenv) ≝
                            λR. ∀b,f,L1,K1. ⬇*[b, f] L1 ≡ K1 → 𝐔⦃f⦄ →
                            ∀f2,L2. R f2 L1 L2 → ∀f1. f ~⊚ f1 ≡ f2 →
                            ∃∃K2. R f1 K1 K2 & ⬇*[b, f] L2 ≡ K2.
-
 
 definition co_dropable_dx: predicate (rtmap → relation lenv) ≝
                            λR. ∀f2,L1,L2. R f2 L1 L2 →

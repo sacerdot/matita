@@ -18,14 +18,14 @@ include "basic_2/relocation/drops.ma".
 
 (* Properties with context-sensitive equivalence for terms ******************)
 
-lemma ceq_lift: d_liftable2 ceq.
+lemma ceq_lift_sn: d_liftable2_sn ceq.
 /2 width=3 by ex2_intro/ qed-.
 
-lemma ceq_inv_lift: d_deliftable2_sn ceq.
+lemma ceq_inv_lift_sn: d_deliftable2_sn ceq.
 /2 width=3 by ex2_intro/ qed-.
 
 (* Note: d_deliftable2_sn cfull does not hold *)
-lemma cfull_lift: d_liftable2 cfull.
+lemma cfull_lift_sn: d_liftable2_sn cfull.
 #K #T1 #T2 #_ #b #f #L #_ #U1 #_ -K -T1 -b
 elim (lifts_total T2 f) /2 width=3 by ex2_intro/
 qed-.

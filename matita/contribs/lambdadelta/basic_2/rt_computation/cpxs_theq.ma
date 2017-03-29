@@ -40,8 +40,7 @@ lemma cpxs_fwd_delta_drops: ∀h,o,I,G,L,K,V1,i. ⬇*[i] L ≡ K.ⓑ{I}V1 →
 elim (cpxs_inv_lref1_drops … H) -H /2 width=1 by or_introl/
 * #I0 #K0 #V0 #U0 #HLK0 #HVU0 #HU0
 lapply (drops_mono … HLK0 … HLK) -HLK0 #H destruct
-elim (cpxs_lifts … HVU0 (Ⓣ) … L … HV12) -HVU0 -HV12 /2 width=3 by drops_isuni_fwd_drop2/ #X #H
-<(lifts_mono … HU0 … H) -U0 -X /2 width=1 by or_intror/
+/4 width=9 by cpxs_lifts_bi, drops_isuni_fwd_drop2, or_intror/
 qed-.
 
 (* Basic_1: was just: pr3_iso_beta *)
@@ -78,12 +77,10 @@ elim (cpxs_inv_appl1 … H) -H *
   @or_intror @(cpxs_trans … HU) -U (**) (* explicit constructor *)
   elim (cpxs_inv_abbr1 … HT0) -HT0 *
   [ #V5 #T5 #HV5 #HT5 #H destruct
-    elim (cpxs_lifts … HV13 (Ⓣ) … (L.ⓓV) … HV12) -V1 /3 width=1 by drops_refl, drops_drop/ #X #H
-    <(lifts_mono … HV34 … H) -V3 -X /3 width=1 by cpxs_flat, cpxs_bind/
+    /6 width=9 by cpxs_lifts_bi, drops_refl, drops_drop, cpxs_flat, cpxs_bind/
   | #X #HT1 #H #H0 destruct
     elim (lifts_inv_bind1 … H) -H #V5 #T5 #HV05 #HT05 #H destruct
-    elim (cpxs_lifts … HV13 (Ⓣ) … (L.ⓓV0) … HV12) -HV13 /3 width=1 by drops_refl, drops_drop/ #X #H
-    <(lifts_mono … HV34 … H) -V3 -X #HV24
+    lapply (cpxs_lifts_bi … HV13 (Ⓣ) … (L.ⓓV0) … HV12 … HV34) -V3 /3 width=1 by drops_refl, drops_drop/ #HV24
     @(cpxs_trans … (+ⓓV.ⓐV2.ⓓ{q}V5.T5)) [ /3 width=1 by cpxs_flat_dx, cpxs_bind_dx/ ] -T
     @(cpxs_strap2 … (ⓐV1.ⓓ{q}V0.T0)) [ /4 width=7 by cpx_zeta, lifts_bind, lifts_flat/ ] -V -V5 -T5
     @(cpxs_strap2 … (ⓓ{q}V0.ⓐV2.T0)) /3 width=3 by cpxs_pair_sn, cpxs_bind_dx, cpx_theta/

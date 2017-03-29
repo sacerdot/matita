@@ -72,7 +72,7 @@ lemma cpxs_inv_abbr1: ∀h,p,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓓ{p}V1.T1 ⬈*[h] U2
     /4 width=3 by lfpxs_pair, cpxs_trans, ex3_intro, or_intror/
   ]
 | #U1 #HTU1 #HU01
-  elim (cpx_lifts … HU02 (Ⓣ) … (L.ⓓV1) … HU01)
+  elim (cpx_lifts_sn … HU02 (Ⓣ) … (L.ⓓV1) … HU01)
   /4 width=3 by cpxs_strap1, drops_refl, drops_drop, ex3_intro, or_intror/
 ]
 qed-.

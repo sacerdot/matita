@@ -58,11 +58,12 @@ elim (tdeq_dec h o T1 T0) #H
 ]
 qed-.
 
-lemma csx_ind_alt: ∀h,o,G,L. ∀R:predicate term.
-                   (∀T1. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T1⦄ →
-                         (∀T2. ⦃G, L⦄ ⊢ T1 ⬈*[h] T2 → (T1 ≡[h, o] T2 → ⊥) → R T2) → R T1
-                   ) →
-                   ∀T. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄ → R T.
+(* Basic_2A1: was: csx_ind_alt *)
+lemma csx_ind_cpxs: ∀h,o,G,L. ∀R:predicate term.
+                    (∀T1. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T1⦄ →
+                          (∀T2. ⦃G, L⦄ ⊢ T1 ⬈*[h] T2 → (T1 ≡[h, o] T2 → ⊥) → R T2) → R T1
+                    ) →
+                    ∀T. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄ → R T.
 #h #o #G #L #R #IH #T #HT
 @(csx_ind_cpxs_tdeq … IH … HT) -IH -HT // (**) (* full auto fails *)
 qed-.

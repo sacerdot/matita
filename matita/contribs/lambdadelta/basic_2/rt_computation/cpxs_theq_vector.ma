@@ -129,13 +129,11 @@ elim (cpxs_inv_appl1 … H) -H *
     @(cpxs_trans … HU) -U
     elim (cpxs_inv_abbr1 … HT0) -HT0 *
     [ #V1 #T1 #HV1 #HT1 #H destruct
-      elim (cpxs_lifts … HV10a (Ⓣ) … (L.ⓓV) … HV12a) -V1a /3 width=1 by drops_refl, drops_drop/ #X #H
-      <(lifts_mono … HV0a … H) -V0a -X #HV2a
+      lapply (cpxs_lifts_bi … HV10a (Ⓣ) … (L.ⓓV) … HV12a … HV0a) -V1a -V0a /3 width=1 by drops_refl, drops_drop/ #HV2a
       @(cpxs_trans … (ⓓ{p}V.ⓐV2a.T1)) /3 width=1 by cpxs_bind, cpxs_pair_sn, cpxs_flat_dx, cpxs_bind_dx/
     | #X #HT1 #H #H0 destruct
       elim (lifts_inv_bind1 … H) -H #V1 #T1 #HW01 #HT01 #H destruct
-      elim (cpxs_lifts … HV10a (Ⓣ) … (L.ⓓV0) … HV12a) /3 width=1 by drops_refl, drops_drop/ #X #H
-      <(lifts_mono … HV0a … H) -V0a -X #HV2a
+      lapply (cpxs_lifts_bi … HV10a (Ⓣ) … (L.ⓓV0) … HV12a … HV0a) -V0a /3 width=1 by drops_refl, drops_drop/ #HV2a
       @(cpxs_trans … (+ⓓV.ⓐV2a.ⓓ{q}V1.T1)) [ /3 width=1 by cpxs_flat_dx, cpxs_bind_dx/ ] -T -V2b -V2b
       @(cpxs_strap2 … (ⓐV1a.ⓓ{q}V0.T0)) [ /4 width=7 by cpx_zeta, lifts_bind, lifts_flat/ ] -V -V1 -T1
       @(cpxs_strap2 … (ⓓ{q}V0.ⓐV2a.T0)) /3 width=3 by cpxs_pair_sn, cpxs_bind_dx, cpx_theta/

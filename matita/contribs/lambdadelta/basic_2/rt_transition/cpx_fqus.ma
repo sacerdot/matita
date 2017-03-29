@@ -29,7 +29,7 @@ lemma fqu_cpx_trans: ∀h,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T2�
   elim (lifts_total X2 (𝐔❴1❵))
   /3 width=3 by fqu_drop, cpx_delta, ex2_intro/
 | #I #G #L2 #V #T2 #X2 #HTX2 #U2 #HTU2
-  elim (cpx_lifts … HTU2 (Ⓣ) … (L2.ⓑ{I}V) … HTX2)
+  elim (cpx_lifts_sn … HTU2 (Ⓣ) … (L2.ⓑ{I}V) … HTX2)
   /3 width=3 by fqu_drop, drops_refl, drops_drop, ex2_intro/
 ]
 qed-.
@@ -87,12 +87,8 @@ lemma fqu_cpx_trans_ntdeq: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2,
   | #H elim (tdeq_inv_pair … H) -H /2 width=1 by/
   ]
 | #I #G #L #V #T1 #U1 #HTU1 #T2 #HT12 #H0
-  elim (cpx_lifts … HT12 (Ⓣ) … (L.ⓑ{I}V) … HTU1) -HT12 /3 width=1 by drops_refl, drops_drop/
-  #U2 #HTU2 #HU12 @(ex3_intro … U2)
-  [1,3: /3 width=1 by fqu_drop/
-  | #H elim (tdeq_inv_lifts … H … HTU1) -U1
-    #X2 #H <(lifts_inj … HTU2 … H) -U2 /2 width=1 by/
-  ]
+  elim (cpx_lifts_sn … HT12 (Ⓣ) … (L.ⓑ{I}V) … HTU1) -HT12
+  /4 width=6 by fqu_drop, drops_refl, drops_drop, tdeq_inv_lifts_bi, ex3_intro/
 ]
 qed-.
 

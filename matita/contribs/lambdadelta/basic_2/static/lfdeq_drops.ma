@@ -21,13 +21,13 @@ include "basic_2/static/lfdeq_fqup.ma".
 (* Properties with generic slicing for local environments *******************)
 
 (* Basic_2A1: includes: lleq_lift_le lleq_lift_ge *)
-lemma lfdeq_lifts: ∀h,o. dedropable_sn (cdeq h o).
-/3 width=5 by lfxs_liftable_dedropable, tdeq_lifts/ qed-.
+lemma lfdeq_lifts_sn: ∀h,o. dedropable_sn (cdeq h o).
+/3 width=5 by lfxs_liftable_dedropable_sn, tdeq_lifts_sn/ qed-.
 
 (* Inversion lemmas with generic slicing for local environments *************)
 
 (* Basic_2A1: restricts: lleq_inv_lift_le lleq_inv_lift_be lleq_inv_lift_ge *)
-lemma lfdeq_inv_lifts: ∀h,o. dropable_sn (cdeq h o).
+lemma lfdeq_inv_lifts_sn: ∀h,o. dropable_sn (cdeq h o).
 /2 width=5 by lfxs_dropable_sn/ qed-.
 
 (* Note: missing in basic_2A1 *)

@@ -26,7 +26,7 @@ lemma fqu_cpr_trans_dx: ∀h,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, 
                         ∃∃L,U1. ⦃G1, L1⦄ ⊢ ➡[h, T1] L & ⦃G1, L⦄ ⊢ T1 ➡[h] U1 & ⦃G1, L, U1⦄ ⊐ ⦃G2, L2, U2⦄.
 #h #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2
 /3 width=5 by lfpr_pair, cpr_pair_sn, cpr_flat, cpm_bind, fqu_lref_O, fqu_pair_sn, fqu_bind_dx, fqu_flat_dx, ex3_2_intro/
-#I #G #L #V #U #T #HUT #U2 #HU2 elim (cpm_lifts … HU2 (Ⓣ) … HUT) -U
+#I #G #L #V #U #T #HUT #U2 #HU2 elim (cpm_lifts_sn … HU2 (Ⓣ) … HUT) -U
 /3 width=9 by fqu_drop, drops_refl, drops_drop, ex3_2_intro/
 qed-.
 
@@ -35,7 +35,7 @@ lemma fqu_cpr_trans_sn: ∀h,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, 
                         ∃∃L,U1. ⦃G1, L1⦄ ⊢ ➡[h, T1] L & ⦃G1, L1⦄ ⊢ T1 ➡[h] U1 & ⦃G1, L, U1⦄ ⊐ ⦃G2, L2, U2⦄.
 #h #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2
 /3 width=5 by lfpr_pair, cpr_pair_sn, cpr_flat, cpm_bind, fqu_lref_O, fqu_pair_sn, fqu_bind_dx, fqu_flat_dx, ex3_2_intro/
-#I #G #L #V #U #T #HUT #U2 #HU2 elim (cpm_lifts … HU2 (Ⓣ) … HUT) -U
+#I #G #L #V #U #T #HUT #U2 #HU2 elim (cpm_lifts_sn … HU2 (Ⓣ) … HUT) -U
 /3 width=9 by fqu_drop, drops_refl, drops_drop, ex3_2_intro/
 qed-.
 
