@@ -11,46 +11,25 @@
 (*        v         GNU General Public License Version 2                  *)
 (*                                                                        *)
 (**************************************************************************)
-
+(*
 include "basic_2/computation/gcp_cr.ma".
-include "basic_2/computation/cpxs_theq_vector.ma".
-include "basic_2/computation/csx_lpx.ma".
-include "basic_2/computation/csx_vector.ma".
+*)
+include "basic_2/rt_computation/cpxs_theq_vector.ma".
+include "basic_2/rt_computation/csx_vector.ma".
+include "basic_2/rt_computation/csx_theq.ma".
+include "basic_2/rt_computation/csx_lfpx.ma".
 
-(* CONTEXT-SENSITIVE EXTENDED STRONGLY NORMALIZING TERM VECTORS *************)
+(* STRONGLY NORMALIZING TERMS FOR UNCOUNTED PARALLEL RT-TRANSITION **********)
 
-(* Advanced properties ******************************************************)
-
-(* Basic_1: was just: sn3_appls_lref *)
-lemma csx_applv_cnx: ∀h,o,G,L,T. 𝐒⦃T⦄ → ⦃G, L⦄ ⊢ ➡[h, o] 𝐍⦃T⦄ →
-                     ∀Vs. ⦃G, L⦄ ⊢ ⬊*[h, o] Vs → ⦃G, L⦄ ⊢ ⬊*[h, o] ⒶVs.T.
-#h #o #G #L #T #H1T #H2T #Vs elim Vs -Vs [ #_ @(cnx_csx … H2T) ] (**) (* /2 width=1/ does not work *)
-#V #Vs #IHV #H
-elim (csxv_inv_cons … H) -H #HV #HVs
-@csx_appl_simple_theq /2 width=1 by applv_simple/ -IHV -HV -HVs
-#X #H #H0
-lapply (cpxs_fwd_cnx_vector … H) -H // -H1T -H2T #H
-elim (H0) -H0 //
-qed.
-
-lemma csx_applv_sort: ∀h,o,G,L,s,Vs. ⦃G, L⦄ ⊢ ⬊*[h, o] Vs → ⦃G, L⦄ ⊢ ⬊*[h, o] ⒶVs.⋆s.
-#h #o #G #L #s elim (deg_total h o s)
-#d generalize in match s; -s @(nat_ind_plus … d) -d [ /3 width=6 by csx_applv_cnx, cnx_sort, simple_atom/ ]
-#d #IHd #s #Hkd lapply (deg_next_SO … Hkd) -Hkd
-#Hkd #Vs elim Vs -Vs /2 width=1 by/
-#V #Vs #IHVs #HVVs
-elim (csxv_inv_cons … HVVs) #HV #HVs
-@csx_appl_simple_theq /2 width=1 by applv_simple, simple_atom/ -IHVs -HV -HVs
-#X #H #H0
-elim (cpxs_fwd_sort_vector … H) -H #H
-[ elim H0 -H0 //
-| -H0 @(csx_cpxs_trans … (Ⓐ(V@Vs).⋆(next h s))) /2 width=1 by cpxs_flat_dx/
-]
-qed.
+(* Vector form of properties with head equivalence for terms ****************)
+(*
+*)
+(*
+*)
 
 (* Basic_1: was just: sn3_appls_beta *)
-lemma csx_applv_beta: ∀h,o,a,G,L,Vs,V,W,T. ⦃G, L⦄ ⊢ ⬊*[h, o] ⒶVs.ⓓ{a}ⓝW.V.T →
-                      ⦃G, L⦄ ⊢ ⬊*[h, o] ⒶVs. ⓐV.ⓛ{a}W.T.
+lemma csx_applv_beta: ∀h,o,p,G,L,Vs,V,W,T. ⦃G, L⦄ ⊢ ⬈*[h, o] ⒶVs.ⓓ{p}ⓝW.V.T →
+                      ⦃G, L⦄ ⊢ ⬈*[h, o] ⒶVs. ⓐV.ⓛ{p}W.T.
 #h #o #a #G #L #Vs elim Vs -Vs /2 width=1 by csx_appl_beta/
 #V0 #Vs #IHV #V #W #T #H1T
 lapply (csx_fwd_pair_sn … H1T) #HV0
@@ -65,7 +44,7 @@ qed.
 
 lemma csx_applv_delta: ∀h,o,I,G,L,K,V1,i. ⬇[i] L ≡ K.ⓑ{I}V1 →
                        ∀V2. ⬆[0, i + 1] V1 ≡ V2 →
-                       ∀Vs. ⦃G, L⦄ ⊢ ⬊*[h, o] (ⒶVs.V2) → ⦃G, L⦄ ⊢ ⬊*[h, o] (ⒶVs.#i).
+                       ∀Vs. ⦃G, L⦄ ⊢ ⬈*[h, o] (ⒶVs.V2) → ⦃G, L⦄ ⊢ ⬈*[h, o] (ⒶVs.#i).
 #h #o #I #G #L #K #V1 #i #HLK #V2 #HV12 #Vs elim Vs -Vs
 [ /4 width=12 by csx_inv_lift, csx_lref_bind, drop_fwd_drop2/
 | #V #Vs #IHV #H1T
@@ -82,8 +61,8 @@ qed.
 
 (* Basic_1: was just: sn3_appls_abbr *)
 lemma csx_applv_theta: ∀h,o,a,G,L,V1b,V2b. ⬆[0, 1] V1b ≡ V2b →
-                       ∀V,T. ⦃G, L⦄ ⊢ ⬊*[h, o] ⓓ{a}V.ⒶV2b.T →
-                       ⦃G, L⦄ ⊢ ⬊*[h, o] ⒶV1b.ⓓ{a}V.T.
+                       ∀V,T. ⦃G, L⦄ ⊢ ⬈*[h, o] ⓓ{a}V.ⒶV2b.T →
+                       ⦃G, L⦄ ⊢ ⬈*[h, o] ⒶV1b.ⓓ{a}V.T.
 #h #o #a #G #L #V1b #V2b * -V1b -V2b /2 width=1 by/
 #V1b #V2b #V1 #V2 #HV12 #H
 generalize in match HV12; -HV12 generalize in match V2; -V2 generalize in match V1; -V1
@@ -100,8 +79,8 @@ elim (cpxs_fwd_theta_vector … (V2@V2b) … H1) -H1 /2 width=1 by liftv_cons/ -
 qed.
 
 (* Basic_1: was just: sn3_appls_cast *)
-lemma csx_applv_cast: ∀h,o,G,L,Vs,W,T. ⦃G, L⦄ ⊢ ⬊*[h, o] ⒶVs.W → ⦃G, L⦄ ⊢ ⬊*[h, o] ⒶVs.T →
-                      ⦃G, L⦄ ⊢ ⬊*[h, o] ⒶVs.ⓝW.T.
+lemma csx_applv_cast: ∀h,o,G,L,Vs,W,T. ⦃G, L⦄ ⊢ ⬈*[h, o] ⒶVs.W → ⦃G, L⦄ ⊢ ⬈*[h, o] ⒶVs.T →
+                      ⦃G, L⦄ ⊢ ⬈*[h, o] ⒶVs.ⓝW.T.
 #h #o #G #L #Vs elim Vs -Vs /2 width=1 by csx_cast/
 #V #Vs #IHV #W #T #H1W #H1T
 lapply (csx_fwd_pair_sn … H1W) #HV

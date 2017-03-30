@@ -45,19 +45,6 @@ lemma csx_intro: ∀h,o,G,L,T1.
                  ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T1⦄.
 /4 width=1 by SN_intro/ qed.
 
-lemma csx_sort: ∀h,o,G,L,s. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃⋆s⦄.
-#h #o #G #L #s elim (deg_total h o s)
-#d generalize in match s; -s elim d -d
-[ #s1 #Hs1 @csx_intro #X #H #HX elim HX -HX
-  elim (cpx_inv_sort1 … H) -H #H destruct //
-  /3 width=3 by tdeq_sort, deg_next/
-| #d #IH #s #Hsd lapply (deg_next_SO … Hsd) -Hsd
-  #Hsd @csx_intro #X #H #HX
-  elim (cpx_inv_sort1 … H) -H #H destruct /2 width=1 by/
-  elim HX //
-]
-qed.
-
 (* Basic forward lemmas *****************************************************)
 
 fact csx_fwd_pair_sn_aux: ∀h,o,G,L,U. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃U⦄ →

@@ -13,12 +13,11 @@
 (**************************************************************************)
 
 include "basic_2/rt_computation/cpxs_lfpx.ma".
-include "basic_2/rt_computation/csx_drops.ma".
 include "basic_2/rt_computation/csx_cpxs.ma".
 
 (* STRONGLY NORMALIZING TERMS FOR UNCOUNTED PARALLEL RT-TRANSITION **********)
 
-(* Advanced properties ******************************************************)
+(* Properties with uncounted parallel rt-transition on referred entries *****)
 
 (* Basic_2A1: was just: csx_lpx_conf *)
 lemma csx_lfpx_conf: ∀h,o,G,L1,T. ⦃G, L1⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄ →
@@ -26,6 +25,8 @@ lemma csx_lfpx_conf: ∀h,o,G,L1,T. ⦃G, L1⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄ →
 #h #o #G #L1 #T #H @(csx_ind_cpxs … H) -T
 /5 width=3 by csx_intro, lfpx_cpx_trans, lfpx_cpxs_conf/
 qed-.
+
+(* Advanced properties ******************************************************)
 
 lemma csx_abst: ∀h,o,p,G,L,W. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃W⦄ →
                 ∀T. ⦃G, L.ⓛW⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄ → ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃ⓛ{p}W.T⦄.
