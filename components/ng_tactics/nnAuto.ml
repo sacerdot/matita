@@ -1887,23 +1887,3 @@ let auto_tac ~params:(_,flags as params) ?trace_ref =
     fast_eq_check_tac ~params  
   else auto_tac ~params ?trace_ref
 ;;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
