@@ -895,7 +895,6 @@ type flags = {
         maxwidth : int;
         maxsize  : int;
         maxdepth : int;
-        timeout  : float;
 }
 
 type cache =
@@ -1833,7 +1832,6 @@ let auto_tac ~params:(univ,flags) ?(trace_ref=ref []) status =
           maxwidth = width;
           maxsize = size;
           maxdepth = depth;
-          timeout = Unix.gettimeofday() +. 3000.;
           do_types = false; 
   } in
   let initial_time = Unix.gettimeofday() in
