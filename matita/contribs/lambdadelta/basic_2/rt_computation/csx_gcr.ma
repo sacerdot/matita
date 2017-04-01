@@ -12,19 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/gcp.ma".
-include "basic_2/rt_transition/cnx_drops.ma".
-include "basic_2/rt_computation/csx_drops.ma".
+include "basic_2/static/gcp_cr.ma".
+include "basic_2/rt_computation/csx_cnx_vector.ma".
+include "basic_2/rt_computation/csx_csx_vector.ma".
 
 (* STRONGLY NORMALIZING TERMS FOR UNCOUNTED PARALLEL RT-TRANSITION **********)
 
-(* Main properties with generic computation properties **********************)
+(* Main properties with generic candidates of reducibility ******************)
 
-theorem csx_gcp: ∀h,o. gcp (cpx h) (tdeq h o) (csx h o).
-#h #o @mk_gcp
-[ normalize /3 width=13 by cnx_lifts/
-| #G #L elim (deg_total h o 0) /3 width=8 by cnx_sort_iter, ex_intro/
-| /2 width=8 by csx_lifts/
-| /2 width=3 by csx_fwd_flat_dx/
+theorem csx_gcr: ∀h,o. gcr (cpx h) (tdeq h o) (csx h o) (csx h o).
+#h #o @mk_gcr //
+[ /3 width=1 by csx_applv_cnx/
+|2,3,6: /2 width=1 by csx_applv_beta, csx_applv_sort, csx_applv_cast/
+| /2 width=7 by csx_applv_delta/
+| #G #L #V1b #V2b #HV12b #a #V #T #H #HV
+  @(csx_applv_theta … HV12b) -HV12b
+  @csx_abbr //
 ]
 qed.

@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/rt_transition/lfpx_fqup.ma".
 include "basic_2/rt_transition/lfpx_lfpx.ma".
 include "basic_2/rt_computation/cpxs_drops.ma".
 include "basic_2/rt_computation/cpxs_cpxs.ma".
@@ -53,5 +54,17 @@ qed.
 
 lemma lfpx_cpxs_trans: ∀h,G. s_rs_transitive … (cpx h G) (lfpx h G).
 #h #G #L2 #T1 #T2 #H #L1 #HL12 @(cpxs_ind … H) -T2
-/4 width=7 by lfpx_cpx_trans, cpxs_trans, lfpx_cpxs_conf/
+/4 width=7 by lfpx_cpx_trans, cpxs_trans, lfpx_cpxs_conf/ (**) (* lfpx_fqup slows this down *)
 qed-.
+
+(* Advanced properties ******************************************************)
+
+lemma cpx_bind2: ∀h,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ⬈[h] V2 →
+                 ∀I,T1,T2. ⦃G, L.ⓑ{I}V2⦄ ⊢ T1 ⬈[h] T2 →
+                 ∀p. ⦃G, L⦄ ⊢ ⓑ{p,I}V1.T1 ⬈*[h] ⓑ{p,I}V2.T2.
+/4 width=5 by lfpx_cpx_trans, cpxs_bind_dx, lfpx_pair/ qed.
+
+lemma cpxs_bind2_dx: ∀h,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ⬈[h] V2 →
+                     ∀I,T1,T2. ⦃G, L.ⓑ{I}V2⦄ ⊢ T1 ⬈*[h] T2 →
+                     ∀p. ⦃G, L⦄ ⊢ ⓑ{p,I}V1.T1 ⬈*[h] ⓑ{p,I}V2.T2.
+/4 width=5 by lfpx_cpxs_trans, cpxs_bind_dx, lfpx_pair/ qed.
