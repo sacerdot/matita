@@ -91,11 +91,11 @@ qed-.
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma lfxs_inv_atom_sn: ∀R,I,Y2. ⋆ ⦻*[R, ⓪{I}] Y2 → Y2 = ⋆.
-#R #I #Y2 * /2 width=4 by lexs_inv_atom1/
+lemma lfxs_inv_atom_sn: ∀R,Y2,T. ⋆ ⦻*[R, T] Y2 → Y2 = ⋆.
+#R #Y2 #T * /2 width=4 by lexs_inv_atom1/
 qed-.
 
-lemma lfxs_inv_atom_dx: ∀R,I,Y1. Y1 ⦻*[R, ⓪{I}] ⋆ → Y1 = ⋆.
+lemma lfxs_inv_atom_dx: ∀R,Y1,T. Y1 ⦻*[R, T] ⋆ → Y1 = ⋆.
 #R #I #Y1 * /2 width=4 by lexs_inv_atom2/
 qed-.
 

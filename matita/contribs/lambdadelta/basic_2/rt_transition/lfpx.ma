@@ -54,10 +54,10 @@ lemma lfpx_pair_repl_dx: ∀h,I,G,L1,L2,T,V,V1.
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma lfpx_inv_atom_sn: ∀h,I,G,Y2. ⦃G, ⋆⦄ ⊢ ⬈[h, ⓪{I}] Y2 → Y2 = ⋆.
+lemma lfpx_inv_atom_sn: ∀h,G,Y2,T. ⦃G, ⋆⦄ ⊢ ⬈[h, T] Y2 → Y2 = ⋆.
 /2 width=3 by lfxs_inv_atom_sn/ qed-.
 
-lemma lfpx_inv_atom_dx: ∀h,I,G,Y1. ⦃G, Y1⦄ ⊢ ⬈[h, ⓪{I}] ⋆ → Y1 = ⋆.
+lemma lfpx_inv_atom_dx: ∀h,G,Y1,T. ⦃G, Y1⦄ ⊢ ⬈[h, T] ⋆ → Y1 = ⋆.
 /2 width=3 by lfxs_inv_atom_dx/ qed-.
 
 lemma lfpx_inv_sort: ∀h,G,Y1,Y2,s. ⦃G, Y1⦄ ⊢ ⬈[h, ⋆s] Y2 →

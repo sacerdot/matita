@@ -12,15 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_transition/lfpx_aaa.ma".
-include "basic_2/rt_computation/cpxs.ma".
+(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS ************)
-
-(* Properties with atomic arity assignment on terms *************************)
-
-lemma cpxs_aaa_conf: ∀h,G,L,T1,A. ⦃G, L⦄ ⊢ T1 ⁝ A →
-                     ∀T2. ⦃G, L⦄ ⊢ T1 ⬈*[h] T2 → ⦃G, L⦄ ⊢ T2 ⁝ A.
-#h #G #L #T1 #A #HT1 #T2 #HT12
-@(TC_Conf3 … HT1 ? HT12) -A -T1 -T2 /2 width=5 by cpx_aaa_conf/
-qed-.
+notation "hvbox( G ⊢ ⬈ * [ break term 46 h , break term 46 o , break term 46 T ] 𝐒 ⦃ break term 46 L ⦄ )"
+   non associative with precedence 45
+   for @{ 'PRedTySNStrong $h $o $T $G $L }.

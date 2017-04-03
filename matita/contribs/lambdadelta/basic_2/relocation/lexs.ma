@@ -206,6 +206,17 @@ lemma lexs_co: ∀RN1,RP1,RN2,RP2.
 /3 width=1 by lexs_atom, lexs_next, lexs_push/
 qed-.
 
+lemma lexs_co_isid: ∀RN1,RP1,RN2,RP2.
+                    (∀L1,T1,T2. RP1 L1 T1 T2 → RP2 L1 T1 T2) →
+                    ∀f,L1,L2. L1 ⦻*[RN1, RP1, f] L2 → 𝐈⦃f⦄ →
+                    L1 ⦻*[RN2, RP2, f] L2.
+#RN1 #RP1 #RN2 #RP2 #HR #f #L1 #L2 #H elim H -f -L1 -L2 //
+#f #I #K1 #K2 #V1 #V2 #_ #HV12 #IH #H
+[ elim (isid_inv_next … H) -H //
+| /4 width=3 by lexs_push, isid_inv_push/
+] 
+qed-.
+
 lemma sle_lexs_trans: ∀RN,RP. (∀L,T1,T2. RN L T1 T2 → RP L T1 T2) →
                       ∀f2,L1,L2. L1 ⦻*[RN, RP, f2] L2 →
                       ∀f1. f1 ⊆ f2 → L1 ⦻*[RN, RP, f1] L2.

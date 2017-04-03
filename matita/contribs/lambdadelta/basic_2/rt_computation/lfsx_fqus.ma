@@ -12,8 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
+include "basic_2/static/lfdeq_fqus.ma".
+include "basic_2/rt_computation/lfsx.ma".
 
-notation "hvbox( G ⊢ ⬊ ⬊ * [ break term 46 h , break term 46 o , break term 46 T , break term 46 f ] break term 46 L )"
-   non associative with precedence 45
-   for @{ 'SNAlt $h $o $T $f $G $L }.
+(* STRONGLY NORMALIZING LOCAL ENV.S FOR UNCOUNTED PARALLEL RT-TRANSITION ****)
+
+(* Advanced properties ******************************************************)
+
+(* Basic_2A1: was: lsx_atom *)
+lemma lfsx_atom: ∀h,o,G,T. G ⊢ ⬈*[h, o, T] 𝐒⦃⋆⦄.
+#h #o #G #T @lfsx_intro
+#Y #H #HI lapply (lfpx_inv_atom_sn … H) -H
+#H destruct elim HI -HI //
+qed.

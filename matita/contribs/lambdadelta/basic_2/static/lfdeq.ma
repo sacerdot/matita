@@ -105,10 +105,10 @@ lemma lfdeq_pair_repl_dx: ∀h,o,I,L1,L2.∀T:term.∀V,V1.
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma lfdeq_inv_atom_sn: ∀h,o,I,Y2. ⋆ ≡[h, o, ⓪{I}] Y2 → Y2 = ⋆.
+lemma lfdeq_inv_atom_sn: ∀h,o,Y2. ∀T:term. ⋆ ≡[h, o, T] Y2 → Y2 = ⋆.
 /2 width=3 by lfxs_inv_atom_sn/ qed-.
 
-lemma lfdeq_inv_atom_dx: ∀h,o,I,Y1. Y1 ≡[h, o, ⓪{I}] ⋆ → Y1 = ⋆.
+lemma lfdeq_inv_atom_dx: ∀h,o,Y1. ∀T:term. Y1 ≡[h, o, T] ⋆ → Y1 = ⋆.
 /2 width=3 by lfxs_inv_atom_dx/ qed-.
 
 lemma lfdeq_inv_zero: ∀h,o,Y1,Y2. Y1 ≡[h, o, #0] Y2 →
