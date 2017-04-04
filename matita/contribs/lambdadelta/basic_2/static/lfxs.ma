@@ -89,6 +89,14 @@ lemma lfxs_co: ∀R1,R2. (∀L,T1,T2. R1 L T1 T2 → R2 L T1 T2) →
 #R1 #R2 #HR #L1 #L2 #T * /4 width=7 by lexs_co, ex2_intro/
 qed-.
 
+lemma lfxs_isid: ∀R1,R2,L1,L2,T1,T2.
+                 (∀f. L1 ⊢ 𝐅*⦃T1⦄ ≡ f → 𝐈⦃f⦄) → 
+                 (∀f. 𝐈⦃f⦄ → L1 ⊢ 𝐅*⦃T2⦄ ≡ f) → 
+                 L1 ⦻*[R1, T1] L2 → L1 ⦻*[R2, T2] L2.
+#R1 #R2 #L1 #L2 #T1 #T2 #H1 #H2 *
+/4 width=7 by lexs_co_isid, ex2_intro/
+qed-.
+
 (* Basic inversion lemmas ***************************************************)
 
 lemma lfxs_inv_atom_sn: ∀R,Y2,T. ⋆ ⦻*[R, T] Y2 → Y2 = ⋆.

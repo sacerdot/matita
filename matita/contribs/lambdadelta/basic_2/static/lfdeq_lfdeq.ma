@@ -42,6 +42,10 @@ theorem lfdeq_canc_sn: ∀h,o,T. left_cancellable … (lfdeq h o T).
 theorem lfdeq_canc_dx: ∀h,o,T. right_cancellable … (lfdeq h o T).
 /3 width=3 by lfdeq_trans, lfdeq_sym/ qed-.
 
+theorem lfdeq_repl: ∀h,o,L1,L2. ∀T:term. L1 ≡[h, o, T] L2 →
+                    ∀K1. L1 ≡[h, o, T] K1 → ∀K2. L2 ≡[h, o, T] K2 → K1 ≡[h, o, T] K2.
+/3 width=3 by lfdeq_canc_sn, lfdeq_trans/ qed-.
+
 (* Advanced properies on negated lazy equivalence *****************************)
 
 (* Note: auto works with /4 width=8/ so lfdeq_canc_sn is preferred ************) 
