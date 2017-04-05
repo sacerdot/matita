@@ -242,3 +242,16 @@ lemma sle_lexs_conf: ∀RN,RP. (∀L,T1,T2. RP L T1 T2 → RN L T1 T2) →
   #g2 #H #H2 destruct /3 width=5 by lexs_next/
 ]
 qed-.
+
+lemma lexs_sle_split: ∀R1,R2,RP. (∀L. reflexive … (R1 L)) → (∀L. reflexive … (R2 L)) →
+                      ∀f,L1,L2. L1 ⦻*[R1, RP, f] L2 → ∀g. f ⊆ g →
+                      ∃∃L. L1 ⦻*[R1, RP, g] L & L ⦻*[R2, cfull, f] L2.
+#R1 #R2 #RP #HR1 #HR2 #f #L1 #L2 #H elim H -f -L1 -L2
+[ /2 width=3 by lexs_atom, ex2_intro/ ]
+#f #I #L1 #L2 #V1 #V2 #_ #HV12 #IH #y #H
+[ elim (sle_inv_nx … H ??) -H [ |*: // ] #g #Hfg #H destruct
+  elim (IH … Hfg) -IH -Hfg /3 width=5 by lexs_next, ex2_intro/
+| elim (sle_inv_px … H ??) -H [1,3: * |*: // ] #g #Hfg #H destruct
+  elim (IH … Hfg) -IH -Hfg /3 width=5 by lexs_next, lexs_push, ex2_intro/
+]
+qed-.

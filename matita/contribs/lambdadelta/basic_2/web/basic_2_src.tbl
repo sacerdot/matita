@@ -62,15 +62,15 @@ table {
         ]
      }
    ]
+*)
    class "blue"
    [ { "conversion" * } {
-        [ { "context-sensitive conversion" * } {
-             [ "cpc ( ⦃?,?⦄ ⊢ ? ⬌ ? )" "cpc_cpc" * ]
+        [ { "context-sensitive r-conversion" * } {
+             [ "cpc ( ⦃?,?⦄ ⊢ ? ⬌[?] ? )" "cpc_cpc" * ]
           }
         ]
      }
    ]
-*)
    class "sky"
    [ { "rt-computation" * } {
 (*
@@ -124,7 +124,7 @@ table {
    ]
    class "cyan"
    [ { "rt-transition" * } {
-        [ { "parallel rst-transition" * } {
+        [ { "uncounted rst-transition" * } {
              [ "fpbq ( ⦃?,?,?⦄ ≽[?] ⦃?,?,?⦄ )" "fpbq_aaa" * ]
              [ "fpb ( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" "fpb_lfdeq" * ]
           }

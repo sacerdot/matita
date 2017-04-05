@@ -6,4 +6,5 @@ basic_2/s_computation
 basic_2/static
 basic_2/i_static
 basic_2/rt_transition
+basic_2/conversion
 apps_2/examples/ex_cpr_omega.ma

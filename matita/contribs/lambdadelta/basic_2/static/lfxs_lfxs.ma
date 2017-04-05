@@ -19,6 +19,43 @@ include "basic_2/static/lfxs.ma".
 
 (* GENERIC EXTENSION ON REFERRED ENTRIES OF A CONTEXT-SENSITIVE REALTION ****)
 
+(* Advanced properties ******************************************************)
+
+lemma lfxs_pair_sn_split: ∀R1,R2. (∀L. reflexive … (R1 L)) → (∀L. reflexive … (R2 L)) →
+                          lexs_frees_confluent … R1 cfull →
+                          ∀L1,L2,V. L1 ⦻*[R1, V] L2 → ∀I,T.
+                          ∃∃L. L1 ⦻*[R1, ②{I}V.T] L & L ⦻*[R2, V] L2.
+#R1 #R2 #HR1 #HR2 #HR #L1 #L2 #V * #f #Hf #HL12 * [ #p ] #I #T
+[ elim (frees_total L1 (ⓑ{p,I}V.T)) #g #Hg
+  elim (frees_inv_bind … Hg) #y1 #y2 #H #_ #Hy
+| elim (frees_total L1 (ⓕ{I}V.T)) #g #Hg
+  elim (frees_inv_flat … Hg) #y1 #y2 #H #_ #Hy
+]
+lapply(frees_mono … H … Hf) -H #H1
+lapply (sor_eq_repl_back1 … Hy … H1) -y1 #Hy
+lapply (sor_inv_sle_sn … Hy) -y2 #Hfg
+elim (lexs_sle_split … HR1 HR2 … HL12 … Hfg) -HL12 #L #HL1 #HL2
+lapply (sle_lexs_trans … HL1 … Hfg) // #H
+elim (HR … Hf … H) -HR -Hf -H
+/4 width=7 by sle_lexs_trans, ex2_intro/
+qed-.
+
+lemma lfxs_flat_dx_split: ∀R1,R2. (∀L. reflexive … (R1 L)) → (∀L. reflexive … (R2 L)) →
+                          lexs_frees_confluent … R1 cfull →
+                          ∀L1,L2,T. L1 ⦻*[R1, T] L2 → ∀I,V.
+                          ∃∃L. L1 ⦻*[R1, ⓕ{I}V.T] L & L ⦻*[R2, T] L2.
+#R1 #R2 #HR1 #HR2 #HR #L1 #L2 #T * #f #Hf #HL12 #I #V
+elim (frees_total L1 (ⓕ{I}V.T)) #g #Hg
+elim (frees_inv_flat … Hg) #y1 #y2 #_ #H #Hy
+lapply(frees_mono … H … Hf) -H #H2
+lapply (sor_eq_repl_back2 … Hy … H2) -y2 #Hy
+lapply (sor_inv_sle_dx … Hy) -y1 #Hfg
+elim (lexs_sle_split … HR1 HR2 … HL12 … Hfg) -HL12 #L #HL1 #HL2
+lapply (sle_lexs_trans … HL1 … Hfg) // #H
+elim (HR … Hf … H) -HR -Hf -H
+/4 width=7 by sle_lexs_trans, ex2_intro/
+qed-.
+
 (* Main properties **********************************************************)
 
 theorem lfxs_bind: ∀R,p,I,L1,L2,V1,V2,T.

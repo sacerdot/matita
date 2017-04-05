@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/lfdeq_fqus.ma".
+include "basic_2/static/lfdeq_fqup.ma".
 include "basic_2/rt_computation/lfsx.ma".
 
 (* STRONGLY NORMALIZING LOCAL ENV.S FOR UNCOUNTED PARALLEL RT-TRANSITION ****)
