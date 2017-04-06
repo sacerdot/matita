@@ -21,6 +21,19 @@ include "basic_2/static/lfxs.ma".
 
 (* Advanced properties ******************************************************)
 
+lemma lfxs_inv_frees: ∀R,L1,L2,T. L1 ⦻*[R, T] L2 →
+                      ∀f. L1 ⊢ 𝐅*⦃T⦄ ≡ f → L1 ⦻*[R, cfull, f] L2.
+#R #L1 #L2 #T * /3 width=6 by frees_mono, lexs_eq_repl_back/
+qed-.
+
+lemma lfxs_dec: ∀R. (∀L,T1,T2. Decidable (R L T1 T2)) →
+                ∀L1,L2,T. Decidable (L1 ⦻*[R, T] L2).
+#R #HR #L1 #L2 #T
+elim (frees_total L1 T) #f #Hf
+elim (lexs_dec R cfull HR … L1 L2 f)
+/4 width=3 by lfxs_inv_frees, cfull_dec, ex2_intro, or_intror, or_introl/
+qed-.
+
 lemma lfxs_pair_sn_split: ∀R1,R2. (∀L. reflexive … (R1 L)) → (∀L. reflexive … (R2 L)) →
                           lexs_frees_confluent … R1 cfull →
                           ∀L1,L2,V. L1 ⦻*[R1, V] L2 → ∀I,T.

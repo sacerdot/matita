@@ -23,9 +23,6 @@ lemma lleq_bind_repl_O: ∀I,L1,L2,V,T. L1.ⓑ{I}V ≡[T, 0] L2.ⓑ{I}V →
                         ∀J,W. L1 ≡[W, 0] L2 → L1.ⓑ{J}W ≡[T, 0] L2.ⓑ{J}W.
 /2 width=7 by llpx_sn_bind_repl_O/ qed-.
 
-lemma lleq_dec: ∀T,L1,L2,l. Decidable (L1 ≡[T, l] L2).
-/3 width=1 by llpx_sn_dec, eq_term_dec/ qed-.
-
 lemma lleq_llpx_sn_trans: ∀R. lleq_transitive R →
                           ∀L1,L2,T,l. L1 ≡[T, l] L2 →
                           ∀L. llpx_sn R l T L2 L → llpx_sn R l T L1 L.

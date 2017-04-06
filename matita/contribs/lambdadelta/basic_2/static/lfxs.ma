@@ -268,12 +268,13 @@ lemma lfxs_fwd_dx: ∀R,I,L1,K2,T,V2. L1 ⦻*[R, T] K2.ⓑ{I}V2 →
 /2 width=3 by ex1_2_intro/
 qed-.
 
-(* Basic_2A1: removed theorems 24:
+(* Basic_2A1: removed theorems 25:
               llpx_sn_sort llpx_sn_skip llpx_sn_lref llpx_sn_free llpx_sn_gref
               llpx_sn_bind llpx_sn_flat
               llpx_sn_inv_bind llpx_sn_inv_flat
               llpx_sn_fwd_lref llpx_sn_fwd_pair_sn llpx_sn_fwd_length
               llpx_sn_fwd_bind_sn llpx_sn_fwd_bind_dx llpx_sn_fwd_flat_sn llpx_sn_fwd_flat_dx
               llpx_sn_refl llpx_sn_Y llpx_sn_bind_O llpx_sn_ge_up llpx_sn_ge llpx_sn_co
-              llpx_sn_fwd_drop_sn llpx_sn_fwd_drop_dx              
+              llpx_sn_fwd_drop_sn llpx_sn_fwd_drop_dx
+              llpx_sn_dec      
 *)

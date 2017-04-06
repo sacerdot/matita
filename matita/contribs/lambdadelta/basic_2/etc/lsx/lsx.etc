@@ -1,0 +1,25 @@
+lemma lsx_lreq_conf: ∀h,o,G,L1,T,l. G ⊢ ⬊*[h, o, T, l] L1 →
+                    ∀L2. L1 ⩬[l, ∞] L2 → G ⊢ ⬊*[h, o, T, l] L2.
+#h #o #G #L1 #T #l #H @(lsx_ind … H) -L1
+#L1 #_ #IHL1 #L2 #HL12 @lsx_intro
+#L3 #HL23 #HnL23 elim (lreq_lpx_trans_lleq … HL12 … HL23) -HL12 -HL23
+#L0 #HL03 #HL10 #H elim (H T) -H /4 width=4 by/
+qed-.
+
+(* these two are better expressed with the binder \chi *)
+
+lemma lsx_fwd_bind_dx: ∀h,o,a,I,G,L,V,T,l. G ⊢ ⬈*[h, o, ⓑ{a,I}V.T, l] L →
+                       G ⊢ ⬈*[h, o, T, ⫯l] L.ⓑ{I}V.
+#h #o #a #I #G #L #V1 #T #l #H @(lsx_ind … H) -L
+#L1 #_ #IHL1 @lsx_intro
+#Y #H #HT elim (lpx_inv_pair1 … H) -H
+#L2 #V2 #HL12 #_ #H destruct
+@(lsx_lreq_conf … (L2.ⓑ{I}V1)) /2 width=1 by lreq_succ/
+@IHL1 // #H @HT -IHL1 -HL12 -HT
+@(lleq_lreq_trans … (L2.ⓑ{I}V1))
+/2 width=2 by lleq_fwd_bind_dx, lreq_succ/
+qed-.
+
+lemma lsx_inv_bind: ∀h,o,a,I,G,L,V,T,l. G ⊢ ⬈*[h, o, ⓑ{a, I}V.T, l] L →
+                    G ⊢ ⬈*[h, o, V, l] L ∧ G ⊢ ⬈*[h, o, T, ⫯l] L.ⓑ{I}V.
+/3 width=4 by lsx_fwd_bind_sn, lsx_fwd_bind_dx, conj/ qed-.

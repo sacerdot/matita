@@ -56,6 +56,9 @@ lemma eq_lenv_dec: ∀L1,L2:lenv. Decidable (L1 = L2).
 ]
 qed-.
 
+lemma cfull_dec: ∀L,T1,T2. Decidable (cfull L T1 T2).
+/2 width=1 by or_introl/ qed-.
+
 (* Basic inversion lemmas ***************************************************)
 
 fact destruct_lpair_lpair_aux: ∀I1,I2,L1,L2,V1,V2. L1.ⓑ{I1}V1 = L2.ⓑ{I2}V2 →
@@ -71,5 +74,5 @@ lemma discr_lpair_x_xy: ∀I,V,L. L = L.ⓑ{I}V → ⊥.
 ]
 qed-.
 
-lemma discr_lpair_xy_x: ∀I,V,L. L.ⓑ{I}V = L→ ⊥.
+lemma discr_lpair_xy_x: ∀I,V,L. L.ⓑ{I}V = L → ⊥.
 /2 width=4 by discr_lpair_x_xy/ qed-.

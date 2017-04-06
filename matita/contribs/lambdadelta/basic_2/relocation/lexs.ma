@@ -255,3 +255,26 @@ lemma lexs_sle_split: ∀R1,R2,RP. (∀L. reflexive … (R1 L)) → (∀L. refle
   elim (IH … Hfg) -IH -Hfg /3 width=5 by lexs_next, lexs_push, ex2_intro/
 ]
 qed-.
+
+lemma lexs_dec: ∀RN,RP.
+                (∀L,T1,T2. Decidable (RN L T1 T2)) →
+                (∀L,T1,T2. Decidable (RP L T1 T2)) →
+                ∀L1,L2,f. Decidable (L1 ⦻*[RN, RP, f] L2).
+#RN #RP #HRN #HRP #L1 elim L1 -L1 [ * | #L1 #I1 #V1 #IH * ]
+[ /2 width=1 by lexs_atom, or_introl/
+| #L2 #I2 #V2 #f @or_intror #H
+  lapply (lexs_inv_atom1 … H) -H #H destruct
+| #f @or_intror #H
+  lapply (lexs_inv_atom2 … H) -H #H destruct
+| #L2 #I2 #V2 #f elim (eq_bind2_dec I1 I2) #H destruct
+  [2: @or_intror #H elim (lexs_fwd_pair … H) -H /2 width=1 by/ ]
+  elim (IH L2 (⫱f)) -IH #HL12
+  [2: @or_intror #H elim (lexs_fwd_pair … H) -H /2 width=1 by/ ]
+  elim (pn_split f) * #g #H destruct
+  [ elim (HRP L1 V1 V2) | elim (HRN L1 V1 V2) ] -HRP -HRN #HV12
+  [1,3: /3 width=1 by lexs_push, lexs_next, or_introl/ ]
+  @or_intror #H
+  [ elim (lexs_inv_push … H) | elim (lexs_inv_next … H) ] -H
+  /2 width=1 by/
+]
+qed-.

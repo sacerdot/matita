@@ -176,11 +176,12 @@ lemma lfdeq_fwd_dx: ∀h,o,I,L1,K2,V2. ∀T:term. L1 ≡[h, o, T] K2.ⓑ{I}V2 �
                     ∃∃K1,V1. L1 = K1.ⓑ{I}V1.
 /2 width=5 by lfxs_fwd_dx/ qed-.
 
-(* Basic_2A1: removed theorems 30: 
+(* Basic_2A1: removed theorems 31: 
               lleq_ind lleq_inv_bind lleq_inv_flat lleq_fwd_length lleq_fwd_lref
               lleq_fwd_drop_sn lleq_fwd_drop_dx
               lleq_fwd_bind_sn lleq_fwd_bind_dx lleq_fwd_flat_sn lleq_fwd_flat_dx
               lleq_sort lleq_skip lleq_lref lleq_free lleq_gref lleq_bind lleq_flat
               lleq_refl lleq_Y lleq_sym lleq_ge_up lleq_ge lleq_bind_O llpx_sn_lrefl
               lleq_trans lleq_canc_sn lleq_canc_dx lleq_nlleq_trans nlleq_lleq_div
+              lleq_dec 
 *)

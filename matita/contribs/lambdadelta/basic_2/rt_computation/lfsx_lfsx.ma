@@ -20,12 +20,20 @@ include "basic_2/rt_computation/lfsx.ma".
 
 (* Advanced properties ******************************************************)
 
+(* Basic_2A1: was just: lsx_lleq_trans *)
 lemma lfsx_lfdeq_trans: ∀h,o,G,L1,T. G ⊢ ⬈*[h, o, T] 𝐒⦃L1⦄ →
                         ∀L2. L1 ≡[h, o, T] L2 → G ⊢ ⬈*[h, o, T] 𝐒⦃L2⦄.
 #h #o #G #L1 #T #H @(lfsx_ind … H) -L1
 #L1 #_ #IHL1 #L2 #HL12 @lfsx_intro
 #L #HL2 #HnL2 elim (lfdeq_lfpx_trans … HL2 … HL12) -HL2
 /4 width=5 by lfdeq_repl/
+qed-.
+
+(* Basic_2A1: was: lsx_lpx_trans *)
+lemma lfsx_lfpx_trans: ∀h,o,G,L1,T. G ⊢ ⬈*[h, o, T] 𝐒⦃L1⦄ →
+                       ∀L2. ⦃G, L1⦄ ⊢ ⬈[h, T] L2 → G ⊢ ⬈*[h, o, T] 𝐒⦃L2⦄.
+#h #o #G #L1 #T #H @(lfsx_ind … H) -L1 #L1 #HL1 #IHL1 #L2 #HL12
+elim (lfdeq_dec h o L1 L2 T) /3 width=4 by lfsx_lfdeq_trans, lfxs_refl/
 qed-.
 
 (* Advanced forward lemmas **************************************************)
@@ -39,7 +47,6 @@ lemma lfsx_fwd_pair_sn: ∀h,o,I,G,L,V,T. G ⊢ ⬈*[h, o, ②{I}V.T] 𝐒⦃L�
 #L2 #H #HnL12 elim (lfpx_pair_sn_split … o I … T H) -H
 /6 width=4 by lfsx_lfdeq_trans, lfdeq_trans, lfdeq_fwd_pair_sn/
 qed-.
-
 
 (* Basic_2A1: was: lsx_fwd_flat_dx *)
 lemma lfsx_fwd_flat_dx: ∀h,o,I,G,L,V,T. G ⊢ ⬈*[h, o, ⓕ{I}V.T] 𝐒⦃L⦄ →

@@ -18,6 +18,11 @@ include "basic_2/static/lfdeq.ma".
 
 (* DEGREE-BASED EQUIVALENCE FOR LOCAL ENVIRONMENTS ON REFERRED ENTRIES ******)
 
+(* Advanced properties ******************************************************)
+
+lemma lfdeq_dec: ∀h,o,L1,L2. ∀T:term. Decidable (L1 ≡[h, o, T] L2).
+/3 width=1 by lfxs_dec, tdeq_dec/ qed-.
+
 (* Main properties **********************************************************)
 
 theorem lfdeq_bind: ∀h,o,p,I,L1,L2,V1,V2,T.
