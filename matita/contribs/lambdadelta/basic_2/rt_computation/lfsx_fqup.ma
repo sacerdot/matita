@@ -19,7 +19,7 @@ include "basic_2/rt_computation/lfsx.ma".
 
 (* Advanced properties ******************************************************)
 
-(* Basic_2A1: was: lsx_atom *)
+(* Basic_2A1: uses: lsx_atom *)
 lemma lfsx_atom: ∀h,o,G,T. G ⊢ ⬈*[h, o, T] 𝐒⦃⋆⦄.
 #h #o #G #T @lfsx_intro
 #Y #H #HI lapply (lfpx_inv_atom_sn … H) -H

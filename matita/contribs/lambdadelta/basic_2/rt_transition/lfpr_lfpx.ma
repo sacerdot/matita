@@ -20,5 +20,6 @@ include "basic_2/rt_transition/lfpr.ma".
 
 (* Fwd. lemmas with unc. rt-transition for local env.s on referred entries **)
 
+(* Basic_2A1: uses: lpr_lpx *)
 lemma lfpr_fwd_lfpx: ∀h,T,G,L1,L2. ⦃G, L1⦄ ⊢ ➡[h, T] L2 → ⦃G, L1⦄ ⊢ ⬈[h, T] L2.
 /3 width=3 by cpm_fwd_cpx, lfxs_co/ qed-.

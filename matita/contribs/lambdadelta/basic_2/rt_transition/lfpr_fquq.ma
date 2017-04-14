@@ -30,6 +30,7 @@ lemma fqu_cpr_trans_dx: ∀h,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, 
 /3 width=9 by fqu_drop, drops_refl, drops_drop, ex3_2_intro/
 qed-.
 
+(* Basic_2A1: uses: fqu_lpr_trans *)
 lemma fqu_cpr_trans_sn: ∀h,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T2⦄ →
                         ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡[h] U2 →
                         ∃∃L,U1. ⦃G1, L1⦄ ⊢ ➡[h, T1] L & ⦃G1, L1⦄ ⊢ T1 ➡[h] U1 & ⦃G1, L, U1⦄ ⊐ ⦃G2, L2, U2⦄.
@@ -50,6 +51,7 @@ lemma fquq_cpr_trans_dx: ∀h,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐⸮ ⦃G2, 
 ]
 qed-.
 
+(* Basic_2A1: uses: fquq_lpr_trans *)
 lemma fquq_cpr_trans_sn: ∀h,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐⸮ ⦃G2, L2, T2⦄ →
                          ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡[h] U2 →
                          ∃∃L,U1. ⦃G1, L1⦄ ⊢ ➡[h, T1] L & ⦃G1, L1⦄ ⊢ T1 ➡[h] U1 & ⦃G1, L, U1⦄ ⊐⸮ ⦃G2, L2, U2⦄.

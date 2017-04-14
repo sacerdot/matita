@@ -1,7 +1,24 @@
-(* Basic forward lemmas *****************************************************)
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/i_static/tc_lfxs_length.ma".
+include "basic_2/rt_computation/lfpxs.ma".
+
+(* UNCOUNTED PARALLEL RT-COMPUTATION FOR LOCAL ENV.S ON REFERRED ENTRIES ****)
 
 (* Forward lemmas with length for local environments ************************)
 
-(* Basic_2A1: was just: lpxs_fwd_length *)
-lemma lfpxs_fwd_length: ∀h,o,G,L1,L2. ⦃G, L1⦄ ⊢ ⬈*[h, o] L2 → |L1| = |L2|.
-/2 width=2 by TC_lpx_sn_fwd_length/ qed-.
+(* Basic_2A1: uses: lpxs_fwd_length *)
+lemma lfpxs_fwd_length: ∀h,G,L1,L2,T. ⦃G, L1⦄ ⊢ ⬈*[h, T] L2 → |L1| = |L2|.
+/2 width=3 by tc_lfxs_fwd_length/ qed-.

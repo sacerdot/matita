@@ -19,6 +19,7 @@ include "basic_2/static/lfxs.ma".
 
 (* Advanced properties ******************************************************)
 
+(* Basic_2A1: uses: llpx_sn_refl *)
 lemma lfxs_refl: ∀R. (∀L. reflexive … (R L)) → ∀L,T. L ⦻*[R, T] L.
 #R #HR #L #T elim (frees_total L T) /3 width=3 by lexs_refl, ex2_intro/
 qed.

@@ -54,9 +54,11 @@ lemma lfpr_pair_repl_dx: ∀h,I,G,L1,L2,T,V,V1.
 
 (* Basic inversion lemmas ***************************************************)
 
+(* Basic_2A1: uses: lpr_inv_atom1 *)
 lemma lfpr_inv_atom_sn: ∀h,I,G,Y2. ⦃G, ⋆⦄ ⊢ ➡[h, ⓪{I}] Y2 → Y2 = ⋆.
 /2 width=3 by lfxs_inv_atom_sn/ qed-.
 
+(* Basic_2A1: uses: lpr_inv_atom2 *)
 lemma lfpr_inv_atom_dx: ∀h,I,G,Y1. ⦃G, Y1⦄ ⊢ ➡[h, ⓪{I}] ⋆ → Y1 = ⋆.
 /2 width=3 by lfxs_inv_atom_dx/ qed-.
 
@@ -131,33 +133,21 @@ lemma lfpr_inv_gref_pair_dx: ∀h,I,G,Y1,L2,V2,l. ⦃G, Y1⦄ ⊢ ➡[h, §l] L2
 
 (* Basic forward lemmas *****************************************************)
 
-lemma lfpr_fwd_bind_sn: ∀h,p,I,G,L1,L2,V,T.
-                        ⦃G, L1⦄ ⊢ ➡[h, ⓑ{p,I}V.T] L2 → ⦃G, L1⦄ ⊢ ➡[h, V] L2.
-/2 width=4 by lfxs_fwd_bind_sn/ qed-.
+lemma lfpr_fwd_pair_sn: ∀h,I,G,L1,L2,V,T.
+                        ⦃G, L1⦄ ⊢ ➡[h, ②{I}V.T] L2 → ⦃G, L1⦄ ⊢ ➡[h, V] L2.
+/2 width=3 by lfxs_fwd_pair_sn/ qed-.
 
 lemma lfpr_fwd_bind_dx: ∀h,p,I,G,L1,L2,V,T.
                         ⦃G, L1⦄ ⊢ ➡[h, ⓑ{p,I}V.T] L2 → ⦃G, L1.ⓑ{I}V⦄ ⊢ ➡[h, T] L2.ⓑ{I}V.
 /2 width=2 by lfxs_fwd_bind_dx/ qed-.
 
-lemma lfpr_fwd_flat_sn: ∀h,I,G,L1,L2,V,T.
-                        ⦃G, L1⦄ ⊢ ➡[h, ⓕ{I}V.T] L2 → ⦃G, L1⦄ ⊢ ➡[h, V] L2.
-/2 width=3 by lfxs_fwd_flat_sn/ qed-.
-
 lemma lfpr_fwd_flat_dx: ∀h,I,G,L1,L2,V,T.
                         ⦃G, L1⦄ ⊢ ➡[h, ⓕ{I}V.T] L2 → ⦃G, L1⦄ ⊢ ➡[h, T] L2.
 /2 width=3 by lfxs_fwd_flat_dx/ qed-.
 
-lemma lfpr_fwd_pair_sn: ∀h,I,G,L1,L2,V,T.
-                        ⦃G, L1⦄ ⊢ ➡[h, ②{I}V.T] L2 → ⦃G, L1⦄ ⊢ ➡[h, V] L2.
-/2 width=3 by lfxs_fwd_pair_sn/ qed-.
-
-(* Basic_2A1: removed theorems 16:
-              lpr_inv_atom1 lpr_inv_pair1 lpr_inv_atom2 lpr_inv_pair2
-              lpr_refl lpr_pair
-              lpr_fwd_length lpr_lpx
-              lpr_drop_conf drop_lpr_trans lpr_drop_trans_O1
+(* Basic_2A1: removed theorems 5:
+              lpr_inv_pair1 lpr_inv_pair2
               cpr_conf_lpr lpr_cpr_conf_dx lpr_cpr_conf_sn
-              fqu_lpr_trans fquq_lpr_trans
 *)
 (* Basic_1: removed theorems 7:
             wcpr0_gen_sort wcpr0_gen_head

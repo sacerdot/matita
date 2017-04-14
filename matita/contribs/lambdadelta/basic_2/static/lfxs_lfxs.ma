@@ -26,6 +26,7 @@ lemma lfxs_inv_frees: ∀R,L1,L2,T. L1 ⦻*[R, T] L2 →
 #R #L1 #L2 #T * /3 width=6 by frees_mono, lexs_eq_repl_back/
 qed-.
 
+(* Basic_2A1: uses: llpx_sn_dec *)
 lemma lfxs_dec: ∀R. (∀L,T1,T2. Decidable (R L T1 T2)) →
                 ∀L1,L2,T. Decidable (L1 ⦻*[R, T] L2).
 #R #HR #L1 #L2 #T
@@ -71,6 +72,7 @@ qed-.
 
 (* Main properties **********************************************************)
 
+(* Basic_2A1: uses: llpx_sn_bind llpx_sn_bind_O *)
 theorem lfxs_bind: ∀R,p,I,L1,L2,V1,V2,T.
                    L1 ⦻*[R, V1] L2 → L1.ⓑ{I}V1 ⦻*[R, T] L2.ⓑ{I}V2 →
                    L1 ⦻*[R, ⓑ{p,I}V1.T] L2.
@@ -79,6 +81,7 @@ elim (lexs_fwd_pair … Hf2) -Hf2 #Hf2 #_ elim (sor_isfin_ex f1 (⫱f2))
 /3 width=7 by frees_fwd_isfin, frees_bind, lexs_join, isfin_tl, ex2_intro/
 qed.
 
+(* Basic_2A1: llpx_sn_flat *)
 theorem lfxs_flat: ∀R,I,L1,L2,V,T.
                    L1 ⦻*[R, V] L2 → L1 ⦻*[R, T] L2 →
                    L1 ⦻*[R, ⓕ{I}V.T] L2.
@@ -107,4 +110,22 @@ elim (lexs_conf … HL01 … HL02) /2 width=3 by ex2_intro/ [ | -HL01 -HL02 ]
   lapply (sle_lexs_trans … HK02 … H0) // -HK02 #HK02
   elim (HR12 … HV01 … HV02 K1 … K2) /2 width=3 by ex2_intro/
 ]
+qed-.
+
+(* Negated inversion lemmas *************************************************)
+
+(* Basic_2A1: uses: nllpx_sn_inv_bind nllpx_sn_inv_bind_O *)
+lemma lfnxs_inv_bind: ∀R. (∀L,T1,T2. Decidable (R L T1 T2)) →
+                      ∀p,I,L1,L2,V,T. (L1 ⦻*[R, ⓑ{p,I}V.T] L2 → ⊥) →
+                      (L1 ⦻*[R, V] L2 → ⊥) ∨ (L1.ⓑ{I}V ⦻*[R, T] L2.ⓑ{I}V → ⊥).
+#R #HR #p #I #L1 #L2 #V #T #H elim (lfxs_dec … HR L1 L2 V)
+/4 width=2 by lfxs_bind, or_intror, or_introl/
+qed-.
+
+(* Basic_2A1: uses: nllpx_sn_inv_flat *)
+lemma lfnxs_inv_flat: ∀R. (∀L,T1,T2. Decidable (R L T1 T2)) →
+                      ∀I,L1,L2,V,T. (L1 ⦻*[R, ⓕ{I}V.T] L2 → ⊥) →
+                      (L1 ⦻*[R, V] L2 → ⊥) ∨ (L1 ⦻*[R, T] L2 → ⊥).
+#R #HR #I #L1 #L2 #V #T #H elim (lfxs_dec … HR L1 L2 V)
+/4 width=1 by lfxs_flat, or_intror, or_introl/
 qed-.

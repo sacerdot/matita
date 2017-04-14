@@ -22,7 +22,7 @@ include "basic_2/rt_transition/cpx_drops.ma".
 
 (* Properties with context-sensitive free variables *************************)
 
-(* Basic_2A1: was: lpx_cpx_frees_trans *)
+(* Basic_2A1: uses: lpx_cpx_frees_trans *)
 lemma cpx_frees_conf_lfpx: ∀h,G,L1,T1,f1. L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 →
                            ∀L2. L1 ⦻*[cpx h G, cfull, f1] L2 →
                            ∀T2. ⦃G, L1⦄ ⊢ T1 ⬈[h] T2 →
@@ -147,10 +147,10 @@ lemma cpx_frees_conf_lfpx: ∀h,G,L1,T1,f1. L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 →
 ]
 qed-.
 
-(* Basic_2A1: was: cpx_frees_trans *)
+(* Basic_2A1: uses: cpx_frees_trans *)
 lemma cpx_frees_conf: ∀h,G. R_frees_confluent (cpx h G).
 /3 width=7 by cpx_frees_conf_lfpx, lexs_refl/ qed-.
 
-(* Basic_2A1: was: lpx_frees_trans *)
+(* Basic_2A1: uses: lpx_frees_trans *)
 lemma lfpx_frees_conf: ∀h,G. lexs_frees_confluent (cpx h G) cfull.
 /2 width=7 by cpx_frees_conf_lfpx/ qed-.

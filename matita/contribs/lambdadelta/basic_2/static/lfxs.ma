@@ -49,6 +49,7 @@ lemma lfxs_atom: ∀R,I. ⋆ ⦻*[R, ⓪{I}] ⋆.
 /3 width=3 by lexs_atom, frees_atom, ex2_intro/
 qed.
 
+(* Basic_2A1: uses: llpx_sn_sort *)
 lemma lfxs_sort: ∀R,I,L1,L2,V1,V2,s.
                  L1 ⦻*[R, ⋆s] L2 → L1.ⓑ{I}V1 ⦻*[R, ⋆s] L2.ⓑ{I}V2.
 #R #I #L1 #L2 #V1 #V2 #s * /3 width=3 by lexs_push, frees_sort, ex2_intro/
@@ -64,6 +65,7 @@ lemma lfxs_lref: ∀R,I,L1,L2,V1,V2,i.
 #R #I #L1 #L2 #V1 #V2 #i * /3 width=3 by lexs_push, frees_lref, ex2_intro/
 qed.
 
+(* Basic_2A1: uses: llpx_sn_gref *)
 lemma lfxs_gref: ∀R,I,L1,L2,V1,V2,l.
                  L1 ⦻*[R, §l] L2 → L1.ⓑ{I}V1 ⦻*[R, §l] L2.ⓑ{I}V2.
 #R #I #L1 #L2 #V1 #V2 #l * /3 width=3 by lexs_push, frees_gref, ex2_intro/
@@ -84,6 +86,7 @@ lemma lfxs_sym: ∀R. lexs_frees_confluent R cfull →
 /4 width=5 by sle_lexs_trans, lexs_sym, ex2_intro/
 qed-.
 
+(* Basic_2A1: uses: llpx_sn_co *)
 lemma lfxs_co: ∀R1,R2. (∀L,T1,T2. R1 L T1 T2 → R2 L T1 T2) →
                ∀L1,L2,T. L1 ⦻*[R1, T] L2 → L1 ⦻*[R2, T] L2.
 #R1 #R2 #HR #L1 #L2 #T * /4 width=7 by lexs_co, ex2_intro/
@@ -155,12 +158,14 @@ lemma lfxs_inv_gref: ∀R,Y1,Y2,l. Y1 ⦻*[R, §l] Y2 →
 ]
 qed-.
 
+(* Basic_2A1: uses: llpx_sn_inv_bind llpx_sn_inv_bind_O *)
 lemma lfxs_inv_bind: ∀R,p,I,L1,L2,V1,V2,T. L1 ⦻*[R, ⓑ{p,I}V1.T] L2 → R L1 V1 V2 →
                      L1 ⦻*[R, V1] L2 ∧ L1.ⓑ{I}V1 ⦻*[R, T] L2.ⓑ{I}V2.
 #R #p #I #L1 #L2 #V1 #V2 #T * #f #Hf #HL #HV elim (frees_inv_bind … Hf) -Hf
 /6 width=6 by sle_lexs_trans, lexs_inv_tl, sor_inv_sle_dx, sor_inv_sle_sn, ex2_intro, conj/
 qed-.
 
+(* Basic_2A1: uses: llpx_sn_inv_flat *)
 lemma lfxs_inv_flat: ∀R,I,L1,L2,V,T. L1 ⦻*[R, ⓕ{I}V.T] L2 →
                      L1 ⦻*[R, V] L2 ∧ L1 ⦻*[R, T] L2.
 #R #I #L1 #L2 #V #T * #f #Hf #HL elim (frees_inv_flat … Hf) -Hf
@@ -239,26 +244,22 @@ qed-.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma lfxs_fwd_bind_sn: ∀R,p,I,L1,L2,V,T. L1 ⦻*[R, ⓑ{p,I}V.T] L2 → L1 ⦻*[R, V] L2.
-#R #p #I #L1 #L2 #V #T * #f #Hf #HL elim (frees_inv_bind … Hf) -Hf
+(* Basic_2A1: uses: llpx_sn_fwd_pair_sn llpx_sn_fwd_bind_sn llpx_sn_fwd_flat_sn *)
+lemma lfxs_fwd_pair_sn: ∀R,I,L1,L2,V,T. L1 ⦻*[R, ②{I}V.T] L2 → L1 ⦻*[R, V] L2.
+#R * [ #p ] #I #L1 #L2 #V #T * #f #Hf #HL
+[ elim (frees_inv_bind … Hf) | elim (frees_inv_flat … Hf) ] -Hf
 /4 width=6 by sle_lexs_trans, sor_inv_sle_sn, ex2_intro/
 qed-.
 
+(* Basic_2A1: uses: llpx_sn_fwd_bind_dx llpx_sn_fwd_bind_O_dx *)
 lemma lfxs_fwd_bind_dx: ∀R,p,I,L1,L2,V1,V2,T. L1 ⦻*[R, ⓑ{p,I}V1.T] L2 →
                         R L1 V1 V2 → L1.ⓑ{I}V1 ⦻*[R, T] L2.ⓑ{I}V2.
 #R #p #I #L1 #L2 #V1 #V2 #T #H #HV elim (lfxs_inv_bind … H HV) -H -HV //
 qed-.
 
-lemma lfxs_fwd_flat_sn: ∀R,I,L1,L2,V,T. L1 ⦻*[R, ⓕ{I}V.T] L2 → L1 ⦻*[R, V] L2.
-#R #I #L1 #L2 #V #T #H elim (lfxs_inv_flat … H) -H //
-qed-.
-
+(* Basic_2A1: uses: llpx_sn_fwd_flat_dx *)
 lemma lfxs_fwd_flat_dx: ∀R,I,L1,L2,V,T. L1 ⦻*[R, ⓕ{I}V.T] L2 → L1 ⦻*[R, T] L2.
 #R #I #L1 #L2 #V #T #H elim (lfxs_inv_flat … H) -H //
-qed-.
-
-lemma lfxs_fwd_pair_sn: ∀R,I,L1,L2,V,T. L1 ⦻*[R, ②{I}V.T] L2 → L1 ⦻*[R, V] L2.
-#R * /2 width=4 by lfxs_fwd_flat_sn, lfxs_fwd_bind_sn/
 qed-.
 
 lemma lfxs_fwd_dx: ∀R,I,L1,K2,T,V2. L1 ⦻*[R, T] K2.ⓑ{I}V2 →
@@ -268,13 +269,9 @@ lemma lfxs_fwd_dx: ∀R,I,L1,K2,T,V2. L1 ⦻*[R, T] K2.ⓑ{I}V2 →
 /2 width=3 by ex1_2_intro/
 qed-.
 
-(* Basic_2A1: removed theorems 25:
-              llpx_sn_sort llpx_sn_skip llpx_sn_lref llpx_sn_free llpx_sn_gref
-              llpx_sn_bind llpx_sn_flat
-              llpx_sn_inv_bind llpx_sn_inv_flat
-              llpx_sn_fwd_lref llpx_sn_fwd_pair_sn llpx_sn_fwd_length
-              llpx_sn_fwd_bind_sn llpx_sn_fwd_bind_dx llpx_sn_fwd_flat_sn llpx_sn_fwd_flat_dx
-              llpx_sn_refl llpx_sn_Y llpx_sn_bind_O llpx_sn_ge_up llpx_sn_ge llpx_sn_co
-              llpx_sn_fwd_drop_sn llpx_sn_fwd_drop_dx
-              llpx_sn_dec      
+(* Basic_2A1: removed theorems 9:
+              llpx_sn_skip llpx_sn_lref llpx_sn_free 
+              llpx_sn_fwd_lref
+              llpx_sn_Y llpx_sn_ge_up llpx_sn_ge 
+              llpx_sn_fwd_drop_sn llpx_sn_fwd_drop_dx      
 *)

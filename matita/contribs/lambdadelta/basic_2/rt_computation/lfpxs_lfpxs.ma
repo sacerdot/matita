@@ -12,18 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/lfxs_fqup.ma".
-include "basic_2/rt_transition/lfpx.ma".
+include "basic_2/rt_computation/lfpxs.ma".
 
-(* UNCOUNTED PARALLEL RT-TRANSITION FOR LOCAL ENV.S ON REFERRED ENTRIES *****)
+(* UNCOUNTED PARALLEL RT-COMPUTATION FOR LOCAL ENV.S ON REFERRED ENTRIES ****)
 
-(* Advanced properties ******************************************************)
+(* Main properties **********************************************************)
 
-(* Basic_2A1: uses: lpx_refl lpx_pair *)
-lemma lfpx_refl: ∀h,G,T. reflexive … (lfpx h G T).
-/2 width=1 by lfxs_refl/ qed.
-
-(* Basic_2A1: uses: lpx_refl lpx_pair *)
-lemma lfpx_pair: ∀h,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ⬈[h] V2 →
-                 ∀I,T. ⦃G, L.ⓑ{I}V1⦄ ⊢ ⬈[h, T] L.ⓑ{I}V2.
-/2 width=1 by lfxs_pair/ qed.
+(* Basic_2A1: uses: lpxs_trans *)
+theorem lfpxs_trans: ∀h,G,T. Transitive … (lfpxs h G T).
+#h #G #T #L1 #L #HL1 #L2 #HL2 @(trans_TC … HL1 HL2) (**) (* auto fails *) 
+qed-.

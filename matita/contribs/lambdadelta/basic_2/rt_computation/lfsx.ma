@@ -27,7 +27,7 @@ interpretation
 
 (* Basic eliminators ********************************************************)
 
-(* Basic_2A1: was: lsx_ind *)
+(* Basic_2A1: uses: lsx_ind *)
 lemma lfsx_ind: ∀h,o,G,T. ∀R:predicate lenv.
                 (∀L1. G ⊢ ⬈*[h, o, T] 𝐒⦃L1⦄ →
                       (∀L2. ⦃G, L1⦄ ⊢ ⬈[h, T] L2 → (L1 ≡[h, o, T] L2 → ⊥) → R L2) →
@@ -40,13 +40,13 @@ qed-.
 
 (* Basic properties *********************************************************)
 
-(* Basic_2A1: was: lsx_intro *)
+(* Basic_2A1: uses: lsx_intro *)
 lemma lfsx_intro: ∀h,o,G,L1,T.
                   (∀L2. ⦃G, L1⦄ ⊢ ⬈[h, T] L2 → (L1 ≡[h, o, T] L2 → ⊥) → G ⊢ ⬈*[h, o, T] 𝐒⦃L2⦄) →
                   G ⊢ ⬈*[h, o, T] 𝐒⦃L1⦄.
 /5 width=1 by lfdeq_sym, SN_intro/ qed.
 
-(* Basic_2A1: was: lsx_sort *)
+(* Basic_2A1: uses: lsx_sort *)
 lemma lfsx_sort: ∀h,o,G,L,s. G ⊢ ⬈*[h, o, ⋆s] 𝐒⦃L⦄.
 #h #o #G #L1 #s @lfsx_intro
 #L2 #H #Hs elim Hs -Hs elim (lfpx_inv_sort … H) -H *
@@ -56,7 +56,7 @@ lemma lfsx_sort: ∀h,o,G,L,s. G ⊢ ⬈*[h, o, ⋆s] 𝐒⦃L⦄.
 ]
 qed.
 
-(* Basic_2A1: was: lsx_gref *)
+(* Basic_2A1: uses: lsx_gref *)
 lemma lfsx_gref: ∀h,o,G,L,p. G ⊢ ⬈*[h, o, §p] 𝐒⦃L⦄.
 #h #o #G #L1 #s @lfsx_intro
 #L2 #H #Hs elim Hs -Hs elim (lfpx_inv_gref … H) -H *
@@ -66,6 +66,7 @@ lemma lfsx_gref: ∀h,o,G,L,p. G ⊢ ⬈*[h, o, §p] 𝐒⦃L⦄.
 ]
 qed.
 
-(* Basic_2A1: removed theorems 2:
+(* Basic_2A1: removed theorems 9:
               lsx_ge_up lsx_ge
+              lsxa_ind lsxa_intro lsxa_lleq_trans lsxa_lpxs_trans lsxa_intro_lpx lsx_lsxa lsxa_inv_lsx
 *)

@@ -19,6 +19,7 @@ include "basic_2/static/lfxs.ma".
 
 (* Forward lemmas with length for local environments ************************)
 
+(* Basic_2A1: uses: llpx_sn_fwd_length *)
 lemma lfxs_fwd_length: ∀R,L1,L2,T. L1 ⦻*[R, T] L2 → |L1| = |L2|.
 #R #L1 #L2 #T * /2 width=4 by lexs_fwd_length/
 qed-.

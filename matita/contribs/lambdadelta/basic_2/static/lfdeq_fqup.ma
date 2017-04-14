@@ -19,6 +19,7 @@ include "basic_2/static/lfdeq.ma".
 
 (* Advanced properties ******************************************************)
 
+(* Basic_2A1: uses: lleq_refl *)
 lemma lfdeq_refl: ∀h,o,T. reflexive … (lfdeq h o T).
 /2 width=1 by lfxs_refl/ qed.
 

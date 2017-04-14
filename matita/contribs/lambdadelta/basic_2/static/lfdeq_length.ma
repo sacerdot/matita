@@ -19,5 +19,6 @@ include "basic_2/static/lfdeq.ma".
 
 (* Forward lemmas with length for local environments ************************)
 
+(* Basic_2A1: lleq_fwd_length *)
 lemma lfdeq_fwd_length: ∀h,o,L1,L2. ∀T:term. L1 ≡[h, o, T] L2 → |L1| = |L2|.
 /2 width=3 by lfxs_fwd_length/ qed-.

@@ -25,4 +25,3 @@ lemma lpxs_ind_alt: ∀h,o,G. ∀R:relation lenv.
 lemma lpxs_pair2: ∀h,o,I,G,L1,L2. ⦃G, L1⦄ ⊢ ➡*[h, o] L2 →
                   ∀V1,V2. ⦃G, L2⦄ ⊢ V1 ➡*[h, o] V2 → ⦃G, L1.ⓑ{I}V1⦄ ⊢ ➡*[h, o] L2.ⓑ{I}V2.
 /3 width=3 by lpxs_pair, lpxs_cpxs_trans/ qed.
-

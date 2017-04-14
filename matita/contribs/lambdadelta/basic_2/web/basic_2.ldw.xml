@@ -84,7 +84,7 @@
          (anniversary milestone).
    </news>
    <news class="alpha" date="2014 January 20.">
-         Parametrized slicing of local environments
+         Parametrized slicing on local environments
 	 comprises both versions of this operation
 	 (one from basic_1, the other used in basic_2 till now).
    </news>

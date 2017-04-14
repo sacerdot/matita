@@ -53,8 +53,7 @@ lemma lfpx_cpx_trans: ∀h,G. s_r_transitive … (cpx h G) (lfpx h G).
 qed.
 
 lemma lfpx_cpxs_trans: ∀h,G. s_rs_transitive … (cpx h G) (lfpx h G).
-#h #G #L2 #T1 #T2 #H #L1 #HL12 @(cpxs_ind … H) -T2
-/4 width=7 by lfpx_cpx_trans, cpxs_trans, lfpx_cpxs_conf/ (**) (* lfpx_fqup slows this down *)
+/3 width=6 by lfpx_cpx_conf, lfpx_cpx_trans, s_r_trans_LTC1/
 qed-.
 
 (* Advanced properties ******************************************************)

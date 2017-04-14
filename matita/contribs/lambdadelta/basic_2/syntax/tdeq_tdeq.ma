@@ -45,6 +45,6 @@ theorem tdeq_tdneq_trans: ∀h,o,T1,T. T1 ≡[h, o] T → ∀T2. (T ≡[h, o] T2
                           T1 ≡[h, o] T2 → ⊥.
 /3 width=3 by tdeq_canc_sn/ qed-.
 
-theorem tndeq_tdeq_canc_dx: ∀h,o,T1,T. (T1 ≡[h, o] T → ⊥) → ∀T2. T2 ≡[h, o] T →
+theorem tdneq_tdeq_canc_dx: ∀h,o,T1,T. (T1 ≡[h, o] T → ⊥) → ∀T2. T2 ≡[h, o] T →
                             T1 ≡[h, o] T2 → ⊥.
 /3 width=3 by tdeq_trans/ qed-.

@@ -21,7 +21,7 @@ include "basic_2/rt_transition/lfpx_fqup.ma".
 (* Properties with atomic arity assignment for terms ************************)
 
 (* Note: lemma 500 *)
-(* Basic_2A1: was: cpx_lpx_aaa_conf *)
+(* Basic_2A1: uses: cpx_lpx_aaa_conf *)
 lemma cpx_aaa_conf_lfpx: ∀h,G,L1,T1,A. ⦃G, L1⦄ ⊢ T1 ⁝ A →
                          ∀T2. ⦃G, L1⦄ ⊢ T1 ⬈[h] T2 →
                          ∀L2. ⦃G, L1⦄ ⊢ ⬈[h, T1] L2 → ⦃G, L2⦄ ⊢ T2 ⁝ A.

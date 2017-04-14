@@ -19,18 +19,18 @@ include "basic_2/rt_computation/lfpxs_fqup.ma".
 
 (* Properties with uncounted context-sensitive rt-computation for terms *****)
 
+(* Basic_2A1: uses: lpxs_pair lpxs_pair_refl *)
 lemma lfpxs_pair: ∀h,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ⬈*[h] V2 →
                   ∀I,T. ⦃G, L.ⓑ{I}V1⦄ ⊢ ⬈*[h, T] L.ⓑ{I}V2.
-#h #G #L #V1 #V2 #H @(cpxs_ind … H) -V2
-/3 width=3 by lfpxs_strap1, lfpx_pair/
-qed.
+/2 width=1 by tc_lfxs_pair/ qed.
 
-(* Basic_2A1: was just: lpxs_cpx_trans *)
+(* Basic_2A1: uses: lpxs_cpx_trans *)
 lemma lfpxs_cpx_trans: ∀h,G. s_r_transitive … (cpx h G) (lfpxs h G).
-/3 width=5 by s_r_trans_LTC2, lfpx_cpxs_trans/ qed-.
+#h #G @s_r_trans_LTC2 @lfpx_cpxs_trans (**) (* auto fails *)
+qed-.
 
 (* Note: lfpxs_cpx_conf does not hold, thus we cannot invoke s_r_trans_LTC1 *)
-(* Basic_2A1: was just: lpxs_cpxs_trans *)
+(* Basic_2A1: uses: lpxs_cpxs_trans *)
 lemma lfpxs_cpxs_trans: ∀h,G. s_rs_transitive … (cpx h G) (lfpxs h G).
 #h #G @s_r_to_s_rs_trans @s_r_trans_LTC2
 @s_rs_trans_TC1 /2 width=3 by lfpx_cpxs_trans/ (**) (* full auto too slow *)

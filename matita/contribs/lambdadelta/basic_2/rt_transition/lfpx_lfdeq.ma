@@ -125,7 +125,7 @@ lemma tdeq_cpx_trans: ∀h,o,G,L,T2,T0. T2 ≡[h, o] T0 →
 elim (cpx_tdeq_conf … HT01 T2) -HT01 /3 width=3 by tdeq_sym, ex2_intro/
 qed-.
 
-(* Basic_2A1: was just: cpx_lleq_conf *)
+(* Basic_2A1: uses: cpx_lleq_conf *)
 lemma cpx_lfdeq_conf: ∀h,o,G,L0,T0,T1. ⦃G, L0⦄ ⊢ T0 ⬈[h] T1 →
                       ∀L2. L0 ≡[h, o, T0] L2 →
                       ∃∃T. ⦃G, L2⦄ ⊢ T0 ⬈[h] T & T1 ≡[h, o] T.
@@ -134,7 +134,7 @@ elim (cpx_tdeq_conf_lexs … HT01 T0 … L0 … HL02) -HT01 -HL02
 /2 width=3 by lfxs_refl, ex2_intro/
 qed-.
 
-(* Basic_2A1: was just: lleq_cpx_trans *)
+(* Basic_2A1: uses: lleq_cpx_trans *)
 lemma lfdeq_cpx_trans: ∀h,o,G,L2,L0,T0. L2 ≡[h, o, T0] L0 →
                        ∀T1. ⦃G, L0⦄ ⊢ T0 ⬈[h] T1 →
                        ∃∃T. ⦃G, L2⦄ ⊢ T0 ⬈[h] T & T ≡[h, o] T1.
@@ -146,7 +146,7 @@ qed-.
 lemma lfpx_lfdeq_conf: ∀h,o,G,T. confluent2 … (lfpx h G T) (lfdeq h o T).
 /3 width=6 by lfpx_frees_conf, cpx_tdeq_conf_lexs, frees_lfdeq_conf_lexs, lfxs_conf/ qed-.
 
-(* Basic_2A1: was just: lleq_lpx_trans *)
+(* Basic_2A1: uses: lleq_lpx_trans *)
 lemma lfdeq_lfpx_trans: ∀h,o,G,T,L2,K2. ⦃G, L2⦄ ⊢ ⬈[h, T] K2 →
                         ∀L1. L1 ≡[h, o, T] L2 →
                         ∃∃K1. ⦃G, L1⦄ ⊢ ⬈[h, T] K1 & K1 ≡[h, o, T] K2.

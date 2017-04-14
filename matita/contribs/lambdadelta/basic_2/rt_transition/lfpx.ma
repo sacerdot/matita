@@ -54,9 +54,11 @@ lemma lfpx_pair_repl_dx: ∀h,I,G,L1,L2,T,V,V1.
 
 (* Basic inversion lemmas ***************************************************)
 
+(* Basic_2A1: uses: lpx_inv_atom1 *)
 lemma lfpx_inv_atom_sn: ∀h,G,Y2,T. ⦃G, ⋆⦄ ⊢ ⬈[h, T] Y2 → Y2 = ⋆.
 /2 width=3 by lfxs_inv_atom_sn/ qed-.
 
+(* Basic_2A1: uses: lpx_inv_atom2 *)
 lemma lfpx_inv_atom_dx: ∀h,G,Y1,T. ⦃G, Y1⦄ ⊢ ⬈[h, T] ⋆ → Y1 = ⋆.
 /2 width=3 by lfxs_inv_atom_dx/ qed-.
 
@@ -131,29 +133,18 @@ lemma lfpx_inv_gref_pair_dx: ∀h,I,G,Y1,L2,V2,l. ⦃G, Y1⦄ ⊢ ⬈[h, §l] L2
 
 (* Basic forward lemmas *****************************************************)
 
-lemma lfpx_fwd_bind_sn: ∀h,p,I,G,L1,L2,V,T.
-                        ⦃G, L1⦄ ⊢ ⬈[h, ⓑ{p,I}V.T] L2 → ⦃G, L1⦄ ⊢ ⬈[h, V] L2.
-/2 width=4 by lfxs_fwd_bind_sn/ qed-.
+lemma lfpx_fwd_pair_sn: ∀h,I,G,L1,L2,V,T.
+                        ⦃G, L1⦄ ⊢ ⬈[h, ②{I}V.T] L2 → ⦃G, L1⦄ ⊢ ⬈[h, V] L2.
+/2 width=3 by lfxs_fwd_pair_sn/ qed-.
 
 lemma lfpx_fwd_bind_dx: ∀h,p,I,G,L1,L2,V,T.
                         ⦃G, L1⦄ ⊢ ⬈[h, ⓑ{p,I}V.T] L2 → ⦃G, L1.ⓑ{I}V⦄ ⊢ ⬈[h, T] L2.ⓑ{I}V.
 /2 width=2 by lfxs_fwd_bind_dx/ qed-.
 
-lemma lfpx_fwd_flat_sn: ∀h,I,G,L1,L2,V,T.
-                        ⦃G, L1⦄ ⊢ ⬈[h, ⓕ{I}V.T] L2 → ⦃G, L1⦄ ⊢ ⬈[h, V] L2.
-/2 width=3 by lfxs_fwd_flat_sn/ qed-.
-
 lemma lfpx_fwd_flat_dx: ∀h,I,G,L1,L2,V,T.
                         ⦃G, L1⦄ ⊢ ⬈[h, ⓕ{I}V.T] L2 → ⦃G, L1⦄ ⊢ ⬈[h, T] L2.
 /2 width=3 by lfxs_fwd_flat_dx/ qed-.
 
-lemma lfpx_fwd_pair_sn: ∀h,I,G,L1,L2,V,T.
-                        ⦃G, L1⦄ ⊢ ⬈[h, ②{I}V.T] L2 → ⦃G, L1⦄ ⊢ ⬈[h, V] L2.
-/2 width=3 by lfxs_fwd_pair_sn/ qed-.
-
-(* Basic_2A1: removed theorems 14:
-              lpx_refl lpx_pair lpx_fwd_length
-              lpx_inv_atom1 lpx_inv_pair1 lpx_inv_atom2 lpx_inv_pair2 lpx_inv_pair
-              lpx_drop_conf drop_lpx_trans lpx_drop_trans_O1
-              lpx_cpx_frees_trans cpx_frees_trans lpx_frees_trans
+(* Basic_2A1: removed theorems 3:
+              lpx_inv_pair1 lpx_inv_pair2 lpx_inv_pair
 *)

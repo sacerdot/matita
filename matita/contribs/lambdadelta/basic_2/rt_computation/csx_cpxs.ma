@@ -46,7 +46,7 @@ lemma csx_ind_cpxs_tdeq: ∀h,o,G,L. ∀R:predicate term.
 @IH -IH /3 width=3 by csx_cpxs_trans, csx_tdeq_trans/ -HT1 #V2 #HTV2 #HnTV2
 lapply (tdeq_tdneq_trans … HT02 … HnTV2) -HnTV2 #H
 elim (tdeq_cpxs_trans … HT02 … HTV2) -T2 #V0 #HTV0 #HV02
-lapply (tndeq_tdeq_canc_dx … H … HV02) -H #HnTV0
+lapply (tdneq_tdeq_canc_dx … H … HV02) -H #HnTV0
 elim (tdeq_dec h o T1 T0) #H
 [ lapply (tdeq_tdneq_trans … H … HnTV0) -H -HnTV0 #Hn10
   lapply (cpxs_trans … HT10 … HTV0) -T0 #H10

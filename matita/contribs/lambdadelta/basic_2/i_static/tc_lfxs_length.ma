@@ -12,11 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/lpxs.ma".
+include "basic_2/static/lfxs_length.ma".
+include "basic_2/i_static/tc_lfxs.ma".
 
-(* SN EXTENDED PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS *******************)
+(* ITERATED EXTENSION ON REFERRED ENTRIES OF A CONTEXT-SENSITIVE REALTION ***)
 
-(* Main properties **********************************************************)
+(* Forward lemmas with length for local environments ************************)
 
-theorem lpxs_trans: ∀h,o,G. Transitive … (lpxs h o G).
-/2 width=3 by trans_TC/ qed-.
+(* Basic_2A1: uses: TC_lpx_sn_fwd_length *)
+lemma tc_lfxs_fwd_length: ∀R,L1,L2,T. L1 ⦻**[R, T] L2 → |L1| = |L2|.
+#R #L1 #L2 #T #H elim H -L2
+[ #L2 #HL12 >(lfxs_fwd_length … HL12) -HL12 //
+| #L #L2 #_ #HL2 #IHL1
+  >IHL1 -L1 >(lfxs_fwd_length … HL2) -HL2 //
+]
+qed-.

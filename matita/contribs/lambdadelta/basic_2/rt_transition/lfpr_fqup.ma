@@ -20,9 +20,11 @@ include "basic_2/rt_transition/lfpr.ma".
 (* Advanced properties ******************************************************)
 
 (* Note: lemma 250 *)
+(* Basic_2A1: uses: lpr_refl *)
 lemma lfpr_refl: ∀h,G,T. reflexive … (lfpr h G T).
 /2 width=1 by lfxs_refl/ qed.
 
+(* Basic_2A1: uses: lpr_pair *)
 lemma lfpr_pair: ∀h,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 →
                  ∀I,T. ⦃G, L.ⓑ{I}V1⦄ ⊢ ➡[h, T] L.ⓑ{I}V2.
 /2 width=1 by lfxs_pair/ qed.

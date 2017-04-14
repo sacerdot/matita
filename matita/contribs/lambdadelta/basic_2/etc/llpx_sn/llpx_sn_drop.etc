@@ -104,46 +104,8 @@ lemma llpx_sn_inv_S: ∀R,L1,L2,T,l. llpx_sn R (l + 1) T L1 L2 →
                      llpx_sn R 0 V1 K1 K2 → R K1 V1 V2 → llpx_sn R l T L1 L2.
 /2 width=9 by llpx_sn_inv_S_aux/ qed-.
 
-lemma llpx_sn_inv_bind_O: ∀R. (∀L. reflexive … (R L)) →
-                          ∀a,I,L1,L2,V,T. llpx_sn R 0 (ⓑ{a,I}V.T) L1 L2 →
-                          llpx_sn R 0 V L1 L2 ∧ llpx_sn R 0 T (L1.ⓑ{I}V) (L2.ⓑ{I}V).
-#R #HR #a #I #L1 #L2 #V #T #H elim (llpx_sn_inv_bind … H) -H
-/3 width=9 by drop_pair, conj, llpx_sn_inv_S/
-qed-.
-
-(* More advanced forward lemmas *********************************************)
-
-lemma llpx_sn_fwd_bind_O_dx: ∀R. (∀L. reflexive … (R L)) →
-                             ∀a,I,L1,L2,V,T. llpx_sn R 0 (ⓑ{a,I}V.T) L1 L2 →
-                             llpx_sn R 0 T (L1.ⓑ{I}V) (L2.ⓑ{I}V).
-#R #HR #a #I #L1 #L2 #V #T #H elim (llpx_sn_inv_bind_O … H) -H //
-qed-.
-
 (* Advanced properties ******************************************************)
 
 lemma llpx_sn_bind_repl_O: ∀R,I,L1,L2,V1,V2,T. llpx_sn R 0 T (L1.ⓑ{I}V1) (L2.ⓑ{I}V2) →
                            ∀J,W1,W2. llpx_sn R 0 W1 L1 L2 → R L1 W1 W2 → llpx_sn R 0 T (L1.ⓑ{J}W1) (L2.ⓑ{J}W2).
 /3 width=9 by llpx_sn_bind_repl_SO, llpx_sn_inv_S/ qed-.
-
-(* Inversion lemmas on negated lazy pointwise extension *********************)
-
-lemma nllpx_sn_inv_bind: ∀R. (∀L,T1,T2. Decidable (R L T1 T2)) →
-                         ∀a,I,L1,L2,V,T,l. (llpx_sn R l (ⓑ{a,I}V.T) L1 L2 → ⊥) →
-                         (llpx_sn R l V L1 L2 → ⊥) ∨ (llpx_sn R (⫯l) T (L1.ⓑ{I}V) (L2.ⓑ{I}V) → ⊥).
-#R #HR #a #I #L1 #L2 #V #T #l #H elim (llpx_sn_dec … HR V L1 L2 l)
-/4 width=1 by llpx_sn_bind, or_intror, or_introl/
-qed-.
-
-lemma nllpx_sn_inv_flat: ∀R. (∀L,T1,T2. Decidable (R L T1 T2)) →
-                         ∀I,L1,L2,V,T,l. (llpx_sn R l (ⓕ{I}V.T) L1 L2 → ⊥) →
-                         (llpx_sn R l V L1 L2 → ⊥) ∨ (llpx_sn R l T L1 L2 → ⊥).
-#R #HR #I #L1 #L2 #V #T #l #H elim (llpx_sn_dec … HR V L1 L2 l)
-/4 width=1 by llpx_sn_flat, or_intror, or_introl/
-qed-.
-
-lemma nllpx_sn_inv_bind_O: ∀R. (∀L,T1,T2. Decidable (R L T1 T2)) →
-                           ∀a,I,L1,L2,V,T. (llpx_sn R 0 (ⓑ{a,I}V.T) L1 L2 → ⊥) →
-                           (llpx_sn R 0 V L1 L2 → ⊥) ∨ (llpx_sn R 0 T (L1.ⓑ{I}V) (L2.ⓑ{I}V) → ⊥).
-#R #HR #a #I #L1 #L2 #V #T #H elim (llpx_sn_dec … HR V L1 L2 0)
-/4 width=1 by llpx_sn_bind_O, or_intror, or_introl/
-qed-.
