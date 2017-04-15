@@ -54,5 +54,5 @@ lemma lfpxs_inv_atom2: ∀h,I,G,L1. ⦃G, L1⦄ ⊢ ⬈*[h, ⓪{I}] ⋆ → L1 =
 lemma lfpxs_fwd_pair_sn: ∀h,I,G,L1,L2,V,T. ⦃G, L1⦄ ⊢ ⬈*[h, ②{I}V.T] L2 → ⦃G, L1⦄ ⊢ ⬈*[h, V] L2.
 /2 width=3 by tc_lfxs_fwd_pair_sn/ qed-.
 
-lemma lfpxs_flat_dx: ∀h,I,G,L1,L2,V,T. ⦃G, L1⦄ ⊢ ⬈*[h, ⓕ{I}V.T] L2 → ⦃G, L1⦄ ⊢ ⬈*[h, T] L2.
+lemma lfpxs_fwd_flat_dx: ∀h,I,G,L1,L2,V,T. ⦃G, L1⦄ ⊢ ⬈*[h, ⓕ{I}V.T] L2 → ⦃G, L1⦄ ⊢ ⬈*[h, T] L2.
 /2 width=3 by tc_lfxs_fwd_flat_dx/ qed-.

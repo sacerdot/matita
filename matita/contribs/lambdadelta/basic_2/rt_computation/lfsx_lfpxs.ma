@@ -30,7 +30,7 @@ lemma lfsx_intro_lfpxs: ∀h,o,G,L1,T.
 (* Basic_2A1: uses: lsx_lpxs_trans *)
 lemma lfsx_lfpxs_trans: ∀h,o,G,L1,T. G ⊢ ⬈*[h, o, T] 𝐒⦃L1⦄ →
                         ∀L2. ⦃G, L1⦄ ⊢ ⬈*[h, T] L2 → G ⊢ ⬈*[h, o, T] 𝐒⦃L2⦄.
-#h #o #G #L1 #T #HL1 #L2 #H @(lfpxs_ind … H) -L2
+#h #o #G #L1 #T #HL1 #L2 #H @(lfpxs_ind_sn … H) -L2
 /2 width=3 by lfsx_lfpx_trans/
 qed-.
 
@@ -73,51 +73,50 @@ qed-.
 
 (* Advanced properties ******************************************************)
 
-fact lsx_bind_lpxs_aux: ∀h,o,p,I,G,L1,V. G ⊢ ⬈*[h, o, V] 𝐒⦃L1⦄ →
-                        ∀Y,T. G ⊢ ⬈*[h, o, T] 𝐒⦃Y⦄ →
-                        ∀L2. Y = L2.ⓑ{I}V → ⦃G, L1⦄ ⊢ ⬈*[h, ⓑ{p,I}V.T] L2 →
-                        G ⊢ ⬈*[h, o, ⓑ{p,I}V.T] 𝐒⦃L2⦄.
+fact lfsx_bind_lfpxs_aux: ∀h,o,p,I,G,L1,V. G ⊢ ⬈*[h, o, V] 𝐒⦃L1⦄ →
+                          ∀Y,T. G ⊢ ⬈*[h, o, T] 𝐒⦃Y⦄ →
+                          ∀L2. Y = L2.ⓑ{I}V → ⦃G, L1⦄ ⊢ ⬈*[h, ⓑ{p,I}V.T] L2 →
+                          G ⊢ ⬈*[h, o, ⓑ{p,I}V.T] 𝐒⦃L2⦄.
 #h #o #p #I #G #L1 #V #H @(lfsx_ind_lfpxs … H) -L1
-#L1 #HL1 #IHL1 #Y #T #H @(lfsx_ind_lfpxs … H) -Y
-#Y #HY #IHY #L2 #H #HL12 destruct @lfsx_intro_lfpxs
-#L0 #HL20 lapply (lfpxs_trans … HL12 … HL20)
-#HL10 #H elim (lfdneq_inv_bind … H) -H [ -HL1 -IHY | -HY -IHL1 ]
+#L1 #_ #IHL1 #Y #T #H @(lfsx_ind_lfpxs … H) -Y
+#Y #HY #IHY #L2 #H #HL12 destruct
+@lfsx_intro_lfpxs #L0 #HL20
+lapply (lfpxs_trans … HL12 … HL20) #HL10 #H
+elim (lfdneq_inv_bind … H) -H [ -IHY | -HY -IHL1 -HL12 ]
 [ #HnV elim (lfdeq_dec h o L1 L2 V)
-  [ #HV @(IHL1 … L0) -IHL1
-    [2: /3 width=5 by lfdeq_canc_sn/
-    |5: // |3: skip
-    |6: //
-  
-   lfdeq_lfdneq_trans/
-  
-  /3 width=5 by lfsx_lfpxs_trans, lfpxs_pair, lfdeq_canc_sn/ (**) (* full auto too slow *)
-  | -HnV -HL10 /4 width=5 by lsx_lpxs_trans, lpxs_pair/
+  [ #HV @(IHL1 … L0) -IHL1 -HL12
+    /3 width=4 by lfsx_lfpxs_trans, lfpxs_fwd_bind_dx, lfpxs_fwd_pair_sn, lfdeq_canc_sn/ (**) (* full auto too slow *)
+  | -HnV -HL10 /4 width=4 by lfsx_lfpxs_trans, lfpxs_fwd_pair_sn/
   ]
-| /3 width=4 by lpxs_pair/
+| /3 width=4 by lfpxs_fwd_bind_dx/
 ]
 qed-.
 
-lemma lsx_bind: ∀h,o,a,I,G,L,V,l. G ⊢ ⬈*[h, o, V, l] L →
-                ∀T. G ⊢ ⬈*[h, o, T, ⫯l] L.ⓑ{I}V →
-                G ⊢ ⬈*[h, o, ⓑ{a,I}V.T, l] L.
-/2 width=3 by lsx_bind_lpxs_aux/ qed.
+(* Basic_2A1: uses: lsx_bind *)
+lemma lfsx_bind: ∀h,o,p,I,G,L,V. G ⊢ ⬈*[h, o, V] 𝐒⦃L⦄ →
+                 ∀T. G ⊢ ⬈*[h, o, T] 𝐒⦃L.ⓑ{I}V⦄ →
+                 G ⊢ ⬈*[h, o, ⓑ{p,I}V.T] 𝐒⦃L⦄.
+/2 width=3 by lfsx_bind_lfpxs_aux/ qed.
 
-lemma lsx_flat_lpxs: ∀h,o,I,G,L1,V,l. G ⊢ ⬈*[h, o, V, l] L1 →
-                     ∀L2,T. G ⊢ ⬈*[h, o, T, l] L2 → ⦃G, L1⦄ ⊢ ⬈*[h, o] L2 →
-                     G ⊢ ⬈*[h, o, ⓕ{I}V.T, l] L2.
-#h #o #I #G #L1 #V #l #H @(lsx_ind_lfpxs … H) -L1
-#L1 #HL1 #IHL1 #L2 #T #H @(lsx_ind_lfpxs … H) -L2
-#L2 #HL2 #IHL2 #HL12 @lsx_intro_lfpxs
-#L0 #HL20 lapply (lpxs_trans … HL12 … HL20)
-#HL10 #H elim (nlleq_inv_flat … H) -H [ -HL1 -IHL2 | -HL2 -IHL1 ]
-[ #HnV elim (lleq_dec V L1 L2 l)
-  [ #HV @(IHL1 … L0) /3 width=3 by lsx_lpxs_trans, lleq_canc_sn/ (**) (* full auto too slow: 47s *)
-  | -HnV -HL10 /3 width=4 by lsx_lpxs_trans/
+(* Basic_2A1: uses: lsx_flat_lpxs *)
+lemma lfsx_flat_lfpxs: ∀h,o,I,G,L1,V. G ⊢ ⬈*[h, o, V] 𝐒⦃L1⦄ →
+                       ∀L2,T. G ⊢ ⬈*[h, o, T] 𝐒⦃L2⦄ → ⦃G, L1⦄ ⊢ ⬈*[h, ⓕ{I}V.T] L2 →
+                       G ⊢ ⬈*[h, o, ⓕ{I}V.T] 𝐒⦃L2⦄.
+#h #o #I #G #L1 #V #H @(lfsx_ind_lfpxs … H) -L1
+#L1 #HL1 #IHL1 #L2 #T #H @(lfsx_ind_lfpxs … H) -L2
+#L2 #HL2 #IHL2 #HL12 @lfsx_intro_lfpxs
+#L0 #HL20 lapply (lfpxs_trans … HL12 … HL20)
+#HL10 #H elim (lfdneq_inv_flat … H) -H [ -HL1 -IHL2 | -HL2 -IHL1 ]
+[ #HnV elim (lfdeq_dec h o L1 L2 V)
+  [ #HV @(IHL1 … L0) -IHL1 -HL12
+    /3 width=5 by lfsx_lfpxs_trans, lfpxs_fwd_flat_dx, lfpxs_fwd_pair_sn, lfdeq_canc_sn/ (**) (* full auto too slow: 47s *)
+  | -HnV -HL10 /4 width=4 by lfsx_lfpxs_trans, lfpxs_fwd_pair_sn/
   ]
-| /3 width=1 by/
+| /3 width=3 by lfpxs_fwd_flat_dx/
 ]
 qed-.
 
-lemma lsx_flat: ∀h,o,I,G,L,V,l. G ⊢ ⬈*[h, o, V, l] L →
-                ∀T. G ⊢ ⬈*[h, o, T, l] L → G ⊢ ⬈*[h, o, ⓕ{I}V.T, l] L.
-/2 width=3 by lsx_flat_lpxs/ qed.
+(* Basic_2A1: uses: lsx_flat *)
+lemma lfsx_flat: ∀h,o,I,G,L,V. G ⊢ ⬈*[h, o, V] 𝐒⦃L⦄ →
+                 ∀T. G ⊢ ⬈*[h, o, T] 𝐒⦃L⦄ → G ⊢ ⬈*[h, o, ⓕ{I}V.T] 𝐒⦃L⦄.
+/2 width=3 by lfsx_flat_lfpxs/ qed.
