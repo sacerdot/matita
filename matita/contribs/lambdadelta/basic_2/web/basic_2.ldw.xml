@@ -34,6 +34,11 @@
 
    <subsection name="A2">Stage "A2": "Extending the Applicability Condition"</subsection>
 
+   <news class="alpha" date="2017 April 16.">
+         Strong rt-normalization
+         for simply typed terms
+         (anniversary milestone).
+   </news>
    <news class="alpha" date="2017 March 16.">
          First behavioral component reconstructed:
          rt_transition.

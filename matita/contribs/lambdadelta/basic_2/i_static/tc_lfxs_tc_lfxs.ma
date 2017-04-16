@@ -12,13 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/i_static/tc_lfxs_tc_lfxs.ma".
-include "basic_2/rt_computation/lfpxs.ma".
+include "basic_2/i_static/tc_lfxs.ma".
 
-(* UNCOUNTED PARALLEL RT-COMPUTATION FOR LOCAL ENV.S ON REFERRED ENTRIES ****)
+(* ITERATED EXTENSION ON REFERRED ENTRIES OF A CONTEXT-SENSITIVE REALTION ***)
 
 (* Main properties **********************************************************)
 
-(* Basic_2A1: uses: lpxs_trans *)
-theorem lfpxs_trans: ∀h,G,T. Transitive … (lfpxs h G T).
-/2 width=3 by tc_lfxs_trans/ qed-.
+theorem tc_lfxs_trans: ∀R,T. Transitive … (tc_lfxs R T).
+#R #T #L1 #L #HL1 #L2 #HL2 @(trans_TC … HL1 HL2) (**) (* auto fails *) 
+qed-.
