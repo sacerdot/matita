@@ -116,7 +116,7 @@ table {
              [ "lfsx ( ? ⊢ ⬈*[?,?,?] 𝐒⦃?⦄ )" "lfsx_fqup" + "lfsx_lfpxs" + "lfsx_lfsx" * ]
              [ "csx_vector ( ⦃?,?⦄ ⊢ ⬈*[?,?] 𝐒⦃?⦄ )" "csx_cnx_vector" + "csx_csx_vector" * ]
              [ "csx ( ⦃?,?⦄ ⊢ ⬈*[?,?] 𝐒⦃?⦄ )" "csx_simple" + "csx_simple_theq" + "csx_drops" + "csx_lsubr" + "csx_aaa" + "csx_gcp" + "csx_gcr" + "csx_lfpx" + "csx_cnx" + "csx_cpxs" + "csx_csx" * ]
-             [ "lfpxs ( ⦃?,?⦄ ⊢ ⬈*[?,?] ? )" "lfpxs_length" + "lfpxs_fqup" + "lfpxs_lfdeq" + "lfpxs_cpxs" + "lfpxs_lfpxs" * ]
+             [ "lfpxs ( ⦃?,?⦄ ⊢ ⬈*[?,?] ? )" "lfpxs_length" + "lfpxs_drops" + "lfpxs_fqup" + "lfpxs_lfdeq" + "lfpxs_aaa" + "lfpxs_cpxs" + "lfpxs_lfpxs" * ]
              [ "cpxs ( ⦃?,?⦄ ⊢ ? ⬈*[?] ? )" "cpxs_tdeq" + "cpxs_theq" + "cpxs_theq_vector" + "cpxs_drops" + "cpxs_lsubr" + "cpxs_aaa" + "cpxs_lfpx" + "cpxs_cnx" + "cpxs_cpxs" * ] 
           }
         ]
@@ -150,7 +150,7 @@ table {
    class "water"
    [ { "iterated static typing" * } {
         [ { "iterated extension on referred entries" * } {
-             [ "tc_lfxs ( ? ⦻**[?,?] ? )" "tc_lfxs_length" + "tc_lfxs_fqup" + "tc_lfxs_tc_lfxs" * ]
+             [ "tc_lfxs ( ? ⦻**[?,?] ? )" "tc_lfxs_length" + "tc_lfxs_drops" + "tc_lfxs_fqup" + "tc_lfxs_tc_lfxs" * ]
           }
         ]
      }

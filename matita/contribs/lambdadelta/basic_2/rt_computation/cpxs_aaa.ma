@@ -19,8 +19,6 @@ include "basic_2/rt_computation/cpxs.ma".
 
 (* Properties with atomic arity assignment on terms *************************)
 
-lemma cpxs_aaa_conf: ∀h,G,L,T1,A. ⦃G, L⦄ ⊢ T1 ⁝ A →
-                     ∀T2. ⦃G, L⦄ ⊢ T1 ⬈*[h] T2 → ⦃G, L⦄ ⊢ T2 ⁝ A.
-#h #G #L #T1 #A #HT1 #T2 #HT12
-@(TC_Conf3 … HT1 ? HT12) -A -T1 -T2 /2 width=5 by cpx_aaa_conf/
+lemma cpxs_aaa_conf: ∀h,G,L. Conf3 … (aaa G L) (cpxs h G L).
+#h #G #L @TC_Conf3 @cpx_aaa_conf (**) (* auto fails *)
 qed-.

@@ -19,10 +19,9 @@ include "basic_2/rt_transition/lfpr_lfpx.ma".
 
 (* Properties with atomic arity assignment for terms ************************)
 
-lemma cpr_aaa_conf: ∀h,G,L,T1,A. ⦃G, L⦄ ⊢ T1 ⁝ A →
-                    ∀T2. ⦃G, L⦄ ⊢ T1 ➡[h] T2 → ⦃G, L⦄ ⊢ T2 ⁝ A.
+lemma cpr_aaa_conf: ∀h,G,L. Conf3 … (aaa G L) (cpm 0 h G L).
 /3 width=5 by cpx_aaa_conf, cpm_fwd_cpx/ qed-.
 
-lemma lfpr_aaa_conf: ∀h,G,L1,T,A. ⦃G, L1⦄ ⊢ T ⁝ A →
-                     ∀L2. ⦃G, L1⦄ ⊢ ➡[h, T] L2 → ⦃G, L2⦄ ⊢ T ⁝ A.
+(* Basic_2A1: uses: lpr_aaa_conf *)
+lemma lfpr_aaa_conf: ∀h,G,T. Conf3 … (λL. aaa G L T) (lfpr h G T).
 /3 width=4 by lfpx_aaa_conf, lfpr_fwd_lfpx/ qed-.

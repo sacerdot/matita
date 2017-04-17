@@ -12,18 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reduction/lpx_drop.ma".
-include "basic_2/computation/lpxs.ma".
+include "basic_2/rt_transition/lfpx_aaa.ma".
+include "basic_2/rt_computation/lfpxs.ma".
 
-(* SN EXTENDED PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS *******************)
+(* UNCOUNTED PARALLEL RT-COMPUTATION FOR LOCAL ENV.S ON REFERRED ENTRIES ****)
 
-(* Properties on local environment slicing ***********************************)
+(* Properties with atomic arity assignment on terms **************************)
 
-lemma lpxs_drop_conf: ∀h,o,G. dropable_sn (lpxs h o G).
-/3 width=3 by dropable_sn_TC, lpx_drop_conf/ qed-.
-
-lemma drop_lpxs_trans: ∀h,o,G. dedropable_sn (lpxs h o G).
-/3 width=3 by dedropable_sn_TC, drop_lpx_trans/ qed-.
-
-lemma lpxs_drop_trans_O1: ∀h,o,G. dropable_dx (lpxs h o G).
-/3 width=3 by dropable_dx_TC, lpx_drop_trans_O1/ qed-.
+(* Basic_2A1: uses: lpxs_aaa_conf *) 
+lemma lfpxs_aaa_conf: ∀h,G,T. Conf3 … (λL. aaa G L T) (lfpxs h G T).
+#h #G #T @TC_Conf3 @lfpx_aaa_conf (**) (* auto fails *)
+qed-.

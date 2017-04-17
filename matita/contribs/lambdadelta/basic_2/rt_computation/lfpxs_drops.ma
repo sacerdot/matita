@@ -12,19 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reduction/lpx_aaa.ma".
-include "basic_2/computation/lpxs.ma".
+include "basic_2/i_static/tc_lfxs_drops.ma".
+include "basic_2/rt_transition/lfpx_drops.ma".
 
-(* SN EXTENDED PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS *******************)
+(* UNCOUNTED PARALLEL RT-COMPUTATION FOR LOCAL ENV.S ON REFERRED ENTRIES ****)
 
-(* Properties about atomic arity assignment on terms ************************)
+(* Properties with generic slicing for local environments *******************)
 
-lemma lpxs_aaa_conf: ∀h,o,G,L1,T,A. ⦃G, L1⦄ ⊢ T ⁝ A →
-                     ∀L2. ⦃G, L1⦄ ⊢ ➡*[h, o] L2 → ⦃G, L2⦄ ⊢ T ⁝ A.
-#h #o #G #L1 #T #A #HT #L2 #HL12
-@(TC_Conf3 … (λL,A. ⦃G, L⦄ ⊢ T ⁝ A) … HT ? HL12) /2 width=5 by lpx_aaa_conf/
-qed-.
+(* Basic_2A1: uses: drop_lpxs_trans *)
+lemma drops_lfpxs_trans: ∀h,G. tc_dedropable_sn (cpx h G).
+/3 width=5 by drops_lfpx_trans, dedropable_sn_LTC/ qed-.
 
-lemma lprs_aaa_conf: ∀G,L1,T,A. ⦃G, L1⦄ ⊢ T ⁝ A →
-                     ∀L2. ⦃G, L1⦄ ⊢ ➡* L2 → ⦃G, L2⦄ ⊢ T ⁝ A.
-/3 width=5 by lprs_lpxs, lpxs_aaa_conf/ qed-.
+(* Inversion lemmas with generic slicing for local environments *************)
+
+(* Basic_2A1: uses: lpxs_drop_conf *)
+lemma lfpxs_drops_conf: ∀h,G. tc_dropable_sn (cpx h G).
+/3 width=5 by lfpx_drops_conf, dropable_sn_LTC/ qed-.
+
+(* Basic_2A1: uses: lpxs_drop_trans_O1 *)
+lemma lfpxs_drops_trans: ∀h,G. tc_dropable_dx (cpx h G).
+/3 width=5 by lfpx_drops_trans, dropable_dx_LTC/ qed-.

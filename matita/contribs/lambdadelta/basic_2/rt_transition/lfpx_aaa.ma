@@ -73,10 +73,9 @@ lemma cpx_aaa_conf_lfpx: ∀h,G,L1,T1,A. ⦃G, L1⦄ ⊢ T1 ⁝ A →
 ]
 qed-.
 
-lemma cpx_aaa_conf: ∀h,G,L,T1,A. ⦃G, L⦄ ⊢ T1 ⁝ A →
-                    ∀T2. ⦃G, L⦄ ⊢ T1 ⬈[h] T2 → ⦃G, L⦄ ⊢ T2 ⁝ A.
+lemma cpx_aaa_conf: ∀h,G,L. Conf3 … (aaa G L) (cpx h G L).
 /2 width=6 by cpx_aaa_conf_lfpx/ qed-.
 
-lemma lfpx_aaa_conf: ∀h,G,L1,T,A. ⦃G, L1⦄ ⊢ T ⁝ A →
-                     ∀L2. ⦃G, L1⦄ ⊢ ⬈[h, T] L2 → ⦃G, L2⦄ ⊢ T ⁝ A.
+(* Basic_2A1: uses: lpx_aaa_conf *)
+lemma lfpx_aaa_conf: ∀h,G,T. Conf3 … (λL. aaa G L T) (lfpx h G T).
 /2 width=6 by cpx_aaa_conf_lfpx/ qed-.
