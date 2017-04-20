@@ -30,6 +30,10 @@ lemma lfpx_flat_dx_split: ∀h,o,I,G,L1,L2,V,T. ⦃G, L1⦄ ⊢ ⬈[h, T] L2 →
                           ∃∃L. ⦃G, L1⦄ ⊢ ⬈[h, ⓕ{I}V.T] L & L ≡[h, o, T] L2.
 /3 width=5 by lfpx_frees_conf, lfxs_flat_dx_split/ qed-.
 
+lemma lfpx_bind_dx_split: ∀h,o,p,I,G,L1,L2,V1,T. ⦃G, L1.ⓑ{I}V1⦄ ⊢ ⬈[h, T] L2 →
+                          ∃∃L,V. ⦃G, L1⦄ ⊢ ⬈[h, ⓑ{p,I}V1.T] L & L.ⓑ{I}V ≡[h, o, T] L2 & ⦃G, L1⦄ ⊢ V1 ⬈[h] V.
+/3 width=5 by lfpx_frees_conf, lfxs_bind_dx_split/ qed-.
+
 lemma cpx_tdeq_conf_lexs: ∀h,o,G. R_confluent2_lfxs … (cpx h G) (cdeq h o) (cpx h G) (cdeq h o).
 #h #o #G #L0 #T0 #T1 #H @(cpx_ind … H) -G -L0 -T0 -T1 /2 width=3 by ex2_intro/
 [ #G #L0 #s0 #X0 #H0 #L1 #HL01 #L2 #HL02

@@ -44,7 +44,7 @@ lemma lfsx_fwd_pair_sn: ∀h,o,I,G,L,V,T. G ⊢ ⬈*[h, o, ②{I}V.T] 𝐒⦃L�
 #h #o #I #G #L #V #T #H @(lfsx_ind … H) -L
 #L1 #_ #IHL1 @lfsx_intro
 #L2 #H #HnL12 elim (lfpx_pair_sn_split … o I … T H) -H
-/6 width=4 by lfsx_lfdeq_trans, lfdeq_trans, lfdeq_fwd_pair_sn/
+/6 width=3 by lfsx_lfdeq_trans, lfdeq_trans, lfdeq_fwd_pair_sn/
 qed-.
 
 (* Basic_2A1: uses: lsx_fwd_flat_dx *)
@@ -53,7 +53,7 @@ lemma lfsx_fwd_flat_dx: ∀h,o,I,G,L,V,T. G ⊢ ⬈*[h, o, ⓕ{I}V.T] 𝐒⦃L�
 #h #o #I #G #L #V #T #H @(lfsx_ind … H) -L
 #L1 #_ #IHL1 @lfsx_intro
 #L2 #H #HnL12 elim (lfpx_flat_dx_split … o I … V … H) -H
-/6 width=4 by lfsx_lfdeq_trans, lfdeq_trans, lfdeq_fwd_flat_dx/
+/6 width=3 by lfsx_lfdeq_trans, lfdeq_trans, lfdeq_fwd_flat_dx/
 qed-.
 
 (* Advanced inversion lemmas ************************************************)

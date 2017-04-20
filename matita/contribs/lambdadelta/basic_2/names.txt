@@ -44,11 +44,13 @@ F: boolean false
 T: boolean true
 
 a: application
-b: binder
+b: generic binder with one argument 
 d: abbreviation
-f: flat
-l: abstraction
+f: generic flat with one argument
+l: typed abstraction
 n: native type annotation
+u: generic binder with zero argument
+x: exclusion
 
 NAMING CONVENTIONS FOR TRANSFORMATIONS AND RELATED FORMS
 
