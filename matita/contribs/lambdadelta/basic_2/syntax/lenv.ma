@@ -13,10 +13,13 @@
 (**************************************************************************)
 
 include "basic_2/notation/constructors/star_0.ma".
+include "basic_2/notation/constructors/dxitem_2.ma".
+include "basic_2/notation/constructors/dxbind1_2.ma".
 include "basic_2/notation/constructors/dxbind2_3.ma".
+include "basic_2/notation/constructors/dxvoid_1.ma".
 include "basic_2/notation/constructors/dxabbr_2.ma".
 include "basic_2/notation/constructors/dxabst_2.ma".
-include "basic_2/syntax/term.ma".
+include "basic_2/syntax/bind.ma".
 
 (* LOCAL ENVIRONMENTS *******************************************************)
 
@@ -28,10 +31,16 @@ inductive lenv: Type[0] ≝
 
 interpretation "sort (local environment)"
    'Star = LAtom.
-
+(*
+interpretation "local environment binding construction (unary)"
+   'DxBind1 L I = (LUnit L I).
+*)
 interpretation "local environment binding construction (binary)"
    'DxBind2 L I T = (LPair L I T).
-
+(*
+interpretation "void (local environment)"
+   'DxVoid L = (LPair L Void).
+*)
 interpretation "abbreviation (local environment)"
    'DxAbbr L T = (LPair L Abbr T).
 

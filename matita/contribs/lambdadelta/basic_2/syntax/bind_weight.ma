@@ -12,8 +12,24 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
+include "basic_2/syntax/term.ma".
 
-notation "hvbox( L . break ⓤ { term 46 I } )"
- non associative with precedence 47
- for @{ 'DxBind1 $L $I }.
+(* BINDERS FOR LOCAL ENVIRONMENTS ******************************************)
+
+include "basic_2/syntax/term_weight.ma".
+include "basic_2/syntax/bind.ma".
+
+(* WEIGHT OF A BINDER FOR LOCAL ENVIRONMENTS *******************************)
+
+rec definition bw I ≝ match I with
+[ BUnit _   ⇒ 1
+| BPair _ V ⇒ ♯{V}
+].
+
+interpretation "weight (binder for local environments)" 'Weight I = (bw I).
+
+(* Basic properties *********************************************************)
+
+lemma bw_pos: ∀I. 1 ≤ ♯{I}.
+* //
+qed.

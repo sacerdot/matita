@@ -14,6 +14,6 @@
 
 (* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-notation "hvbox( L . break ⓤ { term 46 I } )"
- non associative with precedence 47
- for @{ 'DxBind1 $L $I }.
+notation "hvbox( ⓘ { term 46 I } . break term 55 L )"
+ non associative with precedence 55
+ for @{ 'SnItem $I $L }.

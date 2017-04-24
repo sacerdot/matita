@@ -257,6 +257,10 @@ table {
              [ "lenv" * ]
           }
         ]
+        [ { "binders for local environments" * } {
+             [ "bind" "bind_weight" * ]
+          }
+        ]
         [ { "terms" * } {
              [ "term_vector ( Ⓐ?.? )" * ]
              [ "term_simple ( 𝐒⦃?⦄ )"  * ]

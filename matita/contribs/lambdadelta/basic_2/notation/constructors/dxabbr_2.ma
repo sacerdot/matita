@@ -15,5 +15,5 @@
 (* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
 notation "hvbox( L . break ⓓ T1 )"
- left associative with precedence 49
+ left associative with precedence 50
  for @{ 'DxAbbr $L $T1 }.

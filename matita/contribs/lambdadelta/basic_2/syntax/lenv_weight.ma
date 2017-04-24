@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/syntax/term_weight.ma".
+include "basic_2/syntax/bind_weight.ma".
 include "basic_2/syntax/lenv.ma".
 
 (* WEIGHT OF A LOCAL ENVIRONMENT ********************************************)
@@ -27,7 +27,7 @@ interpretation "weight (local environment)" 'Weight L = (lw L).
 (* Basic properties *********************************************************)
 
 lemma lw_pair: ∀I,L,V. ♯{L} < ♯{L.ⓑ{I}V}.
-/3 width=1 by lt_plus_to_minus_r, monotonic_lt_plus_r/ qed.
+normalize /2 width=1 by monotonic_le_plus_r/ qed.
 
 (* Basic_1: removed theorems 4: clt_cong clt_head clt_thead clt_wf_ind *)
 (* Basic_1: removed local theorems 1: clt_wf__q_ind *)

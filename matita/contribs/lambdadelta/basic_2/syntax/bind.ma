@@ -12,8 +12,25 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
+include "basic_2/syntax/term.ma".
 
-notation "hvbox( L . break ⓤ { term 46 I } )"
- non associative with precedence 47
- for @{ 'DxBind1 $L $I }.
+(* BINDERS FOR LOCAL ENVIRONMENTS ******************************************)
+
+inductive bind: Type[0] ≝
+| BUnit: bind1 → bind
+| BPair: bind2 → term → bind
+.
+
+(* Basic properties ********************************************************)
+
+lemma eq_bind_dec: ∀I1,I2:bind. Decidable (I1 = I2).
+* #I1 [2: #V1 ] * #I2 [2,4: #V2 ]
+[ elim (eq_bind2_dec I1 I2) #HI
+  [ elim (eq_term_dec V1 V2) #HV /2 width=1 by or_introl/ ]
+  @or_intror #H destruct /2 width=1 by/
+| @or_intror #H destruct
+| @or_intror #H destruct
+| elim (eq_bind1_dec I1 I2) #HI /2 width=1 by or_introl/
+  @or_intror #H destruct /2 width=1 by/
+]
+qed-.

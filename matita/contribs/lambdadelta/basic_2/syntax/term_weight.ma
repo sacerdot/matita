@@ -19,7 +19,7 @@ include "basic_2/syntax/term.ma".
 
 rec definition tw T ≝ match T with
 [ TAtom _     ⇒ 1
-| TPair _ V T ⇒ tw V + tw T + 1
+| TPair _ V T ⇒ ⫯(tw V + tw T)
 ].
 
 interpretation "weight (term)" 'Weight T = (tw T).

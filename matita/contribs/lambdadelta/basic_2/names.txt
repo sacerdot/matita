@@ -47,6 +47,7 @@ a: application
 b: generic binder with one argument 
 d: abbreviation
 f: generic flat with one argument
+i: generic binder for local environments
 l: typed abstraction
 n: native type annotation
 u: generic binder with zero argument

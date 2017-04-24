@@ -28,28 +28,22 @@ lemma ltail_length: ∀I,L,V. |ⓑ{I}V.L| = ⫯|L|.
 #I #L #V >append_length //
 qed.
 
-(* Basic_1: was just: chead_ctail *)
-lemma lpair_ltail: ∀L,I,V. ∃∃J,K,W. L.ⓑ{I}V = ⓑ{J}W.K & |L| = |K|.
-#L elim L -L /2 width=5 by ex2_3_intro/
-#L #Z #X #IHL #I #V elim (IHL Z X) -IHL
-#J #K #W #H #_ >H -H >ltail_length
-@(ex2_3_intro … J (K.ⓑ{I}V) W) /2 width=1 by length_pair/
-qed-.
-
 (* Advanced inversion lemmas on length for local environments ***************)
 
 (* Basic_2A1: was: length_inv_pos_dx_ltail *)
 lemma length_inv_succ_dx_ltail: ∀L,l. |L| = ⫯l →
                                 ∃∃I,K,V. |K| = l & L = ⓑ{I}V.K.
 #Y #l #H elim (length_inv_succ_dx … H) -H #I #L #V #Hl #HLK destruct
-elim (lpair_ltail L I V) /2 width=5 by ex2_3_intro/
+elim (lenv_case_tail … L) [2: * #K #J #W ]
+#H destruct /2 width=5 by ex2_3_intro/
 qed-.
 
 (* Basic_2A1: was: length_inv_pos_sn_ltail *)
 lemma length_inv_succ_sn_ltail: ∀L,l. ⫯l = |L| →
                                 ∃∃I,K,V. l = |K| & L = ⓑ{I}V.K.
 #Y #l #H elim (length_inv_succ_sn … H) -H #I #L #V #Hl #HLK destruct
-elim (lpair_ltail L I V) /2 width=5 by ex2_3_intro/
+elim (lenv_case_tail … L) [2: * #K #J #W ]
+#H destruct /2 width=5 by ex2_3_intro/
 qed-.
 
 (* Inversion lemmas with length for local environments **********************)
@@ -108,9 +102,11 @@ qed-.
 (* Basic eliminators ********************************************************)
 
 (* Basic_1: was: c_tail_ind *)
-lemma lenv_ind_alt: ∀R:predicate lenv.
-                    R (⋆) → (∀I,L,T. R L → R (ⓑ{I}T.L)) →
-                    ∀L. R L.
-#R #IH1 #IH2 #L @(f_ind … length … L) -L #x #IHx * // -IH1
-#L #I #V #H destruct elim (lpair_ltail L I V) /4 width=1 by/
+(* Basic_2A1: was: lenv_ind_alt *) 
+lemma lenv_ind_tail: ∀R:predicate lenv.
+                     R (⋆) → (∀I,L,T. R L → R (ⓑ{I}T.L)) → ∀L. R L.
+#R #IH1 #IH2 #L @(f_ind … length … L) -L #x #IHx * //
+#L #I #V -IH1 #H destruct
+elim (lenv_case_tail … L) [2: * #K #J #W ]
+#H destruct /3 width=1 by/
 qed-.

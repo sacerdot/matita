@@ -13,7 +13,9 @@
 (**************************************************************************)
 
 include "ground_2/notation/functions/append_2.ma".
+include "basic_2/notation/functions/snbind1_2.ma".
 include "basic_2/notation/functions/snbind2_3.ma".
+include "basic_2/notation/functions/snvoid_1.ma".
 include "basic_2/notation/functions/snabbr_2.ma".
 include "basic_2/notation/functions/snabst_2.ma".
 include "basic_2/syntax/lenv.ma".
@@ -26,10 +28,16 @@ rec definition append L K on K ≝ match K with
 ].
 
 interpretation "append (local environment)" 'Append L1 L2 = (append L1 L2).
-
+(*
+interpretation "local environment tail binding construction (unary)"
+   'SnBind1 I L = (append (LUnit LAtom I) L).
+*)
 interpretation "local environment tail binding construction (binary)"
    'SnBind2 I T L = (append (LPair LAtom I T) L).
-
+(*
+interpretation "tail exclusion (local environment)"
+   'SnVoid L = (append (LUnit LAtom Void) L).
+*)
 interpretation "tail abbreviation (local environment)"
    'SnAbbr T L = (append (LPair LAtom Abbr T) L).
 
@@ -66,4 +74,11 @@ lemma append_inj_sn: ∀K,L1,L2. L1@@K = L2@@K → L1 = L2.
 #K elim K -K //
 #K #I #V #IH #L1 #L2 >append_pair #H
 elim (destruct_lpair_lpair_aux … H) -H /2 width=1 by/ (**) (* destruct lemma needed *)
+qed-.
+
+(* Basic_1: uses: chead_ctail *)
+(* Basic_2A1: uses: lpair_ltail *)
+lemma lenv_case_tail: ∀L. L = ⋆ ∨ ∃∃K,I,V. L = ⓑ{I}V.K.
+#L elim L -L /2 width=1 by or_introl/
+#L #I #V * [2: * ] /3 width=4 by ex1_3_intro, or_intror/
 qed-.
