@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "ground_2/notation/constructors/cons_2.ma".
-include "ground_2/lib/star.ma".
+include "ground_2/lib/relations.ma".
 
 (* STREAMS ******************************************************************)
 

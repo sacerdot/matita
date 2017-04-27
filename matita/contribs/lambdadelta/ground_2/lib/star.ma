@@ -13,56 +13,18 @@
 (**************************************************************************)
 
 include "basics/star1.ma".
-include "ground_2/xoa/xoa_props.ma".
+include "ground_2/lib/relations.ma".
 
-(* PROPERTIES OF RELATIONS **************************************************)
-
-definition relation5 : Type[0] → Type[0] → Type[0] → Type[0] → Type[0] → Type[0]
-≝ λA,B,C,D,E.A→B→C→D→E→Prop.
-
-definition relation6 : Type[0] → Type[0] → Type[0] → Type[0] → Type[0] → Type[0] → Type[0]
-≝ λA,B,C,D,E,F.A→B→C→D→E→F→Prop.
-
-definition Decidable: Prop → Prop ≝ λR. R ∨ (R → ⊥).
-
-definition Transitive: ∀A. ∀R: relation A. Prop ≝ λA,R.
-                       ∀a1,a0. R a1 a0 → ∀a2. R a0 a2 → R a1 a2.
-                       
-definition left_cancellable: ∀A. ∀R: relation A. Prop ≝ λA,R.
-                             ∀a0,a1. R a0 a1 → ∀a2. R a0 a2 → R a1 a2.
-
-definition right_cancellable: ∀A. ∀R: relation A. Prop ≝ λA,R.
-                              ∀a1,a0. R a1 a0 → ∀a2. R a2 a0 → R a1 a2.
-
-definition pw_confluent2: ∀A. relation A → relation A → predicate A ≝ λA,R1,R2,a0.
-                          ∀a1. R1 a0 a1 → ∀a2. R2 a0 a2 →
-                          ∃∃a. R2 a1 a & R1 a2 a.
-
-definition confluent2: ∀A. relation (relation A) ≝ λA,R1,R2.
-                       ∀a0. pw_confluent2 A R1 R2 a0.
-
-definition transitive2: ∀A. ∀R1,R2: relation A. Prop ≝ λA,R1,R2.
-                        ∀a1,a0. R1 a1 a0 → ∀a2. R2 a0 a2 →
-                        ∃∃a. R2 a1 a & R1 a a2.
-
-definition bi_confluent:  ∀A,B. ∀R: bi_relation A B. Prop ≝ λA,B,R.
-                          ∀a0,a1,b0,b1. R a0 b0 a1 b1 → ∀a2,b2. R a0 b0 a2 b2 →
-                          ∃∃a,b. R a1 b1 a b & R a2 b2 a b.
+(* TRANSITIVE CLOSURE *******************************************************)
 
 definition LTC: ∀A:Type[0]. ∀B. (A→relation B) → (A→relation B) ≝
                 λA,B,R,a. TC … (R a).
-
-definition lsub_trans: ∀A,B. relation2 (A→relation B) (relation A) ≝ λA,B,R1,R2.
-                       ∀L2,T1,T2. R1 L2 T1 T2 → ∀L1. R2 L1 L2 → R1 L1 T1 T2.
 
 definition s_r_transitive: ∀A,B. relation2 (A→relation B) (B→relation A) ≝ λA,B,R1,R2.
                            ∀L2,T1,T2. R1 L2 T1 T2 → ∀L1. R2 T1 L1 L2 → LTC … R1 L1 T1 T2.
 
 definition s_rs_transitive: ∀A,B. relation2 (A→relation B) (B→relation A) ≝ λA,B,R1,R2.
                             ∀L2,T1,T2. LTC … R1 L2 T1 T2 → ∀L1. R2 T1 L1 L2 → LTC … R1 L1 T1 T2.
-
-definition s_r_confluent1: ∀A,B. relation2 (A→relation B) (B→relation A) ≝ λA,B,R1,R2.
-                           ∀L1,T1,T2. R1 L1 T1 T2 → ∀L2. R2 T1 L1 L2 → R2 T2 L1 L2.
 
 lemma TC_strip1: ∀A,R1,R2. confluent2 A R1 R2 →
                  ∀a0,a1. TC … R1 a0 a1 → ∀a2. R2 a0 a2 →
@@ -134,44 +96,6 @@ lemma TC_transitive2: ∀A,R1,R2.
 ]
 qed.
 
-definition NF: ∀A. relation A → relation A → predicate A ≝
-   λA,R,S,a1. ∀a2. R a1 a2 → S a1 a2.
-
-definition NF_dec: ∀A. relation A → relation A → Prop ≝
-                   λA,R,S. ∀a1. NF A R S a1 ∨
-                   ∃∃a2. R … a1 a2 & (S a1 a2 → ⊥).
-
-inductive SN (A) (R,S:relation A): predicate A ≝
-| SN_intro: ∀a1. (∀a2. R a1 a2 → (S a1 a2 → ⊥) → SN A R S a2) → SN A R S a1
-.
-
-lemma NF_to_SN: ∀A,R,S,a. NF A R S a → SN A R S a.
-#A #R #S #a1 #Ha1
-@SN_intro #a2 #HRa12 #HSa12
-elim HSa12 -HSa12 /2 width=1 by/
-qed.
-
-lemma SN_to_NF: ∀A,R,S. NF_dec A R S →
-                ∀a1. SN A R S a1 →
-                ∃∃a2. star … R a1 a2 & NF A R S a2.
-#A #R #S #HRS #a1 #H elim H -a1
-#a1 #_ #IHa1 elim (HRS a1) -HRS /2 width=3 by srefl, ex2_intro/
-* #a0 #Ha10 #Ha01 elim (IHa1 … Ha10 Ha01) -IHa1 -Ha01 /3 width=3 by star_compl, ex2_intro/
-qed-.
-
-definition NF_sn: ∀A. relation A → relation A → predicate A ≝
-   λA,R,S,a2. ∀a1. R a1 a2 → S a1 a2.
-
-inductive SN_sn (A) (R,S:relation A): predicate A ≝
-| SN_sn_intro: ∀a2. (∀a1. R a1 a2 → (S a1 a2 → ⊥) → SN_sn A R S a1) → SN_sn A R S a2
-.
-
-lemma NF_to_SN_sn: ∀A,R,S,a. NF_sn A R S a → SN_sn A R S a.
-#A #R #S #a2 #Ha2
-@SN_sn_intro #a1 #HRa12 #HSa12
-elim HSa12 -HSa12 /2 width=1 by/
-qed.
-
 lemma LTC_lsub_trans: ∀A,B,R,S. lsub_trans A B R S → lsub_trans A B (LTC … R) S.
 #A #B #R #S #HRS #L2 #T1 #T2 #H elim H -T2 /3 width=3 by inj/
 #T #T2 #_ #HT2 #IHT1 #L1 #HL12
@@ -215,7 +139,17 @@ elim (TC_idem … (S L2) …  T1 T2)
 #_ #H1 #H2 #_ @H2 @HSR /3 width=3 by/
 qed-.
 
-(* relations on unboxed pairs ***********************************************)
+(* Normal form and strong normalization *************************************)
+
+lemma SN_to_NF: ∀A,R,S. NF_dec A R S →
+                ∀a1. SN A R S a1 →
+                ∃∃a2. star … R a1 a2 & NF A R S a2.
+#A #R #S #HRS #a1 #H elim H -a1
+#a1 #_ #IHa1 elim (HRS a1) -HRS /2 width=3 by srefl, ex2_intro/
+* #a0 #Ha10 #Ha01 elim (IHa1 … Ha10 Ha01) -IHa1 -Ha01 /3 width=3 by star_compl, ex2_intro/
+qed-.
+
+(* Relations on unboxed pairs ***********************************************)
 
 lemma bi_TC_strip: ∀A,B,R. bi_confluent A B R →
                    ∀a0,a1,b0,b1. R a0 b0 a1 b1 → ∀a2,b2. bi_TC … R a0 b0 a2 b2 →
@@ -256,7 +190,7 @@ lemma bi_TC_decomp_l: ∀A,B. ∀R:bi_relation A B.
 ]
 qed-.
 
-(* relations on unboxed triples *********************************************)
+(* Relations on unboxed triples *********************************************)
 
 definition tri_RC: ∀A,B,C. tri_relation A B C → tri_relation A B C ≝
                    λA,B,C,R,a1,b1,c1,a2,b2,c2. R … a1 b1 c1 a2 b2 c2 ∨

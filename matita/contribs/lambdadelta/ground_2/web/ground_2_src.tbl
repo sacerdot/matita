@@ -48,7 +48,7 @@ table {
              [ "stream ( ? @ ? )" "stream_eq ( ? ≐ ? )" "stream_hdtl ( ↓? )" "stream_tls ( ↓*[?]? )" * ]
              [ "list ( ◊ ) ( ? @ ? ) ( |?| )" "list2 ( ◊ ) ( {?,?} @ ? ) ( ? @@ ? ) ( |?| )" * ]
              [ "bool ( Ⓕ ) ( Ⓣ )" "arith ( ?^? ) ( ⫯? ) ( ⫰? ) ( ? ∨ ? ) ( ? ∧ ? )" * ]
-             [ "star" "lstar" * ]
+             [ "relations" "star" "lstar" * ]
           }
         ]
      }
