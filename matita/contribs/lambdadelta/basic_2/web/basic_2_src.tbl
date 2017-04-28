@@ -213,7 +213,8 @@ table {
              [ "drops ( ⬇*[?,?] ? ≡ ? ) ( ⬇*[?] ? ≡ ? )" "drops_lstar" + "drops_weight" + "drops_length" + "drops_ceq" + "drops_lexs" + "drops_lreq" + "drops_drops" * ]
           }
         ]
-        [ { "generic relocation for terms" * } {
+        [ { "generic relocation" * } {
+             [ "lifts_bind ( ⬆*[?] ? ≡ ? )" "lifts_weight_bind" + "lifts_lifts_bind" * ]
              [ "lifts_vector ( ⬆*[?] ? ≡ ? )" "lifts_lifts_vector" * ]
              [ "lifts ( ⬆*[?] ? ≡ ? )" "lifts_simple" + "lifts_weight" + "lifts_tdeq" + "lifts_lifts" * ]
           }
