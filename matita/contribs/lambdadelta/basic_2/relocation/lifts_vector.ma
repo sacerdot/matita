@@ -25,10 +25,10 @@ inductive liftsv (f:rtmap): relation (list term) ≝
                liftsv f (T1 @ T1s) (T2 @ T2s)
 .
 
-interpretation "uniform relocation (vector)"
+interpretation "uniform relocation (term vector)"
    'RLiftStar i T1s T2s = (liftsv (uni i) T1s T2s).
 
-interpretation "generic relocation (vector)"
+interpretation "generic relocation (term vector)"
    'RLiftStar f T1s T2s = (liftsv f T1s T2s).
 
 (* Basic inversion lemmas ***************************************************)

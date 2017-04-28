@@ -106,13 +106,13 @@ qed-.
 (* Advanced proprerties *****************************************************)
 
 (* Basic_2A1: includes: lift_inj *)
-lemma lifts_inj: ∀f,T1,U. ⬆*[f] T1 ≡ U → ∀T2. ⬆*[f] T2 ≡ U → T1 = T2.
+lemma lifts_inj: ∀f. is_inj2 … (lifts f).
 #f #T1 #U #H1 #T2 #H2 lapply (after_isid_dx 𝐈𝐝  … f)
 /3 width=6 by lifts_div3, lifts_fwd_isid/
 qed-.
 
 (* Basic_2A1: includes: lift_mono *)
-lemma lifts_mono: ∀f,T,U1. ⬆*[f] T ≡ U1 → ∀U2. ⬆*[f] T ≡ U2 → U1 = U2.
+lemma lifts_mono: ∀f,T. is_mono … (lifts f T).
 #f #T #U1 #H1 #U2 #H2 lapply (after_isid_sn 𝐈𝐝  … f)
 /3 width=6 by lifts_conf, lifts_fwd_isid/
 qed-.

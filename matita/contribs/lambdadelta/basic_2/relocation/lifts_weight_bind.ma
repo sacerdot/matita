@@ -12,20 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/syntax/term_weight.ma".
-include "basic_2/syntax/bind.ma".
+include "basic_2/syntax/bind_weight.ma".
+include "basic_2/relocation/lifts_weight.ma".
+include "basic_2/relocation/lifts_bind.ma".
 
-(* WEIGHT OF A BINDER FOR LOCAL ENVIRONMENTS *******************************)
+(* GENERIC RELOCATION FOR BINDERS *******************************************)
 
-rec definition bw I ≝ match I with
-[ BUnit _   ⇒ 1
-| BPair _ V ⇒ ♯{V}
-].
+(* Forward lemmas with weight for binders ***********************************)
 
-interpretation "weight (binder for local environments)" 'Weight I = (bw I).
-
-(* Basic properties *********************************************************)
-
-lemma bw_pos: ∀I. 1 ≤ ♯{I}.
-* //
-qed.
+lemma liftsb_fwd_bw: ∀f,I1,I2. ⬆*[f] I1 ≡ I2 → ♯{I1} = ♯{I2}.
+#f #I1 #I2 * -I1 -I2 /2 width=2 by lifts_fwd_tw/
+qed-.
