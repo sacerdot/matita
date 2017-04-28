@@ -192,13 +192,6 @@ qed-.
 
 (* Relations on unboxed triples *********************************************)
 
-definition tri_RC: ∀A,B,C. tri_relation A B C → tri_relation A B C ≝
-                   λA,B,C,R,a1,b1,c1,a2,b2,c2. R … a1 b1 c1 a2 b2 c2 ∨
-                   ∧∧ a1 = a2 & b1 = b2 & c1 = c2.
-
-lemma tri_RC_reflexive: ∀A,B,C,R. tri_reflexive A B C (tri_RC … R).
-/3 width=1 by and3_intro, or_intror/ qed.
-
 definition tri_star: ∀A,B,C,R. tri_relation A B C ≝
                      λA,B,C,R. tri_RC A B C (tri_TC … R).
 

@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/lib/star.ma".
 include "basic_2/notation/relations/relationstarstar_4.ma".
 include "basic_2/static/lfxs.ma".
 

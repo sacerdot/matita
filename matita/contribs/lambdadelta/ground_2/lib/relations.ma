@@ -94,3 +94,12 @@ lemma NF_to_SN_sn: ∀A,R,S,a. NF_sn A R S a → SN_sn A R S a.
 @SN_sn_intro #a1 #HRa12 #HSa12
 elim HSa12 -HSa12 /2 width=1 by/
 qed.
+
+(* Relations on unboxed triples *********************************************)
+
+definition tri_RC: ∀A,B,C. tri_relation A B C → tri_relation A B C ≝
+                   λA,B,C,R,a1,b1,c1,a2,b2,c2. R … a1 b1 c1 a2 b2 c2 ∨
+                   ∧∧ a1 = a2 & b1 = b2 & c1 = c2.
+
+lemma tri_RC_reflexive: ∀A,B,C,R. tri_reflexive A B C (tri_RC … R).
+/3 width=1 by and3_intro, or_intror/ qed.

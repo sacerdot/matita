@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/lib/star.ma".
 include "ground_2/lib/lstar.ma".
 include "basic_2/relocation/lreq_lreq.ma".
 

@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/lib/star.ma".
 include "basic_2/notation/relations/suptermstar_6.ma".
 include "basic_2/s_transition/fquq.ma".
 
