@@ -22,9 +22,9 @@ include "basic_2/relocation/drops.ma".
 theorem lexs_trans_gen (RN1) (RP1) (RN2) (RP2) (RN) (RP) (f):
                        lexs_transitive RN1 RN2 RN RN1 RP1 →
                        lexs_transitive RP1 RP2 RP RN1 RP1 →
-                       ∀L1,L0. L1 ⦻*[RN1, RP1, f] L0 →
-                       ∀L2. L0 ⦻*[RN2, RP2, f] L2 →
-                       L1 ⦻*[RN, RP, f] L2.
+                       ∀L1,L0. L1 ⪤*[RN1, RP1, f] L0 →
+                       ∀L2. L0 ⪤*[RN2, RP2, f] L2 →
+                       L1 ⪤*[RN, RP, f] L2.
 #RN1 #RP1 #RN2 #RP2 #RN #RP #f #HN #HP #L1 #L0 #H elim H -f -L1 -L0
 [ #f #L2 #H >(lexs_inv_atom1 … H) -L2 //
 | #f #I #K1 #K #V1 #V #HK1 #HV1 #IH #L2 #H elim (lexs_inv_next1 … H) -H
@@ -74,9 +74,9 @@ theorem lexs_canc_dx: ∀RN,RP,f. Transitive … (lexs RN RP f) →
 /3 width=3 by/ qed-.
 
 lemma lexs_meet: ∀RN,RP,L1,L2.
-                 ∀f1. L1 ⦻*[RN, RP, f1] L2 →
-                 ∀f2. L1 ⦻*[RN, RP, f2] L2 →
-                 ∀f. f1 ⋒ f2 ≡ f → L1 ⦻*[RN, RP, f] L2.
+                 ∀f1. L1 ⪤*[RN, RP, f1] L2 →
+                 ∀f2. L1 ⪤*[RN, RP, f2] L2 →
+                 ∀f. f1 ⋒ f2 ≡ f → L1 ⪤*[RN, RP, f] L2.
 #RN #RP #L1 #L2 #f1 #H elim H -f1 -L1 -L2 //
 #f1 #I #L1 #L2 #V1 #V2 #_ #HV12 #IH #f2 #H #f #Hf
 elim (pn_split f2) * #g2 #H2 destruct
@@ -87,9 +87,9 @@ try elim (lexs_inv_push … H) try elim (lexs_inv_next … H) -H
 qed-.
 
 lemma lexs_join: ∀RN,RP,L1,L2.
-                 ∀f1. L1 ⦻*[RN, RP, f1] L2 →
-                 ∀f2. L1 ⦻*[RN, RP, f2] L2 →
-                 ∀f. f1 ⋓ f2 ≡ f → L1 ⦻*[RN, RP, f] L2.
+                 ∀f1. L1 ⪤*[RN, RP, f1] L2 →
+                 ∀f2. L1 ⪤*[RN, RP, f2] L2 →
+                 ∀f. f1 ⋓ f2 ≡ f → L1 ⪤*[RN, RP, f] L2.
 #RN #RP #L1 #L2 #f1 #H elim H -f1 -L1 -L2 //
 #f1 #I #L1 #L2 #V1 #V2 #_ #HV12 #IH #f2 #H #f #Hf
 elim (pn_split f2) * #g2 #H2 destruct

@@ -21,18 +21,18 @@ include "basic_2/static/lfxs.ma".
 
 definition dedropable_sn: predicate (relation3 lenv term term) ≝
                           λR. ∀b,f,L1,K1. ⬇*[b, f] L1 ≡ K1 →
-                          ∀K2,T. K1 ⦻*[R, T] K2 → ∀U. ⬆*[f] T ≡ U →
-                          ∃∃L2. L1 ⦻*[R, U] L2 & ⬇*[b, f] L2 ≡ K2 & L1 ≡[f] L2.
+                          ∀K2,T. K1 ⪤*[R, T] K2 → ∀U. ⬆*[f] T ≡ U →
+                          ∃∃L2. L1 ⪤*[R, U] L2 & ⬇*[b, f] L2 ≡ K2 & L1 ≡[f] L2.
 
 definition dropable_sn: predicate (relation3 lenv term term) ≝
                         λR. ∀b,f,L1,K1. ⬇*[b, f] L1 ≡ K1 → 𝐔⦃f⦄ →
-                        ∀L2,U. L1 ⦻*[R, U] L2 → ∀T. ⬆*[f] T ≡ U →
-                        ∃∃K2. K1 ⦻*[R, T] K2 & ⬇*[b, f] L2 ≡ K2.
+                        ∀L2,U. L1 ⪤*[R, U] L2 → ∀T. ⬆*[f] T ≡ U →
+                        ∃∃K2. K1 ⪤*[R, T] K2 & ⬇*[b, f] L2 ≡ K2.
 
 definition dropable_dx: predicate (relation3 lenv term term) ≝
-                        λR. ∀L1,L2,U. L1 ⦻*[R, U] L2 →
+                        λR. ∀L1,L2,U. L1 ⪤*[R, U] L2 →
                         ∀b,f,K2. ⬇*[b, f] L2 ≡ K2 → 𝐔⦃f⦄ → ∀T. ⬆*[f] T ≡ U →
-                        ∃∃K1. ⬇*[b, f] L1 ≡ K1 & K1 ⦻*[R, T] K2.
+                        ∃∃K1. ⬇*[b, f] L1 ≡ K1 & K1 ⪤*[R, T] K2.
 
 (* Properties with generic slicing for local environments *******************)
 
@@ -70,23 +70,23 @@ elim (lexs_co_dropable_dx … HL12 … HLK2 … H2f) -L2
 qed-.
 
 (* Basic_2A1: was: llpx_sn_inv_lift_O *)
-lemma lfxs_inv_lifts_bi: ∀R,L1,L2,U. L1 ⦻*[R, U] L2 →
+lemma lfxs_inv_lifts_bi: ∀R,L1,L2,U. L1 ⪤*[R, U] L2 →
                          ∀K1,K2,i. ⬇*[i] L1 ≡ K1 → ⬇*[i] L2 ≡ K2 →
-                         ∀T. ⬆*[i] T ≡ U → K1 ⦻*[R, T] K2.
+                         ∀T. ⬆*[i] T ≡ U → K1 ⪤*[R, T] K2.
 #R #L1 #L2 #U #HL12 #K1 #K2 #i #HLK1 #HLK2 #T #HTU
 elim (lfxs_dropable_sn … HLK1 … HL12 … HTU) -L1 -U // #Y #HK12 #HY
 lapply (drops_mono … HY … HLK2) -L2 -i #H destruct //
 qed-.
 
-lemma lfxs_inv_lref_sn: ∀R,L1,L2,i. L1 ⦻*[R, #i] L2 → ∀I,K1,V1. ⬇*[i] L1 ≡ K1.ⓑ{I}V1 →
-                        ∃∃K2,V2. ⬇*[i] L2 ≡ K2.ⓑ{I}V2 & K1 ⦻*[R, V1] K2 & R K1 V1 V2.
+lemma lfxs_inv_lref_sn: ∀R,L1,L2,i. L1 ⪤*[R, #i] L2 → ∀I,K1,V1. ⬇*[i] L1 ≡ K1.ⓑ{I}V1 →
+                        ∃∃K2,V2. ⬇*[i] L2 ≡ K2.ⓑ{I}V2 & K1 ⪤*[R, V1] K2 & R K1 V1 V2.
 #R #L1 #L2 #i #HL12 #I #K1 #V1 #HLK1 elim (lfxs_dropable_sn … HLK1 … HL12 (#0)) -HLK1 -HL12 //
 #Y #HY #HLK2 elim (lfxs_inv_zero_pair_sn … HY) -HY
 #K2 #V2 #HK12 #HV12 #H destruct /2 width=5 by ex3_2_intro/
 qed-.
 
-lemma lfxs_inv_lref_dx: ∀R,L1,L2,i. L1 ⦻*[R, #i] L2 → ∀I,K2,V2. ⬇*[i] L2 ≡ K2.ⓑ{I}V2 →
-                        ∃∃K1,V1. ⬇*[i] L1 ≡ K1.ⓑ{I}V1 & K1 ⦻*[R, V1] K2 & R K1 V1 V2.
+lemma lfxs_inv_lref_dx: ∀R,L1,L2,i. L1 ⪤*[R, #i] L2 → ∀I,K2,V2. ⬇*[i] L2 ≡ K2.ⓑ{I}V2 →
+                        ∃∃K1,V1. ⬇*[i] L1 ≡ K1.ⓑ{I}V1 & K1 ⪤*[R, V1] K2 & R K1 V1 V2.
 #R #L1 #L2 #i #HL12 #I #K2 #V2 #HLK2 elim (lfxs_dropable_dx … HL12 … HLK2 … (#0)) -HLK2 -HL12 //
 #Y #HLK1 #HY elim (lfxs_inv_zero_pair_dx … HY) -HY
 #K1 #V1 #HK12 #HV12 #H destruct /2 width=5 by ex3_2_intro/

@@ -21,14 +21,14 @@ include "basic_2/static/lfxs.ma".
 
 (* Advanced properties ******************************************************)
 
-lemma lfxs_inv_frees: ∀R,L1,L2,T. L1 ⦻*[R, T] L2 →
-                      ∀f. L1 ⊢ 𝐅*⦃T⦄ ≡ f → L1 ⦻*[R, cfull, f] L2.
+lemma lfxs_inv_frees: ∀R,L1,L2,T. L1 ⪤*[R, T] L2 →
+                      ∀f. L1 ⊢ 𝐅*⦃T⦄ ≡ f → L1 ⪤*[R, cfull, f] L2.
 #R #L1 #L2 #T * /3 width=6 by frees_mono, lexs_eq_repl_back/
 qed-.
 
 (* Basic_2A1: uses: llpx_sn_dec *)
 lemma lfxs_dec: ∀R. (∀L,T1,T2. Decidable (R L T1 T2)) →
-                ∀L1,L2,T. Decidable (L1 ⦻*[R, T] L2).
+                ∀L1,L2,T. Decidable (L1 ⪤*[R, T] L2).
 #R #HR #L1 #L2 #T
 elim (frees_total L1 T) #f #Hf
 elim (lexs_dec R cfull HR … L1 L2 f)
@@ -37,8 +37,8 @@ qed-.
 
 lemma lfxs_pair_sn_split: ∀R1,R2. (∀L. reflexive … (R1 L)) → (∀L. reflexive … (R2 L)) →
                           lexs_frees_confluent … R1 cfull →
-                          ∀L1,L2,V. L1 ⦻*[R1, V] L2 → ∀I,T.
-                          ∃∃L. L1 ⦻*[R1, ②{I}V.T] L & L ⦻*[R2, V] L2.
+                          ∀L1,L2,V. L1 ⪤*[R1, V] L2 → ∀I,T.
+                          ∃∃L. L1 ⪤*[R1, ②{I}V.T] L & L ⪤*[R2, V] L2.
 #R1 #R2 #HR1 #HR2 #HR #L1 #L2 #V * #f #Hf #HL12 * [ #p ] #I #T
 [ elim (frees_total L1 (ⓑ{p,I}V.T)) #g #Hg
   elim (frees_inv_bind … Hg) #y1 #y2 #H #_ #Hy
@@ -56,8 +56,8 @@ qed-.
 
 lemma lfxs_flat_dx_split: ∀R1,R2. (∀L. reflexive … (R1 L)) → (∀L. reflexive … (R2 L)) →
                           lexs_frees_confluent … R1 cfull →
-                          ∀L1,L2,T. L1 ⦻*[R1, T] L2 → ∀I,V.
-                          ∃∃L. L1 ⦻*[R1, ⓕ{I}V.T] L & L ⦻*[R2, T] L2.
+                          ∀L1,L2,T. L1 ⪤*[R1, T] L2 → ∀I,V.
+                          ∃∃L. L1 ⪤*[R1, ⓕ{I}V.T] L & L ⪤*[R2, T] L2.
 #R1 #R2 #HR1 #HR2 #HR #L1 #L2 #T * #f #Hf #HL12 #I #V
 elim (frees_total L1 (ⓕ{I}V.T)) #g #Hg
 elim (frees_inv_flat … Hg) #y1 #y2 #_ #H #Hy
@@ -72,8 +72,8 @@ qed-.
 
 lemma lfxs_bind_dx_split: ∀R1,R2. (∀L. reflexive … (R1 L)) → (∀L. reflexive … (R2 L)) →
                           lexs_frees_confluent … R1 cfull →
-                          ∀I,L1,L2,V1,T. L1.ⓑ{I}V1 ⦻*[R1, T] L2 → ∀p.
-                          ∃∃L,V. L1 ⦻*[R1, ⓑ{p,I}V1.T] L & L.ⓑ{I}V ⦻*[R2, T] L2 & R1 L1 V1 V.
+                          ∀I,L1,L2,V1,T. L1.ⓑ{I}V1 ⪤*[R1, T] L2 → ∀p.
+                          ∃∃L,V. L1 ⪤*[R1, ⓑ{p,I}V1.T] L & L.ⓑ{I}V ⪤*[R2, T] L2 & R1 L1 V1 V.
 #R1 #R2 #HR1 #HR2 #HR #I #L1 #L2 #V1 #T * #f #Hf #HL12 #p
 elim (frees_total L1 (ⓑ{p,I}V1.T)) #g #Hg
 elim (frees_inv_bind … Hg) #y1 #y2 #_ #H #Hy
@@ -93,8 +93,8 @@ qed-.
 
 (* Basic_2A1: uses: llpx_sn_bind llpx_sn_bind_O *)
 theorem lfxs_bind: ∀R,p,I,L1,L2,V1,V2,T.
-                   L1 ⦻*[R, V1] L2 → L1.ⓑ{I}V1 ⦻*[R, T] L2.ⓑ{I}V2 →
-                   L1 ⦻*[R, ⓑ{p,I}V1.T] L2.
+                   L1 ⪤*[R, V1] L2 → L1.ⓑ{I}V1 ⪤*[R, T] L2.ⓑ{I}V2 →
+                   L1 ⪤*[R, ⓑ{p,I}V1.T] L2.
 #R #p #I #L1 #L2 #V1 #V2 #T * #f1 #HV #Hf1 * #f2 #HT #Hf2
 elim (lexs_fwd_pair … Hf2) -Hf2 #Hf2 #_ elim (sor_isfin_ex f1 (⫱f2))
 /3 width=7 by frees_fwd_isfin, frees_bind, lexs_join, isfin_tl, ex2_intro/
@@ -102,8 +102,8 @@ qed.
 
 (* Basic_2A1: llpx_sn_flat *)
 theorem lfxs_flat: ∀R,I,L1,L2,V,T.
-                   L1 ⦻*[R, V] L2 → L1 ⦻*[R, T] L2 →
-                   L1 ⦻*[R, ⓕ{I}V.T] L2.
+                   L1 ⪤*[R, V] L2 → L1 ⪤*[R, T] L2 →
+                   L1 ⪤*[R, ⓕ{I}V.T] L2.
 #R #I #L1 #L2 #V #T * #f1 #HV #Hf1 * #f2 #HT #Hf2 elim (sor_isfin_ex f1 f2)
 /3 width=7 by frees_fwd_isfin, frees_flat, lexs_join, ex2_intro/
 qed.
@@ -135,16 +135,16 @@ qed-.
 
 (* Basic_2A1: uses: nllpx_sn_inv_bind nllpx_sn_inv_bind_O *)
 lemma lfnxs_inv_bind: ∀R. (∀L,T1,T2. Decidable (R L T1 T2)) →
-                      ∀p,I,L1,L2,V,T. (L1 ⦻*[R, ⓑ{p,I}V.T] L2 → ⊥) →
-                      (L1 ⦻*[R, V] L2 → ⊥) ∨ (L1.ⓑ{I}V ⦻*[R, T] L2.ⓑ{I}V → ⊥).
+                      ∀p,I,L1,L2,V,T. (L1 ⪤*[R, ⓑ{p,I}V.T] L2 → ⊥) →
+                      (L1 ⪤*[R, V] L2 → ⊥) ∨ (L1.ⓑ{I}V ⪤*[R, T] L2.ⓑ{I}V → ⊥).
 #R #HR #p #I #L1 #L2 #V #T #H elim (lfxs_dec … HR L1 L2 V)
 /4 width=2 by lfxs_bind, or_intror, or_introl/
 qed-.
 
 (* Basic_2A1: uses: nllpx_sn_inv_flat *)
 lemma lfnxs_inv_flat: ∀R. (∀L,T1,T2. Decidable (R L T1 T2)) →
-                      ∀I,L1,L2,V,T. (L1 ⦻*[R, ⓕ{I}V.T] L2 → ⊥) →
-                      (L1 ⦻*[R, V] L2 → ⊥) ∨ (L1 ⦻*[R, T] L2 → ⊥).
+                      ∀I,L1,L2,V,T. (L1 ⪤*[R, ⓕ{I}V.T] L2 → ⊥) →
+                      (L1 ⪤*[R, V] L2 → ⊥) ∨ (L1 ⪤*[R, T] L2 → ⊥).
 #R #HR #I #L1 #L2 #V #T #H elim (lfxs_dec … HR L1 L2 V)
 /4 width=1 by lfxs_flat, or_intror, or_introl/
 qed-.

@@ -20,18 +20,18 @@ include "basic_2/i_static/tc_lfxs.ma".
 
 definition tc_dedropable_sn: predicate (relation3 lenv term term) ≝
                              λR. ∀b,f,L1,K1. ⬇*[b, f] L1 ≡ K1 →
-                             ∀K2,T. K1 ⦻**[R, T] K2 → ∀U. ⬆*[f] T ≡ U →
-                             ∃∃L2. L1 ⦻**[R, U] L2 & ⬇*[b, f] L2 ≡ K2 & L1 ≡[f] L2.
+                             ∀K2,T. K1 ⪤**[R, T] K2 → ∀U. ⬆*[f] T ≡ U →
+                             ∃∃L2. L1 ⪤**[R, U] L2 & ⬇*[b, f] L2 ≡ K2 & L1 ≡[f] L2.
 
 definition tc_dropable_sn: predicate (relation3 lenv term term) ≝
                            λR. ∀b,f,L1,K1. ⬇*[b, f] L1 ≡ K1 → 𝐔⦃f⦄ →
-                           ∀L2,U. L1 ⦻**[R, U] L2 → ∀T. ⬆*[f] T ≡ U →
-                           ∃∃K2. K1 ⦻**[R, T] K2 & ⬇*[b, f] L2 ≡ K2.
+                           ∀L2,U. L1 ⪤**[R, U] L2 → ∀T. ⬆*[f] T ≡ U →
+                           ∃∃K2. K1 ⪤**[R, T] K2 & ⬇*[b, f] L2 ≡ K2.
 
 definition tc_dropable_dx: predicate (relation3 lenv term term) ≝
-                           λR. ∀L1,L2,U. L1 ⦻**[R, U] L2 →
+                           λR. ∀L1,L2,U. L1 ⪤**[R, U] L2 →
                            ∀b,f,K2. ⬇*[b, f] L2 ≡ K2 → 𝐔⦃f⦄ → ∀T. ⬆*[f] T ≡ U →
-                           ∃∃K1. ⬇*[b, f] L1 ≡ K1 & K1 ⦻**[R, T] K2.
+                           ∃∃K1. ⬇*[b, f] L1 ≡ K1 & K1 ⪤**[R, T] K2.
 
 (* Properties with generic slicing for local environments *******************)
 

@@ -24,7 +24,7 @@ include "basic_2/rt_transition/cpx_drops.ma".
 
 (* Basic_2A1: uses: lpx_cpx_frees_trans *)
 lemma cpx_frees_conf_lfpx: ∀h,G,L1,T1,f1. L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 →
-                           ∀L2. L1 ⦻*[cpx h G, cfull, f1] L2 →
+                           ∀L2. L1 ⪤*[cpx h G, cfull, f1] L2 →
                            ∀T2. ⦃G, L1⦄ ⊢ T1 ⬈[h] T2 →
                            ∃∃f2. L2 ⊢ 𝐅*⦃T2⦄ ≡ f2 & f2 ⊆ f1.
 #h #G #L1 #T1 @(fqup_wf_ind_eq … G L1 T1) -G -L1 -T1

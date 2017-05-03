@@ -60,8 +60,8 @@ lemma lexs_liftable_co_dedropable_sn: ∀RN,RP. (∀L. reflexive ? (RN L)) → (
 qed-.
 
 fact lexs_dropable_dx_aux: ∀RN,RP,b,f,L2,K2. ⬇*[b, f] L2 ≡ K2 → 𝐔⦃f⦄ →
-                           ∀f2,L1. L1 ⦻*[RN, RP, f2] L2 → ∀f1. f ~⊚ f1 ≡ f2 →
-                           ∃∃K1. ⬇*[b, f] L1 ≡ K1 & K1 ⦻*[RN, RP, f1] K2.
+                           ∀f2,L1. L1 ⪤*[RN, RP, f2] L2 → ∀f1. f ~⊚ f1 ≡ f2 →
+                           ∃∃K1. ⬇*[b, f] L1 ≡ K1 & K1 ⪤*[RN, RP, f1] K2.
 #RN #RP #b #f #L2 #K2 #H elim H -f -L2 -K2
 [ #f #Hf #_ #f2 #X #H #f1 #Hf2 lapply (lexs_inv_atom2 … H) -H
   #H destruct /4 width=3 by lexs_atom, drops_atom, ex2_intro/
@@ -87,10 +87,10 @@ lemma lexs_co_dropable_dx: ∀RN,RP. co_dropable_dx (lexs RN RP).
 
 (* Basic_2A1: includes: lpx_sn_drop_conf *) (**)
 lemma lexs_drops_conf_next: ∀RN,RP.
-                            ∀f2,L1,L2. L1 ⦻*[RN, RP, f2] L2 →
+                            ∀f2,L1,L2. L1 ⪤*[RN, RP, f2] L2 →
                             ∀b,f,I,K1,V1. ⬇*[b,f] L1 ≡ K1.ⓑ{I}V1 → 𝐔⦃f⦄ →
                             ∀f1. f ~⊚ ⫯f1 ≡ f2 →
-                            ∃∃K2,V2. ⬇*[b,f] L2 ≡ K2.ⓑ{I}V2 & K1 ⦻*[RN, RP, f1] K2 & RN K1 V1 V2.
+                            ∃∃K2,V2. ⬇*[b,f] L2 ≡ K2.ⓑ{I}V2 & K1 ⪤*[RN, RP, f1] K2 & RN K1 V1 V2.
 #RN #RP #f2 #L1 #L2 #HL12 #b #f #I #K1 #V1 #HLK1 #Hf #f1 #Hf2
 elim (lexs_co_dropable_sn … HLK1 … Hf … HL12 … Hf2) -L1 -f2 -Hf
 #X #HX #HLK2 elim (lexs_inv_next1 … HX) -HX
@@ -98,10 +98,10 @@ elim (lexs_co_dropable_sn … HLK1 … Hf … HL12 … Hf2) -L1 -f2 -Hf
 qed-.
 
 lemma lexs_drops_conf_push: ∀RN,RP.
-                            ∀f2,L1,L2. L1 ⦻*[RN, RP, f2] L2 →
+                            ∀f2,L1,L2. L1 ⪤*[RN, RP, f2] L2 →
                             ∀b,f,I,K1,V1. ⬇*[b,f] L1 ≡ K1.ⓑ{I}V1 → 𝐔⦃f⦄ →
                             ∀f1. f ~⊚ ↑f1 ≡ f2 →
-                            ∃∃K2,V2. ⬇*[b,f] L2 ≡ K2.ⓑ{I}V2 & K1 ⦻*[RN, RP, f1] K2 & RP K1 V1 V2.
+                            ∃∃K2,V2. ⬇*[b,f] L2 ≡ K2.ⓑ{I}V2 & K1 ⪤*[RN, RP, f1] K2 & RP K1 V1 V2.
 #RN #RP #f2 #L1 #L2 #HL12 #b #f #I #K1 #V1 #HLK1 #Hf #f1 #Hf2
 elim (lexs_co_dropable_sn … HLK1 … Hf … HL12 … Hf2) -L1 -f2 -Hf
 #X #HX #HLK2 elim (lexs_inv_push1 … HX) -HX
@@ -109,20 +109,20 @@ elim (lexs_co_dropable_sn … HLK1 … Hf … HL12 … Hf2) -L1 -f2 -Hf
 qed-.
 
 (* Basic_2A1: includes: lpx_sn_drop_trans *)
-lemma lexs_drops_trans_next: ∀RN,RP,f2,L1,L2. L1 ⦻*[RN, RP, f2] L2 →
+lemma lexs_drops_trans_next: ∀RN,RP,f2,L1,L2. L1 ⪤*[RN, RP, f2] L2 →
                              ∀b,f,I,K2,V2. ⬇*[b,f] L2 ≡ K2.ⓑ{I}V2 → 𝐔⦃f⦄ →
                              ∀f1. f ~⊚ ⫯f1 ≡ f2 →
-                             ∃∃K1,V1. ⬇*[b,f] L1 ≡ K1.ⓑ{I}V1 & K1 ⦻*[RN, RP, f1] K2 & RN K1 V1 V2.
+                             ∃∃K1,V1. ⬇*[b,f] L1 ≡ K1.ⓑ{I}V1 & K1 ⪤*[RN, RP, f1] K2 & RN K1 V1 V2.
 #RN #RP #f2 #L1 #L2 #HL12 #b #f #I #K1 #V1 #HLK1 #Hf #f1 #Hf2
 elim (lexs_co_dropable_dx … HL12 … HLK1 … Hf … Hf2) -L2 -f2 -Hf
 #X #HLK1 #HX elim (lexs_inv_next2 … HX) -HX
 #K1 #V1 #HK12 #HV12 #H destruct /2 width=5 by ex3_2_intro/
 qed-.
 
-lemma lexs_drops_trans_push: ∀RN,RP,f2,L1,L2. L1 ⦻*[RN, RP, f2] L2 →
+lemma lexs_drops_trans_push: ∀RN,RP,f2,L1,L2. L1 ⪤*[RN, RP, f2] L2 →
                              ∀b,f,I,K2,V2. ⬇*[b,f] L2 ≡ K2.ⓑ{I}V2 → 𝐔⦃f⦄ →
                              ∀f1. f ~⊚ ↑f1 ≡ f2 →
-                             ∃∃K1,V1. ⬇*[b,f] L1 ≡ K1.ⓑ{I}V1 & K1 ⦻*[RN, RP, f1] K2 & RP K1 V1 V2.
+                             ∃∃K1,V1. ⬇*[b,f] L1 ≡ K1.ⓑ{I}V1 & K1 ⪤*[RN, RP, f1] K2 & RP K1 V1 V2.
 #RN #RP #f2 #L1 #L2 #HL12 #b #f #I #K1 #V1 #HLK1 #Hf #f1 #Hf2
 elim (lexs_co_dropable_dx … HL12 … HLK1 … Hf … Hf2) -L2 -f2 -Hf
 #X #HLK1 #HX elim (lexs_inv_push2 … HX) -HX
@@ -131,10 +131,10 @@ qed-.
 
 lemma drops_lexs_trans_next: ∀RN,RP. (∀L. reflexive ? (RN L)) → (∀L. reflexive ? (RP L)) →
                              d_liftable2_sn RN → d_liftable2_sn RP →
-                             ∀f1,K1,K2. K1 ⦻*[RN, RP, f1] K2 →
+                             ∀f1,K1,K2. K1 ⪤*[RN, RP, f1] K2 →
                              ∀b,f,I,L1,V1. ⬇*[b,f] L1.ⓑ{I}V1 ≡ K1 →
                              ∀f2. f ~⊚ f1 ≡ ⫯f2 →
-                             ∃∃L2,V2. ⬇*[b,f] L2.ⓑ{I}V2 ≡ K2 & L1 ⦻*[RN, RP, f2] L2 & RN L1 V1 V2 & L1.ⓑ{I}V1≡[f]L2.ⓑ{I}V2.
+                             ∃∃L2,V2. ⬇*[b,f] L2.ⓑ{I}V2 ≡ K2 & L1 ⪤*[RN, RP, f2] L2 & RN L1 V1 V2 & L1.ⓑ{I}V1≡[f]L2.ⓑ{I}V2.
 #RN #RP #H1RN #H1RP #H2RN #H2RP #f1 #K1 #K2 #HK12 #b #f #I #L1 #V1 #HLK1 #f2 #Hf2
 elim (lexs_liftable_co_dedropable_sn … H1RN H1RP H2RN H2RP … HLK1 … HK12 … Hf2) -K1 -f1 -H1RN -H1RP -H2RN -H2RP
 #X #HX #HLK2 #H1L12 elim (lexs_inv_next1 … HX) -HX
@@ -143,10 +143,10 @@ qed-.
 
 lemma drops_lexs_trans_push: ∀RN,RP. (∀L. reflexive ? (RN L)) → (∀L. reflexive ? (RP L)) →
                              d_liftable2_sn RN → d_liftable2_sn RP →
-                             ∀f1,K1,K2. K1 ⦻*[RN, RP, f1] K2 →
+                             ∀f1,K1,K2. K1 ⪤*[RN, RP, f1] K2 →
                              ∀b,f,I,L1,V1. ⬇*[b,f] L1.ⓑ{I}V1 ≡ K1 →
                              ∀f2. f ~⊚ f1 ≡ ↑f2 →
-                             ∃∃L2,V2. ⬇*[b,f] L2.ⓑ{I}V2 ≡ K2 & L1 ⦻*[RN, RP, f2] L2 & RP L1 V1 V2 & L1.ⓑ{I}V1≡[f]L2.ⓑ{I}V2.
+                             ∃∃L2,V2. ⬇*[b,f] L2.ⓑ{I}V2 ≡ K2 & L1 ⪤*[RN, RP, f2] L2 & RP L1 V1 V2 & L1.ⓑ{I}V1≡[f]L2.ⓑ{I}V2.
 #RN #RP #H1RN #H1RP #H2RN #H2RP #f1 #K1 #K2 #HK12 #b #f #I #L1 #V1 #HLK1 #f2 #Hf2
 elim (lexs_liftable_co_dedropable_sn … H1RN H1RP H2RN H2RP … HLK1 … HK12 … Hf2) -K1 -f1 -H1RN -H1RP -H2RN -H2RP
 #X #HX #HLK2 #H1L12 elim (lexs_inv_push1 … HX) -HX
@@ -154,7 +154,7 @@ elim (lexs_liftable_co_dedropable_sn … H1RN H1RP H2RN H2RP … HLK1 … HK12 �
 qed-.
 
 lemma drops_atom2_lexs_conf: ∀RN,RP,b,f1,L1. ⬇*[b, f1] L1 ≡ ⋆ → 𝐔⦃f1⦄ →
-                             ∀f,L2. L1 ⦻*[RN, RP, f] L2 →
+                             ∀f,L2. L1 ⪤*[RN, RP, f] L2 →
                              ∀f2. f1 ~⊚ f2 ≡f → ⬇*[b, f1] L2 ≡ ⋆.
 #RN #RP #b #f1 #L1 #H1 #Hf1 #f #L2 #H2 #f2 #H3
 elim (lexs_co_dropable_sn … H1 … H2 … H3) // -H1 -H2 -H3 -Hf1
