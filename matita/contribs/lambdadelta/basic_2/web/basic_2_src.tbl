@@ -253,12 +253,14 @@ table {
           }
         ]
         [ { "local environments" * } {
+             [ "lenv_ext2" * ]
              [ "lenv_length ( |?| )" * ]
              [ "lenv_weight ( ♯{?} )" * ]
              [ "lenv" * ]
           }
         ]
         [ { "binders for local environments" * } {
+             [ "bind_ext2" * ]
              [ "bind" "bind_weight" * ]
           }
         ]
