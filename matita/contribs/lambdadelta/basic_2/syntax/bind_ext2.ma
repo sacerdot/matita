@@ -63,6 +63,19 @@ lemma ext2_inv_pair_dx: ∀R,Z1,I,V2. ext2 R Z1 (BPair I V2) →
                         ∃∃V1. R V1 V2 & Z1 = BPair I V1.
 /2 width=3 by ext2_inv_pair_dx_aux/ qed-.
 
+(* Advanced inversion lemmas ***********************************************)
+
+lemma ext2_inv_unit: ∀R,I1,I2. ext2 R (BUnit I1) (BUnit I2) → I1 = I2.
+#R #I1 #I2 #H lapply (ext2_inv_unit_sn … H) -H
+#H destruct //
+qed-.
+
+lemma ext2_inv_pair: ∀R,I1,I2,V1,V2. ext2 R (BPair I1 V1) (BPair I2 V2) →
+                     I1 = I2 ∧ R V1 V2.
+#R #I1 #I2 #V1 #V2 #H elim (ext2_inv_pair_sn … H) -H
+#V #HV #H destruct /2 width=1 by conj/
+qed-.
+
 (* Basic properties ********************************************************)
 
 lemma ext2_refl: ∀R. reflexive … R → reflexive … (ext2 R).
@@ -71,4 +84,19 @@ qed.
 
 lemma ext2_sym: ∀R. symmetric … R → symmetric … (ext2 R).
 #R #HR #T1 #T2 * /3 width=1 by ext2_unit, ext2_pair/
+qed-.
+
+lemma ext2_dec: ∀R. (∀T1,T2. Decidable (R T1 T2)) →
+                ∀I1,I2. Decidable (ext2 R I1 I2).
+#R #HR * #I1 [2: #T1 ] * #I2 [2,4: #T2 ]
+[ elim (eq_bind2_dec I1 I2) #HI12 destruct
+  [ elim (HR T1 T2) -HR #HT12 /3 width=1 by ext2_pair, or_introl/ ]
+  @or_intror #H elim (ext2_inv_pair … H) -H /2 width=1 by/
+| @or_intror #H lapply (ext2_inv_unit_sn … H) -H
+  #H destruct
+| @or_intror #H lapply (ext2_inv_unit_dx … H) -H
+  #H destruct
+| elim (eq_bind1_dec I1 I2) #HI12 destruct
+  /4 width=2 by ext2_inv_unit, ext2_unit, or_intror, or_introl/
+]
 qed-.
