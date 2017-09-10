@@ -151,6 +151,14 @@ lemma coafter_inv_xxn: ∀g1,g2,g. g1 ~⊚ g2 ≡ g → ∀f. ⫯f = g →
 ]
 qed-.
 
+lemma coafter_inv_xnn: ∀g1,g2,g. g1 ~⊚ g2 ≡ g →
+                       ∀f2,f. ⫯f2 = g2 → ⫯f = g →
+                       ∃∃f1. f1 ~⊚ f2 ≡ f & ↑f1 = g1.
+#g1 #g2 #g #Hg #f2 #f #H2 destruct #H
+elim (coafter_inv_xxn … Hg … H) -g
+#z1 #z2 #Hf #H1 #H2 destruct /2 width=3 by ex2_intro/
+qed-.
+
 lemma coafter_inv_xxp: ∀g1,g2,g. g1 ~⊚ g2 ≡ g → ∀f. ↑f = g →
                        (∃∃f1,f2. f1 ~⊚ f2 ≡ f & ↑f1 = g1 & ↑f2 = g2) ∨
                        ∃∃f1. f1 ~⊚ g2 ≡ f & ⫯f1 = g1.

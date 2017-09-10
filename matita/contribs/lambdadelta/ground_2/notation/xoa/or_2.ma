@@ -12,13 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basics/logic.ma".
-include "ground_2/notation/xoa/false_0.ma".
-include "ground_2/notation/xoa/true_0.ma".
-include "ground_2/notation/xoa/or_2.ma".
-include "ground_2/notation/xoa/and_2.ma".
-include "ground_2/xoa/xoa.ma".
+(* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
 
-interpretation "logical false" 'false = False.
-
-interpretation "logical true" 'true = True.
+notation > "hvbox(∨∨ term 29 P0 break | term 29 P1)"
+ non associative with precedence 30
+ for @{ 'or $P0 $P1 }.

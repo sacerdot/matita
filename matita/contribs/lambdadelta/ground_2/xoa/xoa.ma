@@ -16,7 +16,7 @@
 
 include "basics/pts.ma".
 
-include "ground_2/notation/xoa_notation.ma".
+include "ground_2/notation/xoa/notation.ma".
 
 (* multiple existental quantifier (1, 2) *)
 
