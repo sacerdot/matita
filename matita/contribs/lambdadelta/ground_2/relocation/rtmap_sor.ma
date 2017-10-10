@@ -266,19 +266,6 @@ corec lemma sor_sym: ∀f1,f2,f. f1 ⋓ f2 ≡ f → f2 ⋓ f1 ≡ f.
 [ @sor_pp | @sor_pn | @sor_np | @sor_nn ] /2 width=7 by/
 qed-.
 
-(* Main properties **********************************************************)
-
-axiom monotonic_sle_sor: ∀f1,g1. f1 ⊆ g1 → ∀f2,g2. f2 ⊆ g2 →
-                         ∀f. f1 ⋓ f2 ≡ f → ∀g. g1 ⋓ g2 ≡ g → f ⊆ g.
-
-axiom sor_trans1: ∀f0,f3,f4. f0 ⋓ f3 ≡ f4 →
-                  ∀f1,f2. f1 ⋓ f2 ≡ f0 →
-                  ∀f. f2 ⋓ f3 ≡ f → f1 ⋓ f ≡ f4.
-
-axiom sor_trans2: ∀f1,f0,f4. f1 ⋓ f0 ≡ f4 →
-                  ∀f2, f3. f2 ⋓ f3 ≡ f0 →
-                  ∀f. f1 ⋓ f2 ≡ f → f ⋓ f3 ≡ f4.
-
 (* Properties with tail *****************************************************)
 
 lemma sor_tl: ∀f1,f2,f. f1 ⋓ f2 ≡ f → ⫱f1 ⋓ ⫱f2 ≡ ⫱f.
@@ -461,3 +448,46 @@ qed.
 corec lemma sor_sle_sn: ∀f1,f2. f1 ⊆ f2 → f2 ⋓ f1 ≡ f2.
 #f1 #f2 * -f1 -f2 /3 width=7 by sor_pp, sor_nn, sor_np/
 qed.
+
+(* Main properties **********************************************************)
+
+axiom monotonic_sle_sor: ∀f1,g1. f1 ⊆ g1 → ∀f2,g2. f2 ⊆ g2 →
+                         ∀f. f1 ⋓ f2 ≡ f → ∀g. g1 ⋓ g2 ≡ g → f ⊆ g.
+
+axiom sor_trans1: ∀f0,f3,f4. f0 ⋓ f3 ≡ f4 →
+                  ∀f1,f2. f1 ⋓ f2 ≡ f0 →
+                  ∀f. f2 ⋓ f3 ≡ f → f1 ⋓ f ≡ f4.
+
+axiom sor_trans2: ∀f1,f0,f4. f1 ⋓ f0 ≡ f4 →
+                  ∀f2, f3. f2 ⋓ f3 ≡ f0 →
+                  ∀f. f1 ⋓ f2 ≡ f → f ⋓ f3 ≡ f4.
+
+corec theorem sor_distr_dx: ∀f1,f2,f. f1 ⋓ f2 ≡ f → ∀g1,g2,g. g1 ⋓ g2 ≡ g →
+                            ∀g0. g1 ⋓ g0 ≡ f1 → g2 ⋓ g0 ≡ f2 → g ⋓ g0 ≡ f.
+#f1 #f2 #f cases (pn_split f) * #x #Hx #Hf #g1 #g2 #g #Hg #g0 #Hf1 #Hf2
+[ cases (sor_inv_xxp … Hf … Hx) -Hf #x1 #x2 #Hf #Hx1 #Hx2
+  cases (sor_inv_xxp … Hf1 … Hx1) -f1 #y1 #y0 #Hf1 #Hy1 #Hy0
+  cases (sor_inv_xpp … Hf2 … Hy0 … Hx2) -f2 #y2 #Hf2 #Hy2
+  cases (sor_inv_ppx … Hg … Hy1 Hy2) -g1 -g2 #y #Hg #Hy
+  @(sor_pp … Hy Hy0 Hx) -g -g0 -f /2 width=8 by/
+| cases (pn_split g) * #y #Hy
+  [ cases (sor_inv_xxp … Hg … Hy) -Hg #y1 #y2 #Hg #Hy1 #Hy2
+    cases (sor_xxn_tl … Hf … Hx) * #x1 #x2 #_ #Hx1 #Hx2
+    [ cases (sor_inv_pxn … Hf1 … Hy1 Hx1) -g1 #y0 #Hf1 #Hy0
+      cases (sor_inv_pnx … Hf2 … Hy2 Hy0) -g2 -x2 #x2 #Hf2 #Hx2
+    | cases (sor_inv_pxn … Hf2 … Hy2 Hx2) -g2 #y0 #Hf2 #Hy0
+      cases (sor_inv_pnx … Hf1 … Hy1 Hy0) -g1 -x1 #x1 #Hf1 #Hx1
+    ]
+    lapply (sor_inv_nnn … Hf … Hx1 Hx2 Hx) -f1 -f2 #Hf
+    @(sor_pn … Hy Hy0 Hx) -g -g0 -f /2 width=8 by/
+  | lapply (sor_tl … Hf) -Hf #Hf
+    lapply (sor_tl … Hg) -Hg #Hg
+    lapply (sor_tl … Hf1) -Hf1 #Hf1
+    lapply (sor_tl … Hf2) -Hf2 #Hf2
+    cases (pn_split g0) * #y0 #Hy0
+    [ @(sor_np … Hy Hy0 Hx) /2 width=8 by/
+    | @(sor_nn … Hy Hy0 Hx) /2 width=8 by/
+    ]
+  ]
+]
+qed-.

@@ -12,4 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/relocation/rtmap_sand.ma".
+include "ground_2/relocation/rtmap_sor.ma".
+
+(* RELOCATION N-STREAM ******************************************************)
+
+axiom union: rtmap → rtmap → rtmap.
+
+interpretation "union (nstream)"
+   'union f1 f2 = (union f1 f2).
+
+(* Specific properties on sor ***********************************************)
+
+axiom sor_total: ∀f1,f2. f1 ⋓ f2 ≡ f1 ∪ f2.

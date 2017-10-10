@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "ground_2/relocation/rtmap_isid.ma".
+include "ground_2/relocation/rtmap_isdiv.ma".
 
 (* RELOCATION MAP ***********************************************************)
 
@@ -27,9 +28,10 @@ interpretation "inclusion (rtmap)"
 
 (* Basic properties *********************************************************)
 
-corec lemma sle_refl: ∀f. f ⊆ f.
-#f cases (pn_split f) * #g #H
-[ @(sle_push … H H) | @(sle_next … H H) ] -H //
+corec lemma sle_refl: ∀f1,f2. f1 ≗ f2 → f1 ⊆ f2.
+#f1 #f2 * -f1 -f2
+#f1 #f2 #g1 #g2 #H12 #H1 #H2
+[ @(sle_push … H1 H2) | @(sle_next … H1 H2) ] -H1 -H2 /2 width=1 by/
 qed.
 
 (* Basic inversion lemmas ***************************************************)
@@ -146,4 +148,22 @@ corec lemma sle_inv_isid_dx: ∀f1,f2. f1 ⊆ f2 → 𝐈⦃f2⦄ → 𝐈⦃f1�
 [2,3: elim (isid_inv_next … H) // ]
 lapply (isid_inv_push … H ??) -H
 /3 width=3 by isid_push/
+qed-.
+
+(* Properties with isdiv ****************************************************)
+
+corec lemma sle_isdiv_dx: ∀f2. 𝛀⦃f2⦄ → ∀f1. f1 ⊆ f2.
+#f2 * -f2
+#f2 #g2 #Hf2 #H2 #f1 cases (pn_split f1) *
+/3 width=5 by sle_weak, sle_next/
+qed.
+
+(* Inversion lemmas with isdiv **********************************************)
+
+corec lemma sle_inv_isdiv_sn: ∀f1,f2. f1 ⊆ f2 → 𝛀⦃f1⦄ → 𝛀⦃f2⦄.
+#f1 #f2 * -f1 -f2
+#f1 #f2 #g1 #g2 #Hf * * #H
+[1,3: elim (isdiv_inv_push … H) // ]
+lapply (isdiv_inv_next … H ??) -H
+/3 width=3 by isdiv_next/
 qed-.

@@ -35,15 +35,13 @@ qed-.
 
 (* Basic inversion lemmas ***************************************************)
 
+lemma isfin_inv_push: ∀g. 𝐅⦃g⦄ → ∀f. ↑f = g → 𝐅⦃f⦄.
+#g * /3 width=4 by fcla_inv_px, ex_intro/
+qed-.
+
 lemma isfin_inv_next: ∀g. 𝐅⦃g⦄ → ∀f. ⫯f = g → 𝐅⦃f⦄.
 #g * #n #H #f #H0 elim (fcla_inv_nx … H … H0) -g
 /2 width=2 by ex_intro/
-qed-.
-
-(* Basic forward lemmas *****************************************************)
-
-lemma isfin_fwd_push: ∀g. 𝐅⦃g⦄ → ∀f. ↑f = g → 𝐅⦃f⦄.
-#g * /3 width=4 by fcla_inv_px, ex_intro/
 qed-.
 
 (* Basic properties *********************************************************)
@@ -66,9 +64,23 @@ lemma isfin_next: ∀f. 𝐅⦃f⦄ → 𝐅⦃⫯f⦄.
 #f * /3 width=2 by fcla_next, ex_intro/
 qed.
 
+(* Properties with iterated push ********************************************)
+
+lemma isfin_pushs: ∀n,f. 𝐅⦃f⦄ → 𝐅⦃↑*[n]f⦄.
+#n elim n -n /3 width=3 by isfin_push/
+qed.
+
+(* Inversion lemmas with iterated push **************************************)
+
+lemma isfin_inv_pushs: ∀n,g. 𝐅⦃↑*[n]g⦄ → 𝐅⦃g⦄.
+#n elim n -n /3 width=3 by isfin_inv_push/
+qed.
+
+(* Properties with tail *****************************************************)
+
 lemma isfin_tl: ∀f. 𝐅⦃f⦄ → 𝐅⦃⫱f⦄.
 #f elim (pn_split f) * #g #H #Hf destruct
-/3 width=3 by isfin_fwd_push, isfin_inv_next/
+/3 width=3 by isfin_inv_push, isfin_inv_next/
 qed.
 
 (* Inversion lemmas with tail ***********************************************)
@@ -77,7 +89,7 @@ lemma isfin_inv_tl: ∀f. 𝐅⦃⫱f⦄ → 𝐅⦃f⦄.
 #f elim (pn_split f) * /2 width=1 by isfin_next, isfin_push/
 qed-.
 
-(* Inversion lemmas with tls ********************************************************)
+(* Inversion lemmas with iterated tail **************************************)
 
 lemma isfin_inv_tls: ∀n,f. 𝐅⦃⫱*[n]f⦄ → 𝐅⦃f⦄.
 #n elim n -n /3 width=1 by isfin_inv_tl/

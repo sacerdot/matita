@@ -75,6 +75,18 @@ corec lemma eq_push_inv_isid: ∀f. 𝐈⦃f⦄ → ↑f ≗ f.
 @eq_f //
 qed-.
 
+(* Properties with iterated push ********************************************)
+
+lemma isid_pushs: ∀n,f. 𝐈⦃f⦄ → 𝐈⦃↑*[n]f⦄.
+#n elim n -n /3 width=3 by isid_push/
+qed.
+
+(* Inversion lemmas with iterated push **************************************)
+
+lemma isid_inv_pushs: ∀n,g. 𝐈⦃↑*[n]g⦄ → 𝐈⦃g⦄.
+#n elim n -n /3 width=3 by isid_inv_push/
+qed.
+
 (* Properties with tail *****************************************************)
 
 lemma isid_tl: ∀f. 𝐈⦃f⦄ → 𝐈⦃⫱f⦄.

@@ -236,15 +236,26 @@ lemma coafter_mono_eq: ∀f1,f2,f. f1 ~⊚ f2 ≡ f → ∀g1,g2,g. g1 ~⊚ g2 �
                        f1 ≗ g1 → f2 ≗ g2 → f ≗ g.
 /4 width=4 by coafter_mono, coafter_eq_repl_back1, coafter_eq_repl_back2/ qed-.
 
-(* Inversion lemmas with pushs **********************************************)
+(* Forward lemmas with pushs ************************************************)
 
-lemma coafter_fwd_pushs: ∀n,g2,g1,g. g2 ~⊚ g1 ≡ g → @⦃0, g2⦄ ≡ n →
-                         ∃f. ↑*[n]f = g.
-#n elim n -n /2 width=2 by ex_intro/
-#n #IH #g2 #g1 #g #Hg #Hg2
-cases (at_inv_pxn … Hg2) -Hg2 [ |*: // ] #f2 #Hf2 #H2
-cases (coafter_inv_nxx … Hg … H2) -Hg -H2 #f #Hf #H0 destruct
-elim (IH … Hf Hf2) -g1 -g2 -f2 /2 width=2 by ex_intro/
+lemma coafter_fwd_pushs: ∀j,i,g2,f1,g. g2 ~⊚ ↑*[i]f1 ≡ g → @⦃i, g2⦄ ≡ j →
+                         ∃f. ↑*[j] f = g.
+#j elim j -j
+[ #i #g2 #f1 #g #Hg #H
+  elim (at_inv_xxp … H) -H [|*: // ] #f2 #H1 #H2 destruct
+  /2 width=2 by ex_intro/
+| #j #IH * [| #i ] #g2 #f1 #g #Hg #H
+  [ elim (at_inv_pxn … H) -H [|*: // ] #f2 #Hij #H destruct
+    elim (coafter_inv_nxx … Hg) -Hg [|*: // ] #f #Hf #H destruct
+    elim (IH … Hf Hij) -f1 -f2 -IH /2 width=2 by ex_intro/
+  | elim (at_inv_nxn … H) -H [1,4: * |*: // ] #f2 #Hij #H destruct
+    [ elim (coafter_inv_ppx … Hg) -Hg [|*: // ] #f #Hf #H destruct
+      elim (IH … Hf Hij) -f1 -f2 -i /2 width=2 by ex_intro/
+    | elim (coafter_inv_nxx … Hg) -Hg [|*: // ] #f #Hf #H destruct
+      elim (IH … Hf Hij) -f1 -f2 -i /2 width=2 by ex_intro/
+    ]
+  ]
+]
 qed-.
 
 (* Inversion lemmas with tail ***********************************************)
@@ -267,14 +278,25 @@ qed-.
 
 (* Properties with iterated tail ********************************************)
 
-lemma coafter_tls: ∀n,f1,f2,f. @⦃0, f1⦄ ≡ n →
-                   f1 ~⊚ f2 ≡ f → ⫱*[n]f1 ~⊚ f2 ≡ ⫱*[n]f.
-#n elim n -n //
-#n #IH #f1 #f2 #f #Hf1 #Hf
-cases (at_inv_pxn … Hf1) -Hf1 [ |*: // ] #g1 #Hg1 #H1
-cases (coafter_inv_nxx … Hf … H1) -Hf #g #Hg #H0 destruct
-<tls_xn <tls_xn /2 width=1 by/
+lemma coafter_tls: ∀j,i,f1,f2,f. @⦃i, f1⦄ ≡ j →
+                   f1 ~⊚ f2 ≡ f → ⫱*[j]f1 ~⊚ ⫱*[i]f2 ≡ ⫱*[j]f.
+#j elim j -j [ #i | #j #IH * [| #i ] ] #f1 #f2 #f #Hf1 #Hf
+[ elim (at_inv_xxp … Hf1) -Hf1 [ |*: // ] #g1 #Hg1 #H1 destruct //
+| elim (at_inv_pxn … Hf1) -Hf1 [ |*: // ] #g1 #Hg1 #H1
+  elim (coafter_inv_nxx … Hf … H1) -Hf #g #Hg #H0 destruct
+  lapply (IH … Hg1 Hg) -IH -Hg1 -Hg //
+| elim (at_inv_nxn … Hf1) -Hf1 [1,4: * |*: // ] #g1 #Hg1 #H1
+  [ elim (coafter_inv_pxx … Hf … H1) -Hf * #g2 #g #Hg #H2 #H0 destruct
+    lapply (IH … Hg1 Hg) -IH -Hg1 -Hg #H //
+  | elim (coafter_inv_nxx … Hf … H1) -Hf #g #Hg #H0 destruct
+    lapply (IH … Hg1 Hg) -IH -Hg1 -Hg #H //
+  ]
+]
 qed.
+
+lemma coafter_tls_O: ∀n,f1,f2,f. @⦃0, f1⦄ ≡ n →
+                     f1 ~⊚ f2 ≡ f → ⫱*[n]f1 ~⊚ f2 ≡ ⫱*[n]f.
+/2 width=1 by coafter_tls/ qed.
 
 lemma coafter_tls_succ: ∀g2,g1,g. g2 ~⊚ g1 ≡ g →
                         ∀n. @⦃0, g2⦄ ≡ n → ⫱*[⫯n]g2 ~⊚ ⫱g1 ≡ ⫱*[⫯n]g.
@@ -286,30 +308,26 @@ elim (coafter_inv_pxx … Hg … H2) -Hg * #f1 #f #Hf #H1 #H0 destruct
 <tls_S <tls_S <H2 <H0 -g2 -g -n //
 qed.
 
-lemma coafter_fwd_xpx_pushs: ∀g2,f1,g,n. g2 ~⊚ ↑f1 ≡ g → @⦃0, g2⦄ ≡ n →
-                             ∃f. ↑*[⫯n]f = g.
-#g2 #g1 #g #n #Hg #Hg2
+lemma coafter_fwd_xpx_pushs: ∀g2,f1,g,i,j. @⦃i, g2⦄ ≡ j → g2 ~⊚ ↑*[⫯i]f1 ≡ g →
+                             ∃∃f.  ⫱*[⫯j]g2 ~⊚ f1 ≡ f & ↑*[⫯j]f = g.
+#g2 #g1 #g #i #j #Hg2 <pushs_xn #Hg
 elim (coafter_fwd_pushs … Hg Hg2) #f #H0 destruct
-lapply (coafter_tls … Hg2 Hg) -Hg <tls_pushs #Hf
-lapply (at_pxx_tls … Hg2) -Hg2 #H
-elim (at_inv_pxp … H) -H [ |*: // ] #f2 #H2
-elim (coafter_inv_pxx … Hf … H2) -Hf -H2 * #f1 #g #_ #H1 #H0 destruct
-[ /2 width=2 by ex_intro/
-| elim (discr_next_push … H1)
-] 
+lapply (coafter_tls … Hg2 Hg) -Hg <tls_pushs <tls_pushs #Hf
+lapply (at_inv_tls … Hg2) -Hg2 #H
+lapply (coafter_eq_repl_fwd2 … Hf … H) -H -Hf #Hf
+elim (coafter_inv_ppx … Hf) [|*: // ] -Hf #g #Hg #H destruct
+/2 width=3 by ex2_intro/
 qed-.
 
-lemma coafter_fwd_xnx_pushs: ∀g2,f1,g,n. g2 ~⊚ ⫯f1 ≡ g → @⦃0, g2⦄ ≡ n →
-                             ∃f. ↑*[n] ⫯f = g.
-#g2 #g1 #g #n #Hg #Hg2
+lemma coafter_fwd_xnx_pushs: ∀g2,f1,g,i,j. @⦃i, g2⦄ ≡ j → g2 ~⊚ ↑*[i]⫯f1 ≡ g →
+                             ∃∃f. ⫱*[⫯j]g2 ~⊚ f1 ≡ f & ↑*[j] ⫯f = g.
+#g2 #g1 #g #i #j #Hg2 #Hg
 elim (coafter_fwd_pushs … Hg Hg2) #f #H0 destruct
-lapply (coafter_tls … Hg2 Hg) -Hg <tls_pushs #Hf
-lapply (at_pxx_tls … Hg2) -Hg2 #H
-elim (at_inv_pxp … H) -H [ |*: // ] #f2 #H2
-elim (coafter_inv_pxx … Hf … H2) -Hf -H2 * #f1 #g #_ #H1 #H0 destruct
-[ elim (discr_push_next … H1)
-| /2 width=2 by ex_intro/
-] 
+lapply (coafter_tls … Hg2 Hg) -Hg <tls_pushs <tls_pushs #Hf
+lapply (at_inv_tls … Hg2) -Hg2 #H
+lapply (coafter_eq_repl_fwd2 … Hf … H) -H -Hf #Hf
+elim (coafter_inv_pnx … Hf) [|*: // ] -Hf #g #Hg #H destruct
+/2 width=3 by ex2_intro/
 qed-.
 
 (* Properties with test for identity ****************************************)
@@ -596,8 +614,8 @@ lapply (istot_inv_push … H2f1 … H1) -H2f1 #H2g1
 cases (H2g1 0) #n #Hn
 cases (coafter_inv_pxx … H … H1) -H * #g2 #g #H #H2 #H0
 [ lapply (isid_inv_push … Hf … H0) -Hf #Hg
-  @(isid_push … H2)
-  /3 width=7 by coafter_tls, istot_tls, at_pxx_tls, isid_tls/
+  @(isid_push … H2) -H2
+  /3 width=7 by coafter_tls_O, at_pxx_tls, istot_tls, isid_tls/
 | cases (isid_inv_next … Hf … H0)
 ]
 qed-.
@@ -628,7 +646,7 @@ lapply (istot_inv_push … Hf1 … H1) -Hf1 #Hg1
 elim (Hg1 0) #n #Hn
 [ elim (coafter_inv_ppx … Hf) | elim (coafter_inv_pnx … Hf)
 ] -Hf [1,6: |*: // ] #g #Hg #H0 destruct
-/5 width=6 by isfin_next, isfin_push, isfin_inv_tls, istot_tls, at_pxx_tls, coafter_tls/
+/5 width=6 by isfin_next, isfin_push, isfin_inv_tls, istot_tls, at_pxx_tls, coafter_tls_O/
 qed-.
 
 fact coafter_isfin2_fwd_aux: (∀f1. @⦃0, f1⦄ ≡ 0 → H_coafter_isfin2_fwd f1) →
