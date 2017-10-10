@@ -4,14 +4,14 @@ H    := @
 TRIM := sed "s/ \\+$$//"
 
 XOA_CONF     := ground_2/xoa.conf.xml
-XOA_TARGETS  := ground_2/notation/xoa_notation.ma ground_2/xoa/xoa.ma
+XOA_TARGETS  := ground_2/notation/xoa/notation.ma ground_2/xoa/xoa.ma
 
 XOA_DIR      := ../../../components/binaries/xoa
 XOA          := xoa.native
 XOA_OPTS     := ../../matita.conf.xml $(XOA_CONF)
 
 XOA2_CONF    := ground_2/xoa2.conf.xml
-XOA2_TARGETS := ground_2/notation/xoa2_notation.ma ground_2/xoa/xoa2.ma
+XOA2_TARGETS := ground_2/notation/xoa/notation2.ma ground_2/xoa/xoa2.ma
 XOA2_OPTS    := ../../matita.conf.xml $(XOA2_CONF)
 
 DEP_INPUT    := .depend

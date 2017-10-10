@@ -64,7 +64,7 @@ lemma frees_drops_next: ∀f1,L1,T1. L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 →
 | #f1 #I1 #L1 #V1 #Hf1 #IH #I2 #L2 #V2 *
   [ -IH #HL12 lapply (drops_fwd_isid … HL12 ?) -HL12 //
     #H destruct #g1 #Hgf1 >(injective_next … Hgf1) -g1
-    /2 width=3 by sle_refl, ex2_intro/
+    /3 width=3 by sle_refl, ex2_intro/
   | -Hf1 #n #HL12 lapply (drops_inv_drop1 … HL12) -HL12
     #HL12 #g1 <tls_xn <tl_next_rew #Hgf1 elim (IH … HL12 … Hgf1) -IH -HL12 -Hgf1
     /2 width=3 by ex2_intro/
