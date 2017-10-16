@@ -34,6 +34,10 @@
 
    <subsection name="A2">Stage "A2": "Extending the Applicability Condition"</subsection>
 
+   <news class="alpha" date="2017 October 16.">
+         Exclusion binder in local environments.
+         Ported components: syntax, relocation, s_transition, s_computation, static.
+   </news>
    <news class="alpha" date="2017 April 16.">
          Strong rt-normalization
          for simply typed terms

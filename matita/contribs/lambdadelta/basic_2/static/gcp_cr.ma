@@ -113,33 +113,34 @@ lemma acr_gcr: ∀RR,RS,RP. gcp RR RS RP → gcr RR RS RP RP →
   lapply (s1 … IHB … HB) #HV0
   @(s2 … IHA  … (V0@V0s)) /3 width=13 by cp0, gcp2_all, lifts_simple_dx, conj/
 | #p #G #L #Vs #U #T #W #HA #f #L0 #V0 #X #HL0 #H #HB
-  elim (lifts_inv_applv1 … H) -H #V0s #Y #HV0s #HY #H destruct
-  elim (lifts_inv_flat1 … HY) -HY #U0 #X #HU0 #HX #H destruct
+  elim (lifts_inv_applv1 … H) -H #V0s #X0 #HV0s #H0 #H destruct
+  elim (lifts_inv_flat1 … H0) -H0 #U0 #X #HU0 #HX #H destruct
   elim (lifts_inv_bind1 … HX) -HX #W0 #T0 #HW0 #HT0 #H destruct
   @(s3 … IHA … (V0@V0s)) /5 width=6 by lifts_applv, lifts_flat, lifts_bind/
 | #G #L #Vs #HVs #s #f #L0 #V0 #X #HL0 #H #HB
-  elim (lifts_inv_applv1 … H) -H #V0s #Y #HV0s #HY #H destruct
-  >(lifts_inv_sort1 … HY) -Y
+  elim (lifts_inv_applv1 … H) -H #V0s #X0 #HV0s #H0 #H destruct
+  >(lifts_inv_sort1 … H0) -X0
   lapply (s1 … IHB … HB) #HV0
   @(s4 … IHA … (V0@V0s)) /3 width=7 by gcp2_all, conj/
 | #I #G #L #K #Vs #V1 #V2 #i #HA #HV12 #HLK #f #L0 #V0 #X #HL0 #H #HB
-  elim (lifts_inv_applv1 … H) -H #V0s #Y #HV0s #HY #H destruct
-  elim (lifts_inv_lref1 … HY) -HY #j #Hf #H destruct
+  elim (lifts_inv_applv1 … H) -H #V0s #X0 #HV0s #H0 #H destruct
+  elim (lifts_inv_lref1 … H0) -H0 #j #Hf #H destruct
   lapply (drops_trans … HL0 … HLK ??) [3: |*: // ] -HLK #H
   elim (drops_split_trans … H) -H [ |*: /2 width=6 by after_uni_dx/ ] #Y #HLK0 #HY
   lapply (drops_tls_at … Hf … HY) -HY #HY
-  elim (drops_inv_skip2 … HY) -HY #K0 #W1 #_ #HVW1 #H destruct
+  elim (drops_inv_skip2 … HY) -HY #Z #K0 #HK0 #HZ #H destruct
+  elim (liftsb_inv_pair_sn … HZ) -HZ #W1 #HVW1 #H destruct
   elim (lifts_total W1 (𝐔❴⫯j❵)) #W2 #HW12
   lapply (lifts_trans … HVW1 … HW12 ??) -HVW1 [3: |*: // ] #H
   lapply (lifts_conf … HV12 … H f ?) -V1 [ /2 width=3 by after_uni_succ_sn/ ] #HVW2
   @(s5 … IHA … (V0@V0s) … HW12) /3 width=4 by drops_inv_gen, lifts_applv/
 | #G #L #V1s #V2s #HV12s #p #V #T #HA #HV #f #L0 #V10 #X #HL0 #H #HB
-  elim (lifts_inv_applv1 … H) -H #V10s #Y #HV10s #HY #H destruct
-  elim (lifts_inv_bind1 … HY) -HY #V0 #T0 #HV0 #HT0 #H destruct
+  elim (lifts_inv_applv1 … H) -H #V10s #X0 #HV10s #H0 #H destruct
+  elim (lifts_inv_bind1 … H0) -H0 #V0 #T0 #HV0 #HT0 #H destruct
   elim (lifts_total V10 (𝐔❴1❵)) #V20 #HV120
   elim (liftsv_total (𝐔❴1❵) V10s) #V20s #HV120s
   @(s6 … IHA … (V10@V10s) (V20@V20s)) /3 width=7 by cp2, liftsv_cons/
-  @(HA … (↑f)) /2 width=2 by drops_skip/
+  @(HA … (↑f)) /3 width=2 by drops_skip, ext2_pair/
   [ @lifts_applv //
     lapply (liftsv_trans … HV10s … HV120s ??) -V10s [3: |*: // ] #H
     elim (liftsv_split_trans … H (𝐔❴1❵) (↑f)) /2 width=1 by after_uni_one_sn/ #V10s #HV10s #HV120s
@@ -147,8 +148,8 @@ lemma acr_gcr: ∀RR,RS,RP. gcp RR RS RP → gcr RR RS RP RP →
   | @(acr_lifts … H1RP … HB … HV120) /3 width=2 by drops_refl, drops_drop/
   ]
 | #G #L #Vs #T #W #HA #HW #f #L0 #V0 #X #HL0 #H #HB
-  elim (lifts_inv_applv1 … H) -H #V0s #Y #HV0s #HY #H destruct
-  elim (lifts_inv_flat1 … HY) -HY #W0 #T0 #HW0 #HT0 #H destruct
+  elim (lifts_inv_applv1 … H) -H #V0s #X0 #HV0s #H0 #H destruct
+  elim (lifts_inv_flat1 … H0) -H0 #W0 #T0 #HW0 #HT0 #H destruct
   @(s7 … IHA … (V0@V0s)) /3 width=5 by lifts_applv/
 ]
 qed.

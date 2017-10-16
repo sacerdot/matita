@@ -21,6 +21,6 @@ include "basic_2/static/gcp_aaa.ma".
 
 lemma lsuba_lsubc: ∀RR,RS,RP. gcp RR RS RP → gcr RR RS RP RP →
                    ∀G,L1,L2. G ⊢ L1 ⫃⁝ L2 → G ⊢ L1 ⫃[RP] L2.
-#RR #RS #RP #H1RP #H2RP #G #L1 #L2 #H elim H -L1 -L2 /2 width=1 by lsubc_pair/
+#RR #RS #RP #H1RP #H2RP #G #L1 #L2 #H elim H -L1 -L2 /2 width=1 by lsubc_bind/
 #L1 #L2 #W #V #A #H elim (aaa_inv_cast … H) -H /3 width=4 by acr_aaa, lsubc_beta/
 qed.

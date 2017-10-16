@@ -20,22 +20,22 @@ include "basic_2/static/frees.ma".
 
 theorem frees_mono: ∀f1,L,T. L ⊢ 𝐅*⦃T⦄ ≡ f1 → ∀f2. L ⊢ 𝐅*⦃T⦄ ≡ f2 → f1 ≗ f2.
 #f1 #L #T #H elim H -f1 -L -T
-[ /3 width=2 by frees_inv_atom, isid_inv_eq_repl/
-| /4 width=5 by frees_inv_sort, eq_push_inv_isid, isid_inv_eq_repl, eq_trans/
-| #f1 #I #L #V #_ #IH #x #H elim (frees_inv_zero … H) -H *
-  [ #H destruct
-  | #f2 #Z #Y #X #Hf2 #H1 #H2 destruct /3 width=5 by eq_next/
-  ]
-| #f1 #I #L #V #i #_ #IH #x #H elim (frees_inv_lref … H) -H *
-  [ #H destruct
-  | #f2 #Z #Y #X #Hf2 #H1 #H2 destruct /3 width=5 by eq_push/
-  ]
-| /4 width=5 by frees_inv_gref, eq_push_inv_isid, isid_inv_eq_repl, eq_trans/
-| #f1 #f2 #f #p #I #L #V #T #_ #_ #Hf #IHV #IHT #g #H elim (frees_inv_bind … H) -H
-  #g1 #g2 #HV #HT #Hg @(sor_mono … Hf) -Hf
+[ /3 width=3 by frees_inv_sort, isid_inv_eq_repl/
+| #f1 #i #Hf1 #g2 #H
+  elim (frees_inv_atom … H) -H #f2 #Hf2 #H destruct
+  /4 width=5 by isid_inv_eq_repl, pushs_eq_repl, eq_next/
+| #f1 #I #L #V #_ #IH #g2 #H elim (frees_inv_pair … H) -H
+  #f2 #Hf2 #H destruct /3 width=5 by eq_next/
+| #f1 #I #L #Hf1 #g2 #H elim (frees_inv_unit … H) -H
+  #f2 #Hf2 #H destruct /3 width=5 by isid_inv_eq_repl, eq_next/
+| #f1 #I #L #i #_ #IH #g2 #H elim (frees_inv_lref … H) -H
+  #f2 #Hf2 #H destruct /3 width=5 by eq_push/
+| /3 width=3 by frees_inv_gref, isid_inv_eq_repl/
+| #f1V #f1T #f1 #p #I #L #V #T #_ #_ #Hf1 #IHV #IHT #f2 #H elim (frees_inv_bind … H) -H
+  #f2V #f2T #HV #HT #Hf2 @(sor_mono … Hf1) -Hf1
   /5 width=3 by sor_eq_repl_fwd2, sor_eq_repl_fwd1, tl_eq_repl/ (**) (* full auto too slow *)
-| #f1 #f2 #f #I #L #V #T #_ #_ #Hf #IHV #IHT #g #H elim (frees_inv_flat … H) -H
-  #g1 #g2 #HV #HT #Hg @(sor_mono … Hf) -Hf
+| #f1V #f1T #f1 #I #L #V #T #_ #_ #Hf1 #IHV #IHT #f2 #H elim (frees_inv_flat … H) -H
+  #f2V #f2T #HV #HT #Hf2 @(sor_mono … Hf1) -Hf1
   /4 width=3 by sor_eq_repl_fwd2, sor_eq_repl_fwd1/ (**) (* full auto too slow *)
 ]
 qed-.

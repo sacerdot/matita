@@ -28,11 +28,25 @@ interpretation "inclusion (rtmap)"
 
 (* Basic properties *********************************************************)
 
-corec lemma sle_refl: ∀f1,f2. f1 ≗ f2 → f1 ⊆ f2.
-#f1 #f2 * -f1 -f2
-#f1 #f2 #g1 #g2 #H12 #H1 #H2
-[ @(sle_push … H1 H2) | @(sle_next … H1 H2) ] -H1 -H2 /2 width=1 by/
+axiom sle_eq_repl_back1: ∀f2. eq_repl_back … (λf1. f1 ⊆ f2).
+
+lemma sle_eq_repl_fwd1: ∀f2. eq_repl_fwd … (λf1. f1 ⊆ f2).
+#f2 @eq_repl_sym /2 width=3 by sle_eq_repl_back1/
+qed-.
+
+axiom sle_eq_repl_back2: ∀f1. eq_repl_back … (λf2. f1 ⊆ f2).
+
+lemma sle_eq_repl_fwd2: ∀f1. eq_repl_fwd … (λf2. f1 ⊆ f2).
+#f1 @eq_repl_sym /2 width=3 by sle_eq_repl_back2/
+qed-.
+
+corec lemma sle_refl: ∀f. f ⊆ f.
+#f cases (pn_split f) * #g #H
+[ @(sle_push … H H) | @(sle_next … H H) ] -H //
 qed.
+
+lemma sle_refl_eq: ∀f1,f2. f1 ≗ f2 → f1 ⊆ f2.
+/2 width=3 by sle_eq_repl_back2/ qed.
 
 (* Basic inversion lemmas ***************************************************)
 

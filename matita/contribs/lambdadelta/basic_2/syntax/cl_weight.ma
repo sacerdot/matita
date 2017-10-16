@@ -29,11 +29,11 @@ interpretation "weight (closure)" 'Weight G L T = (fw G L T).
 lemma fw_shift: ∀p,I,G,K,V,T. ♯{G, K.ⓑ{I}V, T} < ♯{G, K, ⓑ{p,I}V.T}.
 normalize /2 width=1 by monotonic_le_plus_r/
 qed.
-(*
+
 lemma fw_clear: ∀p,I1,I2,G,K,V,T. ♯{G, K.ⓤ{I1}, T} < ♯{G, K, ⓑ{p,I2}V.T}.
 normalize /4 width=1 by monotonic_le_plus_r, le_S_S/
 qed.
-*)
+
 lemma fw_tpair_sn: ∀I,G,L,V,T. ♯{G, L, V} < ♯{G, L, ②{I}V.T}.
 normalize in ⊢ (?→?→?→?→?→?%%); //
 qed.

@@ -21,7 +21,8 @@ include "basic_2/static/lfxs.ma".
 
 (* Basic_2A1: uses: llpx_sn_refl *)
 lemma lfxs_refl: ∀R. (∀L. reflexive … (R L)) → ∀L,T. L ⪤*[R, T] L.
-#R #HR #L #T elim (frees_total L T) /3 width=3 by lexs_refl, ex2_intro/
+#R #HR #L #T elim (frees_total L T)
+/4 width=3 by lexs_refl, ext2_refl, ex2_intro/
 qed.
 
 lemma lfxs_pair: ∀R. (∀L. reflexive … (R L)) →
@@ -29,5 +30,20 @@ lemma lfxs_pair: ∀R. (∀L. reflexive … (R L)) →
 #R #HR #L #V1 #V2 #HV12 #I #T
 elim (frees_total (L.ⓑ{I}V1) T) #f #Hf
 elim (pn_split f) * #g #H destruct
-/4 width=3 by lexs_refl, lexs_next, lexs_push, ex2_intro/
+/5 width=3 by lexs_refl, lexs_next, lexs_push, ext2_refl, ext2_pair, ex2_intro/
 qed.
+
+(* Advanced inversion lemmas ************************************************)
+
+lemma lfxs_inv_bind_void: ∀R,p,I,L1,L2,V,T. L1 ⪤*[R, ⓑ{p,I}V.T] L2 →
+                          L1 ⪤*[R, V] L2 ∧ L1.ⓧ ⪤*[R, T] L2.ⓧ.
+#R #p #I #L1 #L2 #V #T * #f #Hf #HL elim (frees_inv_bind_void … Hf) -Hf
+/6 width=6 by sle_lexs_trans, lexs_inv_tl, sor_inv_sle_dx, sor_inv_sle_sn, ex2_intro, conj/
+qed-.
+
+(* Advanced forward lemmas **************************************************)
+
+lemma lfxs_fwd_bind_dx_void: ∀R,p,I,L1,L2,V,T. L1 ⪤*[R, ⓑ{p,I}V.T] L2 →
+                             L1.ⓧ ⪤*[R, T] L2.ⓧ.
+#R #p #I #L1 #L2 #V #T #H elim (lfxs_inv_bind_void … H) -H //
+qed-.

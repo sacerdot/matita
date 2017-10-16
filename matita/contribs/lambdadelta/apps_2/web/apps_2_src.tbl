@@ -19,6 +19,7 @@ table {
      }
    ]
 *)
+(*
    class "orange"
    [ { "functional" * } {
         [ { "reduction and type machine" * } {
@@ -39,6 +40,7 @@ table {
         ]
      }
    ]
+*)
 }
 
 class "top"               { * }

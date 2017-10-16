@@ -21,8 +21,8 @@ include "basic_2/relocation/lreq_lreq.ma".
 (* Properties with reflexive and transitive closure *************************)
 
 (* Basic_2A1: was: d_liftable_LTC *)
-lemma d2_liftable_sn_LTC: ∀R. d_liftable2_sn R → d_liftable2_sn (LTC … R).
-#R #HR #K #T1 #T2 #H elim H -T2
+lemma d2_liftable_sn_LTC: ∀C,S,R. d_liftable2_sn C S R → d_liftable2_sn C S (LTC … R).
+#C #S #R #HR #K #T1 #T2 #H elim H -T2
 [ #T2 #HT12 #b #f #L #HLK #U1 #HTU1
   elim (HR … HT12 … HLK … HTU1) /3 width=3 by inj, ex2_intro/
 | #T #T2 #_ #HT2 #IHT1 #b #f #L #HLK #U1 #HTU1
@@ -32,8 +32,8 @@ lemma d2_liftable_sn_LTC: ∀R. d_liftable2_sn R → d_liftable2_sn (LTC … R).
 qed-.
 
 (* Basic_2A1: was: d_deliftable_sn_LTC *)
-lemma d2_deliftable_sn_LTC: ∀R. d_deliftable2_sn R → d_deliftable2_sn (LTC … R).
-#R #HR #L #U1 #U2 #H elim H -U2
+lemma d2_deliftable_sn_LTC: ∀C,S,R. d_deliftable2_sn C S R → d_deliftable2_sn C S (LTC … R).
+#C #S #R #HR #L #U1 #U2 #H elim H -U2
 [ #U2 #HU12 #b #f #K #HLK #T1 #HTU1
   elim (HR … HU12 … HLK … HTU1) -HR -L -U1 /3 width=3 by inj, ex2_intro/
 | #U #U2 #_ #HU2 #IHU1 #b #f #K #HLK #T1 #HTU1
@@ -53,8 +53,8 @@ lemma co_dropable_sn_TC: ∀R. co_dropable_sn R → co_dropable_sn (LTC … R).
 qed-.
 
 (* Basic_2A1: was: d_liftable_llstar *)
-lemma d2_liftable_sn_llstar: ∀R. d_liftable2_sn R → ∀d. d_liftable2_sn (llstar … R d).
-#R #HR #d #K #T1 #T2 #H @(lstar_ind_r … d T2 H) -d -T2
+lemma d2_liftable_sn_llstar: ∀C,S,R. d_liftable2_sn C S R → ∀d. d_liftable2_sn C S (llstar … R d).
+#C #S #R #HR #d #K #T1 #T2 #H @(lstar_ind_r … d T2 H) -d -T2
 [ #b #f #L #_ #U1 #HTU1 -HR -b -K /2 width=3 by ex2_intro/
 | #l #T #T2 #_ #HT2 #IHT1 #b #f #L #HLK #U1 #HTU1
   elim (IHT1 … HLK … HTU1) -T1 #U #HTU #HU1
@@ -63,9 +63,9 @@ lemma d2_liftable_sn_llstar: ∀R. d_liftable2_sn R → ∀d. d_liftable2_sn (ll
 qed-.
 
 (* Basic_2A1: was: d_deliftable_sn_llstar *)
-lemma d2_deliftable_sn_llstar: ∀R. d_deliftable2_sn R →
-                               ∀d. d_deliftable2_sn (llstar … R d).
-#R #HR #l #L #U1 #U2 #H @(lstar_ind_r … l U2 H) -l -U2
+lemma d2_deliftable_sn_llstar: ∀C,S,R. d_deliftable2_sn C S R →
+                               ∀d. d_deliftable2_sn C S (llstar … R d).
+#C #S #R #HR #l #L #U1 #U2 #H @(lstar_ind_r … l U2 H) -l -U2
 [ /2 width=3 by lstar_O, ex2_intro/
 | #l #U #U2 #_ #HU2 #IHU1 #b #f #K #HLK #T1 #HTU1
   elim (IHU1 … HLK … HTU1) -IHU1 -U1 #T #HTU #HT1

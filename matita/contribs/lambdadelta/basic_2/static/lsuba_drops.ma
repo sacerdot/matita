@@ -26,15 +26,15 @@ lemma lsuba_drops_conf_isuni: ∀G,L1,L2. G ⊢ L1 ⫃⁝ L2 →
                               ∃∃K2. G ⊢ K1 ⫃⁝ K2 & ⬇*[b, f] L2 ≡ K2.
 #G #L1 #L2 #H elim H -L1 -L2
 [ /2 width=3 by ex2_intro/
-| #I #L1 #L2 #V #HL12 #IH #b #f #K1 #Hf #H
-  elim (drops_inv_pair1_isuni … Hf H) -Hf -H *
+| #I #L1 #L2 #HL12 #IH #b #f #K1 #Hf #H
+  elim (drops_inv_bind1_isuni … Hf H) -Hf -H *
   [ #Hf #H destruct -IH
-    /3 width=3 by lsuba_pair, drops_refl, ex2_intro/
+    /3 width=3 by lsuba_bind, drops_refl, ex2_intro/
   | #g #Hg #HLK1 #H destruct -HL12
     elim (IH … Hg HLK1) -L1 -Hg /3 width=3 by drops_drop, ex2_intro/
   ]
 | #L1 #L2 #W #V #A #HV #HW #HL12 #IH #b #f #K1 #Hf #H
-  elim (drops_inv_pair1_isuni … Hf H) -Hf -H *
+  elim (drops_inv_bind1_isuni … Hf H) -Hf -H *
   [ #Hf #H destruct -IH
     /3 width=3 by drops_refl, lsuba_beta, ex2_intro/
   | #g #Hg #HLK1 #H destruct -HL12
@@ -50,15 +50,15 @@ lemma lsuba_drops_trans_isuni: ∀G,L1,L2. G ⊢ L1 ⫃⁝ L2 →
                                ∃∃K1. G ⊢ K1 ⫃⁝ K2 & ⬇*[b, f] L1 ≡ K1.
 #G #L1 #L2 #H elim H -L1 -L2
 [ /2 width=3 by ex2_intro/
-| #I #L1 #L2 #V #HL12 #IH #b #f #K2 #Hf #H
-  elim (drops_inv_pair1_isuni … Hf H) -Hf -H *
+| #I #L1 #L2 #HL12 #IH #b #f #K2 #Hf #H
+  elim (drops_inv_bind1_isuni … Hf H) -Hf -H *
   [ #Hf #H destruct -IH
-    /3 width=3 by lsuba_pair, drops_refl, ex2_intro/
+    /3 width=3 by lsuba_bind, drops_refl, ex2_intro/
   | #g #Hg #HLK2 #H destruct -HL12
     elim (IH … Hg HLK2) -L2 -Hg /3 width=3 by drops_drop, ex2_intro/
   ]
 | #L1 #L2 #W #V #A #HV #HW #HL12 #IH #b #f #K2 #Hf #H
-  elim (drops_inv_pair1_isuni … Hf H) -Hf -H *
+  elim (drops_inv_bind1_isuni … Hf H) -Hf -H *
   [ #Hf #H destruct -IH
     /3 width=3 by drops_refl, lsuba_beta, ex2_intro/
   | #g #Hg #HLK2 #H destruct -HL12

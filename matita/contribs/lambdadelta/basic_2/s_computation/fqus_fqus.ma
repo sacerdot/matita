@@ -18,5 +18,5 @@ include "basic_2/s_computation/fqus.ma".
 
 (* Main properties **********************************************************)
 
-theorem fqus_trans: tri_transitive … fqus.
+theorem fqus_trans: ∀b. tri_transitive … (fqus b).
 /2 width=5 by tri_TC_transitive/ qed-.

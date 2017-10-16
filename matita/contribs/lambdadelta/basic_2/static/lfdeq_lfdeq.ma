@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/syntax/ext2_ext2.ma".
 include "basic_2/syntax/tdeq_tdeq.ma".
 include "basic_2/static/lfxs_lfxs.ma".
 include "basic_2/static/lfdeq.ma".
@@ -37,12 +38,17 @@ theorem lfdeq_flat: ∀h,o,I,L1,L2,V,T. L1 ≡[h, o, V] L2 → L1 ≡[h, o, T] L
                     L1 ≡[h, o, ⓕ{I}V.T] L2.
 /2 width=1 by lfxs_flat/ qed.
 
+theorem lfdeq_bind_void: ∀h,o,p,I,L1,L2,V,T.
+                         L1 ≡[h, o, V] L2 → L1.ⓧ ≡[h, o, T] L2.ⓧ →
+                         L1 ≡[h, o, ⓑ{p,I}V.T] L2.
+/2 width=1 by lfxs_bind_void/ qed.
+
 (* Basic_2A1: uses: lleq_trans *)
 theorem lfdeq_trans: ∀h,o,T. Transitive … (lfdeq h o T).
 #h #o #T #L1 #L * #f1 #Hf1 #HL1 #L2 * #f2 #Hf2 #HL2
 lapply (frees_tdeq_conf_lexs … Hf1 T … HL1) // #H0
 lapply (frees_mono … Hf2 … H0) -Hf2 -H0
-/4 width=7 by lexs_trans, lexs_eq_repl_back, tdeq_trans, ex2_intro/
+/5 width=7 by lexs_trans, lexs_eq_repl_back, tdeq_trans, ext2_trans, ex2_intro/
 qed-.
 
 (* Basic_2A1: uses: lleq_canc_sn *)
@@ -85,3 +91,7 @@ lemma lfdneq_inv_bind: ∀h,o,p,I,L1,L2,V,T. (L1 ≡[h, o, ⓑ{p,I}V.T] L2 → �
 lemma lfdneq_inv_flat: ∀h,o,I,L1,L2,V,T. (L1 ≡[h, o, ⓕ{I}V.T] L2 → ⊥) →
                        (L1 ≡[h, o, V] L2 → ⊥) ∨ (L1 ≡[h, o, T] L2 → ⊥).
 /3 width=2 by lfnxs_inv_flat, tdeq_dec/ qed-.
+
+lemma lfdneq_inv_bind_void: ∀h,o,p,I,L1,L2,V,T. (L1 ≡[h, o, ⓑ{p,I}V.T] L2 → ⊥) →
+                            (L1 ≡[h, o, V] L2 → ⊥) ∨ (L1.ⓧ ≡[h, o, T] L2.ⓧ → ⊥).
+/3 width=3 by lfnxs_inv_bind_void, tdeq_dec/ qed-.

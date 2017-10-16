@@ -34,6 +34,7 @@ lemma aaa_fqu_conf: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T2⦄ 
   [ elim (aaa_inv_abbr … H)
   | elim (aaa_inv_abst … H)
   ] -H /2 width=2 by ex_intro/
+| #p #I #G #L #V #T #H destruct
 | * #G #L #V #T #X #H
   [ elim (aaa_inv_appl … H)
   | elim (aaa_inv_cast … H)

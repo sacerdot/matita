@@ -462,6 +462,22 @@ axiom sor_trans2: ∀f1,f0,f4. f1 ⋓ f0 ≡ f4 →
                   ∀f2, f3. f2 ⋓ f3 ≡ f0 →
                   ∀f. f1 ⋓ f2 ≡ f → f ⋓ f3 ≡ f4.
 
+lemma sor_trans1_sym: ∀f0,f1,f2,f3,f4,f.
+                      f0⋓f4 ≡ f1 → f1⋓f2 ≡ f → f0⋓f2 ≡ f3 → f3⋓f4 ≡ f.
+/4 width=6 by sor_sym, sor_trans1/ qed-.
+
+corec theorem sor_trans2_idem: ∀f0,f1,f2. f0 ⋓ f1 ≡ f2 →
+                               ∀f. f1 ⋓ f2 ≡ f → f1 ⋓ f0 ≡ f.
+#f0 #f1 #f2 * -f0 -f1 -f2
+#f0 #f1 #f2 #g0 #g1 #g2 #Hf2 #H0 #H1 #H2 #g #Hg
+[ cases (sor_inv_ppx … Hg … H1 H2)
+| cases (sor_inv_pnx … Hg … H1 H2)
+| cases (sor_inv_nnx … Hg … H1 H2)
+| cases (sor_inv_nnx … Hg … H1 H2)
+] -g2 #f #Hf #H
+/3 width=7 by sor_nn, sor_np, sor_pn, sor_pp/
+qed-.
+
 corec theorem sor_distr_dx: ∀f1,f2,f. f1 ⋓ f2 ≡ f → ∀g1,g2,g. g1 ⋓ g2 ≡ g →
                             ∀g0. g1 ⋓ g0 ≡ f1 → g2 ⋓ g0 ≡ f2 → g ⋓ g0 ≡ f.
 #f1 #f2 #f cases (pn_split f) * #x #Hx #Hf #g1 #g2 #g #Hg #g0 #Hf1 #Hf2
@@ -491,3 +507,4 @@ corec theorem sor_distr_dx: ∀f1,f2,f. f1 ⋓ f2 ≡ f → ∀g1,g2,g. g1 ⋓ g
   ]
 ]
 qed-.
+

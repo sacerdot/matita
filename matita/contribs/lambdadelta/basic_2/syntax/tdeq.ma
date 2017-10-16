@@ -14,7 +14,7 @@
 
 include "basic_2/notation/relations/lazyeq_4.ma".
 include "basic_2/syntax/item_sd.ma".
-include "basic_2/syntax/lenv.ma".
+include "basic_2/syntax/term.ma".
 
 (* DEGREE-BASED EQUIVALENCE ON TERMS ****************************************)
 
@@ -28,9 +28,6 @@ inductive tdeq (h) (o): relation term ≝
 interpretation
    "degree-based equivalence (terms)"
    'LazyEq h o T1 T2 = (tdeq h o T1 T2).
-
-definition cdeq: ∀h. sd h → relation3 lenv term term ≝
-                 λh,o,L. tdeq h o.
 
 (* Basic inversion lemmas ***************************************************)
 

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/syntax/bind_ext2.ma".
+include "basic_2/syntax/ext2.ma".
 include "basic_2/syntax/lenv.ma".
 
 (* EXTENSION TO BINDERS OF A CONTEXT-SENSITIVE RELATION FOR TERMS ***********)

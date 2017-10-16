@@ -18,15 +18,16 @@ include "basic_2/syntax/lenv.ma".
 (* WEIGHT OF A LOCAL ENVIRONMENT ********************************************)
 
 rec definition lw L ≝ match L with
-[ LAtom       ⇒ 0
-| LPair L _ V ⇒ lw L + ♯{V}
+[ LAtom     ⇒ 0
+| LBind L I ⇒ lw L + ♯{I}
 ].
 
 interpretation "weight (local environment)" 'Weight L = (lw L).
 
 (* Basic properties *********************************************************)
 
-lemma lw_pair: ∀I,L,V. ♯{L} < ♯{L.ⓑ{I}V}.
+(* Basic_2A1: uses: lw_pair *)
+lemma lw_bind: ∀I,L. ♯{L} < ♯{L.ⓘ{I}}.
 normalize /2 width=1 by monotonic_le_plus_r/ qed.
 
 (* Basic_1: removed theorems 4: clt_cong clt_head clt_thead clt_wf_ind *)

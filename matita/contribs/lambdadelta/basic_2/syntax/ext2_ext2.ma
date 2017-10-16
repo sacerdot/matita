@@ -12,13 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/lsubr.ma".
-include "basic_2/static/lsubc.ma".
+include "basic_2/syntax/ext2.ma".
 
-(* LOCAL ENVIRONMENT REFINEMENT FOR GENERIC REDUCIBILITY ********************)
+(* EXTENSION TO BINDERS OF A RELATION FOR TERMS *****************************)
 
-(* Forward lemmas with restricted refinement for local environments *********)
+(* Main properties **********************************************************)
 
-lemma lsubc_fwd_lsubr: ∀RP,G,L1,L2. G ⊢ L1 ⫃[RP] L2 → L1 ⫃ L2.
-#RP #G #L1 #L2 #H elim H -L1 -L2 /2 width=1 by lsubr_bind, lsubr_beta/
+theorem ext2_trans: ∀R. Transitive … R → Transitive … (ext2 R).
+#R #HR #I1 #I #H elim H -I1 -I
+[ #I1 #J #H >(ext2_inv_unit_sn … H) -J /2 width=1 by ext2_unit/
+| #I1 #V1 #V #HV1 #J #H elim (ext2_inv_pair_sn … H) -H 
+  #V2 #HV2 #H destruct /3 width=3 by ext2_pair/
+]
 qed-.

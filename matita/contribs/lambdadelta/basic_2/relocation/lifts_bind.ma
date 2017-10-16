@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/syntax/bind_ext2.ma".
+include "basic_2/syntax/ext2.ma".
 include "basic_2/relocation/lifts.ma".
 
 (* GENERIC RELOCATION FOR BINDERS *******************************************)

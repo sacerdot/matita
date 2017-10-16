@@ -14,7 +14,7 @@
 
 include "basic_2/relocation/lifts_tdeq.ma".
 include "basic_2/static/lfxs_drops.ma".
-include "basic_2/static/lfdeq_fqup.ma".
+include "basic_2/static/lfdeq.ma".
 
 (* DEGREE-BASED EQUIVALENCE FOR LOCAL ENVIRONMENTS ON REFERRED ENTRIES ******)
 
@@ -40,10 +40,10 @@ lemma lfdeq_inv_lifts_bi: ∀h,o,L1,L2,U. L1 ≡[h, o, U] L2 →
                           ∀T. ⬆*[i] T ≡ U → K1 ≡[h, o, T] K2.
 /2 width=8 by lfxs_inv_lifts_bi/ qed-.
 
-lemma lfdeq_inv_lref_sn: ∀h,o,L1,L2,i. L1 ≡[h, o, #i] L2 → ∀I,K1,V1. ⬇*[i] L1 ≡ K1.ⓑ{I}V1 →
-                         ∃∃K2,V2. ⬇*[i] L2 ≡ K2.ⓑ{I}V2 & K1 ≡[h, o, V1] K2 & V1 ≡[h, o] V2.
-/2 width=3 by lfxs_inv_lref_sn/ qed-.
+lemma lfdeq_inv_lref_pair_sn: ∀h,o,L1,L2,i. L1 ≡[h, o, #i] L2 → ∀I,K1,V1. ⬇*[i] L1 ≡ K1.ⓑ{I}V1 →
+                              ∃∃K2,V2. ⬇*[i] L2 ≡ K2.ⓑ{I}V2 & K1 ≡[h, o, V1] K2 & V1 ≡[h, o] V2.
+/2 width=3 by lfxs_inv_lref_pair_sn/ qed-.
 
-lemma lfdeq_inv_lref_dx: ∀h,o,L1,L2,i. L1 ≡[h, o, #i] L2 → ∀I,K2,V2. ⬇*[i] L2 ≡ K2.ⓑ{I}V2 →
-                         ∃∃K1,V1. ⬇*[i] L1 ≡ K1.ⓑ{I}V1 & K1 ≡[h, o, V1] K2 & V1 ≡[h, o] V2.
-/2 width=3 by lfxs_inv_lref_dx/ qed-.
+lemma lfdeq_inv_lref_pair_dx: ∀h,o,L1,L2,i. L1 ≡[h, o, #i] L2 → ∀I,K2,V2. ⬇*[i] L2 ≡ K2.ⓑ{I}V2 →
+                              ∃∃K1,V1. ⬇*[i] L1 ≡ K1.ⓑ{I}V1 & K1 ≡[h, o, V1] K2 & V1 ≡[h, o] V2.
+/2 width=3 by lfxs_inv_lref_pair_dx/ qed-.

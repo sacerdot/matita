@@ -21,29 +21,29 @@ include "basic_2/syntax/append.ma".
 
 lemma append_length: ∀L1,L2. |L1 @@ L2| = |L1| + |L2|.
 #L1 #L2 elim L2 -L2 //
-#L2 #I #V2 >append_pair >length_pair >length_pair //
+#L2 #I >append_bind >length_bind >length_bind //
 qed.
 
-lemma ltail_length: ∀I,L,V. |ⓑ{I}V.L| = ⫯|L|.
-#I #L #V >append_length //
+lemma ltail_length: ∀I,L. |ⓘ{I}.L| = ⫯|L|.
+#I #L >append_length //
 qed.
 
 (* Advanced inversion lemmas on length for local environments ***************)
 
 (* Basic_2A1: was: length_inv_pos_dx_ltail *)
-lemma length_inv_succ_dx_ltail: ∀L,l. |L| = ⫯l →
-                                ∃∃I,K,V. |K| = l & L = ⓑ{I}V.K.
-#Y #l #H elim (length_inv_succ_dx … H) -H #I #L #V #Hl #HLK destruct
-elim (lenv_case_tail … L) [2: * #K #J #W ]
-#H destruct /2 width=5 by ex2_3_intro/
+lemma length_inv_succ_dx_ltail: ∀L,n. |L| = ⫯n →
+                                ∃∃I,K. |K| = n & L = ⓘ{I}.K.
+#Y #n #H elim (length_inv_succ_dx … H) -H #I #L #Hn #HLK destruct
+elim (lenv_case_tail … L) [2: * #K #J ]
+#H destruct /2 width=4 by ex2_2_intro/
 qed-.
 
 (* Basic_2A1: was: length_inv_pos_sn_ltail *)
-lemma length_inv_succ_sn_ltail: ∀L,l. ⫯l = |L| →
-                                ∃∃I,K,V. l = |K| & L = ⓑ{I}V.K.
-#Y #l #H elim (length_inv_succ_sn … H) -H #I #L #V #Hl #HLK destruct
-elim (lenv_case_tail … L) [2: * #K #J #W ]
-#H destruct /2 width=5 by ex2_3_intro/
+lemma length_inv_succ_sn_ltail: ∀L,n. ⫯n = |L| →
+                                ∃∃I,K. n = |K| & L = ⓘ{I}.K.
+#Y #n #H elim (length_inv_succ_sn … H) -H #I #L #Hn #HLK destruct
+elim (lenv_case_tail … L) [2: * #K #J ]
+#H destruct /2 width=4 by ex2_2_intro/
 qed-.
 
 (* Inversion lemmas with length for local environments **********************)
@@ -53,13 +53,13 @@ lemma append_inj_length_sn: ∀K1,K2,L1,L2. L1 @@ K1 = L2 @@ K2 → |K1| = |K2| 
                             L1 = L2 ∧ K1 = K2.
 #K1 elim K1 -K1
 [ * /2 width=1 by conj/
-  #K2 #I2 #V2 #L1 #L2 #_ >length_atom >length_pair
+  #K2 #I2 #L1 #L2 #_ >length_atom >length_bind
   #H destruct
-| #K1 #I1 #V1 #IH *
-  [ #L1 #L2 #_ >length_atom >length_pair
+| #K1 #I1 #IH *
+  [ #L1 #L2 #_ >length_atom >length_bind
     #H destruct
-  | #K2 #I2 #V2 #L1 #L2 #H1 >length_pair >length_pair #H2
-    elim (destruct_lpair_lpair_aux … H1) -H1 #H1 #H3 #H4 destruct (**) (* destruct lemma needed *)
+  | #K2 #I2 #L1 #L2 #H1 >length_bind >length_bind #H2
+    elim (destruct_lbind_lbind_aux … H1) -H1 #H1 #H3 destruct (**) (* destruct lemma needed *)
     elim (IH … H1) -IH -H1 /3 width=4 by conj/
   ]
 ]
@@ -71,15 +71,15 @@ lemma append_inj_length_dx: ∀K1,K2,L1,L2. L1 @@ K1 = L2 @@ K2 → |L1| = |L2| 
                             L1 = L2 ∧ K1 = K2.
 #K1 elim K1 -K1
 [ * /2 width=1 by conj/
-  #K2 #I2 #V2 #L1 #L2 >append_atom >append_pair #H destruct
-  >length_pair >append_length >plus_n_Sm
+  #K2 #I2 #L1 #L2 >append_atom >append_bind #H destruct
+  >length_bind >append_length >plus_n_Sm
   #H elim (plus_xSy_x_false … H)
-| #K1 #I1 #V1 #IH *
-  [ #L1 #L2 >append_pair >append_atom #H destruct
-    >length_pair >append_length >plus_n_Sm #H
+| #K1 #I1 #IH *
+  [ #L1 #L2 >append_bind >append_atom #H destruct
+    >length_bind >append_length >plus_n_Sm #H
     lapply (discr_plus_x_xy … H) -H #H destruct
-  | #K2 #I2 #V2 #L1 #L2 >append_pair >append_pair #H1 #H2
-    elim (destruct_lpair_lpair_aux … H1) -H1 #H1 #H3 #H4 destruct (**) (* destruct lemma needed *)
+  | #K2 #I2 #L1 #L2 >append_bind >append_bind #H1 #H2
+    elim (destruct_lbind_lbind_aux … H1) -H1 #H1 #H3 destruct (**) (* destruct lemma needed *)
     elim (IH … H1) -IH -H1 /2 width=1 by conj/
   ]
 ]
@@ -104,9 +104,9 @@ qed-.
 (* Basic_1: was: c_tail_ind *)
 (* Basic_2A1: was: lenv_ind_alt *) 
 lemma lenv_ind_tail: ∀R:predicate lenv.
-                     R (⋆) → (∀I,L,T. R L → R (ⓑ{I}T.L)) → ∀L. R L.
+                     R (⋆) → (∀I,L. R L → R (ⓘ{I}.L)) → ∀L. R L.
 #R #IH1 #IH2 #L @(f_ind … length … L) -L #x #IHx * //
-#L #I #V -IH1 #H destruct
-elim (lenv_case_tail … L) [2: * #K #J #W ]
+#L #I -IH1 #H destruct
+elim (lenv_case_tail … L) [2: * #K #J ]
 #H destruct /3 width=1 by/
 qed-.

@@ -19,28 +19,28 @@ include "basic_2/s_transition/fqu.ma".
 
 (* Forward lemmas with length for local environments ************************)
 
-fact fqu_fwd_length_lref1_aux: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T2⦄ →
+fact fqu_fwd_length_lref1_aux: ∀b,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐[b] ⦃G2, L2, T2⦄ →
                                ∀i. T1 = #i → |L2| < |L1|.
-#G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2 // [2: #p]
-#I #G #L #V #T #j #H destruct
+#b #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2 // [2,3: #p]
+#I #G #L #V #T [2: #_ ] #j #H destruct
 qed-.
 
-lemma fqu_fwd_length_lref1: ∀G1,G2,L1,L2,T2,i. ⦃G1, L1, #i⦄ ⊐ ⦃G2, L2, T2⦄ →
+lemma fqu_fwd_length_lref1: ∀b,G1,G2,L1,L2,T2,i. ⦃G1, L1, #i⦄ ⊐[b] ⦃G2, L2, T2⦄ →
                             |L2| < |L1|.
-/2 width=7 by fqu_fwd_length_lref1_aux/
+/2 width=8 by fqu_fwd_length_lref1_aux/
 qed-.
 
 (* Inversion lemmas with length for local environments **********************)
 
-fact fqu_inv_eq_aux: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T2⦄ →
+fact fqu_inv_eq_aux: ∀b,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐[b] ⦃G2, L2, T2⦄ →
                      G1 = G2 → |L1| = |L2| → T1 = T2 → ⊥.
-#G1 #G2 #L1 #L2 #T1 #T2 * -G1 -G2 -L1 -L2 -T1 -T2
+#b #G1 #G2 #L1 #L2 #T1 #T2 * -G1 -G2 -L1 -L2 -T1 -T2
 [1: #I #G #L #V #_ #H elim (succ_inv_refl_sn … H)
-|5: #I #G #L #V #T #U #_ #_ #H elim (succ_inv_refl_sn … H)
+|6: #I #G #L #T #U #_ #_ #H elim (succ_inv_refl_sn … H)
 ]
 /2 width=4 by discr_tpair_xy_y, discr_tpair_xy_x/
 qed-.
 
-lemma fqu_inv_eq: ∀G,L1,L2,T. ⦃G, L1, T⦄ ⊐ ⦃G, L2, T⦄ → |L1| = |L2| → ⊥.
-#G #L1 #L2 #T #H #H0 @(fqu_inv_eq_aux … H … H0) // (**) (* full auto fails *)
+lemma fqu_inv_eq: ∀b,G,L1,L2,T. ⦃G, L1, T⦄ ⊐[b] ⦃G, L2, T⦄ → |L1| = |L2| → ⊥.
+#b #G #L1 #L2 #T #H #H0 @(fqu_inv_eq_aux … H … H0) // (**) (* full auto fails *)
 qed-. 

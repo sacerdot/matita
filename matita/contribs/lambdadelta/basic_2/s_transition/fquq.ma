@@ -13,25 +13,31 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/suptermopt_6.ma".
+include "basic_2/notation/relations/suptermopt_7.ma".
 include "basic_2/s_transition/fqu.ma".
 
 (* OPTIONAL SUPCLOSURE ******************************************************)
 
 (* Basic_2A1: was: fquqa *)
 (* Basic_2A1: includes: fquq_inv_gen *)
-definition fquq: tri_relation genv lenv term ≝ tri_RC … fqu.
+definition fquq: bool → tri_relation genv lenv term ≝
+                 λb. tri_RC … (fqu b).
+
+interpretation
+   "extended optional structural successor (closure)"
+   'SupTermOpt b G1 L1 T1 G2 L2 T2 = (fquq b G1 L1 T1 G2 L2 T2).
 
 interpretation
    "optional structural successor (closure)"
-   'SupTermOpt G1 L1 T1 G2 L2 T2 = (fquq G1 L1 T1 G2 L2 T2).
+   'SupTermOpt G1 L1 T1 G2 L2 T2 = (fquq true G1 L1 T1 G2 L2 T2).
 
 (* Basic properties *********************************************************)
 
 (* Basic_2A1: includes: fquqa_refl *)
-lemma fquq_refl: tri_reflexive … fquq.
+lemma fquq_refl: ∀b. tri_reflexive … (fquq b).
 // qed.
 
-lemma fqu_fquq: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ⊐⸮ ⦃G2, L2, T2⦄.
+lemma fqu_fquq: ∀b,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐[b] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ⊐⸮[b] ⦃G2, L2, T2⦄.
 /2 width=1 by or_introl/ qed.
 
 (* Basic_2A1: removed theorems 8:

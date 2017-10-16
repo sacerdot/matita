@@ -27,11 +27,11 @@ interpretation "weight (restricted closure)" 'Weight L T = (rfw L T).
 lemma rfw_shift: ∀p,I,K,V,T. ♯{K.ⓑ{I}V, T} < ♯{K, ⓑ{p,I}V.T}.
 normalize /2 width=1 by monotonic_le_plus_r/
 qed.
-(*
+
 lemma rfw_clear: ∀p,I1,I2,K,V,T. ♯{K.ⓤ{I1}, T} < ♯{K, ⓑ{p,I2}V.T}.
 normalize /4 width=1 by monotonic_le_plus_r, le_S_S/
 qed.
-*)
+
 lemma rfw_tpair_sn: ∀I,L,V,T. ♯{L, V} < ♯{L, ②{I}V.T}.
 normalize in ⊢ (?→?→?→?→?%%); //
 qed.

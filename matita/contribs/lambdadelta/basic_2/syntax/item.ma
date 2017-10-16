@@ -24,7 +24,7 @@ inductive item0: Type[0] ≝
    | GRef: nat → item0 (* reference by position: starting at 0 *)
 .
 
-(* binary binding items *)
+(* unary binding items *)
 inductive bind1: Type[0] ≝
   | Void: bind1 (* exclusion *)
 .

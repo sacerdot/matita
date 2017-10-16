@@ -19,7 +19,8 @@ include "basic_2/s_transition/fquq.ma".
 
 (* Forward lemmas with weight for closures **********************************)
 
-lemma fquq_fwd_fw: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐⸮ ⦃G2, L2, T2⦄ → ♯{G2, L2, T2} ≤ ♯{G1, L1, T1}.
-#G1 #G2 #L1 #L2 #T1 #T2 #H elim H -H [2: * ]
-/3 width=1 by fqu_fwd_fw, lt_to_le/
+lemma fquq_fwd_fw: ∀b,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐⸮[b] ⦃G2, L2, T2⦄ →
+                   ♯{G2, L2, T2} ≤ ♯{G1, L1, T1}.
+#b #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -H [2: * ]
+/3 width=2 by fqu_fwd_fw, lt_to_le/
 qed-.

@@ -23,8 +23,8 @@ theorem aaa_mono: ∀G,L,T,A1. ⦃G, L⦄ ⊢ T ⁝ A1 → ∀A2. ⦃G, L⦄ ⊢
 [ #G #L #s #A2 #H >(aaa_inv_sort … H) -H //
 | #I1 #G #L #V1 #B #_ #IH #A2 #H
   elim (aaa_inv_zero … H) -H #I2 #K2 #V2 #H #HA2 destruct /2 width=1 by/
-| #I1 #G #L #V1 #B #i #_ #IH #A2 #H
-  elim (aaa_inv_lref … H) -H #I2 #K2 #V2 #H #HA2 destruct /2 width=1 by/
+| #I1 #G #L #B #i #_ #IH #A2 #H
+  elim (aaa_inv_lref … H) -H #I2 #K2 #H #HA2 destruct /2 width=1 by/
 | #p #G #L #V #T #B1 #A1 #_ #_ #_ #IH #A2 #H
   elim (aaa_inv_abbr … H) -H /2 width=1 by/
 | #p #G #L #V1 #T1 #B1 #A1 #_ #_ #IHB1 #IHA1 #X #H

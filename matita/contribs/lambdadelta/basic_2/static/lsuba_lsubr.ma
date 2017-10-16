@@ -20,5 +20,5 @@ include "basic_2/static/lsuba.ma".
 (* Forward lemmas with restricted refinement for local environments *********)
 
 lemma lsuba_fwd_lsubr: ∀G,L1,L2. G ⊢ L1 ⫃⁝ L2 → L1 ⫃ L2.
-#G #L1 #L2 #H elim H -L1 -L2 /2 width=1 by lsubr_pair, lsubr_beta/
+#G #L1 #L2 #H elim H -L1 -L2 /2 width=1 by lsubr_bind, lsubr_beta/
 qed-.

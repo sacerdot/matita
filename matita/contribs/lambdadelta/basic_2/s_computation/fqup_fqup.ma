@@ -18,5 +18,5 @@ include "basic_2/s_computation/fqup.ma".
 
 (* Main properties **********************************************************)
 
-theorem fqup_trans: tri_transitive … fqup.
+theorem fqup_trans: ∀b. tri_transitive … (fqup b).
 /2 width=5 by tri_TC_transitive/ qed-.

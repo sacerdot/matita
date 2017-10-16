@@ -1,0 +1,6 @@
+(* A Basic_A2 lemma we do not need so far *)
+lemma lsubf_sle_div: ∀f,f2,L1,L2. ⦃L1, f⦄ ⫃ 𝐅* ⦃L2, f2⦄ →
+                     ∀f1. f1 ⊆ f2 → ⦃L1, f⦄ ⫃ 𝐅* ⦃L2, f1⦄.
+#f #f2 #L1 #L2 #H elim H -f -f2 -L1 -L2
+/4 width=3 by lsubf_beta, lsubf_bind, lsubf_atom, sle_tl, sle_trans/
+qed-.

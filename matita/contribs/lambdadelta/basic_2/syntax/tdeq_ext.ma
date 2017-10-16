@@ -12,20 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/drops.ma".
+include "basic_2/syntax/tdeq.ma".
+include "basic_2/syntax/lenv_ext2.ma".
 
-(* GENERIC SLICING FOR LOCAL ENVIRONMENTS ***********************************)
+(* EXTENDED DEGREE-BASED EQUIVALENCE ****************************************)
 
-(* Properties with context-sensitive equivalence for terms ******************)
+definition cdeq: ∀h. sd h → relation3 lenv term term ≝
+                 λh,o,L. tdeq h o.
 
-lemma ceq_lift_sn: d_liftable2_sn ceq.
-/2 width=3 by ex2_intro/ qed-.
+definition cdeq_ext: ∀h. sd h → relation3 lenv bind bind ≝
+                     λh,o. cext2 (cdeq h o).
 
-lemma ceq_inv_lift_sn: d_deliftable2_sn ceq.
-/2 width=3 by ex2_intro/ qed-.
-
-(* Note: d_deliftable2_sn cfull does not hold *)
-lemma cfull_lift_sn: d_liftable2_sn cfull.
-#K #T1 #T2 #_ #b #f #L #_ #U1 #_ -K -T1 -b
-elim (lifts_total T2 f) /2 width=3 by ex2_intro/
-qed-.
+interpretation
+   "degree-based equivalence (binders)"
+   'LazyEq h o I1 I2 = (ext2 (tdeq h o) I1 I2).

@@ -12,9 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/drops.ma".
 include "basic_2/s_computation/fqup_weight.ma".
-include "basic_2/static/frees.ma".
+include "basic_2/static/lsubf_lsubr.ma".
 
 (* CONTEXT-SENSITIVE FREE VARIABLES *****************************************)
 
@@ -22,82 +21,81 @@ include "basic_2/static/frees.ma".
 
 (* Note: this replaces lemma 1400 concluding the "big tree" theorem *)
 lemma frees_total: ∀L,T. ∃f. L ⊢ 𝐅*⦃T⦄ ≡ f.
-#L #T @(fqup_wf_ind_eq … (⋆) L T) -L -T
-#G0 #L0 #T0 #IH #G #L *
-[ cases L -L /3 width=2 by frees_atom, ex_intro/
-  #L #I #V *
-  [ #s #HG #HL #HT destruct
-    elim (IH G L (⋆s)) -IH /3 width=2 by frees_sort_gen, fqu_fqup, fqu_drop, lifts_sort, ex_intro/
-  | * [2: #i ] #HG #HL #HT destruct
-    [ elim (IH G L (#i)) -IH /3 width=2 by frees_lref, fqu_fqup, ex_intro/
-    | elim (IH G L V) -IH /3 width=2 by frees_zero, fqu_fqup, fqu_lref_O, ex_intro/
+#L #T @(fqup_wf_ind_eq (Ⓣ) … (⋆) L T) -L -T
+#G0 #L0 #T0 #IH #G #L * *
+[ /3 width=2 by frees_sort, ex_intro/
+| cases L -L /3 width=2 by frees_atom, ex_intro/
+  #L #I *
+  [ cases I -I #I [2: #V ] #HG #HL #HT destruct
+    [ elim (IH G L V) -IH
+      /3 width=2 by frees_pair, fqu_fqup, fqu_lref_O, ex_intro/
+    | -IH /3 width=2 by frees_unit, ex_intro/
     ]
-  | #l #HG #HL #HT destruct
-    elim (IH G L (§l)) -IH /3 width=2 by frees_gref_gen, fqu_fqup, fqu_drop, lifts_gref, ex_intro/
+  | #i #HG #HL #HT destruct
+    elim (IH G L (#i)) -IH
+    /3 width=2 by frees_lref, fqu_fqup, fqu_drop, ex_intro/
   ]
-| * [ #p ] #I #V #T #HG #HL #HT destruct elim (IH G L V) // #f1 #HV
-  [ elim (IH G (L.ⓑ{I}V) T) -IH // #f2 #HT
-    elim (sor_isfin_ex f1 (⫱f2))
-    /3 width=6 by frees_fwd_isfin, frees_bind, isfin_tl, ex_intro/
-  | elim (IH G L T) -IH // #f2 #HT
-    elim (sor_isfin_ex f1 f2)
-    /3 width=6 by frees_fwd_isfin, frees_flat, ex_intro/ 
-  ]
+| /3 width=2 by frees_gref, ex_intro/
+| #p #I #V #T #HG #HL #HT destruct
+  elim (IH G L V) // #f1 #HV
+  elim (IH G (L.ⓑ{I}V) T) -IH // #f2 #HT
+  elim (sor_isfin_ex f1 (⫱f2))
+  /3 width=6 by frees_fwd_isfin, frees_bind, isfin_tl, ex_intro/
+| #I #V #T #HG #HL #HT destruct
+  elim (IH G L V) // #f1 #HV
+  elim (IH G L T) -IH // #f2 #HT
+  elim (sor_isfin_ex f1 f2)
+  /3 width=6 by frees_fwd_isfin, frees_flat, ex_intro/
 ]
 qed-.
 
-(* Properties with plus-iterated supclosure *********************************)
+(* Advanced main properties *************************************************)
 
-lemma frees_drops_next: ∀f1,L1,T1. L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 →
-                        ∀I2,L2,V2,n. ⬇*[n] L1 ≡ L2.ⓑ{I2}V2 →
-                        ∀g1. ⫯g1 = ⫱*[n] f1 →
-                        ∃∃g2. L2 ⊢ 𝐅*⦃V2⦄ ≡ g2 & g2 ⊆ g1.
-#f1 #L1 #T1 #H elim H -f1 -L1 -T1
-[ #f1 #I1 #Hf1 #I2 #L2 #V2 #n #HL12
-  elim (drops_inv_atom1 … HL12) -HL12 #H destruct
-| #f1 #I1 #L1 #V1 #s #_ #IH #I2 #L2 #V2 *
-  [ -IH #_ #g1 #Hgf1 elim (discr_next_push … Hgf1)
-  | #n #HL12 lapply (drops_inv_drop1 … HL12) -HL12
-    #HL12 #g1 <tls_xn #Hgf1 elim (IH … HL12 … Hgf1) -IH -HL12 -Hgf1
-    /2 width=3 by ex2_intro/
-  ]
-| #f1 #I1 #L1 #V1 #Hf1 #IH #I2 #L2 #V2 *
-  [ -IH #HL12 lapply (drops_fwd_isid … HL12 ?) -HL12 //
-    #H destruct #g1 #Hgf1 >(injective_next … Hgf1) -g1
-    /3 width=3 by sle_refl, ex2_intro/
-  | -Hf1 #n #HL12 lapply (drops_inv_drop1 … HL12) -HL12
-    #HL12 #g1 <tls_xn <tl_next_rew #Hgf1 elim (IH … HL12 … Hgf1) -IH -HL12 -Hgf1
-    /2 width=3 by ex2_intro/
-  ]
-| #f1 #I1 #L1 #V1 #i #_ #IH #I2 #L2 #V2 *
-  [ -IH #_ #g1 #Hgf1 elim (discr_next_push … Hgf1)
-  | #n #HL12 lapply (drops_inv_drop1 … HL12) -HL12
-    #HL12 #g1 <tls_xn #Hgf1 elim (IH … HL12 … Hgf1) -IH -HL12 -Hgf1
-    /2 width=3 by ex2_intro/
-  ]
-| #f1 #I1 #L1 #V1 #l #_ #IH #I2 #L2 #V2 *
-  [ -IH #_ #g1 #Hgf1 elim (discr_next_push … Hgf1)
-  | #n #HL12 lapply (drops_inv_drop1 … HL12) -HL12
-    #HL12 #g1 <tls_xn #Hgf1 elim (IH … HL12 … Hgf1) -IH -HL12 -Hgf1
-    /2 width=3 by ex2_intro/
-  ]
-| #fV1 #fT1 #f1 #p #I1 #L1 #V1 #T1 #_ #_ #Hf1 #IHV1 #IHT1 #I2 #L2 #V2 #n #HL12 #g1 #Hgf1
-  lapply (sor_tls … Hf1 n) -Hf1 <Hgf1 -Hgf1 #Hf1
-  elim (sor_xxn_tl … Hf1) [1,2: * |*: // ] -Hf1
-  #gV1 #gT1 #Hg1
-  [ -IHT1 #H1 #_ elim (IHV1 … HL12 … H1) -IHV1 -HL12 -H1
-    /3 width=6 by sor_inv_sle_sn_trans, ex2_intro/
-  | -IHV1 #_ >tls_xn #H2 elim (IHT1 … H2) -IHT1 -H2
-    /3 width=6 by drops_drop, sor_inv_sle_dx_trans, ex2_intro/
-  ]
-| #fV1 #fT1 #f1 #I1 #L1 #V1 #T1 #_ #_ #Hf1 #IHV1 #IHT1 #I2 #L2 #V2 #n #HL12 #g1 #Hgf1
-  lapply (sor_tls … Hf1 n) -Hf1 <Hgf1 -Hgf1 #Hf1
-  elim (sor_xxn_tl … Hf1) [1,2: * |*: // ] -Hf1
-  #gV1 #gT1 #Hg1
-  [ -IHT1 #H1 #_ elim (IHV1 … HL12 … H1) -IHV1 -HL12 -H1
-    /3 width=6 by sor_inv_sle_sn_trans, ex2_intro/
-  | -IHV1 #_ #H2 elim (IHT1 … HL12 … H2) -IHT1 -HL12 -H2
-    /3 width=6 by sor_inv_sle_dx_trans, ex2_intro/
-  ]
+theorem frees_bind_void: ∀f1,L,V. L ⊢ 𝐅*⦃V⦄ ≡ f1 → ∀f2,T. L.ⓧ ⊢ 𝐅*⦃T⦄ ≡ f2 →
+                         ∀f. f1 ⋓ ⫱f2 ≡ f → ∀p,I. L ⊢ 𝐅*⦃ⓑ{p,I}V.T⦄ ≡ f.
+#f1 #L #V #Hf1 #f2 #T #Hf2 #f #Hf #p #I
+elim (frees_total (L.ⓑ{I}V) T) #f0 #Hf0
+lapply (lsubr_lsubf … Hf2 … Hf0) -Hf2 /2 width=5 by lsubr_unit/ #H02
+elim (pn_split f2) * #g2 #H destruct
+[ elim (lsubf_inv_push2 … H02) -H02 #g0 #Z #Y #H02 #H0 #H destruct
+  lapply (lsubf_inv_refl … H02) -H02 #H02
+  lapply (sor_eq_repl_fwd2 … Hf … H02) -g2 #Hf
+  /2 width=5 by frees_bind/
+| elim (lsubf_inv_unit2 … H02) -H02 * [ #g0 #Y #_ #_ #H destruct ]
+  #z1 #g0 #z #Z #Y #X #H02 #Hz1 #Hz #H0 #H destruct
+  lapply (lsubf_inv_refl … H02) -H02 #H02
+  lapply (frees_mono … Hz1 … Hf1) -Hz1 #H1
+  lapply (sor_eq_repl_back1 … Hz … H02) -g0 #Hz
+  lapply (sor_eq_repl_back2 … Hz … H1) -z1 #Hz
+  lapply (sor_sym … Hz) -Hz #Hz
+  lapply (sor_mono … f Hz ?) // -Hz #H
+  lapply (sor_inv_sle_sn … Hf) -Hf #Hf
+  lapply (frees_eq_repl_back … Hf0 (⫯f) ?) /2 width=5 by eq_next/ -z #Hf0
+  @(frees_bind … Hf1 Hf0) -Hf1 -Hf0 (**) (* constructor needed *)
+  /2 width=1 by sor_sle_dx/
+]
+qed-.
+
+(* Advanced inversion lemmas ************************************************)
+
+lemma frees_inv_bind_void: ∀f,p,I,L,V,T. L ⊢ 𝐅*⦃ⓑ{p,I}V.T⦄ ≡ f →
+                           ∃∃f1,f2. L ⊢ 𝐅*⦃V⦄ ≡ f1 & L.ⓧ ⊢ 𝐅*⦃T⦄ ≡ f2 & f1 ⋓ ⫱f2 ≡ f.
+#f #p #I #L #V #T #H
+elim (frees_inv_bind … H) -H #f1 #f2 #Hf1 #Hf2 #Hf
+elim (frees_total (L.ⓧ) T) #f0 #Hf0
+lapply (lsubr_lsubf … Hf0 … Hf2) -Hf2 /2 width=5 by lsubr_unit/ #H20
+elim (pn_split f0) * #g0 #H destruct
+[ elim (lsubf_inv_push2 … H20) -H20 #g2 #I #Y #H20 #H2 #H destruct
+  lapply (lsubf_inv_refl … H20) -H20 #H20
+  lapply (sor_eq_repl_back2 … Hf … H20) -g2 #Hf
+  /2 width=5 by ex3_2_intro/
+| elim (lsubf_inv_unit2 … H20) -H20 * [ #g2 #Y #_ #_ #H destruct ]
+  #z1 #z0 #g2 #Z #Y #X #H20 #Hz1 #Hg2 #H2 #H destruct
+  lapply (lsubf_inv_refl … H20) -H20 #H0
+  lapply (frees_mono … Hz1 … Hf1) -Hz1 #H1
+  lapply (sor_eq_repl_back1 … Hg2 … H0) -z0 #Hg2
+  lapply (sor_eq_repl_back2 … Hg2 … H1) -z1 #Hg2
+  @(ex3_2_intro … Hf1 Hf0) -Hf1 -Hf0 (**) (* constructor needed *)
+  /2 width=3 by sor_trans2_idem/
 ]
 qed-.
