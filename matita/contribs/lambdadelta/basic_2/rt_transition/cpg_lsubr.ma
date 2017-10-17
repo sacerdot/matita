@@ -29,11 +29,11 @@ lemma lsubr_cpg_trans: ∀Rt,c,h,G. lsub_trans … (cpg Rt h c G) lsubr.
 | #c #G #L1 #V1 #V2 #W2 #_ #HVW2 #IH #X #H
   elim (lsubr_inv_abst2 … H) -H * #L2 [2: #V ] #HL21 #H destruct
   /4 width=3 by cpg_delta, cpg_ell, cpg_ee/
-| #c #I1 #G #L1 #V1 #T1 #U1 #i #_ #HTU1 #IH #X #H
-  elim (lsubr_fwd_pair2 … H) -H #I2 #L2 #V2 #HL21 #H destruct
+| #c #I1 #G #L1 #T1 #U1 #i #_ #HTU1 #IH #X #H
+  elim (lsubr_fwd_bind2 … H) -H #I2 #L2 #HL21 #H destruct
   /3 width=3 by cpg_lref/
-|6,12: /4 width=1 by cpg_bind, cpg_beta, lsubr_pair/
+|6,12: /4 width=1 by cpg_bind, cpg_beta, lsubr_bind/
 |7,8,10,11: /3 width=1 by cpg_appl, cpg_cast, cpg_eps, cpg_ee/
-|9,13: /4 width=3 by cpg_zeta, cpg_theta, lsubr_pair/
+|9,13: /4 width=3 by cpg_zeta, cpg_theta, lsubr_bind/
 ]
 qed-.
