@@ -39,6 +39,21 @@ axiom s_r_conf2_LTC2: ∀R. s_r_transitive … R (lfxs R) →
 #L1 #L #HL1 #HL2 #IH @(tc_lfxs_step_sn … IH) -IH //
 *)
 
+lemma tc_lfxs_inv_zero: ∀R,Y1,Y2. Y1 ⪤**[R, #0] Y2 →
+                        ∨∨ Y1 = ⋆ ∧ Y2 = ⋆
+                         | ∃∃I,L1,L2,V1,V2. L1 ⪤**[R, V1] L2 & R L1 V1 V2 &
+                                            Y1 = L1.ⓑ{I}V1 & Y2 = L2.ⓑ{I}V2
+                         | ∃∃f,I,L1,L2. 𝐈⦃f⦄ & L1 ⪤*[cext2 R, cfull, f] L2 &
+                                        Y1 = L1.ⓤ{I} & Y2 = L2.ⓤ{I}.
+#R #Y1 #Y2 #H elim H -Y2
+[
+| #Y #Y2 #_ #H elim (lfxs_inv_zero … H) -H *
+  [ #H #H2 * * /3 width=9 by or3_intro0, or3_intro1, or3_intro2, ex4_5_intro, ex4_4_intro, conj/
+  | #I #L #L2 #V #V2 #HL2 #HV2 #H #H2 * *
+    [ #H1 #H0 destruct
+    | #I0 #L0 #L1 #V0 #V1 #HL01 #HV01 #H1 #H0 destruct  
+
+
 lemma tc_lfxs_inv_zero: ∀R. s_r_confluent1 … R (lfxs R) →
                         s_r_transitive … R (lfxs R) →
                         ∀Y1,Y2. Y1 ⦻**[R, #0] Y2 →

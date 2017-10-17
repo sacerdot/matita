@@ -19,5 +19,5 @@ include "basic_2/i_static/tc_lfxs.ma".
 (* Main properties **********************************************************)
 
 theorem tc_lfxs_trans: ∀R,T. Transitive … (tc_lfxs R T).
-#R #T #L1 #L #HL1 #L2 #HL2 @(trans_TC … HL1 HL2) (**) (* auto fails *) 
+#R #T #L1 #L #HL1 #L2 #HL2 @(trans_TC … HL1 HL2) (**) (* auto fails *)
 qed-.

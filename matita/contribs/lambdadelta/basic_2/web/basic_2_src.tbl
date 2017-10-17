@@ -148,6 +148,7 @@ table {
         ]
      }
    ]
+*)
    class "water"
    [ { "iterated static typing" * } {
         [ { "iterated extension on referred entries" * } {
@@ -156,7 +157,6 @@ table {
         ]
      }
    ]
-*)
    class "green"
    [ { "static typing" * } {
         [ { "generic reducibility" * } {

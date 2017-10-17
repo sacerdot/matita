@@ -46,3 +46,22 @@ lemma tc_lfxs_ind_dx: ∀R. (∀L. reflexive … (R L)) →
 #R #HR #L2 #R0 #HL2 #IHL2 #L1 #HL12
 @(TC_star_ind_dx … HL2 IHL2 … HL12) /2 width=4 by lfxs_refl/
 qed-.
+
+(* Advanced inversion lemmas ************************************************)
+
+lemma tc_lfxs_inv_bind_void: ∀R. (∀L. reflexive … (R L)) →
+                             ∀p,I,L1,L2,V,T. L1 ⪤**[R, ⓑ{p,I}V.T] L2 →
+                             L1 ⪤**[R, V] L2 ∧ L1.ⓧ ⪤**[R, T] L2.ⓧ.
+#R #HR #p #I #L1 #L2 #V #T #H @(tc_lfxs_ind_sn … HR … H) -L2
+[ /3 width=1 by tc_lfxs_refl, conj/
+| #L #L2 #_ #H * elim (lfxs_inv_bind_void … H) -H /3 width=3 by tc_lfxs_step_dx, conj/
+]
+qed-.
+
+(* Advanced forward lemmas **************************************************)
+
+lemma tc_lfxs_fwd_bind_dx_void: ∀R. (∀L. reflexive … (R L)) →
+                                ∀p,I,L1,L2,V,T. L1 ⪤**[R, ⓑ{p,I}V.T] L2 →
+                                L1.ⓧ ⪤**[R, T] L2.ⓧ.
+#R #HR #p #I #L1 #L2 #V #T #H elim (tc_lfxs_inv_bind_void … H) -H //
+qed-.
