@@ -67,7 +67,7 @@ elim (pn_split f2) * #g2 #H destruct
   lapply (frees_mono … Hz1 … Hf1) -Hz1 #H1
   lapply (sor_eq_repl_back1 … Hz … H02) -g0 #Hz
   lapply (sor_eq_repl_back2 … Hz … H1) -z1 #Hz
-  lapply (sor_sym … Hz) -Hz #Hz
+  lapply (sor_comm … Hz) -Hz #Hz
   lapply (sor_mono … f Hz ?) // -Hz #H
   lapply (sor_inv_sle_sn … Hf) -Hf #Hf
   lapply (frees_eq_repl_back … Hf0 (⫯f) ?) /2 width=5 by eq_next/ -z #Hf0
@@ -96,6 +96,6 @@ elim (pn_split f0) * #g0 #H destruct
   lapply (sor_eq_repl_back1 … Hg2 … H0) -z0 #Hg2
   lapply (sor_eq_repl_back2 … Hg2 … H1) -z1 #Hg2
   @(ex3_2_intro … Hf1 Hf0) -Hf1 -Hf0 (**) (* constructor needed *)
-  /2 width=3 by sor_trans2_idem/
+  /2 width=3 by sor_comm_23_idem/
 ]
 qed-.

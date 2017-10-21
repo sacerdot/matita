@@ -14,10 +14,6 @@
 
 include "basic_2/static/lsubf.ma".
 
-axiom lsubf_inv_sor_dx: ∀f1,f2,L1,L2. ⦃L1, f1⦄ ⫃𝐅* ⦃L2, f2⦄ →
-                        ∀x2,y2. x2⋓y2 ≡ f2 →
-                        ∃∃x1,y1. ⦃L1, x1⦄ ⫃𝐅* ⦃L2, x2⦄ & ⦃L1, y1⦄ ⫃𝐅* ⦃L2, y2⦄ & x1⋓y1 ≡ f1.
-
 (* RESTRICTED REFINEMENT FOR CONTEXT-SENSITIVE FREE VARIABLES ***************)
 
 (* Properties with context-sensitive free variables *************************)

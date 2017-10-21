@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/lrsubeqf_4.ma".
+include "ground_2/relocation/nstream_sor.ma".
 include "basic_2/static/frees.ma".
 
 (* RESTRICTED REFINEMENT FOR CONTEXT-SENSITIVE FREE VARIABLES ***************)
@@ -311,3 +312,36 @@ elim (pn_split f2) * #g2 #H2 destruct
 @ex2_intro [1,2,4,5: /2 width=2 by lsubf_push, lsubf_bind/ ] // (**) (* constructor needed *)
 qed-.
 
+lemma lsubf_inv_sor_dx: ∀f1,f2,L1,L2. ⦃L1, f1⦄ ⫃𝐅* ⦃L2, f2⦄ →
+                        ∀f2l,f2r. f2l⋓f2r ≡ f2 →
+                        ∃∃f1l,f1r. ⦃L1, f1l⦄ ⫃𝐅* ⦃L2, f2l⦄ & ⦃L1, f1r⦄ ⫃𝐅* ⦃L2, f2r⦄ & f1l⋓f1r ≡ f1.
+#f1 #f2 #L1 #L2 #H elim H -f1 -f2 -L1 -L2
+[ /3 width=7 by sor_eq_repl_fwd3, ex3_2_intro/
+| #g1 #g2 #I1 #I2 #L1 #L2 #_ #IH #f2l #f2r #H
+  elim (sor_inv_xxp … H) -H [|*: // ] #g2l #g2r #Hg2 #Hl #Hr destruct
+  elim (IH … Hg2) -g2 /3 width=11 by lsubf_push, sor_pp, ex3_2_intro/
+| #g1 #g2 #I #L1 #L2 #_ #IH #f2l #f2r #H
+  elim (sor_inv_xxn … H) -H [1,3,4: * |*: // ] #g2l #g2r #Hg2 #Hl #Hr destruct
+  elim (IH … Hg2) -g2 /3 width=11 by lsubf_push, lsubf_bind, sor_np, sor_pn, sor_nn, ex3_2_intro/
+| #g #g0 #g1 #g2 #L1 #L2 #W #V #Hg #Hg1 #_ #IH #f2l #f2r #H
+  elim (sor_inv_xxn … H) -H [1,3,4: * |*: // ] #g2l #g2r #Hg2 #Hl #Hr destruct
+  elim (IH … Hg2) -g2 #g1l #g1r #Hl #Hr #Hg0
+  [ lapply (sor_comm_23 … Hg0 Hg1 ?) -g0 [3: |*: // ] #Hg1
+    /3 width=11 by lsubf_push, lsubf_beta, sor_np, ex3_2_intro/
+  | lapply (sor_assoc_dx … Hg1 … Hg0 ??) -g0 [3: |*: // ] #Hg1
+    /3 width=11 by lsubf_push, lsubf_beta, sor_pn, ex3_2_intro/
+  | lapply (sor_distr_dx … Hg0 … Hg1) -g0 [5: |*: // ] #Hg1
+    /3 width=11 by lsubf_beta, sor_nn, ex3_2_intro/
+  ]
+| #g #g0 #g1 #g2 #I1 #I2 #L1 #L2 #V #Hg #Hg1 #_ #IH #f2l #f2r #H
+  elim (sor_inv_xxn … H) -H [1,3,4: * |*: // ] #g2l #g2r #Hg2 #Hl #Hr destruct
+  elim (IH … Hg2) -g2 #g1l #g1r #Hl #Hr #Hg0
+  [ lapply (sor_comm_23 … Hg0 Hg1 ?) -g0 [3: |*: // ] #Hg1
+    /3 width=11 by lsubf_push, lsubf_unit, sor_np, ex3_2_intro/
+  | lapply (sor_assoc_dx … Hg1 … Hg0 ??) -g0 [3: |*: // ] #Hg1
+    /3 width=11 by lsubf_push, lsubf_unit, sor_pn, ex3_2_intro/
+  | lapply (sor_distr_dx … Hg0 … Hg1) -g0 [5: |*: // ] #Hg1
+    /3 width=11 by lsubf_unit, sor_nn, ex3_2_intro/
+  ]
+]
+qed-.

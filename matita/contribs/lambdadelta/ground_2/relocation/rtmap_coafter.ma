@@ -694,7 +694,7 @@ lemma coafter_sor: ∀f. 𝐅⦃f⦄ → ∀f2. 𝐓⦃f2⦄ → ∀f1. f2 ~⊚ 
 [ #f #Hf #f2 #Hf2 #f1 #Hf #f1a #f1b #Hf1
   lapply (coafter_fwd_isid2 … Hf ??) -Hf // #H2f1
   elim (sor_inv_isid3 … Hf1) -Hf1 //
-  /3 width=5 by coafter_isid_dx, sor_refl, ex3_2_intro/
+  /3 width=5 by coafter_isid_dx, sor_idem, ex3_2_intro/
 | #f #_ #IH #f2 #Hf2 #f1 #H1 #f1a #f1b #H2
   elim (coafter_inv_xxp … H1) -H1 [1,3: * |*: // ]
   [ #g2 #g1 #Hf #Hgf2 #Hgf1

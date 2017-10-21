@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/relocation/nstream_sor.ma".
 include "basic_2/static/frees_frees.ma".
 include "basic_2/static/lsubf.ma".
 
@@ -47,7 +46,7 @@ theorem lsubf_sor: ∀K,L,g1,f1. ⦃K, g1⦄ ⫃𝐅* ⦃L, f1⦄ →
       ]
     ]
     elim (sor_inv_pnx … Hf) -Hf [1,6,11,16:|*: // ] #x #Hx #H destruct
-    /3 width=12 by lsubf_unit, lsubf_beta, lsubf_bind, sor_trans2/
+    /3 width=12 by lsubf_unit, lsubf_beta, lsubf_bind, sor_assoc_sn/
   | elim (sor_inv_npx … Hg) -Hg [|*: // ] #y #Hy #H destruct
     elim (lsubf_inv_push1 … H2) -H2 #x2 #Z2 #Y2 #H2 #H #H0 destruct
     generalize in match H1; -H1 cases J -J #J [| #V ] #H1
@@ -59,7 +58,7 @@ theorem lsubf_sor: ∀K,L,g1,f1. ⦃K, g1⦄ ⫃𝐅* ⦃L, f1⦄ →
       ]
     ]
     elim (sor_inv_npx … Hf) -Hf [1,6,11,16:|*: // ] #x #Hx #H destruct
-    /3 width=12 by lsubf_unit, lsubf_beta, lsubf_bind, sor_trans1_sym/
+    /3 width=12 by lsubf_unit, lsubf_beta, lsubf_bind, sor_comm_23/
   | elim (sor_inv_nnx … Hg) -Hg [|*: // ] #y #Hy #H destruct
     generalize in match H2; generalize in match H1; -H1 -H2 cases J -J #J [| #V ] #H1 #H2
     [ elim (lsubf_inv_unit1 … H1) -H1 #x1 #Y1 #H1 #H #H0 destruct
@@ -78,7 +77,7 @@ theorem lsubf_sor: ∀K,L,g1,f1. ⦃K, g1⦄ ⫃𝐅* ⦃L, f1⦄ →
       ]
     ]
     elim (sor_inv_nnx … Hf) -Hf [1,6,11,16:|*: // ] #x #Hx #H destruct
-    /3 width=12 by lsubf_unit, lsubf_beta, lsubf_bind, sor_distr_dx/
+    /3 width=12 by lsubf_unit, lsubf_beta, lsubf_bind, sor_coll_dx/
   ]
 ]
 qed-.
