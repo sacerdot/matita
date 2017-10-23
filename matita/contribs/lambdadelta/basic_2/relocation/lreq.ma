@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/lazyeq_3.ma".
+include "basic_2/notation/relations/lazyeqsn_3.ma".
 include "basic_2/syntax/ext2.ma".
 include "basic_2/relocation/lexs.ma".
 
@@ -23,7 +23,7 @@ definition lreq: relation3 rtmap lenv lenv ≝ lexs ceq cfull.
 
 interpretation
   "ranged equivalence (local environment)"
-  'LazyEq f L1 L2 = (lreq f L1 L2).
+  'LazyEqSn f L1 L2 = (lreq f L1 L2).
 
 (* Basic properties *********************************************************)
 
