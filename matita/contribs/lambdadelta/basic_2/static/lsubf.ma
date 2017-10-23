@@ -305,13 +305,24 @@ qed.
 lemma lsubf_refl_eq: ∀f1,f2,L. f1 ≗ f2 → ⦃L, f1⦄ ⫃𝐅* ⦃L, f2⦄.
 /2 width=3 by lsubf_eq_repl_back2/ qed.
 
-lemma lsubf_tl_dx: ∀g1,f2,I,L1,L2. ⦃L1, g1⦄ ⫃𝐅* ⦃L2, ⫱f2⦄ →
-                   ∃∃f1. ⦃L1.ⓘ{I}, f1⦄ ⫃𝐅* ⦃L2.ⓘ{I}, f2⦄ & g1 = ⫱f1.
+lemma lsubf_bind_tl_dx: ∀g1,f2,I,L1,L2. ⦃L1, g1⦄ ⫃𝐅* ⦃L2, ⫱f2⦄ →
+                        ∃∃f1. ⦃L1.ⓘ{I}, f1⦄ ⫃𝐅* ⦃L2.ⓘ{I}, f2⦄ & g1 = ⫱f1.
 #g1 #f2 #I #L1 #L2 #H
 elim (pn_split f2) * #g2 #H2 destruct
 @ex2_intro [1,2,4,5: /2 width=2 by lsubf_push, lsubf_bind/ ] // (**) (* constructor needed *)
 qed-.
 
+lemma lsubf_beta_tl_dx: ∀f,f0,g1,L1,V. L1 ⊢ 𝐅*⦃V⦄ ≡ f → f0 ⋓ f ≡ g1 →
+                        ∀f2,L2,W. ⦃L1, f0⦄ ⫃𝐅* ⦃L2, ⫱f2⦄ →
+                        ∃∃f1. ⦃L1.ⓓⓝW.V, f1⦄ ⫃𝐅* ⦃L2.ⓛW, f2⦄ & ⫱f1 ⊆ g1.
+#f #f0 #g1 #L1 #V #Hf #Hg1 #f2
+elim (pn_split f2) * #x2 #H2 #L2 #W #HL12 destruct
+[ /3 width=4 by lsubf_push, sor_inv_sle_sn, ex2_intro/
+| @(ex2_intro … (⫯g1)) /2 width=5 by lsubf_beta/ (**) (* full auto fails *) 
+]
+qed-.
+
+(* Note: this might be moved *)
 lemma lsubf_inv_sor_dx: ∀f1,f2,L1,L2. ⦃L1, f1⦄ ⫃𝐅* ⦃L2, f2⦄ →
                         ∀f2l,f2r. f2l⋓f2r ≡ f2 →
                         ∃∃f1l,f1r. ⦃L1, f1l⦄ ⫃𝐅* ⦃L2, f2l⦄ & ⦃L1, f1r⦄ ⫃𝐅* ⦃L2, f2r⦄ & f1l⋓f1r ≡ f1.

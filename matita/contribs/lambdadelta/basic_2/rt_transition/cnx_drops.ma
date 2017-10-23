@@ -25,6 +25,11 @@ lemma cnx_lref_atom: ∀h,o,G,L,i. ⬇*[i] L ≡ ⋆ → ⦃G, L⦄ ⊢ ⬈[h, o
 #I #K #V1 #V2 #HLK lapply (drops_mono … Hi … HLK) -L #H destruct
 qed.
 
+lemma cnx_lref_unit: ∀h,o,I,G,L,K,i. ⬇*[i] L ≡ K.ⓤ{I} → ⦃G, L⦄ ⊢ ⬈[h, o] 𝐍⦃#i⦄.
+#h #o #I #G #L #K #i #HLK #X #H elim (cpx_inv_lref1_drops … H) -H // *
+#Z #Y #V1 #V2 #HLY lapply (drops_mono … HLK … HLY) -L #H destruct
+qed.
+
 (* Basic_2A1: includes: cnx_lift *)
 lemma cnx_lifts: ∀h,o,G. d_liftable1 … (cnx h o G).
 #h #o #G #K #T #HT #b #f #L #HLK #U #HTU #U0 #H

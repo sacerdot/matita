@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/lazyeq_8.ma".
+include "basic_2/notation/relations/lazyeqsn_8.ma".
 include "basic_2/syntax/genv.ma".
 include "basic_2/static/lfdeq.ma".
 
@@ -24,7 +24,7 @@ inductive ffdeq (h) (o) (G) (L1) (T): relation3 genv lenv term ≝
 
 interpretation
    "degree-based equivalence on referred entries (closure)"
-   'LazyEq h o G1 L1 T1 G2 L2 T2 = (ffdeq h o G1 L1 T1 G2 L2 T2).
+   'LazyEqSn h o G1 L1 T1 G2 L2 T2 = (ffdeq h o G1 L1 T1 G2 L2 T2).
 
 (* Basic properties *********************************************************)
 

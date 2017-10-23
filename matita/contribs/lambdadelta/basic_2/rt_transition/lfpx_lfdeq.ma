@@ -45,17 +45,17 @@ lemma cpx_tdeq_conf_lexs: ∀h,o,G. R_confluent2_lfxs … (cpx h G) (cdeq h o) (
   elim (lfdeq_inv_zero_pair_sn … H2) -H2 #K2 #X2 #HK02 #HX2 #H destruct
   elim (IH X2 … HK01 … HK02) // -K0 -V0 #V #HV1 #HV2
   elim (tdeq_lifts_sn … HV1 … HVW1) -V1 /3 width=5 by cpx_delta, ex2_intro/
-| #I #G #K0 #V0 #V1 #W1 #i #_ #IH #HVW1 #T2 #H0 #L1 #H1 #L2 #H2
+| #I0 #G #K0 #V1 #W1 #i #_ #IH #HVW1 #T2 #H0 #L1 #H1 #L2 #H2
   >(tdeq_inv_lref1 … H0) -H0
-  elim (lfpx_inv_lref_pair_sn … H1) -H1 #K1 #X1 #HK01 #H destruct
-  elim (lfdeq_inv_lref_pair_sn … H2) -H2 #K2 #X2 #HK02 #H destruct
-  elim (IH … HK01 … HK02) [|*: //] -K0 -V0 #V #HV1 #HV2
+  elim (lfpx_inv_lref_bind_sn … H1) -H1 #I1 #K1 #HK01 #H destruct
+  elim (lfdeq_inv_lref_bind_sn … H2) -H2 #I2 #K2 #HK02 #H destruct
+  elim (IH … HK01 … HK02) [|*: //] -K0 #V #HV1 #HV2
   elim (tdeq_lifts_sn … HV1 … HVW1) -V1 /3 width=5 by cpx_lref, ex2_intro/
 | #p #I #G #L0 #V0 #V1 #T0 #T1 #_ #_ #IHV #IHT #X0 #H0 #L1 #H1 #L2 #H2
   elim (tdeq_inv_pair1 … H0) -H0 #V2 #T2 #HV02 #HT02 #H destruct
   elim (lfpx_inv_bind … H1) -H1 #HL01 #H1
   elim (lfdeq_inv_bind … H2) -H2 #HL02 #H2
-  lapply (lfdeq_pair_repl_dx … H2 … HV02) -H2 #H2
+  lapply (lfdeq_bind_repl_dx … H2 (BPair I V2) ?) -H2 /2 width=1 by ext2_pair/ #H2
   elim (IHV … HV02 … HL01 … HL02) -IHV -HV02 -HL01 -HL02
   elim (IHT … HT02 … H1 … H2) -L0 -T0
   /3 width=5 by cpx_bind, tdeq_pair, ex2_intro/
@@ -70,7 +70,7 @@ lemma cpx_tdeq_conf_lexs: ∀h,o,G. R_confluent2_lfxs … (cpx h G) (cdeq h o) (
   elim (tdeq_inv_pair1 … H0) -H0 #V2 #T2 #HV02 #HT02 #H destruct
   elim (lfpx_inv_bind … H1) -H1 #HL01 #H1
   elim (lfdeq_inv_bind … H2) -H2 #HL02 #H2
-  lapply (lfdeq_pair_repl_dx … H2 … HV02) -H2 -HV02 #H2
+  lapply (lfdeq_bind_repl_dx … H2 (BPair Abbr V2) ?) -H2 /2 width=1 by ext2_pair/ -HV02 #H2
   elim (IH … HT02 … H1 … H2) -L0 -T0 #T #HT1
   elim (tdeq_inv_lifts_sn … HT1 … HUT1) -T1
   /3 width=5 by cpx_zeta, ex2_intro/
@@ -93,7 +93,7 @@ lemma cpx_tdeq_conf_lexs: ∀h,o,G. R_confluent2_lfxs … (cpx h G) (cdeq h o) (
   elim (lfpx_inv_bind … H1) -H1 #H1LW0 #H1LT0
   elim (lfdeq_inv_flat … H2) -H2 #H2LV0 #H2
   elim (lfdeq_inv_bind … H2) -H2 #H2LW0 #H2LT0
-  lapply (lfdeq_pair_repl_dx … H2LT0 … HW02) -H2LT0 #H2LT0
+  lapply (lfdeq_bind_repl_dx … H2LT0 (BPair Abst W2) ?) -H2LT0 /2 width=1 by ext2_pair/ #H2LT0
   elim (IHV … HV02 … H1LV0 … H2LV0) -IHV -HV02 -H1LV0 -H2LV0
   elim (IHW … HW02 … H1LW0 … H2LW0) -IHW -HW02 -H1LW0 -H2LW0
   elim (IHT … HT02 … H1LT0 … H2LT0) -L0 -V0 -T0
@@ -105,7 +105,7 @@ lemma cpx_tdeq_conf_lexs: ∀h,o,G. R_confluent2_lfxs … (cpx h G) (cdeq h o) (
   elim (lfpx_inv_bind … H1) -H1 #H1LW0 #H1LT0
   elim (lfdeq_inv_flat … H2) -H2 #H2LV0 #H2
   elim (lfdeq_inv_bind … H2) -H2 #H2LW0 #H2LT0
-  lapply (lfdeq_pair_repl_dx … H2LT0 … HW02) -H2LT0 #H2LT0
+  lapply (lfdeq_bind_repl_dx … H2LT0 (BPair Abbr W2) ?) -H2LT0 /2 width=1 by ext2_pair/ #H2LT0
   elim (IHV … HV02 … H1LV0 … H2LV0) -IHV -HV02 -H1LV0 -H2LV0 #V #HV1
   elim (IHW … HW02 … H1LW0 … H2LW0) -IHW -HW02 -H1LW0 -H2LW0
   elim (IHT … HT02 … H1LT0 … H2LT0) -L0 -V0 -T0
@@ -114,7 +114,7 @@ lemma cpx_tdeq_conf_lexs: ∀h,o,G. R_confluent2_lfxs … (cpx h G) (cdeq h o) (
 ]
 qed-.
 
-lemma cpx_tdeq_conf: ∀h,o,G,L,T0,T1. ⦃G, L⦄ ⊢ T0 ⬈[h] T1 →
+lemma cpx_tdeq_conf: ∀h,o,G,L. ∀T0:term. ∀T1. ⦃G, L⦄ ⊢ T0 ⬈[h] T1 →
                      ∀T2. T0 ≡[h, o] T2 →
                      ∃∃T. T1 ≡[h, o] T & ⦃G, L⦄ ⊢ T2 ⬈[h] T.
 #h #o #G #L #T0 #T1 #HT01 #T2 #HT02
@@ -122,7 +122,7 @@ elim (cpx_tdeq_conf_lexs … HT01 … HT02 L … L) -HT01 -HT02
 /2 width=3 by lfxs_refl, ex2_intro/
 qed-.
 
-lemma tdeq_cpx_trans: ∀h,o,G,L,T2,T0. T2 ≡[h, o] T0 →
+lemma tdeq_cpx_trans: ∀h,o,G,L,T2. ∀T0:term. T2 ≡[h, o] T0 →
                       ∀T1. ⦃G, L⦄ ⊢ T0 ⬈[h] T1 → 
                       ∃∃T. ⦃G, L⦄ ⊢ T2 ⬈[h] T & T ≡[h, o] T1.
 #h #o #G #L #T2 #T0 #HT20 #T1 #HT01

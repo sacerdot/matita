@@ -43,7 +43,7 @@ lemma lsubf_frees_trans: ∀f2,L2,T. L2 ⊢ 𝐅*⦃T⦄ ≡ f2 →
 | /3 width=5 by lsubf_fwd_isid_dx, frees_gref/
 | #f2V #f2T #f2 #p #I #L2 #V #T #_ #_ #Hf2 #IHV #IHT #f1 #L1 #H12
   elim (lsubf_inv_sor_dx … H12 … Hf2) -f2 #f1V #g1T #HV #HT #Hf1
-  elim (lsubf_tl_dx … (BPair I V) … HT) -HT #f1T #HT #H destruct
+  elim (lsubf_bind_tl_dx … (BPair I V) … HT) -HT #f1T #HT #H destruct
   /3 width=5 by frees_bind/
 | #f2V #f2T #f2 #I #L2 #V #T #_ #_ #Hf2 #IHV #IHT #f1 #L1 #H12
   elim (lsubf_inv_sor_dx … H12 … Hf2) -f2 /3 width=5 by frees_flat/

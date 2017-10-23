@@ -12,29 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/lazyeq_5.ma".
-include "basic_2/syntax/tdeq.ma".
-include "basic_2/syntax/lenv_ext2.ma".
+(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-(* EXTENDED DEGREE-BASED EQUIVALENCE ****************************************)
-
-definition tdeq_ext: ∀h. sd h → relation bind ≝
-                     λh,o. ext2 (tdeq h o).
-
-definition cdeq: ∀h. sd h → relation3 lenv term term ≝
-                 λh,o,L. tdeq h o.
-
-definition cdeq_ext: ∀h. sd h → relation3 lenv bind bind ≝
-                     λh,o. cext2 (cdeq h o).
-
-interpretation
-   "context-free degree-based equivalence (binder)"
-   'LazyEq h o I1 I2 = (tdeq_ext h o I1 I2).
-
-interpretation
-   "context-dependent degree-based equivalence (term)"
-   'LazyEq h o L T1 T2 = (cdeq h o L T1 T2).
-
-interpretation
-   "context-dependent degree-based equivalence (binder)"
-   'LazyEq h o L I1 I2 = (cdeq_ext h o L I1 I2).
+notation "hvbox( L1 ≡ [ break term 46 h , break term 46 o , break term 46 T ] break term 46 L2 )"
+   non associative with precedence 45
+   for @{ 'LazyEqSn $h $o $T $L1 $L2 }.

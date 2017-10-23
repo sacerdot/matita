@@ -36,9 +36,9 @@ lemma cpx_delta: ∀h,I,G,K,V1,V2,W2. ⦃G, K⦄ ⊢ V1 ⬈[h] V2 →
 /3 width=4 by cpg_delta, cpg_ell, ex_intro/
 qed.
 
-lemma cpx_lref: ∀h,I,G,K,V,T,U,i. ⦃G, K⦄ ⊢ #i ⬈[h] T →
-                ⬆*[1] T ≡ U → ⦃G, K.ⓑ{I}V⦄ ⊢ #⫯i ⬈[h] U.
-#h #I #G #K #V #T #U #i *
+lemma cpx_lref: ∀h,I,G,K,T,U,i. ⦃G, K⦄ ⊢ #i ⬈[h] T →
+                ⬆*[1] T ≡ U → ⦃G, K.ⓘ{I}⦄ ⊢ #⫯i ⬈[h] U.
+#h #I #G #K #T #U #i *
 /3 width=4 by cpg_lref, ex_intro/
 qed.
 
@@ -106,10 +106,10 @@ lemma cpx_inv_atom1: ∀h,J,G,L,T2. ⦃G, L⦄ ⊢ ⓪{J} ⬈[h] T2 →
                       | ∃∃s. T2 = ⋆(next h s) & J = Sort s
                       | ∃∃I,K,V1,V2. ⦃G, K⦄ ⊢ V1 ⬈[h] V2 & ⬆*[1] V2 ≡ T2 &
                                      L = K.ⓑ{I}V1 & J = LRef 0
-                      | ∃∃I,K,V,T,i. ⦃G, K⦄ ⊢ #i ⬈[h] T & ⬆*[1] T ≡ T2 &
-                                     L = K.ⓑ{I}V & J = LRef (⫯i).
+                      | ∃∃I,K,T,i. ⦃G, K⦄ ⊢ #i ⬈[h] T & ⬆*[1] T ≡ T2 &
+                                   L = K.ⓘ{I} & J = LRef (⫯i).
 #h #J #G #L #T2 * #c #H elim (cpg_inv_atom1 … H) -H *
-/4 width=9 by or4_intro0, or4_intro1, or4_intro2, or4_intro3, ex4_5_intro, ex4_4_intro, ex2_intro, ex_intro/
+/4 width=8 by or4_intro0, or4_intro1, or4_intro2, or4_intro3, ex4_4_intro, ex2_intro, ex_intro/
 qed-.
 
 lemma cpx_inv_sort1: ∀h,G,L,T2,s. ⦃G, L⦄ ⊢ ⋆s ⬈[h] T2 →
@@ -128,9 +128,9 @@ qed-.
 
 lemma cpx_inv_lref1: ∀h,G,L,T2,i. ⦃G, L⦄ ⊢ #⫯i ⬈[h] T2 →
                      T2 = #(⫯i) ∨
-                     ∃∃I,K,V,T. ⦃G, K⦄ ⊢ #i ⬈[h] T & ⬆*[1] T ≡ T2 & L = K.ⓑ{I}V.
+                     ∃∃I,K,T. ⦃G, K⦄ ⊢ #i ⬈[h] T & ⬆*[1] T ≡ T2 & L = K.ⓘ{I}.
 #h #G #L #T2 #i * #c #H elim (cpg_inv_lref1 … H) -H *
-/4 width=7 by ex3_4_intro, ex_intro, or_introl, or_intror/
+/4 width=6 by ex3_3_intro, ex_intro, or_introl, or_intror/
 qed-.
 
 lemma cpx_inv_gref1: ∀h,G,L,T2,l. ⦃G, L⦄ ⊢ §l ⬈[h] T2 → T2 = §l.
@@ -194,10 +194,10 @@ lemma cpx_inv_zero1_pair: ∀h,I,G,K,V1,T2. ⦃G, K.ⓑ{I}V1⦄ ⊢ #0 ⬈[h] T2
 /4 width=3 by ex2_intro, ex_intro, or_intror, or_introl/
 qed-.
 
-lemma cpx_inv_lref1_pair: ∀h,I,G,K,V,T2,i. ⦃G, K.ⓑ{I}V⦄ ⊢ #⫯i ⬈[h] T2 →
+lemma cpx_inv_lref1_bind: ∀h,I,G,K,T2,i. ⦃G, K.ⓘ{I}⦄ ⊢ #⫯i ⬈[h] T2 →
                           T2 = #(⫯i) ∨
                           ∃∃T. ⦃G, K⦄ ⊢ #i ⬈[h] T & ⬆*[1] T ≡ T2.
-#h #I #G #L #V #T2 #i * #c #H elim (cpg_inv_lref1_pair … H) -H *
+#h #I #G #L #T2 #i * #c #H elim (cpg_inv_lref1_bind … H) -H *
 /4 width=3 by ex2_intro, ex_intro, or_introl, or_intror/
 qed-.
 
@@ -238,8 +238,8 @@ lemma cpx_ind: ∀h. ∀R:relation4 genv lenv term term.
                (∀G,L,s. R G L (⋆s) (⋆(next h s))) →
                (∀I,G,K,V1,V2,W2. ⦃G, K⦄ ⊢ V1 ⬈[h] V2 → R G K V1 V2 →
                  ⬆*[1] V2 ≡ W2 → R G (K.ⓑ{I}V1) (#0) W2
-               ) → (∀I,G,K,V,T,U,i. ⦃G, K⦄ ⊢ #i ⬈[h] T → R G K (#i) T →
-                 ⬆*[1] T ≡ U → R G (K.ⓑ{I}V) (#⫯i) (U)
+               ) → (∀I,G,K,T,U,i. ⦃G, K⦄ ⊢ #i ⬈[h] T → R G K (#i) T →
+                 ⬆*[1] T ≡ U → R G (K.ⓘ{I}) (#⫯i) (U)
                ) → (∀p,I,G,L,V1,V2,T1,T2. ⦃G, L⦄ ⊢ V1 ⬈[h] V2 → ⦃G, L.ⓑ{I}V1⦄ ⊢ T1 ⬈[h] T2 →
                   R G L V1 V2 → R G (L.ⓑ{I}V1) T1 T2 → R G L (ⓑ{p,I}V1.T1) (ⓑ{p,I}V2.T2)
                ) → (∀I,G,L,V1,V2,T1,T2. ⦃G, L⦄ ⊢ V1 ⬈[h] V2 → ⦃G, L⦄ ⊢ T1 ⬈[h] T2 →

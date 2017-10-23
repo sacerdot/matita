@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/lazyeq_5.ma".
+include "basic_2/notation/relations/lazyeqsn_5.ma".
 include "basic_2/syntax/tdeq_ext.ma".
 include "basic_2/static/lfxs.ma".
 
@@ -23,11 +23,11 @@ definition lfdeq: ∀h. sd h → relation3 term lenv lenv ≝
 
 interpretation
    "degree-based equivalence on referred entries (local environment)"
-   'LazyEq h o T L1 L2 = (lfdeq h o T L1 L2).
+   'LazyEqSn h o T L1 L2 = (lfdeq h o T L1 L2).
 
 interpretation
    "degree-based ranged equivalence (local environment)"
-   'LazyEq h o f L1 L2 = (lexs (cdeq_ext h o) cfull f L1 L2).
+   'LazyEqSn h o f L1 L2 = (lexs (cdeq_ext h o) cfull f L1 L2).
 (*
 definition lfdeq_transitive: predicate (relation3 lenv term term) ≝
            λR. ∀L2,T1,T2. R L2 T1 T2 → ∀L1. L1 ≡[h, o, T1] L2 → R L1 T1 T2.

@@ -26,7 +26,7 @@ inductive tdeq (h) (o): relation term ≝
 .
 
 interpretation
-   "degree-based equivalence (terms)"
+   "context-free degree-based equivalence (term)"
    'LazyEq h o T1 T2 = (tdeq h o T1 T2).
 
 (* Basic inversion lemmas ***************************************************)

@@ -12,29 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/lazyeq_5.ma".
-include "basic_2/syntax/tdeq.ma".
 include "basic_2/syntax/lenv_ext2.ma".
+include "basic_2/rt_transition/cpx.ma".
 
-(* EXTENDED DEGREE-BASED EQUIVALENCE ****************************************)
+(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR BINDERS ***********)
 
-definition tdeq_ext: ∀h. sd h → relation bind ≝
-                     λh,o. ext2 (tdeq h o).
-
-definition cdeq: ∀h. sd h → relation3 lenv term term ≝
-                 λh,o,L. tdeq h o.
-
-definition cdeq_ext: ∀h. sd h → relation3 lenv bind bind ≝
-                     λh,o. cext2 (cdeq h o).
+definition cpx_ext (h) (G): relation3 lenv bind bind ≝
+                            cext2 (cpx h G).
 
 interpretation
-   "context-free degree-based equivalence (binder)"
-   'LazyEq h o I1 I2 = (tdeq_ext h o I1 I2).
-
-interpretation
-   "context-dependent degree-based equivalence (term)"
-   'LazyEq h o L T1 T2 = (cdeq h o L T1 T2).
-
-interpretation
-   "context-dependent degree-based equivalence (binder)"
-   'LazyEq h o L I1 I2 = (cdeq_ext h o L I1 I2).
+   "uncounted context-sensitive parallel rt-transition (binder)"
+   'PRedTy h G L I1 I2 = (cpx_ext h G L I1 I2).

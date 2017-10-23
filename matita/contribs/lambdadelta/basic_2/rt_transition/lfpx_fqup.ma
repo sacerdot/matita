@@ -27,3 +27,15 @@ lemma lfpx_refl: ∀h,G,T. reflexive … (lfpx h G T).
 lemma lfpx_pair: ∀h,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ⬈[h] V2 →
                  ∀I,T. ⦃G, L.ⓑ{I}V1⦄ ⊢ ⬈[h, T] L.ⓑ{I}V2.
 /2 width=1 by lfxs_pair/ qed.
+
+(* Advanced inversion lemmas ************************************************)
+
+lemma lfpx_inv_bind_void: ∀h,p,I,G,L1,L2,V,T. ⦃G, L1⦄ ⊢ ⬈[h, ⓑ{p,I}V.T] L2 →
+                          ⦃G, L1⦄ ⊢ ⬈[h, V] L2 ∧ ⦃G, L1.ⓧ⦄ ⊢ ⬈[h, T] L2.ⓧ.
+/2 width=3 by lfxs_inv_bind_void/ qed-.
+
+(* Advanced forward lemmas **************************************************)
+
+lemma lfpx_fwd_bind_dx_void: ∀h,p,I,G,L1,L2,V,T.
+                             ⦃G, L1⦄ ⊢ ⬈[h, ⓑ{p,I}V.T] L2 → ⦃G, L1.ⓧ⦄ ⊢ ⬈[h, T] L2.ⓧ.
+/2 width=4 by lfxs_fwd_bind_dx_void/ qed-.

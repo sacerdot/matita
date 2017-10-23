@@ -16,4 +16,4 @@
 
 notation "hvbox( L1 ≡ [ break term 46 f ] break term 46 L2 )"
    non associative with precedence 45
-   for @{ 'LazyEq $f $L1 $L2 }.
+   for @{ 'LazyEqSn $f $L1 $L2 }.

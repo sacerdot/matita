@@ -34,9 +34,9 @@ lemma cpx_aaa_conf_lfpx: ∀h,G,L1,T1,A. ⦃G, L1⦄ ⊢ T1 ⁝ A →
   [ #H destruct /3 width=1 by aaa_zero/
   | -HV12 * /4 width=7 by aaa_lifts, drops_refl, drops_drop/
   ]
-| #I #G #L1 #V1 #B #i #_ #IH #X2 #HX #Y #HY
-  elim (lfpx_inv_lref_pair_sn … HY) -HY #L2 #W2 #HL12 #H destruct
-  elim (cpx_inv_lref1_pair … HX) -HX
+| #I #G #L1 #B #i #_ #IH #X2 #HX #Y #HY
+  elim (lfpx_inv_lref_bind_sn … HY) -HY #I2 #L2 #HL12 #H destruct
+  elim (cpx_inv_lref1_bind … HX) -HX
   [ #H destruct /3 width=1 by aaa_lref/
   | * /4 width=7 by aaa_lifts, drops_refl, drops_drop/
   ]
@@ -44,14 +44,14 @@ lemma cpx_aaa_conf_lfpx: ∀h,G,L1,T1,A. ⦃G, L1⦄ ⊢ T1 ⁝ A →
   elim (lfpx_inv_bind … HL12) -HL12 #HV #HT
   elim (cpx_inv_abbr1 … HX) -HX *
   [ #V2 #T2 #HV12 #HT12 #H destruct
-    /4 width=2 by lfpx_pair_repl_dx, aaa_abbr/
+    /5 width=2 by lfpx_bind_repl_dx, aaa_abbr, ext2_pair/
   | #T2 #HT12 #HXT2 #H destruct -IHV
     /4 width=7 by aaa_inv_lifts, drops_drop, drops_refl/
   ]
 | #p #G #L1 #V1 #T1 #B #A #_ #_ #IHV #IHT #X2 #H #L2 #HL12
   elim (lfpx_inv_bind … HL12) -HL12 #HV #HT
   elim (cpx_inv_abst1 … H) -H #V2 #T2 #HV12 #HT12 #H destruct
-  /4 width=2 by lfpx_pair_repl_dx, aaa_abst/
+  /5 width=2 by lfpx_bind_repl_dx, aaa_abst, ext2_pair/
 | #G #L1 #V1 #T1 #B #A #_ #_ #IHV #IHT #X2 #H #L2 #HL12
   elim (lfpx_inv_flat … HL12) -HL12 #HV #HT
   elim (cpx_inv_appl1 … H) -H *

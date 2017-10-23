@@ -77,20 +77,20 @@ lemma frees_inv_lref_drops: ∀L,i,f. L ⊢ 𝐅*⦃#i⦄ ≡ f →
                             ∨∨ ∃∃g. ⬇*[Ⓕ, 𝐔❴i❵] L ≡ ⋆ & 𝐈⦃g⦄ & f = ↑*[i] ⫯g
                              | ∃∃g,I,K,V. K ⊢ 𝐅*⦃V⦄ ≡ g &
                                           ⬇*[i] L ≡ K.ⓑ{I}V & f = ↑*[i] ⫯g
-                             | ∃∃g,I,K. ⬇*[i] L ≡ K.ⓤ{I} & f = ↑*[i] ⫯g.
+                             | ∃∃g,I,K. ⬇*[i] L ≡ K.ⓤ{I} & 𝐈⦃g⦄ & f = ↑*[i] ⫯g.
 #L elim L -L
 [ #i #g | #L #I #IH * [ #g cases I -I [ #I | #I #V ] -IH | #i #g ] ] #H
 [ elim (frees_inv_atom … H) -H #f #Hf #H destruct
   /3 width=3 by or3_intro0, ex3_intro/
 | elim (frees_inv_unit … H) -H #f #Hf #H destruct
-  /4 width=3 by drops_refl, or3_intro2, ex2_3_intro/
+  /4 width=3 by drops_refl, or3_intro2, ex3_3_intro/
 | elim (frees_inv_pair … H) -H #f #Hf #H destruct
   /4 width=7 by drops_refl, or3_intro1, ex3_4_intro/
 | elim (frees_inv_lref … H) -H #f #Hf #H destruct
   elim (IH … Hf) -IH -Hf *
   [ /4 width=3 by drops_drop, or3_intro0, ex3_intro/
   | /4 width=7 by drops_drop, or3_intro1, ex3_4_intro/
-  | /4 width=3 by drops_drop, or3_intro2, ex2_3_intro/
+  | /4 width=3 by drops_drop, or3_intro2, ex3_3_intro/
   ]
 ]
 qed-.
