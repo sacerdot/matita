@@ -126,13 +126,11 @@ table {
 *)
    class "cyan"
    [ { "rt-transition" * } {
-(*
         [ { "uncounted rst-transition" * } {
              [ "fpbq ( ⦃?,?,?⦄ ≽[?] ⦃?,?,?⦄ )" "fpbq_aaa" * ]
              [ "fpb ( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" "fpb_lfdeq" * ]
           }
         ]
-*)
         [ { "t-bound context-sensitive rt-transition" * } {
              [ "lfpr ( ⦃?,?⦄ ⊢ ➡[?,?] ? )" "lfpr_length" + "lfpr_drops" + "lfpr_fquq" + "lfpr_fqup" + "lfpr_frees" + "lfpr_aaa" + "lfpr_lfpx" + "lfpr_lfpr" * ]
              [ "cpr_ext ( ⦃?,?⦄ ⊢ ? ➡[?] ? )" * ]
