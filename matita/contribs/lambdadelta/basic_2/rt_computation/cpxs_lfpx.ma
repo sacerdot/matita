@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/rt_transition/lfpx_fqup.ma".
-include "basic_2/rt_transition/lfpx_lfpx.ma".
+include "basic_2/rt_transition/lfpx_cpx.ma".
 include "basic_2/rt_computation/cpxs_drops.ma".
 include "basic_2/rt_computation/cpxs_cpxs.ma".
 
@@ -30,8 +30,8 @@ lemma lfpx_cpx_trans: ∀h,G. s_r_transitive … (cpx h G) (lfpx h G).
 | #I #G #L2 #V #V2 #W2 #_ #IH #HVW2 #Y1 #H
   elim (lfpx_inv_zero_pair_dx … H) -H #L1 #V1 #HL1 #HV1 #H destruct
   /5 width=3 by lfpx_cpx_conf, cpxs_delta, cpxs_strap2/
-| #I #G #L2 #V #V2 #W2 #i #_ #IH #HVW2 #Y1 #H
-  elim (lfpx_inv_lref_pair_dx … H) -H #L1 #V1 #HL1 #HV1
+| #I2 #G #L2 #V2 #W2 #i #_ #IH #HVW2 #Y1 #H
+  elim (lfpx_inv_lref_bind_dx … H) -H #I1 #L1 #HL1 #H destruct
   /4 width=3 by cpxs_lref, cpxs_strap2/
 | #p #I #G #L2 #V #V2 #T #T2 #_ #_ #IHV #IHT #L1 #H
   elim (lfpx_inv_bind … H) -H /3 width=1 by cpxs_bind/

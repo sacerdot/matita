@@ -30,9 +30,9 @@ lemma cpxs_delta: ∀h,I,G,K,V1,V2. ⦃G, K⦄ ⊢ V1 ⬈*[h] V2 →
 ]
 qed.
 
-lemma cpxs_lref: ∀h,I,G,K,V,T,i. ⦃G, K⦄ ⊢ #i ⬈*[h] T →
-                 ∀U. ⬆*[1] T ≡ U → ⦃G, K.ⓑ{I}V⦄ ⊢ #⫯i ⬈*[h] U.
-#h #I #G #K #V #T #i #H @(cpxs_ind … H) -T
+lemma cpxs_lref: ∀h,I,G,K,T,i. ⦃G, K⦄ ⊢ #i ⬈*[h] T →
+                 ∀U. ⬆*[1] T ≡ U → ⦃G, K.ⓘ{I}⦄ ⊢ #⫯i ⬈*[h] U.
+#h #I #G #K #T #i #H @(cpxs_ind … H) -T
 [ /3 width=3 by cpx_cpxs, cpx_lref/
 | #T0 #T #_ #HT2 #IH #U #HTU
   elim (lifts_total T0 (𝐔❴1❵))
@@ -71,15 +71,15 @@ qed-.
 
 lemma cpxs_inv_lref1: ∀h,G,L,T2,i. ⦃G, L⦄ ⊢ #⫯i ⬈*[h] T2 →
                       T2 = #(⫯i) ∨
-                      ∃∃I,K,V,T. ⦃G, K⦄ ⊢ #i ⬈*[h] T & ⬆*[1] T ≡ T2 & L = K.ⓑ{I}V.
+                      ∃∃I,K,T. ⦃G, K⦄ ⊢ #i ⬈*[h] T & ⬆*[1] T ≡ T2 & L = K.ⓘ{I}.
 #h #G #L #T2 #i #H @(cpxs_ind … H) -T2 /2 width=1 by or_introl/
 #T #T2 #_ #HT2 *
 [ #H destruct
   elim (cpx_inv_lref1 … HT2) -HT2 /2 width=1 by or_introl/
-  * /4 width=7 by cpx_cpxs, ex3_4_intro, or_intror/
-| * #I #K #V1 #T1 #Hi #HT1 #H destruct
+  * /4 width=6 by cpx_cpxs, ex3_3_intro, or_intror/
+| * #I #K #T1 #Hi #HT1 #H destruct
   elim (cpx_inv_lifts_sn … HT2 (Ⓣ) … K … HT1) -T
-  /4 width=7 by cpxs_strap1, drops_refl, drops_drop, ex3_4_intro, or_intror/
+  /4 width=6 by cpxs_strap1, drops_refl, drops_drop, ex3_3_intro, or_intror/
 ]
 qed-.
 
@@ -103,17 +103,17 @@ qed-.
 (* Properties with generic relocation ***************************************)
 
 (* Basic_2A1: includes: cpxs_lift *)
-lemma cpxs_lifts_sn: ∀h,G. d_liftable2_sn (cpxs h G).
+lemma cpxs_lifts_sn: ∀h,G. d_liftable2_sn … lifts (cpxs h G).
 /3 width=10 by cpx_lifts_sn, cpxs_strap1, d2_liftable_sn_LTC/ qed-.
 
-lemma cpxs_lifts_bi: ∀h,G. d_liftable2_bi (cpxs h G).
-/3 width=9 by cpxs_lifts_sn, d_liftable2_sn_bi/ qed-.
+lemma cpxs_lifts_bi: ∀h,G. d_liftable2_bi … lifts (cpxs h G).
+/3 width=12 by cpxs_lifts_sn, d_liftable2_sn_bi, lifts_mono/ qed-.
 
 (* Inversion lemmas with generic relocation *********************************)
 
 (* Basic_2A1: includes: cpxs_inv_lift1 *)
-lemma cpxs_inv_lifts_sn: ∀h,G. d_deliftable2_sn (cpxs h G).
+lemma cpxs_inv_lifts_sn: ∀h,G. d_deliftable2_sn … lifts (cpxs h G).
 /3 width=6 by d2_deliftable_sn_LTC, cpx_inv_lifts_sn/ qed-.
 
-lemma cpxs_inv_lifts_bi: ∀h,G. d_deliftable2_bi (cpxs h G).
-/3 width=9 by cpxs_inv_lifts_sn, d_deliftable2_sn_bi/ qed-.
+lemma cpxs_inv_lifts_bi: ∀h,G. d_deliftable2_bi … lifts (cpxs h G).
+/3 width=12 by cpxs_inv_lifts_sn, d_deliftable2_sn_bi, lifts_inj/ qed-.
