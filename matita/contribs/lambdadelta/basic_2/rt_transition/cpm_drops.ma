@@ -42,8 +42,8 @@ lemma cpm_inv_atom1_drops: ∀n,h,I,G,L,T2. ⦃G, L⦄ ⊢ ⓪{I} ➡[n, h] T2 �
                             | ∃∃s. T2 = ⋆(next h s) & I = Sort s & n = 1
                             | ∃∃K,V,V2,i. ⬇*[i] L ≡ K.ⓓV & ⦃G, K⦄ ⊢ V ➡[n, h] V2 &
                                           ⬆*[⫯i] V2 ≡ T2 & I = LRef i
-                            | ∃∃k,K,V,V2,i. ⬇*[i] L ≡ K.ⓛV & ⦃G, K⦄ ⊢ V ➡[k, h] V2 &
-                                            ⬆*[⫯i] V2 ≡ T2 & I = LRef i & n = ⫯k.
+                            | ∃∃m,K,V,V2,i. ⬇*[i] L ≡ K.ⓛV & ⦃G, K⦄ ⊢ V ➡[m, h] V2 &
+                                            ⬆*[⫯i] V2 ≡ T2 & I = LRef i & n = ⫯m.
 #n #h #I #G #L #T2 * #c #Hc #H elim (cpg_inv_atom1_drops … H) -H *
 [ #H1 #H2 destruct lapply (isrt_inv_00 … Hc) -Hc
   /3 width=1 by or4_intro0, conj/
@@ -59,10 +59,10 @@ qed-.
 
 lemma cpm_inv_lref1_drops: ∀n,h,G,L,T2,i. ⦃G, L⦄ ⊢ #i ➡[n, h] T2 →
                            ∨∨ T2 = #i ∧ n = 0
-                            | ∃∃K,V,V2. ⬇*[i] L ≡ K. ⓓV & ⦃G, K⦄ ⊢ V ➡[n, h] V2 &
+                            | ∃∃K,V,V2. ⬇*[i] L ≡ K.ⓓV & ⦃G, K⦄ ⊢ V ➡[n, h] V2 &
                                         ⬆*[⫯i] V2 ≡ T2
-                            | ∃∃k,K,V,V2. ⬇*[i] L ≡ K. ⓛV & ⦃G, K⦄ ⊢ V ➡[k, h] V2 &
-                                          ⬆*[⫯i] V2 ≡ T2 & n = ⫯k.
+                            | ∃∃m,K,V,V2. ⬇*[i] L ≡ K. ⓛV & ⦃G, K⦄ ⊢ V ➡[m, h] V2 &
+                                          ⬆*[⫯i] V2 ≡ T2 & n = ⫯m.
 #n #h #G #L #T2 #i * #c #Hc #H elim (cpg_inv_lref1_drops … H) -H *
 [ #H1 #H2 destruct lapply (isrt_inv_00 … Hc) -Hc
   /3 width=1 by or3_intro0, conj/
@@ -78,24 +78,26 @@ qed-.
 
 (* Basic_1: includes: pr0_lift pr2_lift *)
 (* Basic_2A1: includes: cpr_lift *)
-lemma cpm_lifts_sn: ∀n,h,G. d_liftable2_sn (cpm n h G).
+lemma cpm_lifts_sn: ∀n,h,G. d_liftable2_sn … lifts (cpm n h G).
 #n #h #G #K #T1 #T2 * #c #Hc #HT12 #b #f #L #HLK #U1 #HTU1
 elim (cpg_lifts_sn … HT12 … HLK … HTU1) -K -T1
 /3 width=5 by ex2_intro/
 qed-.
 
-lemma cpm_lifts_bi: ∀n,h,G. d_liftable2_bi (cpm n h G).
-/3 width=9 by cpm_lifts_sn, d_liftable2_sn_bi/ qed-.
+lemma cpm_lifts_bi: ∀n,h,G. d_liftable2_bi … lifts (cpm n h G).
+#n #h #G #K #T1 #T2 * /3 width=11 by cpg_lifts_bi, ex2_intro/
+qed-.
 
 (* Inversion lemmas with generic slicing for local environments *************)
 
 (* Basic_1: includes: pr0_gen_lift pr2_gen_lift *)
 (* Basic_2A1: includes: cpr_inv_lift1 *)
-lemma cpm_inv_lifts_sn: ∀n,h,G. d_deliftable2_sn (cpm n h G).
+lemma cpm_inv_lifts_sn: ∀n,h,G. d_deliftable2_sn … lifts (cpm n h G).
 #n #h #G #L #U1 #U2 * #c #Hc #HU12 #b #f #K #HLK #T1 #HTU1
 elim (cpg_inv_lifts_sn … HU12 … HLK … HTU1) -L -U1
 /3 width=5 by ex2_intro/
 qed-.
 
-lemma cpm_inv_lifts_bi: ∀n,h,G. d_deliftable2_bi (cpm n h G).
-/3 width=9 by cpm_inv_lifts_sn, d_deliftable2_sn_bi/ qed-.
+lemma cpm_inv_lifts_bi: ∀n,h,G. d_deliftable2_bi … lifts (cpm n h G).
+#n #h #G #L #U1 #U2 * /3 width=11 by cpg_inv_lifts_bi, ex2_intro/
+qed-.

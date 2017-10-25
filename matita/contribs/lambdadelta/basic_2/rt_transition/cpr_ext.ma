@@ -12,12 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/conversion/cpc.ma".
+include "basic_2/syntax/lenv_ext2.ma".
+include "basic_2/rt_transition/cpm.ma".
 
-(* CONTEXT-SENSITIVE PARALLEL R-CONVERSION FOR TERMS ************************)
+(* CONTEXT-SENSITIVE PARALLEL R-TRANSITION FOR BINDERS **********************)
 
-(* Main properties **********************************************************)
+definition cpr_ext (h) (G): relation3 lenv bind bind ≝
+                            cext2 (cpm 0 h G).
 
-theorem cpc_conf: ∀h,G,L,T0,T1,T2. ⦃G, L⦄ ⊢ T0 ⬌[h] T1 → ⦃G, L⦄ ⊢ T0 ⬌[h] T2 →
-                  ∃∃T. ⦃G, L⦄ ⊢ T1 ⬌[h] T & ⦃G, L⦄ ⊢ T2 ⬌[h] T.
-/3 width=3 by cpc_sym, ex2_intro/ qed-.
+interpretation
+   "context-sensitive parallel r-transition (binder)"
+   'PRed h G L I1 I2 = (cpr_ext h G L I1 I2).

@@ -113,22 +113,22 @@ lemma cpx_inv_atom1: ∀h,J,G,L,T2. ⦃G, L⦄ ⊢ ⓪{J} ⬈[h] T2 →
 qed-.
 
 lemma cpx_inv_sort1: ∀h,G,L,T2,s. ⦃G, L⦄ ⊢ ⋆s ⬈[h] T2 →
-                     T2 = ⋆s ∨ T2 = ⋆(next h s).
+                     ∨∨ T2 = ⋆s | T2 = ⋆(next h s).
 #h #G #L #T2 #s * #c #H elim (cpg_inv_sort1 … H) -H *
 /2 width=1 by or_introl, or_intror/
 qed-.
 
 lemma cpx_inv_zero1: ∀h,G,L,T2. ⦃G, L⦄ ⊢ #0 ⬈[h] T2 →
-                     T2 = #0 ∨
-                     ∃∃I,K,V1,V2. ⦃G, K⦄ ⊢ V1 ⬈[h] V2 & ⬆*[1] V2 ≡ T2 &
-                                  L = K.ⓑ{I}V1.
+                     ∨∨ T2 = #0
+                      | ∃∃I,K,V1,V2. ⦃G, K⦄ ⊢ V1 ⬈[h] V2 & ⬆*[1] V2 ≡ T2 &
+                                     L = K.ⓑ{I}V1.
 #h #G #L #T2 * #c #H elim (cpg_inv_zero1 … H) -H *
 /4 width=7 by ex3_4_intro, ex_intro, or_introl, or_intror/
 qed-.
 
 lemma cpx_inv_lref1: ∀h,G,L,T2,i. ⦃G, L⦄ ⊢ #⫯i ⬈[h] T2 →
-                     T2 = #(⫯i) ∨
-                     ∃∃I,K,T. ⦃G, K⦄ ⊢ #i ⬈[h] T & ⬆*[1] T ≡ T2 & L = K.ⓘ{I}.
+                     ∨∨ T2 = #(⫯i)
+                      | ∃∃I,K,T. ⦃G, K⦄ ⊢ #i ⬈[h] T & ⬆*[1] T ≡ T2 & L = K.ⓘ{I}.
 #h #G #L #T2 #i * #c #H elim (cpg_inv_lref1 … H) -H *
 /4 width=6 by ex3_3_intro, ex_intro, or_introl, or_intror/
 qed-.
@@ -137,21 +137,19 @@ lemma cpx_inv_gref1: ∀h,G,L,T2,l. ⦃G, L⦄ ⊢ §l ⬈[h] T2 → T2 = §l.
 #h #G #L #T2 #l * #c #H elim (cpg_inv_gref1 … H) -H //
 qed-.
 
-lemma cpx_inv_bind1: ∀h,p,I,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓑ{p,I}V1.T1 ⬈[h] U2 → (
-                     ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ⬈[h] V2 & ⦃G, L.ⓑ{I}V1⦄ ⊢ T1 ⬈[h] T2 &
-                              U2 = ⓑ{p,I}V2.T2
-                     ) ∨
-                     ∃∃T. ⦃G, L.ⓓV1⦄ ⊢ T1 ⬈[h] T & ⬆*[1] U2 ≡ T &
-                          p = true & I = Abbr.
+lemma cpx_inv_bind1: ∀h,p,I,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓑ{p,I}V1.T1 ⬈[h] U2 →
+                     ∨∨ ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ⬈[h] V2 & ⦃G, L.ⓑ{I}V1⦄ ⊢ T1 ⬈[h] T2 &
+                                 U2 = ⓑ{p,I}V2.T2
+                      | ∃∃T. ⦃G, L.ⓓV1⦄ ⊢ T1 ⬈[h] T & ⬆*[1] U2 ≡ T &
+                             p = true & I = Abbr.
 #h #p #I #G #L #V1 #T1 #U2 * #c #H elim (cpg_inv_bind1 … H) -H *
 /4 width=5 by ex4_intro, ex3_2_intro, ex_intro, or_introl, or_intror/
 qed-.
 
-lemma cpx_inv_abbr1: ∀h,p,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓓ{p}V1.T1 ⬈[h] U2 → (
-                     ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ⬈[h] V2 & ⦃G, L.ⓓV1⦄ ⊢ T1 ⬈[h] T2 &
-                              U2 = ⓓ{p}V2.T2
-                     ) ∨
-                     ∃∃T. ⦃G, L.ⓓV1⦄ ⊢ T1 ⬈[h] T & ⬆*[1] U2 ≡ T & p = true.
+lemma cpx_inv_abbr1: ∀h,p,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓓ{p}V1.T1 ⬈[h] U2 →
+                     ∨∨ ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ⬈[h] V2 & ⦃G, L.ⓓV1⦄ ⊢ T1 ⬈[h] T2 &
+                                 U2 = ⓓ{p}V2.T2
+                      | ∃∃T. ⦃G, L.ⓓV1⦄ ⊢ T1 ⬈[h] T & ⬆*[1] U2 ≡ T & p = true.
 #h #p #G #L #V1 #T1 #U2 * #c #H elim (cpg_inv_abbr1 … H) -H *
 /4 width=5 by ex3_2_intro, ex3_intro, ex_intro, or_introl, or_intror/
 qed-.
@@ -188,15 +186,15 @@ qed-.
 (* Advanced inversion lemmas ************************************************)
 
 lemma cpx_inv_zero1_pair: ∀h,I,G,K,V1,T2. ⦃G, K.ⓑ{I}V1⦄ ⊢ #0 ⬈[h] T2 →
-                          T2 = #0 ∨
-                          ∃∃V2. ⦃G, K⦄ ⊢ V1 ⬈[h] V2 & ⬆*[1] V2 ≡ T2.
+                          ∨∨ T2 = #0
+                           | ∃∃V2. ⦃G, K⦄ ⊢ V1 ⬈[h] V2 & ⬆*[1] V2 ≡ T2.
 #h #I #G #L #V1 #T2 * #c #H elim (cpg_inv_zero1_pair … H) -H *
 /4 width=3 by ex2_intro, ex_intro, or_intror, or_introl/
 qed-.
 
 lemma cpx_inv_lref1_bind: ∀h,I,G,K,T2,i. ⦃G, K.ⓘ{I}⦄ ⊢ #⫯i ⬈[h] T2 →
-                          T2 = #(⫯i) ∨
-                          ∃∃T. ⦃G, K⦄ ⊢ #i ⬈[h] T & ⬆*[1] T ≡ T2.
+                          ∨∨ T2 = #(⫯i)
+                           | ∃∃T. ⦃G, K⦄ ⊢ #i ⬈[h] T & ⬆*[1] T ≡ T2.
 #h #I #G #L #T2 #i * #c #H elim (cpg_inv_lref1_bind … H) -H *
 /4 width=3 by ex2_intro, ex_intro, or_introl, or_intror/
 qed-.

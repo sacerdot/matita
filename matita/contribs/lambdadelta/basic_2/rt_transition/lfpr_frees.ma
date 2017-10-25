@@ -14,6 +14,7 @@
 
 include "basic_2/rt_transition/lfpx_frees.ma".
 include "basic_2/rt_transition/cpm_cpx.ma".
+include "basic_2/rt_transition/cpr_ext.ma".
 
 (* PARALLEL R-TRANSITION FOR LOCAL ENV.S ON REFERRED ENTRIES ****************)
 
@@ -22,5 +23,5 @@ include "basic_2/rt_transition/cpm_cpx.ma".
 lemma cpm_frees_conf: ∀n,h,G. R_frees_confluent (cpm n h G).
 /3 width=6 by cpm_fwd_cpx, cpx_frees_conf/ qed-.
 
-lemma lfpr_frees_conf: ∀h,G. lexs_frees_confluent (cpm 0 h G) cfull.
-/4 width=9 by cpm_fwd_cpx, lfpx_frees_conf, lexs_co/ qed-.
+lemma lfpr_frees_conf: ∀h,G. lexs_frees_confluent (cpr_ext h G) cfull.
+/5 width=9 by cpm_fwd_cpx, lfpx_frees_conf, lexs_co, cext2_co/ qed-.

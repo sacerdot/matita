@@ -40,10 +40,10 @@ fact cpr_conf_lfpr_atom_delta:
    ∀L1. ⦃G, L0⦄ ⊢ ➡[h, #i] L1 → ∀L2. ⦃G, L0⦄ ⊢ ➡[h, #i] L2 →
    ∃∃T. ⦃G, L1⦄ ⊢ #i ➡[h] T & ⦃G, L2⦄ ⊢ T2 ➡[h] T.
 #h #G #L0 #i #IH #K0 #V0 #HLK0 #V2 #HV02 #T2 #HVT2 #L1 #HL01 #L2 #HL02
-elim (lfpr_inv_lref_sn … HL01 … HLK0) -HL01 #K1 #V1 #HLK1 #HK01 #HV01
-elim (lfpr_inv_lref_sn … HL02 … HLK0) -HL02 #K2 #W2 #HLK2 #HK02 #_
+elim (lfpr_inv_lref_pair_sn … HL01 … HLK0) -HL01 #K1 #V1 #HLK1 #HK01 #HV01
+elim (lfpr_inv_lref_pair_sn … HL02 … HLK0) -HL02 #K2 #W2 #HLK2 #HK02 #_
 lapply (drops_isuni_fwd_drop2 … HLK2) // -W2 #HLK2
-lapply (fqup_lref … G … HLK0) -HLK0 #HLK0
+lapply (fqup_lref (Ⓣ) … G … HLK0) -HLK0 #HLK0
 elim (IH … HLK0 … HV01 … HV02 … HK01 … HK02) -L0 -K0 -V0 #V #HV1 #HV2
 elim (cpm_lifts_sn … HV2 … HLK2 … HVT2) -K2 -V2
 /3 width=6 by cpm_delta_drops, ex2_intro/
@@ -66,11 +66,11 @@ fact cpr_conf_lfpr_delta_delta:
 #h #G #L0 #i #IH #K0 #V0 #HLK0 #V1 #HV01 #T1 #HVT1
 #KX #VX #H #V2 #HV02 #T2 #HVT2 #L1 #HL01 #L2 #HL02
 lapply (drops_mono … H … HLK0) -H #H destruct
-elim (lfpr_inv_lref_sn … HL01 … HLK0) -HL01 #K1 #W1 #HLK1 #HK01 #_
+elim (lfpr_inv_lref_pair_sn … HL01 … HLK0) -HL01 #K1 #W1 #HLK1 #HK01 #_
 lapply (drops_isuni_fwd_drop2 … HLK1) -W1 // #HLK1
-elim (lfpr_inv_lref_sn … HL02 … HLK0) -HL02 #K2 #W2 #HLK2 #HK02 #_
+elim (lfpr_inv_lref_pair_sn … HL02 … HLK0) -HL02 #K2 #W2 #HLK2 #HK02 #_
 lapply (drops_isuni_fwd_drop2 … HLK2) -W2 // #HLK2
-lapply (fqup_lref … G … HLK0) -HLK0 #HLK0
+lapply (fqup_lref (Ⓣ) … G … HLK0) -HLK0 #HLK0
 elim (IH … HLK0 … HV01 … HV02 … HK01 … HK02) -L0 -K0 -V0 #V #HV1 #HV2
 elim (cpm_lifts_sn … HV1 … HLK1 … HVT1) -K1 -V1 #T #HVT #HT1
 elim (cpm_lifts_sn … HV2 … HLK2 … HVT2) -K2 -V2 #X #HX #HT2
@@ -95,7 +95,7 @@ elim (lfpr_inv_bind … HL01) -HL01 #H1V0 #H1T0
 elim (lfpr_inv_bind … HL02) -HL02 #H2V0 #H2T0
 elim (IH … HV01 … HV02 … H1V0 … H2V0) //
 elim (IH … HT01 … HT02 (L1.ⓑ{I}V1) … (L2.ⓑ{I}V2)) -IH
-/3 width=5 by lfpr_pair_repl_dx, cpm_bind, ex2_intro/
+/3 width=5 by lfpr_bind_repl_dx, cpm_bind, ext2_pair, ex2_intro/
 qed-.
 
 fact cpr_conf_lfpr_bind_zeta:
@@ -113,7 +113,7 @@ fact cpr_conf_lfpr_bind_zeta:
 #T2 #HT02 #X2 #HXT2 #L1 #HL01 #L2 #HL02
 elim (lfpr_inv_bind … HL01) -HL01 #H1V0 #H1T0
 elim (lfpr_inv_bind … HL02) -HL02 #H2V0 #H2T0
-elim (IH … HT01 … HT02 (L1.ⓓV1) … (L2.ⓓV1)) -IH -HT01 -HT02 /2 width=4 by lfpr_pair_repl_dx/ -L0 -V0 -T0 #T #HT1 #HT2
+elim (IH … HT01 … HT02 (L1.ⓓV1) … (L2.ⓓV1)) -IH -HT01 -HT02 /3 width=4 by lfpr_bind_repl_dx, ext2_pair/ -L0 -V0 -T0 #T #HT1 #HT2
 elim (cpm_inv_lifts_sn … HT2 … L2 … HXT2) -T2 /3 width=3 by drops_refl, drops_drop, cpm_zeta, ex2_intro/
 qed-.
 
@@ -133,7 +133,7 @@ fact cpr_conf_lfpr_zeta_zeta:
 #T2 #HT02 #X2 #HXT2 #L1 #HL01 #L2 #HL02
 elim (lfpr_inv_bind … HL01) -HL01 #H1V0 #H1T0
 elim (lfpr_inv_bind … HL02) -HL02 #H2V0 #H2T0
-elim (IH … HT01 … HT02 (L1.ⓓV0) … (L2.ⓓV0)) -IH -HT01 -HT02 /2 width=4 by lfpr_pair_repl_dx/ -L0 -T0 #T #HT1 #HT2
+elim (IH … HT01 … HT02 (L1.ⓓV0) … (L2.ⓓV0)) -IH -HT01 -HT02 /3 width=4 by lfpr_bind_repl_dx, ext2_pair/ -L0 -T0 #T #HT1 #HT2
 elim (cpm_inv_lifts_sn … HT1 … L1 … HXT1) -T1 /3 width=2 by drops_refl, drops_drop/ #T1 #HT1 #HXT1
 elim (cpm_inv_lifts_sn … HT2 … L2 … HXT2) -T2 /3 width=2 by drops_refl, drops_drop/ #T2 #HT2 #HXT2
 lapply (lifts_inj … HT2 … HT1) -T #H destruct /2 width=3 by ex2_intro/
@@ -212,7 +212,7 @@ elim (lfpr_inv_flat … HL02) -HL02 #H2V0 #HL02
 elim (lfpr_inv_bind … HL02) -HL02 #H2W0 #H2T0
 elim (IH … HV01 … HV02 … H1V0 … H2V0) -HV01 -HV02 /2 width=1 by/ #V #HV1 #HV2
 elim (IH … HW01 … HW02 … H1W0 … H2W0) /2 width=1 by/ #W #HW1 #HW2
-elim (IH … HT01 … HT02 (L1.ⓛW1) … (L2.ⓛW2)) /2 width=4 by lfpr_pair_repl_dx/ -L0 -V0 -W0 -T0 #T #HT1 #HT2
+elim (IH … HT01 … HT02 (L1.ⓛW1) … (L2.ⓛW2)) /3 width=4 by lfpr_bind_repl_dx, ext2_pair/ -L0 -V0 -W0 -T0 #T #HT1 #HT2
 lapply (lsubr_cpm_trans … HT2 (L2.ⓓⓝW2.V2) ?) -HT2 /2 width=1 by lsubr_beta/ (**) (* full auto not tried *)
 /4 width=5 by cpm_bind, cpr_flat, cpm_beta, ex2_intro/
 qed-.
@@ -240,10 +240,10 @@ elim (cpm_lifts_sn … HV2 … (L2.ⓓW2) … HVU2) -HVU2 /3 width=2 by drops_re
 elim (cpm_inv_abbr1 … H) -H *
 [ #W1 #T1 #HW01 #HT01 #H destruct
   elim (IH … HW01 … HW02 … H1W0 … H2W0) /2 width=1 by/
-  elim (IH … HT01 … HT02 (L1.ⓓW1) … (L2.ⓓW2)) /2 width=4 by lfpr_pair_repl_dx/ -L0 -V0 -W0 -T0
+  elim (IH … HT01 … HT02 (L1.ⓓW1) … (L2.ⓓW2)) /3 width=4 by lfpr_bind_repl_dx, ext2_pair/ -L0 -V0 -W0 -T0
   /4 width=7 by cpm_bind, cpr_flat, cpm_theta, ex2_intro/
 | #T1 #HT01 #HXT1 #H destruct
-  elim (IH … HT01 … HT02 (L1.ⓓW2) … (L2.ⓓW2)) /2 width=4 by lfpr_pair_repl_dx/ -L0 -V0 -W0 -T0 #T #HT1 #HT2
+  elim (IH … HT01 … HT02 (L1.ⓓW2) … (L2.ⓓW2)) /3 width=4 by lfpr_bind_repl_dx, ext2_pair/ -L0 -V0 -W0 -T0 #T #HT1 #HT2
   elim (cpm_inv_lifts_sn … HT1 … L1 … HXT1) -HXT1
   /4 width=9 by cpr_flat, cpm_zeta, drops_refl, drops_drop, lifts_flat, ex2_intro/
 ]
@@ -268,7 +268,7 @@ elim (lfpr_inv_flat … HL02) -HL02 #H2V0 #HL02
 elim (lfpr_inv_bind … HL02) -HL02 #H2W0 #H2T0
 elim (IH … HV01 … HV02 … H1V0 … H2V0) -HV01 -HV02 /2 width=1 by/ #V #HV1 #HV2
 elim (IH … HW01 … HW02 … H1W0 … H2W0) /2 width=1/ #W #HW1 #HW2
-elim (IH … HT01 … HT02 (L1.ⓛW1) … (L2.ⓛW2)) /2 width=4 by lfpr_pair_repl_dx/ -L0 -V0 -W0 -T0 #T #HT1 #HT2
+elim (IH … HT01 … HT02 (L1.ⓛW1) … (L2.ⓛW2)) /3 width=4 by lfpr_bind_repl_dx, ext2_pair/ -L0 -V0 -W0 -T0 #T #HT1 #HT2
 lapply (lsubr_cpm_trans … HT1 (L1.ⓓⓝW1.V1) ?) -HT1 /2 width=1 by lsubr_beta/
 lapply (lsubr_cpm_trans … HT2 (L2.ⓓⓝW2.V2) ?) -HT2 /2 width=1 by lsubr_beta/
 /4 width=5 by cpm_bind, cpr_flat, ex2_intro/ (**) (* full auto not tried *)
@@ -296,7 +296,7 @@ elim (lfpr_inv_flat … HL02) -HL02 #H2V0 #HL02
 elim (lfpr_inv_bind … HL02) -HL02 #H2W0 #H2T0
 elim (IH … HV01 … HV02 … H1V0 … H2V0) -HV01 -HV02 /2 width=1 by/ #V #HV1 #HV2
 elim (IH … HW01 … HW02 … H1W0 … H2W0) /2 width=1 by/
-elim (IH … HT01 … HT02 (L1.ⓓW1) … (L2.ⓓW2)) /2 width=4 by lfpr_pair_repl_dx/ -L0 -V0 -W0 -T0
+elim (IH … HT01 … HT02 (L1.ⓓW1) … (L2.ⓓW2)) /3 width=4 by lfpr_bind_repl_dx, ext2_pair/ -L0 -V0 -W0 -T0
 elim (cpm_lifts_sn … HV1 … (L1.ⓓW1) … HVU1) -HVU1 /3 width=2 by drops_refl, drops_drop/ #U #HVU
 elim (cpm_lifts_sn … HV2 … (L2.ⓓW2) … HVU2) -HVU2 /3 width=2 by drops_refl, drops_drop/ #X #HX
 lapply (lifts_mono … HX … HVU) -HX #H destruct
@@ -304,7 +304,7 @@ lapply (lifts_mono … HX … HVU) -HX #H destruct
 qed-.
 
 theorem cpr_conf_lfpr: ∀h,G. R_confluent2_lfxs (cpm 0 h G) (cpm 0 h G) (cpm 0 h G) (cpm 0 h G).
-#h #G #L0 #T0 @(fqup_wf_ind_eq … G L0 T0) -G -L0 -T0 #G #L #T #IH #G0 #L0 * [| * ]
+#h #G #L0 #T0 @(fqup_wf_ind_eq (Ⓣ) … G L0 T0) -G -L0 -T0 #G #L #T #IH #G0 #L0 * [| * ]
 [ #I0 #HG #HL #HT #T1 #H1 #T2 #H2 #L1 #HL01 #L2 #HL02 destruct
   elim (cpr_inv_atom1_drops … H1) -H1
   elim (cpr_inv_atom1_drops … H2) -H2
@@ -381,3 +381,17 @@ qed-.
 
 theorem lfpr_conf: ∀h,G,T. confluent … (lfpr h G T).
 /3 width=6 by cpr_conf_lfpr, lfpr_frees_conf, lfxs_conf/ qed-.
+
+theorem lfpr_bind: ∀h,G,L1,L2,V1. ⦃G, L1⦄ ⊢ ➡[h, V1] L2 →
+                   ∀I,V2,T. ⦃G, L1.ⓑ{I}V1⦄ ⊢ ➡[h, T] L2.ⓑ{I}V2 →
+                   ∀p. ⦃G, L1⦄ ⊢ ➡[h, ⓑ{p,I}V1.T] L2.
+/2 width=2 by lfxs_bind/ qed.
+
+theorem lfpr_flat: ∀h,G,L1,L2,V. ⦃G, L1⦄ ⊢ ➡[h, V] L2 →
+                   ∀I,T. ⦃G, L1⦄ ⊢ ➡[h, T] L2 → ⦃G, L1⦄ ⊢ ➡[h, ⓕ{I}V.T] L2.
+/2 width=1 by lfxs_flat/ qed.
+
+theorem lfpr_bind_void: ∀h,G,L1,L2,V. ⦃G, L1⦄ ⊢ ➡[h, V] L2 →
+                        ∀T. ⦃G, L1.ⓧ⦄ ⊢ ➡[h, T] L2.ⓧ →
+                        ∀p,I. ⦃G, L1⦄ ⊢ ➡[h, ⓑ{p,I}V.T] L2.
+/2 width=1 by lfxs_bind_void/ qed.

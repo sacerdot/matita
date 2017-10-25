@@ -14,7 +14,7 @@
 
 include "basic_2/notation/relations/predsn_5.ma".
 include "basic_2/static/lfxs.ma".
-include "basic_2/rt_transition/cpm.ma".
+include "basic_2/rt_transition/cpr_ext.ma".
 
 (* PARALLEL R-TRANSITION FOR LOCAL ENV.S ON REFERRED ENTRIES ****************)
 
@@ -34,23 +34,23 @@ lemma lfpr_sort: ∀h,I,G,L1,L2,V1,V2,s.
                  ⦃G, L1⦄ ⊢ ➡[h, ⋆s] L2 → ⦃G, L1.ⓑ{I}V1⦄ ⊢ ➡[h, ⋆s] L2.ⓑ{I}V2.
 /2 width=1 by lfxs_sort/ qed.
 
-lemma lfpr_zero: ∀h,I,G,L1,L2,V1,V2. ⦃G, L1⦄ ⊢ ➡[h, V1] L2 →
+lemma lfpr_pair: ∀h,I,G,L1,L2,V1,V2. ⦃G, L1⦄ ⊢ ➡[h, V1] L2 →
                  ⦃G, L1⦄ ⊢ V1 ➡[h] V2 → ⦃G, L1.ⓑ{I}V1⦄ ⊢ ➡[h, #0] L2.ⓑ{I}V2.
-/2 width=1 by lfxs_zero/ qed.
+/2 width=1 by lfxs_pair/ qed.
 
-lemma lfpr_lref: ∀h,I,G,L1,L2,V1,V2,i.
-                 ⦃G, L1⦄ ⊢ ➡[h, #i] L2 → ⦃G, L1.ⓑ{I}V1⦄ ⊢ ➡[h, #⫯i] L2.ⓑ{I}V2.
+lemma lfpr_lref: ∀h,I1,I2,G,L1,L2,i.
+                 ⦃G, L1⦄ ⊢ ➡[h, #i] L2 → ⦃G, L1.ⓘ{I1}⦄ ⊢ ➡[h, #⫯i] L2.ⓘ{I2}.
 /2 width=1 by lfxs_lref/ qed.
 
-lemma lfpr_gref: ∀h,I,G,L1,L2,V1,V2,l.
-                 ⦃G, L1⦄ ⊢ ➡[h, §l] L2 → ⦃G, L1.ⓑ{I}V1⦄ ⊢ ➡[h, §l] L2.ⓑ{I}V2.
+lemma lfpr_gref: ∀h,I1,I2,G,L1,L2,l.
+                 ⦃G, L1⦄ ⊢ ➡[h, §l] L2 → ⦃G, L1.ⓘ{I1}⦄ ⊢ ➡[h, §l] L2.ⓘ{I2}.
 /2 width=1 by lfxs_gref/ qed.
 
-lemma lfpr_pair_repl_dx: ∀h,I,G,L1,L2,T,V,V1.
-                         ⦃G, L1.ⓑ{I}V⦄ ⊢ ➡[h, T] L2.ⓑ{I}V1 →
-                         ∀V2. ⦃G, L1⦄ ⊢ V ➡[h] V2 →
-                         ⦃G, L1.ⓑ{I}V⦄ ⊢ ➡[h, T] L2.ⓑ{I}V2.
-/2 width=2 by lfxs_pair_repl_dx/ qed-.
+lemma lfpr_bind_repl_dx: ∀h,I,I1,G,L1,L2,T.
+                         ⦃G, L1.ⓘ{I}⦄ ⊢ ➡[h, T] L2.ⓘ{I1} →
+                         ∀I2. ⦃G, L1⦄ ⊢ I ➡[h] I2 →
+                         ⦃G, L1.ⓘ{I}⦄ ⊢ ➡[h, T] L2.ⓘ{I2}.
+/2 width=2 by lfxs_bind_repl_dx/ qed-.
 
 (* Basic inversion lemmas ***************************************************)
 
@@ -63,47 +63,47 @@ lemma lfpr_inv_atom_dx: ∀h,I,G,Y1. ⦃G, Y1⦄ ⊢ ➡[h, ⓪{I}] ⋆ → Y1 =
 /2 width=3 by lfxs_inv_atom_dx/ qed-.
 
 lemma lfpr_inv_sort: ∀h,G,Y1,Y2,s. ⦃G, Y1⦄ ⊢ ➡[h, ⋆s] Y2 →
-                     (Y1 = ⋆ ∧ Y2 = ⋆) ∨
-                     ∃∃I,L1,L2,V1,V2. ⦃G, L1⦄ ⊢ ➡[h, ⋆s] L2 &
-                                      Y1 = L1.ⓑ{I}V1 & Y2 = L2.ⓑ{I}V2.
+                     ∨∨ Y1 = ⋆ ∧ Y2 = ⋆
+                      | ∃∃I1,I2,L1,L2. ⦃G, L1⦄ ⊢ ➡[h, ⋆s] L2 &
+                                       Y1 = L1.ⓘ{I1} & Y2 = L2.ⓘ{I2}.
 /2 width=1 by lfxs_inv_sort/ qed-.
-
+(*
 lemma lfpr_inv_zero: ∀h,G,Y1,Y2. ⦃G, Y1⦄ ⊢ ➡[h, #0] Y2 →
                      (Y1 = ⋆ ∧ Y2 = ⋆) ∨
                      ∃∃I,L1,L2,V1,V2. ⦃G, L1⦄ ⊢ ➡[h, V1] L2 &
                                       ⦃G, L1⦄ ⊢ V1 ➡[h] V2 &
                                       Y1 = L1.ⓑ{I}V1 & Y2 = L2.ⓑ{I}V2.
 /2 width=1 by lfxs_inv_zero/ qed-.
-
+*)
 lemma lfpr_inv_lref: ∀h,G,Y1,Y2,i. ⦃G, Y1⦄ ⊢ ➡[h, #⫯i] Y2 →
-                     (Y1 = ⋆ ∧ Y2 = ⋆) ∨
-                     ∃∃I,L1,L2,V1,V2. ⦃G, L1⦄ ⊢ ➡[h, #i] L2 &
-                                      Y1 = L1.ⓑ{I}V1 & Y2 = L2.ⓑ{I}V2.
+                     ∨∨ Y1 = ⋆ ∧ Y2 = ⋆
+                      | ∃∃I1,I2,L1,L2. ⦃G, L1⦄ ⊢ ➡[h, #i] L2 &
+                                       Y1 = L1.ⓘ{I1} & Y2 = L2.ⓘ{I2}.
 /2 width=1 by lfxs_inv_lref/ qed-.
 
 lemma lfpr_inv_gref: ∀h,G,Y1,Y2,l. ⦃G, Y1⦄ ⊢ ➡[h, §l] Y2 →
-                     (Y1 = ⋆ ∧ Y2 = ⋆) ∨
-                     ∃∃I,L1,L2,V1,V2. ⦃G, L1⦄ ⊢ ➡[h, §l] L2 &
-                                      Y1 = L1.ⓑ{I}V1 & Y2 = L2.ⓑ{I}V2.
+                     ∨∨ Y1 = ⋆ ∧ Y2 = ⋆
+                      | ∃∃I1,I2,L1,L2. ⦃G, L1⦄ ⊢ ➡[h, §l] L2 &
+                                       Y1 = L1.ⓘ{I1} & Y2 = L2.ⓘ{I2}.
 /2 width=1 by lfxs_inv_gref/ qed-.
 
 lemma lfpr_inv_bind: ∀h,p,I,G,L1,L2,V,T. ⦃G, L1⦄ ⊢ ➡[h, ⓑ{p,I}V.T] L2 →
-                     ⦃G, L1⦄ ⊢ ➡[h, V] L2 ∧ ⦃G, L1.ⓑ{I}V⦄ ⊢ ➡[h, T] L2.ⓑ{I}V.
+                     ∧∧ ⦃G, L1⦄ ⊢ ➡[h, V] L2 & ⦃G, L1.ⓑ{I}V⦄ ⊢ ➡[h, T] L2.ⓑ{I}V.
 /2 width=2 by lfxs_inv_bind/ qed-.
 
 lemma lfpr_inv_flat: ∀h,I,G,L1,L2,V,T. ⦃G, L1⦄ ⊢ ➡[h, ⓕ{I}V.T] L2 →
-                     ⦃G, L1⦄ ⊢ ➡[h, V] L2 ∧ ⦃G, L1⦄ ⊢ ➡[h, T] L2.
+                     ∧∧ ⦃G, L1⦄ ⊢ ➡[h, V] L2 & ⦃G, L1⦄ ⊢ ➡[h, T] L2.
 /2 width=2 by lfxs_inv_flat/ qed-.
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma lfpr_inv_sort_pair_sn: ∀h,I,G,Y2,L1,V1,s. ⦃G, L1.ⓑ{I}V1⦄ ⊢ ➡[h, ⋆s] Y2 →
-                             ∃∃L2,V2. ⦃G, L1⦄ ⊢ ➡[h, ⋆s] L2 & Y2 = L2.ⓑ{I}V2.
-/2 width=2 by lfxs_inv_sort_pair_sn/ qed-.
+lemma lfpr_inv_sort_bind_sn: ∀h,I1,G,Y2,L1,s. ⦃G, L1.ⓘ{I1}⦄ ⊢ ➡[h, ⋆s] Y2 →
+                             ∃∃I2,L2. ⦃G, L1⦄ ⊢ ➡[h, ⋆s] L2 & Y2 = L2.ⓘ{I2}.
+/2 width=2 by lfxs_inv_sort_bind_sn/ qed-.
 
-lemma lfpr_inv_sort_pair_dx: ∀h,I,G,Y1,L2,V2,s. ⦃G, Y1⦄ ⊢ ➡[h, ⋆s] L2.ⓑ{I}V2 →
-                             ∃∃L1,V1. ⦃G, L1⦄ ⊢ ➡[h, ⋆s] L2 & Y1 = L1.ⓑ{I}V1.
-/2 width=2 by lfxs_inv_sort_pair_dx/ qed-.
+lemma lfpr_inv_sort_bind_dx: ∀h,I2,G,Y1,L2,s. ⦃G, Y1⦄ ⊢ ➡[h, ⋆s] L2.ⓘ{I2} →
+                             ∃∃I1,L1. ⦃G, L1⦄ ⊢ ➡[h, ⋆s] L2 & Y1 = L1.ⓘ{I1}.
+/2 width=2 by lfxs_inv_sort_bind_dx/ qed-.
 
 lemma lfpr_inv_zero_pair_sn: ∀h,I,G,Y2,L1,V1. ⦃G, L1.ⓑ{I}V1⦄ ⊢ ➡[h, #0] Y2 →
                              ∃∃L2,V2. ⦃G, L1⦄ ⊢ ➡[h, V1] L2 & ⦃G, L1⦄ ⊢ V1 ➡[h] V2 &
@@ -115,21 +115,21 @@ lemma lfpr_inv_zero_pair_dx: ∀h,I,G,Y1,L2,V2. ⦃G, Y1⦄ ⊢ ➡[h, #0] L2.�
                                       Y1 = L1.ⓑ{I}V1.
 /2 width=1 by lfxs_inv_zero_pair_dx/ qed-.
 
-lemma lfpr_inv_lref_pair_sn: ∀h,I,G,Y2,L1,V1,i. ⦃G, L1.ⓑ{I}V1⦄ ⊢ ➡[h, #⫯i] Y2 →
-                             ∃∃L2,V2. ⦃G, L1⦄ ⊢ ➡[h, #i] L2 & Y2 = L2.ⓑ{I}V2.
-/2 width=2 by lfxs_inv_lref_pair_sn/ qed-.
+lemma lfpr_inv_lref_bind_sn: ∀h,I1,G,Y2,L1,i. ⦃G, L1.ⓘ{I1}⦄ ⊢ ➡[h, #⫯i] Y2 →
+                             ∃∃I2,L2. ⦃G, L1⦄ ⊢ ➡[h, #i] L2 & Y2 = L2.ⓘ{I2}.
+/2 width=2 by lfxs_inv_lref_bind_sn/ qed-.
 
-lemma lfpr_inv_lref_pair_dx: ∀h,I,G,Y1,L2,V2,i. ⦃G, Y1⦄ ⊢ ➡[h, #⫯i] L2.ⓑ{I}V2 →
-                             ∃∃L1,V1. ⦃G, L1⦄ ⊢ ➡[h, #i] L2 & Y1 = L1.ⓑ{I}V1.
-/2 width=2 by lfxs_inv_lref_pair_dx/ qed-.
+lemma lfpr_inv_lref_bind_dx: ∀h,I2,G,Y1,L2,i. ⦃G, Y1⦄ ⊢ ➡[h, #⫯i] L2.ⓘ{I2} →
+                             ∃∃I1,L1. ⦃G, L1⦄ ⊢ ➡[h, #i] L2 & Y1 = L1.ⓘ{I1}.
+/2 width=2 by lfxs_inv_lref_bind_dx/ qed-.
 
-lemma lfpr_inv_gref_pair_sn: ∀h,I,G,Y2,L1,V1,l. ⦃G, L1.ⓑ{I}V1⦄ ⊢ ➡[h, §l] Y2 →
-                             ∃∃L2,V2. ⦃G, L1⦄ ⊢ ➡[h, §l] L2 & Y2 = L2.ⓑ{I}V2.
-/2 width=2 by lfxs_inv_gref_pair_sn/ qed-.
+lemma lfpr_inv_gref_bind_sn: ∀h,I1,G,Y2,L1,l. ⦃G, L1.ⓘ{I1}⦄ ⊢ ➡[h, §l] Y2 →
+                             ∃∃I2,L2. ⦃G, L1⦄ ⊢ ➡[h, §l] L2 & Y2 = L2.ⓘ{I2}.
+/2 width=2 by lfxs_inv_gref_bind_sn/ qed-.
 
-lemma lfpr_inv_gref_pair_dx: ∀h,I,G,Y1,L2,V2,l. ⦃G, Y1⦄ ⊢ ➡[h, §l] L2.ⓑ{I}V2 →
-                             ∃∃L1,V1. ⦃G, L1⦄ ⊢ ➡[h, §l] L2 & Y1 = L1.ⓑ{I}V1.
-/2 width=2 by lfxs_inv_gref_pair_dx/ qed-.
+lemma lfpr_inv_gref_bind_dx: ∀h,I2,G,Y1,L2,l. ⦃G, Y1⦄ ⊢ ➡[h, §l] L2.ⓘ{I2} →
+                             ∃∃I1,L1. ⦃G, L1⦄ ⊢ ➡[h, §l] L2 & Y1 = L1.ⓘ{I1}.
+/2 width=2 by lfxs_inv_gref_bind_dx/ qed-.
 
 (* Basic forward lemmas *****************************************************)
 

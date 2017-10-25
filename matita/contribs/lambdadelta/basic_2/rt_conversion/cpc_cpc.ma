@@ -12,14 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_transition/cpg_lsubr.ma".
-include "basic_2/rt_transition/cpm.ma".
+include "basic_2/rt_conversion/cpc.ma".
 
-(* T-BOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS ***************)
+(* CONTEXT-SENSITIVE PARALLEL R-CONVERSION FOR TERMS ************************)
 
-(* Properties with restricted refinement for local environments *************)
+(* Main properties **********************************************************)
 
-(* Basic_2A1: includes: lsubr_cpr_trans *)
-lemma lsubr_cpm_trans: ∀n,h,G. lsub_trans … (cpm n h G) lsubr.
-#n #h #G #L1 #T1 #T2 * /3 width=5 by lsubr_cpg_trans, ex2_intro/
-qed-.
+theorem cpc_conf: ∀h,G,L,T0,T1,T2. ⦃G, L⦄ ⊢ T0 ⬌[h] T1 → ⦃G, L⦄ ⊢ T0 ⬌[h] T2 →
+                  ∃∃T. ⦃G, L⦄ ⊢ T1 ⬌[h] T & ⦃G, L⦄ ⊢ T2 ⬌[h] T.
+/3 width=3 by cpc_sym, ex2_intro/ qed-.

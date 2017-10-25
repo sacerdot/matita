@@ -88,11 +88,11 @@ lemma lfpx_inv_gref: ∀h,G,Y1,Y2,l. ⦃G, Y1⦄ ⊢ ⬈[h, §l] Y2 →
 /2 width=1 by lfxs_inv_gref/ qed-.
 
 lemma lfpx_inv_bind: ∀h,p,I,G,L1,L2,V,T. ⦃G, L1⦄ ⊢ ⬈[h, ⓑ{p,I}V.T] L2 →
-                     ⦃G, L1⦄ ⊢ ⬈[h, V] L2 ∧ ⦃G, L1.ⓑ{I}V⦄ ⊢ ⬈[h, T] L2.ⓑ{I}V.
+                     ∧∧ ⦃G, L1⦄ ⊢ ⬈[h, V] L2 & ⦃G, L1.ⓑ{I}V⦄ ⊢ ⬈[h, T] L2.ⓑ{I}V.
 /2 width=2 by lfxs_inv_bind/ qed-.
 
 lemma lfpx_inv_flat: ∀h,I,G,L1,L2,V,T. ⦃G, L1⦄ ⊢ ⬈[h, ⓕ{I}V.T] L2 →
-                     ⦃G, L1⦄ ⊢ ⬈[h, V] L2 ∧ ⦃G, L1⦄ ⊢ ⬈[h, T] L2.
+                     ∧∧ ⦃G, L1⦄ ⊢ ⬈[h, V] L2 & ⦃G, L1⦄ ⊢ ⬈[h, T] L2.
 /2 width=2 by lfxs_inv_flat/ qed-.
 
 (* Advanced inversion lemmas ************************************************)

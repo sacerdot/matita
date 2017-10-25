@@ -12,12 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_transition/cpx_lfxs.ma".
+include "basic_2/static/lfxs_lfxs.ma".
 include "basic_2/rt_transition/lfpx.ma".
 
 (* UNCOUNTED PARALLEL RT-TRANSITION FOR LOCAL ENV.S ON REFERRED ENTRIES *****)
 
-(* Advanced properties ******************************************************)
+(* Main properties **********************************************************)
 
-lemma lfpx_cpx_conf: ∀h,G. s_r_confluent1 … (cpx h G) (lfpx h G).
-/2 width=5 by cpx_lfxs_conf/ qed-.
+theorem lfpx_bind: ∀h,G,L1,L2,V1. ⦃G, L1⦄ ⊢ ⬈[h, V1] L2 →
+                   ∀I,V2,T. ⦃G, L1.ⓑ{I}V1⦄ ⊢ ⬈[h, T] L2.ⓑ{I}V2 →
+                   ∀p. ⦃G, L1⦄ ⊢ ⬈[h, ⓑ{p,I}V1.T] L2.
+/2 width=2 by lfxs_bind/ qed.
+
+theorem lfpx_flat: ∀h,G,L1,L2,V. ⦃G, L1⦄ ⊢ ⬈[h, V] L2 →
+                   ∀I,T. ⦃G, L1⦄ ⊢ ⬈[h, T] L2 → ⦃G, L1⦄ ⊢ ⬈[h, ⓕ{I}V.T] L2.
+/2 width=1 by lfxs_flat/ qed.
+
+theorem lfpx_bind_void: ∀h,G,L1,L2,V. ⦃G, L1⦄ ⊢ ⬈[h, V] L2 →
+                        ∀T. ⦃G, L1.ⓧ⦄ ⊢ ⬈[h, T] L2.ⓧ →
+                        ∀p,I. ⦃G, L1⦄ ⊢ ⬈[h, ⓑ{p,I}V.T] L2.
+/2 width=1 by lfxs_bind_void/ qed.

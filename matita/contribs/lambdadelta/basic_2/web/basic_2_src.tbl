@@ -63,15 +63,15 @@ table {
      }
    ]
 *)
-(*
    class "blue"
-   [ { "conversion" * } {
+   [ { "rt-conversion" * } {
         [ { "context-sensitive r-conversion" * } {
              [ "cpc ( ⦃?,?⦄ ⊢ ? ⬌[?] ? )" "cpc_cpc" * ]
           }
         ]
      }
    ]
+(*
    class "sky"
    [ { "rt-computation" * } {
 (*
@@ -132,16 +132,17 @@ table {
              [ "fpb ( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" "fpb_lfdeq" * ]
           }
         ]
+*)
         [ { "t-bound context-sensitive rt-transition" * } {
              [ "lfpr ( ⦃?,?⦄ ⊢ ➡[?,?] ? )" "lfpr_length" + "lfpr_drops" + "lfpr_fquq" + "lfpr_fqup" + "lfpr_frees" + "lfpr_aaa" + "lfpr_lfpx" + "lfpr_lfpr" * ]
+             [ "cpr_ext ( ⦃?,?⦄ ⊢ ? ➡[?] ? )" * ]
              [ "cpr ( ⦃?,?⦄ ⊢ ? ➡[?] ? )" "cpr_drops" * ]
              [ "cpm ( ⦃?,?⦄ ⊢ ? ➡[?,?] ? )" "cpm_simple" + "cpm_drops" + "cpm_lsubr" + "cpm_lfxs" + "cpm_cpx" * ]
           }
         ]
-*)
         [ { "uncounted context-sensitive rt-transition" * } {
              [ "cnx ( ⦃?,?⦄ ⊢ ⬈[?,?] 𝐍⦃?⦄ )" "cnx_simple" + "cnx_drops" + "cnx_cnx" * ]
-             [ "lfpx ( ⦃?,?⦄ ⊢ ⬈[?,?] ? )" "lfpx_length" + "lfpx_drops" + "lfpx_fqup" + "lfpx_frees" + "lfpx_lfdeq" + "lfpx_aaa" + "lfpx_lfpx" * ]
+             [ "lfpx ( ⦃?,?⦄ ⊢ ⬈[?,?] ? )" "lfpx_length" + "lfpx_drops" + "lfpx_fqup" + "lfpx_frees" + "lfpx_lfdeq" + "lfpx_aaa" + "lfpx_cpx" + "lfpx_lfpx" * ]
              [ "cpx_ext ( ⦃?,?⦄ ⊢ ? ⬈[?] ? )" * ]
              [ "cpx ( ⦃?,?⦄ ⊢ ? ⬈[?] ? )" "cpx_simple" + "cpx_drops" + "cpx_fqus" + "cpx_lsubr" + "cpx_lfxs" * ]
           }
@@ -245,7 +246,7 @@ table {
           }
         ]
         [ { "degree-based equivalence" * } {
-             [ "tdeq_ext ( ? ≡[?,?] ? )" * ]
+             [ "tdeq_ext ( ? ≡[?,?] ? ) ( ? ⊢ ? ≡[?,?] ? )" * ]
              [ "tdeq ( ? ≡[?,?] ? )" "tdeq_tdeq" * ]
           }
         ]

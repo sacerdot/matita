@@ -1,0 +1,7 @@
+(* Advanced properties ******************************************************)
+
+(* Basic_1: was by definition: pr2_free *)
+(* Basic_2A1: includes: tpr_cpr *)
+lemma tpm_cpm: ∀n,h,G,T1,T2. ⦃G, ⋆⦄ ⊢ T1 ➡[n, h] T2 → ∀L. ⦃G, L⦄ ⊢ T1 ➡[n, h] T2.
+#n #h #G #T1 #T2 #HT12 #L lapply (lsubr_cpm_trans … HT12 L ?) //
+qed.
