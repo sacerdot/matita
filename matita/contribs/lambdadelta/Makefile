@@ -207,12 +207,12 @@ define SUMMARY_TEMPLATE
 	@printf '   class "gray"   [ "category"\n'                >> $$@
 	@printf '      [ "objects" * ]\n'                         >> $$@
 	@printf '   ]\n'                                          >> $$@
-	@printf '   class "cyan"   [ "sizes"\n'                   >> $$@
+	@printf '   class "water"  [ "sizes"\n'                   >> $$@
 	@printf '      [ "files"      "$$(S1)" ]\n'               >> $$@
 	@printf '      [ "characters" "$$(S2)" ]\n'               >> $$@
 	@printf '      [ "nodes"      "$$(S4)" ]\n'               >> $$@
 	@printf '   ]\n'                                          >> $$@	
-	@printf '   class "green"  [ "propositions"\n'            >> $$@
+	@printf '   class "grass"  [ "propositions"\n'            >> $$@
 	@printf '      [ "theorems" "$$(P1)" ]\n'                 >> $$@
 	@printf '      [ "lemmas"   "$$(P2)" ]\n'                 >> $$@
 	@printf '      [ "total"    "$$(P3)" ]\n'                 >> $$@
