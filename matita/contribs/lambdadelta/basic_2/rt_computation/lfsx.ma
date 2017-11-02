@@ -51,8 +51,8 @@ lemma lfsx_sort: ∀h,o,G,L,s. G ⊢ ⬈*[h, o, ⋆s] 𝐒⦃L⦄.
 #h #o #G #L1 #s @lfsx_intro
 #L2 #H #Hs elim Hs -Hs elim (lfpx_inv_sort … H) -H *
 [ #H1 #H2 destruct //
-| #I #K1 #K2 #V1 #V2 #HK12 #H1 #H2 destruct
-  /4 width=4 by lfdeq_sort, lfxs_isid, frees_sort_gen, frees_inv_sort/
+| #I1 #I2 #K1 #K2 #HK12 #H1 #H2 destruct
+  /4 width=4 by lfdeq_sort, lfxs_isid, frees_sort, frees_inv_sort/
 ]
 qed.
 
@@ -61,8 +61,8 @@ lemma lfsx_gref: ∀h,o,G,L,p. G ⊢ ⬈*[h, o, §p] 𝐒⦃L⦄.
 #h #o #G #L1 #s @lfsx_intro
 #L2 #H #Hs elim Hs -Hs elim (lfpx_inv_gref … H) -H *
 [ #H1 #H2 destruct //
-| #I #K1 #K2 #V1 #V2 #HK12 #H1 #H2 destruct
-  /4 width=4 by lfdeq_gref, lfxs_isid, frees_gref_gen, frees_inv_gref/
+| #I1 #I2 #K1 #K2 #HK12 #H1 #H2 destruct
+  /4 width=4 by lfdeq_gref, lfxs_isid, frees_gref, frees_inv_gref/
 ]
 qed.
 

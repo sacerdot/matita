@@ -52,8 +52,8 @@ qed.
 
 (* Basic_1: was just: sn3_abbr *)
 (* Basic_2A1: was: csx_lref_bind *)
-lemma csx_lref_drops: ∀h,o,I,G,L,K,V,i. ⬇*[i] L ≡ K.ⓑ{I}V →
-                      ⦃G, K⦄ ⊢ ⬈*[h, o] 𝐒⦃V⦄ → ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃#i⦄.
+lemma csx_lref_pair: ∀h,o,I,G,L,K,V,i. ⬇*[i] L ≡ K.ⓑ{I}V →
+                     ⦃G, K⦄ ⊢ ⬈*[h, o] 𝐒⦃V⦄ → ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃#i⦄.
 #h #o #I #G #L #K #V #i #HLK #HV
 @csx_intro #X #H #Hi elim (cpx_inv_lref1_drops … H) -H
 [ #H destruct elim Hi //
@@ -67,8 +67,8 @@ qed.
 
 (* Basic_1: was: sn3_gen_def *)
 (* Basic_2A1: was: csx_inv_lref_bind *)
-lemma csx_inv_lref_drops: ∀h,o,I,G,L,K,V,i. ⬇*[i] L ≡ K.ⓑ{I}V →
-                          ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃#i⦄ → ⦃G, K⦄ ⊢ ⬈*[h, o] 𝐒⦃V⦄.
+lemma csx_inv_lref_pair: ∀h,o,I,G,L,K,V,i. ⬇*[i] L ≡ K.ⓑ{I}V →
+                         ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃#i⦄ → ⦃G, K⦄ ⊢ ⬈*[h, o] 𝐒⦃V⦄.
 #h #o #I #G #L #K #V #i #HLK #Hi
 elim (lifts_total V (𝐔❴⫯i❵))
 /4 width=9 by csx_inv_lifts, csx_cpx_trans, cpx_delta_drops, drops_isuni_fwd_drop2/

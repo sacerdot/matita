@@ -204,20 +204,20 @@ define SUMMARY_TEMPLATE
 	@printf '  SUMMARY $(1)\n'
 	@printf 'name "$$(basename $$(@F))"\n\n'                  >  $$@
 	@printf 'table {\n'                                       >> $$@
-	@printf '   class "gray"   [ "category"\n'                >> $$@
+	@printf '   class "gray"  [ "category"\n'                 >> $$@
 	@printf '      [ "objects" * ]\n'                         >> $$@
 	@printf '   ]\n'                                          >> $$@
-	@printf '   class "water"  [ "sizes"\n'                   >> $$@
+	@printf '   class "water" [ "sizes"\n'                    >> $$@
 	@printf '      [ "files"      "$$(S1)" ]\n'               >> $$@
 	@printf '      [ "characters" "$$(S2)" ]\n'               >> $$@
 	@printf '      [ "nodes"      "$$(S4)" ]\n'               >> $$@
 	@printf '   ]\n'                                          >> $$@	
-	@printf '   class "grass"  [ "propositions"\n'            >> $$@
+	@printf '   class "green" [ "propositions"\n'             >> $$@
 	@printf '      [ "theorems" "$$(P1)" ]\n'                 >> $$@
 	@printf '      [ "lemmas"   "$$(P2)" ]\n'                 >> $$@
 	@printf '      [ "total"    "$$(P3)" ]\n'                 >> $$@
 	@printf '   ]\n'                                          >> $$@
-	@printf '   class "yellow" [ "concepts"\n'                >> $$@
+	@printf '   class "grass" [ "concepts"\n'                 >> $$@
 	@printf '      [ "declared" "$$(C1)" ]\n'                 >> $$@
 	@printf '      [ "defined"  "$$(C2)" ]\n'                 >> $$@
 	@printf '      [ "total"    "$$(C3)" ]\n'                 >> $$@

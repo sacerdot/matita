@@ -94,25 +94,25 @@ lemma lfdeq_atom: ∀h,o,I. ⋆ ≡[h, o, ⓪{I}] ⋆.
 /2 width=1 by lfxs_atom/ qed.
 
 (* Basic_2A1: uses: lleq_sort *)
-lemma lfdeq_sort: ∀h,o,I,L1,L2,V1,V2,s.
-                  L1 ≡[h, o, ⋆s] L2 → L1.ⓑ{I}V1 ≡[h, o, ⋆s] L2.ⓑ{I}V2.
+lemma lfdeq_sort: ∀h,o,I1,I2,L1,L2,s.
+                  L1 ≡[h, o, ⋆s] L2 → L1.ⓘ{I1} ≡[h, o, ⋆s] L2.ⓘ{I2}.
 /2 width=1 by lfxs_sort/ qed.
 
-lemma lfdeq_pair: ∀h,o,I,L1,L2,V.
-                  L1 ≡[h, o, V] L2 → L1.ⓑ{I}V ≡[h, o, #0] L2.ⓑ{I}V.
+lemma lfdeq_pair: ∀h,o,I,L1,L2,V1,V2. L1 ≡[h, o, V1] L2 → V1 ≡[h, o] V2 →
+                                      L1.ⓑ{I}V1 ≡[h, o, #0] L2.ⓑ{I}V2.
 /2 width=1 by lfxs_pair/ qed.
-
+(*
 lemma lfdeq_unit: ∀h,o,f,I,L1,L2. 𝐈⦃f⦄ → L1 ⪤*[cdeq_ext h o, cfull, f] L2 →
                   L1.ⓤ{I} ≡[h, o, #0] L2.ⓤ{I}.
 /2 width=3 by lfxs_unit/ qed.
-
-lemma lfdeq_lref: ∀h,o,I,L1,L2,V1,V2,i.
-                  L1 ≡[h, o, #i] L2 → L1.ⓑ{I}V1 ≡[h, o, #⫯i] L2.ⓑ{I}V2.
+*)
+lemma lfdeq_lref: ∀h,o,I1,I2,L1,L2,i.
+                  L1 ≡[h, o, #i] L2 → L1.ⓘ{I1} ≡[h, o, #⫯i] L2.ⓘ{I2}.
 /2 width=1 by lfxs_lref/ qed.
 
 (* Basic_2A1: uses: lleq_gref *)
-lemma lfdeq_gref: ∀h,o,I,L1,L2,V1,V2,l.
-                  L1 ≡[h, o, §l] L2 → L1.ⓑ{I}V1 ≡[h, o, §l] L2.ⓑ{I}V2.
+lemma lfdeq_gref: ∀h,o,I1,I2,L1,L2,l.
+                  L1 ≡[h, o, §l] L2 → L1.ⓘ{I1} ≡[h, o, §l] L2.ⓘ{I2}.
 /2 width=1 by lfxs_gref/ qed.
 
 lemma lfdeq_bind_repl_dx: ∀h,o,I,I1,L1,L2.∀T:term.
@@ -128,7 +128,7 @@ lemma lfdeq_inv_atom_sn: ∀h,o,Y2. ∀T:term. ⋆ ≡[h, o, T] Y2 → Y2 = ⋆.
 
 lemma lfdeq_inv_atom_dx: ∀h,o,Y1. ∀T:term. Y1 ≡[h, o, T] ⋆ → Y1 = ⋆.
 /2 width=3 by lfxs_inv_atom_dx/ qed-.
-
+(*
 lemma lfdeq_inv_zero: ∀h,o,Y1,Y2. Y1 ≡[h, o, #0] Y2 →
                       ∨∨ Y1 = ⋆ ∧ Y2 = ⋆
                        | ∃∃I,L1,L2,V1,V2. L1 ≡[h, o, V1] L2 & V1 ≡[h, o] V2 &
@@ -138,7 +138,7 @@ lemma lfdeq_inv_zero: ∀h,o,Y1,Y2. Y1 ≡[h, o, #0] Y2 →
 #h #o #Y1 #Y2 #H elim (lfxs_inv_zero … H) -H *
 /3 width=9 by or3_intro0, or3_intro1, or3_intro2, ex4_5_intro, ex4_4_intro, conj/
 qed-.
-
+*)
 lemma lfdeq_inv_lref: ∀h,o,Y1,Y2,i. Y1 ≡[h, o, #⫯i] Y2 →
                       (Y1 = ⋆ ∧ Y2 = ⋆) ∨
                       ∃∃I1,I2,L1,L2. L1 ≡[h, o, #i] L2 &
