@@ -43,7 +43,7 @@ lemma lfsx_fwd_pair_sn: ∀h,o,I,G,L,V,T. G ⊢ ⬈*[h, o, ②{I}V.T] 𝐒⦃L�
                         G ⊢ ⬈*[h, o, V] 𝐒⦃L⦄.
 #h #o #I #G #L #V #T #H @(lfsx_ind … H) -L
 #L1 #_ #IHL1 @lfsx_intro
-#L2 #H #HnL12 elim (lfpx_pair_sn_split … o I … T H) -H
+#L2 #H #HnL12 elim (lfpx_pair_sn_split … H o I T) -H
 /6 width=3 by lfsx_lfdeq_trans, lfdeq_trans, lfdeq_fwd_pair_sn/
 qed-.
 
@@ -52,8 +52,18 @@ lemma lfsx_fwd_flat_dx: ∀h,o,I,G,L,V,T. G ⊢ ⬈*[h, o, ⓕ{I}V.T] 𝐒⦃L�
                         G ⊢ ⬈*[h, o, T] 𝐒⦃L⦄.
 #h #o #I #G #L #V #T #H @(lfsx_ind … H) -L
 #L1 #_ #IHL1 @lfsx_intro
-#L2 #H #HnL12 elim (lfpx_flat_dx_split … o I … V … H) -H
+#L2 #H #HnL12 elim (lfpx_flat_dx_split … H o I V) -H
 /6 width=3 by lfsx_lfdeq_trans, lfdeq_trans, lfdeq_fwd_flat_dx/
+qed-.
+
+(* Basic_2A1: uses: lsx_fwd_bind_dx *)
+(* Note: the exclusion binder (ⓧ) makes this more elegant and much simpler *)
+lemma lfsx_fwd_bind_dx: ∀h,o,p,I,G,L,V,T. G ⊢ ⬈*[h, o, ⓑ{p,I}V.T] 𝐒⦃L⦄ →
+                        G ⊢ ⬈*[h, o, T] 𝐒⦃L.ⓧ⦄.
+#h #o #p #I #G #L #V #T #H @(lfsx_ind … H) -L
+#L1 #_ #IH @lfsx_intro
+#L2 #H #HT elim (lfpx_bind_dx_split_void … H o p I V) -H
+/6 width=5 by lfsx_lfdeq_trans, lfdeq_trans, lfdeq_fwd_bind_dx_void/
 qed-.
 
 (* Advanced inversion lemmas ************************************************)
@@ -62,3 +72,8 @@ qed-.
 lemma lfsx_inv_flat: ∀h,o,I,G,L,V,T. G ⊢ ⬈*[h, o, ⓕ{I}V.T] 𝐒⦃L⦄ →
                      G ⊢ ⬈*[h, o, V] 𝐒⦃L⦄ ∧ G ⊢ ⬈*[h, o, T] 𝐒⦃L⦄.
 /3 width=3 by lfsx_fwd_pair_sn, lfsx_fwd_flat_dx, conj/ qed-.
+
+(* Basic_2A1: uses: lsx_inv_bind *)
+lemma lfsx_inv_bind: ∀h,o,p,I,G,L,V,T. G ⊢ ⬈*[h, o, ⓑ{p,I}V.T] 𝐒⦃L⦄ →
+                     G ⊢ ⬈*[h, o, V] 𝐒⦃L⦄ ∧ G ⊢ ⬈*[h, o, T] 𝐒⦃L.ⓧ⦄.
+/3 width=4 by lfsx_fwd_pair_sn, lfsx_fwd_bind_dx, conj/ qed-.

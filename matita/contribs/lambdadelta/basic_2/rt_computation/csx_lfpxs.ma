@@ -12,14 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/csx_lpx.ma".
-include "basic_2/computation/lpxs.ma".
+include "basic_2/rt_computation/csx_lfpx.ma".
+include "basic_2/rt_computation/lfpxs_fqup.ma".
 
-(* CONTEXT-SENSITIVE EXTENDED STRONGLY NORMALIZING TERMS ********************)
+(* STRONGLY NORMALIZING TERMS FOR UNCOUNTED PARALLEL RT-TRANSITION **********)
 
-(* Properties on sn extended parallel computation for local environments ****)
+(* Properties with uncounted parallel rt-computation on referred entries ****)
 
-lemma csx_lpxs_conf: ∀h,o,G,L1,L2. ⦃G, L1⦄ ⊢ ➡*[h, o] L2 →
-                     ∀T. ⦃G, L1⦄ ⊢ ⬊*[h, o] T → ⦃G, L2⦄ ⊢ ⬊*[h, o] T.
-#h #o #G #L1 #L2 #H @(lpxs_ind … H) -L2 /3 by lpxs_strap1, csx_lpx_conf/
+(* Basic_2A1: uses: csx_lpxs_conf *)
+lemma csx_lfpxs_conf: ∀h,o,G,L1,L2,T. ⦃G, L1⦄ ⊢ ⬈*[h, T] L2 →
+                      ⦃G, L1⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄ → ⦃G, L2⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄.
+#h #o #G #L1 #L2 #T #H @(lfpxs_ind_sn … H) -L2 /3 by lfpxs_step_dx, csx_lfpx_conf/
 qed-.

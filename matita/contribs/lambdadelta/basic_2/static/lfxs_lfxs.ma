@@ -89,6 +89,26 @@ elim (HR … Hf … H0) -HR -Hf -H0
 /4 width=7 by sle_lexs_trans, ex3_2_intro, ex2_intro/
 qed-.
 
+lemma lfxs_bind_dx_split_void: ∀R1,R2. (∀L. reflexive … (R1 L)) → (∀L. reflexive … (R2 L)) →
+                               lexs_frees_confluent … (cext2 R1) cfull →
+                               ∀L1,L2,T. L1.ⓧ ⪤*[R1, T] L2 → ∀p,I,V.
+                               ∃∃L. L1 ⪤*[R1, ⓑ{p,I}V.T] L & L.ⓧ ⪤*[R2, T] L2.
+#R1 #R2 #HR1 #HR2 #HR #L1 #L2 #T * #f #Hf #HL12 #p #I #V
+elim (frees_total L1 (ⓑ{p,I}V.T)) #g #Hg
+elim (frees_inv_bind_void … Hg) #y1 #y2 #_ #H #Hy
+lapply(frees_mono … H … Hf) -H #H2
+lapply (tl_eq_repl … H2) -H2 #H2
+lapply (sor_eq_repl_back2 … Hy … H2) -y2 #Hy
+lapply (sor_inv_sle_dx … Hy) -y1 #Hfg
+lapply (sle_inv_tl_sn … Hfg) -Hfg #Hfg
+elim (lexs_sle_split (cext2 R1) (cext2 R2) … HL12 … Hfg) -HL12 /2 width=1 by ext2_refl/ #Y #H #HL2
+lapply (sle_lexs_trans … H … Hfg) // #H0
+elim (lexs_inv_next1 … H) -H #Z #L #HL1 #H
+elim (ext2_inv_unit_sn … H) -H #H destruct
+elim (HR … Hf … H0) -HR -Hf -H0
+/4 width=7 by sle_lexs_trans, ex2_intro/ (* note: 2 ex2_intro *)
+qed-.
+
 (* Main properties **********************************************************)
 
 (* Basic_2A1: uses: llpx_sn_bind llpx_sn_bind_O *)
