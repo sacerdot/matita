@@ -42,9 +42,17 @@ definition d_liftable1: predicate (relation2 lenv term) ≝
                         λR. ∀K,T. R K T → ∀b,f,L. ⬇*[b, f] L ≡ K →
                         ∀U. ⬆*[f] T ≡ U → R L U.
 
+definition d_liftable1_isuni: predicate (relation2 lenv term) ≝
+                              λR. ∀K,T. R K T → ∀b,f,L. ⬇*[b, f] L ≡ K → 𝐔⦃f⦄ →
+                              ∀U. ⬆*[f] T ≡ U → R L U.
+
 definition d_deliftable1: predicate (relation2 lenv term) ≝
                           λR. ∀L,U. R L U → ∀b,f,K. ⬇*[b, f] L ≡ K →
                           ∀T. ⬆*[f] T ≡ U → R K T.
+
+definition d_deliftable1_isuni: predicate (relation2 lenv term) ≝
+                                λR. ∀L,U. R L U → ∀b,f,K. ⬇*[b, f] L ≡ K → 𝐔⦃f⦄ →
+                                ∀T. ⬆*[f] T ≡ U → R K T.
 
 definition d_liftable2_sn: ∀C:Type[0]. ∀S:rtmap → relation C.
                            predicate (lenv → relation C) ≝
@@ -234,7 +242,6 @@ lemma drops_fwd_isid: ∀b,f,L1,L2. ⬇*[b, f] L1 ≡ L2 → 𝐈⦃f⦄ → L1 
 | /5 width=5 by isid_inv_push, liftsb_fwd_isid, eq_f2, sym_eq/
 ]
 qed-.
-
 
 lemma drops_after_fwd_drop2: ∀b,f2,I,X,K. ⬇*[b, f2] X ≡ K.ⓘ{I} →
                              ∀f1,f. 𝐈⦃f1⦄ → f2 ⊚ ⫯f1 ≡ f → ⬇*[b, f] X ≡ K.

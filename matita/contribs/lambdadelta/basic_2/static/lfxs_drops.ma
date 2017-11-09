@@ -36,7 +36,6 @@ definition dropable_dx: predicate (relation3 lenv term term) ≝
 
 (* Properties with generic slicing for local environments *******************)
 
-(* Basic_2A1: includes: llpx_sn_lift_le llpx_sn_lift_ge *)
 lemma lfxs_liftable_dedropable_sn: ∀R. (∀L. reflexive ? (R L)) →
                                    d_liftable2_sn … lifts R → dedropable_sn R.
 #R #H1R #H2R #b #f #L1 #K1 #HLK1 #K2 #T * #f1 #Hf1 #HK12 #U #HTU
@@ -48,7 +47,7 @@ qed-.
 
 (* Inversion lemmas with generic slicing for local environments *************)
 
-(* Basic_2A1: restricts: llpx_sn_inv_lift_le llpx_sn_inv_lift_be llpx_sn_inv_lift_ge *)
+(* Basic_2A1: uses: llpx_sn_inv_lift_le llpx_sn_inv_lift_be llpx_sn_inv_lift_ge *)
 (* Basic_2A1: was: llpx_sn_drop_conf_O *)
 lemma lfxs_dropable_sn: ∀R. dropable_sn R.
 #R #b #f #L1 #K1 #HLK1 #H1f #L2 #U * #f2 #Hf2 #HL12 #T #HTU
@@ -69,13 +68,13 @@ elim (lexs_co_dropable_dx … HL12 … HLK2 … H2f) -L2
 /4 width=9 by frees_inv_lifts, ex2_intro/
 qed-.
 
-(* Basic_2A1: was: llpx_sn_inv_lift_O *)
-lemma lfxs_inv_lifts_bi: ∀R,L1,L2,U. L1 ⪤*[R, U] L2 →
-                         ∀K1,K2,i. ⬇*[i] L1 ≡ K1 → ⬇*[i] L2 ≡ K2 →
-                         ∀T. ⬆*[i] T ≡ U → K1 ⪤*[R, T] K2.
-#R #L1 #L2 #U #HL12 #K1 #K2 #i #HLK1 #HLK2 #T #HTU
+(* Basic_2A1: uses: llpx_sn_inv_lift_O *)
+lemma lfxs_inv_lifts_bi: ∀R,L1,L2,U. L1 ⪤*[R, U] L2 → ∀b,f. 𝐔⦃f⦄ → 
+                         ∀K1,K2. ⬇*[b, f] L1 ≡ K1 → ⬇*[b, f] L2 ≡ K2 →
+                         ∀T. ⬆*[f] T ≡ U → K1 ⪤*[R, T] K2.
+#R #L1 #L2 #U #HL12 #b #f #Hf #K1 #K2 #HLK1 #HLK2 #T #HTU
 elim (lfxs_dropable_sn … HLK1 … HL12 … HTU) -L1 -U // #Y #HK12 #HY
-lapply (drops_mono … HY … HLK2) -L2 -i #H destruct //
+lapply (drops_mono … HY … HLK2) -b -f -L2 #H destruct //
 qed-.
 
 lemma lfxs_inv_lref_pair_sn: ∀R,L1,L2,i. L1 ⪤*[R, #i] L2 → ∀I,K1,V1. ⬇*[i] L1 ≡ K1.ⓑ{I}V1 →

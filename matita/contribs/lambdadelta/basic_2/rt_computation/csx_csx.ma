@@ -73,3 +73,11 @@ lemma csx_inv_lref_pair: ∀h,o,I,G,L,K,V,i. ⬇*[i] L ≡ K.ⓑ{I}V →
 elim (lifts_total V (𝐔❴⫯i❵))
 /4 width=9 by csx_inv_lifts, csx_cpx_trans, cpx_delta_drops, drops_isuni_fwd_drop2/
 qed-.
+
+lemma csx_inv_lref: ∀h,o,G,L,i. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃#i⦄ →
+                    ∨∨ ⬇*[Ⓕ, 𝐔❴i❵] L ≡ ⋆
+                     | ∃∃I,K. ⬇*[i] L ≡ K.ⓤ{I}
+                     | ∃∃I,K,V. ⬇*[i] L ≡ K.ⓑ{I}V & ⦃G, K⦄ ⊢ ⬈*[h, o] 𝐒⦃V⦄.
+#h #o #G #L #i #H elim (drops_F_uni L i) /2 width=1 by or3_intro0/
+* * /4 width=9 by csx_inv_lref_pair, ex2_3_intro, ex1_2_intro, or3_intro2, or3_intro1/
+qed-.

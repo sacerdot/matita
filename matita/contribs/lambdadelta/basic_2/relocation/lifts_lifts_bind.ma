@@ -32,3 +32,22 @@ theorem liftsb_trans: ∀f1,I1,I. ⬆*[f1] I1 ≡ I → ∀f2,I2. ⬆*[f2] I ≡
 [ elim (liftsb_inv_pair_sn … H) | lapply (liftsb_inv_unit_sn … H) ] -H
 /3 width=6 by lifts_trans, ext2_pair, ext2_unit/
 qed-.
+
+theorem liftsb_conf: ∀f1,I,I1. ⬆*[f1] I ≡ I1 → ∀f,I2. ⬆*[f] I ≡ I2 →
+                     ∀f2. f2 ⊚ f1 ≡ f → ⬆*[f2] I1 ≡ I2.
+#f1 #I #I1 * -I -I1 #I [2: #V #V1 #HV1 ] #f2 #I2 #H
+[ elim (liftsb_inv_pair_sn … H) | lapply (liftsb_inv_unit_sn … H) ] -H
+/3 width=6 by lifts_conf, ext2_pair, ext2_unit/
+qed-.
+
+(* Advanced proprerties *****************************************************)
+
+lemma liftsb_inj: ∀f. is_inj2 … (liftsb f).
+#f #T1 #U #H1 #T2 #H2 lapply (after_isid_dx 𝐈𝐝  … f)
+/3 width=6 by liftsb_div3, liftsb_fwd_isid/
+qed-.
+
+lemma liftsb_mono: ∀f,T. is_mono … (liftsb f T).
+#f #T #U1 #H1 #U2 #H2 lapply (after_isid_sn 𝐈𝐝  … f)
+/3 width=6 by liftsb_conf, liftsb_fwd_isid/
+qed-.

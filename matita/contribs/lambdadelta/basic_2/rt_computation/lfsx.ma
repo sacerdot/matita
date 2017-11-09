@@ -66,6 +66,24 @@ lemma lfsx_gref: ∀h,o,G,L,p. G ⊢ ⬈*[h, o, §p] 𝐒⦃L⦄.
 ]
 qed.
 
+lemma lfsx_unit: ∀h,o,I,G,L. G ⊢ ⬈*[h, o, #0] 𝐒⦃L.ⓤ{I}⦄.
+#h #o #I #G #L1 @lfsx_intro
+#Y #HY #HnY elim HnY -HnY /2 width=2 by lfxs_unit_sn/
+qed.
+
+(* Basic forward lemmas *****************************************************)
+
+fact lfsx_fwd_pair_aux: ∀h,o,G,L. G ⊢ ⬈*[h, o, #0] 𝐒⦃L⦄ →
+                        ∀I,K,V. L = K.ⓑ{I}V → G ⊢ ⬈*[h, o, V] 𝐒⦃K⦄.
+#h #o #G #L #H
+@(lfsx_ind … H) -L #L1 #_ #IH #I #K1 #V #H destruct
+/5 width=5 by lfpx_pair, lfsx_intro, lfdeq_fwd_zero_pair/
+qed-.
+
+lemma lfsx_fwd_pair: ∀h,o,I,G,K,V.
+                     G ⊢ ⬈*[h, o, #0] 𝐒⦃K.ⓑ{I}V⦄ → G ⊢ ⬈*[h, o, V] 𝐒⦃K⦄.
+/2 width=4 by lfsx_fwd_pair_aux/ qed-.
+
 (* Basic_2A1: removed theorems 9:
               lsx_ge_up lsx_ge
               lsxa_ind lsxa_intro lsxa_lleq_trans lsxa_lpxs_trans lsxa_intro_lpx lsx_lsxa lsxa_inv_lsx

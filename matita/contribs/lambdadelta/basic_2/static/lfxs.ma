@@ -44,72 +44,6 @@ definition R_confluent2_lfxs: relation4 (relation3 lenv term term)
                               ∀L1. L0 ⪤*[RP1, T0] L1 → ∀L2. L0 ⪤*[RP2, T0] L2 →
                               ∃∃T. R2 L1 T1 T & R1 L2 T2 T.
 
-(* Basic properties *********************************************************)
-
-lemma lfxs_atom: ∀R,I. ⋆ ⪤*[R, ⓪{I}] ⋆.
-#R * /3 width=3 by frees_sort, frees_atom, frees_gref, lexs_atom, ex2_intro/
-qed.
-
-(* Basic_2A1: uses: llpx_sn_sort *)
-lemma lfxs_sort: ∀R,I1,I2,L1,L2,s.
-                 L1 ⪤*[R, ⋆s] L2 → L1.ⓘ{I1} ⪤*[R, ⋆s] L2.ⓘ{I2}.
-#R #I1 #I2 #L1 #L2 #s * #f #Hf #H12
-lapply (frees_inv_sort … Hf) -Hf
-/4 width=3 by frees_sort, lexs_push, isid_push, ex2_intro/
-qed.
-
-lemma lfxs_pair: ∀R,I,L1,L2,V1,V2. L1 ⪤*[R, V1] L2 →
-                 R L1 V1 V2 → L1.ⓑ{I}V1 ⪤*[R, #0] L2.ⓑ{I}V2.
-#R #I1 #I2 #L1 #L2 #V1 *
-/4 width=3 by ext2_pair, frees_pair, lexs_next, ex2_intro/
-qed.
-
-lemma lfxs_unit: ∀R,f,I,L1,L2. 𝐈⦃f⦄ → L1 ⪤*[cext2 R, cfull, f] L2 →
-                 L1.ⓤ{I} ⪤*[R, #0] L2.ⓤ{I}.
-/4 width=3 by frees_unit, lexs_next, ext2_unit, ex2_intro/ qed.
-
-lemma lfxs_lref: ∀R,I1,I2,L1,L2,i.
-                 L1 ⪤*[R, #i] L2 → L1.ⓘ{I1} ⪤*[R, #⫯i] L2.ⓘ{I2}.
-#R #I1 #I2 #L1 #L2 #i * /3 width=3 by lexs_push, frees_lref, ex2_intro/
-qed.
-
-(* Basic_2A1: uses: llpx_sn_gref *)
-lemma lfxs_gref: ∀R,I1,I2,L1,L2,l.
-                 L1 ⪤*[R, §l] L2 → L1.ⓘ{I1} ⪤*[R, §l] L2.ⓘ{I2}.
-#R #I1 #I2 #L1 #L2 #l * #f #Hf #H12
-lapply (frees_inv_gref … Hf) -Hf
-/4 width=3 by frees_gref, lexs_push, isid_push, ex2_intro/
-qed.
-
-lemma lfxs_bind_repl_dx: ∀R,I,I1,L1,L2,T.
-                         L1.ⓘ{I} ⪤*[R, T] L2.ⓘ{I1} →
-                         ∀I2. cext2 R L1 I I2 →
-                         L1.ⓘ{I} ⪤*[R, T] L2.ⓘ{I2}.
-#R #I #I1 #L1 #L2 #T * #f #Hf #HL12 #I2 #HR
-/3 width=5 by lexs_pair_repl, ex2_intro/
-qed-.
-
-lemma lfxs_sym: ∀R. lexs_frees_confluent (cext2 R) cfull →
-                (∀L1,L2,T1,T2. R L1 T1 T2 → R L2 T2 T1) →
-                ∀T. symmetric … (lfxs R T).
-#R #H1R #H2R #T #L1 #L2 * #f1 #Hf1 #HL12 elim (H1R … Hf1 … HL12) -Hf1
-/5 width=5 by sle_lexs_trans, lexs_sym, cext2_sym, ex2_intro/
-qed-.
-
-(* Basic_2A1: uses: llpx_sn_co *)
-lemma lfxs_co: ∀R1,R2. (∀L,T1,T2. R1 L T1 T2 → R2 L T1 T2) →
-               ∀L1,L2,T. L1 ⪤*[R1, T] L2 → L1 ⪤*[R2, T] L2.
-#R1 #R2 #HR #L1 #L2 #T * /5 width=7 by lexs_co, cext2_co, ex2_intro/
-qed-.
-
-lemma lfxs_isid: ∀R1,R2,L1,L2,T1,T2.
-                 (∀f. L1 ⊢ 𝐅*⦃T1⦄ ≡ f → 𝐈⦃f⦄) → 
-                 (∀f. 𝐈⦃f⦄ → L1 ⊢ 𝐅*⦃T2⦄ ≡ f) → 
-                 L1 ⪤*[R1, T1] L2 → L1 ⪤*[R2, T2] L2.
-#R1 #R2 #L1 #L2 #T1 #T2 #H1 #H2 *
-/4 width=7 by lexs_co_isid, ex2_intro/
-qed-.
-
 (* Basic inversion lemmas ***************************************************)
 
 lemma lfxs_inv_atom_sn: ∀R,Y2,T. ⋆ ⪤*[R, T] Y2 → Y2 = ⋆.
@@ -284,6 +218,12 @@ qed-.
 
 (* Basic forward lemmas *****************************************************)
 
+lemma lfxs_fwd_zero_pair: ∀R,I,K1,K2,V1,V2.
+                          K1.ⓑ{I}V1 ⪤*[R, #0] K2.ⓑ{I}V2 → K1 ⪤*[R, V1] K2.
+#R #I #K1 #K2 #V1 #V2 #H
+elim (lfxs_inv_zero_pair_sn … H) -H #Y #X #HK12 #_ #H destruct //
+qed-.
+
 (* Basic_2A1: uses: llpx_sn_fwd_pair_sn llpx_sn_fwd_bind_sn llpx_sn_fwd_flat_sn *)
 lemma lfxs_fwd_pair_sn: ∀R,I,L1,L2,V,T. L1 ⪤*[R, ②{I}V.T] L2 → L1 ⪤*[R, V] L2.
 #R * [ #p ] #I #L1 #L2 #V #T * #f #Hf #HL
@@ -307,6 +247,79 @@ lemma lfxs_fwd_dx: ∀R,I2,L1,K2,T. L1 ⪤*[R, T] K2.ⓘ{I2} →
 #R #I2 #L1 #K2 #T * #f elim (pn_split f) * #g #Hg #_ #Hf destruct
 [ elim (lexs_inv_push2 … Hf) | elim (lexs_inv_next2 … Hf) ] -Hf #I1 #K1 #_ #_ #H destruct
 /2 width=3 by ex1_2_intro/
+qed-.
+
+(* Basic properties *********************************************************)
+
+lemma lfxs_atom: ∀R,I. ⋆ ⪤*[R, ⓪{I}] ⋆.
+#R * /3 width=3 by frees_sort, frees_atom, frees_gref, lexs_atom, ex2_intro/
+qed.
+
+(* Basic_2A1: uses: llpx_sn_sort *)
+lemma lfxs_sort: ∀R,I1,I2,L1,L2,s.
+                 L1 ⪤*[R, ⋆s] L2 → L1.ⓘ{I1} ⪤*[R, ⋆s] L2.ⓘ{I2}.
+#R #I1 #I2 #L1 #L2 #s * #f #Hf #H12
+lapply (frees_inv_sort … Hf) -Hf
+/4 width=3 by frees_sort, lexs_push, isid_push, ex2_intro/
+qed.
+
+lemma lfxs_pair: ∀R,I,L1,L2,V1,V2. L1 ⪤*[R, V1] L2 →
+                 R L1 V1 V2 → L1.ⓑ{I}V1 ⪤*[R, #0] L2.ⓑ{I}V2.
+#R #I1 #I2 #L1 #L2 #V1 *
+/4 width=3 by ext2_pair, frees_pair, lexs_next, ex2_intro/
+qed.
+
+lemma lfxs_unit: ∀R,f,I,L1,L2. 𝐈⦃f⦄ → L1 ⪤*[cext2 R, cfull, f] L2 →
+                 L1.ⓤ{I} ⪤*[R, #0] L2.ⓤ{I}.
+/4 width=3 by frees_unit, lexs_next, ext2_unit, ex2_intro/ qed.
+
+lemma lfxs_lref: ∀R,I1,I2,L1,L2,i.
+                 L1 ⪤*[R, #i] L2 → L1.ⓘ{I1} ⪤*[R, #⫯i] L2.ⓘ{I2}.
+#R #I1 #I2 #L1 #L2 #i * /3 width=3 by lexs_push, frees_lref, ex2_intro/
+qed.
+
+(* Basic_2A1: uses: llpx_sn_gref *)
+lemma lfxs_gref: ∀R,I1,I2,L1,L2,l.
+                 L1 ⪤*[R, §l] L2 → L1.ⓘ{I1} ⪤*[R, §l] L2.ⓘ{I2}.
+#R #I1 #I2 #L1 #L2 #l * #f #Hf #H12
+lapply (frees_inv_gref … Hf) -Hf
+/4 width=3 by frees_gref, lexs_push, isid_push, ex2_intro/
+qed.
+
+lemma lfxs_bind_repl_dx: ∀R,I,I1,L1,L2,T.
+                         L1.ⓘ{I} ⪤*[R, T] L2.ⓘ{I1} →
+                         ∀I2. cext2 R L1 I I2 →
+                         L1.ⓘ{I} ⪤*[R, T] L2.ⓘ{I2}.
+#R #I #I1 #L1 #L2 #T * #f #Hf #HL12 #I2 #HR
+/3 width=5 by lexs_pair_repl, ex2_intro/
+qed-.
+
+lemma lfxs_sym: ∀R. lexs_frees_confluent (cext2 R) cfull →
+                (∀L1,L2,T1,T2. R L1 T1 T2 → R L2 T2 T1) →
+                ∀T. symmetric … (lfxs R T).
+#R #H1R #H2R #T #L1 #L2 * #f1 #Hf1 #HL12 elim (H1R … Hf1 … HL12) -Hf1
+/5 width=5 by sle_lexs_trans, lexs_sym, cext2_sym, ex2_intro/
+qed-.
+
+(* Basic_2A1: uses: llpx_sn_co *)
+lemma lfxs_co: ∀R1,R2. (∀L,T1,T2. R1 L T1 T2 → R2 L T1 T2) →
+               ∀L1,L2,T. L1 ⪤*[R1, T] L2 → L1 ⪤*[R2, T] L2.
+#R1 #R2 #HR #L1 #L2 #T * /5 width=7 by lexs_co, cext2_co, ex2_intro/
+qed-.
+
+lemma lfxs_isid: ∀R1,R2,L1,L2,T1,T2.
+                 (∀f. L1 ⊢ 𝐅*⦃T1⦄ ≡ f → 𝐈⦃f⦄) →
+                 (∀f. 𝐈⦃f⦄ → L1 ⊢ 𝐅*⦃T2⦄ ≡ f) →
+                 L1 ⪤*[R1, T1] L2 → L1 ⪤*[R2, T2] L2.
+#R1 #R2 #L1 #L2 #T1 #T2 #H1 #H2 *
+/4 width=7 by lexs_co_isid, ex2_intro/
+qed-.
+
+lemma lfxs_unit_sn: ∀R1,R2,I,K1,L2.
+                    K1.ⓤ{I} ⪤*[R1, #0] L2 → K1.ⓤ{I} ⪤*[R2, #0] L2.
+#R1 #R2 #I #K1 #L2 #H
+elim (lfxs_inv_zero_unit_sn … H) -H #f #K2 #Hf #HK12 #H destruct
+/3 width=7 by lfxs_unit, lexs_co_isid/
 qed-.
 
 (* Basic_2A1: removed theorems 9:

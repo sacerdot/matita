@@ -12,11 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/csx_lpxs.ma".
-include "basic_2/computation/lcosx_cpx.ma".
+include "basic_2/rt_computation/csx_lsubr.ma".
+include "basic_2/rt_computation/lfsx_lfpxs.ma".
 
-(* SN EXTENDED STRONGLY NORMALIZING LOCAL ENVIRONMENTS **********************)
-
+(* STRONGLY NORMALIZING LOCAL ENV.S FOR UNCOUNTED PARALLEL RT-TRANSITION ****)
+(*
 (* Advanced properties ******************************************************)
 
 lemma lsx_lref_be_lpxs: ∀h,o,I,G,K1,V,i,l. l ≤ yinj i → ⦃G, K1⦄ ⊢ ⬊*[h, o] V →
@@ -39,21 +39,28 @@ lemma lsx_lref_be: ∀h,o,I,G,K,V,i,l. l ≤ yinj i → ⦃G, K⦄ ⊢ ⬊*[h, o
                    G ⊢ ⬊*[h, o, V, 0] K →
                    ∀L. ⬇[i] L ≡ K.ⓑ{I}V → G ⊢ ⬊*[h, o, #i, l] L.
 /2 width=8 by lsx_lref_be_lpxs/ qed.
-
+*)
 (* Main properties **********************************************************)
 
-theorem csx_lsx: ∀h,o,G,L,T. ⦃G, L⦄ ⊢ ⬊*[h, o] T → ∀l. G ⊢ ⬊*[h, o, T, l] L.
-#h #o #G #L #T @(fqup_wf_ind_eq … G L T) -G -L -T
+theorem csx_lsx: ∀h,o,G,L,T. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄ → G ⊢ ⬈*[h, o, T] 𝐒⦃L⦄.
+#h #o #G #L #T @(fqup_wf_ind_eq (Ⓕ) … G L T) -G -L -T
 #Z #Y #X #IH #G #L * * //
-[ #i #HG #HL #HT #H #l destruct
+[ #i #HG #HL #HT #H destruct
+  elim (csx_inv_lref … H) -H [ |*: * ]
+  [ #HL
+  | #I #K #HLK
+  | #I #K #V #HLK #HV
+  ]
+(*
   elim (lt_or_ge i (|L|)) /2 width=1 by lsx_lref_free/
   elim (ylt_split i l) /2 width=1 by lsx_lref_skip/
   #Hli #Hi elim (drop_O1_lt (Ⓕ) … Hi) -Hi
   #I #K #V #HLK lapply (csx_inv_lref_bind … HLK … H) -H
   /4 width=6 by lsx_lref_be, fqup_lref/
-| #a #I #V #T #HG #HL #HT #H #l destruct
-  elim (csx_fwd_bind … H) -H /3 width=1 by lsx_bind/
-| #I #V #T #HG #HL #HT #H #l destruct
-  elim (csx_fwd_flat … H) -H /3 width=1 by lsx_flat/
+*)
+| #a #I #V #T #HG #HL #HT #H destruct
+  elim (csx_fwd_bind_unit … H Void) -H /3 width=1 by lfsx_bind_void/
+| #I #V #T #HG #HL #HT #H destruct
+  elim (csx_fwd_flat … H) -H /3 width=1 by lfsx_flat/
 ]
 qed.

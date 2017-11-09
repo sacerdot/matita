@@ -29,6 +29,10 @@ lemma lfpxs_fwd_bind_dx: ∀h,p,I,G,L1,L2,V,T. ⦃G, L1⦄ ⊢ ⬈*[h, ⓑ{p,I}V
                          ⦃G, L1.ⓑ{I}V⦄ ⊢ ⬈*[h, T] L2.ⓑ{I}V.
 /2 width=2 by tc_lfxs_fwd_bind_dx/ qed-.
 
+lemma lfpxs_fwd_bind_dx_void: ∀h,p,I,G,L1,L2,V,T. ⦃G, L1⦄ ⊢ ⬈*[h, ⓑ{p,I}V.T] L2 →
+                              ⦃G, L1.ⓧ⦄ ⊢ ⬈*[h, T] L2.ⓧ.
+/2 width=4 by tc_lfxs_fwd_bind_dx_void/ qed-.
+
 (* Advanced eliminators *****************************************************)
 
 (* Basic_2A1: uses: lpxs_ind *)

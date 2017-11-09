@@ -175,6 +175,10 @@ lemma lfdeq_inv_lref_bind_dx: ∀h,o,I2,Y1,L2,i. Y1 ≡[h, o, #⫯i] L2.ⓘ{I2} 
 
 (* Basic forward lemmas *****************************************************)
 
+lemma lfdeq_fwd_zero_pair: ∀h,o,I,K1,K2,V1,V2.
+                           K1.ⓑ{I}V1 ≡[h, o, #0] K2.ⓑ{I}V2 → K1 ≡[h, o, V1] K2.
+/2 width=3 by lfxs_fwd_zero_pair/ qed-.
+
 (* Basic_2A1: uses: lleq_fwd_bind_sn lleq_fwd_flat_sn *)
 lemma lfdeq_fwd_pair_sn: ∀h,o,I,L1,L2,V,T. L1 ≡[h, o, ②{I}V.T] L2 → L1 ≡[h, o, V] L2.
 /2 width=3 by lfxs_fwd_pair_sn/ qed-.

@@ -74,7 +74,7 @@ lemma lfdeq_fqu_trans: ∀h,o,b,G1,G2,L2,K2,T,U. ⦃G1, L2, T⦄ ⊐[b] ⦃G2, K
   /2 width=5 by fqu_flat_dx, ex3_2_intro/
 | #I #G #L2 #T #U #HTU #Y #HU
   elim (lfdeq_fwd_dx … HU) #L1 #V1 #H destruct
-  /5 width=12 by lfdeq_inv_lifts_bi, fqu_drop, drops_refl, drops_drop, ex3_2_intro/
+  /5 width=14 by lfdeq_inv_lifts_bi, fqu_drop, drops_refl, drops_drop, ex3_2_intro/
 ]
 qed-.
 

@@ -20,13 +20,11 @@ include "basic_2/static/lfdeq.ma".
 
 (* Properties with generic slicing for local environments *******************)
 
-(* Basic_2A1: includes: lleq_lift_le lleq_lift_ge *)
 lemma lfdeq_lifts_sn: ∀h,o. dedropable_sn (cdeq h o).
 /3 width=5 by lfxs_liftable_dedropable_sn, tdeq_lifts_sn/ qed-.
 
 (* Inversion lemmas with generic slicing for local environments *************)
 
-(* Basic_2A1: restricts: lleq_inv_lift_le lleq_inv_lift_be lleq_inv_lift_ge *)
 lemma lfdeq_inv_lifts_sn: ∀h,o. dropable_sn (cdeq h o).
 /2 width=5 by lfxs_dropable_sn/ qed-.
 
@@ -34,11 +32,11 @@ lemma lfdeq_inv_lifts_sn: ∀h,o. dropable_sn (cdeq h o).
 lemma lfdeq_inv_lifts_dx: ∀h,o. dropable_dx (cdeq h o).
 /2 width=5 by lfxs_dropable_dx/ qed-.
 
-(* Note: missing in basic_2A1 *)
-lemma lfdeq_inv_lifts_bi: ∀h,o,L1,L2,U. L1 ≡[h, o, U] L2 →
-                          ∀K1,K2,i. ⬇*[i] L1 ≡ K1 → ⬇*[i] L2 ≡ K2 →
-                          ∀T. ⬆*[i] T ≡ U → K1 ≡[h, o, T] K2.
-/2 width=8 by lfxs_inv_lifts_bi/ qed-.
+(* Basic_2A1: uses: lleq_inv_lift_le lleq_inv_lift_be lleq_inv_lift_ge *)
+lemma lfdeq_inv_lifts_bi: ∀h,o,L1,L2,U. L1 ≡[h, o, U] L2 → ∀b,f. 𝐔⦃f⦄ →
+                          ∀K1,K2. ⬇*[b, f] L1 ≡ K1 → ⬇*[b, f] L2 ≡ K2 →
+                          ∀T. ⬆*[f] T ≡ U → K1 ≡[h, o, T] K2.
+/2 width=10 by lfxs_inv_lifts_bi/ qed-.
 
 lemma lfdeq_inv_lref_pair_sn: ∀h,o,L1,L2,i. L1 ≡[h, o, #i] L2 → ∀I,K1,V1. ⬇*[i] L1 ≡ K1.ⓑ{I}V1 →
                               ∃∃K2,V2. ⬇*[i] L2 ≡ K2.ⓑ{I}V2 & K1 ≡[h, o, V1] K2 & V1 ≡[h, o] V2.

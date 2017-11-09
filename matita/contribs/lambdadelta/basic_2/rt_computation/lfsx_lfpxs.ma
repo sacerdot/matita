@@ -120,3 +120,27 @@ qed-.
 lemma lfsx_flat: ∀h,o,I,G,L,V. G ⊢ ⬈*[h, o, V] 𝐒⦃L⦄ →
                  ∀T. G ⊢ ⬈*[h, o, T] 𝐒⦃L⦄ → G ⊢ ⬈*[h, o, ⓕ{I}V.T] 𝐒⦃L⦄.
 /2 width=3 by lfsx_flat_lfpxs/ qed.
+
+fact lfsx_bind_lfpxs_void_aux: ∀h,o,p,I,G,L1,V. G ⊢ ⬈*[h, o, V] 𝐒⦃L1⦄ →
+                               ∀Y,T. G ⊢ ⬈*[h, o, T] 𝐒⦃Y⦄ →
+                               ∀L2. Y = L2.ⓧ → ⦃G, L1⦄ ⊢ ⬈*[h, ⓑ{p,I}V.T] L2 →
+                               G ⊢ ⬈*[h, o, ⓑ{p,I}V.T] 𝐒⦃L2⦄.
+#h #o #p #I #G #L1 #V #H @(lfsx_ind_lfpxs … H) -L1
+#L1 #_ #IHL1 #Y #T #H @(lfsx_ind_lfpxs … H) -Y
+#Y #HY #IHY #L2 #H #HL12 destruct
+@lfsx_intro_lfpxs #L0 #HL20
+lapply (lfpxs_trans … HL12 … HL20) #HL10 #H
+elim (lfdneq_inv_bind_void … H) -H [ -IHY | -HY -IHL1 -HL12 ]
+[ #HnV elim (lfdeq_dec h o L1 L2 V)
+  [ #HV @(IHL1 … L0) -IHL1 -HL12
+    /3 width=6 by lfsx_lfpxs_trans, lfpxs_fwd_bind_dx_void, lfpxs_fwd_pair_sn, lfdeq_canc_sn/ (**) (* full auto too slow *)
+  | -HnV -HL10 /4 width=4 by lfsx_lfpxs_trans, lfpxs_fwd_pair_sn/
+  ]
+| /3 width=4 by lfpxs_fwd_bind_dx_void/
+]
+qed-.
+
+lemma lfsx_bind_void: ∀h,o,p,I,G,L,V. G ⊢ ⬈*[h, o, V] 𝐒⦃L⦄ →
+                      ∀T. G ⊢ ⬈*[h, o, T] 𝐒⦃L.ⓧ⦄ →
+                      G ⊢ ⬈*[h, o, ⓑ{p,I}V.T] 𝐒⦃L⦄.
+/2 width=3 by lfsx_bind_lfpxs_void_aux/ qed.

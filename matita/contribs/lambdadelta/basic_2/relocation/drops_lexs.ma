@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/relocation/lifts_lifts_bind.ma".
 include "basic_2/relocation/drops.ma".
 
 (* GENERIC SLICING FOR LOCAL ENVIRONMENTS ***********************************)
@@ -40,9 +41,37 @@ lemma lexs_co_dropable_sn: ∀RN,RP. co_dropable_sn (lexs RN RP).
 ]
 qed-.
 
+lemma lexs_liftable_co_dedropable_bi: ∀RN,RP. d_liftable2_sn … liftsb RN → d_liftable2_sn … liftsb RP →
+                                      ∀f2,L1,L2. L1 ⪤*[cfull, RP, f2] L2 → ∀f1,K1,K2. K1 ⪤*[RN, RP, f1] K2 →
+                                      ∀b,f. ⬇*[b, f] L1 ≡ K1 → ⬇*[b, f] L2 ≡ K2 →
+                                      f ~⊚ f1 ≡ f2 → L1 ⪤*[RN, RP, f2] L2.
+#RN #RP #HRN #HRP #f2 #L1 #L2 #H elim H -f2 -L1 -L2 //
+#g2 #I1 #I2 #L1 #L2 #HL12 #HI12 #IH #f1 #Y1 #Y2 #HK12 #b #f #HY1 #HY2 #H
+[ elim (coafter_inv_xxn … H) [ |*: // ] -H #g #g1 #Hg2 #H1 #H2 destruct
+  elim (drops_inv_skip1 … HY1) -HY1 #J1 #K1 #HLK1 #HJI1 #H destruct
+  elim (drops_inv_skip1 … HY2) -HY2 #J2 #K2 #HLK2 #HJI2 #H destruct
+  elim (lexs_inv_next … HK12) -HK12 #HK12 #HJ12
+  elim (HRN … HJ12 … HLK1 … HJI1) -HJ12 -HJI1 #Z #Hz
+  >(liftsb_mono … Hz … HJI2) -Z /3 width=9 by lexs_next/
+| elim (coafter_inv_xxp … H) [1,2: |*: // ] -H *
+  [ #g #g1 #Hg2 #H1 #H2 destruct
+    elim (drops_inv_skip1 … HY1) -HY1 #J1 #K1 #HLK1 #HJI1 #H destruct
+    elim (drops_inv_skip1 … HY2) -HY2 #J2 #K2 #HLK2 #HJI2 #H destruct
+    elim (lexs_inv_push … HK12) -HK12 #HK12 #HJ12
+    elim (HRP … HJ12 … HLK1 … HJI1) -HJ12 -HJI1 #Z #Hz
+    >(liftsb_mono … Hz … HJI2) -Z /3 width=9 by lexs_push/
+  | #g #Hg2 #H destruct
+    lapply (drops_inv_drop1 … HY1) -HY1 #HLK1
+    lapply (drops_inv_drop1 … HY2) -HY2 #HLK2
+    /3 width=9 by lexs_push/
+  ]
+]
+qed-.
+
 (* Basic_2A1: includes: lpx_sn_liftable_dedropable *)
 lemma lexs_liftable_co_dedropable_sn: ∀RN,RP. (∀L. reflexive … (RN L)) → (∀L. reflexive … (RP L)) →
-                                      d_liftable2_sn … liftsb RN → d_liftable2_sn … liftsb RP → co_dedropable_sn (lexs RN RP).
+                                      d_liftable2_sn … liftsb RN → d_liftable2_sn … liftsb RP →
+                                      co_dedropable_sn (lexs RN RP).
 #RN #RP #H1RN #H1RP #H2RN #H2RP #b #f #L1 #K1 #H elim H -f -L1 -K1
 [ #f #Hf #X #f1 #H #f2 #Hf2 >(lexs_inv_atom1 … H) -X
   /4 width=4 by drops_atom, lexs_atom, ex3_intro/
