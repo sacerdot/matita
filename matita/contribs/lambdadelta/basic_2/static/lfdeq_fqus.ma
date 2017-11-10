@@ -32,7 +32,7 @@ lemma fqu_tdeq_conf: ∀h,o,b,G1,G2,L1,L2,U1,T1. ⦃G1, L1, U1⦄ ⊐[b] ⦃G2, 
   /2 width=5 by fqu_pair_sn, ex3_2_intro/
 | #p #I #G #L #W1 #U1 #X #H
   elim (tdeq_inv_pair1 … H) -H #W2 #U2 #HW12 #HU12 #H destruct
-  /3 width=5 by lfdeq_pair, fqu_bind_dx, ex3_2_intro/
+  /3 width=5 by lfdeq_pair_refl, fqu_bind_dx, ex3_2_intro/
 | #p #I #G #L #W1 #U1 #Hb #X #H
   elim (tdeq_inv_pair1 … H) -H #W2 #U2 #HW12 #HU12 #H destruct
   /3 width=5 by fqu_clear, ex3_2_intro/

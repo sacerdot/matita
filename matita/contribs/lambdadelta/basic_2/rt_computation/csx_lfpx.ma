@@ -38,7 +38,7 @@ elim (cpx_inv_abst1 … H1) -H1
 elim (tdneq_inv_pair … H2) -H2
 [ #H elim H -H //
 | -IHT #H lapply (csx_cpx_trans … o … HLT0) // -HT
-  #HT0 lapply (csx_lfpx_conf … HT0 … (L.ⓛW0)) -HT0 /4 width=1 by lfpx_pair/
+  #HT0 lapply (csx_lfpx_conf … HT0 … (L.ⓛW0)) -HT0 /4 width=1 by lfpx_pair_refl/
 | -IHW -HT /4 width=3 by csx_cpx_trans, cpx_pair_sn/
 ]
 qed.
@@ -52,7 +52,7 @@ elim (cpx_inv_abbr1 … H1) -H1 *
 [ #V1 #T1 #HLV1 #HLT1 #H destruct
   elim (tdneq_inv_pair … H2) -H2
   [ #H elim H -H //
-  | /4 width=3 by csx_cpx_trans, csx_lfpx_conf, lfpx_pair/
+  | /4 width=3 by csx_cpx_trans, csx_lfpx_conf, lfpx_pair_refl/
   | -IHV /4 width=3 by csx_cpx_trans, cpx_cpxs, cpx_pair_sn/
   ]
 | -IHV -IHT -H2
@@ -89,7 +89,7 @@ elim (cpx_inv_appl1 … HL) -HL *
 | -IHVT -H #b #V0 #V3 #W0 #W1 #T0 #T1 #HLV10 #HV03 #HLW01 #HLT01 #H1 #H2 destruct
   lapply (cpx_lifts_bi … HLV10 (Ⓣ) … (L.ⓓW0) … HV12 … HV03) -HLV10 -HV12 -HV03 /3 width=1 by drops_refl, drops_drop/ #HLV23
   @csx_abbr /2 width=3 by csx_cpx_trans/ -HV
-  @(csx_lfpx_conf … (L.ⓓW0)) /2 width=1 by lfpx_pair/ -W1
+  @(csx_lfpx_conf … (L.ⓓW0)) /2 width=1 by lfpx_pair_refl/ -W1
   /4 width=5 by csx_cpxs_trans, cpx_cpxs, cpx_flat/
 ]
 qed-.

@@ -23,10 +23,10 @@ lemma tc_lfxs_refl: ∀R. (∀L. reflexive … (R L)) → ∀T. reflexive … (t
 /3 width=1 by lfxs_refl, inj/ qed.
 
 (* Basic_2A1: uses: TC_lpx_sn_pair TC_lpx_sn_pair_refl *)
-lemma tc_lfxs_pair: ∀R. (∀L. reflexive … (R L)) →
-                    ∀L,V1,V2. LTC … R L V1 V2 → ∀I,T. L.ⓑ{I}V1 ⪤**[R, T] L.ⓑ{I}V2.
+lemma tc_lfxs_pair_refl: ∀R. (∀L. reflexive … (R L)) →
+                         ∀L,V1,V2. LTC … R L V1 V2 → ∀I,T. L.ⓑ{I}V1 ⪤**[R, T] L.ⓑ{I}V2.
 #R #HR #L #V1 #V2 #H elim H -V2
-/3 width=3 by tc_lfxs_step_dx, lfxs_pair, inj/
+/3 width=3 by tc_lfxs_step_dx, lfxs_pair_refl, inj/
 qed.
 
 (* Advanced eliminators *****************************************************)

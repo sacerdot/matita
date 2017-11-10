@@ -61,9 +61,9 @@ qed-.
 lemma cpx_bind2: ∀h,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ⬈[h] V2 →
                  ∀I,T1,T2. ⦃G, L.ⓑ{I}V2⦄ ⊢ T1 ⬈[h] T2 →
                  ∀p. ⦃G, L⦄ ⊢ ⓑ{p,I}V1.T1 ⬈*[h] ⓑ{p,I}V2.T2.
-/4 width=5 by lfpx_cpx_trans, cpxs_bind_dx, lfpx_pair/ qed.
+/4 width=5 by lfpx_cpx_trans, cpxs_bind_dx, lfpx_pair_refl/ qed.
 
 lemma cpxs_bind2_dx: ∀h,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ⬈[h] V2 →
                      ∀I,T1,T2. ⦃G, L.ⓑ{I}V2⦄ ⊢ T1 ⬈*[h] T2 →
                      ∀p. ⦃G, L⦄ ⊢ ⓑ{p,I}V1.T1 ⬈*[h] ⓑ{p,I}V2.T2.
-/4 width=5 by lfpx_cpxs_trans, cpxs_bind_dx, lfpx_pair/ qed.
+/4 width=5 by lfpx_cpxs_trans, cpxs_bind_dx, lfpx_pair_refl/ qed.

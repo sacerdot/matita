@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/rt_computation/lfpxs.ma".
+include "basic_2/rt_computation/csx_cpxs.ma".
 include "basic_2/rt_computation/csx_lsubr.ma".
 include "basic_2/rt_computation/lfsx_drops.ma".
 include "basic_2/rt_computation/lfsx_lfpxs.ma".
@@ -22,23 +23,29 @@ include "basic_2/rt_computation/lfsx_lfpxs.ma".
 (* Advanced properties ******************************************************)
 
 (* Basic_2A1: uses: lsx_lref_be_lpxs *)
-axiom lfsx_pair_lpxs: ∀h,o,G,K1,V. ⦃G, K1⦄ ⊢ ⬈*[h, o] 𝐒⦃V⦄ →
-                      ∀K2. G ⊢ ⬈*[h, o, V] 𝐒⦃K2⦄ → ⦃G, K1⦄ ⊢ ⬈*[h, V] K2 →
-                      ∀I. G ⊢ ⬈*[h, o, #0] 𝐒⦃K2.ⓑ{I}V⦄.
-(*
-#h #o #I #G #K1 #V #i #l #Hli #H @(csx_ind_alt … H) -V
-#V0 #_ #IHV0 #K2 #H @(lsx_ind … H) -K2
-#K0 #HK0 #IHK0 #HK10 #L0 #HLK0 @lsx_intro
-#L2 #HL02 #HnL02 elim (lpx_drop_conf … HLK0 … HL02) -HL02
-#Y #H #HLK2 elim (lpx_inv_pair1 … H) -H
-#K2 #V2 #HK02 #HV02 #H destruct
-elim (eq_term_dec V0 V2) #HnV02 destruct [ -IHV0 -HV02 -HK0 | -IHK0 -HnL02 -HLK0 ]
-[ /4 width=8 by lpxs_strap1, lleq_lref/
-| @(IHV0 … HnV02 … HLK2) -IHV0 -HnV02 -HLK2
+lemma lfsx_pair_lfpxs: ∀h,o,G,K1,V. ⦃G, K1⦄ ⊢ ⬈*[h, o] 𝐒⦃V⦄ →
+                       ∀K2. G ⊢ ⬈*[h, o, V] 𝐒⦃K2⦄ → ⦃G, K1⦄ ⊢ ⬈*[h, V] K2 →
+                       ∀I. G ⊢ ⬈*[h, o, #0] 𝐒⦃K2.ⓑ{I}V⦄.
+#h #o #G #K1 #V #H
+@(csx_ind_cpxs … H) -V #V0 #_ #IHV0 #K2 #H
+@(lfsx_ind … H) -K2 #K0 #HK0 #IHK0 #HK10 #I
+@lfsx_intro #Y #HY #HnY
+elim (lfpx_inv_zero_pair_sn … HY) -HY #K2 #V2 #HK02 #HV02 #H destruct
+elim (tdeq_dec h o V0 V2) #HnV02 destruct [ -IHV0 -HV02 -HK0 | -IHK0 -HnY ]
+[ /5 width=5 by lfsx_lfdeq_trans, lfpxs_step_dx, lfdeq_pair/
+| @lfsx_lfpx_trans
+  [2: @(IHV0 … HnV02 K0 … I) -IHV0 -HnV02
+      [ /2 width=3 by lfpxs_cpx_trans/
+      |
+      | 
+      ]
+  |1: skip
+  |3: @lfpx_pair /2 width=3 by lfpx_cpx_conf/
+  ]  
   /3 width=4 by lsx_cpx_trans_O, lsx_lpx_trans, lpxs_cpx_trans, lpxs_strap1/ (**) (* full auto too slow *)
 ]
 qed.
-*)
+
 (* Basic_2A1: uses: lsx_lref_be *)
 lemma lfsx_lref_pair: ∀h,o,G,K,V. ⦃G, K⦄ ⊢ ⬈*[h, o] 𝐒⦃V⦄ → G ⊢ ⬈*[h, o, V] 𝐒⦃K⦄ →
                       ∀I,L,i. ⬇*[i] L ≡ K.ⓑ{I}V → G ⊢ ⬈*[h, o, #i] 𝐒⦃L⦄.
