@@ -12,11 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_computation/lfpxs.ma".
 include "basic_2/rt_computation/csx_cpxs.ma".
 include "basic_2/rt_computation/csx_lsubr.ma".
-include "basic_2/rt_computation/lfsx_drops.ma".
-include "basic_2/rt_computation/lfsx_lfpxs.ma".
+include "basic_2/rt_computation/lsubsx_lfsx.ma".
 
 (* STRONGLY NORMALIZING LOCAL ENV.S FOR UNCOUNTED PARALLEL RT-TRANSITION ****)
 
@@ -36,13 +34,12 @@ elim (tdeq_dec h o V0 V2) #HnV02 destruct [ -IHV0 -HV02 -HK0 | -IHK0 -HnY ]
 | @lfsx_lfpx_trans
   [2: @(IHV0 … HnV02 K0 … I) -IHV0 -HnV02
       [ /2 width=3 by lfpxs_cpx_trans/
-      |
+      | /2 width=3 by lfsx_cpx_trans/
       | 
       ]
   |1: skip
   |3: @lfpx_pair /2 width=3 by lfpx_cpx_conf/
-  ]  
-  /3 width=4 by lsx_cpx_trans_O, lsx_lpx_trans, lpxs_cpx_trans, lpxs_strap1/ (**) (* full auto too slow *)
+  ]
 ]
 qed.
 
