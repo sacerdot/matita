@@ -20,10 +20,10 @@ include "basic_2/dynamic/snv_scpes.ma".
 (* Properties on nat-iterated stratified static type assignment for terms ***)
 
 fact snv_lstas_aux: ∀h,o,G0,L0,T0.
-                    (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_snv_cpr_lpr h o G1 L1 T1) →
-                    (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_da_cpr_lpr h o G1 L1 T1) →
-                    (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_lstas_cpr_lpr h o G1 L1 T1) →
-                    (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_snv_lstas h o G1 L1 T1) →
+                    (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G1, L1, T1⦄ → IH_snv_cpr_lpr h o G1 L1 T1) →
+                    (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G1, L1, T1⦄ → IH_da_cpr_lpr h o G1 L1 T1) →
+                    (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G1, L1, T1⦄ → IH_lstas_cpr_lpr h o G1 L1 T1) →
+                    (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G1, L1, T1⦄ → IH_snv_lstas h o G1 L1 T1) →
                     ∀G1,L1,T1. G0 = G1 → L0 = L1 → T0 = T1 → IH_snv_lstas h o G1 L1 T1.
 #h #o #G0 #L0 #T0 #IH4 #IH3 #IH2 #IH1 #G1 #L1 * * [|||| * ]
 [ #s #HG0 #HL0 #HT0 #_ #d1 #d2 #Hd21 #Hd1 #X #H2 destruct -IH4 -IH3 -IH2 -IH1

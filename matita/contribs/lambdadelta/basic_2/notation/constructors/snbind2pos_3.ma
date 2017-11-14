@@ -14,6 +14,6 @@
 
 (* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-notation "hvbox( + ⓑ { term 46 I } break term 55 T1 . break term 55 T )"
+notation "hvbox( + ⓑ { term 46 I } break term 55 T1. break term 55 T )"
  non associative with precedence 55
  for @{ 'SnBind2Pos $I $T1 $T }.

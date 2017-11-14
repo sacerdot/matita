@@ -21,10 +21,10 @@ include "basic_2/dynamic/lsubsv_lstas.ma".
 (* Properties on sn parallel reduction for local environments ***************)
 
 fact lstas_cpr_lpr_aux: ∀h,o,G0,L0,T0.
-                        (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_snv_lstas h o G1 L1 T1) →
-                        (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_snv_cpr_lpr h o G1 L1 T1) →
-                        (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_da_cpr_lpr h o G1 L1 T1) →
-                        (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_lstas_cpr_lpr h o G1 L1 T1) →
+                        (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G1, L1, T1⦄ → IH_snv_lstas h o G1 L1 T1) →
+                        (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G1, L1, T1⦄ → IH_snv_cpr_lpr h o G1 L1 T1) →
+                        (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G1, L1, T1⦄ → IH_da_cpr_lpr h o G1 L1 T1) →
+                        (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G1, L1, T1⦄ → IH_lstas_cpr_lpr h o G1 L1 T1) →
                         ∀G1,L1,T1. G0 = G1 → L0 = L1 → T0 = T1 → IH_lstas_cpr_lpr h o G1 L1 T1.
 #h #o #G0 #L0 #T0 #IH4 #IH3 #IH2 #IH1 #G1 #L1 * * [|||| * ]
 [ #s #_ #_ #_ #_ #d1 #d2 #_ #_ #X2 #H2 #X3 #H3 #L2 #_ -IH4 -IH3 -IH2 -IH1

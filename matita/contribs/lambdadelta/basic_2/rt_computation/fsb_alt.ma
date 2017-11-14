@@ -21,7 +21,7 @@ include "basic_2/computation/fsb.ma".
 (* Note: alternative definition of fsb *)
 inductive fsba (h) (o): relation3 genv lenv term ≝
 | fsba_intro: ∀G1,L1,T1. (
-                 ∀G2,L2,T2. ⦃G1, L1, T1⦄ >≡[h, o] ⦃G2, L2, T2⦄ → fsba h o G2 L2 T2
+                 ∀G2,L2,T2. ⦃G1, L1, T1⦄ >≛[h, o] ⦃G2, L2, T2⦄ → fsba h o G2 L2 T2
               ) → fsba h o G1 L1 T1.
 
 interpretation
@@ -32,7 +32,7 @@ interpretation
 
 lemma fsba_ind_alt: ∀h,o. ∀R: relation3 …. (
                        ∀G1,L1,T1. ⦥⦥[h,o] ⦃G1, L1, T1⦄ → (
-                          ∀G2,L2,T2. ⦃G1, L1, T1⦄ >≡[h, o] ⦃G2, L2, T2⦄ → R G2 L2 T2
+                          ∀G2,L2,T2. ⦃G1, L1, T1⦄ >≛[h, o] ⦃G2, L2, T2⦄ → R G2 L2 T2
                        ) → R G1 L1 T1
                     ) →
                     ∀G,L,T. ⦥⦥[h, o] ⦃G, L, T⦄ → R G L T.
@@ -73,7 +73,7 @@ lemma fsb_fpbs_trans: ∀h,o,G1,L1,T1. ⦥[h, o] ⦃G1, L1, T1⦄ →
 
 lemma fsb_ind_fpbg: ∀h,o. ∀R:relation3 genv lenv term.
                     (∀G1,L1,T1. ⦥[h, o] ⦃G1, L1, T1⦄ →
-                                (∀G2,L2,T2. ⦃G1, L1, T1⦄ >≡[h, o] ⦃G2, L2, T2⦄ → R G2 L2 T2) →
+                                (∀G2,L2,T2. ⦃G1, L1, T1⦄ >≛[h, o] ⦃G2, L2, T2⦄ → R G2 L2 T2) →
                                 R G1 L1 T1
                     ) →
                     ∀G1,L1,T1. ⦥[h, o] ⦃G1, L1, T1⦄ → R G1 L1 T1.

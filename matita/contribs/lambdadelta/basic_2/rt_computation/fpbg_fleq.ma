@@ -20,12 +20,12 @@ include "basic_2/computation/fpbg.ma".
 
 (* Properties on lazy equivalence for closures ******************************)
 
-lemma fpbg_fleq_trans: ∀h,o,G1,G,L1,L,T1,T. ⦃G1, L1, T1⦄ >≡[h, o] ⦃G, L, T⦄ →
-                       ∀G2,L2,T2. ⦃G, L, T⦄ ≡[0] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ >≡[h, o] ⦃G2, L2, T2⦄.
+lemma fpbg_fleq_trans: ∀h,o,G1,G,L1,L,T1,T. ⦃G1, L1, T1⦄ >≛[h, o] ⦃G, L, T⦄ →
+                       ∀G2,L2,T2. ⦃G, L, T⦄ ≡[0] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ >≛[h, o] ⦃G2, L2, T2⦄.
 /3 width=5 by fpbg_fpbq_trans, fleq_fpbq/ qed-.
 
-lemma fleq_fpbg_trans: ∀h,o,G,G2,L,L2,T,T2. ⦃G, L, T⦄ >≡[h, o] ⦃G2, L2, T2⦄ →
-                       ∀G1,L1,T1. ⦃G1, L1, T1⦄ ≡[0] ⦃G, L, T⦄ → ⦃G1, L1, T1⦄ >≡[h, o] ⦃G2, L2, T2⦄.
+lemma fleq_fpbg_trans: ∀h,o,G,G2,L,L2,T,T2. ⦃G, L, T⦄ >≛[h, o] ⦃G2, L2, T2⦄ →
+                       ∀G1,L1,T1. ⦃G1, L1, T1⦄ ≡[0] ⦃G, L, T⦄ → ⦃G1, L1, T1⦄ >≛[h, o] ⦃G2, L2, T2⦄.
 #h #o #G #G2 #L #L2 #T #T2 * #G0 #L0 #T0 #H0 #H02 #G1 #L1 #T1 #H1
 elim (fleq_fpb_trans …  H1 … H0) -G -L -T
 /4 width=9 by fpbs_strap2, fleq_fpbq, ex2_3_intro/
@@ -39,14 +39,14 @@ lemma fleq_fpbs: ∀h,o,G1,G2,L1,L2,T1,T2.
 qed.
 
 lemma fpbg_fwd_fpbs: ∀h,o,G1,G2,L1,L2,T1,T2.
-                     ⦃G1, L1, T1⦄ >≡[h,o] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄.
+                     ⦃G1, L1, T1⦄ >≛[h,o] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄.
 #h #o #G1 #G2 #L1 #L2 #T1 #T2 *
 /3 width=5 by fpbs_strap2, fpb_fpbq/
 qed-.
 
 lemma fpbs_fpbg: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄ →
                  ⦃G1, L1, T1⦄ ≡[0] ⦃G2, L2, T2⦄ ∨
-                 ⦃G1, L1, T1⦄ >≡[h, o] ⦃G2, L2, T2⦄.
+                 ⦃G1, L1, T1⦄ >≛[h, o] ⦃G2, L2, T2⦄.
 #h #o #G1 #G2 #L1 #L2 #T1 #T2 #H @(fpbs_ind … H) -G2 -L2 -T2
 [ /2 width=1 by or_introl/
 | #G #G2 #L #L2 #T #T2 #_ #H2 * #H1 @(fpbq_ind_alt … H2) -H2 #H2

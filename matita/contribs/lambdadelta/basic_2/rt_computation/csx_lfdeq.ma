@@ -21,7 +21,7 @@ include "basic_2/rt_computation/csx_csx.ma".
 
 (* Basic_2A1: uses: csx_lleq_conf *)
 lemma csx_lfdeq_conf: ∀h,o,G,L1,T. ⦃G, L1⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄ →
-                      ∀L2. L1 ≡[h, o, T] L2 → ⦃G, L2⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄.
+                      ∀L2. L1 ≛[h, o, T] L2 → ⦃G, L2⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄.
 #h #o #G #L1 #T #H
 @(csx_ind … H) -T #T1 #_ #IH #L2 #HL12
 @csx_intro #T2 #HT12 #HnT12
@@ -30,6 +30,6 @@ elim (lfdeq_cpx_trans … HL12 … HT12) -HT12
 qed-.
 
 (* Basic_2A1: uses: csx_lleq_conf *)
-lemma csx_lfdeq_trans: ∀h,o,L1,L2,T. L1 ≡[h, o, T] L2 →
+lemma csx_lfdeq_trans: ∀h,o,L1,L2,T. L1 ≛[h, o, T] L2 →
                        ∀G. ⦃G, L2⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄ → ⦃G, L1⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄.
 /3 width=3 by csx_lfdeq_conf, lfdeq_sym/ qed-.

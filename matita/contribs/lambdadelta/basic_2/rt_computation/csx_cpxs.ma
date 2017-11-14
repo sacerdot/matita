@@ -22,7 +22,7 @@ include "basic_2/rt_computation/csx_csx.ma".
 
 (* Basic_1: was just: sn3_intro *)
 lemma csx_intro_cpxs: ∀h,o,G,L,T1.
-                      (∀T2. ⦃G, L⦄ ⊢ T1 ⬈*[h] T2 → (T1 ≡[h, o] T2 → ⊥) → ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T2⦄) →
+                      (∀T2. ⦃G, L⦄ ⊢ T1 ⬈*[h] T2 → (T1 ≛[h, o] T2 → ⊥) → ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T2⦄) →
                       ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T1⦄.
 /4 width=1 by cpx_cpxs, csx_intro/ qed-.
 
@@ -37,10 +37,10 @@ qed-.
 
 lemma csx_ind_cpxs_tdeq: ∀h,o,G,L. ∀R:predicate term.
                          (∀T1. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T1⦄ →
-                               (∀T2. ⦃G, L⦄ ⊢ T1 ⬈*[h] T2 → (T1 ≡[h, o] T2 → ⊥) → R T2) → R T1
+                               (∀T2. ⦃G, L⦄ ⊢ T1 ⬈*[h] T2 → (T1 ≛[h, o] T2 → ⊥) → R T2) → R T1
                          ) →
                          ∀T1. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T1⦄ →
-                         ∀T0. ⦃G, L⦄ ⊢ T1 ⬈*[h] T0 → ∀T2. T0 ≡[h, o] T2 → R T2.
+                         ∀T0. ⦃G, L⦄ ⊢ T1 ⬈*[h] T0 → ∀T2. T0 ≛[h, o] T2 → R T2.
 #h #o #G #L #R #IH #T1 #H @(csx_ind … H) -T1
 #T1 #HT1 #IH1 #T0 #HT10 #T2 #HT02
 @IH -IH /3 width=3 by csx_cpxs_trans, csx_tdeq_trans/ -HT1 #V2 #HTV2 #HnTV2
@@ -61,7 +61,7 @@ qed-.
 (* Basic_2A1: was: csx_ind_alt *)
 lemma csx_ind_cpxs: ∀h,o,G,L. ∀R:predicate term.
                     (∀T1. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T1⦄ →
-                          (∀T2. ⦃G, L⦄ ⊢ T1 ⬈*[h] T2 → (T1 ≡[h, o] T2 → ⊥) → R T2) → R T1
+                          (∀T2. ⦃G, L⦄ ⊢ T1 ⬈*[h] T2 → (T1 ≛[h, o] T2 → ⊥) → R T2) → R T1
                     ) →
                     ∀T. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄ → R T.
 #h #o #G #L #R #IH #T #HT

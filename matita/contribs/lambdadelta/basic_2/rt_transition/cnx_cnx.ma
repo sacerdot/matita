@@ -21,7 +21,7 @@ include "basic_2/rt_transition/cnx.ma".
 (* Advanced properties ******************************************************)
 
 lemma cnx_tdeq_trans: ∀h,o,G,L,T1. ⦃G, L⦄ ⊢ ⬈[h, o] 𝐍⦃T1⦄ →
-                      ∀T2. T1 ≡[h, o] T2 → ⦃G, L⦄ ⊢ ⬈[h, o] 𝐍⦃T2⦄.
+                      ∀T2. T1 ≛[h, o] T2 → ⦃G, L⦄ ⊢ ⬈[h, o] 𝐍⦃T2⦄.
 #h #o #G #L #T1 #HT1 #T2 #HT12 #T #HT2
 elim (tdeq_cpx_trans … HT12 … HT2) -HT2 #T0 #HT10 #HT0
 lapply (HT1 … HT10) -HT1 -HT10 /2 width=5 by tdeq_repl/ (**) (* full auto fails *)

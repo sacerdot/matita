@@ -23,19 +23,19 @@ include "basic_2/rt_transition/lfpx.ma". (**) (* should be in lfpx_frees.ma *)
 (* Properties with degree-based equivalence for local environments **********)
 
 lemma lfpx_pair_sn_split: ∀h,G,L1,L2,V. ⦃G, L1⦄ ⊢ ⬈[h, V] L2 → ∀o,I,T.
-                          ∃∃L. ⦃G, L1⦄ ⊢ ⬈[h, ②{I}V.T] L & L ≡[h, o, V] L2.
+                          ∃∃L. ⦃G, L1⦄ ⊢ ⬈[h, ②{I}V.T] L & L ≛[h, o, V] L2.
 /3 width=5 by lfpx_frees_conf, lfxs_pair_sn_split/ qed-.
 
 lemma lfpx_flat_dx_split: ∀h,G,L1,L2,T. ⦃G, L1⦄ ⊢ ⬈[h, T] L2 → ∀o,I,V.
-                          ∃∃L. ⦃G, L1⦄ ⊢ ⬈[h, ⓕ{I}V.T] L & L ≡[h, o, T] L2.
+                          ∃∃L. ⦃G, L1⦄ ⊢ ⬈[h, ⓕ{I}V.T] L & L ≛[h, o, T] L2.
 /3 width=5 by lfpx_frees_conf, lfxs_flat_dx_split/ qed-.
 
 lemma lfpx_bind_dx_split: ∀h,I,G,L1,L2,V1,T. ⦃G, L1.ⓑ{I}V1⦄ ⊢ ⬈[h, T] L2 → ∀o,p.
-                          ∃∃L,V. ⦃G, L1⦄ ⊢ ⬈[h, ⓑ{p,I}V1.T] L & L.ⓑ{I}V ≡[h, o, T] L2 & ⦃G, L1⦄ ⊢ V1 ⬈[h] V.
+                          ∃∃L,V. ⦃G, L1⦄ ⊢ ⬈[h, ⓑ{p,I}V1.T] L & L.ⓑ{I}V ≛[h, o, T] L2 & ⦃G, L1⦄ ⊢ V1 ⬈[h] V.
 /3 width=5 by lfpx_frees_conf, lfxs_bind_dx_split/ qed-.
 
 lemma lfpx_bind_dx_split_void: ∀h,G,K1,L2,T. ⦃G, K1.ⓧ⦄ ⊢ ⬈[h, T] L2 → ∀o,p,I,V.
-                               ∃∃K2. ⦃G, K1⦄ ⊢ ⬈[h, ⓑ{p,I}V.T] K2 & K2.ⓧ ≡[h, o, T] L2.
+                               ∃∃K2. ⦃G, K1⦄ ⊢ ⬈[h, ⓑ{p,I}V.T] K2 & K2.ⓧ ≛[h, o, T] L2.
 /3 width=5 by lfpx_frees_conf, lfxs_bind_dx_split_void/ qed-.
 
 lemma cpx_tdeq_conf_lexs: ∀h,o,G. R_confluent2_lfxs … (cpx h G) (cdeq h o) (cpx h G) (cdeq h o).
@@ -119,33 +119,33 @@ lemma cpx_tdeq_conf_lexs: ∀h,o,G. R_confluent2_lfxs … (cpx h G) (cdeq h o) (
 qed-.
 
 lemma cpx_tdeq_conf: ∀h,o,G,L. ∀T0:term. ∀T1. ⦃G, L⦄ ⊢ T0 ⬈[h] T1 →
-                     ∀T2. T0 ≡[h, o] T2 →
-                     ∃∃T. T1 ≡[h, o] T & ⦃G, L⦄ ⊢ T2 ⬈[h] T.
+                     ∀T2. T0 ≛[h, o] T2 →
+                     ∃∃T. T1 ≛[h, o] T & ⦃G, L⦄ ⊢ T2 ⬈[h] T.
 #h #o #G #L #T0 #T1 #HT01 #T2 #HT02
 elim (cpx_tdeq_conf_lexs … HT01 … HT02 L … L) -HT01 -HT02
 /2 width=3 by lfxs_refl, ex2_intro/
 qed-.
 
-lemma tdeq_cpx_trans: ∀h,o,G,L,T2. ∀T0:term. T2 ≡[h, o] T0 →
+lemma tdeq_cpx_trans: ∀h,o,G,L,T2. ∀T0:term. T2 ≛[h, o] T0 →
                       ∀T1. ⦃G, L⦄ ⊢ T0 ⬈[h] T1 → 
-                      ∃∃T. ⦃G, L⦄ ⊢ T2 ⬈[h] T & T ≡[h, o] T1.
+                      ∃∃T. ⦃G, L⦄ ⊢ T2 ⬈[h] T & T ≛[h, o] T1.
 #h #o #G #L #T2 #T0 #HT20 #T1 #HT01
 elim (cpx_tdeq_conf … HT01 T2) -HT01 /3 width=3 by tdeq_sym, ex2_intro/
 qed-.
 
 (* Basic_2A1: uses: cpx_lleq_conf *)
 lemma cpx_lfdeq_conf: ∀h,o,G,L0,T0,T1. ⦃G, L0⦄ ⊢ T0 ⬈[h] T1 →
-                      ∀L2. L0 ≡[h, o, T0] L2 →
-                      ∃∃T. ⦃G, L2⦄ ⊢ T0 ⬈[h] T & T1 ≡[h, o] T.
+                      ∀L2. L0 ≛[h, o, T0] L2 →
+                      ∃∃T. ⦃G, L2⦄ ⊢ T0 ⬈[h] T & T1 ≛[h, o] T.
 #h #o #G #L0 #T0 #T1 #HT01 #L2 #HL02
 elim (cpx_tdeq_conf_lexs … HT01 T0 … L0 … HL02) -HT01 -HL02
 /2 width=3 by lfxs_refl, ex2_intro/
 qed-.
 
 (* Basic_2A1: uses: lleq_cpx_trans *)
-lemma lfdeq_cpx_trans: ∀h,o,G,L2,L0,T0. L2 ≡[h, o, T0] L0 →
+lemma lfdeq_cpx_trans: ∀h,o,G,L2,L0,T0. L2 ≛[h, o, T0] L0 →
                        ∀T1. ⦃G, L0⦄ ⊢ T0 ⬈[h] T1 →
-                       ∃∃T. ⦃G, L2⦄ ⊢ T0 ⬈[h] T & T ≡[h, o] T1.
+                       ∃∃T. ⦃G, L2⦄ ⊢ T0 ⬈[h] T & T ≛[h, o] T1.
 #h #o #G #L2 #L0 #T0 #HL20 #T1 #HT01
 elim (cpx_lfdeq_conf … o … HT01 L2) -HT01
 /3 width=3 by lfdeq_sym, tdeq_sym, ex2_intro/
@@ -156,8 +156,8 @@ lemma lfpx_lfdeq_conf: ∀h,o,G,T. confluent2 … (lfpx h G T) (lfdeq h o T).
 
 (* Basic_2A1: uses: lleq_lpx_trans *)
 lemma lfdeq_lfpx_trans: ∀h,o,G,T,L2,K2. ⦃G, L2⦄ ⊢ ⬈[h, T] K2 →
-                        ∀L1. L1 ≡[h, o, T] L2 →
-                        ∃∃K1. ⦃G, L1⦄ ⊢ ⬈[h, T] K1 & K1 ≡[h, o, T] K2.
+                        ∀L1. L1 ≛[h, o, T] L2 →
+                        ∃∃K1. ⦃G, L1⦄ ⊢ ⬈[h, T] K1 & K1 ≛[h, o, T] K2.
 #h #o #G #T #L2 #K2 #HLK2 #L1 #HL12
 elim (lfpx_lfdeq_conf … o … HLK2 L1)
 /3 width=3 by lfdeq_sym, ex2_intro/

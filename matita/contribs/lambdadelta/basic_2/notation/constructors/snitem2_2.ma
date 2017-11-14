@@ -14,6 +14,6 @@
 
 (* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-notation "hvbox( ② term 55 T1 . break term 55 T )"
+notation "hvbox( ② term 55 T1. break term 55 T )"
  non associative with precedence 55
  for @{ 'SnItem2 $T1 $T }.

@@ -19,8 +19,8 @@ include "basic_2/static/aaa.ma".
 
 (* Properties with degree-based equivalence on referred entries *************)
 
-lemma aaa_tdeq_conf_fldeq: ∀h,o,G,L1,T1,A. ⦃G, L1⦄ ⊢ T1 ⁝ A → ∀T2. T1 ≡[h, o] T2 →
-                           ∀L2. L1 ≡[h, o, T1] L2 → ⦃G, L2⦄ ⊢ T2 ⁝ A.
+lemma aaa_tdeq_conf_fldeq: ∀h,o,G,L1,T1,A. ⦃G, L1⦄ ⊢ T1 ⁝ A → ∀T2. T1 ≛[h, o] T2 →
+                           ∀L2. L1 ≛[h, o, T1] L2 → ⦃G, L2⦄ ⊢ T2 ⁝ A.
 #h #o #G #L1 #T1 #A #H elim H -G -L1 -T1 -A
 [ #G #L1 #s1 #X #H1 elim (tdeq_inv_sort1 … H1) -H1 //
 | #I #G #L1 #V1 #B #_ #IH #X #H1 >(tdeq_inv_lref1 … H1) -H1

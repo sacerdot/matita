@@ -19,6 +19,6 @@ include "basic_2/syntax/theq.ma".
 
 (* Properties with degree-based equivalence for terms ***********************)
 
-lemma tdeq_theq: ∀h,o,T1,T2. T1 ≡[h, o] T2 → T1 ⩳[h, o] T2.
+lemma tdeq_theq: ∀h,o,T1,T2. T1 ≛[h, o] T2 → T1 ⩳[h, o] T2.
 #h #o #T1 #T2 * -T1 -T2 /2 width=3 by theq_sort, theq_pair/
 qed.

@@ -25,5 +25,5 @@ lemma cpx_lfdeq_conf_sn: ∀h,o,G. s_r_confluent1 … (cpx h G) (lfdeq h o).
 
 (* Basic_2A1: was just: cpx_lleq_conf_dx *)
 lemma cpx_lfdeq_conf_dx: ∀h,o,G,L2,T1,T2. ⦃G, L2⦄ ⊢ T1 ⬈[h] T2 →
-                         ∀L1. L1 ≡[h, o, T1] L2 → L1 ≡[h, o, T2] L2.
+                         ∀L1. L1 ≛[h, o, T1] L2 → L1 ≛[h, o, T2] L2.
 /4 width=4 by cpx_lfdeq_conf_sn, lfdeq_sym/ qed-.

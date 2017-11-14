@@ -46,17 +46,17 @@ definition IH_snv_lstas: ∀h:sh. sd h → relation3 genv lenv term ≝
 (* Properties for the preservation results **********************************)
 
 fact snv_cprs_lpr_aux: ∀h,o,G0,L0,T0.
-                       (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_snv_cpr_lpr h o G1 L1 T1) →
-                       ∀G,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G, L1, T1⦄ → ⦃G, L1⦄ ⊢ T1 ¡[h, o] →
+                       (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G1, L1, T1⦄ → IH_snv_cpr_lpr h o G1 L1 T1) →
+                       ∀G,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G, L1, T1⦄ → ⦃G, L1⦄ ⊢ T1 ¡[h, o] →
                        ∀T2. ⦃G, L1⦄ ⊢ T1 ➡* T2 → ∀L2. ⦃G, L1⦄ ⊢ ➡ L2 → ⦃G, L2⦄ ⊢ T2 ¡[h, o].
 #h #o #G0 #L0 #T0 #IH #G #L1 #T1 #HLT0 #HT1 #T2 #H
 @(cprs_ind … H) -T2 /4 width=6 by fpbg_fpbs_trans, cprs_fpbs/
 qed-.
 
 fact da_cprs_lpr_aux: ∀h,o,G0,L0,T0.
-                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_snv_cpr_lpr h o G1 L1 T1) →
-                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_da_cpr_lpr h o G1 L1 T1) →
-                      ∀G,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G, L1, T1⦄ → ⦃G, L1⦄ ⊢ T1 ¡[h, o] →
+                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G1, L1, T1⦄ → IH_snv_cpr_lpr h o G1 L1 T1) →
+                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G1, L1, T1⦄ → IH_da_cpr_lpr h o G1 L1 T1) →
+                      ∀G,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G, L1, T1⦄ → ⦃G, L1⦄ ⊢ T1 ¡[h, o] →
                       ∀d. ⦃G, L1⦄ ⊢ T1 ▪[h, o] d →
                       ∀T2. ⦃G, L1⦄ ⊢ T1 ➡* T2 → ∀L2. ⦃G, L1⦄ ⊢ ➡ L2 → ⦃G, L2⦄ ⊢ T2 ▪[h, o] d.
 #h #o #G0 #L0 #T0 #IH2 #IH1 #G #L1 #T1 #HLT0 #HT1 #d #Hd #T2 #H
@@ -64,10 +64,10 @@ fact da_cprs_lpr_aux: ∀h,o,G0,L0,T0.
 qed-.
 
 fact da_scpds_lpr_aux: ∀h,o,G0,L0,T0.
-                       (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_snv_lstas h o G1 L1 T1) →
-                       (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_snv_cpr_lpr h o G1 L1 T1) →
-                       (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_da_cpr_lpr h o G1 L1 T1) →
-                       ∀G,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G, L1, T1⦄ → ⦃G, L1⦄ ⊢ T1 ¡[h, o] →
+                       (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G1, L1, T1⦄ → IH_snv_lstas h o G1 L1 T1) →
+                       (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G1, L1, T1⦄ → IH_snv_cpr_lpr h o G1 L1 T1) →
+                       (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G1, L1, T1⦄ → IH_da_cpr_lpr h o G1 L1 T1) →
+                       ∀G,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G, L1, T1⦄ → ⦃G, L1⦄ ⊢ T1 ¡[h, o] →
                        ∀d1. ⦃G, L1⦄ ⊢ T1 ▪[h, o] d1 →
                        ∀T2,d2. ⦃G, L1⦄ ⊢ T1 •*➡*[h, o, d2] T2 → ∀L2. ⦃G, L1⦄ ⊢ ➡ L2 →
                        d2 ≤ d1 ∧ ⦃G, L2⦄ ⊢ T2 ▪[h, o] d1-d2.
@@ -79,11 +79,11 @@ lapply (da_cprs_lpr_aux … IH2 IH1 … Hd12 … HT2 … HL12) -IH2 -IH1 -HT2 -H
 qed-.
 
 fact da_scpes_aux: ∀h,o,G0,L0,T0.
-                   (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_snv_lstas h o G1 L1 T1) →
-                   (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_snv_cpr_lpr h o G1 L1 T1) →
-                   (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_da_cpr_lpr h o G1 L1 T1) →
-                   ∀G,L,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G, L, T1⦄ → ⦃G, L⦄ ⊢ T1 ¡[h, o] →
-                   ∀T2. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G, L, T2⦄ → ⦃G, L⦄ ⊢ T2 ¡[h, o] →
+                   (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G1, L1, T1⦄ → IH_snv_lstas h o G1 L1 T1) →
+                   (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G1, L1, T1⦄ → IH_snv_cpr_lpr h o G1 L1 T1) →
+                   (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G1, L1, T1⦄ → IH_da_cpr_lpr h o G1 L1 T1) →
+                   ∀G,L,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G, L, T1⦄ → ⦃G, L⦄ ⊢ T1 ¡[h, o] →
+                   ∀T2. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G, L, T2⦄ → ⦃G, L⦄ ⊢ T2 ¡[h, o] →
                    ∀d11. ⦃G, L⦄ ⊢ T1 ▪[h, o] d11 → ∀d12. ⦃G, L⦄ ⊢ T2 ▪[h, o] d12 →
                    ∀d21,d22. ⦃G, L⦄ ⊢ T1 •*⬌*[h, o, d21, d22] T2 →
                    ∧∧ d21 ≤ d11 & d22 ≤ d12 & d11 - d21 = d12 - d22.
@@ -94,10 +94,10 @@ elim (da_scpds_lpr_aux … IH3 IH2 IH1 … Hd12 … HT2 … L) -Hd12 -HT2 //
 qed-.
 
 fact lstas_cprs_lpr_aux: ∀h,o,G0,L0,T0.
-                         (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_snv_cpr_lpr h o G1 L1 T1) →
-                         (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_da_cpr_lpr h o G1 L1 T1) →
-                         (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_lstas_cpr_lpr h o G1 L1 T1) →
-                         ∀G,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G, L1, T1⦄ → ⦃G, L1⦄ ⊢ T1 ¡[h, o] →
+                         (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G1, L1, T1⦄ → IH_snv_cpr_lpr h o G1 L1 T1) →
+                         (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G1, L1, T1⦄ → IH_da_cpr_lpr h o G1 L1 T1) →
+                         (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G1, L1, T1⦄ → IH_lstas_cpr_lpr h o G1 L1 T1) →
+                         ∀G,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G, L1, T1⦄ → ⦃G, L1⦄ ⊢ T1 ¡[h, o] →
                          ∀d1,d2. d2 ≤ d1 → ⦃G, L1⦄ ⊢ T1 ▪[h, o] d1 →
                          ∀U1. ⦃G, L1⦄ ⊢ T1 •*[h, d2] U1 →
                          ∀T2. ⦃G, L1⦄ ⊢ T1 ➡* T2 → ∀L2. ⦃G, L1⦄ ⊢ ➡ L2 →
@@ -115,9 +115,9 @@ elim (IH1 … Hd21 … HTU … HTT2 … HL12) -IH1 -HTU -HTT2
 qed-.
 
 fact scpds_cpr_lpr_aux: ∀h,o,G0,L0,T0.
-                        (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_da_cpr_lpr h o G1 L1 T1) →
-                        (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_lstas_cpr_lpr h o G1 L1 T1) →
-                        ∀G,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G, L1, T1⦄ → ⦃G, L1⦄ ⊢ T1 ¡[h, o] →
+                        (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G1, L1, T1⦄ → IH_da_cpr_lpr h o G1 L1 T1) →
+                        (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G1, L1, T1⦄ → IH_lstas_cpr_lpr h o G1 L1 T1) →
+                        ∀G,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G, L1, T1⦄ → ⦃G, L1⦄ ⊢ T1 ¡[h, o] →
                         ∀U1,d. ⦃G, L1⦄ ⊢ T1 •*➡*[h, o, d] U1 →
                         ∀T2. ⦃G, L1⦄ ⊢ T1 ➡ T2 → ∀L2. ⦃G, L1⦄ ⊢ ➡ L2 →
                         ∃∃U2. ⦃G, L2⦄ ⊢ T2 •*➡*[h, o, d] U2 & ⦃G, L2⦄ ⊢ U1 ➡* U2.
@@ -130,10 +130,10 @@ elim (cpcs_inv_cprs … H) -H /3 width=6 by ex4_2_intro, ex2_intro/
 qed-.
 
 fact scpes_cpr_lpr_aux: ∀h,o,G0,L0,T0.
-                        (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_da_cpr_lpr h o G1 L1 T1) →
-                        (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_lstas_cpr_lpr h o G1 L1 T1) →
-                        ∀G,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G, L1, T1⦄ → ⦃G, L1⦄ ⊢ T1 ¡[h, o] →
-                        ∀T2. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G, L1, T2⦄ → ⦃G, L1⦄ ⊢ T2 ¡[h, o] →
+                        (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G1, L1, T1⦄ → IH_da_cpr_lpr h o G1 L1 T1) →
+                        (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G1, L1, T1⦄ → IH_lstas_cpr_lpr h o G1 L1 T1) →
+                        ∀G,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G, L1, T1⦄ → ⦃G, L1⦄ ⊢ T1 ¡[h, o] →
+                        ∀T2. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G, L1, T2⦄ → ⦃G, L1⦄ ⊢ T2 ¡[h, o] →
                         ∀d1,d2. ⦃G, L1⦄ ⊢ T1 •*⬌*[h, o, d1, d2] T2 →
                         ∀U1. ⦃G, L1⦄ ⊢ T1 ➡ U1 → ∀U2. ⦃G, L1⦄ ⊢ T2 ➡ U2 → ∀L2. ⦃G, L1⦄ ⊢ ➡ L2 →
                         ⦃G, L2⦄ ⊢ U1 •*⬌*[h, o, d1, d2] U2.
@@ -145,11 +145,11 @@ elim (cprs_conf … H1 … H2) -T0
 qed-.
 
 fact lstas_scpds_aux: ∀h,o,G0,L0,T0.
-                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_snv_lstas h o G1 L1 T1) →
-                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_snv_cpr_lpr h o G1 L1 T1) →
-                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_da_cpr_lpr h o G1 L1 T1) →
-                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_lstas_cpr_lpr h o G1 L1 T1) →
-                      ∀G,L,T. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G, L, T⦄ → ⦃G, L⦄ ⊢ T ¡[h, o] →
+                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G1, L1, T1⦄ → IH_snv_lstas h o G1 L1 T1) →
+                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G1, L1, T1⦄ → IH_snv_cpr_lpr h o G1 L1 T1) →
+                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G1, L1, T1⦄ → IH_da_cpr_lpr h o G1 L1 T1) →
+                      (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G1, L1, T1⦄ → IH_lstas_cpr_lpr h o G1 L1 T1) →
+                      ∀G,L,T. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G, L, T⦄ → ⦃G, L⦄ ⊢ T ¡[h, o] →
                       ∀d,d1. d1 ≤ d → ⦃G, L⦄ ⊢ T ▪[h, o] d → ∀T1. ⦃G, L⦄ ⊢ T •*[h, d1] T1 →
                       ∀T2,d2. ⦃G, L⦄ ⊢ T •*➡*[h, o, d2] T2 → ⦃G, L⦄ ⊢ T1 •*⬌*[h, o, d2-d1, d1-d2] T2.
 #h #o #G0 #L0 #T0 #IH4 #IH3 #IH2 #IH1 #G #L #T #H0 #HT #d #d1 #Hd1 #HTd #T1 #HT1 #T2 #d2 * #X #d0 #Hd20 #H #HTX #HXT2
@@ -169,12 +169,12 @@ elim (le_or_ge d1 d2) #Hd12 >(eq_minus_O … Hd12)
 qed-.
 
 fact scpes_le_aux: ∀h,o,G0,L0,T0.
-                   (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_snv_lstas h o G1 L1 T1) →
-                   (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_snv_cpr_lpr h o G1 L1 T1) →
-                   (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_da_cpr_lpr h o G1 L1 T1) →
-                   (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G1, L1, T1⦄ → IH_lstas_cpr_lpr h o G1 L1 T1) →
-                   ∀G,L,T1. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G, L, T1⦄ → ⦃G, L⦄ ⊢ T1 ¡[h, o] →
-                   ∀T2. ⦃G0, L0, T0⦄ >≡[h, o] ⦃G, L, T2⦄ → ⦃G, L⦄ ⊢ T2 ¡[h, o] →
+                   (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G1, L1, T1⦄ → IH_snv_lstas h o G1 L1 T1) →
+                   (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G1, L1, T1⦄ → IH_snv_cpr_lpr h o G1 L1 T1) →
+                   (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G1, L1, T1⦄ → IH_da_cpr_lpr h o G1 L1 T1) →
+                   (∀G1,L1,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G1, L1, T1⦄ → IH_lstas_cpr_lpr h o G1 L1 T1) →
+                   ∀G,L,T1. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G, L, T1⦄ → ⦃G, L⦄ ⊢ T1 ¡[h, o] →
+                   ∀T2. ⦃G0, L0, T0⦄ >≛[h, o] ⦃G, L, T2⦄ → ⦃G, L⦄ ⊢ T2 ¡[h, o] →
                    ∀d11. ⦃G, L⦄ ⊢ T1 ▪[h, o] d11 → ∀d12. ⦃G, L⦄ ⊢ T2 ▪[h, o] d12 →
                    ∀d21,d22,d. d21 + d ≤ d11 → d22 + d ≤ d12 →
                    ⦃G, L⦄ ⊢ T1 •*⬌*[h, o, d21, d22] T2 → ⦃G, L⦄ ⊢ T1 •*⬌*[h, o, d21+d, d22+d] T2.

@@ -23,18 +23,18 @@ include "basic_2/static/lfdeq.ma".
 lemma lfdeq_refl: ∀h,o,T. reflexive … (lfdeq h o T).
 /2 width=1 by lfxs_refl/ qed.
 
-lemma lfdeq_pair_refl: ∀h,o,V1,V2. V1 ≡[h, o] V2 →
-                       ∀I,L. ∀T:term. L.ⓑ{I}V1 ≡[h, o, T] L.ⓑ{I}V2.
+lemma lfdeq_pair_refl: ∀h,o,V1,V2. V1 ≛[h, o] V2 →
+                       ∀I,L. ∀T:term. L.ⓑ{I}V1 ≛[h, o, T] L.ⓑ{I}V2.
 /2 width=1 by lfxs_pair_refl/ qed.
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma lfdeq_inv_bind_void: ∀h,o,p,I,L1,L2,V,T. L1 ≡[h, o, ⓑ{p,I}V.T] L2 →
-                           L1 ≡[h, o, V] L2 ∧ L1.ⓧ ≡[h, o, T] L2.ⓧ.
+lemma lfdeq_inv_bind_void: ∀h,o,p,I,L1,L2,V,T. L1 ≛[h, o, ⓑ{p,I}V.T] L2 →
+                           L1 ≛[h, o, V] L2 ∧ L1.ⓧ ≛[h, o, T] L2.ⓧ.
 /2 width=3 by lfxs_inv_bind_void/ qed-.
 
 (* Advanced forward lemmas **************************************************)
 
 lemma lfdeq_fwd_bind_dx_void: ∀h,o,p,I,L1,L2,V,T.
-                              L1 ≡[h, o, ⓑ{p,I}V.T] L2 → L1.ⓧ ≡[h, o, T] L2.ⓧ.
+                              L1 ≛[h, o, ⓑ{p,I}V.T] L2 → L1.ⓧ ≛[h, o, T] L2.ⓧ.
 /2 width=4 by lfxs_fwd_bind_dx_void/ qed-.

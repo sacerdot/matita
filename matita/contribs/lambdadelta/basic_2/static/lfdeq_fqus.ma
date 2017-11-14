@@ -22,8 +22,8 @@ include "basic_2/static/lfdeq_lfdeq.ma".
 (* Properties with supclosure ***********************************************)
 
 lemma fqu_tdeq_conf: ∀h,o,b,G1,G2,L1,L2,U1,T1. ⦃G1, L1, U1⦄ ⊐[b] ⦃G2, L2, T1⦄ →
-                     ∀U2. U1 ≡[h, o] U2 →
-                     ∃∃L,T2. ⦃G1, L1, U2⦄ ⊐[b] ⦃G2, L, T2⦄ & L2 ≡[h, o, T1] L & T1 ≡[h, o] T2.
+                     ∀U2. U1 ≛[h, o] U2 →
+                     ∃∃L,T2. ⦃G1, L1, U2⦄ ⊐[b] ⦃G2, L, T2⦄ & L2 ≛[h, o, T1] L & T1 ≛[h, o] T2.
 #h #o #b #G1 #G2 #L1 #L2 #U1 #T1 #H elim H -G1 -G2 -L1 -L2 -U1 -T1
 [ #I #G #L #W #X #H >(tdeq_inv_lref1 … H) -X
   /2 width=5 by fqu_lref_O, ex3_2_intro/
@@ -46,8 +46,8 @@ lemma fqu_tdeq_conf: ∀h,o,b,G1,G2,L1,L2,U1,T1. ⦃G1, L1, U1⦄ ⊐[b] ⦃G2, 
 qed-.
 
 lemma tdeq_fqu_trans: ∀h,o,b,G1,G2,L1,L2,U1,T1. ⦃G1, L1, U1⦄ ⊐[b] ⦃G2, L2, T1⦄ →
-                      ∀U2. U2 ≡[h, o] U1 →
-                      ∃∃L,T2. ⦃G1, L1, U2⦄ ⊐[b] ⦃G2, L, T2⦄ & T2 ≡[h, o] T1 & L ≡[h, o, T1] L2.
+                      ∀U2. U2 ≛[h, o] U1 →
+                      ∃∃L,T2. ⦃G1, L1, U2⦄ ⊐[b] ⦃G2, L, T2⦄ & T2 ≛[h, o] T1 & L ≛[h, o, T1] L2.
 #h #o #b #G1 #G2 #L1 #L2 #U1 #T1 #H12 #U2 #HU21
 elim (fqu_tdeq_conf … o … H12 U2) -H12
 /3 width=5 by lfdeq_sym, tdeq_sym, ex3_2_intro/
@@ -55,8 +55,8 @@ qed-.
 
 (* Basic_2A1: was just: lleq_fqu_trans *)
 lemma lfdeq_fqu_trans: ∀h,o,b,G1,G2,L2,K2,T,U. ⦃G1, L2, T⦄ ⊐[b] ⦃G2, K2, U⦄ →
-                       ∀L1. L1 ≡[h, o, T] L2 →
-                       ∃∃K1,U0. ⦃G1, L1, T⦄ ⊐[b] ⦃G2, K1, U0⦄ & U0 ≡[h, o] U & K1 ≡[h, o, U] K2.
+                       ∀L1. L1 ≛[h, o, T] L2 →
+                       ∃∃K1,U0. ⦃G1, L1, T⦄ ⊐[b] ⦃G2, K1, U0⦄ & U0 ≛[h, o] U & K1 ≛[h, o, U] K2.
 #h #o #b #G1 #G2 #L2 #K2 #T #U #H elim H -G1 -G2 -L2 -K2 -T -U
 [ #I #G #L2 #V2 #L1 #H elim (lfdeq_inv_zero_pair_dx … H) -H
   #K1 #V1 #HV1 #HV12 #H destruct
@@ -80,8 +80,8 @@ qed-.
 
 (* Basic_2A1: was just: lleq_fquq_trans *)
 lemma lfdeq_fquq_trans: ∀h,o,b,G1,G2,L2,K2,T,U. ⦃G1, L2, T⦄ ⊐⸮[b] ⦃G2, K2, U⦄ →
-                        ∀L1. L1 ≡[h, o, T] L2 →
-                        ∃∃K1,U0. ⦃G1, L1, T⦄ ⊐⸮[b] ⦃G2, K1, U0⦄ & U0 ≡[h, o] U & K1 ≡[h, o, U] K2.
+                        ∀L1. L1 ≛[h, o, T] L2 →
+                        ∃∃K1,U0. ⦃G1, L1, T⦄ ⊐⸮[b] ⦃G2, K1, U0⦄ & U0 ≛[h, o] U & K1 ≛[h, o, U] K2.
 #h #o #b #G1 #G2 #L2 #K2 #T #U #H elim H -H
 [ #H #L1 #HL12 elim (lfdeq_fqu_trans … H … HL12) -L2 /3 width=5 by fqu_fquq, ex3_2_intro/
 | * #HG #HL #HT destruct /2 width=5 by ex3_2_intro/
@@ -90,8 +90,8 @@ qed-.
 
 (* Basic_2A1: was just: lleq_fqup_trans *)
 lemma lfdeq_fqup_trans: ∀h,o,b,G1,G2,L2,K2,T,U. ⦃G1, L2, T⦄ ⊐+[b] ⦃G2, K2, U⦄ →
-                        ∀L1. L1 ≡[h, o, T] L2 →
-                        ∃∃K1,U0. ⦃G1, L1, T⦄ ⊐+[b] ⦃G2, K1, U0⦄ & U0 ≡[h, o] U & K1 ≡[h, o, U] K2.
+                        ∀L1. L1 ≛[h, o, T] L2 →
+                        ∃∃K1,U0. ⦃G1, L1, T⦄ ⊐+[b] ⦃G2, K1, U0⦄ & U0 ≛[h, o] U & K1 ≛[h, o, U] K2.
 #h #o #b #G1 #G2 #L2 #K2 #T #U #H @(fqup_ind … H) -G2 -K2 -U
 [ #G2 #K2 #U #HTU #L1 #HL12 elim (lfdeq_fqu_trans … HTU … HL12) -L2
   /3 width=5 by fqu_fqup, ex3_2_intro/
@@ -106,8 +106,8 @@ qed-.
 
 (* Basic_2A1: was just: lleq_fqus_trans *)
 lemma lfdeq_fqus_trans: ∀h,o,b,G1,G2,L2,K2,T,U. ⦃G1, L2, T⦄ ⊐*[b] ⦃G2, K2, U⦄ →
-                        ∀L1. L1 ≡[h, o, T] L2 →
-                        ∃∃K1,U0. ⦃G1, L1, T⦄ ⊐*[b] ⦃G2, K1, U0⦄ & U0 ≡[h, o] U & K1 ≡[h, o, U] K2.
+                        ∀L1. L1 ≛[h, o, T] L2 →
+                        ∃∃K1,U0. ⦃G1, L1, T⦄ ⊐*[b] ⦃G2, K1, U0⦄ & U0 ≛[h, o] U & K1 ≛[h, o, U] K2.
 #h #o #b #G1 #G2 #L2 #K2 #T #U #H #L1 #HL12 elim(fqus_inv_fqup … H) -H
 [ #H elim (lfdeq_fqup_trans … H … HL12) -L2 /3 width=5 by fqup_fqus, ex3_2_intro/
 | * #HG #HL #HT destruct /2 width=5 by ex3_2_intro/

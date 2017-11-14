@@ -23,7 +23,7 @@ include "basic_2/rt_computation/lfsx_lfsx.ma".
 
 (* Basic_2A1: uses: lsx_intro_alt *)
 lemma lfsx_intro_lfpxs: ∀h,o,G,L1,T.
-                        (∀L2. ⦃G, L1⦄ ⊢ ⬈*[h, T] L2 → (L1 ≡[h, o, T] L2 → ⊥) → G ⊢ ⬈*[h, o, T] 𝐒⦃L2⦄) →
+                        (∀L2. ⦃G, L1⦄ ⊢ ⬈*[h, T] L2 → (L1 ≛[h, o, T] L2 → ⊥) → G ⊢ ⬈*[h, o, T] 𝐒⦃L2⦄) →
                         G ⊢ ⬈*[h, o, T] 𝐒⦃L1⦄.
 /4 width=1 by lfpx_lfpxs, lfsx_intro/ qed-.
 
@@ -38,11 +38,11 @@ qed-.
 
 lemma lfsx_ind_lfpxs_lfdeq: ∀h,o,G,T. ∀R:predicate lenv.
                             (∀L1. G ⊢ ⬈*[h, o, T] 𝐒⦃L1⦄ →
-                                  (∀L2. ⦃G, L1⦄ ⊢ ⬈*[h, T] L2 → (L1 ≡[h, o, T] L2 → ⊥) → R L2) →
+                                  (∀L2. ⦃G, L1⦄ ⊢ ⬈*[h, T] L2 → (L1 ≛[h, o, T] L2 → ⊥) → R L2) →
                                   R L1
                             ) →
                             ∀L1. G ⊢ ⬈*[h, o, T] 𝐒⦃L1⦄  →
-                            ∀L0. ⦃G, L1⦄ ⊢ ⬈*[h, T] L0 → ∀L2. L0 ≡[h, o, T] L2 → R L2.
+                            ∀L0. ⦃G, L1⦄ ⊢ ⬈*[h, T] L0 → ∀L2. L0 ≛[h, o, T] L2 → R L2.
 #h #o #G #T #R #IH #L1 #H @(lfsx_ind … H) -L1
 #L1 #HL1 #IH1 #L0 #HL10 #L2 #HL02
 @IH -IH /3 width=3 by lfsx_lfpxs_trans, lfsx_lfdeq_trans/ -HL1 #K2 #HLK2 #HnLK2
@@ -63,7 +63,7 @@ qed-.
 (* Basic_2A1: uses: lsx_ind_alt *)
 lemma lfsx_ind_lfpxs: ∀h,o,G,T. ∀R:predicate lenv.
                       (∀L1. G ⊢ ⬈*[h, o, T] 𝐒⦃L1⦄ →
-                            (∀L2. ⦃G, L1⦄ ⊢ ⬈*[h, T] L2 → (L1 ≡[h, o, T] L2 → ⊥) → R L2) →
+                            (∀L2. ⦃G, L1⦄ ⊢ ⬈*[h, T] L2 → (L1 ≛[h, o, T] L2 → ⊥) → R L2) →
                             R L1
                       ) →
                       ∀L. G ⊢ ⬈*[h, o, T] 𝐒⦃L⦄  → R L.

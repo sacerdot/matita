@@ -14,6 +14,6 @@
 
 (* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-notation "hvbox( L . ⓧ )"
+notation "hvbox( L. ⓧ )"
  non associative with precedence 49
  for @{ 'DxVoid $L }.

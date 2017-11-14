@@ -92,7 +92,7 @@ table {
           }
         ]
         [ { "parallel qrst-computation" * } {
-             [ "fpbg ( ⦃?,?,?⦄ >≡[?,?] ⦃?,?,?⦄ )" "fpbg_lift" + "fpbg_fleq" + "fpbg_fpbs" + "fpbg_fpbg" * ]
+             [ "fpbg ( ⦃?,?,?⦄ >≛[?,?] ⦃?,?,?⦄ )" "fpbg_lift" + "fpbg_fleq" + "fpbg_fpbs" + "fpbg_fpbg" * ]
              [ "fpbs ( ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "fpbs_alt ( ⦃?,?,?⦄ ≥≥[?,?] ⦃?,?,?⦄ )" "fpbs_lift" + "fpbs_aaa" + "fpbs_fpb" + "fpbs_fpbs" * ]
           }
         ]
@@ -166,8 +166,8 @@ table {
           }
         ]
         [ { "degree-based equivalence on referred entries" * } {
-             [ "ffdeq ( ⦃?,?,?⦄ ≡[?,?] ⦃?,?,?⦄ )" "ffdeq_fqup" + "ffdeq_ffdeq" * ]
-             [ "lfdeq ( ? ≡[?,?,?] ? )" "lfdeq_length" + "lfdeq_drops" + "lfdeq_fqup" + "lfdeq_fqus" + "lfdeq_lfdeq" * ]
+             [ "ffdeq ( ⦃?,?,?⦄ ≛[?,?] ⦃?,?,?⦄ )" "ffdeq_fqup" + "ffdeq_ffdeq" * ]
+             [ "lfdeq ( ? ≛[?,?,?] ? )" "lfdeq_length" + "lfdeq_drops" + "lfdeq_fqup" + "lfdeq_fqus" + "lfdeq_lfdeq" * ]
           }
         ]
         [ { "generic extension on referred entries" * } {
@@ -237,8 +237,8 @@ table {
           }
         ]
         [ { "degree-based equivalence" * } {
-             [ "tdeq_ext ( ? ≡[?,?] ? ) ( ? ⊢ ? ≡[?,?] ? )" * ]
-             [ "tdeq ( ? ≡[?,?] ? )" "tdeq_tdeq" * ]
+             [ "tdeq_ext ( ? ≛[?,?] ? ) ( ? ⊢ ? ≛[?,?] ? )" * ]
+             [ "tdeq ( ? ≛[?,?] ? )" "tdeq_tdeq" * ]
           }
         ]
         [ { "closures" * } {

@@ -22,8 +22,8 @@ include "basic_2/rt_computation/lfpxs_fqup.ma".
 
 (* Basic_2A1: was: lleq_lpxs_trans *)
 lemma lfdeq_lfpxs_trans: ∀h,o,G,L2,K2,T. ⦃G, L2⦄ ⊢ ⬈*[h, T] K2 →
-                         ∀L1. L1 ≡[h, o, T] L2 →
-                         ∃∃K1. ⦃G, L1⦄ ⊢ ⬈*[h, T] K1 & K1 ≡[h, o, T] K2.
+                         ∀L1. L1 ≛[h, o, T] L2 →
+                         ∃∃K1. ⦃G, L1⦄ ⊢ ⬈*[h, T] K1 & K1 ≛[h, o, T] K2.
 #h #o #G #L2 #K2 #T #H @(lfpxs_ind_sn … H) -K2 /2 width=3 by ex2_intro/
 #K #K2 #_ #HK2 #IH #L1 #HT elim (IH … HT) -L2
 #L #HL1 #HT elim (lfdeq_lfpx_trans … HK2 … HT) -K
@@ -31,8 +31,8 @@ lemma lfdeq_lfpxs_trans: ∀h,o,G,L2,K2,T. ⦃G, L2⦄ ⊢ ⬈*[h, T] K2 →
 qed-.
 
 (* Basic_2A1: was: lpxs_nlleq_inv_step_sn *)
-lemma lfpxs_lfdneq_inv_step_sn: ∀h,o,G,L1,L2,T. ⦃G, L1⦄ ⊢ ⬈*[h, T] L2 → (L1 ≡[h, o, T] L2 → ⊥) →
-                                ∃∃L,L0. ⦃G, L1⦄ ⊢ ⬈[h, T] L & L1 ≡[h, o, T] L → ⊥ & ⦃G, L⦄ ⊢ ⬈*[h, T] L0 & L0 ≡[h, o, T] L2.
+lemma lfpxs_lfdneq_inv_step_sn: ∀h,o,G,L1,L2,T. ⦃G, L1⦄ ⊢ ⬈*[h, T] L2 → (L1 ≛[h, o, T] L2 → ⊥) →
+                                ∃∃L,L0. ⦃G, L1⦄ ⊢ ⬈[h, T] L & L1 ≛[h, o, T] L → ⊥ & ⦃G, L⦄ ⊢ ⬈*[h, T] L0 & L0 ≛[h, o, T] L2.
 #h #o #G #L1 #L2 #T #H @(lfpxs_ind_dx … H) -L1
 [ #H elim H -H //
 | #L1 #L #H1 #H2 #IH2 #H12 elim (lfdeq_dec h o L1 L T) #H

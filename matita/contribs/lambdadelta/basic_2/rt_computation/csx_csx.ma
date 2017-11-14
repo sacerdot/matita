@@ -21,7 +21,7 @@ include "basic_2/rt_computation/csx_drops.ma".
 (* Advanced properties ******************************************************)
 
 lemma csx_tdeq_trans: ∀h,o,G,L,T1. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T1⦄ →
-                      ∀T2. T1 ≡[h, o] T2 → ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T2⦄.
+                      ∀T2. T1 ≛[h, o] T2 → ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T2⦄.
 #h #o #G #L #T1 #H @(csx_ind … H) -T1 #T #_ #IH #T2 #HT2
 @csx_intro #T1 #HT21 #HnT21 elim (tdeq_cpx_trans … HT2 … HT21) -HT21
 /4 width=5 by tdeq_repl/

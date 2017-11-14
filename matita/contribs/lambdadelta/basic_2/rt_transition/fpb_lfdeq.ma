@@ -22,9 +22,9 @@ include "basic_2/rt_transition/fpb.ma".
 (* Properties with degree-based equivalence for local environments **********)
 
 (* Basic_2A1: was just: lleq_fpb_trans *)
-lemma lfdeq_fpb_trans: ∀h,o,F,K1,K2,T. K1 ≡[h, o, T] K2 →
+lemma lfdeq_fpb_trans: ∀h,o,F,K1,K2,T. K1 ≛[h, o, T] K2 →
                        ∀G,L2,U. ⦃F, K2, T⦄ ≻[h, o] ⦃G, L2, U⦄ →
-                       ∃∃L1,U0. ⦃F, K1, T⦄ ≻[h, o] ⦃G, L1, U0⦄ & U0 ≡[h, o] U & L1 ≡[h, o, U] L2.
+                       ∃∃L1,U0. ⦃F, K1, T⦄ ≻[h, o] ⦃G, L1, U0⦄ & U0 ≛[h, o] U & L1 ≛[h, o, U] L2.
 #h #o #F #K1 #K2 #T #HT #G #L2 #U * -G -L2 -U
 [ #G #L2 #U #H2 elim (lfdeq_fqu_trans … H2 … HT) -K2
   /3 width=5 by fpb_fqu, ex3_2_intro/

@@ -30,7 +30,7 @@ interpretation
 (* Basic_2A1: uses: lsx_ind *)
 lemma lfsx_ind: ∀h,o,G,T. ∀R:predicate lenv.
                 (∀L1. G ⊢ ⬈*[h, o, T] 𝐒⦃L1⦄ →
-                      (∀L2. ⦃G, L1⦄ ⊢ ⬈[h, T] L2 → (L1 ≡[h, o, T] L2 → ⊥) → R L2) →
+                      (∀L2. ⦃G, L1⦄ ⊢ ⬈[h, T] L2 → (L1 ≛[h, o, T] L2 → ⊥) → R L2) →
                       R L1
                 ) →
                 ∀L. G ⊢ ⬈*[h, o, T] 𝐒⦃L⦄ → R L.
@@ -42,7 +42,7 @@ qed-.
 
 (* Basic_2A1: uses: lsx_intro *)
 lemma lfsx_intro: ∀h,o,G,L1,T.
-                  (∀L2. ⦃G, L1⦄ ⊢ ⬈[h, T] L2 → (L1 ≡[h, o, T] L2 → ⊥) → G ⊢ ⬈*[h, o, T] 𝐒⦃L2⦄) →
+                  (∀L2. ⦃G, L1⦄ ⊢ ⬈[h, T] L2 → (L1 ≛[h, o, T] L2 → ⊥) → G ⊢ ⬈*[h, o, T] 𝐒⦃L2⦄) →
                   G ⊢ ⬈*[h, o, T] 𝐒⦃L1⦄.
 /5 width=1 by lfdeq_sym, SN_intro/ qed.
 

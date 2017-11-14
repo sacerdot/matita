@@ -28,12 +28,12 @@ interpretation "'qrst' proper parallel computation (closure)"
 (* Basic properties *********************************************************)
 
 lemma fpb_fpbg: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≻[h, o] ⦃G2, L2, T2⦄ →
-                ⦃G1, L1, T1⦄ >≡[h, o] ⦃G2, L2, T2⦄.
+                ⦃G1, L1, T1⦄ >≛[h, o] ⦃G2, L2, T2⦄.
 /2 width=5 by ex2_3_intro/ qed.
 
 lemma fpbg_fpbq_trans: ∀h,o,G1,G,G2,L1,L,L2,T1,T,T2.
-                       ⦃G1, L1, T1⦄ >≡[h, o] ⦃G, L, T⦄ → ⦃G, L, T⦄ ≽[h, o] ⦃G2, L2, T2⦄ →
-                       ⦃G1, L1, T1⦄ >≡[h, o] ⦃G2, L2, T2⦄.
+                       ⦃G1, L1, T1⦄ >≛[h, o] ⦃G, L, T⦄ → ⦃G, L, T⦄ ≽[h, o] ⦃G2, L2, T2⦄ →
+                       ⦃G1, L1, T1⦄ >≛[h, o] ⦃G2, L2, T2⦄.
 #h #o #G1 #G #G2 #L1 #L #L2 #T1 #T #T2 *
 /3 width=9 by fpbs_strap1, ex2_3_intro/
 qed-.

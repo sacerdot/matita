@@ -63,7 +63,7 @@ lemma csx_ind_fpb: ∀h,o. ∀R:relation3 genv lenv term.
 
 lemma csx_ind_fpbg: ∀h,o. ∀R:relation3 genv lenv term.
                     (∀G1,L1,T1. ⦃G1, L1⦄ ⊢ ⬊*[h, o] T1 →
-                                (∀G2,L2,T2. ⦃G1, L1, T1⦄ >≡[h, o] ⦃G2, L2, T2⦄ → R G2 L2 T2) →
+                                (∀G2,L2,T2. ⦃G1, L1, T1⦄ >≛[h, o] ⦃G2, L2, T2⦄ → R G2 L2 T2) →
                                 R G1 L1 T1
                     ) →
                     ∀G,L,T. ⦃G, L⦄ ⊢ ⬊*[h, o] T → R G L T.

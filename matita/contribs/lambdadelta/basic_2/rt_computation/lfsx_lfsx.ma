@@ -22,7 +22,7 @@ include "basic_2/rt_computation/lfsx.ma".
 
 (* Basic_2A1: uses: lsx_lleq_trans *)
 lemma lfsx_lfdeq_trans: ∀h,o,G,L1,T. G ⊢ ⬈*[h, o, T] 𝐒⦃L1⦄ →
-                        ∀L2. L1 ≡[h, o, T] L2 → G ⊢ ⬈*[h, o, T] 𝐒⦃L2⦄.
+                        ∀L2. L1 ≛[h, o, T] L2 → G ⊢ ⬈*[h, o, T] 𝐒⦃L2⦄.
 #h #o #G #L1 #T #H @(lfsx_ind … H) -L1
 #L1 #_ #IHL1 #L2 #HL12 @lfsx_intro
 #L #HL2 #HnL2 elim (lfdeq_lfpx_trans … HL2 … HL12) -HL2

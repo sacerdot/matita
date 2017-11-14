@@ -52,7 +52,7 @@ lemma aaa_ind_fpb: ∀h,o. ∀R:relation3 genv lenv term.
 
 fact aaa_ind_fpbg_aux: ∀h,o. ∀R:relation3 genv lenv term.
                        (∀G1,L1,T1,A. ⦃G1, L1⦄ ⊢ T1 ⁝ A →
-                                     (∀G2,L2,T2. ⦃G1, L1, T1⦄ >≡[h, o] ⦃G2, L2, T2⦄ → R G2 L2 T2) →
+                                     (∀G2,L2,T2. ⦃G1, L1, T1⦄ >≛[h, o] ⦃G2, L2, T2⦄ → R G2 L2 T2) →
                                      R G1 L1 T1
                        ) →
                        ∀G,L,T. ⦃G, L⦄ ⊢ ⬊*[h, o] T → ∀A. ⦃G, L⦄ ⊢ T ⁝ A → R G L T.
@@ -64,7 +64,7 @@ qed-.
 
 lemma aaa_ind_fpbg: ∀h,o. ∀R:relation3 genv lenv term.
                     (∀G1,L1,T1,A. ⦃G1, L1⦄ ⊢ T1 ⁝ A →
-                                  (∀G2,L2,T2. ⦃G1, L1, T1⦄ >≡[h, o] ⦃G2, L2, T2⦄ → R G2 L2 T2) →
+                                  (∀G2,L2,T2. ⦃G1, L1, T1⦄ >≛[h, o] ⦃G2, L2, T2⦄ → R G2 L2 T2) →
                                   R G1 L1 T1
                     ) →
                     ∀G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → R G L T.
