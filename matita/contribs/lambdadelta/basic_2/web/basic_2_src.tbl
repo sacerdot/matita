@@ -221,6 +221,7 @@ table {
           }
         ]
         [ { "generic entrywise extension" * } {
+             [ "lex ( ? ⦻[?] ? )" * ]
              [ "lexs ( ? ⦻*[?,?,?] ? )" "lexs_tc" + "lexs_length" + "lexs_lexs" * ]
           }
         ]
@@ -251,7 +252,8 @@ table {
           }
         ]
         [ { "local environments" * } {
-             [ "lenv_ext2" * ]
+             [ "ceq_ext" "ceq_ext_ceq_ext" * ]
+             [ "cext2" * ]
              [ "lenv_length ( |?| )" * ]
              [ "lenv_weight ( ♯{?} )" * ]
              [ "lenv" * ]
