@@ -170,6 +170,9 @@ table {
              [ "lfdeq ( ? ≛[?,?,?] ? )" "lfdeq_length" + "lfdeq_drops" + "lfdeq_fqup" + "lfdeq_fqus" + "lfdeq_lfdeq" * ]
           }
         ]
+        [ { "syntactic equivalence on referred entries" * } {
+             [ "lfeq ( ? ≡[?] ? )" * ]
+          }
         [ { "generic extension on referred entries" * } {
              [ "lfxs ( ? ⦻*[?,?] ? )" "lfxs_length" + "lfxs_drops" + "lfxs_fqup" + "lfxs_lfxs" * ]
           }
@@ -207,7 +210,7 @@ table {
    [ { "relocation" * } {
         [ { "generic slicing for local environments" * } {
              [ "drops_vector ( ⬇*[?,?] ? ≡ ? ) ( ⬇*[?] ? ≡ ? )" * ]
-             [ "drops ( ⬇*[?,?] ? ≡ ? ) ( ⬇*[?] ? ≡ ? )" "drops_lstar" + "drops_weight" + "drops_length" + "drops_ext2" + "drops_lexs" + "drops_lreq" + "drops_drops" * ]
+             [ "drops ( ⬇*[?,?] ? ≡ ? ) ( ⬇*[?] ? ≡ ? )" "drops_lstar" + "drops_weight" + "drops_length" + "drops_cext2" + "drops_lexs" + "drops_lreq" + "drops_drops" * ]
           }
         ]
         [ { "generic relocation" * } {
@@ -356,7 +359,7 @@ class "italic"            { 1 }
           }
         ]
         [ { "pointwise extension of a relation" * } {
-             [ "lpx_sn" "lpx_sn_alt" + "lpx_sn_tc" + "lpx_sn_drop" + "lpx_sn_lpx_sn" * ]
+             [ "lpx_sn" "lpx_sn_alt" + "lpx_sn_drop" + "lpx_sn_lpx_sn" * ]
           }
         ]
              [ "cpx_lreq" + "cpr_cir" + "fpb_lift" + "fpbq_lift" ]

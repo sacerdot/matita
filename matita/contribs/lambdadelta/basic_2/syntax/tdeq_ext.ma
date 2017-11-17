@@ -13,8 +13,8 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/stareq_5.ma".
+include "basic_2/syntax/cext2.ma".
 include "basic_2/syntax/tdeq.ma".
-include "basic_2/syntax/lenv_ext2.ma".
 
 (* EXTENDED DEGREE-BASED EQUIVALENCE ****************************************)
 

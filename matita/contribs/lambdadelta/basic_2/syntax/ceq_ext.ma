@@ -13,13 +13,19 @@
 (**************************************************************************)
 
 include "basic_2/syntax/cext2.ma".
-include "basic_2/rt_transition/cpx.ma".
 
-(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR BINDERS ***********)
+(* CONTEXT-AWARE SYNTACTIC EQUIVALENCE FOR BINDERS **************************)
 
-definition cpx_ext (h) (G): relation3 lenv bind bind ≝
-                            cext2 (cpx h G).
+definition ceq_ext: lenv → relation bind ≝
+                    cext2 ceq.
 
-interpretation
-   "uncounted context-sensitive parallel rt-transition (binder)"
-   'PRedTy h G L I1 I2 = (cpx_ext h G L I1 I2).
+(* Basic properties *********************************************************)
+
+lemma ceq_ext_refl (L): reflexive … (ceq_ext L).
+/2 width=1 by ext2_refl/ qed.
+
+(* Basic inversion lemmas ***************************************************)
+
+lemma ceq_ext_inv_eq: ∀L,I1,I2. ceq_ext L I1 I2 → I1 = I2.
+#L #I1 #I2 * -I1 -I2 //
+qed-.   

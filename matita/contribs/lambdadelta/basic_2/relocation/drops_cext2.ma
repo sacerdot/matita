@@ -12,20 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/syntax/lenv_ext2.ma".
+include "basic_2/relocation/drops.ma".
 
-(* EXTENSION TO BINDERS OF A CONTEXT-SENSITIVE RELATION FOR TERMS ***********)
+(* GENERIC SLICING FOR LOCAL ENVIRONMENTS ***********************************)
 
-definition ceq_ext: lenv → relation bind ≝
-                    cext2 ceq.
+(* Properties with the extension to binders of a context-sensitive relation *)
 
-(* Basic properties *********************************************************)
-
-lemma ceq_ext_refl (L): reflexive … (ceq_ext L).
-/2 width=1 by ext2_refl/ qed.
-
-(* Basic inversion lemmas ***************************************************)
-
-lemma ceq_ext_inv_eq: ∀L,I1,I2. ceq_ext L I1 I2 → I1 = I2.
-#L #I1 #I2 * -I1 -I2 //
-qed-.   
+lemma cext2_d_liftable2_sn: ∀R. d_liftable2_sn … lifts R →
+                            d_liftable2_sn … liftsb (cext2 R).
+#R #HR #K #I1 #I2 * -I1 -I2 #I [| #T1 #T2 #HT12 ]
+#b #f #L #HLK #Z1 #H
+[ lapply (liftsb_inv_unit_sn … H)
+| lapply (liftsb_inv_pair_sn … H) * #U1 #HTU1
+] -H #H destruct /3 width=3 by ext2_unit, ex2_intro/
+elim (HR … HT12 … HLK … HTU1) -HR -b -K -T1 /3 width=3 by ext2_pair, ex2_intro/
+qed-. 

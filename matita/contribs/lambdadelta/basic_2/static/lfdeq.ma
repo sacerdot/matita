@@ -195,11 +195,3 @@ lemma lfdeq_fwd_flat_dx: ∀h,o,I,L1,L2,V,T. L1 ≛[h, o, ⓕ{I}V.T] L2 → L1 �
 lemma lfdeq_fwd_dx: ∀h,o,I2,L1,K2. ∀T:term. L1 ≛[h, o, T] K2.ⓘ{I2} →
                     ∃∃I1,K1. L1 = K1.ⓘ{I1}.
 /2 width=5 by lfxs_fwd_dx/ qed-.
-
-(* Basic_2A1: removed theorems 10:
-              lleq_ind lleq_fwd_lref
-              lleq_fwd_drop_sn lleq_fwd_drop_dx
-              lleq_skip lleq_lref lleq_free
-              lleq_Y lleq_ge_up lleq_ge
-               
-*)

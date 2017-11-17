@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/relocation/drops_cext2.ma".
 include "basic_2/relocation/drops_lexs.ma".
-include "basic_2/relocation/drops_ext2.ma".
 include "basic_2/static/frees_drops.ma".
 include "basic_2/static/lfxs.ma".
 

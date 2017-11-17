@@ -12,29 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(*
 include "basic_2/static/lfeq.ma".
-*)
 include "basic_2/static/lfxs_lfxs.ma".
 include "basic_2/i_static/tc_lfxs_fqup.ma".
 
-include "basic_2/notation/relations/lazyeqsn_3.ma".
-
-definition ceq_ext: relation3 lenv bind bind ≝
-                    cext2 (λL,T1,T2. T1 = T2).
-
-definition lfeq: relation3 term lenv lenv ≝
-                 lfxs (λL,T1,T2. T1 = T2).
-
-interpretation
-   "syntactic equivalence on referred entries (local environment)"
-   'LazyEqSn T L1 L2 = (lfeq T L1 L2).
-
-axiom lfeq_lfxs_trans: ∀R,L1,L,T. L1 ≡[T] L →
-                       ∀L2. L ⪤*[R, T] L2 → L1 ⪤*[R, T] L2.
-
-axiom cext2_inv_LTC: ∀R,L,I1,I2. cext2 (LTC … R) L I1 I2 → LTC … (cext2 R) L I1 I2.
 (*
+axiom cext2_inv_LTC: ∀R,L,I1,I2. cext2 (LTC … R) L I1 I2 → LTC … (cext2 R) L I1 I2.
+
 #R #L #I1 #I2 * -I1 -I2
 [ /2 width=1 by ext2_unit, inj/
 | #I #V1 #V2 #HV12 
@@ -51,9 +35,10 @@ lemma pippo: ∀RN,RP. (∀L. reflexive … (RP L)) →
 [ @step [3: 
 *)
 
+(*
 axiom lexs_frees_confluent_LTC_sn: ∀RN,RP. lexs_frees_confluent RN RP →
                                    lexs_frees_confluent (LTC … RN) RP.
-(*
+
 #RN #RP #HR #f1 #L1 #T #Hf1 #L2 #H  
 *)
 (* ITERATED EXTENSION ON REFERRED ENTRIES OF A CONTEXT-SENSITIVE REALTION ***)

@@ -12,19 +12,28 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/syntax/lenv_ext2.ma".
-include "basic_2/relocation/drops.ma".
+include "basic_2/notation/relations/lazyeqsn_3.ma".
+include "basic_2/static/lfxs.ma".
 
-(* GENERIC SLICING FOR LOCAL ENVIRONMENTS ***********************************)
+(* SYNTACTIC EQUIVALENCE FOR LOCAL ENVIRONMENTS ON REFERRED ENTRIES *********)
 
-(* Properties with the extension to binders of a context-sensitive relation *)
+(* Basic_2A1: was: lleq *)
+definition lfeq: relation3 term lenv lenv ≝
+                 lfxs ceq.
 
-lemma cext2_d_liftable2_sn: ∀R. d_liftable2_sn … lifts R →
-                            d_liftable2_sn … liftsb (cext2 R).
-#R #HR #K #I1 #I2 * -I1 -I2 #I [| #T1 #T2 #HT12 ]
-#b #f #L #HLK #Z1 #H
-[ lapply (liftsb_inv_unit_sn … H)
-| lapply (liftsb_inv_pair_sn … H) * #U1 #HTU1
-] -H #H destruct /3 width=3 by ext2_unit, ex2_intro/
-elim (HR … HT12 … HLK … HTU1) -HR -b -K -T1 /3 width=3 by ext2_pair, ex2_intro/
-qed-. 
+interpretation
+   "syntactic equivalence on referred entries (local environment)"
+   'LazyEqSn T L1 L2 = (lfeq T L1 L2).
+
+(***************************************************)
+
+axiom lfeq_lfxs_trans: ∀R,L1,L,T. L1 ≡[T] L →
+                       ∀L2. L ⪤*[R, T] L2 → L1 ⪤*[R, T] L2.
+
+(* Basic_2A1: removed theorems 10:
+              lleq_ind lleq_fwd_lref
+              lleq_fwd_drop_sn lleq_fwd_drop_dx
+              lleq_skip lleq_lref lleq_free
+              lleq_Y lleq_ge_up lleq_ge
+               
+*)

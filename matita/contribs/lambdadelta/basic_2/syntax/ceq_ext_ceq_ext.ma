@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/syntax/lenv_ceq.ma".
+include "basic_2/syntax/ceq_ext.ma".
 
-(* CONTEXT-DEPENDENT SYNTACTIC EQUIVALENCE FOR BINDERS **********************)
+(* CONTEXT-AWARE SYNTACTIC EQUIVALENCE FOR BINDERS **************************)
 
 (* Main properties **********************************************************)
 
