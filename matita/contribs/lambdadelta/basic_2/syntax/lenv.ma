@@ -52,7 +52,7 @@ interpretation "abstraction (local environment)"
 
 definition cfull: relation3 lenv bind bind ≝ λL,I1,I2. ⊤.
 
-definition ceq: relation3 lenv bind bind ≝ λL. eq ….
+definition ceq: relation3 lenv term term ≝ λL. eq ….
 
 (* Basic properties *********************************************************)
 

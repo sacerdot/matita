@@ -12,26 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/syntax/ceq_ext_ceq_ext.ma".
-include "basic_2/relocation/lexs_lexs.ma".
+include "basic_2/syntax/lenv_ceq.ma".
 
-(* RANGED EQUIVALENCE FOR LOCAL ENVIRONMENTS ********************************)
+(* CONTEXT-DEPENDENT SYNTACTIC EQUIVALENCE FOR BINDERS **********************)
 
 (* Main properties **********************************************************)
 
-theorem lreq_trans: ∀f. Transitive … (lreq f).
-/3 width=5 by lexs_trans, ceq_ext_trans/ qed-.
-
-theorem lreq_canc_sn: ∀f. left_cancellable … (lreq f).
-/3 width=3 by lexs_canc_sn, lreq_trans, lreq_sym/ qed-.
-
-theorem lreq_canc_dx: ∀f. right_cancellable … (lreq f).
-/3 width=3 by lexs_canc_dx, lreq_trans, lreq_sym/ qed-.
-
-theorem lreq_join: ∀f1,L1,L2. L1 ≡[f1] L2 → ∀f2. L1 ≡[f2] L2 →
-                   ∀f. f1 ⋓ f2 ≡ f → L1 ≡[f] L2.
-/2 width=5 by lexs_join/ qed-.
-
-theorem lreq_meet: ∀f1,L1,L2. L1 ≡[f1] L2 → ∀f2. L1 ≡[f2] L2 →
-                   ∀f. f1 ⋒ f2 ≡ f → L1 ≡[f] L2.
-/2 width=5 by lexs_meet/ qed-.
+theorem ceq_ext_trans: ∀L1,I1,I. ceq_ext L1 I1 I →
+                       ∀L2,I2. ceq_ext L2 I I2 → ∀L3. ceq_ext L3 I1 I2. 
+#L1 #I1 #I * -I1 -I //
+#I1 #V1 #V #HV1 #L2 #Z #H elim (ext2_inv_pair_sn … H) -H //
+qed-.

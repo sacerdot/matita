@@ -18,7 +18,6 @@ include "basic_2/syntax/lenv.ma".
 
 (* GENERIC ENTRYWISE EXTENSION OF CONTEXT-SENSITIVE REALTIONS FOR TERMS *****)
 
-(* Basic_2A1: includes: lpx_sn_atom lpx_sn_pair *)
 inductive lexs (RN,RP:relation3 lenv bind bind): rtmap → relation lenv ≝
 | lexs_atom: ∀f. lexs RN RP f (⋆) (⋆)
 | lexs_next: ∀f,I1,I2,L1,L2.

@@ -432,10 +432,12 @@ qed-.
 
 (* Properties with context-sensitive equivalence for terms ******************)
 
-lemma ceq_lift_sn: d_liftable2_sn … liftsb ceq.
+lemma ceq_lift_sn: d_liftable2_sn … liftsb ceq_ext.
+#K #I1 #I2 #H <(ceq_ext_inv_eq … H) -I2
 /2 width=3 by ex2_intro/ qed-.
 
-lemma ceq_inv_lift_sn: d_deliftable2_sn … liftsb ceq.
+lemma ceq_inv_lift_sn: d_deliftable2_sn … liftsb ceq_ext.
+#L #J1 #J2 #H <(ceq_ext_inv_eq … H) -J2
 /2 width=3 by ex2_intro/ qed-.
 
 (* Note: d_deliftable2_sn cfull does not hold *)

@@ -221,7 +221,7 @@ table {
           }
         ]
         [ { "generic entrywise extension" * } {
-             [ "lexs ( ? ⦻*[?,?,?] ? )" "lexs_length" + "lexs_lexs" * ]
+             [ "lexs ( ? ⦻*[?,?,?] ? )" "lexs_tc" + "lexs_length" + "lexs_lexs" * ]
           }
         ]
      }
@@ -258,7 +258,7 @@ table {
           }
         ]
         [ { "binders for local environments" * } {
-             [ "ext2" "ext2_ext2" * ]
+             [ "ext2" "ext2_tc" + "ext2_ext2" * ]
              [ "bind" "bind_weight" * ]
           }
         ]

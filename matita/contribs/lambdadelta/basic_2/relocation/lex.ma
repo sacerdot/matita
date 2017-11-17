@@ -12,26 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/syntax/ceq_ext_ceq_ext.ma".
-include "basic_2/relocation/lexs_lexs.ma".
+include "basic_2/notation/relations/relation_3.ma".
+include "basic_2/relocation/lexs.ma".
 
-(* RANGED EQUIVALENCE FOR LOCAL ENVIRONMENTS ********************************)
+(* GENERIC EXTENSION OF A CONTEXT-SENSITIVE REALTION ON TERMS ***************)
 
-(* Main properties **********************************************************)
+(* Basic_2A1: includes: lpx_sn_atom lpx_sn_pair *)
+definition lex: (lenv → relation bind) → relation lenv ≝
+                λR,L1,L2. ∃∃f. 𝐈⦃f⦄ & L1 ⪤*[cfull, R, f] L2.
 
-theorem lreq_trans: ∀f. Transitive … (lreq f).
-/3 width=5 by lexs_trans, ceq_ext_trans/ qed-.
-
-theorem lreq_canc_sn: ∀f. left_cancellable … (lreq f).
-/3 width=3 by lexs_canc_sn, lreq_trans, lreq_sym/ qed-.
-
-theorem lreq_canc_dx: ∀f. right_cancellable … (lreq f).
-/3 width=3 by lexs_canc_dx, lreq_trans, lreq_sym/ qed-.
-
-theorem lreq_join: ∀f1,L1,L2. L1 ≡[f1] L2 → ∀f2. L1 ≡[f2] L2 →
-                   ∀f. f1 ⋓ f2 ≡ f → L1 ≡[f] L2.
-/2 width=5 by lexs_join/ qed-.
-
-theorem lreq_meet: ∀f1,L1,L2. L1 ≡[f1] L2 → ∀f2. L1 ≡[f2] L2 →
-                   ∀f. f1 ⋒ f2 ≡ f → L1 ≡[f] L2.
-/2 width=5 by lexs_meet/ qed-.
+interpretation "generic extension (local environment)"
+   'Relation R L1 L2 = (lex R L1 L2).

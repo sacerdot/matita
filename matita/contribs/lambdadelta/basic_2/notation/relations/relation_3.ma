@@ -12,26 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/syntax/ceq_ext_ceq_ext.ma".
-include "basic_2/relocation/lexs_lexs.ma".
+(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-(* RANGED EQUIVALENCE FOR LOCAL ENVIRONMENTS ********************************)
-
-(* Main properties **********************************************************)
-
-theorem lreq_trans: ∀f. Transitive … (lreq f).
-/3 width=5 by lexs_trans, ceq_ext_trans/ qed-.
-
-theorem lreq_canc_sn: ∀f. left_cancellable … (lreq f).
-/3 width=3 by lexs_canc_sn, lreq_trans, lreq_sym/ qed-.
-
-theorem lreq_canc_dx: ∀f. right_cancellable … (lreq f).
-/3 width=3 by lexs_canc_dx, lreq_trans, lreq_sym/ qed-.
-
-theorem lreq_join: ∀f1,L1,L2. L1 ≡[f1] L2 → ∀f2. L1 ≡[f2] L2 →
-                   ∀f. f1 ⋓ f2 ≡ f → L1 ≡[f] L2.
-/2 width=5 by lexs_join/ qed-.
-
-theorem lreq_meet: ∀f1,L1,L2. L1 ≡[f1] L2 → ∀f2. L1 ≡[f2] L2 →
-                   ∀f. f1 ⋒ f2 ≡ f → L1 ≡[f] L2.
-/2 width=5 by lexs_meet/ qed-.
+notation "hvbox( L1 ⪤  [ break term 46 R ] break term 46 L2 )"
+   non associative with precedence 45
+   for @{ 'Relation $R $L1 $L2 }.
