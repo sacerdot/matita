@@ -12,22 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/relocation/rtmap_uni.ma".
-include "basic_2/notation/relations/relation_3.ma".
-include "basic_2/syntax/cext2.ma".
-include "basic_2/relocation/lexs.ma".
+include "basic_2/static/lfxs_fqup.ma".
+include "basic_2/static/lfeq.ma".
 
-(* GENERIC EXTENSION OF A CONTEXT-SENSITIVE REALTION ON TERMS ***************)
+(* SYNTACTIC EQUIVALENCE FOR LOCAL ENVIRONMENTS ON REFERRED ENTRIES *********)
 
-(* Basic_2A1: includes: lpx_sn_atom lpx_sn_pair *)
-definition lex: (lenv → relation term) → relation lenv ≝
-                λR,L1,L2. ∃∃f. 𝐈⦃f⦄ & L1 ⪤*[cfull, cext2 R, f] L2.
+(* Advanced properties ******************************************************)
 
-interpretation "generic extension (local environment)"
-   'Relation R L1 L2 = (lex R L1 L2).
-
-(* Basic properties *********************************************************)
-
-(* Basic_2A1: was: lpx_sn_refl *)
-lemma lex_refl: ∀R. c_reflexive … R → reflexive … (lex R).
-/4 width=3 by lexs_refl, ext2_refl, ex2_intro/ qed.
+(* Basic_2A1: was: lleq_refl *)
+lemma lfeq_refl: ∀T. reflexive … (lfeq T).
+/2 width=1 by lfxs_refl/ qed.

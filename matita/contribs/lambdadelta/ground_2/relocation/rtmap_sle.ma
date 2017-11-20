@@ -24,7 +24,7 @@ coinductive sle: relation rtmap ≝
 .
 
 interpretation "inclusion (rtmap)"
-   'subseteq t1 t2 = (sle t1 t2).
+   'subseteq f1 f2 = (sle f1 f2).
 
 (* Basic properties *********************************************************)
 
@@ -83,7 +83,7 @@ lemma sle_inv_pp: ∀g1,g2. g1 ⊆ g2 → ∀f1,f2. ↑f1 = g1 → ↑f2 = g2 �
 #x1 #H #Hx1 destruct lapply (injective_push … Hx1) -Hx1 //
 qed-.
 
-lemma sle_inv_nn: ∀g1,g2. g1 ⊆ g2 → ∀f1,f2.  ⫯f1 = g1 → ⫯f2 = g2 → f1 ⊆ f2.
+lemma sle_inv_nn: ∀g1,g2. g1 ⊆ g2 → ∀f1,f2. ⫯f1 = g1 → ⫯f2 = g2 → f1 ⊆ f2.
 #g1 #g2 #H #f1 #f2 #H1 #H2 elim (sle_inv_nx … H … H1) -g1
 #x2 #H #Hx2 destruct lapply (injective_next … Hx2) -Hx2 //
 qed-.

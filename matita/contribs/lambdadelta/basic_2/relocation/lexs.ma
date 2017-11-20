@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "ground_2/relocation/rtmap_sle.ma".
+include "ground_2/relocation/rtmap_sdj.ma".
 include "basic_2/notation/relations/relationstar_5.ma".
 include "basic_2/syntax/lenv.ma".
 
@@ -170,10 +171,7 @@ lemma lexs_eq_repl_fwd: ∀RN,RP,L1,L2. eq_repl_fwd … (λf. L1 ⪤*[RN, RP, f]
 #RN #RP #L1 #L2 @eq_repl_sym /2 width=3 by lexs_eq_repl_back/ (**) (* full auto fails *)
 qed-.
 
-(* Basic_2A1: uses: lpx_sn_refl *)
-lemma lexs_refl: ∀RN,RP.
-                 (∀L. reflexive … (RN L)) →
-                 (∀L. reflexive … (RP L)) →
+lemma lexs_refl: ∀RN,RP. c_reflexive … RN → c_reflexive … RP →
                  ∀f.reflexive … (lexs RN RP f).
 #RN #RP #HRN #HRP #f #L generalize in match f; -f elim L -L //
 #L #I #IH #f elim (pn_split f) *
@@ -194,16 +192,13 @@ lemma lexs_pair_repl: ∀RN,RP,f,I1,I2,L1,L2.
                       L1.ⓘ{J1} ⪤*[RN, RP, f] L2.ⓘ{J2}.
 /3 width=3 by lexs_inv_tl, lexs_fwd_bind/ qed-.
 
-lemma lexs_co: ∀RN1,RP1,RN2,RP2.
-               (∀L1,I1,I2. RN1 L1 I1 I2 → RN2 L1 I1 I2) →
-               (∀L1,I1,I2. RP1 L1 I1 I2 → RP2 L1 I1 I2) →
+lemma lexs_co: ∀RN1,RP1,RN2,RP2. RN1 ⊆ RN2 → RP1 ⊆ RP2 →
                ∀f,L1,L2. L1 ⪤*[RN1, RP1, f] L2 → L1 ⪤*[RN2, RP2, f] L2.
 #RN1 #RP1 #RN2 #RP2 #HRN #HRP #f #L1 #L2 #H elim H -f -L1 -L2
 /3 width=1 by lexs_atom, lexs_next, lexs_push/
 qed-.
 
-lemma lexs_co_isid: ∀RN1,RP1,RN2,RP2.
-                    (∀L1,I1,I2. RP1 L1 I1 I2 → RP2 L1 I1 I2) →
+lemma lexs_co_isid: ∀RN1,RP1,RN2,RP2. RP1 ⊆ RP2 →
                     ∀f,L1,L2. L1 ⪤*[RN1, RP1, f] L2 → 𝐈⦃f⦄ →
                     L1 ⪤*[RN2, RP2, f] L2.
 #RN1 #RP1 #RN2 #RP2 #HR #f #L1 #L2 #H elim H -f -L1 -L2 //
@@ -213,7 +208,19 @@ lemma lexs_co_isid: ∀RN1,RP1,RN2,RP2.
 ]
 qed-.
 
-lemma sle_lexs_trans: ∀RN,RP. (∀L,I1,I2. RN L I1 I2 → RP L I1 I2) →
+lemma lexs_sdj: ∀RN,RP. RP ⊆ RN →
+                ∀f1,L1,L2. L1 ⪤*[RN, RP, f1] L2 →
+                ∀f2. f1 ∥ f2 → L1 ⪤*[RP, RN, f2] L2.
+#RN #RP #HR #f1 #L1 #L2 #H elim H -f1 -L1 -L2 //
+#f1 #I1 #I2 #L1 #L2 #_ #HI12 #IH #f2 #H12
+[ elim (sdj_inv_nx … H12) -H12 [2,3: // ]
+  #g2 #H #H2 destruct /3 width=1 by lexs_push/
+| elim (sdj_inv_px … H12) -H12 [2,4: // ] *
+  #g2 #H #H2 destruct /3 width=1 by lexs_next, lexs_push/
+]
+qed-.
+
+lemma sle_lexs_trans: ∀RN,RP. RN ⊆ RP →
                       ∀f2,L1,L2. L1 ⪤*[RN, RP, f2] L2 →
                       ∀f1. f1 ⊆ f2 → L1 ⪤*[RN, RP, f1] L2.
 #RN #RP #HR #f2 #L1 #L2 #H elim H -f2 -L1 -L2 //
@@ -226,7 +233,7 @@ lemma sle_lexs_trans: ∀RN,RP. (∀L,I1,I2. RN L I1 I2 → RP L I1 I2) →
 ]
 qed-.
 
-lemma sle_lexs_conf: ∀RN,RP. (∀L,I1,I2. RP L I1 I2 → RN L I1 I2) →
+lemma sle_lexs_conf: ∀RN,RP. RP ⊆ RN →
                      ∀f1,L1,L2. L1 ⪤*[RN, RP, f1] L2 →
                      ∀f2. f1 ⊆ f2 → L1 ⪤*[RN, RP, f2] L2.
 #RN #RP #HR #f1 #L1 #L2 #H elim H -f1 -L1 -L2 //
@@ -239,7 +246,7 @@ lemma sle_lexs_conf: ∀RN,RP. (∀L,I1,I2. RP L I1 I2 → RN L I1 I2) →
 ]
 qed-.
 
-lemma lexs_sle_split: ∀R1,R2,RP. (∀L. reflexive … (R1 L)) → (∀L. reflexive … (R2 L)) →
+lemma lexs_sle_split: ∀R1,R2,RP. c_reflexive … R1 → c_reflexive … R2 →
                       ∀f,L1,L2. L1 ⪤*[R1, RP, f] L2 → ∀g. f ⊆ g →
                       ∃∃L. L1 ⪤*[R1, RP, g] L & L ⪤*[R2, cfull, f] L2.
 #R1 #R2 #RP #HR1 #HR2 #f #L1 #L2 #H elim H -f -L1 -L2
@@ -248,6 +255,19 @@ lemma lexs_sle_split: ∀R1,R2,RP. (∀L. reflexive … (R1 L)) → (∀L. refle
 [ elim (sle_inv_nx … H ??) -H [ |*: // ] #g #Hfg #H destruct
   elim (IH … Hfg) -IH -Hfg /3 width=5 by lexs_next, ex2_intro/
 | elim (sle_inv_px … H ??) -H [1,3: * |*: // ] #g #Hfg #H destruct
+  elim (IH … Hfg) -IH -Hfg /3 width=5 by lexs_next, lexs_push, ex2_intro/
+]
+qed-.
+
+lemma lexs_sdj_split: ∀R1,R2,RP. c_reflexive … R1 → c_reflexive … R2 →
+                      ∀f,L1,L2. L1 ⪤*[R1, RP, f] L2 → ∀g. f ∥ g →
+                      ∃∃L. L1 ⪤*[RP, R1, g] L & L ⪤*[R2, cfull, f] L2.
+#R1 #R2 #RP #HR1 #HR2 #f #L1 #L2 #H elim H -f -L1 -L2
+[ /2 width=3 by lexs_atom, ex2_intro/ ]
+#f #I1 #I2 #L1 #L2 #_ #HI12 #IH #y #H
+[ elim (sdj_inv_nx … H ??) -H [ |*: // ] #g #Hfg #H destruct
+  elim (IH … Hfg) -IH -Hfg /3 width=5 by lexs_next, lexs_push, ex2_intro/
+| elim (sdj_inv_px … H ??) -H [1,3: * |*: // ] #g #Hfg #H destruct
   elim (IH … Hfg) -IH -Hfg /3 width=5 by lexs_next, lexs_push, ex2_intro/
 ]
 qed-.

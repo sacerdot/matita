@@ -19,32 +19,32 @@ include "basic_2/relocation/lexs.ma".
 
 (* Properties with transitive closure ***************************************)
 
-lemma lexs_tc_refl: ∀RN,RP. (∀L. reflexive … (RN L)) → (∀L. reflexive … (RP L)) →
+lemma lexs_tc_refl: ∀RN,RP. c_reflexive … RN → c_reflexive … RP →
                     ∀f. reflexive … (TC … (lexs RN RP f)).
 /3 width=1 by lexs_refl, TC_reflexive/ qed.
 
-lemma lexs_tc_next_sn: ∀RN,RP. (∀L. reflexive … (RN L)) →
+lemma lexs_tc_next_sn: ∀RN,RP. c_reflexive … RN →
                        ∀f,I2,L1,L2. TC … (lexs RN RP f) L1 L2 → ∀I1. RN L1 I1 I2 → 
                        TC … (lexs RN RP (⫯f)) (L1.ⓘ{I1}) (L2.ⓘ{I2}).
 #RN #RP #HRN #f #I2 #L1 #L2 #H @(TC_ind_dx ??????? H) -L1
 /3 width=3 by lexs_next, TC_strap, inj/
 qed.
 
-lemma lexs_tc_next_dx: ∀RN,RP. (∀L. reflexive … (RN L)) → (∀L. reflexive … (RP L)) →
+lemma lexs_tc_next_dx: ∀RN,RP. c_reflexive … RN → c_reflexive … RP →
                        ∀f,I1,I2,L1. (LTC … RN) L1 I1 I2 → ∀L2. L1 ⪤*[RN, RP, f] L2 →
                        TC … (lexs RN RP (⫯f)) (L1.ⓘ{I1}) (L2.ⓘ{I2}).
 #RN #RP #HRN #HRP #f #I1 #I2 #L1 #H elim H -I2
 /4 width=5 by lexs_refl, lexs_next, step, inj/
 qed.
 
-lemma lexs_tc_push_sn: ∀RN,RP. (∀L. reflexive … (RP L)) →
+lemma lexs_tc_push_sn: ∀RN,RP. c_reflexive … RP →
                        ∀f,I2,L1,L2. TC … (lexs RN RP f) L1 L2 → ∀I1. RP L1 I1 I2 → 
                        TC … (lexs RN RP (↑f)) (L1.ⓘ{I1}) (L2.ⓘ{I2}).
 #RN #RP #HRP #f #I2 #L1 #L2 #H @(TC_ind_dx ??????? H) -L1
 /3 width=3 by lexs_push, TC_strap, inj/
 qed.
 
-lemma lexs_tc_push_dx: ∀RN,RP. (∀L. reflexive … (RN L)) → (∀L. reflexive … (RP L)) →
+lemma lexs_tc_push_dx: ∀RN,RP. c_reflexive … RN → c_reflexive … RP →
                        ∀f,I1,I2,L1. (LTC … RP) L1 I1 I2 → ∀L2. L1 ⪤*[RN, RP, f] L2 →
                        TC … (lexs RN RP (↑f)) (L1.ⓘ{I1}) (L2.ⓘ{I2}).
 #RN #RP #HRN #HRP #f #I1 #I2 #L1 #H elim H -I2
@@ -63,14 +63,14 @@ qed.
 
 (* Main properties with transitive closure **********************************)
 
-theorem lexs_tc_next: ∀RN,RP. (∀L. reflexive … (RN L)) → (∀L. reflexive … (RP L)) →
+theorem lexs_tc_next: ∀RN,RP. c_reflexive … RN → c_reflexive … RP →
                       ∀f,I1,I2,L1. (LTC … RN) L1 I1 I2 → ∀L2. TC … (lexs RN RP f) L1 L2 →
                       TC … (lexs RN RP (⫯f)) (L1.ⓘ{I1}) (L2.ⓘ{I2}).
 #RN #RP #HRN #HRP #f #I1 #I2 #L1 #H elim H -I2
 /4 width=5 by lexs_tc_next_sn, lexs_tc_refl, trans_TC/
 qed.
 
-theorem lexs_tc_push: ∀RN,RP. (∀L. reflexive … (RN L)) → (∀L. reflexive … (RP L)) →
+theorem lexs_tc_push: ∀RN,RP. c_reflexive … RN → c_reflexive … RP →
                       ∀f,I1,I2,L1. (LTC … RP) L1 I1 I2 → ∀L2. TC … (lexs RN RP f) L1 L2 →
                       TC … (lexs RN RP (↑f)) (L1.ⓘ{I1}) (L2.ⓘ{I2}).
 #RN #RP #HRN #HRP #f #I1 #I2 #L1 #H elim H -I2
@@ -104,14 +104,14 @@ qed.
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma lexs_inv_tc_sn: ∀RN,RP. (∀L. reflexive … (RN L)) → (∀L. reflexive … (RP L)) →
+lemma lexs_inv_tc_sn: ∀RN,RP. c_reflexive … RN → c_reflexive … RP →
                       ∀f,L1,L2. L1 ⪤*[LTC … RN, RP, f] L2 → TC … (lexs RN RP f) L1 L2.
 #RN #RP #HRN #HRP #f #L1 #L2 #H elim H -f -L1 -L2
 /2 width=1 by lexs_tc_next, lexs_tc_push_sn, lexs_atom, inj/
 qed-.
 
 (* Basic_2A1: uses: lpx_sn_LTC_TC_lpx_sn *)
-lemma lexs_inv_tc_dx: ∀RN,RP. (∀L. reflexive … (RN L)) → (∀L. reflexive … (RP L)) →
+lemma lexs_inv_tc_dx: ∀RN,RP. c_reflexive … RN → c_reflexive … RP →
                       ∀f,L1,L2. L1 ⪤*[RN, LTC … RP, f] L2 → TC … (lexs RN RP f) L1 L2.
 #RN #RP #HRN #HRP #f #L1 #L2 #H elim H -f -L1 -L2
 /2 width=1 by lexs_tc_push, lexs_tc_next_sn, lexs_atom, inj/

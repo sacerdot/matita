@@ -17,13 +17,31 @@ include "ground_2/xoa/xoa_props.ma".
 
 (* GENERIC RELATIONS ********************************************************)
 
-(* PROPERTIES OF RELATIONS **************************************************)
+(* Inclusion ****************************************************************)
 
-definition relation5 : Type[0] → Type[0] → Type[0] → Type[0] → Type[0] → Type[0]
+definition subR2 (S1) (S2): relation (relation2 S1 S2) ≝
+           λR1,R2. (∀a1,a2. R1 a1 a2 → R2 a1 a2).
+
+interpretation "2-relation inclusion"
+   'subseteq R1 R2 = (subR2 ?? R1 R2).
+
+definition subR3 (S1) (S2) (S3): relation (relation3 S1 S2 S3) ≝
+           λR1,R2. (∀a1,a2,a3. R1 a1 a2 a3 → R2 a1 a2 a3).
+
+interpretation "3-relation inclusion"
+   'subseteq R1 R2 = (subR3 ??? R1 R2).
+
+(* Properties of relations **************************************************)
+
+definition relation5: Type[0] → Type[0] → Type[0] → Type[0] → Type[0] → Type[0]
 ≝ λA,B,C,D,E.A→B→C→D→E→Prop.
 
-definition relation6 : Type[0] → Type[0] → Type[0] → Type[0] → Type[0] → Type[0] → Type[0]
+definition relation6: Type[0] → Type[0] → Type[0] → Type[0] → Type[0] → Type[0] → Type[0]
 ≝ λA,B,C,D,E,F.A→B→C→D→E→F→Prop.
+
+(**) (* we dont use "∀a. reflexive … (R a)" since auto seems to dislike repeatd δ-expansion *)  
+definition c_reflexive (A) (B): predicate (relation3 A B B) ≝
+                                λR. ∀a,b. R a b b.
 
 definition Decidable: Prop → Prop ≝ λR. R ∨ (R → ⊥).
 
@@ -47,9 +65,9 @@ definition transitive2: ∀A. ∀R1,R2: relation A. Prop ≝ λA,R1,R2.
                         ∀a1,a0. R1 a1 a0 → ∀a2. R2 a0 a2 →
                         ∃∃a. R2 a1 a & R1 a a2.
 
-definition bi_confluent:  ∀A,B. ∀R: bi_relation A B. Prop ≝ λA,B,R.
-                          ∀a0,a1,b0,b1. R a0 b0 a1 b1 → ∀a2,b2. R a0 b0 a2 b2 →
-                          ∃∃a,b. R a1 b1 a b & R a2 b2 a b.
+definition bi_confluent: ∀A,B. ∀R: bi_relation A B. Prop ≝ λA,B,R.
+                         ∀a0,a1,b0,b1. R a0 b0 a1 b1 → ∀a2,b2. R a0 b0 a2 b2 →
+                         ∃∃a,b. R a1 b1 a b & R a2 b2 a b.
 
 definition lsub_trans: ∀A,B. relation2 (A→relation B) (relation A) ≝ λA,B,R1,R2.
                        ∀L2,T1,T2. R1 L2 T1 T2 → ∀L1. R2 L1 L2 → R1 L1 T1 T2.
