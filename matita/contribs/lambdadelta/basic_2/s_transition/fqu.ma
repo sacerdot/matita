@@ -44,7 +44,13 @@ interpretation
 
 (* Basic properties *********************************************************)
 
-lemma fqu_lref_S: ∀b,I,G,L,V,i. ⦃G, L.ⓑ{I}V, #⫯i⦄ ⊐[b] ⦃G, L, #i⦄.
+lemma fqu_sort: ∀b,I,G,L,s. ⦃G, L.ⓘ{I}, ⋆s⦄ ⊐[b] ⦃G, L, ⋆s⦄.
+/2 width=1 by fqu_drop/ qed.
+
+lemma fqu_lref_S: ∀b,I,G,L,i. ⦃G, L.ⓘ{I}, #⫯i⦄ ⊐[b] ⦃G, L, #i⦄.
+/2 width=1 by fqu_drop/ qed.
+
+lemma fqu_gref: ∀b,I,G,L,l. ⦃G, L.ⓘ{I}, §l⦄ ⊐[b] ⦃G, L, §l⦄.
 /2 width=1 by fqu_drop/ qed.
 
 (* Basic inversion lemmas ***************************************************)

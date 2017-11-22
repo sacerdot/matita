@@ -30,6 +30,13 @@ lemma tc_lfxs_pair_refl: ∀R. c_reflexive … R →
 /3 width=3 by tc_lfxs_step_dx, lfxs_pair_refl, inj/
 qed.
 
+lemma tc_lfxs_tc: ∀R,L1,L2,T,f. 𝐈⦃f⦄ → TC … (lexs cfull (cext2 R) f) L1 L2 →
+                  L1 ⪤**[R, T] L2.
+#R #L1 #L2 #T #f #Hf #H elim H -L2
+[ elim (frees_total L1 T) | #L elim (frees_total L T) ]
+/5 width=7 by lexs_sdj, tc_lfxs_step_dx, sdj_isid_sn, inj, ex2_intro/
+qed.
+
 (* Advanced eliminators *****************************************************)
 
 lemma tc_lfxs_ind_sn: ∀R. c_reflexive … R →

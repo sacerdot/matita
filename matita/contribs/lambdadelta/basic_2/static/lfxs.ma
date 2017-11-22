@@ -44,6 +44,16 @@ definition R_confluent2_lfxs: relation4 (relation3 lenv term term)
                               ∀L1. L0 ⪤*[RP1, T0] L1 → ∀L2. L0 ⪤*[RP2, T0] L2 →
                               ∃∃T. R2 L1 T1 T & R1 L2 T2 T.
 
+definition lfxs_confluent: relation … ≝
+                           λR1,R2. 
+                           ∀K1,K,V1. K1 ⪤*[R1, V1] K → ∀V. R1 K1 V1 V →
+                           ∀K2. K ⪤*[R2, V] K2 → K ⪤*[R2, V1] K2.
+
+definition lfxs_transitive: relation3 ? (relation3 ?? term) ? ≝
+                            λR1,R2,R3.
+                            ∀K1,K,V1. K1 ⪤*[R1, V1] K →
+                            ∀V. R1 K1 V1 V → ∀V2. R2 K V V2 → R3 K1 V1 V2.
+
 (* Basic inversion lemmas ***************************************************)
 
 lemma lfxs_inv_atom_sn: ∀R,Y2,T. ⋆ ⪤*[R, T] Y2 → Y2 = ⋆.

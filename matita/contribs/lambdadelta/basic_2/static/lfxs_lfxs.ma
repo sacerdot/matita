@@ -165,6 +165,59 @@ elim (lexs_conf … HL01 … HL02) /2 width=3 by ex2_intro/ [ | -HL01 -HL02 ]
 ]
 qed-.
 
+theorem lfxs_trans_gen: ∀R1,R2,R3. 
+                        c_reflexive … R1 → c_reflexive … R2 →
+                        lfxs_confluent R1 R2 → lfxs_transitive R1 R2 R3 →
+                        ∀L1,T,L. L1 ⪤*[R1, T] L →
+                        ∀L2. L ⪤*[R2, T] L2 → L1 ⪤*[R3, T] L2.
+#R1 #R2 #R3 #H1R #H2R #H3R #H4R #L1 #T @(fqup_wf_ind_eq (Ⓣ) … (⋆) L1 T) -L1 -T
+#G0 #L0 #T0 #IH #G #L1 * *
+[ #s #HG #HL #HT #L #H1 #L2 #H2 destruct
+  elim (lfxs_inv_sort … H1) -H1 *
+  [ #H1 #H0 destruct
+    >(lfxs_inv_atom_sn … H2) -L2 //
+  | #I1 #I #K1 #K #HK1 #H1 #H0 destruct
+    elim (lfxs_inv_sort_bind_sn … H2) -H2 #I2 #K2 #HK2 #H destruct
+    /4 width=3 by lfxs_sort, fqu_fqup/
+  ]
+| * [ | #i ] #HG #HL #HT #L #H1 #L2 #H2 destruct
+  [ elim (lfxs_inv_zero … H1) -H1 *
+    [ #H1 #H0 destruct
+      >(lfxs_inv_atom_sn … H2) -L2 //
+    | #I #K1 #K #V1 #V #HK1 #H1 #H0 #H destruct
+      elim (lfxs_inv_zero_pair_sn … H2) -H2 #K2 #V2 #HK2 #HV2 #H destruct
+      /4 width=7 by lfxs_pair, fqu_fqup, fqu_lref_O/
+    | #f1 #I #K1 #K #Hf1 #HK1 #H1 #H0 destruct
+      elim (lfxs_inv_zero_unit_sn … H2) -H2 #f2 #K2 #Hf2 #HK2 #H destruct
+      /5 width=8 by lfxs_unit, lexs_trans_id_cfull, lexs_eq_repl_back, isid_inv_eq_repl/
+    ]
+  | elim (lfxs_inv_lref … H1) -H1 *
+    [ #H1 #H0 destruct
+      >(lfxs_inv_atom_sn … H2) -L2 //
+    | #I1 #I #K1 #K #HK1 #H1 #H0 destruct
+      elim (lfxs_inv_lref_bind_sn … H2) -H2 #I2 #K2 #HK2 #H destruct
+     /4 width=3 by lfxs_lref, fqu_fqup/
+    ]
+  ]
+| #l #HG #HL #HT #L #H1 #L2 #H2 destruct
+  elim (lfxs_inv_gref … H1) -H1 *
+  [ #H1 #H0 destruct
+    >(lfxs_inv_atom_sn … H2) -L2 //
+  | #I1 #I #K1 #K #HK1 #H1 #H0 destruct
+    elim (lfxs_inv_gref_bind_sn … H2) -H2 #I2 #K2 #HK2 #H destruct
+    /4 width=3 by lfxs_gref, fqu_fqup/
+  ]
+| #p #I #V1 #T1 #HG #HL #HT #L #H1 #L2 #H2 destruct
+  elim (lfxs_inv_bind … V1 V1 … H1) -H1 // #H1V #H1T
+  elim (lfxs_inv_bind … V1 V1 … H2) -H2 // #H2V #H2T
+  /3 width=4 by lfxs_bind/
+| #I #V1 #T1 #HG #HL #HT #L #H1 #L2 #H2 destruct
+  elim (lfxs_inv_flat … H1) -H1 #H1V #H1T
+  elim (lfxs_inv_flat … H2) -H2 #H2V #H2T
+  /3 width=3 by lfxs_flat/
+]
+qed-.
+
 (* Negated inversion lemmas *************************************************)
 
 (* Basic_2A1: uses: nllpx_sn_inv_bind nllpx_sn_inv_bind_O *)

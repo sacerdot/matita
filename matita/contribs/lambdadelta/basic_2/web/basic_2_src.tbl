@@ -150,7 +150,7 @@ table {
    class "water"
    [ { "iterated static typing" * } {
         [ { "iterated extension on referred entries" * } {
-             [ [ "" ] "tc_lfxs ( ? ⦻**[?,?] ? )" "tc_lfxs_length" + "tc_lfxs_drops" + "tc_lfxs_fqup" + "tc_lfxs_tc_lfxs" * ]
+             [ [ "" ] "tc_lfxs ( ? ⦻**[?,?] ? )" "tc_lfxs_length" + "tc_lfxs_lex" + "tc_lfxs_drops" + "tc_lfxs_fqup" + "tc_lfxs_tc_lfxs" * ]
           }
         ]
      }
@@ -174,7 +174,7 @@ table {
           }
         ]
         [ { "syntactic equivalence on referred entries" * } {
-             [ [ "" ] "lfeq ( ? ≡[?] ? )" "lfeq_fqup" * ]
+             [ [ "" ] "lfeq ( ? ≡[?] ? )" "lfeq_fqup" + "lfeq_lfeq" * ]
           }
         ]
         [ { "generic extension on referred entries" * } {

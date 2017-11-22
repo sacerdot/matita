@@ -40,6 +40,16 @@ theorem lexs_trans (RN) (RP) (f): lexs_transitive RN RN RN RN RP →
                                   Transitive … (lexs RN RP f).
 /2 width=9 by lexs_trans_gen/ qed-.
 
+theorem lexs_trans_id_cfull: ∀R1,R2,R3,L1,L,f. L1 ⪤*[R1, cfull, f] L → 𝐈⦃f⦄ →
+                             ∀L2.  L ⪤*[R2, cfull, f] L2 → L1 ⪤*[R3, cfull, f] L2.
+#R1 #R2 #R3 #L1 #L #f #H elim H -L1 -L -f
+[ #f #Hf #L2 #H >(lexs_inv_atom1 … H) -L2 // ]
+#f #I1 #I #K1 #K #HK1 #_ #IH #Hf #L2 #H
+[ elim (isid_inv_next … Hf) | lapply (isid_inv_push … Hf ??) ] -Hf [5: |*: // ] #Hf
+elim (lexs_inv_push1 … H) -H #I2 #K2 #HK2 #_ #H destruct
+/3 width=1 by lexs_push/
+qed-.
+
 (* Basic_2A1: includes: lpx_sn_conf *)
 theorem lexs_conf (RN1) (RP1) (RN2) (RP2):
                   ∀L,f.

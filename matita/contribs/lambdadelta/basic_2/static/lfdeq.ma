@@ -28,10 +28,7 @@ interpretation
 interpretation
    "degree-based ranged equivalence (local environment)"
    'StarEqSn h o f L1 L2 = (lexs (cdeq_ext h o) cfull f L1 L2).
-(*
-definition lfdeq_transitive: predicate (relation3 lenv term term) ≝
-           λR. ∀L2,T1,T2. R L2 T1 T2 → ∀L1. L1 ≛[h, o, T1] L2 → R L1 T1 T2.
-*)
+
 (* Basic properties ***********************************************************)
 
 lemma frees_tdeq_conf_lexs: ∀h,o,f,L1,T1. L1 ⊢ 𝐅*⦃T1⦄ ≡ f → ∀T2. T1 ≛[h, o] T2 →

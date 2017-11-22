@@ -17,6 +17,9 @@ include "basic_2/relocation/lexs.ma".
 
 (* GENERIC ENTRYWISE EXTENSION OF CONTEXT-SENSITIVE REALTIONS FOR TERMS *****)
 
+definition s_rs_transitive_isid: relation (relation3 lenv bind bind) ≝ λRN,RP.
+                                 ∀f. 𝐈⦃f⦄ → s_rs_transitive … RP (λ_.lexs RN RP f).
+
 (* Properties with transitive closure ***************************************)
 
 lemma lexs_tc_refl: ∀RN,RP. c_reflexive … RN → c_reflexive … RP →
@@ -78,7 +81,7 @@ theorem lexs_tc_push: ∀RN,RP. c_reflexive … RN → c_reflexive … RP →
 qed.
 
 (* Basic_2A1: uses: TC_lpx_sn_ind *)
-theorem lexs_tc_step_dx: ∀RN,RP. (∀f. 𝐈⦃f⦄ → s_rs_transitive … RP (λ_.lexs RN RP f)) →
+theorem lexs_tc_step_dx: ∀RN,RP. s_rs_transitive_isid RN RP →
                          ∀f,L1,L. L1 ⪤*[RN, RP, f] L → 𝐈⦃f⦄ →
                          ∀L2. L ⪤*[RN, LTC … RP, f] L2 → L1⪤* [RN, LTC … RP, f] L2.
 #RN #RP #HRP #f #L1 #L #H elim H -f -L1 -L
@@ -96,7 +99,7 @@ qed-.
 (* Advanced properties ******************************************************)
 
 (* Basic_2A1: uses: TC_lpx_sn_inv_lpx_sn_LTC *)
-lemma lexs_tc_dx: ∀RN,RP. (∀f. 𝐈⦃f⦄ → s_rs_transitive … RP (λ_.lexs RN RP f)) →
+lemma lexs_tc_dx: ∀RN,RP. s_rs_transitive_isid RN RP →
                   ∀f. 𝐈⦃f⦄ → ∀L1,L2. TC … (lexs RN RP f) L1 L2 → L1 ⪤*[RN, LTC … RP, f] L2.
 #RN #RP #HRP #f #Hf #L1 #L2 #H @(TC_ind_dx ??????? H) -L1
 /3 width=3 by lexs_tc_step_dx, lexs_tc_inj_dx/
