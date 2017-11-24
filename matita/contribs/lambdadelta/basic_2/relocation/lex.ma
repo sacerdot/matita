@@ -17,7 +17,7 @@ include "basic_2/notation/relations/relation_3.ma".
 include "basic_2/syntax/cext2.ma".
 include "basic_2/relocation/lexs.ma".
 
-(* GENERIC EXTENSION OF A CONTEXT-SENSITIVE REALTION ON TERMS ***************)
+(* GENERIC EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS **************)
 
 (* Basic_2A1: includes: lpx_sn_atom lpx_sn_pair *)
 definition lex: (lenv → relation term) → relation lenv ≝
@@ -28,9 +28,21 @@ interpretation "generic extension (local environment)"
 
 (* Basic properties *********************************************************)
 
+lemma lex_bind: ∀R,I1,I2,K1,K2. K1 ⪤[R] K2 → cext2 R K1 I1 I2 →
+                K1.ⓘ{I1} ⪤[R] K2.ⓘ{I2}.
+#R #I1 #I2 #K1 #K2 * #f #Hf #HK12 #HI12
+/3 width=3 by lexs_push, isid_push, ex2_intro/
+qed.
+
 (* Basic_2A1: was: lpx_sn_refl *)
 lemma lex_refl: ∀R. c_reflexive … R → reflexive … (lex R).
 /4 width=3 by lexs_refl, ext2_refl, ex2_intro/ qed.
+
+(* Advanced properties ******************************************************)
+
+lemma lex_bind_refl_dx: ∀R. c_reflexive … R →
+                        ∀I,K1,K2. K1 ⪤[R] K2 → K1.ⓘ{I} ⪤[R] K2.ⓘ{I}.
+/3 width=3 by ext2_refl, lex_bind/ qed.
 
 (* Basic inversion lemmas ***************************************************)
 
@@ -39,14 +51,12 @@ lemma lex_inv_atom_sn: ∀R,L2. ⋆ ⪤[R] L2 → L2 = ⋆.
 #R #L2 * #f #Hf #H >(lexs_inv_atom1 … H) -L2 //
 qed-.
 
-(* Basic_2A1: was: lpx_sn_inv_pair1 *)
-lemma lex_inv_pair_sn: ∀R,I,L2,K1,V1. K1.ⓑ{I}V1 ⪤[R] L2 →
-                       ∃∃K2,V2. K1 ⪤[R] K2 & R K1 V1 V2 & L2 = K2.ⓑ{I}V2.
-#R #I #L2 #K1 #V1 * #f #Hf #H
+lemma lex_inv_bind_sn: ∀R,I1,L2,K1. K1.ⓘ{I1} ⪤[R] L2 →
+                       ∃∃I2,K2. K1 ⪤[R] K2 & cext2 R K1 I1 I2 & L2 = K2.ⓘ{I2}.
+#R #I1 #L2 #K1 * #f #Hf #H
 lapply (lexs_eq_repl_fwd … H (↑f) ?) -H /2 width=1 by eq_push_inv_isid/ #H
-elim (lexs_inv_push1 … H) -H #Z2 #K2 #HK12 #HZ2 #H destruct
-elim (ext2_inv_pair_sn … HZ2) -HZ2 #V2 #HV12 #H destruct
-/3 width=5 by ex3_2_intro, ex2_intro/
+elim (lexs_inv_push1 … H) -H #I2 #K2 #HK12 #HI12 #H destruct
+/3 width=5 by ex2_intro, ex3_2_intro/
 qed-.
 
 (* Basic_2A1: was: lpx_sn_inv_atom2 *)
@@ -54,17 +64,33 @@ lemma lex_inv_atom_dx: ∀R,L1. L1 ⪤[R] ⋆ → L1 = ⋆.
 #R #L1 * #f #Hf #H >(lexs_inv_atom2 … H) -L1 //
 qed-.
 
-(* Basic_2A1: was: lpx_sn_inv_pair2 *)
-lemma lex_inv_pair_dx: ∀R,I,L1,K2,V2. L1 ⪤[R] K2.ⓑ{I}V2 →
-                       ∃∃K1,V1. K1 ⪤[R] K2 & R K1 V1 V2 & L1 = K1.ⓑ{I}V1.
-#R #I #L1 #K2 #V2 * #f #Hf #H
+lemma lex_inv_bind_dx: ∀R,I2,L1,K2. L1 ⪤[R] K2.ⓘ{I2} →
+                       ∃∃I1,K1. K1 ⪤[R] K2 & cext2 R K1 I1 I2 & L1 = K1.ⓘ{I1}.
+#R #I2 #L1 #K2 * #f #Hf #H
 lapply (lexs_eq_repl_fwd … H (↑f) ?) -H /2 width=1 by eq_push_inv_isid/ #H
-elim (lexs_inv_push2 … H) -H #Z1 #K1 #HK12 #HZ1 #H destruct
-elim (ext2_inv_pair_dx … HZ1) -HZ1 #V1 #HV12 #H destruct
+elim (lexs_inv_push2 … H) -H #I1 #K1 #HK12 #HI12 #H destruct
 /3 width=5 by ex3_2_intro, ex2_intro/
 qed-.
 
 (* Advanced inversion lemmas ************************************************)
+
+(* Basic_2A1: was: lpx_sn_inv_pair1 *)
+lemma lex_inv_pair_sn: ∀R,I,L2,K1,V1. K1.ⓑ{I}V1 ⪤[R] L2 →
+                       ∃∃K2,V2. K1 ⪤[R] K2 & R K1 V1 V2 & L2 = K2.ⓑ{I}V2.
+#R #I #L2 #K1 #V1 #H
+elim (lex_inv_bind_sn … H) -H #Z2 #K2 #HK12 #HZ2 #H destruct
+elim (ext2_inv_pair_sn … HZ2) -HZ2 #V2 #HV12 #H destruct
+/2 width=5 by ex3_2_intro/
+qed-.
+
+(* Basic_2A1: was: lpx_sn_inv_pair2 *)
+lemma lex_inv_pair_dx: ∀R,I,L1,K2,V2. L1 ⪤[R] K2.ⓑ{I}V2 →
+                       ∃∃K1,V1. K1 ⪤[R] K2 & R K1 V1 V2 & L1 = K1.ⓑ{I}V1.
+#R #I #L1 #K2 #V2 #H
+elim (lex_inv_bind_dx … H) -H #Z1 #K1 #HK12 #HZ1 #H destruct
+elim (ext2_inv_pair_dx … HZ1) -HZ1 #V1 #HV12 #H destruct
+/2 width=5 by ex3_2_intro/
+qed-.
 
 (* Basic_2A1: was: lpx_sn_inv_pair *)
 lemma lex_inv_pair: ∀R,I1,I2,L1,L2,V1,V2.

@@ -12,22 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/i_static/tc_lfxs_lex.ma".
-include "basic_2/rt_transition/cpx_lfeq.ma".
-include "basic_2/rt_computation/cpxs_lpx.ma".
-include "basic_2/rt_computation/lpxs.ma".
-include "basic_2/rt_computation/lfpxs.ma".
+include "basic_2/syntax/ext2_tc.ma".
+include "basic_2/relocation/lexs_tc.ma".
+include "basic_2/relocation/lex.ma".
 
-(* UNCOUNTED PARALLEL RT-COMPUTATION FOR LOCAL ENV.S ON REFERRED ENTRIES ****)
+(* GENERIC EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS **************)
 
-(* Properties with uncounted parallel rt-computation for local environments *)
+(* Inversion lemmas with transitive closure *********************************)
 
-lemma lfpxs_lpxs_lfeq: ∀h,G,L1,L. ⦃G, L1⦄ ⊢ ⬈*[h] L →
-                       ∀L2,T. L ≡[T] L2 → ⦃G, L1⦄ ⊢ ⬈*[h, T] L2.
-/2 width=3 by tc_lfxs_lex_lfeq/ qed.
-
-(* Inversion lemmas with uncounted parallel rt-computation for local envs ***)
-
-lemma tc_lfxs_inv_lex_lfeq: ∀h,G,L1,L2,T. ⦃G, L1⦄ ⊢ ⬈*[h, T] L2 →
-                            ∃∃L. ⦃G, L1⦄ ⊢ ⬈*[h] L & L ≡[T] L2.
-/3 width=5 by lfpx_frees_conf, lpx_cpxs_trans, lfeq_cpx_trans, tc_lfxs_inv_lex_lfeq/ qed-.
+lemma s_rs_transitive_lex_inv_isid: ∀R. s_rs_transitive … R (λ_.lex R) →
+                                    s_rs_transitive_isid cfull (cext2 R).
+#R #HR #f #Hf #L2 #T1 #T2 #H #L1 #HL12
+elim (ext2_tc … H) -H
+[ /3 width=1 by ext2_inv_tc, ext2_unit/
+| #I #V1 #V2 #HV12
+  @ext2_inv_tc @ext2_pair
+  @(HR … HV12) -HV12 /2 width=3 by ex2_intro/ (**) (* auto fails *)
+]
+qed-.

@@ -12,9 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/syntax/ext2_tc.ma".
-include "basic_2/relocation/lexs_tc.ma".
-include "basic_2/relocation/lex.ma".
+include "basic_2/relocation/lex_tc.ma".
 include "basic_2/static/lfeq_fqup.ma".
 include "basic_2/static/lfeq_lfeq.ma".
 include "basic_2/i_static/tc_lfxs_fqup.ma".
@@ -36,13 +34,15 @@ lemma tc_lfxs_lex_lfeq: ∀R. c_reflexive … R →
 
 (* Inversion lemmas with generic extension of a context sensitive relation **)
 
+(* Note: s_rs_transitive_lex_inv_isid could be invoked in the last auto but makes it too slow *)
 lemma tc_lfxs_inv_lex_lfeq: ∀R. c_reflexive … R →
                             lexs_frees_confluent (cext2 R) cfull →
-                            s_rs_transitive_isid cfull (cext2 R) →
+                            s_rs_transitive … R (λ_.lex R) →
                             lfeq_transitive R →
                             ∀L1,L2,T. L1 ⪤**[R, T] L2 →
                             ∃∃L. L1 ⪤[LTC … R] L & L ≡[T] L2.
 #R #H1R #H2R #H3R #H4R #L1 #L2 #T #H
+lapply (s_rs_transitive_lex_inv_isid … H3R) -H3R #H3R
 @(tc_lfxs_ind_sn … H1R … H) -H -L2
 [ /4 width=3 by lfeq_refl, lex_refl, inj, ex2_intro/
 | #L0 #L2 #_ #HL02 * #L * #f0 #Hf0 #HL1 #HL0
