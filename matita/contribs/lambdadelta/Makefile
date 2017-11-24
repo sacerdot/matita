@@ -192,7 +192,9 @@ define SUMMARY_TEMPLATE
   $$(SUM_$(1)): C0 = $$(shell cat $(1)/$(1)_probe.txt)
   $$(SUM_$(1)): S1 = $$(word 1, $$(C0))
   $$(SUM_$(1)): S2 = $$(word 2, $$(C0))
+  $$(SUM_$(1)): S3 = $$(word 3, $$(C0))
   $$(SUM_$(1)): S4 = $$(word 4, $$(C0))
+  $$(SUM_$(1)): S5 = $$(shell printf "%.1f" `echo "scale=2;$$(S4)/$$(S2)"|bc`)
   $$(SUM_$(1)): C1 = $$(word 5, $$(C0))
   $$(SUM_$(1)): C2 = $$(word 7, $$(C0))
   $$(SUM_$(1)): C3 = $$(shell echo "$$(C1)+$$(C2)"|bc)
@@ -200,32 +202,32 @@ define SUMMARY_TEMPLATE
   $$(SUM_$(1)): P2 = $$(word 9, $$(C0))
   $$(SUM_$(1)): P3 = $$(shell echo "$$(P1)+$$(P2)"|bc)
 
-  $$(SUM_$(1)): $$(MAS_$(1)) $(1)/$(1)_probe.txt
+  $$(SUM_$(1)): $$(MAS_$(1)) $(1)/$(1)_probe.txt Makefile
 	@printf '  SUMMARY $(1)\n'
-	@printf 'name "$$(basename $$(@F))"\n\n'                  >  $$@
-	@printf 'table {\n'                                       >> $$@
-	@printf '   class "gray"  [ "category"\n'                 >> $$@
-	@printf '      [ "objects" * ]\n'                         >> $$@
-	@printf '   ]\n'                                          >> $$@
-	@printf '   class "water" [ "sizes"\n'                    >> $$@
-	@printf '      [ "files"      "$$(S1)" ]\n'               >> $$@
-	@printf '      [ "characters" "$$(S2)" ]\n'               >> $$@
-	@printf '      [ "nodes"      "$$(S4)" ]\n'               >> $$@
-	@printf '   ]\n'                                          >> $$@	
-	@printf '   class "green" [ "propositions"\n'             >> $$@
-	@printf '      [ "theorems" "$$(P1)" ]\n'                 >> $$@
-	@printf '      [ "lemmas"   "$$(P2)" ]\n'                 >> $$@
-	@printf '      [ "total"    "$$(P3)" ]\n'                 >> $$@
-	@printf '   ]\n'                                          >> $$@
-	@printf '   class "grass" [ "concepts"\n'                 >> $$@
-	@printf '      [ "declared" "$$(C1)" ]\n'                 >> $$@
-	@printf '      [ "defined"  "$$(C2)" ]\n'                 >> $$@
-	@printf '      [ "total"    "$$(C3)" ]\n'                 >> $$@
-	@printf '   ]\n'                                          >> $$@
-	@printf '}\n\n'                                           >> $$@
-	@printf 'class "capitalize italic" { 0 }\n\n'             >> $$@
-	@printf 'class "italic"            { 1 } { 3 } { 5 }\n\n' >> $$@
-	@printf 'class "right italic"      { 2 } { 4 } { 6 }\n'   >> $$@
+	@printf 'name "$$(basename $$(@F))"\n\n'                        >  $$@
+	@printf 'table {\n'                                             >> $$@
+	@printf '   class "gray"  [ "category"\n'                       >> $$@
+	@printf '      [ "units" * ]\n'                                 >> $$@
+	@printf '   ]\n'                                                >> $$@
+	@printf '   class "water" [ "sizes"\n'                          >> $$@
+	@printf '      [ "characters (files)"    "$$(S2) ($$(S1))" ]\n' >> $$@
+	@printf '      [ "nodes (objects)"       "$$(S4) ($$(S3))" ]\n' >> $$@
+	@printf '      [ "intrinsic loss factor" "$$(S5)" ]\n'          >> $$@
+	@printf '   ]\n'                                                >> $$@	
+	@printf '   class "green" [ "propositions"\n'                   >> $$@
+	@printf '      [ "theorems" "$$(P1)" ]\n'                       >> $$@
+	@printf '      [ "lemmas"   "$$(P2)" ]\n'                       >> $$@
+	@printf '      [ "total"    "$$(P3)" ]\n'                       >> $$@
+	@printf '   ]\n'                                                >> $$@
+	@printf '   class "grass" [ "concepts"\n'                       >> $$@
+	@printf '      [ "declared" "$$(C1)" ]\n'                       >> $$@
+	@printf '      [ "defined"  "$$(C2)" ]\n'                       >> $$@
+	@printf '      [ "total"    "$$(C3)" ]\n'                       >> $$@
+	@printf '   ]\n'                                                >> $$@
+	@printf '}\n\n'                                                 >> $$@
+	@printf 'class "capitalize italic" { 0 }\n\n'                   >> $$@
+	@printf 'class "italic"            { 1 } { 3 } { 5 }\n\n'       >> $$@
+	@printf 'class "right italic"      { 2 } { 4 } { 6 }\n'         >> $$@
 
 .PHONY: $$(SUM_$(1))
 endef
