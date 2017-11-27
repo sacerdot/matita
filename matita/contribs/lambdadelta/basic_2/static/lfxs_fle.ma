@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/frees_frees.ma".
 include "basic_2/static/fle.ma".
 include "basic_2/static/lfxs_lfxs.ma".
 
