@@ -154,6 +154,12 @@ lemma frees_lifts: ∀b,f1,K,T. K ⊢ 𝐅*⦃T⦄ ≡ f1 →
 ]
 qed-.
 
+lemma frees_lifts_SO: ∀b,L,K. ⬇*[b, 𝐔❴1❵] L ≡ K → ∀T,U. ⬆*[1] T ≡ U →
+                      ∀f. K ⊢ 𝐅*⦃T⦄ ≡ f → L ⊢ 𝐅*⦃U⦄ ≡ ↑f.
+#b #L #K #HLK #T #U #HTU #f #Hf
+@(frees_lifts b … Hf … HTU) //  (**) (* auto fails *)
+qed.
+
 (* Forward lemmas with generic slicing for local environments ***************)
 
 lemma frees_fwd_coafter: ∀b,f2,L,U. L ⊢ 𝐅*⦃U⦄ ≡ f2 →

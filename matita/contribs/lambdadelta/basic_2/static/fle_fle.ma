@@ -12,22 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_transition/cpx_lfxs.ma".
-include "basic_2/rt_transition/cpm_cpx.ma".
-include "basic_2/rt_transition/cpr_ext.ma".
+include "basic_2/static/frees_frees.ma".
+include "basic_2/static/fle.ma".
 
-(* CONTEXT-SENSITIVE PARALLEL REDUCTION FOR TERMS ***************************)
+(* FREE VARIABLES INCLUSION FOR RESTRICTED CLOSURES *************************)
 
-(* Properties with context-sensitive free variables *************************)
+(* Main properties **********************************************************)
 
-lemma cpm_frees_conf: ∀n,h,G. R_frees_confluent (cpm n h G).
-/3 width=6 by cpm_fwd_cpx, cpx_frees_conf/ qed-.
-
-lemma lfpr_frees_conf: ∀h,G. lexs_frees_confluent (cpr_ext h G) cfull.
-/5 width=9 by cpm_fwd_cpx, lfpx_frees_conf, lexs_co, cext2_co/ qed-.
-
-(* Properties with generic extension on referred entries ********************)
-
-(* Basic_2A1: was just: cpr_llpx_sn_conf *)
-lemma cpm_lfxs_conf: ∀R,n,h,G. s_r_confluent1 … (cpm n h G) (lfxs R).
-/3 width=5 by cpm_fwd_cpx, cpx_lfxs_conf/ qed-.
+theorem fle_trans: bi_transitive … fle.
+#L1 #L #T1 #T * #f1 #f #HT1 #HT #Hf1 #L2 #T2 * #g #f2 #Hg #HT2 #Hf2
+/5 width=8 by frees_mono, sle_trans, sle_eq_repl_back2, ex3_2_intro/
+qed-.

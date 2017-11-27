@@ -12,22 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_transition/cpx_lfxs.ma".
-include "basic_2/rt_transition/cpm_cpx.ma".
-include "basic_2/rt_transition/cpr_ext.ma".
+include "basic_2/static/frees_frees.ma".
+include "basic_2/static/fle.ma".
+include "basic_2/static/lfxs_lfxs.ma".
 
-(* CONTEXT-SENSITIVE PARALLEL REDUCTION FOR TERMS ***************************)
+(* GENERIC EXTENSION ON REFERRED ENTRIES OF A CONTEXT-SENSITIVE REALTION ****)
 
-(* Properties with context-sensitive free variables *************************)
+(* Properties with free variables inclusion for restricted closures *********)
 
-lemma cpm_frees_conf: ∀n,h,G. R_frees_confluent (cpm n h G).
-/3 width=6 by cpm_fwd_cpx, cpx_frees_conf/ qed-.
-
-lemma lfpr_frees_conf: ∀h,G. lexs_frees_confluent (cpr_ext h G) cfull.
-/5 width=9 by cpm_fwd_cpx, lfpx_frees_conf, lexs_co, cext2_co/ qed-.
-
-(* Properties with generic extension on referred entries ********************)
-
-(* Basic_2A1: was just: cpr_llpx_sn_conf *)
-lemma cpm_lfxs_conf: ∀R,n,h,G. s_r_confluent1 … (cpm n h G) (lfxs R).
-/3 width=5 by cpm_fwd_cpx, cpx_lfxs_conf/ qed-.
+lemma fle_lfxs_trans: ∀R,L1,T1,T2. ⦃L1, T1⦄ ⊆ ⦃L1, T2⦄ →
+                      ∀L2. L1 ⪤*[R, T2] L2 → L1 ⪤*[R, T1] L2.
+#R #L1 #T1 #T2 * #f1 #f2 #Hf1 #Hf2 #Hf12 #L2 #HL12
+/4 width=5 by lfxs_inv_frees, sle_lexs_trans, ex2_intro/
+qed-.

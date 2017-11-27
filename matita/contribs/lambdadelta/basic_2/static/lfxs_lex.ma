@@ -12,16 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_transition/lfpx_frees.ma".
-include "basic_2/rt_transition/cpm_cpx.ma".
-include "basic_2/rt_transition/cpr_ext.ma".
+include "basic_2/relocation/lex.ma".
+include "basic_2/static/lfxs_fqup.ma".
 
-(* PARALLEL R-TRANSITION FOR LOCAL ENV.S ON REFERRED ENTRIES ****************)
+(* GENERIC EXTENSION ON REFERRED ENTRIES OF A CONTEXT-SENSITIVE REALTION ****)
 
-(* Properties with context-sensitive free variables *************************)
+(* Properties with generic extension of a context-sensitive relation ********)
 
-lemma cpm_frees_conf: ∀n,h,G. R_frees_confluent (cpm n h G).
-/3 width=6 by cpm_fwd_cpx, cpx_frees_conf/ qed-.
-
-lemma lfpr_frees_conf: ∀h,G. lexs_frees_confluent (cpr_ext h G) cfull.
-/5 width=9 by cpm_fwd_cpx, lfpx_frees_conf, lexs_co, cext2_co/ qed-.
+lemma lfxs_lex: ∀R,L1,L2. L1 ⪤[R] L2 → ∀T. L1 ⪤*[R, T] L2.
+#R #L1 #L2 * #f #Hf #HL12 #T
+elim (frees_total L1 T) #g #Hg
+/4 width=5 by lexs_sdj, sdj_isid_sn, ex2_intro/
+qed.

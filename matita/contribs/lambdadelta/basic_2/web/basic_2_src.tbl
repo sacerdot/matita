@@ -126,7 +126,7 @@ table {
           }
         ]
         [ { "context-sensitive parallel r-transition" * } {
-             [ [ "for lenvs on referred entries" ] "lfpr ( ⦃?,?⦄ ⊢ ➡[?,?] ? )" "lfpr_length" + "lfpr_drops" + "lfpr_fquq" + "lfpr_fqup" + "lfpr_frees" + "lfpr_aaa" + "lfpr_lfpx" + "lfpr_lfpr" * ]
+             [ [ "for lenvs on referred entries" ] "lfpr ( ⦃?,?⦄ ⊢ ➡[?,?] ? )" "lfpr_length" + "lfpr_drops" + "lfpr_fquq" + "lfpr_fqup" + "lfpr_aaa" + "lfpr_lfpx" + "lfpr_lfpr" * ]
              [ [ "for binders" ] "cpr_ext ( ⦃?,?⦄ ⊢ ? ➡[?] ? )" * ]
              [ [ "for terms" ] "cpr ( ⦃?,?⦄ ⊢ ? ➡[?] ? )" "cpr_drops" * ]
           }
@@ -137,7 +137,7 @@ table {
         ]
         [ { "uncounted context-sensitive parallel rt-transition" * } {
              [ [ "normal form for terms" ] "cnx ( ⦃?,?⦄ ⊢ ⬈[?,?] 𝐍⦃?⦄ )" "cnx_simple" + "cnx_drops" + "cnx_cnx" * ]
-             [ [ "for lenvs on referred entries" ] "lfpx ( ⦃?,?⦄ ⊢ ⬈[?,?] ? )" "lfpx_length" + "lfpx_drops" + "lfpx_fqup" + "lfpx_frees" + "lfpx_lfdeq" + "lfpx_aaa" + "lfpx_cpx" + "lfpx_lfpx" * ]
+             [ [ "for lenvs on referred entries" ] "lfpx ( ⦃?,?⦄ ⊢ ⬈[?,?] ? )" "lfpx_length" + "lfpx_drops" + "lfpx_fqup" + "lfpx_lfdeq" + "lfpx_aaa" + "lfpx_cpx" + "lfpx_lfpx" * ]
              [ [ "for lenvs on all entries" ] "lpx ( ⦃?,?⦄ ⊢ ⬈[?] ? )" * ]
              [ [ "for binders" ] "cpx_ext ( ⦃?,?⦄ ⊢ ? ⬈[?] ? )" * ]
              [ [ "for terms" ] "cpx ( ⦃?,?⦄ ⊢ ? ⬈[?] ? )" "cpx_simple" + "cpx_drops" + "cpx_fqus" + "cpx_lsubr" + "cpx_lfxs" + "cpx_lfeq" * ]
@@ -180,10 +180,11 @@ table {
           }
         ]
         [ { "generic extension of a context-sensitive relation" * } {
-             [ [ "for lenvs on referred entries" ] "lfxs ( ? ⦻*[?,?] ? )" "lfxs_length" + "lfxs_drops" + "lfxs_fqup" + "lfxs_lfxs" * ]
+             [ [ "for lenvs on referred entries" ] "lfxs ( ? ⦻*[?,?] ? )" "lfxs_length" + "lfxs_lex" + "lfxs_drops" + "lfxs_fqup" + "flxs_fle" + "lfxs_lfxs" * ]
           }
         ]
         [ { "context-sensitive free variables" * } {
+             [ [ "inclusion for restricted closures" ] "fle ( ⦃?,?⦄ ⊆ ⦃?,?⦄ )" "fle_drops" + "fle_fqup" + "fle_fle" * ]
              [ [ "restricted refinement for lenvs" ] "lsubf ( ⦃?,?⦄ ⫃𝐅* ⦃?,?⦄ )" "lsubf_lsubr" + "lsubf_frees" + "lsubf_lsubf" * ]
              [ [ "for terms" ] "frees ( ? ⊢ 𝐅*⦃?⦄ ≡ ? )" "frees_drops" + "frees_fqup" + "frees_frees" * ]
           }

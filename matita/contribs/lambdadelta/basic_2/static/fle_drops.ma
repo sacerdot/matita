@@ -12,22 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_transition/cpx_lfxs.ma".
-include "basic_2/rt_transition/cpm_cpx.ma".
-include "basic_2/rt_transition/cpr_ext.ma".
+include "basic_2/static/frees_drops.ma".
+include "basic_2/static/fle.ma".
 
-(* CONTEXT-SENSITIVE PARALLEL REDUCTION FOR TERMS ***************************)
+(* FREE VARIABLES INCLUSION FOR RESTRICTED CLOSURES *************************)
 
-(* Properties with context-sensitive free variables *************************)
+(* Advanced properties ******************************************************)
 
-lemma cpm_frees_conf: ∀n,h,G. R_frees_confluent (cpm n h G).
-/3 width=6 by cpm_fwd_cpx, cpx_frees_conf/ qed-.
-
-lemma lfpr_frees_conf: ∀h,G. lexs_frees_confluent (cpr_ext h G) cfull.
-/5 width=9 by cpm_fwd_cpx, lfpx_frees_conf, lexs_co, cext2_co/ qed-.
-
-(* Properties with generic extension on referred entries ********************)
-
-(* Basic_2A1: was just: cpr_llpx_sn_conf *)
-lemma cpm_lfxs_conf: ∀R,n,h,G. s_r_confluent1 … (cpm n h G) (lfxs R).
-/3 width=5 by cpm_fwd_cpx, cpx_lfxs_conf/ qed-.
+lemma fle_bind_dx: ∀T,U. ⬆*[1] T ≡ U →
+                   ∀p,I,L,V. ⦃L, T⦄ ⊆ ⦃L, ⓑ{p,I}V.U⦄.
+#T #U #HTU #p #I #L #V
+elim (frees_total L V) #f1 #Hf1
+elim (frees_total L T) #f2 #Hf2
+elim (sor_isfin_ex f1 f2) /3 width=3 by frees_fwd_isfin, isfin_tl/ #f #H #_
+lapply (sor_inv_sle_dx … H) #Hf0
+>(tl_push_rew f) in H; #Hf
+/6 width=6 by frees_lifts_SO, frees_bind, drops_refl, drops_drop, ex3_2_intro/
+qed.
