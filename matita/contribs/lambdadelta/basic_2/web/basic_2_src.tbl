@@ -263,6 +263,7 @@ table {
         [ { "local environments" * } {
              [ [ "" ] "ceq_ext" "ceq_ext_ceq_ext" * ]
              [ [ "" ] "cext2" * ]
+             [ [ "" ] "lenv_voids ( ⓧ*[?]? )" * ]
              [ [ "" ] "lenv_length ( |?| )" * ]
              [ [ "" ] "lenv_weight ( ♯{?} )" * ]
              [ [ "" ] "lenv" * ]
