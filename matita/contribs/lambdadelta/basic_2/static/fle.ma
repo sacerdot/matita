@@ -14,38 +14,37 @@
 
 include "ground_2/relocation/rtmap_id.ma".
 include "basic_2/notation/relations/subseteq_4.ma".
+include "basic_2/syntax/voids_length.ma".
 include "basic_2/static/frees.ma".
 
 (* FREE VARIABLES INCLUSION FOR RESTRICTED CLOSURES *************************)
 
-definition fle: bi_relation lenv term ≝ λL1,T1,L2,T2.
-                ∃∃f1,f2. L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 & L2 ⊢ 𝐅*⦃T2⦄ ≡ f2 & f1 ⊆ f2.
+inductive fle (T2) (L2) (T1): predicate lenv ≝
+| fle_intro: ∀f1,f2,L1,n. ⓧ*[n]L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 → L2 ⊢ 𝐅*⦃T2⦄ ≡ f2 →
+             |L1| = |L2| → ⫱*[n]f1 ⊆ f2 → fle T2 L2 T1 (ⓧ*[n]L1)
+.
 
 interpretation "free variables inclusion (restricted closure)"
-   'SubSetEq L1 T1 L2 T2 = (fle L1 T1 L2 T2).
+   'SubSetEq L1 T1 L2 T2 = (fle T2 L2 T1 L1).
 
 (* Basic properties *********************************************************)
 
-lemma fle_sort: ∀L1,L2,s1,s2. ⦃L1, ⋆s1⦄ ⊆ ⦃L2, ⋆s2⦄.
-/3 width=5 by frees_sort, sle_refl, ex3_2_intro/ qed.
+lemma fle_sort: ∀L1,L2. |L1| = |L2| → ∀s1,s2. ⦃L1, ⋆s1⦄ ⊆ ⦃L2, ⋆s2⦄.
+/3 width=5 by frees_sort, sle_refl, fle_intro/ qed.
 
-lemma fle_gref: ∀L1,L2,l1,l2. ⦃L1, §l1⦄ ⊆ ⦃L2, §l2⦄.
-/3 width=5 by frees_gref, sle_refl, ex3_2_intro/ qed.
+lemma fle_gref: ∀L1,L2. |L1| = |L2| → ∀l1,l2. ⦃L1, §l1⦄ ⊆ ⦃L2, §l2⦄.
+/3 width=5 by frees_gref, sle_refl, fle_intro/ qed.
 
-lemma fle_bind: ∀L1,L2,V1,V2. ⦃L1, V1⦄ ⊆ ⦃L2, V2⦄ →
-                ∀I1,I2,T1,T2. ⦃L1.ⓑ{I1}V1, T1⦄ ⊆ ⦃L2.ⓑ{I2}V2, T2⦄ →
-                ∀p. ⦃L1, ⓑ{p,I1}V1.T1⦄ ⊆ ⦃L2, ⓑ{p,I2}V2.T2⦄.
-#L1 #L2 #V1 #V2 * #f1 #g1 #HV1 #HV2 #Hfg1 #I1 #I2 #T1 #T2 * #f2 #g2 #Hf2 #Hg2 #Hfg2 #p
-elim (sor_isfin_ex f1 (⫱f2)) /3 width=3 by frees_fwd_isfin, isfin_tl/ #f #Hf #_
-elim (sor_isfin_ex g1 (⫱g2)) /3 width=3 by frees_fwd_isfin, isfin_tl/ #g #Hg #_
-/4 width=12 by frees_bind, monotonic_sle_sor, sle_tl, ex3_2_intro/
-qed.
+(* Basic inversion lemmas ***************************************************)
 
-lemma fle_flat: ∀L1,L2,V1,V2. ⦃L1, V1⦄ ⊆ ⦃L2, V2⦄ →
-                ∀T1,T2. ⦃L1, T1⦄ ⊆ ⦃L2, T2⦄ →
-                ∀I1,I2. ⦃L1, ⓕ{I1}V1.T1⦄ ⊆ ⦃L2, ⓕ{I2}V2.T2⦄.
-#L1 #L2 #V1 #V2 * #f1 #g1 #HV1 #HV2 #Hfg1 #T1 #T2 * #f2 #g2 #Hf2 #Hg2 #Hfg2 #I1 #I2
-elim (sor_isfin_ex f1 f2) /2 width=3 by frees_fwd_isfin/ #f #Hf #_
-elim (sor_isfin_ex g1 g2) /2 width=3 by frees_fwd_isfin/ #g #Hg #_
-/3 width=12 by frees_flat, monotonic_sle_sor, ex3_2_intro/
-qed.
+fact fle_inv_voids_sn_aux: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⊆ ⦃L2, T2⦄ →
+                           ∀K1,n. |K1| = |L2| → L1 = ⓧ*[n]K1 →
+                           ∃∃f1,f2. ⓧ*[n]K1 ⊢ 𝐅*⦃T1⦄ ≡ f1 & L2 ⊢ 𝐅*⦃T2⦄ ≡ f2 & ⫱*[n]f1 ⊆ f2.
+#L1 #L2 #T1 #T2 * -L1 #f1 #f2 #L1 #n #Hf1 #Hf2 #HL12 #Hf12 #Y #x #HY #H destruct
+elim (voids_inj_length … H) // -H -HL12 -HY #H1 #H2 destruct
+/2 width=5 by ex3_2_intro/
+qed-.
+
+lemma fle_inv_voids_sn: ∀L1,L2,T1,T2,n. ⦃ⓧ*[n]L1, T1⦄ ⊆ ⦃L2, T2⦄ → |L1| = |L2| →
+                        ∃∃f1,f2. ⓧ*[n]L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 & L2 ⊢ 𝐅*⦃T2⦄ ≡ f2 & ⫱*[n]f1 ⊆ f2.
+/2 width=3 by fle_inv_voids_sn_aux/ qed-.
