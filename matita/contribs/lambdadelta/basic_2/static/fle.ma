@@ -19,13 +19,13 @@ include "basic_2/static/frees.ma".
 
 (* FREE VARIABLES INCLUSION FOR RESTRICTED CLOSURES *************************)
 
-inductive fle (T2) (L2) (T1): predicate lenv ≝
-| fle_intro: ∀f1,f2,L1,n. ⓧ*[n]L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 → L2 ⊢ 𝐅*⦃T2⦄ ≡ f2 →
-             |L1| = |L2| → ⫱*[n]f1 ⊆ f2 → fle T2 L2 T1 (ⓧ*[n]L1)
+inductive fle (T1) (T2): relation lenv ≝
+| fle_intro: ∀f1,f2,L1,L2,n1,n2. ⓧ*[n1]L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 → ⓧ*[n2]L2 ⊢ 𝐅*⦃T2⦄ ≡ f2 →
+             |L1| = |L2| → ⫱*[n1]f1 ⊆ ⫱*[n2]f2 → fle T1 T2 (ⓧ*[n1]L1) (ⓧ*[n2]L2)
 .
 
 interpretation "free variables inclusion (restricted closure)"
-   'SubSetEq L1 T1 L2 T2 = (fle T2 L2 T1 L1).
+   'SubSetEq L1 T1 L2 T2 = (fle T1 T2 L1 L2).
 
 (* Basic properties *********************************************************)
 
@@ -37,11 +37,15 @@ lemma fle_gref: ∀L1,L2. |L1| = |L2| → ∀l1,l2. ⦃L1, §l1⦄ ⊆ ⦃L2, §
 
 (* Basic inversion lemmas ***************************************************)
 
-fact fle_inv_voids_sn_aux: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⊆ ⦃L2, T2⦄ →
-                           ∀K1,n. |K1| = |L2| → L1 = ⓧ*[n]K1 →
-                           ∃∃f1,f2. ⓧ*[n]K1 ⊢ 𝐅*⦃T1⦄ ≡ f1 & L2 ⊢ 𝐅*⦃T2⦄ ≡ f2 & ⫱*[n]f1 ⊆ f2.
-#L1 #L2 #T1 #T2 * -L1 #f1 #f2 #L1 #n #Hf1 #Hf2 #HL12 #Hf12 #Y #x #HY #H destruct
-elim (voids_inj_length … H) // -H -HL12 -HY #H1 #H2 destruct
+fact fle_inv_voids_aux: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⊆ ⦃L2, T2⦄ →
+                        ∀K1,K2,n1,n2. |K1| = |K2| → L1 = ⓧ*[n1]K1 → L2 = ⓧ*[n2]K2 →
+                        ∃∃f1,f2. ⓧ*[n1]K1 ⊢ 𝐅*⦃T1⦄ ≡ f1 & ⓧ*[n2]K2 ⊢ 𝐅*⦃T2⦄ ≡ f2 & ⫱*[n1]f1 ⊆ ⫱*[n2]f2.
+#L1 #L2 #T1 #T2 * -L1 -L2
+#f1 #f2 #L1 #L2 #n1 #n2 #Hf1 #Hf2 #HL12 #Hf12 #Y1 #Y2 #x1 #x2 #HY12 #H1 #H2 destruct
+>H1 in Hf1; >H2 in Hf2; #Hf2 #Hf1
+@(ex3_2_intro … Hf1 Hf2) -Hf1 -Hf2
+
+elim (voids_inj_length … H1) // -H -HL12 -HY #H1 #H2 destruct
 /2 width=5 by ex3_2_intro/
 qed-.
 

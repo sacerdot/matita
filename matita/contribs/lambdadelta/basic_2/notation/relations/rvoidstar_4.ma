@@ -14,6 +14,6 @@
 
 (* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-notation "hvbox( ⓧ* [ term 46 n ] term 46 L )"
-   non associative with precedence 46
-   for @{ 'VoidStar $n $L }.
+notation "hvbox( ⓧ* [ term 46 n1 ] term 46 L1 ≋ ⓧ* [ term 46 n2 ] term 46 L2 )"
+   non associative with precedence 45
+   for @{ 'RVoidStar $n1 $L1 $n2 $L2 }.

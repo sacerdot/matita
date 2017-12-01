@@ -15,14 +15,14 @@
 include "basic_2/syntax/lenv_length.ma".
 include "basic_2/syntax/voids.ma".
 
-(* EXTENSION OF A LOCAL ENVIRONMENT WITH EXCLUSION BINDERS ******************)
+(* EQUIVALENCE FOR LOCAL ENVIRONMENTS UP TO EXCLUSION BINDERS ***************)
 
-(* Properties with length for local environments ****************************)
+(* Forward lemmas with length for local environments ************************)
 
-lemma length_void: ∀L,n. n+|L| = |ⓧ*[n]L|.
-#L #n elim n -n //
-#n #IH <voids_succ >length_bind <IH -IH //
-qed.
+lemma voids_fwd_length: ∀L1,L2,n1,n2. ⓧ*[n1]L1 ≋ ⓧ*[n2]L2 →
+                        |L1| + n2 = |L2| + n1.
+#L1 #L2 #n1 #n2 #H elim H -L1 -L2 -n1 -n2 normalize //
+#I1 #I2 #K1 #K2 #V #n #_ #IH 
 
 (* Main forward properties with length for local environments ***************)
 
