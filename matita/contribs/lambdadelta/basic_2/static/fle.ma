@@ -14,29 +14,32 @@
 
 include "ground_2/relocation/rtmap_id.ma".
 include "basic_2/notation/relations/subseteq_4.ma".
-include "basic_2/syntax/voids_length.ma".
+include "basic_2/syntax/voids.ma".
 include "basic_2/static/frees.ma".
 
 (* FREE VARIABLES INCLUSION FOR RESTRICTED CLOSURES *************************)
 
-inductive fle (T1) (T2): relation lenv ≝
-| fle_intro: ∀f1,f2,L1,L2,n1,n2. ⓧ*[n1]L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 → ⓧ*[n2]L2 ⊢ 𝐅*⦃T2⦄ ≡ f2 →
-             |L1| = |L2| → ⫱*[n1]f1 ⊆ ⫱*[n2]f2 → fle T1 T2 (ⓧ*[n1]L1) (ⓧ*[n2]L2)
-.
+definition fle: bi_relation lenv term ≝ λL1,T1,L2,T2.
+                ∃∃n1,n2,f1,f2. L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 & L2 ⊢ 𝐅*⦃T2⦄ ≡ f2 &
+                               ⓧ*[n1]L1 ≋ ⓧ*[n2]L2 & ⫱*[n1]f1 ⊆ ⫱*[n2]f2.
 
 interpretation "free variables inclusion (restricted closure)"
-   'SubSetEq L1 T1 L2 T2 = (fle T1 T2 L1 L2).
+   'SubSetEq L1 T1 L2 T2 = (fle L1 T1 L2 T2).
 
 (* Basic properties *********************************************************)
 
-lemma fle_sort: ∀L1,L2. |L1| = |L2| → ∀s1,s2. ⦃L1, ⋆s1⦄ ⊆ ⦃L2, ⋆s2⦄.
-/3 width=5 by frees_sort, sle_refl, fle_intro/ qed.
+lemma fle_sort: ∀L,s1,s2. ⦃L, ⋆s1⦄ ⊆ ⦃L, ⋆s2⦄.
+#L elim (voids_refl L)
+/3 width=8 by frees_sort, sle_refl, ex4_4_intro/
+qed.
 
-lemma fle_gref: ∀L1,L2. |L1| = |L2| → ∀l1,l2. ⦃L1, §l1⦄ ⊆ ⦃L2, §l2⦄.
-/3 width=5 by frees_gref, sle_refl, fle_intro/ qed.
+lemma fle_gref: ∀L,l1,l2. ⦃L, §l1⦄ ⊆ ⦃L, §l2⦄.
+#L elim (voids_refl L)
+/3 width=8 by frees_gref, sle_refl, ex4_4_intro/
+qed.
 
 (* Basic inversion lemmas ***************************************************)
-
+(*
 fact fle_inv_voids_aux: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⊆ ⦃L2, T2⦄ →
                         ∀K1,K2,n1,n2. |K1| = |K2| → L1 = ⓧ*[n1]K1 → L2 = ⓧ*[n2]K2 →
                         ∃∃f1,f2. ⓧ*[n1]K1 ⊢ 𝐅*⦃T1⦄ ≡ f1 & ⓧ*[n2]K2 ⊢ 𝐅*⦃T2⦄ ≡ f2 & ⫱*[n1]f1 ⊆ ⫱*[n2]f2.
@@ -52,3 +55,4 @@ qed-.
 lemma fle_inv_voids_sn: ∀L1,L2,T1,T2,n. ⦃ⓧ*[n]L1, T1⦄ ⊆ ⦃L2, T2⦄ → |L1| = |L2| →
                         ∃∃f1,f2. ⓧ*[n]L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 & L2 ⊢ 𝐅*⦃T2⦄ ≡ f2 & ⫱*[n]f1 ⊆ f2.
 /2 width=3 by fle_inv_voids_sn_aux/ qed-.
+*)

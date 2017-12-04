@@ -238,6 +238,11 @@ table {
    ]
    class "red"
    [ { "syntax" * } {
+        [ { "equivalence up to exclusion binders" * } {
+             [ [ "" ] "voids ( ⓧ*[?]? ≋ ⓧ*[?]? )" "voids_length" + "voids_voids" * ]
+          }
+        ]
+   
         [ { "append for local environments" * } {
              [ [ "" ] "append ( ? @@ ? )" "append_length" * ]
           }
@@ -263,7 +268,6 @@ table {
         [ { "local environments" * } {
              [ [ "" ] "ceq_ext" "ceq_ext_ceq_ext" * ]
              [ [ "" ] "cext2" * ]
-             [ [ "" ] "lenv_voids ( ⓧ*[?]? )" * ]
              [ [ "" ] "lenv_length ( |?| )" * ]
              [ [ "" ] "lenv_weight ( ♯{?} )" * ]
              [ [ "" ] "lenv" * ]

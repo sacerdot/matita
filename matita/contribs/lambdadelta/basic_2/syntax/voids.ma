@@ -45,30 +45,19 @@ lemma voids_sym: bi_symmetric … voids.
 /2 width=2 by voids_atom, voids_pair_sn, voids_pair_dx, voids_void_sn, voids_void_dx/
 qed-.
 
-(*
+(* Advanced Inversion lemmas ************************************************)
 
-
-
-
-lemma voids_zero: ∀L. L = ⓧ*[0]L.
-// qed.
-
-lemma voids_succ: ∀L,n. (ⓧ*[n]L).ⓧ = ⓧ*[⫯n]L.
-// qed.
-
-(* Advanced properties ******************************************************)
-
-lemma voids_next: ∀n,L. ⓧ*[n](L.ⓧ) = ⓧ*[⫯n]L.
-#n elim n -n //
-qed.
-
-(* Main inversion properties ************************************************)
-
-theorem voids_inj: ∀n. injective … (λL. ⓧ*[n]L).
-#n elim n -n //
-#n #IH #L1 #L2
-<voids_succ <voids_succ #H
-elim (destruct_lbind_lbind_aux … H) -H (**) (* destruct lemma needed *)
-/2 width=1 by/
+fact voids_inv_void_dx_aux: ∀L1,L2,n1,n2. ⓧ*[n1]L1 ≋ ⓧ*[n2]L2 →
+                            ∀K2,m2. n2 = ⫯m2 → L2 = K2.ⓧ → ⓧ*[n1]L1 ≋ ⓧ*[m2]K2.
+#L1 #L2 #n1 #n2 #H elim H -L1 -L2 -n1 -n2
+[ #K2 #m2 #H destruct
+| #I1 #I2 #L1 #L2 #V #n #_ #_ #K2 #m2 #H destruct
+| #I1 #I2 #L1 #L2 #V #n #_ #_ #K2 #m2 #H destruct
+| #L1 #L2 #n1 #n2 #_ #IH #K2 #m2 #H1 #H2 destruct
+  /3 width=1 by voids_void_sn/
+| #L1 #L2 #n1 #n2 #HL12 #_ #K2 #m2 #H1 #H2 destruct //
+]
 qed-.
-*)
+
+lemma voids_inv_void_dx: ∀L1,L2,n1,n2. ⓧ*[n1]L1 ≋ ⓧ*[⫯n2]L2.ⓧ → ⓧ*[n1]L1 ≋ ⓧ*[n2]L2.
+/2 width=5 by voids_inv_void_dx_aux/ qed-.

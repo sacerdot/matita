@@ -69,21 +69,21 @@ lemma plus_n_2: ∀n. n + 2 = n + 1 + 1.
 // qed.
 
 lemma le_plus_minus: ∀m,n,p. p ≤ n → m + n - p = m + (n - p).
-/2 by plus_minus/ qed.
+/2 by plus_minus/ qed-.
 
 lemma le_plus_minus_comm: ∀n,m,p. p ≤ m → m + n - p = m - p + n.
-/2 by plus_minus/ qed.
+/2 by plus_minus/ qed-.
 
 lemma minus_minus_comm3: ∀n,x,y,z. n-x-y-z = n-y-z-x.
 // qed.
 
 lemma arith_b1: ∀a,b,c1. c1 ≤ b → a - c1 - (b - c1) = a - b.
 #a #b #c1 #H >minus_minus_comm >minus_le_minus_minus_comm //
-qed.
+qed-.
 
 lemma arith_b2: ∀a,b,c1,c2. c1 + c2 ≤ b → a - c1 - c2 - (b - c1 - c2) = a - b.
 #a #b #c1 #c2 #H >minus_plus >minus_plus >minus_plus /2 width=1 by arith_b1/
-qed.
+qed-.
 
 lemma arith_c1x: ∀x,a,b,c1. x + c1 + a - (b + c1) = x + a - b.
 /3 by monotonic_le_minus_l, le_to_le_to_eq, le_n/ qed.
@@ -91,10 +91,14 @@ lemma arith_c1x: ∀x,a,b,c1. x + c1 + a - (b + c1) = x + a - b.
 lemma arith_h1: ∀a1,a2,b,c1. c1 ≤ a1 → c1 ≤ b →
                 a1 - c1 + a2 - (b - c1) = a1 + a2 - b.
 #a1 #a2 #b #c1 #H1 #H2 >plus_minus /2 width=1 by arith_b2/
-qed.
+qed-.
 
 lemma arith_i: ∀x,y,z. y < x → x+z-y-1 = x-y-1+z.
 /2 width=1 by plus_minus/ qed-.
+
+lemma plus_to_minus_2: ∀m1,m2,n1,n2. n1 ≤ m1 → n2 ≤ m2 →
+                       m1+n2 = m2+n1 → m1-n1 = m2-n2.
+/2 width=1 by arith_b1/ qed-.
 
 lemma idempotent_max: ∀n:nat. n = (n ∨ n).
 #n normalize >le_to_leb_true //
@@ -136,7 +140,7 @@ lemma monotonic_le_minus_l2: ∀x1,x2,y,z. x1 ≤ x2 → x1 - y - z ≤ x2 - y -
 /3 width=1 by monotonic_le_minus_l/ qed.
 
 (* Note: this might interfere with nat.ma *)
-lemma monotonic_lt_pred: ∀m,n. m < n → O < m → pred m < pred n.
+lemma monotonic_lt_pred: ∀m,n. m < n → 0 < m → pred m < pred n.
 #m #n #Hmn #Hm whd >(S_pred … Hm)
 @le_S_S_to_le >S_pred /2 width=3 by transitive_lt/
 qed.
@@ -172,26 +176,6 @@ qed.
 
 (* Inversion & forward lemmas ***********************************************)
 
-lemma nat_split: ∀x. x = 0 ∨ ∃y. ⫯y = x.
-* /3 width=2 by ex_intro, or_introl, or_intror/
-qed-.
-
-lemma max_inv_O3: ∀x,y. (x ∨ y) = 0 → 0 = x ∧ 0 = y.
-/4 width=2 by le_maxr, le_maxl, le_n_O_to_eq, conj/
-qed-.
-
-lemma plus_inv_O3: ∀x,y. x + y = 0 → x = 0 ∧ y = 0.
-/2 width=1 by plus_le_0/ qed-.
-
-lemma discr_plus_xy_y: ∀x,y. x + y = y → x = 0.
-// qed-.
-
-lemma discr_plus_x_xy: ∀x,y. x = x + y → y = 0.
-/2 width=2 by le_plus_minus_comm/ qed-.
-
-lemma lt_plus_SO_to_le: ∀x,y. x < y + 1 → x ≤ y.
-/2 width=1 by monotonic_pred/ qed-.
-
 lemma lt_refl_false: ∀n. n < n → ⊥.
 #n #H elim (lt_to_not_eq … H) -H /2 width=1 by/
 qed-.
@@ -205,25 +189,6 @@ lemma lt_le_false: ∀x,y. x < y → y ≤ x → ⊥.
 
 lemma succ_inv_refl_sn: ∀x. ⫯x = x → ⊥.
 #x #H @(lt_le_false x (⫯x)) //
-qed-.
-
-lemma lt_inv_O1: ∀n. 0 < n → ∃m. ⫯m = n.
-* /2 width=2 by ex_intro/
-#H cases (lt_le_false … H) -H //
-qed-.
-
-lemma lt_inv_S1: ∀m,n. ⫯m < n → ∃∃p. m < p & ⫯p = n.
-#m * /3 width=3 by lt_S_S_to_lt, ex2_intro/
-#H cases (lt_le_false … H) -H //
-qed-.
-
-lemma lt_inv_gen: ∀y,x. x < y → ∃∃z. x ≤ z & ⫯z = y.
-* /3 width=3 by le_S_S_to_le, ex2_intro/
-#x #H elim (lt_le_false … H) -H //
-qed-.
-
-lemma pred_inv_refl: ∀m. pred m = m → m = 0.
-* // normalize #m #H elim (lt_refl_false m) //
 qed-.
 
 lemma le_plus_xSy_O_false: ∀x,y. x + S y ≤ 0 → ⊥.
@@ -241,6 +206,28 @@ lemma plus_xySz_x_false: ∀z,x,y. x + y + S z = x → ⊥.
 lemma plus_xSy_x_false: ∀y,x. x + S y = x → ⊥.
 /2 width=4 by plus_xySz_x_false/ qed-.
 
+lemma pred_inv_refl: ∀m. pred m = m → m = 0.
+* // normalize #m #H elim (lt_refl_false m) //
+qed-.
+
+lemma discr_plus_xy_y: ∀x,y. x + y = y → x = 0.
+// qed-.
+
+lemma discr_plus_x_xy: ∀x,y. x = x + y → y = 0.
+/2 width=2 by le_plus_minus_comm/ qed-.
+
+lemma lt_plus_SO_to_le: ∀x,y. x < y + 1 → x ≤ y.
+/2 width=1 by monotonic_pred/ qed-.
+
+lemma plus2_inv_le_sn: ∀m1,m2,n1,n2. m1 + n1 = m2 + n2 → m1 ≤ m2 → n2 ≤ n1.
+#m1 #m2 #n1 #n2 #H #Hm
+lapply (monotonic_le_plus_l n1 … Hm) -Hm >H -H
+/2 width=2 by le_plus_to_le/
+qed-.
+
+lemma lt_S_S_to_lt: ∀x,y. ⫯x < ⫯y → x < y.
+/2 width=1 by le_S_S_to_le/ qed-.
+
 (* Note this should go in nat.ma *)
 lemma discr_x_minus_xy: ∀x,y. x = x - y → x = 0 ∨ y = 0.
 #x @(nat_ind_plus … x) -x /2 width=1 by or_introl/
@@ -250,12 +237,35 @@ lemma discr_x_minus_xy: ∀x,y. x = x - y → x = 0 ∨ y = 0.
 #H destruct
 qed-.
 
+lemma lt_inv_O1: ∀n. 0 < n → ∃m. ⫯m = n.
+* /2 width=2 by ex_intro/
+#H cases (lt_le_false … H) -H //
+qed-.
+
+lemma lt_inv_S1: ∀m,n. ⫯m < n → ∃∃p. m < p & ⫯p = n.
+#m * /3 width=3 by lt_S_S_to_lt, ex2_intro/
+#H cases (lt_le_false … H) -H //
+qed-.
+
+lemma lt_inv_gen: ∀y,x. x < y → ∃∃z. x ≤ z & ⫯z = y.
+* /3 width=3 by le_S_S_to_le, ex2_intro/
+#x #H elim (lt_le_false … H) -H //
+qed-.
+
+lemma plus_inv_O3: ∀x,y. x + y = 0 → x = 0 ∧ y = 0.
+/2 width=1 by plus_le_0/ qed-.
+
+lemma max_inv_O3: ∀x,y. (x ∨ y) = 0 → 0 = x ∧ 0 = y.
+/4 width=2 by le_maxr, le_maxl, le_n_O_to_eq, conj/
+qed-.
+
 lemma zero_eq_plus: ∀x,y. 0 = x + y → 0 = x ∧ 0 = y.
 * /2 width=1 by conj/ #x #y normalize #H destruct
 qed-.
 
-lemma lt_S_S_to_lt: ∀x,y. ⫯x < ⫯y → x < y.
-/2 width=1 by le_S_S_to_le/ qed-.
+lemma nat_split: ∀x. x = 0 ∨ ∃y. ⫯y = x.
+* /3 width=2 by ex_intro, or_introl, or_intror/
+qed-.
 
 lemma lt_elim: ∀R:relation nat.
                (∀n2. R O (⫯n2)) →
