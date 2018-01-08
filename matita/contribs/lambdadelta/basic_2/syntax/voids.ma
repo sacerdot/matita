@@ -12,52 +12,80 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/rvoidstar_4.ma".
+include "basic_2/notation/functions/voidstar_2.ma".
 include "basic_2/syntax/lenv.ma".
 
-(* EQUIVALENCE FOR LOCAL ENVIRONMENTS UP TO EXCLUSION BINDERS ***************)
+(* EXTENSION OF A LOCAL ENVIRONMENT WITH EXCLUSION BINDERS ******************)
 
-inductive voids: bi_relation nat lenv ≝
-| voids_atom   : voids 0 (⋆) 0 (⋆)
-| voids_pair_sn: ∀I1,I2,K1,K2,V1,n. voids n K1 n K2 →
-                 voids 0 (K1.ⓑ{I1}V1) 0 (K2.ⓘ{I2})
-| voids_pair_dx: ∀I1,I2,K1,K2,V2,n. voids n K1 n K2 →
-                 voids 0 (K1.ⓘ{I1}) 0 (K2.ⓑ{I2}V2)
-| voids_void_sn: ∀K1,K2,n1,n2. voids n1 K1 n2 K2 →
-                 voids (⫯n1) (K1.ⓧ) n2 K2
-| voids_void_dx: ∀K1,K2,n1,n2. voids n1 K1 n2 K2 →
-                 voids n1 K1 (⫯n2) (K2.ⓧ)
-.
+rec definition voids (L:lenv) (n:nat) on n: lenv ≝ match n with
+[ O ⇒ L | S m ⇒ (voids L m).ⓧ ].
 
-interpretation "equivalence up to exclusion binders (local environment)"
-   'RVoidStar n1 L1 n2 L2 = (voids n1 L1 n2 L2).
+interpretation "extension with exclusion binders (local environment)"
+   'VoidStar n L = (voids L n).
 
 (* Basic properties *********************************************************)
 
-lemma voids_refl: ∀L. ∃n. ⓧ*[n]L ≋ ⓧ*[n]L.
-#L elim L -L /2 width=2 by ex_intro, voids_atom/
-#L #I * #n #IH cases I -I /3 width=2 by ex_intro, voids_pair_dx/
-* /4 width=2 by ex_intro, voids_void_sn, voids_void_dx/
+lemma voids_zero: ∀L. L = ⓧ*[0]L.
+// qed.
+
+lemma voids_succ: ∀L,n. (ⓧ*[n]L).ⓧ = ⓧ*[⫯n]L.
+// qed.
+
+(* Advanced properties ******************************************************)
+
+lemma voids_next: ∀n,L. ⓧ*[n](L.ⓧ) = ⓧ*[⫯n]L.
+#n elim n -n //
+qed.
+
+(* Basic inversion lemmas ***************************************************)
+
+lemma voids_atom_inv: ∀K,n. ⓧ*[n]K = ⋆ → ∧∧ ⋆ = K & 0 = n.
+#K * /2 width=1 by conj/
+#n <voids_succ #H destruct
 qed-.
 
-lemma voids_sym: bi_symmetric … voids.
-#n1 #n2 #L1 #L2 #H elim H -L1 -L2 -n1 -n2
-/2 width=2 by voids_atom, voids_pair_sn, voids_pair_dx, voids_void_sn, voids_void_dx/
+lemma voids_pair_inv: ∀I,K1,K2,V,n. ⓧ*[n]K1 = K2.ⓑ{I}V →
+                      ∧∧ K2.ⓑ{I}V = K1 & 0 = n.
+#I #K1 #K2 #V * /2 width=1 by conj/
+#n <voids_succ #H destruct
 qed-.
 
-(* Advanced Inversion lemmas ************************************************)
+(* Advanced inversion lemmas ************************************************)
 
-fact voids_inv_void_dx_aux: ∀L1,L2,n1,n2. ⓧ*[n1]L1 ≋ ⓧ*[n2]L2 →
-                            ∀K2,m2. n2 = ⫯m2 → L2 = K2.ⓧ → ⓧ*[n1]L1 ≋ ⓧ*[m2]K2.
-#L1 #L2 #n1 #n2 #H elim H -L1 -L2 -n1 -n2
-[ #K2 #m2 #H destruct
-| #I1 #I2 #L1 #L2 #V #n #_ #_ #K2 #m2 #H destruct
-| #I1 #I2 #L1 #L2 #V #n #_ #_ #K2 #m2 #H destruct
-| #L1 #L2 #n1 #n2 #_ #IH #K2 #m2 #H1 #H2 destruct
-  /3 width=1 by voids_void_sn/
-| #L1 #L2 #n1 #n2 #HL12 #_ #K2 #m2 #H1 #H2 destruct //
+lemma voids_inv_atom_sn: ∀n1,K2,n2. ⓧ*[n1]⋆ = ⓧ*[n2]K2 →
+                         ∧∧ ⓧ*[n1-n2]⋆ = K2 & n2 ≤ n1.
+#n1 elim n1 -n1
+[ #K2 <voids_zero * /2 width=1 by conj/
+  #n1 <voids_succ #H destruct
+| #n1 #IH #K2 *
+  [ <voids_zero #H destruct /2 width=1 by conj/
+  | #n2 <voids_succ <voids_succ >minus_S_S #H
+    elim (destruct_lbind_lbind_aux … H) -H #HK #_ (**) (* destruct lemma needed *)
+    elim (IH … HK) -IH -HK #H #Hn destruct /3 width=1 by conj, le_S_S/
+  ]
 ]
 qed-.
 
-lemma voids_inv_void_dx: ∀L1,L2,n1,n2. ⓧ*[n1]L1 ≋ ⓧ*[⫯n2]L2.ⓧ → ⓧ*[n1]L1 ≋ ⓧ*[n2]L2.
-/2 width=5 by voids_inv_void_dx_aux/ qed-.
+lemma voids_inv_pair_sn: ∀I,V,n1,K1,K2,n2. ⓧ*[n1]K1.ⓑ{I}V = ⓧ*[n2]K2 →
+                         ∧∧ ⓧ*[n1-n2]K1.ⓑ{I}V = K2 & n2 ≤ n1.
+#I #V #n1 elim n1 -n1
+[ #K1 #K2 <voids_zero * /2 width=1 by conj/
+  #n1 <voids_succ #H destruct
+| #n1 #IH #K1 #K2 *
+  [ <voids_zero #H destruct /2 width=1 by conj/
+  | #n2 <voids_succ <voids_succ >minus_S_S #H
+    elim (destruct_lbind_lbind_aux … H) -H #HK #_ (**) (* destruct lemma needed *)
+    elim (IH … HK) -IH -HK #H #Hn destruct /3 width=1 by conj, le_S_S/
+  ]
+]
+qed-.
+
+(* Main inversion properties ************************************************)
+
+theorem voids_inj: ∀n. injective … (λL. ⓧ*[n]L).
+#n elim n -n //
+#n #IH #L1 #L2
+<voids_succ <voids_succ #H
+elim (destruct_lbind_lbind_aux … H) -H (**) (* destruct lemma needed *)
+/2 width=1 by/
+qed-.

@@ -12,12 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/syntax/voids.ma".
+(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-(* EQUIVALENCE FOR LOCAL ENVIRONMENTS UP TO EXCLUSION BINDERS ***************)
-
-(* Main inversion lemmas ****************************************************)
-
-theorem voids_inj: ∀L1,L2,n1,n2. ⓧ*[n1]L1 ≋ ⓧ*[n2]L2 →
-                   ∀m1,m2. ⓧ*[m1]L1 ≋ ⓧ*[m2]L2 →
-                   ∧∧ n1 = m1 & n2 = m2.
+notation "hvbox( ⓧ* [ term 46 n ] term 46 L )"
+   non associative with precedence 46
+   for @{ 'VoidStar $n $L }.

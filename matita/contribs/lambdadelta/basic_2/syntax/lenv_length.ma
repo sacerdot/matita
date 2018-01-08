@@ -23,6 +23,8 @@ rec definition length L ≝ match L with
 
 interpretation "length (local environment)" 'card L = (length L).
 
+definition length2 (L1) (L2): nat ≝ |L1| + |L2|. 
+
 (* Basic properties *********************************************************)
 
 lemma length_atom: |⋆| = 0.

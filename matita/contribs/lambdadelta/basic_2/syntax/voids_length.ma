@@ -15,44 +15,32 @@
 include "basic_2/syntax/lenv_length.ma".
 include "basic_2/syntax/voids.ma".
 
-(* EQUIVALENCE FOR LOCAL ENVIRONMENTS UP TO EXCLUSION BINDERS ***************)
+(* EXTENSION OF A LOCAL ENVIRONMENT WITH EXCLUSION BINDERS ******************)
 
-(* Forward lemmas with length for local environments ************************)
+(* Properties with length for local environments ****************************)
 
-lemma voids_fwd_length_le_sn: ∀L1,L2,n1,n2. ⓧ*[n1]L1 ≋ ⓧ*[n2]L2 → n1 ≤ |L1|.
-#L1 #L2 #n1 #n2 #H elim H -L1 -L2 -n1 -n2 normalize
-/2 width=1 by le_S_S/
-qed-.
+lemma length_void: ∀L,n. n+|L| = |ⓧ*[n]L|.
+#L #n elim n -n //
+#n #IH <voids_succ >length_bind <IH -IH //
+qed.
 
-lemma voids_fwd_length_le_dx: ∀L1,L2,n1,n2. ⓧ*[n1]L1 ≋ ⓧ*[n2]L2 → n2 ≤ |L2|.
-#L1 #L2 #n1 #n2 #H elim H -L1 -L2 -n1 -n2 normalize
-/2 width=1 by le_S_S/
-qed-.
+lemma length_void_le: ∀L,n. |L| ≤ |ⓧ*[n]L|.
+// qed.
 
-lemma voids_fwd_length: ∀L1,L2,n1,n2. ⓧ*[n1]L1 ≋ ⓧ*[n2]L2 →
-                        |L1| + n2 = |L2| + n1.
-#L1 #L2 #n1 #n2 #H elim H -L1 -L2 -n1 -n2 normalize
-/2 width=2 by injective_plus_r/
-qed-.
+(* Main forward properties with length for local environments ***************)
 
-lemma voids_fwd_length_minus: ∀L1,L2,n1,n2. ⓧ*[n1]L1 ≋ ⓧ*[n2]L2 →
-                              |L1| - n1 = |L2| - n2.
-/3 width=3 by voids_fwd_length, voids_fwd_length_le_dx, voids_fwd_length_le_sn, plus_to_minus_2/ qed-.
-
-lemma voids_inj_length: ∀L1,L2,n1,n2. ⓧ*[n1]L1 ≋ ⓧ*[n2]L2 →
-                        |L1| = |L2| → n1 = n2.
-#L1 #L2 #n1 #n2 #H #HL12
-lapply (voids_fwd_length … H) -H #H
-/2 width=2 by injective_plus_l/
-qed-.
-
-(* Inversion lemmas with length for local environments **********************)
-
-lemma voids_inv_void_dx_length: ∀L1,L2,n1,n2. ⓧ*[n1]L1 ≋ ⓧ*[n2]L2.ⓧ → |L1| ≤ |L2| →
-                                ∃∃m2. ⓧ*[n1]L1 ≋ ⓧ*[m2]L2 & n2 = ⫯m2 & n1 ≤ m2.
-#L1 #L2 #n1 #n2 #H #HL12
-lapply (voids_fwd_length … H) normalize >plus_n_Sm #H0
-lapply (plus2_inv_le_sn … H0 HL12) -H0 -HL12 #H0
-elim (le_inv_S1 … H0) -H0 #m2 #Hm2 #H0 destruct
-/3 width=4 by voids_inv_void_dx, ex3_intro/
+theorem voids_inj_length: ∀n1,n2,L1,L2. ⓧ*[n1]L1 = ⓧ*[n2]L2 →
+                          |L1| = |L2| → n1 = n2 ∧ L1 = L2.
+#n1 elim n1 -n1
+[ * /2 width=1 by conj/ #n2 #L1 #L2 | #n1 #IH * [ | #n2 ] #L1 #L2 ]
+[ <voids_zero #H destruct
+  <length_void <commutative_plus #H
+  elim (plus_xSy_x_false … H)
+| <voids_zero #H destruct
+  <length_void <commutative_plus #H
+  elim (plus_xSy_x_false … (sym_eq … H))
+| <voids_succ <voids_succ #H #HL12
+  elim (destruct_lbind_lbind_aux … H) -H (**) (* destruct lemma needed *)
+  #H #_ elim (IH … H HL12) -IH -H -HL12 /2 width=1 by conj/
+]
 qed-.

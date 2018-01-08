@@ -1,0 +1,98 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "ground_2/xoa/xoa2.ma".
+include "basic_2/syntax/voids_length.ma".
+include "basic_2/syntax/lveq.ma".
+
+(* EQUIVALENCE FOR LOCAL ENVIRONMENTS UP TO EXCLUSION BINDERS ***************)
+
+(* Inversion lemmas with extension with exclusion binders *******************)
+
+lemma lveq_inv_voids: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1, n2] L2 →
+                      ∨∨ ∧∧ ⓧ*[n1]⋆ = L1 & ⓧ*[n2]⋆ = L2
+                       | ∃∃I1,I2,K1,K2,V1,n. K1 ≋ⓧ*[n, n] K2 & ⓧ*[n1](K1.ⓑ{I1}V1) = L1 & ⓧ*[n2](K2.ⓘ{I2}) = L2
+                       | ∃∃I1,I2,K1,K2,V2,n. K1 ≋ⓧ*[n, n] K2 & ⓧ*[n1](K1.ⓘ{I1}) = L1 & ⓧ*[n2](K2.ⓑ{I2}V2) = L2.
+#L1 #L2 #n1 #n2 #H elim H -L1 -L2 -n1 -n2
+[ /3 width=1 by conj, or3_intro0/
+|2,3: /3 width=9 by or3_intro1, or3_intro2, ex3_6_intro/
+|4,5: #K1 #K2 #n1 #n2 #HK12 * *
+   /3 width=9 by conj, or3_intro0, or3_intro1, or3_intro2, ex3_6_intro/
+]
+qed-.
+
+(* Eliminators with extension with exclusion binders ************************)
+
+lemma lveq_ind_voids: ∀R:bi_relation lenv nat. (
+                         ∀n1,n2. R (ⓧ*[n1]⋆) n1 (ⓧ*[n2]⋆) n2
+                      ) → (
+                         ∀I1,I2,K1,K2,V1,n1,n2,n. K1 ≋ⓧ*[n, n] K2 → R K1 n K2 n →
+                         R (ⓧ*[n1]K1.ⓑ{I1}V1) n1 (ⓧ*[n2]K2.ⓘ{I2}) n2
+                      ) → (
+                         ∀I1,I2,K1,K2,V2,n1,n2,n. K1 ≋ⓧ*[n, n] K2 → R K1 n K2 n →
+                         R (ⓧ*[n1]K1.ⓘ{I1}) n1 (ⓧ*[n2]K2.ⓑ{I2}V2) n2
+                      ) →
+                      ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1, n2] L2 → R L1 n1 L2 n2.
+#R #IH1 #IH2 #IH3 #L1 #L2 @(f2_ind ?? length2 ?? L1 L2) -L1 -L2
+#m #IH #L1 #L2 #Hm #n1 #n2 #H destruct
+elim (lveq_inv_voids … H) -H * //
+#I1 #I2 #K1 #K2 #V #n #HK #H1 #H2 destruct
+/4 width=3 by lt_plus/
+qed-.
+
+(*
+
+(* Properties with extension with exclusion binders *************************)
+
+lemma lveq_voids_sn: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1, n2] L2 →
+                     ∀m1. ⓧ*[m1]L1 ≋ⓧ*[m1+n1, n2] L2.
+#L1 #L2 #n1 #n2 #HL12 #m1 elim m1 -m1 /2 width=1 by lveq_void_sn/
+qed-.
+
+lemma lveq_voids_dx: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1, n2] L2 →
+                     ∀m2. L1 ≋ⓧ*[n1, m2+n2] ⓧ*[m2]L2.
+#L1 #L2 #n1 #n2 #HL12 #m2 elim m2 -m2 /2 width=1 by lveq_void_dx/
+qed-.
+
+lemma lveq_voids: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1, n2] L2 →
+                  ∀m1,m2. ⓧ*[m1]L1 ≋ⓧ*[m1+n1, m2+n2] ⓧ*[m2]L2.
+/3 width=1 by lveq_voids_dx, lveq_voids_sn/ qed-.
+
+lemma lveq_voids_zero: ∀L1,L2. L1 ≋ⓧ*[0, 0] L2 →
+                       ∀n1,n2. ⓧ*[n1]L1 ≋ⓧ*[n1, n2] ⓧ*[n2]L2.
+#L1 #L2 #HL12 #n1 #n2
+>(plus_n_O … n1) in ⊢ (?%???); >(plus_n_O … n2) in ⊢ (???%?);
+/2 width=1 by lveq_voids/ qed-.
+
+(* Inversion lemmas with extension with exclusion binders *******************)
+
+lemma lveq_inv_voids_sn: ∀L1,L2,n1,n2,m1. ⓧ*[m1]L1 ≋ⓧ*[m1+n1, n2] L2 →
+                         L1 ≋ⓧ*[n1, n2] L2.
+#L1 #L2 #n1 #n2 #m1 elim m1 -m1 /3 width=1 by lveq_inv_void_sn/
+qed-.
+
+lemma lveq_inv_voids_dx: ∀L1,L2,n1,n2,m2. L1 ≋ⓧ*[n1, m2+n2] ⓧ*[m2]L2 →
+                         L1 ≋ⓧ*[n1, n2] L2.
+#L1 #L2 #n1 #n2 #m2 elim m2 -m2 /3 width=1 by lveq_inv_void_dx/
+qed-.
+
+lemma lveq_inv_voids: ∀L1,L2,n1,n2,m1,m2. ⓧ*[m1]L1 ≋ⓧ*[m1+n1, m2+n2] ⓧ*[m2]L2 →
+                      L1 ≋ⓧ*[n1, n2] L2.
+/3 width=3 by lveq_inv_voids_dx, lveq_inv_voids_sn/ qed-.
+
+lemma lveq_inv_voids_zero: ∀L1,L2,n1,n2. ⓧ*[n1]L1 ≋ⓧ*[n1, n2] ⓧ*[n2]L2 →
+                           L1 ≋ⓧ*[0, 0] L2.
+/2 width=3 by lveq_inv_voids/ qed-.
+
+*)

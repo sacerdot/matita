@@ -24,8 +24,7 @@ f,g    : local reference transforming map
 h      : sort hierarchy parameter
 i,j    : local reference depth (de Bruijn's)
 k,l    : global reference level
-m      : 
-n      : type iterations
+m,n    : iterations
 o      : sort degree parameter (origin)
 p,q    : binder polarity
 r      :
