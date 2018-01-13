@@ -58,15 +58,34 @@ lemma lveq_inj_length: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1, n2] L2 →
 lapply (lveq_fwd_length … H) -H #H
 /2 width=2 by injective_plus_l/
 qed-.
-(*
+
+lemma lveq_fwd_abst_bind_length_le: ∀I1,I2,L1,L2,V1,n1,n2.
+                                    L1.ⓑ{I1}V1 ≋ⓧ*[n1, n2] L2.ⓘ{I2} → |L1| ≤ |L2|.
+#I1 #I2 #L1 #L2 #V1 #n1 #n2 #HL
+lapply (lveq_fwd_pair_sn … HL) #H destruct
+lapply (lveq_fwd_length … HL) -HL >length_bind >length_bind #H
+/2 width=1 by monotonic_pred/
+qed-.
+
+lemma lveq_fwd_bind_abst_length_le: ∀I1,I2,L1,L2,V2,n1,n2.
+                                    L1.ⓘ{I1} ≋ⓧ*[n1, n2] L2.ⓑ{I2}V2 → |L2| ≤ |L1|.
+/3 width=6 by lveq_fwd_abst_bind_length_le, lveq_sym/ qed-.
+
 (* Inversion lemmas with length for local environments **********************)
-                   
+
 lemma lveq_inv_void_dx_length: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1, n2] L2.ⓧ → |L1| ≤ |L2| →
                                ∃∃m2. L1 ≋ ⓧ*[n1, m2] L2 & n2 = ⫯m2 & n1 ≤ m2.
 #L1 #L2 #n1 #n2 #H #HL12
 lapply (lveq_fwd_length … H) normalize >plus_n_Sm #H0
 lapply (plus2_inv_le_sn … H0 HL12) -H0 -HL12 #H0
 elim (le_inv_S1 … H0) -H0 #m2 #Hm2 #H0 destruct
-/3 width=4 by lveq_inv_void_dx, ex3_intro/
+/3 width=4 by lveq_inv_void_succ_dx, ex3_intro/
 qed-.
-*)
+
+lemma lveq_inv_void_sn_length: ∀L1,L2,n1,n2. L1.ⓧ ≋ⓧ*[n1, n2] L2 → |L2| ≤ |L1| →
+                               ∃∃m1. L1 ≋ ⓧ*[m1, n2] L2 & n1 = ⫯m1 & n2 ≤ m1.
+#L1 #L2 #n1 #n2 #H #HL
+lapply (lveq_sym … H) -H #H
+elim (lveq_inv_void_dx_length … H HL) -H -HL
+/3 width=4 by lveq_sym, ex3_intro/
+qed-.

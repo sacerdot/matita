@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/syntax/lveq_lveq.ma".
 include "basic_2/static/frees_frees.ma".
 include "basic_2/static/fle_fqup.ma".
 
@@ -19,14 +20,15 @@ include "basic_2/static/fle_fqup.ma".
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma fle_inv_voids_sn_frees_dx: ∀L1,L2,T1,T2,n. ⦃ⓧ*[n]L1, T1⦄ ⊆ ⦃L2, T2⦄ →
-                                 |L1| = |L2| → ∀f2. L2 ⊢ 𝐅*⦃T2⦄ ≡ f2 →
-                                 ∃∃f1. ⓧ*[n]L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 & ⫱*[n]f1 ⊆ f2.
-#L1 #L2 #T1 #T2 #n #H #HL12 #f2 #Hf2
-elim (fle_inv_voids_sn … H HL12) -H -HL12 #f1 #g2 #Hf1 #Hg2 #Hfg
-lapply (frees_mono … Hg2 … Hf2) -Hg2 -Hf2 #Hfg2
-lapply (sle_eq_repl_back2 … Hfg … Hfg2) -g2
-/2 width=3 by ex2_intro/
+lemma fle_frees_trans: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⊆ ⦃L2, T2⦄ →
+                       ∀f2. L2 ⊢ 𝐅*⦃T2⦄ ≡ f2 →
+                       ∃∃n1,n2,f1. L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 &
+                                   L1 ≋ⓧ*[n1, n2] L2 & ⫱*[n1]f1 ⊆ ⫱*[n2]f2.
+#L1 #L2 #T1 #T2 * #n1 #n2 #f1 #g2 #Hf1 #Hg2 #HL #Hn #f2 #Hf2
+lapply (frees_mono … Hg2 … Hf2) -Hg2 -Hf2 #Hgf2
+lapply (tls_eq_repl n2 … Hgf2) -Hgf2 #Hgf2
+lapply (sle_eq_repl_back2 … Hn … Hgf2) -g2
+/2 width=6 by ex3_3_intro/
 qed-.
 
 (* Main properties **********************************************************)
@@ -38,37 +40,38 @@ qed-.
 *)
 theorem fle_bind_sn: ∀L1,L2,V1,T1,T. ⦃L1, V1⦄ ⊆ ⦃L2, T⦄ → ⦃L1.ⓧ, T1⦄ ⊆ ⦃L2, T⦄ →
                      ∀p,I. ⦃L1, ⓑ{p,I}V1.T1⦄ ⊆ ⦃L2, T⦄.
-#L1 #L2 #V1 #T1 #T * -L1 #f1 #x #L1 #n1 #Hf1 #Hx #HL12 #Hf1x
->voids_succ #H #p #I
-elim (fle_inv_voids_sn_frees_dx … H … Hx) -H // #f2 #Hf2
-<tls_xn #Hf2x
+#L1 #L2 #V1 #T1 #T * #n1 #x #f1 #g #Hf1 #Hg #H1n1 #H2n1 #H #p #I
+elim (fle_frees_trans … H … Hg) -H #n2 #n #f2 #Hf2 #H1n2 #H2n2
+elim (lveq_inj_void_sn … H1n1 … H1n2) -H1n2 #H1 #H2 destruct
 elim (sor_isfin_ex f1 (⫱f2)) /3 width=3 by frees_fwd_isfin, isfin_tl/ #f #Hf #_
-/4 width=9 by fle_intro, frees_bind_void, sor_inv_sle, sor_tls/
+<tls_xn in H2n2; #H2n2
+/4 width=12 by frees_bind_void, sor_inv_sle, sor_tls, ex4_4_intro/
 qed.
 
 theorem fle_flat_sn: ∀L1,L2,V1,T1,T. ⦃L1, V1⦄ ⊆ ⦃L2, T⦄ → ⦃L1, T1⦄ ⊆ ⦃L2, T⦄ →
                      ∀I. ⦃L1, ⓕ{I}V1.T1⦄ ⊆ ⦃L2, T⦄.
-#L1 #L2 #V1 #T1 #T * -L1 #f1 #x #L1 #n1 #Hf1 #Hx #HL12 #Hf1x #H #I
-elim (fle_inv_voids_sn_frees_dx … H … Hx) -H // #f2 #Hf2 #Hf2x
+#L1 #L2 #V1 #T1 #T * #n1 #x #f1 #g #Hf1 #Hg #H1n1 #H2n1 #H #I
+elim (fle_frees_trans … H … Hg) -H #n2 #n #f2 #Hf2 #H1n2 #H2n2
+elim (lveq_inj … H1n1 … H1n2) -H1n2 #H1 #H2 destruct
 elim (sor_isfin_ex f1 f2) /2 width=3 by frees_fwd_isfin/ #f #Hf #_
-/4 width=9 by fle_intro, frees_flat, sor_inv_sle, sor_tls/
+/4 width=12 by frees_flat, sor_inv_sle, sor_tls, ex4_4_intro/
 qed.
 (*
-lemma fle_bind: ∀L1,L2,V1,V2. ⦃L1, V1⦄ ⊆ ⦃L2, V2⦄ →
-                ∀I1,I2,T1,T2. ⦃L1.ⓑ{I1}V1, T1⦄ ⊆ ⦃L2.ⓑ{I2}V2, T2⦄ →
-                ∀p. ⦃L1, ⓑ{p,I1}V1.T1⦄ ⊆ ⦃L2, ⓑ{p,I2}V2.T2⦄.
-#L1 #L2 #V1 #V2 * #f1 #g1 #HV1 #HV2 #Hfg1 #I1 #I2 #T1 #T2 * #f2 #g2 #Hf2 #Hg2 #Hfg2 #p
+theorem fle_bind: ∀L1,L2,V1,V2. ⦃L1, V1⦄ ⊆ ⦃L2, V2⦄ →
+                  ∀I1,I2,T1,T2. ⦃L1.ⓑ{I1}V1, T1⦄ ⊆ ⦃L2.ⓑ{I2}V2, T2⦄ →
+                  ∀p. ⦃L1, ⓑ{p,I1}V1.T1⦄ ⊆ ⦃L2, ⓑ{p,I2}V2.T2⦄.
+#L1 #L2 #V1 #V2 #HV #I1 #I2 #T1 #T2 #HT #p
+@fle_bind_sn
+[ @fle_bind_dx_sn //
+| @fle_bind_dx_dx
+
+
 elim (sor_isfin_ex f1 (⫱f2)) /3 width=3 by frees_fwd_isfin, isfin_tl/ #f #Hf #_
 elim (sor_isfin_ex g1 (⫱g2)) /3 width=3 by frees_fwd_isfin, isfin_tl/ #g #Hg #_
 /4 width=12 by frees_bind, monotonic_sle_sor, sle_tl, ex3_2_intro/
 qed.
-
-lemma fle_flat: ∀L1,L2,V1,V2. ⦃L1, V1⦄ ⊆ ⦃L2, V2⦄ →
-                ∀T1,T2. ⦃L1, T1⦄ ⊆ ⦃L2, T2⦄ →
-                ∀I1,I2. ⦃L1, ⓕ{I1}V1.T1⦄ ⊆ ⦃L2, ⓕ{I2}V2.T2⦄.
-#L1 #L2 #V1 #V2 * #f1 #g1 #HV1 #HV2 #Hfg1 #T1 #T2 * #f2 #g2 #Hf2 #Hg2 #Hfg2 #I1 #I2
-elim (sor_isfin_ex f1 f2) /2 width=3 by frees_fwd_isfin/ #f #Hf #_
-elim (sor_isfin_ex g1 g2) /2 width=3 by frees_fwd_isfin/ #g #Hg #_
-/3 width=12 by frees_flat, monotonic_sle_sor, ex3_2_intro/
-qed.
 *)
+theorem fle_flat: ∀L1,L2,V1,V2. ⦃L1, V1⦄ ⊆ ⦃L2, V2⦄ →
+                  ∀T1,T2. ⦃L1, T1⦄ ⊆ ⦃L2, T2⦄ →
+                  ∀I1,I2. ⦃L1, ⓕ{I1}V1.T1⦄ ⊆ ⦃L2, ⓕ{I2}V2.T2⦄.
+/3 width=1 by fle_flat_sn, fle_flat_dx_dx, fle_flat_dx_sn/ qed-.

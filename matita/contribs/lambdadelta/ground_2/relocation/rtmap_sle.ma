@@ -146,6 +146,12 @@ lemma sle_inv_tl_dx: ∀f1,f2. f1 ⊆ ⫱f2 → ↑f1 ⊆ f2.
 /2 width=5 by sle_push, sle_weak/
 qed-.
 
+(* Properties with iteraded tail ********************************************)
+
+lemma sle_tls: ∀f1,f2. f1 ⊆ f2 → ∀i. ⫱*[i] f1 ⊆ ⫱*[i] f2.
+#f1 #f2 #Hf12 #i elim i -i /2 width=5 by sle_tl/
+qed.
+
 (* Properties with isid *****************************************************)
 
 corec lemma sle_isid_sn: ∀f1. 𝐈⦃f1⦄ → ∀f2. f1 ⊆ f2.

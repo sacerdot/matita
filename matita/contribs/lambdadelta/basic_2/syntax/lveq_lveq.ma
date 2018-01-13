@@ -16,6 +16,33 @@ include "basic_2/syntax/lveq_length.ma".
 
 (* EQUIVALENCE FOR LOCAL ENVIRONMENTS UP TO EXCLUSION BINDERS ***************)
 
+(* Main forward lemmas ******************************************************)
+
+theorem lveq_fwd_inj_succ_zero: ∀L1,L2,n1. L1 ≋ⓧ*[⫯n1, 0] L2 →
+                                ∀m1,m2. L1 ≋ⓧ*[m1, m2] L2 → ∃x1. ⫯x1 = m1.
+#L1 #L2 #n1 #Hn #m1 #m2 #Hm
+lapply (lveq_fwd_length … Hn) -Hn <plus_n_O #Hn
+lapply (lveq_fwd_length … Hm) -Hm >Hn >associative_plus -Hn #Hm
+lapply (injective_plus_r … Hm) -Hm
+<plus_S1 /2 width=2 by ex_intro/
+qed-.
+
+theorem lveq_fwd_inj_zero_succ: ∀L1,L2,n2. L1 ≋ⓧ*[0, ⫯n2] L2 →
+                                ∀m1,m2. L1 ≋ⓧ*[m1, m2] L2 → ∃x2. ⫯x2 = m2.
+/4 width=6 by lveq_fwd_inj_succ_zero, lveq_sym/ qed-. (* auto: 2x lveq_sym *)
+
+theorem lveq_fwd_inj_succ_sn: ∀L1,L2,n1,n2. L1 ≋ⓧ*[⫯n1, n2] L2 →
+                              ∀m1,m2. L1 ≋ⓧ*[m1, m2] L2 →
+                              ∨∨ ∃x. ⫯x = n2 | ∃x. ⫯x = m1.
+#L1 #L2 #n1 * [2: #n2 ] /3 width=2 by ex_intro, or_introl/
+#Hn #m1 #m2 #Hm @or_intror @lveq_fwd_inj_succ_zero /width=6 by/ (**) (* auto fails *)
+qed-.
+
+theorem lveq_fwd_inj_succ_dx: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1, ⫯n2] L2 →
+                              ∀m1,m2. L1 ≋ⓧ*[m1, m2] L2 →
+                              ∨∨ ∃x. ⫯x = n1 | ∃x. ⫯x = m2.
+/4 width=6 by lveq_fwd_inj_succ_sn, lveq_sym/ qed-. (* auto: 2x lveq_sym *) 
+
 (* Main inversion lemmas ****************************************************)
 
 theorem lveq_inv_pair_sn: ∀K1,K2,n. K1 ≋ⓧ*[n, n] K2 →
@@ -31,97 +58,89 @@ theorem lveq_inv_pair_dx: ∀K1,K2,n. K1 ≋ⓧ*[n, n] K2 →
                           ∀I1,I2,V,m1,m2. K1.ⓘ{I1} ≋ⓧ*[m1, m2] K2.ⓑ{I2}V →
                           ∧∧ 0 = m1 & 0 = m2.
 /4 width=8 by lveq_inv_pair_sn, lveq_sym, commutative_and/ qed-.
-(*
-theorem lveq_inv_void_sn: ∀K1,K2,n1,n2. K1 ≋ⓧ*[n1, n2] K2 →
-                          ∀m1,m2. K1.ⓧ ≋ⓧ*[m1, m2] K2 →
-                          0 < m1. 
-*)
-(*
+
 theorem lveq_inj: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1, n2] L2 →
                   ∀m1,m2. L1 ≋ⓧ*[m1, m2] L2 →
                   ∧∧ n1 = m1 & n2 = m2.
 #L1 #L2 @(f2_ind ?? length2 ?? L1 L2) -L1 -L2
-#x #IH #L1 #L2 #Hx #n1 #n2 #H
-generalize in match Hx; -Hx
-cases H -L1 -L2 -n1 -n2
-/2 width=8 by lveq_inv_pair_dx, lveq_inv_pair_sn, lveq_inv_atom/
-#K1 #K2 #n1 #n2 #HK #Hx #m1 #m2 #H destruct
-
-
-
-[ #_ #m1 #m2 #HL -x /2 width=1 by lveq_inv_atom/
-| #I1 #I2 #K1 #K2 #V1 #n #HK #_ #m1 #m2 #H -x     
-  
-
-
-theorem lveq_inj: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1, n2] L2 →
-                  ∀m1,m2. L1 ≋ⓧ*[m1, m2] L2 →
-                  ∧∧ n1 = m1 & n2 = m2.
-#L1 #L2 #n1 #n2 #H @(lveq_ind_voids … H) -H -L1 -L2 -n1 -n2
-[ #n1 #n2 #m1 #m2 #H elim (lveq_inv_voids … H) -H *
-  [ /3 width=1 by voids_inj, conj/ ]
-  #J1 #J2 #K1 #K2 #W #m #_ [ #H #_ | #_ #H ]
-  elim (voids_inv_pair_sn … H) -H #H #_
-  elim (voids_atom_inv … H) -H #H #_ destruct
-]
-#I1 #I2 #L1 #L2 #V #n1 #n2 #n #HL #IH #m1 #m2 #H
-elim (lveq_inv_voids … H) -H *
-[1,4: [ #H #_ | #_ #H ]
-  elim (voids_inv_atom_sn … H) -H #H #_
-  elim (voids_pair_inv … H) -H #H #_ destruct
-]
-#J1 #J2 #K1 #K2 #W #m #HK [1,3: #H1 #H2 |*: #H2 #H1 ]
-elim (voids_inv_pair_sn … H1) -H1 #H #Hnm
-[1,4: -IH -Hnm elim (voids_pair_inv … H) -H #H1 #H2 destruct
-|2,3: elim (voids_inv_pair_dx … H2) -H2 #H2 #_
- 
-  elim (IH … HK)    
-
-
-(*
-/3 width=3 by lveq_inv_atom, lveq_inv_voids/
-| 
-  lapply (lveq_inv_voids … H) -H #H
-  elim (lveq_inv_pair_sn … H) -H * /2 width=1 by conj/
-  #Y2 #y2 #HY2 #H1 #H2 #H3 destruct 
-*)
-
-(*
-fact lveq_inv_pair_bind_aux: ∀L1,L2,n1,n2. L1 ≋ ⓧ*[n1, n2] L2 →
-                             ∀I1,I2,K1,K2,V1. K1.ⓑ{I1}V1 = L1 → K2.ⓘ{I2} = L2 →
-                             ∨∨ ∃∃m. K1 ≋ ⓧ*[m, m] K2 & 0 = n1 & 0 = n2
-                              | ∃∃m1,m2. K1 ≋ ⓧ*[m1, m2] K2 &
-                                         BUnit Void = I2 & ⫯m2 = n2.
-#L1 #L2 #n1 #n2 #H elim H -L1 -L2 -n1 -n2
-[ #J1 #J2 #L1 #L2 #V1 #H1 #H2 destruct
-|2,3: #I1 #I2 #K1 #K2 #V #n #HK #_ #J1 #J2 #L1 #L2 #V1 #H1 #H2 destruct /3 width=2 by or_introl, ex3_intro/
-|4,5: #K1 #K2 #n1 #n2 #HK #IH #J1 #J2 #L1 #L2 #V1 #H1 #H2 destruct
- /3 width=4 by _/
-]
-qed-.
-
-lemma voids_inv_pair_bind: ∀I1,I2,K1,K2,V1,n1,n2. ⓧ*[n1]K1.ⓑ{I1}V1 ≋ ⓧ*[n2]K2.ⓘ{I2} →
-                           ∨∨ ∃∃n. ⓧ*[n]K1 ≋ ⓧ*[n]K2 & 0 = n1 & 0 = n2
-                            | ∃∃m2. ⓧ*[n1]K1.ⓑ{I1}V1 ≋ ⓧ*[m2]K2 &
-                                    BUnit Void = I2 & ⫯m2 = n2.
-/2 width=5 by voids_inv_pair_bind_aux/ qed-.
-
-fact voids_inv_bind_pair_aux: ∀L1,L2,n1,n2. ⓧ*[n1]L1 ≋ ⓧ*[n2]L2 →
-                              ∀I1,I2,K1,K2,V2. K1.ⓘ{I1} = L1 → K2.ⓑ{I2}V2 = L2 →
-                              ∨∨ ∃∃n. ⓧ*[n]K1 ≋ ⓧ*[n]K2 & 0 = n1 & 0 = n2
-                               | ∃∃m1. ⓧ*[m1]K1 ≋ ⓧ*[n2]K2.ⓑ{I2}V2 &
-                                       BUnit Void = I1 & ⫯m1 = n1.
-#L1 #L2 #n1 #n2 * -L1 -L2 -n1 -n2
-[ #J1 #J2 #L1 #L2 #V1 #H1 #H2 destruct
-|2,3: #I1 #I2 #K1 #K2 #V #n #HK #J1 #J2 #L1 #L2 #V2 #H1 #H2 destruct /3 width=2 by or_introl, ex3_intro/
-|4,5: #K1 #K2 #n1 #n2 #HK #J1 #J2 #L1 #L2 #V2 #H1 #H2 destruct /3 width=3 by or_intror, ex3_intro/
+#x #IH * [2: #L1 #I1 ] * [2,4: #L2 #I2 ]
+[ cases I1 -I1 [ * | #I1 #V1 ] cases I2 -I2 [1,3: * |*: #I2 #V2 ] ]
+#Hx #n1 #n2 #Hn #m1 #m2 #Hm destruct
+[ elim (lveq_fwd_void_void … Hn) * #x #H destruct
+  elim (lveq_fwd_void_void … Hm) * #y #H destruct
+  [ lapply (lveq_inv_void_succ_sn … Hn) -Hn #Hn
+    lapply (lveq_inv_void_succ_sn … Hm) -Hm #Hm
+    elim (IH … Hn … Hm) -IH -Hn -Hm // #H1 #H2 destruct
+    /2 width=1 by conj/
+  | elim (lveq_fwd_inj_succ_sn … Hn … Hm) * #z #H destruct
+    [ lapply (lveq_inv_void_succ_dx … Hn) -Hn #Hn
+      lapply (lveq_inv_void_succ_dx … Hm) -Hm #Hm
+      elim (IH … Hn … Hm) -IH -Hn -Hm [2: normalize // ] #H1 #H2 destruct (**) (* avoid normalize *)
+      /2 width=1 by conj/
+    | lapply (lveq_inv_void_succ_sn … Hn) -Hn #Hn
+      lapply (lveq_inv_void_succ_sn … Hm) -Hm #Hm
+      elim (IH … Hn … Hm) -IH -Hn -Hm // #H1 #H2 destruct
+      /2 width=1 by conj/
+    ]
+  | elim (lveq_fwd_inj_succ_dx … Hn … Hm) * #z #H destruct
+    [ lapply (lveq_inv_void_succ_sn … Hn) -Hn #Hn
+      lapply (lveq_inv_void_succ_sn … Hm) -Hm #Hm
+      elim (IH … Hn … Hm) -IH -Hn -Hm // #H1 #H2 destruct
+      /2 width=1 by conj/
+    | lapply (lveq_inv_void_succ_dx … Hn) -Hn #Hn
+      lapply (lveq_inv_void_succ_dx … Hm) -Hm #Hm
+      elim (IH … Hn … Hm) -IH -Hn -Hm [2: normalize // ] #H1 #H2 destruct (**) (* avoid normalize *)
+      /2 width=1 by conj/
+    ]
+  | lapply (lveq_inv_void_succ_dx … Hn) -Hn #Hn
+    lapply (lveq_inv_void_succ_dx … Hm) -Hm #Hm
+    elim (IH … Hn … Hm) -IH -Hn -Hm [2: normalize // ] #H1 #H2 destruct (**) (* avoid normalize *)
+    /2 width=1 by conj/
+  ]
+| lapply (lveq_fwd_abst_bind_length_le … Hn) #HL
+  elim (le_to_or_lt_eq … HL) -HL #HL
+  [ elim (lveq_inv_void_dx_length … Hn) -Hn // #x1 #Hn #H #_ destruct
+    elim (lveq_inv_void_dx_length … Hm) -Hm // #y1 #Hm #H #_ destruct
+    elim (IH … Hn … Hm) -IH -Hn -Hm -HL [2: normalize // ] #H1 #H2 destruct (**) (* avoid normalize *)
+    /2 width=1 by conj/
+  | elim (lveq_eq_ex … HL) -HL #x #HL
+    elim (lveq_inv_pair_sn … HL … Hn) -Hn #H1 #H2 destruct
+    elim (lveq_inv_pair_sn … HL … Hm) -Hm #H1 #H2 destruct
+    /2 width=1 by conj/
+  ]
+| lapply (lveq_fwd_bind_abst_length_le … Hn) #HL
+  elim (le_to_or_lt_eq … HL) -HL #HL
+  [ elim (lveq_inv_void_sn_length … Hn) -Hn // #x1 #Hn #H #_ destruct
+    elim (lveq_inv_void_sn_length … Hm) -Hm // #y1 #Hm #H #_ destruct
+    elim (IH … Hn … Hm) -IH -Hn -Hm -HL // #H1 #H2 destruct
+    /2 width=1 by conj/
+  | lapply (sym_eq ??? HL) -HL #HL
+    elim (lveq_eq_ex … HL) -HL #x #HL
+    elim (lveq_inv_pair_dx … HL … Hn) -Hn #H1 #H2 destruct
+    elim (lveq_inv_pair_dx … HL … Hm) -Hm #H1 #H2 destruct
+    /2 width=1 by conj/
+  ]
+| elim (lveq_inv_pair_pair… Hn) -Hn #x #_ #H1 #H2 destruct
+  elim (lveq_inv_pair_pair… Hm) -Hm #y #_ #H1 #H2 destruct
+  /2 width=1 by conj/
+| elim (lveq_inv_atom_bind … Hn) -Hn #x #Hn #H1 #H2 destruct
+  elim (lveq_inv_atom_bind … Hm) -Hm #y #Hm #H1 #H2 destruct
+  elim (IH … Hn … Hm) -IH -Hn -Hm /2 width=1 by conj/
+| elim (lveq_inv_bind_atom … Hn) -Hn #x #Hn #H1 #H2 destruct
+  elim (lveq_inv_bind_atom … Hm) -Hm #y #Hm #H1 #H2 destruct
+  elim (IH … Hn … Hm) -IH -Hn -Hm /2 width=1 by conj/
+| elim (lveq_inv_atom_atom … Hn) -Hn #H1 #H2 destruct
+  elim (lveq_inv_atom_atom … Hm) -Hm #H1 #H2 destruct
+  /2 width=1 by conj/
 ]
 qed-.
 
-lemma voids_inv_bind_pair: ∀I1,I2,K1,K2,V2,n1,n2. ⓧ*[n1]K1.ⓘ{I1} ≋ ⓧ*[n2]K2.ⓑ{I2}V2 →
-                           ∨∨ ∃∃n. ⓧ*[n]K1 ≋ ⓧ*[n]K2 & 0 = n1 & 0 = n2
-                            | ∃∃m1. ⓧ*[m1]K1 ≋ ⓧ*[n2]K2.ⓑ{I2}V2 &
-                                    BUnit Void = I1 & ⫯m1 = n1.
-/2 width=5 by voids_inv_bind_pair_aux/ qed-.
-*)
-*)
+theorem lveq_inj_void_sn: ∀K1,K2,n1,n2. K1 ≋ⓧ*[n1, n2] K2 →
+                          ∀m1,m2. K1.ⓧ ≋ⓧ*[m1, m2] K2 →
+                          ∧∧ ⫯n1 = m1 & n2 = m2.
+/3 width=4 by lveq_inj, lveq_void_sn/ qed-.
+
+theorem lveq_inj_void_dx: ∀K1,K2,n1,n2. K1 ≋ⓧ*[n1, n2] K2 →
+                          ∀m1,m2. K1 ≋ⓧ*[m1, m2] K2.ⓧ →
+                          ∧∧ n1 = m1 & ⫯n2 = m2.
+/3 width=4 by lveq_inj, lveq_void_dx/ qed-.

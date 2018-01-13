@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+(* requires <key name="ex">3 6</key> *)
 include "ground_2/xoa/xoa2.ma".
 include "basic_2/syntax/voids_length.ma".
 include "basic_2/syntax/lveq.ma".

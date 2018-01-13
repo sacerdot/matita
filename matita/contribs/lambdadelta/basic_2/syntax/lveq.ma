@@ -47,8 +47,8 @@ qed-.
 
 (* Basic inversion lemmas ***************************************************)
 
-fact lveq_inv_atom_aux: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1, n2] L2 →
-                        ⋆ = L1 → ⋆ = L2 → ∧∧ 0 = n1 & 0 = n2.
+fact lveq_inv_atom_atom_aux: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1, n2] L2 →
+                             ⋆ = L1 → ⋆ = L2 → ∧∧ 0 = n1 & 0 = n2.
 #L1 #L2 #n1 #n2 * -L1 -L2 -n1 -n2
 [ /2 width=1 by conj/
 |2,3: #I1 #I2 #K1 #K2 #V #n #_ #H1 #H2 destruct
@@ -56,10 +56,46 @@ fact lveq_inv_atom_aux: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1, n2] L2 →
 ]
 qed-.
 
-(* Advanced inversion lemmas ************************************************)
+lemma lveq_inv_atom_atom: ∀n1,n2. ⋆ ≋ⓧ*[n1, n2] ⋆ → 0 = n1 ∧ 0 = n2.
+/2 width=5 by lveq_inv_atom_atom_aux/ qed-.
 
-lemma lveq_inv_atom: ∀n1,n2. ⋆ ≋ⓧ*[n1, n2] ⋆ → 0 = n1 ∧ 0 = n2.
-/2 width=5 by lveq_inv_atom_aux/ qed-.
+fact lveq_inv_bind_atom_aux: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1, n2] L2 →
+                             ∀I1,K1. K1.ⓘ{I1} = L1 → ⋆ = L2 →
+                             ∃∃m1. K1 ≋ⓧ*[m1, n2] ⋆ & BUnit Void = I1 & ⫯m1 = n1.
+#L1 #L2 #n1 #n2 * -L1 -L2 -n1 -n2
+[ #Z1 #Y1 #H destruct
+|2,3: #I1 #I2 #K1 #K2 #V #n #_ #Z1 #Y1 #_ #H2 destruct
+|4,5: #K1 #K2 #n1 #n2 #HK #Z1 #Y1 #H1 #H2 destruct /2 width=3 by ex3_intro/
+]
+qed-.
+
+lemma lveq_inv_bind_atom: ∀I1,K1,n1,n2. K1.ⓘ{I1} ≋ⓧ*[n1, n2] ⋆ →
+                          ∃∃m1. K1 ≋ⓧ*[m1, n2] ⋆ & BUnit Void = I1 & ⫯m1 = n1.
+/2 width=5 by lveq_inv_bind_atom_aux/ qed-.
+
+lemma lveq_inv_atom_bind: ∀I2,K2,n1,n2. ⋆ ≋ⓧ*[n1, n2] K2.ⓘ{I2} →
+                          ∃∃m2. ⋆ ≋ⓧ*[n1, m2] K2 & BUnit Void = I2 & ⫯m2 = n2.
+#I2 #K2 #n1 #n2 #H
+lapply (lveq_sym … H) -H #H
+elim (lveq_inv_bind_atom … H) -H
+/3 width=3 by lveq_sym, ex3_intro/
+qed-.
+
+fact lveq_inv_pair_pair_aux: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1, n2] L2 →
+                             ∀I1,I2,K1,K2,V1,V2. K1.ⓑ{I1}V1 = L1 → K2.ⓑ{I2}V2 = L2 →
+                             ∃∃n. K1 ≋ⓧ*[n, n] K2 & 0 = n1 & 0 = n2.
+#L1 #L2 #n1 #n2 * -L1 -L2 -n1 -n2
+[ #Z1 #Z2 #Y1 #Y2 #X1 #X2 #H1 #H2 destruct
+|2,3: #I1 #I2 #K1 #K2 #V #n #HK #Z1 #Z2 #Y1 #Y2 #X1 #X2 #H1 #H2 destruct /2 width=2 by ex3_intro/
+|4,5: #K1 #K2 #n1 #n2 #_ #Z1 #Z2 #Y1 #Y2 #X1 #X2 #H1 #H2 destruct
+]
+qed-.
+
+lemma lveq_inv_pair_pair: ∀I1,I2,K1,K2,V1,V2,m1,m2. K1.ⓑ{I1}V1 ≋ⓧ*[m1, m2] K2.ⓑ{I2}V2 →
+                          ∃∃n. K1 ≋ⓧ*[n, n] K2 & 0 = m1 & 0 = m2.
+/2 width=9 by lveq_inv_pair_pair_aux/ qed-.
+
+(* Advanced inversion lemmas ************************************************)
 
 fact lveq_inv_void_succ_sn_aux: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1, n2] L2 →
                                 ∀K1,m1. L1 = K1.ⓧ → n1 = ⫯m1 → K1 ≋ ⓧ*[m1, n2] L2.
@@ -78,6 +114,22 @@ lemma lveq_inv_void_succ_sn: ∀L1,L2,n1,n2. L1.ⓧ ≋ⓧ*[⫯n1, n2] L2 → L1
 
 lemma lveq_inv_void_succ_dx: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1, ⫯n2] L2.ⓧ → L1 ≋ ⓧ*[n1, n2] L2.
 /4 width=5 by lveq_inv_void_succ_sn_aux, lveq_sym/ qed-.
+
+(* Basic forward lemmas *****************************************************)
+
+fact lveq_fwd_void_void_aux: ∀L1,L2,m1,m2. L1 ≋ⓧ*[m1, m2] L2 →
+                             ∀K1,K2. K1.ⓧ = L1 → K2.ⓧ = L2 →
+                             ∨∨ ∃n. ⫯n = m1 | ∃n. ⫯n = m2.
+#L1 #L2 #m1 #m2 * -L1 -L2 -m1 -m2
+[ #Y1 #Y2 #H1 #H2 destruct
+|2,3: #I1 #I2 #K1 #K2 #V #n #_ #Y1 #Y2 #H1 #H2 destruct
+|4,5: #K1 #K2 #n1 #n2 #_ #Y1 #Y2 #H1 #H2 destruct /3 width=2 by ex_intro, or_introl, or_intror/
+]
+qed-.
+
+lemma lveq_fwd_void_void: ∀K1,K2,m1,m2. K1.ⓧ ≋ⓧ*[m1, m2] K2.ⓧ →
+                          ∨∨ ∃n. ⫯n = m1 | ∃n. ⫯n = m2.
+/2 width=7 by lveq_fwd_void_void_aux/ qed-.
 
 (* Advanced forward lemmas **************************************************)
 

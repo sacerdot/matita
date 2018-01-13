@@ -24,8 +24,8 @@ lemma fle_bind_dx: ∀T,U. ⬆*[1] T ≡ U →
 #T #U #HTU #p #I #L #V
 elim (frees_total L V) #f1 #Hf1
 elim (frees_total L T) #f2 #Hf2
-elim (sor_isfin_ex f1 f2) /3 width=3 by frees_fwd_isfin, isfin_tl/ #f #H #_
-lapply (sor_inv_sle_dx … H) #Hf0
->(tl_push_rew f) in H; #Hf
-/6 width=6 by frees_lifts_SO, frees_bind, drops_refl, drops_drop, ex3_2_intro/
+elim (sor_isfin_ex f1 f2) /3 width=3 by frees_fwd_isfin, isfin_tl/ #f #Hf #_
+lapply (sor_inv_sle_dx … Hf) #Hf0
+elim (lveq_refl L) #n #HL
+/6 width=8 by frees_lifts_SO, frees_bind, drops_refl, drops_drop, sle_tls, ex4_4_intro/
 qed.
