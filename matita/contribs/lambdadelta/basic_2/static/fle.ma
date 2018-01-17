@@ -29,14 +29,10 @@ interpretation "free variables inclusion (restricted closure)"
 (* Basic properties *********************************************************)
 
 lemma fle_sort: ∀L,s1,s2. ⦃L, ⋆s1⦄ ⊆ ⦃L, ⋆s2⦄.
-#L elim (lveq_refl L)
-/3 width=8 by frees_sort, sle_refl, ex4_4_intro/
-qed.
+/3 width=8 by frees_sort, sle_refl, ex4_4_intro/ qed.
 
 lemma fle_gref: ∀L,l1,l2. ⦃L, §l1⦄ ⊆ ⦃L, §l2⦄.
-#L elim (lveq_refl L)
-/3 width=8 by frees_gref, sle_refl, ex4_4_intro/
-qed.
+/3 width=8 by frees_gref, sle_refl, ex4_4_intro/ qed.
 
 (* Basic inversion lemmas ***************************************************)
 (*

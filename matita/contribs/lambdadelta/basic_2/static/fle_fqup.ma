@@ -22,7 +22,6 @@ include "basic_2/static/fle.ma".
 
 lemma fle_refl: bi_reflexive … fle.
 #L #T
-elim (lveq_refl L) #n #Hn
 elim (frees_total L T) #f #Hf
 /2 width=8 by sle_refl, ex4_4_intro/
 qed.
@@ -39,7 +38,7 @@ qed.
 lemma fle_bind_dx_dx: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⊆ ⦃L2.ⓧ, T2⦄ → |L1| ≤ |L2| →
                       ∀p,I,V2. ⦃L1, T1⦄ ⊆ ⦃L2, ⓑ{p,I}V2.T2⦄.
 #L1 #L2 #T1 #T2 * #n1 #x1 #f2 #g2 #Hf2 #Hg2 #H #Hfg2 #HL12 #p #I #V2
-elim (lveq_inv_void_dx_length … H HL12) -H -HL12 #m1 #HL12 #H #_ destruct
+elim (lveq_inv_void_dx_length … H HL12) -H -HL12 #m1 #HL12 #H1 #H2 destruct
 <tls_xn in Hfg2; #Hfg2
 elim (frees_total L2 V2) #g1 #Hg1
 elim (sor_isfin_ex g1 (⫱g2)) /3 width=3 by frees_fwd_isfin, isfin_tl/ #g #Hg #_

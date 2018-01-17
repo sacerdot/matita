@@ -38,11 +38,12 @@ theorem fle_trans: bi_transitive … fle.
 /5 width=8 by frees_mono, sle_trans, sle_eq_repl_back2, ex3_2_intro/
 qed-.
 *)
-theorem fle_bind_sn: ∀L1,L2,V1,T1,T. ⦃L1, V1⦄ ⊆ ⦃L2, T⦄ → ⦃L1.ⓧ, T1⦄ ⊆ ⦃L2, T⦄ →
-                     ∀p,I. ⦃L1, ⓑ{p,I}V1.T1⦄ ⊆ ⦃L2, T⦄.
-#L1 #L2 #V1 #T1 #T * #n1 #x #f1 #g #Hf1 #Hg #H1n1 #H2n1 #H #p #I
+theorem fle_bind_sn_ge: ∀L1,L2. |L2| ≤ |L1| →
+                        ∀V1,T1,T. ⦃L1, V1⦄ ⊆ ⦃L2, T⦄ → ⦃L1.ⓧ, T1⦄ ⊆ ⦃L2, T⦄ →
+                        ∀p,I. ⦃L1, ⓑ{p,I}V1.T1⦄ ⊆ ⦃L2, T⦄.
+#L1 #L2 #HL #V1 #T1 #T * #n1 #x #f1 #g #Hf1 #Hg #H1n1 #H2n1 #H #p #I
 elim (fle_frees_trans … H … Hg) -H #n2 #n #f2 #Hf2 #H1n2 #H2n2
-elim (lveq_inj_void_sn … H1n1 … H1n2) -H1n2 #H1 #H2 destruct
+elim (lveq_inj_void_sn_ge … H1n1 … H1n2) -H1n2 // #H1 #H2 #H3 destruct
 elim (sor_isfin_ex f1 (⫱f2)) /3 width=3 by frees_fwd_isfin, isfin_tl/ #f #Hf #_
 <tls_xn in H2n2; #H2n2
 /4 width=12 by frees_bind_void, sor_inv_sle, sor_tls, ex4_4_intro/

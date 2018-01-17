@@ -239,16 +239,15 @@ table {
    class "red"
    [ { "syntax" * } {
         [ { "equivalence up to exclusion binders" * } {
-             [ [ "" ] "voids ( ⓧ*[?]? ≋ ⓧ*[?]? )" "voids_length" + "voids_voids" * ]
+             [ [ "for lenvs" ] "lveq ( ? ≋ⓧ*[?,?] ? )" "lveq_length" + "lveq_lveq" * ]
           }
         ]
-   
-        [ { "append for local environments" * } {
-             [ [ "" ] "append ( ? @@ ? )" "append_length" * ]
+        [ { "append" * } {
+             [ [ "for lenvs" ] "append ( ? @@ ? )" "append_length" * ]
           }
         ]
-        [ { "head equivalence for terms" * } {
-             [ [ "" ] "theq ( ? ⩳[?,?] ? )" "theq_simple" + "theq_tdeq" + "theq_theq" + "theq_simple_vector" * ]
+        [ { "head equivalence" * } {
+             [ [ "for terms" ] "theq ( ? ⩳[?,?] ? )" "theq_simple" + "theq_tdeq" + "theq_theq" + "theq_simple_vector" * ]
           }
         ]
         [ { "degree-based equivalence" * } {
