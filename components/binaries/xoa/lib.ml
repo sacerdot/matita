@@ -35,7 +35,6 @@ let print_comment och =
 
 let open_out preamble name =
    let path = [
-      R.get_string "matita.rt_base_dir"; 
       R.get_string "xoa.output_dir"; 
       name
    ] in
