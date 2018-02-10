@@ -26,6 +26,25 @@ elim (frees_total L T) #f #Hf
 /2 width=8 by sle_refl, ex4_4_intro/
 qed.
 
+lemma fle_sort_length: ∀L1,L2,s1,s2. |L1| = |L2| → ⦃L1, ⋆s1⦄ ⊆ ⦃L2, ⋆s2⦄.
+/3 width=8 by lveq_length_eq, frees_sort, sle_refl, ex4_4_intro/ qed.
+
+lemma fle_gref_length: ∀L1,L2,l1,l2. |L1| = |L2| → ⦃L1, §l1⦄ ⊆ ⦃L2, §l2⦄.
+/3 width=8 by lveq_length_eq, frees_gref, sle_refl, ex4_4_intro/ qed.
+
+lemma fle_shift: ∀L1,L2. |L1| = |L2| →
+                 ∀I,T1,T2,V.  ⦃L1.ⓧ, T1⦄ ⊆ ⦃L2.ⓑ{I}V, T2⦄ →
+                 ∀p. ⦃L1.ⓧ, T1⦄ ⊆ ⦃L2, ⓑ{p,I}V.T2⦄.
+#L1 #L2 #H1L #I #T1 #T2 #V
+* #n #m #f2 #g2 #Hf2 #Hg2 #H2L #Hfg2 #p
+elim (lveq_inj_length … H2L) // -H1L #H1 #H2 destruct
+lapply (lveq_inv_bind … H2L) -H2L #HL
+elim (frees_total L2 V) #g1 #Hg1
+elim (sor_isfin_ex g1 (⫱g2)) /3 width=3 by frees_fwd_isfin, isfin_tl/ #g #Hg #_
+lapply (sor_inv_sle_dx … Hg) #H0g
+/4 width=10 by frees_bind, lveq_void_sn, sle_tl, sle_trans, ex4_4_intro/
+qed.
+
 lemma fle_bind_dx_sn: ∀L1,L2,V1,V2. ⦃L1, V1⦄ ⊆ ⦃L2, V2⦄ →
                       ∀p,I,T2. ⦃L1, V1⦄ ⊆ ⦃L2, ⓑ{p,I}V2.T2⦄.
 #L1 #L2 #V1 #V2 * #n1 #m1 #f1 #g1 #Hf1 #Hg1 #HL12 #Hfg1 #p #I #T2

@@ -1,0 +1,17 @@
+(* Basic inversion lemmas ***************************************************)
+
+fact fle_inv_voids_aux: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⊆ ⦃L2, T2⦄ →
+                        ∀K1,K2,n1,n2. |K1| = |K2| → L1 = ⓧ*[n1]K1 → L2 = ⓧ*[n2]K2 →
+                        ∃∃f1,f2. ⓧ*[n1]K1 ⊢ 𝐅*⦃T1⦄ ≡ f1 & ⓧ*[n2]K2 ⊢ 𝐅*⦃T2⦄ ≡ f2 & ⫱*[n1]f1 ⊆ ⫱*[n2]f2.
+#L1 #L2 #T1 #T2 * -L1 -L2
+#f1 #f2 #L1 #L2 #n1 #n2 #Hf1 #Hf2 #HL12 #Hf12 #Y1 #Y2 #x1 #x2 #HY12 #H1 #H2 destruct
+>H1 in Hf1; >H2 in Hf2; #Hf2 #Hf1
+@(ex3_2_intro … Hf1 Hf2) -Hf1 -Hf2
+
+elim (voids_inj_length … H1) // -H -HL12 -HY #H1 #H2 destruct
+/2 width=5 by ex3_2_intro/
+qed-.
+
+lemma fle_inv_voids_sn: ∀L1,L2,T1,T2,n. ⦃ⓧ*[n]L1, T1⦄ ⊆ ⦃L2, T2⦄ → |L1| = |L2| →
+                        ∃∃f1,f2. ⓧ*[n]L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 & L2 ⊢ 𝐅*⦃T2⦄ ≡ f2 & ⫱*[n]f1 ⊆ f2.
+/2 width=3 by fle_inv_voids_sn_aux/ qed-.

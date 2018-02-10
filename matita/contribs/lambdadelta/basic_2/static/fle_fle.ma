@@ -57,21 +57,33 @@ elim (lveq_inj … H1n1 … H1n2) -H1n2 #H1 #H2 destruct
 elim (sor_isfin_ex f1 f2) /2 width=3 by frees_fwd_isfin/ #f #Hf #_
 /4 width=12 by frees_flat, sor_inv_sle, sor_tls, ex4_4_intro/
 qed.
-(*
+
+theorem fle_bind_eq: ∀L1,L2. |L1| = |L2| → ∀V1,V2. ⦃L1, V1⦄ ⊆ ⦃L2, V2⦄ →
+                     ∀I2,T1,T2. ⦃L1.ⓧ, T1⦄ ⊆ ⦃L2.ⓑ{I2}V2, T2⦄ →
+                     ∀p,I1. ⦃L1, ⓑ{p,I1}V1.T1⦄ ⊆ ⦃L2, ⓑ{p,I2}V2.T2⦄.
+#L1 #L2 #HL #V1 #V2
+* #n1 #m1 #f1 #g1 #Hf1 #Hg1 #H1L #Hfg1 #I2 #T1 #T2
+* #n2 #m2 #f2 #g2 #Hf2 #Hg2 #H2L #Hfg2 #p #I1
+elim (lveq_inj_length … H1L) // #H1 #H2 destruct
+elim (lveq_inj_length … H2L) // -HL -H2L #H1 #H2 destruct
+elim (sor_isfin_ex f1 (⫱f2)) /3 width=3 by frees_fwd_isfin, isfin_tl/ #f #Hf #_
+elim (sor_isfin_ex g1 (⫱g2)) /3 width=3 by frees_fwd_isfin, isfin_tl/ #g #Hg #_
+/4 width=15 by frees_bind_void, frees_bind, monotonic_sle_sor, sle_tl, ex4_4_intro/
+qed.
+
 theorem fle_bind: ∀L1,L2,V1,V2. ⦃L1, V1⦄ ⊆ ⦃L2, V2⦄ →
                   ∀I1,I2,T1,T2. ⦃L1.ⓑ{I1}V1, T1⦄ ⊆ ⦃L2.ⓑ{I2}V2, T2⦄ →
                   ∀p. ⦃L1, ⓑ{p,I1}V1.T1⦄ ⊆ ⦃L2, ⓑ{p,I2}V2.T2⦄.
-#L1 #L2 #V1 #V2 #HV #I1 #I2 #T1 #T2 #HT #p
-@fle_bind_sn
-[ @fle_bind_dx_sn //
-| @fle_bind_dx_dx
-
-
+#L1 #L2 #V1 #V2
+* #n1 #m1 #f1 #g1 #Hf1 #Hg1 #H1L #Hfg1 #I1 #I2 #T1 #T2
+* #n2 #m2 #f2 #g2 #Hf2 #Hg2 #H2L #Hfg2 #p
+elim (lveq_inv_pair_pair … H2L) -H2L #H2L #H1 #H2 destruct
+elim (lveq_inj … H2L … H1L) -H1L #H1 #H2 destruct
 elim (sor_isfin_ex f1 (⫱f2)) /3 width=3 by frees_fwd_isfin, isfin_tl/ #f #Hf #_
 elim (sor_isfin_ex g1 (⫱g2)) /3 width=3 by frees_fwd_isfin, isfin_tl/ #g #Hg #_
-/4 width=12 by frees_bind, monotonic_sle_sor, sle_tl, ex3_2_intro/
+/4 width=15 by frees_bind, monotonic_sle_sor, sle_tl, ex4_4_intro/
 qed.
-*)
+
 theorem fle_flat: ∀L1,L2,V1,V2. ⦃L1, V1⦄ ⊆ ⦃L2, V2⦄ →
                   ∀T1,T2. ⦃L1, T1⦄ ⊆ ⦃L2, T2⦄ →
                   ∀I1,I2. ⦃L1, ⓕ{I1}V1.T1⦄ ⊆ ⦃L2, ⓕ{I2}V2.T2⦄.

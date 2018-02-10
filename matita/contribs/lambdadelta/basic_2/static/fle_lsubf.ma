@@ -12,24 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/relocation/rtmap_id.ma".
-include "basic_2/notation/relations/subseteq_4.ma".
-include "basic_2/syntax/lveq.ma".
-include "basic_2/static/frees.ma".
+include "basic_2/static/frees_fqup.ma".
+include "basic_2/static/lsubf_lsubr.ma".
+include "basic_2/static/fle.ma".
 
 (* FREE VARIABLES INCLUSION FOR RESTRICTED CLOSURES *************************)
 
-definition fle: bi_relation lenv term ≝ λL1,T1,L2,T2.
-                ∃∃n1,n2,f1,f2. L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 & L2 ⊢ 𝐅*⦃T2⦄ ≡ f2 &
-                               L1 ≋ⓧ*[n1, n2] L2 & ⫱*[n1]f1 ⊆ ⫱*[n2]f2.
+(* Advanced forward lemmas ***************************************************)
 
-interpretation "free variables inclusion (restricted closure)"
-   'SubSetEq L1 T1 L2 T2 = (fle L1 T1 L2 T2).
-
-(* Basic properties *********************************************************)
-
-lemma fle_sort: ∀L,s1,s2. ⦃L, ⋆s1⦄ ⊆ ⦃L, ⋆s2⦄.
-/3 width=8 by frees_sort, sle_refl, ex4_4_intro/ qed.
-
-lemma fle_gref: ∀L,l1,l2. ⦃L, §l1⦄ ⊆ ⦃L, §l2⦄.
-/3 width=8 by frees_gref, sle_refl, ex4_4_intro/ qed.
+lemma fle_fwd_pair_sn: ∀I1,I2,L1,L2,V1,V2,T1,T2. ⦃L1.ⓑ{I1}V1, T1⦄ ⊆ ⦃L2.ⓑ{I2}V2, T2⦄ →
+                       ⦃L1.ⓧ, T1⦄ ⊆ ⦃L2.ⓑ{I2}V2, T2⦄.
+#I1 #I2 #L1 #L2 #V1 #V2 #T1 #T2 *
+#n1 #n2 #f1 #f2 #Hf1 #Hf2 #HL12 #Hf12
+elim (lveq_inv_pair_pair … HL12) -HL12 #HL12 #H1 #H2 destruct
+elim (frees_total (L1.ⓧ) T1) #g1 #Hg1
+lapply (lsubr_lsubf … Hg1 … Hf1) -Hf1 /2 width=1 by lsubr_unit/ #Hfg1
+/5 width=10 by lsubf_fwd_sle, lveq_bind, sle_trans, ex4_4_intro/ (**) (* full auto too slow *)
+qed-.

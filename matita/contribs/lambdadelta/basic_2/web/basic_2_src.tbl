@@ -184,7 +184,7 @@ table {
           }
         ]
         [ { "context-sensitive free variables" * } {
-             [ [ "inclusion for restricted closures" ] "fle ( ⦃?,?⦄ ⊆ ⦃?,?⦄ )" "fle_drops" + "fle_fqup" + "fle_fle" * ]
+             [ [ "inclusion for restricted closures" ] "fle ( ⦃?,?⦄ ⊆ ⦃?,?⦄ )" "fle_drops" + "fle_fqup" + "fle_lsubf" + "fle_fle" * ]
              [ [ "restricted refinement for lenvs" ] "lsubf ( ⦃?,?⦄ ⫃𝐅* ⦃?,?⦄ )" "lsubf_lsubr" + "lsubf_frees" + "lsubf_lsubf" * ]
              [ [ "for terms" ] "frees ( ? ⊢ 𝐅*⦃?⦄ ≡ ? )" "frees_drops" + "frees_fqup" + "frees_frees" * ]
           }

@@ -46,6 +46,18 @@ lemma lveq_fwd_length: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1, n2] L2 →
 #K1 #K2 #n #_ * #H1 #H2 >length_bind /3 width=1 by minus_Sn_m, conj/
 qed-.
 
+lemma lveq_length_fwd_sn: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1, n2] L2 → |L1| ≤ |L2| → 0 = n1.
+#L1 #L2 #n1 #n2 #H #HL
+elim (lveq_fwd_length … H) -H
+>(eq_minus_O … HL) //
+qed-.
+
+lemma lveq_length_fwd_dx: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1, n2] L2 → |L2| ≤ |L1| → 0 = n2.
+#L1 #L2 #n1 #n2 #H #HL
+elim (lveq_fwd_length … H) -H
+>(eq_minus_O … HL) //
+qed-.
+
 lemma lveq_inj_length: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1, n2] L2 →
                        |L1| = |L2| → ∧∧ 0 = n1 & 0 = n2.
 #L1 #L2 #n1 #n2 #H #HL
