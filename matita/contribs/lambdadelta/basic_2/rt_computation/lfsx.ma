@@ -35,7 +35,7 @@ lemma lfsx_ind: ∀h,o,G,T. ∀R:predicate lenv.
                 ) →
                 ∀L. G ⊢ ⬈*[h, o, T] 𝐒⦃L⦄ → R L.
 #h #o #G #T #R #H0 #L1 #H elim H -L1
-/5 width=1 by lfdeq_sym, SN_intro/
+/5 width=1 by SN_intro/
 qed-.
 
 (* Basic properties *********************************************************)
@@ -44,7 +44,7 @@ qed-.
 lemma lfsx_intro: ∀h,o,G,L1,T.
                   (∀L2. ⦃G, L1⦄ ⊢ ⬈[h, T] L2 → (L1 ≛[h, o, T] L2 → ⊥) → G ⊢ ⬈*[h, o, T] 𝐒⦃L2⦄) →
                   G ⊢ ⬈*[h, o, T] 𝐒⦃L1⦄.
-/5 width=1 by lfdeq_sym, SN_intro/ qed.
+/5 width=1 by SN_intro/ qed.
 
 (* Basic_2A1: uses: lsx_sort *)
 lemma lfsx_sort: ∀h,o,G,L,s. G ⊢ ⬈*[h, o, ⋆s] 𝐒⦃L⦄.

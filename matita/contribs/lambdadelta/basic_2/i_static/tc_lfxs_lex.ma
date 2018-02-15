@@ -36,7 +36,7 @@ lemma tc_lfxs_lex_lfeq: ∀R. c_reflexive … R →
 
 (* Note: s_rs_transitive_lex_inv_isid could be invoked in the last auto but makes it too slow *)
 lemma tc_lfxs_inv_lex_lfeq: ∀R. c_reflexive … R →
-                            lexs_frees_confluent (cext2 R) cfull →
+                            lfxs_fle_compatible R →
                             s_rs_transitive … R (λ_.lex R) →
                             lfeq_transitive R →
                             ∀L1,L2,T. L1 ⪤**[R, T] L2 →
@@ -50,7 +50,7 @@ lapply (s_rs_transitive_lex_inv_isid … H3R) -H3R #H3R
   elim (lexs_sdj_split … ceq_ext … HL2 f0 ?) -HL2
   [ #L0 #HL0 #HL02 |*: /2 width=1 by ext2_refl, sdj_isid_dx/ ]
   lapply (lexs_sdj … HL0 f1 ?) /2 width=1 by sdj_isid_sn/ #H
-  elim (H2R … Hf1 … H) -H #f2 #Hf2 #Hf21
+  elim (frees_lexs_conf … Hf1 … H) // -H2R -H #f2 #Hf2 #Hf21
   lapply (sle_lexs_trans … HL02 … Hf21) -f1 // #HL02
   lapply (lexs_co ?? cfull (LTC … (cext2 R)) … HL1) -HL1 /2 width=1 by ext2_inv_tc/ #HL1
   /8 width=11 by lexs_inv_tc_dx, lexs_tc_dx, lexs_co, ext2_tc, ext2_refl, step, ex2_intro/ (**) (* full auto too slow *)

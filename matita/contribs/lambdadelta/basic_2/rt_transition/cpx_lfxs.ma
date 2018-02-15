@@ -12,6 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/syntax/lveq_length.ma".
+include "basic_2/relocation/lexs_length.ma".
 include "basic_2/relocation/drops_lexs.ma".
 include "basic_2/static/frees_drops.ma".
 include "basic_2/static/lsubf_frees.ma".
@@ -158,18 +160,26 @@ lemma cpx_frees_conf_lexs: ∀h,G,L1,T1,f1. L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 →
 qed-.
 
 (* Basic_2A1: uses: cpx_frees_trans *)
-lemma cpx_frees_conf: ∀h,G. R_frees_confluent (cpx h G).
-/4 width=7 by cpx_frees_conf_lexs, lexs_refl, ext2_refl/ qed-.
+lemma cpx_fle_comp: ∀h,G. R_fle_compatible (cpx h G).
+#h #G #L #T1 #T2 #HT12
+elim (frees_total L T1) #f1 #Hf1
+elim (cpx_frees_conf_lexs … Hf1 L … HT12) -HT12
+/3 width=8 by lexs_refl, ext2_refl, ex4_4_intro/
+qed-.
 
 (* Basic_2A1: uses: lpx_frees_trans *)
-lemma lfpx_frees_conf: ∀h,G. lexs_frees_confluent (cpx_ext h G) cfull.
-/2 width=7 by cpx_frees_conf_lexs/ qed-.
+lemma lfpx_fle_comp: ∀h,G. lfxs_fle_compatible (cpx h G).
+#h #G #L1 #L2 #T * #f1 #Hf1 #HL12
+elim (cpx_frees_conf_lexs h … Hf1 … HL12 T) // #f2 #Hf2
+lapply (lexs_fwd_length … HL12)
+/3 width=8 by lveq_length_eq, ex4_4_intro/ (**) (* full auto fails *)
+qed-.
 
 (* Properties with generic extension on referred entries ********************)
 
 (* Note: lemma 1000 *)
 (* Basic_2A1: uses: cpx_llpx_sn_conf *)
 lemma cpx_lfxs_conf: ∀R,h,G. s_r_confluent1 … (cpx h G) (lfxs R).
-#R #h #G #L1 #T1 #T2 #H #L2 * #f1 #Hf1 elim (cpx_frees_conf … Hf1 … H) -T1
-/3 width=5 by sle_lexs_trans, ex2_intro/
+#R #h #G #L1 #T1 #T2 #H #L2 * #f1 #Hf1 elim (cpx_frees_conf_lexs … Hf1 L1 … H) -T1
+/3 width=5 by lexs_refl, ext2_refl, sle_lexs_trans, ex2_intro/
 qed-.

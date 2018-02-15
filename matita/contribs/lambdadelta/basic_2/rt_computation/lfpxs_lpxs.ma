@@ -30,4 +30,4 @@ lemma lfpxs_lpxs_lfeq: ∀h,G,L1,L. ⦃G, L1⦄ ⊢ ⬈*[h] L →
 
 lemma tc_lfxs_inv_lex_lfeq: ∀h,G,L1,L2,T. ⦃G, L1⦄ ⊢ ⬈*[h, T] L2 →
                             ∃∃L. ⦃G, L1⦄ ⊢ ⬈*[h] L & L ≡[T] L2.
-/3 width=5 by lfpx_frees_conf, lpx_cpxs_trans, lfeq_cpx_trans, tc_lfxs_inv_lex_lfeq/ qed-.
+/3 width=5 by lfpx_fle_comp, lpx_cpxs_trans, lfeq_cpx_trans, tc_lfxs_inv_lex_lfeq/ qed-.

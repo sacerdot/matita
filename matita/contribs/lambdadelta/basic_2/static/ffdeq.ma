@@ -26,12 +26,6 @@ interpretation
    "degree-based equivalence on referred entries (closure)"
    'StarEqSn h o G1 L1 T1 G2 L2 T2 = (ffdeq h o G1 L1 T1 G2 L2 T2).
 
-(* Basic properties *********************************************************)
-
-lemma ffdeq_sym: ∀h,o. tri_symmetric … (ffdeq h o).
-#h #o #G1 #G2 #L1 #L2 #T1 #T2 * -G1 -L1 -T1 /3 width=1 by ffdeq_intro, lfdeq_sym/
-qed-.
-
 (* Basic inversion lemmas ***************************************************)
 
 lemma ffdeq_inv_gen: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≛[h, o] ⦃G2, L2, T2⦄ →

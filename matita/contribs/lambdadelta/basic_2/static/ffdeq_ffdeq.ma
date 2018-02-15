@@ -17,6 +17,12 @@ include "basic_2/static/ffdeq.ma".
 
 (* DEGREE-BASED EQUIVALENCE FOR CLOSURES ON REFERRED ENTRIES ****************)
 
+(* Advanced properties ******************************************************)
+
+lemma ffdeq_sym: ∀h,o. tri_symmetric … (ffdeq h o).
+#h #o #G1 #G2 #L1 #L2 #T1 #T2 * -G1 -L1 -T1 /3 width=1 by ffdeq_intro, lfdeq_sym/
+qed-.
+
 (* Main properties **********************************************************)
 
 theorem ffdeq_trans: ∀h,o. tri_transitive … (ffdeq h o).

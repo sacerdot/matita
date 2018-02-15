@@ -1,6 +1,5 @@
 
 include "basic_2/static/lfxs_lex.ma".
-include "basic_2/static/lfxs_fle.ma".
 include "basic_2/rt_transition/cpx_etc.ma".
 include "basic_2/rt_computation/lfpxs_lpxs.ma".
 

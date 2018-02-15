@@ -13,7 +13,6 @@
 (**************************************************************************)
 
 include "basic_2/syntax/lveq_lveq.ma".
-include "basic_2/static/frees_frees.ma".
 include "basic_2/static/fle_fqup.ma".
 
 (* FREE VARIABLES INCLUSION FOR RESTRICTED CLOSURES *************************)
@@ -29,6 +28,15 @@ lapply (frees_mono … Hg2 … Hf2) -Hg2 -Hf2 #Hgf2
 lapply (tls_eq_repl n2 … Hgf2) -Hgf2 #Hgf2
 lapply (sle_eq_repl_back2 … Hn … Hgf2) -g2
 /2 width=6 by ex3_3_intro/
+qed-.
+
+lemma fle_frees_trans_eq: ∀L1,L2. |L1| = |L2| →
+                          ∀T1,T2. ⦃L1, T1⦄ ⊆ ⦃L2, T2⦄ → ∀f2. L2 ⊢ 𝐅*⦃T2⦄ ≡ f2 →
+                          ∃∃f1. L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 & f1 ⊆ f2.
+#L1 #L2 #H1L #T1 #T2 #H2L #f2 #Hf2
+elim (fle_frees_trans … H2L … Hf2) -T2 #n1 #n2 #f1 #Hf1 #H2L #Hf12
+elim (lveq_inj_length … H2L) // -L2 #H1 #H2 destruct
+/2 width=3 by ex2_intro/
 qed-.
 
 (* Main properties **********************************************************)

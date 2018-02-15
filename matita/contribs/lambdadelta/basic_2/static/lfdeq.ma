@@ -31,8 +31,8 @@ interpretation
 
 (* Basic properties ***********************************************************)
 
-lemma frees_tdeq_conf_lexs: ∀h,o,f,L1,T1. L1 ⊢ 𝐅*⦃T1⦄ ≡ f → ∀T2. T1 ≛[h, o] T2 →
-                            ∀L2. L1 ≛[h, o, f] L2 → L2 ⊢ 𝐅*⦃T2⦄ ≡ f.
+lemma frees_tdeq_conf_lfdeq: ∀h,o,f,L1,T1. L1 ⊢ 𝐅*⦃T1⦄ ≡ f → ∀T2. T1 ≛[h, o] T2 →
+                             ∀L2. L1 ≛[h, o, f] L2 → L2 ⊢ 𝐅*⦃T2⦄ ≡ f.
 #h #o #f #L1 #T1 #H elim H -f -L1 -T1
 [ #f #L1 #s1 #Hf #X #H1 #L2 #_
   elim (tdeq_inv_sort1 … H1) -H1 #s2 #d #_ #_ #H destruct
@@ -67,24 +67,15 @@ qed-.
 
 lemma frees_tdeq_conf: ∀h,o,f,L,T1. L ⊢ 𝐅*⦃T1⦄ ≡ f →
                        ∀T2. T1 ≛[h, o] T2 → L ⊢ 𝐅*⦃T2⦄ ≡ f.
-/4 width=7 by frees_tdeq_conf_lexs, lexs_refl, ext2_refl/ qed-.
+/4 width=7 by frees_tdeq_conf_lfdeq, lexs_refl, ext2_refl/ qed-.
 
-lemma frees_lexs_conf: ∀h,o,f,L1,T. L1 ⊢ 𝐅*⦃T⦄ ≡ f →
-                       ∀L2. L1 ≛[h, o, f] L2 → L2 ⊢ 𝐅*⦃T⦄ ≡ f.
-/2 width=7 by frees_tdeq_conf_lexs, tdeq_refl/ qed-.
-
-lemma frees_lfdeq_conf_lexs: ∀h,o. lexs_frees_confluent (cdeq_ext h o) cfull.
-/3 width=7 by frees_tdeq_conf_lexs, ex2_intro/ qed-.
+lemma frees_lfdeq_conf: ∀h,o,f,L1,T. L1 ⊢ 𝐅*⦃T⦄ ≡ f →
+                        ∀L2. L1 ≛[h, o, f] L2 → L2 ⊢ 𝐅*⦃T⦄ ≡ f.
+/2 width=7 by frees_tdeq_conf_lfdeq, tdeq_refl/ qed-.
 
 lemma tdeq_lfdeq_conf_sn: ∀h,o. s_r_confluent1 … (cdeq h o) (lfdeq h o).
 #h #o #L1 #T1 #T2 #HT12 #L2 *
 /3 width=5 by frees_tdeq_conf, ex2_intro/
-qed-.
-
-(* Basic_2A1: uses: lleq_sym *)
-lemma lfdeq_sym: ∀h,o,T. symmetric … (lfdeq h o T).
-#h #o #T #L1 #L2 *
-/4 width=7 by frees_tdeq_conf_lexs, lfxs_sym, tdeq_sym, ex2_intro/
 qed-.
 
 lemma lfdeq_atom: ∀h,o,I. ⋆ ≛[h, o, ⓪{I}] ⋆.

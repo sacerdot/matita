@@ -180,11 +180,11 @@ table {
           }
         ]
         [ { "generic extension of a context-sensitive relation" * } {
-             [ [ "for lenvs on referred entries" ] "lfxs ( ? ⦻*[?,?] ? )" "lfxs_length" + "lfxs_lex" + "lfxs_drops" + "lfxs_fqup" + "flxs_fle" + "lfxs_lfxs" * ]
+             [ [ "for lenvs on referred entries" ] "lfxs ( ? ⦻*[?,?] ? )" "lfxs_length" + "lfxs_lex" + "lfxs_drops" + "lfxs_fqup" + "lfxs_lfxs" * ]
           }
         ]
         [ { "context-sensitive free variables" * } {
-             [ [ "inclusion for restricted closures" ] "fle ( ⦃?,?⦄ ⊆ ⦃?,?⦄ )" "fle_drops" + "fle_fqup" + "fle_lsubf" + "fle_fle" * ]
+             [ [ "inclusion for restricted closures" ] "fle ( ⦃?,?⦄ ⊆ ⦃?,?⦄ )" "fle_drops" + "fle_fqup" + "fle_fle" * ]
              [ [ "restricted refinement for lenvs" ] "lsubf ( ⦃?,?⦄ ⫃𝐅* ⦃?,?⦄ )" "lsubf_lsubr" + "lsubf_frees" + "lsubf_lsubf" * ]
              [ [ "for terms" ] "frees ( ? ⊢ 𝐅*⦃?⦄ ≡ ? )" "frees_drops" + "frees_fqup" + "frees_frees" * ]
           }

@@ -67,13 +67,6 @@ lemma tc_lfxs_gref: ∀R,I,L1,L2,V1,V2,l.
 /3 width=4 by lfxs_gref, tc_lfxs_step_dx, inj/
 qed.
 
-lemma tc_lfxs_sym: ∀R. lexs_frees_confluent (cext2 R) cfull →
-                   (∀L1,L2,T1,T2. R L1 T1 T2 → R L2 T2 T1) →
-                   ∀T. symmetric … (tc_lfxs R T).
-#R #H1R #H2R #T #L1 #L2 #H elim H -L2
-/4 width=3 by lfxs_sym, tc_lfxs_step_sn, inj/
-qed-.
-
 lemma tc_lfxs_co: ∀R1,R2. (∀L,T1,T2. R1 L T1 T2 → R2 L T1 T2) →
                   ∀L1,L2,T. L1 ⪤**[R1, T] L2 → L1 ⪤**[R2, T] L2.
 #R1 #R2 #HR #L1 #L2 #T #H elim H -L2

@@ -15,6 +15,7 @@
 include "basic_2/relocation/lifts_tdeq.ma".
 include "basic_2/static/lfxs_lfxs.ma".
 include "basic_2/static/lfdeq_fqup.ma".
+include "basic_2/static/lfdeq_lfdeq.ma".
 include "basic_2/rt_transition/cpx_lfxs.ma".
 include "basic_2/rt_transition/lfpx.ma".
 
@@ -24,19 +25,19 @@ include "basic_2/rt_transition/lfpx.ma".
 
 lemma lfpx_pair_sn_split: ∀h,G,L1,L2,V. ⦃G, L1⦄ ⊢ ⬈[h, V] L2 → ∀o,I,T.
                           ∃∃L. ⦃G, L1⦄ ⊢ ⬈[h, ②{I}V.T] L & L ≛[h, o, V] L2.
-/3 width=5 by lfpx_frees_conf, lfxs_pair_sn_split/ qed-.
+/3 width=5 by lfpx_fle_comp, lfxs_pair_sn_split/ qed-.
 
 lemma lfpx_flat_dx_split: ∀h,G,L1,L2,T. ⦃G, L1⦄ ⊢ ⬈[h, T] L2 → ∀o,I,V.
                           ∃∃L. ⦃G, L1⦄ ⊢ ⬈[h, ⓕ{I}V.T] L & L ≛[h, o, T] L2.
-/3 width=5 by lfpx_frees_conf, lfxs_flat_dx_split/ qed-.
+/3 width=5 by lfpx_fle_comp, lfxs_flat_dx_split/ qed-.
 
 lemma lfpx_bind_dx_split: ∀h,I,G,L1,L2,V1,T. ⦃G, L1.ⓑ{I}V1⦄ ⊢ ⬈[h, T] L2 → ∀o,p.
                           ∃∃L,V. ⦃G, L1⦄ ⊢ ⬈[h, ⓑ{p,I}V1.T] L & L.ⓑ{I}V ≛[h, o, T] L2 & ⦃G, L1⦄ ⊢ V1 ⬈[h] V.
-/3 width=5 by lfpx_frees_conf, lfxs_bind_dx_split/ qed-.
+/3 width=5 by lfpx_fle_comp, lfxs_bind_dx_split/ qed-.
 
 lemma lfpx_bind_dx_split_void: ∀h,G,K1,L2,T. ⦃G, K1.ⓧ⦄ ⊢ ⬈[h, T] L2 → ∀o,p,I,V.
                                ∃∃K2. ⦃G, K1⦄ ⊢ ⬈[h, ⓑ{p,I}V.T] K2 & K2.ⓧ ≛[h, o, T] L2.
-/3 width=5 by lfpx_frees_conf, lfxs_bind_dx_split_void/ qed-.
+/3 width=5 by lfpx_fle_comp, lfxs_bind_dx_split_void/ qed-.
 
 lemma cpx_tdeq_conf_lexs: ∀h,o,G. R_confluent2_lfxs … (cpx h G) (cdeq h o) (cpx h G) (cdeq h o).
 #h #o #G #L0 #T0 #T1 #H @(cpx_ind … H) -G -L0 -T0 -T1 /2 width=3 by ex2_intro/
@@ -152,7 +153,7 @@ elim (cpx_lfdeq_conf … o … HT01 L2) -HT01
 qed-.
 
 lemma lfpx_lfdeq_conf: ∀h,o,G,T. confluent2 … (lfpx h G T) (lfdeq h o T).
-/3 width=6 by lfpx_frees_conf, cpx_tdeq_conf_lexs, frees_lfdeq_conf_lexs, lfxs_conf/ qed-.
+/3 width=6 by lfpx_fle_comp, lfdeq_fle_comp, cpx_tdeq_conf_lexs, lfxs_conf/ qed-.
 
 (* Basic_2A1: uses: lleq_lpx_trans *)
 lemma lfdeq_lfpx_trans: ∀h,o,G,T,L2,K2. ⦃G, L2⦄ ⊢ ⬈[h, T] K2 →

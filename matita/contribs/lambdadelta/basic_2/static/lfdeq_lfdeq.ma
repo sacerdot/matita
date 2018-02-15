@@ -15,11 +15,15 @@
 include "basic_2/syntax/ext2_ext2.ma".
 include "basic_2/syntax/tdeq_tdeq.ma".
 include "basic_2/static/lfxs_lfxs.ma".
-include "basic_2/static/lfdeq.ma".
+include "basic_2/static/lfdeq_length.ma".
 
 (* DEGREE-BASED EQUIVALENCE FOR LOCAL ENVIRONMENTS ON REFERRED ENTRIES ******)
 
 (* Advanced properties ******************************************************)
+
+(* Basic_2A1: uses: lleq_sym *)
+lemma lfdeq_sym: ∀h,o,T. symmetric … (lfdeq h o T).
+/3 width=3 by lfdeq_fle_comp, lfxs_sym, tdeq_sym/ qed-.
 
 (* Basic_2A1: uses: lleq_dec *)
 lemma lfdeq_dec: ∀h,o,L1,L2. ∀T:term. Decidable (L1 ≛[h, o, T] L2).
@@ -46,7 +50,7 @@ theorem lfdeq_bind_void: ∀h,o,p,I,L1,L2,V,T.
 (* Basic_2A1: uses: lleq_trans *)
 theorem lfdeq_trans: ∀h,o,T. Transitive … (lfdeq h o T).
 #h #o #T #L1 #L * #f1 #Hf1 #HL1 #L2 * #f2 #Hf2 #HL2
-lapply (frees_tdeq_conf_lexs … Hf1 T … HL1) // #H0
+lapply (frees_tdeq_conf_lfdeq … Hf1 T … HL1) // #H0
 lapply (frees_mono … Hf2 … H0) -Hf2 -H0
 /5 width=7 by lexs_trans, lexs_eq_repl_back, tdeq_trans, ext2_trans, ex2_intro/
 qed-.

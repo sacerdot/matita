@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/lfdeq.ma".
+include "basic_2/static/lfdeq_lfdeq.ma".
 include "basic_2/rt_transition/cpx_lfxs.ma".
 
 (* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS *************)

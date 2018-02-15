@@ -14,17 +14,16 @@
 
 include "basic_2/rt_transition/cpx_lfxs.ma".
 include "basic_2/rt_transition/cpm_cpx.ma".
-include "basic_2/rt_transition/cpr_ext.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL REDUCTION FOR TERMS ***************************)
 
 (* Properties with context-sensitive free variables *************************)
 
-lemma cpm_frees_conf: ∀n,h,G. R_frees_confluent (cpm n h G).
-/3 width=6 by cpm_fwd_cpx, cpx_frees_conf/ qed-.
+lemma cpm_fle_comp: ∀n,h,G. R_fle_compatible (cpm n h G).
+/3 width=6 by cpm_fwd_cpx, cpx_fle_comp/ qed-.
 
-lemma lfpr_frees_conf: ∀h,G. lexs_frees_confluent (cpr_ext h G) cfull.
-/5 width=9 by cpm_fwd_cpx, lfpx_frees_conf, lexs_co, cext2_co/ qed-.
+lemma lfpr_fle_comp: ∀h,G. lfxs_fle_compatible (cpm 0 h G).
+/4 width=5 by cpm_fwd_cpx, lfpx_fle_comp, lfxs_co/ qed-.
 
 (* Properties with generic extension on referred entries ********************)
 

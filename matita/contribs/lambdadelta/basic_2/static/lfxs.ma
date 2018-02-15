@@ -12,11 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/relocation/rtmap_id.ma".
 include "basic_2/notation/relations/relationstar_4.ma".
 include "basic_2/syntax/cext2.ma".
 include "basic_2/relocation/lexs.ma".
-include "basic_2/static/frees.ma".
+include "basic_2/static/fle.ma".
 
 (* GENERIC EXTENSION ON REFERRED ENTRIES OF A CONTEXT-SENSITIVE REALTION ****)
 
@@ -26,16 +25,11 @@ definition lfxs (R) (T): relation lenv ≝
 interpretation "generic extension on referred entries (local environment)"
    'RelationStar R T L1 L2 = (lfxs R T L1 L2).
 
-definition R_frees_confluent: predicate (relation3 …) ≝
-                              λRN.
-                              ∀f1,L,T1. L ⊢ 𝐅*⦃T1⦄ ≡ f1 → ∀T2. RN L T1 T2 →
-                              ∃∃f2. L ⊢ 𝐅*⦃T2⦄ ≡ f2 & f2 ⊆ f1.
+definition R_fle_compatible: predicate (relation3 …) ≝ λRN.
+                             ∀L,T1,T2. RN L T1 T2 → ⦃L, T2⦄ ⊆ ⦃L, T1⦄.
 
-definition lexs_frees_confluent: relation (relation3 …) ≝
-                                 λRN,RP.
-                                 ∀f1,L1,T. L1 ⊢ 𝐅*⦃T⦄ ≡ f1 →
-                                 ∀L2. L1 ⪤*[RN, RP, f1] L2 →
-                                 ∃∃f2. L2 ⊢ 𝐅*⦃T⦄ ≡ f2 & f2 ⊆ f1.
+definition lfxs_fle_compatible: predicate (relation3 …) ≝ λRN.
+                                ∀L1,L2,T. L1 ⪤*[RN, T] L2 → ⦃L2, T⦄ ⊆ ⦃L1, T⦄.
 
 definition R_confluent2_lfxs: relation4 (relation3 lenv term term)
                                         (relation3 lenv term term) … ≝
@@ -302,13 +296,6 @@ lemma lfxs_bind_repl_dx: ∀R,I,I1,L1,L2,T.
                          L1.ⓘ{I} ⪤*[R, T] L2.ⓘ{I2}.
 #R #I #I1 #L1 #L2 #T * #f #Hf #HL12 #I2 #HR
 /3 width=5 by lexs_pair_repl, ex2_intro/
-qed-.
-
-lemma lfxs_sym: ∀R. lexs_frees_confluent (cext2 R) cfull →
-                (∀L1,L2,T1,T2. R L1 T1 T2 → R L2 T2 T1) →
-                ∀T. symmetric … (lfxs R T).
-#R #H1R #H2R #T #L1 #L2 * #f1 #Hf1 #HL12 elim (H1R … Hf1 … HL12) -Hf1
-/5 width=5 by sle_lexs_trans, lexs_sym, cext2_sym, ex2_intro/
 qed-.
 
 (* Basic_2A1: uses: llpx_sn_co *)
