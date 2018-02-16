@@ -23,13 +23,14 @@ include "basic_2/rt_transition/cpx.ma".
 (* Properties with context-sensitive free variables *************************)
 
 (* Note: "⦃L2, T1⦄ ⊆ ⦃L0, T1⦄" may not hold *)
-axiom cpx_lfxs_conf_fle: ∀R. c_reflexive … R →
-                         ∀h,G,L0,T0,T1. ⦃G, L0⦄ ⊢ T0 ⬈[h] T1 →
+axiom cpx_lfxs_conf_fle: ∀R,h. c_reflexive … R →
+                         (∨∨ (∀G. (cpx h G) = R) | R_fle_compatible R) →
+                         ∀G,L0,T0,T1. ⦃G, L0⦄ ⊢ T0 ⬈[h] T1 →
                          ∀L2. L0 ⪤*[R, T0] L2 →
                          ∧∧ ⦃L2, T0⦄ ⊆ ⦃L0, T0⦄ & ⦃L2, T1⦄ ⊆ ⦃L2, T0⦄
                           & ⦃L0, T1⦄ ⊆ ⦃L0, T0⦄.
 (*
-#R #HR #h #G #L0 #T0 @(fqup_wf_ind_eq (Ⓕ) … G L0 T0) -G -L0 -T0
+#R #h #H1R #H2R #G #L0 #T0 @(fqup_wf_ind_eq (Ⓕ) … G L0 T0) -G -L0 -T0
 #G #L #T #IH #G0 #L0 * *
 [ #s #HG #HL #HT #X #HX #Y #HY destruct -IH
   lapply (lfxs_fwd_length … HY) -HY #H0
@@ -41,14 +42,33 @@ axiom cpx_lfxs_conf_fle: ∀R. c_reflexive … R →
       elim (lfxs_inv_zero … HY) -HY *
       [ #H1 #H2 destruct -IH /2 width=1 by and3_intro/
       | #I #K0 #K2 #V0 #V2 #HK02 #HV02 #H1 #H2 destruct
-        elim (IH … HK02) [4,5: /2 width=2 by fqu_fqup, fqu_lref_O/ ]
-   
-    lapply (lfxs_fwd_length … HY) -HY #H0
-    /3 width=1 by fle_lref_length, and3_intro/
-  | * #I0 #K0 #V0 #V1 #HLK0 #HV01 #HX  
-
-  elim (lfxs_inv_lref … HY) -HY // #HV0 #HT0
-
+        elim H2R -H2R #H2R
+        [ <(H2R G0) in HV02; -H2R #HV02
+          elim (IH … HV02 … HK02) /2 width=2 by fqu_fqup, fqu_lref_O/ -IH -HV02 -HK02 #H1V #H2V #H3V
+        | lapply (H2R … HV02) -H2R -HV02 #HV20
+          elim (IH … V0 … HK02) [|*: /2 width=4 by fqu_fqup, fqu_lref_O/ ] -IH -HK02 #H1V #_ #_
+        ]
+      | #f #I #K0 #K2 #Hf #HK02 #H1 #H2 destruct
+      ]
+    | * #I0 #K0 #V0 #V1 #HV01 #HV1X #H destruct
+      elim (lfxs_inv_zero_pair_sn … HY) -HY #K2 #V2 #HK02 #HV02 #H destruct
+    ]
+  | elim (cpx_inv_lref1 … HX) -HX
+    [ #H destruct
+      elim (lfxs_inv_lref … HY) -HY *
+      [ #H0 #H1 destruct /2 width=1 by and3_intro/
+      | #I0 #I2 #K0 #K2 #HK02 #H1 #H2 destruct
+        lapply (lfxs_fwd_length … HK02) #HK
+        elim (IH … HK02) [|*: /2 width=4 by fqu_fqup/ ] -IH -HK02
+        /3 width=5 by and3_intro, fle_lifts_SO/
+      ]
+    | * #I0 #K0 #V1 #HV1 #HV1X #H0 destruct
+      elim (lfxs_inv_lref_bind_sn … HY) -HY #I2 #K2 #HK02 #H destruct
+      lapply (lfxs_fwd_length … HK02) #HK
+      elim (IH … HK02) [|*: /2 width=4 by fqu_fqup/ ] -IH -HV1 -HK02
+      /3 width=5 by fle_lifts_SO, and3_intro/
+    ]
+  ]
 | #l #HG #HL #HT #X #HX #Y #HY destruct -IH
   lapply (lfxs_fwd_length … HY) -HY #H0
   >(cpx_inv_gref1 … HX) -X
