@@ -18,6 +18,16 @@ include "basic_2/static/fle_fle.ma".
 include "basic_2/static/lfxs_length.ma".
 include "basic_2/rt_transition/cpx.ma".
 
+
+lemma fle_zero_bi: ∀K1,K2. |K1| = |K2| → ∀V1,V2. ⦃K1, V1⦄ ⊆ ⦃K2, V2⦄ →
+                   ∀I1,I2. ⦃K1.ⓑ{I1}V1, #O⦄ ⊆ ⦃K2.ⓑ{I2}V2, #O⦄.
+#K1 #K2 #HK #V1 #V2
+* #n1 #n2 #f1 #f2 #Hf1 #Hf2 #HK12 #Hf12
+#I1 #I2
+elim (lveq_inj_length … HK12) // -HK #H1 #H2 destruct
+/3 width=12 by frees_pair, lveq_bind, sle_next, ex4_4_intro/
+qed.
+
 (* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS *************)
 
 (* Properties with context-sensitive free variables *************************)
@@ -42,11 +52,13 @@ axiom cpx_lfxs_conf_fle: ∀R,h. c_reflexive … R →
       elim (lfxs_inv_zero … HY) -HY *
       [ #H1 #H2 destruct -IH /2 width=1 by and3_intro/
       | #I #K0 #K2 #V0 #V2 #HK02 #HV02 #H1 #H2 destruct
+        lapply (lfxs_fwd_length … HK02) #HK
         elim H2R -H2R #H2R
         [ <(H2R G0) in HV02; -H2R #HV02
-          elim (IH … HV02 … HK02) /2 width=2 by fqu_fqup, fqu_lref_O/ -IH -HV02 -HK02 #H1V #H2V #H3V
-        | lapply (H2R … HV02) -H2R -HV02 #HV20
-          elim (IH … V0 … HK02) [|*: /2 width=4 by fqu_fqup, fqu_lref_O/ ] -IH -HK02 #H1V #_ #_
+          elim (IH … HV02 … HK02) /2 width=2 by fqu_fqup, fqu_lref_O/ -IH -HV02 -HK02 #H1V #H2V #_
+          /4 width=1 by fle_trans_tc, fle_zero_bi, and3_intro/
+        | lapply (H2R … HV02 … HK02) -H2R -HV02 -HK02 -IH #HKV20
+          /3 width=1 by fle_zero_bi, and3_intro/
         ]
       | #f #I #K0 #K2 #Hf #HK02 #H1 #H2 destruct
       ]

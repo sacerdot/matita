@@ -40,12 +40,31 @@ elim (lveq_inj_length … H2L) // -L2 #H1 #H2 destruct
 qed-.
 
 (* Main properties **********************************************************)
-(*
-theorem fle_trans: bi_transitive … fle.
-#L1 #L #T1 #T * #f1 #f #HT1 #HT #Hf1 #L2 #T2 * #g #f2 #Hg #HT2 #Hf2
-/5 width=8 by frees_mono, sle_trans, sle_eq_repl_back2, ex3_2_intro/
+
+theorem fle_trans_sn: ∀L1,L2,T1,T. ⦃L1, T1⦄ ⊆ ⦃L2, T⦄ →
+                      ∀T2. ⦃L2, T⦄ ⊆ ⦃L2, T2⦄ → ⦃L1, T1⦄ ⊆ ⦃L2, T2⦄.
+#L1 #L2 #T1 #T
+* #m1 #m0 #g1 #g0 #Hg1 #Hg0 #Hm #Hg
+#T2
+* #n0 #n2 #f0 #f2 #Hf0 #Hf2 #Hn #Hf
+lapply (frees_mono … Hf0 … Hg0) -Hf0 -Hg0 #Hfg0
+elim (lveq_inj_length … Hn) // -Hn #H1 #H2 destruct
+lapply (sle_eq_repl_back1 … Hf … Hfg0) -f0
+/4 width=10 by sle_tls, sle_trans, ex4_4_intro/
 qed-.
-*)
+
+theorem fle_trans_dx: ∀L1,T1,T. ⦃L1, T1⦄ ⊆ ⦃L1, T⦄ →
+                      ∀L2,T2. ⦃L1, T⦄ ⊆ ⦃L2, T2⦄ → ⦃L1, T1⦄ ⊆ ⦃L2, T2⦄.
+#L1 #T1 #T
+* #m1 #m0 #g1 #g0 #Hg1 #Hg0 #Hm #Hg
+#L2 #T2
+* #n0 #n2 #f0 #f2 #Hf0 #Hf2 #Hn #Hf
+lapply (frees_mono … Hg0 … Hf0) -Hg0 -Hf0 #Hgf0
+elim (lveq_inj_length … Hm) // -Hm #H1 #H2 destruct
+lapply (sle_eq_repl_back2 … Hg … Hgf0) -g0
+/4 width=10 by sle_tls, sle_trans, ex4_4_intro/
+qed-.
+
 theorem fle_bind_sn_ge: ∀L1,L2. |L2| ≤ |L1| →
                         ∀V1,T1,T. ⦃L1, V1⦄ ⊆ ⦃L2, T⦄ → ⦃L1.ⓧ, T1⦄ ⊆ ⦃L2, T⦄ →
                         ∀p,I. ⦃L1, ⓑ{p,I}V1.T1⦄ ⊆ ⦃L2, T⦄.
