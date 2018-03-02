@@ -12,22 +12,27 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/lfxs_lfxs.ma".
-include "basic_2/i_static/tc_lfxs.ma".
+include "ground_2/relocation/rtmap_id.ma".
+include "basic_2/notation/relations/subseteq_4.ma".
+include "basic_2/syntax/lveq.ma".
+include "basic_2/static/frees.ma".
 
-(* ITERATED EXTENSION ON REFERRED ENTRIES OF A CONTEXT-SENSITIVE REALTION ***)
+(* FREE VARIABLES INCLUSION FOR RESTRICTED CLOSURES *************************)
 
-(* Advanced properties ******************************************************)
+definition fsle: bi_relation lenv term ≝ λL1,T1,L2,T2.
+                 ∃∃n1,n2,f1,f2. L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 & L2 ⊢ 𝐅*⦃T2⦄ ≡ f2 &
+                                L1 ≋ⓧ*[n1, n2] L2 & ⫱*[n1]f1 ⊆ ⫱*[n2]f2.
 
-lemma tc_lfxs_sym: ∀R. lfxs_fsle_compatible R →
-                   (∀L1,L2,T1,T2. R L1 T1 T2 → R L2 T2 T1) →
-                   ∀T. symmetric … (tc_lfxs R T).
-#R #H1R #H2R #T #L1 #L2 #H elim H -L2
-/4 width=3 by lfxs_sym, tc_lfxs_step_sn, inj/
-qed-.
+interpretation "free variables inclusion (restricted closure)"
+   'SubSetEq L1 T1 L2 T2 = (fsle L1 T1 L2 T2).
 
-(* Main properties **********************************************************)
+interpretation "free variables inclusion (term)"
+   'subseteq T1 T2 = (fsle LAtom T1 LAtom T2).
 
-theorem tc_lfxs_trans: ∀R,T. Transitive … (tc_lfxs R T).
-#R #T #L1 #L #HL1 #L2 #HL2 @(trans_TC … HL1 HL2) (**) (* auto fails *)
-qed-.
+(* Basic properties *********************************************************)
+
+lemma fsle_sort: ∀L,s1,s2. ⦃L, ⋆s1⦄ ⊆ ⦃L, ⋆s2⦄.
+/3 width=8 by frees_sort, sle_refl, ex4_4_intro/ qed.
+
+lemma fsle_gref: ∀L,l1,l2. ⦃L, §l1⦄ ⊆ ⦃L, §l2⦄.
+/3 width=8 by frees_gref, sle_refl, ex4_4_intro/ qed.

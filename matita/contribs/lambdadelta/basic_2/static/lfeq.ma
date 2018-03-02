@@ -29,11 +29,6 @@ interpretation
 definition lfeq_transitive: predicate (relation3 lenv term term) ≝
            λR. ∀L2,T1,T2. R L2 T1 T2 → ∀L1. L1 ≡[T1] L2 → R L1 T1 T2.
 
-(* Basic_properties *********************************************************)
-
-lemma lfxs_transitive_lfeq: ∀R. lfxs_transitive ceq R R → lfeq_transitive R.
-/2 width=5 by/ qed.
-
 (* Basic inversion lemmas ***************************************************)
 
 lemma lfeq_transitive_inv_lfxs: ∀R. lfeq_transitive R → lfxs_transitive ceq R R.
@@ -79,6 +74,35 @@ lemma lfeq_fwd_lfxs: ∀R. c_reflexive … R →
                      ∀L1,L2,T. L1 ≡[T] L2 → L1 ⪤*[R, T] L2.
 #R #HR #L1 #L2 #T * #f #Hf #HL12
 /4 width=7 by lexs_co, cext2_co, ex2_intro/
+qed-.
+
+(* Basic_properties *********************************************************)
+
+lemma lfxs_transitive_lfeq: ∀R. lfxs_transitive ceq R R → lfeq_transitive R.
+/2 width=5 by/ qed.
+
+lemma frees_lfeq_conf: ∀f,L1,T. L1 ⊢ 𝐅*⦃T⦄ ≡ f →
+                       ∀L2. L1 ≡[T] L2 → L2 ⊢ 𝐅*⦃T⦄ ≡ f.
+#f #L1 #T #H elim H -f -L1 -T
+[ /2 width=3 by frees_sort/
+| #f #i #Hf #L2 #H2
+  >(lfxs_inv_atom_sn … H2) -L2
+  /2 width=1 by frees_atom/
+| #f #I #L1 #V1 #_ #IH #Y #H2
+  elim (lfeq_inv_zero_pair_sn … H2) -H2 #L2 #HL12 #H destruct
+  /3 width=1 by frees_pair/
+| #f #I #L1 #Hf #Y #H2
+  elim (lfxs_inv_zero_unit_sn … H2) -H2 #g #L2 #_ #_ #H destruct
+  /2 width=1 by frees_unit/
+| #f #I #L1 #i #_ #IH #Y #H2
+  elim (lfeq_inv_lref_bind_sn … H2) -H2 #J #L2 #HL12 #H destruct
+  /3 width=1 by frees_lref/
+| /2 width=1 by frees_gref/
+| #f1V #f1T #f1 #p #I #L1 #V1 #T1 #_ #_ #Hf1 #IHV #IHT #L2 #H2
+  elim (lfeq_inv_bind … H2) -H2 /3 width=5 by frees_bind/
+| #f1V #f1T #f1 #I #L1 #V1 #T1 #_ #_ #Hf1 #IHV #IHT #L2 #H2
+  elim (lfeq_inv_flat … H2) -H2 /3 width=5 by frees_flat/
+]
 qed-.
 
 (* Basic_2A1: removed theorems 10:

@@ -289,7 +289,14 @@ qed-.
 lemma sor_xnx_tl: ∀g1,g2,g. g1 ⋓ g2 ≡ g → ∀f2. ⫯f2 = g2 →
                   ∃∃f1,f. f1 ⋓ f2 ≡ f & ⫱g1 = f1 & ⫯f = g.
 #g1 elim (pn_split g1) * #f1 #H1 #g2 #g #H #f2 #H2
-[ elim (sor_inv_pnx … H … H1 H2) | elim (sor_inv_nnx … H … H1 H2) ] -g2 #f #Hf #H0
+[ elim (sor_inv_pnx … H … H1 H2) | elim (sor_inv_nnx … H … H1 H2) ] -g2
+/3 width=5 by ex3_2_intro/
+qed-.
+
+lemma sor_nxx_tl: ∀g1,g2,g. g1 ⋓ g2 ≡ g → ∀f1. ⫯f1 = g1 →
+                  ∃∃f2,f. f1 ⋓ f2 ≡ f & ⫱g2 = f2 & ⫯f = g.
+#g1 #g2 elim (pn_split g2) * #f2 #H2 #g #H #f1 #H1
+[ elim (sor_inv_npx … H … H1 H2) | elim (sor_inv_nnx … H … H1 H2) ] -g1
 /3 width=5 by ex3_2_intro/
 qed-.
 

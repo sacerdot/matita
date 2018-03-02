@@ -35,3 +35,13 @@ lemma lexs_length_cfull: ∀L1,L2. |L1| = |L2| → ∀f. L1 ⪤*[cfull, cfull, f
   elim (pn_split f) * #g #H destruct /3 width=1 by lexs_next, lexs_push/
 ]
 qed.
+
+lemma lexs_length_isid: ∀R,L1,L2. |L1| = |L2| →
+                        ∀f. 𝐈⦃f⦄ → L1 ⪤*[R, cfull, f] L2.
+#R #L1 elim L1 -L1
+[ #Y2 #H >(length_inv_zero_sn … H) -Y2 //
+| #L1 #I1 #IH #Y2 #H #f #Hf
+  elim (length_inv_succ_sn … H) -H #I2 #L2 #HL12 #H destruct
+  elim (isid_inv_gen … Hf) -Hf #g #Hg #H destruct /3 width=1 by lexs_push/
+]
+qed.

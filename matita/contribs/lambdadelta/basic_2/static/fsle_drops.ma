@@ -12,16 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/syntax/lveq_length.ma".
 include "basic_2/static/frees_drops.ma".
-include "basic_2/static/fle.ma".
+include "basic_2/static/fsle_length.ma".
 
 (* FREE VARIABLES INCLUSION FOR RESTRICTED CLOSURES *************************)
 
 (* Advanced properties ******************************************************)
 
-lemma fle_lifts_sn: ∀T1,U1. ⬆*[1] T1 ≡ U1 → ∀L1,L2. |L2| ≤ |L1| →
-                    ∀T2. ⦃L1, T1⦄ ⊆ ⦃L2, T2⦄ → ⦃L1.ⓧ, U1⦄ ⊆ ⦃L2, T2⦄.
+lemma fsle_lifts_sn: ∀T1,U1. ⬆*[1] T1 ≡ U1 → ∀L1,L2. |L2| ≤ |L1| →
+                     ∀T2. ⦃L1, T1⦄ ⊆ ⦃L2, T2⦄ → ⦃L1.ⓧ, U1⦄ ⊆ ⦃L2, T2⦄.
 #T1 #U1 #HTU1 #L1 #L2 #H1L #T2
 * #n #m #f #g #Hf #Hg #H2L #Hfg
 lapply (lveq_length_fwd_dx … H2L ?) // -H1L #H destruct
@@ -30,9 +29,9 @@ lapply (frees_lifts_SO (Ⓣ) (L1.ⓧ) … HTU1 … Hf)
 @(ex4_4_intro … Hf Hg) /2 width=4 by lveq_void_sn/ (**) (* explict constructor *)
 qed-.
 
-lemma fle_lifts_SO: ∀K1,K2. |K1| = |K2| → ∀T1,T2. ⦃K1, T1⦄ ⊆ ⦃K2, T2⦄ →
-                    ∀U1,U2. ⬆*[1] T1 ≡ U1 → ⬆*[1] T2 ≡ U2 →
-                    ∀I1,I2.  ⦃K1.ⓘ{I1}, U1⦄ ⊆ ⦃K2.ⓘ{I2}, U2⦄.
+lemma fsle_lifts_SO: ∀K1,K2. |K1| = |K2| → ∀T1,T2. ⦃K1, T1⦄ ⊆ ⦃K2, T2⦄ →
+                     ∀U1,U2. ⬆*[1] T1 ≡ U1 → ⬆*[1] T2 ≡ U2 →
+                     ∀I1,I2.  ⦃K1.ⓘ{I1}, U1⦄ ⊆ ⦃K2.ⓘ{I2}, U2⦄.
 #K1 #K2 #HK #T1 #T2
 * #n1 #n2 #f1 #f2 #Hf1 #Hf2 #HK12 #Hf12
 #U1 #U2 #HTU1 #HTU2 #I1 #I2
@@ -42,9 +41,9 @@ qed.
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma fle_inv_lifts_sn: ∀T1,U1. ⬆*[1] T1 ≡ U1 →
-                        ∀I1,I2,L1,L2,V1,V2,U2. ⦃L1.ⓑ{I1}V1,U1⦄ ⊆ ⦃L2.ⓑ{I2}V2, U2⦄ →
-                        ∀p. ⦃L1, T1⦄ ⊆ ⦃L2, ⓑ{p,I2}V2.U2⦄.
+lemma fsle_inv_lifts_sn: ∀T1,U1. ⬆*[1] T1 ≡ U1 →
+                         ∀I1,I2,L1,L2,V1,V2,U2. ⦃L1.ⓑ{I1}V1,U1⦄ ⊆ ⦃L2.ⓑ{I2}V2, U2⦄ →
+                         ∀p. ⦃L1, T1⦄ ⊆ ⦃L2, ⓑ{p,I2}V2.U2⦄.
 #T1 #U1 #HTU1 #I1 #I2 #L1 #L2 #V1 #V2 #U2
 * #n #m #f2 #g2 #Hf2 #Hg2 #HL #Hfg2 #p
 elim (lveq_inv_pair_pair … HL) -HL #HL #H1 #H2 destruct

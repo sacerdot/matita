@@ -36,7 +36,7 @@ lemma tc_lfxs_lex_lfeq: ∀R. c_reflexive … R →
 
 (* Note: s_rs_transitive_lex_inv_isid could be invoked in the last auto but makes it too slow *)
 lemma tc_lfxs_inv_lex_lfeq: ∀R. c_reflexive … R →
-                            lfxs_fle_compatible R →
+                            lfxs_fsle_compatible R →
                             s_rs_transitive … R (λ_.lex R) →
                             lfeq_transitive R →
                             ∀L1,L2,T. L1 ⪤**[R, T] L2 →

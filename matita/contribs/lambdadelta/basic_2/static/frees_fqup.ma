@@ -99,3 +99,52 @@ elim (pn_split f0) * #g0 #H destruct
   /2 width=3 by sor_comm_23_idem/
 ]
 qed-.
+
+lemma frees_ind_void: ∀R:relation3 ….
+                      (
+                         ∀f,L,s. 𝐈⦃f⦄ → R L (⋆s) f
+                      ) → (
+                         ∀f,i. 𝐈⦃f⦄ → R (⋆) (#i) (↑*[i]⫯f)
+                      ) → (
+                         ∀f,I,L,V.
+                         L ⊢ 𝐅*⦃V⦄ ≡ f → R L V f→ R (L.ⓑ{I}V) (#O) (⫯f) 
+                      ) → (
+                         ∀f,I,L. 𝐈⦃f⦄ → R (L.ⓤ{I}) (#O) (⫯f)
+                      ) → (
+                         ∀f,I,L,i.
+                         L ⊢ 𝐅*⦃#i⦄ ≡ f → R L (#i) f → R (L.ⓘ{I}) (#(⫯i)) (↑f)
+                      ) → (
+                         ∀f,L,l. 𝐈⦃f⦄ → R L (§l) f
+                      ) → (
+                         ∀f1,f2,f,p,I,L,V,T.
+                         L ⊢ 𝐅*⦃V⦄ ≡ f1 → L.ⓧ ⊢𝐅*⦃T⦄≡ f2 → f1 ⋓ ⫱f2 ≡ f →
+                         R L V f1 →R (L.ⓧ) T f2 → R L (ⓑ{p,I}V.T) f
+                      ) → (
+                         ∀f1,f2,f,I,L,V,T.
+                         L ⊢ 𝐅*⦃V⦄ ≡ f1 → L ⊢𝐅*⦃T⦄ ≡ f2 → f1 ⋓ f2 ≡ f →
+                         R L V f1 → R L T f2 → R L (ⓕ{I}V.T) f
+                      ) →
+                      ∀L,T,f. L ⊢ 𝐅*⦃T⦄ ≡ f → R L T f.
+#R #IH1 #IH2 #IH3 #IH4 #IH5 #IH6 #IH7 #IH8 #L #T
+@(fqup_wf_ind_eq (Ⓕ) … (⋆) L T) -L -T #G0 #L0 #T0 #IH #G #L * *
+[ #s #HG #HL #HT #f #H destruct -IH
+  lapply (frees_inv_sort … H) -H /2 width=1 by/
+| cases L -L
+  [ #i #HG #HL #HT #f #H destruct -IH
+    elim (frees_inv_atom … H) -H #g #Hg #H destruct /2 width=1 by/
+  | #L #I * [ cases I -I #I [ | #V ] | #i ] #HG #HL #HT #f #H destruct
+    [ elim (frees_inv_unit … H) -H #g #Hg #H destruct /2 width=1 by/
+    | elim (frees_inv_pair … H) -H #g #Hg #H destruct
+      /4 width=2 by fqu_fqup, fqu_lref_O/
+    | elim (frees_inv_lref … H) -H #g #Hg #H destruct
+      /4 width=2 by fqu_fqup/
+    ]
+  ]
+| #l #HG #HL #HT #f #H destruct -IH
+  lapply (frees_inv_gref … H) -H /2 width=1 by/
+| #p #I #V #T #HG #HL #HT #f #H destruct
+  elim (frees_inv_bind_void … H) -H /3 width=7 by/
+| #I #V #T #HG #HL #HT #f #H destruct
+  elim (frees_inv_flat … H) -H /3 width=7 by/
+]
+qed-.

@@ -380,7 +380,7 @@ qed-.
 (* Main properties **********************************************************)
 
 theorem lfpr_conf: ∀h,G,T. confluent … (lfpr h G T).
-/3 width=6 by cpr_conf_lfpr, lfpr_fle_comp, lfxs_conf/ qed-.
+/3 width=6 by cpr_conf_lfpr, lfpr_fsle_comp, lfxs_conf/ qed-.
 
 theorem lfpr_bind: ∀h,G,L1,L2,V1. ⦃G, L1⦄ ⊢ ➡[h, V1] L2 →
                    ∀I,V2,T. ⦃G, L1.ⓑ{I}V1⦄ ⊢ ➡[h, T] L2.ⓑ{I}V2 →

@@ -12,22 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/lfxs_lfxs.ma".
-include "basic_2/i_static/tc_lfxs.ma".
+include "basic_2/notation/relations/isidentity_2.ma".
+include "basic_2/static/frees.ma".
 
-(* ITERATED EXTENSION ON REFERRED ENTRIES OF A CONTEXT-SENSITIVE REALTION ***)
+(* FREE VARIABLES IDENTITY FOR RESTRICTED CLOSURES **************************)
 
-(* Advanced properties ******************************************************)
+definition fid: relation2 … ≝ λL,T.
+                ∀f. L ⊢ 𝐅*⦃T⦄ ≡ f →  𝐈⦃f⦄.
 
-lemma tc_lfxs_sym: ∀R. lfxs_fsle_compatible R →
-                   (∀L1,L2,T1,T2. R L1 T1 T2 → R L2 T2 T1) →
-                   ∀T. symmetric … (tc_lfxs R T).
-#R #H1R #H2R #T #L1 #L2 #H elim H -L2
-/4 width=3 by lfxs_sym, tc_lfxs_step_sn, inj/
-qed-.
+interpretation "free variables identity (restricted closure)"
+   'IsIdentity L T = (fid L T).
 
-(* Main properties **********************************************************)
+(* Basic properties *********************************************************)
 
-theorem tc_lfxs_trans: ∀R,T. Transitive … (tc_lfxs R T).
-#R #T #L1 #L #HL1 #L2 #HL2 @(trans_TC … HL1 HL2) (**) (* auto fails *)
-qed-.
+lemma fid_sort: ∀L,s. 𝐈⦃L, ⋆s⦄.
+/2 width=3 by frees_inv_sort/ qed.
+
+lemma fid_gref: ∀L,l. 𝐈⦃L, §l⦄.
+/2 width=3 by frees_inv_gref/ qed.

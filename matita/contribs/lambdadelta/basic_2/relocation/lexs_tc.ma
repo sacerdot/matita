@@ -98,7 +98,6 @@ qed-.
 
 (* Advanced properties ******************************************************)
 
-(* Basic_2A1: uses: TC_lpx_sn_inv_lpx_sn_LTC *)
 lemma lexs_tc_dx: ∀RN,RP. s_rs_transitive_isid RN RP →
                   ∀f. 𝐈⦃f⦄ → ∀L1,L2. TC … (lexs RN RP f) L1 L2 → L1 ⪤*[RN, LTC … RP, f] L2.
 #RN #RP #HRP #f #Hf #L1 #L2 #H @(TC_ind_dx ??????? H) -L1
@@ -113,7 +112,6 @@ lemma lexs_inv_tc_sn: ∀RN,RP. c_reflexive … RN → c_reflexive … RP →
 /2 width=1 by lexs_tc_next, lexs_tc_push_sn, lexs_atom, inj/
 qed-.
 
-(* Basic_2A1: uses: lpx_sn_LTC_TC_lpx_sn *)
 lemma lexs_inv_tc_dx: ∀RN,RP. c_reflexive … RN → c_reflexive … RP →
                       ∀f,L1,L2. L1 ⪤*[RN, LTC … RP, f] L2 → TC … (lexs RN RP f) L1 L2.
 #RN #RP #HRN #HRP #f #L1 #L2 #H elim H -f -L1 -L2

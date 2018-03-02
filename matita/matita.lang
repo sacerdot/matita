@@ -90,22 +90,22 @@
          <keyword>axiom</keyword>
 
          <!-- tactics -->
-         <keyword>apply</keyword>	    	 
-         <keyword>applyS</keyword>	    	 
-         <keyword>cases</keyword>	    	 
-         <keyword>letin</keyword>	    	 
-         <keyword>auto</keyword>	    	 
-         <keyword>elim</keyword>	    	 
-         <keyword>whd</keyword>	    	 
-         <keyword>normalize</keyword>	    	 
-         <keyword>assumption</keyword>	    	 
-         <keyword>generalize</keyword>	    	 
-         <keyword>change</keyword>	    	 
-         <keyword>rewrite</keyword>	    	 
-         <keyword>cut</keyword>	    	 
+         <keyword>apply</keyword>
+         <keyword>applyS</keyword>
+         <keyword>cases</keyword>
+         <keyword>letin</keyword>
+         <keyword>auto</keyword>
+         <keyword>elim</keyword>
+         <keyword>whd</keyword>
+         <keyword>normalize</keyword>
+         <keyword>assumption</keyword>
+         <keyword>generalize</keyword>
+         <keyword>change</keyword>
+         <keyword>rewrite</keyword>
+         <keyword>cut</keyword>
          <keyword>inversion</keyword>
          <keyword>lapply</keyword>
-         <keyword>destruct</keyword> 
+         <keyword>destruct</keyword>
 
           <!-- commands -->
           <keyword>alias</keyword>
@@ -116,23 +116,24 @@
           <keyword>prefer</keyword>
           <keyword>nocomposites</keyword>
           <keyword>coinductive</keyword>
-          <keyword>constraint</keyword>          
+          <keyword>constraint</keyword>
           <keyword>corec</keyword>
           <keyword>cyclic</keyword>
           <keyword>default</keyword>
           <keyword>discriminator</keyword>
           <keyword>for</keyword>
+          <keyword>id</keyword>
           <keyword>include</keyword>
           <keyword>include'</keyword>
           <keyword>inductive</keyword>
           <keyword>inverter</keyword>
           <keyword>in</keyword>
           <keyword>interpretation</keyword>
-	  <keyword>left</keyword>          
+	  <keyword>left</keyword>
           <keyword>let</keyword>
           <keyword>match</keyword>
           <keyword>names</keyword>
-	  <keyword>non</keyword>          
+	  <keyword>non</keyword>
 	  <keyword>notation</keyword>
           <keyword>on</keyword>
           <keyword>precedence</keyword>
@@ -141,14 +142,15 @@
           <keyword>rec</keyword>
           <keyword>record</keyword>
           <keyword>return</keyword>
-	  <keyword>right</keyword>          
-          <keyword>source</keyword>    
+	  <keyword>right</keyword>
+          <keyword>source</keyword>
+          <keyword>symbol</keyword>
           <keyword>to</keyword>
-          <keyword>universe</keyword>          
+          <keyword>universe</keyword>
 	  <keyword>using</keyword>
           <keyword>with</keyword>
-         
-         
+
+
           <!-- commands -->
           <keyword>unification</keyword>
           <keyword>hint</keyword>
@@ -166,7 +168,7 @@
           <keyword>coercions</keyword>
           <keyword>comments</keyword>
           <keyword>debug</keyword>
-         
+
           <!-- tinycals -->
           <keyword>try</keyword>
           <keyword>solve</keyword>

@@ -12,22 +12,28 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/lfxs_lfxs.ma".
-include "basic_2/i_static/tc_lfxs.ma".
+include "basic_2/static/fid.ma".
+include "basic_2/static/fle_fqup.ma".
 
-(* ITERATED EXTENSION ON REFERRED ENTRIES OF A CONTEXT-SENSITIVE REALTION ***)
+(* FREE VARIABLES INCLUSION FOR RESTRICTED CLOSURES *************************)
 
-(* Advanced properties ******************************************************)
+(* Properties with free variables identity for restricted closures **********)
 
-lemma tc_lfxs_sym: ∀R. lfxs_fsle_compatible R →
-                   (∀L1,L2,T1,T2. R L1 T1 T2 → R L2 T2 T1) →
-                   ∀T. symmetric … (tc_lfxs R T).
-#R #H1R #H2R #T #L1 #L2 #H elim H -L2
-/4 width=3 by lfxs_sym, tc_lfxs_step_sn, inj/
-qed-.
+lemma fle_fid_sn: ∀L1,L2. |L1| = |L2| →
+                  ∀T1,T2. 𝐈⦃L1, T1⦄ → ⦃L1, T1⦄ ⊆ ⦃L2, T2⦄.
+#L1 #L2 #HL #T1 #T2 #HT1
+elim (frees_total L1 T1) #f1 #Hf1
+elim (frees_total L2 T2) #f2 #Hf2
+/4 width=8 by lveq_length_eq, sle_isid_sn, ex4_4_intro/
+qed.
 
-(* Main properties **********************************************************)
+(* Inversion lemmas with free variables identity for restricted closures ****)
 
-theorem tc_lfxs_trans: ∀R,T. Transitive … (tc_lfxs R T).
-#R #T #L1 #L #HL1 #L2 #HL2 @(trans_TC … HL1 HL2) (**) (* auto fails *)
+lemma fle_inv_fid_dx: ∀L1,L2. |L1| = |L2| →
+                      ∀T1,T2. ⦃L1, T1⦄ ⊆ ⦃L2, T2⦄ →  𝐈⦃L2, T2⦄ → 𝐈⦃L1, T1⦄.
+#L1 #L2 #HL #T1 #T2
+* #n1 #n2 #f1 #f2 #Hf1 #Hf2 #HL12 #Hf12 #HT2 #g1 #Hg1
+elim (lveq_inj_length … HL12) // -HL -HL12 #H1 #H2 destruct
+lapply (frees_mono … Hf1 … Hg1) -Hg1 #Hfg1
+/4 width=5 by sle_inv_isid_dx, isid_eq_repl_back/
 qed-.

@@ -19,11 +19,11 @@ include "basic_2/rt_transition/cpm_cpx.ma".
 
 (* Properties with context-sensitive free variables *************************)
 
-lemma cpm_fle_comp: ∀n,h,G. R_fle_compatible (cpm n h G).
-/3 width=6 by cpm_fwd_cpx, cpx_fle_comp/ qed-.
+lemma cpm_fsle_comp: ∀n,h,G. R_fsle_compatible (cpm n h G).
+/3 width=6 by cpm_fwd_cpx, cpx_fsle_comp/ qed-.
 
-lemma lfpr_fle_comp: ∀h,G. lfxs_fle_compatible (cpm 0 h G).
-/4 width=5 by cpm_fwd_cpx, lfpx_fle_comp, lfxs_co/ qed-.
+lemma lfpr_fsle_comp: ∀h,G. lfxs_fsle_compatible (cpm 0 h G).
+/4 width=5 by cpm_fwd_cpx, lfpx_fsle_comp, lfxs_co/ qed-.
 
 (* Properties with generic extension on referred entries ********************)
 

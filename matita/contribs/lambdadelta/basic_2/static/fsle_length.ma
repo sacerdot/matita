@@ -12,22 +12,24 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/lfxs_lfxs.ma".
-include "basic_2/i_static/tc_lfxs.ma".
+include "basic_2/syntax/lveq_length.ma".
+include "basic_2/static/fsle.ma".
 
-(* ITERATED EXTENSION ON REFERRED ENTRIES OF A CONTEXT-SENSITIVE REALTION ***)
+(* FREE VARIABLES INCLUSION FOR RESTRICTED CLOSURES *************************)
 
-(* Advanced properties ******************************************************)
+(* Properties with length for local environments ****************************)
 
-lemma tc_lfxs_sym: ∀R. lfxs_fsle_compatible R →
-                   (∀L1,L2,T1,T2. R L1 T1 T2 → R L2 T2 T1) →
-                   ∀T. symmetric … (tc_lfxs R T).
-#R #H1R #H2R #T #L1 #L2 #H elim H -L2
-/4 width=3 by lfxs_sym, tc_lfxs_step_sn, inj/
-qed-.
+lemma fsle_sort_bi: ∀L1,L2,s1,s2. |L1| = |L2| → ⦃L1, ⋆s1⦄ ⊆ ⦃L2, ⋆s2⦄.
+/3 width=8 by lveq_length_eq, frees_sort, sle_refl, ex4_4_intro/ qed.
 
-(* Main properties **********************************************************)
+lemma fsle_gref_bi: ∀L1,L2,l1,l2. |L1| = |L2| → ⦃L1, §l1⦄ ⊆ ⦃L2, §l2⦄.
+/3 width=8 by lveq_length_eq, frees_gref, sle_refl, ex4_4_intro/ qed.
 
-theorem tc_lfxs_trans: ∀R,T. Transitive … (tc_lfxs R T).
-#R #T #L1 #L #HL1 #L2 #HL2 @(trans_TC … HL1 HL2) (**) (* auto fails *)
-qed-.
+lemma fsle_zero_bi: ∀K1,K2. |K1| = |K2| → ∀V1,V2. ⦃K1, V1⦄ ⊆ ⦃K2, V2⦄ →
+                    ∀I1,I2. ⦃K1.ⓑ{I1}V1, #O⦄ ⊆ ⦃K2.ⓑ{I2}V2, #O⦄.
+#K1 #K2 #HK #V1 #V2
+* #n1 #n2 #f1 #f2 #Hf1 #Hf2 #HK12 #Hf12
+#I1 #I2
+elim (lveq_inj_length … HK12) // -HK #H1 #H2 destruct
+/3 width=12 by frees_pair, lveq_bind, sle_next, ex4_4_intro/
+qed.

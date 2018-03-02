@@ -12,10 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/relocation/rtmap_id.ma".
 include "basic_2/notation/relations/relationstar_4.ma".
 include "basic_2/syntax/cext2.ma".
 include "basic_2/relocation/lexs.ma".
-include "basic_2/static/fle.ma".
+include "basic_2/static/frees.ma".
 
 (* GENERIC EXTENSION ON REFERRED ENTRIES OF A CONTEXT-SENSITIVE REALTION ****)
 
@@ -24,12 +25,6 @@ definition lfxs (R) (T): relation lenv ≝
 
 interpretation "generic extension on referred entries (local environment)"
    'RelationStar R T L1 L2 = (lfxs R T L1 L2).
-
-definition R_fle_compatible: predicate (relation3 …) ≝ λRN.
-                             ∀L,T1,T2. RN L T1 T2 → ⦃L, T2⦄ ⊆ ⦃L, T1⦄.
-
-definition lfxs_fle_compatible: predicate (relation3 …) ≝ λRN.
-                                ∀L1,L2,T. L1 ⪤*[RN, T] L2 → ⦃L2, T⦄ ⊆ ⦃L1, T⦄.
 
 definition R_confluent2_lfxs: relation4 (relation3 lenv term term)
                                         (relation3 lenv term term) … ≝

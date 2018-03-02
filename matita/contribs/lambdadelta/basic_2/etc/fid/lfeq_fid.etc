@@ -12,22 +12,28 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/lfxs_lfxs.ma".
-include "basic_2/i_static/tc_lfxs.ma".
+include "basic_2/relocation/lexs_length.ma".
+include "basic_2/static/frees_fqup.ma".
+include "basic_2/static/fid.ma".
+include "basic_2/static/lfeq.ma".
 
-(* ITERATED EXTENSION ON REFERRED ENTRIES OF A CONTEXT-SENSITIVE REALTION ***)
+(* SYNTACTIC EQUIVALENCE FOR LOCAL ENVIRONMENTS ON REFERRED ENTRIES *********)
 
-(* Advanced properties ******************************************************)
+(* properties with free variables identity for restricted closures **********)
 
-lemma tc_lfxs_sym: ∀R. lfxs_fsle_compatible R →
-                   (∀L1,L2,T1,T2. R L1 T1 T2 → R L2 T2 T1) →
-                   ∀T. symmetric … (tc_lfxs R T).
-#R #H1R #H2R #T #L1 #L2 #H elim H -L2
-/4 width=3 by lfxs_sym, tc_lfxs_step_sn, inj/
-qed-.
+lemma fid_lfeq: ∀L1,L2. |L1| = |L2| → ∀T. 𝐈⦃L1, T⦄ → L1 ≡[T] L2.
+#L1 #L2 #HL1 #T #HT
+elim (frees_total L1 T) #f #Hf
+/4 width=3 by lexs_length_isid, ex2_intro/
+qed.
 
-(* Main properties **********************************************************)
+(* Advanced properties with free variables identity for restricted closures *)
 
-theorem tc_lfxs_trans: ∀R,T. Transitive … (tc_lfxs R T).
-#R #T #L1 #L #HL1 #L2 #HL2 @(trans_TC … HL1 HL2) (**) (* auto fails *)
-qed-.
+lemma fid_length: ∀L1,L2. |L1| = |L2| → ∀T. 𝐈⦃L1, T⦄ → 𝐈⦃L2, T⦄.
+#L1 #L2 #HL #T #HT #g #Hg
+elim (frees_total L1 T) #f #Hf
+lapply (frees_mono f … Hg) -Hg
+[ /3 width=4 by fid_lfeq, frees_lfeq_conf/
+| /3 width=3 by isid_eq_repl_back/
+]
+qed-. 

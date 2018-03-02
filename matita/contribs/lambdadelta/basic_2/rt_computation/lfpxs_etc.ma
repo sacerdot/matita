@@ -7,6 +7,7 @@ lemma R_fle_comp_LTC: ∀R. R_fle_compatible R → R_fle_compatible (LTC … R).
 #R #HR #L #T1 #T2 #H elim H -T2
 /3 width=3 by fle_trans_dx/
 qed-.
+
 lemma lfpxs_cpx_conf: ∀h,G. s_r_confluent1 … (cpx h G) (lfpxs h G).
 #h #G #L1 #T1 #T2 #HT12 #L2 #H
 elim (tc_lfxs_inv_lex_lfeq … H) -H #L #HL1 #HL2
