@@ -67,14 +67,7 @@ lemma lfpx_inv_sort: ∀h,G,Y1,Y2,s. ⦃G, Y1⦄ ⊢ ⬈[h, ⋆s] Y2 →
                       | ∃∃I1,I2,L1,L2. ⦃G, L1⦄ ⊢ ⬈[h, ⋆s] L2 &
                                        Y1 = L1.ⓘ{I1} & Y2 = L2.ⓘ{I2}.
 /2 width=1 by lfxs_inv_sort/ qed-.
-(*
-lemma lfpx_inv_zero: ∀h,G,Y1,Y2. ⦃G, Y1⦄ ⊢ ⬈[h, #0] Y2 →
-                     (Y1 = ⋆ ∧ Y2 = ⋆) ∨
-                     ∃∃I,L1,L2,V1,V2. ⦃G, L1⦄ ⊢ ⬈[h, V1] L2 &
-                                      ⦃G, L1⦄ ⊢ V1 ⬈[h] V2 &
-                                      Y1 = L1.ⓑ{I}V1 & Y2 = L2.ⓑ{I}V2.
-/2 width=1 by lfxs_inv_zero/ qed-.
-*)
+
 lemma lfpx_inv_lref: ∀h,G,Y1,Y2,i. ⦃G, Y1⦄ ⊢ ⬈[h, #⫯i] Y2 →
                      ∨∨ Y1 = ⋆ ∧ Y2 = ⋆
                       | ∃∃I1,I2,L1,L2. ⦃G, L1⦄ ⊢ ⬈[h, #i] L2 &

@@ -12,9 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/lfxs_lfxs.ma".
 include "basic_2/rt_transition/cpm_lsubr.ma".
-include "basic_2/rt_transition/cpm_lfxs.ma".
+include "basic_2/rt_transition/cpm_fsle.ma".
 include "basic_2/rt_transition/cpr.ma".
 include "basic_2/rt_transition/cpr_drops.ma".
 include "basic_2/rt_transition/lfpr_drops.ma".

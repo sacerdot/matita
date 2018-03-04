@@ -12,21 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_transition/cpx_lfxs.ma".
-include "basic_2/rt_transition/cpm_cpx.ma".
+include "basic_2/relocation/lex_length.ma".
+include "basic_2/rt_computation/lpxs.ma".
 
-(* CONTEXT-SENSITIVE PARALLEL REDUCTION FOR TERMS ***************************)
+(* UNCOUNTED PARALLEL RT-COMPUTATION FOR LOCAL ENVIRONMENTS *****************)
 
-(* Properties with context-sensitive free variables *************************)
+(* Forward lemmas with length for local environments ************************)
 
-lemma cpm_fsle_comp: ∀n,h,G. R_fsle_compatible (cpm n h G).
-/3 width=6 by cpm_fwd_cpx, cpx_fsle_comp/ qed-.
-
-lemma lfpr_fsle_comp: ∀h,G. lfxs_fsle_compatible (cpm 0 h G).
-/4 width=5 by cpm_fwd_cpx, lfpx_fsle_comp, lfxs_co/ qed-.
-
-(* Properties with generic extension on referred entries ********************)
-
-(* Basic_2A1: was just: cpr_llpx_sn_conf *)
-lemma cpm_lfxs_conf: ∀R,n,h,G. s_r_confluent1 … (cpm n h G) (lfxs R).
-/3 width=5 by cpm_fwd_cpx, cpx_lfxs_conf/ qed-.
+lemma lpxs_fwd_length: ∀h,G,L1,L2. ⦃G, L1⦄ ⊢ ⬈*[h] L2 → |L1| = |L2|.
+/2 width=2 by lex_fwd_length/ qed-.

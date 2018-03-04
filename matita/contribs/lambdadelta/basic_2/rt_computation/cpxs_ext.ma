@@ -12,9 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/fsle.ma".
+include "basic_2/syntax/cext2.ma".
+include "basic_2/rt_computation/cpxs.ma".
 
-(* FREE VARIABLES INCLUSION FOR TERMS ***************************************)
+(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR BINDERS **********)
 
-interpretation "free variables inclusion (term)"
-   'subseteq T1 T2 = (fsle LAtom T1 LAtom T2).
+definition cpxs_ext (h) (G): relation3 lenv bind bind ≝
+                             cext2 (cpxs h G).
+
+interpretation
+   "uncounted context-sensitive parallel rt-computation (binder)"
+   'PRedTyStar h G L I1 I2 = (cpxs_ext h G L I1 I2).

@@ -36,3 +36,14 @@ elim (frees_total L1 U) #f2 #Hf2
 lapply (frees_fwd_coafter … Hf2 … HLK1 … HTU … Hf1) -HTU #Hf
 /4 width=12 by lexs_length_cfull, lexs_liftable_co_dedropable_bi, cext2_d_liftable2_sn, cfull_lift_sn, ex2_intro/
 qed-.
+
+(* Inversion lemmas with length for local environment ***********************)
+
+lemma lfxs_inv_zero_length: ∀R,Y1,Y2. Y1 ⪤*[R, #0] Y2 →
+                            ∨∨ Y1 = ⋆ ∧ Y2 = ⋆
+                             | ∃∃I,L1,L2,V1,V2. L1 ⪤*[R, V1] L2 & R L1 V1 V2 &
+                                                Y1 = L1.ⓑ{I}V1 & Y2 = L2.ⓑ{I}V2
+                             | ∃∃I,L1,L2. |L1| = |L2| & Y1 = L1.ⓤ{I} & Y2 = L2.ⓤ{I}.
+#R #Y1 #Y2 #H elim (lfxs_inv_zero … H) -H *
+/4 width=9 by lexs_fwd_length, ex4_5_intro, ex3_3_intro, or3_intro2, or3_intro1, or3_intro0, conj/
+qed-.

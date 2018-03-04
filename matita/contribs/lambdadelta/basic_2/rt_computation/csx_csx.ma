@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/syntax/tdeq_tdeq.ma".
 include "basic_2/rt_transition/lfpx_lfdeq.ma".
 include "basic_2/rt_computation/csx_drops.ma".
 

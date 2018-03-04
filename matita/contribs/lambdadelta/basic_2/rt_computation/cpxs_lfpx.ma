@@ -12,8 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_transition/lfpx_fqup.ma".
-include "basic_2/rt_transition/lfpx_cpx.ma".
+include "basic_2/rt_transition/lfpx_fsle.ma".
 include "basic_2/rt_computation/cpxs_drops.ma".
 include "basic_2/rt_computation/cpxs_cpxs.ma".
 

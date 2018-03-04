@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/relocation/rtmap_id.ma".
 include "basic_2/syntax/ext2_tc.ma".
 include "basic_2/relocation/lexs_tc.ma".
 include "basic_2/relocation/lex.ma".

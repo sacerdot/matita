@@ -75,6 +75,18 @@ qed.
 
 (* Basic inversion lemmas ***************************************************)
 
+lemma append_inv_atom3_sn: ∀L,K. ⋆ = L @@ K → ∧∧ ⋆ = L & ⋆ = K.
+#L * /2 width=1 by conj/
+#K #I >append_bind #H destruct
+qed-.
+
+lemma append_inv_bind3_sn: ∀I0,L,L0,K. L0.ⓘ{I0} = L @@ K →
+                           ∨∨ ∧∧ L0.ⓘ{I0} = L & ⋆ = K
+                            | ∃∃K0. K = K0.ⓘ{I0} & L0 = L @@ K0.
+#I0 #L #L0 * /3 width=1 by or_introl, conj/
+#K #I >append_bind #H destruct /3 width=3 by ex2_intro, or_intror/
+qed-.
+
 lemma append_inj_sn: ∀K,L1,L2. L1@@K = L2@@K → L1 = L2.
 #K elim K -K //
 #K #I #IH #L1 #L2 >append_bind #H

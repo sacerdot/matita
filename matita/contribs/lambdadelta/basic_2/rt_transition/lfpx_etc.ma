@@ -12,26 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/fsle_drops.ma".
-include "basic_2/static/fsle_fqup.ma".
-include "basic_2/static/fsle_fsle.ma".
-include "basic_2/static/lfxs_length.ma".
-include "basic_2/static/lfxs_fsle.ma".
-include "basic_2/rt_transition/cpx.ma".
-
-(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS *************)
-
-(* Properties with context-sensitive free variables *************************)
+include "basic_2/rt_transition/lfpx_fsle.ma".
+(*
+lemma R_fle_comp_LTC: ∀R. R_fle_compatible R → R_fle_compatible (LTC … R).
+#R #HR #L #T1 #T2 #H elim H -T2
+/3 width=3 by fle_trans_dx/
+qed-.
+*)
 
 (* Note: "⦃L2, T1⦄ ⊆ ⦃L0, T1⦄" may not hold *)
-axiom cpx_lfxs_conf_fsle: ∀R,h. c_reflexive … R →
-                          (∨∨ (∀G. (cpx h G) = R) | R_fsle_compatible R) →
-                          ∀G,L0,T0,T1. ⦃G, L0⦄ ⊢ T0 ⬈[h] T1 →
-                          ∀L2. L0 ⪤*[R, T0] L2 →
-                          ∧∧ ⦃L2, T0⦄ ⊆ ⦃L0, T0⦄ & ⦃L2, T1⦄ ⊆ ⦃L2, T0⦄
-                           & ⦃L0, T1⦄ ⊆ ⦃L0, T0⦄.
+axiom lfpx_cpx_conf_fsle4: ∀h,G,L0,T0,T1. ⦃G, L0⦄ ⊢ T0 ⬈[h] T1 →
+                           ∀L2. ⦃G, L0⦄ ⊢⬈[h, T0] L2 → ⦃L2, T1⦄ ⊆ ⦃L0, T1⦄.
 (*
-#R #h #H1R #H2R #G #L0 #T0 @(fqup_wf_ind_eq (Ⓕ) … G L0 T0) -G -L0 -T0
+#h #G0 #L0 #T0 @(fqup_wf_ind_eq (Ⓕ) … G0 L0 T0) -G0 -L0 -T0
 #G #L #T #IH #G0 #L0 * *
 [ #s #HG #HL #HT #X #HX #Y #HY destruct -IH
   lapply (lfxs_fwd_length … HY) -HY #H0

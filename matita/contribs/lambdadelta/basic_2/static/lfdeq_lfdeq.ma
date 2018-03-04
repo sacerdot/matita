@@ -14,7 +14,6 @@
 
 include "basic_2/syntax/ext2_ext2.ma".
 include "basic_2/syntax/tdeq_tdeq.ma".
-include "basic_2/static/lfxs_lfxs.ma".
 include "basic_2/static/lfdeq_length.ma".
 
 (* DEGREE-BASED EQUIVALENCE FOR LOCAL ENVIRONMENTS ON REFERRED ENTRIES ******)

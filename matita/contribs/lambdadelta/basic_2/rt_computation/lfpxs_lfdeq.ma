@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/lfdeq_lfdeq.ma".
 include "basic_2/rt_transition/lfpx_lfdeq.ma".
 include "basic_2/rt_computation/lfpxs_fqup.ma".
 

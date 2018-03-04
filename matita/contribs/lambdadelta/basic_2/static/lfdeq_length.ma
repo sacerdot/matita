@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/syntax/lveq_length.ma".
 include "basic_2/relocation/lifts_tdeq.ma".
 include "basic_2/static/lfxs_length.ma".
 include "basic_2/static/lfxs_fsle.ma".

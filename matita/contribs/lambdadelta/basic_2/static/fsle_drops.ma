@@ -29,6 +29,15 @@ lapply (frees_lifts_SO (Ⓣ) (L1.ⓧ) … HTU1 … Hf)
 @(ex4_4_intro … Hf Hg) /2 width=4 by lveq_void_sn/ (**) (* explict constructor *)
 qed-.
 
+lemma fsle_lifts_SO_sn: ∀K1,K2. |K1| = |K2| → ∀V1,V2. ⦃K1, V1⦄ ⊆ ⦃K2, V2⦄ →
+                        ∀W1. ⬆*[1] V1 ≡ W1 → ∀I1,I2. ⦃K1.ⓘ{I1}, W1⦄ ⊆ ⦃K2.ⓑ{I2}V2, #O⦄.
+#K1 #K2 #HK #V1 #V2
+* #n1 #n2 #f1 #f2 #Hf1 #Hf2 #HK12 #Hf12
+#W1 #HVW1 #I1 #I2
+elim (lveq_inj_length … HK12) // -HK #H1 #H2 destruct
+/5 width=12 by frees_lifts_SO, frees_pair, drops_refl, drops_drop, lveq_bind, sle_weak, ex4_4_intro/
+qed.
+
 lemma fsle_lifts_SO: ∀K1,K2. |K1| = |K2| → ∀T1,T2. ⦃K1, T1⦄ ⊆ ⦃K2, T2⦄ →
                      ∀U1,U2. ⬆*[1] T1 ≡ U1 → ⬆*[1] T2 ≡ U2 →
                      ∀I1,I2.  ⦃K1.ⓘ{I1}, U1⦄ ⊆ ⦃K2.ⓘ{I2}, U2⦄.

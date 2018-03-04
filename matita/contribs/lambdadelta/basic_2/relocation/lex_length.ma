@@ -12,22 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/lfxs_fsle.ma".
-include "basic_2/i_static/tc_lfxs.ma".
+include "basic_2/relocation/lexs_length.ma".
+include "basic_2/relocation/lex.ma".
 
-(* ITERATED EXTENSION ON REFERRED ENTRIES OF A CONTEXT-SENSITIVE REALTION ***)
+(* GENERIC EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS **************)
 
-(* Advanced properties ******************************************************)
+(* Forward lemmas with length for local environments ************************)
 
-lemma tc_lfxs_sym: ∀R. lfxs_fsle_compatible R →
-                   (∀L1,L2,T1,T2. R L1 T1 T2 → R L2 T2 T1) →
-                   ∀T. symmetric … (tc_lfxs R T).
-#R #H1R #H2R #T #L1 #L2 #H elim H -L2
-/4 width=3 by lfxs_sym, tc_lfxs_step_sn, inj/
-qed-.
-
-(* Main properties **********************************************************)
-
-theorem tc_lfxs_trans: ∀R,T. Transitive … (tc_lfxs R T).
-#R #T #L1 #L #HL1 #L2 #HL2 @(trans_TC … HL1 HL2) (**) (* auto fails *)
+(* Basic_2A1: was: lpx_sn_fwd_length *)
+lemma lex_fwd_length: ∀R,L1,L2. L1 ⪤[R] L2 → |L1| = |L2|.
+#R #L1 #L2 * /2 width=4 by lexs_fwd_length/
 qed-.

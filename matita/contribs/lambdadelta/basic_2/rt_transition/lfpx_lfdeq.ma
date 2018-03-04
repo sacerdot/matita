@@ -12,12 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/lifts_tdeq.ma".
-include "basic_2/static/lfxs_lfxs.ma".
 include "basic_2/static/lfdeq_fqup.ma".
 include "basic_2/static/lfdeq_lfdeq.ma".
-include "basic_2/rt_transition/cpx_lfxs.ma".
-include "basic_2/rt_transition/lfpx.ma".
+include "basic_2/rt_transition/lfpx_fsle.ma".
 
 (* UNCOUNTED PARALLEL RT-TRANSITION FOR LOCAL ENV.S ON REFERRED ENTRIES *****)
 

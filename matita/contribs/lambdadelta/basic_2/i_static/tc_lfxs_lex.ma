@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/relocation/lex_tc.ma".
+include "basic_2/static/lfxs_fsle.ma".
 include "basic_2/static/lfeq_fqup.ma".
 include "basic_2/static/lfeq_lfeq.ma".
 include "basic_2/i_static/tc_lfxs_fqup.ma".
