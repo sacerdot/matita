@@ -62,3 +62,12 @@ qed-.
 lemma lfsx_cpx_trans: ∀h,o,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬈[h] T2 →
                       G ⊢ ⬈*[h, o, T1] 𝐒⦃L⦄ → G ⊢ ⬈*[h, o, T2] 𝐒⦃L⦄.
 /3 width=6 by lfsx_cpx_trans_lsubsx, lsubsx_refl/ qed-.
+
+(* Properties with strong normalizing env's for uncounted rt-computation ****)
+
+lemma lfsx_cpxs_trans: ∀h,o,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬈*[h] T2 →
+                       G ⊢ ⬈*[h, o, T1] 𝐒⦃L⦄ → G ⊢ ⬈*[h, o, T2] 𝐒⦃L⦄.
+#h #o #G #L #T1 #T2 #H
+@(cpxs_ind_dx ???????? H) -T1 //
+/3 width=3 by lfsx_cpx_trans/
+qed-.
