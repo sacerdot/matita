@@ -177,7 +177,7 @@ table {
           }
         ]
         [ { "syntactic equivalence" * } {
-             [ [ "for lenvs on referred entries" ] "lfeq" + "( ? ≡[?] ? )" "lfeq_fqup" + "lfeq_lfeq" * ]
+             [ [ "for lenvs on referred entries" ] "lfeq" + "( ? ≡[?] ? )" "lfeq_fqup" + "lfeq_fsle" * ]
           }
         ]
         [ { "generic extension of a context-sensitive relation" * } {

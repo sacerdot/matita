@@ -19,7 +19,7 @@ include "basic_2/i_static/tc_lfxs.ma".
 
 (* Advanced properties ******************************************************)
 
-lemma tc_lfxs_sym: ∀R. lfxs_fsle_compatible R →
+lemma tc_lfxs_sym: ∀R. lfxs_fsge_compatible R →
                    (∀L1,L2,T1,T2. R L1 T1 T2 → R L2 T2 T1) →
                    ∀T. symmetric … (tc_lfxs R T).
 #R #H1R #H2R #T #L1 #L2 #H elim H -L2

@@ -11,37 +11,46 @@
 (*        v         GNU General Public License Version 2                  *)
 (*                                                                        *)
 (**************************************************************************)
-
+(*
 include "basic_2/rt_computation/csx_cpxs.ma".
 include "basic_2/rt_computation/csx_lsubr.ma".
+include "basic_2/rt_computation/lfsx_lpxs.ma".
+*)
 include "basic_2/rt_computation/lsubsx_lfsx.ma".
 
 (* STRONGLY NORMALIZING LOCAL ENV.S FOR UNCOUNTED PARALLEL RT-TRANSITION ****)
+(*
+axiom lpxs_trans: ∀h,G. Transitive … (lpxs h G).
+*)
 
 (* Advanced properties ******************************************************)
 
 (* Basic_2A1: uses: lsx_lref_be_lpxs *)
-lemma lfsx_pair_lfpxs: ∀h,o,G,K1,V. ⦃G, K1⦄ ⊢ ⬈*[h, o] 𝐒⦃V⦄ →
-                       ∀K2. G ⊢ ⬈*[h, o, V] 𝐒⦃K2⦄ → ⦃G, K1⦄ ⊢ ⬈*[h, V] K2 →
-                       ∀I. G ⊢ ⬈*[h, o, #0] 𝐒⦃K2.ⓑ{I}V⦄.
+lemma lfsx_pair_lpxs: ∀h,o,G,K1,V. ⦃G, K1⦄ ⊢ ⬈*[h, o] 𝐒⦃V⦄ →
+                      ∀K2. G ⊢ ⬈*[h, o, V] 𝐒⦃K2⦄ → ⦃G, K1⦄ ⊢ ⬈*[h] K2 →
+                      ∀I. G ⊢ ⬈*[h, o, #0] 𝐒⦃K2.ⓑ{I}V⦄.
 #h #o #G #K1 #V #H
 @(csx_ind_cpxs … H) -V #V0 #_ #IHV0 #K2 #H
-@(lfsx_ind … H) -K2 #K0 #HK0 #IHK0 #HK10 #I
-@lfsx_intro #Y #HY #HnY
-elim (lfpx_inv_zero_pair_sn … HY) -HY #K2 #V2 #HK02 #HV02 #H destruct
+@(lfsx_ind_lpxs … H) -K2 #K0 #HK0 #IHK0 #HK10 #I
+@lfsx_intro_lpxs #Y #HY #HnY
+elim (lpxs_inv_pair_sn … HY) -HY #K2 #V2 #HK02 #HV02 #H destruct
 elim (tdeq_dec h o V0 V2) #HnV02 destruct [ -IHV0 -HV02 -HK0 | -IHK0 -HnY ]
-[ /5 width=5 by lfsx_lfdeq_trans, lfpxs_step_dx, lfdeq_pair/
-| @lfsx_lfpx_trans
-  [2: @(IHV0 … HnV02 K0 … I) -IHV0 -HnV02
-      [ /2 width=3 by lfpxs_cpx_trans/
-      | /2 width=3 by lfsx_cpx_trans/
-      | 
-      ]
-  |1: skip
-  |3: @lfpx_pair /2 width=3 by lfpx_cpx_conf/
+[ /5 width=5 by lfsx_lfdeq_trans, lpxs_trans, lfdeq_pair/
+| @(IHV0 … HnV02) -IHV0 -HnV02
+  [
+  | /3 width=3 by lfsx_lpxs_trans, lfsx_cpxs_trans/
+  | /2 width=3 by lpxs_trans/
   ]
-]
-qed.
+
+(*
+ @(lfsx_lpxs_trans … (K0.ⓑ{I}V2))
+  [ @(IHV0 … HnV02 … HK10) -IHV0 -HnV02
+    [
+    | /2 width=3 by lfsx_cpxs_trans/
+    ]
+  | 
+  ]  
+*)
 
 (* Basic_2A1: uses: lsx_lref_be *)
 lemma lfsx_lref_pair: ∀h,o,G,K,V. ⦃G, K⦄ ⊢ ⬈*[h, o] 𝐒⦃V⦄ → G ⊢ ⬈*[h, o, V] 𝐒⦃K⦄ →

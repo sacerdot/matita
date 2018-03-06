@@ -19,11 +19,11 @@ include "basic_2/rt_transition/cpm_cpx.ma".
 
 (* Forward lemmas with free variables inclusion for restricted closures *****)
 
-lemma cpm_fsle_comp: ∀n,h,G. R_fsle_compatible (cpm n h G).
-/3 width=6 by cpm_fwd_cpx, cpx_fsle_comp/ qed-.
+lemma cpm_fsge_comp: ∀n,h,G. R_fsge_compatible (cpm n h G).
+/3 width=6 by cpm_fwd_cpx, cpx_fsge_comp/ qed-.
 
-lemma lfpr_fsle_comp: ∀h,G. lfxs_fsle_compatible (cpm 0 h G).
-/4 width=5 by cpm_fwd_cpx, lfpx_fsle_comp, lfxs_co/ qed-.
+lemma lfpr_fsge_comp: ∀h,G. lfxs_fsge_compatible (cpm 0 h G).
+/4 width=5 by cpm_fwd_cpx, lfpx_fsge_comp, lfxs_co/ qed-.
 
 (* Properties with generic extension on referred entries ********************)
 

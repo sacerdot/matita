@@ -19,24 +19,35 @@ include "basic_2/relocation/drops.ma".
 
 (* Main properties **********************************************************)
 
-theorem lexs_trans_gen (RN1) (RP1) (RN2) (RP2) (RN) (RP) (f):
-                       lexs_transitive RN1 RN2 RN RN1 RP1 →
-                       lexs_transitive RP1 RP2 RP RN1 RP1 →
-                       ∀L1,L0. L1 ⪤*[RN1, RP1, f] L0 →
+theorem lexs_trans_gen (RN1) (RP1) (RN2) (RP2) (RN) (RP):
+                       ∀L1,f.
+                       (∀g,I,K,n. ⬇*[n] L1 ≡ K.ⓘ{I} → ⫯g = ⫱*[n] f → lexs_transitive RN1 RN2 RN RN1 RP1 g K I) →
+                       (∀g,I,K,n. ⬇*[n] L1 ≡ K.ⓘ{I} → ↑g = ⫱*[n] f → lexs_transitive RP1 RP2 RP RN1 RP1 g K I) →
+                       ∀L0. L1 ⪤*[RN1, RP1, f] L0 →
                        ∀L2. L0 ⪤*[RN2, RP2, f] L2 →
                        L1 ⪤*[RN, RP, f] L2.
-#RN1 #RP1 #RN2 #RP2 #RN #RP #f #HN #HP #L1 #L0 #H elim H -f -L1 -L0
-[ #f #L2 #H >(lexs_inv_atom1 … H) -L2 //
-| #f #I1 #I #K1 #K #HK1 #HI1 #IH #L2 #H elim (lexs_inv_next1 … H) -H
-  #I2 #K2 #HK2 #HI2 #H destruct /4 width=6 by lexs_next/
-| #f #I1 #I #K1 #K #HK1 #HI1 #IH #L2 #H elim (lexs_inv_push1 … H) -H
-  #I2 #K2 #HK2 #HI2 #H destruct /4 width=6 by lexs_push/
+#RN1 #RP1 #RN2 #RP2 #RN #RP #L1 elim L1 -L1
+[ #f #_ #_ #L0 #H1 #L2 #H2
+  lapply (lexs_inv_atom1 … H1) -H1 #H destruct
+  lapply (lexs_inv_atom1 … H2) -H2 #H destruct
+  /2 width=1 by lexs_atom/
+| #K1 #I1 #IH #f elim (pn_split f) * #g #H destruct
+  #HN #HP #L0 #H1 #L2 #H2
+  [ elim (lexs_inv_push1 … H1) -H1 #I0 #K0 #HK10 #HI10 #H destruct
+    elim (lexs_inv_push1 … H2) -H2 #I2 #K2 #HK02 #HI02 #H destruct
+    lapply (HP … 0 … HI10 … HK10 … HI02) -HI10 -HI02 /2 width=2 by drops_refl/ #HI12
+    lapply (IH … HK10 … HK02) -IH -K0 /3 width=3 by lexs_push, drops_drop/
+  | elim (lexs_inv_next1 … H1) -H1 #I0 #K0 #HK10 #HI10 #H destruct
+    elim (lexs_inv_next1 … H2) -H2 #I2 #K2 #HK02 #HI02 #H destruct
+    lapply (HN … 0 … HI10 … HK10 … HI02) -HI10 -HI02 /2 width=2 by drops_refl/ #HI12
+    lapply (IH … HK10 … HK02) -IH -K0 /3 width=3 by lexs_next, drops_drop/
+  ]
 ]
 qed-.
 
 (* Basic_2A1: includes: lpx_sn_trans *)
-theorem lexs_trans (RN) (RP) (f): lexs_transitive RN RN RN RN RP →
-                                  lexs_transitive RP RP RP RN RP →
+theorem lexs_trans (RN) (RP) (f): (∀g,I,K. lexs_transitive RN RN RN RN RP g K I) →
+                                  (∀g,I,K. lexs_transitive RP RP RP RN RP g K I) →
                                   Transitive … (lexs RN RP f).
 /2 width=9 by lexs_trans_gen/ qed-.
 

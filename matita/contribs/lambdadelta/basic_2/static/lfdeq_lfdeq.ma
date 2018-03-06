@@ -22,7 +22,7 @@ include "basic_2/static/lfdeq_length.ma".
 
 (* Basic_2A1: uses: lleq_sym *)
 lemma lfdeq_sym: ∀h,o,T. symmetric … (lfdeq h o T).
-/3 width=3 by lfdeq_fsle_comp, lfxs_sym, tdeq_sym/ qed-.
+/3 width=3 by lfdeq_fsge_comp, lfxs_sym, tdeq_sym/ qed-.
 
 (* Basic_2A1: uses: lleq_dec *)
 lemma lfdeq_dec: ∀h,o,L1,L2. ∀T:term. Decidable (L1 ≛[h, o, T] L2).

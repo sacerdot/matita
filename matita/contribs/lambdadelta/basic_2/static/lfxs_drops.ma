@@ -34,6 +34,11 @@ definition dropable_dx: predicate (relation3 lenv term term) ≝
                         ∀b,f,K2. ⬇*[b, f] L2 ≡ K2 → 𝐔⦃f⦄ → ∀T. ⬆*[f] T ≡ U →
                         ∃∃K1. ⬇*[b, f] L1 ≡ K1 & K1 ⪤*[R, T] K2.
 
+definition lfxs_transitive_next: relation3 … ≝ λR1,R2,R3.
+                                 ∀f,L,T. L ⊢ 𝐅*⦃T⦄ ≡ f →
+                                 ∀g,I,K,n. ⬇*[n] L ≡ K.ⓘ{I} → ⫯g = ⫱*[n] f →
+                                 lexs_transitive (cext2 R1) (cext2 R2) (cext2 R3) (cext2 R1) cfull g K I.
+
 (* Properties with generic slicing for local environments *******************)
 
 lemma lfxs_liftable_dedropable_sn: ∀R. (∀L. reflexive ? (R L)) →
@@ -44,6 +49,19 @@ lapply (frees_fwd_coafter … Hf2 … HLK1 … HTU … Hf1) -HTU #Hf
 elim (lexs_liftable_co_dedropable_sn … HLK1 … HK12 … Hf) -f1 -K1
 /3 width=6 by cext2_d_liftable2_sn, cfull_lift_sn, ext2_refl, ex3_intro, ex2_intro/
 qed-.
+
+lemma lfxs_trans_next: ∀R1,R2,R3. lfxs_transitive R1 R2 R3 → lfxs_transitive_next R1 R2 R3.
+#R1 #R2 #R3 #HR #f #L1 #T #Hf #g #I1 #K1 #n #HLK #Hgf #I #H
+generalize in match HLK; -HLK elim H -I1 -I
+[ #I #_ #L2 #_ #I2 #H
+  lapply (ext2_inv_unit_sn … H) -H #H destruct
+  /2 width=1 by ext2_unit/
+| #I #V1 #V #HV1 #HLK1 #L2 #HL12 #I2 #H
+  elim (ext2_inv_pair_sn … H) -H #V2 #HV2 #H destruct
+  elim (frees_inv_drops_next … Hf … HLK1 … Hgf) -f -HLK1 #f #Hf #Hfg
+  /5 width=5 by ext2_pair, sle_lexs_trans, ex2_intro/
+]
+qed.
 
 (* Inversion lemmas with generic slicing for local environments *************)
 

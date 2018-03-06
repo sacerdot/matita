@@ -39,6 +39,15 @@ elim (lveq_inj_length … H2L) // -L2 #H1 #H2 destruct
 /2 width=3 by ex2_intro/
 qed-.
 
+lemma fsle_inv_frees_eq: ∀L1,L2. |L1| = |L2| →
+                         ∀T1,T2. ⦃L1, T1⦄ ⊆ ⦃L2, T2⦄ →
+                         ∀f1. L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 → ∀f2. L2 ⊢ 𝐅*⦃T2⦄ ≡ f2 →
+                         f1 ⊆ f2.
+#L1 #L2 #H1L #T1 #T2 #H2L #f1 #Hf1 #f2 #Hf2
+elim (fsle_frees_trans_eq … H2L … Hf2) // -L2 -T2
+/3 width=6 by frees_mono, sle_eq_repl_back1/
+qed-.
+
 (* Main properties **********************************************************)
 
 theorem fsle_trans_sn: ∀L1,L2,T1,T. ⦃L1, T1⦄ ⊆ ⦃L2, T⦄ →

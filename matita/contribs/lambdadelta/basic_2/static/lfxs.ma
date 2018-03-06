@@ -38,7 +38,7 @@ definition lfxs_confluent: relation … ≝
                            ∀K1,K,V1. K1 ⪤*[R1, V1] K → ∀V. R1 K1 V1 V →
                            ∀K2. K ⪤*[R2, V] K2 → K ⪤*[R2, V1] K2.
 
-definition lfxs_transitive: relation3 ? (relation3 ?? term) ? ≝
+definition lfxs_transitive: relation3 ? (relation3 ?? term) … ≝
                             λR1,R2,R3.
                             ∀K1,K,V1. K1 ⪤*[R1, V1] K →
                             ∀V. R1 K1 V1 V → ∀V2. R2 K V V2 → R3 K1 V1 V2.

@@ -25,14 +25,12 @@ interpretation
    "syntactic equivalence on referred entries (local environment)"
    'LazyEqSn T L1 L2 = (lfeq T L1 L2).
 
+(* Note: "lfeq_transitive R" is equivalent to "lfxs_transitive ceq R R" *)
 (* Basic_2A1: uses: lleq_transitive *)
 definition lfeq_transitive: predicate (relation3 lenv term term) ≝
            λR. ∀L2,T1,T2. R L2 T1 T2 → ∀L1. L1 ≡[T1] L2 → R L1 T1 T2.
 
 (* Basic inversion lemmas ***************************************************)
-
-lemma lfeq_transitive_inv_lfxs: ∀R. lfeq_transitive R → lfxs_transitive ceq R R.
-/2 width=3 by/ qed-.
 
 lemma lfeq_inv_bind: ∀p,I,L1,L2,V,T. L1 ≡[ⓑ{p,I}V.T] L2 →
                      ∧∧ L1 ≡[V] L2 & L1.ⓑ{I}V ≡[T] L2.ⓑ{I}V.
@@ -77,9 +75,6 @@ lemma lfeq_fwd_lfxs: ∀R. c_reflexive … R →
 qed-.
 
 (* Basic_properties *********************************************************)
-
-lemma lfxs_transitive_lfeq: ∀R. lfxs_transitive ceq R R → lfeq_transitive R.
-/2 width=5 by/ qed.
 
 lemma frees_lfeq_conf: ∀f,L1,T. L1 ⊢ 𝐅*⦃T⦄ ≡ f →
                        ∀L2. L1 ≡[T] L2 → L2 ⊢ 𝐅*⦃T⦄ ≡ f.

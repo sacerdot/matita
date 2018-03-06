@@ -21,7 +21,7 @@ include "basic_2/static/lfdeq.ma".
 
 (* Advanved properties with free variables inclusion ************************)
 
-lemma lfdeq_fsle_comp: ∀h,o. lfxs_fsle_compatible (cdeq h o).
+lemma lfdeq_fsge_comp: ∀h,o. lfxs_fsge_compatible (cdeq h o).
 #h #o #L1 #L2 #T * #f1 #Hf1 #HL12
 lapply (frees_lfdeq_conf h o … Hf1 … HL12)
 lapply (lexs_fwd_length … HL12)

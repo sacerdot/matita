@@ -36,16 +36,18 @@ definition R_pw_confluent2_lexs: relation3 lenv bind bind → relation3 lenv bin
                                  relation3 lenv bind bind → relation3 lenv bind bind →
                                  relation3 lenv bind bind → relation3 lenv bind bind →
                                  relation3 rtmap lenv bind ≝
-                                 λR1,R2,RN1,RP1,RN2,RP2,f,L0,T0.
-                                 ∀T1. R1 L0 T0 T1 → ∀T2. R2 L0 T0 T2 →
+                                 λR1,R2,RN1,RP1,RN2,RP2,f,L0,I0.
+                                 ∀I1. R1 L0 I0 I1 → ∀I2. R2 L0 I0 I2 →
                                  ∀L1. L0 ⪤*[RN1, RP1, f] L1 → ∀L2. L0 ⪤*[RN2, RP2, f] L2 →
-                                 ∃∃T. R2 L1 T1 T & R1 L2 T2 T.
+                                 ∃∃I. R2 L1 I1 I & R1 L2 I2 I.
 
-definition lexs_transitive: relation5 (relation3 lenv bind bind)
-                                      (relation3 lenv bind bind) … ≝
-                            λR1,R2,R3,RN,RP.
-                            ∀f,L1,T1,T. R1 L1 T1 T → ∀L2. L1 ⪤*[RN, RP, f] L2 →
-                            ∀T2. R2 L2 T T2 → R3 L1 T1 T2.
+definition lexs_transitive: relation3 lenv bind bind → relation3 lenv bind bind →
+                            relation3 lenv bind bind →
+                            relation3 lenv bind bind → relation3 lenv bind bind →
+                            relation3 rtmap lenv bind ≝
+                            λR1,R2,R3,RN,RP,f,L1,I1.
+                            ∀I. R1 L1 I1 I → ∀L2. L1 ⪤*[RN, RP, f] L2 →
+                            ∀I2. R2 L2 I I2 → R3 L1 I1 I2.
 
 (* Basic inversion lemmas ***************************************************)
 
