@@ -108,7 +108,7 @@ table {
 *)
         [ { "uncounted context-sensitive parallel rt-computation" * } {
              [ [ "refinement for lenvs" ] "lsubsx" + "( ? ⊢ ? ⊆ⓧ[?,?,?] ? )" "lsubsx_lfsx" + "lsubsx_lsubsx" * ]
-             [ [ "strongly normalizing for lenvs on referred entries" ] "lfsx" + "( ? ⊢ ⬈*[?,?,?] 𝐒⦃?⦄ )" "lfsx_drops" + "lfsx_fqup" + "lfsx_cpxs" + "lfsx_lfpxs" + "lfsx_lfsx" * ]
+             [ [ "strongly normalizing for lenvs on referred entries" ] "lfsx" + "( ? ⊢ ⬈*[?,?,?] 𝐒⦃?⦄ )" "lfsx_drops" + "lfsx_fqup" + "lfsx_cpx" + "lfsx_cpxs" + "lfsx_lfpxs" + "lfsx_lfsx" * ]
              [ [ "strongly normalizing for term vectors" ] "csx_vector" + "( ⦃?,?⦄ ⊢ ⬈*[?,?] 𝐒⦃?⦄ )" "csx_cnx_vector" + "csx_csx_vector" * ]
              [ [ "strongly normalizing for terms" ] "csx" + "( ⦃?,?⦄ ⊢ ⬈*[?,?] 𝐒⦃?⦄ )" "csx_simple" + "csx_simple_theq" + "csx_drops" + "csx_lsubr" + "csx_lfdeq" + "csx_aaa" + "csx_gcp" + "csx_gcr" + "csx_lfpx" + "csx_cnx" + "csx_cpxs" + "csx_lfpxs" + "csx_csx" * ]
              [ [ "for lenvs on referred entries" ] "lfpxs" + "( ⦃?,?⦄ ⊢ ⬈*[?,?] ? )" "lfpxs_length" + "lfpxs_drops" + "lfpxs_fqup" + "lfpxs_lfdeq" + "lfpxs_aaa" + "lfpxs_cpxs" + "lfpxs_lpxs" + "lfpxs_lfpxs" * ]
@@ -138,7 +138,7 @@ table {
         ]
         [ { "uncounted context-sensitive parallel rt-transition" * } {
              [ [ "normal form for terms" ] "cnx" + "( ⦃?,?⦄ ⊢ ⬈[?,?] 𝐍⦃?⦄ )" "cnx_simple" + "cnx_drops" + "cnx_cnx" * ]
-             [ [ "for lenvs on referred entries" ] "lfpx" + "( ⦃?,?⦄ ⊢ ⬈[?,?] ? )" "lfpx_length" + "lfpx_drops" + "lfpx_fqup" + "lfpx_fsle" + "lfpx_lfdeq" + "lfpx_aaa" + "lfpx_lfpx" * ]
+             [ [ "for lenvs on referred entries" ] "lfpx" + "( ⦃?,?⦄ ⊢ ⬈[?,?] ? )" "lfpx_length" + "lfpx_drops" + "lfpx_fqup" + "lfpx_fsle" + "lfpx_lfdeq" + "lfpx_aaa" + "lfpx_lpx" + "lfpx_lfpx" * ]
              [ [ "for lenvs on all entries" ] "lpx" + "( ⦃?,?⦄ ⊢ ⬈[?] ? )" * ]
              [ [ "for binders" ] "cpx_ext" + "( ⦃?,?⦄ ⊢ ? ⬈[?] ? )" * ]
              [ [ "for terms" ] "cpx" + "( ⦃?,?⦄ ⊢ ? ⬈[?] ? )" "cpx_simple" + "cpx_drops" + "cpx_fqus" + "cpx_lsubr" + "cpx_lfeq" + "cpx_lfdeq" * ]

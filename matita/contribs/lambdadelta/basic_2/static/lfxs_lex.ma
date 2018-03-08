@@ -13,7 +13,8 @@
 (**************************************************************************)
 
 include "basic_2/relocation/lex.ma".
-include "basic_2/static/lfxs_fqup.ma".
+include "basic_2/static/lfxs_fsle.ma".
+include "basic_2/static/lfeq.ma".
 
 (* GENERIC EXTENSION ON REFERRED ENTRIES OF A CONTEXT-SENSITIVE REALTION ****)
 
@@ -24,3 +25,17 @@ lemma lfxs_lex: ∀R,L1,L2. L1 ⪤[R] L2 → ∀T. L1 ⪤*[R, T] L2.
 elim (frees_total L1 T) #g #Hg
 /4 width=5 by lexs_sdj, sdj_isid_sn, ex2_intro/
 qed.
+
+(* Inversion lemmas with generic extension of a context sensitive relation **)
+
+lemma lfxs_inv_lex_lfeq: ∀R. c_reflexive … R →
+                         lfxs_fsge_compatible R →
+                         ∀L1,L2,T. L1 ⪤*[R, T] L2 →
+                         ∃∃L. L1 ⪤[R] L & L ≡[T] L2.
+#R #H1R #H2R #L1 #L2 #T * #f1 #Hf1 #HL
+elim (lexs_sdj_split … ceq_ext … HL 𝐈𝐝 ?) -HL
+[ #L0 #HL10 #HL02 |*: /2 width=1 by ext2_refl, sdj_isid_dx/ ] -H1R
+lapply (lexs_sdj … HL10 f1 ?) /2 width=1 by sdj_isid_sn/ #H
+elim (frees_lexs_conf … Hf1 … H) // -H2R -H #f0 #Hf0 #Hf01
+/4 width=7 by sle_lexs_trans, (* 2x *) ex2_intro/
+qed-.
