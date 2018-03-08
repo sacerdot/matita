@@ -1,8 +1,8 @@
 cpxs.ma cpxs_tdeq.ma cpxs_theq.ma cpxs_theq_vector.ma cpxs_drops.ma cpxs_fqus.ma cpxs_lsubr.ma cpxs_lfdeq.ma cpxs_aaa.ma cpxs_lpx.ma cpxs_lfpx.ma cpxs_cnx.ma cpxs_cpxs.ma
 cpxs_ext.ma
-lpxs.ma lpxs_length.ma
+lpxs.ma lpxs_length.ma lpxs_lpx.ma lpxs_cpxs.ma
 lfpxs.ma lfpxs_length.ma lfpxs_drops.ma lfpxs_fqup.ma lfpxs_lfdeq.ma lfpxs_aaa.ma lfpxs_cpxs.ma lfpxs_lpxs.ma lfpxs_lfpxs.ma
 csx.ma csx_simple.ma csx_simple_theq.ma csx_drops.ma csx_lsubr.ma csx_lfdeq.ma csx_aaa.ma csx_gcp.ma csx_gcr.ma csx_lfpx.ma csx_cnx.ma csx_cpxs.ma csx_lfpxs.ma csx_csx.ma
 csx_vector.ma csx_cnx_vector.ma csx_csx_vector.ma 
-lfsx.ma lfsx_drops.ma lfsx_fqup.ma lfsx_lpx.ma lfsx_lpxs.ma lfsx_lfpxs.ma lfsx_lfsx.ma
+lfsx.ma lfsx_drops.ma lfsx_fqup.ma lfsx_lpx.ma lfsx_lpxs.ma lfsx_lfpxs.ma lfsx_csx.ma lfsx_lfsx.ma
 lsubsx.ma lsubsx_lfsx.ma lsubsx_lsubsx.ma

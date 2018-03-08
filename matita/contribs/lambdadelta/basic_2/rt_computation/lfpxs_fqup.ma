@@ -19,7 +19,6 @@ include "basic_2/rt_computation/lfpxs.ma".
 
 (* Advanced properties ******************************************************)
 
-(* Basic_2A1: uses: lpxs_refl *)
 lemma lfpxs_refl: ∀h,G,T. reflexive … (lfpxs h G T).
 /2 width=1 by tc_lfxs_refl/ qed.
 

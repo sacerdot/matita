@@ -31,11 +31,9 @@ interpretation
 lemma lfpx_lfpxs: ∀h,G,T,L1,L2. ⦃G, L1⦄ ⊢ ⬈[h, T] L2 → ⦃G, L1⦄ ⊢ ⬈*[h, T] L2.
 /2 width=1 by inj/ qed.
 
-(* Basic_2A1: was just: lpxs_strap1 *)
 lemma lfpxs_step_dx: ∀h,G,T,L1,L,L2. ⦃G, L1⦄ ⊢ ⬈*[h, T] L → ⦃G, L⦄ ⊢ ⬈[h, T] L2 → ⦃G, L1⦄ ⊢ ⬈*[h, T] L2.
 /2 width=3 by tc_lfxs_step_dx/ qed.
 
-(* Basic_2A1: was just: lpxs_strap2 *)
 lemma lfpxs_step_sn: ∀h,G,T,L1,L,L2. ⦃G, L1⦄ ⊢ ⬈[h, T] L → ⦃G, L⦄ ⊢ ⬈*[h, T] L2 → ⦃G, L1⦄ ⊢ ⬈*[h, T] L2.
 /2 width=3 by tc_lfxs_step_sn/ qed.
 

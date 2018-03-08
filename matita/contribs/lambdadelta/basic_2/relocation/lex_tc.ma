@@ -52,3 +52,12 @@ lapply (monotonic_TC … (lexs cfull (cext2 R) 𝐈𝐝) … HL12) -HL12
 ]
 qed-.
 
+lemma lex_ltc_step_dx: ∀R. c_reflexive … R → s_rs_transitive … R (λ_. lex R) →
+                       ∀L1,L. lex (LTC … R) L1 L →
+                       ∀L2. lex R L L2 → lex (LTC … R) L1 L2.
+/4 width=3 by lex_ltc, lex_inv_ltc, step/ qed-.
+
+lemma lex_ltc_step_sn: ∀R. c_reflexive … R → s_rs_transitive … R (λ_. lex R) →
+                       ∀L1,L. lex R L1 L →
+                       ∀L2. lex (LTC … R) L L2 → lex (LTC … R) L1 L2.
+/4 width=3 by lex_ltc, lex_inv_ltc, TC_strap/ qed-.

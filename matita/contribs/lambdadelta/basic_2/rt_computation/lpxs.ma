@@ -25,6 +25,11 @@ interpretation
    "uncounted parallel rt-computation (local environment)"
    'PRedTySnStar h G L1 L2 = (lpxs h G L1 L2).
 
+(* Basic properties *********************************************************)
+
+lemma lpxs_refl: ∀h,G. reflexive … (lpxs h G).
+/2 width=1 by lex_refl/ qed.
+
 (* Basic inversion lemmas ***************************************************)
 
 lemma lpxs_inv_bind_sn: ∀h,G,I1,L2,K1. ⦃G, K1.ⓘ{I1}⦄ ⊢⬈*[h] L2 →

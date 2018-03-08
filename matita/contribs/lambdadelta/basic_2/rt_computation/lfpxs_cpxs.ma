@@ -24,13 +24,11 @@ lemma lfpxs_pair_refl: ∀h,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ⬈*[h] V2 →
                        ∀I,T. ⦃G, L.ⓑ{I}V1⦄ ⊢ ⬈*[h, T] L.ⓑ{I}V2.
 /2 width=1 by tc_lfxs_pair_refl/ qed.
 
-(* Basic_2A1: uses: lpxs_cpx_trans *)
 lemma lfpxs_cpx_trans: ∀h,G. s_r_transitive … (cpx h G) (lfpxs h G).
 #h #G @s_r_trans_LTC2 @lfpx_cpxs_trans (**) (* auto fails *)
 qed-.
 
 (* Note: lfpxs_cpx_conf does not hold, thus we cannot invoke s_r_trans_LTC1 *)
-(* Basic_2A1: uses: lpxs_cpxs_trans *)
 lemma lfpxs_cpxs_trans: ∀h,G. s_rs_transitive … (cpx h G) (lfpxs h G).
 #h #G @s_r_to_s_rs_trans @s_r_trans_LTC2
 @s_rs_trans_TC1 /2 width=3 by lfpx_cpxs_trans/ (**) (* full auto too slow *)
