@@ -21,7 +21,7 @@ include "basic_2/i_static/tc_lfxs.ma".
 definition tc_dedropable_sn: predicate (relation3 lenv term term) ≝
                              λR. ∀b,f,L1,K1. ⬇*[b, f] L1 ≡ K1 →
                              ∀K2,T. K1 ⪤**[R, T] K2 → ∀U. ⬆*[f] T ≡ U →
-                             ∃∃L2. L1 ⪤**[R, U] L2 & ⬇*[b, f] L2 ≡ K2 & L1 ≡[f] L2.
+                             ∃∃L2. L1 ⪤**[R, U] L2 & ⬇*[b, f] L2 ≡ K2 & L1 ≐[f] L2.
 
 definition tc_dropable_sn: predicate (relation3 lenv term term) ≝
                            λR. ∀b,f,L1,K1. ⬇*[b, f] L1 ≡ K1 → 𝐔⦃f⦄ →

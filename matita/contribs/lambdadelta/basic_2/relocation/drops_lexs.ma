@@ -163,7 +163,7 @@ lemma drops_lexs_trans_next: ∀RN,RP. (∀L. reflexive ? (RN L)) → (∀L. ref
                              ∀f1,K1,K2. K1 ⪤*[RN, RP, f1] K2 →
                              ∀b,f,I1,L1. ⬇*[b, f] L1.ⓘ{I1} ≡ K1 →
                              ∀f2. f ~⊚ f1 ≡ ⫯f2 →
-                             ∃∃I2,L2. ⬇*[b, f] L2.ⓘ{I2} ≡ K2 & L1 ⪤*[RN, RP, f2] L2 & RN L1 I1 I2 & L1.ⓘ{I1} ≡[f] L2.ⓘ{I2}.
+                             ∃∃I2,L2. ⬇*[b, f] L2.ⓘ{I2} ≡ K2 & L1 ⪤*[RN, RP, f2] L2 & RN L1 I1 I2 & L1.ⓘ{I1} ≐[f] L2.ⓘ{I2}.
 #RN #RP #H1RN #H1RP #H2RN #H2RP #f1 #K1 #K2 #HK12 #b #f #I1 #L1 #HLK1 #f2 #Hf2
 elim (lexs_liftable_co_dedropable_sn … H1RN H1RP H2RN H2RP … HLK1 … HK12 … Hf2) -K1 -f1 -H1RN -H1RP -H2RN -H2RP
 #X #HX #HLK2 #H1L12 elim (lexs_inv_next1 … HX) -HX
@@ -175,7 +175,7 @@ lemma drops_lexs_trans_push: ∀RN,RP. (∀L. reflexive ? (RN L)) → (∀L. ref
                              ∀f1,K1,K2. K1 ⪤*[RN, RP, f1] K2 →
                              ∀b,f,I1,L1. ⬇*[b, f] L1.ⓘ{I1} ≡ K1 →
                              ∀f2. f ~⊚ f1 ≡ ↑f2 →
-                             ∃∃I2,L2. ⬇*[b, f] L2.ⓘ{I2} ≡ K2 & L1 ⪤*[RN, RP, f2] L2 & RP L1 I1 I2 & L1.ⓘ{I1} ≡[f] L2.ⓘ{I2}.
+                             ∃∃I2,L2. ⬇*[b, f] L2.ⓘ{I2} ≡ K2 & L1 ⪤*[RN, RP, f2] L2 & RP L1 I1 I2 & L1.ⓘ{I1} ≐[f] L2.ⓘ{I2}.
 #RN #RP #H1RN #H1RP #H2RN #H2RP #f1 #K1 #K2 #HK12 #b #f #I1 #L1 #HLK1 #f2 #Hf2
 elim (lexs_liftable_co_dedropable_sn … H1RN H1RP H2RN H2RP … HLK1 … HK12 … Hf2) -K1 -f1 -H1RN -H1RP -H2RN -H2RP
 #X #HX #HLK2 #H1L12 elim (lexs_inv_push1 … HX) -HX

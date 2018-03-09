@@ -28,7 +28,7 @@ lemma tc_lfxs_lex: ∀R. c_reflexive … R →
 qed.
 
 lemma tc_lfxs_lex_lfeq: ∀R. c_reflexive … R →
-                        ∀L1,L. L1 ⪤[LTC … R] L → ∀L2,T. L ≡[T] L2 →
+                        ∀L1,L. L1 ⪤[LTC … R] L → ∀L2,T. L ≐[T] L2 →
                         L1 ⪤**[R, T] L2.
 /3 width=3 by tc_lfxs_lex, tc_lfxs_step_dx, lfeq_fwd_lfxs/ qed.
 
@@ -40,7 +40,7 @@ lemma tc_lfxs_inv_lex_lfeq: ∀R. c_reflexive … R →
                             s_rs_transitive … R (λ_.lex R) →
                             lfeq_transitive R →
                             ∀L1,L2,T. L1 ⪤**[R, T] L2 →
-                            ∃∃L. L1 ⪤[LTC … R] L & L ≡[T] L2.
+                            ∃∃L. L1 ⪤[LTC … R] L & L ≐[T] L2.
 #R #H1R #H2R #H3R #H4R #L1 #L2 #T #H
 lapply (s_rs_transitive_lex_inv_isid … H3R) -H3R #H3R
 @(tc_lfxs_ind_sn … H1R … H) -H -L2
