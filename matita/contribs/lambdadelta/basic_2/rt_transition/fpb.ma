@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/btpredproper_8.ma".
+include "basic_2/notation/relations/predsubtyproper_8.ma".
 include "basic_2/s_transition/fqu.ma".
 include "basic_2/static/lfdeq.ma".
 include "basic_2/rt_transition/lfpr_lfpx.ma".
@@ -27,7 +27,7 @@ inductive fpb (h) (o) (G1) (L1) (T1): relation3 genv lenv term ≝
 
 interpretation
    "proper parallel rst-transition (closure)"
-   'BTPRedProper h o G1 L1 T1 G2 L2 T2 = (fpb h o G1 L1 T1 G2 L2 T2).
+   'PRedSubTyProper h o G1 L1 T1 G2 L2 T2 = (fpb h o G1 L1 T1 G2 L2 T2).
 
 (* Basic properties *********************************************************)
 

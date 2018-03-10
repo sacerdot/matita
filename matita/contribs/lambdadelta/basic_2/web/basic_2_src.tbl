@@ -107,7 +107,7 @@ table {
         ]
 *)
         [ { "uncounted context-sensitive parallel rt-computation" * } {
-             [ [ "refinement for lenvs" ] "lsubsx" + "( ? ⊢ ? ⊆ⓧ[?,?,?] ? )" "lsubsx_lfsx" + "lsubsx_lsubsx" * ]
+             [ [ "refinement for lenvs on selected entries" ] "lsubsx" + "( ? ⊢ ? ⊆ⓧ[?,?,?] ? )" "lsubsx_lfsx" + "lsubsx_lsubsx" * ]
              [ [ "strongly normalizing for lenvs on referred entries" ] "lfsx" + "( ? ⊢ ⬈*[?,?,?] 𝐒⦃?⦄ )" "lfsx_drops" + "lfsx_fqup" + "lfsx_cpx" + "lfsx_cpxs" + "lfsx_lfpxs" + "lfsx_lfsx" * ]
              [ [ "strongly normalizing for term vectors" ] "csx_vector" + "( ⦃?,?⦄ ⊢ ⬈*[?,?] 𝐒⦃?⦄ )" "csx_cnx_vector" + "csx_csx_vector" * ]
              [ [ "strongly normalizing for terms" ] "csx" + "( ⦃?,?⦄ ⊢ ⬈*[?,?] 𝐒⦃?⦄ )" "csx_simple" + "csx_simple_theq" + "csx_drops" + "csx_fqus" + "csx_lsubr" + "csx_lfdeq" + "csx_aaa" + "csx_gcp" + "csx_gcr" + "csx_lfpx" + "csx_cnx" + "csx_cpxs" + "csx_lfpxs" + "csx_csx" * ]
@@ -122,8 +122,8 @@ table {
    class "cyan"
    [ { "rt-transition" * } {
         [ { "uncounted parallel rst-transition" * } {
-             [ [ "for closures" ] "fpbq" + "( ⦃?,?,?⦄ ≽[?] ⦃?,?,?⦄ )" "fpbq_aaa" * ]
-             [ [ "proper for closures" ] "fpb" + "( ⦃?,?,?⦄ ≻[?] ⦃?,?,?⦄ )" "fpb_lfdeq" * ]
+             [ [ "for closures" ] "fpbq" + "( ⦃?,?,?⦄ ≽[?,?] ⦃?,?,?⦄ )" "fpbq_aaa" * ]
+             [ [ "proper for closures" ] "fpb" + "( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" "fpb_lfdeq" * ]
           }
         ]
         [ { "context-sensitive parallel r-transition" * } {
@@ -168,7 +168,7 @@ table {
         ]
         [ { "atomic arity assignment" * } {
              [ [ "restricted refinement for lenvs" ] "lsuba" + "( ? ⊢ ? ⫃⁝ ? )" "lsuba_drops" + "lsuba_lsubr" + "lsuba_aaa" + "lsuba_lsuba" * ]
-             [ [ "for terms" ] "aaa" + "( ⦃?,?⦄ ⊢ ? ⁝ ? )" "aaa_drops" + "aaa_fqus" + "aaa_lfdeq" + "aaa_aaa" * ]
+             [ [ "for terms" ] "aaa" + "( ⦃?,?⦄ ⊢ ? ⁝ ? )" "aaa_drops" + "aaa_fqus" + "aaa_lfdeq" + "aaa_ffdeq" + "aaa_aaa" * ]
           }
         ]
         [ { "degree-based equivalence" * } {
@@ -177,7 +177,7 @@ table {
           }
         ]
         [ { "syntactic equivalence" * } {
-             [ [ "for lenvs on referred entries" ] "lfeq" + "( ? ≡[?] ? )" "lfeq_fqup" + "lfeq_fsle" * ]
+             [ [ "for lenvs on referred entries" ] "lfeq" + "( ? ≐[?] ? )" "lfeq_fqup" + "lfeq_fsle" * ]
           }
         ]
         [ { "generic extension of a context-sensitive relation" * } {
@@ -227,7 +227,7 @@ table {
           }
         ]
         [ { "syntactic equivalence" * } {
-             [ [ "for lenvs on selected entries" ] "lreq" + "( ? ≡[?] ? )" "lreq_length" + "lreq_lreq" * ]
+             [ [ "for lenvs on selected entries" ] "lreq" + "( ? ≐[?] ? )" "lreq_length" + "lreq_lreq" * ]
           }
         ]
         [ { "generic entrywise extension" * } {

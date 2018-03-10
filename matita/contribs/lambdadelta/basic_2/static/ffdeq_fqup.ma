@@ -20,4 +20,4 @@ include "basic_2/static/ffdeq.ma".
 (* Advanced properties ******************************************************)
 
 lemma ffdeq_refl: ∀h,o. tri_reflexive … (ffdeq h o).
-/2 width=1 by ffdeq_intro/ qed.
+/2 width=1 by ffdeq_intro_sn/ qed.

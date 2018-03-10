@@ -29,8 +29,8 @@ lemma lfdeq_fpb_trans: ∀h,o,F,K1,K2,T. K1 ≛[h, o, T] K2 →
 [ #G #L2 #U #H2 elim (lfdeq_fqu_trans … H2 … HT) -K2
   /3 width=5 by fpb_fqu, ex3_2_intro/
 | #U #HTU #HnTU elim (lfdeq_cpx_trans … HT … HTU) -HTU
-  /5 width=10 by fpb_cpx, cpx_lfdeq_conf_sn, tdeq_trans, tdeq_lfdeq_conf_sn, ex3_2_intro/
+  /5 width=10 by fpb_cpx, cpx_lfdeq_conf_sn, tdeq_trans, tdeq_lfdeq_conf, ex3_2_intro/
 | #L2 #HKL2 #HnKL2 elim (lfdeq_lfpx_trans … HKL2 … HT) -HKL2
-  /6 width=5 by fpb_lfpx, lfdeq_canc_sn, ex3_2_intro/ (* 2 lleq_canc_sn *)
+  /6 width=5 by fpb_lfpx, (* 2x *) lfdeq_canc_sn, ex3_2_intro/
 ]
 qed-.

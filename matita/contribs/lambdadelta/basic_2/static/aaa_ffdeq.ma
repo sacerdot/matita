@@ -12,17 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/aaa_fqus.ma".
-include "basic_2/static/aaa_ffdeq.ma".
-include "basic_2/rt_transition/lfpx_aaa.ma".
-include "basic_2/rt_transition/fpbq.ma".
+include "basic_2/static/ffdeq.ma".
+include "basic_2/static/aaa_lfdeq.ma".
 
-(* PARALLEL RST-TRANSITION FOR CLOSURES *************************************)
+(* ATONIC ARITY ASSIGNMENT ON TERMS *****************************************)
 
-(* Properties with atomic arity assignment for terms ************************)
+(* Properties with degree-based equivalence on referred entries *************)
 
-lemma fpbq_aaa_conf: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≽[h, o] ⦃G2, L2, T2⦄ →
-                     ∀A1. ⦃G1, L1⦄ ⊢ T1 ⁝ A1 → ∃A2. ⦃G2, L2⦄ ⊢ T2 ⁝ A2.
+lemma aaa_ffdeq_conf: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≛[h, o] ⦃G2, L2, T2⦄ → 
+                      ∀A. ⦃G1, L1⦄ ⊢ T1 ⁝ A → ⦃G2, L2⦄ ⊢ T2 ⁝ A.
 #h #o #G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2
-/3 width=8 by lfpx_aaa_conf, cpx_aaa_conf, aaa_ffdeq_conf, aaa_fquq_conf, ex_intro/
-qed-.
+/2 width=7 by aaa_tdeq_conf_lfdeq/ qed-.

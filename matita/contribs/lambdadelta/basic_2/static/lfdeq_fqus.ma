@@ -60,7 +60,7 @@ lemma lfdeq_fqu_trans: ∀h,o,b,G1,G2,L2,K2,T,U. ⦃G1, L2, T⦄ ⊐[b] ⦃G2, K
 #h #o #b #G1 #G2 #L2 #K2 #T #U #H elim H -G1 -G2 -L2 -K2 -T -U
 [ #I #G #L2 #V2 #L1 #H elim (lfdeq_inv_zero_pair_dx … H) -H
   #K1 #V1 #HV1 #HV12 #H destruct
-  /3 width=7 by tdeq_lfdeq_conf_sn, fqu_lref_O, ex3_2_intro/
+  /3 width=7 by tdeq_lfdeq_conf, fqu_lref_O, ex3_2_intro/
 | * [ #p ] #I #G #L2 #V #T #L1 #H
   [ elim (lfdeq_inv_bind … H)
   | elim (lfdeq_inv_flat … H)
@@ -100,7 +100,7 @@ lemma lfdeq_fqup_trans: ∀h,o,b,G1,G2,L2,K2,T,U. ⦃G1, L2, T⦄ ⊐+[b] ⦃G2,
   elim (lfdeq_fqu_trans … HU2 … HK0) -K #K1 #U1 #HU1 #HU12 #HK12
   elim (tdeq_fqu_trans … HU1 … HU0) -U #K3 #U3 #HU03 #HU31 #HK31
   @(ex3_2_intro … K3 U3) (**) (* full auto too slow *)
-  /3 width=5 by lfdeq_trans, tdeq_lfdeq_conf_sn, fqup_strap1, tdeq_trans/
+  /3 width=5 by lfdeq_trans, tdeq_lfdeq_conf, fqup_strap1, tdeq_trans/
 ]
 qed-.
 

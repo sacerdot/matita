@@ -73,10 +73,14 @@ lemma frees_lfdeq_conf: ∀h,o,f,L1,T. L1 ⊢ 𝐅*⦃T⦄ ≡ f →
                         ∀L2. L1 ≛[h, o, f] L2 → L2 ⊢ 𝐅*⦃T⦄ ≡ f.
 /2 width=7 by frees_tdeq_conf_lfdeq, tdeq_refl/ qed-.
 
-lemma tdeq_lfdeq_conf_sn: ∀h,o. s_r_confluent1 … (cdeq h o) (lfdeq h o).
+lemma tdeq_lfdeq_conf: ∀h,o. s_r_confluent1 … (cdeq h o) (lfdeq h o).
 #h #o #L1 #T1 #T2 #HT12 #L2 *
 /3 width=5 by frees_tdeq_conf, ex2_intro/
 qed-.
+
+lemma tdeq_lfdeq_div: ∀h,o,T1,T2. T1 ≛[h, o] T2 →
+                      ∀L1,L2. L1 ≛[h, o, T2] L2 → L1 ≛[h, o, T1] L2.
+/3 width=3 by tdeq_lfdeq_conf, tdeq_sym/ qed-.
 
 lemma lfdeq_atom: ∀h,o,I. ⋆ ≛[h, o, ⓪{I}] ⋆.
 /2 width=1 by lfxs_atom/ qed.
