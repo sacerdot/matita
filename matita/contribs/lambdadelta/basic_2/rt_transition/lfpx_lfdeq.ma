@@ -36,6 +36,13 @@ lemma lfpx_bind_dx_split_void: ∀h,G,K1,L2,T. ⦃G, K1.ⓧ⦄ ⊢ ⬈[h, T] L2 
                                ∃∃K2. ⦃G, K1⦄ ⊢ ⬈[h, ⓑ{p,I}V.T] K2 & K2.ⓧ ≛[h, o, T] L2.
 /3 width=5 by lfpx_fsge_comp, lfxs_bind_dx_split_void/ qed-.
 
+lemma lfpx_tdeq_conf: ∀h,o,G. s_r_confluent1 … (cdeq h o) (lfpx h G).
+/2 width=5 by tdeq_lfxs_conf/ qed-.
+
+lemma lfpx_tdeq_div: ∀h,o,T1,T2. T1 ≛[h, o] T2 →
+                     ∀G,L1,L2. ⦃G, L1⦄ ⊢ ⬈[h, T2] L2 → ⦃G, L1⦄ ⊢ ⬈[h, T1] L2.
+/2 width=5 by tdeq_lfxs_div/ qed-.
+
 lemma cpx_tdeq_conf_lexs: ∀h,o,G. R_confluent2_lfxs … (cpx h G) (cdeq h o) (cpx h G) (cdeq h o).
 #h #o #G #L0 #T0 #T1 #H @(cpx_ind … H) -G -L0 -T0 -T1 /2 width=3 by ex2_intro/
 [ #G #L0 #s0 #X0 #H0 #L1 #HL01 #L2 #HL02

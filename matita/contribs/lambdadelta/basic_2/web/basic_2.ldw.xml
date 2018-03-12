@@ -34,6 +34,9 @@
 
    <subsection name="A2">Stage "A2": "Extending the Applicability Condition"</subsection>
 
+   <news class="alpha" date="2018 March 9.">
+         Support for rt-computation completed.
+   </news>
    <news class="alpha" date="2017 October 17.">
          Exclusion binder in local environments.
          Syntactic component updated:
@@ -45,7 +48,7 @@
          (anniversary milestone).
    </news>
    <news class="alpha" date="2017 March 16.">
-         First behavioral component reconstructed:
+         First behavioral component completed:
          rt_transition.
    </news>
    <news class="alpha" date="2017 February 19.">
@@ -58,7 +61,7 @@
          Confluence for context-sensitive parallel r-transition on terms.
    </news>
    <news class="alpha" date="2016 April 16.">
-         Syntactic component reconstructed:
+         Syntactic component completed:
          syntax, relocation, s_transition, s_computation, static
          (anniversary milestone).
    </news>

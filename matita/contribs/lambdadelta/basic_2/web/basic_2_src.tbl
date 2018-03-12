@@ -123,7 +123,7 @@ table {
    [ { "rt-transition" * } {
         [ { "uncounted parallel rst-transition" * } {
              [ [ "for closures" ] "fpbq" + "( ⦃?,?,?⦄ ≽[?,?] ⦃?,?,?⦄ )" "fpbq_aaa" * ]
-             [ [ "proper for closures" ] "fpb" + "( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" "fpb_lfdeq" * ]
+             [ [ "proper for closures" ] "fpb" + "( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" "fpb_lfdeq" + "fpb_ffdeq" * ]
           }
         ]
         [ { "context-sensitive parallel r-transition" * } {
