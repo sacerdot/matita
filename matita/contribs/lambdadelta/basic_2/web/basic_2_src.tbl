@@ -209,7 +209,7 @@ table {
    [ { "s-transition" * } {
         [ { "structural successor" * } {
              [ [ "for closures" ] "fquq" + "( ⦃?,?,?⦄ ⊐⸮[?] ⦃?,?,?⦄ )" + "( ⦃?,?,?⦄ ⊐⸮ ⦃?,?,?⦄ )" "fquq_length" + "fquq_weight" * ]
-             [ [ "proper for closures" ] "fqu" + "( ⦃?,?,?⦄ ⊐[?] ⦃?,?,?⦄ )" + "( ⦃?,?,?⦄ ⊐ ⦃?,?,?⦄ )" "fqu_length" + "fqu_weight" * ]
+             [ [ "proper for closures" ] "fqu" + "( ⦃?,?,?⦄ ⊐[?] ⦃?,?,?⦄ )" + "( ⦃?,?,?⦄ ⊐ ⦃?,?,?⦄ )" "fqu_length" + "fqu_weight" + "fqu_tdeq" * ]
           }
         ]
      }

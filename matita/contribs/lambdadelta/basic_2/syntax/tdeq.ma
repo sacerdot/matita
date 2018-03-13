@@ -101,6 +101,13 @@ lemma tdeq_inv_pair: ∀h,o,I1,I2,V1,V2,T1,T2. ②{I1}V1.T1 ≛[h, o] ②{I2}V2.
 #V0 #T0 #HV #HT #H destruct /2 width=1 by and3_intro/
 qed-.
 
+lemma tdeq_inv_pair_xy_x: ∀h,o,I,V,T. ②{I}V.T ≛[h, o] V → ⊥.
+#h #o #I #V elim V -V
+[ #J #T #H elim (tdeq_inv_pair1 … H) -H #X #Y #_ #_ #H destruct
+| #J #X #Y #IHX #_ #T #H elim (tdeq_inv_pair … H) -H #H #HY #_ destruct /2 width=2 by/
+]
+qed-.
+
 lemma tdeq_inv_pair_xy_y: ∀h,o,I,T,V. ②{I}V.T ≛[h, o] T → ⊥.
 #h #o #I #T elim T -T
 [ #J #V #H elim (tdeq_inv_pair1 … H) -H #X #Y #_ #_ #H destruct

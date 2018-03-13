@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/s_transition/fqu_tdeq.ma".
 include "basic_2/static/ffdeq.ma".
 include "basic_2/rt_transition/fpb_lfdeq.ma".
 
@@ -32,19 +33,14 @@ elim (lfdeq_fpb_trans … HK12 … H) -K2 #L0 #U0 #H #HUT0 #HLK0
 qed-.
 
 (* Inversion lemmas with degree-based equivalence for closures **************)
-(*
+
 (* Basic_2A1: uses: fpb_inv_fleq *)
 lemma fpb_inv_ffdeq: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≻[h, o] ⦃G2, L2, T2⦄ →
                      ⦃G1, L1, T1⦄ ≛[h, o] ⦃G2, L2, T2⦄ → ⊥.
 #h #o #G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2
 [ #G2 #L2 #T2 #H12 #H elim (ffdeq_inv_gen_sn … H) -H
-  #_ #H1 #H2
-(*
-
-  /3 width=8 by lfdeq_fwd_length, fqu_inv_eq/
-*)  
+  /3 width=11 by lfdeq_fwd_length, fqu_inv_tdeq/
 | #T2 #_ #HnT #H elim (ffdeq_inv_gen_sn … H) -H /2 width=1 by/
 | #L2 #_ #HnL #H elim (ffdeq_inv_gen_sn … H) -H /2 width=1 by/
 ]
 qed-.
-*)

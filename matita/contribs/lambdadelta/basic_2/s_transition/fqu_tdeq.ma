@@ -12,20 +12,25 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/syntax/lenv_length.ma".
-include "basic_2/s_transition/fqu.ma".
+include "basic_2/syntax/tdeq.ma".
+include "basic_2/s_transition/fqu_length.ma".
 
 (* SUPCLOSURE ***************************************************************)
 
-(* Forward lemmas with length for local environments ************************)
+(* Inversion lemmas with context-free degree-based equivalence for terms ****)
 
-fact fqu_fwd_length_lref1_aux: ∀b,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐[b] ⦃G2, L2, T2⦄ →
-                               ∀i. T1 = #i → |L2| < |L1|.
-#b #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2 // [2,3: #p]
-#I #G #L #V #T [2: #_ ] #j #H destruct
+fact fqu_inv_tdeq_aux: ∀h,o,b,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐[b] ⦃G2, L2, T2⦄ →
+                       G1 = G2 → |L1| = |L2| → T1 ≛[h, o] T2 → ⊥.
+#h #o #b #G1 #G2 #L1 #L2 #T1 #T2 * -G1 -G2 -L1 -L2 -T1 -T2
+[1: #I #G #L #V #_ #H elim (succ_inv_refl_sn … H)
+|6: #I #G #L #T #U #_ #_ #H elim (succ_inv_refl_sn … H)
+]
+/2 width=6 by tdeq_inv_pair_xy_y, tdeq_inv_pair_xy_x/
 qed-.
 
-lemma fqu_fwd_length_lref1: ∀b,G1,G2,L1,L2,T2,i. ⦃G1, L1, #i⦄ ⊐[b] ⦃G2, L2, T2⦄ →
-                            |L2| < |L1|.
-/2 width=8 by fqu_fwd_length_lref1_aux/
-qed-.
+(* Basic_2A1: uses: fqu_inv_eq *)
+lemma fqu_inv_tdeq: ∀h,o,b,G,L1,L2,T1,T2. ⦃G, L1, T1⦄ ⊐[b] ⦃G, L2, T2⦄ →
+                    |L1| = |L2| → T1 ≛[h, o] T2 → ⊥.
+#h #o #b #G #L1 #L2 #T1 #T2 #H
+@(fqu_inv_tdeq_aux … H) // (**) (* full auto fails *)
+qed-. 

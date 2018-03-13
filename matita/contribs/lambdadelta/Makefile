@@ -28,7 +28,7 @@ ORIGS        := basic_2/basic_1.orig
 
 CONTRIB      := lambdadelta_2
 
-TAGS := all xoa xoa2 orig elim deps top leaf stats tbls trim contrib
+TAGS := all xoa xoa2 orig elim deps top leaf stats tbls trim contrib clean
 
 PACKAGES  := ground_2 basic_2 apps_2 alpha_1
 XPACKAGES := ground_2 basic_2
@@ -253,6 +253,11 @@ trim: $(TRIMS:%=%.trimmed)
 contrib:
 	@echo "  TAR -czf $(CONTRIB).tar.gz root $(XPACKAGES)"
 	$(H)tar -czf $(CONTRIB).tar.gz root $(XMAS)
+
+# clean ######################################################################
+
+clean:
+	@$(RM) `find -name "*~" -type f -print`
 
 ##############################################################################
 
