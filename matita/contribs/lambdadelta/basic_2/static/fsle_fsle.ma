@@ -74,6 +74,19 @@ lapply (sle_eq_repl_back2 … Hg … Hgf0) -g0
 /4 width=10 by sle_tls, sle_trans, ex4_4_intro/
 qed-.
 
+theorem fsle_trans_rc: ∀L1,L,T1,T. |L1| = |L| → ⦃L1, T1⦄ ⊆ ⦃L, T⦄ →
+                       ∀L2,T2. |L| = |L2| → ⦃L, T⦄ ⊆ ⦃L2, T2⦄ → ⦃L1, T1⦄ ⊆ ⦃L2, T2⦄.
+#L1 #L #T1 #T #HL1
+* #m1 #m0 #g1 #g0 #Hg1 #Hg0 #Hm #Hg
+#L2 #T2 #HL2
+* #n0 #n2 #f0 #f2 #Hf0 #Hf2 #Hn #Hf
+lapply (frees_mono … Hg0 … Hf0) -Hg0 -Hf0 #Hgf0
+elim (lveq_inj_length … Hm) // -Hm #H1 #H2 destruct
+elim (lveq_inj_length … Hn) // -Hn #H1 #H2 destruct
+lapply (sle_eq_repl_back2 … Hg … Hgf0) -g0
+/3 width=10 by lveq_length_eq, sle_trans, ex4_4_intro/
+qed-.
+
 theorem fsle_bind_sn_ge: ∀L1,L2. |L2| ≤ |L1| →
                          ∀V1,T1,T. ⦃L1, V1⦄ ⊆ ⦃L2, T⦄ → ⦃L1.ⓧ, T1⦄ ⊆ ⦃L2, T⦄ →
                          ∀p,I. ⦃L1, ⓑ{p,I}V1.T1⦄ ⊆ ⦃L2, T⦄.

@@ -1,0 +1,31 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/static/lsubr_length.ma".
+include "basic_2/rt_transition/lfpx_fsle.ma".
+
+lemma pippo: ∀L1,L2. L2 ⫃ L1 → ∀T. ⦃L1, T⦄ ⊆ ⦃L2, T⦄. 
+#L1 #L2 #HL #T
+elim (frees_total L1 T) #f1 #Hf1
+elim (frees_total L2 T) #f2 #Hf2
+lapply (lsubr_lsubf … Hf1 … HL … Hf2) #H
+lapply (lsubf_fwd_sle … H) -H #H12
+lapply (lsubr_fwd_length … HL) -HL #HL
+/3 width=8 by lveq_length_eq, ex4_4_intro/
+qed.
+
+lemma R_fle_comp_LTC: ∀R. R_fle_compatible R → R_fle_compatible (LTC … R).
+#R #HR #L #T1 #T2 #H elim H -T2
+/3 width=3 by fle_trans_dx/
+qed-.

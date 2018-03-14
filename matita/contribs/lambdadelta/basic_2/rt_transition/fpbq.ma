@@ -19,12 +19,12 @@ include "basic_2/rt_transition/lfpr_lfpx.ma".
 
 (* PARALLEL RST-TRANSITION FOR CLOSURES *************************************)
 
-(* Basic_2A1: includes: fpbq_lleq *)
+(* Basic_2A1: includes: fleq_fpbq fpbq_lleq *)
 inductive fpbq (h) (o) (G1) (L1) (T1): relation3 genv lenv term ≝
 | fpbq_fquq : ∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊐⸮ ⦃G2, L2, T2⦄ → fpbq h o G1 L1 T1 G2 L2 T2
 | fpbq_cpx  : ∀T2. ⦃G1, L1⦄ ⊢ T1 ⬈[h] T2 → fpbq h o G1 L1 T1 G1 L1 T2
 | fpbq_lfpx : ∀L2. ⦃G1, L1⦄ ⊢ ⬈[h, T1] L2 → fpbq h o G1 L1 T1 G1 L2 T1
-| ffpq_lfdeq: ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≛[h, o] ⦃G2, L2, T2⦄ → fpbq h o G1 L1 T1 G2 L2 T2
+| fpbq_ffdeq: ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≛[h, o] ⦃G2, L2, T2⦄ → fpbq h o G1 L1 T1 G2 L2 T2
 .
 
 interpretation

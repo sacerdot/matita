@@ -122,7 +122,7 @@ table {
    class "cyan"
    [ { "rt-transition" * } {
         [ { "uncounted parallel rst-transition" * } {
-             [ [ "for closures" ] "fpbq" + "( ⦃?,?,?⦄ ≽[?,?] ⦃?,?,?⦄ )" "fpbq_aaa" * ]
+             [ [ "for closures" ] "fpbq" + "( ⦃?,?,?⦄ ≽[?,?] ⦃?,?,?⦄ )" "fpbq_aaa" + "fpbq_fpb" * ]
              [ [ "proper for closures" ] "fpb" + "( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" "fpb_lfdeq" + "fpb_ffdeq" * ]
           }
         ]
