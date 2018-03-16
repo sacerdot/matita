@@ -17,6 +17,17 @@ include "basic_2/rt_computation/lfpxs_fqup.ma".
 
 (* UNCOUNTED PARALLEL RT-COMPUTATION FOR LOCAL ENV.S ON REFERRED ENTRIES ****)
 
+(* Properties with degree-based equivalence on terms ************************)
+
+lemma lfpxs_tdeq_trans: ∀h,o,G. s_r_confluent1 … (cdeq h o) (lfpxs h G).
+#h #o #G #L1 #T1 #T2 #HT12 #L2 #H @(lfpxs_ind_sn … H) -L2
+/3 width=6 by lfpxs_step_dx, lfpx_tdeq_conf/
+qed-.
+
+lemma tdeq_lfpxs_trans: ∀h,o,T1,T2. T1 ≛[h, o] T2 →
+                        ∀G,L1,L2. ⦃G, L1⦄ ⊢⬈*[h, T2] L2 → ⦃G, L1⦄ ⊢⬈*[h, T1] L2.
+/3 width=4 by lfpxs_tdeq_trans, tdeq_sym/ qed-.
+
 (* Properties with degree-based equivalence on referred entries *************)
 
 (* Basic_2A1: was: lleq_lpxs_trans *)

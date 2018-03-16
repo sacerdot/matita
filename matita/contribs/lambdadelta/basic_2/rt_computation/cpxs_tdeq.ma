@@ -20,7 +20,7 @@ include "basic_2/rt_computation/cpxs.ma".
 (* Properties with degree-based equivalence for terms ***********************)
 
 lemma tdeq_cpxs_trans: ∀h,o,U1,T1. U1 ≛[h, o] T1 → ∀G,L,T2. ⦃G, L⦄ ⊢ T1 ⬈*[h] T2 → 
-                       ∃∃U2.  ⦃G, L⦄ ⊢ U1 ⬈*[h] U2 & U2 ≛[h, o] T2.
+                       ∃∃U2. ⦃G, L⦄ ⊢ U1 ⬈*[h] U2 & U2 ≛[h, o] T2.
 #h #o #U1 #T1 #HUT1 #G #L #T2 #HT12 @(cpxs_ind … HT12) -T2 /2 width=3 by ex2_intro/
 #T #T2 #_ #HT2 * #U #HU1 #HUT elim (tdeq_cpx_trans … HUT … HT2) -T -T1
 /3 width=3 by ex2_intro, cpxs_strap1/

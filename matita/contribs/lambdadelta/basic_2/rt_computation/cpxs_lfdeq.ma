@@ -32,9 +32,9 @@ elim (tdeq_cpxs_trans … H2 … H3) -T #U0 #H2 #H3
 qed-.
 
 (* Basic_2A1: was just: cpxs_lleq_conf *) 
-lemma cpxs_lfdeq_trans: ∀h,o,G,L0,T0,T1. ⦃G, L0⦄ ⊢ T0 ⬈*[h] T1 →
-                        ∀L2. L0 ≛[h, o, T0] L2 →
-                        ∃∃T. ⦃G, L2⦄ ⊢ T0 ⬈*[h] T & T ≛[h, o] T1.
+lemma cpxs_lfdeq_conf: ∀h,o,G,L0,T0,T1. ⦃G, L0⦄ ⊢ T0 ⬈*[h] T1 →
+                       ∀L2. L0 ≛[h, o, T0] L2 →
+                       ∃∃T. ⦃G, L2⦄ ⊢ T0 ⬈*[h] T & T ≛[h, o] T1.
 /3 width=3 by lfdeq_cpxs_trans, lfdeq_sym/ qed-.
 
 (* Basic_2A1: was just: cpxs_lleq_conf_dx *) 

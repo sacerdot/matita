@@ -19,7 +19,7 @@ include "basic_2/static/lfdeq_lfdeq.ma".
 
 (* DEGREE-BASED EQUIVALENCE FOR LOCAL ENVIRONMENTS ON REFERRED ENTRIES ******)
 
-(* Properties with supclosure ***********************************************)
+(* Properties with extended structural successor for closures ***************)
 
 lemma fqu_tdeq_conf: ∀h,o,b,G1,G2,L1,L2,U1,T1. ⦃G1, L1, U1⦄ ⊐[b] ⦃G2, L2, T1⦄ →
                      ∀U2. U1 ≛[h, o] U2 →
@@ -53,7 +53,7 @@ elim (fqu_tdeq_conf … o … H12 U2) -H12
 /3 width=5 by lfdeq_sym, tdeq_sym, ex3_2_intro/
 qed-.
 
-(* Basic_2A1: was just: lleq_fqu_trans *)
+(* Basic_2A1: uses: lleq_fqu_trans *)
 lemma lfdeq_fqu_trans: ∀h,o,b,G1,G2,L2,K2,T,U. ⦃G1, L2, T⦄ ⊐[b] ⦃G2, K2, U⦄ →
                        ∀L1. L1 ≛[h, o, T] L2 →
                        ∃∃K1,U0. ⦃G1, L1, T⦄ ⊐[b] ⦃G2, K1, U0⦄ & U0 ≛[h, o] U & K1 ≛[h, o, U] K2.
@@ -78,6 +78,18 @@ lemma lfdeq_fqu_trans: ∀h,o,b,G1,G2,L2,K2,T,U. ⦃G1, L2, T⦄ ⊐[b] ⦃G2, K
 ]
 qed-.
 
+(* Properties with optional structural successor for closures ***************)
+
+lemma tdeq_fquq_trans: ∀h,o,b,G1,G2,L1,L2,U1,T1. ⦃G1, L1, U1⦄ ⊐⸮[b] ⦃G2, L2, T1⦄ →
+                       ∀U2. U2 ≛[h, o] U1 →
+                       ∃∃L,T2. ⦃G1, L1, U2⦄ ⊐⸮[b] ⦃G2, L, T2⦄ & T2 ≛[h, o] T1 & L ≛[h, o, T1] L2.
+#h #o #b #G1 #G2 #L1 #L2 #U1 #T1 #H elim H -H
+[ #H #U2 #HU21 elim (tdeq_fqu_trans … H … HU21) -U1
+  /3 width=5 by fqu_fquq, ex3_2_intro/
+| * #HG #HL #HT destruct /2 width=5 by ex3_2_intro/
+]
+qed-.
+
 (* Basic_2A1: was just: lleq_fquq_trans *)
 lemma lfdeq_fquq_trans: ∀h,o,b,G1,G2,L2,K2,T,U. ⦃G1, L2, T⦄ ⊐⸮[b] ⦃G2, K2, U⦄ →
                         ∀L1. L1 ≛[h, o, T] L2 →
@@ -87,6 +99,8 @@ lemma lfdeq_fquq_trans: ∀h,o,b,G1,G2,L2,K2,T,U. ⦃G1, L2, T⦄ ⊐⸮[b] ⦃G
 | * #HG #HL #HT destruct /2 width=5 by ex3_2_intro/
 ]
 qed-.
+
+(* Properties with plus-iterated structural successor for closures **********)
 
 (* Basic_2A1: was just: lleq_fqup_trans *)
 lemma lfdeq_fqup_trans: ∀h,o,b,G1,G2,L2,K2,T,U. ⦃G1, L2, T⦄ ⊐+[b] ⦃G2, K2, U⦄ →
@@ -101,6 +115,33 @@ lemma lfdeq_fqup_trans: ∀h,o,b,G1,G2,L2,K2,T,U. ⦃G1, L2, T⦄ ⊐+[b] ⦃G2,
   elim (tdeq_fqu_trans … HU1 … HU0) -U #K3 #U3 #HU03 #HU31 #HK31
   @(ex3_2_intro … K3 U3) (**) (* full auto too slow *)
   /3 width=5 by lfdeq_trans, tdeq_lfdeq_conf, fqup_strap1, tdeq_trans/
+]
+qed-.
+
+lemma tdeq_fqup_trans: ∀h,o,b,G1,G2,L1,L2,U1,T1. ⦃G1, L1, U1⦄ ⊐+[b] ⦃G2, L2, T1⦄ →
+                       ∀U2. U2 ≛[h, o] U1 →
+                       ∃∃L,T2. ⦃G1, L1, U2⦄ ⊐+[b] ⦃G2, L, T2⦄ & T2 ≛[h, o] T1 & L ≛[h, o, T1] L2.
+#h #o #b #G1 #G2 #L1 #L2 #U1 #T1 #H @(fqup_ind_dx … H) -G1 -L1 -U1
+[ #G1 #L1 #U1 #H #U2 #HU21 elim (tdeq_fqu_trans … H … HU21) -U1
+  /3 width=5 by fqu_fqup, ex3_2_intro/
+| #G1 #G #L1 #L #U1 #U #H #_ #IH #U2 #HU21
+  elim (tdeq_fqu_trans … H … HU21) -U1 #L0 #T #H1 #HTU #HL0
+  lapply (tdeq_lfdeq_div … HTU … HL0) -HL0 #HL0
+  elim (IH … HTU) -U #K2 #U1 #H2 #HUT1 #HKL2
+  elim (lfdeq_fqup_trans … H2 … HL0) -L #K #U #H2 #HU1 #HK2
+  lapply (tdeq_lfdeq_conf … HUT1 … HK2) -HK2 #HK2
+  /3 width=7 by lfdeq_trans, fqup_strap2, tdeq_trans, ex3_2_intro/
+]
+qed-.
+
+(* Properties with star-iterated structural successor for closures **********)
+
+lemma tdeq_fqus_trans: ∀h,o,b,G1,G2,L1,L2,U1,T1. ⦃G1, L1, U1⦄ ⊐*[b] ⦃G2, L2, T1⦄ →
+                       ∀U2. U2 ≛[h, o] U1 →
+                       ∃∃L,T2. ⦃G1, L1, U2⦄ ⊐*[b] ⦃G2, L, T2⦄ & T2 ≛[h, o] T1 & L ≛[h, o, T1] L2.
+#h #o #b #G1 #G2 #L1 #L2 #U1 #T1 #H #U2 #HU21 elim(fqus_inv_fqup … H) -H
+[ #H elim (tdeq_fqup_trans … H … HU21) -U1 /3 width=5 by fqup_fqus, ex3_2_intro/
+| * #HG #HL #HT destruct /2 width=5 by ex3_2_intro/
 ]
 qed-.
 
