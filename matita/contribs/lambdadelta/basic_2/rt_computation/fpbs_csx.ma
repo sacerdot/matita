@@ -12,22 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/fpbs.ma".
-include "basic_2/computation/csx_lleq.ma".
-include "basic_2/computation/csx_lpx.ma".
+include "basic_2/rt_computation/csx_fpbq.ma".
+include "basic_2/rt_computation/fpbs.ma".
 
-(* CONTEXT-SENSITIVE EXTENDED STRONGLY NORMALIZING TERMS ********************)
+(* PARALLEL RST-COMPUTATION FOR CLOSURES ************************************)
 
-(* Advanced properties ******************************************************)
+(* Properties with sn for uncounted parallel rt-transition for terms ********)
 
-lemma csx_fpb_conf: ∀h,o,G1,L1,T1. ⦃G1, L1⦄ ⊢ ⬊*[h, o] T1 →
-                    ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≽[h, o] ⦃G2, L2, T2⦄ → ⦃G2, L2⦄ ⊢ ⬊*[h, o] T2.
-#h #o #G1 #L1 #T1 #HT1 #G2 #L2 #T2 *
-/2 width=5 by csx_cpx_trans, csx_fquq_conf, csx_lpx_conf, csx_lleq_conf/
-qed-.
-
-lemma csx_fpbs_conf: ∀h,o,G1,L1,T1. ⦃G1, L1⦄ ⊢ ⬊*[h, o] T1 →
-                     ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄ → ⦃G2, L2⦄ ⊢ ⬊*[h, o] T2.
+(* Basic_2A1: was: csx_fpbs_conf *)
+lemma fpbs_csx_conf: ∀h,o,G1,L1,T1. ⦃G1, L1⦄ ⊢ ⬈*[h, o] 𝐒⦃T1⦄ →
+                     ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄ → ⦃G2, L2⦄ ⊢ ⬈*[h, o] 𝐒⦃T2⦄.
 #h #o #G1 #L1 #T1 #HT1 #G2 #L2 #T2 #H @(fpbs_ind … H) -G2 -L2 -T2
-/2 width=5 by csx_fpb_conf/
+/2 width=5 by csx_fpbq_conf/
 qed-.

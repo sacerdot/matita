@@ -12,12 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reduction/fpbq_aaa.ma".
-include "basic_2/computation/fpbs.ma".
+include "basic_2/rt_transition/fpbq_aaa.ma".
+include "basic_2/rt_computation/fpbs.ma".
 
-(* "QRST" PARALLEL COMPUTATION FOR CLOSURES *********************************)
+(* PARALLEL RST-COMPUTATION FOR CLOSURES ************************************)
 
-(* Properties on atomic arity assignment for terms **************************)
+(* Properties with atomic arity assignment for terms ************************)
 
 lemma fpbs_aaa_conf: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄ →
                      ∀A1. ⦃G1, L1⦄ ⊢ T1 ⁝ A1 → ∃A2. ⦃G2, L2⦄ ⊢ T2 ⁝ A2.

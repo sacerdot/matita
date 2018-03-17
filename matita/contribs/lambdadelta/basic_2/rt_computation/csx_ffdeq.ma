@@ -12,11 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_computation/fpbs.ma".
+include "basic_2/static/ffdeq.ma".
+include "basic_2/rt_computation/csx_lfdeq.ma".
 
-(* PARALLEL RST-COMPUTATION FOR CLOSURES ************************************)
+(* STRONGLY NORMALIZING TERMS FOR UNCOUNTED PARALLEL RT-TRANSITION **********)
 
-(* Main properties **********************************************************)
+(* Properties with degree-based equivalence for closures ********************)
 
-theorem fpbs_trans: ∀h,o. tri_transitive … (fpbs h o).
-/2 width=5 by tri_TC_transitive/ qed-.
+lemma csx_ffdeq_conf: ∀h,o,G1,L1,T1. ⦃G1, L1⦄ ⊢ ⬈*[h, o] 𝐒⦃T1⦄ →
+                      ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≛[h, o] ⦃G2, L2, T2⦄ → ⦃G2, L2⦄ ⊢ ⬈*[h, o] 𝐒⦃T2⦄.
+#h #o #G1 #L1 #T1 #HT1 #G2 #L2 #T2 * -G2 -L2 -T2
+/3 width=3 by csx_lfdeq_conf, csx_tdeq_trans/
+qed-.
