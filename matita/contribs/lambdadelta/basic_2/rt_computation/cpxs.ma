@@ -145,5 +145,3 @@ elim (cpx_inv_cast1 … HU2) -HU2 /3 width=3 by cpxs_strap1, or3_intro1, or3_int
 lapply (cpxs_strap1 … HW1 … HW2) -W
 lapply (cpxs_strap1 … HT1 … HT2) -T /3 width=5 by or3_intro0, ex3_2_intro/
 qed-.
-
-(* Basic_2A1: removed theorems 1: cpxs_neq_inv_step_sn *)

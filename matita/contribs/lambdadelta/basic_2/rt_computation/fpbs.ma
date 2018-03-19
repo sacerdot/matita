@@ -53,7 +53,7 @@ lemma fpbs_strap2: ∀h,o,G1,G,G2,L1,L,L2,T1,T,T2. ⦃G1, L1, T1⦄ ≽[h, o] �
                    ⦃G, L, T⦄ ≥[h, o] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄.
 /2 width=5 by tri_TC_strap/ qed-.
 
-(* Basic_2A1: uses: lleq_fpbs *)
+(* Basic_2A1: uses: lleq_fpbs fleq_fpbs *)
 lemma ffdeq_fpbs: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≛[h, o] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄.
 /3 width=1 by fpbq_fpbs, fpbq_ffdeq/ qed.
 

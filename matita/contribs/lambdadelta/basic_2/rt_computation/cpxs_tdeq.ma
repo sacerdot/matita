@@ -27,16 +27,19 @@ lemma tdeq_cpxs_trans: ∀h,o,U1,T1. U1 ≛[h, o] T1 → ∀G,L,T2. ⦃G, L⦄ �
 qed-.
 
 (* Note: this requires tdeq to be symmetric *)
-lemma cpxs_tdneq_inv_step_sn: ∀h,o,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬈*[h] T2 → (T1 ≛[h, o] T2 → ⊥) →
+(* Nasic_2A1: uses: cpxs_neq_inv_step_sn *)
+lemma cpxs_tdneq_fwd_step_sn: ∀h,o,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬈*[h] T2 → (T1 ≛[h, o] T2 → ⊥) →
                               ∃∃T,T0. ⦃G, L⦄ ⊢ T1 ⬈[h] T & T1 ≛[h, o] T → ⊥ & ⦃G, L⦄ ⊢ T ⬈*[h] T0 & T0 ≛[h, o] T2.
 #h #o #G #L #T1 #T2 #H @(cpxs_ind_dx … H) -T1
 [ #H elim H -H //
-| #T1 #T #H1 #H2 #IH #Hn12 elim (tdeq_dec h o T1 T) #H destruct
-  [ -H1 -H2 elim IH -IH /3 width=3 by tdeq_trans/ -Hn12
-    #X #X2 #HTX #HnTX #HX2 #HXT2 elim (tdeq_cpx_trans … H … HTX) -HTX
-    #X1 #HTX1 #HX1 elim (tdeq_cpxs_trans … HX1 … HX2) -HX2
-    /5 width=8 by tdeq_canc_sn, tdeq_trans, ex4_2_intro/ (* Note: 2 tdeq_trans *)
-  | -IH -Hn12 /3 width=6 by ex4_2_intro/
+| #T1 #T0 #HT10 #HT02 #IH #Hn12
+  elim (tdeq_dec h o T1 T0) [ -HT10 -HT02 #H10 | -IH #Hn10 ]
+  [ elim IH -IH /3 width=3 by tdeq_trans/ -Hn12
+    #T3 #T4 #HT03 #Hn03 #HT34 #H42
+    elim (tdeq_cpx_trans … H10 … HT03) -HT03 #T5 #HT15 #H53
+    elim (tdeq_cpxs_trans … H53 … HT34) -HT34 #T6 #HT56 #H64
+    /5 width=8 by tdeq_canc_sn, (* 2x *) tdeq_trans, ex4_2_intro/
+  | /3 width=6 by ex4_2_intro/
   ]
 ]
 qed-.

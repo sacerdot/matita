@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/fpbg_fpbs.ma".
+include "basic_2/rt_computation/fpbg_fpbs.ma".
 
-(* "QRST" PROPER PARALLEL COMPUTATION FOR CLOSURES **************************)
+(* PROPER PARALLEL RST-COMPUTATION FOR CLOSURES *****************************)
 
 (* Main properties **********************************************************)
 

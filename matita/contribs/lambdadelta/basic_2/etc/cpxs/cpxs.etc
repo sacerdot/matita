@@ -3,14 +3,3 @@ lemma cprs_cpxs: ∀h,o,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬈* T2 → ⦃G, L⦄ ⊢ 
 #h #o #G #L #T1 #T2 #H @(cprs_ind … H) -T2 /3 width=3 by cpxs_strap1,
 cpr_cpx/
 qed.
-
-lemma cpxs_neq_inv_step_sn: ∀h,o,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬈*[h] T2 → (T1 = T2 → ⊥) →
-                            ∃∃T. ⦃G, L⦄ ⊢ T1 ⬈[h] T & T1 = T → ⊥ & ⦃G, L⦄ ⊢ T ⬈*[h] T2.
-#h #o #G #L #T1 #T2 #H @(cpxs_ind_dx … H) -T1
-[ #H elim H -H //
-| #T1 #T #H1 #H2 #IH2 #H12 elim (eq_term_dec T1 T) #H destruct
-  [ -H1 -H2 /3 width=1 by/
-  | -IH2 /3 width=4 by ex3_intro/ (**) (* auto fails without clear *)
-  ]
-]
-qed-.

@@ -28,7 +28,10 @@ ORIGS        := basic_2/basic_1.orig
 
 CONTRIB      := lambdadelta_2
 
-TAGS := all xoa xoa2 orig elim deps top leaf stats tbls trim contrib clean
+WWW          := ../../../../helm/www/lambdadelta
+
+TAGS := all xoa xoa2 orig elim deps top leaf stats tbls trim contrib clean \
+        www up-html
 
 PACKAGES  := ground_2 basic_2 apps_2 alpha_1
 XPACKAGES := ground_2 basic_2
@@ -257,7 +260,17 @@ contrib:
 # clean ######################################################################
 
 clean:
-	@$(RM) `find -name "*~" -type f -print`
+	$(H)$(RM) `find -name "*~" -type f -print`
+
+# www ######################################################################
+
+www:
+	$(H)$(MAKE) --no-print-directory -C $(WWW) www
+
+# www ######################################################################
+
+up-html:
+	$(H)$(MAKE) --no-print-directory -C $(WWW) up-html
 
 ##############################################################################
 

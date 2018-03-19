@@ -50,9 +50,9 @@ lapply (tdneq_tdeq_canc_dx … H … HV02) -H #HnTV0
 elim (tdeq_dec h o T1 T0) #H
 [ lapply (tdeq_tdneq_trans … H … HnTV0) -H -HnTV0 #Hn10
   lapply (cpxs_trans … HT10 … HTV0) -T0 #H10
-  elim (cpxs_tdneq_inv_step_sn … H10 …  Hn10) -H10 -Hn10
+  elim (cpxs_tdneq_fwd_step_sn … H10 …  Hn10) -H10 -Hn10
   /3 width=8 by tdeq_trans/
-| elim (cpxs_tdneq_inv_step_sn … HT10 … H) -HT10 -H #T #V #HT1 #HnT1 #HTV #HVT0
+| elim (cpxs_tdneq_fwd_step_sn … HT10 … H) -HT10 -H #T #V #HT1 #HnT1 #HTV #HVT0
   elim (tdeq_cpxs_trans … HVT0 … HTV0) -T0
   /3 width=8 by cpxs_trans, tdeq_trans/
 ]

@@ -12,17 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reduction/fpb_lift.ma".
-include "basic_2/computation/fpbg.ma".
+include "basic_2/computation/lpxs_ffdeq.ma".
+include "basic_2/computation/fpbg_ffdeq.ma".
 
-(* "QRST" PARALLEL COMPUTATION FOR CLOSURES *********************************)
+(* PROPER PARALLEL RST-COMPUTATION FOR CLOSURES **************************)
 
-(* Advanced properties ******************************************************)
-
-lemma sta_fpbg: ∀h,o,G,L,T1,T2,d. ⦃G, L⦄ ⊢ T1 ▪[h, o] d+1 →
-                ⦃G, L⦄ ⊢ T1 •*[h, 1] T2 → ⦃G, L, T1⦄ >≛[h, o] ⦃G, L, T2⦄.
-/4 width=2 by fpb_fpbg, sta_fpb/ qed.
-
-lemma lstas_fpbg: ∀h,o,G,L,T1,T2,d2. ⦃G, L⦄ ⊢ T1 •*[h, d2] T2 → (T1 = T2 → ⊥) →
-                  ∀d1. d2 ≤ d1 → ⦃G, L⦄ ⊢ T1 ▪[h, o] d1 → ⦃G, L, T1⦄ >≛[h, o] ⦃G, L, T2⦄.
-/3 width=5 by lstas_cpxs, cpxs_fpbg/ qed.
+lemma lpxs_fpbg: ∀h,o,G,L1,L2,T. ⦃G, L1⦄ ⊢ ➡*[h, o] L2 →
+                 (L1 ≡[T, 0] L2 → ⊥) → ⦃G, L1, T⦄ >≛[h, o] ⦃G, L2, T⦄.
+#h #o #G #L1 #L2 #T #H #H0 elim (lpxs_nlleq_inv_step_sn … H … H0) -H -H0
+/4 width=5 by fpb_lpx, lpxs_lleq_fpbs, ex2_3_intro/
+qed.

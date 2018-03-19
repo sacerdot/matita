@@ -12,28 +12,39 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/lazybtpredstarproper_8.ma".
-include "basic_2/reduction/fpb.ma".
-include "basic_2/computation/fpbs.ma".
+include "basic_2/notation/relations/predsubtystarproper_8.ma".
+include "basic_2/rt_transition/fpb.ma".
+include "basic_2/rt_computation/fpbs.ma".
 
-(* "QRST" PROPER PARALLEL COMPUTATION FOR CLOSURES **************************)
+(* PROPER PARALLEL RST-COMPUTATION FOR CLOSURES *****************************)
 
 definition fpbg: ∀h. sd h → tri_relation genv lenv term ≝
                  λh,o,G1,L1,T1,G2,L2,T2.
                  ∃∃G,L,T. ⦃G1, L1, T1⦄ ≻[h, o] ⦃G, L, T⦄ & ⦃G, L, T⦄ ≥[h, o] ⦃G2, L2, T2⦄.
 
-interpretation "'qrst' proper parallel computation (closure)"
-   'LazyBTPRedStarProper h o G1 L1 T1 G2 L2 T2 = (fpbg h o G1 L1 T1 G2 L2 T2).
+interpretation "proper parallel rst-computation (closure)"
+   'PRedSubTyStarProper h o G1 L1 T1 G2 L2 T2 = (fpbg h o G1 L1 T1 G2 L2 T2).
 
 (* Basic properties *********************************************************)
 
 lemma fpb_fpbg: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≻[h, o] ⦃G2, L2, T2⦄ →
-                ⦃G1, L1, T1⦄ >≛[h, o] ⦃G2, L2, T2⦄.
+                ⦃G1, L1, T1⦄ >[h, o] ⦃G2, L2, T2⦄.
 /2 width=5 by ex2_3_intro/ qed.
 
 lemma fpbg_fpbq_trans: ∀h,o,G1,G,G2,L1,L,L2,T1,T,T2.
-                       ⦃G1, L1, T1⦄ >≛[h, o] ⦃G, L, T⦄ → ⦃G, L, T⦄ ≽[h, o] ⦃G2, L2, T2⦄ →
-                       ⦃G1, L1, T1⦄ >≛[h, o] ⦃G2, L2, T2⦄.
+                       ⦃G1, L1, T1⦄ >[h, o] ⦃G, L, T⦄ → ⦃G, L, T⦄ ≽[h, o] ⦃G2, L2, T2⦄ →
+                       ⦃G1, L1, T1⦄ >[h, o] ⦃G2, L2, T2⦄.
 #h #o #G1 #G #G2 #L1 #L #L2 #T1 #T #T2 *
 /3 width=9 by fpbs_strap1, ex2_3_intro/
 qed-.
+
+(* Note: this is used in the closure proof *)
+lemma fpbg_fpbs_trans: ∀h,o,G,G2,L,L2,T,T2. ⦃G, L, T⦄ ≥[h, o] ⦃G2, L2, T2⦄ →
+                       ∀G1,L1,T1. ⦃G1, L1, T1⦄ >[h, o] ⦃G, L, T⦄ → ⦃G1, L1, T1⦄ >[h, o] ⦃G2, L2, T2⦄.
+#h #o #G #G2 #L #L2 #T #T2 #H @(fpbs_ind_dx … H) -G -L -T /3 width=5 by fpbg_fpbq_trans/
+qed-.
+
+(* Basic_2A1: uses: fpbg_fleq_trans *)
+lemma fpbg_ffdeq_trans: ∀h,o,G1,G,L1,L,T1,T. ⦃G1, L1, T1⦄ >[h, o] ⦃G, L, T⦄ →
+                        ∀G2,L2,T2. ⦃G, L, T⦄ ≛[h, o] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ >[h, o] ⦃G2, L2, T2⦄.
+/3 width=5 by fpbg_fpbq_trans, fpbq_ffdeq/ qed-.
