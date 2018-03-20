@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/ffdeq_fqup.ma".
 include "basic_2/static/ffdeq_fqus.ma".
 include "basic_2/static/ffdeq_ffdeq.ma".
 include "basic_2/rt_computation/cpxs_fqus.ma".
@@ -46,8 +45,8 @@ lemma lfpxs_fpbs_trans: ∀h,o,G1,G2,L,L2,T1,T2. ⦃G1, L, T1⦄ ≥[h, o] ⦃G2
 qed-.
 
 (* Basic_2A1: uses: lpxs_lleq_fpbs *)
-lemma lpxs_ffdeq_fpbs: ∀h,o,G1,L1,L,T1. ⦃G1, L1⦄ ⊢ ⬈*[h, T1] L →
-                       ∀G2,L2,T2. ⦃G1, L, T1⦄ ≛[h, o] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄.
+lemma lfpxs_ffdeq_fpbs: ∀h,o,G1,L1,L,T1. ⦃G1, L1⦄ ⊢ ⬈*[h, T1] L →
+                        ∀G2,L2,T2. ⦃G1, L, T1⦄ ≛[h, o] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄.
 /3 width=3 by lfpxs_fpbs_trans, ffdeq_fpbs/ qed.
 
 (* Properties with star-iterated structural successor for closures **********)

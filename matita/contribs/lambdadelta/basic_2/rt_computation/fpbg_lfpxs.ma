@@ -12,13 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/lpxs_ffdeq.ma".
-include "basic_2/computation/fpbg_ffdeq.ma".
+include "basic_2/rt_computation/fpbs_lfpxs.ma".
+include "basic_2/rt_computation/fpbg.ma".
 
-(* PROPER PARALLEL RST-COMPUTATION FOR CLOSURES **************************)
+(* PROPER PARALLEL RST-COMPUTATION FOR CLOSURES *****************************)
 
-lemma lpxs_fpbg: ∀h,o,G,L1,L2,T. ⦃G, L1⦄ ⊢ ➡*[h, o] L2 →
-                 (L1 ≡[T, 0] L2 → ⊥) → ⦃G, L1, T⦄ >≛[h, o] ⦃G, L2, T⦄.
-#h #o #G #L1 #L2 #T #H #H0 elim (lpxs_nlleq_inv_step_sn … H … H0) -H -H0
-/4 width=5 by fpb_lpx, lpxs_lleq_fpbs, ex2_3_intro/
+(* Properties with uncounted parallel rt-computation on referred entries ****)
+
+(* Basic_2A1: uses: lpxs_fpbg *)
+lemma lfpxs_lfdneq_fpbg: ∀h,o,G,L1,L2,T. ⦃G, L1⦄ ⊢ ⬈*[h, T] L2 →
+                         (L1 ≛[h, o, T] L2 → ⊥) → ⦃G, L1, T⦄ >[h, o] ⦃G, L2, T⦄.
+#h #o #G #L1 #L2 #T #H #H0
+elim (lfpxs_lfdneq_inv_step_sn … H … H0) -H -H0
+/4 width=7 by fpb_lfpx, lfpxs_ffdeq_fpbs, ffdeq_intro_sn, ex2_3_intro/
 qed.
