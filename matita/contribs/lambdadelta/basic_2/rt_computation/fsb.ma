@@ -12,11 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/btsn_5.ma".
-include "basic_2/reduction/fpb.ma".
-include "basic_2/computation/csx.ma".
+include "basic_2/notation/relations/predsubtystrong_5.ma".
+include "basic_2/rt_transition/fpb.ma".
 
-(* "QRST" STRONGLY NORMALIZING CLOSURES *************************************)
+(* STRONGLY NORMALIZING CLOSURES FOR PARALLEL RST-TRANSITION ****************)
 
 inductive fsb (h) (o): relation3 genv lenv term ≝
 | fsb_intro: ∀G1,L1,T1. (
@@ -25,23 +24,23 @@ inductive fsb (h) (o): relation3 genv lenv term ≝
 .
 
 interpretation
-   "'qrst' strong normalization (closure)"
-   'BTSN h o G L T = (fsb h o G L T).
+   "strong normalization for parallel rst-transition (closure)"
+   'PRedSubTyStrong h o G L T = (fsb h o G L T).
 
 (* Basic eliminators ********************************************************)
 
+(* Note: eliminator with shorter ground hypothesis *)
+(* Note: to be named fsb_ind when fsb becomes a definition like csx, lfsx ***)
 lemma fsb_ind_alt: ∀h,o. ∀R: relation3 …. (
-                      ∀G1,L1,T1. ⦥[h,o] ⦃G1, L1, T1⦄ → (
+                      ∀G1,L1,T1. ≥[h,o] 𝐒⦃G1, L1, T1⦄ → (
                          ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≻[h, o] ⦃G2, L2, T2⦄ → R G2 L2 T2
                       ) → R G1 L1 T1
                    ) →
-                   ∀G,L,T. ⦥[h, o] ⦃G, L, T⦄ → R G L T.
+                   ∀G,L,T. ≥[h, o] 𝐒⦃G, L, T⦄ → R G L T.
 #h #o #R #IH #G #L #T #H elim H -G -L -T
 /4 width=1 by fsb_intro/
 qed-.
 
-(* Basic inversion lemmas ***************************************************)
-
-lemma fsb_inv_csx: ∀h,o,G,L,T. ⦥[h, o] ⦃G, L, T⦄ → ⦃G, L⦄ ⊢ ⬊*[h, o] T.
-#h #o #G #L #T #H elim H -G -L -T /5 width=1 by csx_intro, fpb_cpx/
-qed-.
+(* Basic_2A1: removed theorems 5:
+              fsba_intro fsba_ind_alt fsba_fpbs_trans fsb_fsba fsba_inv_fsb
+*)

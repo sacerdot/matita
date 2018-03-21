@@ -74,22 +74,6 @@ table {
    class "sky"
    [ { "rt-computation" * } {
 (*
-        [ { "evaluation for context-sensitive rt-reduction" * } {
-             [ [ "" ] "cpxe ( ⦃?,?⦄ ⊢ ➡*[?,?] 𝐍⦃?⦄ )" * ]
-          }
-        ]
-        [ { "evaluation for context-sensitive reduction" * } {
-             [ [ "" ] "cpre ( ⦃?,?⦄ ⊢ ➡* 𝐍⦃?⦄ )" "cpre_cpre" * ]
-          }
-        ]
-        [ { "strongly normalizing qrst-computation" * } {
-             [ [ "" ] "fsb ( ⦥[?,?] ⦃?,?,?⦄ )" "fsb_alt ( ⦥⦥[?,?] ⦃?,?,?⦄ )" "fsb_aaa" + "fsb_csx" * ]
-          }
-        ]
-        [ { "parallel qrst-computation" * } {
-             
-          }
-        ]
         [ { "decomposed rt-computation" * } {
              [ [ "" ] "scpds ( ⦃?,?⦄ ⊢ ? •*➡*[?,?,?] ? )" "scpds_lift" + "scpds_aaa" + "scpds_scpds" * ]
           }
@@ -101,6 +85,7 @@ table {
         ]
 *)
         [ { "uncounted context-sensitive parallel rst-computation" * } {
+             [ [ "strongly normalizing for closures" ] "fsb" + "( ≥[?,?] 𝐒⦃?,?,?⦄ )" "fsb_ffdeq" + "fsb_aaa" + "fsb_csx" + "fsb_fpbg" * ]
              [ [ "proper for closures" ] "fpbg" + "( ⦃?,?,?⦄ >[?,?] ⦃?,?,?⦄ )" "fpbg_fqup" + "fpbg_cpxs" + "fpbg_lfpxs" + "fpbg_fpbs" + "fpbg_fpbg" * ]
              [ [ "for closures" ] "fpbs" + "( ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "fpbs_fqup" + "fpbs_fqus" + "fpbs_aaa" + "fpbs_fpb" + "fpbs_cpxs" + "fpbs_lfpxs" + "fpbs_csx" + "fpbs_fpbs" * ]
           }
@@ -304,6 +289,14 @@ class "capitalize italic" { 0 1 }
 
 class "italic"            { 2 }
 (*
+        [ { "evaluation for context-sensitive rt-reduction" * } {
+             [ [ "" ] "cpxe ( ⦃?,?⦄ ⊢ ➡*[?,?] 𝐍⦃?⦄ )" * ]
+          }
+        ]
+        [ { "evaluation for context-sensitive reduction" * } {
+             [ [ "" ] "cpre ( ⦃?,?⦄ ⊢ ➡* 𝐍⦃?⦄ )" "cpre_cpre" * ]
+          }
+        ]
         [ { "normal forms for context-sensitive rt-reduction" * } {
              [ [ "" ] "cnx_crx" + "cnx_cix" * ]
           }
@@ -348,14 +341,6 @@ class "italic"            { 2 }
              [ [ "" ] "cpys ( ⦃?,?⦄ ⊢ ? ▶*[?,?] ? )" "cpys_alt ( ⦃?,?⦄ ⊢ ? ▶▶*[?,?] ? )" "cpys_lift" + "cpys_cpys" * ]
           }
         ]
-        [ { "pointwise union for local environments" * } {
-             [ [ "" ] "llor ( ? ⋓[?,?] ? ≡ ? )" "llor_alt" + "llor_drop" * ]
-          }
-        ]
-        [ { "lazy pointwise extension of a relation" * } {
-             [ [ "" ] "llpx_sn" "llpx_sn_alt" + "llpx_sn_alt_rec" + "llpx_sn_tc" + "llpx_sn_lreq" + "llpx_sn_drop" + "llpx_sn_lpx_sn" + "llpx_sn_frees" + "llpx_sn_llor" * ]
-          }
-        ]
         [ { "global env. slicing" * } {
              [ [ "" ] "gget ( ⬇[?] ? ≡ ? )" "gget_gget" * ]
           }
@@ -368,10 +353,4 @@ class "italic"            { 2 }
              [ [ "" ] "lsuby ( ? ⊆[?,?] ? )" "lsuby_lsuby" * ]
           }
         ]
-        [ { "pointwise extension of a relation" * } {
-             [ [ "" ] "lpx_sn" "lpx_sn_alt" + "lpx_sn_drop" + "lpx_sn_lpx_sn" * ]
-          }
-        ]
-             [ [ "" ] "cpx_lreq" + "cpr_cir" + "fpb_lift" + "fpbq_lift" ]
-             [ [ "" ] "lleq ( ? ≡[?,?] ? )" "lleq_alt" + "lleq_alt_rec" + "lleq_lreq" + "lleq_drop" + "lleq_fqus" + "lleq_llor" + "lleq_lleq" * ]
 *)

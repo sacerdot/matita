@@ -12,8 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
+include "basic_2/rt_transition/fpb_ffdeq.ma".
+include "basic_2/rt_computation/fsb.ma".
 
-notation "hvbox( ⦥ [ term 46 h, break term 46 o ] ⦃ break term 46 G, break term 46 L, break term 46 T ⦄ )"
-   non associative with precedence 45
-   for @{ 'BTSN $h $o $G $L $T }.
+(* STRONGLY NORMALIZING CLOSURES FOR PARALLEL RST-TRANSITION ****************)
+
+(* Properties with degree-based equivalence for closures ********************)
+
+lemma fsb_ffdeq_trans: ∀h,o,G1,L1,T1. ≥[h, o] 𝐒⦃G1, L1, T1⦄ →
+                       ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≛[h, o] ⦃G2, L2, T2⦄ → ≥[h, o] 𝐒⦃G2, L2, T2⦄.
+#h #o #G1 #L1 #T1 #H @(fsb_ind_alt … H) -G1 -L1 -T1 
+#G1 #L1 #T1 #_ #IH #G2 #L2 #T2 #H12
+@fsb_intro #G #L #T #H2
+elim (ffdeq_fpb_trans … H12 … H2) -G2 -L2 -T2
+/2 width=5 by/
+qed-.
