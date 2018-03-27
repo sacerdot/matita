@@ -66,19 +66,17 @@ lemma cpxs_fqus_lfpxs_fpbs: ∀h,o,G1,L1,T1,T. ⦃G1, L1⦄ ⊢ T1 ⬈*[h] T →
 
 (* Advanced properties ******************************************************)
 
-(* Basic_2A1: uses: fpbs_intro_alt *) 
-lemma fpbs_intro_star: ∀h,o,G1,L1,T1,T. ⦃G1, L1⦄ ⊢ T1 ⬈*[h] T →
-                       ∀G,L,T0. ⦃G1, L1, T⦄ ⊐* ⦃G, L, T0⦄ →
-                       ∀L0. ⦃G, L⦄ ⊢ ⬈*[h, T0] L0 →
-                       ∀G2,L2,T2. ⦃G, L0, T0⦄ ≛[h, o] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄ .
+lemma fpbs_intro_fstar: ∀h,o,G1,L1,T1,T. ⦃G1, L1⦄ ⊢ T1 ⬈*[h] T →
+                        ∀G,L,T0. ⦃G1, L1, T⦄ ⊐* ⦃G, L, T0⦄ →
+                        ∀L0. ⦃G, L⦄ ⊢ ⬈*[h, T0] L0 →
+                        ∀G2,L2,T2. ⦃G, L0, T0⦄ ≛[h, o] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄ .
 /3 width=5 by cpxs_fqus_lfpxs_fpbs, fpbs_strap1, fpbq_ffdeq/ qed.
 
 (* Advanced inversion lemmas *************************************************)
 
-(* Basic_2A1: uses: fpbs_inv_alt *) 
-lemma fpbs_inv_star: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄ →
-                     ∃∃G,L,L0,T,T0. ⦃G1, L1⦄ ⊢ T1 ⬈*[h] T & ⦃G1, L1, T⦄ ⊐* ⦃G, L, T0⦄
-                                  & ⦃G, L⦄ ⊢ ⬈*[h, T0] L0 & ⦃G, L0, T0⦄ ≛[h, o] ⦃G2, L2, T2⦄.
+lemma fpbs_inv_fstar: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄ →
+                      ∃∃G,L,L0,T,T0. ⦃G1, L1⦄ ⊢ T1 ⬈*[h] T & ⦃G1, L1, T⦄ ⊐* ⦃G, L, T0⦄
+                                   & ⦃G, L⦄ ⊢ ⬈*[h, T0] L0 & ⦃G, L0, T0⦄ ≛[h, o] ⦃G2, L2, T2⦄.
 #h #o #G1 #G2 #L1 #L2 #T1 #T2 #H @(fpbs_ind_dx … H) -G1 -L1 -T1
 [ /2 width=9 by ex4_5_intro/
 | #G1 #G0 #L1 #L0 #T1 #T0 * -G0 -L0 -T0

@@ -12,16 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/lfeq_fsle.ma".
-include "basic_2/static/lfdeq.ma".
+include "basic_2/static/ffdeq.ma".
+include "basic_2/rt_transition/cpx_lfdeq.ma".
+include "basic_2/rt_transition/lfpx_lfdeq.ma".
 
-(* DEGREE-BASED EQUIVALENCE FOR LOCAL ENVIRONMENTS ON REFERRED ENTRIES ******)
+(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS *************)
 
-(* Properties with syntactic equivalence on referred entries ****************)
+(* Properties with degree-based equivalence for closures ********************)
 
-lemma lfeq_lfdeq: ∀h,o,L1,L2. ∀T:term. L1 ≐[T] L2 → L1 ≛[h, o, T] L2.
-/2 width=3 by lfxs_co/ qed.
-
-lemma lfeq_lfdeq_trans: ∀h,o,L1,L. ∀T:term. L1 ≐[T] L →
-                        ∀L2. L ≛[h, o, T] L2 → L1 ≛[h, o, T] L2.
-/2 width=3 by lfeq_lfxs_trans/ qed-.
+lemma ffdeq_cpx_trans: ∀h,o,G1,G2,L1,L2,T1,T. ⦃G1, L1, T1⦄ ≛[h, o] ⦃G2, L2, T⦄ →
+                       ∀T2. ⦃G2, L2⦄ ⊢ T ⬈[h] T2 →
+                       ∃∃T0. ⦃G1, L1⦄ ⊢ T1 ⬈[h] T0 & ⦃G1, L1, T0⦄ ≛[h, o] ⦃G2, L2, T2⦄.
+#h #o #G1 #G2 #L1 #L2 #T1 #T #H #T2 #HT2
+elim (ffdeq_inv_gen_dx … H) -H #H #HL12 #HT1 destruct
+elim (lfdeq_cpx_trans … HL12 … HT2) #T0 #HT0 #HT02
+lapply (cpx_lfdeq_conf_dx … HT2 … HL12) -HL12 #HL12
+elim (tdeq_cpx_trans … HT1 … HT0) -T #T #HT1 #HT0
+/4 width=5 by ffdeq_intro_dx, tdeq_trans, ex2_intro/
+qed-.

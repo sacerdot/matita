@@ -12,16 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/lfeq_fsle.ma".
-include "basic_2/static/lfdeq.ma".
+include "basic_2/static/lfdeq_lfeq.ma".
+include "basic_2/static/ffdeq.ma".
 
-(* DEGREE-BASED EQUIVALENCE FOR LOCAL ENVIRONMENTS ON REFERRED ENTRIES ******)
+(* DEGREE-BASED EQUIVALENCE FOR CLOSURES ON REFERRED ENTRIES ****************)
 
 (* Properties with syntactic equivalence on referred entries ****************)
 
-lemma lfeq_lfdeq: ∀h,o,L1,L2. ∀T:term. L1 ≐[T] L2 → L1 ≛[h, o, T] L2.
-/2 width=3 by lfxs_co/ qed.
-
-lemma lfeq_lfdeq_trans: ∀h,o,L1,L. ∀T:term. L1 ≐[T] L →
-                        ∀L2. L ≛[h, o, T] L2 → L1 ≛[h, o, T] L2.
-/2 width=3 by lfeq_lfxs_trans/ qed-.
+lemma lfeq_lfdeq_trans: ∀h,o,L1,L,T1. L1 ≐[T1] L →
+                        ∀G1,G2,L2,T2. ⦃G1, L, T1⦄ ≛[h, o] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≛[h, o] ⦃G2, L2, T2⦄.
+#h #o #L1 #L #T1 #HL1 #G1 #G2 #L2 #T2 #H
+elim (ffdeq_inv_gen_sn … H) -H #H #HL2 #T12 destruct
+/3 width=3 by ffdeq_intro_sn, lfeq_lfdeq_trans/
+qed-.

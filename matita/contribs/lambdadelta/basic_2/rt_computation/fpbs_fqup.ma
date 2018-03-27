@@ -13,9 +13,16 @@
 (**************************************************************************)
 
 include "basic_2/s_computation/fqus_fqup.ma".
+include "basic_2/static/ffdeq_fqup.ma".
 include "basic_2/rt_computation/fpbs_fqus.ma".
 
 (* PARALLEL RST-COMPUTATION FOR CLOSURES ************************************)
+
+(* Advanced properties ******************************************************)
+
+lemma tdeq_fpbs_trans: ∀h,o,T1,T. T1 ≛[h, o] T →
+                       ∀G1,G2,L1,L2,T2. ⦃G1, L1, T⦄ ≥[h, o] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄.
+/3 width=5 by ffdeq_fpbs_trans, tdeq_ffdeq/ qed-.
 
 (* Properties with plus-iterated structural successor for closures **********)
 

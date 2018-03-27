@@ -87,7 +87,7 @@ table {
         [ { "uncounted context-sensitive parallel rst-computation" * } {
              [ [ "strongly normalizing for closures" ] "fsb" + "( ≥[?,?] 𝐒⦃?,?,?⦄ )" "fsb_ffdeq" + "fsb_aaa" + "fsb_csx" + "fsb_fpbg" * ]
              [ [ "proper for closures" ] "fpbg" + "( ⦃?,?,?⦄ >[?,?] ⦃?,?,?⦄ )" "fpbg_fqup" + "fpbg_cpxs" + "fpbg_lfpxs" + "fpbg_fpbs" + "fpbg_fpbg" * ]
-             [ [ "for closures" ] "fpbs" + "( ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "fpbs_fqup" + "fpbs_fqus" + "fpbs_aaa" + "fpbs_fpb" + "fpbs_cpxs" + "fpbs_lfpxs" + "fpbs_csx" + "fpbs_fpbs" * ]
+             [ [ "for closures" ] "fpbs" + "( ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "fpbs_fqup" + "fpbs_fqus" + "fpbs_aaa" + "fpbs_cpx" + "fpbs_fpb" + "fpbs_cpxs" + "fpbs_lpxs" + "fpbs_lfpxs" + "fpbs_csx" + "fpbs_fpbs" * ]
           }
         ]
         [ { "uncounted context-sensitive parallel rt-computation" * } {
@@ -125,7 +125,7 @@ table {
              [ [ "for lenvs on referred entries" ] "lfpx" + "( ⦃?,?⦄ ⊢ ⬈[?,?] ? )" "lfpx_length" + "lfpx_drops" + "lfpx_fquq" + "lfpx_fqup" + "lfpx_fsle" + "lfpx_lfdeq" + "lfpx_aaa" + "lfpx_lpx" + "lfpx_lfpx" * ]
              [ [ "for lenvs on all entries" ] "lpx" + "( ⦃?,?⦄ ⊢ ⬈[?] ? )" * ]
              [ [ "for binders" ] "cpx_ext" + "( ⦃?,?⦄ ⊢ ? ⬈[?] ? )" * ]
-             [ [ "for terms" ] "cpx" + "( ⦃?,?⦄ ⊢ ? ⬈[?] ? )" "cpx_simple" + "cpx_drops" + "cpx_fqus" + "cpx_lsubr" + "cpx_lfeq" + "cpx_lfdeq" * ]
+             [ [ "for terms" ] "cpx" + "( ⦃?,?⦄ ⊢ ? ⬈[?] ? )" "cpx_simple" + "cpx_drops" + "cpx_fqus" + "cpx_lsubr" + "cpx_lfeq" + "cpx_lfdeq" + "cpx_ffdeq" * ]
           }
         ]
         [ { "counted context-sensitive parallel rt-transition" * } {
@@ -156,7 +156,7 @@ table {
           }
         ]
         [ { "degree-based equivalence" * } {
-             [ [ "for closures on referred entries" ] "ffdeq" + "( ⦃?,?,?⦄ ≛[?,?] ⦃?,?,?⦄ )" "ffdeq_fqup" + "ffdeq_fqus" + "ffdeq_ffdeq" * ]
+             [ [ "for closures on referred entries" ] "ffdeq" + "( ⦃?,?,?⦄ ≛[?,?] ⦃?,?,?⦄ )" "ffdeq_fqup" + "ffdeq_fqus" + "ffdeq_lfeq" + "ffdeq_ffdeq" * ]
              [ [ "for lenvs on referred entries" ] "lfdeq" + "( ? ≛[?,?,?] ? )" "lfdeq_length" + "lfdeq_drops" + "lfdeq_fqup" + "lfdeq_fqus" + "lfdeq_lfeq" + "lfdeq_lfdeq" * ]
           }
         ]
