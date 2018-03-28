@@ -34,6 +34,10 @@
 
    <subsection name="A2">Stage "A2": "Extending the Applicability Condition"</subsection>
 
+   <news class="alpha" date="2018 April 16.">
+         "Big tree" theorem
+         (anniversary milestone).
+   </news>
    <news class="alpha" date="2018 March 9.">
          Support for rt-computation completed.
    </news>
