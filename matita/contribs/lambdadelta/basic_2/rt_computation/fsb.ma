@@ -41,6 +41,7 @@ lemma fsb_ind_alt: ∀h,o. ∀R: relation3 …. (
 /4 width=1 by fsb_intro/
 qed-.
 
-(* Basic_2A1: removed theorems 5:
+(* Basic_2A1: removed theorems 6:
               fsba_intro fsba_ind_alt fsba_fpbs_trans fsb_fsba fsba_inv_fsb
+              aaa_fsba
 *)

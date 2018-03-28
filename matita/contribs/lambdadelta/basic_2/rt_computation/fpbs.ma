@@ -67,6 +67,10 @@ lemma ffdeq_fpbs_trans: ∀h,o,G,G2,L,L2,T,T2. ⦃G, L, T⦄ ≥[h, o] ⦃G2, L2
                         ∀G1,L1,T1. ⦃G1, L1, T1⦄ ≛[h, o] ⦃G, L, T⦄ → ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄.
 /3 width=5 by fpbs_strap2, fpbq_ffdeq/ qed-.
 
+lemma tdeq_lfdeq_lfpx_fpbs: ∀h,o,T1,T2. T1 ≛[h, o] T2 → ∀L1,L0. L1 ≛[h, o, T2] L0 →
+                            ∀G,L2. ⦃G, L0⦄ ⊢ ⬈[h, T2] L2 → ⦃G, L1, T1⦄ ≥[h, o] ⦃G, L2, T2⦄.
+/4 width=5 by ffdeq_fpbs, fpbs_strap1, fpbq_lfpx, ffdeq_intro_dx/ qed.
+
 (* Basic_2A1: removed theorems 3:
               fpb_fpbsa_trans fpbs_fpbsa fpbsa_inv_fpbs
 *)

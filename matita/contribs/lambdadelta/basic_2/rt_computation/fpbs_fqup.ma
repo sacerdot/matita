@@ -24,6 +24,10 @@ lemma tdeq_fpbs_trans: ∀h,o,T1,T. T1 ≛[h, o] T →
                        ∀G1,G2,L1,L2,T2. ⦃G1, L1, T⦄ ≥[h, o] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄.
 /3 width=5 by ffdeq_fpbs_trans, tdeq_ffdeq/ qed-.
 
+lemma fpbs_tdeq_trans: ∀h,o,G1,G2,L1,L2,T1,T. ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T⦄ →
+                       ∀T2. T ≛[h, o] T2 →  ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄.
+/3 width=5 by fpbs_ffdeq_trans, tdeq_ffdeq/ qed-.
+
 (* Properties with plus-iterated structural successor for closures **********)
 
 lemma fqup_fpbs: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐+ ⦃G2, L2, T2⦄ →

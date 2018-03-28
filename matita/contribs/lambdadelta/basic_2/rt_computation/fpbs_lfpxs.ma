@@ -49,6 +49,10 @@ lemma lfpxs_ffdeq_fpbs: ∀h,o,G1,L1,L,T1. ⦃G1, L1⦄ ⊢ ⬈*[h, T1] L →
                         ∀G2,L2,T2. ⦃G1, L, T1⦄ ≛[h, o] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄.
 /3 width=3 by lfpxs_fpbs_trans, ffdeq_fpbs/ qed.
 
+lemma fpbs_lfpx_trans: ∀h,o,G1,G2,L1,L,T1,T2. ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L, T2⦄ →
+                       ∀L2. ⦃G2, L⦄ ⊢ ⬈[h, T2] L2 → ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄.
+/3 width=3 by fpbs_lfpxs_trans, lfpx_lfpxs/ qed-.
+
 (* Properties with star-iterated structural successor for closures **********)
 
 (* Basic_2A1: uses: fqus_lpxs_fpbs *)
@@ -63,6 +67,16 @@ lemma cpxs_fqus_lfpxs_fpbs: ∀h,o,G1,L1,T1,T. ⦃G1, L1⦄ ⊢ T1 ⬈*[h] T →
                             ∀G2,L,T2. ⦃G1, L1, T⦄ ⊐* ⦃G2, L, T2⦄ →
                             ∀L2.⦃G2, L⦄ ⊢ ⬈*[h, T2] L2 → ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄.
 /3 width=5 by cpxs_fqus_fpbs, fpbs_lfpxs_trans/ qed.
+
+lemma fpbs_cpxs_tdeq_fqup_lfpx_trans: ∀h,o,G1,G3,L1,L3,T1,T3. ⦃G1, L1, T1⦄ ≥ [h, o] ⦃G3, L3, T3⦄ →
+                                      ∀T4. ⦃G3, L3⦄ ⊢ T3 ⬈*[h] T4 → ∀T5. T4 ≛[h, o] T5 →
+                                      ∀G2,L4,T2. ⦃G3, L3, T5⦄ ⊐+ ⦃G2, L4, T2⦄ →
+                                      ∀L2. ⦃G2, L4⦄ ⊢ ⬈[h, T2] L2 → ⦃G1, L1, T1⦄ ≥ [h, o] ⦃G2, L2, T2⦄.
+#h #o #G1 #G3 #L1 #L3 #T1 #T3 #H13 #T4 #HT34 #T5 #HT45 #G2 #L4 #T2 #H34 #L2 #HL42  
+@(fpbs_lfpx_trans … HL42) -L2 (**) (* full auto too slow *)
+@(fpbs_fqup_trans … H34) -G2 -L4 -T2
+/3 width=3 by fpbs_cpxs_trans, fpbs_tdeq_trans/ 
+qed-.
 
 (* Advanced properties ******************************************************)
 
