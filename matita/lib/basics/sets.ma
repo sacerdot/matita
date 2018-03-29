@@ -10,6 +10,7 @@
       V_______________________________________________________________ *)
 
 include "basics/logic.ma".
+include "basics/core_notation/singl_1.ma".
 
 (**** a subset of A is just an object of type A→Prop ****)
 

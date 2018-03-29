@@ -243,10 +243,6 @@ for @{ 'divide $a $b }.
 notation "- term 65 a" with precedence 65 
 for @{ 'uminus $a }.
 
-notation "a !"
-  non associative with precedence 80
-for @{ 'fact $a }.
-
 notation "\sqrt a" 
   non associative with precedence 65
 for @{ 'sqrt $a }.
@@ -277,18 +273,6 @@ for @{ 'powerset $A }.
 notation > "hvbox(\Omega ^ term 90 A)" non associative with precedence 90
 for @{ 'powerset $A }.
 
-notation < "hvbox({ ident i | term 19 p })" with precedence 90
-for @{ 'subset (\lambda ${ident i} : $nonexistent . $p)}.
-
-notation > "hvbox({ ident i | term 19 p })" with precedence 90
-for @{ 'subset (\lambda ${ident i}. $p)}.
-
-notation < "hvbox({ ident i ∈ term 19 s | term 19 p })" with precedence 90
-for @{ 'comprehension $s (\lambda ${ident i} : $nonexistent . $p)}.
-
-notation > "hvbox({ ident i ∈ term 19 s | term 19 p })" with precedence 90
-for @{ 'comprehension $s (\lambda ${ident i}. $p)}.
-
 notation "hvbox(a break ∈ b)" non associative with precedence 45
 for @{ 'mem $a $b }.
 
@@ -307,20 +291,12 @@ for @{ 'intersects $a $b }. (* \cap *)
 notation "hvbox(a break ∪ b)" left associative with precedence 55
 for @{ 'union $a $b }. (* \cup *)
 
-notation "hvbox({ term 19 a })" with precedence 90 for @{ 'singl $a}.
-
 notation "hvbox(a break \approx b)" non associative with precedence 45 
   for @{ 'napart $a $b}.
         
 notation "hvbox(a break # b)" non associative with precedence 45 
   for @{ 'apart $a $b}.
-*)
-    
-notation "hvbox(a break \circ b)" 
-  left associative with precedence 60
-for @{ 'compose $a $b }.
 
-(*
 notation < "↓ \ensp a" with precedence 60 for @{ 'downarrow $a }.
 notation > "↓ a" with precedence 60 for @{ 'downarrow $a }.
 

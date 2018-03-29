@@ -1,5 +1,6 @@
 
 include "tutorial/chapter5.ma".
+include "basics/core_notation/singl_1.ma".
 
 (*************************** Naive Set Theory *********************************)
 

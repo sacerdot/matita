@@ -14,6 +14,7 @@
 
 include "arithmetics/nat.ma".
 include "basics/lists/list.ma".
+include "basics/core_notation/singl_1.ma".
 
 interpretation "iff" 'iff a b = (iff a b).  
 

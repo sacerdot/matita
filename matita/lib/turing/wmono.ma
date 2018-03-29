@@ -11,6 +11,7 @@
 
 include "basics/vectors.ma".
 include "basics/finset.ma".
+include "basics/core_notation/compose_2.ma".
 (* include "basics/relations.ma". *)
 
 record tape (sig:FinSet): Type[0] ≝ 

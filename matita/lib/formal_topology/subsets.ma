@@ -13,6 +13,8 @@
 (**************************************************************************)
 
 include "formal_topology/categories.ma".
+include "basics/core_notation/singl_1.ma".
+include "basics/core_notation/subset_1.ma".
 (*
 record powerset_carrier (A: objs1 SET) : Type[1] ≝ { mem_operator: A ⇒_1 CPROP }.
 interpretation "powerset low" 'powerset A = (powerset_carrier A).

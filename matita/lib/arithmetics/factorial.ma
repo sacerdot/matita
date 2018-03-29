@@ -10,6 +10,7 @@
       V_______________________________________________________________ *)
 
 include "arithmetics/exp.ma".
+include "basics/core_notation/fact_1.ma".
 
 let rec fact n ≝
   match n with 

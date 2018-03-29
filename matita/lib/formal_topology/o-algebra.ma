@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basics/core_notation/comprehension_2.ma".
 include "formal_topology/categories.ma".
 (*
 inductive bool : Type[0] := true : bool | false : bool.

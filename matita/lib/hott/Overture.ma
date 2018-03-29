@@ -1,4 +1,5 @@
 include "hott/types.ma".
+include "basics/core_notation/compose_2.ma".
 
 (* * * Basic definitions of homotopy type theory, particularly the groupoid structure of identity types. *)
 

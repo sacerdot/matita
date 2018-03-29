@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basics/core_notation/comprehension_2.ma".
 include "formal_topology/subsets.ma".
 (*
 record binary_relation (A,B: SET) : Type[1] ≝
