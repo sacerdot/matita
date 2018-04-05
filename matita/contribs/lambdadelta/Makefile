@@ -70,7 +70,7 @@ xoa: $(XOA_TARGETS)
 
 $(XOA_TARGETS): $(XOA_CONF)
 	@echo "  EXEC $(XOA) $(XOA_CONF)"
-	$(H)MATITA_RT_BASE_DIR=../.. $(XOA_DIR)/$(XOA) $(XOA_OPTS)
+	$(H)$(XOA_DIR)/$(XOA) $(XOA_OPTS)
 
 # xoa2 #######################################################################
 

@@ -35,8 +35,9 @@ let mk_exists ooch noch c v =
       if v = 1 then P.sprintf "%s%u" s c else P.sprintf "%s%u_%u" s c v
    in
    let o_name = name "ex" in
-   let i_name = "'Ex" in
-
+   let i_name =
+      if v = 1 then "'Ex" else P.sprintf "'Ex%u" v
+   in
    let set n      = P.sprintf "A%u" (v - n) in
    let set_list   = string_iter "," set v in   
    let set_type   = string_iter "→" set v in
