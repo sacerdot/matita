@@ -44,7 +44,7 @@ qed.
 
 (* Basic_2A1: uses: lsx_lref_be *)
 lemma lfsx_lref_pair_drops: ∀h,o,G,K,V. ⦃G, K⦄ ⊢ ⬈*[h, o] 𝐒⦃V⦄ → G ⊢ ⬈*[h, o, V] 𝐒⦃K⦄ →
-                            ∀I,i,L. ⬇*[i] L ≡ K.ⓑ{I}V → G ⊢ ⬈*[h, o, #i] 𝐒⦃L⦄.
+                            ∀I,i,L. ⬇*[i] L ≘ K.ⓑ{I}V → G ⊢ ⬈*[h, o, #i] 𝐒⦃L⦄.
 #h #o #G #K #V #HV #HK #I #i elim i -i
 [ #L #H >(drops_fwd_isid … H) -H /2 width=3 by lfsx_pair_lpxs/
 | #i #IH #L #H

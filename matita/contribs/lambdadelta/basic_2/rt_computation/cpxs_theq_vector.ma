@@ -44,8 +44,8 @@ elim (cpxs_inv_appl1 … H) -H *
 qed-.
 
 (* Basic_2A1: was: cpxs_fwd_delta_vector *)
-lemma cpxs_fwd_delta_drops_vector: ∀h,o,I,G,L,K,V1,i. ⬇*[i] L ≡ K.ⓑ{I}V1 →
-                                   ∀V2. ⬆*[⫯i] V1 ≡ V2 →
+lemma cpxs_fwd_delta_drops_vector: ∀h,o,I,G,L,K,V1,i. ⬇*[i] L ≘ K.ⓑ{I}V1 →
+                                   ∀V2. ⬆*[⫯i] V1 ≘ V2 →
                                    ∀Vs,U. ⦃G, L⦄ ⊢ ⒶVs.#i ⬈*[h] U →
                                    ⒶVs.#i ⩳[h, o] U ∨ ⦃G, L⦄ ⊢ ⒶVs.V2 ⬈*[h] U.
 #h #o #I #G #L #K #V1 #i #HLK #V2 #HV12 #Vs elim Vs -Vs /2 width=5 by cpxs_fwd_delta_drops/
@@ -94,7 +94,7 @@ elim (cpxs_inv_appl1 … H) -H *
 qed-.
 
 (* Basic_1: was just: pr3_iso_appls_abbr *)
-lemma cpxs_fwd_theta_vector: ∀h,o,G,L,V1b,V2b. ⬆*[1] V1b ≡ V2b →
+lemma cpxs_fwd_theta_vector: ∀h,o,G,L,V1b,V2b. ⬆*[1] V1b ≘ V2b →
                              ∀p,V,T,U. ⦃G, L⦄ ⊢ ⒶV1b.ⓓ{p}V.T ⬈*[h] U →
                              ⒶV1b.ⓓ{p}V.T ⩳[h, o] U ∨ ⦃G, L⦄ ⊢ ⓓ{p}V.ⒶV2b.T ⬈*[h] U.
 #h #o #G #L #V1b #V2b * -V1b -V2b /3 width=1 by or_intror/

@@ -18,7 +18,7 @@ include "ground_2/relocation/rtmap_fcla.ma".
 (* RELOCATION MAP ***********************************************************)
 
 definition isfin: predicate rtmap ≝
-                  λf. ∃n. 𝐂⦃f⦄ ≡ n.
+                  λf. ∃n. 𝐂⦃f⦄ ≘ n.
 
 interpretation "test for finite colength (rtmap)"
    'IsFinite f = (isfin f).

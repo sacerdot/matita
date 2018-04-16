@@ -18,7 +18,7 @@ include "basic_2/conversion/cpc.ma".
 (* CONTEXT-SENSITIVE PARALLEL EQUIVALENCE ON TERMS **************************)
 
 definition cpcs: relation4 genv lenv term term ≝
-           λG. LTC … (cpc G).
+           λG. CTC … (cpc G).
 
 interpretation "context-sensitive parallel equivalence (term)"
    'PConvStar G L T1 T2 = (cpcs G L T1 T2).

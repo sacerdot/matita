@@ -31,9 +31,9 @@ definition lfxs_fsle_compatible: predicate (relation3 …) ≝ λRN.
 (* Basic inversions with free variables inclusion for restricted closures ***)
 
 lemma frees_lexs_conf: ∀R. lfxs_fsge_compatible R →
-                       ∀L1,T,f1. L1 ⊢ 𝐅*⦃T⦄ ≡ f1 →
+                       ∀L1,T,f1. L1 ⊢ 𝐅*⦃T⦄ ≘ f1 →
                        ∀L2. L1 ⪤*[cext2 R, cfull, f1] L2 →
-                       ∃∃f2. L2 ⊢ 𝐅*⦃T⦄ ≡ f2 & f2 ⊆ f1.
+                       ∃∃f2. L2 ⊢ 𝐅*⦃T⦄ ≘ f2 & f2 ⊆ f1.
 #R #HR #L1 #T #f1 #Hf1 #L2 #H1L
 lapply (HR L1 L2 T ?) /2 width=3 by ex2_intro/ #H2L
 @(fsle_frees_trans_eq … H2L … Hf1) /3 width=4 by lexs_fwd_length, sym_eq/

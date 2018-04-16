@@ -19,9 +19,9 @@ include "basic_2/static/lfdeq.ma".
 
 (* Properties with syntactic equivalence on referred entries ****************)
 
-lemma lfeq_lfdeq: ∀h,o,L1,L2. ∀T:term. L1 ≐[T] L2 → L1 ≛[h, o, T] L2.
+lemma lfeq_lfdeq: ∀h,o,L1,L2. ∀T:term. L1 ≡[T] L2 → L1 ≛[h, o, T] L2.
 /2 width=3 by lfxs_co/ qed.
 
-lemma lfeq_lfdeq_trans: ∀h,o,L1,L. ∀T:term. L1 ≐[T] L →
+lemma lfeq_lfdeq_trans: ∀h,o,L1,L. ∀T:term. L1 ≡[T] L →
                         ∀L2. L ≛[h, o, T] L2 → L1 ≛[h, o, T] L2.
 /2 width=3 by lfeq_lfxs_trans/ qed-.

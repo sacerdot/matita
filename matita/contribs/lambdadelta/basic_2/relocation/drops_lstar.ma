@@ -21,7 +21,7 @@ include "basic_2/relocation/lreq_lreq.ma".
 (* Properties with reflexive and transitive closure *************************)
 
 (* Basic_2A1: was: d_liftable_LTC *)
-lemma d2_liftable_sn_LTC: ∀C,S,R. d_liftable2_sn C S R → d_liftable2_sn C S (LTC … R).
+lemma d2_liftable_sn_CTC: ∀C,S,R. d_liftable2_sn C S R → d_liftable2_sn C S (CTC … R).
 #C #S #R #HR #K #T1 #T2 #H elim H -T2
 [ #T2 #HT12 #b #f #L #HLK #U1 #HTU1
   elim (HR … HT12 … HLK … HTU1) /3 width=3 by inj, ex2_intro/
@@ -32,7 +32,7 @@ lemma d2_liftable_sn_LTC: ∀C,S,R. d_liftable2_sn C S R → d_liftable2_sn C S 
 qed-.
 
 (* Basic_2A1: was: d_deliftable_sn_LTC *)
-lemma d2_deliftable_sn_LTC: ∀C,S,R. d_deliftable2_sn C S R → d_deliftable2_sn C S (LTC … R).
+lemma d2_deliftable_sn_CTC: ∀C,S,R. d_deliftable2_sn C S R → d_deliftable2_sn C S (CTC … R).
 #C #S #R #HR #L #U1 #U2 #H elim H -U2
 [ #U2 #HU12 #b #f #K #HLK #T1 #HTU1
   elim (HR … HU12 … HLK … HTU1) -HR -L -U1 /3 width=3 by inj, ex2_intro/
@@ -42,7 +42,7 @@ lemma d2_deliftable_sn_LTC: ∀C,S,R. d_deliftable2_sn C S R → d_deliftable2_s
 ]
 qed-.
 
-lemma co_dropable_sn_TC: ∀R. co_dropable_sn R → co_dropable_sn (LTC … R).
+lemma co_dropable_sn_TC: ∀R. co_dropable_sn R → co_dropable_sn (CTC … R).
 #R #HR #b #f #L1 #K1 #HLK1 #Hf #f2 #L2 #H elim H -L2
 [ #L2 #HL12 #f1 #H elim (HR … HLK1 … Hf … HL12 … H) -HR -Hf -f2 -L1
   /3 width=3 by inj, ex2_intro/
@@ -73,7 +73,7 @@ lemma d2_deliftable_sn_llstar: ∀C,S,R. d_deliftable2_sn C S R →
 ]
 qed-.
 
-lemma co_dropable_dx_TC: ∀R. co_dropable_dx R → co_dropable_dx (LTC … R).
+lemma co_dropable_dx_TC: ∀R. co_dropable_dx R → co_dropable_dx (CTC … R).
 #R #HR #f2 #L1 #L2 #H elim H -L2
 [ #L2 #HL12 #b #f #K2 #HLK2 #Hf #f1 #Hf2 elim (HR … HL12 … HLK2 … Hf … Hf2) -HR -Hf -f2 -L2
   /3 width=3 by inj, ex2_intro/
@@ -83,7 +83,7 @@ lemma co_dropable_dx_TC: ∀R. co_dropable_dx R → co_dropable_dx (LTC … R).
 ]
 qed-.
 
-lemma co_dedropable_sn_TC: ∀R. co_dedropable_sn R → co_dedropable_sn (LTC … R).
+lemma co_dedropable_sn_TC: ∀R. co_dedropable_sn R → co_dedropable_sn (CTC … R).
 #R #HR #b #f #L1 #K1 #HLK1 #f1 #K2 #H elim H -K2
 [ #K2 #HK12 #f2 #Hf elim (HR … HLK1 … HK12 … Hf) -HR -f1 -K1
   /3 width=4 by inj, ex3_intro/

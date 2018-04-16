@@ -25,12 +25,12 @@ lemma lfpxs_pair_refl: ∀h,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ⬈*[h] V2 →
 /2 width=1 by tc_lfxs_pair_refl/ qed.
 
 lemma lfpxs_cpx_trans: ∀h,G. s_r_transitive … (cpx h G) (lfpxs h G).
-#h #G @s_r_trans_LTC2 @lfpx_cpxs_trans (**) (* auto fails *)
+#h #G @s_r_trans_CTC2 @lfpx_cpxs_trans (**) (* auto fails *)
 qed-.
 
-(* Note: lfpxs_cpx_conf does not hold, thus we cannot invoke s_r_trans_LTC1 *)
+(* Note: lfpxs_cpx_conf does not hold, thus we cannot invoke s_r_trans_CTC1 *)
 lemma lfpxs_cpxs_trans: ∀h,G. s_rs_transitive … (cpx h G) (lfpxs h G).
-#h #G @s_r_to_s_rs_trans @s_r_trans_LTC2
+#h #G @s_r_to_s_rs_trans @s_r_trans_CTC2
 @s_rs_trans_TC1 /2 width=3 by lfpx_cpxs_trans/ (**) (* full auto too slow *)
 qed-.
 
@@ -57,7 +57,7 @@ lemma cpxs_inv_abbr1: ∀h,p,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓓ{p}V1.T1 ⬈*[h] U2
                       ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ⬈*[h] V2 & ⦃G, L.ⓓV1⦄ ⊢ T1 ⬈*[h] T2 &
                                U2 = ⓓ{p}V2.T2
                       ) ∨
-                      ∃∃T2. ⦃G, L.ⓓV1⦄ ⊢ T1 ⬈*[h] T2 & ⬆*[1] U2 ≡ T2 & p = true.
+                      ∃∃T2. ⦃G, L.ⓓV1⦄ ⊢ T1 ⬈*[h] T2 & ⬆*[1] U2 ≘ T2 & p = true.
 #h #p #G #L #V1 #T1 #U2 #H @(cpxs_ind … H) -U2 /3 width=5 by ex3_2_intro, or_introl/
 #U0 #U2 #_ #HU02 * *
 [ #V0 #T0 #HV10 #HT10 #H destruct

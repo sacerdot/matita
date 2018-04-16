@@ -20,5 +20,5 @@ include "basic_2/rt_computation/cpxs.ma".
 (* Properties with restricted refinement for local environments *************)
 
 lemma lsubr_cpxs_trans: ∀h,G. lsub_trans … (cpxs h G) lsubr.
-/3 width=5 by lsubr_cpx_trans, LTC_lsub_trans/
+/3 width=5 by lsubr_cpx_trans, CTC_lsub_trans/
 qed-.

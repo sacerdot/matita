@@ -31,7 +31,7 @@ qed.
 lemma lfxs_inv_lex_lfeq: ∀R. c_reflexive … R →
                          lfxs_fsge_compatible R →
                          ∀L1,L2,T. L1 ⪤*[R, T] L2 →
-                         ∃∃L. L1 ⪤[R] L & L ≐[T] L2.
+                         ∃∃L. L1 ⪤[R] L & L ≡[T] L2.
 #R #H1R #H2R #L1 #L2 #T * #f1 #Hf1 #HL
 elim (lexs_sdj_split … ceq_ext … HL 𝐈𝐝 ?) -HL
 [ #L0 #HL10 #HL02 |*: /2 width=1 by ext2_refl, sdj_isid_dx/ ] -H1R

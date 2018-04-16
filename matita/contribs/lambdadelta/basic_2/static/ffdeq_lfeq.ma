@@ -19,7 +19,7 @@ include "basic_2/static/ffdeq.ma".
 
 (* Properties with syntactic equivalence on referred entries ****************)
 
-lemma lfeq_lfdeq_trans: ∀h,o,L1,L,T1. L1 ≐[T1] L →
+lemma lfeq_lfdeq_trans: ∀h,o,L1,L,T1. L1 ≡[T1] L →
                         ∀G1,G2,L2,T2. ⦃G1, L, T1⦄ ≛[h, o] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≛[h, o] ⦃G2, L2, T2⦄.
 #h #o #L1 #L #T1 #HL1 #G1 #G2 #L2 #T2 #H
 elim (ffdeq_inv_gen_sn … H) -H #H #HL2 #T12 destruct

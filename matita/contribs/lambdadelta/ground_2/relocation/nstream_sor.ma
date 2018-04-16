@@ -23,4 +23,4 @@ interpretation "union (nstream)"
 
 (* Specific properties on sor ***********************************************)
 
-axiom sor_total: ∀f1,f2. f1 ⋓ f2 ≡ f1 ∪ f2.
+axiom sor_total: ∀f1,f2. f1 ⋓ f2 ≘ f1 ∪ f2.

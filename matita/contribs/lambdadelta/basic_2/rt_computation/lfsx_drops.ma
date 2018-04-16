@@ -44,13 +44,13 @@ qed-.
 (* Advanced properties ******************************************************)
 
 (* Basic_2A1: uses: lsx_lref_free *)
-lemma lfsx_lref_atom: ∀h,o,G,L,i. ⬇*[Ⓕ, 𝐔❴i❵] L ≡ ⋆ → G ⊢ ⬈*[h, o, #i] 𝐒⦃L⦄.
+lemma lfsx_lref_atom: ∀h,o,G,L,i. ⬇*[Ⓕ, 𝐔❴i❵] L ≘ ⋆ → G ⊢ ⬈*[h, o, #i] 𝐒⦃L⦄.
 #h #o #G #L1 #i #HL1
 @(lfsx_lifts … (#0) … HL1) -HL1 //
 qed.
 
 (* Basic_2A1: uses: lsx_lref_skip *)
-lemma lfsx_lref_unit: ∀h,o,I,G,L,K,i. ⬇*[i] L ≡ K.ⓤ{I} → G ⊢ ⬈*[h, o, #i] 𝐒⦃L⦄.
+lemma lfsx_lref_unit: ∀h,o,I,G,L,K,i. ⬇*[i] L ≘ K.ⓤ{I} → G ⊢ ⬈*[h, o, #i] 𝐒⦃L⦄.
 #h #o #I #G #L1 #K1 #i #HL1
 @(lfsx_lifts … (#0) … HL1) -HL1 //
 qed.
@@ -59,7 +59,7 @@ qed.
 
 (* Basic_2A1: uses: lsx_fwd_lref_be *)
 lemma lfsx_fwd_lref_pair: ∀h,o,G,L,i. G ⊢ ⬈*[h, o, #i] 𝐒⦃L⦄ →
-                          ∀I,K,V. ⬇*[i] L ≡ K.ⓑ{I}V → G ⊢ ⬈*[h, o, V] 𝐒⦃K⦄.
+                          ∀I,K,V. ⬇*[i] L ≘ K.ⓑ{I}V → G ⊢ ⬈*[h, o, V] 𝐒⦃K⦄.
 #h #o #G #L #i #HL #I #K #V #HLK
 lapply (lfsx_inv_lifts … HL … HLK … (#0) ?) -L
 /2 width=2 by lfsx_fwd_pair/

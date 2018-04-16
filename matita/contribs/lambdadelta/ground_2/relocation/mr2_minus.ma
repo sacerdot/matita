@@ -30,7 +30,7 @@ interpretation "minus (multiple relocation with pairs)"
 
 (* Basic inversion lemmas ***************************************************)
 
-fact minuss_inv_nil1_aux: ∀cs1,cs2,i. cs1 ▭ i ≡ cs2 → cs1 = ◊ → cs2 = ◊.
+fact minuss_inv_nil1_aux: ∀cs1,cs2,i. cs1 ▭ i ≘ cs2 → cs1 = ◊ → cs2 = ◊.
 #cs1 #cs2 #i * -cs1 -cs2 -i
 [ //
 | #cs1 #cs2 #l #m #i #_ #_ #H destruct
@@ -38,13 +38,13 @@ fact minuss_inv_nil1_aux: ∀cs1,cs2,i. cs1 ▭ i ≡ cs2 → cs1 = ◊ → cs2 
 ]
 qed-.
 
-lemma minuss_inv_nil1: ∀cs2,i. ◊ ▭ i ≡ cs2 → cs2 = ◊.
+lemma minuss_inv_nil1: ∀cs2,i. ◊ ▭ i ≘ cs2 → cs2 = ◊.
 /2 width=4 by minuss_inv_nil1_aux/ qed-.
 
-fact minuss_inv_cons1_aux: ∀cs1,cs2,i. cs1 ▭ i ≡ cs2 →
+fact minuss_inv_cons1_aux: ∀cs1,cs2,i. cs1 ▭ i ≘ cs2 →
                            ∀l,m,cs. cs1 = {l, m} @ cs →
-                           l ≤ i ∧ cs ▭ m + i ≡ cs2 ∨
-                           ∃∃cs0. i < l & cs ▭ i ≡ cs0 &
+                           l ≤ i ∧ cs ▭ m + i ≘ cs2 ∨
+                           ∃∃cs0. i < l & cs ▭ i ≘ cs0 &
                                    cs2 = {l - i, m} @ cs0.
 #cs1 #cs2 #i * -cs1 -cs2 -i
 [ #i #l #m #cs #H destruct
@@ -53,22 +53,22 @@ fact minuss_inv_cons1_aux: ∀cs1,cs2,i. cs1 ▭ i ≡ cs2 →
 ]
 qed-.
 
-lemma minuss_inv_cons1: ∀cs1,cs2,l,m,i. {l, m} @ cs1 ▭ i ≡ cs2 →
-                        l ≤ i ∧ cs1 ▭ m + i ≡ cs2 ∨
-                        ∃∃cs. i < l & cs1 ▭ i ≡ cs &
+lemma minuss_inv_cons1: ∀cs1,cs2,l,m,i. {l, m} @ cs1 ▭ i ≘ cs2 →
+                        l ≤ i ∧ cs1 ▭ m + i ≘ cs2 ∨
+                        ∃∃cs. i < l & cs1 ▭ i ≘ cs &
                                cs2 = {l - i, m} @ cs.
 /2 width=3 by minuss_inv_cons1_aux/ qed-.
 
-lemma minuss_inv_cons1_ge: ∀cs1,cs2,l,m,i. {l, m} @ cs1 ▭ i ≡ cs2 →
-                           l ≤ i → cs1 ▭ m + i ≡ cs2.
+lemma minuss_inv_cons1_ge: ∀cs1,cs2,l,m,i. {l, m} @ cs1 ▭ i ≘ cs2 →
+                           l ≤ i → cs1 ▭ m + i ≘ cs2.
 #cs1 #cs2 #l #m #i #H
 elim (minuss_inv_cons1 … H) -H * // #cs #Hil #_ #_ #Hli
 elim (lt_le_false … Hil Hli)
 qed-.
 
-lemma minuss_inv_cons1_lt: ∀cs1,cs2,l,m,i. {l, m} @ cs1 ▭ i ≡ cs2 →
+lemma minuss_inv_cons1_lt: ∀cs1,cs2,l,m,i. {l, m} @ cs1 ▭ i ≘ cs2 →
                            i < l →
-                           ∃∃cs. cs1 ▭ i ≡ cs & cs2 = {l - i, m} @ cs.
+                           ∃∃cs. cs1 ▭ i ≘ cs & cs2 = {l - i, m} @ cs.
 #cs1 #cs2 #l #m #i #H elim (minuss_inv_cons1 … H) -H * /2 width=3 by ex2_intro/
 #Hli #_ #Hil elim (lt_le_false … Hil Hli)
 qed-.

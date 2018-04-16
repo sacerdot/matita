@@ -32,8 +32,8 @@ qed-.
 
 (* Basic_2A1: uses: lleq_lift_le lleq_lift_ge *)
 lemma lfdeq_lifts_bi: ∀L1,L2. |L1| = |L2| → ∀h,o,K1,K2,T. K1 ≛[h, o, T] K2 →
-                      ∀b,f. ⬇*[b, f] L1 ≡ K1 → ⬇*[b, f] L2 ≡ K2 →
-                      ∀U. ⬆*[f] T ≡ U → L1 ≛[h, o, U] L2.
+                      ∀b,f. ⬇*[b, f] L1 ≘ K1 → ⬇*[b, f] L2 ≘ K2 →
+                      ∀U. ⬆*[f] T ≘ U → L1 ≛[h, o, U] L2.
 /3 width=9 by lfxs_lifts_bi, tdeq_lifts_sn/ qed-.
 
 (* Forward lemmas with length for local environments ************************)

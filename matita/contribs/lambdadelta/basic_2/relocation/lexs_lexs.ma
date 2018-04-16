@@ -21,8 +21,8 @@ include "basic_2/relocation/drops.ma".
 
 theorem lexs_trans_gen (RN1) (RP1) (RN2) (RP2) (RN) (RP):
                        ∀L1,f.
-                       (∀g,I,K,n. ⬇*[n] L1 ≡ K.ⓘ{I} → ⫯g = ⫱*[n] f → lexs_transitive RN1 RN2 RN RN1 RP1 g K I) →
-                       (∀g,I,K,n. ⬇*[n] L1 ≡ K.ⓘ{I} → ↑g = ⫱*[n] f → lexs_transitive RP1 RP2 RP RN1 RP1 g K I) →
+                       (∀g,I,K,n. ⬇*[n] L1 ≘ K.ⓘ{I} → ⫯g = ⫱*[n] f → lexs_transitive RN1 RN2 RN RN1 RP1 g K I) →
+                       (∀g,I,K,n. ⬇*[n] L1 ≘ K.ⓘ{I} → ↑g = ⫱*[n] f → lexs_transitive RP1 RP2 RP RN1 RP1 g K I) →
                        ∀L0. L1 ⪤*[RN1, RP1, f] L0 →
                        ∀L2. L0 ⪤*[RN2, RP2, f] L2 →
                        L1 ⪤*[RN, RP, f] L2.
@@ -64,8 +64,8 @@ qed-.
 (* Basic_2A1: includes: lpx_sn_conf *)
 theorem lexs_conf (RN1) (RP1) (RN2) (RP2):
                   ∀L,f.
-                  (∀g,I,K,n. ⬇*[n] L ≡ K.ⓘ{I} → ⫯g = ⫱*[n] f → R_pw_confluent2_lexs RN1 RN2 RN1 RP1 RN2 RP2 g K I) →
-                  (∀g,I,K,n. ⬇*[n] L ≡ K.ⓘ{I} → ↑g = ⫱*[n] f → R_pw_confluent2_lexs RP1 RP2 RN1 RP1 RN2 RP2 g K I) →
+                  (∀g,I,K,n. ⬇*[n] L ≘ K.ⓘ{I} → ⫯g = ⫱*[n] f → R_pw_confluent2_lexs RN1 RN2 RN1 RP1 RN2 RP2 g K I) →
+                  (∀g,I,K,n. ⬇*[n] L ≘ K.ⓘ{I} → ↑g = ⫱*[n] f → R_pw_confluent2_lexs RP1 RP2 RN1 RP1 RN2 RP2 g K I) →
                   pw_confluent2 … (lexs RN1 RP1 f) (lexs RN2 RP2 f) L.
 #RN1 #RP1 #RN2 #RP2 #L elim L -L
 [ #f #_ #_ #L1 #H1 #L2 #H2 >(lexs_inv_atom1 … H1) >(lexs_inv_atom1 … H2) -H2 -H1
@@ -97,7 +97,7 @@ theorem lexs_canc_dx: ∀RN,RP,f. Transitive … (lexs RN RP f) →
 lemma lexs_meet: ∀RN,RP,L1,L2.
                  ∀f1. L1 ⪤*[RN, RP, f1] L2 →
                  ∀f2. L1 ⪤*[RN, RP, f2] L2 →
-                 ∀f. f1 ⋒ f2 ≡ f → L1 ⪤*[RN, RP, f] L2.
+                 ∀f. f1 ⋒ f2 ≘ f → L1 ⪤*[RN, RP, f] L2.
 #RN #RP #L1 #L2 #f1 #H elim H -f1 -L1 -L2 //
 #f1 #I1 #I2 #L1 #L2 #_ #HI12 #IH #f2 #H #f #Hf
 elim (pn_split f2) * #g2 #H2 destruct
@@ -110,7 +110,7 @@ qed-.
 lemma lexs_join: ∀RN,RP,L1,L2.
                  ∀f1. L1 ⪤*[RN, RP, f1] L2 →
                  ∀f2. L1 ⪤*[RN, RP, f2] L2 →
-                 ∀f. f1 ⋓ f2 ≡ f → L1 ⪤*[RN, RP, f] L2.
+                 ∀f. f1 ⋓ f2 ≘ f → L1 ⪤*[RN, RP, f] L2.
 #RN #RP #L1 #L2 #f1 #H elim H -f1 -L1 -L2 //
 #f1 #I1 #I2 #L1 #L2 #_ #HI12 #IH #f2 #H #f #Hf
 elim (pn_split f2) * #g2 #H2 destruct

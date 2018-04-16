@@ -20,8 +20,8 @@ include "basic_2/dynamic/snv.ma".
 
 (* Relocation properties ****************************************************)
 
-lemma snv_lift: ∀h,o,G,K,T. ⦃G, K⦄ ⊢ T ¡[h, o] → ∀L,b,l,k. ⬇[b, l, k] L ≡ K →
-                ∀U. ⬆[l, k] T ≡ U → ⦃G, L⦄ ⊢ U ¡[h, o].
+lemma snv_lift: ∀h,o,G,K,T. ⦃G, K⦄ ⊢ T ¡[h, o] → ∀L,b,l,k. ⬇[b, l, k] L ≘ K →
+                ∀U. ⬆[l, k] T ≘ U → ⦃G, L⦄ ⊢ U ¡[h, o].
 #h #o #G #K #T #H elim H -G -K -T
 [ #G #K #s #L #b #l #k #_ #X #H
   >(lift_inv_sort1 … H) -X -K -l -k //
@@ -48,8 +48,8 @@ lemma snv_lift: ∀h,o,G,K,T. ⦃G, K⦄ ⊢ T ¡[h, o] → ∀L,b,l,k. ⬇[b, l
 ]
 qed.
 
-lemma snv_inv_lift: ∀h,o,G,L,U. ⦃G, L⦄ ⊢ U ¡[h, o] → ∀K,b,l,k. ⬇[b, l, k] L ≡ K →
-                    ∀T. ⬆[l, k] T ≡ U → ⦃G, K⦄ ⊢ T ¡[h, o].
+lemma snv_inv_lift: ∀h,o,G,L,U. ⦃G, L⦄ ⊢ U ¡[h, o] → ∀K,b,l,k. ⬇[b, l, k] L ≘ K →
+                    ∀T. ⬆[l, k] T ≘ U → ⦃G, K⦄ ⊢ T ¡[h, o].
 #h #o #G #L #U #H elim H -G -L -U
 [ #G #L #s #K #b #l #k #_ #X #H
   >(lift_inv_sort2 … H) -X -L -l -k //

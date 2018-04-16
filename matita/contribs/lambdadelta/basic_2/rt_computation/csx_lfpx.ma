@@ -60,7 +60,7 @@ elim (cpx_inv_abbr1 … H1) -H1 *
 ]
 qed.
 
-fact csx_appl_theta_aux: ∀h,o,p,G,L,U. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃U⦄ → ∀V1,V2. ⬆*[1] V1 ≡ V2 →
+fact csx_appl_theta_aux: ∀h,o,p,G,L,U. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃U⦄ → ∀V1,V2. ⬆*[1] V1 ≘ V2 →
                          ∀V,T. U = ⓓ{p}V.ⓐV2.T → ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃ⓐV1.ⓓ{p}V.T⦄.
 #h #o #p #G #L #X #H @(csx_ind_cpxs … H) -X
 #X #HVT #IHVT #V1 #V2 #HV12 #V #T #H destruct
@@ -95,5 +95,5 @@ elim (cpx_inv_appl1 … HL) -HL *
 qed-.
 
 lemma csx_appl_theta: ∀h,o,p,G,L,V,V2,T. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃ⓓ{p}V.ⓐV2.T⦄ →
-                      ∀V1. ⬆*[1] V1 ≡ V2 → ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃ⓐV1.ⓓ{p}V.T⦄.
+                      ∀V1. ⬆*[1] V1 ≘ V2 → ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃ⓐV1.ⓓ{p}V.T⦄.
 /2 width=5 by csx_appl_theta_aux/ qed.

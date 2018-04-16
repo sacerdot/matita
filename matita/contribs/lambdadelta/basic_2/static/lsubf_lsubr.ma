@@ -44,8 +44,8 @@ elim (isid_inv_gen … Hf2) -Hf2 #g2 #Hg2 #H destruct
 /3 width=1 by lsubf_push/
 qed.
 
-lemma lsubr_lsubf: ∀f2,L2,T. L2 ⊢ 𝐅*⦃T⦄ ≡ f2 → ∀L1. L1 ⫃ L2 →
-                   ∀f1. L1 ⊢ 𝐅*⦃T⦄ ≡ f1 → ⦃L1, f1⦄ ⫃𝐅* ⦃L2, f2⦄.
+lemma lsubr_lsubf: ∀f2,L2,T. L2 ⊢ 𝐅*⦃T⦄ ≘ f2 → ∀L1. L1 ⫃ L2 →
+                   ∀f1. L1 ⊢ 𝐅*⦃T⦄ ≘ f1 → ⦃L1, f1⦄ ⫃𝐅* ⦃L2, f2⦄.
 #f2 #L2 #T #H elim H -f2 -L2 -T
 [ #f2 #L2 #s #Hf2 #L1 #HL12 #f1 #Hf1
   lapply (frees_inv_sort … Hf1) -Hf1 /2 width=1 by lsubr_lsubf_isid/

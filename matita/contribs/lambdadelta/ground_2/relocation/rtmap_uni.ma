@@ -73,7 +73,7 @@ lemma uni_inv_isid: ∀f. 𝐔❴0❵ ≗ f → 𝐈⦃f⦄.
 
 (* Properties with finite colength assignment ***************************)
 
-lemma fcla_uni: ∀n. 𝐂⦃𝐔❴n❵⦄ ≡ n.
+lemma fcla_uni: ∀n. 𝐂⦃𝐔❴n❵⦄ ≘ n.
 #n elim n -n /2 width=1 by fcla_isid, fcla_next/
 qed.
 

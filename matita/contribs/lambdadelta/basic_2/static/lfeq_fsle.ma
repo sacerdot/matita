@@ -29,5 +29,5 @@ qed.
 (* Forward lemmas with free variables inclusion for restricted closures *****)
 
 lemma lfeq_lfxs_trans: ∀R. lfeq_transitive R →
-                       ∀L1,L,T. L1 ≐[T] L → ∀L2. L ⪤*[R, T] L2 → L1 ⪤*[R, T] L2.
+                       ∀L1,L,T. L1 ≡[T] L → ∀L2. L ⪤*[R, T] L2 → L1 ⪤*[R, T] L2.
 /4 width=16 by lfeq_fsle_comp, lfxs_trans_fsle, lfxs_trans_next/ qed-.

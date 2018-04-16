@@ -89,7 +89,7 @@ qed-.
 
 (* Specific properties on coafter *******************************************)
 
-corec lemma coafter_total_aux: ∀f2,f1,f. f2 ~∘ f1 = f → f2 ~⊚ f1 ≡ f.
+corec lemma coafter_total_aux: ∀f2,f1,f. f2 ~∘ f1 = f → f2 ~⊚ f1 ≘ f.
 * #n2 #f2 * #n1 #f1 * #n #f cases n2 -n2
 [ cases n1 -n1
   [ #H cases (cocompose_inv_ppx … H) -H /3 width=7 by coafter_refl, eq_f2/
@@ -99,5 +99,5 @@ corec lemma coafter_total_aux: ∀f2,f1,f. f2 ~∘ f1 = f → f2 ~⊚ f1 ≡ f.
 ]
 qed-.
 
-theorem coafter_total: ∀f2,f1. f2 ~⊚ f1 ≡ f2 ~∘ f1.
+theorem coafter_total: ∀f2,f1. f2 ~⊚ f1 ≘ f2 ~∘ f1.
 /2 width=1 by coafter_total_aux/ qed.

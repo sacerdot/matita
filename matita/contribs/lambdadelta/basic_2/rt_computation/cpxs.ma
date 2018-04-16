@@ -19,7 +19,7 @@ include "basic_2/rt_transition/cpx.ma".
 (* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS ************)
 
 definition cpxs: sh → relation4 genv lenv term term ≝
-                 λh,G. LTC … (cpx h G).
+                 λh,G. CTC … (cpx h G).
 
 interpretation "uncounted context-sensitive parallel rt-computation (term)"
    'PRedTyStar h G L T1 T2 = (cpxs h G L T1 T2).
@@ -89,7 +89,7 @@ lemma cpxs_pair_sn: ∀h,I,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ⬈*[h] V2 →
 /3 width=3 by cpxs_strap1, cpx_pair_sn/
 qed.
 
-lemma cpxs_zeta: ∀h,G,L,V,T1,T,T2. ⬆*[1] T2 ≡ T →
+lemma cpxs_zeta: ∀h,G,L,V,T1,T,T2. ⬆*[1] T2 ≘ T →
                  ⦃G, L.ⓓV⦄ ⊢ T1 ⬈*[h] T → ⦃G, L⦄ ⊢ +ⓓV.T1 ⬈*[h] T2.
 #h #G #L #V #T1 #T #T2 #HT2 #H @(cpxs_ind_dx … H) -T1
 /3 width=3 by cpxs_strap2, cpx_cpxs, cpx_bind, cpx_zeta/
@@ -116,7 +116,7 @@ lemma cpxs_beta_dx: ∀h,p,G,L,V1,V2,W1,W2,T1,T2.
 qed.
 
 lemma cpxs_theta_dx: ∀h,p,G,L,V1,V,V2,W1,W2,T1,T2.
-                     ⦃G, L⦄ ⊢ V1 ⬈[h] V → ⬆*[1] V ≡ V2 → ⦃G, L.ⓓW1⦄ ⊢ T1 ⬈*[h] T2 →
+                     ⦃G, L⦄ ⊢ V1 ⬈[h] V → ⬆*[1] V ≘ V2 → ⦃G, L.ⓓW1⦄ ⊢ T1 ⬈*[h] T2 →
                      ⦃G, L⦄ ⊢ W1 ⬈[h] W2 → ⦃G, L⦄ ⊢ ⓐV1.ⓓ{p}W1.T1 ⬈*[h] ⓓ{p}W2.ⓐV2.T2.
 #h #p #G #L #V1 #V #V2 #W1 #W2 #T1 #T2 #HV1 #HV2 * -T2 
 /4 width=9 by cpx_cpxs, cpxs_strap1, cpxs_bind_dx, cpxs_flat_dx, cpx_theta/

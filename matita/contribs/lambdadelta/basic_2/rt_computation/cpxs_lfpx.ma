@@ -22,7 +22,7 @@ include "basic_2/rt_computation/cpxs_cpxs.ma".
 (* Properties with uncounted parallel rt-transition on referred entries *****)
 
 lemma lfpx_cpxs_conf: ∀h,G. s_r_confluent1 … (cpxs h G) (lfpx h G).
-/3 width=5 by lfpx_cpx_conf, s_r_conf1_LTC1/ qed-.
+/3 width=5 by lfpx_cpx_conf, s_r_conf1_CTC1/ qed-.
 
 lemma lfpx_cpx_trans: ∀h,G. s_r_transitive … (cpx h G) (lfpx h G).
 #h #G #L2 #T1 #T2 #H @(cpx_ind … H) -G -L2 -T1 -T2 //
@@ -53,7 +53,7 @@ lemma lfpx_cpx_trans: ∀h,G. s_r_transitive … (cpx h G) (lfpx h G).
 qed.
 
 lemma lfpx_cpxs_trans: ∀h,G. s_rs_transitive … (cpx h G) (lfpx h G).
-/3 width=6 by lfpx_cpx_conf, lfpx_cpx_trans, s_r_trans_LTC1/
+/3 width=6 by lfpx_cpx_conf, lfpx_cpx_trans, s_r_trans_CTC1/
 qed-.
 
 (* Advanced properties ******************************************************)

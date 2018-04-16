@@ -24,9 +24,9 @@ inductive lsubf: relation4 lenv rtmap lenv rtmap ≝
               lsubf (L1.ⓘ{I1}) (↑f1) (L2.ⓘ{I2}) (↑f2)
 | lsubf_bind: ∀f1,f2,I,L1,L2. lsubf L1 f1 L2 f2 →
               lsubf (L1.ⓘ{I}) (⫯f1) (L2.ⓘ{I}) (⫯f2)
-| lsubf_beta: ∀f,f0,f1,f2,L1,L2,W,V. L1 ⊢ 𝐅*⦃V⦄ ≡ f → f0 ⋓ f ≡ f1 →
+| lsubf_beta: ∀f,f0,f1,f2,L1,L2,W,V. L1 ⊢ 𝐅*⦃V⦄ ≘ f → f0 ⋓ f ≘ f1 →
               lsubf L1 f0 L2 f2 → lsubf (L1.ⓓⓝW.V) (⫯f1) (L2.ⓛW) (⫯f2)
-| lsubf_unit: ∀f,f0,f1,f2,I1,I2,L1,L2,V. L1 ⊢ 𝐅*⦃V⦄ ≡ f → f0 ⋓ f ≡ f1 →
+| lsubf_unit: ∀f,f0,f1,f2,I1,I2,L1,L2,V. L1 ⊢ 𝐅*⦃V⦄ ≘ f → f0 ⋓ f ≘ f1 →
               lsubf L1 f0 L2 f2 → lsubf (L1.ⓑ{I1}V) (⫯f1) (L2.ⓤ{I2}) (⫯f2)
 .
 
@@ -71,10 +71,10 @@ fact lsubf_inv_pair1_aux: ∀f1,f2,L1,L2. ⦃L1, f1⦄ ⫃𝐅* ⦃L2, f2⦄ →
                           ∀g1,I,K1,X. f1 = ⫯g1 → L1 = K1.ⓑ{I}X →
                           ∨∨ ∃∃g2,K2. ⦃K1, g1⦄ ⫃𝐅* ⦃K2, g2⦄ & f2 = ⫯g2 & L2 = K2.ⓑ{I}X
                            | ∃∃g,g0,g2,K2,W,V. ⦃K1, g0⦄ ⫃𝐅* ⦃K2, g2⦄ & 
-                                               K1 ⊢ 𝐅*⦃V⦄ ≡ g & g0 ⋓ g ≡ g1 & f2 = ⫯g2 &
+                                               K1 ⊢ 𝐅*⦃V⦄ ≘ g & g0 ⋓ g ≘ g1 & f2 = ⫯g2 &
                                                I = Abbr & X = ⓝW.V & L2 = K2.ⓛW
                            | ∃∃g,g0,g2,J,K2. ⦃K1, g0⦄ ⫃𝐅* ⦃K2, g2⦄ & 
-                                             K1 ⊢ 𝐅*⦃X⦄ ≡ g & g0 ⋓ g ≡ g1 & f2 = ⫯g2 &
+                                             K1 ⊢ 𝐅*⦃X⦄ ≘ g & g0 ⋓ g ≘ g1 & f2 = ⫯g2 &
                                              L2 = K2.ⓤ{J}.
 #f1 #f2 #L1 #L2 * -f1 -f2 -L1 -L2
 [ #f1 #f2 #_ #g1 #J #K1 #X #_ #H destruct
@@ -91,10 +91,10 @@ qed-.
 lemma lsubf_inv_pair1: ∀g1,f2,I,K1,L2,X. ⦃K1.ⓑ{I}X, ⫯g1⦄ ⫃𝐅* ⦃L2, f2⦄ →
                        ∨∨ ∃∃g2,K2. ⦃K1, g1⦄ ⫃𝐅* ⦃K2, g2⦄ & f2 = ⫯g2 & L2 = K2.ⓑ{I}X
                         | ∃∃g,g0,g2,K2,W,V. ⦃K1, g0⦄ ⫃𝐅* ⦃K2, g2⦄ & 
-                                            K1 ⊢ 𝐅*⦃V⦄ ≡ g & g0 ⋓ g ≡ g1 & f2 = ⫯g2 &
+                                            K1 ⊢ 𝐅*⦃V⦄ ≘ g & g0 ⋓ g ≘ g1 & f2 = ⫯g2 &
                                             I = Abbr & X = ⓝW.V & L2 = K2.ⓛW
                         | ∃∃g,g0,g2,J,K2. ⦃K1, g0⦄ ⫃𝐅* ⦃K2, g2⦄ & 
-                                          K1 ⊢ 𝐅*⦃X⦄ ≡ g & g0 ⋓ g ≡ g1 & f2 = ⫯g2 &
+                                          K1 ⊢ 𝐅*⦃X⦄ ≘ g & g0 ⋓ g ≘ g1 & f2 = ⫯g2 &
                                           L2 = K2.ⓤ{J}.
 /2 width=5 by lsubf_inv_pair1_aux/ qed-.
 
@@ -150,7 +150,7 @@ fact lsubf_inv_pair2_aux: ∀f1,f2,L1,L2. ⦃L1, f1⦄ ⫃𝐅* ⦃L2, f2⦄ →
                           ∀g2,I,K2,W. f2 = ⫯g2 → L2 = K2.ⓑ{I}W →
                           ∨∨ ∃∃g1,K1. ⦃K1, g1⦄ ⫃𝐅* ⦃K2, g2⦄ & f1 = ⫯g1 & L1 = K1.ⓑ{I}W
                            | ∃∃g,g0,g1,K1,V. ⦃K1, g0⦄ ⫃𝐅* ⦃K2, g2⦄ &
-                                             K1 ⊢ 𝐅*⦃V⦄ ≡ g & g0 ⋓ g ≡ g1 & f1 = ⫯g1 &
+                                             K1 ⊢ 𝐅*⦃V⦄ ≘ g & g0 ⋓ g ≘ g1 & f1 = ⫯g1 &
                                              I = Abst & L1 = K1.ⓓⓝW.V.
 #f1 #f2 #L1 #L2 * -f1 -f2 -L1 -L2
 [ #f1 #f2 #_ #g2 #J #K2 #X #_ #H destruct
@@ -166,7 +166,7 @@ qed-.
 lemma lsubf_inv_pair2: ∀f1,g2,I,L1,K2,W. ⦃L1, f1⦄ ⫃𝐅* ⦃K2.ⓑ{I}W, ⫯g2⦄ →
                        ∨∨ ∃∃g1,K1. ⦃K1, g1⦄ ⫃𝐅* ⦃K2, g2⦄ & f1 = ⫯g1 & L1 = K1.ⓑ{I}W
                         | ∃∃g,g0,g1,K1,V. ⦃K1, g0⦄ ⫃𝐅* ⦃K2, g2⦄ &
-                                          K1 ⊢ 𝐅*⦃V⦄ ≡ g & g0 ⋓ g ≡ g1 & f1 = ⫯g1 &
+                                          K1 ⊢ 𝐅*⦃V⦄ ≘ g & g0 ⋓ g ≘ g1 & f1 = ⫯g1 &
                                           I = Abst & L1 = K1.ⓓⓝW.V.
 /2 width=5 by lsubf_inv_pair2_aux/ qed-.
 
@@ -174,7 +174,7 @@ fact lsubf_inv_unit2_aux: ∀f1,f2,L1,L2. ⦃L1, f1⦄ ⫃𝐅* ⦃L2, f2⦄ →
                           ∀g2,I,K2. f2 = ⫯g2 → L2 = K2.ⓤ{I} →
                           ∨∨ ∃∃g1,K1. ⦃K1, g1⦄ ⫃𝐅* ⦃K2, g2⦄ & f1 = ⫯g1 & L1 = K1.ⓤ{I}
                            | ∃∃g,g0,g1,J,K1,V. ⦃K1, g0⦄ ⫃𝐅* ⦃K2, g2⦄ & 
-                                               K1 ⊢ 𝐅*⦃V⦄ ≡ g & g0 ⋓ g ≡ g1 & f1 = ⫯g1 &
+                                               K1 ⊢ 𝐅*⦃V⦄ ≘ g & g0 ⋓ g ≘ g1 & f1 = ⫯g1 &
                                                L1 = K1.ⓑ{J}V.
 #f1 #f2 #L1 #L2 * -f1 -f2 -L1 -L2
 [ #f1 #f2 #_ #g2 #J #K2 #_ #H destruct
@@ -190,7 +190,7 @@ qed-.
 lemma lsubf_inv_unit2: ∀f1,g2,I,L1,K2. ⦃L1, f1⦄ ⫃𝐅* ⦃K2.ⓤ{I}, ⫯g2⦄ →
                        ∨∨ ∃∃g1,K1. ⦃K1, g1⦄ ⫃𝐅* ⦃K2, g2⦄ & f1 = ⫯g1 & L1 = K1.ⓤ{I}
                         | ∃∃g,g0,g1,J,K1,V. ⦃K1, g0⦄ ⫃𝐅* ⦃K2, g2⦄ & 
-                                            K1 ⊢ 𝐅*⦃V⦄ ≡ g & g0 ⋓ g ≡ g1 & f1 = ⫯g1 &
+                                            K1 ⊢ 𝐅*⦃V⦄ ≘ g & g0 ⋓ g ≘ g1 & f1 = ⫯g1 &
                                             L1 = K1.ⓑ{J}V.
 /2 width=5 by lsubf_inv_unit2_aux/ qed-.
 
@@ -220,7 +220,7 @@ lemma lsubf_inv_bind_sn: ∀g1,f2,I,K1,K2. ⦃K1.ⓘ{I}, ⫯g1⦄ ⫃𝐅* ⦃K2
 qed-.
 
 lemma lsubf_inv_beta_sn: ∀g1,f2,K1,K2,V,W. ⦃K1.ⓓⓝW.V, ⫯g1⦄ ⫃𝐅* ⦃K2.ⓛW, f2⦄ →
-                         ∃∃g,g0,g2. ⦃K1, g0⦄ ⫃𝐅* ⦃K2, g2⦄ & K1 ⊢ 𝐅*⦃V⦄ ≡ g & g0 ⋓ g ≡ g1 & f2 = ⫯g2.
+                         ∃∃g,g0,g2. ⦃K1, g0⦄ ⫃𝐅* ⦃K2, g2⦄ & K1 ⊢ 𝐅*⦃V⦄ ≘ g & g0 ⋓ g ≘ g1 & f2 = ⫯g2.
 #g1 #f2 #K1 #K2 #V #W #H elim (lsubf_inv_pair1 … H) -H *
 [ #z2 #Y2 #_ #_ #H destruct
 | #z #z0 #z2 #Y2 #X0 #X #H02 #Hz #Hg1 #H #_ #H0 #H1 destruct
@@ -230,7 +230,7 @@ lemma lsubf_inv_beta_sn: ∀g1,f2,K1,K2,V,W. ⦃K1.ⓓⓝW.V, ⫯g1⦄ ⫃𝐅* 
 qed-.
 
 lemma lsubf_inv_unit_sn: ∀g1,f2,I,J,K1,K2,V. ⦃K1.ⓑ{I}V, ⫯g1⦄ ⫃𝐅* ⦃K2.ⓤ{J}, f2⦄ →
-                         ∃∃g,g0,g2. ⦃K1, g0⦄ ⫃𝐅* ⦃K2, g2⦄ & K1 ⊢ 𝐅*⦃V⦄ ≡ g & g0 ⋓ g ≡ g1 & f2 = ⫯g2.
+                         ∃∃g,g0,g2. ⦃K1, g0⦄ ⫃𝐅* ⦃K2, g2⦄ & K1 ⊢ 𝐅*⦃V⦄ ≘ g & g0 ⋓ g ≘ g1 & f2 = ⫯g2.
 #g1 #f2 #I #J #K1 #K2 #V #H elim (lsubf_inv_pair1 … H) -H *
 [ #z2 #Y2 #_ #_ #H destruct
 | #z #z0 #z2 #Y2 #X0 #X #_ #_ #_ #_ #_ #_ #H destruct
@@ -312,7 +312,7 @@ elim (pn_split f2) * #g2 #H2 destruct
 @ex2_intro [1,2,4,5: /2 width=2 by lsubf_push, lsubf_bind/ ] // (**) (* constructor needed *)
 qed-.
 
-lemma lsubf_beta_tl_dx: ∀f,f0,g1,L1,V. L1 ⊢ 𝐅*⦃V⦄ ≡ f → f0 ⋓ f ≡ g1 →
+lemma lsubf_beta_tl_dx: ∀f,f0,g1,L1,V. L1 ⊢ 𝐅*⦃V⦄ ≘ f → f0 ⋓ f ≘ g1 →
                         ∀f2,L2,W. ⦃L1, f0⦄ ⫃𝐅* ⦃L2, ⫱f2⦄ →
                         ∃∃f1. ⦃L1.ⓓⓝW.V, f1⦄ ⫃𝐅* ⦃L2.ⓛW, f2⦄ & ⫱f1 ⊆ g1.
 #f #f0 #g1 #L1 #V #Hf #Hg1 #f2
@@ -324,8 +324,8 @@ qed-.
 
 (* Note: this might be moved *)
 lemma lsubf_inv_sor_dx: ∀f1,f2,L1,L2. ⦃L1, f1⦄ ⫃𝐅* ⦃L2, f2⦄ →
-                        ∀f2l,f2r. f2l⋓f2r ≡ f2 →
-                        ∃∃f1l,f1r. ⦃L1, f1l⦄ ⫃𝐅* ⦃L2, f2l⦄ & ⦃L1, f1r⦄ ⫃𝐅* ⦃L2, f2r⦄ & f1l⋓f1r ≡ f1.
+                        ∀f2l,f2r. f2l⋓f2r ≘ f2 →
+                        ∃∃f1l,f1r. ⦃L1, f1l⦄ ⫃𝐅* ⦃L2, f2l⦄ & ⦃L1, f1r⦄ ⫃𝐅* ⦃L2, f2r⦄ & f1l⋓f1r ≘ f1.
 #f1 #f2 #L1 #L2 #H elim H -f1 -f2 -L1 -L2
 [ /3 width=7 by sor_eq_repl_fwd3, ex3_2_intro/
 | #g1 #g2 #I1 #I2 #L1 #L2 #_ #IH #f2l #f2r #H

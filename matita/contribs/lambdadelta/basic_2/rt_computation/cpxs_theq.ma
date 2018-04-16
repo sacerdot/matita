@@ -32,8 +32,8 @@ qed-.
 
 (* Note: probably this is an inversion lemma *)
 (* Basic_2A1: was: cpxs_fwd_delta *)
-lemma cpxs_fwd_delta_drops: ∀h,o,I,G,L,K,V1,i. ⬇*[i] L ≡ K.ⓑ{I}V1 →
-                            ∀V2. ⬆*[⫯i] V1 ≡ V2 →
+lemma cpxs_fwd_delta_drops: ∀h,o,I,G,L,K,V1,i. ⬇*[i] L ≘ K.ⓑ{I}V1 →
+                            ∀V2. ⬆*[⫯i] V1 ≘ V2 →
                             ∀U. ⦃G, L⦄ ⊢ #i ⬈*[h] U →
                             #i ⩳[h, o] U ∨ ⦃G, L⦄ ⊢ V2 ⬈*[h] U.
 #h #o #I #G #L #K #V1 #i #HLK #V2 #HV12 #U #H
@@ -58,7 +58,7 @@ lemma cpxs_fwd_beta: ∀h,o,p,G,L,V,W,T,U. ⦃G, L⦄ ⊢ ⓐV.ⓛ{p}W.T ⬈*[h]
 qed-.
 
 lemma cpxs_fwd_theta: ∀h,o,p,G,L,V1,V,T,U. ⦃G, L⦄ ⊢ ⓐV1.ⓓ{p}V.T ⬈*[h] U →
-                      ∀V2. ⬆*[1] V1 ≡ V2 → ⓐV1.ⓓ{p}V.T ⩳[h, o] U ∨
+                      ∀V2. ⬆*[1] V1 ≘ V2 → ⓐV1.ⓓ{p}V.T ⩳[h, o] U ∨
                       ⦃G, L⦄ ⊢ ⓓ{p}V.ⓐV2.T ⬈*[h] U.
 #h #o #p #G #L #V1 #V #T #U #H #V2 #HV12
 elim (cpxs_inv_appl1 … H) -H *

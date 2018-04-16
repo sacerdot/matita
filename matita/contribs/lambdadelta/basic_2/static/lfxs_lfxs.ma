@@ -21,7 +21,7 @@ include "basic_2/static/lfxs.ma".
 (* Advanced inversion lemmas ************************************************)
 
 lemma lfxs_inv_frees: ∀R,L1,L2,T. L1 ⪤*[R, T] L2 →
-                      ∀f. L1 ⊢ 𝐅*⦃T⦄ ≡ f → L1 ⪤*[cext2 R, cfull, f] L2.
+                      ∀f. L1 ⊢ 𝐅*⦃T⦄ ≘ f → L1 ⪤*[cext2 R, cfull, f] L2.
 #R #L1 #L2 #T * /3 width=6 by frees_mono, lexs_eq_repl_back/
 qed-.
 

@@ -60,7 +60,7 @@ elim (cprs_inv_abst1 … H2) -H2 #V2 #T2 #HV12 #HUT2 #H destruct
 qed-.
 
 lemma scpds_inv_abbr_abst: ∀h,o,a1,a2,G,L,V1,W2,T1,T2,d. ⦃G, L⦄ ⊢ ⓓ{a1}V1.T1 •*➡*[h, o, d] ⓛ{a2}W2.T2 →
-                           ∃∃T. ⦃G, L.ⓓV1⦄ ⊢ T1 •*➡*[h, o, d] T & ⬆[0, 1] ⓛ{a2}W2.T2 ≡ T & a1 = true.
+                           ∃∃T. ⦃G, L.ⓓV1⦄ ⊢ T1 •*➡*[h, o, d] T & ⬆[0, 1] ⓛ{a2}W2.T2 ≘ T & a1 = true.
 #h #o #a1 #a2 #G #L #V1 #W2 #T1 #T2 #d2 * #X #d1 #Hd21 #Hd1 #H1 #H2
 lapply (da_inv_bind … Hd1) -Hd1 #Hd1
 elim (lstas_inv_bind1 … H1) -H1 #U1 #HTU1 #H destruct

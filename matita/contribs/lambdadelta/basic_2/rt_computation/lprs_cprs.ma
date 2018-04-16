@@ -49,12 +49,12 @@ lemma lprs_ind_alt: ∀G. ∀R:relation lenv.
 (* Properties on context-sensitive parallel computation for terms ***********)
 
 lemma lprs_cpr_trans: ∀G. b_c_transitive … (cpr G) (λ_. lprs G).
-/3 width=5 by b_c_trans_LTC2, lpr_cprs_trans/ qed-.
+/3 width=5 by b_c_trans_CTC2, lpr_cprs_trans/ qed-.
 
 (* Basic_1: was just: pr3_pr3_pr3_t *)
-(* Note: alternative proof /3 width=5 by s_r_trans_LTC1, lprs_cpr_trans/ *)
+(* Note: alternative proof /3 width=5 by s_r_trans_CTC1, lprs_cpr_trans/ *)
 lemma lprs_cprs_trans: ∀G. b_rs_transitive … (cpr G) (λ_. lprs G).
-#G @b_c_to_b_rs_trans @b_c_trans_LTC2
+#G @b_c_to_b_rs_trans @b_c_trans_CTC2
 @b_rs_trans_TC1 /2 width=3 by lpr_cprs_trans/ (**) (* full auto too slow *)
 qed-.
 
@@ -117,7 +117,7 @@ lemma cprs_inv_abbr1: ∀a,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓓ{a}V1.T1 ➡* U2 → 
                       ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡* V2 & ⦃G, L.ⓓV1⦄ ⊢ T1 ➡* T2 &
                                U2 = ⓓ{a}V2.T2
                       ) ∨
-                      ∃∃T2. ⦃G, L.ⓓV1⦄ ⊢ T1 ➡* T2 & ⬆[0, 1] U2 ≡ T2 & a = true.
+                      ∃∃T2. ⦃G, L.ⓓV1⦄ ⊢ T1 ➡* T2 & ⬆[0, 1] U2 ≘ T2 & a = true.
 #a #G #L #V1 #T1 #U2 #H @(cprs_ind … H) -U2 /3 width=5 by ex3_2_intro, or_introl/
 #U0 #U2 #_ #HU02 * *
 [ #V0 #T0 #HV10 #HT10 #H destruct

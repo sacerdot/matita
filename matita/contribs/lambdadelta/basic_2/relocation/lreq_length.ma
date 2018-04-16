@@ -20,5 +20,5 @@ include "basic_2/relocation/lreq.ma".
 (* Forward lemmas with length for local environments ************************)
 
 (* Basic_2A1: includes: lreq_fwd_length *)
-lemma lreq_fwd_length: ∀f,L1,L2. L1 ≐[f] L2 → |L1| = |L2|.
+lemma lreq_fwd_length: ∀f,L1,L2. L1 ≡[f] L2 → |L1| = |L2|.
 /2 width=4 by lexs_fwd_length/ qed-.

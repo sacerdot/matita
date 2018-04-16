@@ -21,7 +21,7 @@ include "basic_2/relocation/lifts.ma".
 inductive liftsv (f:rtmap): relation (list term) ≝
 | liftsv_nil : liftsv f (◊) (◊)
 | liftsv_cons: ∀T1s,T2s,T1,T2.
-               ⬆*[f] T1 ≡ T2 → liftsv f T1s T2s →
+               ⬆*[f] T1 ≘ T2 → liftsv f T1s T2s →
                liftsv f (T1 @ T1s) (T2 @ T2s)
 .
 
@@ -33,18 +33,18 @@ interpretation "generic relocation (term vector)"
 
 (* Basic inversion lemmas ***************************************************)
 
-fact liftsv_inv_nil1_aux: ∀f,X,Y. ⬆*[f] X ≡ Y → X = ◊ → Y = ◊.
+fact liftsv_inv_nil1_aux: ∀f,X,Y. ⬆*[f] X ≘ Y → X = ◊ → Y = ◊.
 #f #X #Y * -X -Y //
 #T1s #T2s #T1 #T2 #_ #_ #H destruct
 qed-.
 
 (* Basic_2A1: includes: liftv_inv_nil1 *)
-lemma liftsv_inv_nil1: ∀f,Y. ⬆*[f] ◊ ≡ Y → Y = ◊.
+lemma liftsv_inv_nil1: ∀f,Y. ⬆*[f] ◊ ≘ Y → Y = ◊.
 /2 width=5 by liftsv_inv_nil1_aux/ qed-.
 
-fact liftsv_inv_cons1_aux: ∀f:rtmap. ∀X,Y. ⬆*[f] X ≡ Y →
+fact liftsv_inv_cons1_aux: ∀f:rtmap. ∀X,Y. ⬆*[f] X ≘ Y →
                            ∀T1,T1s. X = T1 @ T1s →
-                           ∃∃T2,T2s. ⬆*[f] T1 ≡ T2 & ⬆*[f] T1s ≡ T2s &
+                           ∃∃T2,T2s. ⬆*[f] T1 ≘ T2 & ⬆*[f] T1s ≘ T2s &
                                      Y = T2 @ T2s.
 #f #X #Y * -X -Y
 [ #U1 #U1s #H destruct
@@ -53,22 +53,22 @@ fact liftsv_inv_cons1_aux: ∀f:rtmap. ∀X,Y. ⬆*[f] X ≡ Y →
 qed-.
 
 (* Basic_2A1: includes: liftv_inv_cons1 *)
-lemma liftsv_inv_cons1: ∀f:rtmap. ∀T1,T1s,Y. ⬆*[f] T1 @ T1s ≡ Y →
-                        ∃∃T2,T2s. ⬆*[f] T1 ≡ T2 & ⬆*[f] T1s ≡ T2s &
+lemma liftsv_inv_cons1: ∀f:rtmap. ∀T1,T1s,Y. ⬆*[f] T1 @ T1s ≘ Y →
+                        ∃∃T2,T2s. ⬆*[f] T1 ≘ T2 & ⬆*[f] T1s ≘ T2s &
                                   Y = T2 @ T2s.
 /2 width=3 by liftsv_inv_cons1_aux/ qed-.
 
-fact liftsv_inv_nil2_aux: ∀f,X,Y. ⬆*[f] X ≡ Y → Y = ◊ → X = ◊.
+fact liftsv_inv_nil2_aux: ∀f,X,Y. ⬆*[f] X ≘ Y → Y = ◊ → X = ◊.
 #f #X #Y * -X -Y //
 #T1s #T2s #T1 #T2 #_ #_ #H destruct
 qed-.
 
-lemma liftsv_inv_nil2: ∀f,X. ⬆*[f] X ≡ ◊ → X = ◊.
+lemma liftsv_inv_nil2: ∀f,X. ⬆*[f] X ≘ ◊ → X = ◊.
 /2 width=5 by liftsv_inv_nil2_aux/ qed-.
 
-fact liftsv_inv_cons2_aux: ∀f:rtmap. ∀X,Y. ⬆*[f] X ≡ Y →
+fact liftsv_inv_cons2_aux: ∀f:rtmap. ∀X,Y. ⬆*[f] X ≘ Y →
                            ∀T2,T2s. Y = T2 @ T2s →
-                           ∃∃T1,T1s. ⬆*[f] T1 ≡ T2 & ⬆*[f] T1s ≡ T2s &
+                           ∃∃T1,T1s. ⬆*[f] T1 ≘ T2 & ⬆*[f] T1s ≘ T2s &
                                      X = T1 @ T1s.
 #f #X #Y * -X -Y
 [ #U2 #U2s #H destruct
@@ -76,14 +76,14 @@ fact liftsv_inv_cons2_aux: ∀f:rtmap. ∀X,Y. ⬆*[f] X ≡ Y →
 ]
 qed-.
 
-lemma liftsv_inv_cons2: ∀f:rtmap. ∀X,T2,T2s. ⬆*[f] X ≡ T2 @ T2s →
-                        ∃∃T1,T1s. ⬆*[f] T1 ≡ T2 & ⬆*[f] T1s ≡ T2s &
+lemma liftsv_inv_cons2: ∀f:rtmap. ∀X,T2,T2s. ⬆*[f] X ≘ T2 @ T2s →
+                        ∃∃T1,T1s. ⬆*[f] T1 ≘ T2 & ⬆*[f] T1s ≘ T2s &
                                   X = T1 @ T1s.
 /2 width=3 by liftsv_inv_cons2_aux/ qed-.
 
 (* Basic_1: was: lifts1_flat (left to right) *)
-lemma lifts_inv_applv1: ∀f:rtmap. ∀V1s,U1,T2. ⬆*[f] Ⓐ V1s.U1 ≡ T2 →
-                        ∃∃V2s,U2. ⬆*[f] V1s ≡ V2s & ⬆*[f] U1 ≡ U2 &
+lemma lifts_inv_applv1: ∀f:rtmap. ∀V1s,U1,T2. ⬆*[f] Ⓐ V1s.U1 ≘ T2 →
+                        ∃∃V2s,U2. ⬆*[f] V1s ≘ V2s & ⬆*[f] U1 ≘ U2 &
                                   T2 = Ⓐ V2s.U2.
 #f #V1s elim V1s -V1s
 [ /3 width=5 by ex3_2_intro, liftsv_nil/
@@ -93,8 +93,8 @@ lemma lifts_inv_applv1: ∀f:rtmap. ∀V1s,U1,T2. ⬆*[f] Ⓐ V1s.U1 ≡ T2 →
 ]
 qed-.
 
-lemma lifts_inv_applv2: ∀f:rtmap. ∀V2s,U2,T1. ⬆*[f] T1 ≡ Ⓐ V2s.U2 →
-                        ∃∃V1s,U1. ⬆*[f] V1s ≡ V2s & ⬆*[f] U1 ≡ U2 &
+lemma lifts_inv_applv2: ∀f:rtmap. ∀V2s,U2,T1. ⬆*[f] T1 ≘ Ⓐ V2s.U2 →
+                        ∃∃V1s,U1. ⬆*[f] V1s ≘ V2s & ⬆*[f] U1 ≘ U2 &
                                   T1 = Ⓐ V1s.U1.
 #f #V2s elim V2s -V2s
 [ /3 width=5 by ex3_2_intro, liftsv_nil/
@@ -107,7 +107,7 @@ qed-.
 (* Basic properties *********************************************************)
 
 (* Basic_2A1: includes: liftv_total *)
-lemma liftsv_total: ∀f. ∀T1s:list term. ∃T2s. ⬆*[f] T1s ≡ T2s.
+lemma liftsv_total: ∀f. ∀T1s:list term. ∃T2s. ⬆*[f] T1s ≘ T2s.
 #f #T1s elim T1s -T1s
 [ /2 width=2 by liftsv_nil, ex_intro/
 | #T1 #T1s * #T2s #HT12s
@@ -116,15 +116,15 @@ lemma liftsv_total: ∀f. ∀T1s:list term. ∃T2s. ⬆*[f] T1s ≡ T2s.
 qed-.
 
 (* Basic_1: was: lifts1_flat (right to left) *)
-lemma lifts_applv: ∀f:rtmap. ∀V1s,V2s. ⬆*[f] V1s ≡ V2s →
-                   ∀T1,T2. ⬆*[f] T1 ≡ T2 →
-                   ⬆*[f] Ⓐ V1s.T1 ≡ Ⓐ V2s.T2.
+lemma lifts_applv: ∀f:rtmap. ∀V1s,V2s. ⬆*[f] V1s ≘ V2s →
+                   ∀T1,T2. ⬆*[f] T1 ≘ T2 →
+                   ⬆*[f] Ⓐ V1s.T1 ≘ Ⓐ V2s.T2.
 #f #V1s #V2s #H elim H -V1s -V2s /3 width=1 by lifts_flat/
 qed.
 
-lemma liftsv_split_trans: ∀f,T1s,T2s. ⬆*[f] T1s ≡ T2s →
-                          ∀f1,f2. f2 ⊚ f1 ≡ f →
-                          ∃∃Ts. ⬆*[f1] T1s ≡ Ts & ⬆*[f2] Ts ≡ T2s.
+lemma liftsv_split_trans: ∀f,T1s,T2s. ⬆*[f] T1s ≘ T2s →
+                          ∀f1,f2. f2 ⊚ f1 ≘ f →
+                          ∃∃Ts. ⬆*[f1] T1s ≘ Ts & ⬆*[f2] Ts ≘ T2s.
 #f #T1s #T2s #H elim H -T1s -T2s
 [ /2 width=3 by liftsv_nil, ex2_intro/
 | #T1s #T2s #T1 #T2 #HT12 #_ #IH #f1 #f2 #Hf

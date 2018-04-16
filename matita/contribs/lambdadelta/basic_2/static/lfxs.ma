@@ -21,7 +21,7 @@ include "basic_2/static/frees.ma".
 (* GENERIC EXTENSION ON REFERRED ENTRIES OF A CONTEXT-SENSITIVE REALTION ****)
 
 definition lfxs (R) (T): relation lenv ≝
-                λL1,L2. ∃∃f. L1 ⊢ 𝐅*⦃T⦄ ≡ f & L1 ⪤*[cext2 R, cfull, f] L2.
+                λL1,L2. ∃∃f. L1 ⊢ 𝐅*⦃T⦄ ≘ f & L1 ⪤*[cext2 R, cfull, f] L2.
 
 interpretation "generic extension on referred entries (local environment)"
    'RelationStar R T L1 L2 = (lfxs R T L1 L2).
@@ -300,8 +300,8 @@ lemma lfxs_co: ∀R1,R2. (∀L,T1,T2. R1 L T1 T2 → R2 L T1 T2) →
 qed-.
 
 lemma lfxs_isid: ∀R1,R2,L1,L2,T1,T2.
-                 (∀f. L1 ⊢ 𝐅*⦃T1⦄ ≡ f → 𝐈⦃f⦄) →
-                 (∀f. 𝐈⦃f⦄ → L1 ⊢ 𝐅*⦃T2⦄ ≡ f) →
+                 (∀f. L1 ⊢ 𝐅*⦃T1⦄ ≘ f → 𝐈⦃f⦄) →
+                 (∀f. 𝐈⦃f⦄ → L1 ⊢ 𝐅*⦃T2⦄ ≘ f) →
                  L1 ⪤*[R1, T1] L2 → L1 ⪤*[R2, T2] L2.
 #R1 #R2 #L1 #L2 #T1 #T2 #H1 #H2 *
 /4 width=7 by lexs_co_isid, ex2_intro/

@@ -20,7 +20,7 @@ include "basic_2/computation/scpds.ma".
 (* activate genv *)
 inductive snv (h) (o): relation3 genv lenv term ≝
 | snv_sort: ∀G,L,s. snv h o G L (⋆s)
-| snv_lref: ∀I,G,L,K,V,i. ⬇[i] L ≡ K.ⓑ{I}V → snv h o G K V → snv h o G L (#i)
+| snv_lref: ∀I,G,L,K,V,i. ⬇[i] L ≘ K.ⓑ{I}V → snv h o G K V → snv h o G L (#i)
 | snv_bind: ∀a,I,G,L,V,T. snv h o G L V → snv h o G (L.ⓑ{I}V) T → snv h o G L (ⓑ{a,I}V.T)
 | snv_appl: ∀a,G,L,V,W0,T,U0,d. snv h o G L V → snv h o G L T →
             ⦃G, L⦄ ⊢ V •*➡*[h, o, 1] W0 → ⦃G, L⦄ ⊢ T •*➡*[h, o, d] ⓛ{a}W0.U0 → snv h o G L (ⓐV.T)
@@ -34,7 +34,7 @@ interpretation "stratified native validity (term)"
 (* Basic inversion lemmas ***************************************************)
 
 fact snv_inv_lref_aux: ∀h,o,G,L,X. ⦃G, L⦄ ⊢ X ¡[h, o] → ∀i. X = #i →
-                       ∃∃I,K,V. ⬇[i] L ≡ K.ⓑ{I}V & ⦃G, K⦄ ⊢ V ¡[h, o].
+                       ∃∃I,K,V. ⬇[i] L ≘ K.ⓑ{I}V & ⦃G, K⦄ ⊢ V ¡[h, o].
 #h #o #G #L #X * -G -L -X
 [ #G #L #s #i #H destruct
 | #I #G #L #K #V #i0 #HLK #HV #i #H destruct /2 width=5 by ex2_3_intro/
@@ -45,7 +45,7 @@ fact snv_inv_lref_aux: ∀h,o,G,L,X. ⦃G, L⦄ ⊢ X ¡[h, o] → ∀i. X = #i 
 qed-.
 
 lemma snv_inv_lref: ∀h,o,G,L,i. ⦃G, L⦄ ⊢ #i ¡[h, o] →
-                    ∃∃I,K,V. ⬇[i] L ≡ K.ⓑ{I}V & ⦃G, K⦄ ⊢ V ¡[h, o].
+                    ∃∃I,K,V. ⬇[i] L ≘ K.ⓑ{I}V & ⦃G, K⦄ ⊢ V ¡[h, o].
 /2 width=3 by snv_inv_lref_aux/ qed-.
 
 fact snv_inv_gref_aux: ∀h,o,G,L,X. ⦃G, L⦄ ⊢ X ¡[h, o] → ∀p. X = §p → ⊥.

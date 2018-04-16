@@ -18,7 +18,7 @@ include "basic_2/static/lfxs.ma".
 
 (* ITERATED EXTENSION ON REFERRED ENTRIES OF A CONTEXT-SENSITIVE REALTION ***)
 
-definition tc_lfxs (R): term → relation lenv ≝ LTC … (lfxs R).
+definition tc_lfxs (R): term → relation lenv ≝ CTC … (lfxs R).
 
 interpretation "iterated extension on referred entries (local environment)"
    'RelationStarStar R T L1 L2 = (tc_lfxs R T L1 L2).

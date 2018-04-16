@@ -20,8 +20,8 @@ include "basic_2/static/fsle_fqup.ma".
 (* Advanced inversion lemmas ************************************************)
 
 lemma fsle_frees_trans: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⊆ ⦃L2, T2⦄ →
-                        ∀f2. L2 ⊢ 𝐅*⦃T2⦄ ≡ f2 →
-                        ∃∃n1,n2,f1. L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 &
+                        ∀f2. L2 ⊢ 𝐅*⦃T2⦄ ≘ f2 →
+                        ∃∃n1,n2,f1. L1 ⊢ 𝐅*⦃T1⦄ ≘ f1 &
                                     L1 ≋ⓧ*[n1, n2] L2 & ⫱*[n1]f1 ⊆ ⫱*[n2]f2.
 #L1 #L2 #T1 #T2 * #n1 #n2 #f1 #g2 #Hf1 #Hg2 #HL #Hn #f2 #Hf2
 lapply (frees_mono … Hg2 … Hf2) -Hg2 -Hf2 #Hgf2
@@ -31,8 +31,8 @@ lapply (sle_eq_repl_back2 … Hn … Hgf2) -g2
 qed-.
 
 lemma fsle_frees_trans_eq: ∀L1,L2. |L1| = |L2| →
-                           ∀T1,T2. ⦃L1, T1⦄ ⊆ ⦃L2, T2⦄ → ∀f2. L2 ⊢ 𝐅*⦃T2⦄ ≡ f2 →
-                           ∃∃f1. L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 & f1 ⊆ f2.
+                           ∀T1,T2. ⦃L1, T1⦄ ⊆ ⦃L2, T2⦄ → ∀f2. L2 ⊢ 𝐅*⦃T2⦄ ≘ f2 →
+                           ∃∃f1. L1 ⊢ 𝐅*⦃T1⦄ ≘ f1 & f1 ⊆ f2.
 #L1 #L2 #H1L #T1 #T2 #H2L #f2 #Hf2
 elim (fsle_frees_trans … H2L … Hf2) -T2 #n1 #n2 #f1 #Hf1 #H2L #Hf12
 elim (lveq_inj_length … H2L) // -L2 #H1 #H2 destruct
@@ -41,7 +41,7 @@ qed-.
 
 lemma fsle_inv_frees_eq: ∀L1,L2. |L1| = |L2| →
                          ∀T1,T2. ⦃L1, T1⦄ ⊆ ⦃L2, T2⦄ →
-                         ∀f1. L1 ⊢ 𝐅*⦃T1⦄ ≡ f1 → ∀f2. L2 ⊢ 𝐅*⦃T2⦄ ≡ f2 →
+                         ∀f1. L1 ⊢ 𝐅*⦃T1⦄ ≘ f1 → ∀f2. L2 ⊢ 𝐅*⦃T2⦄ ≘ f2 →
                          f1 ⊆ f2.
 #L1 #L2 #H1L #T1 #T2 #H2L #f1 #Hf1 #f2 #Hf2
 elim (fsle_frees_trans_eq … H2L … Hf2) // -L2 -T2

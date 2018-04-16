@@ -26,5 +26,5 @@ lemma lfpx_lpx: ∀h,G,L1,L2,T. ⦃G, L1⦄ ⊢ ⬈[h] L2 → ⦃G, L1⦄ ⊢ �
 (* Inversion lemmas with uncounted parallel rt-transition for local envs ****)
 
 lemma lfpx_inv_lpx_lfeq: ∀h,G,L1,L2,T. ⦃G, L1⦄ ⊢ ⬈[h, T] L2 →
-                         ∃∃L. ⦃G, L1⦄ ⊢ ⬈[h] L & L ≐[T] L2.
+                         ∃∃L. ⦃G, L1⦄ ⊢ ⬈[h] L & L ≡[T] L2.
 /3 width=3 by lfpx_fsge_comp, lfxs_inv_lex_lfeq/ qed-.

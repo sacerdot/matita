@@ -20,7 +20,7 @@ include "basic_2/static/lsubf_lsubr.ma".
 (* Advanced properties ******************************************************)
 
 (* Note: this replaces lemma 1400 concluding the "big tree" theorem *)
-lemma frees_total: ∀L,T. ∃f. L ⊢ 𝐅*⦃T⦄ ≡ f.
+lemma frees_total: ∀L,T. ∃f. L ⊢ 𝐅*⦃T⦄ ≘ f.
 #L #T @(fqup_wf_ind_eq (Ⓣ) … (⋆) L T) -L -T
 #G0 #L0 #T0 #IH #G #L * *
 [ /3 width=2 by frees_sort, ex_intro/
@@ -51,8 +51,8 @@ qed-.
 
 (* Advanced main properties *************************************************)
 
-theorem frees_bind_void: ∀f1,L,V. L ⊢ 𝐅*⦃V⦄ ≡ f1 → ∀f2,T. L.ⓧ ⊢ 𝐅*⦃T⦄ ≡ f2 →
-                         ∀f. f1 ⋓ ⫱f2 ≡ f → ∀p,I. L ⊢ 𝐅*⦃ⓑ{p,I}V.T⦄ ≡ f.
+theorem frees_bind_void: ∀f1,L,V. L ⊢ 𝐅*⦃V⦄ ≘ f1 → ∀f2,T. L.ⓧ ⊢ 𝐅*⦃T⦄ ≘ f2 →
+                         ∀f. f1 ⋓ ⫱f2 ≘ f → ∀p,I. L ⊢ 𝐅*⦃ⓑ{p,I}V.T⦄ ≘ f.
 #f1 #L #V #Hf1 #f2 #T #Hf2 #f #Hf #p #I
 elim (frees_total (L.ⓑ{I}V) T) #f0 #Hf0
 lapply (lsubr_lsubf … Hf2 … Hf0) -Hf2 /2 width=5 by lsubr_unit/ #H02
@@ -78,8 +78,8 @@ qed-.
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma frees_inv_bind_void: ∀f,p,I,L,V,T. L ⊢ 𝐅*⦃ⓑ{p,I}V.T⦄ ≡ f →
-                           ∃∃f1,f2. L ⊢ 𝐅*⦃V⦄ ≡ f1 & L.ⓧ ⊢ 𝐅*⦃T⦄ ≡ f2 & f1 ⋓ ⫱f2 ≡ f.
+lemma frees_inv_bind_void: ∀f,p,I,L,V,T. L ⊢ 𝐅*⦃ⓑ{p,I}V.T⦄ ≘ f →
+                           ∃∃f1,f2. L ⊢ 𝐅*⦃V⦄ ≘ f1 & L.ⓧ ⊢ 𝐅*⦃T⦄ ≘ f2 & f1 ⋓ ⫱f2 ≘ f.
 #f #p #I #L #V #T #H
 elim (frees_inv_bind … H) -H #f1 #f2 #Hf1 #Hf2 #Hf
 elim (frees_total (L.ⓧ) T) #f0 #Hf0
@@ -107,24 +107,24 @@ lemma frees_ind_void: ∀R:relation3 ….
                          ∀f,i. 𝐈⦃f⦄ → R (⋆) (#i) (↑*[i]⫯f)
                       ) → (
                          ∀f,I,L,V.
-                         L ⊢ 𝐅*⦃V⦄ ≡ f → R L V f→ R (L.ⓑ{I}V) (#O) (⫯f) 
+                         L ⊢ 𝐅*⦃V⦄ ≘ f → R L V f→ R (L.ⓑ{I}V) (#O) (⫯f) 
                       ) → (
                          ∀f,I,L. 𝐈⦃f⦄ → R (L.ⓤ{I}) (#O) (⫯f)
                       ) → (
                          ∀f,I,L,i.
-                         L ⊢ 𝐅*⦃#i⦄ ≡ f → R L (#i) f → R (L.ⓘ{I}) (#(⫯i)) (↑f)
+                         L ⊢ 𝐅*⦃#i⦄ ≘ f → R L (#i) f → R (L.ⓘ{I}) (#(⫯i)) (↑f)
                       ) → (
                          ∀f,L,l. 𝐈⦃f⦄ → R L (§l) f
                       ) → (
                          ∀f1,f2,f,p,I,L,V,T.
-                         L ⊢ 𝐅*⦃V⦄ ≡ f1 → L.ⓧ ⊢𝐅*⦃T⦄≡ f2 → f1 ⋓ ⫱f2 ≡ f →
+                         L ⊢ 𝐅*⦃V⦄ ≘ f1 → L.ⓧ ⊢𝐅*⦃T⦄≘ f2 → f1 ⋓ ⫱f2 ≘ f →
                          R L V f1 →R (L.ⓧ) T f2 → R L (ⓑ{p,I}V.T) f
                       ) → (
                          ∀f1,f2,f,I,L,V,T.
-                         L ⊢ 𝐅*⦃V⦄ ≡ f1 → L ⊢𝐅*⦃T⦄ ≡ f2 → f1 ⋓ f2 ≡ f →
+                         L ⊢ 𝐅*⦃V⦄ ≘ f1 → L ⊢𝐅*⦃T⦄ ≘ f2 → f1 ⋓ f2 ≘ f →
                          R L V f1 → R L T f2 → R L (ⓕ{I}V.T) f
                       ) →
-                      ∀L,T,f. L ⊢ 𝐅*⦃T⦄ ≡ f → R L T f.
+                      ∀L,T,f. L ⊢ 𝐅*⦃T⦄ ≘ f → R L T f.
 #R #IH1 #IH2 #IH3 #IH4 #IH5 #IH6 #IH7 #IH8 #L #T
 @(fqup_wf_ind_eq (Ⓕ) … (⋆) L T) -L -T #G0 #L0 #T0 #IH #G #L * *
 [ #s #HG #HL #HT #f #H destruct -IH

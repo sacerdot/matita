@@ -38,5 +38,5 @@ lemma lpx_cpx_trans: ∀h,G. s_r_transitive … (cpx h G) (λ_.lpx h G).
 qed-.
 
 lemma lpx_cpxs_trans: ∀h,G. s_rs_transitive … (cpx h G) (λ_.lpx h G).
-#h #G @s_r_trans_LTC1 /2 width=3 by lpx_cpx_trans/ (**) (* full auto fails *)
+#h #G @s_r_trans_CTC1 /2 width=3 by lpx_cpx_trans/ (**) (* full auto fails *)
 qed-.

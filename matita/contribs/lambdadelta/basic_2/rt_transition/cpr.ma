@@ -36,9 +36,9 @@ qed.
 
 lemma cpr_inv_atom1: ∀h,J,G,L,T2. ⦃G, L⦄ ⊢ ⓪{J} ➡[h] T2 →
                      ∨∨ T2 = ⓪{J}
-                      | ∃∃K,V1,V2. ⦃G, K⦄ ⊢ V1 ➡[h] V2 & ⬆*[1] V2 ≡ T2 &
+                      | ∃∃K,V1,V2. ⦃G, K⦄ ⊢ V1 ➡[h] V2 & ⬆*[1] V2 ≘ T2 &
                                    L = K.ⓓV1 & J = LRef 0
-                      | ∃∃I,K,T,i. ⦃G, K⦄ ⊢ #i ➡[h] T & ⬆*[1] T ≡ T2 &
+                      | ∃∃I,K,T,i. ⦃G, K⦄ ⊢ #i ➡[h] T & ⬆*[1] T ≘ T2 &
                                    L = K.ⓘ{I} & J = LRef (⫯i).
 #h #J #G #L #T2 #H elim (cpm_inv_atom1 … H) -H *
 /3 width=8 by tri_lt, or3_intro0, or3_intro1, or3_intro2, ex4_4_intro, ex4_3_intro/
@@ -52,7 +52,7 @@ qed-.
 
 lemma cpr_inv_zero1: ∀h,G,L,T2. ⦃G, L⦄ ⊢ #0 ➡[h] T2 →
                      ∨∨ T2 = #0
-                      | ∃∃K,V1,V2. ⦃G, K⦄ ⊢ V1 ➡[h] V2 & ⬆*[1] V2 ≡ T2 &
+                      | ∃∃K,V1,V2. ⦃G, K⦄ ⊢ V1 ➡[h] V2 & ⬆*[1] V2 ≘ T2 &
                                    L = K.ⓓV1.
 #h #G #L #T2 #H elim (cpm_inv_zero1 … H) -H *
 /3 width=6 by ex3_3_intro, or_introl, or_intror/
@@ -61,7 +61,7 @@ qed-.
 
 lemma cpr_inv_lref1: ∀h,G,L,T2,i. ⦃G, L⦄ ⊢ #⫯i ➡[h] T2 →
                      ∨∨ T2 = #(⫯i)
-                      | ∃∃I,K,T. ⦃G, K⦄ ⊢ #i ➡[h] T & ⬆*[1] T ≡ T2 & L = K.ⓘ{I}.
+                      | ∃∃I,K,T. ⦃G, K⦄ ⊢ #i ➡[h] T & ⬆*[1] T ≘ T2 & L = K.ⓘ{I}.
 #h #G #L #T2 #i #H elim (cpm_inv_lref1 … H) -H *
 /3 width=6 by ex3_3_intro, or_introl, or_intror/
 qed-.
@@ -86,7 +86,7 @@ lemma cpr_inv_flat1: ∀h,I,G,L,V1,U1,U2. ⦃G, L⦄ ⊢ ⓕ{I}V1.U1 ➡[h] U2 �
                       | ∃∃p,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 & ⦃G, L⦄ ⊢ W1 ➡[h] W2 &
                                             ⦃G, L.ⓛW1⦄ ⊢ T1 ➡[h] T2 & U1 = ⓛ{p}W1.T1 &
                                             U2 = ⓓ{p}ⓝW2.V2.T2 & I = Appl
-                      | ∃∃p,V,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V & ⬆*[1] V ≡ V2 &
+                      | ∃∃p,V,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V & ⬆*[1] V ≘ V2 &
                                               ⦃G, L⦄ ⊢ W1 ➡[h] W2 & ⦃G, L.ⓓW1⦄ ⊢ T1 ➡[h] T2 &
                                               U1 = ⓓ{p}W1.T1 &
                                               U2 = ⓓ{p}W2.ⓐV2.T2 & I = Appl.

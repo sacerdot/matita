@@ -49,7 +49,7 @@ qed-.
 (*
 (* Basic_2A1: was: cpx_lleq_conf *)
 lemma cpx_lfeq_conf: ∀h,G,L2,T1,T2. ⦃G, L2⦄ ⊢ T1 ⬈[h] T2 →
-                     ∀L1. L2 ≡[T1] L1 → ⦃G, L1⦄ ⊢ T1 ⬈[h] T2.
+                     ∀L1. L2 ≘[T1] L1 → ⦃G, L1⦄ ⊢ T1 ⬈[h] T2.
 /3 width=3 by lfeq_cpx_trans, lfeq_sym/ qed-.
 *)
 (* Basic_2A1: was: cpx_lleq_conf_sn *)
@@ -58,6 +58,6 @@ lemma cpx_lfeq_conf_sn: ∀h,G. s_r_confluent1 … (cpx h G) lfeq.
 (*
 (* Basic_2A1: was: cpx_lleq_conf_dx *)
 lemma cpx_lfeq_conf_dx: ∀h,G,L2,T1,T2. ⦃G, L2⦄ ⊢ T1 ⬈[h] T2 →
-                        ∀L1. L1 ≡[T1] L2 → L1 ≡[T2] L2.
+                        ∀L1. L1 ≘[T1] L2 → L1 ≘[T2] L2.
 /4 width=6 by cpx_lfeq_conf_sn, lfeq_sym/ qed-.
 *)

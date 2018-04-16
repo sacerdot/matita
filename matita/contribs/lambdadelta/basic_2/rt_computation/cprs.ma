@@ -19,7 +19,7 @@ include "basic_2/reduction/cnr.ma".
 
 (* Basic_1: includes: pr1_pr0 *)
 definition cprs: relation4 genv lenv term term ≝
-                 λG. LTC … (cpr G).
+                 λG. CTC … (cpr G).
 
 interpretation "context-sensitive parallel computation (term)"
    'PRedStar G L T1 T2 = (cprs G L T1 T2).
@@ -60,7 +60,7 @@ lemma cprs_strap2: ∀G,L,T1,T,T2.
 normalize /2 width=3 by TC_strap/ qed-.
 
 lemma lsubr_cprs_trans: ∀G. lsub_trans … (cprs G) lsubr.
-/3 width=5 by lsubr_cpr_trans, LTC_lsub_trans/
+/3 width=5 by lsubr_cpr_trans, CTC_lsub_trans/
 qed-.
 
 (* Basic_1: was: pr3_pr1 *)
@@ -85,7 +85,7 @@ lemma cprs_flat_sn: ∀I,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡ T2 → ∀V1,V2. ⦃G,
 /3 width=3 by cprs_strap1, cpr_cprs, cpr_pair_sn, cpr_flat/
 qed.
 
-lemma cprs_zeta: ∀G,L,V,T1,T,T2. ⬆[0, 1] T2 ≡ T →
+lemma cprs_zeta: ∀G,L,V,T1,T,T2. ⬆[0, 1] T2 ≘ T →
                  ⦃G, L.ⓓV⦄ ⊢ T1 ➡* T → ⦃G, L⦄ ⊢ +ⓓV.T1 ➡* T2.
 #G #L #V #T1 #T #T2 #HT2 #H @(cprs_ind_dx … H) -T1
 /3 width=3 by cprs_strap2, cpr_cprs, cpr_bind, cpr_zeta/
@@ -104,7 +104,7 @@ lemma cprs_beta_dx: ∀a,G,L,V1,V2,W1,W2,T1,T2.
 qed.
 
 lemma cprs_theta_dx: ∀a,G,L,V1,V,V2,W1,W2,T1,T2.
-                     ⦃G, L⦄ ⊢ V1 ➡ V → ⬆[0, 1] V ≡ V2 → ⦃G, L.ⓓW1⦄ ⊢ T1 ➡* T2 →
+                     ⦃G, L⦄ ⊢ V1 ➡ V → ⬆[0, 1] V ≘ V2 → ⦃G, L.ⓓW1⦄ ⊢ T1 ➡* T2 →
                      ⦃G, L⦄ ⊢ W1 ➡ W2 → ⦃G, L⦄ ⊢ ⓐV1.ⓓ{a}W1.T1 ➡* ⓓ{a}W2.ⓐV2.T2.
 #a #G #L #V1 #V #V2 #W1 #W2 #T1 #T2 #HV1 #HV2 * -T2
 /4 width=9 by cprs_strap1, cpr_cprs, cprs_bind_dx, cprs_flat_dx, cpr_theta/

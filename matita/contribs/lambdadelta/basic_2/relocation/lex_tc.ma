@@ -23,8 +23,8 @@ alias symbol "subseteq" = "relation inclusion".
 (* Inversion lemmas with transitive closure *********************************)
 
 (* Basic_2A1: was: lpx_sn_LTC_TC_lpx_sn *)
-lemma lex_inv_ltc: ∀R. c_reflexive … R →
-                   lex (LTC … R) ⊆ TC … (lex R).
+lemma lex_inv_CTC: ∀R. c_reflexive … R →
+                   lex (CTC … R) ⊆ TC … (lex R).
 #R #HR #L1 #L2 *
 /5 width=11 by lexs_inv_tc_dx, lexs_co, ext2_inv_tc, ext2_refl, monotonic_TC, ex2_intro/
 qed-.
@@ -43,8 +43,8 @@ qed-.
 (* Properties with transitive closure ***************************************)
 
 (* Basic_2A1: was: TC_lpx_sn_inv_lpx_sn_LTC *)
-lemma lex_ltc: ∀R. s_rs_transitive … R (λ_. lex R) →
-               TC … (lex R) ⊆ lex (LTC … R).
+lemma lex_CTC: ∀R. s_rs_transitive … R (λ_. lex R) →
+               TC … (lex R) ⊆ lex (CTC … R).
 #R #HR #L1 #L2 #HL12
 lapply (monotonic_TC … (lexs cfull (cext2 R) 𝐈𝐝) … HL12) -HL12
 [ #L1 #L2 * /3 width=3 by lexs_eq_repl_fwd, eq_id_inv_isid/
@@ -52,12 +52,12 @@ lapply (monotonic_TC … (lexs cfull (cext2 R) 𝐈𝐝) … HL12) -HL12
 ]
 qed-.
 
-lemma lex_ltc_step_dx: ∀R. c_reflexive … R → s_rs_transitive … R (λ_. lex R) →
-                       ∀L1,L. lex (LTC … R) L1 L →
-                       ∀L2. lex R L L2 → lex (LTC … R) L1 L2.
-/4 width=3 by lex_ltc, lex_inv_ltc, step/ qed-.
+lemma lex_CTC_step_dx: ∀R. c_reflexive … R → s_rs_transitive … R (λ_. lex R) →
+                       ∀L1,L. lex (CTC … R) L1 L →
+                       ∀L2. lex R L L2 → lex (CTC … R) L1 L2.
+/4 width=3 by lex_CTC, lex_inv_CTC, step/ qed-.
 
-lemma lex_ltc_step_sn: ∀R. c_reflexive … R → s_rs_transitive … R (λ_. lex R) →
+lemma lex_CTC_step_sn: ∀R. c_reflexive … R → s_rs_transitive … R (λ_. lex R) →
                        ∀L1,L. lex R L1 L →
-                       ∀L2. lex (LTC … R) L L2 → lex (LTC … R) L1 L2.
-/4 width=3 by lex_ltc, lex_inv_ltc, TC_strap/ qed-.
+                       ∀L2. lex (CTC … R) L L2 → lex (CTC … R) L1 L2.
+/4 width=3 by lex_CTC, lex_inv_CTC, TC_strap/ qed-.

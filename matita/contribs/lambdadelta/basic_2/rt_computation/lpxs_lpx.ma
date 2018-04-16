@@ -23,9 +23,9 @@ include "basic_2/rt_computation/cpxs_lpx.ma".
 (* Basic_2A1: was: lpxs_strap1 *)
 lemma lpxs_step_dx: ∀h,G,L1,L. ⦃G, L1⦄ ⊢ ⬈*[h] L →
                     ∀L2. ⦃G, L⦄ ⊢ ⬈[h] L2 → ⦃G, L1⦄ ⊢ ⬈*[h] L2.
-/3 width=3 by lpx_cpxs_trans, lex_ltc_step_dx/ qed-.
+/3 width=3 by lpx_cpxs_trans, lex_CTC_step_dx/ qed-.
 
 (* Basic_2A1: was: lpxs_strap2 *)
 lemma lpxs_step_sn: ∀h,G,L1,L. ⦃G, L1⦄ ⊢ ⬈[h] L →
                     ∀L2. ⦃G, L⦄ ⊢ ⬈*[h] L2 → ⦃G, L1⦄ ⊢ ⬈*[h] L2.
-/3 width=3 by lpx_cpxs_trans, lex_ltc_step_sn/ qed-.
+/3 width=3 by lpx_cpxs_trans, lex_CTC_step_sn/ qed-.

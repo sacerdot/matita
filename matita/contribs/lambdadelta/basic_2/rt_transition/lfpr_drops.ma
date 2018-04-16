@@ -34,10 +34,10 @@ lemma lfpr_drops_conf: ∀h,G. dropable_sn (cpm 0 h G).
 lemma lfpr_drops_trans: ∀h,G. dropable_dx (cpm 0 h G).
 /2 width=5 by lfxs_dropable_dx/ qed-.
 
-lemma lfpr_inv_lref_pair_sn: ∀h,G,L1,L2,i. ⦃G, L1⦄ ⊢ ➡[h, #i] L2 → ∀I,K1,V1. ⬇*[i] L1 ≡ K1.ⓑ{I}V1 →
-                             ∃∃K2,V2. ⬇*[i] L2 ≡ K2.ⓑ{I}V2 & ⦃G, K1⦄ ⊢ ➡[h, V1] K2 & ⦃G, K1⦄ ⊢ V1 ➡[h] V2.
+lemma lfpr_inv_lref_pair_sn: ∀h,G,L1,L2,i. ⦃G, L1⦄ ⊢ ➡[h, #i] L2 → ∀I,K1,V1. ⬇*[i] L1 ≘ K1.ⓑ{I}V1 →
+                             ∃∃K2,V2. ⬇*[i] L2 ≘ K2.ⓑ{I}V2 & ⦃G, K1⦄ ⊢ ➡[h, V1] K2 & ⦃G, K1⦄ ⊢ V1 ➡[h] V2.
 /2 width=3 by lfxs_inv_lref_pair_sn/ qed-.
 
-lemma lfpr_inv_lref_pair_dx: ∀h,G,L1,L2,i. ⦃G, L1⦄ ⊢ ➡[h, #i] L2 → ∀I,K2,V2. ⬇*[i] L2 ≡ K2.ⓑ{I}V2 →
-                             ∃∃K1,V1. ⬇*[i] L1 ≡ K1.ⓑ{I}V1 & ⦃G, K1⦄ ⊢ ➡[h, V1] K2 & ⦃G, K1⦄ ⊢ V1 ➡[h] V2.
+lemma lfpr_inv_lref_pair_dx: ∀h,G,L1,L2,i. ⦃G, L1⦄ ⊢ ➡[h, #i] L2 → ∀I,K2,V2. ⬇*[i] L2 ≘ K2.ⓑ{I}V2 →
+                             ∃∃K1,V1. ⬇*[i] L1 ≘ K1.ⓑ{I}V1 & ⦃G, K1⦄ ⊢ ➡[h, V1] K2 & ⦃G, K1⦄ ⊢ V1 ➡[h] V2.
 /2 width=3 by lfxs_inv_lref_pair_dx/ qed-.

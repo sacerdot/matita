@@ -25,7 +25,7 @@ lemma tc_lfxs_refl: ∀R. c_reflexive … R →
 
 (* Basic_2A1: uses: TC_lpx_sn_pair TC_lpx_sn_pair_refl *)
 lemma tc_lfxs_pair_refl: ∀R. c_reflexive … R →
-                         ∀L,V1,V2. LTC … R L V1 V2 → ∀I,T. L.ⓑ{I}V1 ⪤**[R, T] L.ⓑ{I}V2.
+                         ∀L,V1,V2. CTC … R L V1 V2 → ∀I,T. L.ⓑ{I}V1 ⪤**[R, T] L.ⓑ{I}V2.
 #R #HR #L #V1 #V2 #H elim H -V2
 /3 width=3 by tc_lfxs_step_dx, lfxs_pair_refl, inj/
 qed.

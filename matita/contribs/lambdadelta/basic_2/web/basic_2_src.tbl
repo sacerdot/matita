@@ -161,7 +161,7 @@ table {
           }
         ]
         [ { "syntactic equivalence" * } {
-             [ [ "for lenvs on referred entries" ] "lfeq" + "( ? ≐[?] ? )" "lfeq_fqup" + "lfeq_fsle" * ]
+             [ [ "for lenvs on referred entries" ] "lfeq" + "( ? ≡[?] ? )" "lfeq_fqup" + "lfeq_fsle" * ]
           }
         ]
         [ { "generic extension of a context-sensitive relation" * } {
@@ -171,7 +171,7 @@ table {
         [ { "context-sensitive free variables" * } {
              [ [ "inclusion for restricted closures" ] "fsle" + "( ⦃?,?⦄ ⊆ ⦃?,?⦄ )" "fsle_length" + "fsle_drops" + "fsle_fqup" + "fsle_fsle" * ]
              [ [ "restricted refinement for lenvs" ] "lsubf" + "( ⦃?,?⦄ ⫃𝐅* ⦃?,?⦄ )" "lsubf_lsubr" + "lsubf_frees" + "lsubf_lsubf" * ]
-             [ [ "for terms" ] "frees" + "( ? ⊢ 𝐅*⦃?⦄ ≡ ? )" "frees_append" + "frees_drops" + "frees_fqup" + "frees_frees" * ]
+             [ [ "for terms" ] "frees" + "( ? ⊢ 𝐅*⦃?⦄ ≘ ? )" "frees_append" + "frees_drops" + "frees_fqup" + "frees_frees" * ]
           }
         ]
         [ { "local environments" * } {
@@ -201,17 +201,17 @@ table {
    class "orange"
    [ { "relocation" * } {
         [ { "generic slicing" * } {
-             [ [ "for lenvs" ] "drops" + "( ⬇*[?,?] ? ≡ ? )" + "( ⬇*[?] ? ≡ ? )" "drops_lstar" + "drops_weight" + "drops_length" + "drops_cext2" + "drops_lexs" + "drops_lreq" + "drops_drops" + "drops_vector" * ]
+             [ [ "for lenvs" ] "drops" + "( ⬇*[?,?] ? ≘ ? )" + "( ⬇*[?] ? ≘ ? )" "drops_lstar" + "drops_weight" + "drops_length" + "drops_cext2" + "drops_lexs" + "drops_lreq" + "drops_drops" + "drops_vector" * ]
           }
         ]
         [ { "generic relocation" * } {
-             [ [ "for binders" ] "lifts_bind" + "( ⬆*[?] ? ≡ ? )" "lifts_weight_bind" + "lifts_lifts_bind" * ]
-             [ [ "for term vectors" ] "lifts_vector" + "( ⬆*[?] ? ≡ ? )" "lifts_lifts_vector" * ]
-             [ [ "for terms" ] "lifts" + "( ⬆*[?] ? ≡ ? )" "lifts_simple" + "lifts_weight" + "lifts_tdeq" + "lifts_lifts" * ]
+             [ [ "for binders" ] "lifts_bind" + "( ⬆*[?] ? ≘ ? )" "lifts_weight_bind" + "lifts_lifts_bind" * ]
+             [ [ "for term vectors" ] "lifts_vector" + "( ⬆*[?] ? ≘ ? )" "lifts_lifts_vector" * ]
+             [ [ "for terms" ] "lifts" + "( ⬆*[?] ? ≘ ? )" "lifts_simple" + "lifts_weight" + "lifts_tdeq" + "lifts_lifts" * ]
           }
         ]
         [ { "syntactic equivalence" * } {
-             [ [ "for lenvs on selected entries" ] "lreq" + "( ? ≐[?] ? )" "lreq_length" + "lreq_lreq" * ]
+             [ [ "for lenvs on selected entries" ] "lreq" + "( ? ≡[?] ? )" "lreq_length" + "lreq_lreq" * ]
           }
         ]
         [ { "generic entrywise extension" * } {
@@ -342,7 +342,7 @@ class "italic"            { 2 }
           }
         ]
         [ { "global env. slicing" * } {
-             [ [ "" ] "gget ( ⬇[?] ? ≡ ? )" "gget_gget" * ]
+             [ [ "" ] "gget ( ⬇[?] ? ≘ ? )" "gget_gget" * ]
           }
         ]
         [ { "context-sensitive ordinary rt-substitution" * } {

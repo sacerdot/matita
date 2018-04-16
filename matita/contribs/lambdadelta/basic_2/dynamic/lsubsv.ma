@@ -116,8 +116,8 @@ qed-.
 
 (* Note: the constant 0 cannot be generalized *)
 lemma lsubsv_drop_O1_conf: ∀h,o,G,L1,L2. G ⊢ L1 ⫃¡[h, o] L2 →
-                           ∀K1,b,k. ⬇[b, 0, k] L1 ≡ K1 →
-                           ∃∃K2. G ⊢ K1 ⫃¡[h, o] K2 & ⬇[b, 0, k] L2 ≡ K2.
+                           ∀K1,b,k. ⬇[b, 0, k] L1 ≘ K1 →
+                           ∃∃K2. G ⊢ K1 ⫃¡[h, o] K2 & ⬇[b, 0, k] L2 ≘ K2.
 #h #o #G #L1 #L2 #H elim H -L1 -L2
 [ /2 width=3 by ex2_intro/
 | #I #L1 #L2 #V #_ #IHL12 #K1 #b #k #H
@@ -139,8 +139,8 @@ qed-.
 
 (* Note: the constant 0 cannot be generalized *)
 lemma lsubsv_drop_O1_trans: ∀h,o,G,L1,L2. G ⊢ L1 ⫃¡[h, o] L2 →
-                            ∀K2,b, k. ⬇[b, 0, k] L2 ≡ K2 →
-                            ∃∃K1. G ⊢ K1 ⫃¡[h, o] K2 & ⬇[b, 0, k] L1 ≡ K1.
+                            ∀K2,b, k. ⬇[b, 0, k] L2 ≘ K2 →
+                            ∃∃K1. G ⊢ K1 ⫃¡[h, o] K2 & ⬇[b, 0, k] L1 ≘ K1.
 #h #o #G #L1 #L2 #H elim H -L1 -L2
 [ /2 width=3 by ex2_intro/
 | #I #L1 #L2 #V #_ #IHL12 #K2 #b #k #H

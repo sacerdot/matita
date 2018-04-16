@@ -28,13 +28,13 @@ interpretation "finite colength assignment (rtmap)"
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma fcla_inv_px: ∀g,m. 𝐂⦃g⦄ ≡ m → ∀f. ↑f = g → 𝐂⦃f⦄ ≡ m.
+lemma fcla_inv_px: ∀g,m. 𝐂⦃g⦄ ≘ m → ∀f. ↑f = g → 𝐂⦃f⦄ ≘ m.
 #g #m * -g -m /3 width=3 by fcla_isid, isid_inv_push/
 #g #m #_ #f #H elim (discr_push_next … H)
 qed-.
 
-lemma fcla_inv_nx: ∀g,m. 𝐂⦃g⦄ ≡ m → ∀f. ⫯f = g →
-                   ∃∃n. 𝐂⦃f⦄ ≡ n & ⫯n = m.
+lemma fcla_inv_nx: ∀g,m. 𝐂⦃g⦄ ≘ m → ∀f. ⫯f = g →
+                   ∃∃n. 𝐂⦃f⦄ ≘ n & ⫯n = m.
 #g #m * -g -m /2 width=3 by ex2_intro/
 [ #g #Hg #f #H elim (isid_inv_next …  H) -H //
 | #g #m #_ #f #H elim (discr_next_push … H)
@@ -43,29 +43,29 @@ qed-.
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma cla_inv_nn: ∀g,m. 𝐂⦃g⦄ ≡ m → ∀f,n. ⫯f = g → ⫯n = m → 𝐂⦃f⦄ ≡ n.
+lemma cla_inv_nn: ∀g,m. 𝐂⦃g⦄ ≘ m → ∀f,n. ⫯f = g → ⫯n = m → 𝐂⦃f⦄ ≘ n.
 #g #m #H #f #n #H1 #H2 elim (fcla_inv_nx … H … H1) -g
 #x #Hf #H destruct //
 qed-.
 
-lemma cla_inv_np: ∀g,m. 𝐂⦃g⦄ ≡ m → ∀f. ⫯f = g → 0 = m → ⊥.
+lemma cla_inv_np: ∀g,m. 𝐂⦃g⦄ ≘ m → ∀f. ⫯f = g → 0 = m → ⊥.
 #g #m #H #f #H1 elim (fcla_inv_nx … H … H1) -g
 #x #_ #H1 #H2 destruct
 qed-.
 
-lemma fcla_inv_xp: ∀g,m. 𝐂⦃g⦄ ≡ m → 0 = m → 𝐈⦃g⦄.
+lemma fcla_inv_xp: ∀g,m. 𝐂⦃g⦄ ≘ m → 0 = m → 𝐈⦃g⦄.
 #g #m #H elim H -g -m /3 width=3 by isid_push/
 #g #m #_ #_ #H destruct
 qed-.
 
-lemma fcla_inv_isid: ∀f,n. 𝐂⦃f⦄ ≡ n → 𝐈⦃f⦄ → 0 = n.
+lemma fcla_inv_isid: ∀f,n. 𝐂⦃f⦄ ≘ n → 𝐈⦃f⦄ → 0 = n.
 #f #n #H elim H -f -n /3 width=3 by isid_inv_push/
 #f #n #_ #_ #H elim (isid_inv_next … H) -H //  
 qed-.
 
 (* Main forward lemmas ******************************************************)
 
-theorem fcla_mono: ∀f,n1. 𝐂⦃f⦄ ≡ n1 → ∀n2. 𝐂⦃f⦄ ≡ n2 → n1 = n2.
+theorem fcla_mono: ∀f,n1. 𝐂⦃f⦄ ≘ n1 → ∀n2. 𝐂⦃f⦄ ≘ n2 → n1 = n2.
 #f #n #H elim H -f -n
 [ /2 width=3 by fcla_inv_isid/
 | /3 width=3 by fcla_inv_px/
@@ -76,12 +76,12 @@ qed-.
 
 (* Basic properties *********************************************************)
 
-lemma fcla_eq_repl_back: ∀n. eq_repl_back … (λf. 𝐂⦃f⦄ ≡ n).
+lemma fcla_eq_repl_back: ∀n. eq_repl_back … (λf. 𝐂⦃f⦄ ≘ n).
 #n #f1 #H elim H -f1 -n /3 width=3 by fcla_isid, isid_eq_repl_back/
 #f1 #n #_ #IH #g2 #H [ elim (eq_inv_px … H) | elim (eq_inv_nx … H) ] -H
 /3 width=3 by fcla_push, fcla_next/
 qed-.
 
-lemma fcla_eq_repl_fwd: ∀n. eq_repl_fwd … (λf. 𝐂⦃f⦄ ≡ n).
+lemma fcla_eq_repl_fwd: ∀n. eq_repl_fwd … (λf. 𝐂⦃f⦄ ≘ n).
 #n @eq_repl_sym /2 width=3 by fcla_eq_repl_back/
 qed-.

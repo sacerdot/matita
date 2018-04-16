@@ -17,14 +17,14 @@ include "ground_2/lib/relations.ma".
 
 (* TRANSITIVE CLOSURE *******************************************************)
 
-definition LTC: ∀A:Type[0]. ∀B. (A→relation B) → (A→relation B) ≝
+definition CTC: ∀A:Type[0]. ∀B. (A→relation B) → (A→relation B) ≝
                 λA,B,R,a. TC … (R a).
 
 definition s_r_transitive: ∀A,B. relation2 (A→relation B) (B→relation A) ≝ λA,B,R1,R2.
-                           ∀L2,T1,T2. R1 L2 T1 T2 → ∀L1. R2 T1 L1 L2 → LTC … R1 L1 T1 T2.
+                           ∀L2,T1,T2. R1 L2 T1 T2 → ∀L1. R2 T1 L1 L2 → CTC … R1 L1 T1 T2.
 
 definition s_rs_transitive: ∀A,B. relation2 (A→relation B) (B→relation A) ≝ λA,B,R1,R2.
-                            ∀L2,T1,T2. LTC … R1 L2 T1 T2 → ∀L1. R2 T1 L1 L2 → LTC … R1 L1 T1 T2.
+                            ∀L2,T1,T2. CTC … R1 L2 T1 T2 → ∀L1. R2 T1 L1 L2 → CTC … R1 L1 T1 T2.
 
 lemma TC_strip1: ∀A,R1,R2. confluent2 A R1 R2 →
                  ∀a0,a1. TC … R1 a0 a1 → ∀a2. R2 a0 a2 →
@@ -96,28 +96,28 @@ lemma TC_transitive2: ∀A,R1,R2.
 ]
 qed.
 
-lemma LTC_lsub_trans: ∀A,B,R,S. lsub_trans A B R S → lsub_trans A B (LTC … R) S.
+lemma CTC_lsub_trans: ∀A,B,R,S. lsub_trans A B R S → lsub_trans A B (CTC … R) S.
 #A #B #R #S #HRS #L2 #T1 #T2 #H elim H -T2 /3 width=3 by inj/
 #T #T2 #_ #HT2 #IHT1 #L1 #HL12
 lapply (HRS … HT2 … HL12) -HRS -HT2 /3 width=3 by step/
 qed-.
 
-lemma s_r_conf1_LTC1: ∀A,B,S,R. s_r_confluent1 A B S R → s_r_confluent1 A B (LTC … S) R.
+lemma s_r_conf1_CTC1: ∀A,B,S,R. s_r_confluent1 A B S R → s_r_confluent1 A B (CTC … S) R.
 #A #B #S #R #HSR #L1 #T1 #T2 #H @(TC_ind_dx … T1 H) -T1 /3 width=3 by/
 qed-.
 
-lemma s_r_trans_LTC1: ∀A,B,S,R. s_r_confluent1 A B S R →
+lemma s_r_trans_CTC1: ∀A,B,S,R. s_r_confluent1 A B S R →
                       s_r_transitive A B S R → s_rs_transitive A B S R.
 #A #B #S #R #H1SR #H2SR #L2 #T1 #T2 #H @(TC_ind_dx … T1 H) -T1 /2 width=3 by/
 #T1 #T #HT1 #_ #IHT2 #L1 #HL12 lapply (H2SR … HT1 … HL12) -H2SR -HT1
-/4 width=5 by s_r_conf1_LTC1, trans_TC/
+/4 width=5 by s_r_conf1_CTC1, trans_TC/
 qed-.
 
-lemma s_r_trans_LTC2: ∀A,B,S,R. s_rs_transitive A B S R → s_r_transitive A B S (LTC … R).
+lemma s_r_trans_CTC2: ∀A,B,S,R. s_rs_transitive A B S R → s_r_transitive A B S (CTC … R).
 #A #B #S #R #HSR #L2 #T1 #T2 #HT12 #L1 #H @(TC_ind_dx … L1 H) -L1 /3 width=3 by inj/
 qed-.
 
-lemma s_r_to_s_rs_trans: ∀A,B,S,R. s_r_transitive A B (LTC … S) R →
+lemma s_r_to_s_rs_trans: ∀A,B,S,R. s_r_transitive A B (CTC … S) R →
                          s_rs_transitive A B S R.
 #A #B #S #R #HSR #L2 #T1 #T2 #HL2 #L1 #HT1
 elim (TC_idem … (S L1) …  T1 T2)
@@ -125,14 +125,14 @@ elim (TC_idem … (S L1) …  T1 T2)
 qed-.
 
 lemma s_rs_to_s_r_trans: ∀A,B,S,R. s_rs_transitive A B S R →
-                         s_r_transitive A B (LTC … S) R.
+                         s_r_transitive A B (CTC … S) R.
 #A #B #S #R #HSR #L2 #T1 #T2 #HL2 #L1 #HT1
 elim (TC_idem … (S L1) …  T1 T2)
 #H #_ @H @HSR //
 qed-.
 
 lemma s_rs_trans_TC1: ∀A,B,S,R. s_rs_transitive A B S R →
-                      s_rs_transitive A B (LTC … S) R.
+                      s_rs_transitive A B (CTC … S) R.
 #A #B #S #R #HSR #L2 #T1 #T2 #HL2 #L1 #HT1
 elim (TC_idem … (S L1) …  T1 T2)
 elim (TC_idem … (S L2) …  T1 T2)
