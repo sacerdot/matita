@@ -297,15 +297,6 @@ notation "hvbox(a break \approx b)" non associative with precedence 45
 notation "hvbox(a break # b)" non associative with precedence 45 
   for @{ 'apart $a $b}.
 
-notation < "↓ \ensp a" with precedence 60 for @{ 'downarrow $a }.
-notation > "↓ a" with precedence 60 for @{ 'downarrow $a }.
-
-notation "hvbox(U break ↓ V)" non associative with precedence 60 for @{ 'fintersects $U $V }.
-
-notation "↑a" with precedence 60 for @{ 'uparrow $a }.
-
-notation "hvbox(a break ↑ b)" with precedence 60 for @{ 'funion $a $b }.
-
 notation < "term 76 a \sup term 90 b" non associative with precedence 75 for @{ 'exp $a $b}.
 notation > "a \sup term 90 b" non associative with precedence 75 for @{ 'exp $a $b}.
 notation > "a ^ term 90 b"  non associative with precedence 75 for @{ 'exp $a $b}.

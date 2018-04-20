@@ -1,3 +1,4 @@
+include "basics/core_notation/fintersects_2.ma".
 include "turing/mono.ma".
 include "basics/vectors.ma".
 

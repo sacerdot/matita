@@ -12,6 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basics/core_notation/fintersects_2.ma".
+include "basics/core_notation/downarrow_1.ma".
 include "formal_topology/o-basic_pairs.ma".
 include "formal_topology/o-saturations.ma".
 (*

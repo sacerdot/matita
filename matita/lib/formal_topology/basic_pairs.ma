@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basics/core_notation/fintersects_2.ma".
 include "formal_topology/relations.ma".
 include "formal_topology/notation.ma".
 (*
