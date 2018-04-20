@@ -84,7 +84,7 @@ lemma lfxs_inv_zero: ∀R,Y1,Y2. Y1 ⪤*[R, #0] Y2 →
 ]
 qed-.
 
-lemma lfxs_inv_lref: ∀R,Y1,Y2,i. Y1 ⪤*[R, #⫯i] Y2 →
+lemma lfxs_inv_lref: ∀R,Y1,Y2,i. Y1 ⪤*[R, #↑i] Y2 →
                      ∨∨ Y1 = ⋆ ∧ Y2 = ⋆
                       | ∃∃I1,I2,L1,L2. L1 ⪤*[R, #i] L2 &
                                        Y1 = L1.ⓘ{I1} & Y2 = L2.ⓘ{I2}.
@@ -183,7 +183,7 @@ lemma lfxs_inv_zero_unit_dx: ∀R,I,L1,K2. L1 ⪤*[R, #0] K2.ⓤ{I} →
 ]
 qed-.
 
-lemma lfxs_inv_lref_bind_sn: ∀R,I1,K1,L2,i. K1.ⓘ{I1} ⪤*[R, #⫯i] L2 →
+lemma lfxs_inv_lref_bind_sn: ∀R,I1,K1,L2,i. K1.ⓘ{I1} ⪤*[R, #↑i] L2 →
                              ∃∃I2,K2. K1 ⪤*[R, #i] K2 & L2 = K2.ⓘ{I2}.
 #R #I1 #K1 #L2 #i #H elim (lfxs_inv_lref … H) -H *
 [ #H destruct
@@ -191,7 +191,7 @@ lemma lfxs_inv_lref_bind_sn: ∀R,I1,K1,L2,i. K1.ⓘ{I1} ⪤*[R, #⫯i] L2 →
 ]
 qed-.
 
-lemma lfxs_inv_lref_bind_dx: ∀R,I2,K2,L1,i. L1 ⪤*[R, #⫯i] K2.ⓘ{I2} →
+lemma lfxs_inv_lref_bind_dx: ∀R,I2,K2,L1,i. L1 ⪤*[R, #↑i] K2.ⓘ{I2} →
                              ∃∃I1,K1. K1 ⪤*[R, #i] K2 & L1 = K1.ⓘ{I1}.
 #R #I2 #K2 #L1 #i #H elim (lfxs_inv_lref … H) -H *
 [ #_ #H destruct
@@ -273,7 +273,7 @@ lemma lfxs_unit: ∀R,f,I,L1,L2. 𝐈⦃f⦄ → L1 ⪤*[cext2 R, cfull, f] L2 �
 /4 width=3 by frees_unit, lexs_next, ext2_unit, ex2_intro/ qed.
 
 lemma lfxs_lref: ∀R,I1,I2,L1,L2,i.
-                 L1 ⪤*[R, #i] L2 → L1.ⓘ{I1} ⪤*[R, #⫯i] L2.ⓘ{I2}.
+                 L1 ⪤*[R, #i] L2 → L1.ⓘ{I1} ⪤*[R, #↑i] L2.ⓘ{I2}.
 #R #I1 #I2 #L1 #L2 #i * /3 width=3 by lexs_push, frees_lref, ex2_intro/
 qed.
 

@@ -18,9 +18,9 @@ include "ground_2/relocation/rtmap_isid.ma".
 (* RELOCATION MAP ***********************************************************)
 
 coinductive sdj: relation rtmap ≝
-| sdj_pp: ∀f1,f2,g1,g2. sdj f1 f2 → ↑f1 = g1 → ↑f2 = g2 → sdj g1 g2
-| sdj_np: ∀f1,f2,g1,g2. sdj f1 f2 → ⫯f1 = g1 → ↑f2 = g2 → sdj g1 g2
-| sdj_pn: ∀f1,f2,g1,g2. sdj f1 f2 → ↑f1 = g1 → ⫯f2 = g2 → sdj g1 g2
+| sdj_pp: ∀f1,f2,g1,g2. sdj f1 f2 → ⫯f1 = g1 → ⫯f2 = g2 → sdj g1 g2
+| sdj_np: ∀f1,f2,g1,g2. sdj f1 f2 → ↑f1 = g1 → ⫯f2 = g2 → sdj g1 g2
+| sdj_pn: ∀f1,f2,g1,g2. sdj f1 f2 → ⫯f1 = g1 → ↑f2 = g2 → sdj g1 g2
 .
 
 interpretation "disjointness (rtmap)"
@@ -49,7 +49,7 @@ qed-.
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma sdj_inv_pp: ∀g1,g2. g1 ∥ g2 → ∀f1,f2. ↑f1 = g1 → ↑f2 = g2 → f1 ∥ f2.
+lemma sdj_inv_pp: ∀g1,g2. g1 ∥ g2 → ∀f1,f2. ⫯f1 = g1 → ⫯f2 = g2 → f1 ∥ f2.
 #g1 #g2 * -g1 -g2
 #f1 #f2 #g1 #g2 #H #H1 #H2 #x1 #x2 #Hx1 #Hx2 destruct
 [ lapply (injective_push … Hx1) -Hx1
@@ -59,7 +59,7 @@ lemma sdj_inv_pp: ∀g1,g2. g1 ∥ g2 → ∀f1,f2. ↑f1 = g1 → ↑f2 = g2 �
 ]
 qed-.
 
-lemma sdj_inv_np: ∀g1,g2. g1 ∥ g2 → ∀f1,f2. ⫯f1 = g1 → ↑f2 = g2 → f1 ∥ f2.
+lemma sdj_inv_np: ∀g1,g2. g1 ∥ g2 → ∀f1,f2. ↑f1 = g1 → ⫯f2 = g2 → f1 ∥ f2.
 #g1 #g2 * -g1 -g2
 #f1 #f2 #g1 #g2 #H #H1 #H2 #x1 #x2 #Hx1 #Hx2 destruct
 [ elim (discr_next_push … Hx1)
@@ -69,7 +69,7 @@ lemma sdj_inv_np: ∀g1,g2. g1 ∥ g2 → ∀f1,f2. ⫯f1 = g1 → ↑f2 = g2 �
 ]
 qed-.
 
-lemma sdj_inv_pn: ∀g1,g2. g1 ∥ g2 → ∀f1,f2. ↑f1 = g1 → ⫯f2 = g2 → f1 ∥ f2.
+lemma sdj_inv_pn: ∀g1,g2. g1 ∥ g2 → ∀f1,f2. ⫯f1 = g1 → ↑f2 = g2 → f1 ∥ f2.
 #g1 #g2 * -g1 -g2
 #f1 #f2 #g1 #g2 #H #H1 #H2 #x1 #x2 #Hx1 #Hx2 destruct
 [ elim (discr_next_push … Hx2)
@@ -79,7 +79,7 @@ lemma sdj_inv_pn: ∀g1,g2. g1 ∥ g2 → ∀f1,f2. ↑f1 = g1 → ⫯f2 = g2 �
 ]
 qed-.
 
-lemma sdj_inv_nn: ∀g1,g2. g1 ∥ g2 → ∀f1,f2. ⫯f1 = g1 → ⫯f2 = g2 → ⊥.
+lemma sdj_inv_nn: ∀g1,g2. g1 ∥ g2 → ∀f1,f2. ↑f1 = g1 → ↑f2 = g2 → ⊥.
 #g1 #g2 * -g1 -g2
 #f1 #f2 #g1 #g2 #H #H1 #H2 #x1 #x2 #Hx1 #Hx2 destruct
 [ elim (discr_next_push … Hx1)
@@ -90,33 +90,33 @@ qed-.
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma sdj_inv_nx: ∀g1,g2. g1 ∥ g2 → ∀f1. ⫯f1 = g1 →
-                  ∃∃f2. f1 ∥ f2 & ↑f2 = g2.
+lemma sdj_inv_nx: ∀g1,g2. g1 ∥ g2 → ∀f1. ↑f1 = g1 →
+                  ∃∃f2. f1 ∥ f2 & ⫯f2 = g2.
 #g1 #g2 elim (pn_split g2) * #f2 #H2 #H #f1 #H1
 [ lapply (sdj_inv_np … H … H1 H2) -H /2 width=3 by ex2_intro/
 | elim (sdj_inv_nn … H … H1 H2)
 ]
 qed-.
 
-lemma sdj_inv_xn: ∀g1,g2. g1 ∥ g2 → ∀f2. ⫯f2 = g2 →
-                  ∃∃f1. f1 ∥ f2 & ↑f1 = g1.
+lemma sdj_inv_xn: ∀g1,g2. g1 ∥ g2 → ∀f2. ↑f2 = g2 →
+                  ∃∃f1. f1 ∥ f2 & ⫯f1 = g1.
 #g1 #g2 elim (pn_split g1) * #f1 #H1 #H #f2 #H2
 [ lapply (sdj_inv_pn … H … H1 H2) -H /2 width=3 by ex2_intro/
 | elim (sdj_inv_nn … H … H1 H2)
 ]
 qed-.
 
-lemma sdj_inv_xp: ∀g1,g2. g1 ∥ g2 → ∀f2. ↑f2 = g2 →
-                  ∨∨ ∃∃f1. f1 ∥ f2 & ↑f1 = g1
-                   | ∃∃f1. f1 ∥ f2 & ⫯f1 = g1.
+lemma sdj_inv_xp: ∀g1,g2. g1 ∥ g2 → ∀f2. ⫯f2 = g2 →
+                  ∨∨ ∃∃f1. f1 ∥ f2 & ⫯f1 = g1
+                   | ∃∃f1. f1 ∥ f2 & ↑f1 = g1.
 #g1 #g2 elim (pn_split g1) * #f1 #H1 #H #f2 #H2
 [ lapply (sdj_inv_pp … H … H1 H2) | lapply (sdj_inv_np … H … H1 H2) ] -H -H2
 /3 width=3 by ex2_intro, or_introl, or_intror/
 qed-.
 
-lemma sdj_inv_px: ∀g1,g2. g1 ∥ g2 → ∀f1. ↑f1 = g1 →
-                  ∨∨ ∃∃f2. f1 ∥ f2 & ↑f2 = g2
-                   | ∃∃f2. f1 ∥ f2 & ⫯f2 = g2.
+lemma sdj_inv_px: ∀g1,g2. g1 ∥ g2 → ∀f1. ⫯f1 = g1 →
+                  ∨∨ ∃∃f2. f1 ∥ f2 & ⫯f2 = g2
+                   | ∃∃f2. f1 ∥ f2 & ↑f2 = g2.
 #g1 #g2 elim (pn_split g2) * #f2 #H2 #H #f1 #H1
 [ lapply (sdj_inv_pp … H … H1 H2) | lapply (sdj_inv_pn … H … H1 H2) ] -H -H1
 /3 width=3 by ex2_intro, or_introl, or_intror/

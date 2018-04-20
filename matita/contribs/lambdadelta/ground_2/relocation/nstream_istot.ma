@@ -22,7 +22,7 @@ rec definition apply (i: nat) on i: rtmap → nat ≝ ?.
 * #n #f cases i -i
 [ @n
 | #i lapply (apply i f) -apply -i -f
-  #i @(⫯(n+i))
+  #i @(↑(n+i))
 ]
 defined.
 
@@ -35,7 +35,7 @@ lemma at_O1: ∀i2,f. @⦃0, i2@f⦄ ≘ i2.
 #i2 elim i2 -i2 /2 width=5 by at_refl, at_next/
 qed.
 
-lemma at_S1: ∀n,f,i1,i2. @⦃i1, f⦄ ≘ i2 → @⦃⫯i1, n@f⦄ ≘ ⫯(n+i2).
+lemma at_S1: ∀n,f,i1,i2. @⦃i1, f⦄ ≘ i2 → @⦃↑i1, n@f⦄ ≘ ↑(n+i2).
 #n elim n -n /3 width=7 by at_push, at_next/
 qed.
 
@@ -60,8 +60,8 @@ lemma at_inv_O1: ∀f,n,i2. @⦃0, n@f⦄ ≘ i2 → n = i2.
 #j2 #Hj * -i2 /3 width=1 by eq_f/
 qed-.
 
-lemma at_inv_S1: ∀f,n,j1,i2. @⦃⫯j1, n@f⦄ ≘ i2 →
-                 ∃∃j2. @⦃j1, f⦄ ≘ j2 & ⫯(n+j2) = i2.
+lemma at_inv_S1: ∀f,n,j1,i2. @⦃↑j1, n@f⦄ ≘ i2 →
+                 ∃∃j2. @⦃j1, f⦄ ≘ j2 & ↑(n+j2) = i2.
 #f #n elim n -n /2 width=5 by at_inv_npx/
 #n #IH #j1 #i2 #H elim (at_inv_xnx … H) -H [2,3: // ]
 #j2 #Hj * -i2 elim (IH … Hj) -IH -Hj
@@ -94,7 +94,7 @@ elim (eq_inv_seq_aux … H) -H normalize //
 #Hn #Hf /4 width=1 by eq_f2, eq_f/
 qed.
 
-lemma apply_S1: ∀f,i. (⫯f)@❴i❵ = ⫯(f@❴i❵).
+lemma apply_S1: ∀f,i. (↑f)@❴i❵ = ↑(f@❴i❵).
 * #n #f * //
 qed.
 

@@ -14,6 +14,6 @@
 
 (* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
 
-notation "hvbox( f1 ≗ break term 46 f2 )"
-   non associative with precedence 45
-   for @{ 'FunExtEq $f1 $f2 }.
+notation "hvbox( ⫰ * [ term 46 n ] term 46 T )"
+   non associative with precedence 46
+   for @{ 'DownSpoonStar $n $T }.

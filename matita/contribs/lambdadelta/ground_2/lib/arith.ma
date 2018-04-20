@@ -12,16 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/notation/constructors/successor_1.ma".
-include "ground_2/notation/functions/predecessor_1.ma".
+include "ground_2/notation/constructors/uparrow_1.ma".
+include "ground_2/notation/functions/downarrow_1.ma".
 include "arithmetics/nat.ma".
 include "ground_2/lib/relations.ma".
 
 (* ARITHMETICAL PROPERTIES **************************************************)
 
-interpretation "nat successor" 'Successor m = (S m).
+interpretation "nat successor" 'UpArrow m = (S m).
 
-interpretation "nat predecessor" 'Predecessor m = (pred m).
+interpretation "nat predecessor" 'DownArrow m = (pred m).
 
 interpretation "nat min" 'and x y = (min x y).
 
@@ -35,7 +35,7 @@ normalize // qed.
 lemma pred_S: ∀m. pred (S m) = m.
 // qed.
 
-lemma plus_S1: ∀x,y. ⫯(x+y) = (⫯x) + y.
+lemma plus_S1: ∀x,y. ↑(x+y) = (↑x) + y.
 // qed.
 
 lemma max_O1: ∀n. n = (0 ∨ n).
@@ -44,14 +44,14 @@ lemma max_O1: ∀n. n = (0 ∨ n).
 lemma max_O2: ∀n. n = (n ∨ 0).
 // qed.
 
-lemma max_SS: ∀n1,n2. ⫯(n1∨n2) = (⫯n1 ∨ ⫯n2).
+lemma max_SS: ∀n1,n2. ↑(n1∨n2) = (↑n1 ∨ ↑n2).
 #n1 #n2 elim (decidable_le n1 n2) #H normalize
 [ >(le_to_leb_true … H) | >(not_le_to_leb_false … H) ] -H //
 qed.
 
 (* Equations ****************************************************************)
 
-lemma plus_SO: ∀n. n + 1 = ⫯n.
+lemma plus_SO: ∀n. n + 1 = ↑n.
 // qed.
 
 lemma minus_plus_m_m_commutative: ∀n,m:nat. n = m + n - m.
@@ -145,16 +145,16 @@ lemma monotonic_lt_pred: ∀m,n. m < n → 0 < m → pred m < pred n.
 @le_S_S_to_le >S_pred /2 width=3 by transitive_lt/
 qed.
 
-lemma lt_S_S: ∀x,y. x < y → ⫯x < ⫯y.
+lemma lt_S_S: ∀x,y. x < y → ↑x < ↑y.
 /2 width=1 by le_S_S/ qed.
 
-lemma lt_S: ∀n,m. n < m → n < ⫯m.
+lemma lt_S: ∀n,m. n < m → n < ↑m.
 /2 width=1 by le_S/ qed.
 
-lemma max_S1_le_S: ∀n1,n2,n. (n1 ∨ n2) ≤ n → (⫯n1 ∨ n2) ≤ ⫯n.
+lemma max_S1_le_S: ∀n1,n2,n. (n1 ∨ n2) ≤ n → (↑n1 ∨ n2) ≤ ↑n.
 /4 width=2 by to_max, le_maxr, le_S_S, le_S/ qed-.
 
-lemma max_S2_le_S: ∀n1,n2,n. (n1 ∨ n2) ≤ n → (n1 ∨ ⫯n2) ≤ ⫯n.
+lemma max_S2_le_S: ∀n1,n2,n. (n1 ∨ n2) ≤ n → (n1 ∨ ↑n2) ≤ ↑n.
 /2 width=1 by max_S1_le_S/ qed-.
 
 lemma arith_j: ∀x,y,z. x-y-1 ≤ x-(y-z)-1.
@@ -187,8 +187,8 @@ qed-.
 lemma lt_le_false: ∀x,y. x < y → y ≤ x → ⊥.
 /3 width=4 by lt_refl_false, lt_to_le_to_lt/ qed-.
 
-lemma succ_inv_refl_sn: ∀x. ⫯x = x → ⊥.
-#x #H @(lt_le_false x (⫯x)) //
+lemma succ_inv_refl_sn: ∀x. ↑x = x → ⊥.
+#x #H @(lt_le_false x (↑x)) //
 qed-.
 
 lemma le_plus_xSy_O_false: ∀x,y. x + S y ≤ 0 → ⊥.
@@ -225,7 +225,7 @@ lapply (monotonic_le_plus_l n1 … Hm) -Hm >H -H
 /2 width=2 by le_plus_to_le/
 qed-.
 
-lemma lt_S_S_to_lt: ∀x,y. ⫯x < ⫯y → x < y.
+lemma lt_S_S_to_lt: ∀x,y. ↑x < ↑y → x < y.
 /2 width=1 by le_S_S_to_le/ qed-.
 
 (* Note this should go in nat.ma *)
@@ -237,17 +237,17 @@ lemma discr_x_minus_xy: ∀x,y. x = x - y → x = 0 ∨ y = 0.
 #H destruct
 qed-.
 
-lemma lt_inv_O1: ∀n. 0 < n → ∃m. ⫯m = n.
+lemma lt_inv_O1: ∀n. 0 < n → ∃m. ↑m = n.
 * /2 width=2 by ex_intro/
 #H cases (lt_le_false … H) -H //
 qed-.
 
-lemma lt_inv_S1: ∀m,n. ⫯m < n → ∃∃p. m < p & ⫯p = n.
+lemma lt_inv_S1: ∀m,n. ↑m < n → ∃∃p. m < p & ↑p = n.
 #m * /3 width=3 by lt_S_S_to_lt, ex2_intro/
 #H cases (lt_le_false … H) -H //
 qed-.
 
-lemma lt_inv_gen: ∀y,x. x < y → ∃∃z. x ≤ z & ⫯z = y.
+lemma lt_inv_gen: ∀y,x. x < y → ∃∃z. x ≤ z & ↑z = y.
 * /3 width=3 by le_S_S_to_le, ex2_intro/
 #x #H elim (lt_le_false … H) -H //
 qed-.
@@ -263,13 +263,13 @@ lemma zero_eq_plus: ∀x,y. 0 = x + y → 0 = x ∧ 0 = y.
 * /2 width=1 by conj/ #x #y normalize #H destruct
 qed-.
 
-lemma nat_split: ∀x. x = 0 ∨ ∃y. ⫯y = x.
+lemma nat_split: ∀x. x = 0 ∨ ∃y. ↑y = x.
 * /3 width=2 by ex_intro, or_introl, or_intror/
 qed-.
 
 lemma lt_elim: ∀R:relation nat.
-               (∀n2. R O (⫯n2)) →
-               (∀n1,n2. R n1 n2 → R (⫯n1) (⫯n2)) →
+               (∀n2. R O (↑n2)) →
+               (∀n1,n2. R n1 n2 → R (↑n1) (↑n2)) →
                ∀n2,n1. n1 < n2 → R n1 n2.
 #R #IH1 #IH2 #n2 elim n2 -n2
 [ #n1 #H elim (lt_le_false … H) -H //
@@ -279,7 +279,7 @@ qed-.
 
 lemma le_elim: ∀R:relation nat.
                (∀n2. R O (n2)) →
-               (∀n1,n2. R n1 n2 → R (⫯n1) (⫯n2)) →
+               (∀n1,n2. R n1 n2 → R (↑n1) (↑n2)) →
                ∀n1,n2. n1 ≤ n2 → R n1 n2.
 #R #IH1 #IH2 #n1 #n2 @(nat_elim2 … n1 n2) -n1 -n2
 /4 width=1 by monotonic_pred/ -IH1 -IH2

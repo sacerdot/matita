@@ -39,7 +39,7 @@ lemma cpr_inv_atom1: ∀h,J,G,L,T2. ⦃G, L⦄ ⊢ ⓪{J} ➡[h] T2 →
                       | ∃∃K,V1,V2. ⦃G, K⦄ ⊢ V1 ➡[h] V2 & ⬆*[1] V2 ≘ T2 &
                                    L = K.ⓓV1 & J = LRef 0
                       | ∃∃I,K,T,i. ⦃G, K⦄ ⊢ #i ➡[h] T & ⬆*[1] T ≘ T2 &
-                                   L = K.ⓘ{I} & J = LRef (⫯i).
+                                   L = K.ⓘ{I} & J = LRef (↑i).
 #h #J #G #L #T2 #H elim (cpm_inv_atom1 … H) -H *
 /3 width=8 by tri_lt, or3_intro0, or3_intro1, or3_intro2, ex4_4_intro, ex4_3_intro/
 #n #_ #_ #H destruct
@@ -59,8 +59,8 @@ lemma cpr_inv_zero1: ∀h,G,L,T2. ⦃G, L⦄ ⊢ #0 ➡[h] T2 →
 #n #K #V1 #V2 #_ #_ #_ #H destruct
 qed-.
 
-lemma cpr_inv_lref1: ∀h,G,L,T2,i. ⦃G, L⦄ ⊢ #⫯i ➡[h] T2 →
-                     ∨∨ T2 = #(⫯i)
+lemma cpr_inv_lref1: ∀h,G,L,T2,i. ⦃G, L⦄ ⊢ #↑i ➡[h] T2 →
+                     ∨∨ T2 = #(↑i)
                       | ∃∃I,K,T. ⦃G, K⦄ ⊢ #i ➡[h] T & ⬆*[1] T ≘ T2 & L = K.ⓘ{I}.
 #h #G #L #T2 #i #H elim (cpm_inv_lref1 … H) -H *
 /3 width=6 by ex3_3_intro, or_introl, or_intror/

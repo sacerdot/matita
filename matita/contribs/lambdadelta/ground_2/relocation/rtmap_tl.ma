@@ -28,14 +28,14 @@ interpretation "tail (rtmap)" 'DropPred f = (tl f).
 lemma tl_rew: ∀f. case_type0 (λ_:rtmap.rtmap) (λf:rtmap.f) (λf:rtmap.f) f = ⫱f.
 // qed.
 
-lemma tl_push_rew: ∀f. f = ⫱↑f.
+lemma tl_push_rew: ∀f. f = ⫱⫯f.
 #f <tl_rew <iota_push //
 qed.
 
-lemma tl_next_rew: ∀f. f = ⫱⫯f.
+lemma tl_next_rew: ∀f. f = ⫱↑f.
 #f <tl_rew <iota_next //
 qed.
 
-lemma tl_eq_repl: eq_repl … (λf1,f2. ⫱f1 ≗ ⫱f2).
+lemma tl_eq_repl: eq_repl … (λf1,f2. ⫱f1 ≡ ⫱f2).
 #f1 #f2 * -f1 -f2 //
 qed.

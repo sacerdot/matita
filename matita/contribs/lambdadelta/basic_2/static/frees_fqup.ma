@@ -70,7 +70,7 @@ elim (pn_split f2) * #g2 #H destruct
   lapply (sor_comm … Hz) -Hz #Hz
   lapply (sor_mono … f Hz ?) // -Hz #H
   lapply (sor_inv_sle_sn … Hf) -Hf #Hf
-  lapply (frees_eq_repl_back … Hf0 (⫯f) ?) /2 width=5 by eq_next/ -z #Hf0
+  lapply (frees_eq_repl_back … Hf0 (↑f) ?) /2 width=5 by eq_next/ -z #Hf0
   @(frees_bind … Hf1 Hf0) -Hf1 -Hf0 (**) (* constructor needed *)
   /2 width=1 by sor_sle_dx/
 ]
@@ -104,15 +104,15 @@ lemma frees_ind_void: ∀R:relation3 ….
                       (
                          ∀f,L,s. 𝐈⦃f⦄ → R L (⋆s) f
                       ) → (
-                         ∀f,i. 𝐈⦃f⦄ → R (⋆) (#i) (↑*[i]⫯f)
+                         ∀f,i. 𝐈⦃f⦄ → R (⋆) (#i) (⫯*[i]↑f)
                       ) → (
                          ∀f,I,L,V.
-                         L ⊢ 𝐅*⦃V⦄ ≘ f → R L V f→ R (L.ⓑ{I}V) (#O) (⫯f) 
+                         L ⊢ 𝐅*⦃V⦄ ≘ f → R L V f→ R (L.ⓑ{I}V) (#O) (↑f) 
                       ) → (
-                         ∀f,I,L. 𝐈⦃f⦄ → R (L.ⓤ{I}) (#O) (⫯f)
+                         ∀f,I,L. 𝐈⦃f⦄ → R (L.ⓤ{I}) (#O) (↑f)
                       ) → (
                          ∀f,I,L,i.
-                         L ⊢ 𝐅*⦃#i⦄ ≘ f → R L (#i) f → R (L.ⓘ{I}) (#(⫯i)) (↑f)
+                         L ⊢ 𝐅*⦃#i⦄ ≘ f → R L (#i) f → R (L.ⓘ{I}) (#(↑i)) (⫯f)
                       ) → (
                          ∀f,L,l. 𝐈⦃f⦄ → R L (§l) f
                       ) → (

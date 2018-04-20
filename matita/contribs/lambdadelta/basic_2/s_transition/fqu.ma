@@ -47,7 +47,7 @@ interpretation
 lemma fqu_sort: ∀b,I,G,L,s. ⦃G, L.ⓘ{I}, ⋆s⦄ ⊐[b] ⦃G, L, ⋆s⦄.
 /2 width=1 by fqu_drop/ qed.
 
-lemma fqu_lref_S: ∀b,I,G,L,i. ⦃G, L.ⓘ{I}, #⫯i⦄ ⊐[b] ⦃G, L, #i⦄.
+lemma fqu_lref_S: ∀b,I,G,L,i. ⦃G, L.ⓘ{I}, #↑i⦄ ⊐[b] ⦃G, L, #i⦄.
 /2 width=1 by fqu_drop/ qed.
 
 lemma fqu_gref: ∀b,I,G,L,l. ⦃G, L.ⓘ{I}, §l⦄ ⊐[b] ⦃G, L, §l⦄.
@@ -76,7 +76,7 @@ lemma fqu_inv_sort1: ∀b,G1,G2,L1,L2,T2,s. ⦃G1, L1, ⋆s⦄ ⊐[b] ⦃G2, L2,
 fact fqu_inv_lref1_aux: ∀b,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐[b] ⦃G2, L2, T2⦄ →
                         ∀i. T1 = #i →
                         (∃∃J,V. G1 = G2 & L1 = L2.ⓑ{J}V & T2 = V & i = 0) ∨
-                        ∃∃J,j. G1 = G2 & L1 = L2.ⓘ{J} & T2 = #j & i = ⫯j.
+                        ∃∃J,j. G1 = G2 & L1 = L2.ⓘ{J} & T2 = #j & i = ↑j.
 #b #G1 #G2 #L1 #L2 #T1 #T2 * -G1 -G2 -L1 -L2 -T1 -T2
 [ #I #G #L #T #i #H destruct /3 width=4 by ex4_2_intro, or_introl/
 | #I #G #L #V #T #i #H destruct
@@ -90,7 +90,7 @@ qed-.
 
 lemma fqu_inv_lref1: ∀b,G1,G2,L1,L2,T2,i. ⦃G1, L1, #i⦄ ⊐[b] ⦃G2, L2, T2⦄ →
                      (∃∃J,V. G1 = G2 & L1 = L2.ⓑ{J}V & T2 = V & i = 0) ∨
-                     ∃∃J,j. G1 = G2 & L1 = L2.ⓘ{J} & T2 = #j & i = ⫯j.
+                     ∃∃J,j. G1 = G2 & L1 = L2.ⓘ{J} & T2 = #j & i = ↑j.
 /2 width=4 by fqu_inv_lref1_aux/ qed-.
 
 fact fqu_inv_gref1_aux: ∀b,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐[b] ⦃G2, L2, T2⦄ →
@@ -184,7 +184,7 @@ lemma fqu_inv_zero1_pair: ∀b,I,G1,G2,K,L2,V,T2. ⦃G1, K.ⓑ{I}V, #0⦄ ⊐[b]
 #Z #X #H1 #H2 #H3 #H4 destruct /2 width=1 by and3_intro/
 qed-.
 
-lemma fqu_inv_lref1_bind: ∀b,I,G1,G2,K,L2,T2,i. ⦃G1, K.ⓘ{I}, #(⫯i)⦄ ⊐[b] ⦃G2, L2, T2⦄ →
+lemma fqu_inv_lref1_bind: ∀b,I,G1,G2,K,L2,T2,i. ⦃G1, K.ⓘ{I}, #(↑i)⦄ ⊐[b] ⦃G2, L2, T2⦄ →
                           ∧∧ G1 = G2 & L2 = K & T2 = #i.
 #b #I #G1 #G2 #K #L2 #T2 #i #H elim (fqu_inv_lref1 … H) -H *
 #Z #X #H1 #H2 #H3 #H4 destruct /2 width=1 by and3_intro/

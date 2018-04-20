@@ -37,7 +37,7 @@ interpretation "append (list of pairs)"
 
 rec definition length2 (A1,A2:Type[0]) (l:list2 A1 A2) on l ≝ match l with
 [ nil2        ⇒ 0
-| cons2 _ _ l ⇒ ⫯(length2 A1 A2 l)
+| cons2 _ _ l ⇒ ↑(length2 A1 A2 l)
 ].
 
 interpretation "length (list of pairs)"

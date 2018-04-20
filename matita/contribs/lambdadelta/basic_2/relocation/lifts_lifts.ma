@@ -46,7 +46,7 @@ theorem lifts_div4: ∀f2,Tf,T. ⬆*[f2] Tf ≘ T → ∀g2,Tg. ⬆*[g2] Tg ≘ 
 ]
 qed-.
 
-lemma lifts_div4_one: ∀f,Tf,T. ⬆*[↑f] Tf ≘ T →
+lemma lifts_div4_one: ∀f,Tf,T. ⬆*[⫯f] Tf ≘ T →
                       ∀T1. ⬆*[1] T1 ≘ T →
                       ∃∃T0. ⬆*[1] T0 ≘ Tf & ⬆*[f] T0 ≘ T1.
 /4 width=6 by lifts_div4, at_div_id_dx, at_div_pn/ qed-.

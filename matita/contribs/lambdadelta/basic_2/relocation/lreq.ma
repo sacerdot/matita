@@ -52,7 +52,7 @@ lemma lreq_inv_atom1: ∀f,Y. ⋆ ≡[f] Y → Y = ⋆.
 /2 width=4 by lexs_inv_atom1/ qed-.
 
 (* Basic_2A1: includes: lreq_inv_pair1 *)
-lemma lreq_inv_next1: ∀g,J,K1,Y. K1.ⓘ{J} ≡[⫯g] Y →
+lemma lreq_inv_next1: ∀g,J,K1,Y. K1.ⓘ{J} ≡[↑g] Y →
                       ∃∃K2. K1 ≡[g] K2 & Y = K2.ⓘ{J}.
 #g #J #K1 #Y #H
 elim (lexs_inv_next1 … H) -H #Z #K2 #HK12 #H1 #H2 destruct
@@ -60,7 +60,7 @@ elim (lexs_inv_next1 … H) -H #Z #K2 #HK12 #H1 #H2 destruct
 qed-.
 
 (* Basic_2A1: includes: lreq_inv_zero1 lreq_inv_succ1 *)
-lemma lreq_inv_push1: ∀g,J1,K1,Y. K1.ⓘ{J1} ≡[↑g] Y →
+lemma lreq_inv_push1: ∀g,J1,K1,Y. K1.ⓘ{J1} ≡[⫯g] Y →
                       ∃∃J2,K2. K1 ≡[g] K2 & Y = K2.ⓘ{J2}.
 #g #J1 #K1 #Y #H elim (lexs_inv_push1 … H) -H /2 width=4 by ex2_2_intro/
 qed-.
@@ -70,7 +70,7 @@ lemma lreq_inv_atom2: ∀f,X. X ≡[f] ⋆ → X = ⋆.
 /2 width=4 by lexs_inv_atom2/ qed-.
 
 (* Basic_2A1: includes: lreq_inv_pair2 *)
-lemma lreq_inv_next2: ∀g,J,X,K2. X ≡[⫯g] K2.ⓘ{J} →
+lemma lreq_inv_next2: ∀g,J,X,K2. X ≡[↑g] K2.ⓘ{J} →
                       ∃∃K1. K1 ≡[g] K2 & X = K1.ⓘ{J}.
 #g #J #X #K2 #H
 elim (lexs_inv_next2 … H) -H #Z #K1 #HK12 #H1 #H2 destruct
@@ -78,20 +78,20 @@ elim (lexs_inv_next2 … H) -H #Z #K1 #HK12 #H1 #H2 destruct
 qed-.
 
 (* Basic_2A1: includes: lreq_inv_zero2 lreq_inv_succ2 *)
-lemma lreq_inv_push2: ∀g,J2,X,K2. X ≡[↑g] K2.ⓘ{J2} →
+lemma lreq_inv_push2: ∀g,J2,X,K2. X ≡[⫯g] K2.ⓘ{J2} →
                       ∃∃J1,K1. K1 ≡[g] K2 & X = K1.ⓘ{J1}.
 #g #J2 #X #K2 #H elim (lexs_inv_push2 … H) -H /2 width=4 by ex2_2_intro/
 qed-.
 
 (* Basic_2A1: includes: lreq_inv_pair *)
-lemma lreq_inv_next: ∀f,I1,I2,L1,L2. L1.ⓘ{I1} ≡[⫯f] L2.ⓘ{I2} →
+lemma lreq_inv_next: ∀f,I1,I2,L1,L2. L1.ⓘ{I1} ≡[↑f] L2.ⓘ{I2} →
                      L1 ≡[f] L2 ∧ I1 = I2.
 #f #I1 #I2 #L1 #L2 #H elim (lexs_inv_next … H) -H
 /3 width=3 by ceq_ext_inv_eq, conj/
 qed-.
 
 (* Basic_2A1: includes: lreq_inv_succ *)
-lemma lreq_inv_push: ∀f,I1,I2,L1,L2. L1.ⓘ{I1} ≡[↑f] L2.ⓘ{I2} → L1 ≡[f] L2.
+lemma lreq_inv_push: ∀f,I1,I2,L1,L2. L1.ⓘ{I1} ≡[⫯f] L2.ⓘ{I2} → L1 ≡[f] L2.
 #f #I1 #I2 #L1 #L2 #H elim (lexs_inv_push … H) -H /2 width=1 by conj/
 qed-.
 

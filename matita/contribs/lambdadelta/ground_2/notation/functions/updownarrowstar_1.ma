@@ -14,14 +14,6 @@
 
 (* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
 
-notation < "hvbox( v1 ≐ break term 46 v2 )"
-   non associative with precedence 45
-   for @{ 'ExtEq $M $v1 $v2 }.
-
-notation > "hvbox( v1 ≐ break term 46 v2 )"
-   non associative with precedence 45
-   for @{ 'ExtEq ? $v1 $v2 }.
-
-notation > "hvbox( v1 ≐ break ⦋ term 46 M ⦌ break term 46 v2 )"
-   non associative with precedence 45
-   for @{ 'ExtEq $M $v1 $v2 }.
+notation "hvbox( ↕* term 46 T )"
+   non associative with precedence 46
+   for @{ 'UpDownArrowStar $T }.

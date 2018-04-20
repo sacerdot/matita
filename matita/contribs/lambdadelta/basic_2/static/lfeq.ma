@@ -56,11 +56,11 @@ elim (lfxs_inv_zero_pair_dx … H) -H #K1 #X #HK12 #HX #H destruct
 /2 width=3 by ex2_intro/
 qed-.
 
-lemma lfeq_inv_lref_bind_sn: ∀I1,K1,L2,i. K1.ⓘ{I1} ≡[#⫯i] L2 →
+lemma lfeq_inv_lref_bind_sn: ∀I1,K1,L2,i. K1.ⓘ{I1} ≡[#↑i] L2 →
                              ∃∃I2,K2. K1 ≡[#i] K2 & L2 = K2.ⓘ{I2}.
 /2 width=2 by lfxs_inv_lref_bind_sn/ qed-.
 
-lemma lfeq_inv_lref_bind_dx: ∀I2,K2,L1,i. L1 ≡[#⫯i] K2.ⓘ{I2} →
+lemma lfeq_inv_lref_bind_dx: ∀I2,K2,L1,i. L1 ≡[#↑i] K2.ⓘ{I2} →
                              ∃∃I1,K1. K1 ≡[#i] K2 & L1 = K1.ⓘ{I1}.
 /2 width=2 by lfxs_inv_lref_bind_dx/ qed-.
 

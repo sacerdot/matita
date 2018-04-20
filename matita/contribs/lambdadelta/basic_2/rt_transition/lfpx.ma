@@ -39,7 +39,7 @@ lemma lfpx_pair: ∀h,I,G,L1,L2,V1,V2.
 /2 width=1 by lfxs_pair/ qed.
 
 lemma lfpx_lref: ∀h,I1,I2,G,L1,L2,i.
-                 ⦃G, L1⦄ ⊢ ⬈[h, #i] L2 → ⦃G, L1.ⓘ{I1}⦄ ⊢ ⬈[h, #⫯i] L2.ⓘ{I2}.
+                 ⦃G, L1⦄ ⊢ ⬈[h, #i] L2 → ⦃G, L1.ⓘ{I1}⦄ ⊢ ⬈[h, #↑i] L2.ⓘ{I2}.
 /2 width=1 by lfxs_lref/ qed.
 
 lemma lfpx_gref: ∀h,I1,I2,G,L1,L2,l.
@@ -68,7 +68,7 @@ lemma lfpx_inv_sort: ∀h,G,Y1,Y2,s. ⦃G, Y1⦄ ⊢ ⬈[h, ⋆s] Y2 →
                                        Y1 = L1.ⓘ{I1} & Y2 = L2.ⓘ{I2}.
 /2 width=1 by lfxs_inv_sort/ qed-.
 
-lemma lfpx_inv_lref: ∀h,G,Y1,Y2,i. ⦃G, Y1⦄ ⊢ ⬈[h, #⫯i] Y2 →
+lemma lfpx_inv_lref: ∀h,G,Y1,Y2,i. ⦃G, Y1⦄ ⊢ ⬈[h, #↑i] Y2 →
                      ∨∨ Y1 = ⋆ ∧ Y2 = ⋆
                       | ∃∃I1,I2,L1,L2. ⦃G, L1⦄ ⊢ ⬈[h, #i] L2 &
                                        Y1 = L1.ⓘ{I1} & Y2 = L2.ⓘ{I2}.
@@ -108,11 +108,11 @@ lemma lfpx_inv_zero_pair_dx: ∀h,I,G,Y1,L2,V2. ⦃G, Y1⦄ ⊢ ⬈[h, #0] L2.�
                                       Y1 = L1.ⓑ{I}V1.
 /2 width=1 by lfxs_inv_zero_pair_dx/ qed-.
 
-lemma lfpx_inv_lref_bind_sn: ∀h,I1,G,Y2,L1,i. ⦃G, L1.ⓘ{I1}⦄ ⊢ ⬈[h, #⫯i] Y2 →
+lemma lfpx_inv_lref_bind_sn: ∀h,I1,G,Y2,L1,i. ⦃G, L1.ⓘ{I1}⦄ ⊢ ⬈[h, #↑i] Y2 →
                              ∃∃I2,L2. ⦃G, L1⦄ ⊢ ⬈[h, #i] L2 & Y2 = L2.ⓘ{I2}.
 /2 width=2 by lfxs_inv_lref_bind_sn/ qed-.
 
-lemma lfpx_inv_lref_bind_dx: ∀h,I2,G,Y1,L2,i. ⦃G, Y1⦄ ⊢ ⬈[h, #⫯i] L2.ⓘ{I2} →
+lemma lfpx_inv_lref_bind_dx: ∀h,I2,G,Y1,L2,i. ⦃G, Y1⦄ ⊢ ⬈[h, #↑i] L2.ⓘ{I2} →
                              ∃∃I1,L1. ⦃G, L1⦄ ⊢ ⬈[h, #i] L2 & Y1 = L1.ⓘ{I1}.
 /2 width=2 by lfxs_inv_lref_bind_dx/ qed-.
 

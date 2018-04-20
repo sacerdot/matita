@@ -12,7 +12,7 @@ table {
    class "water"
    [ { "generic rt-transition counter" * } {
         [ { "" * } {
-             [ "rtc ( 〈?,?,?,?〉 ) ( 𝟘𝟘 ) ( 𝟙𝟘 ) ( 𝟘𝟙 )" "rtc_isrc ( 𝐑𝐓⦃?, ?⦄ )" "rtc_shift ( ↓? )" "rtc_max ( ? ∨ ? )" "rtc_plus ( ? + ? )" * ]
+             [ "rtc ( 〈?,?,?,?〉 ) ( 𝟘𝟘 ) ( 𝟙𝟘 ) ( 𝟘𝟙 )" "rtc_isrc ( 𝐑𝐓⦃?, ?⦄ )" "rtc_shift ( ↕*? )" "rtc_max ( ? ∨ ? )" "rtc_plus ( ? + ? )" * ]
           }
         ]
      }
@@ -20,13 +20,13 @@ table {
    class "green"
    [ { "multiple relocation" * } {
         [ { "" * } {
-             [ "rtmap" "rtmap_eq ( ? ≗ ? )" "rtmap_pushs ( ↑*[?]? )" "rtmap_nexts ( ⫯*[?]? )" 
+             [ "rtmap" "rtmap_eq ( ? ≡ ? )" "rtmap_pushs ( ⫯*[?]? )" "rtmap_nexts ( ↑*[?]? )" 
                "rtmap_tl ( ⫱? )" "rtmap_tls ( ⫱*[?]? )" "rtmap_isid ( 𝐈⦃?⦄ )" "rtmap_id" "rtmap_isdiv ( 𝛀⦃?⦄ )"
                "rtmap_fcla ( 𝐂⦃?⦄ ≘ ? )" "rtmap_isfin ( 𝐅⦃?⦄ )" "rtmap_isuni ( 𝐔⦃?⦄ )" "rtmap_uni ( 𝐔❴?❵ )"
                "rtmap_sle ( ? ⊆ ? )" "rtmap_sdj ( ? ∥ ? )" "rtmap_sand ( ? ⋒ ? ≘ ? )" "rtmap_sor ( ? ⋓ ? ≘ ? )"
                "rtmap_at ( @⦃?,?⦄ ≘ ? )" "rtmap_istot ( 𝐓⦃?⦄ )" "rtmap_after ( ? ⊚ ? ≘ ? )" "rtmap_coafter ( ? ~⊚ ? ≘ ? )"
              * ]
-             [ "nstream ( ↑? ) ( ⫯? )" "nstream_eq" "" "" "" "" "nstream_isid" "nstream_id ( 𝐈𝐝 )" ""
+             [ "nstream ( ⫯? ) ( ↑? )" "nstream_eq" "" "" "" "" "nstream_isid" "nstream_id ( 𝐈𝐝 )" ""
                "" "" "" "" "" "" "" "nstream_sor" "" "nstream_istot ( ?@❴?❵ )" "nstream_after ( ? ∘ ? )" "nstream_coafter ( ? ~∘ ? )"
              * ]
 (*
@@ -41,7 +41,7 @@ table {
    class "grass"
    [ { "natural numbers with infinity" * } {
         [ { "" * } {
-           [ "ynat ( ∞ )" "ynat_pred ( ⫰? )" "ynat_succ ( ⫯? )"
+           [ "ynat ( ∞ )" "ynat_pred ( ↓? )" "ynat_succ ( ↑? )"
              "ynat_le ( ? ≤ ? )" "ynat_lt ( ? &lt; ? )"
              "ynat_plus ( ? + ? )" *
            ]
@@ -52,9 +52,9 @@ table {
    class "yellow"
    [ { "extensions to the library" * } {
         [ { "" * } {
-             [ "stream ( ? @ ? )" "stream_eq ( ? ≐ ? )" "stream_hdtl ( ↓? )" "stream_tls ( ↓*[?]? )" * ]
+             [ "stream ( ? @ ? )" "stream_eq ( ? ≗ ? )" "stream_hdtl ( ⫰? )" "stream_tls ( ⫰*[?]? )" * ]
              [ "list ( ◊ ) ( ? @ ? ) ( |?| )" "list2 ( ◊ ) ( {?,?} @ ? ) ( ? @@ ? ) ( |?| )" * ]
-             [ "bool ( Ⓕ ) ( Ⓣ )" "arith ( ?^? ) ( ⫯? ) ( ⫰? ) ( ? ∨ ? ) ( ? ∧ ? )" * ]
+             [ "bool ( Ⓕ ) ( Ⓣ )" "arith ( ?^? ) ( ↑? ) ( ↓? ) ( ? ∨ ? ) ( ? ∧ ? )" * ]
              [ "relations ( ? ⊆ ? )" "star" "lstar" * ]
           }
         ]

@@ -20,11 +20,11 @@ include "ground_2/relocation/rtmap_after.ma".
 
 coinductive coafter: relation3 rtmap rtmap rtmap ≝
 | coafter_refl: ∀f1,f2,f,g1,g2,g. coafter f1 f2 f →
-                ↑f1 = g1 → ↑f2 = g2 → ↑f = g → coafter g1 g2 g
+                ⫯f1 = g1 → ⫯f2 = g2 → ⫯f = g → coafter g1 g2 g
 | coafter_push: ∀f1,f2,f,g1,g2,g. coafter f1 f2 f →
-                ↑f1 = g1 → ⫯f2 = g2 → ⫯f = g → coafter g1 g2 g
+                ⫯f1 = g1 → ↑f2 = g2 → ↑f = g → coafter g1 g2 g
 | coafter_next: ∀f1,f2,f,g1,g. coafter f1 f2 f →
-                ⫯f1 = g1 → ↑f = g → coafter g1 f2 g
+                ↑f1 = g1 → ⫯f = g → coafter g1 f2 g
 .
 
 interpretation "relational co-composition (rtmap)"
@@ -32,7 +32,7 @@ interpretation "relational co-composition (rtmap)"
 
 definition H_coafter_inj: predicate rtmap ≝
                           λf1. 𝐓⦃f1⦄ →
-                          ∀f,f21,f22. f1 ~⊚ f21 ≘ f → f1 ~⊚ f22 ≘ f → f21 ≗ f22.
+                          ∀f,f21,f22. f1 ~⊚ f21 ≘ f → f1 ~⊚ f22 ≘ f → f21 ≡ f22.
 
 definition H_coafter_fwd_isid2: predicate rtmap ≝
                                 λf1. ∀f2,f. f1 ~⊚ f2 ≘ f → 𝐓⦃f1⦄ → 𝐈⦃f⦄ → 𝐈⦃f2⦄.
@@ -42,8 +42,8 @@ definition H_coafter_isfin2_fwd: predicate rtmap ≝
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma coafter_inv_ppx: ∀g1,g2,g. g1 ~⊚ g2 ≘ g → ∀f1,f2. ↑f1 = g1 → ↑f2 = g2 →
-                       ∃∃f. f1 ~⊚ f2 ≘ f & ↑f = g.
+lemma coafter_inv_ppx: ∀g1,g2,g. g1 ~⊚ g2 ≘ g → ∀f1,f2. ⫯f1 = g1 → ⫯f2 = g2 →
+                       ∃∃f. f1 ~⊚ f2 ≘ f & ⫯f = g.
 #g1 #g2 #g * -g1 -g2 -g #f1 #f2 #f #g1
 [ #g2 #g #Hf #H1 #H2 #H #x1 #x2 #Hx1 #Hx2 destruct
   >(injective_push … Hx1) >(injective_push … Hx2) -x2 -x1
@@ -55,8 +55,8 @@ lemma coafter_inv_ppx: ∀g1,g2,g. g1 ~⊚ g2 ≘ g → ∀f1,f2. ↑f1 = g1 →
 ]
 qed-.
 
-lemma coafter_inv_pnx: ∀g1,g2,g. g1 ~⊚ g2 ≘ g → ∀f1,f2. ↑f1 = g1 → ⫯f2 = g2 →
-                       ∃∃f. f1 ~⊚ f2 ≘ f & ⫯f = g.
+lemma coafter_inv_pnx: ∀g1,g2,g. g1 ~⊚ g2 ≘ g → ∀f1,f2. ⫯f1 = g1 → ↑f2 = g2 →
+                       ∃∃f. f1 ~⊚ f2 ≘ f & ↑f = g.
 #g1 #g2 #g * -g1 -g2 -g #f1 #f2 #f #g1
 [ #g2 #g #_ #_ #H2 #_ #x1 #x2 #_ #Hx2 destruct
   elim (discr_next_push … Hx2)
@@ -68,8 +68,8 @@ lemma coafter_inv_pnx: ∀g1,g2,g. g1 ~⊚ g2 ≘ g → ∀f1,f2. ↑f1 = g1 →
 ]
 qed-.
 
-lemma coafter_inv_nxx: ∀g1,f2,g. g1 ~⊚ f2 ≘ g → ∀f1. ⫯f1 = g1 →
-                       ∃∃f. f1 ~⊚ f2 ≘ f & ↑f = g.
+lemma coafter_inv_nxx: ∀g1,f2,g. g1 ~⊚ f2 ≘ g → ∀f1. ↑f1 = g1 →
+                       ∃∃f. f1 ~⊚ f2 ≘ f & ⫯f = g.
 #g1 #f2 #g * -g1 -f2 -g #f1 #f2 #f #g1
 [ #g2 #g #_ #H1 #_ #_ #x1 #Hx1 destruct
   elim (discr_next_push … Hx1)
@@ -84,50 +84,50 @@ qed-.
 (* Advanced inversion lemmas ************************************************)
 
 lemma coafter_inv_ppp: ∀g1,g2,g. g1 ~⊚ g2 ≘ g →
-                       ∀f1,f2,f. ↑f1 = g1 → ↑f2 = g2 → ↑f = g → f1 ~⊚ f2 ≘ f.
+                       ∀f1,f2,f. ⫯f1 = g1 → ⫯f2 = g2 → ⫯f = g → f1 ~⊚ f2 ≘ f.
 #g1 #g2 #g #Hg #f1 #f2 #f #H1 #H2 #H
 elim (coafter_inv_ppx … Hg … H1 H2) -g1 -g2 #x #Hf #Hx destruct
 <(injective_push … Hx) -f //
 qed-.
 
 lemma coafter_inv_ppn: ∀g1,g2,g. g1 ~⊚ g2 ≘ g →
-                       ∀f1,f2,f. ↑f1 = g1 → ↑f2 = g2 → ⫯f = g → ⊥.
+                       ∀f1,f2,f. ⫯f1 = g1 → ⫯f2 = g2 → ↑f = g → ⊥.
 #g1 #g2 #g #Hg #f1 #f2 #f #H1 #H2 #H
 elim (coafter_inv_ppx … Hg … H1 H2) -g1 -g2 #x #Hf #Hx destruct
 elim (discr_push_next … Hx)
 qed-.
 
 lemma coafter_inv_pnn: ∀g1,g2,g. g1 ~⊚ g2 ≘ g →
-                       ∀f1,f2,f. ↑f1 = g1 → ⫯f2 = g2 → ⫯f = g → f1 ~⊚ f2 ≘ f.
+                       ∀f1,f2,f. ⫯f1 = g1 → ↑f2 = g2 → ↑f = g → f1 ~⊚ f2 ≘ f.
 #g1 #g2 #g #Hg #f1 #f2 #f #H1 #H2 #H
 elim (coafter_inv_pnx … Hg … H1 H2) -g1 -g2 #x #Hf #Hx destruct
 <(injective_next … Hx) -f //
 qed-.
 
 lemma coafter_inv_pnp: ∀g1,g2,g. g1 ~⊚ g2 ≘ g →
-                       ∀f1,f2,f. ↑f1 = g1 → ⫯f2 = g2 → ↑f = g → ⊥.
+                       ∀f1,f2,f. ⫯f1 = g1 → ↑f2 = g2 → ⫯f = g → ⊥.
 #g1 #g2 #g #Hg #f1 #f2 #f #H1 #H2 #H
 elim (coafter_inv_pnx … Hg … H1 H2) -g1 -g2 #x #Hf #Hx destruct
 elim (discr_next_push … Hx)
 qed-.
 
 lemma coafter_inv_nxp: ∀g1,f2,g. g1 ~⊚ f2 ≘ g →
-                       ∀f1,f. ⫯f1 = g1 → ↑f = g → f1 ~⊚ f2 ≘ f.
+                       ∀f1,f. ↑f1 = g1 → ⫯f = g → f1 ~⊚ f2 ≘ f.
 #g1 #f2 #g #Hg #f1 #f #H1 #H
 elim (coafter_inv_nxx … Hg … H1) -g1 #x #Hf #Hx destruct
 <(injective_push … Hx) -f //
 qed-.
 
 lemma coafter_inv_nxn: ∀g1,f2,g. g1 ~⊚ f2 ≘ g →
-                       ∀f1,f. ⫯f1 = g1 → ⫯f = g → ⊥.
+                       ∀f1,f. ↑f1 = g1 → ↑f = g → ⊥.
 #g1 #f2 #g #Hg #f1 #f #H1 #H
 elim (coafter_inv_nxx … Hg … H1) -g1 #x #Hf #Hx destruct
 elim (discr_push_next … Hx)
 qed-.
 
 lemma coafter_inv_pxp: ∀g1,g2,g. g1 ~⊚ g2 ≘ g →
-                       ∀f1,f. ↑f1 = g1 → ↑f = g →
-                       ∃∃f2. f1 ~⊚ f2 ≘ f & ↑f2 = g2.
+                       ∀f1,f. ⫯f1 = g1 → ⫯f = g →
+                       ∃∃f2. f1 ~⊚ f2 ≘ f & ⫯f2 = g2.
 #g1 #g2 #g #Hg #f1 #f #H1 #H elim (pn_split g2) * #f2 #H2
 [ lapply (coafter_inv_ppp … Hg … H1 H2 H) -g1 -g /2 width=3 by ex2_intro/
 | elim (coafter_inv_pnp … Hg … H1 H2 H)
@@ -135,16 +135,16 @@ lemma coafter_inv_pxp: ∀g1,g2,g. g1 ~⊚ g2 ≘ g →
 qed-.
 
 lemma coafter_inv_pxn: ∀g1,g2,g. g1 ~⊚ g2 ≘ g →
-                       ∀f1,f. ↑f1 = g1 → ⫯f = g →
-                       ∃∃f2. f1 ~⊚ f2 ≘ f & ⫯f2 = g2.
+                       ∀f1,f. ⫯f1 = g1 → ↑f = g →
+                       ∃∃f2. f1 ~⊚ f2 ≘ f & ↑f2 = g2.
 #g1 #g2 #g #Hg #f1 #f #H1 #H elim (pn_split g2) * #f2 #H2
 [ elim (coafter_inv_ppn … Hg … H1 H2 H)
 | lapply (coafter_inv_pnn … Hg … H1 … H) -g1 -g /2 width=3 by ex2_intro/
 ]
 qed-.
 
-lemma coafter_inv_xxn: ∀g1,g2,g. g1 ~⊚ g2 ≘ g → ∀f. ⫯f = g →
-                       ∃∃f1,f2. f1 ~⊚ f2 ≘ f & ↑f1 = g1 & ⫯f2 = g2.
+lemma coafter_inv_xxn: ∀g1,g2,g. g1 ~⊚ g2 ≘ g → ∀f. ↑f = g →
+                       ∃∃f1,f2. f1 ~⊚ f2 ≘ f & ⫯f1 = g1 & ↑f2 = g2.
 #g1 #g2 #g #Hg #f #H elim (pn_split g1) * #f1 #H1
 [ elim (coafter_inv_pxn … Hg … H1 H) -g /2 width=5 by ex3_2_intro/
 | elim (coafter_inv_nxn … Hg … H1 H)
@@ -152,16 +152,16 @@ lemma coafter_inv_xxn: ∀g1,g2,g. g1 ~⊚ g2 ≘ g → ∀f. ⫯f = g →
 qed-.
 
 lemma coafter_inv_xnn: ∀g1,g2,g. g1 ~⊚ g2 ≘ g →
-                       ∀f2,f. ⫯f2 = g2 → ⫯f = g →
-                       ∃∃f1. f1 ~⊚ f2 ≘ f & ↑f1 = g1.
+                       ∀f2,f. ↑f2 = g2 → ↑f = g →
+                       ∃∃f1. f1 ~⊚ f2 ≘ f & ⫯f1 = g1.
 #g1 #g2 #g #Hg #f2 #f #H2 destruct #H
 elim (coafter_inv_xxn … Hg … H) -g
 #z1 #z2 #Hf #H1 #H2 destruct /2 width=3 by ex2_intro/
 qed-.
 
-lemma coafter_inv_xxp: ∀g1,g2,g. g1 ~⊚ g2 ≘ g → ∀f. ↑f = g →
-                       (∃∃f1,f2. f1 ~⊚ f2 ≘ f & ↑f1 = g1 & ↑f2 = g2) ∨
-                       ∃∃f1. f1 ~⊚ g2 ≘ f & ⫯f1 = g1.
+lemma coafter_inv_xxp: ∀g1,g2,g. g1 ~⊚ g2 ≘ g → ∀f. ⫯f = g →
+                       (∃∃f1,f2. f1 ~⊚ f2 ≘ f & ⫯f1 = g1 & ⫯f2 = g2) ∨
+                       ∃∃f1. f1 ~⊚ g2 ≘ f & ↑f1 = g1.
 #g1 #g2 #g #Hg #f #H elim (pn_split g1) * #f1 #H1
 [ elim (coafter_inv_pxp … Hg … H1 H) -g
   /3 width=5 by or_introl, ex3_2_intro/
@@ -169,9 +169,9 @@ lemma coafter_inv_xxp: ∀g1,g2,g. g1 ~⊚ g2 ≘ g → ∀f. ↑f = g →
 ]
 qed-.
 
-lemma coafter_inv_pxx: ∀g1,g2,g. g1 ~⊚ g2 ≘ g → ∀f1. ↑f1 = g1 →
-                       (∃∃f2,f. f1 ~⊚ f2 ≘ f & ↑f2 = g2 & ↑f = g) ∨
-                       (∃∃f2,f. f1 ~⊚ f2 ≘ f & ⫯f2 = g2 & ⫯f = g).
+lemma coafter_inv_pxx: ∀g1,g2,g. g1 ~⊚ g2 ≘ g → ∀f1. ⫯f1 = g1 →
+                       (∃∃f2,f. f1 ~⊚ f2 ≘ f & ⫯f2 = g2 & ⫯f = g) ∨
+                       (∃∃f2,f. f1 ~⊚ f2 ≘ f & ↑f2 = g2 & ↑f = g).
 #g1 #g2 #g #Hg #f1 #H1 elim (pn_split g2) * #f2 #H2
 [ elim (coafter_inv_ppx … Hg … H1 H2) -g1
   /3 width=5 by or_introl, ex3_2_intro/
@@ -223,7 +223,7 @@ qed-.
 
 (* Main inversion lemmas ****************************************************)
 
-corec theorem coafter_mono: ∀f1,f2,x,y. f1 ~⊚ f2 ≘ x → f1 ~⊚ f2 ≘ y → x ≗ y.
+corec theorem coafter_mono: ∀f1,f2,x,y. f1 ~⊚ f2 ≘ x → f1 ~⊚ f2 ≘ y → x ≡ y.
 #f1 #f2 #x #y * -f1 -f2 -x
 #f1 #f2 #x #g1 [1,2: #g2 ] #g #Hx #H1 [1,2: #H2 ] #H0x #Hy
 [ cases (coafter_inv_ppx … Hy … H1 H2) -g1 -g2 /3 width=8 by eq_push/
@@ -233,13 +233,13 @@ corec theorem coafter_mono: ∀f1,f2,x,y. f1 ~⊚ f2 ≘ x → f1 ~⊚ f2 ≘ y 
 qed-.
 
 lemma coafter_mono_eq: ∀f1,f2,f. f1 ~⊚ f2 ≘ f → ∀g1,g2,g. g1 ~⊚ g2 ≘ g →
-                       f1 ≗ g1 → f2 ≗ g2 → f ≗ g.
+                       f1 ≡ g1 → f2 ≡ g2 → f ≡ g.
 /4 width=4 by coafter_mono, coafter_eq_repl_back1, coafter_eq_repl_back2/ qed-.
 
 (* Forward lemmas with pushs ************************************************)
 
-lemma coafter_fwd_pushs: ∀j,i,g2,f1,g. g2 ~⊚ ↑*[i]f1 ≘ g → @⦃i, g2⦄ ≘ j →
-                         ∃f. ↑*[j] f = g.
+lemma coafter_fwd_pushs: ∀j,i,g2,f1,g. g2 ~⊚ ⫯*[i]f1 ≘ g → @⦃i, g2⦄ ≘ j →
+                         ∃f. ⫯*[j] f = g.
 #j elim j -j
 [ #i #g2 #f1 #g #Hg #H
   elim (at_inv_xxp … H) -H [|*: // ] #f2 #H1 #H2 destruct
@@ -261,18 +261,18 @@ qed-.
 (* Inversion lemmas with tail ***********************************************)
 
 lemma coafter_inv_tl1: ∀g2,g1,g. g2 ~⊚ ⫱g1 ≘ g →
-                       ∃∃f. ↑g2 ~⊚ g1 ≘ f & ⫱f = g.
+                       ∃∃f. ⫯g2 ~⊚ g1 ≘ f & ⫱f = g.
 #g2 #g1 #g elim (pn_split g1) * #f1 #H1 #H destruct
 [ /3 width=7 by coafter_refl, ex2_intro/
-| @(ex2_intro … (⫯g)) /2 width=7 by coafter_push/ (**) (* full auto fails *)
+| @(ex2_intro … (↑g)) /2 width=7 by coafter_push/ (**) (* full auto fails *)
 ]
 qed-.
 
 lemma coafter_inv_tl0: ∀g2,g1,g. g2 ~⊚ g1 ≘ ⫱g →
-                       ∃∃f1. ↑g2 ~⊚ f1 ≘ g & ⫱f1 = g1.
+                       ∃∃f1. ⫯g2 ~⊚ f1 ≘ g & ⫱f1 = g1.
 #g2 #g1 #g elim (pn_split g) * #f #H0 #H destruct
 [ /3 width=7 by coafter_refl, ex2_intro/
-| @(ex2_intro … (⫯g1)) /2 width=7 by coafter_push/ (**) (* full auto fails *)
+| @(ex2_intro … (↑g1)) /2 width=7 by coafter_push/ (**) (* full auto fails *)
 ]
 qed-.
 
@@ -299,7 +299,7 @@ lemma coafter_tls_O: ∀n,f1,f2,f. @⦃0, f1⦄ ≘ n →
 /2 width=1 by coafter_tls/ qed.
 
 lemma coafter_tls_succ: ∀g2,g1,g. g2 ~⊚ g1 ≘ g →
-                        ∀n. @⦃0, g2⦄ ≘ n → ⫱*[⫯n]g2 ~⊚ ⫱g1 ≘ ⫱*[⫯n]g.
+                        ∀n. @⦃0, g2⦄ ≘ n → ⫱*[↑n]g2 ~⊚ ⫱g1 ≘ ⫱*[↑n]g.
 #g2 #g1 #g #Hg #n #Hg2
 lapply (coafter_tls … Hg2 … Hg) -Hg #Hg
 lapply (at_pxx_tls … Hg2) -Hg2 #H
@@ -308,8 +308,8 @@ elim (coafter_inv_pxx … Hg … H2) -Hg * #f1 #f #Hf #H1 #H0 destruct
 <tls_S <tls_S <H2 <H0 -g2 -g -n //
 qed.
 
-lemma coafter_fwd_xpx_pushs: ∀g2,f1,g,i,j. @⦃i, g2⦄ ≘ j → g2 ~⊚ ↑*[⫯i]f1 ≘ g →
-                             ∃∃f.  ⫱*[⫯j]g2 ~⊚ f1 ≘ f & ↑*[⫯j]f = g.
+lemma coafter_fwd_xpx_pushs: ∀g2,f1,g,i,j. @⦃i, g2⦄ ≘ j → g2 ~⊚ ⫯*[↑i]f1 ≘ g →
+                             ∃∃f.  ⫱*[↑j]g2 ~⊚ f1 ≘ f & ⫯*[↑j]f = g.
 #g2 #g1 #g #i #j #Hg2 <pushs_xn #Hg
 elim (coafter_fwd_pushs … Hg Hg2) #f #H0 destruct
 lapply (coafter_tls … Hg2 Hg) -Hg <tls_pushs <tls_pushs #Hf
@@ -319,8 +319,8 @@ elim (coafter_inv_ppx … Hf) [|*: // ] -Hf #g #Hg #H destruct
 /2 width=3 by ex2_intro/
 qed-.
 
-lemma coafter_fwd_xnx_pushs: ∀g2,f1,g,i,j. @⦃i, g2⦄ ≘ j → g2 ~⊚ ↑*[i]⫯f1 ≘ g →
-                             ∃∃f. ⫱*[⫯j]g2 ~⊚ f1 ≘ f & ↑*[j] ⫯f = g.
+lemma coafter_fwd_xnx_pushs: ∀g2,f1,g,i,j. @⦃i, g2⦄ ≘ j → g2 ~⊚ ⫯*[i]↑f1 ≘ g →
+                             ∃∃f. ⫱*[↑j]g2 ~⊚ f1 ≘ f & ⫯*[j] ↑f = g.
 #g2 #g1 #g #i #j #Hg2 #Hg
 elim (coafter_fwd_pushs … Hg Hg2) #f #H0 destruct
 lapply (coafter_tls … Hg2 Hg) -Hg <tls_pushs <tls_pushs #Hf
@@ -346,7 +346,7 @@ qed.
 
 (* Inversion lemmas with test for identity **********************************)
 
-lemma coafter_isid_inv_sn: ∀f1,f2,f. f1 ~⊚ f2 ≘ f → 𝐈⦃f1⦄ → f2 ≗ f.
+lemma coafter_isid_inv_sn: ∀f1,f2,f. f1 ~⊚ f2 ≘ f → 𝐈⦃f1⦄ → f2 ≡ f.
 /3 width=6 by coafter_isid_sn, coafter_mono/ qed-.
 
 lemma coafter_isid_inv_dx: ∀f1,f2,f. f1 ~⊚ f2 ≘ f → 𝐈⦃f2⦄ → 𝐈⦃f⦄.
@@ -361,12 +361,12 @@ qed.
 
 
 (*
-lemma coafter_isid_isuni: ∀f1,f2. 𝐈⦃f2⦄ → 𝐔⦃f1⦄ → f1 ~⊚ ⫯f2 ≘ ⫯f1.
+lemma coafter_isid_isuni: ∀f1,f2. 𝐈⦃f2⦄ → 𝐔⦃f1⦄ → f1 ~⊚ ↑f2 ≘ ↑f1.
 #f1 #f2 #Hf2 #H elim H -H
 /5 width=7 by coafter_isid_dx, coafter_eq_repl_back2, coafter_next, coafter_push, eq_push_inv_isid/
 qed.
 
-lemma coafter_uni_next2: ∀f2. 𝐔⦃f2⦄ → ∀f1,f. ⫯f2 ~⊚ f1 ≘ f → f2 ~⊚ ⫯f1 ≘ f.
+lemma coafter_uni_next2: ∀f2. 𝐔⦃f2⦄ → ∀f1,f. ↑f2 ~⊚ f1 ≘ f → f2 ~⊚ ↑f1 ≘ f.
 #f2 #H elim H -f2
 [ #f2 #Hf2 #f1 #f #Hf
   elim (coafter_inv_nxx … Hf) -Hf [2,3: // ] #g #Hg #H0 destruct
@@ -380,7 +380,7 @@ qed.
 
 (* Properties with uniform relocations **************************************)
 
-lemma coafter_uni_sn: ∀i,f. 𝐔❴i❵ ~⊚ f ≘ ↑*[i] f.
+lemma coafter_uni_sn: ∀i,f. 𝐔❴i❵ ~⊚ f ≘ ⫯*[i] f.
 #i elim i -i /2 width=5 by coafter_isid_sn, coafter_next/
 qed.
 
@@ -489,7 +489,7 @@ lemma coafter_uni_sn: ∀i2,i1,f2. @⦃i1, f2⦄ ≘ i2 →
 qed-.
 
 lemma coafter_uni_succ_dx: ∀i2,i1,f2. @⦃i1, f2⦄ ≘ i2 →
-                           ∀f. f2 ~⊚ 𝐔❴⫯i1❵ ≘ f → 𝐔❴⫯i2❵ ~⊚ ⫱*[⫯i2] f2 ≘ f.
+                           ∀f. f2 ~⊚ 𝐔❴↑i1❵ ≘ f → 𝐔❴↑i2❵ ~⊚ ⫱*[↑i2] f2 ≘ f.
 #i2 elim i2 -i2
 [ #i1 #f2 #Hf2 #f #Hf
   elim (at_inv_xxp … Hf2) -Hf2 // #g2 #H1 #H2 destruct
@@ -509,7 +509,7 @@ lemma coafter_uni_succ_dx: ∀i2,i1,f2. @⦃i1, f2⦄ ≘ i2 →
 qed.
 
 lemma coafter_uni_succ_sn: ∀i2,i1,f2. @⦃i1, f2⦄ ≘ i2 →
-                           ∀f. 𝐔❴⫯i2❵ ~⊚ ⫱*[⫯i2] f2 ≘ f → f2 ~⊚ 𝐔❴⫯i1❵ ≘ f.
+                           ∀f. 𝐔❴↑i2❵ ~⊚ ⫱*[↑i2] f2 ≘ f → f2 ~⊚ 𝐔❴↑i1❵ ≘ f.
 #i2 elim i2 -i2
 [ #i1 #f2 #Hf2 #f #Hf
   elim (at_inv_xxp … Hf2) -Hf2 // #g2 #H1 #H2 destruct
@@ -525,11 +525,11 @@ lemma coafter_uni_succ_sn: ∀i2,i1,f2. @⦃i1, f2⦄ ≘ i2 →
 ]
 qed-.
 
-lemma coafter_uni_one_dx: ∀f2,f. ↑f2 ~⊚ 𝐔❴⫯O❵ ≘ f → 𝐔❴⫯O❵ ~⊚ f2 ≘ f.
-#f2 #f #H @(coafter_uni_succ_dx … (↑f2)) /2 width=3 by at_refl/
+lemma coafter_uni_one_dx: ∀f2,f. ⫯f2 ~⊚ 𝐔❴↑O❵ ≘ f → 𝐔❴↑O❵ ~⊚ f2 ≘ f.
+#f2 #f #H @(coafter_uni_succ_dx … (⫯f2)) /2 width=3 by at_refl/
 qed.
 
-lemma coafter_uni_one_sn: ∀f1,f. 𝐔❴⫯O❵ ~⊚ f1 ≘ f → ↑f1 ~⊚ 𝐔❴⫯O❵ ≘ f.
+lemma coafter_uni_one_sn: ∀f1,f. 𝐔❴↑O❵ ~⊚ f1 ≘ f → ⫯f1 ~⊚ 𝐔❴↑O❵ ≘ f.
 /3 width=3 by coafter_uni_succ_sn, at_refl/ qed-.
 *)
 (* Forward lemmas with istot ************************************************)
@@ -561,7 +561,7 @@ lemma coafter_at1_fwd: ∀f1,i1,i2. @⦃i1, f1⦄ ≘ i2 → ∀f2. 𝐓⦃f2⦄
 /3 width=8 by coafter_fwd_at, ex2_intro/
 qed-.
 
-lemma coafter_fwd_isid_sn: ∀f2,f1,f. 𝐓⦃f⦄ → f2 ~⊚ f1 ≘ f → f1 ≗ f → 𝐈⦃f2⦄.
+lemma coafter_fwd_isid_sn: ∀f2,f1,f. 𝐓⦃f⦄ → f2 ~⊚ f1 ≘ f → f1 ≡ f → 𝐈⦃f2⦄.
 #f2 #f1 #f #H #Hf elim (coafter_inv_istot … Hf H) -H
 #Hf2 #Hf1 #H @isid_at_total // -Hf2
 #i2 #i #Hf2 elim (Hf1 i2) -Hf1
@@ -570,7 +570,7 @@ lemma coafter_fwd_isid_sn: ∀f2,f1,f. 𝐓⦃f⦄ → f2 ~⊚ f1 ≘ f → f1 �
 /3 width=7 by at_eq_repl_back, at_mono, at_id_le/
 qed-.
 
-lemma coafter_fwd_isid_dx: ∀f2,f1,f.  𝐓⦃f⦄ → f2 ~⊚ f1 ≘ f → f2 ≗ f → 𝐈⦃f1⦄.
+lemma coafter_fwd_isid_dx: ∀f2,f1,f.  𝐓⦃f⦄ → f2 ~⊚ f1 ≘ f → f2 ≡ f → 𝐈⦃f1⦄.
 #f2 #f1 #f #H #Hf elim (coafter_inv_istot … Hf H) -H
 #Hf2 #Hf1 #H2 @isid_at_total // -Hf1
 #i1 #i2 #Hi12 elim (coafter_at1_fwd … Hi12 … Hf) -f1

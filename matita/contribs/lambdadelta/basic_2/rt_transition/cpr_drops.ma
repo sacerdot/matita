@@ -22,7 +22,7 @@ include "basic_2/rt_transition/cpm_drops.ma".
 lemma cpr_inv_atom1_drops: ∀h,I,G,L,T2. ⦃G, L⦄ ⊢ ⓪{I} ➡[h] T2 →
                            ∨∨ T2 = ⓪{I}
                             | ∃∃K,V,V2,i. ⬇*[i] L ≘ K.ⓓV & ⦃G, K⦄ ⊢ V ➡[h] V2 &
-                                          ⬆*[⫯i] V2 ≘ T2 & I = LRef i.
+                                          ⬆*[↑i] V2 ≘ T2 & I = LRef i.
 #h #I #G #L #T2 #H elim (cpm_inv_atom1_drops … H) -H *
 [ /2 width=1 by or_introl/
 | #s #_ #_ #H destruct
@@ -36,7 +36,7 @@ qed-.
 lemma cpr_inv_lref1_drops: ∀h,G,L,T2,i. ⦃G, L⦄ ⊢ #i ➡[h] T2 →
                            ∨∨ T2 = #i
                             | ∃∃K,V,V2. ⬇*[i] L ≘ K. ⓓV & ⦃G, K⦄ ⊢ V ➡[h] V2 &
-                                        ⬆*[⫯i] V2 ≘ T2.
+                                        ⬆*[↑i] V2 ≘ T2.
 #h #G #L #T2 #i #H elim (cpm_inv_lref1_drops … H) -H *
 [ /2 width=1 by or_introl/
 | /3 width=6 by ex3_3_intro, or_intror/

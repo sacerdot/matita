@@ -1,11 +1,10 @@
 #!/bin/sh
-for MA in `find basic_2 -name "*.ma"`; do
-#for MA in `find -name "cpg*.ma" -or -name "cpx*.ma"`; do
-   sed "s!$1!$2!g" ${MA} > ${MA}.new
-   if [ ! -s ${MA}.new ] || diff ${MA} ${MA}.new > /dev/null; 
-      then rm -f ${MA}.new; 
-      else echo ${MA}; mv -f ${MA} ${MA}.old; mv -f ${MA}.new ${MA};
+for SRC in `find ground_2 basic_2 -name "*.ma" -or -name "*.tbl"`; do
+   sed "s!$1!$2!g" ${SRC} > ${SRC}.new
+   if [ ! -s ${SRC}.new ] || diff ${SRC} ${SRC}.new > /dev/null; 
+      then rm -f ${SRC}.new; 
+      else echo ${SRC}; mv -f ${SRC} ${SRC}.old; mv -f ${SRC}.new ${SRC};
    fi
 done
 
-unset MA
+unset SRC

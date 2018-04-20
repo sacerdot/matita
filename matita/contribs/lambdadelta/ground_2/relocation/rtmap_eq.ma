@@ -12,27 +12,27 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/notation/relations/funexteq_2.ma".
+include "ground_2/notation/relations/ideq_2.ma".
 include "ground_2/relocation/rtmap.ma".
 
 (* RELOCATION MAP ***********************************************************)
 
 coinductive eq: relation rtmap ≝
-| eq_push: ∀f1,f2,g1,g2. eq f1 f2 → ↑f1 = g1 → ↑f2 = g2 → eq g1 g2
-| eq_next: ∀f1,f2,g1,g2. eq f1 f2 → ⫯f1 = g1 → ⫯f2 = g2 → eq g1 g2
+| eq_push: ∀f1,f2,g1,g2. eq f1 f2 → ⫯f1 = g1 → ⫯f2 = g2 → eq g1 g2
+| eq_next: ∀f1,f2,g1,g2. eq f1 f2 → ↑f1 = g1 → ↑f2 = g2 → eq g1 g2
 .
 
 interpretation "extensional equivalence (rtmap)"
-   'FunExtEq f1 f2 = (eq f1 f2).
+   'IdEq f1 f2 = (eq f1 f2).
 
 definition eq_repl (R:relation …) ≝
-                   ∀f1,f2. f1 ≗ f2 → R f1 f2.
+                   ∀f1,f2. f1 ≡ f2 → R f1 f2.
 
 definition eq_repl_back (R:predicate …) ≝
-                        ∀f1. R f1 → ∀f2. f1 ≗ f2 → R f2.
+                        ∀f1. R f1 → ∀f2. f1 ≡ f2 → R f2.
 
 definition eq_repl_fwd (R:predicate …) ≝
-                       ∀f1. R f1 → ∀f2. f2 ≗ f1 → R f2.
+                       ∀f1. R f1 → ∀f2. f2 ≡ f1 → R f2.
 
 (* Basic properties *********************************************************)
 
@@ -52,8 +52,8 @@ lemma eq_repl_sym: ∀R. eq_repl_back R → eq_repl_fwd R.
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma eq_inv_px: ∀g1,g2. g1 ≗ g2 → ∀f1. ↑f1 = g1 →
-                 ∃∃f2. f1 ≗ f2 & ↑f2 = g2.
+lemma eq_inv_px: ∀g1,g2. g1 ≡ g2 → ∀f1. ⫯f1 = g1 →
+                 ∃∃f2. f1 ≡ f2 & ⫯f2 = g2.
 #g1 #g2 * -g1 -g2
 #f1 #f2 #g1 #g2 #Hf * * -g1 -g2
 #x1 #H
@@ -62,8 +62,8 @@ lemma eq_inv_px: ∀g1,g2. g1 ≗ g2 → ∀f1. ↑f1 = g1 →
 ]
 qed-.
 
-lemma eq_inv_nx: ∀g1,g2. g1 ≗ g2 → ∀f1. ⫯f1 = g1 →
-                 ∃∃f2. f1 ≗ f2 & ⫯f2 = g2.
+lemma eq_inv_nx: ∀g1,g2. g1 ≡ g2 → ∀f1. ↑f1 = g1 →
+                 ∃∃f2. f1 ≡ f2 & ↑f2 = g2.
 #g1 #g2 * -g1 -g2
 #f1 #f2 #g1 #g2 #Hf * * -g1 -g2
 #x1 #H
@@ -72,8 +72,8 @@ lemma eq_inv_nx: ∀g1,g2. g1 ≗ g2 → ∀f1. ⫯f1 = g1 →
 ]
 qed-.
 
-lemma eq_inv_xp: ∀g1,g2. g1 ≗ g2 → ∀f2. ↑f2 = g2 →
-                 ∃∃f1. f1 ≗ f2 & ↑f1 = g1.
+lemma eq_inv_xp: ∀g1,g2. g1 ≡ g2 → ∀f2. ⫯f2 = g2 →
+                 ∃∃f1. f1 ≡ f2 & ⫯f1 = g1.
 #g1 #g2 * -g1 -g2
 #f1 #f2 #g1 #g2 #Hf * * -g1 -g2
 #x2 #H
@@ -82,8 +82,8 @@ lemma eq_inv_xp: ∀g1,g2. g1 ≗ g2 → ∀f2. ↑f2 = g2 →
 ]
 qed-.
 
-lemma eq_inv_xn: ∀g1,g2. g1 ≗ g2 → ∀f2. ⫯f2 = g2 →
-                 ∃∃f1. f1 ≗ f2 & ⫯f1 = g1.
+lemma eq_inv_xn: ∀g1,g2. g1 ≡ g2 → ∀f2. ↑f2 = g2 →
+                 ∃∃f1. f1 ≡ f2 & ↑f1 = g1.
 #g1 #g2 * -g1 -g2
 #f1 #f2 #g1 #g2 #Hf * * -g1 -g2
 #x2 #H
@@ -94,33 +94,33 @@ qed-.
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma eq_inv_pp: ∀g1,g2. g1 ≗ g2 → ∀f1,f2. ↑f1 = g1 → ↑f2 = g2 → f1 ≗ f2.
+lemma eq_inv_pp: ∀g1,g2. g1 ≡ g2 → ∀f1,f2. ⫯f1 = g1 → ⫯f2 = g2 → f1 ≡ f2.
 #g1 #g2 #H #f1 #f2 #H1 elim (eq_inv_px … H … H1) -g1
 #x2 #Hx2 * -g2
 #H lapply (injective_push … H) -H //
 qed-.
 
-lemma eq_inv_nn: ∀g1,g2. g1 ≗ g2 → ∀f1,f2. ⫯f1 = g1 → ⫯f2 = g2 → f1 ≗ f2.
+lemma eq_inv_nn: ∀g1,g2. g1 ≡ g2 → ∀f1,f2. ↑f1 = g1 → ↑f2 = g2 → f1 ≡ f2.
 #g1 #g2 #H #f1 #f2 #H1 elim (eq_inv_nx … H … H1) -g1
 #x2 #Hx2 * -g2
 #H lapply (injective_next … H) -H //
 qed-.
 
-lemma eq_inv_pn: ∀g1,g2. g1 ≗ g2 → ∀f1,f2. ↑f1 = g1 → ⫯f2 = g2 → ⊥.
+lemma eq_inv_pn: ∀g1,g2. g1 ≡ g2 → ∀f1,f2. ⫯f1 = g1 → ↑f2 = g2 → ⊥.
 #g1 #g2 #H #f1 #f2 #H1 elim (eq_inv_px … H … H1) -g1
 #x2 #Hx2 * -g2
 #H elim (discr_next_push … H)
 qed-.
 
-lemma eq_inv_np: ∀g1,g2. g1 ≗ g2 → ∀f1,f2. ⫯f1 = g1 → ↑f2 = g2 → ⊥.
+lemma eq_inv_np: ∀g1,g2. g1 ≡ g2 → ∀f1,f2. ↑f1 = g1 → ⫯f2 = g2 → ⊥.
 #g1 #g2 #H #f1 #f2 #H1 elim (eq_inv_nx … H … H1) -g1
 #x2 #Hx2 * -g2
 #H elim (discr_push_next … H)
 qed-.
 
-lemma eq_inv_gen: ∀f1,f2. f1 ≗ f2 →
-                  (∃∃g1,g2. g1 ≗ g2 & ↑g1 = f1 & ↑g2 = f2) ∨
-                  ∃∃g1,g2. g1 ≗ g2 & ⫯g1 = f1 & ⫯g2 = f2.
+lemma eq_inv_gen: ∀f1,f2. f1 ≡ f2 →
+                  (∃∃g1,g2. g1 ≡ g2 & ⫯g1 = f1 & ⫯g2 = f2) ∨
+                  ∃∃g1,g2. g1 ≡ g2 & ↑g1 = f1 & ↑g2 = f2.
 #f1 elim (pn_split f1) * #g1 #H1 #f2 #Hf
 [ elim (eq_inv_px … Hf … H1) -Hf /3 width=5 by or_introl, ex3_2_intro/
 | elim (eq_inv_nx … Hf … H1) -Hf /3 width=5 by or_intror, ex3_2_intro/
@@ -136,8 +136,8 @@ corec theorem eq_trans: Transitive … eq.
 /3 width=5 by eq_push, eq_next/
 qed-.
 
-theorem eq_canc_sn: ∀f2. eq_repl_back (λf. f ≗ f2).
+theorem eq_canc_sn: ∀f2. eq_repl_back (λf. f ≡ f2).
 /3 width=3 by eq_trans, eq_sym/ qed-.
 
-theorem eq_canc_dx: ∀f1. eq_repl_fwd (λf. f1 ≗ f).
+theorem eq_canc_dx: ∀f1. eq_repl_fwd (λf. f1 ≡ f).
 /3 width=3 by eq_trans, eq_sym/ qed-.

@@ -16,6 +16,6 @@ include "ground_2/relocation/nstream.ma".
 
 (* RELOCATION MAP ***********************************************************)
 
-lemma pn_split: ∀f. (∃g. ↑g = f) ∨ (∃g. ⫯g = f).
+lemma pn_split: ∀f. (∃g. ⫯g = f) ∨ (∃g. ↑g = f).
 @case_prop /3 width=2 by or_introl, or_intror, ex_intro/
 qed-.

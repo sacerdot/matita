@@ -36,7 +36,7 @@ definition dropable_dx: predicate (relation3 lenv term term) ≝
 
 definition lfxs_transitive_next: relation3 … ≝ λR1,R2,R3.
                                  ∀f,L,T. L ⊢ 𝐅*⦃T⦄ ≘ f →
-                                 ∀g,I,K,n. ⬇*[n] L ≘ K.ⓘ{I} → ⫯g = ⫱*[n] f →
+                                 ∀g,I,K,n. ⬇*[n] L ≘ K.ⓘ{I} → ↑g = ⫱*[n] f →
                                  lexs_transitive (cext2 R1) (cext2 R2) (cext2 R3) (cext2 R1) cfull g K I.
 
 (* Properties with generic slicing for local environments *******************)

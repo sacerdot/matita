@@ -69,7 +69,7 @@ qed.
 lemma csx_inv_lref_pair: ∀h,o,I,G,L,K,V,i. ⬇*[i] L ≘ K.ⓑ{I}V →
                          ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃#i⦄ → ⦃G, K⦄ ⊢ ⬈*[h, o] 𝐒⦃V⦄.
 #h #o #I #G #L #K #V #i #HLK #Hi
-elim (lifts_total V (𝐔❴⫯i❵))
+elim (lifts_total V (𝐔❴↑i❵))
 /4 width=9 by csx_inv_lifts, csx_cpx_trans, cpx_delta_drops, drops_isuni_fwd_drop2/
 qed-.
 

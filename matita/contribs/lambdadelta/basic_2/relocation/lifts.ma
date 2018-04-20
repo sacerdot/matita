@@ -28,7 +28,7 @@ inductive lifts: rtmap → relation term ≝
 | lifts_lref: ∀f,i1,i2. @⦃i1, f⦄ ≘ i2 → lifts f (#i1) (#i2)
 | lifts_gref: ∀f,l. lifts f (§l) (§l)
 | lifts_bind: ∀f,p,I,V1,V2,T1,T2.
-              lifts f V1 V2 → lifts (↑f) T1 T2 →
+              lifts f V1 V2 → lifts (⫯f) T1 T2 →
               lifts f (ⓑ{p,I}V1.T1) (ⓑ{p,I}V2.T2)
 | lifts_flat: ∀f,I,V1,V2,T1,T2.
               lifts f V1 V2 → lifts f T1 T2 →
@@ -103,7 +103,7 @@ lemma lifts_inv_gref1: ∀f,Y,l. ⬆*[f] §l ≘ Y → Y = §l.
 
 fact lifts_inv_bind1_aux: ∀f,X,Y. ⬆*[f] X ≘ Y →
                           ∀p,I,V1,T1. X = ⓑ{p,I}V1.T1 →
-                          ∃∃V2,T2. ⬆*[f] V1 ≘ V2 & ⬆*[↑f] T1 ≘ T2 &
+                          ∃∃V2,T2. ⬆*[f] V1 ≘ V2 & ⬆*[⫯f] T1 ≘ T2 &
                                    Y = ⓑ{p,I}V2.T2.
 #f #X #Y * -f -X -Y
 [ #f #s #q #J #W1 #U1 #H destruct
@@ -117,7 +117,7 @@ qed-.
 (* Basic_1: was: lift1_bind *)
 (* Basic_2A1: includes: lift_inv_bind1 *)
 lemma lifts_inv_bind1: ∀f,p,I,V1,T1,Y. ⬆*[f] ⓑ{p,I}V1.T1 ≘ Y →
-                       ∃∃V2,T2. ⬆*[f] V1 ≘ V2 & ⬆*[↑f] T1 ≘ T2 &
+                       ∃∃V2,T2. ⬆*[f] V1 ≘ V2 & ⬆*[⫯f] T1 ≘ T2 &
                                 Y = ⓑ{p,I}V2.T2.
 /2 width=3 by lifts_inv_bind1_aux/ qed-.
 
@@ -185,7 +185,7 @@ lemma lifts_inv_gref2: ∀f,X,l. ⬆*[f] X ≘ §l → X = §l.
 
 fact lifts_inv_bind2_aux: ∀f,X,Y. ⬆*[f] X ≘ Y →
                           ∀p,I,V2,T2. Y = ⓑ{p,I}V2.T2 →
-                          ∃∃V1,T1. ⬆*[f] V1 ≘ V2 & ⬆*[↑f] T1 ≘ T2 &
+                          ∃∃V1,T1. ⬆*[f] V1 ≘ V2 & ⬆*[⫯f] T1 ≘ T2 &
                                    X = ⓑ{p,I}V1.T1.
 #f #X #Y * -f -X -Y
 [ #f #s #q #J #W2 #U2 #H destruct
@@ -199,7 +199,7 @@ qed-.
 (* Basic_1: includes: lift_gen_bind *)
 (* Basic_2A1: includes: lift_inv_bind2 *)
 lemma lifts_inv_bind2: ∀f,p,I,V2,T2,X. ⬆*[f] X ≘ ⓑ{p,I}V2.T2 →
-                       ∃∃V1,T1. ⬆*[f] V1 ≘ V2 & ⬆*[↑f] T1 ≘ T2 &
+                       ∃∃V1,T1. ⬆*[f] V1 ≘ V2 & ⬆*[⫯f] T1 ≘ T2 &
                                 X = ⓑ{p,I}V1.T1.
 /2 width=3 by lifts_inv_bind2_aux/ qed-.
 
@@ -352,7 +352,7 @@ lemma lifts_total: ∀T1,f. ∃T2. ⬆*[f] T1 ≘ T2.
 /3 width=2 by lifts_lref, lifts_sort, lifts_gref, ex_intro/
 [ #p ] #I #V1 #T1 #IHV1 #IHT1 #f
 elim (IHV1 f) -IHV1 #V2 #HV12
-[ elim (IHT1 (↑f)) -IHT1 /3 width=2 by lifts_bind, ex_intro/
+[ elim (IHT1 (⫯f)) -IHT1 /3 width=2 by lifts_bind, ex_intro/
 | elim (IHT1 f) -IHT1 /3 width=2 by lifts_flat, ex_intro/
 ]
 qed-.
@@ -372,7 +372,7 @@ lemma lifts_split_trans: ∀f,T1,T2. ⬆*[f] T1 ≘ T2 →
   /3 width=3 by lifts_lref, ex2_intro/
 | /3 width=3 by lifts_gref, ex2_intro/
 | #f #p #I #V1 #V2 #T1 #T2 #_ #_ #IHV #IHT #f1 #f2 #Ht
-  elim (IHV … Ht) elim (IHT (↑f1) (↑f2)) -IHV -IHT
+  elim (IHV … Ht) elim (IHT (⫯f1) (⫯f2)) -IHV -IHT
   /3 width=5 by lifts_bind, after_O2, ex2_intro/
 | #f #I #V1 #V2 #T1 #T2 #_ #_ #IHV #IHT #f1 #f2 #Ht
   elim (IHV … Ht) elim (IHT … Ht) -IHV -IHT -Ht
@@ -390,7 +390,7 @@ lemma lifts_split_div: ∀f1,T1,T2. ⬆*[f1] T1 ≘ T2 →
   /3 width=3 by lifts_lref, ex2_intro/
 | /3 width=3 by lifts_gref, ex2_intro/
 | #f1 #p #I #V1 #V2 #T1 #T2 #_ #_ #IHV #IHT #f2 #f #Ht
-  elim (IHV … Ht) elim (IHT (↑f2) (↑f)) -IHV -IHT
+  elim (IHV … Ht) elim (IHT (⫯f2) (⫯f)) -IHV -IHT
   /3 width=5 by lifts_bind, after_O2, ex2_intro/
 | #f1 #I #V1 #V2 #T1 #T2 #_ #_ #IHV #IHT #f2 #f #Ht
   elim (IHV … Ht) elim (IHT … Ht) -IHV -IHT -Ht
@@ -411,7 +411,7 @@ lemma is_lifts_dec: ∀T2,f. Decidable (∃T1. ⬆*[f] T1 ≘ T2).
   ]
 | * [ #p ] #I #V2 #T2 #IHV2 #IHT2 #f
   [ elim (IHV2 f) -IHV2
-    [ * #V1 #HV12 elim (IHT2 (↑f)) -IHT2
+    [ * #V1 #HV12 elim (IHT2 (⫯f)) -IHT2
       [ * #T1 #HT12 @or_introl /3 width=2 by lifts_bind, ex_intro/
       | -V1 #HT2 @or_intror * #X #H
         elim (lifts_inv_bind2 … H) -H /3 width=2 by ex_intro/

@@ -18,9 +18,9 @@ include "ground_2/relocation/rtmap_isdiv.ma".
 (* RELOCATION MAP ***********************************************************)
 
 coinductive sle: relation rtmap ≝
-| sle_push: ∀f1,f2,g1,g2. sle f1 f2 → ↑f1 = g1 → ↑f2 = g2 → sle g1 g2
-| sle_next: ∀f1,f2,g1,g2. sle f1 f2 → ⫯f1 = g1 → ⫯f2 = g2 → sle g1 g2
-| sle_weak: ∀f1,f2,g1,g2. sle f1 f2 → ↑f1 = g1 → ⫯f2 = g2 → sle g1 g2
+| sle_push: ∀f1,f2,g1,g2. sle f1 f2 → ⫯f1 = g1 → ⫯f2 = g2 → sle g1 g2
+| sle_next: ∀f1,f2,g1,g2. sle f1 f2 → ↑f1 = g1 → ↑f2 = g2 → sle g1 g2
+| sle_weak: ∀f1,f2,g1,g2. sle f1 f2 → ⫯f1 = g1 → ↑f2 = g2 → sle g1 g2
 .
 
 interpretation "inclusion (rtmap)"
@@ -45,28 +45,28 @@ corec lemma sle_refl: ∀f. f ⊆ f.
 [ @(sle_push … H H) | @(sle_next … H H) ] -H //
 qed.
 
-lemma sle_refl_eq: ∀f1,f2. f1 ≗ f2 → f1 ⊆ f2.
+lemma sle_refl_eq: ∀f1,f2. f1 ≡ f2 → f1 ⊆ f2.
 /2 width=3 by sle_eq_repl_back2/ qed.
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma sle_inv_xp: ∀g1,g2. g1 ⊆ g2 → ∀f2. ↑f2 = g2 →
-                  ∃∃f1. f1 ⊆ f2 & ↑f1 = g1.
+lemma sle_inv_xp: ∀g1,g2. g1 ⊆ g2 → ∀f2. ⫯f2 = g2 →
+                  ∃∃f1. f1 ⊆ f2 & ⫯f1 = g1.
 #g1 #g2 * -g1 -g2
 #f1 #f2 #g1 #g2 #H #H1 #H2 #x2 #Hx2 destruct
 [ lapply (injective_push … Hx2) -Hx2 /2 width=3 by ex2_intro/ ]
 elim (discr_push_next … Hx2)
 qed-.
 
-lemma sle_inv_nx: ∀g1,g2. g1 ⊆ g2 → ∀f1. ⫯f1 = g1 →
-                  ∃∃f2. f1 ⊆ f2 & ⫯f2 = g2.
+lemma sle_inv_nx: ∀g1,g2. g1 ⊆ g2 → ∀f1. ↑f1 = g1 →
+                  ∃∃f2. f1 ⊆ f2 & ↑f2 = g2.
 #g1 #g2 * -g1 -g2
 #f1 #f2 #g1 #g2 #H #H1 #H2 #x1 #Hx1 destruct
 [2: lapply (injective_next … Hx1) -Hx1 /2 width=3 by ex2_intro/ ]
 elim (discr_next_push … Hx1)
 qed-.
 
-lemma sle_inv_pn: ∀g1,g2. g1 ⊆ g2 → ∀f1,f2. ↑f1 = g1 → ⫯f2 = g2 → f1 ⊆ f2.
+lemma sle_inv_pn: ∀g1,g2. g1 ⊆ g2 → ∀f1,f2. ⫯f1 = g1 → ↑f2 = g2 → f1 ⊆ f2.
 #g1 #g2 * -g1 -g2
 #f1 #f2 #g1 #g2 #H #H1 #H2 #x1 #x2 #Hx1 #Hx2 destruct
 [ elim (discr_next_push … Hx2)
@@ -78,25 +78,25 @@ qed-.
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma sle_inv_pp: ∀g1,g2. g1 ⊆ g2 → ∀f1,f2. ↑f1 = g1 → ↑f2 = g2 → f1 ⊆ f2.
+lemma sle_inv_pp: ∀g1,g2. g1 ⊆ g2 → ∀f1,f2. ⫯f1 = g1 → ⫯f2 = g2 → f1 ⊆ f2.
 #g1 #g2 #H #f1 #f2 #H1 #H2 elim (sle_inv_xp … H … H2) -g2
 #x1 #H #Hx1 destruct lapply (injective_push … Hx1) -Hx1 //
 qed-.
 
-lemma sle_inv_nn: ∀g1,g2. g1 ⊆ g2 → ∀f1,f2. ⫯f1 = g1 → ⫯f2 = g2 → f1 ⊆ f2.
+lemma sle_inv_nn: ∀g1,g2. g1 ⊆ g2 → ∀f1,f2. ↑f1 = g1 → ↑f2 = g2 → f1 ⊆ f2.
 #g1 #g2 #H #f1 #f2 #H1 #H2 elim (sle_inv_nx … H … H1) -g1
 #x2 #H #Hx2 destruct lapply (injective_next … Hx2) -Hx2 //
 qed-.
 
-lemma sle_inv_px: ∀g1,g2. g1 ⊆ g2 → ∀f1. ↑f1 = g1 →
-                  (∃∃f2. f1 ⊆ f2 & ↑f2 = g2) ∨ ∃∃f2. f1 ⊆ f2 & ⫯f2 = g2.
+lemma sle_inv_px: ∀g1,g2. g1 ⊆ g2 → ∀f1. ⫯f1 = g1 →
+                  (∃∃f2. f1 ⊆ f2 & ⫯f2 = g2) ∨ ∃∃f2. f1 ⊆ f2 & ↑f2 = g2.
 #g1 #g2 elim (pn_split g2) * #f2 #H2 #H #f1 #H1
 [ lapply (sle_inv_pp … H … H1 H2) | lapply (sle_inv_pn … H … H1 H2) ] -H -H1
 /3 width=3 by ex2_intro, or_introl, or_intror/
 qed-.
 
-lemma sle_inv_xn: ∀g1,g2. g1 ⊆ g2 → ∀f2. ⫯f2 = g2 →
-                  (∃∃f1. f1 ⊆ f2 & ↑f1 = g1) ∨ ∃∃f1. f1 ⊆ f2 & ⫯f1 = g1.
+lemma sle_inv_xn: ∀g1,g2. g1 ⊆ g2 → ∀f2. ↑f2 = g2 →
+                  (∃∃f1. f1 ⊆ f2 & ⫯f1 = g1) ∨ ∃∃f1. f1 ⊆ f2 & ↑f1 = g1.
 #g1 #g2 elim (pn_split g1) * #f1 #H1 #H #f2 #H2
 [ lapply (sle_inv_pn … H … H1 H2) | lapply (sle_inv_nn … H … H1 H2) ] -H -H2
 /3 width=3 by ex2_intro, or_introl, or_intror/
@@ -113,17 +113,17 @@ qed-.
 
 (* Properties with iteraded push ********************************************)
 
-lemma sle_pushs: ∀f1,f2. f1 ⊆ f2 → ∀i. ↑*[i] f1 ⊆ ↑*[i] f2.
+lemma sle_pushs: ∀f1,f2. f1 ⊆ f2 → ∀i. ⫯*[i] f1 ⊆ ⫯*[i] f2.
 #f1 #f2 #Hf12 #i elim i -i /2 width=5 by sle_push/
 qed.
 
 (* Properties with tail *****************************************************)
 
-lemma sle_px_tl: ∀g1,g2. g1 ⊆ g2 → ∀f1. ↑f1 = g1 → f1 ⊆ ⫱g2.
+lemma sle_px_tl: ∀g1,g2. g1 ⊆ g2 → ∀f1. ⫯f1 = g1 → f1 ⊆ ⫱g2.
 #g1 #g2 #H #f1 #H1 elim (sle_inv_px … H … H1) -H -H1 * //
 qed.
 
-lemma sle_xn_tl: ∀g1,g2. g1 ⊆ g2 → ∀f2. ⫯f2 = g2 → ⫱g1 ⊆ f2.
+lemma sle_xn_tl: ∀g1,g2. g1 ⊆ g2 → ∀f2. ↑f2 = g2 → ⫱g1 ⊆ f2.
 #g1 #g2 #H #f2 #H2 elim (sle_inv_xn … H … H2) -H -H2 * //
 qed.
 
@@ -136,12 +136,12 @@ qed.
 
 (* Inversion lemmas with tail ***********************************************)
 
-lemma sle_inv_tl_sn: ∀f1,f2. ⫱f1 ⊆ f2 → f1 ⊆ ⫯f2.
+lemma sle_inv_tl_sn: ∀f1,f2. ⫱f1 ⊆ f2 → f1 ⊆ ↑f2.
 #f1 elim (pn_split f1) * #g1 #H destruct
 /2 width=5 by sle_next, sle_weak/
 qed-.
 
-lemma sle_inv_tl_dx: ∀f1,f2. f1 ⊆ ⫱f2 → ↑f1 ⊆ f2.
+lemma sle_inv_tl_dx: ∀f1,f2. f1 ⊆ ⫱f2 → ⫯f1 ⊆ f2.
 #f1 #f2 elim (pn_split f2) * #g2 #H destruct
 /2 width=5 by sle_push, sle_weak/
 qed-.

@@ -92,7 +92,7 @@ qed-.
 
 (* Properties with shift ****************************************************)
 
-lemma max_shift: ∀c1,c2. ((↓c1) ∨ (↓c2)) = ↓(c1∨c2).
+lemma max_shift: ∀c1,c2. ((↕*c1) ∨ (↕*c2)) = ↕*(c1∨c2).
 * #ri1 #rs1 #ti1 #ts1 * #ri2 #rs2 #ti2 #ts2
 <shift_rew <shift_rew <shift_rew <max_rew //
 qed.

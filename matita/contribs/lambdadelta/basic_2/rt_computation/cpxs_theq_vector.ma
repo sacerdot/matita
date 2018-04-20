@@ -45,7 +45,7 @@ qed-.
 
 (* Basic_2A1: was: cpxs_fwd_delta_vector *)
 lemma cpxs_fwd_delta_drops_vector: ∀h,o,I,G,L,K,V1,i. ⬇*[i] L ≘ K.ⓑ{I}V1 →
-                                   ∀V2. ⬆*[⫯i] V1 ≘ V2 →
+                                   ∀V2. ⬆*[↑i] V1 ≘ V2 →
                                    ∀Vs,U. ⦃G, L⦄ ⊢ ⒶVs.#i ⬈*[h] U →
                                    ⒶVs.#i ⩳[h, o] U ∨ ⦃G, L⦄ ⊢ ⒶVs.V2 ⬈*[h] U.
 #h #o #I #G #L #K #V1 #i #HLK #V2 #HV12 #Vs elim Vs -Vs /2 width=5 by cpxs_fwd_delta_drops/

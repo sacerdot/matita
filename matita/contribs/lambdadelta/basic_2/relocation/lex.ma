@@ -54,7 +54,7 @@ qed-.
 lemma lex_inv_bind_sn: ∀R,I1,L2,K1. K1.ⓘ{I1} ⪤[R] L2 →
                        ∃∃I2,K2. K1 ⪤[R] K2 & cext2 R K1 I1 I2 & L2 = K2.ⓘ{I2}.
 #R #I1 #L2 #K1 * #f #Hf #H
-lapply (lexs_eq_repl_fwd … H (↑f) ?) -H /2 width=1 by eq_push_inv_isid/ #H
+lapply (lexs_eq_repl_fwd … H (⫯f) ?) -H /2 width=1 by eq_push_inv_isid/ #H
 elim (lexs_inv_push1 … H) -H #I2 #K2 #HK12 #HI12 #H destruct
 /3 width=5 by ex2_intro, ex3_2_intro/
 qed-.
@@ -67,7 +67,7 @@ qed-.
 lemma lex_inv_bind_dx: ∀R,I2,L1,K2. L1 ⪤[R] K2.ⓘ{I2} →
                        ∃∃I1,K1. K1 ⪤[R] K2 & cext2 R K1 I1 I2 & L1 = K1.ⓘ{I1}.
 #R #I2 #L1 #K2 * #f #Hf #H
-lapply (lexs_eq_repl_fwd … H (↑f) ?) -H /2 width=1 by eq_push_inv_isid/ #H
+lapply (lexs_eq_repl_fwd … H (⫯f) ?) -H /2 width=1 by eq_push_inv_isid/ #H
 elim (lexs_inv_push2 … H) -H #I1 #K1 #HK12 #HI12 #H destruct
 /3 width=5 by ex3_2_intro, ex2_intro/
 qed-.

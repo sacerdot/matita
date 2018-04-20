@@ -130,7 +130,7 @@ lemma cpxs_inv_sort1: ∀h,G,L,X2,s. ⦃G, L⦄ ⊢ ⋆s ⬈*[h] X2 →
 #h #G #L #X2 #s #H @(cpxs_ind … H) -X2 /2 width=2 by ex_intro/
 #X #X2 #_ #HX2 * #n #H destruct
 elim (cpx_inv_sort1 … HX2) -HX2 #H destruct /2 width=2 by ex_intro/
-@(ex_intro … (⫯n)) >iter_S //
+@(ex_intro … (↑n)) >iter_S //
 qed-.
 
 lemma cpxs_inv_cast1: ∀h,G,L,W1,T1,U2. ⦃G, L⦄ ⊢ ⓝW1.T1 ⬈*[h] U2 →

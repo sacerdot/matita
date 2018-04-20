@@ -17,10 +17,10 @@ include "ground_2/relocation/rtmap_isfin.ma".
 include "ground_2/relocation/rtmap_sle.ma".
 
 coinductive sor: relation3 rtmap rtmap rtmap ≝
-| sor_pp: ∀f1,f2,f,g1,g2,g. sor f1 f2 f → ↑f1 = g1 → ↑f2 = g2 → ↑f = g → sor g1 g2 g
-| sor_np: ∀f1,f2,f,g1,g2,g. sor f1 f2 f → ⫯f1 = g1 → ↑f2 = g2 → ⫯f = g → sor g1 g2 g
-| sor_pn: ∀f1,f2,f,g1,g2,g. sor f1 f2 f → ↑f1 = g1 → ⫯f2 = g2 → ⫯f = g → sor g1 g2 g
-| sor_nn: ∀f1,f2,f,g1,g2,g. sor f1 f2 f → ⫯f1 = g1 → ⫯f2 = g2 → ⫯f = g → sor g1 g2 g
+| sor_pp: ∀f1,f2,f,g1,g2,g. sor f1 f2 f → ⫯f1 = g1 → ⫯f2 = g2 → ⫯f = g → sor g1 g2 g
+| sor_np: ∀f1,f2,f,g1,g2,g. sor f1 f2 f → ↑f1 = g1 → ⫯f2 = g2 → ↑f = g → sor g1 g2 g
+| sor_pn: ∀f1,f2,f,g1,g2,g. sor f1 f2 f → ⫯f1 = g1 → ↑f2 = g2 → ↑f = g → sor g1 g2 g
+| sor_nn: ∀f1,f2,f,g1,g2,g. sor f1 f2 f → ↑f1 = g1 → ↑f2 = g2 → ↑f = g → sor g1 g2 g
 .
 
 interpretation "union (rtmap)"
@@ -28,7 +28,18 @@ interpretation "union (rtmap)"
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma sor_inv_ppx: ∀g1,g2,g. g1 ⋓ g2 ≘ g → ∀f1,f2. ↑f1 = g1 → ↑f2 = g2 →
+lemma sor_inv_ppx: ∀g1,g2,g. g1 ⋓ g2 ≘ g → ∀f1,f2. ⫯f1 = g1 → ⫯f2 = g2 →
+                   ∃∃f. f1 ⋓ f2 ≘ f & ⫯f = g.
+#g1 #g2 #g * -g1 -g2 -g
+#f1 #f2 #f #g1 #g2 #g #Hf #H1 #H2 #H0 #x1 #x2 #Hx1 #Hx2 destruct
+try (>(injective_push … Hx1) -x1) try (>(injective_next … Hx1) -x1)
+try elim (discr_push_next … Hx1) try elim (discr_next_push … Hx1)
+try (>(injective_push … Hx2) -x2) try (>(injective_next … Hx2) -x2)
+try elim (discr_push_next … Hx2) try elim (discr_next_push … Hx2)
+/2 width=3 by ex2_intro/
+qed-.
+
+lemma sor_inv_npx: ∀g1,g2,g. g1 ⋓ g2 ≘ g → ∀f1,f2. ↑f1 = g1 → ⫯f2 = g2 →
                    ∃∃f. f1 ⋓ f2 ≘ f & ↑f = g.
 #g1 #g2 #g * -g1 -g2 -g
 #f1 #f2 #f #g1 #g2 #g #Hf #H1 #H2 #H0 #x1 #x2 #Hx1 #Hx2 destruct
@@ -39,8 +50,8 @@ try elim (discr_push_next … Hx2) try elim (discr_next_push … Hx2)
 /2 width=3 by ex2_intro/
 qed-.
 
-lemma sor_inv_npx: ∀g1,g2,g. g1 ⋓ g2 ≘ g → ∀f1,f2. ⫯f1 = g1 → ↑f2 = g2 →
-                   ∃∃f. f1 ⋓ f2 ≘ f & ⫯f = g.
+lemma sor_inv_pnx: ∀g1,g2,g. g1 ⋓ g2 ≘ g → ∀f1,f2. ⫯f1 = g1 → ↑f2 = g2 →
+                   ∃∃f. f1 ⋓ f2 ≘ f & ↑f = g.
 #g1 #g2 #g * -g1 -g2 -g
 #f1 #f2 #f #g1 #g2 #g #Hf #H1 #H2 #H0 #x1 #x2 #Hx1 #Hx2 destruct
 try (>(injective_push … Hx1) -x1) try (>(injective_next … Hx1) -x1)
@@ -50,19 +61,8 @@ try elim (discr_push_next … Hx2) try elim (discr_next_push … Hx2)
 /2 width=3 by ex2_intro/
 qed-.
 
-lemma sor_inv_pnx: ∀g1,g2,g. g1 ⋓ g2 ≘ g → ∀f1,f2. ↑f1 = g1 → ⫯f2 = g2 →
-                   ∃∃f. f1 ⋓ f2 ≘ f & ⫯f = g.
-#g1 #g2 #g * -g1 -g2 -g
-#f1 #f2 #f #g1 #g2 #g #Hf #H1 #H2 #H0 #x1 #x2 #Hx1 #Hx2 destruct
-try (>(injective_push … Hx1) -x1) try (>(injective_next … Hx1) -x1)
-try elim (discr_push_next … Hx1) try elim (discr_next_push … Hx1)
-try (>(injective_push … Hx2) -x2) try (>(injective_next … Hx2) -x2)
-try elim (discr_push_next … Hx2) try elim (discr_next_push … Hx2)
-/2 width=3 by ex2_intro/
-qed-.
-
-lemma sor_inv_nnx: ∀g1,g2,g. g1 ⋓ g2 ≘ g → ∀f1,f2. ⫯f1 = g1 → ⫯f2 = g2 →
-                   ∃∃f. f1 ⋓ f2 ≘ f & ⫯f = g.
+lemma sor_inv_nnx: ∀g1,g2,g. g1 ⋓ g2 ≘ g → ∀f1,f2. ↑f1 = g1 → ↑f2 = g2 →
+                   ∃∃f. f1 ⋓ f2 ≘ f & ↑f = g.
 #g1 #g2 #g * -g1 -g2 -g
 #f1 #f2 #f #g1 #g2 #g #Hf #H1 #H2 #H0 #x1 #x2 #Hx1 #Hx2 destruct
 try (>(injective_push … Hx1) -x1) try (>(injective_next … Hx1) -x1)
@@ -75,14 +75,14 @@ qed-.
 (* Advanced inversion lemmas ************************************************)
 
 lemma sor_inv_ppn: ∀g1,g2,g. g1 ⋓ g2 ≘ g →
-                   ∀f1,f2,f. ↑f1 = g1 → ↑f2 = g2 → ⫯f = g → ⊥.
+                   ∀f1,f2,f. ⫯f1 = g1 → ⫯f2 = g2 → ↑f = g → ⊥.
 #g1 #g2 #g #H #f1 #f2 #f #H1 #H2 #H0
 elim (sor_inv_ppx … H … H1 H2) -g1 -g2 #x #_ #H destruct
 /2 width=3 by discr_push_next/
 qed-.
 
 lemma sor_inv_nxp: ∀g1,g2,g. g1 ⋓ g2 ≘ g →
-                   ∀f1,f. ⫯f1 = g1 → ↑f = g → ⊥.
+                   ∀f1,f. ↑f1 = g1 → ⫯f = g → ⊥.
 #g1 #g2 #g #H #f1 #f #H1 #H0
 elim (pn_split g2) * #f2 #H2
 [ elim (sor_inv_npx … H … H1 H2)
@@ -92,7 +92,7 @@ elim (pn_split g2) * #f2 #H2
 qed-.
 
 lemma sor_inv_xnp: ∀g1,g2,g. g1 ⋓ g2 ≘ g →
-                   ∀f2,f. ⫯f2 = g2 → ↑f = g → ⊥.
+                   ∀f2,f. ↑f2 = g2 → ⫯f = g → ⊥.
 #g1 #g2 #g #H #f2 #f #H2 #H0
 elim (pn_split g1) * #f1 #H1
 [ elim (sor_inv_pnx … H … H1 H2)
@@ -102,36 +102,36 @@ elim (pn_split g1) * #f1 #H1
 qed-.
 
 lemma sor_inv_ppp: ∀g1,g2,g. g1 ⋓ g2 ≘ g →
-                   ∀f1,f2,f. ↑f1 = g1 → ↑f2 = g2 → ↑f = g → f1 ⋓ f2 ≘ f.
+                   ∀f1,f2,f. ⫯f1 = g1 → ⫯f2 = g2 → ⫯f = g → f1 ⋓ f2 ≘ f.
 #g1 #g2 #g #H #f1 #f2 #f #H1 #H2 #H0
 elim (sor_inv_ppx … H … H1 H2) -g1 -g2 #x #Hx #H destruct
 <(injective_push … H) -f //
 qed-.
 
 lemma sor_inv_npn: ∀g1,g2,g. g1 ⋓ g2 ≘ g →
-                   ∀f1,f2,f. ⫯f1 = g1 → ↑f2 = g2 → ⫯f = g → f1 ⋓ f2 ≘ f.
+                   ∀f1,f2,f. ↑f1 = g1 → ⫯f2 = g2 → ↑f = g → f1 ⋓ f2 ≘ f.
 #g1 #g2 #g #H #f1 #f2 #f #H1 #H2 #H0
 elim (sor_inv_npx … H … H1 H2) -g1 -g2 #x #Hx #H destruct
 <(injective_next … H) -f //
 qed-.
 
 lemma sor_inv_pnn: ∀g1,g2,g. g1 ⋓ g2 ≘ g →
-                   ∀f1,f2,f. ↑f1 = g1 → ⫯f2 = g2 → ⫯f = g → f1 ⋓ f2 ≘ f.
+                   ∀f1,f2,f. ⫯f1 = g1 → ↑f2 = g2 → ↑f = g → f1 ⋓ f2 ≘ f.
 #g1 #g2 #g #H #f1 #f2 #f #H1 #H2 #H0
 elim (sor_inv_pnx … H … H1 H2) -g1 -g2 #x #Hx #H destruct
 <(injective_next … H) -f //
 qed-.
 
 lemma sor_inv_nnn: ∀g1,g2,g. g1 ⋓ g2 ≘ g →
-                   ∀f1,f2,f. ⫯f1 = g1 → ⫯f2 = g2 → ⫯f = g → f1 ⋓ f2 ≘ f.
+                   ∀f1,f2,f. ↑f1 = g1 → ↑f2 = g2 → ↑f = g → f1 ⋓ f2 ≘ f.
 #g1 #g2 #g #H #f1 #f2 #f #H1 #H2 #H0
 elim (sor_inv_nnx … H … H1 H2) -g1 -g2 #x #Hx #H destruct
 <(injective_next … H) -f //
 qed-.
 
 lemma sor_inv_pxp: ∀g1,g2,g. g1 ⋓ g2 ≘ g →
-                   ∀f1,f. ↑f1 = g1 → ↑f = g →
-                   ∃∃f2. f1 ⋓ f2 ≘ f & ↑f2 = g2.
+                   ∀f1,f. ⫯f1 = g1 → ⫯f = g →
+                   ∃∃f2. f1 ⋓ f2 ≘ f & ⫯f2 = g2.
 #g1 #g2 #g #H #f1 #f #H1 #H0
 elim (pn_split g2) * #f2 #H2
 [ /3 width=7 by sor_inv_ppp, ex2_intro/
@@ -140,8 +140,8 @@ elim (pn_split g2) * #f2 #H2
 qed-.
 
 lemma sor_inv_xpp: ∀g1,g2,g. g1 ⋓ g2 ≘ g →
-                   ∀f2,f. ↑f2 = g2 → ↑f = g →
-                   ∃∃f1. f1 ⋓ f2 ≘ f & ↑f1 = g1.
+                   ∀f2,f. ⫯f2 = g2 → ⫯f = g →
+                   ∃∃f1. f1 ⋓ f2 ≘ f & ⫯f1 = g1.
 #g1 #g2 #g #H #f2 #f #H2 #H0
 elim (pn_split g1) * #f1 #H1
 [ /3 width=7 by sor_inv_ppp, ex2_intro/
@@ -150,8 +150,8 @@ elim (pn_split g1) * #f1 #H1
 qed-.
 
 lemma sor_inv_pxn: ∀g1,g2,g. g1 ⋓ g2 ≘ g →
-                   ∀f1,f. ↑f1 = g1 → ⫯f = g →
-                   ∃∃f2. f1 ⋓ f2 ≘ f & ⫯f2 = g2.
+                   ∀f1,f. ⫯f1 = g1 → ↑f = g →
+                   ∃∃f2. f1 ⋓ f2 ≘ f & ↑f2 = g2.
 #g1 #g2 #g #H #f1 #f #H1 #H0
 elim (pn_split g2) * #f2 #H2
 [ elim (sor_inv_ppn … H … H1 H2 H0)
@@ -160,8 +160,8 @@ elim (pn_split g2) * #f2 #H2
 qed-.
 
 lemma sor_inv_xpn: ∀g1,g2,g. g1 ⋓ g2 ≘ g →
-                   ∀f2,f. ↑f2 = g2 → ⫯f = g →
-                   ∃∃f1. f1 ⋓ f2 ≘ f & ⫯f1 = g1.
+                   ∀f2,f. ⫯f2 = g2 → ↑f = g →
+                   ∃∃f1. f1 ⋓ f2 ≘ f & ↑f1 = g1.
 #g1 #g2 #g #H #f2 #f #H2 #H0
 elim (pn_split g1) * #f1 #H1
 [ elim (sor_inv_ppn … H … H1 H2 H0)
@@ -169,8 +169,8 @@ elim (pn_split g1) * #f1 #H1
 ]
 qed-.
 
-lemma sor_inv_xxp: ∀g1,g2,g. g1 ⋓ g2 ≘ g → ∀f. ↑f = g →
-                   ∃∃f1,f2. f1 ⋓ f2 ≘ f & ↑f1 = g1 & ↑f2 = g2.
+lemma sor_inv_xxp: ∀g1,g2,g. g1 ⋓ g2 ≘ g → ∀f. ⫯f = g →
+                   ∃∃f1,f2. f1 ⋓ f2 ≘ f & ⫯f1 = g1 & ⫯f2 = g2.
 #g1 #g2 #g #H #f #H0
 elim (pn_split g1) * #f1 #H1
 [ elim (sor_inv_pxp … H … H1 H0) -g /2 width=5 by ex3_2_intro/
@@ -179,25 +179,25 @@ elim (pn_split g1) * #f1 #H1
 qed-.
 
 lemma sor_inv_nxn: ∀g1,g2,g. g1 ⋓ g2 ≘ g →
-                   ∀f1,f. ⫯f1 = g1 → ⫯f = g →
-                   (∃∃f2. f1 ⋓ f2 ≘ f & ↑f2 = g2) ∨
-                   ∃∃f2. f1 ⋓ f2 ≘ f & ⫯f2 = g2.
+                   ∀f1,f. ↑f1 = g1 → ↑f = g →
+                   (∃∃f2. f1 ⋓ f2 ≘ f & ⫯f2 = g2) ∨
+                   ∃∃f2. f1 ⋓ f2 ≘ f & ↑f2 = g2.
 #g1 #g2 elim (pn_split g2) *
 /4 width=7 by sor_inv_npn, sor_inv_nnn, ex2_intro, or_intror, or_introl/
 qed-.
 
 lemma sor_inv_xnn: ∀g1,g2,g. g1 ⋓ g2 ≘ g →
-                   ∀f2,f. ⫯f2 = g2 → ⫯f = g →
-                   (∃∃f1. f1 ⋓ f2 ≘ f & ↑f1 = g1) ∨
-                   ∃∃f1. f1 ⋓ f2 ≘ f & ⫯f1 = g1.
+                   ∀f2,f. ↑f2 = g2 → ↑f = g →
+                   (∃∃f1. f1 ⋓ f2 ≘ f & ⫯f1 = g1) ∨
+                   ∃∃f1. f1 ⋓ f2 ≘ f & ↑f1 = g1.
 #g1 elim (pn_split g1) *
 /4 width=7 by sor_inv_pnn, sor_inv_nnn, ex2_intro, or_intror, or_introl/
 qed-.
 
-lemma sor_inv_xxn: ∀g1,g2,g. g1 ⋓ g2 ≘ g → ∀f. ⫯f = g →
-                   ∨∨ ∃∃f1,f2. f1 ⋓ f2 ≘ f & ⫯f1 = g1 & ↑f2 = g2
-                    | ∃∃f1,f2. f1 ⋓ f2 ≘ f & ↑f1 = g1 & ⫯f2 = g2
-                    | ∃∃f1,f2. f1 ⋓ f2 ≘ f & ⫯f1 = g1 & ⫯f2 = g2.
+lemma sor_inv_xxn: ∀g1,g2,g. g1 ⋓ g2 ≘ g → ∀f. ↑f = g →
+                   ∨∨ ∃∃f1,f2. f1 ⋓ f2 ≘ f & ↑f1 = g1 & ⫯f2 = g2
+                    | ∃∃f1,f2. f1 ⋓ f2 ≘ f & ⫯f1 = g1 & ↑f2 = g2
+                    | ∃∃f1,f2. f1 ⋓ f2 ≘ f & ↑f1 = g1 & ↑f2 = g2.
 #g1 #g2 #g #H #f #H0
 elim (pn_split g1) * #f1 #H1
 [ elim (sor_inv_pxn … H … H1 H0) -g
@@ -209,7 +209,7 @@ qed-.
 
 (* Main inversion lemmas ****************************************************)
 
-corec theorem sor_mono: ∀f1,f2,x,y. f1 ⋓ f2 ≘ x → f1 ⋓ f2 ≘ y → x ≗ y.
+corec theorem sor_mono: ∀f1,f2,x,y. f1 ⋓ f2 ≘ x → f1 ⋓ f2 ≘ y → x ≡ y.
 #f1 #f2 #x #y * -f1 -f2 -x
 #f1 #f2 #f #g1 #g2 #g #Hf #H1 #H2 #H0 #H
 [ cases (sor_inv_ppx … H … H1 H2)
@@ -279,22 +279,22 @@ lemma sor_tl: ∀f1,f2,f. f1 ⋓ f2 ≘ f → ⫱f1 ⋓ ⫱f2 ≘ ⫱f.
 ] -Hf #g #Hg #H destruct //
 qed.
 
-lemma sor_xxn_tl: ∀g1,g2,g. g1 ⋓ g2 ≘ g → ∀f. ⫯f = g →
-                  (∃∃f1,f2. f1 ⋓ f2 ≘ f & ⫯f1 = g1 & ⫱g2 = f2) ∨
-                  (∃∃f1,f2. f1 ⋓ f2 ≘ f & ⫱g1 = f1 & ⫯f2 = g2).
+lemma sor_xxn_tl: ∀g1,g2,g. g1 ⋓ g2 ≘ g → ∀f. ↑f = g →
+                  (∃∃f1,f2. f1 ⋓ f2 ≘ f & ↑f1 = g1 & ⫱g2 = f2) ∨
+                  (∃∃f1,f2. f1 ⋓ f2 ≘ f & ⫱g1 = f1 & ↑f2 = g2).
 #g1 #g2 #g #H #f #H0 elim (sor_inv_xxn … H … H0) -H -H0 *
 /3 width=5 by ex3_2_intro, or_introl, or_intror/
 qed-.
 
-lemma sor_xnx_tl: ∀g1,g2,g. g1 ⋓ g2 ≘ g → ∀f2. ⫯f2 = g2 →
-                  ∃∃f1,f. f1 ⋓ f2 ≘ f & ⫱g1 = f1 & ⫯f = g.
+lemma sor_xnx_tl: ∀g1,g2,g. g1 ⋓ g2 ≘ g → ∀f2. ↑f2 = g2 →
+                  ∃∃f1,f. f1 ⋓ f2 ≘ f & ⫱g1 = f1 & ↑f = g.
 #g1 elim (pn_split g1) * #f1 #H1 #g2 #g #H #f2 #H2
 [ elim (sor_inv_pnx … H … H1 H2) | elim (sor_inv_nnx … H … H1 H2) ] -g2
 /3 width=5 by ex3_2_intro/
 qed-.
 
-lemma sor_nxx_tl: ∀g1,g2,g. g1 ⋓ g2 ≘ g → ∀f1. ⫯f1 = g1 →
-                  ∃∃f2,f. f1 ⋓ f2 ≘ f & ⫱g2 = f2 & ⫯f = g.
+lemma sor_nxx_tl: ∀g1,g2,g. g1 ⋓ g2 ≘ g → ∀f1. ↑f1 = g1 →
+                  ∃∃f2,f. f1 ⋓ f2 ≘ f & ⫱g2 = f2 & ↑f = g.
 #g1 #g2 elim (pn_split g2) * #f2 #H2 #g #H #f1 #H1
 [ elim (sor_inv_npx … H … H1 H2) | elim (sor_inv_nnx … H … H1 H2) ] -g1
 /3 width=5 by ex3_2_intro/
@@ -326,23 +326,23 @@ lemma sor_isid: ∀f1,f2,f. 𝐈⦃f1⦄ → 𝐈⦃f2⦄ → 𝐈⦃f⦄ → f1
 
 (* Inversion lemmas with tail ***********************************************)
 
-lemma sor_inv_tl_sn: ∀f1,f2,f. ⫱f1 ⋓ f2 ≘ f → f1 ⋓ ⫯f2 ≘ ⫯f.
+lemma sor_inv_tl_sn: ∀f1,f2,f. ⫱f1 ⋓ f2 ≘ f → f1 ⋓ ↑f2 ≘ ↑f.
 #f1 #f2 #f elim (pn_split f1) *
 #g1 #H destruct /2 width=7 by sor_pn, sor_nn/
 qed-.
 
-lemma sor_inv_tl_dx: ∀f1,f2,f. f1 ⋓ ⫱f2 ≘ f → ⫯f1 ⋓ f2 ≘ ⫯f.
+lemma sor_inv_tl_dx: ∀f1,f2,f. f1 ⋓ ⫱f2 ≘ f → ↑f1 ⋓ f2 ≘ ↑f.
 #f1 #f2 #f elim (pn_split f2) *
 #g2 #H destruct /2 width=7 by sor_np, sor_nn/
 qed-.
 
 (* Inversion lemmas with test for identity **********************************)
 
-lemma sor_isid_inv_sn: ∀f1,f2,f. f1 ⋓ f2 ≘ f → 𝐈⦃f1⦄ → f2 ≗ f.
+lemma sor_isid_inv_sn: ∀f1,f2,f. f1 ⋓ f2 ≘ f → 𝐈⦃f1⦄ → f2 ≡ f.
 /3 width=4 by sor_isid_sn, sor_mono/
 qed-.
 
-lemma sor_isid_inv_dx: ∀f1,f2,f. f1 ⋓ f2 ≘ f → 𝐈⦃f2⦄ → f1 ≗ f.
+lemma sor_isid_inv_dx: ∀f1,f2,f. f1 ⋓ f2 ≘ f → 𝐈⦃f2⦄ → f1 ≡ f.
 /3 width=4 by sor_isid_dx, sor_mono/
 qed-.
 

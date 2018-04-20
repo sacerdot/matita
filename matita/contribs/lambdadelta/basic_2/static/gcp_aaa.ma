@@ -41,7 +41,7 @@ theorem acr_aaa_csubc_lifts: ∀RR,RS,RP.
   lapply (drops_tls_at … Hf … HY) -Hf -HY #HY
   elim (drops_inv_skip2 … HY) -HY #Z #K0 #HK01 #HZ #H destruct
   elim (liftsb_inv_pair_sn … HZ) -HZ #V0 #HV10 #H destruct
-  elim (lifts_total V0 (𝐔❴⫯j❵)) #V #HV0
+  elim (lifts_total V0 (𝐔❴↑j❵)) #V #HV0
   elim (lsubc_drops_trans_isuni … HL20 … HLK0) -HL20 -HLK0 // #Y #HLK2 #H
   elim (lsubc_inv_bind2 … H) -H *
   [ #K2 #HK20 #H destruct
@@ -52,7 +52,7 @@ theorem acr_aaa_csubc_lifts: ∀RR,RS,RP.
     lapply (drops_isuni_fwd_drop2 … HLK2) // #HLK2b
     lapply (aaa_lifts … HKV1 … HK01 … HV10) -HKV1 -HK01 -HV10 #HKV0A
     lapply (aaa_mono … HKV0B … HKV0A) #H destruct -HKV0B -HKV0A
-    elim (lifts_total V2 (𝐔❴⫯j❵)) #V3 #HV23
+    elim (lifts_total V2 (𝐔❴↑j❵)) #V3 #HV23
     lapply (s5 … HA … G … (◊) … (ⓝW2.V2) (ⓝV.V3) ????)
     [3: |*: /2 width=9 by drops_inv_gen, lifts_flat/ ] -HLK2
     lapply (s7 … HA G L2 (◊)) -HA /3 width=7 by acr_lifts/
@@ -74,7 +74,7 @@ theorem acr_aaa_csubc_lifts: ∀RR,RS,RP.
   elim (drops_lsubc_trans … H1RP … HL32 … HL20) -L2 #L2 #HL32 #HL20
   lapply (aaa_lifts … HW … (f3∘f) L2 … W3 ?) -HW
   [4: |*: /2 width=8 by drops_trans, lifts_trans/ ] #HW3
-  @(IH … ((↑f3)∘↑f) … (L2. ⓛW3)) -IH
+  @(IH … ((⫯f3)∘⫯f) … (L2. ⓛW3)) -IH
   /4 width=12 by lsubc_beta, drops_trans, drops_skip, lifts_trans, ext2_pair/
 | #V #T #HG #HL #HT #A #HA #b #f #L0 #HL01 #X0 #H0 #L2 #HL20 destruct
   elim (aaa_inv_appl … HA) -HA #B #HV #HT

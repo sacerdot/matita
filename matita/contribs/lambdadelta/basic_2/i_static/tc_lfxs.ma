@@ -56,7 +56,7 @@ lemma tc_lfxs_unit: ∀R,f,I,L1,L2. 𝐈⦃f⦄ → L1 ⪤*[cext2 R, cfull, f] L
 /3 width=3 by lfxs_unit, inj/ qed.
 
 lemma tc_lfxs_lref: ∀R,I,L1,L2,V1,V2,i.
-                    L1 ⪤**[R, #i] L2 → L1.ⓑ{I}V1 ⪤**[R, #⫯i] L2.ⓑ{I}V2.
+                    L1 ⪤**[R, #i] L2 → L1.ⓑ{I}V1 ⪤**[R, #↑i] L2.ⓑ{I}V2.
 #R #I #L1 #L2 #V1 #V2 #i #H elim H -L2
 /3 width=4 by lfxs_lref, tc_lfxs_step_dx, inj/
 qed.

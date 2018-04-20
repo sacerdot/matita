@@ -83,7 +83,7 @@ qed-.
 
 (* Inversion lemmas on successor ********************************************)
 
-fact yle_inv_succ1_aux: ∀x,y:ynat. x ≤ y → ∀m. x = ⫯m → m ≤ ⫰y ∧ ⫯⫰y = y.
+fact yle_inv_succ1_aux: ∀x,y:ynat. x ≤ y → ∀m. x = ↑m → m ≤ ↓y ∧ ↑↓y = y.
 #x #y * -x -y
 [ #x #y #Hxy #m #H elim (ysucc_inv_inj_sn … H) -H
   #n #H1 #H2 destruct elim (le_inv_S1 … Hxy) -Hxy
@@ -92,14 +92,14 @@ fact yle_inv_succ1_aux: ∀x,y:ynat. x ≤ y → ∀m. x = ⫯m → m ≤ ⫰y �
 ]
 qed-.
 
-lemma yle_inv_succ1: ∀m,y:ynat. ⫯m ≤ y → m ≤ ⫰y ∧ ⫯⫰y = y.
+lemma yle_inv_succ1: ∀m,y:ynat. ↑m ≤ y → m ≤ ↓y ∧ ↑↓y = y.
 /2 width=3 by yle_inv_succ1_aux/ qed-.
 
-lemma yle_inv_succ: ∀m,n. ⫯m ≤ ⫯n → m ≤ n.
+lemma yle_inv_succ: ∀m,n. ↑m ≤ ↑n → m ≤ n.
 #m #n #H elim (yle_inv_succ1 … H) -H //
 qed-.
 
-lemma yle_inv_succ2: ∀x,y. x ≤ ⫯y → ⫰x ≤ y.
+lemma yle_inv_succ2: ∀x,y. x ≤ ↑y → ↓x ≤ y.
 #x #y #Hxy elim (ynat_cases x)
 [ #H destruct //
 | * #m #H destruct /2 width=1 by yle_inv_succ/
@@ -108,35 +108,35 @@ qed-.
 
 (* Properties on predecessor ************************************************)
 
-lemma yle_pred_sn: ∀m,n. m ≤ n → ⫰m ≤ n.
+lemma yle_pred_sn: ∀m,n. m ≤ n → ↓m ≤ n.
 #m #n * -m -n /3 width=3 by transitive_le, yle_inj/
 qed.
 
-lemma yle_refl_pred_sn: ∀x. ⫰x ≤ x.
+lemma yle_refl_pred_sn: ∀x. ↓x ≤ x.
 /2 width=1 by yle_refl, yle_pred_sn/ qed.
 
-lemma yle_pred: ∀m,n. m ≤ n → ⫰m ≤ ⫰n.
+lemma yle_pred: ∀m,n. m ≤ n → ↓m ≤ ↓n.
 #m #n * -m -n /3 width=1 by yle_inj, monotonic_pred/
 qed.
 
 (* Properties on successor **************************************************)
 
-lemma yle_succ: ∀m,n. m ≤ n → ⫯m ≤ ⫯n.
+lemma yle_succ: ∀m,n. m ≤ n → ↑m ≤ ↑n.
 #m #n * -m -n /3 width=1 by yle_inj, le_S_S/
 qed.
 
-lemma yle_succ_dx: ∀m,n. m ≤ n → m ≤ ⫯n.
+lemma yle_succ_dx: ∀m,n. m ≤ n → m ≤ ↑n.
 #m #n * -m -n /3 width=1 by le_S, yle_inj/
 qed.
 
-lemma yle_refl_S_dx: ∀x. x ≤ ⫯x.
+lemma yle_refl_S_dx: ∀x. x ≤ ↑x.
 /2 width=1 by yle_succ_dx/ qed.
 
-lemma yle_refl_SP_dx: ∀x. x ≤ ⫯⫰x.
+lemma yle_refl_SP_dx: ∀x. x ≤ ↑↓x.
 * // * //
 qed.
 
-lemma yle_succ2: ∀x,y. ⫰x ≤ y → x ≤ ⫯y.
+lemma yle_succ2: ∀x,y. ↓x ≤ y → x ≤ ↑y.
 #x #y #Hxy elim (ynat_cases x)
 [ #H destruct //
 | * #m #H destruct /2 width=1 by yle_succ/

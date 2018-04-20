@@ -92,7 +92,7 @@ lemma lveq_fwd_bind_abst_length_le: ∀I1,I2,L1,L2,V2,n1,n2.
 (* Inversion lemmas with length for local environments **********************)
 
 lemma lveq_inv_void_dx_length: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1, n2] L2.ⓧ → |L1| ≤ |L2| →
-                               ∃∃m2. L1 ≋ ⓧ*[n1, m2] L2 & 0 = n1 & ⫯m2 = n2.
+                               ∃∃m2. L1 ≋ ⓧ*[n1, m2] L2 & 0 = n1 & ↑m2 = n2.
 #L1 #L2 #n1 #n2 #H #HL12
 lapply (lveq_fwd_length_plus … H) normalize >plus_n_Sm #H0
 lapply (plus2_inv_le_sn … H0 HL12) -H0 -HL12 #H0
@@ -101,7 +101,7 @@ elim (lveq_inv_void_succ_dx … H) -H /2 width=3 by ex3_intro/
 qed-.
 
 lemma lveq_inv_void_sn_length: ∀L1,L2,n1,n2. L1.ⓧ ≋ⓧ*[n1, n2] L2 → |L2| ≤ |L1| →
-                               ∃∃m1. L1 ≋ ⓧ*[m1, n2] L2 & ⫯m1 = n1 & 0 = n2.
+                               ∃∃m1. L1 ≋ ⓧ*[m1, n2] L2 & ↑m1 = n1 & 0 = n2.
 #L1 #L2 #n1 #n2 #H #HL
 lapply (lveq_sym … H) -H #H
 elim (lveq_inv_void_dx_length … H HL) -H -HL

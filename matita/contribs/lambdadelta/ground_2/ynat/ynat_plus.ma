@@ -27,7 +27,7 @@ interpretation "ynat plus" 'plus x y = (yplus x y).
 lemma yplus_O2: ∀m:ynat. m + 0 = m.
 // qed.
 
-lemma yplus_S2: ∀m:ynat. ∀n. m + S n = ⫯(m + n).
+lemma yplus_S2: ∀m:ynat. ∀n. m + S n = ↑(m + n).
 // qed.
 
 lemma yplus_Y2: ∀m:ynat. m + (∞) = ∞.
@@ -35,18 +35,18 @@ lemma yplus_Y2: ∀m:ynat. m + (∞) = ∞.
 
 (* Properties on successor **************************************************)
 
-lemma yplus_succ2: ∀m,n. m + ⫯n = ⫯(m + n).
+lemma yplus_succ2: ∀m,n. m + ↑n = ↑(m + n).
 #m * //
 qed.
 
-lemma yplus_succ1: ∀m,n. ⫯m + n = ⫯(m + n).
+lemma yplus_succ1: ∀m,n. ↑m + n = ↑(m + n).
 #m * // #n elim n -n //
 qed.
 
-lemma yplus_succ_swap: ∀m,n. m + ⫯n = ⫯m + n.
+lemma yplus_succ_swap: ∀m,n. m + ↑n = ↑m + n.
 // qed.
 
-lemma yplus_SO2: ∀m. m + 1 = ⫯m.
+lemma yplus_SO2: ∀m. m + 1 = ↑m.
 * //
 qed.
 
@@ -93,12 +93,12 @@ qed.
 
 (* Inversion lemmas on successor *********************************************)
 
-lemma yplus_inv_succ_lt_dx: ∀x,y,z:ynat. 0 < y → x + y = ⫯z → x + ⫰y = z.
+lemma yplus_inv_succ_lt_dx: ∀x,y,z:ynat. 0 < y → x + y = ↑z → x + ↓y = z.
 #x #y #z #H <(ylt_inv_O1 y) // >yplus_succ2
 /2 width=1 by ysucc_inv_inj/
 qed-.
 
-lemma yplus_inv_succ_lt_sn: ∀x,y,z:ynat. 0 < x → x + y = ⫯z → ⫰x + y = z.
+lemma yplus_inv_succ_lt_sn: ∀x,y,z:ynat. 0 < x → x + y = ↑z → ↓x + y = z.
 #x #y #z #H <(ylt_inv_O1 x) // >yplus_succ1
 /2 width=1 by ysucc_inv_inj/
 
@@ -168,13 +168,13 @@ lemma ylt_inv_plus_Y: ∀x,y. x + y < ∞ → x < ∞ ∧ y < ∞.
 #z #H elim (yplus_inv_inj … H) -H /2 width=1 by conj/
 qed-.
 
-lemma ylt_inv_plus_sn: ∀x,y. x < y → ∃∃z. ⫯z + x = y & x < ∞.
+lemma ylt_inv_plus_sn: ∀x,y. x < y → ∃∃z. ↑z + x = y & x < ∞.
 #x #y #H elim (ylt_inv_le … H) -H
 #Hx #H elim (yle_inv_plus_sn … H) -H
 /2 width=2 by ex2_intro/
 qed-.
 
-lemma ylt_inv_plus_dx: ∀x,y. x < y → ∃∃z. x + ⫯z = y & x < ∞.
+lemma ylt_inv_plus_dx: ∀x,y. x < y → ∃∃z. x + ↑z = y & x < ∞.
 #x #y #H elim (ylt_inv_plus_sn … H) -H
 #z >yplus_comm /2 width=2 by ex2_intro/
 qed-.
@@ -302,11 +302,11 @@ qed-.
 
 (* Properties on predeccessor ***********************************************)
 
-lemma yplus_pred1: ∀x,y:ynat. 0 < x → ⫰x + y = ⫰(x+y).
+lemma yplus_pred1: ∀x,y:ynat. 0 < x → ↓x + y = ↓(x+y).
 #x * // #y elim y -y // #y #IH #Hx
 >yplus_S2 >yplus_S2 >IH -IH // >ylt_inv_O1
 /2 width=1 by ylt_plus_dx1_trans/
 qed-.
 
-lemma yplus_pred2: ∀x,y:ynat. 0 < y → x + ⫰y = ⫰(x+y).
+lemma yplus_pred2: ∀x,y:ynat. 0 < y → x + ↓y = ↓(x+y).
 /2 width=1 by yplus_pred1/ qed-.

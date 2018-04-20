@@ -19,7 +19,7 @@ include "basic_2/s_computation/fqup.ma".
 
 (* Properties with generic slicing for local environments *******************)
 
-lemma fqup_drops_succ: ∀b,G,K,T,i,L,U. ⬇*[⫯i] L ≘ K → ⬆*[⫯i] T ≘ U →
+lemma fqup_drops_succ: ∀b,G,K,T,i,L,U. ⬇*[↑i] L ≘ K → ⬆*[↑i] T ≘ U →
                        ⦃G, L, U⦄ ⊐+[b] ⦃G, K, T⦄.
 #b #G #K #T #i elim i -i
 [ #L #U #HLK #HTU elim (drops_inv_succ … HLK) -HLK
@@ -27,7 +27,7 @@ lemma fqup_drops_succ: ∀b,G,K,T,i,L,U. ⬇*[⫯i] L ≘ K → ⬆*[⫯i] T ≘
   /3 width=2 by fqu_fqup, fqu_drop/
 | #l #IH #L #U #HLK #HTU elim (drops_inv_succ … HLK) -HLK
   #I #Y #HY #H destruct
-  elim (lifts_split_trans … HTU … (𝐔❴⫯l❵) (𝐔❴1❵)) -HTU
+  elim (lifts_split_trans … HTU … (𝐔❴↑l❵) (𝐔❴1❵)) -HTU
   /4 width=5 by fqup_strap2, fqu_drop/
 ]
 qed.

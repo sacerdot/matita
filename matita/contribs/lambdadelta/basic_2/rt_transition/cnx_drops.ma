@@ -42,7 +42,7 @@ qed-.
 (* Basic_2A1: was: cnx_inv_delta *)
 lemma cnx_inv_lref_pair: ∀h,o,I,G,L,K,V,i. ⬇*[i] L ≘ K.ⓑ{I}V → ⦃G, L⦄ ⊢ ⬈[h, o] 𝐍⦃#i⦄ → ⊥.
 #h #o #I #G #L #K #V #i #HLK #H
-elim (lifts_total V (𝐔❴⫯i❵)) #W #HVW
+elim (lifts_total V (𝐔❴↑i❵)) #W #HVW
 lapply (H W ?) -H /2 width=7 by cpx_delta_drops/ -HLK
 #H lapply (tdeq_inv_lref1 … H) -H #H destruct
 /2 width=5 by lifts_inv_lref2_uni_lt/

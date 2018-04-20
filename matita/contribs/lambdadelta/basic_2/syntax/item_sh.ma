@@ -33,7 +33,7 @@ lapply (next_lt h ((next h)^n s)) #H
 lapply (le_to_lt_to_lt … IH H) -IH -H /2 width=2 by lt_to_le/
 qed.
 
-lemma nexts_lt: ∀h,s,n. s < (next h)^(⫯n) s.
+lemma nexts_lt: ∀h,s,n. s < (next h)^(↑n) s.
 #h #s #n normalize
 lapply (nexts_le h s n) #H
 @(le_to_lt_to_lt … H) //

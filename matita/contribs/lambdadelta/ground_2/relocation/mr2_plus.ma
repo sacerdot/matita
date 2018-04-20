@@ -26,7 +26,7 @@ interpretation "plus (multiple relocation with pairs)"
 
 (* Basic properties *********************************************************)
 
-lemma pluss_SO2: ∀l,m,cs. ({l, m} @ cs) + 1 = {⫯l, m} @ cs + 1.
+lemma pluss_SO2: ∀l,m,cs. ({l, m} @ cs) + 1 = {↑l, m} @ cs + 1.
 normalize // qed.
 
 (* Basic inversion lemmas ***************************************************)

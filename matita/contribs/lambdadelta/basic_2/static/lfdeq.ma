@@ -106,7 +106,7 @@ lemma lfdeq_unit: ∀h,o,f,I,L1,L2. 𝐈⦃f⦄ → L1 ⪤*[cdeq_ext h o, cfull,
 /2 width=3 by lfxs_unit/ qed.
 *)
 lemma lfdeq_lref: ∀h,o,I1,I2,L1,L2,i.
-                  L1 ≛[h, o, #i] L2 → L1.ⓘ{I1} ≛[h, o, #⫯i] L2.ⓘ{I2}.
+                  L1 ≛[h, o, #i] L2 → L1.ⓘ{I1} ≛[h, o, #↑i] L2.ⓘ{I2}.
 /2 width=1 by lfxs_lref/ qed.
 
 (* Basic_2A1: uses: lleq_gref *)
@@ -138,7 +138,7 @@ lemma lfdeq_inv_zero: ∀h,o,Y1,Y2. Y1 ≛[h, o, #0] Y2 →
 /3 width=9 by or3_intro0, or3_intro1, or3_intro2, ex4_5_intro, ex4_4_intro, conj/
 qed-.
 *)
-lemma lfdeq_inv_lref: ∀h,o,Y1,Y2,i. Y1 ≛[h, o, #⫯i] Y2 →
+lemma lfdeq_inv_lref: ∀h,o,Y1,Y2,i. Y1 ≛[h, o, #↑i] Y2 →
                       (Y1 = ⋆ ∧ Y2 = ⋆) ∨
                       ∃∃I1,I2,L1,L2. L1 ≛[h, o, #i] L2 &
                                      Y1 = L1.ⓘ{I1} & Y2 = L2.ⓘ{I2}.
@@ -164,11 +164,11 @@ lemma lfdeq_inv_zero_pair_dx: ∀h,o,I,Y1,L2,V2. Y1 ≛[h, o, #0] L2.ⓑ{I}V2 �
                               ∃∃L1,V1. L1 ≛[h, o, V1] L2 & V1 ≛[h, o] V2 & Y1 = L1.ⓑ{I}V1.
 /2 width=1 by lfxs_inv_zero_pair_dx/ qed-.
 
-lemma lfdeq_inv_lref_bind_sn: ∀h,o,I1,Y2,L1,i. L1.ⓘ{I1} ≛[h, o, #⫯i] Y2 →
+lemma lfdeq_inv_lref_bind_sn: ∀h,o,I1,Y2,L1,i. L1.ⓘ{I1} ≛[h, o, #↑i] Y2 →
                               ∃∃I2,L2. L1 ≛[h, o, #i] L2 & Y2 = L2.ⓘ{I2}.
 /2 width=2 by lfxs_inv_lref_bind_sn/ qed-.
 
-lemma lfdeq_inv_lref_bind_dx: ∀h,o,I2,Y1,L2,i. Y1 ≛[h, o, #⫯i] L2.ⓘ{I2} →
+lemma lfdeq_inv_lref_bind_dx: ∀h,o,I2,Y1,L2,i. Y1 ≛[h, o, #↑i] L2.ⓘ{I2} →
                               ∃∃I1,L1. L1 ≛[h, o, #i] L2 & Y1 = L1.ⓘ{I1}.
 /2 width=2 by lfxs_inv_lref_bind_dx/ qed-.
 

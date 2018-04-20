@@ -20,7 +20,7 @@ include "ground_2/relocation/rtmap_coafter.ma".
 rec definition fun0 (n1:nat) on n1: rtmap → nat.
 * * [ | #n2 #f2 @0 ]
 #f2 cases n1 -n1 [ @0 ]
-#n1 @(⫯(fun0 n1 f2))
+#n1 @(↑(fun0 n1 f2))
 defined.
 
 rec definition fun2 (n1:nat) on n1: rtmap → rtmap.
@@ -45,15 +45,15 @@ interpretation "functional co-composition (nstream)"
 (* Basic properties on funs *************************************************)
 
 (* Note: we need theese since matita blocks recursive δ when ι is blocked *)  
-lemma fun0_xn: ∀f2,n1. 0 = fun0 n1 (⫯f2).
+lemma fun0_xn: ∀f2,n1. 0 = fun0 n1 (↑f2).
 * #n2 #f2 * //
 qed.
 
-lemma fun2_xn: ∀f2,n1. f2 = fun2 n1 (⫯f2).
+lemma fun2_xn: ∀f2,n1. f2 = fun2 n1 (↑f2).
 * #n2 #f2 * //
 qed.
 
-lemma fun1_xxn: ∀f2,f1,n1. fun1 n1 f1 (⫯f2) = n1@f1.
+lemma fun1_xxn: ∀f2,f1,n1. fun1 n1 f1 (↑f2) = n1@f1.
 * #n2 #f2 #f1 * //
 qed.
 
@@ -65,22 +65,22 @@ qed.
 
 (* Basic inversion lemmas on compose ****************************************)
 
-lemma cocompose_inv_ppx: ∀f2,f1,f,x. (↑f2) ~∘ (↑f1) = x@f →
+lemma cocompose_inv_ppx: ∀f2,f1,f,x. (⫯f2) ~∘ (⫯f1) = x@f →
                          0 = x ∧ f2 ~∘ f1 = f.
 #f2 #f1 #f #x
 <cocompose_rew #H destruct
 normalize /2 width=1 by conj/
 qed-.
 
-lemma cocompose_inv_pnx: ∀f2,f1,f,n1,x. (↑f2) ~∘ ((⫯n1)@f1) = x@f →
-                         ∃∃n. ⫯n = x & f2 ~∘ (n1@f1) = n@f.
+lemma cocompose_inv_pnx: ∀f2,f1,f,n1,x. (⫯f2) ~∘ ((↑n1)@f1) = x@f →
+                         ∃∃n. ↑n = x & f2 ~∘ (n1@f1) = n@f.
 #f2 #f1 #f #n1 #x
 <cocompose_rew #H destruct
 @(ex2_intro … (fun0 n1 f2)) // <cocompose_rew
 /3 width=1 by eq_f2/
 qed-.
 
-lemma cocompose_inv_nxx: ∀f2,f1,f,n1,x. (⫯f2) ~∘ (n1@f1) = x@f →
+lemma cocompose_inv_nxx: ∀f2,f1,f,n1,x. (↑f2) ~∘ (n1@f1) = x@f →
                          0 = x ∧ f2 ~∘ (n1@f1) = f.
 #f2 #f1 #f #n1 #x
 <cocompose_rew #H destruct

@@ -18,9 +18,9 @@ include "ground_2/relocation/rtmap_uni.ma".
 (* RELOCATION MAP ***********************************************************)
 
 coinductive at: rtmap → relation nat ≝
-| at_refl: ∀f,g,j1,j2. ↑f = g → 0 = j1 → 0 = j2 → at g j1 j2 
-| at_push: ∀f,i1,i2. at f i1 i2 → ∀g,j1,j2. ↑f = g → ⫯i1 = j1 → ⫯i2 = j2 → at g j1 j2
-| at_next: ∀f,i1,i2. at f i1 i2 → ∀g,j2. ⫯f = g → ⫯i2 = j2 → at g i1 j2
+| at_refl: ∀f,g,j1,j2. ⫯f = g → 0 = j1 → 0 = j2 → at g j1 j2 
+| at_push: ∀f,i1,i2. at f i1 i2 → ∀g,j1,j2. ⫯f = g → ↑i1 = j1 → ↑i2 = j2 → at g j1 j2
+| at_next: ∀f,i1,i2. at f i1 i2 → ∀g,j2. ↑f = g → ↑i2 = j2 → at g i1 j2
 .
 
 interpretation "relational application (rtmap)"
@@ -32,15 +32,15 @@ definition H_at_div: relation4 rtmap rtmap rtmap rtmap ≝ λf2,g2,f1,g1.
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma at_inv_ppx: ∀f,i1,i2. @⦃i1, f⦄ ≘ i2 → ∀g. 0 = i1 → ↑g = f → 0 = i2.
+lemma at_inv_ppx: ∀f,i1,i2. @⦃i1, f⦄ ≘ i2 → ∀g. 0 = i1 → ⫯g = f → 0 = i2.
 #f #i1 #i2 * -f -i1 -i2 //
 [ #f #i1 #i2 #_ #g #j1 #j2 #_ * #_ #x #H destruct
 | #f #i1 #i2 #_ #g #j2 * #_ #x #_ #H elim (discr_push_next … H)
 ]
 qed-.
 
-lemma at_inv_npx: ∀f,i1,i2. @⦃i1, f⦄ ≘ i2 → ∀g,j1. ⫯j1 = i1 → ↑g = f →
-                  ∃∃j2. @⦃j1, g⦄ ≘ j2 & ⫯j2 = i2.
+lemma at_inv_npx: ∀f,i1,i2. @⦃i1, f⦄ ≘ i2 → ∀g,j1. ↑j1 = i1 → ⫯g = f →
+                  ∃∃j2. @⦃j1, g⦄ ≘ j2 & ↑j2 = i2.
 #f #i1 #i2 * -f -i1 -i2
 [ #f #g #j1 #j2 #_ * #_ #x #x1 #H destruct
 | #f #i1 #i2 #Hi #g #j1 #j2 * * * #x #x1 #H #Hf >(injective_push … Hf) -g destruct /2 width=3 by ex2_intro/
@@ -48,8 +48,8 @@ lemma at_inv_npx: ∀f,i1,i2. @⦃i1, f⦄ ≘ i2 → ∀g,j1. ⫯j1 = i1 → �
 ]
 qed-.
 
-lemma at_inv_xnx: ∀f,i1,i2. @⦃i1, f⦄ ≘ i2 → ∀g. ⫯g = f →
-                  ∃∃j2. @⦃i1, g⦄ ≘ j2 & ⫯j2 = i2.
+lemma at_inv_xnx: ∀f,i1,i2. @⦃i1, f⦄ ≘ i2 → ∀g. ↑g = f →
+                  ∃∃j2. @⦃i1, g⦄ ≘ j2 & ↑j2 = i2.
 #f #i1 #i2 * -f -i1 -i2
 [ #f #g #j1 #j2 * #_ #_ #x #H elim (discr_next_push … H)
 | #f #i1 #i2 #_ #g #j1 #j2 * #_ #_ #x #H elim (discr_next_push … H)
@@ -60,42 +60,42 @@ qed-.
 (* Advanced inversion lemmas ************************************************)
 
 lemma at_inv_ppn: ∀f,i1,i2. @⦃i1, f⦄ ≘ i2 →
-                  ∀g,j2. 0 = i1 → ↑g = f → ⫯j2 = i2 → ⊥.
+                  ∀g,j2. 0 = i1 → ⫯g = f → ↑j2 = i2 → ⊥.
 #f #i1 #i2 #Hf #g #j2 #H1 #H <(at_inv_ppx … Hf … H1 H) -f -g -i1 -i2
 #H destruct
 qed-.
 
 lemma at_inv_npp: ∀f,i1,i2. @⦃i1, f⦄ ≘ i2 →
-                  ∀g,j1. ⫯j1 = i1 → ↑g = f → 0 = i2 → ⊥.
+                  ∀g,j1. ↑j1 = i1 → ⫯g = f → 0 = i2 → ⊥.
 #f #i1 #i2 #Hf #g #j1 #H1 #H elim (at_inv_npx … Hf … H1 H) -f -i1
 #x2 #Hg * -i2 #H destruct
 qed-.
 
 lemma at_inv_npn: ∀f,i1,i2. @⦃i1, f⦄ ≘ i2 →
-                  ∀g,j1,j2. ⫯j1 = i1 → ↑g = f → ⫯j2 = i2 → @⦃j1, g⦄ ≘ j2.
+                  ∀g,j1,j2. ↑j1 = i1 → ⫯g = f → ↑j2 = i2 → @⦃j1, g⦄ ≘ j2.
 #f #i1 #i2 #Hf #g #j1 #j2 #H1 #H elim (at_inv_npx … Hf … H1 H) -f -i1
 #x2 #Hg * -i2 #H destruct //
 qed-.
 
 lemma at_inv_xnp: ∀f,i1,i2. @⦃i1, f⦄ ≘ i2 →
-                  ∀g. ⫯g = f → 0 = i2 → ⊥.
+                  ∀g. ↑g = f → 0 = i2 → ⊥.
 #f #i1 #i2 #Hf #g #H elim (at_inv_xnx … Hf … H) -f
 #x2 #Hg * -i2 #H destruct
 qed-.
 
 lemma at_inv_xnn: ∀f,i1,i2. @⦃i1, f⦄ ≘ i2 →
-                  ∀g,j2. ⫯g = f → ⫯j2 = i2 → @⦃i1, g⦄ ≘ j2.
+                  ∀g,j2. ↑g = f → ↑j2 = i2 → @⦃i1, g⦄ ≘ j2.
 #f #i1 #i2 #Hf #g #j2 #H elim (at_inv_xnx … Hf … H) -f
 #x2 #Hg * -i2 #H destruct //
 qed-.
 
-lemma at_inv_pxp: ∀f,i1,i2. @⦃i1, f⦄ ≘ i2 → 0 = i1 → 0 = i2 → ∃g. ↑g = f.
+lemma at_inv_pxp: ∀f,i1,i2. @⦃i1, f⦄ ≘ i2 → 0 = i1 → 0 = i2 → ∃g. ⫯g = f.
 #f elim (pn_split … f) * /2 width=2 by ex_intro/
 #g #H #i1 #i2 #Hf #H1 #H2 cases (at_inv_xnp … Hf … H H2)
 qed-.
 
-lemma at_inv_pxn: ∀f,i1,i2. @⦃i1, f⦄ ≘ i2 → ∀j2. 0 = i1 → ⫯j2 = i2 →
-                  ∃∃g. @⦃i1, g⦄ ≘ j2 & ⫯g = f.
+lemma at_inv_pxn: ∀f,i1,i2. @⦃i1, f⦄ ≘ i2 → ∀j2. 0 = i1 → ↑j2 = i2 →
+                  ∃∃g. @⦃i1, g⦄ ≘ j2 & ↑g = f.
 #f elim (pn_split … f) *
 #g #H #i1 #i2 #Hf #j2 #H1 #H2
 [ elim (at_inv_ppn … Hf … H1 H H2)
@@ -104,7 +104,7 @@ lemma at_inv_pxn: ∀f,i1,i2. @⦃i1, f⦄ ≘ i2 → ∀j2. 0 = i1 → ⫯j2 = 
 qed-.
 
 lemma at_inv_nxp: ∀f,i1,i2. @⦃i1, f⦄ ≘ i2 →
-                  ∀j1. ⫯j1 = i1 → 0 = i2 → ⊥.
+                  ∀j1. ↑j1 = i1 → 0 = i2 → ⊥.
 #f elim (pn_split f) *
 #g #H #i1 #i2 #Hf #j1 #H1 #H2
 [ elim (at_inv_npp … Hf … H1 H H2)
@@ -112,30 +112,30 @@ lemma at_inv_nxp: ∀f,i1,i2. @⦃i1, f⦄ ≘ i2 →
 ]
 qed-.
 
-lemma at_inv_nxn: ∀f,i1,i2. @⦃i1, f⦄ ≘ i2 → ∀j1,j2. ⫯j1 = i1 → ⫯j2 = i2 →
-                  (∃∃g. @⦃j1, g⦄ ≘ j2 & ↑g = f) ∨
-                  ∃∃g. @⦃i1, g⦄ ≘ j2 & ⫯g = f.
+lemma at_inv_nxn: ∀f,i1,i2. @⦃i1, f⦄ ≘ i2 → ∀j1,j2. ↑j1 = i1 → ↑j2 = i2 →
+                  (∃∃g. @⦃j1, g⦄ ≘ j2 & ⫯g = f) ∨
+                  ∃∃g. @⦃i1, g⦄ ≘ j2 & ↑g = f.
 #f elim (pn_split f) *
 /4 width=7 by at_inv_xnn, at_inv_npn, ex2_intro, or_intror, or_introl/
 qed-.
 
 (* Note: the following inversion lemmas must be checked *)
-lemma at_inv_xpx: ∀f,i1,i2. @⦃i1, f⦄ ≘ i2 → ∀g. ↑g = f →
+lemma at_inv_xpx: ∀f,i1,i2. @⦃i1, f⦄ ≘ i2 → ∀g. ⫯g = f →
                   (0 = i1 ∧ 0 = i2) ∨
-                  ∃∃j1,j2. @⦃j1, g⦄ ≘ j2 & ⫯j1 = i1 & ⫯j2 = i2.
+                  ∃∃j1,j2. @⦃j1, g⦄ ≘ j2 & ↑j1 = i1 & ↑j2 = i2.
 #f * [2: #i1 ] #i2 #Hf #g #H
 [ elim (at_inv_npx … Hf … H) -f /3 width=5 by or_intror, ex3_2_intro/
 | >(at_inv_ppx … Hf … H) -f /3 width=1 by conj, or_introl/
 ]
 qed-.
 
-lemma at_inv_xpp: ∀f,i1,i2. @⦃i1, f⦄ ≘ i2 → ∀g. ↑g = f → 0 = i2 → 0 = i1.
+lemma at_inv_xpp: ∀f,i1,i2. @⦃i1, f⦄ ≘ i2 → ∀g. ⫯g = f → 0 = i2 → 0 = i1.
 #f #i1 #i2 #Hf #g #H elim (at_inv_xpx … Hf … H) -f * //
 #j1 #j2 #_ #_ * -i2 #H destruct
 qed-.
 
-lemma at_inv_xpn: ∀f,i1,i2. @⦃i1, f⦄ ≘ i2 → ∀g,j2. ↑g = f → ⫯j2 = i2 →
-                  ∃∃j1. @⦃j1, g⦄ ≘ j2 & ⫯j1 = i1.
+lemma at_inv_xpn: ∀f,i1,i2. @⦃i1, f⦄ ≘ i2 → ∀g,j2. ⫯g = f → ↑j2 = i2 →
+                  ∃∃j1. @⦃j1, g⦄ ≘ j2 & ↑j1 = i1.
 #f #i1 #i2 #Hf #g #j2 #H elim (at_inv_xpx … Hf … H) -f *
 [ #_ * -i2 #H destruct
 | #x1 #x2 #Hg #H1 * -i2 #H destruct /2 width=3 by ex2_intro/
@@ -143,7 +143,7 @@ lemma at_inv_xpn: ∀f,i1,i2. @⦃i1, f⦄ ≘ i2 → ∀g,j2. ↑g = f → ⫯j
 qed-.
 
 lemma at_inv_xxp: ∀f,i1,i2. @⦃i1, f⦄ ≘ i2 → 0 = i2 →
-                  ∃∃g. 0 = i1 & ↑g = f.
+                  ∃∃g. 0 = i1 & ⫯g = f.
 #f elim (pn_split f) *
 #g #H #i1 #i2 #Hf #H2
 [ /3 width=6 by at_inv_xpp, ex2_intro/
@@ -151,9 +151,9 @@ lemma at_inv_xxp: ∀f,i1,i2. @⦃i1, f⦄ ≘ i2 → 0 = i2 →
 ]
 qed-.
 
-lemma at_inv_xxn: ∀f,i1,i2. @⦃i1, f⦄ ≘ i2 → ∀j2.  ⫯j2 = i2 →
-                  (∃∃g,j1. @⦃j1, g⦄ ≘ j2 & ⫯j1 = i1 & ↑g = f) ∨
-                  ∃∃g. @⦃i1, g⦄ ≘ j2 & ⫯g = f.
+lemma at_inv_xxn: ∀f,i1,i2. @⦃i1, f⦄ ≘ i2 → ∀j2.  ↑j2 = i2 →
+                  (∃∃g,j1. @⦃j1, g⦄ ≘ j2 & ↑j1 = i1 & ⫯g = f) ∨
+                  ∃∃g. @⦃i1, g⦄ ≘ j2 & ↑g = f.
 #f elim (pn_split f) *
 #g #H #i1 #i2 #Hf #j2 #H2
 [ elim (at_inv_xpn … Hf … H H2) -i2 /3 width=5 by or_introl, ex3_2_intro/
@@ -172,13 +172,13 @@ lemma at_increasing: ∀i2,i1,f. @⦃i1, f⦄ ≘ i2 → i1 ≤ i2.
 ]
 qed-.
 
-lemma at_increasing_strict: ∀g,i1,i2. @⦃i1, g⦄ ≘ i2 → ∀f. ⫯f = g →
-                            i1 < i2 ∧ @⦃i1, f⦄ ≘ ⫰i2.
+lemma at_increasing_strict: ∀g,i1,i2. @⦃i1, g⦄ ≘ i2 → ∀f. ↑f = g →
+                            i1 < i2 ∧ @⦃i1, f⦄ ≘ ↓i2.
 #g #i1 #i2 #Hg #f #H elim (at_inv_xnx … Hg … H) -Hg -H
 /4 width=2 by conj, at_increasing, le_S_S/
 qed-.
 
-lemma at_fwd_id_ex: ∀f,i. @⦃i, f⦄ ≘ i → ∃g. ↑g = f.
+lemma at_fwd_id_ex: ∀f,i. @⦃i, f⦄ ≘ i → ∃g. ⫯g = f.
 #f elim (pn_split f) * /2 width=2 by ex_intro/
 #g #H #i #Hf elim (at_inv_xnx … Hf … H) -Hf -H
 #j2 #Hg #H destruct lapply (at_increasing … Hg) -Hg
@@ -278,7 +278,7 @@ elim (IH … Hf Hg) -IH -j /2 width=3 by ex2_intro/
 qed-.
 
 theorem at_div_pp: ∀f2,g2,f1,g1.
-                   H_at_div f2 g2 f1 g1 → H_at_div (↑f2) (↑g2) (↑f1) (↑g1).
+                   H_at_div f2 g2 f1 g1 → H_at_div (⫯f2) (⫯g2) (⫯f1) (⫯g1).
 #f2 #g2 #f1 #g1 #IH #jf #jg #j #Hf #Hg
 elim (at_inv_xpx … Hf) -Hf [1,2: * |*: // ]
 [ #H1 #H2 destruct -IH
@@ -291,7 +291,7 @@ elim (at_inv_xpx … Hf) -Hf [1,2: * |*: // ]
 qed-.
 
 theorem at_div_nn: ∀f2,g2,f1,g1.
-                   H_at_div f2 g2 f1 g1 → H_at_div (⫯f2) (⫯g2) (f1) (g1).
+                   H_at_div f2 g2 f1 g1 → H_at_div (↑f2) (↑g2) (f1) (g1).
 #f2 #g2 #f1 #g1 #IH #jf #jg #j #Hf #Hg
 elim (at_inv_xnx … Hf) -Hf [ |*: // ] #i #Hf2 #H destruct
 lapply (at_inv_xnn … Hg ????) -Hg [5: |*: // ] #Hg2
@@ -299,7 +299,7 @@ elim (IH … Hf2 Hg2) -IH -i /2 width=3 by ex2_intro/
 qed-.
 
 theorem at_div_np: ∀f2,g2,f1,g1.
-                   H_at_div f2 g2 f1 g1 → H_at_div (⫯f2) (↑g2) (f1) (⫯g1).
+                   H_at_div f2 g2 f1 g1 → H_at_div (↑f2) (⫯g2) (f1) (↑g1).
 #f2 #g2 #f1 #g1 #IH #jf #jg #j #Hf #Hg
 elim (at_inv_xnx … Hf) -Hf [ |*: // ] #i #Hf2 #H destruct
 lapply (at_inv_xpn … Hg ????) -Hg [5: * |*: // ] #xg #Hg2 #H destruct
@@ -307,7 +307,7 @@ elim (IH … Hf2 Hg2) -IH -i /3 width=7 by at_next, ex2_intro/
 qed-.
 
 theorem at_div_pn: ∀f2,g2,f1,g1.
-                   H_at_div f2 g2 f1 g1 → H_at_div (↑f2) (⫯g2) (⫯f1) (g1).
+                   H_at_div f2 g2 f1 g1 → H_at_div (⫯f2) (↑g2) (↑f1) (g1).
 /4 width=6 by at_div_np, at_div_comm/ qed-.
 
 (* Properties on tls ********************************************************)
@@ -319,7 +319,7 @@ cases (at_inv_pxn … Hf) -Hf [ |*: // ] #g #Hg #H0 destruct
 <tls_xn /2 width=1 by/
 qed.
 
-lemma at_tls: ∀i2,f. ↑⫱*[⫯i2]f ≗ ⫱*[i2]f → ∃i1. @⦃i1, f⦄ ≘ i2.
+lemma at_tls: ∀i2,f. ⫯⫱*[↑i2]f ≡ ⫱*[i2]f → ∃i1. @⦃i1, f⦄ ≘ i2.
 #i2 elim i2 -i2
 [ /4 width=4 by at_eq_repl_back, at_refl, ex_intro/
 | #i2 #IH #f <tls_xn <tls_xn in ⊢ (??%→?); #H
@@ -330,8 +330,8 @@ qed-.
 
 (* Inversion lemmas with tls ************************************************)
 
-lemma at_inv_nxx: ∀n,g,i1,j2. @⦃⫯i1, g⦄ ≘ j2 → @⦃0, g⦄ ≘ n →
-                  ∃∃i2. @⦃i1, ⫱*[⫯n]g⦄ ≘ i2 & ⫯(n+i2) = j2.
+lemma at_inv_nxx: ∀n,g,i1,j2. @⦃↑i1, g⦄ ≘ j2 → @⦃0, g⦄ ≘ n →
+                  ∃∃i2. @⦃i1, ⫱*[↑n]g⦄ ≘ i2 & ↑(n+i2) = j2.
 #n elim n -n
 [ #g #i1 #j2 #Hg #H
   elim (at_inv_pxp … H) -H [ |*: // ] #f #H0
@@ -345,7 +345,7 @@ lemma at_inv_nxx: ∀n,g,i1,j2. @⦃⫯i1, g⦄ ≘ j2 → @⦃0, g⦄ ≘ n →
 ]
 qed-.
 
-lemma at_inv_tls: ∀i2,i1,f. @⦃i1, f⦄ ≘ i2 → ↑⫱*[⫯i2]f ≗ ⫱*[i2]f.
+lemma at_inv_tls: ∀i2,i1,f. @⦃i1, f⦄ ≘ i2 → ⫯⫱*[↑i2]f ≡ ⫱*[i2]f.
 #i2 elim i2 -i2
 [ #i1 #f #Hf elim (at_inv_xxp … Hf) -Hf // #g #H1 #H destruct
   /2 width=1 by eq_refl/
@@ -378,7 +378,7 @@ qed-.
 
 (* Advanced properties on id ************************************************)
 
-lemma id_inv_at: ∀f. (∀i. @⦃i, f⦄ ≘ i) → 𝐈𝐝 ≗ f.
+lemma id_inv_at: ∀f. (∀i. @⦃i, f⦄ ≘ i) → 𝐈𝐝 ≡ f.
 /3 width=1 by isid_at, eq_id_inv_isid/ qed-.
 
 lemma id_at: ∀i. @⦃i, 𝐈𝐝⦄ ≘ i.

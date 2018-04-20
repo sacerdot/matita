@@ -19,8 +19,8 @@ include "ground_2/relocation/rtmap_isid.ma".
 
 inductive fcla: relation2 rtmap nat ≝
 | fcla_isid: ∀f. 𝐈⦃f⦄ → fcla f 0
-| fcla_push: ∀f,n. fcla f n → fcla (↑f) n
-| fcla_next: ∀f,n. fcla f n → fcla (⫯f) (⫯n)
+| fcla_push: ∀f,n. fcla f n → fcla (⫯f) n
+| fcla_next: ∀f,n. fcla f n → fcla (↑f) (↑n)
 .
 
 interpretation "finite colength assignment (rtmap)"
@@ -28,13 +28,13 @@ interpretation "finite colength assignment (rtmap)"
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma fcla_inv_px: ∀g,m. 𝐂⦃g⦄ ≘ m → ∀f. ↑f = g → 𝐂⦃f⦄ ≘ m.
+lemma fcla_inv_px: ∀g,m. 𝐂⦃g⦄ ≘ m → ∀f. ⫯f = g → 𝐂⦃f⦄ ≘ m.
 #g #m * -g -m /3 width=3 by fcla_isid, isid_inv_push/
 #g #m #_ #f #H elim (discr_push_next … H)
 qed-.
 
-lemma fcla_inv_nx: ∀g,m. 𝐂⦃g⦄ ≘ m → ∀f. ⫯f = g →
-                   ∃∃n. 𝐂⦃f⦄ ≘ n & ⫯n = m.
+lemma fcla_inv_nx: ∀g,m. 𝐂⦃g⦄ ≘ m → ∀f. ↑f = g →
+                   ∃∃n. 𝐂⦃f⦄ ≘ n & ↑n = m.
 #g #m * -g -m /2 width=3 by ex2_intro/
 [ #g #Hg #f #H elim (isid_inv_next …  H) -H //
 | #g #m #_ #f #H elim (discr_next_push … H)
@@ -43,12 +43,12 @@ qed-.
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma cla_inv_nn: ∀g,m. 𝐂⦃g⦄ ≘ m → ∀f,n. ⫯f = g → ⫯n = m → 𝐂⦃f⦄ ≘ n.
+lemma cla_inv_nn: ∀g,m. 𝐂⦃g⦄ ≘ m → ∀f,n. ↑f = g → ↑n = m → 𝐂⦃f⦄ ≘ n.
 #g #m #H #f #n #H1 #H2 elim (fcla_inv_nx … H … H1) -g
 #x #Hf #H destruct //
 qed-.
 
-lemma cla_inv_np: ∀g,m. 𝐂⦃g⦄ ≘ m → ∀f. ⫯f = g → 0 = m → ⊥.
+lemma cla_inv_np: ∀g,m. 𝐂⦃g⦄ ≘ m → ∀f. ↑f = g → 0 = m → ⊥.
 #g #m #H #f #H1 elim (fcla_inv_nx … H … H1) -g
 #x #_ #H1 #H2 destruct
 qed-.

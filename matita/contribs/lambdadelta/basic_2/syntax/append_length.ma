@@ -24,14 +24,14 @@ lemma append_length: ∀L1,L2. |L1 @@ L2| = |L1| + |L2|.
 #L2 #I >append_bind >length_bind >length_bind //
 qed.
 
-lemma ltail_length: ∀I,L. |ⓘ{I}.L| = ⫯|L|.
+lemma ltail_length: ∀I,L. |ⓘ{I}.L| = ↑|L|.
 #I #L >append_length //
 qed.
 
 (* Advanced inversion lemmas on length for local environments ***************)
 
 (* Basic_2A1: was: length_inv_pos_dx_ltail *)
-lemma length_inv_succ_dx_ltail: ∀L,n. |L| = ⫯n →
+lemma length_inv_succ_dx_ltail: ∀L,n. |L| = ↑n →
                                 ∃∃I,K. |K| = n & L = ⓘ{I}.K.
 #Y #n #H elim (length_inv_succ_dx … H) -H #I #L #Hn #HLK destruct
 elim (lenv_case_tail … L) [2: * #K #J ]
@@ -39,7 +39,7 @@ elim (lenv_case_tail … L) [2: * #K #J ]
 qed-.
 
 (* Basic_2A1: was: length_inv_pos_sn_ltail *)
-lemma length_inv_succ_sn_ltail: ∀L,n. ⫯n = |L| →
+lemma length_inv_succ_sn_ltail: ∀L,n. ↑n = |L| →
                                 ∃∃I,K. n = |K| & L = ⓘ{I}.K.
 #Y #n #H elim (length_inv_succ_sn … H) -H #I #L #Hn #HLK destruct
 elim (lenv_case_tail … L) [2: * #K #J ]

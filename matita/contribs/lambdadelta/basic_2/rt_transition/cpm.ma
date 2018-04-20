@@ -42,13 +42,13 @@ lemma cpm_delta: ∀n,h,G,K,V1,V2,W2. ⦃G, K⦄ ⊢ V1 ➡[n, h] V2 →
 qed.
 
 lemma cpm_ell: ∀n,h,G,K,V1,V2,W2. ⦃G, K⦄ ⊢ V1 ➡[n, h] V2 →
-               ⬆*[1] V2 ≘ W2 → ⦃G, K.ⓛV1⦄ ⊢ #0 ➡[⫯n, h] W2.
+               ⬆*[1] V2 ≘ W2 → ⦃G, K.ⓛV1⦄ ⊢ #0 ➡[↑n, h] W2.
 #n #h #G #K #V1 #V2 #W2 *
 /3 width=5 by cpg_ell, ex2_intro, isrt_succ/
 qed.
 
 lemma cpm_lref: ∀n,h,I,G,K,T,U,i. ⦃G, K⦄ ⊢ #i ➡[n, h] T →
-                ⬆*[1] T ≘ U → ⦃G, K.ⓘ{I}⦄ ⊢ #⫯i ➡[n, h] U.
+                ⬆*[1] T ≘ U → ⦃G, K.ⓘ{I}⦄ ⊢ #↑i ➡[n, h] U.
 #n #h #I #G #K #T #U #i *
 /3 width=5 by cpg_lref, ex2_intro/
 qed.
@@ -88,7 +88,7 @@ lemma cpm_eps: ∀n,h,G,L,V,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[n, h] T2 → ⦃G, L⦄
 /3 width=3 by cpg_eps, isrt_plus_O2, ex2_intro/
 qed.
 
-lemma cpm_ee: ∀n,h,G,L,V1,V2,T. ⦃G, L⦄ ⊢ V1 ➡[n, h] V2 → ⦃G, L⦄ ⊢ ⓝV1.T ➡[⫯n, h] V2.
+lemma cpm_ee: ∀n,h,G,L,V1,V2,T. ⦃G, L⦄ ⊢ V1 ➡[n, h] V2 → ⦃G, L⦄ ⊢ ⓝV1.T ➡[↑n, h] V2.
 #n #h #G #L #V1 #V2 #T *
 /3 width=3 by cpg_ee, isrt_succ, ex2_intro/
 qed.
@@ -125,9 +125,9 @@ lemma cpm_inv_atom1: ∀n,h,J,G,L,T2. ⦃G, L⦄ ⊢ ⓪{J} ➡[n, h] T2 →
                       | ∃∃K,V1,V2. ⦃G, K⦄ ⊢ V1 ➡[n, h] V2 & ⬆*[1] V2 ≘ T2 &
                                    L = K.ⓓV1 & J = LRef 0
                       | ∃∃k,K,V1,V2. ⦃G, K⦄ ⊢ V1 ➡[k, h] V2 & ⬆*[1] V2 ≘ T2 &
-                                     L = K.ⓛV1 & J = LRef 0 & n = ⫯k
+                                     L = K.ⓛV1 & J = LRef 0 & n = ↑k
                       | ∃∃I,K,T,i. ⦃G, K⦄ ⊢ #i ➡[n, h] T & ⬆*[1] T ≘ T2 &
-                                   L = K.ⓘ{I} & J = LRef (⫯i).
+                                   L = K.ⓘ{I} & J = LRef (↑i).
 #n #h #J #G #L #T2 * #c #Hc #H elim (cpg_inv_atom1 … H) -H *
 [ #H1 #H2 destruct /4 width=1 by isrt_inv_00, or5_intro0, conj/
 | #s #H1 #H2 #H3 destruct /4 width=3 by isrt_inv_01, or5_intro1, ex3_intro/
@@ -154,7 +154,7 @@ lemma cpm_inv_zero1: ∀n,h,G,L,T2. ⦃G, L⦄ ⊢ #0 ➡[n, h] T2 →
                       | ∃∃K,V1,V2. ⦃G, K⦄ ⊢ V1 ➡[n, h] V2 & ⬆*[1] V2 ≘ T2 &
                                    L = K.ⓓV1
                       | ∃∃k,K,V1,V2. ⦃G, K⦄ ⊢ V1 ➡[k, h] V2 & ⬆*[1] V2 ≘ T2 &
-                                     L = K.ⓛV1 & n = ⫯k.
+                                     L = K.ⓛV1 & n = ↑k.
 #n #h #G #L #T2 * #c #Hc #H elim (cpg_inv_zero1 … H) -H *
 [ #H1 #H2 destruct /4 width=1 by isrt_inv_00, or3_intro0, conj/
 | #cV #K #V1 #V2 #HV12 #HVT2 #H1 #H2 destruct
@@ -165,8 +165,8 @@ lemma cpm_inv_zero1: ∀n,h,G,L,T2. ⦃G, L⦄ ⊢ #0 ➡[n, h] T2 →
 ]
 qed-.
 
-lemma cpm_inv_lref1: ∀n,h,G,L,T2,i. ⦃G, L⦄ ⊢ #⫯i ➡[n, h] T2 →
-                     ∨∨ T2 = #(⫯i) ∧ n = 0
+lemma cpm_inv_lref1: ∀n,h,G,L,T2,i. ⦃G, L⦄ ⊢ #↑i ➡[n, h] T2 →
+                     ∨∨ T2 = #(↑i) ∧ n = 0
                       | ∃∃I,K,T. ⦃G, K⦄ ⊢ #i ➡[n, h] T & ⬆*[1] T ≘ T2 & L = K.ⓘ{I}.
 #n #h #G #L #T2 #i * #c #Hc #H elim (cpg_inv_lref1 … H) -H *
 [ #H1 #H2 destruct /4 width=1 by isrt_inv_00, or_introl, conj/
@@ -261,7 +261,7 @@ lemma cpm_inv_cast1: ∀n,h,G,L,V1,U1,U2. ⦃G, L⦄ ⊢ ⓝV1.U1 ➡[n, h] U2 �
                      ∨∨ ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡[n, h] V2 & ⦃G, L⦄ ⊢ U1 ➡[n, h] T2 &
                                  U2 = ⓝV2.T2
                       | ⦃G, L⦄ ⊢ U1 ➡[n, h] U2
-                      | ∃∃k. ⦃G, L⦄ ⊢ V1 ➡[k, h] U2 & n = ⫯k.
+                      | ∃∃k. ⦃G, L⦄ ⊢ V1 ➡[k, h] U2 & n = ↑k.
 #n #h #G #L #V1 #U1 #U2 * #c #Hc #H elim (cpg_inv_cast1 … H) -H *
 [ #cV #cT #V2 #T2 #HV12 #HT12 #HcVT #H1 #H2 destruct
   elim (isrt_inv_max … Hc) -Hc #nV #nT #HcV #HcT #H destruct

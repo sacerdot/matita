@@ -17,17 +17,17 @@ include "ground_2/relocation/rtmap_eq.ma".
 
 (* RELOCATION N-STREAM ******************************************************)
 
-corec definition id: rtmap ≝ ↑id.
+corec definition id: rtmap ≝ ⫯id.
 
 interpretation "identity (nstream)"
    'Identity = (id).
 
 (* Basic properties *********************************************************)
 
-lemma id_rew: ↑𝐈𝐝 = 𝐈𝐝.
+lemma id_rew: ⫯𝐈𝐝 = 𝐈𝐝.
 <(stream_rew … (𝐈𝐝)) in ⊢ (???%); normalize //
 qed.
 
-lemma id_eq_rew: ↑𝐈𝐝 ≗ 𝐈𝐝.
+lemma id_eq_rew: ⫯𝐈𝐝 ≡ 𝐈𝐝.
 cases id_rew in ⊢ (??%); //
 qed.

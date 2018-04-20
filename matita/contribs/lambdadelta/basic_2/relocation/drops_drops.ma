@@ -60,7 +60,7 @@ theorem drops_trans: ∀b1,f1,L1,L. ⬇*[b1, f1] L1 ≘ L →
 qed-.
 
 theorem drops_conf_div: ∀f1,L,K. ⬇*[Ⓣ,f1] L ≘ K → ∀f2. ⬇*[Ⓣ,f2] L ≘ K →
-                        𝐔⦃f1⦄ → 𝐔⦃f2⦄ → f1 ≗ f2.
+                        𝐔⦃f1⦄ → 𝐔⦃f2⦄ → f1 ≡ f2.
 #f1 #L #K #H elim H -f1 -L -K
 [ #f1 #Hf1 #f2 #Hf2 elim (drops_inv_atom1 … Hf2) -Hf2
   /3 width=1 by isid_inv_eq_repl/
@@ -94,7 +94,7 @@ qed-.
 (* Basic_2A1: includes: drop_conf_lt *)
 lemma drops_conf_skip1: ∀b2,f,L,L2. ⬇*[b2, f] L ≘ L2 →
                         ∀b1,f1,I1,K1. ⬇*[b1, f1] L ≘ K1.ⓘ{I1} →
-                        ∀f2. f1 ⊚ ↑f2 ≘ f →
+                        ∀f2. f1 ⊚ ⫯f2 ≘ f →
                         ∃∃I2,K2. L2 = K2.ⓘ{I2} &
                                  ⬇*[b2, f2] K1 ≘ K2 & ⬆*[f2] I2 ≘ I1.
 #b2 #f #L #L2 #H2 #b1 #f1 #I1 #K1 #H1 #f2 #Hf lapply (drops_conf … H1 … H2 … Hf) -L -Hf
@@ -104,7 +104,7 @@ qed-.
 (* Basic_2A1: includes: drop_trans_lt *)
 lemma drops_trans_skip2: ∀b1,f1,L1,L. ⬇*[b1, f1] L1 ≘ L →
                          ∀b2,f2,I2,K2. ⬇*[b2, f2] L ≘ K2.ⓘ{I2} →
-                         ∀f. f1 ⊚ f2 ≘ ↑f →
+                         ∀f. f1 ⊚ f2 ≘ ⫯f →
                          ∃∃I1,K1. L1 = K1.ⓘ{I1} &
                                   ⬇*[b1∧b2, f] K1 ≘ K2 & ⬆*[f] I2 ≘ I1.
 #b1 #f1 #L1 #L #H1 #b2 #f2 #I2 #K2 #H2 #f #Hf
@@ -115,7 +115,7 @@ qed-.
 (* Basic_2A1: includes: drops_conf_div *)
 lemma drops_conf_div_bind: ∀f1,f2,I1,I2,L,K.
                            ⬇*[Ⓣ, f1] L ≘ K.ⓘ{I1} → ⬇*[Ⓣ, f2] L ≘ K.ⓘ{I2} →
-                           𝐔⦃f1⦄ → 𝐔⦃f2⦄ → f1 ≗ f2 ∧ I1 = I2.
+                           𝐔⦃f1⦄ → 𝐔⦃f2⦄ → f1 ≡ f2 ∧ I1 = I2.
 #f1 #f2 #I1 #I2 #L #K #Hf1 #Hf2 #HU1 #HU2
 lapply (drops_isuni_fwd_drop2 … Hf1) // #H1
 lapply (drops_isuni_fwd_drop2 … Hf2) // #H2

@@ -28,22 +28,22 @@ interpretation "tls (rtmap)" 'DropPreds n f = (tls f n).
 lemma tls_O: ∀f. f = ⫱*[0] f.
 // qed.
 
-lemma tls_S: ∀f,n. ⫱ ⫱*[n] f = ⫱*[⫯n] f.
+lemma tls_S: ∀f,n. ⫱ ⫱*[n] f = ⫱*[↑n] f.
 // qed.
 
-lemma tls_eq_repl: ∀n. eq_repl (λf1,f2. ⫱*[n] f1 ≗ ⫱*[n] f2).
+lemma tls_eq_repl: ∀n. eq_repl (λf1,f2. ⫱*[n] f1 ≡ ⫱*[n] f2).
 #n elim n -n /3 width=1 by tl_eq_repl/
 qed.
 
 (* Advanced properties ******************************************************)
 
-lemma tls_xn: ∀n,f. ⫱*[n] ⫱f = ⫱*[⫯n] f.
+lemma tls_xn: ∀n,f. ⫱*[n] ⫱f = ⫱*[↑n] f.
 #n elim n -n //
 qed.
 
 (* Properties with pushs ****************************************************)
 
-lemma tls_pushs: ∀n,f. f = ⫱*[n] ↑*[n] f.
+lemma tls_pushs: ∀n,f. f = ⫱*[n] ⫯*[n] f.
 #n elim n -n //
 #n #IH #f <tls_xn //
 qed.

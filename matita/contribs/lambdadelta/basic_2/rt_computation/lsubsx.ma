@@ -22,11 +22,11 @@ include "basic_2/rt_computation/lfsx.ma".
 inductive lsubsx (h) (o) (G): rtmap → relation lenv ≝
 | lsubsx_atom: ∀f. lsubsx h o G f (⋆) (⋆)
 | lsubsx_push: ∀f,I,K1,K2. lsubsx h o G f K1 K2 →
-               lsubsx h o G (↑f) (K1.ⓘ{I}) (K2.ⓘ{I})
+               lsubsx h o G (⫯f) (K1.ⓘ{I}) (K2.ⓘ{I})
 | lsubsx_unit: ∀f,I,K1,K2. lsubsx h o G f K1 K2 →
-               lsubsx h o G (⫯f) (K1.ⓤ{I}) (K2.ⓧ)
+               lsubsx h o G (↑f) (K1.ⓤ{I}) (K2.ⓧ)
 | lsubsx_pair: ∀f,I,K1,K2,V. G ⊢ ⬈*[h, o, V] 𝐒⦃K2⦄ →
-               lsubsx h o G f K1 K2 → lsubsx h o G (⫯f) (K1.ⓑ{I}V) (K2.ⓧ)
+               lsubsx h o G f K1 K2 → lsubsx h o G (↑f) (K1.ⓑ{I}V) (K2.ⓧ)
 .
 
 interpretation
@@ -48,7 +48,7 @@ lemma lsubsx_inv_atom_sn: ∀h,o,g,G,L2. G ⊢ ⋆ ⊆ⓧ[h, o, g] L2 → L2 = �
 /2 width=7 by lsubsx_inv_atom_sn_aux/ qed-.
 
 fact lsubsx_inv_push_sn_aux: ∀h,o,g,G,L1,L2. G ⊢ L1 ⊆ⓧ[h, o, g] L2 →
-                             ∀f,I,K1. g = ↑f → L1 = K1.ⓘ{I} →
+                             ∀f,I,K1. g = ⫯f → L1 = K1.ⓘ{I} →
                              ∃∃K2. G ⊢ K1 ⊆ⓧ[h, o, f] K2 & L2 = K2.ⓘ{I}.
 #h #o #g #G #L1 #L2 * -g -L1 -L2
 [ #f #g #J #L1 #_ #H destruct
@@ -61,12 +61,12 @@ fact lsubsx_inv_push_sn_aux: ∀h,o,g,G,L1,L2. G ⊢ L1 ⊆ⓧ[h, o, g] L2 →
 ]
 qed-.
 
-lemma lsubsx_inv_push_sn: ∀h,o,f,I,G,K1,L2. G ⊢ K1.ⓘ{I} ⊆ⓧ[h, o, ↑f] L2 →
+lemma lsubsx_inv_push_sn: ∀h,o,f,I,G,K1,L2. G ⊢ K1.ⓘ{I} ⊆ⓧ[h, o, ⫯f] L2 →
                           ∃∃K2. G ⊢ K1 ⊆ⓧ[h, o, f] K2 & L2 = K2.ⓘ{I}.
 /2 width=5 by lsubsx_inv_push_sn_aux/ qed-.
 
 fact lsubsx_inv_unit_sn_aux: ∀h,o,g,G,L1,L2. G ⊢ L1 ⊆ⓧ[h, o, g] L2 →
-                             ∀f,I,K1. g = ⫯f → L1 = K1.ⓤ{I} →
+                             ∀f,I,K1. g = ↑f → L1 = K1.ⓤ{I} →
                              ∃∃K2. G ⊢ K1 ⊆ⓧ[h, o, f] K2 & L2 = K2.ⓧ.
 #h #o #g #G #L1 #L2 * -g -L1 -L2
 [ #f #g #J #L1 #_ #H destruct
@@ -78,12 +78,12 @@ fact lsubsx_inv_unit_sn_aux: ∀h,o,g,G,L1,L2. G ⊢ L1 ⊆ⓧ[h, o, g] L2 →
 ]
 qed-.
 
-lemma lsubsx_inv_unit_sn: ∀h,o,f,I,G,K1,L2. G ⊢ K1.ⓤ{I} ⊆ⓧ[h, o, ⫯f] L2 →
+lemma lsubsx_inv_unit_sn: ∀h,o,f,I,G,K1,L2. G ⊢ K1.ⓤ{I} ⊆ⓧ[h, o, ↑f] L2 →
                           ∃∃K2. G ⊢ K1 ⊆ⓧ[h, o, f] K2 & L2 = K2.ⓧ.
 /2 width=6 by lsubsx_inv_unit_sn_aux/ qed-.
 
 fact lsubsx_inv_pair_sn_aux: ∀h,o,g,G,L1,L2. G ⊢ L1 ⊆ⓧ[h, o, g] L2 →
-                             ∀f,I,K1,V. g = ⫯f → L1 = K1.ⓑ{I}V →
+                             ∀f,I,K1,V. g = ↑f → L1 = K1.ⓑ{I}V →
                              ∃∃K2. G ⊢ ⬈*[h, o, V] 𝐒⦃K2⦄ &
                                    G ⊢ K1 ⊆ⓧ[h, o, f] K2 & L2 = K2.ⓧ.
 #h #o #g #G #L1 #L2 * -g -L1 -L2
@@ -97,7 +97,7 @@ fact lsubsx_inv_pair_sn_aux: ∀h,o,g,G,L1,L2. G ⊢ L1 ⊆ⓧ[h, o, g] L2 →
 qed-.
 
 (* Basic_2A1: uses: lcosx_inv_pair *)
-lemma lsubsx_inv_pair_sn: ∀h,o,f,I,G,K1,L2,V. G ⊢ K1.ⓑ{I}V ⊆ⓧ[h, o, ⫯f] L2 →
+lemma lsubsx_inv_pair_sn: ∀h,o,f,I,G,K1,L2,V. G ⊢ K1.ⓑ{I}V ⊆ⓧ[h, o, ↑f] L2 →
                           ∃∃K2. G ⊢ ⬈*[h, o, V] 𝐒⦃K2⦄ &
                                 G ⊢ K1 ⊆ⓧ[h, o, f] K2 & L2 = K2.ⓧ.
 /2 width=6 by lsubsx_inv_pair_sn_aux/ qed-.
@@ -105,9 +105,9 @@ lemma lsubsx_inv_pair_sn: ∀h,o,f,I,G,K1,L2,V. G ⊢ K1.ⓑ{I}V ⊆ⓧ[h, o, �
 (* Advanced inversion lemmas ************************************************)
 
 lemma lsubsx_inv_pair_sn_gen: ∀h,o,g,I,G,K1,L2,V. G ⊢ K1.ⓑ{I}V ⊆ⓧ[h, o, g] L2 →
-                              ∨∨ ∃∃f,K2. G ⊢ K1 ⊆ⓧ[h, o, f] K2 & g = ↑f & L2 = K2.ⓑ{I}V
+                              ∨∨ ∃∃f,K2. G ⊢ K1 ⊆ⓧ[h, o, f] K2 & g = ⫯f & L2 = K2.ⓑ{I}V
                                | ∃∃f,K2. G ⊢ ⬈*[h, o, V] 𝐒⦃K2⦄ &
-                                         G ⊢ K1 ⊆ⓧ[h, o, f] K2 & g = ⫯f & L2 = K2.ⓧ.
+                                         G ⊢ K1 ⊆ⓧ[h, o, f] K2 & g = ↑f & L2 = K2.ⓧ.
 #h #o #g #I #G #K1 #L2 #V #H
 elim (pn_split g) * #f #Hf destruct
 [ elim (lsubsx_inv_push_sn … H) -H /3 width=5 by ex3_2_intro, or_introl/

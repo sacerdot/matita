@@ -23,7 +23,7 @@ include "basic_2/syntax/genv.ma".
 inductive aaa: relation4 genv lenv term aarity ≝
 | aaa_sort: ∀G,L,s. aaa G L (⋆s) (⓪)
 | aaa_zero: ∀I,G,L,V,B. aaa G L V B → aaa G (L.ⓑ{I}V) (#0) B
-| aaa_lref: ∀I,G,L,A,i. aaa G L (#i) A → aaa G (L.ⓘ{I}) (#⫯i) A
+| aaa_lref: ∀I,G,L,A,i. aaa G L (#i) A → aaa G (L.ⓘ{I}) (#↑i) A
 | aaa_abbr: ∀p,G,L,V,T,B,A.
             aaa G L V B → aaa G (L.ⓓV) T A → aaa G L (ⓓ{p}V.T) A
 | aaa_abst: ∀p,G,L,V,T,B,A.
@@ -67,7 +67,7 @@ lemma aaa_inv_zero: ∀G,L,A. ⦃G, L⦄ ⊢ #0 ⁝ A →
                     ∃∃I,K,V. L = K.ⓑ{I}V & ⦃G, K⦄ ⊢ V ⁝ A.
 /2 width=3 by aaa_inv_zero_aux/ qed-.
 
-fact aaa_inv_lref_aux: ∀G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ∀i. T = #(⫯i) →
+fact aaa_inv_lref_aux: ∀G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ∀i. T = #(↑i) →
                        ∃∃I,K. L = K.ⓘ{I} & ⦃G, K⦄ ⊢ #i ⁝ A.
 #G #L #T #A * -G -L -T -A
 [ #G #L #s #j #H destruct
@@ -80,7 +80,7 @@ fact aaa_inv_lref_aux: ∀G,L,T,A. ⦃G, L⦄ ⊢ T ⁝ A → ∀i. T = #(⫯i) 
 ]
 qed-.
 
-lemma aaa_inv_lref: ∀G,L,A,i. ⦃G, L⦄ ⊢ #⫯i ⁝ A →
+lemma aaa_inv_lref: ∀G,L,A,i. ⦃G, L⦄ ⊢ #↑i ⁝ A →
                     ∃∃I,K. L = K.ⓘ{I} & ⦃G, K⦄ ⊢ #i ⁝ A.
 /2 width=3 by aaa_inv_lref_aux/ qed-.
 
