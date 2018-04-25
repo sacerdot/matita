@@ -55,7 +55,7 @@ table {
              [ "stream ( ? @ ? )" "stream_eq ( ? ≗ ? )" "stream_hdtl ( ⫰? )" "stream_tls ( ⫰*[?]? )" * ]
              [ "list ( ◊ ) ( ? @ ? ) ( |?| )" "list2 ( ◊ ) ( {?,?} @ ? ) ( ? @@ ? ) ( |?| )" * ]
              [ "bool ( Ⓕ ) ( Ⓣ )" "arith ( ?^? ) ( ↑? ) ( ↓? ) ( ? ∨ ? ) ( ? ∧ ? )" * ]
-             [ "relations ( ? ⊆ ? )" "star" "lstar" * ]
+             [ "logic ( ⊥ ) ( ⊤ )" "relations ( ? ⊆ ? )" "functions" "star" "ltc" * ]
           }
         ]
      }
@@ -63,7 +63,7 @@ table {
    class "orange"
    [ { "generated logical decomposables" * } {
         [ { "" * } {
-             [ "xoa ( ∃∃ ) ( ∨∨ ) ( ∧∧ )" "xoa_props ( ⊥ ) ( ⊤ )" * ]
+             [ "xoa ( ∃∃ ) ( ∨∨ ) ( ∧∧ )" * ]
           }
         ]
      }

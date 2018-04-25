@@ -1,0 +1,22 @@
+include "ground_2/lib/lstar.ma".
+
+(* Basic_2A1: was: d_liftable_llstar *)
+lemma d2_liftable_sn_llstar: ∀C,S,R. d_liftable2_sn C S R → ∀d. d_liftable2_sn C S (llstar … R d).
+#C #S #R #HR #d #K #T1 #T2 #H @(lstar_ind_r … d T2 H) -d -T2
+[ #b #f #L #_ #U1 #HTU1 -HR -b -K /2 width=3 by ex2_intro/
+| #l #T #T2 #_ #HT2 #IHT1 #b #f #L #HLK #U1 #HTU1
+  elim (IHT1 … HLK … HTU1) -T1 #U #HTU #HU1
+  elim (HR … HT2 … HLK … HTU) -T /3 width=5 by lstar_dx, ex2_intro/
+]
+qed-.
+
+(* Basic_2A1: was: d_deliftable_sn_llstar *)
+lemma d2_deliftable_sn_llstar: ∀C,S,R. d_deliftable2_sn C S R →
+                               ∀d. d_deliftable2_sn C S (llstar … R d).
+#C #S #R #HR #l #L #U1 #U2 #H @(lstar_ind_r … l U2 H) -l -U2
+[ /2 width=3 by lstar_O, ex2_intro/
+| #l #U #U2 #_ #HU2 #IHU1 #b #f #K #HLK #T1 #HTU1
+  elim (IHU1 … HLK … HTU1) -IHU1 -U1 #T #HTU #HT1
+  elim (HR … HU2 … HLK … HTU) -HR -L -U /3 width=5 by lstar_dx, ex2_intro/
+]
+qed-.

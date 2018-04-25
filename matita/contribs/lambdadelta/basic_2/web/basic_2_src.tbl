@@ -201,7 +201,7 @@ table {
    class "orange"
    [ { "relocation" * } {
         [ { "generic slicing" * } {
-             [ [ "for lenvs" ] "drops" + "( ⬇*[?,?] ? ≘ ? )" + "( ⬇*[?] ? ≘ ? )" "drops_lstar" + "drops_weight" + "drops_length" + "drops_cext2" + "drops_lexs" + "drops_lreq" + "drops_drops" + "drops_vector" * ]
+             [ [ "for lenvs" ] "drops" + "( ⬇*[?,?] ? ≘ ? )" + "( ⬇*[?] ? ≘ ? )" "drops_ctc" + "drops_weight" + "drops_length" + "drops_cext2" + "drops_lexs" + "drops_lreq" + "drops_drops" + "drops_vector" * ]
           }
         ]
         [ { "generic relocation" * } {

@@ -12,9 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "arithmetics/lstar.ma".
+include "basics/logic.ma".
+include "ground_2/notation/xoa/false_0.ma".
+include "ground_2/notation/xoa/true_0.ma".
+include "ground_2/notation/xoa/or_2.ma".
+include "ground_2/notation/xoa/and_2.ma".
+include "ground_2/xoa/xoa.ma".
 
-(* PROPERTIES OF NAT-LABELED REFLEXIVE AND TRANSITIVE CLOSURE ***************)
+interpretation "logical false" 'false = False.
 
-definition llstar: ∀A:Type[0]. ∀B. (A→relation B) → nat → (A→relation B) ≝
-                   λA,B,R,l,a. lstar … (R a) l.
+interpretation "logical true" 'true = True.
+
+(* Logical properties missing in the basic library **************************)
+
+lemma commutative_and: ∀A,B. A ∧ B → B ∧ A.
+#A #B * /2 width=1 by conj/
+qed-.

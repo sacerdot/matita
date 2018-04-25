@@ -13,9 +13,12 @@
 (**************************************************************************)
 
 include "basics/relations.ma".
-include "ground_2/xoa/xoa_props.ma".
+include "ground_2/lib/logic.ma".
 
 (* GENERIC RELATIONS ********************************************************)
+
+lemma insert_eq: ∀A,a. ∀Q1,Q2:predicate A. (∀a0. Q1 a0 → a = a0 → Q2 a0) → Q1 a → Q2 a.
+/2 width=1 by/ qed-.
 
 (* Inclusion ****************************************************************)
 

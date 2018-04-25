@@ -12,19 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basics/logic.ma".
-include "ground_2/notation/xoa/false_0.ma".
-include "ground_2/notation/xoa/true_0.ma".
-include "ground_2/notation/xoa/or_2.ma".
-include "ground_2/notation/xoa/and_2.ma".
-include "ground_2/xoa/xoa.ma".
+include "ground_2/lib/relations.ma".
 
-interpretation "logical false" 'false = False.
+(* FUNCTIONS ****************************************************************)
 
-interpretation "logical true" 'true = True.
+definition left_identity (A:Type[0]) (f): predicate A ≝ λi. ∀a:A. a = f i a.
 
-(* Logical properties missing in the basic library **************************) 
-
-lemma commutative_and: ∀A,B. A ∧ B → B ∧ A.
-#A #B * /2 width=1 by conj/
-qed-.
+definition right_identity (A:Type[0]) (f): predicate A ≝ λi. ∀a:A. a = f a i.
