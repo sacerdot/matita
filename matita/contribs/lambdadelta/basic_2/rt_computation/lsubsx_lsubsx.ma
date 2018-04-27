@@ -14,7 +14,7 @@
 
 include "basic_2/rt_computation/lsubsx.ma".
 
-(* CLEAR OF STRONGLY NORMALIZING ENTRIES FOR UNCOUNTED RT-TRANSITION ********)
+(* CLEAR OF STRONGLY NORMALIZING ENTRIES FOR UNBOUND RT-TRANSITION **********)
 
 (* Main properties **********************************************************)
 

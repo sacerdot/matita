@@ -17,7 +17,7 @@ include "basic_2/rt_computation/fpbs_fqup.ma".
 
 (* PARALLEL RST-COMPUTATION FOR CLOSURES ************************************)
 
-(* Properties with uncounted context-sensitive parallel rt-computation ******)
+(* Properties with unbound context-sensitive parallel rt-computation ********)
 
 lemma cpxs_fpbs: ∀h,o,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬈*[h] T2 → ⦃G, L, T1⦄ ≥[h, o] ⦃G, L, T2⦄.
 #h #o #G #L #T1 #T2 #H @(cpxs_ind … H) -T2

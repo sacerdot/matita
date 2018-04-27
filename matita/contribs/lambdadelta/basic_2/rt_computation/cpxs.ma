@@ -16,12 +16,12 @@ include "ground_2/lib/star.ma".
 include "basic_2/notation/relations/predtystar_5.ma".
 include "basic_2/rt_transition/cpx.ma".
 
-(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS ************)
+(* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS **************)
 
 definition cpxs: sh → relation4 genv lenv term term ≝
                  λh,G. CTC … (cpx h G).
 
-interpretation "uncounted context-sensitive parallel rt-computation (term)"
+interpretation "unbound context-sensitive parallel rt-computation (term)"
    'PRedTyStar h G L T1 T2 = (cpxs h G L T1 T2).
 
 (* Basic eliminators ********************************************************)

@@ -16,13 +16,13 @@ include "basic_2/notation/relations/predtystrong_5.ma".
 include "basic_2/syntax/tdeq.ma".
 include "basic_2/rt_transition/cpx.ma".
 
-(* STRONGLY NORMALIZING TERMS FOR UNCOUNTED PARALLEL RT-TRANSITION **********)
+(* STRONGLY NORMALIZING TERMS FOR UNBOUND PARALLEL RT-TRANSITION ************)
 
 definition csx: ∀h. sd h → relation3 genv lenv term ≝
                 λh,o,G,L. SN … (cpx h G L) (tdeq h o …).
 
 interpretation
-   "strong normalization for uncounted context-sensitive parallel rt-transition (term)"
+   "strong normalization for unbound context-sensitive parallel rt-transition (term)"
    'PRedTyStrong h o G L T = (csx h o G L T).
 
 (* Basic eliminators ********************************************************)

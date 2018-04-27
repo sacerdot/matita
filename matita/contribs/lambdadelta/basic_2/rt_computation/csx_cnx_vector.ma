@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* STRONGLY NORMALIZING TERM VECTORS FOR UNCOUNTED PARALLEL RT-TRANSITION ***)
+(* STRONGLY NORMALIZING TERM VECTORS FOR UNBOUND PARALLEL RT-TRANSITION *****)
 
 include "basic_2/rt_computation/cpxs_theq_vector.ma".
 include "basic_2/rt_computation/csx_simple_theq.ma".
@@ -20,7 +20,7 @@ include "basic_2/rt_computation/csx_cnx.ma".
 include "basic_2/rt_computation/csx_cpxs.ma".
 include "basic_2/rt_computation/csx_vector.ma".
 
-(* Properties with normal terms for uncounted parallel rt-transition ********)
+(* Properties with normal terms for unbound parallel rt-transition **********)
 
 (* Basic_1: was just: sn3_appls_lref *)
 lemma csx_applv_cnx: ∀h,o,G,L,T. 𝐒⦃T⦄ → ⦃G, L⦄ ⊢ ⬈[h, o] 𝐍⦃T⦄ →

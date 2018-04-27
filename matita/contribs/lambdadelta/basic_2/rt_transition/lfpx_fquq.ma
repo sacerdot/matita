@@ -16,7 +16,7 @@ include "basic_2/rt_transition/lfpx_drops.ma".
 include "basic_2/rt_transition/lfpx_fsle.ma".
 include "basic_2/s_transition/fquq.ma".
 
-(* UNCOUNTED PARALLEL RT-TRANSITION FOR LOCAL ENV.S ON REFERRED ENTRIES *****)
+(* UNBOUND PARALLEL RT-TRANSITION FOR LOCAL ENV.S ON REFERRED ENTRIES *******)
 
 (* Properties with extended structural successor for closures ***************)
 

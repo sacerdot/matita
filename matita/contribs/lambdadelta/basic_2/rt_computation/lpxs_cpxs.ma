@@ -15,9 +15,9 @@
 include "basic_2/rt_computation/lfpxs_cpxs.ma".
 include "basic_2/rt_computation/lfpxs_lpxs.ma".
 
-(* UNCOUNTED PARALLEL RT-COMPUTATION FOR LOCAL ENVIRONMENTS *****************)
+(* UNBOUND PARALLEL RT-COMPUTATION FOR LOCAL ENVIRONMENTS *******************)
 
-(* Properties with uncounted context-sensitive rt-computation for terms *****)
+(* Properties with unbound context-sensitive rt-computation for terms *******)
 
 lemma lpxs_cpx_trans: ∀h,G. s_r_transitive … (cpx h G) (λ_.lpxs h G).
 /3 width=3 by lfpxs_cpx_trans, lfpxs_lpxs/ qed-.

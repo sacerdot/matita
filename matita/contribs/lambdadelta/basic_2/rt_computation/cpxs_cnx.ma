@@ -15,7 +15,7 @@
 include "basic_2/rt_transition/cnx_cnx.ma".
 include "basic_2/rt_computation/cpxs.ma".
 
-(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS ************)
+(* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS **************)
 
 (* Inversion lemmas with normal terms ***************************************)
 

@@ -17,7 +17,7 @@ include "basic_2/rt_computation/csx_fqus.ma".
 include "basic_2/rt_computation/csx_ffdeq.ma".
 include "basic_2/rt_computation/csx_lfpx.ma".
 
-(* STRONGLY NORMALIZING TERMS FOR UNCOUNTED PARALLEL RT-TRANSITION **********)
+(* STRONGLY NORMALIZING TERMS FOR UNBOUND PARALLEL RT-TRANSITION ************)
 
 (* Properties with parallel rst-transition for closures *********************)
 

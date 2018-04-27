@@ -15,9 +15,9 @@
 include "basic_2/rt_transition/lfpx_aaa.ma".
 include "basic_2/rt_computation/lfpxs.ma".
 
-(* UNCOUNTED PARALLEL RT-COMPUTATION FOR LOCAL ENV.S ON REFERRED ENTRIES ****)
+(* UNBOUND PARALLEL RT-COMPUTATION FOR LOCAL ENV.S ON REFERRED ENTRIES ******)
 
-(* Properties with atomic arity assignment on terms **************************)
+(* Properties with atomic arity assignment on terms *************************)
 
 (* Basic_2A1: uses: lpxs_aaa_conf *) 
 lemma lfpxs_aaa_conf: ∀h,G,T. Conf3 … (λL. aaa G L T) (lfpxs h G T).

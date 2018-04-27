@@ -15,7 +15,7 @@
 include "basic_2/rt_transition/cpx_lsubr.ma".
 include "basic_2/rt_computation/csx_csx.ma".
 
-(* STRONGLY NORMALIZING TERMS FOR UNCOUNTED PARALLEL RT-TRANSITION **********)
+(* STRONGLY NORMALIZING TERMS FOR UNBOUND PARALLEL RT-TRANSITION ************)
 
 (* Advanced properties ******************************************************)
 

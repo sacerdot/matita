@@ -16,7 +16,7 @@ include "basic_2/static/ffdeq.ma".
 include "basic_2/rt_transition/cpx_lfdeq.ma".
 include "basic_2/rt_transition/lfpx_lfdeq.ma".
 
-(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS *************)
+(* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS ***************)
 
 (* Properties with degree-based equivalence for closures ********************)
 

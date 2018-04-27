@@ -17,9 +17,9 @@ include "basic_2/rt_transition/lfpx_fquq.ma".
 include "basic_2/rt_computation/cpxs_drops.ma".
 include "basic_2/rt_computation/cpxs_cpxs.ma".
 
-(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS ************)
+(* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS **************)
 
-(* Properties with uncounted parallel rt-transition on referred entries *****)
+(* Properties with unbound parallel rt-transition on referred entries *******)
 
 lemma lfpx_cpxs_conf: ∀h,G. s_r_confluent1 … (cpxs h G) (lfpx h G).
 /3 width=5 by lfpx_cpx_conf, s_r_conf1_CTC1/ qed-.

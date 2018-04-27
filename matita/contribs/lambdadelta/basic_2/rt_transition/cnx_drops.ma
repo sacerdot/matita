@@ -16,7 +16,7 @@ include "basic_2/relocation/lifts_tdeq.ma".
 include "basic_2/rt_transition/cpx_drops.ma".
 include "basic_2/rt_transition/cnx.ma".
 
-(* NORMAL TERMS FOR UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION ******)
+(* NORMAL TERMS FOR UNBOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION ********)
 
 (* Properties with generic slicing ******************************************)
 

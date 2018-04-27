@@ -15,7 +15,7 @@
 include "basic_2/static/ffdeq.ma".
 include "basic_2/rt_computation/lfpxs_lfdeq.ma".
 
-(* UNCOUNTED PARALLEL RT-COMPUTATION FOR LOCAL ENV.S ON REFERRED ENTRIES ****)
+(* UNBOUND PARALLEL RT-COMPUTATION FOR LOCAL ENV.S ON REFERRED ENTRIES ******)
 
 (* Properties with degree-based equivalence on closures *********************)
 

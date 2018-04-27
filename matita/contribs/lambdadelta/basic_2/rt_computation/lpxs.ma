@@ -16,13 +16,13 @@ include "basic_2/notation/relations/predtysnstar_4.ma".
 include "basic_2/relocation/lex.ma".
 include "basic_2/rt_computation/cpxs_ext.ma".
 
-(* UNCOUNTED PARALLEL RT-COMPUTATION FOR LOCAL ENVIRONMENTS *****************)
+(* UNBOUND PARALLEL RT-COMPUTATION FOR LOCAL ENVIRONMENTS *******************)
 
 definition lpxs: ∀h. relation3 genv lenv lenv ≝
                  λh,G. lex (cpxs h G).
 
 interpretation
-   "uncounted parallel rt-computation (local environment)"
+   "unbound parallel rt-computation (local environment)"
    'PRedTySnStar h G L1 L2 = (lpxs h G L1 L2).
 
 (* Basic properties *********************************************************)

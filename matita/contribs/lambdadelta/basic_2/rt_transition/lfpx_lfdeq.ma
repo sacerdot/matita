@@ -16,7 +16,7 @@ include "basic_2/static/lfdeq_fqup.ma".
 include "basic_2/static/lfdeq_lfdeq.ma".
 include "basic_2/rt_transition/lfpx_fsle.ma".
 
-(* UNCOUNTED PARALLEL RT-TRANSITION FOR LOCAL ENV.S ON REFERRED ENTRIES *****)
+(* UNBOUND PARALLEL RT-TRANSITION FOR LOCAL ENV.S ON REFERRED ENTRIES *******)
 
 (* Properties with degree-based equivalence for local environments **********)
 

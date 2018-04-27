@@ -15,9 +15,9 @@
 include "basic_2/rt_computation/csx_lfpx.ma".
 include "basic_2/rt_computation/lfpxs_fqup.ma".
 
-(* STRONGLY NORMALIZING TERMS FOR UNCOUNTED PARALLEL RT-TRANSITION **********)
+(* STRONGLY NORMALIZING TERMS FOR UNBOUND PARALLEL RT-TRANSITION ************)
 
-(* Properties with uncounted parallel rt-computation on referred entries ****)
+(* Properties with unbound parallel rt-computation on referred entries ******)
 
 (* Basic_2A1: uses: csx_lpxs_conf *)
 lemma csx_lfpxs_conf: ∀h,o,G,L1,L2,T. ⦃G, L1⦄ ⊢ ⬈*[h, T] L2 →

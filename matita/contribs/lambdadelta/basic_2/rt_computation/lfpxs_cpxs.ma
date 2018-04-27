@@ -15,9 +15,9 @@
 include "basic_2/rt_computation/cpxs_lfpx.ma".
 include "basic_2/rt_computation/lfpxs_fqup.ma".
 
-(* UNCOUNTED PARALLEL RT-COMPUTATION FOR LOCAL ENV.S ON REFERRED ENTRIES ****)
+(* UNBOUND PARALLEL RT-COMPUTATION FOR LOCAL ENV.S ON REFERRED ENTRIES ******)
 
-(* Properties with uncounted context-sensitive rt-computation for terms *****)
+(* Properties with unbound context-sensitive rt-computation for terms *******)
 
 (* Basic_2A1: uses: lpxs_pair lpxs_pair_refl *)
 lemma lfpxs_pair_refl: ∀h,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ⬈*[h] V2 →
@@ -34,14 +34,14 @@ lemma lfpxs_cpxs_trans: ∀h,G. s_rs_transitive … (cpx h G) (lfpxs h G).
 @s_rs_trans_TC1 /2 width=3 by lfpx_cpxs_trans/ (**) (* full auto too slow *)
 qed-.
 
-(* Advanced properties on uncounted rt-computation for terms ****************)
+(* Advanced properties on unbound rt-computation for terms ******************)
 
 lemma cpxs_bind2: ∀h,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ⬈*[h] V2 →
                   ∀I,T1,T2. ⦃G, L.ⓑ{I}V2⦄ ⊢ T1 ⬈*[h] T2 →
                   ∀p. ⦃G, L⦄ ⊢ ⓑ{p,I}V1.T1 ⬈*[h] ⓑ{p,I}V2.T2.
 /4 width=3 by lfpxs_cpxs_trans, lfpxs_pair_refl, cpxs_bind/ qed.
 
-(* Advanced inversion lemmas on uncounted rt-computation for terms **********)
+(* Advanced inversion lemmas on unbound rt-computation for terms ************)
 
 lemma cpxs_inv_abst1: ∀h,p,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓛ{p}V1.T1 ⬈*[h] U2 →
                       ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ⬈*[h] V2 & ⦃G, L.ⓛV1⦄ ⊢ T1 ⬈*[h] T2 &

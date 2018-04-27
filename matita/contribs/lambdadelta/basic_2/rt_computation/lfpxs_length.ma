@@ -15,7 +15,7 @@
 include "basic_2/i_static/tc_lfxs_length.ma".
 include "basic_2/rt_computation/lfpxs.ma".
 
-(* UNCOUNTED PARALLEL RT-COMPUTATION FOR LOCAL ENV.S ON REFERRED ENTRIES ****)
+(* UNBOUND PARALLEL RT-COMPUTATION FOR LOCAL ENV.S ON REFERRED ENTRIES ******)
 
 (* Forward lemmas with length for local environments ************************)
 

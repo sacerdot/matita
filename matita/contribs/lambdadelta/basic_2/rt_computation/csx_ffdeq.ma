@@ -15,7 +15,7 @@
 include "basic_2/static/ffdeq.ma".
 include "basic_2/rt_computation/csx_lfdeq.ma".
 
-(* STRONGLY NORMALIZING TERMS FOR UNCOUNTED PARALLEL RT-TRANSITION **********)
+(* STRONGLY NORMALIZING TERMS FOR UNBOUND PARALLEL RT-TRANSITION ************)
 
 (* Properties with degree-based equivalence for closures ********************)
 

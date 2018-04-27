@@ -22,7 +22,7 @@ include "basic_2/rt_computation/fpbs_cpxs.ma".
 
 (* PARALLEL RST-COMPUTATION FOR CLOSURES ************************************)
 
-(* Properties with uncounted parallel rt-computation on referred entries ****)
+(* Properties with unbound parallel rt-computation on referred entries ******)
 
 (* Basic_2A1: uses: lpxs_fpbs *)
 lemma lfpxs_fpbs: ∀h,o,G,L1,L2,T. ⦃G, L1⦄ ⊢ ⬈*[h, T] L2 → ⦃G, L1, T⦄ ≥[h, o] ⦃G, L2, T⦄.
@@ -60,7 +60,7 @@ lemma fqus_lfpxs_fpbs: ∀h,o,G1,G2,L1,L,T1,T2. ⦃G1, L1, T1⦄ ⊐* ⦃G2, L, 
                        ∀L2. ⦃G2, L⦄ ⊢ ⬈*[h, T2] L2 → ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄.
 /3 width=3 by fpbs_lfpxs_trans, fqus_fpbs/ qed.
 
-(* Properties with uncounted context-sensitive parallel rt-computation ******)
+(* Properties with unbound context-sensitive parallel rt-computation ********)
 
 (* Basic_2A1: uses: cpxs_fqus_lpxs_fpbs *)
 lemma cpxs_fqus_lfpxs_fpbs: ∀h,o,G1,L1,T1,T. ⦃G1, L1⦄ ⊢ T1 ⬈*[h] T →

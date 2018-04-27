@@ -17,7 +17,7 @@ include "basic_2/rt_computation/cpxs_lsubr.ma".
 include "basic_2/rt_computation/cpxs_cnx.ma".
 include "basic_2/rt_computation/lfpxs_cpxs.ma".
 
-(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS ************)
+(* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS **************)
 
 (* Forward lemmas with head equivalence for terms ***************************)
 

@@ -16,9 +16,9 @@ include "basic_2/relocation/lex_tc.ma".
 include "basic_2/rt_computation/lpxs.ma".
 include "basic_2/rt_computation/cpxs_lpx.ma".
 
-(* UNCOUNTED PARALLEL RT-COMPUTATION FOR LOCAL ENVIRONMENTS *****************)
+(* UNBOUND PARALLEL RT-COMPUTATION FOR LOCAL ENVIRONMENTS *******************)
 
-(* Properties with uncounted rt-transition for local environments ***********)
+(* Properties with unbound rt-transition for local environments *************)
 
 (* Basic_2A1: was: lpxs_strap1 *)
 lemma lpxs_step_dx: ∀h,G,L1,L. ⦃G, L1⦄ ⊢ ⬈*[h] L →

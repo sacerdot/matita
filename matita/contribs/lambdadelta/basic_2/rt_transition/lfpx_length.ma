@@ -15,7 +15,7 @@
 include "basic_2/static/lfxs_length.ma".
 include "basic_2/rt_transition/lfpx.ma".
 
-(* UNCOUNTED PARALLEL RT-TRANSITION FOR LOCAL ENV.S ON REFERRED ENTRIES *****)
+(* UNBOUND PARALLEL RT-TRANSITION FOR LOCAL ENV.S ON REFERRED ENTRIES *******)
 
 (* Forward lemmas with length for local environments ************************)
 

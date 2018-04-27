@@ -16,13 +16,13 @@ include "basic_2/notation/relations/predtynormal_5.ma".
 include "basic_2/syntax/tdeq.ma".
 include "basic_2/rt_transition/cpx.ma".
 
-(* NORMAL TERMS FOR UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION ******)
+(* NORMAL TERMS FOR UNBOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION ********)
 
 definition cnx: ∀h. sd h → relation3 genv lenv term ≝
                 λh,o,G,L. NF … (cpx h G L) (tdeq h o …).
 
 interpretation
-   "normality for uncounted context-sensitive parallel rt-transition (term)"
+   "normality for unbound context-sensitive parallel rt-transition (term)"
    'PRedTyNormal h o G L T = (cnx h o G L T).
 
 (* Basic inversion lemmas ***************************************************)

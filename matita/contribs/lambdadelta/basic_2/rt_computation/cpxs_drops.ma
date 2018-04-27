@@ -16,7 +16,7 @@ include "basic_2/relocation/drops_ctc.ma".
 include "basic_2/rt_transition/cpx_drops.ma".
 include "basic_2/rt_computation/cpxs.ma".
 
-(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS ************)
+(* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS **************)
 
 (* Advanced properties ******************************************************)
 

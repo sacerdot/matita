@@ -15,7 +15,7 @@
 include "basic_2/relocation/lex_length.ma".
 include "basic_2/rt_computation/lpxs.ma".
 
-(* UNCOUNTED PARALLEL RT-COMPUTATION FOR LOCAL ENVIRONMENTS *****************)
+(* UNBOUND PARALLEL RT-COMPUTATION FOR LOCAL ENVIRONMENTS *******************)
 
 (* Forward lemmas with length for local environments ************************)
 

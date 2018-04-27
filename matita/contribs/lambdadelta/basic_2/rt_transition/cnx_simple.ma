@@ -15,7 +15,7 @@
 include "basic_2/rt_transition/cpx_simple.ma".
 include "basic_2/rt_transition/cnx.ma".
 
-(* NORMAL TERMS FOR UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION ******)
+(* NORMAL TERMS FOR UNBOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION ********)
 
 (* Inversion lemmas with simple terms ***************************************)
 

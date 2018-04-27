@@ -16,9 +16,9 @@ include "basic_2/rt_computation/cpxs_tdeq.ma".
 include "basic_2/rt_computation/fpbs_cpxs.ma".
 include "basic_2/rt_computation/fpbg.ma".
 
-(* PROPER PARALLEL RST-COMPUTATION FOR CLOSURES **************************)
+(* PROPER PARALLEL RST-COMPUTATION FOR CLOSURES *****************************)
 
-(* Properties with uncounted context-sensitive parallel rt-computation ******)
+(* Properties with unbound context-sensitive parallel rt-computation ********)
 
 (* Basic_2A1: was: cpxs_fpbg *)
 lemma cpxs_tdneq_fpbg: ∀h,o,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬈*[h] T2 →

@@ -15,7 +15,7 @@
 include "basic_2/i_static/tc_lfxs_drops.ma".
 include "basic_2/rt_transition/lfpx_drops.ma".
 
-(* UNCOUNTED PARALLEL RT-COMPUTATION FOR LOCAL ENV.S ON REFERRED ENTRIES ****)
+(* UNBOUND PARALLEL RT-COMPUTATION FOR LOCAL ENV.S ON REFERRED ENTRIES ******)
 
 (* Properties with generic slicing for local environments *******************)
 

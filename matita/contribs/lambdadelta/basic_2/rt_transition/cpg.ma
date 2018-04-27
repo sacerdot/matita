@@ -20,7 +20,7 @@ include "basic_2/syntax/lenv.ma".
 include "basic_2/syntax/genv.ma".
 include "basic_2/relocation/lifts.ma".
 
-(* COUNTED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS ***************)
+(* BOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS *****************)
 
 (* avtivate genv *)
 inductive cpg (Rt:relation rtc) (h): rtc → relation4 genv lenv term term ≝
@@ -55,7 +55,7 @@ inductive cpg (Rt:relation rtc) (h): rtc → relation4 genv lenv term term ≝
 .
 
 interpretation
-   "counted context-sensitive parallel rt-transition (term)"
+   "bound context-sensitive parallel rt-transition (term)"
    'PRedTy Rt c h G L T1 T2 = (cpg Rt h c G L T1 T2).
 
 (* Basic properties *********************************************************)

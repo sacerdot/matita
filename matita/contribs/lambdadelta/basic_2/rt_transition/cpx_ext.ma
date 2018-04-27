@@ -15,11 +15,11 @@
 include "basic_2/syntax/cext2.ma".
 include "basic_2/rt_transition/cpx.ma".
 
-(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR BINDERS ***********)
+(* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR BINDERS *************)
 
 definition cpx_ext (h) (G): relation3 lenv bind bind ≝
                             cext2 (cpx h G).
 
 interpretation
-   "uncounted context-sensitive parallel rt-transition (binder)"
+   "unbound context-sensitive parallel rt-transition (binder)"
    'PRedTy h G L I1 I2 = (cpx_ext h G L I1 I2).

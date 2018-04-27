@@ -15,7 +15,7 @@
 include "basic_2/rt_transition/lfpx_lfdeq.ma".
 include "basic_2/rt_computation/lfsx.ma".
 
-(* STRONGLY NORMALIZING LOCAL ENV.S FOR UNCOUNTED PARALLEL RT-TRANSITION ****)
+(* STRONGLY NORMALIZING LOCAL ENV.S FOR UNBOUND PARALLEL RT-TRANSITION ******)
 
 (* Advanced properties ******************************************************)
 

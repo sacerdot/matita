@@ -15,7 +15,7 @@
 include "basic_2/rt_transition/cpg_drops.ma".
 include "basic_2/rt_transition/cpx.ma".
 
-(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS *************)
+(* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS ***************)
 
 (* Advanced properties ******************************************************)
 

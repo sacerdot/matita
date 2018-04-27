@@ -17,7 +17,7 @@ include "basic_2/rt_computation/fpbg.ma".
 
 (* PROPER PARALLEL RST-COMPUTATION FOR CLOSURES *****************************)
 
-(* Properties with uncounted parallel rt-computation on referred entries ****)
+(* Properties with unbound parallel rt-computation on referred entries ******)
 
 (* Basic_2A1: uses: lpxs_fpbg *)
 lemma lfpxs_lfdneq_fpbg: ∀h,o,G,L1,L2,T. ⦃G, L1⦄ ⊢ ⬈*[h, T] L2 →

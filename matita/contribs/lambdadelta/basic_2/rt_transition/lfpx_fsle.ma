@@ -17,7 +17,7 @@ include "basic_2/static/lfxs_fsle.ma".
 include "basic_2/rt_transition/lfpx_length.ma".
 include "basic_2/rt_transition/lfpx_fqup.ma".
 
-(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS *************)
+(* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS ***************)
 
 (* Forward lemmas with free variables inclusion for restricted closures *****)
 

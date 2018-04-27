@@ -17,7 +17,7 @@ include "basic_2/s_computation/fqup_weight.ma".
 include "basic_2/s_computation/fqup_drops.ma".
 include "basic_2/rt_transition/cpg.ma".
 
-(* COUNTED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS ***************)
+(* BOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS *****************)
 
 (* Advanced properties ******************************************************)
 

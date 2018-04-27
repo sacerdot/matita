@@ -18,7 +18,7 @@ include "basic_2/rt_transition/lfpx_length.ma".
 include "basic_2/rt_transition/lfpx_drops.ma".
 include "basic_2/rt_computation/lfsx_fqup.ma".
 
-(* STRONGLY NORMALIZING LOCAL ENV.S FOR UNCOUNTED PARALLEL RT-TRANSITION ****)
+(* STRONGLY NORMALIZING LOCAL ENV.S FOR UNBOUND PARALLEL RT-TRANSITION ******)
 
 (* Properties with generic relocation ***************************************)
 

@@ -16,9 +16,9 @@ include "basic_2/rt_transition/lpx.ma".
 include "basic_2/rt_computation/cpxs_drops.ma".
 include "basic_2/rt_computation/cpxs_cpxs.ma".
 
-(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS ************)
+(* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS **************)
 
-(* Properties with uncounted parallel rt-transition for local environments **)
+(* Properties with unbound parallel rt-transition for local environments ****)
 
 lemma lpx_cpx_trans: ∀h,G. s_r_transitive … (cpx h G) (λ_.lpx h G).
 #h #G #L2 #T1 #T2 #H @(cpx_ind … H) -G -L2 -T1 -T2

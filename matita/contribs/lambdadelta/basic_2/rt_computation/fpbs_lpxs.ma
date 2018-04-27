@@ -18,7 +18,7 @@ include "basic_2/rt_computation/fpbs_lfpxs.ma".
 
 (* PARALLEL RST-COMPUTATION FOR CLOSURES ************************************)
 
-(* Properties with uncounted parallel rt-computation on local environments **)
+(* Properties with unbound parallel rt-computation on local environments ****)
 
 (* Basic_2A1: uses: fpbs_intro_alt *) 
 lemma fpbs_intro_star: ∀h,o,G1,L1,T1,T. ⦃G1, L1⦄ ⊢ T1 ⬈*[h] T →
@@ -27,7 +27,7 @@ lemma fpbs_intro_star: ∀h,o,G1,L1,T1,T. ⦃G1, L1⦄ ⊢ T1 ⬈*[h] T →
                        ∀G2,L2,T2. ⦃G, L0, T0⦄ ≛[h, o] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄ .
 /3 width=9 by fpbs_intro_fstar, lfpxs_lpxs/ qed.
 
-(* Eliminators with uncounted parallel rt-computation on local environments *)
+(* Eliminators with unbound parallel rt-computation on local environments ***)
 
 (* Basic_2A1: uses: fpbs_inv_alt *)
 lemma fpbs_inv_star: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄ →

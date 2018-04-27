@@ -16,7 +16,7 @@ include "basic_2/syntax/theq_simple_vector.ma".
 include "basic_2/relocation/lifts_vector.ma".
 include "basic_2/rt_computation/cpxs_theq.ma".
 
-(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS ************)
+(* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS **************)
 
 (* Vector form of forward lemmas with head equivalence for terms ************)
 

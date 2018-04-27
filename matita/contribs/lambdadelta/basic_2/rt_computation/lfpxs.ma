@@ -16,13 +16,13 @@ include "basic_2/notation/relations/predtysnstar_5.ma".
 include "basic_2/i_static/tc_lfxs.ma".
 include "basic_2/rt_transition/lfpx.ma".
 
-(* UNCOUNTED PARALLEL RT-COMPUTATION FOR LOCAL ENV.S ON REFERRED ENTRIES ****)
+(* UNBOUND PARALLEL RT-COMPUTATION FOR LOCAL ENV.S ON REFERRED ENTRIES ******)
 
 definition lfpxs: ∀h. relation4 genv term lenv lenv ≝
                   λh,G. tc_lfxs (cpx h G).
 
 interpretation
-   "uncounted parallel rt-computation on referred entries (local environment)"
+   "unbound parallel rt-computation on referred entries (local environment)"
    'PRedTySnStar h T G L1 L2 = (lfpxs h G T L1 L2).
 
 (* Basic properties *********************************************************)

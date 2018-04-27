@@ -16,9 +16,9 @@ include "basic_2/rt_computation/lfsx_drops.ma".
 include "basic_2/rt_computation/lfsx_lfpxs.ma".
 include "basic_2/rt_computation/lsubsx.ma".
 
-(* CLEAR OF STRONGLY NORMALIZING ENTRIES FOR UNCOUNTED RT-TRANSITION ********)
+(* CLEAR OF STRONGLY NORMALIZING ENTRIES FOR UNBOUND RT-TRANSITION **********)
 
-(* Properties with strong normalizing env's for uncounted rt-transition *****)
+(* Properties with strong normalizing env's for unbound rt-transition *******)
 
 (* Basic_2A1: uses: lsx_cpx_trans_lcosx *)
 lemma lfsx_cpx_trans_lsubsx: ∀h,o,G,L0,T1,T2. ⦃G, L0⦄ ⊢ T1 ⬈[h] T2 →
@@ -63,7 +63,7 @@ lemma lfsx_cpx_trans: ∀h,o,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬈[h] T2 →
                       G ⊢ ⬈*[h, o, T1] 𝐒⦃L⦄ → G ⊢ ⬈*[h, o, T2] 𝐒⦃L⦄.
 /3 width=6 by lfsx_cpx_trans_lsubsx, lsubsx_refl/ qed-.
 
-(* Properties with strong normalizing env's for uncounted rt-computation ****)
+(* Properties with strong normalizing env's for unbound rt-computation ******)
 
 lemma lfsx_cpxs_trans: ∀h,o,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬈*[h] T2 →
                        G ⊢ ⬈*[h, o, T1] 𝐒⦃L⦄ → G ⊢ ⬈*[h, o, T2] 𝐒⦃L⦄.

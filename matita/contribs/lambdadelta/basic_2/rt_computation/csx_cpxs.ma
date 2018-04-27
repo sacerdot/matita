@@ -16,9 +16,9 @@ include "basic_2/rt_computation/cpxs_tdeq.ma".
 include "basic_2/rt_computation/cpxs_cpxs.ma".
 include "basic_2/rt_computation/csx_csx.ma".
 
-(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS ************)
+(* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS **************)
 
-(* Properties with uncounted context-sensitive rt-computation for terms *****)
+(* Properties with unbound context-sensitive rt-computation for terms *******)
 
 (* Basic_1: was just: sn3_intro *)
 lemma csx_intro_cpxs: ∀h,o,G,L,T1.
@@ -33,7 +33,7 @@ lemma csx_cpxs_trans: ∀h,o,G,L,T1. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T1⦄ →
 /2 width=3 by csx_cpx_trans/
 qed-.
 
-(* Eliminators with uncounted context-sensitive rt-computation for terms ****)
+(* Eliminators with unbound context-sensitive rt-computation for terms ******)
 
 lemma csx_ind_cpxs_tdeq: ∀h,o,G,L. ∀R:predicate term.
                          (∀T1. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T1⦄ →

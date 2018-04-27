@@ -15,7 +15,7 @@
 include "basic_2/rt_transition/lfpx_aaa.ma".
 include "basic_2/rt_computation/cpxs.ma".
 
-(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS ************)
+(* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS **************)
 
 (* Properties with atomic arity assignment on terms *************************)
 

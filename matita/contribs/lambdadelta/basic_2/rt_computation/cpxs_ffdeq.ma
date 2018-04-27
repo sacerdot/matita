@@ -15,7 +15,7 @@
 include "basic_2/static/ffdeq.ma".
 include "basic_2/rt_computation/cpxs_lfdeq.ma".
 
-(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS ************)
+(* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS **************)
 
 (* Properties with degree-based equivalence for closures ********************)
 

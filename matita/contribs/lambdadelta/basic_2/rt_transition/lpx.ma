@@ -16,13 +16,13 @@ include "basic_2/notation/relations/predtysn_4.ma".
 include "basic_2/relocation/lex.ma".
 include "basic_2/rt_transition/cpx_ext.ma".
 
-(* UNCOUNTED PARALLEL RT-TRANSITION FOR LOCAL ENVIRONMENTS ******************)
+(* UNBOUND PARALLEL RT-TRANSITION FOR LOCAL ENVIRONMENTS ********************)
 
 definition lpx: sh → genv → relation lenv ≝
                 λh,G. lex (cpx h G).
 
 interpretation
-   "uncounted parallel rt-transition (local environment)"
+   "unbound parallel rt-transition (local environment)"
    'PRedTySn h G L1 L2 = (lpx h G L1 L2).
 
 (* Basic properties *********************************************************)

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS ************)
+(* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS **************)
 
 include "basic_2/rt_transition/cpx_fqus.ma".
 include "basic_2/rt_computation/cpxs_drops.ma".

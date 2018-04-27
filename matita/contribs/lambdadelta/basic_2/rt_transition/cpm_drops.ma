@@ -78,13 +78,13 @@ qed-.
 
 (* Basic_1: includes: pr0_lift pr2_lift *)
 (* Basic_2A1: includes: cpr_lift *)
-lemma cpm_lifts_sn: ∀n,h,G. d_liftable2_sn … lifts (cpm n h G).
+lemma cpm_lifts_sn: ∀n,h,G. d_liftable2_sn … lifts (λL. cpm h G L n).
 #n #h #G #K #T1 #T2 * #c #Hc #HT12 #b #f #L #HLK #U1 #HTU1
 elim (cpg_lifts_sn … HT12 … HLK … HTU1) -K -T1
 /3 width=5 by ex2_intro/
 qed-.
 
-lemma cpm_lifts_bi: ∀n,h,G. d_liftable2_bi … lifts (cpm n h G).
+lemma cpm_lifts_bi: ∀n,h,G. d_liftable2_bi … lifts (λL. cpm h G L n).
 #n #h #G #K #T1 #T2 * /3 width=11 by cpg_lifts_bi, ex2_intro/
 qed-.
 
@@ -92,12 +92,12 @@ qed-.
 
 (* Basic_1: includes: pr0_gen_lift pr2_gen_lift *)
 (* Basic_2A1: includes: cpr_inv_lift1 *)
-lemma cpm_inv_lifts_sn: ∀n,h,G. d_deliftable2_sn … lifts (cpm n h G).
+lemma cpm_inv_lifts_sn: ∀n,h,G. d_deliftable2_sn … lifts (λL. cpm h G L n).
 #n #h #G #L #U1 #U2 * #c #Hc #HU12 #b #f #K #HLK #T1 #HTU1
 elim (cpg_inv_lifts_sn … HU12 … HLK … HTU1) -L -U1
 /3 width=5 by ex2_intro/
 qed-.
 
-lemma cpm_inv_lifts_bi: ∀n,h,G. d_deliftable2_bi … lifts (cpm n h G).
+lemma cpm_inv_lifts_bi: ∀n,h,G. d_deliftable2_bi … lifts (λL. cpm h G L n).
 #n #h #G #L #U1 #U2 * /3 width=11 by cpg_inv_lifts_bi, ex2_intro/
 qed-.

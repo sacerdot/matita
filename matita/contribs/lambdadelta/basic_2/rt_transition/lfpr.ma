@@ -19,7 +19,7 @@ include "basic_2/rt_transition/cpr_ext.ma".
 (* PARALLEL R-TRANSITION FOR LOCAL ENV.S ON REFERRED ENTRIES ****************)
 
 definition lfpr: sh → genv → relation3 term lenv lenv ≝
-                 λh,G. lfxs (cpm 0 h G).
+                 λh,G. lfxs (λL. cpm h G L 0).
 
 interpretation
    "parallel r-transition on referred entries (local environment)"

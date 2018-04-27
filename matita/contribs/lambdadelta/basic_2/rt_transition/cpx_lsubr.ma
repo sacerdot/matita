@@ -15,7 +15,7 @@
 include "basic_2/rt_transition/cpg_lsubr.ma".
 include "basic_2/rt_transition/cpx.ma".
 
-(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS *************)
+(* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS ***************)
 
 (* Properties with restricted refinement for local environments *************)
 

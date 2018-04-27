@@ -16,13 +16,13 @@ include "basic_2/notation/relations/predtysnstrong_5.ma".
 include "basic_2/static/lfdeq.ma".
 include "basic_2/rt_transition/lfpx.ma".
 
-(* STRONGLY NORMALIZING LOCAL ENV.S FOR UNCOUNTED PARALLEL RT-TRANSITION ****)
+(* STRONGLY NORMALIZING LOCAL ENV.S FOR UNBOUND PARALLEL RT-TRANSITION ******)
 
 definition lfsx: ∀h. sd h → relation3 term genv lenv ≝
                  λh,o,T,G. SN … (lfpx h G T) (lfdeq h o T).
 
 interpretation
-   "strong normalization for uncounted context-sensitive parallel rt-transition on referred entries (local environment)"
+   "strong normalization for unbound context-sensitive parallel rt-transition on referred entries (local environment)"
    'PRedTySNStrong h o T G L = (lfsx h o T G L).
 
 (* Basic eliminators ********************************************************)

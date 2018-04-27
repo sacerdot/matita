@@ -16,13 +16,13 @@ include "basic_2/notation/relations/predtysn_5.ma".
 include "basic_2/static/lfxs.ma".
 include "basic_2/rt_transition/cpx_ext.ma".
 
-(* UNCOUNTED PARALLEL RT-TRANSITION FOR LOCAL ENV.S ON REFERRED ENTRIES *****)
+(* UNBOUND PARALLEL RT-TRANSITION FOR LOCAL ENV.S ON REFERRED ENTRIES *******)
 
 definition lfpx: sh → genv → relation3 term lenv lenv ≝
                  λh,G. lfxs (cpx h G).
 
 interpretation
-   "uncounted parallel rt-transition on referred entries (local environment)"
+   "unbound parallel rt-transition on referred entries (local environment)"
    'PRedTySn h T G L1 L2 = (lfpx h G T L1 L2).
 
 (* Basic properties ***********************************************************)

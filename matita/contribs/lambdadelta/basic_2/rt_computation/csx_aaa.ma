@@ -17,7 +17,7 @@ include "basic_2/rt_computation/cpxs_aaa.ma".
 include "basic_2/rt_computation/csx_gcp.ma".
 include "basic_2/rt_computation/csx_gcr.ma".
 
-(* STRONGLY NORMALIZING TERMS FOR UNCOUNTED PARALLEL RT-TRANSITION **********)
+(* STRONGLY NORMALIZING TERMS FOR UNBOUND PARALLEL RT-TRANSITION ************)
 
 (* Main properties with atomic arity assignment *****************************)
 

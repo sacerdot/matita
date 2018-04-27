@@ -302,7 +302,7 @@ lapply (lifts_mono … HX … HVU) -HX #H destruct
 /4 width=7 by cpm_bind, cpr_flat, ex2_intro/ (**) (* full auto not tried *)
 qed-.
 
-theorem cpr_conf_lfpr: ∀h,G. R_confluent2_lfxs (cpm 0 h G) (cpm 0 h G) (cpm 0 h G) (cpm 0 h G).
+theorem cpr_conf_lfpr: ∀h,G. R_confluent2_lfxs (λL. cpm h G L 0) (λL. cpm h G L 0) (λL. cpm h G L 0) (λL. cpm h G L 0).
 #h #G #L0 #T0 @(fqup_wf_ind_eq (Ⓣ) … G L0 T0) -G -L0 -T0 #G #L #T #IH #G0 #L0 * [| * ]
 [ #I0 #HG #HL #HT #T1 #H1 #T2 #H2 #L1 #HL01 #L2 #HL02 destruct
   elim (cpr_inv_atom1_drops … H1) -H1
@@ -359,7 +359,7 @@ theorem cpr_conf_lfpr: ∀h,G. R_confluent2_lfxs (cpm 0 h G) (cpm 0 h G) (cpm 0 
 qed-.
 
 (* Basic_1: includes: pr0_confluence pr2_confluence *)
-theorem cpr_conf: ∀h,G,L. confluent … (cpm 0 h G L).
+theorem cpr_conf: ∀h,G,L. confluent … (cpm h G L 0).
 /2 width=6 by cpr_conf_lfpr/ qed-.
 
 (* Properties with context-sensitive parallel r-transition for terms ********)

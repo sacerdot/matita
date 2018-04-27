@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS *************)
+(* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS ***************)
 
 include "basic_2/relocation/lifts_tdeq.ma".
 include "basic_2/s_computation/fqus_fqup.ma".

@@ -15,13 +15,13 @@
 include "basic_2/syntax/term_vector.ma".
 include "basic_2/rt_computation/csx.ma".
 
-(* STRONGLY NORMALIZING TERMS VECTORS FOR UNCOUNTED PARALLEL RT-TRANSITION **)
+(* STRONGLY NORMALIZING TERMS VECTORS FOR UNBOUND PARALLEL RT-TRANSITION ****)
 
 definition csxv: ∀h. sd h → relation3 genv lenv (list term) ≝
                  λh,o,G,L. all … (csx h o G L).
 
 interpretation
-   "strong normalization for uncounted context-sensitive parallel rt-transition (term vector)"
+   "strong normalization for unbound context-sensitive parallel rt-transition (term vector)"
    'PRedTyStrong h o G L Ts = (csxv h o G L Ts).
 
 (* Basic inversion lemmas ***************************************************)

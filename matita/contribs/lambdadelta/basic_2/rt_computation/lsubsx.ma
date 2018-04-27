@@ -15,7 +15,7 @@
 include "basic_2/notation/relations/lsubeqx_6.ma".
 include "basic_2/rt_computation/lfsx.ma".
 
-(* CLEAR OF STRONGLY NORMALIZING ENTRIES FOR UNCOUNTED RT-TRANSITION ********)
+(* CLEAR OF STRONGLY NORMALIZING ENTRIES FOR UNBOUND RT-TRANSITION **********)
 
 (* Note: this should be an instance of a more general lexs *)
 (* Basic_2A1: uses: lcosx *)

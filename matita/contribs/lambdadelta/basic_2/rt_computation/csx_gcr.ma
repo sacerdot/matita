@@ -16,7 +16,7 @@ include "basic_2/static/gcp_cr.ma".
 include "basic_2/rt_computation/csx_cnx_vector.ma".
 include "basic_2/rt_computation/csx_csx_vector.ma".
 
-(* STRONGLY NORMALIZING TERMS FOR UNCOUNTED PARALLEL RT-TRANSITION **********)
+(* STRONGLY NORMALIZING TERMS FOR UNBOUND PARALLEL RT-TRANSITION ************)
 
 (* Main properties with generic candidates of reducibility ******************)
 

@@ -15,13 +15,13 @@
 include "basic_2/notation/relations/predty_5.ma".
 include "basic_2/rt_transition/cpg.ma".
 
-(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS *************)
+(* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS ***************)
 
 definition cpx (h): relation4 genv lenv term term ≝
                     λG,L,T1,T2. ∃c. ⦃G, L⦄ ⊢ T1 ⬈[eq_f, c, h] T2.
 
 interpretation
-   "uncounted context-sensitive parallel rt-transition (term)"
+   "unbound context-sensitive parallel rt-transition (term)"
    'PRedTy h G L T1 T2 = (cpx h G L T1 T2).
 
 (* Basic properties *********************************************************)

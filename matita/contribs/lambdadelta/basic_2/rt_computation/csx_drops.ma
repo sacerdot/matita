@@ -16,7 +16,7 @@ include "basic_2/relocation/lifts_tdeq.ma".
 include "basic_2/rt_transition/cpx_drops.ma".
 include "basic_2/rt_computation/csx.ma".
 
-(* STRONGLY NORMALIZING TERMS FOR UNCOUNTED PARALLEL RT-TRANSITION **********)
+(* STRONGLY NORMALIZING TERMS FOR UNBOUND PARALLEL RT-TRANSITION ************)
 
 (* Properties with generic relocation ***************************************)
 

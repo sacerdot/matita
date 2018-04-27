@@ -19,7 +19,7 @@ include "basic_2/rt_computation/csx_lsubr.ma".
 include "basic_2/rt_computation/lfsx_lpx.ma".
 include "basic_2/rt_computation/lsubsx_lfsx.ma".
 
-(* STRONGLY NORMALIZING LOCAL ENV.S FOR UNCOUNTED PARALLEL RT-TRANSITION ****)
+(* STRONGLY NORMALIZING LOCAL ENV.S FOR UNBOUND PARALLEL RT-TRANSITION ******)
 
 (* Advanced properties ******************************************************)
 

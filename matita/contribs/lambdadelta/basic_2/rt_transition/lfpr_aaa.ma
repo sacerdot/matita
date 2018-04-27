@@ -19,7 +19,7 @@ include "basic_2/rt_transition/lfpr_lfpx.ma".
 
 (* Properties with atomic arity assignment for terms ************************)
 
-lemma cpr_aaa_conf: ∀h,G,L. Conf3 … (aaa G L) (cpm 0 h G L).
+lemma cpr_aaa_conf: ∀h,G,L. Conf3 … (aaa G L) (cpm h G L 0).
 /3 width=5 by cpx_aaa_conf, cpm_fwd_cpx/ qed-.
 
 (* Basic_2A1: uses: lpr_aaa_conf *)

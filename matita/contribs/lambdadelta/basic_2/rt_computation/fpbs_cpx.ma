@@ -18,7 +18,7 @@ include "basic_2/rt_computation/fpbs_lpxs.ma".
 
 (* PARALLEL RST-COMPUTATION FOR CLOSURES ************************************)
 
-(* Properties with uncounted context-sensitive parallel rt-transition *******)
+(* Properties with unbound context-sensitive parallel rt-transition *********)
 
 (* Basic_2A1: uses: fpbs_cpx_trans_neq *)
 lemma fpbs_cpx_tdneq_trans: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄ →

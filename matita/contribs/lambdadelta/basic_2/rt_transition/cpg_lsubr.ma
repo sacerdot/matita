@@ -15,7 +15,7 @@
 include "basic_2/static/lsubr.ma".
 include "basic_2/rt_transition/cpg.ma".
 
-(* COUNTED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS ***************)
+(* BOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS *****************)
 
 (* Properties with restricted refinement for local environments *************)
 

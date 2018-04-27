@@ -17,9 +17,9 @@ include "basic_2/rt_computation/lfpxs_cpxs.ma".
 include "basic_2/rt_computation/lfpxs_lfpxs.ma".
 include "basic_2/rt_computation/lfsx_lfsx.ma".
 
-(* STRONGLY NORMALIZING LOCAL ENV.S FOR UNCOUNTED PARALLEL RT-TRANSITION ****)
+(* STRONGLY NORMALIZING LOCAL ENV.S FOR UNBOUND PARALLEL RT-TRANSITION ******)
 
-(* Properties with uncounted rt-computation on referred entries *************)
+(* Properties with unbound rt-computation on referred entries ***************)
 
 (* Basic_2A1: uses: lsx_intro_alt *)
 lemma lfsx_intro_lfpxs: ∀h,o,G,L1,T.
@@ -34,7 +34,7 @@ lemma lfsx_lfpxs_trans: ∀h,o,G,L1,T. G ⊢ ⬈*[h, o, T] 𝐒⦃L1⦄ →
 /2 width=3 by lfsx_lfpx_trans/
 qed-.
 
-(* Eliminators with uncounted rt-computation on referred entries ************)
+(* Eliminators with unbound rt-computation on referred entries **************)
 
 lemma lfsx_ind_lfpxs_lfdeq: ∀h,o,G,T. ∀R:predicate lenv.
                             (∀L1. G ⊢ ⬈*[h, o, T] 𝐒⦃L1⦄ →

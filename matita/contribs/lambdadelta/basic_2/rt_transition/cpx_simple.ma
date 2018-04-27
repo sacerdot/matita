@@ -15,7 +15,9 @@
 include "basic_2/rt_transition/cpg_simple.ma".
 include "basic_2/rt_transition/cpx.ma".
 
-(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS *************)
+(* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS ***************)
+
+(* Inversion lemmas with simple terms ***************************************)
 
 lemma cpx_inv_appl1_simple: ∀h,G,L,V1,T1,U. ⦃G, L⦄ ⊢ ⓐV1.T1 ⬈[h] U → 𝐒⦃T1⦄ →
                             ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ⬈[h] V2 & ⦃G, L⦄ ⊢ T1 ⬈[h] T2 &

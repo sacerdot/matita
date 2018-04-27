@@ -16,7 +16,7 @@ include "basic_2/static/aaa_drops.ma".
 include "basic_2/static/lsuba_aaa.ma".
 include "basic_2/rt_transition/lfpx_fqup.ma".
 
-(* UNCOUNTED PARALLEL RT-TRANSITION FOR LOCAL ENV.S ON REFERRED ENTRIES *****)
+(* UNBOUND PARALLEL RT-TRANSITION FOR LOCAL ENV.S ON REFERRED ENTRIES *******)
 
 (* Properties with atomic arity assignment for terms ************************)
 

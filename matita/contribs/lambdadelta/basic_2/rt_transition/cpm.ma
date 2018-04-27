@@ -19,16 +19,16 @@ include "basic_2/rt_transition/cpg.ma".
 (* T-BOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS ***************)
 
 (* Basic_2A1: includes: cpr *)
-definition cpm (n) (h): relation4 genv lenv term term ≝
-                        λG,L,T1,T2. ∃∃c. 𝐑𝐓⦃n, c⦄ & ⦃G, L⦄ ⊢ T1 ⬈[eq_t, c, h] T2.
+definition cpm (h) (G) (L) (n): relation2 term term ≝
+                                λT1,T2. ∃∃c. 𝐑𝐓⦃n, c⦄ & ⦃G, L⦄ ⊢ T1 ⬈[eq_t, c, h] T2.
 
 interpretation
-   "semi-counted context-sensitive parallel rt-transition (term)"
-   'PRed n h G L T1 T2 = (cpm n h G L T1 T2).
+   "t-bound context-sensitive parallel rt-transition (term)"
+   'PRed n h G L T1 T2 = (cpm h G L n T1 T2).
 
 interpretation
    "context-sensitive parallel r-transition (term)"
-   'PRed h G L T1 T2 = (cpm O h G L T1 T2).
+   'PRed h G L T1 T2 = (cpm h G L O T1 T2).
 
 (* Basic properties *********************************************************)
 
@@ -110,11 +110,12 @@ lemma cpm_theta: ∀n,h,p,G,L,V1,V,V2,W1,W2,T1,T2.
 /6 width=9 by cpg_theta, isrt_plus_O2, isrt_max, isr_shift, ex2_intro/
 qed.
 
-(* Basic properties on r-transition *****************************************)
+(* Basic properties with r-transition ***************************************)
 
+(* Note: this is needed by cpms_ind_sn and cpms_ind_dx *)
 (* Basic_1: includes by definition: pr0_refl *)
 (* Basic_2A1: includes: cpr_atom *)
-lemma cpr_refl: ∀h,G,L. reflexive … (cpm 0 h G L).
+lemma cpr_refl: ∀h,G,L. reflexive … (cpm h G L 0).
 /3 width=3 by cpg_refl, ex2_intro/ qed.
 
 (* Basic inversion lemmas ***************************************************)

@@ -15,7 +15,7 @@
 include "basic_2/rt_transition/cpx_lsubr.ma".
 include "basic_2/rt_computation/cpxs.ma".
 
-(* UNCOUNTED CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS ************)
+(* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS **************)
 
 (* Properties with restricted refinement for local environments *************)
 

@@ -15,7 +15,7 @@
 include "basic_2/s_computation/fqus.ma".
 include "basic_2/rt_computation/csx_lsubr.ma".
 
-(* STRONGLY NORMALIZING TERMS FOR UNCOUNTED PARALLEL RT-TRANSITION **********)
+(* STRONGLY NORMALIZING TERMS FOR UNBOUND PARALLEL RT-TRANSITION ************)
 
 (* Properties with extended supclosure **************************************)
 
