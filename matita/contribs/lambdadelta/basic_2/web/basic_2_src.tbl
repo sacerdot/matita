@@ -232,7 +232,7 @@ table {
           }
         ]
         [ { "append" * } {
-             [ [ "for lenvs" ] "append" + "( ? @@ ? )" "append_length" * ]
+             [ [ "for lenvs" ] "append" + "( ? + ? )" "append_length" * ]
           }
         ]
         [ { "head equivalence" * } {

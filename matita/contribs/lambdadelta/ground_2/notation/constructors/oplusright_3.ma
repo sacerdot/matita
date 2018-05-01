@@ -14,6 +14,14 @@
 
 (* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
 
-notation "hvbox( { term 46 hd1 , break term 46 hd2 } @ break term 46 tl )"
+notation < "hvbox( hd ⨮ break tl )"
+  right associative with precedence 47
+  for @{ 'OPlusRight $S $hd $tl }.
+
+notation > "hvbox( hd ⨮ break tl )"
+  right associative with precedence 47
+  for @{ 'OPlusRight ? $hd $tl }.
+
+notation > "hvbox( hd ⨮{ break term 46 S } break term 46 tl )"
   non associative with precedence 47
-  for @{ 'Cons $hd1 $hd2 $tl }.
+  for @{ 'OPlusRight $S $hd $tl }.
