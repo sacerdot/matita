@@ -1,0 +1,44 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/substitution/lift_neg.ma".
+include "apps_2/models/model_sound.ma".
+
+(* MODEL ********************************************************************)
+
+lemma sound_ti_eq_nlift: ∀M. sound M → ∀sv,gv,U,lv1,lv2.
+                         (∀i. (∀T. ⬆[i, 1]T ≡ U → ⊥) → lv1 i = lv2 i) →
+                         〚U〛⦋M⦌{sv, gv, lv1} = 〚U〛⦋M⦌{sv, gv, lv2}.
+#M #HM #sv #gv #U elim U -U * [||| #a * | * ]
+[ #k #lv1 #lv2 #H >(m1 … HM) >(m1 … HM) -HM //
+| #i #lv1 #lv2 #H >(m2 … HM) >(m2 … HM) -HM
+  /3 width=7 by lift_inv_lref2_be/
+| #p #lv1 #lv2 #H >(m3 … HM) >(m3 … HM) -HM //
+| #W #U #IHW #IHU #lv1 #lv2 #H >(m4 … HM) >(m4 … HM)
+  @IHU -IHU #i @(nat_ind_plus … i) -i
+  [ /5 width=9 by nlift_bind_sn/
+  | #i #_ #H0 >raise_gt // >raise_gt //
+    /4 width=9 by nlift_bind_dx/
+  ]
+| #W #U #IHW #IHU #lv1 #lv2 #H @(m5 … HM) /5 width=9 by nlift_bind_sn/
+  #d @IHU -IHU #i @(nat_ind_plus … i) -i //
+  #i #_ #H0 lapply (nlift_bind_dx … H0) -H0
+  #H0 lapply (H i ?) -H /2 width=5 by/ -H0 #H
+  >raise_gt // >raise_gt //
+| #W #U #IHW #IHU #lv1 #lv2 #H >(m6 … HM) >(m6 … HM)
+  /6 width=8 by nlift_flat_sn, nlift_flat_dx, eq_f2/
+| #W #U #_ #IHU #lv1 #lv2 #H >(m7 … HM) >(m7 … HM)
+  /5 width=8 by nlift_flat_dx/
+]
+qed-.

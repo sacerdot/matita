@@ -20,6 +20,9 @@ include "ground_2/lib/logic.ma".
 lemma insert_eq: ∀A,a. ∀Q1,Q2:predicate A. (∀a0. Q1 a0 → a = a0 → Q2 a0) → Q1 a → Q2 a.
 /2 width=1 by/ qed-.
 
+definition replace_2 (A) (B): relation3 (relation2 A B) (relation A) (relation B) ≝
+                              λR,Sa,Sb. ∀a1,b1. R a1 b1 → ∀a2. Sa a1 a2 → ∀b2. Sb b1 b2 → R a2 b2.
+
 (* Inclusion ****************************************************************)
 
 definition subR2 (S1) (S2): relation (relation2 S1 S2) ≝

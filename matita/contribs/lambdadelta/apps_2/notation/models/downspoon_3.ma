@@ -12,14 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/lib/relations.ma".
+(* NOTATION FOR THE "models" COMPONENT **************************************)
 
-(* FUNCTIONS ****************************************************************)
+notation < "hvbox( ⫰[ break term 46 i ] break term 46 lv )"
+   non associative with precedence 46
+   for @{ 'DownSpoon $M $d $lv }.
 
-definition left_identity (A) (f): predicate A ≝ λi. ∀a:A. a = f i a.
+notation > "hvbox( ⫰[ break term 46 i ] break term 46 lv )"
+   non associative with precedence 46
+   for @{ 'DownSpoon ? $d $lv }.
 
-definition right_identity (A) (f): predicate A ≝ λi. ∀a:A. a = f a i.
-
-definition compatible_3 (A) (B) (C): relation4 … (relation A) (relation B) (relation C) ≝
-                                     λf,Sa,Sb,Sc.
-                                     ∀a1,a2. Sa a1 a2 → ∀b1,b2. Sb b1 b2 → Sc (f a1 b1) (f a2 b2).
+notation > "hvbox( ⫰{ term 46 M }[ break term 46 i ] break term 46 lv )"
+   non associative with precedence 46
+   for @{ 'DownSpoon $M $d $lv }.

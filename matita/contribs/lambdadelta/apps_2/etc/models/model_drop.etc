@@ -1,0 +1,35 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/substitution/drop.ma".
+include "apps_2/models/model_li.ma".
+include "apps_2/models/model_lift.ma".
+
+(* MODEL ********************************************************************)
+
+(* Properties on basic slicing **********************************************)
+
+lemma sound_drop: ∀M. sound M → extensional M →
+                  ∀sv,gv,L,K,s,l,m. ⬇[s, l, m] L ≡ K →
+                  ∀lv. lv ∈ 〚L〛⦋M⦌{sv, gv} → ↓[l, m] lv ∈ 〚K〛⦋M⦌{sv, gv}.
+#M #H1M #H2M #sv #gv #L #K #s #l #m #H elim H -l -m /2 width=3 by li_veq/
+[ * #L #K #V #m #_ #IHLK #x #H -H1M -H2M
+  [ elim (li_inv_ldef … H) | elim (li_inv_ldec … H) ] -H
+  /4 width=5 by li_veq, lower_raise_be, lower_veq/ (* 2 x li_veq *)
+| * #L #K #W #V #l #m #_ #HVW #IHLK #x #H
+  [ elim (li_inv_ldef … H) #lv | elim (li_inv_ldec … H) #lv #d ] -H
+  <(sound_fwd_lift M H1M H2M sv gv … HVW lv) -H1M -H2M -HVW
+  /5 width=6 by li_veq, li_ldec, li_ldef, lower_raise_lt, lower_veq/ (* 2 x li_veq *)
+]
+qed-.

@@ -12,14 +12,25 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/lib/relations.ma".
+include "apps_2/models/model_li.ma".
+include "apps_2/models/veq.ma".
 
-(* FUNCTIONS ****************************************************************)
+(* EVALUATION EQUIVALENCE  **************************************************)
 
-definition left_identity (A) (f): predicate A ≝ λi. ∀a:A. a = f i a.
+(* Properties with local environment interpretation *************************)
 
-definition right_identity (A) (f): predicate A ≝ λi. ∀a:A. a = f a i.
-
-definition compatible_3 (A) (B) (C): relation4 … (relation A) (relation B) (relation C) ≝
-                                     λf,Sa,Sb,Sc.
-                                     ∀a1,a2. Sa a1 a2 → ∀b1,b2. Sb b1 b2 → Sc (f a1 b1) (f a2 b2).
+lemma li_repl_back (M) (gv): is_model M →
+                             ∀L,lv1. lv1 ϵ ⟦L⟧[gv] →
+                             ∀lv2. lv1 ≗{M} lv2 → lv2 ϵ ⟦L⟧[gv].
+#M #gv #HM #L #lv1 #H elim H -L -lv1 //
+[ #lv1 #d1 #K #V #_ #Hd #IH #y #H
+  elim (veq_inv_push_sn … H) -H #lv2 #d2 #Hlv12 #Hd12 #H destruct
+  /4 width=5 by li_abbr, ti_comp_l, mr/
+| #lv1 #d1 #K #W #_ #IH #y #H
+  elim (veq_inv_push_sn … H) -H #lv2 #d2 #Hlv12 #_ #H destruct
+  /3 width=1 by li_abst/
+| #lv1 #d1 #I #K #_ #IH #y #H
+  elim (veq_inv_push_sn … H) -H #lv2 #d2 #Hlv12 #_ #H destruct
+  /3 width=1 by li_unit/
+]
+qed-.

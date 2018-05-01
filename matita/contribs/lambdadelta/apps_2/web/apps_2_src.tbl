@@ -9,6 +9,26 @@ table {
         ]
      }
    ]
+   class "orange"
+   [ { "models" * } {
+        [ { "denotational equivalence" * } {
+             [ "deq" + "( ? ⊢ ? ≗{?} ? )" * ]
+          }
+        ]
+        [ { "evaluation equivalence" * } {
+             [ "veq" + "( ? ≗{?} ? )" "veq_li" * ]
+          }
+        ]
+        [ { "model declaration" * } {
+             [ "model" + "( ? ≗{?} ? )" + "( ? @{?} ? )" + "( ⟦?⟧{?}[?,?] )"
+               "model_push" + "( ⫯{?}[?] )" + "( ⫯{?}[?←?] )"
+               "model_props"
+               "model_li" + "( ? ϵ ⟦?⟧{?}[?] )"
+               * ]
+          }
+        ]
+     }
+   ]
 (*
    class "yellow"
    [ { "MLTT1" * } {
