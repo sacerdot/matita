@@ -12,8 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/lib/functions.ma".
-include "apps_2/models/model_push.ma".
+include "apps_2/models/model_vlift.ma".
 
 (* MODEL ********************************************************************)
 

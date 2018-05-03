@@ -12,18 +12,28 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/notation/relations/doteq_4.ma".
 include "ground_2/lib/relations.ma".
 
-(* FUNCTIONS ****************************************************************)
+(* EXTENSIONAL EQUIVALENCE **************************************************)
 
-definition left_identity (A) (f): predicate A ≝ λi. ∀a:A. a = f i a.
+definition exteq (A,B:Type[0]): relation (A → B) ≝
+                                λf1,f2. ∀a. f1 a = f2 a.
 
-definition right_identity (A) (f): predicate A ≝ λi. ∀a:A. a = f a i.
+interpretation "extensional equivalence"
+   'DotEq A B f1 f2 = (exteq A B f1 f2).
 
-definition compatible_2 (A) (B): relation3 … (relation A) (relation B) ≝
-                                 λf,Sa,Sb.
-                                 ∀a1,a2. Sa a1 a2 → Sb (f a1) (f a2).
+(* Basic_properties *********************************************************)
 
-definition compatible_3 (A) (B) (C): relation4 … (relation A) (relation B) (relation C) ≝
-                                     λf,Sa,Sb,Sc.
-                                     ∀a1,a2. Sa a1 a2 → ∀b1,b2. Sb b1 b2 → Sc (f a1 b1) (f a2 b2).
+lemma exteq_refl (A) (B): reflexive … (exteq A B).
+// qed.
+
+lemma exteq_repl (A) (B): replace_2 … (exteq A B) (exteq A B) (exteq A B).
+// qed-.
+
+lemma exteq_sym (A) (B): symmetric … (exteq A B).
+/2 width=1 by exteq_repl/ qed-.
+
+lemma exteq_trans (A) (B): Transitive … (exteq A B).
+/2 width=1 by exteq_repl/ qed-.
+

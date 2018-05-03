@@ -12,18 +12,31 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/lib/relations.ma".
+include "apps_2/models/vdrop_vlift.ma".
+include "apps_2/models/veq.ma".
 
-(* FUNCTIONS ****************************************************************)
+(* EVALUATION EQUIVALENCE  **************************************************)
 
-definition left_identity (A) (f): predicate A ≝ λi. ∀a:A. a = f i a.
+(* Properties with evaluation drop ******************************************)
 
-definition right_identity (A) (f): predicate A ≝ λi. ∀a:A. a = f a i.
+lemma vdrop_comp (M): ∀i. compatible_2 … (vdrop M i) (veq M) (veq M).
+#M #i #lv1 #lv2 #Hlv12 #j elim (lt_or_ge j i) #Hji
+[ >vdrop_lt // >vdrop_lt //
+| >vdrop_ge // >vdrop_ge //
+]
+qed.
 
-definition compatible_2 (A) (B): relation3 … (relation A) (relation B) ≝
-                                 λf,Sa,Sb.
-                                 ∀a1,a2. Sa a1 a2 → Sb (f a1) (f a2).
+(* Advanced inversion lemmas with evaluation evaluation lift ****************)
 
-definition compatible_3 (A) (B) (C): relation4 … (relation A) (relation B) (relation C) ≝
-                                     λf,Sa,Sb,Sc.
-                                     ∀a1,a2. Sa a1 a2 → ∀b1,b2. Sb b1 b2 → Sc (f a1 b1) (f a2 b2).
+lemma veq_inv_vlift_sn (M): ∀lv1,y2,d1,i. ⫯[i←d1]lv1 ≗{M} y2 →
+                            ∃∃lv2,d2. lv1 ≗ lv2 & d1 ≗ d2 & ⫯[i←d2]lv2 ≐ y2.
+#M #lv1 #y2 #d1 #i #H
+@(ex3_2_intro)
+[5: @exteq_sym @vlift_vdrop_eq |1,2: skip
+| #j elim (lt_or_ge j i) #Hji
+  [ lapply (H j) -H >vlift_lt // >vdrop_lt //
+  | lapply (H (↑j)) -H >vlift_gt /2 width=1 by monotonic_le_plus_l/ >vdrop_ge //
+  ]
+| lapply (H i) >vlift_eq //
+]
+qed-.

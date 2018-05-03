@@ -55,7 +55,7 @@ table {
              [ "stream ( ? ⨮{?} ? )" "stream_eq ( ? ≗{?} ? )" "stream_hdtl ( ⫰{?}? )" "stream_tls ( ⫰*{?}[?]? )" * ]
              [ "list ( ◊ ) ( ? ⨮{?} ? ) ( |?| )" "list2 ( ◊ ) ( {?,?} ⨮{?,?} ? ) ( |?| )" * ]
              [ "bool ( Ⓕ ) ( Ⓣ )" "arith ( ?^? ) ( ↑? ) ( ↓? ) ( ? ∨ ? ) ( ? ∧ ? )" * ]
-             [ "logic ( ⊥ ) ( ⊤ )" "relations ( ? ⊆ ? )" "functions" "star" "ltc" * ]
+             [ "logic ( ⊥ ) ( ⊤ )" "relations ( ? ⊆ ? )" "functions" "exteq ( ? ≐{?,?} ? )" "star" "ltc" * ]
           }
         ]
      }

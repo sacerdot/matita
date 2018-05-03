@@ -62,6 +62,10 @@ lemma plus_minus_minus_be: ∀x,y,z. y ≤ z → z ≤ x → (x - z) + (z - y) =
 #x #z #y #Hzy #Hyx >plus_minus // >commutative_plus >plus_minus //
 qed-.
 
+lemma lt_succ_pred: ∀m,n. n < m → m = ↑↓m.
+#m #n #Hm >S_pred /2 width=2 by ltn_to_ltO/
+qed-.
+
 fact plus_minus_minus_be_aux: ∀i,x,y,z. y ≤ z → z ≤ x → i = z - y → x - z + i = x - y.
 /2 width=1 by plus_minus_minus_be/ qed-.
 

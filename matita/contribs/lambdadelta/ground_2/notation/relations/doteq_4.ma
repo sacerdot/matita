@@ -12,18 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/lib/relations.ma".
+(* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
 
-(* FUNCTIONS ****************************************************************)
+notation < "hvbox( f1 ≐ break term 46 f2 )"
+   non associative with precedence 45
+   for @{ 'DotEq $A $B $f1 $f2 }.
 
-definition left_identity (A) (f): predicate A ≝ λi. ∀a:A. a = f i a.
+notation > "hvbox( f1 ≐ break term 46 f2 )"
+   non associative with precedence 45
+   for @{ 'DotEq ? ? $f1 $f2 }.
 
-definition right_identity (A) (f): predicate A ≝ λi. ∀a:A. a = f a i.
-
-definition compatible_2 (A) (B): relation3 … (relation A) (relation B) ≝
-                                 λf,Sa,Sb.
-                                 ∀a1,a2. Sa a1 a2 → Sb (f a1) (f a2).
-
-definition compatible_3 (A) (B) (C): relation4 … (relation A) (relation B) (relation C) ≝
-                                     λf,Sa,Sb,Sc.
-                                     ∀a1,a2. Sa a1 a2 → ∀b1,b2. Sb b1 b2 → Sc (f a1 b1) (f a2 b2).
+notation > "hvbox( f1 ≐{ break term 46 A, break term 46 B } break term 46 f2 )"
+   non associative with precedence 45
+   for @{ 'DotEq $A $B $f1 $f2 }.

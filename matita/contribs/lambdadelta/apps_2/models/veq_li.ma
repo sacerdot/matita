@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "apps_2/models/model_li.ma".
-include "apps_2/models/veq.ma".
+include "apps_2/models/veq_vdrop.ma".
 
 (* EVALUATION EQUIVALENCE  **************************************************)
 
@@ -24,13 +24,15 @@ lemma li_repl_back (M) (gv): is_model M →
                              ∀lv2. lv1 ≗{M} lv2 → lv2 ϵ ⟦L⟧[gv].
 #M #gv #HM #L #lv1 #H elim H -L -lv1 //
 [ #lv1 #d1 #K #V #_ #Hd #IH #y #H
-  elim (veq_inv_push_sn … H) -H #lv2 #d2 #Hlv12 #Hd12 #H destruct
-  /4 width=5 by li_abbr, ti_comp_l, mr/
+  elim (veq_inv_vlift_sn … H) -H #lv2 #d2 #Hlv12 #Hd12 #Hy
+  /5 width=5 by li_repl, li_abbr, ti_comp_l, mr/
 | #lv1 #d1 #K #W #_ #IH #y #H
-  elim (veq_inv_push_sn … H) -H #lv2 #d2 #Hlv12 #_ #H destruct
-  /3 width=1 by li_abst/
+  elim (veq_inv_vlift_sn … H) -H #lv2 #d2 #Hlv12 #_ #Hy
+  /4 width=3 by li_repl, li_abst/
 | #lv1 #d1 #I #K #_ #IH #y #H
-  elim (veq_inv_push_sn … H) -H #lv2 #d2 #Hlv12 #_ #H destruct
-  /3 width=1 by li_unit/
+  elim (veq_inv_vlift_sn … H) -H #lv2 #d2 #Hlv12 #_ #Hy
+  /4 width=3 by li_repl, li_unit/
+| #lv1 #lv #L #_ #Hlv1 #IH #lv2 #Hlv2
+  @IH /2 width=3 by exteq_veq_trans/
 ]
 qed-.

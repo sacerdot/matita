@@ -12,28 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "apps_2/notation/models/upspoon_4.ma".
-include "apps_2/notation/models/upspoon_3.ma".
-include "apps_2/models/model.ma".
+include "apps_2/models/model_vlift.ma".
+include "apps_2/models/vdrop.ma".
 
-(* MODEL ********************************************************************)
+(* EVALUATION DROP **********************************************************)
 
-definition push (M): nat → dd M → evaluation M → evaluation M ≝
-                     λj,d,lv,i. tri … i j (lv i) d (lv (↓i)).
+(* Advanced properties with evaluation evaluation lift **********************)
 
-interpretation "generic push (model evaluation)"
-   'UpSpoon M i d lv = (push M i d lv).
-
-interpretation "push (model evaluation)"
-   'UpSpoon M d lv = (push M O d lv).
-
-(* Basic properties *********************************************************)
-
-lemma push_lt: ∀M,lv,d,j,i. i < j → (⫯{M}[j←d] lv) i = lv i.
-/2 width=1 by tri_lt/ qed-.
-
-lemma push_eq: ∀M,lv,d,i. (⫯{M}[i←d] lv) i = d.
-/2 width=1 by tri_eq/ qed-.
-
-lemma push_gt: ∀M,lv,d,j,i. j < i → (⫯{M}[j←d] lv) i = lv (↓i).
-/2 width=1 by tri_gt/ qed-.
+lemma vlift_vdrop_eq (M): ∀lv,i. lv ≐{?,dd M} ⫯[i←lv i]⫰[i]lv.
+#M #lv #i #j elim (lt_or_eq_or_gt j i) #Hji destruct
+[ >vlift_lt // >vdrop_lt //
+| >vlift_eq //
+| >vlift_gt // >vdrop_ge /2 width=1 by monotonic_pred/
+  <(lt_succ_pred … Hji) //
+]
+qed.

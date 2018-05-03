@@ -16,12 +16,16 @@ table {
           }
         ]
         [ { "evaluation equivalence" * } {
-             [ "veq" + "( ? ≗{?} ? )" "veq_li" * ]
+             [ "veq" + "( ? ≗{?} ? )" "veq_vdrop" "veq_li" * ]
+          }
+        ]
+        [ { "evaluation drop" * } {        
+             [ "vdrop" + "( ⫰{?}? )" + "( ⫰{?}[?]? )" "vdrop_vlift" * ]
           }
         ]
         [ { "model declaration" * } {
              [ "model" + "( ? ≗{?} ? )" + "( ? @{?} ? )" + "( ⟦?⟧{?}[?,?] )"
-               "model_push" + "( ⫯{?}[?] )" + "( ⫯{?}[?←?] )"
+               "model_vlift" + "( ⫯{?}[?]? )" + "( ⫯{?}[?←?]? )"
                "model_props"
                "model_li" + "( ? ϵ ⟦?⟧{?}[?] )"
                * ]
