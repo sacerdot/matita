@@ -20,9 +20,9 @@ include "ground_2/relocation/mr2.ma".
 inductive at: mr2 → relation nat ≝
 | at_nil: ∀i. at (◊) i i
 | at_lt : ∀cs,l,m,i1,i2. i1 < l →
-          at cs i1 i2 → at ({l, m} @ cs) i1 i2
+          at cs i1 i2 → at ({l, m} ⨮ cs) i1 i2
 | at_ge : ∀cs,l,m,i1,i2. l ≤ i1 →
-          at cs (i1 + m) i2 → at ({l, m} @ cs) i1 i2
+          at cs (i1 + m) i2 → at ({l, m} ⨮ cs) i1 i2
 .
 
 interpretation "application (multiple relocation with pairs)"
@@ -42,7 +42,7 @@ lemma at_inv_nil: ∀i1,i2. @⦃i1, ◊⦄ ≘ i2 → i1 = i2.
 /2 width=3 by at_inv_nil_aux/ qed-.
 
 fact at_inv_cons_aux: ∀cs,i1,i2. @⦃i1, cs⦄ ≘ i2 →
-                      ∀l,m,cs0. cs = {l, m} @ cs0 →
+                      ∀l,m,cs0. cs = {l, m} ⨮ cs0 →
                       i1 < l ∧ @⦃i1, cs0⦄ ≘ i2 ∨
                       l ≤ i1 ∧ @⦃i1 + m, cs0⦄ ≘ i2.
 #cs #i1 #i2 * -cs -i1 -i2
@@ -52,19 +52,19 @@ fact at_inv_cons_aux: ∀cs,i1,i2. @⦃i1, cs⦄ ≘ i2 →
 ]
 qed-.
 
-lemma at_inv_cons: ∀cs,l,m,i1,i2. @⦃i1, {l, m} @ cs⦄ ≘ i2 →
+lemma at_inv_cons: ∀cs,l,m,i1,i2. @⦃i1, {l, m} ⨮ cs⦄ ≘ i2 →
                    i1 < l ∧ @⦃i1, cs⦄ ≘ i2 ∨
                    l ≤ i1 ∧ @⦃i1 + m, cs⦄ ≘ i2.
 /2 width=3 by at_inv_cons_aux/ qed-.
 
-lemma at_inv_cons_lt: ∀cs,l,m,i1,i2. @⦃i1, {l, m} @ cs⦄ ≘ i2 →
+lemma at_inv_cons_lt: ∀cs,l,m,i1,i2. @⦃i1, {l, m} ⨮ cs⦄ ≘ i2 →
                       i1 < l → @⦃i1, cs⦄ ≘ i2.
 #cs #l #m #i1 #m2 #H
 elim (at_inv_cons … H) -H * // #Hli1 #_ #Hi1l
 elim (lt_le_false … Hi1l Hli1)
 qed-.
 
-lemma at_inv_cons_ge: ∀cs,l,m,i1,i2. @⦃i1, {l, m} @ cs⦄ ≘ i2 →
+lemma at_inv_cons_ge: ∀cs,l,m,i1,i2. @⦃i1, {l, m} ⨮ cs⦄ ≘ i2 →
                       l ≤ i1 → @⦃i1 + m, cs⦄ ≘ i2.
 #cs #l #m #i1 #m2 #H
 elim (at_inv_cons … H) -H * // #Hi1l #_ #Hli1

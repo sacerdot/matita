@@ -32,7 +32,7 @@ interpretation "application to vector (term)"
 lemma applv_nil: ∀T. Ⓐ◊.T = T.
 // qed.
 
-lemma applv_cons: ∀V,Vs,T. ⒶV@Vs.T = ⓐV.ⒶVs.T.
+lemma applv_cons: ∀V,Vs,T. ⒶV⨮Vs.T = ⓐV.ⒶVs.T.
 // qed.
 
 (* Properties with simple terms *********************************************)

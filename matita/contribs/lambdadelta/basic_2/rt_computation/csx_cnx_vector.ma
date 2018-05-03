@@ -49,7 +49,7 @@ lemma csx_applv_sort: ∀h,o,G,L,s,Vs. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃Vs⦄ �
   #X #H #H0
   elim (cpxs_fwd_sort_vector … o … H) -H #H
   [ elim H0 -H0 //
-  | -H0 @(csx_cpxs_trans … (Ⓐ(V@Vs).⋆(next h s)))
+  | -H0 @(csx_cpxs_trans … (Ⓐ(V⨮Vs).⋆(next h s)))
     /3 width=1 by cpxs_flat_dx, deg_next_SO/
   ]
 ]

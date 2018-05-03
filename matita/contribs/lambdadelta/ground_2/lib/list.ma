@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "ground_2/notation/constructors/nil_0.ma".
-include "ground_2/notation/constructors/cons_2.ma".
+include "ground_2/notation/constructors/oplusright_3.ma".
 include "ground_2/lib/arith.ma".
 
 (* LISTS ********************************************************************)
@@ -24,9 +24,9 @@ inductive list (A:Type[0]) : Type[0] :=
 
 interpretation "nil (list)" 'Nil = (nil ?).
 
-interpretation "cons (list)" 'Cons hd tl = (cons ? hd tl).
+interpretation "cons (list)" 'OPlusRight A hd tl = (cons A hd tl).
 
-rec definition length (A:Type[0]) (l:list A) on l ≝ match l with
+rec definition length A (l:list A) on l ≝ match l with
 [ nil      ⇒ 0
 | cons _ l ⇒ ↑(length A l)
 ].
@@ -45,7 +45,7 @@ rec definition all A (R:predicate A) (l:list A) on l ≝
 lemma length_nil (A:Type[0]): |nil A| = 0.
 // qed.
 
-lemma length_cons (A:Type[0]) (l:list A) (a:A): |a@l| = ↑|l|.
+lemma length_cons (A:Type[0]) (l:list A) (a:A): |a⨮l| = ↑|l|.
 // qed.
 
 (* Basic inversion lemmas on length *****************************************)
@@ -58,11 +58,11 @@ lemma length_inv_zero_sn (A:Type[0]) (l:list A): 0 = |l| → l = ◊.
 /2 width=1 by length_inv_zero_dx/ qed-.
 
 lemma length_inv_succ_dx (A:Type[0]) (l:list A) (x): |l| = ↑x →
-                         ∃∃tl,a. x = |tl| & l = a @ tl.
+                         ∃∃tl,a. x = |tl| & l = a ⨮ tl.
 #A * /2 width=4 by ex2_2_intro/
 >length_nil #x #H destruct
 qed-.
 
 lemma length_inv_succ_sn (A:Type[0]) (l:list A) (x): ↑x = |l| →
-                         ∃∃tl,a. x = |tl| & l = a @ tl.
+                         ∃∃tl,a. x = |tl| & l = a ⨮ tl.
 /2 width=1 by length_inv_succ_dx/ qed.

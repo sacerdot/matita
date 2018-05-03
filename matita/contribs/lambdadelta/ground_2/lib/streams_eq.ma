@@ -18,7 +18,7 @@ include "ground_2/lib/streams.ma".
 (* STREAMS ******************************************************************)
 
 coinductive eq_stream (A): relation (stream A) ≝
-| eq_seq: ∀t1,t2,b1,b2. b1 = b2 → eq_stream A t1 t2 → eq_stream A (b1@t1) (b2@t2)
+| eq_seq: ∀t1,t2,b1,b2. b1 = b2 → eq_stream A t1 t2 → eq_stream A (b1⨮t1) (b2⨮t2)
 .
 
 interpretation "extensional equivalence (nstream)"
@@ -36,7 +36,7 @@ definition eq_stream_repl_fwd (A) (R:predicate …) ≝
 (* Basic inversion lemmas ***************************************************)
 
 lemma eq_stream_inv_seq: ∀A,t1,t2. t1 ≗{A} t2 →
-                         ∀u1,u2,a1,a2. a1@u1 = t1 → a2@u2 = t2 →
+                         ∀u1,u2,a1,a2. a1⨮u1 = t1 → a2⨮u2 = t2 →
                          u1 ≗ u2 ∧ a1 = a2.
 #A #t1 #t2 * -t1 -t2
 #t1 #t2 #b1 #b2 #Hb #Ht #u1 #u2 #a1 #a2 #H1 #H2 destruct /2 width=1 by conj/

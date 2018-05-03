@@ -52,8 +52,8 @@ table {
    class "yellow"
    [ { "extensions to the library" * } {
         [ { "" * } {
-             [ "stream ( ? @ ? )" "stream_eq ( ? ≗ ? )" "stream_hdtl ( ⫰? )" "stream_tls ( ⫰*[?]? )" * ]
-             [ "list ( ◊ ) ( ? @ ? ) ( |?| )" "list2 ( ◊ ) ( {?,?} @ ? ) ( ? @@ ? ) ( |?| )" * ]
+             [ "stream ( ? ⨮{?} ? )" "stream_eq ( ? ≗{?} ? )" "stream_hdtl ( ⫰{?}? )" "stream_tls ( ⫰*{?}[?]? )" * ]
+             [ "list ( ◊ ) ( ? ⨮{?} ? ) ( |?| )" "list2 ( ◊ ) ( {?,?} ⨮{?,?} ? ) ( |?| )" * ]
              [ "bool ( Ⓕ ) ( Ⓣ )" "arith ( ?^? ) ( ↑? ) ( ↓? ) ( ? ∨ ? ) ( ? ∧ ? )" * ]
              [ "logic ( ⊥ ) ( ⊤ )" "relations ( ? ⊆ ? )" "functions" "star" "ltc" * ]
           }

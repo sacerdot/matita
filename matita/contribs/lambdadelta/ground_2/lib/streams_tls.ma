@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/notation/functions/downspoonstar_2.ma".
+include "ground_2/notation/functions/downspoonstar_3.ma".
 include "ground_2/lib/streams_hdtl.ma".
 
 (* STREAMS ******************************************************************)
@@ -21,7 +21,7 @@ rec definition tls (A:Type[0]) (n:nat) on n: stream A → stream A ≝ ?.
 cases n -n [ #t @t | #n #t @tl @(tls … n t) ]
 defined.
 
-interpretation "recursive tail (strams)" 'DownSpoonStar n f = (tls ? n f).
+interpretation "iterated tail (strams)" 'DownSpoonStar A n f = (tls A n f).
 
 (* basic properties *********************************************************)
 

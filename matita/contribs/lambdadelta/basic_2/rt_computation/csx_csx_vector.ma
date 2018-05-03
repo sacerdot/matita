@@ -67,7 +67,7 @@ lapply (csx_appl_theta … H … HW12) -H -HW12 #H
 lapply (csx_fwd_pair_sn … H) #HW1
 lapply (csx_fwd_flat_dx … H) #H1
 @csx_appl_simple_theq /2 width=3 by simple_flat/ -IHV12b -HW1 -H1 #X #H1 #H2
-elim (cpxs_fwd_theta_vector … o … (V2@V2b) … H1) -H1 /2 width=1 by liftsv_cons/ -HV12b -HV12
+elim (cpxs_fwd_theta_vector … o … (V2⨮V2b) … H1) -H1 /2 width=1 by liftsv_cons/ -HV12b -HV12
 [ -H #H elim H2 -H2 //
 | -H2 /3 width=5 by csx_cpxs_trans, cpxs_flat_dx/
 ]

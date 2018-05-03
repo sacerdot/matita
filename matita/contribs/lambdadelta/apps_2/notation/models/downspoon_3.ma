@@ -16,12 +16,12 @@
 
 notation < "hvbox( ⫰[ break term 46 i ] break term 46 lv )"
    non associative with precedence 46
-   for @{ 'DownSpoon $M $d $lv }.
+   for @{ 'DownSpoon $M $i $lv }.
 
 notation > "hvbox( ⫰[ break term 46 i ] break term 46 lv )"
    non associative with precedence 46
-   for @{ 'DownSpoon ? $d $lv }.
+   for @{ 'DownSpoon ? $i $lv }.
 
 notation > "hvbox( ⫰{ term 46 M }[ break term 46 i ] break term 46 lv )"
    non associative with precedence 46
-   for @{ 'DownSpoon $M $d $lv }.
+   for @{ 'DownSpoon $M $i $lv }.

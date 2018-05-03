@@ -22,7 +22,7 @@ inductive liftsv (f:rtmap): relation (list term) ≝
 | liftsv_nil : liftsv f (◊) (◊)
 | liftsv_cons: ∀T1s,T2s,T1,T2.
                ⬆*[f] T1 ≘ T2 → liftsv f T1s T2s →
-               liftsv f (T1 @ T1s) (T2 @ T2s)
+               liftsv f (T1 ⨮ T1s) (T2 ⨮ T2s)
 .
 
 interpretation "uniform relocation (term vector)"
@@ -43,9 +43,9 @@ lemma liftsv_inv_nil1: ∀f,Y. ⬆*[f] ◊ ≘ Y → Y = ◊.
 /2 width=5 by liftsv_inv_nil1_aux/ qed-.
 
 fact liftsv_inv_cons1_aux: ∀f:rtmap. ∀X,Y. ⬆*[f] X ≘ Y →
-                           ∀T1,T1s. X = T1 @ T1s →
+                           ∀T1,T1s. X = T1 ⨮ T1s →
                            ∃∃T2,T2s. ⬆*[f] T1 ≘ T2 & ⬆*[f] T1s ≘ T2s &
-                                     Y = T2 @ T2s.
+                                     Y = T2 ⨮ T2s.
 #f #X #Y * -X -Y
 [ #U1 #U1s #H destruct
 | #T1s #T2s #T1 #T2 #HT12 #HT12s #U1 #U1s #H destruct /2 width=5 by ex3_2_intro/
@@ -53,9 +53,9 @@ fact liftsv_inv_cons1_aux: ∀f:rtmap. ∀X,Y. ⬆*[f] X ≘ Y →
 qed-.
 
 (* Basic_2A1: includes: liftv_inv_cons1 *)
-lemma liftsv_inv_cons1: ∀f:rtmap. ∀T1,T1s,Y. ⬆*[f] T1 @ T1s ≘ Y →
+lemma liftsv_inv_cons1: ∀f:rtmap. ∀T1,T1s,Y. ⬆*[f] T1 ⨮ T1s ≘ Y →
                         ∃∃T2,T2s. ⬆*[f] T1 ≘ T2 & ⬆*[f] T1s ≘ T2s &
-                                  Y = T2 @ T2s.
+                                  Y = T2 ⨮ T2s.
 /2 width=3 by liftsv_inv_cons1_aux/ qed-.
 
 fact liftsv_inv_nil2_aux: ∀f,X,Y. ⬆*[f] X ≘ Y → Y = ◊ → X = ◊.
@@ -67,18 +67,18 @@ lemma liftsv_inv_nil2: ∀f,X. ⬆*[f] X ≘ ◊ → X = ◊.
 /2 width=5 by liftsv_inv_nil2_aux/ qed-.
 
 fact liftsv_inv_cons2_aux: ∀f:rtmap. ∀X,Y. ⬆*[f] X ≘ Y →
-                           ∀T2,T2s. Y = T2 @ T2s →
+                           ∀T2,T2s. Y = T2 ⨮ T2s →
                            ∃∃T1,T1s. ⬆*[f] T1 ≘ T2 & ⬆*[f] T1s ≘ T2s &
-                                     X = T1 @ T1s.
+                                     X = T1 ⨮ T1s.
 #f #X #Y * -X -Y
 [ #U2 #U2s #H destruct
 | #T1s #T2s #T1 #T2 #HT12 #HT12s #U2 #U2s #H destruct /2 width=5 by ex3_2_intro/
 ]
 qed-.
 
-lemma liftsv_inv_cons2: ∀f:rtmap. ∀X,T2,T2s. ⬆*[f] X ≘ T2 @ T2s →
+lemma liftsv_inv_cons2: ∀f:rtmap. ∀X,T2,T2s. ⬆*[f] X ≘ T2 ⨮ T2s →
                         ∃∃T1,T1s. ⬆*[f] T1 ≘ T2 & ⬆*[f] T1s ≘ T2s &
-                                  X = T1 @ T1s.
+                                  X = T1 ⨮ T1s.
 /2 width=3 by liftsv_inv_cons2_aux/ qed-.
 
 (* Basic_1: was: lifts1_flat (left to right) *)

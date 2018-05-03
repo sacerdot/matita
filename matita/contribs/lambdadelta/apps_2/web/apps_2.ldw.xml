@@ -13,6 +13,10 @@
          applications of λδ version 2.
          In particular it contains the components below.
    </body>
+   <topitem name="models">
+      <notice class="alpha" notice="Models."/>
+      Denotational semantics for λδ.
+   </topitem>
    <topitem name="MLTT1">
       <notice class="alpha" notice="MLTT1."/>
       Martin-Löf's Type Theory with one universe
@@ -33,6 +37,9 @@
          and its timeline.
    </body>
    <table name="apps_2_sum"/>
+   <news class="alpha" date="2018 April 30.">
+         The Models component is started for λδ version 2.
+   </news>
    <news class="alpha" date="2017 March 6.">
          The Examples component is moved from the Core directory.
    </news>

@@ -19,7 +19,7 @@ include "basic_2/syntax/append.ma".
 
 (* Properties with length for local environments ****************************)
 
-lemma append_length: ∀L1,L2. |L1 @@ L2| = |L1| + |L2|.
+lemma append_length: ∀L1,L2. |L1 + L2| = |L1| + |L2|.
 #L1 #L2 elim L2 -L2 //
 #L2 #I >append_bind >length_bind >length_bind //
 qed.
@@ -49,7 +49,7 @@ qed-.
 (* Inversion lemmas with length for local environments **********************)
 
 (* Basic_2A1: was: append_inj_sn *)
-lemma append_inj_length_sn: ∀K1,K2,L1,L2. L1 @@ K1 = L2 @@ K2 → |K1| = |K2| →
+lemma append_inj_length_sn: ∀K1,K2,L1,L2. L1 + K1 = L2 + K2 → |K1| = |K2| →
                             L1 = L2 ∧ K1 = K2.
 #K1 elim K1 -K1
 [ * /2 width=1 by conj/
@@ -67,7 +67,7 @@ qed-.
 
 (* Note: lemma 750 *)
 (* Basic_2A1: was: append_inj_dx *)
-lemma append_inj_length_dx: ∀K1,K2,L1,L2. L1 @@ K1 = L2 @@ K2 → |L1| = |L2| →
+lemma append_inj_length_dx: ∀K1,K2,L1,L2. L1 + K1 = L2 + K2 → |L1| = |L2| →
                             L1 = L2 ∧ K1 = K2.
 #K1 elim K1 -K1
 [ * /2 width=1 by conj/
@@ -87,15 +87,15 @@ qed-.
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma append_inj_dx: ∀L,K1,K2. L@@K1 = L@@K2 → K1 = K2.
+lemma append_inj_dx: ∀L,K1,K2. L+K1 = L+K2 → K1 = K2.
 #L #K1 #K2 #H elim (append_inj_length_dx … H) -H //
 qed-.
 
-lemma append_inv_refl_dx: ∀L,K. L@@K = L → K = ⋆.
+lemma append_inv_refl_dx: ∀L,K. L+K = L → K = ⋆.
 #L #K #H elim (append_inj_dx … (⋆) … H) //
 qed-.
 
-lemma append_inv_pair_dx: ∀I,L,K,V. L@@K = L.ⓑ{I}V → K = ⋆.ⓑ{I}V.
+lemma append_inv_pair_dx: ∀I,L,K,V. L+K = L.ⓑ{I}V → K = ⋆.ⓑ{I}V.
 #I #L #K #V #H elim (append_inj_dx … (⋆.ⓑ{I}V) … H) //
 qed-.
 

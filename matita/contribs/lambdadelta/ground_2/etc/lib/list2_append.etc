@@ -12,14 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/notation/functions/identity_0.ma".
-include "ground_2/relocation/rtmap_isid.ma".
+include "ground_2/notation/functions/oplus_4.ma".
+include "ground_2/lib/list2.ma".
 
-(* RELOCATION N-STREAM ******************************************************)
+(* LISTS OF PAIRS ***********************************************************)
 
-(* Specific inversion lemmas ************************************************)
+rec definition append2 A1 A2 (l1,l2:list2 A1 A2) on l1 ≝ match l1 with
+[ nil2           ⇒ l2
+| cons2 a1 a2 tl ⇒ {a1, a2} ⨮ append2 A1 A2 tl l2
+].
 
-lemma isid_inv_seq: ∀f,n. 𝐈⦃n⨮f⦄ → 𝐈⦃f⦄ ∧ 0 = n.
-#f #n #H elim (isid_inv_gen … H) -H
-#g #Hg #H elim (push_inv_seq_dx … H) -H /2 width=1 by conj/
-qed-.
+interpretation "append (list of pairs)"
+   'OPlus A1 A2 l1 l2 = (append2 A1 A2 l1 l2).

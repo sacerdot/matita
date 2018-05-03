@@ -31,11 +31,11 @@ interpretation "functional application (nstream)"
 
 (* Specific properties on at ************************************************)
 
-lemma at_O1: ∀i2,f. @⦃0, i2@f⦄ ≘ i2.
+lemma at_O1: ∀i2,f. @⦃0, i2⨮f⦄ ≘ i2.
 #i2 elim i2 -i2 /2 width=5 by at_refl, at_next/
 qed.
 
-lemma at_S1: ∀n,f,i1,i2. @⦃i1, f⦄ ≘ i2 → @⦃↑i1, n@f⦄ ≘ ↑(n+i2).
+lemma at_S1: ∀n,f,i1,i2. @⦃i1, f⦄ ≘ i2 → @⦃↑i1, n⨮f⦄ ≘ ↑(n+i2).
 #n elim n -n /3 width=7 by at_push, at_next/
 qed.
 
@@ -47,20 +47,20 @@ qed.
 lemma at_istot: ∀f. 𝐓⦃f⦄.
 /2 width=2 by ex_intro/ qed.
 
-lemma at_plus2: ∀f,i1,i,n,m. @⦃i1, n@f⦄ ≘ i → @⦃i1, (m+n)@f⦄ ≘ m+i.
+lemma at_plus2: ∀f,i1,i,n,m. @⦃i1, n⨮f⦄ ≘ i → @⦃i1, (m+n)⨮f⦄ ≘ m+i.
 #f #i1 #i #n #m #H elim m -m //
 #m <plus_S1 /2 width=5 by at_next/ (**) (* full auto fails *)
 qed.
 
 (* Specific inversion lemmas on at ******************************************)
 
-lemma at_inv_O1: ∀f,n,i2. @⦃0, n@f⦄ ≘ i2 → n = i2.
+lemma at_inv_O1: ∀f,n,i2. @⦃0, n⨮f⦄ ≘ i2 → n = i2.
 #f #n elim n -n /2 width=6 by at_inv_ppx/
 #n #IH #i2 #H elim (at_inv_xnx … H) -H [2,3: // ]
 #j2 #Hj * -i2 /3 width=1 by eq_f/
 qed-.
 
-lemma at_inv_S1: ∀f,n,j1,i2. @⦃↑j1, n@f⦄ ≘ i2 →
+lemma at_inv_S1: ∀f,n,j1,i2. @⦃↑j1, n⨮f⦄ ≘ i2 →
                  ∃∃j2. @⦃j1, f⦄ ≘ j2 & ↑(n+j2) = i2.
 #f #n elim n -n /2 width=5 by at_inv_npx/
 #n #IH #j1 #i2 #H elim (at_inv_xnx … H) -H [2,3: // ]
@@ -73,7 +73,7 @@ lemma at_inv_total: ∀f,i1,i2. @⦃i1, f⦄ ≘ i2 → f@❴i1❵ = i2.
 
 (* Spercific forward lemmas on at *******************************************)
 
-lemma at_increasing_plus: ∀f,n,i1,i2. @⦃i1, n@f⦄ ≘ i2 → i1 + n ≤ i2.
+lemma at_increasing_plus: ∀f,n,i1,i2. @⦃i1, n⨮f⦄ ≘ i2 → i1 + n ≤ i2.
 #f #n *
 [ #i2 #H <(at_inv_O1 … H) -i2 //
 | #i1 #i2 #H elim (at_inv_S1 … H) -H
@@ -81,7 +81,7 @@ lemma at_increasing_plus: ∀f,n,i1,i2. @⦃i1, n@f⦄ ≘ i2 → i1 + n ≤ i2.
 ]
 qed-.
 
-lemma at_fwd_id: ∀f,n,i. @⦃i, n@f⦄ ≘ i → 0 = n.
+lemma at_fwd_id: ∀f,n,i. @⦃i, n⨮f⦄ ≘ i → 0 = n.
 #f #n #i #H elim (at_fwd_id_ex … H) -H
 #g #H elim (push_inv_seq_dx … H) -H //
 qed-.

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/notation/constructors/cons_2.ma".
+include "ground_2/notation/constructors/oplusright_3.ma".
 include "ground_2/lib/relations.ma".
 
 (* STREAMS ******************************************************************)
@@ -21,10 +21,10 @@ coinductive stream (A:Type[0]): Type[0] ≝
 | seq: A → stream A → stream A
 .
 
-interpretation "cons (nstream)" 'Cons b t = (seq ? b t).
+interpretation "cons (nstream)" 'OPlusRight A a u = (seq A a u).
 
 (* Basic properties *********************************************************)
 
-lemma stream_rew (A) (t:stream A): match t with [ seq a u ⇒ a @ u ] = t.
+lemma stream_rew (A) (t:stream A): match t with [ seq a u ⇒ a ⨮ u ] = t.
 #A * //
 qed.

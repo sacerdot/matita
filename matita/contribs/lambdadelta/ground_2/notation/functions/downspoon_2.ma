@@ -14,6 +14,14 @@
 
 (* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
 
-notation "hvbox( ⫰ term 46 T )"
+notation < "hvbox( ⫰ term 46 a )"
    non associative with precedence 46
-   for @{ 'DownSpoon $T }.
+   for @{ 'DownSpoon $S $a }.
+
+notation > "hvbox( ⫰ term 46 a )"
+   non associative with precedence 46
+   for @{ 'DownSpoon ? $a }.
+
+notation > "hvbox( ⫰{ term 46 S } break term 46 a )"
+   non associative with precedence 46
+   for @{ 'DownSpoon $S $a }.

@@ -19,22 +19,22 @@ include "ground_2/lib/streams_tls.ma".
 
 definition rtmap: Type[0] ≝ stream nat.
 
-definition push: rtmap → rtmap ≝ λf. 0@f.
+definition push: rtmap → rtmap ≝ λf. 0⨮f.
 
 interpretation "push (nstream)" 'UpSpoon f = (push f).
 
 definition next: rtmap → rtmap.
-* #n #f @(↑n@f)
+* #n #f @(↑n⨮f)
 defined.
 
 interpretation "next (nstream)" 'UpArrow f = (next f).
 
 (* Basic properties *********************************************************)
 
-lemma push_rew: ∀f. 0@f = ⫯f.
+lemma push_rew: ∀f. 0⨮f = ⫯f.
 // qed.
 
-lemma next_rew: ∀f,n. (↑n)@f = ↑(n@f).
+lemma next_rew: ∀f,n. (↑n)⨮f = ↑(n⨮f).
 // qed.
 
 (* Basic inversion lemmas ***************************************************)
@@ -55,19 +55,19 @@ lemma injective_next: injective ? ? next.
 * #n1 #f1 * #n2 #f2 normalize #H destruct //
 qed-.
 
-lemma push_inv_seq_sn: ∀f,g,n. n@g = ⫯f → 0 = n ∧ g = f.
+lemma push_inv_seq_sn: ∀f,g,n. n⨮g = ⫯f → 0 = n ∧ g = f.
 #f #g #n <push_rew #H destruct /2 width=1 by conj/
 qed-.
 
-lemma push_inv_seq_dx: ∀f,g,n. ⫯f = n@g → 0 = n ∧ g = f.
+lemma push_inv_seq_dx: ∀f,g,n. ⫯f = n⨮g → 0 = n ∧ g = f.
 #f #g #n <push_rew #H destruct /2 width=1 by conj/
 qed-.
 
-lemma next_inv_seq_sn: ∀f,g,n. n@g = ↑f → ∃∃m. m@g = f & ↑m = n.
+lemma next_inv_seq_sn: ∀f,g,n. n⨮g = ↑f → ∃∃m. m⨮g = f & ↑m = n.
 * #m #f #g #n <next_rew #H destruct /2 width=3 by ex2_intro/
 qed-.
 
-lemma next_inv_seq_dx: ∀f,g,n. ↑f = n@g → ∃∃m. m@g = f & ↑m = n.
+lemma next_inv_seq_dx: ∀f,g,n. ↑f = n⨮g → ∃∃m. m⨮g = f & ↑m = n.
 * #m #f #g #n <next_rew #H destruct /2 width=3 by ex2_intro/
 qed-.
 

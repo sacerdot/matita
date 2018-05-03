@@ -14,6 +14,14 @@
 
 (* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
 
-notation "hvbox( l1 @@ break l2 )"
-  right associative with precedence 47
-  for @{ 'Append $l1 $l2 }.
+notation < "hvbox( ⫰*[ break term 46 n ] break term 46 a )"
+   non associative with precedence 46
+   for @{ 'DownSpoonStar $S $n $a }.
+
+notation > "hvbox( ⫰*[ break term 46 n ] break term 46 a )"
+   non associative with precedence 46
+   for @{ 'DownSpoonStar ? $n $a }.
+
+notation > "hvbox( ⫰*{ term 46 S }[ break term 46 n ] break term 46 a )"
+   non associative with precedence 46
+   for @{ 'DownSpoonStar $S $n $a }.
