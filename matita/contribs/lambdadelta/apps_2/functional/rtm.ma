@@ -44,18 +44,18 @@ record rtm: Type[0] ≝
 
 (* initial state *)
 definition rtm_i: genv → term → rtm ≝
-                  λG,T. mk_rtm G 0 (⋆) (◊) T.
+                  λG,T. mk_rtm G 0 (⋆) (Ⓔ) T.
 
 (* update code *)
 definition rtm_t: rtm → term → rtm ≝
                   λM,T. match M with
-                  [ mk_rtm G u E _ _ ⇒ mk_rtm G u E (◊) T
+                  [ mk_rtm G u E _ _ ⇒ mk_rtm G u E (Ⓔ) T
                   ].
 
 (* update closure *)
 definition rtm_u: rtm → xenv → term → rtm ≝
                   λM,E,T. match M with
-                  [ mk_rtm G u _ _ _ ⇒ mk_rtm G u E (◊) T
+                  [ mk_rtm G u _ _ _ ⇒ mk_rtm G u E (Ⓔ) T
                   ].
 
 (* get global environment *)

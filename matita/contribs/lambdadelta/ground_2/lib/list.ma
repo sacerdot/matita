@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/notation/constructors/nil_0.ma".
+include "ground_2/notation/constructors/circledE_1.ma".
 include "ground_2/notation/constructors/oplusright_3.ma".
 include "ground_2/lib/arith.ma".
 
@@ -22,7 +22,7 @@ inductive list (A:Type[0]) : Type[0] :=
   | nil : list A
   | cons: A → list A → list A.
 
-interpretation "nil (list)" 'Nil = (nil ?).
+interpretation "nil (list)" 'CircledE A = (nil A).
 
 interpretation "cons (list)" 'OPlusRight A hd tl = (cons A hd tl).
 
@@ -50,11 +50,11 @@ lemma length_cons (A:Type[0]) (l:list A) (a:A): |a⨮l| = ↑|l|.
 
 (* Basic inversion lemmas on length *****************************************)
 
-lemma length_inv_zero_dx (A:Type[0]) (l:list A): |l| = 0 → l = ◊.
+lemma length_inv_zero_dx (A:Type[0]) (l:list A): |l| = 0 → l = Ⓔ.
 #A * // #a #l >length_cons #H destruct
 qed-.
 
-lemma length_inv_zero_sn (A:Type[0]) (l:list A): 0 = |l| → l = ◊.
+lemma length_inv_zero_sn (A:Type[0]) (l:list A): 0 = |l| → l = Ⓔ.
 /2 width=1 by length_inv_zero_dx/ qed-.
 
 lemma length_inv_succ_dx (A:Type[0]) (l:list A) (x): |l| = ↑x →

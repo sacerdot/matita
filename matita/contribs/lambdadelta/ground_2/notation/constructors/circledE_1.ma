@@ -12,18 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/notation/constructors/diamond_0.ma".
-include "ground_2/notation/constructors/semicolon_3.ma".
-include "ground_2/lib/arith.ma".
+(* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
 
-(* MULTIPLE RELOCATION WITH PAIRS *******************************************)
+notation < "hvbox( Ⓔ )"
+   non associative with precedence 55
+   for @{ 'CircledE $S }.
 
-inductive mr2: Type[0] :=
-  | nil2 : mr2
-  | cons2: nat → nat → mr2 → mr2.
+notation > "hvbox( Ⓔ )"
+   non associative with precedence 55
+   for @{ 'CircledE ? }.
 
-interpretation "nil (multiple relocation with pairs)"
-  'Diamond = (nil2).
-
-interpretation "cons (multiple relocation with pairs)"
-  'Semicolon hd1 hd2 tl = (cons2 hd1 hd2 tl).
+notation > "hvbox( Ⓔ{ term 46 C } )"
+   non associative with precedence 55
+   for @{ 'CircledE $S }.

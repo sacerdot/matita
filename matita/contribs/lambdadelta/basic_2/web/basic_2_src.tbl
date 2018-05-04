@@ -250,6 +250,7 @@ table {
           }
         ]
         [ { "global environments" * } {
+             [ [ "" ] "genv_length" + "( |?| )" * ]
              [ [ "" ] "genv" * ]
           }
         ]

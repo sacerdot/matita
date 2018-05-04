@@ -12,8 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
+include "basic_2/syntax/genv.ma".
 
-notation "◊"
-  non associative with precedence 46
-  for @{ 'Nil }.
+(* LENGTH OF A GLOBAL ENVIRONMENT *******************************************)
+
+rec definition glength G on G ≝ match G with
+[ GAtom       ⇒ 0
+| GBind G _ _ ⇒ ↑(glength G)
+].
+
+interpretation "length (global environment)"
+  'card G = (glength G).

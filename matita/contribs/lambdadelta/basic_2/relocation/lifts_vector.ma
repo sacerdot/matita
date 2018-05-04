@@ -19,7 +19,7 @@ include "basic_2/relocation/lifts.ma".
 
 (* Basic_2A1: includes: liftv_nil liftv_cons *)
 inductive liftsv (f:rtmap): relation (list term) ≝
-| liftsv_nil : liftsv f (◊) (◊)
+| liftsv_nil : liftsv f (Ⓔ) (Ⓔ)
 | liftsv_cons: ∀T1s,T2s,T1,T2.
                ⬆*[f] T1 ≘ T2 → liftsv f T1s T2s →
                liftsv f (T1 ⨮ T1s) (T2 ⨮ T2s)
@@ -33,13 +33,13 @@ interpretation "generic relocation (term vector)"
 
 (* Basic inversion lemmas ***************************************************)
 
-fact liftsv_inv_nil1_aux: ∀f,X,Y. ⬆*[f] X ≘ Y → X = ◊ → Y = ◊.
+fact liftsv_inv_nil1_aux: ∀f,X,Y. ⬆*[f] X ≘ Y → X = Ⓔ → Y = Ⓔ.
 #f #X #Y * -X -Y //
 #T1s #T2s #T1 #T2 #_ #_ #H destruct
 qed-.
 
 (* Basic_2A1: includes: liftv_inv_nil1 *)
-lemma liftsv_inv_nil1: ∀f,Y. ⬆*[f] ◊ ≘ Y → Y = ◊.
+lemma liftsv_inv_nil1: ∀f,Y. ⬆*[f] Ⓔ ≘ Y → Y = Ⓔ.
 /2 width=5 by liftsv_inv_nil1_aux/ qed-.
 
 fact liftsv_inv_cons1_aux: ∀f:rtmap. ∀X,Y. ⬆*[f] X ≘ Y →
@@ -58,12 +58,12 @@ lemma liftsv_inv_cons1: ∀f:rtmap. ∀T1,T1s,Y. ⬆*[f] T1 ⨮ T1s ≘ Y →
                                   Y = T2 ⨮ T2s.
 /2 width=3 by liftsv_inv_cons1_aux/ qed-.
 
-fact liftsv_inv_nil2_aux: ∀f,X,Y. ⬆*[f] X ≘ Y → Y = ◊ → X = ◊.
+fact liftsv_inv_nil2_aux: ∀f,X,Y. ⬆*[f] X ≘ Y → Y = Ⓔ → X = Ⓔ.
 #f #X #Y * -X -Y //
 #T1s #T2s #T1 #T2 #_ #_ #H destruct
 qed-.
 
-lemma liftsv_inv_nil2: ∀f,X. ⬆*[f] X ≘ ◊ → X = ◊.
+lemma liftsv_inv_nil2: ∀f,X. ⬆*[f] X ≘ Ⓔ → X = Ⓔ.
 /2 width=5 by liftsv_inv_nil2_aux/ qed-.
 
 fact liftsv_inv_cons2_aux: ∀f:rtmap. ∀X,Y. ⬆*[f] X ≘ Y →

@@ -39,6 +39,7 @@ NAMING CONVENTIONS FOR CONSTRUCTORS
 2: binary
 
 A: application to vector
+E: empty list
 F: boolean false
 T: boolean true
 

@@ -105,7 +105,7 @@ lemma acr_gcr: ∀RR,RS,RP. gcp RR RS RP → gcr RR RS RP RP →
 #B #A #IHB #IHA @mk_gcr
 [ #G #L #T #H
   elim (cp1 … H1RP G L) #s #HK
-  lapply (s2 … IHB G L (◊) … HK) // #HB
+  lapply (s2 … IHB G L (Ⓔ) … HK) // #HB
   lapply (H (𝐈𝐝) L (⋆s) T ? ? ?) -H
   /3 width=6 by s1, cp3, drops_refl, lifts_refl/
 | #G #L #Vs #HVs #T #H1T #H2T #f #L0 #V0 #X #HL0 #H #HB
@@ -165,11 +165,11 @@ lapply (acr_gcr … H1RP H2RP A) #HCA
 lapply (acr_gcr … H1RP H2RP B) #HCB
 elim (lifts_inv_bind1 … H) -H #W0 #T0 #HW0 #HT0 #H destruct
 lapply (acr_lifts … H1RP … HW … HL0 … HW0) -HW #HW0
-lapply (s3 … HCA … p G L0 (◊)) #H @H -H
-lapply (s6 … HCA G L0 (◊) (◊) ?) // #H @H -H
+lapply (s3 … HCA … p G L0 (Ⓔ)) #H @H -H
+lapply (s6 … HCA G L0 (Ⓔ) (Ⓔ) ?) // #H @H -H
 [ @(HA … HL0) //
 | lapply (s1 … HCB) -HCB #HCB
-  lapply (s7 … H2RP G L0 (◊)) /3 width=1 by/
+  lapply (s7 … H2RP G L0 (Ⓔ)) /3 width=1 by/
 ]
 qed.
 

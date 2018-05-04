@@ -31,7 +31,7 @@ theorem acr_aaa_csubc_lifts: ∀RR,RS,RP.
   lapply (aaa_inv_sort … HA) -HA #H destruct
   >(lifts_inv_sort1 … H0) -H0
   lapply (acr_gcr … H1RP H2RP (⓪)) #HAtom
-  lapply (s4 … HAtom G L2 (◊)) /2 width=1 by/
+  lapply (s4 … HAtom G L2 (Ⓔ)) /2 width=1 by/
 | #i #HG #HL #HT #A #HA #b #f #L0 #HL01 #X0 #H0 #L2 #HL20 destruct
   elim (aaa_inv_lref_drops … HA) -HA #I #K1 #V1 #HLK1 #HKV1
   elim (lifts_inv_lref1 … H0) -H0 #j #Hf #H destruct
@@ -46,16 +46,16 @@ theorem acr_aaa_csubc_lifts: ∀RR,RS,RP.
   elim (lsubc_inv_bind2 … H) -H *
   [ #K2 #HK20 #H destruct
     lapply (drops_isuni_fwd_drop2 … HLK2) // #HLK2b
-    lapply (s5 … HA ? G ? ? (◊) … HV0 ?) -HA
+    lapply (s5 … HA ? G ? ? (Ⓔ) … HV0 ?) -HA
     /4 width=11 by acr_lifts, fqup_lref, drops_inv_gen/
   | #K2 #V2 #W2 #B #HKV2 #HK2V0 #HKV0B #_ #H1 #H2 destruct -IH -HLK1
     lapply (drops_isuni_fwd_drop2 … HLK2) // #HLK2b
     lapply (aaa_lifts … HKV1 … HK01 … HV10) -HKV1 -HK01 -HV10 #HKV0A
     lapply (aaa_mono … HKV0B … HKV0A) #H destruct -HKV0B -HKV0A
     elim (lifts_total V2 (𝐔❴↑j❵)) #V3 #HV23
-    lapply (s5 … HA … G … (◊) … (ⓝW2.V2) (ⓝV.V3) ????)
+    lapply (s5 … HA … G … (Ⓔ) … (ⓝW2.V2) (ⓝV.V3) ????)
     [3: |*: /2 width=9 by drops_inv_gen, lifts_flat/ ] -HLK2
-    lapply (s7 … HA G L2 (◊)) -HA /3 width=7 by acr_lifts/
+    lapply (s7 … HA G L2 (Ⓔ)) -HA /3 width=7 by acr_lifts/
   ]
 | #l #HG #HL #HT #A #HA #b #f #L0 #HL01 #X0 #H0 #L2 #HL20 destruct -IH
   elim (aaa_inv_gref … HA)
@@ -65,7 +65,7 @@ theorem acr_aaa_csubc_lifts: ∀RR,RS,RP.
   lapply (acr_gcr … H1RP H2RP A) #HA
   lapply (acr_gcr … H1RP H2RP B) #HB
   lapply (s1 … HB) -HB #HB
-  lapply (s6 … HA G L2 (◊) (◊)) /5 width=10 by lsubc_bind, liftsv_nil, drops_skip, ext2_pair/
+  lapply (s6 … HA G L2 (Ⓔ) (Ⓔ)) /5 width=10 by lsubc_bind, liftsv_nil, drops_skip, ext2_pair/
 | #W #T #HG #HL #HT #Z0 #HA #b #f #L0 #HL01 #X0 #H0 #L2 #HL20 destruct
   elim (aaa_inv_abst … HA) -HA #B #A #HW #HT #H destruct
   elim (lifts_inv_bind1 … H0) -H0 #W0 #T0 #HW0 #HT0 #H destruct
@@ -85,7 +85,7 @@ theorem acr_aaa_csubc_lifts: ∀RR,RS,RP.
   elim (aaa_inv_cast … HA) -HA #HW #HT
   elim (lifts_inv_flat1 … H0) -H0 #W0 #T0 #HW0 #HT0 #H destruct
   lapply (acr_gcr … H1RP H2RP A) #HA
-  lapply (s7 … HA G L2 (◊)) /3 width=10 by/
+  lapply (s7 … HA G L2 (Ⓔ)) /3 width=10 by/
 ]
 qed.
 

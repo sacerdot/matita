@@ -33,7 +33,7 @@ table {
              [ "trace ( ∥?∥ )" "trace_at ( @⦃?,?⦄ ≘ ? )" "trace_after ( ? ⊚ ? ≘ ? )" "trace_isid ( 𝐈⦃?⦄ )" "trace_isun ( 𝐔⦃?⦄ )"
                "trace_sle ( ? ⊆ ? )" "trace_sor ( ? ⋓ ? ≘ ? )" "trace_snot ( ∁ ? )" * ]
 *)
-             [ "mr2" "mr2_at ( @⦃?,?⦄ ≘ ? )" "mr2_plus ( ? + ? )" "mr2_minus ( ? ▭ ? ≘ ? )" * ]
+             [ "mr2 ( ◊ ) ( {?,?};? )" "mr2_at ( @⦃?,?⦄ ≘ ? )" "mr2_plus ( ? + ? )" "mr2_minus ( ? ▭ ? ≘ ? )" * ]
           }
         ]
      }
@@ -53,7 +53,7 @@ table {
    [ { "extensions to the library" * } {
         [ { "" * } {
              [ "stream ( ? ⨮{?} ? )" "stream_eq ( ? ≗{?} ? )" "stream_hdtl ( ⫰{?}? )" "stream_tls ( ⫰*{?}[?]? )" * ]
-             [ "list ( ◊ ) ( ? ⨮{?} ? ) ( |?| )" "list2 ( ◊ ) ( {?,?} ⨮{?,?} ? ) ( |?| )" * ]
+             [ "list ( Ⓔ{?} ) ( ? ⨮{?} ? ) ( |?| )" * ]
              [ "bool ( Ⓕ ) ( Ⓣ )" "arith ( ?^? ) ( ↑? ) ( ↓? ) ( ? ∨ ? ) ( ? ∧ ? )" * ]
              [ "logic ( ⊥ ) ( ⊤ )" "relations ( ? ⊆ ? )" "functions" "exteq ( ? ≐{?,?} ? )" "star" "ltc" * ]
           }
