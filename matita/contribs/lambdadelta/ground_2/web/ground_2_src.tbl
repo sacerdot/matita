@@ -53,7 +53,7 @@ table {
    [ { "extensions to the library" * } {
         [ { "" * } {
              [ "stream ( ? ⨮{?} ? )" "stream_eq ( ? ≗{?} ? )" "stream_hdtl ( ⫰{?}? )" "stream_tls ( ⫰*{?}[?]? )" * ]
-             [ "list ( Ⓔ{?} ) ( ? ⨮{?} ? ) ( |?| )" * ]
+             [ "list ( Ⓔ{?} ) ( ? ⨮{?} ? )" "list_length ( |?| )" * ]
              [ "bool ( Ⓕ ) ( Ⓣ )" "arith ( ?^? ) ( ↑? ) ( ↓? ) ( ? ∨ ? ) ( ? ∧ ? )" * ]
              [ "logic ( ⊥ ) ( ⊤ )" "relations ( ? ⊆ ? )" "functions" "exteq ( ? ≐{?,?} ? )" "star" "ltc" * ]
           }
