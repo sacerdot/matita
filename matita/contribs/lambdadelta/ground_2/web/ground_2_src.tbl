@@ -25,6 +25,7 @@ table {
                "rtmap_fcla ( 𝐂⦃?⦄ ≘ ? )" "rtmap_isfin ( 𝐅⦃?⦄ )" "rtmap_isuni ( 𝐔⦃?⦄ )" "rtmap_uni ( 𝐔❴?❵ )"
                "rtmap_sle ( ? ⊆ ? )" "rtmap_sdj ( ? ∥ ? )" "rtmap_sand ( ? ⋒ ? ≘ ? )" "rtmap_sor ( ? ⋓ ? ≘ ? )"
                "rtmap_at ( @⦃?,?⦄ ≘ ? )" "rtmap_istot ( 𝐓⦃?⦄ )" "rtmap_after ( ? ⊚ ? ≘ ? )" "rtmap_coafter ( ? ~⊚ ? ≘ ? )"
+               "rtmap_basic ( 𝐁❴?,?❵ )"
              * ]
              [ "nstream ( ⫯? ) ( ↑? )" "nstream_eq" "" "" "" "" "nstream_isid" "nstream_id ( 𝐈𝐝 )" ""
                "" "" "" "" "" "" "" "nstream_sor" "" "nstream_istot ( ?@❴?❵ )" "nstream_after ( ? ∘ ? )" "nstream_coafter ( ? ~∘ ? )"

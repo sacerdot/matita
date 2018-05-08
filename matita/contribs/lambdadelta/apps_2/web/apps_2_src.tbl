@@ -16,7 +16,7 @@ table {
           }
         ]
         [ { "evaluation equivalence" * } {
-             [ "veq" + "( ? ≗{?} ? )" "veq_vdrop" "veq_li" * ]
+             [ "veq" + "( ? ≗{?} ? )" "veq_vdrop" "veq_li" "veq_lifts" * ]
           }
         ]
         [ { "evaluation drop" * } {        
