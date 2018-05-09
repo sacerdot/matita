@@ -12,14 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/syntax/term_weight.ma".
 include "basic_2/syntax/genv.ma".
 
-(* LENGTH OF A GLOBAL ENVIRONMENT *******************************************)
+(* WEIGHT OF A GLOBAL ENVIRONMENT *******************************************)
 
-rec definition glength G on G ≝ match G with
+rec definition gw G ≝ match G with
 [ GAtom       ⇒ 0
-| GPair G _ _ ⇒ ↑(glength G)
+| GPair G I T ⇒ gw G + ♯{T}
 ].
 
-interpretation "length (global environment)"
-  'card G = (glength G).
+interpretation "weight (global environment)" 'Weight G = (gw G).
+
+(* Basic properties *********************************************************)
+
+lemma gw_pair: ∀I,G,T. ♯{G} < ♯{G.ⓑ{I}T}.
+normalize /2 width=1 by monotonic_le_plus_r/ qed.

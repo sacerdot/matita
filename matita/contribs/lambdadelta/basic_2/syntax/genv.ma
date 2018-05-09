@@ -23,20 +23,20 @@ include "basic_2/syntax/term.ma".
 (* global environments *)
 inductive genv: Type[0] ≝
 | GAtom: genv                       (* empty *)
-| GBind: genv → bind2 → term → genv (* binding construction *)
+| GPair: genv → bind2 → term → genv (* binary binding construction *)
 .
 
 interpretation "sort (global environment)"
    'Star = (GAtom).
 
 interpretation "global environment binding construction (binary)"
-   'DxBind2 G I T = (GBind G I T).
+   'DxBind2 G I T = (GPair G I T).
 
 interpretation "abbreviation (global environment)"
-   'DxAbbr G T = (GBind G Abbr T).
+   'DxAbbr G T = (GPair G Abbr T).
 
 interpretation "abstraction (global environment)"
-   'DxAbst G T = (GBind G Abst T).
+   'DxAbst G T = (GPair G Abst T).
 
 (* Basic properties *********************************************************)
 
