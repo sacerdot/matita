@@ -84,6 +84,13 @@ elim (max_inv_dx … H) -H #ri1 #rs1 #ti1 #ts1 #ri2 #rs2 #ti2 #ts2 #_ #_ #H1 #H2
 elim (max_inv_O3 … H1) -H1 /3 width=5 by ex3_2_intro, ex1_2_intro/
 qed-.
 
+lemma isrt_O_inv_max: ∀c1,c2. 𝐑𝐓⦃0, c1 ∨ c2⦄ → ∧∧ 𝐑𝐓⦃0, c1⦄ & 𝐑𝐓⦃0, c2⦄.
+#c1 #c2 #H
+elim (isrt_inv_max … H) -H #n1 #n2 #Hn1 #Hn2 #H
+elim (max_inv_O3 … H) -H #H1 #H2 destruct
+/2 width=1 by conj/
+qed-.
+
 lemma isrt_inv_max_O_dx: ∀n,c1,c2. 𝐑𝐓⦃n, c1 ∨ c2⦄ → 𝐑𝐓⦃0, c2⦄ → 𝐑𝐓⦃n, c1⦄.
 #n #c1 #c2 #H #H2
 elim (isrt_inv_max … H) -H #n1 #n2 #Hn1 #Hn2 #H destruct

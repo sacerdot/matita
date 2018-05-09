@@ -32,9 +32,21 @@ lemma veq_repl (M): is_model M →
                     replace_2 … (veq M) (veq M) (veq M).
 /2 width=5 by mr/ qed-.
 
+lemma veq_sym (M): is_model M → symmetric … (veq M).
+/3 width=5 by veq_repl, veq_refl/ qed-.
+
+lemma veq_trans (M): is_model M → Transitive … (veq M).
+/3 width=5 by veq_repl, veq_refl/ qed-.
+
+(* Properties with extebsional equivalence **********************************)
+
 lemma ext_veq (M): is_model M →
                    ∀lv1,lv2. lv1 ≐ lv2 → lv1 ≗{M} lv2.
 /2 width=1 by mq/ qed.
+
+lemma veq_repl_exteq (M): is_model M →
+                          replace_2 … (veq M) (exteq …) (exteq …).
+/2 width=5 by mr/ qed-.
 
 lemma exteq_veq_trans (M): ∀lv1,lv. lv1 ≐ lv →
                            ∀lv2. lv ≗{M} lv2 → lv1 ≗ lv2.

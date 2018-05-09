@@ -12,16 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
+include "basic_2/syntax/genv.ma".
 
-notation < "hvbox( L ⊢ break term 46 T1 ≗ break term 46 T2 )"
-   non associative with precedence 45
-   for @{ 'RingEq $M $L $T1 $T2 }.
-
-notation > "hvbox( L ⊢ break term 46 T1 ≗ break term 46 T2 )"
-   non associative with precedence 45
-   for @{ 'RingEq ? $L $T1 $T2 }.
-
-notation > "hvbox( L ⊢ break term 46 T1 ≗{ break term 46 M } break term 46 T2 )"
-   non associative with precedence 45
-   for @{ 'RingEq $M $L $T1 $T2 }.
+(* GLOBAL ENVIRONMENT INTERPRETATION  ***************************************)

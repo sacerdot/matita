@@ -12,28 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "apps_2/notation/models/ringeq_5.ma".
-include "apps_2/models/model_gi.ma".
-include "apps_2/models/model_li.ma".
-include "apps_2/models/model_props.ma".
+(* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
 
-(* DENOTATIONAL EQUIVALENCE  ************************************************)
+notation < "hvbox( ⦃ term 46 G, break term 46 L ⦄ ⊢ break term 46 T1 ≗ break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'RingEq $M $G $L $T1 $T2 }.
 
-definition deq (M): relation4 genv lenv term term ≝
-                    λG,L,T1,T2. ∀gv,lv. lv ϵ ⟦L⟧[gv] → ⟦T1⟧[gv, lv] ≗{M} ⟦T2⟧[gv, lv].
+notation > "hvbox( ⦃ term 46 G, break term 46 L ⦄ ⊢ break term 46 T1 ≗ break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'RingEq ? $G $L $T1 $T2 }.
 
-interpretation "denotational equivalence (model)"
-   'RingEq M G L T1 T2 = (deq M G L T1 T2).
-
-(* Basic properties *********************************************************)
-
-lemma deq_refl (M): is_model M →
-                    ∀G,L. reflexive … (deq M G L).
-/2 width=1 by mq/ qed.
-(*
-lemma veq_sym: ∀M. symmetric … (veq M).
-// qed-.
-
-theorem veq_trans: ∀M. transitive … (veq M).
-// qed-.
-*)
+notation > "hvbox( ⦃ term 46 G, break term 46 L ⦄ ⊢ break term 46 T1 ≗{ break term 46 M } break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'RingEq $M $G $L $T1 $T2 }.

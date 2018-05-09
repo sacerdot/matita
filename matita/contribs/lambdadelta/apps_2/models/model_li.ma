@@ -81,3 +81,15 @@ qed-.
 lemma li_inv_unit (M) (gv): ∀v,I,L. v ϵ ⟦L.ⓤ{I}⟧{M}[gv] →
                             ∃∃lv,d. lv ϵ ⟦L⟧{M}[gv] & ⫯{M}[d]lv ≐ v.
 /2 width=4 by li_inv_unit_aux/ qed-.
+
+(* Advanced forward lemmas **************************************************)
+
+lemma li_fwd_bind (M) (gv): ∀v,I,L. v ϵ ⟦L.ⓘ{I}⟧{M}[gv] →
+                            ∃∃lv,d. lv ϵ ⟦L⟧{M}[gv] & ⫯{M}[d]lv ≐ v.
+#m #gv #v * [ #I | * #V ] #L #H
+[ @(li_inv_unit … H)
+| elim (li_inv_abbr … H) -H #lv #d #Hl #_ #Hv
+  /2 width=4 by ex2_2_intro/
+| @(li_inv_abst … H)
+]
+qed-.

@@ -12,7 +12,7 @@ table {
    class "orange"
    [ { "models" * } {
         [ { "denotational equivalence" * } {
-             [ "deq" + "( ? ⊢ ? ≗{?} ? )" * ]
+             [ "deq" + "( ? ⊢ ? ≗{?} ? )" "deq_cpr" * ]
           }
         ]
         [ { "evaluation equivalence" * } {
@@ -28,6 +28,7 @@ table {
                "model_vlift" + "( ⫯{?}[?]? )" + "( ⫯{?}[?←?]? )"
                "model_props"
                "model_li" + "( ? ϵ ⟦?⟧{?}[?] )"
+               "model_gi"
                * ]
           }
         ]
