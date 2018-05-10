@@ -62,8 +62,12 @@ table {
      }
    ]
    class "orange"
-   [ { "generated logical decomposables" * } {
-        [ { "" * } {
+   [ { "generated library" * } {
+        [ { "equality insertion" * } {
+             [ "insert_eq" * ]
+          }
+        ]
+        [ { "logical decomposables" * } {
              [ "xoa ( ∃∃ ) ( ∨∨ ) ( ∧∧ )" * ]
           }
         ]

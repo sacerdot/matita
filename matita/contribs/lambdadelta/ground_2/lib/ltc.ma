@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/insert_eq/insert_eq_0.ma".
 include "ground_2/lib/functions.ma".
 
 (* LABELLED TRANSITIVE CLOSURE **********************************************)
@@ -37,7 +38,7 @@ lemma ltc_ind_sn (A) (f) (B) (R) (Q:relation2 A B) (b2): associative … f →
                  (∀a,b1. R a b1 b2 → Q a b1) →
                  (∀a1,a2,b1,b. R a1 b1 b → ltc … f … R a2 b b2 → Q a2 b → Q (f a1 a2) b1) →
                  ∀a,b1. ltc … f … R a b1 b2 → Q a b1.
-#A #f #B #R #Q #b2 #Hf #IH1 #IH2 #a #b1 @(insert_eq … b2)
+#A #f #B #R #Q #b2 #Hf #IH1 #IH2 #a #b1 @(insert_eq_0 … b2)
 #b0 #H elim H -a -b1 -b0 /2 width=2 by/
 #a1 #a2 #b1 #b #b0 #H #Hb2 #_
 generalize in match Hb2; generalize in match a2; -Hb2 -a2
@@ -48,7 +49,7 @@ lemma ltc_ind_dx (A) (f) (B) (R) (Q:A→predicate B) (b1): associative … f →
                  (∀a,b2. R a b1 b2 → Q a b2) →
                  (∀a1,a2,b,b2. ltc … f … R a1 b1 b → Q a1 b → R a2 b b2 → Q (f a1 a2) b2) →
                  ∀a,b2. ltc … f … R a b1 b2 → Q a b2.
-#A #f #B #R #Q #b1 #Hf #IH1 #IH2 #a #b2 @(insert_eq … b1)
+#A #f #B #R #Q #b1 #Hf #IH1 #IH2 #a #b2 @(insert_eq_0 … b1)
 #b0 #H elim H -a -b0 -b2 /2 width=2 by/
 #a1 #a2 #b0 #b #b2 #Hb0 #H #IHb0 #_
 generalize in match IHb0; generalize in match Hb0; generalize in match a1; -IHb0 -Hb0 -a1
