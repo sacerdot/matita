@@ -10,3 +10,4 @@ fpbs.ma fpbs_fqup.ma fpbs_fqus.ma fpbs_aaa.ma fpbs_cpx.ma fpbs_fpb.ma fpbs_cpxs.
 fpbg.ma fpbg_fqup.ma fpbg_cpxs.ma fpbg_lfpxs.ma fpbg_fpbs.ma fpbg_fpbg.ma
 fsb.ma fsb_ffdeq.ma fsb_aaa.ma fsb_csx.ma fsb_fpbg.ma
 cpms.ma
+cprs.ma
