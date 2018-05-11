@@ -71,6 +71,60 @@ lemma cpms_bind_dx (n) (h) (G) (L):
 #n #h #G #L #V1 #V2 #HV12 #I #T1 #T2 #H #a @(cpms_ind_sn … H) -T1
 /3 width=3 by cpms_step_sn, cpm_cpms, cpm_bind/ qed.
 
+lemma cpms_appl_dx (n) (h) (G) (L):
+                   ∀V1,V2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 →
+                   ∀T1,T2. ⦃G, L⦄ ⊢ T1 ➡*[n, h] T2 →
+                   ⦃G, L⦄ ⊢ ⓐV1.T1 ➡*[n, h] ⓐV2.T2.
+#n #h #G #L #V1 #V2 #HV12 #T1 #T2 #H @(cpms_ind_sn … H) -T1
+/3 width=3 by cpms_step_sn, cpm_cpms, cpm_appl/
+qed.
+
+(* Basic_2A1: uses: cprs_zeta *)
+lemma cpms_zeta (n) (h) (G) (L):
+                ∀T2,T. ⬆*[1] T2 ≘ T →
+                ∀V,T1. ⦃G, L.ⓓV⦄ ⊢ T1 ➡*[n, h] T → ⦃G, L⦄ ⊢ +ⓓV.T1 ➡*[n, h] T2.
+#n #h #G #L #T2 #T #HT2 #V #T1 #H @(cpms_ind_sn … H) -T1
+/3 width=3 by cpms_step_sn, cpm_cpms, cpm_bind, cpm_zeta/
+qed.
+
+(* Basic_2A1: uses: cprs_eps *)
+lemma cpms_eps (n) (h) (G) (L):
+               ∀T1,T2. ⦃G, L⦄ ⊢ T1 ➡*[n, h] T2 →
+               ∀V. ⦃G, L⦄ ⊢ ⓝV.T1 ➡*[n, h] T2.
+#n #h #G #L #T1 #T2 #H @(cpms_ind_sn … H) -T1
+/3 width=3 by cpms_step_sn, cpm_cpms, cpm_eps/
+qed.
+
+(* Basic_2A1: uses: cprs_beta_dx *)
+lemma cpms_beta_dx (n) (h) (G) (L):
+                   ∀V1,V2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 →
+                   ∀W1,W2. ⦃G, L⦄ ⊢ W1 ➡[h] W2 →
+                   ∀T1,T2. ⦃G, L.ⓛW1⦄ ⊢ T1 ➡*[n, h] T2 →
+                   ∀p. ⦃G, L⦄ ⊢ ⓐV1.ⓛ{p}W1.T1 ➡*[n, h] ⓓ{p}ⓝW2.V2.T2.
+#n #h #G #L #V1 #V2 #HV12 #W1 #W2 #HW12 #T1 #T2 #H @(cpms_ind_dx … H) -T2
+/4 width=7 by cpms_step_dx, cpm_cpms, cpms_bind_dx, cpms_appl_dx, cpm_beta/
+qed.
+
+(* Basic_2A1: uses: cprs_theta_dx *)
+lemma cpms_theta_dx (n) (h) (G) (L):
+                    ∀V1,V. ⦃G, L⦄ ⊢ V1 ➡[h] V →
+                    ∀V2. ⬆*[1] V ≘ V2 →
+                    ∀W1,W2. ⦃G, L⦄ ⊢ W1 ➡[h] W2 →
+                    ∀T1,T2. ⦃G, L.ⓓW1⦄ ⊢ T1 ➡*[n, h] T2 →
+                    ∀p. ⦃G, L⦄ ⊢ ⓐV1.ⓓ{p}W1.T1 ➡*[n, h] ⓓ{p}W2.ⓐV2.T2.
+#n #h #G #L #V1 #V #HV1 #V2 #HV2 #W1 #W2 #HW12 #T1 #T2 #H @(cpms_ind_dx … H) -T2
+/4 width=9 by cpms_step_dx, cpm_cpms, cpms_bind_dx, cpms_appl_dx, cpm_theta/
+qed.
+
+(* Basic inversion lemmas ***************************************************)
+
+lemma cpms_inv_sort1 (n) (h) (G) (L): ∀X2,s. ⦃G, L⦄ ⊢ ⋆s ➡*[n, h] X2 → X2 = ⋆(((next h)^n) s).
+#n #h #G #L #X2 #s #H @(cpms_ind_dx … H) -X2 //
+#n1 #n2 #X #X2 #_ #IH #HX2 destruct
+elim (cpm_inv_sort1 … HX2) -HX2 * // #H1 #H2 destruct
+/2 width=3 by refl, trans_eq/
+qed-.
+
 (* Basic properties with r-transition ***************************************)
 
 (* Basic_1: was: pr3_refl *)

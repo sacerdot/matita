@@ -78,12 +78,14 @@ table {
              [ [ "" ] "scpds ( ⦃?,?⦄ ⊢ ? •*➡*[?,?,?] ? )" "scpds_lift" + "scpds_aaa" + "scpds_scpds" * ]
           }
         ]
-        [ { "context-sensitive computation" * } {
+*)        
+        [ { "context-sensitive parallel r-computation" * } {
+(*
              [ [ "" ] "lprs ( ⦃?,?⦄ ⊢ ➡* ? )" "lprs_drop" + "lprs_cprs" + "lprs_lprs" * ]
-             [ [ "" ] "cprs ( ⦃?,?⦄ ⊢ ? ➡* ?)" "cprs_lift" + "cprs_cprs" * ]
+*)
+             [ [ "for terms" ] "cprs" + "( ⦃?,?⦄ ⊢ ? ➡*[?] ?)" (* "cprs_lift" + "cprs_cprs" *) * ]
           }
         ]
-*)
         [ { "t-bound context-sensitive parallel rt-computation" * } {
              [ [ "for terms" ] "cpms" + "( ⦃?,?⦄ ⊢ ? ➡*[?,?] ? )" * ]
           }
