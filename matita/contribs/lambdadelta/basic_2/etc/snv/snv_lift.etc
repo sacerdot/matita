@@ -20,13 +20,6 @@ include "basic_2/dynamic/snv.ma".
 
 (* Relocation properties ****************************************************)
 
-| nv_lref: ∀I,G,L,K,V,i. ⬇[i] L ≘ K.ⓑ{I}V → nv a h G K V → nv a h G L (#i)
-
-lemma nv_inv_lref: ∀a,h,G,L,i. ⦃G, L⦄ ⊢ #i ![a, h] →
-                    ∃∃I,K,V. ⬇[i] L ≘ K.ⓑ{I}V & ⦃G, K⦄ ⊢ V ![a, h].
-/2 width=3 by nv_inv_lref_aux/ qed-.
-
-
 lemma snv_lift: ∀h,o,G,K,T. ⦃G, K⦄ ⊢ T ¡[h, o] → ∀L,b,l,k. ⬇[b, l, k] L ≘ K →
                 ∀U. ⬆[l, k] T ≘ U → ⦃G, L⦄ ⊢ U ¡[h, o].
 #h #o #G #K #T #H elim H -G -K -T

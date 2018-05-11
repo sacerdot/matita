@@ -11,14 +11,6 @@ table {
    ]
 (*
    class "wine"
-   [ { "" * } {
-        [ { "" * } {
-             [ [ "" ] "" * ]
-          }
-        ]
-     }
-   ]
-(*   
    [ { "higher order dynamic typing" * } {
         [ { "higher order native type assignment" * } {
              [ [ "" ] "ntas ( ⦃?,?⦄ ⊢ ? :* ? )" "nta_lift" * ]
@@ -38,18 +30,21 @@ table {
              [ [ "" ] "nta ( ⦃?,?⦄ ⊢ ? : ? )" "nta_alt ( ⦃?,?⦄ ⊢ ? :: ? )" "nta_lift" "nta_ltpss" "nta_thin" "nta_aaa" "nta_sta" "nta_ltpr" "nta_nta" * ]
           }
         ]
-*)
         [ { "local env. ref. for stratified native validity" * } {
              [ [ "" ] "lsubsv ( ? ⊢ ? ⫃¡[?,?] ? )" "lsubsv_lsuba" + "lsubsv_lsubd" + "lsubsv_lstas" + "lsubsv_scpds" + "lsubsv_cpcs" + "lsubsv_snv" * ]
           }
         ]
-        [ { "stratified native validity" * } {
+*)        
+        [ { "native validity" * } {
+(*
              [ [ "" ] "shnv ( ⦃?,?⦄ ⊢ ? ¡[?,?,?] )" * ]
-             [ [ "" ] "snv ( ⦃?,?⦄ ⊢ ? ¡[?,?] )" "snv_lift" + "snv_aaa" + "snv_da_lpr" + "snv_lstas" + "snv_lstas_lpr" + "snv_lpr" + "snv_fsb" + "snv_scpes" + "snv_preserve" * ]
+*)
+             [ [ "for terms" ] "nv" + "( ⦃?,?⦄ ⊢ ? ![?,?] )" (* "snv_lift" + "snv_aaa" + "snv_da_lpr" + "snv_lstas" + "snv_lstas_lpr" + "snv_lpr" + "snv_fsb" + "snv_scpes" + "snv_preserve" *) * ]
           }
         ]
      }
    ]
+(*   
    class "prune"
    [ { "equivalence" * } {
         [ { "decomposed rt-equivalence" * } {

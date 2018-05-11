@@ -15,7 +15,7 @@ S      : RTM stack
 T,U,V,W: term
 X,Y,Z  : reserved: transient objet denoted by a capital letter
 
-a      :
+a      : applicability condition (true = restricted, false = general)
 b      : local dropping kind parameter (true = restricted, false = general)
 c      : rt-reduction count parameter
 d      : term degree
