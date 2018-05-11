@@ -44,20 +44,20 @@ table {
         ]
      }
    ]
-(*   
    class "prune"
-   [ { "equivalence" * } {
+   [ { "rt-equivalence" * } {
+(*
         [ { "decomposed rt-equivalence" * } {
              [ [ "" ] "scpes ( ⦃?,?⦄ ⊢ ? •*⬌*[?,?,?,?] ? )" "scpes_aaa" + "scpes_cpcs" + "scpes_scpes" * ]
           }
         ]
-        [ { "context-sensitive equivalence" * } {
-             [ [ "" ] "cpcs ( ⦃?,?⦄ ⊢ ? ⬌* ? )" "cpcs_aaa" + "cpcs_cprs" + "cpcs_cpcs" * ]
+*)        
+        [ { "context-sensitive parallel r-equivalence" * } {
+             [ [ "for terms" ] "cpcs ( ⦃?,?⦄ ⊢ ? ⬌*[?] ? )" (* "cpcs_aaa" + "cpcs_cprs" + "cpcs_cpcs" *) * ]
           }
         ]
      }
    ]
-*)
    class "blue"
    [ { "rt-conversion" * } {
         [ { "context-sensitive parallel r-conversion" * } {
