@@ -12,14 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/unfold/lstas_aaa.ma".
-include "basic_2/computation/cpxs_aaa.ma".
-include "basic_2/computation/scpds.ma".
+include "basic_2/rt_transition/cpm_cpx.ma".
+include "basic_2/rt_computation/cpxs.ma".
+include "basic_2/rt_computation/cpms.ma".
 
-(* STRATIFIED DECOMPOSED PARALLEL COMPUTATION ON TERMS **********************)
+(* T-BOUND CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS **************)
 
-(* Properties on atomic arity assignment for terms **************************)
+(* Forward lemmas with unbound context-sensitive rt-computation for terms ***)
 
-lemma scpds_aaa_conf: ∀h,o,G,L,d. Conf3 … (aaa G L) (scpds h o d G L).
-#h #o #G #L #d #A #T #HT #U * /3 width=6 by lstas_aaa_conf, cprs_aaa_conf/
-qed.
+(* Basic_2A1: includes: cprs_cpxs *)
+lemma cpms_fwd_cpxs (n) (h): ∀G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡*[n, h] T2 → ⦃G, L⦄ ⊢ T1 ⬈*[h] T2.
+#n #h #G #L #T1 #T2 #H @(cpms_ind_dx … H) -T2
+/3 width=4 by cpxs_strap1, cpm_fwd_cpx/
+qed-.

@@ -12,18 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reduction/lpx_aaa.ma".
-include "basic_2/computation/cpxs.ma".
+include "basic_2/rt_transition/cpm_lsubr.ma".
+include "basic_2/rt_computation/cpms.ma".
 
-(* CONTEXT-SENSITIVE EXTENDED PARALLEL COMPUTATION ON TERMS *****************)
+(* T-BOUND CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS **************)
 
-(* Properties about atomic arity assignment on terms ************************)
+(* Properties with restricted refinement for local environments *************)
 
-lemma cpxs_aaa_conf: ∀h,o,G,L,T1,A. ⦃G, L⦄ ⊢ T1 ⁝ A →
-                     ∀T2. ⦃G, L⦄ ⊢ T1 ⬈*[h, o] T2 → ⦃G, L⦄ ⊢ T2 ⁝ A.
-#h #o #G #L #T1 #A #HT1 #T2 #HT12
-@(TC_Conf3 … HT1 ? HT12) -A -T1 -T2 /2 width=5 by cpx_aaa_conf/
+(* Basic_2A1: uses: lsubr_cprs_trans *)
+lemma lsubr_cpms_trans (n) (h): ∀G. lsub_trans … (λL. cpms h G L n) lsubr.
+/3 width=5 by lsubr_cpm_trans, ltc_lsub_trans/
 qed-.
-
-lemma cprs_aaa_conf: ∀G,L,T1,A. ⦃G, L⦄ ⊢ T1 ⁝ A → ∀T2. ⦃G, L⦄ ⊢ T1 ⬈* T2 → ⦃G, L⦄ ⊢ T2 ⁝ A.
-/3 width=5 by cpxs_aaa_conf, cprs_cpxs/ qed-.

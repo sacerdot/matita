@@ -77,3 +77,13 @@ lemma ltc_ind_dx_refl (A) (i) (f) (B) (R) (Q:A→predicate B) (b1):
 @(ltc_ind_dx … R … H1f … IH2 … H) -a -b2 -H1f #a #b2 #Hb12
 >(H2f a) -H2f /3 width=4 by ltc_rc/
 qed-.
+
+(* Properties with lsub *****************************************************)
+
+lemma ltc_lsub_trans: ∀A,f. associative … f →
+                      ∀B,C,R,S. (∀n. lsub_trans B C (λL. R L n) S) →
+                      ∀n. lsub_trans B C (λL. ltc A f … (R L) n) S.
+#A #f #Hf #B #C #R #S #HRS #n #L2 #T1 #T2 #H
+@(ltc_ind_dx … Hf ???? H) -n -T2
+/3 width=5 by ltc_dx, ltc_rc/
+qed-.

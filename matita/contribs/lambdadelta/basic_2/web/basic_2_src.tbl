@@ -70,7 +70,7 @@ table {
    [ { "rt-computation" * } {
 (*
         [ { "decomposed rt-computation" * } {
-             [ [ "" ] "scpds ( ⦃?,?⦄ ⊢ ? •*➡*[?,?,?] ? )" "scpds_lift" + "scpds_aaa" + "scpds_scpds" * ]
+             "scpds_scpds"
           }
         ]
 *)        
@@ -82,7 +82,7 @@ table {
           }
         ]
         [ { "t-bound context-sensitive parallel rt-computation" * } {
-             [ [ "for terms" ] "cpms" + "( ⦃?,?⦄ ⊢ ? ➡*[?,?] ? )" "cpms_drops" * ]
+             [ [ "for terms" ] "cpms" + "( ⦃?,?⦄ ⊢ ? ➡*[?,?] ? )" "cpms_drops" + "cpms_lsubr" + "cpms_aaa" + "cpms_cpxs" * ]
           }
         ]
         [ { "unbound context-sensitive parallel rst-computation" * } {

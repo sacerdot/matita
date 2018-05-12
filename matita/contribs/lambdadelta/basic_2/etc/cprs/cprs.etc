@@ -1,7 +1,3 @@
-lemma lsubr_cprs_trans: ∀G. lsub_trans … (cprs G) lsubr.
-/3 width=5 by lsubr_cpr_trans, CTC_lsub_trans/
-qed-.
-
 (* Basic_1: was: pr3_pr1 *)
 lemma tprs_cprs: ∀G,L,T1,T2. ⦃G, ⋆⦄ ⊢ T1 ➡* T2 → ⦃G, L⦄ ⊢ T1 ➡* T2.
 /2 width=3 by lsubr_cprs_trans/ qed.
