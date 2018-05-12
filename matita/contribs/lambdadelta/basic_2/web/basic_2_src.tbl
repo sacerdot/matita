@@ -78,11 +78,11 @@ table {
 (*
              [ [ "" ] "lprs ( ⦃?,?⦄ ⊢ ➡* ? )" "lprs_drop" + "lprs_cprs" + "lprs_lprs" * ]
 *)
-             [ [ "for terms" ] "cprs" + "( ⦃?,?⦄ ⊢ ? ➡*[?] ?)" (* "cprs_lift" + "cprs_cprs" *) * ]
+             [ [ "for terms" ] "cprs" + "( ⦃?,?⦄ ⊢ ? ➡*[?] ?)" "cprs_drops" (* + "cprs_cprs" *) * ]
           }
         ]
         [ { "t-bound context-sensitive parallel rt-computation" * } {
-             [ [ "for terms" ] "cpms" + "( ⦃?,?⦄ ⊢ ? ➡*[?,?] ? )" * ]
+             [ [ "for terms" ] "cpms" + "( ⦃?,?⦄ ⊢ ? ➡*[?,?] ? )" "cpms_drops" * ]
           }
         ]
         [ { "unbound context-sensitive parallel rst-computation" * } {
@@ -202,7 +202,7 @@ table {
    class "orange"
    [ { "relocation" * } {
         [ { "generic slicing" * } {
-             [ [ "for lenvs" ] "drops" + "( ⬇*[?,?] ? ≘ ? )" + "( ⬇*[?] ? ≘ ? )" "drops_ctc" + "drops_weight" + "drops_length" + "drops_cext2" + "drops_lexs" + "drops_lreq" + "drops_drops" + "drops_vector" * ]
+             [ [ "for lenvs" ] "drops" + "( ⬇*[?,?] ? ≘ ? )" + "( ⬇*[?] ? ≘ ? )" "drops_ctc" + "drops_ltc" + "drops_weight" + "drops_length" + "drops_cext2" + "drops_lexs" + "drops_lreq" + "drops_drops" + "drops_vector" * ]
           }
         ]
         [ { "generic relocation" * } {

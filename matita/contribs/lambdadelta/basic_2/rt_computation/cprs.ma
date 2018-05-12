@@ -15,7 +15,7 @@
 include "basic_2/rt_transition/cpr.ma".
 include "basic_2/rt_computation/cpms.ma".
 
-(* CONTEXT-SENSITIVE PARALLEL COMPUTATION FOR TERMS *************************)
+(* CONTEXT-SENSITIVE PARALLEL R-COMPUTATION FOR TERMS ***********************)
 
 (* Basic eliminators ********************************************************)
 

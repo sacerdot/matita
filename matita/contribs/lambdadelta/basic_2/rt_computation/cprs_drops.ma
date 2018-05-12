@@ -12,25 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/da_lift.ma".
-include "basic_2/unfold/lstas_lift.ma".
-include "basic_2/computation/cprs_lift.ma".
-include "basic_2/computation/scpds.ma".
+include "basic_2/rt_computation/cpms_drops.ma".
 
-(* STRATIFIED DECOMPOSED PARALLEL COMPUTATION ON TERMS **********************)
+(* CONTEXT-SENSITIVE PARALLEL R-COMPUTATION FOR TERMS ***********************)
 
-(* Relocation properties ****************************************************)
+(* Advanced inversion lemmas ************************************************)
 
-lemma scpds_lift: ∀h,o,G,d. d_liftable (scpds h o d G).
-#h #o #G #d2 #K #T1 #T2 * #T #d1 #Hd21 #Hd1 #HT1 #HT2 #L #b #l #k
-elim (lift_total T l k)
-/3 width=15 by cprs_lift, da_lift, lstas_lift, ex4_2_intro/
-qed.
-
-lemma scpds_inv_lift1: ∀h,o,G,d. d_deliftable_sn (scpds h o d G).
-#h #o #G #d2 #L #U1 #U2 * #U #d1 #Hd21 #Hd1 #HU1 #HU2 #K #b #l #k #HLK #T1 #HTU1
-lapply (da_inv_lift … Hd1 … HLK … HTU1) -Hd1 #Hd1
-elim (lstas_inv_lift1 … HU1 … HLK … HTU1) -U1 #T #HTU #HT1
-elim (cprs_inv_lift1 … HU2 … HLK … HTU) -U -L
-/3 width=8 by ex4_2_intro, ex2_intro/
+(* Basic_1: was: pr3_gen_lref *)
+(* Basic_2A1: was: cprs_inv_lref1 *)
+lemma cprs_inv_lref1_drops (h) (G): ∀L,T2,i. ⦃G, L⦄ ⊢ #i ➡*[h] T2 →
+                                    ∨∨ T2 = #i
+                                     | ∃∃K,V1,T1. ⬇*[i] L ≘ K.ⓓV1 & ⦃G, K⦄ ⊢ V1 ➡*[h] T1 &
+                                                  ⬆*[↑i] T1 ≘ T2.
+#h #G #L #T2 #i #H elim (cpms_inv_lref1_drops … H) -H *
+[ /2 width=1 by or_introl/
+| /3 width=6 by ex3_3_intro, or_intror/
+| #m #K #V #V2 #_ #_ #_ #H destruct
+]
 qed-.
