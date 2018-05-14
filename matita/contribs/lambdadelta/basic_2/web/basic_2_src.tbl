@@ -39,7 +39,7 @@ table {
 (*
              [ [ "" ] "shnv ( ⦃?,?⦄ ⊢ ? ¡[?,?,?] )" * ]
 *)
-             [ [ "for terms" ] "nv" + "( ⦃?,?⦄ ⊢ ? ![?,?] )" (* "snv_lift" + "snv_aaa" + "snv_da_lpr" + "snv_lstas" + "snv_lstas_lpr" + "snv_lpr" + "snv_fsb" + "snv_scpes" + "snv_preserve" *) * ]
+             [ [ "for terms" ] "nv" + "( ⦃?,?⦄ ⊢ ? ![?,?] )" "nv_drops" (* + "snv_aaa" + "snv_da_lpr" + "snv_lstas" + "snv_lstas_lpr" + "snv_lpr" + "snv_fsb" + "snv_scpes" + "snv_preserve" *) * ]
           }
         ]
      }

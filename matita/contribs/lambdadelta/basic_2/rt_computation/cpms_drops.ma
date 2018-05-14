@@ -63,15 +63,20 @@ lemma cpms_inv_lref1_drops (n) (h) (G):
     /4 width=8 by cpms_step_dx, ex4_4_intro, or3_intro2/
   ]
 ]
-qed-. 
+qed-.
 
 (* Properties with generic slicing for local environments *******************)
+
+lemma cpms_lifts_sn: ∀n,h,G. d_liftable2_sn … lifts (λL. cpms h G L n).
+/3 width=6 by d2_liftable_sn_ltc, cpm_lifts_sn/ qed-.
 
 (* Basic_2A1: uses: scpds_lift *)
 (* Basic_2A1: includes: cprs_lift *)
 (* Basic_1: includes: pr3_lift *)
-lemma cpms_lifts_sn: ∀n,h,G. d_liftable2_sn … lifts (λL. cpms h G L n).
-/3 width=6 by d2_liftable_sn_ltc, cpm_lifts_sn/ qed-.
+lemma cpms_lifts_bi: ∀n,h,G. d_liftable2_bi … lifts (λL. cpms h G L n).
+#n #h #G @d_liftable2_sn_bi
+/2 width=6 by cpms_lifts_sn, lifts_mono/
+qed-.
 
 (* Inversion lemmas with generic slicing for local environments *************)
 
@@ -80,3 +85,8 @@ lemma cpms_lifts_sn: ∀n,h,G. d_liftable2_sn … lifts (λL. cpms h G L n).
 (* Basic_1: includes: pr3_gen_lift *)
 lemma cpms_inv_lifts_sn: ∀n,h,G. d_deliftable2_sn … lifts (λL. cpms h G L n).
 /3 width=6 by d2_deliftable_sn_ltc, cpm_inv_lifts_sn/ qed-.
+
+lemma cpms_inv_lifts_bi: ∀n,h,G. d_deliftable2_bi … lifts (λL. cpms h G L n).
+#n #h #G @d_deliftable2_sn_bi
+/2 width=6 by cpms_inv_lifts_sn, lifts_inj/
+qed-.
