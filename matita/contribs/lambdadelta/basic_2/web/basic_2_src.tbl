@@ -9,16 +9,14 @@ table {
         ]
      }
    ]
-(*
    class "wine"
-   [ { "higher order dynamic typing" * } {
-        [ { "higher order native type assignment" * } {
-             [ [ "" ] "ntas ( ⦃?,?⦄ ⊢ ? :* ? )" "nta_lift" * ]
+   [ { "iterated dynamic typing" * } {
+        [ { "" (* "higher order native type assignment" *) * } {
+             [ [ "" ] (* "ntas ( ⦃?,?⦄ ⊢ ? :* ? )" "nta_lift" *) * ]
           }
         ]
      }
    ]
-*)
    class "magenta"
    [ { "dynamic typing" * } {
 (*
@@ -112,19 +110,19 @@ table {
           }
         ]
         [ { "context-sensitive parallel r-transition" * } {
-             [ [ "for lenvs on referred entries" ] "lfpr" + "( ⦃?,?⦄ ⊢ ➡[?,?] ? )" "lfpr_length" + "lfpr_drops" + "lfpr_fquq" + "lfpr_fqup" + "lfpr_aaa" + "lfpr_lfpx" + "lfpr_lfpr" * ]
+             [ [ "for lenvs on all entries" ] "lpr" + "( ⦃?,?⦄ ⊢ ➡[?] ? )" "lpr_length" + "lpr_drops" + "lpr_fquq" + "lpr_aaa" + "lpr_lpx" (* + "lfpr_lfpr" *) * ]
              [ [ "for binders" ] "cpr_ext" + "( ⦃?,?⦄ ⊢ ? ➡[?] ? )" * ]
-             [ [ "for terms" ] "cpr" + "( ⦃?,?⦄ ⊢ ? ➡[?] ? )" "cpr_drops" * ]
+             [ [ "for terms" ] "cpr" + "( ⦃?,?⦄ ⊢ ? ➡[?] ? )" "cpr_drops" + "cpr_cpr" * ]
           }
         ]
         [ { "t-bound context-sensitive parallel rt-transition" * } {
-             [ [ "for terms" ] "cpm" + "( ⦃?,?⦄ ⊢ ? ➡[?,?] ? )" "cpm_simple" + "cpm_drops" + "cpm_lsubr" + "cpm_fsle" + "cpm_cpx" * ]
+             [ [ "for terms" ] "cpm" + "( ⦃?,?⦄ ⊢ ? ➡[?,?] ? )" "cpm_simple" + "cpm_drops" + "cpm_lsubr" + "cpm_fsle" + "cpm_aaa" + "cpm_cpx" * ]
           }
         ]
         [ { "unbound context-sensitive parallel rt-transition" * } {
              [ [ "normal form for terms" ] "cnx" + "( ⦃?,?⦄ ⊢ ⬈[?,?] 𝐍⦃?⦄ )" "cnx_simple" + "cnx_drops" + "cnx_cnx" * ]
-             [ [ "for lenvs on referred entries" ] "lfpx" + "( ⦃?,?⦄ ⊢ ⬈[?,?] ? )" "lfpx_length" + "lfpx_drops" + "lfpx_fquq" + "lfpx_fqup" + "lfpx_fsle" + "lfpx_lfdeq" + "lfpx_aaa" + "lfpx_lpx" + "lfpx_lfpx" * ]
-             [ [ "for lenvs on all entries" ] "lpx" + "( ⦃?,?⦄ ⊢ ⬈[?] ? )" * ]
+             [ [ "for lenvs on referred entries" ] "lfpx" + "( ⦃?,?⦄ ⊢ ⬈[?,?] ? )" "lfpx_length" + "lfpx_fqup" + "lfpx_fsle" + "lfpx_lfdeq" + "lfpx_lpx" + "lfpx_lfpx" * ]
+             [ [ "for lenvs on all entries" ] "lpx" + "( ⦃?,?⦄ ⊢ ⬈[?] ? )" "lpx_length" + "lpx_drops" + "lpx_fquq" + "lpx_fsle" + "lpx_lfdeq" + "lpx_aaa" * ]
              [ [ "for binders" ] "cpx_ext" + "( ⦃?,?⦄ ⊢ ? ⬈[?] ? )" * ]
              [ [ "for terms" ] "cpx" + "( ⦃?,?⦄ ⊢ ? ⬈[?] ? )" "cpx_simple" + "cpx_drops" + "cpx_fqus" + "cpx_lsubr" + "cpx_lfeq" + "cpx_lfdeq" + "cpx_ffdeq" * ]
           }
@@ -202,7 +200,7 @@ table {
    class "orange"
    [ { "relocation" * } {
         [ { "generic slicing" * } {
-             [ [ "for lenvs" ] "drops" + "( ⬇*[?,?] ? ≘ ? )" + "( ⬇*[?] ? ≘ ? )" "drops_ctc" + "drops_ltc" + "drops_weight" + "drops_length" + "drops_cext2" + "drops_lexs" + "drops_lreq" + "drops_drops" + "drops_vector" * ]
+             [ [ "for lenvs" ] "drops" + "( ⬇*[?,?] ? ≘ ? )" + "( ⬇*[?] ? ≘ ? )" "drops_ctc" + "drops_ltc" + "drops_weight" + "drops_length" + "drops_cext2" + "drops_lexs" + "drops_lex" + "drops_lreq" + "drops_drops" + "drops_vector" * ]
           }
         ]
         [ { "generic relocation" * } {
@@ -216,7 +214,7 @@ table {
           }
         ]
         [ { "generic entrywise extension" * } {
-             [ [ "for lenvs of one contex-sensitive relation" ] "lex" + "( ? ⦻[?] ? )" "lex_tc" + "lex_length" * ]
+             [ [ "for lenvs of one contex-sensitive relation" ] "lex" + "( ? ⦻[?] ? )" "lex_tc" + "lex_length" + "lex_lex" * ]
              [ [ "for lenvs of two contex-sensitive relations" ] "lexs" + "( ? ⦻*[?,?,?] ? )" "lexs_tc" + "lexs_length" + "lexs_lexs" * ]
           }
         ]
@@ -292,6 +290,8 @@ class "capitalize italic" { 0 1 }
 
 class "italic"            { 2 }
 (*
+        [ [ "for lenvs on referred entries" ]
+              "lfpr" + "( ⦃?,?⦄ ⊢ ➡[?,?] ? )" "lfpr_length" + "lfpr_drops" + "lfpr_fquq" + "lfpr_fqup" + "lfpr_aaa" + "lfpr_lfpx" + "lfpr_lfpr" * ]
         [ { "evaluation for context-sensitive rt-reduction" * } {
              [ [ "" ] "cpxe ( ⦃?,?⦄ ⊢ ➡*[?,?] 𝐍⦃?⦄ )" * ]
           }

@@ -45,7 +45,6 @@ theorem lexs_trans_gen (RN1) (RP1) (RN2) (RP2) (RN) (RP):
 ]
 qed-.
 
-(* Basic_2A1: includes: lpx_sn_trans *)
 theorem lexs_trans (RN) (RP) (f): (∀g,I,K. lexs_transitive RN RN RN RN RP g K I) →
                                   (∀g,I,K. lexs_transitive RP RP RP RN RP g K I) →
                                   Transitive … (lexs RN RP f).
@@ -61,7 +60,6 @@ elim (lexs_inv_push1 … H) -H #I2 #K2 #HK2 #_ #H destruct
 /3 width=1 by lexs_push/
 qed-.
 
-(* Basic_2A1: includes: lpx_sn_conf *)
 theorem lexs_conf (RN1) (RP1) (RN2) (RP2):
                   ∀L,f.
                   (∀g,I,K,n. ⬇*[n] L ≘ K.ⓘ{I} → ↑g = ⫱*[n] f → R_pw_confluent2_lexs RN1 RN2 RN1 RP1 RN2 RP2 g K I) →

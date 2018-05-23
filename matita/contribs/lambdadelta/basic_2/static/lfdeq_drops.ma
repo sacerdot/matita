@@ -20,16 +20,16 @@ include "basic_2/static/lfdeq.ma".
 
 (* Properties with generic slicing for local environments *******************)
 
-lemma lfdeq_lifts_sn: ∀h,o. dedropable_sn (cdeq h o).
+lemma lfdeq_lifts_sn: ∀h,o. f_dedropable_sn (cdeq h o).
 /3 width=5 by lfxs_liftable_dedropable_sn, tdeq_lifts_sn/ qed-.
 
 (* Inversion lemmas with generic slicing for local environments *************)
 
-lemma lfdeq_inv_lifts_sn: ∀h,o. dropable_sn (cdeq h o).
+lemma lfdeq_inv_lifts_sn: ∀h,o. f_dropable_sn (cdeq h o).
 /2 width=5 by lfxs_dropable_sn/ qed-.
 
 (* Note: missing in basic_2A1 *)
-lemma lfdeq_inv_lifts_dx: ∀h,o. dropable_dx (cdeq h o).
+lemma lfdeq_inv_lifts_dx: ∀h,o. f_dropable_dx (cdeq h o).
 /2 width=5 by lfxs_dropable_dx/ qed-.
 
 (* Basic_2A1: uses: lleq_inv_lift_le lleq_inv_lift_be lleq_inv_lift_ge *)

@@ -16,10 +16,10 @@ include "basic_2/notation/relations/predtysn_5.ma".
 include "basic_2/static/lfxs.ma".
 include "basic_2/rt_transition/cpx_ext.ma".
 
-(* UNBOUND PARALLEL RT-TRANSITION FOR LOCAL ENV.S ON REFERRED ENTRIES *******)
+(* UNBOUND PARALLEL RT-TRANSITION FOR REFERRED LOCAL ENVIRONMENTS ***********)
 
-definition lfpx: sh → genv → relation3 term lenv lenv ≝
-                 λh,G. lfxs (cpx h G).
+definition lfpx (h) (G): relation3 term lenv lenv ≝
+                         lfxs (cpx h G).
 
 interpretation
    "unbound parallel rt-transition on referred entries (local environment)"
@@ -54,11 +54,9 @@ lemma lfpx_bind_repl_dx: ∀h,I,I1,G,L1,L2,T.
 
 (* Basic inversion lemmas ***************************************************)
 
-(* Basic_2A1: uses: lpx_inv_atom1 *)
 lemma lfpx_inv_atom_sn: ∀h,G,Y2,T. ⦃G, ⋆⦄ ⊢ ⬈[h, T] Y2 → Y2 = ⋆.
 /2 width=3 by lfxs_inv_atom_sn/ qed-.
 
-(* Basic_2A1: uses: lpx_inv_atom2 *)
 lemma lfpx_inv_atom_dx: ∀h,G,Y1,T. ⦃G, Y1⦄ ⊢ ⬈[h, T] ⋆ → Y1 = ⋆.
 /2 width=3 by lfxs_inv_atom_dx/ qed-.
 
@@ -137,7 +135,3 @@ lemma lfpx_fwd_bind_dx: ∀h,p,I,G,L1,L2,V,T.
 lemma lfpx_fwd_flat_dx: ∀h,I,G,L1,L2,V,T.
                         ⦃G, L1⦄ ⊢ ⬈[h, ⓕ{I}V.T] L2 → ⦃G, L1⦄ ⊢ ⬈[h, T] L2.
 /2 width=3 by lfxs_fwd_flat_dx/ qed-.
-
-(* Basic_2A1: removed theorems 3:
-              lpx_inv_pair1 lpx_inv_pair2 lpx_inv_pair
-*)

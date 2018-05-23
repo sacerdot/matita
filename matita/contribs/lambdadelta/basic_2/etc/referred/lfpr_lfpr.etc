@@ -358,7 +358,6 @@ theorem cpr_conf_lfpr: ∀h,G. R_confluent2_lfxs (λL. cpm h G L 0) (λL. cpm h 
 ]
 qed-.
 
-(* Basic_1: includes: pr0_confluence pr2_confluence *)
 theorem cpr_conf: ∀h,G,L. confluent … (cpm h G L 0).
 /2 width=6 by cpr_conf_lfpr/ qed-.
 

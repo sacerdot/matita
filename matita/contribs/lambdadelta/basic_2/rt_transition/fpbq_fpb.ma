@@ -22,7 +22,7 @@ include "basic_2/rt_transition/fpbq.ma".
 lemma fpb_fpbq: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≻[h, o] ⦃G2, L2, T2⦄ →
                 ⦃G1, L1, T1⦄ ≽[h, o] ⦃G2, L2, T2⦄.
 #h #o #G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2
-/3 width=1 by fpbq_fquq, fpbq_cpx, fpbq_lfpx, fqu_fquq/
+/3 width=1 by fpbq_fquq, fpbq_cpx, fpbq_lpx, fqu_fquq/
 qed.
 
 (* Basic_2A1: fpb_fpbq_alt *)
@@ -42,7 +42,7 @@ lemma fpbq_inv_fpb: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≽[h, o] ⦃G2, 
 | #T2 #H elim (tdeq_dec h o T1 T2)
   /4 width=1 by fpb_cpx, ffdeq_intro_sn, or_intror, or_introl/
 | #L2 elim (lfdeq_dec h o L1 L2 T1)
-  /4 width=1 by fpb_lfpx, ffdeq_intro_sn, or_intror, or_introl/
+  /4 width=1 by fpb_lpx, ffdeq_intro_sn, or_intror, or_introl/
 | /2 width=1 by or_introl/
 ]
 qed-.

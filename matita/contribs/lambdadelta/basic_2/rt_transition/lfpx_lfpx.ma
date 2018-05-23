@@ -15,7 +15,7 @@
 include "basic_2/static/lfxs_lfxs.ma".
 include "basic_2/rt_transition/lfpx.ma".
 
-(* UNBOUND PARALLEL RT-TRANSITION FOR LOCAL ENV.S ON REFERRED ENTRIES *******)
+(* UNBOUND PARALLEL RT-TRANSITION FOR REFERRED LOCAL ENVIRONMENTS ***********)
 
 (* Main properties **********************************************************)
 

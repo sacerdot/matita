@@ -165,7 +165,7 @@ elim (lexs_conf … HL01 … HL02) /2 width=3 by ex2_intro/ [ | -HL01 -HL02 ]
 qed-.
 
 theorem lfxs_trans_fsle: ∀R1,R2,R3.
-                         lfxs_fsle_compatible R1 → lfxs_transitive_next R1 R2 R3 →
+                         lfxs_fsle_compatible R1 → f_transitive_next R1 R2 R3 →
                          ∀L1,L,T. L1 ⪤*[R1, T] L →
                          ∀L2. L ⪤*[R2, T] L2 → L1 ⪤*[R3, T] L2.
 #R1 #R2 #R3 #H1R #H2R #L1 #L #T #H

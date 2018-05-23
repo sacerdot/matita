@@ -14,7 +14,7 @@
 
 include "basic_2/static/lfdeq_fqus.ma".
 include "basic_2/rt_transition/cpx_lfdeq.ma".
-include "basic_2/rt_transition/lfpx_lfdeq.ma".
+include "basic_2/rt_transition/lpx_lfdeq.ma".
 include "basic_2/rt_transition/fpb.ma".
 
 (* PROPER PARALLEL RST-TRANSITION FOR CLOSURES ******************************)
@@ -31,7 +31,7 @@ lemma tdeq_fpb_trans: ∀h,o,U2,U1. U2 ≛[h, o] U1 →
 | #T1 #HUT1 #HnUT1
   elim (tdeq_cpx_trans … HU21 … HUT1) -HUT1
   /6 width=5 by fpb_cpx, tdeq_canc_sn, tdeq_trans, ex3_2_intro/
-| /6 width=5 by fpb_lfpx, lfpx_tdeq_div, tdeq_lfdeq_conf, ex3_2_intro/
+| /6 width=5 by fpb_lpx, lfpx_tdeq_div, tdeq_lfdeq_conf, ex3_2_intro/
 ]
 qed-.
 
@@ -44,7 +44,7 @@ lemma lfdeq_fpb_trans: ∀h,o,F,K1,K2,T. K1 ≛[h, o, T] K2 →
   /3 width=5 by fpb_fqu, ex3_2_intro/
 | #U #HTU #HnTU elim (lfdeq_cpx_trans … HT … HTU) -HTU
   /5 width=10 by fpb_cpx, cpx_lfdeq_conf_sn, tdeq_trans, tdeq_lfdeq_conf, ex3_2_intro/
-| #L2 #HKL2 #HnKL2 elim (lfdeq_lfpx_trans … HKL2 … HT) -HKL2
-  /6 width=5 by fpb_lfpx, (* 2x *) lfdeq_canc_sn, ex3_2_intro/
+| #L2 #HKL2 #HnKL2 elim (lfdeq_lpx_trans … HKL2 … HT) -HKL2
+  /6 width=5 by fpb_lpx, (* 2x *) lfdeq_canc_sn, ex3_2_intro/
 ]
 qed-.

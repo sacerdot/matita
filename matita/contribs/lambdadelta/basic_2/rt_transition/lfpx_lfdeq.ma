@@ -16,7 +16,7 @@ include "basic_2/static/lfdeq_fqup.ma".
 include "basic_2/static/lfdeq_lfdeq.ma".
 include "basic_2/rt_transition/lfpx_fsle.ma".
 
-(* UNBOUND PARALLEL RT-TRANSITION FOR LOCAL ENV.S ON REFERRED ENTRIES *******)
+(* UNBOUND PARALLEL RT-TRANSITION FOR REFERRED LOCAL ENVIRONMENTS ***********)
 
 (* Properties with degree-based equivalence for local environments **********)
 
@@ -159,7 +159,6 @@ qed-.
 lemma lfpx_lfdeq_conf: ∀h,o,G,T. confluent2 … (lfpx h G T) (lfdeq h o T).
 /3 width=6 by lfpx_fsge_comp, lfdeq_fsge_comp, cpx_tdeq_conf_lexs, lfxs_conf/ qed-.
 
-(* Basic_2A1: uses: lleq_lpx_trans *)
 lemma lfdeq_lfpx_trans: ∀h,o,G,T,L2,K2. ⦃G, L2⦄ ⊢ ⬈[h, T] K2 →
                         ∀L1. L1 ≛[h, o, T] L2 →
                         ∃∃K1. ⦃G, L1⦄ ⊢ ⬈[h, T] K1 & K1 ≛[h, o, T] K2.

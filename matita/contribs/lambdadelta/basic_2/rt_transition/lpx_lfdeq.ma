@@ -12,19 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_transition/cpg_lsubr.ma".
-include "basic_2/rt_transition/cpm.ma".
+include "basic_2/static/lfdeq_lfeq.ma".
+include "basic_2/rt_transition/lfpx_lfdeq.ma".
+include "basic_2/rt_transition/lfpx_lpx.ma".
 
-(* T-BOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS ***************)
+(* UNBOUND PARALLEL RT-TRANSITION FOR FULL LOCAL ENVIRONMENTS ***************)
 
-(* Properties with restricted refinement for local environments *************)
+(* Properties with degree-based equivalence for local environments **********)
 
-(* Basic_2A1: includes: lsubr_cpr_trans *)
-lemma lsubr_cpm_trans (n) (h) (G): lsub_trans … (λL. cpm h G L n) lsubr.
-#n #h #G #L1 #T1 #T2 * /3 width=5 by lsubr_cpg_trans, ex2_intro/
+(* Basic_2A1: uses: lleq_lpx_trans *)
+lemma lfdeq_lpx_trans (h) (o) (G): ∀L2,K2. ⦃G, L2⦄ ⊢ ⬈[h] K2 →
+                                   ∀L1. ∀T:term. L1 ≛[h, o, T] L2 →
+                                   ∃∃K1. ⦃G, L1⦄ ⊢ ⬈[h] K1 & K1 ≛[h, o, T] K2.
+#h #o #G #L2 #K2 #HLK2 #L1 #T #HL12
+lapply (lpx_lfpx … T HLK2) -HLK2 #HLK2
+elim (lfdeq_lfpx_trans … HLK2 … HL12) -L2 #K #H #HK2
+elim (lfpx_inv_lpx_lfeq … H) -H #K1 #HLK1 #HK1
+/3 width=5 by lfeq_lfdeq_trans, ex2_intro/
 qed-.
-
-lemma cpm_bind_unit (n) (h) (G): ∀L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 →
-                                 ∀J,T1,T2. ⦃G, L.ⓤ{J}⦄ ⊢ T1 ➡[n, h] T2 →
-                                 ∀p,I. ⦃G, L⦄ ⊢ ⓑ{p,I}V1.T1 ➡[n, h] ⓑ{p,I}V2.T2.
-/4 width=4 by lsubr_cpm_trans, cpm_bind, lsubr_unit/ qed.

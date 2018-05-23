@@ -12,19 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_transition/cpg_lsubr.ma".
-include "basic_2/rt_transition/cpm.ma".
+include "basic_2/relocation/lex_length.ma".
+include "basic_2/rt_transition/lpx.ma".
 
-(* T-BOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS ***************)
+(* UNBOUND PARALLEL RT-TRANSITION FOR FULL LOCAL ENVIRONMENTS ***************)
 
-(* Properties with restricted refinement for local environments *************)
+(* Forward lemmas with length for local environments ************************)
 
-(* Basic_2A1: includes: lsubr_cpr_trans *)
-lemma lsubr_cpm_trans (n) (h) (G): lsub_trans … (λL. cpm h G L n) lsubr.
-#n #h #G #L1 #T1 #T2 * /3 width=5 by lsubr_cpg_trans, ex2_intro/
-qed-.
-
-lemma cpm_bind_unit (n) (h) (G): ∀L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 →
-                                 ∀J,T1,T2. ⦃G, L.ⓤ{J}⦄ ⊢ T1 ➡[n, h] T2 →
-                                 ∀p,I. ⦃G, L⦄ ⊢ ⓑ{p,I}V1.T1 ➡[n, h] ⓑ{p,I}V2.T2.
-/4 width=4 by lsubr_cpm_trans, cpm_bind, lsubr_unit/ qed.
+lemma lpx_fwd_length (h) (G): ∀L1,L2. ⦃G, L1⦄ ⊢ ⬈[h] L2 → |L1| = |L2|.
+/2 width=2 by lex_fwd_length/ qed-.

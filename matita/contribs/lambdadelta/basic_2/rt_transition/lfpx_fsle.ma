@@ -17,16 +17,15 @@ include "basic_2/static/lfxs_fsle.ma".
 include "basic_2/rt_transition/lfpx_length.ma".
 include "basic_2/rt_transition/lfpx_fqup.ma".
 
-(* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS ***************)
+(* UNBOUND PARALLEL RT-TRANSITION FOR REFERRED LOCAL ENVIRONMENTS ***********)
 
 (* Forward lemmas with free variables inclusion for restricted closures *****)
 
 (* Note: "⦃L2, T1⦄ ⊆ ⦃L2, T0⦄" does not hold *)
 (* Note: Take L0 = K0.ⓓ(ⓝW.V), L2 = K0.ⓓW, T0 = #0, T1 = ⬆*[1]V *)
 (* Note: This invalidates lfpxs_cpx_conf: "∀h,G. s_r_confluent1 … (cpx h G) (lfpxs h G)" *)
-(* Basic_2A1: uses: lpx_cpx_frees_trans *)
-lemma lfpx_cpx_conf_fsge: ∀h,G,L0,T0,T1. ⦃G, L0⦄ ⊢ T0 ⬈[h] T1 →
-                          ∀L2. ⦃G, L0⦄ ⊢⬈[h, T0] L2 → ⦃L2, T1⦄ ⊆ ⦃L0, T0⦄.
+lemma lfpx_cpx_conf_fsge (h) (G): ∀L0,T0,T1. ⦃G, L0⦄ ⊢ T0 ⬈[h] T1 →
+                                  ∀L2. ⦃G, L0⦄ ⊢⬈[h, T0] L2 → ⦃L2, T1⦄ ⊆ ⦃L0, T0⦄.
 #h #G0 #L0 #T0 @(fqup_wf_ind_eq (Ⓕ) … G0 L0 T0) -G0 -L0 -T0
 #G #L #T #IH #G0 #L0 * *
 [ #s #HG #HL #HT #X #HX #Y #HY destruct -IH
@@ -110,28 +109,28 @@ lemma lfpx_cpx_conf_fsge: ∀h,G,L0,T0,T1. ⦃G, L0⦄ ⊢ T0 ⬈[h] T1 →
     ]
   ]
 ]
-qed.
+qed-.
+
+lemma lfpx_fsge_comp (h) (G): lfxs_fsge_compatible (cpx h G).
+/2 width=4 by lfpx_cpx_conf_fsge/ qed-.
+
+(**) (* this section concerns cpx *)
+(* Properties with generic extension on referred entries ********************)
 
 (* Basic_2A1: uses: cpx_frees_trans *)
-lemma cpx_fsge_comp: ∀h,G. R_fsge_compatible (cpx h G).
+lemma cpx_fsge_comp (h) (G): R_fsge_compatible (cpx h G).
 /2 width=4 by lfpx_cpx_conf_fsge/ qed-.
-
-(* Basic_2A1: uses: lpx_frees_trans *)
-lemma lfpx_fsge_comp: ∀h,G. lfxs_fsge_compatible (cpx h G).
-/2 width=4 by lfpx_cpx_conf_fsge/ qed-.
-
-(* Properties with generic extension on referred entries ********************)
 
 (* Note: lemma 1000 *)
 (* Basic_2A1: uses: cpx_llpx_sn_conf *)
-lemma cpx_lfxs_conf: ∀R,h,G. s_r_confluent1 … (cpx h G) (lfxs R).
+lemma cpx_lfxs_conf (R) (h) (G): s_r_confluent1 … (cpx h G) (lfxs R).
 /3 width=3 by fsge_lfxs_trans, cpx_fsge_comp/ qed-.
 
 (* Advanced properties ******************************************************)
 
-lemma lfpx_cpx_conf: ∀h,G. s_r_confluent1 … (cpx h G) (lfpx h G).
+lemma lfpx_cpx_conf (h) (G): s_r_confluent1 … (cpx h G) (lfpx h G).
 /2 width=5 by cpx_lfxs_conf/ qed-.
 
-lemma lfpx_cpx_conf_fsge_dx: ∀h,G,L0,T0,T1. ⦃G, L0⦄ ⊢ T0 ⬈[h] T1 →
-                             ∀L2. ⦃G, L0⦄ ⊢⬈[h, T0] L2 → ⦃L2, T1⦄ ⊆ ⦃L0, T1⦄.
+lemma lfpx_cpx_conf_fsge_dx (h) (G): ∀L0,T0,T1. ⦃G, L0⦄ ⊢ T0 ⬈[h] T1 →
+                                     ∀L2. ⦃G, L0⦄ ⊢⬈[h, T0] L2 → ⦃L2, T1⦄ ⊆ ⦃L0, T1⦄.
 /3 width=5 by lfpx_cpx_conf, lfpx_fsge_comp/ qed-.

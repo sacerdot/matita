@@ -19,7 +19,7 @@ include "basic_2/relocation/drops.ma".
 
 (* Properties with entrywise extension of context-sensitive relations *******)
 
-(* Basic_2A1: includes: lpx_sn_deliftable_dropable *) (**) (* changed after commit 13218 *)
+(**) (* changed after commit 13218 *)
 lemma lexs_co_dropable_sn: ∀RN,RP. co_dropable_sn (lexs RN RP).
 #RN #RP #b #f #L1 #K1 #H elim H -f -L1 -K1
 [ #f #Hf #_ #f2 #X #H #f1 #Hf2 >(lexs_inv_atom1 … H) -X
@@ -68,7 +68,6 @@ lemma lexs_liftable_co_dedropable_bi: ∀RN,RP. d_liftable2_sn … liftsb RN →
 ]
 qed-.
 
-(* Basic_2A1: includes: lpx_sn_liftable_dedropable *)
 lemma lexs_liftable_co_dedropable_sn: ∀RN,RP. (∀L. reflexive … (RN L)) → (∀L. reflexive … (RP L)) →
                                       d_liftable2_sn … liftsb RN → d_liftable2_sn … liftsb RP →
                                       co_dedropable_sn (lexs RN RP).
@@ -110,11 +109,9 @@ fact lexs_dropable_dx_aux: ∀RN,RP,b,f,L2,K2. ⬇*[b, f] L2 ≘ K2 → 𝐔⦃f
 ]
 qed-.
 
-(* Basic_2A1: includes: lpx_sn_dropable *)
 lemma lexs_co_dropable_dx: ∀RN,RP. co_dropable_dx (lexs RN RP).
 /2 width=5 by lexs_dropable_dx_aux/ qed-.
 
-(* Basic_2A1: includes: lpx_sn_drop_conf *) (**)
 lemma lexs_drops_conf_next: ∀RN,RP.
                             ∀f2,L1,L2. L1 ⪤*[RN, RP, f2] L2 →
                             ∀b,f,I1,K1. ⬇*[b, f] L1 ≘ K1.ⓘ{I1} → 𝐔⦃f⦄ →
@@ -137,7 +134,6 @@ elim (lexs_co_dropable_sn … HLK1 … Hf … HL12 … Hf2) -L1 -f2 -Hf
 #I2 #K2 #HK12 #HI12 #H destruct /2 width=5 by ex3_2_intro/
 qed-.
 
-(* Basic_2A1: includes: lpx_sn_drop_trans *)
 lemma lexs_drops_trans_next: ∀RN,RP,f2,L1,L2. L1 ⪤*[RN, RP, f2] L2 →
                              ∀b,f,I2,K2. ⬇*[b, f] L2 ≘ K2.ⓘ{I2} → 𝐔⦃f⦄ →
                              ∀f1. f ~⊚ ↑f1 ≘ f2 →

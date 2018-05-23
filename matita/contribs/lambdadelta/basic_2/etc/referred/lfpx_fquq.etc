@@ -20,7 +20,6 @@ include "basic_2/s_transition/fquq.ma".
 
 (* Properties with extended structural successor for closures ***************)
 
-(* Basic_2A1: uses: lpx_fqu_trans *)
 lemma lfpx_fqu_trans: ∀h,b,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐[b] ⦃G2, L2, T2⦄ →
                       ∀K1. ⦃G1, K1⦄ ⊢ ⬈[h, T1] L1 →
                       ∃∃K2,T. ⦃G1, K1⦄ ⊢ T1 ⬈[h] T & ⦃G1, K1, T⦄ ⊐[b] ⦃G2, K2, T2⦄ & ⦃G2, K2⦄ ⊢ ⬈[h, T2] L2.
@@ -44,7 +43,6 @@ qed-.
 
 (* Properties with extended optional structural successor for closures ******)
 
-(* Basic_2A1: uses: lpx_fquq_trans *)
 lemma lfpx_fquq_trans: ∀h,b,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐⸮[b] ⦃G2, L2, T2⦄ →
                        ∀K1. ⦃G1, K1⦄ ⊢ ⬈[h, T1] L1 →
                        ∃∃K2,T. ⦃G1, K1⦄ ⊢ T1 ⬈[h] T & ⦃G1, K1, T⦄ ⊐⸮[b] ⦃G2, K2, T2⦄ & ⦃G2, K2⦄ ⊢ ⬈[h, T2] L2.

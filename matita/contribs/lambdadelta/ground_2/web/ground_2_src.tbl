@@ -63,8 +63,12 @@ table {
    ]
    class "orange"
    [ { "generated library" * } {
-        [ { "equality insertion" * } {
+        [ { "generalization with equality" * } {
              [ "insert_eq" * ]
+          }
+        ]
+        [ { "permutation of quantifiers" * } {
+             [ "pull" * ]
           }
         ]
         [ { "logical decomposables" * } {

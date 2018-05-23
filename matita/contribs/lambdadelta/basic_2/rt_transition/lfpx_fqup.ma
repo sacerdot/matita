@@ -15,15 +15,13 @@
 include "basic_2/static/lfxs_fqup.ma".
 include "basic_2/rt_transition/lfpx.ma".
 
-(* UNBOUND PARALLEL RT-TRANSITION FOR LOCAL ENV.S ON REFERRED ENTRIES *******)
+(* UNBOUND PARALLEL RT-TRANSITION FOR REFERRED LOCAL ENVIRONMENTS ***********)
 
 (* Advanced properties ******************************************************)
 
-(* Basic_2A1: uses: lpx_refl *)
 lemma lfpx_refl: ∀h,G,T. reflexive … (lfpx h G T).
 /2 width=1 by lfxs_refl/ qed.
 
-(* Basic_2A1: uses: lpx_pair *)
 lemma lfpx_pair_refl: ∀h,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ⬈[h] V2 →
                       ∀I,T. ⦃G, L.ⓑ{I}V1⦄ ⊢ ⬈[h, T] L.ⓑ{I}V2.
 /2 width=1 by lfxs_pair_refl/ qed.

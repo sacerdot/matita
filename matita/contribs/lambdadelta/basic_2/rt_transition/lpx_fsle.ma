@@ -12,19 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_transition/cpg_lsubr.ma".
-include "basic_2/rt_transition/cpm.ma".
+include "basic_2/rt_transition/lfpx_lpx.ma".
 
-(* T-BOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS ***************)
+(* UNBOUND PARALLEL RT-TRANSITION FOR FULL LOCAL ENVIRONMENTS ***************)
 
-(* Properties with restricted refinement for local environments *************)
+(* Forward lemmas with free variables inclusion for restricted closures *****)
 
-(* Basic_2A1: includes: lsubr_cpr_trans *)
-lemma lsubr_cpm_trans (n) (h) (G): lsub_trans … (λL. cpm h G L n) lsubr.
-#n #h #G #L1 #T1 #T2 * /3 width=5 by lsubr_cpg_trans, ex2_intro/
-qed-.
+(* Basic_2A1: uses: lpx_cpx_frees_trans *)
+lemma lpx_cpx_conf_fsge (h) (G): ∀L0,T0,T1. ⦃G, L0⦄ ⊢ T0 ⬈[h] T1 →
+                                 ∀L2. ⦃G, L0⦄ ⊢ ⬈[h] L2 → ⦃L2, T1⦄ ⊆ ⦃L0, T0⦄.
+/3 width=4 by lfpx_cpx_conf_fsge, lpx_lfpx/ qed-.
 
-lemma cpm_bind_unit (n) (h) (G): ∀L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 →
-                                 ∀J,T1,T2. ⦃G, L.ⓤ{J}⦄ ⊢ T1 ➡[n, h] T2 →
-                                 ∀p,I. ⦃G, L⦄ ⊢ ⓑ{p,I}V1.T1 ➡[n, h] ⓑ{p,I}V2.T2.
-/4 width=4 by lsubr_cpm_trans, cpm_bind, lsubr_unit/ qed.
+(* Basic_2A1: uses: lpx_frees_trans *)
+lemma lpx_fsge_comp (h) (G): ∀L0,L2,T0. ⦃G, L0⦄ ⊢ ⬈[h] L2 → ⦃L2, T0⦄ ⊆ ⦃L0, T0⦄.
+/2 width=4 by lpx_cpx_conf_fsge/ qed-.
