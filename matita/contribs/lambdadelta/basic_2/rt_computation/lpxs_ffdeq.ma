@@ -12,12 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/lex_length.ma".
-include "basic_2/rt_computation/lpxs.ma".
+include "basic_2/static/ffdeq.ma".
+include "basic_2/rt_computation/lpxs_lfdeq.ma".
 
 (* UNBOUND PARALLEL RT-COMPUTATION FOR FULL LOCAL ENVIRONMENTS **************)
 
-(* Forward lemmas with length for local environments ************************)
+(* Properties with degree-based equivalence on closures *********************)
 
-lemma lpxs_fwd_length (h) (G): ∀L1,L2. ⦃G, L1⦄ ⊢ ⬈*[h] L2 → |L1| = |L2|.
-/2 width=2 by lex_fwd_length/ qed-.
+lemma ffdeq_lpxs_trans (h) (o): ∀G1,G2,L1,L0,T1,T2. ⦃G1, L1, T1⦄ ≛[h, o] ⦃G2, L0, T2⦄ →
+                                ∀L2. ⦃G2, L0⦄ ⊢⬈*[h] L2 →
+                                ∃∃L. ⦃G1, L1⦄ ⊢⬈*[h] L & ⦃G1, L, T1⦄ ≛[h, o] ⦃G2, L2, T2⦄.
+#h #o #G1 #G2 #L1 #L0 #T1 #T2 #H1 #L2 #HL02
+elim (ffdeq_inv_gen_dx … H1) -H1 #HG #HL10 #HT12 destruct
+elim (lfdeq_lpxs_trans … HL02 … HL10) -L0 #L0 #HL10 #HL02
+/3 width=3 by ffdeq_intro_dx, ex2_intro/
+qed-.

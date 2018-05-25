@@ -12,12 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/lex_length.ma".
-include "basic_2/rt_computation/lpxs.ma".
+include "basic_2/relocation/lex_lex.ma".
+include "basic_2/rt_computation/cpxs_cpxs.ma".
+include "basic_2/rt_computation/lpxs_lpx.ma".
 
 (* UNBOUND PARALLEL RT-COMPUTATION FOR FULL LOCAL ENVIRONMENTS **************)
 
-(* Forward lemmas with length for local environments ************************)
+(* Main properties **********************************************************)
 
-lemma lpxs_fwd_length (h) (G): ∀L1,L2. ⦃G, L1⦄ ⊢ ⬈*[h] L2 → |L1| = |L2|.
-/2 width=2 by lex_fwd_length/ qed-.
+theorem lpxs_trans (h) (G): Transitive … (lpxs h G).
+/4 width=5 by lpxs_cpxs_trans, cpxs_trans, lex_trans/ qed-.

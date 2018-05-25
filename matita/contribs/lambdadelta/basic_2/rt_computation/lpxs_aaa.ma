@@ -12,12 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/lex_length.ma".
-include "basic_2/rt_computation/lpxs.ma".
+include "basic_2/rt_transition/lpx_aaa.ma".
+include "basic_2/rt_computation/lpxs_lpx.ma".
 
 (* UNBOUND PARALLEL RT-COMPUTATION FOR FULL LOCAL ENVIRONMENTS **************)
 
-(* Forward lemmas with length for local environments ************************)
+(* Properties with atomic arity assignment for terms ************************)
 
-lemma lpxs_fwd_length (h) (G): ∀L1,L2. ⦃G, L1⦄ ⊢ ⬈*[h] L2 → |L1| = |L2|.
-/2 width=2 by lex_fwd_length/ qed-.
+lemma lpxs_aaa_conf (h) (G) (T): Conf3 … (λL. aaa G L T) (lpxs h G).
+#h #G #T #A #L1 #HT #L2 #H
+lapply (lex_inv_CTC … H) -H //
+@TC_Conf3 [4: // |*: /2 width=4 by lpx_aaa_conf/ ]
+qed-.
