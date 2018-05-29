@@ -91,7 +91,7 @@ table {
         ]
         [ { "unbound context-sensitive parallel rt-computation" * } {
              [ [ "refinement for lenvs on selected entries" ] "lsubsx" + "( ? ⊢ ? ⊆ⓧ[?,?,?] ? )" "lsubsx_lfsx" + "lsubsx_lsubsx" * ]
-             [ [ "strongly normalizing for lenvs on referred entries" ] "lfsx" + "( ? ⊢ ⬈*[?,?,?] 𝐒⦃?⦄ )" "lfsx_drops" + "lfsx_fqup" + "lfsx_cpx" + "lfsx_cpxs" + "lfsx_lfpxs" + "lfsx_lfsx" * ]
+             [ [ "strongly normalizing for lenvs on referred entries" ] "rdsx" + "( ? ⊢ ⬈*[?,?,?] 𝐒⦃?⦄ )" "rdsx_length" + "rdsx_drops" + "rdsx_fqup" + "rdsx_cpxs" + "rdsx_csx" + "rdsx_rdsx" * ]
              [ [ "strongly normalizing for term vectors" ] "csx_vector" + "( ⦃?,?⦄ ⊢ ⬈*[?,?] 𝐒⦃?⦄ )" "csx_cnx_vector" + "csx_csx_vector" * ]
              [ [ "strongly normalizing for terms" ] "csx" + "( ⦃?,?⦄ ⊢ ⬈*[?,?] 𝐒⦃?⦄ )" "csx_simple" + "csx_simple_theq" + "csx_drops" + "csx_fqus" + "csx_lsubr" + "csx_lfdeq" + "csx_ffdeq" + "csx_aaa" + "csx_gcp" + "csx_gcr" + "csx_lfpx" + "csx_cnx" + "csx_fpbq" + "csx_cpxs" + "csx_lfpxs" + "csx_csx" * ]
              [ [ "for lenvs on referred entries" ] "lfpxs" + "( ⦃?,?⦄ ⊢ ⬈*[?,?] ? )" "lfpxs_length" + "lfpxs_drops" + "lfpxs_fqup" + "lfpxs_lfdeq" + "lfpxs_ffdeq" + "lfpxs_aaa" + "lfpxs_cpxs" + "lfpxs_lpxs" + "lfpxs_lfpxs" * ]

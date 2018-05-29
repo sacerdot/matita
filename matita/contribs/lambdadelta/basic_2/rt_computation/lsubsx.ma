@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/lsubeqx_6.ma".
-include "basic_2/rt_computation/lfsx.ma".
+include "basic_2/rt_computation/rdsx.ma".
 
 (* CLEAR OF STRONGLY NORMALIZING ENTRIES FOR UNBOUND RT-TRANSITION **********)
 
