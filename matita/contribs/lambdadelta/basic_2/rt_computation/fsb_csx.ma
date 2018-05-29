@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_computation/lfsx_csx.ma".
+include "basic_2/rt_computation/rdsx_csx.ma".
 include "basic_2/rt_computation/fpbs_cpx.ma".
 include "basic_2/rt_computation/fpbs_csx.ma".
 include "basic_2/rt_computation/fsb_fpbg.ma".
@@ -34,7 +34,7 @@ lemma csx_fsb_fpbs: ∀h,o,G1,L1,T1. ⦃G1, L1⦄ ⊢ ⬈*[h, o] 𝐒⦃T1⦄ �
 #G0 #L0 #T0 #IHu #H10 
 lapply (fpbs_csx_conf … H10) // -HT1 #HT0
 generalize in match IHu; -IHu generalize in match H10; -H10
-@(lfsx_ind … (csx_lfsx … HT0)) -L0
+@(rdsx_ind … (csx_rdsx … HT0)) -L0
 #L0 #_ #IHd #H10 #IHu @fsb_intro
 #G2 #L2 #T2 * -G2 -L2 -T2 [ -IHd -IHc | -IHu -IHd |  ]
 [ /4 width=5 by fpbs_fqup_trans, fqu_fqup/
@@ -42,15 +42,15 @@ generalize in match IHu; -IHu generalize in match H10; -H10
   elim (fpbs_cpx_tdneq_trans … H10 … HT02 HnT02) -T0
   /3 width=4 by/
 | #L2 #HL02 #HnL02 @(IHd … HL02 HnL02) -IHd -HnL02 [ -IHu -IHc | ]
-  [ /3 width=3 by fpbs_lfpxs_trans, lfpx_lfpxs/
+  [ /3 width=3 by fpbs_lpxs_trans, lpx_lpxs/
   | #G3 #L3 #T3 #H03 #_
-    elim (lfpx_fqup_trans … H03 … HL02) -L2 #L4 #T4 #HT04 #H43 #HL43
+    elim (lpx_fqup_trans … H03 … HL02) -L2 #L4 #T4 #HT04 #H43 #HL43
     elim (tdeq_dec h o T0 T4) [ -IHc -HT04 #HT04 | -IHu #HnT04 ]
     [ elim (tdeq_fqup_trans … H43 … HT04) -T4 #L2 #T4 #H04 #HT43 #HL24
-      /4 width=7 by fsb_fpbs_trans, tdeq_lfdeq_lfpx_fpbs, fpbs_fqup_trans/
+      /4 width=7 by fsb_fpbs_trans, tdeq_lfdeq_lpx_fpbs, fpbs_fqup_trans/
     | elim (cpxs_tdneq_fwd_step_sn … HT04 HnT04) -HT04 -HnT04 #T2 #T5 #HT02 #HnT02 #HT25 #HT54
       elim (fpbs_cpx_tdneq_trans … H10 … HT02 HnT02) -T0 #T0 #HT10 #HnT10 #H02
-      /3 width=14 by fpbs_cpxs_tdeq_fqup_lfpx_trans/
+      /3 width=14 by fpbs_cpxs_tdeq_fqup_lpx_trans/
     ]
   ]
 ]

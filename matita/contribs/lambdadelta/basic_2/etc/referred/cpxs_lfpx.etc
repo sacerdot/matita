@@ -56,21 +56,8 @@ lemma lfpx_cpxs_trans: ∀h,G. s_rs_transitive … (cpx h G) (lfpx h G).
 /3 width=6 by lfpx_cpx_conf, lfpx_cpx_trans, s_r_trans_CTC1/
 qed-.
 
-(* Advanced properties ******************************************************)
-
-lemma cpx_bind2: ∀h,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ⬈[h] V2 →
-                 ∀I,T1,T2. ⦃G, L.ⓑ{I}V2⦄ ⊢ T1 ⬈[h] T2 →
-                 ∀p. ⦃G, L⦄ ⊢ ⓑ{p,I}V1.T1 ⬈*[h] ⓑ{p,I}V2.T2.
-/4 width=5 by lfpx_cpx_trans, cpxs_bind_dx, lfpx_pair_refl/ qed.
-
-lemma cpxs_bind2_dx: ∀h,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ⬈[h] V2 →
-                     ∀I,T1,T2. ⦃G, L.ⓑ{I}V2⦄ ⊢ T1 ⬈*[h] T2 →
-                     ∀p. ⦃G, L⦄ ⊢ ⓑ{p,I}V1.T1 ⬈*[h] ⓑ{p,I}V2.T2.
-/4 width=5 by lfpx_cpxs_trans, cpxs_bind_dx, lfpx_pair_refl/ qed.
-
 (* Properties with plus-iterated structural successor for closures **********)
 
-(* Basic_2A1: uses: lpx_fqup_trans *)
 lemma lfpx_fqup_trans: ∀h,b,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐+[b] ⦃G2, L2, T2⦄ →
                        ∀K1. ⦃G1, K1⦄ ⊢ ⬈[h, T1] L1 →
                        ∃∃K2,T. ⦃G1, K1⦄ ⊢ T1 ⬈*[h] T & ⦃G1, K1, T⦄ ⊐+[b] ⦃G2, K2, T2⦄ & ⦃G2, K2⦄ ⊢ ⬈[h, T2] L2.
@@ -86,7 +73,6 @@ qed-.
 
 (* Properties with star-iterated structural successor for closures **********)
 
-(* Basic_2A1: uses: lpx_fqus_trans *)
 lemma lfpx_fqus_trans: ∀h,b,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐*[b] ⦃G2, L2, T2⦄ →
                        ∀K1. ⦃G1, K1⦄ ⊢ ⬈[h, T1] L1 →
                        ∃∃K2,T. ⦃G1, K1⦄ ⊢ T1 ⬈*[h] T & ⦃G1, K1, T⦄ ⊐*[b] ⦃G2, K2, T2⦄ & ⦃G2, K2⦄ ⊢ ⬈[h, T2] L2.

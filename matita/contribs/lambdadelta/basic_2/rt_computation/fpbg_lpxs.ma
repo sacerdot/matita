@@ -12,15 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_computation/csx_lfpx.ma".
-include "basic_2/rt_computation/lfpxs_fqup.ma".
+include "basic_2/rt_computation/fpbs_lpxs.ma".
+include "basic_2/rt_computation/fpbg.ma".
 
-(* STRONGLY NORMALIZING TERMS FOR UNBOUND PARALLEL RT-TRANSITION ************)
+(* PROPER PARALLEL RST-COMPUTATION FOR CLOSURES *****************************)
 
-(* Properties with unbound parallel rt-computation on referred entries ******)
+(* Properties with unbound rt-computation on full local environments ********)
 
-(* Basic_2A1: uses: csx_lpxs_conf *)
-lemma csx_lfpxs_conf: ∀h,o,G,L1,L2,T. ⦃G, L1⦄ ⊢ ⬈*[h, T] L2 →
-                      ⦃G, L1⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄ → ⦃G, L2⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄.
-#h #o #G #L1 #L2 #T #H @(lfpxs_ind_sn … H) -L2 /3 by lfpxs_step_dx, csx_lfpx_conf/
-qed-.
+(* Basic_2A1: uses: lpxs_fpbg *)
+lemma lpxs_lfdneq_fpbg: ∀h,o,G,L1,L2,T. ⦃G, L1⦄ ⊢ ⬈*[h] L2 →
+                        (L1 ≛[h, o, T] L2 → ⊥) → ⦃G, L1, T⦄ >[h, o] ⦃G, L2, T⦄.
+#h #o #G #L1 #L2 #T #H #H0
+elim (lpxs_lfdneq_inv_step_sn … H … H0) -H -H0
+/4 width=7 by fpb_lpx, lpxs_ffdeq_fpbs, ffdeq_intro_sn, ex2_3_intro/
+qed.

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_transition/lfpx_aaa.ma".
+include "basic_2/rt_transition/lpx_aaa.ma".
 include "basic_2/rt_computation/cpxs.ma".
 
 (* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS **************)

@@ -54,6 +54,7 @@ lemma fqus_cpxs_trans: ∀h,b,G1,G2,L1,L2,T2,U2. ⦃G2, L2⦄ ⊢ T2 ⬈*[h] U2 
 qed-.
 
 (* Note: a proof based on fqu_cpx_trans_tdneq might exist *)
+(* Basic_2A1: uses: fqu_cpxs_trans_neq *)
 lemma fqu_cpxs_trans_tdneq: ∀h,o,b,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐[b] ⦃G2, L2, T2⦄ →
                             ∀U2. ⦃G2, L2⦄ ⊢ T2 ⬈*[h] U2 → (T2 ≛[h, o] U2 → ⊥) →
                             ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ⬈*[h] U1 & T1 ≛[h, o] U1 → ⊥ & ⦃G1, L1, U1⦄ ⊐[b] ⦃G2, L2, U2⦄.
@@ -86,6 +87,7 @@ lemma fqu_cpxs_trans_tdneq: ∀h,o,b,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐[b] 
 ]
 qed-.
 
+(* Basic_2A1: uses: fquq_cpxs_trans_neq *)
 lemma fquq_cpxs_trans_tdneq: ∀h,o,b,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐⸮[b] ⦃G2, L2, T2⦄ →
                              ∀U2. ⦃G2, L2⦄ ⊢ T2 ⬈*[h] U2 → (T2 ≛[h, o] U2 → ⊥) →
                              ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ⬈*[h] U1 & T1 ≛[h, o] U1 → ⊥ & ⦃G1, L1, U1⦄ ⊐⸮[b] ⦃G2, L2, U2⦄.
@@ -96,6 +98,7 @@ lemma fquq_cpxs_trans_tdneq: ∀h,o,b,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐⸮
 ]
 qed-.
 
+(* Basic_2A1: uses: fqup_cpxs_trans_neq *)
 lemma fqup_cpxs_trans_tdneq: ∀h,o,b,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐+[b] ⦃G2, L2, T2⦄ →
                              ∀U2. ⦃G2, L2⦄ ⊢ T2 ⬈*[h] U2 → (T2 ≛[h, o] U2 → ⊥) →
                              ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ⬈*[h] U1 & T1 ≛[h, o] U1 → ⊥ & ⦃G1, L1, U1⦄ ⊐+[b] ⦃G2, L2, U2⦄.
@@ -108,6 +111,7 @@ lemma fqup_cpxs_trans_tdneq: ∀h,o,b,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐+[b
 ]
 qed-.
 
+(* Basic_2A1: uses: fqus_cpxs_trans_neq *)
 lemma fqus_cpxs_trans_tdneq: ∀h,o,b,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐*[b] ⦃G2, L2, T2⦄ →
                              ∀U2. ⦃G2, L2⦄ ⊢ T2 ⬈*[h] U2 → (T2 ≛[h, o] U2 → ⊥) →
                              ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ⬈*[h] U1 & T1 ≛[h, o] U1 → ⊥ & ⦃G1, L1, U1⦄ ⊐*[b] ⦃G2, L2, U2⦄.

@@ -15,7 +15,7 @@
 include "basic_2/rt_computation/cpxs_theq_vector.ma".
 include "basic_2/rt_computation/csx_simple_theq.ma".
 include "basic_2/rt_computation/csx_lsubr.ma".
-include "basic_2/rt_computation/csx_lfpx.ma".
+include "basic_2/rt_computation/csx_lpx.ma".
 include "basic_2/rt_computation/csx_vector.ma".
 
 (* STRONGLY NORMALIZING TERM VECTORS FOR UNBOUND PARALLEL RT-TRANSITION *****)

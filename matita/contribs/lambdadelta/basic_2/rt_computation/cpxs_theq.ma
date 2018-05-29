@@ -15,7 +15,7 @@
 include "basic_2/syntax/theq_tdeq.ma".
 include "basic_2/rt_computation/cpxs_lsubr.ma".
 include "basic_2/rt_computation/cpxs_cnx.ma".
-include "basic_2/rt_computation/lfpxs_cpxs.ma".
+include "basic_2/rt_computation/lpxs_cpxs.ma".
 
 (* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS **************)
 
