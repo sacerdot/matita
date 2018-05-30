@@ -286,3 +286,92 @@ lemma cpm_fwd_bind1_minus: ∀n,h,I,G,L,V1,T1,T. ⦃G, L⦄ ⊢ -ⓑ{I}V1.T1 ➡
 #n #h #I #G #L #V1 #T1 #T * #c #Hc #H #p elim (cpg_fwd_bind1_minus … H p) -H
 /3 width=4 by ex2_2_intro, ex2_intro/
 qed-.
+
+(* Basic eliminators ********************************************************)
+
+lemma isrt_inv_max_shift_sn: ∀n,c1,c2. 𝐑𝐓⦃n, ↕*c1 ∨ c2⦄ →
+                             ∧∧ 𝐑𝐓⦃0, c1⦄ & 𝐑𝐓⦃n, c2⦄.
+#n #c1 #c2 #H
+elim (isrt_inv_max … H) -H #n1 #n2 #Hc1 #Hc2 #H destruct
+elim (isrt_inv_shift … Hc1) -Hc1 #Hc1 * -n1
+/2 width=1 by conj/
+qed-.
+
+lemma isrt_inv_max_eq_t: ∀n,c1,c2. 𝐑𝐓⦃n, c1 ∨ c2⦄ → eq_t c1 c2 →
+                         ∧∧ 𝐑𝐓⦃n, c1⦄ & 𝐑𝐓⦃n, c2⦄.
+#n #c1 #c2 #H #Hc12
+elim (isrt_inv_max … H) -H #n1 #n2 #Hc1 #Hc2 #H destruct
+lapply (isrt_eq_t_trans … Hc1 … Hc12) -Hc12 #H
+<(isrt_inj … H … Hc2) -Hc2
+<idempotent_max /2 width=1 by conj/
+qed-.
+
+lemma cpm_ind (h): ∀R:relation5 nat genv lenv term term.
+                   (∀I,G,L. R 0 G L (⓪{I}) (⓪{I})) →
+                   (∀G,L,s. R 1 G L (⋆s) (⋆(next h s))) →
+                   (∀n,G,K,V1,V2,W2. ⦃G, K⦄ ⊢ V1 ➡[n, h] V2 → R n G K V1 V2 →
+                     ⬆*[1] V2 ≘ W2 → R n G (K.ⓓV1) (#0) W2
+                   ) → (∀n,G,K,V1,V2,W2. ⦃G, K⦄ ⊢ V1 ➡[n, h] V2 → R n G K V1 V2 →
+                     ⬆*[1] V2 ≘ W2 → R (↑n) G (K.ⓛV1) (#0) W2
+                   ) → (∀n,I,G,K,T,U,i. ⦃G, K⦄ ⊢ #i ➡[n, h] T → R n G K (#i) T →
+                     ⬆*[1] T ≘ U → R n G (K.ⓘ{I}) (#↑i) (U)
+                   ) → (∀n,p,I,G,L,V1,V2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 → ⦃G, L.ⓑ{I}V1⦄ ⊢ T1 ➡[n, h] T2 →
+                     R 0 G L V1 V2 → R n G (L.ⓑ{I}V1) T1 T2 → R n G L (ⓑ{p,I}V1.T1) (ⓑ{p,I}V2.T2)
+                   ) → (∀n,G,L,V1,V2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 → ⦃G, L⦄ ⊢ T1 ➡[n, h] T2 →
+                     R 0 G L V1 V2 → R n G L T1 T2 → R n G L (ⓐV1.T1) (ⓐV2.T2)
+                   ) → (∀n,G,L,V1,V2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡[n, h] V2 → ⦃G, L⦄ ⊢ T1 ➡[n, h] T2 →
+                     R n G L V1 V2 → R n G L T1 T2 → R n G L (ⓝV1.T1) (ⓝV2.T2)
+                   ) → (∀n,G,L,V,T1,T,T2. ⦃G, L.ⓓV⦄ ⊢ T1 ➡[n, h] T → R n G (L.ⓓV) T1 T →
+                     ⬆*[1] T2 ≘ T → R n G L (+ⓓV.T1) T2
+                   ) → (∀n,G,L,V,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[n, h] T2 →
+                     R n G L T1 T2 → R n G L (ⓝV.T1) T2
+                   ) → (∀n,G,L,V1,V2,T. ⦃G, L⦄ ⊢ V1 ➡[n, h] V2 →
+                     R n G L V1 V2 → R (↑n) G L (ⓝV1.T) V2
+                   ) → (∀n,p,G,L,V1,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 → ⦃G, L⦄ ⊢ W1 ➡[h] W2 → ⦃G, L.ⓛW1⦄ ⊢ T1 ➡[n, h] T2 →
+                     R 0 G L V1 V2 → R 0 G L W1 W2 → R n G (L.ⓛW1) T1 T2 →
+                     R n G L (ⓐV1.ⓛ{p}W1.T1) (ⓓ{p}ⓝW2.V2.T2)
+                   ) → (∀n,p,G,L,V1,V,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V → ⦃G, L⦄ ⊢ W1 ➡[h] W2 → ⦃G, L.ⓓW1⦄ ⊢ T1 ➡[n, h] T2 →
+                     R 0 G L V1 V → R 0 G L W1 W2 → R n G (L.ⓓW1) T1 T2 →
+                     ⬆*[1] V ≘ V2 → R n G L (ⓐV1.ⓓ{p}W1.T1) (ⓓ{p}W2.ⓐV2.T2)
+                   ) →
+                   ∀n,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[n, h] T2 → R n G L T1 T2.
+#h #R #IH1 #IH2 #IH3 #IH4 #IH5 #IH6 #IH7 #IH8 #IH9 #IH10 #IH11 #IH12 #IH13 #n #G #L #T1 #T2
+* #c #HC #H generalize in match HC; -HC generalize in match n; -n
+elim H -c -G -L -T1 -T2
+[ #I #G #L #n #H <(isrt_inv_00 … H) -H //
+| #G #L #s #n #H <(isrt_inv_01 … H) -H //
+| /3 width=4 by ex2_intro/
+| #c #G #L #V1 #V2 #W2 #HV12 #HVW2 #IH #x #H
+  elim (isrt_inv_plus_SO_dx … H) -H // #n #Hc #H destruct
+  /3 width=4 by ex2_intro/
+| /3 width=4 by ex2_intro/
+| #cV #cT #p #I #G #L #V1 #V2 #T1 #T2 #HV12 #HT12 #IHV #IHT #n #H
+  elim (isrt_inv_max_shift_sn … H) -H #HcV #HcT
+  /3 width=3 by ex2_intro/
+| #cV #cT #G #L #V1 #V2 #T1 #T2 #HV12 #HT12 #IHV #IHT #n #H
+  elim (isrt_inv_max_shift_sn … H) -H #HcV #HcT
+  /3 width=3 by ex2_intro/
+| #cU #cT #G #L #U1 #U2 #T1 #T2 #HUT #HU12 #HT12 #IHU #IHT #n #H
+  elim (isrt_inv_max_eq_t … H) -H // #HcV #HcT
+  /3 width=3 by ex2_intro/
+| #c #G #L #V #T1 #T2 #T #HT12 #HT2 #IH #n #H
+  lapply (isrt_inv_plus_O_dx … H ?) -H // #Hc
+  /3 width=4 by ex2_intro/
+| #c #G #L #U #T1 #T2 #HT12 #IH #n #H
+  lapply (isrt_inv_plus_O_dx … H ?) -H // #Hc
+  /3 width=3 by ex2_intro/
+| #c #G #L #U1 #U2 #T #HU12 #IH #x #H
+  elim (isrt_inv_plus_SO_dx … H) -H // #n #Hc #H destruct
+  /3 width=3 by ex2_intro/
+| #cV #cW #cT #p #G #L #V1 #V2 #W1 #W2 #T1 #T2 #HV12 #HW12 #HT12 #IHV #IHW #IHT #n #H
+  lapply (isrt_inv_plus_O_dx … H ?) -H // >max_shift #H
+  elim (isrt_inv_max_shift_sn … H) -H #H #HcT
+  elim (isrt_O_inv_max … H) -H #HcV #HcW
+  /3 width=3 by ex2_intro/
+| #cV #cW #cT #p #G #L #V1 #V #V2 #W1 #W2 #T1 #T2 #HV1 #HV2 #HW12 #HT12 #IHV #IHW #IHT #n #H
+  lapply (isrt_inv_plus_O_dx … H ?) -H // >max_shift #H
+  elim (isrt_inv_max_shift_sn … H) -H #H #HcT
+  elim (isrt_O_inv_max … H) -H #HcV #HcW
+  /3 width=4 by ex2_intro/
+]
+qed-.
