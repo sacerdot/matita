@@ -73,14 +73,13 @@ table {
         ]
 *)        
         [ { "context-sensitive parallel r-computation" * } {
-(*
-             [ [ "" ] "lprs ( ⦃?,?⦄ ⊢ ➡* ? )" "lprs_drop" + "lprs_cprs" + "lprs_lprs" * ]
-*)
+             [ [ "for lenvs on all entries" ] "lprs ( ⦃?,?⦄ ⊢ ➡*[?] ? )" "lprs_length" + "lprs_drops" (* + "lprs_cprs" + "lprs_lprs" *) * ]
+             [ [ "for binders" ] "cprs_ext" + "( ⦃?,?⦄ ⊢ ? ➡*[?] ?)" * ]
              [ [ "for terms" ] "cprs" + "( ⦃?,?⦄ ⊢ ? ➡*[?] ?)" "cprs_drops" (* + "cprs_cprs" *) * ]
           }
         ]
         [ { "t-bound context-sensitive parallel rt-computation" * } {
-             [ [ "for terms" ] "cpms" + "( ⦃?,?⦄ ⊢ ? ➡*[?,?] ? )" "cpms_drops" + "cpms_lsubr" + "cpms_aaa" + "cpms_cpxs" * ]
+             [ [ "for terms" ] "cpms" + "( ⦃?,?⦄ ⊢ ? ➡*[?,?] ? )" "cpms_drops" + "cpms_lsubr" + "cpms_aaa" + "cpms_lpr" + "cpms_cpxs" + "cpms_cpms" * ]
           }
         ]
         [ { "unbound context-sensitive parallel rst-computation" * } {

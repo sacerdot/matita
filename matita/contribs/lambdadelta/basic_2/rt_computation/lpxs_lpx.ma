@@ -13,8 +13,8 @@
 (**************************************************************************)
 
 include "basic_2/relocation/lex_tc.ma".
-include "basic_2/rt_computation/lpxs.ma".
 include "basic_2/rt_computation/cpxs_lpx.ma".
+include "basic_2/rt_computation/lpxs.ma".
 
 (* UNBOUND PARALLEL RT-COMPUTATION FOR FULL LOCAL ENVIRONMENTS **************)
 

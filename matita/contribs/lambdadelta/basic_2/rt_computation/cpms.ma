@@ -47,6 +47,15 @@ lemma cpms_ind_dx (h) (G) (L) (T1) (Q:relation2 …):
 #h #G #L #T1 #R @ltc_ind_dx_refl //
 qed-.
 
+(* Basic inversion lemmas ***************************************************)
+
+lemma cpms_inv_sort1 (n) (h) (G) (L): ∀X2,s. ⦃G, L⦄ ⊢ ⋆s ➡*[n, h] X2 → X2 = ⋆(((next h)^n) s).
+#n #h #G #L #X2 #s #H @(cpms_ind_dx … H) -X2 //
+#n1 #n2 #X #X2 #_ #IH #HX2 destruct
+elim (cpm_inv_sort1 … HX2) -HX2 * // #H1 #H2 destruct
+/2 width=3 by refl, trans_eq/
+qed-.
+
 (* Basic properties *********************************************************)
 
 (* Basic_1: includes: pr1_pr0 *)
@@ -95,6 +104,16 @@ lemma cpms_eps (n) (h) (G) (L):
 /3 width=3 by cpms_step_sn, cpm_cpms, cpm_eps/
 qed.
 
+lemma cpms_ee (n) (h) (G) (L):
+              ∀U1,U2. ⦃G, L⦄ ⊢ U1 ➡*[n, h] U2 →
+              ∀T. ⦃G, L⦄ ⊢ ⓝU1.T ➡*[↑n, h] U2.
+#n #h #G #L #U1 #U2 #H @(cpms_ind_sn … H) -U1 -n
+[ /3 width=1 by cpm_cpms, cpm_ee/
+| #n1 #n2 #U1 #U #HU1 #HU2 #_ #T >plus_S1
+  /3 width=3 by cpms_step_sn, cpm_ee/
+]
+qed.
+
 (* Basic_2A1: uses: cprs_beta_dx *)
 lemma cpms_beta_dx (n) (h) (G) (L):
                    ∀V1,V2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 →
@@ -116,21 +135,13 @@ lemma cpms_theta_dx (n) (h) (G) (L):
 /4 width=9 by cpms_step_dx, cpm_cpms, cpms_bind_dx, cpms_appl_dx, cpm_theta/
 qed.
 
-(* Basic inversion lemmas ***************************************************)
-
-lemma cpms_inv_sort1 (n) (h) (G) (L): ∀X2,s. ⦃G, L⦄ ⊢ ⋆s ➡*[n, h] X2 → X2 = ⋆(((next h)^n) s).
-#n #h #G #L #X2 #s #H @(cpms_ind_dx … H) -X2 //
-#n1 #n2 #X #X2 #_ #IH #HX2 destruct
-elim (cpm_inv_sort1 … HX2) -HX2 * // #H1 #H2 destruct
-/2 width=3 by refl, trans_eq/
-qed-.
-
 (* Basic properties with r-transition ***************************************)
 
 (* Basic_1: was: pr3_refl *)
 lemma cprs_refl: ∀h,G,L. reflexive … (cpms h G L 0).
 /2 width=1 by cpm_cpms/ qed.
 
-(* Basic_2A1: removed theorems 4:
+(* Basic_2A1: removed theorems 5:
               sta_cprs_scpds lstas_scpds scpds_strap1 scpds_fwd_cprs
+              scpds_inv_lstas_eq
 *)

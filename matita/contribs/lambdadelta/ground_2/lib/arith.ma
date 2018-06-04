@@ -259,6 +259,22 @@ qed-.
 lemma plus_inv_O3: ∀x,y. x + y = 0 → x = 0 ∧ y = 0.
 /2 width=1 by plus_le_0/ qed-.
 
+lemma plus_inv_S3_sn: ∀x1,x2,x3. x1+x2 = ↑x3 →
+                      ∨∨ ∧∧ x1 = 0 & x2 = ↑x3
+                       | ∃∃y1. x1 = ↑y1 & y1 + x2 = x3.
+* /3 width=1 by or_introl, conj/
+#x1 #x2 #x3 <plus_S1 #H destruct
+/3 width=3 by ex2_intro, or_intror/
+qed-.
+
+lemma plus_inv_S3_dx: ∀x2,x1,x3. x1+x2 = ↑x3 →
+                      ∨∨ ∧∧ x2 = 0 & x1 = ↑x3
+                       | ∃∃y2. x2 = ↑y2 & x1 + y2 = x3.
+* /3 width=1 by or_introl, conj/
+#x2 #x1 #x3 <plus_n_Sm #H destruct
+/3 width=3 by ex2_intro, or_intror/
+qed-.
+
 lemma max_inv_O3: ∀x,y. (x ∨ y) = 0 → 0 = x ∧ 0 = y.
 /4 width=2 by le_maxr, le_maxl, le_n_O_to_eq, conj/
 qed-.

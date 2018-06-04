@@ -289,23 +289,6 @@ qed-.
 
 (* Basic eliminators ********************************************************)
 
-lemma isrt_inv_max_shift_sn: ∀n,c1,c2. 𝐑𝐓⦃n, ↕*c1 ∨ c2⦄ →
-                             ∧∧ 𝐑𝐓⦃0, c1⦄ & 𝐑𝐓⦃n, c2⦄.
-#n #c1 #c2 #H
-elim (isrt_inv_max … H) -H #n1 #n2 #Hc1 #Hc2 #H destruct
-elim (isrt_inv_shift … Hc1) -Hc1 #Hc1 * -n1
-/2 width=1 by conj/
-qed-.
-
-lemma isrt_inv_max_eq_t: ∀n,c1,c2. 𝐑𝐓⦃n, c1 ∨ c2⦄ → eq_t c1 c2 →
-                         ∧∧ 𝐑𝐓⦃n, c1⦄ & 𝐑𝐓⦃n, c2⦄.
-#n #c1 #c2 #H #Hc12
-elim (isrt_inv_max … H) -H #n1 #n2 #Hc1 #Hc2 #H destruct
-lapply (isrt_eq_t_trans … Hc1 … Hc12) -Hc12 #H
-<(isrt_inj … H … Hc2) -Hc2
-<idempotent_max /2 width=1 by conj/
-qed-.
-
 lemma cpm_ind (h): ∀R:relation5 nat genv lenv term term.
                    (∀I,G,L. R 0 G L (⓪{I}) (⓪{I})) →
                    (∀G,L,s. R 1 G L (⋆s) (⋆(next h s))) →

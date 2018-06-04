@@ -12,16 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_transition/cpm_cpx.ma".
-include "basic_2/rt_computation/cpxs.ma".
-include "basic_2/rt_computation/cpms.ma".
+include "basic_2/relocation/drops_lex.ma".
+include "basic_2/rt_computation/cpms_drops.ma".
 
-(* T-BOUND CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS **************)
+(* PARALLEL R-COMPUTATION FOR FULL LOCAL ENVIRONMENTS ***********************)
 
-(* Forward lemmas with unbound context-sensitive rt-computation for terms ***)
+(* Properties with generic slicing for local environments *******************)
 
-(* Basic_2A1: includes: scpds_fwd_cpxs cprs_cpxs *)
-lemma cpms_fwd_cpxs (n) (h): ∀G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡*[n, h] T2 → ⦃G, L⦄ ⊢ T1 ⬈*[h] T2.
-#n #h #G #L #T1 #T2 #H @(cpms_ind_dx … H) -T2
-/3 width=4 by cpxs_strap1, cpm_fwd_cpx/
-qed-.
+(* Basic_2A1: was: drop_lprs_trans *)
+lemma drops_lprs_trans (h) (G): dedropable_sn (λL.cpms h G L 0).
+/3 width=6 by lex_liftable_dedropable_sn, cpms_lifts_sn/ qed-.
+
+(* Inversion lemmas with generic slicing for local environments *************)
+
+(* Basic_2A1: was: lprs_drop_conf *)
+lemma lprs_drops_conf (h) (G): dropable_sn (λL.cpms h G L 0).
+/2 width=3 by lex_dropable_sn/ qed-.
+
+(* Basic_2A1: was: lprs_drop_trans_O1 *)
+lemma lprs_drops_trans (h) (G): dropable_dx (λL.cpms h G L 0).
+/2 width=3 by lex_dropable_dx/ qed-.

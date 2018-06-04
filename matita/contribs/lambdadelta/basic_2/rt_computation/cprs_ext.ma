@@ -12,18 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/reduction/lpr_drop.ma".
-include "basic_2/computation/lprs.ma".
+include "basic_2/syntax/cext2.ma".
+include "basic_2/rt_computation/cpms.ma".
 
-(* SN PARALLEL COMPUTATION ON LOCAL ENVIRONMENTS ****************************)
+(* CONTEXT-SENSITIVE PARALLEL R-COMPUTATION FOR BINDERS *********************)
 
-(* Properties on local environment slicing ***********************************)
+definition cprs_ext (h) (G): relation3 lenv bind bind ≝
+                             cext2 (λL. cpms h G L 0).
 
-lemma lprs_drop_conf: ∀G. dropable_sn (lprs G).
-/3 width=3 by dropable_sn_TC, lpr_drop_conf/ qed-.
-
-lemma drop_lprs_trans: ∀G. dedropable_sn (lprs G).
-/3 width=3 by dedropable_sn_TC, drop_lpr_trans/ qed-.
-
-lemma lprs_drop_trans_O1: ∀G. dropable_dx (lprs G).
-/3 width=3 by dropable_dx_TC, lpr_drop_trans_O1/ qed-.
+interpretation
+   "context-sensitive parallel r-computation (binder)"
+   'PRedStar h G L I1 I2 = (cprs_ext h G L I1 I2).

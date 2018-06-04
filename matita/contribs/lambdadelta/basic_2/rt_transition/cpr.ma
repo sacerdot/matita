@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/insert_eq/insert_eq_0.ma".
 include "basic_2/rt_transition/cpm.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL R-TRANSITION FOR TERMS ************************)
@@ -123,38 +124,11 @@ lemma cpr_ind (h): ∀R:relation4 genv lenv term term.
                    ) →
                    ∀G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[h] T2 → R G L T1 T2.
 #h #R #IH1 #IH2 #IH3 #IH4 #IH5 #IH6 #IH7 #IH8 #IH9 #G #L #T1 #T2
-* #c #HC #H generalize in match HC; -HC
-elim H -c -G -L -T1 -T2
-[ /2 width=3 by ex2_intro/
-| #G #L #s #H
-  lapply (isrt_inv_01 … H) -H #H destruct
-| /3 width=4 by ex2_intro/
-| #c #G #L #V1 #V2 #W2 #_ #_ #_ #H
-  elim (isrt_inv_plus_SO_dx … H) -H // #n #_ #H destruct
-| /3 width=4 by ex2_intro/
-| #cV #cT #p #I #G #L #V1 #V2 #T1 #T2 #HV12 #HT12 #IHV #IHT #H
-  elim (isrt_O_inv_max … H) -H #HcV #HcT
-  /4 width=3 by isr_inv_shift, ex2_intro/
-| #cV #cT #G #L #V1 #V2 #T1 #T2 #HV12 #HT12 #IHV #IHT #H
-  elim (isrt_O_inv_max … H) -H #HcV #HcT
-  /4 width=3 by isr_inv_shift, ex2_intro/
-| #cU #cT #G #L #U1 #U2 #T1 #T2 #HUT #HU12 #HT12 #IHU #IHT #H
-  elim (isrt_O_inv_max … H) -H #HcV #HcT
-  /3 width=3 by ex2_intro/
-| /4 width=4 by isrt_inv_plus_O_dx, ex2_intro/
-| /4 width=4 by isrt_inv_plus_O_dx, ex2_intro/
-| #c #G #L #U1 #U2 #T #_ #_ #H
-  elim (isrt_inv_plus_SO_dx … H) -H // #n #_ #H destruct
-| #cV #cW #cT #p #G #L #V1 #V2 #W1 #W2 #T1 #T2 #HV12 #HW12 #HT12 #IHV #IHW #IHT #H
-  lapply (isrt_inv_plus_O_dx … H ?) -H // #H
-  elim (isrt_O_inv_max … H) -H #H #HcT
-  elim (isrt_O_inv_max … H) -H #HcV #HcW
-  /4 width=3 by isr_inv_shift, ex2_intro/
-| #cV #cW #cT #p #G #L #V1 #V #V2 #W1 #W2 #T1 #T2 #HV1 #HV2 #HW12 #HT12 #IHV #IHW #IHT #H
-  lapply (isrt_inv_plus_O_dx … H ?) -H // #H
-  elim (isrt_O_inv_max … H) -H #H #HcT
-  elim (isrt_O_inv_max … H) -H #HcV #HcW
-  /4 width=4 by isr_inv_shift, ex2_intro/
+@(insert_eq_0 … 0) #n #H
+@(cpm_ind … H) -G -L -T1 -T2 -n /3 width=4 by/
+[ #G #L #s #H destruct
+| #n #G #K #V1 #V2 #W2 #_ #_ #_ #H destruct
+| #n #G #L #U1 #U2 #T #_ #_ #H destruct
 ]
 qed-.
 
