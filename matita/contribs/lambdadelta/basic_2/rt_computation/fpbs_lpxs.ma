@@ -17,8 +17,6 @@ include "basic_2/static/ffdeq_ffdeq.ma".
 include "basic_2/rt_computation/cpxs_fqus.ma".
 include "basic_2/rt_computation/cpxs_ffdeq.ma".
 include "basic_2/rt_computation/lpxs_ffdeq.ma".
-include "basic_2/rt_computation/lpxs_lpx.ma".
-include "basic_2/rt_computation/fpbs_fqus.ma".
 include "basic_2/rt_computation/fpbs_cpxs.ma".
 
 (* PARALLEL RST-COMPUTATION FOR CLOSURES ************************************)

@@ -17,7 +17,7 @@ include "basic_2/rt_computation/cpms_cpms.ma".
 
 (* T-BOUND CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS **************)
 
-(* Properties concerning sn parallel reduction on local environments ********)
+(* Properties with parallel rt-transition for full local environments *******)
 
 lemma lpr_cpm_trans (n) (h) (G):
                     ∀L2,T1,T2. ⦃G, L2⦄ ⊢ T1 ➡[n, h] T2 →
@@ -45,26 +45,25 @@ lemma lpr_cpm_trans (n) (h) (G):
 ]
 qed-.
 
-(*
-
-(* Basic_1: uses: pr3_pr2_pr2_t *)
-(* Basic_1: includes: pr3_pr0_pr2_t *)
-(* Basic_2A1: includes: lpr_cpr_trans *)
-lemma lpr_cpm_trans (n) (h) (G): s_r_transitive … (λL. cpm h G L n) (λ_. lpr h G).
-
-lemma cpr_bind2: ∀G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡ V2 → ∀I,T1,T2. ⦃G, L.ⓑ{I}V2⦄ ⊢ T1 ➡ T2 →
-                 ∀a. ⦃G, L⦄ ⊢ ⓑ{a,I}V1.T1 ➡* ⓑ{a,I}V2.T2.
-/4 width=5 by lpr_cpr_trans, cprs_bind_dx, lpr_pair/ qed.
+lemma lpr_cpms_trans (n) (h) (G):
+                     ∀L1,L2. ⦃G, L1⦄ ⊢ ➡[h] L2 →
+                     ∀T1,T2. ⦃G, L2⦄ ⊢ T1 ➡*[n, h] T2 → ⦃G, L1⦄ ⊢ T1 ➡*[n, h] T2.
+#n #h #G #L1 #L2 #HL12 #T1 #T2 #H @(cpms_ind_sn … H) -n -T1
+/3 width=3 by lpr_cpm_trans, cpms_trans/
+qed-.
 
 (* Advanced properties ******************************************************)
 
-(* Basic_1: was only: pr3_pr2_pr3_t pr3_wcpr0_t *)
-lemma lpr_cprs_trans: ∀G. b_rs_transitive … (cpr G) (λ_. lpr G).
-#G @b_c_trans_CTC1 /2 width=3 by lpr_cpr_trans/ (**) (* full auto fails *)
-qed-.
+(* Basic_2A1: includes cpr_bind2 *)
+lemma cpm_bind2 (n) (h) (G) (L):
+                ∀V1,V2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 →
+                ∀I,T1,T2. ⦃G, L.ⓑ{I}V2⦄ ⊢ T1 ➡[n, h] T2 →
+                ∀p. ⦃G, L⦄ ⊢ ⓑ{p,I}V1.T1 ➡*[n, h] ⓑ{p,I}V2.T2.
+/4 width=5 by lpr_cpm_trans, cpms_bind_dx, lpr_pair/ qed.
 
-lemma cprs_bind2_dx: ∀G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡ V2 →
-                     ∀I,T1,T2. ⦃G, L.ⓑ{I}V2⦄ ⊢ T1 ➡* T2 →
-                     ∀a. ⦃G, L⦄ ⊢ ⓑ{a,I}V1.T1 ➡* ⓑ{a,I}V2.T2.
-/4 width=5 by lpr_cprs_trans, cprs_bind_dx, lpr_pair/ qed.
-*)
+(* Basic_2A1: includes cprs_bind2_dx *)
+lemma cpms_bind2_dx (n) (h) (G) (L):
+                    ∀V1,V2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 →
+                    ∀I,T1,T2. ⦃G, L.ⓑ{I}V2⦄ ⊢ T1 ➡*[n, h] T2 →
+                    ∀p. ⦃G, L⦄ ⊢ ⓑ{p,I}V1.T1 ➡*[n, h] ⓑ{p,I}V2.T2.
+/4 width=5 by lpr_cpms_trans, cpms_bind_dx, lpr_pair/ qed.

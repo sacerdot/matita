@@ -11,7 +11,6 @@ XOA          := xoa.native
 XOA_OPTS     := ../../matita.conf.xml $(XOA_CONF)
 
 XOA2_CONF    := ground_2/xoa2.conf.xml
-XOA2_TARGETS := ground_2/notation/xoa/notation2.ma ground_2/xoa/xoa2.ma
 XOA2_OPTS    := ../../matita.conf.xml $(XOA2_CONF)
 
 DEP_INPUT    := .depend
@@ -74,11 +73,9 @@ $(XOA_TARGETS): $(XOA_CONF)
 
 # xoa2 #######################################################################
 
-xoa2: $(XOA2_TARGETS)
-
-$(XOA2_TARGETS): $(XOA2_CONF)
+xoa2: $(XOA2_CONF)
 	@echo "  EXEC $(XOA) $(XOA2_CONF)"
-	$(H)MATITA_RT_BASE_DIR=../.. $(XOA_DIR)/$(XOA) $(XOA2_OPTS)
+	$(H)MATITA_RT_BASE_DIR=../.. $(XOA_DIR)/$(XOA) -s $(XOA2_OPTS)
 
 # elim #######################################################################
 

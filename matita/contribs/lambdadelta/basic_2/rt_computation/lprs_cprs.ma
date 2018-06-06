@@ -140,3 +140,41 @@ qed-.
 lemma lprs_pair2: ∀I,G,L1,L2. ⦃G, L1⦄ ⊢ ➡* L2 →
                   ∀V1,V2. ⦃G, L2⦄ ⊢ V1 ➡* V2 → ⦃G, L1.ⓑ{I}V1⦄ ⊢ ➡* L2.ⓑ{I}V2.
 /3 width=3 by lprs_pair, lprs_cprs_trans/ qed.
+
+(* Advanced inversion lemmas ************************************************)
+
+(* Basic_2A1: uses: scpds_inv_abst1 *)
+lemma cpms_inv_abst_sn (n) (h) (G) (L):
+                       ∀p,V1,T1,X2. ⦃G, L⦄ ⊢ ⓛ{p}V1.T1 ➡*[n, h] X2 →
+                       ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡*[h] V2 & ⦃G, L.ⓛV1⦄ ⊢ T1 ➡*[n, h] T2 &
+                                X2 = ⓛ{p}V2.T2.
+#n #h #G #L #p #V1 #T1 #X2 #H
+@(cpms_ind_dx … H) -X2 /2 width=5 by ex3_2_intro/
+#n1 #n2 #X #X2 #_ * #V #T #HV1 #HT1 #H1 #H2 destruct
+elim (cpm_inv_abst1 … H2) -H2 #V2 #T2 #HV2 #HT2 #H2 destruct
+@ex3_2_intro [1,2,5: // ] 
+[ /2 width=3 by cprs_step_dx/
+| @(cpms_trans … HT1) -T1 -V2 -n1
+
+/3 width=5 by cprs_step_dx, cpms_step_dx, ex3_2_intro/  
+
+
+
+#d2 * #X #d1 #Hd21 #Hd1 #H1 #H2
+lapply (da_inv_bind … Hd1) -Hd1 #Hd1
+elim (lstas_inv_bind1 … H1) -H1 #U #HTU1 #H destruct
+elim (cprs_inv_abst1 … H2) -H2 #V2 #T2 #HV12 #HUT2 #H destruct
+/3 width=6 by ex4_2_intro, ex3_2_intro/
+qed-.
+
+lemma scpds_inv_abbr_abst: ∀h,o,a1,a2,G,L,V1,W2,T1,T2,d. ⦃G, L⦄ ⊢ ⓓ{a1}V1.T1 •*➡*[h, o, d] ⓛ{a2}W2.T2 →
+                           ∃∃T. ⦃G, L.ⓓV1⦄ ⊢ T1 •*➡*[h, o, d] T & ⬆[0, 1] ⓛ{a2}W2.T2 ≘ T & a1 = true.
+#h #o #a1 #a2 #G #L #V1 #W2 #T1 #T2 #d2 * #X #d1 #Hd21 #Hd1 #H1 #H2
+lapply (da_inv_bind … Hd1) -Hd1 #Hd1
+elim (lstas_inv_bind1 … H1) -H1 #U1 #HTU1 #H destruct
+elim (cprs_inv_abbr1 … H2) -H2 *
+[ #V2 #U2 #HV12 #HU12 #H destruct
+| /3 width=6 by ex4_2_intro, ex3_intro/
+]
+qed-.
+*)

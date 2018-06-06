@@ -13,7 +13,6 @@
 (**************************************************************************)
 
 include "basic_2/rt_computation/lpxs_lfdeq.ma".
-include "basic_2/rt_computation/lpxs_lpx.ma".
 include "basic_2/rt_computation/lpxs_lpxs.ma".
 include "basic_2/rt_computation/rdsx_rdsx.ma".
 

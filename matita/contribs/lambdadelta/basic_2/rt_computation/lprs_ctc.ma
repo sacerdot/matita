@@ -12,23 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/lib/relations.ma".
+include "basic_2/rt_computation/cprs_ctc.ma".
+include "basic_2/rt_computation/lprs.ma".
 
-(* FUNCTIONS ****************************************************************)
+(* PARALLEL R-COMPUTATION FOR FULL LOCAL ENVIRONMENTS ***********************)
 
-definition left_identity (A) (f): predicate A ≝ λi. ∀a:A. a = f i a.
+(* Properties with contextual transitive closure ****************************)
 
-definition right_identity (A) (f): predicate A ≝ λi. ∀a:A. a = f a i.
+lemma lprs_CTC (h) (G):
+               ∀L1,L2. L1⪤[CTC … (λL. cpm h G L 0)] L2 → ⦃G, L1⦄⊢ ➡*[h] L2. 
+/3 width=3 by cprs_CTC, lex_co/ qed.
 
-definition compatible_2 (A) (B):
-                        relation3 … (relation A) (relation B) ≝
-                        λf,Sa,Sb.
-                        ∀a1,a2. Sa a1 a2 → Sb (f a1) (f a2).
+(* Inversion lemmas with contextual transitive closure **********************)
 
-definition compatible_3 (A) (B) (C):
-                        relation4 … (relation A) (relation B) (relation C) ≝
-                        λf,Sa,Sb,Sc.
-                        ∀a1,a2. Sa a1 a2 → ∀b1,b2. Sb b1 b2 → Sc (f a1 b1) (f a2 b2).
-
-definition annulment_2 (A) (f): predicate A ≝
-                       λi:A. ∀a1,a2. i = f a1 a2 → ∧∧ i = a1 & i = a2.
+lemma lprs_inv_CTC (h) (G):
+                   ∀L1,L2. ⦃G, L1⦄⊢ ➡*[h] L2 → L1⪤[CTC … (λL. cpm h G L 0)] L2.
+/3 width=3 by cprs_inv_CTC, lex_co/ qed-.
