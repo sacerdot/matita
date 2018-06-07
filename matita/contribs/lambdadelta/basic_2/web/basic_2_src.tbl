@@ -75,7 +75,7 @@ table {
         [ { "context-sensitive parallel r-computation" * } {
              [ [ "for lenvs on all entries" ] "lprs ( ⦃?,?⦄ ⊢ ➡*[?] ? )" "lprs_ctc" + "lprs_length" + "lprs_drops" + "lprs_aaa" + "lprs_lpr" + "lprs_lpxs" (* + "lprs_cprs" + "lprs_lprs" *) * ]
              [ [ "for binders" ] "cprs_ext" + "( ⦃?,?⦄ ⊢ ? ➡*[?] ?)" * ]
-             [ [ "for terms" ] "cprs" + "( ⦃?,?⦄ ⊢ ? ➡*[?] ?)" "cprs_ctc" + "cprs_drops" + "cprs_lpr" (* + "cprs_cprs" *) * ]
+             [ [ "for terms" ] "cprs" + "( ⦃?,?⦄ ⊢ ? ➡*[?] ?)" "cprs_ctc" + "cprs_drops" + "cprs_cpr" + "cprs_lpr" + "cprs_cprs" * ]
           }
         ]
         [ { "t-bound context-sensitive parallel rt-computation" * } {
