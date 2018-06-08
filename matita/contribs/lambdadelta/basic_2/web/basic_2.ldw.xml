@@ -34,6 +34,9 @@
 
    <subsection name="A2">Stage "A2": "Extending the Applicability Condition"</subsection>
 
+   <news class="alpha" date="2018 June 8.">
+         Behavioral component rt_computation completed.
+   </news>
    <news class="alpha" date="2018 April 16.">
          "Big tree" theorem
          (anniversary milestone).
@@ -52,8 +55,7 @@
          (anniversary milestone).
    </news>
    <news class="alpha" date="2017 March 16.">
-         First behavioral component completed:
-         rt_transition.
+         Behavioral component rt_transition completed.
    </news>
    <news class="alpha" date="2017 February 19.">
          Generic candidates of reducibility.

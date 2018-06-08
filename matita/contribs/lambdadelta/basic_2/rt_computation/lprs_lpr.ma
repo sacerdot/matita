@@ -12,9 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/lex_tc.ma".
-include "basic_2/rt_computation/cprs_lpr.ma".
-include "basic_2/rt_computation/lprs_ctc.ma".
+include "basic_2/rt_computation/lprs_tc.ma".
 
 (* PARALLEL R-COMPUTATION FOR FULL LOCAL ENVIRONMENTS ***********************)
 
@@ -46,3 +44,12 @@ lemma lprs_step_sn (h) (G): ∀L1,L. ⦃G, L1⦄ ⊢ ➡[h] L →
 lemma lprs_step_dx (h) (G): ∀L1,L. ⦃G, L1⦄ ⊢ ➡*[h] L →
                             ∀L2. ⦃G, L⦄ ⊢ ➡[h] L2 → ⦃G, L1⦄ ⊢ ➡*[h] L2.
 /4 width=3 by lprs_inv_CTC, lprs_CTC, lpr_cprs_trans, lex_CTC_step_dx/ qed-.
+
+lemma lprs_strip (h) (G): confluent2 … (lprs h G) (lpr h G).
+#h #G #L0 #L1 #HL01 #L2 #HL02
+elim (TC_strip1 … L1 ?? HL02) -HL02
+[ /3 width=3 by lprs_TC, ex2_intro/ | skip
+| /2 width=1 by lprs_inv_TC/
+| /2 width=3 by lpr_conf/
+]
+qed-.

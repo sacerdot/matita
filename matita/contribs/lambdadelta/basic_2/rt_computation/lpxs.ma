@@ -46,13 +46,13 @@ lemma lpxs_refl (h) (G): reflexive … (lpxs h G).
 lemma lpxs_inv_atom_sn (h) (G): ∀L2. ⦃G, ⋆⦄ ⊢ ⬈*[h] L2 → L2 = ⋆.
 /2 width=2 by lex_inv_atom_sn/ qed-.
 
-lemma lpxs_inv_bind_sn (h) (G): ∀I1,L2,K1. ⦃G, K1.ⓘ{I1}⦄ ⊢⬈*[h] L2 →
-                                ∃∃I2,K2. ⦃G, K1⦄ ⊢⬈*[h] K2 & ⦃G, K1⦄ ⊢ I1 ⬈*[h] I2 & L2 = K2.ⓘ{I2}.
+lemma lpxs_inv_bind_sn (h) (G): ∀I1,L2,K1. ⦃G, K1.ⓘ{I1}⦄ ⊢ ⬈*[h] L2 →
+                                ∃∃I2,K2. ⦃G, K1⦄ ⊢ ⬈*[h] K2 & ⦃G, K1⦄ ⊢ I1 ⬈*[h] I2 & L2 = K2.ⓘ{I2}.
 /2 width=1 by lex_inv_bind_sn/ qed-.
 
 (* Basic_2A1: was: lpxs_inv_pair1 *)
-lemma lpxs_inv_pair_sn (h) (G): ∀I,L2,K1,V1. ⦃G, K1.ⓑ{I}V1⦄ ⊢⬈*[h] L2 →
-                                ∃∃K2,V2. ⦃G, K1⦄ ⊢⬈*[h] K2 & ⦃G, K1⦄ ⊢ V1 ⬈*[h] V2 & L2 = K2.ⓑ{I}V2.
+lemma lpxs_inv_pair_sn (h) (G): ∀I,L2,K1,V1. ⦃G, K1.ⓑ{I}V1⦄ ⊢ ⬈*[h] L2 →
+                                ∃∃K2,V2. ⦃G, K1⦄ ⊢ ⬈*[h] K2 & ⦃G, K1⦄ ⊢ V1 ⬈*[h] V2 & L2 = K2.ⓑ{I}V2.
 /2 width=1 by lex_inv_pair_sn/ qed-.
 
 (* Basic_2A1: was: lpxs_inv_atom2 *)

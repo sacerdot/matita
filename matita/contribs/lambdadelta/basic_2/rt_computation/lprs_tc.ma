@@ -12,22 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_computation/cprs_cprs.ma".
-include "basic_2/rt_computation/lprs_cpms.ma".
+include "basic_2/relocation/lex_tc.ma".
+include "basic_2/rt_computation/lprs_ctc.ma".
+include "basic_2/rt_computation/cprs_lpr.ma".
 
 (* PARALLEL R-COMPUTATION FOR FULL LOCAL ENVIRONMENTS ***********************)
 
-(* Main properties **********************************************************)
+(* Properties with transitive closure ***************************************)
 
-theorem lprs_trans (h) (G): Transitive … (lprs h G).
-/4 width=5 by lprs_cpms_trans, cprs_trans, lex_trans/ qed-.
+lemma lprs_TC (h) (G):
+              ∀L1,L2. TC … (lex (λL.cpm h G L 0)) L1 L2 → ⦃G, L1⦄⊢ ➡*[h] L2.
+/4 width=3 by lprs_CTC, lex_CTC, lpr_cprs_trans/ qed.
 
-theorem lprs_conf (h) (G): confluent2 … (lprs h G) (lprs h G).
-#h #G #L0 #L1 #HL01 #L2 #HL02
-elim (TC_confluent2 … L0 L1 … L2)
-[ /3 width=3 by lprs_TC, ex2_intro/ |5,6: skip
-| /2 width=1 by lprs_inv_TC/
-| /2 width=1 by lprs_inv_TC/
-| /2 width=3 by lpr_conf/
-]
-qed-.
+(* Inversion lemmas with transitive closure *********************************)
+
+lemma lprs_inv_TC (h) (G):
+                  ∀L1,L2. ⦃G, L1⦄⊢ ➡*[h] L2 → TC … (lex (λL.cpm h G L 0)) L1 L2.
+/3 width=3 by lprs_inv_CTC, lex_inv_CTC/ qed-.

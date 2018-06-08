@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_transition/lpr_lpr.ma".
 include "basic_2/rt_computation/cpms_lpr.ma".
 include "basic_2/rt_computation/cprs_cpr.ma".
 
