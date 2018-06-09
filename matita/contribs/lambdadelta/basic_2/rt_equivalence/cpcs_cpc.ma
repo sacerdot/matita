@@ -12,19 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_computation/cpms_aaa.ma".
-include "basic_2/rt_equivalence/cpcs_cprs.ma".
+include "basic_2/rt_conversion/cpc_cpc.ma".
+include "basic_2/rt_equivalence/cpcs.ma".
 
-(* CONTEXT-SENSITIVE PARALLEL EQUIVALENCE ON TERMS **************************)
+(* CONTEXT-SENSITIVE PARALLEL R-EQUIVALENCE FOR TERMS ***********************)
 
-(* Main inversion lemmas with atomic arity assignment on terms **************)
+(* Properties with context-sensitive parallel r-conversion for terms ********)
 
-theorem cpcs_aaa_mono (h) (G) (L): ∀T1,T2. ⦃G, L⦄ ⊢ T1 ⬌*[h] T2 →
-                                   ∀A1. ⦃G, L⦄ ⊢ T1 ⁝ A1 → ∀A2. ⦃G, L⦄ ⊢ T2 ⁝ A2 →
-                                   A1 = A2.
-#h #G #L #T1 #T2 #HT12 #A1 #HA1 #A2 #HA2
-elim (cpcs_inv_cprs … HT12) -HT12 #T #HT1 #HT2
-lapply (cpms_aaa_conf … HA1 … HT1) -T1 #HA1
-lapply (cpms_aaa_conf … HA2 … HT2) -T2 #HA2
-lapply (aaa_mono … HA1 … HA2) -L -T //
+lemma cpcs_strip (h) (G) (L): confluent2 … (cpcs h G L) (cpc h G L).
+#h #G #L #T1 #T @TC_strip1 /2 width=3 by cpc_conf/
 qed-.

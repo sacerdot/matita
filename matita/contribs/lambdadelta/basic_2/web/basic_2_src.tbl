@@ -43,15 +43,9 @@ table {
      }
    ]
    class "prune"
-   [ { "rt-equivalence" * } {
-(*
-        [ { "decomposed rt-equivalence" * } {
-             [ [ "" ] "scpes ( ⦃?,?⦄ ⊢ ? •*⬌*[?,?,?,?] ? )" "scpes_aaa" + "scpes_cpcs" + "scpes_scpes" * ]
-          }
-        ]
-*)        
+   [ { "rt-equivalence" * } {        
         [ { "context-sensitive parallel r-equivalence" * } {
-             [ [ "for terms" ] "cpcs ( ⦃?,?⦄ ⊢ ? ⬌*[?] ? )" (* "cpcs_aaa" + "cpcs_cprs" + "cpcs_cpcs" *) * ]
+             [ [ "for terms" ] "cpcs ( ⦃?,?⦄ ⊢ ? ⬌*[?] ? )" "cpcs_drops" + "cpcs_lsubr" + "cpcs_aaa" + "cpcs_cprs" + "cpcs_lprs" + "cpcs_cpc" + "cpcs_cpcs" * ]
           }
         ]
      }
@@ -66,12 +60,6 @@ table {
    ]
    class "sky"
    [ { "rt-computation" * } {
-(*
-        [ { "decomposed rt-computation" * } {
-             "scpds_scpds"
-          }
-        ]
-*)        
         [ { "context-sensitive parallel r-computation" * } {
              [ [ "for lenvs on all entries" ] "lprs ( ⦃?,?⦄ ⊢ ➡*[?] ? )" "lprs_tc" + "lprs_ctc" + "lprs_length" + "lprs_drops" + "lprs_aaa" + "lprs_lpr" + "lprs_lpxs" + "lprs_cpms" + "lprs_cprs" + "lprs_lprs" * ]
              [ [ "for binders" ] "cprs_ext" + "( ⦃?,?⦄ ⊢ ? ➡*[?] ?)" * ]
@@ -288,6 +276,10 @@ class "capitalize italic" { 0 1 }
 
 class "italic"            { 2 }
 (*
+        [ { "decomposed rt-equivalence" * } {
+             [ [ "" ] "scpes ( ⦃?,?⦄ ⊢ ? •*⬌*[?,?,?,?] ? )" "scpes_aaa" + "scpes_cpcs" + "scpes_scpes" * ]
+          }
+        ]
         [ [ "for lenvs on referred entries" ] "lfpxs" + "( ⦃?,?⦄ ⊢ ⬈*[?,?] ? )" "lfpxs_length" + "lfpxs_drops" + "lfpxs_fqup" + "lfpxs_lfdeq" + "lfpxs_ffdeq" + "lfpxs_aaa" + "lfpxs_cpxs" + "lfpxs_lpxs" + "lfpxs_lfpxs" * ]
         [ [ "for lenvs on referred entries" ]
               "lfpr" + "( ⦃?,?⦄ ⊢ ➡[?,?] ? )" "lfpr_length" + "lfpr_drops" + "lfpr_fquq" + "lfpr_fqup" + "lfpr_aaa" + "lfpr_lfpx" + "lfpr_lfpr" * ]
