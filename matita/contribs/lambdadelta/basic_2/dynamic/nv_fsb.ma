@@ -12,13 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/fsb_aaa.ma".
-include "basic_2/dynamic/snv_aaa.ma".
+include "basic_2/rt_computation/fsb_aaa.ma".
+include "basic_2/dynamic/nv_aaa.ma".
 
-(* STRATIFIED NATIVE VALIDITY FOR TERMS *************************************)
+(* NATIVE VALIDITY FOR TERMS ************************************************)
 
-(* forward lemmas on "qrst" strongly normalizing closures *********************)
+(* Forward lemmas with strongly rst-normalizing closures ********************)
 
-lemma snv_fwd_fsb: ∀h,o,G,L,T. ⦃G, L⦄ ⊢ T ¡[h, o] → ⦥[h, o] ⦃G, L, T⦄.
-#h #o #G #L #T #H elim (snv_fwd_aaa … H) -H /2 width=2 by aaa_fsb/
+(* Basic_2A1: uses: snv_fwd_fsb *)
+lemma nv_fwd_fsb (a) (h) (o): ∀G,L,T. ⦃G, L⦄ ⊢ T ![a, h] → ≥[h, o] 𝐒⦃G, L, T⦄.
+#a #h #o #G #L #T #H elim (nv_fwd_aaa … H) -H /2 width=2 by aaa_fsb/
 qed-.

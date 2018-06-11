@@ -1,36 +1,64 @@
-(* Properties on subclosure *************************************************)
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
 
-lemma snv_fqu_conf: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T2⦄ →
-                    ⦃G1, L1⦄ ⊢ T1 ¡[h, o] → ⦃G2, L2⦄ ⊢ T2 ¡[h, o].
-#h #o #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2
+include "basic_2/s_computation/fqus_fqup.ma".
+include "basic_2/dynamic/nv_drops.ma".
+
+(* NATIVE VALIDITY FOR TERMS ************************************************)
+
+(* Properties with supclosure ***********************************************)
+
+(* Basic_2A1: uses: snv_fqu_conf *)
+lemma nv_fqu_conf (a) (h): ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T2⦄ →
+                           ⦃G1, L1⦄ ⊢ T1 ![a, h] → ⦃G2, L2⦄ ⊢ T2 ![a, h].
+#a #h #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2
 [ #I1 #G1 #L1 #V1 #H
-  elim (snv_inv_lref … H) -H #I2 #L2 #V2 #H #HV2
-  lapply (drop_inv_O2 … H) -H #H destruct //
-|2: *
-|5,6: /3 width=8 by snv_inv_lift/
-]
-[1,3: #a #I #G1 #L1 #V1 #T1 #H elim (snv_inv_bind … H) -H //
-|2,4: * #G1 #L1 #V1 #T1 #H
-  [1,3: elim (snv_inv_appl … H) -H //
-  |2,4: elim (snv_inv_cast … H) -H //
+  elim (nv_inv_zero … H) -H #I2 #L2 #V2 #HV2 #H destruct //
+| * [ #p #I1 | * ] #G1 #L1 #V1 #T1 #H
+  [ elim (nv_inv_bind … H) -H //
+  | elim (nv_inv_appl … H) -H //
+  | elim (nv_inv_cast … H) -H //
   ]
+| #p #I1 #G1 #L1 #V1 #T1 #H
+  elim (nv_inv_bind … H) -H //
+| #p #I1 #G1 #L1 #V1 #T1 #H destruct
+| * #G1 #L1 #V1 #T1 #H
+  [ elim (nv_inv_appl … H) -H //
+  | elim (nv_inv_cast … H) -H //
+  ]
+| #I1 #G1 #L1 #T1 #U1 #HTU1 #HU 
+  /4 width=7 by nv_inv_lifts, drops_refl, drops_drop/
 ]
 qed-.
 
-lemma snv_fquq_conf: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐⸮ ⦃G2, L2, T2⦄ →
-                     ⦃G1, L1⦄ ⊢ T1 ¡[h, o] → ⦃G2, L2⦄ ⊢ T2 ¡[h, o].
-#h #o #G1 #G2 #L1 #L2 #T1 #T2 #H elim (fquq_inv_gen … H) -H [|*]
-/2 width=5 by snv_fqu_conf/
+(* Basic_2A1: uses: snv_fquq_conf *)
+lemma nv_fquq_conf (a) (h): ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐⸮ ⦃G2, L2, T2⦄ →
+                            ⦃G1, L1⦄ ⊢ T1 ![a, h] → ⦃G2, L2⦄ ⊢ T2 ![a, h].
+#a #h #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -H [|*]
+/2 width=5 by nv_fqu_conf/
 qed-.
 
-lemma snv_fqup_conf: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐+ ⦃G2, L2, T2⦄ →
-                     ⦃G1, L1⦄ ⊢ T1 ¡[h, o] → ⦃G2, L2⦄ ⊢ T2 ¡[h, o].
-#h #o #G1 #G2 #L1 #L2 #T1 #T2 #H @(fqup_ind … H) -G2 -L2 -T2
-/3 width=5 by fqup_strap1, snv_fqu_conf/
+(* Basic_2A1: uses: snv_fqup_conf *)
+lemma nv_fqup_conf (a) (h): ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐+ ⦃G2, L2, T2⦄ →
+                            ⦃G1, L1⦄ ⊢ T1 ![a, h] → ⦃G2, L2⦄ ⊢ T2 ![a, h].
+#a #h #G1 #G2 #L1 #L2 #T1 #T2 #H @(fqup_ind … H) -G2 -L2 -T2
+/3 width=5 by fqup_strap1, nv_fqu_conf/
 qed-.
 
-lemma snv_fqus_conf: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐* ⦃G2, L2, T2⦄ →
-                     ⦃G1, L1⦄ ⊢ T1 ¡[h, o] → ⦃G2, L2⦄ ⊢ T2 ¡[h, o].
-#h #o #G1 #G2 #L1 #L2 #T1 #T2 #H elim (fqus_inv_gen … H) -H [|*]
-/2 width=5 by snv_fqup_conf/
+(* Basic_2A1: uses: snv_fqus_conf *)
+lemma nv_fqus_conf (a) (h): ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐* ⦃G2, L2, T2⦄ →
+                            ⦃G1, L1⦄ ⊢ T1 ![a, h] → ⦃G2, L2⦄ ⊢ T2 ![a, h].
+#a #h #G1 #G2 #L1 #L2 #T1 #T2 #H elim (fqus_inv_fqup … H) -H [|*]
+/2 width=5 by nv_fqup_conf/
 qed-.
