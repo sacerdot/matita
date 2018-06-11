@@ -37,7 +37,7 @@ table {
 (*
              [ [ "" ] "shnv ( ⦃?,?⦄ ⊢ ? ¡[?,?,?] )" * ]
 *)
-             [ [ "for terms" ] "nv" + "( ⦃?,?⦄ ⊢ ? ![?,?] )" "nv_drops" "nv_fqus" + "nv_aaa" + "snv_fsb" (* + "snv_lpr" + "snv_scpes" + "snv_preserve" *) * ]
+             [ [ "for terms" ] "nv" + "( ⦃?,?⦄ ⊢ ? ![?,?] )" "nv_drops" + "nv_fqus" + "nv_aaa" + "nv_fsb" (* + "snv_lpr" + "snv_scpes" + "snv_preserve" *) * ]
           }
         ]
      }

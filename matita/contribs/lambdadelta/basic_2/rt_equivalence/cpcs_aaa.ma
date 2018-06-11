@@ -19,6 +19,7 @@ include "basic_2/rt_equivalence/cpcs_cprs.ma".
 
 (* Main inversion lemmas with atomic arity assignment on terms **************)
 
+(* Note: lemma 1500 *)
 theorem cpcs_aaa_mono (h) (G) (L): ∀T1,T2. ⦃G, L⦄ ⊢ T1 ⬌*[h] T2 →
                                    ∀A1. ⦃G, L⦄ ⊢ T1 ⁝ A1 → ∀A2. ⦃G, L⦄ ⊢ T2 ⁝ A2 →
                                    A1 = A2.
