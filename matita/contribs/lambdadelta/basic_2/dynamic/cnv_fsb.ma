@@ -13,13 +13,13 @@
 (**************************************************************************)
 
 include "basic_2/rt_computation/fsb_aaa.ma".
-include "basic_2/dynamic/nv_aaa.ma".
+include "basic_2/dynamic/cnv_aaa.ma".
 
-(* NATIVE VALIDITY FOR TERMS ************************************************)
+(* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
 
 (* Forward lemmas with strongly rst-normalizing closures ********************)
 
 (* Basic_2A1: uses: snv_fwd_fsb *)
-lemma nv_fwd_fsb (a) (h) (o): ∀G,L,T. ⦃G, L⦄ ⊢ T ![a, h] → ≥[h, o] 𝐒⦃G, L, T⦄.
-#a #h #o #G #L #T #H elim (nv_fwd_aaa … H) -H /2 width=2 by aaa_fsb/
+lemma cnv_fwd_fsb (a) (h) (o): ∀G,L,T. ⦃G, L⦄ ⊢ T ![a, h] → ≥[h, o] 𝐒⦃G, L, T⦄.
+#a #h #o #G #L #T #H elim (cnv_fwd_aaa … H) -H /2 width=2 by aaa_fsb/
 qed-.

@@ -13,14 +13,14 @@
 (**************************************************************************)
 
 include "basic_2/rt_computation/cpms_aaa.ma".
-include "basic_2/dynamic/nv.ma".
+include "basic_2/dynamic/cnv.ma".
 
-(* NATIVE VALIDITY FOR TERMS ************************************************)
+(* CONTEXT_SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
 
 (* Forward lemmas on atomic arity assignment for terms **********************)
 
 (* Basic_2A1: uses: snv_fwd_aaa *)
-lemma nv_fwd_aaa (a) (h): ∀G,L,T. ⦃G, L⦄ ⊢ T ![a, h] → ∃A. ⦃G, L⦄ ⊢ T ⁝ A.
+lemma cnv_fwd_aaa (a) (h): ∀G,L,T. ⦃G, L⦄ ⊢ T ![a, h] → ∃A. ⦃G, L⦄ ⊢ T ⁝ A.
 #a #h #G #L #T #H elim H -G -L -T
 [ /2 width=2 by aaa_sort, ex_intro/
 | #I #G #L #V #_ * /3 width=2 by aaa_zero, ex_intro/
