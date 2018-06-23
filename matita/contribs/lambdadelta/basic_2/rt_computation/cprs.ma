@@ -20,11 +20,11 @@ include "basic_2/rt_computation/cpms.ma".
 (* Basic eliminators ********************************************************)
 
 (* Basic_2A1: was: cprs_ind_dx *)
-lemma cprs_ind_sn (h) (G) (L) (T2) (R:predicate …):
-                  R T2 →
-                  (∀T1,T. ⦃G, L⦄ ⊢ T1 ➡[h] T → ⦃G, L⦄ ⊢ T ➡*[h] T2 → R T → R T1) →
-                  ∀T1. ⦃G, L⦄ ⊢ T1 ➡*[h] T2 → R T1.
-#h #G #L #T2 #R #IH1 #IH2 #T1
+lemma cprs_ind_sn (h) (G) (L) (T2) (Q:predicate …):
+                  Q T2 →
+                  (∀T1,T. ⦃G, L⦄ ⊢ T1 ➡[h] T → ⦃G, L⦄ ⊢ T ➡*[h] T2 → Q T → Q T1) →
+                  ∀T1. ⦃G, L⦄ ⊢ T1 ➡*[h] T2 → Q T1.
+#h #G #L #T2 #Q #IH1 #IH2 #T1
 @(insert_eq_0 … 0) #n #H
 @(cpms_ind_sn … H) -n -T1 //
 #n1 #n2 #T1 #T #HT1 #HT2 #IH #H
@@ -33,11 +33,11 @@ elim (plus_inv_O3 n1 n2) // -H #H1 #H2 destruct
 qed-.
 
 (* Basic_2A1: was: cprs_ind *)
-lemma cprs_ind_dx (h) (G) (L) (T1) (R:predicate …):
-                  R T1 →
-                  (∀T,T2. ⦃G, L⦄ ⊢ T1 ➡*[h] T → ⦃G, L⦄ ⊢ T ➡[h] T2 → R T → R T2) →
-                  ∀T2. ⦃G, L⦄ ⊢ T1 ➡*[h] T2 → R T2.
-#h #G #L #T1 #R #IH1 #IH2 #T2
+lemma cprs_ind_dx (h) (G) (L) (T1) (Q:predicate …):
+                  Q T1 →
+                  (∀T,T2. ⦃G, L⦄ ⊢ T1 ➡*[h] T → ⦃G, L⦄ ⊢ T ➡[h] T2 → Q T → Q T2) →
+                  ∀T2. ⦃G, L⦄ ⊢ T1 ➡*[h] T2 → Q T2.
+#h #G #L #T1 #Q #IH1 #IH2 #T2
 @(insert_eq_0 … 0) #n #H
 @(cpms_ind_dx … H) -n -T2 //
 #n1 #n2 #T #T2 #HT1 #IH #HT2 #H

@@ -26,17 +26,17 @@ interpretation "unbound context-sensitive parallel rt-computation (term)"
 
 (* Basic eliminators ********************************************************)
 
-lemma cpxs_ind: ∀h,G,L,T1. ∀R:predicate term. R T1 →
-                (∀T,T2. ⦃G, L⦄ ⊢ T1 ⬈*[h] T → ⦃G, L⦄ ⊢ T ⬈[h] T2 → R T → R T2) →
-                ∀T2. ⦃G, L⦄ ⊢ T1 ⬈*[h] T2 → R T2.
-#h #L #G #T1 #R #HT1 #IHT1 #T2 #HT12
+lemma cpxs_ind: ∀h,G,L,T1. ∀Q:predicate term. Q T1 →
+                (∀T,T2. ⦃G, L⦄ ⊢ T1 ⬈*[h] T → ⦃G, L⦄ ⊢ T ⬈[h] T2 → Q T → Q T2) →
+                ∀T2. ⦃G, L⦄ ⊢ T1 ⬈*[h] T2 → Q T2.
+#h #L #G #T1 #Q #HT1 #IHT1 #T2 #HT12
 @(TC_star_ind … HT1 IHT1 … HT12) //
 qed-.
 
-lemma cpxs_ind_dx: ∀h,G,L,T2. ∀R:predicate term. R T2 →
-                   (∀T1,T. ⦃G, L⦄ ⊢ T1 ⬈[h] T → ⦃G, L⦄ ⊢ T ⬈*[h] T2 → R T → R T1) →
-                   ∀T1. ⦃G, L⦄ ⊢ T1 ⬈*[h] T2 → R T1.
-#h #G #L #T2 #R #HT2 #IHT2 #T1 #HT12
+lemma cpxs_ind_dx: ∀h,G,L,T2. ∀Q:predicate term. Q T2 →
+                   (∀T1,T. ⦃G, L⦄ ⊢ T1 ⬈[h] T → ⦃G, L⦄ ⊢ T ⬈*[h] T2 → Q T → Q T1) →
+                   ∀T1. ⦃G, L⦄ ⊢ T1 ⬈*[h] T2 → Q T1.
+#h #G #L #T2 #Q #HT2 #IHT2 #T1 #HT12
 @(TC_star_ind_dx … HT2 IHT2 … HT12) //
 qed-.
 

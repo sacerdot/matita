@@ -231,31 +231,31 @@ qed-.
 
 (* Basic eliminators ********************************************************)
 
-lemma cpx_ind: ∀h. ∀R:relation4 genv lenv term term.
-               (∀I,G,L. R G L (⓪{I}) (⓪{I})) →
-               (∀G,L,s. R G L (⋆s) (⋆(next h s))) →
-               (∀I,G,K,V1,V2,W2. ⦃G, K⦄ ⊢ V1 ⬈[h] V2 → R G K V1 V2 →
-                 ⬆*[1] V2 ≘ W2 → R G (K.ⓑ{I}V1) (#0) W2
-               ) → (∀I,G,K,T,U,i. ⦃G, K⦄ ⊢ #i ⬈[h] T → R G K (#i) T →
-                 ⬆*[1] T ≘ U → R G (K.ⓘ{I}) (#↑i) (U)
+lemma cpx_ind: ∀h. ∀Q:relation4 genv lenv term term.
+               (∀I,G,L. Q G L (⓪{I}) (⓪{I})) →
+               (∀G,L,s. Q G L (⋆s) (⋆(next h s))) →
+               (∀I,G,K,V1,V2,W2. ⦃G, K⦄ ⊢ V1 ⬈[h] V2 → Q G K V1 V2 →
+                 ⬆*[1] V2 ≘ W2 → Q G (K.ⓑ{I}V1) (#0) W2
+               ) → (∀I,G,K,T,U,i. ⦃G, K⦄ ⊢ #i ⬈[h] T → Q G K (#i) T →
+                 ⬆*[1] T ≘ U → Q G (K.ⓘ{I}) (#↑i) (U)
                ) → (∀p,I,G,L,V1,V2,T1,T2. ⦃G, L⦄ ⊢ V1 ⬈[h] V2 → ⦃G, L.ⓑ{I}V1⦄ ⊢ T1 ⬈[h] T2 →
-                  R G L V1 V2 → R G (L.ⓑ{I}V1) T1 T2 → R G L (ⓑ{p,I}V1.T1) (ⓑ{p,I}V2.T2)
+                  Q G L V1 V2 → Q G (L.ⓑ{I}V1) T1 T2 → Q G L (ⓑ{p,I}V1.T1) (ⓑ{p,I}V2.T2)
                ) → (∀I,G,L,V1,V2,T1,T2. ⦃G, L⦄ ⊢ V1 ⬈[h] V2 → ⦃G, L⦄ ⊢ T1 ⬈[h] T2 →
-                  R G L V1 V2 → R G L T1 T2 → R G L (ⓕ{I}V1.T1) (ⓕ{I}V2.T2)
-               ) → (∀G,L,V,T1,T,T2. ⦃G, L.ⓓV⦄ ⊢ T1 ⬈[h] T → R G (L.ⓓV) T1 T →
-                  ⬆*[1] T2 ≘ T → R G L (+ⓓV.T1) T2
-               ) → (∀G,L,V,T1,T2. ⦃G, L⦄ ⊢ T1 ⬈[h] T2 → R G L T1 T2 →
-                  R G L (ⓝV.T1) T2
-               ) → (∀G,L,V1,V2,T. ⦃G, L⦄ ⊢ V1 ⬈[h] V2 → R G L V1 V2 →
-                  R G L (ⓝV1.T) V2
+                  Q G L V1 V2 → Q G L T1 T2 → Q G L (ⓕ{I}V1.T1) (ⓕ{I}V2.T2)
+               ) → (∀G,L,V,T1,T,T2. ⦃G, L.ⓓV⦄ ⊢ T1 ⬈[h] T → Q G (L.ⓓV) T1 T →
+                  ⬆*[1] T2 ≘ T → Q G L (+ⓓV.T1) T2
+               ) → (∀G,L,V,T1,T2. ⦃G, L⦄ ⊢ T1 ⬈[h] T2 → Q G L T1 T2 →
+                  Q G L (ⓝV.T1) T2
+               ) → (∀G,L,V1,V2,T. ⦃G, L⦄ ⊢ V1 ⬈[h] V2 → Q G L V1 V2 →
+                  Q G L (ⓝV1.T) V2
                ) → (∀p,G,L,V1,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ⬈[h] V2 → ⦃G, L⦄ ⊢ W1 ⬈[h] W2 → ⦃G, L.ⓛW1⦄ ⊢ T1 ⬈[h] T2 →
-                  R G L V1 V2 → R G L W1 W2 → R G (L.ⓛW1) T1 T2 →
-                  R G L (ⓐV1.ⓛ{p}W1.T1) (ⓓ{p}ⓝW2.V2.T2)
+                  Q G L V1 V2 → Q G L W1 W2 → Q G (L.ⓛW1) T1 T2 →
+                  Q G L (ⓐV1.ⓛ{p}W1.T1) (ⓓ{p}ⓝW2.V2.T2)
                ) → (∀p,G,L,V1,V,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ⬈[h] V → ⦃G, L⦄ ⊢ W1 ⬈[h] W2 → ⦃G, L.ⓓW1⦄ ⊢ T1 ⬈[h] T2 →
-                  R G L V1 V → R G L W1 W2 → R G (L.ⓓW1) T1 T2 →
-                  ⬆*[1] V ≘ V2 → R G L (ⓐV1.ⓓ{p}W1.T1) (ⓓ{p}W2.ⓐV2.T2)
+                  Q G L V1 V → Q G L W1 W2 → Q G (L.ⓓW1) T1 T2 →
+                  ⬆*[1] V ≘ V2 → Q G L (ⓐV1.ⓓ{p}W1.T1) (ⓓ{p}W2.ⓐV2.T2)
                ) →
-               ∀G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬈[h] T2 → R G L T1 T2.
-#h #R #IH1 #IH2 #IH3 #IH4 #IH5 #IH6 #IH7 #IH8 #IH9 #IH10 #IH11 #G #L #T1 #T2
+               ∀G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬈[h] T2 → Q G L T1 T2.
+#h #Q #IH1 #IH2 #IH3 #IH4 #IH5 #IH6 #IH7 #IH8 #IH9 #IH10 #IH11 #G #L #T1 #T2
 * #c #H elim H -c -G -L -T1 -T2 /3 width=4 by ex_intro/
 qed-.

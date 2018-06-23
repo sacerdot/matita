@@ -28,17 +28,17 @@ interpretation "context-sensitive parallel r-equivalence (term)"
 
 (* Basic_2A1: was: cpcs_ind_dx *)
 lemma cpcs_ind_sn (h) (G) (L) (T2):
-                  ∀R:predicate term. R T2 →
-                  (∀T1,T. ⦃G, L⦄ ⊢ T1 ⬌[h] T → ⦃G, L⦄ ⊢ T ⬌*[h] T2 → R T → R T1) →
-                  ∀T1. ⦃G, L⦄ ⊢ T1 ⬌*[h] T2 → R T1.
+                  ∀Q:predicate term. Q T2 →
+                  (∀T1,T. ⦃G, L⦄ ⊢ T1 ⬌[h] T → ⦃G, L⦄ ⊢ T ⬌*[h] T2 → Q T → Q T1) →
+                  ∀T1. ⦃G, L⦄ ⊢ T1 ⬌*[h] T2 → Q T1.
 normalize /3 width=6 by TC_star_ind_dx/
 qed-.
 
 (* Basic_2A1: was: cpcs_ind *)
 lemma cpcs_ind_dx (h) (G) (L) (T1):
-                  ∀R:predicate term. R T1 →
-                  (∀T,T2. ⦃G, L⦄ ⊢ T1 ⬌*[h] T → ⦃G, L⦄ ⊢ T ⬌[h] T2 → R T → R T2) →
-                  ∀T2. ⦃G, L⦄ ⊢ T1 ⬌*[h] T2 → R T2.
+                  ∀Q:predicate term. Q T1 →
+                  (∀T,T2. ⦃G, L⦄ ⊢ T1 ⬌*[h] T → ⦃G, L⦄ ⊢ T ⬌[h] T2 → Q T → Q T2) →
+                  ∀T2. ⦃G, L⦄ ⊢ T1 ⬌*[h] T2 → Q T2.
 normalize /3 width=6 by TC_star_ind/
 qed-.
 

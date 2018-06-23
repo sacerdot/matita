@@ -9,8 +9,10 @@ IH     : reserved: inductive premise
 I,J    : item
 K,L    : local environment
 M,N    : reserved: future use
-O,P,Q  :
-R      : generic predicate (relation)
+O      :
+P      : relocation environment
+Q      : elimination predicate
+R      : generic predicate/relation
 S      : RTM stack
 T,U,V,W: term
 X,Y,Z  : reserved: transient objet denoted by a capital letter

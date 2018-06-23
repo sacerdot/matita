@@ -61,18 +61,18 @@ lemma csx_fsb: ∀h,o,G,L,T. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄ → ≥[h, o]
 
 (* Advanced eliminators *****************************************************)
 
-lemma csx_ind_fpb: ∀h,o. ∀R:relation3 genv lenv term.
+lemma csx_ind_fpb: ∀h,o. ∀Q:relation3 genv lenv term.
                    (∀G1,L1,T1. ⦃G1, L1⦄ ⊢ ⬈*[h, o] 𝐒⦃T1⦄ →
-                               (∀G2,L2,T2. ⦃G1, L1, T1⦄ ≻[h, o] ⦃G2, L2, T2⦄ → R G2 L2 T2) →
-                               R G1 L1 T1
+                               (∀G2,L2,T2. ⦃G1, L1, T1⦄ ≻[h, o] ⦃G2, L2, T2⦄ → Q G2 L2 T2) →
+                               Q G1 L1 T1
                    ) →
-                   ∀G,L,T. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄ → R G L T.
+                   ∀G,L,T. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄ →  Q G L T.
 /4 width=4 by fsb_inv_csx, csx_fsb, fsb_ind_alt/ qed-.
 
-lemma csx_ind_fpbg: ∀h,o. ∀R:relation3 genv lenv term.
+lemma csx_ind_fpbg: ∀h,o. ∀Q:relation3 genv lenv term.
                     (∀G1,L1,T1. ⦃G1, L1⦄ ⊢ ⬈*[h, o] 𝐒⦃T1⦄ →
-                                (∀G2,L2,T2. ⦃G1, L1, T1⦄ >[h, o] ⦃G2, L2, T2⦄ → R G2 L2 T2) →
-                                R G1 L1 T1
+                                (∀G2,L2,T2. ⦃G1, L1, T1⦄ >[h, o] ⦃G2, L2, T2⦄ → Q G2 L2 T2) →
+                                Q G1 L1 T1
                     ) →
-                    ∀G,L,T. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄ → R G L T.
+                    ∀G,L,T. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄ →  Q G L T.
 /4 width=4 by fsb_inv_csx, csx_fsb, fsb_ind_fpbg/ qed-.

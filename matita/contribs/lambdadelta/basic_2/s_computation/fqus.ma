@@ -30,17 +30,17 @@ interpretation "star-iterated structural successor (closure)"
 
 (* Basic eliminators ********************************************************)
 
-lemma fqus_ind: ∀b,G1,L1,T1. ∀R:relation3 …. R G1 L1 T1 →
-                (∀G,G2,L,L2,T,T2. ⦃G1, L1, T1⦄ ⊐*[b] ⦃G, L, T⦄ → ⦃G, L, T⦄ ⊐⸮[b] ⦃G2, L2, T2⦄ → R G L T → R G2 L2 T2) →
-                ∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊐*[b] ⦃G2, L2, T2⦄ → R G2 L2 T2.
+lemma fqus_ind: ∀b,G1,L1,T1. ∀Q:relation3 …. Q G1 L1 T1 →
+                (∀G,G2,L,L2,T,T2. ⦃G1, L1, T1⦄ ⊐*[b] ⦃G, L, T⦄ → ⦃G, L, T⦄ ⊐⸮[b] ⦃G2, L2, T2⦄ → Q G L T → Q G2 L2 T2) →
+                ∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊐*[b] ⦃G2, L2, T2⦄ → Q G2 L2 T2.
 #b #G1 #L1 #T1 #R #IH1 #IH2 #G2 #L2 #T2 #H
 @(tri_TC_star_ind … IH1 IH2 G2 L2 T2 H) //
 qed-.
 
-lemma fqus_ind_dx: ∀b,G2,L2,T2. ∀R:relation3 …. R G2 L2 T2 →
-                   (∀G1,G,L1,L,T1,T. ⦃G1, L1, T1⦄ ⊐⸮[b] ⦃G, L, T⦄ → ⦃G, L, T⦄ ⊐*[b] ⦃G2, L2, T2⦄ → R G L T → R G1 L1 T1) →
-                   ∀G1,L1,T1. ⦃G1, L1, T1⦄ ⊐*[b] ⦃G2, L2, T2⦄ → R G1 L1 T1.
-#b #G2 #L2 #T2 #R #IH1 #IH2 #G1 #L1 #T1 #H
+lemma fqus_ind_dx: ∀b,G2,L2,T2. ∀Q:relation3 …. Q G2 L2 T2 →
+                   (∀G1,G,L1,L,T1,T. ⦃G1, L1, T1⦄ ⊐⸮[b] ⦃G, L, T⦄ → ⦃G, L, T⦄ ⊐*[b] ⦃G2, L2, T2⦄ → Q G L T → Q G1 L1 T1) →
+                   ∀G1,L1,T1. ⦃G1, L1, T1⦄ ⊐*[b] ⦃G2, L2, T2⦄ → Q G1 L1 T1.
+#b #G2 #L2 #T2 #Q #IH1 #IH2 #G1 #L1 #T1 #H
 @(tri_TC_star_ind_dx … IH1 IH2 G1 L1 T1 H) //
 qed-.
 

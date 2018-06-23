@@ -38,14 +38,14 @@ lemma fsb_intro_fpbg: ∀h,o,G1,L1,T1. (
 
 (* Eliminators with proper parallel rst-computation for closures ************)
 
-lemma fsb_ind_fpbg_fpbs: ∀h,o. ∀R:relation3 genv lenv term.
+lemma fsb_ind_fpbg_fpbs: ∀h,o. ∀Q:relation3 genv lenv term.
                          (∀G1,L1,T1. ≥[h, o] 𝐒⦃G1, L1, T1⦄ →
-                                     (∀G2,L2,T2. ⦃G1, L1, T1⦄ >[h, o] ⦃G2, L2, T2⦄ → R G2 L2 T2) →
-                                     R G1 L1 T1
+                                     (∀G2,L2,T2. ⦃G1, L1, T1⦄ >[h, o] ⦃G2, L2, T2⦄ → Q G2 L2 T2) →
+                                     Q G1 L1 T1
                          ) →
                          ∀G1,L1,T1. ≥[h, o] 𝐒⦃G1, L1, T1⦄ → 
-                         ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄ → R G2 L2 T2.
-#h #o #R #IH1 #G1 #L1 #T1 #H @(fsb_ind_alt … H) -G1 -L1 -T1
+                         ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄ → Q G2 L2 T2.
+#h #o #Q #IH1 #G1 #L1 #T1 #H @(fsb_ind_alt … H) -G1 -L1 -T1
 #G1 #L1 #T1 #H1 #IH #G2 #L2 #T2 #H12
 @IH1 -IH1
 [ -IH /2 width=5 by fsb_fpbs_trans/
@@ -55,12 +55,12 @@ lemma fsb_ind_fpbg_fpbs: ∀h,o. ∀R:relation3 genv lenv term.
 ]
 qed-.
 
-lemma fsb_ind_fpbg: ∀h,o. ∀R:relation3 genv lenv term.
+lemma fsb_ind_fpbg: ∀h,o. ∀Q:relation3 genv lenv term.
                     (∀G1,L1,T1. ≥[h, o] 𝐒⦃G1, L1, T1⦄ →
-                                (∀G2,L2,T2. ⦃G1, L1, T1⦄ >[h, o] ⦃G2, L2, T2⦄ → R G2 L2 T2) →
-                                R G1 L1 T1
+                                (∀G2,L2,T2. ⦃G1, L1, T1⦄ >[h, o] ⦃G2, L2, T2⦄ → Q G2 L2 T2) →
+                                Q G1 L1 T1
                     ) →
-                    ∀G1,L1,T1. ≥[h, o] 𝐒⦃G1, L1, T1⦄ → R G1 L1 T1.
-#h #o #R #IH #G1 #L1 #T1 #H @(fsb_ind_fpbg_fpbs … H) -H
+                    ∀G1,L1,T1. ≥[h, o] 𝐒⦃G1, L1, T1⦄ →  Q G1 L1 T1.
+#h #o #Q #IH #G1 #L1 #T1 #H @(fsb_ind_fpbg_fpbs … H) -H
 /3 width=1 by/
 qed-.

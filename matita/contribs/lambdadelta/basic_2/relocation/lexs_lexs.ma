@@ -51,7 +51,7 @@ theorem lexs_trans (RN) (RP) (f): (∀g,I,K. lexs_transitive RN RN RN RN RP g K 
 /2 width=9 by lexs_trans_gen/ qed-.
 
 theorem lexs_trans_id_cfull: ∀R1,R2,R3,L1,L,f. L1 ⪤*[R1, cfull, f] L → 𝐈⦃f⦄ →
-                             ∀L2.  L ⪤*[R2, cfull, f] L2 → L1 ⪤*[R3, cfull, f] L2.
+                             ∀L2. L ⪤*[R2, cfull, f] L2 → L1 ⪤*[R3, cfull, f] L2.
 #R1 #R2 #R3 #L1 #L #f #H elim H -L1 -L -f
 [ #f #Hf #L2 #H >(lexs_inv_atom1 … H) -L2 // ]
 #f #I1 #I #K1 #K #HK1 #_ #IH #Hf #L2 #H

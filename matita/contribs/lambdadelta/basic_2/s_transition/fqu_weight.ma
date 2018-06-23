@@ -29,9 +29,9 @@ qed-.
 
 (* Advanced eliminators *****************************************************)
 
-lemma fqu_wf_ind: ∀b. ∀R:relation3 …. (
-                     ∀G1,L1,T1. (∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊐[b] ⦃G2, L2, T2⦄ → R G2 L2 T2) →
-		                 R G1 L1 T1
-		              ) → ∀G1,L1,T1. R G1 L1 T1.
-#b #R #HR @(f3_ind … fw) #x #IHx #G1 #L1 #T1 #H destruct /4 width=2 by fqu_fwd_fw/
+lemma fqu_wf_ind: ∀b. ∀Q:relation3 …. (
+                     ∀G1,L1,T1. (∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊐[b] ⦃G2, L2, T2⦄ → Q G2 L2 T2) →
+		                 Q G1 L1 T1
+		              ) → ∀G1,L1,T1. Q G1 L1 T1.
+#b #Q #HQ @(f3_ind … fw) #x #IHx #G1 #L1 #T1 #H destruct /4 width=2 by fqu_fwd_fw/
 qed-.

@@ -27,13 +27,13 @@ interpretation
 
 (* Basic eliminators ********************************************************)
 
-lemma csx_ind: ∀h,o,G,L. ∀R:predicate term.
+lemma csx_ind: ∀h,o,G,L. ∀Q:predicate term.
                (∀T1. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T1⦄ →
-                     (∀T2. ⦃G, L⦄ ⊢ T1 ⬈[h] T2 → (T1 ≛[h, o] T2 → ⊥) → R T2) →
-                     R T1
+                     (∀T2. ⦃G, L⦄ ⊢ T1 ⬈[h] T2 → (T1 ≛[h, o] T2 → ⊥) → Q T2) →
+                     Q T1
                ) →
-               ∀T. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄ → R T.
-#h #o #G #L #R #H0 #T1 #H elim H -T1
+               ∀T. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄ →  Q T.
+#h #o #G #L #Q #H0 #T1 #H elim H -T1
 /5 width=1 by SN_intro/
 qed-.
 

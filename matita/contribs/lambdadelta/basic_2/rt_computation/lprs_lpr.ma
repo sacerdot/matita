@@ -19,15 +19,15 @@ include "basic_2/rt_computation/lprs_tc.ma".
 (* Eliminators with r-transition for full local environments ****************)
 
 (* Basic_2A1: was: lprs_ind_dx *)
-lemma lprs_ind_sn (h) (G) (L2): ∀R:predicate lenv. R L2 →
-                                (∀L1,L. ⦃G, L1⦄ ⊢ ➡[h] L → ⦃G, L⦄ ⊢ ➡*[h] L2 → R L → R L1) →
-                                ∀L1. ⦃G, L1⦄ ⊢ ➡*[h] L2 → R L1.
+lemma lprs_ind_sn (h) (G) (L2): ∀Q:predicate lenv. Q L2 →
+                                (∀L1,L. ⦃G, L1⦄ ⊢ ➡[h] L → ⦃G, L⦄ ⊢ ➡*[h] L2 → Q L → Q L1) →
+                                ∀L1. ⦃G, L1⦄ ⊢ ➡*[h] L2 → Q L1.
 /4 width=8 by lprs_inv_CTC, lprs_CTC, lpr_cprs_trans, cpr_refl, lex_CTC_ind_sn/ qed-.
 
 (* Basic_2A1: was: lprs_ind *)
-lemma lprs_ind_dx (h) (G) (L1): ∀R:predicate lenv. R L1 →
-                                (∀L,L2. ⦃G, L1⦄ ⊢ ➡*[h] L → ⦃G, L⦄ ⊢ ➡[h] L2 → R L → R L2) →
-                                ∀L2. ⦃G, L1⦄ ⊢ ➡*[h] L2 → R L2.
+lemma lprs_ind_dx (h) (G) (L1): ∀Q:predicate lenv. Q L1 →
+                                (∀L,L2. ⦃G, L1⦄ ⊢ ➡*[h] L → ⦃G, L⦄ ⊢ ➡[h] L2 → Q L → Q L2) →
+                                ∀L2. ⦃G, L1⦄ ⊢ ➡*[h] L2 → Q L2.
 /4 width=8 by lprs_inv_CTC, lprs_CTC, lpr_cprs_trans, cpr_refl, lex_CTC_ind_dx/ qed-.
 
 (* Properties with unbound rt-transition for full local environments ********)

@@ -29,13 +29,13 @@ interpretation
 
 (* Basic_2A1: uses: lsx_ind *)
 lemma rdsx_ind (h) (o) (G) (T):
-               ∀R:predicate lenv.
+               ∀Q:predicate lenv.
                (∀L1. G ⊢ ⬈*[h, o, T] 𝐒⦃L1⦄ →
-                     (∀L2. ⦃G, L1⦄ ⊢ ⬈[h] L2 → (L1 ≛[h, o, T] L2 → ⊥) → R L2) →
-                     R L1
+                     (∀L2. ⦃G, L1⦄ ⊢ ⬈[h] L2 → (L1 ≛[h, o, T] L2 → ⊥) → Q L2) →
+                     Q L1
                ) →
-               ∀L. G ⊢ ⬈*[h, o, T] 𝐒⦃L⦄ → R L.
-#h #o #G #T #R #H0 #L1 #H elim H -L1
+               ∀L. G ⊢ ⬈*[h, o, T] 𝐒⦃L⦄ →  Q L.
+#h #o #G #T #Q #H0 #L1 #H elim H -L1
 /5 width=1 by SN_intro/
 qed-.
 

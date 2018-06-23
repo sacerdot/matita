@@ -36,15 +36,15 @@ lemma lpxs_step_dx (h) (G): ∀L1,L. ⦃G, L1⦄ ⊢ ⬈*[h] L →
 (* Eliminators with unbound rt-transition for full local environments *******)
 
 (* Basic_2A1: was: lpxs_ind_dx *)
-lemma lpxs_ind_sn (h) (G) (L2): ∀R:predicate lenv. R L2 →
-                                (∀L1,L. ⦃G, L1⦄ ⊢ ⬈[h] L → ⦃G, L⦄ ⊢ ⬈*[h] L2 → R L → R L1) →
-                                ∀L1. ⦃G, L1⦄ ⊢ ⬈*[h] L2 → R L1.
+lemma lpxs_ind_sn (h) (G) (L2): ∀Q:predicate lenv. Q L2 →
+                                (∀L1,L. ⦃G, L1⦄ ⊢ ⬈[h] L → ⦃G, L⦄ ⊢ ⬈*[h] L2 → Q L → Q L1) →
+                                ∀L1. ⦃G, L1⦄ ⊢ ⬈*[h] L2 → Q L1.
 /3 width=7 by lpx_cpxs_trans, cpx_refl, lex_CTC_ind_sn/ qed-.
 
 (* Basic_2A1: was: lpxs_ind *)
-lemma lpxs_ind_dx (h) (G) (L1): ∀R:predicate lenv. R L1 →
-                                (∀L,L2. ⦃G, L1⦄ ⊢ ⬈*[h] L → ⦃G, L⦄ ⊢ ⬈[h] L2 → R L → R L2) →
-                                ∀L2. ⦃G, L1⦄ ⊢ ⬈*[h] L2 → R L2.
+lemma lpxs_ind_dx (h) (G) (L1): ∀Q:predicate lenv. Q L1 →
+                                (∀L,L2. ⦃G, L1⦄ ⊢ ⬈*[h] L → ⦃G, L⦄ ⊢ ⬈[h] L2 → Q L → Q L2) →
+                                ∀L2. ⦃G, L1⦄ ⊢ ⬈*[h] L2 → Q L2.
 /3 width=7 by lpx_cpxs_trans, cpx_refl, lex_CTC_ind_dx/ qed-.
 
 (* Properties with context-sensitive extended rt-transition for terms *******)

@@ -289,36 +289,36 @@ qed-.
 
 (* Basic eliminators ********************************************************)
 
-lemma cpm_ind (h): ∀R:relation5 nat genv lenv term term.
-                   (∀I,G,L. R 0 G L (⓪{I}) (⓪{I})) →
-                   (∀G,L,s. R 1 G L (⋆s) (⋆(next h s))) →
-                   (∀n,G,K,V1,V2,W2. ⦃G, K⦄ ⊢ V1 ➡[n, h] V2 → R n G K V1 V2 →
-                     ⬆*[1] V2 ≘ W2 → R n G (K.ⓓV1) (#0) W2
-                   ) → (∀n,G,K,V1,V2,W2. ⦃G, K⦄ ⊢ V1 ➡[n, h] V2 → R n G K V1 V2 →
-                     ⬆*[1] V2 ≘ W2 → R (↑n) G (K.ⓛV1) (#0) W2
-                   ) → (∀n,I,G,K,T,U,i. ⦃G, K⦄ ⊢ #i ➡[n, h] T → R n G K (#i) T →
-                     ⬆*[1] T ≘ U → R n G (K.ⓘ{I}) (#↑i) (U)
+lemma cpm_ind (h): ∀Q:relation5 nat genv lenv term term.
+                   (∀I,G,L. Q 0 G L (⓪{I}) (⓪{I})) →
+                   (∀G,L,s. Q 1 G L (⋆s) (⋆(next h s))) →
+                   (∀n,G,K,V1,V2,W2. ⦃G, K⦄ ⊢ V1 ➡[n, h] V2 → Q n G K V1 V2 →
+                     ⬆*[1] V2 ≘ W2 → Q n G (K.ⓓV1) (#0) W2
+                   ) → (∀n,G,K,V1,V2,W2. ⦃G, K⦄ ⊢ V1 ➡[n, h] V2 → Q n G K V1 V2 →
+                     ⬆*[1] V2 ≘ W2 → Q (↑n) G (K.ⓛV1) (#0) W2
+                   ) → (∀n,I,G,K,T,U,i. ⦃G, K⦄ ⊢ #i ➡[n, h] T → Q n G K (#i) T →
+                     ⬆*[1] T ≘ U → Q n G (K.ⓘ{I}) (#↑i) (U)
                    ) → (∀n,p,I,G,L,V1,V2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 → ⦃G, L.ⓑ{I}V1⦄ ⊢ T1 ➡[n, h] T2 →
-                     R 0 G L V1 V2 → R n G (L.ⓑ{I}V1) T1 T2 → R n G L (ⓑ{p,I}V1.T1) (ⓑ{p,I}V2.T2)
+                     Q 0 G L V1 V2 → Q n G (L.ⓑ{I}V1) T1 T2 → Q n G L (ⓑ{p,I}V1.T1) (ⓑ{p,I}V2.T2)
                    ) → (∀n,G,L,V1,V2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 → ⦃G, L⦄ ⊢ T1 ➡[n, h] T2 →
-                     R 0 G L V1 V2 → R n G L T1 T2 → R n G L (ⓐV1.T1) (ⓐV2.T2)
+                     Q 0 G L V1 V2 → Q n G L T1 T2 → Q n G L (ⓐV1.T1) (ⓐV2.T2)
                    ) → (∀n,G,L,V1,V2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡[n, h] V2 → ⦃G, L⦄ ⊢ T1 ➡[n, h] T2 →
-                     R n G L V1 V2 → R n G L T1 T2 → R n G L (ⓝV1.T1) (ⓝV2.T2)
-                   ) → (∀n,G,L,V,T1,T,T2. ⦃G, L.ⓓV⦄ ⊢ T1 ➡[n, h] T → R n G (L.ⓓV) T1 T →
-                     ⬆*[1] T2 ≘ T → R n G L (+ⓓV.T1) T2
+                     Q n G L V1 V2 → Q n G L T1 T2 → Q n G L (ⓝV1.T1) (ⓝV2.T2)
+                   ) → (∀n,G,L,V,T1,T,T2. ⦃G, L.ⓓV⦄ ⊢ T1 ➡[n, h] T → Q n G (L.ⓓV) T1 T →
+                     ⬆*[1] T2 ≘ T → Q n G L (+ⓓV.T1) T2
                    ) → (∀n,G,L,V,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[n, h] T2 →
-                     R n G L T1 T2 → R n G L (ⓝV.T1) T2
+                     Q n G L T1 T2 → Q n G L (ⓝV.T1) T2
                    ) → (∀n,G,L,V1,V2,T. ⦃G, L⦄ ⊢ V1 ➡[n, h] V2 →
-                     R n G L V1 V2 → R (↑n) G L (ⓝV1.T) V2
+                     Q n G L V1 V2 → Q (↑n) G L (ⓝV1.T) V2
                    ) → (∀n,p,G,L,V1,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 → ⦃G, L⦄ ⊢ W1 ➡[h] W2 → ⦃G, L.ⓛW1⦄ ⊢ T1 ➡[n, h] T2 →
-                     R 0 G L V1 V2 → R 0 G L W1 W2 → R n G (L.ⓛW1) T1 T2 →
-                     R n G L (ⓐV1.ⓛ{p}W1.T1) (ⓓ{p}ⓝW2.V2.T2)
+                     Q 0 G L V1 V2 → Q 0 G L W1 W2 → Q n G (L.ⓛW1) T1 T2 →
+                     Q n G L (ⓐV1.ⓛ{p}W1.T1) (ⓓ{p}ⓝW2.V2.T2)
                    ) → (∀n,p,G,L,V1,V,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V → ⦃G, L⦄ ⊢ W1 ➡[h] W2 → ⦃G, L.ⓓW1⦄ ⊢ T1 ➡[n, h] T2 →
-                     R 0 G L V1 V → R 0 G L W1 W2 → R n G (L.ⓓW1) T1 T2 →
-                     ⬆*[1] V ≘ V2 → R n G L (ⓐV1.ⓓ{p}W1.T1) (ⓓ{p}W2.ⓐV2.T2)
+                     Q 0 G L V1 V → Q 0 G L W1 W2 → Q n G (L.ⓓW1) T1 T2 →
+                     ⬆*[1] V ≘ V2 → Q n G L (ⓐV1.ⓓ{p}W1.T1) (ⓓ{p}W2.ⓐV2.T2)
                    ) →
-                   ∀n,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[n, h] T2 → R n G L T1 T2.
-#h #R #IH1 #IH2 #IH3 #IH4 #IH5 #IH6 #IH7 #IH8 #IH9 #IH10 #IH11 #IH12 #IH13 #n #G #L #T1 #T2
+                   ∀n,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[n, h] T2 → Q n G L T1 T2.
+#h #Q #IH1 #IH2 #IH3 #IH4 #IH5 #IH6 #IH7 #IH8 #IH9 #IH10 #IH11 #IH12 #IH13 #n #G #L #T1 #T2
 * #c #HC #H generalize in match HC; -HC generalize in match n; -n
 elim H -c -G -L -T1 -T2
 [ #I #G #L #n #H <(isrt_inv_00 … H) -H //

@@ -37,14 +37,14 @@ lemma cpms_ind_sn (h) (G) (L) (T2) (Q:relation2 …):
                   Q 0 T2 →
                   (∀n1,n2,T1,T. ⦃G, L⦄ ⊢ T1 ➡[n1, h] T → ⦃G, L⦄ ⊢ T ➡*[n2, h] T2 → Q n2 T → Q (n1+n2) T1) →
                   ∀n,T1. ⦃G, L⦄ ⊢ T1 ➡*[n, h] T2 → Q n T1.
-#h #G #L #T2 #R @ltc_ind_sn_refl //
+#h #G #L #T2 #Q @ltc_ind_sn_refl //
 qed-.
 
 lemma cpms_ind_dx (h) (G) (L) (T1) (Q:relation2 …):
                   Q 0 T1 →
                   (∀n1,n2,T,T2. ⦃G, L⦄ ⊢ T1 ➡*[n1, h] T → Q n1 T → ⦃G, L⦄ ⊢ T ➡[n2, h] T2 → Q (n1+n2) T2) →
                   ∀n,T2. ⦃G, L⦄ ⊢ T1 ➡*[n, h] T2 → Q n T2.
-#h #G #L #T1 #R @ltc_ind_dx_refl //
+#h #G #L #T1 #Q @ltc_ind_dx_refl //
 qed-.
 
 (* Basic inversion lemmas ***************************************************)

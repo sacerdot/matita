@@ -103,9 +103,9 @@ qed-.
 
 (* Basic_1: was: c_tail_ind *)
 (* Basic_2A1: was: lenv_ind_alt *) 
-lemma lenv_ind_tail: ∀R:predicate lenv.
-                     R (⋆) → (∀I,L. R L → R (ⓘ{I}.L)) → ∀L. R L.
-#R #IH1 #IH2 #L @(f_ind … length … L) -L #x #IHx * //
+lemma lenv_ind_tail: ∀Q:predicate lenv.
+                     Q (⋆) → (∀I,L. Q L → Q (ⓘ{I}.L)) → ∀L. Q L.
+#Q #IH1 #IH2 #L @(f_ind … length … L) -L #x #IHx * //
 #L #I -IH1 #H destruct
 elim (lenv_case_tail … L) [2: * #K #J ]
 #H destruct /3 width=1 by/

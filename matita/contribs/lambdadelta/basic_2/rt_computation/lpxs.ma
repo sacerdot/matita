@@ -67,15 +67,15 @@ lemma lpxs_inv_pair_dx (h) (G): ∀I,L1,K2,V2. ⦃G, L1⦄ ⊢ ⬈*[h] K2.ⓑ{I}
 (* Basic eliminators ********************************************************)
 
 (* Basic_2A1: was: lpxs_ind_alt *)
-lemma lpxs_ind (h) (G): ∀R:relation lenv.
-                        R (⋆) (⋆) → (
+lemma lpxs_ind (h) (G): ∀Q:relation lenv.
+                        Q (⋆) (⋆) → (
                           ∀I,K1,K2.
                           ⦃G, K1⦄ ⊢ ⬈*[h] K2 →
-                          R K1 K2 → R (K1.ⓘ{I}) (K2.ⓘ{I})
+                          Q K1 K2 → Q (K1.ⓘ{I}) (K2.ⓘ{I})
                         ) → (
                           ∀I,K1,K2,V1,V2.
                           ⦃G, K1⦄ ⊢ ⬈*[h] K2 → ⦃G, K1⦄ ⊢ V1 ⬈*[h] V2 →
-                          R K1 K2 → R (K1.ⓑ{I}V1) (K2.ⓑ{I}V2)
+                          Q K1 K2 → Q (K1.ⓑ{I}V1) (K2.ⓑ{I}V2)
                         ) →
-                        ∀L1,L2. ⦃G, L1⦄ ⊢ ⬈*[h] L2 → R L1 L2.
+                        ∀L1,L2. ⦃G, L1⦄ ⊢ ⬈*[h] L2 → Q L1 L2.
 /3 width=4 by lex_ind/ qed-.

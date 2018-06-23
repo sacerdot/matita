@@ -26,14 +26,14 @@ interpretation "parallel rst-computation (closure)"
 
 (* Basic eliminators ********************************************************)
 
-lemma fpbs_ind: ∀h,o,G1,L1,T1. ∀R:relation3 genv lenv term. R G1 L1 T1 →
-                (∀G,G2,L,L2,T,T2. ⦃G1, L1, T1⦄ ≥[h, o] ⦃G, L, T⦄ → ⦃G, L, T⦄ ≽[h, o] ⦃G2, L2, T2⦄ → R G L T → R G2 L2 T2) →
-                ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄ → R G2 L2 T2.
+lemma fpbs_ind: ∀h,o,G1,L1,T1. ∀Q:relation3 genv lenv term. Q G1 L1 T1 →
+                (∀G,G2,L,L2,T,T2. ⦃G1, L1, T1⦄ ≥[h, o] ⦃G, L, T⦄ → ⦃G, L, T⦄ ≽[h, o] ⦃G2, L2, T2⦄ → Q G L T → Q G2 L2 T2) →
+                ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄ → Q G2 L2 T2.
 /3 width=8 by tri_TC_star_ind/ qed-.
 
-lemma fpbs_ind_dx: ∀h,o,G2,L2,T2. ∀R:relation3 genv lenv term. R G2 L2 T2 →
-                   (∀G1,G,L1,L,T1,T. ⦃G1, L1, T1⦄ ≽[h, o] ⦃G, L, T⦄ → ⦃G, L, T⦄ ≥[h, o] ⦃G2, L2, T2⦄ → R G L T → R G1 L1 T1) →
-                   ∀G1,L1,T1. ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄ → R G1 L1 T1.
+lemma fpbs_ind_dx: ∀h,o,G2,L2,T2. ∀Q:relation3 genv lenv term. Q G2 L2 T2 →
+                   (∀G1,G,L1,L,T1,T. ⦃G1, L1, T1⦄ ≽[h, o] ⦃G, L, T⦄ → ⦃G, L, T⦄ ≥[h, o] ⦃G2, L2, T2⦄ → Q G L T → Q G1 L1 T1) →
+                   ∀G1,L1,T1. ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄ → Q G1 L1 T1.
 /3 width=8 by tri_TC_star_ind_dx/ qed-.
 
 (* Basic properties *********************************************************)

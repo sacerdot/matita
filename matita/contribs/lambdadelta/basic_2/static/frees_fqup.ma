@@ -100,32 +100,32 @@ elim (pn_split f0) * #g0 #H destruct
 ]
 qed-.
 
-lemma frees_ind_void: ∀R:relation3 ….
+lemma frees_ind_void: ∀Q:relation3 ….
                       (
-                         ∀f,L,s. 𝐈⦃f⦄ → R L (⋆s) f
+                         ∀f,L,s. 𝐈⦃f⦄ →  Q L (⋆s) f
                       ) → (
-                         ∀f,i. 𝐈⦃f⦄ → R (⋆) (#i) (⫯*[i]↑f)
+                         ∀f,i. 𝐈⦃f⦄ →  Q (⋆) (#i) (⫯*[i]↑f)
                       ) → (
                          ∀f,I,L,V.
-                         L ⊢ 𝐅*⦃V⦄ ≘ f → R L V f→ R (L.ⓑ{I}V) (#O) (↑f) 
+                         L ⊢ 𝐅*⦃V⦄ ≘ f →  Q L V f→ Q (L.ⓑ{I}V) (#O) (↑f) 
                       ) → (
-                         ∀f,I,L. 𝐈⦃f⦄ → R (L.ⓤ{I}) (#O) (↑f)
+                         ∀f,I,L. 𝐈⦃f⦄ →  Q (L.ⓤ{I}) (#O) (↑f)
                       ) → (
                          ∀f,I,L,i.
-                         L ⊢ 𝐅*⦃#i⦄ ≘ f → R L (#i) f → R (L.ⓘ{I}) (#(↑i)) (⫯f)
+                         L ⊢ 𝐅*⦃#i⦄ ≘ f →  Q L (#i) f → Q (L.ⓘ{I}) (#(↑i)) (⫯f)
                       ) → (
-                         ∀f,L,l. 𝐈⦃f⦄ → R L (§l) f
+                         ∀f,L,l. 𝐈⦃f⦄ →  Q L (§l) f
                       ) → (
                          ∀f1,f2,f,p,I,L,V,T.
                          L ⊢ 𝐅*⦃V⦄ ≘ f1 → L.ⓧ ⊢𝐅*⦃T⦄≘ f2 → f1 ⋓ ⫱f2 ≘ f →
-                         R L V f1 →R (L.ⓧ) T f2 → R L (ⓑ{p,I}V.T) f
+                         Q L V f1 → Q (L.ⓧ) T f2 → Q L (ⓑ{p,I}V.T) f
                       ) → (
                          ∀f1,f2,f,I,L,V,T.
                          L ⊢ 𝐅*⦃V⦄ ≘ f1 → L ⊢𝐅*⦃T⦄ ≘ f2 → f1 ⋓ f2 ≘ f →
-                         R L V f1 → R L T f2 → R L (ⓕ{I}V.T) f
+                         Q L V f1 → Q L T f2 → Q L (ⓕ{I}V.T) f
                       ) →
-                      ∀L,T,f. L ⊢ 𝐅*⦃T⦄ ≘ f → R L T f.
-#R #IH1 #IH2 #IH3 #IH4 #IH5 #IH6 #IH7 #IH8 #L #T
+                      ∀L,T,f. L ⊢ 𝐅*⦃T⦄ ≘ f →  Q L T f.
+#Q #IH1 #IH2 #IH3 #IH4 #IH5 #IH6 #IH7 #IH8 #L #T
 @(fqup_wf_ind_eq (Ⓕ) … (⋆) L T) -L -T #G0 #L0 #T0 #IH #G #L * *
 [ #s #HG #HL #HT #f #H destruct -IH
   lapply (frees_inv_sort … H) -H /2 width=1 by/

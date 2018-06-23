@@ -272,7 +272,7 @@ lemma lfxs_unit (R): ∀f,I,L1,L2. 𝐈⦃f⦄ → L1 ⪤*[cext2 R, cfull, f] L2
 /4 width=3 by frees_unit, lexs_next, ext2_unit, ex2_intro/ qed.
 
 lemma lfxs_lref (R): ∀I1,I2,L1,L2,i.
-                 L1 ⪤*[R, #i] L2 → L1.ⓘ{I1} ⪤*[R, #↑i] L2.ⓘ{I2}.
+                     L1 ⪤*[R, #i] L2 → L1.ⓘ{I1} ⪤*[R, #↑i] L2.ⓘ{I2}.
 #R #I1 #I2 #L1 #L2 #i * /3 width=3 by lexs_push, frees_lref, ex2_intro/
 qed.
 

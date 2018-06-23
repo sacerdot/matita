@@ -40,18 +40,18 @@ qed.
 (* Advanced eliminators *****************************************************)
 
 lemma tc_lfxs_ind_sn: ∀R. c_reflexive … R →
-                      ∀L1,T. ∀R0:predicate …. R0 L1 →
-                      (∀L,L2. L1 ⪤**[R, T] L → L ⪤*[R, T] L2 → R0 L → R0 L2) →
-                      ∀L2. L1 ⪤**[R, T] L2 → R0 L2.
-#R #HR #L1 #T #R0 #HL1 #IHL1 #L2 #HL12
+                      ∀L1,T. ∀Q:predicate …. Q L1 →
+                      (∀L,L2. L1 ⪤**[R, T] L → L ⪤*[R, T] L2 → Q L → Q L2) →
+                      ∀L2. L1 ⪤**[R, T] L2 → Q L2.
+#R #HR #L1 #T #Q #HL1 #IHL1 #L2 #HL12
 @(TC_star_ind … HL1 IHL1 … HL12) /2 width=1 by lfxs_refl/
 qed-.
 
 lemma tc_lfxs_ind_dx: ∀R. c_reflexive … R →
-                      ∀L2,T. ∀R0:predicate …. R0 L2 →
-                      (∀L1,L. L1 ⪤*[R, T] L → L ⪤**[R, T] L2 → R0 L → R0 L1) →
-                      ∀L1. L1 ⪤**[R, T] L2 → R0 L1.
-#R #HR #L2 #R0 #HL2 #IHL2 #L1 #HL12
+                      ∀L2,T. ∀Q:predicate …. Q L2 →
+                      (∀L1,L. L1 ⪤*[R, T] L → L ⪤**[R, T] L2 → Q L → Q L1) →
+                      ∀L1. L1 ⪤**[R, T] L2 → Q L1.
+#R #HR #L2 #Q #HL2 #IHL2 #L1 #HL12
 @(TC_star_ind_dx … HL2 IHL2 … HL12) /2 width=4 by lfxs_refl/
 qed-.
 

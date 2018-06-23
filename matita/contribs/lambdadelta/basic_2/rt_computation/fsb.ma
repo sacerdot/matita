@@ -31,13 +31,13 @@ interpretation
 
 (* Note: eliminator with shorter ground hypothesis *)
 (* Note: to be named fsb_ind when fsb becomes a definition like csx, lfsx ***)
-lemma fsb_ind_alt: ∀h,o. ∀R: relation3 …. (
+lemma fsb_ind_alt: ∀h,o. ∀Q: relation3 …. (
                       ∀G1,L1,T1. ≥[h,o] 𝐒⦃G1, L1, T1⦄ → (
-                         ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≻[h, o] ⦃G2, L2, T2⦄ → R G2 L2 T2
-                      ) → R G1 L1 T1
+                         ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≻[h, o] ⦃G2, L2, T2⦄ → Q G2 L2 T2
+                      ) → Q G1 L1 T1
                    ) →
-                   ∀G,L,T. ≥[h, o] 𝐒⦃G, L, T⦄ → R G L T.
-#h #o #R #IH #G #L #T #H elim H -G -L -T
+                   ∀G,L,T. ≥[h, o] 𝐒⦃G, L, T⦄ →  Q G L T.
+#h #o #Q #IH #G #L #T #H elim H -G -L -T
 /4 width=1 by fsb_intro/
 qed-.
 

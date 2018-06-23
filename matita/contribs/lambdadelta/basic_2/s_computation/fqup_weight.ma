@@ -27,18 +27,18 @@ qed-.
 
 (* Advanced eliminators *****************************************************)
 
-lemma fqup_wf_ind: ∀b. ∀R:relation3 …. (
-                      ∀G1,L1,T1. (∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊐+[b] ⦃G2, L2, T2⦄ → R G2 L2 T2) →
-                      R G1 L1 T1
-                   ) → ∀G1,L1,T1. R G1 L1 T1.
-#b #R #HR @(f3_ind … fw) #x #IHx #G1 #L1 #T1 #H destruct
+lemma fqup_wf_ind: ∀b. ∀Q:relation3 …. (
+                      ∀G1,L1,T1. (∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊐+[b] ⦃G2, L2, T2⦄ → Q G2 L2 T2) →
+                      Q G1 L1 T1
+                   ) → ∀G1,L1,T1. Q G1 L1 T1.
+#b #Q #HQ @(f3_ind … fw) #x #IHx #G1 #L1 #T1 #H destruct
 /4 width=2 by fqup_fwd_fw/
 qed-.
 
-lemma fqup_wf_ind_eq: ∀b. ∀R:relation3 …. (
-                         ∀G1,L1,T1. (∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊐+[b] ⦃G2, L2, T2⦄ → R G2 L2 T2) →
-                         ∀G2,L2,T2. G1 = G2 → L1 = L2 → T1 = T2 → R G2 L2 T2
-                      ) → ∀G1,L1,T1. R G1 L1 T1.
-#b #R #HR @(f3_ind … fw) #x #IHx #G1 #L1 #T1 #H destruct
+lemma fqup_wf_ind_eq: ∀b. ∀Q:relation3 …. (
+                         ∀G1,L1,T1. (∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊐+[b] ⦃G2, L2, T2⦄ → Q G2 L2 T2) →
+                         ∀G2,L2,T2. G1 = G2 → L1 = L2 → T1 = T2 → Q G2 L2 T2
+                      ) → ∀G1,L1,T1. Q G1 L1 T1.
+#b #Q #HQ @(f3_ind … fw) #x #IHx #G1 #L1 #T1 #H destruct
 /4 width=7 by fqup_fwd_fw/
 qed-.

@@ -35,13 +35,13 @@ qed-.
 
 (* Eliminators with unbound context-sensitive rt-computation for terms ******)
 
-lemma csx_ind_cpxs_tdeq: ∀h,o,G,L. ∀R:predicate term.
+lemma csx_ind_cpxs_tdeq: ∀h,o,G,L. ∀Q:predicate term.
                          (∀T1. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T1⦄ →
-                               (∀T2. ⦃G, L⦄ ⊢ T1 ⬈*[h] T2 → (T1 ≛[h, o] T2 → ⊥) → R T2) → R T1
+                               (∀T2. ⦃G, L⦄ ⊢ T1 ⬈*[h] T2 → (T1 ≛[h, o] T2 → ⊥) → Q T2) → Q T1
                          ) →
                          ∀T1. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T1⦄ →
-                         ∀T0. ⦃G, L⦄ ⊢ T1 ⬈*[h] T0 → ∀T2. T0 ≛[h, o] T2 → R T2.
-#h #o #G #L #R #IH #T1 #H @(csx_ind … H) -T1
+                         ∀T0. ⦃G, L⦄ ⊢ T1 ⬈*[h] T0 → ∀T2. T0 ≛[h, o] T2 → Q T2.
+#h #o #G #L #Q #IH #T1 #H @(csx_ind … H) -T1
 #T1 #HT1 #IH1 #T0 #HT10 #T2 #HT02
 @IH -IH /3 width=3 by csx_cpxs_trans, csx_tdeq_trans/ -HT1 #V2 #HTV2 #HnTV2
 lapply (tdeq_tdneq_trans … HT02 … HnTV2) -HnTV2 #H
@@ -59,11 +59,11 @@ elim (tdeq_dec h o T1 T0) #H
 qed-.
 
 (* Basic_2A1: was: csx_ind_alt *)
-lemma csx_ind_cpxs: ∀h,o,G,L. ∀R:predicate term.
+lemma csx_ind_cpxs: ∀h,o,G,L. ∀Q:predicate term.
                     (∀T1. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T1⦄ →
-                          (∀T2. ⦃G, L⦄ ⊢ T1 ⬈*[h] T2 → (T1 ≛[h, o] T2 → ⊥) → R T2) → R T1
+                          (∀T2. ⦃G, L⦄ ⊢ T1 ⬈*[h] T2 → (T1 ≛[h, o] T2 → ⊥) → Q T2) → Q T1
                     ) →
-                    ∀T. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄ → R T.
-#h #o #G #L #R #IH #T #HT
+                    ∀T. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄ →  Q T.
+#h #o #G #L #Q #IH #T #HT
 @(csx_ind_cpxs_tdeq … IH … HT) -IH -HT // (**) (* full auto fails *)
 qed-.

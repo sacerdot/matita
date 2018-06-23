@@ -36,14 +36,14 @@ qed-.
 (* Eliminators with unbound rt-computation for full local environments ******)
 
 lemma rdsx_ind_lpxs_lfdeq (h) (o) (G):
-                          ∀T. ∀R:predicate lenv.
+                          ∀T. ∀Q:predicate lenv.
                           (∀L1. G ⊢ ⬈*[h, o, T] 𝐒⦃L1⦄ →
-                                (∀L2. ⦃G, L1⦄ ⊢ ⬈*[h] L2 → (L1 ≛[h, o, T] L2 → ⊥) → R L2) →
-                                R L1
+                                (∀L2. ⦃G, L1⦄ ⊢ ⬈*[h] L2 → (L1 ≛[h, o, T] L2 → ⊥) → Q L2) →
+                                Q L1
                           ) →
                           ∀L1. G ⊢ ⬈*[h, o, T] 𝐒⦃L1⦄  →
-                          ∀L0. ⦃G, L1⦄ ⊢ ⬈*[h] L0 → ∀L2. L0 ≛[h, o, T] L2 → R L2.
-#h #o #G #T #R #IH #L1 #H @(rdsx_ind … H) -L1
+                          ∀L0. ⦃G, L1⦄ ⊢ ⬈*[h] L0 → ∀L2. L0 ≛[h, o, T] L2 → Q L2.
+#h #o #G #T #Q #IH #L1 #H @(rdsx_ind … H) -L1
 #L1 #HL1 #IH1 #L0 #HL10 #L2 #HL02
 @IH -IH /3 width=3 by rdsx_lpxs_trans, rdsx_lfdeq_trans/ -HL1 #K2 #HLK2 #HnLK2
 lapply (lfdeq_lfdneq_trans … HL02 … HnLK2) -HnLK2 #H
@@ -62,13 +62,13 @@ qed-.
 
 (* Basic_2A1: uses: lsx_ind_alt *)
 lemma rdsx_ind_lpxs (h) (o) (G):
-                    ∀T. ∀R:predicate lenv.
+                    ∀T. ∀Q:predicate lenv.
                     (∀L1. G ⊢ ⬈*[h, o, T] 𝐒⦃L1⦄ →
-                          (∀L2. ⦃G, L1⦄ ⊢ ⬈*[h] L2 → (L1 ≛[h, o, T] L2 → ⊥) → R L2) →
-                          R L1
+                          (∀L2. ⦃G, L1⦄ ⊢ ⬈*[h] L2 → (L1 ≛[h, o, T] L2 → ⊥) → Q L2) →
+                          Q L1
                     ) →
-                    ∀L. G ⊢ ⬈*[h, o, T] 𝐒⦃L⦄  → R L.
-#h #o #G #T #R #IH #L #HL
+                    ∀L. G ⊢ ⬈*[h, o, T] 𝐒⦃L⦄  → Q L.
+#h #o #G #T #Q #IH #L #HL
 @(rdsx_ind_lpxs_lfdeq … IH … HL) -IH -HL // (**) (* full auto fails *)
 qed-.
 
