@@ -13,13 +13,13 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/predtysnstrong_5.ma".
-include "basic_2/static/lfdeq.ma".
+include "basic_2/static/rdeq.ma".
 include "basic_2/rt_transition/lpx.ma".
 
 (* STRONGLY NORMALIZING REFERRED LOCAL ENV.S FOR UNBOUND RT-TRANSITION ******)
 
 definition rdsx (h) (o) (G) (T): predicate lenv ≝
-                                 SN … (lpx h G) (lfdeq h o T).
+                                 SN … (lpx h G) (rdeq h o T).
 
 interpretation
    "strong normalization for unbound context-sensitive parallel rt-transition on referred entries (local environment)"
@@ -57,7 +57,7 @@ lemma rdsx_fwd_pair_sn (h) (o) (G):
 #h #o #G #I #L #V #T #H
 @(rdsx_ind … H) -L #L1 #_ #IHL1
 @rdsx_intro #L2 #HL12 #HnL12
-/4 width=3 by lfdeq_fwd_pair_sn/
+/4 width=3 by rdeq_fwd_pair_sn/
 qed-.
 
 (* Basic_2A1: uses: lsx_fwd_flat_dx *)
@@ -67,14 +67,14 @@ lemma rdsx_fwd_flat_dx (h) (o) (G):
 #h #o #G #I #L #V #T #H 
 @(rdsx_ind … H) -L #L1 #_ #IHL1
 @rdsx_intro #L2 #HL12 #HnL12
-/4 width=3 by lfdeq_fwd_flat_dx/
+/4 width=3 by rdeq_fwd_flat_dx/
 qed-.
 
 fact rdsx_fwd_pair_aux (h) (o) (G): ∀L. G ⊢ ⬈*[h, o, #0] 𝐒⦃L⦄ →
                                     ∀I,K,V. L = K.ⓑ{I}V → G ⊢ ⬈*[h, o, V] 𝐒⦃K⦄.
 #h #o #G #L #H
 @(rdsx_ind … H) -L #L1 #_ #IH #I #K1 #V #H destruct
-/5 width=5 by lpx_pair, rdsx_intro, lfdeq_fwd_zero_pair/
+/5 width=5 by lpx_pair, rdsx_intro, rdeq_fwd_zero_pair/
 qed-.
 
 lemma rdsx_fwd_pair (h) (o) (G):

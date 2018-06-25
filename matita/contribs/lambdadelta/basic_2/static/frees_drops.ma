@@ -191,7 +191,7 @@ lemma frees_inv_lifts: ∀b,f2,L,U. L ⊢ 𝐅*⦃U⦄ ≘ f2 →
 /3 width=7 by frees_eq_repl_back, coafter_inj/
 qed-.
 
-(* Note: this is used by lfxs_conf and might be modified *)
+(* Note: this is used by rex_conf and might be modified *)
 lemma frees_inv_drops_next: ∀f1,L1,T1. L1 ⊢ 𝐅*⦃T1⦄ ≘ f1 →
                             ∀I2,L2,V2,n. ⬇*[n] L1 ≘ L2.ⓑ{I2}V2 →
                             ∀g1. ↑g1 = ⫱*[n] f1 →

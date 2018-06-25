@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_transition/lpx_lfdeq.ma".
+include "basic_2/rt_transition/lpx_rdeq.ma".
 include "basic_2/rt_computation/csx_drops.ma".
 
 (* STRONGLY NORMALIZING TERMS FOR UNBOUND PARALLEL RT-TRANSITION ************)

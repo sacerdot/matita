@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_transition/lfpx_fsle.ma".
+include "basic_2/rt_transition/rpx_fsle.ma".
 include "basic_2/rt_transition/cpm_cpx.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL REDUCTION FOR TERMS ***************************)
@@ -22,11 +22,11 @@ include "basic_2/rt_transition/cpm_cpx.ma".
 lemma cpm_fsge_comp: ∀n,h,G. R_fsge_compatible (λL. cpm h G L n).
 /3 width=6 by cpm_fwd_cpx, cpx_fsge_comp/ qed-.
 
-lemma lfpr_fsge_comp: ∀h,G. lfxs_fsge_compatible (λL. cpm h G L 0).
-/4 width=5 by cpm_fwd_cpx, lfpx_fsge_comp, lfxs_co/ qed-.
+lemma rpr_fsge_comp: ∀h,G. rex_fsge_compatible (λL. cpm h G L 0).
+/4 width=5 by cpm_fwd_cpx, rpx_fsge_comp, rex_co/ qed-.
 
 (* Properties with generic extension on referred entries ********************)
 
 (* Basic_2A1: was just: cpr_llpx_sn_conf *)
-lemma cpm_lfxs_conf: ∀R,n,h,G. s_r_confluent1 … (λL. cpm h G L n) (lfxs R).
-/3 width=5 by cpm_fwd_cpx, cpx_lfxs_conf/ qed-.
+lemma cpm_rex_conf: ∀R,n,h,G. s_r_confluent1 … (λL. cpm h G L n) (rex R).
+/3 width=5 by cpm_fwd_cpx, cpx_rex_conf/ qed-.

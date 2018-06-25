@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_transition/lfpx_lfdeq.ma".
+include "basic_2/rt_transition/rpx_rdeq.ma".
 include "basic_2/rt_transition/cnx.ma".
 
 (* NORMAL TERMS FOR UNBOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION ********)

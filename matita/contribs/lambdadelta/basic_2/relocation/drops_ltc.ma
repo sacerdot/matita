@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "ground_2/lib/ltc.ma".
-include "basic_2/relocation/lreq_lreq.ma".
+include "basic_2/relocation/seq_seq.ma".
 
 (* GENERIC SLICING FOR LOCAL ENVIRONMENTS ***********************************)
 
@@ -90,6 +90,6 @@ lemma co_dedropable_sn_ltc: ∀A,f. associative … f →
 | #n1 #n2 #K #K2 #_ #IH #HK2 #f2 #Hf
   elim (IH … Hf) -K1 -IH #L #H1L1 #HLK #H2L1
   elim (HR … HLK … HK2 … Hf) -f1 -K -HR
-  /3 width=6 by lreq_trans, ltc_dx, ex3_intro/
+  /3 width=6 by seq_trans, ltc_dx, ex3_intro/
 ]
 qed-.

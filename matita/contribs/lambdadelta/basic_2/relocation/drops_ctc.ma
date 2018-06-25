@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "ground_2/lib/star.ma".
-include "basic_2/relocation/lreq_lreq.ma".
+include "basic_2/relocation/seq_seq.ma".
 
 (* GENERIC SLICING FOR LOCAL ENVIRONMENTS ***********************************)
 
@@ -67,6 +67,6 @@ lemma co_dedropable_sn_CTC: ∀R. co_dedropable_sn R → co_dedropable_sn (CTC �
   /3 width=4 by inj, ex3_intro/
 | #K #K2 #_ #HK2 #IH #f2 #Hf elim (IH … Hf) -IH -K1
   #L #H1L1 #HLK #H2L1 elim (HR … HLK … HK2 … Hf) -HR -f1 -K
-  /3 width=6 by lreq_trans, step, ex3_intro/
+  /3 width=6 by seq_trans, step, ex3_intro/
 ]
 qed-.

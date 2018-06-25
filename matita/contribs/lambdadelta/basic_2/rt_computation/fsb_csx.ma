@@ -47,7 +47,7 @@ generalize in match IHu; -IHu generalize in match H10; -H10
     elim (lpx_fqup_trans … H03 … HL02) -L2 #L4 #T4 #HT04 #H43 #HL43
     elim (tdeq_dec h o T0 T4) [ -IHc -HT04 #HT04 | -IHu #HnT04 ]
     [ elim (tdeq_fqup_trans … H43 … HT04) -T4 #L2 #T4 #H04 #HT43 #HL24
-      /4 width=7 by fsb_fpbs_trans, tdeq_lfdeq_lpx_fpbs, fpbs_fqup_trans/
+      /4 width=7 by fsb_fpbs_trans, tdeq_rdeq_lpx_fpbs, fpbs_fqup_trans/
     | elim (cpxs_tdneq_fwd_step_sn … HT04 HnT04) -HT04 -HnT04 #T2 #T5 #HT02 #HnT02 #HT25 #HT54
       elim (fpbs_cpx_tdneq_trans … H10 … HT02 HnT02) -T0 #T0 #HT10 #HnT10 #H02
       /3 width=14 by fpbs_cpxs_tdeq_fqup_lpx_trans/

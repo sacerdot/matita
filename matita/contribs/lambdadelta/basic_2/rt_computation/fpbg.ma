@@ -45,6 +45,6 @@ lemma fpbg_fpbs_trans: ∀h,o,G,G2,L,L2,T,T2. ⦃G, L, T⦄ ≥[h, o] ⦃G2, L2,
 qed-.
 
 (* Basic_2A1: uses: fpbg_fleq_trans *)
-lemma fpbg_ffdeq_trans: ∀h,o,G1,G,L1,L,T1,T. ⦃G1, L1, T1⦄ >[h, o] ⦃G, L, T⦄ →
-                        ∀G2,L2,T2. ⦃G, L, T⦄ ≛[h, o] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ >[h, o] ⦃G2, L2, T2⦄.
-/3 width=5 by fpbg_fpbq_trans, fpbq_ffdeq/ qed-.
+lemma fpbg_fdeq_trans: ∀h,o,G1,G,L1,L,T1,T. ⦃G1, L1, T1⦄ >[h, o] ⦃G, L, T⦄ →
+                       ∀G2,L2,T2. ⦃G, L, T⦄ ≛[h, o] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ >[h, o] ⦃G2, L2, T2⦄.
+/3 width=5 by fpbg_fpbq_trans, fpbq_fdeq/ qed-.

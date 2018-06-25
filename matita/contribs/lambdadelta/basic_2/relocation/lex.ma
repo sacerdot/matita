@@ -17,12 +17,12 @@ include "ground_2/pull/pull_4.ma".
 include "ground_2/relocation/rtmap_uni.ma".
 include "basic_2/notation/relations/relation_3.ma".
 include "basic_2/syntax/cext2.ma".
-include "basic_2/relocation/lexs.ma".
+include "basic_2/relocation/sex.ma".
 
 (* GENERIC EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS **************)
 
 definition lex (R): relation lenv ≝
-                    λL1,L2. ∃∃f. 𝐈⦃f⦄ & L1 ⪤*[cfull, cext2 R, f] L2.
+                    λL1,L2. ∃∃f. 𝐈⦃f⦄ & L1 ⪤[cfull, cext2 R, f] L2.
 
 interpretation "generic extension (local environment)"
    'Relation R L1 L2 = (lex R L1 L2).
@@ -40,21 +40,21 @@ definition lex_transitive: relation (relation3 …) ≝ λR1,R2.
 
 (* Basic_2A1: was: lpx_sn_atom *)
 lemma lex_atom (R): ⋆ ⪤[R] ⋆.
-/2 width=3 by lexs_atom, ex2_intro/ qed.
+/2 width=3 by sex_atom, ex2_intro/ qed.
 
 lemma lex_bind (R): ∀I1,I2,K1,K2. K1 ⪤[R] K2 → cext2 R K1 I1 I2 →
                     K1.ⓘ{I1} ⪤[R] K2.ⓘ{I2}.
 #R #I1 #I2 #K1 #K2 * #f #Hf #HK12 #HI12
-/3 width=3 by lexs_push, isid_push, ex2_intro/
+/3 width=3 by sex_push, isid_push, ex2_intro/
 qed.
 
 (* Basic_2A1: was: lpx_sn_refl *)
 lemma lex_refl (R): c_reflexive … R → reflexive … (lex R).
-/4 width=3 by lexs_refl, ext2_refl, ex2_intro/ qed.
+/4 width=3 by sex_refl, ext2_refl, ex2_intro/ qed.
 
 lemma lex_co (R1) (R2): (∀L,T1,T2. R1 L T1 T2 → R2 L T1 T2) →
                         ∀L1,L2. L1 ⪤[R1] L2 → L1 ⪤[R2] L2.
-#R1 #R2 #HR #L1 #L2 * /5 width=7 by lexs_co, cext2_co, ex2_intro/
+#R1 #R2 #HR #L1 #L2 * /5 width=7 by sex_co, cext2_co, ex2_intro/
 qed-.
 
 (* Advanced properties ******************************************************)
@@ -75,27 +75,27 @@ lemma lex_pair (R): ∀I,K1,K2,V1,V2. K1 ⪤[R] K2 → R K1 V1 V2 →
 
 (* Basic_2A1: was: lpx_sn_inv_atom1: *)
 lemma lex_inv_atom_sn (R): ∀L2. ⋆ ⪤[R] L2 → L2 = ⋆.
-#R #L2 * #f #Hf #H >(lexs_inv_atom1 … H) -L2 //
+#R #L2 * #f #Hf #H >(sex_inv_atom1 … H) -L2 //
 qed-.
 
 lemma lex_inv_bind_sn (R): ∀I1,L2,K1. K1.ⓘ{I1} ⪤[R] L2 →
                            ∃∃I2,K2. K1 ⪤[R] K2 & cext2 R K1 I1 I2 & L2 = K2.ⓘ{I2}.
 #R #I1 #L2 #K1 * #f #Hf #H
-lapply (lexs_eq_repl_fwd … H (⫯f) ?) -H /2 width=1 by eq_push_inv_isid/ #H
-elim (lexs_inv_push1 … H) -H #I2 #K2 #HK12 #HI12 #H destruct
+lapply (sex_eq_repl_fwd … H (⫯f) ?) -H /2 width=1 by eq_push_inv_isid/ #H
+elim (sex_inv_push1 … H) -H #I2 #K2 #HK12 #HI12 #H destruct
 /3 width=5 by ex2_intro, ex3_2_intro/
 qed-.
 
 (* Basic_2A1: was: lpx_sn_inv_atom2 *)
 lemma lex_inv_atom_dx (R): ∀L1. L1 ⪤[R] ⋆ → L1 = ⋆.
-#R #L1 * #f #Hf #H >(lexs_inv_atom2 … H) -L1 //
+#R #L1 * #f #Hf #H >(sex_inv_atom2 … H) -L1 //
 qed-.
 
 lemma lex_inv_bind_dx (R): ∀I2,L1,K2. L1 ⪤[R] K2.ⓘ{I2} →
                            ∃∃I1,K1. K1 ⪤[R] K2 & cext2 R K1 I1 I2 & L1 = K1.ⓘ{I1}.
 #R #I2 #L1 #K2 * #f #Hf #H
-lapply (lexs_eq_repl_fwd … H (⫯f) ?) -H /2 width=1 by eq_push_inv_isid/ #H
-elim (lexs_inv_push2 … H) -H #I1 #K1 #HK12 #HI12 #H destruct
+lapply (sex_eq_repl_fwd … H (⫯f) ?) -H /2 width=1 by eq_push_inv_isid/ #H
+elim (sex_inv_push2 … H) -H #I1 #K1 #HK12 #HI12 #H destruct
 /3 width=5 by ex3_2_intro, ex2_intro/
 qed-.
 

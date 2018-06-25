@@ -14,7 +14,7 @@
 
 include "basic_2/rt_transition/fpbq.ma".
 include "basic_2/rt_computation/csx_fqus.ma".
-include "basic_2/rt_computation/csx_ffdeq.ma".
+include "basic_2/rt_computation/csx_fdeq.ma".
 include "basic_2/rt_computation/csx_lpx.ma".
 
 (* STRONGLY NORMALIZING TERMS FOR UNBOUND PARALLEL RT-TRANSITION ************)
@@ -25,5 +25,5 @@ include "basic_2/rt_computation/csx_lpx.ma".
 lemma csx_fpbq_conf: ∀h,o,G1,L1,T1. ⦃G1, L1⦄ ⊢ ⬈*[h, o] 𝐒⦃T1⦄ →
                      ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≽[h, o] ⦃G2, L2, T2⦄ → ⦃G2, L2⦄ ⊢ ⬈*[h, o] 𝐒⦃T2⦄.
 #h #o #G1 #L1 #T1 #HT1 #G2 #L2 #T2 *
-/2 width=6 by csx_cpx_trans, csx_fquq_conf, csx_lpx_conf, csx_ffdeq_conf/
+/2 width=6 by csx_cpx_trans, csx_fquq_conf, csx_lpx_conf, csx_fdeq_conf/
 qed-.

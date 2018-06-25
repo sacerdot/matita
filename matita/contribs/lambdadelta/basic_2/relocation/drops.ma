@@ -15,7 +15,7 @@
 include "ground_2/relocation/rtmap_coafter.ma".
 include "basic_2/notation/relations/rdropstar_3.ma".
 include "basic_2/notation/relations/rdropstar_4.ma".
-include "basic_2/relocation/lreq.ma".
+include "basic_2/relocation/seq.ma".
 include "basic_2/relocation/lifts_bind.ma".
 
 (* GENERIC SLICING FOR LOCAL ENVIRONMENTS ***********************************)

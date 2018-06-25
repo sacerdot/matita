@@ -17,7 +17,7 @@ include "basic_2/rt_computation/rdsx.ma".
 
 (* CLEAR OF STRONGLY NORMALIZING ENTRIES FOR UNBOUND RT-TRANSITION **********)
 
-(* Note: this should be an instance of a more general lexs *)
+(* Note: this should be an instance of a more general sex *)
 (* Basic_2A1: uses: lcosx *)
 inductive lsubsx (h) (o) (G): rtmap → relation lenv ≝
 | lsubsx_atom: ∀f. lsubsx h o G f (⋆) (⋆)

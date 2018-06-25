@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/lexs_length.ma".
+include "basic_2/relocation/sex_length.ma".
 include "basic_2/relocation/lex.ma".
 
 (* GENERIC EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS **************)
@@ -21,5 +21,5 @@ include "basic_2/relocation/lex.ma".
 
 (* Basic_2A1: was: lpx_sn_fwd_length *)
 lemma lex_fwd_length: ∀R,L1,L2. L1 ⪤[R] L2 → |L1| = |L2|.
-#R #L1 #L2 * /2 width=4 by lexs_fwd_length/
+#R #L1 #L2 * /2 width=4 by sex_fwd_length/
 qed-.

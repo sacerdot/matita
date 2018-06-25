@@ -1,8 +1,8 @@
 #!/bin/sh
-for MA in `find -name "*.ma"`; do
-   if [ -s ${MA}.old ];
-      then echo ${MA}; mv -f ${MA}.old ${MA};
+for SRC in `find -name "*.ma" -or -name "*.tbl"`; do
+   if [ -s ${SRC}.old ];
+      then echo ${SRC}; mv -f ${SRC}.old ${SRC};
    fi
 done
 
-unset MA
+unset SRC

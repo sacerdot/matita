@@ -31,7 +31,7 @@ lemma rdsx_pair_lpxs (h) (o) (G):
 @rdsx_intro #Y #HY #HnY
 elim (lpx_inv_pair_sn … HY) -HY #K2 #V2 #HK02 #HV02 #H destruct
 elim (tdeq_dec h o V0 V2) #HnV02 destruct [ -IHV0 -HV02 -HK0 | -IHK0 -HnY ]
-[ /5 width=5 by rdsx_lfdeq_trans, lpxs_step_dx, lfdeq_pair/
+[ /5 width=5 by rdsx_rdeq_trans, lpxs_step_dx, rdeq_pair/
 | @(IHV0 … HnV02) -IHV0 -HnV02
   [ /2 width=3 by lpxs_cpx_trans/
   | /3 width=3 by rdsx_lpx_trans, rdsx_cpx_trans/

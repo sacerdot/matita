@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/lfdeq_drops.ma".
+include "basic_2/static/rdeq_drops.ma".
 include "basic_2/rt_transition/lpx_drops.ma".
 include "basic_2/rt_computation/rdsx_length.ma".
 include "basic_2/rt_computation/rdsx_fqup.ma".
@@ -27,7 +27,7 @@ lemma rdsx_lifts (h) (o) (G): d_liftable1_isuni … (λL,T. G ⊢ ⬈*[h, o, T] 
 #h #o #G #K #T #H @(rdsx_ind … H) -K
 #K1 #_ #IH #b #f #L1 #HLK1 #Hf #U #HTU @rdsx_intro
 #L2 #HL12 #HnL12 elim (lpx_drops_conf … HLK1 … HL12) 
-/5 width=9 by lfdeq_lifts_bi, lpx_fwd_length/
+/5 width=9 by rdeq_lifts_bi, lpx_fwd_length/
 qed-.
 
 (* Inversion lemmas on relocation *******************************************)
@@ -37,7 +37,7 @@ lemma rdsx_inv_lifts (h) (o) (G): d_deliftable1_isuni … (λL,T. G ⊢ ⬈*[h, 
 #h #o #G #L #U #H @(rdsx_ind … H) -L
 #L1 #_ #IH #b #f #K1 #HLK1 #Hf #T #HTU @rdsx_intro
 #K2 #HK12 #HnK12 elim (drops_lpx_trans … HLK1 … HK12) -HK12
-/4 width=10 by lfdeq_inv_lifts_bi/
+/4 width=10 by rdeq_inv_lifts_bi/
 qed-.
 
 (* Advanced properties ******************************************************)

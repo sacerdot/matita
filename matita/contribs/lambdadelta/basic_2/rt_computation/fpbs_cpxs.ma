@@ -43,7 +43,7 @@ lemma cpxs_tdeq_fpbs_trans: ∀h,o,G1,L1,T1,T. ⦃G1, L1⦄ ⊢ T1 ⬈*[h] T →
 
 lemma cpxs_tdeq_fpbs: ∀h,o,G,L,T1,T. ⦃G, L⦄ ⊢ T1 ⬈*[h] T →
                       ∀T2. T ≛[h, o] T2 → ⦃G, L, T1⦄ ≥[h, o] ⦃G, L, T2⦄.
-/4 width=3 by cpxs_fpbs_trans, ffdeq_fpbs, tdeq_ffdeq/ qed.
+/4 width=3 by cpxs_fpbs_trans, fdeq_fpbs, tdeq_fdeq/ qed.
 
 (* Properties with star-iterated structural successor for closures **********)
 

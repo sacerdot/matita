@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/rt_computation/fpbg_fpbs.ma".
-include "basic_2/rt_computation/fsb_ffdeq.ma".
+include "basic_2/rt_computation/fsb_fdeq.ma".
 
 (* STRONGLY NORMALIZING CLOSURES FOR PARALLEL RST-TRANSITION ****************)
 
@@ -24,7 +24,7 @@ lemma fsb_fpbs_trans: ∀h,o,G1,L1,T1. ≥[h, o] 𝐒⦃G1, L1, T1⦄ →
 #h #o #G1 #L1 #T1 #H @(fsb_ind_alt … H) -G1 -L1 -T1
 #G1 #L1 #T1 #H1 #IH #G2 #L2 #T2 #H12
 elim (fpbs_inv_fpbg … H12) -H12
-[ -IH /2 width=5 by fsb_ffdeq_trans/
+[ -IH /2 width=5 by fsb_fdeq_trans/
 | -H1 * /2 width=5 by/
 ]
 qed-.

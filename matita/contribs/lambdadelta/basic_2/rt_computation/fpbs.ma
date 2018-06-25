@@ -54,22 +54,22 @@ lemma fpbs_strap2: ∀h,o,G1,G,G2,L1,L,L2,T1,T,T2. ⦃G1, L1, T1⦄ ≽[h, o] �
 /2 width=5 by tri_TC_strap/ qed-.
 
 (* Basic_2A1: uses: lleq_fpbs fleq_fpbs *)
-lemma ffdeq_fpbs: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≛[h, o] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄.
-/3 width=1 by fpbq_fpbs, fpbq_ffdeq/ qed.
+lemma fdeq_fpbs: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≛[h, o] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄.
+/3 width=1 by fpbq_fpbs, fpbq_fdeq/ qed.
 
 (* Basic_2A1: uses: fpbs_lleq_trans *)
-lemma fpbs_ffdeq_trans: ∀h,o,G1,G,L1,L,T1,T. ⦃G1, L1, T1⦄ ≥[h, o] ⦃G, L, T⦄ →
-                        ∀G2,L2,T2. ⦃G, L, T⦄ ≛[h, o] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄.
-/3 width=9 by fpbs_strap1, fpbq_ffdeq/ qed-.
+lemma fpbs_fdeq_trans: ∀h,o,G1,G,L1,L,T1,T. ⦃G1, L1, T1⦄ ≥[h, o] ⦃G, L, T⦄ →
+                       ∀G2,L2,T2. ⦃G, L, T⦄ ≛[h, o] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄.
+/3 width=9 by fpbs_strap1, fpbq_fdeq/ qed-.
 
 (* Basic_2A1: uses: lleq_fpbs_trans *)
-lemma ffdeq_fpbs_trans: ∀h,o,G,G2,L,L2,T,T2. ⦃G, L, T⦄ ≥[h, o] ⦃G2, L2, T2⦄ →
-                        ∀G1,L1,T1. ⦃G1, L1, T1⦄ ≛[h, o] ⦃G, L, T⦄ → ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄.
-/3 width=5 by fpbs_strap2, fpbq_ffdeq/ qed-.
+lemma fdeq_fpbs_trans: ∀h,o,G,G2,L,L2,T,T2. ⦃G, L, T⦄ ≥[h, o] ⦃G2, L2, T2⦄ →
+                       ∀G1,L1,T1. ⦃G1, L1, T1⦄ ≛[h, o] ⦃G, L, T⦄ → ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄.
+/3 width=5 by fpbs_strap2, fpbq_fdeq/ qed-.
 
-lemma tdeq_lfdeq_lpx_fpbs: ∀h,o,T1,T2. T1 ≛[h, o] T2 → ∀L1,L0. L1 ≛[h, o, T2] L0 →
-                           ∀G,L2. ⦃G, L0⦄ ⊢ ⬈[h] L2 → ⦃G, L1, T1⦄ ≥[h, o] ⦃G, L2, T2⦄.
-/4 width=5 by ffdeq_fpbs, fpbs_strap1, fpbq_lpx, ffdeq_intro_dx/ qed.
+lemma tdeq_rdeq_lpx_fpbs: ∀h,o,T1,T2. T1 ≛[h, o] T2 → ∀L1,L0. L1 ≛[h, o, T2] L0 →
+                          ∀G,L2. ⦃G, L0⦄ ⊢ ⬈[h] L2 → ⦃G, L1, T1⦄ ≥[h, o] ⦃G, L2, T2⦄.
+/4 width=5 by fdeq_fpbs, fpbs_strap1, fpbq_lpx, fdeq_intro_dx/ qed.
 
 (* Basic_2A1: removed theorems 3:
               fpb_fpbsa_trans fpbs_fpbsa fpbsa_inv_fpbs
