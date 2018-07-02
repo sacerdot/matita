@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/s_computation/fqus_fqup.ma".
+include "static_2/s_computation/fqus_fqup.ma".
 include "basic_2/dynamic/cnv_drops.ma".
 
 (* CONTEXT_SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)

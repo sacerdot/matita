@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/s_computation/fqus_fqup.ma".
-include "basic_2/static/fdeq_fqup.ma".
+include "static_2/s_computation/fqus_fqup.ma".
+include "static_2/static/fdeq_fqup.ma".
 include "basic_2/rt_computation/fpbs_fqus.ma".
 
 (* PARALLEL RST-COMPUTATION FOR CLOSURES ************************************)

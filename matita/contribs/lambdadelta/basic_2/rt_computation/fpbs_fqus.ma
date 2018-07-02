@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/s_computation/fqus.ma".
+include "static_2/s_computation/fqus.ma".
 include "basic_2/rt_computation/fpbs.ma".
 
 (* PARALLEL RST-COMPUTATION FOR CLOSURES ************************************)

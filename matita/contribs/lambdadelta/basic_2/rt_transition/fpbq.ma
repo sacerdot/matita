@@ -13,8 +13,8 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/predsubty_8.ma".
-include "basic_2/static/fdeq.ma".
-include "basic_2/s_transition/fquq.ma".
+include "static_2/static/fdeq.ma".
+include "static_2/s_transition/fquq.ma".
 include "basic_2/rt_transition/lpr_lpx.ma".
 
 (* PARALLEL RST-TRANSITION FOR CLOSURES *************************************)

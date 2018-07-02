@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/notation/constructors/uparrow_1.ma".
+include "ground_2/notation/functions/uparrow_1.ma".
 include "ground_2/notation/functions/downarrow_1.ma".
 include "arithmetics/nat.ma".
 include "ground_2/lib/relations.ma".

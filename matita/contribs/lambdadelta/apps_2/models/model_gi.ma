@@ -12,6 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/syntax/genv.ma".
+include "static_2/syntax/genv.ma".
 
 (* GLOBAL ENVIRONMENT INTERPRETATION  ***************************************)

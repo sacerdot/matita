@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/drops_ltc.ma".
+include "static_2/relocation/drops_ltc.ma".
 include "basic_2/rt_transition/cpm_drops.ma".
 include "basic_2/rt_computation/cpms.ma".
 

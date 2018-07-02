@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/syntax/cext2.ma".
+include "static_2/syntax/cext2.ma".
 include "basic_2/rt_computation/cpms.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL R-COMPUTATION FOR BINDERS *********************)

@@ -14,8 +14,8 @@
 
 include "basics/bool.ma".
 include "ground_2/lib/relations.ma".
-include "ground_2/notation/constructors/no_0.ma".
-include "ground_2/notation/constructors/yes_0.ma".
+include "ground_2/notation/functions/no_0.ma".
+include "ground_2/notation/functions/yes_0.ma".
 
 (* BOOLEAN PROPERTIES *******************************************************)
 

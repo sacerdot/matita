@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/notation/constructors/oplusright_3.ma".
+include "ground_2/notation/functions/oplusright_3.ma".
 include "ground_2/lib/relations.ma".
 
 (* STREAMS ******************************************************************)

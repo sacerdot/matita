@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/aaa_fqus.ma".
-include "basic_2/static/aaa_fdeq.ma".
+include "static_2/static/aaa_fqus.ma".
+include "static_2/static/aaa_fdeq.ma".
 include "basic_2/rt_transition/lpx_aaa.ma".
 include "basic_2/rt_transition/fpbq.ma".
 

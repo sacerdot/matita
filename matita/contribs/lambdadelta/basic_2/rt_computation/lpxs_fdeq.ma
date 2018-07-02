@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/fdeq.ma".
+include "static_2/static/fdeq.ma".
 include "basic_2/rt_computation/lpxs_rdeq.ma".
 
 (* UNBOUND PARALLEL RT-COMPUTATION FOR FULL LOCAL ENVIRONMENTS **************)

@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/predtystrong_5.ma".
-include "basic_2/syntax/tdeq.ma".
+include "static_2/syntax/tdeq.ma".
 include "basic_2/rt_transition/cpx.ma".
 
 (* STRONGLY NORMALIZING TERMS FOR UNBOUND PARALLEL RT-TRANSITION ************)

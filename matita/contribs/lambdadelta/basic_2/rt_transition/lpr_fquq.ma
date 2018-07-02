@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/s_transition/fquq.ma".
+include "static_2/s_transition/fquq.ma".
 include "basic_2/rt_transition/cpm_drops.ma".
 include "basic_2/rt_transition/cpm_lsubr.ma".
 include "basic_2/rt_transition/cpr.ma".

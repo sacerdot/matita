@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/rdeq_drops.ma".
+include "static_2/static/rdeq_drops.ma".
 include "basic_2/rt_transition/lpx_drops.ma".
 include "basic_2/rt_computation/rdsx_length.ma".
 include "basic_2/rt_computation/rdsx_fqup.ma".

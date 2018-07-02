@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/fdeq_fqus.ma".
-include "basic_2/static/fdeq_fdeq.ma".
+include "static_2/static/fdeq_fqus.ma".
+include "static_2/static/fdeq_fdeq.ma".
 include "basic_2/rt_computation/cpxs_fqus.ma".
 include "basic_2/rt_computation/cpxs_fdeq.ma".
 include "basic_2/rt_computation/lpxs_fdeq.ma".

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/lsubr.ma".
+include "static_2/static/lsubr.ma".
 include "basic_2/rt_transition/cpg.ma".
 
 (* BOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS *****************)

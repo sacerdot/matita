@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/rdeq_length.ma".
+include "static_2/static/rdeq_length.ma".
 include "basic_2/rt_transition/lpx_length.ma".
 include "basic_2/rt_computation/rdsx.ma".
 

@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/fsle_drops.ma".
-include "basic_2/static/rex_fsle.ma".
+include "static_2/static/fsle_drops.ma".
+include "static_2/static/rex_fsle.ma".
 include "basic_2/rt_transition/rpx_length.ma".
 include "basic_2/rt_transition/rpx_fqup.ma".
 

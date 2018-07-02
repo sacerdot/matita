@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/rdeq_fqus.ma".
+include "static_2/static/rdeq_fqus.ma".
 include "basic_2/rt_transition/cpx_rdeq.ma".
 include "basic_2/rt_transition/lpx_rdeq.ma".
 include "basic_2/rt_transition/fpb.ma".

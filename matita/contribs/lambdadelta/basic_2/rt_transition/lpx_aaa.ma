@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/aaa_drops.ma".
-include "basic_2/static/lsuba_aaa.ma".
+include "static_2/static/aaa_drops.ma".
+include "static_2/static/lsuba_aaa.ma".
 include "basic_2/rt_transition/lpx_drops.ma".
 
 (* UNBOUND PARALLEL RT-TRANSITION FOR FULL LOCAL ENVIRONMENTS ***************)

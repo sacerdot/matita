@@ -12,10 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/notation/constructors/tuple_4.ma".
-include "ground_2/notation/constructors/zerozero_0.ma".
-include "ground_2/notation/constructors/zeroone_0.ma".
-include "ground_2/notation/constructors/onezero_0.ma".
+include "ground_2/notation/functions/tuple_4.ma".
+include "ground_2/notation/functions/zerozero_0.ma".
+include "ground_2/notation/functions/zeroone_0.ma".
+include "ground_2/notation/functions/onezero_0.ma".
 include "ground_2/lib/arith.ma".
 
 (* RT-TRANSITION COUNTER ****************************************************)

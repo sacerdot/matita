@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page xmlns="http://lambdadelta.info/"
+      description = "\lambda\delta home page"
+      title = "\lambda\delta home page"
+      logo = "crux"
+      head = "cic:/matita/lambdadelta/static_2/ (syntactic components of λδ version 2)"
+>
+   <sitemap name="sitemap"/>
+
+   <section4 name="contents">Contents of the Specification</section4>
+   <body>This specification contains the syntactic components of λδ version 2
+         that every forthcoming system of the λδ family will share.
+   </body>
+
+   <section4 name="summary">Summary of the Specification</section4>
+   <body>Here is a numerical account of the specification's contents
+         and its timeline.
+   </body>
+   <table name="static_2_sum"/>
+
+   <news class="alpha" date="2018 June 30.">
+         The specification stands alone.
+   </news>
+
+   <section4 name="structure">Logical Structure of the Specification</section4>
+   <body>This table reports the specification's components and their planes.
+   </body>
+   <table name="static_2_src"/>
+
+   <footer/>
+</page>

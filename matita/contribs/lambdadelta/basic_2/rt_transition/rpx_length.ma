@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/rex_length.ma".
+include "static_2/static/rex_length.ma".
 include "basic_2/rt_transition/rpx.ma".
 
 (* UNBOUND PARALLEL RT-TRANSITION FOR REFERRED LOCAL ENVIRONMENTS ***********)

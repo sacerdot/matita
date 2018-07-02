@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/rdeq_rdeq.ma".
+include "static_2/static/rdeq_rdeq.ma".
 include "basic_2/rt_transition/rpx_fsle.ma".
 
 (* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS ***************)

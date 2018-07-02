@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/rex_lex.ma".
+include "static_2/static/rex_lex.ma".
 include "basic_2/rt_transition/rpx_fsle.ma".
 include "basic_2/rt_transition/lpx.ma".
 

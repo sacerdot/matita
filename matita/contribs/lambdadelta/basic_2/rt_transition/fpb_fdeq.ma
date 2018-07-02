@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/s_transition/fqu_tdeq.ma".
-include "basic_2/static/fdeq.ma".
+include "static_2/s_transition/fqu_tdeq.ma".
+include "static_2/static/fdeq.ma".
 include "basic_2/rt_transition/fpb_rdeq.ma".
 
 (* PROPER PARALLEL RST-TRANSITION FOR CLOSURES ******************************)

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/lex_lex.ma".
+include "static_2/relocation/lex_lex.ma".
 include "basic_2/rt_computation/lpxs_lpx.ma".
 
 (* UNBOUND PARALLEL RT-COMPUTATION FOR FULL LOCAL ENVIRONMENTS **************)

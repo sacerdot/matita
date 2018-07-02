@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/gcp_aaa.ma".
+include "static_2/static/gcp_aaa.ma".
 include "basic_2/rt_computation/cpxs_aaa.ma".
 include "basic_2/rt_computation/csx_gcp.ma".
 include "basic_2/rt_computation/csx_gcr.ma".

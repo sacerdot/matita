@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "ground_2/lib/arith.ma".
-include "ground_2/notation/constructors/infinity_0.ma".
+include "ground_2/notation/functions/infinity_0.ma".
 
 (* NATURAL NUMBERS WITH INFINITY ********************************************)
 

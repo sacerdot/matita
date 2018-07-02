@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/syntax/term_vector.ma".
+include "static_2/syntax/term_vector.ma".
 include "basic_2/rt_computation/csx.ma".
 
 (* STRONGLY NORMALIZING TERMS VECTORS FOR UNBOUND PARALLEL RT-TRANSITION ****)

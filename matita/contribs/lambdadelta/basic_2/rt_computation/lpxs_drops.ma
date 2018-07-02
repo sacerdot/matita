@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/drops_lex.ma".
+include "static_2/relocation/drops_lex.ma".
 include "basic_2/rt_computation/cpxs_drops.ma".
 
 (* UNBOUND PARALLEL RT-COMPUTATION FOR FULL LOCAL ENVIRONMENTS **************)

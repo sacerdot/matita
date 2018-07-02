@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/syntax/theq_simple.ma".
-include "basic_2/syntax/theq_theq.ma".
+include "static_2/syntax/theq_simple.ma".
+include "static_2/syntax/theq_theq.ma".
 include "basic_2/rt_transition/cpx_simple.ma".
 include "basic_2/rt_computation/cpxs.ma".
 include "basic_2/rt_computation/csx_csx.ma".

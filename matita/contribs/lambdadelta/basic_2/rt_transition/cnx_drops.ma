@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/lifts_tdeq.ma".
+include "static_2/relocation/lifts_tdeq.ma".
 include "basic_2/rt_transition/cpx_drops.ma".
 include "basic_2/rt_transition/cnx.ma".
 

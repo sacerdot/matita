@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/predsn_4.ma".
-include "basic_2/relocation/lex.ma".
+include "static_2/relocation/lex.ma".
 include "basic_2/rt_transition/cpr_ext.ma".
 
 (* PARALLEL R-TRANSITION FOR FULL LOCAL ENVIRONMENTS ************************)

@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/predtysn_5.ma".
-include "basic_2/static/rex.ma".
+include "static_2/static/rex.ma".
 include "basic_2/rt_transition/cpx_ext.ma".
 
 (* UNBOUND PARALLEL RT-TRANSITION FOR REFERRED LOCAL ENVIRONMENTS ***********)

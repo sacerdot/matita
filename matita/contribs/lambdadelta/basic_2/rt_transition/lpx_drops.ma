@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/drops_lex.ma".
+include "static_2/relocation/drops_lex.ma".
 include "basic_2/rt_transition/cpx_drops.ma".
 include "basic_2/rt_transition/lpx.ma".
 

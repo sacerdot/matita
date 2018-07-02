@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/predtysnstrong_5.ma".
-include "basic_2/static/rdeq.ma".
+include "static_2/static/rdeq.ma".
 include "basic_2/rt_transition/lpx.ma".
 
 (* STRONGLY NORMALIZING REFERRED LOCAL ENV.S FOR UNBOUND RT-TRANSITION ******)

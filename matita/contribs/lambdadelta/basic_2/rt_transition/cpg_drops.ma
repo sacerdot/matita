@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/drops_drops.ma".
-include "basic_2/s_computation/fqup_weight.ma".
-include "basic_2/s_computation/fqup_drops.ma".
+include "static_2/relocation/drops_drops.ma".
+include "static_2/s_computation/fqup_weight.ma".
+include "static_2/s_computation/fqup_drops.ma".
 include "basic_2/rt_transition/cpg.ma".
 
 (* BOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS *****************)

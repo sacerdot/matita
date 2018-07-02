@@ -1,0 +1,167 @@
+name "static_2_src"
+
+table {
+   class "gray"
+   [ { "component" * } {
+        [ { "section" * } {
+             [ [ "plane" ] "files" * ]
+          }
+        ]
+     }
+   ]
+   class "water"
+   [ { "iterated static typing" * } {
+        [ { "iterated generic extension of a context-sensitive relation" * } {
+             [ [ "for lenvs on referred entries" ] "rexs" + "( ? ⪤*[?,?] ? )" "rexs_length" + "rexs_lex" + "rexs_drops" + "rexs_fqup" + "rexs_rexs" * ]
+          }
+        ]
+     }
+   ]
+   class "green"
+   [ { "static typing" * } {
+        [ { "generic reducibility" * } {
+             [ [ "restricted refinement for lenvs" ] "lsubc" + "( ? ⊢ ? ⫃[?] ? )" "lsubc_drops" + "lsubc_lsubr" + "lsubc_lsuba" * ]
+             [ [ "candidates" ] "gcp_cr" + "( ⦃?,?,?⦄ ϵ[?] 〚?〛 )" "gcp_aaa" * ]
+             [ [ "computation properties" ] "gcp" *] 
+          }
+        ]
+        [ { "atomic arity assignment" * } {
+             [ [ "restricted refinement for lenvs" ] "lsuba" + "( ? ⊢ ? ⫃⁝ ? )" "lsuba_drops" + "lsuba_lsubr" + "lsuba_aaa" + "lsuba_lsuba" * ]
+             [ [ "for terms" ] "aaa" + "( ⦃?,?⦄ ⊢ ? ⁝ ? )" "aaa_drops" + "aaa_fqus" + "aaa_rdeq" + "aaa_fdeq" + "aaa_aaa" * ]
+          }
+        ]
+        [ { "degree-based equivalence" * } {
+             [ [ "for closures on referred entries" ] "fdeq" + "( ⦃?,?,?⦄ ≛[?,?] ⦃?,?,?⦄ )" "fdeq_fqup" + "fdeq_fqus" + "fdeq_req" + "fdeq_fdeq" * ]
+             [ [ "for lenvs on referred entries" ] "rdeq" + "( ? ≛[?,?,?] ? )" "rdeq_length" + "rdeq_drops" + "rdeq_fqup" + "rdeq_fqus" + "rdeq_req" + "rdeq_rdeq" * ]
+          }
+        ]
+        [ { "syntactic equivalence" * } {
+             [ [ "for lenvs on referred entries" ] "req" + "( ? ≡[?] ? )" "req_fqup" + "req_fsle" * ]
+          }
+        ]
+        [ { "generic extension of a context-sensitive relation" * } {
+             [ [ "for lenvs on referred entries" ] "rex" + "( ? ⪤[?,?] ? )" "rex_length" + "rex_lex" + "rex_drops" + "rex_fqup" + "rex_fsle" + "rex_rex" * ]
+          }
+        ]
+        [ { "context-sensitive free variables" * } {
+             [ [ "inclusion for restricted closures" ] "fsle" + "( ⦃?,?⦄ ⊆ ⦃?,?⦄ )" "fsle_length" + "fsle_drops" + "fsle_fqup" + "fsle_fsle" * ]
+             [ [ "restricted refinement for lenvs" ] "lsubf" + "( ⦃?,?⦄ ⫃𝐅* ⦃?,?⦄ )" "lsubf_lsubr" + "lsubf_frees" + "lsubf_lsubf" * ]
+             [ [ "for terms" ] "frees" + "( ? ⊢ 𝐅*⦃?⦄ ≘ ? )" "frees_append" + "frees_drops" + "frees_fqup" + "frees_frees" * ]
+          }
+        ]
+        [ { "local environments" * } {
+             [ [ "restricted refinement" ] "lsubr" + "( ? ⫃ ? )" "lsubr_length" + "lsubr_drops" + "lsubr_lsubr" * ]
+          }
+        ]
+     }
+   ]
+   class "grass"
+   [ { "s-computation" * } {
+        [ { "iterated structural successor" * } {
+             [ [ "for closures" ] "fqus" + "( ⦃?,?,?⦄ ⊐*[?] ⦃?,?,?⦄ )" + "( ⦃?,?,?⦄ ⊐* ⦃?,?,?⦄ )" "fqus_weight" + "fqus_drops" + "fqus_fqup" + "fqus_fqus" * ]
+             [ [ "proper for closures" ] "fqup" + "( ⦃?,?,?⦄ ⊐+[?] ⦃?,?,?⦄ )" + "( ⦃?,?,?⦄ ⊐+ ⦃?,?,?⦄ )" "fqup_weight" + "fqup_drops" + "fqup_fqup" * ]
+          }
+        ]
+     }
+   ]
+   class "yellow"
+   [ { "s-transition" * } {
+        [ { "structural successor" * } {
+             [ [ "for closures" ] "fquq" + "( ⦃?,?,?⦄ ⊐⸮[?] ⦃?,?,?⦄ )" + "( ⦃?,?,?⦄ ⊐⸮ ⦃?,?,?⦄ )" "fquq_length" + "fquq_weight" * ]
+             [ [ "proper for closures" ] "fqu" + "( ⦃?,?,?⦄ ⊐[?] ⦃?,?,?⦄ )" + "( ⦃?,?,?⦄ ⊐ ⦃?,?,?⦄ )" "fqu_length" + "fqu_weight" + "fqu_tdeq" * ]
+          }
+        ]
+     }
+   ]
+   class "orange"
+   [ { "relocation" * } {
+        [ { "generic slicing" * } {
+             [ [ "for lenvs" ] "drops" + "( ⬇*[?,?] ? ≘ ? )" + "( ⬇*[?] ? ≘ ? )" "drops_ctc" + "drops_ltc" + "drops_weight" + "drops_length" + "drops_cext2" + "drops_sex" + "drops_lex" + "drops_seq" + "drops_drops" + "drops_vector" * ]
+          }
+        ]
+        [ { "generic relocation" * } {
+             [ [ "for binders" ] "lifts_bind" + "( ⬆*[?] ? ≘ ? )" "lifts_weight_bind" + "lifts_lifts_bind" * ]
+             [ [ "for term vectors" ] "lifts_vector" + "( ⬆*[?] ? ≘ ? )" "lifts_lifts_vector" * ]
+             [ [ "for terms" ] "lifts" + "( ⬆*[?] ? ≘ ? )" "lifts_simple" + "lifts_weight" + "lifts_tdeq" + "lifts_lifts" * ]
+          }
+        ]
+        [ { "syntactic equivalence" * } {
+             [ [ "for lenvs on selected entries" ] "seq" + "( ? ≡[?] ? )" "seq_length" + "seq_seq" * ]
+          }
+        ]
+        [ { "generic entrywise extension" * } {
+             [ [ "for lenvs of one contex-sensitive relation" ] "lex" + "( ? ⪤[?] ? )" "lex_tc" + "lex_length" + "lex_lex" * ]
+             [ [ "for lenvs of two contex-sensitive relations" ] "sex" + "( ? ⪤[?,?,?] ? )" "sex_tc" + "sex_length" + "sex_sex" * ]
+          }
+        ]
+     }
+   ]
+   class "red"
+   [ { "syntax" * } {
+        [ { "equivalence up to exclusion binders" * } {
+             [ [ "for lenvs" ] "lveq" + "( ? ≋ⓧ*[?,?] ? )" "lveq_length" + "lveq_lveq" * ]
+          }
+        ]
+        [ { "append" * } {
+             [ [ "for lenvs" ] "append" + "( ? + ? )" "append_length" * ]
+          }
+        ]
+        [ { "head equivalence" * } {
+             [ [ "for terms" ] "theq" + "( ? ⩳[?,?] ? )" "theq_simple" + "theq_tdeq" + "theq_theq" + "theq_simple_vector" * ]
+          }
+        ]
+        [ { "degree-based equivalence" * } {
+             [ [ "" ] "tdeq_ext" + "( ? ≛[?,?] ? )" + "( ? ⊢ ? ≛[?,?] ? )" * ]
+             [ [ "" ] "tdeq" + "( ? ≛[?,?] ? )" "tdeq_tdeq" * ]
+          }
+        ]
+        [ { "closures" * } {
+             [ [ "" ] "cl_weight" + "( ♯{?,?,?} )" * ]
+             [ [ "" ] "cl_restricted_weight" + "( ♯{?,?} )" * ]
+          }
+        ]
+        [ { "global environments" * } {
+             [ [ "" ] "genv_length" + "( |?| )" * ]
+             [ [ "" ] "genv_weight" + "( ♯{?} )" * ]
+             [ [ "" ] "genv" * ]
+          }
+        ]
+        [ { "local environments" * } {
+             [ [ "" ] "ceq_ext" "ceq_ext_ceq_ext" * ]
+             [ [ "" ] "cext2" * ]
+             [ [ "" ] "lenv_length" + "( |?| )" * ]
+             [ [ "" ] "lenv_weight" + "( ♯{?} )" * ]
+             [ [ "" ] "lenv" * ]
+          }
+        ]
+        [ { "binders for local environments" * } {
+             [ [ "" ] "ext2" "ext2_tc" + "ext2_ext2" * ]
+             [ [ "" ] "bind" "bind_weight" * ]
+          }
+        ]
+        [ { "terms" * } {
+             [ [ "" ] "term_vector" + "( Ⓐ?.? )" * ]
+             [ [ "" ] "term_simple" + "( 𝐒⦃?⦄ )"  * ]
+             [ [ "" ] "term_weight" + "( ♯{?} )" * ]
+             [ [ "" ] "term" * ]
+          }
+        ]
+        [ { "items" * } {
+             [ [ "" ] "item_sd" * ]
+             [ [ "" ] "item_sh" * ]
+             [ [ "" ] "item" * ]
+          }
+        ]
+        [ { "atomic arities" * } {
+             [ [ "" ] "aarity" * ]
+          }
+        ]
+     }
+   ]
+}
+
+class "top"               { * }
+
+class "capitalize italic" { 0 1 }
+
+class "italic"            { 2 }

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/lex_lex.ma".
+include "static_2/relocation/lex_lex.ma".
 include "basic_2/rt_transition/cpm_lsubr.ma".
 include "basic_2/rt_transition/cpr.ma".
 include "basic_2/rt_transition/cpr_drops.ma".

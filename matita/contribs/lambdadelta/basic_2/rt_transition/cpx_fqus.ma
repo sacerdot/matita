@@ -14,8 +14,8 @@
 
 (* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS ***************)
 
-include "basic_2/relocation/lifts_tdeq.ma".
-include "basic_2/s_computation/fqus_fqup.ma".
+include "static_2/relocation/lifts_tdeq.ma".
+include "static_2/s_computation/fqus_fqup.ma".
 include "basic_2/rt_transition/cpx_drops.ma".
 include "basic_2/rt_transition/cpx_lsubr.ma".
 

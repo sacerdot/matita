@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/syntax/lenv.ma".
+include "static_2/syntax/lenv.ma".
 include "apps_2/models/model_vlift.ma".
 include "apps_2/notation/models/inwbrackets_4.ma".
 

@@ -15,7 +15,7 @@
 include "ground_2/notation/relations/ringeq_3.ma".
 include "apps_2/notation/models/at_3.ma".
 include "apps_2/notation/models/wbrackets_4.ma".
-include "basic_2/syntax/term.ma".
+include "static_2/syntax/term.ma".
 
 (* MODEL ********************************************************************)
 

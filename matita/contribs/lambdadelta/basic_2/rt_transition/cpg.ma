@@ -15,10 +15,10 @@
 include "ground_2/steps/rtc_max.ma".
 include "ground_2/steps/rtc_plus.ma".
 include "basic_2/notation/relations/predty_7.ma".
-include "basic_2/syntax/item_sh.ma".
-include "basic_2/syntax/lenv.ma".
-include "basic_2/syntax/genv.ma".
-include "basic_2/relocation/lifts.ma".
+include "static_2/syntax/item_sh.ma".
+include "static_2/syntax/lenv.ma".
+include "static_2/syntax/genv.ma".
+include "static_2/relocation/lifts.ma".
 
 (* BOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS *****************)
 

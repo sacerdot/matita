@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/syntax/theq_simple_vector.ma".
-include "basic_2/relocation/lifts_vector.ma".
+include "static_2/syntax/theq_simple_vector.ma".
+include "static_2/relocation/lifts_vector.ma".
 include "basic_2/rt_computation/cpxs_theq.ma".
 
 (* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS **************)

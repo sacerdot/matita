@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/fdeq.ma".
+include "static_2/static/fdeq.ma".
 include "basic_2/rt_computation/csx_rdeq.ma".
 
 (* STRONGLY NORMALIZING TERMS FOR UNBOUND PARALLEL RT-TRANSITION ************)

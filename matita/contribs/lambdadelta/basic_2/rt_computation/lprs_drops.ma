@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/drops_lex.ma".
+include "static_2/relocation/drops_lex.ma".
 include "basic_2/rt_computation/cpms_drops.ma".
 
 (* PARALLEL R-COMPUTATION FOR FULL LOCAL ENVIRONMENTS ***********************)

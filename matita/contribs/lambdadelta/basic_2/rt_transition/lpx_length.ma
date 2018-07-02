@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/relocation/lex_length.ma".
+include "static_2/relocation/lex_length.ma".
 include "basic_2/rt_transition/lpx.ma".
 
 (* UNBOUND PARALLEL RT-TRANSITION FOR FULL LOCAL ENVIRONMENTS ***************)

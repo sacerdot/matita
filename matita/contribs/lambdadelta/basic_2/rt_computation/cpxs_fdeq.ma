@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/fdeq.ma".
+include "static_2/static/fdeq.ma".
 include "basic_2/rt_computation/cpxs_rdeq.ma".
 
 (* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS **************)

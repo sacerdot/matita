@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/lsubd_da.ma".
+include "static_2/static/lsubd_da.ma".
 include "basic_2/dynamic/snv_aaa.ma".
 include "basic_2/dynamic/snv_scpes.ma".
 

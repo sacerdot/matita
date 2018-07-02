@@ -32,7 +32,7 @@ WWW          := ../../../../helm/www/lambdadelta
 TAGS := all xoa xoa2 orig elim deps top leaf stats tbls trim contrib clean \
         www up-html
 
-PACKAGES  := ground_2 basic_2 apps_2 alpha_1
+PACKAGES  := ground_2 basic_2 static_2 apps_2 alpha_1
 XPACKAGES := ground_2 basic_2
 
 LDWS := $(shell find -name "*.ldw.xml")

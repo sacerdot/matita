@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/notation/constructors/diamond_0.ma".
-include "ground_2/notation/constructors/semicolon_3.ma".
+include "ground_2/notation/functions/diamond_0.ma".
+include "ground_2/notation/functions/semicolon_3.ma".
 include "ground_2/lib/arith.ma".
 
 (* MULTIPLE RELOCATION WITH PAIRS *******************************************)

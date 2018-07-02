@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/syntax/cext2.ma".
+include "static_2/syntax/cext2.ma".
 include "basic_2/rt_transition/cpx.ma".
 
 (* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR BINDERS *************)

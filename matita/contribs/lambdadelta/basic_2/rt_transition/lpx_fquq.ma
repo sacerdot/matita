@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/s_transition/fquq.ma".
+include "static_2/s_transition/fquq.ma".
 include "basic_2/rt_transition/lpx.ma".
 
 (* UNBOUND PARALLEL RT-TRANSITION FOR FULL LOCAL ENVIRONMENTS ***************)

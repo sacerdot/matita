@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/static/rdeq_fqup.ma".
+include "static_2/static/rdeq_fqup.ma".
 include "basic_2/rt_computation/rdsx.ma".
 
 (* STRONGLY NORMALIZING REFERRED LOCAL ENV.S FOR UNBOUND RT-TRANSITION ******)
