@@ -12,33 +12,27 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/notation/relations/ringeq_3.ma".
-include "apps_2/notation/models/at_3.ma".
-include "apps_2/notation/models/wbrackets_4.ma".
-include "static_2/syntax/term.ma".
+include "apps_2/models/model_li.ma".
+include "apps_2/models/veq_vdrop.ma".
 
-(* MODEL ********************************************************************)
+(* EVALUATION EQUIVALENCE ***************************************************)
 
-record model: Type[1] ≝ {
-(* Note: denotations domain *)
-   dd: Type[0];
-(* Note: structural equivalence *)
-   sq: relation2 dd dd;
-(* Note: sort evaluation *)
-   sv: nat → dd;
-(* Note: application *)
-   ap: dd → dd → dd;
-(* Note: term interperpretation *)
-   ti: (nat → dd) → (nat → dd) → term → dd
-}.
+(* Properties with local environment interpretation *************************)
 
-interpretation "structural equivalence (model)"
-   'RingEq M d1 d2 = (sq M d1 d2).
-
-interpretation "application (model)"
-   'At M d1 d2 = (ap M d1 d2).
-
-interpretation "term interpretation (model)"
-   'WBrackets M gv lv T = (ti M gv lv T).
-
-definition evaluation: model → Type[0] ≝ λM. nat → dd M.
+lemma li_repl_back (M) (gv): is_model M →
+                             ∀L,lv1. lv1 ϵ ⟦L⟧[gv] →
+                             ∀lv2. lv1 ≗{M} lv2 → lv2 ϵ ⟦L⟧[gv].
+#M #gv #HM #L #lv1 #H elim H -L -lv1 //
+[ #lv1 #d1 #K #V #_ #Hd #IH #y #H
+  elim (veq_inv_vlift_sn … H) -H #lv2 #d2 #Hlv12 #Hd12 #Hy
+  /5 width=5 by li_repl, li_abbr, ti_comp_l, mq/
+| #lv1 #d1 #K #W #_ #IH #y #H
+  elim (veq_inv_vlift_sn … H) -H #lv2 #d2 #Hlv12 #_ #Hy
+  /4 width=3 by li_repl, li_abst/
+| #lv1 #d1 #I #K #_ #IH #y #H
+  elim (veq_inv_vlift_sn … H) -H #lv2 #d2 #Hlv12 #_ #Hy
+  /4 width=3 by li_repl, li_unit/
+| #lv1 #lv #L #_ #Hlv1 #IH #lv2 #Hlv2
+  @IH /2 width=3 by exteq_veq_trans/
+]
+qed-.

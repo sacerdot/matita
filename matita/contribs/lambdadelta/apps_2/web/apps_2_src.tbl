@@ -15,20 +15,22 @@ table {
              [ "deq" + "( ? ⊢ ? ≗{?} ? )" "deq_cpr" * ]
           }
         ]
-        [ { "evaluation equivalence" * } {
-             [ "veq" + "( ? ≗{?} ? )" "veq_vdrop" "veq_li" "veq_lifts" * ]
+        [ { "local environment interpretation" * } {
+             [ "li" + "( ? ϵ ⟦?⟧{?}[?] )" "li_vlifts" * ]
           }
         ]
-        [ { "evaluation drop" * } {        
-             [ "vdrop" + "( ⫰{?}? )" + "( ⫰{?}[?]? )" "vdrop_vlift" * ]
+        [ { "multiple evaluation lift" * } {
+             [ "vlifts" + "( ?⨁{?}[?]? ≘ ? )" "vlifts_shift" * ]
+          }
+        ]
+        [ { "evaluation equivalence" * } {
+             [ "veq" + "( ? ≗{?} ? )" "veq_lifts" * ]
           }
         ]
         [ { "model declaration" * } {
              [ "model" + "( ? ≗{?} ? )" + "( ? @{?} ? )" + "( ⟦?⟧{?}[?,?] )"
-               "model_vlift" + "( ⫯{?}[?]? )" + "( ⫯{?}[?←?]? )"
+               "model_vlift" + "( ⫯{?}[?←?]? )"
                "model_props"
-               "model_li" + "( ? ϵ ⟦?⟧{?}[?] )"
-               "model_gi"
                * ]
           }
         ]
@@ -71,3 +73,9 @@ class "top"               { * }
 class "capitalize italic" { 0 }
 
 class "italic"            { 1 }
+(*
+        [ { "evaluation drop" * } {        
+             [ "vdrop" + "( ⫰{?}? )" + "( ⫰{?}[?]? )" "vdrop_vlift" * ]
+          }
+        ]
+*)

@@ -12,27 +12,27 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "apps_2/models/model_li.ma".
-include "apps_2/models/veq_vdrop.ma".
+include "static_2/syntax/lenv.ma".
 
-(* EVALUATION EQUIVALENCE  **************************************************)
+(* SHIFT FOR RESTRICTED CLOSURES ********************************************)
 
-(* Properties with local environment interpretation *************************)
+rec definition shift L T on L ≝ match L with
+[ LAtom     ⇒ T
+| LBind L I ⇒ match I with
+  [ BUnit _   ⇒ shift L (-ⓛ⋆0.T)
+  | BPair I V ⇒ shift L (-ⓑ{I}V.T)
+  ]
+].
 
-lemma li_repl_back (M) (gv): is_model M →
-                             ∀L,lv1. lv1 ϵ ⟦L⟧[gv] →
-                             ∀lv2. lv1 ≗{M} lv2 → lv2 ϵ ⟦L⟧[gv].
-#M #gv #HM #L #lv1 #H elim H -L -lv1 //
-[ #lv1 #d1 #K #V #_ #Hd #IH #y #H
-  elim (veq_inv_vlift_sn … H) -H #lv2 #d2 #Hlv12 #Hd12 #Hy
-  /5 width=5 by li_repl, li_abbr, ti_comp_l, mr/
-| #lv1 #d1 #K #W #_ #IH #y #H
-  elim (veq_inv_vlift_sn … H) -H #lv2 #d2 #Hlv12 #_ #Hy
-  /4 width=3 by li_repl, li_abst/
-| #lv1 #d1 #I #K #_ #IH #y #H
-  elim (veq_inv_vlift_sn … H) -H #lv2 #d2 #Hlv12 #_ #Hy
-  /4 width=3 by li_repl, li_unit/
-| #lv1 #lv #L #_ #Hlv1 #IH #lv2 #Hlv2
-  @IH /2 width=3 by exteq_veq_trans/
-]
-qed-.
+interpretation "shift (restricted closure)" 'plus L T = (shift L T).
+
+(* Basic properties *********************************************************)
+
+lemma shift_atom: ∀T. ⋆ + T = T.
+// qed.
+
+lemma shift_unit: ∀I,L,T. L.ⓤ{I}+T = L+(-ⓛ⋆0.T).
+// qed.
+
+lemma shift_pair: ∀I,L,V,T. (L.ⓑ{I}V)+T = L+(-ⓑ{I}V.T).
+// qed.

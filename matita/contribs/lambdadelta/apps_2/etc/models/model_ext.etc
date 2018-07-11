@@ -1,0 +1,78 @@
+
+include "ground_2/lib/exteq.ma".
+include "apps_2/models/model_li.ma".
+include "apps_2/models/vdrop.ma".
+
+lemma vlift_ext (M): ∀i. compatible_3 … (vlift M i) (eq …) (exteq …) (exteq …).
+#M #i #d1 #d2 #Hd12 #lv1 #lv2 #HLv12 #j
+elim (lt_or_eq_or_gt j i) #Hij destruct
+[ >vlift_lt // >vlift_lt //
+| >vlift_eq >vlift_eq //
+| >vlift_gt // >vlift_gt //
+]
+qed.
+
+lemma vdrop_ext (M): ∀i. compatible_2 … (vdrop M i) (exteq …) (exteq …).
+#M #i #lv1 #lv2 #Hlv12 #j elim (lt_or_ge j i) #Hji
+[ >vdrop_lt // >vdrop_lt //
+| >vdrop_ge // >vdrop_ge //
+]
+qed.
+
+lemma vlift_vdrop_eq (M): ∀lv,i. lv ≐{?,dd M} ⫯[i←lv i]⫰[i]lv.
+#M #lv #i #j elim (lt_or_eq_or_gt j i) #Hji destruct
+[ >vlift_lt // >vdrop_lt //
+| >vlift_eq //
+| >vlift_gt // >vdrop_ge /2 width=1 by monotonic_pred/
+  <(lt_succ_pred … Hji) //
+]
+qed.
+
+axiom vdrop_vlift_eq: ∀M,lv,d,i. lv ≐{?,dd M} ⫰[i]⫯[i←d]lv.
+(*
+#M #lv #d #i #j elim (lt_or_eq_or_gt j i) #Hji destruct
+*)
+
+lemma ext_inv_vlift_sn (M): ∀lv1,y,i,d. ⫯[i←d]lv1 ≐{?,dd M} y →
+                            ∧∧ d = y i & lv1 ≐ ⫰[i]y.
+#M #lv1 #y #i #d #H @conj
+[ lapply (H i) -H >vlift_eq //
+| @exteq_trans [2: @(vdrop_vlift_eq … d i) | skip ]
+  @vdrop_ext //
+]
+qed-.
+
+lemma ext_inv_vlift_sn (M): ∀lv1,y,i,d. ⫯[i←d]lv1 ≐{?,dd M} y →
+                            ∃∃lv2. lv1 ≐ lv2 & ⫯[i←d]lv2 = y.
+
+lemma li_repl (M) (gv): ∀lv1,L. lv1 ϵ ⟦L⟧{M}[gv] →
+                        ∀lv2. lv1 ≐ lv2 → lv2 ϵ ⟦L⟧{M}[gv].
+#M #gv #lv1 #L #H elim H -lv1 -L
+[ //
+|
+| #lv1 #d #K #W #_ #IH #y #H    
+
+
+
+
+lemma ext_veq (M): is_model M →
+                   ∀lv1,lv2. lv1 ≐ lv2 → lv1 ≗{M} lv2.
+/2 width=1 by mr/ qed.
+
+lemma veq_repl_exteq (M): is_model M →
+                          replace_2 … (veq M) (exteq …) (exteq …).
+/2 width=5 by mq/ qed-.
+
+lemma exteq_veq_trans (M): ∀lv1,lv. lv1 ≐ lv →
+                           ∀lv2. lv ≗{M} lv2 → lv1 ≗ lv2.
+// qed-.
+
+lemma ti_ext_l (M): is_model M →
+                    ∀T,gv,lv1,lv2. lv1 ≐ lv2 →
+                    ⟦T⟧[gv, lv1] ≗{M} ⟦T⟧[gv, lv2].
+/3 width=1 by ti_comp_l, ext_veq/ qed.
+
+lemma valign_ext (M) (l): compatible_2 … (valign M l) (exteq …) (exteq …).
+#M #l #lv1 #lv2 #HLv12 #i
+>valign_rw >valign_rw //
+qed.

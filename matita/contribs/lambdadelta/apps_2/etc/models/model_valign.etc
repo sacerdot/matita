@@ -12,33 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/notation/relations/ringeq_3.ma".
-include "apps_2/notation/models/at_3.ma".
-include "apps_2/notation/models/wbrackets_4.ma".
-include "static_2/syntax/term.ma".
+include "ground_2/lib/functions.ma".
+include "ground_2/lib/exteq.ma".
+include "apps_2/models/model.ma".
 
 (* MODEL ********************************************************************)
 
-record model: Type[1] ≝ {
-(* Note: denotations domain *)
-   dd: Type[0];
-(* Note: structural equivalence *)
-   sq: relation2 dd dd;
-(* Note: sort evaluation *)
-   sv: nat → dd;
-(* Note: application *)
-   ap: dd → dd → dd;
-(* Note: term interperpretation *)
-   ti: (nat → dd) → (nat → dd) → term → dd
-}.
+definition valign (M) (l): evaluation M → evaluation M ≝
+                           λlv,i. ⫯[l](lv i).
 
-interpretation "structural equivalence (model)"
-   'RingEq M d1 d2 = (sq M d1 d2).
+interpretation "alignment (model evaluation)"
+   'UpSpoon M l lv = (valign M l lv).
 
-interpretation "application (model)"
-   'At M d1 d2 = (ap M d1 d2).
+(* Basic properties *********************************************************)
 
-interpretation "term interpretation (model)"
-   'WBrackets M gv lv T = (ti M gv lv T).
-
-definition evaluation: model → Type[0] ≝ λM. nat → dd M.
+lemma valign_rw (M) (l) (lv): ∀i. (⫯{M}[l]lv) i = ⫯[l](lv i).
+// qed.

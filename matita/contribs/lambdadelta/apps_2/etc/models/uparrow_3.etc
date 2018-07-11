@@ -12,33 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/notation/relations/ringeq_3.ma".
-include "apps_2/notation/models/at_3.ma".
-include "apps_2/notation/models/wbrackets_4.ma".
-include "static_2/syntax/term.ma".
+(* NOTATION FOR THE "models" COMPONENT **************************************)
 
-(* MODEL ********************************************************************)
+notation < "hvbox( ↑[ term 46 f ] break term 70 d )"
+   non associative with precedence 70
+   for @{ 'UpArrow $M $f $d }.
 
-record model: Type[1] ≝ {
-(* Note: denotations domain *)
-   dd: Type[0];
-(* Note: structural equivalence *)
-   sq: relation2 dd dd;
-(* Note: sort evaluation *)
-   sv: nat → dd;
-(* Note: application *)
-   ap: dd → dd → dd;
-(* Note: term interperpretation *)
-   ti: (nat → dd) → (nat → dd) → term → dd
-}.
+notation > "hvbox( ↑[ term 46 f ] break term 70 d )"
+   non associative with precedence 70
+   for @{ 'UpArrow ? $f $d }.
 
-interpretation "structural equivalence (model)"
-   'RingEq M d1 d2 = (sq M d1 d2).
-
-interpretation "application (model)"
-   'At M d1 d2 = (ap M d1 d2).
-
-interpretation "term interpretation (model)"
-   'WBrackets M gv lv T = (ti M gv lv T).
-
-definition evaluation: model → Type[0] ≝ λM. nat → dd M.
+notation > "hvbox( ↑{ term 46 M }[ break term 46 f ] break term 70 d )"
+   non associative with precedence 70
+   for @{ 'UpArrow $M $f $d }.

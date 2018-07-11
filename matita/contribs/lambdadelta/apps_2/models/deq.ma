@@ -13,9 +13,8 @@
 (**************************************************************************)
 
 include "apps_2/notation/models/ringeq_5.ma".
-include "apps_2/models/model_gi.ma".
-include "apps_2/models/model_li.ma".
-include "apps_2/models/model_props.ma".
+include "apps_2/models/li.ma".
+include "static_2/syntax/genv.ma".
 
 (* DENOTATIONAL EQUIVALENCE  ************************************************)
 
@@ -29,7 +28,7 @@ interpretation "denotational equivalence (model)"
 
 lemma deq_refl (M): is_model M →
                     ∀G,L. reflexive … (deq M G L).
-/2 width=1 by mq/ qed.
+/2 width=1 by mr/ qed.
 (*
 lemma veq_sym: ∀M. symmetric … (veq M).
 // qed-.

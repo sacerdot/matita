@@ -1,0 +1,138 @@
+
+
+lemma vdrop_refl: ∀M,v,l. ↓[l, 0] v ≐⦋M⦌ v.
+#M #v #l #i elim (lt_or_ge … i l) #Hil
+[ >vdrop_lt //
+| >vdrop_ge //
+]
+qed.
+
+(* Main properties **********************************************************)
+
+theorem vdrop_vdrop_le_sym: ∀M,v,l1,l2,m1,m2. l1 ≤ l2 →
+                            ↓[l1, m1] ↓[l2+m1, m2] v ≐⦋M⦌ ↓[l2, m2] ↓[l1, m1] v.
+#M #v #l1 #l2 #m1 #m2 #Hl12 #j elim (lt_or_ge … j l1) #Hjl1
+[ lapply (lt_to_le_to_lt … Hjl1 Hl12) -Hl12 #Hjl2
+  >vdrop_lt // >vdrop_lt /2 width=3 by lt_to_le_to_lt/
+  >vdrop_lt // >vdrop_lt //
+| >vdrop_ge // elim (lt_or_ge … j l2) #Hjl2 -Hl12
+  [ >vdrop_lt /2 width=1 by lt_minus_to_plus/
+    >vdrop_lt // >vdrop_ge //
+  | >vdrop_ge /2 width=1 by monotonic_le_plus_l/
+    >vdrop_ge // >vdrop_ge /2 width=1 by le_plus/
+  ]
+]
+qed.
+
+lemma vdrop_vdrop_le: ∀M,v,l1,l2,m1,m2. l1 ≤ l2 →
+                      ↓[l2, m2] ↓[l1, m1] v ≐⦋M⦌ ↓[l1, m1] ↓[l2+m1, m2] v.
+/3 width=1 by vdrop_vdrop_le_sym, veq_sym/ qed-.
+
+(* Properties on raise ******************************************************)
+
+lemma vdrop_raise_lt: ∀M,v,d,l,m,i. i ≤ l → ↓[l+1, m] [i⬐d] v ≐⦋M⦌ [i⬐d] ↓[l, m] v.
+#M #v #d #l #m #i #Hil #j elim (lt_or_eq_or_gt … j i) #Hij destruct
+[ lapply (lt_to_le_to_lt … Hij Hil) -Hil #Hjl
+  >vdrop_lt /2 width=1 by le_S/ >raise_lt // >raise_lt // >vdrop_lt //
+| >vdrop_lt /2 width=1 by le_S_S/ >raise_eq >raise_eq //
+| lapply (ltn_to_ltO … Hij) #Hj
+  >raise_gt // elim (lt_or_ge … j (l+1)) #Hlj
+  [ -Hil >vdrop_lt // >vdrop_lt /2 width=2 by lt_plus_to_minus/ >raise_gt //
+  | >vdrop_ge // >vdrop_ge /2 width=1 by le_plus_to_minus_r/
+    >raise_gt /2 width=1 by le_plus/ >plus_minus //
+  ]
+]
+qed.
+
+lemma raise_vdrop_lt: ∀M,v,d,l,m,i. i ≤ l → [i⬐d] ↓[l, m] v ≐⦋M⦌ ↓[l+1, m] [i⬐d] v.
+/3 width=1 by vdrop_raise_lt, veq_sym/ qed.
+
+lemma vdrop_raise_be: ∀M,v,d,l,m,i. l ≤ i → i ≤ l + m → ↓[l, m+1] [i⬐d] v ≐⦋M⦌ ↓[l, m] v.
+#M #v #d #l #m #i #Hli #Hilm #j elim (lt_or_ge … j l) #Hlj
+[ lapply (lt_to_le_to_lt … Hlj Hli) -Hli -Hilm #Hij
+  >vdrop_lt // >vdrop_lt // >raise_lt //
+| lapply (transitive_le … (j+m) Hilm ?) -Hli -Hilm /2 width=1 by monotonic_le_plus_l/ #Hijm
+  >vdrop_ge // >vdrop_ge // >raise_gt /2 width=1 by le_S_S/
+]
+qed.
+
+lemma vdrop_raise_be_sym: ∀M,v,d,l,m,i. l ≤ i → i ≤ l + m → ↓[l, m] v ≐⦋M⦌  ↓[l, m+1] [i⬐d] v.
+/3 width=1 by vdrop_raise_be, veq_sym/ qed.
+
+lemma vdrop_raise: ∀M,v,d,l. ↓[l, 1] [l⬐d] v ≐⦋M⦌ v.
+/3 width=3 by vdrop_raise_be, veq_trans/ qed.
+
+lemma vdrop_raise_sym: ∀M,v,d,l. v ≐⦋M⦌ ↓[l, 1] [l⬐d] v.
+/2 width=1 by veq_sym/ qed.
+
+lemma raise_vdrop: ∀M,v,i. [i⬐v i] ↓[i,1] v ≐⦋M⦌ v.
+#M #V #i #j elim (lt_or_eq_or_gt j i) #Hij destruct
+[ >raise_lt // >vdrop_lt //
+| >raise_eq //
+| >raise_gt // >vdrop_ge /2 width=1 by monotonic_pred/
+  <plus_minus_m_m /2 width=2 by ltn_to_ltO/
+]
+qed.
+
+lemma raise_vdrop_sym: ∀M,v,i. v ≐⦋M⦌ [i⬐v i] ↓[i,1] v.
+/3 width=1 by raise_vdrop, veq_sym/ qed.
+
+lemma raise_vdrop_be: ∀M,v,l,m. ↓[l, m] v ≐⦋M⦌ [l⬐v (l+m)] ↓[l, m+1] v.
+#M #v #l #m #j elim (lt_or_eq_or_gt j l) #Hlj destruct
+[ >vdrop_lt // >raise_lt // >vdrop_lt //
+| >vdrop_ge // >raise_eq //
+| lapply (ltn_to_ltO … Hlj) #Hj
+  >vdrop_ge /2 width=1 by lt_to_le/ >raise_gt //
+  >vdrop_ge /4 width=1 by plus_minus, monotonic_pred, eq_f/
+]
+qed.
+
+lemma raise_vdrop_be_sym: ∀M,v,l,m. [l⬐v (l+m)] ↓[l, m+1] v ≐⦋M⦌ ↓[l, m] v.
+/3 width=1 by raise_vdrop_be, veq_sym/ qed.
+
+(* Forward lemmas on raise **************************************************)
+
+lemma vdrop_fwd_raise_be_S: ∀M,v1,v2,d,l,m. ↓[l, m] v1 ≐⦋M⦌ [l⬐d] v2 →
+                            ↓[l, m+1] v1 ≐ v2.
+#M #v1 #v2 #d #l #m #Hv12 #j elim (lt_or_ge j l) #Hlj
+[ lapply (Hv12 j) -Hv12
+  >vdrop_lt // >vdrop_lt // >raise_lt //
+| lapply (Hv12 (j+1))
+  >vdrop_ge /2 width=1 by le_S/ >vdrop_ge // >raise_gt /2 width=1 by le_S_S/
+]
+qed-.
+
+lemma raise_fwd_vdrop_be_S: ∀M,v1,v2,d,l,m. [l⬐d] v2 ≐⦋M⦌ ↓[l, m] v1 →
+                            v2 ≐ ↓[l, m+1] v1.
+/3 width=2 by vdrop_fwd_raise_be_S, veq_sym/ qed-.
+
+lemma vdrop_fwd_raise_be_O: ∀M,v1,v2,d,l,m. ↓[l, m] v1 ≐⦋M⦌ [l⬐d] v2 → v1 (l+m) = d.
+#M #v1 #v2 #d #l #m #Hv12 lapply (Hv12 l)
+>vdrop_ge // >raise_eq //
+qed-.
+
+lemma raise_fwd_vdrop_be_O: ∀M,v1,v2,d,l,m. [l⬐d] v2 ≐⦋M⦌ ↓[l, m] v1 → d = v1 (l+m).
+/4 width=7 by vdrop_fwd_raise_be_O, veq_sym, sym_eq/ qed-.
+
+(* Inversion lemmas on raise ************************************************)
+
+lemma raise_inv_vdrop_lt: ∀M,v1,v2,d,l,m,i. i ≤ l → [i⬐d] v1 ≐⦋M⦌ ↓[l+1, m] v2 →
+                          ∃∃v. v1 ≐ ↓[l, m] v & v2 ≐ [i⬐d] v.
+#M #v1 #v2 #d #l #m #i #Hil #Hv12
+lapply (Hv12 i) >raise_eq >vdrop_lt /2 width=1 by le_S_S/ #H destruct
+@(ex2_intro … (↓[i, 1] v2)) //
+@(veq_trans … (↓[i, 1] ↓[l+1, m] v2))
+/3 width=3 by vdrop_vdrop_le_sym, vdrop_veq, veq_trans/
+qed-.
+
+lemma vdrop_inv_raise_lt: ∀M,v1,v2,d,l,m,i. i ≤ l → ↓[l+1, m] v2 ≐⦋M⦌ [i⬐d] v1 →
+                          ∃∃v. v1 ≐ ↓[l, m] v & v2 ≐ [i⬐d] v.
+/3 width=1 by raise_inv_vdrop_lt, veq_sym/ qed-.
+
+lemma vdrop_inv_raise_be: ∀M,v1,v2,d,l,m. ↓[l, m] v1 ≐⦋M⦌ [l⬐d] v2 →
+                          v1 (l+m) = d ∧ ↓[l, m+1] v1 ≐ v2.
+/3 width=2 by vdrop_fwd_raise_be_O, vdrop_fwd_raise_be_S, conj/ qed-.
+
+lemma raise_inv_vdrop_be: ∀M,v1,v2,d,l,m. [l⬐d] v2 ≐⦋M⦌ ↓[l, m] v1 →
+                          d = v1 (l+m) ∧ v2 ≐ ↓[l, m+1] v1.
+/3 width=2 by raise_fwd_vdrop_be_O, raise_fwd_vdrop_be_S, conj/ qed-.
