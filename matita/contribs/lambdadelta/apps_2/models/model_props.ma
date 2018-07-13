@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "apps_2/models/model_vlift.ma".
+include "apps_2/models/model_vpush.ma".
 
 (* MODEL ********************************************************************)
 
@@ -64,18 +64,18 @@ lemma seq_canc_sn (M): is_model M → left_cancellable … (sq M).
 lemma seq_canc_dx (M): is_model M → right_cancellable … (sq M).
 /3 width=3 by seq_trans, seq_sym/ qed-.
 
-lemma ti_lref_vlift_eq (M): is_model M →
+lemma ti_lref_vpush_eq (M): is_model M →
                             ∀gv,lv,d,i. ⟦#i⟧[gv,⫯[i←d]lv] ≗{M} d.
 #M #HM #gv #lv #d #i
 @(seq_trans … HM) [2: @ml // | skip ]
->vlift_eq /2 width=1 by mr/
+>vpush_eq /2 width=1 by mr/
 qed.
 
-lemma ti_lref_vlift_gt (M): is_model M →
+lemma ti_lref_vpush_gt (M): is_model M →
                             ∀gv,lv,d,i. ⟦#(↑i)⟧[gv,⫯[0←d]lv] ≗{M} ⟦#i⟧[gv,lv].
 #M #HM #gv #lv #d #i
 @(mq … HM) [4,5: @(seq_sym … HM) /2 width=2 by ml/ |1,2: skip ]
->vlift_gt /2 width=1 by mr/
+>vpush_gt /2 width=1 by mr/
 qed.
 
 (* Basic Forward lemmas *****************************************************)

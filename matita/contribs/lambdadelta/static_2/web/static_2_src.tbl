@@ -103,7 +103,7 @@ table {
           }
         ]
         [ { "append" * } {
-             [ [ "for restricted closures" ] "shift" + "( ? + ? )" "shift_append" * ]
+             [ [ "for restricted closures" ] "fold" + "( ? + ? )" "fold_append" * ]
              [ [ "for lenvs" ] "append" + "( ? + ? )" "append_length" * ]
           }
         ]

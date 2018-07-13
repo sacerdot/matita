@@ -12,16 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR THE "functional" COMPONENT ********************************)
+(* NOTATION FOR THE "models" COMPONENT **************************************)
 
-notation "hvbox( T . break ④ { term 46 I } break { term 46 T1 , break term 46 T2 , break term 46 T3 } )"
- non associative with precedence 50
- for @{ 'DxItem4 $T $I $T1 $T2 $T3 }.
-
-notation "hvbox( ↑* [ term 46 f ] break term 46 T )"
+notation "hvbox( ⇡[ term 46 i ] break term 46 gv )"
    non associative with precedence 46
-   for @{ 'LiftStar $f $T }.
-
-notation "hvbox( T1 ⇨ break term 46 T2 )"
-   non associative with precedence 45
-   for @{ 'SRed $T1 $T2 }.
+   for @{ 'DottedUpArrow $i $gv }.

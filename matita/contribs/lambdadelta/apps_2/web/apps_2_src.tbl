@@ -9,18 +9,24 @@ table {
         ]
      }
    ]
-   class "orange"
+   class "yellow"
    [ { "models" * } {
+        [ { "term model" * } {
+             [ "tm" + "( ⇡[?]? )" + "( ⇡[?←?]? )"
+               "tm_exteq"
+             * ]
+          }
+        ]
         [ { "denotational equivalence" * } {
              [ "deq" + "( ? ⊢ ? ≗{?} ? )" "deq_cpr" * ]
           }
         ]
         [ { "local environment interpretation" * } {
-             [ "li" + "( ? ϵ ⟦?⟧{?}[?] )" "li_vlifts" * ]
+             [ "li" + "( ? ϵ ⟦?⟧{?}[?] )" "li_vpushs" * ]
           }
         ]
-        [ { "multiple evaluation lift" * } {
-             [ "vlifts" + "( ?⨁{?}[?]? ≘ ? )" "vlifts_shift" * ]
+        [ { "multiple evaluation push" * } {
+             [ "vpushs" + "( ?⨁{?}[?]? ≘ ? )" "vpush_fold" * ]
           }
         ]
         [ { "evaluation equivalence" * } {
@@ -29,7 +35,7 @@ table {
         ]
         [ { "model declaration" * } {
              [ "model" + "( ? ≗{?} ? )" + "( ? @{?} ? )" + "( ⟦?⟧{?}[?,?] )"
-               "model_vlift" + "( ⫯{?}[?←?]? )"
+               "model_vpush" + "( ⫯{?}[?←?]? )"
                "model_props"
                * ]
           }
@@ -45,19 +51,23 @@ table {
         ]
      }
    ]
+*)
    class "orange"
    [ { "functional" * } {
+(*
         [ { "reduction and type machine" * } {
              [ "rtm" "rtm_step ( ? ⇨ ? )" * ]
           }
         ]
+*)
         [ { "relocation" * } {
-             [ "lift ( ↑[?,?] ? )" * ]
+             [ "flifts" + "( ↑*[?]? )" + "( ↑[?]? )"
+               "flifts_basic" + "( ↑[?,?]? )"
+             * ]
           }
         ]
      }
    ]
-*)
    class "red"
    [ { "examples" * } {
         [ { "terms with special features" * } {

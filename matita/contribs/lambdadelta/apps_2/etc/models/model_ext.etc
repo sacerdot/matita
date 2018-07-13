@@ -3,14 +3,6 @@ include "ground_2/lib/exteq.ma".
 include "apps_2/models/model_li.ma".
 include "apps_2/models/vdrop.ma".
 
-lemma vlift_ext (M): ∀i. compatible_3 … (vlift M i) (eq …) (exteq …) (exteq …).
-#M #i #d1 #d2 #Hd12 #lv1 #lv2 #HLv12 #j
-elim (lt_or_eq_or_gt j i) #Hij destruct
-[ >vlift_lt // >vlift_lt //
-| >vlift_eq >vlift_eq //
-| >vlift_gt // >vlift_gt //
-]
-qed.
 
 lemma vdrop_ext (M): ∀i. compatible_2 … (vdrop M i) (exteq …) (exteq …).
 #M #i #lv1 #lv2 #Hlv12 #j elim (lt_or_ge j i) #Hji
@@ -66,13 +58,3 @@ lemma veq_repl_exteq (M): is_model M →
 lemma exteq_veq_trans (M): ∀lv1,lv. lv1 ≐ lv →
                            ∀lv2. lv ≗{M} lv2 → lv1 ≗ lv2.
 // qed-.
-
-lemma ti_ext_l (M): is_model M →
-                    ∀T,gv,lv1,lv2. lv1 ≐ lv2 →
-                    ⟦T⟧[gv, lv1] ≗{M} ⟦T⟧[gv, lv2].
-/3 width=1 by ti_comp_l, ext_veq/ qed.
-
-lemma valign_ext (M) (l): compatible_2 … (valign M l) (exteq …) (exteq …).
-#M #l #lv1 #lv2 #HLv12 #i
->valign_rw >valign_rw //
-qed.

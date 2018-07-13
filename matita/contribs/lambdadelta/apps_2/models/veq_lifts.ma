@@ -20,7 +20,7 @@ include "apps_2/models/veq.ma".
 
 (* Forward lemmas with generic relocation ***********************************)
 
-fact lifts_fwd_vlift_aux (M): is_model M → is_extensional M →
+fact lifts_fwd_vpush_aux (M): is_model M → is_extensional M →
                               ∀f,T1,T2. ⬆*[f] T1 ≘ T2 → ∀m. 𝐁❴m,1❵ = f →
                               ∀gv,lv,d. ⟦T1⟧[gv, lv] ≗{M} ⟦T2⟧[gv, ⫯[m←d]lv].
 #M #H1M #H2M #f #T1 #T2 #H elim H -f -T1 -T2
@@ -31,9 +31,9 @@ fact lifts_fwd_vlift_aux (M): is_model M → is_extensional M →
   @(mq … H1M) [4,5: /3 width=2 by seq_sym, ml/ |1,2: skip ]
   elim (lt_or_ge i1 m) #Hi1
   [ lapply (at_basic_inv_lt … Hi12) -Hi12 // #H destruct
-    >vlift_lt /2 width=1 by mr/
+    >vpush_lt /2 width=1 by mr/
   | lapply (at_basic_inv_ge … Hi12) -Hi12 // #H destruct
-    >vlift_gt /2 width=1 by mr, le_S_S/
+    >vpush_gt /2 width=1 by mr, le_S_S/
   ]
 | #f #l #m #Hf #gv #lv #d
   @(mq … H1M) [4,5: /3 width=2 by seq_sym, mg/ |1,2: skip ]
@@ -43,18 +43,18 @@ fact lifts_fwd_vlift_aux (M): is_model M → is_extensional M →
     @(seq_trans … H1M)
     [3: @ti_comp // | skip ]
     [1,2: /2 width=2 by veq_refl/ ]
-    [2: @(vlift_comp … H1M) | skip ]
+    [2: @(vpush_comp … H1M) | skip ]
     [1,2: /2 width=2 by/ |3,4: /2 width=2 by veq_refl/ ] -IHV
     @(seq_trans … H1M)
     [3: @ti_comp // | skip ]
     [1,2: /2 width=2 by veq_refl/ ]
-    [2: @veq_sym // @vlift_swap // | skip ]
+    [2: @veq_sym // @vpush_swap // | skip ]
     /2 width=1 by/
   | @mx // [ /2 width=1 by/ ] -IHV #d0
     @(seq_trans … H1M)
     [3: @ti_comp // | skip ]
     [1,2: /2 width=2 by veq_refl/ ]
-    [2: @veq_sym // @vlift_swap // | skip ]
+    [2: @veq_sym // @vpush_swap // | skip ]
     /2 width=1 by/
   ]
 | #f * #V1 #v2 #T1 #T2 #_ #_ #IHV #IHT #m #Hm #gv #lv #d
@@ -64,7 +64,7 @@ fact lifts_fwd_vlift_aux (M): is_model M → is_extensional M →
 ]
 qed-.
 
-lemma lifts_SO_fwd_vlift (M) (gv): is_model M → is_extensional M →
+lemma lifts_SO_fwd_vpush (M) (gv): is_model M → is_extensional M →
                                    ∀T1,T2. ⬆*[1] T1 ≘ T2 →
                                    ∀lv,d. ⟦T1⟧[gv, lv] ≗{M} ⟦T2⟧[gv, ⫯[0←d]lv].
-/2 width=3 by lifts_fwd_vlift_aux/ qed-.
+/2 width=3 by lifts_fwd_vpush_aux/ qed-.

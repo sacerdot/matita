@@ -113,7 +113,7 @@ lemma li_repl (M) (L): is_model M ->
 | #lv1 #d #K #V #_ #Hd #IH #gv2 #Hgv #lv2 #Hlv destruct
   @li_veq [2: /4 width=4 by li_abbr, veq_refl/ | skip ] -IH
   @(veq_canc_sn … Hlv) -Hlv //
-  /4 width=1 by ti_comp, vlift_comp, (* 2x *) veq_refl/
+  /4 width=1 by ti_comp, vpush_comp, (* 2x *) veq_refl/
 | #lv1 #d #K #W #_ #IH #gv2 #Hgv #lv2 #Hlv
   @li_veq /4 width=3 by li_abst, veq_refl/
 | #lv1 #d #I #K #_ #IH #gv2 #Hgv #lv2 #Hlv

@@ -44,37 +44,37 @@ lemma veq_canc_sn (M): is_model M → left_cancellable … (veq M).
 lemma veq_canc_dx (M): is_model M → right_cancellable … (veq M).
 /3 width=3 by veq_trans, veq_sym/ qed-.
 
-(* Properties with evaluation lift ******************************************)
+(* Properties with evaluation push ******************************************)
 
-theorem vlift_swap (M): is_model M →
+theorem vpush_swap (M): is_model M →
                         ∀i1,i2. i1 ≤ i2 →
                         ∀lv,d1,d2. ⫯[i1←d1] ⫯[i2←d2] lv ≗{M} ⫯[↑i2←d2] ⫯[i1←d1] lv.
 #M #HM #i1 #i2 #Hi12 #lv #d1 #d2 #j
 elim (lt_or_eq_or_gt j i1) #Hji1 destruct
 [ lapply (lt_to_le_to_lt … Hji1 Hi12) #Hji2
-  >vlift_lt // >vlift_lt // >vlift_lt /2 width=1 by lt_S/ >vlift_lt //
+  >vpush_lt // >vpush_lt // >vpush_lt /2 width=1 by lt_S/ >vpush_lt //
   /2 width=1 by veq_refl/
-| >vlift_eq >vlift_lt /2 width=1 by monotonic_le_plus_l/ >vlift_eq
+| >vpush_eq >vpush_lt /2 width=1 by monotonic_le_plus_l/ >vpush_eq
   /2 width=1 by mr/
-| >vlift_gt // elim (lt_or_eq_or_gt (↓j) i2) #Hji2 destruct
-  [ >vlift_lt // >vlift_lt /2 width=1 by lt_minus_to_plus/ >vlift_gt //
+| >vpush_gt // elim (lt_or_eq_or_gt (↓j) i2) #Hji2 destruct
+  [ >vpush_lt // >vpush_lt /2 width=1 by lt_minus_to_plus/ >vpush_gt //
     /2 width=1 by veq_refl/
-  | >vlift_eq <(lt_succ_pred … Hji1) >vlift_eq
+  | >vpush_eq <(lt_succ_pred … Hji1) >vpush_eq
     /2 width=1 by mr/
   | lapply (le_to_lt_to_lt … Hi12 Hji2) #Hi1j
-    >vlift_gt // >vlift_gt /2 width=1 by lt_minus_to_plus_r/ >vlift_gt //
+    >vpush_gt // >vpush_gt /2 width=1 by lt_minus_to_plus_r/ >vpush_gt //
     /2 width=1 by veq_refl/
   ]
 ]
 qed.
 
-lemma vlift_comp (M): is_model M →
-                      ∀i. compatible_3 … (vlift M i) (sq M) (veq M) (veq M).
+lemma vpush_comp (M): is_model M →
+                      ∀i. compatible_3 … (vpush M i) (sq M) (veq M) (veq M).
 #M #HM #i #d1 #d2 #Hd12 #lv1 #lv2 #HLv12 #j
 elim (lt_or_eq_or_gt j i) #Hij destruct
-[ >vlift_lt // >vlift_lt //
-| >vlift_eq >vlift_eq //
-| >vlift_gt // >vlift_gt //
+[ >vpush_lt // >vpush_lt //
+| >vpush_eq >vpush_eq //
+| >vpush_gt // >vpush_gt //
 ]
 qed-.
 
@@ -87,8 +87,8 @@ lemma ti_comp (M): is_model M →
 [ /4 width=5 by seq_trans, seq_sym, ms/
 | /4 width=5 by seq_sym, ml, mq/
 | /4 width=3 by seq_trans, seq_sym, mg/
-| /5 width=5 by vlift_comp, seq_sym, md, mq/
-| /5 width=1 by vlift_comp, mi, mr/
+| /5 width=5 by vpush_comp, seq_sym, md, mq/
+| /5 width=1 by vpush_comp, mi, mr/
 | /4 width=5 by seq_sym, ma, mp, mq/
 | /4 width=5 by seq_sym, me, mq/
 ]

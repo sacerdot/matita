@@ -1,4 +1,3 @@
-
 (**************************************************************************)
 (*       ___                                                              *)
 (*      ||M||                                                             *)
@@ -357,7 +356,7 @@ elim (IHV1 f) -IHV1 #V2 #HV12
 ]
 qed-.
 
-lemma lift_lref_uni: ∀l,i. ⬆*[l] #i ≘ #(l+i).
+lemma lifts_lref_uni: ∀l,i. ⬆*[l] #i ≘ #(l+i).
 #l elim l -l /2 width=1 by lifts_lref/
 qed.
 

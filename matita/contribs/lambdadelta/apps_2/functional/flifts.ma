@@ -12,57 +12,56 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/substitution/lift.ma".
-include "apps_2/functional/notation.ma".
+include "ground_2/notation/functions/uparrowstar_2.ma".
+include "apps_2/notation/functional/uparrow_2.ma".
+include "static_2/relocation/lifts.ma".
 
-(* FUNCTIONAL RELOCATION ****************************************************)
+(* GENERIC FUNCTIONAL RELOCATION ********************************************)
 
-let rec flift d e U on U ≝ match U with
+rec definition flifts f U on U ≝ match U with
 [ TAtom I     ⇒ match I with
   [ Sort _ ⇒ U
-  | LRef i ⇒ #(tri … i d i (i + e) (i + e))
+  | LRef i ⇒ #(f@❴i❵)
   | GRef _ ⇒ U
   ]
 | TPair I V T ⇒ match I with
-  [ Bind2 a I ⇒ ⓑ{a,I} (flift d e V). (flift (d+1) e T)
-  | Flat2 I   ⇒ ⓕ{I} (flift d e V). (flift d e T)
+  [ Bind2 p I ⇒ ⓑ{p,I}(flifts f V).(flifts (⫯f) T)
+  | Flat2 I   ⇒ ⓕ{I}(flifts f V).(flifts f T)
   ]
 ].
 
-interpretation "functional relocation" 'Lift d e T = (flift d e T).
+interpretation "generic functional relocation (term)"
+   'UpArrowStar f T = (flifts f T).
+
+interpretation "uniform functional relocation (term)"
+   'UpArrow i T = (flifts (uni i) T).
 
 (* Main properties **********************************************************)
 
-theorem flift_lift: ∀T,d,e. ⬆[d, e] T ≡ ↑[d, e] T.
-#T elim T -T
-[ * #i #d #e //
-  elim (lt_or_eq_or_gt i d) #Hid normalize
-  [ >(tri_lt ?????? Hid) /2 width=1/
-  | /2 width=1/
-  | >(tri_gt ?????? Hid) /3 width=2/
-  ]
-| * /2/
-]
+theorem flifts_lifts: ∀T,f. ⬆*[f]T ≘ ↑*[f]T.
+#T elim T -T *
+/2 width=1 by lifts_sort, lifts_lref, lifts_gref, lifts_bind, lifts_flat/
 qed.
 
 (* Main inversion properties ************************************************)
 
-theorem flift_inv_lift: ∀d,e,T1,T2. ⬆[d, e] T1 ≡ T2 → ↑[d, e] T1 = T2.
-#d #e #T1 #T2 #H elim H -d -e -T1 -T2 normalize //
-[ #i #d #e #Hid >(tri_lt ?????? Hid) //
-| #i #d #e #Hid
-  elim (le_to_or_lt_eq … Hid) -Hid #Hid
-  [ >(tri_gt ?????? Hid) //
-  | destruct //
-  ]
+theorem flifts_inv_lifts: ∀f,T1,T2. ⬆*[f]T1 ≘ T2 → ↑*[f]T1 = T2.
+#f #T1 #T2 #H elim H -f -T1 -T2 //
+[ #f #i1 #i2 #H <(at_inv_total … H) //
+| #f #p #I #V1 #V2 #T1 #T2 #_ #_ #IHV #IHT <IHV <IHT -V2 -T2 //
+| #f #I #V1 #V2 #T1 #T2 #_ #_ #IHV #IHT <IHV <IHT -V2 -T2 //
 ]
 qed-.
 
 (* Derived properties *******************************************************)
 
+lemma flifts_lref_uni: ∀l,i. ↑[l](#i) = #(l+i).
+/3 width=1 by flifts_inv_lifts, lifts_lref_uni/ qed.
+(*
 lemma flift_join: ∀e1,e2,T. ⬆[e1, e2] ↑[0, e1] T ≡ ↑[0, e1 + e2] T.
 #e1 #e2 #T
 lapply (flift_lift T 0 (e1+e2)) #H
 elim (lift_split … H e1 e1) -H // #U #H
 >(flift_inv_lift … H) -H //
 qed.
+*)

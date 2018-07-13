@@ -12,25 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/lib/functions.ma".
-include "apps_2/notation/models/upspoon_4.ma".
-include "apps_2/models/model.ma".
+(* NOTATION FOR THE "models" COMPONENT **************************************)
 
-(* MODEL ********************************************************************)
-
-definition vlift (M): nat → dd M → evaluation M → evaluation M ≝
-                      λj,d,lv,i. tri … i j (lv i) d (lv (↓i)).
-
-interpretation "lift (model evaluation)"
-   'UpSpoon M i d lv = (vlift M i d lv).
-
-(* Basic properties *********************************************************)
-
-lemma vlift_lt (M): ∀lv,d,j,i. i < j → (⫯{M}[j←d] lv) i = lv i.
-/2 width=1 by tri_lt/ qed-.
-
-lemma vlift_eq (M): ∀lv,d,i. (⫯{M}[i←d] lv) i = d.
-/2 width=1 by tri_eq/ qed-.
-
-lemma vlift_gt (M): ∀lv,d,j,i. j < i → (⫯{M}[j←d] lv) i = lv (↓i).
-/2 width=1 by tri_gt/ qed-.
+notation "hvbox( ⇡[ term 46 i ← break term 46 d ] break term 46 lv )"
+   non associative with precedence 46
+   for @{ 'DottedUpArrow $i $d $lv }.
