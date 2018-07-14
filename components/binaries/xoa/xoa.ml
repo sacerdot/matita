@@ -15,9 +15,11 @@ module L = Lib
 module A = Ast
 module E = Engine
 
+let incremental = ref true
 let separate = ref false
 
 let clear () =
+   incremental := true;
    separate := false;
    R.clear ()
 
@@ -47,12 +49,15 @@ let generate (p, o, n) = function
    | A.Exists (c, v) as d ->
       let oname = Printf.sprintf "%s/ex_%u_%u" o c v in
       let nname = Printf.sprintf "%s/ex_%u_%u" n c v in
-      let ooch = L.open_out p oname in
-      let noch = L.open_out p nname in
-      List.iter (L.out_include ooch) (R.get_list R.string "xoa.include");
-      L.out_include ooch (nname ^ ".ma");
-      E.generate ooch noch d;
-      close_out noch; close_out ooch
+      if !incremental && L.exists_out oname && L.exists_out nname then () else
+      begin
+         let ooch = L.open_out p oname in
+         let noch = L.open_out p nname in
+         List.iter (L.out_include ooch) (R.get_list R.string "xoa.include");
+         L.out_include ooch (nname ^ ".ma");
+         E.generate ooch noch d;
+         close_out noch; close_out ooch
+      end
    | A.Or c          -> ()
    | A.And c         -> ()
 
@@ -72,7 +77,9 @@ let _ =
    let help = "Usage: xoa [ -Xs | <configuration file> ]*\n" in
    let help_X  = " Clear configuration" in
    let help_s  = " Generate separate objects" in
+   let help_u  = " Update existing separate files" in
    Arg.parse [
       "-X", Arg.Unit clear, help_X;
       "-s", Arg.Set separate, help_s;
+      "-u", Arg.Clear incremental, help_u;
    ] process help

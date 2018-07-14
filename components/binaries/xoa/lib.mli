@@ -11,6 +11,8 @@
 
 val get_preamble: string -> string
 
+val exists_out: string -> bool
+
 val open_out: string -> string -> out_channel
 
 val out_include: out_channel -> string -> unit

@@ -19,6 +19,6 @@ type directive = Exists of arity * subarity
 
 let mk_exists c v = Exists (c, v)
 
-let mk_or c = Or c 
+let mk_or c = Or c
 
-let mk_and c = And c 
+let mk_and c = And c

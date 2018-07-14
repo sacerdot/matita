@@ -31,7 +31,7 @@ let void_iter f n =
 let mk_exists ooch noch c v =
    let description = "multiple existental quantifier" in
    let prec = "non associative with precedence 20\n" in
-   let name s = 
+   let name s =
       if v = 1 then P.sprintf "%s%u" s c else P.sprintf "%s%u_%u" s c v
    in
    let o_name = name "ex" in
@@ -39,40 +39,40 @@ let mk_exists ooch noch c v =
       if v = 1 then "'Ex" else P.sprintf "'Ex%u" v
    in
    let set n      = P.sprintf "A%u" (v - n) in
-   let set_list   = string_iter "," set v in   
+   let set_list   = string_iter "," set v in
    let set_type   = string_iter "→" set v in
-      
+
    let ele n      = P.sprintf "x%u" (v - n) in
    let ele_list   = string_iter "," ele v in
    let ele_seq    = string_iter " " ele v in
-   
-   let pre n      = P.sprintf "P%u" (c - n) in   
+
+   let pre n      = P.sprintf "P%u" (c - n) in
    let pre_list   = string_iter "," pre c in
-   let pre_seq    = string_iter " " pre c in 
-   let pre_appl n = P.sprintf "%s %s" (pre n) ele_seq in 
+   let pre_seq    = string_iter " " pre c in
+   let pre_appl n = P.sprintf "%s %s" (pre n) ele_seq in
    let pre_type   = string_iter " → " pre_appl c in
 
    let qm n       = "?" in
-   let qm_set     = string_iter " " qm v in 
-   let qm_pre     = string_iter " " qm c in 
+   let qm_set     = string_iter " " qm v in
+   let qm_pre     = string_iter " " qm c in
 
    let id n       = P.sprintf "ident x%u" (v - n) in
-   let id_list    = string_iter " , " id v in 
+   let id_list    = string_iter " , " id v in
 
    let term n     = P.sprintf "term 19 P%u" (c - n) in
-   let term_conj  = string_iter " break & " term c in 
+   let term_conj  = string_iter " break & " term c in
 
    let abst b n   = let xty = if b then P.sprintf ":$T%u" (v - n) else "" in
                     P.sprintf "λ${ident x%u}%s" (v - n) xty in
 
-   let abst_clo b = string_iter "." (abst b) v in 
+   let abst_clo b = string_iter "." (abst b) v in
 
-   let full b n   = P.sprintf "(%s.$P%u)" (abst_clo b) (c - n) in 
+   let full b n   = P.sprintf "(%s.$P%u)" (abst_clo b) (c - n) in
    let full_seq b = string_iter " " (full b) c in
 
    P.fprintf ooch "(* %s (%u, %u) *)\n\n" description c v;
 
-   P.fprintf ooch "inductive %s (%s:Type[0]) (%s:%s→Prop) : Prop ≝\n" 
+   P.fprintf ooch "inductive %s (%s:Type[0]) (%s:%s→Prop) : Prop ≝\n"
       o_name set_list pre_list set_type;
    P.fprintf ooch "   | %s_intro: ∀%s. %s → %s %s %s\n.\n\n"
       o_name ele_list pre_type o_name qm_set qm_pre;
@@ -95,17 +95,17 @@ let mk_or ooch noch c =
    let o_name = name "or" in
    let i_name = "'Or" in
 
-   let pre n      = P.sprintf "P%u" (c - n) in   
+   let pre n      = P.sprintf "P%u" (c - n) in
    let pre_list   = string_iter "," pre c in
-   let pre_seq    = string_iter " " pre c in 
+   let pre_seq    = string_iter " " pre c in
 
    let qm n       = "?" in
-   let qm_pre     = string_iter " " qm c in 
+   let qm_pre     = string_iter " " qm c in
 
    let term n     = P.sprintf "term 29 P%u" (c - n) in
-   let term_disj  = string_iter " break | " term c in 
+   let term_disj  = string_iter " break | " term c in
 
-   let par n     = P.sprintf "$P%u" (c - n) in 
+   let par n     = P.sprintf "$P%u" (c - n) in
    let par_seq   = string_iter " " par c in
 
    let mk_con n   = P.fprintf ooch "   | %s_intro%u: %s → %s %s\n"
@@ -114,7 +114,7 @@ let mk_or ooch noch c =
 
    P.fprintf ooch "(* %s (%u) *)\n\n" description c;
 
-   P.fprintf ooch "inductive %s (%s:Prop) : Prop ≝\n" 
+   P.fprintf ooch "inductive %s (%s:Prop) : Prop ≝\n"
       o_name pre_list;
    void_iter mk_con c;
    P.fprintf ooch ".\n\n";
@@ -134,23 +134,23 @@ let mk_and ooch noch c =
    let o_name = name "and" in
    let i_name = "'And" in
 
-   let pre n      = P.sprintf "P%u" (c - n) in   
+   let pre n      = P.sprintf "P%u" (c - n) in
    let pre_list   = string_iter "," pre c in
-   let pre_type   = string_iter " → " pre c in   
-   let pre_seq    = string_iter " " pre c in 
+   let pre_type   = string_iter " → " pre c in
+   let pre_seq    = string_iter " " pre c in
 
    let qm n       = "?" in
-   let qm_pre     = string_iter " " qm c in 
+   let qm_pre     = string_iter " " qm c in
 
    let term n     = P.sprintf "term 34 P%u" (c - n) in
-   let term_conj  = string_iter " break & " term c in 
+   let term_conj  = string_iter " break & " term c in
 
-   let par n     = P.sprintf "$P%u" (c - n) in 
+   let par n     = P.sprintf "$P%u" (c - n) in
    let par_seq   = string_iter " " par c in
 
    P.fprintf ooch "(* %s (%u) *)\n\n" description c;
 
-   P.fprintf ooch "inductive %s (%s:Prop) : Prop ≝\n" 
+   P.fprintf ooch "inductive %s (%s:Prop) : Prop ≝\n"
       o_name pre_list;
    P.fprintf ooch "   | %s_intro: %s → %s %s\n.\n\n"
       o_name pre_type o_name qm_pre;
