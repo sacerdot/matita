@@ -42,13 +42,15 @@ lemma cpr_inv_atom1: ∀h,J,G,L,T2. ⦃G, L⦄ ⊢ ⓪{J} ➡[h] T2 →
                       | ∃∃I,K,T,i. ⦃G, K⦄ ⊢ #i ➡[h] T & ⬆*[1] T ≘ T2 &
                                    L = K.ⓘ{I} & J = LRef (↑i).
 #h #J #G #L #T2 #H elim (cpm_inv_atom1 … H) -H *
-/3 width=8 by tri_lt, or3_intro0, or3_intro1, or3_intro2, ex4_4_intro, ex4_3_intro/
-#n #_ #_ #H destruct
+[2,4:|*: /3 width=8 by or3_intro0, or3_intro1, or3_intro2, ex4_4_intro, ex4_3_intro/ ]
+[ #n #_ #_ #H destruct
+| #n #K #V1 #V2 #_ #_ #_ #_ #H destruct
+]  
 qed-.
 
 (* Basic_1: includes: pr0_gen_sort pr2_gen_sort *)
 lemma cpr_inv_sort1: ∀h,G,L,T2,s. ⦃G, L⦄ ⊢ ⋆s ➡[h] T2 → T2 = ⋆s.
-#h #G #L #T2 #s #H elim (cpm_inv_sort1 … H) -H * // #_ #H destruct
+#h #G #L #T2 #s #H elim (cpm_inv_sort1 … H) -H * [ // ] #_ #H destruct
 qed-.
 
 lemma cpr_inv_zero1: ∀h,G,L,T2. ⦃G, L⦄ ⊢ #0 ➡[h] T2 →
@@ -125,7 +127,7 @@ lemma cpr_ind (h): ∀Q:relation4 genv lenv term term.
                    ∀G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[h] T2 → Q G L T1 T2.
 #h #Q #IH1 #IH2 #IH3 #IH4 #IH5 #IH6 #IH7 #IH8 #IH9 #G #L #T1 #T2
 @(insert_eq_0 … 0) #n #H
-@(cpm_ind … H) -G -L -T1 -T2 -n /3 width=4 by/
+@(cpm_ind … H) -G -L -T1 -T2 -n [2,4,11:|*: /3 width=4 by/ ]
 [ #G #L #s #H destruct
 | #n #G #K #V1 #V2 #W2 #_ #_ #_ #H destruct
 | #n #G #L #U1 #U2 #T #_ #_ #H destruct

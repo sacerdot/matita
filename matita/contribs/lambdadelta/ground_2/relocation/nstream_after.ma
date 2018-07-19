@@ -151,3 +151,8 @@ qed-.
 lemma after_inv_apply: ∀f2,f1,f,n2,n1,n. n2⨮f2 ⊚ n1⨮f1 ≘ n⨮f →
                        (n2⨮f2)@❴n1❵ = n ∧ (⫰*[n1]f2) ⊚ f1 ≘ f.
 /3 width=3 by after_fwd_tls, after_fwd_hd, conj/ qed-.
+
+(* Properties on apply ******************************************************)
+
+lemma compose_apply (f2) (f1) (i): f2@❴f1@❴i❵❵ = (f2∘f1)@❴i❵.
+/4 width=6 by after_fwd_at, at_inv_total, sym_eq/ qed.

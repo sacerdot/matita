@@ -88,13 +88,19 @@ qed-.
 
 (* Basic properties *********************************************************)
 
+lemma apply_O1: ∀n,f. (n⨮f)@❴0❵ = n.
+// qed.
+
+lemma apply_S1: ∀n,f,i. (n⨮f)@❴↑i❵ = ↑(n+f@❴i❵).
+// qed.
+
 lemma apply_eq_repl (i): eq_repl … (λf1,f2. f1@❴i❵ = f2@❴i❵).
 #i elim i -i [2: #i #IH ] * #n1 #f1 * #n2 #f2 #H
 elim (eq_inv_seq_aux … H) -H normalize //
 #Hn #Hf /4 width=1 by eq_f2, eq_f/
 qed.
 
-lemma apply_S1: ∀f,i. (↑f)@❴i❵ = ↑(f@❴i❵).
+lemma apply_S2: ∀f,i. (↑f)@❴i❵ = ↑(f@❴i❵).
 * #n #f * //
 qed.
 
@@ -102,3 +108,13 @@ qed.
 
 theorem apply_inj: ∀f,i1,i2,j. f@❴i1❵ = j → f@❴i2❵ = j → i1 = i2.
 /2 width=4 by at_inj/ qed-.
+
+corec theorem nstream_eq_inv_ext: ∀f1,f2. (∀i. f1@❴i❵ = f2@❴i❵) → f1 ≗ f2.
+* #n1 #f1 * #n2 #f2 #Hf @eq_seq
+[ @(Hf 0)
+| @nstream_eq_inv_ext -nstream_eq_inv_ext #i
+  lapply (Hf 0) >apply_O1 >apply_O1 #H destruct
+  lapply (Hf (↑i)) >apply_S1 >apply_S1 #H
+  /3 width=2 by injective_plus_r, injective_S/
+]
+qed-.

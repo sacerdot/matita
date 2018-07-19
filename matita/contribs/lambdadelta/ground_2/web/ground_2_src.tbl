@@ -27,8 +27,12 @@ table {
                "rtmap_at ( @⦃?,?⦄ ≘ ? )" "rtmap_istot ( 𝐓⦃?⦄ )" "rtmap_after ( ? ⊚ ? ≘ ? )" "rtmap_coafter ( ? ~⊚ ? ≘ ? )"
                "rtmap_basic ( 𝐁❴?,?❵ )"
              * ]
-             [ "nstream ( ⫯? ) ( ↑? )" "nstream_eq" "" "" "" "" "nstream_isid" "nstream_id ( 𝐈𝐝 )" ""
-               "" "" "" "" "" "" "" "nstream_sor" "" "nstream_istot ( ?@❴?❵ )" "nstream_after ( ? ∘ ? )" "nstream_coafter ( ? ~∘ ? )"
+             [ "nstream ( ⫯? ) ( ↑? )" "nstream_eq" "" ""
+               "" "" "nstream_isid" "nstream_id ( 𝐈𝐝 )" ""
+               "" "" "" ""
+               "" "" "" "nstream_sor"
+               "" "nstream_istot ( ?@❴?❵ )" "nstream_after ( ? ∘ ? )" "nstream_coafter ( ? ~∘ ? )"
+               "nstream_basic"
              * ]
 (*
              [ "trace ( ∥?∥ )" "trace_at ( @⦃?,?⦄ ≘ ? )" "trace_after ( ? ⊚ ? ≘ ? )" "trace_isid ( 𝐈⦃?⦄ )" "trace_isun ( 𝐔⦃?⦄ )"
