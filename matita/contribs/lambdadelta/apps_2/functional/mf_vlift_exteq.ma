@@ -12,21 +12,24 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/relocation/nstream_basic.ma".
-include "apps_2/functional/flifts.ma".
-include "apps_2/notation/functional/uparrow_3.ma".
+include "ground_2/lib/functions.ma".
+include "ground_2/lib/exteq.ma".
+include "apps_2/functional/flifts_flifts_basic.ma".
+include "apps_2/functional/mf_vlift.ma".
 
-(* BASIC FUNCTIONAL RELOCATION **********************************************)
+(* MULTIPLE EVALUATION LIFT *************************************************)
 
-interpretation "basic functional relocation (term)"
-   'UpArrow d h T = (flifts (basic d h) T).
+(* Properties with extensional equivalence **********************************)
 
-(* Basic properties *********************************************************)
-
-lemma flifts_basic_lref_ge (i) (d) (h): d ≤ i → ↑[d,h](#i) = #(h+i).
-#i #d #h #Hdi
-/4 width=1 by apply_basic_ge, (* 2x *) eq_f/
-qed-.
-
-lemma flifts_basic_bind (p) (I) (V) (T) (d) (h): ↑[d,h](ⓑ{p,I}V.T) = ⓑ{p,I}(↑[d,h]V).(↑[↑d,h]T).
+lemma mf_gc_id: ∀j. ⇡[j]mf_gi ≐ mf_gi.
 // qed.
+
+lemma mf_vlift_comp (l): compatible_2 … (mf_vlift l) (exteq …) (exteq …).
+#l #gv1 #gv2 #Hgv #i
+>mf_vlift_rw >mf_vlift_rw //
+qed.
+
+(* Main properties with extensional equivalence *****************************)
+
+theorem mf_vlift_swap: ∀l1,l2. l2 ≤ l1 → ∀v. ⇡[l2]⇡[l1]v ≐ ⇡[↑l1]⇡[l2]v.
+/2 width=1 by flifts_basic_swap/ qed-.

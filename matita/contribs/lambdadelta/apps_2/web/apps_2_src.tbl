@@ -12,9 +12,7 @@ table {
    class "yellow"
    [ { "models" * } {
         [ { "term model" * } {
-             [ "tm" + "( ⇡[?]? )" + "( ⇡[?←?]? )"
-               "tm_exteq"
-             * ]
+             [ "tm" * ]
           }
         ]
         [ { "denotational equivalence" * } {
@@ -54,16 +52,16 @@ table {
 *)
    class "orange"
    [ { "functional" * } {
-(*
-        [ { "reduction and type machine" * } {
-             [ "rtm" "rtm_step ( ? ⇨ ? )" * ]
+        [ { "multiple filling" * } {
+             [ "mf" + "( ●[?,?]? )" "mf_exeq" "mf_lifts" "mf_cpr" *]
+             [ "mf_vpush" + "( ⇡[?←?]? )" "mf_vpush_exteq" "mf_vpush_vlift" * ]
+             [ "mf_vlift" + "( ⇡[?]? )" "mf_vlift_exteq" * ]
+             [ "mf_v" * ]
           }
         ]
-*)
         [ { "relocation" * } {
-             [ "flifts" + "( ↑*[?]? )" + "( ↑[?]? )"
-               "flifts_basic" + "( ↑[?,?]? )"
-             * ]
+             [ "flifts_basic" + "( ↑[?,?]? )" "flifts_flifts_basic" * ]
+             [ "flifts" + "( ↑*[?]? )" + "( ↑[?]? )" "flifts_flifts" * ]
           }
         ]
      }
@@ -88,4 +86,8 @@ class "italic"            { 1 }
              [ "vdrop" + "( ⫰{?}? )" + "( ⫰{?}[?]? )" "vdrop_vlift" * ]
           }
         ]
+        [ { "reduction and type machine" * } {
+             [ "rtm" "rtm_step ( ? ⇨ ? )" * ]
+          }
+        ]        
 *)

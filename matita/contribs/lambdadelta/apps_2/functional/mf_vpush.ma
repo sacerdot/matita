@@ -12,21 +12,25 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/relocation/nstream_basic.ma".
-include "apps_2/functional/flifts.ma".
-include "apps_2/notation/functional/uparrow_3.ma".
+include "apps_2/notation/functional/dotteduparrow_3.ma".
+include "apps_2/functional/flifts_basic.ma".
+include "apps_2/functional/mf_v.ma".
 
-(* BASIC FUNCTIONAL RELOCATION **********************************************)
+(* MULTIPLE FILLING PUSH ****************************************************)
 
-interpretation "basic functional relocation (term)"
-   'UpArrow d h T = (flifts (basic d h) T).
+definition mf_vpush (j) (T) (lv): mf_evaluation ≝
+                    λi. tri … i j (lv i) T (↑[j,1](lv (↓i))).
+
+interpretation "push (multiple filling)"
+  'DottedUpArrow i d lv = (mf_vpush i d lv).
 
 (* Basic properties *********************************************************)
 
-lemma flifts_basic_lref_ge (i) (d) (h): d ≤ i → ↑[d,h](#i) = #(h+i).
-#i #d #h #Hdi
-/4 width=1 by apply_basic_ge, (* 2x *) eq_f/
-qed-.
+lemma mf_vpush_lt (lv) (j) (T): ∀i. i < j → (⇡[j←T]lv) i = lv i.
+/2 width=1 by tri_lt/ qed-.
 
-lemma flifts_basic_bind (p) (I) (V) (T) (d) (h): ↑[d,h](ⓑ{p,I}V.T) = ⓑ{p,I}(↑[d,h]V).(↑[↑d,h]T).
-// qed.
+lemma mf_vpush_eq: ∀lv,T,i. (⇡[i←T]lv) i = T.
+/2 width=1 by tri_eq/ qed.
+
+lemma mf_vpush_gt: ∀lv,T,j,i. j < i → (⇡[j←T]lv) i = ↑[j,1](lv (↓i)).
+/2 width=1 by tri_gt/ qed-.

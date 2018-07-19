@@ -12,21 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/relocation/nstream_basic.ma".
-include "apps_2/functional/flifts.ma".
-include "apps_2/notation/functional/uparrow_3.ma".
+include "apps_2/functional/mf_vpush_vlift.ma".
+include "apps_2/functional/mf_exteq.ma".
 
-(* BASIC FUNCTIONAL RELOCATION **********************************************)
+(* MULTIPLE FILLING FOR TERMS ***********************************************)
 
-interpretation "basic functional relocation (term)"
-   'UpArrow d h T = (flifts (basic d h) T).
+(* Properties with relocation ***********************************************)
 
-(* Basic properties *********************************************************)
-
-lemma flifts_basic_lref_ge (i) (d) (h): d ≤ i → ↑[d,h](#i) = #(h+i).
-#i #d #h #Hdi
-/4 width=1 by apply_basic_ge, (* 2x *) eq_f/
-qed-.
-
-lemma flifts_basic_bind (p) (I) (V) (T) (d) (h): ↑[d,h](ⓑ{p,I}V.T) = ⓑ{p,I}(↑[d,h]V).(↑[↑d,h]T).
-// qed.
+lemma mf_lifts_basic_SO_dx (T) (j): ∀gv,lv. ↑[j,1]●[gv,lv]T = ●[⇡[j]gv,⇡[j]lv]T.
+#T elim T -T * //
+[ #p #I #V #T #IHV #IHT #j #gv #lv
+  >mf_bind >mf_bind >flifts_basic_bind
+  /4 width=1 by mf_comp, mf_vlift_swap, eq_f2/
+| #I #V #T #IHV #IHT #j #gv #lv
+  >mf_flat >mf_flat >flifts_flat
+  //
+]
+qed.

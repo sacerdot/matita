@@ -12,21 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/relocation/nstream_basic.ma".
-include "apps_2/functional/flifts.ma".
-include "apps_2/notation/functional/uparrow_3.ma".
+include "apps_2/notation/functional/dotteduparrow_2.ma".
+include "apps_2/functional/flifts_basic.ma".
+include "apps_2/functional/mf_v.ma".
 
-(* BASIC FUNCTIONAL RELOCATION **********************************************)
+(* MULTIPLE EVALUATION LIFT *************************************************)
 
-interpretation "basic functional relocation (term)"
-   'UpArrow d h T = (flifts (basic d h) T).
+definition mf_vlift (j) (gv): mf_evaluation ≝ λi. ↑[j,1](gv i).
+
+interpretation "lift (multiple_filling)"
+  'DottedUpArrow i gv = (mf_vlift i gv).
 
 (* Basic properties *********************************************************)
 
-lemma flifts_basic_lref_ge (i) (d) (h): d ≤ i → ↑[d,h](#i) = #(h+i).
-#i #d #h #Hdi
-/4 width=1 by apply_basic_ge, (* 2x *) eq_f/
-qed-.
-
-lemma flifts_basic_bind (p) (I) (V) (T) (d) (h): ↑[d,h](ⓑ{p,I}V.T) = ⓑ{p,I}(↑[d,h]V).(↑[↑d,h]T).
+lemma mf_vlift_rw (j) (gv): ∀i. (⇡[j]gv) i = ↑[j,1](gv i).
 // qed.

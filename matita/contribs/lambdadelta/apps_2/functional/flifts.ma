@@ -36,6 +36,17 @@ interpretation "generic functional relocation (term)"
 interpretation "uniform functional relocation (term)"
    'UpArrow i T = (flifts (uni i) T).
 
+(* Basic properties *********************************************************)
+
+lemma flifts_lref (f) (i): ↑*[f](#i) = #(f@❴i❵).
+// qed.
+
+lemma flifts_bind (f) (p) (I) (V) (T): ↑*[f](ⓑ{p,I}V.T) = ⓑ{p,I}↑*[f]V.↑*[⫯f]T.
+// qed.
+
+lemma flifts_flat (f) (I) (V) (T): ↑*[f](ⓕ{I}V.T) = ⓕ{I}↑*[f]V.↑*[f]T.
+// qed.
+
 (* Main properties **********************************************************)
 
 theorem flifts_lifts: ∀T,f. ⬆*[f]T ≘ ↑*[f]T.
@@ -55,13 +66,10 @@ qed-.
 
 (* Derived properties *******************************************************)
 
+lemma flifts_comp: ∀f1,f2. f1 ≡ f2 → ∀T. ↑*[f1]T = ↑*[f2]T.
+/3 width=3 by flifts_inv_lifts, lifts_eq_repl_fwd/ qed.
+
+(* Derived properties with uniform relocation *******************************)
+
 lemma flifts_lref_uni: ∀l,i. ↑[l](#i) = #(l+i).
 /3 width=1 by flifts_inv_lifts, lifts_lref_uni/ qed.
-(*
-lemma flift_join: ∀e1,e2,T. ⬆[e1, e2] ↑[0, e1] T ≡ ↑[0, e1 + e2] T.
-#e1 #e2 #T
-lapply (flift_lift T 0 (e1+e2)) #H
-elim (lift_split … H e1 e1) -H // #U #H
->(flift_inv_lift … H) -H //
-qed.
-*)
