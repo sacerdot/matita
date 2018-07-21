@@ -39,7 +39,8 @@ lemma cpr_fwd_deq (h) (M): is_model M → is_extensional M →
   |5: /2 width=2 by lifts_SO_fwd_vpush/ | skip ] -U
   >vpush_gt /3 width=5 by ml, mq, mr/
 | #p * #G #L #V1 #V2 #T1 #T2 #_ #_ #IHV #IHT #gv #lv #Hlv
-  [ @(mq … H1M) [4,5: /3 width=2 by seq_sym, md/ |1,2: skip ] -p
+  [ @(mq … H1M) [4,5: /3 width=2 by seq_sym, md/ |1,2: skip ]
+    @mc [3:|*: /2 width=1 by/ ] -p
     @(seq_trans … H1M) [2: @IHT /2 width=1 by li_abbr/ | skip ] -T1
     /4 width=1 by ti_comp, vpush_comp, (* 2x *) veq_refl/
   | /4 width=1 by li_abst, mx/
@@ -53,27 +54,31 @@ lemma cpr_fwd_deq (h) (M): is_model M → is_extensional M →
 | #G #L #V #U1 #U2 #T2 #_ #IH #HTU2 #gv #lv #Hlv
   @(mq … H1M)
   [4: /3 width=2 by seq_sym, md/ | skip
-  |3: /3 width=1 by li_abbr/ | skip ] -L -U1
+  |3: @(seq_trans … H1M) [2: @mz // | skip ]
+      /3 width=1 by li_abbr/
+  |2: skip ] -L -U1
   /3 width=1 by lifts_SO_fwd_vpush, seq_sym/
 | #G #L #V #T1 #T2 #_ #IH #gv #lv #Hlv
   @(seq_trans … H1M) [2: @(me … H1M) | skip ]
   /2 width=1 by/
 | #p #G #L #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #IHV #_ #IHT #gv #lv #Hlv
   @(mq … H1M) [4,5: /3 width=2 by seq_sym, ma, md/ |1,2: skip ]
-  @(mq … H1M)
-  [4: /3 width=2 by seq_sym, mb/ | skip
-  |5: @IHT /2 width=1 by li_abst/ | skip ] -T2
+  @(seq_trans … H1M) [3:|*: /2 width=2 by mb/ ]
+  @mc // -p [ /4 width=5 by seq_trans, seq_sym, me/ ]
+  @(seq_trans … H1M) [2: @IHT /2 width=1 by li_abst/ | skip ] -T1
   @ti_comp /2 width=1 by veq_refl/
   @vpush_comp /2 width=1 by veq_refl/
-  @(mq … H1M) [4,5: /3 width=2 by seq_sym, me/ |1,2: skip ] -L -V1
-  /2 width=1 by mr/
+  /4 width=5 by seq_trans, seq_sym, me/
 | #p #G #L #V1 #V #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #IHV #IHW #IHT #HV2 #gv #lv #Hlv
   @(mq … H1M) [4,5: /3 width=2 by seq_sym, ma, md/ |1,2: skip ]
-  @(seq_trans … H1M) [3: /3 width=1 by seq_sym, ma/ | skip ]
-  @mp // [ @(seq_trans … H1M) /3 width=3 by lifts_SO_fwd_vpush/ ] -V1 -V -V2
   @(mq … H1M)
-  [4: /3 width=2 by seq_sym, md/ | skip
-  |3: @IHT /2 width=1 by li_abbr/ | skip ] -T1
+  [4: /4 width=2 by seq_sym, md, mp/ |1: skip
+  |5: /4 width=2 by seq_sym, ma, mc/ |2: skip
+  ]
+  @(seq_trans … H1M) [2: @mh // | skip ]
+  @mc [3:|*: /2 width=1 by mr/ ]
+  @mp [3:|*: /2 width=1 by lifts_SO_fwd_vpush/ ]
+  @(seq_trans … H1M) [2: @IHT /2 width=1 by li_abbr/ | skip ] -T1
   /4 width=1 by ti_comp, vpush_comp, (* 2x *) veq_refl/
 ]
 qed-.

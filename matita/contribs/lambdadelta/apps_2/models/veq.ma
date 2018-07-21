@@ -1,3 +1,4 @@
+
 (**************************************************************************)
 (*       ___                                                              *)
 (*      ||M||                                                             *)
@@ -87,7 +88,7 @@ lemma ti_comp (M): is_model M →
 [ /4 width=5 by seq_trans, seq_sym, ms/
 | /4 width=5 by seq_sym, ml, mq/
 | /4 width=3 by seq_trans, seq_sym, mg/
-| /5 width=5 by vpush_comp, seq_sym, md, mq/
+| /6 width=5 by vpush_comp, seq_sym, md, mc, mq/
 | /5 width=1 by vpush_comp, mi, mr/
 | /4 width=5 by seq_sym, ma, mp, mq/
 | /4 width=5 by seq_sym, me, mq/

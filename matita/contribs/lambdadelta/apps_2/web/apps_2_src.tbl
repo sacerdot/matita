@@ -12,7 +12,7 @@ table {
    class "yellow"
    [ { "models" * } {
         [ { "term model" * } {
-             [ "tm" * ]
+             [ "tm" "tm_vpush" * ]
           }
         ]
         [ { "denotational equivalence" * } {
@@ -24,7 +24,7 @@ table {
           }
         ]
         [ { "multiple evaluation push" * } {
-             [ "vpushs" + "( ?⨁{?}[?]? ≘ ? )" "vpush_fold" * ]
+             [ "vpushs" + "( ?⨁{?}[?]? ≘ ? )" "vpushs_fold" * ]
           }
         ]
         [ { "evaluation equivalence" * } {

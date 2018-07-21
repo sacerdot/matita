@@ -40,6 +40,7 @@ fact lifts_fwd_vpush_aux (M): is_model M → is_extensional M →
   /2 width=1 by mr/
 | #f #p * #V1 #V2 #T1 #T2 #_ #_ #IHV #IHT #m #Hm #gv #lv #d destruct
   [ @(mq … H1M) [4,5: /3 width=2 by seq_sym, md/ |1,2: skip ]
+    @mc [3:|*: /2 width=1 by/ ]
     @(seq_trans … H1M)
     [3: @ti_comp // | skip ]
     [1,2: /2 width=2 by veq_refl/ ]

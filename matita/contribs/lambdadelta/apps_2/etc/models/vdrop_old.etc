@@ -1,4 +1,9 @@
-
+lemma pippo: ∀M,v1,v2,d,i. [i⬐d] v1 ≐⦋M⦌ v2 → v1 ≐⦋M⦌ ↓[i,1] v2.
+#M #v1 #v2 #d #i #H #j elim (lt_or_ge … j i) #Hij
+[ >lower_lt // <(H j) >raise_lt //
+| >lower_ge // <(H (j+1)) >raise_gt /2 width=1 by le_S_S/
+]
+qed-.
 
 lemma vdrop_refl: ∀M,v,l. ↓[l, 0] v ≐⦋M⦌ v.
 #M #v #l #i elim (lt_or_ge … i l) #Hil

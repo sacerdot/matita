@@ -12,48 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_equivalence/cpcs.ma".
-include "apps_2/functional/mf.ma".
-include "apps_2/models/model.ma".
+include "ground_2/lib/exteq.ma".
+include "apps_2/models/model_vpush.ma".
+include "apps_2/models/tm.ma".
 
 (* TERM MODEL ***************************************************************)
 
-definition tm_dd ≝ term.
+(* Properties with push for model evaluation ********************************)
 
-definition tm_sq (h) (T1) (T2) ≝  ⦃⋆, ⋆⦄ ⊢ T1 ⬌*[h] T2.
-
-definition tm_sv (s) ≝ ⋆s.
-
-definition tm_co (p) (V) (T) ≝ ⓓ{p}V.(↑[1]T).
-
-definition tm_ap (V) (T) ≝ ⓐV.T.
-
-definition tm_ti (gv) (lv) (T) ≝ ●[gv,lv]T.
-
-definition TM (h): model ≝ mk_model … .
-[ @tm_dd
-| @(tm_sq h) |7,8: skip
-| @tm_sv
-| @tm_co
-| @tm_ap
-| @tm_ti
-].
-defined-.
-
-(* Basic properties *********************************************************)
-
-lemma tm_co_rw (h) (p) (V) (T): V⊕{TM h}[p]T = ⓓ{p}V.(↑[1]T).
-// qed.
-
-lemma tm_ti_sort (h) (gv) (lv): ∀s. ⟦⋆s⟧{TM h}[gv,lv] = sv … s.
-// qed.
-
-lemma tm_ti_lref (h): ∀gv,lv,i. ⟦#i⟧{TM h}[gv,lv] = lv i.
-// qed.
-
-lemma tm_ti_gref (h): ∀gv,lv,l. ⟦§l⟧{TM h}[gv,lv] = gv l.
-// qed.
-
-lemma tm_ti_bind (h) (p) (I): ∀gv,lv,V,T.
-                              ⟦ⓑ{p,I}V.T⟧{TM h}[gv,lv] = ⓑ{p,I}⟦V⟧[gv,lv].⟦T⟧{TM h}[⇡[0]gv,⇡[0←#0]lv].
-// qed.
+lemma tm_vpush_vlift_join_O (h) (v) (T): ⇡[0]⫯{TM h}[0←T]v ≐ ⇡[0←↑[1]T]v.
+#h #v #T #i
+elim (eq_or_gt i) #Hi destruct
+[ >mf_vpush_eq >mf_vlift_rw >vpush_eq //
+| >mf_vpush_gt // >mf_vlift_rw >vpush_gt //
+]
+qed.
