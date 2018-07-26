@@ -67,7 +67,7 @@ table {
           }
         ]
         [ { "t-bound context-sensitive parallel rt-computation" * } {
-             [ [ "for terms" ] "cpms" + "( ⦃?,?⦄ ⊢ ? ➡*[?,?] ? )" "cpms_drops" + "cpms_lsubr" + "cpms_aaa" + "cpms_lpr" + "cpms_cpxs" + "cpms_cpms" * ]
+             [ [ "for terms" ] "cpms" + "( ⦃?,?⦄ ⊢ ? ➡*[?,?] ? )" "cpms_drops" + "cpms_lsubr" + "cpms_aaa" + "cpms_lpr" + "cpms_cpxs" + "cpms_fpbs" + "cpms_fpbg" + "cpms_cpms" * ]
           }
         ]
         [ { "unbound context-sensitive parallel rst-computation" * } {

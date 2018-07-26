@@ -57,6 +57,13 @@ lemma plus_SO: ∀n. n + 1 = ↑n.
 lemma minus_plus_m_m_commutative: ∀n,m:nat. n = m + n - m.
 // qed-.
 
+lemma plus_n_2: ∀n. n + 2 = n + 1 + 1.
+// qed.
+
+lemma arith_l: ∀x. 1 = 1-x+(x-(x-1)).
+* // #x >minus_S_S >minus_S_S <minus_O_n <minus_n_O //
+qed.
+
 (* Note: uses minus_minus_comm, minus_plus_m_m, commutative_plus, plus_minus *)
 lemma plus_minus_minus_be: ∀x,y,z. y ≤ z → z ≤ x → (x - z) + (z - y) = x - y.
 #x #z #y #Hzy #Hyx >plus_minus // >commutative_plus >plus_minus //
@@ -68,9 +75,6 @@ qed-.
 
 fact plus_minus_minus_be_aux: ∀i,x,y,z. y ≤ z → z ≤ x → i = z - y → x - z + i = x - y.
 /2 width=1 by plus_minus_minus_be/ qed-.
-
-lemma plus_n_2: ∀n. n + 2 = n + 1 + 1.
-// qed.
 
 lemma le_plus_minus: ∀m,n,p. p ≤ n → m + n - p = m + (n - p).
 /2 by plus_minus/ qed-.

@@ -52,7 +52,7 @@ qed-.
 (* Properties with generic slicing for local environments *******************)
 
 (* Basic_2A1: uses: snv_lift *)
-lemma csv_lifts (a) (h): ∀G. d_liftable1 (cnv a h G).
+lemma cnv_lifts (a) (h): ∀G. d_liftable1 (cnv a h G).
 #a #h #G #K #T
 @(fqup_wf_ind_eq (Ⓣ) … G K T) -G -K -T #G0 #K0 #T0 #IH #G #K * * [|||| * ]
 [ #s #HG #HK #HT #_ #b #f #L #_ #X #H2 destruct
