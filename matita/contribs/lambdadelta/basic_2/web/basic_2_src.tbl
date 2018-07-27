@@ -28,16 +28,10 @@ table {
              [ [ "" ] "nta ( ⦃?,?⦄ ⊢ ? : ? )" "nta_alt ( ⦃?,?⦄ ⊢ ? :: ? )" "nta_lift" "nta_ltpss" "nta_thin" "nta_aaa" "nta_sta" "nta_ltpr" "nta_nta" * ]
           }
         ]
-        [ { "local env. ref. for stratified native validity" * } {
-             [ [ "" ] "lsubsv ( ? ⊢ ? ⫃¡[?,?] ? )" "lsubsv_lsuba" + "lsubsv_lsubd" + "lsubsv_lstas" + "lsubsv_scpds" + "lsubsv_cpcs" + "lsubsv_snv" * ]
-          }
-        ]
-*)        
-        [ { "context-sensitive native validity" * } {
-(*
-             [ [ "" ] "shnv ( ⦃?,?⦄ ⊢ ? ¡[?,?,?] )" * ]
 *)
-             [ [ "for terms" ] "cnv" + "( ⦃?,?⦄ ⊢ ? ![?,?] )" "cnv_drops" + "cnv_fqus" + "cnv_aaa" + "cnv_fsb" (* + "snv_lpr" + "snv_scpes" + "snv_preserve" *) * ]
+        [ { "context-sensitive native validity" * } {
+             [ [ "restricted refinement for lenvs" ] "lsubv ( ? ⊢ ? ⫃![?,?] ? )" "lsubv_drops" + "lsubv_lsubr" + "lsubv_lsuba" + "lsubv_cpms" + "lsubv_cpcs" + "lsubv_cnv" * ]
+             [ [ "for terms" ] "cnv" + "( ⦃?,?⦄ ⊢ ? ![?,?] )" "cnv_drops" + "cnv_fqus" + "cnv_aaa" + "cnv_fsb" + "snv_cpm_trans" (* + "snv_scpes" + "snv_preserve" *) * ]
           }
         ]
      }
@@ -127,6 +121,7 @@ class "capitalize italic" { 0 1 }
 
 class "italic"            { 2 }
 (*
+             [ [ "" ] "shnv ( ⦃?,?⦄ ⊢ ? ¡[?,?,?] )" * ]
         [ { "decomposed rt-equivalence" * } {
              [ [ "" ] "scpes ( ⦃?,?⦄ ⊢ ? •*⬌*[?,?,?,?] ? )" "scpes_aaa" + "scpes_cpcs" + "scpes_scpes" * ]
           }

@@ -12,8 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
+include "basic_2/rt_equivalence/cpcs_lsubr.ma".
+include "basic_2/dynamic/lsubv_lsubr.ma".
 
-notation "hvbox( G ⊢ break term 46 L1 ⫃![ break term 46 a, break term 46 h ] break term 46 L2 )"
-   non associative with precedence 45
-   for @{ 'LRSubEqV $a $h $G $L1 $L2 }.
+(* LOCAL ENVIRONMENT REFINEMENT FOR NATIVE VALIDITY *************************)
+
+(* Forward lemmas with context-sensitive r-equivalence for terms ************)
+
+(* Basic_2A1: uses: lsubsv_cprs_trans *)
+lemma lsubv_cpcs_trans (a) (h) (G): lsub_trans … (cpcs h G) (lsubv a h G).
+/3 width=6 by lsubv_fwd_lsubr, lsubr_cpcs_trans/
+qed-.

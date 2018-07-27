@@ -48,16 +48,23 @@ definition IH_cnv_cpms_conf_lpr (a) (h): relation3 genv lenv term ≝
                                 ∀L1. ⦃G, L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G, L0⦄ ⊢ ➡[h] L2 →
                                 ∃∃T. ⦃G, L1⦄ ⊢ T1 ➡*[n2-n1,h] T & ⦃G, L2⦄ ⊢ T2 ➡*[n1-n2,h] T.
 
-(* Auxiliary properties for preservation ************************************)
+(* Properties for preservation **********************************************)
 
-fact cnv_cpms_trans_lpr_aux (a) (h) (o):
-                            ∀G0,L0,T0.
-                            (∀G1,L1,T1. ⦃G0, L0, T0⦄ >[h, o] ⦃G1, L1, T1⦄ → IH_cnv_cpm_trans_lpr a h G1 L1 T1) →
-                            ∀G1,L1,T1. ⦃G0, L0, T0⦄ >[h, o] ⦃G1, L1, T1⦄ → IH_cnv_cpms_trans_lpr a h G1 L1 T1.
+lemma cnv_cpms_trans_lpr_far (a) (h) (o):
+                             ∀G0,L0,T0.
+                             (∀G1,L1,T1. ⦃G0, L0, T0⦄ >[h, o] ⦃G1, L1, T1⦄ → IH_cnv_cpm_trans_lpr a h G1 L1 T1) →
+                             ∀G1,L1,T1. ⦃G0, L0, T0⦄ >[h, o] ⦃G1, L1, T1⦄ → IH_cnv_cpms_trans_lpr a h G1 L1 T1.
 #a #h #o #G0 #L0 #T0 #IH #G1 #L1 #T1 #H01 #HT1 #n #T2 #H
 @(cpms_ind_dx … H) -n -T2
 /4 width=7 by cpms_fwd_fpbs, fpbg_fpbs_trans/
 qed-.
+
+lemma cnv_cpms_strip_lpr_far (a) (h) (o):
+                             ∀G0,L0,T0.
+                             (∀G1,L1,T1. ⦃G0, L0, T0⦄ >[h, o] ⦃G1, L1, T1⦄ → IH_cnv_cpms_conf_lpr a h G1 L1 T1) →
+                             ∀G1,L1,T1. ⦃G0, L0, T0⦄ >[h, o] ⦃G1, L1, T1⦄ → IH_cnv_cpms_strip_lpr a h G1 L1 T1.
+/3 width=8 by cpm_cpms/ qed-.
+
 (*
 fact cnv_cpms_strip_lpr_aux (a) (h) (o):
                             ∀G0,L0,T0.

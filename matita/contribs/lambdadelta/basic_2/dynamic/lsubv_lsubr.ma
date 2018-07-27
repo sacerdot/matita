@@ -12,8 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
+include "static_2/static/lsubr.ma".
+include "basic_2/dynamic/lsubv.ma".
 
-notation "hvbox( G ⊢ break term 46 L1 ⫃![ break term 46 a, break term 46 h ] break term 46 L2 )"
-   non associative with precedence 45
-   for @{ 'LRSubEqV $a $h $G $L1 $L2 }.
+(* LOCAL ENVIRONMENT REFINEMENT FOR NATIVE VALIDITY *************************)
+
+(* Forward lemmas with restricted refinement for local environments *********)
+
+(* Basic_2A1: uses: lsubsv_fwd_lsubr *)
+lemma lsubv_fwd_lsubr (a) (h) (G): ∀L1,L2. G ⊢ L1 ⫃![a,h] L2 → L1 ⫃ L2.
+#a #h #G #L1 #L2 #H elim H -L1 -L2 /2 width=1 by lsubr_bind, lsubr_beta/
+qed-.
