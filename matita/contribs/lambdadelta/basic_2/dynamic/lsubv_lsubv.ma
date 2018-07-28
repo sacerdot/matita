@@ -12,22 +12,22 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/dynamic/cnv_aaa.ma".
-include "basic_2/dynamic/lsubv.ma".
+include "basic_2/dynamic/lsubv_cnv.ma".
 
 (* LOCAL ENVIRONMENT REFINEMENT FOR NATIVE VALIDITY *************************)
 
-(* Forward lemmas with lenv refinement for atomic arity assignment **********)
+(* Main properties **********************************************************)
 
-(* Basic_2A1: uses: lsubsv_fwd_lsuba *)
-lemma lsubsv_fwd_lsuba (a) (h) (G): ∀L1,L2. G ⊢ L1 ⫃![a,h] L2 → G ⊢ L1 ⫃⁝ L2.
-#a #h #G #L1 #L2 #H elim H -L1 -L2 /2 width=1 by lsuba_bind/
-#L1 #L2 #W #V #H #_ #IH
-elim (cnv_inv_cast … H) -H #W0 #HW #HV #HW0 #HVW0
-elim (cnv_fwd_aaa … HW) -HW #B #HW
-elim (cnv_fwd_aaa … HV) -HV #A #HV
-lapply (cpms_aaa_conf … HW … HW0) -HW0 #H
-lapply (cpms_aaa_conf … HV … HVW0) -HVW0 #HW0
-lapply (aaa_mono … H … HW0) -W0 #H destruct
-/4 width=5 by lsuba_aaa_conf, lsuba_beta, aaa_cast/
+(* Note: not valid in Basic_2A1 *)
+theorem lsubv_trans (a) (h) (G): Transitive … (lsubv a h G).
+#a #h #G #L1 #L #H elim H -L1 -L //
+[ #I #K1 #K #HK1 #IH #Y #H
+  elim (lsubv_inv_bind_sn … H) -H *
+  [ #K2 #HK2 #H destruct /3 width=1 by lsubv_bind/
+  | #K2 #W #V #HWV #HK2 #H1 #H2 destruct /3 width=3 by lsubv_cnv_trans, lsubv_beta/
+  ]
+| #K1 #K #W #V #HWV #_ #IH #Y #H
+  elim (lsubv_inv_abst_sn … H) -H
+  #K2 #HK2 #H1 destruct /3 width=1 by lsubv_beta/
+]
 qed-.

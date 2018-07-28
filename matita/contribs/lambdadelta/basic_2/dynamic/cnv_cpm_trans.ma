@@ -23,12 +23,12 @@ include "basic_2/dynamic/lsubv_cnv.ma".
 
 (* Properties with context-free parallel reduction for local environments *****)
 
-fact cnv_cpm_trans_lpr_aux (a) (h) (o): a = Ⓕ →
+fact cnv_cpm_trans_lpr_aux (a) (h) (o):
                            ∀G0,L0,T0.
                            (∀G1,L1,T1. ⦃G0, L0, T0⦄ >[h, o] ⦃G1, L1, T1⦄ → IH_cnv_cpms_conf_lpr a h G1 L1 T1) →
                            (∀G1,L1,T1. ⦃G0, L0, T0⦄ >[h, o] ⦃G1, L1, T1⦄ → IH_cnv_cpm_trans_lpr a h G1 L1 T1) →
                            ∀G1,L1,T1. G0 = G1 → L0 = L1 → T0 = T1 → IH_cnv_cpm_trans_lpr a h G1 L1 T1.
-#a #h #o #Ha #G0 #L0 #T0 #IH2 #IH1 #G1 #L1 * * [|||| * ]
+#a #h #o #G0 #L0 #T0 #IH2 #IH1 #G1 #L1 * * [|||| * ]
 [ #s #HG0 #HL0 #HT0 #H1 #x #X #H2 #L2 #_ destruct -IH2 -IH1 -H1
   elim (cpm_inv_sort1 … H2) -H2 * #H1 #H2 destruct //
 | #i #HG0 #HL0 #HT0 #H1 #x #X #H2 #L2 #HL12 destruct -IH2
@@ -69,7 +69,7 @@ fact cnv_cpm_trans_lpr_aux (a) (h) (o): a = Ⓕ →
     lapply (cpms_trans … HXV2 … HXW1) -XW1 <plus_n_O #HV2W1
     lapply (cpms_trans … HTU2 … (ⓛ{p}W1.U2) ?)
     [3:|*: /2 width=2 by cpms_bind/ ] -W2 <plus_n_O #HTU2
-    @(cnv_appl … HV2W1 HTU2) // #H destruct
+    /4 width=7 by cnv_appl, minus_le_trans_sn/
   | #q #V2 #W10 #W20 #T10 #T20 #HV12 #HW120 #HT120 #H1 #H2 destruct
     elim (cnv_inv_bind … HT1) -HT1 #HW10 #HT10
     elim (cpms_inv_abst_sn … HTU1) -HTU1 #W30 #T30 #HW130 #_ #H destruct -T30
@@ -102,7 +102,7 @@ fact cnv_cpm_trans_lpr_aux (a) (h) (o): a = Ⓕ →
     elim (cprs_conf … HXW32 … HW3) -W3 #W3 #HXW23 #HW3
     lapply (cpms_trans … HXVW2 … HXW23) -XW2 <plus_n_O #H1
     lapply (cpms_trans … HTU2 ? (ⓛ{p}W3.U2) ?) [3:|*:/2 width=2 by cpms_bind/ ] -W #H2
-    @cnv_bind // @(cnv_appl … H1 H2) // #H destruct
+    /5 width=7 by cnv_appl, cnv_bind, minus_le_trans_sn/
   ]
 | #W1 #T1 #HG0 #HL0 #HT0 #H1 #x #X #H2 #L2 #HL12 destruct
   elim (cnv_inv_cast … H1) -H1 #U1 #HW1 #HT1 #HWU1 #HTU1

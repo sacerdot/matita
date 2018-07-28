@@ -34,7 +34,7 @@ lemma lsubv_drops_conf_isuni (a) (h) (G):
   | #g #Hg #HLK1 #H destruct -HL12
     elim (IH … Hg HLK1) -L1 -Hg /3 width=3 by drops_drop, ex2_intro/
   ]
-| #L1 #L2 #W #V #HVW #HW #HL12 #IH #b #f #K1 #Hf #H
+| #L1 #L2 #W #V #HVW #HL12 #IH #b #f #K1 #Hf #H
   elim (drops_inv_bind1_isuni … Hf H) -Hf -H *
   [ #Hf #H destruct -IH
     /3 width=3 by drops_refl, lsubv_beta, ex2_intro/
@@ -59,7 +59,7 @@ lemma lsubv_drops_trans_isuni (a) (h) (G):
   | #g #Hg #HLK2 #H destruct -HL12
     elim (IH … Hg HLK2) -L2 -Hg /3 width=3 by drops_drop, ex2_intro/
   ]
-| #L1 #L2 #W #V #HWV #HW #HL12 #IH #b #f #K2 #Hf #H
+| #L1 #L2 #W #V #HWV #HL12 #IH #b #f #K2 #Hf #H
   elim (drops_inv_bind1_isuni … Hf H) -Hf -H *
   [ #Hf #H destruct -IH
     /3 width=3 by drops_refl, lsubv_beta, ex2_intro/

@@ -30,8 +30,8 @@ table {
         ]
 *)
         [ { "context-sensitive native validity" * } {
-             [ [ "restricted refinement for lenvs" ] "lsubv ( ? ⊢ ? ⫃![?,?] ? )" "lsubv_drops" + "lsubv_lsubr" + "lsubv_lsuba" + "lsubv_cpms" + "lsubv_cpcs" + "lsubv_cnv" * ]
-             [ [ "for terms" ] "cnv" + "( ⦃?,?⦄ ⊢ ? ![?,?] )" "cnv_drops" + "cnv_fqus" + "cnv_aaa" + "cnv_fsb" + "snv_cpm_trans" (* + "snv_scpes" + "snv_preserve" *) * ]
+             [ [ "restricted refinement for lenvs" ] "lsubv ( ? ⊢ ? ⫃![?,?] ? )" "lsubv_drops" + "lsubv_lsubr" + "lsubv_lsuba" + "lsubv_cpms" + "lsubv_cpcs" + "lsubv_cnv" + "lsubv_lsubv" * ]
+             [ [ "for terms" ] "cnv" + "( ⦃?,?⦄ ⊢ ? ![?,?] )" "cnv_drops" + "cnv_fqus" + "cnv_aaa" + "cnv_fsb" + "cnv_cpm_trans" (* + "cnv_scpes" + "cnv_preserve" *) * ]
           }
         ]
      }

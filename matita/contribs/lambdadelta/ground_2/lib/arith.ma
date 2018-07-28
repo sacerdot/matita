@@ -147,6 +147,9 @@ fact le_repl_sn_trans_aux: ∀x,y,z:nat. x ≤ z → y = x → y ≤ z.
 lemma monotonic_le_minus_l2: ∀x1,x2,y,z. x1 ≤ x2 → x1 - y - z ≤ x2 - y - z.
 /3 width=1 by monotonic_le_minus_l/ qed.
 
+lemma minus_le_trans_sn: ∀x1,x2. x1 ≤ x2 → ∀x. x1-x ≤ x2.
+/2 width=3 by transitive_le/ qed.
+
 (* Note: this might interfere with nat.ma *)
 lemma monotonic_lt_pred: ∀m,n. m < n → 0 < m → pred m < pred n.
 #m #n #Hmn #Hm whd >(S_pred … Hm)
