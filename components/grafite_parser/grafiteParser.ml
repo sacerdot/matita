@@ -23,7 +23,7 @@
  * http://helm.cs.unibo.it/
  *)
 
-(* $Id$ *)
+(* $Id: grafiteParser.ml 13176 2016-04-18 15:29:33Z fguidi $ *)
 
 module N  = NotationPt
 module G  = GrafiteAst
@@ -526,7 +526,9 @@ EXTEND
         G.NObj (loc, 
           N.Theorem(name, N.Implicit `JustOne, Some body, attrs),
           true)
-    | src = source; IDENT "axiom"; i = index; name = IDENT; SYMBOL ":"; typ = term ->
+    | src = source; IDENT "axiom"; i = index; name = IDENT;
+        params = LIST0 protected_binder_vars; SYMBOL ":"; typ = term -> (* FG: params added *)
+        let typ = shift_params `Forall params typ in
         let attrs = src, `Axiom, `Regular in
 	G.NObj (loc, N.Theorem (name, typ, None, attrs),i)
     | src = source; IDENT "inductive"; spec = inductive_spec ->
