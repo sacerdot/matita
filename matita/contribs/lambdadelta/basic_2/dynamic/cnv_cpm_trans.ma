@@ -16,12 +16,12 @@ include "basic_2/rt_computation/cpms_fpbg.ma".
 include "basic_2/rt_computation/cprs_cprs.ma".
 include "basic_2/rt_computation/lprs_cpms.ma".
 include "basic_2/dynamic/cnv_drops.ma".
-include "basic_2/dynamic/cnv_etc.ma".
+include "basic_2/dynamic/cnv_preserve_far.ma".
 include "basic_2/dynamic/lsubv_cnv.ma".
 
 (* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
 
-(* Properties with context-free parallel reduction for local environments *****)
+(* Far preservation propery with t-bound rt-transition for terms ************)
 
 fact cnv_cpm_trans_lpr_aux (a) (h) (o):
                            ∀G0,L0,T0.
@@ -118,7 +118,7 @@ fact cnv_cpm_trans_lpr_aux (a) (h) (o):
     elim (IH2 … HXUW1 … HXUT1 … HL12 … HL12) [|*: /2 width=4 by fqup_cpms_fwd_fpbg/ ] -HXUW1 -HXUT1 -HWU1
     >eq_minus_O // #W0 #H1 #H2 -IH2 -IH1 -L1 -W1 -T1 -U1
     lapply (cprs_trans … HXW21 … H1) -XW1 #H1
-    lapply (cpms_trans … HXT21 … H2) -XT1 <arith_l #H2
+    lapply (cpms_trans … HXT21 … H2) -XT1 <arith_l_eq #H2
     /2 width=3 by cnv_cast/
   | #HX -IH2 -HW1 -U1
     lapply (IH1 … HX … HL12) /2 width=1 by fqup_fpbg/

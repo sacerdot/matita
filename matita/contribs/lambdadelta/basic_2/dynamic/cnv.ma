@@ -139,3 +139,8 @@ lemma cnv_inv_cast (a) (h): ∀G,L,U,T. ⦃G, L⦄ ⊢ ⓝU.T ![a, h] →
                             ∃∃U0. ⦃G, L⦄ ⊢ U ![a, h] & ⦃G, L⦄ ⊢ T ![a, h] &
                                   ⦃G, L⦄ ⊢ U ➡*[h] U0 & ⦃G, L⦄ ⊢ T ➡*[1, h] U0.
 /2 width=3 by cnv_inv_cast_aux/ qed-.
+
+(* Basic_2A1: removed theorems 6:
+              snv_fwd_da snv_fwd_lstas snv_cast_scpes
+              shnv_cast shnv_inv_cast snv_shnv_cast
+*)

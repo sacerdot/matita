@@ -109,3 +109,8 @@ qed-.
 lemma lsubv_refl (a) (h) (G): reflexive … (lsubv a h G).
 #a #h #G #L elim L -L /2 width=1 by lsubv_atom, lsubv_bind/
 qed.
+
+(* Basic_2A1: removed theorems 3:
+              lsubsv_lstas_trans lsubsv_sta_trans
+              lsubsv_fwd_lsubd
+*)

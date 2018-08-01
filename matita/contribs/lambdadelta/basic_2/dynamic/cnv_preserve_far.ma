@@ -59,23 +59,14 @@ lemma cnv_cpms_trans_lpr_far (a) (h) (o):
 /4 width=7 by cpms_fwd_fpbs, fpbg_fpbs_trans/
 qed-.
 
+lemma cnv_cpm_conf_lpr_far (a) (h) (o):
+                           ∀G0,L0,T0.
+                           (∀G1,L1,T1. ⦃G0, L0, T0⦄ >[h, o] ⦃G1, L1, T1⦄ → IH_cnv_cpms_conf_lpr a h G1 L1 T1) →
+                           ∀G1,L1,T1. ⦃G0, L0, T0⦄ >[h, o] ⦃G1, L1, T1⦄ → IH_cnv_cpm_conf_lpr a h G1 L1 T1.
+/3 width=8 by cpm_cpms/ qed-.
+
 lemma cnv_cpms_strip_lpr_far (a) (h) (o):
                              ∀G0,L0,T0.
                              (∀G1,L1,T1. ⦃G0, L0, T0⦄ >[h, o] ⦃G1, L1, T1⦄ → IH_cnv_cpms_conf_lpr a h G1 L1 T1) →
                              ∀G1,L1,T1. ⦃G0, L0, T0⦄ >[h, o] ⦃G1, L1, T1⦄ → IH_cnv_cpms_strip_lpr a h G1 L1 T1.
 /3 width=8 by cpm_cpms/ qed-.
-
-(*
-fact cnv_cpms_strip_lpr_aux (a) (h) (o):
-                            ∀G0,L0,T0.
-                            (∀G1,L1,T1. ⦃G0, L0, T0⦄ >[h, o] ⦃G1, L1, T1⦄ → IH_cnv_cpm_conf_lpr a h G1 L1 T1) →
-                            ∀G1,L1,T1. ⦃G0, L0, T0⦄ >[h, o] ⦃G1, L1, T1⦄ → IH_cnv_cpms_strip_lpr a h G1 L1 T1.
-#a #h #o #G0 #L0 #T0 #IH0 #G #L #T #H0 #HT #n1 #T1 #H
-generalize in match HT; generalize in match H0; -H0 -HT
-@(cpms_ind_sn … H) -n1 -T [ /2 width=8 by/ ]
-#n1 #n2 #T #X #HTX #HXT1 #IH #H0 #HT #n2 #T2 #HT2 #L1 #HL1 #L2 #HL2
-elim (IH0 … HTX … HT2 … HL1 … HL2) // -L -T #T0 #HXT0 #HT20  
-  
-  @(IH … 0 T … HT2 … HL1 … HL2) // -L -IH
-  #T0 #HT20 #HT0  
-*)

@@ -60,9 +60,11 @@ lemma minus_plus_m_m_commutative: ∀n,m:nat. n = m + n - m.
 lemma plus_n_2: ∀n. n + 2 = n + 1 + 1.
 // qed.
 
-lemma arith_l: ∀x. 1 = 1-x+(x-(x-1)).
-* // #x >minus_S_S >minus_S_S <minus_O_n <minus_n_O //
-qed.
+lemma arith_l (n1) (n2): ↑n2-n1 = 1-n1+(n2-(n1-1)).
+* // qed.
+
+lemma arith_l_eq: ∀x. 1 = 1-x+(x-(x-1)).
+// qed.
 
 (* Note: uses minus_minus_comm, minus_plus_m_m, commutative_plus, plus_minus *)
 lemma plus_minus_minus_be: ∀x,y,z. y ≤ z → z ≤ x → (x - z) + (z - y) = x - y.

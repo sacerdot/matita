@@ -103,6 +103,19 @@ lemma cpms_delta_drops (n) (h) (G):
 ]
 qed.
 
+lemma cpms_ell_drops (n) (h) (G):
+                     ∀L,K,W,i. ⬇*[i] L ≘ K.ⓛW →
+                     ∀W2. ⦃G, K⦄ ⊢ W ➡*[n, h] W2 →
+                     ∀V2. ⬆*[↑i] W2 ≘ V2 → ⦃G, L⦄ ⊢ #i ➡*[↑n, h] V2.
+#n #h #G #L #K #W #i #HLK #W2 #H @(cpms_ind_dx … H) -W2
+[ /3 width=6 by cpm_cpms, cpm_ell_drops/
+| #n1 #n2 #W1 #W2 #_ #IH #HW12 #V2 #HWV2
+  lapply (drops_isuni_fwd_drop2 … HLK) -HLK // #HLK
+  elim (lifts_total W1 (𝐔❴↑i❵)) #V1 #HWV1 >plus_S1
+  /3 width=11 by cpm_lifts_bi, cpms_step_dx/
+]
+qed.
+
 (* Advanced inversion lemmas ************************************************)
 
 lemma cpms_inv_lref1_drops (n) (h) (G):

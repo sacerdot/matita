@@ -21,7 +21,7 @@ include "basic_2/dynamic/cnv.ma".
 
 (* Basic_2A1: uses: snv_lref *)
 lemma cnv_lref_drops (a) (h) (G): ∀I,K,V,i,L. ⦃G, K⦄ ⊢ V ![a, h] →
-                                  ⬇*[i] L ≘ K.ⓑ{I}V →  ⦃G, L⦄ ⊢ #i ![a, h].
+                                  ⬇*[i] L ≘ K.ⓑ{I}V → ⦃G, L⦄ ⊢ #i ![a, h].
 #a #h #G #I #K #V #i elim i -i
 [ #L #HV #H
   lapply (drops_fwd_isid … H ?) -H // #H destruct
@@ -48,6 +48,16 @@ lemma cnv_inv_lref_drops (a) (h) (G):
   /3 width=5 by drops_drop, ex2_3_intro/
 ]
 qed-.
+
+(* Advanced forward lemmas **************************************************)
+
+lemma cnv_lref_fwd_drops (a) (h) (G):
+                         ∀i,L. ⦃G, L⦄ ⊢ #i ![a, h] →
+                         ∀I,K,V. ⬇*[i] L ≘ K.ⓑ{I}V → ⦃G, K⦄ ⊢ V ![a, h].
+#a #h #o #i #L #H #I #K #V #HLK
+elim (cnv_inv_lref_drops … H) -H #Z #Y #X #HLY #HX
+lapply (drops_mono … HLY … HLK) -L #H destruct //
+qed-.   
 
 (* Properties with generic slicing for local environments *******************)
 
