@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/notation/relations/predstar_7.ma".
 include "basic_2/rt_computation/fpbg.ma".
 include "basic_2/rt_computation/cpms_fpbs.ma".
 include "basic_2/dynamic/cnv.ma".
@@ -19,6 +20,13 @@ include "basic_2/dynamic/cnv.ma".
 (* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
 
 (* Inductive premises for the preservation results **************************)
+
+definition cpsms (n) (h) (o): relation4 genv lenv term term ≝ λG,L,T1,T2.
+                 ∃∃n1,n2,T. T1 ≛[h,o] T → ⊥ & ⦃G, L⦄ ⊢ T1 ➡[n1,h] T & ⦃G, L⦄ ⊢ T ➡*[n2,h] T2 & n1+n2 = n.
+
+interpretation
+   "context-sensitive parallel stratified t-bound  rt-computarion (term)"
+   'PRedStar n h o G L T1 T2 = (cpsms n h o G L T1 T2).
 
 definition IH_cnv_cpm_trans_lpr (a) (h): relation3 genv lenv term ≝
                                 λG,L1,T1. ⦃G, L1⦄ ⊢ T1 ![a,h] →
@@ -47,6 +55,12 @@ definition IH_cnv_cpms_conf_lpr (a) (h): relation3 genv lenv term ≝
                                 ∀n1,T1. ⦃G, L0⦄ ⊢ T0 ➡*[n1,h] T1 → ∀n2,T2. ⦃G, L0⦄ ⊢ T0 ➡*[n2,h] T2 →
                                 ∀L1. ⦃G, L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G, L0⦄ ⊢ ➡[h] L2 →
                                 ∃∃T. ⦃G, L1⦄ ⊢ T1 ➡*[n2-n1,h] T & ⦃G, L2⦄ ⊢ T2 ➡*[n1-n2,h] T.
+
+definition IH_cnv_cpsms_conf_lpr (a) (h) (o): relation3 genv lenv term ≝
+                                 λG,L0,T0. ⦃G, L0⦄ ⊢ T0 ![a,h] →
+                                 ∀n1,T1. ⦃G, L0⦄ ⊢ T0 ➡*[n1,h,o] T1 → ∀n2,T2. ⦃G, L0⦄ ⊢ T0 ➡*[n2,h,o] T2 →
+                                 ∀L1. ⦃G, L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G, L0⦄ ⊢ ➡[h] L2 →
+                                 ∃∃T. ⦃G, L1⦄ ⊢ T1 ➡*[n2-n1,h] T & ⦃G, L2⦄ ⊢ T2 ➡*[n1-n2,h] T.
 
 (* Properties for preservation **********************************************)
 

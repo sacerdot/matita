@@ -356,6 +356,15 @@ elim (IHV1 f) -IHV1 #V2 #HV12
 ]
 qed-.
 
+lemma lifts_push_zero (f): ⬆*[⫯f]#O ≘ #0.
+/2 width=1 by lifts_lref/ qed.
+
+lemma lifts_push_lref (f) (i1) (i2): ⬆*[f]#i1 ≘ #i2 → ⬆*[⫯f]#(↑i1) ≘ #(↑i2).
+#f1 #i1 #i2 #H
+elim (lifts_inv_lref1 … H) -H #j #Hij #H destruct
+/3 width=7 by lifts_lref, at_push/
+qed.
+
 lemma lifts_lref_uni: ∀l,i. ⬆*[l] #i ≘ #(l+i).
 #l elim l -l /2 width=1 by lifts_lref/
 qed.

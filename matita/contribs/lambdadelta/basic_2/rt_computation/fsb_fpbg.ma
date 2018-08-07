@@ -64,3 +64,12 @@ lemma fsb_ind_fpbg: ∀h,o. ∀Q:relation3 genv lenv term.
 #h #o #Q #IH #G1 #L1 #T1 #H @(fsb_ind_fpbg_fpbs … H) -H
 /3 width=1 by/
 qed-.
+
+(* Inversion lemmas with proper parallel rst-computation for closures *******)
+
+lemma fsb_fpbg_refl_false (h) (o) (G) (L) (T):
+                          ≥[h,o] 𝐒⦃G, L, T⦄ → ⦃G, L, T⦄ >[h,o] ⦃G, L, T⦄ → ⊥.
+#h #o #G #L #T #H
+@(fsb_ind_fpbg … H) -G -L -T #G1 #L1 #T1 #_ #IH #H
+/2 width=5 by/
+qed-.

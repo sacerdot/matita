@@ -60,12 +60,6 @@ lemma minus_plus_m_m_commutative: ∀n,m:nat. n = m + n - m.
 lemma plus_n_2: ∀n. n + 2 = n + 1 + 1.
 // qed.
 
-lemma arith_l (n1) (n2): ↑n2-n1 = 1-n1+(n2-(n1-1)).
-* // qed.
-
-lemma arith_l_eq: ∀x. 1 = 1-x+(x-(x-1)).
-// qed.
-
 (* Note: uses minus_minus_comm, minus_plus_m_m, commutative_plus, plus_minus *)
 lemma plus_minus_minus_be: ∀x,y,z. y ≤ z → z ≤ x → (x - z) + (z - y) = x - y.
 #x #z #y #Hzy #Hyx >plus_minus // >commutative_plus >plus_minus //
@@ -151,6 +145,13 @@ lemma monotonic_le_minus_l2: ∀x1,x2,y,z. x1 ≤ x2 → x1 - y - z ≤ x2 - y -
 
 lemma minus_le_trans_sn: ∀x1,x2. x1 ≤ x2 → ∀x. x1-x ≤ x2.
 /2 width=3 by transitive_le/ qed.
+
+lemma le_plus_to_minus_l: ∀a,b,c. a + b ≤ c → b ≤ c-a.
+/2 width=1 by le_plus_to_minus_r/
+qed-.
+
+lemma le_plus_to_minus_comm: ∀n,m,p. n ≤ p+m → n-p ≤ m.
+/2 width=1 by le_plus_to_minus/ qed-.
 
 (* Note: this might interfere with nat.ma *)
 lemma monotonic_lt_pred: ∀m,n. m < n → 0 < m → pred m < pred n.

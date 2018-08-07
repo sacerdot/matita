@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/lib/arith_2b.ma".
 include "basic_2/rt_transition/lpr_lpr.ma".
 include "basic_2/rt_computation/cpms_lsubr.ma".
 include "basic_2/rt_computation/cpms_fpbg.ma".
@@ -327,7 +328,7 @@ elim (cnv_cpms_strip_lpr_far … IH1 … HTX0 … HT01 … L0 … HL01) [|*: /2 
 elim (IH1 … HV1 … HT2 … HL02 … HL01) [|*: /2 width=4 by fqup_cpms_fwd_fpbg/ ]
 -L0 -V0 -T0 -X0 #U #HVU #HTU
 lapply (cpms_trans … HV2 … HVU) -V <plus_O_n >minus_plus #H2
-lapply (cpms_trans … HT1 … HTU) -T <arith_l #H1
+lapply (cpms_trans … HT1 … HTU) -T <arith_l2 #H1
 /3 width=3 by cpms_eps, ex2_intro/
 qed-.
 
@@ -364,7 +365,7 @@ elim (cnv_cpms_strip_lpr_far … IH1 … HTX0 … HT01 … L0 … HL01) [|*: /2 
 elim (IH1 … HV1 … HT2 … HL02 … HL01) [|*: /2 width=4 by fqup_cpms_fwd_fpbg/ ]
 -L0 -V0 -T0 -X0 #U #HVU #HTU
 lapply (cpms_trans … HV2 … HVU) -V <plus_O_n >minus_plus #H2
-lapply (cpms_trans … HT1 … HTU) -T <arith_l #H1
+lapply (cpms_trans … HT1 … HTU) -T <arith_l2 #H1
 /2 width=3 by ex2_intro/
 qed-.
 
