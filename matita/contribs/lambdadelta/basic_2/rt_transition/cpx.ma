@@ -56,9 +56,10 @@ lemma cpx_flat: ∀h,I,G,L,V1,V2,T1,T2.
 /3 width=5 by cpg_appl, cpg_cast, ex_intro/
 qed.
 
-lemma cpx_zeta: ∀h,G,L,V,T1,T,T2. ⦃G, L.ⓓV⦄ ⊢ T1 ⬈[h] T →
-                ⬆*[1] T2 ≘ T → ⦃G, L⦄ ⊢ +ⓓV.T1 ⬈[h] T2.
-#h #G #L #V #T1 #T #T2 *
+lemma cpx_zeta (h) (G) (L):
+               ∀T1,T. ⬆*[1] T ≘ T1 → ∀T2. ⦃G, L⦄ ⊢ T ⬈[h] T2 →
+               ∀V. ⦃G, L⦄ ⊢ +ⓓV.T1 ⬈[h] T2.
+#h #G #L #T1 #T #HT1 #T2 *
 /3 width=4 by cpg_zeta, ex_intro/
 qed.
 
@@ -140,7 +141,7 @@ qed-.
 lemma cpx_inv_bind1: ∀h,p,I,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓑ{p,I}V1.T1 ⬈[h] U2 →
                      ∨∨ ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ⬈[h] V2 & ⦃G, L.ⓑ{I}V1⦄ ⊢ T1 ⬈[h] T2 &
                                  U2 = ⓑ{p,I}V2.T2
-                      | ∃∃T. ⦃G, L.ⓓV1⦄ ⊢ T1 ⬈[h] T & ⬆*[1] U2 ≘ T &
+                      | ∃∃T. ⬆*[1] T ≘ T1 & ⦃G, L⦄ ⊢ T ⬈[h] U2 & 
                              p = true & I = Abbr.
 #h #p #I #G #L #V1 #T1 #U2 * #c #H elim (cpg_inv_bind1 … H) -H *
 /4 width=5 by ex4_intro, ex3_2_intro, ex_intro, or_introl, or_intror/
@@ -149,7 +150,7 @@ qed-.
 lemma cpx_inv_abbr1: ∀h,p,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓓ{p}V1.T1 ⬈[h] U2 →
                      ∨∨ ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ⬈[h] V2 & ⦃G, L.ⓓV1⦄ ⊢ T1 ⬈[h] T2 &
                                  U2 = ⓓ{p}V2.T2
-                      | ∃∃T. ⦃G, L.ⓓV1⦄ ⊢ T1 ⬈[h] T & ⬆*[1] U2 ≘ T & p = true.
+                      | ∃∃T. ⬆*[1] T ≘ T1 & ⦃G, L⦄ ⊢ T ⬈[h] U2 & p = true.
 #h #p #G #L #V1 #T1 #U2 * #c #H elim (cpg_inv_abbr1 … H) -H *
 /4 width=5 by ex3_2_intro, ex3_intro, ex_intro, or_introl, or_intror/
 qed-.
@@ -242,8 +243,8 @@ lemma cpx_ind: ∀h. ∀Q:relation4 genv lenv term term.
                   Q G L V1 V2 → Q G (L.ⓑ{I}V1) T1 T2 → Q G L (ⓑ{p,I}V1.T1) (ⓑ{p,I}V2.T2)
                ) → (∀I,G,L,V1,V2,T1,T2. ⦃G, L⦄ ⊢ V1 ⬈[h] V2 → ⦃G, L⦄ ⊢ T1 ⬈[h] T2 →
                   Q G L V1 V2 → Q G L T1 T2 → Q G L (ⓕ{I}V1.T1) (ⓕ{I}V2.T2)
-               ) → (∀G,L,V,T1,T,T2. ⦃G, L.ⓓV⦄ ⊢ T1 ⬈[h] T → Q G (L.ⓓV) T1 T →
-                  ⬆*[1] T2 ≘ T → Q G L (+ⓓV.T1) T2
+               ) → (∀G,L,V,T1,T,T2. ⬆*[1] T ≘ T1 → ⦃G, L⦄ ⊢ T ⬈[h] T2 → Q G L T T2 →
+                  Q G L (+ⓓV.T1) T2
                ) → (∀G,L,V,T1,T2. ⦃G, L⦄ ⊢ T1 ⬈[h] T2 → Q G L T1 T2 →
                   Q G L (ⓝV.T1) T2
                ) → (∀G,L,V1,V2,T. ⦃G, L⦄ ⊢ V1 ⬈[h] V2 → Q G L V1 V2 →

@@ -45,8 +45,9 @@ lemma cpx_aaa_conf_lpx (h): ∀G,L1,T1,A. ⦃G, L1⦄ ⊢ T1 ⁝ A →
 | #p #G #L1 #V1 #T1 #B #A #_ #_ #IHV1 #IHT1 #X #H #L2 #HL12
   elim (cpx_inv_abbr1 … H) -H *
   [ #V2 #T2 #HV12 #HT12 #H destruct /4 width=2 by lpx_pair, aaa_abbr/
-  | #T2 #HT12 #HT2 #H destruct -IHV1
-    /4 width=8 by lpx_pair, aaa_inv_lifts, drops_refl, drops_drop/
+  | #X1 #HXT1 #HX1 #H destruct -IHV1
+    elim (cpx_lifts_sn … HX1 (Ⓣ) … (L1.ⓓV1) … HXT1) -X1
+    /4 width=7 by lpx_pair, aaa_inv_lifts, drops_refl, drops_drop/
   ]
 | #p #G #L1 #V1 #T1 #B #A #_ #_ #IHV1 #IHT1 #X #H #L2 #HL12
   elim (cpx_inv_abst1 … H) -H #V2 #T2 #HV12 #HT12 #H destruct

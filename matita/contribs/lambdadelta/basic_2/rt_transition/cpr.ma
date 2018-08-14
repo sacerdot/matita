@@ -50,7 +50,7 @@ qed-.
 
 (* Basic_1: includes: pr0_gen_sort pr2_gen_sort *)
 lemma cpr_inv_sort1: ∀h,G,L,T2,s. ⦃G, L⦄ ⊢ ⋆s ➡[h] T2 → T2 = ⋆s.
-#h #G #L #T2 #s #H elim (cpm_inv_sort1 … H) -H * [ // ] #_ #H destruct
+#h #G #L #T2 #s #H elim (cpm_inv_sort1 … H) -H //
 qed-.
 
 lemma cpr_inv_zero1: ∀h,G,L,T2. ⦃G, L⦄ ⊢ #0 ➡[h] T2 →
@@ -113,8 +113,8 @@ lemma cpr_ind (h): ∀Q:relation4 genv lenv term term.
                      Q G L V1 V2 → Q G (L.ⓑ{I}V1) T1 T2 → Q G L (ⓑ{p,I}V1.T1) (ⓑ{p,I}V2.T2)
                    ) → (∀I,G,L,V1,V2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 → ⦃G, L⦄ ⊢ T1 ➡[h] T2 →
                      Q G L V1 V2 → Q G L T1 T2 → Q G L (ⓕ{I}V1.T1) (ⓕ{I}V2.T2)
-                   ) → (∀G,L,V,T1,T,T2. ⦃G, L.ⓓV⦄ ⊢ T1 ➡[h] T → Q G (L.ⓓV) T1 T →
-                     ⬆*[1] T2 ≘ T → Q G L (+ⓓV.T1) T2
+                   ) → (∀G,L,V,T1,T,T2. ⬆*[1] T ≘ T1 → ⦃G, L⦄ ⊢ T ➡[h] T2 →
+                     Q G L T T2 → Q G L (+ⓓV.T1) T2
                    ) → (∀G,L,V,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[h] T2 → Q G L T1 T2 →
                      Q G L (ⓝV.T1) T2
                    ) → (∀p,G,L,V1,V2,W1,W2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 → ⦃G, L⦄ ⊢ W1 ➡[h] W2 → ⦃G, L.ⓛW1⦄ ⊢ T1 ➡[h] T2 →

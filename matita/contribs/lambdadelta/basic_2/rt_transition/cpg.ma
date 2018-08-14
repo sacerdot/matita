@@ -41,8 +41,8 @@ inductive cpg (Rt:relation rtc) (h): rtc → relation4 genv lenv term term ≝
 | cpg_cast : ∀cU,cT,G,L,U1,U2,T1,T2. Rt cU cT →
              cpg Rt h cU G L U1 U2 → cpg Rt h cT G L T1 T2 →
              cpg Rt h (cU∨cT) G L (ⓝU1.T1) (ⓝU2.T2)
-| cpg_zeta : ∀c,G,L,V,T1,T,T2. cpg Rt h c G (L.ⓓV) T1 T →
-             ⬆*[1] T2 ≘ T → cpg Rt h (c+𝟙𝟘) G L (+ⓓV.T1) T2
+| cpg_zeta : ∀c,G,L,V,T1,T,T2. ⬆*[1] T ≘ T1 → cpg Rt h c G L T T2 →
+             cpg Rt h (c+𝟙𝟘) G L (+ⓓV.T1) T2
 | cpg_eps  : ∀c,G,L,V,T1,T2. cpg Rt h c G L T1 T2 → cpg Rt h (c+𝟙𝟘) G L (ⓝV.T1) T2
 | cpg_ee   : ∀c,G,L,V1,V2,T. cpg Rt h c G L V1 V2 → cpg Rt h (c+𝟘𝟙) G L (ⓝV1.T) V2
 | cpg_beta : ∀cV,cW,cT,p,G,L,V1,V2,W1,W2,T1,T2.
@@ -153,7 +153,7 @@ fact cpg_inv_bind1_aux: ∀Rt,c,h,G,L,U,U2. ⦃G, L⦄ ⊢ U ⬈[Rt, c, h] U2 �
                         ∀p,J,V1,U1. U = ⓑ{p,J}V1.U1 →
                         ∨∨ ∃∃cV,cT,V2,T2. ⦃G, L⦄ ⊢ V1 ⬈[Rt, cV, h] V2 & ⦃G, L.ⓑ{J}V1⦄ ⊢ U1 ⬈[Rt, cT, h] T2 &
                                           U2 = ⓑ{p,J}V2.T2 & c = ((↕*cV)∨cT)
-                         | ∃∃cT,T. ⦃G, L.ⓓV1⦄ ⊢ U1 ⬈[Rt, cT, h] T & ⬆*[1] U2 ≘ T &
+                         | ∃∃cT,T. ⬆*[1] T ≘ U1 & ⦃G, L⦄ ⊢ T ⬈[Rt, cT, h] U2 & 
                                    p = true & J = Abbr & c = cT+𝟙𝟘.
 #Rt #c #h #G #L #U #U2 * -c -G -L -U -U2
 [ #I #G #L #q #J #W #U1 #H destruct
@@ -175,14 +175,14 @@ qed-.
 lemma cpg_inv_bind1: ∀Rt,c,h,p,I,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓑ{p,I}V1.T1 ⬈[Rt, c, h] U2 →
                      ∨∨ ∃∃cV,cT,V2,T2. ⦃G, L⦄ ⊢ V1 ⬈[Rt, cV, h] V2 & ⦃G, L.ⓑ{I}V1⦄ ⊢ T1 ⬈[Rt, cT, h] T2 &
                                        U2 = ⓑ{p,I}V2.T2 & c = ((↕*cV)∨cT)
-                      | ∃∃cT,T. ⦃G, L.ⓓV1⦄ ⊢ T1 ⬈[Rt, cT, h] T & ⬆*[1] U2 ≘ T &
+                      | ∃∃cT,T. ⬆*[1] T ≘ T1 & ⦃G, L⦄ ⊢ T ⬈[Rt, cT, h] U2 &
                                 p = true & I = Abbr & c = cT+𝟙𝟘.
 /2 width=3 by cpg_inv_bind1_aux/ qed-.
 
 lemma cpg_inv_abbr1: ∀Rt,c,h,p,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓓ{p}V1.T1 ⬈[Rt, c, h] U2 →
                      ∨∨ ∃∃cV,cT,V2,T2. ⦃G, L⦄ ⊢ V1 ⬈[Rt, cV, h] V2 & ⦃G, L.ⓓV1⦄ ⊢ T1 ⬈[Rt, cT, h] T2 &
                                        U2 = ⓓ{p}V2.T2 & c = ((↕*cV)∨cT)
-                      | ∃∃cT,T. ⦃G, L.ⓓV1⦄ ⊢ T1 ⬈[Rt, cT, h] T & ⬆*[1] U2 ≘ T &
+                      | ∃∃cT,T. ⬆*[1] T ≘ T1 & ⦃G, L⦄ ⊢ T ⬈[Rt, cT, h] U2 &
                                 p = true & c = cT+𝟙𝟘.
 #Rt #c #h #p #G #L #V1 #T1 #U2 #H elim (cpg_inv_bind1 … H) -H *
 /3 width=8 by ex4_4_intro, ex4_2_intro, or_introl, or_intror/

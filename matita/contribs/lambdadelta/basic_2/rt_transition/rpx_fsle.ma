@@ -15,6 +15,7 @@
 include "static_2/static/fsle_drops.ma".
 include "static_2/static/rex_fsle.ma".
 include "basic_2/rt_transition/rpx_length.ma".
+include "basic_2/rt_transition/rpx_drops.ma".
 include "basic_2/rt_transition/rpx_fqup.ma".
 
 (* UNBOUND PARALLEL RT-TRANSITION FOR REFERRED LOCAL ENVIRONMENTS ***********)
@@ -72,9 +73,10 @@ lemma rpx_cpx_conf_fsge (h) (G): ∀L0,T0,T1. ⦃G, L0⦄ ⊢ T0 ⬈[h] T1 →
   [ #V1 #T1 #HV01 #HT01 #H destruct
     lapply (rpx_fwd_length … HV0) #H0
     /4 width=6 by fsle_bind_eq, fsle_fwd_pair_sn/
-  | #T #HT #HXT #H1 #H2 destruct
+  | #T #H2T0 #HTX #H1 #H2 destruct
+    lapply (rpx_inv_lifts_bi … HT0 (Ⓣ) … H2T0) -HT0 [6:|*: /3 width=2 by drops_refl, drops_drop/ ] #HT
     lapply (rpx_fwd_length … HV0) #H0
-    /3 width=8 by fsle_inv_lifts_sn/
+    /5 width=6 by fsle_bind_dx_dx, fsle_lifts_dx, fqup_zeta/
   ]
 | #I #V0 #X0 #HG #HL #HT #X #HX #Y #HY destruct
   elim (rex_inv_flat … HY) -HY #HV0 #HX0

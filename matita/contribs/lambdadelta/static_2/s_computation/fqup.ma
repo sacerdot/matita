@@ -83,4 +83,10 @@ lemma fqup_ind_dx: ∀b,G2,L2,T2. ∀Q:relation3 ….
 @(tri_TC_ind_dx … IH1 IH2 G1 L1 T1 H)
 qed-.
 
+(* Advanced properties ******************************************************)
+
+lemma fqup_zeta (b) (p) (I) (G) (K) (V):
+                ∀T1,T2. ⬆*[1]T2 ≘ T1 → ⦃G,K,ⓑ{p,I}V.T1⦄ ⊐+[b] ⦃G,K,T2⦄.
+/4 width=5 by fqup_strap2, fqu_fqup, fqu_drop/ qed.
+
 (* Basic_2A1: removed theorems 1: fqup_drop *)

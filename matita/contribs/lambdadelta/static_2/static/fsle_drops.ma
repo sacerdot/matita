@@ -29,6 +29,17 @@ lapply (frees_lifts_SO (Ⓣ) (L1.ⓧ) … HTU1 … Hf)
 @(ex4_4_intro … Hf Hg) /2 width=4 by lveq_void_sn/ (**) (* explict constructor *)
 qed-.
 
+lemma fsle_lifts_dx (L1) (L2):
+                    |L1| ≤ |L2| → ∀T2,U2. ⬆*[1]T2 ≘ U2 →
+                    ∀T1. ⦃L1,T1⦄ ⊆ ⦃L2,T2⦄ → ⦃L1,T1⦄ ⊆ ⦃L2.ⓧ,U2⦄.
+#L1 #L2 #HL21 #T2 #U2 #HTU2 #T1
+* #n #m #f #g #Hf #Hg #H2L #Hfg
+lapply (lveq_length_fwd_sn … H2L ?) // -HL21 #H destruct
+lapply (frees_lifts_SO (Ⓣ) (L2.ⓧ) … HTU2 … Hg)
+[ /3 width=4 by drops_refl, drops_drop/ ] -T2 #Hg
+@(ex4_4_intro … Hf Hg) /2 width=4 by lveq_void_dx/ (**) (* explict constructor *)
+qed-.
+
 lemma fsle_lifts_SO_sn: ∀K1,K2. |K1| = |K2| → ∀V1,V2. ⦃K1, V1⦄ ⊆ ⦃K2, V2⦄ →
                         ∀W1. ⬆*[1] V1 ≘ W1 → ∀I1,I2. ⦃K1.ⓘ{I1}, W1⦄ ⊆ ⦃K2.ⓑ{I2}V2, #O⦄.
 #K1 #K2 #HK #V1 #V2

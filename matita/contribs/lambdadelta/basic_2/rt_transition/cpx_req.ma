@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/static/req.ma".
+include "static_2/static/req_drops.ma".
 include "basic_2/rt_transition/rpx_fsle.ma".
 
 (* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS ***************)
@@ -32,8 +32,10 @@ lemma req_cpx_trans: ∀h,G. req_transitive (cpx h G).
   elim (req_inv_bind … H) -H /3 width=1 by cpx_bind/
 | #I #G #L2 #V1 #V2 #T1 #T2 #_ #_ #IHV12 #IHT12 #L1 #H
   elim (req_inv_flat … H) -H /3 width=1 by cpx_flat/
-| #G #L2 #V2 #T1 #T #T2 #_ #HT2 #IH #L1 #H
-  elim (req_inv_bind … H) -H /3 width=3 by cpx_zeta/
+| #G #L2 #V2 #T1 #T #T2 #HT1 #_ #IH #L1 #H
+  elim (req_inv_bind … H) -H #HV2 #H
+  lapply (req_inv_lifts_bi … H (Ⓣ) … HT1) -H [6:|*: /3 width=2 by drops_refl, drops_drop/ ] #HT
+  /3 width=3 by cpx_zeta/
 | #G #L2 #W1 #T1 #T2 #_ #IH #L1 #H
   elim (req_inv_flat … H) -H /3 width=1 by cpx_eps/
 | #G #L2 #W1 #W2 #T1 #_ #IH #L1 #H

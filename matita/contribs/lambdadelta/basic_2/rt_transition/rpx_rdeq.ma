@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "static_2/static/rdeq_drops.ma".
 include "static_2/static/rdeq_fqup.ma".
 include "static_2/static/rdeq_rdeq.ma".
 include "basic_2/rt_transition/rpx_fsle.ma".
@@ -75,13 +76,14 @@ lemma cpx_tdeq_conf_sex: ∀h,o,G. R_confluent2_rex … (cpx h G) (cdeq h o) (cp
   elim (IHV … HV02 … HL01 … HL02) -IHV -HV02 -HL01 -HL02
   elim (IHT … HT02 … H1 … H2) -L0 -V0 -T0
   /3 width=5 by cpx_flat, tdeq_pair, ex2_intro/
-| #G #L0 #V0 #T0 #T1 #U1 #_ #IH #HUT1 #X0 #H0 #L1 #H1 #L2 #H2
-  elim (tdeq_inv_pair1 … H0) -H0 #V2 #T2 #HV02 #HT02 #H destruct
+| #G #L0 #V0 #U0 #T0 #T1 #HTU0 #_ #IH #X0 #H0 #L1 #H1 #L2 #H2
+  elim (tdeq_inv_pair1 … H0) -H0 #V2 #U2 #HV02 #HU02 #H destruct
   elim (rpx_inv_bind … H1) -H1 #HL01 #H1
   elim (rdeq_inv_bind … H2) -H2 #HL02 #H2
-  lapply (rdeq_bind_repl_dx … H2 (BPair Abbr V2) ?) -H2 /2 width=1 by ext2_pair/ -HV02 #H2
+  lapply (rpx_inv_lifts_bi … H1 (Ⓣ) … HTU0) -H1 [6:|*: /3 width=2 by drops_refl, drops_drop/ ] #H1
+  lapply (rdeq_inv_lifts_bi … H2 (Ⓣ) … HTU0) -H2 [6:|*: /3 width=2 by drops_refl, drops_drop/ ] #H2
+  elim (tdeq_inv_lifts_sn … HU02 … HTU0) -U0 #T2 #HTU2 #HT02
   elim (IH … HT02 … H1 … H2) -L0 -T0 #T #HT1
-  elim (tdeq_inv_lifts_sn … HT1 … HUT1) -T1
   /3 width=5 by cpx_zeta, ex2_intro/
 | #G #L0 #V0 #T0 #T1 #_ #IH #X0 #H0 #L1 #H1 #L2 #H2
   elim (tdeq_inv_pair1 … H0) -H0 #V2 #T2 #_ #HT02 #H destruct

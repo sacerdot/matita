@@ -36,7 +36,7 @@ table {
           }
         ]
         [ { "syntactic equivalence" * } {
-             [ [ "for lenvs on referred entries" ] "req" + "( ? ≡[?] ? )" "req_fqup" + "req_fsle" * ]
+             [ [ "for lenvs on referred entries" ] "req" + "( ? ≡[?] ? )" "req_drops" + "req_fqup" + "req_fsle" * ]
           }
         ]
         [ { "generic extension of a context-sensitive relation" * } {

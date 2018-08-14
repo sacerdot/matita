@@ -76,9 +76,10 @@ lemma cpm_cast: ∀n,h,G,L,U1,U2,T1,T2.
 qed.
 
 (* Basic_2A1: includes: cpr_zeta *)
-lemma cpm_zeta: ∀n,h,G,L,V,T1,T,T2. ⦃G, L.ⓓV⦄ ⊢ T1 ➡[n, h] T →
-                ⬆*[1] T2 ≘ T → ⦃G, L⦄ ⊢ +ⓓV.T1 ➡[n, h] T2.
-#n #h #G #L #V #T1 #T #T2 *
+lemma cpm_zeta (n) (h) (G) (L):
+               ∀T1,T. ⬆*[1] T ≘ T1 → ∀T2. ⦃G, L⦄ ⊢ T ➡[n,h] T2 →
+               ∀V. ⦃G, L⦄ ⊢ +ⓓV.T1 ➡[n, h] T2.
+#n #h #G #L #T1 #T #HT1 #T2 *
 /3 width=5 by cpg_zeta, isrt_plus_O2, ex2_intro/
 qed.
 
@@ -143,11 +144,11 @@ lemma cpm_inv_atom1: ∀n,h,J,G,L,T2. ⦃G, L⦄ ⊢ ⓪{J} ➡[n, h] T2 →
 qed-.
 
 lemma cpm_inv_sort1: ∀n,h,G,L,T2,s. ⦃G, L⦄ ⊢ ⋆s ➡[n,h] T2 →
-                     ∨∨ T2 = ⋆s ∧ n = 0
-                      | T2 = ⋆(next h s) ∧ n = 1.
-#n #h #G #L #T2 #s * #c #Hc #H elim (cpg_inv_sort1 … H) -H *
-#H1 #H2 destruct
-/4 width=1 by isrt_inv_01, isrt_inv_00, or_introl, or_intror, conj/
+                     ∧∧ T2 = ⋆(((next h)^n) s) & n ≤ 1.
+#n #h #G #L #T2 #s * #c #Hc #H
+elim (cpg_inv_sort1 … H) -H * #H1 #H2 destruct
+[ lapply (isrt_inv_00 … Hc) | lapply (isrt_inv_01 … Hc) ] -Hc
+#H destruct /2 width=1 by conj/
 qed-.
 
 lemma cpm_inv_zero1: ∀n,h,G,L,T2. ⦃G, L⦄ ⊢ #0 ➡[n, h] T2 →
@@ -185,15 +186,15 @@ qed-.
 lemma cpm_inv_bind1: ∀n,h,p,I,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓑ{p,I}V1.T1 ➡[n, h] U2 →
                      ∨∨ ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 & ⦃G, L.ⓑ{I}V1⦄ ⊢ T1 ➡[n, h] T2 &
                                  U2 = ⓑ{p,I}V2.T2
-                      | ∃∃T. ⦃G, L.ⓓV1⦄ ⊢ T1 ➡[n, h] T & ⬆*[1] U2 ≘ T &
+                      | ∃∃T. ⬆*[1] T ≘ T1 & ⦃G, L⦄ ⊢ T ➡[n, h] U2 & 
                              p = true & I = Abbr.
 #n #h #p #I #G #L #V1 #T1 #U2 * #c #Hc #H elim (cpg_inv_bind1 … H) -H *
 [ #cV #cT #V2 #T2 #HV12 #HT12 #H1 #H2 destruct
   elim (isrt_inv_max … Hc) -Hc #nV #nT #HcV #HcT #H destruct
   elim (isrt_inv_shift … HcV) -HcV #HcV #H destruct
   /4 width=5 by ex3_2_intro, ex2_intro, or_introl/
-| #cT #T2 #HT12 #HUT2 #H1 #H2 #H3 destruct
-  /5 width=3 by isrt_inv_plus_O_dx, ex4_intro, ex2_intro, or_intror/
+| #cT #T2 #HT21 #HTU2 #H1 #H2 #H3 destruct
+  /5 width=5 by isrt_inv_plus_O_dx, ex4_intro, ex2_intro, or_intror/
 ]
 qed-.
 
@@ -202,14 +203,11 @@ qed-.
 lemma cpm_inv_abbr1: ∀n,h,p,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓓ{p}V1.T1 ➡[n, h] U2 →
                      ∨∨ ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 & ⦃G, L.ⓓV1⦄ ⊢ T1 ➡[n, h] T2 &
                                  U2 = ⓓ{p}V2.T2
-                      | ∃∃T. ⦃G, L.ⓓV1⦄ ⊢ T1 ➡[n, h] T & ⬆*[1] U2 ≘ T & p = true.
-#n #h #p #G #L #V1 #T1 #U2 * #c #Hc #H elim (cpg_inv_abbr1 … H) -H *
-[ #cV #cT #V2 #T2 #HV12 #HT12 #H1 #H2 destruct
-  elim (isrt_inv_max … Hc) -Hc #nV #nT #HcV #HcT #H destruct
-  elim (isrt_inv_shift … HcV) -HcV #HcV #H destruct
-  /4 width=5 by ex3_2_intro, ex2_intro, or_introl/
-| #cT #T2 #HT12 #HUT2 #H1 #H2 destruct
-  /5 width=3 by isrt_inv_plus_O_dx, ex3_intro, ex2_intro, or_intror/
+                      | ∃∃T. ⬆*[1] T ≘ T1 & ⦃G, L⦄ ⊢ T ➡[n, h] U2 & p = true.
+#n #h #p #G #L #V1 #T1 #U2 #H
+elim (cpm_inv_bind1 … H) -H
+[ /3 width=1 by or_introl/
+| * /3 width=3 by ex3_intro, or_intror/
 ]
 qed-.
 
@@ -218,11 +216,11 @@ qed-.
 lemma cpm_inv_abst1: ∀n,h,p,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓛ{p}V1.T1 ➡[n, h] U2 →
                      ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡[h] V2 & ⦃G, L.ⓛV1⦄ ⊢ T1 ➡[n, h] T2 &
                               U2 = ⓛ{p}V2.T2.
-#n #h #p #G #L #V1 #T1 #U2 * #c #Hc #H elim (cpg_inv_abst1 … H) -H
-#cV #cT #V2 #T2 #HV12 #HT12 #H1 #H2 destruct
-elim (isrt_inv_max … Hc) -Hc #nV #nT #HcV #HcT #H destruct
-elim (isrt_inv_shift … HcV) -HcV #HcV #H destruct
-/3 width=5 by ex3_2_intro, ex2_intro/
+#n #h #p #G #L #V1 #T1 #U2 #H
+elim (cpm_inv_bind1 … H) -H
+[ /3 width=1 by or_introl/
+| * #T #_ #_ #_ #H destruct  
+]
 qed-.
 
 (* Basic_1: includes: pr0_gen_appl pr2_gen_appl *)
@@ -304,8 +302,8 @@ lemma cpm_ind (h): ∀Q:relation5 nat genv lenv term term.
                      Q 0 G L V1 V2 → Q n G L T1 T2 → Q n G L (ⓐV1.T1) (ⓐV2.T2)
                    ) → (∀n,G,L,V1,V2,T1,T2. ⦃G, L⦄ ⊢ V1 ➡[n, h] V2 → ⦃G, L⦄ ⊢ T1 ➡[n, h] T2 →
                      Q n G L V1 V2 → Q n G L T1 T2 → Q n G L (ⓝV1.T1) (ⓝV2.T2)
-                   ) → (∀n,G,L,V,T1,T,T2. ⦃G, L.ⓓV⦄ ⊢ T1 ➡[n, h] T → Q n G (L.ⓓV) T1 T →
-                     ⬆*[1] T2 ≘ T → Q n G L (+ⓓV.T1) T2
+                   ) → (∀n,G,L,V,T1,T,T2. ⬆*[1] T ≘ T1 → ⦃G, L⦄ ⊢ T ➡[n, h] T2 →
+                     Q n G L T T2 → Q n G L (+ⓓV.T1) T2
                    ) → (∀n,G,L,V,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[n, h] T2 →
                      Q n G L T1 T2 → Q n G L (ⓝV.T1) T2
                    ) → (∀n,G,L,V1,V2,T. ⦃G, L⦄ ⊢ V1 ➡[n, h] V2 →
@@ -337,7 +335,7 @@ elim H -c -G -L -T1 -T2
 | #cU #cT #G #L #U1 #U2 #T1 #T2 #HUT #HU12 #HT12 #IHU #IHT #n #H
   elim (isrt_inv_max_eq_t … H) -H // #HcV #HcT
   /3 width=3 by ex2_intro/
-| #c #G #L #V #T1 #T2 #T #HT12 #HT2 #IH #n #H
+| #c #G #L #V #T1 #T #T2 #HT1 #HT2 #IH #n #H
   lapply (isrt_inv_plus_O_dx … H ?) -H // #Hc
   /3 width=4 by ex2_intro/
 | #c #G #L #U #T1 #T2 #HT12 #IH #n #H

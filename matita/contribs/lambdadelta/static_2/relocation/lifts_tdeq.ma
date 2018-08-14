@@ -64,3 +64,21 @@ qed-.
 
 lemma tdeq_inv_lifts_bi: ∀h,o. deliftable2_bi (tdeq h o).
 /3 width=6 by tdeq_inv_lifts_sn, deliftable2_sn_bi/ qed-.
+
+lemma tdeq_lifts_inv_pair_sn (h) (o) (I) (f:rtmap):
+                             ∀X,T. ⬆*[f]X ≘ T → ∀V. ②{I}V.T ≛[h,o] X → ⊥.
+#h #o #I #f #X #T #H elim H -f -X -T
+[ #f #s #V #H
+  elim (tdeq_inv_pair1 … H) -H #X1 #X2 #_ #_ #H destruct
+| #f #i #j #_ #V #H
+  elim (tdeq_inv_pair1 … H) -H #X1 #X2 #_ #_ #H destruct
+| #f #l #V #H
+  elim (tdeq_inv_pair1 … H) -H #X1 #X2 #_ #_ #H destruct
+| #f #p #J #X1 #T1 #X2 #T2 #_ #_ #_ #IH2 #V #H
+  elim (tdeq_inv_pair1 … H) -H #Z1 #Z2 #_ #HZ2 #H destruct
+  /2 width=2 by/
+| #f #J #X1 #T1 #X2 #T2 #_ #_ #_ #IH2 #V #H
+  elim (tdeq_inv_pair1 … H) -H #Z1 #Z2 #_ #HZ2 #H destruct
+  /2 width=2 by/
+]
+qed-.

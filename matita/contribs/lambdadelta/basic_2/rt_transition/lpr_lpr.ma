@@ -20,6 +20,11 @@ include "basic_2/rt_transition/lpr_drops.ma".
 
 (* PARALLEL R-TRANSITION FOR FULL LOCAL ENVIRONMENTS ************************)
 
+definition IH_cpr_conf_lpr (h): relation3 genv lenv term ≝ λG,L,T.
+                           ∀T1. ⦃G, L⦄ ⊢ T ➡[h] T1 → ∀T2. ⦃G, L⦄ ⊢ T ➡[h] T2 →
+                           ∀L1. ⦃G, L⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G, L⦄ ⊢ ➡[h] L2 →
+                           ∃∃T0. ⦃G, L1⦄ ⊢ T1 ➡[h] T0 & ⦃G, L2⦄ ⊢ T2 ➡[h] T0.
+
 (* Main properties with context-sensitive parallel reduction for terms ******)
 
 fact cpr_conf_lpr_atom_atom (h):
@@ -27,16 +32,13 @@ fact cpr_conf_lpr_atom_atom (h):
 /2 width=3 by cpr_refl, ex2_intro/ qed-.
 
 fact cpr_conf_lpr_atom_delta (h):
-   ∀G,L0,i. (
-      ∀L,T. ⦃G, L0, #i⦄ ⊐+ ⦃G, L, T⦄ →
-      ∀T1. ⦃G, L⦄ ⊢ T ➡[h] T1 → ∀T2. ⦃G, L⦄ ⊢ T ➡[h] T2 →
-      ∀L1. ⦃G, L⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G, L⦄ ⊢ ➡[h] L2 →
-      ∃∃T0. ⦃G, L1⦄ ⊢ T1 ➡[h] T0 & ⦃G, L2⦄ ⊢ T2 ➡[h] T0
+   ∀G0,L0,i. (
+      ∀G,L,T. ⦃G0, L0, #i⦄ ⊐+ ⦃G, L, T⦄ → IH_cpr_conf_lpr h G L T
    ) →
    ∀K0,V0. ⬇*[i] L0 ≘ K0.ⓓV0 →
-   ∀V2. ⦃G, K0⦄ ⊢ V0 ➡[h] V2 → ∀T2. ⬆*[↑i] V2 ≘ T2 →
-   ∀L1. ⦃G, L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G, L0⦄ ⊢ ➡[h] L2 →
-   ∃∃T. ⦃G, L1⦄ ⊢ #i ➡[h] T & ⦃G, L2⦄ ⊢ T2 ➡[h] T.
+   ∀V2. ⦃G0, K0⦄ ⊢ V0 ➡[h] V2 → ∀T2. ⬆*[↑i] V2 ≘ T2 →
+   ∀L1. ⦃G0, L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G0, L0⦄ ⊢ ➡[h] L2 →
+   ∃∃T. ⦃G0, L1⦄ ⊢ #i ➡[h] T & ⦃G0, L2⦄ ⊢ T2 ➡[h] T.
 #h #G0 #L0 #i #IH #K0 #V0 #HLK0 #V2 #HV02 #T2 #HVT2 #L1 #HL01 #L2 #HL02
 elim (lpr_drops_conf … HLK0 … HL01) -HL01 // #X1 #H1 #HLK1
 elim (lpr_inv_pair_sn … H1) -H1 #K1 #V1 #HK01 #HV01 #H destruct
@@ -51,18 +53,15 @@ qed-.
 
 (* Basic_1: includes: pr0_delta_delta pr2_delta_delta *)
 fact cpr_conf_lpr_delta_delta (h):
-   ∀G,L0,i. (
-      ∀L,T. ⦃G, L0, #i⦄ ⊐+ ⦃G, L, T⦄ →
-      ∀T1. ⦃G, L⦄ ⊢ T ➡[h] T1 → ∀T2. ⦃G, L⦄ ⊢ T ➡[h] T2 →
-      ∀L1. ⦃G, L⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G, L⦄ ⊢ ➡[h] L2 →
-      ∃∃T0. ⦃G, L1⦄ ⊢ T1 ➡[h] T0 & ⦃G, L2⦄ ⊢ T2 ➡[h] T0
+   ∀G0,L0,i. (
+      ∀G,L,T. ⦃G0, L0, #i⦄ ⊐+ ⦃G, L, T⦄ → IH_cpr_conf_lpr h G L T
    ) →
    ∀K0,V0. ⬇*[i] L0 ≘ K0.ⓓV0 →
-   ∀V1. ⦃G, K0⦄ ⊢ V0 ➡[h] V1 → ∀T1. ⬆*[↑i] V1 ≘ T1 →
+   ∀V1. ⦃G0, K0⦄ ⊢ V0 ➡[h] V1 → ∀T1. ⬆*[↑i] V1 ≘ T1 →
    ∀KX,VX. ⬇*[i] L0 ≘ KX.ⓓVX →
-   ∀V2. ⦃G, KX⦄ ⊢ VX ➡[h] V2 → ∀T2. ⬆*[↑i] V2 ≘ T2 →
-   ∀L1. ⦃G, L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G, L0⦄ ⊢ ➡[h] L2 →
-   ∃∃T. ⦃G, L1⦄ ⊢ T1 ➡[h] T & ⦃G, L2⦄ ⊢ T2 ➡[h] T.
+   ∀V2. ⦃G0, KX⦄ ⊢ VX ➡[h] V2 → ∀T2. ⬆*[↑i] V2 ≘ T2 →
+   ∀L1. ⦃G0, L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G0, L0⦄ ⊢ ➡[h] L2 →
+   ∃∃T. ⦃G0, L1⦄ ⊢ T1 ➡[h] T & ⦃G0, L2⦄ ⊢ T2 ➡[h] T.
 #h #G0 #L0 #i #IH #K0 #V0 #HLK0 #V1 #HV01 #T1 #HVT1
 #KX #VX #H #V2 #HV02 #T2 #HVT2 #L1 #HL01 #L2 #HL02
 lapply (drops_mono … H … HLK0) -H #H destruct
@@ -79,16 +78,13 @@ elim (cpm_lifts_sn … HV1 … HLK1 … HVT1) -V1 -HLK1 #T #HVT #HT1
 qed-.
 
 fact cpr_conf_lpr_bind_bind (h):
-   ∀p,I,G,L0,V0,T0. (
-      ∀L,T. ⦃G, L0, ⓑ{p,I}V0.T0⦄ ⊐+ ⦃G, L, T⦄ →
-      ∀T1. ⦃G, L⦄ ⊢ T ➡[h] T1 → ∀T2. ⦃G, L⦄ ⊢ T ➡[h] T2 →
-      ∀L1. ⦃G, L⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G, L⦄ ⊢ ➡[h] L2 →
-      ∃∃T0. ⦃G, L1⦄ ⊢ T1 ➡[h] T0 & ⦃G, L2⦄ ⊢ T2 ➡[h] T0
+   ∀p,I,G0,L0,V0,T0. (
+      ∀G,L,T. ⦃G0, L0, ⓑ{p,I}V0.T0⦄ ⊐+ ⦃G, L, T⦄ → IH_cpr_conf_lpr h G L T
    ) →
-   ∀V1. ⦃G, L0⦄ ⊢ V0 ➡[h] V1 → ∀T1. ⦃G, L0.ⓑ{I}V0⦄ ⊢ T0 ➡[h] T1 →
-   ∀V2. ⦃G, L0⦄ ⊢ V0 ➡[h] V2 → ∀T2. ⦃G, L0.ⓑ{I}V0⦄ ⊢ T0 ➡[h] T2 →
-   ∀L1. ⦃G, L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G, L0⦄ ⊢ ➡[h] L2 →
-   ∃∃T. ⦃G, L1⦄ ⊢ ⓑ{p,I}V1.T1 ➡[h] T & ⦃G, L2⦄ ⊢ ⓑ{p,I}V2.T2 ➡[h] T.
+   ∀V1. ⦃G0, L0⦄ ⊢ V0 ➡[h] V1 → ∀T1. ⦃G0, L0.ⓑ{I}V0⦄ ⊢ T0 ➡[h] T1 →
+   ∀V2. ⦃G0, L0⦄ ⊢ V0 ➡[h] V2 → ∀T2. ⦃G0, L0.ⓑ{I}V0⦄ ⊢ T0 ➡[h] T2 →
+   ∀L1. ⦃G0, L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G0, L0⦄ ⊢ ➡[h] L2 →
+   ∃∃T. ⦃G0, L1⦄ ⊢ ⓑ{p,I}V1.T1 ➡[h] T & ⦃G0, L2⦄ ⊢ ⓑ{p,I}V2.T2 ➡[h] T.
 #h #p #I #G0 #L0 #V0 #T0 #IH #V1 #HV01 #T1 #HT01
 #V2 #HV02 #T2 #HT02 #L1 #HL01 #L2 #HL02
 elim (IH … HV01 … HV02 … HL01 … HL02) //
@@ -97,54 +93,43 @@ elim (IH … HT01 … HT02 (L1.ⓑ{I}V1) … (L2.ⓑ{I}V2)) -IH
 qed-.
 
 fact cpr_conf_lpr_bind_zeta (h):
-   ∀G,L0,V0,T0. (
-      ∀L,T. ⦃G, L0, +ⓓV0.T0⦄ ⊐+ ⦃G, L, T⦄ →
-      ∀T1. ⦃G, L⦄ ⊢ T ➡[h] T1 → ∀T2. ⦃G, L⦄ ⊢ T ➡[h] T2 →
-      ∀L1. ⦃G, L⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G, L⦄ ⊢ ➡[h] L2 →
-      ∃∃T0. ⦃G, L1⦄ ⊢ T1 ➡[h] T0 & ⦃G, L2⦄ ⊢ T2 ➡[h] T0
+   ∀G0,L0,V0,T0. (
+      ∀G,L,T. ⦃G0, L0, +ⓓV0.T0⦄ ⊐+ ⦃G, L, T⦄ → IH_cpr_conf_lpr h G L T
    ) →
-   ∀V1. ⦃G, L0⦄ ⊢ V0 ➡[h] V1 → ∀T1. ⦃G, L0.ⓓV0⦄ ⊢ T0 ➡[h] T1 →
-   ∀T2. ⦃G, L0.ⓓV0⦄ ⊢ T0 ➡[h] T2 → ∀X2. ⬆*[1] X2 ≘ T2 →
-   ∀L1. ⦃G, L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G, L0⦄ ⊢ ➡[h] L2 →
-   ∃∃T. ⦃G, L1⦄ ⊢ +ⓓV1.T1 ➡[h] T & ⦃G, L2⦄ ⊢ X2 ➡[h] T.
+   ∀V1. ⦃G0, L0⦄ ⊢ V0 ➡[h] V1 → ∀T1. ⦃G0, L0.ⓓV0⦄ ⊢ T0 ➡[h] T1 →
+   ∀T2. ⬆*[1]T2 ≘ T0 → ∀X2. ⦃G0, L0⦄ ⊢ T2 ➡[h] X2 →  
+   ∀L1. ⦃G0, L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G0, L0⦄ ⊢ ➡[h] L2 →
+   ∃∃T. ⦃G0, L1⦄ ⊢ +ⓓV1.T1 ➡[h] T & ⦃G0, L2⦄ ⊢ X2 ➡[h] T.
 #h #G0 #L0 #V0 #T0 #IH #V1 #HV01 #T1 #HT01
-#T2 #HT02 #X2 #HXT2 #L1 #HL01 #L2 #HL02
-elim (IH … HT01 … HT02 (L1.ⓓV1) … (L2.ⓓV1)) -IH -HT01 -HT02 /2 width=1 by lpr_pair/ -L0 -V0 -T0 #T #HT1 #HT2
-elim (cpm_inv_lifts_sn … HT2 (Ⓣ) … L2 … HXT2) -T2
-/3 width=3 by cpm_zeta, drops_refl, drops_drop, ex2_intro/
+#T2 #HT20 #X2 #HTX2 #L1 #HL01 #L2 #HL02
+elim (cpm_inv_lifts_sn … HT01 (Ⓣ) … L0 … HT20) -HT01 [| /3 width=1 by drops_refl, drops_drop/ ] #T #HT1 #HT2
+elim (IH … HT2 … HTX2 … HL01 … HL02) [| /2 width=1 by fqup_zeta/ ] -L0 -V0 -T0 -T2 #T2 #HT2 #HXT2
+/3 width=3 by cpm_zeta, ex2_intro/
 qed-.
 
 fact cpr_conf_lpr_zeta_zeta (h):
-   ∀G,L0,V0,T0. (
-      ∀L,T. ⦃G, L0, +ⓓV0.T0⦄ ⊐+ ⦃G, L, T⦄ →
-      ∀T1. ⦃G, L⦄ ⊢ T ➡[h] T1 → ∀T2. ⦃G, L⦄ ⊢ T ➡[h] T2 →
-      ∀L1. ⦃G, L⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G, L⦄ ⊢ ➡[h] L2 →
-      ∃∃T0. ⦃G, L1⦄ ⊢ T1 ➡[h] T0 & ⦃G, L2⦄ ⊢ T2 ➡[h] T0
+   ∀G0,L0,V0,T0. (
+      ∀G,L,T. ⦃G0, L0, +ⓓV0.T0⦄ ⊐+ ⦃G, L, T⦄ → IH_cpr_conf_lpr h G L T
    ) →
-   ∀T1. ⦃G, L0.ⓓV0⦄ ⊢ T0 ➡[h] T1 → ∀X1. ⬆*[1] X1 ≘ T1 →
-   ∀T2. ⦃G, L0.ⓓV0⦄ ⊢ T0 ➡[h] T2 → ∀X2. ⬆*[1] X2 ≘ T2 →
-   ∀L1. ⦃G, L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G, L0⦄ ⊢ ➡[h] L2 →
-   ∃∃T. ⦃G, L1⦄ ⊢ X1 ➡[h] T & ⦃G, L2⦄ ⊢ X2 ➡[h] T.
-#h #G0 #L0 #V0 #T0 #IH #T1 #HT01 #X1 #HXT1
-#T2 #HT02 #X2 #HXT2 #L1 #HL01 #L2 #HL02
-elim (IH … HT01 … HT02 (L1.ⓓV0) … (L2.ⓓV0)) -IH -HT01 -HT02 /2 width=1 by lpr_pair/ -L0 -T0 #T #HT1 #HT2
-elim (cpm_inv_lifts_sn … HT1 (Ⓣ) … L1 … HXT1) -T1 /3 width=2 by drops_refl, drops_drop/ #T1 #HT1 #HXT1
-elim (cpm_inv_lifts_sn … HT2 (Ⓣ) … L2 … HXT2) -T2 /3 width=2 by drops_refl, drops_drop/ #T2 #HT2 #HXT2
-lapply (lifts_inj … HT2 … HT1) -T #H destruct
+   ∀T1. ⬆*[1] T1 ≘ T0 → ∀X1. ⦃G0, L0⦄ ⊢ T1 ➡[h] X1 →
+   ∀T2. ⬆*[1] T2 ≘ T0 → ∀X2. ⦃G0, L0⦄ ⊢ T2 ➡[h] X2 →
+   ∀L1. ⦃G0, L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G0, L0⦄ ⊢ ➡[h] L2 →
+   ∃∃T. ⦃G0, L1⦄ ⊢ X1 ➡[h] T & ⦃G0, L2⦄ ⊢ X2 ➡[h] T.
+#h #G0 #L0 #V0 #T0 #IH #T1 #HT10 #X1 #HTX1
+#T2 #HT20 #X2 #HTX2 #L1 #HL01 #L2 #HL02
+lapply (lifts_inj … HT20 … HT10) -HT20 #H destruct
+elim (IH … HTX1 … HTX2 … HL01 … HL02) [| /2 width=1 by fqup_zeta/ ] -L0 -V0 -T0 -T1 #X #HX1 #HX2
 /2 width=3 by ex2_intro/
 qed-.
 
 fact cpr_conf_lpr_flat_flat (h):
-   ∀I,G,L0,V0,T0. (
-      ∀L,T. ⦃G, L0, ⓕ{I}V0.T0⦄ ⊐+ ⦃G, L, T⦄ →
-      ∀T1. ⦃G, L⦄ ⊢ T ➡[h] T1 → ∀T2. ⦃G, L⦄ ⊢ T ➡[h] T2 →
-      ∀L1. ⦃G, L⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G, L⦄ ⊢ ➡[h] L2 →
-      ∃∃T0. ⦃G, L1⦄ ⊢ T1 ➡[h] T0 & ⦃G, L2⦄ ⊢ T2 ➡[h] T0
+   ∀I,G0,L0,V0,T0. (
+      ∀G,L,T. ⦃G0, L0, ⓕ{I}V0.T0⦄ ⊐+ ⦃G, L, T⦄ → IH_cpr_conf_lpr h G L T
    ) →
-   ∀V1. ⦃G, L0⦄ ⊢ V0 ➡[h] V1 → ∀T1. ⦃G, L0⦄ ⊢ T0 ➡[h] T1 →
-   ∀V2. ⦃G, L0⦄ ⊢ V0 ➡[h] V2 → ∀T2. ⦃G, L0⦄ ⊢ T0 ➡[h] T2 →
-   ∀L1. ⦃G, L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G, L0⦄ ⊢ ➡[h] L2 →
-   ∃∃T. ⦃G, L1⦄ ⊢ ⓕ{I}V1.T1 ➡[h] T & ⦃G, L2⦄ ⊢ ⓕ{I}V2.T2 ➡[h] T.
+   ∀V1. ⦃G0, L0⦄ ⊢ V0 ➡[h] V1 → ∀T1. ⦃G0, L0⦄ ⊢ T0 ➡[h] T1 →
+   ∀V2. ⦃G0, L0⦄ ⊢ V0 ➡[h] V2 → ∀T2. ⦃G0, L0⦄ ⊢ T0 ➡[h] T2 →
+   ∀L1. ⦃G0, L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G0, L0⦄ ⊢ ➡[h] L2 →
+   ∃∃T. ⦃G0, L1⦄ ⊢ ⓕ{I}V1.T1 ➡[h] T & ⦃G0, L2⦄ ⊢ ⓕ{I}V2.T2 ➡[h] T.
 #h #I #G0 #L0 #V0 #T0 #IH #V1 #HV01 #T1 #HT01
 #V2 #HV02 #T2 #HT02 #L1 #HL01 #L2 #HL02
 elim (IH … HV01 … HV02 … HL01 … HL02) //
@@ -153,15 +138,12 @@ elim (IH … HT01 … HT02 … HL01 … HL02) //
 qed-.
 
 fact cpr_conf_lpr_flat_eps (h):
-   ∀G,L0,V0,T0. (
-      ∀L,T. ⦃G, L0, ⓝV0.T0⦄ ⊐+ ⦃G, L, T⦄ →
-      ∀T1. ⦃G, L⦄ ⊢ T ➡[h] T1 → ∀T2. ⦃G, L⦄ ⊢ T ➡[h] T2 →
-      ∀L1. ⦃G, L⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G, L⦄ ⊢ ➡[h] L2 →
-      ∃∃T0. ⦃G, L1⦄ ⊢ T1 ➡[h] T0 & ⦃G, L2⦄ ⊢ T2 ➡[h] T0
+   ∀G0,L0,V0,T0. (
+      ∀G,L,T. ⦃G0, L0, ⓝV0.T0⦄ ⊐+ ⦃G, L, T⦄ → IH_cpr_conf_lpr h G L T
    ) →
-   ∀V1,T1. ⦃G, L0⦄ ⊢ T0 ➡[h] T1 → ∀T2. ⦃G, L0⦄ ⊢ T0 ➡[h] T2 →
-   ∀L1. ⦃G, L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G, L0⦄ ⊢ ➡[h] L2 →
-   ∃∃T. ⦃G, L1⦄ ⊢ ⓝV1.T1 ➡[h] T & ⦃G, L2⦄ ⊢ T2 ➡[h] T.
+   ∀V1,T1. ⦃G0, L0⦄ ⊢ T0 ➡[h] T1 → ∀T2. ⦃G0, L0⦄ ⊢ T0 ➡[h] T2 →
+   ∀L1. ⦃G0, L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G0, L0⦄ ⊢ ➡[h] L2 →
+   ∃∃T. ⦃G0, L1⦄ ⊢ ⓝV1.T1 ➡[h] T & ⦃G0, L2⦄ ⊢ T2 ➡[h] T.
 #h #G0 #L0 #V0 #T0 #IH #V1 #T1 #HT01
 #T2 #HT02 #L1 #HL01 #L2 #HL02
 elim (IH … HT01 … HT02 … HL01 … HL02) // -L0 -V0 -T0
@@ -169,15 +151,12 @@ elim (IH … HT01 … HT02 … HL01 … HL02) // -L0 -V0 -T0
 qed-.
 
 fact cpr_conf_lpr_eps_eps (h):
-   ∀G,L0,V0,T0. (
-      ∀L,T. ⦃G, L0, ⓝV0.T0⦄ ⊐+ ⦃G, L, T⦄ →
-      ∀T1. ⦃G, L⦄ ⊢ T ➡[h] T1 → ∀T2. ⦃G, L⦄ ⊢ T ➡[h] T2 →
-      ∀L1. ⦃G, L⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G, L⦄ ⊢ ➡[h] L2 →
-      ∃∃T0. ⦃G, L1⦄ ⊢ T1 ➡[h] T0 & ⦃G, L2⦄ ⊢ T2 ➡[h] T0
+   ∀G0,L0,V0,T0. (
+      ∀G,L,T. ⦃G0, L0, ⓝV0.T0⦄ ⊐+ ⦃G, L, T⦄ → IH_cpr_conf_lpr h G L T
    ) →
-   ∀T1. ⦃G, L0⦄ ⊢ T0 ➡[h] T1 → ∀T2. ⦃G, L0⦄ ⊢ T0 ➡[h] T2 →
-   ∀L1. ⦃G, L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G, L0⦄ ⊢ ➡[h] L2 →
-   ∃∃T. ⦃G, L1⦄ ⊢ T1 ➡[h] T & ⦃G, L2⦄ ⊢ T2 ➡[h] T.
+   ∀T1. ⦃G0, L0⦄ ⊢ T0 ➡[h] T1 → ∀T2. ⦃G0, L0⦄ ⊢ T0 ➡[h] T2 →
+   ∀L1. ⦃G0, L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G0, L0⦄ ⊢ ➡[h] L2 →
+   ∃∃T. ⦃G0, L1⦄ ⊢ T1 ➡[h] T & ⦃G0, L2⦄ ⊢ T2 ➡[h] T.
 #h #G0 #L0 #V0 #T0 #IH #T1 #HT01
 #T2 #HT02 #L1 #HL01 #L2 #HL02
 elim (IH … HT01 … HT02 … HL01 … HL02) // -L0 -V0 -T0
@@ -185,16 +164,13 @@ elim (IH … HT01 … HT02 … HL01 … HL02) // -L0 -V0 -T0
 qed-.
 
 fact cpr_conf_lpr_flat_beta (h):
-   ∀p,G,L0,V0,W0,T0. (
-      ∀L,T. ⦃G, L0, ⓐV0.ⓛ{p}W0.T0⦄ ⊐+ ⦃G, L, T⦄ →
-      ∀T1. ⦃G, L⦄ ⊢ T ➡[h] T1 → ∀T2. ⦃G, L⦄ ⊢ T ➡[h] T2 →
-      ∀L1. ⦃G, L⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G, L⦄ ⊢ ➡[h] L2 →
-      ∃∃T0. ⦃G, L1⦄ ⊢ T1 ➡[h] T0 & ⦃G, L2⦄ ⊢ T2 ➡[h] T0
+   ∀p,G0,L0,V0,W0,T0. (
+      ∀G,L,T. ⦃G0, L0, ⓐV0.ⓛ{p}W0.T0⦄ ⊐+ ⦃G, L, T⦄ → IH_cpr_conf_lpr h G L T
    ) →
-   ∀V1. ⦃G, L0⦄ ⊢ V0 ➡[h] V1 → ∀T1. ⦃G, L0⦄ ⊢ ⓛ{p}W0.T0 ➡[h] T1 →
-   ∀V2. ⦃G, L0⦄ ⊢ V0 ➡[h] V2 → ∀W2. ⦃G, L0⦄ ⊢ W0 ➡[h] W2 → ∀T2. ⦃G, L0.ⓛW0⦄ ⊢ T0 ➡[h] T2 →
-   ∀L1. ⦃G, L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G, L0⦄ ⊢ ➡[h] L2 →
-   ∃∃T. ⦃G, L1⦄ ⊢ ⓐV1.T1 ➡[h] T & ⦃G, L2⦄ ⊢ ⓓ{p}ⓝW2.V2.T2 ➡[h] T.
+   ∀V1. ⦃G0, L0⦄ ⊢ V0 ➡[h] V1 → ∀T1. ⦃G0, L0⦄ ⊢ ⓛ{p}W0.T0 ➡[h] T1 →
+   ∀V2. ⦃G0, L0⦄ ⊢ V0 ➡[h] V2 → ∀W2. ⦃G0, L0⦄ ⊢ W0 ➡[h] W2 → ∀T2. ⦃G0, L0.ⓛW0⦄ ⊢ T0 ➡[h] T2 →
+   ∀L1. ⦃G0, L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G0, L0⦄ ⊢ ➡[h] L2 →
+   ∃∃T. ⦃G0, L1⦄ ⊢ ⓐV1.T1 ➡[h] T & ⦃G0, L2⦄ ⊢ ⓓ{p}ⓝW2.V2.T2 ➡[h] T.
 #h #p #G0 #L0 #V0 #W0 #T0 #IH #V1 #HV01 #X #H
 #V2 #HV02 #W2 #HW02 #T2 #HT02 #L1 #HL01 #L2 #HL02
 elim (cpm_inv_abst1 … H) -H #W1 #T1 #HW01 #HT01 #H destruct
@@ -210,44 +186,38 @@ qed-.
             pr0_cong_upsilon_cong pr0_cong_upsilon_delta
 *)
 fact cpr_conf_lpr_flat_theta (h):
-   ∀p,G,L0,V0,W0,T0. (
-      ∀L,T. ⦃G, L0, ⓐV0.ⓓ{p}W0.T0⦄ ⊐+ ⦃G, L, T⦄ →
-      ∀T1. ⦃G, L⦄ ⊢ T ➡[h] T1 → ∀T2. ⦃G, L⦄ ⊢ T ➡[h] T2 →
-      ∀L1. ⦃G, L⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G, L⦄ ⊢ ➡[h] L2 →
-      ∃∃T0. ⦃G, L1⦄ ⊢ T1 ➡[h] T0 & ⦃G, L2⦄ ⊢ T2 ➡[h] T0
+   ∀p,G0,L0,V0,W0,T0. (
+      ∀G,L,T. ⦃G0, L0, ⓐV0.ⓓ{p}W0.T0⦄ ⊐+ ⦃G, L, T⦄ → IH_cpr_conf_lpr h G L T
    ) →
-   ∀V1. ⦃G, L0⦄ ⊢ V0 ➡[h] V1 → ∀T1. ⦃G, L0⦄ ⊢ ⓓ{p}W0.T0 ➡[h] T1 →
-   ∀V2. ⦃G, L0⦄ ⊢ V0 ➡[h] V2 → ∀U2. ⬆*[1] V2 ≘ U2 →
-   ∀W2. ⦃G, L0⦄ ⊢ W0 ➡[h] W2 → ∀T2. ⦃G, L0.ⓓW0⦄ ⊢ T0 ➡[h] T2 →
-   ∀L1. ⦃G, L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G, L0⦄ ⊢ ➡[h] L2 →
-   ∃∃T. ⦃G, L1⦄ ⊢ ⓐV1.T1 ➡[h] T & ⦃G, L2⦄ ⊢ ⓓ{p}W2.ⓐU2.T2 ➡[h] T.
+   ∀V1. ⦃G0, L0⦄ ⊢ V0 ➡[h] V1 → ∀T1. ⦃G0, L0⦄ ⊢ ⓓ{p}W0.T0 ➡[h] T1 →
+   ∀V2. ⦃G0, L0⦄ ⊢ V0 ➡[h] V2 → ∀U2. ⬆*[1] V2 ≘ U2 →
+   ∀W2. ⦃G0, L0⦄ ⊢ W0 ➡[h] W2 → ∀T2. ⦃G0, L0.ⓓW0⦄ ⊢ T0 ➡[h] T2 →
+   ∀L1. ⦃G0, L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G0, L0⦄ ⊢ ➡[h] L2 →
+   ∃∃T. ⦃G0, L1⦄ ⊢ ⓐV1.T1 ➡[h] T & ⦃G0, L2⦄ ⊢ ⓓ{p}W2.ⓐU2.T2 ➡[h] T.
 #h #p #G0 #L0 #V0 #W0 #T0 #IH #V1 #HV01 #X #H
 #V2 #HV02 #U2 #HVU2 #W2 #HW02 #T2 #HT02 #L1 #HL01 #L2 #HL02
 elim (IH … HV01 … HV02 … HL01 … HL02) -HV01 -HV02 /2 width=1 by/ #V #HV1 #HV2
-elim (cpm_lifts_sn … HV2 (Ⓣ) … (L2.ⓓW2) … HVU2) -HVU2 /3 width=2 by drops_refl, drops_drop/ #U #HVU #HU2
 elim (cpm_inv_abbr1 … H) -H *
 [ #W1 #T1 #HW01 #HT01 #H destruct
+  elim (cpm_lifts_sn … HV2 (Ⓣ) … (L2.ⓓW2) … HVU2) -HVU2 [| /3 width=2 by drops_refl, drops_drop/ ] #U #HVU #HU2
   elim (IH … HW01 … HW02 … HL01 … HL02) /2 width=1 by/
   elim (IH … HT01 … HT02 (L1.ⓓW1) … (L2.ⓓW2)) /2 width=1 by lpr_pair/ -L0 -V0 -W0 -T0
   /4 width=7 by cpm_bind, cpm_appl, cpm_theta, ex2_intro/
-| #T1 #HT01 #HXT1 #H destruct
-  elim (IH … HT01 … HT02 (L1.ⓓW2) … (L2.ⓓW2)) /2 width=1 by lpr_pair/ -L0 -V0 -W0 -T0 #T #HT1 #HT2
-  elim (cpm_inv_lifts_sn … HT1 (Ⓣ) … L1 … HXT1) -HXT1 /3 width=2 by drops_refl, drops_drop/
-  /4 width=9 by cpm_appl, cpm_zeta, lifts_flat, ex2_intro/
+| #X0 #HXT0 #HX0 #H destruct
+  elim (cpm_inv_lifts_sn … HT02 (Ⓣ) … L0 … HXT0) -HT02 [| /3 width=2 by drops_refl, drops_drop/ ] #X2 #HXT2 #HX02
+  elim (IH … HX0 … HX02 … HL01 … HL02) [| /3 width=5 by fqup_strap1, fqu_drop/ ] -L0 -V0 -W0 -T0 #T #H1T #H2T
+  /4 width=8 by cpm_appl, cpm_zeta, lifts_flat, ex2_intro/
 ]
 qed-.
 
 fact cpr_conf_lpr_beta_beta (h):
-   ∀p,G,L0,V0,W0,T0. (
-      ∀L,T. ⦃G, L0, ⓐV0.ⓛ{p}W0.T0⦄ ⊐+ ⦃G, L, T⦄ →
-      ∀T1. ⦃G, L⦄ ⊢ T ➡[h] T1 → ∀T2. ⦃G, L⦄ ⊢ T ➡[h] T2 →
-      ∀L1. ⦃G, L⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G, L⦄ ⊢ ➡[h] L2 →
-      ∃∃T0. ⦃G, L1⦄ ⊢ T1 ➡[h] T0 & ⦃G, L2⦄ ⊢ T2 ➡[h] T0
+   ∀p,G0,L0,V0,W0,T0. (
+      ∀G,L,T. ⦃G0, L0, ⓐV0.ⓛ{p}W0.T0⦄ ⊐+ ⦃G, L, T⦄ → IH_cpr_conf_lpr h G L T
    ) →
-   ∀V1. ⦃G, L0⦄ ⊢ V0 ➡[h] V1 → ∀W1. ⦃G, L0⦄ ⊢ W0 ➡[h] W1 → ∀T1. ⦃G, L0.ⓛW0⦄ ⊢ T0 ➡[h] T1 →
-   ∀V2. ⦃G, L0⦄ ⊢ V0 ➡[h] V2 → ∀W2. ⦃G, L0⦄ ⊢ W0 ➡[h] W2 → ∀T2. ⦃G, L0.ⓛW0⦄ ⊢ T0 ➡[h] T2 →
-   ∀L1. ⦃G, L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G, L0⦄ ⊢ ➡[h] L2 →
-   ∃∃T. ⦃G, L1⦄ ⊢ ⓓ{p}ⓝW1.V1.T1 ➡[h] T & ⦃G, L2⦄ ⊢ ⓓ{p}ⓝW2.V2.T2 ➡[h] T.
+   ∀V1. ⦃G0, L0⦄ ⊢ V0 ➡[h] V1 → ∀W1. ⦃G0, L0⦄ ⊢ W0 ➡[h] W1 → ∀T1. ⦃G0, L0.ⓛW0⦄ ⊢ T0 ➡[h] T1 →
+   ∀V2. ⦃G0, L0⦄ ⊢ V0 ➡[h] V2 → ∀W2. ⦃G0, L0⦄ ⊢ W0 ➡[h] W2 → ∀T2. ⦃G0, L0.ⓛW0⦄ ⊢ T0 ➡[h] T2 →
+   ∀L1. ⦃G0, L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G0, L0⦄ ⊢ ➡[h] L2 →
+   ∃∃T. ⦃G0, L1⦄ ⊢ ⓓ{p}ⓝW1.V1.T1 ➡[h] T & ⦃G0, L2⦄ ⊢ ⓓ{p}ⓝW2.V2.T2 ➡[h] T.
 #h #p #G0 #L0 #V0 #W0 #T0 #IH #V1 #HV01 #W1 #HW01 #T1 #HT01
 #V2 #HV02 #W2 #HW02 #T2 #HT02 #L1 #HL01 #L2 #HL02
 elim (IH … HV01 … HV02 … HL01 … HL02) -HV01 -HV02 /2 width=1 by/ #V #HV1 #HV2
@@ -260,18 +230,15 @@ qed-.
 
 (* Basic_1: was: pr0_upsilon_upsilon *)
 fact cpr_conf_lpr_theta_theta (h):
-   ∀p,G,L0,V0,W0,T0. (
-      ∀L,T. ⦃G, L0, ⓐV0.ⓓ{p}W0.T0⦄ ⊐+ ⦃G, L, T⦄ →
-      ∀T1. ⦃G, L⦄ ⊢ T ➡[h] T1 → ∀T2. ⦃G, L⦄ ⊢ T ➡[h] T2 →
-      ∀L1. ⦃G, L⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G, L⦄ ⊢ ➡[h] L2 →
-      ∃∃T0. ⦃G, L1⦄ ⊢ T1 ➡[h] T0 & ⦃G, L2⦄ ⊢ T2 ➡[h] T0
+   ∀p,G0,L0,V0,W0,T0. (
+      ∀G,L,T. ⦃G0, L0, ⓐV0.ⓓ{p}W0.T0⦄ ⊐+ ⦃G, L, T⦄ → IH_cpr_conf_lpr h G L T
    ) →
-   ∀V1. ⦃G, L0⦄ ⊢ V0 ➡[h] V1 → ∀U1. ⬆*[1] V1 ≘ U1 →
-   ∀W1. ⦃G, L0⦄ ⊢ W0 ➡[h] W1 → ∀T1. ⦃G, L0.ⓓW0⦄ ⊢ T0 ➡[h] T1 →
-   ∀V2. ⦃G, L0⦄ ⊢ V0 ➡[h] V2 → ∀U2. ⬆*[1] V2 ≘ U2 →
-   ∀W2. ⦃G, L0⦄ ⊢ W0 ➡[h] W2 → ∀T2. ⦃G, L0.ⓓW0⦄ ⊢ T0 ➡[h] T2 →
-   ∀L1. ⦃G, L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G, L0⦄ ⊢ ➡[h] L2 →
-   ∃∃T. ⦃G, L1⦄ ⊢ ⓓ{p}W1.ⓐU1.T1 ➡[h] T & ⦃G, L2⦄ ⊢ ⓓ{p}W2.ⓐU2.T2 ➡[h] T.
+   ∀V1. ⦃G0, L0⦄ ⊢ V0 ➡[h] V1 → ∀U1. ⬆*[1] V1 ≘ U1 →
+   ∀W1. ⦃G0, L0⦄ ⊢ W0 ➡[h] W1 → ∀T1. ⦃G0, L0.ⓓW0⦄ ⊢ T0 ➡[h] T1 →
+   ∀V2. ⦃G0, L0⦄ ⊢ V0 ➡[h] V2 → ∀U2. ⬆*[1] V2 ≘ U2 →
+   ∀W2. ⦃G0, L0⦄ ⊢ W0 ➡[h] W2 → ∀T2. ⦃G0, L0.ⓓW0⦄ ⊢ T0 ➡[h] T2 →
+   ∀L1. ⦃G0, L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G0, L0⦄ ⊢ ➡[h] L2 →
+   ∃∃T. ⦃G0, L1⦄ ⊢ ⓓ{p}W1.ⓐU1.T1 ➡[h] T & ⦃G0, L2⦄ ⊢ ⓓ{p}W2.ⓐU2.T2 ➡[h] T.
 #h #p #G0 #L0 #V0 #W0 #T0 #IH #V1 #HV01 #U1 #HVU1 #W1 #HW01 #T1 #HT01
 #V2 #HV02 #U2 #HVU2 #W2 #HW02 #T2 #HT02 #L1 #HL01 #L2 #HL02
 elim (IH … HV01 … HV02 … HL01 … HL02) -HV01 -HV02 /2 width=1 by/ #V #HV1 #HV2
@@ -289,28 +256,28 @@ theorem cpr_conf_lpr (h): ∀G. lex_confluent (λL.cpm h G L 0) (λL.cpm h G L 0
   elim (cpr_inv_atom1_drops … H1) -H1
   elim (cpr_inv_atom1_drops … H2) -H2
   [ #H2 #H1 destruct
-    /2 width=1 by cpr_conf_lpr_atom_atom/
+    @cpr_conf_lpr_atom_atom
   | * #K0 #V0 #V2 #i2 #HLK0 #HV02 #HVT2 #H2 #H1 destruct
-    /3 width=10 by cpr_conf_lpr_atom_delta/
+    @(cpr_conf_lpr_atom_delta … IH) -IH /width=6 by/
   | #H2 * #K0 #V0 #V1 #i1 #HLK0 #HV01 #HVT1 #H1 destruct
-    /4 width=10 by ex2_commute, cpr_conf_lpr_atom_delta/
+    @ex2_commute @(cpr_conf_lpr_atom_delta … IH) -IH /width=6 by/
   | * #X #Y #V2 #z #H #HV02 #HVT2 #H2
     * #K0 #V0 #V1 #i #HLK0 #HV01 #HVT1 #H1 destruct
-    /3 width=17 by cpr_conf_lpr_delta_delta/
+    @(cpr_conf_lpr_delta_delta … IH) -IH /width=6 by/
   ]
 | #p #I #V0 #T0 #HG #HL #HT #X1 #H1 #X2 #H2 #L1 #HL01 #L2 #HL02 destruct
   elim (cpm_inv_bind1 … H1) -H1 *
   [ #V1 #T1 #HV01 #HT01 #H1
-  | #T1 #HT01 #HXT1 #H11 #H12
+  | #T1 #HT10 #HTX1 #H11 #H12
   ]
   elim (cpm_inv_bind1 … H2) -H2 *
   [1,3: #V2 #T2 #HV02 #HT02 #H2
-  |2,4: #T2 #HT02 #HXT2 #H21 #H22
+  |2,4: #T2 #HT20 #HTX2 #H21 #H22
   ] destruct
-  [ /3 width=10 by cpr_conf_lpr_bind_bind/
-  | /4 width=11 by ex2_commute, cpr_conf_lpr_bind_zeta/
-  | /3 width=11 by cpr_conf_lpr_bind_zeta/
-  | /3 width=12 by cpr_conf_lpr_zeta_zeta/
+  [ @(cpr_conf_lpr_bind_bind … IH) -IH /width=1 by/
+  | @ex2_commute @(cpr_conf_lpr_bind_zeta … IH) -IH /width=3 by/
+  | @(cpr_conf_lpr_bind_zeta … IH) -IH /width=3 by/
+  | @(cpr_conf_lpr_zeta_zeta … IH) -IH /width=3 by/
   ]
 | #I #V0 #T0 #HG #HL #HT #X1 #H1 #X2 #H2 #L1 #HL01 #L2 #HL02 destruct
   elim (cpr_inv_flat1 … H1) -H1 *
@@ -325,16 +292,16 @@ theorem cpr_conf_lpr (h): ∀G. lex_confluent (λL.cpm h G L 0) (λL.cpm h G L 0
   |3,7,11,15: #p2 #V2 #Y2 #W2 #Z2 #T2 #HV02 #HYW2 #HZT2 #H21 #H22 #H23
   |4,8,12,16: #p2 #V2 #U2 #Y2 #W2 #Z2 #T2 #HV02 #HVU2 #HYW2 #HZT2 #H21 #H22 #H23
   ] destruct
-  [ /3 width=10 by cpr_conf_lpr_flat_flat/
-  | /4 width=8 by ex2_commute, cpr_conf_lpr_flat_eps/
-  | /4 width=12 by ex2_commute, cpr_conf_lpr_flat_beta/
-  | /4 width=14 by ex2_commute, cpr_conf_lpr_flat_theta/
-  | /3 width=8 by cpr_conf_lpr_flat_eps/
-  | /3 width=7 by cpr_conf_lpr_eps_eps/
-  | /3 width=12 by cpr_conf_lpr_flat_beta/
-  | /3 width=13 by cpr_conf_lpr_beta_beta/
-  | /3 width=14 by cpr_conf_lpr_flat_theta/
-  | /3 width=17 by cpr_conf_lpr_theta_theta/
+  [ @(cpr_conf_lpr_flat_flat … IH) -IH /width=1 by/
+  | @ex2_commute @(cpr_conf_lpr_flat_eps … IH) -IH /width=1 by/
+  | @ex2_commute @(cpr_conf_lpr_flat_beta … IH) -IH /width=1 by/
+  | @ex2_commute @(cpr_conf_lpr_flat_theta … IH) -IH /width=3 by/
+  | @(cpr_conf_lpr_flat_eps … IH) -IH /width=1 by/
+  | @(cpr_conf_lpr_eps_eps … IH) -IH /width=1 by/
+  | @(cpr_conf_lpr_flat_beta … IH) -IH /width=1 by/
+  | @(cpr_conf_lpr_beta_beta … IH) -IH /width=1 by/
+  | @(cpr_conf_lpr_flat_theta … IH) -IH /width=3 by/
+  | @(cpr_conf_lpr_theta_theta … IH) -IH /width=3 by/
   ]
 ]
 qed-.

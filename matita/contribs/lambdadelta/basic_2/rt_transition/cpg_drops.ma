@@ -115,10 +115,9 @@ lemma cpg_lifts_sn: ∀Rt. reflexive … Rt →
     elim (IH … HV12 … HLK … HVW1) -HV12 //
     elim (IH … HT12 … HTU1) -IH -HT12 -HTU1 [ |*: /3 width=3 by drops_skip, ext2_pair/ ]
     /3 width=5 by cpg_bind, lifts_bind, ex2_intro/
-  | #cT #T2 #HT12 #HXT2 #H1 #H2 #H3 destruct
-    elim (IH … HT12 … HTU1) -IH -HT12 -HTU1 [ |*: /3 width=3 by drops_skip, ext2_pair/ ] #U2 #HTU2 #HU12
-    lapply (lifts_trans … HXT2 … HTU2 ??) -T2 [3: |*: // ] #HXU2
-    elim (lifts_split_trans … HXU2 f (𝐔❴↑O❵)) [2: /2 width=1 by after_uni_one_dx/ ]
+  | #cT #T2 #HT21 #HTX2 #H1 #H2 #H3 destruct
+    elim (lifts_trans4_one … HT21 … HTU1) -HTU1 #U2 #HTU2 #HU21
+    elim (IH … HTX2 … HLK … HTU2) [| /3 width=1 by fqup_zeta/ ] -K -V1 -T1 -T2
     /3 width=5 by cpg_zeta, ex2_intro/
   ]
 | * #V1 #T1 #HG #HK #HT #c #X2 #H2 #b #f #L #HLK #X1 #H1 destruct
@@ -199,9 +198,10 @@ lemma cpg_inv_lifts_sn: ∀Rt. reflexive … Rt →
     elim (IH … HW12 … HLK … HVW1) -HW12 //
     elim (IH … HU12 … HTU1) -IH -HU12 -HTU1 [ |*: /3 width=3 by drops_skip, ext2_pair/ ]
     /3 width=5 by cpg_bind, lifts_bind, ex2_intro/
-  | #cU #U2 #HU12 #HXU2 #H1 #H2 #H3 destruct
-    elim (IH … HU12 … HTU1) -IH -HU12 -HTU1 [ |*: /3 width=3 by drops_skip, ext2_pair/ ] #T2 #HTU2 #HT12
-    elim (lifts_div4_one … HTU2 … HXU2) -U2 /3 width=5 by cpg_zeta, ex2_intro/
+  | #cU #U2 #HU21 #HUX2 #H1 #H2 #H3 destruct
+    elim (lifts_div4_one … HTU1 … HU21) -HTU1 #T2 #HT21 #HTU2
+    elim (IH … HUX2 … HLK … HTU2) [| /3 width=1 by fqup_zeta/ ] -L -W1 -U1 -U2
+    /3 width=5 by cpg_zeta, ex2_intro/
   ]
 | * #W1 #U1 #HG #HL #HU #c #X2 #H2 #b #f #K #HLK #X1 #H1 destruct
   elim (lifts_inv_flat2 … H1) -H1 #V1 #T1 #HVW1 #HTU1 #H destruct

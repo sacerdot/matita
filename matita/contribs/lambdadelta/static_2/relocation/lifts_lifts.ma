@@ -86,6 +86,11 @@ theorem lifts_trans: ∀f1,T1,T. ⬆*[f1] T1 ≘ T → ∀f2,T2. ⬆*[f2] T ≘ 
 ]
 qed-.
 
+lemma lifts_trans4_one (f) (T1) (T2):
+                       ∀T. ⬆*[1]T1 ≘ T → ⬆*[⫯f]T ≘ T2 →
+                       ∃∃T0. ⬆*[f]T1 ≘ T0 & ⬆*[1]T0 ≘ T2.
+/4 width=6 by lifts_trans, lifts_split_trans, after_uni_one_dx/ qed-.
+
 (* Basic_2A1: includes: lift_conf_O1 lift_conf_be *)
 theorem lifts_conf: ∀f1,T,T1. ⬆*[f1] T ≘ T1 → ∀f,T2. ⬆*[f] T ≘ T2 →
                     ∀f2. f2 ⊚ f1 ≘ f → ⬆*[f2] T1 ≘ T2.

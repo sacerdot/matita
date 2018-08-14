@@ -143,9 +143,9 @@ fact cpm_fwd_plus_aux (n) (h): ∀G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[n, h] T2 →
   elim IHU [|*: // ] -IHU #U #HU1 #HU2
   elim IHT [|*: // ] -IHT #T #HT1 #HT2
   /3 width=5 by cpm_cast, ex2_intro/
-| #n #G #K #V #T1 #T2 #V2 #_ #IH #HVT2 #n1 #n2 #H destruct
+| #n #G #K #V #U1 #T1 #T2 #HTU1 #_ #IH #n1 #n2 #H destruct
   elim IH [|*: // ] -IH #T #HT1 #HT2
-  /3 width=6 by cpm_zeta, cpm_bind, ex2_intro/
+  /3 width=3 by cpm_zeta, ex2_intro/
 | #n #G #L #U #T1 #T2 #_ #IH #n1 #n2 #H destruct
   elim IH [|*: // ] -IH #T #HT1 #HT2
   /3 width=3 by cpm_eps, ex2_intro/

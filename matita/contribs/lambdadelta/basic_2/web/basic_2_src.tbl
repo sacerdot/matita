@@ -96,12 +96,12 @@ table {
           }
         ]
         [ { "t-bound context-sensitive parallel rt-transition" * } {
-             [ [ "for terms" ] "cpm" + "( ⦃?,?⦄ ⊢ ? ➡[?,?] ? )" "cpm_simple" + "cpm_drops" + "cpm_lsubr" + "cpm_fsle" + "cpm_aaa" + "cpm_cpx" * ]
+             [ [ "for terms" ] "cpm" + "( ⦃?,?⦄ ⊢ ? ➡[?,?] ? )" "cpm_simple" + "cpm_tdeq" + "cpm_drops" + "cpm_lsubr" + "cpm_fsle" + "cpm_aaa" + "cpm_cpx" * ]
           }
         ]
         [ { "unbound context-sensitive parallel rt-transition" * } {
              [ [ "normal form for terms" ] "cnx" + "( ⦃?,?⦄ ⊢ ⬈[?,?] 𝐍⦃?⦄ )" "cnx_simple" + "cnx_drops" + "cnx_cnx" * ]
-             [ [ "for lenvs on referred entries" ] "rpx" + "( ⦃?,?⦄ ⊢ ⬈[?,?] ? )" "rpx_length" + "rpx_fqup" + "rpx_fsle" + "rpx_rdeq" + "rpx_lpx" + "rpx_rpx" * ]
+             [ [ "for lenvs on referred entries" ] "rpx" + "( ⦃?,?⦄ ⊢ ⬈[?,?] ? )" "rpx_length" + "rpx_drops" + "rpx_fqup" + "rpx_fsle" + "rpx_rdeq" + "rpx_lpx" + "rpx_rpx" * ]
              [ [ "for lenvs on all entries" ] "lpx" + "( ⦃?,?⦄ ⊢ ⬈[?] ? )" "lpx_length" + "lpx_drops" + "lpx_fquq" + "lpx_fsle" + "lpx_rdeq" + "lpx_aaa" * ]
              [ [ "for binders" ] "cpx_ext" + "( ⦃?,?⦄ ⊢ ? ⬈[?] ? )" * ]
              [ [ "for terms" ] "cpx" + "( ⦃?,?⦄ ⊢ ? ⬈[?] ? )" "cpx_simple" + "cpx_drops" + "cpx_fqus" + "cpx_lsubr" + "cpx_req" + "cpx_rdeq" + "cpx_fdeq" * ]
