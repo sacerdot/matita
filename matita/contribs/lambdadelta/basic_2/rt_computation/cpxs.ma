@@ -89,9 +89,18 @@ lemma cpxs_pair_sn: ∀h,I,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ⬈*[h] V2 →
 /3 width=3 by cpxs_strap1, cpx_pair_sn/
 qed.
 
-lemma cpxs_zeta: ∀h,G,L,V,T1,T,T2. ⬆*[1] T2 ≘ T →
-                 ⦃G, L.ⓓV⦄ ⊢ T1 ⬈*[h] T → ⦃G, L⦄ ⊢ +ⓓV.T1 ⬈*[h] T2.
-#h #G #L #V #T1 #T #T2 #HT2 #H @(cpxs_ind_dx … H) -T1
+lemma cpxs_zeta (h) (G) (L) (V):
+                ∀T1,T. ⬆*[1] T ≘ T1 →
+                ∀T2. ⦃G, L⦄ ⊢ T ⬈*[h] T2 → ⦃G, L⦄ ⊢ +ⓓV.T1 ⬈*[h] T2.
+#h #G #L #V #T1 #T #HT1 #T2 #H @(cpxs_ind … H) -T2
+/3 width=3 by cpxs_strap1, cpx_cpxs, cpx_zeta/
+qed.
+
+(* Basic_2A1: was: cpxs_zeta *)
+lemma cpxs_zeta_dx (h) (G) (L) (V):
+                   ∀T2,T. ⬆*[1] T2 ≘ T →
+                   ∀T1. ⦃G, L.ⓓV⦄ ⊢ T1 ⬈*[h] T → ⦃G, L⦄ ⊢ +ⓓV.T1 ⬈*[h] T2.
+#h #G #L #V #T2 #T #HT2 #T1 #H @(cpxs_ind_dx … H) -T1
 /3 width=3 by cpxs_strap2, cpx_cpxs, cpx_bind, cpx_zeta/
 qed.
 

@@ -64,10 +64,10 @@ qed-.
 
 (* Basic_1: was pr3_gen_abbr *)
 (* Basic_2A1: includes: cprs_inv_abbr1 *)
-lemma cpms_inv_abbr_sn (n) (h) (G) (L):
-                       ∀p,V1,T1,X2. ⦃G, L⦄ ⊢ ⓓ{p}V1.T1 ➡*[n, h] X2 →
-                       ∨∨ ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡*[h] V2 & ⦃G, L.ⓓV1⦄ ⊢ T1 ➡*[n, h] T2 & X2 = ⓓ{p}V2.T2
-                        | ∃∃T2. ⦃G, L.ⓓV1⦄ ⊢ T1 ➡*[n ,h] T2 & ⬆*[1] X2 ≘ T2 & p = Ⓣ.
+lemma cpms_inv_abbr_sn_dx (n) (h) (G) (L):
+                          ∀p,V1,T1,X2. ⦃G, L⦄ ⊢ ⓓ{p}V1.T1 ➡*[n, h] X2 →
+                          ∨∨ ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡*[h] V2 & ⦃G, L.ⓓV1⦄ ⊢ T1 ➡*[n, h] T2 & X2 = ⓓ{p}V2.T2
+                           | ∃∃T2. ⦃G, L.ⓓV1⦄ ⊢ T1 ➡*[n ,h] T2 & ⬆*[1] X2 ≘ T2 & p = Ⓣ.
 #n #h #G #L #p #V1 #T1 #X2 #H
 @(cpms_ind_dx … H) -X2 -n /3 width=5 by ex3_2_intro, or_introl/
 #n1 #n2 #X #X2 #_ * *
@@ -75,8 +75,9 @@ lemma cpms_inv_abbr_sn (n) (h) (G) (L):
   elim (cpm_inv_abbr1 … HX2) -HX2 *
   [ #V2 #T2 #HV2 #HT2 #H destruct
     /6 width=7 by lprs_cpm_trans, lprs_pair, cprs_step_dx, cpms_trans, ex3_2_intro, or_introl/
-  | #T2 #HT2 #HXT2 #Hp
-    /6 width=7 by lprs_cpm_trans, lprs_pair, cpms_trans, ex3_intro, or_intror/
+  | #T2 #HT2 #HTX2 #Hp -V
+    elim (cpm_lifts_sn … HTX2 (Ⓣ) … (L.ⓓV1) … HT2) -T2 [| /3 width=3 by drops_refl, drops_drop/ ] #X #HX2 #HTX
+    /4 width=3 by cpms_step_dx, ex3_intro, or_intror/
   ]
 | #T #HT1 #HXT #Hp #HX2
   elim (cpm_lifts_sn … HX2 (Ⓣ) … (L.ⓓV1) … HXT) -X
@@ -89,7 +90,7 @@ lemma cpms_inv_abbr_abst (n) (h) (G) (L):
                          ∀p1,p2,V1,W2,T1,T2. ⦃G, L⦄ ⊢ ⓓ{p1}V1.T1 ➡*[n, h] ⓛ{p2}W2.T2 →
                          ∃∃T. ⦃G, L.ⓓV1⦄ ⊢ T1 ➡*[n, h] T & ⬆*[1] ⓛ{p2}W2.T2 ≘ T & p1 = Ⓣ.
 #n #h #G #L #p1 #p2 #V1 #W2 #T1 #T2 #H
-elim (cpms_inv_abbr_sn … H) -H *
+elim (cpms_inv_abbr_sn_dx … H) -H *
 [ #V #T #_ #_ #H destruct
 | /2 width=3 by ex3_intro/
 ]

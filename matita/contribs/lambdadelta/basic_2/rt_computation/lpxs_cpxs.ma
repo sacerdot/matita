@@ -36,23 +36,26 @@ lapply (lpxs_cpx_trans … HT02 (L.ⓛV1) ?)
 /3 width=5 by lpxs_pair, cpxs_trans, cpxs_strap1, ex3_2_intro/
 qed-.
 
-lemma cpxs_inv_abbr1 (h) (G): ∀p,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓓ{p}V1.T1 ⬈*[h] U2 →
-                              ∨∨ ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ⬈*[h] V2 & ⦃G, L.ⓓV1⦄ ⊢ T1 ⬈*[h] T2 &
-                                          U2 = ⓓ{p}V2.T2
-                               | ∃∃T2. ⦃G, L.ⓓV1⦄ ⊢ T1 ⬈*[h] T2 & ⬆*[1] U2 ≘ T2 & p = Ⓣ.
-#h #G #p #L #V1 #T1 #U2 #H @(cpxs_ind … H) -U2 /3 width=5 by ex3_2_intro, or_introl/
+(* Basic_2A1: was: cpxs_inv_abbr1 *)
+lemma cpxs_inv_abbr1_dx (h) (p) (G) (L):
+                        ∀V1,T1,U2. ⦃G, L⦄ ⊢ ⓓ{p}V1.T1 ⬈*[h] U2 →
+                        ∨∨ ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ⬈*[h] V2 & ⦃G, L.ⓓV1⦄ ⊢ T1 ⬈*[h] T2 &
+                                    U2 = ⓓ{p}V2.T2
+                         | ∃∃T2. ⦃G, L.ⓓV1⦄ ⊢ T1 ⬈*[h] T2 & ⬆*[1] U2 ≘ T2 & p = Ⓣ.
+#h #p #G #L #V1 #T1 #U2 #H
+@(cpxs_ind … H) -U2 /3 width=5 by ex3_2_intro, or_introl/
 #U0 #U2 #_ #HU02 * *
 [ #V0 #T0 #HV10 #HT10 #H destruct
   elim (cpx_inv_abbr1 … HU02) -HU02 *
   [ #V2 #T2 #HV02 #HT02 #H destruct
     lapply (lpxs_cpx_trans … HT02 (L.ⓓV1) ?)
     /4 width=5 by lpxs_pair, cpxs_trans, cpxs_strap1, ex3_2_intro, or_introl/
-  | #T2 #HT02 #HUT2
-    lapply (lpxs_cpx_trans … HT02 (L.ⓓV1) ?) -HT02
-    /4 width=3 by lpxs_pair, cpxs_trans, ex3_intro, or_intror/
+  | #T2 #HT20 #HTU2 #Hp -V0
+    elim (cpx_lifts_sn … HTU2 (Ⓣ) … (L.ⓓV1) … HT20) -T2 [| /3 width=3 by drops_refl, drops_drop/ ] #U0 #HU20 #HTU0
+    /4 width=3 by cpxs_strap1, ex3_intro, or_intror/
   ]
 | #U1 #HTU1 #HU01 #Hp
-  elim (cpx_lifts_sn … HU02 (Ⓣ) … (L.ⓓV1) … HU01) -U0 /3 width=3 by drops_refl, drops_drop/ #U #HU2 #HU1
+  elim (cpx_lifts_sn … HU02 (Ⓣ) … (L.ⓓV1) … HU01) -U0 [| /3 width=3 by drops_refl, drops_drop/ ] #U #HU2 #HU1
   /4 width=3 by cpxs_strap1, ex3_intro, or_intror/
 ]
 qed-.

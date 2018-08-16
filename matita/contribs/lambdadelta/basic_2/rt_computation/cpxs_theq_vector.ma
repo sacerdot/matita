@@ -112,7 +112,7 @@ elim (cpxs_inv_appl1 … H) -H *
     elim (theq_inv_pair1 … HT0) #V1 #T1 #H destruct
   | @or_intror -V1b (**) (* explicit constructor *)
     @(cpxs_trans … HU) -U
-    elim (cpxs_inv_abbr1 … HT0) -HT0 *
+    elim (cpxs_inv_abbr1_dx … HT0) -HT0 *
     [ -HV12a #V1 #T1 #_ #_ #H destruct
     | -V1b #X #HT1 #H #H0 destruct
       elim (lifts_inv_bind1 … H) -H #W1 #T1 #HW01 #HT01 #H destruct
@@ -127,7 +127,7 @@ elim (cpxs_inv_appl1 … H) -H *
     elim (theq_inv_pair1 … HT0) #V1 #T1 #H destruct
   | @or_intror -V1b -V1b (**) (* explicit constructor *)
     @(cpxs_trans … HU) -U
-    elim (cpxs_inv_abbr1 … HT0) -HT0 *
+    elim (cpxs_inv_abbr1_dx … HT0) -HT0 *
     [ #V1 #T1 #HV1 #HT1 #H destruct
       lapply (cpxs_lifts_bi … HV10a (Ⓣ) … (L.ⓓV) … HV12a … HV0a) -V1a -V0a /3 width=1 by drops_refl, drops_drop/ #HV2a
       @(cpxs_trans … (ⓓ{p}V.ⓐV2a.T1)) /3 width=1 by cpxs_bind, cpxs_pair_sn, cpxs_flat_dx, cpxs_bind_dx/

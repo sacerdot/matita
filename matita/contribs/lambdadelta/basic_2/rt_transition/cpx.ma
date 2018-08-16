@@ -100,6 +100,12 @@ lemma cpx_pair_sn: ∀h,I,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ⬈[h] V2 →
 #h * /2 width=2 by cpx_flat, cpx_bind/
 qed.
 
+lemma cpg_cpx (h) (Rt) (c) (G) (L):
+              ∀T1,T2. ⦃G,L⦄ ⊢ T1 ⬈[Rt,c,h] T2 → ⦃G,L⦄ ⊢ T1 ⬈[h] T2.
+#h #Rt #c #G #L #T1 #T2 #H elim H -c -G -L -T1 -T2
+/2 width=3 by cpx_theta, cpx_beta, cpx_ee, cpx_eps, cpx_zeta, cpx_flat, cpx_bind, cpx_lref, cpx_delta/
+qed.
+
 (* Basic inversion lemmas ***************************************************)
 
 lemma cpx_inv_atom1: ∀h,J,G,L,T2. ⦃G, L⦄ ⊢ ⓪{J} ⬈[h] T2 →

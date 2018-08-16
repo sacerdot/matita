@@ -40,9 +40,9 @@ lemma rdsx_cpx_trans_lsubsx (h) (o): ∀G,L0,T1,T2. ⦃G, L0⦄ ⊢ T1 ⬈[h] T2
   /4 width=2 by lsubsx_pair, rdsx_bind_void/
 | #I0 #G #L0 #V1 #V2 #T1 #T2 #_ #_ #IHV12 #IHT12 #f #L #HL0 #HL
   elim (rdsx_inv_flat … HL) -HL /3 width=2 by rdsx_flat/
-| #G #L0 #V #U1 #U2 #T2 #_ #HTU2 #IHU12 #f #L #HL0 #HL
+| #G #L0 #V #U1 #T1 #T2 #HTU1 #_ #IHT12 #f #L #HL0 #HL
   elim (rdsx_inv_bind … HL) -HL #HV #HU1
-  /4 width=8 by lsubsx_pair, rdsx_inv_lifts, drops_refl, drops_drop/
+  /5 width=8 by rdsx_inv_lifts, drops_refl, drops_drop/
 | #G #L0 #V #T1 #T2 #_ #IHT12 #f #L #HL0 #HL
   elim (rdsx_inv_flat … HL) -HL /2 width=2 by/
 | #G #L0 #V1 #V2 #T #_ #IHV12 #f #L #HL0 #HL

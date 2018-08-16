@@ -64,7 +64,7 @@ lemma cpxs_fwd_theta: ∀h,o,p,G,L,V1,V,T,U. ⦃G, L⦄ ⊢ ⓐV1.ⓓ{p}V.T ⬈*
 elim (cpxs_inv_appl1 … H) -H *
 [ -HV12 #V0 #T0 #_ #_ #H destruct /2 width=1 by theq_pair, or_introl/
 | #q #W #T0 #HT0 #HU
-  elim (cpxs_inv_abbr1 … HT0) -HT0 *
+  elim (cpxs_inv_abbr1_dx … HT0) -HT0 *
   [ #V3 #T3 #_ #_ #H destruct
   | #X #HT2 #H #H0 destruct
     elim (lifts_inv_bind1 … H) -H #W2 #T2 #HW2 #HT02 #H destruct
@@ -75,7 +75,7 @@ elim (cpxs_inv_appl1 … H) -H *
   ]
 | #q #V3 #V4 #V0 #T0 #HV13 #HV34 #HT0 #HU
   @or_intror @(cpxs_trans … HU) -U (**) (* explicit constructor *)
-  elim (cpxs_inv_abbr1 … HT0) -HT0 *
+  elim (cpxs_inv_abbr1_dx … HT0) -HT0 *
   [ #V5 #T5 #HV5 #HT5 #H destruct
     /6 width=9 by cpxs_lifts_bi, drops_refl, drops_drop, cpxs_flat, cpxs_bind/
   | #X #HT1 #H #H0 destruct

@@ -52,8 +52,7 @@ qed-.
 lemma cpms_inv_sort1 (n) (h) (G) (L): ∀X2,s. ⦃G, L⦄ ⊢ ⋆s ➡*[n, h] X2 → X2 = ⋆(((next h)^n) s).
 #n #h #G #L #X2 #s #H @(cpms_ind_dx … H) -X2 //
 #n1 #n2 #X #X2 #_ #IH #HX2 destruct
-elim (cpm_inv_sort1 … HX2) -HX2 * // #H1 #H2 destruct
-/2 width=3 by refl, trans_eq/
+elim (cpm_inv_sort1 … HX2) -HX2 #H #_ destruct //
 qed-.
 
 (* Basic properties *********************************************************)
@@ -88,10 +87,17 @@ lemma cpms_appl_dx (n) (h) (G) (L):
 /3 width=3 by cpms_step_sn, cpm_cpms, cpm_appl/
 qed.
 
-(* Basic_2A1: uses: cprs_zeta *)
 lemma cpms_zeta (n) (h) (G) (L):
-                ∀T2,T. ⬆*[1] T2 ≘ T →
-                ∀V,T1. ⦃G, L.ⓓV⦄ ⊢ T1 ➡*[n, h] T → ⦃G, L⦄ ⊢ +ⓓV.T1 ➡*[n, h] T2.
+                ∀T1,T. ⬆*[1] T ≘ T1 →
+                ∀V,T2. ⦃G, L⦄ ⊢ T ➡*[n, h] T2 → ⦃G, L⦄ ⊢ +ⓓV.T1 ➡*[n, h] T2.
+#n #h #G #L #T1 #T #HT1 #V #T2 #H @(cpms_ind_dx … H) -T2
+/3 width=3 by cpms_step_dx, cpm_cpms, cpm_zeta/
+qed.
+
+(* Basic_2A1: uses: cprs_zeta *)
+lemma cpms_zeta_dx (n) (h) (G) (L):
+                   ∀T2,T. ⬆*[1] T2 ≘ T →
+                   ∀V,T1. ⦃G, L.ⓓV⦄ ⊢ T1 ➡*[n, h] T → ⦃G, L⦄ ⊢ +ⓓV.T1 ➡*[n, h] T2.
 #n #h #G #L #T2 #T #HT2 #V #T1 #H @(cpms_ind_sn … H) -T1
 /3 width=3 by cpms_step_sn, cpm_cpms, cpm_bind, cpm_zeta/
 qed.
