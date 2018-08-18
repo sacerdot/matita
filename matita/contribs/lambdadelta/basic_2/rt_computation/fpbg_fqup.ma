@@ -17,6 +17,12 @@ include "basic_2/rt_computation/fpbg.ma".
 
 (* PROPER PARALLEL RST-COMPUTATION FOR CLOSURES *****************************)
 
+(* Advanced properties with degree-based equivalence for terms **************)
+
+lemma fpbg_tdeq_div: ∀h,o,G1,G2,L1,L2,T1,T. ⦃G1, L1, T1⦄ >[h, o] ⦃G2, L2, T⦄ →
+                     ∀T2. T2 ≛[h, o] T → ⦃G1, L1, T1⦄ >[h, o] ⦃G2, L2, T2⦄.
+/4 width=5 by fpbg_fdeq_trans, tdeq_fdeq, tdeq_sym/ qed-.
+
 (* Properties with plus-iterated structural successor for closures **********)
 
 (* Note: this is used in the closure proof *)

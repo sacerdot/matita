@@ -48,3 +48,11 @@ qed-.
 lemma fpbg_fdeq_trans: ∀h,o,G1,G,L1,L,T1,T. ⦃G1, L1, T1⦄ >[h, o] ⦃G, L, T⦄ →
                        ∀G2,L2,T2. ⦃G, L, T⦄ ≛[h, o] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ >[h, o] ⦃G2, L2, T2⦄.
 /3 width=5 by fpbg_fpbq_trans, fpbq_fdeq/ qed-.
+
+(* Properties with t-bound rt-transition for terms **************************)
+
+lemma cpm_tdneq_cpm_fpbg (h) (o) (G) (L):
+                         ∀n1,T1,T. ⦃G, L⦄ ⊢ T1 ➡[n1,h] T → (T1 ≛[h,o] T → ⊥) →
+                         ∀n2,T2. ⦃G, L⦄ ⊢ T ➡[n2,h] T2 →
+                         ⦃G, L, T1⦄ >[h,o] ⦃G, L, T2⦄.
+/4 width=5 by fpbq_fpbs, cpm_fpbq, cpm_fpb, ex2_3_intro/ qed. 

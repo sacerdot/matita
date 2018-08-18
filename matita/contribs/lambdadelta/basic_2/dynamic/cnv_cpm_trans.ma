@@ -31,7 +31,7 @@ fact cnv_cpm_trans_lpr_aux (a) (h) (o):
                            ∀G1,L1,T1. G0 = G1 → L0 = L1 → T0 = T1 → IH_cnv_cpm_trans_lpr a h G1 L1 T1.
 #a #h #o #G0 #L0 #T0 #IH2 #IH1 #G1 #L1 * * [|||| * ]
 [ #s #HG0 #HL0 #HT0 #H1 #x #X #H2 #L2 #_ destruct -IH2 -IH1 -H1
-  elim (cpm_inv_sort1 … H2) -H2 * #H1 #H2 destruct //
+  elim (cpm_inv_sort1 … H2) -H2 #H #_ destruct //
 | #i #HG0 #HL0 #HT0 #H1 #x #X #H2 #L2 #HL12 destruct -IH2
   elim (cnv_inv_lref_drops … H1) -H1 #I #K1 #V1 #HLK1 #HV1
   elim (lpr_drops_conf … HLK1 … HL12) -HL12 // #Y #H #HLK2
@@ -52,8 +52,8 @@ fact cnv_cpm_trans_lpr_aux (a) (h) (o):
   elim (cnv_inv_bind … H1) -H1 #HV1 #HT1
   elim (cpm_inv_bind1 … H2) -H2 *
   [ #V2 #T2 #HV12 #HT12 #H destruct /4 width=9 by fqup_fpbg, cnv_bind, lpr_pair/
-  | #T2 #HT12 #HXT2 #H1 #H2 destruct -HV1
-    /4 width=11 by fqup_fpbg, cnv_inv_lifts, lpr_pair, drops_refl, drops_drop/
+  | #X1 #HXT1 #HX1 #H1 #H2 destruct -HV1
+    /5 width=7 by cnv_inv_lifts, fqup_fpbg, fqup_zeta, drops_refl, drops_drop/
   ]
 | #V1 #T1 #HG0 #HL0 #HT0 #H1 #x #X #H2 #L2 #HL12 destruct
   elim (cnv_inv_appl … H1) -H1 #n #p #W1 #U1 #Hn #HV1 #HT1 #HVW1 #HTU1
