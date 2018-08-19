@@ -51,13 +51,11 @@ lemma cpr_fwd_deq (h) (M): is_model M → is_extensional M →
   | @(mq … H1M) [4,5: /3 width=2 by seq_sym, me/ |1,2: skip ]
     /2 width=1 by/
   ]
-| #G #L #V #U1 #U2 #T2 #_ #IH #HTU2 #gv #lv #Hlv
+| #G #L #V #U1 #T1 #T2 #HTU1 #_ #IH #gv #lv #Hlv
   @(mq … H1M)
   [4: /3 width=2 by seq_sym, md/ | skip
   |3: @(seq_trans … H1M) [2: @mz // | skip ]
-      /3 width=1 by li_abbr/
-  |2: skip ] -L -U1
-  /3 width=1 by lifts_SO_fwd_vpush, seq_sym/
+  ] /3 width=3 by lifts_SO_fwd_vpush, seq_sym/
 | #G #L #V #T1 #T2 #_ #IH #gv #lv #Hlv
   @(seq_trans … H1M) [2: @(me … H1M) | skip ]
   /2 width=1 by/
