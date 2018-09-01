@@ -37,5 +37,5 @@ lemma ypred_Y: (↓∞) = ∞.
 
 lemma ypred_inv_refl: ∀m:ynat. ↓m = m → m = 0 ∨ m = ∞.
 * // #m #H lapply (yinj_inj … H) -H (**) (* destruct lemma needed *)
-/4 width=1 by pred_inv_refl, or_introl, eq_f/
+/4 width=1 by pred_inv_fix_sn, or_introl, eq_f/
 qed-.

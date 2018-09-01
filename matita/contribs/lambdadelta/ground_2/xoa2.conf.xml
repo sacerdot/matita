@@ -5,6 +5,8 @@
     <key name="objects">ground_2/xoa</key>
     <key name="notations">ground_2/notation/xoa</key>
     <key name="include">basics/pts.ma</key>
+    <key name="ex">5 1</key>
     <key name="ex">5 7</key>
+    <key name="ex">9 3</key>
   </section>
 </helm_registry>

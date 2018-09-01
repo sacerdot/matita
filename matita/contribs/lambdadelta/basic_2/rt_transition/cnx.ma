@@ -33,7 +33,7 @@ lapply (H (⋆(next h s)) ?) -H /2 width=2 by cpx_ess/ -G -L #H
 elim (tdeq_inv_sort1 … H) -H #s0 #d #H1 #H2 #H destruct
 lapply (deg_next … H1) #H0
 lapply (deg_mono … H0 … H2) -H0 -H2 #H
-<(pred_inv_refl … H) -H //
+>(pred_inv_fix_sn … H) -H //
 qed-.
 
 lemma cnx_inv_abst: ∀h,o,p,G,L,V,T. ⦃G, L⦄ ⊢ ⬈[h, o] 𝐍⦃ⓛ{p}V.T⦄ →

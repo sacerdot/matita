@@ -119,6 +119,15 @@ qed.
 lemma cpr_refl: ∀h,G,L. reflexive … (cpm h G L 0).
 /3 width=3 by cpg_refl, ex2_intro/ qed.
 
+(* Advanced properties ******************************************************)
+
+lemma cpm_sort_iter (h) (G) (L):
+                    ∀n. n ≤ 1 →
+                    ∀s. ⦃G,L⦄ ⊢ ⋆s ➡ [n,h] ⋆((next h)^n s).
+#h #G #L * //
+#n #H #s <(le_n_O_to_eq n) /2 width=1 by le_S_S_to_le/
+qed.
+
 (* Basic inversion lemmas ***************************************************)
 
 lemma cpm_inv_atom1: ∀n,h,J,G,L,T2. ⦃G, L⦄ ⊢ ⓪{J} ➡[n, h] T2 →

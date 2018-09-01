@@ -49,7 +49,7 @@ lemma max_SS: ∀n1,n2. ↑(n1∨n2) = (↑n1 ∨ ↑n2).
 [ >(le_to_leb_true … H) | >(not_le_to_leb_false … H) ] -H //
 qed.
 
-(* Equations ****************************************************************)
+(* Equalities ***************************************************************)
 
 lemma plus_SO: ∀n. n + 1 = ↑n.
 // qed.
@@ -57,8 +57,11 @@ lemma plus_SO: ∀n. n + 1 = ↑n.
 lemma minus_plus_m_m_commutative: ∀n,m:nat. n = m + n - m.
 // qed-.
 
-lemma plus_n_2: ∀n. n + 2 = n + 1 + 1.
-// qed.
+lemma plus_to_minus_2: ∀m1,m2,n1,n2. n1 ≤ m1 → n2 ≤ m2 →
+                       m1+n2 = m2+n1 → m1-n1 = m2-n2.
+#m1 #m2 #n1 #n2 #H1 #H2 #H
+@plus_to_minus >plus_minus_associative //
+qed-.
 
 (* Note: uses minus_minus_comm, minus_plus_m_m, commutative_plus, plus_minus *)
 lemma plus_minus_minus_be: ∀x,y,z. y ≤ z → z ≤ x → (x - z) + (z - y) = x - y.
@@ -80,29 +83,6 @@ lemma le_plus_minus_comm: ∀n,m,p. p ≤ m → m + n - p = m - p + n.
 
 lemma minus_minus_comm3: ∀n,x,y,z. n-x-y-z = n-y-z-x.
 // qed.
-
-lemma arith_b1: ∀a,b,c1. c1 ≤ b → a - c1 - (b - c1) = a - b.
-#a #b #c1 #H >minus_minus_comm >minus_le_minus_minus_comm //
-qed-.
-
-lemma arith_b2: ∀a,b,c1,c2. c1 + c2 ≤ b → a - c1 - c2 - (b - c1 - c2) = a - b.
-#a #b #c1 #c2 #H >minus_plus >minus_plus >minus_plus /2 width=1 by arith_b1/
-qed-.
-
-lemma arith_c1x: ∀x,a,b,c1. x + c1 + a - (b + c1) = x + a - b.
-/3 by monotonic_le_minus_l, le_to_le_to_eq, le_n/ qed.
-
-lemma arith_h1: ∀a1,a2,b,c1. c1 ≤ a1 → c1 ≤ b →
-                a1 - c1 + a2 - (b - c1) = a1 + a2 - b.
-#a1 #a2 #b #c1 #H1 #H2 >plus_minus /2 width=1 by arith_b2/
-qed-.
-
-lemma arith_i: ∀x,y,z. y < x → x+z-y-1 = x-y-1+z.
-/2 width=1 by plus_minus/ qed-.
-
-lemma plus_to_minus_2: ∀m1,m2,n1,n2. n1 ≤ m1 → n2 ≤ m2 →
-                       m1+n2 = m2+n1 → m1-n1 = m2-n2.
-/2 width=1 by arith_b1/ qed-.
 
 lemma idempotent_max: ∀n:nat. n = (n ∨ n).
 #n normalize >le_to_leb_true //
@@ -134,12 +114,6 @@ lemma lt_or_eq_or_gt: ∀m,n. ∨∨ m < n | n = m | n < m.
 #m #Hm * /3 width=1 by not_le_to_lt, le_S_S, or3_intro2/
 qed-.
 
-fact le_repl_sn_conf_aux: ∀x,y,z:nat. x ≤ z → x = y → y ≤ z.
-// qed-.
-
-fact le_repl_sn_trans_aux: ∀x,y,z:nat. x ≤ z → y = x → y ≤ z.
-// qed-.
-
 lemma monotonic_le_minus_l2: ∀x1,x2,y,z. x1 ≤ x2 → x1 - y - z ≤ x2 - y - z.
 /3 width=1 by monotonic_le_minus_l/ qed.
 
@@ -170,23 +144,6 @@ lemma max_S1_le_S: ∀n1,n2,n. (n1 ∨ n2) ≤ n → (↑n1 ∨ n2) ≤ ↑n.
 
 lemma max_S2_le_S: ∀n1,n2,n. (n1 ∨ n2) ≤ n → (n1 ∨ ↑n2) ≤ ↑n.
 /2 width=1 by max_S1_le_S/ qed-.
-
-lemma arith_j: ∀x,y,z. x-y-1 ≤ x-(y-z)-1.
-/3 width=1 by monotonic_le_minus_l, monotonic_le_minus_r/ qed.
-
-lemma arith_k_sn: ∀z,x,y,n. z < x → x+n ≤ y → x-z-1+n ≤ y-z-1.
-#z #x #y #n #Hzx #Hxny
->plus_minus [2: /2 width=1 by monotonic_le_minus_r/ ]
->plus_minus [2: /2 width=1 by lt_to_le/ ]
-/2 width=1 by monotonic_le_minus_l2/
-qed.
-
-lemma arith_k_dx: ∀z,x,y,n. z < x → y ≤ x+n → y-z-1 ≤ x-z-1+n.
-#z #x #y #n #Hzx #Hyxn
->plus_minus [2: /2 width=1 by monotonic_le_minus_r/ ]
->plus_minus [2: /2 width=1 by lt_to_le/ ]
-/2 width=1 by monotonic_le_minus_l2/
-qed.
 
 (* Inversion & forward lemmas ***********************************************)
 
@@ -220,8 +177,9 @@ lemma plus_xySz_x_false: ∀z,x,y. x + y + S z = x → ⊥.
 lemma plus_xSy_x_false: ∀y,x. x + S y = x → ⊥.
 /2 width=4 by plus_xySz_x_false/ qed-.
 
-lemma pred_inv_refl: ∀m. pred m = m → m = 0.
-* // normalize #m #H elim (lt_refl_false m) //
+lemma pred_inv_fix_sn: ∀x. ↓x = x → 0 = x.
+* // #x <pred_Sn #H
+elim (succ_inv_refl_sn x) //
 qed-.
 
 lemma discr_plus_xy_y: ∀x,y. x + y = y → x = 0.
@@ -229,9 +187,6 @@ lemma discr_plus_xy_y: ∀x,y. x + y = y → x = 0.
 
 lemma discr_plus_x_xy: ∀x,y. x = x + y → y = 0.
 /2 width=2 by le_plus_minus_comm/ qed-.
-
-lemma lt_plus_SO_to_le: ∀x,y. x < y + 1 → x ≤ y.
-/2 width=1 by monotonic_pred/ qed-.
 
 lemma plus2_inv_le_sn: ∀m1,m2,n1,n2. m1 + n1 = m2 + n2 → m1 ≤ m2 → n2 ≤ n1.
 #m1 #m2 #n1 #n2 #H #Hm
@@ -332,10 +287,6 @@ lemma iter_O: ∀B:Type[0]. ∀f:B→B.∀b. f^0 b = b.
 
 lemma iter_S: ∀B:Type[0]. ∀f:B→B.∀b,l. f^(S l) b = f (f^l b).
 // qed.
-
-lemma iter_SO: ∀B:Type[0]. ∀f:B→B. ∀b,l. f^(l+1) b = f (f^l b).
-#B #f #b #l >commutative_plus //
-qed.
 
 lemma iter_n_Sm: ∀B:Type[0]. ∀f:B→B. ∀b,l. f^l (f b) = f (f^l b).
 #B #f #b #l elim l -l normalize //

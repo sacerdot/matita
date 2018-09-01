@@ -18,11 +18,11 @@ include "basic_2/rt_computation/cpms_lsubr.ma".
 include "basic_2/rt_computation/cpms_fpbg.ma".
 include "basic_2/rt_computation/cpms_cpms.ma".
 include "basic_2/dynamic/cnv_drops.ma".
-include "basic_2/dynamic/cnv_preserve_far.ma".
+include "basic_2/dynamic/cnv_preserve_sub.ma".
 
 (* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
 
-(* Far diamond propery with t-bound rt-transition for terms *****************)
+(* Sub diamond propery with t-bound rt-transition for terms *****************)
 
 fact cnv_cpm_conf_lpr_atom_atom_aux (h) (G) (L1) (L2) (I):
      ∃∃T. ⦃G,L1⦄ ⊢ ⓪{I} ➡*[0,h] T & ⦃G, L2⦄ ⊢ ⓪{I} ➡*[O,h] T.
@@ -48,7 +48,7 @@ elim (lpr_drops_conf … HLK … HL2) -HL2 // #Y2 #H2 #HLK2
 elim (lpr_inv_pair_sn … H2) -H2 #K2 #V2 #HK2 #_ #H destruct
 lapply (drops_isuni_fwd_drop2 … HLK2) -V2 // #HLK2
 lapply (fqup_lref (Ⓣ) … G … HLK) -HLK #HLK
-elim (cnv_cpm_conf_lpr_far … IH … HV1 … HVX … HK1 … HK2) [|*: /2 width=1 by fqup_fpbg/ ] -L -K -V
+elim (cnv_cpm_conf_lpr_sub … IH … HV1 … HVX … HK1 … HK2) [|*: /2 width=1 by fqup_fpbg/ ] -L -K -V
 <minus_O_n <minus_n_O #V #HV1 #HVX
 elim (cpms_lifts_sn … HVX … HLK2 … HXV) -XV -HLK2 #XV #HVX #HXV
 /3 width=6 by cpms_delta_drops, ex2_intro/
@@ -70,7 +70,7 @@ elim (lpr_drops_conf … HLK … HL2) -HL2 // #Y2 #H2 #HLK2
 elim (lpr_inv_pair_sn … H2) -H2 #K2 #W2 #HK2 #_ #H destruct
 lapply (drops_isuni_fwd_drop2 … HLK2) -W2 // #HLK2
 lapply (fqup_lref (Ⓣ) … G … HLK) -HLK #HLK
-elim (cnv_cpm_conf_lpr_far … IH … HW1 … HWX … HK1 … HK2) [|*: /2 width=1 by fqup_fpbg/ ] -L -K -W
+elim (cnv_cpm_conf_lpr_sub … IH … HW1 … HWX … HK1 … HK2) [|*: /2 width=1 by fqup_fpbg/ ] -L -K -W
 <minus_O_n <minus_n_O #W #HW1 #HWX
 elim (cpms_lifts_sn … HWX … HLK2 … HXW) -XW -HLK2 #XW #HWX #HXW
 /3 width=6 by cpms_ell_drops, ex2_intro/
@@ -96,7 +96,7 @@ elim (lpr_drops_conf … HLK … HL2) -HL2 // #Y2 #H2 #HLK2
 elim (lpr_inv_pair_sn … H2) -H2 #K2 #V2 #HK2 #_ #H destruct
 lapply (drops_isuni_fwd_drop2 … HLK2) -V2 // #HLK2
 lapply (fqup_lref (Ⓣ) … G … HLK) -HLK #HLK
-elim (cnv_cpm_conf_lpr_far … IH … HVX1 … HVX2 … HK1 … HK2) [|*: /2 width=1 by fqup_fpbg/ ] -L -K -V
+elim (cnv_cpm_conf_lpr_sub … IH … HVX1 … HVX2 … HK1 … HK2) [|*: /2 width=1 by fqup_fpbg/ ] -L -K -V
 #V #HVX1 #HVX2
 elim (cpms_lifts_sn … HVX1 … HLK1 … HXV1) -XV1 -HLK1 #W1 #HVW1 #HXW1
 /3 width=11 by cpms_lifts_bi, ex2_intro/
@@ -120,7 +120,7 @@ fact cnv_cpm_conf_lpr_bind_bind_aux (a) (h) (o) (p) (I) (G) (L) (V) (T):
 #L1 #HL01 #L2 #HL02
 elim (cnv_inv_bind … H0) -H0 #HV0 #HT0
 elim (cpr_conf_lpr … HV01 … HV02 … HL01 … HL02) #V #HV1 #HV2
-elim (cnv_cpm_conf_lpr_far … IH … HT01 … HT02 (L1.ⓑ{I}V1) … (L2.ⓑ{I}V2)) [|*: /2 width=1 by fqup_fpbg, lpr_pair/ ]
+elim (cnv_cpm_conf_lpr_sub … IH … HT01 … HT02 (L1.ⓑ{I}V1) … (L2.ⓑ{I}V2)) [|*: /2 width=1 by fqup_fpbg, lpr_pair/ ]
 #T #HT1 #HT2 -L0 -V0 -T0
 /3 width=5 by cpms_bind_dx, ex2_intro/
 qed-.
@@ -140,7 +140,7 @@ lapply (cnv_inv_lifts … HT0 (Ⓣ) … L0 … HT20) -HT0
 [ /3 width=3 by drops_refl, drops_drop/ ] #HT2 
 elim (cpm_inv_lifts_sn … HT01 (Ⓣ) … L0 … HT20) -HT01
 [| /3 width=1 by drops_refl, drops_drop/ ] #XT1 #HXT1 #HXT12
-elim (cnv_cpm_conf_lpr_far … IH … HXT12 … HXT2 … HL01 … HL02)
+elim (cnv_cpm_conf_lpr_sub … IH … HXT12 … HXT2 … HL01 … HL02)
 [|*: /3 width=1 by fqup_fpbg, fqup_zeta/ ] -L0 -T0 -V0 #T #HT1 #HT2
 /3 width=3 by cpms_zeta, ex2_intro/
 qed-.
@@ -159,7 +159,7 @@ elim (cnv_inv_bind … H0) -H0 #_ #HT0
 lapply (lifts_inj … HT10 … HT20) -HT10 #H destruct
 lapply (cnv_inv_lifts … HT0 (Ⓣ) … L0 … HT20) -HT0
 [ /3 width=3 by drops_refl, drops_drop/ ] #HT2
-elim (cnv_cpm_conf_lpr_far … IH … HXT1 … HXT2 … HL01 … HL02)
+elim (cnv_cpm_conf_lpr_sub … IH … HXT1 … HXT2 … HL01 … HL02)
 [|*: /3 width=1 by fqup_fpbg, fqup_zeta/ ] -L0 -T0 #T #HT1 #HT2
 /2 width=3 by ex2_intro/
 qed-.
@@ -176,7 +176,7 @@ fact cnv_cpm_conf_lpr_appl_appl_aux (a) (h) (o) (G) (L) (V) (T):
 #L1 #HL01 #L2 #HL02
 elim (cnv_inv_appl … H0) -H0 #n0 #p0 #X01 #X02 #_ #HV0 #HT0 #_ #_ -n0 -p0 -X01 -X02
 elim (cpr_conf_lpr … HV01 … HV02 … HL01 … HL02) #V #HV1 #HV2
-elim (cnv_cpm_conf_lpr_far … IH … HT01 … HT02 … HL01 … HL02) [|*: /2 width=1 by fqup_fpbg/ ]
+elim (cnv_cpm_conf_lpr_sub … IH … HT01 … HT02 … HL01 … HL02) [|*: /2 width=1 by fqup_fpbg/ ]
 #T #HT1 #HT2 -L0 -V0 -T0
 /3 width=5 by cpms_appl_dx, ex2_intro/
 qed-.
@@ -197,7 +197,7 @@ elim (cnv_inv_bind … H0) -H0 #HW0 #HT0
 elim (cpm_inv_abst1 … HX) -HX #W1 #T1 #HW01 #HT01 #H destruct
 elim (cpr_conf_lpr … HV01 … HV02 … HL01 … HL02) #V #HV1 #HV2
 elim (cpr_conf_lpr … HW01 … HW02 … HL01 … HL02) #W #HW1 #HW2
-elim (cnv_cpm_conf_lpr_far … IH … HT01 … HT02 (L1.ⓛW1) … (L2.ⓛW2)) [|*: /2 width=1 by fqup_fpbg, lpr_pair/ ]
+elim (cnv_cpm_conf_lpr_sub … IH … HT01 … HT02 (L1.ⓛW1) … (L2.ⓛW2)) [|*: /2 width=1 by fqup_fpbg, lpr_pair/ ]
 #T #HT1 #HT2 -L0 -V0 -W0 -T0
 lapply (lsubr_cpms_trans … HT2 (L2.ⓓⓝW2.V2) ?) -HT2 [ /2 width=1 by lsubr_beta/ ] #HT2
 /4 width=5 by cpms_beta_dx, cpms_bind_dx, cpm_cast, ex2_intro/
@@ -222,13 +222,13 @@ elim (cpm_inv_abbr1 … HX) -HX *
 [ #W1 #T1 #HW01 #HT01 #H destruct
   elim (cpm_lifts_sn … HV2 (Ⓣ) … (L2.ⓓW2) … HVU2) -HVU2 [| /3 width=1 by drops_refl, drops_drop/ ] #U #HVU #HU2
   elim (cpr_conf_lpr … HW01 … HW02 … HL01 … HL02) #W #HW1 #HW2
-  elim (cnv_cpm_conf_lpr_far … IH … HT01 … HT02 (L1.ⓓW1) … (L2.ⓓW2)) [|*: /2 width=1 by fqup_fpbg, lpr_pair/ ]
+  elim (cnv_cpm_conf_lpr_sub … IH … HT01 … HT02 (L1.ⓓW1) … (L2.ⓓW2)) [|*: /2 width=1 by fqup_fpbg, lpr_pair/ ]
   #T #HT1 #HT2 -L0 -V0 -W0 -T0
   /4 width=7 by cpms_theta_dx, cpms_appl_dx, cpms_bind_dx, ex2_intro/
 | #X0 #HXT0 #H1X0 #H destruct
   lapply (cnv_inv_lifts … HT0 (Ⓣ) … L0 … HXT0) -HT0 [ /3 width=3 by drops_refl, drops_drop/ ] #H2X0 
   elim (cpm_inv_lifts_sn … HT02 (Ⓣ) … L0 … HXT0) -HT02 [| /3 width=1 by drops_refl, drops_drop/ ] #X2 #HXT2 #HX02
-  elim (cnv_cpm_conf_lpr_far … IH … H1X0 … HX02 … HL01 … HL02)
+  elim (cnv_cpm_conf_lpr_sub … IH … H1X0 … HX02 … HL01 … HL02)
   [|*: /4 width=5 by fqup_fpbg, fqup_strap1, fqu_drop/ ] #T #HT1 #HT2 -L0 -V0 -W0 -T0
   /4 width=8 by cpms_zeta, cpms_appl_dx, lifts_flat, ex2_intro/
 ]
@@ -249,7 +249,7 @@ elim (cnv_inv_appl … H0) -H0 #n0 #p0 #X01 #X02 #_ #HV0 #H0 #_ #_ -n0 -p0 -X01 
 elim (cnv_inv_bind … H0) -H0 #HW0 #HT0
 elim (cpr_conf_lpr … HV01 … HV02 … HL01 … HL02) #V #HV1 #HV2
 elim (cpr_conf_lpr … HW01 … HW02 … HL01 … HL02) #W #HW1 #HW2
-elim (cnv_cpm_conf_lpr_far … IH … HT01 … HT02 (L1.ⓛW1) … (L2.ⓛW2)) [|*: /2 width=1 by fqup_fpbg, lpr_pair/ ]
+elim (cnv_cpm_conf_lpr_sub … IH … HT01 … HT02 (L1.ⓛW1) … (L2.ⓛW2)) [|*: /2 width=1 by fqup_fpbg, lpr_pair/ ]
 #T #HT1 #HT2 -L0 -V0 -W0 -T0
 lapply (lsubr_cpms_trans … HT1 (L1.ⓓⓝW1.V1) ?) -HT1 /2 width=1 by lsubr_beta/ #HT1
 lapply (lsubr_cpms_trans … HT2 (L2.ⓓⓝW2.V2) ?) -HT2 /2 width=1 by lsubr_beta/ #HT2
@@ -272,7 +272,7 @@ elim (cnv_inv_appl … H0) -H0 #n0 #p0 #X01 #X02 #_ #HV0 #H0 #_ #_ -n0 -p0 -X01 
 elim (cnv_inv_bind … H0) -H0 #HW0 #HT0
 elim (cpr_conf_lpr … HV01 … HV02 … HL01 … HL02) #V #HV1 #HV2
 elim (cpr_conf_lpr … HW01 … HW02 … HL01 … HL02) #W #HW1 #HW2
-elim (cnv_cpm_conf_lpr_far … IH … HT01 … HT02 (L1.ⓓW1) … (L2.ⓓW2)) [|*: /2 width=1 by fqup_fpbg, lpr_pair/ ]
+elim (cnv_cpm_conf_lpr_sub … IH … HT01 … HT02 (L1.ⓓW1) … (L2.ⓓW2)) [|*: /2 width=1 by fqup_fpbg, lpr_pair/ ]
 #T #HT1 #HT2 -L0 -V0 -W0 -T0
 elim (cpm_lifts_sn … HV1 (Ⓣ) … (L1.ⓓW1) … HVU1) -V1 [| /3 width=1 by drops_refl, drops_drop/ ] #U #HVU #HU1
 lapply (cpm_lifts_bi … HV2 (Ⓣ) … (L2.ⓓW2) … HVU2 … HVU) -V2 -V [ /3 width=1 by drops_refl, drops_drop/ ] #HU2
@@ -290,8 +290,8 @@ fact cnv_cpm_conf_lpr_cast_cast_aux (a) (h) (o) (G) (L) (V) (T):
 #n1 #V1 #HV01 #n2 #V2 #HV02 #T1 #HT01 #T2 #HT02
 #L1 #HL01 #L2 #HL02
 elim (cnv_inv_cast … H0) -H0 #X0 #HV0 #HT0 #_ #_ -X0
-elim (cnv_cpm_conf_lpr_far … IH … HV01 … HV02 … HL01 … HL02) [|*: /2 width=1 by fqup_fpbg/ ]
-elim (cnv_cpm_conf_lpr_far … IH … HT01 … HT02 … HL01 … HL02) [|*: /2 width=1 by fqup_fpbg/ ]
+elim (cnv_cpm_conf_lpr_sub … IH … HV01 … HV02 … HL01 … HL02) [|*: /2 width=1 by fqup_fpbg/ ]
+elim (cnv_cpm_conf_lpr_sub … IH … HT01 … HT02 … HL01 … HL02) [|*: /2 width=1 by fqup_fpbg/ ]
 #T #HT1 #HT2 #V #HV1 #HV2 -L0 -V0 -T0
 /3 width=5 by cpms_cast, ex2_intro/
 qed-.
@@ -307,7 +307,7 @@ fact cnv_cpm_conf_lpr_cast_epsilon_aux (a) (h) (o) (G) (L) (V) (T):
 #n1 #V1 #HV01 #T1 #HT01 #n2 #T2 #HT02
 #L1 #HL01 #L2 #HL02
 elim (cnv_inv_cast … H0) -H0 #X0 #HV0 #HT0 #_ #_ -X0
-elim (cnv_cpm_conf_lpr_far … IH … HT01 … HT02 … HL01 … HL02) [|*: /2 width=1 by fqup_fpbg/ ]
+elim (cnv_cpm_conf_lpr_sub … IH … HT01 … HT02 … HL01 … HL02) [|*: /2 width=1 by fqup_fpbg/ ]
 #T #HT1 #HT2 -L0 -V0 -T0
 /3 width=3 by cpms_eps, ex2_intro/
 qed-.
@@ -324,9 +324,9 @@ fact cnv_cpm_conf_lpr_cast_ee_aux (a) (h) (o) (G) (L) (V) (T):
 #n1 #V1 #HV01 #n2 #V2 #HV02 #T1 #HT01
 #L1 #HL01 #L2 #HL02 -HV01
 elim (cnv_inv_cast … H0) -H0 #X0 #HV0 #HT0 #HVX0 #HTX0
-lapply (cnv_cpms_trans_lpr_far … IH2 … HVX0 … L0 ?) [4:|*: /2 width=1 by fqup_fpbg/ ] #HX0
-elim (cnv_cpms_strip_lpr_far … IH1 … HVX0 … HV02 … L0 … HL02) [|*: /2 width=1 by fqup_fpbg/ ]
-elim (cnv_cpms_strip_lpr_far … IH1 … HTX0 … HT01 … L0 … HL01) [|*: /2 width=1 by fqup_fpbg/ ]
+lapply (cnv_cpms_trans_lpr_sub … IH2 … HVX0 … L0 ?) [4:|*: /2 width=1 by fqup_fpbg/ ] #HX0
+elim (cnv_cpms_strip_lpr_sub … IH1 … HVX0 … HV02 … L0 … HL02) [|*: /2 width=1 by fqup_fpbg/ ]
+elim (cnv_cpms_strip_lpr_sub … IH1 … HTX0 … HT01 … L0 … HL01) [|*: /2 width=1 by fqup_fpbg/ ]
 -HV02 -HTX0 -HT01 <minus_O_n <minus_n_O #T #HT2 #HT1 #V #HV1 #HV2
 elim (IH1 … HV1 … HT2 … HL02 … HL01) [|*: /2 width=4 by fqup_cpms_fwd_fpbg/ ]
 -L0 -V0 -T0 -X0 #U #HVU #HTU
@@ -345,7 +345,7 @@ fact cnv_cpm_conf_lpr_epsilon_epsilon_aux (a) (h) (o) (G) (L) (V) (T):
 #n1 #T1 #HT01 #n2 #T2 #HT02
 #L1 #HL01 #L2 #HL02
 elim (cnv_inv_cast … H0) -H0 #X0 #_ #HT0 #_ #_ -X0
-elim (cnv_cpm_conf_lpr_far … IH … HT01 … HT02 … HL01 … HL02) [|*: /2 width=1 by fqup_fpbg/ ]
+elim (cnv_cpm_conf_lpr_sub … IH … HT01 … HT02 … HL01 … HL02) [|*: /2 width=1 by fqup_fpbg/ ]
 #T #HT1 #HT2 -L0 -V0 -T0
 /2 width=3 by ex2_intro/
 qed-.
@@ -361,9 +361,9 @@ fact cnv_cpm_conf_lpr_epsilon_ee_aux (a) (h) (o) (G) (L) (V) (T):
 #n1 #T1 #HT01 #n2 #V2 #HV02
 #L1 #HL01 #L2 #HL02
 elim (cnv_inv_cast … H0) -H0 #X0 #HV0 #HT0 #HVX0 #HTX0
-lapply (cnv_cpms_trans_lpr_far … IH2 … HVX0 … L0 ?) [4:|*: /2 width=1 by fqup_fpbg/ ] #HX0
-elim (cnv_cpms_strip_lpr_far … IH1 … HVX0 … HV02 … L0 … HL02) [|*: /2 width=1 by fqup_fpbg/ ]
-elim (cnv_cpms_strip_lpr_far … IH1 … HTX0 … HT01 … L0 … HL01) [|*: /2 width=1 by fqup_fpbg/ ]
+lapply (cnv_cpms_trans_lpr_sub … IH2 … HVX0 … L0 ?) [4:|*: /2 width=1 by fqup_fpbg/ ] #HX0
+elim (cnv_cpms_strip_lpr_sub … IH1 … HVX0 … HV02 … L0 … HL02) [|*: /2 width=1 by fqup_fpbg/ ]
+elim (cnv_cpms_strip_lpr_sub … IH1 … HTX0 … HT01 … L0 … HL01) [|*: /2 width=1 by fqup_fpbg/ ]
 -HV02 -HTX0 -HT01 <minus_O_n <minus_n_O #T #HT2 #HT1 #V #HV1 #HV2
 elim (IH1 … HV1 … HT2 … HL02 … HL01) [|*: /2 width=4 by fqup_cpms_fwd_fpbg/ ]
 -L0 -V0 -T0 -X0 #U #HVU #HTU
@@ -382,7 +382,7 @@ fact cnv_cpm_conf_lpr_ee_ee_aux (a) (h) (o) (G) (L) (V) (T):
 #n1 #V1 #HV01 #n2 #V2 #HV02
 #L1 #HL01 #L2 #HL02
 elim (cnv_inv_cast … H0) -H0 #X0 #HV0 #_ #_ #_ -X0
-elim (cnv_cpm_conf_lpr_far … IH … HV01 … HV02 … HL01 … HL02) [|*: /2 width=1 by fqup_fpbg/ ]
+elim (cnv_cpm_conf_lpr_sub … IH … HV01 … HV02 … HL01 … HL02) [|*: /2 width=1 by fqup_fpbg/ ]
 #V #HV1 #HV2 -L0 -V0 -T0
 /2 width=3 by ex2_intro/
 qed-.

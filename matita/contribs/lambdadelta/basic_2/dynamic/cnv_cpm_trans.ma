@@ -17,12 +17,12 @@ include "basic_2/rt_computation/cpms_fpbg.ma".
 include "basic_2/rt_computation/cprs_cprs.ma".
 include "basic_2/rt_computation/lprs_cpms.ma".
 include "basic_2/dynamic/cnv_drops.ma".
-include "basic_2/dynamic/cnv_preserve_far.ma".
+include "basic_2/dynamic/cnv_preserve_sub.ma".
 include "basic_2/dynamic/lsubv_cnv.ma".
 
 (* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
 
-(* Far preservation propery with t-bound rt-transition for terms ************)
+(* Sub preservation propery with t-bound rt-transition for terms ************)
 
 fact cnv_cpm_trans_lpr_aux (a) (h) (o):
                            ∀G0,L0,T0.
@@ -61,9 +61,9 @@ fact cnv_cpm_trans_lpr_aux (a) (h) (o):
   [ #V2 #T2 #HV12 #HT12 #H destruct
     lapply (IH1 … HV12 … HL12) /2 width=1 by fqup_fpbg/ #HV2
     lapply (IH1 … HT12 … HL12) /2 width=1 by fqup_fpbg/ #HT2
-    elim (cnv_cpms_strip_lpr_far … IH2 … HVW1 … HV12 … HL12 … HL12) [|*: /2 width=2 by fqup_fpbg/ ] -HVW1 -HV12
+    elim (cnv_cpms_strip_lpr_sub … IH2 … HVW1 … HV12 … HL12 … HL12) [|*: /2 width=2 by fqup_fpbg/ ] -HVW1 -HV12
     <minus_n_O <minus_O_n #XW1 #HXW1 #HXV2
-    elim (cnv_cpms_strip_lpr_far … IH2 … HTU1 … HT12 … HL12 … HL12) [|*: /2 width=2 by fqup_fpbg/ ] -HTU1 -HT12
+    elim (cnv_cpms_strip_lpr_sub … IH2 … HTU1 … HT12 … HL12 … HL12) [|*: /2 width=2 by fqup_fpbg/ ] -HTU1 -HT12
     #X #H #HTU2 -IH2 -IH1 -L1 -V1 -T1
     elim (cpms_inv_abst_sn … H) -H #W2 #U2 #HW12 #_ #H destruct
     elim (cprs_conf … HXW1 … HW12) -W1 #W1 #HXW1 #HW21
@@ -77,9 +77,9 @@ fact cnv_cpm_trans_lpr_aux (a) (h) (o):
     lapply (IH1 … HV12 … HL12) /2 width=1 by fqup_fpbg/ #HV2
     lapply (IH1 … HW120 … HL12) /2 width=1 by fqup_fpbg/ #HW20
     lapply (IH1 … HT10 … HT120 … (L2.ⓛW20) ?) /2 width=1 by fqup_fpbg, lpr_pair/ -HT10 -HT120 #HT20
-    elim (cnv_cpms_strip_lpr_far … IH2 … HVW1 … HV12 … HL12 … HL12) [|*: /2 width=2 by fqup_fpbg/ ] -HVW1 -HV12
+    elim (cnv_cpms_strip_lpr_sub … IH2 … HVW1 … HV12 … HL12 … HL12) [|*: /2 width=2 by fqup_fpbg/ ] -HVW1 -HV12
     <minus_n_O <minus_O_n #XW1 #HXW1 #HXV2
-    elim (cnv_cpms_strip_lpr_far … IH2 … HW130 … HW120 … HL12 … HL12) [|*: /2 width=2 by fqup_fpbg/ ] -HW130 -HW120
+    elim (cnv_cpms_strip_lpr_sub … IH2 … HW130 … HW120 … HL12 … HL12) [|*: /2 width=2 by fqup_fpbg/ ] -HW130 -HW120
     <minus_n_O #XW30 #HXW30 #HW230 -IH2 -IH1 -L1 -V1 -W10 -T10
     elim (cprs_conf … HXW1 … HXW30) -W30 #W30 #HXW1 #HXW30
     lapply (cpms_trans … HXV2 … HXW1) -XW1 <plus_n_O #HV2W30
@@ -92,9 +92,9 @@ fact cnv_cpm_trans_lpr_aux (a) (h) (o):
     lapply (IH1 … HW02 … HL12) /2 width=1 by fqup_fpbg/ #HW2
     lapply (IH1 … HV10 … HL12) /2 width=1 by fqup_fpbg/ #HV0
     lapply (IH1 … HT02 (L2.ⓓW2) ?) /2 width=1 by fqup_fpbg, lpr_pair/ #HT2
-    elim (cnv_cpms_strip_lpr_far … IH2 … HVW1 … HV10 … HL12 … HL12) [|*: /2 width=2 by fqup_fpbg/ ] -HVW1 -HV10
+    elim (cnv_cpms_strip_lpr_sub … IH2 … HVW1 … HV10 … HL12 … HL12) [|*: /2 width=2 by fqup_fpbg/ ] -HVW1 -HV10
     <minus_n_O <minus_O_n #XW1 #HXW1 #HXV0
-    elim (cnv_cpms_strip_lpr_far … IH2 … HTU0 … HT02 … (L2.ⓓW2) … (L2.ⓓW2)) [|*: /2 width=2 by fqup_fpbg, lpr_pair/ ] -HTU0 -HT02 -HW02
+    elim (cnv_cpms_strip_lpr_sub … IH2 … HTU0 … HT02 … (L2.ⓓW2) … (L2.ⓓW2)) [|*: /2 width=2 by fqup_fpbg, lpr_pair/ ] -HTU0 -HT02 -HW02
     #X #H #HTU2 -IH2 -IH1 -L1 -W0 -T0 -U1
     elim (cpms_inv_abst_sn … H) -H #W #U2 #HW3 #_ #H destruct -U3
     lapply (cnv_lifts … HV0 (Ⓣ) … (L2.ⓓW2) … HV02) /3 width=1 by drops_refl, drops_drop/ -HV0 #HV2
@@ -111,10 +111,10 @@ fact cnv_cpm_trans_lpr_aux (a) (h) (o):
   [ * #W2 #T2 #HW12 #HT12 #H destruct
     lapply (IH1 … HW12 … HL12) /2 width=1 by fqup_fpbg/ #HW2
     lapply (IH1 … HT12 … HL12) /2 width=1 by fqup_fpbg/ #HT2
-    lapply (cnv_cpms_trans_lpr_far … IH1 … HTU1 L1 ?) /2 width=1 by fqup_fpbg/ #HU1
-    elim (cnv_cpms_strip_lpr_far … IH2 … HWU1 … HW12 … L1 … HL12) [|*: /2 width=2 by fqup_fpbg/ ] -HW12
+    lapply (cnv_cpms_trans_lpr_sub … IH1 … HTU1 L1 ?) /2 width=1 by fqup_fpbg/ #HU1
+    elim (cnv_cpms_strip_lpr_sub … IH2 … HWU1 … HW12 … L1 … HL12) [|*: /2 width=2 by fqup_fpbg/ ] -HW12
     <minus_n_O <minus_O_n #XW1 #HXUW1 #HXW21
-    elim (cnv_cpms_strip_lpr_far … IH2 … HTU1 … HT12 … L1 … HL12) [|*: /2 width=2 by fqup_fpbg/ ] -HTU1 -HT12
+    elim (cnv_cpms_strip_lpr_sub … IH2 … HTU1 … HT12 … L1 … HL12) [|*: /2 width=2 by fqup_fpbg/ ] -HTU1 -HT12
     #XT1 #HXUT1 #HXT21
     elim (IH2 … HXUW1 … HXUT1 … HL12 … HL12) [|*: /2 width=4 by fqup_cpms_fwd_fpbg/ ] -HXUW1 -HXUT1 -HWU1
     >eq_minus_O // #W0 #H1 #H2 -IH2 -IH1 -L1 -W1 -T1 -U1
