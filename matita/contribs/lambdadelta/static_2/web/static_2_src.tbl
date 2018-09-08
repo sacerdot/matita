@@ -111,6 +111,10 @@ table {
              [ [ "for terms" ] "theq" + "( ? ⩳[?,?] ? )" "theq_simple" + "theq_tdeq" + "theq_theq" + "theq_simple_vector" * ]
           }
         ]
+        [ { "degree positivity" * } {
+             [ [ "for terms" ] "tdpos" + "( 𝐏[?,?]⦃?⦄ )" * ]
+          }
+        ]
         [ { "degree-based equivalence" * } {
              [ [ "" ] "tdeq_ext" + "( ? ≛[?,?] ? )" + "( ? ⊢ ? ≛[?,?] ? )" * ]
              [ [ "" ] "tdeq" + "( ? ≛[?,?] ? )" "tdeq_tdeq" * ]
