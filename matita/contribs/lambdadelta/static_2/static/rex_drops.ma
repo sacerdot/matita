@@ -109,6 +109,17 @@ lemma rex_inv_lref_pair_dx: ∀R,L1,L2,i. L1 ⪤[R, #i] L2 → ∀I,K2,V2. ⬇*[
 #K1 #V1 #HK12 #HV12 #H destruct /2 width=5 by ex3_2_intro/
 qed-.
 
+lemma rex_inv_lref_pair_bi (R) (L1) (L2) (i):
+                           L1 ⪤[R, #i] L2 →
+                           ∀I1,K1,V1. ⬇*[i] L1 ≘ K1.ⓑ{I1}V1 →
+                           ∀I2,K2,V2. ⬇*[i] L2 ≘ K2.ⓑ{I2}V2 →
+                           ∧∧ K1 ⪤[R, V1] K2 & R K1 V1 V2 & I1 = I2.
+#R #L1 #L2 #i #H12 #I1 #K1 #V1 #H1 #I2 #K2 #V2 #H2
+elim (rex_inv_lref_pair_sn … H12 … H1) -L1 #Y2 #X2 #HLY2 #HK12 #HV12
+lapply (drops_mono … HLY2 … H2) -HLY2 -H2 #H destruct
+/2 width=1 by and3_intro/
+qed-.
+
 lemma rex_inv_lref_unit_sn: ∀R,L1,L2,i. L1 ⪤[R, #i] L2 → ∀I,K1. ⬇*[i] L1 ≘ K1.ⓤ{I} →
                             ∃∃f,K2. ⬇*[i] L2 ≘ K2.ⓤ{I} & K1 ⪤[cext2 R, cfull, f] K2 & 𝐈⦃f⦄.
 #R #L1 #L2 #i #HL12 #I #K1 #HLK1 elim (rex_dropable_sn … HLK1 … HL12 (#0)) -HLK1 -HL12 //

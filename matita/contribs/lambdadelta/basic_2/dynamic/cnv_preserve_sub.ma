@@ -12,8 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_computation/fpbg.ma".
-include "basic_2/rt_computation/cpms_fpbs.ma".
+include "basic_2/rt_computation/cpms_fpbg.ma".
 include "basic_2/dynamic/cnv.ma".
 
 (* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
@@ -56,7 +55,7 @@ fact cnv_cpms_trans_lpr_sub (a) (h) (o):
                             ∀G1,L1,T1. ⦃G0, L0, T0⦄ >[h, o] ⦃G1, L1, T1⦄ → IH_cnv_cpms_trans_lpr a h G1 L1 T1.
 #a #h #o #G0 #L0 #T0 #IH #G1 #L1 #T1 #H01 #HT1 #n #T2 #H
 @(cpms_ind_dx … H) -n -T2
-/4 width=7 by cpms_fwd_fpbs, fpbg_fpbs_trans/
+/3 width=7 by fpbg_cpms_trans/
 qed-.
 
 fact cnv_cpm_conf_lpr_sub (a) (h) (o):

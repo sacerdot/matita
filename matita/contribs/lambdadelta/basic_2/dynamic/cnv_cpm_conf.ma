@@ -15,7 +15,6 @@
 include "ground_2/lib/arith_2b.ma".
 include "basic_2/rt_transition/lpr_lpr.ma".
 include "basic_2/rt_computation/cpms_lsubr.ma".
-include "basic_2/rt_computation/cpms_fpbg.ma".
 include "basic_2/rt_computation/cpms_cpms.ma".
 include "basic_2/dynamic/cnv_drops.ma".
 include "basic_2/dynamic/cnv_preserve_sub.ma".
@@ -220,7 +219,7 @@ elim (cnv_inv_bind … H0) -H0 #HW0 #HT0
 elim (cpr_conf_lpr … HV01 … HV02 … HL01 … HL02) #V #HV1 #HV2
 elim (cpm_inv_abbr1 … HX) -HX *
 [ #W1 #T1 #HW01 #HT01 #H destruct
-  elim (cpm_lifts_sn … HV2 (Ⓣ) … (L2.ⓓW2) … HVU2) -HVU2 [| /3 width=1 by drops_refl, drops_drop/ ] #U #HVU #HU2
+  elim (cpm_lifts_sn … HV2 (Ⓣ) … (L2.ⓓW2) … HVU2) -HV2 -HVU2 [| /3 width=1 by drops_refl, drops_drop/ ] #U #HVU #HU2
   elim (cpr_conf_lpr … HW01 … HW02 … HL01 … HL02) #W #HW1 #HW2
   elim (cnv_cpm_conf_lpr_sub … IH … HT01 … HT02 (L1.ⓓW1) … (L2.ⓓW2)) [|*: /2 width=1 by fqup_fpbg, lpr_pair/ ]
   #T #HT1 #HT2 -L0 -V0 -W0 -T0
@@ -396,10 +395,10 @@ fact cnv_cpm_conf_lpr_aux (a) (h) (o):
 [ #I #HG0 #HL0 #HT0 #HT #n1 #X1 #HX1 #n2 #X2 #HX2 #L1 #HL1 #L2 #HL2 destruct
   elim (cpm_inv_atom1_drops … HX1) -HX1 *
   elim (cpm_inv_atom1_drops … HX2) -HX2 *
-  [ #H21 #H22 #H11 #H12 destruct -L -a -o
+  [ #H21 #H22 #H11 #H12 destruct -a -o -L
     <minus_O_n
     /2 width=1 by cnv_cpm_conf_lpr_atom_atom_aux/
-  | #s2 #H21 #H22 #H23 #H11 #H12 destruct -L -a -o
+  | #s2 #H21 #H22 #H23 #H11 #H12 destruct -a -o -L
     <minus_O_n <minus_n_O
     /2 width=1 by cnv_cpm_conf_lpr_atom_ess_aux/
   | #K2 #V2 #XV2 #i #HLK2 #HVX2 #HXV2 #H21 #H11 #H12 destruct -IH2
@@ -408,10 +407,10 @@ fact cnv_cpm_conf_lpr_aux (a) (h) (o):
   | #m2 #K2 #W2 #XW2 #i #HLK2 #HWX2 #HXW2 #H21 #H22 #H11 #H12 destruct -IH2
     <minus_O_n <minus_n_O
     @(cnv_cpm_conf_lpr_atom_ell_aux … IH1) -IH1 /1 width=6 by/
-  | #H21 #H22 #s1 #H11 #H12 #H13 destruct -L -a -o
+  | #H21 #H22 #s1 #H11 #H12 #H13 destruct -a -o -L
     <minus_O_n <minus_n_O
     /3 width=1 by cnv_cpm_conf_lpr_atom_ess_aux, ex2_commute/
-  | #s2 #H21 #H22 #H23 #s1 #H11 #H12 #H13 destruct -L -a -o
+  | #s2 #H21 #H22 #H23 #s1 #H11 #H12 #H13 destruct -a -o -L
     <minus_n_n
     /2 width=1 by cnv_cpm_conf_lpr_atom_atom_aux/
   | #K2 #V2 #XV2 #i2 #_ #_ #_ #H21 #s1 #H11 #H12 #H13 destruct

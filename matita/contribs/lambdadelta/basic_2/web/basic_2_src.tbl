@@ -31,7 +31,7 @@ table {
 *)
         [ { "context-sensitive native validity" * } {
              [ [ "restricted refinement for lenvs" ] "lsubv ( ? ⊢ ? ⫃![?,?] ? )" "lsubv_drops" + "lsubv_lsubr" + "lsubv_lsuba" + "lsubv_cpms" + "lsubv_cpcs" + "lsubv_cnv" + "lsubv_lsubv" * ]
-             [ [ "for terms" ] "cnv" + "( ⦃?,?⦄ ⊢ ? ![?,?] )" "cnv_drops" + "cnv_fqus" + "cnv_aaa" + "cnv_fsb" + "cnv_cpm_trans" + "cnv_cpm_conf" + "cnv_cpm_tdeq" + "cnv_cpm_tdpos" + "cnv_cpms_tdpos" + "cnv_cpms_conf" + "cnv_preserve_sub" + "cnv_preserve_far" (* + "cnv_preserve" *) * ]
+             [ [ "for terms" ] "cnv" + "( ⦃?,?⦄ ⊢ ? ![?,?] )" "cnv_drops" + "cnv_fqus" + "cnv_aaa" + "cnv_fsb" + "cnv_cpm_trans" + "cnv_cpm_conf" + "cnv_cpm_tdeq" + "cnv_cpm_tdpos" + "cnv_cpms_tdpos" + "cnv_cpms_conf" + "cnv_preserve_sub" + "cnv_preserve" * ]
           }
         ]
      }
@@ -61,7 +61,7 @@ table {
           }
         ]
         [ { "t-bound context-sensitive parallel rt-computation" * } {
-             [ [ "for terms" ] "cpms" + "( ⦃?,?⦄ ⊢ ? ➡*[?,?] ? )" "cpms_drops" + "cpms_lsubr" + "cpms_aaa" + "cpms_lpr" + "cpms_cpxs" + "cpms_fpbs" + "cpms_fpbg" + "cpms_cpms" * ]
+             [ [ "for terms" ] "cpms" + "( ⦃?,?⦄ ⊢ ? ➡*[?,?] ? )" "cpms_drops" + "cpms_lsubr" + "cpms_rdeq" + "cpms_aaa" + "cpms_lpr" + "cpms_cpxs" + "cpms_fpbs" + "cpms_fpbg" + "cpms_cpms" * ]
           }
         ]
         [ { "unbound context-sensitive parallel rst-computation" * } {

@@ -43,3 +43,10 @@ lemma rdeq_inv_lref_pair_sn: ∀h,o,L1,L2,i. L1 ≛[h, o, #i] L2 → ∀I,K1,V1.
 lemma rdeq_inv_lref_pair_dx: ∀h,o,L1,L2,i. L1 ≛[h, o, #i] L2 → ∀I,K2,V2. ⬇*[i] L2 ≘ K2.ⓑ{I}V2 →
                              ∃∃K1,V1. ⬇*[i] L1 ≘ K1.ⓑ{I}V1 & K1 ≛[h, o, V1] K2 & V1 ≛[h, o] V2.
 /2 width=3 by rex_inv_lref_pair_dx/ qed-.
+
+lemma rdeq_inv_lref_pair_bi (h) (o) (L1) (L2) (i):
+                            L1 ≛[h,o,#i] L2 →
+                            ∀I1,K1,V1. ⬇*[i] L1 ≘ K1.ⓑ{I1}V1 →
+                            ∀I2,K2,V2. ⬇*[i] L2 ≘ K2.ⓑ{I2}V2 →
+                            ∧∧ K1 ≛[h,o,V1] K2 & V1 ≛[h,o] V2 & I1 = I2.
+/2 width=6 by rex_inv_lref_pair_bi/ qed-.

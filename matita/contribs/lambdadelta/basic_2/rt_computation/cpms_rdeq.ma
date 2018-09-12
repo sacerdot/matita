@@ -12,33 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/lib/arith.ma".
+include "basic_2/rt_computation/cpxs_rdeq.ma".
+include "basic_2/rt_computation/cpms_cpxs.ma".
 
-(* ARITHMETICAL PROPERTIES FOR λδ-2B ****************************************)
+(* T-BOUND CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS **************)
 
-lemma arith_l4 (m11) (m12) (m21) (m22):
-               m21+m22-(m11+m12) = m21-m11-m12+(m22-(m11-m21)-(m12-(m21-m11))).
-#m11 #m12 #m21 #m22 >minus_plus
-elim (le_or_ge (m11+m12) m21) #Hm1121
-[ lapply (transitive_le m11 ??? Hm1121) // #Hm121
-  lapply (le_plus_to_minus_l … Hm1121) #Hm12211
-  <plus_minus // @eq_f2 // >(eq_minus_O m11 ?) // >(eq_minus_O m12 ?) //
-| >(eq_minus_O m21 ?) // <plus_O_n <minus_plus <commutative_plus
-  elim (le_or_ge m11 m21) #Hm121
-  [ lapply (le_plus_to_minus_comm … Hm1121) #Hm2112
-    >(eq_minus_O m11 ?) // <plus_minus_associative // <minus_le_minus_minus_comm //
-  | >(eq_minus_O m21 ?) // <minus_le_minus_minus_comm //
-  ]
-]
-qed.
+(* Properties with degree-based equivalence for local environments **********)
 
-lemma arith_l3 (m) (n1) (n2): n1+n2-m = n1-m+(n2-(m-n1)).
-// qed.
+lemma cpms_rdeq_conf_sn (h) (n) (o) (G) (L1) (L2):
+                        ∀T1,T2. ⦃G, L1⦄ ⊢ T1 ➡*[n,h] T2 →
+                        L1 ≛[h,o,T1] L2 → L1 ≛[h,o,T2] L2.
+/3 width=4 by cpms_fwd_cpxs, cpxs_rdeq_conf_sn/ qed-.
 
-lemma arith_l2 (n1) (n2): ↑n2-n1 = 1-n1+(n2-(n1-1)).
-#n1 #n2 <arith_l3 //
-qed.
-
-lemma arith_l1: ∀x. 1 = 1-x+(x-(x-1)).
-#x <arith_l2 //
-qed.
+lemma cpms_rdeq_conf_dx (h) (n) (o) (G) (L1) (L2):
+                        ∀T1,T2. ⦃G, L2⦄ ⊢ T1 ➡*[n,h] T2 →
+                        L1 ≛[h,o,T1] L2 → L1 ≛[h,o,T2] L2.
+/3 width=4 by cpms_fwd_cpxs, cpxs_rdeq_conf_dx/ qed-.
