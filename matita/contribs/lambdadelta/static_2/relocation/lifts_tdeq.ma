@@ -62,6 +62,9 @@ lemma tdeq_inv_lifts_sn: ∀h,o. deliftable2_sn (tdeq h o).
 ]
 qed-.
 
+lemma tdeq_inv_lifts_dx (h) (o): deliftable2_dx (tdeq h o).
+/3 width=3 by tdeq_inv_lifts_sn, deliftable2_sn_dx, tdeq_sym/ qed-.
+
 lemma tdeq_inv_lifts_bi: ∀h,o. deliftable2_bi (tdeq h o).
 /3 width=6 by tdeq_inv_lifts_sn, deliftable2_sn_bi/ qed-.
 

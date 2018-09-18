@@ -232,6 +232,13 @@ elim (cpm_inv_bind1 … H) -H
 ]
 qed-.
 
+lemma cpm_inv_abst_bi: ∀n,h,p1,p2,G,L,V1,V2,T1,T2. ⦃G,L⦄ ⊢ ⓛ{p1}V1.T1 ➡[n,h] ⓛ{p2}V2.T2 →
+                       ∧∧ ⦃G,L⦄ ⊢ V1 ➡[h] V2 & ⦃G,L.ⓛV1⦄ ⊢ T1 ➡[n,h] T2 & p1 = p2.
+#n #h #p1 #p2 #G #L #V1 #V2 #T1 #T2 #H
+elim (cpm_inv_abst1 … H) -H #XV #XT #HV #HT #H destruct
+/2 width=1 by and3_intro/  
+qed-.
+
 (* Basic_1: includes: pr0_gen_appl pr2_gen_appl *)
 (* Basic_2A1: includes: cpr_inv_appl1 *)
 lemma cpm_inv_appl1: ∀n,h,G,L,V1,U1,U2. ⦃G, L⦄ ⊢ ⓐ V1.U1 ➡[n, h] U2 →

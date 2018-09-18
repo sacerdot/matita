@@ -29,6 +29,19 @@ interpretation
    "context-free degree-based equivalence (term)"
    'StarEq h o T1 T2 = (tdeq h o T1 T2).
 
+(* Basic properties *********************************************************)
+
+lemma tdeq_refl: ∀h,o. reflexive … (tdeq h o).
+#h #o #T elim T -T /2 width=1 by tdeq_pair/
+* /2 width=1 by tdeq_lref, tdeq_gref/
+#s elim (deg_total h o s) /2 width=3 by tdeq_sort/
+qed.
+
+lemma tdeq_sym: ∀h,o. symmetric … (tdeq h o).
+#h #o #T1 #T2 #H elim H -T1 -T2
+/2 width=3 by tdeq_sort, tdeq_lref, tdeq_gref, tdeq_pair/
+qed-.
+
 (* Basic inversion lemmas ***************************************************)
 
 fact tdeq_inv_sort1_aux: ∀h,o,X,Y. X ≛[h, o] Y → ∀s1. X = ⋆s1 →
@@ -79,6 +92,14 @@ lemma tdeq_inv_pair1: ∀h,o,I,V1,T1,Y. ②{I}V1.T1 ≛[h, o] Y →
                       ∃∃V2,T2. V1 ≛[h, o] V2 & T1 ≛[h, o] T2 & Y = ②{I}V2.T2.
 /2 width=3 by tdeq_inv_pair1_aux/ qed-.
 
+lemma tdeq_inv_pair2: ∀h,o,I,X1,V2,T2. X1 ≛[h, o] ②{I}V2.T2 →
+                      ∃∃V1,T1. V1 ≛[h, o] V2 & T1 ≛[h, o] T2 & X1 = ②{I}V1.T1.
+#h #o #I #X1 #V2 #T2 #H
+elim (tdeq_inv_pair1 h o I V2 T2 X1)
+[ #V1 #T1 #HV #HT #H destruct ]
+/3 width=5 by tdeq_sym, ex3_2_intro/
+qed-.
+
 (* Advanced inversion lemmas ************************************************)
 
 lemma tdeq_inv_sort1_deg: ∀h,o,Y,s1. ⋆s1 ≛[h, o] Y → ∀d. deg h o s1 d →
@@ -122,18 +143,7 @@ lemma tdeq_fwd_atom1: ∀h,o,I,Y. ⓪{I} ≛[h, o] Y → ∃J. Y = ⓪{J}.
 /3 width=4 by tdeq_inv_gref1, tdeq_inv_lref1, ex_intro/
 qed-.
 
-(* Basic properties *********************************************************)
-
-lemma tdeq_refl: ∀h,o. reflexive … (tdeq h o).
-#h #o #T elim T -T /2 width=1 by tdeq_pair/
-* /2 width=1 by tdeq_lref, tdeq_gref/
-#s elim (deg_total h o s) /2 width=3 by tdeq_sort/
-qed.
-
-lemma tdeq_sym: ∀h,o. symmetric … (tdeq h o).
-#h #o #T1 #T2 #H elim H -T1 -T2
-/2 width=3 by tdeq_sort, tdeq_lref, tdeq_gref, tdeq_pair/
-qed-.
+(* Advanced properties ******************************************************)
 
 lemma tdeq_dec: ∀h,o,T1,T2. Decidable (T1 ≛[h, o] T2).
 #h #o #T1 elim T1 -T1 [ * #s1 | #I1 #V1 #T1 #IHV #IHT ] * [1,3,5,7: * #s2 |*: #I2 #V2 #T2 ]

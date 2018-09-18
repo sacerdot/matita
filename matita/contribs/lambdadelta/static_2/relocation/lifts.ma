@@ -56,6 +56,10 @@ definition deliftable2_bi: predicate (relation term) ≝
                            λR. ∀U1,U2. R U1 U2 → ∀f,T1. ⬆*[f] T1 ≘ U1 →
                            ∀T2. ⬆*[f] T2 ≘ U2 → R T1 T2.
 
+definition deliftable2_dx: predicate (relation term) ≝
+                           λR. ∀U1,U2. R U1 U2 → ∀f,T2. ⬆*[f] T2 ≘ U2 →
+                           ∃∃T1. ⬆*[f] T1 ≘ U1 & R T1 T2.
+
 (* Basic inversion lemmas ***************************************************)
 
 fact lifts_inv_sort1_aux: ∀f,X,Y. ⬆*[f] X ≘ Y → ∀s. X = ⋆s → Y = ⋆s.
@@ -328,6 +332,11 @@ lemma lifts_fwd_pair2: ∀f:rtmap. ∀I,V2,T2,X. ⬆*[f] X ≘ ②{I}V2.T2 →
 qed-.
 
 (* Basic properties *********************************************************)
+
+lemma deliftable2_sn_dx (R): symmetric … R → deliftable2_sn R → deliftable2_dx R.
+#R #H2R #H1R #U1 #U2 #HU12 #f #T2 #HTU2
+elim (H1R … U1 … HTU2) -H1R /3 width=3 by ex2_intro/
+qed-.
 
 lemma lifts_eq_repl_back: ∀T1,T2. eq_repl_back … (λf. ⬆*[f] T1 ≘ T2).
 #T1 #T2 #f1 #H elim H -T1 -T2 -f1

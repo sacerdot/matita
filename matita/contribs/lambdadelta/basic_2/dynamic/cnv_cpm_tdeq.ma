@@ -115,6 +115,16 @@ elim (cpm_inv_cast1 … H1) -H1 [ * || * ]
 ]
 qed-.
 
+lemma cpm_tdeq_inv_bind_dx (a) (h) (o) (n) (p) (I) (G) (L):
+                           ∀X. ⦃G, L⦄ ⊢ X ![a,h] →
+                           ∀V,T2. ⦃G, L⦄ ⊢ X ➡[n,h] ⓑ{p,I}V.T2 → X ≛[h,o]  ⓑ{p,I}V.T2 →
+                           ∃∃T1. ⦃G,L⦄ ⊢ V ![a,h] & ⦃G, L.ⓑ{I}V⦄ ⊢ T1 ![a,h] & ⦃G, L.ⓑ{I}V⦄ ⊢ T1 ➡[n,h] T2 & T1 ≛[h,o] T2 & X = ⓑ{p,I}V.T1.
+#a #h #o #n #p #I #G #L #X #H0 #V #T2 #H1 #H2
+elim (tdeq_inv_pair2 … H2) #V0 #T1 #_ #_ #H destruct
+elim (cpm_tdeq_inv_bind_sn … H0 … H1 H2) -H0 -H1 -H2 #T0 #HV #HT1 #H1T12 #H2T12 #H destruct
+/2 width=5 by ex5_intro/
+qed-.
+
 (* Eliminators with restricted rt-transition for terms **********************)
 
 lemma cpm_tdeq_ind (a) (h) (o) (n) (G) (Q:relation3 …):

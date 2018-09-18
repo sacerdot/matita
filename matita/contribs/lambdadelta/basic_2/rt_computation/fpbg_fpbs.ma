@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/static/fdeq_fqup.ma".
 include "static_2/static/fdeq_fdeq.ma".
 include "basic_2/rt_transition/fpbq_fpb.ma".
+include "basic_2/rt_computation/fpbs_fqup.ma".
 include "basic_2/rt_computation/fpbg.ma".
 
 (* PROPER PARALLEL RST-COMPUTATION FOR CLOSURES *****************************)
@@ -60,6 +60,13 @@ lemma fpbs_fpbg_trans: ∀h,o,G1,G,L1,L,T1,T. ⦃G1, L1, T1⦄ ≥[h, o] ⦃G, L
                        ∀G2,L2,T2. ⦃G, L, T⦄ >[h, o] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ >[h, o] ⦃G2, L2, T2⦄.
 #h #o #G1 #G #L1 #L #T1 #T #H @(fpbs_ind … H) -G -L -T /3 width=5 by fpbq_fpbg_trans/
 qed-.
+
+(* Advanced properties with plus-iterated structural successor for closures *)
+
+lemma fqup_fpbg_trans (h) (o):
+      ∀G1,G,L1,L,T1,T. ⦃G1,L1,T1⦄ ⊐+ ⦃G,L,T⦄ →
+      ∀G2,L2,T2. ⦃G,L,T⦄ >[h,o] ⦃G2,L2,T2⦄ → ⦃G1,L1,T1⦄ >[h,o] ⦃G2,L2,T2⦄.
+/3 width=5 by fpbs_fpbg_trans, fqup_fpbs/ qed-.
 
 (* Advanced inversion lemmas of parallel rst-computation on closures ********)
 
