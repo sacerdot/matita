@@ -31,7 +31,7 @@ table {
 *)
         [ { "context-sensitive native validity" * } {
              [ [ "restricted refinement for lenvs" ] "lsubv ( ? ⊢ ? ⫃![?,?] ? )" "lsubv_drops" + "lsubv_lsubr" + "lsubv_lsuba" + "lsubv_cpms" + "lsubv_cpcs" + "lsubv_cnv" + "lsubv_lsubv" * ]
-             [ [ "for terms" ] "cnv" + "( ⦃?,?⦄ ⊢ ? ![?,?] )" "cnv_drops" + "cnv_fqus" + "cnv_aaa" + "cnv_fsb" + "cnv_cpm_trans" + "cnv_cpm_conf" + "cnv_cpm_tdeq" + "cnv_cpm_tfeq_trans" + "cnv_cpms_tdeq" + "cnv_cpms_conf" + "cnv_preserve_sub" + "cnv_preserve" * ]
+             [ [ "for terms" ] "cnv" + "( ⦃?,?⦄ ⊢ ? ![?,?] )" "cnv_drops" + "cnv_fqus" + "cnv_aaa" + "cnv_fsb" + "cnv_cpm_trans" + "cnv_cpm_conf" + "cnv_cpm_tdeq" + "cnv_cpm_tdeq_trans" + "cnv_cpm_tdeq_conf" + "cnv_cpms_tdeq" + "cnv_cpms_conf" + "cnv_preserve_sub" + "cnv_preserve" * ]
           }
         ]
      }

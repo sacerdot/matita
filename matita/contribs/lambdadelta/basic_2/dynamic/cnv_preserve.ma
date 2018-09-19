@@ -12,15 +12,24 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/fsb_aaa.ma".
-include "basic_2/dynamic/snv_da_lpr.ma".
-include "basic_2/dynamic/snv_lstas.ma".
-include "basic_2/dynamic/snv_lstas_lpr.ma".
-include "basic_2/dynamic/snv_lpr.ma".
+include "basic_2/dynamic/cnv_cpms_conf.ma".
 
-(* STRATIFIED NATIVE VALIDITY FOR TERMS *************************************)
+(* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
 
 (* Main preservation properties *********************************************)
+(*
+(* Basic_2A1: uses: snv_preserve *)
+lemma cnv_preserve (a) (h): ∀G,L,T. ⦃G,L⦄ ⊢ T ![a,h] →
+                            ∧∧ IH_cnv_cpms_conf_lpr a h G L T
+                             & IH_cnv_cpm_trans_lpr a h G L T.
+#a #h #G #L #T #HT
+elim (tdpos_total h … T) #o
+lapply (cnv_fwd_fsb … o … HT) -HT #H
+@(fsb_ind_fpbg … H) -G -L -T #G #L #T #_ #IH #Ho
+@conj [ letin aux ≝ cnv_cpms_conf_lpr_aux | letin aux ≝ cnv_cpm_trans_lpr_aux ]
+@(aux … o … G L T) // #G0 #L0 #T0 #H
+elim (IH … H) -IH -H //
+
 
 lemma snv_preserve: ∀h,o,G,L,T. ⦃G, L⦄ ⊢ T ¡[h, o] →
                     ∧∧ IH_da_cpr_lpr h o G L T
@@ -92,3 +101,4 @@ elim (lstas_cprs_lpr … HT1 … Hd1 HTd1 … HTU1 … H1 … HL12) -T1 #W1 #H1 
 elim (lstas_cprs_lpr … HT2 … Hd2 HTd2 … HTU2 … H2 … HL12) -T2 #W2 #H2 #HUW2
 lapply (lstas_mono … H1 … H2) -h -T -d #H destruct /2 width=3 by cpcs_canc_dx/
 qed-.
+*)
