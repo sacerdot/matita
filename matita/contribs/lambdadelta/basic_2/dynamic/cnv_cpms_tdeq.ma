@@ -19,7 +19,7 @@ include "basic_2/dynamic/cnv_cpm_tdeq_trans.ma".
 (* Properties with restricted rt-computation for terms **********************)
 
 fact cpms_tdneq_fwd_step_sn_aux (a) (h) (n) (o) (G) (L) (T1):
-     ∀T2.  ⦃G, L⦄ ⊢ T1 ➡*[n,h] T2 → ⦃G, L⦄ ⊢ T1 ![a,h] → (T1 ≛[h,o] T2 → ⊥) →
+     ∀T2. ⦃G, L⦄ ⊢ T1 ➡*[n,h] T2 → ⦃G, L⦄ ⊢ T1 ![a,h] → (T1 ≛[h,o] T2 → ⊥) →
      (∀G0,L0,T0. ⦃G,L,T1⦄ >[h,o] ⦃G0,L0,T0⦄ → IH_cnv_cpms_conf_lpr a h G0 L0 T0) →
      (∀G0,L0,T0. ⦃G,L,T1⦄ >[h,o] ⦃G0,L0,T0⦄ → IH_cnv_cpm_trans_lpr a h G0 L0 T0) →
      ∃∃n1,n2,T0. ⦃G, L⦄ ⊢ T1 ➡[n1,h] T0 & T1 ≛[h,o] T0 → ⊥ & ⦃G, L⦄ ⊢ T0 ➡*[n2,h] T2 & n1+n2 = n.

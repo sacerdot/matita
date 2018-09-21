@@ -27,13 +27,17 @@
    <table name="basic_2_sum"/>
 
    <subsection name="B">Stage "B"</subsection>
+<!-- 
    <news class="alpha" date="Ongoing.">
          Context-sensitive subject equivalence
          for native type assignment.
    </news>
-
-   <subsection name="A2">Stage "A2": "Extending the Applicability Condition"</subsection>
-
+-->
+   <news class="alpha" date="2018 September 21.">
+         λδ-2A completed with
+         confluence of rt-computation and
+         preservation of validity for rt-computation.
+   </news>
    <news class="alpha" date="2018 June 8.">
          Behavioral component rt_computation completed.
    </news>
@@ -75,15 +79,15 @@
          Relocation with reference transforming maps (rtmap).
    </news>
    <news class="alpha" date="2015 October 9.">
-         λδ version 2A2 is started.
+         λδ-2B is started.
    </news>
 
-   <subsection name="A1">Stage "A1": "Extending the Applicability Condition"</subsection>
+   <subsection name="A">Stage "A" </subsection>
    <news class="delta" date="2015 August 27.">
-         λδ version 2A1 appears too complex and is dismissed.
+         λδ-2A appears too complex and is dismissed.
    </news>
    <news class="gamma" date="2014 October 28.">
-         λδ version 2A1 is released.
+         λδ version 2A is released.
    </news>
    <news class="beta" date="2014 September 9.">
          Iterated static type assignment defined (more elegantly)
@@ -151,7 +155,7 @@
          Confluence for context-free parallel reduction on terms.
    </news>
    <news class="alpha" date="2011 April 17.">
-         λδ version 2 is started.
+         λδ-2A is started.
    </news>
 
    <section4 name="structure">Logical Structure of the Specification</section4>

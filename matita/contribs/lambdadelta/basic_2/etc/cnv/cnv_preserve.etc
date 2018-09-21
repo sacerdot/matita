@@ -22,25 +22,7 @@ include "basic_2/dynamic/snv_lpr.ma".
 
 (* Main preservation properties *********************************************)
 
-lemma snv_preserve: ∀h,o,G,L,T. ⦃G, L⦄ ⊢ T ¡[h, o] →
-                    ∧∧ IH_da_cpr_lpr h o G L T
-                     & IH_snv_cpr_lpr h o G L T
-                     & IH_snv_lstas h o G L T
-                     & IH_lstas_cpr_lpr h o G L T.
-#h #o #G #L #T #HT elim (snv_fwd_aaa … HT) -HT
-#A #HT @(aaa_ind_fpbg h o … HT) -G -L -T -A
-#G #L #T #A #_ #IH -A @and4_intro
-[ letin aux ≝ da_cpr_lpr_aux | letin aux ≝ snv_cpr_lpr_aux
-| letin aux ≝ snv_lstas_aux | letin aux ≝ lstas_cpr_lpr_aux
-]
-@(aux … G L T) // #G0 #L0 #T0 #H elim (IH … H) -IH -H //
-qed-.
-
 theorem da_cpr_lpr: ∀h,o,G,L,T. IH_da_cpr_lpr h o G L T.
-#h #o #G #L #T #HT elim (snv_preserve … HT) /2 width=1 by/
-qed-.
-
-theorem snv_cpr_lpr: ∀h,o,G,L,T. IH_snv_cpr_lpr h o G L T.
 #h #o #G #L #T #HT elim (snv_preserve … HT) /2 width=1 by/
 qed-.
 
@@ -53,12 +35,6 @@ theorem lstas_cpr_lpr: ∀h,o,G,L,T. IH_lstas_cpr_lpr h o G L T.
 qed-.
 
 (* Advanced preservation properties *****************************************)
-
-lemma snv_cprs_lpr: ∀h,o,G,L1,T1. ⦃G, L1⦄ ⊢ T1 ¡[h, o] →
-                    ∀T2. ⦃G, L1⦄ ⊢ T1 ➡* T2 → ∀L2. ⦃G, L1⦄ ⊢ ➡ L2 → ⦃G, L2⦄ ⊢ T2 ¡[h, o].
-#h #o #G #L1 #T1 #HT1 #T2 #H
-@(cprs_ind … H) -T2 /3 width=5 by snv_cpr_lpr/
-qed-.
 
 lemma da_cprs_lpr: ∀h,o,G,L1,T1. ⦃G, L1⦄ ⊢ T1 ¡[h, o] →
                    ∀d. ⦃G, L1⦄ ⊢ T1 ▪[h, o] d →
