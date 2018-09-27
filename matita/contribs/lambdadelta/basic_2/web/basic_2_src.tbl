@@ -9,6 +9,7 @@ table {
         ]
      }
    ]
+(*
    class "wine"
    [ { "iterated dynamic typing" * } {
         [ { "" (* "higher order native type assignment" *) * } {
@@ -17,21 +18,16 @@ table {
         ]
      }
    ]
+*)
    class "magenta"
    [ { "dynamic typing" * } {
-(*
-        [ { "local env. ref. for native type assignment" * } {
-             [ [ "" ] "lsubn ( ? ⊢ ? :⫃ ? )" "lsubn_drop" "lsubn_cpcs" "lsubn_nta" * ]
+        [ { "context-sensitive native type assignment" * } {
+             [ [ "for terms" ] "nta" + "( ⦃?,?⦄ ⊢ ? :[?,?] ? )" + "( ⦃?,?⦄ ⊢ ? :[?] ? )" + "( ⦃?,?⦄ ⊢ ? :*[?] ? )" "nta_cpms" + "nta_cpcs" + "nta_preserve" * ] 
           }
         ]
-        [ { "native type assignment" * } {
-             [ [ "" ] "nta ( ⦃?,?⦄ ⊢ ? : ? )" "nta_alt ( ⦃?,?⦄ ⊢ ? :: ? )" "nta_lift" "nta_ltpss" "nta_thin" "nta_aaa" "nta_sta" "nta_ltpr" "nta_nta" * ]
-          }
-        ]
-*)
         [ { "context-sensitive native validity" * } {
              [ [ "restricted refinement for lenvs" ] "lsubv ( ? ⊢ ? ⫃![?,?] ? )" "lsubv_drops" + "lsubv_lsubr" + "lsubv_lsuba" + "lsubv_cpms" + "lsubv_cpcs" + "lsubv_cnv" + "lsubv_lsubv" * ]
-             [ [ "for terms" ] "cnv" + "( ⦃?,?⦄ ⊢ ? ![?,?] )" "cnv_drops" + "cnv_fqus" + "cnv_aaa" + "cnv_fsb" + "cnv_cpm_trans" + "cnv_cpm_conf" + "cnv_cpm_tdeq" + "cnv_cpm_tdeq_trans" + "cnv_cpm_tdeq_conf" + "cnv_cpms_tdeq" + "cnv_cpms_conf" + "cnv_cpms_tdeq_conf" + "cnv_preserve_sub" + "cnv_preserve" * ]
+             [ [ "for terms" ] "cnv" + "( ⦃?,?⦄ ⊢ ? ![?,?] )" + "( ⦃?,?⦄ ⊢ ? ![?] )" + "( ⦃?,?⦄ ⊢ ? !*[?] )" "cnv_drops" + "cnv_fqus" + "cnv_aaa" + "cnv_fsb" + "cnv_cpm_trans" + "cnv_cpm_conf" + "cnv_cpm_tdeq" + "cnv_cpm_tdeq_trans" + "cnv_cpm_tdeq_conf" + "cnv_cpms_tdeq" + "cnv_cpms_conf" + "cnv_cpms_tdeq_conf" + "cnv_preserve_sub" + "cnv_preserve" * ]
           }
         ]
      }
@@ -121,6 +117,11 @@ class "capitalize italic" { 0 1 }
 
 class "italic"            { 2 }
 (*
+
+        [ { "local env. ref. for native type assignment" * } {
+             [ [ "" ] "lsubn ( ? ⊢ ? :⫃ ? )" "lsubn_drop" "lsubn_cpcs" "lsubn_nta" * ]
+          }
+        ]
              [ [ "" ] "shnv ( ⦃?,?⦄ ⊢ ? ¡[?,?,?] )" * ]
         [ { "decomposed rt-equivalence" * } {
              [ [ "" ] "scpes ( ⦃?,?⦄ ⊢ ? •*⬌*[?,?,?,?] ? )" "scpes_aaa" + "scpes_cpcs" + "scpes_scpes" * ]

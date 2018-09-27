@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/rt_transition/cpm_aaa.ma".
 include "basic_2/rt_computation/cpms_aaa.ma".
 include "basic_2/dynamic/cnv.ma".
 
@@ -39,4 +40,13 @@ lemma cnv_fwd_aaa (a) (h): ∀G,L,T. ⦃G, L⦄ ⊢ T ![a, h] → ∃A. ⦃G, L�
   lapply (aaa_mono … H … HU0) -U0 #H destruct
   /3 width=3 by aaa_cast, ex_intro/
 ]
+qed-.
+
+(* Forward lemmas with t_bound rt_transition for terms **********************)
+
+lemma cnv_fwd_cpm_SO (a) (h) (G) (L):
+      ∀T. ⦃G, L⦄ ⊢ T ![a, h] → ∃U. ⦃G,L⦄ ⊢ T ➡[1,h] U.
+#a #h #G #L #T #H
+elim (cnv_fwd_aaa … H) -H #A #HA
+/2 width=2 by aaa_cpm_SO/
 qed-.

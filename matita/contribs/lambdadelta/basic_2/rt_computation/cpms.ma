@@ -47,14 +47,6 @@ lemma cpms_ind_dx (h) (G) (L) (T1) (Q:relation2 …):
 #h #G #L #T1 #Q @ltc_ind_dx_refl //
 qed-.
 
-(* Basic inversion lemmas ***************************************************)
-
-lemma cpms_inv_sort1 (n) (h) (G) (L): ∀X2,s. ⦃G, L⦄ ⊢ ⋆s ➡*[n, h] X2 → X2 = ⋆(((next h)^n) s).
-#n #h #G #L #X2 #s #H @(cpms_ind_dx … H) -X2 //
-#n1 #n2 #X #X2 #_ #IH #HX2 destruct
-elim (cpm_inv_sort1 … HX2) -HX2 #H #_ destruct //
-qed-.
-
 (* Basic properties *********************************************************)
 
 (* Basic_1: includes: pr1_pr0 *)
@@ -146,6 +138,46 @@ qed.
 (* Basic_1: was: pr3_refl *)
 lemma cprs_refl: ∀h,G,L. reflexive … (cpms h G L 0).
 /2 width=1 by cpm_cpms/ qed.
+
+(* Advanced properties ******************************************************)
+
+lemma cpms_sort (h) (G) (L) (n):
+                ∀s. ⦃G,L⦄ ⊢ ⋆s ➡*[n,h] ⋆((next h)^n s).
+#h #G #L #n elim n -n [ // ]
+#n #IH #s <plus_SO
+/3 width=3 by cpms_step_dx, cpm_sort/
+qed.
+
+(* Basic inversion lemmas ***************************************************)
+
+lemma cpms_inv_sort1 (n) (h) (G) (L): ∀X2,s. ⦃G, L⦄ ⊢ ⋆s ➡*[n, h] X2 → X2 = ⋆(((next h)^n) s).
+#n #h #G #L #X2 #s #H @(cpms_ind_dx … H) -X2 //
+#n1 #n2 #X #X2 #_ #IH #HX2 destruct
+elim (cpm_inv_sort1 … HX2) -HX2 #H #_ destruct //
+qed-.
+
+lemma cpms_inv_cast1 (h) (n) (G) (L):
+      ∀W1,T1,X2. ⦃G, L⦄ ⊢ ⓝW1.T1 ➡*[n,h] X2 →
+      ∨∨ ∃∃W2,T2. ⦃G, L⦄ ⊢ W1 ➡*[n,h] W2 & ⦃G, L⦄ ⊢ T1 ➡*[n,h] T2 & X2 = ⓝW2.T2
+       | ⦃G, L⦄ ⊢ T1 ➡*[n,h] X2
+       | ∃∃m. ⦃G, L⦄ ⊢ W1 ➡*[m,h] X2 & n = ↑m.
+#h #n #G #L #W1 #T1 #X2 #H @(cpms_ind_dx … H) -n -X2
+[ /3 width=5 by or3_intro0, ex3_2_intro/
+| #n1 #n2 #X #X2 #_ * [ * || * ]
+  [ #W #T #HW1 #HT1 #H #HX2 destruct
+    elim (cpm_inv_cast1 … HX2) -HX2 [ * || * ]
+    [ #W2 #T2 #HW2 #HT2 #H destruct
+      /4 width=5 by cpms_step_dx, ex3_2_intro, or3_intro0/
+    | #HX2 /3 width=3 by cpms_step_dx, or3_intro1/
+    | #m #HX2 #H destruct <plus_n_Sm
+      /4 width=3 by cpms_step_dx, ex2_intro, or3_intro2/
+    ]
+  | #HX #HX2 /3 width=3 by cpms_step_dx, or3_intro1/
+  | #m #HX #H #HX2 destruct
+    /4 width=3 by cpms_step_dx, ex2_intro, or3_intro2/
+  ]
+]
+qed-.
 
 (* Basic_2A1: removed theorems 5:
               sta_cprs_scpds lstas_scpds scpds_strap1 scpds_fwd_cprs

@@ -1,0 +1,39 @@
+(* Basic_1: was by definition: ty3_bind *)
+(* Basic_2A1: was by definition: nta_bind ntaa_bind *)
+lemma nta_bind
+
+(* Basic_2A1: was by definition: nta_pure ntaa_pure *)
+lemma nta_pure
+
+(* Basic_1: was: ty3_gen_bind *)
+(* Basic_2A1: was: nta_inv_bind1 ntaa_inv_bind1 *)
+lemma nta_inv_bind_sn
+
+| ntaa_cast: ∀L,T,U,W. ntaa h L T U → ntaa h L U W → ntaa h L (ⓝU. T) U
+
+(* Advanced properties ******************************************************)
+
+lemma nta_cast_alt: ∀h,L,T,W,U. ⦃h, L⦄ ⊢ T  : W → ⦃h, L⦄ ⊢ T : U → ⦃h, L⦄ ⊢ ⓝW.T : U.
+#h #L #T #W #U #HTW #HTU
+lapply (nta_mono … HTW … HTU) #HWU
+elim (nta_fwd_correct … HTU) -HTU /3 width=3/
+qed.
+
+lemma nta_inv_cast1: ∀h,L,X,Y,U. ⦃h, L⦄ ⊢ ⓝY.X : U →  ⦃h, L⦄ ⊢ X : Y ∧ L ⊢ Y ⬌* U.
+/2 width=3/ qed-.
+
+(* Basic_1: uses: ty3_gen_cast *)
+lemma nta_inv_cast_sn_old (a) (h) (G) (L) (X2):
+      ∀T0,T1. ⦃G,L⦄ ⊢ ⓝT1.T0 :[a,h] X2 →
+      ∃∃T2. ⦃G,L⦄ ⊢ T0 :[a,h] T1 & ⦃G,L⦄ ⊢ T1 :[a,h] T2 & ⦃G,L⦄ ⊢ ⓝT2.T1 ⬌*[h] X2 & ⦃G,L⦄ ⊢ X2 ![a,h].
+
+(* Basic_1: was: ty3_typecheck *)
+lemma nta_typecheck: ∀h,L,T,U. ⦃h, L⦄ ⊢ T : U → ∃T0. ⦃h, L⦄ ⊢ ⓝU.T : T0.
+/3 width=2/ qed.
+
+(* Basic_1: was: ty3_correct *)
+(* Basic_2A1: was: ntaa_fwd_correct *)
+lemma nta_fwd_correct: ∀h,L,T,U. ⦃h, L⦄ ⊢ T : U → ∃T0. ⦃h, L⦄ ⊢ U : T0.
+#h #L #T #U #H
+elim (ntaa_fwd_correct … (nta_ntaa … H)) -H /3 width=2 by ntaa_nta, ex_intro/
+qed-.

@@ -84,15 +84,13 @@ lemma cprs_inv_sort1 (h) (G) (L): ∀X2,s. ⦃G, L⦄ ⊢ ⋆s ➡*[h] X2 → X2
 
 (* Basic_1: was: pr3_gen_cast *)
 lemma cprs_inv_cast1 (h) (G) (L): ∀W1,T1,X2. ⦃G, L⦄ ⊢ ⓝW1.T1 ➡*[h] X2 →
-                                  ∨∨ ⦃G, L⦄ ⊢ T1 ➡*[h] X2
-                                   | ∃∃W2,T2. ⦃G, L⦄ ⊢ W1 ➡*[h] W2 & ⦃G, L⦄ ⊢ T1 ➡*[h] T2 & X2 = ⓝW2.T2.
-#h #G #L #W1 #T1 #X2 #H @(cprs_ind_dx … H) -X2
-[ /3 width=5 by ex3_2_intro, or_intror/
-| #X #X2 #_ #HX2 * /3 width=3 by cprs_step_dx, or_introl/ *
-  #W #T #HW1 #HT1 #H destruct
-  elim (cpr_inv_cast1 … HX2) -HX2 /3 width=3 by cprs_step_dx, or_introl/ *
-  #W2 #T2 #HW2 #HT2 #H destruct
-  /4 width=5 by cprs_step_dx, ex3_2_intro, or_intror/
+                                  ∨∨ ∃∃W2,T2. ⦃G, L⦄ ⊢ W1 ➡*[h] W2 & ⦃G, L⦄ ⊢ T1 ➡*[h] T2 & X2 = ⓝW2.T2
+                                   | ⦃G, L⦄ ⊢ T1 ➡*[h] X2.
+#h #G #L #W1 #T1 #X2 #H
+elim (cpms_inv_cast1 … H) -H
+[ /2 width=1 by or_introl/
+| /2 width=1 by or_intror/
+| * #m #_ #H destruct
 ]
 qed-.
 

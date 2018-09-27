@@ -12,24 +12,28 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
+include "static_2/notation/relations/pconveta_4.ma".
+include "static_2/relocation/lifts.ma".
+include "static_2/static/aaa.ma".
 
-notation "hvbox( ⦃G, L⦄ ⊢ break ⌘ ⦃ term 46 T ⦄ ≡ break term 46 k )"
-   non associative with precedence 45
-   for @{ 'ICM $L $T $s }.
+(* CONTEXT-SENSITIVE PARALLEL ETA-CONVERSION FOR TERMS **********************)
 
-notation "hvbox( ⦃ term 46 h , break term 46 L ⦄ ⊢ break term 46 T ÷ break term 46 A )"
-   non associative with precedence 45
-   for @{ 'BinaryArity $h $L $T $A }.
+(* avtivate genv *)
+inductive cpce: relation4 genv lenv term term ≝
+| cpce_sort: ∀G,L,s. cpce G L (⋆s) (⋆s)
+| cpce_abbr: ∀G,K,V. cpce G (K.ⓓV) (#0) (#0)
+| cpce_abst: ∀G,K,W,B,A. ⦃G,K⦄ ⊢ W ⁝ ②B.A →
+             cpce G (K.ⓛW) (#0) (+ⓛW.ⓐ#0.#1)
+| cpce_lref: ∀I,G,K,T,U,i. cpce G K (#i) T →
+             ⬆*[1] T ≘ U → cpce G (K.ⓘ{I}) (#↑i) U
+| cpce_bind: ∀p,I,G,K,V1,V2,T1,T2.
+             cpce G K V1 V2 → cpce G (K.ⓑ{I}V1) T1 T2 →
+             cpce G K (ⓑ{p,I}V1.T1) (ⓑ{p,I}V2.T2)
+| cpce_flat: ∀I,G,L,V1,V2,T1,T2.
+             cpce G L V1 V2 → cpce G L T1 T2 →
+             cpce G L (ⓕ{I}V1.T1) (ⓕ{I}V2.T2)
+.
 
-notation "hvbox( h ⊢ break term 46 L1 ÷ ⫃ break term 46 L2 )"
-   non associative with precedence 45
-   for @{ 'LRSubEqB $h $L1 $L2 }.
-
-notation "hvbox( L1 ⊢ ⬌ break term 46 L2 )"
-   non associative with precedence 45
-   for @{ 'PConvSn $L1 $L2 }.
-
-notation "hvbox( L1 ⊢ ⬌* break term 46 L2 )"
-   non associative with precedence 45
-   for @{ 'PConvSnStar $L1 $L2 }.
+interpretation
+   "context-sensitive parallel eta-conversion (term)"
+   'PConvEta G L T1 T2 = (cpce G L T1 T2).

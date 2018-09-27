@@ -13,6 +13,8 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/exclaim_5.ma".
+include "basic_2/notation/relations/exclaim_4.ma".
+include "basic_2/notation/relations/exclaimstar_4.ma".
 include "basic_2/rt_computation/cpms.ma".
 
 (* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
@@ -32,6 +34,12 @@ inductive cnv (a) (h): relation3 genv lenv term ≝
 
 interpretation "context-sensitive native validity (term)"
    'Exclaim a h G L T = (cnv a h G L T).
+
+interpretation "context-sensitive restricted native validity (term)"
+   'Exclaim h G L T = (cnv true h G L T).
+
+interpretation "context-sensitive extended native validity (term)"
+   'ExclaimStar h G L T = (cnv false h G L T).
 
 (* Basic inversion lemmas ***************************************************)
 

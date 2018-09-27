@@ -42,8 +42,19 @@ qed-.
 
 (* Advanced preservation properties *****************************************)
 
+lemma cnv_cpms_conf (a) (h) (G) (L):
+      ∀T0. ⦃G,L⦄ ⊢ T0 ![a,h] →
+      ∀n1,T1. ⦃G,L⦄ ⊢ T0 ➡*[n1,h] T1 → ∀n2,T2. ⦃G,L⦄ ⊢ T0 ➡*[n2,h] T2 →
+      ∃∃T. ⦃G,L⦄ ⊢ T1 ➡*[n2-n1,h] T & ⦃G,L⦄ ⊢ T2 ➡*[n1-n2,h] T.
+/2 width=8 by cnv_cpms_conf_lpr/ qed-.
+
 (* Basic_2A1: uses: snv_cprs_lpr *)
 lemma cnv_cpms_trans_lpr (a) (h) (G) (L) (T): IH_cnv_cpms_trans_lpr a h G L T.
 #a #h #G #L1 #T1 #HT1 #n #T2 #H
 @(cpms_ind_dx … H) -n -T2 /3 width=6 by cnv_cpm_trans_lpr/
 qed-.
+
+lemma cnv_cpms_trans (a) (h) (G) (L):
+      ∀T1. ⦃G,L⦄ ⊢ T1 ![a,h] →
+      ∀n,T2. ⦃G,L⦄ ⊢ T1 ➡*[n,h] T2 → ⦃G,L⦄ ⊢ T2 ![a,h].
+/2 width=6 by cnv_cpms_trans_lpr/ qed-.

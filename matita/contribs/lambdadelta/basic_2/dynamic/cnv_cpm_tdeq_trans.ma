@@ -35,7 +35,7 @@ fact cnv_cpm_tdeq_cpm_trans_sub (a) (h) (o) (G0) (L0) (T0):
   [ #H1 #H2 destruct /2 width=4 by ex3_intro/
   | #s #H1 #H2 #H3 #Hs destruct
     elim (cpm_inv_sort1 … HX2) -HX2 #H #Hn2 destruct >iter_n_Sm
-    /5 width=6 by cpm_sort_iter, tdeq_sort, deg_iter, deg_next, ex3_intro/
+    /5 width=6 by cpm_sort, tdeq_sort, deg_iter, deg_next, ex3_intro/
   ]
 | #p #I #V1 #T1 #HG #HL #HT #H0 #n1 #X1 #H1X #H2X #n2 #X2 #HX2 destruct
   elim (cpm_tdeq_inv_bind_sn … H0 … H1X H2X) -H0 -H1X -H2X #T #_ #H0T1 #H1T1 #H2T1 #H destruct
