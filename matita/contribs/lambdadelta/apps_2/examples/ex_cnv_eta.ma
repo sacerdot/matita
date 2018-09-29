@@ -17,7 +17,7 @@ include "basic_2/dynamic/cnv.ma".
 
 (* EXAMPLES *****************************************************************)
 
-(* Extended validy (basic?_2) vs. restricted validity (basic_1) *************)
+(* Extended validy (basic_2B) vs. restricted validity (basic_1A) ************)
 
 (* Note: extended validity of a closure, height of cnv_appl > 1 *)
 lemma cnv_extended (h) (p): ∀G,L,s. ⦃G, L.ⓛ⋆s.ⓛⓛ{p}⋆s.⋆s.ⓛ#0⦄ ⊢ ⓐ#2.#0 ![Ⓕ,h].

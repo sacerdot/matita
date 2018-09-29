@@ -31,6 +31,17 @@ elim (cnv_fwd_cpm_SO … HT) #U #HTU
 /4 width=2 by cnv_cpms_nta, cpm_cpms, ex_intro/
 qed-.
 
+(* Basic_1: was: ty3_typecheck *)
+lemma nta_typecheck (a) (h) (G) (L):
+      ∀T,U. ⦃G,L⦄ ⊢ T :[a,h] U → ∃T0. ⦃G,L⦄ ⊢ ⓝU.T :[a,h] T0.
+/3 width=1 by cnv_cast, cnv_nta_sn/ qed-.
+
+(* Basic_1: was: ty3_correct *)
+(* Basic_2A1: was: ntaa_fwd_correct *)
+lemma nta_fwd_correct (a) (h) (G) (L):
+      ∀T,U. ⦃G,L⦄ ⊢ T :[a,h] U → ∃T0. ⦃G,L⦄ ⊢ U :[a,h] T0.
+/3 width=2 by nta_fwd_cnv_dx, cnv_nta_sn/ qed-.
+
 lemma nta_pure_cnv (h) (G) (L):
       ∀T,U. ⦃G,L⦄ ⊢ T :*[h] U →
       ∀V. ⦃G,L⦄ ⊢ ⓐV.U !*[h] → ⦃G,L⦄ ⊢ ⓐV.T :*[h] ⓐV.U.
@@ -103,6 +114,32 @@ elim (cpms_inv_cast1 … H2) -H2 [ * || * ]
   elim (cnv_cpms_conf … HU … HUX … HUX0) -HU -HUX0
   <minus_n_n #U1 #HXU1 #HXU01
   @and3_intro // @(cprs_div … U1) /2 width=3 by cprs_trans/ (**) (* full auto too slow *)
+]
+qed-.
+
+(* Basic_1: uses: ty3_gen_cast *)
+lemma nta_inv_cast_sn_old (a) (h) (G) (L) (X2):
+      ∀T0,T1. ⦃G,L⦄ ⊢ ⓝT1.T0 :[a,h] X2 →
+      ∃∃T2. ⦃G,L⦄ ⊢ T0 :[a,h] T1 & ⦃G,L⦄ ⊢ T1 :[a,h] T2 & ⦃G,L⦄ ⊢ ⓝT2.T1 ⬌*[h] X2 & ⦃G,L⦄ ⊢ X2 ![a,h].
+#a #h #G #L #X2 #T0 #T1 #H
+elim (cnv_inv_cast … H) -H #X0 #HX2 #H1 #HX20 #H2
+elim (cnv_inv_cast … H1) #X #HT1 #HT0 #HT1X #HT0X
+elim (cpms_inv_cast1 … H2) -H2 [ * || * ]
+[ #U1 #U0 #HTU1 #HTU0 #H destruct
+  elim (cnv_cpms_conf … HT0 … HT0X … HTU0) -HT0 -HT0X -HTU0
+  <minus_n_n #X0 #HX0 #HUX0
+  lapply (cprs_trans … HT1X … HX0) -X #HT1X0
+  /5 width=7 by cnv_cpms_nta, cpcs_cprs_div, cprs_div, cpms_cast, ex4_intro/
+| #HTX0
+  elim (cnv_cpms_conf … HT0 … HT0X … HTX0) -HT0 -HT0X -HTX0
+  <minus_n_n #X1 #HX1 #HX01
+  elim (cnv_nta_sn … HT1) -HT1 #U1 #HTU1
+  lapply (cprs_trans … HT1X … HX1) -X #HTX1
+  lapply (cprs_trans … HX20 … HX01) -X0 #HX21
+  /4 width=5 by cprs_div, cpms_eps, ex4_intro/
+| #n #HT1X0 #H destruct -X -HT0
+  elim (cnv_nta_sn … HT1) -HT1 #U1 #HTU1
+  /4 width=5 by cprs_div, cpms_eps, ex4_intro/
 ]
 qed-.
 

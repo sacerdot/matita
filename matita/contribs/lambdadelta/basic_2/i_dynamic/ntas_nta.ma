@@ -12,29 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-notation "hvbox( ⦃ h , break L ⦄ ⊢ break term 46 T1 : : * break term 46 T2 )"
-   non associative with precedence 45
-   for @{ 'NativeTypeStarAlt $h $L $T1 $T2 }.
-
 include "basic_2/dynamic/nta.ma".
+include "basic_2/i_dynamic/ntas.ma".
 
-(* HIGHER ORDER NATIVE TYPE ASSIGNMENT ON TERMS *****************************)
+(* ITERATED NATIVE TYPE ASSIGNMENT FOR TERMS ********************************)
+
+(*
 
 definition ntas: sh → lenv → relation term ≝
                  λh,L. star … (nta h L).
 
-interpretation "higher order native type assignment (term)"
-   'NativeTypeStar h L T U = (ntas h L T U).
-
 (* Basic eliminators ********************************************************)
-(*
-lemma cprs_ind: ∀L,T1. ∀R:predicate term. R T1 →
-                (∀T,T2. L ⊢ T1 ➡* T → L ⊢ T ➡ T2 → R T → R T2) →
-                ∀T2. L ⊢ T1 ➡* T2 → R T2.
-#L #T1 #R #HT1 #IHT1 #T2 #HT12
-@(TC_star_ind … HT1 IHT1 … HT12) //
-qed-.
-*)
+
 axiom ntas_ind_dx: ∀h,L,T2. ∀R:predicate term. R T2 →
                    (∀T1,T. ⦃h, L⦄ ⊢ T1 : T → ⦃h, L⦄ ⊢ T :* T2 → R T → R T1) →
                    ∀T1. ⦃h, L⦄ ⊢ T1 :* T2 → R T1.
@@ -45,9 +34,6 @@ qed-.
 *)
 (* Basic properties *********************************************************)
 
-lemma ntas_refl: ∀h,L,T. ⦃h, L⦄ ⊢ T :* T.
-// qed.
-
 lemma ntas_strap1: ∀h,L,T1,T,T2.
                    ⦃h, L⦄ ⊢ T1 :* T → ⦃h, L⦄  ⊢ T : T2 → ⦃h, L⦄  ⊢ T1 :* T2.
 /2 width=3/ qed.
@@ -55,3 +41,4 @@ lemma ntas_strap1: ∀h,L,T1,T,T2.
 lemma ntas_strap2: ∀h,L,T1,T,T2.
                    ⦃h, L⦄  ⊢ T1 : T → ⦃h, L⦄ ⊢ T :* T2 → ⦃h, L⦄ ⊢ T1 :* T2.
 /2 width=3/ qed.
+*)

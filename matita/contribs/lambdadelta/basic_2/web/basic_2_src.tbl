@@ -9,16 +9,14 @@ table {
         ]
      }
    ]
-(*
    class "wine"
    [ { "iterated dynamic typing" * } {
-        [ { "" (* "higher order native type assignment" *) * } {
-             [ [ "" ] (* "ntas ( ⦃?,?⦄ ⊢ ? :* ? )" "nta_lift" *) * ]
+        [ { "context-sensitive iterated native type assignment" * } {
+             [ [ "for terms" ] "ntas" + "( ⦃?,?⦄ ⊢ ? :[?,?,?] ? )" + "( ⦃?,?⦄ ⊢ ? :[?,?] ? )" + "( ⦃?,?⦄ ⊢ ? :*[?,?] ? )" * ] 
           }
         ]
      }
    ]
-*)
    class "magenta"
    [ { "dynamic typing" * } {
         [ { "context-sensitive native type assignment" * } {

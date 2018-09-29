@@ -38,7 +38,7 @@
    </body>
    <table name="apps_2_sum"/>
    <news class="alpha" date="2018 April 30.">
-         The Models component is started for λδ version 2.
+         The Models component is started for λδ-2B.
    </news>
    <news class="alpha" date="2017 March 6.">
          The Examples component is moved from the Core directory.
@@ -48,7 +48,7 @@
    </news>
    <news class="alpha" date="2011 December 20.">
          The Functional component is started
-         inside the specification of λδ version 2.
+         inside the specification of λδ-2A.
    </news>
    <news class="alpha" date="2011 December 12.">
          The MLTT1 component is started.

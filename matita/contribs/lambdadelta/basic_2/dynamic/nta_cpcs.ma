@@ -50,4 +50,3 @@ elim (cnv_inv_cast … H) -H #X1 #HX2 #_ #HX21 #H
 lapply (cpms_inv_sort1 … H) -H #H destruct
 /2 width=1 by cpcs_cprs_sn/
 qed-.
- 

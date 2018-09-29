@@ -11,7 +11,7 @@
 (*        v         GNU General Public License Version 2                  *)
 (*                                                                        *)
 (**************************************************************************)
-
+(*
 include "basic_2/dynamic/nta_lift.ma".
 include "basic_2/hod/ntas.ma".
 
@@ -68,4 +68,5 @@ elim (nta_inv_pure1 … H) -H #W #V #T #HZW #HXV #HVU #HVT
 elim (nta_inv_bind1 … HXV) -HXV #Y0 #X0 #HY0 #HX0 #HX0V
 lapply (cpcs_trans … (ⓐZ.ⓛY.X0) … HVU) -HVU /2 width=1/ -HX0V #HX0U
 @(ex3_1_intro … HX0U) /2 width=2/
+*)
 *)
