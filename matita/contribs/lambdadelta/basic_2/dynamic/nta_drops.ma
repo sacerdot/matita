@@ -11,72 +11,81 @@
 (*        v         GNU General Public License Version 2                  *)
 (*                                                                        *)
 (**************************************************************************)
-(*
-include "basic_2/dynamic/nta_alt.ma".
 
-(* NATIVE TYPE ASSIGNMENT ON TERMS ******************************************)
+include "basic_2/dynamic/cnv_drops.ma".
+include "basic_2/dynamic/nta.ma".
 
-(* Advanced inversion lemmas ************************************************)
+(* NATIVE TYPE ASSIGNMENT FOR TERMS *****************************************)
 
-fact nta_inv_lref1_aux: ∀h,L,T,U. ⦃h, L⦄ ⊢ T : U → ∀j. T = #j →
-                        (∃∃K,V,W,U0. ⇩[0, j] L ≡ K. ⓓV & ⦃h, K⦄ ⊢ V : W &
-                                     ⇧[0, j + 1] W ≡ U0 & L ⊢ U0 ⬌* U
-                        ) ∨
-                        (∃∃K,W,V,U0. ⇩[0, j] L ≡ K. ⓛW & ⦃h, K⦄ ⊢ W : V &
-                                     ⇧[0, j + 1] W ≡ U0 & L ⊢ U0 ⬌* U
-                        ).
-#h #L #T #U #H elim H -L -T -U
-[ #L #k #j #H destruct
-| #L #K #V #W #U #i #HLK #HVW #HWU #_ #j #H destruct /3 width=8/
-| #L #K #W #V #U #i #HLK #HWV #HWU #_ #j #H destruct /3 width=8/
-| #I #L #V #W #T #U #_ #_ #_ #_ #j #H destruct
-| #L #V #W #T #U #_ #_ #_ #_ #j #H destruct
-| #L #V #W #T #U #_ #_ #_ #_ #j #H destruct
-| #L #T #U #_ #_ #j #H destruct
-| #L #T #U1 #U2 #V2 #_ #HU12 #_ #IHTU1 #_ #j #H destruct
-  elim (IHTU1 ??) -IHTU1 [4: // |2: skip ] * #K #V #W #U0 #HLK #HVW #HWU0 #HU01
-  lapply (cpcs_trans … HU01 … HU12) -U1 /3 width=8/
-]
+(* Advanced properties ******************************************************)
+
+lemma nta_ldef (a) (h) (G) (K):
+      ∀V,W. ⦃G,K⦄ ⊢ V :[a,h] W →
+      ∀U. ⬆*[1] W ≘ U → ⦃G,K.ⓓV⦄ ⊢ #0 :[a,h] U.
+#a #h #G #K #V #W #H #U #HWU
+elim (cnv_inv_cast … H) -H #X #HW #HV #HWX #HVX
+lapply (cnv_lifts … HW (Ⓣ) … (K.ⓓV) … HWU) -HW
+[ /3 width=3 by drops_refl, drops_drop/ ] #HU
+elim (cpms_lifts_sn … HWX … (Ⓣ) … (K.ⓓV) … HWU) -W
+[| /3 width=3 by drops_refl, drops_drop/ ] #XW #HXW #HUXW
+/3 width=5 by cnv_zero, cnv_cast, cpms_delta/
 qed.
 
-(* Basic_1: was ty3_gen_lref *)
-lemma nta_inv_lref1: ∀h,L,U,i. ⦃h, L⦄ ⊢ #i : U →
-                     (∃∃K,V,W,U0. ⇩[0, i] L ≡ K. ⓓV & ⦃h, K⦄ ⊢ V : W &
-                                  ⇧[0, i + 1] W ≡ U0 & L ⊢ U0 ⬌* U
-                     ) ∨
-                     (∃∃K,W,V,U0. ⇩[0, i] L ≡ K. ⓛW & ⦃h, K⦄ ⊢ W : V &
-                                  ⇧[0, i + 1] W ≡ U0 & L ⊢ U0 ⬌* U
-                     ).
-/2 width=3/ qed-.
-
-(* Advanced forvard lemmas **************************************************)
-
-fact nta_fwd_pure1_aux: ∀h,L,T,U. ⦃h, L⦄ ⊢ T : U → ∀X,Y. T = ⓐY.X →
-                        ∃∃V,W. ⦃h, L⦄ ⊢ Y : W & ⦃h, L⦄ ⊢ X : V & L ⊢ ⓐY.V ⬌* U.
-#h #L #T #U #H elim H -L -T -U
-[ #L #k #X #Y #H destruct
-| #L #K #V #W #U #i #_ #_ #_ #_ #X #Y #H destruct
-| #L #K #W #V #U #i #_ #_ #_ #_ #X #Y #H destruct
-| #I #L #V #W #T #U #_ #_ #_ #_ #X #Y #H destruct
-| #L #V #W #T #U #HVW #HTU #_ #_ #X #Y #H destruct /2 width=3/
-| #L #V #W #T #U #HTU #_ #_ #IHUW #X #Y #H destruct
-  elim (IHUW U Y ?) -IHUW // /2 width=3/
-| #L #T #U #_ #_ #X #Y #H destruct
-| #L #T #U1 #U2 #V2 #_ #HU12 #_ #IHTU1 #_ #X #Y #H destruct
-  elim (IHTU1 ???) -IHTU1 [4: // |2,3: skip ] #V #W #HYW #HXV #HU1
-  lapply (cpcs_trans … HU1 … HU12) -U1 /2 width=3/
-]
+lemma nta_ldec_cnv (a) (h) (G) (K):
+      ∀W. ⦃G,K⦄ ⊢ W ![a,h] →
+      ∀U. ⬆*[1] W ≘ U → ⦃G,K.ⓛW⦄ ⊢ #0 :[a,h] U.
+#a #h #G #K #W #HW #U #HWU
+lapply (cnv_lifts … HW (Ⓣ) … (K.ⓛW) … HWU)
+/3 width=5 by cnv_zero, cnv_cast, cpms_ell, drops_refl, drops_drop/
 qed.
 
-lemma nta_fwd_pure1: ∀h,L,X,Y,U. ⦃h, L⦄ ⊢ ⓐY.X : U →
-                     ∃∃V,W. ⦃h, L⦄ ⊢ Y : W & ⦃h, L⦄ ⊢ X : V & L ⊢ ⓐY.V ⬌* U.
-/2 width=3/ qed-.
+lemma nta_lref (a) (h) (I) (G) (K):
+      ∀T,i. ⦃G,K⦄ ⊢ #i :[a,h] T →
+      ∀U. ⬆*[1] T ≘ U → ⦃G,K.ⓘ{I}⦄ ⊢ #(↑i) :[a,h] U.
+#a #h #I #G #K #T #i #H #U #HTU
+elim (cnv_inv_cast … H) -H #X #HT #Hi #HTX #H2
+lapply (cnv_lifts … HT (Ⓣ) … (K.ⓘ{I}) … HTU) -HT
+[ /3 width=3 by drops_refl, drops_drop/ ] #HU
+lapply (cnv_lifts … Hi (Ⓣ) (𝐔❴1❵) (K.ⓘ{I}) ???) -Hi
+[4:|*: /3 width=3 by drops_refl, drops_drop/ ] #Hi
+elim (cpms_lifts_sn … HTX … (Ⓣ) … (K.ⓘ{I}) … HTU) -T
+[| /3 width=3 by drops_refl, drops_drop/ ] #XU #HXU #HUXU
+/3 width=5 by cnv_cast, cpms_lref/
+qed.
 
-(* Properties on relocation *************************************************)
+(* Properties with generic slicing for local environments *******************)
+
+lemma nta_lifts_sn (a) (h) (G): d_liftable2_sn … lifts (nta a h G).
+#a #h #G #K #T1 #T2 #H #b #f #L #HLK #U1 #HTU1
+elim (cnv_inv_cast … H) -H #X #HT2 #HT1 #HT2X #HT1X
+elim (lifts_total T2 f) #U2 #HTU2
+lapply (cnv_lifts … HT2 … HLK … HTU2) -HT2 #HU2
+lapply (cnv_lifts … HT1 … HLK … HTU1) -HT1 #HU1
+elim (cpms_lifts_sn … HT2X … HLK … HTU2) -HT2X #X2 #HX2 #HUX2
+elim (cpms_lifts_sn … HT1X … HLK … HTU1) -T1 #X1 #HX1 #HUX1
+lapply (lifts_mono … HX2 … HX1) -K -X #H destruct
+/3 width=6 by cnv_cast, ex2_intro/
+qed-.
 
 (* Basic_1: was: ty3_lift *)
-(* Basic_2A1: was: ntaa_lift *)
-lemma nta_lift: ∀h,L1,T1,U1. ⦃h, L1⦄ ⊢ T1 : U1 → ∀L2,d,e. ⇩[d, e] L2 ≡ L1 →
-                ∀T2. ⇧[d, e] T1 ≡ T2 → ∀U2. ⇧[d, e] U1 ≡ U2 → ⦃h, L2⦄ ⊢ T2 : U2.
-/4 width=9 by ntaa_nta, nta_ntaa, ntaa_lift/ qed.
-*)
+(* Basic_2A1: was: nta_lift ntaa_lift *)
+lemma nta_lifts_bi (a) (h) (G): d_liftable2_bi … lifts (nta a h G).
+/3 width=12 by nta_lifts_sn, d_liftable2_sn_bi, lifts_mono/ qed-.
+
+(* Basic_1: was by definition: ty3_abbr *)
+(* Basic_2A1: was by definition: nta_ldef *)
+lemma nta_ldef_drops (a) (h) (G) (K) (L) (i):
+      ∀V,W. ⦃G,K⦄ ⊢ V :[a,h] W →
+      ∀U. ⬆*[↑i] W ≘ U → ⬇*[i] L ≘ K.ⓓV → ⦃G,L⦄ ⊢ #i :[a,h] U.
+#a #h #G #K #L #i #V #W #HVW #U #HWU #HLK
+elim (lifts_split_trans … HWU (𝐔❴1❵) (𝐔❴i❵)) [| // ] #X #HWX #HXU
+/3 width=9 by nta_lifts_bi, nta_ldef/
+qed.
+
+lemma nta_ldec_drops_cnv (a) (h) (G) (K) (L) (i):
+      ∀W. ⦃G,K⦄ ⊢ W ![a,h] →
+      ∀U. ⬆*[↑i] W ≘ U → ⬇*[i] L ≘ K.ⓛW → ⦃G,L⦄ ⊢ #i :[a,h] U.
+#a #h #G #K #L #i #W #HW #U #HWU #HLK
+elim (lifts_split_trans … HWU (𝐔❴1❵) (𝐔❴i❵)) [| // ] #X #HWX #HXU
+/3 width=9 by nta_lifts_bi, nta_ldec_cnv/
+qed.

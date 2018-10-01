@@ -9,6 +9,10 @@ lemma nta_pure
 (* Basic_2A1: was: nta_inv_bind1 ntaa_inv_bind1 *)
 lemma nta_inv_bind_sn
 
+(* Basic_1: was by definition: ty3_abst *)
+(* Basic_2A1: was by definition: nta_ldec *)
+lemma nta_ldec_drops
+
 (* Advanced properties ******************************************************)
 
 | ntaa_cast: ∀L,T,U,W. ntaa h L T U → ntaa h L U W → ntaa h L (ⓝU. T) U
