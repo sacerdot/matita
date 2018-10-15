@@ -1,0 +1,14 @@
+                D I 
+sort            * *
+lref ldef       *
+lref ldec       *
+lref lref       *
+lref ldef drops *
+lref ldec drops *
+bind            * *
+appl appl       * *
+appl beta       *
+appl pure       *
+cast new        * *
+cast old        * *
+conv            *

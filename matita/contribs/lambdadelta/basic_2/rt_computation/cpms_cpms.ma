@@ -168,3 +168,27 @@ theorem cpms_cast (n) (h) (G) (L):
   /3 width=3 by cpms_trans, cpms_cast_sn/
 ]
 qed.
+
+theorem cpms_trans_swap (h) (G) (L) (T1):
+        ∀n1,T. ⦃G,L⦄ ⊢ T1 ➡*[n1,h] T → ∀n2,T2. ⦃G,L⦄ ⊢ T ➡*[n2,h] T2 →
+        ∃∃T0. ⦃G,L⦄ ⊢ T1 ➡*[n2,h] T0 & ⦃G,L⦄ ⊢ T0 ➡*[n1,h] T2.
+#h #G #L #T1 #n1 #T #HT1 #n2 #T2 #HT2
+lapply (cpms_trans … HT1 … HT2) -T <commutative_plus #HT12
+/2 width=1 by cpms_inv_plus/
+qed-.
+
+(* More advanced inversion lemmas *******************************************)
+(*
+lemma cpms_inv_appl_sn_decompose (h) (n) (G) (L) (V1) (T1):
+      ∀X2. ⦃G,L⦄ ⊢ ⓐV1.T1 ➡*[n,h] X2 →
+      ∃∃T2. ⦃G,L⦄ ⊢ T1 ➡*[n,h] T2 & ⦃G,L⦄ ⊢ ⓐV1.T2 ➡*[h] X2.
+#h #n #G #L #V1 #T1 #X2 #H
+@(cpms_ind_dx … H) -n -X2
+[ /2 width=3 by ex2_intro/
+| #n1 #n2 #X #X2 #_ * #X1 #HTX1 #HX1 #HX2
+  elim (pippo … HX1 … HX2) -X #X #HX1 #HX2
+  elim (cpm_inv_appl_sn_decompose … HX1) -HX1 #U1 #HXU1 #HU1X
+  /3 width=5 by cprs_step_sn, cpms_step_dx, ex2_intro/
+]
+qed-.
+*)

@@ -290,6 +290,22 @@ lemma cpm_inv_cast1: ∀n,h,G,L,V1,U1,U2. ⦃G, L⦄ ⊢ ⓝV1.U1 ➡[n, h] U2 �
 ]
 qed-.
 
+(* Advanced inversion lemmas ************************************************)
+
+lemma cpm_inv_appl_sn_decompose (h) (n) (G) (L) (V1) (T1):
+      ∀X2. ⦃G,L⦄ ⊢ ⓐV1.T1 ➡[n,h] X2 →
+      ∃∃T2. ⦃G,L⦄ ⊢ T1 ➡[n,h] T2 & ⦃G,L⦄ ⊢ ⓐV1.T2 ➡[h] X2.
+#h #n #G #L #V1 #T1 #X2 #H
+elim (cpm_inv_appl1 … H) -H *
+[ #V2 #T2 #HV12 #HT12 #H destruct
+  /3 width=3 by cpm_appl, ex2_intro/
+| #p #V2 #W1 #W2 #U1 #U2 #HV12 #HW12 #HU12 #H1 #H2 destruct
+  /3 width=5 by cpm_beta, cpm_bind, ex2_intro/
+| #p #V2 #V0 #W1 #W2 #U1 #U2 #HV12 #HV20 #HW12 #HU12 #H1 #H2 destruct
+  /3 width=5 by cpm_theta, cpm_bind, ex2_intro/
+]
+qed-.
+
 (* Basic forward lemmas *****************************************************)
 
 (* Basic_2A1: includes: cpr_fwd_bind1_minus *)

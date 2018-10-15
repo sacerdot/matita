@@ -94,6 +94,31 @@ elim (cnv_cpms_conf … H1 … H2 … HVTU) -H1 -H2 -HVTU <minus_n_n #X0 #HX0 #H
 /3 width=5 by cprs_div, cprs_trans/
 qed-.
 
+lemma nta_inv_pure_sn_cnv (h) (G) (L) (X2):
+                          ∀V,T. ⦃G,L⦄ ⊢ ⓐV.T :*[h] X2 →
+                          ∨∨ ∃∃p,W,T0,U0. ⦃G,L⦄ ⊢ V :*[h] W & ⦃G,L⦄ ⊢ ⓛ{p}W.T0 :*[h] ⓛ{p}W.U0 & ⦃G,L⦄ ⊢ T ➡*[h] ⓛ{p}W.T0 & ⦃G,L⦄ ⊢ ⓐV.ⓛ{p}W.U0 ⬌*[h] X2 & ⦃G,L⦄ ⊢ X2 !*[h]
+                           | ∃∃U. ⦃G,L⦄ ⊢ T :*[h] U & ⦃G,L⦄ ⊢ ⓐV.U !*[h] & ⦃G,L⦄ ⊢ ⓐV.U ⬌*[h] X2 & ⦃G,L⦄ ⊢ X2 !*[h].
+#h #G #L #X2 #V #T #H
+elim (cnv_inv_cast … H) -H #X1 #HX2 #H1 #HX21 #H
+elim (cnv_inv_appl … H1) -H1 * [| #n ] #p #W0 #T0 #_ #HV #HT #HW0 #HT0
+lapply (cnv_cpms_trans … HT … HT0) #H
+elim (cnv_inv_bind … H) -H #_ #H1T0
+[ elim (cpms_inv_appl_sn_decompose … H) -H #U #HTU #HUX1 
+  
+
+  [ #V0 #U0 #HV0 #HU0 #H destruct
+    elim (cnv_cpms_conf … HT … HT0 … HU0)
+    <minus_O_n <minus_n_O #X #H #HU0X
+    elim (cpms_inv_abst_sn … H) -H #W1 #U1 #HW01 #HU01 #H destruct
+    @or_introl
+    @(ex5_4_intro … U1 … HT0 … HX2) -HX2
+    [ /2 width=1 by cnv_cpms_nta/
+    | @nta_bind_cnv /2 width=4 by cnv_cpms_trans/ /2 width=3 by cnv_cpms_nta/
+    | @(cpcs_cprs_div … HX21) -HX21
+      @(cprs_div … (ⓐV0.ⓛ{p}W1.U1))
+      /3 width=1 by cpms_appl, cpms_appl_dx, cpms_bind/ 
+    ]
+  
 (* Basic_2A1: uses: nta_inv_cast1 *)
 lemma nta_inv_cast_sn (a) (h) (G) (L) (X2):
       ∀U,T. ⦃G,L⦄ ⊢ ⓝU.T :[a,h] X2 →
