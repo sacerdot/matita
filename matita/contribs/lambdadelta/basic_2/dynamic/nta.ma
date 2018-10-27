@@ -66,6 +66,15 @@ elim (cnv_inv_cast … H2) #X2 #_ #_ #HTX2 #HTX12
 /3 width=3 by cnv_cast, cpms_eps/
 qed.
 
+(* Basic inversion lemmas ***************************************************)
+
+lemma nta_inv_gref_sn (a) (h) (G) (L):
+      ∀X2,l. ⦃G,L⦄ ⊢ §l :[a,h] X2 → ⊥.
+#a #h #G #L #X2 #l #H
+elim (cnv_inv_cast … H) -H #X #_ #H #_ #_
+elim (cnv_inv_gref … H)
+qed-.
+
 (* Basic_forward lemmas *****************************************************)
 
 lemma nta_fwd_cnv_sn (a) (h) (G) (L):

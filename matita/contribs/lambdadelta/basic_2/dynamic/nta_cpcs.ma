@@ -44,9 +44,26 @@ qed-.
 (* Basic_1: was: ty3_gen_sort *)
 (* Basic_2A1: was: nta_inv_sort1 *)
 lemma nta_inv_sort_sn (a) (h) (G) (L) (X2):
-      ∀s. ⦃G,L⦄ ⊢ ⋆s :[a,h] X2 → ⦃G,L⦄ ⊢ ⋆(next h s) ⬌*[h] X2.
+      ∀s. ⦃G,L⦄ ⊢ ⋆s :[a,h] X2 →
+      ∧∧ ⦃G,L⦄ ⊢ ⋆(next h s) ⬌*[h] X2 & ⦃G,L⦄ ⊢ X2 ![a,h].
 #a #h #G #L #X2 #s #H
 elim (cnv_inv_cast … H) -H #X1 #HX2 #_ #HX21 #H
 lapply (cpms_inv_sort1 … H) -H #H destruct
-/2 width=1 by cpcs_cprs_sn/
+/3 width=1 by cpcs_cprs_sn, conj/
+qed-.
+
+lemma nta_inv_ldec_sn_cnv (a) (h) (G) (K) (V):
+      ∀X2. ⦃G,K.ⓛV⦄ ⊢ #0 :[a,h] X2 →
+      ∃∃U. ⦃G,K⦄ ⊢ V ![a,h] & ⬆*[1] V ≘ U & ⦃G,K.ⓛV⦄ ⊢ U ⬌*[h] X2 & ⦃G,K.ⓛV⦄ ⊢ X2 ![a,h].
+#a #h #G #Y #X #X2 #H
+elim (cnv_inv_cast … H) -H #X1 #HX2 #H1 #HX21 #H2
+elim (cnv_inv_zero … H1) -H1 #Z #K #V #HV #H destruct
+elim (cpms_inv_ell_sn … H2) -H2 *
+[ #_ #H destruct
+| #m #W #HVW #HWX1 #H destruct
+  elim (lifts_total V (𝐔❴1❵)) #U #HVU
+  lapply (cpms_lifts_bi … HVW (Ⓣ) … (K.ⓛV) … HVU … HWX1) -W
+  [ /3 width=1 by drops_refl, drops_drop/ ] #HUX1
+  /3 width=5 by cprs_div, ex4_intro/
+]
 qed-.

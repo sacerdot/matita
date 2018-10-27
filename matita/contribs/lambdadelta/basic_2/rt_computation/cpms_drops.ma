@@ -146,6 +146,56 @@ lemma cpms_inv_lref1_drops (n) (h) (G):
 ]
 qed-.
 
+lemma cpms_inv_delta_sn (n) (h) (G) (K) (V):
+      ∀T2. ⦃G,K.ⓓV⦄ ⊢ #0 ➡*[n,h] T2 →
+      ∨∨ ∧∧ T2 = #0 & n = 0
+       | ∃∃V2. ⦃G,K⦄ ⊢ V ➡*[n,h] V2 & ⬆*[1] V2 ≘ T2.
+#n #h #G #K #V #T2 #H
+elim (cpms_inv_lref1_drops … H) -H *
+[ /3 width=1 by or_introl, conj/
+| #Y #X #V2 #H #HV2 #HVT2
+  lapply (drops_fwd_isid … H ?) -H [ // ] #H destruct
+  /3 width=3 by ex2_intro, or_intror/
+| #m #Y #X #V2 #H #HV2 #HVT2
+  lapply (drops_fwd_isid … H ?) -H [ // ] #H destruct
+]
+qed-.
+
+lemma cpms_inv_ell_sn (n) (h) (G) (K) (V):
+      ∀T2. ⦃G,K.ⓛV⦄ ⊢ #0 ➡*[n,h] T2 →
+      ∨∨ ∧∧ T2 = #0 & n = 0
+       | ∃∃m,V2. ⦃G,K⦄ ⊢ V ➡*[m,h] V2 & ⬆*[1] V2 ≘ T2 & n = ↑m.
+#n #h #G #K #V #T2 #H
+elim (cpms_inv_lref1_drops … H) -H *
+[ /3 width=1 by or_introl, conj/
+| #Y #X #V2 #H #HV2 #HVT2
+  lapply (drops_fwd_isid … H ?) -H [ // ] #H destruct
+| #m #Y #X #V2 #H #HV2 #HVT2 #H0 destruct
+  lapply (drops_fwd_isid … H ?) -H [ // ] #H destruct
+  /3 width=5 by ex3_2_intro, or_intror/
+]
+qed-.
+
+lemma cpms_inv_lref_sn (n) (h) (G) (I) (K):
+      ∀U2,i. ⦃G,K.ⓘ{I}⦄ ⊢ #↑i ➡*[n,h] U2 →
+      ∨∨ ∧∧ U2 = #↑i & n = 0
+       | ∃∃T2. ⦃G,K⦄ ⊢ #i ➡*[n,h] T2 & ⬆*[1] T2 ≘ U2.
+#n #h #G #I #K #U2 #i #H
+elim (cpms_inv_lref1_drops … H) -H *
+[ /3 width=1 by or_introl, conj/
+| #L #V #V2 #H #HV2 #HVU2
+  lapply (drops_inv_drop1 … H) -H #HLK
+  elim (lifts_split_trans … HVU2 (𝐔❴↑i❵) (𝐔❴1❵)) -HVU2
+  [| // ] #T2 #HVT2 #HTU2
+  /4 width=6 by cpms_delta_drops, ex2_intro, or_intror/
+| #m #L #V #V2 #H #HV2 #HVU2 #H0 destruct
+  lapply (drops_inv_drop1 … H) -H #HLK
+  elim (lifts_split_trans … HVU2 (𝐔❴↑i❵) (𝐔❴1❵)) -HVU2
+  [| // ] #T2 #HVT2 #HTU2
+  /4 width=6 by cpms_ell_drops, ex2_intro, or_intror/
+]
+qed-.
+
 fact cpms_inv_succ_sn (n) (h) (G) (L):
                       ∀T1,T2. ⦃G, L⦄ ⊢ T1 ➡*[↑n, h] T2 →
                       ∃∃T. ⦃G, L⦄ ⊢ T1 ➡*[1, h] T & ⦃G, L⦄ ⊢ T ➡*[n, h] T2.

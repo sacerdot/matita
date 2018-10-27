@@ -13,6 +13,10 @@ lemma nta_inv_bind_sn
 (* Basic_2A1: was by definition: nta_ldec *)
 lemma nta_ldec_drops
 
+(* Basic_1: was: ty3_gen_lref *)
+(* Basic_2A1: was: nta_inv_lref1 *)
+lemma nta_inv_lref_sn_drops
+
 (* Advanced properties ******************************************************)
 
 | ntaa_cast: ∀L,T,U,W. ntaa h L T U → ntaa h L U W → ntaa h L (ⓝU. T) U
@@ -22,3 +26,35 @@ lemma nta_cast_alt: ∀h,L,T,W,U. ⦃h, L⦄ ⊢ T  : W → ⦃h, L⦄ ⊢ T : U
 lapply (nta_mono … HTW … HTU) #HWU
 elim (nta_fwd_correct … HTU) -HTU /3 width=3/
 qed.
+
+lemma nta_ind_alt: ∀h. ∀Q:lenv→relation term.
+   (∀L,k. Q L ⋆k ⋆(next h k)) →
+   (∀L,K,V,W,U,i.
+      ⇩[O, i] L ≡ K.ⓓV → ⦃h, K⦄ ⊢ V : W → ⇧[O, i + 1] W ≡ U →
+      Q K V W → Q L (#i) U
+   ) →
+   (∀L,K,W,V,U,i.
+      ⇩[O, i] L ≡ K.ⓛW → ⦃h, K⦄ ⊢ W : V → ⇧[O, i + 1] W ≡ U →
+      Q K W V → Q L (#i) U
+   ) →
+   (∀I,L,V,W,T,U.
+      ⦃h, L⦄ ⊢ V : W → ⦃h, L.ⓑ{I}V⦄ ⊢ T : U →
+      Q L V W → Q (L.ⓑ{I}V) T U → Q L (ⓑ{I}V.T) (ⓑ{I}V.U)
+   ) →
+   (∀L,V,W,T,U.
+      ⦃h, L⦄ ⊢ V : W → ⦃h, L⦄ ⊢ (ⓛW.T):(ⓛW.U) →
+      Q L V W →Q L (ⓛW.T) (ⓛW.U) →Q L (ⓐV.ⓛW.T) (ⓐV.ⓛW.U)
+   ) →
+   (∀L,V,W,T,U.
+      ⦃h, L⦄ ⊢ T : U → ⦃h, L⦄ ⊢ (ⓐV.U) : W →
+      Q L T U → Q L (ⓐV.U) W → Q L (ⓐV.T) (ⓐV.U)
+   ) →
+   (∀L,T,U,W.
+      ⦃h, L⦄ ⊢ T : U → ⦃h, L⦄ ⊢ U : W →
+      Q L T U → Q L U W → Q L (ⓝU.T) U
+   ) →
+   (∀L,T,U1,U2,V2.
+      ⦃h, L⦄ ⊢ T : U1 → L ⊢ U1 ⬌* U2 → ⦃h, L⦄ ⊢ U2 : V2 →
+      Q L T U1 →Q L U2 V2 →Q L T U2
+   ) →
+   ∀L,T,U. ⦃h, L⦄ ⊢ T : U → Q L T U.

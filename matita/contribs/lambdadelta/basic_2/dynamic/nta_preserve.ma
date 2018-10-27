@@ -58,6 +58,53 @@ qed.
 
 (* Inversion lemmas based on preservation ***********************************)
 
+lemma nta_inv_ldef_sn (a) (h) (G) (K) (V):
+      ∀X2. ⦃G,K.ⓓV⦄ ⊢ #0 :[a,h] X2 →
+      ∃∃W,U. ⦃G,K⦄ ⊢ V :[a,h] W & ⬆*[1] W ≘ U & ⦃G,K.ⓓV⦄ ⊢ U ⬌*[h] X2 & ⦃G,K.ⓓV⦄ ⊢ X2 ![a,h].
+#a #h #G #Y #X #X2 #H
+elim (cnv_inv_cast … H) -H #X1 #HX2 #H1 #HX21 #H2
+elim (cnv_inv_zero … H1) -H1 #Z #K #V #HV #H destruct
+elim (cpms_inv_delta_sn … H2) -H2 *
+[ #_ #H destruct
+| #W #HVW #HWX1
+  /3 width=5 by cnv_cpms_nta, cpcs_cprs_sn, ex4_2_intro/
+]
+qed-.
+
+lemma nta_inv_lref_sn (a) (h) (G) (L):
+      ∀X2,i. ⦃G,L⦄ ⊢ #↑i :[a,h] X2 →
+      ∃∃I,K,T2,U2. ⦃G,K⦄ ⊢ #i :[a,h] T2 & ⬆*[1] T2 ≘ U2 & ⦃G,K.ⓘ{I}⦄ ⊢ U2 ⬌*[h] X2 & ⦃G,K.ⓘ{I}⦄ ⊢ X2 ![a,h] & L = K.ⓘ{I}.
+#a #h #G #L #X2 #i #H
+elim (cnv_inv_cast … H) -H #X1 #HX2 #H1 #HX21 #H2
+elim (cnv_inv_lref … H1) -H1 #I #K #Hi #H destruct
+elim (cpms_inv_lref_sn … H2) -H2 *
+[ #_ #H destruct
+| #X #HX #HX1
+  /3 width=9 by cnv_cpms_nta, cpcs_cprs_sn, ex5_4_intro/
+]
+qed-.
+
+lemma nta_inv_lref_sn_drops_cnv (a) (h) (G) (L): 
+      ∀X2, i. ⦃G,L⦄ ⊢ #i :[a,h] X2 →
+      ∨∨ ∃∃K,V,W,U. ⬇*[i] L ≘ K.ⓓV & ⦃G,K⦄ ⊢ V :[a,h] W & ⬆*[↑i] W ≘ U & ⦃G,L⦄ ⊢ U ⬌*[h] X2 & ⦃G,L⦄ ⊢ X2 ![a,h]
+       | ∃∃K,W,U. ⬇*[i] L ≘ K. ⓛW & ⦃G,K⦄ ⊢ W ![a,h] & ⬆*[↑i] W ≘ U & ⦃G,L⦄ ⊢ U ⬌*[h] X2 & ⦃G,L⦄ ⊢ X2 ![a,h].
+#a #h #G #L #X2 #i #H
+elim (cnv_inv_cast … H) -H #X1 #HX2 #H1 #HX21 #H2
+elim (cnv_inv_lref_drops … H1) -H1 #I #K #V #HLK #HV
+elim (cpms_inv_lref1_drops … H2) -H2 *
+[ #_ #H destruct
+| #Y #X #W #H #HVW #HUX1
+  lapply (drops_mono … H … HLK) -H #H destruct
+  /4 width=8 by cnv_cpms_nta, cpcs_cprs_sn, ex5_4_intro, or_introl/
+| #n #Y #X #U #H #HVU #HUX1 #H0 destruct
+  lapply (drops_mono … H … HLK) -H #H destruct
+  elim (lifts_total V (𝐔❴↑i❵)) #W #HVW
+  lapply (cpms_lifts_bi … HVU (Ⓣ) … L … HVW … HUX1) -U
+  [ /2 width=2 by drops_isuni_fwd_drop2/ ] #HWX1
+  /4 width=9 by cprs_div, ex5_3_intro, or_intror/
+]
+qed-.
+
 lemma nta_inv_bind_sn_cnv (a) (h) (p) (I) (G) (K) (X2):
       ∀V,T. ⦃G,K⦄ ⊢ ⓑ{p,I}V.T :[a,h] X2 →
       ∃∃U. ⦃G,K⦄ ⊢ V ![a,h] & ⦃G,K.ⓑ{I}V⦄ ⊢ T :[a,h] U & ⦃G,K⦄ ⊢ ⓑ{p,I}V.U ⬌*[h] X2 & ⦃G,K⦄ ⊢ X2 ![a,h].
@@ -93,6 +140,29 @@ elim (cnv_cpms_conf … H1 … H2 … HVTU) -H1 -H2 -HVTU <minus_n_n #X0 #HX0 #H
 @ex4_3_intro [6,13: |*: /2 width=5 by cnv_cpms_nta/ ]
 /3 width=5 by cprs_div, cprs_trans/
 qed-.
+(*
+ (ltc_ind
+ :∀A: Type \sub 0 
+  .(A→A→A)
+   →∀B: Type \sub 0 
+    .relation3 A B B
+     →∀Q_:∀x_3:A.∀x_2:B.∀x_1:B.ltc A __6 B __4 x_3 x_2 x_1→Prop
+      .(∀a:A
+        .∀b1:B
+         .∀b2:B.∀x_5:__5 a b1 b2.Q_ a b1 b2 (ltc_rc A __8 B __6 a b1 b2 x_5))
+       →(∀a1:A
+         .∀a2:A
+          .∀b1:B
+           .∀b:B
+            .∀b2:B
+             .∀x_7:ltc A __10 B __8 a1 b1 b
+              .∀x_6:ltc A __11 B __9 a2 b b2
+               .Q_ a1 b1 b x_7
+                →Q_ a2 b b2 x_6
+                 →Q_ (__14 a1 a2) b1 b2
+                  (ltc_trans A __14 B __12 a1 a2 b1 b b2 x_7 x_6))
+        →∀x_3:A
+         .∀x_2:B.∀x_1:B.∀x_4:ltc A __9 B __7 x_3 x_2 x_1.Q_ x_3 x_2 x_1 x_4)
 
 lemma nta_inv_pure_sn_cnv (h) (G) (L) (X2):
                           ∀V,T. ⦃G,L⦄ ⊢ ⓐV.T :*[h] X2 →
@@ -118,7 +188,7 @@ elim (cnv_inv_bind … H) -H #_ #H1T0
       @(cprs_div … (ⓐV0.ⓛ{p}W1.U1))
       /3 width=1 by cpms_appl, cpms_appl_dx, cpms_bind/ 
     ]
-  
+*)
 (* Basic_2A1: uses: nta_inv_cast1 *)
 lemma nta_inv_cast_sn (a) (h) (G) (L) (X2):
       ∀U,T. ⦃G,L⦄ ⊢ ⓝU.T :[a,h] X2 →

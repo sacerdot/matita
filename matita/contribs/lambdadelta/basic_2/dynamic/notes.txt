@@ -1,10 +1,11 @@
                 D I 
 sort            * *
-lref ldef       *
-lref ldec       *
-lref lref       *
-lref ldef drops *
-lref ldec drops *
+lref ldef       * *
+lref ldec       * *
+lref lref       * *
+lref ldef drops * *
+lref ldec drops * *
+gref              *
 bind            * *
 appl appl       * *
 appl beta       *
