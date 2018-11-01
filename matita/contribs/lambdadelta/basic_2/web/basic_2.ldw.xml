@@ -33,6 +33,9 @@
          for native type assignment.
    </news>
 -->
+   <news class="alpha" date="2018 November 1.">
+         Extended (λδ-2) and restricted (λδ-1) type rules justified.
+   </news>
    <news class="alpha" date="2018 September 21.">
          λδ-2A completed with
          confluence of rt-computation and

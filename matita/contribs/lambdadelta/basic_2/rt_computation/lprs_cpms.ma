@@ -53,6 +53,14 @@ elim (cpm_inv_abst1 … H2) -H2 #V2 #T2 #HV2 #HT2 #H2 destruct
 /5 width=7 by lprs_cpm_trans, lprs_pair, cprs_step_dx, cpms_trans, ex3_2_intro/
 qed-.
 
+lemma cpms_inv_abst_sn_cprs (h) (n) (p) (G) (L) (W):
+                            ∀T,X. ⦃G,L⦄ ⊢ ⓛ{p}W.T ➡*[n,h] X →
+                            ∃∃U. ⦃G,L.ⓛW⦄⊢ T ➡*[n,h] U & ⦃G,L⦄ ⊢ ⓛ{p}W.U ➡*[h] X.
+#h #n #p #G #L #W #T #X #H
+elim (cpms_inv_abst_sn … H) -H #W0 #U #HW0 #HTU #H destruct
+@(ex2_intro … HTU) /2 width=1 by cpms_bind/
+qed-.
+
 (* Basic_2A1: includes: cprs_inv_abst *)
 lemma cpms_inv_abst_bi (n) (h) (G) (L):
                        ∀p,W1,W2,T1,T2. ⦃G, L⦄ ⊢ ⓛ{p}W1.T1 ➡*[n, h] ⓛ{p}W2.T2 →

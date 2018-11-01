@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_transition/cpm_aaa.ma".
 include "basic_2/rt_computation/cpms_aaa.ma".
 include "basic_2/dynamic/cnv.ma".
 
@@ -49,4 +48,13 @@ lemma cnv_fwd_cpm_SO (a) (h) (G) (L):
 #a #h #G #L #T #H
 elim (cnv_fwd_aaa … H) -H #A #HA
 /2 width=2 by aaa_cpm_SO/
+qed-.
+
+(* Forward lemmas with t_bound rt_computation for terms *********************)
+
+lemma cnv_fwd_cpms_total (a) (h) (n) (G) (L):
+      ∀T. ⦃G, L⦄ ⊢ T ![a, h] → ∃U. ⦃G,L⦄ ⊢ T ➡*[n,h] U.
+#a #h #n #G #L #T #H
+elim (cnv_fwd_aaa … H) -H #A #HA
+/2 width=2 by aaa_cpms_total/
 qed-.
