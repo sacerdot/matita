@@ -20,7 +20,7 @@ table {
    class "magenta"
    [ { "dynamic typing" * } {
         [ { "context-sensitive native type assignment" * } {
-             [ [ "for terms" ] "nta" + "( ⦃?,?⦄ ⊢ ? :[?,?] ? )" + "( ⦃?,?⦄ ⊢ ? :[?] ? )" + "( ⦃?,?⦄ ⊢ ? :*[?] ? )" "nta_drops" + "nta_cpms" + "nta_cpcs" + "nta_preserve" + "nta_ind" * ]
+             [ [ "for terms" ] "nta" + "( ⦃?,?⦄ ⊢ ? :[?,?] ? )" + "( ⦃?,?⦄ ⊢ ? :[?] ? )" + "( ⦃?,?⦄ ⊢ ? :*[?] ? )" "nta_drops" + "nta_aaa" + "nta_fsb" + "nta_cpms" + "nta_cpcs" + "nta_preserve" + "nta_preserve_cpcs" + "nta_ind" * ]
           }
         ]
         [ { "context-sensitive native validity" * } {

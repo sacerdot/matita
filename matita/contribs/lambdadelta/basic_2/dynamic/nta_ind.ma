@@ -179,5 +179,5 @@ lemma nta_ind_ext_cnv (h) (Q:relation4 …):
 lapply (nta_fwd_cnv_dx … HTU) #H
 elim (cnv_inv_bind … H) -H #_ #HU
 elim (cnv_nta_sn … HU) -HU #X #HUX
-/4 width=2 by nta_beta, nta_fwd_cnv_sn/
+/4 width=2 by nta_appl_abst, nta_fwd_cnv_sn/
 qed-.

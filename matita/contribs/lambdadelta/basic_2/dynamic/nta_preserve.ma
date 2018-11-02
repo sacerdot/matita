@@ -56,6 +56,47 @@ elim (cpms_inv_abst_sn … H) -H #X3 #X4 #HX13 #HX24 #H destruct
 #H destruct
 qed.
 
+(* Basic_1: uses: ty3_sred_wcpr0_pr0 *)
+lemma nta_cpr_conf_lpr (a) (h) (G):
+      ∀L1,T1,U. ⦃G,L1⦄ ⊢ T1 :[a,h] U → ∀T2. ⦃G,L1⦄ ⊢ T1 ➡[h] T2 →
+      ∀L2. ⦃G,L1⦄ ⊢ ➡[h] L2 → ⦃G,L2⦄ ⊢ T2 :[a,h] U.
+#a #h #G #L1 #T1 #U #H #T2 #HT12 #L2 #HL12
+/3 width=6 by cnv_cpm_trans_lpr, cpm_cast/
+qed-.
+
+(* Basic_1: uses: ty3_sred_pr2 ty3_sred_pr0 *)
+lemma nta_cpr_conf (a) (h) (G) (L):
+      ∀T1,U. ⦃G,L⦄ ⊢ T1 :[a,h] U →
+      ∀T2. ⦃G,L⦄ ⊢ T1 ➡[h] T2 → ⦃G,L⦄ ⊢ T2 :[a,h] U.
+#a #h #G #L #T1 #U #H #T2 #HT12
+/3 width=6 by cnv_cpm_trans, cpm_cast/
+qed-.
+
+(* Note: this is the preservation property *)
+(* Basic_1: uses: ty3_sred_pr3 ty3_sred_pr1 *)
+lemma nta_cprs_conf (a) (h) (G) (L):
+      ∀T1,U. ⦃G,L⦄ ⊢ T1 :[a,h] U →
+      ∀T2. ⦃G,L⦄ ⊢ T1 ➡*[h] T2 → ⦃G,L⦄ ⊢ T2 :[a,h] U.
+#a #h #G #L #T1 #U #H #T2 #HT12
+/3 width=6 by cnv_cpms_trans, cpms_cast/
+qed-.
+
+(* Basic_1: uses: ty3_cred_pr2 *)
+lemma nta_lpr_conf (a) (h) (G):
+      ∀L1,T,U. ⦃G,L1⦄ ⊢ T :[a,h] U →
+      ∀L2. ⦃G,L1⦄ ⊢ ➡[h] L2 → ⦃G,L2⦄ ⊢ T :[a,h] U.
+#a #h #G #L1 #T #U #HTU #L2 #HL12
+/2 width=3 by cnv_lpr_trans/
+qed-.
+
+(* Basic_1: uses: ty3_cred_pr3 *)
+lemma nta_lprs_conf (a) (h) (G):
+      ∀L1,T,U. ⦃G,L1⦄ ⊢ T :[a,h] U →
+      ∀L2. ⦃G,L1⦄ ⊢ ➡*[h] L2 → ⦃G,L2⦄ ⊢ T :[a,h] U.
+#a #h #G #L1 #T #U #HTU #L2 #HL12
+/2 width=3 by cnv_lprs_trans/
+qed-.
+
 (* Inversion lemmas based on preservation ***********************************)
 
 lemma nta_inv_ldef_sn (a) (h) (G) (K) (V):
@@ -206,6 +247,19 @@ elim (cpms_inv_cast1 … H2) -H2 [ * || * ]
 ]
 qed-.
 
+(* Basic_1: uses: ty3_gen_lift *)
+(* Note: "⦃G,L⦄ ⊢ U2 ⬌*[h] X2" can be "⦃G,L⦄ ⊢ X2 ➡*[h] U2" *)
+lemma nta_inv_lifts_sn (a) (h) (G):
+      ∀L,T2,X2. ⦃G,L⦄ ⊢ T2 :[a,h] X2 →
+      ∀b,f,K. ⬇*[b,f] L ≘ K → ∀T1. ⬆*[f] T1 ≘ T2 →
+      ∃∃U1,U2. ⦃G,K⦄ ⊢ T1 :[a,h] U1 & ⬆*[f] U1 ≘ U2 & ⦃G,L⦄ ⊢ U2 ⬌*[h] X2 & ⦃G,L⦄ ⊢ X2 ![a,h].
+#a #h #G #L #T2 #X2 #H #b #f #K #HLK #T1 #HT12
+elim (cnv_inv_cast … H) -H #U2 #HX2 #HT2 #HXU2 #HTU2
+lapply (cnv_inv_lifts … HT2 … HLK … HT12) -HT2 #HT1
+elim (cpms_inv_lifts_sn … HTU2 … HLK … HT12) -T2 -HLK #U1 #HU12 #HTU1
+/3 width=5 by cnv_cpms_nta, cpcs_cprs_sn, ex4_2_intro/
+qed-.
+
 (* Forward lemmas based on preservation *************************************)
 
 (* Basic_1: was: ty3_unique *)
@@ -216,4 +270,15 @@ elim (cnv_inv_cast … H1) -H1 #X1 #_ #_ #HUX1 #HTX1
 elim (cnv_inv_cast … H2) -H2 #X2 #_ #HT #HUX2 #HTX2
 lapply (cnv_cpms_conf_eq … HT … HTX1 … HTX2) -T #HX12
 /3 width=3 by cpcs_cprs_div, cpcs_cprs_step_sn/
+qed-.
+
+(* Advanced properties ******************************************************)
+
+(* Basic_1: uses: ty3_sconv_pc3 *)
+lemma nta_cpcs_bi (a) (h) (G) (L):
+      ∀T1,U1. ⦃G,L⦄ ⊢ T1 :[a,h] U1 → ∀T2,U2. ⦃G,L⦄ ⊢ T2 :[a,h] U2 →
+      ⦃G,L⦄ ⊢ T1 ⬌*[h] T2 → ⦃G,L⦄ ⊢ U1 ⬌*[h] U2.
+#a #h #G #L #T1 #U1 #HTU1 #T2 #U2 #HTU2 #HT12
+elim (cpcs_inv_cprs … HT12) -HT12 #T0 #HT10 #HT02
+/3 width=6 by nta_mono, nta_cprs_conf/
 qed-.

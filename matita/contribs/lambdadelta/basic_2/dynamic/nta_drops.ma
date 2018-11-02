@@ -73,7 +73,7 @@ lemma nta_lifts_bi (a) (h) (G): d_liftable2_bi … lifts (nta a h G).
 /3 width=12 by nta_lifts_sn, d_liftable2_sn_bi, lifts_mono/ qed-.
 
 (* Basic_1: was by definition: ty3_abbr *)
-(* Basic_2A1: was by definition: nta_ldef *)
+(* Basic_2A1: was by definition: nta_ldef ntaa_ldef *)
 lemma nta_ldef_drops (a) (h) (G) (K) (L) (i):
       ∀V,W. ⦃G,K⦄ ⊢ V :[a,h] W →
       ∀U. ⬆*[↑i] W ≘ U → ⬇*[i] L ≘ K.ⓓV → ⦃G,L⦄ ⊢ #i :[a,h] U.

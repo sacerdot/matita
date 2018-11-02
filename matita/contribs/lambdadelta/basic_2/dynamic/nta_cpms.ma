@@ -18,10 +18,10 @@ include "basic_2/dynamic/nta.ma".
 
 (* NATIVE TYPE ASSIGNMENT FOR TERMS *****************************************)
 
-(* Properties with rt_computation for terms *********************************)
+(* Properties with advanced rt_computation for terms ************************)
 
 (* Basic_2A1: was by definition nta_appl ntaa_appl *)
-lemma nta_beta (a) (h) (p) (G) (K):
+lemma nta_appl_abst (a) (h) (p) (G) (K):
       ∀V,W. ⦃G,K⦄ ⊢ V :[a,h] W →
       ∀T,U. ⦃G,K.ⓛW⦄ ⊢ T :[a,h] U → ⦃G,K⦄ ⊢ ⓐV.ⓛ{p}W.T :[a,h] ⓐV.ⓛ{p}W.U.
 #a #h #p #G #K #V #W #H1 #T #U #H2
@@ -47,3 +47,17 @@ elim (cprs_conf … HWX1 … HW0) -HW0 #X0 #HX10 #HWX0
 | /2 width=1 by cpms_appl_dx/
 ]
 qed.
+
+(* Inversion lemmas with advanced rt_computation for terms ******************)
+
+lemma nta_inv_abst_bi_cnv (a) (h) (p) (G) (K) (W):
+      ∀T,U. ⦃G,K⦄ ⊢ ⓛ{p}W.T :[a,h] ⓛ{p}W.U →
+      ∧∧ ⦃G,K⦄ ⊢ W ![a,h] & ⦃G,K.ⓛW⦄ ⊢ T :[a,h] U.
+#a #h #p #G #K #W #T #U #H
+elim (cnv_inv_cast … H) -H #X #HWU #HWT #HUX #HTX
+elim (cnv_inv_bind … HWU) -HWU #HW #HU
+elim (cnv_inv_bind … HWT) -HWT #_ #HT
+elim (cpms_inv_abst_sn … HUX) -HUX #W0 #X0 #_ #HUX0 #H destruct
+elim (cpms_inv_abst_bi … HTX) -HTX #_ #HTX0 -W0
+/3 width=3 by cnv_cast, conj/
+qed-.

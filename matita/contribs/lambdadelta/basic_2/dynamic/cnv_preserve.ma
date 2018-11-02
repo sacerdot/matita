@@ -54,7 +54,23 @@ lemma cnv_cpms_trans_lpr (a) (h) (G) (L) (T): IH_cnv_cpms_trans_lpr a h G L T.
 @(cpms_ind_dx … H) -n -T2 /3 width=6 by cnv_cpm_trans_lpr/
 qed-.
 
+lemma cnv_cpm_trans (a) (h) (G) (L):
+      ∀T1. ⦃G,L⦄ ⊢ T1 ![a,h] →
+      ∀n,T2. ⦃G,L⦄ ⊢ T1 ➡[n,h] T2 → ⦃G,L⦄ ⊢ T2 ![a,h].
+/2 width=6 by cnv_cpm_trans_lpr/ qed-.
+
+(* Note: this is the preservation property *)
 lemma cnv_cpms_trans (a) (h) (G) (L):
       ∀T1. ⦃G,L⦄ ⊢ T1 ![a,h] →
       ∀n,T2. ⦃G,L⦄ ⊢ T1 ➡*[n,h] T2 → ⦃G,L⦄ ⊢ T2 ![a,h].
 /2 width=6 by cnv_cpms_trans_lpr/ qed-.
+
+lemma cnv_lpr_trans (a) (h) (G):
+      ∀L1,T. ⦃G,L1⦄ ⊢ T ![a,h] → ∀L2. ⦃G,L1⦄ ⊢ ➡[h] L2 → ⦃G,L2⦄ ⊢ T ![a,h].
+/2 width=6 by cnv_cpm_trans_lpr/ qed-.
+
+lemma cnv_lprs_trans (a) (h) (G):
+      ∀L1,T. ⦃G,L1⦄ ⊢ T ![a,h] → ∀L2. ⦃G,L1⦄ ⊢ ➡*[h] L2 → ⦃G,L2⦄ ⊢ T ![a,h].
+#a #h #G #L1 #T #HT #L2 #H
+@(lprs_ind_dx … H) -L2 /2 width=3 by cnv_lpr_trans/
+qed-.

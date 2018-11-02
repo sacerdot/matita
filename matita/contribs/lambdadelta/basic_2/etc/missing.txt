@@ -1,0 +1,7 @@
+ty3_gen_cvoid
+ty3_acyclic
+ty3_gen_appl_nf2
+ty3_nf2_inv_all (and following)
+pc3_dec
+pc3_abst_dec
+ty3_inference

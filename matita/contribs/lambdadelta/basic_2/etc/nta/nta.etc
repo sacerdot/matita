@@ -1,3 +1,7 @@
+(* Basic_1: was by definition: ty3_abst *)
+(* Basic_2A1: was by definition: nta_ldec ntaa_ldec *)
+lemma nta_ldec_drops
+
 (* Basic_1: was by definition: ty3_bind *)
 (* Basic_2A1: was by definition: nta_bind ntaa_bind *)
 lemma nta_bind
@@ -9,13 +13,12 @@ lemma nta_pure
 (* Basic_2A1: was: nta_inv_bind1 ntaa_inv_bind1 *)
 lemma nta_inv_bind_sn
 
-(* Basic_1: was by definition: ty3_abst *)
-(* Basic_2A1: was by definition: nta_ldec *)
-lemma nta_ldec_drops
-
 (* Basic_1: was: ty3_gen_lref *)
 (* Basic_2A1: was: nta_inv_lref1 *)
 lemma nta_inv_lref_sn_drops
+
+(* Basic_1: uses: ty3_gen_abst_abst *)
+lemma nta_inv_abst_bi
 
 (* Advanced properties ******************************************************)
 
