@@ -19,10 +19,6 @@ table {
    ]
    class "green"
    [ { "static typing" * } {
-        [ { "context-sensitive parallel eta-conversion" * } {
-             [ [ "for terms" ] "cpce" + "( ⦃?,?⦄ ⊢ ? ⬌η ? )" * ]
-          }
-        ]
         [ { "generic reducibility" * } {
              [ [ "restricted refinement for lenvs" ] "lsubc" + "( ? ⊢ ? ⫃[?] ? )" "lsubc_drops" + "lsubc_lsubr" + "lsubc_lsuba" * ]
              [ [ "candidates" ] "gcp_cr" + "( ⦃?,?,?⦄ ϵ[?] 〚?〛 )" "gcp_aaa" * ]

@@ -40,6 +40,10 @@ table {
    ]
    class "blue"
    [ { "rt-conversion" * } {
+        [ { "context-sensitive parallel eta-conversion" * } {
+             [ [ "for terms" ] "cpce" + "( ⦃?,?⦄ ⊢ ? ⬌η[?] ? )" * ]
+          }
+        ]
         [ { "context-sensitive parallel r-conversion" * } {
              [ [ "for terms" ] "cpc" + "( ⦃?,?⦄ ⊢ ? ⬌[?] ? )" "cpc_cpc" * ]
           }
