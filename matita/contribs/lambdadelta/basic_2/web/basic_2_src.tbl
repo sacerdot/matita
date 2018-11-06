@@ -41,6 +41,7 @@ table {
    class "blue"
    [ { "rt-conversion" * } {
         [ { "context-sensitive parallel eta-conversion" * } {
+             [ [ "for lenvs on all entries" ] "lpce ( ⦃?,?⦄ ⊢ ⬌η[?] ? )" * ]
              [ [ "for terms" ] "cpce" + "( ⦃?,?⦄ ⊢ ? ⬌η[?] ? )" * ]
           }
         ]
