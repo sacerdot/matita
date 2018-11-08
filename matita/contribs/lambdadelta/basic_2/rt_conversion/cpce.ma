@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/xoa/ex_2_4.ma".
 include "basic_2/notation/relations/pconveta_5.ma".
 include "basic_2/rt_computation/cpms.ma".
 
@@ -24,8 +23,8 @@ inductive cpce (h): relation4 genv lenv term term ≝
 | cpce_ldef: ∀G,K,V. cpce h G (K.ⓓV) (#0) (#0)
 | cpce_ldec: ∀n,G,K,V,s. ⦃G,K⦄ ⊢ V ➡*[n,h] ⋆s →
              cpce h G (K.ⓛV) (#0) (#0)
-| cpce_eta : ∀n,p,G,K,V,W,T. ⦃G,K⦄ ⊢ V ➡*[n,h] ⓛ{p}W.T →
-             cpce h G (K.ⓛV) (#0) (+ⓛW.ⓐ#0.#1)
+| cpce_eta : ∀n,p,G,K,V,W1,W2,T. ⦃G,K⦄ ⊢ V ➡*[n,h] ⓛ{p}W1.T →
+             cpce h G K W1 W2 → cpce h G (K.ⓛV) (#0) (+ⓛW2.ⓐ#0.#1)
 | cpce_lref: ∀I,G,K,T,U,i. cpce h G K (#i) T →
              ⬆*[1] T ≘ U → cpce h G (K.ⓘ{I}) (#↑i) U
 | cpce_bind: ∀p,I,G,K,V1,V2,T1,T2.
@@ -37,8 +36,8 @@ inductive cpce (h): relation4 genv lenv term term ≝
 .
 
 interpretation
-   "context-sensitive parallel eta-conversion (term)"
-   'PConvEta h G L T1 T2 = (cpce h G L T1 T2).
+  "context-sensitive parallel eta-conversion (term)"
+  'PConvEta h G L T1 T2 = (cpce h G L T1 T2).
 
 (* Basic inversion lemmas ***************************************************)
 
@@ -49,7 +48,7 @@ lemma cpce_inv_sort_sn (h) (G) (L) (X2):
 [ #G #L #s #_ //
 | #G #K #V #_ //
 | #n #G #K #V #s #_ #_ //
-| #n #p #G #K #V #W #T #_ #H destruct
+| #n #p #G #K #V #W1 #W2 #T #_ #_ #H destruct
 | #I #G #K #T #U #i #_ #_ #H destruct
 | #p #I #G #K #V1 #V2 #T1 #T2 #_ #_ #H destruct
 | #I #G #L #V1 #V2 #T1 #T2 #_ #_ #H destruct
@@ -65,7 +64,7 @@ lemma cpce_inv_ldef_sn (h) (G) (K) (X2):
 [ #G #L #s #_ #_ //
 | #G #K #V #_ #_ //
 | #n #G #K #V #s #_ #_ #_ //
-| #n #p #G #K #V #W #T #_ #_ #H destruct
+| #n #p #G #K #V #W1 #W2 #T #_ #_ #_ #H destruct
 | #I #G #K #T #U #i #_ #_ #H #_ destruct
 | #p #I #G #K #V1 #V2 #T1 #T2 #_ #_ #H #_ destruct
 | #I #G #L #V1 #V2 #T1 #T2 #_ #_ #H #_ destruct
@@ -75,7 +74,7 @@ qed-.
 lemma cpce_inv_ldec_sn (h) (G) (K) (X2):
       ∀V. ⦃G,K.ⓛV⦄ ⊢ #0 ⬌η[h] X2 →
       ∨∨ ∃∃n,s. ⦃G,K⦄ ⊢ V ➡*[n,h] ⋆s & #0 = X2
-       | ∃∃n,p,W,T. ⦃G,K⦄ ⊢ V ➡*[n,h] ⓛ{p}W.T & +ⓛW.ⓐ#0.#1 = X2.
+       | ∃∃n,p,W1,W2,T. ⦃G,K⦄ ⊢ V ➡*[n,h] ⓛ{p}W1.T & ⦃G,K⦄ ⊢ W1 ⬌η[h] W2 & +ⓛW2.ⓐ#0.#1 = X2.
 #h #G #Y #X2 #X
 @(insert_eq_0 … (Y.ⓛX)) #Y1
 @(insert_eq_0 … (#0)) #X1
@@ -83,7 +82,7 @@ lemma cpce_inv_ldec_sn (h) (G) (K) (X2):
 [ #G #L #s #H #_ destruct
 | #G #K #V #_ #H destruct
 | #n #G #K #V #s #HV #_ #H destruct /3 width=3 by ex2_2_intro, or_introl/
-| #n #p #G #K #V #W #T #HV #_ #H destruct /3 width=6 by or_intror, ex2_4_intro/
+| #n #p #G #K #V #W1 #W2 #T #HV #HW #_ #H destruct /3 width=8 by ex3_5_intro, or_intror/
 | #I #G #K #T #U #i #_ #_ #H #_ destruct
 | #p #I #G #K #V1 #V2 #T1 #T2 #_ #_ #H #_ destruct
 | #I #G #L #V1 #V2 #T1 #T2 #_ #_ #H #_ destruct
@@ -100,7 +99,7 @@ lemma cpce_inv_lref_sn (h) (G) (K) (X2):
 [ #G #L #s #H #_ destruct
 | #G #K #V #H #_ destruct
 | #n #G #K #V #s #_ #H #_ destruct
-| #n #p #G #K #V #W #T #_ #H #_ destruct
+| #n #p #G #K #V #W1 #W2 #T #_ #_ #H #_ destruct
 | #I #G #K #T #U #i #Hi #HTU #H1 #H2 destruct /2 width=3 by ex2_intro/
 | #p #I #G #K #V1 #V2 #T1 #T2 #_ #_ #H #_ destruct
 | #I #G #L #V1 #V2 #T1 #T2 #_ #_ #H #_ destruct
@@ -115,7 +114,7 @@ lemma cpce_inv_bind_sn (h) (G) (K) (X2):
 [ #G #L #s #H destruct
 | #G #K #V #H destruct
 | #n #G #K #V #s #_ #H destruct
-| #n #p #G #K #V #W #T #_ #H destruct
+| #n #p #G #K #V #W1 #W2 #T #_ #_ #H destruct
 | #I #G #K #T #U #i #_ #_ #H destruct
 | #p #I #G #K #V1 #V2 #T1 #T2 #HV #HT #H destruct /2 width=5 by ex3_2_intro/
 | #I #G #L #V1 #V2 #T1 #T2 #_ #_ #H destruct
@@ -130,7 +129,7 @@ lemma cpce_inv_flat_sn (h) (G) (L) (X2):
 [ #G #L #s #H destruct
 | #G #K #V #H destruct
 | #n #G #K #V #s #_ #H destruct
-| #n #p #G #K #V #W #T #_ #H destruct
+| #n #p #G #K #V #W1 #W2 #T #_ #_ #H destruct
 | #I #G #K #T #U #i #_ #_ #H destruct
 | #p #I #G #L #V1 #V2 #T1 #T2 #_ #_ #H destruct
 | #I #G #K #V1 #V2 #T1 #T2 #HV #HT #H destruct /2 width=5 by ex3_2_intro/

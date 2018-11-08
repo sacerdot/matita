@@ -27,13 +27,7 @@
    <table name="basic_2_sum"/>
 
    <subsection name="B">Stage "B"</subsection>
-<!-- 
-   <news class="alpha" date="Ongoing.">
-         Context-sensitive subject equivalence
-         for native type assignment.
-   </news>
--->
-   <news class="alpha" date="2018 November 1.">
+   <news class="beta" date="2018 November 1.">
          Extended (λδ-2) and restricted (λδ-1) type rules justified.
    </news>
    <news class="alpha" date="2018 September 21.">

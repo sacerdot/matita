@@ -42,6 +42,7 @@ table {
    [ { "rt-conversion" * } {
         [ { "context-sensitive parallel eta-conversion" * } {
              [ [ "for lenvs on all entries" ] "lpce ( ⦃?,?⦄ ⊢ ⬌η[?] ? )" * ]
+             [ [ "for binders" ] "cpce_ext" + "( ⦃?,?⦄ ⊢ ? ⬌η[?] ? )" * ]
              [ [ "for terms" ] "cpce" + "( ⦃?,?⦄ ⊢ ? ⬌η[?] ? )" * ]
           }
         ]

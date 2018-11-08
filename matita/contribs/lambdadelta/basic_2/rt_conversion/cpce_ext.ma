@@ -12,15 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_conversion/lpce.ma".
-include "basic_2/dynamic/cnv.ma".
+include "static_2/syntax/cext2.ma".
+include "basic_2/rt_conversion/cpce.ma".
 
-(* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
+(* CONTEXT-SENSITIVE PARALLEL ETA-CONVERSION FOR BINDERS ********************)
 
-theorem cnv_cpce_trans_lpce (h) (G):
-        ∀L1,T1,T2. ⦃G,L1⦄ ⊢ T1 ⬌η[h] T2 → ⦃G,L1⦄ ⊢ T1 !*[h] →
-        ∀L2. ⦃G,L1⦄ ⊢ ⬌η[h] L2 → ⦃G,L2⦄ ⊢ T2 !*[h].
-#h #G #L1 #T1 #T2 #H elim H -G -L1 -T1 -T2
-[ #G #L1 #s #_ #L2 #_ //
-| #G #K1 #V1 #_ #Y2 #HY
-  elim (lpce_inv_pair_sn … HY) -HY #K2 #V2 #HK #HV #H destruct               
+definition cpce_ext (h) (G): relation3 lenv bind bind ≝ cext2 (cpce h G).
+
+interpretation
+  "context-sensitive parallel eta-conversion (binder)"
+  'PConvEta h G L I1 I2 = (cpce_ext h G L I1 I2).

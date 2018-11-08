@@ -14,7 +14,7 @@
 
 include "static_2/relocation/lex.ma".
 include "basic_2/notation/relations/pconveta_4.ma".
-include "basic_2/rt_conversion/cpce.ma".
+include "basic_2/rt_conversion/cpce_ext.ma".
 
 (* PARALLEL ETA-CONVERSION FOR FULL LOCAL ENVIRONMENTS **********************)
 
@@ -23,6 +23,13 @@ definition lpce (h) (G): relation lenv ≝ lex (cpce h G).
 interpretation
   "parallel eta-conversion on all entries (local environment)"
   'PConvEta h G L1 L2 = (lpce h G L1 L2).
+
+(* Basic properties *********************************************************)
+
+lemma lpce_bind (h) (G):
+      ∀K1,K2. ⦃G,K1⦄ ⊢ ⬌η[h] K2 →
+      ∀I1,I2. ⦃G,K1⦄ ⊢ I1 ⬌η[h] I2 → ⦃G,K1.ⓘ{I1}⦄ ⊢ ⬌η[h] K2.ⓘ{I2}.
+/2 width=1 by lex_bind/ qed.
 
 (* Advanced properties ******************************************************)
 
@@ -37,9 +44,19 @@ lemma lpce_inv_atom_sn (h) (G):
       ∀L2. ⦃G,⋆⦄ ⊢ ⬌η[h] L2 → L2 = ⋆.
 /2 width=2 by lex_inv_atom_sn/ qed-.
 
+lemma lpce_inv_bind_sn (h) (G):
+      ∀I1,L2,K1. ⦃G,K1.ⓘ{I1}⦄ ⊢ ⬌η[h] L2 →
+      ∃∃I2,K2. ⦃G,K1⦄ ⊢ ⬌η[h] K2 & ⦃G,K1⦄ ⊢ I1 ⬌η[h] I2 & L2 = K2.ⓘ{I2}.
+/2 width=1 by lex_inv_bind_sn/ qed-.
+
 lemma lpce_inv_atom_dx (h) (G):
       ∀L1. ⦃G,L1⦄ ⊢ ⬌η[h] ⋆ → L1 = ⋆.
 /2 width=2 by lex_inv_atom_dx/ qed-.
+
+lemma lpce_inv_bind_dx (h) (G):
+      ∀I2,L1,K2. ⦃G,L1⦄ ⊢ ⬌η[h] K2.ⓘ{I2} →
+      ∃∃I1,K1. ⦃G,K1⦄ ⊢ ⬌η[h] K2 & ⦃G,K1⦄ ⊢ I1 ⬌η[h] I2 & L1 = K1.ⓘ{I1}.
+/2 width=1 by lex_inv_bind_dx/ qed-.
 
 (* Advanced inversion lemmas ************************************************)
 
