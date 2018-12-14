@@ -460,12 +460,12 @@ let input_file fname =
 let input_all ic =
   let size = 10240 in
   let buf = Buffer.create size in
-  let s = String.create size in
+  let s = Bytes.create size in
   (try
     while true do
       let bytes = input ic s 0 size in
       if bytes = 0 then raise End_of_file
-      else Buffer.add_substring buf s 0 bytes
+      else Buffer.add_subbytes buf s 0 bytes
     done
   with End_of_file -> ());
   Buffer.contents buf

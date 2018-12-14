@@ -844,7 +844,7 @@ let object_of_constant status ~metasenv ref bo ty =
                 (fun p1 n ->
                   HExtlib.map_option (fun (_,k) ->
                    (*CSC: BUG here, clashes*)
-                   String.uncapitalize (fst n),k) p1)
+                   String.uncapitalize_ascii (fst n),k) p1)
                 ctx0 ctx
               in
               let bo = typ_of status ~metasenv ctx bo in
@@ -962,15 +962,15 @@ let (|>) f g =
   fun x -> g (f x)
 ;;
 
-let curry f x y =
+(*let curry f x y =
   f (x, y)
-;;
+;;*)
 
 let uncurry f (x, y) =
   f x y
 ;;
 
-let rec char_list_of_string s =
+let char_list_of_string s =
   let l = String.length s in
   let rec aux buffer s =
     function
@@ -1013,8 +1013,10 @@ let rec capitalize_marked_positions s =
     | []    -> s
     | x::xs ->
       if x < String.length s then
-        let c = Char.uppercase (String.get s x) in
-        let _ = String.set s x c in
+        let c = Char.uppercase_ascii (String.get s x) in
+        let b = Bytes.of_string s in
+        let _ = Bytes.set b x c in
+        let s = Bytes.to_string b in
           capitalize_marked_positions s xs
       else
         capitalize_marked_positions s xs
@@ -1028,12 +1030,12 @@ let contract_underscores_and_capitalise =
 
 let idiomatic_haskell_type_name_of_string =
   contract_underscores_and_capitalise |>
-  String.capitalize
+  String.capitalize_ascii
 ;;
 
 let idiomatic_haskell_term_name_of_string =
   contract_underscores_and_capitalise |>
-  String.uncapitalize
+  String.uncapitalize_ascii
 ;;
 
 let classify_reference status ref =
@@ -1223,7 +1225,7 @@ let rec pp_obj status (_,ref,obj_kind) =
       ) il)
  (* inductive and records missing *)
 
-let rec infos_of (info,_,obj_kind) =
+let infos_of (info,_,obj_kind) =
  info @
   match obj_kind with
      LetRec l -> List.concat (List.map (fun (infos,_,_) -> infos) l)

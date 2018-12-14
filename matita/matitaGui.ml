@@ -255,7 +255,7 @@ class interpErrorModel =
 exception UseLibrary;;
 
 let interactive_error_interp ~all_passes
-  (source_buffer:GSourceView2.source_buffer) notify_exn offset errorll filename
+  (source_buffer:GSourceView3.source_buffer) notify_exn offset errorll filename
 = 
   (* hook to save a script for each disambiguation error *)
   if false then
@@ -409,7 +409,6 @@ class gui () =
   let main = new mainWin () in
   let sequents_viewer =
    MatitaMathView.sequentsViewer_instance main#sequentsNotebook in
-  let fileSel = new fileSelectionWin () in
   let findRepl = new findReplWin () in
   let keyBindingBoxes = (* event boxes which should receive global key events *)
     [ main#mainWinEventBox ]
@@ -517,16 +516,10 @@ class gui () =
         ~callback:(fun _ -> hide_find_Repl ();true));
       connect_menu_item main#undoMenuItem
        (fun () -> (MatitaScript.current ())#safe_undo);
-(*CSC: XXX
-      ignore(source_view#source_buffer#connect#can_undo
-        ~callback:main#undoMenuItem#misc#set_sensitive);
-*) main#undoMenuItem#misc#set_sensitive true;
+      main#undoMenuItem#misc#set_sensitive false;
       connect_menu_item main#redoMenuItem
        (fun () -> (MatitaScript.current ())#safe_redo);
-(*CSC: XXX
-      ignore(source_view#source_buffer#connect#can_redo
-        ~callback:main#redoMenuItem#misc#set_sensitive);
-*) main#redoMenuItem#misc#set_sensitive true;
+      main#redoMenuItem#misc#set_sensitive false;
       connect_menu_item main#editMenu (fun () ->
         main#copyMenuItem#misc#set_sensitive
          (MatitaScript.current ())#canCopy;
@@ -573,7 +566,7 @@ class gui () =
         GtkThread.sync (fun () -> ()) ()
       in
       let worker_thread = ref None in
-      let notify_exn (source_view : GSourceView2.source_view) exn =
+      let notify_exn (source_view : GSourceView3.source_view) exn =
        let floc, msg = MatitaExcPp.to_string exn in
         begin
          match floc with
@@ -666,32 +659,6 @@ class gui () =
          with
           exc -> script#source_view#misc#grab_focus (); raise exc in
       
-        (* file selection win *)
-      ignore (fileSel#fileSelectionWin#event#connect#delete (fun _ -> true));
-      ignore (fileSel#fileSelectionWin#connect#response (fun event ->
-        let return r =
-          chosen_file <- r;
-          fileSel#fileSelectionWin#misc#hide ();
-          GMain.Main.quit ()
-        in
-        match event with
-        | `OK ->
-            let fname = fileSel#fileSelectionWin#filename in
-            if Sys.file_exists fname then
-              begin
-                if HExtlib.is_regular fname && not (_only_directory) then 
-                  return (Some fname) 
-                else if _only_directory && HExtlib.is_dir fname then 
-                  return (Some fname)
-              end
-            else
-              begin
-                if _ok_not_exists then 
-                  return (Some fname)
-              end
-        | `CANCEL -> return None
-        | `HELP -> ()
-        | `DELETE_EVENT -> return None));
         (* menus *)
       List.iter (fun w -> w#misc#set_sensitive false) [ main#saveMenuItem ];
         (* console *)
@@ -875,6 +842,10 @@ class gui () =
         current_page <- page;
         let script = MatitaScript.at_page page in
         script#activate;
+        main#undoMenuItem#misc#set_sensitive
+         script#source_view#source_buffer#can_undo ;
+        main#redoMenuItem#misc#set_sensitive
+         script#source_view#source_buffer#can_redo ;
         main#saveMenuItem#misc#set_sensitive script#has_name))
 
     method private externalEditor () =
@@ -1045,7 +1016,6 @@ class gui () =
       self#main#saveMenuItem#misc#set_sensitive true
         
     method private console = console
-    method private fileSel = fileSel
     method private findRepl = findRepl
     method main = main
 
@@ -1060,20 +1030,46 @@ class gui () =
         (fun _ -> callback ();true));
       self#addKeyBinding GdkKeysyms._q callback
 
+    method private chooseFileOrDir ok_not_exists only_directory =
+      let fileSel = GWindow.file_chooser_dialog
+       ~action:`OPEN
+       ~title:"Select file"
+       ~modal:true
+       ~type_hint:`DIALOG
+       ~position:`CENTER
+       () in
+     fileSel#add_select_button_stock `OPEN `OK;
+     fileSel#add_button_stock `CANCEL `CANCEL;
+     ignore (fileSel#set_current_folder(Sys.getcwd ())) ;
+     let res =
+      let rec aux () =
+       match fileSel#run () with
+        | `OK ->
+             (match fileSel#filename with
+                None -> aux ()
+              | Some fname ->
+                 if Sys.file_exists fname then
+                   begin
+                     if HExtlib.is_regular fname && not (only_directory) then 
+                       Some fname
+                     else if only_directory && HExtlib.is_dir fname then 
+                       Some fname
+                     else
+                      aux ()
+                   end
+                 else if ok_not_exists then Some fname else aux ())
+        | `CANCEL -> None
+        | `DELETE_EVENT -> None in
+      aux () in
+     fileSel#destroy () ;
+     res
+
     method private chooseFile ?(ok_not_exists = false) () =
-      _ok_not_exists <- ok_not_exists;
-      _only_directory <- false;
-      fileSel#fileSelectionWin#show ();
-      GtkThread.main ();
-      chosen_file
+      self#chooseFileOrDir ok_not_exists false
 
     method private chooseDir ?(ok_not_exists = false) () =
-      _ok_not_exists <- ok_not_exists;
-      _only_directory <- true;
-      fileSel#fileSelectionWin#show ();
-      GtkThread.main ();
       (* we should check that this is a directory *)
-      chosen_file
+      self#chooseFileOrDir ok_not_exists true
   
   end
 
@@ -1269,6 +1265,4 @@ let _ =
      interactive_uri_choice ~selection_mode ?ok_label:ok ~title ~msg ());
   Disambiguate.set_choose_interp_callback (interactive_interp_choice ());
   (* gtk initialization *)
-  GtkMain.Rc.add_default_file BuildTimeConf.gtkrc_file; (* loads gtk rc *)
-  ignore (GMain.Main.init ())
-
+  GtkMain.Rc.add_default_file BuildTimeConf.gtkrc_file (* loads gtk rc *)

@@ -242,12 +242,12 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
   let dir_RE = Pcre.regexp "^cic:((/([^/]+/)*[^/]+(/)?)|/|)$" in
   let is_uri txt = Pcre.pmatch ~rex:uri_RE txt in
   let is_dir txt = Pcre.pmatch ~rex:dir_RE txt in
-  let gui = MatitaMisc.get_gui () in
+  let _gui = MatitaMisc.get_gui () in
   let win = new MatitaGeneratedGui.browserWin () in
   let _ = win#browserUri#misc#grab_focus () in
   let gviz = LablGraphviz.graphviz ~packing:win#graphScrolledWin#add () in
   let searchText = 
-    GSourceView2.source_view ~auto_indent:false ~editable:false ()
+    GSourceView3.source_view ~auto_indent:false ~editable:false ()
   in
   let _ =
      win#scrolledwinContent#add (searchText :> GObj.widget);
@@ -486,8 +486,8 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
     method private redraw_gviz ?center_on () =
       if Sys.command "which dot" = 0 then
        let tmpfile, oc = Filename.open_temp_file "matita" ".dot" in
-       let fmt = Format.formatter_of_out_channel oc in
-       (* MATITA 1.0 MetadataDeps.DepGraph.render fmt gviz_graph;*)
+       (* MATITA 1.0 let fmt = Format.formatter_of_out_channel oc in
+       MetadataDeps.DepGraph.render fmt gviz_graph;*)
        close_out oc;
        gviz#load_graph_from_file ~gviz_cmd:"tred | dot" tmpfile;
        (match center_on with

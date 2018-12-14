@@ -28,7 +28,7 @@ open Printf
 open GrafiteTypes
 open MatitaGtkMisc
 open MatitaGuiTypes
-open GtkSourceView2
+open GtkSourceView3
 
 let matita_script_current = ref (fun _ -> (assert false : < advance: ?statement:string -> unit -> unit; status: GrafiteTypes.status >));;
 let register_matita_script_current f = matita_script_current := f;;
@@ -174,9 +174,9 @@ let string_of_dom_node node =
 *)
 
 class clickableMathView obj =
-let text_width = 80 in
+(*let text_width = 80 in*)
 object (self)
-  inherit GSourceView2.source_view obj
+  inherit GSourceView3.source_view obj
 
   method strings_of_selection = (assert false : (paste_kind * string) list)
 
@@ -690,7 +690,7 @@ let cicMathView (*?auto_indent ?highlight_current_line ?indent_on_tab ?indent_wi
         Gobject.set_params (Gobject.try_cast obj "GtkSourceView") pl;
         new _cicMathView obj)(*)) ?auto_indent ?highlight_current_line ?indent_on_tab ?indent_width ?insert_spaces_instead_of_tabs ?right_margin_position ?show_line_marks ?show_line_numbers ?show_right_margin ?smart_home_end ?tab_width ?editable ?cursor_visible ?justification ?wrap_mode ?accepts_tab ?border_width*) [] ?width ?height ?packing ?show () :> cicMathView)
 
-let screenshot status sequents metasenv subst (filename as ofn) =
+let screenshot status sequents metasenv subst (filename (*as ofn*)) =
  () (*MATITA 1.0
   let w = GWindow.window ~title:"screenshot" () in
   let width = 500 in

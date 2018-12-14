@@ -1,0 +1,1 @@
+ignore (GMain.Main.init ())

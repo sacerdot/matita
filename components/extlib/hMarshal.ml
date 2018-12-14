@@ -46,8 +46,8 @@ let save ~fmt ~version ~fname data =
   HExtlib.chmod 0o664 fname
 
 let expect ic fname s =
-  let len = String.length s in
-  let buf = String.create len in
+  let len = Bytes.length s in
+  let buf = Bytes.create len in
   really_input ic buf 0 len;
   if buf <> s then raise (Corrupt_file fname)
 
@@ -61,8 +61,8 @@ let load ~fmt ~version ~fname =
         if fmt' <> Hashtbl.hash fmt then raise (Format_mismatch fname);
         let version' = input_binary_int ic in     (* field 2 *)
         if version' <> version then raise (Version_mismatch fname);
-        expect ic fname fmt;                      (* field 3 *)
-        expect ic fname (string_of_int version);  (* field 4 *)
+        expect ic fname (Bytes.of_string fmt);                      (* field 3 *)
+        expect ic fname (Bytes.of_string (string_of_int version));  (* field 4 *)
         let checksum' = input_binary_int ic in    (* field 5 *)
         let marshalled' = HExtlib.input_all ic in (* field 6 *)
         if checksum' <> Hashtbl.hash marshalled' then

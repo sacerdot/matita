@@ -145,7 +145,7 @@ let set' ?(replace=false) registry ~key ~value =
 
 let unset registry = Hashtbl.remove registry
 
-let env_var_of_key s = String.uppercase (Str.global_replace dot_rex "_" s)
+let env_var_of_key s = String.uppercase_ascii (Str.global_replace dot_rex "_" s)
 
 let singleton = function
   | [] ->

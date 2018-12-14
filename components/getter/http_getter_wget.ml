@@ -40,7 +40,7 @@ let get url =
 let get_and_save url dest_filename =
   let out_channel = open_out dest_filename in
   (try
-    Http_user_agent.get_iter (output_string out_channel) url;
+    Http_user_agent.get_iter (output_bytes out_channel) url;
   with exn ->
     close_out out_channel;
     Sys.remove dest_filename;
@@ -49,11 +49,11 @@ let get_and_save url dest_filename =
 
 let get_and_save_to_tmp url =
   let flat_string s s' c =
-    let cs = String.copy s in
+    let cs = Bytes.of_string s in
     for i = 0 to (String.length s) - 1 do
       if String.contains s' s.[i] then cs.[i] <- c
     done;
-    cs
+    Bytes.to_string cs
   in
   let user = try Unix.getlogin () with _ -> "" in
   let tmp_file =

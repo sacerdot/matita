@@ -151,4 +151,4 @@ val utf8_string_length: string -> int
 
 val escape_pango_markup: string -> string
 
-val matita_lang: GSourceView2.source_language
+val matita_lang: GSourceView3.source_language

@@ -254,16 +254,16 @@ class type gui =
 let popup_message 
   ~title ~message ~buttons ~callback
   ?(message_type=`QUESTION) ?parent ?(use_markup=true)
-  ?(destroy_with_parent=true) ?(allow_grow=false) ?(allow_shrink=false)
-  ?icon ?(modal=true) ?(resizable=false) ?screen ?type_hint
-  ?(position=`CENTER_ON_PARENT) ?wm_name ?wm_class ?border_width ?width 
+  ?(destroy_with_parent=true) ?icon ?(modal=true) ?(resizable=false)
+  ?screen ?type_hint
+  ?(position=`CENTER_ON_PARENT) ?wmclass ?border_width ?width 
   ?height ?(show=true) ()
 =
   let m = 
     GWindow.message_dialog 
       ~message ~use_markup ~message_type ~buttons ?parent ~destroy_with_parent 
-      ~title ~allow_grow ~allow_shrink ?icon ~modal ~resizable ?screen 
-      ?type_hint ~position ?wm_name ?wm_class ?border_width ?width ?height 
+      ~title ?icon ~modal ~resizable ?screen 
+      ?type_hint ~position ?wmclass ?border_width ?width ?height 
       ~show () 
   in 
   ignore(m#connect#response 
@@ -275,17 +275,17 @@ let popup_message
 
 let popup_message_lowlevel
   ~title ~message ?(no_separator=true) ~callback ~message_type ~buttons
-  ?parent  ?(destroy_with_parent=true) ?(allow_grow=false) ?(allow_shrink=false)
+  ?parent  ?(destroy_with_parent=true)
   ?icon ?(modal=true) ?(resizable=false) ?screen ?type_hint
-  ?(position=`CENTER_ON_PARENT) ?wm_name ?wm_class ?border_width ?width 
+  ?(position=`CENTER_ON_PARENT) ?wmclass ?border_width ?width 
   ?height ?(show=true) ()
 =
   let m = 
     GWindow.dialog 
       ~no_separator 
       ?parent ~destroy_with_parent 
-      ~title ~allow_grow ~allow_shrink ?icon ~modal ~resizable ?screen 
-      ?type_hint ~position ?wm_name ?wm_class ?border_width ?width ?height 
+      ~title ?icon ~modal ~resizable ?screen 
+      ?type_hint ~position ?wmclass ?border_width ?width ?height 
       ~show:false () 
   in
   let stock = 
@@ -415,7 +415,7 @@ let escape_pango_markup text =
 
 let matita_lang =
  let source_language_manager =
-  GSourceView2.source_language_manager ~default:true in
+  GSourceView3.source_language_manager ~default:true in
  source_language_manager#set_search_path
   (BuildTimeConf.runtime_base_dir ::
     source_language_manager#search_path);

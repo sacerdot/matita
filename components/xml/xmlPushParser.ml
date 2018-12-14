@@ -94,12 +94,12 @@ let parse expat_parser =
         aux (`Channel ic);
         close_in ic
     | `Gzip_channel ic ->
-        let buf = String.create gzip_bufsize in
+        let buf = Bytes.create gzip_bufsize in
         (try
           while true do
             let bytes = Gzip.input ic buf 0 gzip_bufsize in
             if bytes = 0 then raise End_of_file;
-            parse_fun (String.sub buf 0 bytes)
+            parse_fun (Bytes.to_string (Bytes.sub buf 0 bytes))
           done
         with End_of_file -> final expat_parser)
     | `Gzip_file fname ->

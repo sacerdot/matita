@@ -25,7 +25,7 @@ let cut_ident skip_quote s =
         numpart (n-1) n'
       else if code_of_0 <= c && c <= code_of_9 then
         numpart (n-1) (n-1)
-      else if skip_quote & (c = Char.code '\'' || c = Char.code '_') then
+      else if skip_quote && (c = Char.code '\'' || c = Char.code '_') then
         numpart (n-1) (n-1)
       else
         n'
@@ -34,9 +34,9 @@ let cut_ident skip_quote s =
 
 let forget_subscript id =
   let numstart = cut_ident false id in
-  let newid = String.make (numstart+1) '0' in
+  let newid = Bytes.make (numstart+1) '0' in
   String.blit id 0 newid 0 numstart;
-  newid
+  Bytes.to_string newid
 
 (* Namegen.ml *)
 
@@ -58,18 +58,18 @@ let lift_subscript id =
         add (carrypos-1)
       end
       else begin
-        let newid = String.copy id in
-        String.fill newid (carrypos+1) (len-1-carrypos) '0';
+        let newid = Bytes.of_string id in
+        Bytes.fill newid (carrypos+1) (len-1-carrypos) '0';
         newid.[carrypos] <- Char.chr (Char.code c + 1);
-        newid
+        Bytes.to_string newid
       end
     else begin
-      let newid = id^"0" in
+      let newid = Bytes.of_string (id^"0") in
       if carrypos < len-1 then begin
-        String.fill newid (carrypos+1) (len-1-carrypos) '0';
+        Bytes.fill newid (carrypos+1) (len-1-carrypos) '0';
         newid.[carrypos+1] <- '1'
       end;
-      newid
+      Bytes.to_string newid
     end
   in add (len-1)
 
