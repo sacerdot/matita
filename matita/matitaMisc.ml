@@ -78,7 +78,7 @@ class shell_history size =
   let decr x = let x' = x - 1 in if x' < 0 then size + x' else x' in
   let incr x = (x + 1) mod size in
   object (self)
-    val data = Array.create size ""
+    val data = Array.make size ""
 
     inherit basic_history (0, -1 , -1)
     
@@ -106,7 +106,7 @@ class shell_history size =
 class ['a] browser_history ?memento size init =
   object (self)
     initializer match memento with Some m -> self#load m | _ -> ()
-    val data = Array.create size init
+    val data = Array.make size init
 
     inherit basic_history (0, 0, 0)
     

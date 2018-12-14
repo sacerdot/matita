@@ -91,7 +91,7 @@ object
   (** misc *)
   method clean_dirty_lock: unit
   method set_star: bool -> unit
-  method source_view: GSourceView2.source_view
+  method source_view: GSourceView3.source_view
   method has_parent: GObj.widget -> bool
   
   (* debug *)

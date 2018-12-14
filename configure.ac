@@ -24,11 +24,11 @@ if test $HAVE_OCAMLFIND = "yes"; then
 else
   AC_MSG_ERROR(could not find ocamlfind)
 fi
-AC_CHECK_PROG(HAVE_LABLGLADECC, lablgladecc2, yes, no)
+AC_CHECK_PROG(HAVE_LABLGLADECC, lablgladecc, yes, no)
 if test $HAVE_LABLGLADECC = "yes"; then
-  LABLGLADECC="lablgladecc2"
+  LABLGLADECC="lablgladecc"
 else
-  AC_MSG_ERROR(could not find lablgladecc2)
+  AC_MSG_ERROR(could not find lablgladecc)
 fi
 AC_CHECK_PROG(HAVE_CAMLP5O, camlp5o, yes, no)
 if test $HAVE_CAMLP5O = "yes"; then
@@ -40,16 +40,17 @@ fi
 # look for METAS dir
 
 LIBSPATH="`pwd`/components"
-OCAMLPATH="$LIBSPATH/METAS"
+OCAMLPATHL="$LIBSPATH/METAS"
+OCAMLPATH="$OCAMLPATHL:$OCAMLPATH"
 
 # creating META.*
 
 echo -n "creating METAs ... "
-for f in $OCAMLPATH/meta.*.src; do
+for f in $OCAMLPATHL/meta.*.src; do
   basename=`basename $f`
   metaname=`echo $basename | sed 's/meta\.\(.*\)\.src/\1/'`
   dirname=`echo $metaname | sed 's/^helm-//'`
-  metafile="$OCAMLPATH/META.$metaname"
+  metafile="$OCAMLPATHL/META.$metaname"
   cp $f $metafile
   echo "directory=\"$LIBSPATH/$dirname\"" >> $metafile
 done
@@ -57,20 +58,21 @@ echo "done"
 
 # (libs) findlib requisites
 
+#gdome2 \
+#mysql \
 FINDLIB_LIBSREQUIRES="\
 expat \
-gdome2 \
 http \
-lablgtk2 \
-lablgtk2.sourceview2 \
-mysql \
+lablgtk3 \
+lablgtk3.sourceview3 \
 netstring \
-ulex08 \
+ulex-camlp5 \
 zip \
 "
 
 # (Matita) findlib requisites
 
+#lablgtk3.glade \
 FINDLIB_COMREQUIRES="\
 helm-disambiguation \
 helm-grafite \
@@ -87,9 +89,9 @@ $FINDLIB_COMREQUIRES \
 "
 FINDLIB_REQUIRES="\
 $FINDLIB_CREQUIRES \
-lablgtk2.glade \
-lablgtk2.sourceview2 \
+lablgtk3.sourceview3 \
 "
+
 for r in $FINDLIB_LIBSREQUIRES $FINDLIB_REQUIRES
 do
   AC_MSG_CHECKING(for $r ocaml library)

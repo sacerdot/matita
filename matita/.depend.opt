@@ -21,6 +21,7 @@ matitaGui.cmx : matitaTypes.cmx matitaScript.cmx matitaMisc.cmx \
     matitaMathView.cmx matitaGuiTypes.cmi matitaGtkMisc.cmx \
     matitaGeneratedGui.cmx matitaExcPp.cmx buildTimeConf.cmx matitaGui.cmi
 matitaGui.cmi : matitaGuiTypes.cmi
+matitaGuiInit.cmx :
 matitaGuiTypes.cmi : matitaGeneratedGui.cmx applyTransformation.cmi
 matitaInit.cmx : matitaExcPp.cmx buildTimeConf.cmx matitaInit.cmi
 matitaInit.cmi :

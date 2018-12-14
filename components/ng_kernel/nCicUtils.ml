@@ -12,7 +12,6 @@
 (* $Id$ *)
 
 module C = NCic
-module Ref = NReference
 
 exception Subst_not_found of int
 exception Meta_not_found of int

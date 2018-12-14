@@ -104,7 +104,7 @@ let pp_to_outchan strm oc =
 ;;
 
 let pp_to_gzipchan strm oc =
-  pp_gen (fun s -> Gzip.output oc s 0 (String.length s)) strm
+  pp_gen (fun s -> Gzip.output oc (Bytes.of_string s) 0 (String.length s)) strm
 ;;
 
 (** pretty printer to string *)
