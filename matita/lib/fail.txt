@@ -1,7 +1,10 @@
+FAILING FILES 2018-12-17
+
 matitac.opt binding/fp.ma
 matitac.opt binding/ln_concrete.ma
 matitac.opt binding/ln.ma
 matitac.opt binding/names.ma
+matitac.opt extraction.ma
 matitac.opt finite_lambda/confluence.ma
 matitac.opt finite_lambda/reduction.ma
 matitac.opt finite_lambda/terms_and_types.ma
