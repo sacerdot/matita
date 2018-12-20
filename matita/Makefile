@@ -143,8 +143,7 @@ matitaclean.opt: matitac.opt
 	$(H)test -f $@ || ln -s $< $@
 
 matitaGeneratedGui.ml: matita.ui
-	#$(H)$(LABLGLADECC) -embed $< > matitaGeneratedGui.ml
-	$(H)$(LABLGLADECC) $< > matitaGeneratedGui.ml
+	$(H)$(LABLGLADECC) -embed $< > matitaGeneratedGui.ml
 
 
 .PHONY: clean
