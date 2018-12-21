@@ -79,6 +79,8 @@ class graphviz_impl ?packing () =
           ("Graphviz command failed (exit code: %d) on the following graph:\n"
            ^^ "%s\n%!")
           rc (HExtlib.input_file fname);
+        (* CSC: it would be better to show something explaining that the
+           graph is empty *)
         image#clear ()
       end else begin
        image#set_file tmp_png;
