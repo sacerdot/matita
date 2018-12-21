@@ -326,10 +326,14 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       close_out oc;
       if tred then
         gviz#load_graph_from_file 
-          ~gviz_cmd:"dot -Txdot | tred |gvpack -gv | dot" filename
+          (* gvpack can no longer read the output of -Txdot :-( *)
+          (*~gviz_cmd:"dot -Txdot | tred |gvpack -gv | dot" filename*)
+          ~gviz_cmd:"dot -Txdot | tred | dot" filename
       else
         gviz#load_graph_from_file 
-          ~gviz_cmd:"dot -Txdot | gvpack -gv | dot" filename;
+          (* gvpack can no longer read the output of -Txdot :-( *)
+          (*~gviz_cmd:"dot -Txdot | gvpack -gv | dot" filename;*)
+          ~gviz_cmd:"dot -Txdot | dot" filename;
       HExtlib.safe_remove filename
   in
   object (self)
