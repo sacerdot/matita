@@ -461,6 +461,7 @@ class gui () =
         ~website:"http://matita.cs.unibo.it"
         ()
       in
+      ignore(about_dialog#event#connect#delete (fun _ -> true));
       ignore(about_dialog#connect#response (fun _ ->about_dialog#misc#hide ()));
       connect_menu_item main#contentsMenuItem (fun () ->
         if 0 = Sys.command "which gnome-help" then
