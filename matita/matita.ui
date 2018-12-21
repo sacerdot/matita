@@ -1767,10 +1767,9 @@
                         <property name="can_focus">False</property>
                         <property name="spacing">2</property>
                         <child>
-                          <object class="GtkHandleBox" id="TacticsButtonsHandlebox">
+                          <object class="GtkBox" id="TacticsButtonsHandlebox">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="handle_position">top</property>
                             <child>
                               <object class="GtkBox" id="vboxTacticsPalette">
                                 <property name="visible">True</property>
