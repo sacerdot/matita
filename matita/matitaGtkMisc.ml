@@ -247,8 +247,6 @@ class recordModel (tree_view:GTree.view) =
 class type gui =
   object
     method newUriDialog:          unit -> MatitaGeneratedGui.uriChoiceDialog
-    method newConfirmationDialog: unit -> MatitaGeneratedGui.confirmationDialog
-    method newEmptyDialog:        unit -> MatitaGeneratedGui.emptyDialog
   end
 
 let popup_message 
@@ -342,50 +340,6 @@ let report_error ~title ~message ?parent () =
   with
   | PopupClosed -> ()
 
-
-let ask_text ~(gui:#gui) ?(title = "") ?(message = "") ?(multiline = false)
-  ?default ()
-=
-  let dialog = gui#newEmptyDialog () in
-  dialog#emptyDialog#set_title title;
-  dialog#emptyDialogLabel#set_label message;
-  let result = ref None in
-  let return r =
-    result := r;
-    dialog#emptyDialog#destroy ();
-    GMain.Main.quit ()
-  in
-  ignore (dialog#emptyDialog#event#connect#delete (fun _ -> true));
-  if multiline then begin (* multiline input required: use a TextView widget *)
-    let win =
-      GBin.scrolled_window ~width:400 ~height:150 ~hpolicy:`NEVER
-        ~vpolicy:`ALWAYS ~packing:dialog#emptyDialogVBox#add ()
-    in
-    let view = GText.view ~wrap_mode:`CHAR ~packing:win#add () in
-    let buffer = view#buffer in
-    (match default with
-    | None -> ()
-    | Some text ->
-        buffer#set_text text;
-        buffer#select_range buffer#start_iter buffer#end_iter);
-    view#misc#grab_focus ();
-    connect_button dialog#emptyDialogOkButton (fun _ ->
-      return (Some (buffer#get_text ())))
-  end else begin (* monoline input required: use a TextEntry widget *)
-    let entry = GEdit.entry ~packing:dialog#emptyDialogVBox#add () in
-    (match default with
-    | None -> ()
-    | Some text ->
-        entry#set_text text;
-        entry#select_region ~start:0 ~stop:max_int);
-    entry#misc#grab_focus ();
-    connect_button dialog#emptyDialogOkButton (fun _ ->
-      return (Some entry#text))
-  end;
-  connect_button dialog#emptyDialogCancelButton (fun _ ->return None);
-  dialog#emptyDialog#show ();
-  GtkThread.main ();
-  (match !result with None -> raise MatitaTypes.Cancel | Some r -> r)
 
 let utf8_parsed_text s floc = 
   let start, stop = HExtlib.loc_of_floc floc in
