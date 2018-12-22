@@ -319,8 +319,10 @@ let interactive_error_interp ~all_passes
             (offset,[[env,diff,lazy (loffset,Lazy.force msg),significant]]));
     | _::_ ->
        let dialog = new disambiguationErrors () in
-       if all_passes then
-        dialog#disambiguationErrorsMoreErrors#misc#set_sensitive false;
+   dialog#toplevel#add_button "Fix this interpretation" `OK;
+   dialog#toplevel#add_button "Close" `DELETE_EVENT;
+   if not all_passes then
+    dialog#toplevel#add_button "More errors" `HELP; (* HELP means MORE *)
        let model = new interpErrorModel dialog#treeview choices in
        dialog#disambiguationErrors#set_title "Disambiguation error";
        dialog#disambiguationErrorsLabel#set_label
@@ -352,57 +354,50 @@ let interactive_error_interp ~all_passes
             (MultiPassDisambiguator.DisambiguationError
               (offset,[[env,diff,lazy(loffset,Lazy.force msg),significant]]))
            ));
-       let return _ =
-         dialog#disambiguationErrors#destroy ();
-         GMain.Main.quit ()
+   dialog#toplevel#show ();
+   ignore(dialog#toplevel#connect#response (function
+    | `OK ->
+       let tree_path =
+        match fst (dialog#treeview#get_cursor ()) with
+           None -> assert false
+        | Some tp -> tp in
+       let idx1,idx2,idx3 = model#get_interp_no tree_path in
+       let diff =
+        match idx2,idx3 with
+           Some idx2, Some idx3 ->
+            let _,lll = List.nth choices idx1 in
+            let _,envs_and_diffs,_,_ = List.nth lll idx2 in
+            let _,_,diff = List.nth envs_and_diffs idx3 in
+             diff
+         | _,_ -> assert false
        in
-       let fail _ = return () in
-       ignore(dialog#disambiguationErrors#event#connect#delete (fun _ -> true));
-       connect_button dialog#disambiguationErrorsOkButton
-        (fun _ ->
-          let tree_path =
-           match fst (dialog#treeview#get_cursor ()) with
-              None -> assert false
-           | Some tp -> tp in
-          let idx1,idx2,idx3 = model#get_interp_no tree_path in
-          let diff =
-           match idx2,idx3 with
-              Some idx2, Some idx3 ->
-               let _,lll = List.nth choices idx1 in
-               let _,envs_and_diffs,_,_ = List.nth lll idx2 in
-               let _,_,diff = List.nth envs_and_diffs idx3 in
-                diff
-            | _,_ -> assert false
-          in
-           let newtxt =
-            String.concat "\n"
-             ("" ::
-               List.map
-                (fun k,desc -> 
-                  let alias =
-                   match k with
-                   | DisambiguateTypes.Id id ->
-                       GrafiteAst.Ident_alias (id, desc)
-                   | DisambiguateTypes.Symbol (symb, i)-> 
-                       GrafiteAst.Symbol_alias (symb, i, desc)
-                   | DisambiguateTypes.Num i ->
-                       GrafiteAst.Number_alias (i, desc)
-                  in
-                   GrafiteAstPp.pp_alias alias)
-                diff) ^ "\n"
-           in
-            source_buffer#insert
-             ~iter:
-               (source_buffer#get_iter_at_mark
-                (`NAME "beginning_of_statement")) newtxt ;
-            return ()
-        );
-       connect_button dialog#disambiguationErrorsMoreErrors
-        (fun _ -> return () ; raise UseLibrary);
-       connect_button dialog#disambiguationErrorsCancelButton fail;
-       dialog#disambiguationErrors#show ();
-       GtkThread.main ()
-
+        let newtxt =
+         String.concat "\n"
+          ("" ::
+            List.map
+             (fun k,desc -> 
+               let alias =
+                match k with
+                | DisambiguateTypes.Id id ->
+                    GrafiteAst.Ident_alias (id, desc)
+                | DisambiguateTypes.Symbol (symb, i)-> 
+                    GrafiteAst.Symbol_alias (symb, i, desc)
+                | DisambiguateTypes.Num i ->
+                    GrafiteAst.Number_alias (i, desc)
+               in
+                GrafiteAstPp.pp_alias alias)
+             diff) ^ "\n"
+        in
+         source_buffer#insert
+          ~iter:
+            (source_buffer#get_iter_at_mark
+             (`NAME "beginning_of_statement")) newtxt ;
+         dialog#toplevel#destroy ()
+    | `HELP (* HELP MEANS MORE *) ->
+        dialog#toplevel#destroy ();
+        raise UseLibrary
+    | `DELETE_EVENT -> dialog#toplevel#destroy ()
+    | _ -> assert false))
 
 class gui () =
     (* creation order _is_ relevant for windows placement *)
