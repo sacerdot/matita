@@ -318,11 +318,12 @@ let interactive_error_interp ~all_passes
           (MultiPassDisambiguator.DisambiguationError
             (offset,[[env,diff,lazy (loffset,Lazy.force msg),significant]]));
     | _::_ ->
+      GtkThread.sync (fun _ ->
        let dialog = new disambiguationErrors () in
-   dialog#toplevel#add_button "Fix this interpretation" `OK;
-   dialog#toplevel#add_button "Close" `DELETE_EVENT;
-   if not all_passes then
-    dialog#toplevel#add_button "More errors" `HELP; (* HELP means MORE *)
+       dialog#toplevel#add_button "Fix this interpretation" `OK;
+       dialog#toplevel#add_button "Close" `DELETE_EVENT;
+       if not all_passes then
+        dialog#toplevel#add_button "More errors" `HELP; (* HELP means MORE *)
        let model = new interpErrorModel dialog#treeview choices in
        dialog#disambiguationErrors#set_title "Disambiguation error";
        dialog#disambiguationErrorsLabel#set_label
@@ -354,8 +355,7 @@ let interactive_error_interp ~all_passes
             (MultiPassDisambiguator.DisambiguationError
               (offset,[[env,diff,lazy(loffset,Lazy.force msg),significant]]))
            ));
-   dialog#toplevel#show ();
-   ignore(dialog#toplevel#connect#response (function
+   (match GtkThread.sync dialog#toplevel#run () with
     | `OK ->
        let tree_path =
         match fst (dialog#treeview#get_cursor ()) with
@@ -391,13 +391,14 @@ let interactive_error_interp ~all_passes
          source_buffer#insert
           ~iter:
             (source_buffer#get_iter_at_mark
-             (`NAME "beginning_of_statement")) newtxt ;
-         dialog#toplevel#destroy ()
+             (`NAME "beginning_of_statement")) newtxt
     | `HELP (* HELP MEANS MORE *) ->
-        dialog#toplevel#destroy ();
+        dialog#toplevel#destroy () ;
         raise UseLibrary
-    | `DELETE_EVENT -> dialog#toplevel#destroy ()
-    | _ -> assert false))
+    | `DELETE_EVENT -> ()
+    | _ -> assert false) ;
+   dialog#toplevel#destroy ()
+  ) ()
 
 class gui () =
     (* creation order _is_ relevant for windows placement *)
