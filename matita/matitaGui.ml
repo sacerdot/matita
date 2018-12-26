@@ -931,7 +931,7 @@ class gui () =
              save_moo script#status;
              true
         | `NO -> true
-        | `CANCEL -> false
+        | `DELETE_EVENT -> false
       else 
        (save_moo script#status; true)
 
