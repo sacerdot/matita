@@ -25,7 +25,6 @@
 
 (* $Id$ *)
 
-exception PopupClosed
 open Printf
 
 let wrap_callback0 f = fun _ -> try f () with Not_found -> assert false
@@ -250,7 +249,7 @@ class type gui =
   end
 
 let popup_message 
-  ~title ~message ~buttons ~callback
+  ~title ~message ~buttons
   ?(message_type=`QUESTION) ?parent ?(use_markup=true)
   ?(destroy_with_parent=true) ?icon ?(modal=true) ?(resizable=false)
   ?screen ?type_hint
@@ -264,11 +263,7 @@ let popup_message
       ?type_hint ~position ?wmclass ?border_width ?width ?height 
       ~show () 
   in 
-  ignore(m#connect#response 
-    ~callback:(fun a ->  GMain.Main.quit ();callback a));
-  ignore(m#connect#close 
-    ~callback:(fun _ -> GMain.Main.quit ();raise PopupClosed));
-  GtkThread.main ();
+  ignore(m#run ()) ;
   m#destroy () 
 
 let popup_message_lowlevel
@@ -315,14 +310,8 @@ let ask_confirmation ~title ~message ?parent () =
  ) ()
 
 let report_error ~title ~message ?parent () =
-  let callback _ = () in
-  let buttons = GWindow.Buttons.ok in
-  try 
-    popup_message 
-      ~title ~message ~message_type:`ERROR ~callback ~buttons ?parent ()
-  with
-  | PopupClosed -> ()
-
+ let buttons = GWindow.Buttons.ok in
+ popup_message ~title ~message ~message_type:`ERROR ~buttons ?parent ()
 
 let utf8_parsed_text s floc = 
   let start, stop = HExtlib.loc_of_floc floc in
