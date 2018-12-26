@@ -272,19 +272,17 @@ let popup_message
   m#destroy () 
 
 let popup_message_lowlevel
-  ~title ~message ?(no_separator=true) ~callback ~message_type ~buttons
+  ~title ~message ?(no_separator=true) ~message_type ~buttons
   ?parent  ?(destroy_with_parent=true)
   ?icon ?(modal=true) ?(resizable=false) ?screen ?type_hint
   ?(position=`CENTER_ON_PARENT) ?wmclass ?border_width ?width 
-  ?height ?(show=true) ()
+  ?height ()
 =
   let m = 
     GWindow.dialog 
-      ~no_separator 
-      ?parent ~destroy_with_parent 
-      ~title ?icon ~modal ~resizable ?screen 
-      ?type_hint ~position ?wmclass ?border_width ?width ?height 
-      ~show:false () 
+      ?parent ~destroy_with_parent
+      ~title ?icon ~resizable ?screen
+      ?type_hint ~position ?wmclass ?border_width ?width ?height () 
   in
   let stock = 
     match message_type with
@@ -302,34 +300,19 @@ let popup_message_lowlevel
   m#vbox#pack ~from:`START 
     ~padding:20 ~expand:true ~fill:true (hbox:>GObj.widget);
   List.iter (fun (x, y) -> 
-    m#add_button_stock x y;
-    if y = `CANCEL then 
-      m#set_default_response y
+    m#add_button_stock x y
   ) buttons;
-  ignore(m#connect#response 
-    ~callback:(fun a ->  GMain.Main.quit ();callback a));
-  ignore(m#connect#close 
-    ~callback:(fun _ -> GMain.Main.quit ();callback `POPUPCLOSED));
-  if show = true then 
-      m#show ();
-  GtkThread.main ();
-  m#destroy () 
+  let res = m#run () in
+  m#destroy () ;
+  res
 
 
 let ask_confirmation ~title ~message ?parent () =
-  let rc = ref `YES in
-  let callback = 
-    function 
-    | `YES -> rc := `YES
-    | `NO -> rc := `NO
-    | `CANCEL -> rc := `CANCEL
-    | `DELETE_EVENT -> rc := `CANCEL
-    | `POPUPCLOSED -> rc := `CANCEL
-  in
-  let buttons = [`YES,`YES ; `NO,`NO ; `CANCEL,`CANCEL] in
-    popup_message_lowlevel 
-      ~title ~message ~message_type:`WARNING ~callback ~buttons ?parent ();
-    !rc
+ GtkThread.sync (fun _ ->
+  let buttons = [`YES,`YES ; `NO,`NO ; `CANCEL,`DELETE_EVENT] in
+   popup_message_lowlevel 
+     ~title ~message ~message_type:`WARNING ~buttons ?parent ()
+ ) ()
 
 let report_error ~title ~message ?parent () =
   let callback _ = () in

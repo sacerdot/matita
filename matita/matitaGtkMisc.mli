@@ -122,8 +122,7 @@ class type gui =
 val ask_confirmation:
   title:string -> message:string -> 
   ?parent:#GWindow.window_skel ->
-  unit ->
-    [`YES | `NO | `CANCEL]
+  unit -> [`YES | `NO | `DELETE_EVENT ]
 
 val report_error:
   title:string -> message:string -> 
