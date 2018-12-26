@@ -46,6 +46,8 @@ lemma Max0r : ∀n. max n 0 = n.
 #n >commutative_max //
 qed.
 
+alias id "max" = "cic:/matita/arithmetics/nat/max#def:2".
+alias id "mk_Aop" = "cic:/matita/arithmetics/bigops/Aop#con:0:1:2".
 definition MaxA ≝ 
   mk_Aop nat 0 max Max0 Max0r (λa,b,c.sym_eq … (Max_assoc a b c)). 
 
