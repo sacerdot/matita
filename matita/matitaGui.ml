@@ -97,6 +97,8 @@ let interactive_uri_choice
       | uris -> return (Some (List.map NReference.reference_of_string uris)));
     connect_button dialog#uriChoiceAbortButton (fun _ -> return None);
     dialog#uriChoiceDialog#show ();
+    (* CSC: old Gtk2 code. Use #run instead. Look for similar code handling
+       other dialogs *)
     GtkThread.main ();
     (match !choices with 
     | None -> raise MatitaTypes.Cancel
