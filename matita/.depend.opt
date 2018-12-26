@@ -14,7 +14,7 @@ matitaEngine.cmi : applyTransformation.cmi
 matitaExcPp.cmx : matitaEngine.cmx matitaExcPp.cmi
 matitaExcPp.cmi :
 matitaGeneratedGui.cmx :
-matitaGtkMisc.cmx : matitaTypes.cmx matitaGeneratedGui.cmx buildTimeConf.cmx \
+matitaGtkMisc.cmx : matitaGeneratedGui.cmx buildTimeConf.cmx \
     matitaGtkMisc.cmi
 matitaGtkMisc.cmi : matitaGeneratedGui.cmx
 matitaGui.cmx : matitaTypes.cmx matitaScript.cmx matitaMisc.cmx \
