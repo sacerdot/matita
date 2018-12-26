@@ -1133,6 +1133,7 @@ class interpModel =
 let interactive_string_choice 
   text prefix_len ?(title = "") ?(msg = "") () ~id locs uris 
 = 
+ GtkThread.sync (fun _ ->
  let dialog = new uriChoiceDialog () in
  dialog#uriEntryHBox#misc#hide ();
  dialog#uriChoiceSelectedButton#misc#hide ();
@@ -1141,7 +1142,7 @@ let interactive_string_choice
  dialog#uriChoiceTreeView#selection#set_mode
    (`SINGLE :> Gtk.Tags.selection_mode);
  let model = new stringListModel dialog#uriChoiceTreeView in
- let choices = ref None in
+ let choices = ref [] in
  dialog#uriChoiceDialog#set_title title; 
  let hack_len = MatitaGtkMisc.utf8_string_length text in
  let rec colorize acc_len = function
@@ -1176,22 +1177,19 @@ let interactive_string_choice
   in
   dialog#uriChoiceLabel#set_label txt;
   List.iter model#easy_append uris;
-  let return v =
-    choices := v;
-    dialog#uriChoiceDialog#destroy ();
-    GMain.Main.quit ()
-  in
-  ignore (dialog#uriChoiceDialog#event#connect#delete (fun _ -> true));
   connect_button dialog#uriChoiceForwardButton (fun _ ->
     match model#easy_selection () with
     | [] -> ()
-    | uris -> return (Some uris));
-  connect_button dialog#uriChoiceAbortButton (fun _ -> return None);
+    | uris -> choices := uris; dialog#toplevel#response `OK);
+  connect_button dialog#uriChoiceAbortButton (fun _ -> dialog#toplevel#response `DELETE_EVENT);
   dialog#uriChoiceDialog#show ();
-  GtkThread.main ();
-  (match !choices with 
-  | None -> raise MatitaTypes.Cancel
-  | Some uris -> uris)
+  let res =
+   match dialog#toplevel#run () with 
+    | `DELETE_EVENT -> dialog#toplevel#destroy() ; raise MatitaTypes.Cancel
+    | `OK -> !choices
+    | _ -> assert false in
+  dialog#toplevel#destroy () ;
+  res) ()
 
 let interactive_interp_choice () text prefix_len choices =
 (*List.iter (fun l -> prerr_endline "==="; List.iter (fun (_,id,dsc) -> prerr_endline (id ^ " = " ^ dsc)) l) choices;*)
