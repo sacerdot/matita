@@ -24,11 +24,11 @@ if test $HAVE_OCAMLFIND = "yes"; then
 else
   AC_MSG_ERROR(could not find ocamlfind)
 fi
-AC_CHECK_PROG(HAVE_LABLGLADECC, lablgladecc, yes, no)
+AC_CHECK_PROG(HAVE_LABLGLADECC, lablgladecc3, yes, no)
 if test $HAVE_LABLGLADECC = "yes"; then
-  LABLGLADECC="lablgladecc"
+  LABLGLADECC="lablgladecc3"
 else
-  AC_MSG_ERROR(could not find lablgladecc)
+  AC_MSG_ERROR(could not find lablgladecc3)
 fi
 AC_CHECK_PROG(HAVE_CAMLP5O, camlp5o, yes, no)
 if test $HAVE_CAMLP5O = "yes"; then
