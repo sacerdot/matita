@@ -57,9 +57,9 @@ class virtual status =
 let eval_with_new_aliases status f =
  let status =
   status#set_disambiguate_db { status#disambiguate_db with new_aliases = [] } in
- let res = f status in
- let new_aliases = status#disambiguate_db.new_aliases in
-  new_aliases,res
+ let new_status = f status in
+ let new_aliases = new_status#disambiguate_db.new_aliases in
+  new_aliases,new_status
 ;;
 
 let dump_aliases out msg status =
