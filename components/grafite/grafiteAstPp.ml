@@ -55,7 +55,7 @@ let rec pp_ntactic status ~map_unicode_to_tex =
  let pp_tactic_pattern = pp_tactic_pattern ~map_unicode_to_tex in
  function
   | NApply (_,t) -> "@" ^ NotationPp.pp_term status t
-  | NSmartApply (_,t) -> "fixme"
+  | NSmartApply (_,_t) -> "fixme"
   | NAuto (_,(None,flgs)) ->
       "nautobatch" ^
         String.concat " " (List.map (fun a,b -> a ^ "=" ^ b) flgs)
@@ -63,26 +63,26 @@ let rec pp_ntactic status ~map_unicode_to_tex =
       "nautobatch" ^ " by " ^
          (String.concat "," (List.map (NotationPp.pp_term status) l)) ^
         String.concat " " (List.map (fun a,b -> a ^ "=" ^ b) flgs)
-  | NCases (_,what,where) -> "ncases " ^ NotationPp.pp_term status what ^
+  | NCases (_,what,_where) -> "ncases " ^ NotationPp.pp_term status what ^
       "...to be implemented..." ^ " " ^ "...to be implemented..."
   | NConstructor (_,None,l) -> "@ " ^
       String.concat " " (List.map (NotationPp.pp_term status) l)
   | NConstructor (_,Some x,l) -> "@" ^ string_of_int x ^ " " ^
       String.concat " " (List.map (NotationPp.pp_term status) l)
   | NCase1 (_,n) -> "*" ^ n ^ ":"
-  | NChange (_,what,wwhat) -> "nchange " ^ "...to be implemented..." ^ 
+  | NChange (_,_what,wwhat) -> "nchange " ^ "...to be implemented..." ^ 
       " with " ^ NotationPp.pp_term status wwhat
   | NCut (_,t) -> "ncut " ^ NotationPp.pp_term status t
 (*| NDiscriminate (_,t) -> "ndiscriminate " ^ NotationPp.pp_term status t
   | NSubst (_,t) -> "nsubst " ^ NotationPp.pp_term status t *)
   | NClear (_,l) -> "nclear " ^ String.concat " " l
-  | NDestruct (_,dom,skip) -> "ndestruct ..." 
-  | NElim (_,what,where) -> "nelim " ^ NotationPp.pp_term status what ^
+  | NDestruct (_,_dom,_skip) -> "ndestruct ..." 
+  | NElim (_,what,_where) -> "nelim " ^ NotationPp.pp_term status what ^
       "...to be implemented..." ^ " " ^ "...to be implemented..."
   | NId _ -> "nid"
   | NIntro (_,n) -> "#" ^ n
   | NIntros (_,l) -> "#" ^ String.concat " " l
-  | NInversion (_,what,where) -> "ninversion " ^ NotationPp.pp_term status what ^
+  | NInversion (_,what,_where) -> "ninversion " ^ NotationPp.pp_term status what ^
       "...to be implemented..." ^ " " ^ "...to be implemented..."
   | NLApply (_,t) -> "lapply " ^ NotationPp.pp_term status t
   | NRewrite (_,dir,n,where) -> "nrewrite " ^
@@ -112,6 +112,8 @@ let rec pp_ntactic status ~map_unicode_to_tex =
 let pp_nmacro status = function
   | NCheck (_, term) -> Printf.sprintf "ncheck %s" (NotationPp.pp_term status term)
   | Screenshot (_, name) -> Printf.sprintf "screenshot \"%s\"" name
+  | NAutoInteractive _
+  | NIntroGuess _ -> assert false (* TODO *)
 ;;
 
 let pp_l1_pattern = NotationPp.pp_term
@@ -137,7 +139,7 @@ let pp_precedence i = sprintf "with precedence %d" i
 let pp_argument_pattern = function
   | NotationPt.IdentArg (eta_depth, name) ->
       let eta_buf = Buffer.create 5 in
-      for i = 1 to eta_depth do
+      for _i = 1 to eta_depth do
         Buffer.add_string eta_buf "\\eta."
       done;
       sprintf "%s%s" (Buffer.contents eta_buf) name

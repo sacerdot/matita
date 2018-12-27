@@ -25,8 +25,6 @@
 
 (* $Id$ *)
 
-module G = GrafiteAst
-open GrafiteTypes
 open Printf
 
 class status baseuri =
@@ -163,7 +161,7 @@ let baseuri_of_script ~include_paths fname =
 
 (* given a path to a ma file inside the include_paths, returns the
    new include_paths associated to that file *)
-let read_include_paths ~include_paths file =
+let read_include_paths ~include_paths:_ file =
  try 
    let root, _buri, _fname, _tgt = 
      Librarian.baseuri_of_script ~include_paths:[] file in 

@@ -15,7 +15,7 @@ type html_msg = [ `Error of html_tag | `Msg of html_tag ]
 
 type logger_fun = ?append_NL:bool -> html_msg -> unit
 
-let rec string_of_html_tag =
+let string_of_html_tag =
   let rec aux indent =
     let indent_str = String.make indent ' ' in
     function

@@ -92,7 +92,7 @@ let pp_gen f strm =
       pp_r m s
   | [< >] -> ()
  and print_spaces m =
-  for i = 1 to m do f "  " done
+  for _i = 1 to m do f "  " done
  in
  pp_r 0 strm
 ;;

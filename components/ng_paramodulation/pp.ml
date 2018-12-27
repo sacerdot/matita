@@ -70,7 +70,7 @@ let pp_proof bag ~formatter:f p =
         Format.fprintf f "%d: Exact (" eq;
         pp_foterm f t;
         Format.fprintf f ")@;";
-    | Terms.Step (rule,eq1,eq2,dir,pos,subst) ->
+    | Terms.Step (rule,eq1,eq2,dir,_pos,_subst) ->
         Format.fprintf f "%d: %s("
           eq (string_of_rule rule);
 	Format.fprintf f "|%d with %d dir %s))" eq1 eq2

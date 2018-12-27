@@ -89,18 +89,18 @@ let getter_url () = Helm_registry.get "getter.url"
 (* Remote interface: getter methods implemented using a remote getter *)
 
   (* <TODO> *)
-let getxml_remote uri = not_implemented "getxml_remote"
-let getxslt_remote uri = not_implemented "getxslt_remote"
-let getdtd_remote uri = not_implemented "getdtd_remote"
+let getxml_remote _uri = not_implemented "getxml_remote"
+let getxslt_remote _uri = not_implemented "getxslt_remote"
+let getdtd_remote _uri = not_implemented "getdtd_remote"
 let clean_cache_remote () = not_implemented "clean_cache_remote"
 let list_servers_remote () = not_implemented "list_servers_remote"
-let add_server_remote ~logger ~position name =
+let add_server_remote ~logger:_ ~position:_ _name =
   not_implemented "add_server_remote"
-let remove_server_remote ~logger position =
+let remove_server_remote ~logger:_ _position =
   not_implemented "remove_server_remote"
 let getalluris_remote () = not_implemented "getalluris_remote"
-let ls_remote lsuri = not_implemented "ls_remote"
-let exists_remote uri = not_implemented "exists_remote"
+let ls_remote _lsuri = not_implemented "ls_remote"
+let exists_remote _uri = not_implemented "exists_remote"
   (* </TODO> *)
 
 let resolve_remote ~writable uri =
@@ -132,7 +132,7 @@ let resolve_remote ~writable uri =
   | Exception e -> raise e
   | Resolved url -> url
 
-let deref_index_theory ~local uri =
+let deref_index_theory ~local:_ uri =
 (*  if Http_getter_storage.exists ~local (uri ^ xml_suffix) then uri *)
  if is_theory_uri uri && Filename.basename uri = "index.theory" then
     strip_trailing_slash (Filename.dirname uri) ^ theory_suffix
@@ -229,7 +229,7 @@ let store_obj tbl o =
       | s when Pcre.pmatch ~rex:body_ann_RE s       -> (true,  No, Ann, No)
       | s when Pcre.pmatch ~rex:proof_tree_RE s     -> (false, No, No, Yes)
       | s when Pcre.pmatch ~rex:proof_tree_ann_RE s -> (true,  No, No, Ann)
-      | s -> no_flags
+      | _s -> no_flags
     in
     Hashtbl.replace tbl basepart (oldflags ++ newflags)
   end

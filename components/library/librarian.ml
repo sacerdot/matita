@@ -41,7 +41,7 @@ let find_root path =
   let path = absolutize path in
   let paths = List.rev (Str.split (Str.regexp "/") path) in
   let rec build = function
-    | he::tl as l -> ("/" ^ String.concat "/" (List.rev l) ^ "/") :: build tl
+    | _he::tl as l -> ("/" ^ String.concat "/" (List.rev l) ^ "/") :: build tl
     | [] -> ["/"]
   in
   let paths = List.map HExtlib.normalize_path (build paths) in
@@ -78,7 +78,7 @@ let load_root_file rootpath =
 
 let find_root_for ~include_paths file = 
   let include_paths = "" :: Sys.getcwd () :: include_paths in
-   let rec find_path_for file =
+   let find_path_for file =
       try HExtlib.find_in include_paths file
       with Failure "find_in" -> 
        HLog.error ("We are in: " ^ Sys.getcwd ());

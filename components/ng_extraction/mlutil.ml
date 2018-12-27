@@ -168,7 +168,7 @@ module Mlenv = struct
   let clean_free mle =
     let rem = ref Metaset.empty
     and add = ref Metaset.empty in
-    let clean m = match m.contents with
+    let clean m = match m.Miniml.contents with
       | None -> ()
       | Some u -> rem := Metaset.add m !rem; add := find_free !add u
     in
@@ -238,18 +238,18 @@ let type_maxvar t =
 
 (*s What are the type variables occurring in [t]. *)
 
-let intset_union_map_list f l =
-  List.fold_left (fun s t -> Intset.union s (f t)) Intset.empty l
+(*let intset_union_map_list f l =
+  List.fold_left (fun s t -> Intset.union s (f t)) Intset.empty l*)
 
-let intset_union_map_array f a =
-  Array.fold_left (fun s t -> Intset.union s (f t)) Intset.empty a
+(*let intset_union_map_array f a =
+  Array.fold_left (fun s t -> Intset.union s (f t)) Intset.empty a*)
 
-let rec type_listvar = function
+(*let rec type_listvar = function
   | Tmeta {contents = Some t} -> type_listvar t
   | Tvar i | Tvar' i -> Intset.singleton i
   | Tarr (a,b) -> Intset.union (type_listvar a) (type_listvar b)
   | Tglob (_,l) -> intset_union_map_list type_listvar l
-  | _ -> Intset.empty
+  | _ -> Intset.empty*)
 
 (*s From [a -> b -> c] to [[a;b],c]. *)
 
@@ -467,12 +467,12 @@ let ast_occurs_itvl k k' t =
 
 (*s Number of occurences of [Rel k] (resp. [Rel 1]) in [t]. *)
 
-let nb_occur_k k t =
+(*let nb_occur_k k t =
   let cpt = ref 0 in
   ast_iter_rel (fun i -> if i = k then incr cpt) t;
-  !cpt
+  !cpt*)
 
-let nb_occur t = nb_occur_k 1 t
+(*let nb_occur t = nb_occur_k 1 t*)
 
 (* Number of occurences of [Rel 1] in [t], with special treatment of match:
    occurences in different branches aren't added, but we rather use max. *)
@@ -596,7 +596,7 @@ let rec many_lams id a = function
   | 0 -> a
   | n -> many_lams id (MLlam (id,a)) (pred n)
 
-let anonym_lams a n = many_lams anonymous a n
+(*let anonym_lams a n = many_lams anonymous a n*)
 let anonym_tmp_lams a n = many_lams (Tmp anonymous_name) a n
 let dummy_lams a n = many_lams Dummy a n
 
@@ -629,7 +629,7 @@ let rec test_eta_args_lift k n = function
 
 (*s Computes an eta-reduction. *)
 
-let eta_red e =
+(*let eta_red e =
   let ids,t = collect_lams e in
   let n = List.length ids in
   if n = 0 then e
@@ -649,12 +649,12 @@ let eta_red e =
 	if test_eta_args_lift 0 p args && not (ast_occurs_itvl 1 p body)
 	then named_lams ids (ast_lift (-p) body)
 	else e
-    | _ -> e
+    | _ -> e*)
 
 (*s Computes all head linear beta-reductions possible in [(t a)].
   Non-linear head beta-redex become let-in. *)
 
-let rec linear_beta_red a t = match a,t with
+(*let rec linear_beta_red a t = match a,t with
   | [], _ -> t
   | a0::a, MLlam (id,t) ->
       (match nb_occur_match t with
@@ -663,11 +663,11 @@ let rec linear_beta_red a t = match a,t with
 	 | _ ->
 	     let a = List.map (ast_lift 1) a in
 	     MLletin (id, a0, linear_beta_red a t))
-  | _ -> MLapp (t, a)
+  | _ -> MLapp (t, a)*)
 
-let rec tmp_head_lams = function
+(*let rec tmp_head_lams = function
   | MLlam (id, t) -> MLlam (tmp_id id, tmp_head_lams t)
-  | e -> e
+  | e -> e*)
 
 (*s Applies a substitution [s] of constants by their body, plus
   linear beta reductions at modified positions.
@@ -675,7 +675,7 @@ let rec tmp_head_lams = function
   reduction (this helps the inlining of recursors).
 *)
 
-let rec ast_glob_subst _s _t = assert false (*CSC: reimplement match t with
+let ast_glob_subst _s _t = assert false (*CSC: reimplement match t with
   | MLapp ((MLglob ((ConstRef kn) as refe)) as f, a) ->
       let a = List.map (fun e -> tmp_head_lams (ast_glob_subst s e)) a in
       (try linear_beta_red a (Refmap'.find refe s)
@@ -789,7 +789,7 @@ let rec merge_ids ids ids' = match ids,ids' with
 
 let is_exn = function MLexn _ -> true | _ -> false
 
-let rec permut_case_fun br _acc =
+let permut_case_fun br _acc =
   let nb = ref max_int in
   Array.iter (fun (_,_,t) ->
 		let ids, c = collect_lams t in
@@ -1168,7 +1168,7 @@ let optimize_fix a =
 
 (* Utility functions used in the decision of inlining. *)
 
-let rec ml_size = function
+(*let rec ml_size = function
   | MLapp(t,l) -> List.length l + ml_size t + ml_size_list l
   | MLlam(_,t) -> 1 + ml_size t
   | MLcons(_,_,l) -> ml_size_list l
@@ -1181,14 +1181,14 @@ let rec ml_size = function
 
 and ml_size_list l = List.fold_left (fun a t -> a + ml_size t) 0 l
 
-and ml_size_array l = Array.fold_left (fun a t -> a + ml_size t) 0 l
+and ml_size_array l = Array.fold_left (fun a t -> a + ml_size t) 0 l*)
 
-let is_fix = function MLfix _ -> true | _ -> false
+(*let is_fix = function MLfix _ -> true | _ -> false*)
 
-let rec is_constr = function
+(*let rec is_constr = function
   | MLcons _   -> true
   | MLlam(_,t) -> is_constr t
-  | _          -> false
+  | _          -> false*)
 
 (*s Strictness *)
 
@@ -1198,11 +1198,11 @@ let rec is_constr = function
    it begins by at least one non-strict lambda, since the corresponding
    argument to [t] might be unevaluated in the expanded code. *)
 
-exception Toplevel
+(*exception Toplevel*)
 
-let lift n l = List.map ((+) n) l
+(*let lift n l = List.map ((+) n) l*)
 
-let pop n l = List.map (fun x -> if x<=n then raise Toplevel else x-n) l
+(*let pop n l = List.map (fun x -> if x<=n then raise Toplevel else x-n) l*)
 
 (* This function returns a list of de Bruijn indices of non-strict variables,
    or raises [Toplevel] if it has an internal non-strict variable.
@@ -1212,7 +1212,7 @@ let pop n l = List.map (fun x -> if x<=n then raise Toplevel else x-n) l
    variable to the candidates?  We use this flag to check only the external
    lambdas, those that will correspond to arguments. *)
 
-let rec non_stricts add cand = function
+(*let rec non_stricts add cand = function
   | MLlam (_id,t) ->
       let cand = lift 1 cand in
       let cand = if add then 1::cand else cand in
@@ -1242,20 +1242,20 @@ let rec non_stricts add cand = function
 	   let n = List.length i in
 	   let cand = lift n cand in
 	   let cand = pop n (non_stricts add cand t) in
-	   Sort.merge (<=) cand c) [] v
+	   List.merge (compare) cand c) [] v
 	(* [merge] may duplicates some indices, but I don't mind. *)
   | MLmagic t ->
       non_stricts add cand t
   | _ ->
-      cand
+      cand*)
 
 (* The real test: we are looking for internal non-strict variables, so we start
    with no candidates, and the only positive answer is via the [Toplevel]
    exception. *)
 
-let is_not_strict t =
+(*let is_not_strict t =
   try let _ = non_stricts true [] t in false
-  with Toplevel -> true
+  with Toplevel -> true*)
 
 (*s Inlining decision *)
 
@@ -1278,7 +1278,7 @@ let is_not_strict t =
    restriction for the moment.
 *)
 
-let inline_test _r _t =
+(*let inline_test _r _t =
   (*CSC:if not (auto_inline ()) then*) false
 (*
   else
@@ -1289,7 +1289,7 @@ let inline_test _r _t =
       let t1 = eta_red t in
       let t2 = snd (collect_lams t1) in
       not (is_fix t2) && ml_size t < 12 && is_not_strict t
-*)
+*)*)
 
 (*CSC: (not) reimplemented
 let con_of_string s =
@@ -1313,9 +1313,9 @@ let manual_inline_set =
     ]
     Cset_env.empty*)
 
-let manual_inline = function (*CSC:
+(*let manual_inline = function (*CSC:
   | ConstRef c -> Cset_env.mem c manual_inline_set
-  |*) _ -> false
+  |*) _ -> false*)
 
 (* If the user doesn't say he wants to keep [t], we inline in two cases:
    \begin{itemize}

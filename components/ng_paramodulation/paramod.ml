@@ -12,7 +12,7 @@
 (* $Id: orderings.ml 9869 2009-06-11 22:52:38Z denes $ *)
 
 let print s = prerr_endline (Lazy.force s) ;; 
-let noprint s = ();;  
+let noprint _s = ();;  
 let debug = noprint;;
 
 let monster = 100;;
@@ -65,7 +65,7 @@ module type Paramod =
 
 module Paramod (B : Orderings.Blob) = struct
   module Pp = Pp.Pp (B) 
-  module FU = FoUnif.Founif(B) 
+  (*module FU = FoUnif.Founif(B)*)
   module IDX = Index.Index(B) 
   module Sup = Superposition.Superposition(B) 
   module Utils = FoUtils.Utils(B) 
@@ -363,7 +363,7 @@ module Paramod (B : Orderings.Blob) = struct
     debug (lazy("Last chance " ^ string_of_float
 		  (Unix.gettimeofday())));
     let actives_l, active_t = actives in
-    let passive_t,wset,_ = passives in
+    let passive_t,_wset,_ = passives in
     let _ = noprint
       (lazy 
 	 ("Actives :" ^ (String.concat ";\n" 
@@ -493,8 +493,8 @@ module Paramod (B : Orderings.Blob) = struct
     let newstatus = 
       List.fold_left
 	(fun acc g ->
-	   let bag,maxvar,actives,passives,g_actives,g_passives = acc in
-	   let g_passives =
+	   let _bag,_maxvar,_actives,_passives,_g_actives,g_passives = acc in
+	   let _g_passives =
 	     remove_passive_goal g_passives g in
 	   let current = snd g in
 	   let _ = 
@@ -511,7 +511,7 @@ module Paramod (B : Orderings.Blob) = struct
       let l =
         let rec traverse ongoal (accg,acce) i =
           match Terms.get_from_bag i bag with
-            | (id,_,_,Terms.Exact _),_,_ ->
+            | (_id,_,_,Terms.Exact _),_,_ ->
                 if ongoal then [i],acce else
                   if (List.mem i acce) then accg,acce else accg,acce@[i]
             | (_,_,_,Terms.Step (_,i1,i2,_,_,_)),_,_ ->
@@ -573,8 +573,8 @@ module Paramod (B : Orderings.Blob) = struct
   ;;
 
 let demod s goal =
-  let bag,maxvar,actives,passives,g_actives,g_passives = s in
-  let (bag,maxvar), g = mk_goal (bag,maxvar) goal in
+  let bag,maxvar,actives,_passives,_g_actives,_g_passives = s in
+  let (bag,_maxvar), g = mk_goal (bag,maxvar) goal in
   let bag, ((i,_,_,_) as g1) = Sup.demodulate bag g (snd actives) in
     if g1 = g then GaveUp else compute_result bag i []
 (*
@@ -584,7 +584,7 @@ let demod s goal =
 
 let fast_eq_check s goal =
   let (_,_,_,_,_,g_passives) as s = initialize_goal s goal in
-  if is_passive_g_set_empty g_passives then Error "not an equation"
+  if is_passive_g_set_empty g_passives then (Error "not an equation" : szsontology)
   else
   try 
     goal_narrowing 0 2 None s
@@ -598,7 +598,7 @@ let fast_eq_check s goal =
 let nparamod ~useage ~max_steps ?timeout s goal =
   let bag,maxvar,actives,passives,g_actives,g_passives
       = initialize_goal s goal in
-  if is_passive_g_set_empty g_passives then Error "not an equation" 
+  if is_passive_g_set_empty g_passives then (Error "not an equation" : szsontology)
   else
     try given_clause ~useage ~noinfer:false
       bag maxvar 0 0 max_steps timeout actives passives g_actives g_passives

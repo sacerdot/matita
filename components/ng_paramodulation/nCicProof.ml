@@ -131,7 +131,7 @@ let debug c _ = c;;
      NCic.Implicit `Term; eq; NCic.Implicit `Term]; 
   ;;
 
-  let trans eq p = 
+  let trans eq _p = 
    let u= NUri.uri_of_string "cic:/matita/ng/properties/relations/trans.con" in
    let u = NReference.reference_of_spec u (NReference.Fix(0,1,3)) in
      NCic.Appl[NCic.Const u; NCic.Implicit `Type; NCic.Implicit `Term;
@@ -180,7 +180,7 @@ let debug c _ = c;;
               List.fold_left
                (fun (i,acc) t ->
                  i+1,
-                  let f = extract status amount vl f in
+                  let _f = extract status amount vl f in
                   if i = n then
                    let imp = NCic.Implicit `Term in
                     NCic.Appl (dag::imp::imp::imp(* f *)::imp::imp::
@@ -201,15 +201,15 @@ let debug c _ = c;;
      let  module Pp = Pp.Pp(NCicBlob) 
      in
     let module Subst = FoSubst in
-    let compose subst1 subst2 =
+    (*let compose subst1 subst2 =
       let s1 = List.map (fun (x,t) -> (x, Subst.apply_subst subst2 t)) subst1 in
       let s2 = List.filter (fun (m,_) -> not (List.mem_assoc m s1)) subst2
       in s1 @ s2
-    in
+    in*)
     let position i l = 
       let rec aux = function
        | [] -> assert false
-       | (j,_) :: tl when i = j -> 1
+       | (j,_) :: _ when i = j -> 1
        | _ :: tl -> 1 + aux tl
       in
         aux l
@@ -287,7 +287,7 @@ let debug c _ = c;;
               (* prerr_endline (if ongoal then "on goal" else "not on goal");
                  prerr_endline (Pp.pp_substitution subst); *)
               (* let subst = if ongoal then res_subst else subst in *)
-              let id, id1,(lit,vl,proof) =
+              let id, id1,(lit,vl,_proof) =
                 if ongoal then
 		  let lit,vl,proof = get_literal id1 in
 		  id1,id,(Subst.apply_subst res_subst lit,

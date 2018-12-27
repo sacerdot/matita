@@ -10,7 +10,7 @@
 
 open Coq
 open OcamlExtractionTable
-open Miniml
+(*open Miniml*)
 open Mlutil
 
 (*s Some pretty-print utility functions. *)
@@ -41,13 +41,13 @@ let rec lowercase_id id =
  if id = "" then "x" else
  if id.[0] = '_' then lowercase_id (String.sub id 1 (String.length id - 1)) else
  if is_invalid_id id then lowercase_id ("x" ^ id) else
- String.uncapitalize id
+ String.uncapitalize_ascii id
 
 let rec uppercase_id id =
  if id = "" then "T" else
  if id.[0] = '_' then uppercase_id (String.sub id 1 (String.length id - 1)) else
  if is_invalid_id id then uppercase_id ("x" ^ id) else
- String.capitalize id
+ String.capitalize_ascii id
 
 type kind = Term | Type | Cons
 
@@ -108,7 +108,7 @@ let safe_name_of_reference status r =
      NUri.name_of_uri uri
   | _ -> NCicPp.r2s status true r
 
-let maybe_capitalize b n = if b then String.capitalize n else n
+let maybe_capitalize b n = if b then String.capitalize_ascii n else n
 
 let modname_of_filename status capitalize name =
  try
@@ -116,7 +116,7 @@ let modname_of_filename status capitalize name =
    status, maybe_capitalize capitalize name
  with Not_found ->
   let globs = Idset.elements (get_modnames status) in
-  let s = next_ident_away (String.uncapitalize name) globs in
+  let s = next_ident_away (String.uncapitalize_ascii name) globs in
   let status = add_modname status s in
   let status = add_modname_for_filename status name s in
    status, maybe_capitalize capitalize s

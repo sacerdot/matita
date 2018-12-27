@@ -115,8 +115,8 @@ module Stats (B : Terms.Blob) =
 			    else
 			      dependencies op tl acc
 			else dependencies op tl acc
-                    | ((Terms.Node (Terms.Leaf op1::t) as x),y)
-                    | (y,(Terms.Node (Terms.Leaf op1::t) as x)) when leaf_count x > leaf_count y ->
+                    | ((Terms.Node (Terms.Leaf op1::_t) as x),y)
+                    | (y,(Terms.Node (Terms.Leaf op1::_t) as x)) when leaf_count x > leaf_count y ->
                          let rec term_leaves = function
                            | Terms.Node l -> List.fold_left (fun acc x -> acc @ (term_leaves x)) [] l
                            | Terms.Leaf x -> [x]

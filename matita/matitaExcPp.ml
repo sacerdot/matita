@@ -124,7 +124,7 @@ let rec to_string exn =
   | GrafiteTypes.Command_error msg -> None, "Error: " ^ msg
   | CicNotationParser.Parse_error err ->
       None, sprintf "Parse error: %s" err
-  | Unix.Unix_error (code, api, param) ->
+  | Unix.Unix_error (code, api, _param) ->
       let err = Unix.error_message code in
       None, "Unix Error (" ^ api ^ "): " ^ err
   | HMarshal.Corrupt_file fname -> None, sprintf "file '%s' is corrupt" fname

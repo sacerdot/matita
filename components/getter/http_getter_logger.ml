@@ -55,7 +55,7 @@ let log ?(level = 1) s =
     let msg = "[HTTP-Getter] " ^ s in
     match (!logfile, !logchan) with
     | None, _ -> prerr_endline msg
-    | Some fname, Some oc ->
+    | Some _fname, Some oc ->
         output_string oc msg;
         output_string oc "\n";
         flush oc

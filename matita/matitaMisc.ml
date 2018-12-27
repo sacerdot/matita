@@ -38,8 +38,8 @@ let strip_suffix ~suffix s =
 let absolute_path file =
   if file.[0] = '/' then file else Unix.getcwd () ^ "/" ^ file
   
-let is_proof_script fname = true  (** TODO Zack *)
-let is_proof_object fname = true  (** TODO Zack *)
+let is_proof_script _fname = true  (** TODO Zack *)
+let is_proof_object _fname = true  (** TODO Zack *)
 
 let append_phrase_sep s =
   if not (Pcre.pmatch ~pat:(sprintf "%s$" BuildTimeConf.phrase_sep) s) then
@@ -77,7 +77,7 @@ class shell_history size =
   let size = size + 1 in
   let decr x = let x' = x - 1 in if x' < 0 then size + x' else x' in
   let incr x = (x + 1) mod size in
-  object (self)
+  object
     val data = Array.make size ""
 
     inherit basic_history (0, -1 , -1)
@@ -149,8 +149,8 @@ let list_tl_at ?(equality=(==)) e l =
   let rec aux =
     function
     | [] -> raise Not_found
-    | hd :: tl as l when equality hd e -> l
-    | hd :: tl -> aux tl
+    | hd :: _ as l when equality hd e -> l
+    | _ :: tl -> aux tl
   in
   aux l
 

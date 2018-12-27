@@ -25,16 +25,14 @@
 
 (* $Id$ *)
 
-open Printf
-
 let debug = false
 let debug_prerr = if debug then prerr_endline else ignore
 
-module HGT = Http_getter_types;;
-module HG = Http_getter;;
+(*module HGT = Http_getter_types;;*)
+(*module HG = Http_getter;;*)
 (*module UM = UriManager;;*)
 
-let decompile = ref (fun ~baseuri -> assert false);;
+let decompile = ref (fun ~baseuri:_ -> assert false);;
 let set_decompile_cb f = decompile := f;;
 
 (*
@@ -219,11 +217,11 @@ let moo_root_dir = lazy (
 ;;
 *)
 
-let rec close_db cache_of_processed_baseuri uris next =
+let close_db _cache_of_processed_baseuri uris _next =
   uris (* MATITA 1.0 *)
 ;;
 
-let clean_baseuris ?(verbose=true) buris =
+let clean_baseuris ?verbose:(_=true) _buris =
  (* MATITA 1.0 *) () (*
   let cache_of_processed_baseuri = Hashtbl.create 1024 in
   let buris = List.map Http_getter_misc.strip_trailing_slash buris in

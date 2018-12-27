@@ -97,24 +97,24 @@ let ctx_of (c,_) = c ;;
 let mk_cic_term c t = c,t ;;
 
 let ppterm (status:#pstatus) t =
- let uri,height,metasenv,subst,obj = status#obj in
+ let _uri,_height,metasenv,subst,_obj = status#obj in
  let context,t = t in
   status#ppterm ~metasenv ~subst ~context t
 ;;
 
 let ppcontext (status: #pstatus) c =
- let uri,height,metasenv,subst,obj = status#obj in
+ let _uri,_height,metasenv,subst,_obj = status#obj in
   status#ppcontext ~metasenv ~subst c
 ;;
 
 let ppterm_and_context (status: #pstatus) t =
- let uri,height,metasenv,subst,obj = status#obj in
+ let _uri,_height,metasenv,subst,_obj = status#obj in
  let context,t = t in
   status#ppcontext ~metasenv ~subst context ^ "\n ⊢ "^ 
   status#ppterm ~metasenv ~subst ~context t
 ;;
 
-let relocate status destination (source,t as orig) =
+let relocate status destination (source,_t as orig) =
  pp(lazy("relocate:\n" ^ ppterm_and_context status orig));
  pp(lazy("relocate in:\n" ^ ppcontext status destination));
  let rc = 
@@ -134,13 +134,13 @@ let relocate status destination (source,t as orig) =
             compute_ops (e::ctx) (cl1,cl2)
           else
             [ `Delift ctx; `Lift (List.rev ex) ]
-      | (n1, NCic.Def (b1,t1) as e)::cl1 as ex, (n2, NCic.Decl t2)::cl2 ->
+      | (n1, NCic.Def (_b1,t1) as e)::cl1 as ex, (n2, NCic.Decl t2)::cl2 ->
           if n1 = n2 && 
              NCicReduction.are_convertible status ctx ~subst ~metasenv t1 t2 then
             compute_ops (e::ctx) (cl1,cl2)
           else
             [ `Delift ctx; `Lift (List.rev ex) ]
-      | (n1, NCic.Decl _)::cl1 as ex, (n2, NCic.Def _)::cl2 -> 
+      | (_n1, NCic.Decl _)::_cl1 as ex, (_n2, NCic.Def _)::_cl2 -> 
             [ `Delift ctx; `Lift (List.rev ex) ]
       | _::_ as ex, [] -> [ `Lift (List.rev ex) ]
       | [], _::_ -> [ `Delift ctx ]
@@ -369,7 +369,7 @@ let select_term
       else
         let _,_,_,subst,_ = status#obj in
         match t with
-        | NCic.Meta (i,lc) when List.mem_assoc i subst ->
+        | NCic.Meta (i,_lc) when List.mem_assoc i subst ->
             let _,_,t,_ = NCicUtils.lookup_subst i subst in
             aux ctx (status,already_found) t
         | NCic.Meta _ -> (status,already_found),t

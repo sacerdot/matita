@@ -26,7 +26,6 @@
 (* $Id$ *)
 
 open Printf
-open GrafiteTypes
 
 module TA = GrafiteAst
 
@@ -84,7 +83,7 @@ let eval_with_engine include_paths status skipped_txt nonskipped_txt st
       (fun (acc, to_prepend) (status,alias) ->
        match alias with
        | None -> (status,to_prepend ^ nonskipped_txt)::acc,""
-       | Some (k,value) ->
+       | Some (_k,value) ->
             let newtxt = GrafiteAstPp.pp_alias value in
             (status,to_prepend ^ newtxt ^ "\n")::acc, "")
       ([],skipped_txt) enriched_history_fragment
@@ -94,7 +93,7 @@ let eval_with_engine include_paths status skipped_txt nonskipped_txt st
 
 let pp_eager_statement_ast = GrafiteAstPp.pp_statement 
 
-let eval_nmacro include_paths (buffer : GText.buffer) status unparsed_text parsed_text script mac =
+let eval_nmacro _include_paths (_buffer : GText.buffer) status _unparsed_text parsed_text script mac =
   let parsed_text_length = String.length parsed_text in
   match mac with
   | TA.Screenshot (_,name) -> 
@@ -206,12 +205,12 @@ and eval_statement include_paths (buffer : GText.buffer) status script
   in 
   match st with
   | GrafiteAst.Executable (loc, ex) ->
-     let _, nonskipped, skipped, parsed_text_length = text_of_loc loc in
+     let _, nonskipped, skipped, _parsed_text_length = text_of_loc loc in
       eval_executable include_paths buffer status unparsed_text
        skipped nonskipped script ex loc
   | GrafiteAst.Comment (loc, GrafiteAst.Code (_, ex))
     when Helm_registry.get_bool "matita.execcomments" ->
-     let _, nonskipped, skipped, parsed_text_length = text_of_loc loc in
+     let _, nonskipped, skipped, _parsed_text_length = text_of_loc loc in
       eval_executable include_paths buffer status unparsed_text
        skipped nonskipped script ex loc
   | GrafiteAst.Comment (loc, _) -> 
@@ -271,7 +270,7 @@ let similarsymbols_tag = `NAME similarsymbols_tag_name in
 let initial_statuses current baseuri =
  let status = new MatitaEngine.status baseuri in
  (match current with
-     Some current -> NCicLibrary.time_travel status;
+     Some _current -> NCicLibrary.time_travel status;
 (*
       (* MATITA 1.0: there is a known bug in invalidation; temporary fix here *)
       NCicEnvironment.invalidate () *)
@@ -353,7 +352,7 @@ object (self)
           false
         ));
     ignore(source_view#event#connect#button_release
-      ~callback:(fun button -> clean_locked := false; false));
+      ~callback:(fun _button -> clean_locked := false; false));
     ignore(source_view#buffer#connect#after#apply_tag
      ~callback:(
        fun tag ~start:_ ~stop:_ ->
@@ -375,8 +374,8 @@ object (self)
        let menuItems = menu#children in
        let undoMenuItem, redoMenuItem =
         match menuItems with
-           [undo;redo;sep1;cut;copy;paste;delete;sep2;
-            selectall;sep3;inputmethod;insertunicodecharacter] ->
+           [undo;redo;_sep1;cut;copy;paste;delete;_sep2;
+            _selectall;_sep3;_inputmethod;_insertunicodecharacter] ->
               List.iter menu#remove [ copy; cut; delete; paste ];
               undo,redo
          | _ -> assert false in

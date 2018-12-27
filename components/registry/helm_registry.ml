@@ -54,7 +54,7 @@ let starts_with prefix =
       String.sub s 0 prefix_len = prefix
     with Invalid_argument _ -> false
 
-let hashtbl_keys tbl = Hashtbl.fold (fun k _ acc -> k :: acc) tbl []
+(*let hashtbl_keys tbl = Hashtbl.fold (fun k _ acc -> k :: acc) tbl []*)
 let hashtbl_pairs tbl = Hashtbl.fold (fun k v acc -> (k,v) :: acc) tbl []
 
   (** </helpers> *)
@@ -85,16 +85,16 @@ let valid_key_rex = Str.regexp ("^" ^ valid_key_rex_raw ^ "$")
 let interpolated_key_rex = Str.regexp ("\\$(" ^ valid_key_rex_raw ^ ")")
 let dot_rex = Str.regexp "\\."
 let spaces_rex = Str.regexp "[ \t\n\r]+"
-let heading_spaces_rex = Str.regexp "^[ \t\n\r]+"
+(*let heading_spaces_rex = Str.regexp "^[ \t\n\r]+"*)
 let margin_blanks_rex =
   Str.regexp "^\\([ \t\n\r]*\\)\\([^ \t\n\r]*\\)\\([ \t\n\r]*\\)$"
 
 let strip_blanks s = Str.global_replace margin_blanks_rex "\\2" s
 
-let split s =
+(*let split s =
   (* trailing blanks are removed per default by split *)
-  Str.split spaces_rex (Str.global_replace heading_spaces_rex "" s)
-let merge l = String.concat " " l
+  Str.split spaces_rex (Str.global_replace heading_spaces_rex "" s)*)
+(*let merge l = String.concat " " l*)
 
 let handle_type_error f x =
   try f x with exn -> raise (Type_error (Printexc.to_string exn))
@@ -128,10 +128,10 @@ let quad fst_unmarshaller snd_unmarshaller trd_unmarshaller fth_unmarshaller v =
   | _ -> raise (Type_error "not a quad")
 
   (* escapes for xml configuration file *)
-let (escape, unescape) =
+(*let (escape, unescape) =
   let (in_enc, out_enc) = (`Enc_utf8, `Enc_utf8) in
   (Netencoding.Html.encode ~in_enc ~out_enc (),
-   Netencoding.Html.decode ~in_enc ~out_enc ~entity_base:`Xml ())
+   Netencoding.Html.decode ~in_enc ~out_enc ~entity_base:`Xml ())*)
 
 let key_is_valid key =
   if not (Str.string_match valid_key_rex key 0) then

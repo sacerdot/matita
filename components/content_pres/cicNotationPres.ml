@@ -25,8 +25,6 @@
 
 (* $Id$ *)
 
-open Printf
-
 module Ast = NotationPt
 module Mpres = Mpresentation
 
@@ -194,7 +192,7 @@ let add_parens child_prec curr_prec t =
     match t with
     | Mpresentation.Mobject (_, box) ->
         mpres_of_box (Box.H ([], [ open_box_paren; box; closed_box_paren ]))
-    | mpres -> Mpresentation.Mrow ([], [open_paren; t; closed_paren])
+    | _mpres -> Mpresentation.Mrow ([], [open_paren; t; closed_paren])
   end else
     ((*prerr_endline ("NOT adding parens around: "^
       BoxPp.render_to_string (function x::_->x|_->assert false)
@@ -311,7 +309,7 @@ let render status ~lookup_uri ?(prec=(-1)) =
     | t ->
         prerr_endline ("unexpected ast: " ^ NotationPp.pp_term status t);
         assert false
-  and aux_attributes xmlattrs mathonly xref  prec t =
+  and aux_attributes _xmlattrs mathonly _xref  prec t =
     let reset = ref false in
     let inferred_level = ref None in
     let expected_level = ref None in
@@ -352,7 +350,7 @@ let render status ~lookup_uri ?(prec=(-1)) =
     in
 (*     prerr_endline (NotationPp.pp_term t); *)
     aux_attribute t
-  and aux_literal xmlattrs xref prec l =
+  and aux_literal xmlattrs xref _prec l =
     let attrs = make_href xmlattrs xref in
     (match l with
     | `Symbol s -> Mpres.Mo (attrs, to_unicode s)

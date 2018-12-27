@@ -31,8 +31,6 @@ open MatitaGeneratedGui
 open MatitaGtkMisc
 open MatitaMisc
 
-exception Found of int
-
 let all_disambiguation_passes = ref false
 
 (* this is a shit and should be changed :-{ *)
@@ -41,7 +39,7 @@ let interactive_uri_choice
   ?(msg = "") ?(nonvars_button = false) ?(hide_uri_entry=false) 
   ?(hide_try=false) ?(ok_label="_Auto") ?(ok_action:[`SELECT|`AUTO] = `AUTO) 
   ?copy_cb ()
-  ~id uris
+  ~id:_ uris
 =
   if (selection_mode <> `SINGLE) &&
     (Helm_registry.get_opt_default Helm_registry.get_bool ~default:true "matita.auto_disambiguation")
@@ -180,7 +178,7 @@ class interpErrorModel =
               (let loc_row = tree_store#append () in
                 begin
                  match lll with
-                    [passes,envs_and_diffs,_,_] ->
+                    [passes,_envs_and_diffs,_,_] ->
                       tree_store#set ~row:loc_row ~column:id_col
                        ("Error location " ^ string_of_int (!idx1+1) ^
                         ", error message " ^ string_of_int (!idx1+1) ^ ".1" ^
@@ -1011,7 +1009,7 @@ class gui () =
       console#message ("'"^file^"' loaded.");
       self#_enableSaveTo file
 
-    method private _enableSaveTo file =
+    method private _enableSaveTo _file =
       self#main#saveMenuItem#misc#set_sensitive true
         
     method private console = console
@@ -1133,7 +1131,7 @@ class interpModel =
 
 
 let interactive_string_choice 
-  text prefix_len ?(title = "") ?(msg = "") () ~id locs uris 
+  text prefix_len ?(title = "") ?msg:(_ = "") () ~id:_ locs uris 
 = 
  GtkThread.sync (fun _ ->
  let dialog = new uriChoiceDialog () in
@@ -1258,7 +1256,7 @@ let interactive_interp_choice () text prefix_len choices =
 let _ =
   (* disambiguator callbacks *)
   Disambiguate.set_choose_uris_callback
-   (fun ~selection_mode ?ok ?(enable_button_for_non_vars=false) ~title ~msg ->
+   (fun ~selection_mode ?ok ?enable_button_for_non_vars:(_=false) ~title ~msg ->
      interactive_uri_choice ~selection_mode ?ok_label:ok ~title ~msg ());
   Disambiguate.set_choose_interp_callback (interactive_interp_choice ());
   (* gtk initialization *)

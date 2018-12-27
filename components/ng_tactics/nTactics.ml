@@ -312,7 +312,7 @@ let assumption_tac status = distribute_tac (fun status goal ->
 let find_in_context name context =
   let rec aux acc = function
     | [] -> raise Not_found
-    | (hd,_) :: tl when hd = name -> acc
+    | (hd,_) :: _ when hd = name -> acc
     | _ :: tl ->  aux (acc + 1) tl
   in
   aux 1 context
@@ -502,7 +502,7 @@ let analyze_indty_tac ~what indtyref =
   let goalty = get_goalty status goal in
   let status, what = disambiguate status (ctx_of goalty) what `XTInd in
   let status, ty_what = typeof status (ctx_of what) what in 
-  let status, (r,consno,lefts,rights) = analyse_indty status ty_what in
+  let _status, (r,consno,lefts,rights) = analyse_indty status ty_what in
   let leftno = List.length lefts in
   let rightno = List.length rights in
   indtyref := Some { 
@@ -675,7 +675,7 @@ let assert0_tac (hyps,concl) = distribute_tac (fun status goal ->
 let assert_tac seqs status =
  match status#stack with
   | [] -> assert false
-  | (g,_,_,_) :: s ->
+  | (g,_,_,_) :: _s ->
      assert (List.length g = List.length seqs);
      (match seqs with
          [] -> id_tac

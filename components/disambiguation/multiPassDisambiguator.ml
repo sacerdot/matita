@@ -25,8 +25,6 @@
 
 (* $Id$ *)
 
-open Printf
-
 let debug = ref false;;
 let debug_print s =
  if !debug then prerr_endline (Lazy.force s) else ();;
@@ -119,7 +117,7 @@ let disambiguate_thing ~description_of_alias ~passes ~aliases ~universe ~f thing
   let try_pass (fresh_instances, (_, aliases, universe), use_coercions) =
     f ~fresh_instances ~aliases ~universe ~use_coercions thing
   in
-  let set_aliases (instances,(use_mono_aliases,_,_),_) (_, user_asked as res) =
+  let set_aliases (_instances,(use_mono_aliases,_,_),_) (_, user_asked as res) =
    if use_mono_aliases then
     drop_aliases ~minimize_instances:true ~description_of_alias res (* one shot aliases *)
    else if user_asked then

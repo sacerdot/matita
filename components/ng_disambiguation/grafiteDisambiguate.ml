@@ -122,7 +122,7 @@ let ncic_mk_choice status = function
      let desc,f = DisambiguateChoices.nlookup_num_by_dsc dsc in
       desc, `Num_interp
        (fun num -> match f with `Num_interp f -> f num | _ -> assert false)
-  | GrafiteAst.Ident_alias (name, uri) -> 
+  | GrafiteAst.Ident_alias (_name, uri) -> 
      uri, `Sym_interp 
       (fun l->assert(l = []);
         let nref = NReference.reference_of_string uri in
@@ -139,7 +139,7 @@ let mk_implicit b =
 ;;
 
 let nlookup_in_library 
-  interactive_user_uri_choice input_or_locate_uri item 
+  _interactive_user_uri_choice _input_or_locate_uri item 
 =
   match item with
   | DisambiguateTypes.Id id -> 
@@ -206,8 +206,8 @@ let disambiguate_npattern status (text, prefix_len, (wanted, hyp_paths, goal_pat
    (wanted, hyp_paths, goal_path)
 ;;
 
-let disambiguate_reduction_kind text prefix_len = function
-  | `Unfold (Some t) -> assert false (* MATITA 1.0 *)
+let disambiguate_reduction_kind _text _prefix_len = function
+  | `Unfold (Some _t) -> assert false (* MATITA 1.0 *)
   | `Normalize
   | `Simpl
   | `Unfold None

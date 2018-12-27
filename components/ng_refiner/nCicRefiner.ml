@@ -608,15 +608,15 @@ and try_coercions status
     pp (lazy "WWW: trying coercions -- inner check");
     match infty, expty, t with
     (* `XTSort|`XTProd|`XTInd + Match not implemented *) 
-    | _,`XTSome expty, C.Match (Ref.Ref (_,Ref.Ind (_,tyno,leftno)) as r,outty,m,pl) ->
+    | _,`XTSome expty, C.Match (Ref.Ref (_,Ref.Ind (_,_tyno,_leftno)) as r,outty,m,pl) ->
         (*{{{*) pp (lazy "CASE");
         (* {{{ helper functions *)
         let get_cl_and_left_p refit outty =
           match refit with
-          | Ref.Ref (uri, Ref.Ind (_,tyno,leftno)) ->
+          | Ref.Ref (_uri, Ref.Ind (_,tyno,_leftno)) ->
              let _, leftno, itl, _, _ = NCicEnvironment.get_checked_indtys status r in
              let _, _, ty, cl = List.nth itl tyno in
-             let constructorsno = List.length cl in
+             (*let constructorsno = List.length cl in*)
               let count_pis t =
                 let rec aux ctx t = 
                   match NCicReduction.whd status ~subst ~delta:max_int ctx t with
@@ -700,7 +700,7 @@ and try_coercions status
                     (NCicSubstitution.lift status 1 mty) (NCicSubstitution.lift status 1 m) tgt
                 in
                 C.Prod (name, src, t), k
-            | C.Const (Ref.Ref (_,Ref.Ind (_,_,leftno)) as r) ->
+            | C.Const (Ref.Ref (_,Ref.Ind (_,_,_leftno)) as r) ->
                 let k = 
                   let k = C.Const(Ref.mk_constructor i r) in
                   NCicUntrusted.mk_appl k par
@@ -716,8 +716,8 @@ and try_coercions status
                   (NCicReduction.head_beta_reduce status ~delta:max_int 
                    (NCicUntrusted.mk_appl outty [k])))),[mty,m,mty,k]
             | C.Appl (C.Const (Ref.Ref (_,Ref.Ind (_,_,leftno)) as r)::pl) ->
-                let left_p,right_p = HExtlib.split_nth leftno pl in
-                let has_rights = right_p <> [] in
+                let left_p,_right_p = HExtlib.split_nth leftno pl in
+                (*let has_rights = right_p <> [] in*)
                 let k = 
                   let k = C.Const(Ref.mk_constructor i r) in
                   NCicUntrusted.mk_appl k (left_p@par)
@@ -819,7 +819,7 @@ and try_coercions status
         in (* }}} end helper functions *)
         (* constructors types with left params already instantiated *)
         let outty = NCicUntrusted.apply_subst status subst context outty in
-        let cl, left_p, leftno,rno = 
+        let cl, _left_p, leftno,rno = 
           get_cl_and_left_p r outty
         in
         let right_p, mty = 
@@ -930,7 +930,7 @@ and try_coercions status
         pp (lazy ("LAM: coerced = " ^ status#ppterm ~metasenv ~subst ~context coerced));
         metasenv, subst, coerced, expty (*}}}*)
     | _ -> raise exc
-  with exc2 ->    
+  with _ ->    
   let expty =
    match expty with
       `XTSome expty -> expty
@@ -1312,7 +1312,7 @@ let typeof_obj
                 let rec aux context (metasenv,subst) = function
                   | C.Meta _ -> metasenv, subst
                   | C.Implicit _ -> metasenv, subst
-                  | C.Appl (C.Rel i :: args) as t
+                  | C.Appl (C.Rel i :: args)
                       when i > List.length context - len ->
                       let lefts, _ = HExtlib.split_nth leftno args in
                       let ctxlen = List.length context in

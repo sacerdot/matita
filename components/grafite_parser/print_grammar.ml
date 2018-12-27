@@ -105,7 +105,7 @@ let needs_brackets t =
   count_brothers t > 1
 
 let visit_description desc fmt self = 
-  let skip s = true in
+  let skip _s = true in
   let inline s = List.mem s [ "int" ] in
   
   let rec visit_entry e ?level todo is_son  =
@@ -140,7 +140,7 @@ let visit_description desc fmt self =
             (fun x -> Sself :: x) (flatten_tree suff) @ flatten_tree pref)
           todo is_son  
     
-  and visit_tree name t todo is_son  = 
+  and visit_tree name t todo _is_son  = 
     if List.for_all (List.for_all is_symbol_dummy) t then todo else (
     Format.fprintf fmt "@[<v>";
     (match name with 

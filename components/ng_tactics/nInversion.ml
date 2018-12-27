@@ -71,7 +71,7 @@ let rec jmeqpatt = function
 let rec mk_arrows ~jmeq xs ys selection target = 
   match selection,xs,ys with
     [],[],[] -> target
-  | false :: l,x::xs,y::ys -> mk_arrows ~jmeq xs ys l target
+  | false :: l,_x::xs,_y::ys -> mk_arrows ~jmeq xs ys l target
   | true :: l,x::xs,y::ys when jmeq ->
      NotationPt.Binder (`Forall, (mk_id "_",
        Some (mk_appl [mk_sym "jmsimeq" ; 
@@ -95,7 +95,7 @@ let subst_metasenv_and_fix_names status =
    status#set_obj(u,h,NCicUntrusted.apply_subst_metasenv status subst metasenv,subst,o)
 ;;
 
-let mk_inverter ~jmeq name is_ind it leftno ?selection outsort (status: #NCic.status) baseuri =
+let mk_inverter ~jmeq name _is_ind it leftno ?selection outsort (status: #NCic.status) baseuri =
  pp (lazy ("leftno = " ^ string_of_int leftno));
  let _,ind_name,ty,cl = it in
  pp (lazy ("arity: " ^ status#ppterm ~metasenv:[] ~subst:[] ~context:[] ty));
@@ -142,7 +142,7 @@ let mk_inverter ~jmeq name is_ind it leftno ?selection outsort (status: #NCic.st
        in (hypaux 1 ncons)
      in
     
-     let outsort, suffix = NCicElim.ast_of_sort outsort in
+     let outsort, _suffix = NCicElim.ast_of_sort outsort in
      let theorem =
       mk_prods xs
        (NotationPt.Binder (`Forall, (mk_id "Hterm", Some (mk_appl (List.map mk_id (ind_name::xs)))),
@@ -156,7 +156,7 @@ let mk_inverter ~jmeq name is_ind it leftno ?selection outsort (status: #NCic.st
          NotationPt.Theorem
           (name,theorem, Some (NotationPt.Implicit (`Tagged "inv")), attrs))
      in 
-     let uri,height,nmenv,nsubst,nobj = theorem in
+     let _uri,_height,nmenv,_nsubst,_nobj = theorem in
      let ninitial_stack = Continuationals.Stack.of_nmetasenv nmenv in
      let status = status#set_obj theorem in
      let status = status#set_stack ninitial_stack in
@@ -205,6 +205,6 @@ NotationPt.Implicit (`Tagged "end"));
 
 let mk_inverter name is_ind it leftno ?selection outsort status baseuri =
  try mk_inverter ~jmeq:true name is_ind it leftno ?selection outsort status baseuri
- with NTacStatus.Error (s,_) -> 
+ with NTacStatus.Error (_s,_) -> 
    mk_inverter ~jmeq:false name is_ind it leftno ?selection outsort status baseuri
 ;;

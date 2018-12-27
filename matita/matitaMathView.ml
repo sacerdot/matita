@@ -27,9 +27,7 @@
 
 open Printf
 
-open GrafiteTypes
 open MatitaGtkMisc
-open MatitaGuiTypes
 open CicMathView
 
 module Stack = Continuationals.Stack
@@ -91,7 +89,7 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
           GtkSignal.disconnect notebook#as_widget id;
           switch_page_callback <- None
       | None -> ());
-      for i = 0 to pages do notebook#remove_page 0 done; 
+      for _i = 0 to pages do notebook#remove_page 0 done; 
       notebook#set_show_tabs true;
       pages <- 0;
       page2goal <- [];
@@ -112,12 +110,8 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
           scrolledWin <- Some w;
           (match cicMathView#misc#parent with
             | None -> ()
-            | Some parent ->
-               let parent =
-                match cicMathView#misc#parent with
-                   None -> assert false
-                 | Some p -> GContainer.cast_container p
-               in
+            | Some p ->
+               let parent = GContainer.cast_container p in
                 parent#remove cicMathView#coerce);
           w#add cicMathView#coerce
         in
@@ -158,7 +152,7 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
       in
       let add_switch _ _ (_, sw) = add_tab (render_switch sw) sw in
       Stack.iter  (** populate notebook with tabs *)
-        ~env:(fun depth tag (pos, sw) ->
+        ~env:(fun depth _tag (pos, sw) ->
           let markup =
             match depth, pos with
             | 0, 0 -> `Current (render_switch sw)
@@ -180,12 +174,12 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
     method private render_page:
      'status. #ApplyTransformation.status as 'status -> page:int ->
        goal_switch:Stack.switch -> unit
-     = fun status ~page ~goal_switch ->
+     = fun status ~page:_ ~goal_switch ->
       (match goal_switch with
       | Stack.Open goal ->
          let menv,subst = _metasenv in
           cicMathView#nload_sequent status menv subst goal
-      | Stack.Closed goal ->
+      | Stack.Closed _goal ->
           let root = Lazy.force closed_goal_mathml in
           cicMathView#load_root ~root);
       (try
@@ -479,7 +473,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       self#_showMath;
       mathView#load_root (Lazy.force empty_mathml)
 
-    method private _loadCheck term =
+    method private _loadCheck _term =
       failwith "not implemented _loadCheck";
 (*       self#_showMath *)
 
@@ -504,7 +498,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
          "the graph of dependencies amoung objects. Please install it.")
         ~parent:win#toplevel ()
 
-    method private dependencies direction uri () =
+    method private dependencies _direction _uri () =
       assert false (* MATITA 1.0
       let dbd = LibraryDb.instance () in
       let graph =
@@ -728,7 +722,7 @@ let find_selection_owner () =
     | mv :: tl ->
         (match mv#get_selections with
         | [] -> aux tl
-        | sel :: _ -> mv)
+        | _sel :: _ -> mv)
   in
   aux (get_math_views ())
 

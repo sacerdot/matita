@@ -55,10 +55,10 @@ with type t = NCic.term and type input = NCic.term = struct
     | NReference.Fix(_,_,h) -> h
     | _ -> 0
 
-external old_hash_param :
-  int -> int -> 'a -> int = "caml_hash_univ_param" "noalloc";;
+  external old_hash_param :
+    int -> int -> 'a -> int = "caml_hash_univ_param" (*[@@noalloc]*);;
 
-let old_hash = old_hash_param 10 100;;
+  let old_hash = old_hash_param 10 100;;
 
   let compare_refs (NReference.Ref (u1,r1)) (NReference.Ref (u2,r2)) =
     let x = height_of_ref r2 - height_of_ref r1 in

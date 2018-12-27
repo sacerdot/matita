@@ -131,8 +131,8 @@ let compare_weights (h1, w1) (h2, w2) =
           if var1 = var2 then
             let diffs = (w1 - w2) + diffs in
             let r = Pervasives.compare w1 w2 in
-            let lt = lt or (r < 0) in
-            let gt = gt or (r > 0) in
+            let lt = lt || (r < 0) in
+            let gt = gt || (r > 0) in
               if lt && gt then XINCOMPARABLE else
                 aux hdiff (lt, gt) diffs tl1 tl2
           else if var1 < var2 then
@@ -208,7 +208,7 @@ module NRKBO (B : Terms.Blob) = struct
   let name = "nrkbo"
   include B 
 
-  module Pp = Pp.Pp(B)
+  (*module Pp = Pp.Pp(B)*)
 
   let eq_foterm = eq_foterm B.eq;;
 
@@ -224,7 +224,7 @@ exception UnificationFailure of string Lazy.t;;
       in
       match s, t with
         | s, t when eq_foterm s t -> subst
-        | Terms.Var i, Terms.Var j
+        | Terms.Var i, Terms.Var _j
             when (not (List.exists (fun (_,k) -> k=t) subst)) ->
             let subst = FoSubst.build_subst i t subst in
               subst
@@ -290,7 +290,7 @@ module KBO (B : Terms.Blob) = struct
   let name = "kbo"
   include B 
 
-  module Pp = Pp.Pp(B)
+  (*module Pp = Pp.Pp(B)*)
 
   let eq_foterm = eq_foterm B.eq;;
 
@@ -356,7 +356,7 @@ module LPO (B : Terms.Blob) = struct
   let name = "lpo"
   include B 
 
-  module Pp = Pp.Pp(B)
+  (*module Pp = Pp.Pp(B)*)
 
   let eq_foterm = eq_foterm B.eq;;
 

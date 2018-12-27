@@ -13,7 +13,7 @@ open Printf
 
 let print ?(depth=0) s = 
   prerr_endline (String.make (2*depth) ' '^Lazy.force s) 
-let noprint ?(depth=0) _ = () 
+let noprint ?depth:(_=0) _ = () 
 let debug_print = noprint
 
 open Continuationals.Stack
@@ -66,7 +66,7 @@ let is_relevant tbl item =
       else true
   with Not_found -> true
 
-let print_stat status tbl =
+let print_stat _status tbl =
   let l = RefHash.fold (fun a v l -> (a,v)::l) tbl [] in
   let relevance v = float !(v.uses) /. float !(v.nominations) in
   let vcompare (_,v1) (_,v2) =
@@ -356,7 +356,7 @@ let index_local_equations2 eq_cache status open_goal lemmas nohyps =
     eq_cache lemmas
 ;;
 
-let fast_eq_check_tac ~params s = 
+let fast_eq_check_tac ~params:_ s = 
   let unit_eq = index_local_equations s#eq_cache s in   
   dist_fast_eq_check unit_eq s
 ;;
@@ -367,7 +367,7 @@ let paramod eq_cache status goal =
   | s::_ -> s
 ;;
 
-let paramod_tac ~params s = 
+let paramod_tac ~params:_ s = 
   let unit_eq = index_local_equations s#eq_cache s in   
   NTactics.distribute_tac (paramod unit_eq) s
 ;;
@@ -416,7 +416,7 @@ let close_wrt_context status =
     (fun ty ctx_entry -> 
         match ctx_entry with 
        | name, NCic.Decl t -> NCic.Prod(name,t,ty)
-       | name, NCic.Def(bo, _) -> NCicSubstitution.subst status bo ty)
+       | _name, NCic.Def(bo, _) -> NCicSubstitution.subst status bo ty)
 ;;
 
 let args_for_context ?(k=1) ctx =
@@ -424,8 +424,8 @@ let args_for_context ?(k=1) ctx =
     List.fold_left 
       (fun (n,l) ctx_entry -> 
          match ctx_entry with 
-           | name, NCic.Decl t -> n+1,NCic.Rel(n)::l
-           | name, NCic.Def(bo, _) -> n+1,l)
+           | _name, NCic.Decl _t -> n+1,NCic.Rel(n)::l
+           | _name, NCic.Def(_bo, _) -> n+1,l)
       (k,[]) ctx in
     args
 
@@ -444,7 +444,7 @@ let refresh metasenv =
   List.fold_left 
     (fun (metasenv,subst) (i,(iattr,ctx,ty)) ->
        let ikind = NCicUntrusted.kind_of_meta iattr in
-       let metasenv,j,instance,ty = 
+       let metasenv,_j,instance,ty = 
          NCicMetaSubst.mk_meta ~attrs:iattr 
            metasenv ctx ~with_type:ty ikind in
        let s_entry = i,(iattr, ctx, instance, ty) in
@@ -460,12 +460,12 @@ let close_metasenv status metasenv subst =
   *)
   let metasenv = NCicUntrusted.sort_metasenv status subst metasenv in 
     List.fold_left 
-      (fun (subst,objs) (i,(iattr,ctx,ty)) ->
+      (fun (subst,objs) (i,(_iattr,ctx,ty)) ->
          let ty = NCicUntrusted.apply_subst status subst ctx ty in
          let ctx = 
            NCicUntrusted.apply_subst_context status ~fix_projections:true 
              subst ctx in
-         let (uri,_,_,_,obj) as okind = 
+         let (uri,_,_,_,_obj) as okind = 
            constant_for_meta status ctx ty i in
          try
            NCicEnvironment.check_and_add_obj status okind;
@@ -517,7 +517,7 @@ let replace_meta status i args target =
            | _ -> let args = 
                List.map (NCicSubstitution.subst_meta status lc) args in
                NCic.Appl(NCic.Rel k::args))
-    | NCic.Meta (j,lc) as m ->
+    | NCic.Meta (_j,lc) as m ->
         (match lc with
            _,NCic.Irl _ -> m
          | n,NCic.Ctx l ->
@@ -532,7 +532,7 @@ let replace_meta status i args target =
 
 let close_wrt_metasenv status subst =
   List.fold_left 
-    (fun ty (i,(iattr,ctx,mty)) ->
+    (fun ty (i,(_iattr,ctx,mty)) ->
        let mty = NCicUntrusted.apply_subst status subst ctx mty in
        let ctx = 
          NCicUntrusted.apply_subst_context status ~fix_projections:true 
@@ -587,8 +587,8 @@ let saturate_to_ref status metasenv subst ctx nref ty =
     aux metasenv ty []
 
 let smart_apply t unit_eq status g = 
-  let n,h,metasenv,subst,o = status#obj in
-  let gname, ctx, gty = List.assoc g metasenv in
+  let n,h,metasenv,_subst,o = status#obj in
+  let _gname, ctx, gty = List.assoc g metasenv in
   (* let ggty = mk_cic_term context gty in *)
   let status, t = disambiguate status ctx t `XTNone in
   let status,t = term_of_cic_term status t ctx in
@@ -629,7 +629,7 @@ let smart_apply t unit_eq status g =
         debug_print(lazy("ritorno da fast_eq_check"));
         res
     with
-      | NCicEnvironment.ObjectNotFound s as e ->
+      | NCicEnvironment.ObjectNotFound _s as e ->
           raise (Error (lazy "eq_coerc non yet defined",Some e))
       | Error _ as e -> debug_print (lazy "error"); raise e
 (* FG: for now we catch TypeCheckerFailure; to be understood *)  
@@ -952,7 +952,7 @@ let init_cache ?(facts=[]) ?(under_inspection=[],[])
      unit_eq = unit_eq;
      trace = trace}
 
-let only signature _context candidate = true
+let only _signature _context _candidate = true
 (*
         (* TASSI: nel trie ci mettiamo solo il body, non il ty *)
   let candidate_ty = 
@@ -1011,9 +1011,9 @@ let rec stack_goals level gs =
 let open_goals level status = stack_goals level status#stack
 ;;
 
-let try_candidate ?(smart=0) flags depth status eq_cache ctx t =
+let try_candidate ?(smart=0) _flags depth status eq_cache _ctx t =
   try
-    let old_og_no = List.length (open_goals (depth+1) status) in
+    (*let old_og_no = List.length (open_goals (depth+1) status) in*)
     debug_print ~depth (lazy ("try " ^ (string_of_int smart) ^ " : "
       ^ (NotationPp.pp_term status) t));
     let status = 
@@ -1049,7 +1049,7 @@ let try_candidate ?(smart=0) flags depth status eq_cache ctx t =
        debug_print ~depth (lazy "strange application"); None)
     else 
 *)      (incr candidate_no; Some ((!candidate_no,t),status))
-   with Error (msg,exn) -> debug_print ~depth (lazy "failed"); None
+   with Error _ -> debug_print ~depth (lazy "failed"); None
 ;;
 
 let sort_of status subst metasenv ctx t =
@@ -1087,12 +1087,12 @@ let get_cands retrieve_for diff empty gty weak_gty =
             cands, diff more_cands cands
 ;;
 
-let get_candidates ?(smart=true) ~pfailed depth flags status cache signature gty =
+let get_candidates ?(smart=true) ~pfailed depth flags status cache _signature gty =
   let universe = status#auto_cache in
   let _,_,metasenv,subst,_ = status#obj in
   let context = ctx_of gty in
   let _, raw_gty = term_of_cic_term status gty context in
-  let is_prod, is_eq =   
+  let is_prod, _is_eq =   
   let status, t = term_of_cic_term status gty context  in 
   let t = NCicReduction.whd status subst context t in
     match t with
@@ -1209,7 +1209,7 @@ let applicative_case ~pfailed depth signature status flags gty cache =
       flags status tcache signature gty 
   in
   let sm = if is_eq || is_prod then 0 else 2 in
-  let sm1 = if flags.last then 2 else 0 in 
+  (*let sm1 = if flags.last then 2 else 0 in *)
   let maxd = (depth + 1 = flags.maxdepth) in 
   let try_candidates only_one sm acc candidates =
     List.fold_left 
@@ -1335,7 +1335,7 @@ let is_prod status =
 
 let intro ~depth status facts name =
   let status = NTactics.intro_tac name status in
-  let _, ctx, ngty = current_goal status in
+  let _, ctx, _ngty = current_goal status in
   let t = mk_cic_term ctx (NCic.Rel 1) in
   let status, keys = keys_of_term status t in
   let facts = List.fold_left (add_to_th t) facts keys in
@@ -1557,7 +1557,7 @@ match status#stack with
       List.for_all (fun i -> IntSet.mem i others) 
 	(HExtlib.filter_map is_open g)
 
-let top_cache ~depth top status cache =
+let top_cache ~depth:_ top status cache =
   if top then
     let unit_eq = index_local_equations status#eq_cache status in 
     {cache with unit_eq = unit_eq}
@@ -1672,7 +1672,7 @@ auto_main flags signature cache depth status: unit =
 		  {cache with under_inspection = tl,tree} 
 	in 
 	  auto_clusters flags signature cache (depth-1) status
-    | orig::_ ->
+    | _orig::_ ->
 	if depth > 0 && move_to_side depth status
 	then 
 	  let status = NTactics.merge_tac status in
