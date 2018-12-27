@@ -63,6 +63,9 @@ echo "done"
 FINDLIB_LIBSREQUIRES="\
 expat \
 http \
+pcre \
+str \
+unix \
 lablgtk3 \
 lablgtk3.sourceview3 \
 netstring \
