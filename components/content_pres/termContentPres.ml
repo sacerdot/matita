@@ -44,7 +44,7 @@ let resolve_binder = function
 
 let add_level_info prec t = Ast.AttributedTerm (`Level prec, t)
 
-let rec top_pos t = add_level_info ~-1 t
+let top_pos t = add_level_info ~-1 t
 
 let rec remove_level_info =
   function
@@ -347,7 +347,7 @@ let instantiate21 idrefs env l1 =
         Ast.AttributedTerm (attr, subst_singleton pos env t)
     | t -> NotationUtil.group (subst pos env t)
   and subst pos env = function
-    | Ast.AttributedTerm (attr, t) ->
+    | Ast.AttributedTerm (_attr, t) ->
 (*         prerr_endline ("loosing attribute " ^ NotationPp.pp_attribute attr); *)
         subst pos env t
     | Ast.Variable var ->
@@ -378,7 +378,7 @@ let instantiate21 idrefs env l1 =
     | Ast.Literal l as t ->
         let t = add_idrefs idrefs t in
         (match l with
-        | `Keyword k -> [ add_keyword_attrs t ]
+        | `Keyword _k -> [ add_keyword_attrs t ]
         | _ -> [ t ])
     | Ast.Layout l -> [ Ast.Layout (subst_layout pos env l) ]
     | t -> [ NotationUtil.visit_ast (subst_singleton pos env) t ]
@@ -587,7 +587,7 @@ let instantiate_level2 status env term =
   in
   let rec aux env term =
     match term with
-    | Ast.AttributedTerm (a, term) -> (*Ast.AttributedTerm (a, *)aux env term
+    | Ast.AttributedTerm (_a, term) -> (*Ast.AttributedTerm (a, *)aux env term
     | Ast.Appl terms -> Ast.Appl (List.map (aux env) terms)
     | Ast.Binder (binder, var, body) ->
         Ast.Binder (binder, aux_capture_var env var, aux env body)
@@ -632,8 +632,8 @@ let instantiate_level2 status env term =
       Ast.Pattern (head, hrefs, vars) ->
        Ast.Pattern (head, hrefs, List.map (aux_capture_var env) vars)
     | Ast.Wildcard -> Ast.Wildcard
-  and aux_definition env (params, var, term, i) =
-    (List.map (aux_capture_var env) params, aux_capture_var env var, aux env term, i)
+  (*and aux_definition env (params, var, term, i) =
+    (List.map (aux_capture_var env) params, aux_capture_var env var, aux env term, i)*)
   and aux_substs env substs =
     List.map (fun (name, term) -> (name, aux env term)) substs
   and aux_meta_substs env meta_substs = List.map (aux_opt env) meta_substs
@@ -646,7 +646,7 @@ let instantiate_level2 status env term =
     | Ast.TermVar (name,(Ast.Level l|Ast.Self l)) -> 
         Ast.AttributedTerm (`Level l,Env.lookup_term env name)
     | Ast.FreshVar name -> Ast.Ident (lookup_fresh_name name, None)
-    | Ast.Ascription (term, name) -> assert false
+    | Ast.Ascription (_term, _name) -> assert false
   and aux_magic env = function
     | Ast.Default (some_pattern, none_pattern) ->
         let some_pattern_names = NotationUtil.names_of_term some_pattern in
@@ -714,7 +714,7 @@ let instantiate_level2 status env term =
               | _ -> assert false
             in
             instantiate_fold_right env)
-    | Ast.If (_, p_true, p_false) as t ->
+    | Ast.If (_, _p_true, _p_false) as t ->
         aux env (NotationUtil.find_branch (Ast.Magic t))
     | Ast.Fail -> assert false
     | _ -> assert false

@@ -302,7 +302,7 @@ let list_iter_sep ~sep f =
   in
   aux
   
-let rec list_findopt f l = 
+let list_findopt f l = 
   let rec aux k = function 
     | [] -> None 
     | x::tl -> 
@@ -316,13 +316,13 @@ let split_nth n l =
   let rec aux acc n l =
     match n, l with
     | 0, _ -> List.rev acc, l
-    | n, [] -> raise (Failure "HExtlib.split_nth")
+    | _, [] -> raise (Failure "HExtlib.split_nth")
     | n, hd :: tl -> aux (hd :: acc) (n - 1) tl in
   aux [] n l
 
 let list_last l =
   let l = List.rev l in 
-  try List.hd l with exn -> raise (Failure "HExtlib.list_last")
+  try List.hd l with _ -> raise (Failure "HExtlib.list_last")
 ;;
 
 let rec list_assoc_all a = function

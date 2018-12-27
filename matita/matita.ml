@@ -25,11 +25,6 @@
 
 (* $Id$ *)
 
-open Printf
-
-open MatitaGtkMisc
-open GrafiteTypes
-
 (** {2 Initialization} *)
 
 let _ = 

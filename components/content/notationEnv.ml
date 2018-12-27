@@ -93,7 +93,7 @@ let lookup_list env name =
   | ty, _ -> raise (Type_mismatch (name, ty))
 
 let opt_binding_some (n, (ty, v)) = (n, (OptType ty, OptValue (Some v)))
-let opt_binding_none (n, (ty, v)) = (n, (OptType ty, OptValue None))
+let opt_binding_none (n, (ty, _v)) = (n, (OptType ty, OptValue None))
 let opt_binding_of_name (n, ty) = (n, (OptType ty, OptValue None))
 let list_binding_of_name (n, ty) = (n, (ListType ty, ListValue []))
 let opt_declaration (n, ty) = (n, OptType ty)

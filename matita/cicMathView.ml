@@ -25,8 +25,6 @@
 
 open Printf
 
-open GrafiteTypes
-open MatitaGtkMisc
 open MatitaGuiTypes
 open GtkSourceView3
 
@@ -197,7 +195,7 @@ object (self)
     self#buffer#apply_tag all_tag ~start:(self#buffer#get_iter `START)
      ~stop:(self#buffer#get_iter `END);
     ignore(all_tag#connect#event
-      ~callback:(fun ~origin event pos ->
+      ~callback:(fun ~origin:_ event _pos ->
         match GdkEvent.get_type event with
          | `MOTION_NOTIFY -> 
              Gdk.Window.set_cursor
@@ -209,12 +207,12 @@ object (self)
          | _ -> false));
      let hyperlink_tag = self#buffer#create_tag [] in
      ignore(hyperlink_tag#connect#event
-       ~callback:(fun ~origin event pos ->
+       ~callback:(fun ~origin:_ event pos ->
          let offset = (new GText.iter pos)#offset in
          let _,_,href =
           try
            List.find
-            (fun (start,stop,href) -> start <= offset && offset <= stop
+            (fun (start,stop,_href) -> start <= offset && offset <= stop
             ) hyperlinks
           with
            Not_found -> assert false
@@ -235,7 +233,7 @@ object (self)
               false
           | _ -> false));
      List.iter
-      ( fun (start,stop,(href : string)) ->
+      ( fun (start,stop,(_href : string)) ->
           self#buffer#apply_tag hyperlink_tag
            ~start:(self#buffer#get_iter_at_char start)
            ~stop:(self#buffer#get_iter_at_char (stop+1));
@@ -690,7 +688,7 @@ let cicMathView (*?auto_indent ?highlight_current_line ?indent_on_tab ?indent_wi
         Gobject.set_params (Gobject.try_cast obj "GtkSourceView") pl;
         new _cicMathView obj)(*)) ?auto_indent ?highlight_current_line ?indent_on_tab ?indent_width ?insert_spaces_instead_of_tabs ?right_margin_position ?show_line_marks ?show_line_numbers ?show_right_margin ?smart_home_end ?tab_width ?editable ?cursor_visible ?justification ?wrap_mode ?accepts_tab ?border_width*) [] ?width ?height ?packing ?show () :> cicMathView)
 
-let screenshot status sequents metasenv subst (filename (*as ofn*)) =
+let screenshot _status _sequents _metasenv _subst (_filename (*as ofn*)) =
  () (*MATITA 1.0
   let w = GWindow.window ~title:"screenshot" () in
   let width = 500 in

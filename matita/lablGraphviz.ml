@@ -74,7 +74,7 @@ class graphviz_impl ?packing () =
     method load_graph_from_file ?(gviz_cmd = "dot") fname =
       let tmp_png = tempfile () in
       let rc = Sys.command (mk_gviz_cmd gviz_cmd png_flags fname tmp_png) in
-      if rc <> 0 || (Unix.stat tmp_png).st_size = 0 then begin
+      if rc <> 0 || (Unix.stat tmp_png).Unix.st_size = 0 then begin
         eprintf
           ("Graphviz command failed (exit code: %d) on the following graph:\n"
            ^^ "%s\n%!")

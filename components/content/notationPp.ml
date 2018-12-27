@@ -110,7 +110,7 @@ let rec pp_term (status : #NCic.status) ?(pp_parens = true) t =
 	  (match typ with None -> "" | Some t -> sprintf " return %s" (pp_term t))          
           (pp_patterns status patterns)
     | Ast.Cast (t1, t2) -> sprintf "(%s: %s)" (pp_term ~pp_parens:true t1) (pp_term ~pp_parens:true t2)
-    | Ast.LetIn ((var,t2), t1, t3) ->
+    | Ast.LetIn ((var,_t2), t1, t3) ->
 (*       let t2 = match t2 with None -> Ast.Implicit | Some t -> t in *)
         sprintf "let %s \\def %s in %s" (pp_term var)
 (*           (pp_term ~pp_parens:true t2) *)
@@ -251,8 +251,8 @@ and pp_variable = function
   | Ast.NumVar s -> "number " ^ s
   | Ast.IdentVar s -> "ident " ^ s
   | Ast.TermVar (s,Ast.Self _) -> s
-  | Ast.TermVar (s,Ast.Level l) -> "term " ^string_of_int l 
-  | Ast.Ascription (t, n) -> assert false
+  | Ast.TermVar (_s,Ast.Level l) -> "term " ^string_of_int l 
+  | Ast.Ascription (_t, _n) -> assert false
   | Ast.FreshVar n -> "fresh " ^ n
 
 let _pp_term = ref (pp_term ~pp_parens:false)

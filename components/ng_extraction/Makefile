@@ -16,9 +16,6 @@ IMPLEMENTATION_FILES = \
    miniml.ml $(INTERFACE_FILES:%.mli=%.ml)
 EXTRA_OBJECTS_TO_INSTALL = 
 EXTRA_OBJECTS_TO_CLEAN =
-%.cmo: OCAMLOPTIONS += -w Ae
-%.cmi: OCAMLOPTIONS += -w Ae
-%.cmx: OCAMLOPTIONS += -w Ae
 
 include ../../Makefile.defs
 include ../Makefile.common

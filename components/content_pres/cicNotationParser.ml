@@ -189,8 +189,8 @@ let extract_term_production status pattern =
   and aux_magic magic =
     match magic with
     | Ast.Opt p ->
-        let p_bindings, p_atoms, p_names, p_action = inner_pattern p in
-        let action (env_opt : NotationEnv.t option) (loc : Ast.location) =
+        let _p_bindings, p_atoms, p_names, p_action = inner_pattern p in
+        let action (env_opt : NotationEnv.t option) (_loc : Ast.location) =
           match env_opt with
           | Some env -> List.map Env.opt_binding_some env
           | None -> List.map Env.opt_binding_of_name p_names

@@ -25,11 +25,8 @@
 
 (* $Id$ *)
 
-open Printf
-
 module Ast = NotationPt
 module Env = NotationEnv
-module Pp = NotationPp
 module Util = NotationUtil
 
 let get_tag term0 =
@@ -84,7 +81,7 @@ struct
       Ast.Variable (Ast.TermVar (name,Ast.Level 0))
     in
     let rec aux = function
-      | Ast.AttributedTerm (_, t) -> assert false
+      | Ast.AttributedTerm (_, _t) -> assert false
       | Ast.Literal _
       | Ast.Layout _ -> assert false
       | Ast.Variable v -> Ast.Variable v
@@ -169,7 +166,7 @@ input
 *)
 
   and compile_magic = function
-    | Ast.Fold (kind, p_base, names, p_rec) ->
+    | Ast.Fold (_kind, p_base, names, p_rec) ->
         let p_rec_decls = Env.declarations_of_term p_rec in
 	  (* LUCA: p_rec_decls should not contain "names" *)
         let acc_name = try List.hd names with Failure _ -> assert false in
@@ -184,7 +181,7 @@ input
 	     let rec aux term =
 	       match compiled_rec term with
 		 | None -> aux_base term
-		 | Some (env', ctors', _) ->
+		 | Some (env', _ctors', _) ->
 		     begin
                        let acc = Env.lookup_term env' acc_name in
                        let env'' = Env.remove_name env' acc_name in
@@ -220,7 +217,7 @@ input
           | Some (env', ctors', 0) ->
               let env' =
                 List.map
-                  (fun (name, (ty, v)) as binding ->
+                  (fun (name, (_ty, _v)) as binding ->
                     if List.exists (fun (name', _) -> name = name') p_opt_decls
                     then Env.opt_binding_some binding
                     else binding)

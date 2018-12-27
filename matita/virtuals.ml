@@ -59,7 +59,7 @@ let similar_symbols symbol =
 let get_all_eqclass () =
   let rc = ref [] in
   Hashtbl.iter 
-    (fun k v ->
+    (fun _k v ->
       if not (List.mem v !rc) then
         rc := v :: !rc)
     classes;

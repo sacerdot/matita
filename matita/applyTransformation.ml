@@ -66,7 +66,7 @@ let ntxt_of_cic_context ~metasenv ~subst =
   Content2pres.ncontext2pres
   ((new NCicPp.status)#ppcontext ~metasenv ~subst)
 
-let ntxt_of_cic_subst ~map_unicode_to_tex size status ~metasenv ?use_subst subst =
+let ntxt_of_cic_subst ~map_unicode_to_tex:_ _size _status ~metasenv ?use_subst subst =
  [],
  "<<<high level printer for subst not implemented; low-level printing:>>>\n" ^
   (new NCicPp.status)#ppsubst ~metasenv ?use_subst subst
@@ -75,11 +75,11 @@ class status =
  object(self)
   inherit Interpretations.status
   inherit TermContentPres.status
-  method ppterm ~context ~subst ~metasenv ?margin ?inside_fix t =
+  method ppterm ~context ~subst ~metasenv ?margin:(_) ?inside_fix:(_) t =
    snd (ntxt_of_cic_term ~map_unicode_to_tex:false 80 self ~metasenv ~subst
     ~context t)
 
-  method ppcontext ?sep ~subst ~metasenv context =
+  method ppcontext ?sep:(_) ~subst ~metasenv context =
    snd (ntxt_of_cic_context ~map_unicode_to_tex:false 80 self ~metasenv ~subst
     context)
 

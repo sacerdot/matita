@@ -25,8 +25,8 @@
 
 (* $Id: cicUtil.ml 10153 2009-07-28 15:17:51Z sacerdot $ *)
 
-exception Meta_not_found of int
-exception Subst_not_found of int
+(*exception Meta_not_found of int
+exception Subst_not_found of int*)
 
 (* syntactic_equality up to the                 *)
 (* distinction between fake dependent products  *)

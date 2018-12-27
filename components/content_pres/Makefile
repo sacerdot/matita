@@ -16,19 +16,15 @@ INTERFACE_FILES =		 \
 IMPLEMENTATION_FILES =		 \
 	$(INTERFACE_FILES:%.mli=%.ml)
 
-cicNotationPres.cmi: OCAMLOPTIONS += -rectypes
-cicNotationPres.cmo: OCAMLOPTIONS += -rectypes
-cicNotationPres.cmx: OCAMLOPTIONS += -rectypes
-
 all:
 clean:
 
 LOCAL_LINKOPTS = -package helm-content_pres -linkpkg
 
 cicNotationLexer.cmo: OCAMLC = $(OCAMLC_P4)
-cicNotationParser.cmo: OCAMLC = $(OCAMLC_P4)
+cicNotationParser.cmo: OCAMLC = $(OCAMLC_P4) -w -27
 cicNotationLexer.cmx: OCAMLOPT = $(OCAMLOPT_P4)
-cicNotationParser.cmx: OCAMLOPT = $(OCAMLOPT_P4)
+cicNotationParser.cmx: OCAMLOPT = $(OCAMLOPT_P4) -w -27
 cicNotationLexer.ml.annot: OCAMLC = $(OCAMLC_P4)
 cicNotationParser.ml.annot: OCAMLC = $(OCAMLC_P4)
 

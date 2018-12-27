@@ -205,7 +205,7 @@ let is_equation status metasenv subst context ty =
     NCicMetaSubst.saturate status ~delta:0 metasenv subst context
       ty 0 
   in match hty with
-    | NCic.Appl (eq ::tl) when eq = CB.eqP -> true
+    | NCic.Appl (eq ::_) when eq = CB.eqP -> true
     | _ -> false
 ;;
 

@@ -25,8 +25,6 @@
 
 (* $Id$ *)
 
-open Printf
-
 type pattern_kind = Variable | Constructor
 type tag_t = int
 
@@ -121,7 +119,7 @@ struct
       | _ -> kfail () (*CSC: was assert false, but it did happen*))
 
   let success_closure ksucc =
-    (fun matched_terms constructors terms ->
+    (fun matched_terms constructors _terms ->
 (* prerr_endline "success_closure"; *)
        ksucc matched_terms constructors)
 

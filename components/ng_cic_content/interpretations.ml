@@ -107,7 +107,7 @@ let add_idrefs =
   List.fold_right (fun idref t -> Ast.AttributedTerm (`IdRef idref, t))
 
 let instantiate32 idrefs env symbol args =
-  let rec instantiate_arg = function
+  let instantiate_arg = function
     | Ast.IdentArg (n, name) ->
         let t = 
           try List.assoc name env 
@@ -267,7 +267,7 @@ let nast_of_cic0 status
     | NCic.Lambda (n,s,t) ->
         idref (Ast.Binder (`Lambda,(Ast.Ident (n,None), Some (k ~context s)),
          k ~context:((n,NCic.Decl s)::context) t))
-    | NCic.LetIn (n,s,ty,NCic.Rel 1) ->
+    | NCic.LetIn (_n,s,ty,NCic.Rel 1) ->
         idref (Ast.Cast (k ~context ty, k ~context s))
     | NCic.LetIn (n,s,ty,t) ->
         idref (Ast.LetIn ((Ast.Ident (n,None), Some (k ~context s)), k ~context
@@ -324,7 +324,7 @@ let nast_of_cic0 status
         in
 	let rec eat_branch n ctx ty pat =
           match (ty, pat) with
-	  | NCic.Prod (name, s, t), _ when n > 0 ->
+	  | NCic.Prod (_name, _s, t), _ when n > 0 ->
              eat_branch (pred n) ctx t pat 
           | NCic.Prod (_, _, t), NCic.Lambda (name, s, t') ->
               let cv, rhs = eat_branch 0 ((name,NCic.Decl s)::ctx) t t' in
@@ -431,7 +431,7 @@ let nmap_context0 status ~idref ~metasenv ~subst context =
    ) context ([],[]))
 ;;
 
-let nmap_sequent0 status ~idref ~metasenv ~subst (i,(n,context,ty)) =
+let nmap_sequent0 status ~idref ~metasenv ~subst (i,(_n,context,ty)) =
  let module K = Content in
  let nast_of_cic =
   nast_of_cic1 status ~idref ~output_type:`Term ~metasenv ~subst in
@@ -457,7 +457,7 @@ let gen_id prefix seed =
   res
 ;;
 
-let build_def_item seed context metasenv id n t ty =
+let build_def_item seed _context _metasenv id n t ty =
  let module K = Content in
 (*
   try
@@ -543,7 +543,7 @@ let build_inductive b seed =
             K.inductive_constructors = build_constructors seed cl
            }
 in
-let build_fixpoint b seed = 
+let build_fixpoint _b seed = 
       fun (_,n,_,ty,t) ->
         let t = nast_of_cic ~context:[] t in
         let ty = nast_of_cic ~context:[] ty in

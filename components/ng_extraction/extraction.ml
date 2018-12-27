@@ -207,7 +207,7 @@ let sign_with_implicits _r s =
 
 (* Enriching a exception message *)
 
-let rec handle_exn _r _n _fn_name = function x -> x
+let handle_exn _r _n _fn_name = function x -> x
 (*CSC: only for pretty printing
   | MLexn s ->
       (try Scanf.sscanf s "UNBOUND %d"
@@ -1014,7 +1014,7 @@ and extract_case context mle (ip,c,br) status mlt =
 (* [decomp_lams_eta env c t] finds the number [n] of products in the type [t],
    and decompose the term [c] in [n] lambdas, with eta-expansion if needed. *)
 
-let rec decomp_lams_eta_n n m status context c t =
+let decomp_lams_eta_n n m status context c t =
   let rels = fst (splay_prod_n status context n t) in
   let rels',c = decompose_lam c in
   let d = n - m in

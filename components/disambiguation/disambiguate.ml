@@ -51,8 +51,8 @@ type 'a disambiguator_input = string * int * 'a
 type domain = domain_tree list
 and domain_tree = Node of Stdpp.location list * domain_item * domain
 
-let mono_uris_callback ~selection_mode ?ok
-          ?(enable_button_for_non_vars = true) ~title ~msg ~id =
+let mono_uris_callback ~selection_mode:_ ?ok:(_)
+          ?enable_button_for_non_vars:(_ = true) ~title:(_) ~msg:(_) ~id:(_) =
  if Helm_registry.get_opt_default Helm_registry.get_bool ~default:true
       "matita.auto_disambiguation"
  then
@@ -69,7 +69,7 @@ let set_choose_interp_callback f = _choose_interp_callback := f
 
 let interactive_user_uri_choice = !_choose_uris_callback
 let interactive_interpretation_choice interp = !_choose_interp_callback interp
-let input_or_locate_uri ~(title:string) ?id () = None
+let input_or_locate_uri ~title:(_:string) ?id:(_) () = None
   (* Zack: I try to avoid using this callback. I therefore assume that
   * the presence of an identifier that can't be resolved via "locate"
   * query is a syntax error *)
@@ -139,7 +139,7 @@ let resolve ~env ~mk_choice (item: domain_item) arg =
    match snd (mk_choice (Environment.find item env)), arg with
       `Num_interp f, `Num_arg n -> f n
     | `Sym_interp f, `Args l -> f l
-    | `Sym_interp f, `Num_arg n -> (* Implicit number! *) f []
+    | `Sym_interp f, `Num_arg _n -> (* Implicit number! *) f []
     | _,_ -> assert false
   with Not_found -> 
     failwith ("Domain item not found: " ^ 
@@ -149,7 +149,7 @@ let resolve ~env ~mk_choice (item: domain_item) arg =
 let find_in_context name context =
   let rec aux acc = function
     | [] -> raise Not_found
-    | Some hd :: tl when hd = name -> acc
+    | Some hd :: _tl when hd = name -> acc
     | _ :: tl ->  aux (acc + 1) tl
   in
   aux 1 context
@@ -231,7 +231,7 @@ let rec domain_of_term ?(loc = HExtlib.dummy_floc) ~context = function
         | _ :: tl -> get_first_constructor tl in
       let do_branch =
        function
-          Ast.Pattern (head, _, args), term ->
+          Ast.Pattern (_head, _, args), term ->
            let (term_context, args_domain) =
              List.fold_left
                (fun (cont, dom) (name, typ) ->
@@ -284,8 +284,8 @@ let rec domain_of_term ?(loc = HExtlib.dummy_floc) ~context = function
   | Ast.NRef _ -> []
   | Ast.NCic _ -> []
   | Ast.Implicit _ -> []
-  | Ast.Num (num, i) -> [ Node ([loc], Num i, []) ]
-  | Ast.Meta (index, local_context) ->
+  | Ast.Num (_num, i) -> [ Node ([loc], Num i, []) ]
+  | Ast.Meta (_index, local_context) ->
       List.fold_left
        (fun dom term -> dom @ domain_of_term_option ~loc ~context term)
        [] local_context
@@ -352,7 +352,7 @@ let domain_of_obj ~context ast =
           (fun (context,res) (name,ty,_,_) ->
             Some name::context, res @ domain_of_term context ty
           ) (context_w_types,[]) fields)
-   | Ast.LetRec (kind, defs, _) ->
+   | Ast.LetRec (_kind, defs, _) ->
        let add_defs context =
          List.fold_left
            (fun acc (_, (var, _), _, _) -> string_of_name var :: acc
@@ -393,7 +393,7 @@ let domain_diff dom1 dom2 =
           (match elt with
               Symbol (symb',_) when symb = symb' -> true
             | _ -> false)
-       | Num i ->
+       | Num _i ->
           (match elt with
               Num _ -> true
             | _ -> false)
@@ -449,7 +449,7 @@ let disambiguate_thing
    let aliases, todo_dom = 
      let rec aux (aliases,acc) = function 
        | [] -> aliases, acc
-       | (Node (locs, item,extra) as node) :: tl -> 
+       | Node (locs, item,extra) :: tl -> 
            let choices = lookup_choices item in
            if List.length choices = 0 then
             (* Quick failure *)

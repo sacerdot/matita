@@ -50,7 +50,7 @@ let mk_elim status uri leftno it (outsort,suffix) pragma =
  let p_name = mk_id "Q_" in
  let params,ty = NCicReduction.split_prods status ~subst:[] [] leftno ty in
  let params = List.rev_map (function name,_ -> mk_id name) params in
- let args,sort = NCicReduction.split_prods status ~subst:[] [] (-1) ty in
+ let args,_sort = NCicReduction.split_prods status ~subst:[] [] (-1) ty in
  let args = List.rev_map (function name,_ -> mk_id name) args in
  let rec_arg = mk_id (fresh_name ()) in
  let mk_prods = 
@@ -77,7 +77,7 @@ let mk_elim status uri leftno it (outsort,suffix) pragma =
   List.map
    (function (_,name,ty) ->
      let _,ty = NCicReduction.split_prods status ~subst:[] [] leftno ty in
-     let cargs,ty= my_split_prods status ~subst:[] [] (-1) ty in
+     let cargs,_ty= my_split_prods status ~subst:[] [] (-1) ty in
      let cargs_recargs_nih =
       List.fold_left
        (fun (acc,nih) -> function
@@ -248,7 +248,7 @@ let pp (status: #NCic.status) =
     in
     let rec eat_branch n rels ty pat =
       match (ty, pat) with
-      | NCic.Prod (name, s, t), _ when n > 0 ->
+      | NCic.Prod (_name, _s, t), _ when n > 0 ->
          eat_branch (pred n) rels t pat
       | NCic.Prod (_, _, t), NCic.Lambda (name, s, t') ->
           let cv, rhs = eat_branch 0 ((mk_id name)::rels) t t' in

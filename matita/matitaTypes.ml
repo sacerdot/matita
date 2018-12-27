@@ -25,9 +25,6 @@
 
 (* $Id$ *)
 
-open Printf
-open GrafiteTypes
-
   (** user hit the cancel button *)
 exception Cancel
 

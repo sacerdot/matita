@@ -1376,7 +1376,7 @@ let _ = NCicReduction.set_get_relevance get_relevance;;
 
 let indent = ref 0;;
 let debug = true;;
-let logger =
+let _logger =
     let do_indent () = String.make !indent ' ' in  
     (function 
       | `Start_type_checking s ->

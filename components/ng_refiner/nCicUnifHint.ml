@@ -332,8 +332,8 @@ let look_for_hint (status:#status) metasenv subst context t1 t2 =
              end
 ;;
 
-let pp_hint t p =
-  let context, t = 
+let pp_hint _t _p =
+(*  let context, t = 
      let rec aux ctx = function
        | NCic.Prod (name, ty, rest) -> aux ((name, NCic.Decl ty) :: ctx) rest
        | t -> ctx, t
@@ -349,7 +349,6 @@ let pp_hint t p =
   in
   let buff = Buffer.create 100 in
   let fmt = Format.formatter_of_buffer buff in
-(*
   F.fprintf "@[<hov>"
    F.fprintf "@[<hov>"
 (*    pp_ctx [] context *)
@@ -405,9 +404,9 @@ let generate_dot_file (status:#status) fmt =
         (HintSet.elements dataset);
     );
   List.iter (fun x, l -> Pp.node x ~attrs:["label",l] fmt) !nodes;
-  List.iter (fun x, y, l, _, _ -> 
+  List.iter (fun x, y, _l, _, _ -> 
       Pp.raw (Printf.sprintf "%s -- %s [ label=\"%s\" ];\n" x y "?") fmt)
   !edges;
   edges := List.sort (fun (_,_,_,p1,_) (_,_,_,p2,_) -> p1 - p2) !edges;
-  List.iter (fun x, y, _, p, l -> pp_hint l p) !edges;
+  List.iter (fun _x, _y, _, p, l -> pp_hint l p) !edges;
 ;;

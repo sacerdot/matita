@@ -98,7 +98,7 @@ class multiStringListModel ~cols (tree_view: GTree.view) =
       (fun renderer -> GTree.view_column ~renderer ())
       renderers
   in
-  object (self)
+  object
     val text_columns = text_columns
     
     initializer
@@ -173,7 +173,7 @@ class taggedStringListModel ~(tags:(string * GdkPixbuf.pixbuf) list)
   let lookup_pixbuf tag =
     try List.assoc tag tags with Not_found -> assert false
   in
-  object (self)
+  object
     initializer
       tree_view#set_model (Some (list_store :> GTree.model));
       ignore (tree_view#append_column tag_vcolumn);
@@ -227,7 +227,7 @@ class recordModel (tree_view:GTree.view) =
         ])
   in
   let toggle_vcol = GTree.view_column ~renderer:toggle_rend () in
-  object (self)
+  object
     initializer
       tree_view#set_model (Some (list_store :> GTree.model));
       ignore (tree_view#append_column text_vcol);
@@ -267,9 +267,9 @@ let popup_message
   m#destroy () 
 
 let popup_message_lowlevel
-  ~title ~message ?(no_separator=true) ~message_type ~buttons
+  ~title ~message ?no_separator:(_=true) ~message_type ~buttons
   ?parent  ?(destroy_with_parent=true)
-  ?icon ?(modal=true) ?(resizable=false) ?screen ?type_hint
+  ?icon ?modal:(_=true) ?(resizable=false) ?screen ?type_hint
   ?(position=`CENTER_ON_PARENT) ?wmclass ?border_width ?width 
   ?height ()
 =

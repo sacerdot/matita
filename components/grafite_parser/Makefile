@@ -22,8 +22,8 @@ depend: SYNTAXOPTIONS = $(MY_SYNTAXOPTIONS)
 depend.opt: SYNTAXOPTIONS = $(MY_SYNTAXOPTIONS)
 # </cross>
 #
-grafiteParser.cmo: OCAMLC = $(OCAMLC_P4)
-grafiteParser.cmx: OCAMLOPT = $(OCAMLOPT_P4)
+grafiteParser.cmo: OCAMLC = $(OCAMLC_P4) -w -27
+grafiteParser.cmx: OCAMLOPT = $(OCAMLOPT_P4) -w -27
 
 include ../../Makefile.defs
 include ../Makefile.common

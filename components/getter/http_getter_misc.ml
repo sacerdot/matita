@@ -33,7 +33,7 @@ open Printf
 let file_scheme_prefix = "file://"
 
 let trailing_dot_gz_RE = Pcre.regexp "\\.gz$"   (* for g{,un}zip *)
-let url_RE = Pcre.regexp "^([\\w.-]+)(:(\\d+))?(/.*)?$"
+(*let url_RE = Pcre.regexp "^([\\w.-]+)(:(\\d+))?(/.*)?$"*)
 let http_scheme_RE = Pcre.regexp ~flags:[`CASELESS] "^http://"
 let file_scheme_RE = Pcre.regexp ~flags:[`CASELESS] ("^" ^ file_scheme_prefix)
 let dir_sep_RE = Pcre.regexp "/"
@@ -47,7 +47,7 @@ let local_url =
     with Not_found -> None
 
 let bufsiz = 16384  (* for file system I/O *)
-let tcp_bufsiz = 4096 (* for TCP I/O *)
+(*let tcp_bufsiz = 4096 (* for TCP I/O *)*)
 
 let fold_file f init fname =
   let ic = open_in fname in
