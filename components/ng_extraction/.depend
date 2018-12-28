@@ -1,8 +1,6 @@
-common.cmo : ocamlExtractionTable.cmi mlutil.cmi miniml.cmo coq.cmi \
-    common.cmi
-common.cmx : ocamlExtractionTable.cmx mlutil.cmx miniml.cmx coq.cmx \
-    common.cmi
-common.cmi : ocamlExtractionTable.cmi mlutil.cmi miniml.cmo coq.cmi
+common.cmo : ocamlExtractionTable.cmi mlutil.cmi coq.cmi common.cmi
+common.cmx : ocamlExtractionTable.cmx mlutil.cmx coq.cmx common.cmi
+common.cmi : ocamlExtractionTable.cmi coq.cmi
 coq.cmo : coq.cmi
 coq.cmx : coq.cmi
 coq.cmi :
@@ -10,7 +8,7 @@ extraction.cmo : ocamlExtractionTable.cmi mlutil.cmi miniml.cmo coq.cmi \
     common.cmi extraction.cmi
 extraction.cmx : ocamlExtractionTable.cmx mlutil.cmx miniml.cmx coq.cmx \
     common.cmx extraction.cmi
-extraction.cmi : ocamlExtractionTable.cmi miniml.cmo coq.cmi
+extraction.cmi : ocamlExtractionTable.cmi miniml.cmo
 miniml.cmo : coq.cmi
 miniml.cmx : coq.cmx
 mlutil.cmo : ocamlExtractionTable.cmi miniml.cmo coq.cmi mlutil.cmi
