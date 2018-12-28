@@ -13,10 +13,8 @@ nCicReduction.cmo : nReference.cmi nCicUtils.cmi nCicSubstitution.cmi \
 nCicReduction.cmx : nReference.cmx nCicUtils.cmx nCicSubstitution.cmx \
     nCicEnvironment.cmx nCic.cmx nCicReduction.cmi
 nCicReduction.cmi : nCic.cmo
-nCicSubstitution.cmo : nReference.cmi nCicUtils.cmi nCic.cmo \
-    nCicSubstitution.cmi
-nCicSubstitution.cmx : nReference.cmx nCicUtils.cmx nCic.cmx \
-    nCicSubstitution.cmi
+nCicSubstitution.cmo : nCicUtils.cmi nCic.cmo nCicSubstitution.cmi
+nCicSubstitution.cmx : nCicUtils.cmx nCic.cmx nCicSubstitution.cmi
 nCicSubstitution.cmi : nCic.cmo
 nCicTypeChecker.cmo : nUri.cmi nReference.cmi nCicUtils.cmi \
     nCicSubstitution.cmi nCicReduction.cmi nCicEnvironment.cmi nCic.cmo \
