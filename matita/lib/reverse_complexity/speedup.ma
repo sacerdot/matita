@@ -1,3 +1,5 @@
+(*
+<<<<<<< HEAD:matita/matita/broken_lib/reverse_complexity/toolkit.ma
 include "basics/types.ma".
 include "arithmetics/minimization.ma".
 include "arithmetics/bigops.ma".
@@ -181,6 +183,10 @@ qed.
 lemma snd_pU: ∀i,x,r. snd (pU i x r) = out i x r.
 #i #x #r normalize cases (U i x r) normalize >snd_pair //
 qed.
+=======
+include "reverse_complexity/bigops_compl.ma".
+>>>>>>> reverse_complexity lib restored:matita/matita/lib/reverse_complexity/speedup.ma
+*)
 
 (********************************* the speedup ********************************)
 
@@ -282,7 +288,6 @@ lemma condition_1: ∀h,u.g h 0 ≈ g h u.
 qed.
 
 (******************************** Condition 2 *********************************)
-definition total ≝ λf.λx:nat. Some nat (f x).
   
 lemma exists_to_exists_min: ∀h,i. (∃x. i < x ∧ {i ⊙ x} ↓ h (S i) x) → ∃y. min_input h i y = y.
 #h #i * #x * #ltix #Hx %{(min_input h i x)} @min_spec_to_min @found //
@@ -301,200 +306,7 @@ whd in match (out ???); >termy >Hr
 #H @(absurd ? H) @le_to_not_lt @le_n
 qed.
 
-
-(********************************* complexity *********************************)
-
-(* We assume operations have a minimal structural complexity MSC. 
-For instance, for time complexity, MSC is equal to the size of input.
-For space complexity, MSC is typically 0, since we only measure the
-space required in addition to dimension of the input. *)
-
-axiom MSC : nat → nat.
-axiom MSC_le: ∀n. MSC n ≤ n.
-axiom monotonic_MSC: monotonic ? le MSC.
-axiom MSC_pair: ∀a,b. MSC 〈a,b〉 ≤ MSC a + MSC b.
-
-(* C s i means i is running in O(s) *)
- 
-definition C ≝ λs,i.∃c.∃a.∀x.a ≤ x → ∃y. 
-  U i x (c*(s x)) = Some ? y.
-
-(* C f s means f ∈ O(s) where MSC ∈O(s) *)
-definition CF ≝ λs,f.O s MSC ∧ ∃i.code_for (total f) i ∧ C s i.
- 
-lemma ext_CF : ∀f,g,s. (∀n. f n = g n) → CF s f → CF s g.
-#f #g #s #Hext * #HO  * #i * #Hcode #HC % // %{i} %
-  [#x cases (Hcode x) #a #H %{a} whd in match (total ??); <Hext @H | //] 
-qed.
-
-lemma monotonic_CF: ∀s1,s2,f.(∀x. s1 x ≤  s2 x) → CF s1 f → CF s2 f.
-#s1 #s2 #f #H * #HO * #i * #Hcode #Hs1 % 
-  [cases HO #c * #a -HO #HO %{c} %{a} #n #lean @(transitive_le … (HO n lean))
-   @le_times // 
-  |%{i} % [//] cases Hs1 #c * #a -Hs1 #Hs1 %{c} %{a} #n #lean 
-   cases(Hs1 n lean) #y #Hy %{y} @(monotonic_U …Hy) @le_times // 
-  ]
-qed.
-
-lemma O_to_CF: ∀s1,s2,f.O s2 s1 → CF s1 f → CF s2 f.
-#s1 #s2 #f #H * #HO * #i * #Hcode #Hs1 % 
-  [@(O_trans … H) //
-  |%{i} % [//] cases Hs1 #c * #a -Hs1 #Hs1 
-   cases H #c1 * #a1 #Ha1 %{(c*c1)} %{(a+a1)} #n #lean 
-   cases(Hs1 n ?) [2:@(transitive_le … lean) //] #y #Hy %{y} @(monotonic_U …Hy)
-   >associative_times @le_times // @Ha1 @(transitive_le … lean) //
-  ]
-qed.
-
-lemma timesc_CF: ∀s,f,c.CF (λx.c*s x) f → CF s f.
-#s #f #c @O_to_CF @O_times_c 
-qed.
-
-(********************************* composition ********************************)
-axiom CF_comp: ∀f,g,sf,sg,sh. CF sg g → CF sf f → 
-  O sh (λx. sg x + sf (g x)) → CF sh (f ∘ g).
-  
-lemma CF_comp_ext: ∀f,g,h,sh,sf,sg. CF sg g → CF sf f → 
-  (∀x.f(g x) = h x) → O sh (λx. sg x + sf (g x)) → CF sh h.
-#f #g #h #sh #sf #sg #Hg #Hf #Heq #H @(ext_CF (f ∘ g))
-  [#n normalize @Heq | @(CF_comp … H) //]
-qed.
-
-(* primitve recursion *)
-
-let rec prim_rec (k,h:nat →nat) n m on n ≝ 
-  match n with 
-  [ O ⇒ k m
-  | S a ⇒ h 〈a,〈prim_rec k h a m, m〉〉].
-  
-lemma prim_rec_S: ∀k,h,n,m.
-  prim_rec k h (S n) m = h 〈n,〈prim_rec k h n m, m〉〉.
-// qed.
-
-definition unary_pr ≝ λk,h,x. prim_rec k h (fst x) (snd x).
-
-let rec prim_rec_compl (k,h,sk,sh:nat →nat) n m on n ≝ 
-  match n with 
-  [ O ⇒ sk m
-  | S a ⇒ prim_rec_compl k h sk sh a m + sh (prim_rec k h a m)].
-  
-axiom CF_prim_rec: ∀k,h,sk,sh,sf. CF sk k → CF sh h → 
-  O sf (unary_pr sk (λx. fst (snd x) + sh 〈fst x,〈unary_pr k h 〈fst x,snd (snd x)〉,snd (snd x)〉〉)) 
-   → CF sf (unary_pr k h).
-
-(* falso ????
-lemma prim_rec_O: ∀k1,h1,k2,h2. O k1 k2 → O h1 h2 → 
-  O (unary_pr k1 h1) (unary_pr k2 h2).
-#k1 #h1 #k2 #h2 #HO1 #HO2 whd *)
-
-  
-(**************************** primitive operations*****************************)
-
-definition id ≝ λx:nat.x.
-
-axiom CF_id: CF MSC id.
-axiom CF_compS: ∀h,f. CF h f → CF h (S ∘ f).
-axiom CF_comp_fst: ∀h,f. CF h f → CF h (fst ∘ f).
-axiom CF_comp_snd: ∀h,f. CF h f → CF h (snd ∘ f). 
-axiom CF_comp_pair: ∀h,f,g. CF h f → CF h g → CF h (λx. 〈f x,g x〉). 
-
-lemma CF_fst: CF MSC fst.
-@(ext_CF (fst ∘ id)) [#n //] @(CF_comp_fst … CF_id)
-qed.
-
-lemma CF_snd: CF MSC snd.
-@(ext_CF (snd ∘ id)) [#n //] @(CF_comp_snd … CF_id)
-qed.
-
-(************************************** eqb ***********************************)
-  
-axiom CF_eqb: ∀h,f,g.
-  CF h f → CF h g → CF h (λx.eqb (f x) (g x)).
-
-(*********************************** maximum **********************************) 
-
-axiom CF_max: ∀a,b.∀p:nat →bool.∀f,ha,hb,hp,hf,s.
-  CF ha a → CF hb b → CF hp p → CF hf f → 
-  O s (λx.ha x + hb x + ∑_{i ∈[a x ,b x[ }(hp 〈i,x〉 + hf 〈i,x〉)) →
-  CF s (λx.max_{i ∈[a x,b x[ | p 〈i,x〉 }(f 〈i,x〉)). 
-
-(******************************** minimization ********************************) 
-
-axiom CF_mu: ∀a,b.∀f:nat →bool.∀sa,sb,sf,s.
-  CF sa a → CF sb b → CF sf f → 
-  O s (λx.sa x + sb x + ∑_{i ∈[a x ,S(b x)[ }(sf 〈i,x〉)) →
-  CF s (λx.μ_{i ∈[a x,b x] }(f 〈i,x〉)).
-  
-(************************************* smn ************************************)
-axiom smn: ∀f,s. CF s f → ∀x. CF (λy.s 〈x,y〉) (λy.f 〈x,y〉).
-
-(****************************** constructibility ******************************)
- 
-definition constructible ≝ λs. CF s s.
-
-lemma constr_comp : ∀s1,s2. constructible s1 → constructible s2 →
-  (∀x. x ≤ s2 x) → constructible (s2 ∘ s1).
-#s1 #s2 #Hs1 #Hs2 #Hle @(CF_comp … Hs1 Hs2) @O_plus @le_to_O #x [@Hle | //] 
-qed.
-
-lemma ext_constr: ∀s1,s2. (∀x.s1 x = s2 x) → 
-  constructible s1 → constructible s2.
-#s1 #s2 #Hext #Hs1 @(ext_CF … Hext) @(monotonic_CF … Hs1)  #x >Hext //
-qed.
-
-lemma constr_prim_rec: ∀s1,s2. constructible s1 → constructible s2 →
-  (∀n,r,m. 2 * r ≤ s2 〈n,〈r,m〉〉) → constructible (unary_pr s1 s2).
-#s1 #s2 #Hs1 #Hs2 #Hincr @(CF_prim_rec … Hs1 Hs2) whd %{2} %{0} 
-#x #_ lapply (surj_pair x) * #a * #b #eqx >eqx whd in match (unary_pr ???); 
->fst_pair >snd_pair
-whd in match (unary_pr ???); >fst_pair >snd_pair elim a
-  [normalize //
-  |#n #Hind >prim_rec_S >fst_pair >snd_pair >fst_pair >snd_pair
-   >prim_rec_S @transitive_le [| @(monotonic_le_plus_l … Hind)]
-   @transitive_le [| @(monotonic_le_plus_l … (Hincr n ? b))] 
-   whd in match (unary_pr ???); >fst_pair >snd_pair //
-  ]
-qed.
-
-(********************************* simulation *********************************)
-
-axiom sU : nat → nat. 
-
-axiom monotonic_sU: ∀i1,i2,x1,x2,s1,s2. i1 ≤ i2 → x1 ≤ x2 → s1 ≤ s2 →
-  sU 〈i1,〈x1,s1〉〉 ≤ sU 〈i2,〈x2,s2〉〉.
-
-lemma monotonic_sU_aux : ∀x1,x2. fst x1 ≤ fst x2 → fst (snd x1) ≤ fst (snd x2) →
-snd (snd x1) ≤ snd (snd x2) → sU x1 ≤ sU x2.
-#x1 #x2 cases (surj_pair x1) #a1 * #y #eqx1 >eqx1 -eqx1 cases (surj_pair y) 
-#b1 * #c1 #eqy >eqy -eqy
-cases (surj_pair x2) #a2 * #y2 #eqx2 >eqx2 -eqx2 cases (surj_pair y2) 
-#b2 * #c2 #eqy2 >eqy2 -eqy2 >fst_pair >snd_pair >fst_pair >snd_pair 
->fst_pair >snd_pair >fst_pair >snd_pair @monotonic_sU
-qed.
-  
-axiom sU_le: ∀i,x,s. s ≤ sU 〈i,〈x,s〉〉.
-axiom sU_le_i: ∀i,x,s. MSC i ≤ sU 〈i,〈x,s〉〉.
-axiom sU_le_x: ∀i,x,s. MSC x ≤ sU 〈i,〈x,s〉〉.
-
-definition pU_unary ≝ λp. pU (fst p) (fst (snd p)) (snd (snd p)).
-
-axiom CF_U : CF sU pU_unary.
-
-definition termb_unary ≝ λx:ℕ.termb (fst x) (fst (snd x)) (snd (snd x)).
-definition out_unary ≝ λx:ℕ.out (fst x) (fst (snd x)) (snd (snd x)).
-
-lemma CF_termb: CF sU termb_unary. 
-@(ext_CF (fst ∘ pU_unary)) [2: @CF_comp_fst @CF_U]
-#n whd in ⊢ (??%?); whd in  ⊢ (??(?%)?); >fst_pair % 
-qed.
-
-lemma CF_out: CF sU out_unary. 
-@(ext_CF (snd ∘ pU_unary)) [2: @CF_comp_snd @CF_U]
-#n whd in ⊢ (??%?); whd in  ⊢ (??(?%)?); >snd_pair % 
-qed.
-
-
-(******************** complexity of g ********************)
+(**************************** complexity of g *********************************)
 
 definition unary_g ≝ λh.λux. g h (fst ux) (snd ux).
 definition auxg ≝ 
@@ -519,18 +331,18 @@ lemma compl_g2 : ∀h,s1,s2,s.
     (λp:ℕ.eqb (min_input h (fst p) (snd (snd p))) (snd (snd p))) →
   CF s2
     (λp:ℕ.out (fst p) (snd (snd p)) (h (S (fst p)) (snd (snd p)))) →
-  O s (λx.MSC x + ∑_{i ∈[fst x ,snd x[ }(s1 〈i,x〉+s2 〈i,x〉)) → 
+  O s (λx.MSC x + (snd x - fst x)*Max_{i ∈[fst x ,snd x[ }(s1 〈i,x〉+s2 〈i,x〉)) → 
   CF s (auxg h).
 #h #s1 #s2 #s #Hs1 #Hs2 #HO @(ext_CF (aux1g h)) 
   [#n whd in ⊢ (??%%); @eq_aux]
-@(CF_max … CF_fst CF_snd Hs1 Hs2 …) @(O_trans … HO) 
+@(CF_max2 … CF_fst CF_snd Hs1 Hs2 …) @(O_trans … HO) 
 @O_plus [@O_plus @O_plus_l // | @O_plus_r //]
 qed.  
 
 lemma compl_g3 : ∀h,s.
   CF s (λp:ℕ.min_input h (fst p) (snd (snd p))) →
   CF s (λp:ℕ.eqb (min_input h (fst p) (snd (snd p))) (snd (snd p))).
-#h #s #H @(CF_eqb … H) @(CF_comp … CF_snd CF_snd) @(O_trans … (proj1 … H))
+#h #s #H @(CF_eqb … H) @(CF_comp … CF_snd CF_snd) @(O_trans … (le_to_O … (MSC_in … H)))
 @O_plus // %{1} %{0} #n #_ >commutative_times <times_n_1 @monotonic_MSC //
 qed.
 
@@ -548,55 +360,20 @@ qed.
 definition termb_aux ≝ λh.
   termb_unary ∘ λp.〈fst (snd p),〈fst p,h (S (fst (snd p))) (fst p)〉〉.
 
-lemma compl_g4 : ∀h,s1,s.
+lemma compl_g4 : ∀h,s1,s. (∀x. 0 < s1 x) →  
   (CF s1 
     (λp.termb (fst (snd p)) (fst p) (h (S (fst (snd p))) (fst p)))) →
-   (O s (λx.MSC x + ∑_{i ∈[S(fst x) ,S(snd (snd x))[ }(s1 〈i,x〉))) →
+   (O s (λx.MSC x + ((snd(snd x) - (fst x)))*Max_{i ∈[S(fst x) ,S(snd (snd x))[ }(s1 〈i,x〉))) →
   CF s (λp:ℕ.min_input h (fst p) (snd (snd p))).
-#h #s1 #s #Hs1 #HO @(ext_CF (min_input_aux h))
+#h #s1 #s #pos_s1 #Hs1 #HO @(ext_CF (min_input_aux h))
  [#n whd in ⊢ (??%%); @min_input_eq]
-@(CF_mu … MSC MSC … Hs1) 
+@(CF_mu4 … MSC MSC … pos_s1 … Hs1) 
   [@CF_compS @CF_fst 
   |@CF_comp_snd @CF_snd
   |@(O_trans … HO) @O_plus [@O_plus @O_plus_l // | @O_plus_r //]
 qed.
 
-(************************* a couple of technical lemmas ***********************)
-lemma minus_to_0: ∀a,b. a ≤ b → minus a b = 0.
-#a elim a // #n #Hind * 
-  [#H @False_ind /2 by absurd/ | #b normalize #H @Hind @le_S_S_to_le /2/]
-qed.
-
-lemma sigma_bound:  ∀h,a,b. monotonic nat le h → 
-  ∑_{i ∈ [a,S b[ }(h i) ≤  (S b-a)*h b.
-#h #a #b #H cases (decidable_le a b) 
-  [#leab cut (b = pred (S b - a + a)) 
-    [<plus_minus_m_m // @le_S //] #Hb >Hb in match (h b);
-   generalize in match (S b -a);
-   #n elim n 
-    [//
-    |#m #Hind >bigop_Strue [2://] @le_plus 
-      [@H @le_n |@(transitive_le … Hind) @le_times [//] @H //]
-    ]
-  |#ltba lapply (not_le_to_lt … ltba) -ltba #ltba
-   cut (S b -a = 0) [@minus_to_0 //] #Hcut >Hcut //
-  ]
-qed.
-
-lemma sigma_bound_decr:  ∀h,a,b. (∀a1,a2. a1 ≤ a2 → a2 < b → h a2 ≤ h a1) → 
-  ∑_{i ∈ [a,b[ }(h i) ≤  (b-a)*h a.
-#h #a #b #H cases (decidable_le a b) 
-  [#leab cut ((b -a) +a ≤ b) [/2 by le_minus_to_plus_r/] generalize in match (b -a);
-   #n elim n 
-    [//
-    |#m #Hind >bigop_Strue [2://] #Hm 
-     cut (m+a ≤ b) [@(transitive_le … Hm) //] #Hm1
-     @le_plus [@H // |@(transitive_le … (Hind Hm1)) //]
-    ]
-  |#ltba lapply (not_le_to_lt … ltba) -ltba #ltba
-   cut (b -a = 0) [@minus_to_0 @lt_to_le @ltba] #Hcut >Hcut //
-  ]
-qed. 
+(* ??? *)
 
 lemma coroll: ∀s1:nat→nat. (∀n. monotonic ℕ le (λa:ℕ.s1 〈a,n〉)) → 
 O (λx.(snd (snd x)-fst x)*(s1 〈snd (snd x),x〉)) 
@@ -611,15 +388,25 @@ O (λx.(snd x - fst x)*s1 〈fst x,x〉) (λx.∑_{i ∈[fst x,snd x[ }(s1 〈i,
 @(transitive_le … (sigma_bound_decr …)) [2://] @Hs1 
 qed.
 
+lemma coroll3: ∀s1:nat→nat. (∀n,a,b. a ≤ b → b < snd n → s1 〈b,n〉 ≤ s1 〈a,n〉) → 
+O (λx.(snd x - fst x)*s1 〈fst x,x〉) 
+  (λx.(snd x - fst x)*Max_{i ∈[fst x,snd x[ }(s1 〈i,x〉)).
+#s1 #Hs1 @le_to_O #i @le_times // @Max_le #a #lta #_ @Hs1 // 
+@lt_minus_to_plus_r //
+qed.
+
 (**************************** end of technical lemmas *************************)
 
-lemma compl_g5 : ∀h,s1.(∀n. monotonic ℕ le (λa:ℕ.s1 〈a,n〉)) →
+lemma compl_g5 : ∀h,s1.
+  (∀n. 0 < s1 n) → 
+  (∀n. monotonic ℕ le (λa:ℕ.s1 〈a,n〉)) →
   (CF s1 
     (λp.termb (fst (snd p)) (fst p) (h (S (fst (snd p))) (fst p)))) →
   CF (λx.MSC x + (snd (snd x)-fst x)*s1 〈snd (snd x),x〉) 
     (λp:ℕ.min_input h (fst p) (snd (snd p))).
-#h #s1 #Hmono #Hs1 @(compl_g4 … Hs1) @O_plus 
-[@O_plus_l // |@O_plus_r @coroll @Hmono]
+#h #s1 #Hpos #Hmono #Hs1 @(compl_g4 … Hpos Hs1) @O_plus 
+[@O_plus_l // |@O_plus_r @le_to_O #n @le_times //
+@Max_le #i #lti #_ @Hmono @le_S_S_to_le @lt_minus_to_plus_r @lti
 qed.
 
 lemma compl_g6: ∀h.
@@ -683,7 +470,7 @@ lemma compl_g7: ∀h.
     (λp:ℕ.min_input h (fst p) (snd (snd p))).
 #h #hcostr #hmono @(monotonic_CF … (faux2 h))
   [#n normalize >fst_pair >snd_pair //]
-@compl_g5 [2:@(compl_g6 h hcostr)] #n #x #y #lexy >fst_pair >snd_pair 
+@compl_g5 [#n @sU_pos | 3:@(compl_g6 h hcostr)] #n #x #y #lexy >fst_pair >snd_pair 
 >fst_pair >snd_pair @monotonic_sU // @hmono @lexy
 qed.
 
@@ -751,7 +538,7 @@ lemma compl_g9 : ∀h.
 @O_plus 
   [@O_plus_l @le_to_O #x >(times_n_1 (MSC x)) >commutative_times @le_times
     [// | @monotonic_MSC // ]]
-@(O_trans … (coroll2 ??))
+@(O_trans … (coroll3 ??))
   [#n #a #b #leab #ltb >fst_pair >fst_pair >snd_pair >snd_pair
    cut (b ≤ n) [@(transitive_le … (le_snd …)) @lt_to_le //] #lebn
    cut (max a n = n) 
@@ -772,13 +559,23 @@ lemma compl_g9 : ∀h.
   ]
 qed.
 
-definition sg ≝ λh,x.
-  (S (snd x-fst x))*MSC 〈x,x〉 + (snd x-fst x)*(S(snd x-fst x))*sU 〈x,〈snd x,h (S (fst x)) (snd x)〉〉.
+definition c ≝ λx.(S (snd x-fst x))*MSC 〈x,x〉.
 
-lemma sg_def : ∀h,a,b. 
-  sg h 〈a,b〉 = (S (b-a))*MSC 〈〈a,b〉,〈a,b〉〉 + 
+definition sg ≝ λh,x.
+  let a ≝ fst x in
+  let b ≝ snd x in 
+  c x + (b-a)*(S(b-a))*sU 〈x,〈snd x,h (S a) b〉〉.
+
+lemma sg_def1 : ∀h,a,b. 
+  sg h 〈a,b〉 = c 〈a,b〉 +  
    (b-a)*(S(b-a))*sU 〈〈a,b〉,〈b,h (S a) b〉〉.
 #h #a #b whd in ⊢ (??%?); >fst_pair >snd_pair // 
+qed. 
+
+lemma sg_def : ∀h,a,b. 
+  sg h 〈a,b〉 = 
+   S (b-a)*MSC 〈〈a,b〉,〈a,b〉〉 + (b-a)*(S(b-a))*sU 〈〈a,b〉,〈b,h (S a) b〉〉.
+#h #a #b normalize >fst_pair >snd_pair // 
 qed. 
 
 lemma compl_g11 : ∀h.
@@ -806,31 +603,6 @@ lemma h_of_aux_S : ∀r,c,d,b.
     (S (S d))*(MSC 〈〈b-(S d),b〉,〈b-(S d),b〉〉) + 
       (S d)*(S (S d))*sU 〈〈b-(S d),b〉,〈b,r(h_of_aux r c d b)〉〉.
 // qed.
-
-lemma h_of_aux_prim_rec : ∀r,c,n,b. h_of_aux r c n b =
-  prim_rec (λx.c) 
-   (λx.let d ≝ S(fst x) in 
-       let b ≝ snd (snd x) in
-       (S d)*(MSC 〈〈b-d,b〉,〈b-d,b〉〉) +
-        d*(S d)*sU 〈〈b-d,b〉,〈b,r (fst (snd x))〉〉) n b.
-#r #c #n #b elim n
-  [>h_of_aux_O normalize //
-  |#n1 #Hind >h_of_aux_S >prim_rec_S >snd_pair >snd_pair >fst_pair 
-   >fst_pair <Hind //
-  ]
-qed.
-
-lemma h_of_aux_constr : 
-∀r,c. constructible (λx.h_of_aux r c (fst x) (snd x)).
-#r #c 
-  @(ext_constr … 
-    (unary_pr (λx.c) 
-     (λx.let d ≝ S(fst x) in 
-       let b ≝ snd (snd x) in
-       (S d)*(MSC 〈〈b-d,b〉,〈b-d,b〉〉) +
-        d*(S d)*sU 〈〈b-d,b〉,〈b,r (fst (snd x))〉〉)))
-  [#n @sym_eq whd in match (unary_pr ???); @h_of_aux_prim_rec
-  |@constr_prim_rec
 
 definition h_of ≝ λr,p. 
   let m ≝ max (fst p) (snd p) in 
@@ -942,7 +714,7 @@ theorem pseudo_speedup:
 (* ∃m,a.∀n. a≤n → r(sg a) < m * sf n. *)
 #r #Hr #Hmono #Hconstr
 (* f is (g (λi,x. r(h_of r 〈i,x〉)) 0) *) 
-%{(g (λi,x. r(h_of r 〈i,x〉)) 0)} #sf * #H * #i *
+%{(g (λi,x. r(h_of r 〈i,x〉)) 0)} #sf * #i *
 #Hcodei #HCi 
 (* g is (g (λi,x. r(h_of r 〈i,x〉)) (S i)) *)
 %{(g (λi,x. r(h_of r 〈i,x〉)) (S i))}
@@ -967,19 +739,19 @@ theorem pseudo_speedup':
   ∃m,a.∀n. a≤n → r(sg a) < m * sf n. 
 #r #Hr #Hmono #Hconstr 
 (* f is (g (λi,x. r(h_of r 〈i,x〉)) 0) *) 
-%{(g (λi,x. r(h_of r 〈i,x〉)) 0)} #sf * #H * #i *
+%{(g (λi,x. r(h_of r 〈i,x〉)) 0)} #sf * #i *
 #Hcodei #HCi 
 (* g is (g (λi,x. r(h_of r 〈i,x〉)) (S i)) *)
 %{(g (λi,x. r(h_of r 〈i,x〉)) (S i))}
-(* sg is (λx.h_of r 〈i,x〉) *)
+(* sg is (λx.h_of r 〈S i,x〉) *)
 %{(λx. h_of r 〈S i,x〉)}
 lapply (speed_compl_i … Hr Hmono Hconstr (S i)) #Hg
 %[%[@condition_1 |@Hg]
  |cases Hg #H1 * #j * #Hcodej #HCj
   lapply (condition_2 … Hcodei) #Hcond2 (* @not_to_not *)
   cases HCi #m * #a #Ha
-  %{m} %{(max (S i) a)} #n #ltin @not_le_to_lt @(not_to_not … Hcond2) -Hcond2 #Hlesf 
-  %{n} % [@(transitive_le … ltin) @(le_maxl … (le_n …))]
+  %{m} %{(max (S i) a)} #n #ltin @not_le_to_lt @(not_to_not … Hcond2) -Hcond2 
+  #Hlesf %{n} % [@(transitive_le … ltin) @(le_maxl … (le_n …))]
   cases (Ha n ?) [2: @(transitive_le … ltin) @(le_maxr … (le_n …))] 
   #y #Uy %{y} @(monotonic_U … Uy) @(transitive_le … Hlesf)
   @Hmono @(mono_h_of2 … Hr Hmono … ltin)
