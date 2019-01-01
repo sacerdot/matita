@@ -11,6 +11,7 @@
 
 include "basics/logic.ma".
 include "basics/core_notation/compose_2.ma".
+include "basics/core_notation/subseteq_2.ma".
 
 (********** predicates *********)
 

@@ -272,9 +272,6 @@ for @{ 'notmem $a $b }.
 notation "hvbox(a break ≬ b)" non associative with precedence 45
 for @{ 'overlaps $a $b }. (* \between *)
 
-notation "hvbox(a break ⊆ b)" non associative with precedence 45
-for @{ 'subseteq $a $b }. (* \subseteq *)
-
 notation "hvbox(a break ∩ b)" left associative with precedence 60
 for @{ 'intersects $a $b }. (* \cap *)
 
