@@ -385,6 +385,19 @@ lemma max_prim_rec: ∀a,b,p,f,x. a ≤b →
   ]
 qed.
 
+(* FG: aliases added by matita compiled with OCaml 4.0.5, bah ??? *)
+alias symbol "pair" (instance 15) = "abstract pair".
+alias symbol "minus" (instance 14) = "natural minus".
+alias symbol "plus" (instance 11) = "natural plus".
+alias symbol "pair" (instance 10) = "abstract pair".
+alias symbol "plus" (instance 13) = "natural plus".
+alias symbol "pair" (instance 12) = "abstract pair".
+alias symbol "plus" (instance 8) = "natural plus".
+alias symbol "pair" (instance 7) = "abstract pair".
+alias symbol "plus" (instance 6) = "natural plus".
+alias symbol "pair" (instance 5) = "abstract pair".
+alias id "max" = "cic:/matita/arithmetics/nat/max#def:2".
+alias symbol "minus" (instance 3) = "natural minus".
 lemma max_prim_rec1: ∀a,b,p,f,x.
   max_{i ∈[a x,b x[ | p 〈i,x〉 }(f 〈i,x〉) = 
     prim_rec (λi.0) 
@@ -415,6 +428,19 @@ lemma sum_prim_rec1: ∀a,b,p,f,x.
   ]
 qed.
 
+(* FG: aliases added by matita compiled with OCaml 4.0.5, bah ??? *)
+alias symbol "pair" (instance 15) = "abstract pair".
+alias symbol "minus" (instance 14) = "natural minus".
+alias symbol "plus" (instance 11) = "natural plus".
+alias symbol "pair" (instance 10) = "abstract pair".
+alias symbol "plus" (instance 13) = "natural plus".
+alias symbol "pair" (instance 12) = "abstract pair".
+alias symbol "plus" (instance 8) = "natural plus".
+alias symbol "pair" (instance 7) = "abstract pair".
+alias symbol "pair" (instance 6) = "abstract pair".
+alias symbol "plus" (instance 4) = "natural plus".
+alias symbol "pair" (instance 3) = "abstract pair".
+alias symbol "minus" (instance 2) = "natural minus".
 lemma bigop_prim_rec: ∀a,b,c,p,f,x.
   bigop (b x-a x) (λi:ℕ.p 〈i+a x,x〉) ? (c 〈a x,x〉) plus (λi:ℕ.f 〈i+a x,x〉) = 
     prim_rec c 
@@ -430,6 +456,19 @@ lemma bigop_prim_rec: ∀a,b,c,p,f,x.
   ]
 qed.
 
+(* FG: aliases added by matita compiled with OCaml 4.0.5, bah ??? *)
+alias symbol "pair" (instance 15) = "abstract pair".
+alias symbol "minus" (instance 14) = "natural minus".
+alias symbol "minus" (instance 11) = "natural minus".
+alias symbol "pair" (instance 10) = "abstract pair".
+alias symbol "minus" (instance 13) = "natural minus".
+alias symbol "pair" (instance 12) = "abstract pair".
+alias symbol "minus" (instance 8) = "natural minus".
+alias symbol "pair" (instance 7) = "abstract pair".
+alias symbol "pair" (instance 6) = "abstract pair".
+alias symbol "minus" (instance 4) = "natural minus".
+alias symbol "pair" (instance 3) = "abstract pair".
+alias symbol "minus" (instance 2) = "natural minus".
 lemma bigop_prim_rec_dec: ∀a,b,c,p,f,x.
   bigop (b x-a x) (λi:ℕ.p 〈b x -i,x〉) ? (c 〈b x,x〉) plus (λi:ℕ.f 〈b x-i,x〉) = 
     prim_rec c 
@@ -492,7 +531,12 @@ qed.
 
 (* the argument is 〈b-a,〈a,x〉〉 *)
 
-
+(* FG: aliases added by matita compiled with OCaml 4.0.5, bah ??? *)
+alias symbol "plus" (instance 3) = "natural plus".
+alias symbol "pair" (instance 2) = "abstract pair".
+alias id "max" = "cic:/matita/arithmetics/nat/max#def:2".
+alias symbol "plus" (instance 5) = "natural plus".
+alias symbol "pair" (instance 4) = "abstract pair".
 definition max_unary_pr ≝ λp,f.unary_pr (λx.0) 
     (λi. 
       let k ≝ fst i in
@@ -529,7 +573,14 @@ definition unary_compl ≝ λp,f,hf.
           let (x:ℕ) ≝snd (snd (snd i)) in 
           if p 〈k+a,x〉 then max (f 〈k+a,x〉) r else r )) 〈fst x,snd (snd x)〉,
       snd (snd x)〉〉). *)
-      
+
+(* FG: aliases added by matita compiled with OCaml 4.0.5, bah ??? *)   
+alias symbol "plus" (instance 6) = "natural plus".
+alias symbol "pair" (instance 5) = "abstract pair".
+alias symbol "plus" (instance 4) = "natural plus".
+alias symbol "pair" (instance 3) = "abstract pair".
+alias symbol "plus" (instance 2) = "natural plus".
+alias symbol "plus" (instance 1) = "natural plus".
 definition aux_compl ≝ λhp,hf.λi.
   let k ≝ fst i in 
   let r ≝ fst (snd i) in 
@@ -747,7 +798,10 @@ qed.
 
 (* cambiare qui: togliere S *)
 
-
+(* FG: aliases added by matita compiled with OCaml 4.0.5, bah ??? *)
+alias symbol "minus" (instance 1) = "natural minus".
+alias symbol "minus" (instance 3) = "natural minus".
+alias symbol "pair" (instance 2) = "abstract pair".
 definition minim_unary_pr ≝ λf.unary_pr (λx.S(fst x))
     (λi. 
       let k ≝ fst i in
