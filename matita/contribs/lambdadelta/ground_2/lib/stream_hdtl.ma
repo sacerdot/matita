@@ -12,30 +12,28 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/notation/functions/downspoonstar_3.ma".
-include "ground_2/lib/streams_hdtl.ma".
+include "ground_2/notation/functions/downspoon_2.ma".
+include "ground_2/lib/stream_eq.ma".
+include "ground_2/lib/arith.ma".
 
 (* STREAMS ******************************************************************)
 
-rec definition tls (A:Type[0]) (n:nat) on n: stream A → stream A ≝ ?.
-cases n -n [ #t @t | #n #t @tl @(tls … n t) ]
-defined.
+definition hd (A:Type[0]): stream A → A ≝
+              λt. match t with [ seq a _ ⇒ a ].
 
-interpretation "iterated tail (strams)" 'DownSpoonStar A n f = (tls A n f).
+definition tl (A:Type[0]): stream A → stream A ≝
+              λt. match t with [ seq _ t ⇒ t ].
+
+interpretation "tail (stream)" 'DownSpoon A t = (tl A t).
 
 (* basic properties *********************************************************)
 
-lemma tls_rew_O (A) (t): t = tls A 0 t.
+lemma hd_rew (A) (a) (t): a = hd A (a⨮t).
 // qed.
 
-lemma tls_rew_S (A) (n) (t): ⫰⫰*[n]t = tls A (↑n) t.
+lemma tl_rew (A) (a) (t): t = tl A (a⨮t).
 // qed.
 
-lemma tls_S1 (A) (n) (t): ⫰*[n]⫰t = tls A (↑n) t.
-#A #n elim n -n //
-qed.
-
-lemma tls_eq_repl (A) (n): eq_stream_repl A (λt1,t2. ⫰*[n] t1 ≗ ⫰*[n] t2).
-#A #n elim n -n //
-#n #IH * #n1 #t1 * #n2 #t2 #H elim (eq_stream_inv_seq … H) /2 width=7 by/
+lemma eq_stream_split (A) (t): (hd … t) ⨮ ⫰t ≗{A} t.
+#A * //
 qed.

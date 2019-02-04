@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "ground_2/notation/relations/ringeq_3.ma".
-include "ground_2/lib/streams.ma".
+include "ground_2/lib/stream.ma".
 
 (* STREAMS ******************************************************************)
 
@@ -21,7 +21,7 @@ coinductive eq_stream (A): relation (stream A) ≝
 | eq_seq: ∀t1,t2,b1,b2. b1 = b2 → eq_stream A t1 t2 → eq_stream A (b1⨮t1) (b2⨮t2)
 .
 
-interpretation "extensional equivalence (nstream)"
+interpretation "extensional equivalence (stream)"
    'RingEq A t1 t2 = (eq_stream A t1 t2).
 
 definition eq_stream_repl (A) (R:relation …) ≝

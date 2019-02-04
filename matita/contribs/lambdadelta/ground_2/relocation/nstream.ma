@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "ground_2/notation/functions/upspoon_1.ma".
-include "ground_2/lib/streams_tls.ma".
+include "ground_2/lib/stream_tls.ma".
 
 (* RELOCATION N-STREAM ******************************************************)
 
