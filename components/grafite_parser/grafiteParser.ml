@@ -239,6 +239,7 @@ EXTEND
     | SYMBOL "#"; SYMBOL "_" -> G.NTactic(loc,[ G.NIntro (loc,"_")])
     | SYMBOL "*" -> G.NTactic(loc,[ G.NCase1 (loc,"_")])
     | SYMBOL "*"; "as"; n=IDENT -> G.NTactic(loc,[ G.NCase1 (loc,n)])
+    | IDENT "assume"; id = IDENT; SYMBOL ":"; t = tactic_term -> G.NTactic (loc,[G.Assume (loc,id,t)])
     ]
   ];
   auto_fixed_param: [

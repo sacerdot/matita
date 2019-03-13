@@ -89,3 +89,5 @@ val find_in_context : 'a -> ('a * 'b) list -> int
 val inversion_tac: 
    what:NTacStatus.tactic_term -> where:NTacStatus.tactic_pattern -> 
      's NTacStatus.tactic
+
+val exact_tac: NTacStatus.tactic_term -> 's NTacStatus.tactic

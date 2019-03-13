@@ -106,6 +106,7 @@
          <keyword>inversion</keyword>
          <keyword>lapply</keyword>
          <keyword>destruct</keyword>
+         <keyword>assume</keyword>
 
           <!-- commands -->
           <keyword>alias</keyword>

@@ -481,6 +481,7 @@ let eval_ng_tac tac =
       NTactics.block_tac (List.map (fun x -> aux f (text,prefix_len,x)) l)
   |GrafiteAst.NRepeat (_,tac) ->
       NTactics.repeat_tac (f f (text, prefix_len, tac))
+  |GrafiteAst.Assume (_,id,t) -> Declarative.assume id t
  in
   aux aux tac (* trick for non uniform recursion call *)
 ;;

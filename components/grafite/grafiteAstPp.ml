@@ -107,6 +107,7 @@ let rec pp_ntactic status ~map_unicode_to_tex =
   | NBlock (_,l) -> 
      "(" ^ String.concat " " (List.map (pp_ntactic status ~map_unicode_to_tex) l)^ ")"
   | NRepeat (_,t) -> "nrepeat " ^ pp_ntactic status ~map_unicode_to_tex t
+  | Assume (_, ident, term) -> "assume" ^ ident ^ ":" ^ NotationPp.pp_term status term
 ;;
 
 let pp_nmacro status = function
