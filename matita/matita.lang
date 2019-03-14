@@ -107,6 +107,11 @@
          <keyword>lapply</keyword>
          <keyword>destruct</keyword>
          <keyword>assume</keyword>
+         <keyword>suppose</keyword>
+         <keyword>that</keyword>
+         <keyword>is</keyword>
+         <keyword>equivalent</keyword>
+         <keyword>to</keyword>
 
           <!-- commands -->
           <keyword>alias</keyword>

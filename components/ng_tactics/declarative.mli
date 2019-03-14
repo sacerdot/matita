@@ -24,3 +24,4 @@
  *)
 
 val assume : string -> NotationPt.term -> 's NTacStatus.tactic
+val suppose : NotationPt.term -> string -> NotationPt.term option -> 's NTacStatus.tactic

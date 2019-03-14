@@ -28,3 +28,7 @@ open NTactics
 
 let assume name ty =
     exact_tac ("",0,(Ast.Binder (`Lambda,(Ast.Ident (name,None),Some ty),Ast.Implicit `JustOne)))
+
+let suppose t id t1 =
+    let t1 = match t1 with None -> t | Some t1 -> t1 in
+    exact_tac ("",0,(Ast.Binder (`Lambda,(Ast.Ident (id,None),Some t1),Ast.Implicit `JustOne)))

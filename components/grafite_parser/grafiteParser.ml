@@ -239,7 +239,9 @@ EXTEND
     | SYMBOL "#"; SYMBOL "_" -> G.NTactic(loc,[ G.NIntro (loc,"_")])
     | SYMBOL "*" -> G.NTactic(loc,[ G.NCase1 (loc,"_")])
     | SYMBOL "*"; "as"; n=IDENT -> G.NTactic(loc,[ G.NCase1 (loc,n)])
-    | IDENT "assume"; id = IDENT; SYMBOL ":"; t = tactic_term -> G.NTactic (loc,[G.Assume (loc,id,t)])
+    | IDENT "assume" ; id = IDENT; SYMBOL ":"; t = tactic_term -> G.NTactic (loc,[G.Assume (loc,id,t)])
+    | IDENT "suppose" ; t = tactic_term ; LPAREN ; id = IDENT ; RPAREN ; t1 = OPT [IDENT "that"; IDENT
+    "is"; IDENT "equivalent"; "to"; t' = tactic_term -> t'] -> G.NTactic (loc,[G.Suppose (loc,t,id,t1)])
     ]
   ];
   auto_fixed_param: [

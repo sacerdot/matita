@@ -76,7 +76,9 @@ type ntactic =
    | NRepeat of loc * ntactic
    | NBlock of loc * ntactic list
    (* Declarative langauge *)
+   (* Not the best idea to use a string directly, an abstract type for identifiers would be better *)
    | Assume of loc * string * nterm (* loc, identifier, term *)
+   | Suppose of loc * nterm *string * nterm option
 
 type nmacro =
   | NCheck of loc * nterm

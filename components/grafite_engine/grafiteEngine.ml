@@ -482,6 +482,7 @@ let eval_ng_tac tac =
   |GrafiteAst.NRepeat (_,tac) ->
       NTactics.repeat_tac (f f (text, prefix_len, tac))
   |GrafiteAst.Assume (_,id,t) -> Declarative.assume id t
+  |GrafiteAst.Suppose (_,t,id,t1) -> Declarative.suppose t id t1
  in
   aux aux tac (* trick for non uniform recursion call *)
 ;;
