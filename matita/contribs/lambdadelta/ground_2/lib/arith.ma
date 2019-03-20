@@ -127,6 +127,14 @@ qed-.
 lemma le_plus_to_minus_comm: ∀n,m,p. n ≤ p+m → n-p ≤ m.
 /2 width=1 by le_plus_to_minus/ qed-.
 
+lemma le_inv_S1: ∀m,n. ↑m ≤ n → ∃∃p. m ≤ p & ↑p = n.
+#m *
+[ #H lapply (le_n_O_to_eq … H) -H
+  #H destruct
+| /3 width=3 by monotonic_pred, ex2_intro/
+]
+qed-.
+
 (* Note: this might interfere with nat.ma *)
 lemma monotonic_lt_pred: ∀m,n. m < n → 0 < m → pred m < pred n.
 #m #n #Hmn #Hm whd >(S_pred … Hm)

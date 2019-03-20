@@ -12,63 +12,105 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/predtywhead_5.ma".
-include "static_2/syntax/item_sd.ma".
+include "basic_2/notation/relations/predtywhead_4.ma".
+include "static_2/syntax/item_sh.ma".
 include "static_2/syntax/lenv.ma".
 include "static_2/syntax/genv.ma".
 
 (* WHD NORMAL TERMS FOR UNBOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION ****)
 
-inductive cwhx (h) (o:sd h) (G:genv): relation2 lenv term ≝
-| cwhx_sort: ∀L,s. cwhx h o G L (⋆s)
-| cwhx_abst: ∀p,L,W,T. cwhx h o G L (ⓛ{p}W.T)
-| cwhx_neg : ∀L,V,T. cwhx h o G (L.ⓓV) T → cwhx h o G L (-ⓓV.T)
+inductive cwhx (h:sh) (G:genv): relation2 lenv term ≝
+| cwhx_sort: ∀L,s. cwhx h G L (⋆s)
+| cwhx_abst: ∀p,L,W,T. cwhx h G L (ⓛ{p}W.T)
+| cwhx_ldef: ∀L,V,T. cwhx h G (L.ⓓV) T → cwhx h G L (-ⓓV.T)
 .
 
 interpretation
    "whd normality for unbound context-sensitive parallel rt-transition (term)"
-   'PRedTyWHead h o G L T = (cwhx h o G L T).
+   'PRedTyWHead h G L T = (cwhx h G L T).
 
 (* Basic inversion lemmas ***************************************************)
 
-fact cwhx_inv_lref_aux (h) (o) (G):
-                       ∀Y,X. ⦃G,Y⦄ ⊢ ⬈[h,o] 𝐖𝐇⦃X⦄ →
+fact cwhx_inv_lref_aux (h) (G):
+                       ∀Y,X. ⦃G,Y⦄ ⊢ ⬈[h] 𝐖𝐇⦃X⦄ →
                        ∀i. X = #i → ⊥.
-#h #o #G #Y #X * - X -Y
+#h #G #Y #X * - X -Y
 [ #L #s #i #H destruct
 | #p #L #W #T #i #H destruct
 | #L #V #T #_ #i #H destruct
 ]
 qed-.
 
-lemma cwhx_inv_lref (h) (o) (G):
-                    ∀L,i. ⦃G,L⦄ ⊢ ⬈[h,o] 𝐖𝐇⦃#i⦄ → ⊥.
-/2 width=8 by cwhx_inv_lref_aux/ qed-.
+lemma cwhx_inv_lref (h) (G):
+                    ∀L,i. ⦃G,L⦄ ⊢ ⬈[h] 𝐖𝐇⦃#i⦄ → ⊥.
+/2 width=7 by cwhx_inv_lref_aux/ qed-.
 
-fact cwhx_inv_gref_aux (h) (o) (G):
-                       ∀Y,X. ⦃G,Y⦄ ⊢ ⬈[h,o] 𝐖𝐇⦃X⦄ →
+fact cwhx_inv_gref_aux (h) (G):
+                       ∀Y,X. ⦃G,Y⦄ ⊢ ⬈[h] 𝐖𝐇⦃X⦄ →
                        ∀l. X = §l → ⊥.
-#h #o #G #Y #X * - X -Y
+#h #G #Y #X * - X -Y
 [ #L #s #l #H destruct
 | #p #L #W #T #l #H destruct
 | #L #V #T #_ #l #H destruct
 ]
 qed-.
 
-lemma cwhx_inv_gref (h) (o) (G):
-                    ∀L,l. ⦃G,L⦄ ⊢ ⬈[h,o] 𝐖𝐇⦃§l⦄ → ⊥.
-/2 width=8 by cwhx_inv_gref_aux/ qed-.
+lemma cwhx_inv_gref (h) (G):
+                    ∀L,l. ⦃G,L⦄ ⊢ ⬈[h] 𝐖𝐇⦃§l⦄ → ⊥.
+/2 width=7 by cwhx_inv_gref_aux/ qed-.
 
-fact cwhx_inv_pos_aux (h) (o) (G):
-                      ∀Y,X. ⦃G,Y⦄ ⊢ ⬈[h,o] 𝐖𝐇⦃X⦄ →
-                      ∀W,U. X = +ⓓW.U → ⊥.
-#h #o #G #Y #X * - X -Y
+fact cwhx_inv_abbr_aux (h) (G):
+                       ∀Y,X. ⦃G,Y⦄ ⊢ ⬈[h] 𝐖𝐇⦃X⦄ →
+                       ∀V,T. X = +ⓓV.T → ⊥.
+#h #G #Y #X * - X -Y
 [ #L #s #X1 #X2 #H destruct
 | #p #L #W #T #X1 #X2 #H destruct
 | #L #V #T #_ #X1 #X2 #H destruct
 ]
 qed-.
 
-lemma cwhx_inv_pos (h) (o) (G):
-                   ∀Y,V,T. ⦃G,Y⦄ ⊢ ⬈[h,o] 𝐖𝐇⦃+ⓓV.T⦄ → ⊥.
-/2 width=9 by cwhx_inv_pos_aux/ qed-.
+lemma cwhx_inv_abbr (h) (G):
+                    ∀Y,V,T. ⦃G,Y⦄ ⊢ ⬈[h] 𝐖𝐇⦃+ⓓV.T⦄ → ⊥.
+/2 width=8 by cwhx_inv_abbr_aux/ qed-.
+
+fact cwhx_inv_ldef_aux (h) (G):
+                       ∀Y,X. ⦃G,Y⦄ ⊢ ⬈[h] 𝐖𝐇⦃X⦄ →
+                       ∀V,T. X = -ⓓV.T → ⦃G,Y.ⓓV⦄ ⊢ ⬈[h] 𝐖𝐇⦃T⦄.
+#h #G #Y #X * - X -Y
+[ #L #s #X1 #X2 #H destruct
+| #p #L #W #T #X1 #X2 #H destruct
+| #L #V #T #HT #X1 #X2 #H destruct //
+]
+qed-.
+
+lemma cwhx_inv_ldef (h) (G):
+                    ∀Y,V,T. ⦃G,Y⦄ ⊢ ⬈[h] 𝐖𝐇⦃-ⓓV.T⦄ → ⦃G,Y.ⓓV⦄ ⊢ ⬈[h] 𝐖𝐇⦃T⦄.
+/2 width=3 by cwhx_inv_ldef_aux/ qed-.
+
+fact cwhx_inv_appl_aux (h) (G):
+                       ∀Y,X. ⦃G,Y⦄ ⊢ ⬈[h] 𝐖𝐇⦃X⦄ →
+                       ∀V,T. X = ⓐV.T → ⊥.
+#h #G #Y #X * - X -Y
+[ #L #s #X1 #X2 #H destruct
+| #p #L #W #T #X1 #X2 #H destruct
+| #L #V #T #_ #X1 #X2 #H destruct
+]
+qed-.
+
+lemma cwhx_inv_appl (h) (G):
+                    ∀Y,V,T. ⦃G,Y⦄ ⊢ ⬈[h] 𝐖𝐇⦃ⓐV.T⦄ → ⊥.
+/2 width=8 by cwhx_inv_appl_aux/ qed-.
+
+fact cwhx_inv_cast_aux (h) (G):
+                       ∀Y,X. ⦃G,Y⦄ ⊢ ⬈[h] 𝐖𝐇⦃X⦄ →
+                       ∀U,T. X = ⓝU.T → ⊥.
+#h #G #Y #X * - X -Y
+[ #L #s #X1 #X2 #H destruct
+| #p #L #W #T #X1 #X2 #H destruct
+| #L #V #T #_ #X1 #X2 #H destruct
+]
+qed-.
+
+lemma cwhx_inv_cast (h) (G):
+                    ∀Y,U,T. ⦃G,Y⦄ ⊢ ⬈[h] 𝐖𝐇⦃ⓝU.T⦄ → ⊥.
+/2 width=8 by cwhx_inv_cast_aux/ qed-.

@@ -61,7 +61,7 @@ table {
           }
         ]
         [ { "t-bound context-sensitive parallel rt-computation" * } {
-             [ [ "for terms" ] "cpms" + "( ⦃?,?⦄ ⊢ ? ➡*[?,?] ? )" "cpms_drops" + "cpms_lsubr" + "cpms_rdeq" + "cpms_aaa" + "cpms_lpr" + "cpms_cpxs" + "cpms_fpbs" + "cpms_fpbg" + "cpms_cpms" * ]
+             [ [ "for terms" ] "cpms" + "( ⦃?,?⦄ ⊢ ? ➡*[?,?] ? )" "cpms_drops" + "cpms_lsubr" + "cpms_rdeq" + "cpms_aaa" + "cpms_cwhx" + "cpms_lpr" + "cpms_cpxs" + "cpms_fpbs" + "cpms_fpbg" + "cpms_cpms" * ]
           }
         ]
         [ { "unbound context-sensitive parallel rst-computation" * } {
@@ -92,7 +92,7 @@ table {
         [ { "context-sensitive parallel r-transition" * } {
              [ [ "for lenvs on all entries" ] "lpr" + "( ⦃?,?⦄ ⊢ ➡[?] ? )" "lpr_length" + "lpr_drops" + "lpr_fquq" + "lpr_aaa" + "lpr_lpx" + "lpr_lpr" * ]
              [ [ "for binders" ] "cpr_ext" + "( ⦃?,?⦄ ⊢ ? ➡[?] ? )" * ]
-             [ [ "for terms" ] "cpr" + "( ⦃?,?⦄ ⊢ ? ➡[?] ? )" "cpr_drops" + "cpr_cpr" * ]
+             [ [ "for terms" ] "cpr" + "( ⦃?,?⦄ ⊢ ? ➡[?] ? )" "cpr_drops" + "cpr_drops_basic" + "cpr_tdeq" + "cpr_cpr" * ]
           }
         ]
         [ { "t-bound context-sensitive parallel rt-transition" * } {
@@ -100,11 +100,12 @@ table {
           }
         ]
         [ { "unbound context-sensitive parallel rt-transition" * } {
-             [ [ "normal form for terms" ] "cnx" + "( ⦃?,?⦄ ⊢ ⬈[?,?] 𝐍⦃?⦄ )" "cnx_simple" + "cnx_drops" + "cnx_cnx" * ]
+             [ [ "whd normal form for terms" ] "cwhx" + "( ⦃?,?⦄ ⊢ ⬈[?] 𝐖𝐇⦃?⦄ )" "cwhx_drops" + "cwhx_rdeq" * ]
+             [ [ "normal form for terms" ] "cnx" + "( ⦃?,?⦄ ⊢ ⬈[?,?] 𝐍⦃?⦄ )" "cnx_simple" + "cnx_drops" + "cnx_basic" + "cnx_cnx" * ]
              [ [ "for lenvs on referred entries" ] "rpx" + "( ⦃?,?⦄ ⊢ ⬈[?,?] ? )" "rpx_length" + "rpx_drops" + "rpx_fqup" + "rpx_fsle" + "rpx_rdeq" + "rpx_lpx" + "rpx_rpx" * ]
              [ [ "for lenvs on all entries" ] "lpx" + "( ⦃?,?⦄ ⊢ ⬈[?] ? )" "lpx_length" + "lpx_drops" + "lpx_fquq" + "lpx_fsle" + "lpx_rdeq" + "lpx_aaa" * ]
              [ [ "for binders" ] "cpx_ext" + "( ⦃?,?⦄ ⊢ ? ⬈[?] ? )" * ]
-             [ [ "for terms" ] "cpx" + "( ⦃?,?⦄ ⊢ ? ⬈[?] ? )" "cpx_simple" + "cpx_drops" + "cpx_fqus" + "cpx_lsubr" + "cpx_req" + "cpx_rdeq" + "cpx_fdeq" * ]
+             [ [ "for terms" ] "cpx" + "( ⦃?,?⦄ ⊢ ? ⬈[?] ? )" "cpx_simple" + "cpx_drops" + "cpx_drops_basic" + "cpx_fqus" + "cpx_lsubr" + "cpx_req" + "cpx_rdeq" + "cpx_fdeq" * ]
           }
         ]
         [ { "bound context-sensitive parallel rt-transition" * } {

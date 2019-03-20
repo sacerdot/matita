@@ -92,6 +92,13 @@ lemma tdeq_inv_pair1: ∀h,o,I,V1,T1,Y. ②{I}V1.T1 ≛[h, o] Y →
                       ∃∃V2,T2. V1 ≛[h, o] V2 & T1 ≛[h, o] T2 & Y = ②{I}V2.T2.
 /2 width=3 by tdeq_inv_pair1_aux/ qed-.
 
+lemma tdeq_inv_sort2: ∀h,o,X1,s2. X1 ≛[h, o] ⋆s2 →
+                      ∃∃s1,d. deg h o s1 d & deg h o s2 d & X1 = ⋆s1.
+#h #o #X1 #s2 #H
+elim (tdeq_inv_sort1 h o X1 s2)
+/2 width=5 by tdeq_sym, ex3_2_intro/
+qed-.
+
 lemma tdeq_inv_pair2: ∀h,o,I,X1,V2,T2. X1 ≛[h, o] ②{I}V2.T2 →
                       ∃∃V1,T1. V1 ≛[h, o] V2 & T1 ≛[h, o] T2 & X1 = ②{I}V1.T1.
 #h #o #I #X1 #V2 #T2 #H

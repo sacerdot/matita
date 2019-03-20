@@ -75,11 +75,15 @@ table {
    ]
    class "orange"
    [ { "relocation" * } {
-        [ { "generic slicing" * } {
+        [ { "generic and uniform slicing" * } {
              [ [ "for lenvs" ] "drops" + "( ⬇*[?,?] ? ≘ ? )" + "( ⬇*[?] ? ≘ ? )" "drops_ctc" + "drops_ltc" + "drops_weight" + "drops_length" + "drops_cext2" + "drops_sex" + "drops_lex" + "drops_seq" + "drops_drops" + "drops_vector" * ]
           }
         ]
-        [ { "generic relocation" * } {
+        [ { "basic relocation" * } {
+             [ [ "for terms" ] "lifts_basic" + "( ⬆[?,?] ? ≘ ? )" * ]
+          }
+        ]
+        [ { "generic and uniform relocation" * } {
              [ [ "for binders" ] "lifts_bind" + "( ⬆*[?] ? ≘ ? )" "lifts_weight_bind" + "lifts_lifts_bind" * ]
              [ [ "for term vectors" ] "lifts_vector" + "( ⬆*[?] ? ≘ ? )" "lifts_lifts_vector" * ]
              [ [ "for terms" ] "lifts" + "( ⬆*[?] ? ≘ ? )" "lifts_simple" + "lifts_weight" + "lifts_tdeq" + "lifts_lifts" * ]

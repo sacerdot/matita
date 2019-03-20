@@ -13,12 +13,16 @@
 (**************************************************************************)
 
 include "basic_2/rt_computation/fpbg_fqup.ma".
-include "basic_2/rt_computation/fpbg_fpbs.ma".
+include "basic_2/rt_computation/fpbg_cpxs.ma".
 include "basic_2/rt_computation/cpms_fpbs.ma".
 
 (* T-BOUND CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS **************)
 
 (* Forward lemmas with proper parallel rst-computation for closures *********)
+
+lemma cpms_tdneq_fwd_fpbg (h) (o) (n): ∀G,L,T1,T2. ⦃G,L⦄ ⊢ T1 ➡*[n,h] T2 →
+                                       (T1 ≛[h,o] T2 → ⊥) → ⦃G,L,T1⦄ >[h,o] ⦃G,L,T2⦄.
+/3 width=2 by cpms_fwd_cpxs, cpxs_tdneq_fpbg/ qed-.
 
 lemma fpbg_cpms_trans (h) (o) (n): ∀G1,G2,L1,L2,T1,T. ⦃G1, L1, T1⦄ >[h,o] ⦃G2, L2, T⦄ →
                                    ∀T2. ⦃G2, L2⦄ ⊢ T ➡*[n,h] T2 → ⦃G1, L1, T1⦄ >[h,o] ⦃G2, L2, T2⦄.
