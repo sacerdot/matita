@@ -17,11 +17,11 @@ include "basic_2/rt_computation/fsb.ma".
 
 (* STRONGLY NORMALIZING CLOSURES FOR PARALLEL RST-TRANSITION ****************)
 
-(* Properties with degree-based equivalence for closures ********************)
+(* Properties with sort-irrelevant equivalence for closures *****************)
 
-lemma fsb_fdeq_trans: ∀h,o,G1,L1,T1. ≥[h, o] 𝐒⦃G1, L1, T1⦄ →
-                      ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≛[h, o] ⦃G2, L2, T2⦄ → ≥[h, o] 𝐒⦃G2, L2, T2⦄.
-#h #o #G1 #L1 #T1 #H @(fsb_ind_alt … H) -G1 -L1 -T1 
+lemma fsb_fdeq_trans: ∀h,G1,L1,T1. ≥[h] 𝐒⦃G1, L1, T1⦄ →
+                      ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≛ ⦃G2, L2, T2⦄ → ≥[h] 𝐒⦃G2, L2, T2⦄.
+#h #G1 #L1 #T1 #H @(fsb_ind_alt … H) -G1 -L1 -T1 
 #G1 #L1 #T1 #_ #IH #G2 #L2 #T2 #H12
 @fsb_intro #G #L #T #H2
 elim (fdeq_fpb_trans … H12 … H2) -G2 -L2 -T2

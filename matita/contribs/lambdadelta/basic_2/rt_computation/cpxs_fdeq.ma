@@ -17,12 +17,12 @@ include "basic_2/rt_computation/cpxs_rdeq.ma".
 
 (* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS **************)
 
-(* Properties with degree-based equivalence for closures ********************)
+(* Properties with sort-irrelevant equivalence for closures *****************)
 
-lemma fdeq_cpxs_trans: ∀h,o,G1,G2,L1,L2,T1,T. ⦃G1, L1, T1⦄ ≛[h, o] ⦃G2, L2, T⦄ →
+lemma fdeq_cpxs_trans: ∀h,G1,G2,L1,L2,T1,T. ⦃G1, L1, T1⦄ ≛ ⦃G2, L2, T⦄ →
                        ∀T2. ⦃G2, L2⦄ ⊢ T ⬈*[h] T2 →
-                       ∃∃T0. ⦃G1, L1⦄ ⊢ T1 ⬈*[h] T0 & ⦃G1, L1, T0⦄ ≛[h, o] ⦃G2, L2, T2⦄.
-#h #o #G1 #G2 #L1 #L2 #T1 #T #H #T2 #HT2
+                       ∃∃T0. ⦃G1, L1⦄ ⊢ T1 ⬈*[h] T0 & ⦃G1, L1, T0⦄ ≛ ⦃G2, L2, T2⦄.
+#h #G1 #G2 #L1 #L2 #T1 #T #H #T2 #HT2
 elim (fdeq_inv_gen_dx … H) -H #H #HL12 #HT1 destruct
 elim (rdeq_cpxs_trans … HT2 … HL12) #T0 #HT0 #HT02
 lapply (cpxs_rdeq_conf_dx … HT2 … HL12) -HL12 #HL12

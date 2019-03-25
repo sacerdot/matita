@@ -20,10 +20,10 @@ include "basic_2/rt_transition/cnx.ma".
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma cnx_inv_abbr_pos (h) (o) (G) (L): ∀V,T.  ⦃G,L⦄ ⊢ ⬈[h,o] 𝐍⦃+ⓓV.T⦄ → ⊥.
-#h #o #G #L #V #U1 #H
+lemma cnx_inv_abbr_pos (h) (G) (L): ∀V,T.  ⦃G,L⦄ ⊢ ⬈[h] 𝐍⦃+ⓓV.T⦄ → ⊥.
+#h #G #L #V #U1 #H
 elim (cpx_subst h G (L.ⓓV) U1 … 0) [|*: /2 width=4 by drops_refl/ ] #U2 #T2 #HU12 #HTU2
-elim (tdeq_dec h o U1 U2) #HnU12 [ -HU12 | -HTU2 ]
+elim (tdeq_dec U1 U2) #HnU12 [ -HU12 | -HTU2 ]
 [ elim (tdeq_inv_lifts_dx … HnU12 … HTU2) -U2 #T1 #HTU1 #_ -T2
   lapply (H T1 ?) -H [ /2 width=3 by cpx_zeta/ ] #H
   /2 width=9 by tdeq_lifts_inv_pair_sn/

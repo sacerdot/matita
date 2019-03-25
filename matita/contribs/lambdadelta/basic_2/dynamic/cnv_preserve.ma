@@ -23,11 +23,10 @@ lemma cnv_preserve (a) (h): ∀G,L,T. ⦃G,L⦄ ⊢ T ![a,h] →
                             ∧∧ IH_cnv_cpms_conf_lpr a h G L T
                              & IH_cnv_cpm_trans_lpr a h G L T.
 #a #h #G #L #T #HT
-letin o ≝ (sd_O h)
-lapply (cnv_fwd_fsb … o … HT) -HT #H
+lapply (cnv_fwd_fsb … HT) -HT #H
 @(fsb_ind_fpbg … H) -G -L -T #G #L #T #_ #IH
 @conj [ letin aux ≝ cnv_cpms_conf_lpr_aux | letin aux ≝ cnv_cpm_trans_lpr_aux ]
-@(aux … o … G L T) // #G0 #L0 #T0 #H
+@(aux … G L T) // #G0 #L0 #T0 #H
 elim (IH … H) -IH -H //
 qed-.
 

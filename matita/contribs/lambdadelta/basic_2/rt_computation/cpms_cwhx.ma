@@ -24,11 +24,10 @@ include "basic_2/rt_computation/cpms_fpbg.ma".
 (* Properties with whd normality for unbound rt-transition ******************)
 
 lemma aaa_cpms_cwhx (h) (G) (L):
-                    ∀T1,A. ⦃G,L⦄ ⊢ T1 ⁝ A →
-                    ∃∃n,T2. ⦃G,L⦄ ⊢ T1 ➡*[n,h] T2 & ⦃G,L⦄ ⊢ ⬈[h] 𝐖𝐇⦃T2⦄.
+      ∀T1,A. ⦃G,L⦄ ⊢ T1 ⁝ A →
+      ∃∃n,T2. ⦃G,L⦄ ⊢ T1 ➡*[n,h] T2 & ⦃G,L⦄ ⊢ ⬈[h] 𝐖𝐇⦃T2⦄.
 #h #G #L #T1 #A #H
-letin o ≝ (sd_O h)
-@(aaa_ind_fpbg … o … H) -G -L -T1 -A
+@(aaa_ind_fpbg h … H) -G -L -T1 -A
 #G #L #T1 #A * -G -L -T1 -A
 [ #G #L #s #_ /2 width=4 by cwhx_sort, ex2_2_intro/
 | * #G #K #V1 #A #_ #IH -A
@@ -40,7 +39,7 @@ letin o ≝ (sd_O h)
   elim (lifts_total … V2 (𝐔❴1❵)) #T2 #HVT2
   /5 width=10 by cpms_lref, cwhx_lifts, drops_refl, drops_drop, ex2_2_intro/
 | * #G #L #V #T1 #B #A #_ #_ #IH -B -A
-  [ elim (cpr_abbr_pos h o G L V T1) #T0 #HT10 #HnT10
+  [ elim (cpr_abbr_pos h G L V T1) #T0 #HT10 #HnT10
     elim (IH G L T0) -IH [| /4 width=2 by fpb_fpbg, cpm_fpb/ ] -HnT10 #n #T2 #HT02 #HT2
     /3 width=5 by cpms_step_sn, ex2_2_intro/
   | elim (IH … G (L.ⓓV) T1) -IH [| /3 width=1 by fpb_fpbg, fpb_fqu, fqu_bind_dx/ ] #n #T2 #HT12 #HT2
@@ -50,7 +49,7 @@ letin o ≝ (sd_O h)
   /2 width=5 by cwhx_abst, ex2_2_intro/
 | #G #L #V #T1 #B #A #_ #HT1 #IH
   elim (IH … G L T1) [| /3 width=1 by fpb_fpbg, fpb_fqu, fqu_flat_dx/ ] #n1 #T2 #HT12 #HT2
-  elim (tdeq_dec h o T1 T2) [ -n1 #HT12 | -HT2 #HnT12 ]
+  elim (tdeq_dec T1 T2) [ -n1 #HT12 | -HT2 #HnT12 ]
   [ lapply (tdeq_cwhx_trans … HT2 … HT12) -T2
     @(insert_eq_0 … L) #Y @(insert_eq_0 … T1) #X * -Y -X
     [ #L0 #s0 #H1 #H2 destruct -IH

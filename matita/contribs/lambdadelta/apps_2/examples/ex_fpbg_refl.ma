@@ -53,5 +53,5 @@ lemma fqup_ApplOmega_41 (G) (L) (s0) (s): ⦃G,L,ApplOmega4 s0 s⦄ ⊐+ ⦃G,L,
 
 (* Main properties **********************************************************)
 
-theorem fpbg_refl (h) (o) (G) (L) (s0) (s): ⦃G,L,ApplOmega1 s0 s⦄ >[h,o] ⦃G,L,ApplOmega1 s0 s⦄.
+theorem fpbg_refl (h) (G) (L) (s0) (s): ⦃G,L,ApplOmega1 s0 s⦄ >[h] ⦃G,L,ApplOmega1 s0 s⦄.
 /3 width=5 by fpbs_fpbg_trans, fqup_fpbg, cpxs_fpbs/ qed.

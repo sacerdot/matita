@@ -17,13 +17,13 @@ include "static_2/static/rex_length.ma".
 include "static_2/static/rex_fsle.ma".
 include "static_2/static/rdeq.ma".
 
-(* DEGREE-BASED EQUIVALENCE FOR LOCAL ENVIRONMENTS ON REFERRED ENTRIES ******)
+(* SORT-IRRELEVANT EQUIVALENCE FOR LOCAL ENVIRONMENTS ON REFERRED ENTRIES ***)
 
 (* Advanved properties with free variables inclusion ************************)
 
-lemma rdeq_fsge_comp (h) (o): rex_fsge_compatible (cdeq h o).
-#h #o #L1 #L2 #T * #f1 #Hf1 #HL12
-lapply (frees_rdeq_conf h o … Hf1 … HL12)
+lemma rdeq_fsge_comp: rex_fsge_compatible cdeq.
+#L1 #L2 #T * #f1 #Hf1 #HL12
+lapply (frees_rdeq_conf … Hf1 … HL12)
 lapply (sex_fwd_length … HL12)
 /3 width=8 by lveq_length_eq, ex4_4_intro/ (**) (* full auto fails *)
 qed-.
@@ -31,25 +31,25 @@ qed-.
 (* Properties with length for local environments ****************************)
 
 (* Basic_2A1: uses: lleq_sort *)
-lemma rdeq_sort_length (h) (o): ∀L1,L2. |L1| = |L2| → ∀s. L1 ≛[h, o, ⋆s] L2.
+lemma rdeq_sort_length: ∀L1,L2. |L1| = |L2| → ∀s. L1 ≛[⋆s] L2.
 /2 width=1 by rex_sort_length/ qed.
 
 (* Basic_2A1: uses: lleq_gref *)
-lemma rdeq_gref_length (h) (o): ∀L1,L2. |L1| = |L2| → ∀l. L1 ≛[h, o, §l] L2.
+lemma rdeq_gref_length: ∀L1,L2. |L1| = |L2| → ∀l. L1 ≛[§l] L2.
 /2 width=1 by rex_gref_length/ qed.
 
-lemma rdeq_unit_length (h) (o): ∀L1,L2. |L1| = |L2| →
-                                ∀I. L1.ⓤ{I} ≛[h, o, #0] L2.ⓤ{I}.
+lemma rdeq_unit_length: ∀L1,L2. |L1| = |L2| →
+                        ∀I. L1.ⓤ{I} ≛[#0] L2.ⓤ{I}.
 /2 width=1 by rex_unit_length/ qed.
 
 (* Basic_2A1: uses: lleq_lift_le lleq_lift_ge *)
-lemma rdeq_lifts_bi (h) (o): ∀L1,L2. |L1| = |L2| → ∀K1,K2,T. K1 ≛[h, o, T] K2 →
-                             ∀b,f. ⬇*[b, f] L1 ≘ K1 → ⬇*[b, f] L2 ≘ K2 →
-                             ∀U. ⬆*[f] T ≘ U → L1 ≛[h, o, U] L2.
+lemma rdeq_lifts_bi: ∀L1,L2. |L1| = |L2| → ∀K1,K2,T. K1 ≛[T] K2 →
+                     ∀b,f. ⬇*[b, f] L1 ≘ K1 → ⬇*[b, f] L2 ≘ K2 →
+                     ∀U. ⬆*[f] T ≘ U → L1 ≛[U] L2.
 /3 width=9 by rex_lifts_bi, tdeq_lifts_sn/ qed-.
 
 (* Forward lemmas with length for local environments ************************)
 
 (* Basic_2A1: lleq_fwd_length *)
-lemma rdeq_fwd_length (h) (o): ∀L1,L2. ∀T:term. L1 ≛[h, o, T] L2 → |L1| = |L2|.
+lemma rdeq_fwd_length: ∀L1,L2. ∀T:term. L1 ≛[T] L2 → |L1| = |L2|.
 /2 width=3 by rex_fwd_length/ qed-.

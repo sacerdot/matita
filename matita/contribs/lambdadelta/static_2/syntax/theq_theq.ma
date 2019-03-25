@@ -20,10 +20,10 @@ include "static_2/syntax/theq.ma".
 
 (* Basic_1: was: iso_trans *)
 (* Basic_2A1: was: tsts_trans *)
-theorem theq_trans: ∀h,o. Transitive … (theq h o).
-#h #o #T1 #T * -T1 -T
-[ #s1 #s #d #Hs1 #Hs #X #H
-  elim (theq_inv_sort1_deg … H … Hs) -s /2 width=3 by theq_sort/
+theorem theq_trans: Transitive … theq.
+#T1 #T * -T1 -T
+[ #s1 #s #X #H
+  elim (theq_inv_sort1 … H) -s /2 width=1 by theq_sort/
 | #i1 #i #H <(theq_inv_lref1 … H) -H //
 | #l1 #l #H <(theq_inv_gref1 … H) -H //
 | #I #V1 #V #T1 #T #X #H
@@ -32,9 +32,9 @@ theorem theq_trans: ∀h,o. Transitive … (theq h o).
 qed-.
 
 (* Basic_2A1: was: tsts_canc_sn *)
-theorem theq_canc_sn: ∀h,o. left_cancellable … (theq h o).
+theorem theq_canc_sn: left_cancellable … theq.
 /3 width=3 by theq_trans, theq_sym/ qed-.
 
 (* Basic_2A1: was: tsts_canc_dx *)
-theorem theq_canc_dx: ∀h,o. right_cancellable … (theq h o).
+theorem theq_canc_dx: right_cancellable … theq.
 /3 width=3 by theq_trans, theq_sym/ qed-.

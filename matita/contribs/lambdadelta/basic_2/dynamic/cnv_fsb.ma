@@ -20,12 +20,12 @@ include "basic_2/dynamic/cnv_aaa.ma".
 (* Forward lemmas with strongly rst-normalizing closures ********************)
 
 (* Basic_2A1: uses: snv_fwd_fsb *)
-lemma cnv_fwd_fsb (a) (h) (o): ∀G,L,T. ⦃G, L⦄ ⊢ T ![a, h] → ≥[h, o] 𝐒⦃G, L, T⦄.
-#a #h #o #G #L #T #H elim (cnv_fwd_aaa … H) -H /2 width=2 by aaa_fsb/
+lemma cnv_fwd_fsb (a) (h): ∀G,L,T. ⦃G, L⦄ ⊢ T ![a, h] → ≥[h] 𝐒⦃G, L, T⦄.
+#a #h #G #L #T #H elim (cnv_fwd_aaa … H) -H /2 width=2 by aaa_fsb/
 qed-.
 
 (* Inversion lemmas with proper parallel rst-computation for closures *******)
 
-lemma cnv_fpbg_refl_false (a) (h) (o) (G) (L) (T):
-                          ⦃G, L⦄ ⊢ T ![a,h] → ⦃G, L, T⦄ >[h,o] ⦃G, L, T⦄ → ⊥.
+lemma cnv_fpbg_refl_false (a) (h) (G) (L) (T):
+                          ⦃G, L⦄ ⊢ T ![a,h] → ⦃G, L, T⦄ >[h] ⦃G, L, T⦄ → ⊥.
 /3 width=7 by cnv_fwd_fsb, fsb_fpbg_refl_false/ qed-.

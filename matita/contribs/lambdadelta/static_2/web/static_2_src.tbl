@@ -31,8 +31,8 @@ table {
           }
         ]
         [ { "degree-based equivalence" * } {
-             [ [ "for closures on referred entries" ] "fdeq" + "( ⦃?,?,?⦄ ≛[?,?] ⦃?,?,?⦄ )" "fdeq_fqup" + "fdeq_fqus" + "fdeq_req" + "fdeq_fdeq" * ]
-             [ [ "for lenvs on referred entries" ] "rdeq" + "( ? ≛[?,?,?] ? )" "rdeq_length" + "rdeq_drops" + "rdeq_fqup" + "rdeq_fqus" + "rdeq_req" + "rdeq_rdeq" * ]
+             [ [ "for closures on referred entries" ] "fdeq" + "( ⦃?,?,?⦄ ≛ ⦃?,?,?⦄ )" "fdeq_fqup" + "fdeq_fqus" + "fdeq_req" + "fdeq_fdeq" * ]
+             [ [ "for lenvs on referred entries" ] "rdeq" + "( ? ≛[?] ? )" "rdeq_length" + "rdeq_drops" + "rdeq_fqup" + "rdeq_fqus" + "rdeq_req" + "rdeq_rdeq" * ]
           }
         ]
         [ { "syntactic equivalence" * } {
@@ -112,12 +112,12 @@ table {
           }
         ]
         [ { "head equivalence" * } {
-             [ [ "for terms" ] "theq" + "( ? ⩳[?,?] ? )" "theq_simple" + "theq_tdeq" + "theq_theq" + "theq_simple_vector" * ]
+             [ [ "for terms" ] "theq" + "( ? ⩳ ? )" "theq_simple" + "theq_tdeq" + "theq_theq" + "theq_simple_vector" * ]
           }
         ]
         [ { "degree-based equivalence" * } {
-             [ [ "" ] "tdeq_ext" + "( ? ≛[?,?] ? )" + "( ? ⊢ ? ≛[?,?] ? )" * ]
-             [ [ "" ] "tdeq" + "( ? ≛[?,?] ? )" "tdeq_tdeq" * ]
+             [ [ "" ] "tdeq_ext" + "( ? ≛ ? )" + "( ? ⊢ ? ≛ ? )" * ]
+             [ [ "" ] "tdeq" + "( ? ≛ ? )" "tdeq_tdeq" * ]
           }
         ]
         [ { "closures" * } {
@@ -152,7 +152,6 @@ table {
           }
         ]
         [ { "items" * } {
-             [ [ "" ] "item_sd" * ]
              [ [ "" ] "item_sh" * ]
              [ [ "" ] "item" * ]
           }

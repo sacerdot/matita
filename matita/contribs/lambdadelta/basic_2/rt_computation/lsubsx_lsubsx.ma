@@ -18,9 +18,9 @@ include "basic_2/rt_computation/lsubsx.ma".
 
 (* Main properties **********************************************************)
 
-theorem lsubsx_fix: ∀h,o,f,G,L1,L. G ⊢ L1 ⊆ⓧ[h, o, f] L →
-                    ∀L2. G ⊢ L ⊆ⓧ[h, o, f] L2 → L = L2.
-#h #o #f #G #L1 #L #H elim H -f -L1 -L
+theorem lsubsx_fix: ∀h,f,G,L1,L. G ⊢ L1 ⊆ⓧ[h, f] L →
+                    ∀L2. G ⊢ L ⊆ⓧ[h, f] L2 → L = L2.
+#h #f #G #L1 #L #H elim H -f -L1 -L
 [ #f #L2 #H
   >(lsubsx_inv_atom_sn … H) -L2 //
 | #f #I #K1 #K2 #_ #IH #L2 #H
@@ -32,7 +32,7 @@ theorem lsubsx_fix: ∀h,o,f,G,L1,L. G ⊢ L1 ⊆ⓧ[h, o, f] L →
 ]
 qed-.
 
-theorem lsubsx_trans: ∀h,o,f,G. Transitive … (lsubsx h o G f).
-#h #o #f #G #L1 #L #H1 #L2 #H2
+theorem lsubsx_trans: ∀h,f,G. Transitive … (lsubsx h G f).
+#h #f #G #L1 #L #H1 #L2 #H2
 <(lsubsx_fix … H1 … H2) -L2 //
 qed-.

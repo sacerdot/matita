@@ -18,5 +18,5 @@ include "basic_2/rt_computation/fpbs.ma".
 
 (* Main properties **********************************************************)
 
-theorem fpbs_trans: ∀h,o. tri_transitive … (fpbs h o).
+theorem fpbs_trans: ∀h. tri_transitive … (fpbs h).
 /2 width=5 by tri_TC_transitive/ qed-.

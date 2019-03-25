@@ -17,15 +17,15 @@ include "basic_2/rt_transition/cwhx.ma".
 
 (* WHD NORMAL TERMS FOR UNBOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION ****)
 
-(* Properties with degree-based equivalence *********************************)
+(* Properties with sort-irrelevant equivalence ******************************)
 
-lemma rdeq_tdeq_cwhx_trans (h) (o) (G):
+lemma rdeq_tdeq_cwhx_trans (h) (G):
                            ∀L2,T2. ⦃G,L2⦄ ⊢ ⬈[h] 𝐖𝐇⦃T2⦄ →
-                           ∀T1. T1 ≛[h,o] T2 →
-                           ∀L1. L1 ≛[h,o,T1] L2 → ⦃G,L1⦄ ⊢ ⬈[h] 𝐖𝐇⦃T1⦄.
-#h #o #G #L2 #T2 #H elim H -L2 -T2
+                           ∀T1. T1 ≛ T2 →
+                           ∀L1. L1 ≛[T1] L2 → ⦃G,L1⦄ ⊢ ⬈[h] 𝐖𝐇⦃T1⦄.
+#h #G #L2 #T2 #H elim H -L2 -T2
 [ #L2 #s2 #X1 #HX #L1 #HL
-  elim (tdeq_inv_sort2 … HX) -HX #s1 #d #_ #_ #H destruct -s2 -d //
+  elim (tdeq_inv_sort2 … HX) -HX #s1 #H destruct -s2 //
 | #p #L2 #W2 #T2 #X1 #HX #L1 #HL
   elim (tdeq_inv_pair2 … HX) -HX #W1 #T1 #_ #_ #H destruct -W2 -T2 //
 | #L2 #V2 #T2 #_ #IH #X1 #HX #L1 #HL
@@ -35,7 +35,7 @@ lemma rdeq_tdeq_cwhx_trans (h) (o) (G):
 ]
 qed-.
 
-lemma tdeq_cwhx_trans (h) (o) (G) (L):
+lemma tdeq_cwhx_trans (h) (G) (L):
                       ∀T2. ⦃G,L⦄ ⊢ ⬈[h] 𝐖𝐇⦃T2⦄ →
-                      ∀T1. T1 ≛[h,o] T2 → ⦃G,L⦄ ⊢ ⬈[h] 𝐖𝐇⦃T1⦄.
-/3 width=6 by rdeq_tdeq_cwhx_trans/ qed-.
+                      ∀T1. T1 ≛ T2 → ⦃G,L⦄ ⊢ ⬈[h] 𝐖𝐇⦃T1⦄.
+/3 width=5 by rdeq_tdeq_cwhx_trans/ qed-.

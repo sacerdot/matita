@@ -20,19 +20,19 @@ include "basic_2/rt_computation/rdsx.ma".
 (* Advanced properties ******************************************************)
 
 (* Basic_2A1: uses: lsx_lleq_trans *)
-lemma rdsx_rdeq_trans (h) (o) (G):
-                      ∀L1,T. G ⊢ ⬈*[h, o, T] 𝐒⦃L1⦄ →
-                      ∀L2. L1 ≛[h, o, T] L2 → G ⊢ ⬈*[h, o, T] 𝐒⦃L2⦄.
-#h #o #G #L1 #T #H @(rdsx_ind … H) -L1
+lemma rdsx_rdeq_trans (h) (G):
+                      ∀L1,T. G ⊢ ⬈*[h, T] 𝐒⦃L1⦄ →
+                      ∀L2. L1 ≛[T] L2 → G ⊢ ⬈*[h, T] 𝐒⦃L2⦄.
+#h #G #L1 #T #H @(rdsx_ind … H) -L1
 #L1 #_ #IHL1 #L2 #HL12 @rdsx_intro
 #L #HL2 #HnL2 elim (rdeq_lpx_trans … HL2 … HL12) -HL2
 /4 width=5 by rdeq_repl/
 qed-.
 
 (* Basic_2A1: uses: lsx_lpx_trans *)
-lemma rdsx_lpx_trans (h) (o) (G):
-                     ∀L1,T. G ⊢ ⬈*[h, o, T] 𝐒⦃L1⦄ →
-                     ∀L2. ⦃G, L1⦄ ⊢ ⬈[h] L2 → G ⊢ ⬈*[h, o, T] 𝐒⦃L2⦄.
-#h #o #G #L1 #T #H @(rdsx_ind … H) -L1 #L1 #HL1 #IHL1 #L2 #HL12
-elim (rdeq_dec h o L1 L2 T) /3 width=4 by rdsx_rdeq_trans/
+lemma rdsx_lpx_trans (h) (G):
+                     ∀L1,T. G ⊢ ⬈*[h, T] 𝐒⦃L1⦄ →
+                     ∀L2. ⦃G, L1⦄ ⊢ ⬈[h] L2 → G ⊢ ⬈*[h, T] 𝐒⦃L2⦄.
+#h #G #L1 #T #H @(rdsx_ind … H) -L1 #L1 #HL1 #IHL1 #L2 #HL12
+elim (rdeq_dec L1 L2 T) /3 width=4 by rdsx_rdeq_trans/
 qed-.

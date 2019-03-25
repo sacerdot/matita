@@ -65,16 +65,16 @@ table {
           }
         ]
         [ { "unbound context-sensitive parallel rst-computation" * } {
-             [ [ "strongly normalizing for closures" ] "fsb" + "( ≥[?,?] 𝐒⦃?,?,?⦄ )" "fsb_fdeq" + "fsb_aaa" + "fsb_csx" + "fsb_fpbg" * ]
-             [ [ "proper for closures" ] "fpbg" + "( ⦃?,?,?⦄ >[?,?] ⦃?,?,?⦄ )" "fpbg_fqup" + "fpbg_cpxs" + "fpbg_lpxs" + "fpbg_fpbs" + "fpbg_fpbg" * ]
-             [ [ "for closures" ] "fpbs" + "( ⦃?,?,?⦄ ≥[?,?] ⦃?,?,?⦄ )" "fpbs_fqup" + "fpbs_fqus" + "fpbs_aaa" + "fpbs_cpx" + "fpbs_fpb" + "fpbs_cpxs" + "fpbs_lpxs" + "fpbs_csx" + "fpbs_fpbs" * ]
+             [ [ "strongly normalizing for closures" ] "fsb" + "( ≥[?] 𝐒⦃?,?,?⦄ )" "fsb_fdeq" + "fsb_aaa" + "fsb_csx" + "fsb_fpbg" * ]
+             [ [ "proper for closures" ] "fpbg" + "( ⦃?,?,?⦄ >[?] ⦃?,?,?⦄ )" "fpbg_fqup" + "fpbg_cpxs" + "fpbg_lpxs" + "fpbg_fpbs" + "fpbg_fpbg" * ]
+             [ [ "for closures" ] "fpbs" + "( ⦃?,?,?⦄ ≥[?] ⦃?,?,?⦄ )" "fpbs_fqup" + "fpbs_fqus" + "fpbs_aaa" + "fpbs_cpx" + "fpbs_fpb" + "fpbs_cpxs" + "fpbs_lpxs" + "fpbs_csx" + "fpbs_fpbs" * ]
           }
         ]
         [ { "unbound context-sensitive parallel rt-computation" * } {
-             [ [ "refinement for lenvs on selected entries" ] "lsubsx" + "( ? ⊢ ? ⊆ⓧ[?,?,?] ? )" "lsubsx_lfsx" + "lsubsx_lsubsx" * ]
-             [ [ "strongly normalizing for lenvs on referred entries" ] "rdsx" + "( ? ⊢ ⬈*[?,?,?] 𝐒⦃?⦄ )" "rdsx_length" + "rdsx_drops" + "rdsx_fqup" + "rdsx_cpxs" + "rdsx_csx" + "rdsx_rdsx" * ]
-             [ [ "strongly normalizing for term vectors" ] "csx_vector" + "( ⦃?,?⦄ ⊢ ⬈*[?,?] 𝐒⦃?⦄ )" "csx_cnx_vector" + "csx_csx_vector" * ]
-             [ [ "strongly normalizing for terms" ] "csx" + "( ⦃?,?⦄ ⊢ ⬈*[?,?] 𝐒⦃?⦄ )" "csx_simple" + "csx_simple_theq" + "csx_drops" + "csx_fqus" + "csx_lsubr" + "csx_rdeq" + "csx_fdeq" + "csx_aaa" + "csx_gcp" + "csx_gcr" + "csx_lpx" + "csx_cnx" + "csx_fpbq" + "csx_cpxs" + "csx_lpxs" + "csx_csx" * ]
+             [ [ "refinement for lenvs on selected entries" ] "lsubsx" + "( ? ⊢ ? ⊆ⓧ[?,?] ? )" "lsubsx_lfsx" + "lsubsx_lsubsx" * ]
+             [ [ "strongly normalizing for lenvs on referred entries" ] "rdsx" + "( ? ⊢ ⬈*[?,?] 𝐒⦃?⦄ )" "rdsx_length" + "rdsx_drops" + "rdsx_fqup" + "rdsx_cpxs" + "rdsx_csx" + "rdsx_rdsx" * ]
+             [ [ "strongly normalizing for term vectors" ] "csx_vector" + "( ⦃?,?⦄ ⊢ ⬈*[?] 𝐒⦃?⦄ )" "csx_cnx_vector" + "csx_csx_vector" * ]
+             [ [ "strongly normalizing for terms" ] "csx" + "( ⦃?,?⦄ ⊢ ⬈*[?] 𝐒⦃?⦄ )" "csx_simple" + "csx_simple_theq" + "csx_drops" + "csx_fqus" + "csx_lsubr" + "csx_rdeq" + "csx_fdeq" + "csx_aaa" + "csx_gcp" + "csx_gcr" + "csx_lpx" + "csx_cnx" + "csx_fpbq" + "csx_cpxs" + "csx_lpxs" + "csx_csx" * ]
              [ [ "for lenvs on all entries" ] "lpxs" + "( ⦃?,?⦄ ⊢ ⬈*[?] ? )" "lpxs_length" + "lpxs_drops" + "lpxs_rdeq" + "lpxs_fdeq" + "lpxs_aaa" + "lpxs_lpx" + "lpxs_cpxs" + "lpxs_lpxs" * ]
              [ [ "for binders" ] "cpxs_ext" + "( ⦃?,?⦄ ⊢ ? ⬈*[?] ? )" * ]
              [ [ "for terms" ] "cpxs" + "( ⦃?,?⦄ ⊢ ? ⬈*[?] ? )" "cpxs_tdeq" + "cpxs_theq" + "cpxs_theq_vector" + "cpxs_drops" + "cpxs_fqus" + "cpxs_lsubr" + "cpxs_rdeq" + "cpxs_fdeq" + "cpxs_aaa" + "cpxs_lpx" + "cpxs_cnx" + "cpxs_cpxs" * ] 
@@ -85,8 +85,8 @@ table {
    class "cyan"
    [ { "rt-transition" * } {
         [ { "unbound parallel rst-transition" * } {
-             [ [ "for closures" ] "fpbq" + "( ⦃?,?,?⦄ ≽[?,?] ⦃?,?,?⦄ )" "fpbq_aaa" + "fpbq_fpb" * ]
-             [ [ "proper for closures" ] "fpb" + "( ⦃?,?,?⦄ ≻[?,?] ⦃?,?,?⦄ )" "fpb_rdeq" + "fpb_fdeq" * ]
+             [ [ "for closures" ] "fpbq" + "( ⦃?,?,?⦄ ≽[?] ⦃?,?,?⦄ )" "fpbq_aaa" + "fpbq_fpb" * ]
+             [ [ "proper for closures" ] "fpb" + "( ⦃?,?,?⦄ ≻[?] ⦃?,?,?⦄ )" "fpb_rdeq" + "fpb_fdeq" * ]
           }
         ]
         [ { "context-sensitive parallel r-transition" * } {
@@ -101,7 +101,7 @@ table {
         ]
         [ { "unbound context-sensitive parallel rt-transition" * } {
              [ [ "whd normal form for terms" ] "cwhx" + "( ⦃?,?⦄ ⊢ ⬈[?] 𝐖𝐇⦃?⦄ )" "cwhx_drops" + "cwhx_rdeq" * ]
-             [ [ "normal form for terms" ] "cnx" + "( ⦃?,?⦄ ⊢ ⬈[?,?] 𝐍⦃?⦄ )" "cnx_simple" + "cnx_drops" + "cnx_basic" + "cnx_cnx" * ]
+             [ [ "normal form for terms" ] "cnx" + "( ⦃?,?⦄ ⊢ ⬈[?] 𝐍⦃?⦄ )" "cnx_simple" + "cnx_drops" + "cnx_basic" + "cnx_cnx" * ]
              [ [ "for lenvs on referred entries" ] "rpx" + "( ⦃?,?⦄ ⊢ ⬈[?,?] ? )" "rpx_length" + "rpx_drops" + "rpx_fqup" + "rpx_fsle" + "rpx_rdeq" + "rpx_lpx" + "rpx_rpx" * ]
              [ [ "for lenvs on all entries" ] "lpx" + "( ⦃?,?⦄ ⊢ ⬈[?] ? )" "lpx_length" + "lpx_drops" + "lpx_fquq" + "lpx_fsle" + "lpx_rdeq" + "lpx_aaa" * ]
              [ [ "for binders" ] "cpx_ext" + "( ⦃?,?⦄ ⊢ ? ⬈[?] ? )" * ]
