@@ -51,6 +51,19 @@ let pp_tactic_pattern status ~map_unicode_to_tex (what, hyp, goal) =
   in
    Printf.sprintf "%sin %s%s" what_text hyp_text goal_text
 
+let pp_auto_params params status =
+    match params with
+    | (None,flags) -> String.concat " " (List.map (fun a,b -> a ^ "=" ^ b) flags)
+    | (Some l,flags) -> (String.concat "," (List.map (NotationPp.pp_term status) l)) ^
+    String.concat " " (List.map (fun a,b -> a ^ "=" ^ b) flags)
+;;
+
+let pp_just status just =
+ match just with
+    `Term term -> "exact " ^ NotationPp.pp_term status term
+  | `Auto params -> pp_auto_params params status 
+;;
+
 let rec pp_ntactic status ~map_unicode_to_tex =
  let pp_tactic_pattern = pp_tactic_pattern ~map_unicode_to_tex in
  function
@@ -107,9 +120,22 @@ let rec pp_ntactic status ~map_unicode_to_tex =
   | NBlock (_,l) -> 
      "(" ^ String.concat " " (List.map (pp_ntactic status ~map_unicode_to_tex) l)^ ")"
   | NRepeat (_,t) -> "nrepeat " ^ pp_ntactic status ~map_unicode_to_tex t
-  | Assume (_, ident, term) -> "assume" ^ ident ^ ":" ^ NotationPp.pp_term status term
+  | Assume (_, ident, term, term1) -> "assume" ^ ident ^ ":" ^ NotationPp.pp_term status term ^
+  (match term1 with None -> " " | Some t1 -> " that is eqivalent to " ^ NotationPp.pp_term status t1)
   | Suppose (_,term,ident,term1) -> "suppose" ^ NotationPp.pp_term status term ^ "(" ^ ident ^ ")" ^ (match
-  term1 with None -> "" | Some t -> " that is equivalent to " ^ NotationPp.pp_term status t)
+  term1 with None -> " " | Some t -> " that is equivalent to " ^ NotationPp.pp_term status t)
+  | By_just_we_proved (_, just, term1, ident, term2) -> pp_just status just  ^ "we proved" ^
+  NotationPp.pp_term status term1 ^ (match ident with None -> "" | Some ident -> "(" ^ident^ ")") ^ (match
+  term2 with  None -> " " | Some term2 -> " that is equivalent to " ^ NotationPp.pp_term status term2)
+  | We_need_to_prove (_,term,ident,term1) -> "we need to prove" ^ NotationPp.pp_term status term ^
+  (match ident with None -> " " | Some id -> "(" ^ id ^ ")") ^ (match term1 with None -> " " | Some t1
+  -> "or equivalently" ^ NotationPp.pp_term status t1)
+  | Bydone (_, just) -> pp_just status just ^ "done"
+  (*
+  | ExistsElim (_, just, ident, term, term1, ident1) -> pp_just ~term_pp just ^ "let " ^ ident ^ ":"
+  ^ NotationPp.pp_term term ^ "such that " ^ NotationPp.pp_term term1 ^ "(" ^ ident1 ^ ")"
+  | AndElim (_, just, term1, ident1, term2, ident2) -> pp_just ~NotationPp.pp_term just ^ "we have " ^ NotationPp.pp_term term1 ^ " (" ^ ident1 ^ ") " ^ "and " ^ NotationPp.pp_term term2 ^ " (" ^ ident2 ^ ")" 
+  *)
 ;;
 
 let pp_nmacro status = function

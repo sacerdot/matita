@@ -82,7 +82,7 @@ let nnon_punct_of_punct = function
 type by_continuation =
    BYC_done
  | BYC_weproved of N.term * string option * N.term option
- | BYC_letsuchthat of string * N.term * string * N.term
+ | BYC_letsuchthat of string * N.term * N.term * string
  | BYC_wehaveand of string * N.term * string * N.term
 
 let mk_parser statement lstatus =
@@ -239,9 +239,35 @@ EXTEND
     | SYMBOL "#"; SYMBOL "_" -> G.NTactic(loc,[ G.NIntro (loc,"_")])
     | SYMBOL "*" -> G.NTactic(loc,[ G.NCase1 (loc,"_")])
     | SYMBOL "*"; "as"; n=IDENT -> G.NTactic(loc,[ G.NCase1 (loc,n)])
-    | IDENT "assume" ; id = IDENT; SYMBOL ":"; t = tactic_term -> G.NTactic (loc,[G.Assume (loc,id,t)])
+    | IDENT "assume" ; id = IDENT; SYMBOL ":"; t = tactic_term ; t1 = OPT [IDENT "that"; IDENT "is";
+    IDENT "equivalent"; "to"; t' = tactic_term -> t']-> G.NTactic (loc,[G.Assume (loc,id,t,t1)])
     | IDENT "suppose" ; t = tactic_term ; LPAREN ; id = IDENT ; RPAREN ; t1 = OPT [IDENT "that"; IDENT
     "is"; IDENT "equivalent"; "to"; t' = tactic_term -> t'] -> G.NTactic (loc,[G.Suppose (loc,t,id,t1)])
+    | just =
+       [ IDENT "using"; t=tactic_term -> `Term t
+       | params = auto_params -> 
+            let just,params = params in
+            `Auto
+            (match just with 
+             | None -> (None,params)
+             | Some (`Univ univ) -> (Some univ,params)
+             (* `Trace behaves exaclty like None for the moment being *)
+             | Some (`Trace) -> (None,params)
+             )
+       ];
+      cont=by_continuation -> G.NTactic (loc,[
+       (match cont with
+           BYC_done -> G.Bydone (loc, just)
+         | BYC_weproved (ty,id,t1) ->
+            G.By_just_we_proved(loc, just, ty, id, t1)
+        (*
+         | BYC_letsuchthat (id1,t1,t2,id2) ->
+            G.ExistsElim (loc, just, id1, t1, t2, id2)
+         | BYC_wehaveand (id1,t1,id2,t2) ->
+            G.AndElim (loc, just, id1, t1, id2, t2)*))
+        ])
+    | IDENT "we" ; IDENT "need" ; "to" ; IDENT "prove" ; t = tactic_term ; id = OPT [ LPAREN ; id = IDENT ; RPAREN -> id ] ; t1 = OPT [IDENT "or" ; IDENT "equivalently"; t' = tactic_term -> t']->
+        G.NTactic (loc,[G.We_need_to_prove (loc, t, id, t1)])
     ]
   ];
   auto_fixed_param: [
@@ -266,7 +292,6 @@ EXTEND
    ]
 ];
 
-(* MATITA 1.0
   by_continuation: [
     [ WEPROVED; ty = tactic_term ; LPAREN ; id = IDENT ; RPAREN ; t1 = OPT [IDENT "that" ; IDENT "is" ; IDENT "equivalent" ; "to" ; t2 = tactic_term -> t2] -> BYC_weproved (ty,Some id,t1)
     | WEPROVED; ty = tactic_term ; t1 = OPT [IDENT "that" ; IDENT "is" ; IDENT "equivalent" ; "to" ; t2 = tactic_term -> t2] ; 
@@ -274,19 +299,18 @@ EXTEND
     | "done" -> BYC_done
     | "let" ; id1 = IDENT ; SYMBOL ":" ; t1 = tactic_term ;
       IDENT "such" ; IDENT "that" ; t2=tactic_term ; LPAREN ; 
-      id2 = IDENT ; RPAREN -> BYC_letsuchthat (id1,t1,id2,t2)
+      id2 = IDENT ; RPAREN -> BYC_letsuchthat (id1,t1,t2,id2)
     | WEHAVE; t1=tactic_term ; LPAREN ; id1=IDENT ; RPAREN ;"and" ; t2=tactic_term ; LPAREN ; id2=IDENT ; RPAREN ->
               BYC_wehaveand (id1,t1,id2,t2)
     ]
 ];
-*)
-(* MATITA 1.0
+
   rewriting_step_continuation : [
     [ "done" -> true
     | -> false
     ]
 ];
-*)
+
 (* MATITA 1.0
   atomic_tactical:
     [ "sequence" LEFTA
