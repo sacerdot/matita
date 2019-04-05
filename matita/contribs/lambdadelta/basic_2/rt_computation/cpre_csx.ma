@@ -12,8 +12,22 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
+include "basic_2/rt_transition/cpm_cpx.ma".
+include "basic_2/rt_transition/cnr_tdeq.ma".
+include "basic_2/rt_computation/csx.ma".
+include "basic_2/rt_computation/cpre.ma".
 
-notation "hvbox( ⦃ term 46 G, break term 46 L ⦄ ⊢ break term 46 T1 • * ⬌ * [ break term 46 h, break term 46 o, break term 46 n1, break term 46 n2 ] break term 46 T2 )"
-   non associative with precedence 45
-   for @{ 'DPConvStar $h $o $n1 $n2 $G $L $T1 $T2 }.
+(* EVALUATION FOR CONTEXT-SENSITIVE PARALLEL R-TRANSITION ON TERMS **********)
+
+(* Properties with strong normalization for unbound rt-transition for terms *)
+
+(* Basic_1: was just: nf2_sn3 *)
+lemma csx_cpre (h) (G) (L):
+      ∀T1. ⦃G, L⦄ ⊢ ⬈*[h] 𝐒⦃T1⦄ → ∃T2. ⦃G, L⦄ ⊢ T1 ➡*[h] 𝐍⦃T2⦄.
+#h #G #L #T1 #H
+@(csx_ind … H) -T1 #T1 #_ #IHT1
+elim (cnr_dec_tdeq h G L T1) [ /3 width=3 by ex_intro, conj/ ] *
+#T0 #HT10 #HnT10
+elim (IHT1 … HnT10) -IHT1 -HnT10 [| /2 width=2 by cpm_fwd_cpx/ ]
+#T2 * /4 width=3 by cprs_step_sn, ex_intro, conj/
+qed-.

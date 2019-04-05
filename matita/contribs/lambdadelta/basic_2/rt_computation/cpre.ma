@@ -12,8 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
+include "basic_2/notation/relations/predeval_5.ma".
+include "basic_2/rt_computation/cpme.ma".
+include "basic_2/rt_computation/cprs.ma".
 
-notation "hvbox( ⦃ term 46 G, break term 46 L ⦄ ⊢ break term 46 T1 ➡ * 𝐍 ⦃ break term 46 T2 ⦄ )"
-   non associative with precedence 45
-   for @{ 'PRedEval $G $L $T1 $T2 }.
+(* EVALUATION FOR CONTEXT-SENSITIVE PARALLEL R-TRANSITION ON TERMS ***********)
+
+interpretation "evaluation for context-sensitive parallel r-transition (term)"
+   'PRedEval h G L T1 T2 = (cpme h O G L T1 T2).

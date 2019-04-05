@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/xoa/ex_1_4.ma".
 include "static_2/notation/relations/simple_1.ma".
 include "static_2/syntax/term.ma".
 
@@ -39,4 +40,12 @@ lemma simple_inv_bind: ∀p,I,V,T. 𝐒⦃ⓑ{p,I} V. T⦄ → ⊥.
 lemma simple_inv_pair: ∀I,V,T. 𝐒⦃②{I}V.T⦄ → ∃J. I = Flat2 J.
 * /2 width=2 by ex_intro/
 #p #I #V #T #H elim (simple_inv_bind … H)
+qed-.
+
+(* Basic properties *********************************************************)
+
+lemma simple_dec_ex (X): ∨∨ 𝐒⦃X⦄ | ∃∃p,I,T,U. X = ⓑ{p,I}T.U.
+* [ /2 width=1 by simple_atom, or_introl/ ]
+* [| /2 width=1 by simple_flat, or_introl/ ]
+/3 width=5 by ex1_4_intro, or_intror/
 qed-.

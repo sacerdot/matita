@@ -12,24 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/predeval_4.ma".
-include "basic_2/computation/cprs.ma".
-include "basic_2/computation/csx.ma".
+include "basic_2/notation/relations/predeval_6.ma".
+include "basic_2/rt_transition/cnr.ma".
+include "basic_2/rt_computation/cpms.ma".
 
-(* EVALUATION FOR CONTEXT-SENSITIVE PARALLEL REDUCTION ON TERMS *************)
+(* EVALUATION FOR T-BOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION ON TERMS *)
 
-definition cpre: relation4 genv lenv term term ≝
-                 λG,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡* T2 ∧ ⦃G, L⦄ ⊢ ➡ 𝐍⦃T2⦄.
+(* Basic_2A1: uses: cpre *)
+definition cpme (h) (n) (G) (L): relation2 term term ≝
+           λT1,T2. ∧∧ ⦃G, L⦄ ⊢ T1 ➡*[n,h] T2 & ⦃G, L⦄ ⊢ ➡[h] 𝐍⦃T2⦄.
 
-interpretation "evaluation for context-sensitive parallel reduction (term)"
-   'PRedEval G L T1 T2 = (cpre G L T1 T2).
-
-(* Basic properties *********************************************************)
-
-(* Basic_1: was just: nf2_sn3 *)
-lemma csx_cpre: ∀h,o,G,L,T1. ⦃G, L⦄ ⊢ ⬊*[h, o] T1 → ∃T2. ⦃G, L⦄ ⊢ T1 ➡* 𝐍⦃T2⦄.
-#h #o #G #L #T1 #H @(csx_ind … H) -T1
-#T1 #_ #IHT1 elim (cnr_dec G L T1) /3 width=3 by ex_intro, conj/
-* #T #H1T1 #H2T1 elim (IHT1 … H2T1) -IHT1 -H2T1 /2 width=2 by cpr_cpx/
-#T2 * /4 width=3 by cprs_strap2, ex_intro, conj/
-qed.
+interpretation "evaluation for t-bound context-sensitive parallel rt-transition (term)"
+   'PRedEval h n G L T1 T2 = (cpme h n G L T1 T2).

@@ -15,7 +15,7 @@
 include "basic_2/rt_computation/cpms_aaa.ma".
 include "basic_2/dynamic/cnv.ma".
 
-(* CONTEXT_SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
+(* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
 
 (* Forward lemmas on atomic arity assignment for terms **********************)
 

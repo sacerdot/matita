@@ -12,11 +12,29 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/xoa/xoa.ma".
+include "basic_2/rt_computation/cpms_aaa.ma".
+include "basic_2/rt_equivalence/cpes.ma".
 
-(* Properties with multiple existental quantifier (4, 1) ********************)
+(* T-BOUND CONTEXT-SENSITIVE PARALLEL RT-EQUIVALENCE FOR TERMS **************)
 
-lemma ex4_commute (A0) (P0,P1,P2,P3:A0→Prop):
-                  (∃∃x0. P0 x0 & P1 x0 & P2 x0 & P3 x0) → ∃∃x0. P2 x0 & P3 x0 & P0 x0 & P1 x0.
-#A0 #P0 #P1 #P2 #P3 * /2 width=5 by ex4_intro/
+(* Properties with atomic arity assignment on terms *************************)
+
+(* Basic_2A1: uses: scpes_refl *)
+lemma cpes_refl_aaa (h) (n):
+      ∀G,L,T,A.  ⦃G, L⦄ ⊢ T ⁝ A → ⦃G, L⦄ ⊢ T ⬌*[h,n,n] T.
+#h #n #G #L #T #A #HA
+elim (aaa_cpms_total h … n … HA) #U #HTU
+/2 width=3 by cpms_div/
+qed.
+
+(* Main inversion lemmas with atomic arity assignment on terms **************)
+
+(* Basic_2A1: uses: scpes_aaa_mono *)
+theorem cpes_aaa_mono (h) (n1) (n2):
+        ∀G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬌*[h,n1,n2] T2 →
+        ∀A1. ⦃G, L⦄ ⊢ T1 ⁝ A1 → ∀A2. ⦃G, L⦄ ⊢ T2 ⁝ A2 → A1 = A2.
+#h #n1 #n2 #G #L #T1 #T2 * #T #HT1 #HT2 #A1 #HA1 #A2 #HA2
+lapply (cpms_aaa_conf … HA1 … HT1) -T1 #HA1
+lapply (cpms_aaa_conf … HA2 … HT2) -T2 #HA2
+lapply (aaa_mono … HA1 … HA2) -L -T //
 qed-.

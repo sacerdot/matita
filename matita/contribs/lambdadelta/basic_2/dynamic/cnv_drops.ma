@@ -15,7 +15,7 @@
 include "basic_2/rt_computation/cpms_drops.ma".
 include "basic_2/dynamic/cnv.ma".
 
-(* CONTEXT_SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
+(* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
 
 (* Advanced dproperties *****************************************************)
 

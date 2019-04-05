@@ -12,11 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/xoa/xoa.ma".
+(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-(* Properties with multiple existental quantifier (4, 1) ********************)
-
-lemma ex4_commute (A0) (P0,P1,P2,P3:A0→Prop):
-                  (∃∃x0. P0 x0 & P1 x0 & P2 x0 & P3 x0) → ∃∃x0. P2 x0 & P3 x0 & P0 x0 & P1 x0.
-#A0 #P0 #P1 #P2 #P3 * /2 width=5 by ex4_intro/
-qed-.
+notation "hvbox( ⦃ term 46 G, break term 46 L ⦄ ⊢ ➡ [ break term 46 h ] 𝐍 ⦃ break term 46 T ⦄ )"
+   non associative with precedence 45
+   for @{ 'PRedNormal $h $G $L $T }.

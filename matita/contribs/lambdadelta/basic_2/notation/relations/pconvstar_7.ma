@@ -12,18 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/computation/scpds_aaa.ma".
-include "basic_2/equivalence/scpes.ma".
+(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-(* DECOMPOSED EXTENDED PARALLEL EQUIVALENCE FOR TERMS ***********************)
-
-(* Main inversion lemmas about atomic arity assignment on terms *************)
-
-theorem scpes_aaa_mono: ∀h,o,G,L,T1,T2,d1,d2. ⦃G, L⦄ ⊢ T1 •*⬌*[h, o, d1, d2] T2 →
-                        ∀A1. ⦃G, L⦄ ⊢ T1 ⁝ A1 → ∀A2. ⦃G, L⦄ ⊢ T2 ⁝ A2 →
-                        A1 = A2.
-#h #o #G #L #T1 #T2 #d1 #d2 * #T #HT1 #HT2 #A1 #HA1 #A2 #HA2
-lapply (scpds_aaa_conf … HA1 … HT1) -T1 #HA1
-lapply (scpds_aaa_conf … HA2 … HT2) -T2 #HA2
-lapply (aaa_mono … HA1 … HA2) -L -T //
-qed-.
+notation "hvbox( ⦃ term 46 G, break term 46 L ⦄ ⊢ break term 46 T1 ⬌* [ break term 46 h, break term 46 n1, break term 46 n2 ] break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'PConvStar $h $n1 $n2 $G $L $T1 $T2 }.

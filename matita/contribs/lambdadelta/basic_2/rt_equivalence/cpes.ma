@@ -12,26 +12,32 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/dpconvstar_8.ma".
-include "basic_2/computation/scpds.ma".
+include "basic_2/notation/relations/pconvstar_7.ma".
+include "basic_2/rt_computation/cpms.ma".
 
-(* STRATIFIED DECOMPOSED PARALLEL EQUIVALENCE FOR TERMS *********************)
+(* T-BOUND CONTEXT-SENSITIVE PARALLEL RT-EQUIVALENCE FOR TERMS **************)
 
-definition scpes: ∀h. sd h → nat → nat → relation4 genv lenv term term ≝
-                  λh,o,d1,d2,G,L,T1,T2.
-                  ∃∃T. ⦃G, L⦄ ⊢ T1 •*➡*[h, o, d1] T & ⦃G, L⦄ ⊢ T2 •*➡*[h, o, d2] T.
+(* Basic_2A1: uses: scpes *)
+definition cpes (h) (n1) (n2): relation4 genv lenv term term ≝
+           λG,L,T1,T2.
+           ∃∃T. ⦃G, L⦄ ⊢ T1 ➡*[n1,h] T & ⦃G, L⦄ ⊢ T2 ➡*[n2,h] T.
 
-interpretation "stratified decomposed parallel equivalence (term)"
-   'DPConvStar h o d1 d2 G L T1 T2 = (scpes h o d1 d2 G L T1 T2).
+interpretation "t-bound context-sensitive parallel rt-equivalence (term)"
+   'PConvStar h n1 n2 G L T1 T2 = (cpes h n1 n2 G L T1 T2).
 
 (* Basic properties *********************************************************)
 
-lemma scpds_div: ∀h,o,G,L,T1,T2,T,d1,d2.
-                 ⦃G, L⦄ ⊢ T1 •*➡*[h, o, d1] T → ⦃G, L⦄ ⊢ T2 •*➡*[h, o, d2] T →
-                 ⦃G, L⦄ ⊢ T1 •*⬌*[h, o, d1, d2] T2.
+(* Basic_2A1: uses: scpds_div *)
+lemma cpms_div (h) (n1) (n2):
+      ∀G,L,T1,T. ⦃G, L⦄ ⊢ T1 ➡*[n1,h] T →
+      ∀T2. ⦃G, L⦄ ⊢ T2 ➡*[n2,h] T → ⦃G, L⦄ ⊢ T1 ⬌*[h,n1,n2] T2.
 /2 width=3 by ex2_intro/ qed.
 
-lemma scpes_sym: ∀h,o,G,L,T1,T2,d1,d2. ⦃G, L⦄ ⊢ T1 •*⬌*[h, o, d1, d2] T2 →
-                 ⦃G, L⦄ ⊢ T2 •*⬌*[h, o, d2, d1] T1.
-#h #o #G #L #T1 #T2 #L1 #d2 * /2 width=3 by scpds_div/
+lemma cpes_refl (h): ∀G,L. reflexive … (cpes h 0 0 G L).
+/2 width=3 by cpms_div/ qed.
+
+(* Basic_2A1: uses: scpes_sym *)
+lemma cpes_sym (h) (n1) (n2):
+      ∀G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬌*[h,n1,n2] T2 → ⦃G, L⦄ ⊢ T2 ⬌*[h,n2,n1] T1.
+#h #n1 #n2 #G #L #T1 #T2 * /2 width=3 by cpms_div/
 qed-.
