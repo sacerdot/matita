@@ -12,22 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_transition/cpm_cpx.ma".
-include "basic_2/rt_transition/cnr_tdeq.ma".
-include "basic_2/rt_computation/csx.ma".
-include "basic_2/rt_computation/cpre.ma".
+include "basic_2/rt_computation/csx_aaa.ma".
+include "basic_2/rt_computation/cpms_aaa.ma".
+include "basic_2/rt_computation/cpre_csx.ma".
+include "basic_2/rt_computation/cpre_cpms.ma".
 
-(* EVALUATION FOR CONTEXT-SENSITIVE PARALLEL R-TRANSITION ON TERMS **********)
+(* EVALUATION FOR T-BOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION ON TERMS *)
 
-(* Properties with strong normalization for unbound rt-transition for terms *)
+(* Properties with atomic atomic arity assignment on terms ******************)
 
-(* Basic_1: was just: nf2_sn3 *)
-lemma cpre_total_csx (h) (G) (L):
-      ∀T1. ⦃G, L⦄ ⊢ ⬈*[h] 𝐒⦃T1⦄ → ∃T2. ⦃G, L⦄ ⊢ T1 ➡*[h] 𝐍⦃T2⦄.
-#h #G #L #T1 #H
-@(csx_ind … H) -T1 #T1 #_ #IHT1
-elim (cnr_dec_tdeq h G L T1) [ /3 width=3 by ex_intro, conj/ ] *
-#T0 #HT10 #HnT10
-elim (IHT1 … HnT10) -IHT1 -HnT10 [| /2 width=2 by cpm_fwd_cpx/ ]
-#T2 * /4 width=3 by cprs_step_sn, ex_intro, conj/
+lemma cpme_total_aaa (h) (n) (A) (G) (L):
+      ∀T1. ⦃G,L⦄ ⊢ T1 ⁝ A → ∃T2. ⦃G,L⦄ ⊢ T1 ➡*[h,n] 𝐍⦃T2⦄.
+#h #n #A #G #L #T1 #HT1
+elim (cpms_total_aaa h … n … HT1) #T0 #HT10
+elim (cpre_total_csx h G L T0)
+[ #T2 /3 width=4 by cpms_cpre_trans, ex_intro/
+| /4 width=4 by cpms_fwd_cpxs, aaa_csx, csx_cpxs_trans/
+]
 qed-.

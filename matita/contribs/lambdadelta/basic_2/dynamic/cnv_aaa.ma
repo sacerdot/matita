@@ -56,5 +56,5 @@ lemma cnv_fwd_cpms_total (a) (h) (n) (G) (L):
       ∀T. ⦃G, L⦄ ⊢ T ![a, h] → ∃U. ⦃G,L⦄ ⊢ T ➡*[n,h] U.
 #a #h #n #G #L #T #H
 elim (cnv_fwd_aaa … H) -H #A #HA
-/2 width=2 by aaa_cpms_total/
+/2 width=2 by cpms_total_aaa/
 qed-.
