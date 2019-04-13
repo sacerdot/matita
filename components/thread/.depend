@@ -1,6 +1,6 @@
-extThread.cmo : extThread.cmi
-extThread.cmx : extThread.cmi
+threadSafe.cmi :
 extThread.cmi :
 threadSafe.cmo : threadSafe.cmi
 threadSafe.cmx : threadSafe.cmi
-threadSafe.cmi :
+extThread.cmo : extThread.cmi
+extThread.cmx : extThread.cmi

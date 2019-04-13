@@ -243,6 +243,8 @@ EXTEND
     IDENT "equivalent"; "to"; t' = tactic_term -> t']-> G.NTactic (loc,[G.Assume (loc,id,t,t1)])
     | IDENT "suppose" ; t = tactic_term ; LPAREN ; id = IDENT ; RPAREN ; t1 = OPT [IDENT "that"; IDENT
     "is"; IDENT "equivalent"; "to"; t' = tactic_term -> t'] -> G.NTactic (loc,[G.Suppose (loc,t,id,t1)])
+    | "let"; name = IDENT ; SYMBOL <:unicode<def>> ; t = tactic_term ->
+        G.NTactic(loc,[G.NLetIn (loc,(None,[],Some N.UserInput),t,name)])
     | just =
        [ IDENT "using"; t=tactic_term -> `Term t
        | params = auto_params -> 
@@ -260,14 +262,48 @@ EXTEND
            BYC_done -> G.Bydone (loc, just)
          | BYC_weproved (ty,id,t1) ->
             G.By_just_we_proved(loc, just, ty, id, t1)
-        (*
          | BYC_letsuchthat (id1,t1,t2,id2) ->
             G.ExistsElim (loc, just, id1, t1, t2, id2)
          | BYC_wehaveand (id1,t1,id2,t2) ->
-            G.AndElim (loc, just, id1, t1, id2, t2)*))
+            G.AndElim (loc, just, t1, id1, t2, id2))
         ])
     | IDENT "we" ; IDENT "need" ; "to" ; IDENT "prove" ; t = tactic_term ; id = OPT [ LPAREN ; id = IDENT ; RPAREN -> id ] ; t1 = OPT [IDENT "or" ; IDENT "equivalently"; t' = tactic_term -> t']->
         G.NTactic (loc,[G.We_need_to_prove (loc, t, id, t1)])
+    | IDENT "the" ; IDENT "thesis" ; IDENT "becomes" ; t1=tactic_term ; t2 = OPT [IDENT "or"; IDENT
+    "equivalently"; t2 = tactic_term -> t2] ->
+        G.NTactic (loc,[G.Thesisbecomes(loc,t1,t2)])
+    (* DO NOT FACTORIZE with the two following, camlp5 sucks*)
+    | IDENT "conclude";  
+      termine = tactic_term;
+      SYMBOL "=" ;
+      t1=tactic_term ;
+      t2 =
+       [ IDENT "using"; t=tactic_term -> `Term t
+       | IDENT "using"; IDENT "once"; term=tactic_term -> `SolveWith term
+       | IDENT "proof" -> `Proof
+       | params = auto_params -> let _,params = params in `Auto params];
+      cont = rewriting_step_continuation ->
+       G.NTactic (loc,[G.RewritingStep(loc, Some (None,termine), t1, t2, cont)])
+    | IDENT "obtain" ; name = IDENT;
+      termine = tactic_term;
+      SYMBOL "=" ;
+      t1=tactic_term ;
+      t2 =
+       [ IDENT "using"; t=tactic_term -> `Term t
+       | IDENT "using"; IDENT "once"; term=tactic_term -> `SolveWith term
+       | IDENT "proof" -> `Proof
+       | params = auto_params -> let _,params = params in `Auto params];
+      cont = rewriting_step_continuation ->
+       G.NTactic(loc,[G.RewritingStep(loc, Some (Some name,termine), t1, t2, cont)])
+    | SYMBOL "=" ;
+      t1=tactic_term ;
+      t2 =
+       [ IDENT "using"; t=tactic_term -> `Term t
+       | IDENT "using"; IDENT "once"; term=tactic_term -> `SolveWith term
+       | IDENT "proof" -> `Proof
+       | params = auto_params -> let _,params = params in `Auto params];
+      cont = rewriting_step_continuation ->
+       G.NTactic(loc,[G.RewritingStep(loc, None, t1, t2, cont)])
     ]
   ];
   auto_fixed_param: [

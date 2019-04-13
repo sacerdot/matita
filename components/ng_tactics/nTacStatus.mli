@@ -85,6 +85,8 @@ val whd:
 val normalize: 
  #pstatus as 'status -> ?delta:int -> NCic.context -> cic_term ->
   'status * cic_term 
+val are_convertible: 
+ #pstatus as 'status -> NCic.context -> cic_term -> cic_term -> 'status * bool
 val typeof: 
  #pstatus as 'status -> NCic.context -> cic_term -> 'status * cic_term
 val unify: 

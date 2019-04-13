@@ -13,6 +13,7 @@
 
 val print_tac: bool -> string -> 's NTacStatus.tactic
 
+val id_tac: 's NTacStatus.tactic
 val dot_tac: 's NTacStatus.tactic
 val branch_tac: ?force:bool -> 's NTacStatus.tactic
 val shift_tac: 's NTacStatus.tactic

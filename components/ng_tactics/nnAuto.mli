@@ -9,28 +9,26 @@
      \ /   This software is distributed as is, NO WARRANTY.     
       V_______________________________________________________________ *)
 
+type auto_params = NTacStatus.tactic_term list option * (string * string) list
+
 val is_a_fact_obj: 
   #NTacStatus.pstatus -> NUri.uri -> bool
 
-val fast_eq_check_tac:
-  params:(NTacStatus.tactic_term list option * (string * string) list) -> 
-   's NTacStatus.tactic
+val fast_eq_check_tac: params:auto_params -> 's NTacStatus.tactic
 
-val paramod_tac:
-  params:(NTacStatus.tactic_term list option * (string * string) list) -> 
-   's NTacStatus.tactic
+val paramod_tac: params:auto_params -> 's NTacStatus.tactic
 
-val demod_tac:
-  params:(NTacStatus.tactic_term list option* (string * string) list) -> 
-   's NTacStatus.tactic
+val demod_tac: params:auto_params -> 's NTacStatus.tactic
 
 val smart_apply_tac: 
   NTacStatus.tactic_term -> 's NTacStatus.tactic
 
 val auto_tac:
-  params:(NTacStatus.tactic_term list option * (string * string) list) -> 
+  params:auto_params ->
    ?trace_ref:NotationPt.term list ref -> 
    's NTacStatus.tactic
+
+val auto_lowtac: params:auto_params -> NTacStatus.lowtac_status -> int -> NTacStatus.lowtac_status
 
 val keys_of_type: 
   (#NTacStatus.pstatus as 'a) ->

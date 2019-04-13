@@ -501,11 +501,16 @@ let eval_ng_tac tac =
   |GrafiteAst.We_need_to_prove (_, t, id, t2) -> Declarative.we_need_to_prove (text,prefix_len,t) id
   (match t2 with None -> None | Some t2 -> Some (text,prefix_len,t2))
   | GrafiteAst.Bydone (_, j) -> Declarative.bydone (just_to_tacstatus_just j text prefix_len)
-  (*
   | GrafiteAst.ExistsElim (_, just, id1, t1, t2, id2) ->
-     Declarative.existselim just id1 t1 t2 id2
-  | GrafiteAst.AndElim(_,just,t1,id1,t2,id2) ->
-     Declarative.andelim just t1 id1 t2 id2
+     Declarative.existselim (just_to_tacstatus_just just text prefix_len) id1 (text,prefix_len,t1)
+     (text,prefix_len,t2) id2
+  | GrafiteAst.AndElim(_,just,t1,id1,t2,id2) -> Declarative.andelim (just_to_tacstatus_just just
+    text prefix_len) (text,prefix_len,t1) id1 (text,prefix_len,t2) id2
+  | GrafiteAst.Thesisbecomes (_, t1, t2) -> Declarative.thesisbecomes (text,prefix_len,t1)
+  (match t2 with None -> None | Some t2 -> (Some (text,prefix_len,t2)))
+  (*
+  | GrafiteAst.RewritingStep (_,termine,t1,t2,cont) ->
+     Declarative.rewritingstep termine (text,prefix_len,t1) t2 cont
      *)
  in
   aux aux tac (* trick for non uniform recursion call *)

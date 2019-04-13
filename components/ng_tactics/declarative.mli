@@ -23,7 +23,7 @@
  * http://cs.unibo.it/helm/.
  *)
 
-type just = [ `Term of NTacStatus.tactic_term | `Auto of NTacStatus.tactic_term GrafiteAst.aauto_params ]
+type just = [ `Term of NTacStatus.tactic_term | `Auto of NnAuto.auto_params ]
 
 val assume : string -> NTacStatus.tactic_term -> NTacStatus.tactic_term option -> 's NTacStatus.tactic
 val suppose : NTacStatus.tactic_term -> string -> NTacStatus.tactic_term option -> 's NTacStatus.tactic
@@ -31,3 +31,8 @@ val we_need_to_prove : NTacStatus.tactic_term -> string option -> NTacStatus.tac
 val bydone : just -> 's NTacStatus.tactic
 val by_just_we_proved : just -> NTacStatus.tactic_term -> string option  -> NTacStatus.tactic_term
 option -> 's NTacStatus.tactic
+val andelim : just -> NTacStatus.tactic_term -> string -> NTacStatus.tactic_term -> string -> 's
+NTacStatus.tactic
+val existselim : just -> string -> NTacStatus.tactic_term -> NTacStatus.tactic_term -> string -> 's
+NTacStatus.tactic
+val thesisbecomes : NTacStatus.tactic_term -> NTacStatus.tactic_term option -> 's NTacStatus.tactic

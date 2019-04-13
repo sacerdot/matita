@@ -1,11 +1,11 @@
-disambiguate.cmo : disambiguateTypes.cmi disambiguate.cmi
-disambiguate.cmx : disambiguateTypes.cmx disambiguate.cmi
+disambiguateTypes.cmi :
 disambiguate.cmi : disambiguateTypes.cmi
+multiPassDisambiguator.cmi : disambiguateTypes.cmi disambiguate.cmi
 disambiguateTypes.cmo : disambiguateTypes.cmi
 disambiguateTypes.cmx : disambiguateTypes.cmi
-disambiguateTypes.cmi :
+disambiguate.cmo : disambiguateTypes.cmi disambiguate.cmi
+disambiguate.cmx : disambiguateTypes.cmx disambiguate.cmi
 multiPassDisambiguator.cmo : disambiguateTypes.cmi disambiguate.cmi \
     multiPassDisambiguator.cmi
 multiPassDisambiguator.cmx : disambiguateTypes.cmx disambiguate.cmx \
     multiPassDisambiguator.cmi
-multiPassDisambiguator.cmi : disambiguateTypes.cmi disambiguate.cmi

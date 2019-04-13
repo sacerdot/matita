@@ -131,11 +131,27 @@ let rec pp_ntactic status ~map_unicode_to_tex =
   (match ident with None -> " " | Some id -> "(" ^ id ^ ")") ^ (match term1 with None -> " " | Some t1
   -> "or equivalently" ^ NotationPp.pp_term status t1)
   | Bydone (_, just) -> pp_just status just ^ "done"
-  (*
-  | ExistsElim (_, just, ident, term, term1, ident1) -> pp_just ~term_pp just ^ "let " ^ ident ^ ":"
-  ^ NotationPp.pp_term term ^ "such that " ^ NotationPp.pp_term term1 ^ "(" ^ ident1 ^ ")"
-  | AndElim (_, just, term1, ident1, term2, ident2) -> pp_just ~NotationPp.pp_term just ^ "we have " ^ NotationPp.pp_term term1 ^ " (" ^ ident1 ^ ") " ^ "and " ^ NotationPp.pp_term term2 ^ " (" ^ ident2 ^ ")" 
-  *)
+  | ExistsElim (_, just, ident, term, term1, ident1) -> pp_just status just ^ "let " ^ ident ^ ":"
+  ^ NotationPp.pp_term status term ^ "such that " ^ NotationPp.pp_term status term1 ^ "(" ^ ident1 ^ ")"
+  | AndElim (_, just, term1, ident1, term2, ident2) -> pp_just status just ^ "we have " ^
+  NotationPp.pp_term status term1 ^ " (" ^ ident1 ^ ") " ^ "and " ^ NotationPp.pp_term status term2
+  ^ " (" ^ ident2 ^ ")" 
+  | Thesisbecomes (_, term1, term2) -> "the thesis becomes " ^ NotationPp.pp_term status term1 ^ (match
+  term2 with None -> " " | Some term2 -> NotationPp.pp_term status term2)
+  | RewritingStep (_, term, term1, term2, cont) -> 
+      (match term with 
+      | None -> " " 
+      | Some (None,term) -> "conclude " ^ NotationPp.pp_term status term 
+      | Some (Some name,term) -> 
+          "obtain (" ^ name ^ ") " ^ NotationPp.pp_term status term) 
+      ^ "=" ^
+      NotationPp.pp_term status term1 ^ 
+      (match term2 with 
+      | `Auto params -> pp_auto_params (None,params) status
+      | `Term term2 -> " exact " ^ NotationPp.pp_term status term2 
+      | `Proof -> " proof"
+      | `SolveWith term -> " using " ^ NotationPp.pp_term status term)
+      ^ (if cont then " done" else "")
 ;;
 
 let pp_nmacro status = function
