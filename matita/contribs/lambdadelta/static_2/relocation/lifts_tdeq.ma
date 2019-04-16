@@ -38,6 +38,9 @@ lemma tdeq_lifts_sn: liftable2_sn tdeq.
 ]
 qed-.
 
+lemma tdeq_lifts_dx: liftable2_dx tdeq.
+/3 width=3 by tdeq_lifts_sn, liftable2_sn_dx, tdeq_sym/ qed-.
+
 lemma tdeq_lifts_bi: liftable2_bi tdeq.
 /3 width=6 by tdeq_lifts_sn, liftable2_sn_bi/ qed-.
 

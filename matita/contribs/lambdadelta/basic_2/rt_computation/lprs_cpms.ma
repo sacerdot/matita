@@ -62,12 +62,12 @@ elim (cpms_inv_abst_sn … H) -H #W0 #U #HW0 #HTU #H destruct
 qed-.
 
 (* Basic_2A1: includes: cprs_inv_abst *)
-lemma cpms_inv_abst_bi (n) (h) (G) (L):
-                       ∀p,W1,W2,T1,T2. ⦃G, L⦄ ⊢ ⓛ{p}W1.T1 ➡*[n, h] ⓛ{p}W2.T2 →
-                       ∧∧ ⦃G, L⦄ ⊢ W1 ➡*[h] W2 & ⦃G, L.ⓛW1⦄ ⊢ T1 ➡*[n, h] T2.
-#n #h #G #L #p #W1 #W2 #T1 #T2 #H
+lemma cpms_inv_abst_bi (n) (h) (p1) (p2) (G) (L):
+                       ∀W1,W2,T1,T2. ⦃G, L⦄ ⊢ ⓛ{p1}W1.T1 ➡*[n, h] ⓛ{p2}W2.T2 →
+                       ∧∧ p1 = p2 & ⦃G, L⦄ ⊢ W1 ➡*[h] W2 & ⦃G, L.ⓛW1⦄ ⊢ T1 ➡*[n, h] T2.
+#n #h #p1 #p2 #G #L #W1 #W2 #T1 #T2 #H
 elim (cpms_inv_abst_sn … H) -H #W #T #HW1 #HT1 #H destruct
-/2 width=1 by conj/
+/2 width=1 by and3_intro/
 qed-.
 
 (* Basic_1: was pr3_gen_abbr *)

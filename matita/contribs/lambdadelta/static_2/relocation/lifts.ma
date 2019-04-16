@@ -56,6 +56,10 @@ definition deliftable2_bi: predicate (relation term) ≝
                            λR. ∀U1,U2. R U1 U2 → ∀f,T1. ⬆*[f] T1 ≘ U1 →
                            ∀T2. ⬆*[f] T2 ≘ U2 → R T1 T2.
 
+definition liftable2_dx: predicate (relation term) ≝
+                         λR. ∀T1,T2. R T1 T2 → ∀f,U2. ⬆*[f] T2 ≘ U2 →
+                         ∃∃U1. ⬆*[f] T1 ≘ U1 & R U1 U2.
+
 definition deliftable2_dx: predicate (relation term) ≝
                            λR. ∀U1,U2. R U1 U2 → ∀f,T2. ⬆*[f] T2 ≘ U2 →
                            ∃∃T1. ⬆*[f] T1 ≘ U1 & R T1 T2.
@@ -333,6 +337,11 @@ qed-.
 
 (* Basic properties *********************************************************)
 
+lemma liftable2_sn_dx (R): symmetric … R → liftable2_sn R → liftable2_dx R.
+#R #H2R #H1R #T1 #T2 #HT12 #f #U2 #HTU2
+elim (H1R … T1 … HTU2) -H1R /3 width=3 by ex2_intro/
+qed-.
+
 lemma deliftable2_sn_dx (R): symmetric … R → deliftable2_sn R → deliftable2_dx R.
 #R #H2R #H1R #U1 #U2 #HU12 #f #T2 #HTU2
 elim (H1R … U1 … HTU2) -H1R /3 width=3 by ex2_intro/
@@ -365,7 +374,7 @@ elim (IHV1 f) -IHV1 #V2 #HV12
 ]
 qed-.
 
-lemma lifts_push_zero (f): ⬆*[⫯f]#O ≘ #0.
+lemma lifts_push_zero (f): ⬆*[⫯f]#0 ≘ #0.
 /2 width=1 by lifts_lref/ qed.
 
 lemma lifts_push_lref (f) (i1) (i2): ⬆*[f]#i1 ≘ #i2 → ⬆*[⫯f]#(↑i1) ≘ #(↑i2).

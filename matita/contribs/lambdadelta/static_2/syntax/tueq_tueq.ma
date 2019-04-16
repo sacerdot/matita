@@ -12,26 +12,33 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_computation/cprs_cnr.ma".
-include "basic_2/rt_computation/cpre.ma".
-include "basic_2/dynamic/cnv_preserve.ma".
+include "static_2/syntax/tueq.ma".
 
-(* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
+(* TAIL SORT-IRRELEVANT EQUIVALENCE ON TERMS ********************************)
 
-(* Properties with evaluation for t-bound rt-transition on terms ************)
+(* Main properties **********************************************************)
 
-lemma cnv_cpme_trans (a) (h) (n) (G) (L):
-      ∀T1. ⦃G,L⦄ ⊢ T1 ![a,h] →
-      ∀T2. ⦃G,L⦄ ⊢ T1 ➡*[h,n] 𝐍⦃T2⦄ → ⦃G,L⦄ ⊢ T2 ![a,h].
-#a #h #n #G #L #T1 #HT1 #T2 * #HT12 #_
-/2 width=4 by cnv_cpms_trans/
+theorem tueq_trans: Transitive … tueq.
+#T1 #T #H elim H -T1 -T
+[ #s1 #s #X #H
+  elim (tueq_inv_sort1 … H) -s /2 width=1 by tueq_sort/
+| #i1 #i #H //
+| #l1 #l #H //
+| #p #I #V #T1 #T #_ #IHT #X #H
+  elim (tueq_inv_bind1 … H) -H /3 width=1 by tueq_bind/
+| #V #T1 #T #_ #IHT #X #H
+  elim (tueq_inv_appl1 … H) -H /3 width=1 by tueq_appl/
+| #V1 #V #T1 #T #_ #_ #IHV #IHT #X #H
+  elim (tueq_inv_cast1 … H) -H /3 width=1 by tueq_cast/
+]
 qed-.
 
-lemma cnv_cpme_cpms_conf (a) (h) (n) (G) (L):
-      ∀T. ⦃G,L⦄ ⊢ T ![a,h] → ∀T1. ⦃G,L⦄ ⊢ T ➡*[n,h] T1 →
-      ∀T2. ⦃G,L⦄ ⊢ T ➡*[h,n] 𝐍⦃T2⦄ → ⦃G,L⦄ ⊢ T1 ➡*[h] 𝐍⦃T2⦄.
-#a #h #n #G #L #T0 #HT0 #T1 #HT01 #T2 * #HT02 #HT2
-elim (cnv_cpms_conf … HT0 … HT01 … HT02) -T0 <minus_n_n #T0 #HT10 #HT20
-lapply (cprs_inv_cnr_sn … HT20 HT2) -HT20 #H destruct
-/2 width=1 by conj/
-qed-.
+theorem tueq_canc_sn: left_cancellable … tueq.
+/3 width=3 by tueq_trans, tueq_sym/ qed-.
+
+theorem tueq_canc_dx: right_cancellable … tueq.
+/3 width=3 by tueq_trans, tueq_sym/ qed-.
+
+theorem tueq_repl: ∀T1,T2. T1 ≅ T2 →
+                   ∀U1. T1 ≅ U1 → ∀U2. T2 ≅ U2 → U1 ≅ U2.
+/3 width=3 by tueq_canc_sn, tueq_trans/ qed-.

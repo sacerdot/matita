@@ -27,6 +27,10 @@
    <table name="basic_2_sum"/>
 
    <subsection name="B">Stage "B"</subsection>
+   <news class="beta" date="2019 April 16.">
+         Extended (λδ-2) and restricted (λδ-1) validity is decidable 
+         (anniversary milestone).
+   </news>
    <news class="beta" date="2019 March 25.">
          Preservation of validity for rt-computation
          does not need the sort degree parameter

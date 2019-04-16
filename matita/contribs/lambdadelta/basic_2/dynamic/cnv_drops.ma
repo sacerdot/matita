@@ -49,15 +49,30 @@ lemma cnv_inv_lref_drops (a) (h) (G):
 ]
 qed-.
 
-(* Advanced forward lemmas **************************************************)
-
-lemma cnv_lref_fwd_drops (a) (h) (G):
-                         ∀i,L. ⦃G, L⦄ ⊢ #i ![a, h] →
-                         ∀I,K,V. ⬇*[i] L ≘ K.ⓑ{I}V → ⦃G, K⦄ ⊢ V ![a, h].
-#a #h #o #i #L #H #I #K #V #HLK
+lemma cnv_inv_lref_pair (a) (h) (G):
+                        ∀i,L. ⦃G, L⦄ ⊢ #i ![a, h] →
+                        ∀I,K,V. ⬇*[i] L ≘ K.ⓑ{I}V → ⦃G, K⦄ ⊢ V ![a, h].
+#a #h #G #i #L #H #I #K #V #HLK
 elim (cnv_inv_lref_drops … H) -H #Z #Y #X #HLY #HX
 lapply (drops_mono … HLY … HLK) -L #H destruct //
-qed-.   
+qed-.
+
+lemma cnv_inv_lref_atom (a) (h) (b) (G):
+                        ∀i,L. ⦃G, L⦄ ⊢ #i ![a, h] →
+                        ⬇*[b,𝐔❴i❵] L ≘ ⋆ → ⊥.
+#a #h #b #G #i #L #H #Hi
+elim (cnv_inv_lref_drops … H) -H #Z #Y #X #HLY #_
+lapply (drops_gen b … HLY) -HLY #HLY
+lapply (drops_mono … HLY … Hi) -L #H destruct
+qed-.
+
+lemma cnv_inv_lref_unit (a) (h) (G):
+                        ∀i,L. ⦃G, L⦄ ⊢ #i ![a, h] →
+                        ∀I,K. ⬇*[i] L ≘ K.ⓤ{I} → ⊥.
+#a #h #G #i #L #H #I #K #HLK
+elim (cnv_inv_lref_drops … H) -H #Z #Y #X #HLY #_
+lapply (drops_mono … HLY … HLK) -L #H destruct
+qed-.
 
 (* Properties with generic slicing for local environments *******************)
 

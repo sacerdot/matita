@@ -73,3 +73,24 @@ lemma cnv_lprs_trans (a) (h) (G):
 #a #h #G #L1 #T #HT #L2 #H
 @(lprs_ind_dx … H) -L2 /2 width=3 by cnv_lpr_trans/
 qed-.
+
+(* Advanced inversion lemmas ************************************************)
+
+lemma cnv_inv_appl_SO (a) (h) (G) (L):
+      ∀V,T. ⦃G, L⦄ ⊢ ⓐV.T ![a, h] →
+      ∃∃n,p,W0,U0. a = Ⓣ → n = 1 & ⦃G, L⦄ ⊢ V ![a, h] & ⦃G, L⦄ ⊢ T ![a, h] &
+                   ⦃G, L⦄ ⊢ V ➡*[1, h] W0 & ⦃G, L⦄ ⊢ T ➡*[n, h] ⓛ{p}W0.U0.
+* #h #G #L #V #T #H
+elim (cnv_inv_appl … H) -H [ * [| #n ] | #n ] #p #W #U #Ha #HV #HT #HVW #HTU
+[ elim (cnv_fwd_cpm_SO … (ⓛ{p}W.U))
+  [|*: /2 width=8 by cnv_cpms_trans/ ] #X #HU0
+  elim (cpm_inv_abst1 … HU0) #W0 #U0 #HW0 #_ #H0 destruct
+  lapply (cpms_step_dx … HVW … HW0) -HVW -HW0 #HVW0
+  lapply (cpms_step_dx … HTU … HU0) -HTU -HU0 #HTU0
+  /2 width=7 by ex5_4_intro/
+| lapply (Ha ?) -Ha [ // ] #Ha
+  lapply (le_n_O_to_eq n ?) [ /3 width=1 by le_S_S_to_le/ ] -Ha #H destruct
+  /2 width=7 by ex5_4_intro/
+| @(ex5_4_intro … HV HT HVW HTU) #H destruct
+]
+qed-.

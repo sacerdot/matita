@@ -1,4 +1,0 @@
-ground_2
-static_2
-basic_2
-apps_2

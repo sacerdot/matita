@@ -40,7 +40,7 @@ fact cnv_cpm_conf_lpr_atom_delta_aux (a) (h) (G) (L) (i):
      ∀L1. ⦃G,L⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G,L⦄ ⊢ ➡[h] L2 →
      ∃∃T. ⦃G,L1⦄ ⊢ #i ➡*[n,h] T & ⦃G,L2⦄ ⊢ X ➡*[h] T.
 #a #h #G #L #i #IH #HT #K #V #HLK #n #XV #HVX #X #HXV #L1 #HL1 #L2 #HL2
-lapply (cnv_lref_fwd_drops … HT … HLK) -HT #HV
+lapply (cnv_inv_lref_pair … HT … HLK) -HT #HV
 elim (lpr_drops_conf … HLK … HL1) -HL1 // #Y1 #H1 #HLK1
 elim (lpr_inv_pair_sn … H1) -H1 #K1 #V1 #HK1 #HV1 #H destruct
 elim (lpr_drops_conf … HLK … HL2) -HL2 // #Y2 #H2 #HLK2
@@ -62,7 +62,7 @@ fact cnv_cpm_conf_lpr_atom_ell_aux (a) (h) (G) (L) (i):
      ∀L1. ⦃G,L⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G,L⦄ ⊢ ➡[h] L2 →
      ∃∃T. ⦃G,L1⦄ ⊢ #i ➡*[↑n,h] T & ⦃G,L2⦄ ⊢ X ➡*[h] T.
 #a #h #G #L #i #IH #HT #K #W #HLK #n #XW #HWX #X #HXW #L1 #HL1 #L2 #HL2
-lapply (cnv_lref_fwd_drops … HT … HLK) -HT #HW
+lapply (cnv_inv_lref_pair … HT … HLK) -HT #HW
 elim (lpr_drops_conf … HLK … HL1) -HL1 // #Y1 #H1 #HLK1
 elim (lpr_inv_pair_sn … H1) -H1 #K1 #W1 #HK1 #HW1 #H destruct
 elim (lpr_drops_conf … HLK … HL2) -HL2 // #Y2 #H2 #HLK2
@@ -87,7 +87,7 @@ fact cnv_cpm_conf_lpr_delta_delta_aux (a) (h) (I) (G) (L) (i):
 #K #V #HLK #Y #X #HLY #n1 #XV1 #HVX1 #n2 #XV2 #HVX2 #X1 #HXV1 #X2 #HXV2
 #L1 #HL1 #L2 #HL2
 lapply (drops_mono … HLY … HLK) -HLY #H destruct
-lapply (cnv_lref_fwd_drops … HT … HLK) -HT #HV
+lapply (cnv_inv_lref_pair … HT … HLK) -HT #HV
 elim (lpr_drops_conf … HLK … HL1) -HL1 // #Y1 #H1 #HLK1
 elim (lpr_inv_pair_sn … H1) -H1 #K1 #V1 #HK1 #_ #H destruct
 lapply (drops_isuni_fwd_drop2 … HLK1) -V1 // #HLK1

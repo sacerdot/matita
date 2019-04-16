@@ -58,6 +58,6 @@ elim (cnv_inv_cast … H) -H #X #HWU #HWT #HUX #HTX
 elim (cnv_inv_bind … HWU) -HWU #HW #HU
 elim (cnv_inv_bind … HWT) -HWT #_ #HT
 elim (cpms_inv_abst_sn … HUX) -HUX #W0 #X0 #_ #HUX0 #H destruct
-elim (cpms_inv_abst_bi … HTX) -HTX #_ #HTX0 -W0
+elim (cpms_inv_abst_bi … HTX) -HTX #_ #_ #HTX0 -W0
 /3 width=3 by cnv_cast, conj/
 qed-.

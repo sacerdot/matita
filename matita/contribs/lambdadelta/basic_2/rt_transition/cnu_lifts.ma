@@ -12,8 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
+include "static_2/relocation/lifts_tueq.ma".
+include "basic_2/rt_transition/cnu.ma".
 
-notation "hvbox( ⦃ term 46 G, break term 46 L ⦄ ⊢ ⬈ [ break term 46 h ] 𝐖𝐇 ⦃ break term 46 T ⦄ )"
-   non associative with precedence 45
-   for @{ 'PRedTyWHead $h $G $L $T }.
+(* NORMAL TERMS FOR T-UNUNBOUND RT-TRANSITION *******************************)
+
+(* Advanced properties with uniform relocation for terms ********************)
+
+lemma cnu_lref (h) (I) (G) (L):
+      ∀i. ⦃G,L⦄ ⊢ ⥲[h] 𝐍⦃#i⦄ → ⦃G,L.ⓘ{I}⦄ ⊢ ⥲[h] 𝐍⦃#↑i⦄.
+#h #I #G #L #i #Hi #n #X #H
+elim (cpm_inv_lref1 … H) -H *
+[ #H #_ destruct //
+| #J #K #V #HV #HVX #H destruct
+  lapply (Hi … HV) -Hi -HV #HV
+  elim (tueq_lifts_dx … HV … HVX) -V #Xi #Hi #HX
+  lapply (lifts_inv_lref1_uni … Hi) -Hi #H destruct //
+]
+qed.

@@ -12,26 +12,29 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_computation/cprs_cnr.ma".
-include "basic_2/rt_computation/cpre.ma".
-include "basic_2/dynamic/cnv_preserve.ma".
+include "basic_2/rt_computation/cpre_csx.ma".
+include "basic_2/rt_computation/cpre_cpre.ma".
+include "basic_2/rt_equivalence/cpcs_cprs.ma".
 
-(* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
+(* CONTEXT-SENSITIVE PARALLEL R-EQUIVALENCE FOR TERMS ***********************)
 
-(* Properties with evaluation for t-bound rt-transition on terms ************)
+(* Properties with strongly normalizing terms for unbound rt-transition *****)
 
-lemma cnv_cpme_trans (a) (h) (n) (G) (L):
-      ∀T1. ⦃G,L⦄ ⊢ T1 ![a,h] →
-      ∀T2. ⦃G,L⦄ ⊢ T1 ➡*[h,n] 𝐍⦃T2⦄ → ⦃G,L⦄ ⊢ T2 ![a,h].
-#a #h #n #G #L #T1 #HT1 #T2 * #HT12 #_
-/2 width=4 by cnv_cpms_trans/
-qed-.
-
-lemma cnv_cpme_cpms_conf (a) (h) (n) (G) (L):
-      ∀T. ⦃G,L⦄ ⊢ T ![a,h] → ∀T1. ⦃G,L⦄ ⊢ T ➡*[n,h] T1 →
-      ∀T2. ⦃G,L⦄ ⊢ T ➡*[h,n] 𝐍⦃T2⦄ → ⦃G,L⦄ ⊢ T1 ➡*[h] 𝐍⦃T2⦄.
-#a #h #n #G #L #T0 #HT0 #T1 #HT01 #T2 * #HT02 #HT2
-elim (cnv_cpms_conf … HT0 … HT01 … HT02) -T0 <minus_n_n #T0 #HT10 #HT20
-lapply (cprs_inv_cnr_sn … HT20 HT2) -HT20 #H destruct
-/2 width=1 by conj/
+(* Basic_1: was: cpcs_dec *)
+lemma csx_cpcs_dec (h) (G) (L):
+      ∀T1. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃T1⦄ → ∀T2. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃T2⦄ →
+      Decidable … (⦃G,L⦄ ⊢ T1 ⬌*[h] T2).
+#h #G #L #T1 #HT1 #T2 #HT2
+elim (cpre_total_csx … HT1) -HT1 #U1 #HTU1
+elim (cpre_total_csx … HT2) -HT2 #U2 #HTU2
+elim (eq_term_dec U1 U2) [ #H destruct | #HnU12 ]
+[ cases HTU1 -HTU1 #HTU1 #_
+  cases HTU2 -HTU2 #HTU2 #_
+  /3 width=3 by cprs_div, or_introl/
+| @or_intror #H
+  elim (cpcs_inv_cprs … H) -H #T0 #HT10 #HT20
+  lapply (cpre_cprs_conf … HT10 … HTU1) -T1 #H1
+  lapply (cpre_cprs_conf … HT20 … HTU2) -T2 #H2
+  /3 width=6 by cpre_mono/
+]
 qed-.
