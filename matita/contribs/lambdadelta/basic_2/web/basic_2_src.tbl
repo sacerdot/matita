@@ -20,12 +20,12 @@ table {
    class "magenta"
    [ { "dynamic typing" * } {
         [ { "context-sensitive native type assignment" * } {
-             [ [ "for terms" ] "nta" + "( ⦃?,?⦄ ⊢ ? :[?,?] ? )" + "( ⦃?,?⦄ ⊢ ? :[?] ? )" + "( ⦃?,?⦄ ⊢ ? :*[?] ? )" "nta_drops" + "nta_aaa" + "nta_fsb" + "nta_cpms" + "nta_cpcs" + "nta_preserve" + "nta_preserve_cpcs" + "nta_ind" * ]
+             [ [ "for terms" ] "nta" + "( ⦃?,?⦄ ⊢ ? :[?,?] ? )" + "( ⦃?,?⦄ ⊢ ? :[?] ? )" + "( ⦃?,?⦄ ⊢ ? :*[?] ? )" "nta_drops" + "nta_aaa" + "nta_fsb" + "nta_cpms" + "nta_cpcs" + "nta_preserve" + "nta_preserve_cpcs" + "nta_ind" + "nta_eval" * ]
           }
         ]
         [ { "context-sensitive native validity" * } {
              [ [ "restricted refinement for lenvs" ] "lsubv ( ? ⊢ ? ⫃![?,?] ? )" "lsubv_drops" + "lsubv_lsubr" + "lsubv_lsuba" + "lsubv_cpms" + "lsubv_cpcs" + "lsubv_cnv" + "lsubv_lsubv" * ]
-             [ [ "for terms" ] "cnv" + "( ⦃?,?⦄ ⊢ ? ![?,?] )" + "( ⦃?,?⦄ ⊢ ? ![?] )" + "( ⦃?,?⦄ ⊢ ? !*[?] )" "cnv_drops" + "cnv_fqus" + "cnv_aaa" + "cnv_fsb" + "cnv_cpm_trans" + "cnv_cpm_conf" + "cnv_cpm_tdeq" + "cnv_cpm_tdeq_trans" + "cnv_cpm_tdeq_conf" + "cnv_cpms_tdeq" + "cnv_cpms_conf" + "cnv_cpms_tdeq_conf" + "cnv_cpme" + "cnv_cpue" + "cnv_eval" + "cnv_cpes" + "cnv_cpcs" + "cnv_preserve_sub" + "cnv_preserve" + "cnv_preserve_cpes" * ]
+             [ [ "for terms" ] "cnv" + "( ⦃?,?⦄ ⊢ ? ![?,?] )" + "( ⦃?,?⦄ ⊢ ? ![?] )" + "( ⦃?,?⦄ ⊢ ? !*[?] )" "cnv_drops" + "cnv_fqus" + "cnv_aaa" + "cnv_fsb" + "cnv_cpm_trans" + "cnv_cpm_conf" + "cnv_cpm_tdeq" + "cnv_cpm_tdeq_trans" + "cnv_cpm_tdeq_conf" + "cnv_cpms_tdeq" + "cnv_cpms_conf" + "cnv_cpms_tdeq_conf" + "cnv_cpme" + "cnv_cpue" + "cnv_eval" + "cnv_cpes" + "cnv_cpcs" + "cnv_preserve_sub" + "cnv_preserve" + "cnv_preserve_cpes" + "cnv_preserve_cpcs" * ]
           }
         ]
      }

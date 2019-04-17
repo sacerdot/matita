@@ -14,7 +14,7 @@
 
 include "basic_2/rt_computation/cpms_cpms.ma".
 include "basic_2/rt_equivalence/cpes.ma".
-include "basic_2/dynamic/cnv.ma".
+include "basic_2/dynamic/cnv_aaa.ma".
 
 (* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
 
@@ -44,6 +44,25 @@ lemma cnv_inv_appl_cpes (a) (h) (G) (L):
 #a #h #G #L #V #T #H
 elim (cnv_inv_appl … H) -H #n #p #W #U #Hn #HV #HT #HVW #HTU
 /3 width=7 by cpms_div, ex5_4_intro/
+qed-.
+
+lemma cnv_inv_appl_SO_cpes (a) (h) (G) (L):
+      ∀V,T. ⦃G, L⦄ ⊢ ⓐV.T ![a, h] →
+      ∃∃n,p,W,U. a = Ⓣ → n = 1 & ⦃G, L⦄ ⊢ V ![a, h] & ⦃G, L⦄ ⊢ T ![a, h] &
+                 ⦃G, L⦄ ⊢ V ⬌*[h,1,0] W & ⦃G, L⦄ ⊢ T ➡*[n, h] ⓛ{p}W.U.
+#a #h #G #L #V #T #H
+elim (cnv_inv_appl_SO … H) -H #n #p #W #U #Hn #HV #HT #HVW #HTU
+/3 width=7 by cpms_div, ex5_4_intro/
+qed-.
+
+lemma cnv_inv_appl_true_cpes (h) (G) (L):
+      ∀V,T. ⦃G,L⦄ ⊢ ⓐV.T ![h] →
+      ∃∃p,W,U. ⦃G,L⦄ ⊢ V ![h] & ⦃G,L⦄ ⊢ T ![h] &
+                 ⦃G,L⦄ ⊢ V ⬌*[h,1,0] W & ⦃G,L⦄ ⊢ T ➡*[1,h] ⓛ{p}W.U.
+#h #G #L #V #T #H
+elim (cnv_inv_appl_SO_cpes … H) -H #n #p #W #U #Hn
+>Hn -n [| // ] #HV #HT #HVW #HTU
+/2 width=5 by ex4_3_intro/
 qed-.
 
 lemma cnv_inv_cast_cpes (a) (h) (G) (L):

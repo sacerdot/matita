@@ -12,19 +12,24 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_computation/csx_aaa.ma".
-include "basic_2/rt_equivalence/cpcs_csx.ma".
-include "basic_2/dynamic/cnv_aaa.ma".
+include "basic_2/dynamic/cnv_eval.ma".
+include "basic_2/dynamic/nta_preserve.ma".
 
-(* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
+(* NATIVE TYPE ASSIGNMENT FOR TERMS *****************************************)
 
-(* Properties with r-equivalence ********************************************)
+(* Properties with evaluations for rt-transition on terms *******************)
 
-lemma cnv_cpcs_dec (a) (h) (G) (L):
-      ∀T1. ⦃G,L⦄ ⊢ T1 ![a,h] → ∀T2. ⦃G,L⦄ ⊢ T2 ![a,h] →
-      Decidable … (⦃G,L⦄ ⊢ T1 ⬌*[h] T2).
-#a #h #G #L #T1 #HT1 #T2 #HT2
-elim (cnv_fwd_aaa … HT1) -HT1 #A1 #HA1
-elim (cnv_fwd_aaa … HT2) -HT2 #A2 #HA2
-/3 width=2 by csx_cpcs_dec, aaa_csx/
+lemma nta_typecheck_dec (a) (h) (G) (L):
+      ∀T,U. Decidable … (⦃G,L⦄ ⊢ T :[a,h] U).
+/2 width=1 by cnv_dec/ qed-.
+
+(* Basic_1: uses: ty3_inference *)
+lemma nta_inference_dec (a) (h) (G) (L) (T):
+      ∨∨ ∃U. ⦃G,L⦄ ⊢ T :[a,h] U
+       | ∀U. (⦃G,L⦄ ⊢ T :[a,h] U → ⊥).
+#a #h #G #L #T
+elim (cnv_dec a h G L T)
+[ /3 width=1 by cnv_nta_sn, or_introl/
+| /4 width=2 by nta_fwd_cnv_sn, or_intror/
+]
 qed-.

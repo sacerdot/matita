@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/rt_equivalence/cpcs_cpcs.ma".
-include "basic_2/dynamic/cnv_cpcs.ma".
+include "basic_2/dynamic/cnv_preserve_cpcs.ma".
 include "basic_2/dynamic/nta.ma".
 
 (* NATIVE TYPE ASSIGNMENT FOR TERMS *****************************************)
@@ -169,13 +169,7 @@ lemma nta_inv_appl_sn (h) (G) (L) (X2):
       ∃∃p,W,U. ⦃G,L⦄ ⊢ V :[h] W & ⦃G,L⦄ ⊢ T :[h] ⓛ{p}W.U & ⦃G,L⦄ ⊢ ⓐV.ⓛ{p}W.U ⬌*[h] X2 & ⦃G,L⦄ ⊢ X2 ![h].
 #h #G #L #X2 #V #T #H
 elim (cnv_inv_cast … H) -H #X #HX2 #H1 #HX2 #H2
-elim (cnv_inv_appl … H1) * [ | #n ] #p #W #U #Hn #HV #HT #HVW #HTU
-[ lapply (cnv_cpms_trans … HT … HTU) #H
-  elim (cnv_inv_bind … H) -H #_ #HU
-  elim (cnv_fwd_cpm_SO … HU) #U0 #HU0 -HU
-  lapply (cpms_step_dx … HTU 1 (ⓛ{p}W.U0) ?) -HTU [ /2 width=1 by cpm_bind/ ] #HTU
-| lapply (le_n_O_to_eq n ?) [ /3 width=1 by le_S_S_to_le/ ] -Hn #H destruct
-]
+elim (cnv_inv_appl_true … H1) #p #W #U #HV #HT #HVW #HTU
 /5 width=11 by cnv_cpms_nta, cnv_cpms_conf_eq, cpcs_cprs_div, cpms_appl_dx, ex4_3_intro/
 qed-.
 

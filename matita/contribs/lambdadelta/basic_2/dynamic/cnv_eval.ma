@@ -20,13 +20,6 @@ include "basic_2/dynamic/cnv_preserve_cpes.ma".
 
 (* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
 
-lemma abst_dec (X): ∨∨ ∃∃p,W,T. X = ⓛ{p}W.T
-                     | (∀p,W,T. X = ⓛ{p}W.T → ⊥).
-* [ #I | * [ #p * | #I ] #V #T ]
-[3: /3 width=4 by ex1_3_intro, or_introl/ ]
-@or_intror #q #W #U #H destruct
-qed-.
-
 (* main properties with evaluations for rt-transition on terms **************)
 
 theorem cnv_dec (a) (h) (G) (L) (T):
@@ -66,8 +59,7 @@ theorem cnv_dec (a) (h) (G) (L) (T):
           [ elim HTU -HTU #HTU #_
             /3 width=7 by cnv_appl_cpes, or_introl/
           | @or_intror #H
-            elim (cnv_inv_appl_SO_cpes … H) -H #m1 #q #W0 #U0 #Hm1 #_ #_ #HVW0
-            >Hm1 -m1 [| // ] #HTU0
+            elim (cnv_inv_appl_true_cpes … H) -H #q #W0 #U0 #_ #_ #HVW0 #HTU0
             elim (cnv_cpme_cpms_conf … HT … HTU0 … HTU) -T #HU0 #_
             elim (cpms_inv_abst_bi … HU0) -HU0 #_ #HW0 #_ -p -q -U0
             /3 width=3 by cpes_cprs_trans/
@@ -76,8 +68,7 @@ theorem cnv_dec (a) (h) (G) (L) (T):
           ]
         | #HnTU #HTX
           @or_intror #H
-          elim (cnv_inv_appl_SO_cpes … H) -H #m1 #q #W0 #U0 #Hm1 #_ #_ #_
-          >Hm1 -m1 [| // ] #HTU0
+          elim (cnv_inv_appl_true_cpes … H) -H #q #W0 #U0 #_ #_ #_ #HTU0
           elim (cnv_cpme_cpms_conf … HT … HTU0 … HTX) -T #HX #_
           elim (cpms_inv_abst_sn … HX) -HX #V0 #T0 #_ #_ #H destruct -W0 -U0
           /2 width=4 by/
@@ -90,7 +81,7 @@ theorem cnv_dec (a) (h) (G) (L) (T):
           [ elim HTU -HTU #n #HTU #_
             @or_introl @(cnv_appl_cpes … HV … HT … HVW … HTU) #H destruct
           | @or_intror #H
-            elim (cnv_inv_appl_SO_cpes … H) -H #m1 #q #W0 #U0 #_ #_ #_ #HVW0 #HTU0
+            elim (cnv_inv_appl_cpes … H) -H #m1 #q #W0 #U0 #_ #_ #_ #HVW0 #HTU0
             elim (cnv_cpue_cpms_conf … HT … HTU0 … HTU) -m1 -T #X * #m2 #HU0X #_ #HUX
             elim (tueq_inv_bind1 … HUX) -HUX #X0 #_ #H destruct -U
             elim (cpms_inv_abst_bi … HU0X) -HU0X #_ #HW0 #_ -p -q -m2 -U0 -X0
@@ -100,7 +91,7 @@ theorem cnv_dec (a) (h) (G) (L) (T):
           ]
         | #HnTU #HTX
           @or_intror #H
-          elim (cnv_inv_appl_SO_cpes … H) -H #m1 #q #W0 #U0 #_ #_ #_ #_ #HTU0
+          elim (cnv_inv_appl_cpes … H) -H #m1 #q #W0 #U0 #_ #_ #_ #_ #HTU0
           elim (cnv_cpue_cpms_conf … HT … HTU0 … HTX) -m1 -T #X0 * #m2 #HUX0 #_ #HX0
           elim (cpms_inv_abst_sn … HUX0) -HUX0 #V0 #T0 #_ #_ #H destruct -m2 -W0 -U0
           elim (tueq_inv_bind2 … HX0) -HX0 #X0 #_ #H destruct
@@ -110,7 +101,7 @@ theorem cnv_dec (a) (h) (G) (L) (T):
     ]
   ]
   @or_intror #H
-  elim (cnv_inv_appl_SO … H) -H /2 width=1 by/
+  elim (cnv_inv_appl … H) -H /2 width=1 by/
 | #U #T #HG #HL #HT destruct
   elim (IH G L U) [| -IH | // ] #HU
   [ elim (IH G L T) -IH [3: // ] #HT
