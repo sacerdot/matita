@@ -92,3 +92,4 @@ val inversion_tac:
      's NTacStatus.tactic
 
 val exact_tac: NTacStatus.tactic_term -> 's NTacStatus.tactic
+val first_tac: 's NTacStatus.tactic list -> 's NTacStatus.tactic

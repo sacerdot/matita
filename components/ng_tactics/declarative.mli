@@ -36,3 +36,8 @@ NTacStatus.tactic
 val existselim : just -> string -> NTacStatus.tactic_term -> NTacStatus.tactic_term -> string -> 's
 NTacStatus.tactic
 val thesisbecomes : NTacStatus.tactic_term -> NTacStatus.tactic_term option -> 's NTacStatus.tactic
+val rewritingstep : (string option * NTacStatus.tactic_term) option -> NTacStatus.tactic_term ->
+   [ `Term of NTacStatus.tactic_term | `Auto of NnAuto.auto_params
+   | `Proof  | `SolveWith of NTacStatus.tactic_term ] ->
+    bool (* last step *) -> 's NTacStatus.tactic
+val print_stack : 's NTacStatus.tactic

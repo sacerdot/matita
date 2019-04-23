@@ -147,7 +147,7 @@ let rec pp_ntactic status ~map_unicode_to_tex =
       ^ "=" ^
       NotationPp.pp_term status term1 ^ 
       (match term2 with 
-      | `Auto params -> pp_auto_params (None,params) status
+      | `Auto params -> pp_auto_params params status
       | `Term term2 -> " exact " ^ NotationPp.pp_term status term2 
       | `Proof -> " proof"
       | `SolveWith term -> " using " ^ NotationPp.pp_term status term)

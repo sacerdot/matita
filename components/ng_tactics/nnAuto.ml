@@ -1915,7 +1915,7 @@ let auto_lowtac ~params:(univ,flags) status goal =
     let gty = get_goalty status goal in
     let ctx = ctx_of gty in
     let candidates = candidates_from_ctx univ ctx status in 
-    NTactics.exec (auto_tac' candidates ~local_candidates:false ~use_given_only:true flags) status goal
+    auto_tac' candidates ~local_candidates:true ~use_given_only:false flags ~trace_ref:(ref [])
 
 let auto_tac ~params:(univ,flags) ?(trace_ref=ref []) status =
     let candidates = candidates_from_ctx univ [] status in

@@ -413,6 +413,7 @@ let eval_ng_tac tac =
         | None -> `Auto (None,params)
         | Some l -> `Auto (Some (List.map (fun t -> (text,prefix_len,t)) l),params)
     )
+    | _ -> assert false
  in
  let rec aux f (text, prefix_len, tac) =
   match tac with
@@ -508,10 +509,18 @@ let eval_ng_tac tac =
     text prefix_len) (text,prefix_len,t1) id1 (text,prefix_len,t2) id2
   | GrafiteAst.Thesisbecomes (_, t1, t2) -> Declarative.thesisbecomes (text,prefix_len,t1)
   (match t2 with None -> None | Some t2 -> (Some (text,prefix_len,t2)))
-  (*
   | GrafiteAst.RewritingStep (_,termine,t1,t2,cont) ->
-     Declarative.rewritingstep termine (text,prefix_len,t1) t2 cont
-     *)
+     Declarative.rewritingstep  (match termine with None -> None
+                                | Some (s,t) -> Some (s, (text,prefix_len,t))) 
+                                (text,prefix_len,t1) 
+                                (match t2 with 
+                                `Term t -> just_to_tacstatus_just t2 text prefix_len
+                                | `Auto params -> just_to_tacstatus_just t2 text prefix_len
+                                |`Proof -> `Proof
+                                |`SolveWith t -> `SolveWith (text,prefix_len,t)
+                                )
+                                cont
+  | GrafiteAst.PrintStack (_) -> Declarative.print_stack
  in
   aux aux tac (* trick for non uniform recursion call *)
 ;;

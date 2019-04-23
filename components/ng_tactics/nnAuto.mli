@@ -28,7 +28,7 @@ val auto_tac:
    ?trace_ref:NotationPt.term list ref -> 
    's NTacStatus.tactic
 
-val auto_lowtac: params:auto_params -> NTacStatus.lowtac_status -> int -> NTacStatus.lowtac_status
+val auto_lowtac: params:auto_params -> #NTacStatus.pstatus -> int -> 's NTacStatus.tactic
 
 val keys_of_type: 
   (#NTacStatus.pstatus as 'a) ->

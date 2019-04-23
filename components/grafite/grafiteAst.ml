@@ -90,10 +90,12 @@ type ntactic =
    | AndElim of loc * just * nterm * string * nterm * string
    | RewritingStep of
       loc * (string option * nterm) option * nterm *
-       [ `Term of nterm | `Auto of (string*string) list
+       [ `Term of nterm | `Auto of auto_params
        | `Proof | `SolveWith of nterm ] *
        bool (* last step*)
    | Thesisbecomes of loc * nterm * nterm option
+    (* This is a debug tactic to print the stack to stdout, can be safely removed *)
+   | PrintStack of loc 
 
 type nmacro =
   | NCheck of loc * nterm

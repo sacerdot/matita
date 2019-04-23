@@ -53,7 +53,7 @@ let branch_tac ?(force=false) status =
     | (g, t, k, tag) :: s ->
           match init_pos g with (* TODO *)
           | [] -> fail (lazy "empty goals")
-	  | [_] when (not force) -> fail (lazy "too few goals to branch")
+          | [_] when (not force) -> fail (lazy "too few goals to branch")
           | loc :: loc_tl ->
                ([ loc ], [], [], `BranchTag) :: (loc_tl, t, k, tag) :: s
   in
