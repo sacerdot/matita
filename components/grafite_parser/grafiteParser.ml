@@ -272,8 +272,18 @@ EXTEND
     | IDENT "the" ; IDENT "thesis" ; IDENT "becomes" ; t1=tactic_term ; t2 = OPT [IDENT "or"; IDENT
     "equivalently"; t2 = tactic_term -> t2] ->
         G.NTactic (loc,[G.Thesisbecomes(loc,t1,t2)])
+    | IDENT "we" ; IDENT "proceed" ; IDENT "by" ; IDENT "cases" ; "on" ; t=tactic_term ; "to" ; IDENT "prove" ; t1=tactic_term ->  
+        G.NTactic (loc,[G.We_proceed_by_cases_on (loc, t, t1)])
+    | IDENT "we" ; IDENT "proceed" ; IDENT "by" ; IDENT "induction" ; "on" ; t=tactic_term ; "to" ; IDENT "prove" ; t1=tactic_term ->  
+        G.NTactic (loc,[G.We_proceed_by_induction_on (loc, t, t1)])
+    | IDENT "by" ; IDENT "induction" ; IDENT "hypothesis" ; IDENT "we" ; IDENT "know" ; t=tactic_term ; LPAREN ; id = IDENT ; RPAREN ->
+        G.NTactic (loc,[G.Byinduction(loc, t, id)])
+    | IDENT "case" ; id = IDENT ; params=LIST0[LPAREN ; i=IDENT ;
+        SYMBOL":" ; t=tactic_term ; RPAREN -> i,t] ->
+        G.NTactic (loc,[G.Case(loc,id,params)])
     | IDENT "print_stack" -> G.NTactic (loc,[G.PrintStack loc])
     (* DO NOT FACTORIZE with the two following, camlp5 sucks*)
+(*
     | IDENT "conclude";  
       termine = tactic_term;
       SYMBOL "=" ;
@@ -314,6 +324,12 @@ EXTEND
        ];
       cont = rewriting_step_continuation ->
        G.NTactic(loc,[G.RewritingStep(loc, Some (Some name,termine), t1, t2, cont)])
+*)
+    | IDENT "obtain" ; name = IDENT;
+      termine = tactic_term ->
+       G.NTactic(loc,[G.Obtain(loc, name, termine)])
+    | IDENT "conclude" ; termine = tactic_term ->
+       G.NTactic(loc,[G.Conclude(loc, termine)])
     | SYMBOL "=" ;
       t1=tactic_term ;
       t2 =
@@ -331,7 +347,7 @@ EXTEND
              )
        ];
       cont = rewriting_step_continuation ->
-       G.NTactic(loc,[G.RewritingStep(loc, None, t1, t2, cont)])
+       G.NTactic(loc,[G.RewritingStep(loc, t1, t2, cont)])
     ]
   ];
   auto_fixed_param: [

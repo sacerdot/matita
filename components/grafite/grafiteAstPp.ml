@@ -138,6 +138,16 @@ let rec pp_ntactic status ~map_unicode_to_tex =
   ^ " (" ^ ident2 ^ ")" 
   | Thesisbecomes (_, term1, term2) -> "the thesis becomes " ^ NotationPp.pp_term status term1 ^ (match
   term2 with None -> " " | Some term2 -> NotationPp.pp_term status term2)
+  | RewritingStep (_, rhs, just, cont) -> 
+      "=" ^
+      NotationPp.pp_term status rhs ^ 
+      (match just with 
+      | `Auto params -> pp_auto_params params status
+      | `Term t -> " exact " ^ NotationPp.pp_term status t
+      | `Proof -> " proof"
+      | `SolveWith t -> " using " ^ NotationPp.pp_term status t)
+      ^ (if cont then " done" else "")
+(*
   | RewritingStep (_, term, term1, term2, cont) -> 
       (match term with 
       | None -> " " 
@@ -152,6 +162,17 @@ let rec pp_ntactic status ~map_unicode_to_tex =
       | `Proof -> " proof"
       | `SolveWith term -> " using " ^ NotationPp.pp_term status term)
       ^ (if cont then " done" else "")
+*)
+  | Obtain (_,id,t1) -> "obtain (" ^ id ^ ")" ^ NotationPp.pp_term status t1
+  | Conclude (_,t1) -> "conclude " ^ NotationPp.pp_term status t1
+  | We_proceed_by_cases_on (_, term, term1) -> "we proceed by cases on" ^ NotationPp.pp_term status term ^ "to prove" ^ NotationPp.pp_term status  term1
+  | We_proceed_by_induction_on (_, term, term1) -> "we proceed by induction on" ^ NotationPp.pp_term status  term ^ "to prove" ^ NotationPp.pp_term status  term1
+  | Byinduction (_, term, ident) -> "by induction hypothesis we know" ^ NotationPp.pp_term status  term ^ "(" ^ ident ^ ")"
+  | Case (_, id, args) ->
+     "case" ^ id ^
+       String.concat " "
+        (List.map (function (id,term) -> "(" ^ id ^ ": " ^ NotationPp.pp_term status  term ^  ")")
+	  args)
 ;;
 
 let pp_nmacro status = function

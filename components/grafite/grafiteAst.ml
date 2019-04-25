@@ -88,12 +88,24 @@ type ntactic =
    | Bydone of loc * just
    | ExistsElim of loc * just * string * nterm * nterm * string
    | AndElim of loc * just * nterm * string * nterm * string
+                (*
    | RewritingStep of
       loc * (string option * nterm) option * nterm *
        [ `Term of nterm | `Auto of auto_params
        | `Proof | `SolveWith of nterm ] *
        bool (* last step*)
+                   *)
+   | RewritingStep of
+      loc * nterm * [ `Term of nterm | `Auto of auto_params | `Proof | `SolveWith of nterm ] * bool (* last step*)
+   | Obtain of
+      loc * string * nterm
+   | Conclude of
+      loc * nterm
    | Thesisbecomes of loc * nterm * nterm option
+   | We_proceed_by_induction_on of loc * nterm * nterm
+   | We_proceed_by_cases_on of loc * nterm * nterm
+   | Byinduction of loc * nterm * string
+   | Case of loc * string * (string * nterm) list 
     (* This is a debug tactic to print the stack to stdout, can be safely removed *)
    | PrintStack of loc 
 

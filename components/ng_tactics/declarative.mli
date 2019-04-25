@@ -36,8 +36,13 @@ NTacStatus.tactic
 val existselim : just -> string -> NTacStatus.tactic_term -> NTacStatus.tactic_term -> string -> 's
 NTacStatus.tactic
 val thesisbecomes : NTacStatus.tactic_term -> NTacStatus.tactic_term option -> 's NTacStatus.tactic
-val rewritingstep : (string option * NTacStatus.tactic_term) option -> NTacStatus.tactic_term ->
-   [ `Term of NTacStatus.tactic_term | `Auto of NnAuto.auto_params
+val rewritingstep : NTacStatus.tactic_term -> [ `Term of NTacStatus.tactic_term | `Auto of NnAuto.auto_params
    | `Proof  | `SolveWith of NTacStatus.tactic_term ] ->
     bool (* last step *) -> 's NTacStatus.tactic
+val we_proceed_by_cases_on: NTacStatus.tactic_term -> NTacStatus.tactic_term -> 's NTacStatus.tactic
+val we_proceed_by_induction_on: NTacStatus.tactic_term -> NTacStatus.tactic_term -> 's NTacStatus.tactic
+val byinduction: NTacStatus.tactic_term -> string -> 's NTacStatus.tactic
+val case: string -> (string*NotationPt.term) list -> 's NTacStatus.tactic
+val obtain: string -> NTacStatus.tactic_term -> 's NTacStatus.tactic
+val conclude: NTacStatus.tactic_term -> 's NTacStatus.tactic
 val print_stack : 's NTacStatus.tactic

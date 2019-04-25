@@ -62,7 +62,7 @@ let extract_conclusion_type status goal =
   gty
 ;;
 
-let same_type_as_conclusion ty t status goal =
+let alpha_eq_tacterm_kerterm ty t status goal =
   let gty = get_goalty status goal in
   let ctx = ctx_of gty in
   let status,cicterm = disambiguate status ctx ty `XTNone (*(`XTSome (mk_cic_term ctx t))*) in
@@ -88,7 +88,7 @@ let are_convertible ty1 ty2 status goal =
 let lambda_abstract_tac id t1 t2 status goal =
   match extract_conclusion_type status goal with
   | NCic.Prod (_,t,_) ->
-    if same_type_as_conclusion t1 t status goal then
+    if alpha_eq_tacterm_kerterm t1 t status goal then
       match t2 with
       | None ->
         let (_,_,t1) = t1 in
@@ -130,7 +130,7 @@ let suppose t1 id t2 (*status*) =
 
 let assert_tac t1 t2 status goal continuation =
   let t = extract_conclusion_type status goal in
-  if same_type_as_conclusion t1 t status goal then
+  if alpha_eq_tacterm_kerterm t1 t status goal then
     match t2 with
     | None -> continuation
     | Some t2 ->
@@ -278,45 +278,41 @@ let we_need_to_prove t id t1 status =
     )
 ;;
 
-let by_just_we_proved just ty id ty' (*status*) =
-  distribute_tac (fun status goal ->
-    let wrappedjust = just in
-    let just = mk_just status goal just in
-    match id with
-    | None ->
-      (match ty' with
-       | None -> (* just we proved P done *)
-         (
-           try
-             assert_tac ty None status goal (exec (bydone wrappedjust) status goal)
-           with
-           | FirstTypeWrong -> fail (lazy "The given proposition is not the same as the conclusion")
-           | NotEquivalentTypes -> fail (lazy "The given propositions are not equivalent")
-         )
-       | Some ty' -> (* just we proved P that is equivalent to P' done *)
-         (
-           try
-             assert_tac ty' (Some ty) status goal (exec (block_tac [change_tac
-                                                                ~where:("",0,(None,[],Some Ast.UserInput)) ~with_what:ty; bydone
-                                                                wrappedjust]) status goal)
-           with
-           | FirstTypeWrong -> fail (lazy "The second proposition is not the same as the conclusion")
-           | NotEquivalentTypes -> fail (lazy "The given propositions are not equivalent")
-         )
-      )
-    | Some id ->
-      (
-        match ty' with
-        | None -> exec (block_tac [cut_tac ty; branch_tac; just; shift_tac; intro_tac
-                               id; merge_tac ]) status goal
-        | Some ty' -> exec (block_tac [cut_tac ty; branch_tac; just; shift_tac; intro_tac
-                                   id; change_tac ~where:("",0,(None,[id,Ast.UserInput],None))
-                                   ~with_what:ty'; merge_tac]) status goal
-      )
-  )
-;;
-
-let thesisbecomes t1 t2 status = we_need_to_prove t1 None t2 status
+let by_just_we_proved just ty id ty' status =
+  let goal = extract_first_goal_from_status status in
+  let wrappedjust = just in
+  let just = mk_just status goal just in
+  match id with
+  | None ->
+    (match ty' with
+     | None -> (* just we proved P done *)
+       (
+         try
+           assert_tac ty None status goal (bydone wrappedjust status)
+         with
+         | FirstTypeWrong -> fail (lazy "The given proposition is not the same as the conclusion")
+         | NotEquivalentTypes -> fail (lazy "The given propositions are not equivalent")
+       )
+     | Some ty' -> (* just we proved P that is equivalent to P' done *)
+       (
+         try
+           assert_tac ty' None status goal (block_tac [change_tac ~where:("",0,(None,[],Some
+                                                                                       Ast.UserInput))
+                                                              ~with_what:ty; bydone wrappedjust]
+                                                   status )
+         with
+         | FirstTypeWrong -> fail (lazy "The second proposition is not the same as the conclusion")
+         | NotEquivalentTypes -> fail (lazy "The given propositions are not equivalent")
+       )
+    )
+  | Some id ->
+    (
+      match ty' with
+      | None -> block_tac [cut_tac ty; branch_tac; just; shift_tac; intro_tac id; merge_tac ] status
+      | Some ty' -> block_tac [cut_tac ty; branch_tac; just; shift_tac; intro_tac id; change_tac
+                                 ~where:("",0,(None,[id,Ast.UserInput],None)) ~with_what:ty';
+                               merge_tac] status
+    )
 ;;
 
 let existselim just id1 t1 t2 id2 (*status*) =
@@ -360,7 +356,100 @@ let type_of_tactic_term status ctx t =
   let (_,cicty) = typeof status ctx cicterm in
   cicty
 
-let rewritingstep lhs rhs just last_step status =
+let swap_first_two_goals_tac status =
+  let gstatus =
+    match status#stack with
+    | [] -> assert false
+    | (g,t,k,tag) :: s ->
+      match g with
+      | (loc1) :: (loc2) :: tl ->
+        ([loc2;loc1] @+ tl,t,k,tag) :: s
+      | _ -> assert false
+  in
+  status#set_stack gstatus
+
+let thesisbecomes t1 t2 = we_need_to_prove t1 None t2
+;;
+
+let obtain id t1 status =
+    let goal = extract_first_goal_from_status status in
+    let cicgty = get_goalty status goal in
+    let ctx = ctx_of cicgty in
+    let cicty = type_of_tactic_term status ctx t1 in
+    let _,ty = term_of_cic_term status cicty ctx in
+    let (_,_,t1) = t1 in
+    block_tac [ cut_tac ("",0,(Ast.Appl [Ast.Ident ("eq",None); Ast.NCic ty; t1; Ast.Implicit
+                                           `JustOne])); 
+                swap_first_two_goals_tac;
+                branch_tac; shift_tac; shift_tac; intro_tac id; merge_tac; dot_tac;
+              ]
+          status
+;;
+
+let conclude t1 =
+  distribute_tac (fun status goal ->
+    let cicgty = get_goalty status goal in
+    let ctx = ctx_of cicgty in
+    let _,gty = term_of_cic_term status cicgty ctx in
+    match gty with
+      NCic.Appl [_;_;plhs;_] ->
+      if alpha_eq_tacterm_kerterm t1 plhs status goal then
+        exec id_tac status goal
+      else
+        fail (lazy "The given conclusion is different from the left-hand side of the current conclusion")
+    | _ -> fail (lazy "Your conclusion needs to be an equality")
+    )
+;;
+
+let rewritingstep rhs just last_step status =
+  let goal = extract_first_goal_from_status status in
+  let cicgty = get_goalty status goal in
+  let ctx = ctx_of cicgty in
+  let _,gty = term_of_cic_term status cicgty ctx in
+  let cicty = type_of_tactic_term status ctx rhs in
+  let _,ty = term_of_cic_term status cicty ctx in
+  let just' = (* Extraction of the ""justification"" from the ad hoc justification *)
+    match just with
+      `Auto (univ, params) ->
+      let params =
+        if not (List.mem_assoc "timeout" params) then
+          ("timeout","3")::params
+        else params
+      in
+      let params' =
+        if not (List.mem_assoc "paramodulation" params) then
+          ("paramodulation","1")::params
+        else params
+      in
+      if params = params' then NnAuto.auto_lowtac ~params:(univ, params) status goal
+      else
+        first_tac [NnAuto.auto_lowtac ~params:(univ, params) status goal; NnAuto.auto_lowtac
+                     ~params:(univ, params') status goal]
+    | `Term just -> apply_tac just
+    | `SolveWith term -> NnAuto.demod_tac ~params:(Some [term], ["all","1";"steps","1"; "use_ctx","false"])
+    | `Proof -> id_tac
+  in
+  let plhs,prhs,prepare =
+    match gty with (* Extracting the lhs and rhs of the previous equality *)
+      NCic.Appl [_;_;plhs;prhs] -> plhs,prhs,(fun continuation -> continuation status)
+    | _ -> fail (lazy "You are not building an equaility chain")
+  in
+  let continuation =
+    if last_step then
+      (*CSC:manca controllo sul fatto che rhs sia convertibile con prhs*)
+      let todo = [just'] in
+      let todo = if mustdot status then List.append todo [dot_tac] else todo
+      in
+      block_tac todo
+    else
+      let (_,_,rhs) = rhs in
+      block_tac [apply_tac ("",0,Ast.Appl [Ast.Ident ("trans_eq",None); Ast.NCic ty; Ast.NCic plhs;
+                                           rhs; Ast.NCic prhs]); branch_tac; just'; merge_tac]
+  in
+  prepare continuation
+;;
+
+(*
   let goal = extract_first_goal_from_status status in
   let cicgty = get_goalty status goal in
   let ctx = ctx_of cicgty in
@@ -409,37 +498,22 @@ let rewritingstep lhs rhs just last_step status =
       plhs,prhs,
       (fun continuation -> continuation status)
     | Some (Some name,lhs) -> (* obtain *)
-      fail (lazy "Not implemented")
-        (*
-      let plhs = lhs in
-      let prhs = Cic.Meta(newmeta,irl) in
-      plhs,prhs,
+      NCic.Rel 1, NCic.Rel 1, (* continuation for this case is gonna be ignored, so it doesn't
+                                 matter what the values of these two are *)
       (fun continuation ->
-         let metasenv = (newmeta, ctx, ty)::metasenv in
-         let mk_fresh_name_callback =
-           fun metasenv ctx _ ~typ ->
-             FreshNamesGenerator.mk_fresh_name ~subst:[] metasenv ctx
-               (Cic.Name name) ~typ
-         in
-         let proof = curi,metasenv,_subst,proofbo,proofty, attrs in
-         let proof,goals =
-           ProofEngineTypes.apply_tactic
-             (Tacticals.thens
-                ~start:(Tactics.cut ~mk_fresh_name_callback
-                          (Cic.Appl [eq ; ty ; lhs ; prhs]))
-                ~continuations:[Tacticals.id_tac ; continuation]) (proof,goal)
-         in
-         let goals =
-           match just,goals with
-             `Proof, [g1;g2;g3] -> [g2;g3;newmeta;g1]
-           | _, [g1;g2] -> [g2;newmeta;g1]
-           | _, l ->
-             prerr_endline (String.concat "," (List.map string_of_int l));
-             prerr_endline (CicMetaSubst.ppmetasenv [] metasenv);
-             assert false
-         in
-         proof,goals)
-           *)
+         let (_,_,lhs) = lhs in
+        block_tac [ cut_tac ("",0,(Ast.Appl [Ast.Ident ("eq",None); Ast.NCic ty; lhs; Ast.Implicit
+                                              `JustOne])); 
+                   swap_first_two_goals_tac;
+                   branch_tac; shift_tac; shift_tac; intro_tac name; merge_tac; dot_tac;
+(*
+                   change_tac ~where:("",0,(None,[],Some Ast.Appl[Ast.Implicit `JustOne;Ast.Implicit
+                                                                 `JustOne; Ast.UserInput; Ast.Implicit `JustOne]))
+                                         ~with_what:rhs
+*)
+                 ]
+          status
+      )
   in
   let continuation =
     if last_step then
@@ -454,6 +528,42 @@ let rewritingstep lhs rhs just last_step status =
                                            rhs; Ast.NCic prhs]); branch_tac; just'; merge_tac]
   in
     prepare continuation
+;;
+   *)
+
+let we_proceed_by_cases_on t1 t2 status = 
+  let goal = extract_first_goal_from_status status in
+  try
+    assert_tac t2 None status goal (block_tac [cases_tac ~what:t1 ~where:("",0,(None,[],Some
+                                                                               Ast.UserInput));
+                                             dot_tac] status)
+  with
+  | FirstTypeWrong -> fail (lazy "What you want to prove is different from the conclusion")
+
+let we_proceed_by_induction_on t1 t2 status =
+  let goal = extract_first_goal_from_status status in
+  try
+    assert_tac t2 None status goal (block_tac [elim_tac ~what:t1 ~where:("",0,(None,[],Some
+                                                                               Ast.UserInput));
+                                             dot_tac] status)
+  with
+  | FirstTypeWrong -> fail (lazy "What you want to prove is different from the conclusion")
+;;
+
+let byinduction t1 id = suppose t1 id None ;;
+
+let case id l = 
+  distribute_tac (fun status goal ->
+    let rec aux l =
+      match l with 
+        [] -> [id_tac]
+      | (id,ty)::tl ->
+        (try_tac (assume id ("",0,ty) None)) :: (aux tl)
+    in
+(*     if l == [] then exec (try_tac (intro_tac "H")) status goal *)
+(*         else  *)
+    exec (block_tac (aux l)) status goal
+    )
 ;;
 
 let print_stack status = prerr_endline ("PRINT STACK: " ^ (pp status#stack)); id_tac status ;;
