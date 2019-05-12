@@ -492,6 +492,7 @@ type indtyinfo = {
         leftno: int;
         consno: int;
         reference: NReference.reference;
+        cl: NCic.constructor list;
  }
 ;;
 
@@ -502,11 +503,12 @@ let analyze_indty_tac ~what indtyref =
   let goalty = get_goalty status goal in
   let status, what = disambiguate status (ctx_of goalty) what `XTInd in
   let status, ty_what = typeof status (ctx_of what) what in 
-  let status, (r,consno,lefts,rights) = analyse_indty status ty_what in
+  let status, (r,consno,lefts,rights,cl) = analyse_indty status ty_what in
   let leftno = List.length lefts in
   let rightno = List.length rights in
   indtyref := Some { 
     rightno = rightno; leftno = leftno; consno = consno; reference = r;
+    cl = cl;
   };
   exec id_tac orig_status goal)
 ;;
@@ -521,6 +523,33 @@ let sort_of_goal_tac sortref = distribute_tac (fun status goal ->
    sortref := sort;
    status)
 ;;
+
+let pp_ref reference = 
+  let NReference.Ref (uri,spec) = reference in
+  let nstring = NUri.string_of_uri uri in
+  (*"Shareno: " ^ (string_of_int nuri) ^*) "Uri: " ^ nstring ^
+  (match spec with
+    | NReference.Decl -> "Decl"
+    | NReference.Def n -> "Def " ^ (string_of_int n)
+    | NReference.Fix (n1,n2,n3) -> "Fix " ^ (string_of_int n1) ^ " " ^ (string_of_int n2) ^ " " ^ (string_of_int n3)(* fixno, recparamno, height *)
+    | NReference.CoFix n -> "CoFix " ^ (string_of_int n)
+    | NReference.Ind (b,n1,n2) -> "Ind " ^ (string_of_bool b) ^ " " ^ (string_of_int n1) ^ " " ^ (string_of_int n2)(* inductive, indtyno, leftno *)
+    | NReference.Con (n1,n2,n3) ->  "Con " ^ (string_of_int n1) ^ " " ^ (string_of_int n2) ^ " " ^ (string_of_int n3)(* indtyno, constrno, leftno  *)
+  ) ;;
+
+let pp_cl cl = 
+  let rec pp_aux acc = 
+    match acc with 
+    | [] -> ""
+    | (_,consname,_) :: tl -> consname ^ ", " ^ pp_aux tl
+  in
+    pp_aux cl
+;;
+
+let pp_indtyinfo ity = "leftno: " ^ (string_of_int ity.leftno) ^ ", consno: " ^ (string_of_int
+                                                                                   ity.consno) ^ ", rightno: " ^
+                       (string_of_int ity.rightno) ^ ", reference: " ^ (pp_ref ity.reference) ^ ",
+                       cl: " ^ (pp_cl ity.cl);;
 
 let elim_tac ~what:(txt,len,what) ~where = 
   let what = txt, len, Ast.Appl [what; Ast.Implicit `Vector] in
@@ -597,7 +626,7 @@ let cases ~what status goal =
  let gty = get_goalty status goal in
  let status, what = disambiguate status (ctx_of gty) what `XTInd in
  let status, ty = typeof status (ctx_of what) what in
- let status, (ref, consno, _, _) = analyse_indty status ty in
+ let status, (ref, consno, _, _,_) = analyse_indty status ty in
  let status, what = term_of_cic_term status what (ctx_of gty) in
  let t =
   NCic.Match (ref,NCic.Implicit `Term, what,
@@ -628,7 +657,7 @@ let case1_tac name =
 
 let constructor_tac ?(num=1) ~args = distribute_tac (fun status goal ->
   let gty = get_goalty status goal in
-  let status, (r,consno,_,_) = analyse_indty status gty in
+  let status, (r,consno,_,_,_) = analyse_indty status gty in
   if num < 1 || num > consno then fail (lazy "Non existant constructor");
   let ref = NReference.mk_constructor num r in
   let t = 

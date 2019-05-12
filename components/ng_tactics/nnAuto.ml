@@ -323,9 +323,6 @@ let index_local_equations eq_cache ?(flag=false) status =
 ;;
 
 let index_local_equations2 eq_cache status open_goal lemmas ?(flag=false) nohyps =
- if flag then
-  NCicParamod.empty_state
- else begin
   noprint (lazy "indexing equations");
   let eq_cache,lemmas =
    match lemmas with
@@ -361,7 +358,6 @@ let index_local_equations2 eq_cache status open_goal lemmas ?(flag=false) nohyps
            | NCicTypeChecker.TypeCheckerFailure _
            | NCicTypeChecker.AssertFailure _ -> eq_cache)
     eq_cache lemmas
- end
 ;;
 
 let fast_eq_check_tac ~params s = 
@@ -1911,7 +1907,7 @@ let candidates_from_ctx univ ctx status =
             in Ast.NCic res 
         in Some (List.map to_Ast l) 
 
-let auto_lowtac ~params:(univ,flags) status goal =
+let auto_lowtac ~params:(univ,flags as params) status goal =
     let gty = get_goalty status goal in
     let ctx = ctx_of gty in
     let candidates = candidates_from_ctx univ ctx status in 

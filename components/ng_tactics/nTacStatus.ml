@@ -469,7 +469,7 @@ let analyse_indty status ty =
  let _,_,_,cl = List.nth tl i in
  let consno = List.length cl in
  let left, right = HExtlib.split_nth lno args in
- status, (ref, consno, left, right)
+ status, (ref, consno, left, right, cl)
 ;;
 
 let apply_subst status ctx t =

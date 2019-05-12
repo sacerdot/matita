@@ -45,15 +45,9 @@ let extract_first_goal_from_status status =
   | [] -> fail (lazy "There's nothing to prove")
   | (g1, _, k, tag1) :: tl ->
     let goals = filter_open g1 in
-    let (loc::tl) = goals in 
+    let (loc::tl) = goals in
     let goal = goal_of_loc (loc) in
     goal ;;
-  (*
-  let (_,_,metasenv,_,_) = status#obj in
-  match metasenv with
-  | [] -> fail (lazy "There's nothing to prove")
-  | (hd,_) :: tl -> hd
-  *)
 
 let extract_conclusion_type status goal =
   let gty = get_goalty status goal in
@@ -77,8 +71,8 @@ let alpha_eq_tacterm_kerterm ty t status goal =
 let are_convertible ty1 ty2 status goal =
   let gty = get_goalty status goal in
   let ctx = ctx_of gty in
-  let status,cicterm1 = disambiguate status ctx ty1 `XTNone (*(`XTSome (mk_cic_term ctx t))*) in
-  let status,cicterm2 = disambiguate status ctx ty2 `XTNone (*(`XTSome (mk_cic_term ctx t))*) in
+  let status,cicterm1 = disambiguate status ctx ty1 `XTNone in
+  let status,cicterm2 = disambiguate status ctx ty2 `XTNone in
   NTacStatus.are_convertible status ctx cicterm1 cicterm2
 
 (* LCF-like tactic that checks whether the conclusion of the sequent of the given goal is a product, checks that
@@ -106,9 +100,8 @@ let lambda_abstract_tac id t1 t2 status goal =
       raise FirstTypeWrong
   | _ -> raise NotAProduct
 
-let assume name ty eqty (*status*) =
-(*   let goal = extract_first_goal_from_status status in *)
-  distribute_tac (fun status goal -> 
+let assume name ty eqty =
+  distribute_tac (fun status goal ->
     try exec (lambda_abstract_tac name ty eqty status goal) status goal
     with
     | NotAProduct -> fail (lazy "You can't assume without an universal quantification")
@@ -117,8 +110,7 @@ let assume name ty eqty (*status*) =
   )
 ;;
 
-let suppose t1 id t2 (*status*) =
-(*   let goal = extract_first_goal_from_status status in *)
+let suppose t1 id t2 =
   distribute_tac (fun status goal ->
     try exec (lambda_abstract_tac id t1 t2 status goal) status goal
     with
@@ -154,90 +146,11 @@ let mustdot status =
 let bydone just status =
   let goal = extract_first_goal_from_status status in
   let mustdot = mustdot status in
-(*
-  let goal,mustdot =
-    let s = status#stack in
-    match s with
-    | [] -> fail (lazy "Invalid use of done")
-    | (g1, _, k, tag1) :: tl ->
-      let goals = filter_open g1 in
-      let (loc::tl) = goals in 
-      let goal = goal_of_loc (loc) in
-      if List.length k > 0 then
-        goal,true
-      else
-        goal,false
-  in
-
-   *)
-(*
-      let goals = filter_open g1 in
-      let (loc::tl) = goals in 
-      let goal = goal_of_loc (loc) in
-      if tag1 == `BranchTag then
-        if List.length (shift_goals s) > 0 then (* must simply shift *)
-          (
-            prerr_endline (pp status#stack); 
-            prerr_endline "Head goals:";
-            List.map (fun goal -> prerr_endline (string_of_int goal)) (head_goals status#stack);
-            prerr_endline "Shift goals:";
-            List.map (fun goal -> prerr_endline (string_of_int goal)) (shift_goals status#stack);
-            prerr_endline "Open goals:";
-            List.map (fun goal -> prerr_endline (string_of_int goal)) (open_goals status#stack);
-            if tag2 == `BranchTag && g2 <> [] then 
-              goal,true,false,false
-            else if tag2 == `BranchTag then
-              goal,false,true,true
-            else
-              goal,false,true,false
-          )
-        else
-          (
-           if tag2 == `BranchTag then
-              goal,false,true,true
-            else
-              goal,false,true,false
-          )
-      else
-        goal,false,false,false (* It's a strange situation, there's is an underlying level on the
-                                  stack but the current one was not created by a branch? Should be
-                                  an error *)
-    | (g, _, _, tag) :: [] ->
-      let (loc::tl) = filter_open g in 
-      let goal = goal_of_loc (loc) in
-      if tag == `BranchTag then
-(*         let goals = filter_open g in *)
-          goal,false,true,false
-      else
-        goal,false,false,false 
-  in
-   *)
   let l = [mk_just status goal just] in
   let l =
     if mustdot then List.append l [dot_tac] else l
   in
-  (*
-  let l =
-    if mustmerge then List.append l [merge_tac] else l
-  in
-  let l =
-    if mustmergetwice then List.append l [merge_tac]  else l
-  in 
-     *)
     block_tac l status
-(*
-  let (_,_,metasenv,subst,_) = status#obj in
-  let goal,last =
-    match metasenv with
-    | [] -> fail (lazy "There's nothing to prove")
-    | (_,_) :: (hd,_) :: tl -> hd,false
-    | (hd,_) :: tl -> hd,true
-  in
-  if last then
-    mk_just status goal just status
-  else
-    block_tac [ mk_just status goal just; shift_tac ] status
-*)
 ;;
 
 let we_need_to_prove t id t1 status =
@@ -315,7 +228,7 @@ let by_just_we_proved just ty id ty' status =
     )
 ;;
 
-let existselim just id1 t1 t2 id2 (*status*) =
+let existselim just id1 t1 t2 id2 =
   distribute_tac (fun status goal ->
     let (_,_,t1) = t1 in
     let (_,_,t2) = t2 in
@@ -333,8 +246,7 @@ let existselim just id1 t1 t2 id2 (*status*) =
   )
 ;;
 
-let andelim just t1 id1 t2 id2 (*status*) =
-(*   let goal = extract_first_goal_from_status status in *)
+let andelim just t1 id1 t2 id2  =
   distribute_tac (fun status goal ->
     let (_,_,t1) = t1 in
     let (_,_,t2) = t2 in
@@ -379,7 +291,7 @@ let obtain id t1 status =
     let _,ty = term_of_cic_term status cicty ctx in
     let (_,_,t1) = t1 in
     block_tac [ cut_tac ("",0,(Ast.Appl [Ast.Ident ("eq",None); Ast.NCic ty; t1; Ast.Implicit
-                                           `JustOne])); 
+                                           `JustOne]));
                 swap_first_two_goals_tac;
                 branch_tac; shift_tac; shift_tac; intro_tac id; merge_tac; dot_tac;
               ]
@@ -449,102 +361,107 @@ let rewritingstep rhs just last_step status =
   prepare continuation
 ;;
 
-(*
-  let goal = extract_first_goal_from_status status in
-  let cicgty = get_goalty status goal in
-  let ctx = ctx_of cicgty in
-  let _,gty = term_of_cic_term status cicgty ctx in
-  let cicty = type_of_tactic_term status ctx rhs in
-  let _,ty = term_of_cic_term status cicty ctx in
-  let just' = (* Extraction of the ""justification"" from the ad hoc justification *)
-    match just with
-      `Auto (univ, params) ->
-      let params =
-        if not (List.mem_assoc "timeout" params) then
-          ("timeout","3")::params
-        else params
-      in
-      let params' =
-        if not (List.mem_assoc "paramodulation" params) then
-          ("paramodulation","1")::params
-        else params
-      in
-      if params = params' then NnAuto.auto_lowtac ~params:(univ, params) status goal
-      else
-        first_tac [NnAuto.auto_lowtac ~params:(univ, params) status goal; NnAuto.auto_lowtac
-                     ~params:(univ, params') status goal]
-    | `Term just -> apply_tac just
-    | `SolveWith term -> NnAuto.demod_tac ~params:(Some [term], ["all","1";"steps","1"; "use_ctx","false"])
-    | `Proof -> id_tac
-  in
-  let plhs,prhs,prepare =
-    match lhs with
-      None -> (* = E2 *)
-      let plhs,prhs =
-        match gty with (* Extracting the lhs and rhs of the previous equality *)
-          NCic.Appl [_;_;plhs;prhs] -> plhs,prhs
-        | _ -> fail (lazy "You are not building an equaility chain")
-      in
-      plhs,prhs,
-      (fun continuation -> continuation status)
-    | Some (None,lhs) -> (* conclude *) 
-      let plhs,prhs =
-        match gty with
-          NCic.Appl [_;_;plhs;prhs] -> plhs,prhs
-        | _ -> fail (lazy "You are not building an equaility chain")
-      in
-      (*TODO*)
-      (*CSC: manca check plhs convertibile con lhs *)
-      plhs,prhs,
-      (fun continuation -> continuation status)
-    | Some (Some name,lhs) -> (* obtain *)
-      NCic.Rel 1, NCic.Rel 1, (* continuation for this case is gonna be ignored, so it doesn't
-                                 matter what the values of these two are *)
-      (fun continuation ->
-         let (_,_,lhs) = lhs in
-        block_tac [ cut_tac ("",0,(Ast.Appl [Ast.Ident ("eq",None); Ast.NCic ty; lhs; Ast.Implicit
-                                              `JustOne])); 
-                   swap_first_two_goals_tac;
-                   branch_tac; shift_tac; shift_tac; intro_tac name; merge_tac; dot_tac;
-(*
-                   change_tac ~where:("",0,(None,[],Some Ast.Appl[Ast.Implicit `JustOne;Ast.Implicit
-                                                                 `JustOne; Ast.UserInput; Ast.Implicit `JustOne]))
-                                         ~with_what:rhs
-*)
-                 ]
-          status
-      )
-  in
-  let continuation =
-    if last_step then
-      (*CSC:manca controllo sul fatto che rhs sia convertibile con prhs*)
-      let todo = [just'] in
-      let todo = if mustdot status then List.append todo [dot_tac] else todo
-      in
-        block_tac todo
-    else
-      let (_,_,rhs) = rhs in
-      block_tac [apply_tac ("",0,Ast.Appl [Ast.Ident ("trans_eq",None); Ast.NCic ty; Ast.NCic plhs;
-                                           rhs; Ast.NCic prhs]); branch_tac; just'; merge_tac]
-  in
-    prepare continuation
+let rec pp_metasenv_names (metasenv:NCic.metasenv) =
+  match metasenv with
+    [] -> ""
+  | hd :: tl ->
+    let n,conj = hd in
+    let meta_attrs,_,_ = conj in
+    let rec find_name_aux meta_attrs = match meta_attrs with
+        [] -> "Anonymous"
+      | hd :: tl -> match hd with
+          `Name n -> n
+          | _ -> find_name_aux tl
+    in
+    let name = find_name_aux meta_attrs
+    in
+    "[Goal: " ^ (string_of_int n) ^ ", Name: " ^ name ^ "]; " ^ (pp_metasenv_names tl)
 ;;
-   *)
 
-let we_proceed_by_cases_on t1 t2 status = 
-  let goal = extract_first_goal_from_status status in
-  try
-    assert_tac t2 None status goal (block_tac [cases_tac ~what:t1 ~where:("",0,(None,[],Some
-                                                                               Ast.UserInput));
-                                             dot_tac] status)
-  with
-  | FirstTypeWrong -> fail (lazy "What you want to prove is different from the conclusion")
+let print_goals_names_tac s (status:#NTacStatus.tac_status) =
+  let (_,_,metasenv,_,_) = status#obj in
+  prerr_endline (s ^" -> Metasenv: " ^ (pp_metasenv_names metasenv)); status
+
+let add_names_to_goals_tac (cl:NCic.constructor list ref) (status:#NTacStatus.tac_status) =
+  let (olduri,oldint,metasenv,oldsubst,oldkind) = status#obj in
+  let rec remove_name_from_metaattrs mattrs =
+    match mattrs with
+      [] -> []
+    | hd :: tl ->
+      match hd with
+        `Name n -> remove_name_from_metaattrs tl
+      | _ as it -> it :: (remove_name_from_metaattrs tl)
+  in
+  let rec add_names_to_metasenv cl metasenv =
+    match cl with
+      [] -> metasenv
+    | hd :: tl ->
+      let _,consname,_ = hd
+      in match metasenv with
+        [] -> []
+      | mhd :: mtl ->
+        let gnum,conj = mhd in
+        let mattrs,ctx,t = conj in
+        let mattrs = [`Name consname] @ (remove_name_from_metaattrs mattrs)
+        in
+        let newconj = mattrs,ctx,t in
+        let newmeta = gnum,newconj in
+        newmeta :: (add_names_to_metasenv tl mtl)
+  in
+    let newmetasenv = add_names_to_metasenv !cl metasenv in
+    status#set_obj (olduri,oldint,newmetasenv,oldsubst,oldkind)
 
 let we_proceed_by_induction_on t1 t2 status =
   let goal = extract_first_goal_from_status status in
+  let txt,len,t1 = t1 in
+  let t1 = txt, len, Ast.Appl [t1; Ast.Implicit `Vector] in
+  let indtyinfo = ref None in
+  let sort = ref (NCic.Rel 1) in
+  let cl = ref [] in
   try
-    assert_tac t2 None status goal (block_tac [elim_tac ~what:t1 ~where:("",0,(None,[],Some
+    assert_tac t2 None status goal (block_tac [
+            analyze_indty_tac ~what:t1 indtyinfo;
+            sort_of_goal_tac sort;
+            (fun status ->
+             let ity = HExtlib.unopt !indtyinfo in
+             let NReference.Ref (uri, _) = ref_of_indtyinfo ity in
+             let name =
+               NUri.name_of_uri uri ^ "_" ^
+                snd (NCicElim.ast_of_sort
+                  (match !sort with NCic.Sort x -> x | _ -> assert false))
+             in
+             let eliminator =
+               let l = [Ast.Ident (name,None); Ast.Implicit `JustOne] in
+               (* Generating as many implicits as open goals *)
+               let l = l @ HExtlib.mk_list (Ast.Implicit `JustOne) ity.consno in
+               let _,_,t1 = t1 in
+               let l = l @ [t1] in
+               Ast.Appl l
+             in
+             cl := ity.cl;
+             exact_tac ("",0,eliminator) status);
+             add_names_to_goals_tac cl; dot_tac] status)
+  with
+  | FirstTypeWrong -> fail (lazy "What you want to prove is different from the conclusion")
+;;
+
+let we_proceed_by_cases_on ((txt,len,ast1) as t1)  t2 status =
+  let goal = extract_first_goal_from_status status in
+  let npt1 = txt, len, Ast.Appl [ast1; Ast.Implicit `Vector] in
+  let indtyinfo = ref None in
+  let cl = ref [] in
+  try
+    assert_tac t2 None status goal (block_tac [
+                                               analyze_indty_tac ~what:npt1 indtyinfo;
+                                               cases_tac ~what:t1 ~where:("",0,(None,[],Some
                                                                                Ast.UserInput));
+                                               print_goals_names_tac "Pre Adding";
+                                               (
+                                                 fun status ->
+                                                  let ity = HExtlib.unopt !indtyinfo in
+                                                  cl := ity.cl; add_names_to_goals_tac cl status
+                                                );
+                                               print_goals_names_tac "Post Adding";
                                              dot_tac] status)
   with
   | FirstTypeWrong -> fail (lazy "What you want to prove is different from the conclusion")
@@ -552,18 +469,64 @@ let we_proceed_by_induction_on t1 t2 status =
 
 let byinduction t1 id = suppose t1 id None ;;
 
-let case id l = 
-  distribute_tac (fun status goal ->
+let name_of_conj conj =
+  let mattrs,_,_ = conj in
+  let rec search_name mattrs =
+    match mattrs with
+      [] -> "Anonymous"
+    | hd::tl ->
+      match hd with
+      `Name n -> n
+      | _ -> search_name tl
+  in
+  search_name mattrs
+
+let rec loc_of_goal goal l =
+  match l with
+    [] -> fail (lazy "Reached the end")
+  | hd :: tl ->
+    let _,sw = hd in
+    let g = goal_of_switch sw in
+    if g = goal then hd
+    else loc_of_goal goal tl
+;;
+
+let focus_on_case_tac case status =
+  let goal = extract_first_goal_from_status status in
+  let (_,_,metasenv,_,_) = status#obj in
+  let rec goal_of_case case metasenv =
+    match metasenv with
+      [] -> fail (lazy "The given case does not exist")
+    | (goal,conj) :: tl ->
+      if name_of_conj conj = case then goal
+      else goal_of_case case tl
+  in
+  let goal_to_focus = goal_of_case case metasenv in
+  let gstatus =
+    match status#stack with
+      [] -> fail (lazy "There is nothing to prove")
+    | (g,t,k,tag) :: s ->
+      let loc = loc_of_goal goal_to_focus k in
+      let curloc = loc_of_goal goal g in
+      (((g @- [curloc]) @+ [loc]),t,([curloc] @+ (k @- [loc])),tag) :: s
+  in status#set_stack gstatus
+
+let case id l status =
+  let goal = extract_first_goal_from_status status in
+  let (_,_,metasenv,_,_) = status#obj in
+  let conj = NCicUtils.lookup_meta goal metasenv in
+  let name = name_of_conj conj in
+  let continuation =
     let rec aux l =
-      match l with 
+      match l with
         [] -> [id_tac]
       | (id,ty)::tl ->
         (try_tac (assume id ("",0,ty) None)) :: (aux tl)
     in
-(*     if l == [] then exec (try_tac (intro_tac "H")) status goal *)
-(*         else  *)
-    exec (block_tac (aux l)) status goal
-    )
+    aux l
+  in
+  if name = id then block_tac continuation status
+  else block_tac ([focus_on_case_tac id] @ continuation) status
 ;;
 
 let print_stack status = prerr_endline ("PRINT STACK: " ^ (pp status#stack)); id_tac status ;;

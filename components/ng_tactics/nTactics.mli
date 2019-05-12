@@ -76,7 +76,14 @@ val atomic_tac : NTacStatus.tac_status NTacStatus.tactic -> 's NTacStatus.tactic
  (*(NTacStatus.tac_status -> 'c #NTacStatus.status) ->
     (#NTacStatus.tac_status as 'f) -> 'f*)
 
-type indtyinfo 
+(* type indtyinfo  *)
+type indtyinfo = {
+        rightno: int;
+        leftno: int;
+        consno: int;
+        reference: NReference.reference;
+        cl: NCic.constructor list;
+ }
 
 val ref_of_indtyinfo : indtyinfo -> NReference.reference
 
@@ -93,3 +100,4 @@ val inversion_tac:
 
 val exact_tac: NTacStatus.tactic_term -> 's NTacStatus.tactic
 val first_tac: 's NTacStatus.tactic list -> 's NTacStatus.tactic
+val sort_of_goal_tac: NCic.term ref -> 's NTacStatus.tactic

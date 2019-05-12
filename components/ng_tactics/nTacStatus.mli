@@ -75,7 +75,7 @@ val disambiguate:
 
 val analyse_indty: 
  #pstatus as 'status -> cic_term -> 
-  'status * (NReference.reference * int * NCic.term list * NCic.term list)
+  'status * (NReference.reference * int * NCic.term list * NCic.term list * NCic.constructor list)
 
 val ppterm: #pstatus -> cic_term -> string
 val ppcontext: #pstatus -> NCic.context -> string
