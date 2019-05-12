@@ -102,22 +102,22 @@ let lambda_abstract_tac id t1 t2 status goal =
 
 let assume name ty eqty =
   distribute_tac (fun status goal ->
-    try exec (lambda_abstract_tac name ty eqty status goal) status goal
-    with
-    | NotAProduct -> fail (lazy "You can't assume without an universal quantification")
-    | FirstTypeWrong ->  fail (lazy "The assumed type is wrong")
-    | NotEquivalentTypes -> fail (lazy "The two given types are not equivalent")
-  )
+      try exec (lambda_abstract_tac name ty eqty status goal) status goal
+      with
+      | NotAProduct -> fail (lazy "You can't assume without an universal quantification")
+      | FirstTypeWrong ->  fail (lazy "The assumed type is wrong")
+      | NotEquivalentTypes -> fail (lazy "The two given types are not equivalent")
+    )
 ;;
 
 let suppose t1 id t2 =
   distribute_tac (fun status goal ->
-    try exec (lambda_abstract_tac id t1 t2 status goal) status goal
-    with
-    | NotAProduct -> fail (lazy "You can't suppose without a logical implication")
-    | FirstTypeWrong ->  fail (lazy "The supposed proposition is different from the premise")
-    | NotEquivalentTypes -> fail (lazy "The two given propositions are not equivalent")
-  )
+      try exec (lambda_abstract_tac id t1 t2 status goal) status goal
+      with
+      | NotAProduct -> fail (lazy "You can't suppose without a logical implication")
+      | FirstTypeWrong ->  fail (lazy "The supposed proposition is different from the premise")
+      | NotEquivalentTypes -> fail (lazy "The two given propositions are not equivalent")
+    )
 ;;
 
 let assert_tac t1 t2 status goal continuation =
@@ -150,7 +150,7 @@ let bydone just status =
   let l =
     if mustdot then List.append l [dot_tac] else l
   in
-    block_tac l status
+  block_tac l status
 ;;
 
 let we_need_to_prove t id t1 status =
@@ -210,9 +210,9 @@ let by_just_we_proved just ty id ty' status =
        (
          try
            assert_tac ty' None status goal (block_tac [change_tac ~where:("",0,(None,[],Some
-                                                                                       Ast.UserInput))
-                                                              ~with_what:ty; bydone wrappedjust]
-                                                   status )
+                                                                                  Ast.UserInput))
+                                                         ~with_what:ty; bydone wrappedjust]
+                                              status )
          with
          | FirstTypeWrong -> fail (lazy "The second proposition is not the same as the conclusion")
          | NotEquivalentTypes -> fail (lazy "The given propositions are not equivalent")
@@ -230,37 +230,37 @@ let by_just_we_proved just ty id ty' status =
 
 let existselim just id1 t1 t2 id2 =
   distribute_tac (fun status goal ->
-    let (_,_,t1) = t1 in
-    let (_,_,t2) = t2 in
-    let just = mk_just status goal just in
-    exec (block_tac [
-      cut_tac ("",0,(Ast.Appl [Ast.Ident ("ex",None); t1; Ast.Binder (`Lambda,(Ast.Ident
-                                                                                 (id1,None), Some t1),t2)]));
-      branch_tac ~force:false;
-      just;
-      shift_tac;
-      case1_tac "_";
-      intros_tac ~names_ref:(ref []) [id1;id2];
-      merge_tac
-    ]) status goal
-  )
+      let (_,_,t1) = t1 in
+      let (_,_,t2) = t2 in
+      let just = mk_just status goal just in
+      exec (block_tac [
+          cut_tac ("",0,(Ast.Appl [Ast.Ident ("ex",None); t1; Ast.Binder (`Lambda,(Ast.Ident
+                                                                                     (id1,None), Some t1),t2)]));
+          branch_tac ~force:false;
+          just;
+          shift_tac;
+          case1_tac "_";
+          intros_tac ~names_ref:(ref []) [id1;id2];
+          merge_tac
+        ]) status goal
+    )
 ;;
 
 let andelim just t1 id1 t2 id2  =
   distribute_tac (fun status goal ->
-    let (_,_,t1) = t1 in
-    let (_,_,t2) = t2 in
-    let just = mk_just status goal just in
-    exec (block_tac [
-      cut_tac ("",0,(Ast.Appl [Ast.Ident ("And",None); t1 ; t2]));
-      branch_tac ~force:false;
-      just;
-      shift_tac;
-      case1_tac "_";
-      intros_tac ~names_ref:(ref []) [id1;id2];
-      merge_tac
-    ]) status goal
-  )
+      let (_,_,t1) = t1 in
+      let (_,_,t2) = t2 in
+      let just = mk_just status goal just in
+      exec (block_tac [
+          cut_tac ("",0,(Ast.Appl [Ast.Ident ("And",None); t1 ; t2]));
+          branch_tac ~force:false;
+          just;
+          shift_tac;
+          case1_tac "_";
+          intros_tac ~names_ref:(ref []) [id1;id2];
+          merge_tac
+        ]) status goal
+    )
 ;;
 
 let type_of_tactic_term status ctx t =
@@ -284,32 +284,32 @@ let thesisbecomes t1 t2 = we_need_to_prove t1 None t2
 ;;
 
 let obtain id t1 status =
-    let goal = extract_first_goal_from_status status in
-    let cicgty = get_goalty status goal in
-    let ctx = ctx_of cicgty in
-    let cicty = type_of_tactic_term status ctx t1 in
-    let _,ty = term_of_cic_term status cicty ctx in
-    let (_,_,t1) = t1 in
-    block_tac [ cut_tac ("",0,(Ast.Appl [Ast.Ident ("eq",None); Ast.NCic ty; t1; Ast.Implicit
-                                           `JustOne]));
-                swap_first_two_goals_tac;
-                branch_tac; shift_tac; shift_tac; intro_tac id; merge_tac; dot_tac;
-              ]
-          status
+  let goal = extract_first_goal_from_status status in
+  let cicgty = get_goalty status goal in
+  let ctx = ctx_of cicgty in
+  let cicty = type_of_tactic_term status ctx t1 in
+  let _,ty = term_of_cic_term status cicty ctx in
+  let (_,_,t1) = t1 in
+  block_tac [ cut_tac ("",0,(Ast.Appl [Ast.Ident ("eq",None); Ast.NCic ty; t1; Ast.Implicit
+                                         `JustOne]));
+              swap_first_two_goals_tac;
+              branch_tac; shift_tac; shift_tac; intro_tac id; merge_tac; dot_tac;
+            ]
+    status
 ;;
 
 let conclude t1 =
   distribute_tac (fun status goal ->
-    let cicgty = get_goalty status goal in
-    let ctx = ctx_of cicgty in
-    let _,gty = term_of_cic_term status cicgty ctx in
-    match gty with
-      NCic.Appl [_;_;plhs;_] ->
-      if alpha_eq_tacterm_kerterm t1 plhs status goal then
-        exec id_tac status goal
-      else
-        fail (lazy "The given conclusion is different from the left-hand side of the current conclusion")
-    | _ -> fail (lazy "Your conclusion needs to be an equality")
+      let cicgty = get_goalty status goal in
+      let ctx = ctx_of cicgty in
+      let _,gty = term_of_cic_term status cicgty ctx in
+      match gty with
+        NCic.Appl [_;_;plhs;_] ->
+        if alpha_eq_tacterm_kerterm t1 plhs status goal then
+          exec id_tac status goal
+        else
+          fail (lazy "The given conclusion is different from the left-hand side of the current conclusion")
+      | _ -> fail (lazy "Your conclusion needs to be an equality")
     )
 ;;
 
@@ -371,7 +371,7 @@ let rec pp_metasenv_names (metasenv:NCic.metasenv) =
         [] -> "Anonymous"
       | hd :: tl -> match hd with
           `Name n -> n
-          | _ -> find_name_aux tl
+        | _ -> find_name_aux tl
     in
     let name = find_name_aux meta_attrs
     in
@@ -408,8 +408,8 @@ let add_names_to_goals_tac (cl:NCic.constructor list ref) (status:#NTacStatus.ta
         let newmeta = gnum,newconj in
         newmeta :: (add_names_to_metasenv tl mtl)
   in
-    let newmetasenv = add_names_to_metasenv !cl metasenv in
-    status#set_obj (olduri,oldint,newmetasenv,oldsubst,oldkind)
+  let newmetasenv = add_names_to_metasenv !cl metasenv in
+  status#set_obj (olduri,oldint,newmetasenv,oldsubst,oldkind)
 
 let we_proceed_by_induction_on t1 t2 status =
   let goal = extract_first_goal_from_status status in
@@ -420,27 +420,27 @@ let we_proceed_by_induction_on t1 t2 status =
   let cl = ref [] in
   try
     assert_tac t2 None status goal (block_tac [
-            analyze_indty_tac ~what:t1 indtyinfo;
-            sort_of_goal_tac sort;
-            (fun status ->
-             let ity = HExtlib.unopt !indtyinfo in
-             let NReference.Ref (uri, _) = ref_of_indtyinfo ity in
-             let name =
-               NUri.name_of_uri uri ^ "_" ^
-                snd (NCicElim.ast_of_sort
-                  (match !sort with NCic.Sort x -> x | _ -> assert false))
-             in
-             let eliminator =
-               let l = [Ast.Ident (name,None); Ast.Implicit `JustOne] in
-               (* Generating as many implicits as open goals *)
-               let l = l @ HExtlib.mk_list (Ast.Implicit `JustOne) ity.consno in
-               let _,_,t1 = t1 in
-               let l = l @ [t1] in
-               Ast.Appl l
-             in
-             cl := ity.cl;
-             exact_tac ("",0,eliminator) status);
-             add_names_to_goals_tac cl; dot_tac] status)
+        analyze_indty_tac ~what:t1 indtyinfo;
+        sort_of_goal_tac sort;
+        (fun status ->
+           let ity = HExtlib.unopt !indtyinfo in
+           let NReference.Ref (uri, _) = ref_of_indtyinfo ity in
+           let name =
+             NUri.name_of_uri uri ^ "_" ^
+             snd (NCicElim.ast_of_sort
+                    (match !sort with NCic.Sort x -> x | _ -> assert false))
+           in
+           let eliminator =
+             let l = [Ast.Ident (name,None); Ast.Implicit `JustOne] in
+             (* Generating as many implicits as open goals *)
+             let l = l @ HExtlib.mk_list (Ast.Implicit `JustOne) ity.consno in
+             let _,_,t1 = t1 in
+             let l = l @ [t1] in
+             Ast.Appl l
+           in
+           cl := ity.cl;
+           exact_tac ("",0,eliminator) status);
+        add_names_to_goals_tac cl; dot_tac] status)
   with
   | FirstTypeWrong -> fail (lazy "What you want to prove is different from the conclusion")
 ;;
@@ -452,17 +452,17 @@ let we_proceed_by_cases_on ((txt,len,ast1) as t1)  t2 status =
   let cl = ref [] in
   try
     assert_tac t2 None status goal (block_tac [
-                                               analyze_indty_tac ~what:npt1 indtyinfo;
-                                               cases_tac ~what:t1 ~where:("",0,(None,[],Some
-                                                                               Ast.UserInput));
-                                               print_goals_names_tac "Pre Adding";
-                                               (
-                                                 fun status ->
-                                                  let ity = HExtlib.unopt !indtyinfo in
-                                                  cl := ity.cl; add_names_to_goals_tac cl status
-                                                );
-                                               print_goals_names_tac "Post Adding";
-                                             dot_tac] status)
+        analyze_indty_tac ~what:npt1 indtyinfo;
+        cases_tac ~what:t1 ~where:("",0,(None,[],Some
+                                           Ast.UserInput));
+        print_goals_names_tac "Pre Adding";
+        (
+          fun status ->
+            let ity = HExtlib.unopt !indtyinfo in
+            cl := ity.cl; add_names_to_goals_tac cl status
+        );
+        print_goals_names_tac "Post Adding";
+        dot_tac] status)
   with
   | FirstTypeWrong -> fail (lazy "What you want to prove is different from the conclusion")
 ;;
@@ -476,7 +476,7 @@ let name_of_conj conj =
       [] -> "Anonymous"
     | hd::tl ->
       match hd with
-      `Name n -> n
+        `Name n -> n
       | _ -> search_name tl
   in
   search_name mattrs
