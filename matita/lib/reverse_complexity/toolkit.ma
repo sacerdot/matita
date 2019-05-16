@@ -4,6 +4,7 @@ include "arithmetics/bigops.ma".
 include "arithmetics/sigma_pi.ma".
 include "arithmetics/bounded_quantifiers.ma".
 include "reverse_complexity/big_O.ma".
+include "basics/core_notation/napart_2.ma".
 
 (************************* notation for minimization *****************************)
 notation "μ_{ ident i < n } p" 
