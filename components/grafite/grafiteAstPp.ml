@@ -127,17 +127,20 @@ let rec pp_ntactic status ~map_unicode_to_tex =
   | By_just_we_proved (_, just, term1, ident, term2) -> pp_just status just  ^ "we proved" ^
   NotationPp.pp_term status term1 ^ (match ident with None -> "" | Some ident -> "(" ^ident^ ")") ^ (match
   term2 with  None -> " " | Some term2 -> " that is equivalent to " ^ NotationPp.pp_term status term2)
-  | We_need_to_prove (_,term,ident,term1) -> "we need to prove" ^ NotationPp.pp_term status term ^
-  (match ident with None -> " " | Some id -> "(" ^ id ^ ")") ^ (match term1 with None -> " " | Some t1
-  -> "or equivalently" ^ NotationPp.pp_term status t1)
+  | We_need_to_prove (_,term,ident,t) -> "we need to prove" ^ NotationPp.pp_term status term ^
+  (match ident with None -> " " | Some id -> "(" ^ id ^ ")") ^ (match t with None -> "" | Some t ->
+      " or equivalently " ^ (NotationPp.pp_term status t))
+  | BetaRewritingStep (_,t) -> "or equivalently " ^ (NotationPp.pp_term status t)
   | Bydone (_, just) -> pp_just status just ^ "done"
   | ExistsElim (_, just, ident, term, term1, ident1) -> pp_just status just ^ "let " ^ ident ^ ":"
   ^ NotationPp.pp_term status term ^ "such that " ^ NotationPp.pp_term status term1 ^ "(" ^ ident1 ^ ")"
   | AndElim (_, just, term1, ident1, term2, ident2) -> pp_just status just ^ "we have " ^
   NotationPp.pp_term status term1 ^ " (" ^ ident1 ^ ") " ^ "and " ^ NotationPp.pp_term status term2
   ^ " (" ^ ident2 ^ ")" 
-  | Thesisbecomes (_, term1, term2) -> "the thesis becomes " ^ NotationPp.pp_term status term1 ^ (match
-  term2 with None -> " " | Some term2 -> NotationPp.pp_term status term2)
+  | Thesisbecomes (_, t, t1) -> "the thesis becomes " ^ NotationPp.pp_term status t ^
+                                   (match t1 with None -> "" | Some t1 -> " or equivalently " ^
+                                                                          NotationPp.pp_term status
+                                                                            t1)
   | RewritingStep (_, rhs, just, cont) -> 
       "=" ^
       NotationPp.pp_term status rhs ^ 
@@ -147,22 +150,6 @@ let rec pp_ntactic status ~map_unicode_to_tex =
       | `Proof -> " proof"
       | `SolveWith t -> " using " ^ NotationPp.pp_term status t)
       ^ (if cont then " done" else "")
-(*
-  | RewritingStep (_, term, term1, term2, cont) -> 
-      (match term with 
-      | None -> " " 
-      | Some (None,term) -> "conclude " ^ NotationPp.pp_term status term 
-      | Some (Some name,term) -> 
-          "obtain (" ^ name ^ ") " ^ NotationPp.pp_term status term) 
-      ^ "=" ^
-      NotationPp.pp_term status term1 ^ 
-      (match term2 with 
-      | `Auto params -> pp_auto_params params status
-      | `Term term2 -> " exact " ^ NotationPp.pp_term status term2 
-      | `Proof -> " proof"
-      | `SolveWith term -> " using " ^ NotationPp.pp_term status term)
-      ^ (if cont then " done" else "")
-*)
   | Obtain (_,id,t1) -> "obtain (" ^ id ^ ")" ^ NotationPp.pp_term status t1
   | Conclude (_,t1) -> "conclude " ^ NotationPp.pp_term status t1
   | We_proceed_by_cases_on (_, term, term1) -> "we proceed by cases on" ^ NotationPp.pp_term status term ^ "to prove" ^ NotationPp.pp_term status  term1

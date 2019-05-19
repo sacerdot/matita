@@ -267,10 +267,13 @@ EXTEND
          | BYC_wehaveand (id1,t1,id2,t2) ->
             G.AndElim (loc, just, t1, id1, t2, id2))
         ])
-    | IDENT "we" ; IDENT "need" ; "to" ; IDENT "prove" ; t = tactic_term ; id = OPT [ LPAREN ; id = IDENT ; RPAREN -> id ] ; t1 = OPT [IDENT "or" ; IDENT "equivalently"; t' = tactic_term -> t']->
+    | IDENT "we" ; IDENT "need" ; "to" ; IDENT "prove" ; t = tactic_term ; id = OPT [ LPAREN ; id =
+IDENT ; RPAREN -> id ] ; t1 = OPT [IDENT "or" ; IDENT "equivalently"; t' = tactic_term ->
+t']->
         G.NTactic (loc,[G.We_need_to_prove (loc, t, id, t1)])
+    | IDENT "or"; IDENT "equivalently"; t = tactic_term -> G.NTactic(loc,[G.BetaRewritingStep (loc,t)])
     | IDENT "the" ; IDENT "thesis" ; IDENT "becomes" ; t1=tactic_term ; t2 = OPT [IDENT "or"; IDENT
-    "equivalently"; t2 = tactic_term -> t2] ->
+"equivalently"; t2 = tactic_term -> t2] ->
         G.NTactic (loc,[G.Thesisbecomes(loc,t1,t2)])
     | IDENT "we" ; IDENT "proceed" ; IDENT "by" ; IDENT "cases" ; "on" ; t=tactic_term ; "to" ; IDENT "prove" ; t1=tactic_term ->  
         G.NTactic (loc,[G.We_proceed_by_cases_on (loc, t, t1)])

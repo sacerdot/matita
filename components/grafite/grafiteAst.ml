@@ -85,6 +85,7 @@ type ntactic =
    justification, conclusion, identifier, eqconcl *)
    | We_need_to_prove of loc * nterm * string option * nterm option (* loc, newconclusion,
    identifier, equivnewcon *)
+   | BetaRewritingStep of loc * nterm
    | Bydone of loc * just
    | ExistsElim of loc * just * string * nterm * nterm * string
    | AndElim of loc * just * nterm * string * nterm * string

@@ -1005,7 +1005,7 @@ let rec stack_goals level gs =
   if level = 0 then []
   else match gs with 
     | [] -> assert false
-    | (g,_,_,_)::s -> 
+    | (g,_,_,_,_)::s -> 
         let is_open = function
           | (_,Continuationals.Stack.Open i) -> Some i
           | (_,Continuationals.Stack.Closed _) -> None
@@ -1092,6 +1092,15 @@ let get_cands retrieve_for diff empty gty weak_gty =
             cands, diff more_cands cands
 ;;
 
+let is_a_needed_uri s d = 
+  prerr_endline ("DEBUG: " ^ d ^ ": "^ s);
+  s = "cic:/matita/basics/logic/eq.ind" ||
+  s = "cic:/matita/basics/logic/sym_eq.con" ||
+  s = "cic:/matita/basics/logic/trans_eq.con" ||
+  s = "cic:/matita/basics/logic/eq_f3.con" ||
+  s = "cic:/matita/basics/logic/eq_f2.con" ||
+  s = "cic:/matita/basics/logic/eq_f.con"
+
 let get_candidates ?(smart=true) ~pfailed depth flags status cache signature gty =
   let universe = status#auto_cache in
   let _,_,metasenv,subst,_ = status#obj in
@@ -1124,26 +1133,31 @@ let get_candidates ?(smart=true) ~pfailed depth flags status cache signature gty
   in
   (* we now compute global candidates *)
   let global_cands, smart_global_cands =
-   if flags.local_candidates then
-    let mapf s = 
-      let to_ast = function 
-        | NCic.Const r when true 
-             (*is_relevant statistics r*) -> Some (Ast.NRef r)
-     (* | NCic.Const _ -> None  *)
-        | _ -> assert false in
-          HExtlib.filter_map 
-            to_ast (NDiscriminationTree.TermSet.elements s) in
-      let g,l = 
-        get_cands
-          (NDiscriminationTree.DiscriminationTree.retrieve_unifiables universe)
-          NDiscriminationTree.TermSet.diff 
-          NDiscriminationTree.TermSet.empty
-          raw_gty raw_weak_gty in
-      mapf g, mapf l
-    else [],[] in
+  let mapf s = 
+    let to_ast = function 
+      | NCic.Const r when true 
+           (*is_relevant statistics r*) -> Some (Ast.NRef r)
+   (* | NCic.Const _ -> None  *)
+      | _ -> assert false in
+        HExtlib.filter_map 
+          to_ast (NDiscriminationTree.TermSet.elements s) in
+    let g,l = 
+      get_cands
+        (NDiscriminationTree.DiscriminationTree.retrieve_unifiables universe)
+        NDiscriminationTree.TermSet.diff 
+        NDiscriminationTree.TermSet.empty
+        raw_gty raw_weak_gty in
+    mapf g, mapf l
+  in 
+  let global_cands,smart_global_cands = 
+      if flags.local_candidates then global_cands,smart_global_cands
+      else let filter = List.filter (function Ast.NRef NReference.Ref (uri,_) -> is_a_needed_uri
+                                                                                   (NUri.string_of_uri
+                                                                                      uri) "GLOBAL" | _ -> false) 
+        in filter global_cands,filter smart_global_cands
+  in
   (* we now compute local candidates *)
   let local_cands,smart_local_cands = 
-   if flags.local_candidates then
     let mapf s = 
       let to_ast t =
         let _status, t = term_of_cic_term status t context 
@@ -1154,7 +1168,14 @@ let get_candidates ?(smart=true) ~pfailed depth flags status cache signature gty
         (fun ty -> search_in_th ty cache)
         Ncic_termSet.diff  Ncic_termSet.empty gty weak_gty in
       mapf g, mapf l
-   else [],[] in
+  in
+  let local_cands,smart_local_cands = 
+   if flags.local_candidates then local_cands,smart_local_cands
+   else let filter = List.filter (function Ast.NRef NReference.Ref (uri,_) -> is_a_needed_uri
+                                                                                (NUri.string_of_uri
+                                                                                   uri) "LOCAL" | _ -> false) 
+     in filter local_cands,filter smart_local_cands
+  in
   (* we now splits candidates in facts or not facts *)
   let test = is_a_fact_ast status subst metasenv context in
   let by,given_candidates =
@@ -1303,7 +1324,7 @@ let is_subsumed depth filter_depth status gty cache =
              NCicMetaSubst.mk_meta  
                metasenv ctx ~with_type:implication `IsType in
            let status = status#set_obj (n,h,metasenv,subst,obj) in
-           let status = status#set_stack [([1,Open j],[],[],`NoTag)] in 
+           let status = status#set_stack [([1,Open j],[],[],`NoTag,[])] in 
            try
              let status = NTactics.intro_tac "foo" status in
              let status =
@@ -1481,7 +1502,7 @@ let sort_tac status =
   let gstatus = 
     match status#stack with
     | [] -> assert false
-    | (goals, t, k, tag) :: s ->
+    | (goals, t, k, tag, p) :: s ->
         let g = head_goals status#stack in
         let sortedg = 
           (List.rev (MS.topological_sort g (deps status))) in
@@ -1496,7 +1517,7 @@ let sort_tac status =
           let sorted_goals = 
             List.map (fun i -> List.find (is_it i) goals) sortedg
           in
-            (sorted_goals, t, k, tag) :: s
+            (sorted_goals, t, k, tag, p) :: s
   in
    status#set_stack gstatus
 ;;
@@ -1505,13 +1526,13 @@ let clean_up_tac status =
   let gstatus = 
     match status#stack with
     | [] -> assert false
-    | (g, t, k, tag) :: s ->
+    | (g, t, k, tag, p) :: s ->
         let is_open = function
           | (_,Continuationals.Stack.Open _) -> true
           | (_,Continuationals.Stack.Closed _) -> false
         in
         let g' = List.filter is_open g in
-          (g', t, k, tag) :: s
+          (g', t, k, tag, p) :: s
   in
    status#set_stack gstatus
 ;;
@@ -1542,11 +1563,11 @@ let deep_focus_tac level focus status =
     if level = 0 then [],[],gs else
       match gs with 
         | [] -> assert false
-        | (g, t, k, tag) :: s ->
+        | (g, t, k, tag,p) :: s ->
             let f,o,gs = slice (level-1) s in           
             let f1,o1 = List.partition in_focus g
             in
-            (f1,[],[],`BranchTag)::f, (o1, t, k, tag)::o, gs
+            (f1,[],[],`BranchTag, [])::f, (o1, t, k, tag, p)::o, gs
   in
   let gstatus = 
     let f,o,s = slice level status#stack in f@o@s
@@ -1557,7 +1578,7 @@ let deep_focus_tac level focus status =
 let move_to_side level status =
 match status#stack with
   | [] -> assert false
-  | (g,_,_,_)::tl ->
+  | (g,_,_,_,_)::tl ->
       let is_open = function
           | (_,Continuationals.Stack.Open i) -> Some i
           | (_,Continuationals.Stack.Closed _) -> None
@@ -1880,7 +1901,7 @@ let auto_tac' candidates ~local_candidates ?(use_given_only=false) flags ?(trace
               let _ = debug_print (pptrace status trace) in
               let stack = 
                 match s#stack with
-                  | (g,t,k,f) :: rest -> (filter_open g,t,k,f):: rest
+                  | (g,t,k,f,p) :: rest -> (filter_open g,t,k,f,p):: rest
                   | _ -> assert false
               in
               let s = s#set_stack stack in
@@ -1911,7 +1932,7 @@ let auto_lowtac ~params:(univ,flags as params) status goal =
     let gty = get_goalty status goal in
     let ctx = ctx_of gty in
     let candidates = candidates_from_ctx univ ctx status in 
-    auto_tac' candidates ~local_candidates:true ~use_given_only:false flags ~trace_ref:(ref [])
+    auto_tac' candidates ~local_candidates:false ~use_given_only:true flags ~trace_ref:(ref [])
 
 let auto_tac ~params:(univ,flags) ?(trace_ref=ref []) status =
     let candidates = candidates_from_ctx univ [] status in

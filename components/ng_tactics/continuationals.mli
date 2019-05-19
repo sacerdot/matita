@@ -29,12 +29,15 @@ type goal = int
 
 (** {2 Goal stack} *)
 
+(* Key value pairs *)
+type parameters = (string * string) list
+
 module Stack:
 sig
   type switch = Open of goal | Closed of goal
   type locator = int * switch
   type tag = [ `BranchTag | `FocusTag | `NoTag ]
-  type entry = locator list * locator list * locator list * tag
+  type entry = locator list * locator list * locator list * tag * parameters
   type t = entry list
 
   val empty: t

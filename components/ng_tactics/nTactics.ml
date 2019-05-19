@@ -31,16 +31,16 @@ let dot_tac status =
   let gstatus = 
     match status#stack with
     | [] -> assert false
-    | ([], _, [], _) :: _ as stack ->
+    | ([], _, [], _, _) :: _ as stack ->
         (* backward compatibility: do-nothing-dot *)
         stack
-    | (g, t, k, tag) :: s ->
+    | (g, t, k, tag, p) :: s ->
         match filter_open g, k with
         | loc :: loc_tl, _ -> 
-             (([ loc ], t, loc_tl @+ k, tag) :: s) 
+             (([ loc ], t, loc_tl @+ k, tag, p) :: s) 
         | [], loc :: k ->
             assert (is_open loc);
-            (([ loc ], t, k, tag) :: s)
+            (([ loc ], t, k, tag, p) :: s)
         | _ -> fail (lazy "can't use \".\" here")
   in
    status#set_stack gstatus
@@ -50,12 +50,12 @@ let branch_tac ?(force=false) status =
   let gstatus = 
     match status#stack with
     | [] -> assert false
-    | (g, t, k, tag) :: s ->
+    | (g, t, k, tag, p) :: s ->
           match init_pos g with (* TODO *)
           | [] -> fail (lazy "empty goals")
           | [_] when (not force) -> fail (lazy "too few goals to branch")
           | loc :: loc_tl ->
-               ([ loc ], [], [], `BranchTag) :: (loc_tl, t, k, tag) :: s
+            ([ loc ], [], [], `BranchTag, []) :: (loc_tl, t, k, tag, p) :: s
   in
    status#set_stack gstatus
 ;;
@@ -63,12 +63,12 @@ let branch_tac ?(force=false) status =
 let shift_tac status =
   let gstatus = 
     match status#stack with
-    | (g, t, k, `BranchTag) :: (g', t', k', tag) :: s ->
+    | (g, t, k, `BranchTag, p) :: (g', t', k', tag, p') :: s ->
           (match g' with
           | [] -> fail (lazy "no more goals to shift")
           | loc :: loc_tl ->
-                (([ loc ], t @+ filter_open g @+ k, [],`BranchTag)
-                :: (loc_tl, t', k', tag) :: s))
+                (([ loc ], t @+ filter_open g @+ k, [],`BranchTag, p)
+                :: (loc_tl, t', k', tag, p') :: s))
      | _ -> fail (lazy "can't shift goals here")
   in
    status#set_stack gstatus
@@ -78,11 +78,11 @@ let pos_tac i_s status =
   let gstatus = 
     match status#stack with
     | [] -> assert false
-    | ([ loc ], t, [],`BranchTag) :: (g', t', k', tag) :: s
+    | ([ loc ], t, [],`BranchTag, p) :: (g', t', k', tag, p') :: s
       when is_fresh loc ->
         let l_js = List.filter (fun (i, _) -> List.mem i i_s) ([loc] @+ g') in
-          ((l_js, t , [],`BranchTag)
-           :: (([ loc ] @+ g') @- l_js, t', k', tag) :: s)
+          ((l_js, t , [],`BranchTag, p)
+           :: (([ loc ] @+ g') @- l_js, t', k', tag, p') :: s)
     | _ -> fail (lazy "can't use relative positioning here")
   in
    status#set_stack gstatus
@@ -92,7 +92,7 @@ let case_tac lab status =
   let gstatus = 
     match status#stack with
     | [] -> assert false
-    | ([ loc ], t, [],`BranchTag) :: (g', t', k', tag) :: s
+    | ([ loc ], t, [],`BranchTag, p) :: (g', t', k', tag, p') :: s
       when is_fresh loc ->
         let l_js =
           List.filter 
@@ -101,8 +101,8 @@ let case_tac lab status =
               match NCicUtils.lookup_meta (goal_of_loc curloc) metasenv with
                   attrs,_,_ when List.mem (`Name lab) attrs -> true
                 | _ -> false) ([loc] @+ g') in
-          ((l_js, t , [],`BranchTag)
-           :: (([ loc ] @+ g') @- l_js, t', k', tag) :: s)
+          ((l_js, t , [],`BranchTag, p)
+           :: (([ loc ] @+ g') @- l_js, t', k', tag, p') :: s)
     | _ -> fail (lazy "can't use relative positioning here")
   in
    status#set_stack gstatus
@@ -112,9 +112,9 @@ let wildcard_tac status =
   let gstatus = 
     match status#stack with
     | [] -> assert false
-    | ([ loc ] , t, [], `BranchTag) :: (g', t', k', tag) :: s
+    | ([ loc ] , t, [], `BranchTag, p) :: (g', t', k', tag, p') :: s
        when is_fresh loc ->
-            (([loc] @+ g', t, [], `BranchTag) :: ([], t', k', tag) :: s)
+            (([loc] @+ g', t, [], `BranchTag, p) :: ([], t', k', tag, p') :: s)
     | _ -> fail (lazy "can't use wildcard here")
   in
    status#set_stack gstatus
@@ -124,8 +124,8 @@ let merge_tac status =
   let gstatus = 
     match status#stack with
     | [] -> assert false
-    | (g, t, k,`BranchTag) :: (g', t', k', tag) :: s ->
-        ((t @+ filter_open g @+ g' @+ k, t', k', tag) :: s)
+    | (g, t, k,`BranchTag, _) :: (g', t', k', tag, p) :: s ->
+        ((t @+ filter_open g @+ g' @+ k, t', k', tag, p) :: s)
     | _ -> fail (lazy "can't merge goals here")
   in
    status#set_stack gstatus
@@ -145,7 +145,7 @@ let focus_tac gs status =
               if not (List.exists (fun l -> goal_of_loc l = g) stack_locs) then
                 fail (lazy (sprintf "goal %d not found (or closed)" g)))
             gs;
-          (zero_pos gs, [], [], `FocusTag) :: deep_close gs s
+          (zero_pos gs, [], [], `FocusTag, []) :: deep_close gs s
   in
    status#set_stack gstatus
 ;;
@@ -154,7 +154,7 @@ let unfocus_tac status =
   let gstatus = 
     match status#stack with
     | [] -> assert false
-    | (g, [], [], `FocusTag) :: s when filter_open g = [] -> s
+    | (g, [], [], `FocusTag, _) :: s when filter_open g = [] -> s
     | _ as s -> fail (lazy ("can't unfocus, some goals are still open:\n"^
       Continuationals.Stack.pp s))
   in
@@ -165,12 +165,12 @@ let skip_tac status =
   let gstatus = 
     match status#stack with
     | [] -> assert false
-    | (gl, t, k, tag) :: s -> 
+    | (gl, t, k, tag, p) :: s -> 
         let gl = List.map switch_of_loc gl in
         if List.exists (function Open _ -> true | Closed _ -> false) gl then 
           fail (lazy "cannot skip an open goal")
         else 
-          ([],t,k,tag) :: s
+          ([],t,k,tag,p) :: s
   in
    status#set_stack gstatus
 ;;
@@ -219,7 +219,7 @@ let change_stack_type (status : 'a #NTacStatus.status) (stack: 'b) : 'b NTacStat
 ;;
 
 let exec tac (low_status : #lowtac_status) g =
-  let stack = [ [0,Open g], [], [], `NoTag ] in
+  let stack = [ [0,Open g], [], [], `NoTag, [] ] in
   let status = change_stack_type low_status stack in
   let status = tac status in
    (low_status#set_pstatus status)#set_obj status#obj
@@ -228,7 +228,7 @@ let exec tac (low_status : #lowtac_status) g =
 let distribute_tac tac (status : #tac_status) =
   match status#stack with
   | [] -> assert false
-  | (g, t, k, tag) :: s ->
+  | (g, t, k, tag, p) :: s ->
       debug_print (lazy ("context length " ^string_of_int (List.length g)));
       let rec aux s go gc =
         function
@@ -258,7 +258,7 @@ let distribute_tac tac (status : #tac_status) =
       debug_print (lazy ("closed: "
         ^ String.concat " " (List.map string_of_int gcn)));
       let stack =
-        (zero_pos gon, t @~- gcn, k @~- gcn, tag) :: deep_close gcn s
+        (zero_pos gon, t @~- gcn, k @~- gcn, tag, p) :: deep_close gcn s
       in
        ((status#set_stack stack)#set_obj(sn:>lowtac_status)#obj)#set_pstatus sn
 ;;
@@ -704,7 +704,7 @@ let assert0_tac (hyps,concl) = distribute_tac (fun status goal ->
 let assert_tac seqs status =
  match status#stack with
   | [] -> assert false
-  | (g,_,_,_) :: s ->
+  | (g,_,_,_,_) :: s ->
      assert (List.length g = List.length seqs);
      (match seqs with
          [] -> id_tac

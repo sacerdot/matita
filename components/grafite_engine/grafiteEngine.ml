@@ -499,8 +499,9 @@ let eval_ng_tac tac =
   |GrafiteAst.By_just_we_proved (_,j,t1,s,t2) -> Declarative.by_just_we_proved
   (just_to_tacstatus_just j text prefix_len) (text,prefix_len,t1) s (match t2 with None -> None |
   Some t2 -> (Some (text,prefix_len,t2)))
-  |GrafiteAst.We_need_to_prove (_, t, id, t2) -> Declarative.we_need_to_prove (text,prefix_len,t) id
-  (match t2 with None -> None | Some t2 -> Some (text,prefix_len,t2))
+  |GrafiteAst.We_need_to_prove (_, t, id, t1) -> Declarative.we_need_to_prove (text,prefix_len,t) id
+  (match t1 with None -> None | Some t1 -> Some (text,prefix_len,t1))
+  |GrafiteAst.BetaRewritingStep (_, t) -> Declarative.beta_rewriting_step (text,prefix_len,t)
   | GrafiteAst.Bydone (_, j) -> Declarative.bydone (just_to_tacstatus_just j text prefix_len)
   | GrafiteAst.ExistsElim (_, just, id1, t1, t2, id2) ->
      Declarative.existselim (just_to_tacstatus_just just text prefix_len) id1 (text,prefix_len,t1)
@@ -508,7 +509,7 @@ let eval_ng_tac tac =
   | GrafiteAst.AndElim(_,just,t1,id1,t2,id2) -> Declarative.andelim (just_to_tacstatus_just just
     text prefix_len) (text,prefix_len,t1) id1 (text,prefix_len,t2) id2
   | GrafiteAst.Thesisbecomes (_, t1, t2) -> Declarative.thesisbecomes (text,prefix_len,t1)
-  (match t2 with None -> None | Some t2 -> (Some (text,prefix_len,t2)))
+  (match t2 with None -> None | Some t2 -> Some (text,prefix_len,t2))
   | GrafiteAst.RewritingStep (_,rhs,just,cont) ->
      Declarative.rewritingstep (text,prefix_len,rhs)
                                 (match just with 
