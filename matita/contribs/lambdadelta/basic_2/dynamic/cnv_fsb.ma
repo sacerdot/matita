@@ -24,6 +24,13 @@ lemma cnv_fwd_fsb (a) (h): ∀G,L,T. ⦃G, L⦄ ⊢ T ![a, h] → ≥[h] 𝐒⦃
 #a #h #G #L #T #H elim (cnv_fwd_aaa … H) -H /2 width=2 by aaa_fsb/
 qed-.
 
+(* Forward lemmas with strongly rt-normalizing terms ************************)
+
+lemma cnv_fwd_csx (a) (h): ∀G,L,T. ⦃G,L⦄ ⊢ T ![a,h] → ⦃G, L⦄ ⊢ ⬈*[h] 𝐒⦃T⦄.
+#a #h #G #L #T #H
+/3 width=2 by cnv_fwd_fsb, fsb_inv_csx/
+qed-.
+
 (* Inversion lemmas with proper parallel rst-computation for closures *******)
 
 lemma cnv_fpbg_refl_false (a) (h) (G) (L) (T):

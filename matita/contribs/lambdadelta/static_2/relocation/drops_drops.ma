@@ -91,6 +91,20 @@ lemma drops_mono: ∀b1,f,L,L1. ⬇*[b1, f] L ≘ L1 →
 /3 width=8 by drops_conf, drops_fwd_isid/
 qed-.
 
+lemma drops_inv_uni: ∀L,i. ⬇*[Ⓕ, 𝐔❴i❵] L ≘ ⋆ → ∀I,K. ⬇*[i] L ≘ K.ⓘ{I} → ⊥.
+#L #i #H1 #I #K #H2
+lapply (drops_F … H2) -H2 #H2
+lapply (drops_mono … H2 … H1) -L -i #H destruct
+qed-.
+
+lemma drops_ldec_dec: ∀L,i. Decidable (∃∃K,W. ⬇*[i] L ≘ K.ⓛW).
+#L #i elim (drops_F_uni L i) [| * * [ #I #K1 | * #W1 #K1 ] ]
+[4: /3 width=3 by ex1_2_intro, or_introl/
+|*: #H1L @or_intror * #K2 #W2 #H2L
+    lapply (drops_mono … H2L … H1L) -L #H destruct
+]
+qed-.
+
 (* Basic_2A1: includes: drop_conf_lt *)
 lemma drops_conf_skip1: ∀b2,f,L,L2. ⬇*[b2, f] L ≘ L2 →
                         ∀b1,f1,I1,K1. ⬇*[b1, f1] L ≘ K1.ⓘ{I1} →
@@ -124,10 +138,4 @@ lapply (eq_inv_nn … H ????) -H [5: |*: // ] #H12
 lapply (drops_eq_repl_back … Hf1 … H12) -Hf1 #H0
 lapply (drops_mono … H0 … Hf2) -L #H
 destruct /2 width=1 by conj/
-qed-.
-
-lemma drops_inv_uni: ∀L,i. ⬇*[Ⓕ, 𝐔❴i❵] L ≘ ⋆ → ∀I,K. ⬇*[i] L ≘ K.ⓘ{I} → ⊥.
-#L #i #H1 #I #K #H2
-lapply (drops_F … H2) -H2 #H2
-lapply (drops_mono … H2 … H1) -L -i #H destruct
 qed-.

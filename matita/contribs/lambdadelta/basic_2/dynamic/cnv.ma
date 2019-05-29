@@ -159,6 +159,14 @@ lemma cnv_fwd_flat (a) (h) (I) (G) (L):
 ] -H /2 width=1 by conj/
 qed-.
 
+lemma cnv_fwd_pair_sn (a) (h) (I) (G) (L):
+      ∀V,T. ⦃G,L⦄ ⊢ ②{I}V.T ![a,h] → ⦃G,L⦄ ⊢ V ![a,h].
+#a #h * [ #p ] #I #G #L #V #T #H
+[ elim (cnv_inv_bind … H) -H #HV #_
+| elim (cnv_fwd_flat … H) -H #HV #_
+] //
+qed-.
+
 (* Basic_2A1: removed theorems 3:
               shnv_cast shnv_inv_cast snv_shnv_cast
 *)
