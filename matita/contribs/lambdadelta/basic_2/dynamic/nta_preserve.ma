@@ -51,9 +51,8 @@ elim (cnv_inv_appl … H2) #n #p #X1 #X2 #_ #HV #_ #HVX1 #HUX2
 elim (cnv_cpms_conf … HU … HUX0 … HUX2) -HU -HUX2
 <minus_O_n <minus_n_O #X #HX0 #H
 elim (cpms_inv_abst_sn … H) -H #X3 #X4 #HX13 #HX24 #H destruct
-@(cnv_cast … (ⓐV.X0)) [2:|*: /2 width=1 by cpms_appl_dx/ ]
-@(cnv_appl … X3) [4: |*: /2 width=7 by cpms_trans, cpms_cprs_trans/ ]
-#H destruct
+@(cnv_cast … (ⓐV.X0)) [2:|*: /2 width=1 by cpms_appl_dx/ ] (**) (* full auto a bit slow *)
+/3 width=10 by cnv_appl, cpms_trans, cpms_cprs_trans/
 qed.
 
 (* Basic_1: uses: ty3_sred_wcpr0_pr0 *)
@@ -169,7 +168,7 @@ lemma nta_inv_appl_sn (h) (G) (L) (X2):
       ∃∃p,W,U. ⦃G,L⦄ ⊢ V :[h] W & ⦃G,L⦄ ⊢ T :[h] ⓛ{p}W.U & ⦃G,L⦄ ⊢ ⓐV.ⓛ{p}W.U ⬌*[h] X2 & ⦃G,L⦄ ⊢ X2 ![h].
 #h #G #L #X2 #V #T #H
 elim (cnv_inv_cast … H) -H #X #HX2 #H1 #HX2 #H2
-elim (cnv_inv_appl_true … H1) #p #W #U #HV #HT #HVW #HTU
+elim (cnv_inv_appl_pred … H1) #p #W #U #HV #HT #HVW #HTU
 /5 width=11 by cnv_cpms_nta, cnv_cpms_conf_eq, cpcs_cprs_div, cpms_appl_dx, ex4_3_intro/
 qed-.
 

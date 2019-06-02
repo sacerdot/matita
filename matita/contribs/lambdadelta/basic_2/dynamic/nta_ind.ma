@@ -71,7 +71,7 @@ lemma nta_ind_rest_cnv (h) (Q:relation4 …):
   /4 width=5 by nta_bind_cnv/
 | #V #T #HG #HL #HT #X #H destruct
   elim (nta_inv_appl_sn … H) -H #p #W #U #HVW #HTU #HUX #HX
-  /4 width=9 by nta_appl/
+  /4 width=9 by nta_appl, ylt_inj/
 | #U #T #HG #HL #HT #X #H destruct
   elim (nta_inv_cast_sn … H) -H #HTU #HUX #HX
   /4 width=4 by nta_cast/

@@ -42,3 +42,7 @@ qed.
 lemma arith_l1: ∀x. 1 = 1-x+(x-(x-1)).
 #x <arith_l2 //
 qed.
+
+lemma arith_m2 (x) (y): x < y → x+(y-↑x) = ↓y.
+#x #y #Hxy >minus_minus [|*: // ] <minus_Sn_n //
+qed-.

@@ -50,16 +50,19 @@ theorem cnv_dec (a) (h) (G) (L) (T):
 | #V #T #HG #HL #HT destruct
   elim (IH G L V) [| -IH #HV | // ]
   [ elim (IH G L T) -IH [| #HT #HV | // ]
-    [ cases a #HT #HV
-      [ elim (cnv_fwd_aaa … HT) #A #HA
-        elim (cpme_total_aaa h 1 … HA) #X
+    [ cases a -a [ * [| #a ]] #HT #HV
+      [ @or_intror #H
+        elim (cnv_inv_appl … H) -H #n #p #W #U #H #_ #_ #_ #_
+        /3 width=2 by lt_zero_false, ylt_inv_inj/
+      | elim (cnv_fwd_aaa … HT) #A #HA
+        elim (cpme_total_aaa h a … HA) #X
         elim (abst_dec X) [ * ]
         [ #p #W #U #H #HTU destruct
           elim (cnv_cpes_dec … 1 0 … HV W) [ #HVW | #HnVW ]
           [ elim HTU -HTU #HTU #_
-            /3 width=7 by cnv_appl_cpes, or_introl/
+            /4 width=7 by ylt_inj, cnv_appl_cpes, or_introl/
           | @or_intror #H
-            elim (cnv_inv_appl_true_cpes … H) -H #q #W0 #U0 #_ #_ #HVW0 #HTU0
+            elim (cnv_inv_appl_pred_cpes … H) -H #q #W0 #U0 #_ #_ #HVW0 #HTU0
             elim (cnv_cpme_cpms_conf … HT … HTU0 … HTU) -T #HU0 #_
             elim (cpms_inv_abst_bi … HU0) -HU0 #_ #HW0 #_ -p -q -U0
             /3 width=3 by cpes_cprs_trans/
@@ -68,7 +71,7 @@ theorem cnv_dec (a) (h) (G) (L) (T):
           ]
         | #HnTU #HTX
           @or_intror #H
-          elim (cnv_inv_appl_true_cpes … H) -H #q #W0 #U0 #_ #_ #_ #HTU0
+          elim (cnv_inv_appl_pred_cpes … H) -H #q #W0 #U0 #_ #_ #_ #HTU0
           elim (cnv_cpme_cpms_conf … HT … HTU0 … HTX) -T #HX #_
           elim (cpms_inv_abst_sn … HX) -HX #V0 #T0 #_ #_ #H destruct -W0 -U0
           /2 width=4 by/
@@ -79,7 +82,7 @@ theorem cnv_dec (a) (h) (G) (L) (T):
         [ #p #W #U #H #HTU destruct
           elim (cnv_cpes_dec … 1 0 … HV W) [ #HVW | #HnVW ]
           [ elim HTU -HTU #n #HTU #_
-            @or_introl @(cnv_appl_cpes … HV … HT … HVW … HTU) #H destruct
+            /3 width=7 by cnv_appl_cpes, or_introl/ 
           | @or_intror #H
             elim (cnv_inv_appl_cpes … H) -H #m1 #q #W0 #U0 #_ #_ #_ #HVW0 #HTU0
             elim (cnv_cpue_cpms_conf … HT … HTU0 … HTU) -m1 -T #X * #m2 #HU0X #_ #HUX

@@ -26,10 +26,10 @@ interpretation "native type assignment (term)"
    'Colon a h G L T U = (nta a h G L T U).
 
 interpretation "restricted native type assignment (term)"
-   'Colon h G L T U = (nta true h G L T U).
+   'Colon h G L T U = (nta (yinj (S (S O))) h G L T U).
 
 interpretation "extended native type assignment (term)"
-   'ColonStar h G L T U = (nta false h G L T U).
+   'ColonStar h G L T U = (nta Y h G L T U).
 
 (* Basic properties *********************************************************)
 

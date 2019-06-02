@@ -12,7 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/lib/arith_2b.ma".
 include "basic_2/rt_computation/cpms_aaa.ma".
+include "basic_2/rt_computation/lprs_cpms.ma".
 include "basic_2/dynamic/cnv.ma".
 
 (* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
@@ -61,32 +63,19 @@ qed-.
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma cnv_inv_appl_SO (a) (h) (G) (L):
-      ∀V,T. ⦃G, L⦄ ⊢ ⓐV.T ![a, h] →
-      ∃∃n,p,W0,U0. a = Ⓣ → n = 1 & ⦃G, L⦄ ⊢ V ![a, h] & ⦃G, L⦄ ⊢ T ![a, h] &
-                   ⦃G, L⦄ ⊢ V ➡*[1, h] W0 & ⦃G, L⦄ ⊢ T ➡*[n, h] ⓛ{p}W0.U0.
-* #h #G #L #V #T #H
-elim (cnv_inv_appl … H) -H [ * [| #n ] | #n ] #p #W #U #Ha #HV #HT #HVW #HTU
-[ elim (cnv_fwd_aaa … HT) #A #HA
-  elim (aaa_cpm_SO h … (ⓛ{p}W.U))
-  [|*: /2 width=8 by cpms_aaa_conf/ ] #X #HU0
-  elim (cpm_inv_abst1 … HU0) #W0 #U0 #HW0 #_ #H0 destruct
-  lapply (cpms_step_dx … HVW … HW0) -HVW -HW0 #HVW0
-  lapply (cpms_step_dx … HTU … HU0) -HTU -HU0 #HTU0
-  /2 width=7 by ex5_4_intro/
-| lapply (Ha ?) -Ha [ // ] #Ha
-  lapply (le_n_O_to_eq n ?) [ /3 width=1 by le_S_S_to_le/ ] -Ha #H destruct
-  /2 width=7 by ex5_4_intro/
-| @(ex5_4_intro … HV HT HVW HTU) #H destruct
-]
-qed-.
-
-lemma cnv_inv_appl_true (h) (G) (L):
-      ∀V,T. ⦃G,L⦄ ⊢ ⓐV.T ![h] →
-      ∃∃p,W0,U0. ⦃G,L⦄ ⊢ V ![h] & ⦃G,L⦄ ⊢ T ![h] &
-                   ⦃G,L⦄ ⊢ V ➡*[1,h] W0 & ⦃G,L⦄ ⊢ T ➡*[1,h] ⓛ{p}W0.U0.
-#h #G #L #V #T #H
-elim (cnv_inv_appl_SO … H) -H #n #p #W #U #Hn
->Hn -n [| // ] #HV #HT #HVW #HTU
+lemma cnv_inv_appl_pred (a) (h) (G) (L):
+      ∀V,T. ⦃G, L⦄ ⊢ ⓐV.T ![yinj a, h] →
+      ∃∃p,W0,U0. ⦃G, L⦄ ⊢ V ![a, h] & ⦃G, L⦄ ⊢ T ![a, h] &
+                   ⦃G, L⦄ ⊢ V ➡*[1, h] W0 & ⦃G, L⦄ ⊢ T ➡*[↓a, h] ⓛ{p}W0.U0.
+#a #h #G #L #V #T #H
+elim (cnv_inv_appl … H) -H #n #p #W #U #Ha #HV #HT #HVW #HTU
+lapply (ylt_inv_inj … Ha) -Ha #Ha
+elim (cnv_fwd_aaa … HT) #A #HA
+elim (cpms_total_aaa h … (a-↑n) … (ⓛ{p}W.U))
+[|*: /2 width=8 by cpms_aaa_conf/ ] -HA #X #HU0
+elim (cpms_inv_abst_sn … HU0) #W0 #U0 #HW0 #_ #H destruct
+lapply (cpms_trans … HVW … HW0) -HVW -HW0 #HVW0
+lapply (cpms_trans … HTU … HU0) -HTU -HU0
+>(arith_m2 … Ha) -Ha #HTU0
 /2 width=5 by ex4_3_intro/
 qed-.

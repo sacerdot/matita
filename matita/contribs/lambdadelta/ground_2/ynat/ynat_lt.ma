@@ -199,6 +199,10 @@ lemma yle_ylt_trans: ∀x:ynat. ∀y:ynat. ∀z:ynat. y < z → x ≤ y → x < 
 ]
 qed-.
 
+lemma le_ylt_trans (x) (y) (z): x ≤ y → yinj y < z → yinj x < z.  
+/3 width=3 by yle_ylt_trans, yle_inj/
+qed-.
+
 lemma yle_inv_succ1_lt: ∀x,y:ynat. ↑x ≤ y → 0 < y ∧ x ≤ ↓y.
 #x #y #H elim (yle_inv_succ1 … H) -H /3 width=1 by ylt_O1, conj/
 qed-.
@@ -217,6 +221,10 @@ theorem ylt_trans: Transitive … ylt.
   /3 width=3 by transitive_lt, ylt_inj/ (**) (* full auto too slow *)
 | #x #z #H elim (ylt_yle_false … H) //
 ]
+qed-.
+
+lemma lt_ylt_trans (x) (y) (z): x < y → yinj y < z → yinj x < z.  
+/3 width=3 by ylt_trans, ylt_inj/
 qed-.
 
 (* Elimination principles ***************************************************)
