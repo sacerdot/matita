@@ -22,14 +22,14 @@ include "basic_2/rt_computation/rdsx_rdsx.ma".
 
 (* Basic_2A1: uses: lsx_intro_alt *)
 lemma rdsx_intro_lpxs (h) (G):
-                      ∀L1,T. (∀L2. ⦃G, L1⦄ ⊢ ⬈*[h] L2 → (L1 ≛[T] L2 → ⊥) → G ⊢ ⬈*[h, T] 𝐒⦃L2⦄) →
-                      G ⊢ ⬈*[h, T] 𝐒⦃L1⦄.
+                      ∀L1,T. (∀L2. ⦃G,L1⦄ ⊢ ⬈*[h] L2 → (L1 ≛[T] L2 → ⊥) → G ⊢ ⬈*[h,T] 𝐒⦃L2⦄) →
+                      G ⊢ ⬈*[h,T] 𝐒⦃L1⦄.
 /4 width=1 by lpx_lpxs, rdsx_intro/ qed-.
 
 (* Basic_2A1: uses: lsx_lpxs_trans *)
 lemma rdsx_lpxs_trans (h) (G):
-      ∀L1,T. G ⊢ ⬈*[h, T] 𝐒⦃L1⦄ →
-      ∀L2. ⦃G, L1⦄ ⊢ ⬈*[h] L2 → G ⊢ ⬈*[h, T] 𝐒⦃L2⦄.
+      ∀L1,T. G ⊢ ⬈*[h,T] 𝐒⦃L1⦄ →
+      ∀L2. ⦃G,L1⦄ ⊢ ⬈*[h] L2 → G ⊢ ⬈*[h,T] 𝐒⦃L2⦄.
 #h #G #L1 #T #HL1 #L2 #H @(lpxs_ind_dx … H) -L2
 /2 width=3 by rdsx_lpx_trans/
 qed-.
@@ -38,12 +38,12 @@ qed-.
 
 lemma rdsx_ind_lpxs_rdeq (h) (G):
                          ∀T. ∀Q:predicate lenv.
-                         (∀L1. G ⊢ ⬈*[h, T] 𝐒⦃L1⦄ →
-                               (∀L2. ⦃G, L1⦄ ⊢ ⬈*[h] L2 → (L1 ≛[T] L2 → ⊥) → Q L2) →
+                         (∀L1. G ⊢ ⬈*[h,T] 𝐒⦃L1⦄ →
+                               (∀L2. ⦃G,L1⦄ ⊢ ⬈*[h] L2 → (L1 ≛[T] L2 → ⊥) → Q L2) →
                                Q L1
                          ) →
-                         ∀L1. G ⊢ ⬈*[h, T] 𝐒⦃L1⦄  →
-                         ∀L0. ⦃G, L1⦄ ⊢ ⬈*[h] L0 → ∀L2. L0 ≛[T] L2 → Q L2.
+                         ∀L1. G ⊢ ⬈*[h,T] 𝐒⦃L1⦄  →
+                         ∀L0. ⦃G,L1⦄ ⊢ ⬈*[h] L0 → ∀L2. L0 ≛[T] L2 → Q L2.
 #h #G #T #Q #IH #L1 #H @(rdsx_ind … H) -L1
 #L1 #HL1 #IH1 #L0 #HL10 #L2 #HL02
 @IH -IH /3 width=3 by rdsx_lpxs_trans, rdsx_rdeq_trans/ -HL1 #K2 #HLK2 #HnLK2
@@ -64,11 +64,11 @@ qed-.
 (* Basic_2A1: uses: lsx_ind_alt *)
 lemma rdsx_ind_lpxs (h) (G):
                     ∀T. ∀Q:predicate lenv.
-                    (∀L1. G ⊢ ⬈*[h, T] 𝐒⦃L1⦄ →
-                          (∀L2. ⦃G, L1⦄ ⊢ ⬈*[h] L2 → (L1 ≛[T] L2 → ⊥) → Q L2) →
+                    (∀L1. G ⊢ ⬈*[h,T] 𝐒⦃L1⦄ →
+                          (∀L2. ⦃G,L1⦄ ⊢ ⬈*[h] L2 → (L1 ≛[T] L2 → ⊥) → Q L2) →
                           Q L1
                     ) →
-                    ∀L. G ⊢ ⬈*[h, T] 𝐒⦃L⦄  → Q L.
+                    ∀L. G ⊢ ⬈*[h,T] 𝐒⦃L⦄  → Q L.
 #h #G #T #Q #IH #L #HL
 @(rdsx_ind_lpxs_rdeq … IH … HL) -IH -HL // (**) (* full auto fails *)
 qed-.
@@ -76,10 +76,10 @@ qed-.
 (* Advanced properties ******************************************************)
 
 fact rdsx_bind_lpxs_aux (h) (G):
-                        ∀p,I,L1,V. G ⊢ ⬈*[h, V] 𝐒⦃L1⦄ →
-                        ∀Y,T. G ⊢ ⬈*[h, T] 𝐒⦃Y⦄ →
-                        ∀L2. Y = L2.ⓑ{I}V → ⦃G, L1⦄ ⊢ ⬈*[h] L2 →
-                        G ⊢ ⬈*[h, ⓑ{p,I}V.T] 𝐒⦃L2⦄.
+                        ∀p,I,L1,V. G ⊢ ⬈*[h,V] 𝐒⦃L1⦄ →
+                        ∀Y,T. G ⊢ ⬈*[h,T] 𝐒⦃Y⦄ →
+                        ∀L2. Y = L2.ⓑ{I}V → ⦃G,L1⦄ ⊢ ⬈*[h] L2 →
+                        G ⊢ ⬈*[h,ⓑ{p,I}V.T] 𝐒⦃L2⦄.
 #h #G #p #I #L1 #V #H @(rdsx_ind_lpxs … H) -L1
 #L1 #_ #IHL1 #Y #T #H @(rdsx_ind_lpxs … H) -Y
 #Y #HY #IHY #L2 #H #HL12 destruct
@@ -97,16 +97,16 @@ qed-.
 
 (* Basic_2A1: uses: lsx_bind *)
 lemma rdsx_bind (h) (G):
-                ∀p,I,L,V. G ⊢ ⬈*[h, V] 𝐒⦃L⦄ →
-                ∀T. G ⊢ ⬈*[h, T] 𝐒⦃L.ⓑ{I}V⦄ →
-                G ⊢ ⬈*[h, ⓑ{p,I}V.T] 𝐒⦃L⦄.
+                ∀p,I,L,V. G ⊢ ⬈*[h,V] 𝐒⦃L⦄ →
+                ∀T. G ⊢ ⬈*[h,T] 𝐒⦃L.ⓑ{I}V⦄ →
+                G ⊢ ⬈*[h,ⓑ{p,I}V.T] 𝐒⦃L⦄.
 /2 width=3 by rdsx_bind_lpxs_aux/ qed.
 
 (* Basic_2A1: uses: lsx_flat_lpxs *)
 lemma rdsx_flat_lpxs (h) (G):
-                     ∀I,L1,V. G ⊢ ⬈*[h, V] 𝐒⦃L1⦄ →
-                     ∀L2,T. G ⊢ ⬈*[h, T] 𝐒⦃L2⦄ → ⦃G, L1⦄ ⊢ ⬈*[h] L2 →
-                     G ⊢ ⬈*[h, ⓕ{I}V.T] 𝐒⦃L2⦄.
+                     ∀I,L1,V. G ⊢ ⬈*[h,V] 𝐒⦃L1⦄ →
+                     ∀L2,T. G ⊢ ⬈*[h,T] 𝐒⦃L2⦄ → ⦃G,L1⦄ ⊢ ⬈*[h] L2 →
+                     G ⊢ ⬈*[h,ⓕ{I}V.T] 𝐒⦃L2⦄.
 #h #G #I #L1 #V #H @(rdsx_ind_lpxs … H) -L1
 #L1 #HL1 #IHL1 #L2 #T #H @(rdsx_ind_lpxs … H) -L2
 #L2 #HL2 #IHL2 #HL12 @rdsx_intro_lpxs
@@ -123,15 +123,15 @@ qed-.
 
 (* Basic_2A1: uses: lsx_flat *)
 lemma rdsx_flat (h) (G):
-                ∀I,L,V. G ⊢ ⬈*[h, V] 𝐒⦃L⦄ →
-                ∀T. G ⊢ ⬈*[h, T] 𝐒⦃L⦄ → G ⊢ ⬈*[h, ⓕ{I}V.T] 𝐒⦃L⦄.
+                ∀I,L,V. G ⊢ ⬈*[h,V] 𝐒⦃L⦄ →
+                ∀T. G ⊢ ⬈*[h,T] 𝐒⦃L⦄ → G ⊢ ⬈*[h,ⓕ{I}V.T] 𝐒⦃L⦄.
 /2 width=3 by rdsx_flat_lpxs/ qed.
 
 fact rdsx_bind_lpxs_void_aux (h) (G):
-                             ∀p,I,L1,V. G ⊢ ⬈*[h, V] 𝐒⦃L1⦄ →
-                             ∀Y,T. G ⊢ ⬈*[h, T] 𝐒⦃Y⦄ →
-                             ∀L2. Y = L2.ⓧ → ⦃G, L1⦄ ⊢ ⬈*[h] L2 →
-                             G ⊢ ⬈*[h, ⓑ{p,I}V.T] 𝐒⦃L2⦄.
+                             ∀p,I,L1,V. G ⊢ ⬈*[h,V] 𝐒⦃L1⦄ →
+                             ∀Y,T. G ⊢ ⬈*[h,T] 𝐒⦃Y⦄ →
+                             ∀L2. Y = L2.ⓧ → ⦃G,L1⦄ ⊢ ⬈*[h] L2 →
+                             G ⊢ ⬈*[h,ⓑ{p,I}V.T] 𝐒⦃L2⦄.
 #h #G #p #I #L1 #V #H @(rdsx_ind_lpxs … H) -L1
 #L1 #_ #IHL1 #Y #T #H @(rdsx_ind_lpxs … H) -Y
 #Y #HY #IHY #L2 #H #HL12 destruct
@@ -148,7 +148,7 @@ elim (rdneq_inv_bind_void … H) -H [ -IHY | -HY -IHL1 -HL12 ]
 qed-.
 
 lemma rdsx_bind_void (h) (G):
-                     ∀p,I,L,V. G ⊢ ⬈*[h, V] 𝐒⦃L⦄ →
-                     ∀T. G ⊢ ⬈*[h, T] 𝐒⦃L.ⓧ⦄ →
-                     G ⊢ ⬈*[h, ⓑ{p,I}V.T] 𝐒⦃L⦄.
+                     ∀p,I,L,V. G ⊢ ⬈*[h,V] 𝐒⦃L⦄ →
+                     ∀T. G ⊢ ⬈*[h,T] 𝐒⦃L.ⓧ⦄ →
+                     G ⊢ ⬈*[h,ⓑ{p,I}V.T] 𝐒⦃L⦄.
 /2 width=3 by rdsx_bind_lpxs_void_aux/ qed.

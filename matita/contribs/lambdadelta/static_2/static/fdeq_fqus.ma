@@ -19,9 +19,9 @@ include "static_2/static/fdeq.ma".
 
 (* Properties with star-iterated structural successor for closures **********)
 
-lemma fdeq_fqus_trans: ∀b,G1,G,L1,L,T1,T. ⦃G1, L1, T1⦄ ≛ ⦃G, L, T⦄ →
-                       ∀G2,L2,T2. ⦃G, L, T⦄ ⊐*[b] ⦃G2, L2, T2⦄ →
-                       ∃∃G,L0,T0. ⦃G1, L1, T1⦄ ⊐*[b] ⦃G, L0, T0⦄ & ⦃G, L0, T0⦄ ≛ ⦃G2, L2, T2⦄.
+lemma fdeq_fqus_trans: ∀b,G1,G,L1,L,T1,T. ⦃G1,L1,T1⦄ ≛ ⦃G,L,T⦄ →
+                       ∀G2,L2,T2. ⦃G,L,T⦄ ⊐*[b] ⦃G2,L2,T2⦄ →
+                       ∃∃G,L0,T0. ⦃G1,L1,T1⦄ ⊐*[b] ⦃G,L0,T0⦄ & ⦃G,L0,T0⦄ ≛ ⦃G2,L2,T2⦄.
 #b #G1 #G #L1 #L #T1 #T #H1 #G2 #L2 #T2 #H2
 elim(fdeq_inv_gen_dx … H1) -H1 #HG #HL1 #HT1 destruct
 elim (rdeq_fqus_trans … H2 … HL1) -L #L #T0 #H2 #HT02 #HL2

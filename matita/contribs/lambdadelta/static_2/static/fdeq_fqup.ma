@@ -20,7 +20,7 @@ include "static_2/static/fdeq.ma".
 (* Properties with sort-irrelevant equivalence for terms ********************)
 
 lemma tdeq_fdeq: ∀T1,T2. T1 ≛ T2 →
-                 ∀G,L. ⦃G, L, T1⦄ ≛ ⦃G, L, T2⦄.
+                 ∀G,L. ⦃G,L,T1⦄ ≛ ⦃G,L,T2⦄.
 /2 width=1 by fdeq_intro_sn/ qed.
 
 (* Advanced properties ******************************************************)

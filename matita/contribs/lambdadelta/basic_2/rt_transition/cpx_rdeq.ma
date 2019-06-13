@@ -24,6 +24,6 @@ lemma cpx_rdeq_conf_sn: ∀h,G. s_r_confluent1 … (cpx h G) rdeq.
 /3 width=6 by cpx_rex_conf/ qed-.
 
 (* Basic_2A1: was just: cpx_lleq_conf_dx *)
-lemma cpx_rdeq_conf_dx: ∀h,G,L2,T1,T2. ⦃G, L2⦄ ⊢ T1 ⬈[h] T2 →
+lemma cpx_rdeq_conf_dx: ∀h,G,L2,T1,T2. ⦃G,L2⦄ ⊢ T1 ⬈[h] T2 →
                         ∀L1. L1 ≛[T1] L2 → L1 ≛[T2] L2.
 /4 width=5 by cpx_rdeq_conf_sn, rdeq_sym/ qed-.

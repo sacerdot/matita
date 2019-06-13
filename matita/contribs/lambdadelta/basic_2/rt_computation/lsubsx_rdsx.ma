@@ -22,9 +22,9 @@ include "basic_2/rt_computation/lsubsx.ma".
 
 (* Basic_2A1: uses: lsx_cpx_trans_lcosx *)
 lemma rdsx_cpx_trans_lsubsx (h):
-      ∀G,L0,T1,T2. ⦃G, L0⦄ ⊢ T1 ⬈[h] T2 →
-      ∀f,L. G ⊢ L0 ⊆ⓧ[h, f] L →
-      G ⊢ ⬈*[h, T1] 𝐒⦃L⦄ → G ⊢ ⬈*[h, T2] 𝐒⦃L⦄.
+      ∀G,L0,T1,T2. ⦃G,L0⦄ ⊢ T1 ⬈[h] T2 →
+      ∀f,L. G ⊢ L0 ⊆ⓧ[h,f] L →
+      G ⊢ ⬈*[h,T1] 𝐒⦃L⦄ → G ⊢ ⬈*[h,T2] 𝐒⦃L⦄.
 #h #G #L0 #T1 #T2 #H @(cpx_ind … H) -G -L0 -T1 -T2 //
 [ #I0 #G #K0 #V1 #V2 #W2 #_ #IH #HVW2 #g #L #HK0 #HL
   elim (lsubsx_inv_pair_sn_gen … HK0) -HK0 *
@@ -63,13 +63,13 @@ qed-.
 
 (* Basic_2A1: uses: lsx_cpx_trans_O *)
 lemma rdsx_cpx_trans (h):
-      ∀G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬈[h] T2 →
-      G ⊢ ⬈*[h, T1] 𝐒⦃L⦄ → G ⊢ ⬈*[h, T2] 𝐒⦃L⦄.
+      ∀G,L,T1,T2. ⦃G,L⦄ ⊢ T1 ⬈[h] T2 →
+      G ⊢ ⬈*[h,T1] 𝐒⦃L⦄ → G ⊢ ⬈*[h,T2] 𝐒⦃L⦄.
 /3 width=6 by rdsx_cpx_trans_lsubsx, lsubsx_refl/ qed-.
 
 lemma rdsx_cpxs_trans (h):
-      ∀G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬈*[h] T2 →
-      G ⊢ ⬈*[h, T1] 𝐒⦃L⦄ → G ⊢ ⬈*[h, T2] 𝐒⦃L⦄.
+      ∀G,L,T1,T2. ⦃G,L⦄ ⊢ T1 ⬈*[h] T2 →
+      G ⊢ ⬈*[h,T1] 𝐒⦃L⦄ → G ⊢ ⬈*[h,T2] 𝐒⦃L⦄.
 #h #G #L #T1 #T2 #H
 @(cpxs_ind_dx ???????? H) -T1 //
 /3 width=3 by rdsx_cpx_trans/

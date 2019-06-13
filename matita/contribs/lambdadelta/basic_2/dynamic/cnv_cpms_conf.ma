@@ -78,7 +78,7 @@ fact cnv_cpms_conf_lpr_step_tdneq_sub (a) (h) (G0) (L0) (T0) (m11) (m12) (m21) (
 lapply (cnv_cpm_trans_lpr_aux … IH1 IH2 … H1X01 … L0 ?) // #HX1
 lapply (cnv_cpm_trans_lpr_aux … IH1 IH2 … H1X02 … L0 ?) // #HX2
 elim (cnv_cpm_conf_lpr_aux … IH2 IH1 … H1X01 … H1X02 … L0 … L0) // #Z0 #HXZ10 #HXZ20
-cut (⦃G0,L0,T0⦄ >[h] ⦃G0,L0,X2⦄) [ /4 width=5 by cpms_fwd_fpbs, cpm_fpb, ex2_3_intro/ ] #H1fpbg (**) (* cut *)
+cut (⦃G0, L0, T0⦄ >[h] ⦃G0, L0, X2⦄) [ /4 width=5 by cpms_fwd_fpbs, cpm_fpb, ex2_3_intro/ ] #H1fpbg (**) (* cut *)
 lapply (fpbg_fpbs_trans ?? G0 ? L0 ? Z0 ? … H1fpbg) [ /2 width=2 by cpms_fwd_fpbs/ ] #H2fpbg
 lapply (cnv_cpms_trans_lpr_sub … IH2 … HXZ20 … L0 ?) // #HZ0
 elim (IH1 … HXT2 … HXZ20 … L2 … L0) [|*: /4 width=2 by fpb_fpbg, cpm_fpb/ ] -HXT2 -HXZ20 #Z2 #HTZ2 #HZ02
@@ -135,7 +135,7 @@ fact cnv_cpms_conf_lpr_tdneq_tdneq_aux (a) (h) (G0) (L0) (T0) (m11) (m12) (m21) 
 lapply (cnv_cpm_trans_lpr_aux … IH1 IH2 … HX01 … L0 ?) // #HX1
 lapply (cnv_cpm_trans_lpr_aux … IH1 IH2 … HX02 … L0 ?) // #HX2
 elim (cnv_cpm_conf_lpr_aux … IH2 IH1 … HX01 … HX02 … L0 … L0) // #Z0 #HXZ10 #HXZ20
-cut (⦃G0,L0,T0⦄ >[h] ⦃G0,L0,X1⦄) [ /4 width=5 by cpms_fwd_fpbs, cpm_fpb, ex2_3_intro/ ] #H1fpbg (**) (* cut *)
+cut (⦃G0, L0, T0⦄ >[h] ⦃G0, L0, X1⦄) [ /4 width=5 by cpms_fwd_fpbs, cpm_fpb, ex2_3_intro/ ] #H1fpbg (**) (* cut *)
 lapply (fpbg_fpbs_trans ?? G0 ? L0 ? Z0 ? … H1fpbg) [ /2 width=2 by cpms_fwd_fpbs/ ] #H2fpbg
 lapply (cnv_cpms_trans_lpr_sub … IH2 … HXZ10 … L0 ?) // #HZ0
 elim (IH1 … HXT1 … HXZ10 … L1 … L0) [|*: /4 width=2 by fpb_fpbg, cpm_fpb/ ] -HXT1 -HXZ10 #Z1 #HTZ1 #HZ01

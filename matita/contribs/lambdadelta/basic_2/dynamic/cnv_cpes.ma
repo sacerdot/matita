@@ -21,42 +21,42 @@ include "basic_2/dynamic/cnv_aaa.ma".
 
 lemma cnv_appl_cpes (a) (h) (G) (L):
       ∀n. yinj n < a →
-      ∀V. ⦃G, L⦄ ⊢ V ![a, h] → ∀T. ⦃G, L⦄ ⊢ T ![a, h] →
-      ∀W. ⦃G, L⦄ ⊢ V ⬌*[h,1,0] W →
-      ∀p,U. ⦃G, L⦄ ⊢ T ➡*[n, h] ⓛ{p}W.U → ⦃G, L⦄ ⊢ ⓐV.T ![a, h].
+      ∀V. ⦃G,L⦄ ⊢ V ![a,h] → ∀T. ⦃G,L⦄ ⊢ T ![a,h] →
+      ∀W. ⦃G,L⦄ ⊢ V ⬌*[h,1,0] W →
+      ∀p,U. ⦃G,L⦄ ⊢ T ➡*[n,h] ⓛ{p}W.U → ⦃G,L⦄ ⊢ ⓐV.T ![a,h].
 #a #h #G #L #n #Hn #V #HV #T #HT #W *
 /4 width=11 by cnv_appl, cpms_cprs_trans, cpms_bind/
 qed.
 
 lemma cnv_cast_cpes (a) (h) (G) (L):
-      ∀U. ⦃G, L⦄ ⊢ U ![a, h] →
-      ∀T. ⦃G, L⦄ ⊢ T ![a, h] → ⦃G, L⦄ ⊢ U ⬌*[h,0,1] T → ⦃G, L⦄ ⊢ ⓝU.T ![a, h].
+      ∀U. ⦃G,L⦄ ⊢ U ![a,h] →
+      ∀T. ⦃G,L⦄ ⊢ T ![a,h] → ⦃G,L⦄ ⊢ U ⬌*[h,0,1] T → ⦃G,L⦄ ⊢ ⓝU.T ![a,h].
 #a #h #G #L #U #HU #T #HT * /2 width=3 by cnv_cast/
 qed.
 
 (* Inversion lemmas with t-bound rt-equivalence for terms *******************)
 
 lemma cnv_inv_appl_cpes (a) (h) (G) (L):
-      ∀V,T. ⦃G, L⦄ ⊢ ⓐV.T ![a, h] →
-      ∃∃n,p,W,U. yinj n < a & ⦃G, L⦄ ⊢ V ![a, h] & ⦃G, L⦄ ⊢ T ![a, h] &
-                 ⦃G, L⦄ ⊢ V ⬌*[h,1,0] W & ⦃G, L⦄ ⊢ T ➡*[n, h] ⓛ{p}W.U.
+      ∀V,T. ⦃G,L⦄ ⊢ ⓐV.T ![a,h] →
+      ∃∃n,p,W,U. yinj n < a & ⦃G,L⦄ ⊢ V ![a,h] & ⦃G,L⦄ ⊢ T ![a,h] &
+                 ⦃G,L⦄ ⊢ V ⬌*[h,1,0] W & ⦃G,L⦄ ⊢ T ➡*[n,h] ⓛ{p}W.U.
 #a #h #G #L #V #T #H
 elim (cnv_inv_appl … H) -H #n #p #W #U #Hn #HV #HT #HVW #HTU
 /3 width=7 by cpms_div, ex5_4_intro/
 qed-.
 
 lemma cnv_inv_appl_pred_cpes (a) (h) (G) (L):
-      ∀V,T. ⦃G, L⦄ ⊢ ⓐV.T ![yinj a, h] →
-      ∃∃p,W,U. ⦃G, L⦄ ⊢ V ![a, h] & ⦃G, L⦄ ⊢ T ![a, h] &
-                 ⦃G, L⦄ ⊢ V ⬌*[h,1,0] W & ⦃G, L⦄ ⊢ T ➡*[↓a, h] ⓛ{p}W.U.
+      ∀V,T. ⦃G,L⦄ ⊢ ⓐV.T ![yinj a,h] →
+      ∃∃p,W,U. ⦃G,L⦄ ⊢ V ![a,h] & ⦃G,L⦄ ⊢ T ![a,h] &
+                 ⦃G,L⦄ ⊢ V ⬌*[h,1,0] W & ⦃G,L⦄ ⊢ T ➡*[↓a,h] ⓛ{p}W.U.
 #a #h #G #L #V #T #H
 elim (cnv_inv_appl_pred … H) -H #p #W #U #HV #HT #HVW #HTU
 /3 width=7 by cpms_div, ex4_3_intro/
 qed-.
 
 lemma cnv_inv_cast_cpes (a) (h) (G) (L):
-      ∀U,T. ⦃G, L⦄ ⊢ ⓝU.T ![a, h] →
-      ∧∧ ⦃G, L⦄ ⊢ U ![a, h] & ⦃G, L⦄ ⊢ T ![a, h] & ⦃G, L⦄ ⊢ U ⬌*[h,0,1] T.
+      ∀U,T. ⦃G,L⦄ ⊢ ⓝU.T ![a,h] →
+      ∧∧ ⦃G,L⦄ ⊢ U ![a,h] & ⦃G,L⦄ ⊢ T ![a,h] & ⦃G,L⦄ ⊢ U ⬌*[h,0,1] T.
 #a #h #G #L #U #T #H
 elim (cnv_inv_cast … H) -H
 /3 width=3 by cpms_div, and3_intro/

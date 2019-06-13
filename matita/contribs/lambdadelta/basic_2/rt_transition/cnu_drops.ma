@@ -21,7 +21,7 @@ include "basic_2/rt_transition/cnu.ma".
 (* Advanced properties ******************************************************)
 
 lemma cnu_atom_drops (h) (b) (G) (L):
-      ∀i. ⬇*[b,𝐔❴i❵] L ≘ ⋆ → ⦃G, L⦄ ⊢ ⥲[h] 𝐍⦃#i⦄.
+      ∀i. ⬇*[b,𝐔❴i❵] L ≘ ⋆ → ⦃G,L⦄ ⊢ ⥲[h] 𝐍⦃#i⦄.
 #h #b #G #L #i #Hi #n #X #H
 elim (cpm_inv_lref1_drops … H) -H * [ // || #m ] #K #V1 #V2 #HLK
 lapply (drops_gen b … HLK) -HLK #HLK
@@ -29,7 +29,7 @@ lapply (drops_mono … Hi … HLK) -L #H destruct
 qed.
 
 lemma cnu_unit_drops (h) (I) (G) (L):
-      ∀K,i. ⬇*[i] L ≘ K.ⓤ{I} → ⦃G, L⦄ ⊢ ⥲[h] 𝐍⦃#i⦄.
+      ∀K,i. ⬇*[i] L ≘ K.ⓤ{I} → ⦃G,L⦄ ⊢ ⥲[h] 𝐍⦃#i⦄.
 #h #I #G #L #K #i #HLK #n #X #H
 elim (cpm_inv_lref1_drops … H) -H * [ // || #m ] #Y #V1 #V2 #HLY
 lapply (drops_mono … HLK … HLY) -L #H destruct

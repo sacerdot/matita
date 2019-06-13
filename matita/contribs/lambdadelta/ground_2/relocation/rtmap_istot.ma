@@ -17,7 +17,7 @@ include "ground_2/relocation/rtmap_at.ma".
 
 (* RELOCATION MAP ***********************************************************)
 
-definition istot: predicate rtmap ≝ λf. ∀i. ∃j. @⦃i, f⦄ ≘ j.
+definition istot: predicate rtmap ≝ λf. ∀i. ∃j. @⦃i,f⦄ ≘ j.
 
 interpretation "test for totality (rtmap)"
    'IsTotal f = (istot f).
@@ -50,7 +50,7 @@ qed.
 (* Main forward lemmas on at ************************************************)
 
 corec theorem at_ext: ∀f1,f2. 𝐓⦃f1⦄ → 𝐓⦃f2⦄ →
-                      (∀i,i1,i2. @⦃i, f1⦄ ≘ i1 → @⦃i, f2⦄ ≘ i2 → i1 = i2) →
+                      (∀i,i1,i2. @⦃i,f1⦄ ≘ i1 → @⦃i,f2⦄ ≘ i2 → i1 = i2) →
                       f1 ≡ f2.
 #f1 cases (pn_split f1) * #g1 #H1
 #f2 cases (pn_split f2) * #g2 #H2
@@ -72,7 +72,7 @@ qed-.
 
 (* Advanced properties on at ************************************************)
 
-lemma at_dec: ∀f,i1,i2. 𝐓⦃f⦄ → Decidable (@⦃i1, f⦄ ≘ i2).
+lemma at_dec: ∀f,i1,i2. 𝐓⦃f⦄ → Decidable (@⦃i1,f⦄ ≘ i2).
 #f #i1 #i2 #Hf lapply (Hf i1) -Hf *
 #j2 #Hf elim (eq_nat_dec i2 j2)
 [ #H destruct /2 width=1 by or_introl/
@@ -80,8 +80,8 @@ lemma at_dec: ∀f,i1,i2. 𝐓⦃f⦄ → Decidable (@⦃i1, f⦄ ≘ i2).
 ]
 qed-.
 
-lemma is_at_dec_le: ∀f,i2,i. 𝐓⦃f⦄ → (∀i1. i1 + i ≤ i2 → @⦃i1, f⦄ ≘ i2 → ⊥) →
-                    Decidable (∃i1. @⦃i1, f⦄ ≘ i2).
+lemma is_at_dec_le: ∀f,i2,i. 𝐓⦃f⦄ → (∀i1. i1 + i ≤ i2 → @⦃i1,f⦄ ≘ i2 → ⊥) →
+                    Decidable (∃i1. @⦃i1,f⦄ ≘ i2).
 #f #i2 #i #Hf elim i -i
 [ #Ht @or_intror * /3 width=3 by at_increasing/
 | #i #IH #Ht elim (at_dec f (i2-i) i2) /3 width=2 by ex_intro, or_introl/
@@ -90,13 +90,13 @@ lemma is_at_dec_le: ∀f,i2,i. 𝐓⦃f⦄ → (∀i1. i1 + i ≤ i2 → @⦃i1,
 ]
 qed-.
 
-lemma is_at_dec: ∀f,i2. 𝐓⦃f⦄ → Decidable (∃i1. @⦃i1, f⦄ ≘ i2).
+lemma is_at_dec: ∀f,i2. 𝐓⦃f⦄ → Decidable (∃i1. @⦃i1,f⦄ ≘ i2).
 #f #i2 #Hf @(is_at_dec_le ?? (↑i2)) /2 width=4 by lt_le_false/
 qed-.
 
 (* Advanced properties on isid **********************************************)
 
-lemma isid_at_total: ∀f. 𝐓⦃f⦄ → (∀i1,i2. @⦃i1, f⦄ ≘ i2 → i1 = i2) → 𝐈⦃f⦄.
+lemma isid_at_total: ∀f. 𝐓⦃f⦄ → (∀i1,i2. @⦃i1,f⦄ ≘ i2 → i1 = i2) → 𝐈⦃f⦄.
 #f #H1f #H2f @isid_at
 #i lapply (H1f i) -H1f *
 #j #Hf >(H2f … Hf) in ⊢ (???%); -H2f //

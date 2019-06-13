@@ -18,16 +18,16 @@ include "basic_2/dynamic/cnv_cpm_tdeq.ma".
 (* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
 
 definition IH_cnv_cpm_tdeq_conf_lpr (a) (h): relation3 genv lenv term ≝
-           λG,L0,T0. ⦃G, L0⦄ ⊢ T0 ![a,h] →
-           ∀n1,T1. ⦃G, L0⦄ ⊢ T0 ➡[n1,h] T1 → T0 ≛ T1 →
-           ∀n2,T2. ⦃G, L0⦄ ⊢ T0 ➡[n2,h] T2 → T0 ≛ T2 →
-           ∀L1. ⦃G, L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G, L0⦄ ⊢ ➡[h] L2 →
-           ∃∃T. ⦃G, L1⦄ ⊢ T1 ➡[n2-n1,h] T & T1 ≛ T & ⦃G, L2⦄ ⊢ T2 ➡[n1-n2,h] T & T2 ≛ T.
+           λG,L0,T0. ⦃G,L0⦄ ⊢ T0 ![a,h] →
+           ∀n1,T1. ⦃G,L0⦄ ⊢ T0 ➡[n1,h] T1 → T0 ≛ T1 →
+           ∀n2,T2. ⦃G,L0⦄ ⊢ T0 ➡[n2,h] T2 → T0 ≛ T2 →
+           ∀L1. ⦃G,L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G,L0⦄ ⊢ ➡[h] L2 →
+           ∃∃T. ⦃G,L1⦄ ⊢ T1 ➡[n2-n1,h] T & T1 ≛ T & ⦃G,L2⦄ ⊢ T2 ➡[n1-n2,h] T & T2 ≛ T.
 
 (* Diamond propery with restricted rt-transition for terms ******************)
 
 fact cnv_cpm_tdeq_conf_lpr_atom_atom_aux (h) (G0) (L1) (L2) (I):
-     ∃∃T. ⦃G0,L1⦄ ⊢ ⓪{I} ➡[h] T & ⓪{I} ≛ T & ⦃G0, L2⦄ ⊢ ⓪{I} ➡[h] T & ⓪{I} ≛ T.
+     ∃∃T. ⦃G0,L1⦄ ⊢ ⓪{I} ➡[h] T & ⓪{I} ≛ T & ⦃G0,L2⦄ ⊢ ⓪{I} ➡[h] T & ⓪{I} ≛ T.
 #h #G0 #L1 #L2 #I
 /2 width=5 by ex4_intro/
 qed-.

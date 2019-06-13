@@ -21,10 +21,10 @@ include "basic_2/rt_transition/lpr_lpx.ma".
 
 (* Basic_2A1: includes: fleq_fpbq fpbq_lleq *)
 inductive fpbq (h) (G1) (L1) (T1): relation3 genv lenv term ≝
-| fpbq_fquq: ∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊐⸮ ⦃G2, L2, T2⦄ → fpbq h G1 L1 T1 G2 L2 T2
-| fpbq_cpx : ∀T2. ⦃G1, L1⦄ ⊢ T1 ⬈[h] T2 → fpbq h G1 L1 T1 G1 L1 T2
-| fpbq_lpx : ∀L2. ⦃G1, L1⦄ ⊢ ⬈[h] L2 → fpbq h G1 L1 T1 G1 L2 T1
-| fpbq_fdeq: ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≛ ⦃G2, L2, T2⦄ → fpbq h G1 L1 T1 G2 L2 T2
+| fpbq_fquq: ∀G2,L2,T2. ⦃G1,L1,T1⦄ ⊐⸮ ⦃G2,L2,T2⦄ → fpbq h G1 L1 T1 G2 L2 T2
+| fpbq_cpx : ∀T2. ⦃G1,L1⦄ ⊢ T1 ⬈[h] T2 → fpbq h G1 L1 T1 G1 L1 T2
+| fpbq_lpx : ∀L2. ⦃G1,L1⦄ ⊢ ⬈[h] L2 → fpbq h G1 L1 T1 G1 L2 T1
+| fpbq_fdeq: ∀G2,L2,T2. ⦃G1,L1,T1⦄ ≛ ⦃G2,L2,T2⦄ → fpbq h G1 L1 T1 G2 L2 T2
 .
 
 interpretation
@@ -37,10 +37,10 @@ lemma fpbq_refl (h): tri_reflexive … (fpbq h).
 /2 width=1 by fpbq_cpx/ qed.
 
 (* Basic_2A1: includes: cpr_fpbq *)
-lemma cpm_fpbq (n) (h) (G) (L): ∀T1,T2. ⦃G, L⦄ ⊢ T1 ➡[n, h] T2 → ⦃G, L, T1⦄ ≽[h] ⦃G, L, T2⦄. 
+lemma cpm_fpbq (n) (h) (G) (L): ∀T1,T2. ⦃G,L⦄ ⊢ T1 ➡[n,h] T2 → ⦃G,L,T1⦄ ≽[h] ⦃G,L,T2⦄. 
 /3 width=2 by fpbq_cpx, cpm_fwd_cpx/ qed.
 
-lemma lpr_fpbq (h) (G) (T): ∀L1,L2. ⦃G, L1⦄ ⊢ ➡[h] L2 → ⦃G, L1, T⦄ ≽[h] ⦃G, L2, T⦄.
+lemma lpr_fpbq (h) (G) (T): ∀L1,L2. ⦃G,L1⦄ ⊢ ➡[h] L2 → ⦃G,L1,T⦄ ≽[h] ⦃G,L2,T⦄.
 /3 width=1 by fpbq_lpx, lpr_fwd_lpx/ qed.
 
 (* Basic_2A1: removed theorems 2:

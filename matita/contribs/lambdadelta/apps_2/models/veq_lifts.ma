@@ -22,7 +22,7 @@ include "apps_2/models/veq.ma".
 
 fact lifts_fwd_vpush_aux (M): is_model M → is_extensional M →
                               ∀f,T1,T2. ⬆*[f] T1 ≘ T2 → ∀m. 𝐁❴m,1❵ = f →
-                              ∀gv,lv,d. ⟦T1⟧[gv, lv] ≗{M} ⟦T2⟧[gv, ⫯[m←d]lv].
+                              ∀gv,lv,d. ⟦T1⟧[gv,lv] ≗{M} ⟦T2⟧[gv,⫯[m←d]lv].
 #M #H1M #H2M #f #T1 #T2 #H elim H -f -T1 -T2
 [ #f #s #m #Hf #gv #lv #d
   @(mq … H1M) [4,5: /3 width=2 by seq_sym, ms/ |1,2: skip ]
@@ -67,5 +67,5 @@ qed-.
 
 lemma lifts_SO_fwd_vpush (M) (gv): is_model M → is_extensional M →
                                    ∀T1,T2. ⬆*[1] T1 ≘ T2 →
-                                   ∀lv,d. ⟦T1⟧[gv, lv] ≗{M} ⟦T2⟧[gv, ⫯[0←d]lv].
+                                   ∀lv,d. ⟦T1⟧[gv,lv] ≗{M} ⟦T2⟧[gv,⫯[0←d]lv].
 /2 width=3 by lifts_fwd_vpush_aux/ qed-.

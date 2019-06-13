@@ -32,7 +32,7 @@ lemma rdeq_inv_lifts_dx: f_dropable_dx cdeq.
 /2 width=5 by rex_dropable_dx/ qed-.
 
 lemma rdeq_inv_lifts_bi: ∀L1,L2,U. L1 ≛[U] L2 → ∀b,f. 𝐔⦃f⦄ →
-                         ∀K1,K2. ⬇*[b, f] L1 ≘ K1 → ⬇*[b, f] L2 ≘ K2 →
+                         ∀K1,K2. ⬇*[b,f] L1 ≘ K1 → ⬇*[b,f] L2 ≘ K2 →
                          ∀T. ⬆*[f] T ≘ U → K1 ≛[T] K2.
 /2 width=10 by rex_inv_lifts_bi/ qed-.
 

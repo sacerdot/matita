@@ -19,7 +19,7 @@ include "basic_2/rt_computation/cpms.ma".
 (* EVALUATION FOR T-UNBOUND RT-TRANSITION ON TERMS **************************)
 
 definition cpue (h) (G) (L): relation2 term term ≝
-           λT1,T2. ∃∃n. ⦃G, L⦄ ⊢ T1 ➡*[n,h] T2 & ⦃G, L⦄ ⊢ ⥲[h] 𝐍⦃T2⦄.
+           λT1,T2. ∃∃n. ⦃G,L⦄ ⊢ T1 ➡*[n,h] T2 & ⦃G,L⦄ ⊢ ⥲[h] 𝐍⦃T2⦄.
 
 interpretation "evaluation for t-unbound context-sensitive parallel rt-transition (term)"
    'PRedITEval h G L T1 T2 = (cpue h G L T1 T2).

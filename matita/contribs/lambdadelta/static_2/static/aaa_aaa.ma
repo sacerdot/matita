@@ -18,7 +18,7 @@ include "static_2/static/aaa.ma".
 
 (* Main inversion lemmas ****************************************************)
 
-theorem aaa_mono: ∀G,L,T,A1. ⦃G, L⦄ ⊢ T ⁝ A1 → ∀A2. ⦃G, L⦄ ⊢ T ⁝ A2 → A1 = A2.
+theorem aaa_mono: ∀G,L,T,A1. ⦃G,L⦄ ⊢ T ⁝ A1 → ∀A2. ⦃G,L⦄ ⊢ T ⁝ A2 → A1 = A2.
 #G #L #T #A1 #H elim H -G -L -T -A1
 [ #G #L #s #A2 #H >(aaa_inv_sort … H) -H //
 | #I1 #G #L #V1 #B #_ #IH #A2 #H

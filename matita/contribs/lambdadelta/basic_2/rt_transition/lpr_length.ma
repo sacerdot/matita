@@ -17,5 +17,5 @@ include "basic_2/rt_transition/lpr.ma".
 
 (* PARALLEL R-TRANSITION FOR FULL LOCAL ENVIRONMENTS ************************)
 
-lemma lpr_fwd_length (h) (G): ∀L1,L2. ⦃G, L1⦄ ⊢ ➡[h] L2 → |L1| = |L2|.
+lemma lpr_fwd_length (h) (G): ∀L1,L2. ⦃G,L1⦄ ⊢ ➡[h] L2 → |L1| = |L2|.
 /2 width=2 by lex_fwd_length/ qed-.

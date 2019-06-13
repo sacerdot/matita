@@ -22,7 +22,7 @@ include "basic_2/rt_computation/cpue.ma".
 (* Properties with strong normalization for unbound rt-transition for terms *)
 
 lemma cpue_total_csx (h) (G) (L):
-      ∀T1. ⦃G, L⦄ ⊢ ⬈*[h] 𝐒⦃T1⦄ → ∃T2. ⦃G, L⦄ ⊢ T1 ⥲*[h] 𝐍⦃T2⦄.
+      ∀T1. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃T1⦄ → ∃T2. ⦃G,L⦄ ⊢ T1 ⥲*[h] 𝐍⦃T2⦄.
 #h #G #L #T1 #H
 @(csx_ind … H) -T1 #T1 #_ #IHT1
 elim (cnu_dec_tdeq h G L T1) [ /3 width=4 by ex2_intro, ex_intro/ ] *

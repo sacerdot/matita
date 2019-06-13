@@ -22,7 +22,7 @@ include "static_2/static/aaa.ma".
 (* Advanced properties ******************************************************)
 
 (* Basic_2A1: was: aaa_lref *)
-lemma aaa_lref_drops: ∀I,G,K,V,B,i,L. ⬇*[i] L ≘ K.ⓑ{I}V → ⦃G, K⦄ ⊢ V ⁝ B → ⦃G, L⦄ ⊢ #i ⁝ B.
+lemma aaa_lref_drops: ∀I,G,K,V,B,i,L. ⬇*[i] L ≘ K.ⓑ{I}V → ⦃G,K⦄ ⊢ V ⁝ B → ⦃G,L⦄ ⊢ #i ⁝ B.
 #I #G #K #V #B #i elim i -i
 [ #L #H lapply (drops_fwd_isid … H ?) -H //
   #H destruct /2 width=1 by aaa_zero/
@@ -34,8 +34,8 @@ qed.
 (* Advanced inversion lemmas ************************************************)
 
 (* Basic_2A1: was: aaa_inv_lref *)
-lemma aaa_inv_lref_drops: ∀G,A,i,L. ⦃G, L⦄ ⊢ #i ⁝ A →
-                          ∃∃I,K,V. ⬇*[i] L ≘ K.ⓑ{I}V & ⦃G, K⦄ ⊢ V ⁝ A.
+lemma aaa_inv_lref_drops: ∀G,A,i,L. ⦃G,L⦄ ⊢ #i ⁝ A →
+                          ∃∃I,K,V. ⬇*[i] L ≘ K.ⓑ{I}V & ⦃G,K⦄ ⊢ V ⁝ A.
 #G #A #i elim i -i
 [ #L #H elim (aaa_inv_zero … H) -H /3 width=5 by drops_refl, ex2_3_intro/
 | #i #IH #L #H elim (aaa_inv_lref … H) -H
@@ -47,8 +47,8 @@ qed-.
 
 (* Basic_2A1: includes: aaa_lift *)
 (* Note: it should use drops_split_trans_pair2 *)
-lemma aaa_lifts: ∀G,L1,T1,A. ⦃G, L1⦄ ⊢ T1 ⁝ A → ∀b,f,L2. ⬇*[b, f] L2 ≘ L1 →
-                 ∀T2. ⬆*[f] T1 ≘ T2 → ⦃G, L2⦄ ⊢ T2 ⁝ A.
+lemma aaa_lifts: ∀G,L1,T1,A. ⦃G,L1⦄ ⊢ T1 ⁝ A → ∀b,f,L2. ⬇*[b,f] L2 ≘ L1 →
+                 ∀T2. ⬆*[f] T1 ≘ T2 → ⦃G,L2⦄ ⊢ T2 ⁝ A.
 @(fqup_wf_ind_eq (Ⓣ)) #G0 #L0 #T0 #IH #G #L1 * *
 [ #s #HG #HL #HT #A #H #b #f #L2 #HL21 #X #HX -b -IH
   lapply (aaa_inv_sort … H) -H #H destruct
@@ -86,8 +86,8 @@ qed-.
 (* Inversion lemmas with generic slicing for local environments *************)
 
 (* Basic_2A1: includes: aaa_inv_lift *)
-lemma aaa_inv_lifts: ∀G,L2,T2,A. ⦃G, L2⦄ ⊢ T2 ⁝ A → ∀b,f,L1. ⬇*[b, f] L2 ≘ L1 →
-                     ∀T1. ⬆*[f] T1 ≘ T2 → ⦃G, L1⦄ ⊢ T1 ⁝ A.
+lemma aaa_inv_lifts: ∀G,L2,T2,A. ⦃G,L2⦄ ⊢ T2 ⁝ A → ∀b,f,L1. ⬇*[b,f] L2 ≘ L1 →
+                     ∀T1. ⬆*[f] T1 ≘ T2 → ⦃G,L1⦄ ⊢ T1 ⁝ A.
 @(fqup_wf_ind_eq (Ⓣ)) #G0 #L0 #T0 #IH #G #L2 * *
 [ #s #HG #HL #HT #A #H #b #f #L1 #HL21 #X #HX -b -IH
   lapply (aaa_inv_sort … H) -H #H destruct

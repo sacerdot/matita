@@ -46,8 +46,8 @@ qed-.
 
 (* Advanced properties ******************************************************)
 
-lemma cpms_delta (n) (h) (G): ∀K,V1,V2. ⦃G, K⦄ ⊢ V1 ➡*[n, h] V2 →
-                              ∀W2. ⬆*[1] V2 ≘ W2 → ⦃G, K.ⓓV1⦄ ⊢ #0 ➡*[n, h] W2.
+lemma cpms_delta (n) (h) (G): ∀K,V1,V2. ⦃G,K⦄ ⊢ V1 ➡*[n,h] V2 →
+                              ∀W2. ⬆*[1] V2 ≘ W2 → ⦃G,K.ⓓV1⦄ ⊢ #0 ➡*[n,h] W2.
 #n #h #G #K #V1 #V2 #H @(cpms_ind_dx … H) -V2
 [ /3 width=3 by cpm_cpms, cpm_delta/
 | #n1 #n2 #V #V2 #_ #IH #HV2 #W2 #HVW2
@@ -56,8 +56,8 @@ lemma cpms_delta (n) (h) (G): ∀K,V1,V2. ⦃G, K⦄ ⊢ V1 ➡*[n, h] V2 →
 ]
 qed.
 
-lemma cpms_ell (n) (h) (G): ∀K,V1,V2. ⦃G, K⦄ ⊢ V1 ➡*[n, h] V2 →
-                            ∀W2. ⬆*[1] V2 ≘ W2 → ⦃G, K.ⓛV1⦄ ⊢ #0 ➡*[↑n, h] W2.
+lemma cpms_ell (n) (h) (G): ∀K,V1,V2. ⦃G,K⦄ ⊢ V1 ➡*[n,h] V2 →
+                            ∀W2. ⬆*[1] V2 ≘ W2 → ⦃G,K.ⓛV1⦄ ⊢ #0 ➡*[↑n,h] W2.
 #n #h #G #K #V1 #V2 #H @(cpms_ind_dx … H) -V2
 [ /3 width=3 by cpm_cpms, cpm_ell/
 | #n1 #n2 #V #V2 #_ #IH #HV2 #W2 #HVW2
@@ -66,8 +66,8 @@ lemma cpms_ell (n) (h) (G): ∀K,V1,V2. ⦃G, K⦄ ⊢ V1 ➡*[n, h] V2 →
 ]
 qed.
 
-lemma cpms_lref (n) (h) (I) (G): ∀K,T,i. ⦃G, K⦄ ⊢ #i ➡*[n, h] T →
-                                 ∀U. ⬆*[1] T ≘ U → ⦃G, K.ⓘ{I}⦄ ⊢ #↑i ➡*[n, h] U.
+lemma cpms_lref (n) (h) (I) (G): ∀K,T,i. ⦃G,K⦄ ⊢ #i ➡*[n,h] T →
+                                 ∀U. ⬆*[1] T ≘ U → ⦃G,K.ⓘ{I}⦄ ⊢ #↑i ➡*[n,h] U.
 #n #h #I #G #K #T #i #H @(cpms_ind_dx … H) -T
 [ /3 width=3 by cpm_cpms, cpm_lref/
 | #n1 #n2 #T #T2 #_ #IH #HT2 #U2 #HTU2
@@ -77,9 +77,9 @@ lemma cpms_lref (n) (h) (I) (G): ∀K,T,i. ⦃G, K⦄ ⊢ #i ➡*[n, h] T →
 qed.
 
 lemma cpms_cast_sn (n) (h) (G) (L):
-                   ∀U1,U2. ⦃G, L⦄ ⊢ U1 ➡*[n, h] U2 →
-                   ∀T1,T2. ⦃G, L⦄ ⊢ T1 ➡[n, h] T2 →
-                   ⦃G, L⦄ ⊢ ⓝU1.T1 ➡*[n, h] ⓝU2.T2.
+                   ∀U1,U2. ⦃G,L⦄ ⊢ U1 ➡*[n,h] U2 →
+                   ∀T1,T2. ⦃G,L⦄ ⊢ T1 ➡[n,h] T2 →
+                   ⦃G,L⦄ ⊢ ⓝU1.T1 ➡*[n,h] ⓝU2.T2.
 #n #h #G #L #U1 #U2 #H @(cpms_ind_sn … H) -U1 -n
 [ /3 width=3 by cpm_cpms, cpm_cast/
 | #n1 #n2 #U1 #U #HU1 #_ #IH #T1 #T2 #H
@@ -92,8 +92,8 @@ qed.
 (* Basic_2A1: uses: cprs_delta *)
 lemma cpms_delta_drops (n) (h) (G):
                        ∀L,K,V,i. ⬇*[i] L ≘ K.ⓓV →
-                       ∀V2. ⦃G, K⦄ ⊢ V ➡*[n, h] V2 →
-                       ∀W2. ⬆*[↑i] V2 ≘ W2 → ⦃G, L⦄ ⊢ #i ➡*[n, h] W2.
+                       ∀V2. ⦃G,K⦄ ⊢ V ➡*[n,h] V2 →
+                       ∀W2. ⬆*[↑i] V2 ≘ W2 → ⦃G,L⦄ ⊢ #i ➡*[n,h] W2.
 #n #h #G #L #K #V #i #HLK #V2 #H @(cpms_ind_dx … H) -V2
 [ /3 width=6 by cpm_cpms, cpm_delta_drops/
 | #n1 #n2 #V1 #V2 #_ #IH #HV12 #W2 #HVW2
@@ -105,8 +105,8 @@ qed.
 
 lemma cpms_ell_drops (n) (h) (G):
                      ∀L,K,W,i. ⬇*[i] L ≘ K.ⓛW →
-                     ∀W2. ⦃G, K⦄ ⊢ W ➡*[n, h] W2 →
-                     ∀V2. ⬆*[↑i] W2 ≘ V2 → ⦃G, L⦄ ⊢ #i ➡*[↑n, h] V2.
+                     ∀W2. ⦃G,K⦄ ⊢ W ➡*[n,h] W2 →
+                     ∀V2. ⬆*[↑i] W2 ≘ V2 → ⦃G,L⦄ ⊢ #i ➡*[↑n,h] V2.
 #n #h #G #L #K #W #i #HLK #W2 #H @(cpms_ind_dx … H) -W2
 [ /3 width=6 by cpm_cpms, cpm_ell_drops/
 | #n1 #n2 #W1 #W2 #_ #IH #HW12 #V2 #HWV2
@@ -119,11 +119,11 @@ qed.
 (* Advanced inversion lemmas ************************************************)
 
 lemma cpms_inv_lref1_drops (n) (h) (G):
-                           ∀L,T2,i. ⦃G, L⦄ ⊢ #i ➡*[n, h] T2 →
+                           ∀L,T2,i. ⦃G,L⦄ ⊢ #i ➡*[n,h] T2 →
                            ∨∨ ∧∧ T2 = #i & n = 0
-                            | ∃∃K,V,V2. ⬇*[i] L ≘ K.ⓓV & ⦃G, K⦄ ⊢ V ➡*[n, h] V2 &
+                            | ∃∃K,V,V2. ⬇*[i] L ≘ K.ⓓV & ⦃G,K⦄ ⊢ V ➡*[n,h] V2 &
                                         ⬆*[↑i] V2 ≘ T2
-                            | ∃∃m,K,V,V2. ⬇*[i] L ≘ K.ⓛV & ⦃G, K⦄ ⊢ V ➡*[m, h] V2 &
+                            | ∃∃m,K,V,V2. ⬇*[i] L ≘ K.ⓛV & ⦃G,K⦄ ⊢ V ➡*[m,h] V2 &
                                           ⬆*[↑i] V2 ≘ T2 & n = ↑m.
 #n #h #G #L #T2 #i #H @(cpms_ind_dx … H) -T2
 [ /3 width=1 by or3_intro0, conj/
@@ -197,8 +197,8 @@ elim (cpms_inv_lref1_drops … H) -H *
 qed-.
 
 fact cpms_inv_succ_sn (n) (h) (G) (L):
-                      ∀T1,T2. ⦃G, L⦄ ⊢ T1 ➡*[↑n, h] T2 →
-                      ∃∃T. ⦃G, L⦄ ⊢ T1 ➡*[1, h] T & ⦃G, L⦄ ⊢ T ➡*[n, h] T2.
+                      ∀T1,T2. ⦃G,L⦄ ⊢ T1 ➡*[↑n,h] T2 →
+                      ∃∃T. ⦃G,L⦄ ⊢ T1 ➡*[1,h] T & ⦃G,L⦄ ⊢ T ➡*[n,h] T2.
 #n #h #G #L #T1 #T2
 @(insert_eq_0 … (↑n)) #m #H
 @(cpms_ind_sn … H) -T1 -m

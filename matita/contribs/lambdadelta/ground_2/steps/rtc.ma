@@ -43,7 +43,7 @@ definition eq_f: relation rtc ≝ λc1,c2. ⊤.
 
 inductive eq_t: relation rtc ≝
 | eq_t_intro: ∀ri1,ri2,rs1,rs2,ti,ts.
-              eq_t (〈ri1, rs1, ti, ts〉) (〈ri2, rs2, ti, ts〉)
+              eq_t (〈ri1,rs1,ti,ts〉) (〈ri2,rs2,ti,ts〉)
 .
 
 (* Basic properties *********************************************************)

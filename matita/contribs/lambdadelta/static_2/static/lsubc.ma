@@ -21,7 +21,7 @@ include "static_2/static/gcp_cr.ma".
 inductive lsubc (RP) (G): relation lenv ≝
 | lsubc_atom: lsubc RP G (⋆) (⋆)
 | lsubc_bind: ∀I,L1,L2. lsubc RP G L1 L2 → lsubc RP G (L1.ⓘ{I}) (L2.ⓘ{I})
-| lsubc_beta: ∀L1,L2,V,W,A. ⦃G, L1, V⦄ ϵ[RP] 〚A〛 → ⦃G, L1, W⦄ ϵ[RP] 〚A〛 → ⦃G, L2⦄ ⊢ W ⁝ A →
+| lsubc_beta: ∀L1,L2,V,W,A. ⦃G,L1,V⦄ ϵ[RP] 〚A〛 → ⦃G,L1,W⦄ ϵ[RP] 〚A〛 → ⦃G,L2⦄ ⊢ W ⁝ A →
               lsubc RP G L1 L2 → lsubc RP G (L1. ⓓⓝW.V) (L2.ⓛW)
 .
 
@@ -45,7 +45,7 @@ lemma lsubc_inv_atom1: ∀RP,G,L2. G ⊢ ⋆ ⫃[RP] L2 → L2 = ⋆.
 
 fact lsubc_inv_bind1_aux: ∀RP,G,L1,L2. G ⊢ L1 ⫃[RP] L2 → ∀I,K1. L1 = K1.ⓘ{I} →
                           (∃∃K2. G ⊢ K1 ⫃[RP] K2 & L2 = K2.ⓘ{I}) ∨
-                          ∃∃K2,V,W,A. ⦃G, K1, V⦄ ϵ[RP] 〚A〛 & ⦃G, K1, W⦄ ϵ[RP] 〚A〛 & ⦃G, K2⦄ ⊢ W ⁝ A &
+                          ∃∃K2,V,W,A. ⦃G,K1,V⦄ ϵ[RP] 〚A〛 & ⦃G,K1,W⦄ ϵ[RP] 〚A〛 & ⦃G,K2⦄ ⊢ W ⁝ A &
                                       G ⊢ K1 ⫃[RP] K2 &
                                       L2 = K2. ⓛW & I = BPair Abbr (ⓝW.V).
 #RP #G #L1 #L2 * -L1 -L2
@@ -59,7 +59,7 @@ qed-.
 (* Basic_1: was: csubc_gen_head_r *)
 lemma lsubc_inv_bind1: ∀RP,I,G,K1,L2. G ⊢ K1.ⓘ{I} ⫃[RP] L2 →
                        (∃∃K2. G ⊢ K1 ⫃[RP] K2 & L2 = K2.ⓘ{I}) ∨
-                       ∃∃K2,V,W,A. ⦃G, K1, V⦄ ϵ[RP] 〚A〛 & ⦃G, K1, W⦄ ϵ[RP] 〚A〛 & ⦃G, K2⦄ ⊢ W ⁝ A &
+                       ∃∃K2,V,W,A. ⦃G,K1,V⦄ ϵ[RP] 〚A〛 & ⦃G,K1,W⦄ ϵ[RP] 〚A〛 & ⦃G,K2⦄ ⊢ W ⁝ A &
                                    G ⊢ K1 ⫃[RP] K2 &
                                    L2 = K2.ⓛW & I = BPair Abbr (ⓝW.V).
 /2 width=3 by lsubc_inv_bind1_aux/ qed-.
@@ -78,7 +78,7 @@ lemma lsubc_inv_atom2: ∀RP,G,L1. G ⊢ L1 ⫃[RP] ⋆ → L1 = ⋆.
 
 fact lsubc_inv_bind2_aux: ∀RP,G,L1,L2. G ⊢ L1 ⫃[RP] L2 → ∀I,K2. L2 = K2.ⓘ{I} →
                           (∃∃K1. G ⊢ K1 ⫃[RP] K2 & L1 = K1. ⓘ{I}) ∨
-                          ∃∃K1,V,W,A. ⦃G, K1, V⦄ ϵ[RP] 〚A〛 & ⦃G, K1, W⦄ ϵ[RP] 〚A〛 & ⦃G, K2⦄ ⊢ W ⁝ A &
+                          ∃∃K1,V,W,A. ⦃G,K1,V⦄ ϵ[RP] 〚A〛 & ⦃G,K1,W⦄ ϵ[RP] 〚A〛 & ⦃G,K2⦄ ⊢ W ⁝ A &
                                       G ⊢ K1 ⫃[RP] K2 &
                                       L1 = K1.ⓓⓝW.V & I = BPair Abst W.
 #RP #G #L1 #L2 * -L1 -L2
@@ -92,7 +92,7 @@ qed-.
 (* Basic_1: was just: csubc_gen_head_l *)
 lemma lsubc_inv_bind2: ∀RP,I,G,L1,K2. G ⊢ L1 ⫃[RP] K2.ⓘ{I} →
                        (∃∃K1. G ⊢ K1 ⫃[RP] K2 & L1 = K1.ⓘ{I}) ∨
-                       ∃∃K1,V,W,A. ⦃G, K1, V⦄ ϵ[RP] 〚A〛 & ⦃G, K1, W⦄ ϵ[RP] 〚A〛 & ⦃G, K2⦄ ⊢ W ⁝ A &
+                       ∃∃K1,V,W,A. ⦃G,K1,V⦄ ϵ[RP] 〚A〛 & ⦃G,K1,W⦄ ϵ[RP] 〚A〛 & ⦃G,K2⦄ ⊢ W ⁝ A &
                                    G ⊢ K1 ⫃[RP] K2 &
                                    L1 = K1.ⓓⓝW.V & I = BPair Abst W.
 /2 width=3 by lsubc_inv_bind2_aux/ qed-.

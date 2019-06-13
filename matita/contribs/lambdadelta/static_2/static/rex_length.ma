@@ -20,14 +20,14 @@ include "static_2/static/rex_drops.ma".
 (* Forward lemmas with length for local environments ************************)
 
 (* Basic_2A1: uses: llpx_sn_fwd_length *)
-lemma rex_fwd_length (R): ∀L1,L2,T. L1 ⪤[R, T] L2 → |L1| = |L2|.
+lemma rex_fwd_length (R): ∀L1,L2,T. L1 ⪤[R,T] L2 → |L1| = |L2|.
 #R #L1 #L2 #T * /2 width=4 by sex_fwd_length/
 qed-.
 
 (* Properties with length for local environments ****************************)
 
 (* Basic_2A1: uses: llpx_sn_sort *)
-lemma rex_sort_length (R): ∀L1,L2. |L1| = |L2| → ∀s. L1 ⪤[R, ⋆s] L2.
+lemma rex_sort_length (R): ∀L1,L2. |L1| = |L2| → ∀s. L1 ⪤[R,⋆s] L2.
 #R #L1 elim L1 -L1
 [ #Y #H #s >(length_inv_zero_sn … H) -H //
 | #K1 #I1 #IH #Y #H #s
@@ -37,7 +37,7 @@ lemma rex_sort_length (R): ∀L1,L2. |L1| = |L2| → ∀s. L1 ⪤[R, ⋆s] L2.
 qed.
 
 (* Basic_2A1: uses: llpx_sn_gref *)
-lemma rex_gref_length (R): ∀L1,L2. |L1| = |L2| → ∀l. L1 ⪤[R, §l] L2.
+lemma rex_gref_length (R): ∀L1,L2. |L1| = |L2| → ∀l. L1 ⪤[R,§l] L2.
 #R #L1 elim L1 -L1
 [ #Y #H #s >(length_inv_zero_sn … H) -H //
 | #K1 #I1 #IH #Y #H #s
@@ -46,14 +46,14 @@ lemma rex_gref_length (R): ∀L1,L2. |L1| = |L2| → ∀l. L1 ⪤[R, §l] L2.
 ]
 qed.
 
-lemma rex_unit_length (R): ∀L1,L2. |L1| = |L2| → ∀I. L1.ⓤ{I} ⪤[R, #0] L2.ⓤ{I}.
+lemma rex_unit_length (R): ∀L1,L2. |L1| = |L2| → ∀I. L1.ⓤ{I} ⪤[R,#0] L2.ⓤ{I}.
 /3 width=3 by rex_unit, sex_length_isid/ qed.
 
 (* Basic_2A1: uses: llpx_sn_lift_le llpx_sn_lift_ge *)
 lemma rex_lifts_bi (R): d_liftable2_sn … lifts R →
-                        ∀L1,L2. |L1| = |L2| → ∀K1,K2,T. K1 ⪤[R, T] K2 →
-                        ∀b,f. ⬇*[b, f] L1 ≘ K1 → ⬇*[b, f] L2 ≘ K2 →
-                        ∀U. ⬆*[f] T ≘ U → L1 ⪤[R, U] L2.
+                        ∀L1,L2. |L1| = |L2| → ∀K1,K2,T. K1 ⪤[R,T] K2 →
+                        ∀b,f. ⬇*[b,f] L1 ≘ K1 → ⬇*[b,f] L2 ≘ K2 →
+                        ∀U. ⬆*[f] T ≘ U → L1 ⪤[R,U] L2.
 #R #HR #L1 #L2 #HL12 #K1 #K2 #T * #f1 #Hf1 #HK12 #b #f #HLK1 #HLK2 #U #HTU
 elim (frees_total L1 U) #f2 #Hf2
 lapply (frees_fwd_coafter … Hf2 … HLK1 … HTU … Hf1) -HTU #Hf
@@ -62,9 +62,9 @@ qed-.
 
 (* Inversion lemmas with length for local environment ***********************)
 
-lemma rex_inv_zero_length (R): ∀Y1,Y2. Y1 ⪤[R, #0] Y2 →
+lemma rex_inv_zero_length (R): ∀Y1,Y2. Y1 ⪤[R,#0] Y2 →
                                ∨∨ ∧∧ Y1 = ⋆ & Y2 = ⋆
-                                | ∃∃I,L1,L2,V1,V2. L1 ⪤[R, V1] L2 & R L1 V1 V2 &
+                                | ∃∃I,L1,L2,V1,V2. L1 ⪤[R,V1] L2 & R L1 V1 V2 &
                                                    Y1 = L1.ⓑ{I}V1 & Y2 = L2.ⓑ{I}V2
                                 | ∃∃I,L1,L2. |L1| = |L2| & Y1 = L1.ⓤ{I} & Y2 = L2.ⓤ{I}.
 #R #Y1 #Y2 #H elim (rex_inv_zero … H) -H *

@@ -19,10 +19,10 @@ include "static_2/static/fsle_fqup.ma".
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma fsle_frees_trans: ∀L1,L2,T1,T2. ⦃L1, T1⦄ ⊆ ⦃L2, T2⦄ →
+lemma fsle_frees_trans: ∀L1,L2,T1,T2. ⦃L1,T1⦄ ⊆ ⦃L2,T2⦄ →
                         ∀f2. L2 ⊢ 𝐅*⦃T2⦄ ≘ f2 →
                         ∃∃n1,n2,f1. L1 ⊢ 𝐅*⦃T1⦄ ≘ f1 &
-                                    L1 ≋ⓧ*[n1, n2] L2 & ⫱*[n1]f1 ⊆ ⫱*[n2]f2.
+                                    L1 ≋ⓧ*[n1,n2] L2 & ⫱*[n1]f1 ⊆ ⫱*[n2]f2.
 #L1 #L2 #T1 #T2 * #n1 #n2 #f1 #g2 #Hf1 #Hg2 #HL #Hn #f2 #Hf2
 lapply (frees_mono … Hg2 … Hf2) -Hg2 -Hf2 #Hgf2
 lapply (tls_eq_repl n2 … Hgf2) -Hgf2 #Hgf2
@@ -31,7 +31,7 @@ lapply (sle_eq_repl_back2 … Hn … Hgf2) -g2
 qed-.
 
 lemma fsle_frees_trans_eq: ∀L1,L2. |L1| = |L2| →
-                           ∀T1,T2. ⦃L1, T1⦄ ⊆ ⦃L2, T2⦄ → ∀f2. L2 ⊢ 𝐅*⦃T2⦄ ≘ f2 →
+                           ∀T1,T2. ⦃L1,T1⦄ ⊆ ⦃L2,T2⦄ → ∀f2. L2 ⊢ 𝐅*⦃T2⦄ ≘ f2 →
                            ∃∃f1. L1 ⊢ 𝐅*⦃T1⦄ ≘ f1 & f1 ⊆ f2.
 #L1 #L2 #H1L #T1 #T2 #H2L #f2 #Hf2
 elim (fsle_frees_trans … H2L … Hf2) -T2 #n1 #n2 #f1 #Hf1 #H2L #Hf12
@@ -40,7 +40,7 @@ elim (lveq_inj_length … H2L) // -L2 #H1 #H2 destruct
 qed-.
 
 lemma fsle_inv_frees_eq: ∀L1,L2. |L1| = |L2| →
-                         ∀T1,T2. ⦃L1, T1⦄ ⊆ ⦃L2, T2⦄ →
+                         ∀T1,T2. ⦃L1,T1⦄ ⊆ ⦃L2,T2⦄ →
                          ∀f1. L1 ⊢ 𝐅*⦃T1⦄ ≘ f1 → ∀f2. L2 ⊢ 𝐅*⦃T2⦄ ≘ f2 →
                          f1 ⊆ f2.
 #L1 #L2 #H1L #T1 #T2 #H2L #f1 #Hf1 #f2 #Hf2
@@ -50,8 +50,8 @@ qed-.
 
 (* Main properties **********************************************************)
 
-theorem fsle_trans_sn: ∀L1,L2,T1,T. ⦃L1, T1⦄ ⊆ ⦃L2, T⦄ →
-                       ∀T2. ⦃L2, T⦄ ⊆ ⦃L2, T2⦄ → ⦃L1, T1⦄ ⊆ ⦃L2, T2⦄.
+theorem fsle_trans_sn: ∀L1,L2,T1,T. ⦃L1,T1⦄ ⊆ ⦃L2,T⦄ →
+                       ∀T2. ⦃L2,T⦄ ⊆ ⦃L2,T2⦄ → ⦃L1,T1⦄ ⊆ ⦃L2,T2⦄.
 #L1 #L2 #T1 #T
 * #m1 #m0 #g1 #g0 #Hg1 #Hg0 #Hm #Hg
 #T2
@@ -62,8 +62,8 @@ lapply (sle_eq_repl_back1 … Hf … Hfg0) -f0
 /4 width=10 by sle_tls, sle_trans, ex4_4_intro/
 qed-.
 
-theorem fsle_trans_dx: ∀L1,T1,T. ⦃L1, T1⦄ ⊆ ⦃L1, T⦄ →
-                       ∀L2,T2. ⦃L1, T⦄ ⊆ ⦃L2, T2⦄ → ⦃L1, T1⦄ ⊆ ⦃L2, T2⦄.
+theorem fsle_trans_dx: ∀L1,T1,T. ⦃L1,T1⦄ ⊆ ⦃L1,T⦄ →
+                       ∀L2,T2. ⦃L1,T⦄ ⊆ ⦃L2,T2⦄ → ⦃L1,T1⦄ ⊆ ⦃L2,T2⦄.
 #L1 #T1 #T
 * #m1 #m0 #g1 #g0 #Hg1 #Hg0 #Hm #Hg
 #L2 #T2
@@ -74,8 +74,8 @@ lapply (sle_eq_repl_back2 … Hg … Hgf0) -g0
 /4 width=10 by sle_tls, sle_trans, ex4_4_intro/
 qed-.
 
-theorem fsle_trans_rc: ∀L1,L,T1,T. |L1| = |L| → ⦃L1, T1⦄ ⊆ ⦃L, T⦄ →
-                       ∀L2,T2. |L| = |L2| → ⦃L, T⦄ ⊆ ⦃L2, T2⦄ → ⦃L1, T1⦄ ⊆ ⦃L2, T2⦄.
+theorem fsle_trans_rc: ∀L1,L,T1,T. |L1| = |L| → ⦃L1,T1⦄ ⊆ ⦃L,T⦄ →
+                       ∀L2,T2. |L| = |L2| → ⦃L,T⦄ ⊆ ⦃L2,T2⦄ → ⦃L1,T1⦄ ⊆ ⦃L2,T2⦄.
 #L1 #L #T1 #T #HL1
 * #m1 #m0 #g1 #g0 #Hg1 #Hg0 #Hm #Hg
 #L2 #T2 #HL2
@@ -88,8 +88,8 @@ lapply (sle_eq_repl_back2 … Hg … Hgf0) -g0
 qed-.
 
 theorem fsle_bind_sn_ge: ∀L1,L2. |L2| ≤ |L1| →
-                         ∀V1,T1,T. ⦃L1, V1⦄ ⊆ ⦃L2, T⦄ → ⦃L1.ⓧ, T1⦄ ⊆ ⦃L2, T⦄ →
-                         ∀p,I. ⦃L1, ⓑ{p,I}V1.T1⦄ ⊆ ⦃L2, T⦄.
+                         ∀V1,T1,T. ⦃L1,V1⦄ ⊆ ⦃L2,T⦄ → ⦃L1.ⓧ,T1⦄ ⊆ ⦃L2,T⦄ →
+                         ∀p,I. ⦃L1,ⓑ{p,I}V1.T1⦄ ⊆ ⦃L2,T⦄.
 #L1 #L2 #HL #V1 #T1 #T * #n1 #x #f1 #g #Hf1 #Hg #H1n1 #H2n1 #H #p #I
 elim (fsle_frees_trans … H … Hg) -H #n2 #n #f2 #Hf2 #H1n2 #H2n2
 elim (lveq_inj_void_sn_ge … H1n1 … H1n2) -H1n2 // #H1 #H2 #H3 destruct
@@ -98,8 +98,8 @@ elim (sor_isfin_ex f1 (⫱f2)) /3 width=3 by frees_fwd_isfin, isfin_tl/ #f #Hf #
 /4 width=12 by frees_bind_void, sor_inv_sle, sor_tls, ex4_4_intro/
 qed.
 
-theorem fsle_flat_sn: ∀L1,L2,V1,T1,T. ⦃L1, V1⦄ ⊆ ⦃L2, T⦄ → ⦃L1, T1⦄ ⊆ ⦃L2, T⦄ →
-                      ∀I. ⦃L1, ⓕ{I}V1.T1⦄ ⊆ ⦃L2, T⦄.
+theorem fsle_flat_sn: ∀L1,L2,V1,T1,T. ⦃L1,V1⦄ ⊆ ⦃L2,T⦄ → ⦃L1,T1⦄ ⊆ ⦃L2,T⦄ →
+                      ∀I. ⦃L1,ⓕ{I}V1.T1⦄ ⊆ ⦃L2,T⦄.
 #L1 #L2 #V1 #T1 #T * #n1 #x #f1 #g #Hf1 #Hg #H1n1 #H2n1 #H #I
 elim (fsle_frees_trans … H … Hg) -H #n2 #n #f2 #Hf2 #H1n2 #H2n2
 elim (lveq_inj … H1n1 … H1n2) -H1n2 #H1 #H2 destruct
@@ -107,9 +107,9 @@ elim (sor_isfin_ex f1 f2) /2 width=3 by frees_fwd_isfin/ #f #Hf #_
 /4 width=12 by frees_flat, sor_inv_sle, sor_tls, ex4_4_intro/
 qed.
 
-theorem fsle_bind_eq: ∀L1,L2. |L1| = |L2| → ∀V1,V2. ⦃L1, V1⦄ ⊆ ⦃L2, V2⦄ →
-                      ∀I2,T1,T2. ⦃L1.ⓧ, T1⦄ ⊆ ⦃L2.ⓑ{I2}V2, T2⦄ →
-                      ∀p,I1. ⦃L1, ⓑ{p,I1}V1.T1⦄ ⊆ ⦃L2, ⓑ{p,I2}V2.T2⦄.
+theorem fsle_bind_eq: ∀L1,L2. |L1| = |L2| → ∀V1,V2. ⦃L1,V1⦄ ⊆ ⦃L2,V2⦄ →
+                      ∀I2,T1,T2. ⦃L1.ⓧ,T1⦄ ⊆ ⦃L2.ⓑ{I2}V2,T2⦄ →
+                      ∀p,I1. ⦃L1,ⓑ{p,I1}V1.T1⦄ ⊆ ⦃L2,ⓑ{p,I2}V2.T2⦄.
 #L1 #L2 #HL #V1 #V2
 * #n1 #m1 #f1 #g1 #Hf1 #Hg1 #H1L #Hfg1 #I2 #T1 #T2
 * #n2 #m2 #f2 #g2 #Hf2 #Hg2 #H2L #Hfg2 #p #I1
@@ -120,9 +120,9 @@ elim (sor_isfin_ex g1 (⫱g2)) /3 width=3 by frees_fwd_isfin, isfin_tl/ #g #Hg #
 /4 width=15 by frees_bind_void, frees_bind, monotonic_sle_sor, sle_tl, ex4_4_intro/
 qed.
 
-theorem fsle_bind: ∀L1,L2,V1,V2. ⦃L1, V1⦄ ⊆ ⦃L2, V2⦄ →
-                   ∀I1,I2,T1,T2. ⦃L1.ⓑ{I1}V1, T1⦄ ⊆ ⦃L2.ⓑ{I2}V2, T2⦄ →
-                   ∀p. ⦃L1, ⓑ{p,I1}V1.T1⦄ ⊆ ⦃L2, ⓑ{p,I2}V2.T2⦄.
+theorem fsle_bind: ∀L1,L2,V1,V2. ⦃L1,V1⦄ ⊆ ⦃L2,V2⦄ →
+                   ∀I1,I2,T1,T2. ⦃L1.ⓑ{I1}V1,T1⦄ ⊆ ⦃L2.ⓑ{I2}V2,T2⦄ →
+                   ∀p. ⦃L1,ⓑ{p,I1}V1.T1⦄ ⊆ ⦃L2,ⓑ{p,I2}V2.T2⦄.
 #L1 #L2 #V1 #V2
 * #n1 #m1 #f1 #g1 #Hf1 #Hg1 #H1L #Hfg1 #I1 #I2 #T1 #T2
 * #n2 #m2 #f2 #g2 #Hf2 #Hg2 #H2L #Hfg2 #p
@@ -133,7 +133,7 @@ elim (sor_isfin_ex g1 (⫱g2)) /3 width=3 by frees_fwd_isfin, isfin_tl/ #g #Hg #
 /4 width=15 by frees_bind, monotonic_sle_sor, sle_tl, ex4_4_intro/
 qed.
 
-theorem fsle_flat: ∀L1,L2,V1,V2. ⦃L1, V1⦄ ⊆ ⦃L2, V2⦄ →
-                   ∀T1,T2. ⦃L1, T1⦄ ⊆ ⦃L2, T2⦄ →
-                   ∀I1,I2. ⦃L1, ⓕ{I1}V1.T1⦄ ⊆ ⦃L2, ⓕ{I2}V2.T2⦄.
+theorem fsle_flat: ∀L1,L2,V1,V2. ⦃L1,V1⦄ ⊆ ⦃L2,V2⦄ →
+                   ∀T1,T2. ⦃L1,T1⦄ ⊆ ⦃L2,T2⦄ →
+                   ∀I1,I2. ⦃L1,ⓕ{I1}V1.T1⦄ ⊆ ⦃L2,ⓕ{I2}V2.T2⦄.
 /3 width=1 by fsle_flat_sn, fsle_flat_dx_dx, fsle_flat_dx_sn/ qed-.

@@ -30,11 +30,11 @@ interpretation
 (* Basic_2A1: uses: lsx_ind *)
 lemma rdsx_ind (h) (G) (T):
                ∀Q:predicate lenv.
-               (∀L1. G ⊢ ⬈*[h, T] 𝐒⦃L1⦄ →
-                     (∀L2. ⦃G, L1⦄ ⊢ ⬈[h] L2 → (L1 ≛[T] L2 → ⊥) → Q L2) →
+               (∀L1. G ⊢ ⬈*[h,T] 𝐒⦃L1⦄ →
+                     (∀L2. ⦃G,L1⦄ ⊢ ⬈[h] L2 → (L1 ≛[T] L2 → ⊥) → Q L2) →
                      Q L1
                ) →
-               ∀L. G ⊢ ⬈*[h, T] 𝐒⦃L⦄ →  Q L.
+               ∀L. G ⊢ ⬈*[h,T] 𝐒⦃L⦄ →  Q L.
 #h #G #T #Q #H0 #L1 #H elim H -L1
 /5 width=1 by SN_intro/
 qed-.
@@ -44,16 +44,16 @@ qed-.
 (* Basic_2A1: uses: lsx_intro *)
 lemma rdsx_intro (h) (G) (T):
                  ∀L1.
-                 (∀L2. ⦃G, L1⦄ ⊢ ⬈[h] L2 → (L1 ≛[T] L2 → ⊥) → G ⊢ ⬈*[h, T] 𝐒⦃L2⦄) →
-                 G ⊢ ⬈*[h, T] 𝐒⦃L1⦄.
+                 (∀L2. ⦃G,L1⦄ ⊢ ⬈[h] L2 → (L1 ≛[T] L2 → ⊥) → G ⊢ ⬈*[h,T] 𝐒⦃L2⦄) →
+                 G ⊢ ⬈*[h,T] 𝐒⦃L1⦄.
 /5 width=1 by SN_intro/ qed.
 
 (* Basic forward lemmas *****************************************************)
 
 (* Basic_2A1: uses: lsx_fwd_pair_sn lsx_fwd_bind_sn lsx_fwd_flat_sn *)
 lemma rdsx_fwd_pair_sn (h) (G):
-                       ∀I,L,V,T. G ⊢ ⬈*[h, ②{I}V.T] 𝐒⦃L⦄ →
-                       G ⊢ ⬈*[h, V] 𝐒⦃L⦄.
+                       ∀I,L,V,T. G ⊢ ⬈*[h,②{I}V.T] 𝐒⦃L⦄ →
+                       G ⊢ ⬈*[h,V] 𝐒⦃L⦄.
 #h #G #I #L #V #T #H
 @(rdsx_ind … H) -L #L1 #_ #IHL1
 @rdsx_intro #L2 #HL12 #HnL12
@@ -62,8 +62,8 @@ qed-.
 
 (* Basic_2A1: uses: lsx_fwd_flat_dx *)
 lemma rdsx_fwd_flat_dx (h) (G):
-                       ∀I,L,V,T. G ⊢ ⬈*[h, ⓕ{I}V.T] 𝐒⦃L⦄ →
-                       G ⊢ ⬈*[h, T] 𝐒⦃L⦄.
+                       ∀I,L,V,T. G ⊢ ⬈*[h,ⓕ{I}V.T] 𝐒⦃L⦄ →
+                       G ⊢ ⬈*[h,T] 𝐒⦃L⦄.
 #h #G #I #L #V #T #H 
 @(rdsx_ind … H) -L #L1 #_ #IHL1
 @rdsx_intro #L2 #HL12 #HnL12
@@ -71,23 +71,23 @@ lemma rdsx_fwd_flat_dx (h) (G):
 qed-.
 
 fact rdsx_fwd_pair_aux (h) (G):
-     ∀L. G ⊢ ⬈*[h, #0] 𝐒⦃L⦄ →
-     ∀I,K,V. L = K.ⓑ{I}V → G ⊢ ⬈*[h, V] 𝐒⦃K⦄.
+     ∀L. G ⊢ ⬈*[h,#0] 𝐒⦃L⦄ →
+     ∀I,K,V. L = K.ⓑ{I}V → G ⊢ ⬈*[h,V] 𝐒⦃K⦄.
 #h #G #L #H
 @(rdsx_ind … H) -L #L1 #_ #IH #I #K1 #V #H destruct
 /5 width=5 by lpx_pair, rdsx_intro, rdeq_fwd_zero_pair/
 qed-.
 
 lemma rdsx_fwd_pair (h) (G):
-                    ∀I,K,V. G ⊢ ⬈*[h, #0] 𝐒⦃K.ⓑ{I}V⦄ → G ⊢ ⬈*[h, V] 𝐒⦃K⦄.
+                    ∀I,K,V. G ⊢ ⬈*[h,#0] 𝐒⦃K.ⓑ{I}V⦄ → G ⊢ ⬈*[h,V] 𝐒⦃K⦄.
 /2 width=4 by rdsx_fwd_pair_aux/ qed-.
 
 (* Basic inversion lemmas ***************************************************)
 
 (* Basic_2A1: uses: lsx_inv_flat *)
 lemma rdsx_inv_flat (h) (G):
-      ∀I,L,V,T. G ⊢ ⬈*[h, ⓕ{I}V.T] 𝐒⦃L⦄ →
-      ∧∧ G ⊢ ⬈*[h, V] 𝐒⦃L⦄ & G ⊢ ⬈*[h, T] 𝐒⦃L⦄.
+      ∀I,L,V,T. G ⊢ ⬈*[h,ⓕ{I}V.T] 𝐒⦃L⦄ →
+      ∧∧ G ⊢ ⬈*[h,V] 𝐒⦃L⦄ & G ⊢ ⬈*[h,T] 𝐒⦃L⦄.
 /3 width=3 by rdsx_fwd_pair_sn, rdsx_fwd_flat_dx, conj/ qed-.
 
 (* Basic_2A1: removed theorems 9:

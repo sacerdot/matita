@@ -24,7 +24,7 @@ include "basic_2/dynamic/cnv_preserve_sub.ma".
 (* Sub diamond propery with t-bound rt-transition for terms *****************)
 
 fact cnv_cpm_conf_lpr_atom_atom_aux (h) (G) (L1) (L2) (I):
-     ∃∃T. ⦃G,L1⦄ ⊢ ⓪{I} ➡*[0,h] T & ⦃G, L2⦄ ⊢ ⓪{I} ➡*[O,h] T.
+     ∃∃T. ⦃G,L1⦄ ⊢ ⓪{I} ➡*[0,h] T & ⦃G,L2⦄ ⊢ ⓪{I} ➡*[O,h] T.
 /2 width=3 by ex2_intro/ qed-.
 
 fact cnv_cpm_conf_lpr_atom_ess_aux (h) (G) (L1) (L2) (s):
@@ -388,8 +388,8 @@ qed-.
 
 fact cnv_cpm_conf_lpr_aux (a) (h):
                           ∀G0,L0,T0.
-                          (∀G1,L1,T1. ⦃G0, L0, T0⦄ >[h] ⦃G1, L1, T1⦄ → IH_cnv_cpm_trans_lpr a h G1 L1 T1) →
-                          (∀G1,L1,T1. ⦃G0, L0, T0⦄ >[h] ⦃G1, L1, T1⦄ → IH_cnv_cpms_conf_lpr a h G1 L1 T1) →
+                          (∀G1,L1,T1. ⦃G0,L0,T0⦄ >[h] ⦃G1,L1,T1⦄ → IH_cnv_cpm_trans_lpr a h G1 L1 T1) →
+                          (∀G1,L1,T1. ⦃G0,L0,T0⦄ >[h] ⦃G1,L1,T1⦄ → IH_cnv_cpms_conf_lpr a h G1 L1 T1) →
                           ∀G1,L1,T1. G0 = G1 → L0 = L1 → T0 = T1 → IH_cnv_cpm_conf_lpr a h G1 L1 T1.
 #a #h #G0 #L0 #T0 #IH2 #IH1 #G #L * [| * [| * ]]
 [ #I #HG0 #HL0 #HT0 #HT #n1 #X1 #HX1 #n2 #X2 #HX2 #L1 #HL1 #L2 #HL2 destruct

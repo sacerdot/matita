@@ -62,7 +62,7 @@ lemma lpce_inv_bind_dx (h) (G):
 
 lemma lpce_inv_unit_sn (h) (G):
       ∀I,L2,K1. ⦃G,K1.ⓤ{I}⦄ ⊢ ⬌η[h] L2 →
-      ∃∃K2. ⦃G, K1⦄ ⊢ ⬌η[h] K2 & L2 = K2.ⓤ{I}.
+      ∃∃K2. ⦃G,K1⦄ ⊢ ⬌η[h] K2 & L2 = K2.ⓤ{I}.
 /2 width=1 by lex_inv_unit_sn/ qed-.
 
 lemma lpce_inv_pair_sn (h) (G):

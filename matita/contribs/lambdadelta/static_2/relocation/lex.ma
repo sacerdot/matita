@@ -22,7 +22,7 @@ include "static_2/relocation/sex.ma".
 (* GENERIC EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS **************)
 
 definition lex (R): relation lenv ≝
-                    λL1,L2. ∃∃f. 𝐈⦃f⦄ & L1 ⪤[cfull, cext2 R, f] L2.
+                    λL1,L2. ∃∃f. 𝐈⦃f⦄ & L1 ⪤[cfull,cext2 R,f] L2.
 
 interpretation "generic extension (local environment)"
    'Relation R L1 L2 = (lex R L1 L2).

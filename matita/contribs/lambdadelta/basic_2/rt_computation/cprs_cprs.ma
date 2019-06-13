@@ -38,9 +38,9 @@ qed-.
 
 (* Basic_1: was: pr3_flat *)
 theorem cprs_flat (h) (G) (L):
-                  ∀T1,T2. ⦃G, L⦄ ⊢ T1 ➡*[h] T2 →
-                  ∀V1,V2. ⦃G, L⦄ ⊢ V1 ➡*[h] V2 →
-                  ∀I. ⦃G, L⦄ ⊢ ⓕ{I}V1.T1 ➡*[h] ⓕ{I}V2.T2.
+                  ∀T1,T2. ⦃G,L⦄ ⊢ T1 ➡*[h] T2 →
+                  ∀V1,V2. ⦃G,L⦄ ⊢ V1 ➡*[h] V2 →
+                  ∀I. ⦃G,L⦄ ⊢ ⓕ{I}V1.T1 ➡*[h] ⓕ{I}V2.T2.
 #h #G #L #T1 #T2 #HT12 #V1 #V2 #H @(cprs_ind_dx … H) -V2
 [ /2 width=3 by cprs_flat_dx/
 | /3 width=3 by cpr_pair_sn, cprs_step_dx/
@@ -52,15 +52,15 @@ qed.
 (* Basic_1: was pr3_gen_appl *)
 (* Basic_2A1: was: cprs_inv_appl1 *)
 lemma cprs_inv_appl_sn (h) (G) (L):
-                       ∀V1,T1,X2. ⦃G, L⦄ ⊢ ⓐV1.T1 ➡*[h] X2 →
-                       ∨∨ ∃∃V2,T2.       ⦃G, L⦄ ⊢ V1 ➡*[h] V2 &
-                                         ⦃G, L⦄ ⊢ T1 ➡*[h] T2 &
+                       ∀V1,T1,X2. ⦃G,L⦄ ⊢ ⓐV1.T1 ➡*[h] X2 →
+                       ∨∨ ∃∃V2,T2.       ⦃G,L⦄ ⊢ V1 ➡*[h] V2 &
+                                         ⦃G,L⦄ ⊢ T1 ➡*[h] T2 &
                                          X2 = ⓐV2. T2
-                        | ∃∃p,W,T.       ⦃G, L⦄ ⊢ T1 ➡*[h] ⓛ{p}W.T &
-                                         ⦃G, L⦄ ⊢ ⓓ{p}ⓝW.V1.T ➡*[h] X2
-                        | ∃∃p,V0,V2,V,T. ⦃G, L⦄ ⊢ V1 ➡*[h] V0 & ⬆*[1] V0 ≘ V2 &
-                                         ⦃G, L⦄ ⊢ T1 ➡*[h] ⓓ{p}V.T &
-                                         ⦃G, L⦄ ⊢ ⓓ{p}V.ⓐV2.T ➡*[h] X2.
+                        | ∃∃p,W,T.       ⦃G,L⦄ ⊢ T1 ➡*[h] ⓛ{p}W.T &
+                                         ⦃G,L⦄ ⊢ ⓓ{p}ⓝW.V1.T ➡*[h] X2
+                        | ∃∃p,V0,V2,V,T. ⦃G,L⦄ ⊢ V1 ➡*[h] V0 & ⬆*[1] V0 ≘ V2 &
+                                         ⦃G,L⦄ ⊢ T1 ➡*[h] ⓓ{p}V.T &
+                                         ⦃G,L⦄ ⊢ ⓓ{p}V.ⓐV2.T ➡*[h] X2.
 #h #G #L #V1 #T1 #X2 #H elim (cpms_inv_appl_sn … H) -H *
 [ /3 width=5 by or3_intro0, ex3_2_intro/
 | #n1 #n2 #p #V2 #T2 #HT12 #HTX2 #H

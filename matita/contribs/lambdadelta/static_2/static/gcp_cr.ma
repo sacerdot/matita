@@ -63,7 +63,7 @@ record gcr (RR:relation4 genv lenv term term) (RS:relation term) (RP,C:candidate
 (* the functional construction for candidates *)
 definition cfun: candidate → candidate → candidate ≝
                  λC1,C2,G,K,T. ∀f,L,W,U.
-                 ⬇*[Ⓕ, f] L ≘ K → ⬆*[f] T ≘ U → C1 G L W → C2 G L (ⓐW.U).
+                 ⬇*[Ⓕ,f] L ≘ K → ⬆*[f] T ≘ U → C1 G L W → C2 G L (ⓐW.U).
 
 (* the reducibility candidate associated to an atomic arity *)
 rec definition acr (RP:candidate) (A:aarity) on A: candidate ≝
@@ -155,11 +155,11 @@ lemma acr_gcr: ∀RR,RS,RP. gcp RR RS RP → gcr RR RS RP RP →
 qed.
 
 lemma acr_abst: ∀RR,RS,RP. gcp RR RS RP → gcr RR RS RP RP →
-                ∀p,G,L,W,T,A,B. ⦃G, L, W⦄ ϵ[RP] 〚B〛 → (
-                   ∀b,f,L0,V0,W0,T0. ⬇*[b, f] L0 ≘ L → ⬆*[f] W ≘ W0 → ⬆*[⫯f] T ≘ T0 →
-                                   ⦃G, L0, V0⦄ ϵ[RP] 〚B〛 → ⦃G, L0, W0⦄ ϵ[RP] 〚B〛 → ⦃G, L0.ⓓⓝW0.V0, T0⦄ ϵ[RP] 〚A〛
+                ∀p,G,L,W,T,A,B. ⦃G,L,W⦄ ϵ[RP] 〚B〛 → (
+                   ∀b,f,L0,V0,W0,T0. ⬇*[b,f] L0 ≘ L → ⬆*[f] W ≘ W0 → ⬆*[⫯f] T ≘ T0 →
+                                   ⦃G,L0,V0⦄ ϵ[RP] 〚B〛 → ⦃G,L0,W0⦄ ϵ[RP] 〚B〛 → ⦃G,L0.ⓓⓝW0.V0,T0⦄ ϵ[RP] 〚A〛
                 ) →
-                ⦃G, L, ⓛ{p}W.T⦄ ϵ[RP] 〚②B.A〛.
+                ⦃G,L,ⓛ{p}W.T⦄ ϵ[RP] 〚②B.A〛.
 #RR #RS #RP #H1RP #H2RP #p #G #L #W #T #A #B #HW #HA #f #L0 #V0 #X #HL0 #H #HB
 lapply (acr_gcr … H1RP H2RP A) #HCA
 lapply (acr_gcr … H1RP H2RP B) #HCB

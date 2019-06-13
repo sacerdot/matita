@@ -20,19 +20,19 @@ include "static_2/static/rex_rex.ma".
 (* GENERIC EXTENSION ON REFERRED ENTRIES OF A CONTEXT-SENSITIVE REALTION ****)
 
 definition R_fsge_compatible: predicate (relation3 …) ≝ λRN.
-                              ∀L,T1,T2. RN L T1 T2 → ⦃L, T2⦄ ⊆ ⦃L, T1⦄.
+                              ∀L,T1,T2. RN L T1 T2 → ⦃L,T2⦄ ⊆ ⦃L,T1⦄.
 
 definition rex_fsge_compatible: predicate (relation3 …) ≝ λRN.
-                                ∀L1,L2,T. L1 ⪤[RN, T] L2 → ⦃L2, T⦄ ⊆ ⦃L1, T⦄.
+                                ∀L1,L2,T. L1 ⪤[RN,T] L2 → ⦃L2,T⦄ ⊆ ⦃L1,T⦄.
 
 definition rex_fsle_compatible: predicate (relation3 …) ≝ λRN.
-                                ∀L1,L2,T. L1 ⪤[RN, T] L2 → ⦃L1, T⦄ ⊆ ⦃L2, T⦄.
+                                ∀L1,L2,T. L1 ⪤[RN,T] L2 → ⦃L1,T⦄ ⊆ ⦃L2,T⦄.
 
 (* Basic inversions with free variables inclusion for restricted closures ***)
 
 lemma frees_sex_conf: ∀R. rex_fsge_compatible R →
                       ∀L1,T,f1. L1 ⊢ 𝐅*⦃T⦄ ≘ f1 →
-                      ∀L2. L1 ⪤[cext2 R, cfull, f1] L2 →
+                      ∀L2. L1 ⪤[cext2 R,cfull,f1] L2 →
                       ∃∃f2. L2 ⊢ 𝐅*⦃T⦄ ≘ f2 & f2 ⊆ f1.
 #R #HR #L1 #T #f1 #Hf1 #L2 #H1L
 lapply (HR L1 L2 T ?) /2 width=3 by ex2_intro/ #H2L
@@ -41,9 +41,9 @@ qed-.
 
 (* Properties with free variables inclusion for restricted closures *********)
 
-(* Note: we just need lveq_inv_refl: ∀L,n1,n2. L ≋ⓧ*[n1, n2] L → ∧∧ 0 = n1 & 0 = n2 *)
-lemma fsge_rex_trans: ∀R,L1,T1,T2. ⦃L1, T1⦄ ⊆ ⦃L1, T2⦄ →
-                      ∀L2. L1 ⪤[R, T2] L2 → L1 ⪤[R, T1] L2.
+(* Note: we just need lveq_inv_refl: ∀L, n1, n2. L ≋ⓧ*[n1, n2] L → ∧∧ 0 = n1 & 0 = n2 *)
+lemma fsge_rex_trans: ∀R,L1,T1,T2. ⦃L1,T1⦄ ⊆ ⦃L1,T2⦄ →
+                      ∀L2. L1 ⪤[R,T2] L2 → L1 ⪤[R,T1] L2.
 #R #L1 #T1 #T2 * #n1 #n2 #f1 #f2 #Hf1 #Hf2 #Hn #Hf #L2 #HL12
 elim (lveq_inj_length … Hn ?) // #H1 #H2 destruct
 /4 width=5 by rex_inv_frees, sle_sex_trans, ex2_intro/
@@ -60,8 +60,8 @@ qed-.
 
 lemma rex_pair_sn_split: ∀R1,R2. (∀L. reflexive … (R1 L)) → (∀L. reflexive … (R2 L)) →
                          rex_fsge_compatible R1 →
-                         ∀L1,L2,V. L1 ⪤[R1, V] L2 → ∀I,T.
-                         ∃∃L. L1 ⪤[R1, ②{I}V.T] L & L ⪤[R2, V] L2.
+                         ∀L1,L2,V. L1 ⪤[R1,V] L2 → ∀I,T.
+                         ∃∃L. L1 ⪤[R1,②{I}V.T] L & L ⪤[R2,V] L2.
 #R1 #R2 #HR1 #HR2 #HR #L1 #L2 #V * #f #Hf #HL12 * [ #p ] #I #T
 [ elim (frees_total L1 (ⓑ{p,I}V.T)) #g #Hg
   elim (frees_inv_bind … Hg) #y1 #y2 #H #_ #Hy
@@ -79,8 +79,8 @@ qed-.
 
 lemma rex_flat_dx_split: ∀R1,R2. (∀L. reflexive … (R1 L)) → (∀L. reflexive … (R2 L)) →
                          rex_fsge_compatible R1 →
-                         ∀L1,L2,T. L1 ⪤[R1, T] L2 → ∀I,V.
-                         ∃∃L. L1 ⪤[R1, ⓕ{I}V.T] L & L ⪤[R2, T] L2.
+                         ∀L1,L2,T. L1 ⪤[R1,T] L2 → ∀I,V.
+                         ∃∃L. L1 ⪤[R1,ⓕ{I}V.T] L & L ⪤[R2,T] L2.
 #R1 #R2 #HR1 #HR2 #HR #L1 #L2 #T * #f #Hf #HL12 #I #V
 elim (frees_total L1 (ⓕ{I}V.T)) #g #Hg
 elim (frees_inv_flat … Hg) #y1 #y2 #_ #H #Hy
@@ -95,8 +95,8 @@ qed-.
 
 lemma rex_bind_dx_split: ∀R1,R2. (∀L. reflexive … (R1 L)) → (∀L. reflexive … (R2 L)) →
                          rex_fsge_compatible R1 →
-                         ∀I,L1,L2,V1,T. L1.ⓑ{I}V1 ⪤[R1, T] L2 → ∀p.
-                         ∃∃L,V. L1 ⪤[R1, ⓑ{p,I}V1.T] L & L.ⓑ{I}V ⪤[R2, T] L2 & R1 L1 V1 V.
+                         ∀I,L1,L2,V1,T. L1.ⓑ{I}V1 ⪤[R1,T] L2 → ∀p.
+                         ∃∃L,V. L1 ⪤[R1,ⓑ{p,I}V1.T] L & L.ⓑ{I}V ⪤[R2,T] L2 & R1 L1 V1 V.
 #R1 #R2 #HR1 #HR2 #HR #I #L1 #L2 #V1 #T * #f #Hf #HL12 #p
 elim (frees_total L1 (ⓑ{p,I}V1.T)) #g #Hg
 elim (frees_inv_bind … Hg) #y1 #y2 #_ #H #Hy
@@ -115,8 +115,8 @@ qed-.
 
 lemma rex_bind_dx_split_void: ∀R1,R2. (∀L. reflexive … (R1 L)) → (∀L. reflexive … (R2 L)) →
                               rex_fsge_compatible R1 →
-                              ∀L1,L2,T. L1.ⓧ ⪤[R1, T] L2 → ∀p,I,V.
-                              ∃∃L. L1 ⪤[R1, ⓑ{p,I}V.T] L & L.ⓧ ⪤[R2, T] L2.
+                              ∀L1,L2,T. L1.ⓧ ⪤[R1,T] L2 → ∀p,I,V.
+                              ∃∃L. L1 ⪤[R1,ⓑ{p,I}V.T] L & L.ⓧ ⪤[R2,T] L2.
 #R1 #R2 #HR1 #HR2 #HR #L1 #L2 #T * #f #Hf #HL12 #p #I #V
 elim (frees_total L1 (ⓑ{p,I}V.T)) #g #Hg
 elim (frees_inv_bind_void … Hg) #y1 #y2 #_ #H #Hy
@@ -166,8 +166,8 @@ qed-.
 
 theorem rex_trans_fsle: ∀R1,R2,R3.
                         rex_fsle_compatible R1 → f_transitive_next R1 R2 R3 →
-                        ∀L1,L,T. L1 ⪤[R1, T] L →
-                        ∀L2. L ⪤[R2, T] L2 → L1 ⪤[R3, T] L2.
+                        ∀L1,L,T. L1 ⪤[R1,T] L →
+                        ∀L2. L ⪤[R2,T] L2 → L1 ⪤[R3,T] L2.
 #R1 #R2 #R3 #H1R #H2R #L1 #L #T #H
 lapply (H1R … H) -H1R #H0
 cases H -H #f1 #Hf1 #HL1 #L2 * #f2 #Hf2 #HL2

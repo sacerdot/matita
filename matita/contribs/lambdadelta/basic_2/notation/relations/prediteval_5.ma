@@ -9,6 +9,9 @@
 (*      \   /                                                             *)
 (*       \ /        This file is distributed under the terms of the       *)
 (*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
 (* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
 notation "hvbox( ⦃ term 46 G, break term 46 L ⦄ ⊢ break term 46 T1 ⥲* [ break term 46 h ] 𝐍 ⦃ break term 46 T2 ⦄ )"

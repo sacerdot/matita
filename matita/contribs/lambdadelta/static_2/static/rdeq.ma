@@ -79,7 +79,7 @@ lemma tdeq_rex_conf (R): s_r_confluent1 … cdeq (rex R).
 qed-.
 
 lemma tdeq_rex_div (R): ∀T1,T2. T1 ≛ T2 →
-                        ∀L1,L2. L1 ⪤[R, T2] L2 → L1 ⪤[R, T1] L2.
+                        ∀L1,L2. L1 ⪤[R,T2] L2 → L1 ⪤[R,T1] L2.
 /3 width=5 by tdeq_rex_conf, tdeq_sym/ qed-.
 
 lemma tdeq_rdeq_conf: s_r_confluent1 … cdeq rdeq.
@@ -100,7 +100,7 @@ lemma rdeq_pair: ∀I,L1,L2,V1,V2.
                  L1 ≛[V1] L2 → V1 ≛ V2 → L1.ⓑ{I}V1 ≛[#0] L2.ⓑ{I}V2.
 /2 width=1 by rex_pair/ qed.
 (*
-lemma rdeq_unit: ∀f,I,L1,L2. 𝐈⦃f⦄ → L1 ⪤[cdeq_ext, cfull, f] L2 →
+lemma rdeq_unit: ∀f,I,L1,L2. 𝐈⦃f⦄ → L1 ⪤[cdeq_ext,cfull,f] L2 →
                  L1.ⓤ{I} ≛[#0] L2.ⓤ{I}.
 /2 width=3 by rex_unit/ qed.
 *)
@@ -130,7 +130,7 @@ lemma rdeq_inv_zero: ∀Y1,Y2. Y1 ≛[#0] Y2 →
                      ∨∨ ∧∧ Y1 = ⋆ & Y2 = ⋆
                       | ∃∃I,L1,L2,V1,V2. L1 ≛[V1] L2 & V1 ≛ V2 &
                                          Y1 = L1.ⓑ{I}V1 & Y2 = L2.ⓑ{I}V2
-                      | ∃∃f,I,L1,L2. 𝐈⦃f⦄ & L1 ⪤[cdeq_ext h o, cfull, f] L2 &
+                      | ∃∃f,I,L1,L2. 𝐈⦃f⦄ & L1 ⪤[cdeq_ext h o,cfull,f] L2 &
                                          Y1 = L1.ⓤ{I} & Y2 = L2.ⓤ{I}.
 #Y1 #Y2 #H elim (rex_inv_zero … H) -H *
 /3 width=9 by or3_intro0, or3_intro1, or3_intro2, ex4_5_intro, ex4_4_intro, conj/

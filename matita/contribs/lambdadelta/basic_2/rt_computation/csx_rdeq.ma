@@ -20,8 +20,8 @@ include "basic_2/rt_computation/csx_csx.ma".
 (* Properties with sort-irrelevant equivalence for local environments *******)
 
 (* Basic_2A1: uses: csx_lleq_conf *)
-lemma csx_rdeq_conf: ∀h,G,L1,T. ⦃G, L1⦄ ⊢ ⬈*[h] 𝐒⦃T⦄ →
-                     ∀L2. L1 ≛[T] L2 → ⦃G, L2⦄ ⊢ ⬈*[h] 𝐒⦃T⦄.
+lemma csx_rdeq_conf: ∀h,G,L1,T. ⦃G,L1⦄ ⊢ ⬈*[h] 𝐒⦃T⦄ →
+                     ∀L2. L1 ≛[T] L2 → ⦃G,L2⦄ ⊢ ⬈*[h] 𝐒⦃T⦄.
 #h #G #L1 #T #H
 @(csx_ind … H) -T #T1 #_ #IH #L2 #HL12
 @csx_intro #T2 #HT12 #HnT12
@@ -31,5 +31,5 @@ qed-.
 
 (* Basic_2A1: uses: csx_lleq_conf *)
 lemma csx_rdeq_trans: ∀h,L1,L2,T. L1 ≛[T] L2 →
-                      ∀G. ⦃G, L2⦄ ⊢ ⬈*[h] 𝐒⦃T⦄ → ⦃G, L1⦄ ⊢ ⬈*[h] 𝐒⦃T⦄.
+                      ∀G. ⦃G,L2⦄ ⊢ ⬈*[h] 𝐒⦃T⦄ → ⦃G,L1⦄ ⊢ ⬈*[h] 𝐒⦃T⦄.
 /3 width=3 by csx_rdeq_conf, rdeq_sym/ qed-.

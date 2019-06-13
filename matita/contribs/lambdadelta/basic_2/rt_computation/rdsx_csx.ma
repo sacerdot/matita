@@ -22,9 +22,9 @@ include "basic_2/rt_computation/lsubsx_rdsx.ma".
 
 (* Basic_2A1: uses: lsx_lref_be_lpxs *)
 lemma rdsx_pair_lpxs (h) (G):
-                     ∀K1,V. ⦃G, K1⦄ ⊢ ⬈*[h] 𝐒⦃V⦄ →
-                     ∀K2. G ⊢ ⬈*[h, V] 𝐒⦃K2⦄ → ⦃G, K1⦄ ⊢ ⬈*[h] K2 →
-                     ∀I. G ⊢ ⬈*[h, #0] 𝐒⦃K2.ⓑ{I}V⦄.
+                     ∀K1,V. ⦃G,K1⦄ ⊢ ⬈*[h] 𝐒⦃V⦄ →
+                     ∀K2. G ⊢ ⬈*[h,V] 𝐒⦃K2⦄ → ⦃G,K1⦄ ⊢ ⬈*[h] K2 →
+                     ∀I. G ⊢ ⬈*[h,#0] 𝐒⦃K2.ⓑ{I}V⦄.
 #h #G #K1 #V #H
 @(csx_ind_cpxs … H) -V #V0 #_ #IHV0 #K2 #H
 @(rdsx_ind … H) -K2 #K0 #HK0 #IHK0 #HK10 #I
@@ -42,8 +42,8 @@ qed.
 
 (* Basic_2A1: uses: lsx_lref_be *)
 lemma rdsx_lref_pair_drops (h) (G):
-                           ∀K,V. ⦃G, K⦄ ⊢ ⬈*[h] 𝐒⦃V⦄ → G ⊢ ⬈*[h, V] 𝐒⦃K⦄ →
-                           ∀I,i,L. ⬇*[i] L ≘ K.ⓑ{I}V → G ⊢ ⬈*[h, #i] 𝐒⦃L⦄.
+                           ∀K,V. ⦃G,K⦄ ⊢ ⬈*[h] 𝐒⦃V⦄ → G ⊢ ⬈*[h,V] 𝐒⦃K⦄ →
+                           ∀I,i,L. ⬇*[i] L ≘ K.ⓑ{I}V → G ⊢ ⬈*[h,#i] 𝐒⦃L⦄.
 #h #G #K #V #HV #HK #I #i elim i -i
 [ #L #H >(drops_fwd_isid … H) -H /2 width=3 by rdsx_pair_lpxs/
 | #i #IH #L #H
@@ -55,7 +55,7 @@ qed.
 (* Main properties **********************************************************)
 
 (* Basic_2A1: uses: csx_lsx *)
-theorem csx_rdsx (h): ∀G,L,T. ⦃G, L⦄ ⊢ ⬈*[h] 𝐒⦃T⦄ → G ⊢ ⬈*[h, T] 𝐒⦃L⦄.
+theorem csx_rdsx (h): ∀G,L,T. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃T⦄ → G ⊢ ⬈*[h,T] 𝐒⦃L⦄.
 #h #G #L #T @(fqup_wf_ind_eq (Ⓕ) … G L T) -G -L -T
 #Z #Y #X #IH #G #L * * //
 [ #i #HG #HL #HT #H destruct

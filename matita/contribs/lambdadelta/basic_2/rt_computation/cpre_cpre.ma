@@ -32,7 +32,7 @@ qed-.
 
 (* Basic_1: was: nf2_pr3_confluence *)
 theorem cpre_mono (h) (G) (L) (T):
-        ∀T1. ⦃G, L⦄ ⊢ T ➡*[h] 𝐍⦃T1⦄ → ∀T2. ⦃G, L⦄ ⊢ T ➡*[h] 𝐍⦃T2⦄ → T1 = T2.
+        ∀T1. ⦃G,L⦄ ⊢ T ➡*[h] 𝐍⦃T1⦄ → ∀T2. ⦃G,L⦄ ⊢ T ➡*[h] 𝐍⦃T2⦄ → T1 = T2.
 #h #G #L #T0 #T1 * #HT01 #HT1 #T2 * #HT02 #HT2
 elim (cprs_conf … HT01 … HT02) -T0 #T0 #HT10 #HT20
 >(cprs_inv_cnr_sn … HT10 HT1) -T1

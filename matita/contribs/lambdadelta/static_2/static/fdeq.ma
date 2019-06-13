@@ -30,17 +30,17 @@ interpretation
 (* Basic_properties *********************************************************)
 
 lemma fdeq_intro_dx (G): ∀L1,L2,T2. L1 ≛[T2] L2 →
-                         ∀T1. T1 ≛ T2 → ⦃G, L1, T1⦄ ≛ ⦃G, L2, T2⦄.
+                         ∀T1. T1 ≛ T2 → ⦃G,L1,T1⦄ ≛ ⦃G,L2,T2⦄.
 /3 width=3 by fdeq_intro_sn, tdeq_rdeq_div/ qed.
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma fdeq_inv_gen_sn: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≛ ⦃G2, L2, T2⦄ →
+lemma fdeq_inv_gen_sn: ∀G1,G2,L1,L2,T1,T2. ⦃G1,L1,T1⦄ ≛ ⦃G2,L2,T2⦄ →
                        ∧∧ G1 = G2 & L1 ≛[T1] L2 & T1 ≛ T2.
 #G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2 /2 width=1 by and3_intro/
 qed-.
 
-lemma fdeq_inv_gen_dx: ∀G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≛ ⦃G2, L2, T2⦄ →
+lemma fdeq_inv_gen_dx: ∀G1,G2,L1,L2,T1,T2. ⦃G1,L1,T1⦄ ≛ ⦃G2,L2,T2⦄ →
                        ∧∧ G1 = G2 & L1 ≛[T2] L2 & T1 ≛ T2.
 #G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2
 /3 width=3 by tdeq_rdeq_conf, and3_intro/

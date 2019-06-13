@@ -18,7 +18,7 @@ include "ground_2/relocation/mr2.ma".
 
 rec definition pluss (cs:mr2) (i:nat) on cs ≝ match cs with
 [ nil2         ⇒ ◊
-| cons2 l m cs ⇒ {l + i, m};pluss cs i
+| cons2 l m cs ⇒ {l + i,m};pluss cs i
 ].
 
 interpretation "plus (multiple relocation with pairs)"
@@ -26,7 +26,7 @@ interpretation "plus (multiple relocation with pairs)"
 
 (* Basic properties *********************************************************)
 
-lemma pluss_SO2: ∀l,m,cs. ({l, m};cs) + 1 = {↑l, m};cs + 1.
+lemma pluss_SO2: ∀l,m,cs. ({l,m};cs) + 1 = {↑l,m};cs + 1.
 normalize // qed.
 
 (* Basic inversion lemmas ***************************************************)
@@ -36,8 +36,8 @@ lemma pluss_inv_nil2: ∀i,cs. cs + i = ◊ → cs = ◊.
 #l #m #cs #H destruct
 qed.
 
-lemma pluss_inv_cons2: ∀i,l,m,cs2,cs. cs + i = {l, m};cs2 →
-                       ∃∃cs1. cs1 + i = cs2 & cs = {l - i, m};cs1.
+lemma pluss_inv_cons2: ∀i,l,m,cs2,cs. cs + i = {l,m};cs2 →
+                       ∃∃cs1. cs1 + i = cs2 & cs = {l - i,m};cs1.
 #i #l #m #cs2 *
 [ normalize #H destruct
 | #l1 #m1 #cs1 whd in ⊢ (??%?→?); #H destruct

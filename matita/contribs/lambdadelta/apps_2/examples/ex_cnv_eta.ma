@@ -20,7 +20,7 @@ include "basic_2/dynamic/cnv.ma".
 (* Extended validy (basic_2B) vs. restricted validity (basic_1A) ************)
 
 (* Note: extended validity of a closure, height of cnv_appl > 1 *)
-lemma cnv_extended (h) (p): ∀G,L,s. ⦃G, L.ⓛ⋆s.ⓛⓛ{p}⋆s.⋆s.ⓛ#0⦄ ⊢ ⓐ#2.#0 !*[h].
+lemma cnv_extended (h) (p): ∀G,L,s. ⦃G,L.ⓛ⋆s.ⓛⓛ{p}⋆s.⋆s.ⓛ#0⦄ ⊢ ⓐ#2.#0 !*[h].
 #h #p #G #L #s
 @(cnv_appl … 2 p … (⋆s) … (⋆s))
 [ //
@@ -32,7 +32,7 @@ lemma cnv_extended (h) (p): ∀G,L,s. ⦃G, L.ⓛ⋆s.ⓛⓛ{p}⋆s.⋆s.ⓛ#0�
 qed.
 
 (* Note: restricted validity of the η-expanded closure, height of cnv_appl = 1 **)
-lemma vnv_restricted (h) (p): ∀G,L,s. ⦃G, L.ⓛ⋆s.ⓛⓛ{p}⋆s.⋆s.ⓛⓛ{p}⋆s.ⓐ#0.#1⦄ ⊢ ⓐ#2.#0 ![h].
+lemma vnv_restricted (h) (p): ∀G,L,s. ⦃G,L.ⓛ⋆s.ⓛⓛ{p}⋆s.⋆s.ⓛⓛ{p}⋆s.ⓐ#0.#1⦄ ⊢ ⓐ#2.#0 ![h].
 #h #p #G #L #s
 @(cnv_appl … 1 p … (⋆s) … (ⓐ#0.#2))
 [ /2 width=1 by ylt_inj/

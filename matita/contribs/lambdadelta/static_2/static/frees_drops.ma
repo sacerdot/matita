@@ -20,7 +20,7 @@ include "static_2/static/frees_fqup.ma".
 
 (* Advanced properties ******************************************************)
 
-lemma frees_atom_drops: ∀b,L,i. ⬇*[b, 𝐔❴i❵] L ≘ ⋆ →
+lemma frees_atom_drops: ∀b,L,i. ⬇*[b,𝐔❴i❵] L ≘ ⋆ →
                         ∀f. 𝐈⦃f⦄ → L ⊢ 𝐅*⦃#i⦄ ≘ ⫯*[i]↑f.
 #b #L elim L -L /2 width=1 by frees_atom/
 #L #I #IH *
@@ -74,7 +74,7 @@ qed.
 (* Advanced inversion lemmas ************************************************)
 
 lemma frees_inv_lref_drops: ∀L,i,f. L ⊢ 𝐅*⦃#i⦄ ≘ f →
-                            ∨∨ ∃∃g. ⬇*[Ⓕ, 𝐔❴i❵] L ≘ ⋆ & 𝐈⦃g⦄ & f = ⫯*[i] ↑g
+                            ∨∨ ∃∃g. ⬇*[Ⓕ,𝐔❴i❵] L ≘ ⋆ & 𝐈⦃g⦄ & f = ⫯*[i] ↑g
                              | ∃∃g,I,K,V. K ⊢ 𝐅*⦃V⦄ ≘ g &
                                           ⬇*[i] L ≘ K.ⓑ{I}V & f = ⫯*[i] ↑g
                              | ∃∃g,I,K. ⬇*[i] L ≘ K.ⓤ{I} & 𝐈⦃g⦄ & f = ⫯*[i] ↑g.
@@ -98,7 +98,7 @@ qed-.
 (* Properties with generic slicing for local environments *******************)
 
 lemma frees_lifts: ∀b,f1,K,T. K ⊢ 𝐅*⦃T⦄ ≘ f1 →
-                   ∀f,L. ⬇*[b, f] L ≘ K → ∀U. ⬆*[f] T ≘ U →
+                   ∀f,L. ⬇*[b,f] L ≘ K → ∀U. ⬆*[f] T ≘ U →
                    ∀f2. f ~⊚ f1 ≘ f2 → L ⊢ 𝐅*⦃U⦄ ≘ f2.
 #b #f1 #K #T #H lapply (frees_fwd_isfin … H) elim H -f1 -K -T
 [ #f1 #K #s #Hf1 #_ #f #L #HLK #U #H2 #f2 #H3
@@ -154,7 +154,7 @@ lemma frees_lifts: ∀b,f1,K,T. K ⊢ 𝐅*⦃T⦄ ≘ f1 →
 ]
 qed-.
 
-lemma frees_lifts_SO: ∀b,L,K. ⬇*[b, 𝐔❴1❵] L ≘ K → ∀T,U. ⬆*[1] T ≘ U →
+lemma frees_lifts_SO: ∀b,L,K. ⬇*[b,𝐔❴1❵] L ≘ K → ∀T,U. ⬆*[1] T ≘ U →
                       ∀f. K ⊢ 𝐅*⦃T⦄ ≘ f → L ⊢ 𝐅*⦃U⦄ ≘ ⫯f.
 #b #L #K #HLK #T #U #HTU #f #Hf
 @(frees_lifts b … Hf … HTU) //  (**) (* auto fails *)
@@ -163,21 +163,21 @@ qed.
 (* Forward lemmas with generic slicing for local environments ***************)
 
 lemma frees_fwd_coafter: ∀b,f2,L,U. L ⊢ 𝐅*⦃U⦄ ≘ f2 →
-                         ∀f,K. ⬇*[b, f] L ≘ K → ∀T. ⬆*[f] T ≘ U →
+                         ∀f,K. ⬇*[b,f] L ≘ K → ∀T. ⬆*[f] T ≘ U →
                          ∀f1. K ⊢ 𝐅*⦃T⦄ ≘ f1 → f ~⊚ f1 ≘ f2.
 /4 width=11 by frees_lifts, frees_mono, coafter_eq_repl_back0/ qed-.
 
 (* Inversion lemmas with generic slicing for local environments *************)
 
 lemma frees_inv_lifts_ex: ∀b,f2,L,U. L ⊢ 𝐅*⦃U⦄ ≘ f2 →
-                          ∀f,K. ⬇*[b, f] L ≘ K → ∀T. ⬆*[f] T ≘ U →
+                          ∀f,K. ⬇*[b,f] L ≘ K → ∀T. ⬆*[f] T ≘ U →
                           ∃∃f1. f ~⊚ f1 ≘ f2 & K ⊢ 𝐅*⦃T⦄ ≘ f1.
 #b #f2 #L #U #Hf2 #f #K #HLK #T elim (frees_total K T)
 /3 width=9 by frees_fwd_coafter, ex2_intro/
 qed-.
 
 lemma frees_inv_lifts_SO: ∀b,f,L,U. L ⊢ 𝐅*⦃U⦄ ≘ f →
-                          ∀K. ⬇*[b, 𝐔❴1❵] L ≘ K → ∀T. ⬆*[1] T ≘ U →
+                          ∀K. ⬇*[b,𝐔❴1❵] L ≘ K → ∀T. ⬆*[1] T ≘ U →
                           K ⊢ 𝐅*⦃T⦄ ≘ ⫱f.
 #b #f #L #U #H #K #HLK #T #HTU elim(frees_inv_lifts_ex … H … HLK … HTU) -b -L -U
 #f1 #Hf #Hf1 elim (coafter_inv_nxx … Hf) -Hf
@@ -185,7 +185,7 @@ lemma frees_inv_lifts_SO: ∀b,f,L,U. L ⊢ 𝐅*⦃U⦄ ≘ f →
 qed-.
 
 lemma frees_inv_lifts: ∀b,f2,L,U. L ⊢ 𝐅*⦃U⦄ ≘ f2 →
-                       ∀f,K. ⬇*[b, f] L ≘ K → ∀T. ⬆*[f] T ≘ U →
+                       ∀f,K. ⬇*[b,f] L ≘ K → ∀T. ⬆*[f] T ≘ U →
                        ∀f1. f ~⊚ f1 ≘ f2 → K ⊢ 𝐅*⦃T⦄ ≘ f1.
 #b #f2 #L #U #H #f #K #HLK #T #HTU #f1 #Hf2 elim (frees_inv_lifts_ex … H … HLK … HTU) -b -L -U
 /3 width=7 by frees_eq_repl_back, coafter_inj/

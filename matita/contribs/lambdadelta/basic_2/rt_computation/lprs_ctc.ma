@@ -20,11 +20,11 @@ include "basic_2/rt_computation/lprs.ma".
 (* Properties with contextual transitive closure ****************************)
 
 lemma lprs_CTC (h) (G):
-               ∀L1,L2. L1⪤[CTC … (λL. cpm h G L 0)] L2 → ⦃G, L1⦄⊢ ➡*[h] L2. 
+               ∀L1,L2. L1⪤[CTC … (λL. cpm h G L 0)] L2 → ⦃G,L1⦄⊢ ➡*[h] L2. 
 /3 width=3 by cprs_CTC, lex_co/ qed.
 
 (* Inversion lemmas with contextual transitive closure **********************)
 
 lemma lprs_inv_CTC (h) (G):
-                   ∀L1,L2. ⦃G, L1⦄⊢ ➡*[h] L2 → L1⪤[CTC … (λL. cpm h G L 0)] L2.
+                   ∀L1,L2. ⦃G,L1⦄⊢ ➡*[h] L2 → L1⪤[CTC … (λL. cpm h G L 0)] L2.
 /3 width=3 by cprs_inv_CTC, lex_co/ qed-.

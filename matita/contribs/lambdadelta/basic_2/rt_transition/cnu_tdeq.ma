@@ -22,8 +22,8 @@ include "basic_2/rt_transition/cnu_cnr_simple.ma".
 (* Properties with context-free sort-irrelevant equivalence for terms *******)
 
 lemma cnu_dec_tdeq (h) (G) (L):
-      ∀T1. ∨∨ ⦃G, L⦄ ⊢ ⥲[h] 𝐍⦃T1⦄
-            | ∃∃n,T2. ⦃G, L⦄ ⊢ T1 ➡[n,h] T2 & (T1 ≛ T2 → ⊥).
+      ∀T1. ∨∨ ⦃G,L⦄ ⊢ ⥲[h] 𝐍⦃T1⦄
+            | ∃∃n,T2. ⦃G,L⦄ ⊢ T1 ➡[n,h] T2 & (T1 ≛ T2 → ⊥).
 #h #G #L #T1
 @(fqup_wf_ind_eq (Ⓣ) … G L T1) -G -L -T1 #G0 #L0 #T0 #IH #G #L * *
 [ #s #HG #HL #HT destruct -IH

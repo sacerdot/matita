@@ -21,8 +21,8 @@ include "apps_2/models/vpushs.ma".
 
 lemma vpushs_fold (M): is_model M → is_extensional M →
                        ∀L,T1,T2,gv,lv.
-                       (∀v. L ⨁[gv] lv ≘ v → ⟦T1⟧[gv, v] ≗ ⟦T2⟧[gv, v]) → 
-                       ⟦L+T1⟧[gv, lv] ≗{M} ⟦L+T2⟧[gv, lv].
+                       (∀v. L ⨁[gv] lv ≘ v → ⟦T1⟧[gv,v] ≗ ⟦T2⟧[gv,v]) → 
+                       ⟦L+T1⟧[gv,lv] ≗{M} ⟦L+T2⟧[gv,lv].
 #M #H1M #H2M #L elim L -L [| #K * [| * ]]
 [ #T1 #T2 #gv #lv #H12
   >fold_atom >fold_atom
@@ -44,8 +44,8 @@ qed.
 (* Inversion lemmas with fold for restricted closures ***********************)
 
 lemma vpushs_inv_fold (M): is_model M → is_injective M →
-                           ∀L,T1,T2,gv,lv. ⟦L+T1⟧[gv, lv] ≗{M} ⟦L+T2⟧[gv, lv] →
-                           ∀v. L ⨁[gv] lv ≘ v → ⟦T1⟧[gv, v] ≗ ⟦T2⟧[gv, v].
+                           ∀L,T1,T2,gv,lv. ⟦L+T1⟧[gv,lv] ≗{M} ⟦L+T2⟧[gv,lv] →
+                           ∀v. L ⨁[gv] lv ≘ v → ⟦T1⟧[gv,v] ≗ ⟦T2⟧[gv,v].
 #M #H1M #H2M #L elim L -L [| #K * [| * ]]
 [ #T1 #T2 #gv #lv
   >fold_atom >fold_atom #H12 #v #H

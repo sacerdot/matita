@@ -14,6 +14,6 @@
 
 (* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
 
-notation "hvbox( 𝐁❴ break term 46 l, break term 46 h ❵ )"
+notation "hvbox( 𝐁❴ term 46 l, break term 46 h ❵ )"
   non associative with precedence 90
   for @{ 'Basic $l $h }.

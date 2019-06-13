@@ -21,27 +21,27 @@ include "basic_2/rt_transition/rpx_fsle.ma".
 
 (* Properties with sort-irrelevant equivalence for local environments *******)
 
-lemma rpx_pair_sn_split: ∀h,G,L1,L2,V. ⦃G, L1⦄ ⊢ ⬈[h, V] L2 → ∀I,T.
-                         ∃∃L. ⦃G, L1⦄ ⊢ ⬈[h, ②{I}V.T] L & L ≛[V] L2.
+lemma rpx_pair_sn_split: ∀h,G,L1,L2,V. ⦃G,L1⦄ ⊢ ⬈[h,V] L2 → ∀I,T.
+                         ∃∃L. ⦃G,L1⦄ ⊢ ⬈[h,②{I}V.T] L & L ≛[V] L2.
 /3 width=5 by rpx_fsge_comp, rex_pair_sn_split/ qed-.
 
-lemma rpx_flat_dx_split: ∀h,G,L1,L2,T. ⦃G, L1⦄ ⊢ ⬈[h, T] L2 → ∀I,V.
-                         ∃∃L. ⦃G, L1⦄ ⊢ ⬈[h, ⓕ{I}V.T] L & L ≛[T] L2.
+lemma rpx_flat_dx_split: ∀h,G,L1,L2,T. ⦃G,L1⦄ ⊢ ⬈[h,T] L2 → ∀I,V.
+                         ∃∃L. ⦃G,L1⦄ ⊢ ⬈[h,ⓕ{I}V.T] L & L ≛[T] L2.
 /3 width=5 by rpx_fsge_comp, rex_flat_dx_split/ qed-.
 
-lemma rpx_bind_dx_split: ∀h,I,G,L1,L2,V1,T. ⦃G, L1.ⓑ{I}V1⦄ ⊢ ⬈[h, T] L2 → ∀p.
-                         ∃∃L,V. ⦃G, L1⦄ ⊢ ⬈[h, ⓑ{p,I}V1.T] L & L.ⓑ{I}V ≛[T] L2 & ⦃G, L1⦄ ⊢ V1 ⬈[h] V.
+lemma rpx_bind_dx_split: ∀h,I,G,L1,L2,V1,T. ⦃G,L1.ⓑ{I}V1⦄ ⊢ ⬈[h,T] L2 → ∀p.
+                         ∃∃L,V. ⦃G,L1⦄ ⊢ ⬈[h,ⓑ{p,I}V1.T] L & L.ⓑ{I}V ≛[T] L2 & ⦃G,L1⦄ ⊢ V1 ⬈[h] V.
 /3 width=5 by rpx_fsge_comp, rex_bind_dx_split/ qed-.
 
-lemma rpx_bind_dx_split_void: ∀h,G,K1,L2,T. ⦃G, K1.ⓧ⦄ ⊢ ⬈[h, T] L2 → ∀p,I,V.
-                              ∃∃K2. ⦃G, K1⦄ ⊢ ⬈[h, ⓑ{p,I}V.T] K2 & K2.ⓧ ≛[T] L2.
+lemma rpx_bind_dx_split_void: ∀h,G,K1,L2,T. ⦃G,K1.ⓧ⦄ ⊢ ⬈[h,T] L2 → ∀p,I,V.
+                              ∃∃K2. ⦃G,K1⦄ ⊢ ⬈[h,ⓑ{p,I}V.T] K2 & K2.ⓧ ≛[T] L2.
 /3 width=5 by rpx_fsge_comp, rex_bind_dx_split_void/ qed-.
 
 lemma rpx_tdeq_conf: ∀h,G. s_r_confluent1 … cdeq (rpx h G).
 /2 width=5 by tdeq_rex_conf/ qed-.
 
 lemma rpx_tdeq_div: ∀h,T1,T2. T1 ≛ T2 →
-                    ∀G,L1,L2. ⦃G, L1⦄ ⊢ ⬈[h, T2] L2 → ⦃G, L1⦄ ⊢ ⬈[h, T1] L2.
+                    ∀G,L1,L2. ⦃G,L1⦄ ⊢ ⬈[h,T2] L2 → ⦃G,L1⦄ ⊢ ⬈[h,T1] L2.
 /2 width=5 by tdeq_rex_div/ qed-.
 
 lemma cpx_tdeq_conf_sex: ∀h,G. R_confluent2_rex … (cpx h G) cdeq (cpx h G) cdeq.
@@ -125,25 +125,25 @@ lemma cpx_tdeq_conf_sex: ∀h,G. R_confluent2_rex … (cpx h G) cdeq (cpx h G) c
 ]
 qed-.
 
-lemma cpx_tdeq_conf: ∀h,G,L. ∀T0:term. ∀T1. ⦃G, L⦄ ⊢ T0 ⬈[h] T1 →
+lemma cpx_tdeq_conf: ∀h,G,L. ∀T0:term. ∀T1. ⦃G,L⦄ ⊢ T0 ⬈[h] T1 →
                      ∀T2. T0 ≛ T2 →
-                     ∃∃T. T1 ≛ T & ⦃G, L⦄ ⊢ T2 ⬈[h] T.
+                     ∃∃T. T1 ≛ T & ⦃G,L⦄ ⊢ T2 ⬈[h] T.
 #h #G #L #T0 #T1 #HT01 #T2 #HT02
 elim (cpx_tdeq_conf_sex … HT01 … HT02 L … L) -HT01 -HT02
 /2 width=3 by rex_refl, ex2_intro/
 qed-.
 
 lemma tdeq_cpx_trans: ∀h,G,L,T2. ∀T0:term. T2 ≛ T0 →
-                      ∀T1. ⦃G, L⦄ ⊢ T0 ⬈[h] T1 → 
-                      ∃∃T. ⦃G, L⦄ ⊢ T2 ⬈[h] T & T ≛ T1.
+                      ∀T1. ⦃G,L⦄ ⊢ T0 ⬈[h] T1 → 
+                      ∃∃T. ⦃G,L⦄ ⊢ T2 ⬈[h] T & T ≛ T1.
 #h #G #L #T2 #T0 #HT20 #T1 #HT01
 elim (cpx_tdeq_conf … HT01 T2) -HT01 /3 width=3 by tdeq_sym, ex2_intro/
 qed-.
 
 (* Basic_2A1: uses: cpx_lleq_conf *)
-lemma cpx_rdeq_conf: ∀h,G,L0,T0,T1. ⦃G, L0⦄ ⊢ T0 ⬈[h] T1 →
+lemma cpx_rdeq_conf: ∀h,G,L0,T0,T1. ⦃G,L0⦄ ⊢ T0 ⬈[h] T1 →
                      ∀L2. L0 ≛[T0] L2 →
-                     ∃∃T. ⦃G, L2⦄ ⊢ T0 ⬈[h] T & T1 ≛ T.
+                     ∃∃T. ⦃G,L2⦄ ⊢ T0 ⬈[h] T & T1 ≛ T.
 #h #G #L0 #T0 #T1 #HT01 #L2 #HL02
 elim (cpx_tdeq_conf_sex … HT01 T0 … L0 … HL02) -HT01 -HL02
 /2 width=3 by rex_refl, ex2_intro/
@@ -151,8 +151,8 @@ qed-.
 
 (* Basic_2A1: uses: lleq_cpx_trans *)
 lemma rdeq_cpx_trans: ∀h,G,L2,L0,T0. L2 ≛[T0] L0 →
-                      ∀T1. ⦃G, L0⦄ ⊢ T0 ⬈[h] T1 →
-                      ∃∃T. ⦃G, L2⦄ ⊢ T0 ⬈[h] T & T ≛ T1.
+                      ∀T1. ⦃G,L0⦄ ⊢ T0 ⬈[h] T1 →
+                      ∃∃T. ⦃G,L2⦄ ⊢ T0 ⬈[h] T & T ≛ T1.
 #h #G #L2 #L0 #T0 #HL20 #T1 #HT01
 elim (cpx_rdeq_conf … HT01 L2) -HT01
 /3 width=3 by rdeq_sym, tdeq_sym, ex2_intro/
@@ -161,9 +161,9 @@ qed-.
 lemma rpx_rdeq_conf: ∀h,G,T. confluent2 … (rpx h G T) (rdeq T).
 /3 width=6 by rpx_fsge_comp, rdeq_fsge_comp, cpx_tdeq_conf_sex, rex_conf/ qed-.
 
-lemma rdeq_rpx_trans: ∀h,G,T,L2,K2. ⦃G, L2⦄ ⊢ ⬈[h, T] K2 →
+lemma rdeq_rpx_trans: ∀h,G,T,L2,K2. ⦃G,L2⦄ ⊢ ⬈[h,T] K2 →
                       ∀L1. L1 ≛[T] L2 →
-                      ∃∃K1. ⦃G, L1⦄ ⊢ ⬈[h, T] K1 & K1 ≛[T] K2.
+                      ∃∃K1. ⦃G,L1⦄ ⊢ ⬈[h,T] K1 & K1 ≛[T] K2.
 #h #G #T #L2 #K2 #HLK2 #L1 #HL12
 elim (rpx_rdeq_conf … HLK2 L1)
 /3 width=3 by rdeq_sym, ex2_intro/

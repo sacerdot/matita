@@ -34,7 +34,7 @@ lemma sex_tc_next_sn: ∀RN,RP. c_reflexive … RN →
 qed.
 
 lemma sex_tc_next_dx: ∀RN,RP. c_reflexive … RN → c_reflexive … RP →
-                      ∀f,I1,I2,L1. (CTC … RN) L1 I1 I2 → ∀L2. L1 ⪤[RN, RP, f] L2 →
+                      ∀f,I1,I2,L1. (CTC … RN) L1 I1 I2 → ∀L2. L1 ⪤[RN,RP,f] L2 →
                       TC … (sex RN RP (↑f)) (L1.ⓘ{I1}) (L2.ⓘ{I2}).
 #RN #RP #HRN #HRP #f #I1 #I2 #L1 #H elim H -I2
 /4 width=5 by sex_refl, sex_next, step, inj/
@@ -48,18 +48,18 @@ lemma sex_tc_push_sn: ∀RN,RP. c_reflexive … RP →
 qed.
 
 lemma sex_tc_push_dx: ∀RN,RP. c_reflexive … RN → c_reflexive … RP →
-                      ∀f,I1,I2,L1. (CTC … RP) L1 I1 I2 → ∀L2. L1 ⪤[RN, RP, f] L2 →
+                      ∀f,I1,I2,L1. (CTC … RP) L1 I1 I2 → ∀L2. L1 ⪤[RN,RP,f] L2 →
                       TC … (sex RN RP (⫯f)) (L1.ⓘ{I1}) (L2.ⓘ{I2}).
 #RN #RP #HRN #HRP #f #I1 #I2 #L1 #H elim H -I2
 /4 width=5 by sex_refl, sex_push, step, inj/
 qed.
 
-lemma sex_tc_inj_sn: ∀RN,RP,f,L1,L2. L1 ⪤[RN, RP, f] L2 → L1 ⪤[CTC … RN, RP, f] L2.
+lemma sex_tc_inj_sn: ∀RN,RP,f,L1,L2. L1 ⪤[RN,RP,f] L2 → L1 ⪤[CTC … RN,RP,f] L2.
 #RN #RP #f #L1 #L2 #H elim H -f -L1 -L2
 /3 width=1 by sex_push, sex_next, inj/
 qed.
 
-lemma sex_tc_inj_dx: ∀RN,RP,f,L1,L2. L1 ⪤[RN, RP, f] L2 → L1 ⪤[RN, CTC … RP, f] L2.
+lemma sex_tc_inj_dx: ∀RN,RP,f,L1,L2. L1 ⪤[RN,RP,f] L2 → L1 ⪤[RN,CTC … RP,f] L2.
 #RN #RP #f #L1 #L2 #H elim H -f -L1 -L2
 /3 width=1 by sex_push, sex_next, inj/
 qed.
@@ -82,8 +82,8 @@ qed.
 
 (* Basic_2A1: uses: TC_lpx_sn_ind *)
 theorem sex_tc_step_dx: ∀RN,RP. s_rs_transitive_isid RN RP →
-                        ∀f,L1,L. L1 ⪤[RN, RP, f] L → 𝐈⦃f⦄ →
-                        ∀L2. L ⪤[RN, CTC … RP, f] L2 → L1⪤ [RN, CTC … RP, f] L2.
+                        ∀f,L1,L. L1 ⪤[RN,RP,f] L → 𝐈⦃f⦄ →
+                        ∀L2. L ⪤[RN,CTC … RP,f] L2 → L1⪤ [RN,CTC … RP,f] L2.
 #RN #RP #HRP #f #L1 #L #H elim H -f -L1 -L
 [ #f #_ #Y #H -HRP >(sex_inv_atom1 … H) -Y // ]
 #f #I1 #I #L1 #L #HL1 #HI1 #IH #Hf #Y #H
@@ -99,7 +99,7 @@ qed-.
 (* Advanced properties ******************************************************)
 
 lemma sex_tc_dx: ∀RN,RP. s_rs_transitive_isid RN RP →
-                 ∀f. 𝐈⦃f⦄ → ∀L1,L2. TC … (sex RN RP f) L1 L2 → L1 ⪤[RN, CTC … RP, f] L2.
+                 ∀f. 𝐈⦃f⦄ → ∀L1,L2. TC … (sex RN RP f) L1 L2 → L1 ⪤[RN,CTC … RP,f] L2.
 #RN #RP #HRP #f #Hf #L1 #L2 #H @(TC_ind_dx ??????? H) -L1
 /3 width=3 by sex_tc_step_dx, sex_tc_inj_dx/
 qed.
@@ -107,13 +107,13 @@ qed.
 (* Advanced inversion lemmas ************************************************)
 
 lemma sex_inv_tc_sn: ∀RN,RP. c_reflexive … RN → c_reflexive … RP →
-                     ∀f,L1,L2. L1 ⪤[CTC … RN, RP, f] L2 → TC … (sex RN RP f) L1 L2.
+                     ∀f,L1,L2. L1 ⪤[CTC … RN,RP,f] L2 → TC … (sex RN RP f) L1 L2.
 #RN #RP #HRN #HRP #f #L1 #L2 #H elim H -f -L1 -L2
 /2 width=1 by sex_tc_next, sex_tc_push_sn, sex_atom, inj/
 qed-.
 
 lemma sex_inv_tc_dx: ∀RN,RP. c_reflexive … RN → c_reflexive … RP →
-                     ∀f,L1,L2. L1 ⪤[RN, CTC … RP, f] L2 → TC … (sex RN RP f) L1 L2.
+                     ∀f,L1,L2. L1 ⪤[RN,CTC … RP,f] L2 → TC … (sex RN RP f) L1 L2.
 #RN #RP #HRN #HRP #f #L1 #L2 #H elim H -f -L1 -L2
 /2 width=1 by sex_tc_push, sex_tc_next_sn, sex_atom, inj/
 qed-.

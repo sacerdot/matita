@@ -26,34 +26,34 @@ record is_model (M): Prop ≝ {
 (* Note: application: compatibility *)
    mp: compatible_3 … (ap M) (sq M) (sq M) (sq M);
 (* Note: interpretation: sort *)
-   ms: ∀gv,lv,s. ⟦⋆s⟧{M}[gv, lv] ≗ sv M s;
+   ms: ∀gv,lv,s. ⟦⋆s⟧{M}[gv,lv] ≗ sv M s;
 (* Note: interpretation: local reference *)
-   ml: ∀gv,lv,i. ⟦#i⟧{M}[gv, lv] ≗ lv i;
+   ml: ∀gv,lv,i. ⟦#i⟧{M}[gv,lv] ≗ lv i;
 (* Note: interpretation: global reference *)
-   mg: ∀gv,lv,l. ⟦§l⟧{M}[gv, lv] ≗ gv l;
+   mg: ∀gv,lv,l. ⟦§l⟧{M}[gv,lv] ≗ gv l;
 (* Note: interpretation: intensional binder *)
-   mi: ∀p,gv1,gv2,lv1,lv2,W,T. ⟦W⟧{M}[gv1, lv1] ≗ ⟦W⟧{M}[gv2, lv2] →
-       (∀d. ⟦T⟧{M}[gv1, ⫯[0←d]lv1] ≗ ⟦T⟧{M}[gv2, ⫯[0←d]lv2]) →
-       ⟦ⓛ{p}W.T⟧[gv1, lv1] ≗ ⟦ⓛ{p}W.T⟧[gv2, lv2];
+   mi: ∀p,gv1,gv2,lv1,lv2,W,T. ⟦W⟧{M}[gv1,lv1] ≗ ⟦W⟧{M}[gv2,lv2] →
+       (∀d. ⟦T⟧{M}[gv1,⫯[0←d]lv1] ≗ ⟦T⟧{M}[gv2,⫯[0←d]lv2]) →
+       ⟦ⓛ{p}W.T⟧[gv1,lv1] ≗ ⟦ⓛ{p}W.T⟧[gv2,lv2];
 (* Note: interpretation: abbreviation *)
-   md: ∀p,gv,lv,V,T. ⟦ⓓ{p}V.T⟧{M}[gv, lv] ≗ ⟦V⟧[gv, lv] ⊕[p] ⟦T⟧[gv, ⫯[0←⟦V⟧[gv, lv]]lv];
+   md: ∀p,gv,lv,V,T. ⟦ⓓ{p}V.T⟧{M}[gv,lv] ≗ ⟦V⟧[gv,lv] ⊕[p] ⟦T⟧[gv,⫯[0←⟦V⟧[gv,lv]]lv];
 (* Note: interpretation: application *)
-   ma: ∀gv,lv,V,T. ⟦ⓐV.T⟧{M}[gv, lv] ≗ ⟦V⟧[gv, lv] @ ⟦T⟧[gv, lv];
+   ma: ∀gv,lv,V,T. ⟦ⓐV.T⟧{M}[gv,lv] ≗ ⟦V⟧[gv,lv] @ ⟦T⟧[gv,lv];
 (* Note: interpretation: ζ-equivalence *)
    mz: ∀d1,d2. d1 ⊕{M}[Ⓣ] d2 ≗ d2;
 (* Note: interpretation: ϵ-equivalence *)
-   me: ∀gv,lv,W,T. ⟦ⓝW.T⟧{M}[gv, lv] ≗ ⟦T⟧[gv, lv];
+   me: ∀gv,lv,W,T. ⟦ⓝW.T⟧{M}[gv,lv] ≗ ⟦T⟧[gv,lv];
 (* Note: interpretation: β-requivalence *)
-   mb: ∀p,gv,lv,d,W,T. d @ ⟦ⓛ{p}W.T⟧{M}[gv, lv] ≗ d ⊕[p] ⟦T⟧[gv, ⫯[0←d]lv];
+   mb: ∀p,gv,lv,d,W,T. d @ ⟦ⓛ{p}W.T⟧{M}[gv,lv] ≗ d ⊕[p] ⟦T⟧[gv,⫯[0←d]lv];
 (* Note: interpretation: θ-requivalence *)
    mh: ∀p,d1,d2,d3. d1 @ (d2 ⊕{M}[p] d3) ≗ d2 ⊕[p] (d1 @ d3)
 }.
 
 record is_extensional (M): Prop ≝ {
 (* Note: interpretation: extensional abstraction *)
-   mx: ∀p,gv1,gv2,lv1,lv2,W1,W2,T1,T2. ⟦W1⟧{M}[gv1, lv1] ≗ ⟦W2⟧{M}[gv2, lv2] →
-       (∀d. ⟦T1⟧{M}[gv1, ⫯[0←d]lv1] ≗ ⟦T2⟧{M}[gv2, ⫯[0←d]lv2]) →
-       ⟦ⓛ{p}W1.T1⟧[gv1, lv1] ≗ ⟦ⓛ{p}W2.T2⟧[gv2, lv2]
+   mx: ∀p,gv1,gv2,lv1,lv2,W1,W2,T1,T2. ⟦W1⟧{M}[gv1,lv1] ≗ ⟦W2⟧{M}[gv2,lv2] →
+       (∀d. ⟦T1⟧{M}[gv1,⫯[0←d]lv1] ≗ ⟦T2⟧{M}[gv2,⫯[0←d]lv2]) →
+       ⟦ⓛ{p}W1.T1⟧[gv1,lv1] ≗ ⟦ⓛ{p}W2.T2⟧[gv2,lv2]
 }.
 
 record is_injective (M): Prop ≝ {

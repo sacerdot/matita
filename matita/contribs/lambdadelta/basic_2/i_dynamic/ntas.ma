@@ -20,7 +20,7 @@ include "basic_2/dynamic/cnv.ma".
 (* ITERATED NATIVE TYPE ASSIGNMENT FOR TERMS ********************************)
 
 definition ntas (a) (h) (n) (G) (L): relation term ≝ λT,U.
-           ∃∃U0. ⦃G,L⦄ ⊢ U ![a,h] & ⦃G,L⦄ ⊢ T ![a,h] & ⦃G,L⦄ ⊢ U ➡*[h] U0 & ⦃G, L⦄ ⊢ T ➡*[n,h] U0.
+           ∃∃U0. ⦃G,L⦄ ⊢ U ![a,h] & ⦃G,L⦄ ⊢ T ![a,h] & ⦃G,L⦄ ⊢ U ➡*[h] U0 & ⦃G,L⦄ ⊢ T ➡*[n,h] U0.
 
 interpretation "iterated native type assignment (term)"
    'Colon a h n G L T U = (ntas a h n G L T U).

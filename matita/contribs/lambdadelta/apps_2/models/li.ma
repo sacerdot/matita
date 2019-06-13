@@ -20,7 +20,7 @@ include "apps_2/notation/models/inwbrackets_4.ma".
 
 inductive li (M) (gv): relation2 lenv (evaluation M) ≝
 | li_atom: ∀lv. li M gv (⋆) lv
-| li_abbr: ∀lv,d,L,V. li M gv L lv → ⟦V⟧[gv, lv] = d → li M gv (L.ⓓV) (⫯[0←d]lv)
+| li_abbr: ∀lv,d,L,V. li M gv L lv → ⟦V⟧[gv,lv] = d → li M gv (L.ⓓV) (⫯[0←d]lv)
 | li_abst: ∀lv,d,L,W. li M gv L lv → li M gv (L.ⓛW) (⫯[0←d]lv)
 | li_unit: ∀lv,d,I,L. li M gv L lv → li M gv (L.ⓤ{I}) (⫯[0←d]lv)
 | li_veq : ∀lv1,lv2,L. li M gv L lv1 → lv1 ≗ lv2 → li M gv L lv2

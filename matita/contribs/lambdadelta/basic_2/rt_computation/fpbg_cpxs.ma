@@ -21,13 +21,13 @@ include "basic_2/rt_computation/fpbg_fpbs.ma".
 (* Properties with unbound context-sensitive parallel rt-computation ********)
 
 (* Basic_2A1: was: cpxs_fpbg *)
-lemma cpxs_tdneq_fpbg (h): ∀G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ⬈*[h] T2 →
-                           (T1 ≛ T2 → ⊥) → ⦃G, L, T1⦄ >[h] ⦃G, L, T2⦄.
+lemma cpxs_tdneq_fpbg (h): ∀G,L,T1,T2. ⦃G,L⦄ ⊢ T1 ⬈*[h] T2 →
+                           (T1 ≛ T2 → ⊥) → ⦃G,L,T1⦄ >[h] ⦃G,L,T2⦄.
 #h #G #L #T1 #T2 #H #H0
 elim (cpxs_tdneq_fwd_step_sn … H … H0) -H -H0
 /4 width=5 by cpxs_tdeq_fpbs, fpb_cpx, ex2_3_intro/
 qed.
 
-lemma cpxs_fpbg_trans (h): ∀G1,L1,T1,T. ⦃G1, L1⦄ ⊢ T1 ⬈*[h] T →
-                           ∀G2,L2,T2. ⦃G1, L1, T⦄ >[h] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ >[h] ⦃G2, L2, T2⦄.
+lemma cpxs_fpbg_trans (h): ∀G1,L1,T1,T. ⦃G1,L1⦄ ⊢ T1 ⬈*[h] T →
+                           ∀G2,L2,T2. ⦃G1,L1,T⦄ >[h] ⦃G2,L2,T2⦄ → ⦃G1,L1,T1⦄ >[h] ⦃G2,L2,T2⦄.
 /3 width=5 by fpbs_fpbg_trans, cpxs_fpbs/ qed-.

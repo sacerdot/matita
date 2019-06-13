@@ -20,8 +20,8 @@ include "basic_2/dynamic/cnv.ma".
 (* Advanced dproperties *****************************************************)
 
 (* Basic_2A1: uses: snv_lref *)
-lemma cnv_lref_drops (a) (h) (G): ∀I,K,V,i,L. ⦃G, K⦄ ⊢ V ![a, h] →
-                                  ⬇*[i] L ≘ K.ⓑ{I}V → ⦃G, L⦄ ⊢ #i ![a, h].
+lemma cnv_lref_drops (a) (h) (G): ∀I,K,V,i,L. ⦃G,K⦄ ⊢ V ![a,h] →
+                                  ⬇*[i] L ≘ K.ⓑ{I}V → ⦃G,L⦄ ⊢ #i ![a,h].
 #a #h #G #I #K #V #i elim i -i
 [ #L #HV #H
   lapply (drops_fwd_isid … H ?) -H // #H destruct
@@ -36,8 +36,8 @@ qed.
 
 (* Basic_2A1: uses: snv_inv_lref *)
 lemma cnv_inv_lref_drops (a) (h) (G):
-                         ∀i,L. ⦃G, L⦄ ⊢ #i ![a, h] →
-                         ∃∃I,K,V. ⬇*[i] L ≘ K.ⓑ{I}V & ⦃G, K⦄ ⊢ V ![a, h].
+                         ∀i,L. ⦃G,L⦄ ⊢ #i ![a,h] →
+                         ∃∃I,K,V. ⬇*[i] L ≘ K.ⓑ{I}V & ⦃G,K⦄ ⊢ V ![a,h].
 #a #h #G #i elim i -i
 [ #L #H
   elim (cnv_inv_zero … H) -H #I #K #V #HV #H destruct
@@ -50,15 +50,15 @@ lemma cnv_inv_lref_drops (a) (h) (G):
 qed-.
 
 lemma cnv_inv_lref_pair (a) (h) (G):
-                        ∀i,L. ⦃G, L⦄ ⊢ #i ![a, h] →
-                        ∀I,K,V. ⬇*[i] L ≘ K.ⓑ{I}V → ⦃G, K⦄ ⊢ V ![a, h].
+                        ∀i,L. ⦃G,L⦄ ⊢ #i ![a,h] →
+                        ∀I,K,V. ⬇*[i] L ≘ K.ⓑ{I}V → ⦃G,K⦄ ⊢ V ![a,h].
 #a #h #G #i #L #H #I #K #V #HLK
 elim (cnv_inv_lref_drops … H) -H #Z #Y #X #HLY #HX
 lapply (drops_mono … HLY … HLK) -L #H destruct //
 qed-.
 
 lemma cnv_inv_lref_atom (a) (h) (b) (G):
-                        ∀i,L. ⦃G, L⦄ ⊢ #i ![a, h] →
+                        ∀i,L. ⦃G,L⦄ ⊢ #i ![a,h] →
                         ⬇*[b,𝐔❴i❵] L ≘ ⋆ → ⊥.
 #a #h #b #G #i #L #H #Hi
 elim (cnv_inv_lref_drops … H) -H #Z #Y #X #HLY #_
@@ -67,7 +67,7 @@ lapply (drops_mono … HLY … Hi) -L #H destruct
 qed-.
 
 lemma cnv_inv_lref_unit (a) (h) (G):
-                        ∀i,L. ⦃G, L⦄ ⊢ #i ![a, h] →
+                        ∀i,L. ⦃G,L⦄ ⊢ #i ![a,h] →
                         ∀I,K. ⬇*[i] L ≘ K.ⓤ{I} → ⊥.
 #a #h #G #i #L #H #I #K #HLK
 elim (cnv_inv_lref_drops … H) -H #Z #Y #X #HLY #_

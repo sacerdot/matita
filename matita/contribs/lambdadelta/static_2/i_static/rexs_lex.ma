@@ -22,14 +22,14 @@ include "static_2/i_static/rexs_fqup.ma".
 (* Properties with generic extension of a context sensitive relation ********)
 
 lemma rexs_lex: ∀R. c_reflexive … R →
-                ∀L1,L2,T. L1 ⪤[CTC … R] L2 → L1 ⪤*[R, T] L2.
+                ∀L1,L2,T. L1 ⪤[CTC … R] L2 → L1 ⪤*[R,T] L2.
 #R #HR #L1 #L2 #T *
 /5 width=7 by rexs_tc, sex_inv_tc_dx, sex_co, ext2_inv_tc, ext2_refl/
 qed.
 
 lemma rexs_lex_req: ∀R. c_reflexive … R →
                     ∀L1,L. L1 ⪤[CTC … R] L → ∀L2,T. L ≡[T] L2 →
-                    L1 ⪤*[R, T] L2.
+                    L1 ⪤*[R,T] L2.
 /3 width=3 by rexs_lex, rexs_step_dx, req_fwd_rex/ qed.
 
 (* Inversion lemmas with generic extension of a context sensitive relation **)
@@ -39,7 +39,7 @@ lemma rexs_inv_lex_req: ∀R. c_reflexive … R →
                         rex_fsge_compatible R →
                         s_rs_transitive … R (λ_.lex R) →
                         req_transitive R →
-                        ∀L1,L2,T. L1 ⪤*[R, T] L2 →
+                        ∀L1,L2,T. L1 ⪤*[R,T] L2 →
                         ∃∃L. L1 ⪤[CTC … R] L & L ≡[T] L2.
 #R #H1R #H2R #H3R #H4R #L1 #L2 #T #H
 lapply (s_rs_transitive_lex_inv_isid … H3R) -H3R #H3R

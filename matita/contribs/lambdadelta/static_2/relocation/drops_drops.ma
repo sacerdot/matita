@@ -20,9 +20,9 @@ include "static_2/relocation/drops_weight.ma".
 (* Main properties **********************************************************)
 
 (* Basic_2A1: includes: drop_conf_ge drop_conf_be drop_conf_le *)
-theorem drops_conf: ∀b1,f1,L1,L. ⬇*[b1, f1] L1 ≘ L →
-                    ∀b2,f,L2. ⬇*[b2, f] L1 ≘ L2 →
-                    ∀f2. f1 ⊚ f2 ≘ f → ⬇*[b2, f2] L ≘ L2.
+theorem drops_conf: ∀b1,f1,L1,L. ⬇*[b1,f1] L1 ≘ L →
+                    ∀b2,f,L2. ⬇*[b2,f] L1 ≘ L2 →
+                    ∀f2. f1 ⊚ f2 ≘ f → ⬇*[b2,f2] L ≘ L2.
 #b1 #f1 #L1 #L #H elim H -f1 -L1 -L
 [ #f1 #_ #b2 #f #L2 #HL2 #f2 #Hf12 elim (drops_inv_atom1 … HL2) -b1 -HL2
   #H #Hf destruct @drops_atom
@@ -41,9 +41,9 @@ qed-.
 (* Basic_2A1: includes: drop_trans_ge drop_trans_le drop_trans_ge_comm 
                         drops_drop_trans
 *)
-theorem drops_trans: ∀b1,f1,L1,L. ⬇*[b1, f1] L1 ≘ L →
-                     ∀b2,f2,L2. ⬇*[b2, f2] L ≘ L2 →
-                     ∀f. f1 ⊚ f2 ≘ f → ⬇*[b1∧b2, f] L1 ≘ L2.
+theorem drops_trans: ∀b1,f1,L1,L. ⬇*[b1,f1] L1 ≘ L →
+                     ∀b2,f2,L2. ⬇*[b2,f2] L ≘ L2 →
+                     ∀f. f1 ⊚ f2 ≘ f → ⬇*[b1∧b2,f] L1 ≘ L2.
 #b1 #f1 #L1 #L #H elim H -f1 -L1 -L
 [ #f1 #Hf1 #b2 #f2 #L2 #HL2 #f #Hf elim (drops_inv_atom1 … HL2) -HL2
   #H #Hf2 destruct @drops_atom #H elim (andb_inv_true_dx … H) -H
@@ -85,13 +85,13 @@ qed-.
 (* Advanced properties ******************************************************)
 
 (* Basic_2A1: includes: drop_mono *)
-lemma drops_mono: ∀b1,f,L,L1. ⬇*[b1, f] L ≘ L1 →
-                  ∀b2,L2. ⬇*[b2, f] L ≘ L2 → L1 = L2.
+lemma drops_mono: ∀b1,f,L,L1. ⬇*[b1,f] L ≘ L1 →
+                  ∀b2,L2. ⬇*[b2,f] L ≘ L2 → L1 = L2.
 #b1 #f #L #L1 lapply (after_isid_dx 𝐈𝐝 … f)
 /3 width=8 by drops_conf, drops_fwd_isid/
 qed-.
 
-lemma drops_inv_uni: ∀L,i. ⬇*[Ⓕ, 𝐔❴i❵] L ≘ ⋆ → ∀I,K. ⬇*[i] L ≘ K.ⓘ{I} → ⊥.
+lemma drops_inv_uni: ∀L,i. ⬇*[Ⓕ,𝐔❴i❵] L ≘ ⋆ → ∀I,K. ⬇*[i] L ≘ K.ⓘ{I} → ⊥.
 #L #i #H1 #I #K #H2
 lapply (drops_F … H2) -H2 #H2
 lapply (drops_mono … H2 … H1) -L -i #H destruct
@@ -106,21 +106,21 @@ lemma drops_ldec_dec: ∀L,i. Decidable (∃∃K,W. ⬇*[i] L ≘ K.ⓛW).
 qed-.
 
 (* Basic_2A1: includes: drop_conf_lt *)
-lemma drops_conf_skip1: ∀b2,f,L,L2. ⬇*[b2, f] L ≘ L2 →
-                        ∀b1,f1,I1,K1. ⬇*[b1, f1] L ≘ K1.ⓘ{I1} →
+lemma drops_conf_skip1: ∀b2,f,L,L2. ⬇*[b2,f] L ≘ L2 →
+                        ∀b1,f1,I1,K1. ⬇*[b1,f1] L ≘ K1.ⓘ{I1} →
                         ∀f2. f1 ⊚ ⫯f2 ≘ f →
                         ∃∃I2,K2. L2 = K2.ⓘ{I2} &
-                                 ⬇*[b2, f2] K1 ≘ K2 & ⬆*[f2] I2 ≘ I1.
+                                 ⬇*[b2,f2] K1 ≘ K2 & ⬆*[f2] I2 ≘ I1.
 #b2 #f #L #L2 #H2 #b1 #f1 #I1 #K1 #H1 #f2 #Hf lapply (drops_conf … H1 … H2 … Hf) -L -Hf
 #H elim (drops_inv_skip1 … H) -H /2 width=5 by ex3_2_intro/
 qed-.
 
 (* Basic_2A1: includes: drop_trans_lt *)
-lemma drops_trans_skip2: ∀b1,f1,L1,L. ⬇*[b1, f1] L1 ≘ L →
-                         ∀b2,f2,I2,K2. ⬇*[b2, f2] L ≘ K2.ⓘ{I2} →
+lemma drops_trans_skip2: ∀b1,f1,L1,L. ⬇*[b1,f1] L1 ≘ L →
+                         ∀b2,f2,I2,K2. ⬇*[b2,f2] L ≘ K2.ⓘ{I2} →
                          ∀f. f1 ⊚ f2 ≘ ⫯f →
                          ∃∃I1,K1. L1 = K1.ⓘ{I1} &
-                                  ⬇*[b1∧b2, f] K1 ≘ K2 & ⬆*[f] I2 ≘ I1.
+                                  ⬇*[b1∧b2,f] K1 ≘ K2 & ⬆*[f] I2 ≘ I1.
 #b1 #f1 #L1 #L #H1 #b2 #f2 #I2 #K2 #H2 #f #Hf
 lapply (drops_trans … H1 … H2 … Hf) -L -Hf
 #H elim (drops_inv_skip2 … H) -H /2 width=5 by ex3_2_intro/
@@ -128,7 +128,7 @@ qed-.
 
 (* Basic_2A1: includes: drops_conf_div *)
 lemma drops_conf_div_bind: ∀f1,f2,I1,I2,L,K.
-                           ⬇*[Ⓣ, f1] L ≘ K.ⓘ{I1} → ⬇*[Ⓣ, f2] L ≘ K.ⓘ{I2} →
+                           ⬇*[Ⓣ,f1] L ≘ K.ⓘ{I1} → ⬇*[Ⓣ,f2] L ≘ K.ⓘ{I2} →
                            𝐔⦃f1⦄ → 𝐔⦃f2⦄ → f1 ≡ f2 ∧ I1 = I2.
 #f1 #f2 #I1 #I2 #L #K #Hf1 #Hf2 #HU1 #HU2
 lapply (drops_isuni_fwd_drop2 … Hf1) // #H1

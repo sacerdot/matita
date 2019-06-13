@@ -125,7 +125,7 @@ elim (cpms_inv_lref_sn … H2) -H2 *
 qed-.
 
 lemma nta_inv_lref_sn_drops_cnv (a) (h) (G) (L): 
-      ∀X2, i. ⦃G,L⦄ ⊢ #i :[a,h] X2 →
+      ∀X2,i. ⦃G,L⦄ ⊢ #i :[a,h] X2 →
       ∨∨ ∃∃K,V,W,U. ⬇*[i] L ≘ K.ⓓV & ⦃G,K⦄ ⊢ V :[a,h] W & ⬆*[↑i] W ≘ U & ⦃G,L⦄ ⊢ U ⬌*[h] X2 & ⦃G,L⦄ ⊢ X2 ![a,h]
        | ∃∃K,W,U. ⬇*[i] L ≘ K. ⓛW & ⦃G,K⦄ ⊢ W ![a,h] & ⬆*[↑i] W ≘ U & ⦃G,L⦄ ⊢ U ⬌*[h] X2 & ⦃G,L⦄ ⊢ X2 ![a,h].
 #a #h #G #L #X2 #i #H
@@ -241,7 +241,7 @@ elim (cpms_inv_cast1 … H2) -H2 [ * || * ]
 qed-.
 
 (* Basic_1: uses: ty3_gen_lift *)
-(* Note: "⦃G,L⦄ ⊢ U2 ⬌*[h] X2" can be "⦃G,L⦄ ⊢ X2 ➡*[h] U2" *)
+(* Note: "⦃G, L⦄ ⊢ U2 ⬌*[h] X2" can be "⦃G, L⦄ ⊢ X2 ➡*[h] U2" *)
 lemma nta_inv_lifts_sn (a) (h) (G):
       ∀L,T2,X2. ⦃G,L⦄ ⊢ T2 :[a,h] X2 →
       ∀b,f,K. ⬇*[b,f] L ≘ K → ∀T1. ⬆*[f] T1 ≘ T2 →

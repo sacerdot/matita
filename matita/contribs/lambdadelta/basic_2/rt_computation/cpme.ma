@@ -20,7 +20,7 @@ include "basic_2/rt_computation/cpms.ma".
 
 (* Basic_2A1: uses: cpre *)
 definition cpme (h) (n) (G) (L): relation2 term term ≝
-           λT1,T2. ∧∧ ⦃G, L⦄ ⊢ T1 ➡*[n,h] T2 & ⦃G, L⦄ ⊢ ➡[h] 𝐍⦃T2⦄.
+           λT1,T2. ∧∧ ⦃G,L⦄ ⊢ T1 ➡*[n,h] T2 & ⦃G,L⦄ ⊢ ➡[h] 𝐍⦃T2⦄.
 
 interpretation "evaluation for t-bound context-sensitive parallel rt-transition (term)"
    'PRedEval h n G L T1 T2 = (cpme h n G L T1 T2).

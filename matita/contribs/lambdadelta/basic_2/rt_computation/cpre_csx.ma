@@ -23,7 +23,7 @@ include "basic_2/rt_computation/cpre.ma".
 
 (* Basic_1: was just: nf2_sn3 *)
 lemma cpre_total_csx (h) (G) (L):
-      ∀T1. ⦃G, L⦄ ⊢ ⬈*[h] 𝐒⦃T1⦄ → ∃T2. ⦃G, L⦄ ⊢ T1 ➡*[h] 𝐍⦃T2⦄.
+      ∀T1. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃T1⦄ → ∃T2. ⦃G,L⦄ ⊢ T1 ➡*[h] 𝐍⦃T2⦄.
 #h #G #L #T1 #H
 @(csx_ind … H) -T1 #T1 #_ #IHT1
 elim (cnr_dec_tdeq h G L T1) [ /3 width=3 by ex_intro, conj/ ] *

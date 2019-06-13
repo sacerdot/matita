@@ -28,9 +28,9 @@ inductive cnv (a:ynat) (h): relation3 genv lenv term ≝
 | cnv_lref: ∀I,G,K,i. cnv a h G K (#i) → cnv a h G (K.ⓘ{I}) (#↑i)
 | cnv_bind: ∀p,I,G,L,V,T. cnv a h G L V → cnv a h G (L.ⓑ{I}V) T → cnv a h G L (ⓑ{p,I}V.T)
 | cnv_appl: ∀n,p,G,L,V,W0,T,U0. yinj n < a → cnv a h G L V → cnv a h G L T →
-            ⦃G, L⦄ ⊢ V ➡*[1, h] W0 → ⦃G, L⦄ ⊢ T ➡*[n, h] ⓛ{p}W0.U0 → cnv a h G L (ⓐV.T)
+            ⦃G,L⦄ ⊢ V ➡*[1,h] W0 → ⦃G,L⦄ ⊢ T ➡*[n,h] ⓛ{p}W0.U0 → cnv a h G L (ⓐV.T)
 | cnv_cast: ∀G,L,U,T,U0. cnv a h G L U → cnv a h G L T →
-            ⦃G, L⦄ ⊢ U ➡*[h] U0 → ⦃G, L⦄ ⊢ T ➡*[1, h] U0 → cnv a h G L (ⓝU.T)
+            ⦃G,L⦄ ⊢ U ➡*[h] U0 → ⦃G,L⦄ ⊢ T ➡*[1,h] U0 → cnv a h G L (ⓝU.T)
 .
 
 interpretation "context-sensitive native validity (term)"
@@ -44,8 +44,8 @@ interpretation "context-sensitive extended native validity (term)"
 
 (* Basic inversion lemmas ***************************************************)
 
-fact cnv_inv_zero_aux (a) (h): ∀G,L,X. ⦃G, L⦄ ⊢ X ![a, h] → X = #0 →
-                               ∃∃I,K,V. ⦃G, K⦄ ⊢ V ![a, h] & L = K.ⓑ{I}V.
+fact cnv_inv_zero_aux (a) (h): ∀G,L,X. ⦃G,L⦄ ⊢ X ![a,h] → X = #0 →
+                               ∃∃I,K,V. ⦃G,K⦄ ⊢ V ![a,h] & L = K.ⓑ{I}V.
 #a #h #G #L #X * -G -L -X
 [ #G #L #s #H destruct
 | #I #G #K #V #HV #_ /2 width=5 by ex2_3_intro/
@@ -56,12 +56,12 @@ fact cnv_inv_zero_aux (a) (h): ∀G,L,X. ⦃G, L⦄ ⊢ X ![a, h] → X = #0 →
 ]
 qed-.
 
-lemma cnv_inv_zero (a) (h): ∀G,L. ⦃G, L⦄ ⊢ #0 ![a, h] →
-                            ∃∃I,K,V. ⦃G, K⦄ ⊢ V ![a, h] & L = K.ⓑ{I}V.
+lemma cnv_inv_zero (a) (h): ∀G,L. ⦃G,L⦄ ⊢ #0 ![a,h] →
+                            ∃∃I,K,V. ⦃G,K⦄ ⊢ V ![a,h] & L = K.ⓑ{I}V.
 /2 width=3 by cnv_inv_zero_aux/ qed-.
 
-fact cnv_inv_lref_aux (a) (h): ∀G,L,X. ⦃G, L⦄ ⊢ X ![a, h] → ∀i. X = #(↑i) →
-                              ∃∃I,K. ⦃G, K⦄ ⊢ #i ![a, h] & L = K.ⓘ{I}.
+fact cnv_inv_lref_aux (a) (h): ∀G,L,X. ⦃G,L⦄ ⊢ X ![a,h] → ∀i. X = #(↑i) →
+                              ∃∃I,K. ⦃G,K⦄ ⊢ #i ![a,h] & L = K.ⓘ{I}.
 #a #h #G #L #X * -G -L -X
 [ #G #L #s #j #H destruct
 | #I #G #K #V #_ #j #H destruct
@@ -72,11 +72,11 @@ fact cnv_inv_lref_aux (a) (h): ∀G,L,X. ⦃G, L⦄ ⊢ X ![a, h] → ∀i. X = 
 ]
 qed-.
 
-lemma cnv_inv_lref (a) (h): ∀G,L,i. ⦃G, L⦄ ⊢ #↑i ![a, h] →
-                            ∃∃I,K. ⦃G, K⦄ ⊢ #i ![a, h] & L = K.ⓘ{I}.
+lemma cnv_inv_lref (a) (h): ∀G,L,i. ⦃G,L⦄ ⊢ #↑i ![a,h] →
+                            ∃∃I,K. ⦃G,K⦄ ⊢ #i ![a,h] & L = K.ⓘ{I}.
 /2 width=3 by cnv_inv_lref_aux/ qed-.
 
-fact cnv_inv_gref_aux (a) (h): ∀G,L,X. ⦃G, L⦄ ⊢ X ![a, h] → ∀l. X = §l → ⊥.
+fact cnv_inv_gref_aux (a) (h): ∀G,L,X. ⦃G,L⦄ ⊢ X ![a,h] → ∀l. X = §l → ⊥.
 #a #h #G #L #X * -G -L -X
 [ #G #L #s #l #H destruct
 | #I #G #K #V #_ #l #H destruct
@@ -88,13 +88,13 @@ fact cnv_inv_gref_aux (a) (h): ∀G,L,X. ⦃G, L⦄ ⊢ X ![a, h] → ∀l. X = 
 qed-.
 
 (* Basic_2A1: uses: snv_inv_gref *)
-lemma cnv_inv_gref (a) (h): ∀G,L,l. ⦃G, L⦄ ⊢ §l ![a, h] → ⊥.
+lemma cnv_inv_gref (a) (h): ∀G,L,l. ⦃G,L⦄ ⊢ §l ![a,h] → ⊥.
 /2 width=8 by cnv_inv_gref_aux/ qed-.
 
-fact cnv_inv_bind_aux (a) (h): ∀G,L,X. ⦃G, L⦄ ⊢ X ![a, h] →
+fact cnv_inv_bind_aux (a) (h): ∀G,L,X. ⦃G,L⦄ ⊢ X ![a,h] →
                                ∀p,I,V,T. X = ⓑ{p,I}V.T →
-                               ∧∧ ⦃G, L⦄ ⊢ V ![a, h]
-                                & ⦃G, L.ⓑ{I}V⦄ ⊢ T ![a, h].
+                               ∧∧ ⦃G,L⦄ ⊢ V ![a,h]
+                                & ⦃G,L.ⓑ{I}V⦄ ⊢ T ![a,h].
 #a #h #G #L #X * -G -L -X
 [ #G #L #s #q #Z #X1 #X2 #H destruct
 | #I #G #K #V #_ #q #Z #X1 #X2 #H destruct
@@ -106,14 +106,14 @@ fact cnv_inv_bind_aux (a) (h): ∀G,L,X. ⦃G, L⦄ ⊢ X ![a, h] →
 qed-.
 
 (* Basic_2A1: uses: snv_inv_bind *)
-lemma cnv_inv_bind (a) (h): ∀p,I,G,L,V,T. ⦃G, L⦄ ⊢ ⓑ{p,I}V.T ![a, h] →
-                            ∧∧ ⦃G, L⦄ ⊢ V ![a, h]
-                             & ⦃G, L.ⓑ{I}V⦄ ⊢ T ![a, h].
+lemma cnv_inv_bind (a) (h): ∀p,I,G,L,V,T. ⦃G,L⦄ ⊢ ⓑ{p,I}V.T ![a,h] →
+                            ∧∧ ⦃G,L⦄ ⊢ V ![a,h]
+                             & ⦃G,L.ⓑ{I}V⦄ ⊢ T ![a,h].
 /2 width=4 by cnv_inv_bind_aux/ qed-.
 
-fact cnv_inv_appl_aux (a) (h): ∀G,L,X. ⦃G, L⦄ ⊢ X ![a, h] → ∀V,T. X = ⓐV.T →
-                               ∃∃n,p,W0,U0. yinj n < a & ⦃G, L⦄ ⊢ V ![a, h] & ⦃G, L⦄ ⊢ T ![a, h] &
-                                            ⦃G, L⦄ ⊢ V ➡*[1, h] W0 & ⦃G, L⦄ ⊢ T ➡*[n, h] ⓛ{p}W0.U0.
+fact cnv_inv_appl_aux (a) (h): ∀G,L,X. ⦃G,L⦄ ⊢ X ![a,h] → ∀V,T. X = ⓐV.T →
+                               ∃∃n,p,W0,U0. yinj n < a & ⦃G,L⦄ ⊢ V ![a,h] & ⦃G,L⦄ ⊢ T ![a,h] &
+                                            ⦃G,L⦄ ⊢ V ➡*[1,h] W0 & ⦃G,L⦄ ⊢ T ➡*[n,h] ⓛ{p}W0.U0.
 #a #h #G #L #X * -L -X
 [ #G #L #s #X1 #X2 #H destruct
 | #I #G #K #V #_ #X1 #X2 #H destruct
@@ -125,14 +125,14 @@ fact cnv_inv_appl_aux (a) (h): ∀G,L,X. ⦃G, L⦄ ⊢ X ![a, h] → ∀V,T. X 
 qed-.
 
 (* Basic_2A1: uses: snv_inv_appl *)
-lemma cnv_inv_appl (a) (h): ∀G,L,V,T. ⦃G, L⦄ ⊢ ⓐV.T ![a, h] →
-                            ∃∃n,p,W0,U0. yinj n < a & ⦃G, L⦄ ⊢ V ![a, h] & ⦃G, L⦄ ⊢ T ![a, h] &
-                                         ⦃G, L⦄ ⊢ V ➡*[1, h] W0 & ⦃G, L⦄ ⊢ T ➡*[n, h] ⓛ{p}W0.U0.
+lemma cnv_inv_appl (a) (h): ∀G,L,V,T. ⦃G,L⦄ ⊢ ⓐV.T ![a,h] →
+                            ∃∃n,p,W0,U0. yinj n < a & ⦃G,L⦄ ⊢ V ![a,h] & ⦃G,L⦄ ⊢ T ![a,h] &
+                                         ⦃G,L⦄ ⊢ V ➡*[1,h] W0 & ⦃G,L⦄ ⊢ T ➡*[n,h] ⓛ{p}W0.U0.
 /2 width=3 by cnv_inv_appl_aux/ qed-.
 
-fact cnv_inv_cast_aux (a) (h): ∀G,L,X. ⦃G, L⦄ ⊢ X ![a, h] → ∀U,T. X = ⓝU.T →
-                               ∃∃U0. ⦃G, L⦄ ⊢ U ![a, h] & ⦃G, L⦄ ⊢ T ![a, h] &
-                                     ⦃G, L⦄ ⊢ U ➡*[h] U0 & ⦃G, L⦄ ⊢ T ➡*[1, h] U0.
+fact cnv_inv_cast_aux (a) (h): ∀G,L,X. ⦃G,L⦄ ⊢ X ![a,h] → ∀U,T. X = ⓝU.T →
+                               ∃∃U0. ⦃G,L⦄ ⊢ U ![a,h] & ⦃G,L⦄ ⊢ T ![a,h] &
+                                     ⦃G,L⦄ ⊢ U ➡*[h] U0 & ⦃G,L⦄ ⊢ T ➡*[1,h] U0.
 #a #h #G #L #X * -G -L -X
 [ #G #L #s #X1 #X2 #H destruct
 | #I #G #K #V #_ #X1 #X2 #H destruct
@@ -144,16 +144,16 @@ fact cnv_inv_cast_aux (a) (h): ∀G,L,X. ⦃G, L⦄ ⊢ X ![a, h] → ∀U,T. X 
 qed-.
 
 (* Basic_2A1: uses: snv_inv_appl *)
-lemma cnv_inv_cast (a) (h): ∀G,L,U,T. ⦃G, L⦄ ⊢ ⓝU.T ![a, h] →
-                            ∃∃U0. ⦃G, L⦄ ⊢ U ![a, h] & ⦃G, L⦄ ⊢ T ![a, h] &
-                                  ⦃G, L⦄ ⊢ U ➡*[h] U0 & ⦃G, L⦄ ⊢ T ➡*[1, h] U0.
+lemma cnv_inv_cast (a) (h): ∀G,L,U,T. ⦃G,L⦄ ⊢ ⓝU.T ![a,h] →
+                            ∃∃U0. ⦃G,L⦄ ⊢ U ![a,h] & ⦃G,L⦄ ⊢ T ![a,h] &
+                                  ⦃G,L⦄ ⊢ U ➡*[h] U0 & ⦃G,L⦄ ⊢ T ➡*[1,h] U0.
 /2 width=3 by cnv_inv_cast_aux/ qed-.
 
 (* Basic forward lemmas *****************************************************)
 
 lemma cnv_fwd_flat (a) (h) (I) (G) (L):
-                   ∀V,T. ⦃G, L⦄ ⊢ ⓕ{I}V.T ![a,h] →
-                   ∧∧ ⦃G, L⦄ ⊢ V ![a,h] & ⦃G, L⦄ ⊢ T ![a,h].
+                   ∀V,T. ⦃G,L⦄ ⊢ ⓕ{I}V.T ![a,h] →
+                   ∧∧ ⦃G,L⦄ ⊢ V ![a,h] & ⦃G,L⦄ ⊢ T ![a,h].
 #a #h * #G #L #V #T #H
 [ elim (cnv_inv_appl … H) #n #p #W #U #_ #HV #HT #_ #_
 | elim (cnv_inv_cast … H) #U #HV #HT #_ #_

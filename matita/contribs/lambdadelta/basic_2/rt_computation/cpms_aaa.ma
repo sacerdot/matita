@@ -26,7 +26,7 @@ lemma cpms_aaa_conf (n) (h): ∀G,L. Conf3 … (aaa G L) (cpms h G L n).
 /3 width=5 by cpms_fwd_cpxs, cpxs_aaa_conf/ qed-.
 
 lemma cpms_total_aaa (h) (G) (L) (n) (A):
-      ∀T. ⦃G, L⦄ ⊢ T ⁝ A → ∃U. ⦃G,L⦄ ⊢ T ➡*[n,h] U.
+      ∀T. ⦃G,L⦄ ⊢ T ⁝ A → ∃U. ⦃G,L⦄ ⊢ T ➡*[n,h] U.
 #h #G #L #n elim n -n
 [ /2 width=3 by ex_intro/
 | #n #IH #A #T1 #HT1 <plus_SO

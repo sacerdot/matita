@@ -83,7 +83,7 @@ qed-.
 
 lemma ti_comp (M): is_model M →
                    ∀T,gv1,gv2. gv1 ≗ gv2 → ∀lv1,lv2. lv1 ≗ lv2 →
-                   ⟦T⟧[gv1, lv1] ≗{M} ⟦T⟧[gv2, lv2].
+                   ⟦T⟧[gv1,lv1] ≗{M} ⟦T⟧[gv2,lv2].
 #M #HM #T elim T -T * [||| #p * | * ]
 [ /4 width=5 by seq_trans, seq_sym, ms/
 | /4 width=5 by seq_sym, ml, mq/

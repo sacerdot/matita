@@ -25,7 +25,7 @@ lemma cpm_aaa_conf (n) (h): ∀G,L. Conf3 … (aaa G L) (cpm h G L n).
 
 (* Note: one of these U is the inferred type of T *)
 lemma aaa_cpm_SO (h) (G) (L) (A):
-      ∀T. ⦃G, L⦄ ⊢ T ⁝ A → ∃U. ⦃G,L⦄ ⊢ T ➡[1,h] U.
+      ∀T. ⦃G,L⦄ ⊢ T ⁝ A → ∃U. ⦃G,L⦄ ⊢ T ➡[1,h] U.
 #h #G #L #A #T #H elim H -G -L -T -A
 [ /3 width=2 by ex_intro/
 | * #G #L #V #B #_ * #V0 #HV0
