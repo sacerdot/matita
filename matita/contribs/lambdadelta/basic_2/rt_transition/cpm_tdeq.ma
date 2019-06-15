@@ -32,7 +32,7 @@ qed-.
 lemma cpm_tdeq_inv_atom_sn (n) (h) (I) (G) (L):
                            ∀X. ⦃G,L⦄ ⊢ ⓪{I} ➡[n,h] X → ⓪{I} ≛ X →
                            ∨∨ ∧∧ X = ⓪{I} & n = 0
-                            | ∃∃s. X = ⋆(next h s) & I = Sort s & n = 1.
+                            | ∃∃s. X = ⋆(⫯[h]s) & I = Sort s & n = 1.
 #n #h * #s #G #L #X #H1 #H2
 [ elim (cpm_inv_sort1 … H1) -H1
   cases n -n [| #n ] #H #Hn destruct -H2

@@ -12,30 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/syntax/sh_props.ma".
+include "static_2/syntax/sh.ma".
 
 (* SORT HIERARCHY ***********************************************************)
 
-(* strict monotonicity condition *)
-record sh_lt (h): Prop ≝
+(* acyclicity condition *)
+record sh_acyclic (h): Prop ≝
 {
-  next_lt: ∀s. s < ⫯[h]s
+  nexts_inj: ∀s,n1,n2. (next h)^n1 s = (next h)^n2 s → n1 = n2
 }.
 
-(* Basic properties *********************************************************)
-
-lemma nexts_le (h): sh_lt h → ∀s,n. s ≤ (next h)^n s.
-#h #Hh #s #n elim n -n [ // ] normalize #n #IH
-lapply (next_lt … Hh ((next h)^n s)) #H
-lapply (le_to_lt_to_lt … IH H) -IH -H /2 width=2 by lt_to_le/
-qed.
-
-lemma nexts_lt (h): sh_lt h → ∀s,n. s < (next h)^(↑n) s.
-#h #Hh #s #n normalize
-lapply (nexts_le … Hh s n) #H
-@(le_to_lt_to_lt … H) /2 width=1 by next_lt/
-qed.
-
-axiom sh_lt_dec (h): sh_lt h → sh_decidable h.
-
-axiom sh_lt_acyclic (h): sh_lt h → sh_acyclic h.
+(* decidability condition *)
+record sh_decidable (h): Prop ≝
+{
+  nexts_dec: ∀s1,s2. Decidable (∃n. (next h)^n s1 = s2)
+}.

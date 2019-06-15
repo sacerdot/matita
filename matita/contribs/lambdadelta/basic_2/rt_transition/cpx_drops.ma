@@ -32,7 +32,7 @@ qed.
 (* Basic_2A1: was: cpx_inv_atom1 *)
 lemma cpx_inv_atom1_drops: ∀h,I,G,L,T2. ⦃G,L⦄ ⊢ ⓪{I} ⬈[h] T2 →
                            ∨∨ T2 = ⓪{I}
-                            | ∃∃s. T2 = ⋆(next h s) & I = Sort s
+                            | ∃∃s. T2 = ⋆(⫯[h]s) & I = Sort s
                             | ∃∃J,K,V,V2,i. ⬇*[i] L ≘ K.ⓑ{J}V & ⦃G,K⦄ ⊢ V ⬈[h] V2 &
                                             ⬆*[↑i] V2 ≘ T2 & I = LRef i.
 #h #I #G #L #T2 * #c #H elim (cpg_inv_atom1_drops … H) -H *

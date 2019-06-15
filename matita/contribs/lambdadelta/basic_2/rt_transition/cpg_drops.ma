@@ -63,7 +63,7 @@ qed-.
 
 lemma cpg_inv_atom1_drops: ∀Rt,c,h,I,G,L,T2. ⦃G,L⦄ ⊢ ⓪{I} ⬈[Rt,c,h] T2 →
                            ∨∨ T2 = ⓪{I} ∧ c = 𝟘𝟘
-                            | ∃∃s. T2 = ⋆(next h s) & I = Sort s & c = 𝟘𝟙
+                            | ∃∃s. T2 = ⋆(⫯[h]s) & I = Sort s & c = 𝟘𝟙
                             | ∃∃cV,i,K,V,V2. ⬇*[i] L ≘ K.ⓓV & ⦃G,K⦄ ⊢ V ⬈[Rt,cV,h] V2 &
                                              ⬆*[↑i] V2 ≘ T2 & I = LRef i & c = cV
                             | ∃∃cV,i,K,V,V2. ⬇*[i] L ≘ K.ⓛV & ⦃G,K⦄ ⊢ V ⬈[Rt,cV,h] V2 &

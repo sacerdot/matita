@@ -35,7 +35,7 @@ interpretation "extended native type assignment (term)"
 
 (* Basic_1: was by definition: ty3_sort *)
 (* Basic_2A1: was by definition: nta_sort ntaa_sort *)
-lemma nta_sort (a) (h) (G) (L) (s): ⦃G,L⦄ ⊢ ⋆s :[a,h] ⋆(next h s).
+lemma nta_sort (a) (h) (G) (L) (s): ⦃G,L⦄ ⊢ ⋆s :[a,h] ⋆(⫯[h]s).
 #a #h #G #L #s /2 width=3 by cnv_sort, cnv_cast, cpms_sort/
 qed.
 

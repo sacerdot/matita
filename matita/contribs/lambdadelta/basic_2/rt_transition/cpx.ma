@@ -27,7 +27,7 @@ interpretation
 (* Basic properties *********************************************************)
 
 (* Basic_2A1: was: cpx_st *)
-lemma cpx_ess: ∀h,G,L,s. ⦃G,L⦄ ⊢ ⋆s ⬈[h] ⋆(next h s).
+lemma cpx_ess: ∀h,G,L,s. ⦃G,L⦄ ⊢ ⋆s ⬈[h] ⋆(⫯[h]s).
 /2 width=2 by cpg_ess, ex_intro/ qed.
 
 lemma cpx_delta: ∀h,I,G,K,V1,V2,W2. ⦃G,K⦄ ⊢ V1 ⬈[h] V2 →
@@ -110,7 +110,7 @@ qed.
 
 lemma cpx_inv_atom1: ∀h,J,G,L,T2. ⦃G,L⦄ ⊢ ⓪{J} ⬈[h] T2 →
                      ∨∨ T2 = ⓪{J}
-                      | ∃∃s. T2 = ⋆(next h s) & J = Sort s
+                      | ∃∃s. T2 = ⋆(⫯[h]s) & J = Sort s
                       | ∃∃I,K,V1,V2. ⦃G,K⦄ ⊢ V1 ⬈[h] V2 & ⬆*[1] V2 ≘ T2 &
                                      L = K.ⓑ{I}V1 & J = LRef 0
                       | ∃∃I,K,T,i. ⦃G,K⦄ ⊢ #i ⬈[h] T & ⬆*[1] T ≘ T2 &
@@ -120,7 +120,7 @@ lemma cpx_inv_atom1: ∀h,J,G,L,T2. ⦃G,L⦄ ⊢ ⓪{J} ⬈[h] T2 →
 qed-.
 
 lemma cpx_inv_sort1: ∀h,G,L,T2,s. ⦃G,L⦄ ⊢ ⋆s ⬈[h] T2 →
-                     ∨∨ T2 = ⋆s | T2 = ⋆(next h s).
+                     ∨∨ T2 = ⋆s | T2 = ⋆(⫯[h]s).
 #h #G #L #T2 #s * #c #H elim (cpg_inv_sort1 … H) -H *
 /2 width=1 by or_introl, or_intror/
 qed-.
@@ -240,7 +240,7 @@ qed-.
 
 lemma cpx_ind: ∀h. ∀Q:relation4 genv lenv term term.
                (∀I,G,L. Q G L (⓪{I}) (⓪{I})) →
-               (∀G,L,s. Q G L (⋆s) (⋆(next h s))) →
+               (∀G,L,s. Q G L (⋆s) (⋆(⫯[h]s))) →
                (∀I,G,K,V1,V2,W2. ⦃G,K⦄ ⊢ V1 ⬈[h] V2 → Q G K V1 V2 →
                  ⬆*[1] V2 ≘ W2 → Q G (K.ⓑ{I}V1) (#0) W2
                ) → (∀I,G,K,T,U,i. ⦃G,K⦄ ⊢ #i ⬈[h] T → Q G K (#i) T →

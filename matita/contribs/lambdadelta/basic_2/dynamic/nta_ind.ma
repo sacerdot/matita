@@ -22,7 +22,7 @@ include "basic_2/dynamic/nta_preserve.ma".
 (* Advanced eliminators *****************************************************)
 
 lemma nta_ind_rest_cnv (h) (Q:relation4 …):
-      (∀G,L,s. Q G L (⋆s) (⋆(next h s))) →
+      (∀G,L,s. Q G L (⋆s) (⋆(⫯[h]s))) →
       (∀G,K,V,W,U.
         ⦃G,K⦄ ⊢ V :[h] W → ⬆*[1] W ≘ U →
         Q G K V W → Q G (K.ⓓV) (#0) U
@@ -79,7 +79,7 @@ lemma nta_ind_rest_cnv (h) (Q:relation4 …):
 qed-.
 
 lemma nta_ind_ext_cnv_mixed (h) (Q:relation4 …):
-      (∀G,L,s. Q G L (⋆s) (⋆(next h s))) →
+      (∀G,L,s. Q G L (⋆s) (⋆(⫯[h]s))) →
       (∀G,K,V,W,U.
         ⦃G,K⦄ ⊢ V :*[h] W → ⬆*[1] W ≘ U →
         Q G K V W → Q G (K.ⓓV) (#0) U
@@ -144,7 +144,7 @@ lemma nta_ind_ext_cnv_mixed (h) (Q:relation4 …):
 qed-.
 
 lemma nta_ind_ext_cnv (h) (Q:relation4 …):
-      (∀G,L,s. Q G L (⋆s) (⋆(next h s))) →
+      (∀G,L,s. Q G L (⋆s) (⋆(⫯[h]s))) →
       (∀G,K,V,W,U.
         ⦃G,K⦄ ⊢ V :*[h] W → ⬆*[1] W ≘ U →
         Q G K V W → Q G (K.ⓓV) (#0) U

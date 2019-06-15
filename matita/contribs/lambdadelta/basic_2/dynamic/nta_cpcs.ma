@@ -45,7 +45,7 @@ qed-.
 (* Basic_2A1: was: nta_inv_sort1 *)
 lemma nta_inv_sort_sn (a) (h) (G) (L) (X2):
       ∀s. ⦃G,L⦄ ⊢ ⋆s :[a,h] X2 →
-      ∧∧ ⦃G,L⦄ ⊢ ⋆(next h s) ⬌*[h] X2 & ⦃G,L⦄ ⊢ X2 ![a,h].
+      ∧∧ ⦃G,L⦄ ⊢ ⋆(⫯[h]s) ⬌*[h] X2 & ⦃G,L⦄ ⊢ X2 ![a,h].
 #a #h #G #L #X2 #s #H
 elim (cnv_inv_cast … H) -H #X1 #HX2 #_ #HX21 #H
 lapply (cpms_inv_sort1 … H) -H #H destruct

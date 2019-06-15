@@ -12,30 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/syntax/sh_props.ma".
+include "static_2/syntax/sh_lt.ma".
+include "static_2/syntax/sd_d.ma".
 
-(* SORT HIERARCHY ***********************************************************)
+(* SORT DEGREE **************************************************************)
 
-(* strict monotonicity condition *)
-record sh_lt (h): Prop ≝
-{
-  next_lt: ∀s. s < ⫯[h]s
-}.
+(* Properties with sh_lt ****************************************************)
 
-(* Basic properties *********************************************************)
-
-lemma nexts_le (h): sh_lt h → ∀s,n. s ≤ (next h)^n s.
-#h #Hh #s #n elim n -n [ // ] normalize #n #IH
-lapply (next_lt … Hh ((next h)^n s)) #H
-lapply (le_to_lt_to_lt … IH H) -IH -H /2 width=2 by lt_to_le/
+lemma deg_SO_gt (h): sh_lt h →
+      ∀s1,s2. s1 < s2 → deg_SO h s1 s2 0.
+#h #Hh #s1 #s2 #Hs12 @deg_SO_zero * normalize
+[ #H destruct
+  elim (lt_refl_false … Hs12)
+| #n #H
+  lapply (next_lt … Hh ((next h)^n s2)) >H -H #H
+  lapply (transitive_lt … H Hs12) -s1 #H1
+  /3 width=5 by lt_le_false, nexts_le/ (* full auto too slow *)
+]
 qed.
-
-lemma nexts_lt (h): sh_lt h → ∀s,n. s < (next h)^(↑n) s.
-#h #Hh #s #n normalize
-lapply (nexts_le … Hh s n) #H
-@(le_to_lt_to_lt … H) /2 width=1 by next_lt/
-qed.
-
-axiom sh_lt_dec (h): sh_lt h → sh_decidable h.
-
-axiom sh_lt_acyclic (h): sh_lt h → sh_acyclic h.

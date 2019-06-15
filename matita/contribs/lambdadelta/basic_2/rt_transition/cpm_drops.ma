@@ -67,7 +67,7 @@ qed.
 
 lemma cpm_inv_atom1_drops: ∀n,h,I,G,L,T2. ⦃G,L⦄ ⊢ ⓪{I} ➡[n,h] T2 →
                            ∨∨ T2 = ⓪{I} ∧ n = 0
-                            | ∃∃s. T2 = ⋆(next h s) & I = Sort s & n = 1
+                            | ∃∃s. T2 = ⋆(⫯[h]s) & I = Sort s & n = 1
                             | ∃∃K,V,V2,i. ⬇*[i] L ≘ K.ⓓV & ⦃G,K⦄ ⊢ V ➡[n,h] V2 &
                                           ⬆*[↑i] V2 ≘ T2 & I = LRef i
                             | ∃∃m,K,V,V2,i. ⬇*[i] L ≘ K.ⓛV & ⦃G,K⦄ ⊢ V ➡[m,h] V2 &

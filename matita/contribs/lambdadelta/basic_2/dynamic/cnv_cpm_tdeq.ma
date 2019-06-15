@@ -128,7 +128,7 @@ qed-.
 
 lemma cpm_tdeq_ind (a) (h) (n) (G) (Q:relation3 …):
                    (∀I,L. n = 0 → Q L (⓪{I}) (⓪{I})) →
-                   (∀L,s. n = 1 → Q L (⋆s) (⋆(next h s))) →
+                   (∀L,s. n = 1 → Q L (⋆s) (⋆(⫯[h]s))) →
                    (∀p,I,L,V,T1. ⦃G,L⦄⊢ V![a,h] → ⦃G,L.ⓑ{I}V⦄⊢T1![a,h] →
                     ∀T2. ⦃G,L.ⓑ{I}V⦄ ⊢ T1 ➡[n,h] T2 → T1 ≛ T2 →
                     Q (L.ⓑ{I}V) T1 T2 → Q L (ⓑ{p,I}V.T1) (ⓑ{p,I}V.T2)

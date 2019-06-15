@@ -33,7 +33,7 @@ fact cnv_cpm_tdeq_conf_lpr_atom_atom_aux (h) (G0) (L1) (L2) (I):
 qed-.
 
 fact cnv_cpm_tdeq_conf_lpr_atom_ess_aux (h) (G0) (L1) (L2) (s):
-     ∃∃T. ⦃G0,L1⦄ ⊢ ⋆s ➡[1,h] T & ⋆s ≛ T & ⦃G0,L2⦄ ⊢ ⋆(next h s) ➡[h] T & ⋆(next h s) ≛ T.
+     ∃∃T. ⦃G0,L1⦄ ⊢ ⋆s ➡[1,h] T & ⋆s ≛ T & ⦃G0,L2⦄ ⊢ ⋆(⫯[h]s) ➡[h] T & ⋆(⫯[h]s) ≛ T.
 #h #G0 #L1 #L2 #s
 /3 width=5 by tdeq_sort, ex4_intro/
 qed-.

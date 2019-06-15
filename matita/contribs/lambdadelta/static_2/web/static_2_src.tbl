@@ -156,8 +156,12 @@ table {
           }
         ]
         [ { "items" * } {
-             [ [ "" ] "item_sh" * ]
              [ [ "" ] "item" * ]
+          }
+        ]
+        [ { "sorts" * } {
+             [ [ "degree" ] "sd" "sd_d" + "sd_lt" * ]
+             [ [ "hierarchy" ] "sh" + "( ⫯[?]? )" "sh_props" + "sh_lt" * ]
           }
         ]
         [ { "atomic arities" * } {

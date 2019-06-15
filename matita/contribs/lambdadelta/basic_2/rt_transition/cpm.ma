@@ -32,7 +32,7 @@ interpretation
 
 (* Basic properties *********************************************************)
 
-lemma cpm_ess: ∀h,G,L,s. ⦃G,L⦄ ⊢ ⋆s ➡[1,h] ⋆(next h s).
+lemma cpm_ess: ∀h,G,L,s. ⦃G,L⦄ ⊢ ⋆s ➡[1,h] ⋆(⫯[h]s).
 /2 width=3 by cpg_ess, ex2_intro/ qed.
 
 lemma cpm_delta: ∀n,h,G,K,V1,V2,W2. ⦃G,K⦄ ⊢ V1 ➡[n,h] V2 →
@@ -131,7 +131,7 @@ qed.
 
 lemma cpm_inv_atom1: ∀n,h,J,G,L,T2. ⦃G,L⦄ ⊢ ⓪{J} ➡[n,h] T2 →
                      ∨∨ T2 = ⓪{J} ∧ n = 0
-                      | ∃∃s. T2 = ⋆(next h s) & J = Sort s & n = 1
+                      | ∃∃s. T2 = ⋆(⫯[h]s) & J = Sort s & n = 1
                       | ∃∃K,V1,V2. ⦃G,K⦄ ⊢ V1 ➡[n,h] V2 & ⬆*[1] V2 ≘ T2 &
                                    L = K.ⓓV1 & J = LRef 0
                       | ∃∃m,K,V1,V2. ⦃G,K⦄ ⊢ V1 ➡[m,h] V2 & ⬆*[1] V2 ≘ T2 &
@@ -304,7 +304,7 @@ qed-.
 
 lemma cpm_ind (h): ∀Q:relation5 nat genv lenv term term.
                    (∀I,G,L. Q 0 G L (⓪{I}) (⓪{I})) →
-                   (∀G,L,s. Q 1 G L (⋆s) (⋆(next h s))) →
+                   (∀G,L,s. Q 1 G L (⋆s) (⋆(⫯[h]s))) →
                    (∀n,G,K,V1,V2,W2. ⦃G,K⦄ ⊢ V1 ➡[n,h] V2 → Q n G K V1 V2 →
                      ⬆*[1] V2 ≘ W2 → Q n G (K.ⓓV1) (#0) W2
                    ) → (∀n,G,K,V1,V2,W2. ⦃G,K⦄ ⊢ V1 ➡[n,h] V2 → Q n G K V1 V2 →

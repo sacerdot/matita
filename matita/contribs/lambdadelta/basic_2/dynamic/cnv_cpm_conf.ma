@@ -28,7 +28,7 @@ fact cnv_cpm_conf_lpr_atom_atom_aux (h) (G) (L1) (L2) (I):
 /2 width=3 by ex2_intro/ qed-.
 
 fact cnv_cpm_conf_lpr_atom_ess_aux (h) (G) (L1) (L2) (s):
-     ∃∃T. ⦃G,L1⦄ ⊢ ⋆s ➡*[1,h] T & ⦃G,L2⦄ ⊢ ⋆(next h s) ➡*[h] T.
+     ∃∃T. ⦃G,L1⦄ ⊢ ⋆s ➡*[1,h] T & ⦃G,L2⦄ ⊢ ⋆(⫯[h]s) ➡*[h] T.
 /3 width=3 by cpm_cpms, ex2_intro/ qed-.
 
 fact cnv_cpm_conf_lpr_atom_delta_aux (a) (h) (G) (L) (i):
