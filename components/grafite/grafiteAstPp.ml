@@ -120,27 +120,21 @@ let rec pp_ntactic status ~map_unicode_to_tex =
   | NBlock (_,l) -> 
      "(" ^ String.concat " " (List.map (pp_ntactic status ~map_unicode_to_tex) l)^ ")"
   | NRepeat (_,t) -> "nrepeat " ^ pp_ntactic status ~map_unicode_to_tex t
-  | Assume (_, ident, term, term1) -> "assume" ^ ident ^ ":" ^ NotationPp.pp_term status term ^
-  (match term1 with None -> " " | Some t1 -> " that is eqivalent to " ^ NotationPp.pp_term status t1)
-  | Suppose (_,term,ident,term1) -> "suppose" ^ NotationPp.pp_term status term ^ "(" ^ ident ^ ")" ^ (match
-  term1 with None -> " " | Some t -> " that is equivalent to " ^ NotationPp.pp_term status t)
-  | By_just_we_proved (_, just, term1, ident, term2) -> pp_just status just  ^ "we proved" ^
-  NotationPp.pp_term status term1 ^ (match ident with None -> "" | Some ident -> "(" ^ident^ ")") ^ (match
-  term2 with  None -> " " | Some term2 -> " that is equivalent to " ^ NotationPp.pp_term status term2)
-  | We_need_to_prove (_,term,ident,t) -> "we need to prove" ^ NotationPp.pp_term status term ^
-  (match ident with None -> " " | Some id -> "(" ^ id ^ ")") ^ (match t with None -> "" | Some t ->
-      " or equivalently " ^ (NotationPp.pp_term status t))
-  | BetaRewritingStep (_,t) -> "or equivalently " ^ (NotationPp.pp_term status t)
+  | Assume (_, ident, term) -> "assume" ^ ident ^ ":" ^ NotationPp.pp_term status term
+  | Suppose (_,term,ident) -> "suppose" ^ NotationPp.pp_term status term ^ "(" ^ ident ^ ")"
+  | By_just_we_proved (_, just, term1, ident) -> pp_just status just  ^ "we proved" ^
+                                                 NotationPp.pp_term status term1 ^ (match ident with
+        None -> "" | Some ident -> "(" ^ident^ ")")
+  | We_need_to_prove (_,term,ident) -> "we need to prove" ^ NotationPp.pp_term status term ^
+                                         (match ident with None -> "" | Some id -> "(" ^ id ^ ")")
+  | BetaRewritingStep (_,t) -> "that is equivalent to" ^ (NotationPp.pp_term status t)
   | Bydone (_, just) -> pp_just status just ^ "done"
   | ExistsElim (_, just, ident, term, term1, ident1) -> pp_just status just ^ "let " ^ ident ^ ":"
-  ^ NotationPp.pp_term status term ^ "such that " ^ NotationPp.pp_term status term1 ^ "(" ^ ident1 ^ ")"
+  ^ NotationPp.pp_term status term ^ "such that" ^ NotationPp.pp_term status term1 ^ "(" ^ ident1 ^ ")"
   | AndElim (_, just, term1, ident1, term2, ident2) -> pp_just status just ^ "we have " ^
   NotationPp.pp_term status term1 ^ " (" ^ ident1 ^ ") " ^ "and " ^ NotationPp.pp_term status term2
   ^ " (" ^ ident2 ^ ")" 
-  | Thesisbecomes (_, t, t1) -> "the thesis becomes " ^ NotationPp.pp_term status t ^
-                                   (match t1 with None -> "" | Some t1 -> " or equivalently " ^
-                                                                          NotationPp.pp_term status
-                                                                            t1)
+  | Thesisbecomes (_, t) -> "the thesis becomes" ^ NotationPp.pp_term status t
   | RewritingStep (_, rhs, just, cont) -> 
       "=" ^
       NotationPp.pp_term status rhs ^ 

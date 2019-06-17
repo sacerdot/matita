@@ -79,30 +79,21 @@ type ntactic =
    | NBlock of loc * ntactic list
    (* Declarative langauge *)
    (* Not the best idea to use a string directly, an abstract type for identifiers would be better *)
-   | Assume of loc * string * nterm * nterm option (* loc, identifier, type, eqty *)
-   | Suppose of loc * nterm *string * nterm option (* loc, assumption, identifier, eqass *)
-   | By_just_we_proved of loc * just * nterm * string option * nterm option (* loc,
-   justification, conclusion, identifier, eqconcl *)
-   | We_need_to_prove of loc * nterm * string option * nterm option (* loc, newconclusion,
-   identifier, equivnewcon *)
+   | Assume of loc * string * nterm (* loc, identifier, type *)
+   | Suppose of loc * nterm * string (* loc, assumption, identifier *)
+   | By_just_we_proved of loc * just * nterm * string option (* loc, justification, conclusion, identifier *)
+   | We_need_to_prove of loc * nterm * string option (* loc, newconclusion, identifier *)
    | BetaRewritingStep of loc * nterm
    | Bydone of loc * just
    | ExistsElim of loc * just * string * nterm * nterm * string
    | AndElim of loc * just * nterm * string * nterm * string
-                (*
-   | RewritingStep of
-      loc * (string option * nterm) option * nterm *
-       [ `Term of nterm | `Auto of auto_params
-       | `Proof | `SolveWith of nterm ] *
-       bool (* last step*)
-                   *)
    | RewritingStep of
       loc * nterm * [ `Term of nterm | `Auto of auto_params | `Proof | `SolveWith of nterm ] * bool (* last step*)
    | Obtain of
       loc * string * nterm
    | Conclude of
       loc * nterm
-   | Thesisbecomes of loc * nterm * nterm option
+   | Thesisbecomes of loc * nterm
    | We_proceed_by_induction_on of loc * nterm * nterm
    | We_proceed_by_cases_on of loc * nterm * nterm
    | Byinduction of loc * nterm * string

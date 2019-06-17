@@ -25,18 +25,17 @@
 
 type just = [ `Term of NTacStatus.tactic_term | `Auto of NnAuto.auto_params ]
 
-val assume : string -> NTacStatus.tactic_term -> NTacStatus.tactic_term option -> 's NTacStatus.tactic
-val suppose : NTacStatus.tactic_term -> string -> NTacStatus.tactic_term option -> 's NTacStatus.tactic
-val we_need_to_prove : NTacStatus.tactic_term -> string option -> NTacStatus.tactic_term option -> 's NTacStatus.tactic
+val assume : string -> NTacStatus.tactic_term -> 's NTacStatus.tactic
+val suppose : NTacStatus.tactic_term -> string -> 's NTacStatus.tactic
+val we_need_to_prove : NTacStatus.tactic_term -> string option -> 's NTacStatus.tactic
 val beta_rewriting_step : NTacStatus.tactic_term -> 's NTacStatus.tactic
 val bydone : just -> 's NTacStatus.tactic
-val by_just_we_proved : just -> NTacStatus.tactic_term -> string option  -> NTacStatus.tactic_term
-option -> 's NTacStatus.tactic
+val by_just_we_proved : just -> NTacStatus.tactic_term -> string option -> 's NTacStatus.tactic
 val andelim : just -> NTacStatus.tactic_term -> string -> NTacStatus.tactic_term -> string -> 's
 NTacStatus.tactic
 val existselim : just -> string -> NTacStatus.tactic_term -> NTacStatus.tactic_term -> string -> 's
 NTacStatus.tactic
-val thesisbecomes : NTacStatus.tactic_term -> NTacStatus.tactic_term option -> 's NTacStatus.tactic
+val thesisbecomes : NTacStatus.tactic_term -> 's NTacStatus.tactic
 val rewritingstep : NTacStatus.tactic_term -> [ `Term of NTacStatus.tactic_term | `Auto of NnAuto.auto_params
    | `Proof  | `SolveWith of NTacStatus.tactic_term ] ->
     bool (* last step *) -> 's NTacStatus.tactic

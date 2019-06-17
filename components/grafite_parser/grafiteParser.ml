@@ -81,7 +81,7 @@ let nnon_punct_of_punct = function
 
 type by_continuation =
    BYC_done
- | BYC_weproved of N.term * string option * N.term option
+ | BYC_weproved of N.term * string option
  | BYC_letsuchthat of string * N.term * N.term * string
  | BYC_wehaveand of string * N.term * string * N.term
 
@@ -239,10 +239,8 @@ EXTEND
     | SYMBOL "#"; SYMBOL "_" -> G.NTactic(loc,[ G.NIntro (loc,"_")])
     | SYMBOL "*" -> G.NTactic(loc,[ G.NCase1 (loc,"_")])
     | SYMBOL "*"; "as"; n=IDENT -> G.NTactic(loc,[ G.NCase1 (loc,n)])
-    | IDENT "assume" ; id = IDENT; SYMBOL ":"; t = tactic_term ; t1 = OPT [IDENT "that"; IDENT "is";
-    IDENT "equivalent"; "to"; t' = tactic_term -> t']-> G.NTactic (loc,[G.Assume (loc,id,t,t1)])
-    | IDENT "suppose" ; t = tactic_term ; LPAREN ; id = IDENT ; RPAREN ; t1 = OPT [IDENT "that"; IDENT
-    "is"; IDENT "equivalent"; "to"; t' = tactic_term -> t'] -> G.NTactic (loc,[G.Suppose (loc,t,id,t1)])
+    | IDENT "assume" ; id = IDENT; SYMBOL ":"; t = tactic_term -> G.NTactic (loc,[G.Assume (loc,id,t)])
+    | IDENT "suppose" ; t = tactic_term ; LPAREN ; id = IDENT ; RPAREN -> G.NTactic (loc,[G.Suppose (loc,t,id)])
     | "let"; name = IDENT ; SYMBOL <:unicode<def>> ; t = tactic_term ->
         G.NTactic(loc,[G.NLetIn (loc,(None,[],Some N.UserInput),t,name)])
     | just =
@@ -260,21 +258,17 @@ EXTEND
       cont=by_continuation -> G.NTactic (loc,[
        (match cont with
            BYC_done -> G.Bydone (loc, just)
-         | BYC_weproved (ty,id,t1) ->
-            G.By_just_we_proved(loc, just, ty, id, t1)
+         | BYC_weproved (ty,id) ->
+            G.By_just_we_proved(loc, just, ty, id)
          | BYC_letsuchthat (id1,t1,t2,id2) ->
             G.ExistsElim (loc, just, id1, t1, t2, id2)
          | BYC_wehaveand (id1,t1,id2,t2) ->
             G.AndElim (loc, just, t1, id1, t2, id2))
         ])
-    | IDENT "we" ; IDENT "need" ; "to" ; IDENT "prove" ; t = tactic_term ; id = OPT [ LPAREN ; id =
-IDENT ; RPAREN -> id ] ; t1 = OPT [IDENT "or" ; IDENT "equivalently"; t' = tactic_term ->
-t']->
-        G.NTactic (loc,[G.We_need_to_prove (loc, t, id, t1)])
-    | IDENT "or"; IDENT "equivalently"; t = tactic_term -> G.NTactic(loc,[G.BetaRewritingStep (loc,t)])
-    | IDENT "the" ; IDENT "thesis" ; IDENT "becomes" ; t1=tactic_term ; t2 = OPT [IDENT "or"; IDENT
-"equivalently"; t2 = tactic_term -> t2] ->
-        G.NTactic (loc,[G.Thesisbecomes(loc,t1,t2)])
+    | IDENT "we" ; IDENT "need" ; "to" ; IDENT "prove" ; t = tactic_term ; id = OPT [ LPAREN ; id = IDENT ; RPAREN -> id ] ->
+        G.NTactic (loc,[G.We_need_to_prove (loc, t, id)])
+    | IDENT "that" ; IDENT "is" ; IDENT "equivalent" ; "to" ; t = tactic_term -> G.NTactic(loc,[G.BetaRewritingStep (loc,t)])
+    | IDENT "the" ; IDENT "thesis" ; IDENT "becomes" ; t1=tactic_term -> G.NTactic (loc,[G.Thesisbecomes(loc,t1)])
     | IDENT "we" ; IDENT "proceed" ; IDENT "by" ; IDENT "cases" ; "on" ; t=tactic_term ; "to" ; IDENT "prove" ; t1=tactic_term ->  
         G.NTactic (loc,[G.We_proceed_by_cases_on (loc, t, t1)])
     | IDENT "we" ; IDENT "proceed" ; IDENT "by" ; IDENT "induction" ; "on" ; t=tactic_term ; "to" ; IDENT "prove" ; t1=tactic_term ->  
@@ -376,9 +370,7 @@ t']->
 ];
 
   by_continuation: [
-    [ WEPROVED; ty = tactic_term ; LPAREN ; id = IDENT ; RPAREN ; t1 = OPT [IDENT "that" ; IDENT "is" ; IDENT "equivalent" ; "to" ; t2 = tactic_term -> t2] -> BYC_weproved (ty,Some id,t1)
-    | WEPROVED; ty = tactic_term ; t1 = OPT [IDENT "that" ; IDENT "is" ; IDENT "equivalent" ; "to" ; t2 = tactic_term -> t2] ; 
-            "done" -> BYC_weproved (ty,None,t1)
+    [ WEPROVED; ty = tactic_term ; id = OPT [ LPAREN ; id = IDENT ; RPAREN -> id] -> BYC_weproved (ty,id)
     | "done" -> BYC_done
     | "let" ; id1 = IDENT ; SYMBOL ":" ; t1 = tactic_term ;
       IDENT "such" ; IDENT "that" ; t2=tactic_term ; LPAREN ; 

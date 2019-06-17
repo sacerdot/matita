@@ -1926,13 +1926,17 @@ let candidates_from_ctx univ ctx status =
             let status, res = disambiguate status ctx t `XTNone in 
             let _,res = term_of_cic_term status res (ctx_of res) 
             in Ast.NCic res 
-        in Some (List.map to_Ast l) 
+        in Some ((List.map to_Ast l) @ [Ast.Ident("refl",None); Ast.Ident("sym_eq",None);
+                                        Ast.Ident("trans_eq",None); Ast.Ident("eq_f",None);
+                                        Ast.Ident("eq_f2",None); Ast.Ident("eq_f3",None);
+                                        Ast.Ident("rewrite_r",None); Ast.Ident("rewrite_l",None)
+                                       ])
 
 let auto_lowtac ~params:(univ,flags as params) status goal =
     let gty = get_goalty status goal in
     let ctx = ctx_of gty in
     let candidates = candidates_from_ctx univ ctx status in 
-    auto_tac' candidates ~local_candidates:false ~use_given_only:true flags ~trace_ref:(ref [])
+    auto_tac' candidates ~local_candidates:false ~use_given_only:false flags ~trace_ref:(ref [])
 
 let auto_tac ~params:(univ,flags) ?(trace_ref=ref []) status =
     let candidates = candidates_from_ctx univ [] status in

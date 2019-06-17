@@ -94,14 +94,26 @@ let clear_volatile_params_tac status =
     status#set_stack ((g,t,k,tag,newp)::tl)
 ;;
 
+let add_parameter_tac key value status =
+  match status#stack with
+    [] -> status
+  | (g,t,k,tag,p) :: tl -> status#set_stack ((g,t,k,tag,(key,value)::p)::tl)
+;;
+
+
 (* LCF-like tactic that checks whether the conclusion of the sequent of the given goal is a product, checks that
    the type of the conclusion's bound variable is the same as t1 and then uses an exact_tac with
    \lambda id: t1. ?. If a t2 is given it checks that t1 ~_{\beta} t2 and uses and exact_tac with \lambda id: t2. ?
 *)
-let lambda_abstract_tac id t1 t2 status goal =
+let lambda_abstract_tac id t1 status goal =
   match extract_conclusion_type status goal with
   | NCic.Prod (_,t,_) ->
     if alpha_eq_tacterm_kerterm t1 t status goal then
+      let (_,_,t1) = t1 in
+      block_tac [exact_tac ("",0,(Ast.Binder (`Lambda,(Ast.Ident (id,None),Some t1),Ast.Implicit
+                                                `JustOne))); clear_volatile_params_tac;
+                 add_parameter_tac "volatile_newhypo" id] status
+(*
       match t2 with
       | None ->
         let (_,_,t1) = t1 in
@@ -115,22 +127,23 @@ let lambda_abstract_tac id t1 t2 status goal =
                                                     `JustOne))); clear_volatile_params_tac] status
         else
           raise NotEquivalentTypes
+*)
     else
       raise FirstTypeWrong
   | _ -> raise NotAProduct
 
-let assume name ty eqty status =
+let assume name ty status =
   let goal = extract_first_goal_from_status status in
-  try lambda_abstract_tac name ty eqty status goal
+  try lambda_abstract_tac name ty status goal
   with
   | NotAProduct -> fail (lazy "You can't assume without an universal quantification")
   | FirstTypeWrong ->  fail (lazy "The assumed type is wrong")
   | NotEquivalentTypes -> fail (lazy "The two given types are not equivalent")
 ;;
 
-let suppose t1 id t2 status =
+let suppose t1 id status =
   let goal = extract_first_goal_from_status status in
-  try lambda_abstract_tac id t1 t2 status goal
+  try lambda_abstract_tac id t1 status goal
   with
   | NotAProduct -> fail (lazy "You can't suppose without a logical implication")
   | FirstTypeWrong ->  fail (lazy "The supposed proposition is different from the premise")
@@ -168,7 +181,14 @@ let status_parameter key status =
 
 let beta_rewriting_step t status =
   let ctx = status_parameter "volatile_context" status in
-  if ctx <> "beta_rewrite" then fail (lazy "Invalid use of 'or equivalently'")
+  if ctx <> "beta_rewrite" then 
+    (
+      let newhypo = status_parameter "volatile_newhypo" status in
+      if newhypo = "" then
+        fail (lazy "Invalid use of 'or equivalently'")
+      else
+        change_tac ~where:("",0,(None,[newhypo,Ast.UserInput],None)) ~with_what:t status
+    )
   else
     change_tac ~where:("",0,(None,[],Some
                                Ast.UserInput)) ~with_what:t status
@@ -214,88 +234,35 @@ let push_goals_tac status =
     else status (* Nothing to push *)
   | _ -> status
 
-let add_parameter_tac key value status =
-  match status#stack with
-    [] -> status
-  | (g,t,k,tag,p) :: tl -> status#set_stack ((g,t,k,tag,(key,value)::p)::tl)
-;;
-
-let we_need_to_prove t id t1 status =
+let we_need_to_prove t id status =
   let goal = extract_first_goal_from_status status in
   match id with
   | None ->
     (
-      match t1 with
-      | None ->  (* We need to prove t *)
-        (
-          try assert_tac t None status goal (add_parameter_tac "volatile_context" "beta_rewrite" status)
-          with
-          | FirstTypeWrong -> fail (lazy "The given proposition is not the same as the conclusion")
-        )
-      | Some t1 -> (* We need to prove t or equivalently t1 *)
-        (
-          try assert_tac t (Some t1) status goal (block_tac [change_tac ~where:("",0,(None,[],Some
-                                                                             Ast.UserInput))
-                                                               ~with_what:t1;
-                                                             add_parameter_tac "volatile_context"
-                                                               "beta_rewrite"] status)
-          with
-          | FirstTypeWrong -> fail (lazy "The given proposition is not the same as the conclusion")
-          | NotEquivalentTypes -> fail (lazy "The given propositions are not equivalent")
-        )
+      try assert_tac t None status goal (add_parameter_tac "volatile_context" "beta_rewrite" status)
+      with
+      | FirstTypeWrong -> fail (lazy "The given proposition is not the same as the conclusion")
     )
   | Some id ->
     (
-      match t1 with
-      (* We need to prove t (id) *)
-      | None -> block_tac [clear_volatile_params_tac; cut_tac t; branch_tac; shift_tac; intro_tac id; merge_tac; branch_tac;
-                           push_goals_tac
+      block_tac [clear_volatile_params_tac; cut_tac t; branch_tac; shift_tac; intro_tac id; merge_tac; branch_tac;
+                 push_goals_tac; add_parameter_tac "volatile_context" "beta_rewrite"
                           ] status
-      (* We need to prove t (id) or equivalently t1 *)
-      | Some t1 ->  block_tac [clear_volatile_params_tac; cut_tac t; branch_tac ; change_tac ~where:("",0,(None,[],Some
-                                                                                  Ast.UserInput))
-                                 ~with_what:t1; shift_tac; intro_tac id; merge_tac;
-                               branch_tac; push_goals_tac
-                              ]
-                      status
     )
 ;;
 
-let by_just_we_proved just ty id ty' status =
+let by_just_we_proved just ty id status =
   let goal = extract_first_goal_from_status status in
   let wrappedjust = just in
   let just = mk_just status goal just in
   match id with
   | None ->
-    (match ty' with
-     | None -> (* just we proved P done *)
-       (
-         try
-           assert_tac ty None status goal (bydone wrappedjust status)
-         with
-         | FirstTypeWrong -> fail (lazy "The given proposition is not the same as the conclusion")
-         | NotEquivalentTypes -> fail (lazy "The given propositions are not equivalent")
-       )
-     | Some ty' -> (* just we proved P that is equivalent to P' done *)
-       (
-         try
-           assert_tac ty' None status goal (block_tac [change_tac ~where:("",0,(None,[],Some
-                                                                                  Ast.UserInput))
-                                                         ~with_what:ty; bydone wrappedjust]
-                                              status )
-         with
-         | FirstTypeWrong -> fail (lazy "The second proposition is not the same as the conclusion")
-         | NotEquivalentTypes -> fail (lazy "The given propositions are not equivalent")
-       )
-    )
+    assert_tac ty None status goal (block_tac [clear_volatile_params_tac; add_parameter_tac
+                                                 "volatile_context" "beta_rewrite"] status)
   | Some id ->
     (
-      match ty' with
-      | None -> block_tac [cut_tac ty; branch_tac; just; shift_tac; intro_tac id; merge_tac;
-                           clear_volatile_params_tac ] status
-      | Some ty' -> block_tac [cut_tac ty; branch_tac; just; shift_tac; intro_tac id; change_tac
-                                 ~where:("",0,(None,[id,Ast.UserInput],None)) ~with_what:ty';
-                               merge_tac; clear_volatile_params_tac] status
+      block_tac [cut_tac ty; branch_tac; just; shift_tac; intro_tac id; merge_tac;
+                 clear_volatile_params_tac; add_parameter_tac "volatile_newhypo" id] status
     )
 ;;
 
@@ -351,7 +318,7 @@ let swap_first_two_goals_tac status =
   in
   status#set_stack gstatus
 
-let thesisbecomes t1 l = we_need_to_prove t1 None l
+let thesisbecomes t1 = we_need_to_prove t1 None
 ;;
 
 let obtain id t1 status =
@@ -586,7 +553,7 @@ let we_proceed_by_cases_on ((txt,len,ast1) as t1)  t2 status =
   | FirstTypeWrong -> fail (lazy "What you want to prove is different from the conclusion")
 ;;
 
-let byinduction t1 id = suppose t1 id None ;;
+let byinduction t1 id = suppose t1 id ;;
 
 let name_of_conj conj =
   let mattrs,_,_ = conj in
@@ -667,7 +634,7 @@ else
             match l with
               [] -> [id_tac]
             | (id,ty)::tl ->
-              (try_tac (assume id ("",0,ty) None)) :: (aux tl)
+              (try_tac (assume id ("",0,ty))) :: (aux tl)
           in
           aux l
         in

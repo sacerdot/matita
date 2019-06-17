@@ -492,15 +492,11 @@ let eval_ng_tac tac =
       NTactics.block_tac (List.map (fun x -> aux f (text,prefix_len,x)) l)
   |GrafiteAst.NRepeat (_,tac) ->
       NTactics.repeat_tac (f f (text, prefix_len, tac))
-  |GrafiteAst.Assume (_,id,t,t1) -> Declarative.assume id (text,prefix_len,t) (match t1 with None ->
-  None | Some t1 -> (Some (text,prefix_len,t1)))
-  |GrafiteAst.Suppose (_,t,id,t1) -> Declarative.suppose (text,prefix_len,t) id (match t1 with None
-  -> None | Some t1 -> (Some (text,prefix_len,t1)))
-  |GrafiteAst.By_just_we_proved (_,j,t1,s,t2) -> Declarative.by_just_we_proved
-  (just_to_tacstatus_just j text prefix_len) (text,prefix_len,t1) s (match t2 with None -> None |
-  Some t2 -> (Some (text,prefix_len,t2)))
-  |GrafiteAst.We_need_to_prove (_, t, id, t1) -> Declarative.we_need_to_prove (text,prefix_len,t) id
-  (match t1 with None -> None | Some t1 -> Some (text,prefix_len,t1))
+  |GrafiteAst.Assume (_,id,t) -> Declarative.assume id (text,prefix_len,t)
+  |GrafiteAst.Suppose (_,t,id) -> Declarative.suppose (text,prefix_len,t) id
+  |GrafiteAst.By_just_we_proved (_,j,t1,s) -> Declarative.by_just_we_proved
+  (just_to_tacstatus_just j text prefix_len) (text,prefix_len,t1) s
+  |GrafiteAst.We_need_to_prove (_, t, id) -> Declarative.we_need_to_prove (text,prefix_len,t) id
   |GrafiteAst.BetaRewritingStep (_, t) -> Declarative.beta_rewriting_step (text,prefix_len,t)
   | GrafiteAst.Bydone (_, j) -> Declarative.bydone (just_to_tacstatus_just j text prefix_len)
   | GrafiteAst.ExistsElim (_, just, id1, t1, t2, id2) ->
@@ -508,8 +504,7 @@ let eval_ng_tac tac =
      (text,prefix_len,t2) id2
   | GrafiteAst.AndElim(_,just,t1,id1,t2,id2) -> Declarative.andelim (just_to_tacstatus_just just
     text prefix_len) (text,prefix_len,t1) id1 (text,prefix_len,t2) id2
-  | GrafiteAst.Thesisbecomes (_, t1, t2) -> Declarative.thesisbecomes (text,prefix_len,t1)
-  (match t2 with None -> None | Some t2 -> Some (text,prefix_len,t2))
+  | GrafiteAst.Thesisbecomes (_, t1) -> Declarative.thesisbecomes (text,prefix_len,t1)
   | GrafiteAst.RewritingStep (_,rhs,just,cont) ->
      Declarative.rewritingstep (text,prefix_len,rhs)
                                 (match just with 
