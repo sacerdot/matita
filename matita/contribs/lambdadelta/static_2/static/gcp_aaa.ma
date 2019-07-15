@@ -31,7 +31,7 @@ theorem acr_aaa_csubc_lifts: ∀RR,RS,RP.
   lapply (aaa_inv_sort … HA) -HA #H destruct
   >(lifts_inv_sort1 … H0) -H0
   lapply (acr_gcr … H1RP H2RP (⓪)) #HAtom
-  lapply (s4 … HAtom G L2 (Ⓔ)) /2 width=1 by/
+  lapply (s2 … HAtom G L2 (Ⓔ)) /3 width=7 by cp1, simple_atom/
 | #i #HG #HL #HT #A #HA #b #f #L0 #HL01 #X0 #H0 #L2 #HL20 destruct
   elim (aaa_inv_lref_drops … HA) -HA #I #K1 #V1 #HLK1 #HKV1
   elim (lifts_inv_lref1 … H0) -H0 #j #Hf #H destruct

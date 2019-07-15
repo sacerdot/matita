@@ -27,7 +27,7 @@ table {
         ]
         [ { "atomic arity assignment" * } {
              [ [ "restricted refinement for lenvs" ] "lsuba" + "( ? ⊢ ? ⫃⁝ ? )" "lsuba_drops" + "lsuba_lsubr" + "lsuba_aaa" + "lsuba_lsuba" * ]
-             [ [ "for terms" ] "aaa" + "( ⦃?,?⦄ ⊢ ? ⁝ ? )" "aaa_drops" + "aaa_fqus" + "aaa_rdeq" + "aaa_fdeq" + "aaa_aaa" * ]
+             [ [ "for terms" ] "aaa" + "( ⦃?,?⦄ ⊢ ? ⁝ ? )" "aaa_drops" + "aaa_fqus" + "aaa_rdeq" + "aaa_fdeq" + "aaa_aaa" + "aaa_dec" * ]
           }
         ]
         [ { "degree-based equivalence" * } {

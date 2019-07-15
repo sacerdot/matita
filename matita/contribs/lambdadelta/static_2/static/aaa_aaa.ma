@@ -36,3 +36,22 @@ theorem aaa_mono: ∀G,L,T,A1. ⦃G,L⦄ ⊢ T ⁝ A1 → ∀A2. ⦃G,L⦄ ⊢ T
   elim (aaa_inv_cast … H) -H /2 width=1 by/
 ]
 qed-.
+
+(* Advanced inversion lemmas ************************************************)
+
+lemma aaa_aaa_inv_appl (G) (L) (V) (T) (B) (X):
+      ∀A. ⦃G,L⦄ ⊢ ⓐV.T ⁝ A → ⦃G,L⦄ ⊢ V ⁝ B → ⦃G,L⦄⊢ T ⁝ X → ②B.A = X.
+#G #L #V #T #B #X #A #H #H1V #H1T
+elim (aaa_inv_appl … H) -H #B0 #H2V #H2T
+lapply (aaa_mono … H2V … H1V) -V #H destruct
+lapply (aaa_mono … H2T … H1T) -G -L -T //
+qed-.
+
+lemma aaa_aaa_inv_cast (G) (L) (U) (T) (B) (A):
+      ∀X. ⦃G,L⦄ ⊢ ⓝU.T ⁝ X → ⦃G,L⦄ ⊢ U ⁝ B → ⦃G,L⦄⊢ T ⁝ A → ∧∧ B = X & A = X.
+#G #L #U #T #B #A #X #H #H1U #H1T
+elim (aaa_inv_cast … H) -H #H2U #H2T
+lapply (aaa_mono … H1U … H2U) -U #HB
+lapply (aaa_mono … H1T … H2T) -G -L -T #HA
+/2 width=1 by conj/
+qed-.

@@ -38,5 +38,6 @@ qed.
 
 (* Advanced properties ******************************************************)
 
+(* Note: strong normalization does not depend on this any more *)
 lemma csx_applv_sort: ∀h,G,L,s,Vs. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃Vs⦄ → ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃ⒶVs.⋆s⦄.
 /3 width=6 by csx_applv_cnx, cnx_sort, simple_atom/ qed.

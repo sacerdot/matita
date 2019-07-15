@@ -43,6 +43,13 @@ lemma aaa_inv_lref_drops: ∀G,A,i,L. ⦃G,L⦄ ⊢ #i ⁝ A →
 ]
 qed-.
 
+lemma aaa_pair_inv_lref (G) (L) (i):
+      ∀A. ⦃G,L⦄ ⊢ #i ⁝ A → ∀I,K,V. ⬇*[i] L ≘ K.ⓑ{I}V → ⦃G,K⦄ ⊢ V ⁝ A.
+#G #L #i #A #H #I #K #V #HLK
+elim (aaa_inv_lref_drops … H) -H #J #Y #X #HLY #HX
+lapply (drops_mono … HLY … HLK) -L -i #H destruct //
+qed-.
+
 (* Properties with generic slicing for local environments *******************)
 
 (* Basic_2A1: includes: aaa_lift *)

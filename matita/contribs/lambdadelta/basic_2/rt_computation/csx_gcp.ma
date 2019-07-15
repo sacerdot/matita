@@ -23,7 +23,7 @@ include "basic_2/rt_computation/csx_drops.ma".
 theorem csx_gcp: ∀h. gcp (cpx h) tdeq (csx h).
 #h @mk_gcp
 [ normalize /3 width=13 by cnx_lifts/
-| /3 width=5 by O, cnx_sort, ex_intro/
+| /2 width=4 by cnx_sort/
 | /2 width=8 by csx_lifts/
 | /2 width=3 by csx_fwd_flat_dx/
 ]

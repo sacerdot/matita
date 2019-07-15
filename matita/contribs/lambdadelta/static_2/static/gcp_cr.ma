@@ -28,15 +28,12 @@ definition S1 ≝ λRP,C:candidate.
 (* Note: this is Tait's iii, or Girard's CR4 *)
 definition S2 ≝ λRR:relation4 genv lenv term term. λRS:relation term. λRP,C:candidate.
                 ∀G,L,Vs. all … (RP G L) Vs →
-                ∀T. 𝐒⦃T⦄ → NF … (RR G L) RS T → C G L (ⒶVs.T).
+                ∀T. 𝐒⦃T⦄ → nf RR RS G L T → C G L (ⒶVs.T).
 
 (* Note: this generalizes Tait's ii *)
 definition S3 ≝ λC:candidate.
                 ∀a,G,L,Vs,V,T,W.
                 C G L (ⒶVs.ⓓ{a}ⓝW.V.T) → C G L (ⒶVs.ⓐV.ⓛ{a}W.T).
-
-definition S4 ≝ λRP,C:candidate.
-                ∀G,L,Vs. all … (RP G L) Vs → ∀s. C G L (ⒶVs.⋆s).
 
 definition S5 ≝ λC:candidate. ∀I,G,L,K,Vs,V1,V2,i.
                 C G L (ⒶVs.V2) → ⬆*[↑i] V1 ≘ V2 →
@@ -54,7 +51,6 @@ record gcr (RR:relation4 genv lenv term term) (RS:relation term) (RP,C:candidate
 { s1: S1 RP C;
   s2: S2 RR RS RP C;
   s3: S3 C;
-  s4: S4 RP C;
   s5: S5 C;
   s6: S6 RP C;
   s7: S7 C
@@ -99,12 +95,14 @@ qed-.
 (* Basic_1: was:
    sc3_sn3 sc3_abst sc3_appl sc3_abbr sc3_bind sc3_cast
 *)
+(* Note: one sort must exist *)
 lemma acr_gcr: ∀RR,RS,RP. gcp RR RS RP → gcr RR RS RP RP →
                ∀A. gcr RR RS RP (acr RP A).
 #RR #RS #RP #H1RP #H2RP #A elim A -A //
 #B #A #IHB #IHA @mk_gcr
 [ #G #L #T #H
-  elim (cp1 … H1RP G L) #s #HK
+  letin s ≝ 0 (* one sort must exist *)
+  lapply (cp1 … H1RP G L s) #HK
   lapply (s2 … IHB G L (Ⓔ) … HK) // #HB
   lapply (H (𝐈𝐝) L (⋆s) T ? ? ?) -H
   /3 width=6 by s1, cp3, drops_refl, lifts_refl/
@@ -117,11 +115,6 @@ lemma acr_gcr: ∀RR,RS,RP. gcp RR RS RP → gcr RR RS RP RP →
   elim (lifts_inv_flat1 … H0) -H0 #U0 #X #HU0 #HX #H destruct
   elim (lifts_inv_bind1 … HX) -HX #W0 #T0 #HW0 #HT0 #H destruct
   @(s3 … IHA … (V0⨮V0s)) /5 width=6 by lifts_applv, lifts_flat, lifts_bind/
-| #G #L #Vs #HVs #s #f #L0 #V0 #X #HL0 #H #HB
-  elim (lifts_inv_applv1 … H) -H #V0s #X0 #HV0s #H0 #H destruct
-  >(lifts_inv_sort1 … H0) -X0
-  lapply (s1 … IHB … HB) #HV0
-  @(s4 … IHA … (V0⨮V0s)) /3 width=7 by gcp2_all, conj/
 | #I #G #L #K #Vs #V1 #V2 #i #HA #HV12 #HLK #f #L0 #V0 #X #HL0 #H #HB
   elim (lifts_inv_applv1 … H) -H #V0s #X0 #HV0s #H0 #H destruct
   elim (lifts_inv_lref1 … H0) -H0 #j #Hf #H destruct

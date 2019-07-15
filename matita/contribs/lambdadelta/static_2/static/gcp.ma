@@ -17,21 +17,18 @@ include "static_2/relocation/drops_vector.ma".
 
 (* GENERIC COMPUTATION PROPERTIES *******************************************)
 
-definition nf ≝ λRR:relation4 genv lenv term term. λRS:relation term.
-                λG,L,T. NF … (RR G L) RS T.
+definition nf (RR:relation4 genv lenv term term) (RS:relation term) ≝
+              λG,L,T. NF … (RR G L) RS T.
 
 definition candidate: Type[0] ≝ relation3 genv lenv term.
 
-definition CP0 ≝ λRR:relation4 genv lenv term term. λRS:relation term.
-                 ∀G. d_liftable1 (nf RR RS G).
+definition CP0 (RR) (RS) ≝ ∀G. d_liftable1 (nf RR RS G).
 
-definition CP1 ≝ λRR:relation4 genv lenv term term. λRS:relation term.
-                 ∀G,L. ∃s. NF … (RR G L) RS (⋆s).
+definition CP1 (RR) (RS) ≝ ∀G,L,s. nf RR RS G L (⋆s).
 
-definition CP2 ≝ λRP:candidate. ∀G. d_liftable1 (RP G).
+definition CP2 (RP:candidate) ≝ ∀G. d_liftable1 (RP G).
 
-definition CP3 ≝ λRP:candidate.
-                 ∀G,L,T,s. RP G L (ⓐ⋆s.T) → RP G L T.
+definition CP3 (RP:candidate) ≝ ∀G,L,T,s. RP G L (ⓐ⋆s.T) → RP G L T.
 
 (* requirements for generic computation properties *)
 (* Basic_1: includes: nf2_lift1 *)
