@@ -20,7 +20,7 @@ include "basic_2/rt_transition/lpr_lpx.ma".
 (* PROPER PARALLEL RST-TRANSITION FOR CLOSURES ******************************)
 
 inductive fpb (h) (G1) (L1) (T1): relation3 genv lenv term ≝
-| fpb_fqu: ∀G2,L2,T2. ⦃G1,L1,T1⦄ ⊐ ⦃G2,L2,T2⦄ → fpb h G1 L1 T1 G2 L2 T2
+| fpb_fqu: ∀G2,L2,T2. ⦃G1,L1,T1⦄ ⬂ ⦃G2,L2,T2⦄ → fpb h G1 L1 T1 G2 L2 T2
 | fpb_cpx: ∀T2. ⦃G1,L1⦄ ⊢ T1 ⬈[h] T2 → (T1 ≛ T2 → ⊥) → fpb h G1 L1 T1 G1 L1 T2
 | fpb_lpx: ∀L2. ⦃G1,L1⦄ ⊢ ⬈[h] L2 → (L1 ≛[T1] L2 → ⊥) → fpb h G1 L1 T1 G1 L2 T1
 .

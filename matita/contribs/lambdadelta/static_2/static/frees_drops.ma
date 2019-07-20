@@ -20,8 +20,9 @@ include "static_2/static/frees_fqup.ma".
 
 (* Advanced properties ******************************************************)
 
-lemma frees_atom_drops: ∀b,L,i. ⬇*[b,𝐔❴i❵] L ≘ ⋆ →
-                        ∀f. 𝐈⦃f⦄ → L ⊢ 𝐅*⦃#i⦄ ≘ ⫯*[i]↑f.
+lemma frees_atom_drops: 
+      ∀b,L,i. ⬇*[b,𝐔❴i❵] L ≘ ⋆ →
+      ∀f. 𝐈⦃f⦄ → L ⊢ 𝐅+⦃#i⦄ ≘ ⫯*[i]↑f.
 #b #L elim L -L /2 width=1 by frees_atom/
 #L #I #IH *
 [ #H lapply (drops_fwd_isid … H ?) -H // #H destruct
@@ -29,16 +30,18 @@ lemma frees_atom_drops: ∀b,L,i. ⬇*[b,𝐔❴i❵] L ≘ ⋆ →
 ]
 qed.
 
-lemma frees_pair_drops: ∀f,K,V. K ⊢ 𝐅*⦃V⦄ ≘ f → 
-                        ∀i,I,L. ⬇*[i] L ≘ K.ⓑ{I}V → L ⊢ 𝐅*⦃#i⦄ ≘ ⫯*[i] ↑f.
+lemma frees_pair_drops:
+      ∀f,K,V. K ⊢ 𝐅+⦃V⦄ ≘ f → 
+      ∀i,I,L. ⬇*[i] L ≘ K.ⓑ{I}V → L ⊢ 𝐅+⦃#i⦄ ≘ ⫯*[i] ↑f.
 #f #K #V #Hf #i elim i -i
 [ #I #L #H lapply (drops_fwd_isid … H ?) -H /2 width=1 by frees_pair/
 | #i #IH #I #L #H elim (drops_inv_succ … H) -H /3 width=2 by frees_lref/
 ]
 qed.
 
-lemma frees_unit_drops: ∀f.  𝐈⦃f⦄ → ∀I,K,i,L. ⬇*[i] L ≘ K.ⓤ{I} →
-                       L ⊢ 𝐅*⦃#i⦄ ≘ ⫯*[i] ↑f.
+lemma frees_unit_drops:
+      ∀f.  𝐈⦃f⦄ → ∀I,K,i,L. ⬇*[i] L ≘ K.ⓤ{I} →
+      L ⊢ 𝐅+⦃#i⦄ ≘ ⫯*[i] ↑f.
 #f #Hf #I #K #i elim i -i
 [ #L #H lapply (drops_fwd_isid … H ?) -H /2 width=1 by frees_unit/
 | #i #IH #Y #H elim (drops_inv_succ … H) -H
@@ -46,16 +49,18 @@ lemma frees_unit_drops: ∀f.  𝐈⦃f⦄ → ∀I,K,i,L. ⬇*[i] L ≘ K.ⓤ{I
 ]
 qed.
 (*
-lemma frees_sort_pushs: ∀f,K,s. K ⊢ 𝐅*⦃⋆s⦄ ≘ f →
-                        ∀i,L. ⬇*[i] L ≘ K → L ⊢ 𝐅*⦃⋆s⦄ ≘ ⫯*[i] f.
+lemma frees_sort_pushs:
+      ∀f,K,s. K ⊢ 𝐅+⦃⋆s⦄ ≘ f →
+      ∀i,L. ⬇*[i] L ≘ K → L ⊢ 𝐅+⦃⋆s⦄ ≘ ⫯*[i] f.
 #f #K #s #Hf #i elim i -i
 [ #L #H lapply (drops_fwd_isid … H ?) -H //
 | #i #IH #L #H elim (drops_inv_succ … H) -H /3 width=1 by frees_sort/
 ]
 qed.
 *)
-lemma frees_lref_pushs: ∀f,K,j. K ⊢ 𝐅*⦃#j⦄ ≘ f →
-                        ∀i,L. ⬇*[i] L ≘ K → L ⊢ 𝐅*⦃#(i+j)⦄ ≘ ⫯*[i] f.
+lemma frees_lref_pushs:
+      ∀f,K,j. K ⊢ 𝐅+⦃#j⦄ ≘ f →
+      ∀i,L. ⬇*[i] L ≘ K → L ⊢ 𝐅+⦃#(i+j)⦄ ≘ ⫯*[i] f.
 #f #K #j #Hf #i elim i -i
 [ #L #H lapply (drops_fwd_isid … H ?) -H //
 | #i #IH #L #H elim (drops_inv_succ … H) -H
@@ -63,8 +68,9 @@ lemma frees_lref_pushs: ∀f,K,j. K ⊢ 𝐅*⦃#j⦄ ≘ f →
 ]
 qed.
 (*
-lemma frees_gref_pushs: ∀f,K,l. K ⊢ 𝐅*⦃§l⦄ ≘ f →
-                        ∀i,L. ⬇*[i] L ≘ K → L ⊢ 𝐅*⦃§l⦄ ≘ ⫯*[i] f.
+lemma frees_gref_pushs:
+      ∀f,K,l. K ⊢ 𝐅+⦃§l⦄ ≘ f →
+      ∀i,L. ⬇*[i] L ≘ K → L ⊢ 𝐅+⦃§l⦄ ≘ ⫯*[i] f.
 #f #K #l #Hf #i elim i -i
 [ #L #H lapply (drops_fwd_isid … H ?) -H //
 | #i #IH #L #H elim (drops_inv_succ … H) -H /3 width=1 by frees_gref/
@@ -73,11 +79,11 @@ qed.
 *)
 (* Advanced inversion lemmas ************************************************)
 
-lemma frees_inv_lref_drops: ∀L,i,f. L ⊢ 𝐅*⦃#i⦄ ≘ f →
-                            ∨∨ ∃∃g. ⬇*[Ⓕ,𝐔❴i❵] L ≘ ⋆ & 𝐈⦃g⦄ & f = ⫯*[i] ↑g
-                             | ∃∃g,I,K,V. K ⊢ 𝐅*⦃V⦄ ≘ g &
-                                          ⬇*[i] L ≘ K.ⓑ{I}V & f = ⫯*[i] ↑g
-                             | ∃∃g,I,K. ⬇*[i] L ≘ K.ⓤ{I} & 𝐈⦃g⦄ & f = ⫯*[i] ↑g.
+lemma frees_inv_lref_drops:
+      ∀L,i,f. L ⊢ 𝐅+⦃#i⦄ ≘ f →
+      ∨∨ ∃∃g. ⬇*[Ⓕ,𝐔❴i❵] L ≘ ⋆ & 𝐈⦃g⦄ & f = ⫯*[i] ↑g
+       | ∃∃g,I,K,V. K ⊢ 𝐅+⦃V⦄ ≘ g & ⬇*[i] L ≘ K.ⓑ{I}V & f = ⫯*[i] ↑g
+       | ∃∃g,I,K. ⬇*[i] L ≘ K.ⓤ{I} & 𝐈⦃g⦄ & f = ⫯*[i] ↑g.
 #L elim L -L
 [ #i #g | #L #I #IH * [ #g cases I -I [ #I | #I #V ] -IH | #i #g ] ] #H
 [ elim (frees_inv_atom … H) -H #f #Hf #H destruct
@@ -97,9 +103,10 @@ qed-.
 
 (* Properties with generic slicing for local environments *******************)
 
-lemma frees_lifts: ∀b,f1,K,T. K ⊢ 𝐅*⦃T⦄ ≘ f1 →
-                   ∀f,L. ⬇*[b,f] L ≘ K → ∀U. ⬆*[f] T ≘ U →
-                   ∀f2. f ~⊚ f1 ≘ f2 → L ⊢ 𝐅*⦃U⦄ ≘ f2.
+lemma frees_lifts:
+      ∀b,f1,K,T. K ⊢ 𝐅+⦃T⦄ ≘ f1 →
+      ∀f,L. ⬇*[b,f] L ≘ K → ∀U. ⬆*[f] T ≘ U →
+      ∀f2. f ~⊚ f1 ≘ f2 → L ⊢ 𝐅+⦃U⦄ ≘ f2.
 #b #f1 #K #T #H lapply (frees_fwd_isfin … H) elim H -f1 -K -T
 [ #f1 #K #s #Hf1 #_ #f #L #HLK #U #H2 #f2 #H3
   lapply (coafter_isid_inv_dx … H3 … Hf1) -f1 #Hf2
@@ -154,48 +161,54 @@ lemma frees_lifts: ∀b,f1,K,T. K ⊢ 𝐅*⦃T⦄ ≘ f1 →
 ]
 qed-.
 
-lemma frees_lifts_SO: ∀b,L,K. ⬇*[b,𝐔❴1❵] L ≘ K → ∀T,U. ⬆*[1] T ≘ U →
-                      ∀f. K ⊢ 𝐅*⦃T⦄ ≘ f → L ⊢ 𝐅*⦃U⦄ ≘ ⫯f.
+lemma frees_lifts_SO:
+      ∀b,L,K. ⬇*[b,𝐔❴1❵] L ≘ K → ∀T,U. ⬆*[1] T ≘ U →
+      ∀f. K ⊢ 𝐅+⦃T⦄ ≘ f → L ⊢ 𝐅+⦃U⦄ ≘ ⫯f.
 #b #L #K #HLK #T #U #HTU #f #Hf
 @(frees_lifts b … Hf … HTU) //  (**) (* auto fails *)
 qed.
 
 (* Forward lemmas with generic slicing for local environments ***************)
 
-lemma frees_fwd_coafter: ∀b,f2,L,U. L ⊢ 𝐅*⦃U⦄ ≘ f2 →
-                         ∀f,K. ⬇*[b,f] L ≘ K → ∀T. ⬆*[f] T ≘ U →
-                         ∀f1. K ⊢ 𝐅*⦃T⦄ ≘ f1 → f ~⊚ f1 ≘ f2.
+lemma frees_fwd_coafter:
+      ∀b,f2,L,U. L ⊢ 𝐅+⦃U⦄ ≘ f2 →
+      ∀f,K. ⬇*[b,f] L ≘ K → ∀T. ⬆*[f] T ≘ U →
+      ∀f1. K ⊢ 𝐅+⦃T⦄ ≘ f1 → f ~⊚ f1 ≘ f2.
 /4 width=11 by frees_lifts, frees_mono, coafter_eq_repl_back0/ qed-.
 
 (* Inversion lemmas with generic slicing for local environments *************)
 
-lemma frees_inv_lifts_ex: ∀b,f2,L,U. L ⊢ 𝐅*⦃U⦄ ≘ f2 →
-                          ∀f,K. ⬇*[b,f] L ≘ K → ∀T. ⬆*[f] T ≘ U →
-                          ∃∃f1. f ~⊚ f1 ≘ f2 & K ⊢ 𝐅*⦃T⦄ ≘ f1.
+lemma frees_inv_lifts_ex:
+      ∀b,f2,L,U. L ⊢ 𝐅+⦃U⦄ ≘ f2 →
+      ∀f,K. ⬇*[b,f] L ≘ K → ∀T. ⬆*[f] T ≘ U →
+      ∃∃f1. f ~⊚ f1 ≘ f2 & K ⊢ 𝐅+⦃T⦄ ≘ f1.
 #b #f2 #L #U #Hf2 #f #K #HLK #T elim (frees_total K T)
 /3 width=9 by frees_fwd_coafter, ex2_intro/
 qed-.
 
-lemma frees_inv_lifts_SO: ∀b,f,L,U. L ⊢ 𝐅*⦃U⦄ ≘ f →
-                          ∀K. ⬇*[b,𝐔❴1❵] L ≘ K → ∀T. ⬆*[1] T ≘ U →
-                          K ⊢ 𝐅*⦃T⦄ ≘ ⫱f.
+lemma frees_inv_lifts_SO:
+      ∀b,f,L,U. L ⊢ 𝐅+⦃U⦄ ≘ f →
+      ∀K. ⬇*[b,𝐔❴1❵] L ≘ K → ∀T. ⬆*[1] T ≘ U →
+      K ⊢ 𝐅+⦃T⦄ ≘ ⫱f.
 #b #f #L #U #H #K #HLK #T #HTU elim(frees_inv_lifts_ex … H … HLK … HTU) -b -L -U
 #f1 #Hf #Hf1 elim (coafter_inv_nxx … Hf) -Hf
 /3 width=5 by frees_eq_repl_back, coafter_isid_inv_sn/
 qed-.
 
-lemma frees_inv_lifts: ∀b,f2,L,U. L ⊢ 𝐅*⦃U⦄ ≘ f2 →
-                       ∀f,K. ⬇*[b,f] L ≘ K → ∀T. ⬆*[f] T ≘ U →
-                       ∀f1. f ~⊚ f1 ≘ f2 → K ⊢ 𝐅*⦃T⦄ ≘ f1.
+lemma frees_inv_lifts:
+      ∀b,f2,L,U. L ⊢ 𝐅+⦃U⦄ ≘ f2 →
+      ∀f,K. ⬇*[b,f] L ≘ K → ∀T. ⬆*[f] T ≘ U →
+      ∀f1. f ~⊚ f1 ≘ f2 → K ⊢ 𝐅+⦃T⦄ ≘ f1.
 #b #f2 #L #U #H #f #K #HLK #T #HTU #f1 #Hf2 elim (frees_inv_lifts_ex … H … HLK … HTU) -b -L -U
 /3 width=7 by frees_eq_repl_back, coafter_inj/
 qed-.
 
 (* Note: this is used by rex_conf and might be modified *)
-lemma frees_inv_drops_next: ∀f1,L1,T1. L1 ⊢ 𝐅*⦃T1⦄ ≘ f1 →
-                            ∀I2,L2,V2,n. ⬇*[n] L1 ≘ L2.ⓑ{I2}V2 →
-                            ∀g1. ↑g1 = ⫱*[n] f1 →
-                            ∃∃g2. L2 ⊢ 𝐅*⦃V2⦄ ≘ g2 & g2 ⊆ g1.
+lemma frees_inv_drops_next:
+      ∀f1,L1,T1. L1 ⊢ 𝐅+⦃T1⦄ ≘ f1 →
+      ∀I2,L2,V2,n. ⬇*[n] L1 ≘ L2.ⓑ{I2}V2 →
+      ∀g1. ↑g1 = ⫱*[n] f1 →
+      ∃∃g2. L2 ⊢ 𝐅+⦃V2⦄ ≘ g2 & g2 ⊆ g1.
 #f1 #L1 #T1 #H elim H -f1 -L1 -T1
 [ #f1 #L1 #s #Hf1 #I2 #L2 #V2 #n #_ #g1 #H1 -I2 -L1 -s
   lapply (isid_tls n … Hf1) -Hf1 <H1 -f1 #Hf1

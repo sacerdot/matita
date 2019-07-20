@@ -27,7 +27,7 @@ include "basic_2/rt_transition/rpx_fqup.ma".
 (* Note: This invalidates rpxs_cpx_conf: "∀h, G. s_r_confluent1 … (cpx h G) (rpxs h G)" *)
 lemma rpx_cpx_conf_fsge (h) (G): ∀L0,T0,T1. ⦃G,L0⦄ ⊢ T0 ⬈[h] T1 →
                                  ∀L2. ⦃G,L0⦄ ⊢⬈[h,T0] L2 → ⦃L2,T1⦄ ⊆ ⦃L0,T0⦄.
-#h #G0 #L0 #T0 @(fqup_wf_ind_eq (Ⓕ) … G0 L0 T0) -G0 -L0 -T0
+#h #G0 #L0 #T0 @(fqup_wf_ind_eq (Ⓣ) … G0 L0 T0) -G0 -L0 -T0
 #G #L #T #IH #G0 #L0 * *
 [ #s #HG #HL #HT #X #HX #Y #HY destruct -IH
   elim (cpx_inv_sort1 … HX) -HX #H destruct

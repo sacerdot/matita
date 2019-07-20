@@ -57,7 +57,7 @@ generalize in match HT1; -HT1
 | #p #I #V1 #T1 #_ #IH #H
   elim (cnv_inv_bind … H) -H #HV1 #HT1
   elim (IH … HV1) [| /3 width=1 by fpb_fpbg, fpb_fqu, fqu_pair_sn/ ] #V2 #HV12
-  elim (IH … HT1) [| /3 width=1 by fpb_fpbg, fpb_fqu, fqu_bind_dx/ ] #T2 #HT12
+  elim (IH … HT1) [| /4 width=1 by fpb_fpbg, fpb_fqu, fqu_bind_dx/ ] #T2 #HT12
   /3 width=2 by cpce_bind, ex_intro/
 | #I #V1 #T1 #_ #IH #H
   elim (cnv_fwd_flat … H) -H #HV1 #HT1

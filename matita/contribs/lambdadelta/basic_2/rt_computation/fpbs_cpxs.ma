@@ -48,11 +48,11 @@ lemma cpxs_tdeq_fpbs: ∀h,G,L,T1,T. ⦃G,L⦄ ⊢ T1 ⬈*[h] T →
 (* Properties with star-iterated structural successor for closures **********)
 
 lemma cpxs_fqus_fpbs: ∀h,G1,L1,T1,T. ⦃G1,L1⦄ ⊢ T1 ⬈*[h] T →
-                      ∀G2,L2,T2. ⦃G1,L1,T⦄ ⊐* ⦃G2,L2,T2⦄ → ⦃G1,L1,T1⦄ ≥[h] ⦃G2,L2,T2⦄.
+                      ∀G2,L2,T2. ⦃G1,L1,T⦄ ⬂* ⦃G2,L2,T2⦄ → ⦃G1,L1,T1⦄ ≥[h] ⦃G2,L2,T2⦄.
 /3 width=5 by fpbs_fqus_trans, cpxs_fpbs/ qed.
 
 (* Properties with plus-iterated structural successor for closures **********)
 
 lemma cpxs_fqup_fpbs: ∀h,G1,L1,T1,T. ⦃G1,L1⦄ ⊢ T1 ⬈*[h] T →
-                      ∀G2,L2,T2. ⦃G1,L1,T⦄ ⊐+ ⦃G2,L2,T2⦄ → ⦃G1,L1,T1⦄ ≥[h] ⦃G2,L2,T2⦄.
+                      ∀G2,L2,T2. ⦃G1,L1,T⦄ ⬂+ ⦃G2,L2,T2⦄ → ⦃G1,L1,T1⦄ ≥[h] ⦃G2,L2,T2⦄.
 /3 width=5 by fpbs_fqup_trans, cpxs_fpbs/ qed.

@@ -31,8 +31,8 @@ interpretation
 
 (* Basic properties ***********************************************************)
 
-lemma frees_tdeq_conf_rdeq: ∀f,L1,T1. L1 ⊢ 𝐅*⦃T1⦄ ≘ f → ∀T2. T1 ≛ T2 →
-                            ∀L2. L1 ≛[f] L2 → L2 ⊢ 𝐅*⦃T2⦄ ≘ f.
+lemma frees_tdeq_conf_rdeq: ∀f,L1,T1. L1 ⊢ 𝐅+⦃T1⦄ ≘ f → ∀T2. T1 ≛ T2 →
+                            ∀L2. L1 ≛[f] L2 → L2 ⊢ 𝐅+⦃T2⦄ ≘ f.
 #f #L1 #T1 #H elim H -f -L1 -T1
 [ #f #L1 #s1 #Hf #X #H1 #L2 #_
   elim (tdeq_inv_sort1 … H1) -H1 #s2 #H destruct
@@ -65,12 +65,12 @@ lemma frees_tdeq_conf_rdeq: ∀f,L1,T1. L1 ⊢ 𝐅*⦃T1⦄ ≘ f → ∀T2. T1
 ]
 qed-.
 
-lemma frees_tdeq_conf: ∀f,L,T1. L ⊢ 𝐅*⦃T1⦄ ≘ f →
-                       ∀T2. T1 ≛ T2 → L ⊢ 𝐅*⦃T2⦄ ≘ f.
+lemma frees_tdeq_conf: ∀f,L,T1. L ⊢ 𝐅+⦃T1⦄ ≘ f →
+                       ∀T2. T1 ≛ T2 → L ⊢ 𝐅+⦃T2⦄ ≘ f.
 /4 width=7 by frees_tdeq_conf_rdeq, sex_refl, ext2_refl/ qed-.
 
-lemma frees_rdeq_conf: ∀f,L1,T. L1 ⊢ 𝐅*⦃T⦄ ≘ f →
-                       ∀L2. L1 ≛[f] L2 → L2 ⊢ 𝐅*⦃T⦄ ≘ f.
+lemma frees_rdeq_conf: ∀f,L1,T. L1 ⊢ 𝐅+⦃T⦄ ≘ f →
+                       ∀L2. L1 ≛[f] L2 → L2 ⊢ 𝐅+⦃T⦄ ≘ f.
 /2 width=7 by frees_tdeq_conf_rdeq, tdeq_refl/ qed-.
 
 lemma tdeq_rex_conf (R): s_r_confluent1 … cdeq (rex R).

@@ -33,7 +33,7 @@ fact cpr_conf_lpr_atom_atom (h):
 
 fact cpr_conf_lpr_atom_delta (h):
    ∀G0,L0,i. (
-      ∀G,L,T. ⦃G0,L0,#i⦄ ⊐+ ⦃G,L,T⦄ → IH_cpr_conf_lpr h G L T
+      ∀G,L,T. ⦃G0,L0,#i⦄ ⬂+ ⦃G,L,T⦄ → IH_cpr_conf_lpr h G L T
    ) →
    ∀K0,V0. ⬇*[i] L0 ≘ K0.ⓓV0 →
    ∀V2. ⦃G0,K0⦄ ⊢ V0 ➡[h] V2 → ∀T2. ⬆*[↑i] V2 ≘ T2 →
@@ -54,7 +54,7 @@ qed-.
 (* Basic_1: includes: pr0_delta_delta pr2_delta_delta *)
 fact cpr_conf_lpr_delta_delta (h):
    ∀G0,L0,i. (
-      ∀G,L,T. ⦃G0,L0,#i⦄ ⊐+ ⦃G,L,T⦄ → IH_cpr_conf_lpr h G L T
+      ∀G,L,T. ⦃G0,L0,#i⦄ ⬂+ ⦃G,L,T⦄ → IH_cpr_conf_lpr h G L T
    ) →
    ∀K0,V0. ⬇*[i] L0 ≘ K0.ⓓV0 →
    ∀V1. ⦃G0,K0⦄ ⊢ V0 ➡[h] V1 → ∀T1. ⬆*[↑i] V1 ≘ T1 →
@@ -79,7 +79,7 @@ qed-.
 
 fact cpr_conf_lpr_bind_bind (h):
    ∀p,I,G0,L0,V0,T0. (
-      ∀G,L,T. ⦃G0,L0,ⓑ{p,I}V0.T0⦄ ⊐+ ⦃G,L,T⦄ → IH_cpr_conf_lpr h G L T
+      ∀G,L,T. ⦃G0,L0,ⓑ{p,I}V0.T0⦄ ⬂+ ⦃G,L,T⦄ → IH_cpr_conf_lpr h G L T
    ) →
    ∀V1. ⦃G0,L0⦄ ⊢ V0 ➡[h] V1 → ∀T1. ⦃G0,L0.ⓑ{I}V0⦄ ⊢ T0 ➡[h] T1 →
    ∀V2. ⦃G0,L0⦄ ⊢ V0 ➡[h] V2 → ∀T2. ⦃G0,L0.ⓑ{I}V0⦄ ⊢ T0 ➡[h] T2 →
@@ -94,7 +94,7 @@ qed-.
 
 fact cpr_conf_lpr_bind_zeta (h):
    ∀G0,L0,V0,T0. (
-      ∀G,L,T. ⦃G0,L0,+ⓓV0.T0⦄ ⊐+ ⦃G,L,T⦄ → IH_cpr_conf_lpr h G L T
+      ∀G,L,T. ⦃G0,L0,+ⓓV0.T0⦄ ⬂+ ⦃G,L,T⦄ → IH_cpr_conf_lpr h G L T
    ) →
    ∀V1. ⦃G0,L0⦄ ⊢ V0 ➡[h] V1 → ∀T1. ⦃G0,L0.ⓓV0⦄ ⊢ T0 ➡[h] T1 →
    ∀T2. ⬆*[1]T2 ≘ T0 → ∀X2. ⦃G0,L0⦄ ⊢ T2 ➡[h] X2 →  
@@ -109,7 +109,7 @@ qed-.
 
 fact cpr_conf_lpr_zeta_zeta (h):
    ∀G0,L0,V0,T0. (
-      ∀G,L,T. ⦃G0,L0,+ⓓV0.T0⦄ ⊐+ ⦃G,L,T⦄ → IH_cpr_conf_lpr h G L T
+      ∀G,L,T. ⦃G0,L0,+ⓓV0.T0⦄ ⬂+ ⦃G,L,T⦄ → IH_cpr_conf_lpr h G L T
    ) →
    ∀T1. ⬆*[1] T1 ≘ T0 → ∀X1. ⦃G0,L0⦄ ⊢ T1 ➡[h] X1 →
    ∀T2. ⬆*[1] T2 ≘ T0 → ∀X2. ⦃G0,L0⦄ ⊢ T2 ➡[h] X2 →
@@ -124,7 +124,7 @@ qed-.
 
 fact cpr_conf_lpr_flat_flat (h):
    ∀I,G0,L0,V0,T0. (
-      ∀G,L,T. ⦃G0,L0,ⓕ{I}V0.T0⦄ ⊐+ ⦃G,L,T⦄ → IH_cpr_conf_lpr h G L T
+      ∀G,L,T. ⦃G0,L0,ⓕ{I}V0.T0⦄ ⬂+ ⦃G,L,T⦄ → IH_cpr_conf_lpr h G L T
    ) →
    ∀V1. ⦃G0,L0⦄ ⊢ V0 ➡[h] V1 → ∀T1. ⦃G0,L0⦄ ⊢ T0 ➡[h] T1 →
    ∀V2. ⦃G0,L0⦄ ⊢ V0 ➡[h] V2 → ∀T2. ⦃G0,L0⦄ ⊢ T0 ➡[h] T2 →
@@ -139,7 +139,7 @@ qed-.
 
 fact cpr_conf_lpr_flat_eps (h):
    ∀G0,L0,V0,T0. (
-      ∀G,L,T. ⦃G0,L0,ⓝV0.T0⦄ ⊐+ ⦃G,L,T⦄ → IH_cpr_conf_lpr h G L T
+      ∀G,L,T. ⦃G0,L0,ⓝV0.T0⦄ ⬂+ ⦃G,L,T⦄ → IH_cpr_conf_lpr h G L T
    ) →
    ∀V1,T1. ⦃G0,L0⦄ ⊢ T0 ➡[h] T1 → ∀T2. ⦃G0,L0⦄ ⊢ T0 ➡[h] T2 →
    ∀L1. ⦃G0,L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G0,L0⦄ ⊢ ➡[h] L2 →
@@ -152,7 +152,7 @@ qed-.
 
 fact cpr_conf_lpr_eps_eps (h):
    ∀G0,L0,V0,T0. (
-      ∀G,L,T. ⦃G0,L0,ⓝV0.T0⦄ ⊐+ ⦃G,L,T⦄ → IH_cpr_conf_lpr h G L T
+      ∀G,L,T. ⦃G0,L0,ⓝV0.T0⦄ ⬂+ ⦃G,L,T⦄ → IH_cpr_conf_lpr h G L T
    ) →
    ∀T1. ⦃G0,L0⦄ ⊢ T0 ➡[h] T1 → ∀T2. ⦃G0,L0⦄ ⊢ T0 ➡[h] T2 →
    ∀L1. ⦃G0,L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G0,L0⦄ ⊢ ➡[h] L2 →
@@ -165,7 +165,7 @@ qed-.
 
 fact cpr_conf_lpr_flat_beta (h):
    ∀p,G0,L0,V0,W0,T0. (
-      ∀G,L,T. ⦃G0,L0,ⓐV0.ⓛ{p}W0.T0⦄ ⊐+ ⦃G,L,T⦄ → IH_cpr_conf_lpr h G L T
+      ∀G,L,T. ⦃G0,L0,ⓐV0.ⓛ{p}W0.T0⦄ ⬂+ ⦃G,L,T⦄ → IH_cpr_conf_lpr h G L T
    ) →
    ∀V1. ⦃G0,L0⦄ ⊢ V0 ➡[h] V1 → ∀T1. ⦃G0,L0⦄ ⊢ ⓛ{p}W0.T0 ➡[h] T1 →
    ∀V2. ⦃G0,L0⦄ ⊢ V0 ➡[h] V2 → ∀W2. ⦃G0,L0⦄ ⊢ W0 ➡[h] W2 → ∀T2. ⦃G0,L0.ⓛW0⦄ ⊢ T0 ➡[h] T2 →
@@ -187,7 +187,7 @@ qed-.
 *)
 fact cpr_conf_lpr_flat_theta (h):
    ∀p,G0,L0,V0,W0,T0. (
-      ∀G,L,T. ⦃G0,L0,ⓐV0.ⓓ{p}W0.T0⦄ ⊐+ ⦃G,L,T⦄ → IH_cpr_conf_lpr h G L T
+      ∀G,L,T. ⦃G0,L0,ⓐV0.ⓓ{p}W0.T0⦄ ⬂+ ⦃G,L,T⦄ → IH_cpr_conf_lpr h G L T
    ) →
    ∀V1. ⦃G0,L0⦄ ⊢ V0 ➡[h] V1 → ∀T1. ⦃G0,L0⦄ ⊢ ⓓ{p}W0.T0 ➡[h] T1 →
    ∀V2. ⦃G0,L0⦄ ⊢ V0 ➡[h] V2 → ∀U2. ⬆*[1] V2 ≘ U2 →
@@ -212,7 +212,7 @@ qed-.
 
 fact cpr_conf_lpr_beta_beta (h):
    ∀p,G0,L0,V0,W0,T0. (
-      ∀G,L,T. ⦃G0,L0,ⓐV0.ⓛ{p}W0.T0⦄ ⊐+ ⦃G,L,T⦄ → IH_cpr_conf_lpr h G L T
+      ∀G,L,T. ⦃G0,L0,ⓐV0.ⓛ{p}W0.T0⦄ ⬂+ ⦃G,L,T⦄ → IH_cpr_conf_lpr h G L T
    ) →
    ∀V1. ⦃G0,L0⦄ ⊢ V0 ➡[h] V1 → ∀W1. ⦃G0,L0⦄ ⊢ W0 ➡[h] W1 → ∀T1. ⦃G0,L0.ⓛW0⦄ ⊢ T0 ➡[h] T1 →
    ∀V2. ⦃G0,L0⦄ ⊢ V0 ➡[h] V2 → ∀W2. ⦃G0,L0⦄ ⊢ W0 ➡[h] W2 → ∀T2. ⦃G0,L0.ⓛW0⦄ ⊢ T0 ➡[h] T2 →
@@ -231,7 +231,7 @@ qed-.
 (* Basic_1: was: pr0_upsilon_upsilon *)
 fact cpr_conf_lpr_theta_theta (h):
    ∀p,G0,L0,V0,W0,T0. (
-      ∀G,L,T. ⦃G0,L0,ⓐV0.ⓓ{p}W0.T0⦄ ⊐+ ⦃G,L,T⦄ → IH_cpr_conf_lpr h G L T
+      ∀G,L,T. ⦃G0,L0,ⓐV0.ⓓ{p}W0.T0⦄ ⬂+ ⦃G,L,T⦄ → IH_cpr_conf_lpr h G L T
    ) →
    ∀V1. ⦃G0,L0⦄ ⊢ V0 ➡[h] V1 → ∀U1. ⬆*[1] V1 ≘ U1 →
    ∀W1. ⦃G0,L0⦄ ⊢ W0 ➡[h] W1 → ∀T1. ⦃G0,L0.ⓓW0⦄ ⊢ T0 ➡[h] T1 →

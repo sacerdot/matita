@@ -1,0 +1,44 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/rt_computation/csx_lsubr.ma".
+include "basic_2/rt_computation/csx_cpxs.ma".
+include "basic_2/rt_computation/sdsx_rdsx.ma".
+
+(* STRONGLY NORMALIZING REFERRED LOCAL ENV.S FOR UNBOUND RT-TRANSITION ******)
+
+(* Advanced properties ******************************************************)
+
+lemma rdsx_pair_lpxs (h) (I) (G):
+                     ∀K1,V1. G ⊢ ⬈*[h,V1] 𝐒⦃K1⦄ →
+                     ∀V2. ⦃G,K1⦄ ⊢ ⬈*[h] 𝐒⦃V2⦄ →
+                     (∀K. ⦃G,K1⦄ ⊢ ⬈*[h] K → ⦃G,K⦄ ⊢ V1 ⬈*[h] V2) →
+                     G ⊢ ⬈*[h,#0] 𝐒⦃K1.ⓑ{I}V2⦄.
+#h #I #G #K1 #V1 #H
+@(rdsx_ind_lpxs … H) -K1 #K1 #_ #IHK #V2 #H
+@(csx_ind_cpxs … H) -V2 #V2 #HV2 #IHV #HK
+@rdsx_intro_lpxs #Y #HY #HnY
+elim (lpxs_inv_pair_sn … HY) -HY #K3 #V3 #HK13 #HV23 #H destruct
+elim (tdeq_dec V2 V3)
+[ -IHV -HV23 #HV23
+  @(rdsx_rdeq_trans … (K3.ⓑ{I}V2)) [| /2 width=1 by rdeq_pair_refl/ ]
+  @(IHK … HK13) -IHK
+  [
+  |
+  | /3 width=3 by lpxs_trans/
+  ]
+| -IHK -HnY #HnV23
+  @(rdsx_lpxs_trans … (K1.ⓑ{I}V3)) [| /2 width=1 by lpxs_bind_refl_dx/ ]
+  @(IHV … HV23 HnV23) -IHV -HnV23
+  #K #HK

@@ -1,0 +1,110 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "static_2/notation/relations/clearsn_3.ma".
+include "static_2/syntax/cext2.ma".
+include "static_2/relocation/sex.ma".
+
+(* CLEAR FOR LOCAL ENVIRONMENTS ON SELECTED ENTRIES *************************)
+
+definition ccl: relation3 lenv bind bind ≝ λL,I1,I2. BUnit Void = I2.
+
+definition scl: rtmap → relation lenv ≝ sex ccl (cext2 ceq).
+
+interpretation
+  "clear (local environment)"
+  'ClearSn f L1 L2 = (scl f L1 L2).
+
+(* Basic eliminators ********************************************************)
+
+lemma scl_ind (Q:rtmap→relation lenv): 
+      (∀f. Q f (⋆) (⋆)) →
+      (∀f,I,K1,K2. K1 ⊐ⓧ[f] K2 → Q f K1 K2 → Q (⫯f) (K1.ⓘ{I}) (K2.ⓘ{I})) →
+      (∀f,I,K1,K2. K1 ⊐ⓧ[f] K2 → Q f K1 K2 → Q (↑f) (K1.ⓘ{I}) (K2.ⓧ)) →
+      ∀f,L1,L2. L1 ⊐ⓧ[f] L2 → Q f L1 L2.
+#Q #IH1 #IH2 #IH3 #f #L1 #L2 #H elim H -f -L1 -L2 
+[ //
+| #f #I1 #I2 #K1 #K2 #HK #H #IH destruct /2 by/
+| #f #I1 #I2 #K1 #K2 #HK * #I [| #V1 #V2 #H ] #IH destruct /2 by/
+]
+qed-.
+
+(* Basic inversion lemmas ***************************************************)
+
+lemma scl_inv_atom_sn: ∀g,L2. ⋆ ⊐ⓧ[g] L2 → L2 = ⋆.
+/2 width=4 by sex_inv_atom1/ qed-.
+
+lemma scl_inv_push_sn: ∀f,I,K1,L2. K1.ⓘ{I} ⊐ⓧ[⫯f] L2 →
+                       ∃∃K2. K1 ⊐ⓧ[f] K2 & L2 = K2.ⓘ{I}.
+#f #I #K1 #L2 #H
+elim (sex_inv_push1 … H) -H #J #K2 #HK12 *
+/2 width=3 by ex2_intro/
+qed-.
+
+lemma scl_inv_next_sn: ∀f,I,K1,L2. K1.ⓘ{I} ⊐ⓧ[↑f] L2 →
+                       ∃∃K2. K1 ⊐ⓧ[f] K2 & L2 = K2.ⓧ.
+#f #I #K1 #L2 #H
+elim (sex_inv_next1 … H) -H
+/2 width=3 by ex2_intro/
+qed-.
+
+(* Advanced inversion lemmas ************************************************)
+
+lemma scl_inv_bind_sn_gen: ∀g,I,K1,L2. K1.ⓘ{I} ⊐ⓧ[g] L2 →
+                           ∨∨ ∃∃f,K2. K1 ⊐ⓧ[f] K2 & g = ⫯f & L2 = K2.ⓘ{I}
+                            | ∃∃f,K2. K1 ⊐ⓧ[f] K2 & g = ↑f & L2 = K2.ⓧ.
+#g #I #K1 #L2 #H
+elim (pn_split g) * #f #Hf destruct
+[ elim (scl_inv_push_sn … H) -H
+| elim (scl_inv_next_sn … H) -H
+]
+/3 width=5 by ex3_2_intro, or_intror, or_introl/
+qed-.
+
+(* Advanced forward lemmas **************************************************)
+
+lemma scl_fwd_bind_sn: ∀g,I1,K1,L2. K1.ⓘ{I1} ⊐ⓧ[g] L2 →
+                       ∃∃I2,K2. K1 ⊐ⓧ[⫱g] K2 & L2 = K2.ⓘ{I2}.
+#g #I1 #K1 #L2
+elim (pn_split g) * #f #Hf destruct #H
+[ elim (scl_inv_push_sn … H) -H
+| elim (scl_inv_next_sn … H) -H
+]
+/2 width=4 by ex2_2_intro/
+qed-.
+
+(* Basic properties *********************************************************)
+
+lemma scl_atom: ∀f. ⋆ ⊐ⓧ[f] ⋆.
+/by sex_atom/ qed.
+
+lemma scl_push: ∀f,K1,K2. K1 ⊐ⓧ[f] K2 → ∀I. K1.ⓘ{I} ⊐ⓧ[⫯f] K2.ⓘ{I}.
+#f #K1 #K2 #H * /3 width=1 by sex_push, ext2_unit, ext2_pair/
+qed.
+
+lemma scl_next: ∀f,K1,K2. K1 ⊐ⓧ[f] K2 → ∀I. K1.ⓘ{I} ⊐ⓧ[↑f] K2.ⓧ.
+/2 width=1 by sex_next/ qed.
+
+lemma scl_eq_repl_back: ∀L1,L2. eq_repl_back … (λf. L1 ⊐ⓧ[f] L2).
+/2 width=3 by sex_eq_repl_back/ qed-.
+
+lemma scl_eq_repl_fwd: ∀L1,L2. eq_repl_fwd … (λf. L1 ⊐ⓧ[f] L2).
+/2 width=3 by sex_eq_repl_fwd/ qed-.
+
+(* Advanced properties ******************************************************)
+
+lemma scl_refl: ∀f. 𝐈⦃f⦄ → reflexive … (scl f).
+#f #Hf #L elim L -L
+/3 width=3 by scl_eq_repl_back, scl_push, eq_push_inv_isid/
+qed.

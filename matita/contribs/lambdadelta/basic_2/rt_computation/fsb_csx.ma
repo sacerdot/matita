@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_computation/rdsx_csx.ma".
+include "basic_2/rt_computation/rsx_csx.ma".
 include "basic_2/rt_computation/fpbs_cpx.ma".
 include "basic_2/rt_computation/fpbs_csx.ma".
 include "basic_2/rt_computation/fsb_fpbg.ma".
@@ -34,7 +34,7 @@ lemma csx_fsb_fpbs: ∀h,G1,L1,T1. ⦃G1,L1⦄ ⊢ ⬈*[h] 𝐒⦃T1⦄ →
 #G0 #L0 #T0 #IHu #H10 
 lapply (fpbs_csx_conf … H10) // -HT1 #HT0
 generalize in match IHu; -IHu generalize in match H10; -H10
-@(rdsx_ind … (csx_rdsx … HT0)) -L0
+@(rsx_ind … (csx_rsx … HT0)) -L0
 #L0 #_ #IHd #H10 #IHu @fsb_intro
 #G2 #L2 #T2 * -G2 -L2 -T2 [ -IHd -IHc | -IHu -IHd |  ]
 [ /4 width=5 by fpbs_fqup_trans, fqu_fqup/

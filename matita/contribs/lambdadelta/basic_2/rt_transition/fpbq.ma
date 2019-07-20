@@ -21,7 +21,7 @@ include "basic_2/rt_transition/lpr_lpx.ma".
 
 (* Basic_2A1: includes: fleq_fpbq fpbq_lleq *)
 inductive fpbq (h) (G1) (L1) (T1): relation3 genv lenv term ≝
-| fpbq_fquq: ∀G2,L2,T2. ⦃G1,L1,T1⦄ ⊐⸮ ⦃G2,L2,T2⦄ → fpbq h G1 L1 T1 G2 L2 T2
+| fpbq_fquq: ∀G2,L2,T2. ⦃G1,L1,T1⦄ ⬂⸮ ⦃G2,L2,T2⦄ → fpbq h G1 L1 T1 G2 L2 T2
 | fpbq_cpx : ∀T2. ⦃G1,L1⦄ ⊢ T1 ⬈[h] T2 → fpbq h G1 L1 T1 G1 L1 T2
 | fpbq_lpx : ∀L2. ⦃G1,L1⦄ ⊢ ⬈[h] L2 → fpbq h G1 L1 T1 G1 L2 T1
 | fpbq_fdeq: ∀G2,L2,T2. ⦃G1,L1,T1⦄ ≛ ⦃G2,L2,T2⦄ → fpbq h G1 L1 T1 G2 L2 T2

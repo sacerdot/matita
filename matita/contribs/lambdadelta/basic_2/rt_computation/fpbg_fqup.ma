@@ -26,7 +26,7 @@ lemma fpbg_tdeq_div: ∀h,G1,G2,L1,L2,T1,T. ⦃G1,L1,T1⦄ >[h] ⦃G2,L2,T⦄ �
 (* Properties with plus-iterated structural successor for closures **********)
 
 (* Note: this is used in the closure proof *)
-lemma fqup_fpbg: ∀h,G1,G2,L1,L2,T1,T2. ⦃G1,L1,T1⦄ ⊐+ ⦃G2,L2,T2⦄ → ⦃G1,L1,T1⦄ >[h] ⦃G2,L2,T2⦄.
+lemma fqup_fpbg: ∀h,G1,G2,L1,L2,T1,T2. ⦃G1,L1,T1⦄ ⬂+ ⦃G2,L2,T2⦄ → ⦃G1,L1,T1⦄ >[h] ⦃G2,L2,T2⦄.
 #h #G1 #G2 #L1 #L2 #T1 #T2 #H elim (fqup_inv_step_sn … H) -H
 /3 width=5 by fqus_fpbs, fpb_fqu, ex2_3_intro/
 qed.

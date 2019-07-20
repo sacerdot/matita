@@ -48,7 +48,7 @@ lemma cpr_ApplOmega_34 (h) (G) (L) (s0) (s): ⦃G,L⦄ ⊢ ApplOmega3 s0 s ➡[h
 lemma cpxs_ApplOmega_14 (h) (G) (L) (s0) (s): ⦃G,L⦄ ⊢ ApplOmega1 s0 s ⬈*[h] ApplOmega4 s0 s.
 /5 width=4 by cpxs_strap1, cpm_fwd_cpx/ qed.
 
-lemma fqup_ApplOmega_41 (G) (L) (s0) (s): ⦃G,L,ApplOmega4 s0 s⦄ ⊐+ ⦃G,L,ApplOmega1 s0 s⦄.
+lemma fqup_ApplOmega_41 (G) (L) (s0) (s): ⦃G,L,ApplOmega4 s0 s⦄ ⬂+ ⦃G,L,ApplOmega1 s0 s⦄.
 /2 width=1 by/ qed.
 
 (* Main properties **********************************************************)

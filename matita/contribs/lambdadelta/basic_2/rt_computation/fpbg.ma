@@ -39,7 +39,7 @@ lemma fpbg_fpbq_trans: ∀h,G1,G,G2,L1,L,L2,T1,T,T2.
 qed-.
 
 lemma fpbg_fqu_trans (h): ∀G1,G,G2,L1,L,L2,T1,T,T2.
-                          ⦃G1,L1,T1⦄ >[h] ⦃G,L,T⦄ → ⦃G,L,T⦄ ⊐ ⦃G2,L2,T2⦄ →
+                          ⦃G1,L1,T1⦄ >[h] ⦃G,L,T⦄ → ⦃G,L,T⦄ ⬂ ⦃G2,L2,T2⦄ →
                           ⦃G1,L1,T1⦄ >[h] ⦃G2,L2,T2⦄.
 #h #G1 #G #G2 #L1 #L #L2 #T1 #T #T2 #H1 #H2
 /4 width=5 by fpbg_fpbq_trans, fpbq_fquq, fqu_fquq/

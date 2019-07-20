@@ -57,9 +57,9 @@ lemma cpxs_bind2_dx: ∀h,G,L,V1,V2. ⦃G,L⦄ ⊢ V1 ⬈[h] V2 →
 (* Properties with plus-iterated structural successor for closures **********)
 
 (* Basic_2A1: uses: lpx_fqup_trans *)
-lemma lpx_fqup_trans: ∀h,b,G1,G2,L1,L2,T1,T2. ⦃G1,L1,T1⦄ ⊐+[b] ⦃G2,L2,T2⦄ →
+lemma lpx_fqup_trans: ∀h,b,G1,G2,L1,L2,T1,T2. ⦃G1,L1,T1⦄ ⬂+[b] ⦃G2,L2,T2⦄ →
                       ∀K1. ⦃G1,K1⦄ ⊢ ⬈[h] L1 →
-                      ∃∃K2,T. ⦃G1,K1⦄ ⊢ T1 ⬈*[h] T & ⦃G1,K1,T⦄ ⊐+[b] ⦃G2,K2,T2⦄ & ⦃G2,K2⦄ ⊢ ⬈[h] L2.
+                      ∃∃K2,T. ⦃G1,K1⦄ ⊢ T1 ⬈*[h] T & ⦃G1,K1,T⦄ ⬂+[b] ⦃G2,K2,T2⦄ & ⦃G2,K2⦄ ⊢ ⬈[h] L2.
 #h #b #G1 #G2 #L1 #L2 #T1 #T2 #H @(fqup_ind … H) -G2 -L2 -T2
 [ #G2 #L2 #T2 #H12 #K1 #HKL1 elim (lpx_fqu_trans … H12 … HKL1) -L1
   /3 width=5 by cpx_cpxs, fqu_fqup, ex3_2_intro/
@@ -73,9 +73,9 @@ qed-.
 (* Properties with star-iterated structural successor for closures **********)
 
 (* Basic_2A1: uses: lpx_fqus_trans *)
-lemma lpx_fqus_trans: ∀h,b,G1,G2,L1,L2,T1,T2. ⦃G1,L1,T1⦄ ⊐*[b] ⦃G2,L2,T2⦄ →
+lemma lpx_fqus_trans: ∀h,b,G1,G2,L1,L2,T1,T2. ⦃G1,L1,T1⦄ ⬂*[b] ⦃G2,L2,T2⦄ →
                       ∀K1. ⦃G1,K1⦄ ⊢ ⬈[h] L1 →
-                      ∃∃K2,T. ⦃G1,K1⦄ ⊢ T1 ⬈*[h] T & ⦃G1,K1,T⦄ ⊐*[b] ⦃G2,K2,T2⦄ & ⦃G2,K2⦄ ⊢ ⬈[h] L2.
+                      ∃∃K2,T. ⦃G1,K1⦄ ⊢ T1 ⬈*[h] T & ⦃G1,K1,T⦄ ⬂*[b] ⦃G2,K2,T2⦄ & ⦃G2,K2⦄ ⊢ ⬈[h] L2.
 #h #b #G1 #G2 #L1 #L2 #T1 #T2 #H #K1 #HKL1 elim (fqus_inv_fqup … H) -H
 [ #H12 elim (lpx_fqup_trans … H12 … HKL1) -L1 /3 width=5 by fqup_fqus, ex3_2_intro/
 | * #H1 #H2 #H3 destruct /2 width=5 by ex3_2_intro/

@@ -27,7 +27,7 @@ definition IH_cnv_cpm_tdeq_cpm_trans (a) (h): relation3 genv lenv term ≝
 
 fact cnv_cpm_tdeq_cpm_trans_sub (a) (h) (G0) (L0) (T0):
      (∀G,L,T. ⦃G0,L0,T0⦄ >[h] ⦃G,L,T⦄ → IH_cnv_cpm_trans_lpr a h G L T) →
-     (∀G,L,T. ⦃G0,L0,T0⦄ ⊐+ ⦃G,L,T⦄ → IH_cnv_cpm_tdeq_cpm_trans a h G L T) →
+     (∀G,L,T. ⦃G0,L0,T0⦄ ⬂+ ⦃G,L,T⦄ → IH_cnv_cpm_tdeq_cpm_trans a h G L T) →
      ∀G,L,T1. G0 = G → L0 = L → T0 = T1 → IH_cnv_cpm_tdeq_cpm_trans a h G L T1.
 #a #h #G0 #L0 #T0 #IH2 #IH1 #G #L * [| * [| * ]]
 [ #I #_ #_ #_ #_ #n1 #X1 #H1X #H2X #n2 #X2 #HX2 destruct -G0 -L0 -T0

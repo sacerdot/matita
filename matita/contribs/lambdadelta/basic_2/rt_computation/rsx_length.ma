@@ -12,8 +12,29 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
+include "static_2/static/rdeq_length.ma".
+include "basic_2/rt_transition/lpx_length.ma".
+include "basic_2/rt_computation/rsx.ma".
 
-notation "hvbox( G ⊢ break term 46 L1 ⊆ⓧ [ break term 46 h, break term 46 f ] break term 46 L2 )"
-   non associative with precedence 45
-   for @{ 'LSubEqX $h $f $G $L1 $L2 }.
+(* STRONGLY NORMALIZING REFERRED LOCAL ENV.S FOR UNBOUND RT-TRANSITION ******)
+
+(* Advanced properties ******************************************************)
+
+(* Basic_2A1: uses: lsx_sort *)
+lemma rsx_sort (h) (G): ∀L,s. G ⊢ ⬈*[h,⋆s] 𝐒⦃L⦄.
+#h #G #L1 #s @rsx_intro #L2 #H #Hs
+elim Hs -Hs /3 width=3 by lpx_fwd_length, rdeq_sort_length/
+qed.
+
+(* Basic_2A1: uses: lsx_gref *)
+lemma rsx_gref (h) (G): ∀L,l. G ⊢ ⬈*[h,§l] 𝐒⦃L⦄.
+#h #G #L1 #s @rsx_intro #L2 #H #Hs
+elim Hs -Hs /3 width=3 by lpx_fwd_length, rdeq_gref_length/
+qed.
+
+lemma rsx_unit (h) (G): ∀I,L. G ⊢ ⬈*[h,#0] 𝐒⦃L.ⓤ{I}⦄.
+#h #G #I #L1 @rsx_intro
+#Y #HY #HnY elim HnY -HnY
+elim (lpx_inv_unit_sn … HY) -HY #L2 #HL12 #H destruct
+/3 width=3 by lpx_fwd_length, rdeq_unit_length/
+qed.

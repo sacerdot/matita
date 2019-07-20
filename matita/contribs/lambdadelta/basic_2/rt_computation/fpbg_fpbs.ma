@@ -64,7 +64,7 @@ qed-.
 (* Advanced properties with plus-iterated structural successor for closures *)
 
 lemma fqup_fpbg_trans (h):
-      ∀G1,G,L1,L,T1,T. ⦃G1,L1,T1⦄ ⊐+ ⦃G,L,T⦄ →
+      ∀G1,G,L1,L,T1,T. ⦃G1,L1,T1⦄ ⬂+ ⦃G,L,T⦄ →
       ∀G2,L2,T2. ⦃G,L,T⦄ >[h] ⦃G2,L2,T2⦄ → ⦃G1,L1,T1⦄ >[h] ⦃G2,L2,T2⦄.
 /3 width=5 by fpbs_fpbg_trans, fqup_fpbs/ qed-.
 

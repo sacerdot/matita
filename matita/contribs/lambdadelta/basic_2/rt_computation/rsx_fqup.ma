@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "static_2/static/rdeq_fqup.ma".
-include "basic_2/rt_computation/rdsx.ma".
+include "basic_2/rt_computation/rsx.ma".
 
 (* STRONGLY NORMALIZING REFERRED LOCAL ENV.S FOR UNBOUND RT-TRANSITION ******)
 
@@ -22,7 +22,7 @@ include "basic_2/rt_computation/rdsx.ma".
 (* Basic_2A1: uses: lsx_atom *)
 lemma lfsx_atom (h) (G) (T): G ⊢ ⬈*[h,T] 𝐒⦃⋆⦄.
 #h #G #T
-@rdsx_intro #Y #H #HnT
+@rsx_intro #Y #H #HnT
 lapply (lpx_inv_atom_sn … H) -H #H destruct
 elim HnT -HnT //
 qed.
@@ -32,12 +32,11 @@ qed.
 (* Basic_2A1: uses: lsx_fwd_bind_dx *)
 (* Note: the exclusion binder (ⓧ) makes this more elegant and much simpler *)
 (* Note: the old proof without the exclusion binder requires lreq *)
-lemma rdsx_fwd_bind_dx (h) (G):
-                       ∀p,I,L,V,T. G ⊢ ⬈*[h,ⓑ{p,I}V.T] 𝐒⦃L⦄ →
-                       G ⊢ ⬈*[h,T] 𝐒⦃L.ⓧ⦄.
+lemma rsx_fwd_bind_dx_void (h) (G):
+      ∀p,I,L,V,T. G ⊢ ⬈*[h,ⓑ{p,I}V.T] 𝐒⦃L⦄ → G ⊢ ⬈*[h,T] 𝐒⦃L.ⓧ⦄.
 #h #G #p #I #L #V #T #H
-@(rdsx_ind … H) -L #L1 #_ #IH
-@rdsx_intro #Y #H #HT
+@(rsx_ind … H) -L #L1 #_ #IH
+@rsx_intro #Y #H #HT
 elim (lpx_inv_unit_sn … H) -H #L2 #HL12 #H destruct
 /4 width=4 by rdeq_fwd_bind_dx_void/
 qed-.
@@ -45,7 +44,7 @@ qed-.
 (* Advanced inversion lemmas ************************************************)
 
 (* Basic_2A1: uses: lsx_inv_bind *)
-lemma rdsx_inv_bind (h) (G):
+lemma rsx_inv_bind_void (h) (G):
       ∀p,I,L,V,T. G ⊢ ⬈*[h,ⓑ{p,I}V.T] 𝐒⦃L⦄ →
       ∧∧ G ⊢ ⬈*[h,V] 𝐒⦃L⦄ & G ⊢ ⬈*[h,T] 𝐒⦃L.ⓧ⦄.
-/3 width=4 by rdsx_fwd_pair_sn, rdsx_fwd_bind_dx, conj/ qed-.
+/3 width=4 by rsx_fwd_pair_sn, rsx_fwd_bind_dx_void, conj/ qed-.

@@ -45,8 +45,8 @@ table {
         ]
         [ { "context-sensitive free variables" * } {
              [ [ "inclusion for restricted closures" ] "fsle" + "( ⦃?,?⦄ ⊆ ⦃?,?⦄ )" "fsle_length" + "fsle_drops" + "fsle_fqup" + "fsle_fsle" * ]
-             [ [ "restricted refinement for lenvs" ] "lsubf" + "( ⦃?,?⦄ ⫃𝐅* ⦃?,?⦄ )" "lsubf_lsubr" + "lsubf_frees" + "lsubf_lsubf" * ]
-             [ [ "for terms" ] "frees" + "( ? ⊢ 𝐅*⦃?⦄ ≘ ? )" "frees_append" + "frees_drops" + "frees_fqup" + "frees_frees" * ]
+             [ [ "restricted refinement for lenvs" ] "lsubf" + "( ⦃?,?⦄ ⫃𝐅+ ⦃?,?⦄ )" "lsubf_lsubr" + "lsubf_frees" + "lsubf_lsubf" * ]
+             [ [ "for terms" ] "frees" + "( ? ⊢ 𝐅+⦃?⦄ ≘ ? )" "frees_append" + "frees_drops" + "frees_fqup" + "frees_frees" * ]
           }
         ]
         [ { "local environments" * } {
@@ -58,8 +58,8 @@ table {
    class "grass"
    [ { "s-computation" * } {
         [ { "iterated structural successor" * } {
-             [ [ "for closures" ] "fqus" + "( ⦃?,?,?⦄ ⊐*[?] ⦃?,?,?⦄ )" + "( ⦃?,?,?⦄ ⊐* ⦃?,?,?⦄ )" "fqus_weight" + "fqus_drops" + "fqus_fqup" + "fqus_fqus" * ]
-             [ [ "proper for closures" ] "fqup" + "( ⦃?,?,?⦄ ⊐+[?] ⦃?,?,?⦄ )" + "( ⦃?,?,?⦄ ⊐+ ⦃?,?,?⦄ )" "fqup_weight" + "fqup_drops" + "fqup_fqup" * ]
+             [ [ "for closures" ] "fqus" + "( ⦃?,?,?⦄ ⬂*[?] ⦃?,?,?⦄ )" + "( ⦃?,?,?⦄ ⬂* ⦃?,?,?⦄ )" "fqus_weight" + "fqus_drops" + "fqus_fqup" + "fqus_fqus" * ]
+             [ [ "proper for closures" ] "fqup" + "( ⦃?,?,?⦄ ⬂+[?] ⦃?,?,?⦄ )" + "( ⦃?,?,?⦄ ⬂+ ⦃?,?,?⦄ )" "fqup_weight" + "fqup_drops" + "fqup_fqup" * ]
           }
         ]
      }
@@ -67,8 +67,8 @@ table {
    class "yellow"
    [ { "s-transition" * } {
         [ { "structural successor" * } {
-             [ [ "for closures" ] "fquq" + "( ⦃?,?,?⦄ ⊐⸮[?] ⦃?,?,?⦄ )" + "( ⦃?,?,?⦄ ⊐⸮ ⦃?,?,?⦄ )" "fquq_length" + "fquq_weight" * ]
-             [ [ "proper for closures" ] "fqu" + "( ⦃?,?,?⦄ ⊐[?] ⦃?,?,?⦄ )" + "( ⦃?,?,?⦄ ⊐ ⦃?,?,?⦄ )" "fqu_length" + "fqu_weight" + "fqu_tdeq" * ]
+             [ [ "for closures" ] "fquq" + "( ⦃?,?,?⦄ ⬂⸮[?] ⦃?,?,?⦄ )" + "( ⦃?,?,?⦄ ⬂⸮ ⦃?,?,?⦄ )" "fquq_length" + "fquq_weight" * ]
+             [ [ "proper for closures" ] "fqu" + "( ⦃?,?,?⦄ ⬂[?] ⦃?,?,?⦄ )" + "( ⦃?,?,?⦄ ⬂ ⦃?,?,?⦄ )" "fqu_length" + "fqu_weight" + "fqu_tdeq" * ]
           }
         ]
      }

@@ -51,20 +51,20 @@ lemma fpbs_lpx_trans: ∀h,G1,G2,L1,L,T1,T2. ⦃G1,L1,T1⦄ ≥[h] ⦃G2,L,T2⦄
 
 (* Properties with star-iterated structural successor for closures **********)
 
-lemma fqus_lpxs_fpbs: ∀h,G1,G2,L1,L,T1,T2. ⦃G1,L1,T1⦄ ⊐* ⦃G2,L,T2⦄ →
+lemma fqus_lpxs_fpbs: ∀h,G1,G2,L1,L,T1,T2. ⦃G1,L1,T1⦄ ⬂* ⦃G2,L,T2⦄ →
                       ∀L2. ⦃G2,L⦄ ⊢ ⬈*[h] L2 → ⦃G1,L1,T1⦄ ≥[h] ⦃G2,L2,T2⦄.
 /3 width=3 by fpbs_lpxs_trans, fqus_fpbs/ qed.
 
 (* Properties with unbound context-sensitive parallel rt-computation ********)
 
 lemma cpxs_fqus_lpxs_fpbs: ∀h,G1,L1,T1,T. ⦃G1,L1⦄ ⊢ T1 ⬈*[h] T →
-                           ∀G2,L,T2. ⦃G1,L1,T⦄ ⊐* ⦃G2,L,T2⦄ →
+                           ∀G2,L,T2. ⦃G1,L1,T⦄ ⬂* ⦃G2,L,T2⦄ →
                            ∀L2.⦃G2,L⦄ ⊢ ⬈*[h] L2 → ⦃G1,L1,T1⦄ ≥[h] ⦃G2,L2,T2⦄.
 /3 width=5 by cpxs_fqus_fpbs, fpbs_lpxs_trans/ qed.
 
 lemma fpbs_cpxs_tdeq_fqup_lpx_trans: ∀h,G1,G3,L1,L3,T1,T3. ⦃G1,L1,T1⦄ ≥ [h] ⦃G3,L3,T3⦄ →
                                      ∀T4. ⦃G3,L3⦄ ⊢ T3 ⬈*[h] T4 → ∀T5. T4 ≛ T5 →
-                                     ∀G2,L4,T2. ⦃G3,L3,T5⦄ ⊐+ ⦃G2,L4,T2⦄ →
+                                     ∀G2,L4,T2. ⦃G3,L3,T5⦄ ⬂+ ⦃G2,L4,T2⦄ →
                                      ∀L2. ⦃G2,L4⦄ ⊢ ⬈[h] L2 → ⦃G1,L1,T1⦄ ≥ [h] ⦃G2,L2,T2⦄.
 #h #G1 #G3 #L1 #L3 #T1 #T3 #H13 #T4 #HT34 #T5 #HT45 #G2 #L4 #T2 #H34 #L2 #HL42  
 @(fpbs_lpx_trans … HL42) -L2 (**) (* full auto too slow *)
@@ -76,7 +76,7 @@ qed-.
 
 (* Basic_2A1: uses: fpbs_intro_alt *)
 lemma fpbs_intro_star: ∀h,G1,L1,T1,T. ⦃G1,L1⦄ ⊢ T1 ⬈*[h] T →
-                       ∀G,L,T0. ⦃G1,L1,T⦄ ⊐* ⦃G,L,T0⦄ →
+                       ∀G,L,T0. ⦃G1,L1,T⦄ ⬂* ⦃G,L,T0⦄ →
                        ∀L0. ⦃G,L⦄ ⊢ ⬈*[h] L0 →
                        ∀G2,L2,T2. ⦃G,L0,T0⦄ ≛ ⦃G2,L2,T2⦄ → ⦃G1,L1,T1⦄ ≥[h] ⦃G2,L2,T2⦄ .
 /3 width=5 by cpxs_fqus_lpxs_fpbs, fpbs_strap1, fpbq_fdeq/ qed.
@@ -85,7 +85,7 @@ lemma fpbs_intro_star: ∀h,G1,L1,T1,T. ⦃G1,L1⦄ ⊢ T1 ⬈*[h] T →
 
 (* Basic_2A1: uses: fpbs_inv_alt *)
 lemma fpbs_inv_star: ∀h,G1,G2,L1,L2,T1,T2. ⦃G1,L1,T1⦄ ≥[h] ⦃G2,L2,T2⦄ →
-                     ∃∃G,L,L0,T,T0. ⦃G1,L1⦄ ⊢ T1 ⬈*[h] T & ⦃G1,L1,T⦄ ⊐* ⦃G,L,T0⦄
+                     ∃∃G,L,L0,T,T0. ⦃G1,L1⦄ ⊢ T1 ⬈*[h] T & ⦃G1,L1,T⦄ ⬂* ⦃G,L,T0⦄
                                   & ⦃G,L⦄ ⊢ ⬈*[h] L0 & ⦃G,L0,T0⦄ ≛ ⦃G2,L2,T2⦄.
 #h #G1 #G2 #L1 #L2 #T1 #T2 #H @(fpbs_ind_dx … H) -G1 -L1 -T1
 [ /2 width=9 by ex4_5_intro/

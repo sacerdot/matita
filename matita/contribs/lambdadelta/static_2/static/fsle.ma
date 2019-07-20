@@ -20,7 +20,7 @@ include "static_2/static/frees.ma".
 (* FREE VARIABLES INCLUSION FOR RESTRICTED CLOSURES *************************)
 
 definition fsle: bi_relation lenv term ≝ λL1,T1,L2,T2.
-                 ∃∃n1,n2,f1,f2. L1 ⊢ 𝐅*⦃T1⦄ ≘ f1 & L2 ⊢ 𝐅*⦃T2⦄ ≘ f2 &
+                 ∃∃n1,n2,f1,f2. L1 ⊢ 𝐅+⦃T1⦄ ≘ f1 & L2 ⊢ 𝐅+⦃T2⦄ ≘ f2 &
                                 L1 ≋ⓧ*[n1,n2] L2 & ⫱*[n1]f1 ⊆ ⫱*[n2]f2.
 
 interpretation "free variables inclusion (restricted closure)"

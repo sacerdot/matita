@@ -36,7 +36,7 @@ lemma cpms_fpbg_trans (h) (n):
 /3 width=5 by fpbs_fpbg_trans, cpms_fwd_fpbs/ qed-.
 
 lemma fqup_cpms_fwd_fpbg (h):
-      ∀G1,G2,L1,L2,T1,T. ⦃G1,L1,T1⦄ ⊐+ ⦃G2,L2,T⦄ →
+      ∀G1,G2,L1,L2,T1,T. ⦃G1,L1,T1⦄ ⬂+ ⦃G2,L2,T⦄ →
       ∀n,T2. ⦃G2,L2⦄ ⊢ T ➡*[n,h] T2 → ⦃G1,L1,T1⦄ >[h] ⦃G2,L2,T2⦄.
 /3 width=5 by cpms_fwd_fpbs, fqup_fpbg, fpbg_fpbs_trans/ qed-.
 
