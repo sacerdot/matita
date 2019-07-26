@@ -31,7 +31,7 @@ generalize in match HT1; -HT1
 | #i #H1i #IH #H2i
   elim (drops_ldec_dec L i) [ * #K #W #HLK | -H1i -IH #HnX ]
   [ lapply (cnv_inv_lref_pair … H2i … HLK) -H2i #H2W
-    lapply (csx_inv_lref_pair … HLK H1i) -H1i #H1W
+    lapply (csx_inv_lref_pair_drops … HLK H1i) -H1i #H1W
     elim (cpue_total_csx … H1W) -H1W #X
     elim (abst_dec X) [ * | -IH ]
     [ #p #V1 #U #H destruct * #n #HWU #_

@@ -19,17 +19,19 @@ include "basic_2/rt_computation/csx_cpxs.ma".
 
 (* Properties with unbound parallel rt-transition on all entries ************)
 
-lemma csx_lpx_conf: ∀h,G,L1,T. ⦃G,L1⦄ ⊢ ⬈*[h] 𝐒⦃T⦄ →
-                    ∀L2. ⦃G,L1⦄ ⊢ ⬈[h] L2 → ⦃G,L2⦄ ⊢ ⬈*[h] 𝐒⦃T⦄.
+lemma csx_lpx_conf (h) (G):
+      ∀L1,T. ⦃G,L1⦄ ⊢ ⬈*[h] 𝐒⦃T⦄ →
+      ∀L2. ⦃G,L1⦄ ⊢ ⬈[h] L2 → ⦃G,L2⦄ ⊢ ⬈*[h] 𝐒⦃T⦄.
 #h #G #L1 #T #H @(csx_ind_cpxs … H) -T
 /4 width=3 by csx_intro, lpx_cpx_trans/
 qed-.
 
 (* Advanced properties ******************************************************)
 
-lemma csx_abst: ∀h,p,G,L,W. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃W⦄ →
-                ∀T. ⦃G,L.ⓛW⦄ ⊢ ⬈*[h] 𝐒⦃T⦄ → ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃ⓛ{p}W.T⦄.
-#h #p #G #L #W #HW
+lemma csx_abst (h) (G):
+      ∀p,L,W. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃W⦄ →
+      ∀T. ⦃G,L.ⓛW⦄ ⊢ ⬈*[h] 𝐒⦃T⦄ → ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃ⓛ{p}W.T⦄.
+#h #G #p #L #W #HW
 @(csx_ind … HW) -W #W #_ #IHW #T #HT
 @(csx_ind … HT) -T #T #HT #IHT
 @csx_intro #X #H1 #H2
@@ -42,9 +44,10 @@ elim (tdneq_inv_pair  … H2) -H2
 ]
 qed.
 
-lemma csx_abbr: ∀h,p,G,L,V. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃V⦄ →
-                ∀T. ⦃G,L.ⓓV⦄ ⊢ ⬈*[h] 𝐒⦃T⦄ → ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃ⓓ{p}V.T⦄.
-#h #p #G #L #V #HV
+lemma csx_abbr (h) (G):
+      ∀p,L,V. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃V⦄ →
+      ∀T. ⦃G,L.ⓓV⦄ ⊢ ⬈*[h] 𝐒⦃T⦄ → ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃ⓓ{p}V.T⦄.
+#h #G #p #L #V #HV
 @(csx_ind … HV) -V #V #_ #IHV #T #HT
 @(csx_ind_cpxs … HT) -T #T #HT #IHT
 @csx_intro #X #H1 #H2
@@ -60,9 +63,17 @@ elim (cpx_inv_abbr1 … H1) -H1 *
 ]
 qed.
 
-fact csx_appl_theta_aux: ∀h,p,G,L,U. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃U⦄ → ∀V1,V2. ⬆*[1] V1 ≘ V2 →
-                         ∀V,T. U = ⓓ{p}V.ⓐV2.T → ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃ⓐV1.ⓓ{p}V.T⦄.
-#h #p #G #L #X #H
+lemma csx_bind (h) (G):
+      ∀p,I,L,V. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃V⦄ →
+      ∀T. ⦃G,L.ⓑ{I}V⦄ ⊢ ⬈*[h] 𝐒⦃T⦄ → ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃ⓑ{p,I}V.T⦄.
+#h #G #p * #L #V #HV #T #HT
+/2 width=1 by csx_abbr, csx_abst/
+qed.
+
+fact csx_appl_theta_aux (h) (G):
+     ∀p,L,U. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃U⦄ → ∀V1,V2. ⬆*[1] V1 ≘ V2 →
+     ∀V,T. U = ⓓ{p}V.ⓐV2.T → ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃ⓐV1.ⓓ{p}V.T⦄.
+#h #G #p #L #X #H
 @(csx_ind_cpxs … H) -X #X #HVT #IHVT #V1 #V2 #HV12 #V #T #H destruct
 lapply (csx_fwd_pair_sn … HVT) #HV
 lapply (csx_fwd_bind_dx … HVT) -HVT #HVT
@@ -94,6 +105,7 @@ elim (cpx_inv_appl1 … HL) -HL *
 ]
 qed-.
 
-lemma csx_appl_theta: ∀h,p,G,L,V,V2,T. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃ⓓ{p}V.ⓐV2.T⦄ →
-                      ∀V1. ⬆*[1] V1 ≘ V2 → ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃ⓐV1.ⓓ{p}V.T⦄.
+lemma csx_appl_theta (h) (G):
+      ∀p,L,V,V2,T. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃ⓓ{p}V.ⓐV2.T⦄ →
+      ∀V1. ⬆*[1] V1 ≘ V2 → ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃ⓐV1.ⓓ{p}V.T⦄.
 /2 width=5 by csx_appl_theta_aux/ qed.

@@ -43,13 +43,13 @@ qed-.
 (* Advanced properties ******************************************************)
 
 (* Basic_2A1: uses: lsx_lref_free *)
-lemma rsx_lref_atom (h) (G): ∀L,i. ⬇*[Ⓕ,𝐔❴i❵] L ≘ ⋆ → G ⊢ ⬈*[h,#i] 𝐒⦃L⦄.
+lemma rsx_lref_atom_drops (h) (G): ∀L,i. ⬇*[Ⓕ,𝐔❴i❵] L ≘ ⋆ → G ⊢ ⬈*[h,#i] 𝐒⦃L⦄.
 #h #G #L1 #i #HL1
 @(rsx_lifts … (#0) … HL1) -HL1 //
 qed.
 
 (* Basic_2A1: uses: lsx_lref_skip *)
-lemma rsx_lref_unit (h) (G): ∀I,L,K,i. ⬇*[i] L ≘ K.ⓤ{I} → G ⊢ ⬈*[h,#i] 𝐒⦃L⦄.
+lemma rsx_lref_unit_drops (h) (G): ∀I,L,K,i. ⬇*[i] L ≘ K.ⓤ{I} → G ⊢ ⬈*[h,#i] 𝐒⦃L⦄.
 #h #G #I #L1 #K1 #i #HL1
 @(rsx_lifts … (#0) … HL1) -HL1 //
 qed.
@@ -57,7 +57,7 @@ qed.
 (* Advanced forward lemmas **************************************************)
 
 (* Basic_2A1: uses: lsx_fwd_lref_be *)
-lemma rsx_fwd_lref_pair (h) (G):
+lemma rsx_fwd_lref_pair_drops (h) (G):
       ∀L,i. G ⊢ ⬈*[h,#i] 𝐒⦃L⦄ →
       ∀I,K,V. ⬇*[i] L ≘ K.ⓑ{I}V → G ⊢ ⬈*[h,V] 𝐒⦃K⦄.
 #h #G #L #i #HL #I #K #V #HLK

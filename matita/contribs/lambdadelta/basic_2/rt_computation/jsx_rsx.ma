@@ -23,38 +23,37 @@ include "basic_2/rt_computation/jsx.ma".
 (* Basic_2A1: uses: lsx_cpx_trans_lcosx *)
 lemma rsx_cpx_trans_jsx (h) (G):
       ∀L0,T1,T2. ⦃G,L0⦄ ⊢ T1 ⬈[h] T2 →
-      ∀f,L. G ⊢ L0 ⊒[h,f] L →
-      G ⊢ ⬈*[h,T1] 𝐒⦃L⦄ → G ⊢ ⬈*[h,T2] 𝐒⦃L⦄.
+      ∀L. G ⊢ L0 ⊒[h] L → G ⊢ ⬈*[h,T1] 𝐒⦃L⦄ → G ⊢ ⬈*[h,T2] 𝐒⦃L⦄.
 #h #G #L0 #T1 #T2 #H @(cpx_ind … H) -G -L0 -T1 -T2
 [ //
 | //
-| #I0 #G #K0 #V1 #V2 #W2 #_ #IH #HVW2 #g #L #HK0 #HL
-  elim (jsx_inv_pair_sn_gen … HK0) -HK0 *
-  [ #f #K #HK0 #H1 #H2 destruct
+| #I0 #G #K0 #V1 #V2 #W2 #_ #IH #HVW2 #L #HK0 #HL
+  elim (jsx_inv_pair_sn … HK0) -HK0 *
+  [ #K #HK0 #H destruct
     /4 width=8 by rsx_lifts, rsx_fwd_pair, drops_refl, drops_drop/
-  | #f #K #HV1 #HK0 #H1 #H2 destruct
+  | #K #HK0 #HV1 #H destruct
     /4 width=8 by rsx_lifts, drops_refl, drops_drop/
   ]
-| #I0 #G #K0 #T #U #i #_ #IH #HTU #g #L #HK0 #HL
+| #I0 #G #K0 #T #U #i #_ #IH #HTU #L #HK0 #HL
   elim (jsx_fwd_bind_sn … HK0) -HK0 #I #K #HK0 #H destruct
   /6 width=8 by rsx_inv_lifts, rsx_lifts, drops_refl, drops_drop/
-| #p #I0 #G #L0 #V1 #V2 #T1 #T2 #_ #_ #IHV12 #IHT12 #f #L #HL0 #HL
+| #p #I0 #G #L0 #V1 #V2 #T1 #T2 #_ #_ #IHV12 #IHT12 #L #HL0 #HL
   elim (rsx_inv_bind_void … HL) -HL
   /4 width=2 by jsx_pair, rsx_bind_void/
-| #I0 #G #L0 #V1 #V2 #T1 #T2 #_ #_ #IHV12 #IHT12 #f #L #HL0 #HL
+| #I0 #G #L0 #V1 #V2 #T1 #T2 #_ #_ #IHV12 #IHT12 #L #HL0 #HL
   elim (rsx_inv_flat … HL) -HL /3 width=2 by rsx_flat/
-| #G #L0 #V #U1 #T1 #T2 #HTU1 #_ #IHT12 #f #L #HL0 #HL
+| #G #L0 #V #U1 #T1 #T2 #HTU1 #_ #IHT12 #L #HL0 #HL
   elim (rsx_inv_bind_void … HL) -HL #HV #HU1
   /5 width=8 by rsx_inv_lifts, drops_refl, drops_drop/
-| #G #L0 #V #T1 #T2 #_ #IHT12 #f #L #HL0 #HL
+| #G #L0 #V #T1 #T2 #_ #IHT12 #L #HL0 #HL
   elim (rsx_inv_flat … HL) -HL /2 width=2 by/
-| #G #L0 #V1 #V2 #T #_ #IHV12 #f #L #HL0 #HL
+| #G #L0 #V1 #V2 #T #_ #IHV12 #L #HL0 #HL
   elim (rsx_inv_flat … HL) -HL /2 width=2 by/
-| #p #G #L0 #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #IHV12 #IHW12 #IHT12 #f #L #HL0 #HL
+| #p #G #L0 #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #IHV12 #IHW12 #IHT12 #L #HL0 #HL
   elim (rsx_inv_flat … HL) -HL #HV1 #HL
   elim (rsx_inv_bind_void … HL) -HL #HW1 #HT1
   /4 width=2 by jsx_pair, rsx_bind_void, rsx_flat/
-| #p #G #L0 #V1 #V2 #U2 #W1 #W2 #T1 #T2 #_ #_ #_ #IHV12 #IHW12 #IHT12 #HVU2 #f #L #HL0 #HL
+| #p #G #L0 #V1 #V2 #U2 #W1 #W2 #T1 #T2 #_ #_ #_ #IHV12 #IHW12 #IHT12 #HVU2 #L #HL0 #HL
   elim (rsx_inv_flat … HL) -HL #HV1 #HL
   elim (rsx_inv_bind_void … HL) -HL #HW1 #HT1
   /6 width=8 by jsx_pair, rsx_lifts, rsx_bind_void, rsx_flat, drops_refl, drops_drop/

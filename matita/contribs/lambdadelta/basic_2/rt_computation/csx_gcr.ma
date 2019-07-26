@@ -20,13 +20,13 @@ include "basic_2/rt_computation/csx_csx_vector.ma".
 
 (* Main properties with generic candidates of reducibility ******************)
 
-theorem csx_gcr: ∀h. gcr (cpx h) tdeq (csx h) (csx h).
+theorem csx_gcr (h): gcr (cpx h) tdeq (csx h) (csx h).
 #h @mk_gcr
 [ //
 | #G #L #Vs #Hvs #T #HT #H
   @(csx_applv_cnx … H) -H // (**) (* auto fails *)
 | /2 width=1 by csx_applv_beta/
-| /2 width=7 by csx_applv_delta/
+| /2 width=7 by csx_applv_delta_drops/
 | /3 width=3 by csx_applv_theta, csx_abbr/
 | /2 width=1 by csx_applv_cast/
 ]

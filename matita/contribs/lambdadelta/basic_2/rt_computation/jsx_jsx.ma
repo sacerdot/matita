@@ -12,27 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_computation/jsx.ma".
+include "basic_2/rt_computation/jsx_csx.ma".
 
 (* COMPATIBILITY OF STRONG NORMALIZATION FOR UNBOUND RT-TRANSITION **********)
 
 (* Main properties **********************************************************)
 
-theorem jsx_fix (h) (G):
-        ∀f,L1,L. G ⊢ L1 ⊒[h,f] L → ∀L2. G ⊢ L ⊒[h,f] L2 → L = L2.
-#h #G #f #L1 #L #H elim H -f -L1 -L
-[ #f #L2 #H
+theorem jsx_trans (h) (G): Transitive … (jsx h G).
+#h #G #L1 #L #H elim H -L1 -L
+[ #L2 #H
   >(jsx_inv_atom_sn … H) -L2 //
-| #f #I #K1 #K2 #_ #IH #L2 #H
-  elim (jsx_inv_push_sn … H) -H /3 width=1 by eq_f2/
-| #f #I #K1 #K2 #_ #IH #L2 #H
-  elim (jsx_inv_unit_sn … H) -H /3 width=1 by eq_f2/
-| #f #I #K1 #K2 #V #_ #_ #IH #L2 #H
-  elim (jsx_inv_unit_sn … H) -H /3 width=1 by eq_f2/
+| #I #K1 #K #_ #IH #L2 #H
+  elim (jsx_inv_bind_sn … H) -H *
+  [ #K2 #HK2 #H destruct /3 width=1 by jsx_bind/
+  | #J #K2 #V #HK2 #HV #H1 #H2 destruct /3 width=1 by jsx_pair/
+  ]
+| #I #K1 #K #V #_ #HV #IH #L2 #H
+  elim (jsx_inv_void_sn … H) -H #K2 #HK2 #H destruct
+  /3 width=3 by rsx_jsx_trans, jsx_pair/
 ]
-qed-.
-
-theorem jsx_trans (h) (G): ∀f. Transitive … (jsx h G f).
-#h #G #f #L1 #L #H1 #L2 #H2
-<(jsx_fix … H1 … H2) -L2 //
 qed-.
