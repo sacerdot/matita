@@ -78,14 +78,14 @@ qed-.
 (* Basic_forward lemmas *****************************************************)
 
 lemma nta_fwd_cnv_sn (a) (h) (G) (L):
-                     ∀T,U. ⦃G,L⦄ ⊢ T :[a,h] U → ⦃G,L⦄ ⊢ T ![a,h].
+      ∀T,U. ⦃G,L⦄ ⊢ T :[a,h] U → ⦃G,L⦄ ⊢ T ![a,h].
 #a #h #G #L #T #U #H
 elim (cnv_inv_cast … H) -H #X #_ #HT #_ #_ //
 qed-.
 
 (* Note: this is nta_fwd_correct_cnv *)
 lemma nta_fwd_cnv_dx (a) (h) (G) (L):
-                     ∀T,U. ⦃G,L⦄ ⊢ T :[a,h] U → ⦃G,L⦄ ⊢ U ![a,h].
+      ∀T,U. ⦃G,L⦄ ⊢ T :[a,h] U → ⦃G,L⦄ ⊢ U ![a,h].
 #a #h #G #L #T #U #H
 elim (cnv_inv_cast … H) -H #X #HU #_ #_ #_ //
 qed-.

@@ -40,7 +40,7 @@ lapply (aaa_mono … H1W … H2W) -G -L -W #H
 elim (discr_apair_xy_x … H)
 qed-.
 
-(* Basic_2A1: uses: ty3_repellent *)
+(* Basic_1: uses: ty3_repellent *)
 theorem nta_abst_repellent (a) (h) (p) (G) (K):
         ∀W,T,U1. ⦃G,K⦄ ⊢ ⓛ{p}W.T :[a,h] U1 →
         ∀U2. ⦃G,K.ⓛW⦄ ⊢ T :[a,h] U2 → ⬆*[1] U1 ≘ U2 → ⊥.

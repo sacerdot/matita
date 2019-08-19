@@ -174,9 +174,9 @@ qed-.
 
 (* Basic_2A1: uses: nta_fwd_pure1 *)
 lemma nta_inv_pure_sn_cnv (h) (G) (L) (X2):
-                          ∀V,T. ⦃G,L⦄ ⊢ ⓐV.T :*[h] X2 →
-                          ∨∨ ∃∃p,W,U. ⦃G,L⦄ ⊢ V :*[h] W & ⦃G,L⦄ ⊢ T :*[h] ⓛ{p}W.U & ⦃G,L⦄ ⊢ ⓐV.ⓛ{p}W.U ⬌*[h] X2 & ⦃G,L⦄ ⊢ X2 !*[h]
-                           | ∃∃U. ⦃G,L⦄ ⊢ T :*[h] U & ⦃G,L⦄ ⊢ ⓐV.U !*[h] & ⦃G,L⦄ ⊢ ⓐV.U ⬌*[h] X2 & ⦃G,L⦄ ⊢ X2 !*[h].
+      ∀V,T. ⦃G,L⦄ ⊢ ⓐV.T :*[h] X2 →
+      ∨∨ ∃∃p,W,U. ⦃G,L⦄ ⊢ V :*[h] W & ⦃G,L⦄ ⊢ T :*[h] ⓛ{p}W.U & ⦃G,L⦄ ⊢ ⓐV.ⓛ{p}W.U ⬌*[h] X2 & ⦃G,L⦄ ⊢ X2 !*[h]
+       | ∃∃U. ⦃G,L⦄ ⊢ T :*[h] U & ⦃G,L⦄ ⊢ ⓐV.U !*[h] & ⦃G,L⦄ ⊢ ⓐV.U ⬌*[h] X2 & ⦃G,L⦄ ⊢ X2 !*[h].
 #h #G #L #X2 #V #T #H
 elim (cnv_inv_cast … H) -H #X1 #HX2 #H1 #HX21 #H
 elim (cnv_inv_appl … H1) * [| #n ] #p #W0 #T0 #Hn #HV #HT #HW0 #HT0

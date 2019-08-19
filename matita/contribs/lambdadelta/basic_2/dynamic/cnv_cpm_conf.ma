@@ -387,10 +387,10 @@ elim (cnv_cpm_conf_lpr_sub … IH … HV01 … HV02 … HL01 … HL02) [|*: /2 w
 qed-.
 
 fact cnv_cpm_conf_lpr_aux (a) (h):
-                          ∀G0,L0,T0.
-                          (∀G1,L1,T1. ⦃G0,L0,T0⦄ >[h] ⦃G1,L1,T1⦄ → IH_cnv_cpm_trans_lpr a h G1 L1 T1) →
-                          (∀G1,L1,T1. ⦃G0,L0,T0⦄ >[h] ⦃G1,L1,T1⦄ → IH_cnv_cpms_conf_lpr a h G1 L1 T1) →
-                          ∀G1,L1,T1. G0 = G1 → L0 = L1 → T0 = T1 → IH_cnv_cpm_conf_lpr a h G1 L1 T1.
+     ∀G0,L0,T0.
+     (∀G1,L1,T1. ⦃G0,L0,T0⦄ >[h] ⦃G1,L1,T1⦄ → IH_cnv_cpm_trans_lpr a h G1 L1 T1) →
+     (∀G1,L1,T1. ⦃G0,L0,T0⦄ >[h] ⦃G1,L1,T1⦄ → IH_cnv_cpms_conf_lpr a h G1 L1 T1) →
+     ∀G1,L1,T1. G0 = G1 → L0 = L1 → T0 = T1 → IH_cnv_cpm_conf_lpr a h G1 L1 T1.
 #a #h #G0 #L0 #T0 #IH2 #IH1 #G #L * [| * [| * ]]
 [ #I #HG0 #HL0 #HT0 #HT #n1 #X1 #HX1 #n2 #X2 #HX2 #L1 #HL1 #L2 #HL2 destruct
   elim (cpm_inv_atom1_drops … HX1) -HX1 *

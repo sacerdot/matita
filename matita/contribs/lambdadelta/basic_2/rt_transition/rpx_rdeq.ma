@@ -44,7 +44,7 @@ lemma rpx_tdeq_div: ∀h,T1,T2. T1 ≛ T2 →
                     ∀G,L1,L2. ⦃G,L1⦄ ⊢ ⬈[h,T2] L2 → ⦃G,L1⦄ ⊢ ⬈[h,T1] L2.
 /2 width=5 by tdeq_rex_div/ qed-.
 
-lemma cpx_tdeq_conf_sex: ∀h,G. R_confluent2_rex … (cpx h G) cdeq (cpx h G) cdeq.
+lemma cpx_tdeq_conf_rex: ∀h,G. R_confluent2_rex … (cpx h G) cdeq (cpx h G) cdeq.
 #h #G #L0 #T0 #T1 #H @(cpx_ind … H) -G -L0 -T0 -T1 /2 width=3 by ex2_intro/
 [ #G #L0 #s0 #X0 #H0 #L1 #HL01 #L2 #HL02
   elim (tdeq_inv_sort1 … H0) -H0 #s1 #H destruct
@@ -129,7 +129,7 @@ lemma cpx_tdeq_conf: ∀h,G,L. ∀T0:term. ∀T1. ⦃G,L⦄ ⊢ T0 ⬈[h] T1 →
                      ∀T2. T0 ≛ T2 →
                      ∃∃T. T1 ≛ T & ⦃G,L⦄ ⊢ T2 ⬈[h] T.
 #h #G #L #T0 #T1 #HT01 #T2 #HT02
-elim (cpx_tdeq_conf_sex … HT01 … HT02 L … L) -HT01 -HT02
+elim (cpx_tdeq_conf_rex … HT01 … HT02 L … L) -HT01 -HT02
 /2 width=3 by rex_refl, ex2_intro/
 qed-.
 
@@ -145,7 +145,7 @@ lemma cpx_rdeq_conf: ∀h,G,L0,T0,T1. ⦃G,L0⦄ ⊢ T0 ⬈[h] T1 →
                      ∀L2. L0 ≛[T0] L2 →
                      ∃∃T. ⦃G,L2⦄ ⊢ T0 ⬈[h] T & T1 ≛ T.
 #h #G #L0 #T0 #T1 #HT01 #L2 #HL02
-elim (cpx_tdeq_conf_sex … HT01 T0 … L0 … HL02) -HT01 -HL02
+elim (cpx_tdeq_conf_rex … HT01 T0 … L0 … HL02) -HT01 -HL02
 /2 width=3 by rex_refl, ex2_intro/
 qed-.
 
@@ -159,7 +159,7 @@ elim (cpx_rdeq_conf … HT01 L2) -HT01
 qed-.
 
 lemma rpx_rdeq_conf: ∀h,G,T. confluent2 … (rpx h G T) (rdeq T).
-/3 width=6 by rpx_fsge_comp, rdeq_fsge_comp, cpx_tdeq_conf_sex, rex_conf/ qed-.
+/3 width=6 by rpx_fsge_comp, rdeq_fsge_comp, cpx_tdeq_conf_rex, rex_conf/ qed-.
 
 lemma rdeq_rpx_trans: ∀h,G,T,L2,K2. ⦃G,L2⦄ ⊢ ⬈[h,T] K2 →
                       ∀L1. L1 ≛[T] L2 →

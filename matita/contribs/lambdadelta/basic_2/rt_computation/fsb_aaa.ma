@@ -21,7 +21,6 @@ include "basic_2/rt_computation/fsb_csx.ma".
 
 (* Main properties with atomic arity assignment for terms *******************)
 
-(* Note: this is the "big tree" theorem *)
 theorem aaa_fsb: ∀h,G,L,T,A. ⦃G,L⦄ ⊢ T ⁝ A → ≥[h] 𝐒⦃G,L,T⦄.
 /3 width=2 by aaa_csx, csx_fsb/ qed.
 

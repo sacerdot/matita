@@ -66,7 +66,7 @@ qed-.
 lemma cnv_inv_appl_pred (a) (h) (G) (L):
       ∀V,T. ⦃G,L⦄ ⊢ ⓐV.T ![yinj a,h] →
       ∃∃p,W0,U0. ⦃G,L⦄ ⊢ V ![a,h] & ⦃G,L⦄ ⊢ T ![a,h] &
-                   ⦃G,L⦄ ⊢ V ➡*[1,h] W0 & ⦃G,L⦄ ⊢ T ➡*[↓a,h] ⓛ{p}W0.U0.
+                 ⦃G,L⦄ ⊢ V ➡*[1,h] W0 & ⦃G,L⦄ ⊢ T ➡*[↓a,h] ⓛ{p}W0.U0.
 #a #h #G #L #V #T #H
 elim (cnv_inv_appl … H) -H #n #p #W #U #Ha #HV #HT #HVW #HTU
 lapply (ylt_inv_inj … Ha) -Ha #Ha

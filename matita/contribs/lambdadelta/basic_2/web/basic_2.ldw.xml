@@ -29,10 +29,10 @@
    <subsection name="B">Stage "B"</subsection>
    <news class="beta" date="2019 June 2.">
          Parametrized applicability condition
-         allows λδ-2B to generalize both λδ-1A and λδ-1B.
+         allows λδ-2B to generalize both λδ-2A and λδ-1B.
    </news>
    <news class="beta" date="2019 April 16.">
-         Extended (λδ-2A) and restricted (λδ-1A) validity is decidable 
+         Extended (λδ-2A) and restricted (λδ-1B) validity is decidable
          (anniversary milestone).
    </news>
    <news class="beta" date="2019 March 25.">

@@ -48,7 +48,7 @@ qed-.
 lemma cnv_inv_appl_pred_cpes (a) (h) (G) (L):
       ∀V,T. ⦃G,L⦄ ⊢ ⓐV.T ![yinj a,h] →
       ∃∃p,W,U. ⦃G,L⦄ ⊢ V ![a,h] & ⦃G,L⦄ ⊢ T ![a,h] &
-                 ⦃G,L⦄ ⊢ V ⬌*[h,1,0] W & ⦃G,L⦄ ⊢ T ➡*[↓a,h] ⓛ{p}W.U.
+               ⦃G,L⦄ ⊢ V ⬌*[h,1,0] W & ⦃G,L⦄ ⊢ T ➡*[↓a,h] ⓛ{p}W.U.
 #a #h #G #L #V #T #H
 elim (cnv_inv_appl_pred … H) -H #p #W #U #HV #HT #HVW #HTU
 /3 width=7 by cpms_div, ex4_3_intro/

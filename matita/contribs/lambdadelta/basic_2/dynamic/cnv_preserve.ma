@@ -20,8 +20,8 @@ include "basic_2/dynamic/cnv_cpms_conf.ma".
 
 (* Basic_2A1: uses: snv_preserve *)
 lemma cnv_preserve (a) (h): ∀G,L,T. ⦃G,L⦄ ⊢ T ![a,h] →
-                            ∧∧ IH_cnv_cpms_conf_lpr a h G L T
-                             & IH_cnv_cpm_trans_lpr a h G L T.
+      ∧∧ IH_cnv_cpms_conf_lpr a h G L T
+       & IH_cnv_cpm_trans_lpr a h G L T.
 #a #h #G #L #T #HT
 lapply (cnv_fwd_fsb … HT) -HT #H
 @(fsb_ind_fpbg … H) -G -L -T #G #L #T #_ #IH
