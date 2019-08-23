@@ -12,24 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/dynamic/cnv_eval.ma".
-include "basic_2/dynamic/nta_preserve.ma".
+include "basic_2/rt_transition/cpm_simple.ma".
+include "basic_2/rt_transition/cnh.ma".
 
-(* NATIVE TYPE ASSIGNMENT FOR TERMS *****************************************)
+(* NORMAL TERMS HEAD FOR T-UNUNBOUND RT-TRANSITION **************************)
 
-(* Properties with evaluations for rt-transition on terms *******************)
+(* Advanced properties with simple terms ************************************)
 
-lemma nta_typecheck_dec (a) (h) (G) (L): ac_props a →
-      ∀T,U. Decidable … (⦃G,L⦄ ⊢ T :[a,h] U).
-/2 width=1 by cnv_dec/ qed-.
-
-(* Basic_1: uses: ty3_inference *)
-lemma nta_inference_dec (a) (h) (G) (L) (T): ac_props a →
-      ∨∨ ∃U. ⦃G,L⦄ ⊢ T :[a,h] U
-       | ∀U. (⦃G,L⦄ ⊢ T :[a,h] U → ⊥).
-#a #h #G #L #T #Ha
-elim (cnv_dec … h G L T Ha) -Ha
-[ /3 width=1 by cnv_nta_sn, or_introl/
-| /4 width=2 by nta_fwd_cnv_sn, or_intror/
-]
-qed-.
+lemma cnh_appl_simple (h) (G) (L): ∀V,T. 𝐒⦃T⦄ → ⦃G,L⦄ ⊢ ⥲[h] 𝐍⦃ⓐV.T⦄.
+#h #G #L #V1 #T1 #HT1 #n #X #H
+elim (cpm_inv_appl1_simple … H HT1) -H -HT1 #V2 #T2 #_ #_ #H destruct
+/1 width=1 by theq_pair/
+qed.

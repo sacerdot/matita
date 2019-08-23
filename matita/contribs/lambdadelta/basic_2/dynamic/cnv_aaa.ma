@@ -12,9 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/lib/arith_2b.ma".
 include "basic_2/rt_computation/cpms_aaa.ma".
-include "basic_2/rt_computation/lprs_cpms.ma".
 include "basic_2/dynamic/cnv.ma".
 
 (* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
@@ -61,21 +59,23 @@ elim (cnv_fwd_aaa … H) -H #A #HA
 /2 width=2 by cpms_total_aaa/
 qed-.
 
-(* Advanced inversion lemmas ************************************************)
-
-lemma cnv_inv_appl_pred (a) (h) (G) (L):
-      ∀V,T. ⦃G,L⦄ ⊢ ⓐV.T ![yinj a,h] →
-      ∃∃p,W0,U0. ⦃G,L⦄ ⊢ V ![a,h] & ⦃G,L⦄ ⊢ T ![a,h] &
-                 ⦃G,L⦄ ⊢ V ➡*[1,h] W0 & ⦃G,L⦄ ⊢ T ➡*[↓a,h] ⓛ{p}W0.U0.
-#a #h #G #L #V #T #H
-elim (cnv_inv_appl … H) -H #n #p #W #U #Ha #HV #HT #HVW #HTU
-lapply (ylt_inv_inj … Ha) -Ha #Ha
-elim (cnv_fwd_aaa … HT) #A #HA
-elim (cpms_total_aaa h … (a-↑n) … (ⓛ{p}W.U))
-[|*: /2 width=8 by cpms_aaa_conf/ ] -HA #X #HU0
-elim (cpms_inv_abst_sn … HU0) #W0 #U0 #HW0 #_ #H destruct
-lapply (cpms_trans … HVW … HW0) -HVW -HW0 #HVW0
-lapply (cpms_trans … HTU … HU0) -HTU -HU0
->(arith_m2 … Ha) -Ha #HTU0
-/2 width=5 by ex4_3_intro/
+lemma cnv_fwd_cpms_abst_dx_le (a) (h) (G) (L) (W) (p):
+      ∀T. ⦃G,L⦄ ⊢ T ![a,h] →
+      ∀n1,U1. ⦃G,L⦄ ⊢ T ➡*[n1,h] ⓛ{p}W.U1 → ∀n2. n1 ≤ n2 →
+      ∃∃U2. ⦃G,L⦄ ⊢ T ➡*[n2,h] ⓛ{p}W.U2 & ⦃G,L.ⓛW⦄ ⊢ U1 ➡*[n2-n1,h] U2.
+#a #h #G #L #W #p #T #H
+elim (cnv_fwd_aaa … H) -H #A #HA
+/2 width=2 by cpms_abst_dx_le_aaa/
 qed-.
+
+(* Advanced properties ******************************************************)
+
+lemma cnv_appl_ge (a) (h) (n1) (p) (G) (L):
+      ∀n2. n1 ≤ n2 → appl a n2 →
+      ∀V. ⦃G,L⦄ ⊢ V ![a,h] → ∀T. ⦃G,L⦄ ⊢ T ![a,h] →
+      ∀X. ⦃G,L⦄ ⊢ V ➡*[1,h] X → ∀W. ⦃G,L⦄ ⊢ W ➡*[h] X →
+      ∀U. ⦃G,L⦄ ⊢ T ➡*[n1,h] ⓛ{p}W.U → ⦃G,L⦄ ⊢ ⓐV.T ![a,h].
+#a #h #n1 #p #G #L #n2 #Hn12 #Ha #V #HV #T #HT #X #HVX #W #HW #X #HTX
+elim (cnv_fwd_cpms_abst_dx_le  … HT … HTX … Hn12) #U #HTU #_ -n1
+/4 width=11 by cnv_appl, cpms_bind, cpms_cprs_trans/
+qed.

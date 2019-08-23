@@ -12,24 +12,36 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/dynamic/cnv_eval.ma".
-include "basic_2/dynamic/nta_preserve.ma".
+include "ground_2/lib/arith.ma".
 
-(* NATIVE TYPE ASSIGNMENT FOR TERMS *****************************************)
+(* APPLICABILITY CONDITION  *************************************************)
 
-(* Properties with evaluations for rt-transition on terms *******************)
+(* applicability condition specification *)
+record ac: Type[0] ≝ {
+(* degree of the sort *)
+   appl: predicate nat
+}.
 
-lemma nta_typecheck_dec (a) (h) (G) (L): ac_props a →
-      ∀T,U. Decidable … (⦃G,L⦄ ⊢ T :[a,h] U).
-/2 width=1 by cnv_dec/ qed-.
+(* applicability condition postulates *)
+record ac_props (a): Prop ≝ {
+   ac_dec: ∀m. Decidable (∃∃n. m ≤ n & appl a n)
+}.
 
-(* Basic_1: uses: ty3_inference *)
-lemma nta_inference_dec (a) (h) (G) (L) (T): ac_props a →
-      ∨∨ ∃U. ⦃G,L⦄ ⊢ T :[a,h] U
-       | ∀U. (⦃G,L⦄ ⊢ T :[a,h] U → ⊥).
-#a #h #G #L #T #Ha
-elim (cnv_dec … h G L T Ha) -Ha
-[ /3 width=1 by cnv_nta_sn, or_introl/
-| /4 width=2 by nta_fwd_cnv_sn, or_intror/
+(* Notable specifications ***************************************************)
+
+definition apply_top: predicate nat ≝ λn. ⊤.
+
+definition ac_top: ac ≝ mk_ac apply_top.
+
+lemma ac_top_props: ac_props ac_top ≝ mk_ac_props ….
+/3 width=3 by or_introl, ex2_intro/
+qed.
+
+definition ac_eq (k): ac ≝ mk_ac (eq … k).
+
+lemma ac_eq_props (k): ac_props (ac_eq k) ≝ mk_ac_props ….
+#m elim (le_dec m k) #Hm
+[ /3 width=3 by or_introl, ex2_intro/
+| @or_intror * #n #Hmn #H destruct /2 width=1 by/
 ]
-qed-.
+qed.

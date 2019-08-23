@@ -12,24 +12,25 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/dynamic/cnv_eval.ma".
-include "basic_2/dynamic/nta_preserve.ma".
+include "basic_2/rt_computation/cprs_cprs.ma".
+include "basic_2/rt_equivalence/cpes.ma".
 
-(* NATIVE TYPE ASSIGNMENT FOR TERMS *****************************************)
+(* T-BOUND CONTEXT-SENSITIVE PARALLEL RT-EQUIVALENCE FOR TERMS **************)
 
-(* Properties with evaluations for rt-transition on terms *******************)
+(* Properties with t-bound rt-computation on terms **************************)
 
-lemma nta_typecheck_dec (a) (h) (G) (L): ac_props a →
-      ∀T,U. Decidable … (⦃G,L⦄ ⊢ T :[a,h] U).
-/2 width=1 by cnv_dec/ qed-.
+lemma cpes_cprs_trans (h) (n) (G) (L) (T0):
+      ∀T1.  ⦃G,L⦄ ⊢ T1 ⬌*[h,n,0] T0 →
+      ∀T2.  ⦃G,L⦄ ⊢ T0 ➡*[h] T2 → ⦃G,L⦄ ⊢ T1 ⬌*[h,n,0] T2.
+#h #n #G #L #T0 #T1 * #T #HT1 #HT0 #T2 #HT02
+elim (cprs_conf … HT0 … HT02) -T0 #T0 #HT0 #HT20
+/3 width=3 by cpms_div, cpms_cprs_trans/
+qed-.
 
-(* Basic_1: uses: ty3_inference *)
-lemma nta_inference_dec (a) (h) (G) (L) (T): ac_props a →
-      ∨∨ ∃U. ⦃G,L⦄ ⊢ T :[a,h] U
-       | ∀U. (⦃G,L⦄ ⊢ T :[a,h] U → ⊥).
-#a #h #G #L #T #Ha
-elim (cnv_dec … h G L T Ha) -Ha
-[ /3 width=1 by cnv_nta_sn, or_introl/
-| /4 width=2 by nta_fwd_cnv_sn, or_intror/
-]
+lemma cpes_cpms_div (h) (n) (n1) (n2) (G) (L) (T0):
+      ∀T1.  ⦃G,L⦄ ⊢ T1 ⬌*[h,n,n1] T0 →
+      ∀T2.  ⦃G,L⦄ ⊢ T2 ➡*[n2,h] T0 → ⦃G,L⦄ ⊢ T1 ⬌*[h,n,n2+n1] T2.
+#h #n #n1 #n2 #G #L #T0 #T1 * #T #HT1 #HT0 #T2 #HT20
+lapply (cpms_trans … HT20 … HT0) -T0 #HT2
+/2 width=3 by cpms_div/
 qed-.

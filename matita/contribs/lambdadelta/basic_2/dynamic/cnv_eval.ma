@@ -12,9 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_computation/cpue_csx.ma".
-include "basic_2/rt_equivalence/cpes_cprs.ma".
-include "basic_2/dynamic/cnv_cpue.ma".
+include "basic_2/rt_equivalence/cpes_cpes.ma".
+include "basic_2/dynamic/cnv_cpmhe.ma".
 include "basic_2/dynamic/cnv_cpes.ma".
 include "basic_2/dynamic/cnv_preserve_cpes.ma".
 
@@ -22,13 +21,13 @@ include "basic_2/dynamic/cnv_preserve_cpes.ma".
 
 (* main properties with evaluations for rt-transition on terms **************)
 
-theorem cnv_dec (a) (h) (G) (L) (T):
+theorem cnv_dec (a) (h) (G) (L) (T): ac_props a →
         Decidable (⦃G,L⦄ ⊢ T ![a,h]).
-#a #h #G #L #T
+#a #h #G #L #T #Ha
 @(fqup_wf_ind_eq (Ⓣ) … G L T) -G -L -T #G0 #L0 #T0 #IH #G #L * * [|||| * ]
-[ #s #HG #HL #HT destruct -IH
+[ #s #HG #HL #HT destruct -Ha -IH
   /2 width=1 by cnv_sort, or_introl/
-| #i #HG #HL #HT destruct
+| #i #HG #HL #HT destruct -Ha
   elim (drops_F_uni L i) [| * * ]
   [ /3 width=8 by cnv_inv_lref_atom, or_intror/
   | /3 width=9 by cnv_inv_lref_unit, or_intror/
@@ -38,9 +37,9 @@ theorem cnv_dec (a) (h) (G) (L) (T):
     | /4 width=5 by cnv_inv_lref_pair, or_intror/
     ]
   ]
-| #l #HG #HL #HT destruct -IH
+| #l #HG #HL #HT destruct -Ha -IH
   /3 width=6 by cnv_inv_gref, or_intror/
-| #p #I #V #T #HG #HL #HT destruct
+| #p #I #V #T #HG #HL #HT destruct -Ha
   elim (IH G L V) [| -IH | // ] #HV
   [ elim (IH G (L.ⓑ{I}V) T) -IH [3: // ] #HT
     [ /3 width=1 by cnv_bind, or_introl/ ]
@@ -50,56 +49,43 @@ theorem cnv_dec (a) (h) (G) (L) (T):
 | #V #T #HG #HL #HT destruct
   elim (IH G L V) [| -IH #HV | // ]
   [ elim (IH G L T) -IH [| #HT #HV | // ]
-    [ cases a -a [ * [| #a ]] #HT #HV
-      [ @or_intror #H
-        elim (cnv_inv_appl … H) -H #n #p #W #U #H #_ #_ #_ #_
-        /3 width=2 by lt_zero_false, ylt_inv_inj/
-      | elim (cnv_fwd_aaa … HT) #A #HA
-        elim (cpme_total_aaa h a … HA) #X
-        elim (abst_dec X) [ * ]
-        [ #p #W #U #H #HTU destruct
+    [ #HT #HV
+      elim (cnv_R_cpmhe_total … HT) #n #Hn
+      elim (dec_min (R_cpmhe h G L T) … Hn) -Hn
+      [| /2 width=2 by cnv_R_cpmhe_dec/ ] #n0 #_ -n
+      elim (ac_dec … Ha n0) -Ha
+      [ * #n #Hn #Ha * #X0 #HX0 #_
+        elim (abst_dec X0)
+        [ * #p #W #U0 #H destruct
           elim (cnv_cpes_dec … 1 0 … HV W) [ #HVW | #HnVW ]
-          [ elim HTU -HTU #HTU #_
-            /4 width=7 by ylt_inj, cnv_appl_cpes, or_introl/
-          | @or_intror #H
-            elim (cnv_inv_appl_pred_cpes … H) -H #q #W0 #U0 #_ #_ #HVW0 #HTU0
-            elim (cnv_cpme_cpms_conf … HT … HTU0 … HTU) -T #HU0 #_
-            elim (cpms_inv_abst_bi … HU0) -HU0 #_ #HW0 #_ -p -q -U0
-            /3 width=3 by cpes_cprs_trans/
-          | lapply (cnv_cpme_trans … HT … HTU) -T #H
+          [ lapply (cpmhe_fwd_cpms … HX0) -HX0 #HTU0
+            elim (cnv_fwd_cpms_abst_dx_le … HT … HTU0 … Hn) #U #HTU #_ -U0 -n0
+            /3 width=7 by cnv_appl_cpes, or_introl/
+(* Note: argument type mismatch *)
+          | @or_intror #H -n
+            elim (cnv_inv_appl_cpes … H) -H #m0 #q #WX #UX #_ #_ #_ #HVWX #HTUX
+            lapply (cpmhe_abst … HTUX) -HTUX #HTUX
+            elim (cnv_cpmhe_mono … HT … HTUX … HX0) -a -T #H #_
+            elim (cpes_fwd_abst_bi … H) -H #_ #HWX -n0 -m0 -p -q -UX -U0
+            /3 width=3 by cpes_cpes_trans/
+          | lapply (cnv_cpmhe_trans … HT … HX0) -T #H
             elim (cnv_inv_bind … H) -H #HW #_ //
           ]
-        | #HnTU #HTX
+(* Note: no expected type *)
+        | #HnX0
           @or_intror #H
-          elim (cnv_inv_appl_pred_cpes … H) -H #q #W0 #U0 #_ #_ #_ #HTU0
-          elim (cnv_cpme_cpms_conf … HT … HTU0 … HTX) -T #HX #_
-          elim (cpms_inv_abst_sn … HX) -HX #V0 #T0 #_ #_ #H destruct -W0 -U0
+          elim (cnv_inv_appl_cpes … H) -H #m0 #q #W0 #U0 #_ #_ #_ #_ #HTU0
+          lapply (cpmhe_abst … HTU0) -HTU0 #HTU0
+          elim (cnv_cpmhe_mono … HT … HTU0 … HX0) -T #_ #H
+          elim (theq_inv_pair1 … H) -W0 -U0 #W0 #U0 #H destruct
           /2 width=4 by/
         ]
-      | elim (cpue_total_csx h G L T)
-        [| /3 width=2 by cnv_fwd_fsb, fsb_inv_csx/ ] #X
-        elim (abst_dec X) [ * ]
-        [ #p #W #U #H #HTU destruct
-          elim (cnv_cpes_dec … 1 0 … HV W) [ #HVW | #HnVW ]
-          [ elim HTU -HTU #n #HTU #_
-            /3 width=7 by cnv_appl_cpes, or_introl/ 
-          | @or_intror #H
-            elim (cnv_inv_appl_cpes … H) -H #m1 #q #W0 #U0 #_ #_ #_ #HVW0 #HTU0
-            elim (cnv_cpue_cpms_conf … HT … HTU0 … HTU) -m1 -T #X * #m2 #HU0X #_ #HUX
-            elim (tueq_inv_bind1 … HUX) -HUX #X0 #_ #H destruct -U
-            elim (cpms_inv_abst_bi … HU0X) -HU0X #_ #HW0 #_ -p -q -m2 -U0 -X0
-            /3 width=3 by cpes_cprs_trans/
-          | lapply (cnv_cpue_trans … HT … HTU) -T #H
-            elim (cnv_inv_bind … H) -H #HW #_ //
-          ]
-        | #HnTU #HTX
-          @or_intror #H
-          elim (cnv_inv_appl_cpes … H) -H #m1 #q #W0 #U0 #_ #_ #_ #_ #HTU0
-          elim (cnv_cpue_cpms_conf … HT … HTU0 … HTX) -m1 -T #X0 * #m2 #HUX0 #_ #HX0
-          elim (cpms_inv_abst_sn … HUX0) -HUX0 #V0 #T0 #_ #_ #H destruct -m2 -W0 -U0
-          elim (tueq_inv_bind2 … HX0) -HX0 #X0 #_ #H destruct
-          /2 width=4 by/
-        ]
+(* Note: failed applicability *)
+      | #Hge #_ #Hlt
+        @or_intror #H
+        elim (cnv_inv_appl … H) -H #m0 #q #W0 #U0 #Hm0 #_ #_ #_ #HTU0
+        elim (lt_or_ge m0 n0) #H0 [| /3 width=3 by ex2_intro/ ] -Hm0 -Hge
+        /4 width=6 by cpmhe_abst, ex_intro/
       ]
     ]
   ]

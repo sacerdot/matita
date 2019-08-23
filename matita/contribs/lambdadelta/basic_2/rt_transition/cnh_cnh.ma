@@ -12,24 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/dynamic/cnv_eval.ma".
-include "basic_2/dynamic/nta_preserve.ma".
+include "basic_2/rt_transition/cpm.ma".
+include "basic_2/rt_transition/cnh.ma".
 
-(* NATIVE TYPE ASSIGNMENT FOR TERMS *****************************************)
+(* NORMAL TERMS FOR HEAD T-UNUNBOUND RT-TRANSITION **************************)
 
-(* Properties with evaluations for rt-transition on terms *******************)
+(* Advanced properties ******************************************************)
 
-lemma nta_typecheck_dec (a) (h) (G) (L): ac_props a →
-      ∀T,U. Decidable … (⦃G,L⦄ ⊢ T :[a,h] U).
-/2 width=1 by cnv_dec/ qed-.
-
-(* Basic_1: uses: ty3_inference *)
-lemma nta_inference_dec (a) (h) (G) (L) (T): ac_props a →
-      ∨∨ ∃U. ⦃G,L⦄ ⊢ T :[a,h] U
-       | ∀U. (⦃G,L⦄ ⊢ T :[a,h] U → ⊥).
-#a #h #G #L #T #Ha
-elim (cnv_dec … h G L T Ha) -Ha
-[ /3 width=1 by cnv_nta_sn, or_introl/
-| /4 width=2 by nta_fwd_cnv_sn, or_intror/
-]
-qed-.
+axiom cnh_cpm_trans (h) (n) (G) (L):
+      ∀T1,T2. ⦃G,L⦄ ⊢ T1 ➡[n,h] T2 → ⦃G,L⦄ ⊢ ⥲[h] 𝐍⦃T1⦄ → ⦃G,L⦄ ⊢ ⥲[h] 𝐍⦃T2⦄.
+(*
+#h #n #G #L #T1 #T2 #HT1 #n #T2 #HT12 #k #X #HX 
+*)

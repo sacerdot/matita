@@ -12,24 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/dynamic/cnv_eval.ma".
-include "basic_2/dynamic/nta_preserve.ma".
+include "static_2/relocation/lifts.ma".
+include "basic_2/rt_transition/cnh.ma".
 
-(* NATIVE TYPE ASSIGNMENT FOR TERMS *****************************************)
+(* NORMAL TERMS FOR HEAD T-UNUNBOUND RT-TRANSITION **************************)
 
-(* Properties with evaluations for rt-transition on terms *******************)
+(* Advanced properties with uniform relocation for terms ********************)
 
-lemma nta_typecheck_dec (a) (h) (G) (L): ac_props a →
-      ∀T,U. Decidable … (⦃G,L⦄ ⊢ T :[a,h] U).
-/2 width=1 by cnv_dec/ qed-.
-
-(* Basic_1: uses: ty3_inference *)
-lemma nta_inference_dec (a) (h) (G) (L) (T): ac_props a →
-      ∨∨ ∃U. ⦃G,L⦄ ⊢ T :[a,h] U
-       | ∀U. (⦃G,L⦄ ⊢ T :[a,h] U → ⊥).
-#a #h #G #L #T #Ha
-elim (cnv_dec … h G L T Ha) -Ha
-[ /3 width=1 by cnv_nta_sn, or_introl/
-| /4 width=2 by nta_fwd_cnv_sn, or_intror/
+lemma cnh_lref (h) (I) (G) (L):
+      ∀i. ⦃G,L⦄ ⊢ ⥲[h] 𝐍⦃#i⦄ → ⦃G,L.ⓘ{I}⦄ ⊢ ⥲[h] 𝐍⦃#↑i⦄.
+#h #I #G #L #i #Hi #n #X #H
+elim (cpm_inv_lref1 … H) -H *
+[ #H #_ destruct //
+| #J #K #V #HV #HVX #H destruct
+  lapply (Hi … HV) -Hi -HV #HV
+  lapply (theq_inv_lref1 … HV) -HV #H destruct
+  lapply (lifts_inv_lref1_uni … HVX) -HVX #H destruct //
 ]
-qed-.
+qed.

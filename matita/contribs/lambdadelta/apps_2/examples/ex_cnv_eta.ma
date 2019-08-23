@@ -35,12 +35,12 @@ qed.
 lemma vnv_restricted (h) (p): ∀G,L,s. ⦃G,L.ⓛ⋆s.ⓛⓛ{p}⋆s.⋆s.ⓛⓛ{p}⋆s.ⓐ#0.#1⦄ ⊢ ⓐ#2.#0 ![h].
 #h #p #G #L #s
 @(cnv_appl … 1 p … (⋆s) … (ⓐ#0.#2))
-[ /2 width=1 by ylt_inj/
+[ //
 | /4 width=1 by cnv_sort, cnv_zero, cnv_lref/
 | @cnv_zero
   @cnv_bind //
   @(cnv_appl … 1 p … (⋆s) … (⋆s))
-  [ /2 width=1 by ylt_inj/
+  [ //
   | /2 width=1 by cnv_sort, cnv_zero/
   | /4 width=1 by cnv_sort, cnv_zero, cnv_lref, cnv_bind/
   | /2 width=3 by cpms_ell, lifts_sort/

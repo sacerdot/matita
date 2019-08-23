@@ -168,7 +168,7 @@ lemma nta_inv_appl_sn (h) (G) (L) (X2):
       ∃∃p,W,U. ⦃G,L⦄ ⊢ V :[h] W & ⦃G,L⦄ ⊢ T :[h] ⓛ{p}W.U & ⦃G,L⦄ ⊢ ⓐV.ⓛ{p}W.U ⬌*[h] X2 & ⦃G,L⦄ ⊢ X2 ![h].
 #h #G #L #X2 #V #T #H
 elim (cnv_inv_cast … H) -H #X #HX2 #H1 #HX2 #H2
-elim (cnv_inv_appl_pred … H1) #p #W #U #HV #HT #HVW #HTU
+elim (cnv_inv_appl … H1) #n #p #W #U #H <H -n #HV #HT #HVW #HTU
 /5 width=11 by cnv_cpms_nta, cnv_cpms_conf_eq, cpcs_cprs_div, cpms_appl_dx, ex4_3_intro/
 qed-.
 

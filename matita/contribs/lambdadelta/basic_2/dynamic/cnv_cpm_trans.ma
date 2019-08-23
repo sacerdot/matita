@@ -14,9 +14,9 @@
 
 include "ground_2/lib/arith_2b.ma".
 include "basic_2/rt_computation/cprs_cprs.ma".
-include "basic_2/rt_computation/lprs_cpms.ma".
 include "basic_2/dynamic/cnv_drops.ma".
 include "basic_2/dynamic/cnv_preserve_sub.ma".
+include "basic_2/dynamic/cnv_aaa.ma".
 include "basic_2/dynamic/lsubv_cnv.ma".
 
 (* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
@@ -63,13 +63,14 @@ fact cnv_cpm_trans_lpr_aux (a) (h):
     elim (cnv_cpms_strip_lpr_sub … IH2 … HVW1 … HV12 … HL12 … HL12) [|*: /2 width=2 by fqup_fpbg/ ] -HVW1 -HV12
     <minus_n_O <minus_O_n #XW1 #HXW1 #HXV2
     elim (cnv_cpms_strip_lpr_sub … IH2 … HTU1 … HT12 … HL12 … HL12) [|*: /2 width=2 by fqup_fpbg/ ] -HTU1 -HT12
-    #X #H #HTU2 -IH2 -IH1 -L1 -V1 -T1
-    elim (cpms_inv_abst_sn … H) -H #W2 #U2 #HW12 #_ #H destruct
+    #X #H #HTX2 -IH2 -IH1 -L1 -V1 -T1
+    elim (cpms_inv_abst_sn … H) -H #W2 #X2 #HW12 #_ #H destruct
     elim (cprs_conf … HXW1 … HW12) -W1 #W1 #HXW1 #HW21
     lapply (cpms_trans … HXV2 … HXW1) -XW1 <plus_n_O #HV2W1
-    lapply (cpms_trans … HTU2 … (ⓛ{p}W1.U2) ?)
-    [3:|*: /2 width=2 by cpms_bind/ ] -W2 <plus_n_O #HTU2
-    /3 width=7 by cnv_appl, le_ylt_trans/
+    lapply (cpms_trans … HTX2 … (ⓛ{p}W1.X2) ?)
+    [3:|*: /2 width=2 by cpms_bind/ ] -W2 <plus_n_O #HTX2
+    elim (cnv_fwd_cpms_abst_dx_le … HT2 … HTX2 n) -HTX2 [| // ] #U2 #HTU2 #_ -X2
+    /2 width=7 by cnv_appl/
   | #q #V2 #W10 #W20 #T10 #T20 #HV12 #HW120 #HT120 #H1 #H2 destruct
     elim (cnv_inv_bind … HT1) -HT1 #HW10 #HT10
     elim (cpms_inv_abst_sn … HTU1) -HTU1 #W30 #T30 #HW130 #_ #H destruct -T30
@@ -94,15 +95,16 @@ fact cnv_cpm_trans_lpr_aux (a) (h):
     elim (cnv_cpms_strip_lpr_sub … IH2 … HVW1 … HV10 … HL12 … HL12) [|*: /2 width=2 by fqup_fpbg/ ] -HVW1 -HV10
     <minus_n_O <minus_O_n #XW1 #HXW1 #HXV0
     elim (cnv_cpms_strip_lpr_sub … IH2 … HTU0 … HT02 … (L2.ⓓW2) … (L2.ⓓW2)) [|*: /2 width=2 by fqup_fpbg, lpr_pair/ ] -HTU0 -HT02 -HW02
-    #X #H #HTU2 -IH2 -IH1 -L1 -W0 -T0 -U1
-    elim (cpms_inv_abst_sn … H) -H #W #U2 #HW3 #_ #H destruct -U3
+    #X #H #HTX2 -IH2 -IH1 -L1 -W0 -T0 -U1
+    elim (cpms_inv_abst_sn … H) -H #W #X2 #HW3 #_ #H destruct -U3
     lapply (cnv_lifts … HV0 (Ⓣ) … (L2.ⓓW2) … HV02) /3 width=1 by drops_refl, drops_drop/ -HV0 #HV2
     elim (cpms_lifts_sn … HXV0 (Ⓣ) … (L2.ⓓW2) … HV02) /3 width=1 by drops_refl, drops_drop/ -V0 #XW2 #HXW12 #HXVW2
     lapply (cpms_lifts_bi … HXW1 (Ⓣ) … (L2.ⓓW2) … HW13 … HXW12) /3 width=1 by drops_refl, drops_drop/ -W1 -XW1 #HXW32
     elim (cprs_conf … HXW32 … HW3) -W3 #W3 #HXW23 #HW3
     lapply (cpms_trans … HXVW2 … HXW23) -XW2 <plus_n_O #H1
-    lapply (cpms_trans … HTU2 ? (ⓛ{p}W3.U2) ?) [3:|*:/2 width=2 by cpms_bind/ ] -W #H2
-    /4 width=7 by cnv_appl, cnv_bind, le_ylt_trans/
+    lapply (cpms_trans … HTX2 ? (ⓛ{p}W3.X2) ?) [3:|*:/2 width=2 by cpms_bind/ ] -W #H2
+    elim (cnv_fwd_cpms_abst_dx_le … HT2 … H2 n) -H2 [| // ] #U2 #HTU2 #_ -X2
+    /3 width=7 by cnv_appl, cnv_bind/
   ]
 | #W1 #T1 #HG0 #HL0 #HT0 #H1 #x #X #H2 #L2 #HL12 destruct
   elim (cnv_inv_cast … H1) -H1 #U1 #HW1 #HT1 #HWU1 #HTU1

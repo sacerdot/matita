@@ -12,15 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/rt_computation/cpms_cpms.ma".
 include "basic_2/rt_equivalence/cpes.ma".
-include "basic_2/dynamic/cnv_aaa.ma".
+include "basic_2/dynamic/cnv.ma".
 
 (* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
 
 (* Properties with t-bound rt-equivalence for terms *************************)
 
 lemma cnv_appl_cpes (a) (h) (G) (L):
-      ∀n. yinj n < a →
+      ∀n. appl a n →
       ∀V. ⦃G,L⦄ ⊢ V ![a,h] → ∀T. ⦃G,L⦄ ⊢ T ![a,h] →
       ∀W. ⦃G,L⦄ ⊢ V ⬌*[h,1,0] W →
       ∀p,U. ⦃G,L⦄ ⊢ T ➡*[n,h] ⓛ{p}W.U → ⦃G,L⦄ ⊢ ⓐV.T ![a,h].
@@ -38,20 +39,11 @@ qed.
 
 lemma cnv_inv_appl_cpes (a) (h) (G) (L):
       ∀V,T. ⦃G,L⦄ ⊢ ⓐV.T ![a,h] →
-      ∃∃n,p,W,U. yinj n < a & ⦃G,L⦄ ⊢ V ![a,h] & ⦃G,L⦄ ⊢ T ![a,h] &
+      ∃∃n,p,W,U. appl a n & ⦃G,L⦄ ⊢ V ![a,h] & ⦃G,L⦄ ⊢ T ![a,h] &
                  ⦃G,L⦄ ⊢ V ⬌*[h,1,0] W & ⦃G,L⦄ ⊢ T ➡*[n,h] ⓛ{p}W.U.
 #a #h #G #L #V #T #H
 elim (cnv_inv_appl … H) -H #n #p #W #U #Hn #HV #HT #HVW #HTU
 /3 width=7 by cpms_div, ex5_4_intro/
-qed-.
-
-lemma cnv_inv_appl_pred_cpes (a) (h) (G) (L):
-      ∀V,T. ⦃G,L⦄ ⊢ ⓐV.T ![yinj a,h] →
-      ∃∃p,W,U. ⦃G,L⦄ ⊢ V ![a,h] & ⦃G,L⦄ ⊢ T ![a,h] &
-               ⦃G,L⦄ ⊢ V ⬌*[h,1,0] W & ⦃G,L⦄ ⊢ T ➡*[↓a,h] ⓛ{p}W.U.
-#a #h #G #L #V #T #H
-elim (cnv_inv_appl_pred … H) -H #p #W #U #HV #HT #HVW #HTU
-/3 width=7 by cpms_div, ex4_3_intro/
 qed-.
 
 lemma cnv_inv_cast_cpes (a) (h) (G) (L):
@@ -71,7 +63,7 @@ lemma cnv_ind_cpes (a) (h) (Q:relation3 genv lenv term):
       (∀p,I,G,L,V,T. ⦃G,L⦄ ⊢ V![a,h] → ⦃G,L.ⓑ{I}V⦄⊢T![a,h] →
                      Q G L V →Q G (L.ⓑ{I}V) T →Q G L (ⓑ{p,I}V.T)
       ) →
-      (∀n,p,G,L,V,W,T,U. yinj n < a → ⦃G,L⦄ ⊢ V![a,h] → ⦃G,L⦄ ⊢ T![a,h] →
+      (∀n,p,G,L,V,W,T,U. appl a n → ⦃G,L⦄ ⊢ V![a,h] → ⦃G,L⦄ ⊢ T![a,h] →
                          ⦃G,L⦄ ⊢ V ⬌*[h,1,0]W → ⦃G,L⦄ ⊢ T ➡*[n,h] ⓛ{p}W.U →
                          Q G L V → Q G L T → Q G L (ⓐV.T)
       ) →

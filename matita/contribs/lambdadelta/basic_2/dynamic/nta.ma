@@ -20,16 +20,16 @@ include "basic_2/dynamic/cnv.ma".
 (* NATIVE TYPE ASSIGNMENT FOR TERMS *****************************************)
 
 definition nta (a) (h): relation4 genv lenv term term ≝
-                        λG,L,T,U. ⦃G,L⦄ ⊢ ⓝU.T ![a,h].
+           λG,L,T,U. ⦃G,L⦄ ⊢ ⓝU.T ![a,h].
 
 interpretation "native type assignment (term)"
    'Colon a h G L T U = (nta a h G L T U).
 
 interpretation "restricted native type assignment (term)"
-   'Colon h G L T U = (nta (yinj (S (S O))) h G L T U).
+   'Colon h G L T U = (nta (ac_eq (S O)) h G L T U).
 
 interpretation "extended native type assignment (term)"
-   'ColonStar h G L T U = (nta Y h G L T U).
+   'ColonStar h G L T U = (nta ac_top h G L T U).
 
 (* Basic properties *********************************************************)
 

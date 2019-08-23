@@ -12,17 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_computation/cprs_cprs.ma".
-include "basic_2/rt_equivalence/cpes.ma".
+(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-(* T-BOUND CONTEXT-SENSITIVE PARALLEL RT-EQUIVALENCE FOR TERMS **************)
-
-(* Properties with context-sensitive parallel r-computation on terms ********)
-
-lemma cpes_cprs_trans (h) (n) (G) (L) (T0):
-      ∀T1.  ⦃G,L⦄ ⊢ T1 ⬌*[h,n,0] T0 →
-      ∀T2.  ⦃G,L⦄ ⊢ T0 ➡*[h] T2 → ⦃G,L⦄ ⊢ T1 ⬌*[h,n,0] T2.
-#h #n #G #L #T0 #T1 * #T #HT1 #HT0 #T2 #HT02
-elim (cprs_conf … HT0 … HT02) -T0 #T0 #HT0 #HT20
-/3 width=3 by cpms_div, cpms_cprs_trans/
-qed-.
+notation "hvbox( ⦃ term 46 G, break term 46 L ⦄ ⊢ break term 46 T1 ➡* [ break term 46 h, break term 46 n ] 𝐍 *⦃ break term 46 T2 ⦄ )"
+   non associative with precedence 45
+   for @{ 'PRedEvalStar $h $n $G $L $T1 $T2 }.

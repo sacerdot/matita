@@ -1,0 +1,41 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/notation/relations/predevalstar_6.ma".
+include "basic_2/rt_transition/cnu.ma".
+include "basic_2/rt_computation/cpms.ma".
+
+(* T-UNBOUND EVALUATION FOR T-BOUND RT-TRANSITION ON TERMS ******************)
+
+definition cpmue (h) (n) (G) (L): relation2 term term ≝
+           λT1,T2. ∧∧ ⦃G,L⦄ ⊢ T1 ➡*[n,h] T2 & ⦃G,L⦄ ⊢ ⥲[h] 𝐍⦃T2⦄.
+
+interpretation "t-unbound evaluation for t-bound context-sensitive parallel rt-transition (term)"
+   'PRedEvalStar h n G L T1 T2 = (cpmue h n G L T1 T2).
+
+definition R_cpmue (h) (G) (L) (T): predicate nat ≝
+           λn. ∃U. ⦃G,L⦄ ⊢ T ➡*[h,n] 𝐍*⦃U⦄.
+
+(* Basic properties *********************************************************)
+
+lemma cpmue_intro (h) (n) (G) (L):
+      ∀T1,T2. ⦃G,L⦄ ⊢ T1 ➡*[n,h] T2 → ⦃G,L⦄ ⊢ ⥲[h] 𝐍⦃T2⦄ → ⦃G,L⦄ ⊢ T1 ➡*[h,n] 𝐍*⦃T2⦄.
+/2 width=1 by conj/ qed.
+
+(* Basic forward lemmas *****************************************************)
+
+lemma cpmue_fwd_cpms (h) (n) (G) (L):
+      ∀T1,T2. ⦃G,L⦄ ⊢ T1 ➡*[h,n] 𝐍*⦃T2⦄ → ⦃G,L⦄ ⊢ T1 ➡*[n,h] T2.
+#h #n #G #L #T1 #T2 * #HT12 #_ //
+qed-.

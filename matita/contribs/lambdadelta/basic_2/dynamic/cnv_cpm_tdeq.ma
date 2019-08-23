@@ -74,7 +74,7 @@ qed-.
 lemma cpm_tdeq_inv_appl_sn (a) (h) (n) (G) (L):
       ∀V,T1. ⦃G,L⦄ ⊢ ⓐV.T1 ![a,h] →
       ∀X. ⦃G,L⦄ ⊢ ⓐV.T1 ➡[n,h] X → ⓐV.T1 ≛ X →
-      ∃∃m,q,W,U1,T2. yinj m < a & ⦃G,L⦄ ⊢ V ![a,h] & ⦃G,L⦄ ⊢ V ➡*[1,h] W & ⦃G,L⦄ ⊢ T1 ➡*[m,h] ⓛ{q}W.U1
+      ∃∃m,q,W,U1,T2. appl a m & ⦃G,L⦄ ⊢ V ![a,h] & ⦃G,L⦄ ⊢ V ➡*[1,h] W & ⦃G,L⦄ ⊢ T1 ➡*[m,h] ⓛ{q}W.U1
                    & ⦃G,L⦄⊢ T1 ![a,h] & ⦃G,L⦄ ⊢ T1 ➡[n,h] T2 & T1 ≛ T2 & X = ⓐV.T2.
 #a #h #n #G #L #V #T1 #H0 #X #H1 #H2
 elim (cpm_inv_appl1 … H1) -H1 *
@@ -132,7 +132,7 @@ lemma cpm_tdeq_ind (a) (h) (n) (G) (Q:relation3 …):
         ∀T2. ⦃G,L.ⓑ{I}V⦄ ⊢ T1 ➡[n,h] T2 → T1 ≛ T2 →
         Q (L.ⓑ{I}V) T1 T2 → Q L (ⓑ{p,I}V.T1) (ⓑ{p,I}V.T2)
       ) →
-      (∀m. yinj m < a →
+      (∀m. appl a m →
         ∀L,V. ⦃G,L⦄ ⊢ V ![a,h] → ∀W. ⦃G,L⦄ ⊢ V ➡*[1,h] W →
         ∀p,T1,U1. ⦃G,L⦄ ⊢ T1 ➡*[m,h] ⓛ{p}W.U1 → ⦃G,L⦄⊢ T1 ![a,h] →
         ∀T2. ⦃G,L⦄ ⊢ T1 ➡[n,h] T2 → T1 ≛ T2 →

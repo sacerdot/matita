@@ -12,9 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_computation/cpue_csx.ma".
 include "basic_2/rt_conversion/cpce_drops.ma".
-include "basic_2/dynamic/cnv_cpue.ma".
+include "basic_2/dynamic/cnv_cpmhe.ma".
 
 (* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
 
@@ -32,9 +31,10 @@ generalize in match HT1; -HT1
   elim (drops_ldec_dec L i) [ * #K #W #HLK | -H1i -IH #HnX ]
   [ lapply (cnv_inv_lref_pair … H2i … HLK) -H2i #H2W
     lapply (csx_inv_lref_pair_drops … HLK H1i) -H1i #H1W
-    elim (cpue_total_csx … H1W) -H1W #X
+    elim (cpmhe_total_csx … H1W) -H1W #X #n #HWX
     elim (abst_dec X) [ * | -IH ]
-    [ #p #V1 #U #H destruct * #n #HWU #_
+    [ #p #V1 #U #H destruct
+      lapply (cpmhe_fwd_cpms … HWX) -HWX #HWX
       elim (IH G K V1) -IH
       [ #V2 #HV12
         elim (lifts_total V2 (𝐔❴↑i❵)) #W2 #HVW2
@@ -42,13 +42,13 @@ generalize in match HT1; -HT1
       | /3 width=6 by  cnv_cpms_trans, cnv_fwd_pair_sn/
       | /4 width=6 by fqup_cpms_fwd_fpbg, fpbg_fqu_trans, fqup_lref/
       ]
-    | #HnX #HWX
+    | #HnX
       @(ex_intro … (#i))
       @cpce_zero_drops #n0 #p #K0 #W0 #V0 #U0 #HLK0 #HWU0
       lapply (drops_mono … HLK0 … HLK) -i -L #H destruct
-      elim (cnv_cpue_cpms_conf … H2W … HWU0 … HWX) -n0 -W #X0 * #n0 #HUX0 #_ #HX0
-      elim (cpms_inv_abst_sn … HUX0) -HUX0 #V1 #U1 #_ #_ #H destruct -n0 -K -V0 -U0
-      elim (tueq_inv_bind2 … HX0) -HX0 #U0 #_ #H destruct -U1
+      lapply (cpmhe_abst … HWU0) -HWU0 #HWU0
+      elim (cnv_cpmhe_mono … H2W … HWU0 … HWX) #_ #H -a -n -n0 -W
+      elim (theq_inv_pair1 … H) -V0 -U0 #V0 #U0 #H destruct
       /2 width=4 by/
     ]
   | /5 width=3 by cpce_zero_drops, ex1_2_intro, ex_intro/

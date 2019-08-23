@@ -12,24 +12,30 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/dynamic/cnv_eval.ma".
-include "basic_2/dynamic/nta_preserve.ma".
+include "basic_2/rt_transition/cpm_cpx.ma".
+include "basic_2/rt_transition/cnu_tdeq.ma".
+include "basic_2/rt_computation/csx.ma".
+include "basic_2/rt_computation/cpmue.ma".
 
-(* NATIVE TYPE ASSIGNMENT FOR TERMS *****************************************)
+(* T-UNBOUND EVALUATION FOR T-BOUND RT-TRANSITION ON TERMS ******************)
 
-(* Properties with evaluations for rt-transition on terms *******************)
+(* Properties with strong normalization for unbound rt-transition for terms *)
 
-lemma nta_typecheck_dec (a) (h) (G) (L): ac_props a →
-      ∀T,U. Decidable … (⦃G,L⦄ ⊢ T :[a,h] U).
-/2 width=1 by cnv_dec/ qed-.
-
-(* Basic_1: uses: ty3_inference *)
-lemma nta_inference_dec (a) (h) (G) (L) (T): ac_props a →
-      ∨∨ ∃U. ⦃G,L⦄ ⊢ T :[a,h] U
-       | ∀U. (⦃G,L⦄ ⊢ T :[a,h] U → ⊥).
-#a #h #G #L #T #Ha
-elim (cnv_dec … h G L T Ha) -Ha
-[ /3 width=1 by cnv_nta_sn, or_introl/
-| /4 width=2 by nta_fwd_cnv_sn, or_intror/
+lemma cpmue_total_csx (h) (G) (L):
+      ∀T1. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃T1⦄ → ∃∃T2,n. ⦃G,L⦄ ⊢ T1 ➡*[h,n] 𝐍*⦃T2⦄.
+#h #G #L #T1 #H
+@(csx_ind … H) -T1 #T1 #_ #IHT1
+elim (cnu_dec_tdeq h G L T1)
+[ -IHT1 #HT1 /3 width=4 by cpmue_intro, ex1_2_intro/
+| * #n1 #T0 #HT10 #HnT10
+  elim (IHT1 … HnT10) -IHT1 -HnT10 [| /2 width=2 by cpm_fwd_cpx/ ]
+  #T2 #n2 * #HT02 #HT2 /4 width=5 by cpms_step_sn, cpmue_intro, ex1_2_intro/
 ]
+qed-.
+
+lemma R_cpmue_total_csx (h) (G) (L):
+      ∀T1. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃T1⦄ → ∃n. R_cpmue h G L T1 n.
+#h #G #L #T1 #H
+elim (cpmue_total_csx … H) -H #T2 #n #HT12
+/3 width=3 by ex_intro (* 2x *)/
 qed-.

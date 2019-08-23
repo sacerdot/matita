@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/ynat/ynat_lt.ma".
+include "static_2/syntax/ac.ma".
 include "basic_2/notation/relations/exclaim_5.ma".
 include "basic_2/notation/relations/exclaim_4.ma".
 include "basic_2/notation/relations/exclaimstar_4.ma".
@@ -22,12 +22,12 @@ include "basic_2/rt_computation/cpms.ma".
 
 (* activate genv *)
 (* Basic_2A1: uses: snv *)
-inductive cnv (a:ynat) (h): relation3 genv lenv term ≝
+inductive cnv (a) (h): relation3 genv lenv term ≝
 | cnv_sort: ∀G,L,s. cnv a h G L (⋆s)
 | cnv_zero: ∀I,G,K,V. cnv a h G K V → cnv a h G (K.ⓑ{I}V) (#0)
 | cnv_lref: ∀I,G,K,i. cnv a h G K (#i) → cnv a h G (K.ⓘ{I}) (#↑i)
 | cnv_bind: ∀p,I,G,L,V,T. cnv a h G L V → cnv a h G (L.ⓑ{I}V) T → cnv a h G L (ⓑ{p,I}V.T)
-| cnv_appl: ∀n,p,G,L,V,W0,T,U0. yinj n < a → cnv a h G L V → cnv a h G L T →
+| cnv_appl: ∀n,p,G,L,V,W0,T,U0. appl a n → cnv a h G L V → cnv a h G L T →
             ⦃G,L⦄ ⊢ V ➡*[1,h] W0 → ⦃G,L⦄ ⊢ T ➡*[n,h] ⓛ{p}W0.U0 → cnv a h G L (ⓐV.T)
 | cnv_cast: ∀G,L,U,T,U0. cnv a h G L U → cnv a h G L T →
             ⦃G,L⦄ ⊢ U ➡*[h] U0 → ⦃G,L⦄ ⊢ T ➡*[1,h] U0 → cnv a h G L (ⓝU.T)
@@ -37,10 +37,10 @@ interpretation "context-sensitive native validity (term)"
    'Exclaim a h G L T = (cnv a h G L T).
 
 interpretation "context-sensitive restricted native validity (term)"
-   'Exclaim h G L T = (cnv (yinj (S (S O))) h G L T).
+   'Exclaim h G L T = (cnv (ac_eq (S O)) h G L T).
 
 interpretation "context-sensitive extended native validity (term)"
-   'ExclaimStar h G L T = (cnv Y h G L T).
+   'ExclaimStar h G L T = (cnv ac_top h G L T).
 
 (* Basic inversion lemmas ***************************************************)
 
@@ -117,7 +117,7 @@ lemma cnv_inv_bind (a) (h):
 
 fact cnv_inv_appl_aux (a) (h):
      ∀G,L,X. ⦃G,L⦄ ⊢ X ![a,h] → ∀V,T. X = ⓐV.T →
-     ∃∃n,p,W0,U0. yinj n < a & ⦃G,L⦄ ⊢ V ![a,h] & ⦃G,L⦄ ⊢ T ![a,h] &
+     ∃∃n,p,W0,U0. appl a n & ⦃G,L⦄ ⊢ V ![a,h] & ⦃G,L⦄ ⊢ T ![a,h] &
                   ⦃G,L⦄ ⊢ V ➡*[1,h] W0 & ⦃G,L⦄ ⊢ T ➡*[n,h] ⓛ{p}W0.U0.
 #a #h #G #L #X * -L -X
 [ #G #L #s #X1 #X2 #H destruct
@@ -132,7 +132,7 @@ qed-.
 (* Basic_2A1: uses: snv_inv_appl *)
 lemma cnv_inv_appl (a) (h):
       ∀G,L,V,T. ⦃G,L⦄ ⊢ ⓐV.T ![a,h] →
-      ∃∃n,p,W0,U0. yinj n < a & ⦃G,L⦄ ⊢ V ![a,h] & ⦃G,L⦄ ⊢ T ![a,h] &
+      ∃∃n,p,W0,U0. appl a n & ⦃G,L⦄ ⊢ V ![a,h] & ⦃G,L⦄ ⊢ T ![a,h] &
                    ⦃G,L⦄ ⊢ V ➡*[1,h] W0 & ⦃G,L⦄ ⊢ T ➡*[n,h] ⓛ{p}W0.U0.
 /2 width=3 by cnv_inv_appl_aux/ qed-.
 

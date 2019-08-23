@@ -102,6 +102,10 @@ table {
    ]
    class "red"
    [ { "syntax" * } {
+        [ { "applicability condition" * } {
+             [ [ "properties" ] "ac" * ]
+          }
+        ]   
         [ { "equivalence up to exclusion binders" * } {
              [ [ "for lenvs" ] "lveq" + "( ? ≋ⓧ*[?,?] ? )" "lveq_length" + "lveq_lveq" * ]
           }
@@ -111,12 +115,8 @@ table {
              [ [ "for lenvs" ] "append" + "( ? + ? )" "append_length" * ]
           }
         ]
-        [ { "head equivalence" * } {
+        [ { "sort-irrelevant head equivalence" * } {
              [ [ "for terms" ] "theq" + "( ? ⩳ ? )" "theq_simple" + "theq_tdeq" + "theq_theq" + "theq_simple_vector" * ]
-          }
-        ]
-        [ { "tail sort-irrelevant equivalence" * } {
-             [ [ "" ] "tueq" + "( ? ≅ ? )" "tueq_tueq" * ]
           }
         ]
         [ { "sort-irrelevant equivalence" * } {
