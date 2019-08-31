@@ -12,15 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_transition/cpm_simple.ma".
-include "basic_2/rt_transition/cnh.ma".
+include "static_2/syntax/term_vector.ma".
+include "static_2/syntax/toeq_simple.ma".
 
-(* NORMAL TERMS HEAD FOR T-UNUNBOUND RT-TRANSITION **************************)
+(* SORT-IRRELEVANT OUTER EQUIVALENCE FOR TERMS ******************************)
 
-(* Advanced properties with simple terms ************************************)
+(* Advanced inversion lemmas with simple (neutral) terms ********************)
 
-lemma cnh_appl_simple (h) (G) (L): ∀V,T. 𝐒⦃T⦄ → ⦃G,L⦄ ⊢ ⥲[h] 𝐍⦃ⓐV.T⦄.
-#h #G #L #V1 #T1 #HT1 #n #X #H
-elim (cpm_inv_appl1_simple … H HT1) -H -HT1 #V2 #T2 #_ #_ #H destruct
-/1 width=1 by theq_pair/
-qed.
+(* Basic_1: was only: iso_flats_lref_bind_false iso_flats_flat_bind_false *)
+(* Basic_2A1: was: tsts_inv_bind_applv_simple *)
+lemma toeq_inv_applv_bind_simple (p) (I):
+      ∀Vs,V2,T1,T2. ⒶVs.T1 ⩳ ⓑ{p,I}V2.T2 → 𝐒⦃T1⦄ → ⊥.
+#p #I #Vs #V2 #T1 #T2 #H elim (toeq_inv_pair2 … H) -H
+#V0 #T0 elim Vs -Vs normalize
+[ #H destruct #H /2 width=5 by simple_inv_bind/
+| #V #Vs #_ #H destruct
+]
+qed-.

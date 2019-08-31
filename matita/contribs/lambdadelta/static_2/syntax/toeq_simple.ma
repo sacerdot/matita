@@ -12,8 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
+include "static_2/syntax/term_simple.ma".
+include "static_2/syntax/toeq.ma".
 
-notation "hvbox( ⦃ term 46 G, break term 46 L ⦄ ⊢ break term 46 T1 ➡* [ break term 46 h, break term 46 n ] 𝐍 *⦃ break term 46 T2 ⦄ )"
-   non associative with precedence 45
-   for @{ 'PRedEvalStar $h $n $G $L $T1 $T2 }.
+(* SORT-IRRELEVANT OUTER EQUIVALENCE FOR TERMS ******************************)
+
+(* Properies with simple (neutral) terms ************************************)
+
+(* Basic_2A1: was: simple_tsts_repl_dx *)
+lemma simple_toeq_repl_dx: ∀T1,T2. T1 ⩳ T2 → 𝐒⦃T1⦄ → 𝐒⦃T2⦄.
+#T1 #T2 * -T1 -T2 //
+#I #V1 #V2 #T1 #T2 #H
+elim (simple_inv_pair … H) -H #J #H destruct //
+qed-.
+
+(* Basic_2A1: was: simple_tsts_repl_sn *)
+lemma simple_toeq_repl_sn: ∀T1,T2. T1 ⩳ T2 → 𝐒⦃T2⦄ → 𝐒⦃T1⦄.
+/3 width=3 by simple_toeq_repl_dx, toeq_sym/ qed-.

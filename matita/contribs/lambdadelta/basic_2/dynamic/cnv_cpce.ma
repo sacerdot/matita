@@ -12,8 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/rt_computation/cpmuwe_cpmuwe.ma".
 include "basic_2/rt_conversion/cpce_drops.ma".
-include "basic_2/dynamic/cnv_cpmhe.ma".
+include "basic_2/dynamic/cnv_cpmuwe.ma".
 
 (* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
 
@@ -31,10 +32,10 @@ generalize in match HT1; -HT1
   elim (drops_ldec_dec L i) [ * #K #W #HLK | -H1i -IH #HnX ]
   [ lapply (cnv_inv_lref_pair … H2i … HLK) -H2i #H2W
     lapply (csx_inv_lref_pair_drops … HLK H1i) -H1i #H1W
-    elim (cpmhe_total_csx … H1W) -H1W #X #n #HWX
+    elim (cpmuwe_total_csx … H1W) -H1W #X #n #HWX
     elim (abst_dec X) [ * | -IH ]
     [ #p #V1 #U #H destruct
-      lapply (cpmhe_fwd_cpms … HWX) -HWX #HWX
+      lapply (cpmuwe_fwd_cpms … HWX) -HWX #HWX
       elim (IH G K V1) -IH
       [ #V2 #HV12
         elim (lifts_total V2 (𝐔❴↑i❵)) #W2 #HVW2
@@ -46,9 +47,9 @@ generalize in match HT1; -HT1
       @(ex_intro … (#i))
       @cpce_zero_drops #n0 #p #K0 #W0 #V0 #U0 #HLK0 #HWU0
       lapply (drops_mono … HLK0 … HLK) -i -L #H destruct
-      lapply (cpmhe_abst … HWU0) -HWU0 #HWU0
-      elim (cnv_cpmhe_mono … H2W … HWU0 … HWX) #_ #H -a -n -n0 -W
-      elim (theq_inv_pair1 … H) -V0 -U0 #V0 #U0 #H destruct
+      lapply (cpmuwe_abst … HWU0) -HWU0 #HWU0
+      elim (cnv_cpmuwe_mono … H2W … HWU0 … HWX) #_ #H -a -n -n0 -W
+      elim (tweq_inv_abst_sn … H) -V0 -U0 #V0 #U0 #H destruct
       /2 width=4 by/
     ]
   | /5 width=3 by cpce_zero_drops, ex1_2_intro, ex_intro/

@@ -12,15 +12,29 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_transition/cpm.ma".
-include "basic_2/rt_transition/cnh.ma".
+include "static_2/syntax/toeq.ma".
 
-(* NORMAL TERMS FOR HEAD T-UNUNBOUND RT-TRANSITION **************************)
+(* SORT-IRRELEVANT OUTER EQUIVALENCE FOR TERMS ******************************)
 
-(* Advanced properties ******************************************************)
+(* Main properties **********************************************************)
 
-axiom cnh_cpm_trans (h) (n) (G) (L):
-      ∀T1,T2. ⦃G,L⦄ ⊢ T1 ➡[n,h] T2 → ⦃G,L⦄ ⊢ ⥲[h] 𝐍⦃T1⦄ → ⦃G,L⦄ ⊢ ⥲[h] 𝐍⦃T2⦄.
-(*
-#h #n #G #L #T1 #T2 #HT1 #n #T2 #HT12 #k #X #HX 
-*)
+(* Basic_1: was: iso_trans *)
+(* Basic_2A1: was: tsts_trans *)
+theorem toeq_trans: Transitive … toeq.
+#T1 #T * -T1 -T
+[ #s1 #s #X #H
+  elim (toeq_inv_sort1 … H) -s /2 width=1 by toeq_sort/
+| #i1 #i #H <(toeq_inv_lref1 … H) -H //
+| #l1 #l #H <(toeq_inv_gref1 … H) -H //
+| #I #V1 #V #T1 #T #X #H
+  elim (toeq_inv_pair1 … H) -H #V2 #T2 #H destruct //
+]
+qed-.
+
+(* Basic_2A1: was: tsts_canc_sn *)
+theorem toeq_canc_sn: left_cancellable … toeq.
+/3 width=3 by toeq_trans, toeq_sym/ qed-.
+
+(* Basic_2A1: was: tsts_canc_dx *)
+theorem toeq_canc_dx: right_cancellable … toeq.
+/3 width=3 by toeq_trans, toeq_sym/ qed-.

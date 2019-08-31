@@ -13,7 +13,6 @@
 (**************************************************************************)
 
 include "basic_2/rt_computation/cprs_cprs.ma".
-include "basic_2/rt_computation/lprs_cpms.ma".
 include "basic_2/dynamic/cnv_aaa.ma".
 include "basic_2/dynamic/nta.ma".
 

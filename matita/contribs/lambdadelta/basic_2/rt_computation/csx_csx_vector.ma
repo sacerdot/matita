@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_computation/cpxs_theq_vector.ma".
-include "basic_2/rt_computation/csx_simple_theq.ma".
+include "basic_2/rt_computation/cpxs_toeq_vector.ma".
+include "basic_2/rt_computation/csx_simple_toeq.ma".
 include "basic_2/rt_computation/csx_lsubr.ma".
 include "basic_2/rt_computation/csx_lpx.ma".
 include "basic_2/rt_computation/csx_vector.ma".
@@ -30,7 +30,7 @@ lemma csx_applv_beta (h) (G):
 #V0 #Vs #IHV #V #W #T #H1T
 lapply (csx_fwd_pair_sn … H1T) #HV0
 lapply (csx_fwd_flat_dx … H1T) #H2T
-@csx_appl_simple_theq /2 width=1 by applv_simple, simple_flat/ -IHV -HV0 -H2T
+@csx_appl_simple_toeq /2 width=1 by applv_simple, simple_flat/ -IHV -HV0 -H2T
 #X #H #H0
 elim (cpxs_fwd_beta_vector … H) -H #H
 [ -H1T elim H0 -H0 //
@@ -47,7 +47,7 @@ lemma csx_applv_delta_drops (h) (G):
 | #V #Vs #IHV #H1T
   lapply (csx_fwd_pair_sn … H1T) #HV
   lapply (csx_fwd_flat_dx … H1T) #H2T
-  @csx_appl_simple_theq /2 width=1 by applv_simple, simple_atom/ -IHV -HV  -H2T
+  @csx_appl_simple_toeq /2 width=1 by applv_simple, simple_atom/ -IHV -HV  -H2T
   #X #H #H0
   elim (cpxs_fwd_delta_drops_vector … HLK … HV12 … H) -HLK -HV12 -H #H
   [ -H1T elim H0 -H0 //
@@ -68,7 +68,7 @@ elim H -V1b -V2b /2 width=3 by csx_appl_theta/
 lapply (csx_appl_theta … H … HW12) -H -HW12 #H
 lapply (csx_fwd_pair_sn … H) #HW1
 lapply (csx_fwd_flat_dx … H) #H1
-@csx_appl_simple_theq /2 width=3 by simple_flat/ -IHV12b -HW1 -H1 #X #H1 #H2
+@csx_appl_simple_toeq /2 width=3 by simple_flat/ -IHV12b -HW1 -H1 #X #H1 #H2
 elim (cpxs_fwd_theta_vector … (V2⨮V2b) … H1) -H1 /2 width=1 by liftsv_cons/ -HV12b -HV12
 [ -H #H elim H2 -H2 //
 | -H2 /3 width=5 by csx_cpxs_trans, cpxs_flat_dx/
@@ -84,7 +84,7 @@ lemma csx_applv_cast (h) (G):
 lapply (csx_fwd_pair_sn … H1U) #HV
 lapply (csx_fwd_flat_dx … H1U) #H2U
 lapply (csx_fwd_flat_dx … H1T) #H2T
-@csx_appl_simple_theq /2 width=1 by applv_simple, simple_flat/ -IHV -HV -H2U -H2T
+@csx_appl_simple_toeq /2 width=1 by applv_simple, simple_flat/ -IHV -HV -H2U -H2T
 #X #H #H0
 elim (cpxs_fwd_cast_vector … H) -H #H
 [ -H1U -H1T elim H0 -H0 //

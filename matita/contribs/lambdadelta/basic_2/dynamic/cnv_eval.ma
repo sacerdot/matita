@@ -12,8 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/rt_computation/cpmuwe_cpmuwe.ma".
 include "basic_2/rt_equivalence/cpes_cpes.ma".
-include "basic_2/dynamic/cnv_cpmhe.ma".
+include "basic_2/dynamic/cnv_cpmuwe.ma".
 include "basic_2/dynamic/cnv_cpes.ma".
 include "basic_2/dynamic/cnv_preserve_cpes.ma".
 
@@ -50,34 +51,34 @@ theorem cnv_dec (a) (h) (G) (L) (T): ac_props a →
   elim (IH G L V) [| -IH #HV | // ]
   [ elim (IH G L T) -IH [| #HT #HV | // ]
     [ #HT #HV
-      elim (cnv_R_cpmhe_total … HT) #n #Hn
-      elim (dec_min (R_cpmhe h G L T) … Hn) -Hn
-      [| /2 width=2 by cnv_R_cpmhe_dec/ ] #n0 #_ -n
+      elim (cnv_R_cpmuwe_total … HT) #n #Hn
+      elim (dec_min (R_cpmuwe h G L T) … Hn) -Hn
+      [| /2 width=2 by cnv_R_cpmuwe_dec/ ] #n0 #_ -n
       elim (ac_dec … Ha n0) -Ha
       [ * #n #Hn #Ha * #X0 #HX0 #_
         elim (abst_dec X0)
         [ * #p #W #U0 #H destruct
           elim (cnv_cpes_dec … 1 0 … HV W) [ #HVW | #HnVW ]
-          [ lapply (cpmhe_fwd_cpms … HX0) -HX0 #HTU0
+          [ lapply (cpmuwe_fwd_cpms … HX0) -HX0 #HTU0
             elim (cnv_fwd_cpms_abst_dx_le … HT … HTU0 … Hn) #U #HTU #_ -U0 -n0
             /3 width=7 by cnv_appl_cpes, or_introl/
 (* Note: argument type mismatch *)
           | @or_intror #H -n
             elim (cnv_inv_appl_cpes … H) -H #m0 #q #WX #UX #_ #_ #_ #HVWX #HTUX
-            lapply (cpmhe_abst … HTUX) -HTUX #HTUX
-            elim (cnv_cpmhe_mono … HT … HTUX … HX0) -a -T #H #_
+            lapply (cpmuwe_abst … HTUX) -HTUX #HTUX
+            elim (cnv_cpmuwe_mono … HT … HTUX … HX0) -a -T #H #_
             elim (cpes_fwd_abst_bi … H) -H #_ #HWX -n0 -m0 -p -q -UX -U0
             /3 width=3 by cpes_cpes_trans/
-          | lapply (cnv_cpmhe_trans … HT … HX0) -T #H
+          | lapply (cnv_cpmuwe_trans … HT … HX0) -T #H
             elim (cnv_inv_bind … H) -H #HW #_ //
           ]
 (* Note: no expected type *)
         | #HnX0
           @or_intror #H
           elim (cnv_inv_appl_cpes … H) -H #m0 #q #W0 #U0 #_ #_ #_ #_ #HTU0
-          lapply (cpmhe_abst … HTU0) -HTU0 #HTU0
-          elim (cnv_cpmhe_mono … HT … HTU0 … HX0) -T #_ #H
-          elim (theq_inv_pair1 … H) -W0 -U0 #W0 #U0 #H destruct
+          lapply (cpmuwe_abst … HTU0) -HTU0 #HTU0
+          elim (cnv_cpmuwe_mono … HT … HTU0 … HX0) -T #_ #H
+          elim (tweq_inv_abst_sn … H) -W0 -U0 #W0 #U0 #H destruct
           /2 width=4 by/
         ]
 (* Note: failed applicability *)
@@ -85,7 +86,7 @@ theorem cnv_dec (a) (h) (G) (L) (T): ac_props a →
         @or_intror #H
         elim (cnv_inv_appl … H) -H #m0 #q #W0 #U0 #Hm0 #_ #_ #_ #HTU0
         elim (lt_or_ge m0 n0) #H0 [| /3 width=3 by ex2_intro/ ] -Hm0 -Hge
-        /4 width=6 by cpmhe_abst, ex_intro/
+        /4 width=6 by cpmuwe_abst, ex_intro/
       ]
     ]
   ]

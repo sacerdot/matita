@@ -19,8 +19,8 @@ include "basic_2/rt_transition/cpr_drops_basic.ma".
 
 (* Properties with context-free sort-irrelevant equivalence *****************)
 
-lemma cpr_abbr_pos (h) (G) (L) (V) (T1):
-                   ∃∃T2. ⦃G,L⦄ ⊢ +ⓓV.T1 ➡[h] T2 & (+ⓓV.T1 ≛ T2 → ⊥).
+lemma cpr_abbr_pos_tdneq (h) (G) (L) (V) (T1):
+      ∃∃T2. ⦃G,L⦄ ⊢ +ⓓV.T1 ➡[h] T2 & (+ⓓV.T1 ≛ T2 → ⊥).
 #h #G #L #V #U1
 elim (cpr_subst h G (L.ⓓV) U1 … 0) [|*: /2 width=4 by drops_refl/ ] #U2 #T2 #HU12 #HTU2
 elim (tdeq_dec U1 U2) [ -HU12 #HU12 | -HTU2 #HnU12 ]

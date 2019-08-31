@@ -12,20 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/syntax/term_vector.ma".
-include "static_2/syntax/theq_simple.ma".
+include "static_2/syntax/term_simple.ma".
+include "static_2/syntax/tweq.ma".
 
-(* HEAD EQUIVALENCE FOR TERMS ***********************************************)
+(* SORT-IRRELEVANT WHD EQUIVALENCE ON TERMS *********************************)
 
-(* Advanced inversion lemmas with simple (neutral) terms ********************)
+(* Properties with simple terms *********************************************)
 
-(* Basic_1: was only: iso_flats_lref_bind_false iso_flats_flat_bind_false *)
-(* Basic_2A1: was: tsts_inv_bind_applv_simple *)
-lemma theq_inv_applv_bind_simple (p) (I):
-      ∀Vs,V2,T1,T2. ⒶVs.T1 ⩳ ⓑ{p,I}V2.T2 → 𝐒⦃T1⦄ → ⊥.
-#p #I #Vs #V2 #T1 #T2 #H elim (theq_inv_pair2 … H) -H
-#V0 #T0 elim Vs -Vs normalize
-[ #H destruct #H /2 width=5 by simple_inv_bind/
-| #V #Vs #_ #H destruct
+lemma tweq_simple_trans:
+      ∀T1,T2. T1 ≅ T2 → 𝐒⦃T1⦄ → 𝐒⦃T2⦄.
+#T1 #T2 * -T1 -T2
+[4,5: #p #V1 #V2 #T1 #T2 [ #_ ] #H
+      elim (simple_inv_bind … H)
+|*  : /1 width=1 by simple_atom, simple_flat/
 ]
 qed-.

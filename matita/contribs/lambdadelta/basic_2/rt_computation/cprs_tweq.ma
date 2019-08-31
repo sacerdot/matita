@@ -12,13 +12,24 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/syntax/tdeq.ma".
-include "static_2/syntax/theq.ma".
+include "static_2/syntax/tweq_tweq.ma".
+include "static_2/relocation/lifts_tweq.ma".
+include "basic_2/rt_transition/cpr_drops_basic.ma".
+include "basic_2/rt_computation/cpms.ma".
 
-(* HEAD EQUIVALENCE FOR TERMS ***********************************************)
+(* CONTEXT-SENSITIVE PARALLEL R-COMPUTATION FOR TERMS ***********************)
 
-(* Properties with sort-irrelevant equivalence for terms ********************)
+(* Properties with sort-irrelevant whd equivalence on terms *****************)
 
-lemma tdeq_theq: ∀T1,T2. T1 ≛ T2 → T1 ⩳ T2.
-#T1 #T2 * -T1 -T2 /2 width=1 by theq_sort, theq_pair/
-qed.
+lemma cprs_abbr_pos_twneq (h) (G) (L) (V) (T1):
+      ∃∃T2. ⦃G,L⦄ ⊢ +ⓓV.T1 ➡*[h] T2 & (+ⓓV.T1 ≅ T2 → ⊥).
+#h #G #L #V #U1
+elim (cpr_subst h G (L.ⓓV) U1 … 0) [|*: /2 width=4 by drops_refl/ ] #U2 #T2 #HU12 #HTU2
+elim (tweq_dec U1 U2) [ #HpU12 | -HTU2 #HnU12 ]
+[ @(ex2_intro … T2) (**) (* full auto not tried *)
+  [ /3 width=6 by cpms_zeta, cpms_step_sn, cpm_bind/
+  | /4 width=6 by tweq_inv_abbr_pos_sn_X_lifts_Y_Y, tweq_canc_sn, tweq_abbr_pos/
+  ]
+| /4 width=3 by cpm_cpms, cpm_bind, tweq_inv_abbr_pos_bi, ex2_intro/
+]
+qed-.
