@@ -28,7 +28,7 @@ elim (cpr_subst h G (L.ⓓV) U1 … 0) [|*: /2 width=4 by drops_refl/ ] #U2 #T2 
 elim (tweq_dec U1 U2) [ #HpU12 | -HTU2 #HnU12 ]
 [ @(ex2_intro … T2) (**) (* full auto not tried *)
   [ /3 width=6 by cpms_zeta, cpms_step_sn, cpm_bind/
-  | /4 width=6 by tweq_inv_abbr_pos_sn_X_lifts_Y_Y, tweq_canc_sn, tweq_abbr_pos/
+  | /4 width=6 by tweq_inv_abbr_pos_x_lifts_y_y, tweq_canc_sn, tweq_abbr_pos/
   ]
 | /4 width=3 by cpm_cpms, cpm_bind, tweq_inv_abbr_pos_bi, ex2_intro/
 ]

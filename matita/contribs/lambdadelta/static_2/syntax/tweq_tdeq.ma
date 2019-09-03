@@ -12,16 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_computation/cpms_cpms.ma".
-include "basic_2/rt_computation/cpre.ma".
+include "static_2/syntax/tdeq.ma".
+include "static_2/syntax/tweq.ma".
 
-(* EVALUATION FOR CONTEXT-SENSITIVE PARALLEL R-TRANSITION ON TERMS **********)
+(* SORT-IRRELEVANT WHD EQUIVALENCE ON TERMS *********************************)
 
-(* Properties with t-bound rt-computarion on terms **************************)
+(* Properties with sort-irrelevant equivalence for terms ********************)
 
-lemma cpms_cpre_trans (h) (n) (G) (L):
-      ∀T1,T0. ⦃G,L⦄ ⊢T1 ➡*[n,h] T0 →
-      ∀T2. ⦃G,L⦄ ⊢ T0 ➡*[h] 𝐍⦃T2⦄ → ⦃G,L⦄ ⊢ T1 ➡*[h,n] 𝐍⦃T2⦄.
-#h #n #G #L #T1 #T0 #HT10 #T2 * #HT02 #HT2
-/3 width=3 by cpms_cprs_trans, cpme_intro/
-qed-.
+lemma tdeq_tweq: ∀T1,T2. T1 ≛ T2 → T1 ≅ T2.
+#T1 #T2 #H elim H -T1 -T2 [||| * [ #p ] * #V1 #V2 #T1 #T2 #_ #_ #IHV #IHT ]
+[ /1 width=1 by tweq_sort/
+| /1 width=1 by tweq_lref/
+| /1 width=1 by tweq_gref/
+| cases p -p /2 width=1 by tweq_abbr_pos, tweq_abbr_neg/  
+| /1 width=1 by tweq_abst/
+| /2 width=1 by tweq_appl/
+| /2 width=1 by tweq_cast/
+]
+qed.

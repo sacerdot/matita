@@ -96,7 +96,7 @@ lemma tweq_inv_lifts_bi: deliftable2_bi tweq.
 ]
 qed-.
 
-lemma tweq_inv_abbr_pos_sn_X_lifts_Y_Y (T) (f:rtmap):
+lemma tweq_inv_abbr_pos_x_lifts_y_y (T) (f:rtmap):
       ∀V,U. +ⓓV.U ≅ T → ⬆*[f]T ≘ U → ⊥.
 @(f_ind … tw) #n #IH #T #Hn #f #V #U #H1 #H2 destruct
 elim (tweq_inv_abbr_pos_sn … H1) -H1 #X1 #X2 #HX2 #H destruct -V

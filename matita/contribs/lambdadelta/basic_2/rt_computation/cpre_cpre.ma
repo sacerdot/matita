@@ -25,7 +25,7 @@ lemma cpre_cprs_conf (h) (G) (L) (T):
 #h #G #L #T0 #T1 #HT01 #T2 * #HT02 #HT2
 elim (cprs_conf … HT01 … HT02) -T0 #T0 #HT10 #HT20
 lapply (cprs_inv_cnr_sn … HT20 HT2) -HT20 #H destruct
-/2 width=1 by conj/
+/2 width=1 by cpme_intro/
 qed-.
 
 (* Main properties *********************************************************)

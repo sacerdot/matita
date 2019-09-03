@@ -27,8 +27,13 @@
    <table name="basic_2_sum"/>
 
    <subsection name="B">Stage "B"</subsection>
+   <news class="beta" date="2019 September 3.">
+         Applicability condition is now parametrized
+         with a generic subset of numbers.
+   </news>
    <news class="beta" date="2019 June 2.">
-         Parametrized applicability condition
+         Applicability condition parametrized
+         with an initial interval of numbers
          allows λδ-2B to generalize both λδ-2A and λδ-1B.
    </news>
    <news class="beta" date="2019 April 16.">

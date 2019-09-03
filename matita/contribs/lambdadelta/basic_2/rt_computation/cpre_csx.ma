@@ -26,8 +26,8 @@ lemma cpre_total_csx (h) (G) (L):
       ∀T1. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃T1⦄ → ∃T2. ⦃G,L⦄ ⊢ T1 ➡*[h] 𝐍⦃T2⦄.
 #h #G #L #T1 #H
 @(csx_ind … H) -T1 #T1 #_ #IHT1
-elim (cnr_dec_tdeq h G L T1) [ /3 width=3 by ex_intro, conj/ ] *
+elim (cnr_dec_tdeq h G L T1) [ /3 width=3 by ex_intro, cpme_intro/ ] *
 #T0 #HT10 #HnT10
 elim (IHT1 … HnT10) -IHT1 -HnT10 [| /2 width=2 by cpm_fwd_cpx/ ]
-#T2 * /4 width=3 by cprs_step_sn, ex_intro, conj/
+#T2 * /4 width=3 by cprs_step_sn, ex_intro, cpme_intro/
 qed-.

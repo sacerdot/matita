@@ -18,7 +18,7 @@ include "basic_2/dynamic/cnv_preserve.ma".
 
 (* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
 
-(* Properties with evaluation for t-bound rt-transition on terms ************)
+(* Properties with t-bound evaluation on terms ******************************)
 
 lemma cnv_cpme_trans (a) (h) (n) (G) (L):
       ∀T1. ⦃G,L⦄ ⊢ T1 ![a,h] →
@@ -33,7 +33,7 @@ lemma cnv_cpme_cpms_conf (a) (h) (n) (G) (L):
 #a #h #n #G #L #T0 #HT0 #T1 #HT01 #T2 * #HT02 #HT2
 elim (cnv_cpms_conf … HT0 … HT01 … HT02) -T0 <minus_n_n #T0 #HT10 #HT20
 lapply (cprs_inv_cnr_sn … HT20 HT2) -HT20 #H destruct
-/2 width=1 by conj/
+/2 width=1 by cpme_intro/
 qed-.
 
 (* Main properties with evaluation for t-bound rt-transition on terms *****)

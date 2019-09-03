@@ -25,7 +25,7 @@ table {
         ]
         [ { "context-sensitive native validity" * } {
              [ [ "restricted refinement for lenvs" ] "lsubv ( ? ⊢ ? ⫃![?,?] ? )" "lsubv_drops" + "lsubv_lsubr" + "lsubv_lsuba" + "lsubv_cpms" + "lsubv_cpcs" + "lsubv_cnv" + "lsubv_lsubv" * ]
-             [ [ "for terms" ] "cnv" + "( ⦃?,?⦄ ⊢ ? ![?,?] )" + "( ⦃?,?⦄ ⊢ ? ![?] )" + "( ⦃?,?⦄ ⊢ ? !*[?] )" "cnv_drops" + "cnv_fqus" + "cnv_aaa" + "cnv_fsb" + "cnv_cpm_trans" + "cnv_cpm_conf" + "cnv_cpm_tdeq" + "cnv_cpm_tdeq_trans" + "cnv_cpm_tdeq_conf" + "cnv_cpms_tdeq" + "cnv_cpms_conf" + "cnv_cpms_tdeq_conf" + "cnv_cpme" + "cnv_cpmuwe" + "cnv_eval" + "cnv_cpce" + "cnv_cpes" + "cnv_cpcs" + "cnv_preserve_sub" + "cnv_preserve" + "cnv_preserve_cpes" + "cnv_preserve_cpcs" * ]
+             [ [ "for terms" ] "cnv" + "( ⦃?,?⦄ ⊢ ? ![?,?] )" + "( ⦃?,?⦄ ⊢ ? ![?] )" + "( ⦃?,?⦄ ⊢ ? !*[?] )" "cnv_drops" + "cnv_fqus" + "cnv_aaa" + "cnv_fsb" + "cnv_cpm_trans" + "cnv_cpm_conf" + "cnv_cpm_tdeq" + "cnv_cpm_tdeq_trans" + "cnv_cpm_tdeq_conf" + "cnv_cpms_tdeq" + "cnv_cpms_conf" + "cnv_cpms_tdeq_conf" + "cnv_cpme" + "cnv_cpmuwe" + "cnv_cpmuwe_cpme" + "cnv_eval" + "cnv_cpce" + "cnv_cpes" + "cnv_cpcs" + "cnv_preserve_sub" + "cnv_preserve" + "cnv_preserve_cpes" + "cnv_preserve_cpcs" * ]
           }
         ]
      }
@@ -67,9 +67,8 @@ table {
         ]
         [ { "t-bound context-sensitive parallel rt-computation" * } {
              [ [ "t-unbound whd evaluation for terms" ] "cpmuwe ( ⦃?,?⦄ ⊢ ? ⬌*𝐍𝐖*[?,?] ? )" "cpmuwe_csx" + "cpmuwe_cpmuwe" * ]
-             [ [ "t-unbound whd normal form for terms" ] "cnuw ( ⦃?,?⦄ ⊢ ⬌𝐍𝐖*[?] ? )" "cnuw_tdeq" + "cnuw_drops" + "cnuw_simple" + "cnuw_cnuw" * ]
-
-             [ [ "evaluation for terms" ] "cpme ( ⦃?,?⦄ ⊢ ? ➡*[?,?] 𝐍⦃?⦄ )" "cpme_aaa" * ]
+             [ [ "t-unbound whd normal form for terms" ] "cnuw ( ⦃?,?⦄ ⊢ ⬌𝐍𝐖*[?] ? )" "cnuw_drops" + "cnuw_simple" + "cnuw_cnuw" * ]
+             [ [ "t-bpund evaluation for terms" ] "cpme ( ⦃?,?⦄ ⊢ ? ➡*[?,?] 𝐍⦃?⦄ )" "cpme_aaa" * ]
              [ [ "for terms" ] "cpms" + "( ⦃?,?⦄ ⊢ ? ➡*[?,?] ? )" "cpms_drops" + "cpms_lsubr" + "cpms_rdeq" + "cpms_aaa" + "cpms_lpr" + "cpms_cpxs" + "cpms_fpbs" + "cpms_fpbg" + "cpms_cpms" * ]
           }
         ]

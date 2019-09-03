@@ -175,6 +175,16 @@ lemma cpm_inv_zero1: ∀n,h,G,L,T2. ⦃G,L⦄ ⊢ #0 ➡[n,h] T2 →
 ]
 qed-.
 
+lemma cpm_inv_zero1_unit (n) (h) (I) (K) (G):
+      ∀X2. ⦃G,K.ⓤ{I}⦄ ⊢ #0 ➡[n,h] X2 → ∧∧ X2 = #0 & n = 0.
+#n #h #I #G #K #X2 #H
+elim (cpm_inv_zero1 … H) -H *
+[ #H1 #H2 destruct /2 width=1 by conj/
+| #Y #X1 #X2 #_ #_ #H destruct
+| #m #Y #X1 #X2 #_ #_ #H destruct
+]
+qed.
+
 lemma cpm_inv_lref1: ∀n,h,G,L,T2,i. ⦃G,L⦄ ⊢ #↑i ➡[n,h] T2 →
                      ∨∨ T2 = #(↑i) ∧ n = 0
                       | ∃∃I,K,T. ⦃G,K⦄ ⊢ #i ➡[n,h] T & ⬆*[1] T ≘ T2 & L = K.ⓘ{I}.
@@ -184,6 +194,21 @@ lemma cpm_inv_lref1: ∀n,h,G,L,T2,i. ⦃G,L⦄ ⊢ #↑i ➡[n,h] T2 →
  /4 width=6 by ex3_3_intro, ex2_intro, or_intror/
 ]
 qed-.
+
+lemma cpm_inv_lref1_ctop (n) (h) (G):
+      ∀X2,i. ⦃G,⋆⦄ ⊢ #i ➡[n,h] X2 → ∧∧ X2 = #i & n = 0.
+#n #h #G #X2 * [| #i ] #H
+[ elim (cpm_inv_zero1 … H) -H *
+  [ #H1 #H2 destruct /2 width=1 by conj/
+  | #Y #X1 #X2 #_ #_ #H destruct
+  | #m #Y #X1 #X2 #_ #_ #H destruct
+  ]
+| elim (cpm_inv_lref1 … H) -H *
+  [ #H1 #H2 destruct /2 width=1 by conj/
+  | #Z #Y #X0 #_ #_ #H destruct
+  ]
+]
+qed.
 
 lemma cpm_inv_gref1: ∀n,h,G,L,T2,l. ⦃G,L⦄ ⊢ §l ➡[n,h] T2 → T2 = §l ∧ n = 0.
 #n #h #G #L #T2 #l * #c #Hc #H elim (cpg_inv_gref1 … H) -H

@@ -18,7 +18,7 @@ include "basic_2/dynamic/cnv_preserve.ma".
 
 (* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
 
-(* Properties with head evaluation for t-bound rt-transition on terms *******)
+(* Properties with t-unbound whd evaluation on terms ************************)
 
 lemma cnv_cpmuwe_trans (a) (h) (G) (L):
       ∀T1. ⦃G,L⦄ ⊢ T1 ![a,h] →
@@ -28,9 +28,6 @@ lemma cnv_cpmuwe_trans (a) (h) (G) (L):
 lemma cnv_R_cpmuwe_total (a) (h) (G) (L):
       ∀T1. ⦃G,L⦄ ⊢ T1 ![a,h] → ∃n. R_cpmuwe h G L T1 n.
 /4 width=2 by cnv_fwd_fsb, fsb_inv_csx, R_cpmuwe_total_csx/ qed-.
-
-axiom cnv_R_cpmuwe_dec (a) (h) (G) (L):
-      ∀T. ⦃G,L⦄ ⊢ T ![a,h] → ∀n. Decidable (R_cpmuwe h G L T n).
 
 (* Main inversions with head evaluation for t-bound rt-transition on terms **)
 

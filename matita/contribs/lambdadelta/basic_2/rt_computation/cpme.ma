@@ -24,3 +24,16 @@ definition cpme (h) (n) (G) (L): relation2 term term ≝
 
 interpretation "evaluation for t-bound context-sensitive parallel rt-transition (term)"
    'PRedEval h n G L T1 T2 = (cpme h n G L T1 T2).
+
+(* Basic properties *********************************************************)
+
+lemma cpme_intro (h) (n) (G) (L):
+      ∀T1,T2. ⦃G,L⦄ ⊢ T1 ➡*[n,h] T2 → ⦃G,L⦄ ⊢ ➡[h] 𝐍⦃T2⦄ → ⦃G,L⦄⊢T1➡*[h,n]𝐍⦃T2⦄.
+/2 width=1 by conj/ qed.
+
+(* Basic forward lemmas *****************************************************)
+
+lemma cpme_fwd_cpms (h) (n) (G) (L):
+      ∀T1,T2. ⦃G,L⦄⊢T1➡*[h,n]𝐍⦃T2⦄ → ⦃G,L⦄ ⊢ T1 ➡*[n,h] T2.
+#h #n #G #L #T1 #T2 * //
+qed-.

@@ -156,6 +156,36 @@ lemma cpms_inv_sort1 (n) (h) (G) (L): ∀X2,s. ⦃G,L⦄ ⊢ ⋆s ➡*[n,h] X2 �
 elim (cpm_inv_sort1 … HX2) -HX2 #H #_ destruct //
 qed-.
 
+lemma cpms_inv_lref1_ctop (n) (h) (G):
+      ∀X2,i. ⦃G,⋆⦄ ⊢ #i ➡*[n,h] X2 → ∧∧ X2 = #i & n = 0.
+#n #h #G #X2 #i #H @(cpms_ind_dx … H) -X2
+[ /2 width=1 by conj/
+| #n1 #n2 #X #X2 #_ * #HX #Hn1 #HX2 destruct
+  elim (cpm_inv_lref1_ctop … HX2) -HX2 #H1 #H2 destruct
+  /2 width=1 by conj/
+]
+qed-.
+
+lemma cpms_inv_zero1_unit (n) (h) (I) (K) (G):
+      ∀X2. ⦃G,K.ⓤ{I}⦄ ⊢ #0 ➡*[n,h] X2 → ∧∧ X2 = #0 & n = 0.
+#n #h #I #G #K #X2 #H @(cpms_ind_dx … H) -X2
+[ /2 width=1 by conj/
+| #n1 #n2 #X #X2 #_ * #HX #Hn1 #HX2 destruct
+  elim (cpm_inv_zero1_unit … HX2) -HX2 #H1 #H2 destruct
+  /2 width=1 by conj/
+]
+qed-.
+
+lemma cpms_inv_gref1 (n) (h) (G) (L):
+      ∀X2,l. ⦃G,L⦄ ⊢ §l ➡*[n,h] X2 → ∧∧ X2 = §l & n = 0.
+#n #h #G #L #X2 #l #H @(cpms_ind_dx … H) -X2
+[ /2 width=1 by conj/
+| #n1 #n2 #X #X2 #_ * #HX #Hn1 #HX2 destruct
+  elim (cpm_inv_gref1 … HX2) -HX2 #H1 #H2 destruct
+  /2 width=1 by conj/
+]
+qed-.
+
 lemma cpms_inv_cast1 (h) (n) (G) (L):
       ∀W1,T1,X2. ⦃G,L⦄ ⊢ ⓝW1.T1 ➡*[n,h] X2 →
       ∨∨ ∃∃W2,T2. ⦃G,L⦄ ⊢ W1 ➡*[n,h] W2 & ⦃G,L⦄ ⊢ T1 ➡*[n,h] T2 & X2 = ⓝW2.T2

@@ -25,61 +25,6 @@ interpretation
   "normality for t-unbound weak head context-sensitive parallel rt-transition (term)"
   'PRedITNormal h G L T = (cnuw h G L T).
 
-lemma cpm_inv_lref1_ctop (n) (h) (G):
-      ∀X2,i. ⦃G,⋆⦄ ⊢ #i ➡[n,h] X2 → ∧∧ X2 = #i & n = 0.
-#n #h #G #X2 * [| #i ] #H
-[ elim (cpm_inv_zero1 … H) -H *
-  [ #H1 #H2 destruct /2 width=1 by conj/
-  | #Y #X1 #X2 #_ #_ #H destruct
-  | #m #Y #X1 #X2 #_ #_ #H destruct
-  ]
-| elim (cpm_inv_lref1 … H) -H *
-  [ #H1 #H2 destruct /2 width=1 by conj/
-  | #Z #Y #X0 #_ #_ #H destruct
-  ]
-]
-qed.
-
-lemma cpm_inv_zero1_unit (n) (h) (I) (K) (G):
-      ∀X2. ⦃G,K.ⓤ{I}⦄ ⊢ #0 ➡[n,h] X2 → ∧∧ X2 = #0 & n = 0.
-#n #h #I #G #K #X2 #H
-elim (cpm_inv_zero1 … H) -H *
-[ #H1 #H2 destruct /2 width=1 by conj/
-| #Y #X1 #X2 #_ #_ #H destruct
-| #m #Y #X1 #X2 #_ #_ #H destruct
-]
-qed.
-
-lemma cpms_inv_lref1_ctop (n) (h) (G):
-      ∀X2,i. ⦃G,⋆⦄ ⊢ #i ➡*[n,h] X2 → ∧∧ X2 = #i & n = 0.
-#n #h #G #X2 #i #H @(cpms_ind_dx … H) -X2
-[ /2 width=1 by conj/
-| #n1 #n2 #X #X2 #_ * #HX #Hn1 #HX2 destruct
-  elim (cpm_inv_lref1_ctop … HX2) -HX2 #H1 #H2 destruct
-  /2 width=1 by conj/
-]
-qed-.
-
-lemma cpms_inv_zero1_unit (n) (h) (I) (K) (G):
-      ∀X2. ⦃G,K.ⓤ{I}⦄ ⊢ #0 ➡*[n,h] X2 → ∧∧ X2 = #0 & n = 0.
-#n #h #I #G #K #X2 #H @(cpms_ind_dx … H) -X2
-[ /2 width=1 by conj/
-| #n1 #n2 #X #X2 #_ * #HX #Hn1 #HX2 destruct
-  elim (cpm_inv_zero1_unit … HX2) -HX2 #H1 #H2 destruct
-  /2 width=1 by conj/
-]
-qed-.
-
-lemma cpms_inv_gref1 (n) (h) (G) (L):
-      ∀X2,l. ⦃G,L⦄ ⊢ §l ➡*[n,h] X2 → ∧∧ X2 = §l & n = 0.
-#n #h #G #L #X2 #l #H @(cpms_ind_dx … H) -X2
-[ /2 width=1 by conj/
-| #n1 #n2 #X #X2 #_ * #HX #Hn1 #HX2 destruct
-  elim (cpm_inv_gref1 … HX2) -HX2 #H1 #H2 destruct
-  /2 width=1 by conj/
-]
-qed-.
-
 (* Basic properties *********************************************************)
 
 lemma cnuw_sort (h) (G) (L): ∀s. ⦃G,L⦄ ⊢ ➡𝐍𝐖*[h] ⋆s.
@@ -118,7 +63,7 @@ lemma cnuw_inv_cast (h) (G) (L):
       ∀V,T. ⦃G,L⦄ ⊢ ➡𝐍𝐖*[h] ⓝV.T → ⊥.
 #h #G #L #V #T #H
 lapply (H 0 T ?) [ /3 width=1 by cpm_cpms, cpm_eps/ ] -H #H
-/2 width=3 by tweq_inv_cast_sn_XY_Y/
+/2 width=3 by tweq_inv_cast_xy_y/
 qed-.
 
 (* Basic forward lemmas *****************************************************)

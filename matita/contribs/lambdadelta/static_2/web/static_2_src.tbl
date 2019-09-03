@@ -120,7 +120,7 @@ table {
           }
         ]
         [ { "sort-irrelevant whd equivalence" * } {
-             [ [ "for terms" ] "tweq" + "( ? ≅ ? )" "tweq_simple" + "tweq_tueq" * ]
+             [ [ "for terms" ] "tweq" + "( ? ≅ ? )" "tweq_simple" + "tweq_tdeq" + "tweq_tueq" * ]
           }
         ]
         [ { "sort-irrelevant equivalence" * } {

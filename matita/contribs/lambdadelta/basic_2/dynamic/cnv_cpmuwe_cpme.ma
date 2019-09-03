@@ -12,34 +12,24 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/syntax/tweq_tdeq.ma".
-include "basic_2/rt_computation/csx_cpxs.ma".
-include "basic_2/rt_computation/cpms_cpxs.ma".
+include "basic_2/rt_computation/cpme_aaa.ma".
 include "basic_2/rt_computation/cnuw_cnuw.ma".
 include "basic_2/rt_computation/cpmuwe.ma".
+include "basic_2/dynamic/cnv_cpme.ma".
 
-(* T-UNBOUND WHD EVALUATION FOR T-BOUND RT-TRANSITION ON TERMS **************)
+(* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
 
-(* Properties with strong normalization for unbound rt-transition for terms *)
+(* Advanced Properties with t-unbound whd evaluation on terms ***************)
 
-lemma cpmuwe_total_csx (h) (G) (L):
-      ∀T1. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃T1⦄ → ∃∃T2,n. ⦃G,L⦄ ⊢ T1 ➡*𝐍𝐖*[h,n] T2.
-#h #G #L #T1 #H
-@(csx_ind_cpxs … H) -T1 #T1 #_ #IHT1
-elim (cnuw_dec_ex h G L T1)
-[ -IHT1 #HT1 /3 width=4 by cpmuwe_intro, ex1_2_intro/
-| * #n1 #T0 #HT10 #HnT10
-  elim (IHT1 … T0) -IHT1
-  [ #T2 #n2 * #HT02 #HT2 /4 width=5 by cpms_trans, cpmuwe_intro, ex1_2_intro/
-  | /3 width=1 by tdeq_tweq/
-  | /2 width=2 by cpms_fwd_cpxs/
-  ]
+lemma cnv_R_cpmuwe_dec (a) (h) (G) (L):
+      ∀T. ⦃G,L⦄ ⊢ T ![a,h] → ∀n. Decidable (R_cpmuwe h G L T n).
+#a #h #G #L #T1 #HT1 #n
+elim (cnv_fwd_aaa … HT1) #A #HA
+elim (cpme_total_aaa h n … HA) -HA #T2 #HT12
+elim (cnuw_dec h G L T2) #HnT1
+[ /5 width=3 by cpme_fwd_cpms, cpmuwe_intro, ex_intro, or_introl/
+| @or_intror * #T3 * #HT13 #HT3
+  lapply (cnv_cpme_cpms_conf … HT1 … HT13 … HT12) -a -T1 #HT32
+  /4 width=9 by cpme_fwd_cpms, cnuw_cpms_trans/
 ]
-qed-.
-
-lemma R_cpmuwe_total_csx (h) (G) (L):
-      ∀T1. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃T1⦄ → ∃n. R_cpmuwe h G L T1 n.
-#h #G #L #T1 #H
-elim (cpmuwe_total_csx … H) -H #T2 #n #HT12
-/3 width=3 by ex_intro (* 2x *)/
 qed-.

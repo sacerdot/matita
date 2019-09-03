@@ -15,10 +15,6 @@
 include "static_2/notation/relations/approxeq_2.ma".
 include "static_2/syntax/term_weight.ma".
 
-lemma tw_le_pair_dx (I): ∀V,T. ♯{T} < ♯{②{I}V.T}.
-#I #V #T /2 width=1 by le_S_S/
-qed.
-
 (* SORT-IRRELEVANT WHD EQUIVALENCE ON TERMS *********************************)
 
 inductive tweq: relation term ≝
@@ -211,7 +207,7 @@ elim (tweq_inv_cast_sn … H) -H #W2 #U2 #HVW #HTU #H destruct
 /2 width=1 by conj/
 qed-.
 
-lemma tweq_inv_cast_sn_XY_Y: ∀T,V. ⓝV.T ≅ T → ⊥.
+lemma tweq_inv_cast_xy_y: ∀T,V. ⓝV.T ≅ T → ⊥.
 @(f_ind … tw) #n #IH #T #Hn #V #H destruct
 elim (tweq_inv_cast_sn … H) -H #X1 #X2 #_ #HX2 #H destruct -V
 /2 width=4 by/
