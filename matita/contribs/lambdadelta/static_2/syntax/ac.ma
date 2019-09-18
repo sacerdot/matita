@@ -17,7 +17,7 @@ include "static_2/notation/functions/one_0.ma".
 include "static_2/notation/functions/two_0.ma".
 include "static_2/notation/functions/omega_0.ma".
 
-(* APPLICABILITY CONDITION  *************************************************)
+(* APPLICABILITY CONDITION **************************************************)
 
 (* applicability condition specification *)
 record ac: Type[0] ≝ {
@@ -27,7 +27,7 @@ record ac: Type[0] ≝ {
 
 (* applicability condition postulates *)
 record ac_props (a): Prop ≝ {
-   ac_dec: ∀m. Decidable (∃∃n. m ≤ n & ad a n)
+   ac_dec: ∀m. Decidable (∃∃n. ad a n & m ≤ n)
 }.
 
 (* Notable specifications ***************************************************)
@@ -54,6 +54,16 @@ interpretation "zero (applicability domain)"
 lemma ac_eq_props (k): ac_props (ac_eq k) ≝ mk_ac_props ….
 #m elim (le_dec m k) #Hm
 [ /3 width=3 by or_introl, ex2_intro/
-| @or_intror * #n #Hmn #H destruct /2 width=1 by/
+| @or_intror * #n #Hn #Hmn destruct /2 width=1 by/
+]
+qed.
+
+definition ac_le (k): ac ≝ mk_ac (λn. n ≤ k).
+
+lemma ac_le_props (k): ac_props (ac_le k) ≝ mk_ac_props ….
+#m elim (le_dec m k) #Hm
+[ /3 width=3 by or_introl, ex2_intro/
+| @or_intror * #n #Hn #Hmn
+  /3 width=3 by transitive_le/
 ]
 qed.

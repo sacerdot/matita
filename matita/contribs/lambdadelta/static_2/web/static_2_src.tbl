@@ -103,6 +103,7 @@ table {
    class "red"
    [ { "syntax" * } {
         [ { "applicability condition" * } {
+             [ [ "preorder" ] "acle" + "( ? ⊆ ? )"  "acle_acle" * ]
              [ [ "properties" ] "ac" + "( 𝟏 )" + "( 𝟐 )" + "( 𝛚 )" * ]
           }
         ]   

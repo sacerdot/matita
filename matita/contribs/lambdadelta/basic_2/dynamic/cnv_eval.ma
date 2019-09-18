@@ -56,7 +56,7 @@ theorem cnv_dec (h) (a) (G) (L) (T): ac_props a →
       elim (dec_min (R_cpmuwe h G L T) … Hn) -Hn
       [| /2 width=2 by cnv_R_cpmuwe_dec/ ] #n0 #_ -n
       elim (ac_dec … Ha n0) -Ha
-      [ * #n #Hn #Ha * #X0 #HX0 #_
+      [ * #n #Ha #Hn * #X0 #HX0 #_
         elim (abst_dec X0)
         [ * #p #W #U0 #H destruct
           elim (cnv_cpes_dec … 1 0 … HV W) [ #HVW | #HnVW ]
