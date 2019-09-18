@@ -19,8 +19,8 @@ include "basic_2/dynamic/lsubv_cnv.ma".
 (* Main properties **********************************************************)
 
 (* Note: not valid in Basic_2A1 *)
-theorem lsubv_trans (a) (h) (G): Transitive … (lsubv a h G).
-#a #h #G #L1 #L #H elim H -L1 -L //
+theorem lsubv_trans (h) (a) (G): Transitive … (lsubv h a G).
+#h #a #G #L1 #L #H elim H -L1 -L //
 [ #I #K1 #K #HK1 #IH #Y #H
   elim (lsubv_inv_bind_sn … H) -H *
   [ #K2 #HK2 #H destruct /3 width=1 by lsubv_bind/

@@ -20,9 +20,9 @@ include "basic_2/dynamic/cnv_cpmuwe.ma".
 
 (* Properties with context-sensitive parallel eta-conversion for terms ******)
 
-lemma cpce_total_cnv (a) (h) (G) (L):
-      ∀T1. ⦃G,L⦄ ⊢ T1 ![a,h] → ∃T2. ⦃G,L⦄ ⊢ T1 ⬌η[h] T2.
-#a #h #G #L #T1 #HT1
+lemma cpce_total_cnv (h) (a) (G) (L):
+      ∀T1. ⦃G,L⦄ ⊢ T1 ![h,a] → ∃T2. ⦃G,L⦄ ⊢ T1 ⬌η[h] T2.
+#h #a #G #L #T1 #HT1
 lapply (cnv_fwd_csx … HT1) #H
 generalize in match HT1; -HT1
 @(csx_ind_fpbg … H) -G -L -T1

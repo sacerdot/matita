@@ -14,6 +14,6 @@
 
 (* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-notation "hvbox( ⦃ term 46 G, break term 46 L ⦄ ⊢ break term 46 T1 :[ break term 46 a, break term 46 h, break term 46 n ] break term 46 T2 )"
-   non associative with precedence 45
-   for @{ 'Colon $a $h $n $G $L $T1 $T2 }.
+notation "𝟐"
+ non associative with precedence 46
+ for @{ 'Two }.

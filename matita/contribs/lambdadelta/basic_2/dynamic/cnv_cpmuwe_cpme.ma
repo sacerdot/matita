@@ -21,9 +21,9 @@ include "basic_2/dynamic/cnv_cpme.ma".
 
 (* Advanced Properties with t-unbound whd evaluation on terms ***************)
 
-lemma cnv_R_cpmuwe_dec (a) (h) (G) (L):
-      ∀T. ⦃G,L⦄ ⊢ T ![a,h] → ∀n. Decidable (R_cpmuwe h G L T n).
-#a #h #G #L #T1 #HT1 #n
+lemma cnv_R_cpmuwe_dec (h) (a) (G) (L):
+      ∀T. ⦃G,L⦄ ⊢ T ![h,a] → ∀n. Decidable (R_cpmuwe h G L T n).
+#h #a #G #L #T1 #HT1 #n
 elim (cnv_fwd_aaa … HT1) #A #HA
 elim (cpme_total_aaa h n … HA) -HA #T2 #HT12
 elim (cnuw_dec h G L T2) #HnT1

@@ -19,10 +19,10 @@ include "basic_2/dynamic/lsubv_cpms.ma".
 (* Forward lemmas with native validity **************************************)
 
 (* Basic_2A1: uses: lsubsv_snv_trans *)
-lemma lsubv_cnv_trans (a) (h) (G):
-      ∀L2,T. ⦃G,L2⦄ ⊢ T ![a,h] →
-      ∀L1. G ⊢ L1 ⫃![a,h] L2 → ⦃G,L1⦄ ⊢ T ![a,h].
-#a #h #G #L2 #T #H elim H -G -L2 -T //
+lemma lsubv_cnv_trans (h) (a) (G):
+      ∀L2,T. ⦃G,L2⦄ ⊢ T ![h,a] →
+      ∀L1. G ⊢ L1 ⫃![h,a] L2 → ⦃G,L1⦄ ⊢ T ![h,a].
+#h #a #G #L2 #T #H elim H -G -L2 -T //
 [ #I #G #K2 #V #HV #IH #L1 #H
   elim (lsubv_inv_bind_dx … H) -H * /3 width=1 by cnv_zero/
 | #I #G #K2 #i #_ #IH #L1 #H

@@ -22,9 +22,9 @@ include "basic_2/dynamic/cnv_fsb.ma".
 
 (* Inversion lemmas with restricted rt-transition for terms *****************)
 
-lemma cnv_cpr_tdeq_fwd_refl (a) (h) (G) (L):
-      ∀T1,T2. ⦃G,L⦄ ⊢ T1 ➡[h] T2 → T1 ≛ T2 → ⦃G,L⦄ ⊢ T1 ![a,h] → T1 = T2.
-#a #h #G #L #T1 #T2 #H @(cpr_ind … H) -G -L -T1 -T2
+lemma cnv_cpr_tdeq_fwd_refl (h) (a) (G) (L):
+      ∀T1,T2. ⦃G,L⦄ ⊢ T1 ➡[h] T2 → T1 ≛ T2 → ⦃G,L⦄ ⊢ T1 ![h,a] → T1 = T2.
+#h #a #G #L #T1 #T2 #H @(cpr_ind … H) -G -L -T1 -T2
 [ //
 | #G #K #V1 #V2 #X2 #_ #_ #_ #H1 #_ -a -G -K -V1 -V2
   lapply (tdeq_inv_lref1 … H1) -H1 #H destruct //
@@ -53,11 +53,11 @@ lemma cnv_cpr_tdeq_fwd_refl (a) (h) (G) (L):
 ]
 qed-.
 
-lemma cpm_tdeq_inv_bind_sn (a) (h) (n) (p) (I) (G) (L):
-      ∀V,T1. ⦃G,L⦄ ⊢ ⓑ{p,I}V.T1 ![a,h] →
+lemma cpm_tdeq_inv_bind_sn (h) (a) (n) (p) (I) (G) (L):
+      ∀V,T1. ⦃G,L⦄ ⊢ ⓑ{p,I}V.T1 ![h,a] →
       ∀X. ⦃G,L⦄ ⊢ ⓑ{p,I}V.T1 ➡[n,h] X → ⓑ{p,I}V.T1 ≛ X →
-      ∃∃T2. ⦃G,L⦄ ⊢ V ![a,h] & ⦃G,L.ⓑ{I}V⦄ ⊢ T1 ![a,h] & ⦃G,L.ⓑ{I}V⦄ ⊢ T1 ➡[n,h] T2 & T1 ≛ T2 & X = ⓑ{p,I}V.T2.
-#a #h #n #p #I #G #L #V #T1 #H0 #X #H1 #H2
+      ∃∃T2. ⦃G,L⦄ ⊢ V ![h,a] & ⦃G,L.ⓑ{I}V⦄ ⊢ T1 ![h,a] & ⦃G,L.ⓑ{I}V⦄ ⊢ T1 ➡[n,h] T2 & T1 ≛ T2 & X = ⓑ{p,I}V.T2.
+#h #a #n #p #I #G #L #V #T1 #H0 #X #H1 #H2
 elim (cpm_inv_bind1 … H1) -H1 *
 [ #XV #T2 #HXV #HT12 #H destruct
   elim (tdeq_inv_pair … H2) -H2 #_ #H2XV #H2T12
@@ -71,12 +71,12 @@ elim (cpm_inv_bind1 … H1) -H1 *
 ]
 qed-.
 
-lemma cpm_tdeq_inv_appl_sn (a) (h) (n) (G) (L):
-      ∀V,T1. ⦃G,L⦄ ⊢ ⓐV.T1 ![a,h] →
+lemma cpm_tdeq_inv_appl_sn (h) (a) (n) (G) (L):
+      ∀V,T1. ⦃G,L⦄ ⊢ ⓐV.T1 ![h,a] →
       ∀X. ⦃G,L⦄ ⊢ ⓐV.T1 ➡[n,h] X → ⓐV.T1 ≛ X →
-      ∃∃m,q,W,U1,T2. appl a m & ⦃G,L⦄ ⊢ V ![a,h] & ⦃G,L⦄ ⊢ V ➡*[1,h] W & ⦃G,L⦄ ⊢ T1 ➡*[m,h] ⓛ{q}W.U1
-                   & ⦃G,L⦄⊢ T1 ![a,h] & ⦃G,L⦄ ⊢ T1 ➡[n,h] T2 & T1 ≛ T2 & X = ⓐV.T2.
-#a #h #n #G #L #V #T1 #H0 #X #H1 #H2
+      ∃∃m,q,W,U1,T2. ad a m & ⦃G,L⦄ ⊢ V ![h,a] & ⦃G,L⦄ ⊢ V ➡*[1,h] W & ⦃G,L⦄ ⊢ T1 ➡*[m,h] ⓛ{q}W.U1
+                   & ⦃G,L⦄⊢ T1 ![h,a] & ⦃G,L⦄ ⊢ T1 ➡[n,h] T2 & T1 ≛ T2 & X = ⓐV.T2.
+#h #a #n #G #L #V #T1 #H0 #X #H1 #H2
 elim (cpm_inv_appl1 … H1) -H1 *
 [ #XV #T2 #HXV #HT12 #H destruct
   elim (tdeq_inv_pair … H2) -H2 #_ #H2XV #H2T12
@@ -90,13 +90,13 @@ elim (cpm_inv_appl1 … H1) -H1 *
 ]
 qed-.
 
-lemma cpm_tdeq_inv_cast_sn (a) (h) (n) (G) (L):
-      ∀U1,T1. ⦃G,L⦄ ⊢ ⓝU1.T1 ![a,h] →
+lemma cpm_tdeq_inv_cast_sn (h) (a) (n) (G) (L):
+      ∀U1,T1. ⦃G,L⦄ ⊢ ⓝU1.T1 ![h,a] →
       ∀X. ⦃G,L⦄ ⊢ ⓝU1.T1 ➡[n,h] X → ⓝU1.T1 ≛ X →
       ∃∃U0,U2,T2. ⦃G,L⦄ ⊢ U1 ➡*[h] U0 & ⦃G,L⦄ ⊢ T1 ➡*[1,h] U0
-                & ⦃G,L⦄ ⊢ U1 ![a,h] & ⦃G,L⦄ ⊢ U1 ➡[n,h] U2 & U1 ≛ U2
-                & ⦃G,L⦄ ⊢ T1 ![a,h] & ⦃G,L⦄ ⊢ T1 ➡[n,h] T2 & T1 ≛ T2 & X = ⓝU2.T2.
-#a #h #n #G #L #U1 #T1 #H0 #X #H1 #H2
+                & ⦃G,L⦄ ⊢ U1 ![h,a] & ⦃G,L⦄ ⊢ U1 ➡[n,h] U2 & U1 ≛ U2
+                & ⦃G,L⦄ ⊢ T1 ![h,a] & ⦃G,L⦄ ⊢ T1 ➡[n,h] T2 & T1 ≛ T2 & X = ⓝU2.T2.
+#h #a #n #G #L #U1 #T1 #H0 #X #H1 #H2
 elim (cpm_inv_cast1 … H1) -H1 [ * || * ]
 [ #U2 #T2 #HU12 #HT12 #H destruct
   elim (tdeq_inv_pair … H2) -H2 #_ #H2U12 #H2T12
@@ -113,11 +113,11 @@ elim (cpm_inv_cast1 … H1) -H1 [ * || * ]
 ]
 qed-.
 
-lemma cpm_tdeq_inv_bind_dx (a) (h) (n) (p) (I) (G) (L):
-      ∀X. ⦃G,L⦄ ⊢ X ![a,h] →
+lemma cpm_tdeq_inv_bind_dx (h) (a) (n) (p) (I) (G) (L):
+      ∀X. ⦃G,L⦄ ⊢ X ![h,a] →
       ∀V,T2. ⦃G,L⦄ ⊢ X ➡[n,h] ⓑ{p,I}V.T2 → X ≛ ⓑ{p,I}V.T2 →
-      ∃∃T1. ⦃G,L⦄ ⊢ V ![a,h] & ⦃G,L.ⓑ{I}V⦄ ⊢ T1 ![a,h] & ⦃G,L.ⓑ{I}V⦄ ⊢ T1 ➡[n,h] T2 & T1 ≛ T2 & X = ⓑ{p,I}V.T1.
-#a #h #n #p #I #G #L #X #H0 #V #T2 #H1 #H2
+      ∃∃T1. ⦃G,L⦄ ⊢ V ![h,a] & ⦃G,L.ⓑ{I}V⦄ ⊢ T1 ![h,a] & ⦃G,L.ⓑ{I}V⦄ ⊢ T1 ➡[n,h] T2 & T1 ≛ T2 & X = ⓑ{p,I}V.T1.
+#h #a #n #p #I #G #L #X #H0 #V #T2 #H1 #H2
 elim (tdeq_inv_pair2 … H2) #V0 #T1 #_ #_ #H destruct
 elim (cpm_tdeq_inv_bind_sn … H0 … H1 H2) -H0 -H1 -H2 #T0 #HV #HT1 #H1T12 #H2T12 #H destruct
 /2 width=5 by ex5_intro/
@@ -125,27 +125,27 @@ qed-.
 
 (* Eliminators with restricted rt-transition for terms **********************)
 
-lemma cpm_tdeq_ind (a) (h) (n) (G) (Q:relation3 …):
+lemma cpm_tdeq_ind (h) (a) (n) (G) (Q:relation3 …):
       (∀I,L. n = 0 → Q L (⓪{I}) (⓪{I})) →
       (∀L,s. n = 1 → Q L (⋆s) (⋆(⫯[h]s))) →
-      (∀p,I,L,V,T1. ⦃G,L⦄⊢ V![a,h] → ⦃G,L.ⓑ{I}V⦄⊢T1![a,h] →
+      (∀p,I,L,V,T1. ⦃G,L⦄⊢ V![h,a] → ⦃G,L.ⓑ{I}V⦄⊢T1![h,a] →
         ∀T2. ⦃G,L.ⓑ{I}V⦄ ⊢ T1 ➡[n,h] T2 → T1 ≛ T2 →
         Q (L.ⓑ{I}V) T1 T2 → Q L (ⓑ{p,I}V.T1) (ⓑ{p,I}V.T2)
       ) →
-      (∀m. appl a m →
-        ∀L,V. ⦃G,L⦄ ⊢ V ![a,h] → ∀W. ⦃G,L⦄ ⊢ V ➡*[1,h] W →
-        ∀p,T1,U1. ⦃G,L⦄ ⊢ T1 ➡*[m,h] ⓛ{p}W.U1 → ⦃G,L⦄⊢ T1 ![a,h] →
+      (∀m. ad a m →
+        ∀L,V. ⦃G,L⦄ ⊢ V ![h,a] → ∀W. ⦃G,L⦄ ⊢ V ➡*[1,h] W →
+        ∀p,T1,U1. ⦃G,L⦄ ⊢ T1 ➡*[m,h] ⓛ{p}W.U1 → ⦃G,L⦄⊢ T1 ![h,a] →
         ∀T2. ⦃G,L⦄ ⊢ T1 ➡[n,h] T2 → T1 ≛ T2 →
         Q L T1 T2 → Q L (ⓐV.T1) (ⓐV.T2)
       ) →
       (∀L,U0,U1,T1. ⦃G,L⦄ ⊢ U1 ➡*[h] U0 → ⦃G,L⦄ ⊢ T1 ➡*[1,h] U0 →
-        ∀U2. ⦃G,L⦄ ⊢ U1 ![a,h] → ⦃G,L⦄ ⊢ U1 ➡[n,h] U2 → U1 ≛ U2 →
-        ∀T2. ⦃G,L⦄ ⊢ T1 ![a,h] → ⦃G,L⦄ ⊢ T1 ➡[n,h] T2 → T1 ≛ T2 →
+        ∀U2. ⦃G,L⦄ ⊢ U1 ![h,a] → ⦃G,L⦄ ⊢ U1 ➡[n,h] U2 → U1 ≛ U2 →
+        ∀T2. ⦃G,L⦄ ⊢ T1 ![h,a] → ⦃G,L⦄ ⊢ T1 ➡[n,h] T2 → T1 ≛ T2 →
         Q L U1 U2 → Q L T1 T2 → Q L (ⓝU1.T1) (ⓝU2.T2)
       ) →
-      ∀L,T1. ⦃G,L⦄ ⊢ T1 ![a,h] →
+      ∀L,T1. ⦃G,L⦄ ⊢ T1 ![h,a] →
       ∀T2. ⦃G,L⦄ ⊢ T1 ➡[n,h] T2 → T1 ≛ T2 → Q L T1 T2.
-#a #h #n #G #Q #IH1 #IH2 #IH3 #IH4 #IH5 #L #T1
+#h #a #n #G #Q #IH1 #IH2 #IH3 #IH4 #IH5 #L #T1
 @(insert_eq_0 … G) #F
 @(fqup_wf_ind_eq (Ⓣ) … F L T1) -L -T1 -F
 #G0 #L0 #T0 #IH #F #L * [| * [| * ]]
@@ -168,11 +168,11 @@ qed-.
 
 (* Advanced properties with restricted rt-transition for terms **************)
 
-lemma cpm_tdeq_free (a) (h) (n) (G) (L):
-      ∀T1. ⦃G,L⦄ ⊢ T1 ![a,h] →
+lemma cpm_tdeq_free (h) (a) (n) (G) (L):
+      ∀T1. ⦃G,L⦄ ⊢ T1 ![h,a] →
       ∀T2. ⦃G,L⦄ ⊢ T1 ➡[n,h] T2 → T1 ≛ T2 →
       ∀F,K. ⦃F,K⦄ ⊢ T1 ➡[n,h] T2.
-#a #h #n #G #L #T1 #H0 #T2 #H1 #H2
+#h #a #n #G #L #T1 #H0 #T2 #H1 #H2
 @(cpm_tdeq_ind … H0 … H1 H2) -L -T1 -T2
 [ #I #L #H #F #K destruct //
 | #L #s #H #F #K destruct //
@@ -187,11 +187,11 @@ qed-.
 
 (* Advanced inversion lemmas with restricted rt-transition for terms ********)
 
-lemma cpm_tdeq_inv_bind_sn_void (a) (h) (n) (p) (I) (G) (L):
-      ∀V,T1. ⦃G,L⦄ ⊢ ⓑ{p,I}V.T1 ![a,h] →
+lemma cpm_tdeq_inv_bind_sn_void (h) (a) (n) (p) (I) (G) (L):
+      ∀V,T1. ⦃G,L⦄ ⊢ ⓑ{p,I}V.T1 ![h,a] →
       ∀X. ⦃G,L⦄ ⊢ ⓑ{p,I}V.T1 ➡[n,h] X → ⓑ{p,I}V.T1 ≛ X →
-      ∃∃T2. ⦃G,L⦄ ⊢ V ![a,h] & ⦃G,L.ⓑ{I}V⦄ ⊢ T1 ![a,h] & ⦃G,L.ⓧ⦄ ⊢ T1 ➡[n,h] T2 & T1 ≛ T2 & X = ⓑ{p,I}V.T2.
-#a #h #n #p #I #G #L #V #T1 #H0 #X #H1 #H2
+      ∃∃T2. ⦃G,L⦄ ⊢ V ![h,a] & ⦃G,L.ⓑ{I}V⦄ ⊢ T1 ![h,a] & ⦃G,L.ⓧ⦄ ⊢ T1 ➡[n,h] T2 & T1 ≛ T2 & X = ⓑ{p,I}V.T2.
+#h #a #n #p #I #G #L #V #T1 #H0 #X #H1 #H2
 elim (cpm_tdeq_inv_bind_sn … H0 … H1 H2) -H0 -H1 -H2 #T2 #HV #HT1 #H1T12 #H2T12 #H
 /3 width=5 by ex5_intro, cpm_tdeq_free/
 qed-.

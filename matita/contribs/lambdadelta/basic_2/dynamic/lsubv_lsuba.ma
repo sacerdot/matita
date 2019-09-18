@@ -20,8 +20,8 @@ include "basic_2/dynamic/lsubv.ma".
 (* Forward lemmas with lenv refinement for atomic arity assignment **********)
 
 (* Basic_2A1: uses: lsubsv_fwd_lsuba *)
-lemma lsubsv_fwd_lsuba (a) (h) (G): ∀L1,L2. G ⊢ L1 ⫃![a,h] L2 → G ⊢ L1 ⫃⁝ L2.
-#a #h #G #L1 #L2 #H elim H -L1 -L2 /2 width=1 by lsuba_bind/
+lemma lsubsv_fwd_lsuba (h) (a) (G): ∀L1,L2. G ⊢ L1 ⫃![h,a] L2 → G ⊢ L1 ⫃⁝ L2.
+#h #a #G #L1 #L2 #H elim H -L1 -L2 /2 width=1 by lsuba_bind/
 #L1 #L2 #W #V #H #_ #IH
 elim (cnv_inv_cast … H) -H #W0 #HW #HV #HW0 #HVW0
 elim (cnv_fwd_aaa … HW) -HW #B #HW

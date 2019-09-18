@@ -20,10 +20,10 @@ include "basic_2/dynamic/cnv_aaa.ma".
 
 (* Properties with r-equivalence ********************************************)
 
-lemma cnv_cpcs_dec (a) (h) (G) (L):
-      ∀T1. ⦃G,L⦄ ⊢ T1 ![a,h] → ∀T2. ⦃G,L⦄ ⊢ T2 ![a,h] →
+lemma cnv_cpcs_dec (h) (a) (G) (L):
+      ∀T1. ⦃G,L⦄ ⊢ T1 ![h,a] → ∀T2. ⦃G,L⦄ ⊢ T2 ![h,a] →
       Decidable … (⦃G,L⦄ ⊢ T1 ⬌*[h] T2).
-#a #h #G #L #T1 #HT1 #T2 #HT2
+#h #a #G #L #T1 #HT1 #T2 #HT2
 elim (cnv_fwd_aaa … HT1) -HT1 #A1 #HA1
 elim (cnv_fwd_aaa … HT2) -HT2 #A2 #HA2
 /3 width=2 by csx_cpcs_dec, aaa_csx/

@@ -20,6 +20,6 @@ include "basic_2/dynamic/lsubv_lsubr.ma".
 (* Forward lemmas with context-sensitive r-equivalence for terms ************)
 
 (* Basic_2A1: uses: lsubsv_cprs_trans *)
-lemma lsubv_cpcs_trans (a) (h) (G): lsub_trans … (cpcs h G) (lsubv a h G).
+lemma lsubv_cpcs_trans (h) (a) (G): lsub_trans … (cpcs h G) (lsubv h a G).
 /3 width=6 by lsubv_fwd_lsubr, lsubr_cpcs_trans/
 qed-.

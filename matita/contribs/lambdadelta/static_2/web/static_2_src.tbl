@@ -103,7 +103,7 @@ table {
    class "red"
    [ { "syntax" * } {
         [ { "applicability condition" * } {
-             [ [ "properties" ] "ac" * ]
+             [ [ "properties" ] "ac" + "( 𝟏 )" + "( 𝟐 )" + "( 𝛚 )" * ]
           }
         ]   
         [ { "equivalence up to exclusion binders" * } {

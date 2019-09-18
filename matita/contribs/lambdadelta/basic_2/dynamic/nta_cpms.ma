@@ -21,11 +21,11 @@ include "basic_2/dynamic/nta.ma".
 (* Properties with advanced rt_computation for terms ************************)
 
 (* Basic_2A1: uses by definition nta_appl ntaa_appl *)
-lemma nta_appl_abst (a) (h) (p) (G) (L):
-      ∀n. appl a n →
-      ∀V,W. ⦃G,L⦄ ⊢ V :[a,h] W →
-      ∀T,U. ⦃G,L.ⓛW⦄ ⊢ T :[a,h] U → ⦃G,L⦄ ⊢ ⓐV.ⓛ{p}W.T :[a,h] ⓐV.ⓛ{p}W.U.
-#a #h #p #G #L #n #Ha #V #W #H1 #T #U #H2
+lemma nta_appl_abst (h) (a) (p) (G) (L):
+      ∀n. ad a n →
+      ∀V,W. ⦃G,L⦄ ⊢ V :[h,a] W →
+      ∀T,U. ⦃G,L.ⓛW⦄ ⊢ T :[h,a] U → ⦃G,L⦄ ⊢ ⓐV.ⓛ{p}W.T :[h,a] ⓐV.ⓛ{p}W.U.
+#h #a #p #G #L #n #Ha #V #W #H1 #T #U #H2
 elim (cnv_inv_cast … H1) -H1 #X1 #HW #HV #HWX1 #HVX1
 elim (cnv_inv_cast … H2) -H2 #X2 #HU #HT #HUX2 #HTX2
 /4 width=11 by cnv_appl_ge, cnv_cast, cnv_bind, cpms_appl_dx, cpms_bind_dx/
@@ -33,11 +33,11 @@ qed.
 
 (* Basic_1: was by definition: ty3_appl *)
 (* Basic_2A1: was nta_appl_old *)
-lemma nta_appl (a) (h) (p) (G) (L):
-      ∀n. 1 ≤ n → appl a n →
-      ∀V,W. ⦃G,L⦄ ⊢ V :[a,h] W →
-      ∀T,U. ⦃G,L⦄ ⊢ T :[a,h] ⓛ{p}W.U → ⦃G,L⦄ ⊢ ⓐV.T :[a,h] ⓐV.ⓛ{p}W.U.
-#a #h #p #G #L #n #Hn #Ha #V #W #H1 #T #U #H2
+lemma nta_appl (h) (a) (p) (G) (L):
+      ∀n. 1 ≤ n → ad a n →
+      ∀V,W. ⦃G,L⦄ ⊢ V :[h,a] W →
+      ∀T,U. ⦃G,L⦄ ⊢ T :[h,a] ⓛ{p}W.U → ⦃G,L⦄ ⊢ ⓐV.T :[h,a] ⓐV.ⓛ{p}W.U.
+#h #a #p #G #L #n #Hn #Ha #V #W #H1 #T #U #H2
 elim (cnv_inv_cast … H1) -H1 #X1 #HW #HV #HWX1 #HVX1
 elim (cnv_inv_cast … H2) -H2 #X2 #HU #HT #HUX2 #HTX2
 elim (cpms_inv_abst_sn … HUX2) #W0 #U0 #HW0 #HU0 #H destruct
@@ -52,10 +52,10 @@ qed.
 
 (* Inversion lemmas with advanced rt_computation for terms ******************)
 
-lemma nta_inv_abst_bi_cnv (a) (h) (p) (G) (K) (W):
-      ∀T,U. ⦃G,K⦄ ⊢ ⓛ{p}W.T :[a,h] ⓛ{p}W.U →
-      ∧∧ ⦃G,K⦄ ⊢ W ![a,h] & ⦃G,K.ⓛW⦄ ⊢ T :[a,h] U.
-#a #h #p #G #K #W #T #U #H
+lemma nta_inv_abst_bi_cnv (h) (a) (p) (G) (K) (W):
+      ∀T,U. ⦃G,K⦄ ⊢ ⓛ{p}W.T :[h,a] ⓛ{p}W.U →
+      ∧∧ ⦃G,K⦄ ⊢ W ![h,a] & ⦃G,K.ⓛW⦄ ⊢ T :[h,a] U.
+#h #a #p #G #K #W #T #U #H
 elim (cnv_inv_cast … H) -H #X #HWU #HWT #HUX #HTX
 elim (cnv_inv_bind … HWU) -HWU #HW #HU
 elim (cnv_inv_bind … HWT) -HWT #_ #HT

@@ -20,7 +20,7 @@ include "basic_2/dynamic/lsubv_lsubr.ma".
 (* Forward lemmas with t-bound contex-sensitive rt-computation for terms ****)
 
 (* Basic_2A1: uses: lsubsv_cprs_trans lsubsv_scpds_trans *)
-lemma lsubv_cpms_trans (a) (n) (h) (G):
-      lsub_trans … (λL. cpms h G L n) (lsubv a h G).
+lemma lsubv_cpms_trans (h) (a) (n) (G):
+      lsub_trans … (λL. cpms h G L n) (lsubv h a G).
 /3 width=6 by lsubv_fwd_lsubr, lsubr_cpms_trans/
 qed-.

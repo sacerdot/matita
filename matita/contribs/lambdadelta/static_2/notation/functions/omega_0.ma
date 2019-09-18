@@ -14,6 +14,6 @@
 
 (* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-notation "hvbox( ⦃ term 46 G, break term 46 L ⦄ ⊢ break term 46 T !*[ break term 46 h ] )"
-   non associative with precedence 45
-   for @{ 'ExclaimStar $h $G $L $T }.
+notation "𝛚"
+ non associative with precedence 46
+ for @{ 'Omega }.

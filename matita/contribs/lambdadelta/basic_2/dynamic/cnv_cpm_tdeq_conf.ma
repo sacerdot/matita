@@ -17,8 +17,8 @@ include "basic_2/dynamic/cnv_cpm_tdeq.ma".
 
 (* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
 
-definition IH_cnv_cpm_tdeq_conf_lpr (a) (h): relation3 genv lenv term ≝
-           λG,L0,T0. ⦃G,L0⦄ ⊢ T0 ![a,h] →
+definition IH_cnv_cpm_tdeq_conf_lpr (h) (a): relation3 genv lenv term ≝
+           λG,L0,T0. ⦃G,L0⦄ ⊢ T0 ![h,a] →
            ∀n1,T1. ⦃G,L0⦄ ⊢ T0 ➡[n1,h] T1 → T0 ≛ T1 →
            ∀n2,T2. ⦃G,L0⦄ ⊢ T0 ➡[n2,h] T2 → T0 ≛ T2 →
            ∀L1. ⦃G,L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G,L0⦄ ⊢ ➡[h] L2 →
@@ -38,14 +38,14 @@ fact cnv_cpm_tdeq_conf_lpr_atom_ess_aux (h) (G0) (L1) (L2) (s):
 /3 width=5 by tdeq_sort, ex4_intro/
 qed-.
 
-fact cnv_cpm_tdeq_conf_lpr_bind_bind_aux (a) (h) (p) (I) (G0) (L0) (V0) (T0):
-     (∀G,L,T. ⦃G0,L0,ⓑ{p,I}V0.T0⦄ ⬂+ ⦃G,L,T⦄ → IH_cnv_cpm_tdeq_conf_lpr a h G L T) →
-     ⦃G0,L0⦄ ⊢ ⓑ{p,I}V0.T0 ![a,h] →
+fact cnv_cpm_tdeq_conf_lpr_bind_bind_aux (h) (a) (p) (I) (G0) (L0) (V0) (T0):
+     (∀G,L,T. ⦃G0,L0,ⓑ{p,I}V0.T0⦄ ⬂+ ⦃G,L,T⦄ → IH_cnv_cpm_tdeq_conf_lpr h a G L T) →
+     ⦃G0,L0⦄ ⊢ ⓑ{p,I}V0.T0 ![h,a] →
      ∀n1,T1. ⦃G0,L0.ⓑ{I}V0⦄ ⊢ T0 ➡[n1,h] T1 → T0 ≛ T1 →
      ∀n2,T2. ⦃G0,L0.ⓑ{I}V0⦄ ⊢ T0 ➡[n2,h] T2 → T0 ≛ T2 →
      ∀L1. ⦃G0,L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G0,L0⦄ ⊢ ➡[h] L2 →
      ∃∃T. ⦃G0,L1⦄ ⊢ ⓑ{p,I}V0.T1 ➡[n2-n1,h] T & ⓑ{p,I}V0.T1 ≛ T & ⦃G0,L2⦄ ⊢ ⓑ{p,I}V0.T2 ➡[n1-n2,h] T & ⓑ{p,I}V0.T2 ≛ T.
-#a #h #p #I #G0 #L0 #V0 #T0 #IH #H0
+#h #a #p #I #G0 #L0 #V0 #T0 #IH #H0
 #n1 #T1 #H1T01 #H2T01 #n2 #T2 #H1T02 #H2T02
 #L1 #HL01 #L2 #HL02
 elim (cnv_inv_bind … H0) -H0 #_ #HT0
@@ -54,14 +54,14 @@ elim (IH … H1T01 H2T01 … H1T02 H2T02 (L1.ⓑ{I}V0) … (L2.ⓑ{I}V0)) [|*: /
 /3 width=7 by cpm_bind, tdeq_pair, ex4_intro/
 qed-.
 
-fact cnv_cpm_tdeq_conf_lpr_appl_appl_aux (a) (h) (G0) (L0) (V0) (T0):
-     (∀G,L,T. ⦃G0,L0,ⓐV0.T0⦄ ⬂+ ⦃G,L,T⦄ → IH_cnv_cpm_tdeq_conf_lpr a h G L T) →
-     ⦃G0,L0⦄ ⊢ ⓐV0.T0 ![a,h] →
+fact cnv_cpm_tdeq_conf_lpr_appl_appl_aux (h) (a) (G0) (L0) (V0) (T0):
+     (∀G,L,T. ⦃G0,L0,ⓐV0.T0⦄ ⬂+ ⦃G,L,T⦄ → IH_cnv_cpm_tdeq_conf_lpr h a G L T) →
+     ⦃G0,L0⦄ ⊢ ⓐV0.T0 ![h,a] →
      ∀n1,T1. ⦃G0,L0⦄ ⊢ T0 ➡[n1,h] T1 → T0 ≛ T1 →
      ∀n2,T2. ⦃G0,L0⦄ ⊢ T0 ➡[n2,h] T2 → T0 ≛ T2 →
      ∀L1. ⦃G0,L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G0,L0⦄ ⊢ ➡[h] L2 →
      ∃∃T. ⦃G0,L1⦄ ⊢ ⓐV0.T1 ➡[n2-n1,h] T & ⓐV0.T1 ≛ T & ⦃G0,L2⦄ ⊢ ⓐV0.T2 ➡[n1-n2,h] T & ⓐV0.T2 ≛ T.
-#a #h #G0 #L0 #V0 #T0 #IH #H0
+#h #a #G0 #L0 #V0 #T0 #IH #H0
 #n1 #T1 #H1T01 #H2T01 #n2 #T2 #H1T02 #H2T02
 #L1 #HL01 #L2 #HL02
 elim (cnv_inv_appl … H0) -H0 #n0 #p0 #X01 #X02 #_ #_ #HT0 #_ #_ -n0 -p0 -X01 -X02
@@ -70,16 +70,16 @@ elim (IH … H1T01 H2T01 … H1T02 H2T02 … HL01 … HL02) [|*: /2 width=1 by f
 /3 width=7 by cpm_appl, tdeq_pair, ex4_intro/
 qed-.
 
-fact cnv_cpm_tdeq_conf_lpr_cast_cast_aux (a) (h) (G0) (L0) (V0) (T0):
-     (∀G,L,T. ⦃G0,L0,ⓝV0.T0⦄ ⬂+ ⦃G,L,T⦄ → IH_cnv_cpm_tdeq_conf_lpr a h G L T) →
-     ⦃G0,L0⦄ ⊢ ⓝV0.T0 ![a,h] →
+fact cnv_cpm_tdeq_conf_lpr_cast_cast_aux (h) (a) (G0) (L0) (V0) (T0):
+     (∀G,L,T. ⦃G0,L0,ⓝV0.T0⦄ ⬂+ ⦃G,L,T⦄ → IH_cnv_cpm_tdeq_conf_lpr h a G L T) →
+     ⦃G0,L0⦄ ⊢ ⓝV0.T0 ![h,a] →
      ∀n1,V1. ⦃G0,L0⦄ ⊢ V0 ➡[n1,h] V1 → V0 ≛ V1 →
      ∀n2,V2. ⦃G0,L0⦄ ⊢ V0 ➡[n2,h] V2 → V0 ≛ V2 →
      ∀T1. ⦃G0,L0⦄ ⊢ T0 ➡[n1,h] T1 → T0 ≛ T1 →
      ∀T2. ⦃G0,L0⦄ ⊢ T0 ➡[n2,h] T2 → T0 ≛ T2 →
      ∀L1. ⦃G0,L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G0,L0⦄ ⊢ ➡[h] L2 →
      ∃∃T. ⦃G0,L1⦄ ⊢ ⓝV1.T1 ➡[n2-n1,h] T & ⓝV1.T1 ≛ T & ⦃G0,L2⦄ ⊢ ⓝV2.T2 ➡[n1-n2,h] T & ⓝV2.T2 ≛ T.
-#a #h #G0 #L0 #V0 #T0 #IH #H0
+#h #a #G0 #L0 #V0 #T0 #IH #H0
 #n1 #V1 #H1V01 #H2V01 #n2 #V2 #H1V02 #H2V02 #T1 #H1T01 #H2T01 #T2 #H1T02 #H2T02
 #L1 #HL01 #L2 #HL02
 elim (cnv_inv_cast … H0) -H0 #X0 #HV0 #HT0 #_ #_ -X0
@@ -89,10 +89,10 @@ elim (IH … H1T01 H2T01 … H1T02 H2T02 … HL01 … HL02) [|*: /2 width=1 by f
 /3 width=7 by cpm_cast, tdeq_pair, ex4_intro/
 qed-.
 
-fact cnv_cpm_tdeq_conf_lpr_aux (a) (h) (G0) (L0) (T0):
-     (∀G,L,T. ⦃G0,L0,T0⦄ ⬂+ ⦃G,L,T⦄ → IH_cnv_cpm_tdeq_conf_lpr a h G L T) →
-     ∀G,L,T. G0 = G → L0 = L → T0 = T → IH_cnv_cpm_tdeq_conf_lpr a h G L T.
-#a #h #G0 #L0 #T0 #IH1 #G #L * [| * [| * ]]
+fact cnv_cpm_tdeq_conf_lpr_aux (h) (a) (G0) (L0) (T0):
+     (∀G,L,T. ⦃G0,L0,T0⦄ ⬂+ ⦃G,L,T⦄ → IH_cnv_cpm_tdeq_conf_lpr h a G L T) →
+     ∀G,L,T. G0 = G → L0 = L → T0 = T → IH_cnv_cpm_tdeq_conf_lpr h a G L T.
+#h #a #G0 #L0 #T0 #IH1 #G #L * [| * [| * ]]
 [ #I #HG0 #HL0 #HT0 #HT #n1 #X1 #H1X1 #H2X1 #n2 #X2 #H1X2 #H2X2 #L1 #HL1 #L2 #HL2 destruct
   elim (cpm_tdeq_inv_atom_sn … H1X1 H2X1) -H1X1 -H2X1 *
   elim (cpm_tdeq_inv_atom_sn … H1X2 H2X2) -H1X2 -H2X2 *
@@ -127,9 +127,9 @@ fact cnv_cpm_tdeq_conf_lpr_aux (a) (h) (G0) (L0) (T0):
 ]
 qed-.
 
-lemma cnv_cpm_tdeq_conf_lpr (a) (h) (G0) (L0) (T0):
-      IH_cnv_cpm_tdeq_conf_lpr a h G0 L0 T0.
-#a #h #G0 #L0 #T0
+lemma cnv_cpm_tdeq_conf_lpr (h) (a) (G0) (L0) (T0):
+      IH_cnv_cpm_tdeq_conf_lpr h a G0 L0 T0.
+#h #a #G0 #L0 #T0
 @(fqup_wf_ind (Ⓣ) … G0 L0 T0) -G0 -L0 -T0 #G0 #L0 #T0 #IH
 /3 width=17 by cnv_cpm_tdeq_conf_lpr_aux/
 qed-.
