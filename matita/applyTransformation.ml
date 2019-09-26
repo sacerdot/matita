@@ -96,3 +96,15 @@ class status =
   method ppobj obj =
    snd (ntxt_of_cic_object ~map_unicode_to_tex:false 80 self obj)
  end
+
+let notation_pp_term status term =
+  let to_pres = Content2pres.nterm2pres ?prec:None in
+  let content = term in
+  let size = 80 in
+  let ids_to_nrefs = Hashtbl.create 1 in
+  let pres = to_pres status ~ids_to_nrefs content in
+  let pres = CicNotationPres.mpres_of_box pres in
+   BoxPp.render_to_string ~map_unicode_to_tex:(Helm_registry.get_bool "matita.paste_unicode_as_tex")
+    (function x::_ -> x | _ -> assert false) size pres
+
+let _ = NotationPp.set_pp_term (fun status y -> snd (notation_pp_term (Obj.magic status) y))

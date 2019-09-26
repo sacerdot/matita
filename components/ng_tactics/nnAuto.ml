@@ -1092,8 +1092,7 @@ let get_cands retrieve_for diff empty gty weak_gty =
             cands, diff more_cands cands
 ;;
 
-let is_a_needed_uri s d = 
-  prerr_endline ("DEBUG: " ^ d ^ ": "^ s);
+let is_a_needed_uri s =
   s = "cic:/matita/basics/logic/eq.ind" ||
   s = "cic:/matita/basics/logic/sym_eq.con" ||
   s = "cic:/matita/basics/logic/trans_eq.con" ||
@@ -1153,7 +1152,7 @@ let get_candidates ?(smart=true) ~pfailed depth flags status cache signature gty
       if flags.local_candidates then global_cands,smart_global_cands
       else let filter = List.filter (function Ast.NRef NReference.Ref (uri,_) -> is_a_needed_uri
                                                                                    (NUri.string_of_uri
-                                                                                      uri) "GLOBAL" | _ -> false) 
+                                                                                      uri) | _ -> false)
         in filter global_cands,filter smart_global_cands
   in
   (* we now compute local candidates *)
@@ -1173,7 +1172,7 @@ let get_candidates ?(smart=true) ~pfailed depth flags status cache signature gty
    if flags.local_candidates then local_cands,smart_local_cands
    else let filter = List.filter (function Ast.NRef NReference.Ref (uri,_) -> is_a_needed_uri
                                                                                 (NUri.string_of_uri
-                                                                                   uri) "LOCAL" | _ -> false) 
+                                                                                   uri) | _ -> false)
      in filter local_cands,filter smart_local_cands
   in
   (* we now splits candidates in facts or not facts *)
@@ -1936,7 +1935,7 @@ let auto_lowtac ~params:(univ,flags as params) status goal =
     let gty = get_goalty status goal in
     let ctx = ctx_of gty in
     let candidates = candidates_from_ctx univ ctx status in 
-    auto_tac' candidates ~local_candidates:false ~use_given_only:false flags ~trace_ref:(ref [])
+    auto_tac' candidates ~local_candidates:true ~use_given_only:false flags ~trace_ref:(ref [])
 
 let auto_tac ~params:(univ,flags) ?(trace_ref=ref []) status =
     let candidates = candidates_from_ctx univ [] status in

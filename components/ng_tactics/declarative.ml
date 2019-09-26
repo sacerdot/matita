@@ -113,21 +113,6 @@ let lambda_abstract_tac id t1 status goal =
       block_tac [exact_tac ("",0,(Ast.Binder (`Lambda,(Ast.Ident (id,None),Some t1),Ast.Implicit
                                                 `JustOne))); clear_volatile_params_tac;
                  add_parameter_tac "volatile_newhypo" id] status
-(*
-      match t2 with
-      | None ->
-        let (_,_,t1) = t1 in
-        block_tac [exact_tac ("",0,(Ast.Binder (`Lambda,(Ast.Ident (id,None),Some t1),Ast.Implicit
-                                                  `JustOne))); clear_volatile_params_tac] status
-      | Some t2 ->
-        let status,res = are_convertible t1 t2 status goal in
-        if res then
-          let (_,_,t2) = t2 in
-          block_tac [exact_tac ("",0,(Ast.Binder (`Lambda,(Ast.Ident (id,None),Some t2),Ast.Implicit
-                                                    `JustOne))); clear_volatile_params_tac] status
-        else
-          raise NotEquivalentTypes
-*)
     else
       raise FirstTypeWrong
   | _ -> raise NotAProduct
@@ -343,6 +328,7 @@ let conclude t1 status =
   let ctx = ctx_of cicgty in
   let _,gty = term_of_cic_term status cicgty ctx in
   match gty with
+    (* The first term of this Appl should probably be "eq" *)
     NCic.Appl [_;_;plhs;_] ->
     if alpha_eq_tacterm_kerterm t1 plhs status goal then
       add_parameter_tac "volatile_context" "rewrite" status
@@ -389,10 +375,7 @@ let rewritingstep rhs just last_step status =
       in
       let continuation =
         if last_step then
-          (*CSC:manca controllo sul fatto che rhs sia convertibile con prhs*)
           let todo = [just'] @ (done_continuation status) in
-          (*       let todo = if mustdot status then List.append todo [dot_tac] else todo *)
-          (*       in *)
           block_tac todo
         else
           let (_,_,rhs) = rhs in
@@ -496,7 +479,11 @@ let we_proceed_by_induction_on t1 t2 status =
   let t1 = txt, len, Ast.Appl [t1; Ast.Implicit `Vector] in
   let indtyinfo = ref None in
   let sort = ref (NCic.Rel 1) in
-  let cl = ref [] in
+  let cl = ref [] in (* this is a ref on purpose, as the block of code after sort_of_goal_tac in
+  block_tac acts as a block of asynchronous code, in which cl gets modified with the info retrieved
+  with analize_indty_tac, and later used to label each new goal with a costructor name. Using a
+  plain list this doesn't seem to work, as add_names_to_goals_tac would immediately act on an empty
+  list, instead of acting on the list of constructors *)
   try
     assert_tac t2 None status goal (block_tac [
         analyze_indty_tac ~what:t1 indtyinfo;
