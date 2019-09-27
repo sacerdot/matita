@@ -67,7 +67,7 @@ pcre \
 str \
 unix \
 lablgtk3 \
-lablgtk3.sourceview3 \
+lablgtk3-sourceview3 \
 netstring \
 ulex-camlp5 \
 zip \
@@ -92,7 +92,7 @@ $FINDLIB_COMREQUIRES \
 "
 FINDLIB_REQUIRES="\
 $FINDLIB_CREQUIRES \
-lablgtk3.sourceview3 \
+lablgtk3-sourceview3 \
 "
 
 for r in $FINDLIB_LIBSREQUIRES $FINDLIB_REQUIRES
