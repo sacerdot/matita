@@ -7,6 +7,7 @@ INTERFACE_FILES = \
 	nCicElim.mli \
 	nTactics.mli \
         nnAuto.mli \
+	declarative.mli \
 	nDestructTac.mli \
 	nInversion.mli
 

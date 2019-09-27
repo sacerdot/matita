@@ -13,6 +13,7 @@
 
 val print_tac: bool -> string -> 's NTacStatus.tactic
 
+val id_tac: 's NTacStatus.tactic
 val dot_tac: 's NTacStatus.tactic
 val branch_tac: ?force:bool -> 's NTacStatus.tactic
 val shift_tac: 's NTacStatus.tactic
@@ -75,7 +76,14 @@ val atomic_tac : NTacStatus.tac_status NTacStatus.tactic -> 's NTacStatus.tactic
  (*(NTacStatus.tac_status -> 'c #NTacStatus.status) ->
     (#NTacStatus.tac_status as 'f) -> 'f*)
 
-type indtyinfo 
+(* type indtyinfo  *)
+type indtyinfo = {
+        rightno: int;
+        leftno: int;
+        consno: int;
+        reference: NReference.reference;
+        cl: NCic.constructor list;
+ }
 
 val ref_of_indtyinfo : indtyinfo -> NReference.reference
 
@@ -89,3 +97,7 @@ val find_in_context : 'a -> ('a * 'b) list -> int
 val inversion_tac: 
    what:NTacStatus.tactic_term -> where:NTacStatus.tactic_pattern -> 
      's NTacStatus.tactic
+
+val exact_tac: NTacStatus.tactic_term -> 's NTacStatus.tactic
+val first_tac: 's NTacStatus.tactic list -> 's NTacStatus.tactic
+val sort_of_goal_tac: NCic.term ref -> 's NTacStatus.tactic

@@ -232,6 +232,15 @@ let normalize status ?delta ctx t =
   status, (ctx, t)
 ;;
   
+let are_convertible status ctx a b =
+  let status, (_,a) = relocate status ctx a in
+  let status, (_,b) = relocate status ctx b in
+  let _n,_h,metasenv,subst,_o = status#obj in
+  let res = NCicReduction.are_convertible status metasenv subst ctx a b in
+   status, res
+;;
+let are_convertible a b c d = wrap "are_convertible" (are_convertible a b c) d;;
+
 let unify status ctx a b =
   let status, (_,a) = relocate status ctx a in
   let status, (_,b) = relocate status ctx b in
@@ -460,7 +469,7 @@ let analyse_indty status ty =
  let _,_,_,cl = List.nth tl i in
  let consno = List.length cl in
  let left, right = HExtlib.split_nth lno args in
- status, (ref, consno, left, right)
+ status, (ref, consno, left, right, cl)
 ;;
 
 let apply_subst status ctx t =

@@ -1,14 +1,26 @@
-disambiguateChoices.cmo : nnumber_notation.cmi disambiguateChoices.cmi
-disambiguateChoices.cmx : nnumber_notation.cmx disambiguateChoices.cmi
+disambiguateChoices.cmo : \
+    nnumber_notation.cmi \
+    disambiguateChoices.cmi
+disambiguateChoices.cmx : \
+    nnumber_notation.cmx \
+    disambiguateChoices.cmi
 disambiguateChoices.cmi :
-grafiteDisambiguate.cmo : nCicDisambiguate.cmi disambiguateChoices.cmi \
+grafiteDisambiguate.cmo : \
+    nCicDisambiguate.cmi \
+    disambiguateChoices.cmi \
     grafiteDisambiguate.cmi
-grafiteDisambiguate.cmx : nCicDisambiguate.cmx disambiguateChoices.cmx \
+grafiteDisambiguate.cmx : \
+    nCicDisambiguate.cmx \
+    disambiguateChoices.cmx \
     grafiteDisambiguate.cmi
 grafiteDisambiguate.cmi :
-nCicDisambiguate.cmo : nCicDisambiguate.cmi
-nCicDisambiguate.cmx : nCicDisambiguate.cmi
+nCicDisambiguate.cmo : \
+    nCicDisambiguate.cmi
+nCicDisambiguate.cmx : \
+    nCicDisambiguate.cmi
 nCicDisambiguate.cmi :
-nnumber_notation.cmo : nnumber_notation.cmi
-nnumber_notation.cmx : nnumber_notation.cmi
+nnumber_notation.cmo : \
+    nnumber_notation.cmi
+nnumber_notation.cmx : \
+    nnumber_notation.cmi
 nnumber_notation.cmi :

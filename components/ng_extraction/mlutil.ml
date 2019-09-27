@@ -1242,7 +1242,7 @@ and ml_size_array l = Array.fold_left (fun a t -> a + ml_size t) 0 l*)
 	   let n = List.length i in
 	   let cand = lift n cand in
 	   let cand = pop n (non_stricts add cand t) in
-	   List.merge (compare) cand c) [] v
+	   List.merge (-) cand c) [] v
 	(* [merge] may duplicates some indices, but I don't mind. *)
   | MLmagic t ->
       non_stricts add cand t

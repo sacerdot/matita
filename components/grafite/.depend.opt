@@ -1,3 +1,6 @@
 grafiteAst.cmx :
-grafiteAstPp.cmx : grafiteAst.cmx grafiteAstPp.cmi
-grafiteAstPp.cmi : grafiteAst.cmx
+grafiteAstPp.cmx : \
+    grafiteAst.cmx \
+    grafiteAstPp.cmi
+grafiteAstPp.cmi : \
+    grafiteAst.cmx

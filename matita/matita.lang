@@ -106,6 +106,32 @@
          <keyword>inversion</keyword>
          <keyword>lapply</keyword>
          <keyword>destruct</keyword>
+         <keyword>assume</keyword>
+         <keyword>suppose</keyword>
+         <keyword>that</keyword>
+         <keyword>is</keyword>
+         <keyword>equivalent</keyword>
+         <keyword>to</keyword>
+         <keyword>we</keyword> 
+         <keyword>need</keyword> 
+         <keyword>prove</keyword> 
+         <keyword>or</keyword> 
+         <keyword>equivalently</keyword> 
+         <keyword>by</keyword> 
+         <keyword>done</keyword> 
+         <keyword>proved</keyword> 
+         <keyword>have</keyword> 
+         <keyword>such</keyword> 
+         <keyword>the</keyword> 
+         <keyword>thesis</keyword> 
+         <keyword>becomes</keyword> 
+         <keyword>conclude</keyword> 
+         <keyword>obtain</keyword> 
+         <keyword>proceed</keyword> 
+         <keyword>induction</keyword> 
+         <keyword>case</keyword> 
+         <keyword>hypothesis</keyword> 
+         <keyword>know</keyword> 
 
           <!-- commands -->
           <keyword>alias</keyword>

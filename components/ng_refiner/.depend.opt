@@ -1,17 +1,36 @@
-nCicCoercion.cmx : nDiscriminationTree.cmx nCicUnifHint.cmx \
-    nCicMetaSubst.cmx nCicCoercion.cmi
-nCicCoercion.cmi : nCicUnifHint.cmi
-nCicMetaSubst.cmx : nCicMetaSubst.cmi
+nCicCoercion.cmx : \
+    nDiscriminationTree.cmx \
+    nCicUnifHint.cmx \
+    nCicMetaSubst.cmx \
+    nCicCoercion.cmi
+nCicCoercion.cmi : \
+    nCicUnifHint.cmi
+nCicMetaSubst.cmx : \
+    nCicMetaSubst.cmi
 nCicMetaSubst.cmi :
-nCicRefineUtil.cmx : nCicMetaSubst.cmx nCicRefineUtil.cmi
+nCicRefineUtil.cmx : \
+    nCicMetaSubst.cmx \
+    nCicRefineUtil.cmi
 nCicRefineUtil.cmi :
-nCicRefiner.cmx : nCicUnification.cmx nCicRefineUtil.cmx nCicMetaSubst.cmx \
-    nCicCoercion.cmx nCicRefiner.cmi
-nCicRefiner.cmi : nCicCoercion.cmi
-nCicUnifHint.cmx : nDiscriminationTree.cmx nCicMetaSubst.cmx \
+nCicRefiner.cmx : \
+    nCicUnification.cmx \
+    nCicRefineUtil.cmx \
+    nCicMetaSubst.cmx \
+    nCicCoercion.cmx \
+    nCicRefiner.cmi
+nCicRefiner.cmi : \
+    nCicCoercion.cmi
+nCicUnifHint.cmx : \
+    nDiscriminationTree.cmx \
+    nCicMetaSubst.cmx \
     nCicUnifHint.cmi
 nCicUnifHint.cmi :
-nCicUnification.cmx : nCicUnifHint.cmx nCicMetaSubst.cmx nCicUnification.cmi
-nCicUnification.cmi : nCicCoercion.cmi
-nDiscriminationTree.cmx : nDiscriminationTree.cmi
+nCicUnification.cmx : \
+    nCicUnifHint.cmx \
+    nCicMetaSubst.cmx \
+    nCicUnification.cmi
+nCicUnification.cmi : \
+    nCicCoercion.cmi
+nDiscriminationTree.cmx : \
+    nDiscriminationTree.cmi
 nDiscriminationTree.cmi :

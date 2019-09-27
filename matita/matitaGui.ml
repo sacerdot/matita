@@ -601,11 +601,15 @@ class gui () =
           let saved_use_library= !MultiPassDisambiguator.use_library in
           try
            MultiPassDisambiguator.use_library := !all_disambiguation_passes;
+           prerr_endline "PRIMA";
            f script;
            MultiPassDisambiguator.use_library := saved_use_library;
-           unlock_world ()
+           prerr_endline "DOPO";
+           unlock_world () ;
+           prerr_endline "FINE";
           with
            | MultiPassDisambiguator.DisambiguationError (offset,errorll) ->
+              prerr_endline "EXC1";
               (try
                 interactive_error_interp 
                  ~all_passes:!all_disambiguation_passes source_view#source_buffer
@@ -622,7 +626,9 @@ class gui () =
                        notify_exn source_view exc);
                 | exc -> notify_exn source_view exc);
               MultiPassDisambiguator.use_library := saved_use_library;
-              unlock_world ()
+              prerr_endline "DOPO1";
+              unlock_world ();
+              prerr_endline "FINE1"
            | exc ->
               (try notify_exn source_view exc
                with Sys.Break as e -> notify_exn source_view e);

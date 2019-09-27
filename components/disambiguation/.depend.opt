@@ -1,7 +1,15 @@
-disambiguate.cmx : disambiguateTypes.cmx disambiguate.cmi
-disambiguate.cmi : disambiguateTypes.cmi
-disambiguateTypes.cmx : disambiguateTypes.cmi
+disambiguate.cmx : \
+    disambiguateTypes.cmx \
+    disambiguate.cmi
+disambiguate.cmi : \
+    disambiguateTypes.cmi
+disambiguateTypes.cmx : \
+    disambiguateTypes.cmi
 disambiguateTypes.cmi :
-multiPassDisambiguator.cmx : disambiguateTypes.cmx disambiguate.cmx \
+multiPassDisambiguator.cmx : \
+    disambiguateTypes.cmx \
+    disambiguate.cmx \
     multiPassDisambiguator.cmi
-multiPassDisambiguator.cmi : disambiguateTypes.cmi disambiguate.cmi
+multiPassDisambiguator.cmi : \
+    disambiguateTypes.cmi \
+    disambiguate.cmi

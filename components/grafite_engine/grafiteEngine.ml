@@ -404,6 +404,17 @@ let eval_add_constraint status acyclic u1 u2 =
 ;;
 
 let eval_ng_tac tac =
+ let just_to_tacstatus_just just text prefix_len =
+    match just with
+    | `Term t -> `Term (text,prefix_len,t)
+    | `Auto (l,params) -> 
+    (
+        match l with
+        | None -> `Auto (None,params)
+        | Some l -> `Auto (Some (List.map (fun t -> (text,prefix_len,t)) l),params)
+    )
+    | _ -> assert false
+ in
  let rec aux f (text, prefix_len, tac) =
   match tac with
   | GrafiteAst.NApply (_loc, t) -> NTactics.apply_tac (text,prefix_len,t) 
@@ -481,6 +492,39 @@ let eval_ng_tac tac =
       NTactics.block_tac (List.map (fun x -> aux f (text,prefix_len,x)) l)
   |GrafiteAst.NRepeat (_,tac) ->
       NTactics.repeat_tac (f f (text, prefix_len, tac))
+  |GrafiteAst.Assume (_,id,t) -> Declarative.assume id (text,prefix_len,t)
+  |GrafiteAst.Suppose (_,t,id) -> Declarative.suppose (text,prefix_len,t) id
+  |GrafiteAst.By_just_we_proved (_,j,t1,s) -> Declarative.by_just_we_proved
+  (just_to_tacstatus_just j text prefix_len) (text,prefix_len,t1) s
+  |GrafiteAst.We_need_to_prove (_, t, id) -> Declarative.we_need_to_prove (text,prefix_len,t) id
+  |GrafiteAst.BetaRewritingStep (_, t) -> Declarative.beta_rewriting_step (text,prefix_len,t)
+  | GrafiteAst.Bydone (_, j) -> Declarative.bydone (just_to_tacstatus_just j text prefix_len)
+  | GrafiteAst.ExistsElim (_, just, id1, t1, t2, id2) ->
+     Declarative.existselim (just_to_tacstatus_just just text prefix_len) id1 (text,prefix_len,t1)
+     (text,prefix_len,t2) id2
+  | GrafiteAst.AndElim(_,just,t1,id1,t2,id2) -> Declarative.andelim (just_to_tacstatus_just just
+    text prefix_len) (text,prefix_len,t1) id1 (text,prefix_len,t2) id2
+  | GrafiteAst.Thesisbecomes (_, t1) -> Declarative.thesisbecomes (text,prefix_len,t1)
+  | GrafiteAst.RewritingStep (_,rhs,just,cont) ->
+     Declarative.rewritingstep (text,prefix_len,rhs)
+                                (match just with 
+                                  `Term _
+                                | `Auto _ -> just_to_tacstatus_just just text prefix_len
+                                |`Proof -> `Proof
+                                |`SolveWith t -> `SolveWith (text,prefix_len,t)
+                                )
+                                cont
+  | GrafiteAst.Obtain (_,id,t1) ->
+     Declarative.obtain id (text,prefix_len,t1)
+  | GrafiteAst.Conclude (_,t1) ->
+     Declarative.conclude (text,prefix_len,t1)
+  | GrafiteAst.We_proceed_by_cases_on (_, t, t1) ->
+     Declarative.we_proceed_by_cases_on (text,prefix_len,t) (text,prefix_len,t1)
+  | GrafiteAst.We_proceed_by_induction_on (_, t, t1) ->
+     Declarative.we_proceed_by_induction_on (text,prefix_len,t) (text,prefix_len,t1)
+  | GrafiteAst.Byinduction (_, t, id) -> Declarative.byinduction (text,prefix_len,t) id
+  | GrafiteAst.Case (_,id,params) -> Declarative.case id params
+  | GrafiteAst.PrintStack (_) -> Declarative.print_stack
  in
   aux aux tac (* trick for non uniform recursion call *)
 ;;
