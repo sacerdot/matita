@@ -12,7 +12,7 @@ table {
    class "wine"
    [ { "iterated dynamic typing" * } {
         [ { "context-sensitive iterated native type assignment" * } {
-             [ [ "for terms" ] "ntas" + "( ⦃?,?⦄ ⊢ ? :*[?,?,?] ? )" "ntas_nta" + "ntas_preserve" * ]
+             [ [ "for terms" ] "ntas" + "( ⦃?,?⦄ ⊢ ? :*[?,?,?] ? )" "ntas_cpcs" + "ntas_nta" + "ntas_nta_ind" + " ntas_ntas" + "ntas_preserve" * ]
           }
         ]
      }

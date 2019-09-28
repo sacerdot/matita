@@ -1,0 +1,115 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/rt_transition/cpr_drops_basic.ma".
+include "basic_2/dynamic/nta_ind.ma".
+
+lemma lpr_cpr_conf_cpc_sym (h) (G) (L1):
+      ∀T1,T2:term. ⦃G,L1⦄ ⊢ T1 ➡[h] T2 →
+      ∀L2. ⦃G,L1⦄ ⊢ ➡[h] L2 → ⦃G,L2⦄ ⊢ T2 ⬌*[h] T1.
+#h #G #L1 #T1 #T2 #HT12 #L2 #HL12
+elim (lpr_cpr_conf_dx … HT12 … HL12) -L1 #T #HT1 #HT2
+/3 width=3 by cprs_div, cpm_cpms/
+qed.
+
+(* NATIVE TYPE ASSIGNMENT FOR TERMS *****************************************)
+
+definition IH_nta (h) (G) (L1) (T1) ≝
+           ∀U. ⦃G,L1⦄ ⊢ T1 :[h,𝟐] U → ∀T2. ⦃G,L1⦄ ⊢ T1 ➡[h] T2 →
+           ∀L2. ⦃G,L1⦄ ⊢ ➡[h] L2 → ⦃G,L2⦄ ⊢ T2 :[h,𝟐] U.
+
+definition IH_cnv (h) (G) (L1) (T1) ≝
+           (⦃G,L1⦄ ⊢ T1 ![h,𝟐]) → ∀T2. ⦃G,L1⦄ ⊢ T1 ➡[h] T2 →
+           ∀L2. ⦃G,L1⦄ ⊢ ➡[h] L2 → ⦃G,L2⦄ ⊢ T2 ![h,𝟐].
+
+(* Specific proofs for restricted applicability *****************************)
+
+lemma nta_to_cnv (h) (G) (L1) (T1):
+      IH_nta h G L1 T1 → IH_cnv h G L1 T1.
+#h #G #L1 #T1 #H #HT1 #T2 #HT12 #L2 #HL12
+elim (cnv_nta_sn … HT1) -HT1 #U1 #HTU1
+/3 width=2 by nta_fwd_cnv_sn/
+qed-.
+
+(* Note preservation of type without big-tree theorem *)
+lemma nta_cpr_conf_lpr (h) (G) (L1) (T1): IH_nta h G L1 T1.
+#h #G #L1 #T1 @(fqup_wf_ind (Ⓣ) … G L1 T1) -G -L1 -T1
+#G0 #L0 #T0 #IH #U
+@(insert_eq_0 … T0) #T1
+@(insert_eq_0 … L0) #L1
+@(insert_eq_0 … G0) #G
+#H @(nta_ind_rest_cnv … H) -G -L1 -T1 -U
+[ #G #L1 #s #HG0 #HL0 #HT0 #X #HX #L2 #HL12 destruct -IH
+  lapply (cpr_inv_sort1 … HX) -HX #H destruct //
+| #G #K1 #V1 #W1 #U #HVW1 #HW1U #_ #HG0 #HL0 #HT0 #X #HX #Y #HY destruct
+  elim (lpr_inv_pair_sn … HY) -HY #K2 #V2 #HK12 #HV12 #H destruct
+  elim (cpr_inv_zero1 … HX) -HX
+  [ #H destruct
+    /4 width=6 by nta_ldef, fqu_fqup, fqu_lref_O/
+  | * #Y1 #X1 #X2 #HX12 #HX2 #H destruct -HV12
+    @(nta_lifts_bi … (Ⓣ) … HX2 … HW1U) -X -U
+    /4 width=6 by drops_refl, drops_drop, fqu_fqup, fqu_lref_O/
+  ]
+| #G #K1 #W1 #V1 #HW1 #HWV1 #HG0 #HL0 #HT0 #X #HX #Y #HY destruct
+  elim (lpr_inv_pair_sn … HY) -HY #K2 #W2 #HK12 #HW12 #H destruct
+  elim (cpr_inv_zero1 … HX) -HX
+  [ #H destruct
+    lapply (nta_to_cnv … HW1 … W1 … HK12)
+    [1,2: /3 width=1 by fqu_fqup, fqu_lref_O/ ] #H
+    lapply (cnv_lifts … H (Ⓣ) … (K2.ⓛW2) … HWV1) -H
+    [ /3 width=1 by drops_refl, drops_drop/ ] #HV1
+    elim (cpm_lifts_sn … HW12 (Ⓣ) … (K1.ⓛW2) … HWV1) -HWV1
+    [2: /3 width=1 by drops_refl, drops_drop/ ] #V2 #HWV2 #HV12
+    lapply (nta_to_cnv … HW1 … HW12 … HK12) -HW1 -HW12
+    [ /3 width=1 by fqu_fqup, fqu_lref_O/ ] -IH #HW2
+    @(nta_conv_cnv … V2)
+    /3 width=3 by nta_ldec_cnv, lpr_cpr_conf_cpc_sym, lpr_bind_refl_dx/
+  | * #Y1 #X1 #X2 #_ #_ #H destruct
+  ]
+| #I1 #G #K1 #T1 #U1 #i #Hi #HTU1 #_ #HG0 #HL0 #HT0 #X #HX #Y #HY destruct
+  elim (lpr_inv_bind_sn … HY) -HY #I2 #K2 #HK12 #_ #H destruct
+  elim (cpr_inv_lref1 … HX) -HX
+  [ #H destruct /4 width=6 by nta_lref, fqu_fqup/
+  | * #Z1 #Y1 #X1 #HiX1 #HX1 #H destruct
+    @(nta_lifts_bi … (Ⓣ) … HX1 … HTU1) -X -U1
+    /4 width=6 by drops_refl, drops_drop, fqu_fqup/
+  ]
+| #p #I #G #L1 #V1 #T1 #U #HV1 #HT1 #_ #HG0 #HL0 #HT0 #X #HX #L2 #HL12 destruct
+  elim (cpm_inv_bind1 … HX) -HX *
+  [ #V2 #T2 #HV12 #HT12 #H destruct
+    lapply (IH … HT1 T1 … (L2.ⓑ{I}V1) ?)
+    [4:|*: /2 width=1 by lpr_bind_refl_dx/ ] #H
+    lapply (nta_fwd_cnv_dx … H) -H #HU
+    @(nta_conv_cnv … (ⓑ{p,I}V2.U))
+    [ @nta_bind_cnv [ /3 width=6 by nta_to_cnv/ | /4 width=8 by lpr_bind, ext2_pair/ ]
+    | /3 width=3 by lpr_cpr_conf_cpc_sym, cpr_pair_sn/
+    | /4 width=6 by nta_to_cnv, cnv_bind/
+    ]
+  | #U1 #HUT1 #HU1X #H1 #H2 destruct
+(*  
+    elim (cpr_subst h G (L1.ⓓV1) U 0)
+    [|*: /3 width=3 by drops_refl/ ] #U0 #T0 #HU0 #HTU0
+    lapply (nta_conv_cnv … HT1 … U0 ??)
+    [ @(cnv_lifts … HTU0) 
+    
+    @(IH … HU1X … HL12) -L2 -X
+    @(nta_conv_cnv … T0)
+    [
+    | @cpcs_cprs_sn @(cprs_step_sn … (+ⓓV1.U0))
+      /2 width=1 by cpm_bind/ /3 width=3 by cpm_cpms, cpm_zeta/
+  
+  
+    elim (cpm_lifts_sn … HU1X (Ⓣ) … (L1.ⓓV1) … HUT1) -U1
+    [| /3 width=1 by drops_refl, drops_drop/ ] #T2 #HXT2 #HT12
+*)

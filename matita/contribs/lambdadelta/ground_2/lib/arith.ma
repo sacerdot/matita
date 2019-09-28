@@ -51,7 +51,10 @@ qed.
 
 (* Equalities ***************************************************************)
 
-lemma plus_SO: ∀n. n + 1 = ↑n.
+lemma plus_SO_sn (n): 1 + n = ↑n.
+// qed-.
+
+lemma plus_SO_dx (n): n + 1 = ↑n.
 // qed.
 
 lemma minus_plus_m_m_commutative: ∀n,m:nat. n = m + n - m.

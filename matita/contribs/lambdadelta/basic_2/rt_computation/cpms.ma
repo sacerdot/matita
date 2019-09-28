@@ -144,7 +144,7 @@ lemma cprs_refl: ∀h,G,L. reflexive … (cpms h G L 0).
 lemma cpms_sort (h) (G) (L) (n):
                 ∀s. ⦃G,L⦄ ⊢ ⋆s ➡*[n,h] ⋆((next h)^n s).
 #h #G #L #n elim n -n [ // ]
-#n #IH #s <plus_SO
+#n #IH #s <plus_SO_dx
 /3 width=3 by cpms_step_dx, cpm_sort/
 qed.
 

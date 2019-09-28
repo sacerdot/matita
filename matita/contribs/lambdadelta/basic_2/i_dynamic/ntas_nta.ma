@@ -17,12 +17,72 @@ include "basic_2/i_dynamic/ntas_preserve.ma".
 
 (* ITERATED NATIVE TYPE ASSIGNMENT FOR TERMS ********************************)
 
+(* Advanced properties of native validity for terms *************************)
+
+lemma cnv_appl_ntas_ge (h) (a) (G) (L):
+      ∀m,n. m ≤ n → ad a n → ∀V,W. ⦃G,L⦄ ⊢ V :[h,a] W →
+      ∀p,T,U. ⦃G,L⦄ ⊢ T :*[h,a,m] ⓛ{p}W.U → ⦃G,L⦄ ⊢ ⓐV.T ![h,a].
+#h #a #G #L #m #n #Hmn #Hn #V #W #HVW #p #T #U #HTU
+elim (cnv_inv_cast … HVW) -HVW #W0 #HW #HV #HW0 #HVW0
+elim HTU -HTU #U0 #H #HT #HU0 #HTU0
+elim (cnv_cpms_conf … H … HU0 0 (ⓛ{p}W0.U)) -H -HU0
+[| /2 width=1 by cpms_bind/ ] -HW0 <minus_n_O #X0 #HUX0 #H
+elim (cpms_inv_abst_sn … H) -H #W1 #U1 #HW01 #_ #H destruct
+/3 width=13 by cnv_appl_ge, cpms_cprs_trans/
+qed-.
+
+(* Advanced inversion lemmas of native validity for terms *******************)
+
+lemma cnv_inv_appl_ntas (h) (a) (G) (L):
+      ∀V,T. ⦃G,L⦄ ⊢ ⓐV.T ![h,a] →
+      ∃∃n,p,W,T,U. ad a n & ⦃G,L⦄ ⊢ V :[h,a] W & ⦃G,L⦄ ⊢ T :*[h,a,n] ⓛ{p}W.U.
+#h #a #G #L #V #T #H
+elim (cnv_inv_appl … H) -H #n #p #W #U #Hn #HV #HT #HVW #HTU
+/3 width=9 by cnv_cpms_nta, cnv_cpms_ntas, ex3_5_intro/
+qed-.
+
 (* Properties with native type assignment for terms *************************)
 
 lemma nta_ntas (h) (a) (G) (L):
       ∀T,U. ⦃G,L⦄ ⊢ T :[h,a] U → ⦃G,L⦄ ⊢ T :*[h,a,1] U.
 #h #a #G #L #T #U #H
 elim (cnv_inv_cast … H) -H /2 width=3 by ntas_intro/
+qed-.
+
+lemma ntas_step_sn (h) (a) (G) (L):
+      ∀T1,T. ⦃G,L⦄ ⊢ T1 :[h,a] T →
+      ∀n,T2. ⦃G,L⦄ ⊢ T :*[h,a,n] T2 → ⦃G,L⦄ ⊢ T1 :*[h,a,↑n] T2.
+#h #a #G #L #T1 #T #H #n #T2 * #X2 #HT2 #HT #H1TX2 #H2TX2
+elim (cnv_inv_cast … H) -H #X1 #_ #HT1 #H1TX1 #H2TX1
+elim (cnv_cpms_conf … HT … H1TX1 … H2TX2) -T <minus_n_O <minus_O_n <plus_SO_sn #X #HX1 #HX2
+/3 width=5 by ntas_intro, cprs_trans, cpms_trans/
+qed-.
+
+lemma ntas_step_dx (h) (a) (G) (L):
+      ∀n,T1,T. ⦃G,L⦄ ⊢ T1 :*[h,a,n] T →
+      ∀T2. ⦃G,L⦄ ⊢ T :[h,a] T2 → ⦃G,L⦄ ⊢ T1 :*[h,a,↑n] T2.
+#h #a #G #L #n #T1 #T * #X1 #HT #HT1 #H1TX1 #H2TX1 #T2 #H
+elim (cnv_inv_cast … H) -H #X2 #HT2 #_ #H1TX2 #H2TX2
+elim (cnv_cpms_conf … HT … H1TX1 … H2TX2) -T <minus_n_O <minus_O_n <plus_SO_dx #X #HX1 #HX2
+/3 width=5 by ntas_intro, cprs_trans, cpms_trans/
+qed-.
+
+lemma nta_appl_ntas_zero (h) (a) (G) (L): ad a 0 →
+      ∀V,W. ⦃G,L⦄ ⊢ V :[h,a] W → ∀p,T,U0. ⦃G,L⦄ ⊢ T :*[h,a,0] ⓛ{p}W.U0 →
+      ∀U. ⦃G,L.ⓛW⦄ ⊢ U0 :[h,a] U → ⦃G,L⦄ ⊢ ⓐV.T :[h,a] ⓐV.ⓛ{p}W.U.
+#h #a #G #L #Ha #V #W #HVW #p #T #U0 #HTU0 #U #HU0
+lapply (nta_fwd_cnv_dx … HVW) #HW
+lapply (nta_bind_cnv … HW … HU0 p) -HW -HU0 #HU0
+elim (ntas_step_dx … HTU0 … HU0) -HU0 #X #HU #_ #HUX #HTX
+/4 width=9 by cnv_appl_ntas_ge, ntas_refl, cnv_cast, cpms_appl_dx/
+qed.
+
+lemma nta_appl_ntas_pos (h) (a) (n) (G) (L): ad a (↑n) →
+      ∀V,W. ⦃G,L⦄ ⊢ V :[h,a] W → ∀T,U. ⦃G,L⦄ ⊢ T :[h,a] U →
+      ∀p,U0. ⦃G,L⦄ ⊢ U :*[h,a,n] ⓛ{p}W.U0 → ⦃G,L⦄ ⊢ ⓐV.T :[h,a] ⓐV.U.
+#h #a #n #G #L #Ha #V #W #HVW #T #U #HTU #p #U0 #HU0
+elim (cnv_inv_cast … HTU) #X #_ #_ #HUX #HTX
+/4 width=11 by ntas_step_sn, cnv_appl_ntas_ge, cnv_cast, cpms_appl_dx/
 qed-.
 
 (* Inversion lemmas with native type assignment for terms *******************)
@@ -73,29 +133,3 @@ elim (eq_or_gt n) #Hn destruct
   /5 width=10 by cnv_cpms_ntas, cnv_cpms_nta, cnv_cpms_trans, ex6_5_intro, or_intror/
 ]
 qed-.
-
-(*
-
-definition ntas: sh → lenv → relation term ≝
-                 λh,L. star … (nta h L).
-
-(* Basic eliminators ********************************************************)
-
-axiom ntas_ind_dx: ∀h,L,T2. ∀R:predicate term. R T2 →
-                   (∀T1,T. ⦃h,L⦄ ⊢ T1 : T → ⦃h,L⦄ ⊢ T :* T2 → R T → R T1) →
-                   ∀T1. ⦃h,L⦄ ⊢ T1 :* T2 → R T1.
-(*
-#h #L #T2 #R #HT2 #IHT2 #T1 #HT12
-@(star_ind_dx … HT2 IHT2 … HT12) //
-qed-.
-*)
-(* Basic properties *********************************************************)
-
-lemma ntas_strap1: ∀h,L,T1,T,T2.
-                   ⦃h,L⦄ ⊢ T1 :* T → ⦃h,L⦄  ⊢ T : T2 → ⦃h,L⦄  ⊢ T1 :* T2.
-/2 width=3/ qed.
-
-lemma ntas_strap2: ∀h,L,T1,T,T2.
-                   ⦃h,L⦄  ⊢ T1 : T → ⦃h,L⦄ ⊢ T :* T2 → ⦃h,L⦄ ⊢ T1 :* T2.
-/2 width=3/ qed.
-*)

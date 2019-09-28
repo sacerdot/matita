@@ -30,7 +30,7 @@ lemma cpms_total_aaa (h) (G) (L) (n) (A):
       ∀T. ⦃G,L⦄ ⊢ T ⁝ A → ∃U. ⦃G,L⦄ ⊢ T ➡*[n,h] U.
 #h #G #L #n elim n -n
 [ /2 width=3 by ex_intro/
-| #n #IH #A #T1 #HT1 <plus_SO
+| #n #IH #A #T1 #HT1 <plus_SO_dx
   elim (IH … HT1) -IH #T0 #HT10
   lapply (cpms_aaa_conf … HT1 … HT10) -HT1 #HT0
   elim (aaa_cpm_SO h … HT0) -HT0 #T2 #HT02
