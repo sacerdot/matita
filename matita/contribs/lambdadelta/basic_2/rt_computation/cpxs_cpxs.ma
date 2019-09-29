@@ -51,7 +51,7 @@ theorem cpxs_beta: ∀h,p,G,L,V1,V2,W1,W2,T1,T2.
 qed.
 
 theorem cpxs_theta_rc: ∀h,p,G,L,V1,V,V2,W1,W2,T1,T2.
-                       ⦃G,L⦄ ⊢ V1 ⬈[h] V → ⬆*[1] V ≘ V2 →
+                       ⦃G,L⦄ ⊢ V1 ⬈[h] V → ⇧*[1] V ≘ V2 →
                        ⦃G,L.ⓓW1⦄ ⊢ T1 ⬈*[h] T2 → ⦃G,L⦄ ⊢ W1 ⬈*[h] W2 →
                        ⦃G,L⦄ ⊢ ⓐV1.ⓓ{p}W1.T1 ⬈*[h] ⓓ{p}W2.ⓐV2.T2.
 #h #p #G #L #V1 #V #V2 #W1 #W2 #T1 #T2 #HV1 #HV2 #HT12 #H @(cpxs_ind … H) -W2
@@ -59,7 +59,7 @@ theorem cpxs_theta_rc: ∀h,p,G,L,V1,V,V2,W1,W2,T1,T2.
 qed.
 
 theorem cpxs_theta: ∀h,p,G,L,V1,V,V2,W1,W2,T1,T2.
-                    ⬆*[1] V ≘ V2 → ⦃G,L⦄ ⊢ W1 ⬈*[h] W2 →
+                    ⇧*[1] V ≘ V2 → ⦃G,L⦄ ⊢ W1 ⬈*[h] W2 →
                     ⦃G,L.ⓓW1⦄ ⊢ T1 ⬈*[h] T2 → ⦃G,L⦄ ⊢ V1 ⬈*[h] V →
                     ⦃G,L⦄ ⊢ ⓐV1.ⓓ{p}W1.T1 ⬈*[h] ⓓ{p}W2.ⓐV2.T2.
 #h #p #G #L #V1 #V #V2 #W1 #W2 #T1 #T2 #HV2 #HW12 #HT12 #H @(TC_ind_dx … V1 H) -V1
@@ -72,7 +72,7 @@ lemma cpxs_inv_appl1: ∀h,G,L,V1,T1,U2. ⦃G,L⦄ ⊢ ⓐV1.T1 ⬈*[h] U2 →
                       ∨∨ ∃∃V2,T2.       ⦃G,L⦄ ⊢ V1 ⬈*[h] V2 & ⦃G,L⦄ ⊢ T1 ⬈*[h] T2 &
                                         U2 = ⓐV2.T2
                        | ∃∃p,W,T.       ⦃G,L⦄ ⊢ T1 ⬈*[h] ⓛ{p}W.T & ⦃G,L⦄ ⊢ ⓓ{p}ⓝW.V1.T ⬈*[h] U2
-                       | ∃∃p,V0,V2,V,T. ⦃G,L⦄ ⊢ V1 ⬈*[h] V0 & ⬆*[1] V0 ≘ V2 &
+                       | ∃∃p,V0,V2,V,T. ⦃G,L⦄ ⊢ V1 ⬈*[h] V0 & ⇧*[1] V0 ≘ V2 &
                                         ⦃G,L⦄ ⊢ T1 ⬈*[h] ⓓ{p}V.T & ⦃G,L⦄ ⊢ ⓓ{p}V.ⓐV2.T ⬈*[h] U2.
 #h #G #L #V1 #T1 #U2 #H @(cpxs_ind … H) -U2 [ /3 width=5 by or3_intro0, ex3_2_intro/ ]
 #U #U2 #_ #HU2 * *

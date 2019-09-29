@@ -22,8 +22,8 @@ include "basic_2/rt_conversion/cpce.ma".
 lemma cpce_eta_drops (h) (n) (G) (K):
       ∀p,W,V1,U. ⦃G,K⦄ ⊢ W ➡*[n,h] ⓛ{p}V1.U →
       ∀V2. ⦃G,K⦄ ⊢ V1 ⬌η[h] V2 →
-      ∀i,L. ⬇*[i] L ≘ K.ⓛW →
-      ∀W2. ⬆*[↑i] V2 ≘ W2 → ⦃G,L⦄ ⊢ #i ⬌η[h] +ⓛW2.ⓐ#0.#↑i.
+      ∀i,L. ⇩*[i] L ≘ K.ⓛW →
+      ∀W2. ⇧*[↑i] V2 ≘ W2 → ⦃G,L⦄ ⊢ #i ⬌η[h] +ⓛW2.ⓐ#0.#↑i.
 #h #n #G #K #p #W #V1 #U #HWU #V2 #HV12 #i elim i -i
 [ #L #HLK #W2 #HVW2
   >(drops_fwd_isid … HLK) -L [| // ] /2 width=8 by cpce_eta/
@@ -35,7 +35,7 @@ lemma cpce_eta_drops (h) (n) (G) (K):
 qed.
 
 lemma cpce_zero_drops (h) (G):
-      ∀i,L. (∀n,p,K,W,V,U. ⬇*[i] L ≘ K.ⓛW → ⦃G,K⦄ ⊢ W ➡*[n,h] ⓛ{p}V.U → ⊥) →
+      ∀i,L. (∀n,p,K,W,V,U. ⇩*[i] L ≘ K.ⓛW → ⦃G,K⦄ ⊢ W ➡*[n,h] ⓛ{p}V.U → ⊥) →
       ⦃G,L⦄ ⊢ #i ⬌η[h] #i.
 #h #G #i elim i -i
 [ * [ #_ // ] #L #I #Hi

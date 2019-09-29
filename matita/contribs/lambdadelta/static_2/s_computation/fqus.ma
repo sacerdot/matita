@@ -98,7 +98,7 @@ lemma fqus_inv_bind1: ∀b,p,I,G1,G2,L1,L2,V1,T1,T2. ⦃G1,L1,ⓑ{p,I}V1.T1⦄ �
                        | ⦃G1,L1,V1⦄ ⬂*[b] ⦃G2,L2,T2⦄
                        | ∧∧ ⦃G1,L1.ⓑ{I}V1,T1⦄ ⬂*[b] ⦃G2,L2,T2⦄ & b = Ⓣ 
                        | ∧∧ ⦃G1,L1.ⓧ,T1⦄ ⬂*[b] ⦃G2,L2,T2⦄ & b = Ⓕ
-                       | ∃∃J,L,T. ⦃G1,L,T⦄ ⬂*[b] ⦃G2,L2,T2⦄ & ⬆*[1] T ≘ ⓑ{p,I}V1.T1 & L1 = L.ⓘ{J}.
+                       | ∃∃J,L,T. ⦃G1,L,T⦄ ⬂*[b] ⦃G2,L2,T2⦄ & ⇧*[1] T ≘ ⓑ{p,I}V1.T1 & L1 = L.ⓘ{J}.
 #b #p #I #G1 #G2 #L1 #L2 #V1 #T1 #T2 #H elim (fqus_inv_fqu_sn … H) -H * /3 width=1 by and3_intro, or5_intro0/
 #G #L #T #H elim (fqu_inv_bind1 … H) -H *
 [4: #J ] #H1 #H2 #H3 [3,4: #Hb ] #H destruct
@@ -110,7 +110,7 @@ lemma fqus_inv_bind1_true: ∀p,I,G1,G2,L1,L2,V1,T1,T2. ⦃G1,L1,ⓑ{p,I}V1.T1�
                            ∨∨ ∧∧ G1 = G2 & L1 = L2 & ⓑ{p,I}V1.T1 = T2
                                | ⦃G1,L1,V1⦄ ⬂* ⦃G2,L2,T2⦄
                                | ⦃G1,L1.ⓑ{I}V1,T1⦄ ⬂* ⦃G2,L2,T2⦄
-                               | ∃∃J,L,T. ⦃G1,L,T⦄ ⬂* ⦃G2,L2,T2⦄ & ⬆*[1] T ≘ ⓑ{p,I}V1.T1 & L1 = L.ⓘ{J}.
+                               | ∃∃J,L,T. ⦃G1,L,T⦄ ⬂* ⦃G2,L2,T2⦄ & ⇧*[1] T ≘ ⓑ{p,I}V1.T1 & L1 = L.ⓘ{J}.
 #p #I #G1 #G2 #L1 #L2 #V1 #T1 #T2 #H elim (fqus_inv_bind1 … H) -H [1,3,4: * ]
 /3 width=1 by and3_intro, or4_intro0, or4_intro1, or4_intro2, or4_intro3/
 #_ #H destruct
@@ -120,7 +120,7 @@ lemma fqus_inv_flat1: ∀b,I,G1,G2,L1,L2,V1,T1,T2. ⦃G1,L1,ⓕ{I}V1.T1⦄ ⬂*[
                       ∨∨ ∧∧ G1 = G2 & L1 = L2 & ⓕ{I}V1.T1 = T2
                        | ⦃G1,L1,V1⦄ ⬂*[b] ⦃G2,L2,T2⦄
                        | ⦃G1,L1,T1⦄ ⬂*[b] ⦃G2,L2,T2⦄
-                       | ∃∃J,L,T. ⦃G1,L,T⦄ ⬂*[b] ⦃G2,L2,T2⦄ & ⬆*[1] T ≘ ⓕ{I}V1.T1 & L1 = L.ⓘ{J}.
+                       | ∃∃J,L,T. ⦃G1,L,T⦄ ⬂*[b] ⦃G2,L2,T2⦄ & ⇧*[1] T ≘ ⓕ{I}V1.T1 & L1 = L.ⓘ{J}.
 #b #I #G1 #G2 #L1 #L2 #V1 #T1 #T2 #H elim (fqus_inv_fqu_sn … H) -H * /3 width=1 by and3_intro, or4_intro0/
 #G #L #T #H elim (fqu_inv_flat1 … H) -H *
 [3: #J ] #H1 #H2 #H3 #H destruct

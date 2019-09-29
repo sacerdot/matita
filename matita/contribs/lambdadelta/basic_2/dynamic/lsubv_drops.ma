@@ -23,8 +23,8 @@ include "basic_2/dynamic/lsubv.ma".
 (* Basic_2A1: includes: lsubsv_drop_O1_conf *)
 lemma lsubv_drops_conf_isuni (h) (a) (G):
       ∀L1,L2. G ⊢ L1 ⫃![h,a] L2 →
-      ∀b,f,K1. 𝐔⦃f⦄ → ⬇*[b,f] L1 ≘ K1 →
-      ∃∃K2. G ⊢ K1 ⫃![h,a] K2 & ⬇*[b,f] L2 ≘ K2.
+      ∀b,f,K1. 𝐔⦃f⦄ → ⇩*[b,f] L1 ≘ K1 →
+      ∃∃K2. G ⊢ K1 ⫃![h,a] K2 & ⇩*[b,f] L2 ≘ K2.
 #h #a #G #L1 #L2 #H elim H -L1 -L2
 [ /2 width=3 by ex2_intro/
 | #I #L1 #L2 #HL12 #IH #b #f #K1 #Hf #H
@@ -48,8 +48,8 @@ qed-.
 (* Basic_2A1: includes: lsubsv_drop_O1_trans *)
 lemma lsubv_drops_trans_isuni (h) (a) (G):
       ∀L1,L2. G ⊢ L1 ⫃![h,a] L2 →
-      ∀b,f,K2. 𝐔⦃f⦄ → ⬇*[b,f] L2 ≘ K2 →
-      ∃∃K1. G ⊢ K1 ⫃![h,a] K2 & ⬇*[b,f] L1 ≘ K1.
+      ∀b,f,K2. 𝐔⦃f⦄ → ⇩*[b,f] L2 ≘ K2 →
+      ∃∃K1. G ⊢ K1 ⫃![h,a] K2 & ⇩*[b,f] L1 ≘ K1.
 #h #a #G #L1 #L2 #H elim H -L1 -L2
 [ /2 width=3 by ex2_intro/
 | #I #L1 #L2 #HL12 #IH #b #f #K2 #Hf #H

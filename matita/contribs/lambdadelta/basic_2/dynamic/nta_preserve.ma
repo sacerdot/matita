@@ -100,7 +100,7 @@ qed-.
 
 lemma nta_inv_ldef_sn (h) (a) (G) (K) (V):
       ∀X2. ⦃G,K.ⓓV⦄ ⊢ #0 :[h,a] X2 →
-      ∃∃W,U. ⦃G,K⦄ ⊢ V :[h,a] W & ⬆*[1] W ≘ U & ⦃G,K.ⓓV⦄ ⊢ U ⬌*[h] X2 & ⦃G,K.ⓓV⦄ ⊢ X2 ![h,a].
+      ∃∃W,U. ⦃G,K⦄ ⊢ V :[h,a] W & ⇧*[1] W ≘ U & ⦃G,K.ⓓV⦄ ⊢ U ⬌*[h] X2 & ⦃G,K.ⓓV⦄ ⊢ X2 ![h,a].
 #h #a #G #Y #X #X2 #H
 elim (cnv_inv_cast … H) -H #X1 #HX2 #H1 #HX21 #H2
 elim (cnv_inv_zero … H1) -H1 #Z #K #V #HV #H destruct
@@ -113,7 +113,7 @@ qed-.
 
 lemma nta_inv_lref_sn (h) (a) (G) (L):
       ∀X2,i. ⦃G,L⦄ ⊢ #↑i :[h,a] X2 →
-      ∃∃I,K,T2,U2. ⦃G,K⦄ ⊢ #i :[h,a] T2 & ⬆*[1] T2 ≘ U2 & ⦃G,K.ⓘ{I}⦄ ⊢ U2 ⬌*[h] X2 & ⦃G,K.ⓘ{I}⦄ ⊢ X2 ![h,a] & L = K.ⓘ{I}.
+      ∃∃I,K,T2,U2. ⦃G,K⦄ ⊢ #i :[h,a] T2 & ⇧*[1] T2 ≘ U2 & ⦃G,K.ⓘ{I}⦄ ⊢ U2 ⬌*[h] X2 & ⦃G,K.ⓘ{I}⦄ ⊢ X2 ![h,a] & L = K.ⓘ{I}.
 #h #a #G #L #X2 #i #H
 elim (cnv_inv_cast … H) -H #X1 #HX2 #H1 #HX21 #H2
 elim (cnv_inv_lref … H1) -H1 #I #K #Hi #H destruct
@@ -126,8 +126,8 @@ qed-.
 
 lemma nta_inv_lref_sn_drops_cnv (h) (a) (G) (L): 
       ∀X2,i. ⦃G,L⦄ ⊢ #i :[h,a] X2 →
-      ∨∨ ∃∃K,V,W,U. ⬇*[i] L ≘ K.ⓓV & ⦃G,K⦄ ⊢ V :[h,a] W & ⬆*[↑i] W ≘ U & ⦃G,L⦄ ⊢ U ⬌*[h] X2 & ⦃G,L⦄ ⊢ X2 ![h,a]
-       | ∃∃K,W,U. ⬇*[i] L ≘ K. ⓛW & ⦃G,K⦄ ⊢ W ![h,a] & ⬆*[↑i] W ≘ U & ⦃G,L⦄ ⊢ U ⬌*[h] X2 & ⦃G,L⦄ ⊢ X2 ![h,a].
+      ∨∨ ∃∃K,V,W,U. ⇩*[i] L ≘ K.ⓓV & ⦃G,K⦄ ⊢ V :[h,a] W & ⇧*[↑i] W ≘ U & ⦃G,L⦄ ⊢ U ⬌*[h] X2 & ⦃G,L⦄ ⊢ X2 ![h,a]
+       | ∃∃K,W,U. ⇩*[i] L ≘ K. ⓛW & ⦃G,K⦄ ⊢ W ![h,a] & ⇧*[↑i] W ≘ U & ⦃G,L⦄ ⊢ U ⬌*[h] X2 & ⦃G,L⦄ ⊢ X2 ![h,a].
 #h #a #G #L #X2 #i #H
 elim (cnv_inv_cast … H) -H #X1 #HX2 #H1 #HX21 #H2
 elim (cnv_inv_lref_drops … H1) -H1 #I #K #V #HLK #HV
@@ -244,8 +244,8 @@ qed-.
 (* Note: "⦃G, L⦄ ⊢ U2 ⬌*[h] X2" can be "⦃G, L⦄ ⊢ X2 ➡*[h] U2" *)
 lemma nta_inv_lifts_sn (h) (a) (G):
       ∀L,T2,X2. ⦃G,L⦄ ⊢ T2 :[h,a] X2 →
-      ∀b,f,K. ⬇*[b,f] L ≘ K → ∀T1. ⬆*[f] T1 ≘ T2 →
-      ∃∃U1,U2. ⦃G,K⦄ ⊢ T1 :[h,a] U1 & ⬆*[f] U1 ≘ U2 & ⦃G,L⦄ ⊢ U2 ⬌*[h] X2 & ⦃G,L⦄ ⊢ X2 ![h,a].
+      ∀b,f,K. ⇩*[b,f] L ≘ K → ∀T1. ⇧*[f] T1 ≘ T2 →
+      ∃∃U1,U2. ⦃G,K⦄ ⊢ T1 :[h,a] U1 & ⇧*[f] U1 ≘ U2 & ⦃G,L⦄ ⊢ U2 ⬌*[h] X2 & ⦃G,L⦄ ⊢ X2 ![h,a].
 #h #a #G #L #T2 #X2 #H #b #f #K #HLK #T1 #HT12
 elim (cnv_inv_cast … H) -H #U2 #HX2 #HT2 #HXU2 #HTU2
 lapply (cnv_inv_lifts … HT2 … HLK … HT12) -HT2 #HT1

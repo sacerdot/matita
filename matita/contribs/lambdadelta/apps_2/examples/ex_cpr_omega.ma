@@ -28,7 +28,7 @@ definition Omega3 (s): term ≝ +ⓓⓝ⋆s.(Delta s).(Omega1 s).
 
 (* Basic properties *********************************************************)
 
-lemma Delta_lifts (f) (s): ⬆*[f] (Delta s) ≘ (Delta s).
+lemma Delta_lifts (f) (s): ⇧*[f] (Delta s) ≘ (Delta s).
 /4 width=1 by lifts_lref, lifts_bind, lifts_flat/ qed.
 
 (* Basic inversion properties ***********************************************)

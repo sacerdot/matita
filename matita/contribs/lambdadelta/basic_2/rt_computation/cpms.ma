@@ -80,7 +80,7 @@ lemma cpms_appl_dx (n) (h) (G) (L):
 qed.
 
 lemma cpms_zeta (n) (h) (G) (L):
-                ∀T1,T. ⬆*[1] T ≘ T1 →
+                ∀T1,T. ⇧*[1] T ≘ T1 →
                 ∀V,T2. ⦃G,L⦄ ⊢ T ➡*[n,h] T2 → ⦃G,L⦄ ⊢ +ⓓV.T1 ➡*[n,h] T2.
 #n #h #G #L #T1 #T #HT1 #V #T2 #H @(cpms_ind_dx … H) -T2
 /3 width=3 by cpms_step_dx, cpm_cpms, cpm_zeta/
@@ -88,7 +88,7 @@ qed.
 
 (* Basic_2A1: uses: cprs_zeta *)
 lemma cpms_zeta_dx (n) (h) (G) (L):
-                   ∀T2,T. ⬆*[1] T2 ≘ T →
+                   ∀T2,T. ⇧*[1] T2 ≘ T →
                    ∀V,T1. ⦃G,L.ⓓV⦄ ⊢ T1 ➡*[n,h] T → ⦃G,L⦄ ⊢ +ⓓV.T1 ➡*[n,h] T2.
 #n #h #G #L #T2 #T #HT2 #V #T1 #H @(cpms_ind_sn … H) -T1
 /3 width=3 by cpms_step_sn, cpm_cpms, cpm_bind, cpm_zeta/
@@ -125,7 +125,7 @@ qed.
 (* Basic_2A1: uses: cprs_theta_dx *)
 lemma cpms_theta_dx (n) (h) (G) (L):
                     ∀V1,V. ⦃G,L⦄ ⊢ V1 ➡[h] V →
-                    ∀V2. ⬆*[1] V ≘ V2 →
+                    ∀V2. ⇧*[1] V ≘ V2 →
                     ∀W1,W2. ⦃G,L⦄ ⊢ W1 ➡[h] W2 →
                     ∀T1,T2. ⦃G,L.ⓓW1⦄ ⊢ T1 ➡*[n,h] T2 →
                     ∀p. ⦃G,L⦄ ⊢ ⓐV1.ⓓ{p}W1.T1 ➡*[n,h] ⓓ{p}W2.ⓐV2.T2.

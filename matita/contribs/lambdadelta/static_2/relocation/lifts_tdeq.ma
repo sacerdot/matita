@@ -72,7 +72,7 @@ lemma tdeq_inv_lifts_bi: deliftable2_bi tdeq.
 /3 width=6 by tdeq_inv_lifts_sn, deliftable2_sn_bi/ qed-.
 
 lemma tdeq_lifts_inv_pair_sn (I) (f:rtmap):
-                             ∀X,T. ⬆*[f]X ≘ T → ∀V. ②{I}V.T ≛ X → ⊥.
+                             ∀X,T. ⇧*[f]X ≘ T → ∀V. ②{I}V.T ≛ X → ⊥.
 #I #f #X #T #H elim H -f -X -T
 [ #f #s #V #H
   elim (tdeq_inv_pair1 … H) -H #X1 #X2 #_ #_ #H destruct

@@ -22,8 +22,8 @@ include "static_2/static/lsubc_drops.ma".
 (* Basic_1: was: sc3_arity_csubc *)
 theorem acr_aaa_csubc_lifts: ∀RR,RS,RP.
                              gcp RR RS RP → gcr RR RS RP RP →
-                             ∀G,L1,T,A. ⦃G,L1⦄ ⊢ T ⁝ A → ∀b,f,L0. ⬇*[b,f] L0 ≘ L1 →
-                             ∀T0. ⬆*[f] T ≘ T0 → ∀L2. G ⊢ L2 ⫃[RP] L0 →
+                             ∀G,L1,T,A. ⦃G,L1⦄ ⊢ T ⁝ A → ∀b,f,L0. ⇩*[b,f] L0 ≘ L1 →
+                             ∀T0. ⇧*[f] T ≘ T0 → ∀L2. G ⊢ L2 ⫃[RP] L0 →
                              ⦃G,L2,T0⦄ ϵ[RP] 〚A〛.
 #RR #RS #RP #H1RP #H2RP #G #L1 #T @(fqup_wf_ind_eq (Ⓣ) … G L1 T) -G -L1 -T
 #Z #Y #X #IH #G #L1 * [ * | * [ #p ] * ]

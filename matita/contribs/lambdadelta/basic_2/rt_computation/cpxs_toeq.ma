@@ -30,8 +30,8 @@ qed-.
 (* Note: probably this is an inversion lemma *)
 (* Basic_2A1: was: cpxs_fwd_delta *)
 lemma cpxs_fwd_delta_drops (h) (I) (G) (L) (K):
-      ∀V1,i. ⬇*[i] L ≘ K.ⓑ{I}V1 →
-      ∀V2. ⬆*[↑i] V1 ≘ V2 →
+      ∀V1,i. ⇩*[i] L ≘ K.ⓑ{I}V1 →
+      ∀V2. ⇧*[↑i] V1 ≘ V2 →
       ∀X2. ⦃G,L⦄ ⊢ #i ⬈*[h] X2 →
       ∨∨ #i ⩳ X2 | ⦃G,L⦄ ⊢ V2 ⬈*[h] X2.
 #h #I #G #L #K #V1 #i #HLK #V2 #HV12 #X2 #H
@@ -58,7 +58,7 @@ qed-.
 
 lemma cpxs_fwd_theta (h) (p) (G) (L):
            ∀V1,V,T,X2. ⦃G,L⦄ ⊢ ⓐV1.ⓓ{p}V.T ⬈*[h] X2 →
-           ∀V2. ⬆*[1] V1 ≘ V2 →
+           ∀V2. ⇧*[1] V1 ≘ V2 →
            ∨∨ ⓐV1.ⓓ{p}V.T ⩳ X2 | ⦃G,L⦄ ⊢ ⓓ{p}V.ⓐV2.T ⬈*[h] X2.
 #h #p #G #L #V1 #V #T #X2 #H #V2 #HV12
 elim (cpxs_inv_appl1 … H) -H *

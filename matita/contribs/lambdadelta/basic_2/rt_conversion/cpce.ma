@@ -25,9 +25,9 @@ inductive cpce (h): relation4 genv lenv term term ≝
 | cpce_zero: ∀G,K,I. (∀n,p,W,V,U. I = BPair Abst W → ⦃G,K⦄ ⊢ W ➡*[n,h] ⓛ{p}V.U → ⊥) →
              cpce h G (K.ⓘ{I}) (#0) (#0)
 | cpce_eta : ∀n,p,G,K,W,V1,V2,W2,U. ⦃G,K⦄ ⊢ W ➡*[n,h] ⓛ{p}V1.U →
-             cpce h G K V1 V2 → ⬆*[1] V2 ≘ W2 → cpce h G (K.ⓛW) (#0) (+ⓛW2.ⓐ#0.#1)
+             cpce h G K V1 V2 → ⇧*[1] V2 ≘ W2 → cpce h G (K.ⓛW) (#0) (+ⓛW2.ⓐ#0.#1)
 | cpce_lref: ∀I,G,K,T,U,i. cpce h G K (#i) T →
-             ⬆*[1] T ≘ U → cpce h G (K.ⓘ{I}) (#↑i) U
+             ⇧*[1] T ≘ U → cpce h G (K.ⓘ{I}) (#↑i) U
 | cpce_gref: ∀G,L,l. cpce h G L (§l) (§l)
 | cpce_bind: ∀p,I,G,K,V1,V2,T1,T2.
              cpce h G K V1 V2 → cpce h G (K.ⓑ{I}V1) T1 T2 →
@@ -79,7 +79,7 @@ lemma cpce_inv_zero_sn (h) (G) (K) (X2):
       ∀I. ⦃G,K.ⓘ{I}⦄ ⊢ #0 ⬌η[h] X2 →
       ∨∨ ∧∧ ∀n,p,W,V,U. I = BPair Abst W → ⦃G,K⦄ ⊢ W ➡*[n,h] ⓛ{p}V.U → ⊥ & #0 = X2
        | ∃∃n,p,W,V1,V2,W2,U. ⦃G,K⦄ ⊢ W ➡*[n,h] ⓛ{p}V1.U & ⦃G,K⦄ ⊢ V1 ⬌η[h] V2
-                           & ⬆*[1] V2 ≘ W2 & I = BPair Abst W & +ⓛW2.ⓐ#0.#1 = X2.
+                           & ⇧*[1] V2 ≘ W2 & I = BPair Abst W & +ⓛW2.ⓐ#0.#1 = X2.
 #h #G #Y0 #X2 #Z
 @(insert_eq_0 … (Y0.ⓘ{Z})) #Y
 @(insert_eq_0 … (#0)) #X1
@@ -97,7 +97,7 @@ qed-.
 
 lemma cpce_inv_lref_sn (h) (G) (K) (X2):
       ∀I,i. ⦃G,K.ⓘ{I}⦄ ⊢ #↑i ⬌η[h] X2 →
-      ∃∃T2. ⦃G,K⦄ ⊢ #i ⬌η[h] T2 & ⬆*[1] T2 ≘ X2.
+      ∃∃T2. ⦃G,K⦄ ⊢ #i ⬌η[h] T2 & ⇧*[1] T2 ≘ X2.
 #h #G #Y0 #X2 #Z #j
 @(insert_eq_0 … (Y0.ⓘ{Z})) #Y
 @(insert_eq_0 … (#↑j)) #X1

@@ -37,8 +37,8 @@ qed-.
 
 (* Basic_2A1: was: cpxs_fwd_delta_vector *)
 lemma cpxs_fwd_delta_drops_vector (h) (I) (G) (L) (K):
-      ∀V1,i. ⬇*[i] L ≘ K.ⓑ{I}V1 →
-      ∀V2. ⬆*[↑i] V1 ≘ V2 →
+      ∀V1,i. ⇩*[i] L ≘ K.ⓑ{I}V1 →
+      ∀V2. ⇧*[↑i] V1 ≘ V2 →
       ∀Vs,X2. ⦃G,L⦄ ⊢ ⒶVs.#i ⬈*[h] X2 →
       ∨∨ ⒶVs.#i ⩳ X2 | ⦃G,L⦄ ⊢ ⒶVs.V2 ⬈*[h] X2.
 #h #I #G #L #K #V1 #i #HLK #V2 #HV12 #Vs
@@ -90,7 +90,7 @@ qed-.
 
 (* Basic_1: was just: pr3_iso_appls_abbr *)
 lemma cpxs_fwd_theta_vector (h) (G) (L):
-      ∀V1b,V2b. ⬆*[1] V1b ≘ V2b →
+      ∀V1b,V2b. ⇧*[1] V1b ≘ V2b →
       ∀p,V,T,X2. ⦃G,L⦄ ⊢ ⒶV1b.ⓓ{p}V.T ⬈*[h] X2 →
       ∨∨ ⒶV1b.ⓓ{p}V.T ⩳ X2 | ⦃G,L⦄ ⊢ ⓓ{p}V.ⒶV2b.T ⬈*[h] X2.
 #h #G #L #V1b #V2b * -V1b -V2b /3 width=1 by or_intror/

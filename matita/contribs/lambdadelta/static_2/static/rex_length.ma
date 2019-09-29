@@ -53,8 +53,8 @@ lemma rex_unit_length (R): ∀L1,L2. |L1| = |L2| → ∀I. L1.ⓤ{I} ⪤[R,#0] L
 lemma rex_lifts_bi (R):
       d_liftable2_sn … lifts R →
       ∀L1,L2. |L1| = |L2| → ∀K1,K2,T. K1 ⪤[R,T] K2 →
-      ∀b,f. ⬇*[b,f] L1 ≘ K1 → ⬇*[b,f] L2 ≘ K2 →
-      ∀U. ⬆*[f] T ≘ U → L1 ⪤[R,U] L2.
+      ∀b,f. ⇩*[b,f] L1 ≘ K1 → ⇩*[b,f] L2 ≘ K2 →
+      ∀U. ⇧*[f] T ≘ U → L1 ⪤[R,U] L2.
 #R #HR #L1 #L2 #HL12 #K1 #K2 #T * #f1 #Hf1 #HK12 #b #f #HLK1 #HLK2 #U #HTU
 elim (frees_total L1 U) #f2 #Hf2
 lapply (frees_fwd_coafter … Hf2 … HLK1 … HTU … Hf1) -HTU #Hf

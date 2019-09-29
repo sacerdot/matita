@@ -86,7 +86,7 @@ qed-.
 (* Advanced properties ******************************************************)
 
 lemma fqup_zeta (b) (p) (I) (G) (K) (V):
-                ∀T1,T2. ⬆*[1]T2 ≘ T1 → ⦃G,K,ⓑ{p,I}V.T1⦄ ⬂+[b] ⦃G,K,T2⦄.
+                ∀T1,T2. ⇧*[1]T2 ≘ T1 → ⦃G,K,ⓑ{p,I}V.T1⦄ ⬂+[b] ⦃G,K,T2⦄.
 * /4 width=5 by fqup_strap2, fqu_fqup, fqu_drop, fqu_clear, fqu_bind_dx/ qed.
 
 (* Basic_2A1: removed theorems 1: fqup_drop *)

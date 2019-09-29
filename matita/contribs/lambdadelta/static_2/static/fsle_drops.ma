@@ -19,7 +19,7 @@ include "static_2/static/fsle_length.ma".
 
 (* Advanced properties ******************************************************)
 
-lemma fsle_lifts_sn: ∀T1,U1. ⬆*[1] T1 ≘ U1 → ∀L1,L2. |L2| ≤ |L1| →
+lemma fsle_lifts_sn: ∀T1,U1. ⇧*[1] T1 ≘ U1 → ∀L1,L2. |L2| ≤ |L1| →
                      ∀T2. ⦃L1,T1⦄ ⊆ ⦃L2,T2⦄ → ⦃L1.ⓧ,U1⦄ ⊆ ⦃L2,T2⦄.
 #T1 #U1 #HTU1 #L1 #L2 #H1L #T2
 * #n #m #f #g #Hf #Hg #H2L #Hfg
@@ -30,7 +30,7 @@ lapply (frees_lifts_SO (Ⓣ) (L1.ⓧ) … HTU1 … Hf)
 qed-.
 
 lemma fsle_lifts_dx (L1) (L2):
-                    |L1| ≤ |L2| → ∀T2,U2. ⬆*[1]T2 ≘ U2 →
+                    |L1| ≤ |L2| → ∀T2,U2. ⇧*[1]T2 ≘ U2 →
                     ∀T1. ⦃L1,T1⦄ ⊆ ⦃L2,T2⦄ → ⦃L1,T1⦄ ⊆ ⦃L2.ⓧ,U2⦄.
 #L1 #L2 #HL21 #T2 #U2 #HTU2 #T1
 * #n #m #f #g #Hf #Hg #H2L #Hfg
@@ -41,7 +41,7 @@ lapply (frees_lifts_SO (Ⓣ) (L2.ⓧ) … HTU2 … Hg)
 qed-.
 
 lemma fsle_lifts_SO_sn: ∀K1,K2. |K1| = |K2| → ∀V1,V2. ⦃K1,V1⦄ ⊆ ⦃K2,V2⦄ →
-                        ∀W1. ⬆*[1] V1 ≘ W1 → ∀I1,I2. ⦃K1.ⓘ{I1},W1⦄ ⊆ ⦃K2.ⓑ{I2}V2,#O⦄.
+                        ∀W1. ⇧*[1] V1 ≘ W1 → ∀I1,I2. ⦃K1.ⓘ{I1},W1⦄ ⊆ ⦃K2.ⓑ{I2}V2,#O⦄.
 #K1 #K2 #HK #V1 #V2
 * #n1 #n2 #f1 #f2 #Hf1 #Hf2 #HK12 #Hf12
 #W1 #HVW1 #I1 #I2
@@ -50,7 +50,7 @@ elim (lveq_inj_length … HK12) // -HK #H1 #H2 destruct
 qed.
 
 lemma fsle_lifts_SO: ∀K1,K2. |K1| = |K2| → ∀T1,T2. ⦃K1,T1⦄ ⊆ ⦃K2,T2⦄ →
-                     ∀U1,U2. ⬆*[1] T1 ≘ U1 → ⬆*[1] T2 ≘ U2 →
+                     ∀U1,U2. ⇧*[1] T1 ≘ U1 → ⇧*[1] T2 ≘ U2 →
                      ∀I1,I2.  ⦃K1.ⓘ{I1},U1⦄ ⊆ ⦃K2.ⓘ{I2},U2⦄.
 #K1 #K2 #HK #T1 #T2
 * #n1 #n2 #f1 #f2 #Hf1 #Hf2 #HK12 #Hf12
@@ -61,7 +61,7 @@ qed.
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma fsle_inv_lifts_sn: ∀T1,U1. ⬆*[1] T1 ≘ U1 →
+lemma fsle_inv_lifts_sn: ∀T1,U1. ⇧*[1] T1 ≘ U1 →
                          ∀I1,I2,L1,L2,V1,V2,U2. ⦃L1.ⓑ{I1}V1,U1⦄ ⊆ ⦃L2.ⓑ{I2}V2,U2⦄ →
                          ∀p. ⦃L1,T1⦄ ⊆ ⦃L2,ⓑ{p,I2}V2.U2⦄.
 #T1 #U1 #HTU1 #I1 #I2 #L1 #L2 #V1 #V2 #U2

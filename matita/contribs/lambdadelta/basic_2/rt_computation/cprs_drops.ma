@@ -22,8 +22,8 @@ include "basic_2/rt_computation/cpms_drops.ma".
 (* Basic_2A1: was: cprs_inv_lref1 *)
 lemma cprs_inv_lref1_drops (h) (G): ∀L,T2,i. ⦃G,L⦄ ⊢ #i ➡*[h] T2 →
                                     ∨∨ T2 = #i
-                                     | ∃∃K,V1,T1. ⬇*[i] L ≘ K.ⓓV1 & ⦃G,K⦄ ⊢ V1 ➡*[h] T1 &
-                                                  ⬆*[↑i] T1 ≘ T2.
+                                     | ∃∃K,V1,T1. ⇩*[i] L ≘ K.ⓓV1 & ⦃G,K⦄ ⊢ V1 ➡*[h] T1 &
+                                                  ⇧*[↑i] T1 ≘ T2.
 #h #G #L #T2 #i #H elim (cpms_inv_lref1_drops … H) -H *
 [ /2 width=1 by or_introl/
 | /3 width=6 by ex3_3_intro, or_intror/

@@ -43,7 +43,7 @@ qed-.
 (* Basic_1: uses: ty3_repellent *)
 theorem nta_abst_repellent (h) (a) (p) (G) (K):
         ∀W,T,U1. ⦃G,K⦄ ⊢ ⓛ{p}W.T :[h,a] U1 →
-        ∀U2. ⦃G,K.ⓛW⦄ ⊢ T :[h,a] U2 → ⬆*[1] U1 ≘ U2 → ⊥.
+        ∀U2. ⦃G,K.ⓛW⦄ ⊢ T :[h,a] U2 → ⇧*[1] U1 ≘ U2 → ⊥.
 #h #a #p #G #K #W #T #U1 #H1 #U2 #H2 #HU12
 elim (nta_fwd_aaa … H2) -H2 #A2 #H2T #H2U2
 elim (nta_fwd_aaa … H1) -H1 #X1 #H1 #HU1

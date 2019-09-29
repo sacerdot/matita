@@ -38,7 +38,7 @@ lemma rsx_fwd_lref_pair_csx (h) (G):
 /2 width=4 by rsx_fwd_lref_pair_csx_aux/ qed-.
 
 lemma rsx_fwd_lref_pair_csx_drops (h) (G):
-      ∀I,K,V,i,L. ⬇*[i] L ≘ K.ⓑ{I}V → G ⊢ ⬈*[h,#i] 𝐒⦃L⦄ → ⦃G,K⦄ ⊢ ⬈*[h] 𝐒⦃V⦄.
+      ∀I,K,V,i,L. ⇩*[i] L ≘ K.ⓑ{I}V → G ⊢ ⬈*[h,#i] 𝐒⦃L⦄ → ⦃G,K⦄ ⊢ ⬈*[h] 𝐒⦃V⦄.
 #h #G #I #K #V #i elim i -i
 [ #L #H >(drops_fwd_isid … H) -H
   /2 width=2 by rsx_fwd_lref_pair_csx/
@@ -57,15 +57,15 @@ lemma rsx_inv_lref_pair (h) (G):
 /3 width=2 by rsx_fwd_lref_pair_csx, rsx_fwd_pair, conj/ qed-.
 
 lemma rsx_inv_lref_pair_drops (h) (G):
-      ∀I,K,V,i,L. ⬇*[i] L ≘ K.ⓑ{I}V → G ⊢ ⬈*[h,#i] 𝐒⦃L⦄ →
+      ∀I,K,V,i,L. ⇩*[i] L ≘ K.ⓑ{I}V → G ⊢ ⬈*[h,#i] 𝐒⦃L⦄ →
       ∧∧ ⦃G,K⦄ ⊢ ⬈*[h] 𝐒⦃V⦄ & G ⊢ ⬈*[h,V] 𝐒⦃K⦄.
 /3 width=5 by rsx_fwd_lref_pair_csx_drops, rsx_fwd_lref_pair_drops, conj/ qed-.
 
 lemma rsx_inv_lref_drops (h) (G):
       ∀L,i. G ⊢ ⬈*[h,#i] 𝐒⦃L⦄ →
-      ∨∨ ⬇*[Ⓕ,𝐔❴i❵] L ≘ ⋆
-       | ∃∃I,K. ⬇*[i] L ≘ K.ⓤ{I}
-       | ∃∃I,K,V. ⬇*[i] L ≘ K.ⓑ{I}V & ⦃G,K⦄ ⊢ ⬈*[h] 𝐒⦃V⦄ & G ⊢ ⬈*[h,V] 𝐒⦃K⦄.
+      ∨∨ ⇩*[Ⓕ,𝐔❴i❵] L ≘ ⋆
+       | ∃∃I,K. ⇩*[i] L ≘ K.ⓤ{I}
+       | ∃∃I,K,V. ⇩*[i] L ≘ K.ⓑ{I}V & ⦃G,K⦄ ⊢ ⬈*[h] 𝐒⦃V⦄ & G ⊢ ⬈*[h,V] 𝐒⦃K⦄.
 #h #G #L #i #H elim (drops_F_uni L i)
 [ /2 width=1 by or3_intro0/
 | * * /4 width=10 by rsx_fwd_lref_pair_csx_drops, rsx_fwd_lref_pair_drops, ex3_3_intro, ex1_2_intro, or3_intro2, or3_intro1/
@@ -102,7 +102,7 @@ lemma rsx_lref_pair (h) (G):
 (* Basic_2A1: uses: lsx_lref_be *)
 lemma rsx_lref_pair_drops (h) (G):
       ∀K,V. ⦃G,K⦄ ⊢ ⬈*[h] 𝐒⦃V⦄ → G ⊢ ⬈*[h,V] 𝐒⦃K⦄ →
-      ∀I,i,L. ⬇*[i] L ≘ K.ⓑ{I}V → G ⊢ ⬈*[h,#i] 𝐒⦃L⦄.
+      ∀I,i,L. ⇩*[i] L ≘ K.ⓑ{I}V → G ⊢ ⬈*[h,#i] 𝐒⦃L⦄.
 #h #G #K #V #HV #HK #I #i elim i -i
 [ #L #H >(drops_fwd_isid … H) -H /2 width=1 by rsx_lref_pair/
 | #i #IH #L #H

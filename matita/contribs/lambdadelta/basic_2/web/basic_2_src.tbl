@@ -192,7 +192,7 @@ class "italic"            { 2 }
           }
         ]
         [ { "global env. slicing" * } {
-             [ [ "" ] "gget ( ⬇[?] ? ≘ ? )" "gget_gget" * ]
+             [ [ "" ] "gget ( ⇩[?] ? ≘ ? )" "gget_gget" * ]
           }
         ]
         [ { "context-sensitive ordinary rt-substitution" * } {

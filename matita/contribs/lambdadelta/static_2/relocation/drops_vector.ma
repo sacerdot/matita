@@ -19,8 +19,8 @@ include "static_2/relocation/drops.ma".
 
 definition d_liftable1_all: predicate (relation2 lenv term) ≝
                             λR. ∀K,Ts. all … (R K) Ts →
-                            ∀b,f,L. ⬇*[b,f] L ≘ K →
-                            ∀Us. ⬆*[f] Ts ≘ Us → all … (R L) Us.
+                            ∀b,f,L. ⇩*[b,f] L ≘ K →
+                            ∀Us. ⇧*[f] Ts ≘ Us → all … (R L) Us.
 
 (* Properties with generic relocation for term vectors **********************)
 

@@ -20,8 +20,8 @@ include "static_2/relocation/lifts_vector.ma".
 (* Main properties **********************************************************)
 
 (* Basic_1: includes: lifts_inj *)
-theorem liftsv_inj: ∀f,T1s,Us. ⬆*[f] T1s ≘ Us →
-                    ∀T2s. ⬆*[f] T2s ≘ Us → T1s = T2s.
+theorem liftsv_inj: ∀f,T1s,Us. ⇧*[f] T1s ≘ Us →
+                    ∀T2s. ⇧*[f] T2s ≘ Us → T1s = T2s.
 #f #T1s #Us #H elim H -T1s -Us
 [ #T2s #H >(liftsv_inv_nil2 … H) -H //
 | #T1s #Us #T1 #U #HT1U #_ #IHT1Us #X #H destruct
@@ -31,8 +31,8 @@ theorem liftsv_inj: ∀f,T1s,Us. ⬆*[f] T1s ≘ Us →
 qed-.
 
 (* Basic_2A1: includes: liftv_mono *)
-theorem liftsv_mono: ∀f,Ts,U1s. ⬆*[f] Ts ≘ U1s →
-                     ∀U2s. ⬆*[f] Ts ≘ U2s → U1s = U2s.
+theorem liftsv_mono: ∀f,Ts,U1s. ⇧*[f] Ts ≘ U1s →
+                     ∀U2s. ⇧*[f] Ts ≘ U2s → U1s = U2s.
 #f #Ts #U1s #H elim H -Ts -U1s
 [ #U2s #H >(liftsv_inv_nil1 … H) -H //
 | #Ts #U1s #T #U1 #HTU1 #_ #IHTU1s #X #H destruct
@@ -43,8 +43,8 @@ qed-.
 
 (* Basic_1: includes: lifts1_xhg (right to left) *)
 (* Basic_2A1: includes: liftsv_liftv_trans_le *)
-theorem liftsv_trans: ∀f1,T1s,Ts. ⬆*[f1] T1s ≘ Ts → ∀T2s,f2. ⬆*[f2] Ts ≘ T2s →
-                      ∀f. f2 ⊚ f1 ≘ f → ⬆*[f] T1s ≘ T2s.
+theorem liftsv_trans: ∀f1,T1s,Ts. ⇧*[f1] T1s ≘ Ts → ∀T2s,f2. ⇧*[f2] Ts ≘ T2s →
+                      ∀f. f2 ⊚ f1 ≘ f → ⇧*[f] T1s ≘ T2s.
 #f1 #T1s #Ts #H elim H -T1s -Ts
 [ #T2s #f2 #H >(liftsv_inv_nil1 … H) -T2s /2 width=3 by liftsv_nil/
 | #T1s #Ts #T1 #T #HT1 #_ #IHT1s #X #f2 #H elim (liftsv_inv_cons1 … H) -H

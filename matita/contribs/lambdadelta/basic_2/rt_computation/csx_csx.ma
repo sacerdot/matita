@@ -55,7 +55,7 @@ qed.
 (* Basic_1: was just: sn3_abbr *)
 (* Basic_2A1: was: csx_lref_bind *)
 lemma csx_lref_pair_drops (h) (G): 
-      ∀I,L,K,V,i. ⬇*[i] L ≘ K.ⓑ{I}V →
+      ∀I,L,K,V,i. ⇩*[i] L ≘ K.ⓑ{I}V →
       ⦃G,K⦄ ⊢ ⬈*[h] 𝐒⦃V⦄ → ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃#i⦄.
 #h #G #I #L #K #V #i #HLK #HV
 @csx_intro #X #H #Hi elim (cpx_inv_lref1_drops … H) -H
@@ -71,7 +71,7 @@ qed.
 (* Basic_1: was: sn3_gen_def *)
 (* Basic_2A1: was: csx_inv_lref_bind *)
 lemma csx_inv_lref_pair_drops (h) (G):
-      ∀I,L,K,V,i. ⬇*[i] L ≘ K.ⓑ{I}V →
+      ∀I,L,K,V,i. ⇩*[i] L ≘ K.ⓑ{I}V →
       ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃#i⦄ → ⦃G,K⦄ ⊢ ⬈*[h] 𝐒⦃V⦄.
 #h #G #I #L #K #V #i #HLK #Hi
 elim (lifts_total V (𝐔❴↑i❵))
@@ -80,9 +80,9 @@ qed-.
 
 lemma csx_inv_lref_drops (h) (G):
       ∀L,i. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃#i⦄ →
-      ∨∨ ⬇*[Ⓕ,𝐔❴i❵] L ≘ ⋆
-       | ∃∃I,K. ⬇*[i] L ≘ K.ⓤ{I}
-       | ∃∃I,K,V. ⬇*[i] L ≘ K.ⓑ{I}V & ⦃G,K⦄ ⊢ ⬈*[h] 𝐒⦃V⦄.
+      ∨∨ ⇩*[Ⓕ,𝐔❴i❵] L ≘ ⋆
+       | ∃∃I,K. ⇩*[i] L ≘ K.ⓤ{I}
+       | ∃∃I,K,V. ⇩*[i] L ≘ K.ⓑ{I}V & ⦃G,K⦄ ⊢ ⬈*[h] 𝐒⦃V⦄.
 #h #G #L #i #H elim (drops_F_uni L i) /2 width=1 by or3_intro0/
 * * /4 width=9 by csx_inv_lref_pair_drops, ex2_3_intro, ex1_2_intro, or3_intro2, or3_intro1/
 qed-.

@@ -41,7 +41,7 @@ lemma cpxs_inv_abbr1_dx (h) (p) (G) (L):
                         ∀V1,T1,U2. ⦃G,L⦄ ⊢ ⓓ{p}V1.T1 ⬈*[h] U2 →
                         ∨∨ ∃∃V2,T2. ⦃G,L⦄ ⊢ V1 ⬈*[h] V2 & ⦃G,L.ⓓV1⦄ ⊢ T1 ⬈*[h] T2 &
                                     U2 = ⓓ{p}V2.T2
-                         | ∃∃T2. ⦃G,L.ⓓV1⦄ ⊢ T1 ⬈*[h] T2 & ⬆*[1] U2 ≘ T2 & p = Ⓣ.
+                         | ∃∃T2. ⦃G,L.ⓓV1⦄ ⊢ T1 ⬈*[h] T2 & ⇧*[1] U2 ≘ T2 & p = Ⓣ.
 #h #p #G #L #V1 #T1 #U2 #H
 @(cpxs_ind … H) -U2 /3 width=5 by ex3_2_intro, or_introl/
 #U0 #U2 #_ #HU02 * *

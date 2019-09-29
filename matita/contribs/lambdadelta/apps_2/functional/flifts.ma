@@ -49,14 +49,14 @@ lemma flifts_flat (f) (I) (V) (T): ↑*[f](ⓕ{I}V.T) = ⓕ{I}↑*[f]V.↑*[f]T.
 
 (* Main properties **********************************************************)
 
-theorem flifts_lifts: ∀T,f. ⬆*[f]T ≘ ↑*[f]T.
+theorem flifts_lifts: ∀T,f. ⇧*[f]T ≘ ↑*[f]T.
 #T elim T -T *
 /2 width=1 by lifts_sort, lifts_lref, lifts_gref, lifts_bind, lifts_flat/
 qed.
 
 (* Main inversion properties ************************************************)
 
-theorem flifts_inv_lifts: ∀f,T1,T2. ⬆*[f]T1 ≘ T2 → ↑*[f]T1 = T2.
+theorem flifts_inv_lifts: ∀f,T1,T2. ⇧*[f]T1 ≘ T2 → ↑*[f]T1 = T2.
 #f #T1 #T2 #H elim H -f -T1 -T2 //
 [ #f #i1 #i2 #H <(at_inv_total … H) //
 | #f #p #I #V1 #V2 #T1 #T2 #_ #_ #IHV #IHT <IHV <IHT -V2 -T2 //

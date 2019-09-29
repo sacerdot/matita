@@ -54,7 +54,7 @@ qed-.
 
 lemma nta_inv_ldec_sn_cnv (h) (a) (G) (K) (V):
       ∀X2. ⦃G,K.ⓛV⦄ ⊢ #0 :[h,a] X2 →
-      ∃∃U. ⦃G,K⦄ ⊢ V ![h,a] & ⬆*[1] V ≘ U & ⦃G,K.ⓛV⦄ ⊢ U ⬌*[h] X2 & ⦃G,K.ⓛV⦄ ⊢ X2 ![h,a].
+      ∃∃U. ⦃G,K⦄ ⊢ V ![h,a] & ⇧*[1] V ≘ U & ⦃G,K.ⓛV⦄ ⊢ U ⬌*[h] X2 & ⦃G,K.ⓛV⦄ ⊢ X2 ![h,a].
 #h #a #G #Y #X #X2 #H
 elim (cnv_inv_cast … H) -H #X1 #HX2 #H1 #HX21 #H2
 elim (cnv_inv_zero … H1) -H1 #Z #K #V #HV #H destruct

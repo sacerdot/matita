@@ -33,6 +33,6 @@ lemma rpx_inv_lifts_dx (h) (G): f_dropable_dx (cpx h G).
 
 lemma rpx_inv_lifts_bi (h) (G):
                        ∀L1,L2,U. ⦃G,L1⦄ ⊢ ⬈[h,U] L2 → ∀b,f. 𝐔⦃f⦄ →
-                       ∀K1,K2. ⬇*[b,f] L1 ≘ K1 → ⬇*[b,f] L2 ≘ K2 →
-                       ∀T. ⬆*[f]T ≘ U → ⦃G,K1⦄ ⊢ ⬈[h,T] K2.
+                       ∀K1,K2. ⇩*[b,f] L1 ≘ K1 → ⇩*[b,f] L2 ≘ K2 →
+                       ∀T. ⇧*[f]T ≘ U → ⦃G,K1⦄ ⊢ ⬈[h,T] K2.
 /2 width=10 by rex_inv_lifts_bi/ qed-.

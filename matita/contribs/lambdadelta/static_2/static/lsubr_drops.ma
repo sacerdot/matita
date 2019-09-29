@@ -22,10 +22,10 @@ include "static_2/static/lsubr.ma".
 (* Basic_2A1: includes: lsubr_fwd_drop2_pair *)
 lemma lsubr_fwd_drops2_bind:
       ∀L1,L2. L1 ⫃ L2 → 
-      ∀b,f,I,K2. 𝐔⦃f⦄ → ⬇*[b,f] L2 ≘ K2.ⓘ{I} →
-      ∨∨ ∃∃K1. K1 ⫃ K2 & ⬇*[b,f] L1 ≘ K1.ⓘ{I}
-       | ∃∃K1,W,V. K1 ⫃ K2 & ⬇*[b,f] L1 ≘ K1.ⓓⓝW.V & I = BPair Abst W
-       | ∃∃J1,J2,K1,V. K1 ⫃ K2 & ⬇*[b,f] L1 ≘ K1.ⓑ{J1}V & I = BUnit J2.
+      ∀b,f,I,K2. 𝐔⦃f⦄ → ⇩*[b,f] L2 ≘ K2.ⓘ{I} →
+      ∨∨ ∃∃K1. K1 ⫃ K2 & ⇩*[b,f] L1 ≘ K1.ⓘ{I}
+       | ∃∃K1,W,V. K1 ⫃ K2 & ⇩*[b,f] L1 ≘ K1.ⓓⓝW.V & I = BPair Abst W
+       | ∃∃J1,J2,K1,V. K1 ⫃ K2 & ⇩*[b,f] L1 ≘ K1.ⓑ{J1}V & I = BUnit J2.
 #L1 #L2 #H elim H -L1 -L2
 [ #b #f #I #K2 #_ #H
   elim (drops_inv_atom1 … H) -H #H destruct
@@ -44,8 +44,8 @@ qed-.
 (* Basic_2A1: includes: lsubr_fwd_drop2_abbr *)
 lemma lsubr_fwd_drops2_abbr:
       ∀L1,L2. L1 ⫃ L2 →
-      ∀b,f,K2,V. 𝐔⦃f⦄ → ⬇*[b,f] L2 ≘ K2.ⓓV →
-      ∃∃K1. K1 ⫃ K2 & ⬇*[b,f] L1 ≘ K1.ⓓV.
+      ∀b,f,K2,V. 𝐔⦃f⦄ → ⇩*[b,f] L2 ≘ K2.ⓓV →
+      ∃∃K1. K1 ⫃ K2 & ⇩*[b,f] L1 ≘ K1.ⓓV.
 #L1 #L2 #HL12 #b #f #K2 #V #Hf #HLK2
 elim (lsubr_fwd_drops2_bind … HL12 … Hf HLK2) -L2 -Hf // *
 [ #K1 #W #V #_ #_ #H destruct

@@ -21,7 +21,7 @@ include "apps_2/functional/mf_exteq.ma".
 (* Properties with relocation ***********************************************)
 
 lemma mf_delta_drops (h) (G): ∀K,V1,V2. ⦃G,K⦄ ⊢ V1 ➡[h] V2 →
-                              ∀T,L,l. ⬇*[l] L ≘ K.ⓓV1 →
+                              ∀T,L,l. ⇩*[l] L ≘ K.ⓓV1 →
                               ∀gv,lv. ⦃G,L⦄ ⊢ ●[gv,⇡[l←#l]lv]T ➡[h] ●[gv,⇡[l←↑[↑l]V2]lv]T.
 #h #G #K #V1 #V2 #HV #T elim T -T * //
 [ #i #L #l #HKL #gv #lv
