@@ -23,8 +23,8 @@ include "static_2/static/lsubc.ma".
 (* Basic_1: includes: csubc_drop_conf_O *)
 (* Basic_2A1: includes: lsubc_drop_O1_trans *)
 lemma lsubc_drops_trans_isuni: ∀RP,G,L1,L2. G ⊢ L1 ⫃[RP] L2 →
-                               ∀b,f,K2. 𝐔⦃f⦄ → ⬇*[b, f] L2 ≘ K2 →
-                               ∃∃K1. ⬇*[b, f] L1 ≘ K1 & G ⊢ K1 ⫃[RP] K2.
+                               ∀b,f,K2. 𝐔⦃f⦄ → ⬇*[b,f] L2 ≘ K2 →
+                               ∃∃K1. ⬇*[b,f] L1 ≘ K1 & G ⊢ K1 ⫃[RP] K2.
 #RP #G #L1 #L2 #H elim H -L1 -L2
 [ /2 width=3 by ex2_intro/
 | #I #L1 #L2 #HL12 #IH #b #f #K2 #Hf #H
@@ -48,8 +48,8 @@ qed-.
 (* Basic_1: includes: csubc_drop_conf_rev *)
 (* Basic_2A1: includes: drop_lsubc_trans *)
 lemma drops_lsubc_trans: ∀RR,RS,RP. gcp RR RS RP →
-                         ∀b,f,G,L1,K1. ⬇*[b, f] L1 ≘ K1 → ∀K2. G ⊢ K1 ⫃[RP] K2 →
-                         ∃∃L2. G ⊢ L1 ⫃[RP] L2 & ⬇*[b, f] L2 ≘ K2.
+                         ∀b,f,G,L1,K1. ⬇*[b,f] L1 ≘ K1 → ∀K2. G ⊢ K1 ⫃[RP] K2 →
+                         ∃∃L2. G ⊢ L1 ⫃[RP] L2 & ⬇*[b,f] L2 ≘ K2.
 #RR #RS #RP #HR #b #f #G #L1 #K1 #H elim H -f -L1 -K1
 [ #f #Hf #Y #H lapply (lsubc_inv_atom1 … H) -H
   #H destruct /4 width=3 by lsubc_atom, drops_atom, ex2_intro/

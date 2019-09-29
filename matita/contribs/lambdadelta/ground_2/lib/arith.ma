@@ -57,6 +57,9 @@ lemma plus_SO: ∀n. n + 1 = ↑n.
 lemma minus_plus_m_m_commutative: ∀n,m:nat. n = m + n - m.
 // qed-.
 
+lemma plus_minus_m_m_commutative (n) (m): m ≤ n → n = m+(n-m).
+/2 width=1 by plus_minus_associative/ qed-.
+
 lemma plus_to_minus_2: ∀m1,m2,n1,n2. n1 ≤ m1 → n2 ≤ m2 →
                        m1+n2 = m2+n1 → m1-n1 = m2-n2.
 #m1 #m2 #n1 #n2 #H1 #H2 #H
@@ -127,6 +130,14 @@ qed-.
 lemma le_plus_to_minus_comm: ∀n,m,p. n ≤ p+m → n-p ≤ m.
 /2 width=1 by le_plus_to_minus/ qed-.
 
+lemma le_inv_S1: ∀m,n. ↑m ≤ n → ∃∃p. m ≤ p & ↑p = n.
+#m *
+[ #H lapply (le_n_O_to_eq … H) -H
+  #H destruct
+| /3 width=3 by monotonic_pred, ex2_intro/
+]
+qed-.
+
 (* Note: this might interfere with nat.ma *)
 lemma monotonic_lt_pred: ∀m,n. m < n → 0 < m → pred m < pred n.
 #m #n #Hmn #Hm whd >(S_pred … Hm)
@@ -157,6 +168,15 @@ qed-.
 
 lemma lt_le_false: ∀x,y. x < y → y ≤ x → ⊥.
 /3 width=4 by lt_refl_false, lt_to_le_to_lt/ qed-.
+
+lemma le_dec (n) (m): Decidable (n≤m).
+#n elim n -n [ /2 width=1 by or_introl/ ]
+#n #IH * [ /3 width=2 by lt_zero_false, or_intror/ ]
+#m elim (IH m) -IH
+[ /3 width=1 by or_introl, le_S_S/
+| /4 width=1 by or_intror, le_S_S_to_le/
+]
+qed-.
 
 lemma succ_inv_refl_sn: ∀x. ↑x = x → ⊥.
 #x #H @(lt_le_false x (↑x)) //
@@ -322,3 +342,34 @@ lemma tri_gt: ∀A,a1,a2,a3,n1,n2. n2 < n1 → tri A n1 n2 a1 a2 a3 = a3.
 | #n1 #IH #n2 elim n2 -n2 /3 width=1 by monotonic_lt_pred/
 ]
 qed.
+
+(* Decidability of predicates ***********************************************)
+
+lemma dec_lt (R:predicate nat):
+      (∀n. Decidable … (R n)) →
+      ∀n. Decidable … (∃∃m. m < n & R m).
+#R #HR #n elim n -n [| #n * ]
+[ @or_intror * /2 width=2 by lt_zero_false/
+| * /4 width=3 by lt_S, or_introl, ex2_intro/
+| #H0 elim (HR n) -HR
+  [ /3 width=3 by or_introl, ex2_intro/
+  | #Hn @or_intror * #m #Hmn #Hm
+    elim (le_to_or_lt_eq … Hmn) -Hmn #H destruct [ -Hn | -H0 ]
+    /4 width=3 by lt_S_S_to_lt, ex2_intro/
+  ]
+]
+qed-.
+
+lemma dec_min (R:predicate nat):
+      (∀n. Decidable … (R n)) → ∀n. R n →
+      ∃∃m. m ≤ n & R m & (∀p. p < m → R p → ⊥).
+#R #HR #n
+@(nat_elim1 n) -n #n #IH #Hn
+elim (dec_lt … HR n) -HR [ -Hn | -IH ]
+[ * #p #Hpn #Hp
+  elim (IH … Hpn Hp) -IH -Hp #m #Hmp #Hm #HNm
+  @(ex3_intro … Hm HNm) -HNm
+  /3 width=3 by lt_to_le, le_to_lt_to_lt/
+| /4 width=4 by ex3_intro, ex2_intro/
+]
+qed-.

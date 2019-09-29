@@ -28,13 +28,6 @@ qed-.
 
 (* Advanced properties ******************************************************)
 
-lemma scpes_refl: ∀h,o,G,L,T,d1,d2. d2 ≤ d1 → ⦃G, L⦄ ⊢ T ▪[h, o] d1 →
-                  ⦃G, L⦄ ⊢ T •*⬌*[h, o, d2, d2] T.
-#h #o #G #L #T #d1 #d2 #Hd21 #Hd1
-elim (da_lstas … Hd1 … d2) #U #HTU #_
-/3 width=3 by scpds_div, lstas_scpds/
-qed.
-
 lemma lstas_scpes_trans: ∀h,o,G,L,T1,d0,d1. ⦃G, L⦄ ⊢ T1 ▪[h, o] d0 → d1 ≤ d0 →
                          ∀T. ⦃G, L⦄ ⊢ T1 •*[h, d1] T →
                          ∀T2,d,d2. ⦃G, L⦄ ⊢ T •*⬌*[h,o,d,d2] T2 → ⦃G, L⦄ ⊢ T1 •*⬌*[h,o,d1+d,d2] T2.

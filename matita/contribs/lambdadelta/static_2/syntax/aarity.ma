@@ -72,3 +72,11 @@ lemma eq_aarity_dec: ∀A1,A2:aarity. Decidable (A1 = A2).
   ]
 ]
 qed-.
+
+lemma is_apear_dec (B) (X): Decidable (∃A. ②B.A = X).
+#B * [| #X #A ]
+[| elim (eq_aarity_dec X B) #HX ]
+[| /3 width=2 by ex_intro, or_introl/ ]
+@or_intror * #A #H destruct
+/2 width=1 by/
+qed-.

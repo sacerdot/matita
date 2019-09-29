@@ -24,27 +24,27 @@ interpretation "weight (restricted closure)" 'Weight L T = (rfw L T).
 (* Basic properties *********************************************************)
 
 (* Basic_1: was: flt_shift *)
-lemma rfw_shift: ∀p,I,K,V,T. ♯{K.ⓑ{I}V, T} < ♯{K, ⓑ{p,I}V.T}.
+lemma rfw_shift: ∀p,I,K,V,T. ♯{K.ⓑ{I}V,T} < ♯{K,ⓑ{p,I}V.T}.
 normalize /2 width=1 by monotonic_le_plus_r/
 qed.
 
-lemma rfw_clear: ∀p,I1,I2,K,V,T. ♯{K.ⓤ{I1}, T} < ♯{K, ⓑ{p,I2}V.T}.
+lemma rfw_clear: ∀p,I1,I2,K,V,T. ♯{K.ⓤ{I1},T} < ♯{K,ⓑ{p,I2}V.T}.
 normalize /4 width=1 by monotonic_le_plus_r, le_S_S/
 qed.
 
-lemma rfw_tpair_sn: ∀I,L,V,T. ♯{L, V} < ♯{L, ②{I}V.T}.
+lemma rfw_tpair_sn: ∀I,L,V,T. ♯{L,V} < ♯{L,②{I}V.T}.
 normalize in ⊢ (?→?→?→?→?%%); //
 qed.
 
-lemma rfw_tpair_dx: ∀I,L,V,T. ♯{L, T} < ♯{L, ②{I}V.T}.
+lemma rfw_tpair_dx: ∀I,L,V,T. ♯{L,T} < ♯{L,②{I}V.T}.
 normalize in ⊢ (?→?→?→?→?%%); //
 qed.
 
-lemma rfw_lpair_sn: ∀I,L,V,T. ♯{L, V} < ♯{L.ⓑ{I}V, T}.
+lemma rfw_lpair_sn: ∀I,L,V,T. ♯{L,V} < ♯{L.ⓑ{I}V,T}.
 normalize /3 width=1 by monotonic_lt_plus_l, monotonic_le_plus_r/
 qed.
 
-lemma rfw_lpair_dx: ∀I,L,V,T. ♯{L, T} < ♯{L.ⓑ{I}V, T}.
+lemma rfw_lpair_dx: ∀I,L,V,T. ♯{L,T} < ♯{L.ⓑ{I}V,T}.
 normalize /3 width=1 by monotonic_lt_plus_l, monotonic_le_plus_r/
 qed.
 

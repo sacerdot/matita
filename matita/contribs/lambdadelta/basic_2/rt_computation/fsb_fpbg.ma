@@ -19,9 +19,9 @@ include "basic_2/rt_computation/fsb_fdeq.ma".
 
 (* Properties with parallel rst-computation for closures ********************)
 
-lemma fsb_fpbs_trans: ∀h,o,G1,L1,T1. ≥[h, o] 𝐒⦃G1, L1, T1⦄ →
-                      ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄ → ≥[h, o] 𝐒⦃G2, L2, T2⦄.
-#h #o #G1 #L1 #T1 #H @(fsb_ind_alt … H) -G1 -L1 -T1
+lemma fsb_fpbs_trans: ∀h,G1,L1,T1. ≥[h] 𝐒⦃G1,L1,T1⦄ →
+                      ∀G2,L2,T2. ⦃G1,L1,T1⦄ ≥[h] ⦃G2,L2,T2⦄ → ≥[h] 𝐒⦃G2,L2,T2⦄.
+#h #G1 #L1 #T1 #H @(fsb_ind_alt … H) -G1 -L1 -T1
 #G1 #L1 #T1 #H1 #IH #G2 #L2 #T2 #H12
 elim (fpbs_inv_fpbg … H12) -H12
 [ -IH /2 width=5 by fsb_fdeq_trans/
@@ -31,21 +31,21 @@ qed-.
 
 (* Properties with proper parallel rst-computation for closures *************)
 
-lemma fsb_intro_fpbg: ∀h,o,G1,L1,T1. (
-                         ∀G2,L2,T2. ⦃G1, L1, T1⦄ >[h, o] ⦃G2, L2, T2⦄ → ≥[h, o] 𝐒⦃G2, L2, T2⦄
-                      ) → ≥[h, o] 𝐒⦃G1, L1, T1⦄.
+lemma fsb_intro_fpbg: ∀h,G1,L1,T1. (
+                         ∀G2,L2,T2. ⦃G1,L1,T1⦄ >[h] ⦃G2,L2,T2⦄ → ≥[h] 𝐒⦃G2,L2,T2⦄
+                      ) → ≥[h] 𝐒⦃G1,L1,T1⦄.
 /4 width=1 by fsb_intro, fpb_fpbg/ qed.
 
 (* Eliminators with proper parallel rst-computation for closures ************)
 
-lemma fsb_ind_fpbg_fpbs: ∀h,o. ∀Q:relation3 genv lenv term.
-                         (∀G1,L1,T1. ≥[h, o] 𝐒⦃G1, L1, T1⦄ →
-                                     (∀G2,L2,T2. ⦃G1, L1, T1⦄ >[h, o] ⦃G2, L2, T2⦄ → Q G2 L2 T2) →
+lemma fsb_ind_fpbg_fpbs: ∀h. ∀Q:relation3 genv lenv term.
+                         (∀G1,L1,T1. ≥[h] 𝐒⦃G1,L1,T1⦄ →
+                                     (∀G2,L2,T2. ⦃G1,L1,T1⦄ >[h] ⦃G2,L2,T2⦄ → Q G2 L2 T2) →
                                      Q G1 L1 T1
                          ) →
-                         ∀G1,L1,T1. ≥[h, o] 𝐒⦃G1, L1, T1⦄ → 
-                         ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄ → Q G2 L2 T2.
-#h #o #Q #IH1 #G1 #L1 #T1 #H @(fsb_ind_alt … H) -G1 -L1 -T1
+                         ∀G1,L1,T1. ≥[h] 𝐒⦃G1,L1,T1⦄ → 
+                         ∀G2,L2,T2. ⦃G1,L1,T1⦄ ≥[h] ⦃G2,L2,T2⦄ → Q G2 L2 T2.
+#h #Q #IH1 #G1 #L1 #T1 #H @(fsb_ind_alt … H) -G1 -L1 -T1
 #G1 #L1 #T1 #H1 #IH #G2 #L2 #T2 #H12
 @IH1 -IH1
 [ -IH /2 width=5 by fsb_fpbs_trans/
@@ -55,21 +55,21 @@ lemma fsb_ind_fpbg_fpbs: ∀h,o. ∀Q:relation3 genv lenv term.
 ]
 qed-.
 
-lemma fsb_ind_fpbg: ∀h,o. ∀Q:relation3 genv lenv term.
-                    (∀G1,L1,T1. ≥[h, o] 𝐒⦃G1, L1, T1⦄ →
-                                (∀G2,L2,T2. ⦃G1, L1, T1⦄ >[h, o] ⦃G2, L2, T2⦄ → Q G2 L2 T2) →
+lemma fsb_ind_fpbg: ∀h. ∀Q:relation3 genv lenv term.
+                    (∀G1,L1,T1. ≥[h] 𝐒⦃G1,L1,T1⦄ →
+                                (∀G2,L2,T2. ⦃G1,L1,T1⦄ >[h] ⦃G2,L2,T2⦄ → Q G2 L2 T2) →
                                 Q G1 L1 T1
                     ) →
-                    ∀G1,L1,T1. ≥[h, o] 𝐒⦃G1, L1, T1⦄ →  Q G1 L1 T1.
-#h #o #Q #IH #G1 #L1 #T1 #H @(fsb_ind_fpbg_fpbs … H) -H
+                    ∀G1,L1,T1. ≥[h] 𝐒⦃G1,L1,T1⦄ →  Q G1 L1 T1.
+#h #Q #IH #G1 #L1 #T1 #H @(fsb_ind_fpbg_fpbs … H) -H
 /3 width=1 by/
 qed-.
 
 (* Inversion lemmas with proper parallel rst-computation for closures *******)
 
-lemma fsb_fpbg_refl_false (h) (o) (G) (L) (T):
-                          ≥[h,o] 𝐒⦃G, L, T⦄ → ⦃G, L, T⦄ >[h,o] ⦃G, L, T⦄ → ⊥.
-#h #o #G #L #T #H
+lemma fsb_fpbg_refl_false (h) (G) (L) (T):
+                          ≥[h] 𝐒⦃G,L,T⦄ → ⦃G,L,T⦄ >[h] ⦃G,L,T⦄ → ⊥.
+#h #G #L #T #H
 @(fsb_ind_fpbg … H) -G -L -T #G1 #L1 #T1 #_ #IH #H
 /2 width=5 by/
 qed-.

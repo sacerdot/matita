@@ -21,7 +21,7 @@ include "basic_2/rt_computation/cpms.ma".
 (* Forward lemmas with unbound context-sensitive rt-computation for terms ***)
 
 (* Basic_2A1: includes: scpds_fwd_cpxs cprs_cpxs *)
-lemma cpms_fwd_cpxs (n) (h): ∀G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡*[n, h] T2 → ⦃G, L⦄ ⊢ T1 ⬈*[h] T2.
+lemma cpms_fwd_cpxs (n) (h): ∀G,L,T1,T2. ⦃G,L⦄ ⊢ T1 ➡*[n,h] T2 → ⦃G,L⦄ ⊢ T1 ⬈*[h] T2.
 #n #h #G #L #T1 #T2 #H @(cpms_ind_dx … H) -T2
 /3 width=4 by cpxs_strap1, cpm_fwd_cpx/
 qed-.

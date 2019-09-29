@@ -1,6 +1,6 @@
 EXEC = xoa
 VERSION=0.2.0
 
-REQUIRES = helm-grafite
+REQUIRES = helm-registry
 
 include ../Makefile.common

@@ -75,7 +75,7 @@ val disambiguate:
 
 val analyse_indty: 
  #pstatus as 'status -> cic_term -> 
-  'status * (NReference.reference * int * NCic.term list * NCic.term list)
+  'status * (NReference.reference * int * NCic.term list * NCic.term list * NCic.constructor list)
 
 val ppterm: #pstatus -> cic_term -> string
 val ppcontext: #pstatus -> NCic.context -> string
@@ -85,6 +85,8 @@ val whd:
 val normalize: 
  #pstatus as 'status -> ?delta:int -> NCic.context -> cic_term ->
   'status * cic_term 
+val are_convertible: 
+ #pstatus as 'status -> NCic.context -> cic_term -> cic_term -> 'status * bool
 val typeof: 
  #pstatus as 'status -> NCic.context -> cic_term -> 'status * cic_term
 val unify: 

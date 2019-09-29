@@ -50,8 +50,8 @@ lemma req_cpx_trans: ∀h,G. req_transitive (cpx h G).
 qed-.
 (*
 (* Basic_2A1: was: cpx_lleq_conf *)
-lemma cpx_req_conf: ∀h,G,L2,T1,T2. ⦃G, L2⦄ ⊢ T1 ⬈[h] T2 →
-                    ∀L1. L2 ≘[T1] L1 → ⦃G, L1⦄ ⊢ T1 ⬈[h] T2.
+lemma cpx_req_conf: ∀h,G,L2,T1,T2. ⦃G,L2⦄ ⊢ T1 ⬈[h] T2 →
+                    ∀L1. L2 ≘[T1] L1 → ⦃G,L1⦄ ⊢ T1 ⬈[h] T2.
 /3 width=3 by req_cpx_trans, req_sym/ qed-.
 *)
 (* Basic_2A1: was: cpx_lleq_conf_sn *)
@@ -59,7 +59,7 @@ lemma cpx_req_conf_sn: ∀h,G. s_r_confluent1 … (cpx h G) req.
 /2 width=5 by cpx_rex_conf/ qed-.
 (*
 (* Basic_2A1: was: cpx_lleq_conf_dx *)
-lemma cpx_req_conf_dx: ∀h,G,L2,T1,T2. ⦃G, L2⦄ ⊢ T1 ⬈[h] T2 →
+lemma cpx_req_conf_dx: ∀h,G,L2,T1,T2. ⦃G,L2⦄ ⊢ T1 ⬈[h] T2 →
                        ∀L1. L1 ≘[T1] L2 → L1 ≘[T2] L2.
 /4 width=6 by cpx_req_conf_sn, req_sym/ qed-.
 *)

@@ -12,27 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_equivalence/cpcs_cprs.ma".
-include "basic_2/dynamic/cnv_preserve.ma".
+include "basic_2/rt_computation/csx_aaa.ma".
+include "basic_2/rt_equivalence/cpcs_csx.ma".
+include "basic_2/dynamic/cnv_aaa.ma".
 
 (* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
 
-(* Forward lemmas with r-equivalence ****************************************)
+(* Properties with r-equivalence ********************************************)
 
-lemma cnv_cpms_conf_eq (a) (h) (n) (G) (L):
-      ∀T. ⦃G,L⦄ ⊢ T ![a,h] →
-      ∀T1. ⦃G,L⦄ ⊢ T ➡*[n,h] T1 → ∀T2. ⦃G,L⦄ ⊢ T ➡*[n,h] T2 → ⦃G,L⦄ ⊢ T1 ⬌*[h] T2.
-#a #h #n #G #L #T #HT #T1 #HT1 #T2 #HT2
-elim (cnv_cpms_conf … HT … HT1 … HT2) -T <minus_n_n #T #HT1 #HT2
-/2 width=3 by cprs_div/
-qed-.
-
-lemma cnv_cpms_fwd_appl_sn_decompose (a) (h) (G) (L):
-      ∀V,T. ⦃G,L⦄ ⊢ ⓐV.T ![a,h] → ∀n,X. ⦃G,L⦄ ⊢ ⓐV.T ➡*[n,h] X →
-      ∃∃U. ⦃G,L⦄ ⊢ T ![a,h] & ⦃G,L⦄ ⊢ T ➡*[n,h] U & ⦃G,L⦄ ⊢ ⓐV.U ⬌*[h] X.
-#a #h #G #L #V #T #H0 #n #X #HX
-elim (cnv_inv_appl … H0) #m #p #W #U #_ #_ #HT #_ #_ -m -p -W -U
-elim (cnv_fwd_cpms_total … h n … HT) #U #HTU
-lapply (cpms_appl_dx … V V … HTU) [ // ] #H
-/3 width=8 by cnv_cpms_conf_eq, ex3_intro/
+lemma cnv_cpcs_dec (h) (a) (G) (L):
+      ∀T1. ⦃G,L⦄ ⊢ T1 ![h,a] → ∀T2. ⦃G,L⦄ ⊢ T2 ![h,a] →
+      Decidable … (⦃G,L⦄ ⊢ T1 ⬌*[h] T2).
+#h #a #G #L #T1 #HT1 #T2 #HT2
+elim (cnv_fwd_aaa … HT1) -HT1 #A1 #HA1
+elim (cnv_fwd_aaa … HT2) -HT2 #A2 #HA2
+/3 width=2 by csx_cpcs_dec, aaa_csx/
 qed-.

@@ -92,6 +92,13 @@ interpretation "native type annotation (term)"
 
 (* Basic properties *********************************************************)
 
+lemma abst_dec (X): ∨∨ ∃∃p,W,T. X = ⓛ{p}W.T
+                     | (∀p,W,T. X = ⓛ{p}W.T → ⊥).
+* [ #I | * [ #p * | #I ] #V #T ]
+[3: /3 width=4 by ex1_3_intro, or_introl/ ]
+@or_intror #q #W #U #H destruct
+qed-.
+
 (* Basic_1: was: term_dec *)
 lemma eq_term_dec: ∀T1,T2:term. Decidable (T1 = T2).
 #T1 elim T1 -T1 #I1 [| #V1 #T1 #IHV1 #IHT1 ] * #I2 [2,4: #V2 #T2 ]

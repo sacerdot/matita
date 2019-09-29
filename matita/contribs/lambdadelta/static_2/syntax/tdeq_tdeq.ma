@@ -14,14 +14,14 @@
 
 include "static_2/syntax/tdeq.ma".
 
-(* DEGREE-BASED EQUIVALENCE ON TERMS ****************************************)
+(* SORT-IRRELEVANT EQUIVALENCE ON TERMS *************************************)
 
 (* Main properties **********************************************************)
 
-theorem tdeq_trans: ∀h,o. Transitive … (tdeq h o).
-#h #o #T1 #T #H elim H -T1 -T
-[ #s1 #s #d #Hs1 #Hs #X #H
-  elim (tdeq_inv_sort1_deg … H … Hs) -s /2 width=3 by tdeq_sort/
+theorem tdeq_trans: Transitive … tdeq.
+#T1 #T #H elim H -T1 -T
+[ #s1 #s #X #H
+  elim (tdeq_inv_sort1 … H) -s /2 width=1 by tdeq_sort/
 | #i1 #i #H <(tdeq_inv_lref1 … H) -H //
 | #l1 #l #H <(tdeq_inv_gref1 … H) -H //
 | #I #V1 #V #T1 #T #_ #_ #IHV #IHT #X #H
@@ -29,22 +29,20 @@ theorem tdeq_trans: ∀h,o. Transitive … (tdeq h o).
 ]
 qed-.
 
-theorem tdeq_canc_sn: ∀h,o. left_cancellable … (tdeq h o).
+theorem tdeq_canc_sn: left_cancellable … tdeq.
 /3 width=3 by tdeq_trans, tdeq_sym/ qed-.
 
-theorem tdeq_canc_dx: ∀h,o. right_cancellable … (tdeq h o).
+theorem tdeq_canc_dx: right_cancellable … tdeq.
 /3 width=3 by tdeq_trans, tdeq_sym/ qed-.
 
-theorem tdeq_repl: ∀h,o,T1,T2. T1 ≛[h, o] T2 →
-                   ∀U1. T1 ≛[h, o] U1 → ∀U2. T2 ≛[h, o] U2 → U1 ≛[h, o] U2.
+theorem tdeq_repl: ∀T1,T2. T1 ≛ T2 →
+                   ∀U1. T1 ≛ U1 → ∀U2. T2 ≛ U2 → U1 ≛ U2.
 /3 width=3 by tdeq_canc_sn, tdeq_trans/ qed-.
 
 (* Negated main properies ***************************************************)
 
-theorem tdeq_tdneq_trans: ∀h,o,T1,T. T1 ≛[h, o] T → ∀T2. (T ≛[h, o] T2 → ⊥) →
-                          T1 ≛[h, o] T2 → ⊥.
+theorem tdeq_tdneq_trans: ∀T1,T. T1 ≛ T → ∀T2. (T ≛ T2 → ⊥) → T1 ≛ T2 → ⊥.
 /3 width=3 by tdeq_canc_sn/ qed-.
 
-theorem tdneq_tdeq_canc_dx: ∀h,o,T1,T. (T1 ≛[h, o] T → ⊥) → ∀T2. T2 ≛[h, o] T →
-                            T1 ≛[h, o] T2 → ⊥.
+theorem tdneq_tdeq_canc_dx: ∀T1,T. (T1 ≛ T → ⊥) → ∀T2. T2 ≛ T → T1 ≛ T2 → ⊥.
 /3 width=3 by tdeq_trans/ qed-.

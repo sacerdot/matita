@@ -17,12 +17,12 @@ include "static_2/relocation/lifts_lifts.ma".
 
 (* GENERIC RELOCATION FOR TERMS *********************************************)
 
-(* Properties with degree-based equivalence for terms ***********************)
+(* Properties with sort-irrelevant equivalence for terms ********************)
 
-lemma tdeq_lifts_sn: ∀h,o. liftable2_sn (tdeq h o).
-#h #o #T1 #T2 #H elim H -T1 -T2 [||| * ]
-[ #s1 #s2 #d #Hs1 #Hs2 #f #X #H >(lifts_inv_sort1 … H) -H
-  /3 width=5 by lifts_sort, tdeq_sort, ex2_intro/
+lemma tdeq_lifts_sn: liftable2_sn tdeq.
+#T1 #T2 #H elim H -T1 -T2 [||| * ]
+[ #s1 #s2 #f #X #H >(lifts_inv_sort1 … H) -H
+  /3 width=3 by lifts_sort, tdeq_sort, ex2_intro/
 | #i #f #X #H elim (lifts_inv_lref1 … H) -H
   /3 width=3 by lifts_lref, tdeq_lref, ex2_intro/
 | #l #f #X #H >(lifts_inv_gref1 … H) -H
@@ -38,15 +38,18 @@ lemma tdeq_lifts_sn: ∀h,o. liftable2_sn (tdeq h o).
 ]
 qed-.
 
-lemma tdeq_lifts_bi: ∀h,o. liftable2_bi (tdeq h o).
+lemma tdeq_lifts_dx: liftable2_dx tdeq.
+/3 width=3 by tdeq_lifts_sn, liftable2_sn_dx, tdeq_sym/ qed-.
+
+lemma tdeq_lifts_bi: liftable2_bi tdeq.
 /3 width=6 by tdeq_lifts_sn, liftable2_sn_bi/ qed-.
 
-(* Inversion lemmas with degree-based equivalence for terms *****************)
+(* Inversion lemmas with sort-irrelevant equivalence for terms **************)
 
-lemma tdeq_inv_lifts_sn: ∀h,o. deliftable2_sn (tdeq h o).
-#h #o #U1 #U2 #H elim H -U1 -U2 [||| * ]
-[ #s1 #s2 #d #Hs1 #Hs2 #f #X #H >(lifts_inv_sort2 … H) -H
-  /3 width=5 by lifts_sort, tdeq_sort, ex2_intro/
+lemma tdeq_inv_lifts_sn: deliftable2_sn tdeq.
+#U1 #U2 #H elim H -U1 -U2 [||| * ]
+[ #s1 #s2 #f #X #H >(lifts_inv_sort2 … H) -H
+  /3 width=3 by lifts_sort, tdeq_sort, ex2_intro/
 | #i #f #X #H elim (lifts_inv_lref2 … H) -H
   /3 width=3 by lifts_lref, tdeq_lref, ex2_intro/
 | #l #f #X #H >(lifts_inv_gref2 … H) -H
@@ -62,15 +65,15 @@ lemma tdeq_inv_lifts_sn: ∀h,o. deliftable2_sn (tdeq h o).
 ]
 qed-.
 
-lemma tdeq_inv_lifts_dx (h) (o): deliftable2_dx (tdeq h o).
+lemma tdeq_inv_lifts_dx: deliftable2_dx tdeq.
 /3 width=3 by tdeq_inv_lifts_sn, deliftable2_sn_dx, tdeq_sym/ qed-.
 
-lemma tdeq_inv_lifts_bi: ∀h,o. deliftable2_bi (tdeq h o).
+lemma tdeq_inv_lifts_bi: deliftable2_bi tdeq.
 /3 width=6 by tdeq_inv_lifts_sn, deliftable2_sn_bi/ qed-.
 
-lemma tdeq_lifts_inv_pair_sn (h) (o) (I) (f:rtmap):
-                             ∀X,T. ⬆*[f]X ≘ T → ∀V. ②{I}V.T ≛[h,o] X → ⊥.
-#h #o #I #f #X #T #H elim H -f -X -T
+lemma tdeq_lifts_inv_pair_sn (I) (f:rtmap):
+                             ∀X,T. ⬆*[f]X ≘ T → ∀V. ②{I}V.T ≛ X → ⊥.
+#I #f #X #T #H elim H -f -X -T
 [ #f #s #V #H
   elim (tdeq_inv_pair1 … H) -H #X1 #X2 #_ #_ #H destruct
 | #f #i #j #_ #V #H

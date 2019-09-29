@@ -272,9 +272,6 @@ for @{ 'notmem $a $b }.
 notation "hvbox(a break ≬ b)" non associative with precedence 45
 for @{ 'overlaps $a $b }. (* \between *)
 
-notation "hvbox(a break ⊆ b)" non associative with precedence 45
-for @{ 'subseteq $a $b }. (* \subseteq *)
-
 notation "hvbox(a break ∩ b)" left associative with precedence 60
 for @{ 'intersects $a $b }. (* \cap *)
 
@@ -282,12 +279,6 @@ notation "hvbox(a break ∪ b)" left associative with precedence 55
 for @{ 'union $a $b }. (* \cup *)
 
 (* other notations **********************************************************)
-
-notation "hvbox(a break \approx b)" non associative with precedence 45 
-  for @{ 'napart $a $b}.
-        
-notation "hvbox(a break # b)" non associative with precedence 45 
-  for @{ 'apart $a $b}.
 
 notation < "term 76 a \sup term 90 b" non associative with precedence 75 for @{ 'exp $a $b}.
 notation > "a \sup term 90 b" non associative with precedence 75 for @{ 'exp $a $b}.

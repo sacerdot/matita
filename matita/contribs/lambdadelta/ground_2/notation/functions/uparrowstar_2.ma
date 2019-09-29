@@ -14,6 +14,6 @@
 
 (* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
 
-notation "hvbox( ↑ * [ term 46 n ] term 70 T )"
+notation "hvbox( ↑ * [ term 46 n ] break term 70 T )"
    non associative with precedence 70
    for @{ 'UpArrowStar $n $T }.

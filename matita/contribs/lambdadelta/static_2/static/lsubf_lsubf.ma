@@ -19,9 +19,10 @@ include "static_2/static/lsubf.ma".
 
 (* Main properties **********************************************************)
 
-theorem lsubf_sor: ∀K,L,g1,f1. ⦃K, g1⦄ ⫃𝐅* ⦃L, f1⦄ →
-                   ∀g2,f2. ⦃K, g2⦄ ⫃𝐅* ⦃L, f2⦄ →
-                   ∀g. g1 ⋓ g2 ≘ g → ∀f. f1 ⋓ f2 ≘ f → ⦃K, g⦄ ⫃𝐅* ⦃L, f⦄.
+theorem lsubf_sor:
+        ∀K,L,g1,f1. ⦃K,g1⦄ ⫃𝐅+ ⦃L,f1⦄ →
+        ∀g2,f2. ⦃K,g2⦄ ⫃𝐅+ ⦃L,f2⦄ →
+        ∀g. g1 ⋓ g2 ≘ g → ∀f. f1 ⋓ f2 ≘ f → ⦃K,g⦄ ⫃𝐅+ ⦃L,f⦄.
 #K elim K -K
 [ #L #g1 #f1 #H1 #g2 #f2 #H2 #g #Hg #f #Hf
   elim (lsubf_inv_atom1 … H1) -H1 #H1 #H destruct

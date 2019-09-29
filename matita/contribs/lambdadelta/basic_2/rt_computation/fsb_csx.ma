@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_computation/rdsx_csx.ma".
+include "basic_2/rt_computation/rsx_csx.ma".
 include "basic_2/rt_computation/fpbs_cpx.ma".
 include "basic_2/rt_computation/fpbs_csx.ma".
 include "basic_2/rt_computation/fsb_fpbg.ma".
@@ -21,20 +21,20 @@ include "basic_2/rt_computation/fsb_fpbg.ma".
 
 (* Inversion lemmas with context-sensitive stringly rt-normalizing terms ****)
 
-lemma fsb_inv_csx: ∀h,o,G,L,T. ≥[h, o] 𝐒⦃G, L, T⦄ → ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄.
-#h #o #G #L #T #H @(fsb_ind_alt … H) -G -L -T /5 width=1 by csx_intro, fpb_cpx/
+lemma fsb_inv_csx: ∀h,G,L,T. ≥[h] 𝐒⦃G,L,T⦄ → ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃T⦄.
+#h #G #L #T #H @(fsb_ind_alt … H) -G -L -T /5 width=1 by csx_intro, fpb_cpx/
 qed-.
 
 (* Propreties with context-sensitive stringly rt-normalizing terms **********)
 
-lemma csx_fsb_fpbs: ∀h,o,G1,L1,T1. ⦃G1, L1⦄ ⊢ ⬈*[h, o] 𝐒⦃T1⦄ →
-                    ∀G2,L2,T2. ⦃G1, L1, T1⦄ ≥[h, o] ⦃G2, L2, T2⦄ → ≥[h, o] 𝐒⦃G2, L2, T2⦄.
-#h #o #G1 #L1 #T1 #H @(csx_ind … H) -T1
+lemma csx_fsb_fpbs: ∀h,G1,L1,T1. ⦃G1,L1⦄ ⊢ ⬈*[h] 𝐒⦃T1⦄ →
+                    ∀G2,L2,T2. ⦃G1,L1,T1⦄ ≥[h] ⦃G2,L2,T2⦄ → ≥[h] 𝐒⦃G2,L2,T2⦄.
+#h #G1 #L1 #T1 #H @(csx_ind … H) -T1
 #T1 #HT1 #IHc #G2 #L2 #T2 @(fqup_wf_ind (Ⓣ) … G2 L2 T2) -G2 -L2 -T2
 #G0 #L0 #T0 #IHu #H10 
 lapply (fpbs_csx_conf … H10) // -HT1 #HT0
 generalize in match IHu; -IHu generalize in match H10; -H10
-@(rdsx_ind … (csx_rdsx … HT0)) -L0
+@(rsx_ind … (csx_rsx … HT0)) -L0
 #L0 #_ #IHd #H10 #IHu @fsb_intro
 #G2 #L2 #T2 * -G2 -L2 -T2 [ -IHd -IHc | -IHu -IHd |  ]
 [ /4 width=5 by fpbs_fqup_trans, fqu_fqup/
@@ -45,7 +45,7 @@ generalize in match IHu; -IHu generalize in match H10; -H10
   [ /3 width=3 by fpbs_lpxs_trans, lpx_lpxs/
   | #G3 #L3 #T3 #H03 #_
     elim (lpx_fqup_trans … H03 … HL02) -L2 #L4 #T4 #HT04 #H43 #HL43
-    elim (tdeq_dec h o T0 T4) [ -IHc -HT04 #HT04 | -IHu #HnT04 ]
+    elim (tdeq_dec T0 T4) [ -IHc -HT04 #HT04 | -IHu #HnT04 ]
     [ elim (tdeq_fqup_trans … H43 … HT04) -T4 #L2 #T4 #H04 #HT43 #HL24
       /4 width=7 by fsb_fpbs_trans, tdeq_rdeq_lpx_fpbs, fpbs_fqup_trans/
     | elim (cpxs_tdneq_fwd_step_sn … HT04 HnT04) -HT04 -HnT04 #T2 #T5 #HT02 #HnT02 #HT25 #HT54
@@ -56,23 +56,23 @@ generalize in match IHu; -IHu generalize in match H10; -H10
 ]
 qed.
 
-lemma csx_fsb: ∀h,o,G,L,T. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄ → ≥[h, o] 𝐒⦃G, L, T⦄.
+lemma csx_fsb: ∀h,G,L,T. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃T⦄ → ≥[h] 𝐒⦃G,L,T⦄.
 /2 width=5 by csx_fsb_fpbs/ qed.
 
 (* Advanced eliminators *****************************************************)
 
-lemma csx_ind_fpb: ∀h,o. ∀Q:relation3 genv lenv term.
-                   (∀G1,L1,T1. ⦃G1, L1⦄ ⊢ ⬈*[h, o] 𝐒⦃T1⦄ →
-                               (∀G2,L2,T2. ⦃G1, L1, T1⦄ ≻[h, o] ⦃G2, L2, T2⦄ → Q G2 L2 T2) →
+lemma csx_ind_fpb: ∀h. ∀Q:relation3 genv lenv term.
+                   (∀G1,L1,T1. ⦃G1,L1⦄ ⊢ ⬈*[h] 𝐒⦃T1⦄ →
+                               (∀G2,L2,T2. ⦃G1,L1,T1⦄ ≻[h] ⦃G2,L2,T2⦄ → Q G2 L2 T2) →
                                Q G1 L1 T1
                    ) →
-                   ∀G,L,T. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄ →  Q G L T.
+                   ∀G,L,T. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃T⦄ →  Q G L T.
 /4 width=4 by fsb_inv_csx, csx_fsb, fsb_ind_alt/ qed-.
 
-lemma csx_ind_fpbg: ∀h,o. ∀Q:relation3 genv lenv term.
-                    (∀G1,L1,T1. ⦃G1, L1⦄ ⊢ ⬈*[h, o] 𝐒⦃T1⦄ →
-                                (∀G2,L2,T2. ⦃G1, L1, T1⦄ >[h, o] ⦃G2, L2, T2⦄ → Q G2 L2 T2) →
+lemma csx_ind_fpbg: ∀h. ∀Q:relation3 genv lenv term.
+                    (∀G1,L1,T1. ⦃G1,L1⦄ ⊢ ⬈*[h] 𝐒⦃T1⦄ →
+                                (∀G2,L2,T2. ⦃G1,L1,T1⦄ >[h] ⦃G2,L2,T2⦄ → Q G2 L2 T2) →
                                 Q G1 L1 T1
                     ) →
-                    ∀G,L,T. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄ →  Q G L T.
+                    ∀G,L,T. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃T⦄ →  Q G L T.
 /4 width=4 by fsb_inv_csx, csx_fsb, fsb_ind_fpbg/ qed-.

@@ -19,8 +19,8 @@ include "basic_2/rt_computation/lpxs_lpx.ma".
 
 (* Properties with unbound parallel rt-computation on all entries ***********)
 
-lemma csx_lpxs_conf: ∀h,o,G,L1,L2,T. ⦃G, L1⦄ ⊢ ⬈*[h] L2 →
-                     ⦃G, L1⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄ → ⦃G, L2⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄.
-#h #o #G #L1 #L2 #T #H @(lpxs_ind_dx … H) -L2
+lemma csx_lpxs_conf: ∀h,G,L1,L2,T. ⦃G,L1⦄ ⊢ ⬈*[h] L2 →
+                     ⦃G,L1⦄ ⊢ ⬈*[h] 𝐒⦃T⦄ → ⦃G,L2⦄ ⊢ ⬈*[h] 𝐒⦃T⦄.
+#h #G #L1 #L2 #T #H @(lpxs_ind_dx … H) -L2
 /3 by lpxs_step_dx, csx_lpx_conf/
 qed-.

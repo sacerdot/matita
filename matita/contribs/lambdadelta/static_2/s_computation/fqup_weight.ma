@@ -19,8 +19,8 @@ include "static_2/s_computation/fqup.ma".
 
 (* Forward lemmas with weight for closures **********************************)
 
-lemma fqup_fwd_fw: ∀b,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐+[b] ⦃G2, L2, T2⦄ →
-                   ♯{G2, L2, T2} < ♯{G1, L1, T1}.
+lemma fqup_fwd_fw: ∀b,G1,G2,L1,L2,T1,T2. ⦃G1,L1,T1⦄ ⬂+[b] ⦃G2,L2,T2⦄ →
+                   ♯{G2,L2,T2} < ♯{G1,L1,T1}.
 #b #G1 #G2 #L1 #L2 #T1 #T2 #H @(fqup_ind … H) -G2 -L2 -T2
 /3 width=3 by fqu_fwd_fw, transitive_lt/
 qed-.
@@ -28,7 +28,7 @@ qed-.
 (* Advanced eliminators *****************************************************)
 
 lemma fqup_wf_ind: ∀b. ∀Q:relation3 …. (
-                      ∀G1,L1,T1. (∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊐+[b] ⦃G2, L2, T2⦄ → Q G2 L2 T2) →
+                      ∀G1,L1,T1. (∀G2,L2,T2. ⦃G1,L1,T1⦄ ⬂+[b] ⦃G2,L2,T2⦄ → Q G2 L2 T2) →
                       Q G1 L1 T1
                    ) → ∀G1,L1,T1. Q G1 L1 T1.
 #b #Q #HQ @(f3_ind … fw) #x #IHx #G1 #L1 #T1 #H destruct
@@ -36,7 +36,7 @@ lemma fqup_wf_ind: ∀b. ∀Q:relation3 …. (
 qed-.
 
 lemma fqup_wf_ind_eq: ∀b. ∀Q:relation3 …. (
-                         ∀G1,L1,T1. (∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊐+[b] ⦃G2, L2, T2⦄ → Q G2 L2 T2) →
+                         ∀G1,L1,T1. (∀G2,L2,T2. ⦃G1,L1,T1⦄ ⬂+[b] ⦃G2,L2,T2⦄ → Q G2 L2 T2) →
                          ∀G2,L2,T2. G1 = G2 → L1 = L2 → T1 = T2 → Q G2 L2 T2
                       ) → ∀G1,L1,T1. Q G1 L1 T1.
 #b #Q #HQ @(f3_ind … fw) #x #IHx #G1 #L1 #T1 #H destruct

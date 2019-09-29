@@ -20,6 +20,6 @@ include "basic_2/dynamic/lsubv.ma".
 (* Forward lemmas with restricted refinement for local environments *********)
 
 (* Basic_2A1: uses: lsubsv_fwd_lsubr *)
-lemma lsubv_fwd_lsubr (a) (h) (G): ∀L1,L2. G ⊢ L1 ⫃![a,h] L2 → L1 ⫃ L2.
-#a #h #G #L1 #L2 #H elim H -L1 -L2 /2 width=1 by lsubr_bind, lsubr_beta/
+lemma lsubv_fwd_lsubr (h) (a) (G): ∀L1,L2. G ⊢ L1 ⫃![h,a] L2 → L1 ⫃ L2.
+#h #a #G #L1 #L2 #H elim H -L1 -L2 /2 width=1 by lsubr_bind, lsubr_beta/
 qed-.

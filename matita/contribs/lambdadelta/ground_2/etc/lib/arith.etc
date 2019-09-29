@@ -30,3 +30,7 @@ lemma false_lt_to_le: ∀x,y. (x < y → ⊥) → y ≤ x.
 #x #y #H elim (decidable_lt x y) /2 width=1 by not_lt_to_le/
 #Hxy elim (H Hxy)
 qed-.
+
+lemma arith_m2 (x) (y): x < y → x+(y-↑x) = ↓y.
+#x #y #Hxy >minus_minus [|*: // ] <minus_Sn_n //
+qed-.

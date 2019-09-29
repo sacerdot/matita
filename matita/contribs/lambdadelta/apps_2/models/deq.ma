@@ -19,7 +19,7 @@ include "static_2/syntax/genv.ma".
 (* DENOTATIONAL EQUIVALENCE  ************************************************)
 
 definition deq (M): relation4 genv lenv term term ≝
-                    λG,L,T1,T2. ∀gv,lv. lv ϵ ⟦L⟧[gv] → ⟦T1⟧[gv, lv] ≗{M} ⟦T2⟧[gv, lv].
+                    λG,L,T1,T2. ∀gv,lv. lv ϵ ⟦L⟧[gv] → ⟦T1⟧[gv,lv] ≗{M} ⟦T2⟧[gv,lv].
 
 interpretation "denotational equivalence (model)"
    'RingEq M G L T1 T2 = (deq M G L T1 T2).

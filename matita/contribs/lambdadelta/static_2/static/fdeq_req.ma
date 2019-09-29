@@ -15,13 +15,13 @@
 include "static_2/static/rdeq_req.ma".
 include "static_2/static/fdeq.ma".
 
-(* DEGREE-BASED EQUIVALENCE FOR CLOSURES ON REFERRED ENTRIES ****************)
+(* SORT-IRRELEVANT EQUIVALENCE FOR CLOSURES ON REFERRED ENTRIES *************)
 
 (* Properties with syntactic equivalence on referred entries ****************)
 
-lemma req_rdeq_trans: ∀h,o,L1,L,T1. L1 ≡[T1] L →
-                      ∀G1,G2,L2,T2. ⦃G1, L, T1⦄ ≛[h, o] ⦃G2, L2, T2⦄ → ⦃G1, L1, T1⦄ ≛[h, o] ⦃G2, L2, T2⦄.
-#h #o #L1 #L #T1 #HL1 #G1 #G2 #L2 #T2 #H
+lemma req_rdeq_trans: ∀L1,L,T1. L1 ≡[T1] L →
+                      ∀G1,G2,L2,T2. ⦃G1,L,T1⦄ ≛ ⦃G2,L2,T2⦄ → ⦃G1,L1,T1⦄ ≛ ⦃G2,L2,T2⦄.
+#L1 #L #T1 #HL1 #G1 #G2 #L2 #T2 #H
 elim (fdeq_inv_gen_sn … H) -H #H #HL2 #T12 destruct
 /3 width=3 by fdeq_intro_sn, req_rdeq_trans/
 qed-.

@@ -27,8 +27,26 @@
    <table name="basic_2_sum"/>
 
    <subsection name="B">Stage "B"</subsection>
+   <news class="beta" date="2019 September 3.">
+         Applicability condition is now parametrized
+         with a generic subset of numbers.
+   </news>
+   <news class="beta" date="2019 June 2.">
+         Applicability condition parametrized
+         with an initial interval of numbers
+         allows λδ-2B to generalize both λδ-2A and λδ-1B.
+   </news>
+   <news class="beta" date="2019 April 16.">
+         Extended (λδ-2A) and restricted (λδ-1B) validity is decidable
+         (anniversary milestone).
+   </news>
+   <news class="beta" date="2019 March 25.">
+         Preservation of validity for rt-computation
+         does not need the sort degree parameter
+         (i.e. no induction on the degree).
+   </news>
    <news class="beta" date="2018 November 1.">
-         Extended (λδ-2) and restricted (λδ-1) type rules justified.
+         Extended (λδ-2A) and restricted (λδ-1A) type rules justified.
    </news>
    <news class="alpha" date="2018 September 21.">
          λδ-2A completed with

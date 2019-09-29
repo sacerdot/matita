@@ -20,13 +20,13 @@ include "static_2/relocation/sex.ma".
 (* Forward lemmas with length for local environments ************************)
 
 (* Note: "#f #I1 #I2 #L1 #L2 >length_bind >length_bind //" was needed to conclude *)
-lemma sex_fwd_length: ∀RN,RP,f,L1,L2. L1 ⪤[RN, RP, f] L2 → |L1| = |L2|.
+lemma sex_fwd_length: ∀RN,RP,f,L1,L2. L1 ⪤[RN,RP,f] L2 → |L1| = |L2|.
 #RN #RP #f #L1 #L2 #H elim H -f -L1 -L2 //
 qed-.
 
 (* Properties with length for local environments ****************************)
 
-lemma sex_length_cfull: ∀L1,L2. |L1| = |L2| → ∀f. L1 ⪤[cfull, cfull, f] L2.
+lemma sex_length_cfull: ∀L1,L2. |L1| = |L2| → ∀f. L1 ⪤[cfull,cfull,f] L2.
 #L1 elim L1 -L1
 [ #Y2 #H >(length_inv_zero_sn … H) -Y2 //
 | #L1 #I1 #IH #Y2 #H #f
@@ -36,7 +36,7 @@ lemma sex_length_cfull: ∀L1,L2. |L1| = |L2| → ∀f. L1 ⪤[cfull, cfull, f] 
 qed.
 
 lemma sex_length_isid: ∀R,L1,L2. |L1| = |L2| →
-                       ∀f. 𝐈⦃f⦄ → L1 ⪤[R, cfull, f] L2.
+                       ∀f. 𝐈⦃f⦄ → L1 ⪤[R,cfull,f] L2.
 #R #L1 elim L1 -L1
 [ #Y2 #H >(length_inv_zero_sn … H) -Y2 //
 | #L1 #I1 #IH #Y2 #H #f #Hf

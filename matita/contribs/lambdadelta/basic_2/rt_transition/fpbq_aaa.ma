@@ -21,8 +21,8 @@ include "basic_2/rt_transition/fpbq.ma".
 
 (* Properties with atomic arity assignment for terms ************************)
 
-lemma fpbq_aaa_conf: ∀h,o,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ≽[h, o] ⦃G2, L2, T2⦄ →
-                     ∀A1. ⦃G1, L1⦄ ⊢ T1 ⁝ A1 → ∃A2. ⦃G2, L2⦄ ⊢ T2 ⁝ A2.
-#h #o #G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2
+lemma fpbq_aaa_conf: ∀h,G1,G2,L1,L2,T1,T2. ⦃G1,L1,T1⦄ ≽[h] ⦃G2,L2,T2⦄ →
+                     ∀A1. ⦃G1,L1⦄ ⊢ T1 ⁝ A1 → ∃A2. ⦃G2,L2⦄ ⊢ T2 ⁝ A2.
+#h #G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2
 /3 width=8 by lpx_aaa_conf, cpx_aaa_conf, aaa_fdeq_conf, aaa_fquq_conf, ex_intro/
 qed-.

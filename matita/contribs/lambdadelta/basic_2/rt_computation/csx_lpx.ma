@@ -19,32 +19,35 @@ include "basic_2/rt_computation/csx_cpxs.ma".
 
 (* Properties with unbound parallel rt-transition on all entries ************)
 
-lemma csx_lpx_conf: ∀h,o,G,L1,T. ⦃G, L1⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄ →
-                    ∀L2. ⦃G, L1⦄ ⊢ ⬈[h] L2 → ⦃G, L2⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄.
-#h #o #G #L1 #T #H @(csx_ind_cpxs … H) -T
+lemma csx_lpx_conf (h) (G):
+      ∀L1,T. ⦃G,L1⦄ ⊢ ⬈*[h] 𝐒⦃T⦄ →
+      ∀L2. ⦃G,L1⦄ ⊢ ⬈[h] L2 → ⦃G,L2⦄ ⊢ ⬈*[h] 𝐒⦃T⦄.
+#h #G #L1 #T #H @(csx_ind_cpxs … H) -T
 /4 width=3 by csx_intro, lpx_cpx_trans/
 qed-.
 
 (* Advanced properties ******************************************************)
 
-lemma csx_abst: ∀h,o,p,G,L,W. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃W⦄ →
-                ∀T. ⦃G, L.ⓛW⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄ → ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃ⓛ{p}W.T⦄.
-#h #o #p #G #L #W #HW
+lemma csx_abst (h) (G):
+      ∀p,L,W. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃W⦄ →
+      ∀T. ⦃G,L.ⓛW⦄ ⊢ ⬈*[h] 𝐒⦃T⦄ → ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃ⓛ{p}W.T⦄.
+#h #G #p #L #W #HW
 @(csx_ind … HW) -W #W #_ #IHW #T #HT
 @(csx_ind … HT) -T #T #HT #IHT
 @csx_intro #X #H1 #H2
 elim (cpx_inv_abst1 … H1) -H1 #W0 #T0 #HLW0 #HLT0 #H destruct
 elim (tdneq_inv_pair  … H2) -H2
 [ #H elim H -H //
-| -IHT #H lapply (csx_cpx_trans … o … HLT0) // -HT #HT0
+| -IHT #H lapply (csx_cpx_trans … HLT0) // -HT #HT0
   /4 width=5 by csx_lpx_conf, lpx_pair/
 | -IHW -HT /4 width=3 by csx_cpx_trans, cpx_pair_sn/
 ]
 qed.
 
-lemma csx_abbr: ∀h,o,p,G,L,V. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃V⦄ →
-                ∀T. ⦃G, L.ⓓV⦄ ⊢ ⬈*[h, o] 𝐒⦃T⦄ → ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃ⓓ{p}V.T⦄.
-#h #o #p #G #L #V #HV
+lemma csx_abbr (h) (G):
+      ∀p,L,V. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃V⦄ →
+      ∀T. ⦃G,L.ⓓV⦄ ⊢ ⬈*[h] 𝐒⦃T⦄ → ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃ⓓ{p}V.T⦄.
+#h #G #p #L #V #HV
 @(csx_ind … HV) -V #V #_ #IHV #T #HT
 @(csx_ind_cpxs … HT) -T #T #HT #IHT
 @csx_intro #X #H1 #H2
@@ -60,9 +63,17 @@ elim (cpx_inv_abbr1 … H1) -H1 *
 ]
 qed.
 
-fact csx_appl_theta_aux: ∀h,o,p,G,L,U. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃U⦄ → ∀V1,V2. ⬆*[1] V1 ≘ V2 →
-                         ∀V,T. U = ⓓ{p}V.ⓐV2.T → ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃ⓐV1.ⓓ{p}V.T⦄.
-#h #o #p #G #L #X #H
+lemma csx_bind (h) (G):
+      ∀p,I,L,V. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃V⦄ →
+      ∀T. ⦃G,L.ⓑ{I}V⦄ ⊢ ⬈*[h] 𝐒⦃T⦄ → ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃ⓑ{p,I}V.T⦄.
+#h #G #p * #L #V #HV #T #HT
+/2 width=1 by csx_abbr, csx_abst/
+qed.
+
+fact csx_appl_theta_aux (h) (G):
+     ∀p,L,U. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃U⦄ → ∀V1,V2. ⬆*[1] V1 ≘ V2 →
+     ∀V,T. U = ⓓ{p}V.ⓐV2.T → ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃ⓐV1.ⓓ{p}V.T⦄.
+#h #G #p #L #X #H
 @(csx_ind_cpxs … H) -X #X #HVT #IHVT #V1 #V2 #HV12 #V #T #H destruct
 lapply (csx_fwd_pair_sn … HVT) #HV
 lapply (csx_fwd_bind_dx … HVT) -HVT #HVT
@@ -72,13 +83,13 @@ elim (cpx_inv_appl1 … HL) -HL *
   elim (cpx_inv_abbr1 … HL) -HL *
   [ #V3 #T3 #HV3 #HLT3 #H0 destruct
     elim (cpx_lifts_sn … HLV10 (Ⓣ) … (L.ⓓV) … HV12) -HLV10 /3 width=1 by drops_refl, drops_drop/ #V4 #HV04 #HV24
-    elim (tdeq_dec h o (ⓓ{p}V.ⓐV2.T) (ⓓ{p}V3.ⓐV4.T3)) #H0
+    elim (tdeq_dec (ⓓ{p}V.ⓐV2.T) (ⓓ{p}V3.ⓐV4.T3)) #H0
     [ -IHVT -HV3 -HV24 -HLT3
       elim (tdeq_inv_pair … H0) -H0 #_ #HV3 #H0
       elim (tdeq_inv_pair … H0) -H0 #_ #HV24 #HT3
       elim (tdneq_inv_pair … H) -H #H elim H -H -G -L
       /3 width=6 by tdeq_inv_lifts_bi, tdeq_pair/
-    | -V1 @(IHVT … H0 … HV04) -o -V0 /4 width=1 by cpx_cpxs, cpx_flat, cpx_bind/
+    | -V1 @(IHVT … H0 … HV04) -V0 /4 width=1 by cpx_cpxs, cpx_flat, cpx_bind/
     ]
   | #T0 #HT0 #HLT0 #H0 destruct -H -IHVT
     lapply (csx_inv_lifts … HVT (Ⓣ) … L ???) -HVT
@@ -94,6 +105,7 @@ elim (cpx_inv_appl1 … HL) -HL *
 ]
 qed-.
 
-lemma csx_appl_theta: ∀h,o,p,G,L,V,V2,T. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃ⓓ{p}V.ⓐV2.T⦄ →
-                      ∀V1. ⬆*[1] V1 ≘ V2 → ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃ⓐV1.ⓓ{p}V.T⦄.
+lemma csx_appl_theta (h) (G):
+      ∀p,L,V,V2,T. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃ⓓ{p}V.ⓐV2.T⦄ →
+      ∀V1. ⬆*[1] V1 ≘ V2 → ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃ⓐV1.ⓓ{p}V.T⦄.
 /2 width=5 by csx_appl_theta_aux/ qed.

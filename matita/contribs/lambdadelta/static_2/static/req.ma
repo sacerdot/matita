@@ -69,15 +69,15 @@ lemma req_inv_lref_bind_dx: ∀I2,K2,L1,i. L1 ≡[#↑i] K2.ⓘ{I2} →
 (* Basic_2A1: was: llpx_sn_lrefl *)
 (* Basic_2A1: this should have been lleq_fwd_llpx_sn *)
 lemma req_fwd_rex: ∀R. c_reflexive … R →
-                   ∀L1,L2,T. L1 ≡[T] L2 → L1 ⪤[R, T] L2.
+                   ∀L1,L2,T. L1 ≡[T] L2 → L1 ⪤[R,T] L2.
 #R #HR #L1 #L2 #T * #f #Hf #HL12
 /4 width=7 by sex_co, cext2_co, ex2_intro/
 qed-.
 
 (* Basic_properties *********************************************************)
 
-lemma frees_req_conf: ∀f,L1,T. L1 ⊢ 𝐅*⦃T⦄ ≘ f →
-                      ∀L2. L1 ≡[T] L2 → L2 ⊢ 𝐅*⦃T⦄ ≘ f.
+lemma frees_req_conf: ∀f,L1,T. L1 ⊢ 𝐅+⦃T⦄ ≘ f →
+                      ∀L2. L1 ≡[T] L2 → L2 ⊢ 𝐅+⦃T⦄ ≘ f.
 #f #L1 #T #H elim H -f -L1 -T
 [ /2 width=3 by frees_sort/
 | #f #i #Hf #L2 #H2

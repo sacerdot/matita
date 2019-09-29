@@ -122,8 +122,8 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
         let stack_goals = Stack.open_goals status#stack in
         let proof_goals = List.map fst metasenv in
         if
-          HExtlib.list_uniq (List.sort Pervasives.compare stack_goals)
-          <> List.sort Pervasives.compare proof_goals
+          HExtlib.list_uniq (List.sort compare stack_goals)
+          <> List.sort compare proof_goals
         then begin
           prerr_endline ("STACK GOALS = " ^ String.concat " " (List.map string_of_int stack_goals));
           prerr_endline ("PROOF GOALS = " ^ String.concat " " (List.map string_of_int proof_goals));
@@ -573,7 +573,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       let content = Http_getter.ls ~local:false dir in
       let l =
         List.fast_sort
-          Pervasives.compare
+          compare
           (List.map
             (function 
               | Http_getter_types.Ls_section s -> "dir", s

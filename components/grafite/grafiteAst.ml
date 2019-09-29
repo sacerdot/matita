@@ -36,6 +36,8 @@ type npattern =
 
 type auto_params = nterm list option * (string*string) list
 
+type just = [`Term of nterm | `Auto of auto_params]
+
 type ntactic =
    | NApply of loc * nterm
    | NSmartApply of loc * nterm
@@ -75,6 +77,29 @@ type ntactic =
    | NAssumption of loc
    | NRepeat of loc * ntactic
    | NBlock of loc * ntactic list
+   (* Declarative langauge *)
+   (* Not the best idea to use a string directly, an abstract type for identifiers would be better *)
+   | Assume of loc * string * nterm (* loc, identifier, type *)
+   | Suppose of loc * nterm * string (* loc, assumption, identifier *)
+   | By_just_we_proved of loc * just * nterm * string option (* loc, justification, conclusion, identifier *)
+   | We_need_to_prove of loc * nterm * string option (* loc, newconclusion, identifier *)
+   | BetaRewritingStep of loc * nterm
+   | Bydone of loc * just
+   | ExistsElim of loc * just * string * nterm * nterm * string
+   | AndElim of loc * just * nterm * string * nterm * string
+   | RewritingStep of
+      loc * nterm * [ `Term of nterm | `Auto of auto_params | `Proof | `SolveWith of nterm ] * bool (* last step*)
+   | Obtain of
+      loc * string * nterm
+   | Conclude of
+      loc * nterm
+   | Thesisbecomes of loc * nterm
+   | We_proceed_by_induction_on of loc * nterm * nterm
+   | We_proceed_by_cases_on of loc * nterm * nterm
+   | Byinduction of loc * nterm * string
+   | Case of loc * string * (string * nterm) list 
+    (* This is a debug tactic to print the stack to stdout, can be safely removed *)
+   | PrintStack of loc 
 
 type nmacro =
   | NCheck of loc * nterm

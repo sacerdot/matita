@@ -21,8 +21,8 @@ include "basic_2/rt_transition/cpg.ma".
 
 (* Advanced properties ******************************************************)
 
-lemma cpg_delta_drops: ∀Rt,c,h,G,K,V,V2,i,L,T2. ⬇*[i] L ≘ K.ⓓV → ⦃G, K⦄ ⊢ V ⬈[Rt, c, h] V2 →
-                       ⬆*[↑i] V2 ≘ T2 →  ⦃G, L⦄ ⊢ #i ⬈[Rt, c, h] T2.
+lemma cpg_delta_drops: ∀Rt,c,h,G,K,V,V2,i,L,T2. ⬇*[i] L ≘ K.ⓓV → ⦃G,K⦄ ⊢ V ⬈[Rt,c,h] V2 →
+                       ⬆*[↑i] V2 ≘ T2 →  ⦃G,L⦄ ⊢ #i ⬈[Rt,c,h] T2.
 #Rt #c #h #G #K #V #V2 #i elim i -i
 [ #L #T2 #HLK lapply (drops_fwd_isid … HLK ?) // #H destruct /3 width=3 by cpg_delta/
 | #i #IH #L0 #T0 #H0 #HV2 #HVT2
@@ -31,8 +31,8 @@ lemma cpg_delta_drops: ∀Rt,c,h,G,K,V,V2,i,L,T2. ⬇*[i] L ≘ K.ⓓV → ⦃G,
 ]
 qed.
 
-lemma cpg_ell_drops: ∀Rt,c,h,G,K,V,V2,i,L,T2. ⬇*[i] L ≘ K.ⓛV → ⦃G, K⦄ ⊢ V ⬈[Rt,c, h] V2 →
-                     ⬆*[↑i] V2 ≘ T2 →  ⦃G, L⦄ ⊢ #i ⬈[Rt, c+𝟘𝟙, h] T2.
+lemma cpg_ell_drops: ∀Rt,c,h,G,K,V,V2,i,L,T2. ⬇*[i] L ≘ K.ⓛV → ⦃G,K⦄ ⊢ V ⬈[Rt,c,h] V2 →
+                     ⬆*[↑i] V2 ≘ T2 →  ⦃G,L⦄ ⊢ #i ⬈[Rt,c+𝟘𝟙,h] T2.
 #Rt #c #h #G #K #V #V2 #i elim i -i
 [ #L #T2 #HLK lapply (drops_fwd_isid … HLK ?) // #H destruct /3 width=3 by cpg_ell/
 | #i #IH #L0 #T0 #H0 #HV2 #HVT2
@@ -43,11 +43,11 @@ qed.
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma cpg_inv_lref1_drops: ∀Rt,c,h,G,i,L,T2. ⦃G, L⦄ ⊢ #i ⬈[Rt,c, h] T2 →
+lemma cpg_inv_lref1_drops: ∀Rt,c,h,G,i,L,T2. ⦃G,L⦄ ⊢ #i ⬈[Rt,c,h] T2 →
                            ∨∨ T2 = #i ∧ c = 𝟘𝟘
-                            | ∃∃cV,K,V,V2. ⬇*[i] L ≘ K.ⓓV & ⦃G, K⦄ ⊢ V ⬈[Rt, cV, h] V2 &
+                            | ∃∃cV,K,V,V2. ⬇*[i] L ≘ K.ⓓV & ⦃G,K⦄ ⊢ V ⬈[Rt,cV,h] V2 &
                                            ⬆*[↑i] V2 ≘ T2 & c = cV
-                            | ∃∃cV,K,V,V2. ⬇*[i] L ≘ K.ⓛV & ⦃G, K⦄ ⊢ V ⬈[Rt, cV, h] V2 &
+                            | ∃∃cV,K,V,V2. ⬇*[i] L ≘ K.ⓛV & ⦃G,K⦄ ⊢ V ⬈[Rt,cV,h] V2 &
                                            ⬆*[↑i] V2 ≘ T2 & c = cV + 𝟘𝟙.
 #Rt #c #h #G #i elim i -i
 [ #L #T2 #H elim (cpg_inv_zero1 … H) -H * /3 width=1 by or3_intro0, conj/
@@ -61,12 +61,12 @@ lemma cpg_inv_lref1_drops: ∀Rt,c,h,G,i,L,T2. ⦃G, L⦄ ⊢ #i ⬈[Rt,c, h] T2
 ]
 qed-.
 
-lemma cpg_inv_atom1_drops: ∀Rt,c,h,I,G,L,T2. ⦃G, L⦄ ⊢ ⓪{I} ⬈[Rt, c, h] T2 →
+lemma cpg_inv_atom1_drops: ∀Rt,c,h,I,G,L,T2. ⦃G,L⦄ ⊢ ⓪{I} ⬈[Rt,c,h] T2 →
                            ∨∨ T2 = ⓪{I} ∧ c = 𝟘𝟘
-                            | ∃∃s. T2 = ⋆(next h s) & I = Sort s & c = 𝟘𝟙
-                            | ∃∃cV,i,K,V,V2. ⬇*[i] L ≘ K.ⓓV & ⦃G, K⦄ ⊢ V ⬈[Rt, cV, h] V2 &
+                            | ∃∃s. T2 = ⋆(⫯[h]s) & I = Sort s & c = 𝟘𝟙
+                            | ∃∃cV,i,K,V,V2. ⬇*[i] L ≘ K.ⓓV & ⦃G,K⦄ ⊢ V ⬈[Rt,cV,h] V2 &
                                              ⬆*[↑i] V2 ≘ T2 & I = LRef i & c = cV
-                            | ∃∃cV,i,K,V,V2. ⬇*[i] L ≘ K.ⓛV & ⦃G, K⦄ ⊢ V ⬈[Rt, cV, h] V2 &
+                            | ∃∃cV,i,K,V,V2. ⬇*[i] L ≘ K.ⓛV & ⦃G,K⦄ ⊢ V ⬈[Rt,cV,h] V2 &
                                              ⬆*[↑i] V2 ≘ T2 & I = LRef i & c = cV + 𝟘𝟙.
 #Rt #c #h * #n #G #L #T2 #H
 [ elim (cpg_inv_sort1 … H) -H *

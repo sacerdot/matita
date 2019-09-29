@@ -15,14 +15,15 @@
 include "basic_2/rt_computation/cpms_drops.ma".
 include "basic_2/dynamic/cnv.ma".
 
-(* CONTEXT_SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
+(* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
 
 (* Advanced dproperties *****************************************************)
 
 (* Basic_2A1: uses: snv_lref *)
-lemma cnv_lref_drops (a) (h) (G): ∀I,K,V,i,L. ⦃G, K⦄ ⊢ V ![a, h] →
-                                  ⬇*[i] L ≘ K.ⓑ{I}V → ⦃G, L⦄ ⊢ #i ![a, h].
-#a #h #G #I #K #V #i elim i -i
+lemma cnv_lref_drops (h) (a) (G):
+      ∀I,K,V,i,L. ⦃G,K⦄ ⊢ V ![h,a] →
+      ⬇*[i] L ≘ K.ⓑ{I}V → ⦃G,L⦄ ⊢ #i ![h,a].
+#h #a #G #I #K #V #i elim i -i
 [ #L #HV #H
   lapply (drops_fwd_isid … H ?) -H // #H destruct
   /2 width=1 by cnv_zero/
@@ -35,10 +36,10 @@ qed.
 (* Advanced inversion lemmas ************************************************)
 
 (* Basic_2A1: uses: snv_inv_lref *)
-lemma cnv_inv_lref_drops (a) (h) (G):
-                         ∀i,L. ⦃G, L⦄ ⊢ #i ![a, h] →
-                         ∃∃I,K,V. ⬇*[i] L ≘ K.ⓑ{I}V & ⦃G, K⦄ ⊢ V ![a, h].
-#a #h #G #i elim i -i
+lemma cnv_inv_lref_drops (h) (a) (G):
+      ∀i,L. ⦃G,L⦄ ⊢ #i ![h,a] →
+      ∃∃I,K,V. ⬇*[i] L ≘ K.ⓑ{I}V & ⦃G,K⦄ ⊢ V ![h,a].
+#h #a #G #i elim i -i
 [ #L #H
   elim (cnv_inv_zero … H) -H #I #K #V #HV #H destruct
   /3 width=5 by drops_refl, ex2_3_intro/
@@ -49,21 +50,35 @@ lemma cnv_inv_lref_drops (a) (h) (G):
 ]
 qed-.
 
-(* Advanced forward lemmas **************************************************)
-
-lemma cnv_lref_fwd_drops (a) (h) (G):
-                         ∀i,L. ⦃G, L⦄ ⊢ #i ![a, h] →
-                         ∀I,K,V. ⬇*[i] L ≘ K.ⓑ{I}V → ⦃G, K⦄ ⊢ V ![a, h].
-#a #h #o #i #L #H #I #K #V #HLK
+lemma cnv_inv_lref_pair (h) (a) (G):
+      ∀i,L. ⦃G,L⦄ ⊢ #i ![h,a] →
+      ∀I,K,V. ⬇*[i] L ≘ K.ⓑ{I}V → ⦃G,K⦄ ⊢ V ![h,a].
+#h #a #G #i #L #H #I #K #V #HLK
 elim (cnv_inv_lref_drops … H) -H #Z #Y #X #HLY #HX
 lapply (drops_mono … HLY … HLK) -L #H destruct //
-qed-.   
+qed-.
+
+lemma cnv_inv_lref_atom (h) (a) (b) (G):
+      ∀i,L. ⦃G,L⦄ ⊢ #i ![h,a] → ⬇*[b,𝐔❴i❵] L ≘ ⋆ → ⊥.
+#h #a #b #G #i #L #H #Hi
+elim (cnv_inv_lref_drops … H) -H #Z #Y #X #HLY #_
+lapply (drops_gen b … HLY) -HLY #HLY
+lapply (drops_mono … HLY … Hi) -L #H destruct
+qed-.
+
+lemma cnv_inv_lref_unit (h) (a) (G):
+      ∀i,L. ⦃G,L⦄ ⊢ #i ![h,a] →
+      ∀I,K. ⬇*[i] L ≘ K.ⓤ{I} → ⊥.
+#h #a #G #i #L #H #I #K #HLK
+elim (cnv_inv_lref_drops … H) -H #Z #Y #X #HLY #_
+lapply (drops_mono … HLY … HLK) -L #H destruct
+qed-.
 
 (* Properties with generic slicing for local environments *******************)
 
 (* Basic_2A1: uses: snv_lift *)
-lemma cnv_lifts (a) (h): ∀G. d_liftable1 (cnv a h G).
-#a #h #G #K #T
+lemma cnv_lifts (h) (a): ∀G. d_liftable1 (cnv h a G).
+#h #a #G #K #T
 @(fqup_wf_ind_eq (Ⓣ) … G K T) -G -K -T #G0 #K0 #T0 #IH #G #K * * [|||| * ]
 [ #s #HG #HK #HT #_ #b #f #L #_ #X #H2 destruct
   >(lifts_inv_sort1 … H2) -X -K -f //
@@ -101,8 +116,8 @@ qed-.
 (* Inversion lemmas with generic slicing for local environments *************)
 
 (* Basic_2A1: uses: snv_inv_lift *)
-lemma cnv_inv_lifts (a) (h): ∀G. d_deliftable1 (cnv a h G).
-#a #h #G #L #U
+lemma cnv_inv_lifts (h) (a): ∀G. d_deliftable1 (cnv h a G).
+#h #a #G #L #U
 @(fqup_wf_ind_eq (Ⓣ) … G L U) -G -L -U #G0 #L0 #U0 #IH #G #L * * [|||| * ]
 [ #s #HG #HL #HU #H1 #b #f #K #HLK #X #H2 destruct
   >(lifts_inv_sort2 … H2) -X -L -f //

@@ -23,10 +23,10 @@ include "basic_2/dynamic/nta.ma".
 (* Note: this might use fsb_inv_cast (still to be proved) *)
 (* Basic_1: uses: ty3_sn3 *)
 (* Basic_2A1: uses: nta_fwd_csn *)
-theorem nta_fwd_fsb (a) (h) (o) (G) (L):
-        ∀T,U. ⦃G,L⦄ ⊢ T :[a,h] U →
-        ∧∧ ≥[h,o] 𝐒⦃G,L,T⦄ & ≥[h,o] 𝐒⦃G,L,U⦄.
-#a #h #o #G #L #T #U #H
+theorem nta_fwd_fsb (h) (a) (G) (L):
+        ∀T,U. ⦃G,L⦄ ⊢ T :[h,a] U →
+        ∧∧ ≥[h] 𝐒⦃G,L,T⦄ & ≥[h] 𝐒⦃G,L,U⦄.
+#h #a #G #L #T #U #H
 elim (cnv_inv_cast … H) #X #HU #HT #_ #_ -X
 /3 width=2 by cnv_fwd_fsb, conj/
 qed-. 

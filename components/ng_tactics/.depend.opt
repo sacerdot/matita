@@ -1,5 +1,8 @@
 continuationals.cmx : continuationals.cmi
 continuationals.cmi :
+declarative.cmx : nnAuto.cmx nTactics.cmx nTacStatus.cmx nCicElim.cmx \
+    continuationals.cmx declarative.cmi
+declarative.cmi : nnAuto.cmi nTacStatus.cmi
 nCicElim.cmx : nCicElim.cmi
 nCicElim.cmi :
 nCicTacReduction.cmx : nCicTacReduction.cmi

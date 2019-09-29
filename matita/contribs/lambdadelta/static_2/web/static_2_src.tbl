@@ -27,12 +27,12 @@ table {
         ]
         [ { "atomic arity assignment" * } {
              [ [ "restricted refinement for lenvs" ] "lsuba" + "( ? ⊢ ? ⫃⁝ ? )" "lsuba_drops" + "lsuba_lsubr" + "lsuba_aaa" + "lsuba_lsuba" * ]
-             [ [ "for terms" ] "aaa" + "( ⦃?,?⦄ ⊢ ? ⁝ ? )" "aaa_drops" + "aaa_fqus" + "aaa_rdeq" + "aaa_fdeq" + "aaa_aaa" * ]
+             [ [ "for terms" ] "aaa" + "( ⦃?,?⦄ ⊢ ? ⁝ ? )" "aaa_drops" + "aaa_fqus" + "aaa_rdeq" + "aaa_fdeq" + "aaa_aaa" + "aaa_dec" * ]
           }
         ]
         [ { "degree-based equivalence" * } {
-             [ [ "for closures on referred entries" ] "fdeq" + "( ⦃?,?,?⦄ ≛[?,?] ⦃?,?,?⦄ )" "fdeq_fqup" + "fdeq_fqus" + "fdeq_req" + "fdeq_fdeq" * ]
-             [ [ "for lenvs on referred entries" ] "rdeq" + "( ? ≛[?,?,?] ? )" "rdeq_length" + "rdeq_drops" + "rdeq_fqup" + "rdeq_fqus" + "rdeq_req" + "rdeq_rdeq" * ]
+             [ [ "for closures on referred entries" ] "fdeq" + "( ⦃?,?,?⦄ ≛ ⦃?,?,?⦄ )" "fdeq_fqup" + "fdeq_fqus" + "fdeq_req" + "fdeq_fdeq" * ]
+             [ [ "for lenvs on referred entries" ] "rdeq" + "( ? ≛[?] ? )" "rdeq_length" + "rdeq_drops" + "rdeq_fqup" + "rdeq_fqus" + "rdeq_req" + "rdeq_rdeq" * ]
           }
         ]
         [ { "syntactic equivalence" * } {
@@ -45,8 +45,8 @@ table {
         ]
         [ { "context-sensitive free variables" * } {
              [ [ "inclusion for restricted closures" ] "fsle" + "( ⦃?,?⦄ ⊆ ⦃?,?⦄ )" "fsle_length" + "fsle_drops" + "fsle_fqup" + "fsle_fsle" * ]
-             [ [ "restricted refinement for lenvs" ] "lsubf" + "( ⦃?,?⦄ ⫃𝐅* ⦃?,?⦄ )" "lsubf_lsubr" + "lsubf_frees" + "lsubf_lsubf" * ]
-             [ [ "for terms" ] "frees" + "( ? ⊢ 𝐅*⦃?⦄ ≘ ? )" "frees_append" + "frees_drops" + "frees_fqup" + "frees_frees" * ]
+             [ [ "restricted refinement for lenvs" ] "lsubf" + "( ⦃?,?⦄ ⫃𝐅+ ⦃?,?⦄ )" "lsubf_lsubr" + "lsubf_frees" + "lsubf_lsubf" * ]
+             [ [ "for terms" ] "frees" + "( ? ⊢ 𝐅+⦃?⦄ ≘ ? )" "frees_append" + "frees_drops" + "frees_fqup" + "frees_frees" * ]
           }
         ]
         [ { "local environments" * } {
@@ -58,8 +58,8 @@ table {
    class "grass"
    [ { "s-computation" * } {
         [ { "iterated structural successor" * } {
-             [ [ "for closures" ] "fqus" + "( ⦃?,?,?⦄ ⊐*[?] ⦃?,?,?⦄ )" + "( ⦃?,?,?⦄ ⊐* ⦃?,?,?⦄ )" "fqus_weight" + "fqus_drops" + "fqus_fqup" + "fqus_fqus" * ]
-             [ [ "proper for closures" ] "fqup" + "( ⦃?,?,?⦄ ⊐+[?] ⦃?,?,?⦄ )" + "( ⦃?,?,?⦄ ⊐+ ⦃?,?,?⦄ )" "fqup_weight" + "fqup_drops" + "fqup_fqup" * ]
+             [ [ "for closures" ] "fqus" + "( ⦃?,?,?⦄ ⬂*[?] ⦃?,?,?⦄ )" + "( ⦃?,?,?⦄ ⬂* ⦃?,?,?⦄ )" "fqus_weight" + "fqus_drops" + "fqus_fqup" + "fqus_fqus" * ]
+             [ [ "proper for closures" ] "fqup" + "( ⦃?,?,?⦄ ⬂+[?] ⦃?,?,?⦄ )" + "( ⦃?,?,?⦄ ⬂+ ⦃?,?,?⦄ )" "fqup_weight" + "fqup_drops" + "fqup_fqup" * ]
           }
         ]
      }
@@ -67,22 +67,26 @@ table {
    class "yellow"
    [ { "s-transition" * } {
         [ { "structural successor" * } {
-             [ [ "for closures" ] "fquq" + "( ⦃?,?,?⦄ ⊐⸮[?] ⦃?,?,?⦄ )" + "( ⦃?,?,?⦄ ⊐⸮ ⦃?,?,?⦄ )" "fquq_length" + "fquq_weight" * ]
-             [ [ "proper for closures" ] "fqu" + "( ⦃?,?,?⦄ ⊐[?] ⦃?,?,?⦄ )" + "( ⦃?,?,?⦄ ⊐ ⦃?,?,?⦄ )" "fqu_length" + "fqu_weight" + "fqu_tdeq" * ]
+             [ [ "for closures" ] "fquq" + "( ⦃?,?,?⦄ ⬂⸮[?] ⦃?,?,?⦄ )" + "( ⦃?,?,?⦄ ⬂⸮ ⦃?,?,?⦄ )" "fquq_length" + "fquq_weight" * ]
+             [ [ "proper for closures" ] "fqu" + "( ⦃?,?,?⦄ ⬂[?] ⦃?,?,?⦄ )" + "( ⦃?,?,?⦄ ⬂ ⦃?,?,?⦄ )" "fqu_length" + "fqu_weight" + "fqu_tdeq" * ]
           }
         ]
      }
    ]
    class "orange"
    [ { "relocation" * } {
-        [ { "generic slicing" * } {
+        [ { "generic and uniform slicing" * } {
              [ [ "for lenvs" ] "drops" + "( ⬇*[?,?] ? ≘ ? )" + "( ⬇*[?] ? ≘ ? )" "drops_ctc" + "drops_ltc" + "drops_weight" + "drops_length" + "drops_cext2" + "drops_sex" + "drops_lex" + "drops_seq" + "drops_drops" + "drops_vector" * ]
           }
         ]
-        [ { "generic relocation" * } {
+        [ { "basic relocation" * } {
+             [ [ "for terms" ] "lifts_basic" + "( ⬆[?,?] ? ≘ ? )" * ]
+          }
+        ]
+        [ { "generic and uniform relocation" * } {
              [ [ "for binders" ] "lifts_bind" + "( ⬆*[?] ? ≘ ? )" "lifts_weight_bind" + "lifts_lifts_bind" * ]
              [ [ "for term vectors" ] "lifts_vector" + "( ⬆*[?] ? ≘ ? )" "lifts_lifts_vector" * ]
-             [ [ "for terms" ] "lifts" + "( ⬆*[?] ? ≘ ? )" "lifts_simple" + "lifts_weight" + "lifts_tdeq" + "lifts_lifts" * ]
+             [ [ "for terms" ] "lifts" + "( ⬆*[?] ? ≘ ? )" "lifts_simple" + "lifts_weight" + "lifts_tdeq" + "lifts_tweq" + "lifts_toeq" + "lifts_lifts" * ]
           }
         ]
         [ { "syntactic equivalence" * } {
@@ -98,6 +102,11 @@ table {
    ]
    class "red"
    [ { "syntax" * } {
+        [ { "applicability condition" * } {
+             [ [ "preorder" ] "acle" + "( ? ⊆ ? )"  "acle_acle" * ]
+             [ [ "properties" ] "ac" + "( 𝟏 )" + "( 𝟐 )" + "( 𝛚 )" * ]
+          }
+        ]   
         [ { "equivalence up to exclusion binders" * } {
              [ [ "for lenvs" ] "lveq" + "( ? ≋ⓧ*[?,?] ? )" "lveq_length" + "lveq_lveq" * ]
           }
@@ -107,13 +116,17 @@ table {
              [ [ "for lenvs" ] "append" + "( ? + ? )" "append_length" * ]
           }
         ]
-        [ { "head equivalence" * } {
-             [ [ "for terms" ] "theq" + "( ? ⩳[?,?] ? )" "theq_simple" + "theq_tdeq" + "theq_theq" + "theq_simple_vector" * ]
+        [ { "sort-irrelevant outer equivalence" * } {
+             [ [ "for terms" ] "toeq" + "( ? ⩳ ? )" "toeq_simple" + "toeq_tdeq" + "toeq_toeq" + "toeq_simple_vector" * ]
           }
         ]
-        [ { "degree-based equivalence" * } {
-             [ [ "" ] "tdeq_ext" + "( ? ≛[?,?] ? )" + "( ? ⊢ ? ≛[?,?] ? )" * ]
-             [ [ "" ] "tdeq" + "( ? ≛[?,?] ? )" "tdeq_tdeq" * ]
+        [ { "sort-irrelevant whd equivalence" * } {
+             [ [ "for terms" ] "tweq" + "( ? ≅ ? )" "tweq_simple" + "tweq_tdeq" + "tweq_tueq" * ]
+          }
+        ]
+        [ { "sort-irrelevant equivalence" * } {
+             [ [ "" ] "tdeq_ext" + "( ? ≛ ? )" + "( ? ⊢ ? ≛ ? )" * ]
+             [ [ "" ] "tdeq" + "( ? ≛ ? )" "tdeq_tdeq" * ]
           }
         ]
         [ { "closures" * } {
@@ -148,9 +161,12 @@ table {
           }
         ]
         [ { "items" * } {
-             [ [ "" ] "item_sd" * ]
-             [ [ "" ] "item_sh" * ]
              [ [ "" ] "item" * ]
+          }
+        ]
+        [ { "sorts" * } {
+             [ [ "degree" ] "sd" "sd_d" + "sd_lt" * ]
+             [ [ "hierarchy" ] "sh" + "( ⫯[?]? )" "sh_props" + "sh_lt" * ]
           }
         ]
         [ { "atomic arities" * } {

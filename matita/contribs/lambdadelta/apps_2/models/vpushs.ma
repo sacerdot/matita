@@ -20,7 +20,7 @@ include "apps_2/models/veq.ma".
 
 inductive vpushs (M) (gv) (lv): relation2 lenv (evaluation M) ≝
 | vpushs_atom: vpushs M gv lv (⋆) lv
-| vpushs_abbr: ∀v,d,K,V. vpushs M gv lv K v → ⟦V⟧[gv, v] = d → vpushs M gv lv (K.ⓓV) (⫯[0←d]v)
+| vpushs_abbr: ∀v,d,K,V. vpushs M gv lv K v → ⟦V⟧[gv,v] = d → vpushs M gv lv (K.ⓓV) (⫯[0←d]v)
 | vpushs_abst: ∀v,d,K,V. vpushs M gv lv K v → vpushs M gv lv (K.ⓛV) (⫯[0←d]v)
 | vpushs_unit: ∀v,d,I,K. vpushs M gv lv K v → vpushs M gv lv (K.ⓤ{I}) (⫯[0←d]v)
 | vpushs_repl: ∀v1,v2,L. vpushs M gv lv L v1 → v1 ≗ v2 → vpushs M gv lv L v2
@@ -51,7 +51,7 @@ lemma vpushs_inv_atom (M) (gv) (lv): is_model M →
 fact vpushs_inv_abbr_aux (M) (gv) (lv): is_model M →
                                         ∀y,L. L ⨁{M}[gv] lv ≘ y →
                                         ∀K,V. K.ⓓV = L →
-                                        ∃∃v. K ⨁[gv] lv ≘ v & ⫯[0←⟦V⟧[gv, v]]v ≗ y.
+                                        ∃∃v. K ⨁[gv] lv ≘ v & ⫯[0←⟦V⟧[gv,v]]v ≗ y.
 #M #gv #lv #HM #y #L #H elim H -y -L
 [ #Y #X #H destruct
 | #v #d #K #V #Hv #Hd #_ #Y #X #H destruct
@@ -66,7 +66,7 @@ qed-.
 
 lemma vpushs_inv_abbr (M) (gv) (lv): is_model M →
                                      ∀y,K,V. K.ⓓV ⨁{M}[gv] lv ≘ y →
-                                     ∃∃v. K ⨁[gv] lv ≘ v & ⫯[0←⟦V⟧[gv, v]]v ≗ y.
+                                     ∃∃v. K ⨁[gv] lv ≘ v & ⫯[0←⟦V⟧[gv,v]]v ≗ y.
 /2 width=3 by vpushs_inv_abbr_aux/ qed-.
 
 fact vpushs_inv_abst_aux (M) (gv) (lv): is_model M →

@@ -1,0 +1,145 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/rt_computation/rdsx.ma".
+
+(* STRONGLY NORMALIZING SELECTED LOCAL ENV.S FOR UNBOUND RT-TRANSITION ******)
+
+(* Basic_2A1: uses: lcosx *)
+inductive sdsx (h) (G): rtmap → predicate lenv ≝
+| sdsx_atom: ∀f. sdsx h G f (⋆)
+| sdsx_push: ∀f,I,K. sdsx h G f K → sdsx h G (⫯f) (K.ⓘ{I})
+| sdsx_unit: ∀f,I,K. sdsx h G f K → sdsx h G (↑f) (K.ⓤ{I})
+| sdsx_pair: ∀f,I,K,V. G ⊢ ⬈*[h,V] 𝐒⦃K⦄ →
+             sdsx h G f K → sdsx h G (↑f) (K.ⓑ{I}V)
+.
+
+interpretation
+   "strong normalization for unbound context-sensitive parallel rt-transition on selected entries (local environment)"
+   'PRedTySNStrong h f G L = (sdsx h G f L).
+
+(* Basic inversion lemmas ***************************************************)
+
+fact sdsx_inv_push_aux (h) (G):
+     ∀g,L. G ⊢ ⬈*[h,g] 𝐒⦃L⦄ →
+     ∀f,I,K. g = ⫯f → L = K.ⓘ{I} → G ⊢ ⬈*[h,f] 𝐒⦃K⦄.
+#h #G #g #L * -g -L
+[ #f #g #J #L #_ #H destruct
+| #f #I #K #HK #g #J #L #H1 #H2 destruct //
+| #f #I #K #_ #g #J #L #H #_
+  elim (discr_next_push … H)
+| #f #I #K #V #_ #_ #g #J #L #H #_
+  elim (discr_next_push … H)
+]
+qed-.
+
+lemma sdsx_inv_push (h) (G):
+      ∀f,I,K. G ⊢ ⬈*[h,⫯f] 𝐒⦃K.ⓘ{I}⦄ → G ⊢ ⬈*[h,f] 𝐒⦃K⦄.
+/2 width=6 by sdsx_inv_push_aux/ qed-.
+
+fact sdsx_inv_unit_aux (h) (G):
+     ∀g,L. G ⊢ ⬈*[h,g] 𝐒⦃L⦄ →
+     ∀f,I,K. g = ↑f → L = K.ⓤ{I} → G ⊢ ⬈*[h,f] 𝐒⦃K⦄.
+#h #G #g #L * -g -L
+[ #f #g #J #L #_ #H destruct
+| #f #I #K #_ #g #J #L #H #_
+  elim (discr_push_next … H)
+| #f #I #K #HK #g #J #L #H1 #H2 destruct //
+| #f #I #K #V #_ #_ #g #J #L #_ #H destruct
+]
+qed-.
+
+lemma sdsx_inv_unit (h) (G):
+      ∀f,I,K. G ⊢ ⬈*[h,↑f] 𝐒⦃K.ⓤ{I}⦄ → G ⊢ ⬈*[h,f] 𝐒⦃K⦄.
+/2 width=6 by sdsx_inv_unit_aux/ qed-.
+
+fact sdsx_inv_pair_aux (h) (G):
+     ∀g,L. G ⊢ ⬈*[h,g] 𝐒⦃L⦄ →
+     ∀f,I,K,V. g = ↑f → L = K.ⓑ{I}V →
+     ∧∧ G ⊢ ⬈*[h,V] 𝐒⦃K⦄ & G ⊢ ⬈*[h,f] 𝐒⦃K⦄.
+#h #G #g #L * -g -L
+[ #f #g #J #L #W #_ #H destruct
+| #f #I #K #_ #g #J #L #W #H #_
+  elim (discr_push_next … H)
+| #f #I #K #_ #g #J #L #W #_ #H destruct
+| #f #I #K #V #HV #HK #g #J #L #W #H1 #H2 destruct
+  /2 width=1 by conj/
+]
+qed-.
+
+(* Basic_2A1: uses: lcosx_inv_pair *)
+lemma sdsx_inv_pair (h) (G):
+      ∀f,I,K,V. G ⊢ ⬈*[h,↑f] 𝐒⦃K.ⓑ{I}V⦄ →
+      ∧∧ G ⊢ ⬈*[h,V] 𝐒⦃K⦄ & G ⊢ ⬈*[h,f] 𝐒⦃K⦄.
+/2 width=6 by sdsx_inv_pair_aux/ qed-.
+
+(* Advanced inversion lemmas ************************************************)
+
+lemma sdsx_inv_pair_gen (h) (G):
+      ∀g,I,K,V. G ⊢ ⬈*[h,g] 𝐒⦃K.ⓑ{I}V⦄ →
+      ∨∨ ∃∃f. G ⊢ ⬈*[h,f] 𝐒⦃K⦄ & g = ⫯f
+       | ∃∃f. G ⊢ ⬈*[h,V] 𝐒⦃K⦄ & G ⊢ ⬈*[h,f] 𝐒⦃K⦄ & g = ↑f.
+#h #G #g #I #K #V #H
+elim (pn_split g) * #f #Hf destruct
+[ lapply (sdsx_inv_push … H) -H /3 width=3 by ex2_intro, or_introl/
+| elim (sdsx_inv_pair … H) -H /3 width=3 by ex3_intro, or_intror/
+]
+qed-.
+
+(* Advanced forward lemmas **************************************************)
+
+lemma sdsx_fwd_bind (h) (G):
+      ∀g,I,K. G ⊢ ⬈*[h,g] 𝐒⦃K.ⓘ{I}⦄ → G ⊢ ⬈*[h,⫱g] 𝐒⦃K⦄.
+#h #G #g #I #K
+elim (pn_split g) * #f #Hf destruct
+[ #H lapply (sdsx_inv_push … H) -H //
+| cases I -I #I
+  [ #H lapply (sdsx_inv_unit … H) -H //
+  | #V #H elim (sdsx_inv_pair … H) -H //
+  ]
+]
+qed-.
+
+(* Basic properties *********************************************************)
+
+lemma sdsx_eq_repl_back (h) (G):
+      ∀L. eq_repl_back … (λf. G ⊢ ⬈*[h,f] 𝐒⦃L⦄).
+#h #G #L #f1 #H elim H -L -f1
+[ //
+| #f1 #I #L #_ #IH #x2 #H
+  elim (eq_inv_px … H) -H /3 width=3 by sdsx_push/
+| #f1 #I #L #_ #IH #x2 #H
+  elim (eq_inv_nx … H) -H /3 width=3 by sdsx_unit/
+| #f1 #I #L #V #HV #_ #IH #x2 #H
+  elim (eq_inv_nx … H) -H /3 width=3 by sdsx_pair/
+]
+qed-.
+
+lemma sdsx_eq_repl_fwd (h) (G):
+      ∀L. eq_repl_fwd … (λf. G ⊢ ⬈*[h,f] 𝐒⦃L⦄).
+#h #G #L @eq_repl_sym /2 width=3 by sdsx_eq_repl_back/
+qed-.
+
+(* Advanced properties ******************************************************)
+
+(* Basic_2A1: uses: lcosx_O *)
+lemma sdsx_isid (h) (G):
+      ∀f. 𝐈⦃f⦄ → ∀L. G ⊢ ⬈*[h,f] 𝐒⦃L⦄.
+#h #G #f #Hf #L elim L -L
+/3 width=3 by sdsx_eq_repl_back, sdsx_push, eq_push_inv_isid/
+qed.
+
+(* Basic_2A1: removed theorems 2:
+              lcosx_drop_trans_lt lcosx_inv_succ
+*)

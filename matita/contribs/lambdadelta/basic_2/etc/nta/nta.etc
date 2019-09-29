@@ -20,6 +20,9 @@ lemma nta_inv_lref_sn_drops
 (* Basic_1: uses: ty3_gen_abst_abst *)
 lemma nta_inv_abst_bi
 
+(* Basic_1: uses: pc3_dec *)
+lemma nta_cpcs_dec
+
 (* Advanced properties ******************************************************)
 
 | ntaa_cast: ∀L,T,U,W. ntaa h L T U → ntaa h L U W → ntaa h L (ⓝU. T) U

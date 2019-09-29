@@ -19,10 +19,10 @@ include "basic_2/rt_computation/csx_csx.ma".
 
 (* Properties with simple terms *********************************************)
 
-lemma csx_appl_simple: ∀h,o,G,L,V. ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃V⦄ → ∀T1.
-                       (∀T2. ⦃G, L⦄ ⊢ T1 ⬈[h] T2 → (T1 ≛[h, o] T2 → ⊥) → ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃ⓐV.T2⦄) →
-                       𝐒⦃T1⦄ → ⦃G, L⦄ ⊢ ⬈*[h, o] 𝐒⦃ⓐV.T1⦄.
-#h #o #G #L #V #H @(csx_ind … H) -V
+lemma csx_appl_simple: ∀h,G,L,V. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃V⦄ → ∀T1.
+                       (∀T2. ⦃G,L⦄ ⊢ T1 ⬈[h] T2 → (T1 ≛ T2 → ⊥) → ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃ⓐV.T2⦄) →
+                       𝐒⦃T1⦄ → ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃ⓐV.T1⦄.
+#h #G #L #V #H @(csx_ind … H) -V
 #V #_ #IHV #T1 #IHT1 #HT1
 @csx_intro #X #H1 #H2
 elim (cpx_inv_appl1_simple … H1) // -H1

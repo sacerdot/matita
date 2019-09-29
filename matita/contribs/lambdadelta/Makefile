@@ -95,7 +95,7 @@ $(DEP_INPUT): LINE = $(MAS:%=%:include \"\".)
 
 $(DEP_INPUT): $(MAS) Makefile
 	@echo "  GREP include"
-	$(H)grep "include \"" $^ > $(DEP_INPUT)
+	$(H)grep "include \"" $(MAS) > $(DEP_INPUT)
 	$(H)echo "$(LINE)" | sed -e 's/\"\. /\"\.\n/g' >> $(DEP_INPUT) 
 
 # dep ########################################################################

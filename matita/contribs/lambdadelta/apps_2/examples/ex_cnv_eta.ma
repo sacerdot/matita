@@ -17,13 +17,14 @@ include "basic_2/dynamic/cnv.ma".
 
 (* EXAMPLES *****************************************************************)
 
-(* Extended validy (basic_2B) vs. restricted validity (basic_1A) ************)
+(* Extended validy (λδ-2A) vs. restricted validity (λδ-1B) ******************)
 
 (* Note: extended validity of a closure, height of cnv_appl > 1 *)
-lemma cnv_extended (h) (p): ∀G,L,s. ⦃G, L.ⓛ⋆s.ⓛⓛ{p}⋆s.⋆s.ⓛ#0⦄ ⊢ ⓐ#2.#0 ![Ⓕ,h].
+lemma cnv_extended (h) (p) (G) (L):
+      ∀s. ⦃G,L.ⓛ⋆s.ⓛⓛ{p}⋆s.⋆s.ⓛ#0⦄ ⊢ ⓐ#2.#0 ![h,𝛚].
 #h #p #G #L #s
 @(cnv_appl … 2 p … (⋆s) … (⋆s))
-[ #H destruct
+[ //
 | /4 width=1 by cnv_sort, cnv_zero, cnv_lref/
 | /4 width=1 by cnv_bind, cnv_zero/
 | /5 width=3 by cpm_cpms, cpm_lref, cpm_ell, lifts_sort/
@@ -32,15 +33,16 @@ lemma cnv_extended (h) (p): ∀G,L,s. ⦃G, L.ⓛ⋆s.ⓛⓛ{p}⋆s.⋆s.ⓛ#0�
 qed.
 
 (* Note: restricted validity of the η-expanded closure, height of cnv_appl = 1 **)
-lemma vnv_restricted (h) (p): ∀G,L,s. ⦃G, L.ⓛ⋆s.ⓛⓛ{p}⋆s.⋆s.ⓛⓛ{p}⋆s.ⓐ#0.#1⦄ ⊢ ⓐ#2.#0 ![Ⓣ,h].
+lemma cnv_restricted (h) (p) (G) (L):
+      ∀s. ⦃G,L.ⓛ⋆s.ⓛⓛ{p}⋆s.⋆s.ⓛⓛ{p}⋆s.ⓐ#0.#1⦄ ⊢ ⓐ#2.#0 ![h,𝟐].
 #h #p #G #L #s
 @(cnv_appl … 1 p … (⋆s) … (ⓐ#0.#2))
-[ /2 width=1 by/
+[ //
 | /4 width=1 by cnv_sort, cnv_zero, cnv_lref/
 | @cnv_zero
   @cnv_bind //
   @(cnv_appl … 1 p … (⋆s) … (⋆s))
-  [ /2 width=1 by/
+  [ //
   | /2 width=1 by cnv_sort, cnv_zero/
   | /4 width=1 by cnv_sort, cnv_zero, cnv_lref, cnv_bind/
   | /2 width=3 by cpms_ell, lifts_sort/

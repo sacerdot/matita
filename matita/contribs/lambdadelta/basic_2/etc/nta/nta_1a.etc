@@ -1,0 +1,37 @@
+(* FROM BASIC_1
+
+(* NOTE: This can be generalized removing the last premise *)
+      Lemma ty3_gen_cvoid: (g:?; c:?; t1,t2:?) (ty3 g c t1 t2) ->
+                           (e:?; u:?; d:?) (getl d c (CHead e (Bind Void) u)) ->
+                           (a:?) (drop (1) d c a) ->
+                           (EX y1 y2 | t1 = (lift (1) d y1) &
+                                       t2 = (lift (1) d y2) &
+                                       (ty3 g a y1 y2)
+                           ).
+
+Lemma ty3_gen_appl_nf2: (g:?; c:?; w,v,x:?) (ty3 g c (THead (Flat Appl) w v) x) ->
+                        (EX u t | (pc3 c (THead (Flat Appl) w (THead (Bind Abst) u t)) x) &
+                                  (ty3 g c v (THead (Bind Abst) u t)) &
+                                  (ty3 g c w u) &
+                                  (nf2 c (THead (Bind Abst) u t))
+                        ).
+
+Lemma ty3_arity: (g:?; c:?; t1,t2:?) (ty3 g c t1 t2) ->
+                 (EX a1 | (arity g c t1 a1) &
+                          (arity g c t2 (asucc g a1))
+                 ).
+
+Lemma ty3_acyclic: (g:?; c:?; t,u:?)
+                   (ty3 g c t u) -> (pc3 c u t) -> (P:Prop) P.
+
+Theorem pc3_abst_dec: (g:?; c:?; u1,t1:?) (ty3 g c u1 t1) ->
+                      (u2,t2:?) (ty3 g c u2 t2) ->
+                      (EX u v2 | (pc3 c u1 (THead (Bind Abst) u2 u)) &
+                                 (ty3 g c (THead (Bind Abst) v2 u) t1) &
+                                 (pr3 c u2 v2) & (nf2 c v2)
+                      ) \/
+                      ((u:?) (pc3 c u1 (THead (Bind Abst) u2 u)) -> False).
+
+file ty3_nf2_gen
+
+*)

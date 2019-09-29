@@ -31,6 +31,10 @@ lemma tw_pos: ∀T. 1 ≤ ♯{T}.
 #T elim T -T //
 qed.
 
+lemma tw_le_pair_dx (I): ∀V,T. ♯{T} < ♯{②{I}V.T}.
+#I #V #T /2 width=1 by le_S_S/
+qed.
+
 (* Basic_1: removed theorems 11:
             wadd_le wadd_lt wadd_O weight_le weight_eq weight_add_O
             weight_add_S tlt_trans tlt_head_sx tlt_head_dx tlt_wf_ind

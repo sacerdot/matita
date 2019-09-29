@@ -17,14 +17,14 @@ include "basic_2/rt_computation/cpms_cpxs.ma".
 
 (* T-BOUND CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS **************)
 
-(* Properties with degree-based equivalence for local environments **********)
+(* Properties with sort-irrelevant equivalence for local environments *******)
 
-lemma cpms_rdeq_conf_sn (h) (n) (o) (G) (L1) (L2):
-                        ∀T1,T2. ⦃G, L1⦄ ⊢ T1 ➡*[n,h] T2 →
-                        L1 ≛[h,o,T1] L2 → L1 ≛[h,o,T2] L2.
-/3 width=4 by cpms_fwd_cpxs, cpxs_rdeq_conf_sn/ qed-.
+lemma cpms_rdeq_conf_sn (h) (n) (G) (L1) (L2):
+                        ∀T1,T2. ⦃G,L1⦄ ⊢ T1 ➡*[n,h] T2 →
+                        L1 ≛[T1] L2 → L1 ≛[T2] L2.
+/3 width=5 by cpms_fwd_cpxs, cpxs_rdeq_conf_sn/ qed-.
 
-lemma cpms_rdeq_conf_dx (h) (n) (o) (G) (L1) (L2):
-                        ∀T1,T2. ⦃G, L2⦄ ⊢ T1 ➡*[n,h] T2 →
-                        L1 ≛[h,o,T1] L2 → L1 ≛[h,o,T2] L2.
-/3 width=4 by cpms_fwd_cpxs, cpxs_rdeq_conf_dx/ qed-.
+lemma cpms_rdeq_conf_dx (h) (n) (G) (L1) (L2):
+                        ∀T1,T2. ⦃G,L2⦄ ⊢ T1 ➡*[n,h] T2 →
+                        L1 ≛[T1] L2 → L1 ≛[T2] L2.
+/3 width=5 by cpms_fwd_cpxs, cpxs_rdeq_conf_dx/ qed-.
