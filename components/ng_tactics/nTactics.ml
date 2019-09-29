@@ -704,7 +704,7 @@ let assert0_tac (hyps,concl) = distribute_tac (fun status goal ->
 let assert_tac seqs status =
  match status#stack with
   | [] -> assert false
-  | (g,_,_,_) :: _s ->
+  | (g,_,_,_,_) :: _s ->
      assert (List.length g = List.length seqs);
      (match seqs with
          [] -> id_tac

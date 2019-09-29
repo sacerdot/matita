@@ -122,9 +122,9 @@ let write_ast_to_file status fname statement =
           else (first_line := false; [Open_wronly; Open_trunc; Open_creat])
         in
         let out_channel =
-          Stdlib.open_out_gen flaglist 0o0644 fname in
-        let _ = Stdlib.output_string out_channel ((if str.[0] <> '\n' then s else str) ^ "\n") in
-        let _ = Stdlib.close_out out_channel in
+          open_out_gen flaglist 0o0644 fname in
+        let _ = output_string out_channel ((if str.[0] <> '\n' then s else str) ^ "\n") in
+        let _ = close_out out_channel in
         str
       )
     else
