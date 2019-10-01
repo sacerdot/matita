@@ -302,7 +302,7 @@ let list_iter_sep ~sep f =
   in
   aux
   
-let rec list_findopt f l = 
+let list_findopt f l = 
   let rec aux k = function 
     | [] -> None 
     | x::tl -> 
@@ -316,13 +316,13 @@ let split_nth n l =
   let rec aux acc n l =
     match n, l with
     | 0, _ -> List.rev acc, l
-    | n, [] -> raise (Failure "HExtlib.split_nth")
+    | _, [] -> raise (Failure "HExtlib.split_nth")
     | n, hd :: tl -> aux (hd :: acc) (n - 1) tl in
   aux [] n l
 
 let list_last l =
   let l = List.rev l in 
-  try List.hd l with exn -> raise (Failure "HExtlib.list_last")
+  try List.hd l with _ -> raise (Failure "HExtlib.list_last")
 ;;
 
 let rec list_assoc_all a = function
@@ -460,12 +460,12 @@ let input_file fname =
 let input_all ic =
   let size = 10240 in
   let buf = Buffer.create size in
-  let s = String.create size in
+  let s = Bytes.create size in
   (try
     while true do
       let bytes = input ic s 0 size in
       if bytes = 0 then raise End_of_file
-      else Buffer.add_substring buf s 0 bytes
+      else Buffer.add_subbytes buf s 0 bytes
     done
   with End_of_file -> ());
   Buffer.contents buf

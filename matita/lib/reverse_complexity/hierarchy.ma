@@ -1,10 +1,9 @@
 
 include "arithmetics/nat.ma".
-include "arithmetics/log.ma".
-(* include "arithmetics/ord.ma". *)
+include "arithmetics/log.ma". 
 include "arithmetics/bigops.ma".
 include "arithmetics/bounded_quantifiers.ma".
-include "arithmetics/pidgeon_hole.ma".
+include "arithmetics/pidgeon_hole.ma". 
 include "basics/sets.ma".
 include "basics/types.ma".
 
@@ -46,6 +45,8 @@ lemma Max0r : ∀n. max n 0 = n.
 #n >commutative_max //
 qed.
 
+alias id "max" = "cic:/matita/arithmetics/nat/max#def:2".
+alias id "mk_Aop" = "cic:/matita/arithmetics/bigops/Aop#con:0:1:2".
 definition MaxA ≝ 
   mk_Aop nat 0 max Max0 Max0r (λa,b,c.sym_eq … (Max_assoc a b c)). 
 
@@ -116,20 +117,11 @@ lemma O_absorbr: ∀f,g,s. O s f → O f g → O s (f+g).
 #f #g #s #Osf #Ofg @(O_plus … Osf) @(O_trans … Osf) //
 qed.
 
-(* 
-lemma O_ff: ∀f,s. O s f → O s (f+f).
-#f #s #Osf /2/ 
-qed. *)
-
 lemma O_ext2: ∀f,g,s. O s f → (∀x.f x = g x) → O s g.
 #f #g #s * #c * #a #Osf #eqfg %{c} %{a} #n #lean <eqfg @Osf //
 qed.    
 
-
 definition not_O ≝ λf,g.∀c,n0.∃n. n0 ≤ n ∧ c* (f n) < g n .
-
-(* this is the only classical result *)
-axiom not_O_def: ∀f,g. ¬ O f g → not_O f g.
 
 (******************************* small O notation *****************************)
 
@@ -162,56 +154,10 @@ interpretation "abstract pair" 'pair f g = (pair f g).
 
 (************************ basic complexity notions ****************************)
 
-(* u is the deterministic configuration relation of the universal machine (one 
-   step) 
-
-axiom u: nat → option nat.
-
-let rec U c n on n ≝ 
-  match n with  
-  [ O ⇒ None ?
-  | S m ⇒ match u c with 
-    [ None ⇒ Some ? c (* halting case *)
-    | Some c1 ⇒ U c1 m
-    ]
-  ].
- 
-lemma halt_U: ∀i,n,y. u i = None ? → U i n = Some ? y → y = i.
-#i #n #y #H cases n
-  [normalize #H1 destruct |#m normalize >H normalize #H1 destruct //]
-qed. 
-
-lemma Some_to_halt: ∀n,i,y. U i n = Some ? y → u y = None ? .
-#n elim n
-  [#i #y normalize #H destruct (H)
-  |#m #Hind #i #y normalize 
-   cut (u i = None ? ∨ ∃c. u i = Some ? c) 
-    [cases (u i) [/2/ | #c %2 /2/ ]] 
-   *[#H >H normalize #H1 destruct (H1) // |* #c #H >H normalize @Hind ]
-  ]
-qed. *)
-
 axiom U: nat → nat → nat → option nat. 
-(*
-lemma monotonici_U: ∀y,n,m,i.
-  U i m = Some ? y → U i (n+m) = Some ? y.
-#y #n #m elim m 
-  [#i normalize #H destruct 
-  |#p #Hind #i <plus_n_Sm normalize
-    cut (u i = None ? ∨ ∃c. u i = Some ? c) 
-    [cases (u i) [/2/ | #c %2 /2/ ]] 
-   *[#H1 >H1 normalize // |* #c #H >H normalize #H1 @Hind //]
-  ]
-qed. *)
 
 axiom monotonic_U: ∀i,x,n,m,y.n ≤m →
   U i x n = Some ? y → U i x m = Some ? y.
-(* #i #n #m #y #lenm #H >(plus_minus_m_m m n) // @monotonici_U //
-qed. *)
-
-(* axiom U: nat → nat → option nat. *)
-(* axiom monotonic_U: ∀i,n,m,y.n ≤m →
-   U i n = Some ? y → U i m = Some ? y. *)
   
 lemma unique_U: ∀i,x,n,m,yn,ym.
   U i x n = Some ? yn → U i x m = Some ? ym → yn = ym.
@@ -226,7 +172,7 @@ definition code_for ≝ λf,i.∀x.
   ∃n.∀m. n ≤ m → U i x m = f x.
 
 definition terminate ≝ λi,x,r. ∃y. U i x r = Some ? y.
-notation "[i,x] ↓ r" with precedence 60 for @{terminate $i $x $r}.
+notation "{i ⊙ x} ↓ r" with precedence 60 for @{terminate $i $x $r}. 
 
 definition lang ≝ λi,x.∃r,y. U i x r = Some ? y ∧ 0  < y. 
 
@@ -260,11 +206,6 @@ lemma size_f_def: ∀f,n. size_f f n =
   Max_{i < S (of_size n) | eqb (|i|) n}|(f i)|.
 // qed.
 
-(*
-definition Max_const : ∀f,p,n,a. a < n → p a →
-  ∀n. f n = g n →
-  Max_{i < n | p n}(f n) = *)
-
 lemma size_f_size : ∀f,n. size_f (f ∘ size) n = |(f n)|.
 #f #n @le_to_le_to_eq
   [@Max_le #a #lta #Ha normalize >(eqb_true_to_eq  … Ha) //
@@ -287,12 +228,9 @@ lemma size_f_fst : ∀n. size_f fst n ≤ n.
 #n @Max_le #a #lta #Ha <(eqb_true_to_eq  … Ha) //
 qed.
 
-(* definition def ≝ λf:nat → option nat.λx.∃y. f x = Some ? y.*)
-
 (* C s i means that the complexity of i is O(s) *)
 
-definition C ≝ λs,i.∃c.∃a.∀x.a ≤ |x| → ∃y. 
-  U i x (c*(s(|x|))) = Some ? y.
+definition C ≝ λs,i.∃c.∃a.∀x.a ≤ |x| → {i ⊙ x} ↓ (c*(s(|x|))).
 
 definition CF ≝ λs,f.∃i.code_for f i ∧ C s i.
 
@@ -308,6 +246,18 @@ cases HCs1 #c2 * #b #H2 %{(c2*c1)} %{(max a b)}
 %{y} @(monotonic_U …Hy) >associative_times @le_times // @H @(le_maxl … Hmax)
 qed. 
 
+(*********************** The hierachy theorem (left) **************************)
+
+theorem hierarchy_theorem_left: ∀s1,s2:nat→nat.
+   O(s1) ⊆ O(s2) → CF s1 ⊆ CF s2.
+#s1 #s2 #HO #f * #i * #Hcode * #c * #a #Hs1_i %{i} % //
+cases (sub_O_to_O … HO) -HO #c1 * #b #Hs1s2 
+%{(c*c1)} %{(max a b)} #x #lemax 
+cases (Hs1_i x ?) [2: @(le_maxl …lemax)]
+#y #Hy %{y} @(monotonic_U … Hy) >associative_times
+@le_times // @Hs1s2 @(le_maxr … lemax)
+qed.
+
 (************************** The diagonal language *****************************)
 
 (* the diagonal language used for the hierarchy theorem *)
@@ -316,7 +266,7 @@ definition diag ≝ λs,i.
   U (fst i) i (s (|i|)) = Some ? 0. 
 
 lemma equiv_diag: ∀s,i. 
-  diag s i ↔ [fst i,i] ↓ s (|i|) ∧ ¬lang (fst i) i.
+  diag s i ↔ {fst i ⊙ i} ↓ s(|i|) ∧ ¬lang (fst i) i.
 #s #i %
   [whd in ⊢ (%→?); #H % [%{0} //] % * #x * #y *
    #H1 #Hy cut (0 = y) [@(unique_U … H H1)] #eqy /2/
@@ -358,7 +308,39 @@ lemma absurd1: ∀P. iff P (¬ P) →False.
 #H3 @(absurd ?? H3) @H2 @H3 
 qed.
 
-(* axiom weak_pad : ∀a,∃a0.∀n. a0 < n → ∃b. |〈a,b〉| = n. *)
+let rec f_img (f:nat →nat) n on n ≝
+  match n with
+  [O ⇒ [ ]
+  |S m ⇒ f m::f_img f m
+  ].
+
+(* a few lemma to prove injective_to_exists. This is a general result; a nice
+example of the pidgeon hole pricniple *)
+
+lemma f_img_to_exists: 
+  ∀f.∀n,a. a ∈ f_img f n → ∃b. b < n ∧ f b = a.
+#f #n #a elim n normalize [@False_ind]
+#m #Hind *
+  [#Ha %{m} /2/ |#H cases(Hind H) #b * #Hb #Ha %{b} % // @le_S //]
+qed. 
+
+lemma length_f_img: ∀f,n. |f_img f n| = n.
+#f #n elim n // normalize //
+qed. 
+
+lemma unique_f_img: ∀f,n. injective … f → unique ? (f_img f n).
+#f #n #Hinj elim n normalize //
+#m #Hind % // % #H lapply(f_img_to_exists …H) * #b * #ltbm
+#eqbm @(absurd … ltbm) @le_to_not_lt >(Hinj… eqbm) //
+qed.
+
+lemma injective_to_exists: ∀f. injective nat nat f → 
+  ∀n.(∀i.i < n → f i < n) → ∀a. a < n → ∃b. b<n ∧ f b = a.
+#f #finj #n #H1 #a #ltan @(f_img_to_exists f n a)
+@(eq_length_to_mem_all …  (length_f_img …) (unique_f_img …finj …) …ltan)
+#x #Hx cases(f_img_to_exists … Hx) #b * #ltbn #eqx <eqx @H1 //
+qed.
+
 lemma weak_pad1 :∀n,a.∃b. n ≤ 〈a,b〉. 
 #n #a 
 cut (∀i.decidable (〈a,i〉 < n))
@@ -372,7 +354,7 @@ cut (∀i.decidable (〈a,i〉 < n))
   |#H lapply(not_forall_to_exists … Hdec H) 
    * #b * #H1 #H2 %{b} @not_lt_to_le @H2
   ]
-qed. 
+qed.
 
 lemma pad : ∀n,a. ∃b. n ≤ |〈a,b〉|.
 #n #a cases (weak_pad1 (of_size n) a) #b #Hb 
@@ -380,7 +362,7 @@ lemma pad : ∀n,a. ∃b. n ≤ |〈a,b〉|.
 qed.
 
 lemma o_to_ex: ∀s1,s2. o s1 s2 → ∀i. C s2 i →
-  ∃b.[i, 〈i,b〉] ↓ s1 (|〈i,b〉|).
+  ∃b.{i ⊙ 〈i,b〉} ↓ s1 (|〈i,b〉|).
 #s1 #s2  #H #i * #c * #x0 #H1 
 cases (H c) #n0 #H2 cases (pad (max x0 n0) i) #b #Hmax
 %{b} cases (H1 〈i,b〉 ?)
@@ -413,13 +395,8 @@ definition opt_comp ≝ λf,g:nat → option nat. λx.
   [ None ⇒ None ?
   | Some y ⇒ f y ].   
 
-(* axiom CFU: ∀h,g,s. CF s (to_Some h)  → CF s (to_Some (of_size ∘ g)) → 
-  CF (Slow s) (λx.U (h x) (g x)). *)
-  
 axiom sU2: nat → nat → nat.
 axiom sU: nat → nat → nat → nat.
-
-(* axiom CFU: CF sU (λx.U (fst x) (snd x)). *)
 
 axiom CFU_new: ∀h,g,f,s. 
   CF s (to_Some h)  → CF s (to_Some g) → CF s (to_Some f) → 
@@ -443,18 +420,9 @@ axiom monotonic_sU: ∀a1,a2,b1,b2,c1,c2. a1 ≤ a2 → b1 ≤ b2 → c1 ≤c2 �
 
 axiom superlinear_sU: ∀i,x,r. r ≤ sU i x r.
 
+(* not used *)
 definition sU_space ≝ λi,x,r.i+x+r.
-definition sU_time ≝ λi,x,r.i+x+(i^2)*r*(log 2 r).
-
-(*
-axiom CF_comp: ∀f,g,s1, s2. CF s1 f → CF s2 g → 
-  CF (λx.s2 x + s1 (size (deopt (g x)))) (opt_comp f g).
-
-(* axiom CF_comp: ∀f,g,s1, s2. CF s1 f → CF s2 g → 
-  CF (s1 ∘ (λx. size (deopt (g x)))) (opt_comp f g). *)
-  
-axiom CF_comp_strong: ∀f,g,s1,s2. CF s1 f → CF s2 g → 
-  CF (s1 ∘ s2) (opt_comp f g). *)
+definition sU_time ≝ λi,x,r.i+x+(i^2)*r*(log 2 r). 
 
 definition IF ≝ λb,f,g:nat →option nat. λx.
   match b x with 
@@ -483,16 +451,11 @@ axiom CF_pair: ∀f,g,s. CF s (λx.Some ? (f x)) → CF s (λx.Some ? (g x)) →
 
 axiom CF_fst: ∀f,s. CF s (λx.Some ? (f x)) → CF s (λx.Some ? (fst (f x))).
 
-definition minimal ≝ λs. CF s (λn. Some ? n) ∧ ∀c. CF s (λn. Some ? c).
-
-
-(*
-axiom le_snd: ∀n. |snd n| ≤ |n|.
-axiom daemon: ∀P:Prop.P. *)
+definition sufficiently_large ≝ λs. CF s (λn. Some ? n) ∧ ∀c. CF s (λn. Some ? c).
 
 definition constructible ≝ λs. CF s (λx.Some ? (of_size (s (|x|)))).
 
-lemma diag_s: ∀s. minimal s → constructible s → 
+lemma diag_s: ∀s. sufficiently_large s → constructible s → 
   CF (λx.sU x x (s x)) (diag_cf s).
 #s * #Hs_id #Hs_c #Hs_constr 
 cut (O (λx:ℕ.sU x x (s x)) s) [%{1} %{0} #n //]
@@ -505,61 +468,4 @@ cut (O (λx:ℕ.sU x x (s x)) s) [%{1} %{0} #n //]
   |%{1} %{0} #n #_ >commutative_times <times_n_1
    @monotonic_sU // >size_f_size >size_of_size //
   ]
-qed. 
-
-(*
-lemma diag_s: ∀s. minimal s → constructible s → 
-  CF (λx.s x + sU x x (s x)) (diag_cf s).
-#s * #Hs_id #Hs_c #Hs_constr 
-@ext_CF [2: #n @sym_eq @diag_cf_def | skip]
-@IF_CF_new [2,3:@(monotonic_CF … (Hs_c ?)) @O_plus_l //]
-@CFU_new
-  [@CF_fst @(monotonic_CF … Hs_id) @O_plus_l //
-  |@(monotonic_CF … Hs_id) @O_plus_l //
-  |@(monotonic_CF … Hs_constr) @O_plus_l //
-  |@O_plus_r %{1} %{0} #n #_ >commutative_times <times_n_1
-   @monotonic_sU // >size_f_size >size_of_size //
-  ]
-qed. *)
-
-(* proof with old axioms
-lemma diag_s: ∀s. minimal s → constructible s → 
-  CF (λx.s x + sU x x (s x)) (diag_cf s).
-#s * #Hs_id #Hs_c #Hs_constr 
-@ext_CF [2: #n @sym_eq @diag_cf_def | skip]
-@(monotonic_CF ???? (IF_CF (λi:ℕ.U (pair (fst i) i) (|of_size (s (|i|))|))
-   … (λi.s i + s i + s i + (sU (size_f fst i) (size_f (λi.i) i) (size_f (λi.of_size (s (|i|))) i))) … (Hs_c 1) (Hs_c 0) … ))
-  [2: @CFU [@CF_fst // | // |@Hs_constr]
-  |@(O_ext2 (λn:ℕ.s n+sU (size_f fst n) n (s n) + (s n+s n+s n+s n))) 
-    [2: #i >size_f_size >size_of_size >size_f_id //] 
-   @O_absorbr 
-    [%{1} %{0} #n #_ >commutative_times <times_n_1 @le_plus //
-     @monotonic_sU // 
-    |@O_plus_l @(O_plus … (O_refl s)) @(O_plus … (O_refl s)) 
-     @(O_plus … (O_refl s)) //
-  ]
 qed.
-*)
-
-(*************************** The hierachy theorem *****************************)
-
-(*
-theorem hierarchy_theorem_right: ∀s1,s2:nat→nat. 
-  O s1 idN → constructible s1 →
-    not_O s2 s1 → ¬ CF s1 ⊆ CF s2.
-#s1 #s2 #Hs1 #monos1 #H % #H1 
-@(absurd … (CF s2 (diag_cf s1)))
-  [@H1 @diag_s // |@(diag1_not_s1 … H)]
-qed.
-*)
-
-theorem hierarchy_theorem_left: ∀s1,s2:nat→nat.
-   O(s1) ⊆ O(s2) → CF s1 ⊆ CF s2.
-#s1 #s2 #HO #f * #i * #Hcode * #c * #a #Hs1_i %{i} % //
-cases (sub_O_to_O … HO) -HO #c1 * #b #Hs1s2 
-%{(c*c1)} %{(max a b)} #x #lemax 
-cases (Hs1_i x ?) [2: @(le_maxl …lemax)]
-#y #Hy %{y} @(monotonic_U … Hy) >associative_times
-@le_times // @Hs1s2 @(le_maxr … lemax)
-qed.
-

@@ -7,8 +7,7 @@ nCicPp.cmi : nReference.cmi nCic.cmx
 nCicReduction.cmx : nReference.cmx nCicUtils.cmx nCicSubstitution.cmx \
     nCicEnvironment.cmx nCic.cmx nCicReduction.cmi
 nCicReduction.cmi : nCic.cmx
-nCicSubstitution.cmx : nReference.cmx nCicUtils.cmx nCic.cmx \
-    nCicSubstitution.cmi
+nCicSubstitution.cmx : nCicUtils.cmx nCic.cmx nCicSubstitution.cmi
 nCicSubstitution.cmi : nCic.cmx
 nCicTypeChecker.cmx : nUri.cmx nReference.cmx nCicUtils.cmx \
     nCicSubstitution.cmx nCicReduction.cmx nCicEnvironment.cmx nCic.cmx \
@@ -17,7 +16,7 @@ nCicTypeChecker.cmi : nUri.cmi nReference.cmi nCic.cmx
 nCicUntrusted.cmx : nReference.cmx nCicUtils.cmx nCicSubstitution.cmx \
     nCicReduction.cmx nCicEnvironment.cmx nCic.cmx nCicUntrusted.cmi
 nCicUntrusted.cmi : nCic.cmx
-nCicUtils.cmx : nReference.cmx nCic.cmx nCicUtils.cmi
+nCicUtils.cmx : nCic.cmx nCicUtils.cmi
 nCicUtils.cmi : nCic.cmx
 nReference.cmx : nUri.cmx nReference.cmi
 nReference.cmi : nUri.cmi

@@ -85,7 +85,7 @@ let make_args_for_apply term2pres args =
  let make_arg_for_apply is_first arg row = 
   let res =
    match arg with 
-      Con.Aux n -> assert false
+      Con.Aux _n -> assert false
     | Con.Premise prem -> 
         let name = 
           (match prem.Con.premise_binder with
@@ -404,16 +404,16 @@ and conclude_aux term2pres ?skip_initial_lambdas_internal is_top_down conclude =
              (match p.Con.premise_binder with
              | None -> assert false; (* unnamed hypothesis ??? *)
              | Some s -> B.Text([],s))
-         | err -> assert false) in
+         | _err -> assert false) in
       (match conclude.Con.conclude_conclusion with 
          None ->
           B.b_h [] [B.b_kw "by"; B.b_space; arg]
-       | Some c -> 
+       | Some _c -> 
           B.b_h [] [B.b_kw "by"; B.b_space; arg]
        )
     else if conclude.Con.conclude_method = "Intros+LetTac" then
       (match conclude.Con.conclude_args with
-         [Con.ArgProof p] ->
+         [Con.ArgProof _p] ->
            (match conclude.Con.conclude_args with
               [Con.ArgProof p] -> 
                 proof2pres0 term2pres ?skip_initial_lambdas_internal true p false
@@ -538,11 +538,11 @@ and args2pres term2pres l = List.map (arg2pres term2pres) l
 and arg2pres term2pres =
     function
         Con.Aux n -> B.b_kw ("aux " ^ n)
-      | Con.Premise prem -> B.b_kw "premise"
-      | Con.Lemma lemma -> B.b_kw "lemma"
+      | Con.Premise _prem -> B.b_kw "premise"
+      | Con.Lemma _lemma -> B.b_kw "lemma"
       | Con.Term (_,t) -> term2pres t
       | Con.ArgProof p -> proof2pres0 term2pres true p false
-      | Con.ArgMethod s -> B.b_kw "method"
+      | Con.ArgMethod _s -> B.b_kw "method"
  
 and case term2pres conclude =
      let proof_conclusion = 
@@ -557,7 +557,7 @@ and case term2pres conclude =
      let case_on =
        let case_arg = 
          (match arg with
-            Con.Aux n -> B.b_kw "an aux???"
+            Con.Aux _n -> B.b_kw "an aux???"
            | Con.Premise prem ->
               (match prem.Con.premise_binder with
                  None -> B.b_kw "previous"
@@ -565,8 +565,8 @@ and case term2pres conclude =
            | Con.Lemma lemma -> B.Object ([], P.Mi([],lemma.Con.lemma_name))
            | Con.Term (_,t) -> 
                term2pres t
-           | Con.ArgProof p -> B.b_kw "a proof???"
-           | Con.ArgMethod s -> B.b_kw "a method???")
+           | Con.ArgProof _p -> B.b_kw "a proof???"
+           | Con.ArgMethod _s -> B.b_kw "a method???")
       in
         (make_concl "we proceed by cases on" case_arg) in
      let to_prove =
@@ -588,7 +588,7 @@ and byinduction term2pres conclude =
      let induction_on =
        let arg = 
          (match inductive_arg with
-            Con.Aux n -> B.b_kw "an aux???"
+            Con.Aux _n -> B.b_kw "an aux???"
            | Con.Premise prem ->
               (match prem.Con.premise_binder with
                  None -> B.b_kw "previous"
@@ -596,8 +596,8 @@ and byinduction term2pres conclude =
            | Con.Lemma lemma -> B.Object ([], P.Mi([],lemma.Con.lemma_name))
            | Con.Term (_,t) -> 
                term2pres t
-           | Con.ArgProof p -> B.b_kw "a proof???"
-           | Con.ArgMethod s -> B.b_kw "a method???") in
+           | Con.ArgProof _p -> B.b_kw "a proof???"
+           | Con.ArgMethod _s -> B.b_kw "a method???") in
         (make_concl "we proceed by induction on" arg) in
      let to_prove =
       B.H ([], [make_concl "to prove" proof_conclusion ; B.Text([],".")]) in
@@ -690,14 +690,14 @@ and falseind term2pres conclude =
           | Some t -> term2pres t) in
        let case_arg = 
          (match conclude.Con.conclude_args with
-             [Con.Aux(n);_;case_arg] -> case_arg
+             [Con.Aux(_n);_;case_arg] -> case_arg
            | _ -> assert false;
              (* 
              List.map (ContentPp.parg 0) conclude.Con.conclude_args;
              assert false *)) in
        let arg = 
          (match case_arg with
-             Con.Aux n -> assert false
+             Con.Aux _n -> assert false
            | Con.Premise prem ->
               (match prem.Con.premise_binder with
                  None -> [B.b_kw "Contradiction, hence"]
@@ -713,14 +713,14 @@ and falseind term2pres conclude =
 and andind term2pres conclude =
        let proof,case_arg = 
          (match conclude.Con.conclude_args with
-             [Con.Aux(n);_;Con.ArgProof proof;case_arg] -> proof,case_arg
+             [Con.Aux(_n);_;Con.ArgProof proof;case_arg] -> proof,case_arg
            | _ -> assert false;
              (* 
              List.map (ContentPp.parg 0) conclude.Con.conclude_args;
              assert false *)) in
        let arg = 
          (match case_arg with
-             Con.Aux n -> assert false
+             Con.Aux _n -> assert false
            | Con.Premise prem ->
               (match prem.Con.premise_binder with
                  None -> []
@@ -730,7 +730,7 @@ and andind term2pres conclude =
                 B.Object([], P.Mi([],lemma.Con.lemma_name))]
            | _ -> assert false) in
        match proof.Con.proof_context with
-         `Hypothesis hyp1::`Hypothesis hyp2::tl ->
+         `Hypothesis hyp1::`Hypothesis hyp2::_tl ->
             let preshyp1 = 
               B.H ([],
                [B.Text([],"(");
@@ -763,14 +763,14 @@ and andind term2pres conclude =
 and exists term2pres conclude =
        let proof = 
          (match conclude.Con.conclude_args with
-             [Con.Aux(n);_;Con.ArgProof proof;_] -> proof
+             [Con.Aux(_n);_;Con.ArgProof proof;_] -> proof
            | _ -> assert false;
              (* 
              List.map (ContentPp.parg 0) conclude.Con.conclude_args;
              assert false *)) in
        match proof.Con.proof_context with
-           `Declaration decl::`Hypothesis hyp::tl
-         | `Hypothesis decl::`Hypothesis hyp::tl ->
+           `Declaration decl::`Hypothesis hyp::_tl
+         | `Hypothesis decl::`Hypothesis hyp::_tl ->
            let presdecl = 
              B.H ([],
                [(B.b_kw "let");
@@ -982,7 +982,7 @@ let njoint_def2pres term2pres joint_kind defs =
 
 let nobj2pres0
   ?skip_initial_lambdas ?(skip_thm_and_qed=false) term2pres 
-  (id,metasenv,obj : NotationPt.term Content.cobj) 
+  (_id,metasenv,obj : NotationPt.term Content.cobj) 
 =
   match obj with
   | `Def (Content.Const, thesis, `Proof p) ->

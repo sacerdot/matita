@@ -53,10 +53,10 @@ struct
 
   let find k env =
    match k with
-      Symbol (sym,n) ->
+      Symbol (sym,_n) ->
        (try find k env
         with Not_found -> find (Symbol (sym,0)) env)
-    | Num n ->
+    | Num _n ->
        (try find k env
         with Not_found -> find (Num 0) env)
     | _ -> find k env

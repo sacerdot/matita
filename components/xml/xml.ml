@@ -92,7 +92,7 @@ let pp_gen f strm =
       pp_r m s
   | [< >] -> ()
  and print_spaces m =
-  for i = 1 to m do f "  " done
+  for _i = 1 to m do f "  " done
  in
  pp_r 0 strm
 ;;
@@ -104,7 +104,7 @@ let pp_to_outchan strm oc =
 ;;
 
 let pp_to_gzipchan strm oc =
-  pp_gen (fun s -> Gzip.output oc s 0 (String.length s)) strm
+  pp_gen (fun s -> Gzip.output oc (Bytes.of_string s) 0 (String.length s)) strm
 ;;
 
 (** pretty printer to string *)

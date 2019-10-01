@@ -13,8 +13,8 @@
 
 module Index(B : Orderings.Blob) = struct
   module U = FoUtils.Utils(B)
-  module Unif = FoUnif.Founif(B)
-  module Pp = Pp.Pp(B)
+  (*module Unif = FoUnif.Founif(B)*)
+  (*module Pp = Pp.Pp(B)*)
 
   module ClauseOT =
     struct 
@@ -44,7 +44,7 @@ module Index(B : Orderings.Blob) = struct
       let path_string_of =
         let rec aux arity = function
           | Terms.Leaf a -> [Constant (a, arity)]
-          | Terms.Var i -> (* assert (arity = 0); *) [Variable]
+          | Terms.Var _i -> (* assert (arity = 0); *) [Variable]
 	  (* FIXME : should this be allowed or not ? 
           | Terms.Node (Terms.Var _::_) ->
 	      assert false *)
@@ -87,12 +87,12 @@ module Index(B : Orderings.Blob) = struct
         op t l (Terms.Left2Right, c)
     | (_,Terms.Equation (_,r,_,Terms.Lt),_,_) as c -> 
         op t r (Terms.Right2Left, c)
-    | (_,Terms.Equation (l,r,_,Terms.Incomparable),vl,_) as c ->
+    | (_,Terms.Equation (l,r,_,Terms.Incomparable),_vl,_) as c ->
         op (op t l (Terms.Left2Right, c))
           r (Terms.Right2Left, c)
-    | (_,Terms.Equation (l,r,_,Terms.Invertible),vl,_) as c ->
+    | (_,Terms.Equation (l,_r,_,Terms.Invertible),_vl,_) as c ->
 	op t l (Terms.Left2Right, c)
-    | (_,Terms.Equation (_,r,_,Terms.Eq),_,_)  -> assert false
+    | (_,Terms.Equation (_,_r,_,Terms.Eq),_,_)  -> assert false
     | (_,Terms.Predicate p,_,_) as c ->
         op t p (Terms.Nodir, c)
   ;;

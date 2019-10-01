@@ -111,8 +111,6 @@ class taggedStringListModel:
 class type gui =
   object  (* minimal gui object requirements *)
     method newUriDialog:          unit -> MatitaGeneratedGui.uriChoiceDialog
-    method newConfirmationDialog: unit -> MatitaGeneratedGui.confirmationDialog
-    method newEmptyDialog:        unit -> MatitaGeneratedGui.emptyDialog
   end
 
   (** {3 Dialogs}
@@ -124,17 +122,7 @@ class type gui =
 val ask_confirmation:
   title:string -> message:string -> 
   ?parent:#GWindow.window_skel ->
-  unit ->
-    [`YES | `NO | `CANCEL]
-
-  (** @param multiline (default: false) if true a TextView widget will be used
-  * for prompting the user otherwise a TextEntry widget will be
-  * @return the string given by the user *)
-val ask_text:
-  gui:#gui ->
-  ?title:string -> ?message:string ->
-  ?multiline:bool -> ?default:string -> unit ->
-    string
+  unit -> [`YES | `NO | `DELETE_EVENT ]
 
 val report_error:
   title:string -> message:string -> 
@@ -151,4 +139,4 @@ val utf8_string_length: string -> int
 
 val escape_pango_markup: string -> string
 
-val matita_lang: GSourceView2.source_language
+val matita_lang: GSourceView3.source_language

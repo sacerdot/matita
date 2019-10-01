@@ -111,7 +111,7 @@ module Superposition (B : Orderings.Blob) =
       | Terms.Leaf _ as t -> 
 	  let  bag,subst,t,id = f bag t pos ctx id in
            assert (subst=[]); bag,t,id
-      | Terms.Var i as t ->  
+      | Terms.Var _ as t ->  
 	  let t= Subst.apply_subst subst t in
 	    bag,t,id
       | Terms.Node (hd::l) ->
@@ -181,7 +181,7 @@ module Superposition (B : Orderings.Blob) =
          (IDX.DT.retrieve_generalizations table) subterm 
       in
       list_first
-        (fun (dir, (id,lit,vl,_)) ->
+        (fun (dir, (id,lit,_vl,_)) ->
            match lit with
            | Terms.Predicate _ -> assert false
            | Terms.Equation (l,r,_,o) ->
@@ -227,7 +227,7 @@ module Superposition (B : Orderings.Blob) =
          (IDX.DT.retrieve_generalizations table) subterm 
       in
       list_first
-        (fun (dir, ((id,lit,vl,_) as c)) ->
+        (fun (dir, ((id,lit,_vl,_) as c)) ->
 	   debug (lazy("candidate: " 
 		       ^ Pp.pp_unit_clause c)); 
            match lit with
@@ -280,7 +280,7 @@ module Superposition (B : Orderings.Blob) =
                     (bag,subst,newside,id)
     ;;
       
-    let rec demodulate bag (id, literal, vl, pr) table =
+    let demodulate bag (id, literal, vl, _pr) table =
       debug (lazy ("demodulate " ^ (string_of_int id)));
        match literal with
       | Terms.Predicate t -> (* assert false *)
@@ -341,7 +341,7 @@ module Superposition (B : Orderings.Blob) =
 
     let is_identity_goal = function
       | _, Terms.Equation (_,_,_,Terms.Eq), _, _ -> Some []
-      | _, Terms.Equation (l,r,_,_), vl, proof ->
+      | _, Terms.Equation (l,r,_,_), _vl, _proof ->
           (try Some (Unif.unification (* vl *) [] l r)
            with FoUnif.UnificationFailure _ -> None)
       | _, Terms.Predicate _, _, _ -> assert false          
@@ -389,7 +389,7 @@ module Superposition (B : Orderings.Blob) =
       let f b c =
         let id, dir, l, r, vl = 
           match c with
-            | (d, (id,Terms.Equation (l,r,ty,_),vl,_))-> id, d, l, r, vl
+            | (d, (id,Terms.Equation (l,r,_ty,_),vl,_))-> id, d, l, r, vl
             |_ -> assert false 
         in 
         let reverse = (dir = Terms.Left2Right) = b in
@@ -508,7 +508,7 @@ module Superposition (B : Orderings.Blob) =
     let rec orphan_murder bag acc i =
       match Terms.get_from_bag i bag with
         | (_,_,_,Terms.Exact _),discarded,_ -> (discarded,acc)
-        | (_,_,_,Terms.Step (_,i1,i2,_,_,_)),true,_ -> (true,acc)
+        | (_,_,_,Terms.Step (_,_i1,_i2,_,_,_)),true,_ -> (true,acc)
         | (_,_,_,Terms.Step (_,i1,i2,_,_,_)),false,_ ->
             if (List.mem i acc) then (false,acc)
             else match orphan_murder bag acc i1 with
@@ -570,7 +570,7 @@ module Superposition (B : Orderings.Blob) =
                    match simplify ctable maxvar bag c with
                      |bag,None -> (bag,alist,atable)
                         (* an active clause as been discarded *)
-                     |bag,Some c1 ->
+                     |bag,Some _c1 ->
                         bag, c :: alist, IDX.index_unit_clause atable c)
                 (bag,[],IDX.DT.empty) alist
             in
@@ -671,7 +671,7 @@ module Superposition (B : Orderings.Blob) =
       else match (is_identity_goal clause) with
 	| Some subst -> raise (Success (bag,maxvar,clause,subst))
 	| None ->
-        let (id,lit,vl,_) = clause in 
+        let (_id,lit,vl,_) = clause in 
         (* this optimization makes sense only if we demodulated, since in 
 	   that case the clause should have been turned into an identity *)
         if (vl = [] && not(no_demod)) 
@@ -706,10 +706,10 @@ module Superposition (B : Orderings.Blob) =
     (* =================== inference ===================== *)
 
     (* this is OK for both the sup_left and sup_right inference steps *)
-    let superposition table varlist subterm pos context =
+    let superposition table _varlist subterm pos context =
       let cands = IDX.DT.retrieve_unifiables table subterm in
       HExtlib.filter_map
-        (fun (dir, (id,lit,vl,_ (*as uc*))) ->
+        (fun (dir, (id,lit,_vl,_ (*as uc*))) ->
            match lit with
            | Terms.Predicate _ -> assert false
            | Terms.Equation (l,r,_,o) ->

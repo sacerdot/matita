@@ -53,7 +53,7 @@ let newmeta,maxmeta,pushmaxmeta,popmaxmeta =
   (fun () -> incr maxmeta; !maxmeta),
   (fun () -> !maxmeta),
   (fun () -> pushedmetas := !maxmeta::!pushedmetas; maxmeta := 0),
-  (fun () -> match !pushedmetas with [] -> assert false | hd::tl -> pushedmetas := tl)
+  (fun () -> match !pushedmetas with [] -> assert false | _hd::tl -> pushedmetas := tl)
 ;;
 
 exception NotFound of [`NotInTheList | `NotWellTyped];;
@@ -525,8 +525,7 @@ let delift status ~unify metasenv subst context n l t =
          raise (NotFound `NotWellTyped)
       | TypeNotGood
       | NCicTypeChecker.AssertFailure _
-      | NCicReduction.AssertFailure _
-      | NCicTypeChecker.TypeCheckerFailure _ ->
+      | NCicReduction.AssertFailure _ ->
          raise (NotFound `NotWellTyped))
    with NotFound reason ->
       (* This is the case where we fail even first order unification. *)

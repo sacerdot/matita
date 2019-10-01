@@ -40,7 +40,7 @@ let basic_eval_unification_hint (t,n) status =
 
 let inject_unification_hint =
  let basic_eval_unification_hint (t,n) 
-   ~refresh_uri_in_universe ~refresh_uri_in_term ~refresh_uri_in_reference
+   ~refresh_uri_in_universe:_ ~refresh_uri_in_term ~refresh_uri_in_reference:_
    ~alias_only status
  =
   if not alias_only then
@@ -88,7 +88,7 @@ let basic_eval_interpretation ~alias_only (dsc, (symbol, args), cic_appl_pattern
 
 let inject_interpretation =
  let basic_eval_interpretation (dsc, (symbol, args), cic_appl_pattern)
-   ~refresh_uri_in_universe ~refresh_uri_in_term ~refresh_uri_in_reference
+   ~refresh_uri_in_universe:_ ~refresh_uri_in_term:_ ~refresh_uri_in_reference:_
    ~alias_only
  =
   let rec refresh =
@@ -117,8 +117,8 @@ let basic_eval_alias (mode,diff) status =
 ;;
 
 let inject_alias =
- let basic_eval_alias (mode,diff) ~refresh_uri_in_universe ~refresh_uri_in_term
-   ~refresh_uri_in_reference ~alias_only =
+ let basic_eval_alias (mode,diff) ~refresh_uri_in_universe:_ ~refresh_uri_in_term:_
+   ~refresh_uri_in_reference:_ ~alias_only:_ =
    basic_eval_alias (mode,diff)
  in
   GrafiteTypes.Serializer.register#run "alias" basic_eval_alias
@@ -138,7 +138,7 @@ let basic_eval_input_notation (l1,l2) status =
 
 let inject_input_notation =
  let basic_eval_input_notation (l1,l2)
-  ~refresh_uri_in_universe ~refresh_uri_in_term ~refresh_uri_in_reference
+  ~refresh_uri_in_universe:_ ~refresh_uri_in_term ~refresh_uri_in_reference
   ~alias_only status
  =
    if not alias_only then
@@ -169,7 +169,7 @@ let basic_eval_output_notation (l1,l2) status =
 
 let inject_output_notation =
  let basic_eval_output_notation (l1,l2)
-  ~refresh_uri_in_universe ~refresh_uri_in_term ~refresh_uri_in_reference
+  ~refresh_uri_in_universe:_ ~refresh_uri_in_term ~refresh_uri_in_reference
   ~alias_only status
  =
   if not alias_only then
@@ -195,8 +195,8 @@ let eval_output_notation status data=
 ;;
 
 let record_index_obj = 
- let aux l ~refresh_uri_in_universe 
-   ~refresh_uri_in_term ~refresh_uri_in_reference ~alias_only status
+ let aux l ~refresh_uri_in_universe:_
+   ~refresh_uri_in_term ~refresh_uri_in_reference:_ ~alias_only status
  =
   let refresh_uri_in_term = refresh_uri_in_term (status:>NCic.status) in
   if not alias_only then
@@ -297,8 +297,8 @@ let basic_extract_ocaml_obj obj status =
 
 let inject_extract_obj =
  let basic_extract_obj info
-   ~refresh_uri_in_universe ~refresh_uri_in_term ~refresh_uri_in_reference
-   ~alias_only status
+   ~refresh_uri_in_universe:__ ~refresh_uri_in_term:_ ~refresh_uri_in_reference
+   ~alias_only:_ status
  =
   let info= NCicExtraction.refresh_uri_in_info ~refresh_uri_in_reference info in
    status#set_extraction_db
@@ -309,8 +309,8 @@ let inject_extract_obj =
 
 let inject_extract_ocaml_obj =
  let basic_extract_ocaml_obj info
-   ~refresh_uri_in_universe ~refresh_uri_in_term ~refresh_uri_in_reference
-   ~alias_only status
+   ~refresh_uri_in_universe:_ ~refresh_uri_in_term:_ ~refresh_uri_in_reference
+   ~alias_only:_ status
  =
   let info= OcamlExtractionTable.refresh_uri_in_info ~refresh_uri_in_reference ~refresh_uri:NCicLibrary.refresh_uri info in
    status#set_ocaml_extraction_db
@@ -358,7 +358,7 @@ let index_eq print uri (status:#NCic.status) =
 
 let record_index_eq =
  let basic_index_eq uri
-   ~refresh_uri_in_universe ~refresh_uri_in_term ~refresh_uri_in_reference 
+   ~refresh_uri_in_universe:_ ~refresh_uri_in_term:_ ~refresh_uri_in_reference:_ 
    ~alias_only status
    = if not alias_only then index_eq false (NCicLibrary.refresh_uri uri) status 
      else
@@ -381,7 +381,7 @@ let index_eq_for_auto status uri =
 
 let inject_constraint =
  let basic_eval_add_constraint (acyclic,u1,u2) 
-     ~refresh_uri_in_universe ~refresh_uri_in_term ~refresh_uri_in_reference
+     ~refresh_uri_in_universe ~refresh_uri_in_term:_ ~refresh_uri_in_reference:_
      ~alias_only status
  =
   if not alias_only then
@@ -404,6 +404,17 @@ let eval_add_constraint status acyclic u1 u2 =
 ;;
 
 let eval_ng_tac tac =
+ let just_to_tacstatus_just just text prefix_len =
+    match just with
+    | `Term t -> `Term (text,prefix_len,t)
+    | `Auto (l,params) -> 
+    (
+        match l with
+        | None -> `Auto (None,params)
+        | Some l -> `Auto (Some (List.map (fun t -> (text,prefix_len,t)) l),params)
+    )
+    | _ -> assert false
+ in
  let rec aux f (text, prefix_len, tac) =
   match tac with
   | GrafiteAst.NApply (_loc, t) -> NTactics.apply_tac (text,prefix_len,t) 
@@ -481,6 +492,39 @@ let eval_ng_tac tac =
       NTactics.block_tac (List.map (fun x -> aux f (text,prefix_len,x)) l)
   |GrafiteAst.NRepeat (_,tac) ->
       NTactics.repeat_tac (f f (text, prefix_len, tac))
+  |GrafiteAst.Assume (_,id,t) -> Declarative.assume id (text,prefix_len,t)
+  |GrafiteAst.Suppose (_,t,id) -> Declarative.suppose (text,prefix_len,t) id
+  |GrafiteAst.By_just_we_proved (_,j,t1,s) -> Declarative.by_just_we_proved
+  (just_to_tacstatus_just j text prefix_len) (text,prefix_len,t1) s
+  |GrafiteAst.We_need_to_prove (_, t, id) -> Declarative.we_need_to_prove (text,prefix_len,t) id
+  |GrafiteAst.BetaRewritingStep (_, t) -> Declarative.beta_rewriting_step (text,prefix_len,t)
+  | GrafiteAst.Bydone (_, j) -> Declarative.bydone (just_to_tacstatus_just j text prefix_len)
+  | GrafiteAst.ExistsElim (_, just, id1, t1, t2, id2) ->
+     Declarative.existselim (just_to_tacstatus_just just text prefix_len) id1 (text,prefix_len,t1)
+     (text,prefix_len,t2) id2
+  | GrafiteAst.AndElim(_,just,t1,id1,t2,id2) -> Declarative.andelim (just_to_tacstatus_just just
+    text prefix_len) (text,prefix_len,t1) id1 (text,prefix_len,t2) id2
+  | GrafiteAst.Thesisbecomes (_, t1) -> Declarative.thesisbecomes (text,prefix_len,t1)
+  | GrafiteAst.RewritingStep (_,rhs,just,cont) ->
+     Declarative.rewritingstep (text,prefix_len,rhs)
+                                (match just with 
+                                  `Term _
+                                | `Auto _ -> just_to_tacstatus_just just text prefix_len
+                                |`Proof -> `Proof
+                                |`SolveWith t -> `SolveWith (text,prefix_len,t)
+                                )
+                                cont
+  | GrafiteAst.Obtain (_,id,t1) ->
+     Declarative.obtain id (text,prefix_len,t1)
+  | GrafiteAst.Conclude (_,t1) ->
+     Declarative.conclude (text,prefix_len,t1)
+  | GrafiteAst.We_proceed_by_cases_on (_, t, t1) ->
+     Declarative.we_proceed_by_cases_on (text,prefix_len,t) (text,prefix_len,t1)
+  | GrafiteAst.We_proceed_by_induction_on (_, t, t1) ->
+     Declarative.we_proceed_by_induction_on (text,prefix_len,t) (text,prefix_len,t1)
+  | GrafiteAst.Byinduction (_, t, id) -> Declarative.byinduction (text,prefix_len,t) id
+  | GrafiteAst.Case (_,id,params) -> Declarative.case id params
+  | GrafiteAst.PrintStack (_) -> Declarative.print_stack
  in
   aux aux tac (* trick for non uniform recursion call *)
 ;;
@@ -560,7 +604,7 @@ let extract_uris status uris =
 
 let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
   match cmd with
-  | GrafiteAst.Include (loc, mode, fname) ->
+  | GrafiteAst.Include (_loc, mode, fname) ->
      let _root, baseuri, fullpath, _rrelpath = 
        Librarian.baseuri_of_script ~include_paths fname in
      let baseuri = NUri.uri_of_string baseuri in
@@ -571,7 +615,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
        ~alias_only ~baseuri ~fname:fullpath status in
      OcamlExtraction.print_open status
       (NCicLibrary.get_transitively_included status)
-  | GrafiteAst.UnificationHint (loc, t, n) -> eval_unification_hint status t n
+  | GrafiteAst.UnificationHint (_loc, t, n) -> eval_unification_hint status t n
   | GrafiteAst.NCoercion (loc, name, compose, None) ->
      let status, t, ty, source, target =
        let o_t = NotationPt.Ident (name,None) in
@@ -602,7 +646,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
        GrafiteAst.NCoercion (loc, name, compose, Some (t, ty, source, target))
       in
       eval_ncommand ~include_paths opts status (text,prefix_len,cmd)
-  | GrafiteAst.NCoercion (loc, name, compose, Some (t, ty, source, target)) ->
+  | GrafiteAst.NCoercion (_loc, name, compose, Some (t, ty, source, target)) ->
      let status, composites =
       NCicCoercDeclaration.eval_ncoercion status name compose t ty source
        target in
@@ -610,11 +654,11 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
      let mode = GrafiteAst.WithPreferences in (* MATITA 1.0: fixme *)
      let aliases = GrafiteDisambiguate.aliases_for_objs status composites in
       eval_alias status (mode,aliases)
-  | GrafiteAst.NQed (loc,index) ->
+  | GrafiteAst.NQed (_loc,index) ->
      if status#ng_mode <> `ProofMode then
       raise (GrafiteTypes.Command_error "Not in proof mode")
      else
-      let uri,height,menv,subst,obj_kind = status#obj in
+      let uri,_height,menv,subst,obj_kind = status#obj in
        if menv <> [] then
         raise
          (GrafiteTypes.Command_error"You can't Qed an incomplete theorem")
@@ -717,7 +761,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
            let status = match nobj with
                NCic.Inductive (is_ind,leftno,itl,_) ->
                  List.fold_left (fun status it ->      
-                 (let _,ind_name,ty,cl = it in
+                 (let _,ind_name,_ty,_cl = it in
                   List.fold_left 
                    (fun status outsort ->
                       let status = status#set_ng_mode `ProofMode in
@@ -743,11 +787,11 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
               | _ -> status
            in
            let status = match nobj with
-               NCic.Inductive (is_ind,leftno,itl,_) ->
+               NCic.Inductive (_is_ind,leftno,itl,_) ->
                  (* first leibniz *)
                  let status' = List.fold_left
                    (fun status it ->
-                      let _,ind_name,ty,cl = it in
+                      let _,ind_name,_ty,_cl = it in
                       let status = status#set_ng_mode `ProofMode in
                       try
                        (let status,invobj =
@@ -774,7 +818,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
                 (* then JMeq *)
                 List.fold_left
                    (fun status it ->
-                      let _,ind_name,ty,cl = it in
+                      let _,ind_name,_ty,_cl = it in
                       let status = status#set_ng_mode `ProofMode in
                       try
                        (let status,invobj =
@@ -829,7 +873,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
            exn ->
             NCicLibrary.time_travel old_status;
             raise exn)
-  | GrafiteAst.NCopy (log,tgt,src_uri, map) ->
+  | GrafiteAst.NCopy (_loc,tgt,src_uri, map) ->
      if status#ng_mode <> `CommandMode then
       raise (GrafiteTypes.Command_error "Not in command mode")
      else
@@ -860,14 +904,14 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
        let status = subst_metasenv_and_fix_names status in
        let status = status#set_ng_mode `ProofMode in
        eval_ncommand ~include_paths opts status ("",0,GrafiteAst.NQed(Stdpp.dummy_loc,false))
-  | GrafiteAst.NObj (loc,obj,index) ->
+  | GrafiteAst.NObj (_loc,obj,index) ->
      if status#ng_mode <> `CommandMode then
       raise (GrafiteTypes.Command_error "Not in command mode")
      else
       let status,obj =
        GrafiteDisambiguate.disambiguate_nobj status
         ~baseuri:status#baseuri (text,prefix_len,obj) in
-      let uri,height,nmenv,nsubst,nobj = obj in
+      let _uri,_height,nmenv,_nsubst,_nobj = obj in
       let ninitial_stack = Continuationals.Stack.of_nmetasenv nmenv in
       let status = status#set_obj obj in
       let status = status#set_stack ninitial_stack in
@@ -878,12 +922,12 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
            eval_ncommand ~include_paths opts status
              ("",0,GrafiteAst.NQed(Stdpp.dummy_loc,index))
         | _ -> status)
-  | GrafiteAst.NDiscriminator (loc, indty) ->
+  | GrafiteAst.NDiscriminator (_loc, indty) ->
       if status#ng_mode <> `CommandMode then
         raise (GrafiteTypes.Command_error "Not in command mode")
       else
         let status = status#set_ng_mode `ProofMode in
-        let metasenv,subst,status,indty =
+        let _metasenv,_subst,status,indty =
           GrafiteDisambiguate.disambiguate_nterm status `XTNone [] [] [] (text,prefix_len,indty) in
         let indtyno, (_,_,tys,_,_),leftno = match indty with
             NCic.Const ((NReference.Ref (_,NReference.Ind (_,indtyno,leftno))) as r) ->
@@ -898,7 +942,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
                [] -> eval_ncommand ~include_paths opts status ("",0,GrafiteAst.NQed(Stdpp.dummy_loc,false))
              | _ -> prerr_endline ("Discriminator: non empty metasenv");
                     status)
-  | GrafiteAst.NInverter (loc, name, indty, selection, sort) ->
+  | GrafiteAst.NInverter (_loc, name, indty, selection, sort) ->
      if status#ng_mode <> `CommandMode then
       raise (GrafiteTypes.Command_error "Not in command mode")
      else
@@ -918,7 +962,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
             "ninverter: found target %s, which is not a sort"
              (status#ppterm ~metasenv ~subst ~context:[] sort))) in
       let status = status#set_ng_mode `ProofMode in
-      let metasenv,subst,status,indty =
+      let _metasenv,_subst,status,indty =
        GrafiteDisambiguate.disambiguate_nterm status `XTNone [] [] subst
         (text,prefix_len,indty) in
       let indtyno,(_,leftno,tys,_,_) =
@@ -939,16 +983,16 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
             eval_ncommand ~include_paths opts status
              ("",0,GrafiteAst.NQed(Stdpp.dummy_loc,false))
         | _ -> assert false)
-  | GrafiteAst.NUnivConstraint (loc,acyclic,u1,u2) ->
+  | GrafiteAst.NUnivConstraint (_loc,acyclic,u1,u2) ->
       eval_add_constraint status acyclic [`Type,u1] [`Type,u2]
   (* ex lexicon commands *)
-  | GrafiteAst.Interpretation (loc, dsc, (symbol, args), cic_appl_pattern) ->
+  | GrafiteAst.Interpretation (_loc, dsc, (symbol, args), cic_appl_pattern) ->
      let cic_appl_pattern =
       GrafiteDisambiguate.disambiguate_cic_appl_pattern status args
        cic_appl_pattern
      in
       eval_interpretation status (dsc,(symbol, args),cic_appl_pattern)
-  | GrafiteAst.Notation (loc, dir, l1, associativity, precedence, l2) ->
+  | GrafiteAst.Notation (_loc, dir, l1, associativity, precedence, l2) ->
       let l1 = 
         CicNotationParser.check_l1_pattern
          l1 (dir = Some `RightToLeft) precedence associativity
@@ -959,23 +1003,23 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
       in
        if dir <> Some `LeftToRight then eval_output_notation status (l1,l2)
        else status
-  | GrafiteAst.Alias (loc, spec) -> 
+  | GrafiteAst.Alias (_loc, spec) -> 
      let diff =
       (*CSC: Warning: this code should be factorized with the corresponding
              code in DisambiguatePp *)
       match spec with
-      | GrafiteAst.Ident_alias (id,uri) -> 
+      | GrafiteAst.Ident_alias (id,_uri) -> 
          [DisambiguateTypes.Id id,spec]
-      | GrafiteAst.Symbol_alias (symb, instance, desc) ->
+      | GrafiteAst.Symbol_alias (symb, instance, _desc) ->
          [DisambiguateTypes.Symbol (symb,instance),spec]
-      | GrafiteAst.Number_alias (instance,desc) ->
+      | GrafiteAst.Number_alias (instance,_desc) ->
          [DisambiguateTypes.Num instance,spec]
      in
       let mode = GrafiteAst.WithPreferences in(*assert false in (* VEDI SOPRA *) MATITA 1.0*)
        eval_alias status (mode,diff)
 ;;
 
-let eval_comment opts status (text,prefix_len,c) = status
+let eval_comment _opts status (_text,_prefix_len,_c) = status
 
 let rec eval_executable ~include_paths opts status (text,prefix_len,ex) =
   match ex with

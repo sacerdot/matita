@@ -5,7 +5,7 @@ AC_INIT(matita/matitaTypes.ml)
 DEBUG_DEFAULT="true"
 DEFAULT_DBHOST="mysql://mowgli.cs.unibo.it"
 RT_BASE_DIR_DEFAULT="`pwd`/matita"
-MATITA_VERSION="0.99.3"
+MATITA_VERSION="0.99.4"
 DISTRIBUTED="yes"  # "yes" for distributed tarballs
 # End of distribution settings
 
@@ -24,11 +24,11 @@ if test $HAVE_OCAMLFIND = "yes"; then
 else
   AC_MSG_ERROR(could not find ocamlfind)
 fi
-AC_CHECK_PROG(HAVE_LABLGLADECC, lablgladecc2, yes, no)
+AC_CHECK_PROG(HAVE_LABLGLADECC, lablgladecc3, yes, no)
 if test $HAVE_LABLGLADECC = "yes"; then
-  LABLGLADECC="lablgladecc2"
+  LABLGLADECC="lablgladecc3"
 else
-  AC_MSG_ERROR(could not find lablgladecc2)
+  AC_MSG_ERROR(could not find lablgladecc3)
 fi
 AC_CHECK_PROG(HAVE_CAMLP5O, camlp5o, yes, no)
 if test $HAVE_CAMLP5O = "yes"; then
@@ -40,16 +40,17 @@ fi
 # look for METAS dir
 
 LIBSPATH="`pwd`/components"
-OCAMLPATH="$LIBSPATH/METAS"
+OCAMLPATHL="$LIBSPATH/METAS"
+OCAMLPATH="$OCAMLPATHL:$OCAMLPATH"
 
 # creating META.*
 
 echo -n "creating METAs ... "
-for f in $OCAMLPATH/meta.*.src; do
+for f in $OCAMLPATHL/meta.*.src; do
   basename=`basename $f`
   metaname=`echo $basename | sed 's/meta\.\(.*\)\.src/\1/'`
   dirname=`echo $metaname | sed 's/^helm-//'`
-  metafile="$OCAMLPATH/META.$metaname"
+  metafile="$OCAMLPATHL/META.$metaname"
   cp $f $metafile
   echo "directory=\"$LIBSPATH/$dirname\"" >> $metafile
 done
@@ -57,20 +58,24 @@ echo "done"
 
 # (libs) findlib requisites
 
+#gdome2 \
+#mysql \
 FINDLIB_LIBSREQUIRES="\
 expat \
-gdome2 \
 http \
-lablgtk2 \
-lablgtk2.sourceview2 \
-mysql \
+pcre \
+str \
+unix \
+lablgtk3 \
+lablgtk3-sourceview3 \
 netstring \
-ulex08 \
+ulex-camlp5 \
 zip \
 "
 
 # (Matita) findlib requisites
 
+#lablgtk3.glade \
 FINDLIB_COMREQUIRES="\
 helm-disambiguation \
 helm-grafite \
@@ -87,9 +92,9 @@ $FINDLIB_COMREQUIRES \
 "
 FINDLIB_REQUIRES="\
 $FINDLIB_CREQUIRES \
-lablgtk2.glade \
-lablgtk2.sourceview2 \
+lablgtk3-sourceview3 \
 "
+
 for r in $FINDLIB_LIBSREQUIRES $FINDLIB_REQUIRES
 do
   AC_MSG_CHECKING(for $r ocaml library)

@@ -25,7 +25,6 @@
 
 (* $Id$ *)
 
-exception PopupClosed
 open Printf
 
 let wrap_callback0 f = fun _ -> try f () with Not_found -> assert false
@@ -99,7 +98,7 @@ class multiStringListModel ~cols (tree_view: GTree.view) =
       (fun renderer -> GTree.view_column ~renderer ())
       renderers
   in
-  object (self)
+  object
     val text_columns = text_columns
     
     initializer
@@ -174,7 +173,7 @@ class taggedStringListModel ~(tags:(string * GdkPixbuf.pixbuf) list)
   let lookup_pixbuf tag =
     try List.assoc tag tags with Not_found -> assert false
   in
-  object (self)
+  object
     initializer
       tree_view#set_model (Some (list_store :> GTree.model));
       ignore (tree_view#append_column tag_vcolumn);
@@ -228,7 +227,7 @@ class recordModel (tree_view:GTree.view) =
         ])
   in
   let toggle_vcol = GTree.view_column ~renderer:toggle_rend () in
-  object (self)
+  object
     initializer
       tree_view#set_model (Some (list_store :> GTree.model));
       ignore (tree_view#append_column text_vcol);
@@ -247,46 +246,38 @@ class recordModel (tree_view:GTree.view) =
 class type gui =
   object
     method newUriDialog:          unit -> MatitaGeneratedGui.uriChoiceDialog
-    method newConfirmationDialog: unit -> MatitaGeneratedGui.confirmationDialog
-    method newEmptyDialog:        unit -> MatitaGeneratedGui.emptyDialog
   end
 
 let popup_message 
-  ~title ~message ~buttons ~callback
+  ~title ~message ~buttons
   ?(message_type=`QUESTION) ?parent ?(use_markup=true)
-  ?(destroy_with_parent=true) ?(allow_grow=false) ?(allow_shrink=false)
-  ?icon ?(modal=true) ?(resizable=false) ?screen ?type_hint
-  ?(position=`CENTER_ON_PARENT) ?wm_name ?wm_class ?border_width ?width 
+  ?(destroy_with_parent=true) ?icon ?(modal=true) ?(resizable=false)
+  ?screen ?type_hint
+  ?(position=`CENTER_ON_PARENT) ?wmclass ?border_width ?width 
   ?height ?(show=true) ()
 =
   let m = 
     GWindow.message_dialog 
       ~message ~use_markup ~message_type ~buttons ?parent ~destroy_with_parent 
-      ~title ~allow_grow ~allow_shrink ?icon ~modal ~resizable ?screen 
-      ?type_hint ~position ?wm_name ?wm_class ?border_width ?width ?height 
+      ~title ?icon ~modal ~resizable ?screen 
+      ?type_hint ~position ?wmclass ?border_width ?width ?height 
       ~show () 
   in 
-  ignore(m#connect#response 
-    ~callback:(fun a ->  GMain.Main.quit ();callback a));
-  ignore(m#connect#close 
-    ~callback:(fun _ -> GMain.Main.quit ();raise PopupClosed));
-  GtkThread.main ();
+  ignore(m#run ()) ;
   m#destroy () 
 
 let popup_message_lowlevel
-  ~title ~message ?(no_separator=true) ~callback ~message_type ~buttons
-  ?parent  ?(destroy_with_parent=true) ?(allow_grow=false) ?(allow_shrink=false)
-  ?icon ?(modal=true) ?(resizable=false) ?screen ?type_hint
-  ?(position=`CENTER_ON_PARENT) ?wm_name ?wm_class ?border_width ?width 
-  ?height ?(show=true) ()
+  ~title ~message ?no_separator:(_=true) ~message_type ~buttons
+  ?parent  ?(destroy_with_parent=true)
+  ?icon ?modal:(_=true) ?(resizable=false) ?screen ?type_hint
+  ?(position=`CENTER_ON_PARENT) ?wmclass ?border_width ?width 
+  ?height ()
 =
   let m = 
     GWindow.dialog 
-      ~no_separator 
-      ?parent ~destroy_with_parent 
-      ~title ~allow_grow ~allow_shrink ?icon ~modal ~resizable ?screen 
-      ?type_hint ~position ?wm_name ?wm_class ?border_width ?width ?height 
-      ~show:false () 
+      ?parent ~destroy_with_parent
+      ~title ?icon ~resizable ?screen
+      ?type_hint ~position ?wmclass ?border_width ?width ?height () 
   in
   let stock = 
     match message_type with
@@ -304,88 +295,23 @@ let popup_message_lowlevel
   m#vbox#pack ~from:`START 
     ~padding:20 ~expand:true ~fill:true (hbox:>GObj.widget);
   List.iter (fun (x, y) -> 
-    m#add_button_stock x y;
-    if y = `CANCEL then 
-      m#set_default_response y
+    m#add_button_stock x y
   ) buttons;
-  ignore(m#connect#response 
-    ~callback:(fun a ->  GMain.Main.quit ();callback a));
-  ignore(m#connect#close 
-    ~callback:(fun _ -> GMain.Main.quit ();callback `POPUPCLOSED));
-  if show = true then 
-      m#show ();
-  GtkThread.main ();
-  m#destroy () 
+  let res = m#run () in
+  m#destroy () ;
+  res
 
 
 let ask_confirmation ~title ~message ?parent () =
-  let rc = ref `YES in
-  let callback = 
-    function 
-    | `YES -> rc := `YES
-    | `NO -> rc := `NO
-    | `CANCEL -> rc := `CANCEL
-    | `DELETE_EVENT -> rc := `CANCEL
-    | `POPUPCLOSED -> rc := `CANCEL
-  in
-  let buttons = [`YES,`YES ; `NO,`NO ; `CANCEL,`CANCEL] in
-    popup_message_lowlevel 
-      ~title ~message ~message_type:`WARNING ~callback ~buttons ?parent ();
-    !rc
+ GtkThread.sync (fun _ ->
+  let buttons = [`YES,`YES ; `NO,`NO ; `CANCEL,`DELETE_EVENT] in
+   popup_message_lowlevel 
+     ~title ~message ~message_type:`WARNING ~buttons ?parent ()
+ ) ()
 
 let report_error ~title ~message ?parent () =
-  let callback _ = () in
-  let buttons = GWindow.Buttons.ok in
-  try 
-    popup_message 
-      ~title ~message ~message_type:`ERROR ~callback ~buttons ?parent ()
-  with
-  | PopupClosed -> ()
-
-
-let ask_text ~(gui:#gui) ?(title = "") ?(message = "") ?(multiline = false)
-  ?default ()
-=
-  let dialog = gui#newEmptyDialog () in
-  dialog#emptyDialog#set_title title;
-  dialog#emptyDialogLabel#set_label message;
-  let result = ref None in
-  let return r =
-    result := r;
-    dialog#emptyDialog#destroy ();
-    GMain.Main.quit ()
-  in
-  ignore (dialog#emptyDialog#event#connect#delete (fun _ -> true));
-  if multiline then begin (* multiline input required: use a TextView widget *)
-    let win =
-      GBin.scrolled_window ~width:400 ~height:150 ~hpolicy:`NEVER
-        ~vpolicy:`ALWAYS ~packing:dialog#emptyDialogVBox#add ()
-    in
-    let view = GText.view ~wrap_mode:`CHAR ~packing:win#add () in
-    let buffer = view#buffer in
-    (match default with
-    | None -> ()
-    | Some text ->
-        buffer#set_text text;
-        buffer#select_range buffer#start_iter buffer#end_iter);
-    view#misc#grab_focus ();
-    connect_button dialog#emptyDialogOkButton (fun _ ->
-      return (Some (buffer#get_text ())))
-  end else begin (* monoline input required: use a TextEntry widget *)
-    let entry = GEdit.entry ~packing:dialog#emptyDialogVBox#add () in
-    (match default with
-    | None -> ()
-    | Some text ->
-        entry#set_text text;
-        entry#select_region ~start:0 ~stop:max_int);
-    entry#misc#grab_focus ();
-    connect_button dialog#emptyDialogOkButton (fun _ ->
-      return (Some entry#text))
-  end;
-  connect_button dialog#emptyDialogCancelButton (fun _ ->return None);
-  dialog#emptyDialog#show ();
-  GtkThread.main ();
-  (match !result with None -> raise MatitaTypes.Cancel | Some r -> r)
+ let buttons = GWindow.Buttons.ok in
+ popup_message ~title ~message ~message_type:`ERROR ~buttons ?parent ()
 
 let utf8_parsed_text s floc = 
   let start, stop = HExtlib.loc_of_floc floc in
@@ -415,7 +341,7 @@ let escape_pango_markup text =
 
 let matita_lang =
  let source_language_manager =
-  GSourceView2.source_language_manager ~default:true in
+  GSourceView3.source_language_manager ~default:true in
  source_language_manager#set_search_path
   (BuildTimeConf.runtime_base_dir ::
     source_language_manager#search_path);

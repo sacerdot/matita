@@ -11,7 +11,7 @@ else
   ANNOTOPTION =
 endif
 
-OCAML_FLAGS = -pp $(CAMLP5O) -rectypes $(ANNOTOPTION) 
+OCAML_FLAGS = -pp $(CAMLP5O) -rectypes $(ANNOTOPTION) -w @A-52-4-34-37-45-9-44-48-6-32-20-58-7
 OCAMLDEP_FLAGS = -pp $(CAMLP5O) 
 PKGS = -package "$(MATITA_REQUIRES)"
 CPKGS = -package "$(MATITA_CREQUIRES)"
@@ -61,7 +61,7 @@ MAINCMLI =			\
 	matitaclean.mli		\
 	$(NULL)
 # objects for matita (GTK GUI)
-ML = buildTimeConf.ml matitaGeneratedGui.ml $(MLI:%.mli=%.ml)
+ML = buildTimeConf.ml matitaGuiInit.ml matitaGeneratedGui.ml $(MLI:%.mli=%.ml)
 # objects for matitac (batch compiler)
 CML = buildTimeConf.ml $(CMLI:%.mli=%.ml)
 MAINCML = $(MAINCMLI:%.mli=%.ml)
@@ -142,11 +142,9 @@ matitaclean: matitac
 matitaclean.opt: matitac.opt
 	$(H)test -f $@ || ln -s $< $@
 
-matitaGeneratedGui.ml: matita.glade.utf8
+matitaGeneratedGui.ml: matita.ui
 	$(H)$(LABLGLADECC) -embed $< > matitaGeneratedGui.ml
 
-matita.glade.utf8: matita.glade
-	$(H)xmllint --encode UTF8 $< > $@
 
 .PHONY: clean
 clean:
@@ -162,7 +160,6 @@ clean:
 .PHONY: distclean
 distclean: clean
 	$(H)$(MAKE) -C dist/ clean
-	$(H)rm -f matitaGeneratedGui.ml matitaGeneratedGui.mli
 	$(H)rm -f buildTimeConf.ml
 	$(H)rm -f matita.glade.bak matita.gladep.bak
 	$(H)rm -f matita.conf.xml.sample
@@ -204,7 +201,7 @@ cleantests.opt: $(foreach d,$(TEST_DIRS_OPT),$(d)-cleantests-opt)
 
 # {{{ Distribution stuff
 
-dist_pre: matitaGeneratedGui.ml
+dist_pre:
 	$(MAKE) -C dist/ dist_pre
 
 WHERE = $(DESTDIR)/$(RT_BASE_DIR)

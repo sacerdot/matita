@@ -115,7 +115,7 @@ let pp_fields status r fields =
 (*s Pretty-printing of types. [par] is a boolean indicating whether parentheses
     are needed or not. *)
 
-let rec pp_type status par vl t =
+let pp_type status par vl t =
   let rec pp_rec status par = function
     | Tmeta _ | Tvar' _ | Taxiom -> assert false
     | Tvar i -> (try status,pp_tvar (List.nth vl (pred i))

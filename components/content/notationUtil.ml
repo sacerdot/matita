@@ -111,7 +111,7 @@ let visit_variable k = function
   | Ast.Ascription (t, s) -> Ast.Ascription (k t, s)
 
 let variables_of_term t =
-  let rec vars = ref [] in
+  let vars = ref [] in
   let add_variable v =
     if List.mem v !vars then ()
     else vars := v :: !vars
@@ -145,7 +145,7 @@ let names_of_term t =
     List.map aux (variables_of_term t)
 
 let keywords_of_term t =
-  let rec keywords = ref [] in
+  let keywords = ref [] in
   let add_keyword k = keywords := k :: !keywords in
   let rec aux = function
     | Ast.AttributedTerm (_, t) -> aux t
@@ -166,7 +166,7 @@ let rec strip_attributes t =
     | Ast.AttributedTerm (_, term) -> strip_attributes term
     | Ast.Magic m -> Ast.Magic (visit_magic strip_attributes m)
     | Ast.Variable _ as t -> t
-    | t -> assert false
+    | _t -> assert false
   in
   visit_ast ~special_k strip_attributes t
 
@@ -177,7 +177,7 @@ let rec get_idrefs =
   | _ -> []
 
 let meta_names_of_term term =
-  let rec names = ref [] in
+  let names = ref [] in
   let add_name n =
     if List.mem n !names then ()
     else names := n :: !names
@@ -186,7 +186,7 @@ let meta_names_of_term term =
     | Ast.AttributedTerm (_, term) -> aux term
     | Ast.Appl terms -> List.iter aux terms
     | Ast.Binder (_, _, body) -> aux body
-    | Ast.Case (term, indty, outty_opt, patterns) ->
+    | Ast.Case (term, _indty, outty_opt, patterns) ->
         aux term ;
         aux_opt outty_opt ;
         List.iter aux_branch patterns
@@ -218,7 +218,7 @@ let meta_names_of_term term =
     aux term
   and aux_pattern =
    function
-      Ast.Pattern (head, _, vars) -> List.iter aux_capture_var vars
+      Ast.Pattern (_head, _, vars) -> List.iter aux_capture_var vars
     | Ast.Wildcard -> ()
   and aux_substs substs = List.iter (fun (_, term) -> aux term) substs
   and aux_meta_substs meta_substs = List.iter aux_opt meta_substs
@@ -350,8 +350,8 @@ let rec freshen_term ?(index = ref 0) term =
     | _ -> assert false
   in
   match term with
-  | Ast.Symbol (s, instance) -> Ast.Symbol (s, fresh_instance ())
-  | Ast.Num (s, instance) -> Ast.Num (s, fresh_instance ())
+  | Ast.Symbol (s, _instance) -> Ast.Symbol (s, fresh_instance ())
+  | Ast.Num (s, _instance) -> Ast.Num (s, fresh_instance ())
   | t -> visit_ast ~special_k freshen_term t
 
 let freshen_obj obj =

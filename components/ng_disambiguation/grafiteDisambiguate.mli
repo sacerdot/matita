@@ -40,7 +40,7 @@ class virtual status :
  end
 
 val eval_with_new_aliases:
- #status as 'status -> ('status -> 'a) ->
+ #status as 'status -> ('status -> (#status as 'a)) ->
   (DisambiguateTypes.domain_item * GrafiteAst.alias_spec) list * 'a
 
 val set_proof_aliases:

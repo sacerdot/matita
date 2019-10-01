@@ -157,8 +157,8 @@ and type data = A.elt and type dataset = A.t =
       (* the equivalent of skip, but on the index, thus the list of trees
          that are rooted just after the term represented by the tree root
          are returned (we are skipping the root) *)
-      let skip_root = function DiscriminationTree.Node (value, map) ->
-        let rec get n = function DiscriminationTree.Node (v, m) as tree ->
+      let skip_root = function DiscriminationTree.Node (_value, map) ->
+        let rec get n = function DiscriminationTree.Node (_v, m) as tree ->
            if n = 0 then [tree] else 
            PSMap.fold (fun k v res -> (get (n-1 + arity_of k) v) @ res) m []
         in
@@ -171,7 +171,7 @@ and type data = A.elt and type dataset = A.t =
           match tree, path with
           | DiscriminationTree.Node (Some s, _), [] -> s
           | DiscriminationTree.Node (None, _), [] -> A.empty 
-          | DiscriminationTree.Node (_, map), Variable::path when unif ->
+          | DiscriminationTree.Node (_, _map), Variable::path when unif ->
               List.fold_left A.union A.empty
                 (List.map (retrieve path) (skip_root tree))
           | DiscriminationTree.Node (_, map), node::path ->
@@ -239,7 +239,7 @@ and type data = A.elt and type dataset = A.t =
             (List.map
               (fun s, w ->
                  HExtlib.filter_map (fun x ->
-                   try Some (x, w + snd (List.find (fun (s,w) -> A.mem x s) l2))
+                   try Some (x, w + snd (List.find (fun (s,_w) -> A.mem x s) l2))
                    with Not_found -> None)
                    (A.elements s))
               l1)
@@ -254,7 +254,7 @@ and type data = A.elt and type dataset = A.t =
           match tree, path with
           | DiscriminationTree.Node (Some s, _), [] -> S.singleton (s, n)
           | DiscriminationTree.Node (None, _), [] -> S.empty
-          | DiscriminationTree.Node (_, map), Variable::path when unif ->
+          | DiscriminationTree.Node (_, _map), Variable::path when unif ->
               List.fold_left S.union S.empty
                 (List.map (retrieve n path) (skip_root tree))
           | DiscriminationTree.Node (_, map), node::path ->

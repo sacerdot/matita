@@ -20,7 +20,7 @@ endif
 PREPROCOPTIONS = -pp camlp5o
 SYNTAXOPTIONS = -syntax camlp5o
 PREREQ =
-OCAMLOPTIONS = -package "$(REQUIRES)" -predicates "$(PREDICATES)" -thread -rectypes $(ANNOTOPTION)
+OCAMLOPTIONS = -package "$(REQUIRES)" -predicates "$(PREDICATES)" -thread -rectypes $(ANNOTOPTION) -w @A-52-4-34-37-45-9-44-48-6-32-20-58-7-57-3 # -57-3 for ocaml 4.0.5
 OCAMLDEBUGOPTIONS = -g
 #OCAML_PROF=p -p a
 OCAMLARCHIVEOPTIONS =

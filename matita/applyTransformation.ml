@@ -66,7 +66,7 @@ let ntxt_of_cic_context ~metasenv ~subst =
   Content2pres.ncontext2pres
   ((new NCicPp.status)#ppcontext ~metasenv ~subst)
 
-let ntxt_of_cic_subst ~map_unicode_to_tex size status ~metasenv ?use_subst subst =
+let ntxt_of_cic_subst ~map_unicode_to_tex:_ _size _status ~metasenv ?use_subst subst =
  [],
  "<<<high level printer for subst not implemented; low-level printing:>>>\n" ^
   (new NCicPp.status)#ppsubst ~metasenv ?use_subst subst
@@ -75,11 +75,11 @@ class status =
  object(self)
   inherit Interpretations.status
   inherit TermContentPres.status
-  method ppterm ~context ~subst ~metasenv ?margin ?inside_fix t =
+  method ppterm ~context ~subst ~metasenv ?margin:(_) ?inside_fix:(_) t =
    snd (ntxt_of_cic_term ~map_unicode_to_tex:false 80 self ~metasenv ~subst
     ~context t)
 
-  method ppcontext ?sep ~subst ~metasenv context =
+  method ppcontext ?sep:(_) ~subst ~metasenv context =
    snd (ntxt_of_cic_context ~map_unicode_to_tex:false 80 self ~metasenv ~subst
     context)
 
@@ -96,3 +96,15 @@ class status =
   method ppobj obj =
    snd (ntxt_of_cic_object ~map_unicode_to_tex:false 80 self obj)
  end
+
+let notation_pp_term status term =
+  let to_pres = Content2pres.nterm2pres ?prec:None in
+  let content = term in
+  let size = 80 in
+  let ids_to_nrefs = Hashtbl.create 1 in
+  let pres = to_pres status ~ids_to_nrefs content in
+  let pres = CicNotationPres.mpres_of_box pres in
+   BoxPp.render_to_string ~map_unicode_to_tex:(Helm_registry.get_bool "matita.paste_unicode_as_tex")
+    (function x::_ -> x | _ -> assert false) size pres
+
+let _ = NotationPp.set_pp_term (fun status y -> snd (notation_pp_term (Obj.magic status) y))

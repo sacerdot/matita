@@ -26,7 +26,6 @@
 (* $Id$ *)
 
 open Printf
-open GrafiteTypes
 
 module TA = GrafiteAst
 
@@ -84,7 +83,7 @@ let eval_with_engine include_paths status skipped_txt nonskipped_txt st
       (fun (acc, to_prepend) (status,alias) ->
        match alias with
        | None -> (status,to_prepend ^ nonskipped_txt)::acc,""
-       | Some (k,value) ->
+       | Some (_k,value) ->
             let newtxt = GrafiteAstPp.pp_alias value in
             (status,to_prepend ^ newtxt ^ "\n")::acc, "")
       ([],skipped_txt) enriched_history_fragment
@@ -94,7 +93,7 @@ let eval_with_engine include_paths status skipped_txt nonskipped_txt st
 
 let pp_eager_statement_ast = GrafiteAstPp.pp_statement 
 
-let eval_nmacro include_paths (buffer : GText.buffer) status unparsed_text parsed_text script mac =
+let eval_nmacro _include_paths (_buffer : GText.buffer) status _unparsed_text parsed_text script mac =
   let parsed_text_length = String.length parsed_text in
   match mac with
   | TA.Screenshot (_,name) -> 
@@ -206,12 +205,12 @@ and eval_statement include_paths (buffer : GText.buffer) status script
   in 
   match st with
   | GrafiteAst.Executable (loc, ex) ->
-     let _, nonskipped, skipped, parsed_text_length = text_of_loc loc in
+     let _, nonskipped, skipped, _parsed_text_length = text_of_loc loc in
       eval_executable include_paths buffer status unparsed_text
        skipped nonskipped script ex loc
   | GrafiteAst.Comment (loc, GrafiteAst.Code (_, ex))
     when Helm_registry.get_bool "matita.execcomments" ->
-     let _, nonskipped, skipped, parsed_text_length = text_of_loc loc in
+     let _, nonskipped, skipped, _parsed_text_length = text_of_loc loc in
       eval_executable include_paths buffer status unparsed_text
        skipped nonskipped script ex loc
   | GrafiteAst.Comment (loc, _) -> 
@@ -251,7 +250,7 @@ let fresh_script_id =
  *)
 class script ~(parent:GBin.scrolled_window) ~tab_label () =
 let source_view =
-  GSourceView2.source_view
+  GSourceView3.source_view
     ~auto_indent:true
     ~insert_spaces_instead_of_tabs:true ~tab_width:2
     ~right_margin_position:80 ~show_right_margin:true
@@ -260,12 +259,18 @@ let source_view =
     () in
 let buffer = source_view#buffer in
 let source_buffer = source_view#source_buffer in
+let _ =
+ source_buffer#connect#notify_can_undo
+  ~callback:(MatitaMisc.get_gui ())#main#undoMenuItem#misc#set_sensitive in
+let _ =
+ source_buffer#connect#notify_can_redo
+  ~callback:(MatitaMisc.get_gui ())#main#redoMenuItem#misc#set_sensitive in
 let similarsymbols_tag_name = "similarsymbolos" in
 let similarsymbols_tag = `NAME similarsymbols_tag_name in
 let initial_statuses current baseuri =
  let status = new MatitaEngine.status baseuri in
  (match current with
-     Some current -> NCicLibrary.time_travel status;
+     Some _current -> NCicLibrary.time_travel status;
 (*
       (* MATITA 1.0: there is a known bug in invalidation; temporary fix here *)
       NCicEnvironment.invalidate () *)
@@ -347,7 +352,7 @@ object (self)
           false
         ));
     ignore(source_view#event#connect#button_release
-      ~callback:(fun button -> clean_locked := false; false));
+      ~callback:(fun _button -> clean_locked := false; false));
     ignore(source_view#buffer#connect#after#apply_tag
      ~callback:(
        fun tag ~start:_ ~stop:_ ->
@@ -369,23 +374,21 @@ object (self)
        let menuItems = menu#children in
        let undoMenuItem, redoMenuItem =
         match menuItems with
-           [undo;redo;sep1;cut;copy;paste;delete;sep2;
-            selectall;sep3;inputmethod;insertunicodecharacter] ->
+           [undo;redo;_sep1;cut;copy;paste;delete;_sep2;
+            _selectall;_sep3;_inputmethod;_insertunicodecharacter] ->
               List.iter menu#remove [ copy; cut; delete; paste ];
               undo,redo
          | _ -> assert false in
        let add_menu_item =
          let i = ref 2 in (* last occupied position *)
-         fun ?label ?stock () ->
+         fun ~label ->
            incr i;
-           GMenu.image_menu_item ?label ?stock ~packing:(menu#insert ~pos:!i)
-            ()
-       in
-       let copy = add_menu_item ~stock:`COPY () in
-       let cut = add_menu_item ~stock:`CUT () in
-       let delete = add_menu_item ~stock:`DELETE () in
-       let paste = add_menu_item ~stock:`PASTE () in
-       let paste_pattern = add_menu_item ~label:"Paste as pattern" () in
+           GMenu.menu_item ~label ~packing:(menu#insert ~pos:!i) () in
+       let copy = add_menu_item ~label:"Copy" in
+       let cut = add_menu_item ~label:"Cut" in
+       let delete = add_menu_item ~label:"Delete" in
+       let paste = add_menu_item ~label:"Paste" in
+       let paste_pattern = add_menu_item ~label:"Paste as pattern" in
        copy#misc#set_sensitive self#canCopy;
        cut#misc#set_sensitive self#canCut;
        delete#misc#set_sensitive self#canDelete;
@@ -397,24 +400,22 @@ object (self)
        MatitaGtkMisc.connect_menu_item paste self#paste;
        MatitaGtkMisc.connect_menu_item paste_pattern self#pastePattern;
        let new_undoMenuItem =
-        GMenu.image_menu_item
-         ~image:(GMisc.image ~stock:`UNDO ())
+        GMenu.menu_item
          ~use_mnemonic:true
          ~label:"_Undo"
          ~packing:(menu#insert ~pos:0) () in
        new_undoMenuItem#misc#set_sensitive
-        (undoMenuItem#misc#get_flag `SENSITIVE);
+        undoMenuItem#misc#sensitive;
        menu#remove (undoMenuItem :> GMenu.menu_item);
        MatitaGtkMisc.connect_menu_item new_undoMenuItem
         (fun () -> self#safe_undo);
        let new_redoMenuItem =
-        GMenu.image_menu_item
-         ~image:(GMisc.image ~stock:`REDO ())
+        GMenu.menu_item
          ~use_mnemonic:true
          ~label:"_Redo"
          ~packing:(menu#insert ~pos:1) () in
        new_redoMenuItem#misc#set_sensitive
-        (redoMenuItem#misc#get_flag `SENSITIVE);
+        redoMenuItem#misc#sensitive;
         menu#remove (redoMenuItem :> GMenu.menu_item);
         MatitaGtkMisc.connect_menu_item new_redoMenuItem
          (fun () -> self#safe_redo)));

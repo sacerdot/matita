@@ -130,7 +130,7 @@ let arg_list nleft t =
 
 let nargs it nleft consno =
   pp (lazy (Printf.sprintf "nargs %d %d" nleft consno));
-  let _,indname,_,cl = it in
+  let _,_indname,_,cl = it in
   let _,_,t_k = List.nth cl consno in
   List.length (arg_list nleft t_k) ;;
 
@@ -327,14 +327,14 @@ let mk_discriminator ~use_jmeq ?(force=false) name it leftno status baseuri =
       NotationPt.Theorem
        (name, principle, Some (NotationPt.Implicit (`Tagged "inv")), attrs))
   in 
-  let uri,height,nmenv,nsubst,nobj = theorem in
+  let _uri,_height,nmenv,_nsubst,_nobj = theorem in
   let ninitial_stack = Continuationals.Stack.of_nmetasenv nmenv in
   let status = status#set_obj theorem in
   let status = status#set_stack ninitial_stack in
   let status = subst_metasenv_and_fix_names status in
 
   (* PHASE 3: we finally prove the discrimination principle *)
-  let dbranch it ~use_jmeq leftno consno =
+  let dbranch it ~use_jmeq:__ leftno consno =
     let refl_id = mk_sym "refl" in
     pp (lazy (Printf.sprintf "dbranch %d %d" leftno consno));
     let nlist = HExtlib.list_seq 0 (nargs it leftno consno) in
@@ -482,7 +482,7 @@ let subst_tac ~context ~dir skip cur_eq =
     else 
     let gen_tac x =
       (fun s -> 
-      let x' = String.concat " " x in
+      (*let x' = String.concat " " x in*)
       let x = List.map mk_id x in
       (* let s = NTactics.print_tac false ("@generalize " ^ x') s in *)
       generalize0_tac x s) in
@@ -619,7 +619,7 @@ let select_eq ctx acc domain status goal =
            | _ -> status, `NonEq 
            in match kind with
               | `Identity ->
-                  let status, goalty = term_of_cic_term status (get_goalty status goal) ctx in
+                  let status, _goalty = term_of_cic_term status (get_goalty status goal) ctx in
                      status, Some (List.length ctx - i), kind
               | `Cycle | `Blob | `NonEq -> aux (i+1) (* XXX: skip cyclic/blob equations for now *)
               | _ -> 

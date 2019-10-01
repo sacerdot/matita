@@ -12,9 +12,6 @@
 (* $Id$ *)
 
 module C = NCic 
-module Ref = NReference
-
-let debug_print = fun _ -> ();;
 
 let lift_from status ?(no_implicit=true) k n =
  let rec liftaux k = function

@@ -37,7 +37,7 @@ let index_fname = "INDEX"
 
 (******************************* HELPERS **************************************)
 
-let trailing_slash_RE = Pcre.regexp "/$"
+(*let trailing_slash_RE = Pcre.regexp "/$"*)
 let relative_RE_raw = "(^[^/]+(/[^/]+)*/?$)"
 let relative_RE = Pcre.regexp relative_RE_raw
 let file_scheme_RE_raw = "(^file://)"
@@ -115,7 +115,7 @@ let keep_first l =
 let lookup uri =
   let matches =
     HExtlib.filter_map 
-      (fun (rex, _, l, _ as entry) -> 
+      (fun (rex, _, _l, _ as entry) -> 
          try
            let got = Pcre.extract ~full_match:true ~rex uri in
            Some (entry, String.length got.(0))

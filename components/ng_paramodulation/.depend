@@ -7,8 +7,8 @@ foUnif.cmi : terms.cmi orderings.cmi
 foUtils.cmo : terms.cmi orderings.cmi foSubst.cmi foUtils.cmi
 foUtils.cmx : terms.cmx orderings.cmx foSubst.cmx foUtils.cmi
 foUtils.cmi : terms.cmi orderings.cmi
-index.cmo : terms.cmi pp.cmi orderings.cmi foUtils.cmi foUnif.cmi index.cmi
-index.cmx : terms.cmx pp.cmx orderings.cmx foUtils.cmx foUnif.cmx index.cmi
+index.cmo : terms.cmi orderings.cmi foUtils.cmi index.cmi
+index.cmx : terms.cmx orderings.cmx foUtils.cmx index.cmi
 index.cmi : terms.cmi orderings.cmi
 nCicBlob.cmo : terms.cmi foUtils.cmi nCicBlob.cmi
 nCicBlob.cmx : terms.cmx foUtils.cmx nCicBlob.cmi
@@ -21,13 +21,13 @@ nCicParamod.cmi : terms.cmi
 nCicProof.cmo : terms.cmi pp.cmi nCicBlob.cmi foSubst.cmi nCicProof.cmi
 nCicProof.cmx : terms.cmx pp.cmx nCicBlob.cmx foSubst.cmx nCicProof.cmi
 nCicProof.cmi : terms.cmi
-orderings.cmo : terms.cmi pp.cmi foSubst.cmi orderings.cmi
-orderings.cmx : terms.cmx pp.cmx foSubst.cmx orderings.cmi
+orderings.cmo : terms.cmi foSubst.cmi orderings.cmi
+orderings.cmx : terms.cmx foSubst.cmx orderings.cmi
 orderings.cmi : terms.cmi
 paramod.cmo : terms.cmi superposition.cmi pp.cmi orderings.cmi index.cmi \
-    foUtils.cmi foUnif.cmi paramod.cmi
+    foUtils.cmi paramod.cmi
 paramod.cmx : terms.cmx superposition.cmx pp.cmx orderings.cmx index.cmx \
-    foUtils.cmx foUnif.cmx paramod.cmi
+    foUtils.cmx paramod.cmi
 paramod.cmi : terms.cmi orderings.cmi
 pp.cmo : terms.cmi pp.cmi
 pp.cmx : terms.cmx pp.cmi

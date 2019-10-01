@@ -16,19 +16,15 @@ INTERFACE_FILES =		 \
 IMPLEMENTATION_FILES =		 \
 	$(INTERFACE_FILES:%.mli=%.ml)
 
-cicNotationPres.cmi: OCAMLOPTIONS += -rectypes
-cicNotationPres.cmo: OCAMLOPTIONS += -rectypes
-cicNotationPres.cmx: OCAMLOPTIONS += -rectypes
-
 all:
 clean:
 
 LOCAL_LINKOPTS = -package helm-content_pres -linkpkg
 
 cicNotationLexer.cmo: OCAMLC = $(OCAMLC_P4)
-cicNotationParser.cmo: OCAMLC = $(OCAMLC_P4)
+cicNotationParser.cmo: OCAMLC = $(OCAMLC_P4) -w -27
 cicNotationLexer.cmx: OCAMLOPT = $(OCAMLOPT_P4)
-cicNotationParser.cmx: OCAMLOPT = $(OCAMLOPT_P4)
+cicNotationParser.cmx: OCAMLOPT = $(OCAMLOPT_P4) -w -27
 cicNotationLexer.ml.annot: OCAMLC = $(OCAMLC_P4)
 cicNotationParser.ml.annot: OCAMLC = $(OCAMLC_P4)
 
@@ -39,7 +35,7 @@ include ../Makefile.common
 # soon as we have ocaml 3.09 everywhere and "loc" occurrences are replaced by
 # "_loc" occurrences
 UTF8DIR := $(shell $(OCAMLFIND) query helm-syntax_extensions)
-ULEXDIR := $(shell $(OCAMLFIND) query ulex08)
+ULEXDIR := $(shell $(OCAMLFIND) query ulex-camlp5)
 MY_SYNTAXOPTIONS = -pp "camlp5o -I $(UTF8DIR) -I $(ULEXDIR) pa_extend.cmo pa_ulex.cma pa_unicode_macro.cma -loc loc"
 cicNotationLexer.cmo: SYNTAXOPTIONS = $(MY_SYNTAXOPTIONS)
 cicNotationParser.cmo: SYNTAXOPTIONS = $(MY_SYNTAXOPTIONS)

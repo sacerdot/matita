@@ -58,12 +58,12 @@ module Founif (B : Orderings.Blob) = struct
             Subst.build_subst i t subst
       | Terms.Var i, t when occurs_check subst i t ->
           raise (UnificationFailure (lazy "Inference.unification.unif"))
-      | Terms.Var i, t when (List.mem i locked_vars) -> 
+      | Terms.Var i, _t when (List.mem i locked_vars) -> 
           raise (UnificationFailure (lazy "Inference.unification.unif"))
       | Terms.Var i, t -> Subst.build_subst i t subst
       | t, Terms.Var i when occurs_check subst i t ->
           raise (UnificationFailure (lazy "Inference.unification.unif"))
-      | t, Terms.Var i when (List.mem i locked_vars) -> 
+      | _t, Terms.Var i when (List.mem i locked_vars) -> 
           raise (UnificationFailure (lazy "Inference.unification.unif"))
       | t, Terms.Var i -> Subst.build_subst i t subst
       | Terms.Node l1, Terms.Node l2 -> (
@@ -90,7 +90,7 @@ module Founif (B : Orderings.Blob) = struct
       in
       match s, t with
         | s, t when U.eq_foterm s t -> subst
-        | Terms.Var i, Terms.Var j
+        | Terms.Var i, Terms.Var _j
             when (not (List.exists (fun (_,k) -> k=t) subst)) ->
             let subst = Subst.build_subst i t subst in
               subst

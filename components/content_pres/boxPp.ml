@@ -136,15 +136,15 @@ let render_to_strings ~map_unicode_to_tex choose_action size markup =
         let spacing = want_spacing attrs in
         let children' = List.map aux_box children in
         (fun size ->
-          let (size', renderings) as res =
+          let (size', _renderings) as res =
             render_row max_size spacing children'
           in
           if size' <= size then (* children fit in a row *)
             res
           else  (* break needed, re-render using a Box.V *)
             aux_box (Box.V (attrs, children)) size)
-    | Box.V (attrs, []) -> assert false
-    | Box.V (attrs, [child]) -> aux_box child
+    | Box.V (_attrs, []) -> assert false
+    | Box.V (_attrs, [child]) -> aux_box child
     | Box.V (attrs, hd :: tl) ->
         let indent = want_indent attrs in
         let hd_f = aux_box hd in
@@ -163,8 +163,8 @@ let render_to_strings ~map_unicode_to_tex choose_action size markup =
           in
           let rows = hd_rendering @ List.concat tl_renderings in
           max_len rows, rows)
-    | Box.HOV (attrs, []) -> assert false
-    | Box.HOV (attrs, [child]) -> aux_box child
+    | Box.HOV (_attrs, []) -> assert false
+    | Box.HOV (_attrs, [child]) -> aux_box child
     | Box.HOV (attrs, children) ->
         let spacing = want_spacing attrs in
         let indent = want_indent attrs in
@@ -216,7 +216,7 @@ let render_to_strings ~map_unicode_to_tex choose_action size markup =
     let href =
      try
       let _,_,href =
-       List.find (fun (ns,na,value) -> ns = Some "xlink" && na = "href") attrs
+       List.find (fun (ns,na,_value) -> ns = Some "xlink" && na = "href") attrs
       in
        Some href
      with Not_found -> None in
@@ -240,7 +240,7 @@ let render_to_strings ~map_unicode_to_tex choose_action size markup =
         in
         fixed_rendering href s
     | Pres.Mspace _ -> fixed_rendering href string_space
-    | Pres.Mrow (attrs, children) ->
+    | Pres.Mrow (_attrs, children) ->
         let children' = List.map aux_mpres children in
         (fun size -> render_row size false children')
     | Pres.Mfrac (_, m, n) ->

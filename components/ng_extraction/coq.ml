@@ -25,7 +25,7 @@ let cut_ident skip_quote s =
         numpart (n-1) n'
       else if code_of_0 <= c && c <= code_of_9 then
         numpart (n-1) (n-1)
-      else if skip_quote & (c = Char.code '\'' || c = Char.code '_') then
+      else if skip_quote && (c = Char.code '\'' || c = Char.code '_') then
         numpart (n-1) (n-1)
       else
         n'
@@ -34,9 +34,9 @@ let cut_ident skip_quote s =
 
 let forget_subscript id =
   let numstart = cut_ident false id in
-  let newid = String.make (numstart+1) '0' in
+  let newid = Bytes.make (numstart+1) '0' in
   String.blit id 0 newid 0 numstart;
-  newid
+  Bytes.to_string newid
 
 (* Namegen.ml *)
 
@@ -58,18 +58,18 @@ let lift_subscript id =
         add (carrypos-1)
       end
       else begin
-        let newid = String.copy id in
-        String.fill newid (carrypos+1) (len-1-carrypos) '0';
+        let newid = Bytes.of_string id in
+        Bytes.fill newid (carrypos+1) (len-1-carrypos) '0';
         newid.[carrypos] <- Char.chr (Char.code c + 1);
-        newid
+        Bytes.to_string newid
       end
     else begin
-      let newid = id^"0" in
+      let newid = Bytes.of_string (id^"0") in
       if carrypos < len-1 then begin
-        String.fill newid (carrypos+1) (len-1-carrypos) '0';
+        Bytes.fill newid (carrypos+1) (len-1-carrypos) '0';
         newid.[carrypos+1] <- '1'
       end;
-      newid
+      Bytes.to_string newid
     end
   in add (len-1)
 
@@ -187,7 +187,7 @@ let array_map2 f v1 v2 =
   if Array.length v1 == 0 then
     [| |]
   else begin
-    let res = Array.create (Array.length v1) (f v1.(0) v2.(0)) in
+    let res = Array.make (Array.length v1) (f v1.(0) v2.(0)) in
     for i = 1 to pred (Array.length v1) do
       res.(i) <- f v1.(i) v2.(i)
     done;
@@ -324,7 +324,7 @@ let rec pr_com ft s =
       let n = String.index s '\n' in
       String.sub s 0 n, Some (String.sub s (n+1) (String.length s - n - 1))
     with Not_found -> s,None in
-  com_if ft (Lazy.lazy_from_val());
+  com_if ft (Lazy.from_val());
 (*  let s1 =
     if String.length s1 <> 0 && s1.[0] = ' ' then
       (Format.pp_print_space ft (); String.sub s1 1 (String.length s1 - 1))
@@ -347,26 +347,26 @@ let pp_dirs ft =
   in
   let rec pp_cmd = function
     | Ppcmd_print(n,s)        ->
-        com_if ft (Lazy.lazy_from_val()); Format.pp_print_as ft n s
+        com_if ft (Lazy.from_val()); Format.pp_print_as ft n s
     | Ppcmd_box(bty,ss)       -> (* Prevent evaluation of the stream! *)
-        com_if ft (Lazy.lazy_from_val());
+        com_if ft (Lazy.from_val());
         pp_open_box bty ;
         if not (Format.over_max_boxes ()) then Stream.iter pp_cmd ss;
         Format.pp_close_box ft ()
-    | Ppcmd_open_box bty      -> com_if ft (Lazy.lazy_from_val()); pp_open_box bty
+    | Ppcmd_open_box bty      -> com_if ft (Lazy.from_val()); pp_open_box bty
     | Ppcmd_close_box         -> Format.pp_close_box ft ()
     | Ppcmd_close_tbox        -> Format.pp_close_tbox ft ()
     | Ppcmd_white_space n     ->
-        com_if ft (Lazy.lazy_from_fun (fun()->Format.pp_print_break ft n 0))
+        com_if ft (Lazy.from_fun (fun()->Format.pp_print_break ft n 0))
     | Ppcmd_print_break(m,n)  ->
-        com_if ft (Lazy.lazy_from_fun(fun()->Format.pp_print_break ft m n))
+        com_if ft (Lazy.from_fun(fun()->Format.pp_print_break ft m n))
     | Ppcmd_set_tab           -> Format.pp_set_tab ft ()
     | Ppcmd_print_tbreak(m,n) ->
-        com_if ft (Lazy.lazy_from_fun(fun()->Format.pp_print_tbreak ft m n))
+        com_if ft (Lazy.from_fun(fun()->Format.pp_print_tbreak ft m n))
     | Ppcmd_force_newline     ->
         com_brk ft; Format.pp_force_newline ft ()
     | Ppcmd_print_if_broken   ->
-        com_if ft (Lazy.lazy_from_fun(fun()->Format.pp_print_if_newline ft ()))
+        com_if ft (Lazy.from_fun(fun()->Format.pp_print_if_newline ft ()))
     | Ppcmd_comment i         ->
         let coms = split_com [] [] i !comments in
 (*        Format.pp_open_hvbox ft 0;*)

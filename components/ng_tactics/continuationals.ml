@@ -35,21 +35,23 @@ let fail msg = raise (Error msg)
 
 type goal = int
 
+type parameters = (string * string) list
+
 module Stack =
 struct
   type switch = Open of goal | Closed of goal
   type locator = int * switch
   type tag = [ `BranchTag | `FocusTag | `NoTag ]
-  type entry = locator list * locator list * locator list * tag
+  type entry = locator list * locator list * locator list * tag * parameters
   type t = entry list
 
-  let empty = [ [], [], [], `NoTag ]
+  let empty = [ [], [], [], `NoTag , []]
 
   let fold ~env ~cont ~todo init stack =
     let rec aux acc depth =
       function
       | [] -> acc
-      | (locs, todos, conts, tag) :: tl ->
+      | (locs, todos, conts, tag, _p) :: tl ->
           let acc = List.fold_left (fun acc -> env acc depth tag)  acc locs in
           let acc = List.fold_left (fun acc -> cont acc depth tag) acc conts in
           let acc = List.fold_left (fun acc -> todo acc depth tag) acc todos in
@@ -64,10 +66,10 @@ struct
   let map ~env ~cont ~todo =
     let depth = ref ~-1 in
     List.map
-      (fun (s, t, c, tag) ->
+      (fun (s, t, c, tag, p) ->
         incr depth;
         let d = !depth in
-        env d tag s, todo d tag t, cont d tag c, tag)
+        env d tag s, todo d tag t, cont d tag c, tag, p)
 
   let is_open = function _, Open _ -> true | _ -> false
   let close = function n, Open g -> n, Closed g | l -> l
@@ -103,39 +105,39 @@ struct
   let rec find_goal =
     function
     | [] -> raise (Failure "Continuationals.find_goal")
-    | (l :: _,   _   ,   _   , _) :: _ -> goal_of_loc l
-    | (  _   ,   _   , l :: _, _) :: _ -> goal_of_loc l
-    | (  _   , l :: _,   _   , _) :: _ -> goal_of_loc l
+    | (l :: _,   _   ,   _   , _, _) :: _ -> goal_of_loc l
+    | (  _   ,   _   , l :: _, _, _) :: _ -> goal_of_loc l
+    | (  _   , l :: _,   _   , _, _) :: _ -> goal_of_loc l
     | _ :: tl -> find_goal tl
 
   let is_empty =
     function
     | [] -> assert false
-    | [ [], [], [], `NoTag ] -> true
+    | [ [], [], [], `NoTag , _] -> true
     | _ -> false
 
   let of_nmetasenv metasenv =
     let goals = List.map (fun (g, _) -> g) metasenv in
-    [ zero_pos goals, [], [], `NoTag ]
+    [ zero_pos goals, [], [], `NoTag , []]
 
   let head_switches =
     function
-    | (locs, _, _, _) :: _ -> List.map switch_of_loc locs
+    | (locs, _, _, _, _) :: _ -> List.map switch_of_loc locs
     | [] -> assert false
 
   let head_goals =
     function
-    | (locs, _, _, _) :: _ -> List.map goal_of_loc locs
+    | (locs, _, _, _, _) :: _ -> List.map goal_of_loc locs
     | [] -> assert false
 
   let head_tag =
     function
-    | (_, _, _, tag) :: _ -> tag
+    | (_, _, _, tag, _) :: _ -> tag
     | [] -> assert false
 
   let shift_goals =
     function
-    | _ :: (locs, _, _, _) :: _ -> List.map goal_of_loc locs
+    | _ :: (locs, _, _, _, _) :: _ -> List.map goal_of_loc locs
     | [] -> assert false
     | _ -> []
 
@@ -163,9 +165,10 @@ struct
     let pp_loc (i, s) = string_of_int i ^ pp_switch s in
     let pp_env env = sprintf "[%s]" (String.concat ";" (List.map pp_loc env)) in
     let pp_tag = function `BranchTag -> "B" | `FocusTag -> "F" | `NoTag -> "N" in
-    let pp_stack_entry (env, todo, cont, tag) =
-      sprintf "(%s, %s, %s, %s)" (pp_env env) (pp_env todo) (pp_env cont)
-        (pp_tag tag)
+    let pp_par = function [] -> "" | _ as l -> List.fold_left (fun acc (k,v) -> acc ^ "K: " ^ k ^ " V: " ^ v ^ "; ") "" l in
+    let pp_stack_entry (env, todo, cont, tag, parameters) =
+      sprintf "(%s, %s, %s, %s, %s)" (pp_env env) (pp_env todo) (pp_env cont)
+        (pp_tag tag) (pp_par parameters)
     in
     String.concat " :: " (List.map pp_stack_entry stack)
 end
@@ -270,7 +273,7 @@ struct
     let ostatus, stack =
       match cmd, stack with
       | _, [] -> assert false
-      | Tactical tac, (g, t, k, tag) :: s ->
+      | Tactical tac, (g, t, k, tag, p) :: s ->
 (* COMMENTED OUT TO ALLOW PARAMODULATION TO DO A 
  *   auto paramodulation.try assumption.
  * EVEN IF NO GOALS ARE LEFT OPEN BY AUTO.
@@ -300,49 +303,49 @@ struct
           debug_print (lazy ("closed: "
             ^ String.concat " " (List.map string_of_int gcn)));
           let stack =
-            (zero_pos gon, t @~- gcn, k @~- gcn, tag) :: deep_close gcn s
+            (zero_pos gon, t @~- gcn, k @~- gcn, tag, p) :: deep_close gcn s
           in
           sn, stack
-      | Dot, ([], _, [], _) :: _ ->
+      | Dot, ([], _, [], _, _) :: _ ->
           (* backward compatibility: do-nothing-dot *)
           new_stack stack
-      | Dot, (g, t, k, tag) :: s ->
+      | Dot, (g, t, k, tag, p) :: s ->
           (match filter_open g, k with
-          | loc :: loc_tl, _ -> new_stack (([ loc ], t, loc_tl @+ k, tag) :: s)
+          | loc :: loc_tl, _ -> new_stack (([ loc ], t, loc_tl @+ k, tag, p) :: s)
           | [], loc :: k ->
               assert (is_open loc);
-              new_stack (([ loc ], t, k, tag) :: s)
+              new_stack (([ loc ], t, k, tag, p) :: s)
           | _ -> fail (lazy "can't use \".\" here"))
       | Semicolon, _ -> new_stack stack
-      | Branch, (g, t, k, tag) :: s ->
+      | Branch, (g, t, k, tag, p) :: s ->
           (match init_pos g with
           | [] | [ _ ] -> fail (lazy "too few goals to branch");
           | loc :: loc_tl ->
               new_stack
-                (([ loc ], [], [], `BranchTag) :: (loc_tl, t, k, tag) :: s))
-      | Shift, (g, t, k, `BranchTag) :: (g', t', k', tag) :: s ->
+                (([ loc ], [], [], `BranchTag, []) :: (loc_tl, t, k, tag,p) :: s))
+      | Shift, (g, t, k, `BranchTag, p) :: (g', t', k', tag, p') :: s ->
           (match g' with
           | [] -> fail (lazy "no more goals to shift")
           | loc :: loc_tl ->
               new_stack
-                (([ loc ], t @+ filter_open g @+ k, [],`BranchTag)
-                :: (loc_tl, t', k', tag) :: s))
+                (([ loc ], t @+ filter_open g @+ k, [],`BranchTag, p)
+                :: (loc_tl, t', k', tag, p') :: s))
       | Shift, _ -> fail (lazy "can't shift goals here")
-      | Pos i_s, ([ loc ], t, [],`BranchTag) :: (g', t', k', tag) :: s
+      | Pos i_s, ([ loc ], t, [],`BranchTag, p) :: (g', t', k', tag, p') :: s
         when is_fresh loc ->
           let l_js = List.filter (fun (i, _) -> List.mem i i_s) ([loc] @+ g') in
           new_stack
-            ((l_js, t , [],`BranchTag)
-             :: (([ loc ] @+ g') @- l_js, t', k', tag) :: s)
+            ((l_js, t , [],`BranchTag, p)
+             :: (([ loc ] @+ g') @- l_js, t', k', tag, p') :: s)
       | Pos _, _ -> fail (lazy "can't use relative positioning here")
-      | Wildcard, ([ loc ] , t, [], `BranchTag) :: (g', t', k', tag) :: s
+      | Wildcard, ([ loc ] , t, [], `BranchTag, p) :: (g', t', k', tag, p') :: s
           when is_fresh loc ->
             new_stack
-              (([loc] @+ g', t, [], `BranchTag)
-                :: ([], t', k', tag) :: s)
+              (([loc] @+ g', t, [], `BranchTag, p)
+                :: ([], t', k', tag, p') :: s)
       | Wildcard, _ -> fail (lazy "can't use wildcard here")
-      | Merge, (g, t, k,`BranchTag) :: (g', t', k', tag) :: s ->
-          new_stack ((t @+ filter_open g @+ g' @+ k, t', k', tag) :: s)
+      | Merge, (g, t, k,`BranchTag,_) :: (g', t', k', tag,p') :: s ->
+          new_stack ((t @+ filter_open g @+ g' @+ k, t', k', tag, p') :: s)
       | Merge, _ -> fail (lazy "can't merge goals here")
       | Focus [], _ -> assert false
       | Focus gs, s ->
@@ -355,8 +358,8 @@ struct
               if not (List.exists (fun l -> goal_of_loc l = g) stack_locs) then
                 fail (lazy (sprintf "goal %d not found (or closed)" g)))
             gs;
-          new_stack ((zero_pos gs, [], [], `FocusTag) :: deep_close gs s)
-      | Unfocus, ([], [], [], `FocusTag) :: s -> new_stack s
+          new_stack ((zero_pos gs, [], [], `FocusTag, []) :: deep_close gs s)
+      | Unfocus, ([], [], [], `FocusTag, _) :: s -> new_stack s
       | Unfocus, _ -> fail (lazy "can't unfocus, some goals are still open")
     in
     debug_print (lazy (sprintf "EVAL CONT %s -> %s" (pp_t cmd) (pp stack)));

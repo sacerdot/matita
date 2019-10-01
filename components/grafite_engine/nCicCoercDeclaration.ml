@@ -152,7 +152,7 @@ disambiguation error")))
       aux 0 [] ty
   in
   let status, tgt, arity = 
-    let metasenv,subst,status,tgt =
+    let _metasenv,subst,status,tgt =
       GrafiteDisambiguate.disambiguate_nterm 
         status `XTSort [] [] [] ("",0,tgt) in
     let tgt = NCicUntrusted.apply_subst status subst [] tgt in
@@ -182,7 +182,7 @@ let fresh_uri status prefix suffix =
 
 exception Stop;;
 
-let close_graph name t s d to_s from_d p a status =
+let close_graph _name t s d to_s from_d _p a status =
   let c =
     List.find 
      (function (_,_,NCic.Appl (x::_),_,_) -> x = t | _ -> assert false) 
@@ -228,7 +228,7 @@ let close_graph name t s d to_s from_d p a status =
          let pos = 
            match p with 
            | NCic.Meta (p,_) -> pos_in_list p (List.map fst metasenv) 
-           | t -> raise Stop
+           | _t -> raise Stop
          in
          let ty = NCicTypeChecker.typeof status ~metasenv:[] ~subst:[] [] bo in
          let src,tgt = src_tgt_of_ty_cpos_arity status ty pos arity in
@@ -292,8 +292,8 @@ let record_ncoercion =
   let d = refresh_uri_in_term d in
    basic_index_ncoercion (name,compose,t,s,d,p,a)
  in
- let aux_l l ~refresh_uri_in_universe ~refresh_uri_in_term
-  ~refresh_uri_in_reference ~alias_only status
+ let aux_l l ~refresh_uri_in_universe:_ ~refresh_uri_in_term
+  ~refresh_uri_in_reference:_ ~alias_only status
  =
   if not alias_only then
    List.fold_right (aux ~refresh_uri_in_term:(refresh_uri_in_term (status:>NCic.status))) l status

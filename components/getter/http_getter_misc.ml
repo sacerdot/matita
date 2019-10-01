@@ -33,7 +33,7 @@ open Printf
 let file_scheme_prefix = "file://"
 
 let trailing_dot_gz_RE = Pcre.regexp "\\.gz$"   (* for g{,un}zip *)
-let url_RE = Pcre.regexp "^([\\w.-]+)(:(\\d+))?(/.*)?$"
+(*let url_RE = Pcre.regexp "^([\\w.-]+)(:(\\d+))?(/.*)?$"*)
 let http_scheme_RE = Pcre.regexp ~flags:[`CASELESS] "^http://"
 let file_scheme_RE = Pcre.regexp ~flags:[`CASELESS] ("^" ^ file_scheme_prefix)
 let dir_sep_RE = Pcre.regexp "/"
@@ -47,7 +47,7 @@ let local_url =
     with Not_found -> None
 
 let bufsiz = 16384  (* for file system I/O *)
-let tcp_bufsiz = 4096 (* for TCP I/O *)
+(*let tcp_bufsiz = 4096 (* for TCP I/O *)*)
 
 let fold_file f init fname =
   let ic = open_in fname in
@@ -67,12 +67,12 @@ let iter_buf_size = 10240
 
 let iter_file_data f fname =
   let ic = open_in fname in
-  let buf = String.create iter_buf_size in
+  let buf = Bytes.create iter_buf_size in
   try
     while true do
       let bytes = input ic buf 0 iter_buf_size in
       if bytes = 0 then raise End_of_file;
-      f (String.sub buf 0 bytes)
+      f (Bytes.to_string (Bytes.sub buf 0 bytes))
     done
   with End_of_file -> close_in ic
 
@@ -93,7 +93,7 @@ let cp src dst =
     let ic = open_in src in
       try
 	let oc = open_out dst in
-	let buf = String.create bufsiz in
+	let buf = Bytes.create bufsiz in
 	  (try
 	     while true do
 	       let bytes = input ic buf 0 bufsiz in
@@ -137,7 +137,7 @@ let wget ?output url =
       (let oc = 
         open_out (match output with Some f -> f | None -> Filename.basename url)
       in
-      Http_user_agent.get_iter (fun data -> output_string oc data) url;
+      Http_user_agent.get_iter (fun data -> output_bytes oc data) url;
       close_out oc)
   | scheme -> (* unsupported scheme *)
       failwith ("Http_getter_misc.wget: unsupported scheme: " ^ scheme)
@@ -147,7 +147,7 @@ let gzip ?(keep = false) ?output fname =
   Http_getter_logger.log ~level:3
     (sprintf "gzipping %s (keep: %b, output: %s)" fname keep output);
   let (ic, oc) = (open_in fname, Gzip.open_out output) in
-  let buf = String.create bufsiz in
+  let buf = Bytes.create bufsiz in
   (try
     while true do
       let bytes = input ic buf 0 bufsiz in
@@ -179,7 +179,7 @@ let gunzip ?(keep = false) ?output fname =
     try
       let ic = Gzip.open_in_chan zic in
       let oc = open_out output in
-      let buf = String.create bufsiz in
+      let buf = Bytes.create bufsiz in
       (try
         while true do
           let bytes = Gzip.input ic buf 0 bufsiz in
@@ -240,11 +240,11 @@ let http_get url =
     let fname = Pcre.replace ~rex:file_scheme_RE url in
     try
       let size = (Unix.stat fname).Unix.st_size in
-      let buf = String.create size in
+      let buf = Bytes.create size in
       let ic = open_in fname in
       really_input ic buf 0 size ;
       close_in ic;
-      Some buf
+      Some (Bytes.to_string buf)
     with Unix.Unix_error (Unix.ENOENT, "stat", _) -> None
   end else  (* other URL, pass it to Http_user_agent *)
     try
@@ -298,11 +298,11 @@ let extension s =
 
 let temp_file_of_uri uri =
   let flat_string s s' c =
-    let cs = String.copy s in
+    let cs = Bytes.of_string s in
     for i = 0 to (String.length s) - 1 do
       if String.contains s' s.[i] then cs.[i] <- c
     done;
-    cs
+    Bytes.to_string cs
   in
   let user = try Unix.getlogin () with _ -> "" in
   Filename.open_temp_file (user ^ flat_string uri ".-=:;!?/&" '_') ""

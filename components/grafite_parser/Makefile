@@ -14,7 +14,7 @@ clean:
 # soon as we have ocaml 3.09 everywhere and "loc" occurrences are replaced by
 # "_loc" occurrences
 UTF8DIR = $(shell $(OCAMLFIND) query helm-syntax_extensions)
-ULEXDIR = $(shell $(OCAMLFIND) query ulex08)
+ULEXDIR = $(shell $(OCAMLFIND) query ulex-camlp5)
 MY_SYNTAXOPTIONS = -pp "camlp5o -I $(UTF8DIR) -I $(ULEXDIR) pa_extend.cmo pa_ulex.cma pa_unicode_macro.cma -loc loc"
 grafiteParser.cmo: SYNTAXOPTIONS = $(MY_SYNTAXOPTIONS)
 grafiteParser.cmx: SYNTAXOPTIONS = $(MY_SYNTAXOPTIONS)
@@ -22,8 +22,8 @@ depend: SYNTAXOPTIONS = $(MY_SYNTAXOPTIONS)
 depend.opt: SYNTAXOPTIONS = $(MY_SYNTAXOPTIONS)
 # </cross>
 #
-grafiteParser.cmo: OCAMLC = $(OCAMLC_P4)
-grafiteParser.cmx: OCAMLOPT = $(OCAMLOPT_P4)
+grafiteParser.cmo: OCAMLC = $(OCAMLC_P4) -w -27
+grafiteParser.cmx: OCAMLOPT = $(OCAMLOPT_P4) -w -27
 
 include ../../Makefile.defs
 include ../Makefile.common

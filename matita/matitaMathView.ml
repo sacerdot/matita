@@ -27,9 +27,7 @@
 
 open Printf
 
-open GrafiteTypes
 open MatitaGtkMisc
-open MatitaGuiTypes
 open CicMathView
 
 module Stack = Continuationals.Stack
@@ -91,7 +89,7 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
           GtkSignal.disconnect notebook#as_widget id;
           switch_page_callback <- None
       | None -> ());
-      for i = 0 to pages do notebook#remove_page 0 done; 
+      for _i = 0 to pages do notebook#remove_page 0 done; 
       notebook#set_show_tabs true;
       pages <- 0;
       page2goal <- [];
@@ -112,12 +110,8 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
           scrolledWin <- Some w;
           (match cicMathView#misc#parent with
             | None -> ()
-            | Some parent ->
-               let parent =
-                match cicMathView#misc#parent with
-                   None -> assert false
-                 | Some p -> GContainer.cast_container p
-               in
+            | Some p ->
+               let parent = GContainer.cast_container p in
                 parent#remove cicMathView#coerce);
           w#add cicMathView#coerce
         in
@@ -128,8 +122,8 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
         let stack_goals = Stack.open_goals status#stack in
         let proof_goals = List.map fst metasenv in
         if
-          HExtlib.list_uniq (List.sort Pervasives.compare stack_goals)
-          <> List.sort Pervasives.compare proof_goals
+          HExtlib.list_uniq (List.sort compare stack_goals)
+          <> List.sort compare proof_goals
         then begin
           prerr_endline ("STACK GOALS = " ^ String.concat " " (List.map string_of_int stack_goals));
           prerr_endline ("PROOF GOALS = " ^ String.concat " " (List.map string_of_int proof_goals));
@@ -158,7 +152,7 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
       in
       let add_switch _ _ (_, sw) = add_tab (render_switch sw) sw in
       Stack.iter  (** populate notebook with tabs *)
-        ~env:(fun depth tag (pos, sw) ->
+        ~env:(fun depth _tag (pos, sw) ->
           let markup =
             match depth, pos with
             | 0, 0 -> `Current (render_switch sw)
@@ -180,12 +174,12 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
     method private render_page:
      'status. #ApplyTransformation.status as 'status -> page:int ->
        goal_switch:Stack.switch -> unit
-     = fun status ~page ~goal_switch ->
+     = fun status ~page:_ ~goal_switch ->
       (match goal_switch with
       | Stack.Open goal ->
          let menv,subst = _metasenv in
           cicMathView#nload_sequent status menv subst goal
-      | Stack.Closed goal ->
+      | Stack.Closed _goal ->
           let root = Lazy.force closed_goal_mathml in
           cicMathView#load_root ~root);
       (try
@@ -242,12 +236,12 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
   let dir_RE = Pcre.regexp "^cic:((/([^/]+/)*[^/]+(/)?)|/|)$" in
   let is_uri txt = Pcre.pmatch ~rex:uri_RE txt in
   let is_dir txt = Pcre.pmatch ~rex:dir_RE txt in
-  let gui = MatitaMisc.get_gui () in
+  let _gui = MatitaMisc.get_gui () in
   let win = new MatitaGeneratedGui.browserWin () in
   let _ = win#browserUri#misc#grab_focus () in
   let gviz = LablGraphviz.graphviz ~packing:win#graphScrolledWin#add () in
   let searchText = 
-    GSourceView2.source_view ~auto_indent:false ~editable:false ()
+    GSourceView3.source_view ~auto_indent:false ~editable:false ()
   in
   let _ =
      win#scrolledwinContent#add (searchText :> GObj.widget);
@@ -326,10 +320,14 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       close_out oc;
       if tred then
         gviz#load_graph_from_file 
-          ~gviz_cmd:"dot -Txdot | tred |gvpack -gv | dot" filename
+          (* gvpack can no longer read the output of -Txdot :-( *)
+          (*~gviz_cmd:"dot -Txdot | tred |gvpack -gv | dot" filename*)
+          ~gviz_cmd:"dot -Txdot | tred | dot" filename
       else
         gviz#load_graph_from_file 
-          ~gviz_cmd:"dot -Txdot | gvpack -gv | dot" filename;
+          (* gvpack can no longer read the output of -Txdot :-( *)
+          (*~gviz_cmd:"dot -Txdot | gvpack -gv | dot" filename;*)
+          ~gviz_cmd:"dot -Txdot | dot" filename;
       HExtlib.safe_remove filename
   in
   object (self)
@@ -475,7 +473,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       self#_showMath;
       mathView#load_root (Lazy.force empty_mathml)
 
-    method private _loadCheck term =
+    method private _loadCheck _term =
       failwith "not implemented _loadCheck";
 (*       self#_showMath *)
 
@@ -486,8 +484,8 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
     method private redraw_gviz ?center_on () =
       if Sys.command "which dot" = 0 then
        let tmpfile, oc = Filename.open_temp_file "matita" ".dot" in
-       let fmt = Format.formatter_of_out_channel oc in
-       (* MATITA 1.0 MetadataDeps.DepGraph.render fmt gviz_graph;*)
+       (* MATITA 1.0 let fmt = Format.formatter_of_out_channel oc in
+       MetadataDeps.DepGraph.render fmt gviz_graph;*)
        close_out oc;
        gviz#load_graph_from_file ~gviz_cmd:"tred | dot" tmpfile;
        (match center_on with
@@ -500,7 +498,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
          "the graph of dependencies amoung objects. Please install it.")
         ~parent:win#toplevel ()
 
-    method private dependencies direction uri () =
+    method private dependencies _direction _uri () =
       assert false (* MATITA 1.0
       let dbd = LibraryDb.instance () in
       let graph =
@@ -575,7 +573,7 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
       let content = Http_getter.ls ~local:false dir in
       let l =
         List.fast_sort
-          Pervasives.compare
+          compare
           (List.map
             (function 
               | Http_getter_types.Ls_section s -> "dir", s
@@ -724,7 +722,7 @@ let find_selection_owner () =
     | mv :: tl ->
         (match mv#get_selections with
         | [] -> aux tl
-        | sel :: _ -> mv)
+        | _sel :: _ -> mv)
   in
   aux (get_math_views ())
 

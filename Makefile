@@ -93,8 +93,8 @@ dist_pre:
 dist_export: dist/configure
 	rm -rf $(DISTDIR)
 	mkdir $(DISTDIR)
-	svn export components $(DISTDIR)/components
-	svn export matita $(DISTDIR)/matita
+	git archive matita-lablgtk3 components | tar -x -C $(DISTDIR)
+	git archive matita-lablgtk3 matita | tar -x -C $(DISTDIR)
 	(cd $(DISTDIR) && find . -name .depend -exec rm \{\} \;)
 	(cd $(DISTDIR) && find . -name .depend.opt -exec rm \{\} \;)
 	(cd $(DISTDIR) && rm -rf $(CLEAN_ON_DIST))

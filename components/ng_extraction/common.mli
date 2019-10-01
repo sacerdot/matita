@@ -9,8 +9,8 @@
 (*i $Id: common.mli 14641 2011-11-06 11:59:10Z herbelin $ i*)
 
 open Coq
-open Miniml
-open Mlutil
+(**open Miniml
+open Mlutil*)
 open OcamlExtractionTable
 
 (** By default, in module Format, you can do horizontal placing of blocks

@@ -31,8 +31,6 @@ open MatitaGeneratedGui
 open MatitaGtkMisc
 open MatitaMisc
 
-exception Found of int
-
 let all_disambiguation_passes = ref false
 
 (* this is a shit and should be changed :-{ *)
@@ -41,7 +39,7 @@ let interactive_uri_choice
   ?(msg = "") ?(nonvars_button = false) ?(hide_uri_entry=false) 
   ?(hide_try=false) ?(ok_label="_Auto") ?(ok_action:[`SELECT|`AUTO] = `AUTO) 
   ?copy_cb ()
-  ~id uris
+  ~id:_ uris
 =
   if (selection_mode <> `SINGLE) &&
     (Helm_registry.get_opt_default Helm_registry.get_bool ~default:true "matita.auto_disambiguation")
@@ -97,6 +95,8 @@ let interactive_uri_choice
       | uris -> return (Some (List.map NReference.reference_of_string uris)));
     connect_button dialog#uriChoiceAbortButton (fun _ -> return None);
     dialog#uriChoiceDialog#show ();
+    (* CSC: old Gtk2 code. Use #run instead. Look for similar code handling
+       other dialogs *)
     GtkThread.main ();
     (match !choices with 
     | None -> raise MatitaTypes.Cancel
@@ -178,7 +178,7 @@ class interpErrorModel =
               (let loc_row = tree_store#append () in
                 begin
                  match lll with
-                    [passes,envs_and_diffs,_,_] ->
+                    [passes,_envs_and_diffs,_,_] ->
                       tree_store#set ~row:loc_row ~column:id_col
                        ("Error location " ^ string_of_int (!idx1+1) ^
                         ", error message " ^ string_of_int (!idx1+1) ^ ".1" ^
@@ -255,7 +255,7 @@ class interpErrorModel =
 exception UseLibrary;;
 
 let interactive_error_interp ~all_passes
-  (source_buffer:GSourceView2.source_buffer) notify_exn offset errorll filename
+  (source_buffer:GSourceView3.source_buffer) notify_exn offset errorll filename
 = 
   (* hook to save a script for each disambiguation error *)
   if false then
@@ -318,9 +318,12 @@ let interactive_error_interp ~all_passes
           (MultiPassDisambiguator.DisambiguationError
             (offset,[[env,diff,lazy (loffset,Lazy.force msg),significant]]));
     | _::_ ->
+      GtkThread.sync (fun _ ->
        let dialog = new disambiguationErrors () in
-       if all_passes then
-        dialog#disambiguationErrorsMoreErrors#misc#set_sensitive false;
+       dialog#toplevel#add_button "Fix this interpretation" `OK;
+       dialog#toplevel#add_button "Close" `DELETE_EVENT;
+       if not all_passes then
+        dialog#toplevel#add_button "More errors" `HELP; (* HELP means MORE *)
        let model = new interpErrorModel dialog#treeview choices in
        dialog#disambiguationErrors#set_title "Disambiguation error";
        dialog#disambiguationErrorsLabel#set_label
@@ -352,64 +355,56 @@ let interactive_error_interp ~all_passes
             (MultiPassDisambiguator.DisambiguationError
               (offset,[[env,diff,lazy(loffset,Lazy.force msg),significant]]))
            ));
-       let return _ =
-         dialog#disambiguationErrors#destroy ();
-         GMain.Main.quit ()
+   (match GtkThread.sync dialog#toplevel#run () with
+    | `OK ->
+       let tree_path =
+        match fst (dialog#treeview#get_cursor ()) with
+           None -> assert false
+        | Some tp -> tp in
+       let idx1,idx2,idx3 = model#get_interp_no tree_path in
+       let diff =
+        match idx2,idx3 with
+           Some idx2, Some idx3 ->
+            let _,lll = List.nth choices idx1 in
+            let _,envs_and_diffs,_,_ = List.nth lll idx2 in
+            let _,_,diff = List.nth envs_and_diffs idx3 in
+             diff
+         | _,_ -> assert false
        in
-       let fail _ = return () in
-       ignore(dialog#disambiguationErrors#event#connect#delete (fun _ -> true));
-       connect_button dialog#disambiguationErrorsOkButton
-        (fun _ ->
-          let tree_path =
-           match fst (dialog#treeview#get_cursor ()) with
-              None -> assert false
-           | Some tp -> tp in
-          let idx1,idx2,idx3 = model#get_interp_no tree_path in
-          let diff =
-           match idx2,idx3 with
-              Some idx2, Some idx3 ->
-               let _,lll = List.nth choices idx1 in
-               let _,envs_and_diffs,_,_ = List.nth lll idx2 in
-               let _,_,diff = List.nth envs_and_diffs idx3 in
-                diff
-            | _,_ -> assert false
-          in
-           let newtxt =
-            String.concat "\n"
-             ("" ::
-               List.map
-                (fun k,desc -> 
-                  let alias =
-                   match k with
-                   | DisambiguateTypes.Id id ->
-                       GrafiteAst.Ident_alias (id, desc)
-                   | DisambiguateTypes.Symbol (symb, i)-> 
-                       GrafiteAst.Symbol_alias (symb, i, desc)
-                   | DisambiguateTypes.Num i ->
-                       GrafiteAst.Number_alias (i, desc)
-                  in
-                   GrafiteAstPp.pp_alias alias)
-                diff) ^ "\n"
-           in
-            source_buffer#insert
-             ~iter:
-               (source_buffer#get_iter_at_mark
-                (`NAME "beginning_of_statement")) newtxt ;
-            return ()
-        );
-       connect_button dialog#disambiguationErrorsMoreErrors
-        (fun _ -> return () ; raise UseLibrary);
-       connect_button dialog#disambiguationErrorsCancelButton fail;
-       dialog#disambiguationErrors#show ();
-       GtkThread.main ()
-
+        let newtxt =
+         String.concat "\n"
+          ("" ::
+            List.map
+             (fun k,desc -> 
+               let alias =
+                match k with
+                | DisambiguateTypes.Id id ->
+                    GrafiteAst.Ident_alias (id, desc)
+                | DisambiguateTypes.Symbol (symb, i)-> 
+                    GrafiteAst.Symbol_alias (symb, i, desc)
+                | DisambiguateTypes.Num i ->
+                    GrafiteAst.Number_alias (i, desc)
+               in
+                GrafiteAstPp.pp_alias alias)
+             diff) ^ "\n"
+        in
+         source_buffer#insert
+          ~iter:
+            (source_buffer#get_iter_at_mark
+             (`NAME "beginning_of_statement")) newtxt
+    | `HELP (* HELP MEANS MORE *) ->
+        dialog#toplevel#destroy () ;
+        raise UseLibrary
+    | `DELETE_EVENT -> ()
+    | _ -> assert false) ;
+   dialog#toplevel#destroy ()
+  ) ()
 
 class gui () =
     (* creation order _is_ relevant for windows placement *)
   let main = new mainWin () in
   let sequents_viewer =
    MatitaMathView.sequentsViewer_instance main#sequentsNotebook in
-  let fileSel = new fileSelectionWin () in
   let findRepl = new findReplWin () in
   let keyBindingBoxes = (* event boxes which should receive global key events *)
     [ main#mainWinEventBox ]
@@ -462,6 +457,7 @@ class gui () =
         ~website:"http://matita.cs.unibo.it"
         ()
       in
+      ignore(about_dialog#event#connect#delete (fun _ -> true));
       ignore(about_dialog#connect#response (fun _ ->about_dialog#misc#hide ()));
       connect_menu_item main#contentsMenuItem (fun () ->
         if 0 = Sys.command "which gnome-help" then
@@ -517,16 +513,10 @@ class gui () =
         ~callback:(fun _ -> hide_find_Repl ();true));
       connect_menu_item main#undoMenuItem
        (fun () -> (MatitaScript.current ())#safe_undo);
-(*CSC: XXX
-      ignore(source_view#source_buffer#connect#can_undo
-        ~callback:main#undoMenuItem#misc#set_sensitive);
-*) main#undoMenuItem#misc#set_sensitive true;
+      main#undoMenuItem#misc#set_sensitive false;
       connect_menu_item main#redoMenuItem
        (fun () -> (MatitaScript.current ())#safe_redo);
-(*CSC: XXX
-      ignore(source_view#source_buffer#connect#can_redo
-        ~callback:main#redoMenuItem#misc#set_sensitive);
-*) main#redoMenuItem#misc#set_sensitive true;
+      main#redoMenuItem#misc#set_sensitive false;
       connect_menu_item main#editMenu (fun () ->
         main#copyMenuItem#misc#set_sensitive
          (MatitaScript.current ())#canCopy;
@@ -573,7 +563,7 @@ class gui () =
         GtkThread.sync (fun () -> ()) ()
       in
       let worker_thread = ref None in
-      let notify_exn (source_view : GSourceView2.source_view) exn =
+      let notify_exn (source_view : GSourceView3.source_view) exn =
        let floc, msg = MatitaExcPp.to_string exn in
         begin
          match floc with
@@ -666,32 +656,6 @@ class gui () =
          with
           exc -> script#source_view#misc#grab_focus (); raise exc in
       
-        (* file selection win *)
-      ignore (fileSel#fileSelectionWin#event#connect#delete (fun _ -> true));
-      ignore (fileSel#fileSelectionWin#connect#response (fun event ->
-        let return r =
-          chosen_file <- r;
-          fileSel#fileSelectionWin#misc#hide ();
-          GMain.Main.quit ()
-        in
-        match event with
-        | `OK ->
-            let fname = fileSel#fileSelectionWin#filename in
-            if Sys.file_exists fname then
-              begin
-                if HExtlib.is_regular fname && not (_only_directory) then 
-                  return (Some fname) 
-                else if _only_directory && HExtlib.is_dir fname then 
-                  return (Some fname)
-              end
-            else
-              begin
-                if _ok_not_exists then 
-                  return (Some fname)
-              end
-        | `CANCEL -> return None
-        | `HELP -> ()
-        | `DELETE_EVENT -> return None));
         (* menus *)
       List.iter (fun w -> w#misc#set_sensitive false) [ main#saveMenuItem ];
         (* console *)
@@ -875,6 +839,10 @@ class gui () =
         current_page <- page;
         let script = MatitaScript.at_page page in
         script#activate;
+        main#undoMenuItem#misc#set_sensitive
+         script#source_view#source_buffer#can_undo ;
+        main#redoMenuItem#misc#set_sensitive
+         script#source_view#source_buffer#can_redo ;
         main#saveMenuItem#misc#set_sensitive script#has_name))
 
     method private externalEditor () =
@@ -961,7 +929,7 @@ class gui () =
              save_moo script#status;
              true
         | `NO -> true
-        | `CANCEL -> false
+        | `DELETE_EVENT -> false
       else 
        (save_moo script#status; true)
 
@@ -1041,11 +1009,10 @@ class gui () =
       console#message ("'"^file^"' loaded.");
       self#_enableSaveTo file
 
-    method private _enableSaveTo file =
+    method private _enableSaveTo _file =
       self#main#saveMenuItem#misc#set_sensitive true
         
     method private console = console
-    method private fileSel = fileSel
     method private findRepl = findRepl
     method main = main
 
@@ -1060,20 +1027,46 @@ class gui () =
         (fun _ -> callback ();true));
       self#addKeyBinding GdkKeysyms._q callback
 
+    method private chooseFileOrDir ok_not_exists only_directory =
+      let fileSel = GWindow.file_chooser_dialog
+       ~action:`OPEN
+       ~title:"Select file"
+       ~modal:true
+       ~type_hint:`DIALOG
+       ~position:`CENTER
+       () in
+     fileSel#add_select_button_stock `OPEN `OK;
+     fileSel#add_button_stock `CANCEL `CANCEL;
+     ignore (fileSel#set_current_folder(Sys.getcwd ())) ;
+     let res =
+      let rec aux () =
+       match fileSel#run () with
+        | `OK ->
+             (match fileSel#filename with
+                None -> aux ()
+              | Some fname ->
+                 if Sys.file_exists fname then
+                   begin
+                     if HExtlib.is_regular fname && not (only_directory) then 
+                       Some fname
+                     else if only_directory && HExtlib.is_dir fname then 
+                       Some fname
+                     else
+                      aux ()
+                   end
+                 else if ok_not_exists then Some fname else aux ())
+        | `CANCEL -> None
+        | `DELETE_EVENT -> None in
+      aux () in
+     fileSel#destroy () ;
+     res
+
     method private chooseFile ?(ok_not_exists = false) () =
-      _ok_not_exists <- ok_not_exists;
-      _only_directory <- false;
-      fileSel#fileSelectionWin#show ();
-      GtkThread.main ();
-      chosen_file
+      self#chooseFileOrDir ok_not_exists false
 
     method private chooseDir ?(ok_not_exists = false) () =
-      _ok_not_exists <- ok_not_exists;
-      _only_directory <- true;
-      fileSel#fileSelectionWin#show ();
-      GtkThread.main ();
       (* we should check that this is a directory *)
-      chosen_file
+      self#chooseFileOrDir ok_not_exists true
   
   end
 
@@ -1138,8 +1131,9 @@ class interpModel =
 
 
 let interactive_string_choice 
-  text prefix_len ?(title = "") ?(msg = "") () ~id locs uris 
+  text prefix_len ?(title = "") ?msg:(_ = "") () ~id:_ locs uris 
 = 
+ GtkThread.sync (fun _ ->
  let dialog = new uriChoiceDialog () in
  dialog#uriEntryHBox#misc#hide ();
  dialog#uriChoiceSelectedButton#misc#hide ();
@@ -1148,7 +1142,7 @@ let interactive_string_choice
  dialog#uriChoiceTreeView#selection#set_mode
    (`SINGLE :> Gtk.Tags.selection_mode);
  let model = new stringListModel dialog#uriChoiceTreeView in
- let choices = ref None in
+ let choices = ref [] in
  dialog#uriChoiceDialog#set_title title; 
  let hack_len = MatitaGtkMisc.utf8_string_length text in
  let rec colorize acc_len = function
@@ -1183,22 +1177,19 @@ let interactive_string_choice
   in
   dialog#uriChoiceLabel#set_label txt;
   List.iter model#easy_append uris;
-  let return v =
-    choices := v;
-    dialog#uriChoiceDialog#destroy ();
-    GMain.Main.quit ()
-  in
-  ignore (dialog#uriChoiceDialog#event#connect#delete (fun _ -> true));
   connect_button dialog#uriChoiceForwardButton (fun _ ->
     match model#easy_selection () with
     | [] -> ()
-    | uris -> return (Some uris));
-  connect_button dialog#uriChoiceAbortButton (fun _ -> return None);
+    | uris -> choices := uris; dialog#toplevel#response `OK);
+  connect_button dialog#uriChoiceAbortButton (fun _ -> dialog#toplevel#response `DELETE_EVENT);
   dialog#uriChoiceDialog#show ();
-  GtkThread.main ();
-  (match !choices with 
-  | None -> raise MatitaTypes.Cancel
-  | Some uris -> uris)
+  let res =
+   match dialog#toplevel#run () with 
+    | `DELETE_EVENT -> dialog#toplevel#destroy() ; raise MatitaTypes.Cancel
+    | `OK -> !choices
+    | _ -> assert false in
+  dialog#toplevel#destroy () ;
+  res) ()
 
 let interactive_interp_choice () text prefix_len choices =
 (*List.iter (fun l -> prerr_endline "==="; List.iter (fun (_,id,dsc) -> prerr_endline (id ^ " = " ^ dsc)) l) choices;*)
@@ -1265,10 +1256,8 @@ let interactive_interp_choice () text prefix_len choices =
 let _ =
   (* disambiguator callbacks *)
   Disambiguate.set_choose_uris_callback
-   (fun ~selection_mode ?ok ?(enable_button_for_non_vars=false) ~title ~msg ->
+   (fun ~selection_mode ?ok ?enable_button_for_non_vars:(_=false) ~title ~msg ->
      interactive_uri_choice ~selection_mode ?ok_label:ok ~title ~msg ());
   Disambiguate.set_choose_interp_callback (interactive_interp_choice ());
   (* gtk initialization *)
-  GtkMain.Rc.add_default_file BuildTimeConf.gtkrc_file; (* loads gtk rc *)
-  ignore (GMain.Main.init ())
-
+  GtkMain.Rc.add_default_file BuildTimeConf.gtkrc_file (* loads gtk rc *)

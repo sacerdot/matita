@@ -74,17 +74,22 @@ class graphviz_impl ?packing () =
     method load_graph_from_file ?(gviz_cmd = "dot") fname =
       let tmp_png = tempfile () in
       let rc = Sys.command (mk_gviz_cmd gviz_cmd png_flags fname tmp_png) in
-      if rc <> 0 then
+      if rc <> 0 || (Unix.stat tmp_png).Unix.st_size = 0 then begin
         eprintf
           ("Graphviz command failed (exit code: %d) on the following graph:\n"
            ^^ "%s\n%!")
           rc (HExtlib.input_file fname);
-      image#set_file tmp_png;
-      HExtlib.safe_remove tmp_png;
-      let tmp_map = tempfile () in
-      ignore (Sys.command (mk_gviz_cmd gviz_cmd map_flags fname tmp_map));
-      self#load_map tmp_map;
-      HExtlib.safe_remove tmp_map
+        (* CSC: it would be better to show something explaining that the
+           graph is empty *)
+        image#clear ()
+      end else begin
+       image#set_file tmp_png;
+       HExtlib.safe_remove tmp_png;
+       let tmp_map = tempfile () in
+       ignore (Sys.command (mk_gviz_cmd gviz_cmd map_flags fname tmp_map));
+       self#load_map tmp_map;
+       HExtlib.safe_remove tmp_map
+      end
 
     method private load_map fname =
       let areas = ref [] in

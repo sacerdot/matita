@@ -25,8 +25,6 @@
 
 (* $Id$ *)
 
-open Printf
-
 type log_tag = [ `Debug | `Error | `Message | `Warning ]
 type log_callback = log_tag -> string -> unit
 

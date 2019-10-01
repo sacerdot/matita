@@ -18,7 +18,7 @@ module E = NCicEnvironment
 exception AssertFailure of string Lazy.t;;
 
 let debug = ref false;;
-let pp m = if !debug then prerr_endline (Lazy.force m) else ();;
+(*let pp m = if !debug then prerr_endline (Lazy.force m) else ();;*)
 
 module type Strategy = sig
   type stack_term

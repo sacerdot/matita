@@ -60,7 +60,7 @@ let rec uri_of_string = function
       Cic_uri (Theory (Pcre.replace ~pat:"^theory:" uri))
   | uri -> raise (Invalid_URI uri)
 
-let patch_xsl ?(via_http = true) () =
+let patch_xsl ?via_http:(_ = true) () =
   fun line ->
     let mk_patch_fun tag line =
       Pcre.replace
@@ -125,7 +125,7 @@ let return_file
       | (None, None) -> []
     in
     Http_daemon.send_basic_headers ~code:(`Code 200) outchan;
-    Http_daemon.send_headers headers outchan;
+    Http_daemon.send_headers ~headers outchan;
     Http_daemon.send_CRLF outchan
   end;
   match gunzip, patch_fun with
