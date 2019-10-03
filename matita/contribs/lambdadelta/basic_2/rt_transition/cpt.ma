@@ -86,10 +86,72 @@ qed.
 lemma cpt_refl (h) (G) (L): reflexive … (cpt h G L 0).
 /3 width=3 by cpg_refl, ex2_intro/ qed.
 
-(* Advanced properties ******************************************************)
+(* Basic inversion lemmas ***************************************************)
 
-lemma cpt_sort (h) (G) (L):
-      ∀n. n ≤ 1 → ∀s. ⦃G,L⦄ ⊢ ⋆s ⬆[h,n] ⋆((next h)^n s).
-#h #G #L * //
-#n #H #s <(le_n_O_to_eq n) /2 width=1 by le_S_S_to_le/
-qed.
+lemma cpt_inv_atom_sn (h) (n) (J) (G) (L):
+      ∀X2. ⦃G,L⦄ ⊢ ⓪{J} ⬆[h,n] X2 →
+      ∨∨ ∧∧ X2 = ⓪{J} & n = 0
+       | ∃∃s. X2 = ⋆(⫯[h]s) & J = Sort s & n =1
+       | ∃∃K,V1,V2. ⦃G,K⦄ ⊢ V1 ⬆[h,n] V2 & ⇧*[1] V2 ≘ X2 & L = K.ⓓV1 & J = LRef 0
+       | ∃∃m,K,V1,V2. ⦃G,K⦄ ⊢ V1 ⬆[h,m] V2 & ⇧*[1] V2 ≘ X2 & L = K.ⓛV1 & J = LRef 0 & n = ↑m
+       | ∃∃I,K,T,i. ⦃G,K⦄ ⊢ #i ⬆[h,n] T & ⇧*[1] T ≘ X2 & L = K.ⓘ{I} & J = LRef (↑i).
+#h #n #J #G #L #X2 * #c #Hc #H
+elim (cpg_inv_atom1 … H) -H *
+[ #H1 #H2 destruct /3 width=1 by or5_intro0, conj/
+| #s #H1 #H2 #H3 destruct /3 width=3 by or5_intro1, ex3_intro/
+| #cV #K #V1 #V2 #HV12 #HVT2 #H1 #H2 #H3 destruct
+  /4 width=6 by or5_intro2, ex4_3_intro, ex2_intro/
+| #cV #K #V1 #V2 #HV12 #HVT2 #H1 #H2 #H3 destruct
+  elim (ist_inv_plus_SO_dx … H3) -H3 [| // ] #m #Hc #H destruct
+  /4 width=9 by or5_intro3, ex5_4_intro, ex2_intro/
+| #I #K #V2 #i #HV2 #HVT2 #H1 #H2 destruct
+  /4 width=8 by or5_intro4, ex4_4_intro, ex2_intro/
+]
+qed-.
+
+lemma cpt_inv_bind_sn (h) (n) (p) (I) (G) (L) (V1) (T1):
+      ∀X2. ⦃G,L⦄ ⊢ ⓑ{p,I}V1.T1 ⬆[h,n] X2 →
+      ∃∃V2,T2. ⦃G,L⦄ ⊢ V1 ⬆[h,0] V2 & ⦃G,L.ⓑ{I}V1⦄ ⊢ T1 ⬆[h,n] T2
+             & X2 = ⓑ{p,I}V2.T2.
+#h #n #p #I #G #L #V1 #T1 #X2 * #c #Hc #H
+elim (cpg_inv_bind1 … H) -H *
+[ #cV #cT #V2 #T2 #HV12 #HT12 #H1 #H2 destruct
+  elim (ist_inv_max … H2) -H2 #nV #nT #HcV #HcT #H destruct
+  elim (ist_inv_shift … HcV) -HcV #HcV #H destruct
+  /3 width=5 by ex3_2_intro, ex2_intro/
+| #cT #T2 #_ #_ #_ #_ #H destruct
+  elim (ist_inv_plus_10_dx … H)
+]
+qed-.
+
+lemma cpt_inv_appl_sn (h) (n) (G) (L) (V1) (T1):
+      ∀X2. ⦃G,L⦄ ⊢ ⓐV1.T1 ⬆[h,n] X2 →
+      ∃∃V2,T2. ⦃G,L⦄ ⊢ V1 ⬆[h,0] V2 & ⦃G,L⦄ ⊢ T1 ⬆[h,n] T2 & X2 = ⓐV2.T2.
+#h #n #G #L #V1 #T1 #X2 * #c #Hc #H elim (cpg_inv_appl1 … H) -H *
+[ #cV #cT #V2 #T2 #HV12 #HT12 #H1 #H2 destruct
+  elim (ist_inv_max … H2) -H2 #nV #nT #HcV #HcT #H destruct
+  elim (ist_inv_shift … HcV) -HcV #HcV #H destruct
+  /3 width=5 by ex3_2_intro, ex2_intro/
+| #cV #cW #cU #p #V2 #W1 #W2 #U1 #U2 #_ #_ #_ #_ #_ #H destruct
+  elim (ist_inv_plus_10_dx … H)
+| #cV #cW #cU #p #V #V2 #W1 #W2 #U1 #U2 #_ #_ #_ #_ #_ #_ #H destruct
+  elim (ist_inv_plus_10_dx … H)
+]
+qed-.
+
+lemma cpt_inv_cast_sn (h) (n) (G) (L) (V1) (T1):
+      ∀X2. ⦃G,L⦄ ⊢ ⓝV1.T1 ⬆[h,n] X2 →
+      ∨∨ ∃∃V2,T2. ⦃G,L⦄ ⊢ V1 ⬆[h,n] V2 & ⦃G,L⦄ ⊢ T1 ⬆[h,n] T2 & X2 = ⓝV2.T2
+       | ∃∃m. ⦃G,L⦄ ⊢ V1 ⬆[h,m] X2 & n = ↑m.
+#h #n #G #L #V1 #T1 #X2 * #c #Hc #H elim (cpg_inv_cast1 … H) -H *
+[ #cV #cT #V2 #T2 #HV12 #HT12 #HcVT #H1 #H2 destruct
+  elim (ist_inv_max … H2) -H2 #nV #nT #HcV #HcT #H destruct
+  <idempotent_max
+  /4 width=5 by or_introl, ex3_2_intro, ex2_intro/
+| #cT #_ #H destruct
+  elim (ist_inv_plus_10_dx … H)
+| #cV #H12 #H destruct
+  elim (ist_inv_plus_SO_dx … H) -H [| // ] #m #Hm #H destruct
+  /4 width=3 by ex2_intro, or_intror/
+]
+qed-.

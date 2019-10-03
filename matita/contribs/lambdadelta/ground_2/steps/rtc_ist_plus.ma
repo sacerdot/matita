@@ -58,3 +58,9 @@ lemma ist_inv_plus_SO_dx:
 elim (ist_inv_plus … H) -H #n1 #n2 #Hn1 #Hn2 #H destruct
 /2 width=3 by ex2_intro/
 qed-.
+
+lemma ist_inv_plus_10_dx: ∀n,c. 𝐓⦃n,c+𝟙𝟘⦄ → ⊥.
+#n #c #H
+elim (ist_inv_plus … H) -H #n1 #n2 #_ #H #_
+/2 width=2 by ist_inv_10/
+qed-.

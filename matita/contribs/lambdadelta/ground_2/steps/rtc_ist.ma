@@ -41,6 +41,10 @@ lemma ist_inv_01: ∀n. 𝐓⦃n,𝟘𝟙⦄ → 1 = n.
 #n #H destruct //
 qed-.
 
+lemma ist_inv_10: ∀n. 𝐓⦃n,𝟙𝟘⦄ → ⊥.
+#h #H destruct
+qed-.
+
 (* Main inversion properties ************************************************)
 
 theorem ist_inj: ∀n1,n2,c. 𝐓⦃n1,c⦄ → 𝐓⦃n2,c⦄ → n1 = n2.
