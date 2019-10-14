@@ -1925,11 +1925,14 @@ let candidates_from_ctx univ ctx status =
             let status, res = disambiguate status ctx t `XTNone in 
             let _,res = term_of_cic_term status res (ctx_of res) 
             in Ast.NCic res 
-        in Some ((List.map to_Ast l) @ [Ast.Ident("refl",None); Ast.Ident("sym_eq",None);
-                                        Ast.Ident("trans_eq",None); Ast.Ident("eq_f",None);
-                                        Ast.Ident("eq_f2",None); Ast.Ident("eq_f3",None);
-                                        Ast.Ident("rewrite_r",None); Ast.Ident("rewrite_l",None)
-                                       ])
+        in Some (List.map to_Ast l)
+(* FG: adding these lemmas to (List.map to_Ast l) slows auto very much in some cases 
+                                    @ [Ast.Ident("refl",None); Ast.Ident("sym_eq",None);
+                                       Ast.Ident("trans_eq",None); Ast.Ident("eq_f",None);
+                                       Ast.Ident("eq_f2",None); Ast.Ident("eq_f3",None);
+                                       Ast.Ident("rewrite_r",None); Ast.Ident("rewrite_l",None)
+                                      ]
+*)
 
 let auto_lowtac ~params:(univ,flags) status goal =
     let gty = get_goalty status goal in
