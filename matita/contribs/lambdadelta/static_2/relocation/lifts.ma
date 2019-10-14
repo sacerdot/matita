@@ -287,6 +287,22 @@ lemma lifts_inv_pair_xy_y: ∀I,T,V,f. ⇧*[f] ②{I}V.T ≘ T → ⊥.
 ]
 qed-.
 
+lemma lifts_inv_push_zero_sn (f):
+      ∀X. ⇧*[⫯f]#0 ≘ X → #0 = X.
+#f #X #H
+elim (lifts_inv_lref1 … H) -H #i #Hi #H destruct
+lapply (at_inv_ppx … Hi ???) -Hi //
+qed-.
+
+lemma lifts_inv_push_succ_sn (f) (i1):
+      ∀X. ⇧*[⫯f]#(↑i1) ≘ X →
+      ∃∃i2. ⇧*[f]#i1 ≘ #i2 & #(↑i2) = X.
+#f #i1 #X #H
+elim (lifts_inv_lref1 … H) -H #j #Hij #H destruct
+elim (at_inv_npx … Hij) -Hij [|*: // ] #i2 #Hi12 #H destruct
+/3 width=3 by lifts_lref, ex2_intro/
+qed-.
+
 (* Inversion lemmas with uniform relocations ********************************)
 
 lemma lifts_inv_lref1_uni: ∀l,Y,i. ⇧*[l] #i ≘ Y → Y = #(l+i).

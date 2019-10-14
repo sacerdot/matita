@@ -133,3 +133,10 @@ lemma deliftable2_sn_bi: ∀R. deliftable2_sn R → deliftable2_bi R.
 elim (HR … HU12 … HTU1) -HR -U1 #X #HUX #HTX
 <(lifts_inj … HUX … HTU2) -U2 -T2 -f //
 qed-.
+
+lemma lifts_trans_uni (T):
+      ∀l1,T1. ⇧*[l1] T1 ≘ T →
+      ∀l2,T2. ⇧*[l2] T ≘ T2 → ⇧*[l1+l2] T1 ≘ T2.
+#T #l1 #T1 #HT1 #l2 #T2 #HT2
+@(lifts_trans … HT1 … HT2) //
+qed-.

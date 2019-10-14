@@ -1,0 +1,54 @@
+(* Advanced inversion lemmas ************************************************)
+
+lemma cpt_inv_sort_sn (h) (n) (G) (L) (s):
+      ∀X2. ⦃G,L⦄ ⊢ ⋆s ⬆[h,n] X2 →
+      ∨∨ ∧∧ X2 = ⋆s & n = 0
+       | ∧∧ X2 = ⋆(⫯[h]s) & n =1.
+#h #n #G #L #s #X2 * #c #Hc #H
+elim (cpg_inv_sort1 … H) -H * #H1 #H2 destruct
+/3 width=1 by or_introl, or_intror, conj/
+qed-.
+
+lemma cpt_inv_zero_sn (h) (n) (G) (L):
+      ∀X2. ⦃G,L⦄ ⊢ #0 ⬆[h,n] X2 →
+      ∨∨ ∧∧ X2 = #0 & n = 0
+       | ∃∃K,V1,V2. ⦃G,K⦄ ⊢ V1 ⬆[h,n] V2 & ⇧*[1] V2 ≘ X2 & L = K.ⓓV1
+       | ∃∃m,K,V1,V2. ⦃G,K⦄ ⊢ V1 ⬆[h,m] V2 & ⇧*[1] V2 ≘ X2 & L = K.ⓛV1 & n = ↑m.
+#h #n #G #L #X2 * #c #Hc #H
+elim (cpg_inv_zero1 … H) -H *
+[ #H1 #H2 destruct /3 width=1 by or3_intro0, conj/
+| #cV #K #V1 #V2 #HV12 #HVT2 #H1 #H2 destruct
+  /4 width=8 by or3_intro1, ex3_3_intro, ex2_intro/
+| #cV #K #V1 #V2 #HV12 #HVT2 #H1 #H2 destruct
+  elim (ist_inv_plus_SO_dx … H2) -H2 [| // ] #m #Hc #H destruct
+  /4 width=8 by or3_intro2, ex4_4_intro, ex2_intro/
+]
+qed-.
+
+lemma cpt_inv_lref_sn (h) (n) (G) (L) (i):
+      ∀X2. ⦃G,L⦄ ⊢ #↑i ⬆[h,n] X2 →
+      ∨∨ ∧∧ X2 = #(↑i) & n = 0
+       | ∃∃I,K,T. ⦃G,K⦄ ⊢ #i ⬆[h,n] T & ⇧*[1] T ≘ X2 & L = K.ⓘ{I}.
+#h #n #G #L #i #X2 * #c #Hc #H
+elim (cpg_inv_lref1 … H) -H *
+[ #H1 #H2 destruct /3 width=1 by or_introl, conj/
+| #I #K #V2 #HV2 #HVT2 #H destruct
+ /4 width=6 by ex3_3_intro, ex2_intro, or_intror/
+]
+qed-.
+
+lemma cpt_inv_gref_sn (h) (n) (G) (L) (l): 
+      ∀X2. ⦃G,L⦄ ⊢ §l ⬆[h,n] X2 → ∧∧ X2 = §l & n = 0.
+#h #n #G #L #l #X2 * #c #Hc #H
+elim (cpg_inv_gref1 … H) -H #H1 #H2 destruct
+/2 width=1 by conj/
+qed-.
+
+
+lemma cpt_inv_sort_sn_iter (h) (n) (G) (L) (s):
+      ∀X2. ⦃G,L⦄ ⊢ ⋆s ⬆[h,n] X2 →
+      ∧∧ X2 = ⋆(((next h)^n) s) & n ≤ 1.
+#h #n #G #L #s #X2 #H
+elim (cpt_inv_sort_sn … H) -H * #H1 #H2 destruct
+/2 width=1 by conj/
+qed-.

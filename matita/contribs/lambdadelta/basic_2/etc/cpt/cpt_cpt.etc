@@ -1,0 +1,62 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/rt_transition/cpt_drops.ma".
+include "basic_2/rt_transition/cpt_fqu.ma".
+
+(* T-BOUND CONTEXT-SENSITIVE PARALLEL T-TRANSITION FOR TERMS ****************)
+
+(* Main properties **********************************************************)
+
+theorem cpt_n_O_trans (h) (n) (G) (L) (T0):
+        ∀T1. ⦃G,L⦄ ⊢ T1 ⬆[h,n] T0 →
+        ∀T2. ⦃G,L⦄ ⊢ T0 ⬆[h,0] T2 → ⦃G,L⦄ ⊢ T1 ⬆[h,n] T2.
+#h #n #G #L #T0 #T1 #H
+@(cpt_ind … H) -H
+[ #I #G #L #X2 #HX2 //
+| #G #L #s #X2 #HX2
+  elim (cpt_inv_sort_sn_iter … HX2) -HX2 #H #_ destruct //
+| #n #G #K #V1 #V0 #W0 #_ #IH #HVW0 #W2 #HW02
+  elim (cpt_inv_lifts_sn … HW02 (Ⓣ) … K … HVW0) -W0
+  [| /3 width=1 by drops_refl, drops_drop/ ] #V2 #HVW2 #HV02
+  /3 width=3 by cpt_delta/
+| #n #G #K #W1 #W0 #V0 #_ #IH #HWV0 #V2 #HV02
+  elim (cpt_inv_lifts_sn … HV02 (Ⓣ) … K … HWV0) -V0
+  [| /3 width=1 by drops_refl, drops_drop/ ] #W2 #HWV2 #HW02
+  /3 width=3 by cpt_ell/
+| #n #I #G #K #T0 #U0 #i #_ #IH #HTU0 #U2 #HU02
+  elim (cpt_inv_lifts_sn … HU02 (Ⓣ) … K … HTU0) -U0
+  [| /3 width=1 by drops_refl, drops_drop/ ] #T2 #HTU2 #HT02
+  /3 width=3 by cpt_lref/
+| #n #p #I #G #L #V1 #V0 #T1 #T0 #_ #_ #IHV #IHT #X2 #HX2
+  elim (cpt_inv_bind_sn … HX2) -HX2 #V2 #T2 #HV02 #HT02 #H destruct
+  @cpt_bind
+  [ /2 width=1 by/
+  | @IHT
+  ]
+| #n #G #L #V1 #V0 #T1 #T0 #_ #_ #IHV #IHT #X2 #HX2
+  elim (cpt_inv_appl_sn … HX2) -HX2 #V2 #T2 #HV02 #HT02 #H destruct
+  /3 width=1 by cpt_appl/
+| #n #G #L #V1 #V0 #T1 #T0 #_ #_ #IHV #IHT #X2 #HX2
+  elim (cpt_inv_cast_sn … HX2) -HX2 *
+  [ #V2 #T2 #HV02 #HT02 #H destruct /3 width=1 by cpt_cast/
+  | #m #_ #H destruct
+  ]
+| #n #G #L #V1 #V0 #T1 #_ #IH #V2 #HV02
+  /3 width=1 by cpt_ee/
+]
+  
+ 
+
+  

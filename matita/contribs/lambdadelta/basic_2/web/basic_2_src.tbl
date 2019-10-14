@@ -93,7 +93,7 @@ table {
    class "cyan"
    [ { "rt-transition" * } {
         [ { "context-sensitive parallel t-transition" * } {
-             [ [ "for terms" ] "cpt" + "( ⦃?,?⦄ ⊢ ? ⬆[?,?] ? )" "cpt_drops" + "cpt_cpm" * ]
+             [ [ "for terms" ] "cpt" + "( ⦃?,?⦄ ⊢ ? ⬆[?,?] ? )" "cpt_drops" + "cpt_fqu" + "cpt_cpm" * ]
           }
         ]
         [ { "context-sensitive parallel r-transition" * } {
