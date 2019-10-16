@@ -169,7 +169,7 @@ let beta_rewriting_step t status =
     (
       let newhypo = status_parameter "volatile_newhypo" status in
       if newhypo = "" then
-        fail (lazy "Invalid use of 'or equivalently'")
+        fail (lazy "Invalid use of 'that is equivalent to'")
       else
         change_tac ~where:("",0,(None,[newhypo,Ast.UserInput],None)) ~with_what:t status
     )
@@ -538,7 +538,11 @@ let we_proceed_by_cases_on ((txt,len,ast1) as t1)  t2 status =
   | FirstTypeWrong -> fail (lazy "What you want to prove is different from the conclusion")
 ;;
 
-let byinduction t1 id = suppose t1 id ;;
+let byinduction t1 id status =
+  let ctx = status_parameter "context" status in
+  if ctx <> "induction" then fail (lazy "You can't use this tactic outside of an induction context")
+  else suppose t1 id status
+;;
 
 let name_of_conj conj =
   let mattrs,_,_ = conj in
