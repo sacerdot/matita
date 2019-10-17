@@ -12,13 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/relocation/drops.ma".
-include "static_2/relocation/lifts_lifts.ma".
+include "basic_2/rt_computation/cpms_drops.ma".
 include "basic_2/rt_conversion/cpce.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL ETA-CONVERSION FOR TERMS **********************)
 
-(* Properties with uniform slicing for local environments *******************)
+(* Advanced properties ******************************************************)
+
+lemma cpce_zero_drops (h) (G):
+      ∀i,L. (∀n,p,K,W,V,U. ⇩*[i] L ≘ K.ⓛW → ⦃G,K⦄ ⊢ W ➡*[n,h] ⓛ{p}V.U → ⊥) →
+      ⦃G,L⦄ ⊢ #i ⬌η[h] #i.
+#h #G #i elim i -i
+[ * [ #_ // ] #L #I #Hi
+  /4 width=8 by cpce_zero, drops_refl/
+| #i #IH * [ -IH #_ // ] #L #I #Hi
+  /5 width=8 by cpce_lref, drops_drop/
+]
+qed.
 
 lemma cpce_eta_drops (h) (n) (G) (K):
       ∀p,W,V1,U. ⦃G,K⦄ ⊢ W ➡*[n,h] ⓛ{p}V1.U →
@@ -35,20 +45,23 @@ lemma cpce_eta_drops (h) (n) (G) (K):
 ]
 qed.
 
-lemma cpce_zero_drops (h) (G):
-      ∀i,L. (∀n,p,K,W,V,U. ⇩*[i] L ≘ K.ⓛW → ⦃G,K⦄ ⊢ W ➡*[n,h] ⓛ{p}V.U → ⊥) →
-      ⦃G,L⦄ ⊢ #i ⬌η[h] #i.
-#h #G #i elim i -i
-[ * [ #_ // ] #L #I #Hi
-  /4 width=8 by cpce_zero, drops_refl/
-| #i #IH * [ -IH #_ // ] #L #I #Hi
-  /5 width=8 by cpce_lref, drops_drop/
+lemma cpce_lref_drops (h) (G) (K) (i):
+      ∀T. ⦃G,K⦄ ⊢ #i ⬌η[h] T → ∀j,L. ⇩*[j] L ≘ K →
+      ∀U. ⇧*[j] T ≘ U → ⦃G,L⦄ ⊢ #(j+i) ⬌η[h] U.
+#h #G #K #i #T #Hi #j elim j -j
+[ #L #HLK #U #HTU
+  lapply (drops_fwd_isid … HLK ?) -HLK [ // ] #H destruct
+  lapply (lifts_fwd_isid … HTU ?) -HTU [ // ] #H destruct //
+| #j #IH #Y #HYK #X #HTX -Hi
+  elim (drops_inv_succ … HYK) -HYK #I #L #HLK #H destruct
+  elim (lifts_split_trans … HTX (𝐔❴j❵) (𝐔❴1❵)) [| // ] #U #HTU #HUX
+  /3 width=3 by cpce_lref/
 ]
-qed.
+qed-.
 
-(* Inversion lemmas with uniform slicing for local environments *************)
+(* Advanced inversion lemmas ************************************************)
 
-lemma cpce_inv_lref_sn_drops (h) (G) (i) (L):
+lemma cpce_inv_lref_sn_drops_bind (h) (G) (i) (L):
       ∀X2. ⦃G,L⦄ ⊢ #i ⬌η[h] X2 →
       ∀I,K. ⇩*[i] L ≘ K.ⓘ{I} →
       ∨∨ ∧∧ ∀n,p,W,V,U. I = BPair Abst W → ⦃G,K⦄ ⊢ W ➡*[n,h] ⓛ{p}V.U → ⊥ & #i = X2
@@ -82,9 +95,161 @@ lemma cpce_inv_zero_sn_drops (h) (G) (i) (L):
       (∀n,p,W,V,U. I = BPair Abst W → ⦃G,K⦄ ⊢ W ➡*[n,h] ⓛ{p}V.U → ⊥) →
       #i = X2.
 #h #G #i #L #X2 #HX2 #I #K #HLK #HI
-elim (cpce_inv_lref_sn_drops … HX2 … HLK) -L *
+elim (cpce_inv_lref_sn_drops_bind … HX2 … HLK) -L *
 [ #_ #H //
 | #n #p #W #V1 #V2 #W2 #U #HWU #_ #_ #H destruct
   elim (HI … HWU) -n -p -K -X2 -V1 -V2 -W2 -U -i //
 ]
 qed-.
+
+(* Properties with uniform slicing for local environments *******************)
+
+lemma cpce_lifts_sn (h) (G):
+      d_liftable2_sn … lifts (cpce h G).
+#h #G #K #T1 #T2 #H elim H -G -K -T1 -T2
+[ #G #K #s #b #f #L #HLK #X #HX
+  lapply (lifts_inv_sort1 … HX) -HX #H destruct
+  /2 width=3 by cpce_sort, lifts_sort, ex2_intro/
+| #G #i #b #f #L #HLK #X #HX
+  elim (lifts_inv_lref1 … HX) -HX #j #Hf #H destruct
+  @(ex2_intro … (#j))
+  [ /2 width=1 by lifts_lref/
+  | @cpce_zero_drops #n #p #Y #W #V #U #HY #_
+    elim (drops_inv_atom2 … HLK) -HLK #j1 #g #HLK #Hg
+    elim (after_at_fwd … Hf … Hg) -f #j2 #_ #Hj -g -i
+    lapply (at_inv_uni … Hj) -Hj #H destruct
+    lapply (drops_conf … HLK … HY ??) -L [3:|*: // ] #H
+    elim (drops_inv_atom1 … H) -H #H #_ destruct
+  ]
+| #G #K #I #HI #b #f #L #HLK #X #HX
+  elim (lifts_inv_lref1 … HX) -HX #j #Hf #H destruct
+  @(ex2_intro … (#j))
+  [ /2 width=1 by lifts_lref/
+  | elim (drops_split_trans_bind2 … HLK … Hf) -HLK -Hf #J #Y1 #HY1 #HK #HIJ
+    @cpce_zero_drops #n #p #Y2 #W #V #U #HY2 #HWU
+    lapply (drops_mono … HY2 … HY1) -L #H destruct
+    elim (liftsb_inv_pair_dx … HIJ) -HIJ #X #HXW #H destruct
+    elim (cpms_inv_lifts_sn … HWU … HK … HXW) -b -Y1 -W #X0 #H #HXU
+    elim (lifts_inv_bind2 … H) -H #V0 #U0 #_ #_ #H destruct -f -j -V -U
+    /2 width=7 by/
+  ]
+| #n #p #G #K #W #V1 #V2 #W2 #U #HWU #_ #HVW2 #IH #b #f #L #HLK #X #HX
+  elim (lifts_inv_lref1 … HX) -HX #j #Hf #H destruct
+  elim (drops_split_trans_bind2 … HLK … Hf) -HLK #J #Y #HY #HK #HIJ
+  elim (liftsb_inv_pair_sn … HIJ) -HIJ #W0 #HW0 #H destruct
+  elim (cpms_lifts_sn … HWU … HK … HW0) -HWU -HW0 #X #H #HWU0
+  elim (lifts_inv_bind1 … H) -H #V0 #U0 #HV10 #HU0 #H destruct
+  elim (IH … HK … HV10) -IH -HK -HV10 #VX #HV2X #HV0X
+  elim (lifts_total W2 f) #WX2 #HWX2
+  lapply (lifts_trans … HVW2 … HWX2 ??) [3:|*: // ] -HVW2 #HVX2
+  @(ex2_intro … (+ⓛWX2.ⓐ#O.#(↑j)))
+  [ /5 width=1 by lifts_lref, lifts_bind, lifts_flat, at_S1/
+  | /4 width=18 by cpce_eta_drops, lifts_conf, after_uni_succ_dx/
+  ]
+| #I #G #K #T #U #i #_ #HTU #IH #b #f #L #HLK #X #HX
+  elim (lifts_inv_lref1 … HX) -HX #x #Hf #H destruct
+  elim (at_inv_nxx … Hf) -Hf [|*: // ] #j #Hf #H destruct
+  elim (drops_split_trans_bind2 … HLK) -HLK [|*: // ] #Z #Y #HLY #HYK #_ -I
+  lapply (drops_isuni_fwd_drop2 … HLY) -HLY [ // ] #HLY  
+  elim (IH … HYK) -IH -HYK [|*: /2 width=2 by lifts_lref/ ] -i #T0 #HT0 #Hj
+  elim (lifts_total U f) #U0 #HU0
+  lapply (lifts_trans … HTU … HU0 ??) [3:|*: // ] -HTU #HTU0
+  lapply (lifts_conf … HT0 … HTU0 ??) -T
+  [3:|*: /2 width=3 by after_uni_succ_dx/ ] #HTU0 >plus_S1
+  /3 width=7 by cpce_lref_drops, ex2_intro/
+| #G #K #l #b #f #L #HLK #X #HX
+  lapply (lifts_inv_gref1 … HX) -HX #H destruct
+  /2 width=3 by cpce_gref, lifts_gref, ex2_intro/
+| #p #I #G #K #V1 #V2 #T1 #T2 #_ #_ #IHV #IHT #b #f #L #HLK #X #HX
+  elim (lifts_inv_bind1 … HX) -HX #W1 #U1 #HVW1 #HTU1 #H destruct
+  elim (IHV … HLK … HVW1) -IHV #W2 #HVW2 #HW12
+  elim (IHT … HTU1) -IHT -HTU1 [|*: /3 width=3 by drops_skip, ext2_pair/ ] -HVW1 #U2 #HTU2 #HU12
+  /3 width=5 by cpce_bind, lifts_bind, ex2_intro/
+| #I #G #K #V1 #V2 #T1 #T2 #_ #_ #IHV #IHT #b #f #L #HLK #X #HX
+  elim (lifts_inv_flat1 … HX) -HX #W1 #U1 #HVW1 #HTU1 #H destruct
+  elim (IHV … HLK … HVW1) -IHV -HVW1 #W2 #HVW2 #HW12
+  elim (IHT … HLK … HTU1) -IHT -HTU1 -HLK #U2 #HTU2 #HU12
+  /3 width=5 by cpce_flat, lifts_flat, ex2_intro/
+]
+qed-.
+
+lemma cpce_lifts_bi (h) (G):
+      d_liftable2_bi … lifts (cpce h G).
+/3 width=12 by cpce_lifts_sn, d_liftable2_sn_bi, lifts_mono/ qed-.
+
+(* Inversion lemmas with uniform slicing for local environments *************)
+
+lemma cpce_inv_lifts_sn (h) (G):
+      d_deliftable2_sn … lifts (cpce h G).
+#h #G #K #T1 #T2 #H elim H -G -K -T1 -T2
+[ #G #K #s #b #f #L #HLK #X #HX
+  lapply (lifts_inv_sort2 … HX) -HX #H destruct
+  /2 width=3 by cpce_sort, lifts_sort, ex2_intro/
+| #G #i #b #f #L #HLK #X #HX
+  elim (lifts_inv_lref2 … HX) -HX #j #Hf #H destruct
+  @(ex2_intro … (#j))
+  [ /2 width=1 by lifts_lref/
+  | @cpce_zero_drops #n #p #Y #W #V #U #HY #_ -n -p -G -V -U -i
+    elim (drops_inv_atom1 … HLK) -HLK #H #_ destruct -b -f
+    elim (drops_inv_atom1 … HY) -HY #H #_ destruct
+  ]
+| #G #K #I #HI #b #f #L #HLK #X #HX
+  elim (lifts_inv_lref2 … HX) -HX #j #Hf #H destruct
+  @(ex2_intro … (#j))
+  [ /2 width=1 by lifts_lref/
+  | elim (at_inv_xxp … Hf) -Hf [| // ] #g #H1 #H2 destruct
+    elim (drops_inv_skip1 … HLK) -HLK #J #Y #HKY #HIJ #H destruct
+    @cpce_zero #n #p #W #V #U #H #HWU destruct
+    elim (liftsb_inv_pair_sn … HIJ) -HIJ #X #HXW #H destruct
+    elim (cpms_lifts_sn … HWU … HKY … HXW) -b -Y -W #X0 #H #HXU
+    elim (lifts_inv_bind1 … H) -H #V0 #U0 #_ #_ #H destruct -V -U
+    /2 width=7 by/
+  ]
+| #n #p #G #K #W #V1 #V2 #W2 #U #HWU #_ #HVW2 #IH #b #f #L #HLK #X #HX
+  elim (lifts_inv_lref2 … HX) -HX #j #Hf #H destruct
+  elim (at_inv_xxp … Hf) -Hf [| // ] #g #H1 #H2 destruct
+  elim (drops_inv_skip1 … HLK) -HLK #J #Y #HKY #HIJ #H destruct
+  elim (liftsb_inv_pair_dx … HIJ) -HIJ #W0 #HW0 #H destruct
+  elim (cpms_inv_lifts_sn … HWU … HKY … HW0) -HWU -HW0 #X #H #HWU0
+  elim (lifts_inv_bind2 … H) -H #V0 #U0 #HV10 #HU0 #H destruct
+  elim (IH … HKY … HV10) -IH -HKY -HV10 #VX #HV2X #HV0X
+  lapply (lifts_trans … HV2X … HVW2 (↑g) ?)
+  [ /3 width=5 by after_isid_sn, after_next/ ] -V2 #H
+  elim (lifts_split_trans … H 𝐔❴1❵ (⫯g) ?)
+  [| /3 width=7 by after_isid_dx, after_push/ ] #VX2 #HVX2 #HVW2
+  /5 width=10 by cpce_eta, lifts_flat, lifts_bind, lifts_lref, ex2_intro/
+| #I #G #K #T #U #i #_ #HTU #IH #b #f #L #HLK #X #HX
+  elim (lifts_inv_lref2 … HX) -HX #x #Hf #H destruct
+(**) (* this part should be a lemma *)
+  elim (at_inv_xxn … Hf) -Hf [2,4: // ] *
+  [ #g #j #Hij #H1 #H2 destruct
+    elim (drops_inv_skip1 … HLK) -HLK #J #Y #HLK #_ #H destruct -I
+  | #g #Hij #H destruct
+    lapply (drops_inv_drop1 … HLK) -HLK #HLK
+  ]
+(**)
+  elim (IH … HLK) -IH -HLK [1,4:|*: /2 width=2 by lifts_lref/ ] -i #T0 #HT0 #Hj
+  lapply (lifts_trans … HT0 … HTU (↑g) ?)
+  [1,3: /3 width=5 by after_isid_sn, after_next/ ] -T #H
+  elim (lifts_split_trans … H 𝐔❴1❵ (⫯g) ?)
+  [2,4: /3 width=7 by after_isid_dx, after_push/ ] #U0 #HTU0 #HU0
+  /3 width=5 by cpce_lref, ex2_intro/
+| #G #K #l #b #f #L #HLK #X #HX
+  lapply (lifts_inv_gref2 … HX) -HX #H destruct
+  /2 width=3 by cpce_gref, lifts_gref, ex2_intro/
+| #p #I #G #K #V1 #V2 #T1 #T2 #_ #_ #IHV #IHT #b #f #L #HLK #X #HX
+  elim (lifts_inv_bind2 … HX) -HX #W1 #U1 #HVW1 #HTU1 #H destruct
+  elim (IHV … HLK … HVW1) -IHV #W2 #HVW2 #HW12
+  elim (IHT … HTU1) -IHT -HTU1 [|*: /3 width=3 by drops_skip, ext2_pair/ ] -HVW1 #U2 #HTU2 #HU12
+  /3 width=5 by cpce_bind, lifts_bind, ex2_intro/
+| #I #G #K #V1 #V2 #T1 #T2 #_ #_ #IHV #IHT #b #f #L #HLK #X #HX
+  elim (lifts_inv_flat2 … HX) -HX #W1 #U1 #HVW1 #HTU1 #H destruct
+  elim (IHV … HLK … HVW1) -IHV -HVW1 #W2 #HVW2 #HW12
+  elim (IHT … HLK … HTU1) -IHT -HTU1 -HLK #U2 #HTU2 #HU12
+  /3 width=5 by cpce_flat, lifts_flat, ex2_intro/
+]
+qed-.
+
+lemma cpce_inv_lifts_bi (h) (G):
+      d_deliftable2_bi … lifts (cpce h G).
+/3 width=12 by cpce_inv_lifts_sn, d_deliftable2_sn_bi, lifts_inj/ qed-.
