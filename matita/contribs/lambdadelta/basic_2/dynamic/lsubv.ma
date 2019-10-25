@@ -74,7 +74,7 @@ fact lsubv_inv_atom_dx_aux (h) (a) (G):
 qed-.
 
 (* Basic_2A1: uses: lsubsv_inv_atom2 *)
-lemma lsubv_inv_atom2 (h) (a) (G):
+lemma lsubv_inv_atom_dx (h) (a) (G):
       ∀L1. G ⊢ L1 ⫃![h,a] ⋆ → L1 = ⋆.
 /2 width=6 by lsubv_inv_atom_dx_aux/ qed-.
 

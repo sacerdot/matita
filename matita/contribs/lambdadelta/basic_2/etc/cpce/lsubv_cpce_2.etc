@@ -1,0 +1,59 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* include "basic_2/rt_equivalence/cpes.ma". *)
+include "basic_2/dynamic/cnv_cpmuwe.ma".
+(* include "basic_2/dynamic/lsubv.ma". *)
+
+(* T-BOUND CONTEXT-SENSITIVE PARALLEL RT-EQUIVALENCE FOR TERMS **************)
+
+(* Properties with restricted refinement for local environments *************)
+
+lemma lsubr_cnuw_trans (h) (G):
+      ∀L2,T. ⦃G,L2⦄ ⊢ ➡𝐍𝐖*[h] T → ∀L1. L1 ⫃ L2 → ⦃G,L1⦄ ⊢ ➡𝐍𝐖*[h] T.
+#h #G #L2 #T1 #HT1 #L1 #HL12 #n #T2 #HT12 
+
+lemma lsubv_cpmuwe_trans (h) (a) (n) (G):
+      lsub_trans … (cpmuwe h n G) (lsubv h a G).
+#h #a #n #G #L2 #T1 #T2 * #HT12 #HT2 #L1 #HL12
+lapply (lsubv_cpms_trans … HT12 … HL12) -HT12 #HT12
+@(cpmuwe_intro … HT12) -HT12
+
+lemma cnv_cpmuwe_cpms_conf (h) (a) (G) (L):
+      ∀T. ⦃G,L⦄ ⊢ T ![h,a] → ∀n1,T1. ⦃G,L⦄ ⊢ T ➡*[n1,h] T1 →
+      ∀n2,T2. ⦃G,L⦄ ⊢ T ➡*𝐍𝐖*[h,n2] T2 →
+      ∃∃T0. ⦃G,L⦄ ⊢ T1 ➡*[n2-n1,h] T0 & T0 ≅ T2 & ⦃G,L⦄ ⊢ ➡𝐍𝐖*[h] T2.
+#h #a #G #L #T0 #HT0 #n1 #T1 #HT01 #n2 #T2 * #HT02 #HT2
+elim (cnv_cpms_conf … HT0 … HT01 … HT02) -T0 #T0 #HT10 #HT20
+lapply (HT2 … HT20) -HT20 #HT20
+/3 width=3 by tweq_sym, ex3_intro/
+qed-.
+
+lemma lsubv_cpms_abst_conf_cnv (h) (a) (G) (L1) (T0):
+      ∀n1,p1,W1,T1. ⦃G,L1⦄ ⊢ T0 ➡*[n1,h] ⓛ{p1}W1.T1 →
+      ∀L2. ⦃G,L2⦄ ⊢ T0 ![h,a] → G ⊢ L1 ⫃![h,a] L2 →
+      ∃∃n2,p2,W2,T2. ⦃G,L2⦄ ⊢ T0 ➡*[n2,h] ⓛ{p2}W2.T2.
+#h #a #G #L1 #T0 #n1 #p1 #W1 #T1 #HT01 #L2 #HT0 #HL12
+elim (cnv_R_cpmuwe_total … HT0) #n2 * #X2 #HT02
+elim (abst_dec X2) [ * | #HnX2 ]
+[ #p2 #W2 #T2 #H destruct
+  /3 width=5 by cpmuwe_fwd_cpms, ex1_4_intro/
+| lapply (lsubv_cnv_trans … HT0 … HL12) -HT0 #HT0
+  lapply (lsubv_cpmuwe_trans … HT02 … HL12) -HT02 -HL12 #HT02
+  elim (cnv_cpmuwe_cpms_conf … HT0 … HT01 … HT02) -HT0 -HT01 -HT02 #U2 #H1 #H2 #_ 
+  elim (cpms_inv_abst_sn … H1) -H1 #W2 #T2 #_ #_ #H destruct
+  elim (tweq_inv_abst_sn … H2) -W2 -T2 #W2 #T2 #H destruct
+  elim (HnX2 p1 W2 T2) -HnX2 //
+]
+qed-.

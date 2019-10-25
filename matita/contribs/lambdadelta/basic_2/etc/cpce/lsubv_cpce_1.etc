@@ -1,0 +1,56 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2/rt_conversion/cpce.ma".
+include "basic_2/rt_equivalence/cpcs.ma".
+include "basic_2/dynamic/lsubv.ma".
+
+(* LOCAL ENVIRONMENT REFINEMENT FOR NATIVE VALIDITY *************************)
+
+lemma lsubv_inv_unit_dx (h) (a) (G):
+      ∀I,L1,K2. G ⊢ L1 ⫃![h,a] K2.ⓤ{I} →
+      ∃∃K1. G ⊢ K1 ⫃![h,a] K2 & L1 = K1.ⓤ{I}.
+#h #a #G #I #L1 #K2 #H
+elim (lsubv_inv_bind_dx … H) -H // *
+#K1 #XW #XV #_ #_ #H1 #H2 destruct
+qed-.
+
+lemma lsubv_inv_abbr_dx (h) (a) (G):
+      ∀L1,K2,V. G ⊢ L1 ⫃![h,a] K2.ⓓV →
+      ∃∃K1. G ⊢ K1 ⫃![h,a] K2 & L1 = K1.ⓓV.
+#h #a #G #L1 #K2 #V #H
+elim (lsubv_inv_bind_dx … H) -H // *
+#K1 #XW #XV #_ #_ #H1 #H2 destruct
+qed-.
+
+lemma lsubv_cpce_trans_cpcs (h) (a) (G) (T0):
+      ∀L2,T2. ⦃G,L2⦄ ⊢ T0 ⬌η[h] T2 → ∀L1. G ⊢ L1 ⫃![h,a] L2 →
+      ∃∃T1. ⦃G,L1⦄ ⊢ T0 ⬌η[h] T1 & ⦃G,L1⦄ ⊢ T1 ⬌*[h] T2.
+#h #a #G #T0 #L2 #T2 #H elim H -G -L2 -T0 -T2
+[ #G #L2 #s #L1 #HL12
+  /2 width=3 by cpce_sort, ex2_intro/
+| #G #i #Y1 #HY1
+  lapply (lsubv_inv_atom2 … HY1) -HY1 #H destruct
+   /2 width=3 by cpce_atom, ex2_intro/
+| #I #G #K2 #Y1 #HY1
+  elim (lsubv_inv_unit_dx … HY1) -HY1 #K2 #_ #H destruct
+  /2 width=3 by cpce_unit, ex2_intro/
+| #G #K2 #V2 #Y1 #HY1
+  elim (lsubv_inv_abbr_dx … HY1) -HY1 #K2 #_ #H destruct
+  /2 width=3 by cpce_ldef, ex2_intro/
+| #G #K2 #W2 #HW2 #Y1 #HY1
+  elim (lsubv_inv_bind_dx … HY1) -HY1 *
+  [ #K1 #HK12 #H destruct
+    @(ex2_intro … (#0)) [| // ]
+    @cpce_ldec #n #p #V2 #U2 #HWU2
