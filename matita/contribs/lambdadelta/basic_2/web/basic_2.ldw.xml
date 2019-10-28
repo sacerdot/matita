@@ -46,7 +46,7 @@
          (i.e. no induction on the degree).
    </news>
    <news class="beta" date="2018 November 1.">
-         Extended (λδ-2A) and restricted (λδ-1A) type rules justified.
+         Extended (λδ-2A) and restricted (λδ-1B) validity rules justified.
    </news>
    <news class="alpha" date="2018 September 21.">
          λδ-2A completed with
@@ -102,7 +102,7 @@
          λδ-2A appears too complex and is dismissed.
    </news>
    <news class="gamma" date="2014 October 28.">
-         λδ version 2A is released.
+         λδ-2A is released.
    </news>
    <news class="beta" date="2014 September 9.">
          Iterated static type assignment defined (more elegantly)

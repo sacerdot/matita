@@ -25,7 +25,7 @@ table {
         ]
         [ { "context-sensitive native validity" * } {
              [ [ "restricted refinement for lenvs" ] "lsubv ( ? ⊢ ? ⫃![?,?] ? )" "lsubv_drops" + "lsubv_lsubr" + "lsubv_lsuba" + "lsubv_cpms" + "lsubv_cpcs" + "lsubv_cnv" + "lsubv_lsubv" * ]
-             [ [ "for terms" ] "cnv" + "( ⦃?,?⦄ ⊢ ? ![?,?] )" "cnv_acle" + "cnv_drops" + "cnv_fqus" + "cnv_aaa" + "cnv_fsb" + "cnv_cpm_trans" + "cnv_cpm_conf" + "cnv_cpm_tdeq" + "cnv_cpm_tdeq_trans" + "cnv_cpm_tdeq_conf" + "cnv_cpms_tdeq" + "cnv_cpms_conf" + "cnv_cpms_tdeq_conf" + "cnv_cpme" + "cnv_cpmuwe" + "cnv_cpmuwe_cpme" + "cnv_eval" + "cnv_cpes" + "cnv_cpcs" + "cnv_preserve_sub" + "cnv_preserve" + "cnv_preserve_cpes" + "cnv_preserve_cpcs" * ]
+             [ [ "for terms" ] "cnv" + "( ⦃?,?⦄ ⊢ ? ![?,?] )" "cnv_acle" + "cnv_drops" + "cnv_fqus" + "cnv_aaa" + "cnv_fsb" + "cnv_cpm_trans" + "cnv_cpm_conf" + "cnv_cpm_tdeq" + "cnv_cpm_tdeq_trans" + "cnv_cpm_tdeq_conf" + "cnv_cpms_tdeq" + "cnv_cpms_conf" + "cnv_cpms_tdeq_conf" + "cnv_cpme" + "cnv_cpmuwe" + "cnv_cpmuwe_cpme" + "cnv_cpts" + "cnv_cpes" + "cnv_cpcs" + "cnv_preserve_sub" + "cnv_preserve" + "cnv_preserve_cpes" + "cnv_preserve_cpcs" + "cnv_eval" * ]
           }
         ]
      }
@@ -60,6 +60,10 @@ table {
    ]
    class "sky"
    [ { "rt-computation" * } {
+        [ { "context-sensitive parallel t-computation" * } {
+             [ [ "for terms" ] "cpts" + "( ⦃?,?⦄ ⊢ ? ⬆*[?,?] ? )" "cpts_drops" + "cpts_aaa" + "cpts_cpms" * ]
+          }
+        ]
         [ { "context-sensitive parallel r-computation" * } {
              [ [ "evaluation for terms" ] "cpre ( ⦃?,?⦄ ⊢ ? ➡*[?] 𝐍⦃?⦄ )" "cpre_csx" + "cpre_cpms" + "cpre_cpre" * ]
              [ [ "for lenvs on all entries" ] "lprs ( ⦃?,?⦄ ⊢ ➡*[?] ? )" "lprs_tc" + "lprs_ctc" + "lprs_length" + "lprs_drops" + "lprs_aaa" + "lprs_lpr" + "lprs_lpxs" + "lprs_cpms" + "lprs_cprs" + "lprs_lprs" * ]
