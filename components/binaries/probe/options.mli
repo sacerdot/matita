@@ -35,4 +35,8 @@ val no_devel: bool ref
 
 val no_init: bool ref
 
+val add_dep: NUri.uri -> NUri.uri -> unit
+
+val out_deps: string -> unit
+
 val clear: unit -> unit

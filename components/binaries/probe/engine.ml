@@ -43,14 +43,14 @@ let is_registry str =
 let get_uri str =
   let str = H.normalize_path str in
   let dir, file =
-      if H.is_regular str && F.check_suffix str ".ma" 
+      if H.is_regular str && F.check_suffix str ".ma"
       then F.dirname str, F.chop_extension (F.basename str)
       else if H.is_dir str then str, ""
       else missing str
    in
    let rec aux bdir file = match B.find_roots_in_dir bdir with
-      | [root] -> 
-         let buri = L.assoc "baseuri" (B.load_root_file root) in         
+      | [root] ->
+         let buri = L.assoc "baseuri" (B.load_root_file root) in
 	 F.concat bdir file, F.concat buri file
       | roots  ->
          if bdir = F.current_dir_name || bdir = F.dir_sep then unrooted dir roots else

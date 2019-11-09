@@ -50,7 +50,8 @@ define MAS_TEMPLATE
 
 $(1)/$(1)_probe.txt: $$(MAS_$(1))
 	@echo "  PROBE $(1)"
-	$$(H)$$(PRB_DIR)/$$(PRB) $$(PRB_OPTS) $(1) -sn -sc -on -oc -f > $$@
+	$$(H)$$(PRB_DIR)/$$(PRB) $$(PRB_OPTS) $(1) -sn -sc -on -oc -f -b $(1)/$(1)_deps.txt > $$@
+	$$(H)sort < $(1)/$(1)_deps.txt | uniq > $(1)/$(1)_deps_uniq.txt
 endef
 
 $(foreach PKG, $(PACKAGES), $(eval $(call MAS_TEMPLATE,$(PKG))))
@@ -102,19 +103,19 @@ $(DEP_INPUT): $(MAS) Makefile
 
 deps: $(DEP_INPUT)
 	@echo "  MATITADEP -c"
-	$(H)$(DEP_DIR)/$(DEP) -c $(DEP_OPTS) < $<
+	$(H)$(DEP_DIR)/$(DEP) -c $(DEP_OPTS) $<
 
 # top ########################################################################
 
 top: $(DEP_INPUT)
 	@echo "  MATITADEP -t"
-	$(H)$(DEP_DIR)/$(DEP) -t $(DEP_OPTS) < $<
+	$(H)$(DEP_DIR)/$(DEP) -t $(DEP_OPTS) $<
 
 # leaf #######################################################################
 
 leaf: $(DEP_INPUT)
 	@echo "  MATITADEP -l"
-	$(H)$(DEP_DIR)/$(DEP) -l $(DEP_OPTS) < $<
+	$(H)$(DEP_DIR)/$(DEP) -l $(DEP_OPTS) $<
 
 # stats ######################################################################
 

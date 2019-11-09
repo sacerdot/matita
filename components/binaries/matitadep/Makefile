@@ -1,6 +1,6 @@
 EXEC = matitadep
 VERSION=0.1.0
 
-REQUIRES =
+REQUIRES = helm-ng_library
 
 include ../Makefile.common

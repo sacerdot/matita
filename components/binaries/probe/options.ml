@@ -12,9 +12,11 @@
 module A = Array
 module P = Printf
 
-module C = NCic
+module C  = NCic
 module R  = Helm_registry
+module U  = NUri
 module US = NUri.UriSet
+module UH = NUri.UriHash
 
 type def_xflavour = [ C.def_flavour
                     | `Inductive
@@ -60,27 +62,41 @@ let no_devel = ref default_no_devel
 
 let no_init = ref default_no_init
 
-let index_of_xflavour = function 
-   | `Inductive  -> 0
-   | `Axiom      -> 1 
-   | `Definition -> 2
-   | `Fact       -> 3
-   | `Lemma      -> 4
-   | `Theorem    -> 5
-   | `Corollary  -> 6
-   | `Example    -> 7
+let deps = UH.create 11
+
+let index_of_xflavour = function
+  | `Inductive  -> 0
+  | `Axiom      -> 1
+  | `Definition -> 2
+  | `Fact       -> 3
+  | `Lemma      -> 4
+  | `Theorem    -> 5
+  | `Corollary  -> 6
+  | `Example    -> 7
 
 let add_xflavour n xf =
-   let i = index_of_xflavour xf in
-   slot.(i) <- slot.(i) + n
+  let i = index_of_xflavour xf in
+  slot.(i) <- slot.(i) + n
 
 let clear_slot i _ = slot.(i) <- 0
 
 let iter_xflavours map = A.iteri (fun _ -> map) slot
 
+let add_dep c u =
+  UH.add deps c u
+
+let out_deps file =
+  let och = open_out file in
+  let map a b =
+    P.fprintf och "\"%s\": \"%s\"\n" (U.string_of_uri a) (U.string_of_uri b)
+  in
+  UH.iter map deps;
+  close_out och
+
 let clear () =
-   R.clear (); A.iteri clear_slot slot;
-   objs := default_objs; srcs := default_srcs; remove := default_remove;
-   exclude := default_exclude; net := default_net;
-   chars := default_chars; debug_lexer := default_debug_lexer;
-   no_devel := default_no_devel; no_init := default_no_init
+  R.clear (); A.iteri clear_slot slot;
+  objs := default_objs; srcs := default_srcs; remove := default_remove;
+  exclude := default_exclude; net := default_net;
+  chars := default_chars; debug_lexer := default_debug_lexer;
+  no_devel := default_no_devel; no_init := default_no_init;
+  UH.reset deps
