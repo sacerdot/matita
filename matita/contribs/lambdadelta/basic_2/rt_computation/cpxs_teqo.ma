@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/syntax/toeq_tdeq.ma".
+include "static_2/syntax/teqo_tdeq.ma".
 include "basic_2/rt_computation/cpxs_lsubr.ma".
 include "basic_2/rt_computation/cpxs_cnx.ma".
 include "basic_2/rt_computation/lpxs_cpxs.ma".
@@ -46,7 +46,7 @@ lemma cpxs_fwd_beta (h) (p) (G) (L):
       ∀V,W,T,X2. ⦃G,L⦄ ⊢ ⓐV.ⓛ{p}W.T ⬈*[h] X2 →
       ∨∨ ⓐV.ⓛ{p}W.T ⩳ X2 | ⦃G,L⦄ ⊢ ⓓ{p}ⓝW.V.T ⬈*[h] X2.
 #h #p #G #L #V #W #T #X2 #H elim (cpxs_inv_appl1 … H) -H *
-[ #V0 #T0 #_ #_ #H destruct /2 width=1 by toeq_pair, or_introl/
+[ #V0 #T0 #_ #_ #H destruct /2 width=1 by teqo_pair, or_introl/
 | #b #W0 #T0 #HT0 #HU
   elim (cpxs_inv_abst1 … HT0) -HT0 #W1 #T1 #HW1 #HT1 #H destruct
   lapply (lsubr_cpxs_trans … HT1 (L.ⓓⓝW.V) ?) -HT1
@@ -62,7 +62,7 @@ lemma cpxs_fwd_theta (h) (p) (G) (L):
            ∨∨ ⓐV1.ⓓ{p}V.T ⩳ X2 | ⦃G,L⦄ ⊢ ⓓ{p}V.ⓐV2.T ⬈*[h] X2.
 #h #p #G #L #V1 #V #T #X2 #H #V2 #HV12
 elim (cpxs_inv_appl1 … H) -H *
-[ -HV12 #V0 #T0 #_ #_ #H destruct /2 width=1 by toeq_pair, or_introl/
+[ -HV12 #V0 #T0 #_ #_ #H destruct /2 width=1 by teqo_pair, or_introl/
 | #q #W #T0 #HT0 #HU
   elim (cpxs_inv_abbr1_dx … HT0) -HT0 *
   [ #V3 #T3 #_ #_ #H destruct
@@ -93,10 +93,10 @@ lemma cpxs_fwd_cast (h) (G) (L):
       ∨∨ ⓝW. T ⩳ X2 | ⦃G,L⦄ ⊢ T ⬈*[h] X2 | ⦃G,L⦄ ⊢ W ⬈*[h] X2.
 #h #G #L #W #T #X2 #H
 elim (cpxs_inv_cast1 … H) -H /2 width=1 by or3_intro1, or3_intro2/ *
-#W0 #T0 #_ #_ #H destruct /2 width=1 by toeq_pair, or3_intro0/
+#W0 #T0 #_ #_ #H destruct /2 width=1 by teqo_pair, or3_intro0/
 qed-.
 
 lemma cpxs_fwd_cnx (h) (G) (L):
       ∀T1. ⦃G,L⦄ ⊢ ⬈[h] 𝐍⦃T1⦄ →
       ∀X2. ⦃G,L⦄ ⊢ T1 ⬈*[h] X2 → T1 ⩳ X2.
-/3 width=5 by cpxs_inv_cnx1, tdeq_toeq/ qed-.
+/3 width=5 by cpxs_inv_cnx1, tdeq_teqo/ qed-.

@@ -99,19 +99,7 @@ lemma nta_inv_appl_sn_ntas (h) (a) (G) (L) (V) (T):
       ∨∨ ∃∃p,W,U,U0. ad a 0 & ⦃G,L⦄ ⊢ V :[h,a] W & ⦃G,L⦄ ⊢ T :*[h,a,0] ⓛ{p}W.U0 & ⦃G,L.ⓛW⦄ ⊢ U0 :[h,a] U & ⦃G,L⦄ ⊢ ⓐV.ⓛ{p}W.U ⬌*[h] X & ⦃G,L⦄ ⊢ X ![h,a]
        | ∃∃n,p,W,U,U0. ad a (↑n) & ⦃G,L⦄ ⊢ V :[h,a] W & ⦃G,L⦄ ⊢ T :[h,a] U & ⦃G,L⦄ ⊢ U :*[h,a,n] ⓛ{p}W.U0 & ⦃G,L⦄ ⊢ ⓐV.U ⬌*[h] X & ⦃G,L⦄ ⊢ X ![h,a].
 #h #a #G #L #V #T #X #H
-(*
-lapply (nta_ntas … H) -H #H
-elim (ntas_inv_appl_sn … H) -H * #n #p #W #U #U0 #Hn #Ha #HVW #HTU #HU #HUX #HX
-[ elim (eq_or_gt n) #H destruct
-  [ <minus_n_O in HU; #HU -Hn
-    /4 width=8 by ntas_inv_nta, ex6_4_intro, or_introl/
-  | lapply (le_to_le_to_eq … Hn H) -Hn -H #H destruct
-    <minus_n_n in HU; #HU
-    @or_intror
-    @(ex6_5_intro … Ha … HUX HX) -Ha -X
-    [2,4: /2 width=2 by ntas_inv_nta/
-    |6: @ntas_refl
-*)
+(* Note: insert here: alternate proof in ntas_nta.etc *)
 elim (cnv_inv_cast … H) -H #X0 #HX #HVT #HX0 #HTX0
 elim (cnv_inv_appl … HVT) #n #p #W #U0 #Ha #HV #HT #HVW #HTU0
 elim (eq_or_gt n) #Hn destruct

@@ -12,20 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/syntax/term_simple.ma".
-include "static_2/syntax/toeq.ma".
+include "static_2/syntax/term_vector.ma".
+include "static_2/syntax/teqo_simple.ma".
 
 (* SORT-IRRELEVANT OUTER EQUIVALENCE FOR TERMS ******************************)
 
-(* Properies with simple (neutral) terms ************************************)
+(* Advanced inversion lemmas with simple (neutral) terms ********************)
 
-(* Basic_2A1: was: simple_tsts_repl_dx *)
-lemma simple_toeq_repl_dx: ∀T1,T2. T1 ⩳ T2 → 𝐒⦃T1⦄ → 𝐒⦃T2⦄.
-#T1 #T2 * -T1 -T2 //
-#I #V1 #V2 #T1 #T2 #H
-elim (simple_inv_pair … H) -H #J #H destruct //
+(* Basic_1: was only: iso_flats_lref_bind_false iso_flats_flat_bind_false *)
+(* Basic_2A1: was: tsts_inv_bind_applv_simple *)
+lemma teqo_inv_applv_bind_simple (p) (I):
+      ∀Vs,V2,T1,T2. ⒶVs.T1 ⩳ ⓑ{p,I}V2.T2 → 𝐒⦃T1⦄ → ⊥.
+#p #I #Vs #V2 #T1 #T2 #H elim (teqo_inv_pair2 … H) -H
+#V0 #T0 elim Vs -Vs normalize
+[ #H destruct #H /2 width=5 by simple_inv_bind/
+| #V #Vs #_ #H destruct
+]
 qed-.
-
-(* Basic_2A1: was: simple_tsts_repl_sn *)
-lemma simple_toeq_repl_sn: ∀T1,T2. T1 ⩳ T2 → 𝐒⦃T2⦄ → 𝐒⦃T1⦄.
-/3 width=3 by simple_toeq_repl_dx, toeq_sym/ qed-.

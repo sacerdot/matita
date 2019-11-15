@@ -12,20 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/syntax/term_vector.ma".
-include "static_2/syntax/toeq_simple.ma".
+include "static_2/syntax/tdeq.ma".
+include "static_2/syntax/teqo.ma".
 
 (* SORT-IRRELEVANT OUTER EQUIVALENCE FOR TERMS ******************************)
 
-(* Advanced inversion lemmas with simple (neutral) terms ********************)
+(* Properties with sort-irrelevant equivalence for terms ********************)
 
-(* Basic_1: was only: iso_flats_lref_bind_false iso_flats_flat_bind_false *)
-(* Basic_2A1: was: tsts_inv_bind_applv_simple *)
-lemma toeq_inv_applv_bind_simple (p) (I):
-      ∀Vs,V2,T1,T2. ⒶVs.T1 ⩳ ⓑ{p,I}V2.T2 → 𝐒⦃T1⦄ → ⊥.
-#p #I #Vs #V2 #T1 #T2 #H elim (toeq_inv_pair2 … H) -H
-#V0 #T0 elim Vs -Vs normalize
-[ #H destruct #H /2 width=5 by simple_inv_bind/
-| #V #Vs #_ #H destruct
-]
-qed-.
+lemma tdeq_teqo: ∀T1,T2. T1 ≛ T2 → T1 ⩳ T2.
+#T1 #T2 * -T1 -T2 /2 width=1 by teqo_sort, teqo_pair/
+qed.

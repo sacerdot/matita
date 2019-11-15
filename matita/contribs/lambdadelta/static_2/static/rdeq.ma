@@ -99,11 +99,11 @@ lemma rdeq_sort: ∀I1,I2,L1,L2,s.
 lemma rdeq_pair: ∀I,L1,L2,V1,V2.
                  L1 ≛[V1] L2 → V1 ≛ V2 → L1.ⓑ{I}V1 ≛[#0] L2.ⓑ{I}V2.
 /2 width=1 by rex_pair/ qed.
-(*
-lemma rdeq_unit: ∀f,I,L1,L2. 𝐈⦃f⦄ → L1 ⪤[cdeq_ext,cfull,f] L2 →
+
+lemma rdeq_unit: ∀f,I,L1,L2. 𝐈⦃f⦄ → L1 ≛[f] L2 →
                  L1.ⓤ{I} ≛[#0] L2.ⓤ{I}.
 /2 width=3 by rex_unit/ qed.
-*)
+
 lemma rdeq_lref: ∀I1,I2,L1,L2,i.
                  L1 ≛[#i] L2 → L1.ⓘ{I1} ≛[#↑i] L2.ⓘ{I2}.
 /2 width=1 by rex_lref/ qed.
@@ -125,17 +125,16 @@ lemma rdeq_inv_atom_sn: ∀Y2. ∀T:term. ⋆ ≛[T] Y2 → Y2 = ⋆.
 
 lemma rdeq_inv_atom_dx: ∀Y1. ∀T:term. Y1 ≛[T] ⋆ → Y1 = ⋆.
 /2 width=3 by rex_inv_atom_dx/ qed-.
-(*
-lemma rdeq_inv_zero: ∀Y1,Y2. Y1 ≛[#0] Y2 →
-                     ∨∨ ∧∧ Y1 = ⋆ & Y2 = ⋆
-                      | ∃∃I,L1,L2,V1,V2. L1 ≛[V1] L2 & V1 ≛ V2 &
-                                         Y1 = L1.ⓑ{I}V1 & Y2 = L2.ⓑ{I}V2
-                      | ∃∃f,I,L1,L2. 𝐈⦃f⦄ & L1 ⪤[cdeq_ext h o,cfull,f] L2 &
-                                         Y1 = L1.ⓤ{I} & Y2 = L2.ⓤ{I}.
+
+lemma rdeq_inv_zero:
+      ∀Y1,Y2. Y1 ≛[#0] Y2 →
+      ∨∨ ∧∧ Y1 = ⋆ & Y2 = ⋆
+       | ∃∃I,L1,L2,V1,V2. L1 ≛[V1] L2 & V1 ≛ V2 & Y1 = L1.ⓑ{I}V1 & Y2 = L2.ⓑ{I}V2
+       | ∃∃f,I,L1,L2. 𝐈⦃f⦄ & L1 ≛[f] L2 & Y1 = L1.ⓤ{I} & Y2 = L2.ⓤ{I}.
 #Y1 #Y2 #H elim (rex_inv_zero … H) -H *
 /3 width=9 by or3_intro0, or3_intro1, or3_intro2, ex4_5_intro, ex4_4_intro, conj/
 qed-.
-*)
+
 lemma rdeq_inv_lref: ∀Y1,Y2,i. Y1 ≛[#↑i] Y2 →
                      ∨∨ ∧∧ Y1 = ⋆ & Y2 = ⋆
                       | ∃∃I1,I2,L1,L2. L1 ≛[#i] L2 &

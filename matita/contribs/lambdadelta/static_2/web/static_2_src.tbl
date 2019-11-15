@@ -86,7 +86,7 @@ table {
         [ { "generic and uniform relocation" * } {
              [ [ "for binders" ] "lifts_bind" + "( ⇧*[?] ? ≘ ? )" "lifts_weight_bind" + "lifts_lifts_bind" * ]
              [ [ "for term vectors" ] "lifts_vector" + "( ⇧*[?] ? ≘ ? )" "lifts_lifts_vector" * ]
-             [ [ "for terms" ] "lifts" + "( ⇧*[?] ? ≘ ? )" "lifts_simple" + "lifts_weight" + "lifts_tdeq" + "lifts_tweq" + "lifts_toeq" + "lifts_lifts" * ]
+             [ [ "for terms" ] "lifts" + "( ⇧*[?] ? ≘ ? )" "lifts_simple" + "lifts_weight" + "lifts_tdeq" + "lifts_tweq" + "lifts_teqo" + "lifts_lifts" * ]
           }
         ]
         [ { "syntactic equivalence" * } {
@@ -117,7 +117,7 @@ table {
           }
         ]
         [ { "sort-irrelevant outer equivalence" * } {
-             [ [ "for terms" ] "toeq" + "( ? ⩳ ? )" "toeq_simple" + "toeq_tdeq" + "toeq_toeq" + "toeq_simple_vector" * ]
+             [ [ "for terms" ] "teqo" + "( ? ⩳ ? )" "teqo_simple" + "teqo_tdeq" + "teqo_teqo" + "teqo_simple_vector" * ]
           }
         ]
         [ { "sort-irrelevant whd equivalence" * } {

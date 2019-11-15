@@ -48,16 +48,7 @@ lemma frees_unit_drops:
   #J #L #HLK #H destruct /3 width=1 by frees_lref/
 ]
 qed.
-(*
-lemma frees_sort_pushs:
-      ∀f,K,s. K ⊢ 𝐅+⦃⋆s⦄ ≘ f →
-      ∀i,L. ⇩*[i] L ≘ K → L ⊢ 𝐅+⦃⋆s⦄ ≘ ⫯*[i] f.
-#f #K #s #Hf #i elim i -i
-[ #L #H lapply (drops_fwd_isid … H ?) -H //
-| #i #IH #L #H elim (drops_inv_succ … H) -H /3 width=1 by frees_sort/
-]
-qed.
-*)
+
 lemma frees_lref_pushs:
       ∀f,K,j. K ⊢ 𝐅+⦃#j⦄ ≘ f →
       ∀i,L. ⇩*[i] L ≘ K → L ⊢ 𝐅+⦃#(i+j)⦄ ≘ ⫯*[i] f.
@@ -67,16 +58,7 @@ lemma frees_lref_pushs:
   #I #Y #HYK #H destruct /3 width=1 by frees_lref/
 ]
 qed.
-(*
-lemma frees_gref_pushs:
-      ∀f,K,l. K ⊢ 𝐅+⦃§l⦄ ≘ f →
-      ∀i,L. ⇩*[i] L ≘ K → L ⊢ 𝐅+⦃§l⦄ ≘ ⫯*[i] f.
-#f #K #l #Hf #i elim i -i
-[ #L #H lapply (drops_fwd_isid … H ?) -H //
-| #i #IH #L #H elim (drops_inv_succ … H) -H /3 width=1 by frees_gref/
-]
-qed.
-*)
+
 (* Advanced inversion lemmas ************************************************)
 
 lemma frees_inv_lref_drops:

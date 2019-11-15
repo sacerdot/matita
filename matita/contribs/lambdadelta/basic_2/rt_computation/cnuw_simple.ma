@@ -18,13 +18,6 @@ include "basic_2/rt_computation/cnuw.ma".
 
 (* NORMAL TERMS FOR T-UNUNBOUND WHD RT-TRANSITION ***************************)
 
-(* Advanced forward lemma with with simple terms ****************************)
-(*
-lemma cnuw_fwd_appl_simple (h) (G) (L):
-      ∀V,T. ⦃G,L⦄ ⊢ ➡𝐍𝐖*[h] ⓐV.T → 𝐒⦃T⦄.
-#h #G #L #V #T #HT
-elim (simple_dec_ex T) [ // ] * #p #I #W #U #H destruct
-*)
 (* Advanced properties with simple terms ************************************)
 
 lemma cnuw_appl_simple (h) (G) (L):

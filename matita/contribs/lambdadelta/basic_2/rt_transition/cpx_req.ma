@@ -20,7 +20,7 @@ include "basic_2/rt_transition/rpx_fsle.ma".
 (* Properties with syntactic equivalence for lenvs on referred entries ******)
 
 (* Basic_2A1: was: lleq_cpx_trans *)
-lemma req_cpx_trans: ∀h,G. req_transitive (cpx h G).
+lemma req_cpx_trans (h) (G): req_transitive (cpx h G).
 #h #G #L2 #T1 #T2 #H @(cpx_ind … H) -G -L2 -T1 -T2 /2 width=2 by cpx_ess/
 [ #I #G #K2 #V1 #V2 #W2 #_ #IH #HVW2 #L1 #H
   elim (req_inv_zero_pair_dx … H) -H #K1 #HK12 #H destruct
@@ -48,18 +48,7 @@ lemma req_cpx_trans: ∀h,G. req_transitive (cpx h G).
   elim (req_inv_bind … H) -H /3 width=3 by cpx_theta/
 ]
 qed-.
-(*
-(* Basic_2A1: was: cpx_lleq_conf *)
-lemma cpx_req_conf: ∀h,G,L2,T1,T2. ⦃G,L2⦄ ⊢ T1 ⬈[h] T2 →
-                    ∀L1. L2 ≘[T1] L1 → ⦃G,L1⦄ ⊢ T1 ⬈[h] T2.
-/3 width=3 by req_cpx_trans, req_sym/ qed-.
-*)
+
 (* Basic_2A1: was: cpx_lleq_conf_sn *)
-lemma cpx_req_conf_sn: ∀h,G. s_r_confluent1 … (cpx h G) req.
+lemma cpx_req_conf_sn (h) (G): s_r_confluent1 … (cpx h G) req.
 /2 width=5 by cpx_rex_conf/ qed-.
-(*
-(* Basic_2A1: was: cpx_lleq_conf_dx *)
-lemma cpx_req_conf_dx: ∀h,G,L2,T1,T2. ⦃G,L2⦄ ⊢ T1 ⬈[h] T2 →
-                       ∀L1. L1 ≘[T1] L2 → L1 ≘[T2] L2.
-/4 width=6 by cpx_req_conf_sn, req_sym/ qed-.
-*)

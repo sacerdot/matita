@@ -1,0 +1,11 @@
+lapply (nta_ntas … H) -H #H
+elim (ntas_inv_appl_sn … H) -H * #n #p #W #U #U0 #Hn #Ha #HVW #HTU #HU #HUX #HX
+[ elim (eq_or_gt n) #H destruct
+  [ <minus_n_O in HU; #HU -Hn
+    /4 width=8 by ntas_inv_nta, ex6_4_intro, or_introl/
+  | lapply (le_to_le_to_eq … Hn H) -Hn -H #H destruct
+    <minus_n_n in HU; #HU
+    @or_intror
+    @(ex6_5_intro … Ha … HUX HX) -Ha -X
+    [2,4: /2 width=2 by ntas_inv_nta/
+    |6: @ntas_refl

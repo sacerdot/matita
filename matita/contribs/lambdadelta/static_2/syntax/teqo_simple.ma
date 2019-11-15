@@ -12,13 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/syntax/tdeq.ma".
-include "static_2/syntax/toeq.ma".
+include "static_2/syntax/term_simple.ma".
+include "static_2/syntax/teqo.ma".
 
 (* SORT-IRRELEVANT OUTER EQUIVALENCE FOR TERMS ******************************)
 
-(* Properties with sort-irrelevant equivalence for terms ********************)
+(* Properies with simple (neutral) terms ************************************)
 
-lemma tdeq_toeq: ∀T1,T2. T1 ≛ T2 → T1 ⩳ T2.
-#T1 #T2 * -T1 -T2 /2 width=1 by toeq_sort, toeq_pair/
-qed.
+(* Basic_2A1: was: simple_tsts_repl_dx *)
+lemma simple_teqo_repl_dx: ∀T1,T2. T1 ⩳ T2 → 𝐒⦃T1⦄ → 𝐒⦃T2⦄.
+#T1 #T2 * -T1 -T2 //
+#I #V1 #V2 #T1 #T2 #H
+elim (simple_inv_pair … H) -H #J #H destruct //
+qed-.
+
+(* Basic_2A1: was: simple_tsts_repl_sn *)
+lemma simple_teqo_repl_sn: ∀T1,T2. T1 ⩳ T2 → 𝐒⦃T2⦄ → 𝐒⦃T1⦄.
+/3 width=3 by simple_teqo_repl_dx, teqo_sym/ qed-.
