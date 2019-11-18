@@ -15,7 +15,7 @@
 include "basic_2/rt_computation/cpmuwe_cpmuwe.ma".
 include "basic_2/rt_equivalence/cpes_cpes.ma".
 include "basic_2/dynamic/cnv_cpmuwe.ma". (**) (* should be included by the next *)
-include "basic_2/dynamic/cnv_cpmuwe_cpme.ma".
+include "basic_2/dynamic/cnv_cpmuwe_cpmre.ma".
 include "basic_2/dynamic/cnv_cpes.ma".
 include "basic_2/dynamic/cnv_preserve_cpes.ma".
 

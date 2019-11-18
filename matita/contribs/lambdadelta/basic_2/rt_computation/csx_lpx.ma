@@ -36,7 +36,7 @@ lemma csx_abst (h) (G):
 @(csx_ind … HT) -T #T #HT #IHT
 @csx_intro #X #H1 #H2
 elim (cpx_inv_abst1 … H1) -H1 #W0 #T0 #HLW0 #HLT0 #H destruct
-elim (tdneq_inv_pair  … H2) -H2
+elim (tneqx_inv_pair  … H2) -H2
 [ #H elim H -H //
 | -IHT #H lapply (csx_cpx_trans … HLT0) // -HT #HT0
   /4 width=5 by csx_lpx_conf, lpx_pair/
@@ -53,7 +53,7 @@ lemma csx_abbr (h) (G):
 @csx_intro #X #H1 #H2
 elim (cpx_inv_abbr1 … H1) -H1 *
 [ #V1 #T1 #HLV1 #HLT1 #H destruct
-  elim (tdneq_inv_pair … H2) -H2
+  elim (tneqx_inv_pair … H2) -H2
   [ #H elim H -H //
   | /4 width=5 by csx_cpx_trans, csx_lpx_conf, lpx_pair/
   | -IHV /4 width=3 by csx_cpx_trans, cpx_cpxs, cpx_pair_sn/
@@ -83,12 +83,12 @@ elim (cpx_inv_appl1 … HL) -HL *
   elim (cpx_inv_abbr1 … HL) -HL *
   [ #V3 #T3 #HV3 #HLT3 #H0 destruct
     elim (cpx_lifts_sn … HLV10 (Ⓣ) … (L.ⓓV) … HV12) -HLV10 /3 width=1 by drops_refl, drops_drop/ #V4 #HV04 #HV24
-    elim (tdeq_dec (ⓓ{p}V.ⓐV2.T) (ⓓ{p}V3.ⓐV4.T3)) #H0
+    elim (teqx_dec (ⓓ{p}V.ⓐV2.T) (ⓓ{p}V3.ⓐV4.T3)) #H0
     [ -IHVT -HV3 -HV24 -HLT3
-      elim (tdeq_inv_pair … H0) -H0 #_ #HV3 #H0
-      elim (tdeq_inv_pair … H0) -H0 #_ #HV24 #HT3
-      elim (tdneq_inv_pair … H) -H #H elim H -H -G -L
-      /3 width=6 by tdeq_inv_lifts_bi, tdeq_pair/
+      elim (teqx_inv_pair … H0) -H0 #_ #HV3 #H0
+      elim (teqx_inv_pair … H0) -H0 #_ #HV24 #HT3
+      elim (tneqx_inv_pair … H) -H #H elim H -H -G -L
+      /3 width=6 by teqx_inv_lifts_bi, teqx_pair/
     | -V1 @(IHVT … H0 … HV04) -V0 /4 width=1 by cpx_cpxs, cpx_flat, cpx_bind/
     ]
   | #T0 #HT0 #HLT0 #H0 destruct -H -IHVT

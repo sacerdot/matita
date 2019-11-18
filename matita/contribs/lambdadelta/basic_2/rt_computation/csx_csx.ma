@@ -12,26 +12,26 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_transition/lpx_rdeq.ma".
+include "basic_2/rt_transition/lpx_reqx.ma".
 include "basic_2/rt_computation/csx_drops.ma".
 
 (* STRONGLY NORMALIZING TERMS FOR UNBOUND PARALLEL RT-TRANSITION ************)
 
 (* Advanced properties ******************************************************)
 
-lemma csx_tdeq_trans (h) (G):
+lemma csx_teqx_trans (h) (G):
       ∀L,T1. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃T1⦄ →
       ∀T2. T1 ≛ T2 → ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃T2⦄.
 #h #G #L #T1 #H @(csx_ind … H) -T1 #T #_ #IH #T2 #HT2
-@csx_intro #T1 #HT21 #HnT21 elim (tdeq_cpx_trans … HT2 … HT21) -HT21
-/4 width=5 by tdeq_repl/
+@csx_intro #T1 #HT21 #HnT21 elim (teqx_cpx_trans … HT2 … HT21) -HT21
+/4 width=5 by teqx_repl/
 qed-.
 
 lemma csx_cpx_trans (h) (G):
       ∀L,T1. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃T1⦄ →
       ∀T2. ⦃G,L⦄ ⊢ T1 ⬈[h] T2 → ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃T2⦄.
 #h #G #L #T1 #H @(csx_ind … H) -T1 #T1 #HT1 #IHT1 #T2 #HLT12
-elim (tdeq_dec T1 T2) /3 width=4 by csx_tdeq_trans/
+elim (teqx_dec T1 T2) /3 width=4 by csx_teqx_trans/
 qed-.
 
 (* Basic_1: was just: sn3_cast *)
@@ -43,7 +43,7 @@ lemma csx_cast (h) (G):
 #T #HT #IHT @csx_intro
 #X #H1 #H2 elim (cpx_inv_cast1 … H1) -H1
 [ * #W0 #T0 #HLW0 #HLT0 #H destruct
-  elim (tdneq_inv_pair … H2) -H2
+  elim (tneqx_inv_pair … H2) -H2
   [ -W -T #H elim H -H //
   | -HW -IHT /3 width=3 by csx_cpx_trans/
   | -HW -HT -IHW /4 width=3 by csx_cpx_trans, cpx_pair_sn/

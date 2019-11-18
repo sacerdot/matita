@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/predsubty_7.ma".
-include "static_2/static/fdeq.ma".
+include "static_2/static/feqx.ma".
 include "static_2/s_transition/fquq.ma".
 include "basic_2/rt_transition/lpr_lpx.ma".
 
@@ -24,7 +24,7 @@ inductive fpbq (h) (G1) (L1) (T1): relation3 genv lenv term ≝
 | fpbq_fquq: ∀G2,L2,T2. ⦃G1,L1,T1⦄ ⬂⸮ ⦃G2,L2,T2⦄ → fpbq h G1 L1 T1 G2 L2 T2
 | fpbq_cpx : ∀T2. ⦃G1,L1⦄ ⊢ T1 ⬈[h] T2 → fpbq h G1 L1 T1 G1 L1 T2
 | fpbq_lpx : ∀L2. ⦃G1,L1⦄ ⊢ ⬈[h] L2 → fpbq h G1 L1 T1 G1 L2 T1
-| fpbq_fdeq: ∀G2,L2,T2. ⦃G1,L1,T1⦄ ≛ ⦃G2,L2,T2⦄ → fpbq h G1 L1 T1 G2 L2 T2
+| fpbq_feqx: ∀G2,L2,T2. ⦃G1,L1,T1⦄ ≛ ⦃G2,L2,T2⦄ → fpbq h G1 L1 T1 G2 L2 T2
 .
 
 interpretation

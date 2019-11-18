@@ -54,22 +54,22 @@ lemma fpbs_strap2: ∀h,G1,G,G2,L1,L,L2,T1,T,T2. ⦃G1,L1,T1⦄ ≽[h] ⦃G,L,T�
 /2 width=5 by tri_TC_strap/ qed-.
 
 (* Basic_2A1: uses: lleq_fpbs fleq_fpbs *)
-lemma fdeq_fpbs: ∀h,G1,G2,L1,L2,T1,T2. ⦃G1,L1,T1⦄ ≛ ⦃G2,L2,T2⦄ → ⦃G1,L1,T1⦄ ≥[h] ⦃G2,L2,T2⦄.
-/3 width=1 by fpbq_fpbs, fpbq_fdeq/ qed.
+lemma feqx_fpbs: ∀h,G1,G2,L1,L2,T1,T2. ⦃G1,L1,T1⦄ ≛ ⦃G2,L2,T2⦄ → ⦃G1,L1,T1⦄ ≥[h] ⦃G2,L2,T2⦄.
+/3 width=1 by fpbq_fpbs, fpbq_feqx/ qed.
 
 (* Basic_2A1: uses: fpbs_lleq_trans *)
-lemma fpbs_fdeq_trans: ∀h,G1,G,L1,L,T1,T. ⦃G1,L1,T1⦄ ≥[h] ⦃G,L,T⦄ →
+lemma fpbs_feqx_trans: ∀h,G1,G,L1,L,T1,T. ⦃G1,L1,T1⦄ ≥[h] ⦃G,L,T⦄ →
                        ∀G2,L2,T2. ⦃G,L,T⦄ ≛ ⦃G2,L2,T2⦄ → ⦃G1,L1,T1⦄ ≥[h] ⦃G2,L2,T2⦄.
-/3 width=9 by fpbs_strap1, fpbq_fdeq/ qed-.
+/3 width=9 by fpbs_strap1, fpbq_feqx/ qed-.
 
 (* Basic_2A1: uses: lleq_fpbs_trans *)
-lemma fdeq_fpbs_trans: ∀h,G,G2,L,L2,T,T2. ⦃G,L,T⦄ ≥[h] ⦃G2,L2,T2⦄ →
+lemma feqx_fpbs_trans: ∀h,G,G2,L,L2,T,T2. ⦃G,L,T⦄ ≥[h] ⦃G2,L2,T2⦄ →
                        ∀G1,L1,T1. ⦃G1,L1,T1⦄ ≛ ⦃G,L,T⦄ → ⦃G1,L1,T1⦄ ≥[h] ⦃G2,L2,T2⦄.
-/3 width=5 by fpbs_strap2, fpbq_fdeq/ qed-.
+/3 width=5 by fpbs_strap2, fpbq_feqx/ qed-.
 
-lemma tdeq_rdeq_lpx_fpbs: ∀h,T1,T2. T1 ≛ T2 → ∀L1,L0. L1 ≛[T2] L0 →
+lemma teqx_reqx_lpx_fpbs: ∀h,T1,T2. T1 ≛ T2 → ∀L1,L0. L1 ≛[T2] L0 →
                           ∀G,L2. ⦃G,L0⦄ ⊢ ⬈[h] L2 → ⦃G,L1,T1⦄ ≥[h] ⦃G,L2,T2⦄.
-/4 width=5 by fdeq_fpbs, fpbs_strap1, fpbq_lpx, fdeq_intro_dx/ qed.
+/4 width=5 by feqx_fpbs, fpbs_strap1, fpbq_lpx, feqx_intro_dx/ qed.
 
 (* Basic_2A1: removed theorems 3:
               fpb_fpbsa_trans fpbs_fpbsa fpbsa_inv_fpbs

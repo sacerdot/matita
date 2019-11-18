@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/syntax/teqo_tdeq.ma".
+include "static_2/syntax/teqo_teqx.ma".
 include "basic_2/rt_computation/cpxs_lsubr.ma".
 include "basic_2/rt_computation/cpxs_cnx.ma".
 include "basic_2/rt_computation/lpxs_cpxs.ma".
@@ -99,4 +99,4 @@ qed-.
 lemma cpxs_fwd_cnx (h) (G) (L):
       ∀T1. ⦃G,L⦄ ⊢ ⬈[h] 𝐍⦃T1⦄ →
       ∀X2. ⦃G,L⦄ ⊢ T1 ⬈*[h] X2 → T1 ⩳ X2.
-/3 width=5 by cpxs_inv_cnx1, tdeq_teqo/ qed-.
+/3 width=5 by cpxs_inv_cnx1, teqx_teqo/ qed-.

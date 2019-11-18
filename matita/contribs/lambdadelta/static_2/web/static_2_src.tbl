@@ -27,12 +27,12 @@ table {
         ]
         [ { "atomic arity assignment" * } {
              [ [ "restricted refinement for lenvs" ] "lsuba" + "( ? ⊢ ? ⫃⁝ ? )" "lsuba_drops" + "lsuba_lsubr" + "lsuba_aaa" + "lsuba_lsuba" * ]
-             [ [ "for terms" ] "aaa" + "( ⦃?,?⦄ ⊢ ? ⁝ ? )" "aaa_drops" + "aaa_fqus" + "aaa_rdeq" + "aaa_fdeq" + "aaa_aaa" + "aaa_dec" * ]
+             [ [ "for terms" ] "aaa" + "( ⦃?,?⦄ ⊢ ? ⁝ ? )" "aaa_drops" + "aaa_fqus" + "aaa_reqx" + "aaa_feqx" + "aaa_aaa" + "aaa_dec" * ]
           }
         ]
         [ { "degree-based equivalence" * } {
-             [ [ "for closures on referred entries" ] "fdeq" + "( ⦃?,?,?⦄ ≛ ⦃?,?,?⦄ )" "fdeq_fqup" + "fdeq_fqus" + "fdeq_req" + "fdeq_fdeq" * ]
-             [ [ "for lenvs on referred entries" ] "rdeq" + "( ? ≛[?] ? )" "rdeq_length" + "rdeq_drops" + "rdeq_fqup" + "rdeq_fqus" + "rdeq_req" + "rdeq_rdeq" * ]
+             [ [ "for closures on referred entries" ] "feqx" + "( ⦃?,?,?⦄ ≛ ⦃?,?,?⦄ )" "feqx_fqup" + "feqx_fqus" + "feqx_req" + "feqx_feqx" * ]
+             [ [ "for lenvs on referred entries" ] "reqx" + "( ? ≛[?] ? )" "reqx_length" + "reqx_drops" + "reqx_fqup" + "reqx_fqus" + "reqx_req" + "reqx_reqx" * ]
           }
         ]
         [ { "syntactic equivalence" * } {
@@ -68,7 +68,7 @@ table {
    [ { "s-transition" * } {
         [ { "structural successor" * } {
              [ [ "for closures" ] "fquq" + "( ⦃?,?,?⦄ ⬂⸮[?] ⦃?,?,?⦄ )" + "( ⦃?,?,?⦄ ⬂⸮ ⦃?,?,?⦄ )" "fquq_length" + "fquq_weight" * ]
-             [ [ "proper for closures" ] "fqu" + "( ⦃?,?,?⦄ ⬂[?] ⦃?,?,?⦄ )" + "( ⦃?,?,?⦄ ⬂ ⦃?,?,?⦄ )" "fqu_length" + "fqu_weight" + "fqu_tdeq" * ]
+             [ [ "proper for closures" ] "fqu" + "( ⦃?,?,?⦄ ⬂[?] ⦃?,?,?⦄ )" + "( ⦃?,?,?⦄ ⬂ ⦃?,?,?⦄ )" "fqu_length" + "fqu_weight" + "fqu_teqx" * ]
           }
         ]
      }
@@ -86,7 +86,7 @@ table {
         [ { "generic and uniform relocation" * } {
              [ [ "for binders" ] "lifts_bind" + "( ⇧*[?] ? ≘ ? )" "lifts_weight_bind" + "lifts_lifts_bind" * ]
              [ [ "for term vectors" ] "lifts_vector" + "( ⇧*[?] ? ≘ ? )" "lifts_lifts_vector" * ]
-             [ [ "for terms" ] "lifts" + "( ⇧*[?] ? ≘ ? )" "lifts_simple" + "lifts_weight" + "lifts_tdeq" + "lifts_tweq" + "lifts_teqo" + "lifts_lifts" * ]
+             [ [ "for terms" ] "lifts" + "( ⇧*[?] ? ≘ ? )" "lifts_simple" + "lifts_weight" + "lifts_teqx" + "lifts_tweq" + "lifts_teqo" + "lifts_lifts" * ]
           }
         ]
         [ { "syntactic equivalence" * } {
@@ -117,16 +117,16 @@ table {
           }
         ]
         [ { "sort-irrelevant outer equivalence" * } {
-             [ [ "for terms" ] "teqo" + "( ? ⩳ ? )" "teqo_simple" + "teqo_tdeq" + "teqo_teqo" + "teqo_simple_vector" * ]
+             [ [ "for terms" ] "teqo" + "( ? ⩳ ? )" "teqo_simple" + "teqo_teqx" + "teqo_teqo" + "teqo_simple_vector" * ]
           }
         ]
         [ { "sort-irrelevant whd equivalence" * } {
-             [ [ "for terms" ] "tweq" + "( ? ≅ ? )" "tweq_simple" + "tweq_tdeq" + "tweq_tueq" * ]
+             [ [ "for terms" ] "tweq" + "( ? ≅ ? )" "tweq_simple" + "tweq_teqx" + "tweq_tueq" * ]
           }
         ]
         [ { "sort-irrelevant equivalence" * } {
-             [ [ "" ] "tdeq_ext" + "( ? ≛ ? )" + "( ? ⊢ ? ≛ ? )" * ]
-             [ [ "" ] "tdeq" + "( ? ≛ ? )" "tdeq_tdeq" * ]
+             [ [ "" ] "teqx_ext" + "( ? ≛ ? )" + "( ? ⊢ ? ≛ ? )" * ]
+             [ [ "" ] "teqx" + "( ? ≛ ? )" "teqx_teqx" * ]
           }
         ]
         [ { "closures" * } {

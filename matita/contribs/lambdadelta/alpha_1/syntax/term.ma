@@ -12,12 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/constructors/snitem2_3.ma".
-include "basic_2/notation/constructors/star_0.ma".
-include "basic_2/notation/constructors/snabstpos_2.ma".
-include "basic_2/notation/constructors/snabbr_3.ma".
-include "basic_2/notation/constructors/snabbrpos_2.ma".
-include "basic_2/notation/constructors/snabbrneg_2.ma".
+include "static_2/notation/functions/snitem2_3.ma".
+include "static_2/notation/functions/star_0.ma".
+include "static_2/notation/functions/snabstpos_2.ma".
+include "static_2/notation/functions/snabbr_3.ma".
+include "static_2/notation/functions/snabbrpos_2.ma".
+include "static_2/notation/functions/snabbrneg_2.ma".
 include "alpha_1/notation/constructors/snitem1_2.ma".
 include "alpha_1/notation/constructors/snstar_2.ma".
 include "alpha_1/notation/constructors/snlref_2.ma".

@@ -16,7 +16,25 @@ module C  = NCic
 module R  = Helm_registry
 module U  = NUri
 module US = NUri.UriSet
-module UH = NUri.UriHash
+
+module UriPair = struct
+
+  type t = U.uri * U.uri
+
+  let equal (u1l,u1r) (u2l,u2r) =
+     U.eq u1l u2l && U.eq u1r u2r
+
+  let compare (u1l,u1r) (u2l,u2r) =
+    match U.compare u1l u2l with
+    | 0 -> U.compare u1r u2r
+    | c -> c
+
+  let hash (ul,ur) =
+    Hashtbl.hash (U.hash ul, U.hash ur)
+
+end
+
+module UPS = Set.Make(UriPair)
 
 type def_xflavour = [ C.def_flavour
                     | `Inductive
@@ -62,7 +80,7 @@ let no_devel = ref default_no_devel
 
 let no_init = ref default_no_init
 
-let deps = UH.create 11
+let deps = ref UPS.empty
 
 let index_of_xflavour = function
   | `Inductive  -> 0
@@ -83,14 +101,14 @@ let clear_slot i _ = slot.(i) <- 0
 let iter_xflavours map = A.iteri (fun _ -> map) slot
 
 let add_dep c u =
-  UH.add deps c u
+  deps := UPS.add (c,u) !deps
 
 let out_deps file =
   let och = open_out file in
-  let map a b =
+  let map (a,b) =
     P.fprintf och "\"%s\": \"%s\"\n" (U.string_of_uri a) (U.string_of_uri b)
   in
-  UH.iter map deps;
+  UPS.iter map !deps;
   close_out och
 
 let clear () =
@@ -99,4 +117,4 @@ let clear () =
   exclude := default_exclude; net := default_net;
   chars := default_chars; debug_lexer := default_debug_lexer;
   no_devel := default_no_devel; no_init := default_no_init;
-  UH.reset deps
+  deps := UPS.empty

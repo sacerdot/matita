@@ -31,9 +31,9 @@ elim (cpx_inv_appl1 … H1) -H1 *
   @IHT1 -IHT1 [4: // | skip ]
   [ lapply (lsubr_cpx_trans … HLT0 (L.ⓓⓝW.V) ?) -HLT0 -H2
     /3 width=1 by cpx_bind, cpx_flat, lsubr_beta/
-  | #H elim (tdeq_inv_pair … H) -H
-    #_ #H elim (tdeq_inv_pair … H) -H
-    #_ /4 width=1 by tdeq_pair/
+  | #H elim (teqx_inv_pair … H) -H
+    #_ #H elim (teqx_inv_pair … H) -H
+    #_ /4 width=1 by teqx_pair/
   ]
 | -IHT1 -H2 #q #V0 #W0 #W2 #T0 #T2 #HLV0 #HLW02 #HLT02 #H1 #H3 destruct
   lapply (lsubr_cpx_trans … HLT02 (L.ⓓⓝW0.V) ?) -HLT02
@@ -55,7 +55,7 @@ fact csx_fwd_bind_dx_unit_aux (h) (G):
 #h #G #L #U #H elim H -H #U0 #_ #IH #p #I #J #V #T #H destruct
 @csx_intro #T2 #HLT2 #HT2
 @(IH (ⓑ{p, I}V.T2)) -IH /2 width=4 by cpx_bind_unit/ -HLT2
-#H elim (tdeq_inv_pair … H) -H /2 width=1 by/
+#H elim (teqx_inv_pair … H) -H /2 width=1 by/
 qed-.
 
 lemma csx_fwd_bind_dx_unit (h) (G):

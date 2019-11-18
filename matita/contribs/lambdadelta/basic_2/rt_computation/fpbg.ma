@@ -52,13 +52,13 @@ lemma fpbg_fpbs_trans: ∀h,G,G2,L,L2,T,T2. ⦃G,L,T⦄ ≥[h] ⦃G2,L2,T2⦄ �
 qed-.
 
 (* Basic_2A1: uses: fpbg_fleq_trans *)
-lemma fpbg_fdeq_trans: ∀h,G1,G,L1,L,T1,T. ⦃G1,L1,T1⦄ >[h] ⦃G,L,T⦄ →
+lemma fpbg_feqx_trans: ∀h,G1,G,L1,L,T1,T. ⦃G1,L1,T1⦄ >[h] ⦃G,L,T⦄ →
                        ∀G2,L2,T2. ⦃G,L,T⦄ ≛ ⦃G2,L2,T2⦄ → ⦃G1,L1,T1⦄ >[h] ⦃G2,L2,T2⦄.
-/3 width=5 by fpbg_fpbq_trans, fpbq_fdeq/ qed-.
+/3 width=5 by fpbg_fpbq_trans, fpbq_feqx/ qed-.
 
 (* Properties with t-bound rt-transition for terms **************************)
 
-lemma cpm_tdneq_cpm_fpbg (h) (G) (L):
+lemma cpm_tneqx_cpm_fpbg (h) (G) (L):
                          ∀n1,T1,T. ⦃G,L⦄ ⊢ T1 ➡[n1,h] T → (T1 ≛ T → ⊥) →
                          ∀n2,T2. ⦃G,L⦄ ⊢ T ➡[n2,h] T2 → ⦃G,L,T1⦄ >[h] ⦃G,L,T2⦄.
 /4 width=5 by fpbq_fpbs, cpm_fpbq, cpm_fpb, ex2_3_intro/ qed. 

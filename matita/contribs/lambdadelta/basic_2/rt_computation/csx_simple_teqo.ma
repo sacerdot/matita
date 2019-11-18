@@ -34,7 +34,7 @@ lemma csx_appl_simple_teqo (h) (G) (L):
 @csx_intro #X #HL #H
 elim (cpx_inv_appl1_simple … HL) -HL //
 #V0 #T0 #HLV0 #HLT10 #H0 destruct
-elim (tdneq_inv_pair … H) -H
+elim (tneqx_inv_pair … H) -H
 [ #H elim H -H //
 | -IHT1 #HV0
   @(csx_cpx_trans … (ⓐV0.T1)) /2 width=1 by cpx_flat/ -HLT10

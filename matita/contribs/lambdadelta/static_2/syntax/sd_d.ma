@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/pull/pull_2.ma".
 include "static_2/syntax/sh_props.ma".
 include "static_2/syntax/sd.ma".
 

@@ -15,6 +15,7 @@
 include "ground_2/notation/functions/uparrow_1.ma".
 include "ground_2/notation/functions/downarrow_1.ma".
 include "arithmetics/nat.ma".
+include "ground_2/pull/pull_2.ma".
 include "ground_2/lib/relations.ma".
 
 (* ARITHMETICAL PROPERTIES **************************************************)
@@ -152,6 +153,14 @@ lemma lt_S_S: ∀x,y. x < y → ↑x < ↑y.
 
 lemma lt_S: ∀n,m. n < m → n < ↑m.
 /2 width=1 by le_S/ qed.
+
+lemma monotonic_lt_minus_r:
+∀p,q,n. q < n -> q < p → n-p < n-q.
+#p #q #n #Hn #H
+lapply (monotonic_le_minus_r … n H) -H #H
+@(le_to_lt_to_lt … H) -H
+/2 width=1 by lt_plus_to_minus/
+qed.
 
 lemma max_S1_le_S: ∀n1,n2,n. (n1 ∨ n2) ≤ n → (↑n1 ∨ n2) ≤ ↑n.
 /4 width=2 by to_max, le_maxr, le_S_S, le_S/ qed-.
@@ -292,6 +301,21 @@ lemma le_elim: ∀R:relation nat.
 #R #IH1 #IH2 #n1 #n2 @(nat_elim2 … n1 n2) -n1 -n2
 /4 width=1 by monotonic_pred/ -IH1 -IH2
 #n1 #H elim (lt_le_false … H) -H //
+qed-.
+
+lemma nat_elim_le_sn (Q:relation …):
+      (∀m1,m2. (∀m. m < m2-m1 → Q (m2-m) m2) → m1 ≤ m2 → Q m1 m2) →
+      ∀n1,n2. n1 ≤ n2 → Q n1 n2.
+#Q #IH #n1 #n2 #Hn
+<(minus_minus_m_m … Hn) -Hn
+lapply (minus_le n2 n1)
+let d ≝ (n2-n1)
+@(nat_elim1 … d) -d -n1 #d
+@pull_2 #Hd
+<(minus_minus_m_m … Hd) in ⊢ (%→?); -Hd
+let n1 ≝ (n2-d) #IHd
+@IH -IH [| // ] #m #Hn
+/4 width=3 by lt_to_le, lt_to_le_to_lt/
 qed-.
 
 (* Iterators ****************************************************************)

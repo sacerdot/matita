@@ -12,10 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_computation/cpme_aaa.ma".
-include "basic_2/rt_computation/cpre_cpre.ma".
+include "basic_2/rt_computation/cpmre_aaa.ma".
+include "basic_2/rt_computation/cprre_cprre.ma".
 include "basic_2/rt_equivalence/cpes.ma".
-include "basic_2/dynamic/cnv_cpme.ma".
+include "basic_2/dynamic/cnv_cpmre.ma".
 
 (* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
 
@@ -27,15 +27,15 @@ lemma cnv_cpes_dec (h) (a) (n1) (n2) (G) (L):
 #h #a #n1 #n2 #G #L #T1 #HT1 #T2 #HT2
 elim (cnv_fwd_aaa … HT1) #A1 #HA1
 elim (cnv_fwd_aaa … HT2) #A2 #HA2
-elim (cpme_total_aaa h n1 … HA1) -HA1 #U1 #HTU1
-elim (cpme_total_aaa h n2 … HA2) -HA2 #U2 #HTU2
+elim (cpmre_total_aaa h n1 … HA1) -HA1 #U1 #HTU1
+elim (cpmre_total_aaa h n2 … HA2) -HA2 #U2 #HTU2
 elim (eq_term_dec U1 U2) [ #H destruct | #HnU12 ]
 [ cases HTU1 -HTU1 #HTU1 #_
   cases HTU2 -HTU2 #HTU2 #_
   /3 width=3 by cpms_div, or_introl/
 | @or_intror * #T0 #HT10 #HT20
-  lapply (cnv_cpme_cpms_conf … HT1 … HT10 … HTU1) -T1 #H1
-  lapply (cnv_cpme_cpms_conf … HT2 … HT20 … HTU2) -T2 #H2
-  /3 width=6 by cpre_mono/
+  lapply (cnv_cpmre_cpms_conf … HT1 … HT10 … HTU1) -T1 #H1
+  lapply (cnv_cpmre_cpms_conf … HT2 … HT20 … HTU2) -T2 #H2
+  /3 width=6 by cprre_mono/
 ]
 qed-.

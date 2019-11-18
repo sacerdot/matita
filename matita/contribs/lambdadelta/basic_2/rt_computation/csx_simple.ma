@@ -27,7 +27,7 @@ lemma csx_appl_simple: ∀h,G,L,V. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃V⦄ → ∀T1.
 @csx_intro #X #H1 #H2
 elim (cpx_inv_appl1_simple … H1) // -H1
 #V0 #T0 #HLV0 #HLT10 #H destruct
-elim (tdneq_inv_pair … H2) -H2
+elim (tneqx_inv_pair … H2) -H2
 [ #H elim H -H //
 | #HV0 @(csx_cpx_trans … (ⓐV0.T1)) /2 width=1 by cpx_flat/ -HLT10
   @(IHV … HLV0 … HV0) -HV0 /4 width=5 by csx_cpx_trans, cpx_pair_sn/ (**) (* full auto too slow *) 

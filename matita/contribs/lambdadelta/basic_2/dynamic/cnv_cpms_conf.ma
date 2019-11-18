@@ -13,13 +13,13 @@
 (**************************************************************************)
 
 include "basic_2/dynamic/cnv_cpm_conf.ma".
-include "basic_2/dynamic/cnv_cpms_tdeq_conf.ma".
+include "basic_2/dynamic/cnv_cpms_teqx_conf.ma".
 
 (* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
 
 (* Sub confluence propery with t-bound rt-computation for terms *************)
 
-fact cnv_cpms_conf_lpr_tdeq_tdeq_aux (h) (a) (G0) (L0) (T0):
+fact cnv_cpms_conf_lpr_teqx_teqx_aux (h) (a) (G0) (L0) (T0):
      (∀G,L,T. ⦃G0,L0,T0⦄ >[h] ⦃G,L,T⦄ → IH_cnv_cpm_trans_lpr h a G L T) →
      (∀G,L,T. ⦃G0,L0,T0⦄ >[h] ⦃G,L,T⦄ → IH_cnv_cpms_conf_lpr h a G L T) →
      ⦃G0,L0⦄ ⊢ T0 ![h,a] →
@@ -30,11 +30,11 @@ fact cnv_cpms_conf_lpr_tdeq_tdeq_aux (h) (a) (G0) (L0) (T0):
 #h #a #G #L0 #T0 #IH2 #IH1 #HT0
 #n1 #T1 #H1T01 #H2T01 #n2 #T2 #H1T02 #H2T02
 #L1 #HL01 #L2 #HL02
-elim (cnv_cpms_tdeq_conf_lpr_aux … IH2 IH1 … H1T01 … H1T02 … HL01 … HL02) -IH2 -IH1 -H1T01 -H1T02 -HL01 -HL02
+elim (cnv_cpms_teqx_conf_lpr_aux … IH2 IH1 … H1T01 … H1T02 … HL01 … HL02) -IH2 -IH1 -H1T01 -H1T02 -HL01 -HL02
 /2 width=3 by ex2_intro/
 qed-.
 
-fact cnv_cpms_conf_lpr_refl_tdneq_sub (h) (a) (G0) (L0) (T0) (m21) (m22):
+fact cnv_cpms_conf_lpr_refl_tneqx_sub (h) (a) (G0) (L0) (T0) (m21) (m22):
      (∀G,L,T. ⦃G0,L0,T0⦄ >[h] ⦃G,L,T⦄ → IH_cnv_cpm_trans_lpr h a G L T) →
      (∀G,L,T. ⦃G0,L0,T0⦄ >[h] ⦃G,L,T⦄ → IH_cnv_cpms_conf_lpr h a G L T) →
      ⦃G0,L0⦄ ⊢ T0 ![h,a] →
@@ -56,7 +56,7 @@ lapply (cpms_trans … HTY2 … HY2) -Y2 #HT2Y
 /2 width=3 by ex2_intro/
 qed-.
 
-fact cnv_cpms_conf_lpr_step_tdneq_sub (h) (a) (G0) (L0) (T0) (m11) (m12) (m21) (m22):
+fact cnv_cpms_conf_lpr_step_tneqx_sub (h) (a) (G0) (L0) (T0) (m11) (m12) (m21) (m22):
      (∀G,L,T. ⦃G0,L0,T0⦄ >[h] ⦃G,L,T⦄ → IH_cnv_cpm_trans_lpr h a G L T) →
      (∀G,L,T. ⦃G0,L0,T0⦄ >[h] ⦃G,L,T⦄ → IH_cnv_cpms_conf_lpr h a G L T) →
      ⦃G0,L0⦄ ⊢ T0 ![h,a] →
@@ -82,11 +82,11 @@ cut (⦃G0, L0, T0⦄ >[h] ⦃G0, L0, X2⦄) [ /4 width=5 by cpms_fwd_fpbs, cpm_
 lapply (fpbg_fpbs_trans ?? G0 ? L0 ? Z0 ? … H1fpbg) [ /2 width=2 by cpms_fwd_fpbs/ ] #H2fpbg
 lapply (cnv_cpms_trans_lpr_sub … IH2 … HXZ20 … L0 ?) // #HZ0
 elim (IH1 … HXT2 … HXZ20 … L2 … L0) [|*: /4 width=2 by fpb_fpbg, cpm_fpb/ ] -HXT2 -HXZ20 #Z2 #HTZ2 #HZ02
-elim (tdeq_dec X1 Z0) #H2XZ
+elim (teqx_dec X1 Z0) #H2XZ
 [ -IH
-  elim (cnv_cpms_conf_lpr_tdeq_tdeq_aux … HX1 … H1XT1 H2XT1 … HXZ10 H2XZ … L1 … L0) [2,3: // |4,5: /4 width=5 by cpm_fpbq, fpbq_fpbg_trans/ ]
+  elim (cnv_cpms_conf_lpr_teqx_teqx_aux … HX1 … H1XT1 H2XT1 … HXZ10 H2XZ … L1 … L0) [2,3: // |4,5: /4 width=5 by cpm_fpbq, fpbq_fpbg_trans/ ]
 | -H1XT1 -H2XT1
-  elim (cpms_tdneq_fwd_step_sn_aux … HXZ10 HX1 H2XZ) [|*: /4 width=5 by cpm_fpbq, fpbq_fpbg_trans/ ]
+  elim (cpms_tneqx_fwd_step_sn_aux … HXZ10 HX1 H2XZ) [|*: /4 width=5 by cpm_fpbq, fpbq_fpbg_trans/ ]
   -HXZ10 -H2XZ #n1 #n2 #X0 #H1X10 #H2X10 #HXZ0 #Hn
   elim (IH … H1X10 H2X10 … HXZ0 … L1 … L0) [2,3: // |4,5: /4 width=5 by cpm_fpbq, fpbq_fpbg_trans/ ]
   >Hn -n1 -n2 -X0 -IH
@@ -98,7 +98,7 @@ lapply (cpms_trans … HTZ2 … HZ02) -Z2 <arith_l4 #HT2Z
 /2 width=3 by ex2_intro/
 qed-.
 
-fact cnv_cpms_conf_lpr_tdeq_tdneq_aux (h) (a) (G0) (L0) (T0) (n1) (m21) (m22):
+fact cnv_cpms_conf_lpr_teqx_tneqx_aux (h) (a) (G0) (L0) (T0) (n1) (m21) (m22):
      (∀G,L,T. ⦃G0,L0,T0⦄ >[h] ⦃G,L,T⦄ → IH_cnv_cpm_trans_lpr h a G L T) →
      (∀G,L,T. ⦃G0,L0,T0⦄ >[h] ⦃G,L,T⦄ → IH_cnv_cpms_conf_lpr h a G L T) →
      ⦃G0,L0⦄ ⊢ T0 ![h,a] →
@@ -110,18 +110,18 @@ fact cnv_cpms_conf_lpr_tdeq_tdneq_aux (h) (a) (G0) (L0) (T0) (n1) (m21) (m22):
 #T1 #H1T01 #H2T01
 generalize in match m22; generalize in match m21; -m21 -m22
 generalize in match IH1; generalize in match IH2;
-@(cpms_tdeq_ind_sn … H1T01 HT0 H2T01 IH1 IH2) -n1 -T0
+@(cpms_teqx_ind_sn … H1T01 HT0 H2T01 IH1 IH2) -n1 -T0
 [ #HT1 #IH2 #IH1 #m21 #m22
   #X2 #HX02 #HnX02 #T2 #HXT2 #L1 #HL01 #L2 #HL02
   <minus_O_n <minus_n_O
-  @(cnv_cpms_conf_lpr_refl_tdneq_sub … IH2 IH1) -IH2 -IH1 /2 width=4 by/
+  @(cnv_cpms_conf_lpr_refl_tneqx_sub … IH2 IH1) -IH2 -IH1 /2 width=4 by/
 | #m11 #m12 #T0 #X1 #H1X01 #HT0 #H2X01 #H1XT1 #_ #H2XT1 #IH #IH2 #IH1 #m21 #m22
   #X2 #HX02 #HnX02 #T2 #HXT2 #L1 #HL01 #L2 #HL02
-  @(cnv_cpms_conf_lpr_step_tdneq_sub … IH2 IH1 … IH) -IH2 -IH1 -IH /2 width=4 by/
+  @(cnv_cpms_conf_lpr_step_tneqx_sub … IH2 IH1 … IH) -IH2 -IH1 -IH /2 width=4 by/
 ]
 qed-.
 
-fact cnv_cpms_conf_lpr_tdneq_tdneq_aux (h) (a) (G0) (L0) (T0) (m11) (m12) (m21) (m22):
+fact cnv_cpms_conf_lpr_tneqx_tneqx_aux (h) (a) (G0) (L0) (T0) (m11) (m12) (m21) (m22):
      (∀G,L,T. ⦃G0,L0,T0⦄ >[h] ⦃G,L,T⦄ → IH_cnv_cpm_trans_lpr h a G L T) →
      (∀G,L,T. ⦃G0,L0,T0⦄ >[h] ⦃G,L,T⦄ → IH_cnv_cpms_conf_lpr h a G L T) →
      ⦃G0,L0⦄ ⊢ T0 ![h,a] →
@@ -152,18 +152,18 @@ fact cnv_cpms_conf_lpr_aux (h) (a) (G0) (L0) (T0):
      ∀G,L,T. G0 = G → L0 = L → T0 = T → IH_cnv_cpms_conf_lpr h a G L T.
 #h #a #G #L #T #IH2 #IH1 #G0 #L0 #T0 #HG #HL #HT
 #HT0 #n1 #T1 #HT01 #n2 #T2 #HT02 #L1 #HL01 #L2 #HL02 destruct
-elim (tdeq_dec T0 T1) #H2T01
-elim (tdeq_dec T0 T2) #H2T02
-[ @(cnv_cpms_conf_lpr_tdeq_tdeq_aux … IH2 IH1) -IH2 -IH1 /2 width=1 by/
-| elim (cpms_tdneq_fwd_step_sn_aux … HT02 HT0 H2T02 IH1 IH2) -HT02 -H2T02
+elim (teqx_dec T0 T1) #H2T01
+elim (teqx_dec T0 T2) #H2T02
+[ @(cnv_cpms_conf_lpr_teqx_teqx_aux … IH2 IH1) -IH2 -IH1 /2 width=1 by/
+| elim (cpms_tneqx_fwd_step_sn_aux … HT02 HT0 H2T02 IH1 IH2) -HT02 -H2T02
   #m21 #m22 #X2 #HX02 #HnX02 #HXT2 #H2 destruct
-  @(cnv_cpms_conf_lpr_tdeq_tdneq_aux … IH2 IH1) -IH2 -IH1 /2 width=4 by/
-| elim (cpms_tdneq_fwd_step_sn_aux … HT01 HT0 H2T01 IH1 IH2) -HT01 -H2T01
+  @(cnv_cpms_conf_lpr_teqx_tneqx_aux … IH2 IH1) -IH2 -IH1 /2 width=4 by/
+| elim (cpms_tneqx_fwd_step_sn_aux … HT01 HT0 H2T01 IH1 IH2) -HT01 -H2T01
   #m11 #m12 #X1 #HX01 #HnX01 #HXT1 #H1 destruct
-  @ex2_commute @(cnv_cpms_conf_lpr_tdeq_tdneq_aux … IH2 IH1) -IH2 -IH1 /2 width=4 by/
-| elim (cpms_tdneq_fwd_step_sn_aux … HT01 HT0 H2T01 IH1 IH2) -HT01 -H2T01
-  elim (cpms_tdneq_fwd_step_sn_aux … HT02 HT0 H2T02 IH1 IH2) -HT02 -H2T02
+  @ex2_commute @(cnv_cpms_conf_lpr_teqx_tneqx_aux … IH2 IH1) -IH2 -IH1 /2 width=4 by/
+| elim (cpms_tneqx_fwd_step_sn_aux … HT01 HT0 H2T01 IH1 IH2) -HT01 -H2T01
+  elim (cpms_tneqx_fwd_step_sn_aux … HT02 HT0 H2T02 IH1 IH2) -HT02 -H2T02
   #m21 #m22 #X2 #HX02 #HnX02 #HXT2 #H2 #m11 #m12 #X1 #HX01 #HnX01 #HXT1 #H1 destruct
-  @(cnv_cpms_conf_lpr_tdneq_tdneq_aux … IH2 IH1) -IH2 -IH1 /2 width=4 by/
+  @(cnv_cpms_conf_lpr_tneqx_tneqx_aux … IH2 IH1) -IH2 -IH1 /2 width=4 by/
 ]
 qed-.

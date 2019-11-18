@@ -298,13 +298,47 @@ qed-.
 
 (* Basic properties *********************************************************)
 
-axiom lsubf_eq_repl_back1: ∀f2,L1,L2. eq_repl_back … (λf1. ⦃L1,f1⦄ ⫃𝐅+ ⦃L2,f2⦄).
+lemma lsubf_eq_repl_back1: ∀f2,L1,L2. eq_repl_back … (λf1. ⦃L1,f1⦄ ⫃𝐅+ ⦃L2,f2⦄).
+#f2 #L1 #L2 #f #H elim H -f -f2 -L1 -L2
+[ #f1 #f2 #Hf12 #g1 #Hfg1
+  /3 width=3 by lsubf_atom, eq_canc_sn/
+| #f1 #f2 #I1 #I2 #K1 #K2 #_ #IH #g #H
+  elim (eq_inv_px … H) -H [|*: // ] #g1 #Hfg1 #H destruct
+  /3 width=1 by lsubf_push/
+| #f1 #f2 #I #K1 #K2 #_ #IH #g #H
+  elim (eq_inv_nx … H) -H [|*: // ] #g1 #Hfg1 #H destruct
+  /3 width=1 by lsubf_bind/
+| #f #f0 #f1 #f2 #K1 #L2 #W #V #Hf #Hf1 #_ #IH #g #H
+  elim (eq_inv_nx … H) -H [|*: // ] #g1 #Hfg1 #H destruct
+  /3 width=5 by lsubf_beta, sor_eq_repl_back3/
+| #f #f0 #f1 #f2 #I1 #I2 #K1 #K2 #V #Hf #Hf1 #_ #IH #g #H
+  elim (eq_inv_nx … H) -H [|*: // ] #g1 #Hfg1 #H destruct
+  /3 width=5 by lsubf_unit, sor_eq_repl_back3/
+]
+qed-.
 
 lemma lsubf_eq_repl_fwd1: ∀f2,L1,L2. eq_repl_fwd … (λf1. ⦃L1,f1⦄ ⫃𝐅+ ⦃L2,f2⦄).
 #f2 #L1 #L2 @eq_repl_sym /2 width=3 by lsubf_eq_repl_back1/
 qed-.
 
-axiom lsubf_eq_repl_back2: ∀f1,L1,L2. eq_repl_back … (λf2. ⦃L1,f1⦄ ⫃𝐅+ ⦃L2,f2⦄).
+lemma lsubf_eq_repl_back2: ∀f1,L1,L2. eq_repl_back … (λf2. ⦃L1,f1⦄ ⫃𝐅+ ⦃L2,f2⦄).
+#f1 #L1 #L2 #f #H elim H -f1 -f -L1 -L2
+[ #f1 #f2 #Hf12 #g2 #Hfg2
+  /3 width=3 by lsubf_atom, eq_trans/
+| #f1 #f2 #I1 #I2 #K1 #K2 #_ #IH #g #H
+  elim (eq_inv_px … H) -H [|*: // ] #g2 #Hfg2 #H destruct
+  /3 width=1 by lsubf_push/
+| #f1 #f2 #I #K1 #K2 #_ #IH #g #H
+  elim (eq_inv_nx … H) -H [|*: // ] #g2 #Hfg2 #H destruct
+  /3 width=1 by lsubf_bind/
+| #f #f0 #f1 #f2 #K1 #L2 #W #V #Hf #Hf1 #_ #IH #g #H
+  elim (eq_inv_nx … H) -H [|*: // ] #g2 #Hfg2 #H destruct
+  /3 width=5 by lsubf_beta/
+| #f #f0 #f1 #f2 #I1 #I2 #K1 #K2 #V #Hf #Hf1 #_ #IH #g #H
+  elim (eq_inv_nx … H) -H [|*: // ] #g2 #Hfg2 #H destruct
+  /3 width=5 by lsubf_unit/
+]
+qed-.
 
 lemma lsubf_eq_repl_fwd2: ∀f1,L1,L2. eq_repl_fwd … (λf2. ⦃L1,f1⦄ ⫃𝐅+ ⦃L2,f2⦄).
 #f1 #L1 #L2 @eq_repl_sym /2 width=3 by lsubf_eq_repl_back2/

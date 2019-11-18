@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/static/rdeq_fqup.ma".
+include "static_2/static/reqx_fqup.ma".
 include "basic_2/rt_computation/rsx.ma".
 
 (* STRONGLY NORMALIZING REFERRED LOCAL ENV.S FOR UNBOUND RT-TRANSITION ******)
@@ -38,7 +38,7 @@ lemma rsx_fwd_bind_dx_void (h) (G):
 @(rsx_ind … H) -L #L1 #_ #IH
 @rsx_intro #Y #H #HT
 elim (lpx_inv_unit_sn … H) -H #L2 #HL12 #H destruct
-/4 width=4 by rdeq_fwd_bind_dx_void/
+/4 width=4 by reqx_fwd_bind_dx_void/
 qed-.
 
 (* Advanced inversion lemmas ************************************************)

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_transition/fpb_fdeq.ma".
+include "basic_2/rt_transition/fpb_feqx.ma".
 include "basic_2/rt_transition/fpbq.ma".
 
 (* PARALLEL RST-TRANSITION FOR CLOSURES *************************************)
@@ -26,9 +26,9 @@ lemma fpb_fpbq: ∀h,G1,G2,L1,L2,T1,T2. ⦃G1,L1,T1⦄ ≻[h] ⦃G2,L2,T2⦄ →
 qed.
 
 (* Basic_2A1: fpb_fpbq_alt *)
-lemma fpb_fpbq_ffdneq: ∀h,G1,G2,L1,L2,T1,T2. ⦃G1,L1,T1⦄ ≻[h] ⦃G2,L2,T2⦄ →
+lemma fpb_fpbq_fneqx: ∀h,G1,G2,L1,L2,T1,T2. ⦃G1,L1,T1⦄ ≻[h] ⦃G2,L2,T2⦄ →
                        ∧∧ ⦃G1,L1,T1⦄ ≽[h] ⦃G2,L2,T2⦄ & (⦃G1,L1,T1⦄ ≛ ⦃G2,L2,T2⦄ → ⊥).
-/3 width=10 by fpb_fpbq, fpb_inv_fdeq, conj/ qed-.
+/3 width=10 by fpb_fpbq, fpb_inv_feqx, conj/ qed-.
 
 (* Inversrion lemmas with proper parallel rst-transition for closures *******)
 
@@ -38,17 +38,17 @@ lemma fpbq_inv_fpb: ∀h,G1,G2,L1,L2,T1,T2. ⦃G1,L1,T1⦄ ≽[h] ⦃G2,L2,T2⦄
                      | ⦃G1,L1,T1⦄ ≻[h] ⦃G2,L2,T2⦄.
 #h #G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2
 [ #G2 #L2 #T2 * [2: * #H1 #H2 #H3 destruct ]
-  /3 width=1 by fpb_fqu, fdeq_intro_sn, or_intror, or_introl/
-| #T2 #H elim (tdeq_dec T1 T2)
-  /4 width=1 by fpb_cpx, fdeq_intro_sn, or_intror, or_introl/
-| #L2 elim (rdeq_dec L1 L2 T1)
-  /4 width=1 by fpb_lpx, fdeq_intro_sn, or_intror, or_introl/
+  /3 width=1 by fpb_fqu, feqx_intro_sn, or_intror, or_introl/
+| #T2 #H elim (teqx_dec T1 T2)
+  /4 width=1 by fpb_cpx, feqx_intro_sn, or_intror, or_introl/
+| #L2 elim (reqx_dec L1 L2 T1)
+  /4 width=1 by fpb_lpx, feqx_intro_sn, or_intror, or_introl/
 | /2 width=1 by or_introl/
 ]
 qed-.
 
 (* Basic_2A1: fpbq_inv_fpb_alt *)
-lemma fpbq_ffdneq_inv_fpb: ∀h,G1,G2,L1,L2,T1,T2. ⦃G1,L1,T1⦄ ≽[h] ⦃G2,L2,T2⦄ →
+lemma fpbq_fneqx_inv_fpb: ∀h,G1,G2,L1,L2,T1,T2. ⦃G1,L1,T1⦄ ≽[h] ⦃G2,L2,T2⦄ →
                            (⦃G1,L1,T1⦄ ≛ ⦃G2,L2,T2⦄ → ⊥) → ⦃G1,L1,T1⦄ ≻[h] ⦃G2,L2,T2⦄.
 #h #G1 #G2 #L1 #L2 #T1 #T2 #H #H0
 elim (fpbq_inv_fpb … H) -H // #H elim H0 -H0 //

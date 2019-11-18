@@ -20,7 +20,7 @@ include "basic_2/rt_computation/csx_csx_vector.ma".
 
 (* Main properties with generic candidates of reducibility ******************)
 
-theorem csx_gcr (h): gcr (cpx h) tdeq (csx h) (csx h).
+theorem csx_gcr (h): gcr (cpx h) teqx (csx h) (csx h).
 #h @mk_gcr
 [ //
 | #G #L #Vs #Hvs #T #HT #H

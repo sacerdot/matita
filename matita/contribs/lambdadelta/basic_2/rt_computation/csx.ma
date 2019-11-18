@@ -13,13 +13,13 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/predtystrong_4.ma".
-include "static_2/syntax/tdeq.ma".
+include "static_2/syntax/teqx.ma".
 include "basic_2/rt_transition/cpx.ma".
 
 (* STRONGLY NORMALIZING TERMS FOR UNBOUND PARALLEL RT-TRANSITION ************)
 
 definition csx: ∀h. relation3 genv lenv term ≝
-                λh,G,L. SN … (cpx h G L) tdeq.
+                λh,G,L. SN … (cpx h G L) teqx.
 
 interpretation
    "strong normalization for unbound context-sensitive parallel rt-transition (term)"
@@ -52,7 +52,7 @@ fact csx_fwd_pair_sn_aux: ∀h,G,L,U. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃U⦄ →
 #h #G #L #U #H elim H -H #U0 #_ #IH #I #V #T #H destruct
 @csx_intro #V2 #HLV2 #HV2
 @(IH (②{I}V2.T)) -IH /2 width=3 by cpx_pair_sn/ -HLV2
-#H elim (tdeq_inv_pair … H) -H /2 width=1 by/
+#H elim (teqx_inv_pair … H) -H /2 width=1 by/
 qed-.
 
 (* Basic_1: was just: sn3_gen_head *)
@@ -64,7 +64,7 @@ fact csx_fwd_bind_dx_aux: ∀h,G,L,U. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃U⦄ →
 #h #G #L #U #H elim H -H #U0 #_ #IH #p #I #V #T #H destruct
 @csx_intro #T2 #HLT2 #HT2
 @(IH (ⓑ{p, I}V.T2)) -IH /2 width=3 by cpx_bind/ -HLT2
-#H elim (tdeq_inv_pair … H) -H /2 width=1 by/
+#H elim (teqx_inv_pair … H) -H /2 width=1 by/
 qed-.
 
 (* Basic_1: was just: sn3_gen_bind *)
@@ -76,7 +76,7 @@ fact csx_fwd_flat_dx_aux: ∀h,G,L,U. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃U⦄ →
 #h #G #L #U #H elim H -H #U0 #_ #IH #I #V #T #H destruct
 @csx_intro #T2 #HLT2 #HT2
 @(IH (ⓕ{I}V.T2)) -IH /2 width=3 by cpx_flat/ -HLT2
-#H elim (tdeq_inv_pair … H) -H /2 width=1 by/
+#H elim (teqx_inv_pair … H) -H /2 width=1 by/
 qed-.
 
 (* Basic_1: was just: sn3_gen_flat *)

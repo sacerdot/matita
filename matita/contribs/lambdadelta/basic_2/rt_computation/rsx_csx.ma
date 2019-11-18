@@ -28,7 +28,7 @@ fact rsx_fwd_lref_pair_csx_aux (h) (G):
 @csx_intro #V2 #HV12 #HnV12
 @(IH … I) -IH [1,4: // | -HnV12 | -G #H ]
 [ /2 width=1 by lpx_pair/
-| elim (rdeq_inv_zero_pair_sn … H) -H #Y #X #_ #H1 #H2 destruct -I
+| elim (reqx_inv_zero_pair_sn … H) -H #Y #X #_ #H1 #H2 destruct -I
   /2 width=1 by/
 ]
 qed-.
@@ -85,8 +85,8 @@ lemma rsx_lref_pair_lpxs (h) (G):
 @(rsx_ind … H) -K2 #K0 #HK0 #IHK0 #HK10 #I
 @rsx_intro #Y #HY #HnY
 elim (lpx_inv_pair_sn … HY) -HY #K2 #V2 #HK02 #HV02 #H destruct
-elim (tdeq_dec V0 V2) #HnV02 destruct [ -IHV0 -HV02 -HK0 | -IHK0 -HnY ]
-[ /5 width=5 by rsx_rdeq_trans, lpxs_step_dx, rdeq_pair/
+elim (teqx_dec V0 V2) #HnV02 destruct [ -IHV0 -HV02 -HK0 | -IHK0 -HnY ]
+[ /5 width=5 by rsx_reqx_trans, lpxs_step_dx, reqx_pair/
 | @(IHV0 … HnV02) -IHV0 -HnV02
   [ /2 width=3 by lpxs_cpx_trans/
   | /3 width=3 by rsx_lpx_trans, rsx_cpx_trans/

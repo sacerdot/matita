@@ -29,7 +29,7 @@ CONTRIB      := lambdadelta_2
 
 WWW          := ../../../../helm/www/lambdadelta
 
-TAGS := all xoa xoa2 orig elim deps top leaf stats tbls trim contrib clean \
+TAGS := all xoa xoa2 orig elim deps top leaf stats tbls odeps trim contrib clean \
         www up-html
 
 PACKAGES  := ground_2 static_2 basic_2 apps_2 alpha_1
@@ -48,10 +48,14 @@ define MAS_TEMPLATE
   MAS_$(1) := $$(shell find $(1) -name "*.ma")
   MAS      += $$(MAS_$(1))
 
-$(1)/$(1)_probe.txt: $$(MAS_$(1))
+$(1)/probe.txt: $$(MAS_$(1))
 	@echo "  PROBE $(1)"
-	$$(H)$$(PRB_DIR)/$$(PRB) $$(PRB_OPTS) $(1) -sn -sc -on -oc -f -b $(1)/$(1)_deps.txt > $$@
-	$$(H)sort < $(1)/$(1)_deps.txt | uniq > $(1)/$(1)_deps_uniq.txt
+	$$(H)$$(PRB_DIR)/$$(PRB) $$(PRB_OPTS) $(1) -sn -sc -on -oc -f > $$@
+
+$(1)/deps.txt: $$(MAS_$(1))
+	@echo "  PROBE $(1)"
+	$$(H)$$(PRB_DIR)/$$(PRB) $$(PRB_OPTS) $(1) -b $$@
+
 endef
 
 $(foreach PKG, $(PACKAGES), $(eval $(call MAS_TEMPLATE,$(PKG))))
@@ -123,7 +127,7 @@ define STATS_TEMPLATE
   STT_$(1) := $(1).stats
   STTS     += $$(STT_$(1))
 
-  $$(STT_$(1)): C0 = $$(shell cat $(1)/$(1)_probe.txt)
+  $$(STT_$(1)): C0 = $$(shell cat $(1)/probe.txt)
   $$(STT_$(1)): C2 = $$(word 2, $$(C0))
   $$(STT_$(1)): C3 = $$(word 4, $$(C0))
   $$(STT_$(1)): O1 = $$(shell ls $$(MAS_$(1)) | wc -l)
@@ -140,7 +144,7 @@ define STATS_TEMPLATE
   $$(STT_$(1)): M2 = $$(shell grep "$$(OPEN)\*[^*:]*$$$$" $$(MAS_$(1)) | wc -l)
   $$(STT_$(1)): M3 = $$(shell grep "(\*\*)" $$(MAS_$(1)) | wc -l)
 
-$$(STT_$(1)): $$(MAS_$(1)) $(1)/$(1)_probe.txt
+$$(STT_$(1)): $$(MAS_$(1)) $(1)/probe.txt
 	@printf '\x1B[1;40;37m'
 	@printf '%-15s %-46s' 'Statistics for:' $(1)
 	@printf '\x1B[0m\n'
@@ -187,10 +191,10 @@ stats: $(STTS)
 # summary ####################################################################
 
 define SUMMARY_TEMPLATE
-  SUM_$(1) := $(1)/web/$(1)_sum.tbl  
+  SUM_$(1) := $(1)/web/$(1)_sum.tbl
   SUMS     += $$(SUM_$(1))
 
-  $$(SUM_$(1)): C0 = $$(shell cat $(1)/$(1)_probe.txt)
+  $$(SUM_$(1)): C0 = $$(shell cat $(1)/probe.txt)
   $$(SUM_$(1)): S1 = $$(word 1, $$(C0))
   $$(SUM_$(1)): S2 = $$(word 2, $$(C0))
   $$(SUM_$(1)): S3 = $$(word 3, $$(C0))
@@ -203,7 +207,7 @@ define SUMMARY_TEMPLATE
   $$(SUM_$(1)): P2 = $$(word 9, $$(C0))
   $$(SUM_$(1)): P3 = $$(shell echo "$$(P1)+$$(P2)"|bc)
 
-  $$(SUM_$(1)): $$(MAS_$(1)) $(1)/$(1)_probe.txt Makefile
+  $$(SUM_$(1)): $$(MAS_$(1)) $(1)/probe.txt Makefile
 	@printf '  SUMMARY $(1)\n'
 	@printf 'name "$$(basename $$(@F))"\n\n'                        >  $$@
 	@printf 'table {\n'                                             >> $$@
@@ -238,6 +242,10 @@ ifeq ($(MAKECMDGOALS), tbls)
 endif
 
 tbls: $(SUMS)
+
+# odeps ######################################################################
+
+odeps: $(PACKAGES:%=%/deps.txt)
 
 # trim #######################################################################
 
