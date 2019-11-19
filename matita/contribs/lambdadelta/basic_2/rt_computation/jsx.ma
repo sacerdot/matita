@@ -72,7 +72,7 @@ lemma jsx_inv_pair_sn (h) (G):
        | ∃∃K2. G ⊢ K1 ⊒[h] K2 & G ⊢ ⬈*[h,V] 𝐒⦃K2⦄ & L2 = K2.ⓧ.
 #h #G #I #K1 #L2 #V #H elim (jsx_inv_bind_sn … H) -H *
 [ /3 width=3 by ex2_intro, or_introl/
-| #J #K2 #X #HK12 #HX #H1 #H2 destruct /3 width=4 by ex3_intro, or_intror/ 
+| #J #K2 #X #HK12 #HX #H1 #H2 destruct /3 width=4 by ex3_intro, or_intror/
 ]
 qed-.
 

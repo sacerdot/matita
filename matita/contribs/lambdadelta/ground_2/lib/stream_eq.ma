@@ -68,4 +68,4 @@ theorem eq_stream_canc_sn: ∀A,t,t1,t2. t ≗ t1 → t ≗ t2 → t1 ≗{A} t2.
 /3 width=3 by eq_stream_trans, eq_stream_sym/ qed-.
 
 theorem eq_stream_canc_dx: ∀A,t,t1,t2. t1 ≗ t → t2 ≗ t → t1 ≗{A} t2.
-/3 width=3 by eq_stream_trans, eq_stream_sym/ qed-. 
+/3 width=3 by eq_stream_trans, eq_stream_sym/ qed-.

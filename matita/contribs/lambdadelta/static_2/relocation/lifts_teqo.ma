@@ -21,7 +21,7 @@ include "static_2/relocation/lifts_lifts.ma".
 
 lemma teqo_lifts_sn: liftable2_sn teqo.
 #T1 #T2 #H elim H -T1 -T2 [||| * ]
-[ #s1 #s2 #f #X #H 
+[ #s1 #s2 #f #X #H
   >(lifts_inv_sort1 … H) -H
   /2 width=3 by teqo_sort, ex2_intro/
 | #i #f #X #H

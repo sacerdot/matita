@@ -26,7 +26,7 @@ include "basic_2/rt_computation/rsx_fqup.ma".
 lemma rsx_lifts (h) (G): d_liftable1_isuni … (λL,T. G ⊢ ⬈*[h,T] 𝐒⦃L⦄).
 #h #G #K #T #H @(rsx_ind … H) -K
 #K1 #_ #IH #b #f #L1 #HLK1 #Hf #U #HTU @rsx_intro
-#L2 #HL12 #HnL12 elim (lpx_drops_conf … HLK1 … HL12) 
+#L2 #HL12 #HnL12 elim (lpx_drops_conf … HLK1 … HL12)
 /5 width=9 by reqx_lifts_bi, lpx_fwd_length/
 qed-.
 

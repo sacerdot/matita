@@ -74,7 +74,7 @@ interpretation
 
 (* Basic properties *********************************************************)
 
-(* Note: this requires Ⓕ-slicing in cfun since b is unknown in d_liftable_1 *) 
+(* Note: this requires Ⓕ-slicing in cfun since b is unknown in d_liftable_1 *)
 (* Note: this requires multiple relocation *)
 (* Basic 1: includes: sc3_lift *)
 (* Basic 2A1: includes: gcr_lift *)

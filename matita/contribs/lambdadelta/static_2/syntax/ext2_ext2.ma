@@ -21,7 +21,7 @@ include "static_2/syntax/ext2.ma".
 theorem ext2_trans: ∀R. Transitive … R → Transitive … (ext2 R).
 #R #HR #I1 #I #H elim H -I1 -I
 [ #I1 #J #H >(ext2_inv_unit_sn … H) -J /2 width=1 by ext2_unit/
-| #I1 #V1 #V #HV1 #J #H elim (ext2_inv_pair_sn … H) -H 
+| #I1 #V1 #V #HV1 #J #H elim (ext2_inv_pair_sn … H) -H
   #V2 #HV2 #H destruct /3 width=3 by ext2_pair/
 ]
 qed-.

@@ -19,7 +19,7 @@ include "static_2/static/lsubf_lsubf.ma".
 
 (* Forward lemmas with restricted refinement for local environments *********)
 
-lemma lsubf_fwd_lsubr_isdiv: 
+lemma lsubf_fwd_lsubr_isdiv:
       ∀f1,f2,L1,L2. ⦃L1,f1⦄ ⫃𝐅+ ⦃L2,f2⦄ → 𝛀⦃f1⦄ → 𝛀⦃f2⦄ → L1 ⫃ L2.
 #f1 #f2 #L1 #L2 #H elim H -f1 -f2 -L1 -L2
 /4 width=3 by lsubr_bind, isdiv_inv_next/

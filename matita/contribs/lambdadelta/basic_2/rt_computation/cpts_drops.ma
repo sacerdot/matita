@@ -24,7 +24,7 @@ lemma cpts_lifts_sn (h) (n) (G):
       d_liftable2_sn … lifts (λL. cpts h G L n).
 /3 width=6 by d2_liftable_sn_ltc, cpt_lifts_sn/ qed-.
 
-lemma cpts_lifts_bi (h) (n) (G): 
+lemma cpts_lifts_bi (h) (n) (G):
       d_liftable2_bi … lifts (λL. cpts h G L n).
 #h #n #G @d_liftable2_sn_bi
 /2 width=6 by cpts_lifts_sn, lifts_mono/

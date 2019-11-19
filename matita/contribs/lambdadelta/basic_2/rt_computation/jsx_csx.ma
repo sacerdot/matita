@@ -27,7 +27,7 @@ lemma jsx_csx_conf (h) (G):
 
 (* Properties with strongly rt-normalizing referred local environments ******)
 
-(* Note: Try by induction on the 2nd premise by generalizing V with f *) 
+(* Note: Try by induction on the 2nd premise by generalizing V with f *)
 lemma rsx_jsx_trans (h) (G):
       ∀L1,V. G ⊢ ⬈*[h,V] 𝐒⦃L1⦄ →
       ∀L2. G ⊢ L1 ⊒[h] L2 → G ⊢ ⬈*[h,V] 𝐒⦃L2⦄.

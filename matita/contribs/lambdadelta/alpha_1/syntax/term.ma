@@ -18,14 +18,14 @@ include "static_2/notation/functions/snabstpos_2.ma".
 include "static_2/notation/functions/snabbr_3.ma".
 include "static_2/notation/functions/snabbrpos_2.ma".
 include "static_2/notation/functions/snabbrneg_2.ma".
-include "alpha_1/notation/constructors/snitem1_2.ma".
-include "alpha_1/notation/constructors/snstar_2.ma".
-include "alpha_1/notation/constructors/snlref_2.ma".
-include "alpha_1/notation/constructors/sngref_2.ma".
-include "alpha_1/notation/constructors/snabstneg_1.ma".
-include "alpha_1/notation/constructors/snproj_3.ma".
-include "alpha_1/notation/constructors/snprojpos_2.ma".
-include "alpha_1/notation/constructors/snprojneg_2.ma".
+include "alpha_1/notation/functions/snitem1_2.ma".
+include "alpha_1/notation/functions/snstar_2.ma".
+include "alpha_1/notation/functions/snlref_2.ma".
+include "alpha_1/notation/functions/sngref_2.ma".
+include "alpha_1/notation/functions/snabstneg_1.ma".
+include "alpha_1/notation/functions/snproj_3.ma".
+include "alpha_1/notation/functions/snprojpos_2.ma".
+include "alpha_1/notation/functions/snprojneg_2.ma".
 include "alpha_1/syntax/item.ma".
 
 (* TERMS ********************************************************************)

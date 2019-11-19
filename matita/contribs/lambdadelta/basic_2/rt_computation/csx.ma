@@ -98,6 +98,6 @@ lemma csx_fwd_flat: ∀h,I,G,L,V,T. ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃ⓕ{I}V.T⦄ �
             sn3_appl_appls sn3_bind sn3_appl_bind sn3_appls_bind
 *)
 (* Basic_2A1: removed theorems 6:
-              csxa_ind csxa_intro csxa_cpxs_trans csxa_intro_cpx 
+              csxa_ind csxa_intro csxa_cpxs_trans csxa_intro_cpx
               csx_csxa csxa_csx
 *)

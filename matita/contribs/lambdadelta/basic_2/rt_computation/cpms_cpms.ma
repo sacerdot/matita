@@ -87,7 +87,7 @@ qed.
 theorem cpms_theta (n) (h) (G) (L):
                    ∀V,V2. ⇧*[1] V ≘ V2 → ∀W1,W2. ⦃G,L⦄ ⊢ W1 ➡*[h] W2 →
                    ∀T1,T2. ⦃G,L.ⓓW1⦄ ⊢ T1 ➡*[n,h] T2 →
-                   ∀V1. ⦃G,L⦄ ⊢ V1 ➡*[h] V → 
+                   ∀V1. ⦃G,L⦄ ⊢ V1 ➡*[h] V →
                    ∀p. ⦃G,L⦄ ⊢ ⓐV1.ⓓ{p}W1.T1 ➡*[n,h] ⓓ{p}W2.ⓐV2.T2.
 #n #h #G #L #V #V2 #HV2 #W1 #W2 #HW12 #T1 #T2 #HT12 #V1 #H @(cprs_ind_sn … H) -V1
 [ /2 width=3 by cpms_theta_rc/

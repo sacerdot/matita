@@ -21,7 +21,7 @@ include "static_2/static/lsubr.ma".
 
 (* Basic_2A1: includes: lsubr_fwd_drop2_pair *)
 lemma lsubr_fwd_drops2_bind:
-      ∀L1,L2. L1 ⫃ L2 → 
+      ∀L1,L2. L1 ⫃ L2 →
       ∀b,f,I,K2. 𝐔⦃f⦄ → ⇩*[b,f] L2 ≘ K2.ⓘ{I} →
       ∨∨ ∃∃K1. K1 ⫃ K2 & ⇩*[b,f] L1 ≘ K1.ⓘ{I}
        | ∃∃K1,W,V. K1 ⫃ K2 & ⇩*[b,f] L1 ≘ K1.ⓓⓝW.V & I = BPair Abst W

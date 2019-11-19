@@ -25,7 +25,7 @@ PRB_OPTS     := $(XOA_OPTS) -g -i
 ORIG         := . ./orig.sh 
 ORIGS        := basic_2/basic_1.orig
 
-CONTRIB      := lambdadelta_2
+CONTRIB      := lambdadelta_2B
 
 WWW          := ../../../../helm/www/lambdadelta
 
@@ -260,8 +260,8 @@ trim: $(TRIMS:%=%.trimmed)
 # contrib ####################################################################
 
 contrib:
-	@echo "  TAR -czf $(CONTRIB).tar.gz root $(XPACKAGES)"
-	$(H)tar -czf $(CONTRIB).tar.gz root $(XMAS)
+	@echo "  TAR -cjf $(CONTRIB).tar.bz2 root $(XPACKAGES)"
+	$(H)tar -cjf $(CONTRIB).tar.bz2 root $(XMAS)
 
 # clean ######################################################################
 

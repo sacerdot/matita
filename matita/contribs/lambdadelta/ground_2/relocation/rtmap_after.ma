@@ -166,7 +166,7 @@ corec lemma after_eq_repl_back2: ∀f1,f. eq_repl_back (λf2. f2 ⊚ f1 ≘ f).
 #f21 #f1 #f #g21 [1,2: #g1 ] #g #Hf #H21 [1,2: #H1 ] #H #g22 #H0
 [ cases (eq_inv_px …  H0 …  H21) -g21 /3 width=7 by after_refl/
 | cases (eq_inv_px …  H0 …  H21) -g21 /3 width=7 by after_push/
-| cases (eq_inv_nx …  H0 …  H21) -g21 /3 width=5 by after_next/ 
+| cases (eq_inv_nx …  H0 …  H21) -g21 /3 width=5 by after_next/
 ]
 qed-.
 
@@ -267,7 +267,7 @@ lemma after_mono_eq: ∀f1,f2,f. f1 ⊚ f2 ≘ f → ∀g1,g2,g. g1 ⊚ g2 ≘ g
 
 (* Properties on tls ********************************************************)
 
-lemma after_tls: ∀n,f1,f2,f. @⦃0, f1⦄ ≘ n → 
+lemma after_tls: ∀n,f1,f2,f. @⦃0, f1⦄ ≘ n →
                  f1 ⊚ f2 ≘ f → ⫱*[n]f1 ⊚ f2 ≘ ⫱*[n]f.
 #n elim n -n //
 #n #IH #f1 #f2 #f #Hf1 #Hf

@@ -177,7 +177,7 @@ qed.
 lemma cpt_inv_gref_sn (h) (n) (G) (L) (l):
       ∀X2. ⦃G,L⦄ ⊢ §l ⬆[h,n] X2 → ∧∧ X2 = §l & n = 0.
 #h #n #G #L #l #X2 * #c #Hc #H elim (cpg_inv_gref1 … H) -H
-#H1 #H2 destruct /2 width=1 by conj/ 
+#H1 #H2 destruct /2 width=1 by conj/
 qed-.
 
 lemma cpt_inv_bind_sn (h) (n) (p) (I) (G) (L) (V1) (T1):

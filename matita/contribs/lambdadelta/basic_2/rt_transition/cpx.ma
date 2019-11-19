@@ -77,7 +77,7 @@ qed.
 lemma cpx_beta: ∀h,p,G,L,V1,V2,W1,W2,T1,T2.
                 ⦃G,L⦄ ⊢ V1 ⬈[h] V2 → ⦃G,L⦄ ⊢ W1 ⬈[h] W2 → ⦃G,L.ⓛW1⦄ ⊢ T1 ⬈[h] T2 →
                 ⦃G,L⦄ ⊢ ⓐV1.ⓛ{p}W1.T1 ⬈[h] ⓓ{p}ⓝW2.V2.T2.
-#h #p #G #L #V1 #V2 #W1 #W2 #T1 #T2 * #cV #HV12 * #cW #HW12 * 
+#h #p #G #L #V1 #V2 #W1 #W2 #T1 #T2 * #cV #HV12 * #cW #HW12 *
 /3 width=2 by cpg_beta, ex_intro/
 qed.
 
@@ -85,7 +85,7 @@ lemma cpx_theta: ∀h,p,G,L,V1,V,V2,W1,W2,T1,T2.
                  ⦃G,L⦄ ⊢ V1 ⬈[h] V → ⇧*[1] V ≘ V2 → ⦃G,L⦄ ⊢ W1 ⬈[h] W2 →
                  ⦃G,L.ⓓW1⦄ ⊢ T1 ⬈[h] T2 →
                  ⦃G,L⦄ ⊢ ⓐV1.ⓓ{p}W1.T1 ⬈[h] ⓓ{p}W2.ⓐV2.T2.
-#h #p #G #L #V1 #V #V2 #W1 #W2 #T1 #T2 * #cV #HV1 #HV2 * #cW #HW12 * 
+#h #p #G #L #V1 #V #V2 #W1 #W2 #T1 #T2 * #cV #HV1 #HV2 * #cW #HW12 *
 /3 width=4 by cpg_theta, ex_intro/
 qed.
 
@@ -147,7 +147,7 @@ qed-.
 lemma cpx_inv_bind1: ∀h,p,I,G,L,V1,T1,U2. ⦃G,L⦄ ⊢ ⓑ{p,I}V1.T1 ⬈[h] U2 →
                      ∨∨ ∃∃V2,T2. ⦃G,L⦄ ⊢ V1 ⬈[h] V2 & ⦃G,L.ⓑ{I}V1⦄ ⊢ T1 ⬈[h] T2 &
                                  U2 = ⓑ{p,I}V2.T2
-                      | ∃∃T. ⇧*[1] T ≘ T1 & ⦃G,L⦄ ⊢ T ⬈[h] U2 & 
+                      | ∃∃T. ⇧*[1] T ≘ T1 & ⦃G,L⦄ ⊢ T ⬈[h] U2 &
                              p = true & I = Abbr.
 #h #p #I #G #L #V1 #T1 #U2 * #c #H elim (cpg_inv_bind1 … H) -H *
 /4 width=5 by ex4_intro, ex3_2_intro, ex_intro, or_introl, or_intror/
@@ -224,7 +224,7 @@ lemma cpx_inv_flat1: ∀h,I,G,L,V1,U1,U2. ⦃G,L⦄ ⊢ ⓕ{I}V1.U1 ⬈[h] U2 �
   /3 width=14 by or5_intro0, or5_intro3, or5_intro4, ex7_7_intro, ex6_6_intro, ex3_2_intro/
 | elim (cpx_inv_cast1 … H) -H [ * ]
   /3 width=14 by or5_intro0, or5_intro1, or5_intro2, ex3_2_intro, conj/
-] 
+]
 qed-.
 
 (* Basic forward lemmas *****************************************************)

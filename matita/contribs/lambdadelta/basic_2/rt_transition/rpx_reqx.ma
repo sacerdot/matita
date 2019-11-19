@@ -134,7 +134,7 @@ elim (cpx_teqx_conf_rex … HT01 … HT02 L … L) -HT01 -HT02
 qed-.
 
 lemma teqx_cpx_trans: ∀h,G,L,T2. ∀T0:term. T2 ≛ T0 →
-                      ∀T1. ⦃G,L⦄ ⊢ T0 ⬈[h] T1 → 
+                      ∀T1. ⦃G,L⦄ ⊢ T0 ⬈[h] T1 →
                       ∃∃T. ⦃G,L⦄ ⊢ T2 ⬈[h] T & T ≛ T1.
 #h #G #L #T2 #T0 #HT20 #T1 #HT01
 elim (cpx_teqx_conf … HT01 T2) -HT01 /3 width=3 by teqx_sym, ex2_intro/

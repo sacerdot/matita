@@ -37,7 +37,7 @@ lemma fpbq_refl (h): tri_reflexive … (fpbq h).
 /2 width=1 by fpbq_cpx/ qed.
 
 (* Basic_2A1: includes: cpr_fpbq *)
-lemma cpm_fpbq (n) (h) (G) (L): ∀T1,T2. ⦃G,L⦄ ⊢ T1 ➡[n,h] T2 → ⦃G,L,T1⦄ ≽[h] ⦃G,L,T2⦄. 
+lemma cpm_fpbq (n) (h) (G) (L): ∀T1,T2. ⦃G,L⦄ ⊢ T1 ➡[n,h] T2 → ⦃G,L,T1⦄ ≽[h] ⦃G,L,T2⦄.
 /3 width=2 by fpbq_cpx, cpm_fwd_cpx/ qed.
 
 lemma lpr_fpbq (h) (G) (T): ∀L1,L2. ⦃G,L1⦄ ⊢ ➡[h] L2 → ⦃G,L1,T⦄ ≽[h] ⦃G,L2,T⦄.

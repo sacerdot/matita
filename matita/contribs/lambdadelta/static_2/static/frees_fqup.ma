@@ -109,7 +109,7 @@ lemma frees_ind_void (Q:relation3 …):
         ∀f,i. 𝐈⦃f⦄ →  Q (⋆) (#i) (⫯*[i]↑f)
       ) → (
         ∀f,I,L,V.
-        L ⊢ 𝐅+⦃V⦄ ≘ f →  Q L V f→ Q (L.ⓑ{I}V) (#O) (↑f) 
+        L ⊢ 𝐅+⦃V⦄ ≘ f →  Q L V f→ Q (L.ⓑ{I}V) (#O) (↑f)
       ) → (
         ∀f,I,L. 𝐈⦃f⦄ →  Q (L.ⓤ{I}) (#O) (↑f)
       ) → (

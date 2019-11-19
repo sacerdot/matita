@@ -46,7 +46,7 @@ fact yle_inv_O2_aux: ∀m:ynat. ∀x:ynat. m ≤ x → x = 0 → m = 0.
 #m #x * -m -x
 [ #m #n #Hmn #H destruct /3 width=1 by le_n_O_to_eq, eq_f/
 | #m #H destruct
-] 
+]
 qed-.
 
 lemma yle_inv_O2: ∀m:ynat. m ≤ 0 → m = 0.
@@ -152,4 +152,4 @@ theorem yle_trans: Transitive … yle.
   /3 width=3 by transitive_le, yle_inj/ (**) (* full auto too slow *)
 | #x #z #H lapply (yle_inv_Y1 … H) //
 ]
-qed-. 
+qed-.

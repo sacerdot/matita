@@ -86,7 +86,7 @@ lemma yplus_comm_24: ∀x1,x2,x3,x4. x1 + x4 + x3 + x2 = x1 + x2 + x3 + x4.
 /2 width=1 by eq_f2/
 qed.
 
-lemma yplus_assoc_23: ∀x1,x2,x3,x4. x1 + x2 + (x3 + x4) = x1 + (x2 + x3) + x4.  
+lemma yplus_assoc_23: ∀x1,x2,x3,x4. x1 + x2 + (x3 + x4) = x1 + (x2 + x3) + x4.
 #x1 #x2 #x3 #x4 >yplus_assoc >yplus_assoc
 /2 width=1 by eq_f2/
 qed.
@@ -148,15 +148,15 @@ lemma yplus_inv_monotonic_dx_inj: ∀z,x,y. x + yinj z = y + yinj z → x = y.
 qed-.
 
 lemma yplus_inv_monotonic_dx: ∀z,x,y. z < ∞ → x + z = y + z → x = y.
-#z #x #y #H elim (ylt_inv_Y2 … H) -H /2 width=2 by yplus_inv_monotonic_dx_inj/ 
+#z #x #y #H elim (ylt_inv_Y2 … H) -H /2 width=2 by yplus_inv_monotonic_dx_inj/
 qed-.
 
 lemma yplus_inv_Y2: ∀x,y. x + y = ∞ → x = ∞ ∨ y = ∞.
-* /2 width=1 by or_introl/ #x * // #y >yplus_inj #H destruct 
+* /2 width=1 by or_introl/ #x * // #y >yplus_inj #H destruct
 qed-.
 
 lemma yplus_inv_monotonic_23: ∀z,x1,x2,y1,y2. z < ∞ →
-                              x1 + z + y1 = x2 + z + y2 → x1 + y1 = x2 + y2. 
+                              x1 + z + y1 = x2 + z + y2 → x1 + y1 = x2 + y2.
 #z #x1 #x2 #y1 #y2 #Hz #H @(yplus_inv_monotonic_dx z) //
 >yplus_comm_23 >H -H //
 qed-.
@@ -269,7 +269,7 @@ lemma monotonic_ylt_plus_sn_inj: ∀x,y. x < y → ∀z:nat. yinj z + x < yinj z
 lemma monotonic_ylt_plus_dx: ∀x,y. x < y → ∀z. z < ∞ → x + z < y + z.
 #x #y #Hxy #z #Hz elim (ylt_inv_Y2 … Hz) -Hz
 #m #H destruct /2 width=1 by monotonic_ylt_plus_dx_inj/
-qed.  
+qed.
 
 lemma monotonic_ylt_plus_sn: ∀x,y. x < y → ∀z. z < ∞ → z + x < z + y.
 /2 width=1 by monotonic_ylt_plus_dx/ qed.

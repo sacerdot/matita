@@ -66,7 +66,7 @@ lemma fpbs_cpxs_teqx_fqup_lpx_trans: ∀h,G1,G3,L1,L3,T1,T3. ⦃G1,L1,T1⦄ ≥ 
                                      ∀T4. ⦃G3,L3⦄ ⊢ T3 ⬈*[h] T4 → ∀T5. T4 ≛ T5 →
                                      ∀G2,L4,T2. ⦃G3,L3,T5⦄ ⬂+ ⦃G2,L4,T2⦄ →
                                      ∀L2. ⦃G2,L4⦄ ⊢ ⬈[h] L2 → ⦃G1,L1,T1⦄ ≥ [h] ⦃G2,L2,T2⦄.
-#h #G1 #G3 #L1 #L3 #T1 #T3 #H13 #T4 #HT34 #T5 #HT45 #G2 #L4 #T2 #H34 #L2 #HL42  
+#h #G1 #G3 #L1 #L3 #T1 #T3 #H13 #T4 #HT34 #T5 #HT45 #G2 #L4 #T2 #H34 #L2 #HL42
 @(fpbs_lpx_trans … HL42) -L2 (**) (* full auto too slow *)
 @(fpbs_fqup_trans … H34) -G2 -L4 -T2
 /3 width=3 by fpbs_cpxs_trans, fpbs_teqx_trans/

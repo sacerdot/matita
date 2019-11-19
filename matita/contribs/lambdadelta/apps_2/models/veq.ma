@@ -79,7 +79,7 @@ elim (lt_or_eq_or_gt j i) #Hij destruct
 ]
 qed-.
 
-(* Properies with term interpretation ***************************************) 
+(* Properies with term interpretation ***************************************)
 
 lemma ti_comp (M): is_model M →
                    ∀T,gv1,gv2. gv1 ≗ gv2 → ∀lv1,lv2. lv1 ≗ lv2 →

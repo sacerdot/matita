@@ -65,7 +65,7 @@ fact cnv_cpm_teqx_cpm_trans_sub (h) (a) (G0) (L0) (T0):
     lapply (cpm_teqx_free … HT0 … H1T02 H2T02 G (L.ⓓⓝW2.V2)) -H1T02 #H1T02
     /3 width=6 by cpm_beta, cpm_bind, teqx_pair, ex3_intro/
   | #p #V2 #V0 #W1 #W2 #T #T2 #HV12 #HV20 #HW12 #HT2 #H1 #H2 destruct
-    elim (cpm_teqx_inv_bind_dx … H0T1 … H1T1 H2T1) -H0T1 -H1T1 -H2T1 #T1 #_ #H0T1 #H1T1 #H2T1 #H destruct 
+    elim (cpm_teqx_inv_bind_dx … H0T1 … H1T1 H2T1) -H0T1 -H1T1 -H2T1 #T1 #_ #H0T1 #H1T1 #H2T1 #H destruct
     elim (IH1 … H0T1 … H1T1 H2T1 … HT2) -T -IH1 [| // ] #T0 #HT10 #H1T02 #H2T02
     lapply (IH2 … H0T1 … HT10 (L.ⓓW1) ?) -IH2 -H0T1 [3:|*: /2 width=1 by fqup_fpbg/ ] #HT0
     lapply (cpm_teqx_free … HT0 … H1T02 H2T02 G (L.ⓓW2)) -H1T02

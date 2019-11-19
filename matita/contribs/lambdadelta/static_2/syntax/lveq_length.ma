@@ -62,7 +62,7 @@ lemma lveq_inj_length: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1,n2] L2 →
                        |L1| = |L2| → ∧∧ 0 = n1 & 0 = n2.
 #L1 #L2 #n1 #n2 #H #HL
 elim (lveq_fwd_length … H) -H
->HL -HL /2 width=1 by conj/ 
+>HL -HL /2 width=1 by conj/
 qed-.
 
 lemma lveq_fwd_length_plus: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1,n2] L2 →

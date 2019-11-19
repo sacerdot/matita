@@ -47,7 +47,7 @@ elim (drops_inv_bind1_isuni … H) -H [3,6: // |*: * -Hf ]
 [1,3: #Hf #H destruct -IH /3 width=3 by drops_refl, ex2_intro/
 |2,4:
   #g #Hg #HK1 #H destruct
-  elim (IH … Hg … HK1) -K1 -Hg #Y2 #HY12 #HKY2 
+  elim (IH … Hg … HK1) -K1 -Hg #Y2 #HY12 #HKY2
   /3 width=3 by drops_drop, ex2_intro/
 ]
 qed-.

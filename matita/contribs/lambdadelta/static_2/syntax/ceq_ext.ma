@@ -28,4 +28,4 @@ lemma ceq_ext_refl (L): reflexive … (ceq_ext L).
 
 lemma ceq_ext_inv_eq: ∀L,I1,I2. ceq_ext L I1 I2 → I1 = I2.
 #L #I1 #I2 * -I1 -I2 //
-qed-.   
+qed-.

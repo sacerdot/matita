@@ -60,7 +60,7 @@ qed-.
 
 lemma fcla_inv_isid: ∀f,n. 𝐂⦃f⦄ ≘ n → 𝐈⦃f⦄ → 0 = n.
 #f #n #H elim H -f -n /3 width=3 by isid_inv_push/
-#f #n #_ #_ #H elim (isid_inv_next … H) -H //  
+#f #n #_ #_ #H elim (isid_inv_next … H) -H //
 qed-.
 
 (* Main forward lemmas ******************************************************)

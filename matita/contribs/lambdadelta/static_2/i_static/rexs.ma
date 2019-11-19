@@ -101,7 +101,7 @@ lemma rexs_inv_sort: ∀R,Y1,Y2,s. Y1 ⪤*[R,⋆s] Y2 →
       /4 width=7 by ex3_4_intro, rexs_step_dx, or_intror/
     ]
   ]
-] 
+]
 qed-.
 
 lemma rexs_inv_gref: ∀R,Y1,Y2,l. Y1 ⪤*[R,§l] Y2 →
@@ -119,7 +119,7 @@ lemma rexs_inv_gref: ∀R,Y1,Y2,l. Y1 ⪤*[R,§l] Y2 →
       /4 width=7 by ex3_4_intro, rexs_step_dx, or_intror/
     ]
   ]
-] 
+]
 qed-.
 
 lemma rexs_inv_bind: ∀R. (∀L. reflexive … (R L)) →

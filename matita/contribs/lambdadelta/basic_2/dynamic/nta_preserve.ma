@@ -124,7 +124,7 @@ elim (cpms_inv_lref_sn … H2) -H2 *
 ]
 qed-.
 
-lemma nta_inv_lref_sn_drops_cnv (h) (a) (G) (L): 
+lemma nta_inv_lref_sn_drops_cnv (h) (a) (G) (L):
       ∀X2,i. ⦃G,L⦄ ⊢ #i :[h,a] X2 →
       ∨∨ ∃∃K,V,W,U. ⇩*[i] L ≘ K.ⓓV & ⦃G,K⦄ ⊢ V :[h,a] W & ⇧*[↑i] W ≘ U & ⦃G,L⦄ ⊢ U ⬌*[h] X2 & ⦃G,L⦄ ⊢ X2 ![h,a]
        | ∃∃K,W,U. ⇩*[i] L ≘ K. ⓛW & ⦃G,K⦄ ⊢ W ![h,a] & ⇧*[↑i] W ≘ U & ⦃G,L⦄ ⊢ U ⬌*[h] X2 & ⦃G,L⦄ ⊢ X2 ![h,a].

@@ -30,7 +30,7 @@ lemma reqx_dec: ∀L1,L2. ∀T:term. Decidable (L1 ≛[T] L2).
 
 (* Main properties **********************************************************)
 
-(* Basic_2A1: uses: lleq_bind lleq_bind_O *) 
+(* Basic_2A1: uses: lleq_bind lleq_bind_O *)
 theorem reqx_bind: ∀p,I,L1,L2,V1,V2,T.
                    L1 ≛[V1] L2 → L1.ⓑ{I}V1 ≛[T] L2.ⓑ{I}V2 →
                    L1 ≛[ⓑ{p,I}V1.T] L2.
@@ -67,7 +67,7 @@ theorem reqx_repl: ∀L1,L2. ∀T:term. L1 ≛[T] L2 →
 
 (* Negated properties *******************************************************)
 
-(* Note: auto works with /4 width=8/ so reqx_canc_sn is preferred **********) 
+(* Note: auto works with /4 width=8/ so reqx_canc_sn is preferred **********)
 (* Basic_2A1: uses: lleq_nlleq_trans *)
 lemma reqx_rneqx_trans: ∀T:term.∀L1,L. L1 ≛[T] L →
                         ∀L2. (L ≛[T] L2 → ⊥) → (L1 ≛[T] L2 → ⊥).

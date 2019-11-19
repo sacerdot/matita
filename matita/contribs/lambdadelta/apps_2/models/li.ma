@@ -31,7 +31,7 @@ interpretation "local environment interpretation (model)"
 
 (* Basic inversion lemmas ***************************************************)
 
-fact li_inv_abbr_aux (M) (gv): is_model M → 
+fact li_inv_abbr_aux (M) (gv): is_model M →
                                ∀v,Y. v ϵ ⟦Y⟧{M}[gv] → ∀L,V. Y = L.ⓓV →
                                ∃∃lv. lv ϵ ⟦L⟧[gv] & ⫯[0←⟦V⟧[gv,lv]]lv ≗ v.
 #M #gv #HM #v #Y #H elim H -v -Y

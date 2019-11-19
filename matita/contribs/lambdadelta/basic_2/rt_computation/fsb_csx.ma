@@ -31,7 +31,7 @@ lemma csx_fsb_fpbs: ∀h,G1,L1,T1. ⦃G1,L1⦄ ⊢ ⬈*[h] 𝐒⦃T1⦄ →
                     ∀G2,L2,T2. ⦃G1,L1,T1⦄ ≥[h] ⦃G2,L2,T2⦄ → ≥[h] 𝐒⦃G2,L2,T2⦄.
 #h #G1 #L1 #T1 #H @(csx_ind … H) -T1
 #T1 #HT1 #IHc #G2 #L2 #T2 @(fqup_wf_ind (Ⓣ) … G2 L2 T2) -G2 -L2 -T2
-#G0 #L0 #T0 #IHu #H10 
+#G0 #L0 #T0 #IHu #H10
 lapply (fpbs_csx_conf … H10) // -HT1 #HT0
 generalize in match IHu; -IHu generalize in match H10; -H10
 @(rsx_ind … (csx_rsx … HT0)) -L0

@@ -44,7 +44,7 @@ lemma eq_genv_dec: ∀G1,G2:genv. Decidable (G1 = G2).
 #G1 elim G1 -G1 [| #G1 #I1 #T1 #IHG1 ] * [2,4: #G2 #I2 #T2 ]
 [3: /2 width=1 by or_introl/
 |2: elim (eq_bind2_dec I1 I2) #HI
-    [ elim (IHG1 G2) -IHG1 #HG 
+    [ elim (IHG1 G2) -IHG1 #HG
       [ elim (eq_term_dec T1 T2) #HT /2 width=1 by or_introl/ ]
     ]
 ]

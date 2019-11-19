@@ -42,7 +42,7 @@ fact lsubr_inv_atom1_aux: ∀L1,L2. L1 ⫃ L2 → L1 = ⋆ → L2 = ⋆.
 #L1 #L2 * -L1 -L2 //
 [ #I #L1 #L2 #_ #H destruct
 | #L1 #L2 #V #W #_ #H destruct
-| #I1 #I2 #L1 #L2 #V #_ #H destruct  
+| #I1 #I2 #L1 #L2 #V #_ #H destruct
 ]
 qed-.
 
@@ -108,7 +108,7 @@ lemma lsubr_inv_abst1:
       ∨∨ ∃∃K2. K1 ⫃ K2 & L2 = K2.ⓛW
        | ∃∃I2,K2. K1 ⫃ K2 & L2 = K2.ⓤ{I2}.
 #K1 #L2 #W #H elim (lsubr_inv_bind1 … H) -H *
-/3 width=4 by ex2_2_intro, ex2_intro, or_introl, or_intror/ 
+/3 width=4 by ex2_2_intro, ex2_intro, or_introl, or_intror/
 #K2 #V2 #W2 #_ #_ #H destruct
 qed-.
 
@@ -129,7 +129,7 @@ lemma lsubr_inv_pair2:
 #I #L1 #K2 #W #H elim (lsubr_inv_bind2 … H) -H *
 [ /3 width=3 by ex2_intro, or_introl/
 | #K1 #X #V #HK12 #H1 #H2 destruct /3 width=4 by ex3_2_intro, or_intror/
-| #J1 #J1 #K1 #V #_ #_ #H destruct   
+| #J1 #J1 #K1 #V #_ #_ #H destruct
 ]
 qed-.
 

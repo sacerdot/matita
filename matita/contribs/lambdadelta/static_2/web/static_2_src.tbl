@@ -22,7 +22,7 @@ table {
         [ { "generic reducibility" * } {
              [ [ "restricted refinement for lenvs" ] "lsubc" + "( ? ⊢ ? ⫃[?] ? )" "lsubc_drops" + "lsubc_lsubr" + "lsubc_lsuba" * ]
              [ [ "candidates" ] "gcp_cr" + "( ⦃?,?,?⦄ ϵ[?] 〚?〛 )" "gcp_aaa" * ]
-             [ [ "computation properties" ] "gcp" *] 
+             [ [ "computation properties" ] "gcp" *]
           }
         ]
         [ { "atomic arity assignment" * } {
@@ -106,7 +106,7 @@ table {
              [ [ "preorder" ] "acle" + "( ? ⊆ ? )"  "acle_acle" * ]
              [ [ "properties" ] "ac" + "( 𝟏 )" + "( 𝟐 )" + "( 𝛚 )" * ]
           }
-        ]   
+        ]
         [ { "equivalence up to exclusion binders" * } {
              [ [ "for lenvs" ] "lveq" + "( ? ≋ⓧ*[?,?] ? )" "lveq_length" + "lveq_lveq" * ]
           }

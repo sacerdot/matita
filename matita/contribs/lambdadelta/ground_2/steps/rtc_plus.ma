@@ -27,7 +27,7 @@ interpretation "plus (rtc)"
 
 (* Basic properties *********************************************************)
 
-(**) (* plus is not disambiguated parentheses *) 
+(**) (* plus is not disambiguated parentheses *)
 lemma plus_rew: ∀ri1,ri2,rs1,rs2,ti1,ti2,ts1,ts2.
                  〈ri1+ri2,rs1+rs2,ti1+ti2,ts1+ts2〉 =
                  (〈ri1,rs1,ti1,ts1〉) + (〈ri2,rs2,ti2,ts2〉).

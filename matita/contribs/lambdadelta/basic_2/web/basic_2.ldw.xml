@@ -7,7 +7,7 @@
       head = "cic:/matita/lambdadelta/basic_2/ (core λδ version 2)"
 >
    <sitemap name="sitemap"/>
-<!--   
+<!--
    <section>System's Syntax and Behavior</section>
    <body>This is a summary of the "block structure"
          of the System's syntactic items and reductions.
@@ -27,6 +27,9 @@
    <table name="basic_2_sum"/>
 
    <subsection name="B">Stage "B"</subsection>
+   <news class="gamma" date="2019 November 19.">
+         λδ-2B is released.
+   </news>
    <news class="beta" date="2019 September 3.">
          Applicability condition is now parametrized
          with a generic subset of numbers.
@@ -118,13 +121,13 @@
    </news>
    <news class="alpha" date="2014 April 16.">
          Lazy equivalence on local environments
-	 added as q-step to rst-computation on closures
+         added as q-step to rst-computation on closures
          (anniversary milestone).
    </news>
    <news class="alpha" date="2014 January 20.">
          Parametrized slicing on local environments
-	 comprises both versions of this operation
-	 (one from basic_1, the other used in basic_2 till now).
+         comprises both versions of this operation
+         (one from basic_1, the other used in basic_2 till now).
    </news>
    <news class="alpha" date="2013 August 7.">
          Passive support for global environments.

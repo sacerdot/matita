@@ -61,4 +61,4 @@ lemma fpbg_feqx_trans: ∀h,G1,G,L1,L,T1,T. ⦃G1,L1,T1⦄ >[h] ⦃G,L,T⦄ →
 lemma cpm_tneqx_cpm_fpbg (h) (G) (L):
                          ∀n1,T1,T. ⦃G,L⦄ ⊢ T1 ➡[n1,h] T → (T1 ≛ T → ⊥) →
                          ∀n2,T2. ⦃G,L⦄ ⊢ T ➡[n2,h] T2 → ⦃G,L,T1⦄ >[h] ⦃G,L,T2⦄.
-/4 width=5 by fpbq_fpbs, cpm_fpbq, cpm_fpb, ex2_3_intro/ qed. 
+/4 width=5 by fpbq_fpbs, cpm_fpbq, cpm_fpb, ex2_3_intro/ qed.

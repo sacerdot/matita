@@ -32,4 +32,4 @@ lemma fqus_inv_refl_atom3: ∀b,I,G,L,X. ⦃G,L,⓪{I}⦄ ⬂*[b] ⦃G,L,X⦄ �
 #G0 #L0 #T0 #H1 #H2 lapply (fqu_fwd_fw … H1) lapply (fqus_fwd_fw … H2) -H2 -H1
 #H2 #H1 lapply (le_to_lt_to_lt … H2 H1) -G0 -L0 -T0
 #H elim (lt_le_false … H) -H /2 width=1 by monotonic_le_plus_r/
-qed-.  
+qed-.

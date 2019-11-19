@@ -32,5 +32,5 @@ lemma ntas_inv_zero (h) (a) (G) (L):
       ∀T1,T2. ⦃G,L⦄ ⊢ T1 :*[h,a,0] T2 →
       ∧∧ ⦃G,L⦄ ⊢ T1 ![h,a] & ⦃G,L⦄ ⊢ T2 ![h,a] & ⦃G,L⦄ ⊢ T1 ⬌*[h] T2.
 #h #a #G #L #T1 #T2 * #T0 #HT1 #HT2 #HT20 #HT10
-/3 width=3 by cprs_div, and3_intro/ 
+/3 width=3 by cprs_div, and3_intro/
 qed-.

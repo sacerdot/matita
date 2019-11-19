@@ -199,7 +199,7 @@ lemma yle_ylt_trans: ∀x:ynat. ∀y:ynat. ∀z:ynat. y < z → x ≤ y → x < 
 ]
 qed-.
 
-lemma le_ylt_trans (x) (y) (z): x ≤ y → yinj y < z → yinj x < z.  
+lemma le_ylt_trans (x) (y) (z): x ≤ y → yinj y < z → yinj x < z.
 /3 width=3 by yle_ylt_trans, yle_inj/
 qed-.
 
@@ -223,7 +223,7 @@ theorem ylt_trans: Transitive … ylt.
 ]
 qed-.
 
-lemma lt_ylt_trans (x) (y) (z): x < y → yinj y < z → yinj x < z.  
+lemma lt_ylt_trans (x) (y) (z): x < y → yinj y < z → yinj x < z.
 /3 width=3 by ylt_trans, ylt_inj/
 qed-.
 

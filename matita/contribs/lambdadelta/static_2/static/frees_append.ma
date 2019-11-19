@@ -39,7 +39,7 @@ fact frees_inv_append_void_aux:
      ∀K. L = ⓧ.K → K ⊢ 𝐅+⦃T⦄ ≘ f.
 #f #L #T #H elim H -f -L -T
 [ /2 width=1 by frees_sort/
-| #f #i #_ #K #H 
+| #f #i #_ #K #H
   elim (append_inv_atom3_sn … H) -H #H1 #H2 destruct
 | #f #I #L #V #_ #IH #K #H
   elim (append_inv_bind3_sn … H) -H * [ | #Y ] #H1 #H2 destruct

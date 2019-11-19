@@ -54,7 +54,7 @@ qed-.
 (* Basic_2A1: was: length_inv_pos_sn *)
 lemma length_inv_succ_sn: ∀n,L. ↑n = |L| →
                           ∃∃I,K. n = |K| & L = K. ⓘ{I}.
-#n #L #H lapply (sym_eq ??? H) -H 
+#n #L #H lapply (sym_eq ??? H) -H
 #H elim (length_inv_succ_dx … H) -H /2 width=4 by ex2_2_intro/
 qed-.
 

@@ -19,7 +19,7 @@ include "static_2/static/fsle_fqup.ma".
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma fsle_frees_trans: 
+lemma fsle_frees_trans:
       ∀L1,L2,T1,T2. ⦃L1,T1⦄ ⊆ ⦃L2,T2⦄ →
       ∀f2. L2 ⊢ 𝐅+⦃T2⦄ ≘ f2 →
       ∃∃n1,n2,f1. L1 ⊢ 𝐅+⦃T1⦄ ≘ f1 & L1 ≋ⓧ*[n1,n2] L2 & ⫱*[n1]f1 ⊆ ⫱*[n2]f2.

@@ -42,7 +42,7 @@ definition relation5: Type[0] → Type[0] → Type[0] → Type[0] → Type[0] �
 definition relation6: Type[0] → Type[0] → Type[0] → Type[0] → Type[0] → Type[0] → Type[0] ≝
            λA,B,C,D,E,F.A→B→C→D→E→F→Prop.
 
-(**) (* we don't use "∀a. reflexive … (R a)" since auto seems to dislike repeatd δ-expansion *)  
+(**) (* we don't use "∀a. reflexive … (R a)" since auto seems to dislike repeatd δ-expansion *)
 definition c_reflexive (A) (B): predicate (relation3 A B B) ≝
            λR. ∀a,b. R a b b.
 

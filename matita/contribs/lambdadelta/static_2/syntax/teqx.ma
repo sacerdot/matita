@@ -173,7 +173,7 @@ qed-.
 (* Negated inversion lemmas *************************************************)
 
 lemma tneqx_inv_pair: ∀I1,I2,V1,V2,T1,T2.
-                      (②{I1}V1.T1 ≛ ②{I2}V2.T2 → ⊥) → 
+                      (②{I1}V1.T1 ≛ ②{I2}V2.T2 → ⊥) →
                       ∨∨ I1 = I2 → ⊥
                       |  (V1 ≛ V2 → ⊥)
                       |  (T1 ≛ T2 → ⊥).

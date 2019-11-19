@@ -40,7 +40,7 @@ qed-.
 lemma cnx_inv_abbr_neg: ∀h,G,L,V,T. ⦃G,L⦄ ⊢ ⬈[h] 𝐍⦃-ⓓV.T⦄ →
                         ⦃G,L⦄ ⊢ ⬈[h] 𝐍⦃V⦄ ∧ ⦃G,L.ⓓV⦄ ⊢ ⬈[h] 𝐍⦃T⦄.
 #h #G #L #V1 #T1 #HVT1 @conj
-[ #V2 #HV2 lapply (HVT1 (-ⓓV2.T1) ?) -HVT1 /2 width=2 by cpx_pair_sn/ -HV2 
+[ #V2 #HV2 lapply (HVT1 (-ⓓV2.T1) ?) -HVT1 /2 width=2 by cpx_pair_sn/ -HV2
 | #T2 #HT2 lapply (HVT1 (-ⓓV1.T2) ?) -HVT1 /2 width=2 by cpx_bind/ -HT2
 ]
 #H elim (teqx_inv_pair … H) -H //

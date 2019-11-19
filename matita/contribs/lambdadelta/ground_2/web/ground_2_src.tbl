@@ -12,7 +12,7 @@ table {
    class "water"
    [ { "generic rt-transition counter" * } {
         [ { "" * } {
-             [ "rtc_ist ( 𝐓⦃?,?⦄ )" "rtc_ist_shift" "rtc_ist_plus" "rtc_ist_max" * ]  
+             [ "rtc_ist ( 𝐓⦃?,?⦄ )" "rtc_ist_shift" "rtc_ist_plus" "rtc_ist_max" * ]
              [ "rtc ( 〈?,?,?,?〉 ) ( 𝟘𝟘 ) ( 𝟙𝟘 ) ( 𝟘𝟙 )" "rtc_isrc ( 𝐑𝐓⦃?,?⦄ )" "rtc_shift ( ↕*? )" "rtc_max ( ? ∨ ? )" "rtc_plus ( ? + ? )" * ]
           }
         ]
@@ -21,7 +21,7 @@ table {
    class "green"
    [ { "multiple relocation" * } {
         [ { "" * } {
-             [ "rtmap" "rtmap_eq ( ? ≡ ? )" "rtmap_pushs ( ⫯*[?]? )" "rtmap_nexts ( ↑*[?]? )" 
+             [ "rtmap" "rtmap_eq ( ? ≡ ? )" "rtmap_pushs ( ⫯*[?]? )" "rtmap_nexts ( ↑*[?]? )"
                "rtmap_tl ( ⫱? )" "rtmap_tls ( ⫱*[?]? )" "rtmap_isid ( 𝐈⦃?⦄ )" "rtmap_id" "rtmap_isdiv ( 𝛀⦃?⦄ )"
                "rtmap_fcla ( 𝐂⦃?⦄ ≘ ? )" "rtmap_isfin ( 𝐅⦃?⦄ )" "rtmap_isuni ( 𝐔⦃?⦄ )" "rtmap_uni ( 𝐔❴?❵ )"
                "rtmap_sle ( ? ⊆ ? )" "rtmap_sdj ( ? ∥ ? )" "rtmap_sand ( ? ⋒ ? ≘ ? )" "rtmap_sor ( ? ⋓ ? ≘ ? )"

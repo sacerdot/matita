@@ -86,7 +86,7 @@ definition co_dropable_sn: predicate (rtmap → relation lenv) ≝
 definition co_dropable_dx: predicate (rtmap → relation lenv) ≝
                            λR. ∀f2,L1,L2. R f2 L1 L2 →
                            ∀b,f,K2. ⇩*[b,f] L2 ≘ K2 → 𝐔⦃f⦄ →
-                           ∀f1. f ~⊚ f1 ≘ f2 → 
+                           ∀f1. f ~⊚ f1 ≘ f2 →
                            ∃∃K1. ⇩*[b,f] L1 ≘ K1 & R f1 K1 K2.
 
 definition co_dedropable_sn: predicate (rtmap → relation lenv) ≝
@@ -261,7 +261,7 @@ qed-.
 
 lemma drops_isuni_ex: ∀f. 𝐔⦃f⦄ → ∀L. ∃K. ⇩*[Ⓕ,f] L ≘ K.
 #f #H elim H -f /4 width=2 by drops_refl, drops_TF, ex_intro/
-#f #_ #g #H #IH destruct * /2 width=2 by ex_intro/ 
+#f #_ #g #H #IH destruct * /2 width=2 by ex_intro/
 #L #I elim (IH L) -IH /3 width=2 by drops_drop, ex_intro/
 qed-.
 

@@ -143,7 +143,7 @@ lemma sex_inv_push: ∀RN,RP,f,I1,I2,L1,L2.
 qed-.
 
 lemma sex_inv_tl: ∀RN,RP,f,I1,I2,L1,L2. L1 ⪤[RN,RP,⫱f] L2 →
-                  RN L1 I1 I2 → RP L1 I1 I2 → 
+                  RN L1 I1 I2 → RP L1 I1 I2 →
                   L1.ⓘ{I1} ⪤[RN,RP,f] L2.ⓘ{I2}.
 #RN #RP #f #I1 #I2 #L2 #L2 elim (pn_split f) *
 /2 width=1 by sex_next, sex_push/
@@ -151,7 +151,7 @@ qed-.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma sex_fwd_bind: ∀RN,RP,f,I1,I2,L1,L2. 
+lemma sex_fwd_bind: ∀RN,RP,f,I1,I2,L1,L2.
                     L1.ⓘ{I1} ⪤[RN,RP,f] L2.ⓘ{I2} →
                     L1 ⪤[RN,RP,⫱f] L2.
 #RN #RP #f #I1 #I2 #L1 #L2 #Hf

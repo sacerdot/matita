@@ -105,5 +105,5 @@ qed-.
               lleq_fwd_drop_sn lleq_fwd_drop_dx
               lleq_skip lleq_lref lleq_free
               lleq_Y lleq_ge_up lleq_ge
-               
+
 *)

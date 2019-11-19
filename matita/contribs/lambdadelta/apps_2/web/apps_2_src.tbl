@@ -82,12 +82,12 @@ class "capitalize italic" { 0 }
 
 class "italic"            { 1 }
 (*
-        [ { "evaluation drop" * } {        
+        [ { "evaluation drop" * } {
              [ "vdrop" + "( ⫰{?}? )" + "( ⫰{?}[?]? )" "vdrop_vlift" * ]
           }
         ]
         [ { "reduction and type machine" * } {
              [ "rtm" "rtm_step ( ? ⇨ ? )" * ]
           }
-        ]        
+        ]
 *)

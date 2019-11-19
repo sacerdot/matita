@@ -21,7 +21,7 @@ include "apps_2/models/vpushs.ma".
 
 lemma vpushs_fold (M): is_model M → is_extensional M →
                        ∀L,T1,T2,gv,lv.
-                       (∀v. L ⨁[gv] lv ≘ v → ⟦T1⟧[gv,v] ≗ ⟦T2⟧[gv,v]) → 
+                       (∀v. L ⨁[gv] lv ≘ v → ⟦T1⟧[gv,v] ≗ ⟦T2⟧[gv,v]) →
                        ⟦L+T1⟧[gv,lv] ≗{M} ⟦L+T2⟧[gv,lv].
 #M #H1M #H2M #L elim L -L [| #K * [| * ]]
 [ #T1 #T2 #gv #lv #H12

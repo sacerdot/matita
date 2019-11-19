@@ -54,7 +54,7 @@ qed.
 
 (* Basic_1: was just: sn3_abbr *)
 (* Basic_2A1: was: csx_lref_bind *)
-lemma csx_lref_pair_drops (h) (G): 
+lemma csx_lref_pair_drops (h) (G):
       ∀I,L,K,V,i. ⇩*[i] L ≘ K.ⓑ{I}V →
       ⦃G,K⦄ ⊢ ⬈*[h] 𝐒⦃V⦄ → ⦃G,L⦄ ⊢ ⬈*[h] 𝐒⦃#i⦄.
 #h #G #I #L #K #V #i #HLK #HV

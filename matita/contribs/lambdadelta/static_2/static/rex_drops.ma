@@ -90,7 +90,7 @@ qed-.
 
 (* Basic_2A1: uses: llpx_sn_inv_lift_O *)
 lemma rex_inv_lifts_bi (R):
-      ∀L1,L2,U. L1 ⪤[R,U] L2 → ∀b,f. 𝐔⦃f⦄ → 
+      ∀L1,L2,U. L1 ⪤[R,U] L2 → ∀b,f. 𝐔⦃f⦄ →
       ∀K1,K2. ⇩*[b,f] L1 ≘ K1 → ⇩*[b,f] L2 ≘ K2 →
       ∀T. ⇧*[f] T ≘ U → K1 ⪤[R,T] K2.
 #R #L1 #L2 #U #HL12 #b #f #Hf #K1 #K2 #HLK1 #HLK2 #T #HTU

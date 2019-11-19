@@ -34,7 +34,7 @@ definition R_confluent2_rex: relation4 (relation3 lenv term term)
                              ∃∃T. R2 L1 T1 T & R1 L2 T2 T.
 
 definition rex_confluent: relation … ≝
-                          λR1,R2. 
+                          λR1,R2.
                           ∀K1,K,V1. K1 ⪤[R1,V1] K → ∀V. R1 K1 V1 V →
                           ∀K2. K ⪤[R2,V] K2 → K ⪤[R2,V1] K2.
 
@@ -319,7 +319,7 @@ lemma rex_isid (R1) (R2):
 /4 width=7 by sex_co_isid, ex2_intro/
 qed-.
 
-lemma rex_unit_sn (R1) (R2): 
+lemma rex_unit_sn (R1) (R2):
       ∀I,K1,L2. K1.ⓤ{I} ⪤[R1,#0] L2 → K1.ⓤ{I} ⪤[R2,#0] L2.
 #R1 #R2 #I #K1 #L2 #H
 elim (rex_inv_zero_unit_sn … H) -H #f #K2 #Hf #HK12 #H destruct
@@ -327,8 +327,8 @@ elim (rex_inv_zero_unit_sn … H) -H #f #K2 #Hf #HK12 #H destruct
 qed-.
 
 (* Basic_2A1: removed theorems 9:
-              llpx_sn_skip llpx_sn_lref llpx_sn_free 
+              llpx_sn_skip llpx_sn_lref llpx_sn_free
               llpx_sn_fwd_lref
-              llpx_sn_Y llpx_sn_ge_up llpx_sn_ge 
-              llpx_sn_fwd_drop_sn llpx_sn_fwd_drop_dx      
+              llpx_sn_Y llpx_sn_ge_up llpx_sn_ge
+              llpx_sn_fwd_drop_sn llpx_sn_fwd_drop_dx
 *)

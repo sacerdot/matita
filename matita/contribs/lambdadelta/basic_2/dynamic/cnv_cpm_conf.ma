@@ -127,7 +127,7 @@ qed-.
 fact cnv_cpm_conf_lpr_bind_zeta_aux (h) (a) (G) (L) (V) (T):
      (∀G0,L0,T0. ⦃G,L,+ⓓV.T⦄ >[h] ⦃G0,L0,T0⦄ → IH_cnv_cpms_conf_lpr h a G0 L0 T0) →
      ⦃G,L⦄ ⊢ +ⓓV.T ![h,a] →
-     ∀V1. ⦃G,L⦄ ⊢V ➡[h] V1 → ∀n1,T1. ⦃G,L.ⓓV⦄ ⊢ T ➡[n1,h] T1 → 
+     ∀V1. ⦃G,L⦄ ⊢V ➡[h] V1 → ∀n1,T1. ⦃G,L.ⓓV⦄ ⊢ T ➡[n1,h] T1 →
      ∀T2. ⇧*[1]T2 ≘ T → ∀n2,XT2. ⦃G,L⦄ ⊢ T2 ➡[n2,h] XT2 →
      ∀L1. ⦃G,L⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G,L⦄ ⊢ ➡[h] L2 →
      ∃∃T. ⦃G,L1⦄ ⊢ +ⓓV1.T1 ➡*[n2-n1,h] T & ⦃G,L2⦄ ⊢ XT2 ➡*[n1-n2,h] T.
@@ -136,7 +136,7 @@ fact cnv_cpm_conf_lpr_bind_zeta_aux (h) (a) (G) (L) (V) (T):
 #L1 #HL01 #L2 #HL02
 elim (cnv_inv_bind … H0) -H0 #_ #HT0
 lapply (cnv_inv_lifts … HT0 (Ⓣ) … L0 … HT20) -HT0
-[ /3 width=3 by drops_refl, drops_drop/ ] #HT2 
+[ /3 width=3 by drops_refl, drops_drop/ ] #HT2
 elim (cpm_inv_lifts_sn … HT01 (Ⓣ) … L0 … HT20) -HT01
 [| /3 width=1 by drops_refl, drops_drop/ ] #XT1 #HXT1 #HXT12
 elim (cnv_cpm_conf_lpr_sub … IH … HXT12 … HXT2 … HL01 … HL02)
@@ -225,7 +225,7 @@ elim (cpm_inv_abbr1 … HX) -HX *
   #T #HT1 #HT2 -L0 -V0 -W0 -T0
   /4 width=7 by cpms_theta_dx, cpms_appl_dx, cpms_bind_dx, ex2_intro/
 | #X0 #HXT0 #H1X0 #H destruct
-  lapply (cnv_inv_lifts … HT0 (Ⓣ) … L0 … HXT0) -HT0 [ /3 width=3 by drops_refl, drops_drop/ ] #H2X0 
+  lapply (cnv_inv_lifts … HT0 (Ⓣ) … L0 … HXT0) -HT0 [ /3 width=3 by drops_refl, drops_drop/ ] #H2X0
   elim (cpm_inv_lifts_sn … HT02 (Ⓣ) … L0 … HXT0) -HT02 [| /3 width=1 by drops_refl, drops_drop/ ] #X2 #HXT2 #HX02
   elim (cnv_cpm_conf_lpr_sub … IH … H1X0 … HX02 … HL01 … HL02)
   [|*: /4 width=5 by fqup_fpbg, fqup_strap1, fqu_drop/ ] #T #HT1 #HT2 -L0 -V0 -W0 -T0
@@ -423,7 +423,7 @@ fact cnv_cpm_conf_lpr_aux (h) (a):
     @(cnv_cpm_conf_lpr_delta_delta_aux … IH1) -IH1 /1 width=13 by/
   | #m2 #K2 #W2 #XW2 #i2 #HLK2 #_ #_ #H21 #H22 #K1 #V1 #XV1 #i1 #HLK1 #_ #_ #H11 destruct -a -XW2 -XV1 -HL2 -HL1
     elim cnv_cpm_conf_lpr_delta_ell_aux /1 width=8 by/
-  | #H21 #H22 #m1 #K1 #W1 #XW1 #i1 #HLK1 #HWX1 #HXW1 #H11 #H12 destruct -IH2 
+  | #H21 #H22 #m1 #K1 #W1 #XW1 #i1 #HLK1 #HWX1 #HXW1 #H11 #H12 destruct -IH2
     <minus_O_n <minus_n_O
     @ex2_commute @(cnv_cpm_conf_lpr_atom_ell_aux … IH1) -IH1 /1 width=6 by/
   | #s2 #H21 #H22 #H23 #m1 #K1 #W1 #XW1 #i1 #_ #_ #_ #H11 #H12 destruct

@@ -19,7 +19,7 @@ include "basic_2/rt_computation/cpxs.ma".
 
 (* Properties with sort-irrelevant equivalence for terms ********************)
 
-lemma teqx_cpxs_trans: ∀h,U1,T1. U1 ≛ T1 → ∀G,L,T2. ⦃G,L⦄ ⊢ T1 ⬈*[h] T2 → 
+lemma teqx_cpxs_trans: ∀h,U1,T1. U1 ≛ T1 → ∀G,L,T2. ⦃G,L⦄ ⊢ T1 ⬈*[h] T2 →
                        ∃∃U2. ⦃G,L⦄ ⊢ U1 ⬈*[h] U2 & U2 ≛ T2.
 #h #U1 #T1 #HUT1 #G #L #T2 #HT12 @(cpxs_ind … HT12) -T2 /2 width=3 by ex2_intro/
 #T #T2 #_ #HT2 * #U #HU1 #HUT elim (teqx_cpx_trans … HUT … HT2) -T -T1

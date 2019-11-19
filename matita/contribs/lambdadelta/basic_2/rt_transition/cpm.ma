@@ -212,14 +212,14 @@ qed.
 
 lemma cpm_inv_gref1: ∀n,h,G,L,T2,l. ⦃G,L⦄ ⊢ §l ➡[n,h] T2 → T2 = §l ∧ n = 0.
 #n #h #G #L #T2 #l * #c #Hc #H elim (cpg_inv_gref1 … H) -H
-#H1 #H2 destruct /3 width=1 by isrt_inv_00, conj/ 
+#H1 #H2 destruct /3 width=1 by isrt_inv_00, conj/
 qed-.
 
 (* Basic_2A1: includes: cpr_inv_bind1 *)
 lemma cpm_inv_bind1: ∀n,h,p,I,G,L,V1,T1,U2. ⦃G,L⦄ ⊢ ⓑ{p,I}V1.T1 ➡[n,h] U2 →
                      ∨∨ ∃∃V2,T2. ⦃G,L⦄ ⊢ V1 ➡[h] V2 & ⦃G,L.ⓑ{I}V1⦄ ⊢ T1 ➡[n,h] T2 &
                                  U2 = ⓑ{p,I}V2.T2
-                      | ∃∃T. ⇧*[1] T ≘ T1 & ⦃G,L⦄ ⊢ T ➡[n,h] U2 & 
+                      | ∃∃T. ⇧*[1] T ≘ T1 & ⦃G,L⦄ ⊢ T ➡[n,h] U2 &
                              p = true & I = Abbr.
 #n #h #p #I #G #L #V1 #T1 #U2 * #c #Hc #H elim (cpg_inv_bind1 … H) -H *
 [ #cV #cT #V2 #T2 #HV12 #HT12 #H1 #H2 destruct
@@ -252,7 +252,7 @@ lemma cpm_inv_abst1: ∀n,h,p,G,L,V1,T1,U2. ⦃G,L⦄ ⊢ ⓛ{p}V1.T1 ➡[n,h] U
 #n #h #p #G #L #V1 #T1 #U2 #H
 elim (cpm_inv_bind1 … H) -H
 [ /3 width=1 by or_introl/
-| * #T #_ #_ #_ #H destruct  
+| * #T #_ #_ #_ #H destruct
 ]
 qed-.
 
@@ -260,7 +260,7 @@ lemma cpm_inv_abst_bi: ∀n,h,p1,p2,G,L,V1,V2,T1,T2. ⦃G,L⦄ ⊢ ⓛ{p1}V1.T1 
                        ∧∧ ⦃G,L⦄ ⊢ V1 ➡[h] V2 & ⦃G,L.ⓛV1⦄ ⊢ T1 ➡[n,h] T2 & p1 = p2.
 #n #h #p1 #p2 #G #L #V1 #V2 #T1 #T2 #H
 elim (cpm_inv_abst1 … H) -H #XV #XT #HV #HT #H destruct
-/2 width=1 by and3_intro/  
+/2 width=1 by and3_intro/
 qed-.
 
 (* Basic_1: includes: pr0_gen_appl pr2_gen_appl *)

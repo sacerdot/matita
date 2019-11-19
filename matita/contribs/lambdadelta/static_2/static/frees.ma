@@ -227,7 +227,7 @@ qed-.
               frees_inv_bind frees_inv_flat frees_inv_bind_O
               frees_lref_eq frees_lref_be frees_weak
               frees_bind_sn frees_bind_dx frees_flat_sn frees_flat_dx
-              frees_lift_ge frees_inv_lift_be frees_inv_lift_ge 
+              frees_lift_ge frees_inv_lift_be frees_inv_lift_ge
               lreq_frees_trans frees_lreq_conf
               llor_atom llor_skip llor_total
               llor_tail_frees llor_tail_cofrees

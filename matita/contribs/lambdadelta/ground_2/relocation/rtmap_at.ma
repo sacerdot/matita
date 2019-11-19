@@ -18,7 +18,7 @@ include "ground_2/relocation/rtmap_uni.ma".
 (* RELOCATION MAP ***********************************************************)
 
 coinductive at: rtmap → relation nat ≝
-| at_refl: ∀f,g,j1,j2. ⫯f = g → 0 = j1 → 0 = j2 → at g j1 j2 
+| at_refl: ∀f,g,j1,j2. ⫯f = g → 0 = j1 → 0 = j2 → at g j1 j2
 | at_push: ∀f,i1,i2. at f i1 i2 → ∀g,j1,j2. ⫯f = g → ↑i1 = j1 → ↑i2 = j2 → at g j1 j2
 | at_next: ∀f,i1,i2. at f i1 i2 → ∀g,j2. ↑f = g → ↑i2 = j2 → at g i1 j2
 .
@@ -324,7 +324,7 @@ lemma at_tls: ∀i2,f. ⫯⫱*[↑i2]f ≡ ⫱*[i2]f → ∃i1. @⦃i1,f⦄ ≘ 
 [ /4 width=4 by at_eq_repl_back, at_refl, ex_intro/
 | #i2 #IH #f <tls_xn <tls_xn in ⊢ (??%→?); #H
   elim (IH … H) -IH -H #i1 #Hf
-  elim (pn_split f) * #g #Hg destruct /3 width=8 by at_push, at_next, ex_intro/  
+  elim (pn_split f) * #g #Hg destruct /3 width=8 by at_push, at_next, ex_intro/
 ]
 qed-.
 

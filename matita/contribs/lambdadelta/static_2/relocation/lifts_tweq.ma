@@ -48,7 +48,7 @@ lemma tweq_lifts_sn: liftable2_sn tweq.
 | #V1 #V2 #T1 #T2 #_ #_ #IHV #IHT #f #X #H
   elim (lifts_inv_flat1 … H) -H #W1 #U1 #HVW1 #HTU1 #H destruct
   elim (IHV … HVW1) -V1 #W2 #HVW2 #HW12
-  elim (IHT … HTU1) -T1 #U2 #HTU2 #HU12 
+  elim (IHT … HTU1) -T1 #U2 #HTU2 #HU12
   /3 width=5 by lifts_flat, tweq_cast, ex2_intro/
 ]
 qed-.

@@ -41,7 +41,7 @@ interpretation "generic relocation (term)"
    'RLiftStar f T1 T2 = (lifts f T1 T2).
 
 definition liftable2_sn: predicate (relation term) ≝
-                         λR. ∀T1,T2. R T1 T2 → ∀f,U1. ⇧*[f] T1 ≘ U1 → 
+                         λR. ∀T1,T2. R T1 T2 → ∀f,U1. ⇧*[f] T1 ≘ U1 →
                          ∃∃U2. ⇧*[f] T2 ≘ U2 & R U1 U2.
 
 definition deliftable2_sn: predicate (relation term) ≝
@@ -49,7 +49,7 @@ definition deliftable2_sn: predicate (relation term) ≝
                            ∃∃T2. ⇧*[f] T2 ≘ U2 & R T1 T2.
 
 definition liftable2_bi: predicate (relation term) ≝
-                         λR. ∀T1,T2. R T1 T2 → ∀f,U1. ⇧*[f] T1 ≘ U1 → 
+                         λR. ∀T1,T2. R T1 T2 → ∀f,U1. ⇧*[f] T1 ≘ U1 →
                          ∀U2. ⇧*[f] T2 ≘ U2 → R U1 U2.
 
 definition deliftable2_bi: predicate (relation term) ≝
@@ -486,8 +486,8 @@ lemma lifts_uni: ∀n1,n2,T,U. ⇧*[𝐔❴n1❵∘𝐔❴n2❵] T ≘ U → ⇧
               lift_lref_ge_minus lift_lref_ge_minus_eq
 *)
 (* Basic_1: removed theorems 8:
-            lift_lref_gt            
-            lift_head lift_gen_head 
+            lift_lref_gt
+            lift_head lift_gen_head
             lift_weight_map lift_weight lift_weight_add lift_weight_add_O
             lift_tlt_dx
 *)

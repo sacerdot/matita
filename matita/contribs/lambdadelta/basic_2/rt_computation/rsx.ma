@@ -63,7 +63,7 @@ qed-.
 lemma rsx_fwd_flat_dx (h) (G):
       ∀I,L,V,T. G ⊢ ⬈*[h,ⓕ{I}V.T] 𝐒⦃L⦄ →
       G ⊢ ⬈*[h,T] 𝐒⦃L⦄.
-#h #G #I #L #V #T #H 
+#h #G #I #L #V #T #H
 @(rsx_ind … H) -L #L1 #_ #IHL1
 @rsx_intro #L2 #HL12 #HnL12
 /4 width=3 by reqx_fwd_flat_dx/

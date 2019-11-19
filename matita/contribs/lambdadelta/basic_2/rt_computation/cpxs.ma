@@ -127,7 +127,7 @@ qed.
 lemma cpxs_theta_dx: ∀h,p,G,L,V1,V,V2,W1,W2,T1,T2.
                      ⦃G,L⦄ ⊢ V1 ⬈[h] V → ⇧*[1] V ≘ V2 → ⦃G,L.ⓓW1⦄ ⊢ T1 ⬈*[h] T2 →
                      ⦃G,L⦄ ⊢ W1 ⬈[h] W2 → ⦃G,L⦄ ⊢ ⓐV1.ⓓ{p}W1.T1 ⬈*[h] ⓓ{p}W2.ⓐV2.T2.
-#h #p #G #L #V1 #V #V2 #W1 #W2 #T1 #T2 #HV1 #HV2 * -T2 
+#h #p #G #L #V1 #V #V2 #W1 #W2 #T1 #T2 #HV1 #HV2 * -T2
 /4 width=9 by cpx_cpxs, cpxs_strap1, cpxs_bind_dx, cpxs_flat_dx, cpx_theta/
 qed.
 

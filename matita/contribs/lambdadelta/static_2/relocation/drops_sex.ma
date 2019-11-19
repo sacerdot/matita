@@ -34,7 +34,7 @@ lemma sex_co_dropable_sn: ∀RN,RP. co_dropable_sn (sex RN RP).
   lapply (drops_fwd_isid … HLK … Hf) -HLK #H0 destruct
   lapply (liftsb_fwd_isid … HJI1 … Hf) -HJI1 #H0 destruct
   elim (coafter_inv_pxx … Hf2) -Hf2 [1,3:* |*: // ] #g1 #g2 #Hg2 #H1 #H2 destruct
-  [ elim (sex_inv_push1 … H) | elim (sex_inv_next1 … H) ] -H #I2 #L2 #HL12 #HI12 #H destruct 
+  [ elim (sex_inv_push1 … H) | elim (sex_inv_next1 … H) ] -H #I2 #L2 #HL12 #HI12 #H destruct
   elim (IH … HL12 … Hg2) -g2 -IH /2 width=1 by isuni_isid/ #K2 #HK12 #HLK2
   lapply (drops_fwd_isid … HLK2 … Hf) -HLK2 #H0 destruct
   /4 width=3 by drops_refl, sex_next, sex_push, isid_push, ex2_intro/

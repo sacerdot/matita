@@ -22,7 +22,7 @@ include "basic_2/rt_transition/fpb.ma".
 (* Properties with sort-irrelevant equivalence for local environments *******)
 
 lemma teqx_fpb_trans: ∀h,U2,U1. U2 ≛ U1 →
-                      ∀G1,G2,L1,L2,T1. ⦃G1,L1,U1⦄ ≻[h] ⦃G2,L2,T1⦄ → 
+                      ∀G1,G2,L1,L2,T1. ⦃G1,L1,U1⦄ ≻[h] ⦃G2,L2,T1⦄ →
                       ∃∃L,T2. ⦃G1,L1,U2⦄ ≻[h] ⦃G2,L,T2⦄ & T2 ≛ T1 & L ≛[T1] L2.
 #h #U2 #U1 #HU21 #G1 #G2 #L1 #L2 #T1 * -G2 -L2 -T1
 [ #G2 #L2 #T1 #H

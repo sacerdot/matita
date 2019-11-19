@@ -102,7 +102,7 @@ qed-.
 (* Basic eliminators ********************************************************)
 
 (* Basic_1: was: c_tail_ind *)
-(* Basic_2A1: was: lenv_ind_alt *) 
+(* Basic_2A1: was: lenv_ind_alt *)
 lemma lenv_ind_tail: ∀Q:predicate lenv.
                      Q (⋆) → (∀I,L. Q L → Q (ⓘ{I}.L)) → ∀L. Q L.
 #Q #IH1 #IH2 #L @(f_ind … length … L) -L #x #IHx * //

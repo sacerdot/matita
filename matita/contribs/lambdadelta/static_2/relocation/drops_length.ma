@@ -39,7 +39,7 @@ theorem drops_fwd_length_eq1: ∀b1,b2,f,L1,K1. ⇩*[b1,f] L1 ≘ K1 →
   #I2 #K2 #HLK2 #_ #H destruct
   lapply (IH … HLK2 H12) -f >length_bind >length_bind /2 width=1 by/ (**) (* full auto fails *)
 ]
-qed-.  
+qed-.
 
 (* forward lemmas with finite colength assignment ***************************)
 

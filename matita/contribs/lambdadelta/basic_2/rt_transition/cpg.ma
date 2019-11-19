@@ -30,7 +30,7 @@ inductive cpg (Rt:relation rtc) (h): rtc → relation4 genv lenv term term ≝
              ⇧*[1] V2 ≘ W2 → cpg Rt h c G (L.ⓓV1) (#0) W2
 | cpg_ell  : ∀c,G,L,V1,V2,W2. cpg Rt h c G L V1 V2 →
              ⇧*[1] V2 ≘ W2 → cpg Rt h (c+𝟘𝟙) G (L.ⓛV1) (#0) W2
-| cpg_lref : ∀c,I,G,L,T,U,i. cpg Rt h c G L (#i) T → 
+| cpg_lref : ∀c,I,G,L,T,U,i. cpg Rt h c G L (#i) T →
              ⇧*[1] T ≘ U → cpg Rt h c G (L.ⓘ{I}) (#↑i) U
 | cpg_bind : ∀cV,cT,p,I,G,L,V1,V2,T1,T2.
              cpg Rt h cV G L V1 V2 → cpg Rt h cT G (L.ⓑ{I}V1) T1 T2 →
@@ -69,7 +69,7 @@ qed.
 (* Basic inversion lemmas ***************************************************)
 
 fact cpg_inv_atom1_aux: ∀Rt,c,h,G,L,T1,T2. ⦃G,L⦄ ⊢ T1 ⬈[Rt,c,h] T2 → ∀J. T1 = ⓪{J} →
-                        ∨∨ T2 = ⓪{J} ∧ c = 𝟘𝟘 
+                        ∨∨ T2 = ⓪{J} ∧ c = 𝟘𝟘
                          | ∃∃s. J = Sort s & T2 = ⋆(⫯[h]s) & c = 𝟘𝟙
                          | ∃∃cV,K,V1,V2. ⦃G,K⦄ ⊢ V1 ⬈[Rt,cV,h] V2 & ⇧*[1] V2 ≘ T2 &
                                          L = K.ⓓV1 & J = LRef 0 & c = cV
@@ -95,7 +95,7 @@ fact cpg_inv_atom1_aux: ∀Rt,c,h,G,L,T1,T2. ⦃G,L⦄ ⊢ T1 ⬈[Rt,c,h] T2 →
 qed-.
 
 lemma cpg_inv_atom1: ∀Rt,c,h,J,G,L,T2. ⦃G,L⦄ ⊢ ⓪{J} ⬈[Rt,c,h] T2 →
-                     ∨∨ T2 = ⓪{J} ∧ c = 𝟘𝟘 
+                     ∨∨ T2 = ⓪{J} ∧ c = 𝟘𝟘
                       | ∃∃s. J = Sort s & T2 = ⋆(⫯[h]s) & c = 𝟘𝟙
                       | ∃∃cV,K,V1,V2. ⦃G,K⦄ ⊢ V1 ⬈[Rt,cV,h] V2 & ⇧*[1] V2 ≘ T2 &
                                       L = K.ⓓV1 & J = LRef 0 & c = cV
@@ -153,7 +153,7 @@ fact cpg_inv_bind1_aux: ∀Rt,c,h,G,L,U,U2. ⦃G,L⦄ ⊢ U ⬈[Rt,c,h] U2 →
                         ∀p,J,V1,U1. U = ⓑ{p,J}V1.U1 →
                         ∨∨ ∃∃cV,cT,V2,T2. ⦃G,L⦄ ⊢ V1 ⬈[Rt,cV,h] V2 & ⦃G,L.ⓑ{J}V1⦄ ⊢ U1 ⬈[Rt,cT,h] T2 &
                                           U2 = ⓑ{p,J}V2.T2 & c = ((↕*cV)∨cT)
-                         | ∃∃cT,T. ⇧*[1] T ≘ U1 & ⦃G,L⦄ ⊢ T ⬈[Rt,cT,h] U2 & 
+                         | ∃∃cT,T. ⇧*[1] T ≘ U1 & ⦃G,L⦄ ⊢ T ⬈[Rt,cT,h] U2 &
                                    p = true & J = Abbr & c = cT+𝟙𝟘.
 #Rt #c #h #G #L #U #U2 * -c -G -L -U -U2
 [ #I #G #L #q #J #W #U1 #H destruct
@@ -191,7 +191,7 @@ qed-.
 lemma cpg_inv_abst1: ∀Rt,c,h,p,G,L,V1,T1,U2. ⦃G,L⦄ ⊢ ⓛ{p}V1.T1 ⬈[Rt,c,h] U2 →
                      ∃∃cV,cT,V2,T2. ⦃G,L⦄ ⊢ V1 ⬈[Rt,cV,h] V2 & ⦃G,L.ⓛV1⦄ ⊢ T1 ⬈[Rt,cT,h] T2 &
                                     U2 = ⓛ{p}V2.T2 & c = ((↕*cV)∨cT).
-#Rt #c #h #p #G #L #V1 #T1 #U2 #H elim (cpg_inv_bind1 … H) -H * 
+#Rt #c #h #p #G #L #V1 #T1 #U2 #H elim (cpg_inv_bind1 … H) -H *
 [ /3 width=8 by ex4_4_intro/
 | #c #T #_ #_ #_ #H destruct
 ]

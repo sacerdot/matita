@@ -97,7 +97,7 @@ fact cpr_conf_lpr_bind_zeta (h):
       ∀G,L,T. ⦃G0,L0,+ⓓV0.T0⦄ ⬂+ ⦃G,L,T⦄ → IH_cpr_conf_lpr h G L T
    ) →
    ∀V1. ⦃G0,L0⦄ ⊢ V0 ➡[h] V1 → ∀T1. ⦃G0,L0.ⓓV0⦄ ⊢ T0 ➡[h] T1 →
-   ∀T2. ⇧*[1]T2 ≘ T0 → ∀X2. ⦃G0,L0⦄ ⊢ T2 ➡[h] X2 →  
+   ∀T2. ⇧*[1]T2 ≘ T0 → ∀X2. ⦃G0,L0⦄ ⊢ T2 ➡[h] X2 →
    ∀L1. ⦃G0,L0⦄ ⊢ ➡[h] L1 → ∀L2. ⦃G0,L0⦄ ⊢ ➡[h] L2 →
    ∃∃T. ⦃G0,L1⦄ ⊢ +ⓓV1.T1 ➡[h] T & ⦃G0,L2⦄ ⊢ X2 ➡[h] T.
 #h #G0 #L0 #V0 #T0 #IH #V1 #HV01 #T1 #HT01

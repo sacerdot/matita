@@ -25,7 +25,7 @@ lemma cpr_flat: ∀h,I,G,L,V1,V2,T1,T2.
                 ⦃G,L⦄ ⊢ V1 ➡[h] V2 → ⦃G,L⦄ ⊢ T1 ➡[h] T2 →
                 ⦃G,L⦄ ⊢ ⓕ{I}V1.T1 ➡[h] ⓕ{I}V2.T2.
 #h * /2 width=1 by cpm_cast, cpm_appl/
-qed. 
+qed.
 
 (* Basic_1: was: pr2_head_1 *)
 lemma cpr_pair_sn: ∀h,I,G,L,V1,V2. ⦃G,L⦄ ⊢ V1 ➡[h] V2 →
@@ -45,7 +45,7 @@ lemma cpr_inv_atom1: ∀h,J,G,L,T2. ⦃G,L⦄ ⊢ ⓪{J} ➡[h] T2 →
 [2,4:|*: /3 width=8 by or3_intro0, or3_intro1, or3_intro2, ex4_4_intro, ex4_3_intro/ ]
 [ #n #_ #_ #H destruct
 | #n #K #V1 #V2 #_ #_ #_ #_ #H destruct
-]  
+]
 qed-.
 
 (* Basic_1: includes: pr0_gen_sort pr2_gen_sort *)

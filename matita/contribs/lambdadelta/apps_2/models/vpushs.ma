@@ -40,7 +40,7 @@ fact vpushs_inv_atom_aux (M) (gv) (lv): is_model M →
 | #v #d #K #V #_ #_ #H destruct
 | #v #d #I #K #_ #_ #H destruct
 | #v1 #v2 #L #_ #Hv12 #IH #H destruct
-  /3 width=3 by veq_trans/ 
+  /3 width=3 by veq_trans/
 ]
 qed-.
 

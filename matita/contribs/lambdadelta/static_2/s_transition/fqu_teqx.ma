@@ -33,4 +33,4 @@ lemma fqu_inv_teqx: ∀b,G,L1,L2,T1,T2. ⦃G,L1,T1⦄ ⬂[b] ⦃G,L2,T2⦄ →
                     |L1| = |L2| → T1 ≛ T2 → ⊥.
 #b #G #L1 #L2 #T1 #T2 #H
 @(fqu_inv_teqx_aux … H) // (**) (* full auto fails *)
-qed-. 
+qed-.

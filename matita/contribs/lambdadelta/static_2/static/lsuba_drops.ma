@@ -21,7 +21,7 @@ include "static_2/static/lsuba.ma".
 
 (* Note: the premise 𝐔⦃f⦄ cannot be removed *)
 (* Basic_2A1: includes: lsuba_drop_O1_conf *)
-lemma lsuba_drops_conf_isuni: ∀G,L1,L2. G ⊢ L1 ⫃⁝ L2 → 
+lemma lsuba_drops_conf_isuni: ∀G,L1,L2. G ⊢ L1 ⫃⁝ L2 →
                               ∀b,f,K1. 𝐔⦃f⦄ → ⇩*[b,f] L1 ≘ K1 →
                               ∃∃K2. G ⊢ K1 ⫃⁝ K2 & ⇩*[b,f] L2 ≘ K2.
 #G #L1 #L2 #H elim H -L1 -L2

@@ -91,7 +91,7 @@ elim (lt_or_ge s2 s1) #Hs
     | /3 width=2 by ex_intro, or_introl/
     ]
   | -IH @or_introl @(ex_intro … 1) // (**) (* auto fails *)
-  | lapply (transitive_lt s1 ??? Hs21) [ /2 width=1 by next_lt/ ] -Hs12 #Hs12 
+  | lapply (transitive_lt s1 ??? Hs21) [ /2 width=1 by next_lt/ ] -Hs12 #Hs12
     elim (IH (s2-⫯[h]s1)) -IH
     [3: /3 width=1 by next_lt, monotonic_lt_minus_r/ ]
     >minus_minus_m_m [2,4: /2 width=1 by lt_to_le/ ] -Hs21

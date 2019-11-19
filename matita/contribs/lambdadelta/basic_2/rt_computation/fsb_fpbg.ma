@@ -43,7 +43,7 @@ lemma fsb_ind_fpbg_fpbs: ∀h. ∀Q:relation3 genv lenv term.
                                      (∀G2,L2,T2. ⦃G1,L1,T1⦄ >[h] ⦃G2,L2,T2⦄ → Q G2 L2 T2) →
                                      Q G1 L1 T1
                          ) →
-                         ∀G1,L1,T1. ≥[h] 𝐒⦃G1,L1,T1⦄ → 
+                         ∀G1,L1,T1. ≥[h] 𝐒⦃G1,L1,T1⦄ →
                          ∀G2,L2,T2. ⦃G1,L1,T1⦄ ≥[h] ⦃G2,L2,T2⦄ → Q G2 L2 T2.
 #h #Q #IH1 #G1 #L1 #T1 #H @(fsb_ind_alt … H) -G1 -L1 -T1
 #G1 #L1 #T1 #H1 #IH #G2 #L2 #T2 #H12

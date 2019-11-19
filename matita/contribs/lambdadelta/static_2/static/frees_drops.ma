@@ -20,7 +20,7 @@ include "static_2/static/frees_fqup.ma".
 
 (* Advanced properties ******************************************************)
 
-lemma frees_atom_drops: 
+lemma frees_atom_drops:
       ∀b,L,i. ⇩*[b,𝐔❴i❵] L ≘ ⋆ →
       ∀f. 𝐈⦃f⦄ → L ⊢ 𝐅+⦃#i⦄ ≘ ⫯*[i]↑f.
 #b #L elim L -L /2 width=1 by frees_atom/
@@ -31,7 +31,7 @@ lemma frees_atom_drops:
 qed.
 
 lemma frees_pair_drops:
-      ∀f,K,V. K ⊢ 𝐅+⦃V⦄ ≘ f → 
+      ∀f,K,V. K ⊢ 𝐅+⦃V⦄ ≘ f →
       ∀i,I,L. ⇩*[i] L ≘ K.ⓑ{I}V → L ⊢ 𝐅+⦃#i⦄ ≘ ⫯*[i] ↑f.
 #f #K #V #Hf #i elim i -i
 [ #I #L #H lapply (drops_fwd_isid … H ?) -H /2 width=1 by frees_pair/

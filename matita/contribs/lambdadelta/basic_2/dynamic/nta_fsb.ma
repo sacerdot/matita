@@ -29,4 +29,4 @@ theorem nta_fwd_fsb (h) (a) (G) (L):
 #h #a #G #L #T #U #H
 elim (cnv_inv_cast … H) #X #HU #HT #_ #_ -X
 /3 width=2 by cnv_fwd_fsb, conj/
-qed-. 
+qed-.

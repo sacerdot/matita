@@ -31,7 +31,7 @@ table {
      }
    ]
    class "prune"
-   [ { "rt-equivalence" * } {        
+   [ { "rt-equivalence" * } {
         [ { "context-sensitive parallel r-equivalence" * } {
              [ [ "for terms" ] "cpcs ( ⦃?,?⦄ ⊢ ? ⬌*[?] ? )" "cpcs_drops" + "cpcs_lsubr" + "cpcs_aaa" + "cpcs_csx" + "cpcs_cprs" + "cpcs_lprs" + "cpcs_cpc" + "cpcs_cpcs" * ]
           }
@@ -91,7 +91,7 @@ table {
              [ [ "strongly normalizing for terms" ] "csx" + "( ⦃?,?⦄ ⊢ ⬈*[?] 𝐒⦃?⦄ )" "csx_simple" + "csx_simple_teqo" + "csx_drops" + "csx_fqus" + "csx_lsubr" + "csx_reqx" + "csx_feqx" + "csx_aaa" + "csx_gcp" + "csx_gcr" + "csx_lpx" + "csx_cnx" + "csx_fpbq" + "csx_cpxs" + "csx_lpxs" + "csx_csx" * ]
              [ [ "for lenvs on all entries" ] "lpxs" + "( ⦃?,?⦄ ⊢ ⬈*[?] ? )" "lpxs_length" + "lpxs_drops" + "lpxs_reqx" + "lpxs_feqx" + "lpxs_aaa" + "lpxs_lpx" + "lpxs_cpxs" + "lpxs_lpxs" * ]
              [ [ "for binders" ] "cpxs_ext" + "( ⦃?,?⦄ ⊢ ? ⬈*[?] ? )" * ]
-             [ [ "for terms" ] "cpxs" + "( ⦃?,?⦄ ⊢ ? ⬈*[?] ? )" "cpxs_teqx" + "cpxs_teqo" + "cpxs_teqo_vector" + "cpxs_drops" + "cpxs_fqus" + "cpxs_lsubr" + "cpxs_reqx" + "cpxs_feqx" + "cpxs_aaa" + "cpxs_lpx" + "cpxs_cnx" + "cpxs_cpxs" * ] 
+             [ [ "for terms" ] "cpxs" + "( ⦃?,?⦄ ⊢ ? ⬈*[?] ? )" "cpxs_teqx" + "cpxs_teqo" + "cpxs_teqo_vector" + "cpxs_drops" + "cpxs_fqus" + "cpxs_lsubr" + "cpxs_reqx" + "cpxs_feqx" + "cpxs_aaa" + "cpxs_lpx" + "cpxs_cnx" + "cpxs_cpxs" * ]
           }
         ]
      }

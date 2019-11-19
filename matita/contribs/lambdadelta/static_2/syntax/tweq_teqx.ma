@@ -24,7 +24,7 @@ lemma teqx_tweq: ∀T1,T2. T1 ≛ T2 → T1 ≅ T2.
 [ /1 width=1 by tweq_sort/
 | /1 width=1 by tweq_lref/
 | /1 width=1 by tweq_gref/
-| cases p -p /2 width=1 by tweq_abbr_pos, tweq_abbr_neg/  
+| cases p -p /2 width=1 by tweq_abbr_pos, tweq_abbr_neg/
 | /1 width=1 by tweq_abst/
 | /2 width=1 by tweq_appl/
 | /2 width=1 by tweq_cast/

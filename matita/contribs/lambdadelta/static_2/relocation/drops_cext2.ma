@@ -26,4 +26,4 @@ lemma cext2_d_liftable2_sn: ∀R. d_liftable2_sn … lifts R →
 | lapply (liftsb_inv_pair_sn … H) * #U1 #HTU1
 ] -H #H destruct /3 width=3 by ext2_unit, ex2_intro/
 elim (HR … HT12 … HLK … HTU1) -HR -b -K -T1 /3 width=3 by ext2_pair, ex2_intro/
-qed-. 
+qed-.

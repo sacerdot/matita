@@ -44,7 +44,7 @@ interpretation "functional co-composition (nstream)"
 
 (* Basic properties on funs *************************************************)
 
-(* Note: we need theese since matita blocks recursive δ when ι is blocked *)  
+(* Note: we need theese since matita blocks recursive δ when ι is blocked *)
 lemma fun0_xn: ∀f2,n1. 0 = fun0 n1 (↑f2).
 * #n2 #f2 * //
 qed.

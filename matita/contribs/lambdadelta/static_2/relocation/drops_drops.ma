@@ -38,7 +38,7 @@ theorem drops_conf: ∀b1,f1,L1,L. ⇩*[b1,f1] L1 ≘ L →
 qed-.
 
 (* Basic_1: was: drop1_trans *)
-(* Basic_2A1: includes: drop_trans_ge drop_trans_le drop_trans_ge_comm 
+(* Basic_2A1: includes: drop_trans_ge drop_trans_le drop_trans_ge_comm
                         drops_drop_trans
 *)
 theorem drops_trans: ∀b1,f1,L1,L. ⇩*[b1,f1] L1 ≘ L →

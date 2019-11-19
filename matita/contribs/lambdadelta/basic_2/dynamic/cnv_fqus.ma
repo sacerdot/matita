@@ -38,7 +38,7 @@ lemma cnv_fqu_conf (h) (a):
   [ elim (cnv_inv_appl … H) -H //
   | elim (cnv_inv_cast … H) -H //
   ]
-| #I1 #G1 #L1 #T1 #U1 #HTU1 #HU 
+| #I1 #G1 #L1 #T1 #U1 #HTU1 #HU
   /4 width=7 by cnv_inv_lifts, drops_refl, drops_drop/
 ]
 qed-.

@@ -27,7 +27,7 @@ lemma sex_tc_refl: ∀RN,RP. c_reflexive … RN → c_reflexive … RP →
 /3 width=1 by sex_refl, TC_reflexive/ qed.
 
 lemma sex_tc_next_sn: ∀RN,RP. c_reflexive … RN →
-                      ∀f,I2,L1,L2. TC … (sex RN RP f) L1 L2 → ∀I1. RN L1 I1 I2 → 
+                      ∀f,I2,L1,L2. TC … (sex RN RP f) L1 L2 → ∀I1. RN L1 I1 I2 →
                       TC … (sex RN RP (↑f)) (L1.ⓘ{I1}) (L2.ⓘ{I2}).
 #RN #RP #HRN #f #I2 #L1 #L2 #H @(TC_ind_dx ??????? H) -L1
 /3 width=3 by sex_next, TC_strap, inj/
@@ -41,7 +41,7 @@ lemma sex_tc_next_dx: ∀RN,RP. c_reflexive … RN → c_reflexive … RP →
 qed.
 
 lemma sex_tc_push_sn: ∀RN,RP. c_reflexive … RP →
-                      ∀f,I2,L1,L2. TC … (sex RN RP f) L1 L2 → ∀I1. RP L1 I1 I2 → 
+                      ∀f,I2,L1,L2. TC … (sex RN RP f) L1 L2 → ∀I1. RP L1 I1 I2 →
                       TC … (sex RN RP (⫯f)) (L1.ⓘ{I1}) (L2.ⓘ{I2}).
 #RN #RP #HRP #f #I2 #L1 #L2 #H @(TC_ind_dx ??????? H) -L1
 /3 width=3 by sex_push, TC_strap, inj/

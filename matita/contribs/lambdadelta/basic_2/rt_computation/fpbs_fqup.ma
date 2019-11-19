@@ -32,7 +32,7 @@ lemma fpbs_teqx_trans: ∀h,G1,G2,L1,L2,T1,T. ⦃G1,L1,T1⦄ ≥[h] ⦃G2,L2,T�
 
 lemma fqup_fpbs: ∀h,G1,G2,L1,L2,T1,T2. ⦃G1,L1,T1⦄ ⬂+ ⦃G2,L2,T2⦄ →
                  ⦃G1,L1,T1⦄ ≥[h] ⦃G2,L2,T2⦄.
-#h #G1 #G2 #L1 #L2 #T1 #T2 #H @(fqup_ind … H) -G2 -L2 -T2 
+#h #G1 #G2 #L1 #L2 #T1 #T2 #H @(fqup_ind … H) -G2 -L2 -T2
 /4 width=5 by fqu_fquq, fpbq_fquq, tri_step/
 qed.
 
