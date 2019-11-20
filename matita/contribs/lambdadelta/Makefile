@@ -261,7 +261,7 @@ trim: $(TRIMS:%=%.trimmed)
 
 contrib:
 	@echo "  TAR -cjf $(CONTRIB).tar.bz2 root $(XPACKAGES)"
-	$(H)tar -cjf $(CONTRIB).tar.bz2 root $(XMAS)
+	$(H)tar -cjf $(CONTRIB).tar.bz2 ../lambdadelta/root $(XMAS:%=../lambdadelta/%)
 
 # clean ######################################################################
 
