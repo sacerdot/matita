@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page xmlns="http://lambdadelta.info/"
+      description = "\lambda\delta home page"
+      title = "\lambda\delta home page"
+      logo = "crux"
+      head = "The Formal Systems of the λδ (\lambda\delta) Family"
+>
+  <sitemap name="sitemap"/>
+
+  <section15 name="log">System and Specification Log</section15>
+  <body>
+    The next table logs the system features and the specification features
+    changed in each version with respect to the previous one.
+  </body>
+  <body>
+    Marks:
+    "@" system feature,
+    "+" added feature, "*" replaced feature, "-" removed feature 
+  </body>
+  <table name="changes"/>
+
+  <footer/>
+</page>

@@ -1,0 +1,373 @@
+name "changes"
+
+table {
+  class "gray"
+  [ "specification" [ "aspect" [ "" "" "changes" ]]
+  ]
+
+  class "orange"
+  [ { "λδ-2B" + "(November 2019)" * }
+    {
+     [ [{ "validity" * }]
+       { "@" "" "@" }
+       { "+" "-" "*" }
+       { "type assignment (terms)"
+         "stratified higher validity (terms) removed"
+         "primitive validity (terms)"
+       }
+     ]
+     [ [{ "equivalences" * }]
+       { "" "" "" "" }
+       { "+" "+" "+" "-" }
+       { "equivalence for full rt-reduction (terms)"
+         "equivalence for whd rt-reduction (terms)"
+         "equivalence for full rt-reduction (terms, referred lenvs, closures)"
+         "syntactic equivalence (closures) removed"
+       }
+     ]
+     [ [{ "partial orders" * }]
+       { "" }
+       { "+" }
+       { "switch in primitive order relations for closures to enable the exclusion binder"
+       }
+     ]
+     [ [{ "normal form predicates" * }]
+       { "" "" "" "" "" }
+       { "-" "-" "-" "-" "-" }
+       { "irreducible forms for full rt-reduction (terms) removed"
+         "reducible forms for full rt-reduction (terms) removed"
+         "irreducible forms for reduction (terms) removed"
+         "reducible forms for reduction (terms) removed"
+         "abstract reducibility properties (items) removed"
+       }
+     ]
+     [ [{ "substitution" * }]
+       { "" }
+       { "-" }
+       { "zero or more refs (terms) removed"
+       }
+     ]
+     [ [{ "relocation" * }]
+       { "" "" "" "" }
+       { "-" "*" "-" "*" }
+       { "basic slicing (lenvs) removed"
+         "primitive finite slicing (lenvs)"
+         "basic relocation (lists of terms) removed"
+         "primitive finite relocation (terms, lists of terms)"
+       }
+     ]
+     [ [{ "free varibles" * }]
+       { "" }
+       { "+" }
+       { "union (referred lenvs) removed"
+       }
+     ]
+     [ [{ "syntax" * }]
+       { "@" }
+       { "+" }
+       { "exclusion binder for lenvs"
+       }
+     ]
+     [ [{ "ground" * }]
+       { "" "" "" "" }
+       { "+" "*" "+" "-" }
+       { "rt-transition counters"
+         "generic reference transforming maps as streams of non-negative integers"
+         "extensional equality, labelled transitive closures and streams"
+         "non-negative integers with infinity removed"
+       }
+     ]
+    }
+  ]
+
+  class "orange"
+  [ { "λδ-2A" + "(October 2014)" * }
+    {
+     [ [{ "validity" * }]
+       { "" "" "@" "" "" "" "@" }
+       { "-" "-" "-" "+" "+" "+" "+" }
+       { "flat or invalid entry clear (lenvs) removed"
+         "refinement for type assignment (lenvs) removed"
+         "primitive type assignment (terms, specialized lists of terms) removed"
+         "confluence and preservation properties"
+         "higher validity (terms)"
+         "refinement for validity (lenvs)"
+         "primitive stratified validity (terms)"
+       }
+     ]
+     [ [{ "equivalences" * }]
+       { "@" "" "@" "" "" "" }
+       { "+" "+" "-" "-" "-" "+" }
+       { "primitive decomposed rt-equivalence (terms)"
+         "single-step context-sensitive r-eqivalence (terms)"
+         "primitive context-sensitive r-eqivalence (terms) removed"
+         "context-free r-eqivalence (terms) removed"
+         "level equivalence (binary arities) removed"
+         "syntactic equivalence (selected lenvs, referred lenvs, selected closures)"
+       }
+     ]
+     [ [{ "partial orders" * }]
+       { "" "" "" "" "" "" "" }
+       { "+" "*" "+" "-" "-" "-" "-" }
+       { "big-tree order relations (closures)"
+         "primitive order relations for closures"
+         "simple weight (restricted closures)"
+         "order relation (lists of terms) based on lengths removed"
+         "order relations (binary arities) based on weights removed"
+         "simple weights (binary arities) removed"
+         "complex weight (terms) removed"
+       }
+     ]
+     [ [{ "reducibility" * }]
+       { "" "" "" "" "" "" "" "" }
+       { "+" "+" "*" "+" "*" "+" "*" "-" }
+       { "compatibility predicate for strong normalization (referred lenvs)"
+         "strong normalization for bt-reduction (referred closures)"
+         "strong normalization for full rt-reduction (terms, lists of terms, referred lenvs)"
+         "arrow candidate, arity interpretation"
+         "abatract Tait's candidates with 7 postulates"
+         "abstract computation for reducibility with 4 postulates"
+         "atomic arities with sort, implication"
+         "succerssor, addition, look-up predicate (binary arities) removed"
+       }
+     ]
+     [ [{ "normal form predicates" * }]
+       { "" "" "" "" "" "" "" "" "" }
+       { "+" "+" "+" "+" "+" "-" "+" "+" "+" }
+       { "evaluation for full rt-reduction (terms)"
+         "normal form for full rt-reduction (terms)"
+         "irreducible forms for fulld rt-reduction (terms)"
+         "reducible forms for full rt-reduction (terms)"
+         "evaluation for reduction (terms)"
+         "normal form for reduction (lists of terms) removed"
+         "irreducible forms for reduction (terms)"
+         "reducible forms for reduction (terms)"
+         "abstract reducibility properties (items)"
+       }
+     ]
+     [ [{ "reduction and type synthesis" * }]
+       { "" "" "@" "@" "" "" "" "@" "@" }
+       { "+" "+" "+" "*" "-" "+" "-" "*" "-" }
+       { "stratified full rt-computation (terms, lenvs)"
+         "stratified full rt-transition (terms, lenvs)"
+         "decomposed rt-computation (terms)"
+         "primitive counted iterated type synthesis with δ,s,l,e (terms)"
+         "syntax-oriented type synthesis (terms) removed"
+         "refinement for reduction (lenvs)"
+         "context-free computation (terms) removed"
+         "primitive context-sensitive transition with typed β, δ, (wrong) ζ, θ, ε (terms, lenvs)"
+         "context-free transition (terms, lenvs) removed"
+       }
+     ]
+     [ [{ "substitution" * }]
+       { "" "" "" "@"}
+       { "-" "-" "+" "-" }
+       { "every ref (terms) removed"
+         "zero or more refs (lenvs) removed"
+         "(restricted) zero or more selected refs (terms)"
+         "one or more refs (terms, lenvs, closures) removed"
+       }
+     ]
+     [ [{ "degree" * }]
+       { "@" "" "@" "" }
+       { "+" "+" "+" "+" }
+       { "refinement for degree (lenvs)"
+         "degree assignment (terms)"
+         "concrete systems of reference"
+         "abstract system of reference with compatibility condition"
+       }
+     ]
+     [ [{ "relocation and slicing" * }]
+       { "" "" "" "" "" "" }
+       { "+" "+" "+" "-" "-" "-" }
+       { "look-up predicate (genvs)"
+         "abstract properties for relations"
+         "switch in basic and finite slicing (lenvs)"
+         "look-up predicate (lenvs) removed"
+         "parametric relocation (terms) removed"
+         "level update functions removed"
+       }
+     ]
+     [ [{ "free varibles" * }]
+       { "" "" }
+       { "+" "+" }
+       { "union (referred lenvs)"
+         "hereditarily free variable predicate"
+       }
+     ]
+     [ [{ "helpers" * }]
+       { "" "" "" "" "" "" "" "" "" "" "" "" }
+       { "+" "-" "-" "+" "+" "-" "-" "-" "-" "+" "+" "-" }
+       { "unfold (closures)"
+         "append (closures) removed"
+         "refinement (lenvs) removed"
+         "refinement (selected lenvs)"
+         "append (lenvs)"
+         "left cons (lenvs) removed"
+         "flat construction clear (lenvs) removed"
+         "sort extraction (lenvs) removed"
+         "context predicate (terms) removed"
+         "neutral predicate (terms)"
+         "multiple application (terms)"
+         "multiple head construction (terms) removed"
+       }
+     ]
+     [ [{ "extension" * }]
+       { "" "" }
+       { "+" "+" }
+       { "abstract properties with extension (lenvs, referred lenvs)"
+         "for 3-relations (lenvs, referred lenvs)"
+       }
+     ]
+     [ [{ "syntax" * }]
+       { "@" "@" "@" "@" "@" "" }
+       { "+" "+" "+" "-" "-" "-" }
+       { "polarized binders for terms"
+         "non-negative integer global references for terms"
+         "syntactic support for genvs with typed abstraction, abbreviation"
+         "numbered sorts, application, type annotation removed from lenvs"
+         "exclusion binder removed from terms and lenvs"
+         "specialized lists of terms removed with length, right cons"
+       }
+     ]
+     [ [{ "parameters" * }]
+       { "" "" }
+       { "+" "-"}
+       { "concrete sort hierarchies"
+         "iterated next function (sort hierarchy) removed"
+       }
+     ]
+     [ [{ "ground" * }]
+       { "" "" "" }
+       { "+" "+" "+" }
+       { "lists and non-negative integers with infinity"
+         "support for iterated functions"
+         "library extension for transitive closures and booleans"
+       }
+     ]
+    }
+  ]
+
+  class "red"
+  [ { "λδ-1A" + "(November 2006)" * }
+    {
+     [ [{ "validity" * }]
+       { "@" "" "" }
+       { "+" "+" "+" }
+       { "flat or invalid entry clear (lenvs)"
+         "refinement for type assignment (lenvs)"
+         "primitive type assignment (terms, specialized lists of terms)"
+       }
+     ]
+     [ [{ "equivalences" * }]
+       { "" "@" "" "" "" }
+       { "+" "+" "+" "+" "+" }
+       { "(transitive closure) context-sensitive r-eqivalence (terms)"
+         "primitive context-sensitive r-eqivalence (terms)"
+         "context-free r-eqivalence (terms)"
+         "equivalence for outer reduction (terms)"
+         "level equivalence (binary arities)"
+       }
+     ]
+     [ [{ "partial orders" * }]
+       { "" "" "" "" }
+       { "+" "+" "+" "+" }
+       { "order relation (specialized lists of terms) based on lengths"
+         "order relations (terms, lenvs, closures, binary arities) based on weights"
+         "simple weights (terms, lenvs, closures, binary arities)"
+         "complex weight (terms)"
+       }
+     ]
+     [ [{ "reducibility" * }]
+       { "" "" "" "" "" "" "" }
+       { "+" "+" "+" "+" "+" "+" "+" }
+       { "refinement for reducibility (lenvs)"
+         "Girards's candidates (closures)"
+         "strong normalization for reduction (terms, specialized lists of terms)"
+         "refinement for arity (lenvs)"
+         "arity assignment (terms)"
+         "succerssor, addition, look-up predicate (binary arities)"
+         "binary arities with sort, implication"
+       }
+     ]
+     [ [{ "normal form predicates" * }]
+       { "" }
+       { "+" }
+       { "normal form for context-sensitive reduction (terms, specialized lists of terms)"
+       }
+     ]
+     [ [{ "reduction and type synthesis" * }]
+       { "" "@" "" "" "" "@" }
+       { "+" "+" "+" "+" "+" "+" }
+       { "countless iterated type synthesis (terms)"
+         "syntax-oriented type synthesis with δ,s,l (terms)"
+         "context-sensitive computation (terms)"
+         "context-free computation (terms)"
+         "(restricted) context-sensitive transition (terms)"
+         "context-free transition with untyped β, δ, ζ, θ, ε (terms, lenvs)"
+       }
+     ]
+     [ [{ "substitution" * }]
+       { "" "" "@"}
+       { "+" "+" "+" }
+       { "every ref (terms)"
+         "zero or more refs (terms, lenvs)"
+         "one or more refs (terms, lenvs, closures)"
+       }
+     ]
+     [ [{ "relocation and slicing" * }]
+       { "" "" "" "" "" "" "" "" }
+       { "+" "+" "+" "+" "+" "+" "+" "+" }
+       { "order relation (lenvs) based on look-up"
+         "look-up predicate (lenvs)"
+         "finite slicing (lenvs)"
+         "basic slicing (lenvs)"
+         "finite relocation (terms, specialized lists of terms)"
+         "basic relocation (terms, specialized lists of terms)"
+         "parametric relocation (terms)"
+         "level update functions"
+       }
+     ]
+     [ [{ "helpers" * }]
+       { "" "" "" "" "" "" "" "" }
+       { "+" "+" "+" "+" "+" "+" "+" "+" }
+       { "append (closures)"
+         "refinement (lenvs)"
+         "length (lenvs)"
+         "left cons (lenvs)"
+         "flat entry clear (lenvs)"
+         "sort extraction (lenvs)"
+         "context predicate (terms)"
+         "multiple head construction (terms)"
+       }
+     ]
+     [ [{ "syntax" * }]
+       { "@" "" "@" }
+       { "+" "+" "+" }
+       { "lenvs with non-negative integer sorts, application, typed abstraction, abbreviation, exclusion, type annotation"
+         "specialized lists of terms with length, right cons"
+         "terms with non-negative integer sorts and local references, application, typed abstraction, abbreviation, exclusion, type annotation"
+       }
+     ]
+     [ [{ "parameters" * }]
+       { "" "@" }
+       { "+" "+" }
+       { "iterated next function (sort hierarchy)"
+         "abstract sort hierarchy with strict monotonicity condition based on non-negative integers"
+       }
+     ]
+     [ [{ "ground" * }]
+       { "" "" }
+       { "+" "+" }
+       { "finite reference transforming maps as compositions of basic ones"
+         "library extension for logic and non-negative integers"
+       }
+     ]
+    }
+  ]
+
+}
+
+class "capitalize" [ 0 ]
+
+class "center" { 2 3 }
