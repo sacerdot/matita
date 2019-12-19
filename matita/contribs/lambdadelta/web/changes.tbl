@@ -12,23 +12,34 @@ table {
        { "@" "" "@" }
        { "+" "-" "*" }
        { "type assignment (terms)"
-         "stratified higher validity (terms) removed"
+         "higher validity (terms) removed"
          "primitive validity (terms)"
        }
      ]
      [ [{ "equivalences" * }]
-       { "" "" "" "" }
-       { "+" "+" "+" "-" }
-       { "equivalence for full rt-reduction (terms)"
-         "equivalence for whd rt-reduction (terms)"
-         "equivalence for full rt-reduction (terms, referred lenvs, closures)"
-         "syntactic equivalence (closures) removed"
+       { "" "" "" "" "" }
+       { "+" "+" "+" "+" "-" }
+       { "equivalence for whd rt-reduction (terms)"
+         "equivalence for full rt-reduction (terms, items, referred lenvs, referred closures)"
+         "equivalence up to exclusion binders (selected lenvs)"
+         "syntactic equivalence (items)"
+         "syntactic equivalence (selected closures) removed"
        }
      ]
      [ [{ "partial orders" * }]
+       { "" "" "" "" "" }
+       { "+" "+" "+" "+" "+" }
+       { "properties with inclusion (hereditarily free variables)"
+         "inclusion (hereditarily free variables)"
+         "inclusion (applicability)"
+         "switch in primitive order relations (closures) to enable the exclusion binder"
+         "simple weight (items, genvs)"
+       }
+     ]
+     [ [{ "reducibility" * }]
        { "" }
-       { "+" }
-       { "switch in primitive order relations for closures to enable the exclusion binder"
+       { "*" }
+       { "abatract Tait's candidates with 6 postulates"
        }
      ]
      [ [{ "normal form predicates" * }]
@@ -47,25 +58,57 @@ table {
        { "zero or more refs (terms) removed"
        }
      ]
-     [ [{ "relocation" * }]
-       { "" "" "" "" }
-       { "-" "*" "-" "*" }
-       { "basic slicing (lenvs) removed"
+     [ [{ "relocation and slicing" * }]
+       { "" "" "" "" "" "" }
+       { "+" "-" "*" "-" "+" "*" }
+       { "properties with abstract relocation (terms/items)"
+         "basic slicing (lenvs) removed"
          "primitive finite slicing (lenvs)"
-         "basic relocation (lists of terms) removed"
+         "basic relocation (terms, lists of terms) removed"
+         "primitive finite relocation (items)" 
          "primitive finite relocation (terms, lists of terms)"
        }
      ]
      [ [{ "free varibles" * }]
-       { "" }
-       { "+" }
-       { "union (referred lenvs) removed"
+       { "" "" }
+       { "+" "-" }
+       { "refinement for hereditarily free variables (lenvs)"
+         "union (referred lenvs) removed"
+       }
+     ]
+     [ [{ "helpers" * }]
+       { "" "" "" }
+       { "+" "+" "+" }
+       { "append (restricted closures) wrong on excluded entries"
+         "length (genvs)"
+         "abstract properties with append (lenvs)"
+       }
+     ]
+     [ [{ "extension" * }]
+       { "" "" "" "" "" }
+       { "+" "+" "+" "+" "+" }
+       { "properties with iterated extension (referred lenvs)"
+         "iterated for 3-relations (referred lenvs)"
+         "abstract properties with extension (selected lenvs)"
+         "for 3-relations (selected lenvs)"
+         "for 2-relations and 3-relations (items)"
        }
      ]
      [ [{ "syntax" * }]
-       { "@" }
-       { "+" }
-       { "exclusion binder for lenvs"
+       { "@" "" }
+       { "+" "+" }
+       { "exclusion binder (lenvs)"
+         "bonding items (lenvs)"
+       }
+     ]
+     [ [{ "parameters" * }]
+       { "" "" "@" "" "@" }
+       { "+" "+" "+" "+" "*" }
+       { "concrete instances (applicability)"
+         "abstract properties (applicability)"
+         "abstract applicability condition"
+         "sort hierarchy properties including strict monotonicity condition based on non-negative integers"
+         "abstract sort hierarchy without properties"
        }
      ]
      [ [{ "ground" * }]
@@ -96,24 +139,26 @@ table {
        }
      ]
      [ [{ "equivalences" * }]
-       { "@" "" "@" "" "" "" }
-       { "+" "+" "-" "-" "-" "+" }
+       { "@" "" "@" "" "" "" "" }
+       { "+" "+" "-" "-" "-" "+" "+" }
        { "primitive decomposed rt-equivalence (terms)"
          "single-step context-sensitive r-eqivalence (terms)"
          "primitive context-sensitive r-eqivalence (terms) removed"
          "context-free r-eqivalence (terms) removed"
          "level equivalence (binary arities) removed"
-         "syntactic equivalence (selected lenvs, referred lenvs, selected closures)"
+         "properties with syntactic equivalence (referred lenvs)"
+         "syntactic equivalence (selected lenvs, referred lenvs, referred closures)"
        }
      ]
      [ [{ "partial orders" * }]
-       { "" "" "" "" "" "" "" }
-       { "+" "*" "+" "-" "-" "-" "-" }
+       { "" "" "" "" "" "" "" "" }
+       { "+" "*" "+" "-" "-" "-" "-" "-" }
        { "big-tree order relations (closures)"
          "primitive order relations for closures"
          "simple weight (restricted closures)"
+         "order relation (lenvs) based on look-up removed"
          "order relation (lists of terms) based on lengths removed"
-         "order relations (binary arities) based on weights removed"
+         "order relations (terms, lenvs, binary arities) based on weights removed"
          "simple weights (binary arities) removed"
          "complex weight (terms) removed"
        }
@@ -136,7 +181,7 @@ table {
        { "+" "+" "+" "+" "+" "-" "+" "+" "+" }
        { "evaluation for full rt-reduction (terms)"
          "normal form for full rt-reduction (terms)"
-         "irreducible forms for fulld rt-reduction (terms)"
+         "irreducible forms for full rt-reduction (terms)"
          "reducible forms for full rt-reduction (terms)"
          "evaluation for reduction (terms)"
          "normal form for reduction (lists of terms) removed"
@@ -169,7 +214,7 @@ table {
        }
      ]
      [ [{ "degree" * }]
-       { "@" "" "@" "" }
+       { "" "@" "" "@" }
        { "+" "+" "+" "+" }
        { "refinement for degree (lenvs)"
          "degree assignment (terms)"
@@ -204,7 +249,7 @@ table {
          "refinement (selected lenvs)"
          "append (lenvs)"
          "left cons (lenvs) removed"
-         "flat construction clear (lenvs) removed"
+         "flat entry clear (lenvs) removed"
          "sort extraction (lenvs) removed"
          "context predicate (terms) removed"
          "neutral predicate (terms)"
@@ -232,7 +277,7 @@ table {
      ]
      [ [{ "parameters" * }]
        { "" "" }
-       { "+" "-"}
+       { "+" "-" }
        { "concrete sort hierarchies"
          "iterated next function (sort hierarchy) removed"
        }
@@ -270,9 +315,10 @@ table {
        }
      ]
      [ [{ "partial orders" * }]
-       { "" "" "" "" }
-       { "+" "+" "+" "+" }
-       { "order relation (specialized lists of terms) based on lengths"
+       { "" "" "" "" "" }
+       { "+" "+" "+" "+" "+" }
+       { "order relation (lenvs) based on look-up"
+         "order relation (specialized lists of terms) based on lengths"
          "order relations (terms, lenvs, closures, binary arities) based on weights"
          "simple weights (terms, lenvs, closures, binary arities)"
          "complex weight (terms)"
@@ -293,7 +339,7 @@ table {
      [ [{ "normal form predicates" * }]
        { "" }
        { "+" }
-       { "normal form for context-sensitive reduction (terms, specialized lists of terms)"
+       { "normal form for reduction (terms, specialized lists of terms)"
        }
      ]
      [ [{ "reduction and type synthesis" * }]
@@ -316,10 +362,9 @@ table {
        }
      ]
      [ [{ "relocation and slicing" * }]
-       { "" "" "" "" "" "" "" "" }
-       { "+" "+" "+" "+" "+" "+" "+" "+" }
-       { "order relation (lenvs) based on look-up"
-         "look-up predicate (lenvs)"
+       { "" "" "" "" "" "" "" }
+       { "+" "+" "+" "+" "+" "+" "+" }
+       { "look-up predicate (lenvs)"
          "finite slicing (lenvs)"
          "basic slicing (lenvs)"
          "finite relocation (terms, specialized lists of terms)"

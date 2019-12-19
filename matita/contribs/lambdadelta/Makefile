@@ -30,7 +30,7 @@ CONTRIB      := lambdadelta_2B
 WWW          := ../../../../helm/www/lambdadelta
 
 TAGS := all xoa xoa2 orig elim deps top leaf stats tbls odeps trim contrib clean \
-        www up-html
+        home up-home
 
 PACKAGES  := ground_2 static_2 basic_2 apps_2 alpha_1
 XPACKAGES := ground_2 static_2 basic_2
@@ -270,13 +270,13 @@ clean:
 
 # www ######################################################################
 
-www:
-	$(H)$(MAKE) --no-print-directory -C $(WWW) www
+home:
+	$(H)$(MAKE) --no-print-directory -C $(WWW) home
 
 # www ######################################################################
 
-up-html:
-	$(H)$(MAKE) --no-print-directory -C $(WWW) up-html
+up-home:
+	$(H)$(MAKE) --no-print-directory -C $(WWW) up-home
 
 ##############################################################################
 
