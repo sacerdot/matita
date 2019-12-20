@@ -9,17 +9,20 @@ table {
   [ { "λδ-2B" + "(November 2019)" * }
     {
      [ [{ "validity" * }]
-       { "@" "" "@" }
-       { "+" "-" "*" }
-       { "type assignment (terms)"
+       { "" "@" "" "@" }
+       { "+" "+" "-" "*" }
+       { "iterated type assignment (terms)"
+         "type assignment (terms)"
          "higher validity (terms) removed"
          "primitive validity (terms)"
        }
      ]
      [ [{ "equivalences" * }]
-       { "" "" "" "" "" }
-       { "+" "+" "+" "+" "-" }
-       { "equivalence for whd rt-reduction (terms)"
+       { "" "" "" "" "" "" "" }
+       { "+" "-" "+" "+" "+" "+" "-" }
+       { "derived rt-equivalence (terms)"
+         "primitive decomposed rt-equivalence (terms) removed"
+         "equivalence for whd rt-reduction (terms)"
          "equivalence for full rt-reduction (terms, items, referred lenvs, referred closures)"
          "equivalence up to exclusion binders (selected lenvs)"
          "syntactic equivalence (items)"
@@ -37,31 +40,62 @@ table {
        }
      ]
      [ [{ "reducibility" * }]
-       { "" }
-       { "*" }
-       { "abatract Tait's candidates with 6 postulates"
+       { "" "" "" }
+       { "+" "-" "*" }
+       { "compatibility relation for strong normalization (referred lenvs)"
+         "compatibility predicate for strong normalization (referred lenvs) removed"
+         "abatract Tait's candidates with 6 postulates"
        }
      ]
      [ [{ "normal form predicates" * }]
-       { "" "" "" "" "" }
-       { "-" "-" "-" "-" "-" }
-       { "irreducible forms for full rt-reduction (terms) removed"
+       { "" "" "" "" "" "" "" "" "" "" }
+       { "+" "-" "+" "*" "+" "-" "-" "-" "-" "-" }
+       { "properties with evaluation"
+         "evaluation for full rt-reduction (terms) removed"
+         "whd evaluation for mixed rt-reduction (terms)"
+         "evaluation for mixed rt-reduction (terms)"
+         "whd normal form for mixed rt-reduction (terms)"
+         "irreducible forms for full rt-reduction (terms) removed"
          "reducible forms for full rt-reduction (terms) removed"
          "irreducible forms for reduction (terms) removed"
          "reducible forms for reduction (terms) removed"
          "abstract reducibility properties (items) removed"
        }
      ]
+     [ [{ "reduction and type synthesis" * }]
+       { "" "" "@" "" "" "@" "" "" "@" "@" }
+       { "*" "*" "-" "+" "*" "+" "*" "+" "*" "+" }
+       { "counted iterated type synthesis (terms)"
+         "full rt-computation (terms, items, lenvs)"
+         "decomposed rt-computation (terms) removed"
+         "r-computation (items)"
+         "mixerd rt-computation (terms)"
+         "counted type synthesis (terms) with δ,s,l,e"
+         "full rt-transition (terms, items, lenvs, referred lenvs)"
+         "r-transition (items)"
+         "mixed rt-transition (terms)"
+         "primitive generic rt transition (terms) with typed β, δ, (correct) ζ, θ, ε"
+       }
+     ]
      [ [{ "substitution" * }]
-       { "" }
-       { "-" }
-       { "zero or more refs (terms) removed"
+       { "" "" }
+       { "-" "-" }
+       { "(restricted) zero or more selected refs (terms) removed"
+         "zero or more refs (terms) removed"
+       }
+     ]
+     [ [{ "degree" * }]
+       { "" "@" }
+       { "-" "-" }
+       { "refinement for degree (lenvs) removed"
+         "degree assignment (terms) removed"
        }
      ]
      [ [{ "relocation and slicing" * }]
-       { "" "" "" "" "" "" }
-       { "+" "-" "*" "-" "+" "*" }
-       { "properties with abstract relocation (terms/items)"
+       { "" "" "" "" "" "" "" }
+       { "-" "+" "-" "*" "-" "+" "*" }
+       { "look-up predicate (genvs) removed"
+         "properties with abstract relocation (terms/items)"
          "basic slicing (lenvs) removed"
          "primitive finite slicing (lenvs)"
          "basic relocation (terms, lists of terms) removed"
@@ -77,10 +111,12 @@ table {
        }
      ]
      [ [{ "helpers" * }]
-       { "" "" "" }
-       { "+" "+" "+" }
-       { "append (restricted closures) wrong on excluded entries"
+       { "" "" "" "" "" }
+       { "-" "+" "+" "-" "+" }
+       { "unfold (closures) removed"
+         "append (restricted closures) wrong on excluded entries"
          "length (genvs)"
+         "refinement (selected lenvs) removed"
          "abstract properties with append (lenvs)"
        }
      ]
@@ -102,13 +138,14 @@ table {
        }
      ]
      [ [{ "parameters" * }]
-       { "" "" "@" "" "@" }
-       { "+" "+" "+" "+" "*" }
-       { "concrete instances (applicability)"
-         "abstract properties (applicability)"
+       { "" "" "@" "" "" "@" }
+       { "+" "+" "+" "-" "+" "*" }
+       { "instances (applicability)"
+         "predicates (applicability)"
          "abstract applicability condition"
-         "sort hierarchy properties including strict monotonicity condition based on non-negative integers"
-         "abstract sort hierarchy without properties"
+         "instances (sort hierarchy) removed"
+         "predicates (sort hierarchy) including strict monotonicity condition based on non-negative integers"
+         "abstract sort hierarchy without predicates"
        }
      ]
      [ [{ "ground" * }]
@@ -124,7 +161,7 @@ table {
   ]
 
   class "orange"
-  [ { "λδ-2A" + "(October 2014)" * }
+  [ { "λδ-2A" + "(August 2015)" * }
     {
      [ [{ "validity" * }]
        { "" "" "@" "" "" "" "@" }
@@ -154,7 +191,7 @@ table {
        { "" "" "" "" "" "" "" "" }
        { "+" "*" "+" "-" "-" "-" "-" "-" }
        { "big-tree order relations (closures)"
-         "primitive order relations for closures"
+         "primitive order relations (closures)"
          "simple weight (restricted closures)"
          "order relation (lenvs) based on look-up removed"
          "order relation (lists of terms) based on lengths removed"
@@ -177,9 +214,10 @@ table {
        }
      ]
      [ [{ "normal form predicates" * }]
-       { "" "" "" "" "" "" "" "" "" }
-       { "+" "+" "+" "+" "+" "-" "+" "+" "+" }
+       { "" "" "" "" "" "" "" "" "" "" }
+       { "+" "+" "+" "+" "+" "+" "-" "+" "+" "+" }
        { "evaluation for full rt-reduction (terms)"
+         "evaluation for reduction (terms)"
          "normal form for full rt-reduction (terms)"
          "irreducible forms for full rt-reduction (terms)"
          "reducible forms for full rt-reduction (terms)"
@@ -191,14 +229,15 @@ table {
        }
      ]
      [ [{ "reduction and type synthesis" * }]
-       { "" "" "@" "@" "" "" "" "@" "@" }
-       { "+" "+" "+" "*" "-" "+" "-" "*" "-" }
+       { "" "" "@" "@" "" "" "" "" "@" "@" }
+       { "+" "+" "+" "*" "-" "+" "+" "-" "*" "-" }
        { "stratified full rt-computation (terms, lenvs)"
          "stratified full rt-transition (terms, lenvs)"
          "decomposed rt-computation (terms)"
          "primitive counted iterated type synthesis with δ,s,l,e (terms)"
          "syntax-oriented type synthesis (terms) removed"
          "refinement for reduction (lenvs)"
+         "context-sensitive computation (lenvs)"
          "context-free computation (terms) removed"
          "primitive context-sensitive transition with typed β, δ, (wrong) ζ, θ, ε (terms, lenvs)"
          "context-free transition (terms, lenvs) removed"
@@ -278,7 +317,7 @@ table {
      [ [{ "parameters" * }]
        { "" "" }
        { "+" "-" }
-       { "concrete sort hierarchies"
+       { "instances (sort hierarchy)"
          "iterated next function (sort hierarchy) removed"
        }
      ]
@@ -294,7 +333,7 @@ table {
   ]
 
   class "red"
-  [ { "λδ-1A" + "(November 2006)" * }
+  [ { "λδ-1A" + "(May 2008)" * }
     {
      [ [{ "validity" * }]
        { "@" "" "" }
