@@ -3,15 +3,10 @@ H    := @
 
 TRIM := sed "s/ \\+$$//"
 
-XOA_CONF     := ground_2/xoa.conf.xml
-XOA_TARGETS  := ground_2/notation/xoa/notation.ma ground_2/xoa/xoa.ma
-
 XOA_DIR      := ../../../components/binaries/xoa
 XOA          := xoa.native
+XOA_CONF     := ground_2/xoa.conf.xml
 XOA_OPTS     := ../../matita.conf.xml $(XOA_CONF)
-
-XOA2_CONF    := ground_2/xoa2.conf.xml
-XOA2_OPTS    := ../../matita.conf.xml $(XOA2_CONF)
 
 DEP_INPUT    := .depend
 DEP_DIR      := ../../../components/binaries/matitadep
@@ -29,7 +24,7 @@ CONTRIB      := lambdadelta_2B
 
 WWW          := ../../../../helm/www/lambdadelta
 
-TAGS := all xoa xoa2 orig elim deps top leaf stats tbls odeps trim contrib clean \
+TAGS := all xoa orig elim deps top leaf stats tbls odeps trim contrib clean \
         home up-home
 
 PACKAGES  := ground_2 static_2 basic_2 apps_2 alpha_1
@@ -70,17 +65,9 @@ $(foreach PKG, $(XPACKAGES), $(eval $(call XMAS_TEMPLATE,$(PKG))))
 
 # xoa ########################################################################
 
-xoa: $(XOA_TARGETS)
-
-$(XOA_TARGETS): $(XOA_CONF)
+xoa: $(XOA_CONF)
 	@echo "  EXEC $(XOA) $(XOA_CONF)"
-	$(H)$(XOA_DIR)/$(XOA) $(XOA_OPTS)
-
-# xoa2 #######################################################################
-
-xoa2: $(XOA2_CONF)
-	@echo "  EXEC $(XOA) $(XOA2_CONF)"
-	$(H)MATITA_RT_BASE_DIR=../.. $(XOA_DIR)/$(XOA) -s $(XOA2_OPTS)
+	$(H)MATITA_RT_BASE_DIR=../.. $(XOA_DIR)/$(XOA) -s $(XOA_OPTS)
 
 # elim #######################################################################
 
