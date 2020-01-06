@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/xoa/ex_4_4.ma".
 include "ground_2/relocation/rtmap_id.ma".
 include "static_2/notation/relations/subseteq_4.ma".
 include "static_2/syntax/lveq.ma".

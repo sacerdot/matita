@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/xoa/ex_4_2.ma".
 include "ground_2/notation/relations/runion_3.ma".
 include "ground_2/relocation/rtmap_isfin.ma".
 include "ground_2/relocation/rtmap_sle.ma".

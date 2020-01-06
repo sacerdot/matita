@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/xoa/ex_3_2.ma".
 include "ground_2/ynat/ynat_lt.ma".
 
 (* NATURAL NUMBERS WITH INFINITY ********************************************)

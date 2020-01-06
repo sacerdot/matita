@@ -12,6 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/xoa/ex_3_3.ma".
+include "ground_2/xoa/ex_4_2.ma".
+include "ground_2/xoa/ex_4_4.ma".
+include "ground_2/xoa/ex_5_2.ma".
+include "ground_2/xoa/ex_6_9.ma".
+include "ground_2/xoa/ex_7_10.ma".
+include "ground_2/xoa/or_5.ma".
 include "ground_2/steps/rtc_max.ma".
 include "ground_2/steps/rtc_plus.ma".
 include "basic_2/notation/relations/predty_7.ma".

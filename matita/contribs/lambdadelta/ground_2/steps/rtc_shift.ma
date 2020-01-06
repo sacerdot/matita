@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/xoa/ex_5_4.ma".
 include "ground_2/notation/functions/updownarrowstar_1.ma".
 include "ground_2/steps/rtc_isrt.ma".
 

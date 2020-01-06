@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/xoa/ex_4_3.ma".
 include "ground_2/steps/rtc_ist_shift.ma".
 include "ground_2/steps/rtc_ist_plus.ma".
 include "ground_2/steps/rtc_ist_max.ma".

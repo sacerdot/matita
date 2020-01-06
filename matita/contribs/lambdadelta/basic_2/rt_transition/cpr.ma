@@ -12,6 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/xoa/ex_6_6.ma".
+include "ground_2/xoa/ex_7_7.ma".
+include "ground_2/xoa/or_4.ma".
 include "ground_2/insert_eq/insert_eq_0.ma".
 include "basic_2/rt_transition/cpm.ma".
 

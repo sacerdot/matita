@@ -12,6 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/xoa/ex_2_3.ma".
+include "ground_2/xoa/ex_3_3.ma".
+include "ground_2/xoa/or_5.ma".
 include "ground_2/lib/star.ma".
 include "static_2/notation/relations/suptermstar_6.ma".
 include "static_2/notation/relations/suptermstar_7.ma".
@@ -83,7 +86,7 @@ lemma fqus_inv_lref1: ∀b,G1,G2,L1,L2,T2,i. ⦃G1,L1,#i⦄ ⬂*[b] ⦃G2,L2,T2�
                        | ∃∃J,L,V. ⦃G1,L,V⦄ ⬂*[b] ⦃G2,L2,T2⦄ & L1 = L.ⓑ{J}V & i = 0
                        | ∃∃J,L,j. ⦃G1,L,#j⦄ ⬂*[b] ⦃G2,L2,T2⦄ & L1 = L.ⓘ{J} & i = ↑j.
 #b #G1 #G2 #L1 #L2 #T2 #i #H elim (fqus_inv_fqu_sn … H) -H * /3 width=1 by and3_intro, or3_intro0/
-#G #L #T #H elim (fqu_inv_lref1 … H) -H * /3 width=7 by or3_intro1, or3_intro2, ex3_4_intro, ex3_3_intro/
+#G #L #T #H elim (fqu_inv_lref1 … H) -H * /3 width=6 by ex3_3_intro, or3_intro1, or3_intro2/
 qed-.
 
 lemma fqus_inv_gref1: ∀b,G1,G2,L1,L2,T2,l. ⦃G1,L1,§l⦄ ⬂*[b] ⦃G2,L2,T2⦄ →

@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/xoa/ex_1_2.ma".
 include "ground_2/notation/functions/tuple_4.ma".
 include "ground_2/notation/functions/zerozero_0.ma".
 include "ground_2/notation/functions/zeroone_0.ma".

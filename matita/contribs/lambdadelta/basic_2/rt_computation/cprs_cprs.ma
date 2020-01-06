@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/xoa/ex_4_5.ma".
 include "basic_2/rt_computation/cpms_cpms.ma".
 include "basic_2/rt_computation/cprs_cpr.ma".
 

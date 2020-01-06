@@ -13,6 +13,8 @@
 (**************************************************************************)
 
 include "basics/relations.ma".
+include "ground_2/xoa/and_3.ma".
+include "ground_2/xoa/ex_2_2.ma".
 include "ground_2/lib/logic.ma".
 
 (* GENERIC RELATIONS ********************************************************)

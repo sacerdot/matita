@@ -12,6 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/xoa/ex_3_2.ma".
+include "ground_2/xoa/ex_6_8.ma".
 include "ground_2/steps/rtc_isrt.ma".
 
 (* RT-TRANSITION COUNTER ****************************************************)

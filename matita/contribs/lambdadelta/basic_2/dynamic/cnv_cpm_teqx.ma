@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "ground_2/xoa/ex_5_1.ma".
+include "ground_2/xoa/ex_8_5.ma".
 include "ground_2/xoa/ex_9_3.ma".
 include "basic_2/rt_transition/cpm_teqx.ma".
 include "basic_2/rt_computation/fpbg_fqup.ma".

@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/xoa/ex_1_3.ma".
 include "static_2/notation/functions/item0_1.ma".
 include "static_2/notation/functions/snitem2_3.ma".
 include "static_2/notation/functions/snbind2_4.ma".

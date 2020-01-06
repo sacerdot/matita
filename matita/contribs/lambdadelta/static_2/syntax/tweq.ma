@@ -12,6 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/xoa/ex_1_2.ma".
+include "ground_2/xoa/ex_3_2.ma".
 include "static_2/notation/relations/approxeq_2.ma".
 include "static_2/syntax/term_weight.ma".
 

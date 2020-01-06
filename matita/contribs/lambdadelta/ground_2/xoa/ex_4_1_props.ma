@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/xoa/xoa.ma".
+include "ground_2/xoa/ex_4_1.ma".
 
 (* Properties with multiple existental quantifier (4, 1) ********************)
 

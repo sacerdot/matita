@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/xoa/ex_2_3.ma".
 include "basic_2/notation/relations/predsubtystarproper_7.ma".
 include "basic_2/rt_transition/fpb.ma".
 include "basic_2/rt_computation/fpbs.ma".

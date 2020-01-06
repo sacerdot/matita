@@ -17,7 +17,6 @@ include "ground_2/notation/xoa/false_0.ma".
 include "ground_2/notation/xoa/true_0.ma".
 include "ground_2/notation/xoa/or_2.ma".
 include "ground_2/notation/xoa/and_2.ma".
-include "ground_2/xoa/xoa.ma".
 
 interpretation "logical false" 'false = False.
 

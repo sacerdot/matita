@@ -12,6 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/xoa/ex_1_2.ma".
+include "ground_2/xoa/ex_3_4.ma".
+include "ground_2/xoa/ex_4_4.ma".
+include "ground_2/xoa/ex_4_5.ma".
 include "ground_2/relocation/rtmap_id.ma".
 include "static_2/notation/relations/relation_4.ma".
 include "static_2/syntax/cext2.ma".
