@@ -30,7 +30,7 @@ lemma pippo (h) (gv) (lv) (T): ●[gv,lv]T = ⟦T⟧{TM h}[gv,lv].
 lemma tm_mi (h) (gv1) (gv2) (lv1) (lv2) (p) (W) (T):
             ⟦W⟧[gv1,lv1] ≗{TM h} ⟦W⟧[gv2,lv2] →
             (∀d. ⟦T⟧[gv1,⫯[0←d]lv1] ≗ ⟦T⟧[gv2,⫯[0←d]lv2]) →
-            ⟦ⓛ{p}W.T⟧[gv1,lv1] ≗ ⟦ⓛ{p}W.T⟧[gv2,lv2].
+            ⟦ⓛ[p]W.T⟧[gv1,lv1] ≗ ⟦ⓛ[p]W.T⟧[gv2,lv2].
 #h #gv1 #gv2 #lv1 #lv2 #p #W #T #HW #HT
 >tm_ti_bind >tm_ti_bind
 @(cpcs_bind1 … HW)
@@ -46,7 +46,7 @@ lapply (HT (#0)) -HT #HT
 *)
 
 lemma tm_md (h) (p) (gv) (lv) (V) (T):
-            ⓓ{p}V.⟦T⟧{TM h}[⇡[0]gv,⇡[0←#0]lv] ≗{TM h} V⊕{TM h}[p]⟦T⟧{TM h}[gv,⫯{TM h}[0←V]lv].
+            ⓓ[p]V.⟦T⟧{TM h}[⇡[0]gv,⇡[0←#0]lv] ≗{TM h} V⊕{TM h}[p]⟦T⟧{TM h}[gv,⫯{TM h}[0←V]lv].
 #h #p #gv #lv #V #T
 >tm_co_rw >(mf_lifts_basic_SO_dx T 0)
 >(mf_comp … T) in ⊢ (???%);
@@ -62,7 +62,7 @@ lemma tm_me (h) (gv) (lv) (U) (T):
 /4 width=1 by cpc_cpcs, cpm_eps, or_introl/ qed.
 
 lemma tm_mb (h) (p) (gv) (lv) (d) (W) (T):
-            d@⟦ⓛ{p}W.T⟧[gv,lv] ≗{TM h} d⊕[p]⟦T⟧[gv,⫯[0←d]lv].
+            d@⟦ⓛ[p]W.T⟧[gv,lv] ≗{TM h} d⊕[p]⟦T⟧[gv,⫯[0←d]lv].
 #h #p #gv #lv #d #W #T
 @cpcs_repl [5: @tm_md |4: /4 width=2 by cpc_cpcs, cpm_beta, or_intror/ |1,2: skip ]
 /5 width=1 by cpcs_bind1, cpc_cpcs, cpm_eps, or_introl/

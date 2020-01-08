@@ -27,11 +27,11 @@ interpretation "weight (term)" 'Weight T = (tw T).
 (* Basic properties *********************************************************)
 
 (* Basic_1: was: tweight_lt *)
-lemma tw_pos: ∀T. 1 ≤ ♯{T}.
+lemma tw_pos: ∀T. 1 ≤ ♯❨T❩.
 #T elim T -T //
 qed.
 
-lemma tw_le_pair_dx (I): ∀V,T. ♯{T} < ♯{②{I}V.T}.
+lemma tw_le_pair_dx (I): ∀V,T. ♯❨T❩ < ♯❨②[I]V.T❩.
 #I #V #T /2 width=1 by le_S_S/
 qed.
 

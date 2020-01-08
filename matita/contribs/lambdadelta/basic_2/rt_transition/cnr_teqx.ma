@@ -24,8 +24,8 @@ include "basic_2/rt_transition/cnr_drops.ma".
 (* Basic_1: was: nf2_dec *)
 (* Basic_2A1: uses: cnr_dec *)
 lemma cnr_dec_teqx (h) (G) (L):
-      ∀T1. ∨∨ ⦃G,L⦄ ⊢ ➡[h] 𝐍⦃T1⦄
-            | ∃∃T2. ⦃G,L⦄ ⊢ T1 ➡[h] T2 & (T1 ≛ T2 → ⊥).
+      ∀T1. ∨∨ ❪G,L❫ ⊢ ➡[h] 𝐍❪T1❫
+            | ∃∃T2. ❪G,L❫ ⊢ T1 ➡[h] T2 & (T1 ≛ T2 → ⊥).
 #h #G #L #T1
 @(fqup_wf_ind_eq (Ⓣ) … G L T1) -G -L -T1 #G0 #L0 #T0 #IH #G #L * *
 [ #s #HG #HL #HT destruct -IH
@@ -35,7 +35,7 @@ lemma cnr_dec_teqx (h) (G) (L):
   [ /3 width=6 by cnr_lref_atom, or_introl/
   | * * [ #I | * #V ] #K #HLK
     [ /3 width=7 by cnr_lref_unit, or_introl/
-    | elim (lifts_total V 𝐔❴↑i❵) #W #HVW
+    | elim (lifts_total V 𝐔❨↑i❩) #W #HVW
       @or_intror @(ex2_intro … W) [ /2 width=6 by cpm_delta_drops/ ] #H
       lapply (teqx_inv_lref1 … H) -H #H destruct
       /2 width=5 by lifts_inv_lref2_uni_lt/
@@ -65,10 +65,10 @@ lemma cnr_dec_teqx (h) (G) (L):
   | elim (IH G L V1) [ elim (IH G (L.ⓛV1) T1) [| * | // ] | * | // ] -IH
     [ #HT1 #HV1 /3 width=6 by cnr_abst, or_introl/
     | #T2 #HT12 #HnT12 #_
-      @or_intror @(ex2_intro … (ⓛ{p}V1.T2)) [ /2 width=1 by cpm_bind/ ] #H
+      @or_intror @(ex2_intro … (ⓛ[p]V1.T2)) [ /2 width=1 by cpm_bind/ ] #H
       elim (teqx_inv_pair … H) -H /2 width=1 by/
     | #V2 #HV12 #HnV12
-      @or_intror @(ex2_intro … (ⓛ{p}V2.T1)) [ /2 width=1 by cpr_pair_sn/ ] #H
+      @or_intror @(ex2_intro … (ⓛ[p]V2.T1)) [ /2 width=1 by cpr_pair_sn/ ] #H
       elim (teqx_inv_pair … H) -H /2 width=1 by/
     ]
   ]
@@ -77,10 +77,10 @@ lemma cnr_dec_teqx (h) (G) (L):
     [ #HT1 #HV1
       elim (simple_dec_ex T1) [| * #p * #W1 #U1 #H destruct ]
       [ /3 width=6 by cnr_appl_simple, or_introl/
-      | elim (lifts_total V1 𝐔❴1❵) #X1 #HVX1
-        @or_intror @(ex2_intro … (ⓓ{p}W1.ⓐX1.U1)) [ /2 width=3 by cpm_theta/ ] #H
+      | elim (lifts_total V1 𝐔❨1❩) #X1 #HVX1
+        @or_intror @(ex2_intro … (ⓓ[p]W1.ⓐX1.U1)) [ /2 width=3 by cpm_theta/ ] #H
         elim (teqx_inv_pair … H) -H #H destruct
-      | @or_intror @(ex2_intro … (ⓓ{p}ⓝW1.V1.U1)) [ /2 width=1 by cpm_beta/ ] #H
+      | @or_intror @(ex2_intro … (ⓓ[p]ⓝW1.V1.U1)) [ /2 width=1 by cpm_beta/ ] #H
         elim (teqx_inv_pair … H) -H #H destruct
       ]
     | #T2 #HT12 #HnT12 #_

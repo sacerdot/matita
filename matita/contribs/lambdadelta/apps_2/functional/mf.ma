@@ -45,9 +45,9 @@ lemma mf_gref: ∀gv,lv,l. ●[gv,lv]§l = gv l.
 // qed.
 
 lemma mf_bind (p) (I): ∀gv,lv,V,T.
-                       ●[gv,lv]ⓑ{p,I}V.T = ⓑ{p,I}●[gv,lv]V.●[⇡[0]gv,⇡[0←#0]lv]T.
+                       ●[gv,lv]ⓑ[p,I]V.T = ⓑ[p,I]●[gv,lv]V.●[⇡[0]gv,⇡[0←#0]lv]T.
 // qed.
 
 lemma mf_flat (I): ∀gv,lv,V,T.
-                   ●[gv,lv]ⓕ{I}V.T = ⓕ{I}●[gv,lv]V.●[gv,lv]T.
+                   ●[gv,lv]ⓕ[I]V.T = ⓕ[I]●[gv,lv]V.●[gv,lv]T.
 // qed.

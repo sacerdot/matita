@@ -24,7 +24,7 @@ include "basic_2/dynamic/cnv_preserve_cpes.ma".
 (* main properties with evaluations for rt-transition on terms **************)
 
 theorem cnv_dec (h) (a) (G) (L) (T): ac_props a →
-        Decidable (⦃G,L⦄ ⊢ T ![h,a]).
+        Decidable (❪G,L❫ ⊢ T ![h,a]).
 #h #a #G #L #T #Ha
 @(fqup_wf_ind_eq (Ⓣ) … G L T) -G -L -T #G0 #L0 #T0 #IH #G #L * * [|||| * ]
 [ #s #HG #HL #HT destruct -Ha -IH
@@ -43,7 +43,7 @@ theorem cnv_dec (h) (a) (G) (L) (T): ac_props a →
   /3 width=6 by cnv_inv_gref, or_intror/
 | #p #I #V #T #HG #HL #HT destruct -Ha
   elim (IH G L V) [| -IH | // ] #HV
-  [ elim (IH G (L.ⓑ{I}V) T) -IH [3: // ] #HT
+  [ elim (IH G (L.ⓑ[I]V) T) -IH [3: // ] #HT
     [ /3 width=1 by cnv_bind, or_introl/ ]
   ]
   @or_intror #H

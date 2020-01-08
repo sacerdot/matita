@@ -31,21 +31,21 @@ theorem cpcs_canc_dx (h) (G) (L): right_cancellable … (cpcs h G L).
 
 (* Advanced properties ******************************************************)
 
-lemma cpcs_bind1 (h) (G) (L): ∀V1,V2. ⦃G,L⦄ ⊢ V1 ⬌*[h] V2 →
-                              ∀I,T1,T2. ⦃G,L.ⓑ{I}V1⦄ ⊢ T1 ⬌*[h] T2 →
-                              ∀p. ⦃G,L⦄ ⊢ ⓑ{p,I}V1.T1 ⬌*[h] ⓑ{p,I}V2.T2.
+lemma cpcs_bind1 (h) (G) (L): ∀V1,V2. ❪G,L❫ ⊢ V1 ⬌*[h] V2 →
+                              ∀I,T1,T2. ❪G,L.ⓑ[I]V1❫ ⊢ T1 ⬌*[h] T2 →
+                              ∀p. ❪G,L❫ ⊢ ⓑ[p,I]V1.T1 ⬌*[h] ⓑ[p,I]V2.T2.
 /3 width=3 by cpcs_trans, cpcs_bind_sn, cpcs_bind_dx/ qed.
 
-lemma cpcs_bind2 (h) (G) (L): ∀V1,V2. ⦃G,L⦄ ⊢ V1 ⬌*[h] V2 →
-                              ∀I,T1,T2. ⦃G,L.ⓑ{I}V2⦄ ⊢ T1 ⬌*[h] T2 →
-                              ∀p. ⦃G,L⦄ ⊢ ⓑ{p,I}V1.T1 ⬌*[h] ⓑ{p,I}V2.T2.
+lemma cpcs_bind2 (h) (G) (L): ∀V1,V2. ❪G,L❫ ⊢ V1 ⬌*[h] V2 →
+                              ∀I,T1,T2. ❪G,L.ⓑ[I]V2❫ ⊢ T1 ⬌*[h] T2 →
+                              ∀p. ❪G,L❫ ⊢ ⓑ[p,I]V1.T1 ⬌*[h] ⓑ[p,I]V2.T2.
 /3 width=3 by cpcs_trans, cpcs_bind_sn, cpcs_bind_dx/ qed.
 
 (* Advanced properties with r-transition for full local environments ********)
 
 (* Basic_1: was: pc3_wcpr0 *)
-lemma lpr_cpcs_conf (h) (G): ∀L1,L2. ⦃G,L1⦄ ⊢ ➡[h] L2 →
-                             ∀T1,T2. ⦃G,L1⦄ ⊢ T1 ⬌*[h] T2 → ⦃G,L2⦄ ⊢ T1 ⬌*[h] T2.
+lemma lpr_cpcs_conf (h) (G): ∀L1,L2. ❪G,L1❫ ⊢ ➡[h] L2 →
+                             ∀T1,T2. ❪G,L1❫ ⊢ T1 ⬌*[h] T2 → ❪G,L2❫ ⊢ T1 ⬌*[h] T2.
 #h #G #L1 #L2 #HL12 #T1 #T2 #H elim (cpcs_inv_cprs … H) -H
 /3 width=5 by cpcs_canc_dx, lpr_cprs_conf/
 qed-.

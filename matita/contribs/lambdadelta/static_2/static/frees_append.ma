@@ -19,7 +19,7 @@ include "static_2/static/frees.ma".
 
 (* Properties with append for local environments ****************************)
 
-lemma frees_append_void: ∀f,K,T. K ⊢ 𝐅+⦃T⦄ ≘ f → ⓧ.K ⊢ 𝐅+⦃T⦄ ≘ f.
+lemma frees_append_void: ∀f,K,T. K ⊢ 𝐅+❪T❫ ≘ f → ⓧ.K ⊢ 𝐅+❪T❫ ≘ f.
 #f #K #T #H elim H -f -K -T
 [ /2 width=1 by frees_sort/
 | #f * /3 width=1 by frees_atom, frees_unit, frees_lref/
@@ -35,8 +35,8 @@ qed.
 (* Inversion lemmas with append for local environments **********************)
 
 fact frees_inv_append_void_aux:
-     ∀f,L,T. L ⊢ 𝐅+⦃T⦄ ≘ f →
-     ∀K. L = ⓧ.K → K ⊢ 𝐅+⦃T⦄ ≘ f.
+     ∀f,L,T. L ⊢ 𝐅+❪T❫ ≘ f →
+     ∀K. L = ⓧ.K → K ⊢ 𝐅+❪T❫ ≘ f.
 #f #L #T #H elim H -f -L -T
 [ /2 width=1 by frees_sort/
 | #f #i #_ #K #H
@@ -56,5 +56,5 @@ fact frees_inv_append_void_aux:
 ]
 qed-.
 
-lemma frees_inv_append_void: ∀f,K,T. ⓧ.K  ⊢ 𝐅+⦃T⦄ ≘ f → K ⊢ 𝐅+⦃T⦄ ≘ f.
+lemma frees_inv_append_void: ∀f,K,T. ⓧ.K  ⊢ 𝐅+❪T❫ ≘ f → K ⊢ 𝐅+❪T❫ ≘ f.
 /2 width=3 by frees_inv_append_void_aux/ qed-.

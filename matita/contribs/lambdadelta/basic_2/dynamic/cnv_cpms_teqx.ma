@@ -19,10 +19,10 @@ include "basic_2/dynamic/cnv_cpm_teqx_trans.ma".
 (* Properties with restricted rt-computation for terms **********************)
 
 fact cpms_tneqx_fwd_step_sn_aux (h) (a) (n) (G) (L) (T1):
-     ∀T2. ⦃G,L⦄ ⊢ T1 ➡*[n,h] T2 → ⦃G,L⦄ ⊢ T1 ![h,a] → (T1 ≛ T2 → ⊥) →
-     (∀G0,L0,T0. ⦃G,L,T1⦄ >[h] ⦃G0,L0,T0⦄ → IH_cnv_cpms_conf_lpr h a G0 L0 T0) →
-     (∀G0,L0,T0. ⦃G,L,T1⦄ >[h] ⦃G0,L0,T0⦄ → IH_cnv_cpm_trans_lpr h a G0 L0 T0) →
-     ∃∃n1,n2,T0. ⦃G,L⦄ ⊢ T1 ➡[n1,h] T0 & T1 ≛ T0 → ⊥ & ⦃G,L⦄ ⊢ T0 ➡*[n2,h] T2 & n1+n2 = n.
+     ∀T2. ❪G,L❫ ⊢ T1 ➡*[n,h] T2 → ❪G,L❫ ⊢ T1 ![h,a] → (T1 ≛ T2 → ⊥) →
+     (∀G0,L0,T0. ❪G,L,T1❫ >[h] ❪G0,L0,T0❫ → IH_cnv_cpms_conf_lpr h a G0 L0 T0) →
+     (∀G0,L0,T0. ❪G,L,T1❫ >[h] ❪G0,L0,T0❫ → IH_cnv_cpm_trans_lpr h a G0 L0 T0) →
+     ∃∃n1,n2,T0. ❪G,L❫ ⊢ T1 ➡[n1,h] T0 & T1 ≛ T0 → ⊥ & ❪G,L❫ ⊢ T0 ➡*[n2,h] T2 & n1+n2 = n.
 #h #a #n #G #L #T1 #T2 #H
 @(cpms_ind_sn … H) -n -T1
 [ #_ #H2T2 elim H2T2 -H2T2 //
@@ -43,11 +43,11 @@ fact cpms_tneqx_fwd_step_sn_aux (h) (a) (n) (G) (L) (T1):
 qed-.
 
 fact cpms_teqx_ind_sn (h) (a) (G) (L) (T2) (Q:relation2 …):
-     (⦃G,L⦄ ⊢ T2 ![h,a] → Q 0 T2) →
-     (∀n1,n2,T1,T. ⦃G,L⦄ ⊢ T1 ➡[n1,h] T → ⦃G,L⦄ ⊢ T1 ![h,a] → T1 ≛ T → ⦃G,L⦄ ⊢ T ➡*[n2,h] T2 → ⦃G,L⦄ ⊢ T ![h,a] → T ≛ T2 → Q n2 T → Q (n1+n2) T1) →
-     ∀n,T1. ⦃G,L⦄ ⊢ T1 ➡*[n,h] T2 → ⦃G,L⦄ ⊢ T1 ![h,a] → T1 ≛ T2 →
-     (∀G0,L0,T0. ⦃G,L,T1⦄ >[h] ⦃G0,L0,T0⦄ → IH_cnv_cpms_conf_lpr h a G0 L0 T0) →
-     (∀G0,L0,T0. ⦃G,L,T1⦄ >[h] ⦃G0,L0,T0⦄ → IH_cnv_cpm_trans_lpr h a G0 L0 T0) →
+     (❪G,L❫ ⊢ T2 ![h,a] → Q 0 T2) →
+     (∀n1,n2,T1,T. ❪G,L❫ ⊢ T1 ➡[n1,h] T → ❪G,L❫ ⊢ T1 ![h,a] → T1 ≛ T → ❪G,L❫ ⊢ T ➡*[n2,h] T2 → ❪G,L❫ ⊢ T ![h,a] → T ≛ T2 → Q n2 T → Q (n1+n2) T1) →
+     ∀n,T1. ❪G,L❫ ⊢ T1 ➡*[n,h] T2 → ❪G,L❫ ⊢ T1 ![h,a] → T1 ≛ T2 →
+     (∀G0,L0,T0. ❪G,L,T1❫ >[h] ❪G0,L0,T0❫ → IH_cnv_cpms_conf_lpr h a G0 L0 T0) →
+     (∀G0,L0,T0. ❪G,L,T1❫ >[h] ❪G0,L0,T0❫ → IH_cnv_cpm_trans_lpr h a G0 L0 T0) →
      Q n T1.
 #h #a #G #L #T2 #Q #IB1 #IB2 #n #T1 #H
 @(cpms_ind_sn … H) -n -T1

@@ -21,17 +21,17 @@ table {
    [ { "static typing" * } {
         [ { "generic reducibility" * } {
              [ [ "restricted refinement for lenvs" ] "lsubc" + "( ? ⊢ ? ⫃[?] ? )" "lsubc_drops" + "lsubc_lsubr" + "lsubc_lsuba" * ]
-             [ [ "candidates" ] "gcp_cr" + "( ⦃?,?,?⦄ ϵ[?] 〚?〛 )" "gcp_aaa" * ]
+             [ [ "candidates" ] "gcp_cr" + "( ❪?,?,?❫ ϵ ⟦?⟧[?] )" "gcp_aaa" * ]
              [ [ "computation properties" ] "gcp" *]
           }
         ]
         [ { "atomic arity assignment" * } {
              [ [ "restricted refinement for lenvs" ] "lsuba" + "( ? ⊢ ? ⫃⁝ ? )" "lsuba_drops" + "lsuba_lsubr" + "lsuba_aaa" + "lsuba_lsuba" * ]
-             [ [ "for terms" ] "aaa" + "( ⦃?,?⦄ ⊢ ? ⁝ ? )" "aaa_drops" + "aaa_fqus" + "aaa_reqx" + "aaa_feqx" + "aaa_aaa" + "aaa_dec" * ]
+             [ [ "for terms" ] "aaa" + "( ❪?,?❫ ⊢ ? ⁝ ? )" "aaa_drops" + "aaa_fqus" + "aaa_reqx" + "aaa_feqx" + "aaa_aaa" + "aaa_dec" * ]
           }
         ]
         [ { "degree-based equivalence" * } {
-             [ [ "for closures on referred entries" ] "feqx" + "( ⦃?,?,?⦄ ≛ ⦃?,?,?⦄ )" "feqx_fqup" + "feqx_fqus" + "feqx_req" + "feqx_feqx" * ]
+             [ [ "for closures on referred entries" ] "feqx" + "( ❪?,?,?❫ ≛ ❪?,?,?❫ )" "feqx_fqup" + "feqx_fqus" + "feqx_req" + "feqx_feqx" * ]
              [ [ "for lenvs on referred entries" ] "reqx" + "( ? ≛[?] ? )" "reqx_length" + "reqx_drops" + "reqx_fqup" + "reqx_fqus" + "reqx_req" + "reqx_reqx" * ]
           }
         ]
@@ -44,9 +44,9 @@ table {
           }
         ]
         [ { "context-sensitive free variables" * } {
-             [ [ "inclusion for restricted closures" ] "fsle" + "( ⦃?,?⦄ ⊆ ⦃?,?⦄ )" "fsle_length" + "fsle_drops" + "fsle_fqup" + "fsle_fsle" * ]
-             [ [ "restricted refinement for lenvs" ] "lsubf" + "( ⦃?,?⦄ ⫃𝐅+ ⦃?,?⦄ )" "lsubf_lsubr" + "lsubf_frees" + "lsubf_lsubf" * ]
-             [ [ "for terms" ] "frees" + "( ? ⊢ 𝐅+⦃?⦄ ≘ ? )" "frees_append" + "frees_drops" + "frees_fqup" + "frees_frees" * ]
+             [ [ "inclusion for restricted closures" ] "fsle" + "( ❪?,?❫ ⊆ ❪?,?❫ )" "fsle_length" + "fsle_drops" + "fsle_fqup" + "fsle_fsle" * ]
+             [ [ "restricted refinement for lenvs" ] "lsubf" + "( ❪?,?❫ ⫃𝐅+ ❪?,?❫ )" "lsubf_lsubr" + "lsubf_frees" + "lsubf_lsubf" * ]
+             [ [ "for terms" ] "frees" + "( ? ⊢ 𝐅+❪?❫ ≘ ? )" "frees_append" + "frees_drops" + "frees_fqup" + "frees_frees" * ]
           }
         ]
         [ { "local environments" * } {
@@ -58,8 +58,8 @@ table {
    class "grass"
    [ { "s-computation" * } {
         [ { "iterated structural successor" * } {
-             [ [ "for closures" ] "fqus" + "( ⦃?,?,?⦄ ⬂*[?] ⦃?,?,?⦄ )" + "( ⦃?,?,?⦄ ⬂* ⦃?,?,?⦄ )" "fqus_weight" + "fqus_drops" + "fqus_fqup" + "fqus_fqus" * ]
-             [ [ "proper for closures" ] "fqup" + "( ⦃?,?,?⦄ ⬂+[?] ⦃?,?,?⦄ )" + "( ⦃?,?,?⦄ ⬂+ ⦃?,?,?⦄ )" "fqup_weight" + "fqup_drops" + "fqup_fqup" * ]
+             [ [ "for closures" ] "fqus" + "( ❪?,?,?❫ ⬂*[?] ❪?,?,?❫ )" + "( ❪?,?,?❫ ⬂* ❪?,?,?❫ )" "fqus_weight" + "fqus_drops" + "fqus_fqup" + "fqus_fqus" * ]
+             [ [ "proper for closures" ] "fqup" + "( ❪?,?,?❫ ⬂+[?] ❪?,?,?❫ )" + "( ❪?,?,?❫ ⬂+ ❪?,?,?❫ )" "fqup_weight" + "fqup_drops" + "fqup_fqup" * ]
           }
         ]
      }
@@ -67,8 +67,8 @@ table {
    class "yellow"
    [ { "s-transition" * } {
         [ { "structural successor" * } {
-             [ [ "for closures" ] "fquq" + "( ⦃?,?,?⦄ ⬂⸮[?] ⦃?,?,?⦄ )" + "( ⦃?,?,?⦄ ⬂⸮ ⦃?,?,?⦄ )" "fquq_length" + "fquq_weight" * ]
-             [ [ "proper for closures" ] "fqu" + "( ⦃?,?,?⦄ ⬂[?] ⦃?,?,?⦄ )" + "( ⦃?,?,?⦄ ⬂ ⦃?,?,?⦄ )" "fqu_length" + "fqu_weight" + "fqu_teqx" * ]
+             [ [ "for closures" ] "fquq" + "( ❪?,?,?❫ ⬂⸮[?] ❪?,?,?❫ )" + "( ❪?,?,?❫ ⬂⸮ ❪?,?,?❫ )" "fquq_length" + "fquq_weight" * ]
+             [ [ "proper for closures" ] "fqu" + "( ❪?,?,?❫ ⬂[?] ❪?,?,?❫ )" + "( ❪?,?,?❫ ⬂ ❪?,?,?❫ )" "fqu_length" + "fqu_weight" + "fqu_teqx" * ]
           }
         ]
      }
@@ -130,13 +130,13 @@ table {
           }
         ]
         [ { "closures" * } {
-             [ [ "" ] "cl_weight" + "( ♯{?,?,?} )" * ]
-             [ [ "" ] "cl_restricted_weight" + "( ♯{?,?} )" * ]
+             [ [ "" ] "cl_weight" + "( ♯❨?,?,?❩ )" * ]
+             [ [ "" ] "cl_restricted_weight" + "( ♯❨?,?❩ )" * ]
           }
         ]
         [ { "global environments" * } {
              [ [ "" ] "genv_length" + "( |?| )" * ]
-             [ [ "" ] "genv_weight" + "( ♯{?} )" * ]
+             [ [ "" ] "genv_weight" + "( ♯❨?❩ )" * ]
              [ [ "" ] "genv" * ]
           }
         ]
@@ -144,7 +144,7 @@ table {
              [ [ "" ] "ceq_ext" "ceq_ext_ceq_ext" * ]
              [ [ "" ] "cext2" * ]
              [ [ "" ] "lenv_length" + "( |?| )" * ]
-             [ [ "" ] "lenv_weight" + "( ♯{?} )" * ]
+             [ [ "" ] "lenv_weight" + "( ♯❨?❩ )" * ]
              [ [ "" ] "lenv" * ]
           }
         ]
@@ -155,8 +155,8 @@ table {
         ]
         [ { "terms" * } {
              [ [ "" ] "term_vector" + "( Ⓐ?.? )" * ]
-             [ [ "" ] "term_simple" + "( 𝐒⦃?⦄ )"  * ]
-             [ [ "" ] "term_weight" + "( ♯{?} )" * ]
+             [ [ "" ] "term_simple" + "( 𝐒❪?❫ )"  * ]
+             [ [ "" ] "term_weight" + "( ♯❨?❩ )" * ]
              [ [ "" ] "term" * ]
           }
         ]

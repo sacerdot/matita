@@ -22,7 +22,7 @@ include "basic_2/rt_computation/cpms.ma".
 (* Properties with sort-irrelevant whd equivalence on terms *****************)
 
 lemma cprs_abbr_pos_twneq (h) (G) (L) (V) (T1):
-      ∃∃T2. ⦃G,L⦄ ⊢ +ⓓV.T1 ➡*[h] T2 & (+ⓓV.T1 ≅ T2 → ⊥).
+      ∃∃T2. ❪G,L❫ ⊢ +ⓓV.T1 ➡*[h] T2 & (+ⓓV.T1 ≅ T2 → ⊥).
 #h #G #L #V #U1
 elim (cpr_subst h G (L.ⓓV) U1 … 0) [|*: /2 width=4 by drops_refl/ ] #U2 #T2 #HU12 #HTU2
 elim (tweq_dec U1 U2) [ #HpU12 | -HTU2 #HnU12 ]

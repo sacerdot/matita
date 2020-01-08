@@ -37,7 +37,7 @@ interpretation
 lemma fquq_refl: ∀b. tri_reflexive … (fquq b).
 // qed.
 
-lemma fqu_fquq: ∀b,G1,G2,L1,L2,T1,T2. ⦃G1,L1,T1⦄ ⬂[b] ⦃G2,L2,T2⦄ → ⦃G1,L1,T1⦄ ⬂⸮[b] ⦃G2,L2,T2⦄.
+lemma fqu_fquq: ∀b,G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ⬂[b] ❪G2,L2,T2❫ → ❪G1,L1,T1❫ ⬂⸮[b] ❪G2,L2,T2❫.
 /2 width=1 by or_introl/ qed.
 
 (* Basic_2A1: removed theorems 8:

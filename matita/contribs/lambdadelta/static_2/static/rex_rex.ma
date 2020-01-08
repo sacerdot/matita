@@ -22,7 +22,7 @@ include "static_2/static/rex.ma".
 
 lemma rex_inv_frees (R):
       ∀L1,L2,T. L1 ⪤[R,T] L2 →
-      ∀f. L1 ⊢ 𝐅+⦃T⦄ ≘ f → L1 ⪤[cext2 R,cfull,f] L2.
+      ∀f. L1 ⊢ 𝐅+❪T❫ ≘ f → L1 ⪤[cext2 R,cfull,f] L2.
 #R #L1 #L2 #T * /3 width=6 by frees_mono, sex_eq_repl_back/
 qed-.
 
@@ -42,8 +42,8 @@ qed-.
 
 (* Basic_2A1: uses: llpx_sn_bind llpx_sn_bind_O *)
 theorem rex_bind (R) (p) (I):
-        ∀L1,L2,V1,V2,T. L1 ⪤[R,V1] L2 → L1.ⓑ{I}V1 ⪤[R,T] L2.ⓑ{I}V2 →
-        L1 ⪤[R,ⓑ{p,I}V1.T] L2.
+        ∀L1,L2,V1,V2,T. L1 ⪤[R,V1] L2 → L1.ⓑ[I]V1 ⪤[R,T] L2.ⓑ[I]V2 →
+        L1 ⪤[R,ⓑ[p,I]V1.T] L2.
 #R #p #I #L1 #L2 #V1 #V2 #T * #f1 #HV #Hf1 * #f2 #HT #Hf2
 lapply (sex_fwd_bind … Hf2) -Hf2 #Hf2 elim (sor_isfin_ex f1 (⫱f2))
 /3 width=7 by frees_fwd_isfin, frees_bind, sex_join, isfin_tl, ex2_intro/
@@ -51,13 +51,13 @@ qed.
 
 (* Basic_2A1: llpx_sn_flat *)
 theorem rex_flat (R) (I):
-        ∀L1,L2,V,T. L1 ⪤[R,V] L2 → L1 ⪤[R,T] L2 → L1 ⪤[R,ⓕ{I}V.T] L2.
+        ∀L1,L2,V,T. L1 ⪤[R,V] L2 → L1 ⪤[R,T] L2 → L1 ⪤[R,ⓕ[I]V.T] L2.
 #R #I #L1 #L2 #V #T * #f1 #HV #Hf1 * #f2 #HT #Hf2 elim (sor_isfin_ex f1 f2)
 /3 width=7 by frees_fwd_isfin, frees_flat, sex_join, ex2_intro/
 qed.
 
 theorem rex_bind_void (R) (p) (I):
-        ∀L1,L2,V,T. L1 ⪤[R,V] L2 → L1.ⓧ ⪤[R,T] L2.ⓧ → L1 ⪤[R,ⓑ{p,I}V.T] L2.
+        ∀L1,L2,V,T. L1 ⪤[R,V] L2 → L1.ⓧ ⪤[R,T] L2.ⓧ → L1 ⪤[R,ⓑ[p,I]V.T] L2.
 #R #p #I #L1 #L2 #V #T * #f1 #HV #Hf1 * #f2 #HT #Hf2
 lapply (sex_fwd_bind … Hf2) -Hf2 #Hf2 elim (sor_isfin_ex f1 (⫱f2))
 /3 width=7 by frees_fwd_isfin, frees_bind_void, sex_join, isfin_tl, ex2_intro/
@@ -68,8 +68,8 @@ qed.
 (* Basic_2A1: uses: nllpx_sn_inv_bind nllpx_sn_inv_bind_O *)
 lemma rnex_inv_bind (R):
       (∀L,T1,T2. Decidable (R L T1 T2)) →
-      ∀p,I,L1,L2,V,T. (L1 ⪤[R,ⓑ{p,I}V.T] L2 → ⊥) →
-      ∨∨ (L1 ⪤[R,V] L2 → ⊥) | (L1.ⓑ{I}V ⪤[R,T] L2.ⓑ{I}V → ⊥).
+      ∀p,I,L1,L2,V,T. (L1 ⪤[R,ⓑ[p,I]V.T] L2 → ⊥) →
+      ∨∨ (L1 ⪤[R,V] L2 → ⊥) | (L1.ⓑ[I]V ⪤[R,T] L2.ⓑ[I]V → ⊥).
 #R #HR #p #I #L1 #L2 #V #T #H elim (rex_dec … HR L1 L2 V)
 /4 width=2 by rex_bind, or_intror, or_introl/
 qed-.
@@ -77,7 +77,7 @@ qed-.
 (* Basic_2A1: uses: nllpx_sn_inv_flat *)
 lemma rnex_inv_flat (R):
       (∀L,T1,T2. Decidable (R L T1 T2)) →
-      ∀I,L1,L2,V,T. (L1 ⪤[R,ⓕ{I}V.T] L2 → ⊥) →
+      ∀I,L1,L2,V,T. (L1 ⪤[R,ⓕ[I]V.T] L2 → ⊥) →
       ∨∨ (L1 ⪤[R,V] L2 → ⊥) | (L1 ⪤[R,T] L2 → ⊥).
 #R #HR #I #L1 #L2 #V #T #H elim (rex_dec … HR L1 L2 V)
 /4 width=1 by rex_flat, or_intror, or_introl/
@@ -85,7 +85,7 @@ qed-.
 
 lemma rnex_inv_bind_void (R):
       (∀L,T1,T2. Decidable (R L T1 T2)) →
-      ∀p,I,L1,L2,V,T. (L1 ⪤[R,ⓑ{p,I}V.T] L2 → ⊥) →
+      ∀p,I,L1,L2,V,T. (L1 ⪤[R,ⓑ[p,I]V.T] L2 → ⊥) →
       ∨∨ (L1 ⪤[R,V] L2 → ⊥) | (L1.ⓧ ⪤[R,T] L2.ⓧ → ⊥).
 #R #HR #p #I #L1 #L2 #V #T #H elim (rex_dec … HR L1 L2 V)
 /4 width=2 by rex_bind_void, or_intror, or_introl/

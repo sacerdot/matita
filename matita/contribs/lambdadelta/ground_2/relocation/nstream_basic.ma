@@ -19,16 +19,16 @@ include "ground_2/relocation/nstream_after.ma".
 
 (* Specific properties on basic relocation **********************************)
 
-lemma apply_basic_lt: ∀m,n,i. i < m → 𝐁❴m,n❵@❴i❵ = i.
+lemma apply_basic_lt: ∀m,n,i. i < m → 𝐁❨m,n❩@❨i❩ = i.
 /3 width=1 by at_inv_total, at_basic_lt/ qed-.
 
-lemma apply_basic_ge: ∀m,n,i. m ≤ i → 𝐁❴m,n❵@❴i❵ = n+i.
+lemma apply_basic_ge: ∀m,n,i. m ≤ i → 𝐁❨m,n❩@❨i❩ = n+i.
 /3 width=1 by at_inv_total, at_basic_ge/ qed-.
 
 (* Specific main properties on basic relocation *****************************)
 
 theorem basic_swap: ∀d1,d2. d2 ≤ d1 →
-                    ∀h1,h2. 𝐁❴d2,h2❵∘𝐁❴d1,h1❵ ≡ 𝐁❴h2+d1,h1❵∘𝐁❴d2,h2❵.
+                    ∀h1,h2. 𝐁❨d2,h2❩∘𝐁❨d1,h1❩ ≡ 𝐁❨h2+d1,h1❩∘𝐁❨d2,h2❩.
 #d1 #d2 #Hd21 #h1 #h2
 @nstream_inv_eq
 @nstream_eq_inv_ext #i

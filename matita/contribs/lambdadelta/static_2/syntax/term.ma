@@ -93,8 +93,8 @@ interpretation "native type annotation (term)"
 
 (* Basic properties *********************************************************)
 
-lemma abst_dec (X): ∨∨ ∃∃p,W,T. X = ⓛ{p}W.T
-                     | (∀p,W,T. X = ⓛ{p}W.T → ⊥).
+lemma abst_dec (X): ∨∨ ∃∃p,W,T. X = ⓛ[p]W.T
+                     | (∀p,W,T. X = ⓛ[p]W.T → ⊥).
 * [ #I | * [ #p * | #I ] #V #T ]
 [3: /3 width=4 by ex1_3_intro, or_introl/ ]
 @or_intror #q #W #U #H destruct
@@ -116,16 +116,16 @@ qed-.
 
 (* Basic inversion lemmas ***************************************************)
 
-fact destruct_tatom_tatom_aux: ∀I1,I2. ⓪{I1} = ⓪{I2} → I1 = I2.
+fact destruct_tatom_tatom_aux: ∀I1,I2. ⓪[I1] = ⓪[I2] → I1 = I2.
 #I1 #I2 #H destruct //
 qed-.
 
-fact destruct_tpair_tpair_aux: ∀I1,I2,T1,T2,V1,V2. ②{I1}T1.V1 = ②{I2}T2.V2 →
+fact destruct_tpair_tpair_aux: ∀I1,I2,T1,T2,V1,V2. ②[I1]T1.V1 = ②[I2]T2.V2 →
                                ∧∧T1 = T2 & I1 = I2 & V1 = V2.
 #I1 #I2 #T1 #T2 #V1 #V2 #H destruct /2 width=1 by and3_intro/
 qed-.
 
-lemma discr_tpair_xy_x: ∀I,T,V. ②{I}V.T = V → ⊥.
+lemma discr_tpair_xy_x: ∀I,T,V. ②[I]V.T = V → ⊥.
 #I #T #V elim V -V
 [ #J #H destruct
 | #J #W #U #IHW #_ #H elim (destruct_tpair_tpair_aux … H) -H /2 width=1 by/ (**) (* destruct lemma needed *)
@@ -133,7 +133,7 @@ lemma discr_tpair_xy_x: ∀I,T,V. ②{I}V.T = V → ⊥.
 qed-.
 
 (* Basic_1: was: thead_x_y_y *)
-lemma discr_tpair_xy_y: ∀I,V,T. ②{I}V.T = T → ⊥.
+lemma discr_tpair_xy_y: ∀I,V,T. ②[I]V.T = T → ⊥.
 #I #V #T elim T -T
 [ #J #H destruct
 | #J #W #U #_ #IHU #H elim (destruct_tpair_tpair_aux … H) -H /2 width=1 by/ (**) (* destruct lemma needed *)
@@ -141,7 +141,7 @@ lemma discr_tpair_xy_y: ∀I,V,T. ②{I}V.T = T → ⊥.
 qed-.
 
 lemma eq_false_inv_tpair_sn: ∀I,V1,T1,V2,T2.
-                             (②{I}V1.T1 = ②{I}V2.T2 → ⊥) →
+                             (②[I]V1.T1 = ②[I]V2.T2 → ⊥) →
                              (V1 = V2 → ⊥) ∨ (V1 = V2 ∧ (T1 = T2 → ⊥)).
 #I #V1 #T1 #V2 #T2 #H
 elim (eq_term_dec V1 V2) /3 width=1 by or_introl/ #HV12 destruct
@@ -149,7 +149,7 @@ elim (eq_term_dec V1 V2) /3 width=1 by or_introl/ #HV12 destruct
 qed-.
 
 lemma eq_false_inv_tpair_dx: ∀I,V1,T1,V2,T2.
-                             (②{I} V1. T1 = ②{I}V2.T2 → ⊥) →
+                             (②[I] V1. T1 = ②[I]V2.T2 → ⊥) →
                              (T1 = T2 → ⊥) ∨ (T1 = T2 ∧ (V1 = V2 → ⊥)).
 #I #V1 #T1 #V2 #T2 #H
 elim (eq_term_dec T1 T2) /3 width=1 by or_introl/ #HT12 destruct

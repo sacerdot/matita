@@ -21,7 +21,7 @@ include "basic_2/rt_computation/cprre.ma".
 (* Properties with context-sensitive parallel r-computation for terms ******)
 
 lemma cprre_cprs_conf (h) (G) (L) (T):
-      ∀T1. ⦃G,L⦄ ⊢ T ➡*[h] T1 → ∀T2. ⦃G,L⦄ ⊢ T ➡*[h] 𝐍⦃T2⦄ → ⦃G,L⦄ ⊢ T1 ➡*[h] 𝐍⦃T2⦄.
+      ∀T1. ❪G,L❫ ⊢ T ➡*[h] T1 → ∀T2. ❪G,L❫ ⊢ T ➡*[h] 𝐍❪T2❫ → ❪G,L❫ ⊢ T1 ➡*[h] 𝐍❪T2❫.
 #h #G #L #T0 #T1 #HT01 #T2 * #HT02 #HT2
 elim (cprs_conf … HT01 … HT02) -T0 #T0 #HT10 #HT20
 lapply (cprs_inv_cnr_sn … HT20 HT2) -HT20 #H destruct
@@ -33,7 +33,7 @@ qed-.
 (* Basic_1: was: nf2_pr3_confluence *)
 (* Basic_2A1: was: cpre_mono *)
 theorem cprre_mono (h) (G) (L) (T):
-        ∀T1. ⦃G,L⦄ ⊢ T ➡*[h] 𝐍⦃T1⦄ → ∀T2. ⦃G,L⦄ ⊢ T ➡*[h] 𝐍⦃T2⦄ → T1 = T2.
+        ∀T1. ❪G,L❫ ⊢ T ➡*[h] 𝐍❪T1❫ → ∀T2. ❪G,L❫ ⊢ T ➡*[h] 𝐍❪T2❫ → T1 = T2.
 #h #G #L #T0 #T1 * #HT01 #HT1 #T2 * #HT02 #HT2
 elim (cprs_conf … HT01 … HT02) -T0 #T0 #HT10 #HT20
 >(cprs_inv_cnr_sn … HT10 HT1) -T1

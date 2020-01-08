@@ -50,27 +50,27 @@ qed-.
 (* Basic_1: includes: pr2_delta1 *)
 (* Basic_2A1: includes: cpr_delta *)
 lemma cpm_delta_drops: ∀n,h,G,L,K,V,V2,W2,i.
-                       ⇩*[i] L ≘ K.ⓓV → ⦃G,K⦄ ⊢ V ➡[n,h] V2 →
-                       ⇧*[↑i] V2 ≘ W2 → ⦃G,L⦄ ⊢ #i ➡[n,h] W2.
+                       ⇩*[i] L ≘ K.ⓓV → ❪G,K❫ ⊢ V ➡[n,h] V2 →
+                       ⇧*[↑i] V2 ≘ W2 → ❪G,L❫ ⊢ #i ➡[n,h] W2.
 #n #h #G #L #K #V #V2 #W2 #i #HLK *
 /3 width=8 by cpg_delta_drops, ex2_intro/
 qed.
 
 lemma cpm_ell_drops: ∀n,h,G,L,K,V,V2,W2,i.
-                     ⇩*[i] L ≘ K.ⓛV → ⦃G,K⦄ ⊢ V ➡[n,h] V2 →
-                     ⇧*[↑i] V2 ≘ W2 → ⦃G,L⦄ ⊢ #i ➡[↑n,h] W2.
+                     ⇩*[i] L ≘ K.ⓛV → ❪G,K❫ ⊢ V ➡[n,h] V2 →
+                     ⇧*[↑i] V2 ≘ W2 → ❪G,L❫ ⊢ #i ➡[↑n,h] W2.
 #n #h #G #L #K #V #V2 #W2 #i #HLK *
 /3 width=8 by cpg_ell_drops, isrt_succ, ex2_intro/
 qed.
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma cpm_inv_atom1_drops: ∀n,h,I,G,L,T2. ⦃G,L⦄ ⊢ ⓪{I} ➡[n,h] T2 →
-                           ∨∨ T2 = ⓪{I} ∧ n = 0
+lemma cpm_inv_atom1_drops: ∀n,h,I,G,L,T2. ❪G,L❫ ⊢ ⓪[I] ➡[n,h] T2 →
+                           ∨∨ T2 = ⓪[I] ∧ n = 0
                             | ∃∃s. T2 = ⋆(⫯[h]s) & I = Sort s & n = 1
-                            | ∃∃K,V,V2,i. ⇩*[i] L ≘ K.ⓓV & ⦃G,K⦄ ⊢ V ➡[n,h] V2 &
+                            | ∃∃K,V,V2,i. ⇩*[i] L ≘ K.ⓓV & ❪G,K❫ ⊢ V ➡[n,h] V2 &
                                           ⇧*[↑i] V2 ≘ T2 & I = LRef i
-                            | ∃∃m,K,V,V2,i. ⇩*[i] L ≘ K.ⓛV & ⦃G,K⦄ ⊢ V ➡[m,h] V2 &
+                            | ∃∃m,K,V,V2,i. ⇩*[i] L ≘ K.ⓛV & ❪G,K❫ ⊢ V ➡[m,h] V2 &
                                             ⇧*[↑i] V2 ≘ T2 & I = LRef i & n = ↑m.
 #n #h #I #G #L #T2 * #c #Hc #H elim (cpg_inv_atom1_drops … H) -H *
 [ #H1 #H2 destruct lapply (isrt_inv_00 … Hc) -Hc
@@ -85,11 +85,11 @@ lemma cpm_inv_atom1_drops: ∀n,h,I,G,L,T2. ⦃G,L⦄ ⊢ ⓪{I} ➡[n,h] T2 →
 ]
 qed-.
 
-lemma cpm_inv_lref1_drops: ∀n,h,G,L,T2,i. ⦃G,L⦄ ⊢ #i ➡[n,h] T2 →
+lemma cpm_inv_lref1_drops: ∀n,h,G,L,T2,i. ❪G,L❫ ⊢ #i ➡[n,h] T2 →
                            ∨∨ T2 = #i ∧ n = 0
-                            | ∃∃K,V,V2. ⇩*[i] L ≘ K.ⓓV & ⦃G,K⦄ ⊢ V ➡[n,h] V2 &
+                            | ∃∃K,V,V2. ⇩*[i] L ≘ K.ⓓV & ❪G,K❫ ⊢ V ➡[n,h] V2 &
                                         ⇧*[↑i] V2 ≘ T2
-                            | ∃∃m,K,V,V2. ⇩*[i] L ≘ K. ⓛV & ⦃G,K⦄ ⊢ V ➡[m,h] V2 &
+                            | ∃∃m,K,V,V2. ⇩*[i] L ≘ K. ⓛV & ❪G,K❫ ⊢ V ➡[m,h] V2 &
                                           ⇧*[↑i] V2 ≘ T2 & n = ↑m.
 #n #h #G #L #T2 #i * #c #Hc #H elim (cpg_inv_lref1_drops … H) -H *
 [ #H1 #H2 destruct lapply (isrt_inv_00 … Hc) -Hc
@@ -104,9 +104,9 @@ qed-.
 
 (* Advanced forward lemmas **************************************************)
 
-fact cpm_fwd_plus_aux (n) (h): ∀G,L,T1,T2. ⦃G,L⦄ ⊢ T1 ➡[n,h] T2 →
+fact cpm_fwd_plus_aux (n) (h): ∀G,L,T1,T2. ❪G,L❫ ⊢ T1 ➡[n,h] T2 →
                                ∀n1,n2. n1+n2 = n →
-                               ∃∃T. ⦃G,L⦄ ⊢ T1 ➡[n1,h] T & ⦃G,L⦄ ⊢ T ➡[n2,h] T2.
+                               ∃∃T. ❪G,L❫ ⊢ T1 ➡[n1,h] T & ❪G,L❫ ⊢ T ➡[n2,h] T2.
 #n #h #G #L #T1 #T2 #H @(cpm_ind … H) -G -L -T1 -T2 -n
 [ #I #G #L #n1 #n2 #H
   elim (plus_inv_O3 … H) -H #H1 #H2 destruct
@@ -119,19 +119,19 @@ fact cpm_fwd_plus_aux (n) (h): ∀G,L,T1,T2. ⦃G,L⦄ ⊢ T1 ➡[n,h] T2 →
   ]
 | #n #G #K #V1 #V2 #W2 #_ #IH #HVW2 #n1 #n2 #H destruct
   elim IH [|*: // ] -IH #V #HV1 #HV2
-  elim (lifts_total V 𝐔❴↑O❵) #W #HVW
+  elim (lifts_total V 𝐔❨↑O❩) #W #HVW
   /5 width=11 by cpm_lifts_bi, cpm_delta, drops_refl, drops_drop, ex2_intro/
 | #n #G #K #V1 #V2 #W2 #HV12 #IH #HVW2 #x1 #n2 #H
   elim (plus_inv_S3_sn … H) -H *
   [ #H1 #H2 destruct -IH /3 width=3 by cpm_ell, ex2_intro/
   | #n1 #H1 #H2 destruct -HV12
     elim (IH n1) [|*: // ] -IH #V #HV1 #HV2
-    elim (lifts_total V 𝐔❴↑O❵) #W #HVW
+    elim (lifts_total V 𝐔❨↑O❩) #W #HVW
     /5 width=11 by cpm_lifts_bi, cpm_ell, drops_refl, drops_drop, ex2_intro/
   ]
 | #n #I #G #K #T2 #U2 #i #_ #IH #HTU2 #n1 #n2 #H destruct
   elim IH [|*: // ] -IH #T #HT1 #HT2
-  elim (lifts_total T 𝐔❴↑O❵) #U #HTU
+  elim (lifts_total T 𝐔❨↑O❩) #U #HTU
   /5 width=11 by cpm_lifts_bi, cpm_lref, drops_refl, drops_drop, ex2_intro/
 | #n #p #I #G #L #V1 #V2 #T1 #T2 #HV12 #_ #_ #IHT #n1 #n2 #H destruct
   elim IHT [|*: // ] -IHT #T #HT1 #HT2
@@ -165,6 +165,6 @@ fact cpm_fwd_plus_aux (n) (h): ∀G,L,T1,T2. ⦃G,L⦄ ⊢ T1 ➡[n,h] T2 →
 ]
 qed-.
 
-lemma cpm_fwd_plus (h) (G) (L): ∀n1,n2,T1,T2. ⦃G,L⦄ ⊢ T1 ➡[n1+n2,h] T2 →
-                                ∃∃T. ⦃G,L⦄ ⊢ T1 ➡[n1,h] T & ⦃G,L⦄ ⊢ T ➡[n2,h] T2.
+lemma cpm_fwd_plus (h) (G) (L): ∀n1,n2,T1,T2. ❪G,L❫ ⊢ T1 ➡[n1+n2,h] T2 →
+                                ∃∃T. ❪G,L❫ ⊢ T1 ➡[n1,h] T & ❪G,L❫ ⊢ T ➡[n2,h] T2.
 /2 width=3 by cpm_fwd_plus_aux/ qed-.

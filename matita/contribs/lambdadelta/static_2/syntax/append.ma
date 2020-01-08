@@ -25,7 +25,7 @@ include "static_2/syntax/lenv.ma".
 
 rec definition append L K on K ≝ match K with
 [ LAtom     ⇒ L
-| LBind K I ⇒ (append L K).ⓘ{I}
+| LBind K I ⇒ (append L K).ⓘ[I]
 ].
 
 interpretation "append (local environment)" 'plus L1 L2 = (append L1 L2).
@@ -57,7 +57,7 @@ lemma append_atom: ∀L. (L + ⋆) = L. (**) (* () should be redundant *)
 // qed.
 
 (* Basic_2A1: uses: append_pair *)
-lemma append_bind: ∀I,L,K. L+(K.ⓘ{I}) = (L+K).ⓘ{I}.
+lemma append_bind: ∀I,L,K. L+(K.ⓘ[I]) = (L+K).ⓘ[I].
 // qed.
 
 lemma append_atom_sn: ∀L. ⋆ + L = L.
@@ -69,7 +69,7 @@ lemma append_assoc: associative … append.
 #L1 #L2 #L3 elim L3 -L3 //
 qed.
 
-lemma append_shift: ∀L,K,I. L+(ⓘ{I}.K) = (L.ⓘ{I})+K.
+lemma append_shift: ∀L,K,I. L+(ⓘ[I].K) = (L.ⓘ[I])+K.
 #L #K #I <append_assoc //
 qed.
 
@@ -80,9 +80,9 @@ lemma append_inv_atom3_sn: ∀L,K. ⋆ = L + K → ∧∧ ⋆ = L & ⋆ = K.
 #K #I >append_bind #H destruct
 qed-.
 
-lemma append_inv_bind3_sn: ∀I0,L,L0,K. L0.ⓘ{I0} = L + K →
-                           ∨∨ ∧∧ L0.ⓘ{I0} = L & ⋆ = K
-                            | ∃∃K0. K = K0.ⓘ{I0} & L0 = L + K0.
+lemma append_inv_bind3_sn: ∀I0,L,L0,K. L0.ⓘ[I0] = L + K →
+                           ∨∨ ∧∧ L0.ⓘ[I0] = L & ⋆ = K
+                            | ∃∃K0. K = K0.ⓘ[I0] & L0 = L + K0.
 #I0 #L #L0 * /3 width=1 by or_introl, conj/
 #K #I >append_bind #H destruct /3 width=3 by ex2_intro, or_intror/
 qed-.
@@ -95,7 +95,7 @@ qed-.
 
 (* Basic_1: uses: chead_ctail *)
 (* Basic_2A1: uses: lpair_ltail *)
-lemma lenv_case_tail: ∀L. L = ⋆ ∨ ∃∃K,I. L = ⓘ{I}.K.
+lemma lenv_case_tail: ∀L. L = ⋆ ∨ ∃∃K,I. L = ⓘ[I].K.
 #L elim L -L /2 width=1 by or_introl/
 #L #I * [2: * ] /3 width=3 by ex1_2_intro, or_intror/
 qed-.

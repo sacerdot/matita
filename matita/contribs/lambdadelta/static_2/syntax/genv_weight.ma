@@ -19,12 +19,12 @@ include "static_2/syntax/genv.ma".
 
 rec definition gw G ≝ match G with
 [ GAtom       ⇒ 0
-| GPair G I T ⇒ gw G + ♯{T}
+| GPair G I T ⇒ gw G + ♯❨T❩
 ].
 
 interpretation "weight (global environment)" 'Weight G = (gw G).
 
 (* Basic properties *********************************************************)
 
-lemma gw_pair: ∀I,G,T. ♯{G} < ♯{G.ⓑ{I}T}.
+lemma gw_pair: ∀I,G,T. ♯❨G❩ < ♯❨G.ⓑ[I]T❩.
 normalize /2 width=1 by monotonic_le_plus_r/ qed.

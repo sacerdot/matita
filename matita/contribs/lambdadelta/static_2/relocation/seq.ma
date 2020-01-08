@@ -52,16 +52,16 @@ lemma seq_inv_atom1: ∀f,Y. ⋆ ≡[f] Y → Y = ⋆.
 /2 width=4 by sex_inv_atom1/ qed-.
 
 (* Basic_2A1: includes: lreq_inv_pair1 *)
-lemma seq_inv_next1: ∀g,J,K1,Y. K1.ⓘ{J} ≡[↑g] Y →
-                     ∃∃K2. K1 ≡[g] K2 & Y = K2.ⓘ{J}.
+lemma seq_inv_next1: ∀g,J,K1,Y. K1.ⓘ[J] ≡[↑g] Y →
+                     ∃∃K2. K1 ≡[g] K2 & Y = K2.ⓘ[J].
 #g #J #K1 #Y #H
 elim (sex_inv_next1 … H) -H #Z #K2 #HK12 #H1 #H2 destruct
 <(ceq_ext_inv_eq … H1) -Z /2 width=3 by ex2_intro/
 qed-.
 
 (* Basic_2A1: includes: lreq_inv_zero1 lreq_inv_succ1 *)
-lemma seq_inv_push1: ∀g,J1,K1,Y. K1.ⓘ{J1} ≡[⫯g] Y →
-                     ∃∃J2,K2. K1 ≡[g] K2 & Y = K2.ⓘ{J2}.
+lemma seq_inv_push1: ∀g,J1,K1,Y. K1.ⓘ[J1] ≡[⫯g] Y →
+                     ∃∃J2,K2. K1 ≡[g] K2 & Y = K2.ⓘ[J2].
 #g #J1 #K1 #Y #H elim (sex_inv_push1 … H) -H /2 width=4 by ex2_2_intro/
 qed-.
 
@@ -70,32 +70,32 @@ lemma seq_inv_atom2: ∀f,X. X ≡[f] ⋆ → X = ⋆.
 /2 width=4 by sex_inv_atom2/ qed-.
 
 (* Basic_2A1: includes: lreq_inv_pair2 *)
-lemma seq_inv_next2: ∀g,J,X,K2. X ≡[↑g] K2.ⓘ{J} →
-                     ∃∃K1. K1 ≡[g] K2 & X = K1.ⓘ{J}.
+lemma seq_inv_next2: ∀g,J,X,K2. X ≡[↑g] K2.ⓘ[J] →
+                     ∃∃K1. K1 ≡[g] K2 & X = K1.ⓘ[J].
 #g #J #X #K2 #H
 elim (sex_inv_next2 … H) -H #Z #K1 #HK12 #H1 #H2 destruct
 <(ceq_ext_inv_eq … H1) -J /2 width=3 by ex2_intro/
 qed-.
 
 (* Basic_2A1: includes: lreq_inv_zero2 lreq_inv_succ2 *)
-lemma seq_inv_push2: ∀g,J2,X,K2. X ≡[⫯g] K2.ⓘ{J2} →
-                     ∃∃J1,K1. K1 ≡[g] K2 & X = K1.ⓘ{J1}.
+lemma seq_inv_push2: ∀g,J2,X,K2. X ≡[⫯g] K2.ⓘ[J2] →
+                     ∃∃J1,K1. K1 ≡[g] K2 & X = K1.ⓘ[J1].
 #g #J2 #X #K2 #H elim (sex_inv_push2 … H) -H /2 width=4 by ex2_2_intro/
 qed-.
 
 (* Basic_2A1: includes: lreq_inv_pair *)
-lemma seq_inv_next: ∀f,I1,I2,L1,L2. L1.ⓘ{I1} ≡[↑f] L2.ⓘ{I2} →
+lemma seq_inv_next: ∀f,I1,I2,L1,L2. L1.ⓘ[I1] ≡[↑f] L2.ⓘ[I2] →
                     ∧∧ L1 ≡[f] L2 & I1 = I2.
 #f #I1 #I2 #L1 #L2 #H elim (sex_inv_next … H) -H
 /3 width=3 by ceq_ext_inv_eq, conj/
 qed-.
 
 (* Basic_2A1: includes: lreq_inv_succ *)
-lemma seq_inv_push: ∀f,I1,I2,L1,L2. L1.ⓘ{I1} ≡[⫯f] L2.ⓘ{I2} → L1 ≡[f] L2.
+lemma seq_inv_push: ∀f,I1,I2,L1,L2. L1.ⓘ[I1] ≡[⫯f] L2.ⓘ[I2] → L1 ≡[f] L2.
 #f #I1 #I2 #L1 #L2 #H elim (sex_inv_push … H) -H /2 width=1 by conj/
 qed-.
 
-lemma seq_inv_tl: ∀f,I,L1,L2. L1 ≡[⫱f] L2 → L1.ⓘ{I} ≡[f] L2.ⓘ{I}.
+lemma seq_inv_tl: ∀f,I,L1,L2. L1 ≡[⫱f] L2 → L1.ⓘ[I] ≡[f] L2.ⓘ[I].
 /2 width=1 by sex_inv_tl/ qed-.
 
 (* Basic_2A1: removed theorems 5:

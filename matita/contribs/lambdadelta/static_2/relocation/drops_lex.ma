@@ -23,11 +23,11 @@ definition dedropable_sn: predicate … ≝
                           ∃∃L2. L1 ⪤[R] L2 & ⇩*[b,f] L2 ≘ K2 & L1 ≡[f] L2.
 
 definition dropable_sn: predicate … ≝
-                        λR. ∀b,f,L1,K1. ⇩*[b,f] L1 ≘ K1 → 𝐔⦃f⦄ → ∀L2. L1 ⪤[R] L2 →
+                        λR. ∀b,f,L1,K1. ⇩*[b,f] L1 ≘ K1 → 𝐔❪f❫ → ∀L2. L1 ⪤[R] L2 →
                         ∃∃K2. K1 ⪤[R] K2 & ⇩*[b,f] L2 ≘ K2.
 
 definition dropable_dx: predicate … ≝
-                        λR. ∀L1,L2. L1 ⪤[R] L2 → ∀b,f,K2. ⇩*[b,f] L2 ≘ K2 → 𝐔⦃f⦄ →
+                        λR. ∀L1,L2. L1 ⪤[R] L2 → ∀b,f,K2. ⇩*[b,f] L2 ≘ K2 → 𝐔❪f❫ →
                         ∃∃K1. ⇩*[b,f] L1 ≘ K1 & K1 ⪤[R] K2.
 
 (* Properties with generic extension ****************************************)
@@ -58,8 +58,8 @@ qed-.
 
 (* Basic_2A1: includes: lpx_sn_drop_conf *)
 lemma lex_drops_conf_pair (R): ∀L1,L2. L1 ⪤[R] L2 →
-                               ∀b,f,I,K1,V1. ⇩*[b,f] L1 ≘ K1.ⓑ{I}V1 → 𝐔⦃f⦄ →
-                               ∃∃K2,V2. ⇩*[b,f] L2 ≘ K2.ⓑ{I}V2 & K1 ⪤[R] K2 & R K1 V1 V2.
+                               ∀b,f,I,K1,V1. ⇩*[b,f] L1 ≘ K1.ⓑ[I]V1 → 𝐔❪f❫ →
+                               ∃∃K2,V2. ⇩*[b,f] L2 ≘ K2.ⓑ[I]V2 & K1 ⪤[R] K2 & R K1 V1 V2.
 #R #L1 #L2 * #f2 #Hf2 #HL12 #b #f #I #K1 #V1 #HLK1 #Hf
 elim (sex_drops_conf_push … HL12 … HLK1 Hf f2) -L1 -Hf
 [ #Z2 #K2 #HLK2 #HK12 #H
@@ -71,8 +71,8 @@ qed-.
 
 (* Basic_2A1: includes: lpx_sn_drop_trans *)
 lemma lex_drops_trans_pair (R): ∀L1,L2. L1 ⪤[R] L2 →
-                                ∀b,f,I,K2,V2. ⇩*[b,f] L2 ≘ K2.ⓑ{I}V2 → 𝐔⦃f⦄ →
-                                ∃∃K1,V1. ⇩*[b,f] L1 ≘ K1.ⓑ{I}V1 & K1 ⪤[R] K2 & R K1 V1 V2.
+                                ∀b,f,I,K2,V2. ⇩*[b,f] L2 ≘ K2.ⓑ[I]V2 → 𝐔❪f❫ →
+                                ∃∃K1,V1. ⇩*[b,f] L1 ≘ K1.ⓑ[I]V1 & K1 ⪤[R] K2 & R K1 V1 V2.
 #R #L1 #L2 * #f2 #Hf2 #HL12 #b #f #I #K2 #V2 #HLK2 #Hf
 elim (sex_drops_trans_push … HL12 … HLK2 Hf f2) -L2 -Hf
 [ #Z1 #K1 #HLK1 #HK12 #H

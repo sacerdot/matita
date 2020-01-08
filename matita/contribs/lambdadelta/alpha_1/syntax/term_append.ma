@@ -18,8 +18,8 @@ include "alpha_1/syntax/term.ma".
 
 let rec tappend T U on T ≝ match T with
 [ TAtom       ⇒ U
-| TUnit I T   ⇒ ①{I}.(tappend T U)
-| TPair I V T ⇒ ②{I}V.(tappend T U)
+| TUnit I T   ⇒ ①[I].(tappend T U)
+| TPair I V T ⇒ ②[I]V.(tappend T U)
 ].
 
 interpretation "append (term)" 'plus T U = (tappend T U).

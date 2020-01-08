@@ -19,11 +19,11 @@ include "static_2/static/lsubc.ma".
 
 (* Properties with generic slicing ******************************************)
 
-(* Note: the premise 𝐔⦃f⦄ cannot be removed *)
+(* Note: the premise 𝐔❪f❫ cannot be removed *)
 (* Basic_1: includes: csubc_drop_conf_O *)
 (* Basic_2A1: includes: lsubc_drop_O1_trans *)
 lemma lsubc_drops_trans_isuni: ∀RP,G,L1,L2. G ⊢ L1 ⫃[RP] L2 →
-                               ∀b,f,K2. 𝐔⦃f⦄ → ⇩*[b,f] L2 ≘ K2 →
+                               ∀b,f,K2. 𝐔❪f❫ → ⇩*[b,f] L2 ≘ K2 →
                                ∃∃K1. ⇩*[b,f] L1 ≘ K1 & G ⊢ K1 ⫃[RP] K2.
 #RP #G #L1 #L2 #H elim H -L1 -L2
 [ /2 width=3 by ex2_intro/

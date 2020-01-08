@@ -28,5 +28,5 @@ lemma flifts_basic_lref_ge (i) (d) (h): d ≤ i → ↑[d,h](#i) = #(h+i).
 /4 width=1 by apply_basic_ge, (* 2x *) eq_f/
 qed-.
 
-lemma flifts_basic_bind (p) (I) (V) (T) (d) (h): ↑[d,h](ⓑ{p,I}V.T) = ⓑ{p,I}(↑[d,h]V).(↑[↑d,h]T).
+lemma flifts_basic_bind (p) (I) (V) (T) (d) (h): ↑[d,h](ⓑ[p,I]V.T) = ⓑ[p,I](↑[d,h]V).(↑[↑d,h]T).
 // qed.

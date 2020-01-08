@@ -21,7 +21,7 @@ include "apps_2/models/deq.ma".
 (* Forward lemmas with context-sensitive parallel reduction for terms *******)
 
 lemma cpr_fwd_deq (h) (M): is_model M → is_extensional M →
-                           ∀G,L,T1,T2. ⦃G,L⦄ ⊢ T1 ➡[h] T2 → ⦃G,L⦄ ⊢ T1 ≗{M} T2.
+                           ∀G,L,T1,T2. ❪G,L❫ ⊢ T1 ➡[h] T2 → ❪G,L❫ ⊢ T1 ≗{M} T2.
 #h #M #H1M #H2M #G #L #T1 #T2 #H @(cpr_ind … H) -G -L -T1 -T2
 [ /2 width=2 by deq_refl/
 | #G #K #V1 #V2 #W2 #_ #IH #HVW2 #gv #v #H

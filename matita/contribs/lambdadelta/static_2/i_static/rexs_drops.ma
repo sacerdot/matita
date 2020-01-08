@@ -24,13 +24,13 @@ definition tc_f_dedropable_sn: predicate (relation3 lenv term term) ≝
                                ∃∃L2. L1 ⪤*[R,U] L2 & ⇩*[b,f] L2 ≘ K2 & L1 ≡[f] L2.
 
 definition tc_f_dropable_sn: predicate (relation3 lenv term term) ≝
-                             λR. ∀b,f,L1,K1. ⇩*[b,f] L1 ≘ K1 → 𝐔⦃f⦄ →
+                             λR. ∀b,f,L1,K1. ⇩*[b,f] L1 ≘ K1 → 𝐔❪f❫ →
                              ∀L2,U. L1 ⪤*[R,U] L2 → ∀T. ⇧*[f] T ≘ U →
                              ∃∃K2. K1 ⪤*[R,T] K2 & ⇩*[b,f] L2 ≘ K2.
 
 definition tc_f_dropable_dx: predicate (relation3 lenv term term) ≝
                              λR. ∀L1,L2,U. L1 ⪤*[R,U] L2 →
-                             ∀b,f,K2. ⇩*[b,f] L2 ≘ K2 → 𝐔⦃f⦄ → ∀T. ⇧*[f] T ≘ U →
+                             ∀b,f,K2. ⇩*[b,f] L2 ≘ K2 → 𝐔❪f❫ → ∀T. ⇧*[f] T ≘ U →
                              ∃∃K1. ⇩*[b,f] L1 ≘ K1 & K1 ⪤*[R,T] K2.
 
 (* Properties with generic slicing for local environments *******************)

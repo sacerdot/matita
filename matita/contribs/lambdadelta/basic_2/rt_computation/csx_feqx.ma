@@ -19,8 +19,8 @@ include "basic_2/rt_computation/csx_reqx.ma".
 
 (* Properties with sort-irrelevant equivalence for closures *****************)
 
-lemma csx_feqx_conf: ∀h,G1,L1,T1. ⦃G1,L1⦄ ⊢ ⬈*[h] 𝐒⦃T1⦄ →
-                     ∀G2,L2,T2. ⦃G1,L1,T1⦄ ≛ ⦃G2,L2,T2⦄ → ⦃G2,L2⦄ ⊢ ⬈*[h] 𝐒⦃T2⦄.
+lemma csx_feqx_conf: ∀h,G1,L1,T1. ❪G1,L1❫ ⊢ ⬈*[h] 𝐒❪T1❫ →
+                     ∀G2,L2,T2. ❪G1,L1,T1❫ ≛ ❪G2,L2,T2❫ → ❪G2,L2❫ ⊢ ⬈*[h] 𝐒❪T2❫.
 #h #G1 #L1 #T1 #HT1 #G2 #L2 #T2 * -G2 -L2 -T2
 /3 width=3 by csx_reqx_conf, csx_teqx_trans/
 qed-.

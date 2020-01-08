@@ -24,7 +24,7 @@ lemma append_length: ∀L1,L2. |L1 + L2| = |L1| + |L2|.
 #L2 #I >append_bind >length_bind >length_bind //
 qed.
 
-lemma ltail_length: ∀I,L. |ⓘ{I}.L| = ↑|L|.
+lemma ltail_length: ∀I,L. |ⓘ[I].L| = ↑|L|.
 #I #L >append_length //
 qed.
 
@@ -32,7 +32,7 @@ qed.
 
 (* Basic_2A1: was: length_inv_pos_dx_ltail *)
 lemma length_inv_succ_dx_ltail: ∀L,n. |L| = ↑n →
-                                ∃∃I,K. |K| = n & L = ⓘ{I}.K.
+                                ∃∃I,K. |K| = n & L = ⓘ[I].K.
 #Y #n #H elim (length_inv_succ_dx … H) -H #I #L #Hn #HLK destruct
 elim (lenv_case_tail … L) [2: * #K #J ]
 #H destruct /2 width=4 by ex2_2_intro/
@@ -40,7 +40,7 @@ qed-.
 
 (* Basic_2A1: was: length_inv_pos_sn_ltail *)
 lemma length_inv_succ_sn_ltail: ∀L,n. ↑n = |L| →
-                                ∃∃I,K. n = |K| & L = ⓘ{I}.K.
+                                ∃∃I,K. n = |K| & L = ⓘ[I].K.
 #Y #n #H elim (length_inv_succ_sn … H) -H #I #L #Hn #HLK destruct
 elim (lenv_case_tail … L) [2: * #K #J ]
 #H destruct /2 width=4 by ex2_2_intro/
@@ -95,8 +95,8 @@ lemma append_inv_refl_dx: ∀L,K. L+K = L → K = ⋆.
 #L #K #H elim (append_inj_dx … (⋆) … H) //
 qed-.
 
-lemma append_inv_pair_dx: ∀I,L,K,V. L+K = L.ⓑ{I}V → K = ⋆.ⓑ{I}V.
-#I #L #K #V #H elim (append_inj_dx … (⋆.ⓑ{I}V) … H) //
+lemma append_inv_pair_dx: ∀I,L,K,V. L+K = L.ⓑ[I]V → K = ⋆.ⓑ[I]V.
+#I #L #K #V #H elim (append_inj_dx … (⋆.ⓑ[I]V) … H) //
 qed-.
 
 (* Basic eliminators ********************************************************)
@@ -104,7 +104,7 @@ qed-.
 (* Basic_1: was: c_tail_ind *)
 (* Basic_2A1: was: lenv_ind_alt *)
 lemma lenv_ind_tail: ∀Q:predicate lenv.
-                     Q (⋆) → (∀I,L. Q L → Q (ⓘ{I}.L)) → ∀L. Q L.
+                     Q (⋆) → (∀I,L. Q L → Q (ⓘ[I].L)) → ∀L. Q L.
 #Q #IH1 #IH2 #L @(f_ind … length … L) -L #x #IHx * //
 #L #I -IH1 #H destruct
 elim (lenv_case_tail … L) [2: * #K #J ]

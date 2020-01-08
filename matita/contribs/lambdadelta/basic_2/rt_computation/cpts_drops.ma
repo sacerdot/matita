@@ -45,41 +45,41 @@ qed-.
 (* Advanced properties ******************************************************)
 
 lemma cpts_delta (h) (n) (G):
-      ∀K,V1,V2. ⦃G,K⦄ ⊢ V1 ⬆*[h,n] V2 →
-      ∀W2. ⇧*[1] V2 ≘ W2 → ⦃G,K.ⓓV1⦄ ⊢ #0 ⬆*[h,n] W2.
+      ∀K,V1,V2. ❪G,K❫ ⊢ V1 ⬆*[h,n] V2 →
+      ∀W2. ⇧*[1] V2 ≘ W2 → ❪G,K.ⓓV1❫ ⊢ #0 ⬆*[h,n] W2.
 #h #n #G #K #V1 #V2 #H @(cpts_ind_dx … H) -V2
 [ /3 width=3 by cpt_cpts, cpt_delta/
 | #n1 #n2 #V #V2 #_ #IH #HV2 #W2 #HVW2
-  elim (lifts_total V (𝐔❴1❵)) #W #HVW
+  elim (lifts_total V (𝐔❨1❩)) #W #HVW
   /5 width=11 by cpts_step_dx, cpt_lifts_bi, drops_refl, drops_drop/
 ]
 qed.
 
 lemma cpts_ell (h) (n) (G):
-      ∀K,V1,V2. ⦃G,K⦄ ⊢ V1 ⬆*[h,n] V2 →
-      ∀W2. ⇧*[1] V2 ≘ W2 → ⦃G,K.ⓛV1⦄ ⊢ #0 ⬆*[h,↑n] W2.
+      ∀K,V1,V2. ❪G,K❫ ⊢ V1 ⬆*[h,n] V2 →
+      ∀W2. ⇧*[1] V2 ≘ W2 → ❪G,K.ⓛV1❫ ⊢ #0 ⬆*[h,↑n] W2.
 #h #n #G #K #V1 #V2 #H @(cpts_ind_dx … H) -V2
 [ /3 width=3 by cpt_cpts, cpt_ell/
 | #n1 #n2 #V #V2 #_ #IH #HV2 #W2 #HVW2
-  elim (lifts_total V (𝐔❴1❵)) #W #HVW >plus_S1
+  elim (lifts_total V (𝐔❨1❩)) #W #HVW >plus_S1
   /5 width=11 by cpts_step_dx, cpt_lifts_bi, drops_refl, drops_drop/
 ]
 qed.
 
 lemma cpts_lref (h) (n) (I) (G):
-      ∀K,T,i. ⦃G,K⦄ ⊢ #i ⬆*[h,n] T →
-      ∀U. ⇧*[1] T ≘ U → ⦃G,K.ⓘ{I}⦄ ⊢ #↑i ⬆*[h,n] U.
+      ∀K,T,i. ❪G,K❫ ⊢ #i ⬆*[h,n] T →
+      ∀U. ⇧*[1] T ≘ U → ❪G,K.ⓘ[I]❫ ⊢ #↑i ⬆*[h,n] U.
 #h #n #I #G #K #T #i #H @(cpts_ind_dx … H) -T
 [ /3 width=3 by cpt_cpts, cpt_lref/
 | #n1 #n2 #T #T2 #_ #IH #HT2 #U2 #HTU2
-  elim (lifts_total T (𝐔❴1❵)) #U #TU
+  elim (lifts_total T (𝐔❨1❩)) #U #TU
   /5 width=11 by cpts_step_dx, cpt_lifts_bi, drops_refl, drops_drop/
 ]
 qed.
 
 lemma cpts_cast_sn (h) (n) (G) (L):
-      ∀U1,U2. ⦃G,L⦄ ⊢ U1 ⬆*[h,n] U2 →
-      ∀T1,T2. ⦃G,L⦄ ⊢ T1 ⬆[h,n] T2 → ⦃G,L⦄ ⊢ ⓝU1.T1 ⬆*[h,n] ⓝU2.T2.
+      ∀U1,U2. ❪G,L❫ ⊢ U1 ⬆*[h,n] U2 →
+      ∀T1,T2. ❪G,L❫ ⊢ T1 ⬆[h,n] T2 → ❪G,L❫ ⊢ ⓝU1.T1 ⬆*[h,n] ⓝU2.T2.
 #h #n #G #L #U1 #U2 #H @(cpts_ind_sn … H) -U1 -n
 [ /3 width=3 by cpt_cpts, cpt_cast/
 | #n1 #n2 #U1 #U #HU1 #_ #IH #T1 #T2 #H
@@ -90,26 +90,26 @@ qed.
 
 lemma cpts_delta_drops (h) (n) (G):
       ∀L,K,V,i. ⇩*[i] L ≘ K.ⓓV →
-      ∀V2. ⦃G,K⦄ ⊢ V ⬆*[h,n] V2 →
-      ∀W2. ⇧*[↑i] V2 ≘ W2 → ⦃G,L⦄ ⊢ #i ⬆*[h,n] W2.
+      ∀V2. ❪G,K❫ ⊢ V ⬆*[h,n] V2 →
+      ∀W2. ⇧*[↑i] V2 ≘ W2 → ❪G,L❫ ⊢ #i ⬆*[h,n] W2.
 #h #n #G #L #K #V #i #HLK #V2 #H @(cpts_ind_dx … H) -V2
 [ /3 width=6 by cpt_cpts, cpt_delta_drops/
 | #n1 #n2 #V1 #V2 #_ #IH #HV12 #W2 #HVW2
   lapply (drops_isuni_fwd_drop2 … HLK) -HLK // #HLK
-  elim (lifts_total V1 (𝐔❴↑i❵)) #W1 #HVW1
+  elim (lifts_total V1 (𝐔❨↑i❩)) #W1 #HVW1
   /3 width=11 by cpt_lifts_bi, cpts_step_dx/
 ]
 qed.
 
 lemma cpts_ell_drops (h) (n) (G):
       ∀L,K,W,i. ⇩*[i] L ≘ K.ⓛW →
-      ∀W2. ⦃G,K⦄ ⊢ W ⬆*[h,n] W2 →
-      ∀V2. ⇧*[↑i] W2 ≘ V2 → ⦃G,L⦄ ⊢ #i ⬆*[h,↑n] V2.
+      ∀W2. ❪G,K❫ ⊢ W ⬆*[h,n] W2 →
+      ∀V2. ⇧*[↑i] W2 ≘ V2 → ❪G,L❫ ⊢ #i ⬆*[h,↑n] V2.
 #h #n #G #L #K #W #i #HLK #W2 #H @(cpts_ind_dx … H) -W2
 [ /3 width=6 by cpt_cpts, cpt_ell_drops/
 | #n1 #n2 #W1 #W2 #_ #IH #HW12 #V2 #HWV2
   lapply (drops_isuni_fwd_drop2 … HLK) -HLK // #HLK
-  elim (lifts_total W1 (𝐔❴↑i❵)) #V1 #HWV1 >plus_S1
+  elim (lifts_total W1 (𝐔❨↑i❩)) #V1 #HWV1 >plus_S1
   /3 width=11 by cpt_lifts_bi, cpts_step_dx/
 ]
 qed.
@@ -117,10 +117,10 @@ qed.
 (* Advanced inversion lemmas ************************************************)
 
 lemma cpts_inv_lref_sn_drops (h) (n) (G) (L) (i):
-      ∀X2. ⦃G,L⦄ ⊢ #i ⬆*[h,n] X2 →
+      ∀X2. ❪G,L❫ ⊢ #i ⬆*[h,n] X2 →
       ∨∨ ∧∧ X2 = #i & n = 0
-       | ∃∃K,V,V2. ⇩*[i] L ≘ K.ⓓV & ⦃G,K⦄ ⊢ V ⬆*[h,n] V2 & ⇧*[↑i] V2 ≘ X2
-       | ∃∃m,K,V,V2. ⇩*[i] L ≘ K.ⓛV & ⦃G,K⦄ ⊢ V ⬆*[h,m] V2 & ⇧*[↑i] V2 ≘ X2 & n = ↑m.
+       | ∃∃K,V,V2. ⇩*[i] L ≘ K.ⓓV & ❪G,K❫ ⊢ V ⬆*[h,n] V2 & ⇧*[↑i] V2 ≘ X2
+       | ∃∃m,K,V,V2. ⇩*[i] L ≘ K.ⓛV & ❪G,K❫ ⊢ V ⬆*[h,m] V2 & ⇧*[↑i] V2 ≘ X2 & n = ↑m.
 #h #n #G #L #i #X2 #H @(cpts_ind_dx … H) -X2
 [ /3 width=1 by or3_intro0, conj/
 | #n1 #n2 #T #T2 #_ #IH #HT2 cases IH -IH *
@@ -143,9 +143,9 @@ lemma cpts_inv_lref_sn_drops (h) (n) (G) (L) (i):
 qed-.
 
 lemma cpts_inv_delta_sn (h) (n) (G) (K) (V):
-      ∀X2. ⦃G,K.ⓓV⦄ ⊢ #0 ⬆*[h,n] X2 →
+      ∀X2. ❪G,K.ⓓV❫ ⊢ #0 ⬆*[h,n] X2 →
       ∨∨ ∧∧ X2 = #0 & n = 0
-       | ∃∃V2. ⦃G,K⦄ ⊢ V ⬆*[h,n] V2 & ⇧*[1] V2 ≘ X2.
+       | ∃∃V2. ❪G,K❫ ⊢ V ⬆*[h,n] V2 & ⇧*[1] V2 ≘ X2.
 #h #n #G #K #V #X2 #H
 elim (cpts_inv_lref_sn_drops … H) -H *
 [ /3 width=1 by or_introl, conj/
@@ -158,9 +158,9 @@ elim (cpts_inv_lref_sn_drops … H) -H *
 qed-.
 
 lemma cpts_inv_ell_sn (h) (n) (G) (K) (V):
-      ∀X2. ⦃G,K.ⓛV⦄ ⊢ #0 ⬆*[h,n] X2 →
+      ∀X2. ❪G,K.ⓛV❫ ⊢ #0 ⬆*[h,n] X2 →
       ∨∨ ∧∧ X2 = #0 & n = 0
-       | ∃∃m,V2. ⦃G,K⦄ ⊢ V ⬆*[h,m] V2 & ⇧*[1] V2 ≘ X2 & n = ↑m.
+       | ∃∃m,V2. ❪G,K❫ ⊢ V ⬆*[h,m] V2 & ⇧*[1] V2 ≘ X2 & n = ↑m.
 #h #n #G #K #V #X2 #H
 elim (cpts_inv_lref_sn_drops … H) -H *
 [ /3 width=1 by or_introl, conj/
@@ -173,28 +173,28 @@ elim (cpts_inv_lref_sn_drops … H) -H *
 qed-.
 
 lemma cpts_inv_lref_sn (h) (n) (I) (G) (K) (i):
-      ∀X2. ⦃G,K.ⓘ{I}⦄ ⊢ #↑i ⬆*[h,n] X2 →
+      ∀X2. ❪G,K.ⓘ[I]❫ ⊢ #↑i ⬆*[h,n] X2 →
       ∨∨ ∧∧ X2 = #↑i & n = 0
-       | ∃∃T2. ⦃G,K⦄ ⊢ #i ⬆*[h,n] T2 & ⇧*[1] T2 ≘ X2.
+       | ∃∃T2. ❪G,K❫ ⊢ #i ⬆*[h,n] T2 & ⇧*[1] T2 ≘ X2.
 #h #n #I #G #K #i #X2 #H
 elim (cpts_inv_lref_sn_drops … H) -H *
 [ /3 width=1 by or_introl, conj/
 | #L #V #V2 #H #HV2 #HVU2
   lapply (drops_inv_drop1 … H) -H #HLK
-  elim (lifts_split_trans … HVU2 (𝐔❴↑i❵) (𝐔❴1❵)) -HVU2
+  elim (lifts_split_trans … HVU2 (𝐔❨↑i❩) (𝐔❨1❩)) -HVU2
   [| // ] #T2 #HVT2 #HTU2
   /4 width=6 by cpts_delta_drops, ex2_intro, or_intror/
 | #m #L #V #V2 #H #HV2 #HVU2 #H0 destruct
   lapply (drops_inv_drop1 … H) -H #HLK
-  elim (lifts_split_trans … HVU2 (𝐔❴↑i❵) (𝐔❴1❵)) -HVU2
+  elim (lifts_split_trans … HVU2 (𝐔❨↑i❩) (𝐔❨1❩)) -HVU2
   [| // ] #T2 #HVT2 #HTU2
   /4 width=6 by cpts_ell_drops, ex2_intro, or_intror/
 ]
 qed-.
 
 lemma cpts_inv_succ_sn (h) (n) (G) (L):
-      ∀T1,T2. ⦃G,L⦄ ⊢ T1 ⬆*[h,↑n] T2 →
-      ∃∃T. ⦃G,L⦄ ⊢ T1 ⬆*[h,1] T & ⦃G,L⦄ ⊢ T ⬆*[h,n] T2.
+      ∀T1,T2. ❪G,L❫ ⊢ T1 ⬆*[h,↑n] T2 →
+      ∃∃T. ❪G,L❫ ⊢ T1 ⬆*[h,1] T & ❪G,L❫ ⊢ T ⬆*[h,n] T2.
 #h #n #G #L #T1 #T2
 @(insert_eq_0 … (↑n)) #m #H
 @(cpts_ind_sn … H) -T1 -m

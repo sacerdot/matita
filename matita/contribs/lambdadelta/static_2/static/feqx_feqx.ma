@@ -32,18 +32,18 @@ theorem feqx_trans: tri_transitive … feqx.
 /4 width=5 by feqx_intro_sn, reqx_trans, teqx_reqx_div, teqx_trans/
 qed-.
 
-theorem feqx_canc_sn: ∀G,G1,L,L1,T,T1. ⦃G,L,T⦄ ≛ ⦃G1,L1,T1⦄→
-                      ∀G2,L2,T2. ⦃G,L,T⦄ ≛ ⦃G2,L2,T2⦄ → ⦃G1,L1,T1⦄ ≛ ⦃G2,L2,T2⦄.
+theorem feqx_canc_sn: ∀G,G1,L,L1,T,T1. ❪G,L,T❫ ≛ ❪G1,L1,T1❫→
+                      ∀G2,L2,T2. ❪G,L,T❫ ≛ ❪G2,L2,T2❫ → ❪G1,L1,T1❫ ≛ ❪G2,L2,T2❫.
 /3 width=5 by feqx_trans, feqx_sym/ qed-.
 
-theorem feqx_canc_dx: ∀G1,G,L1,L,T1,T. ⦃G1,L1,T1⦄ ≛ ⦃G,L,T⦄ →
-                      ∀G2,L2,T2. ⦃G2,L2,T2⦄ ≛ ⦃G,L,T⦄ → ⦃G1,L1,T1⦄ ≛ ⦃G2,L2,T2⦄.
+theorem feqx_canc_dx: ∀G1,G,L1,L,T1,T. ❪G1,L1,T1❫ ≛ ❪G,L,T❫ →
+                      ∀G2,L2,T2. ❪G2,L2,T2❫ ≛ ❪G,L,T❫ → ❪G1,L1,T1❫ ≛ ❪G2,L2,T2❫.
 /3 width=5 by feqx_trans, feqx_sym/ qed-.
 
 (* Main inversion lemmas with degree-based equivalence on terms *************)
 
-theorem feqx_tneqx_repl_dx: ∀G1,G2,L1,L2,T1,T2. ⦃G1,L1,T1⦄ ≛ ⦃G2,L2,T2⦄ →
-                            ∀U1,U2. ⦃G1,L1,U1⦄ ≛ ⦃G2,L2,U2⦄ →
+theorem feqx_tneqx_repl_dx: ∀G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ≛ ❪G2,L2,T2❫ →
+                            ∀U1,U2. ❪G1,L1,U1❫ ≛ ❪G2,L2,U2❫ →
                             (T2 ≛ U2 → ⊥) → (T1 ≛ U1 → ⊥).
 #G1 #G2 #L1 #L2 #T1 #T2 #HT #U1 #U2 #HU #HnTU2 #HTU1
 elim (feqx_inv_gen_sn … HT) -HT #_ #_ #HT

@@ -14,6 +14,6 @@
 
 (* NOTATION FOR THE FORMAL SYSTEM α *****************************************)
 
-notation "hvbox( - 𝛌 . break term 55 T )"
+notation "hvbox( -𝛌. break term 55 T )"
  non associative with precedence 55
  for @{ 'SnAbstNeg $T }.

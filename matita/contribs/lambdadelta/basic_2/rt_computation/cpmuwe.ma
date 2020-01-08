@@ -18,41 +18,41 @@ include "basic_2/rt_computation/cnuw.ma".
 (* T-UNBOUND WHD EVALUATION FOR T-BOUND RT-TRANSITION ON TERMS **************)
 
 definition cpmuwe (h) (n) (G) (L): relation2 term term ≝
-           λT1,T2. ∧∧ ⦃G,L⦄ ⊢ T1 ➡*[n,h] T2 & ⦃G,L⦄ ⊢ ➡𝐍𝐖*[h] T2.
+           λT1,T2. ∧∧ ❪G,L❫ ⊢ T1 ➡*[n,h] T2 & ❪G,L❫ ⊢ ➡𝐍𝐖*[h] T2.
 
 interpretation "t-unbound whd evaluation for t-bound context-sensitive parallel rt-transition (term)"
    'PRedEvalWStar h n G L T1 T2 = (cpmuwe h n G L T1 T2).
 
 definition R_cpmuwe (h) (G) (L) (T): predicate nat ≝
-           λn. ∃U. ⦃G,L⦄ ⊢ T ➡*𝐍𝐖*[h,n] U.
+           λn. ∃U. ❪G,L❫ ⊢ T ➡*𝐍𝐖*[h,n] U.
 
 (* Basic properties *********************************************************)
 
 lemma cpmuwe_intro (h) (n) (G) (L):
-      ∀T1,T2. ⦃G,L⦄ ⊢ T1 ➡*[n,h] T2 → ⦃G,L⦄ ⊢ ➡𝐍𝐖*[h] T2 → ⦃G,L⦄ ⊢ T1 ➡*𝐍𝐖*[h,n] T2.
+      ∀T1,T2. ❪G,L❫ ⊢ T1 ➡*[n,h] T2 → ❪G,L❫ ⊢ ➡𝐍𝐖*[h] T2 → ❪G,L❫ ⊢ T1 ➡*𝐍𝐖*[h,n] T2.
 /2 width=1 by conj/ qed.
 
 (* Advanced properties ******************************************************)
 
 lemma cpmuwe_sort (h) (n) (G) (L) (T):
-      ∀s. ⦃G,L⦄ ⊢ T ➡*[n,h] ⋆s → ⦃G,L⦄ ⊢ T ➡*𝐍𝐖*[h,n] ⋆s.
+      ∀s. ❪G,L❫ ⊢ T ➡*[n,h] ⋆s → ❪G,L❫ ⊢ T ➡*𝐍𝐖*[h,n] ⋆s.
 /3 width=5 by cnuw_sort, cpmuwe_intro/ qed.
 
 lemma cpmuwe_ctop (h) (n) (G) (T):
-      ∀i. ⦃G,⋆⦄ ⊢ T ➡*[n,h] #i → ⦃G,⋆⦄ ⊢ T ➡*𝐍𝐖*[h,n] #i.
+      ∀i. ❪G,⋆❫ ⊢ T ➡*[n,h] #i → ❪G,⋆❫ ⊢ T ➡*𝐍𝐖*[h,n] #i.
 /3 width=5 by cnuw_ctop, cpmuwe_intro/ qed.
 
 lemma cpmuwe_zero_unit (h) (n) (G) (L) (T):
-      ∀I. ⦃G,L.ⓤ{I}⦄ ⊢ T ➡*[n,h] #0 → ⦃G,L.ⓤ{I}⦄ ⊢ T ➡*𝐍𝐖*[h,n] #0.
+      ∀I. ❪G,L.ⓤ[I]❫ ⊢ T ➡*[n,h] #0 → ❪G,L.ⓤ[I]❫ ⊢ T ➡*𝐍𝐖*[h,n] #0.
 /3 width=6 by cnuw_zero_unit, cpmuwe_intro/ qed.
 
 lemma cpmuwe_gref (h) (n) (G) (L) (T):
-      ∀l. ⦃G,L⦄ ⊢ T ➡*[n,h] §l → ⦃G,L⦄ ⊢ T ➡*𝐍𝐖*[h,n] §l.
+      ∀l. ❪G,L❫ ⊢ T ➡*[n,h] §l → ❪G,L❫ ⊢ T ➡*𝐍𝐖*[h,n] §l.
 /3 width=5 by cnuw_gref, cpmuwe_intro/ qed.
 
 (* Basic forward lemmas *****************************************************)
 
 lemma cpmuwe_fwd_cpms (h) (n) (G) (L):
-      ∀T1,T2. ⦃G,L⦄ ⊢ T1 ➡*𝐍𝐖*[h,n] T2 → ⦃G,L⦄ ⊢ T1 ➡*[n,h] T2.
+      ∀T1,T2. ❪G,L❫ ⊢ T1 ➡*𝐍𝐖*[h,n] T2 → ❪G,L❫ ⊢ T1 ➡*[n,h] T2.
 #h #n #G #L #T1 #T2 * #HT12 #_ //
 qed-.

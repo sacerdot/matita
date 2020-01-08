@@ -21,7 +21,7 @@ include "basic_2/rt_computation/cnuw.ma".
 (* Advanced properties with simple terms ************************************)
 
 lemma cnuw_appl_simple (h) (G) (L):
-      ∀V,T. 𝐒⦃T⦄ → ⦃G,L⦄ ⊢ ➡𝐍𝐖*[h] T → ⦃G,L⦄ ⊢ ➡𝐍𝐖*[h] ⓐV.T.
+      ∀V,T. 𝐒❪T❫ → ❪G,L❫ ⊢ ➡𝐍𝐖*[h] T → ❪G,L❫ ⊢ ➡𝐍𝐖*[h] ⓐV.T.
 #h #G #L #V1 #T1 #H1T1 #H2T1 #n #X #H
 elim (cpms_inv_appl_sn … H) -H *
 [ #V2 #T2 #_ #HT12 #H destruct -H1T1

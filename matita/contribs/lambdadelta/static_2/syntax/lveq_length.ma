@@ -79,14 +79,14 @@ lemma lveq_fwd_length_minus: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1,n2] L2 →
 /3 width=3 by lveq_fwd_length_plus, lveq_fwd_length_le_dx, lveq_fwd_length_le_sn, plus_to_minus_2/ qed-.
 
 lemma lveq_fwd_abst_bind_length_le: ∀I1,I2,L1,L2,V1,n1,n2.
-                                    L1.ⓑ{I1}V1 ≋ⓧ*[n1,n2] L2.ⓘ{I2} → |L1| ≤ |L2|.
+                                    L1.ⓑ[I1]V1 ≋ⓧ*[n1,n2] L2.ⓘ[I2] → |L1| ≤ |L2|.
 #I1 #I2 #L1 #L2 #V1 #n1 #n2 #HL
 lapply (lveq_fwd_pair_sn … HL) #H destruct
 elim (lveq_fwd_length … HL) -HL >length_bind >length_bind //
 qed-.
 
 lemma lveq_fwd_bind_abst_length_le: ∀I1,I2,L1,L2,V2,n1,n2.
-                                    L1.ⓘ{I1} ≋ⓧ*[n1,n2] L2.ⓑ{I2}V2 → |L2| ≤ |L1|.
+                                    L1.ⓘ[I1] ≋ⓧ*[n1,n2] L2.ⓑ[I2]V2 → |L2| ≤ |L1|.
 /3 width=6 by lveq_fwd_abst_bind_length_le, lveq_sym/ qed-.
 
 (* Inversion lemmas with length for local environments **********************)

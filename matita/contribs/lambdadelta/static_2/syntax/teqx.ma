@@ -22,7 +22,7 @@ inductive teqx: relation term ≝
 | teqx_sort: ∀s1,s2. teqx (⋆s1) (⋆s2)
 | teqx_lref: ∀i. teqx (#i) (#i)
 | teqx_gref: ∀l. teqx (§l) (§l)
-| teqx_pair: ∀I,V1,V2,T1,T2. teqx V1 V2 → teqx T1 T2 → teqx (②{I}V1.T1) (②{I}V2.T2)
+| teqx_pair: ∀I,V1,V2,T1,T2. teqx V1 V2 → teqx T1 T2 → teqx (②[I]V1.T1) (②[I]V2.T2)
 .
 
 interpretation
@@ -77,8 +77,8 @@ qed-.
 lemma teqx_inv_gref1: ∀Y,l. §l ≛ Y → Y = §l.
 /2 width=5 by teqx_inv_gref1_aux/ qed-.
 
-fact teqx_inv_pair1_aux: ∀X,Y. X ≛ Y → ∀I,V1,T1. X = ②{I}V1.T1 →
-                         ∃∃V2,T2. V1 ≛ V2 & T1 ≛ T2 & Y = ②{I}V2.T2.
+fact teqx_inv_pair1_aux: ∀X,Y. X ≛ Y → ∀I,V1,T1. X = ②[I]V1.T1 →
+                         ∃∃V2,T2. V1 ≛ V2 & T1 ≛ T2 & Y = ②[I]V2.T2.
 #X #Y * -X -Y
 [ #s1 #s2 #J #W1 #U1 #H destruct
 | #i #J #W1 #U1 #H destruct
@@ -87,8 +87,8 @@ fact teqx_inv_pair1_aux: ∀X,Y. X ≛ Y → ∀I,V1,T1. X = ②{I}V1.T1 →
 ]
 qed-.
 
-lemma teqx_inv_pair1: ∀I,V1,T1,Y. ②{I}V1.T1 ≛ Y →
-                      ∃∃V2,T2. V1 ≛ V2 & T1 ≛ T2 & Y = ②{I}V2.T2.
+lemma teqx_inv_pair1: ∀I,V1,T1,Y. ②[I]V1.T1 ≛ Y →
+                      ∃∃V2,T2. V1 ≛ V2 & T1 ≛ T2 & Y = ②[I]V2.T2.
 /2 width=3 by teqx_inv_pair1_aux/ qed-.
 
 lemma teqx_inv_sort2: ∀X1,s2. X1 ≛ ⋆s2 →
@@ -98,8 +98,8 @@ elim (teqx_inv_sort1 X1 s2)
 /2 width=2 by teqx_sym, ex_intro/
 qed-.
 
-lemma teqx_inv_pair2: ∀I,X1,V2,T2. X1 ≛ ②{I}V2.T2 →
-                      ∃∃V1,T1. V1 ≛ V2 & T1 ≛ T2 & X1 = ②{I}V1.T1.
+lemma teqx_inv_pair2: ∀I,X1,V2,T2. X1 ≛ ②[I]V2.T2 →
+                      ∃∃V1,T1. V1 ≛ V2 & T1 ≛ T2 & X1 = ②[I]V1.T1.
 #I #X1 #V2 #T2 #H
 elim (teqx_inv_pair1 I V2 T2 X1)
 [ #V1 #T1 #HV #HT #H destruct ]
@@ -108,20 +108,20 @@ qed-.
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma teqx_inv_pair: ∀I1,I2,V1,V2,T1,T2. ②{I1}V1.T1 ≛ ②{I2}V2.T2 →
+lemma teqx_inv_pair: ∀I1,I2,V1,V2,T1,T2. ②[I1]V1.T1 ≛ ②[I2]V2.T2 →
                      ∧∧ I1 = I2 & V1 ≛ V2 & T1 ≛ T2.
 #I1 #I2 #V1 #V2 #T1 #T2 #H elim (teqx_inv_pair1 … H) -H
 #V0 #T0 #HV #HT #H destruct /2 width=1 by and3_intro/
 qed-.
 
-lemma teqx_inv_pair_xy_x: ∀I,V,T. ②{I}V.T ≛ V → ⊥.
+lemma teqx_inv_pair_xy_x: ∀I,V,T. ②[I]V.T ≛ V → ⊥.
 #I #V elim V -V
 [ #J #T #H elim (teqx_inv_pair1 … H) -H #X #Y #_ #_ #H destruct
 | #J #X #Y #IHX #_ #T #H elim (teqx_inv_pair … H) -H #H #HY #_ destruct /2 width=2 by/
 ]
 qed-.
 
-lemma teqx_inv_pair_xy_y: ∀I,T,V. ②{I}V.T ≛ T → ⊥.
+lemma teqx_inv_pair_xy_y: ∀I,T,V. ②[I]V.T ≛ T → ⊥.
 #I #T elim T -T
 [ #J #V #H elim (teqx_inv_pair1 … H) -H #X #Y #_ #_ #H destruct
 | #J #X #Y #_ #IHY #V #H elim (teqx_inv_pair … H) -H #H #_ #HY destruct /2 width=2 by/
@@ -130,7 +130,7 @@ qed-.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma teqx_fwd_atom1: ∀I,Y. ⓪{I} ≛ Y → ∃J. Y = ⓪{J}.
+lemma teqx_fwd_atom1: ∀I,Y. ⓪[I] ≛ Y → ∃J. Y = ⓪[J].
 * #x #Y #H [ elim (teqx_inv_sort1 … H) -H ]
 /3 width=4 by teqx_inv_gref1, teqx_inv_lref1, ex_intro/
 qed-.
@@ -174,7 +174,7 @@ qed-.
 (* Negated inversion lemmas *************************************************)
 
 lemma tneqx_inv_pair: ∀I1,I2,V1,V2,T1,T2.
-                      (②{I1}V1.T1 ≛ ②{I2}V2.T2 → ⊥) →
+                      (②[I1]V1.T1 ≛ ②[I2]V2.T2 → ⊥) →
                       ∨∨ I1 = I2 → ⊥
                       |  (V1 ≛ V2 → ⊥)
                       |  (T1 ≛ T2 → ⊥).

@@ -22,9 +22,9 @@ include "basic_2/rt_transition/lpx_drops.ma".
 
 (* Note: lemma 500 *)
 (* Basic_2A1: was: cpx_lpx_aaa_conf *)
-lemma cpx_aaa_conf_lpx (h): ∀G,L1,T1,A. ⦃G,L1⦄ ⊢ T1 ⁝ A →
-                            ∀T2. ⦃G,L1⦄ ⊢ T1 ⬈[h] T2 →
-                            ∀L2. ⦃G,L1⦄ ⊢ ⬈[h] L2 → ⦃G,L2⦄ ⊢ T2 ⁝ A.
+lemma cpx_aaa_conf_lpx (h): ∀G,L1,T1,A. ❪G,L1❫ ⊢ T1 ⁝ A →
+                            ∀T2. ❪G,L1❫ ⊢ T1 ⬈[h] T2 →
+                            ∀L2. ❪G,L1❫ ⊢ ⬈[h] L2 → ❪G,L2❫ ⊢ T2 ⁝ A.
 #h #G #L1 #T1 #A #H elim H -G -L1 -T1 -A
 [ #G #L1 #s #X #H
   elim (cpx_inv_sort1 … H) -H #H destruct //
@@ -57,12 +57,12 @@ lemma cpx_aaa_conf_lpx (h): ∀G,L1,T1,A. ⦃G,L1⦄ ⊢ T1 ⁝ A →
   [ #V2 #T2 #HV12 #HT12 #H destruct /3 width=3 by aaa_appl/
   | #q #V2 #W1 #W2 #U1 #U2 #HV12 #HW12 #HU12 #H1 #H2 destruct
     lapply (IHV1 … HV12 … HL12) -IHV1 -HV12 #HV2
-    lapply (IHT1 (ⓛ{q}W2.U2) … HL12) -IHT1 /2 width=1 by cpx_bind/ -L1 #H
+    lapply (IHT1 (ⓛ[q]W2.U2) … HL12) -IHT1 /2 width=1 by cpx_bind/ -L1 #H
     elim (aaa_inv_abst … H) -H #B0 #A0 #HW1 #HU2 #H destruct
     /5 width=6 by lsuba_aaa_trans, lsuba_beta, aaa_abbr, aaa_cast/
   | #q #V #V2 #W1 #W2 #U1 #U2 #HV1 #HV2 #HW12 #HU12 #H1 #H2 destruct
     lapply (aaa_lifts G L2 … B … (L2.ⓓW2) … HV2) -HV2 /3 width=2 by drops_refl, drops_drop/ #HV2
-    lapply (IHT1 (ⓓ{q}W2.U2) … HL12) -IHT1 /2 width=1 by cpx_bind/ -L1 #H
+    lapply (IHT1 (ⓓ[q]W2.U2) … HL12) -IHT1 /2 width=1 by cpx_bind/ -L1 #H
     elim (aaa_inv_abbr … H) -H /3 width=3 by aaa_abbr, aaa_appl/
   ]
 | #G #L1 #V1 #T1 #A #_ #_ #IHV1 #IHT1 #X #H #L2 #HL12

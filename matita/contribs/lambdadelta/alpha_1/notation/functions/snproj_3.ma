@@ -14,6 +14,6 @@
 
 (* NOTATION FOR THE FORMAL SYSTEM α *****************************************)
 
-notation "hvbox( 𝛑 { term 46 a } break term 55 T1 . break term 55 T2 )"
+notation "hvbox( 𝛑[ term 46 p ] break term 55 T1. break term 55 T2 )"
  non associative with precedence 55
- for @{ 'SnProj $a $T1 $T2 }.
+ for @{ 'SnProj $p $T1 $T2 }.

@@ -20,9 +20,9 @@ include "basic_2/rt_computation/cpmuwe.ma".
 (* Advanced properties ******************************************************)
 
 lemma cpmuwe_abbr_neg (h) (n) (G) (L) (T):
-      ∀V,U. ⦃G,L⦄ ⊢ T ➡*[n,h] -ⓓV.U → ⦃G,L⦄ ⊢ T ➡*𝐍𝐖*[h,n] -ⓓV.U.
+      ∀V,U. ❪G,L❫ ⊢ T ➡*[n,h] -ⓓV.U → ❪G,L❫ ⊢ T ➡*𝐍𝐖*[h,n] -ⓓV.U.
 /3 width=5 by cnuw_abbr_neg, cpmuwe_intro/ qed.
 
 lemma cpmuwe_abst (h) (n) (p) (G) (L) (T):
-      ∀W,U. ⦃G,L⦄ ⊢ T ➡*[n,h] ⓛ{p}W.U → ⦃G,L⦄ ⊢ T ➡*𝐍𝐖*[h,n] ⓛ{p}W.U.
+      ∀W,U. ❪G,L❫ ⊢ T ➡*[n,h] ⓛ[p]W.U → ❪G,L❫ ⊢ T ➡*𝐍𝐖*[h,n] ⓛ[p]W.U.
 /3 width=5 by cnuw_abst, cpmuwe_intro/ qed.

@@ -20,8 +20,8 @@ include "basic_2/dynamic/nta.ma".
 (* Properties with r-equivalence for terms **********************************)
 
 lemma nta_conv_cnv (h) (a) (G) (L) (T):
-                   ∀U1. ⦃G,L⦄ ⊢ T :[h,a] U1 →
-                   ∀U2. ⦃G,L⦄  ⊢ U1 ⬌*[h] U2 → ⦃G,L⦄ ⊢ U2 ![h,a] → ⦃G,L⦄ ⊢ T :[h,a] U2.
+                   ∀U1. ❪G,L❫ ⊢ T :[h,a] U1 →
+                   ∀U2. ❪G,L❫  ⊢ U1 ⬌*[h] U2 → ❪G,L❫ ⊢ U2 ![h,a] → ❪G,L❫ ⊢ T :[h,a] U2.
 #h #a #G #L #T #U1 #H1 #U2 #HU12 #HU2
 elim (cnv_inv_cast … H1) -H1 #X1 #HU1 #HT #HUX1 #HTX1
 lapply (cpcs_cprs_conf … HUX1 … HU12) -U1 #H
@@ -32,9 +32,9 @@ qed-.
 (* Basic_1: was by definition: ty3_conv *)
 (* Basic_2A1: was by definition: nta_conv ntaa_conv *)
 lemma nta_conv (h) (a) (G) (L) (T):
-               ∀U1. ⦃G,L⦄ ⊢ T :[h,a] U1 →
-               ∀U2. ⦃G,L⦄  ⊢ U1 ⬌*[h] U2 →
-               ∀W2. ⦃G,L⦄ ⊢ U2 :[h,a] W2 → ⦃G,L⦄ ⊢ T :[h,a] U2.
+               ∀U1. ❪G,L❫ ⊢ T :[h,a] U1 →
+               ∀U2. ❪G,L❫  ⊢ U1 ⬌*[h] U2 →
+               ∀W2. ❪G,L❫ ⊢ U2 :[h,a] W2 → ❪G,L❫ ⊢ T :[h,a] U2.
 #h #a #G #L #T #U1 #H1 #U2 #HU12 #W2 #H2
 /3 width=3 by nta_conv_cnv, nta_fwd_cnv_sn/
 qed-.
@@ -44,8 +44,8 @@ qed-.
 (* Basic_1: was: ty3_gen_sort *)
 (* Basic_2A1: was: nta_inv_sort1 *)
 lemma nta_inv_sort_sn (h) (a) (G) (L) (X2):
-      ∀s. ⦃G,L⦄ ⊢ ⋆s :[h,a] X2 →
-      ∧∧ ⦃G,L⦄ ⊢ ⋆(⫯[h]s) ⬌*[h] X2 & ⦃G,L⦄ ⊢ X2 ![h,a].
+      ∀s. ❪G,L❫ ⊢ ⋆s :[h,a] X2 →
+      ∧∧ ❪G,L❫ ⊢ ⋆(⫯[h]s) ⬌*[h] X2 & ❪G,L❫ ⊢ X2 ![h,a].
 #h #a #G #L #X2 #s #H
 elim (cnv_inv_cast … H) -H #X1 #HX2 #_ #HX21 #H
 lapply (cpms_inv_sort1 … H) -H #H destruct
@@ -53,15 +53,15 @@ lapply (cpms_inv_sort1 … H) -H #H destruct
 qed-.
 
 lemma nta_inv_ldec_sn_cnv (h) (a) (G) (K) (V):
-      ∀X2. ⦃G,K.ⓛV⦄ ⊢ #0 :[h,a] X2 →
-      ∃∃U. ⦃G,K⦄ ⊢ V ![h,a] & ⇧*[1] V ≘ U & ⦃G,K.ⓛV⦄ ⊢ U ⬌*[h] X2 & ⦃G,K.ⓛV⦄ ⊢ X2 ![h,a].
+      ∀X2. ❪G,K.ⓛV❫ ⊢ #0 :[h,a] X2 →
+      ∃∃U. ❪G,K❫ ⊢ V ![h,a] & ⇧*[1] V ≘ U & ❪G,K.ⓛV❫ ⊢ U ⬌*[h] X2 & ❪G,K.ⓛV❫ ⊢ X2 ![h,a].
 #h #a #G #Y #X #X2 #H
 elim (cnv_inv_cast … H) -H #X1 #HX2 #H1 #HX21 #H2
 elim (cnv_inv_zero … H1) -H1 #Z #K #V #HV #H destruct
 elim (cpms_inv_ell_sn … H2) -H2 *
 [ #_ #H destruct
 | #m #W #HVW #HWX1 #H destruct
-  elim (lifts_total V (𝐔❴1❵)) #U #HVU
+  elim (lifts_total V (𝐔❨1❩)) #U #HVU
   lapply (cpms_lifts_bi … HVW (Ⓣ) … (K.ⓛV) … HVU … HWX1) -W
   [ /3 width=1 by drops_refl, drops_drop/ ] #HUX1
   /3 width=5 by cprs_div, ex4_intro/

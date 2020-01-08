@@ -37,7 +37,7 @@ qed-.
 (* Advanced properties ******************************************************)
 
 lemma cnuw_lref (h) (I) (G) (L):
-      ∀i. ⦃G,L⦄ ⊢ ➡𝐍𝐖*[h] #i → ⦃G,L.ⓘ{I}⦄ ⊢ ➡𝐍𝐖*[h] #↑i.
+      ∀i. ❪G,L❫ ⊢ ➡𝐍𝐖*[h] #i → ❪G,L.ⓘ[I]❫ ⊢ ➡𝐍𝐖*[h] #↑i.
 #h #I #G #L #i #Hi #n #X2 #H
 elim (cpms_inv_lref_sn … H) -H *
 [ #H #_ destruct //
@@ -49,7 +49,7 @@ elim (cpms_inv_lref_sn … H) -H *
 qed.
 
 lemma cnuw_atom_drops (h) (b) (G) (L):
-      ∀i. ⇩*[b,𝐔❴i❵] L ≘ ⋆ → ⦃G,L⦄ ⊢ ➡𝐍𝐖*[h] #i.
+      ∀i. ⇩*[b,𝐔❨i❩] L ≘ ⋆ → ❪G,L❫ ⊢ ➡𝐍𝐖*[h] #i.
 #h #b #G #L #i #Hi #n #X #H
 elim (cpms_inv_lref1_drops … H) -H * [ // || #m ] #K #V1 #V2 #HLK
 lapply (drops_gen b … HLK) -HLK #HLK
@@ -57,7 +57,7 @@ lapply (drops_mono … Hi … HLK) -L #H destruct
 qed.
 
 lemma cnuw_unit_drops (h) (I) (G) (L):
-      ∀K,i. ⇩*[i] L ≘ K.ⓤ{I} → ⦃G,L⦄ ⊢ ➡𝐍𝐖*[h] #i.
+      ∀K,i. ⇩*[i] L ≘ K.ⓤ[I] → ❪G,L❫ ⊢ ➡𝐍𝐖*[h] #i.
 #h #I #G #L #K #i #HLK #n #X #H
 elim (cpms_inv_lref1_drops … H) -H * [ // || #m ] #Y #V1 #V2 #HLY
 lapply (drops_mono … HLK … HLY) -L #H destruct

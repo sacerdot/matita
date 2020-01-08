@@ -23,7 +23,7 @@ inductive teqo: relation term ≝
 | teqo_sort: ∀s1,s2. teqo (⋆s1) (⋆s2)
 | teqo_lref: ∀i. teqo (#i) (#i)
 | teqo_gref: ∀l. teqo (§l) (§l)
-| teqo_pair: ∀I,V1,V2,T1,T2. teqo (②{I}V1.T1) (②{I}V2.T2)
+| teqo_pair: ∀I,V1,V2,T1,T2. teqo (②[I]V1.T1) (②[I]V2.T2)
 .
 
 interpretation
@@ -69,8 +69,8 @@ lemma teqo_inv_gref1: ∀Y,l. §l ⩳ Y → Y = §l.
 /2 width=5 by teqo_inv_gref1_aux/ qed-.
 
 fact teqo_inv_pair1_aux: ∀T1,T2. T1 ⩳ T2 →
-                         ∀J,W1,U1. T1 = ②{J}W1.U1 →
-                         ∃∃W2,U2. T2 = ②{J}W2.U2.
+                         ∀J,W1,U1. T1 = ②[J]W1.U1 →
+                         ∃∃W2,U2. T2 = ②[J]W2.U2.
 #T1 #T2 * -T1 -T2
 [ #s1 #s2 #J #W1 #U1 #H destruct
 | #i #J #W1 #U1 #H destruct
@@ -81,13 +81,13 @@ qed-.
 
 (* Basic_1: was: iso_gen_head *)
 (* Basic_2A1: was: tsts_inv_pair1 *)
-lemma teqo_inv_pair1: ∀J,W1,U1,T2. ②{J}W1.U1 ⩳ T2 →
-                      ∃∃W2,U2. T2 = ②{J}W2. U2.
+lemma teqo_inv_pair1: ∀J,W1,U1,T2. ②[J]W1.U1 ⩳ T2 →
+                      ∃∃W2,U2. T2 = ②[J]W2. U2.
 /2 width=7 by teqo_inv_pair1_aux/ qed-.
 
 fact teqo_inv_pair2_aux: ∀T1,T2. T1 ⩳ T2 →
-                         ∀J,W2,U2. T2 = ②{J}W2.U2 →
-                         ∃∃W1,U1. T1 = ②{J}W1.U1.
+                         ∀J,W2,U2. T2 = ②[J]W2.U2 →
+                         ∃∃W1,U1. T1 = ②[J]W1.U1.
 #T1 #T2 * -T1 -T2
 [ #s1 #s2 #J #W2 #U2 #H destruct
 | #i #J #W2 #U2 #H destruct
@@ -97,13 +97,13 @@ fact teqo_inv_pair2_aux: ∀T1,T2. T1 ⩳ T2 →
 qed-.
 
 (* Basic_2A1: was: tsts_inv_pair2 *)
-lemma teqo_inv_pair2: ∀J,T1,W2,U2. T1 ⩳ ②{J}W2.U2 →
-                      ∃∃W1,U1. T1 = ②{J}W1.U1.
+lemma teqo_inv_pair2: ∀J,T1,W2,U2. T1 ⩳ ②[J]W2.U2 →
+                      ∃∃W1,U1. T1 = ②[J]W1.U1.
 /2 width=7 by teqo_inv_pair2_aux/ qed-.
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma teqo_inv_pair: ∀I1,I2,V1,V2,T1,T2. ②{I1}V1.T1 ⩳ ②{I2}V2.T2 →
+lemma teqo_inv_pair: ∀I1,I2,V1,V2,T1,T2. ②[I1]V1.T1 ⩳ ②[I2]V2.T2 →
                      I1 = I2.
 #I1 #I2 #V1 #V2 #T1 #T2 #H elim (teqo_inv_pair1 … H) -H
 #V0 #T0 #H destruct //

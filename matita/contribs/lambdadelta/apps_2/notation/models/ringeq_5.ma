@@ -14,14 +14,14 @@
 
 (* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
 
-notation < "hvbox( ⦃ term 46 G, break term 46 L ⦄ ⊢ break term 46 T1 ≗ break term 46 T2 )"
+notation < "hvbox( ❪ term 46 G, break term 46 L ❫ ⊢ break term 46 T1 ≗ break term 46 T2 )"
    non associative with precedence 45
    for @{ 'RingEq $M $G $L $T1 $T2 }.
 
-notation > "hvbox( ⦃ term 46 G, break term 46 L ⦄ ⊢ break term 46 T1 ≗ break term 46 T2 )"
+notation > "hvbox( ❪ term 46 G, break term 46 L ❫ ⊢ break term 46 T1 ≗ break term 46 T2 )"
    non associative with precedence 45
    for @{ 'RingEq ? $G $L $T1 $T2 }.
 
-notation > "hvbox( ⦃ term 46 G, break term 46 L ⦄ ⊢ break term 46 T1 ≗{ break term 46 M } break term 46 T2 )"
+notation > "hvbox( ❪ term 46 G, break term 46 L ❫ ⊢ break term 46 T1 ≗{ break term 46 M } break term 46 T2 )"
    non associative with precedence 45
    for @{ 'RingEq $M $G $L $T1 $T2 }.

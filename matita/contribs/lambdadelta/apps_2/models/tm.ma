@@ -20,11 +20,11 @@ include "apps_2/models/model.ma".
 
 definition tm_dd ≝ term.
 
-definition tm_sq (h) (T1) (T2) ≝  ⦃⋆,⋆⦄ ⊢ T1 ⬌*[h] T2.
+definition tm_sq (h) (T1) (T2) ≝  ❪⋆,⋆❫ ⊢ T1 ⬌*[h] T2.
 
 definition tm_sv (s) ≝ ⋆s.
 
-definition tm_co (p) (V) (T) ≝ ⓓ{p}V.(↑[1]T).
+definition tm_co (p) (V) (T) ≝ ⓓ[p]V.(↑[1]T).
 
 definition tm_ap (V) (T) ≝ ⓐV.T.
 
@@ -42,7 +42,7 @@ defined-.
 
 (* Basic properties *********************************************************)
 
-lemma tm_co_rw (h) (p) (V) (T): V⊕{TM h}[p]T = ⓓ{p}V.(↑[1]T).
+lemma tm_co_rw (h) (p) (V) (T): V⊕{TM h}[p]T = ⓓ[p]V.(↑[1]T).
 // qed.
 
 lemma tm_ti_sort (h) (gv) (lv): ∀s. ⟦⋆s⟧{TM h}[gv,lv] = sv … s.
@@ -55,5 +55,5 @@ lemma tm_ti_gref (h): ∀gv,lv,l. ⟦§l⟧{TM h}[gv,lv] = gv l.
 // qed.
 
 lemma tm_ti_bind (h) (p) (I): ∀gv,lv,V,T.
-                              ⟦ⓑ{p,I}V.T⟧{TM h}[gv,lv] = ⓑ{p,I}⟦V⟧[gv,lv].⟦T⟧{TM h}[⇡[0]gv,⇡[0←#0]lv].
+                              ⟦ⓑ[p,I]V.T⟧{TM h}[gv,lv] = ⓑ[p,I]⟦V⟧[gv,lv].⟦T⟧{TM h}[⇡[0]gv,⇡[0←#0]lv].
 // qed.

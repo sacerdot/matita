@@ -22,11 +22,11 @@ include "basic_2/rt_transition/rpx_fqup.ma".
 
 (* Forward lemmas with free variables inclusion for restricted closures *****)
 
-(* Note: "⦃L2, T1⦄ ⊆ ⦃L2, T0⦄" does not hold *)
+(* Note: "❪L2, T1❫ ⊆ ❪L2, T0❫" does not hold *)
 (* Note: Take L0 = K0.ⓓ(ⓝW.V), L2 = K0.ⓓW, T0 = #0, T1 = ⇧*[1]V *)
 (* Note: This invalidates rpxs_cpx_conf: "∀h, G. s_r_confluent1 … (cpx h G) (rpxs h G)" *)
-lemma rpx_cpx_conf_fsge (h) (G): ∀L0,T0,T1. ⦃G,L0⦄ ⊢ T0 ⬈[h] T1 →
-                                 ∀L2. ⦃G,L0⦄ ⊢⬈[h,T0] L2 → ⦃L2,T1⦄ ⊆ ⦃L0,T0⦄.
+lemma rpx_cpx_conf_fsge (h) (G): ∀L0,T0,T1. ❪G,L0❫ ⊢ T0 ⬈[h] T1 →
+                                 ∀L2. ❪G,L0❫ ⊢⬈[h,T0] L2 → ❪L2,T1❫ ⊆ ❪L0,T0❫.
 #h #G0 #L0 #T0 @(fqup_wf_ind_eq (Ⓣ) … G0 L0 T0) -G0 -L0 -T0
 #G #L #T #IH #G0 #L0 * *
 [ #s #HG #HL #HT #X #HX #Y #HY destruct -IH
@@ -133,6 +133,6 @@ lemma cpx_rex_conf (R) (h) (G): s_r_confluent1 … (cpx h G) (rex R).
 lemma rpx_cpx_conf (h) (G): s_r_confluent1 … (cpx h G) (rpx h G).
 /2 width=5 by cpx_rex_conf/ qed-.
 
-lemma rpx_cpx_conf_fsge_dx (h) (G): ∀L0,T0,T1. ⦃G,L0⦄ ⊢ T0 ⬈[h] T1 →
-                                    ∀L2. ⦃G,L0⦄ ⊢⬈[h,T0] L2 → ⦃L2,T1⦄ ⊆ ⦃L0,T1⦄.
+lemma rpx_cpx_conf_fsge_dx (h) (G): ∀L0,T0,T1. ❪G,L0❫ ⊢ T0 ⬈[h] T1 →
+                                    ∀L2. ❪G,L0❫ ⊢⬈[h,T0] L2 → ❪L2,T1❫ ⊆ ❪L0,T1❫.
 /3 width=5 by rpx_cpx_conf, rpx_fsge_comp/ qed-.

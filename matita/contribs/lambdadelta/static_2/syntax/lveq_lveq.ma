@@ -19,7 +19,7 @@ include "static_2/syntax/lveq_length.ma".
 (* Main inversion lemmas ****************************************************)
 
 theorem lveq_inv_bind: ∀K1,K2. K1 ≋ⓧ*[0,0] K2 →
-                       ∀I1,I2,m1,m2. K1.ⓘ{I1} ≋ⓧ*[m1,m2] K2.ⓘ{I2} →
+                       ∀I1,I2,m1,m2. K1.ⓘ[I1] ≋ⓧ*[m1,m2] K2.ⓘ[I2] →
                        ∧∧ 0 = m1 & 0 = m2.
 #K1 #K2 #HK #I1 #I2 #m1 #m2 #H
 lapply (lveq_fwd_length_eq … HK) -HK #HK

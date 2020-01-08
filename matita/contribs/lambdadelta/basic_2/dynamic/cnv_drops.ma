@@ -21,8 +21,8 @@ include "basic_2/dynamic/cnv.ma".
 
 (* Basic_2A1: uses: snv_lref *)
 lemma cnv_lref_drops (h) (a) (G):
-      ∀I,K,V,i,L. ⦃G,K⦄ ⊢ V ![h,a] →
-      ⇩*[i] L ≘ K.ⓑ{I}V → ⦃G,L⦄ ⊢ #i ![h,a].
+      ∀I,K,V,i,L. ❪G,K❫ ⊢ V ![h,a] →
+      ⇩*[i] L ≘ K.ⓑ[I]V → ❪G,L❫ ⊢ #i ![h,a].
 #h #a #G #I #K #V #i elim i -i
 [ #L #HV #H
   lapply (drops_fwd_isid … H ?) -H // #H destruct
@@ -37,8 +37,8 @@ qed.
 
 (* Basic_2A1: uses: snv_inv_lref *)
 lemma cnv_inv_lref_drops (h) (a) (G):
-      ∀i,L. ⦃G,L⦄ ⊢ #i ![h,a] →
-      ∃∃I,K,V. ⇩*[i] L ≘ K.ⓑ{I}V & ⦃G,K⦄ ⊢ V ![h,a].
+      ∀i,L. ❪G,L❫ ⊢ #i ![h,a] →
+      ∃∃I,K,V. ⇩*[i] L ≘ K.ⓑ[I]V & ❪G,K❫ ⊢ V ![h,a].
 #h #a #G #i elim i -i
 [ #L #H
   elim (cnv_inv_zero … H) -H #I #K #V #HV #H destruct
@@ -51,15 +51,15 @@ lemma cnv_inv_lref_drops (h) (a) (G):
 qed-.
 
 lemma cnv_inv_lref_pair (h) (a) (G):
-      ∀i,L. ⦃G,L⦄ ⊢ #i ![h,a] →
-      ∀I,K,V. ⇩*[i] L ≘ K.ⓑ{I}V → ⦃G,K⦄ ⊢ V ![h,a].
+      ∀i,L. ❪G,L❫ ⊢ #i ![h,a] →
+      ∀I,K,V. ⇩*[i] L ≘ K.ⓑ[I]V → ❪G,K❫ ⊢ V ![h,a].
 #h #a #G #i #L #H #I #K #V #HLK
 elim (cnv_inv_lref_drops … H) -H #Z #Y #X #HLY #HX
 lapply (drops_mono … HLY … HLK) -L #H destruct //
 qed-.
 
 lemma cnv_inv_lref_atom (h) (a) (b) (G):
-      ∀i,L. ⦃G,L⦄ ⊢ #i ![h,a] → ⇩*[b,𝐔❴i❵] L ≘ ⋆ → ⊥.
+      ∀i,L. ❪G,L❫ ⊢ #i ![h,a] → ⇩*[b,𝐔❨i❩] L ≘ ⋆ → ⊥.
 #h #a #b #G #i #L #H #Hi
 elim (cnv_inv_lref_drops … H) -H #Z #Y #X #HLY #_
 lapply (drops_gen b … HLY) -HLY #HLY
@@ -67,8 +67,8 @@ lapply (drops_mono … HLY … Hi) -L #H destruct
 qed-.
 
 lemma cnv_inv_lref_unit (h) (a) (G):
-      ∀i,L. ⦃G,L⦄ ⊢ #i ![h,a] →
-      ∀I,K. ⇩*[i] L ≘ K.ⓤ{I} → ⊥.
+      ∀i,L. ❪G,L❫ ⊢ #i ![h,a] →
+      ∀I,K. ⇩*[i] L ≘ K.ⓤ[I] → ⊥.
 #h #a #G #i #L #H #I #K #HLK
 elim (cnv_inv_lref_drops … H) -H #Z #Y #X #HLY #_
 lapply (drops_mono … HLY … HLK) -L #H destruct
@@ -125,7 +125,7 @@ lemma cnv_inv_lifts (h) (a): ∀G. d_deliftable1 (cnv h a G).
   elim (cnv_inv_lref_drops … H1) -H1 #I0 #L0 #W #HL0 #HW
   elim (lifts_inv_lref2 … H2) -H2 #i #Hf #H destruct
 (**) (* this should be a lemma *)
-  lapply (drops_split_div … HLK (𝐔❴i❵) ???) -HLK [4,8: * |*: // ] #Y0 #HK #HLY0
+  lapply (drops_split_div … HLK (𝐔❨i❩) ???) -HLK [4,8: * |*: // ] #Y0 #HK #HLY0
   lapply (drops_conf … HL0 … HLY0 ??) -HLY0 [3,6: |*: /2 width=6 by after_uni_dx/ ] #HLY0
   lapply (drops_tls_at … Hf … HLY0) -HLY0 #HLY0
   elim (drops_inv_skip1 … HLY0) -HLY0 #Z #K0 #HLK0 #HZ #H destruct

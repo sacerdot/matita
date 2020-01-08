@@ -20,7 +20,7 @@ include "ground_2/relocation/rtmap_basic.ma".
 (* Properties with composition **********************************************)
 
 lemma after_basic_rc (m2,m1,n2,n1):
-                     m1 ≤ m2 → m2 ≤ m1+n1 → 𝐁❴m2,n2❵ ⊚ 𝐁❴m1,n1❵ ≘ 𝐁❴m1,n2+n1❵.
+                     m1 ≤ m2 → m2 ≤ m1+n1 → 𝐁❨m2,n2❩ ⊚ 𝐁❨m1,n1❩ ≘ 𝐁❨m1,n2+n1❩.
 #m2 elim m2 -m2
 [ #m1 #n2 #n1 #Hm21 #_
   <(le_n_O_to_eq … Hm21) -m1 //

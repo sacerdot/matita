@@ -34,9 +34,9 @@ record is_model (M): Prop ≝ {
 (* Note: interpretation: intensional binder *)
    mi: ∀p,gv1,gv2,lv1,lv2,W,T. ⟦W⟧{M}[gv1,lv1] ≗ ⟦W⟧{M}[gv2,lv2] →
        (∀d. ⟦T⟧{M}[gv1,⫯[0←d]lv1] ≗ ⟦T⟧{M}[gv2,⫯[0←d]lv2]) →
-       ⟦ⓛ{p}W.T⟧[gv1,lv1] ≗ ⟦ⓛ{p}W.T⟧[gv2,lv2];
+       ⟦ⓛ[p]W.T⟧[gv1,lv1] ≗ ⟦ⓛ[p]W.T⟧[gv2,lv2];
 (* Note: interpretation: abbreviation *)
-   md: ∀p,gv,lv,V,T. ⟦ⓓ{p}V.T⟧{M}[gv,lv] ≗ ⟦V⟧[gv,lv] ⊕[p] ⟦T⟧[gv,⫯[0←⟦V⟧[gv,lv]]lv];
+   md: ∀p,gv,lv,V,T. ⟦ⓓ[p]V.T⟧{M}[gv,lv] ≗ ⟦V⟧[gv,lv] ⊕[p] ⟦T⟧[gv,⫯[0←⟦V⟧[gv,lv]]lv];
 (* Note: interpretation: application *)
    ma: ∀gv,lv,V,T. ⟦ⓐV.T⟧{M}[gv,lv] ≗ ⟦V⟧[gv,lv] @ ⟦T⟧[gv,lv];
 (* Note: interpretation: ζ-equivalence *)
@@ -44,7 +44,7 @@ record is_model (M): Prop ≝ {
 (* Note: interpretation: ϵ-equivalence *)
    me: ∀gv,lv,W,T. ⟦ⓝW.T⟧{M}[gv,lv] ≗ ⟦T⟧[gv,lv];
 (* Note: interpretation: β-requivalence *)
-   mb: ∀p,gv,lv,d,W,T. d @ ⟦ⓛ{p}W.T⟧{M}[gv,lv] ≗ d ⊕[p] ⟦T⟧[gv,⫯[0←d]lv];
+   mb: ∀p,gv,lv,d,W,T. d @ ⟦ⓛ[p]W.T⟧{M}[gv,lv] ≗ d ⊕[p] ⟦T⟧[gv,⫯[0←d]lv];
 (* Note: interpretation: θ-requivalence *)
    mh: ∀p,d1,d2,d3. d1 @ (d2 ⊕{M}[p] d3) ≗ d2 ⊕[p] (d1 @ d3)
 }.
@@ -53,7 +53,7 @@ record is_extensional (M): Prop ≝ {
 (* Note: interpretation: extensional abstraction *)
    mx: ∀p,gv1,gv2,lv1,lv2,W1,W2,T1,T2. ⟦W1⟧{M}[gv1,lv1] ≗ ⟦W2⟧{M}[gv2,lv2] →
        (∀d. ⟦T1⟧{M}[gv1,⫯[0←d]lv1] ≗ ⟦T2⟧{M}[gv2,⫯[0←d]lv2]) →
-       ⟦ⓛ{p}W1.T1⟧[gv1,lv1] ≗ ⟦ⓛ{p}W2.T2⟧[gv2,lv2]
+       ⟦ⓛ[p]W1.T1⟧[gv1,lv1] ≗ ⟦ⓛ[p]W2.T2⟧[gv2,lv2]
 }.
 
 record is_injective (M): Prop ≝ {
@@ -99,7 +99,7 @@ qed.
 
 lemma ti_fwd_mx_dx (M): is_model M → is_injective M →
                         ∀p,gv1,gv2,lv1,lv2,W1,W2,T1,T2.
-                        ⟦ⓛ{p}W1.T1⟧[gv1,lv1] ≗ ⟦ⓛ{p}W2.T2⟧[gv2,lv2] →
+                        ⟦ⓛ[p]W1.T1⟧[gv1,lv1] ≗ ⟦ⓛ[p]W2.T2⟧[gv2,lv2] →
                         ∀d. ⟦T1⟧{M}[gv1,⫯[0←d]lv1] ≗ ⟦T2⟧{M}[gv2,⫯[0←d]lv2].
 #M #H1M #H2M #p #gv1 #gv2 #lv1 #lv2 #W1 #W2 #T1 #T2 #H12 #d
 @(co_inv_dx … p d d)
@@ -108,7 +108,7 @@ qed-.
 
 lemma ti_fwd_abbr_dx (M): is_model M → is_injective M →
                           ∀p,gv1,gv2,lv1,lv2,V1,V2,T1,T2.
-                          ⟦ⓓ{p}V1.T1⟧[gv1,lv1] ≗ ⟦ⓓ{p}V2.T2⟧[gv2,lv2] →
+                          ⟦ⓓ[p]V1.T1⟧[gv1,lv1] ≗ ⟦ⓓ[p]V2.T2⟧[gv2,lv2] →
                           ⟦T1⟧{M}[gv1,⫯[0←⟦V1⟧[gv1,lv1]]lv1] ≗ ⟦T2⟧{M}[gv2,⫯[0←⟦V2⟧[gv2,lv2]]lv2].
 #M #H1M #H2M #p #gv1 #gv2 #lv1 #lv2 #V1 #V2 #T1 #T2 #H12
 @(co_inv_dx … p (⟦V1⟧[gv1,lv1]) (⟦V2⟧[gv2,lv2]))

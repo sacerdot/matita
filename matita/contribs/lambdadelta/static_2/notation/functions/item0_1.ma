@@ -14,6 +14,6 @@
 
 (* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-notation "hvbox( ⓪ { term 46 I } )"
+notation "hvbox( ⓪[ term 46 I ] )"
  non associative with precedence 55
  for @{ 'Item0 $I }.

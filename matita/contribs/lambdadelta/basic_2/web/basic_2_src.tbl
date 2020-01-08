@@ -12,7 +12,7 @@ table {
    class "wine"
    [ { "iterated dynamic typing" * } {
         [ { "context-sensitive iterated native type assignment" * } {
-             [ [ "for terms" ] "ntas" + "( ⦃?,?⦄ ⊢ ? :*[?,?,?] ? )" "ntas_cpcs" + "ntas_nta" + "ntas_nta_ind" + " ntas_ntas" + "ntas_preserve" * ]
+             [ [ "for terms" ] "ntas" + "( ❪?,?❫ ⊢ ? :*[?,?,?] ? )" "ntas_cpcs" + "ntas_nta" + "ntas_nta_ind" + " ntas_ntas" + "ntas_preserve" * ]
           }
         ]
      }
@@ -20,12 +20,12 @@ table {
    class "magenta"
    [ { "dynamic typing" * } {
         [ { "context-sensitive native type assignment" * } {
-             [ [ "for terms" ] "nta" + "( ⦃?,?⦄ ⊢ ? :[?,?] ? )" "nta_drops" + "nta_aaa" + "nta_fsb" + "nta_cpms" + "nta_cpcs" + "nta_preserve" + "nta_preserve_cpcs" + "nta_ind" + "nta_eval" * ]
+             [ [ "for terms" ] "nta" + "( ❪?,?❫ ⊢ ? :[?,?] ? )" "nta_drops" + "nta_aaa" + "nta_fsb" + "nta_cpms" + "nta_cpcs" + "nta_preserve" + "nta_preserve_cpcs" + "nta_ind" + "nta_eval" * ]
           }
         ]
         [ { "context-sensitive native validity" * } {
              [ [ "restricted refinement for lenvs" ] "lsubv ( ? ⊢ ? ⫃![?,?] ? )" "lsubv_drops" + "lsubv_lsubr" + "lsubv_lsuba" + "lsubv_cpms" + "lsubv_cpcs" + "lsubv_cnv" + "lsubv_lsubv" * ]
-             [ [ "for terms" ] "cnv" + "( ⦃?,?⦄ ⊢ ? ![?,?] )" "cnv_acle" + "cnv_drops" + "cnv_fqus" + "cnv_aaa" + "cnv_fsb" + "cnv_cpm_trans" + "cnv_cpm_conf" + "cnv_cpm_teqx" + "cnv_cpm_teqx_trans" + "cnv_cpm_teqx_conf" + "cnv_cpms_teqx" + "cnv_cpms_conf" + "cnv_cpms_teqx_conf" + "cnv_cpmre" + "cnv_cpmuwe" + "cnv_cpmuwe_cpmre" + "cnv_cpts" + "cnv_cpes" + "cnv_cpcs" + "cnv_preserve_sub" + "cnv_preserve" + "cnv_preserve_cpes" + "cnv_preserve_cpcs" + "cnv_eval" * ]
+             [ [ "for terms" ] "cnv" + "( ❪?,?❫ ⊢ ? ![?,?] )" "cnv_acle" + "cnv_drops" + "cnv_fqus" + "cnv_aaa" + "cnv_fsb" + "cnv_cpm_trans" + "cnv_cpm_conf" + "cnv_cpm_teqx" + "cnv_cpm_teqx_trans" + "cnv_cpm_teqx_conf" + "cnv_cpms_teqx" + "cnv_cpms_conf" + "cnv_cpms_teqx_conf" + "cnv_cpmre" + "cnv_cpmuwe" + "cnv_cpmuwe_cpmre" + "cnv_cpts" + "cnv_cpes" + "cnv_cpcs" + "cnv_preserve_sub" + "cnv_preserve" + "cnv_preserve_cpes" + "cnv_preserve_cpcs" + "cnv_eval" * ]
           }
         ]
      }
@@ -33,11 +33,11 @@ table {
    class "prune"
    [ { "rt-equivalence" * } {
         [ { "context-sensitive parallel r-equivalence" * } {
-             [ [ "for terms" ] "cpcs ( ⦃?,?⦄ ⊢ ? ⬌*[?] ? )" "cpcs_drops" + "cpcs_lsubr" + "cpcs_aaa" + "cpcs_csx" + "cpcs_cprs" + "cpcs_lprs" + "cpcs_cpc" + "cpcs_cpcs" * ]
+             [ [ "for terms" ] "cpcs ( ❪?,?❫ ⊢ ? ⬌*[?] ? )" "cpcs_drops" + "cpcs_lsubr" + "cpcs_aaa" + "cpcs_csx" + "cpcs_cprs" + "cpcs_lprs" + "cpcs_cpc" + "cpcs_cpcs" * ]
           }
         ]
         [ { "t-bound context-sensitive parallel rt-equivalence" * } {
-             [ [ "for terms" ] "cpes ( ⦃?,?⦄ ⊢ ? ⬌*[?,?,?] ? )" "cpes_aaa" + "cpes_cpms" + "cpes_cpes" * ]
+             [ [ "for terms" ] "cpes ( ❪?,?❫ ⊢ ? ⬌*[?,?,?] ? )" "cpes_aaa" + "cpes_cpms" + "cpes_cpes" * ]
           }
         ]
      }
@@ -46,14 +46,14 @@ table {
    [ { "rt-conversion" * } {
 (*
         [ { "context-sensitive parallel eta-conversion" * } {
-             [ [ "for lenvs on all entries" ] "lpce ( ⦃?,?⦄ ⊢ ⬌η[?] ? )" "lpce_drops" * ]
-             [ [ "for binders" ] "cpce_ext" + "( ⦃?,?⦄ ⊢ ? ⬌η[?] ? )" * ]
-             [ [ "for terms" ] "cpce" + "( ⦃?,?⦄ ⊢ ? ⬌η[?] ? )" "cpce_drops" * ]
+             [ [ "for lenvs on all entries" ] "lpce ( ❪?,?❫ ⊢ ⬌η[?] ? )" "lpce_drops" * ]
+             [ [ "for binders" ] "cpce_ext" + "( ❪?,?❫ ⊢ ? ⬌η[?] ? )" * ]
+             [ [ "for terms" ] "cpce" + "( ❪?,?❫ ⊢ ? ⬌η[?] ? )" "cpce_drops" * ]
           }
         ]
 *)
         [ { "context-sensitive parallel r-conversion" * } {
-             [ [ "for terms" ] "cpc" + "( ⦃?,?⦄ ⊢ ? ⬌[?] ? )" "cpc_cpc" * ]
+             [ [ "for terms" ] "cpc" + "( ❪?,?❫ ⊢ ? ⬌[?] ? )" "cpc_cpc" * ]
           }
         ]
      }
@@ -61,37 +61,37 @@ table {
    class "sky"
    [ { "rt-computation" * } {
         [ { "context-sensitive parallel t-computation" * } {
-             [ [ "for terms" ] "cpts" + "( ⦃?,?⦄ ⊢ ? ⬆*[?,?] ? )" "cpts_drops" + "cpts_aaa" + "cpts_cpms" * ]
+             [ [ "for terms" ] "cpts" + "( ❪?,?❫ ⊢ ? ⬆*[?,?] ? )" "cpts_drops" + "cpts_aaa" + "cpts_cpms" * ]
           }
         ]
         [ { "context-sensitive parallel r-computation" * } {
-             [ [ "evaluation for terms" ] "cprre ( ⦃?,?⦄ ⊢ ? ➡*[?] 𝐍⦃?⦄ )" "cprre_csx" + "cprre_cpms" + "cprre_cprre" * ]
-             [ [ "for lenvs on all entries" ] "lprs ( ⦃?,?⦄ ⊢ ➡*[?] ? )" "lprs_tc" + "lprs_ctc" + "lprs_length" + "lprs_drops" + "lprs_aaa" + "lprs_lpr" + "lprs_lpxs" + "lprs_cpms" + "lprs_cprs" + "lprs_lprs" * ]
-             [ [ "for binders" ] "cprs_ext" + "( ⦃?,?⦄ ⊢ ? ➡*[?] ?)" * ]
-             [ [ "for terms" ] "cprs" + "( ⦃?,?⦄ ⊢ ? ➡*[?] ?)" "cprs_ctc" + "cprs_tweq" + "cprs_drops" + "cprs_cpr" + "cprs_lpr" + "cprs_cnr" + "cprs_cprs" * ]
+             [ [ "evaluation for terms" ] "cprre ( ❪?,?❫ ⊢ ? ➡*[?] 𝐍❪?❫ )" "cprre_csx" + "cprre_cpms" + "cprre_cprre" * ]
+             [ [ "for lenvs on all entries" ] "lprs ( ❪?,?❫ ⊢ ➡*[?] ? )" "lprs_tc" + "lprs_ctc" + "lprs_length" + "lprs_drops" + "lprs_aaa" + "lprs_lpr" + "lprs_lpxs" + "lprs_cpms" + "lprs_cprs" + "lprs_lprs" * ]
+             [ [ "for binders" ] "cprs_ext" + "( ❪?,?❫ ⊢ ? ➡*[?] ?)" * ]
+             [ [ "for terms" ] "cprs" + "( ❪?,?❫ ⊢ ? ➡*[?] ?)" "cprs_ctc" + "cprs_tweq" + "cprs_drops" + "cprs_cpr" + "cprs_lpr" + "cprs_cnr" + "cprs_cprs" * ]
           }
         ]
         [ { "t-bound context-sensitive parallel rt-computation" * } {
-             [ [ "t-unbound whd evaluation for terms" ] "cpmuwe ( ⦃?,?⦄ ⊢ ? ⬌*𝐍𝐖*[?,?] ? )" "cpmuwe_csx" + "cpmuwe_cpmuwe" * ]
-             [ [ "t-unbound whd normal form for terms" ] "cnuw ( ⦃?,?⦄ ⊢ ⬌𝐍𝐖*[?] ? )" "cnuw_drops" + "cnuw_simple" + "cnuw_cnuw" * ]
-             [ [ "t-bpund evaluation for terms" ] "cpmre ( ⦃?,?⦄ ⊢ ? ➡*[?,?] 𝐍⦃?⦄ )" "cpmre_aaa" * ]
-             [ [ "for terms" ] "cpms" + "( ⦃?,?⦄ ⊢ ? ➡*[?,?] ? )" "cpms_drops" + "cpms_lsubr" + "cpms_reqx" + "cpms_aaa" + "cpms_lpr" + "cpms_cpxs" + "cpms_fpbs" + "cpms_fpbg" + "cpms_cpms" * ]
+             [ [ "t-unbound whd evaluation for terms" ] "cpmuwe ( ❪?,?❫ ⊢ ? ➡*𝐍𝐖*[?,?] ? )" "cpmuwe_csx" + "cpmuwe_cpmuwe" * ]
+             [ [ "t-unbound whd normal form for terms" ] "cnuw ( ❪?,?❫ ⊢ ➡𝐍𝐖*[?] ? )" "cnuw_drops" + "cnuw_simple" + "cnuw_cnuw" * ]
+             [ [ "t-bpund evaluation for terms" ] "cpmre ( ❪?,?❫ ⊢ ? ➡*[?,?] 𝐍❪?❫ )" "cpmre_aaa" * ]
+             [ [ "for terms" ] "cpms" + "( ❪?,?❫ ⊢ ? ➡*[?,?] ? )" "cpms_drops" + "cpms_lsubr" + "cpms_reqx" + "cpms_aaa" + "cpms_lpr" + "cpms_cpxs" + "cpms_fpbs" + "cpms_fpbg" + "cpms_cpms" * ]
           }
         ]
         [ { "unbound context-sensitive parallel rst-computation" * } {
-             [ [ "strongly normalizing for closures" ] "fsb" + "( ≥[?] 𝐒⦃?,?,?⦄ )" "fsb_feqx" + "fsb_aaa" + "fsb_csx" + "fsb_fpbg" * ]
-             [ [ "proper for closures" ] "fpbg" + "( ⦃?,?,?⦄ >[?] ⦃?,?,?⦄ )" "fpbg_fqup" + "fpbg_cpxs" + "fpbg_lpxs" + "fpbg_fpbs" + "fpbg_fpbg" * ]
-             [ [ "for closures" ] "fpbs" + "( ⦃?,?,?⦄ ≥[?] ⦃?,?,?⦄ )" "fpbs_fqup" + "fpbs_fqus" + "fpbs_aaa" + "fpbs_cpx" + "fpbs_fpb" + "fpbs_cpxs" + "fpbs_lpxs" + "fpbs_csx" + "fpbs_fpbs" * ]
+             [ [ "strongly normalizing for closures" ] "fsb" + "( ≥[?] 𝐒❪?,?,?❫ )" "fsb_feqx" + "fsb_aaa" + "fsb_csx" + "fsb_fpbg" * ]
+             [ [ "proper for closures" ] "fpbg" + "( ❪?,?,?❫ >[?] ❪?,?,?❫ )" "fpbg_fqup" + "fpbg_cpxs" + "fpbg_lpxs" + "fpbg_fpbs" + "fpbg_fpbg" * ]
+             [ [ "for closures" ] "fpbs" + "( ❪?,?,?❫ ≥[?] ❪?,?,?❫ )" "fpbs_fqup" + "fpbs_fqus" + "fpbs_aaa" + "fpbs_cpx" + "fpbs_fpb" + "fpbs_cpxs" + "fpbs_lpxs" + "fpbs_csx" + "fpbs_fpbs" * ]
           }
         ]
         [ { "unbound context-sensitive parallel rt-computation" * } {
              [ [ "compatibility for lenvs" ] "jsx" + "( ? ⊢ ? ⊒[?] ? )" "jsx_drops" + "jsx_lsubr" + "jsx_csx" + "jsx_rsx" + "jsx_jsx" * ]
-             [ [ "strongly normalizing for lenvs on referred entries" ] "rsx" + "( ? ⊢ ⬈*[?,?] 𝐒⦃?⦄ )" "rsx_length" + "rsx_drops" + "rsx_fqup" + "rsx_cpxs" + "rsx_csx" + "rsx_rsx" * ]
-             [ [ "strongly normalizing for term vectors" ] "csx_vector" + "( ⦃?,?⦄ ⊢ ⬈*[?] 𝐒⦃?⦄ )" "csx_cnx_vector" + "csx_csx_vector" * ]
-             [ [ "strongly normalizing for terms" ] "csx" + "( ⦃?,?⦄ ⊢ ⬈*[?] 𝐒⦃?⦄ )" "csx_simple" + "csx_simple_teqo" + "csx_drops" + "csx_fqus" + "csx_lsubr" + "csx_reqx" + "csx_feqx" + "csx_aaa" + "csx_gcp" + "csx_gcr" + "csx_lpx" + "csx_cnx" + "csx_fpbq" + "csx_cpxs" + "csx_lpxs" + "csx_csx" * ]
-             [ [ "for lenvs on all entries" ] "lpxs" + "( ⦃?,?⦄ ⊢ ⬈*[?] ? )" "lpxs_length" + "lpxs_drops" + "lpxs_reqx" + "lpxs_feqx" + "lpxs_aaa" + "lpxs_lpx" + "lpxs_cpxs" + "lpxs_lpxs" * ]
-             [ [ "for binders" ] "cpxs_ext" + "( ⦃?,?⦄ ⊢ ? ⬈*[?] ? )" * ]
-             [ [ "for terms" ] "cpxs" + "( ⦃?,?⦄ ⊢ ? ⬈*[?] ? )" "cpxs_teqx" + "cpxs_teqo" + "cpxs_teqo_vector" + "cpxs_drops" + "cpxs_fqus" + "cpxs_lsubr" + "cpxs_reqx" + "cpxs_feqx" + "cpxs_aaa" + "cpxs_lpx" + "cpxs_cnx" + "cpxs_cpxs" * ]
+             [ [ "strongly normalizing for lenvs on referred entries" ] "rsx" + "( ? ⊢ ⬈*[?,?] 𝐒❪?❫ )" "rsx_length" + "rsx_drops" + "rsx_fqup" + "rsx_cpxs" + "rsx_csx" + "rsx_rsx" * ]
+             [ [ "strongly normalizing for term vectors" ] "csx_vector" + "( ❪?,?❫ ⊢ ⬈*[?] 𝐒❪?❫ )" "csx_cnx_vector" + "csx_csx_vector" * ]
+             [ [ "strongly normalizing for terms" ] "csx" + "( ❪?,?❫ ⊢ ⬈*[?] 𝐒❪?❫ )" "csx_simple" + "csx_simple_teqo" + "csx_drops" + "csx_fqus" + "csx_lsubr" + "csx_reqx" + "csx_feqx" + "csx_aaa" + "csx_gcp" + "csx_gcr" + "csx_lpx" + "csx_cnx" + "csx_fpbq" + "csx_cpxs" + "csx_lpxs" + "csx_csx" * ]
+             [ [ "for lenvs on all entries" ] "lpxs" + "( ❪?,?❫ ⊢ ⬈*[?] ? )" "lpxs_length" + "lpxs_drops" + "lpxs_reqx" + "lpxs_feqx" + "lpxs_aaa" + "lpxs_lpx" + "lpxs_cpxs" + "lpxs_lpxs" * ]
+             [ [ "for binders" ] "cpxs_ext" + "( ❪?,?❫ ⊢ ? ⬈*[?] ? )" * ]
+             [ [ "for terms" ] "cpxs" + "( ❪?,?❫ ⊢ ? ⬈*[?] ? )" "cpxs_teqx" + "cpxs_teqo" + "cpxs_teqo_vector" + "cpxs_drops" + "cpxs_fqus" + "cpxs_lsubr" + "cpxs_reqx" + "cpxs_feqx" + "cpxs_aaa" + "cpxs_lpx" + "cpxs_cnx" + "cpxs_cpxs" * ]
           }
         ]
      }
@@ -99,35 +99,35 @@ table {
    class "cyan"
    [ { "rt-transition" * } {
         [ { "context-sensitive parallel t-transition" * } {
-             [ [ "for terms" ] "cpt" + "( ⦃?,?⦄ ⊢ ? ⬆[?,?] ? )" "cpt_drops" + "cpt_fqu" + "cpt_cpm" * ]
+             [ [ "for terms" ] "cpt" + "( ❪?,?❫ ⊢ ? ⬆[?,?] ? )" "cpt_drops" + "cpt_fqu" + "cpt_cpm" * ]
           }
         ]
         [ { "context-sensitive parallel r-transition" * } {
-             [ [ "normal form for terms" ] "cnr ( ⦃?,?⦄ ⊢ ➡[?] 𝐍⦃?⦄ )" "cnr_simple" + "cnr_teqx" + "cnr_drops" * ]
-             [ [ "for lenvs on all entries" ] "lpr" + "( ⦃?,?⦄ ⊢ ➡[?] ? )" "lpr_length" + "lpr_drops" + "lpr_fquq" + "lpr_aaa" + "lpr_lpx" + "lpr_lpr" * ]
-             [ [ "for binders" ] "cpr_ext" + "( ⦃?,?⦄ ⊢ ? ➡[?] ? )" * ]
-             [ [ "for terms" ] "cpr" + "( ⦃?,?⦄ ⊢ ? ➡[?] ? )" "cpr_drops" + "cpr_drops_basic" + "cpr_teqx" + "cpr_cpr" * ]
+             [ [ "normal form for terms" ] "cnr ( ❪?,?❫ ⊢ ➡[?] 𝐍❪?❫ )" "cnr_simple" + "cnr_teqx" + "cnr_drops" * ]
+             [ [ "for lenvs on all entries" ] "lpr" + "( ❪?,?❫ ⊢ ➡[?] ? )" "lpr_length" + "lpr_drops" + "lpr_fquq" + "lpr_aaa" + "lpr_lpx" + "lpr_lpr" * ]
+             [ [ "for binders" ] "cpr_ext" + "( ❪?,?❫ ⊢ ? ➡[?] ? )" * ]
+             [ [ "for terms" ] "cpr" + "( ❪?,?❫ ⊢ ? ➡[?] ? )" "cpr_drops" + "cpr_drops_basic" + "cpr_teqx" + "cpr_cpr" * ]
           }
         ]
         [ { "t-bound context-sensitive parallel rt-transition" * } {
-             [ [ "for terms" ] "cpm" + "( ⦃?,?⦄ ⊢ ? ➡[?,?] ? )" "cpm_simple" + "cpm_teqx" + "cpm_drops" + "cpm_lsubr" + "cpm_fsle" + "cpm_aaa" + "cpm_cpx" * ]
+             [ [ "for terms" ] "cpm" + "( ❪?,?❫ ⊢ ? ➡[?,?] ? )" "cpm_simple" + "cpm_teqx" + "cpm_drops" + "cpm_lsubr" + "cpm_fsle" + "cpm_aaa" + "cpm_cpx" * ]
           }
         ]
         [ { "unbound parallel rst-transition" * } {
-             [ [ "for closures" ] "fpbq" + "( ⦃?,?,?⦄ ≽[?] ⦃?,?,?⦄ )" "fpbq_aaa" + "fpbq_fpb" * ]
-             [ [ "proper for closures" ] "fpb" + "( ⦃?,?,?⦄ ≻[?] ⦃?,?,?⦄ )" "fpb_reqx" + "fpb_feqx" * ]
+             [ [ "for closures" ] "fpbq" + "( ❪?,?,?❫ ≽[?] ❪?,?,?❫ )" "fpbq_aaa" + "fpbq_fpb" * ]
+             [ [ "proper for closures" ] "fpb" + "( ❪?,?,?❫ ≻[?] ❪?,?,?❫ )" "fpb_reqx" + "fpb_feqx" * ]
           }
         ]
         [ { "unbound context-sensitive parallel rt-transition" * } {
-             [ [ "normal form for terms" ] "cnx" + "( ⦃?,?⦄ ⊢ ⬈[?] 𝐍⦃?⦄ )" "cnx_simple" + "cnx_drops" + "cnx_basic" + "cnx_cnx" * ]
-             [ [ "for lenvs on referred entries" ] "rpx" + "( ⦃?,?⦄ ⊢ ⬈[?,?] ? )" "rpx_length" + "rpx_drops" + "rpx_fqup" + "rpx_fsle" + "rpx_reqx" + "rpx_lpx" + "rpx_rpx" * ]
-             [ [ "for lenvs on all entries" ] "lpx" + "( ⦃?,?⦄ ⊢ ⬈[?] ? )" "lpx_length" + "lpx_drops" + "lpx_fquq" + "lpx_fsle" + "lpx_reqx" + "lpx_aaa" * ]
-             [ [ "for binders" ] "cpx_ext" + "( ⦃?,?⦄ ⊢ ? ⬈[?] ? )" * ]
-             [ [ "for terms" ] "cpx" + "( ⦃?,?⦄ ⊢ ? ⬈[?] ? )" "cpx_simple" + "cpx_drops" + "cpx_drops_basic" + "cpx_fqus" + "cpx_lsubr" + "cpx_req" + "cpx_reqx" + "cpx_feqx" * ]
+             [ [ "normal form for terms" ] "cnx" + "( ❪?,?❫ ⊢ ⬈[?] 𝐍❪?❫ )" "cnx_simple" + "cnx_drops" + "cnx_basic" + "cnx_cnx" * ]
+             [ [ "for lenvs on referred entries" ] "rpx" + "( ❪?,?❫ ⊢ ⬈[?,?] ? )" "rpx_length" + "rpx_drops" + "rpx_fqup" + "rpx_fsle" + "rpx_reqx" + "rpx_lpx" + "rpx_rpx" * ]
+             [ [ "for lenvs on all entries" ] "lpx" + "( ❪?,?❫ ⊢ ⬈[?] ? )" "lpx_length" + "lpx_drops" + "lpx_fquq" + "lpx_fsle" + "lpx_reqx" + "lpx_aaa" * ]
+             [ [ "for binders" ] "cpx_ext" + "( ❪?,?❫ ⊢ ? ⬈[?] ? )" * ]
+             [ [ "for terms" ] "cpx" + "( ❪?,?❫ ⊢ ? ⬈[?] ? )" "cpx_simple" + "cpx_drops" + "cpx_drops_basic" + "cpx_fqus" + "cpx_lsubr" + "cpx_req" + "cpx_reqx" + "cpx_feqx" * ]
           }
         ]
         [ { "bound context-sensitive parallel rt-transition" * } {
-             [ [ "for terms" ] "cpg" + "( ⦃?,?⦄ ⊢ ? ⬈[?,?] ? )" "cpg_simple" + "cpg_drops" + "cpg_lsubr" * ]
+             [ [ "for terms" ] "cpg" + "( ❪?,?❫ ⊢ ? ⬈[?,?] ? )" "cpg_simple" + "cpg_drops" + "cpg_lsubr" * ]
           }
         ]
      }
@@ -145,16 +145,16 @@ class "italic"            { 2 }
              [ [ "" ] "lsubn ( ? ⊢ ? :⫃ ? )" "lsubn_drop" "lsubn_cpcs" "lsubn_nta" * ]
           }
         ]
-             [ [ "" ] "shnv ( ⦃?,?⦄ ⊢ ? ¡[?,?,?] )" * ]
+             [ [ "" ] "shnv ( ❪?,?❫ ⊢ ? ¡[?,?,?] )" * ]
         [ { "decomposed rt-equivalence" * } {
              "scpes_cpcs" + "scpes_scpes"
           }
         ]
-        [ [ "for lenvs on referred entries" ] "rpxs" + "( ⦃?,?⦄ ⊢ ⬈*[?,?] ? )" "rpxs_length" + "rpxs_drops" + "rpxs_fqup" + "rpxs_reqx" + "rpxs_feqx" + "rpxs_aaa" + "rpxs_cpxs" + "rpxs_lpxs" + "rpxs_rpxs" * ]
+        [ [ "for lenvs on referred entries" ] "rpxs" + "( ❪?,?❫ ⊢ ⬈*[?,?] ? )" "rpxs_length" + "rpxs_drops" + "rpxs_fqup" + "rpxs_reqx" + "rpxs_feqx" + "rpxs_aaa" + "rpxs_cpxs" + "rpxs_lpxs" + "rpxs_rpxs" * ]
         [ [ "for lenvs on referred entries" ]
-              "lfpr" + "( ⦃?,?⦄ ⊢ ➡[?,?] ? )" "lfpr_length" + "lfpr_drops" + "lfpr_fquq" + "lfpr_fqup" + "lfpr_aaa" + "lfpr_rpx" + "lfpr_lfpr" * ]
+              "lfpr" + "( ❪?,?❫ ⊢ ➡[?,?] ? )" "lfpr_length" + "lfpr_drops" + "lfpr_fquq" + "lfpr_fqup" + "lfpr_aaa" + "lfpr_rpx" + "lfpr_lfpr" * ]
         [ { "evaluation for context-sensitive rt-reduction" * } {
-             [ [ "" ] "cpxe ( ⦃?,?⦄ ⊢ ➡*[?,?] 𝐍⦃?⦄ )" * ]
+             [ [ "" ] "cpxe ( ❪?,?❫ ⊢ ➡*[?,?] 𝐍❪?❫ )" * ]
           }
         ]
         [ { "normal forms for context-sensitive rt-reduction" * } {
@@ -162,11 +162,11 @@ class "italic"            { 2 }
           }
         ]
         [ { "irreducible forms for context-sensitive rt-reduction" * } {
-             [ [ "" ] "cix ( ⦃?,?⦄ ⊢ ➡[?,?] 𝐈⦃?⦄ )" "cix_lift" * ]
+             [ [ "" ] "cix ( ❪?,?❫ ⊢ ➡[?,?] 𝐈❪?❫ )" "cix_lift" * ]
           }
         ]
         [ { "reducible forms for context-sensitive rt-reduction" * } {
-             [ [ "" ] "crx ( ⦃?,?⦄ ⊢ ➡[?,?] 𝐑⦃?⦄ )" "crx_lift" * ]
+             [ [ "" ] "crx ( ❪?,?❫ ⊢ ➡[?,?] 𝐑❪?❫ )" "crx_lift" * ]
           }
         ]
         [ { "normal forms for context-sensitive reduction" * } {
@@ -174,19 +174,19 @@ class "italic"            { 2 }
           }
         ]
         [ { "irreducible forms for context-sensitive reduction" * } {
-             [ [ "" ] "cir ( ⦃?,?⦄ ⊢ ➡ 𝐈⦃?⦄ )" "cir_lift" * ]
+             [ [ "" ] "cir ( ❪?,?❫ ⊢ ➡ 𝐈❪?❫ )" "cir_lift" * ]
           }
         ]
         [ { "reducible forms for context-sensitive reduction" * } {
-             [ [ "" ] "crr ( ⦃?,?⦄ ⊢ ➡ 𝐑⦃?⦄ )" "crr_lift" * ]
+             [ [ "" ] "crr ( ❪?,?❫ ⊢ ➡ 𝐑❪?❫ )" "crr_lift" * ]
           }
         ]
         [ { "unfold" * } {
-             [ [ "" ] "unfold ( ⦃?,?⦄ ⊢ ? ⧫* ? )" * ]
+             [ [ "" ] "unfold ( ❪?,?❫ ⊢ ? ⧫* ? )" * ]
           }
         ]
         [ { "iterated static type assignment" * } {
-             [ [ "" ] "lstas ( ⦃?,?⦄ ⊢ ? •*[?,?] ? )" "lstas_lift" + "lstas_llpx_sn.ma" + "lstas_aaa" + "lstas_da" + "lstas_lstas" * ]
+             [ [ "" ] "lstas ( ❪?,?❫ ⊢ ? •*[?,?] ? )" "lstas_lift" + "lstas_llpx_sn.ma" + "lstas_aaa" + "lstas_da" + "lstas_lstas" * ]
           }
         ]
         [ { "local env. ref. for degree assignment" * } {
@@ -194,11 +194,11 @@ class "italic"            { 2 }
           }
         ]
         [ { "degree assignment" * } {
-             [ [ "" ] "da ( ⦃?,?⦄ ⊢ ? ▪[?,?] ? )" "da_lift" + "da_aaa" + "da_da" * ]
+             [ [ "" ] "da ( ❪?,?❫ ⊢ ? ▪[?,?] ? )" "da_lift" + "da_aaa" + "da_da" * ]
           }
         ]
         [ { "context-sensitive multiple rt-substitution" * } {
-             [ [ "" ] "cpys ( ⦃?,?⦄ ⊢ ? ▶*[?,?] ? )" "cpys_alt ( ⦃?,?⦄ ⊢ ? ▶▶*[?,?] ? )" "cpys_lift" + "cpys_cpys" * ]
+             [ [ "" ] "cpys ( ❪?,?❫ ⊢ ? ▶*[?,?] ? )" "cpys_alt ( ❪?,?❫ ⊢ ? ▶▶*[?,?] ? )" "cpys_lift" + "cpys_cpys" * ]
           }
         ]
         [ { "global env. slicing" * } {
@@ -206,7 +206,7 @@ class "italic"            { 2 }
           }
         ]
         [ { "context-sensitive ordinary rt-substitution" * } {
-             [ [ "" ] "cpy ( ⦃?,?⦄ ⊢ ? ▶[?,?] ? )" "cpy_lift" + "cpy_nlift" + "cpy_cpy" * ]
+             [ [ "" ] "cpy ( ❪?,?❫ ⊢ ? ▶[?,?] ? )" "cpy_lift" + "cpy_nlift" + "cpy_cpy" * ]
           }
         ]
         [ { "local env. ref. for rt-substitution" * } {

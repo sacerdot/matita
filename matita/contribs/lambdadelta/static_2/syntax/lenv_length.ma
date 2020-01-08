@@ -29,7 +29,7 @@ lemma length_atom: |⋆| = 0.
 // qed.
 
 (* Basic_2A1: uses: length_pair *)
-lemma length_bind: ∀I,L. |L.ⓘ{I}| = ↑|L|.
+lemma length_bind: ∀I,L. |L.ⓘ[I]| = ↑|L|.
 // qed.
 
 (* Basic inversion lemmas ***************************************************)
@@ -44,7 +44,7 @@ lemma length_inv_zero_sn: ∀L. 0 = |L| → L = ⋆.
 
 (* Basic_2A1: was: length_inv_pos_dx *)
 lemma length_inv_succ_dx: ∀n,L. |L| = ↑n →
-                          ∃∃I,K. |K| = n & L = K. ⓘ{I}.
+                          ∃∃I,K. |K| = n & L = K. ⓘ[I].
 #n *
 [ >length_atom #H destruct
 | #L #I >length_bind /3 width=4 by ex2_2_intro, injective_S/
@@ -53,7 +53,7 @@ qed-.
 
 (* Basic_2A1: was: length_inv_pos_sn *)
 lemma length_inv_succ_sn: ∀n,L. ↑n = |L| →
-                          ∃∃I,K. n = |K| & L = K. ⓘ{I}.
+                          ∃∃I,K. n = |K| & L = K. ⓘ[I].
 #n #L #H lapply (sym_eq ??? H) -H
 #H elim (length_inv_succ_dx … H) -H /2 width=4 by ex2_2_intro/
 qed-.

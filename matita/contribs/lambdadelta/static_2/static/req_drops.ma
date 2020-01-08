@@ -20,7 +20,7 @@ include "static_2/static/req.ma".
 (* Note: req_inv_lifts_dx missing in basic_2A1 *)
 
 (* Basic_2A1: uses: lleq_inv_lift_le lleq_inv_lift_be lleq_inv_lift_ge *)
-lemma req_inv_lifts_bi: ∀L1,L2,U. L1 ≡[U] L2 → ∀b,f. 𝐔⦃f⦄ →
+lemma req_inv_lifts_bi: ∀L1,L2,U. L1 ≡[U] L2 → ∀b,f. 𝐔❪f❫ →
                         ∀K1,K2. ⇩*[b,f] L1 ≘ K1 → ⇩*[b,f] L2 ≘ K2 →
                         ∀T. ⇧*[f] T ≘ U → K1 ≡[T] K2.
 /2 width=10 by rex_inv_lifts_bi/ qed-.

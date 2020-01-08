@@ -14,6 +14,6 @@
 
 (* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
 
-notation "hvbox( 𝐔 ❴ break term 46 a ❵ )"
+notation "hvbox( 𝐔 ❨ break term 46 a ❩ )"
   non associative with precedence 90
   for @{ 'Uniform $a }.

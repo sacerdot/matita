@@ -20,9 +20,9 @@ include "basic_2/rt_computation/cpxs_teqx.ma".
 (* Properties with sort-irrelevant equivalence for local environments *******)
 
 (* Basic_2A1: was just: lleq_cpxs_trans *)
-lemma reqx_cpxs_trans: ∀h,G,L0,T0,T1. ⦃G,L0⦄ ⊢ T0 ⬈*[h] T1 →
+lemma reqx_cpxs_trans: ∀h,G,L0,T0,T1. ❪G,L0❫ ⊢ T0 ⬈*[h] T1 →
                        ∀L2. L2 ≛[T0] L0 →
-                       ∃∃T. ⦃G,L2⦄ ⊢ T0 ⬈*[h] T & T ≛ T1.
+                       ∃∃T. ❪G,L2❫ ⊢ T0 ⬈*[h] T & T ≛ T1.
 #h #G #L0 #T0 #T1 #H @(cpxs_ind_dx … H) -T0 /2 width=3 by ex2_intro/
 #T0 #T #HT0 #_ #IH #L2 #HL2
 elim (reqx_cpx_trans … HL2 … HT0) #U1 #H1 #H2
@@ -32,18 +32,18 @@ elim (teqx_cpxs_trans … H2 … H3) -T #U0 #H2 #H3
 qed-.
 
 (* Basic_2A1: was just: cpxs_lleq_conf *)
-lemma cpxs_reqx_conf: ∀h,G,L0,T0,T1. ⦃G,L0⦄ ⊢ T0 ⬈*[h] T1 →
+lemma cpxs_reqx_conf: ∀h,G,L0,T0,T1. ❪G,L0❫ ⊢ T0 ⬈*[h] T1 →
                       ∀L2. L0 ≛[T0] L2 →
-                      ∃∃T. ⦃G,L2⦄ ⊢ T0 ⬈*[h] T & T ≛ T1.
+                      ∃∃T. ❪G,L2❫ ⊢ T0 ⬈*[h] T & T ≛ T1.
 /3 width=3 by reqx_cpxs_trans, reqx_sym/ qed-.
 
 (* Basic_2A1: was just: cpxs_lleq_conf_dx *)
-lemma cpxs_reqx_conf_dx: ∀h,G,L2,T1,T2. ⦃G,L2⦄ ⊢ T1 ⬈*[h] T2 →
+lemma cpxs_reqx_conf_dx: ∀h,G,L2,T1,T2. ❪G,L2❫ ⊢ T1 ⬈*[h] T2 →
                          ∀L1. L1 ≛[T1] L2 → L1 ≛[T2] L2.
 #h #G #L2 #T1 #T2 #H @(cpxs_ind … H) -T2 /3 width=6 by cpx_reqx_conf_dx/
 qed-.
 
 (* Basic_2A1: was just: lleq_conf_sn *)
-lemma cpxs_reqx_conf_sn: ∀h,G,L1,T1,T2. ⦃G,L1⦄ ⊢ T1 ⬈*[h] T2 →
+lemma cpxs_reqx_conf_sn: ∀h,G,L1,T1,T2. ❪G,L1❫ ⊢ T1 ⬈*[h] T2 →
                          ∀L2. L1 ≛[T1] L2 → L1 ≛[T2] L2.
 /4 width=6 by cpxs_reqx_conf_dx, reqx_sym/ qed-.

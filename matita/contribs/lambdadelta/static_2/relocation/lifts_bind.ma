@@ -48,7 +48,7 @@ lemma liftsb_eq_repl_back: ∀I1,I2. eq_repl_back … (λf. ⇧*[f] I1 ≘ I2).
 #I1 #I2 #f1 * -I1 -I2 /3 width=3 by lifts_eq_repl_back, ext2_pair/
 qed-.
 
-lemma liftsb_refl: ∀f. 𝐈⦃f⦄ → reflexive … (liftsb f).
+lemma liftsb_refl: ∀f. 𝐈❪f❫ → reflexive … (liftsb f).
 /3 width=1 by lifts_refl, ext2_refl/ qed.
 
 lemma liftsb_total: ∀I1,f. ∃I2. ⇧*[f] I1 ≘ I2.
@@ -66,6 +66,6 @@ qed-.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma liftsb_fwd_isid: ∀f,I1,I2. ⇧*[f] I1 ≘ I2 → 𝐈⦃f⦄ → I1 = I2.
+lemma liftsb_fwd_isid: ∀f,I1,I2. ⇧*[f] I1 ≘ I2 → 𝐈❪f❫ → I1 = I2.
 #f #I1 #I2 * -I1 -I2 /3 width=3 by lifts_fwd_isid, eq_f2/
 qed-.

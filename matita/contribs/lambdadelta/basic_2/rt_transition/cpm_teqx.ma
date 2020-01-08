@@ -20,7 +20,7 @@ include "basic_2/rt_transition/cpm_drops.ma".
 (* Inversion lemmas with sort-irrelevant equivalence for terms **************)
 
 lemma cpm_teqx_inv_lref_sn (n) (h) (G) (L) (i):
-                           ∀X.  ⦃G,L⦄ ⊢ #i ➡[n,h] X → #i ≛ X →
+                           ∀X.  ❪G,L❫ ⊢ #i ➡[n,h] X → #i ≛ X →
                            ∧∧ X = #i & n = 0.
 #n #h #G #L #i #X #H1 #H2
 lapply (teqx_inv_lref1 … H2) -H2 #H destruct
@@ -30,8 +30,8 @@ elim (lifts_inv_lref2_uni_lt … H) -H //
 qed-.
 
 lemma cpm_teqx_inv_atom_sn (n) (h) (I) (G) (L):
-                           ∀X. ⦃G,L⦄ ⊢ ⓪{I} ➡[n,h] X → ⓪{I} ≛ X →
-                           ∨∨ ∧∧ X = ⓪{I} & n = 0
+                           ∀X. ❪G,L❫ ⊢ ⓪[I] ➡[n,h] X → ⓪[I] ≛ X →
+                           ∨∨ ∧∧ X = ⓪[I] & n = 0
                             | ∃∃s. X = ⋆(⫯[h]s) & I = Sort s & n = 1.
 #n #h * #s #G #L #X #H1 #H2
 [ elim (cpm_inv_sort1 … H1) -H1

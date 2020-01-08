@@ -37,6 +37,6 @@ lemma applv_cons: ∀V,Vs,T. ⒶV⨮Vs.T = ⓐV.ⒶVs.T.
 
 (* Properties with simple terms *********************************************)
 
-lemma applv_simple: ∀T,Vs. 𝐒⦃T⦄ → 𝐒⦃ⒶVs.T⦄.
+lemma applv_simple: ∀T,Vs. 𝐒❪T❫ → 𝐒❪ⒶVs.T❫.
 #T * //
 qed.

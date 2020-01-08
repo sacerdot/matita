@@ -25,32 +25,32 @@ interpretation "test for t-transition counter (rtc)"
 
 (* Basic properties *********************************************************)
 
-lemma isr_00: 𝐓⦃0,𝟘𝟘⦄.
+lemma isr_00: 𝐓❪0,𝟘𝟘❫.
 // qed.
 
-lemma ist_01: 𝐓⦃1,𝟘𝟙⦄.
+lemma ist_01: 𝐓❪1,𝟘𝟙❫.
 // qed.
 
 (* Basic inversion properties ***********************************************)
 
-lemma ist_inv_00: ∀n. 𝐓⦃n,𝟘𝟘⦄ → 0 = n.
+lemma ist_inv_00: ∀n. 𝐓❪n,𝟘𝟘❫ → 0 = n.
 #n #H destruct //
 qed-.
 
-lemma ist_inv_01: ∀n. 𝐓⦃n,𝟘𝟙⦄ → 1 = n.
+lemma ist_inv_01: ∀n. 𝐓❪n,𝟘𝟙❫ → 1 = n.
 #n #H destruct //
 qed-.
 
-lemma ist_inv_10: ∀n. 𝐓⦃n,𝟙𝟘⦄ → ⊥.
+lemma ist_inv_10: ∀n. 𝐓❪n,𝟙𝟘❫ → ⊥.
 #h #H destruct
 qed-.
 
 (* Main inversion properties ************************************************)
 
-theorem ist_inj: ∀n1,n2,c. 𝐓⦃n1,c⦄ → 𝐓⦃n2,c⦄ → n1 = n2.
+theorem ist_inj: ∀n1,n2,c. 𝐓❪n1,c❫ → 𝐓❪n2,c❫ → n1 = n2.
 #n1 #n2 #c #H1 #H2 destruct //
 qed-.
 
-theorem ist_mono: ∀n,c1,c2. 𝐓⦃n,c1⦄ → 𝐓⦃n,c2⦄ → c1 = c2.
+theorem ist_mono: ∀n,c1,c2. 𝐓❪n,c1❫ → 𝐓❪n,c2❫ → c1 = c2.
 #n #c1 #c2 #H1 #H2 destruct //
 qed-.

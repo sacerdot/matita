@@ -47,13 +47,13 @@ interpretation "term construction (binary)"
    'SnItem2 I T1 T2 = (TPair I T1 T2).
 
 interpretation "character (term)"
-   'SnStar k T = (TUnit (Char k) T).
+   'SnStar s T = (TUnit (Char s) T).
 
 interpretation "local reference (term)"
    'SnLRef i T = (TUnit (LRef i) T).
 
 interpretation "global reference (term)"
-   'SnGRef p T = (TUnit (GRef p) T).
+   'SnGRef l T = (TUnit (GRef l) T).
 
 interpretation "negative abbreviation (term)"
    'SnAbbrNeg T = (TUnit Decl T).
@@ -62,7 +62,7 @@ interpretation "positive abstraction (term)"
    'SnAbstPos T1 T2 = (TPair Abst T1 T2).
 
 interpretation "abbreviation (term)"
-   'SnAbbr a T1 T2 = (TPair (Abbr a) T1 T2).
+   'SnAbbr p T1 T2 = (TPair (Abbr p) T1 T2).
 
 interpretation "positive abbreviation (term)"
    'SnAbbrPos T1 T2 = (TPair (Abbr true) T1 T2).
@@ -71,7 +71,7 @@ interpretation "negative abbreviation (term)"
    'SnAbbrNeg T1 T2 = (TPair (Abbr false) T1 T2).
 
 interpretation "projection (term)"
-   'SnProj a T1 T2 = (TPair (Proj a) T1 T2).
+   'SnProj p T1 T2 = (TPair (Proj p) T1 T2).
 
 interpretation "positive projection (term)"
    'SnProjPos T1 T2 = (TPair (Proj true) T1 T2).

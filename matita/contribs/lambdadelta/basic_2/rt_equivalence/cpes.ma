@@ -20,7 +20,7 @@ include "basic_2/rt_computation/cpms.ma".
 (* Basic_2A1: uses: scpes *)
 definition cpes (h) (n1) (n2): relation4 genv lenv term term ≝
            λG,L,T1,T2.
-           ∃∃T. ⦃G,L⦄ ⊢ T1 ➡*[n1,h] T & ⦃G,L⦄ ⊢ T2 ➡*[n2,h] T.
+           ∃∃T. ❪G,L❫ ⊢ T1 ➡*[n1,h] T & ❪G,L❫ ⊢ T2 ➡*[n2,h] T.
 
 interpretation "t-bound context-sensitive parallel rt-equivalence (term)"
    'PConvStar h n1 n2 G L T1 T2 = (cpes h n1 n2 G L T1 T2).
@@ -29,8 +29,8 @@ interpretation "t-bound context-sensitive parallel rt-equivalence (term)"
 
 (* Basic_2A1: uses: scpds_div *)
 lemma cpms_div (h) (n1) (n2):
-      ∀G,L,T1,T. ⦃G,L⦄ ⊢ T1 ➡*[n1,h] T →
-      ∀T2. ⦃G,L⦄ ⊢ T2 ➡*[n2,h] T → ⦃G,L⦄ ⊢ T1 ⬌*[h,n1,n2] T2.
+      ∀G,L,T1,T. ❪G,L❫ ⊢ T1 ➡*[n1,h] T →
+      ∀T2. ❪G,L❫ ⊢ T2 ➡*[n2,h] T → ❪G,L❫ ⊢ T1 ⬌*[h,n1,n2] T2.
 /2 width=3 by ex2_intro/ qed.
 
 lemma cpes_refl (h): ∀G,L. reflexive … (cpes h 0 0 G L).
@@ -38,6 +38,6 @@ lemma cpes_refl (h): ∀G,L. reflexive … (cpes h 0 0 G L).
 
 (* Basic_2A1: uses: scpes_sym *)
 lemma cpes_sym (h) (n1) (n2):
-      ∀G,L,T1,T2. ⦃G,L⦄ ⊢ T1 ⬌*[h,n1,n2] T2 → ⦃G,L⦄ ⊢ T2 ⬌*[h,n2,n1] T1.
+      ∀G,L,T1,T2. ❪G,L❫ ⊢ T1 ⬌*[h,n1,n2] T2 → ❪G,L❫ ⊢ T2 ⬌*[h,n2,n1] T1.
 #h #n1 #n2 #G #L #T1 #T2 * /2 width=3 by cpms_div/
 qed-.

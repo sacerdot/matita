@@ -19,8 +19,8 @@ include "basic_2/rt_transition/cnx.ma".
 
 (* Advanced properties ******************************************************)
 
-lemma cnx_teqx_trans: ∀h,G,L,T1. ⦃G,L⦄ ⊢ ⬈[h] 𝐍⦃T1⦄ →
-                      ∀T2. T1 ≛ T2 → ⦃G,L⦄ ⊢ ⬈[h] 𝐍⦃T2⦄.
+lemma cnx_teqx_trans: ∀h,G,L,T1. ❪G,L❫ ⊢ ⬈[h] 𝐍❪T1❫ →
+                      ∀T2. T1 ≛ T2 → ❪G,L❫ ⊢ ⬈[h] 𝐍❪T2❫.
 #h #G #L #T1 #HT1 #T2 #HT12 #T #HT2
 elim (teqx_cpx_trans … HT12 … HT2) -HT2 #T0 #HT10 #HT0
 lapply (HT1 … HT10) -HT1 -HT10 /2 width=5 by teqx_repl/ (**) (* full auto fails *)

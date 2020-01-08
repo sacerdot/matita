@@ -21,7 +21,7 @@ include "basic_2/dynamic/cnv.ma".
 
 (* Note: extended validity of a closure, height of cnv_appl > 1 *)
 lemma cnv_extended (h) (p) (G) (L):
-      ∀s. ⦃G,L.ⓛ⋆s.ⓛⓛ{p}⋆s.⋆s.ⓛ#0⦄ ⊢ ⓐ#2.#0 ![h,𝛚].
+      ∀s. ❪G,L.ⓛ⋆s.ⓛⓛ[p]⋆s.⋆s.ⓛ#0❫ ⊢ ⓐ#2.#0 ![h,𝛚].
 #h #p #G #L #s
 @(cnv_appl … 2 p … (⋆s) … (⋆s))
 [ //
@@ -34,7 +34,7 @@ qed.
 
 (* Note: restricted validity of the η-expanded closure, height of cnv_appl = 1 **)
 lemma cnv_restricted (h) (p) (G) (L):
-      ∀s. ⦃G,L.ⓛ⋆s.ⓛⓛ{p}⋆s.⋆s.ⓛⓛ{p}⋆s.ⓐ#0.#1⦄ ⊢ ⓐ#2.#0 ![h,𝟐].
+      ∀s. ❪G,L.ⓛ⋆s.ⓛⓛ[p]⋆s.⋆s.ⓛⓛ[p]⋆s.ⓐ#0.#1❫ ⊢ ⓐ#2.#0 ![h,𝟐].
 #h #p #G #L #s
 @(cnv_appl … 1 p … (⋆s) … (ⓐ#0.#2))
 [ //

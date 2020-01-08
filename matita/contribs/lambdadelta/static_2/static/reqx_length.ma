@@ -39,7 +39,7 @@ lemma reqx_gref_length: ∀L1,L2. |L1| = |L2| → ∀l. L1 ≛[§l] L2.
 /2 width=1 by rex_gref_length/ qed.
 
 lemma reqx_unit_length: ∀L1,L2. |L1| = |L2| →
-                        ∀I. L1.ⓤ{I} ≛[#0] L2.ⓤ{I}.
+                        ∀I. L1.ⓤ[I] ≛[#0] L2.ⓤ[I].
 /2 width=1 by rex_unit_length/ qed.
 
 (* Basic_2A1: uses: lleq_lift_le lleq_lift_ge *)

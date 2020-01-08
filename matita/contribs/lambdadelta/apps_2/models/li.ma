@@ -22,7 +22,7 @@ inductive li (M) (gv): relation2 lenv (evaluation M) ≝
 | li_atom: ∀lv. li M gv (⋆) lv
 | li_abbr: ∀lv,d,L,V. li M gv L lv → ⟦V⟧[gv,lv] = d → li M gv (L.ⓓV) (⫯[0←d]lv)
 | li_abst: ∀lv,d,L,W. li M gv L lv → li M gv (L.ⓛW) (⫯[0←d]lv)
-| li_unit: ∀lv,d,I,L. li M gv L lv → li M gv (L.ⓤ{I}) (⫯[0←d]lv)
+| li_unit: ∀lv,d,I,L. li M gv L lv → li M gv (L.ⓤ[I]) (⫯[0←d]lv)
 | li_veq : ∀lv1,lv2,L. li M gv L lv1 → lv1 ≗ lv2 → li M gv L lv2
 .
 
@@ -72,7 +72,7 @@ lemma li_inv_abst (M) (gv): is_model M →
 /2 width=4 by li_inv_abst_aux/ qed-.
 
 fact li_inv_unit_aux (M) (gv): is_model M →
-                               ∀v,Y. v ϵ ⟦Y⟧{M}[gv] → ∀I,L. Y = L.ⓤ{I} →
+                               ∀v,Y. v ϵ ⟦Y⟧{M}[gv] → ∀I,L. Y = L.ⓤ[I] →
                                ∃∃lv,d. lv ϵ ⟦L⟧[gv] & ⫯[0←d]lv ≗ v.
 #M #gv #HM #v #Y #H elim H -v -Y
 [ #lv #J #K #H destruct
@@ -87,14 +87,14 @@ fact li_inv_unit_aux (M) (gv): is_model M →
 qed-.
 
 lemma li_inv_unit (M) (gv): is_model M →
-                            ∀v,I,L. v ϵ ⟦L.ⓤ{I}⟧{M}[gv] →
+                            ∀v,I,L. v ϵ ⟦L.ⓤ[I]⟧{M}[gv] →
                             ∃∃lv,d. lv ϵ ⟦L⟧[gv] & ⫯[0←d]lv ≗ v.
 /2 width=4 by li_inv_unit_aux/ qed-.
 
 (* Advanced forward lemmas **************************************************)
 
 lemma li_fwd_bind (M) (gv): is_model M →
-                            ∀v,I,L. v ϵ ⟦L.ⓘ{I}⟧{M}[gv] →
+                            ∀v,I,L. v ϵ ⟦L.ⓘ[I]⟧{M}[gv] →
                             ∃∃lv,d. lv ϵ ⟦L⟧[gv] & ⫯[0←d]lv ≗ v.
 #M #gv #HM #v * [ #I | * #V ] #L #H
 [ /2 width=2 by li_inv_unit/

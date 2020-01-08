@@ -32,17 +32,17 @@ lemma reqx_dec: ∀L1,L2. ∀T:term. Decidable (L1 ≛[T] L2).
 
 (* Basic_2A1: uses: lleq_bind lleq_bind_O *)
 theorem reqx_bind: ∀p,I,L1,L2,V1,V2,T.
-                   L1 ≛[V1] L2 → L1.ⓑ{I}V1 ≛[T] L2.ⓑ{I}V2 →
-                   L1 ≛[ⓑ{p,I}V1.T] L2.
+                   L1 ≛[V1] L2 → L1.ⓑ[I]V1 ≛[T] L2.ⓑ[I]V2 →
+                   L1 ≛[ⓑ[p,I]V1.T] L2.
 /2 width=2 by rex_bind/ qed.
 
 (* Basic_2A1: uses: lleq_flat *)
 theorem reqx_flat: ∀I,L1,L2,V,T.
-                   L1 ≛[V] L2 → L1 ≛[T] L2 → L1 ≛[ⓕ{I}V.T] L2.
+                   L1 ≛[V] L2 → L1 ≛[T] L2 → L1 ≛[ⓕ[I]V.T] L2.
 /2 width=1 by rex_flat/ qed.
 
 theorem reqx_bind_void: ∀p,I,L1,L2,V,T.
-                        L1 ≛[V] L2 → L1.ⓧ ≛[T] L2.ⓧ → L1 ≛[ⓑ{p,I}V.T] L2.
+                        L1 ≛[V] L2 → L1.ⓧ ≛[T] L2.ⓧ → L1 ≛[ⓑ[p,I]V.T] L2.
 /2 width=1 by rex_bind_void/ qed.
 
 (* Basic_2A1: uses: lleq_trans *)
@@ -85,15 +85,15 @@ theorem rneqx_reqx_canc_dx: ∀L1,L. ∀T:term. (L1 ≛[T] L → ⊥) →
 (* Negated inversion lemmas *************************************************)
 
 (* Basic_2A1: uses: nlleq_inv_bind nlleq_inv_bind_O *)
-lemma rneqx_inv_bind: ∀p,I,L1,L2,V,T. (L1 ≛[ⓑ{p,I}V.T] L2 → ⊥) →
-                      (L1 ≛[V] L2 → ⊥) ∨ (L1.ⓑ{I}V ≛[T] L2.ⓑ{I}V → ⊥).
+lemma rneqx_inv_bind: ∀p,I,L1,L2,V,T. (L1 ≛[ⓑ[p,I]V.T] L2 → ⊥) →
+                      (L1 ≛[V] L2 → ⊥) ∨ (L1.ⓑ[I]V ≛[T] L2.ⓑ[I]V → ⊥).
 /3 width=2 by rnex_inv_bind, teqx_dec/ qed-.
 
 (* Basic_2A1: uses: nlleq_inv_flat *)
-lemma rneqx_inv_flat: ∀I,L1,L2,V,T. (L1 ≛[ⓕ{I}V.T] L2 → ⊥) →
+lemma rneqx_inv_flat: ∀I,L1,L2,V,T. (L1 ≛[ⓕ[I]V.T] L2 → ⊥) →
                       (L1 ≛[V] L2 → ⊥) ∨ (L1 ≛[T] L2 → ⊥).
 /3 width=2 by rnex_inv_flat, teqx_dec/ qed-.
 
-lemma rneqx_inv_bind_void: ∀p,I,L1,L2,V,T. (L1 ≛[ⓑ{p,I}V.T] L2 → ⊥) →
+lemma rneqx_inv_bind_void: ∀p,I,L1,L2,V,T. (L1 ≛[ⓑ[p,I]V.T] L2 → ⊥) →
                            (L1 ≛[V] L2 → ⊥) ∨ (L1.ⓧ ≛[T] L2.ⓧ → ⊥).
 /3 width=3 by rnex_inv_bind_void, teqx_dec/ qed-.

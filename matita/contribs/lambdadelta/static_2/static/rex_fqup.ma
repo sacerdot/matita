@@ -27,9 +27,9 @@ qed.
 
 lemma rex_pair_refl (R):
       (∀L. reflexive … (R L)) →
-      ∀L,V1,V2. R L V1 V2 → ∀I,T. L.ⓑ{I}V1 ⪤[R,T] L.ⓑ{I}V2.
+      ∀L,V1,V2. R L V1 V2 → ∀I,T. L.ⓑ[I]V1 ⪤[R,T] L.ⓑ[I]V2.
 #R #HR #L #V1 #V2 #HV12 #I #T
-elim (frees_total (L.ⓑ{I}V1) T) #f #Hf
+elim (frees_total (L.ⓑ[I]V1) T) #f #Hf
 elim (pn_split f) * #g #H destruct
 /5 width=3 by sex_refl, sex_next, sex_push, ext2_refl, ext2_pair, ex2_intro/
 qed.
@@ -37,7 +37,7 @@ qed.
 (* Advanced inversion lemmas ************************************************)
 
 lemma rex_inv_bind_void (R):
-      ∀p,I,L1,L2,V,T. L1 ⪤[R,ⓑ{p,I}V.T] L2 → L1 ⪤[R,V] L2 ∧ L1.ⓧ ⪤[R,T] L2.ⓧ.
+      ∀p,I,L1,L2,V,T. L1 ⪤[R,ⓑ[p,I]V.T] L2 → L1 ⪤[R,V] L2 ∧ L1.ⓧ ⪤[R,T] L2.ⓧ.
 #R #p #I #L1 #L2 #V #T * #f #Hf #HL elim (frees_inv_bind_void … Hf) -Hf
 /6 width=6 by sle_sex_trans, sex_inv_tl, sor_inv_sle_dx, sor_inv_sle_sn, ex2_intro, conj/
 qed-.
@@ -45,6 +45,6 @@ qed-.
 (* Advanced forward lemmas **************************************************)
 
 lemma rex_fwd_bind_dx_void (R):
-      ∀p,I,L1,L2,V,T. L1 ⪤[R,ⓑ{p,I}V.T] L2 → L1.ⓧ ⪤[R,T] L2.ⓧ.
+      ∀p,I,L1,L2,V,T. L1 ⪤[R,ⓑ[p,I]V.T] L2 → L1.ⓧ ⪤[R,T] L2.ⓧ.
 #R #p #I #L1 #L2 #V #T #H elim (rex_inv_bind_void … H) -H //
 qed-.

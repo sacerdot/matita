@@ -31,8 +31,8 @@ interpretation
 
 (* Basic properties ***********************************************************)
 
-lemma frees_teqx_conf_reqx: ∀f,L1,T1. L1 ⊢ 𝐅+⦃T1⦄ ≘ f → ∀T2. T1 ≛ T2 →
-                            ∀L2. L1 ≛[f] L2 → L2 ⊢ 𝐅+⦃T2⦄ ≘ f.
+lemma frees_teqx_conf_reqx: ∀f,L1,T1. L1 ⊢ 𝐅+❪T1❫ ≘ f → ∀T2. T1 ≛ T2 →
+                            ∀L2. L1 ≛[f] L2 → L2 ⊢ 𝐅+❪T2❫ ≘ f.
 #f #L1 #T1 #H elim H -f -L1 -T1
 [ #f #L1 #s1 #Hf #X #H1 #L2 #_
   elim (teqx_inv_sort1 … H1) -H1 #s2 #H destruct
@@ -65,12 +65,12 @@ lemma frees_teqx_conf_reqx: ∀f,L1,T1. L1 ⊢ 𝐅+⦃T1⦄ ≘ f → ∀T2. T1
 ]
 qed-.
 
-lemma frees_teqx_conf: ∀f,L,T1. L ⊢ 𝐅+⦃T1⦄ ≘ f →
-                       ∀T2. T1 ≛ T2 → L ⊢ 𝐅+⦃T2⦄ ≘ f.
+lemma frees_teqx_conf: ∀f,L,T1. L ⊢ 𝐅+❪T1❫ ≘ f →
+                       ∀T2. T1 ≛ T2 → L ⊢ 𝐅+❪T2❫ ≘ f.
 /4 width=7 by frees_teqx_conf_reqx, sex_refl, ext2_refl/ qed-.
 
-lemma frees_reqx_conf: ∀f,L1,T. L1 ⊢ 𝐅+⦃T⦄ ≘ f →
-                       ∀L2. L1 ≛[f] L2 → L2 ⊢ 𝐅+⦃T⦄ ≘ f.
+lemma frees_reqx_conf: ∀f,L1,T. L1 ⊢ 𝐅+❪T❫ ≘ f →
+                       ∀L2. L1 ≛[f] L2 → L2 ⊢ 𝐅+❪T❫ ≘ f.
 /2 width=7 by frees_teqx_conf_reqx, teqx_refl/ qed-.
 
 lemma teqx_rex_conf (R): s_r_confluent1 … cdeq (rex R).
@@ -89,33 +89,33 @@ lemma teqx_reqx_div: ∀T1,T2. T1 ≛ T2 →
                      ∀L1,L2. L1 ≛[T2] L2 → L1 ≛[T1] L2.
 /2 width=5 by teqx_rex_div/ qed-.
 
-lemma reqx_atom: ∀I. ⋆ ≛[⓪{I}] ⋆.
+lemma reqx_atom: ∀I. ⋆ ≛[⓪[I]] ⋆.
 /2 width=1 by rex_atom/ qed.
 
 lemma reqx_sort: ∀I1,I2,L1,L2,s.
-                 L1 ≛[⋆s] L2 → L1.ⓘ{I1} ≛[⋆s] L2.ⓘ{I2}.
+                 L1 ≛[⋆s] L2 → L1.ⓘ[I1] ≛[⋆s] L2.ⓘ[I2].
 /2 width=1 by rex_sort/ qed.
 
 lemma reqx_pair: ∀I,L1,L2,V1,V2.
-                 L1 ≛[V1] L2 → V1 ≛ V2 → L1.ⓑ{I}V1 ≛[#0] L2.ⓑ{I}V2.
+                 L1 ≛[V1] L2 → V1 ≛ V2 → L1.ⓑ[I]V1 ≛[#0] L2.ⓑ[I]V2.
 /2 width=1 by rex_pair/ qed.
 
-lemma reqx_unit: ∀f,I,L1,L2. 𝐈⦃f⦄ → L1 ≛[f] L2 →
-                 L1.ⓤ{I} ≛[#0] L2.ⓤ{I}.
+lemma reqx_unit: ∀f,I,L1,L2. 𝐈❪f❫ → L1 ≛[f] L2 →
+                 L1.ⓤ[I] ≛[#0] L2.ⓤ[I].
 /2 width=3 by rex_unit/ qed.
 
 lemma reqx_lref: ∀I1,I2,L1,L2,i.
-                 L1 ≛[#i] L2 → L1.ⓘ{I1} ≛[#↑i] L2.ⓘ{I2}.
+                 L1 ≛[#i] L2 → L1.ⓘ[I1] ≛[#↑i] L2.ⓘ[I2].
 /2 width=1 by rex_lref/ qed.
 
 lemma reqx_gref: ∀I1,I2,L1,L2,l.
-                 L1 ≛[§l] L2 → L1.ⓘ{I1} ≛[§l] L2.ⓘ{I2}.
+                 L1 ≛[§l] L2 → L1.ⓘ[I1] ≛[§l] L2.ⓘ[I2].
 /2 width=1 by rex_gref/ qed.
 
 lemma reqx_bind_repl_dx: ∀I,I1,L1,L2.∀T:term.
-                         L1.ⓘ{I} ≛[T] L2.ⓘ{I1} →
+                         L1.ⓘ[I] ≛[T] L2.ⓘ[I1] →
                          ∀I2. I ≛ I2 →
-                         L1.ⓘ{I} ≛[T] L2.ⓘ{I2}.
+                         L1.ⓘ[I] ≛[T] L2.ⓘ[I2].
 /2 width=2 by rex_bind_repl_dx/ qed-.
 
 (* Basic inversion lemmas ***************************************************)
@@ -129,8 +129,8 @@ lemma reqx_inv_atom_dx: ∀Y1. ∀T:term. Y1 ≛[T] ⋆ → Y1 = ⋆.
 lemma reqx_inv_zero:
       ∀Y1,Y2. Y1 ≛[#0] Y2 →
       ∨∨ ∧∧ Y1 = ⋆ & Y2 = ⋆
-       | ∃∃I,L1,L2,V1,V2. L1 ≛[V1] L2 & V1 ≛ V2 & Y1 = L1.ⓑ{I}V1 & Y2 = L2.ⓑ{I}V2
-       | ∃∃f,I,L1,L2. 𝐈⦃f⦄ & L1 ≛[f] L2 & Y1 = L1.ⓤ{I} & Y2 = L2.ⓤ{I}.
+       | ∃∃I,L1,L2,V1,V2. L1 ≛[V1] L2 & V1 ≛ V2 & Y1 = L1.ⓑ[I]V1 & Y2 = L2.ⓑ[I]V2
+       | ∃∃f,I,L1,L2. 𝐈❪f❫ & L1 ≛[f] L2 & Y1 = L1.ⓤ[I] & Y2 = L2.ⓤ[I].
 #Y1 #Y2 #H elim (rex_inv_zero … H) -H *
 /3 width=9 by or3_intro0, or3_intro1, or3_intro2, ex4_5_intro, ex4_4_intro, conj/
 qed-.
@@ -138,56 +138,56 @@ qed-.
 lemma reqx_inv_lref: ∀Y1,Y2,i. Y1 ≛[#↑i] Y2 →
                      ∨∨ ∧∧ Y1 = ⋆ & Y2 = ⋆
                       | ∃∃I1,I2,L1,L2. L1 ≛[#i] L2 &
-                                       Y1 = L1.ⓘ{I1} & Y2 = L2.ⓘ{I2}.
+                                       Y1 = L1.ⓘ[I1] & Y2 = L2.ⓘ[I2].
 /2 width=1 by rex_inv_lref/ qed-.
 
 (* Basic_2A1: uses: lleq_inv_bind lleq_inv_bind_O *)
-lemma reqx_inv_bind: ∀p,I,L1,L2,V,T. L1 ≛[ⓑ{p,I}V.T] L2 →
-                     ∧∧ L1 ≛[V] L2 & L1.ⓑ{I}V ≛[T] L2.ⓑ{I}V.
+lemma reqx_inv_bind: ∀p,I,L1,L2,V,T. L1 ≛[ⓑ[p,I]V.T] L2 →
+                     ∧∧ L1 ≛[V] L2 & L1.ⓑ[I]V ≛[T] L2.ⓑ[I]V.
 /2 width=2 by rex_inv_bind/ qed-.
 
 (* Basic_2A1: uses: lleq_inv_flat *)
-lemma reqx_inv_flat: ∀I,L1,L2,V,T. L1 ≛[ⓕ{I}V.T] L2 →
+lemma reqx_inv_flat: ∀I,L1,L2,V,T. L1 ≛[ⓕ[I]V.T] L2 →
                      ∧∧ L1 ≛[V] L2 & L1 ≛[T] L2.
 /2 width=2 by rex_inv_flat/ qed-.
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma reqx_inv_zero_pair_sn: ∀I,Y2,L1,V1. L1.ⓑ{I}V1 ≛[#0] Y2 →
-                             ∃∃L2,V2. L1 ≛[V1] L2 & V1 ≛ V2 & Y2 = L2.ⓑ{I}V2.
+lemma reqx_inv_zero_pair_sn: ∀I,Y2,L1,V1. L1.ⓑ[I]V1 ≛[#0] Y2 →
+                             ∃∃L2,V2. L1 ≛[V1] L2 & V1 ≛ V2 & Y2 = L2.ⓑ[I]V2.
 /2 width=1 by rex_inv_zero_pair_sn/ qed-.
 
-lemma reqx_inv_zero_pair_dx: ∀I,Y1,L2,V2. Y1 ≛[#0] L2.ⓑ{I}V2 →
-                             ∃∃L1,V1. L1 ≛[V1] L2 & V1 ≛ V2 & Y1 = L1.ⓑ{I}V1.
+lemma reqx_inv_zero_pair_dx: ∀I,Y1,L2,V2. Y1 ≛[#0] L2.ⓑ[I]V2 →
+                             ∃∃L1,V1. L1 ≛[V1] L2 & V1 ≛ V2 & Y1 = L1.ⓑ[I]V1.
 /2 width=1 by rex_inv_zero_pair_dx/ qed-.
 
-lemma reqx_inv_lref_bind_sn: ∀I1,Y2,L1,i. L1.ⓘ{I1} ≛[#↑i] Y2 →
-                             ∃∃I2,L2. L1 ≛[#i] L2 & Y2 = L2.ⓘ{I2}.
+lemma reqx_inv_lref_bind_sn: ∀I1,Y2,L1,i. L1.ⓘ[I1] ≛[#↑i] Y2 →
+                             ∃∃I2,L2. L1 ≛[#i] L2 & Y2 = L2.ⓘ[I2].
 /2 width=2 by rex_inv_lref_bind_sn/ qed-.
 
-lemma reqx_inv_lref_bind_dx: ∀I2,Y1,L2,i. Y1 ≛[#↑i] L2.ⓘ{I2} →
-                             ∃∃I1,L1. L1 ≛[#i] L2 & Y1 = L1.ⓘ{I1}.
+lemma reqx_inv_lref_bind_dx: ∀I2,Y1,L2,i. Y1 ≛[#↑i] L2.ⓘ[I2] →
+                             ∃∃I1,L1. L1 ≛[#i] L2 & Y1 = L1.ⓘ[I1].
 /2 width=2 by rex_inv_lref_bind_dx/ qed-.
 
 (* Basic forward lemmas *****************************************************)
 
 lemma reqx_fwd_zero_pair: ∀I,K1,K2,V1,V2.
-                          K1.ⓑ{I}V1 ≛[#0] K2.ⓑ{I}V2 → K1 ≛[V1] K2.
+                          K1.ⓑ[I]V1 ≛[#0] K2.ⓑ[I]V2 → K1 ≛[V1] K2.
 /2 width=3 by rex_fwd_zero_pair/ qed-.
 
 (* Basic_2A1: uses: lleq_fwd_bind_sn lleq_fwd_flat_sn *)
-lemma reqx_fwd_pair_sn: ∀I,L1,L2,V,T. L1 ≛[②{I}V.T] L2 → L1 ≛[V] L2.
+lemma reqx_fwd_pair_sn: ∀I,L1,L2,V,T. L1 ≛[②[I]V.T] L2 → L1 ≛[V] L2.
 /2 width=3 by rex_fwd_pair_sn/ qed-.
 
 (* Basic_2A1: uses: lleq_fwd_bind_dx lleq_fwd_bind_O_dx *)
 lemma reqx_fwd_bind_dx: ∀p,I,L1,L2,V,T.
-                        L1 ≛[ⓑ{p,I}V.T] L2 → L1.ⓑ{I}V ≛[T] L2.ⓑ{I}V.
+                        L1 ≛[ⓑ[p,I]V.T] L2 → L1.ⓑ[I]V ≛[T] L2.ⓑ[I]V.
 /2 width=2 by rex_fwd_bind_dx/ qed-.
 
 (* Basic_2A1: uses: lleq_fwd_flat_dx *)
-lemma reqx_fwd_flat_dx: ∀I,L1,L2,V,T. L1 ≛[ⓕ{I}V.T] L2 → L1 ≛[T] L2.
+lemma reqx_fwd_flat_dx: ∀I,L1,L2,V,T. L1 ≛[ⓕ[I]V.T] L2 → L1 ≛[T] L2.
 /2 width=3 by rex_fwd_flat_dx/ qed-.
 
-lemma reqx_fwd_dx: ∀I2,L1,K2. ∀T:term. L1 ≛[T] K2.ⓘ{I2} →
-                   ∃∃I1,K1. L1 = K1.ⓘ{I1}.
+lemma reqx_fwd_dx: ∀I2,L1,K2. ∀T:term. L1 ≛[T] K2.ⓘ[I2] →
+                   ∃∃I1,K1. L1 = K1.ⓘ[I1].
 /2 width=5 by rex_fwd_dx/ qed-.

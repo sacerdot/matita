@@ -124,13 +124,13 @@ qed-.
 
 (* Properties with isid *****************************************************)
 
-corec lemma sdj_isid_dx: ∀f2. 𝐈⦃f2⦄ → ∀f1. f1 ∥ f2.
+corec lemma sdj_isid_dx: ∀f2. 𝐈❪f2❫ → ∀f1. f1 ∥ f2.
 #f2 * -f2
 #f2 #g2 #Hf2 #H2 #f1 cases (pn_split f1) *
 /3 width=5 by sdj_np, sdj_pp/
 qed.
 
-corec lemma sdj_isid_sn: ∀f1. 𝐈⦃f1⦄ → ∀f2. f1 ∥ f2.
+corec lemma sdj_isid_sn: ∀f1. 𝐈❪f1❫ → ∀f2. f1 ∥ f2.
 #f1 * -f1
 #f1 #g1 #Hf1 #H1 #f2 cases (pn_split f2) *
 /3 width=5 by sdj_pn, sdj_pp/
@@ -138,7 +138,7 @@ qed.
 
 (* Inversion lemmas with isid ***********************************************)
 
-corec lemma sdj_inv_refl: ∀f. f ∥ f →  𝐈⦃f⦄.
+corec lemma sdj_inv_refl: ∀f. f ∥ f →  𝐈❪f❫.
 #f cases (pn_split f) * #g #Hg #H
 [ lapply (sdj_inv_pp … H … Hg Hg) -H /3 width=3 by isid_push/
 | elim (sdj_inv_nn … H … Hg Hg)

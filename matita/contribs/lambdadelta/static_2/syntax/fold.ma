@@ -20,7 +20,7 @@ rec definition fold L T on L ≝ match L with
 [ LAtom     ⇒ T
 | LBind L I ⇒ match I with
   [ BUnit _   ⇒ fold L (-ⓛ⋆0.T)
-  | BPair I V ⇒ fold L (-ⓑ{I}V.T)
+  | BPair I V ⇒ fold L (-ⓑ[I]V.T)
   ]
 ].
 
@@ -31,8 +31,8 @@ interpretation "fold (restricted closure)" 'plus L T = (fold L T).
 lemma fold_atom: ∀T. ⋆ + T = T.
 // qed.
 
-lemma fold_unit: ∀I,L,T. L.ⓤ{I}+T = L+(-ⓛ⋆0.T).
+lemma fold_unit: ∀I,L,T. L.ⓤ[I]+T = L+(-ⓛ⋆0.T).
 // qed.
 
-lemma fold_pair: ∀I,L,V,T. (L.ⓑ{I}V)+T = L+(-ⓑ{I}V.T).
+lemma fold_pair: ∀I,L,V,T. (L.ⓑ[I]V)+T = L+(-ⓑ[I]V.T).
 // qed.

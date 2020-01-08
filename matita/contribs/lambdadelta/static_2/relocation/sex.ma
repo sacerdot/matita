@@ -23,10 +23,10 @@ inductive sex (RN,RP:relation3 lenv bind bind): rtmap → relation lenv ≝
 | sex_atom: ∀f. sex RN RP f (⋆) (⋆)
 | sex_next: ∀f,I1,I2,L1,L2.
             sex RN RP f L1 L2 → RN L1 I1 I2 →
-            sex RN RP (↑f) (L1.ⓘ{I1}) (L2.ⓘ{I2})
+            sex RN RP (↑f) (L1.ⓘ[I1]) (L2.ⓘ[I2])
 | sex_push: ∀f,I1,I2,L1,L2.
             sex RN RP f L1 L2 → RP L1 I1 I2 →
-            sex RN RP (⫯f) (L1.ⓘ{I1}) (L2.ⓘ{I2})
+            sex RN RP (⫯f) (L1.ⓘ[I1]) (L2.ⓘ[I2])
 .
 
 interpretation "generic entrywise extension (local environment)"
@@ -60,8 +60,8 @@ qed-.
 lemma sex_inv_atom1: ∀RN,RP,f,Y. ⋆ ⪤[RN,RP,f] Y → Y = ⋆.
 /2 width=6 by sex_inv_atom1_aux/ qed-.
 
-fact sex_inv_next1_aux: ∀RN,RP,f,X,Y. X ⪤[RN,RP,f] Y → ∀g,J1,K1. X = K1.ⓘ{J1} → f = ↑g →
-                        ∃∃J2,K2. K1 ⪤[RN,RP,g] K2 & RN K1 J1 J2 & Y = K2.ⓘ{J2}.
+fact sex_inv_next1_aux: ∀RN,RP,f,X,Y. X ⪤[RN,RP,f] Y → ∀g,J1,K1. X = K1.ⓘ[J1] → f = ↑g →
+                        ∃∃J2,K2. K1 ⪤[RN,RP,g] K2 & RN K1 J1 J2 & Y = K2.ⓘ[J2].
 #RN #RP #f #X #Y * -f -X -Y
 [ #f #g #J1 #K1 #H destruct
 | #f #I1 #I2 #L1 #L2 #HL #HI #g #J1 #K1 #H1 #H2 <(injective_next … H2) -g destruct
@@ -71,12 +71,12 @@ fact sex_inv_next1_aux: ∀RN,RP,f,X,Y. X ⪤[RN,RP,f] Y → ∀g,J1,K1. X = K1.
 qed-.
 
 (* Basic_2A1: includes lpx_sn_inv_pair1 *)
-lemma sex_inv_next1: ∀RN,RP,g,J1,K1,Y. K1.ⓘ{J1} ⪤[RN,RP,↑g] Y →
-                     ∃∃J2,K2. K1 ⪤[RN,RP,g] K2 & RN K1 J1 J2 & Y = K2.ⓘ{J2}.
+lemma sex_inv_next1: ∀RN,RP,g,J1,K1,Y. K1.ⓘ[J1] ⪤[RN,RP,↑g] Y →
+                     ∃∃J2,K2. K1 ⪤[RN,RP,g] K2 & RN K1 J1 J2 & Y = K2.ⓘ[J2].
 /2 width=7 by sex_inv_next1_aux/ qed-.
 
-fact sex_inv_push1_aux: ∀RN,RP,f,X,Y. X ⪤[RN,RP,f] Y → ∀g,J1,K1. X = K1.ⓘ{J1} → f = ⫯g →
-                        ∃∃J2,K2. K1 ⪤[RN,RP,g] K2 & RP K1 J1 J2 & Y = K2.ⓘ{J2}.
+fact sex_inv_push1_aux: ∀RN,RP,f,X,Y. X ⪤[RN,RP,f] Y → ∀g,J1,K1. X = K1.ⓘ[J1] → f = ⫯g →
+                        ∃∃J2,K2. K1 ⪤[RN,RP,g] K2 & RP K1 J1 J2 & Y = K2.ⓘ[J2].
 #RN #RP #f #X #Y * -f -X -Y
 [ #f #g #J1 #K1 #H destruct
 | #f #I1 #I2 #L1 #L2 #_ #_ #g #J1 #K1 #_ #H elim (discr_next_push … H)
@@ -85,8 +85,8 @@ fact sex_inv_push1_aux: ∀RN,RP,f,X,Y. X ⪤[RN,RP,f] Y → ∀g,J1,K1. X = K1.
 ]
 qed-.
 
-lemma sex_inv_push1: ∀RN,RP,g,J1,K1,Y. K1.ⓘ{J1} ⪤[RN,RP,⫯g] Y →
-                     ∃∃J2,K2. K1 ⪤[RN,RP,g] K2 & RP K1 J1 J2 & Y = K2.ⓘ{J2}.
+lemma sex_inv_push1: ∀RN,RP,g,J1,K1,Y. K1.ⓘ[J1] ⪤[RN,RP,⫯g] Y →
+                     ∃∃J2,K2. K1 ⪤[RN,RP,g] K2 & RP K1 J1 J2 & Y = K2.ⓘ[J2].
 /2 width=7 by sex_inv_push1_aux/ qed-.
 
 fact sex_inv_atom2_aux: ∀RN,RP,f,X,Y. X ⪤[RN,RP,f] Y → Y = ⋆ → X = ⋆.
@@ -98,8 +98,8 @@ qed-.
 lemma sex_inv_atom2: ∀RN,RP,f,X. X ⪤[RN,RP,f] ⋆ → X = ⋆.
 /2 width=6 by sex_inv_atom2_aux/ qed-.
 
-fact sex_inv_next2_aux: ∀RN,RP,f,X,Y. X ⪤[RN,RP,f] Y → ∀g,J2,K2. Y = K2.ⓘ{J2} → f = ↑g →
-                        ∃∃J1,K1. K1 ⪤[RN,RP,g] K2 & RN K1 J1 J2 & X = K1.ⓘ{J1}.
+fact sex_inv_next2_aux: ∀RN,RP,f,X,Y. X ⪤[RN,RP,f] Y → ∀g,J2,K2. Y = K2.ⓘ[J2] → f = ↑g →
+                        ∃∃J1,K1. K1 ⪤[RN,RP,g] K2 & RN K1 J1 J2 & X = K1.ⓘ[J1].
 #RN #RP #f #X #Y * -f -X -Y
 [ #f #g #J2 #K2 #H destruct
 | #f #I1 #I2 #L1 #L2 #HL #HI #g #J2 #K2 #H1 #H2 <(injective_next … H2) -g destruct
@@ -109,12 +109,12 @@ fact sex_inv_next2_aux: ∀RN,RP,f,X,Y. X ⪤[RN,RP,f] Y → ∀g,J2,K2. Y = K2.
 qed-.
 
 (* Basic_2A1: includes lpx_sn_inv_pair2 *)
-lemma sex_inv_next2: ∀RN,RP,g,J2,X,K2. X ⪤[RN,RP,↑g] K2.ⓘ{J2} →
-                     ∃∃J1,K1. K1 ⪤[RN,RP,g] K2 & RN K1 J1 J2 & X = K1.ⓘ{J1}.
+lemma sex_inv_next2: ∀RN,RP,g,J2,X,K2. X ⪤[RN,RP,↑g] K2.ⓘ[J2] →
+                     ∃∃J1,K1. K1 ⪤[RN,RP,g] K2 & RN K1 J1 J2 & X = K1.ⓘ[J1].
 /2 width=7 by sex_inv_next2_aux/ qed-.
 
-fact sex_inv_push2_aux: ∀RN,RP,f,X,Y. X ⪤[RN,RP,f] Y → ∀g,J2,K2. Y = K2.ⓘ{J2} → f = ⫯g →
-                        ∃∃J1,K1. K1 ⪤[RN,RP,g] K2 & RP K1 J1 J2 & X = K1.ⓘ{J1}.
+fact sex_inv_push2_aux: ∀RN,RP,f,X,Y. X ⪤[RN,RP,f] Y → ∀g,J2,K2. Y = K2.ⓘ[J2] → f = ⫯g →
+                        ∃∃J1,K1. K1 ⪤[RN,RP,g] K2 & RP K1 J1 J2 & X = K1.ⓘ[J1].
 #RN #RP #f #X #Y * -f -X -Y
 [ #f #J2 #K2 #g #H destruct
 | #f #I1 #I2 #L1 #L2 #_ #_ #g #J2 #K2 #_ #H elim (discr_next_push … H)
@@ -123,20 +123,20 @@ fact sex_inv_push2_aux: ∀RN,RP,f,X,Y. X ⪤[RN,RP,f] Y → ∀g,J2,K2. Y = K2.
 ]
 qed-.
 
-lemma sex_inv_push2: ∀RN,RP,g,J2,X,K2. X ⪤[RN,RP,⫯g] K2.ⓘ{J2} →
-                     ∃∃J1,K1. K1 ⪤[RN,RP,g] K2 & RP K1 J1 J2 & X = K1.ⓘ{J1}.
+lemma sex_inv_push2: ∀RN,RP,g,J2,X,K2. X ⪤[RN,RP,⫯g] K2.ⓘ[J2] →
+                     ∃∃J1,K1. K1 ⪤[RN,RP,g] K2 & RP K1 J1 J2 & X = K1.ⓘ[J1].
 /2 width=7 by sex_inv_push2_aux/ qed-.
 
 (* Basic_2A1: includes lpx_sn_inv_pair *)
 lemma sex_inv_next: ∀RN,RP,f,I1,I2,L1,L2.
-                    L1.ⓘ{I1} ⪤[RN,RP,↑f] L2.ⓘ{I2} →
+                    L1.ⓘ[I1] ⪤[RN,RP,↑f] L2.ⓘ[I2] →
                     L1 ⪤[RN,RP,f] L2 ∧ RN L1 I1 I2.
 #RN #RP #f #I1 #I2 #L1 #L2 #H elim (sex_inv_next1 … H) -H
 #I0 #L0 #HL10 #HI10 #H destruct /2 width=1 by conj/
 qed-.
 
 lemma sex_inv_push: ∀RN,RP,f,I1,I2,L1,L2.
-                    L1.ⓘ{I1} ⪤[RN,RP,⫯f] L2.ⓘ{I2} →
+                    L1.ⓘ[I1] ⪤[RN,RP,⫯f] L2.ⓘ[I2] →
                     L1 ⪤[RN,RP,f] L2 ∧ RP L1 I1 I2.
 #RN #RP #f #I1 #I2 #L1 #L2 #H elim (sex_inv_push1 … H) -H
 #I0 #L0 #HL10 #HI10 #H destruct /2 width=1 by conj/
@@ -144,7 +144,7 @@ qed-.
 
 lemma sex_inv_tl: ∀RN,RP,f,I1,I2,L1,L2. L1 ⪤[RN,RP,⫱f] L2 →
                   RN L1 I1 I2 → RP L1 I1 I2 →
-                  L1.ⓘ{I1} ⪤[RN,RP,f] L2.ⓘ{I2}.
+                  L1.ⓘ[I1] ⪤[RN,RP,f] L2.ⓘ[I2].
 #RN #RP #f #I1 #I2 #L2 #L2 elim (pn_split f) *
 /2 width=1 by sex_next, sex_push/
 qed-.
@@ -152,7 +152,7 @@ qed-.
 (* Basic forward lemmas *****************************************************)
 
 lemma sex_fwd_bind: ∀RN,RP,f,I1,I2,L1,L2.
-                    L1.ⓘ{I1} ⪤[RN,RP,f] L2.ⓘ{I2} →
+                    L1.ⓘ[I1] ⪤[RN,RP,f] L2.ⓘ[I2] →
                     L1 ⪤[RN,RP,⫱f] L2.
 #RN #RP #f #I1 #I2 #L1 #L2 #Hf
 elim (pn_split f) * #g #H destruct
@@ -189,9 +189,9 @@ lemma sex_sym: ∀RN,RP.
 qed-.
 
 lemma sex_pair_repl: ∀RN,RP,f,I1,I2,L1,L2.
-                     L1.ⓘ{I1} ⪤[RN,RP,f] L2.ⓘ{I2} →
+                     L1.ⓘ[I1] ⪤[RN,RP,f] L2.ⓘ[I2] →
                      ∀J1,J2. RN L1 J1 J2 → RP L1 J1 J2 →
-                     L1.ⓘ{J1} ⪤[RN,RP,f] L2.ⓘ{J2}.
+                     L1.ⓘ[J1] ⪤[RN,RP,f] L2.ⓘ[J2].
 /3 width=3 by sex_inv_tl, sex_fwd_bind/ qed-.
 
 lemma sex_co: ∀RN1,RP1,RN2,RP2. RN1 ⊆ RN2 → RP1 ⊆ RP2 →
@@ -201,7 +201,7 @@ lemma sex_co: ∀RN1,RP1,RN2,RP2. RN1 ⊆ RN2 → RP1 ⊆ RP2 →
 qed-.
 
 lemma sex_co_isid: ∀RN1,RP1,RN2,RP2. RP1 ⊆ RP2 →
-                   ∀f,L1,L2. L1 ⪤[RN1,RP1,f] L2 → 𝐈⦃f⦄ →
+                   ∀f,L1,L2. L1 ⪤[RN1,RP1,f] L2 → 𝐈❪f❫ →
                    L1 ⪤[RN2,RP2,f] L2.
 #RN1 #RP1 #RN2 #RP2 #HR #f #L1 #L2 #H elim H -f -L1 -L2 //
 #f #I1 #I2 #K1 #K2 #_ #HI12 #IH #H

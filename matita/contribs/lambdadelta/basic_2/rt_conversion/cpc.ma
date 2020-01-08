@@ -18,7 +18,7 @@ include "basic_2/rt_transition/cpm.ma".
 (* CONTEXT-SENSITIVE PARALLEL R-CONVERSION FOR TERMS ************************)
 
 definition cpc: sh → relation4 genv lenv term term ≝
-                λh,G,L,T1,T2. ⦃G,L⦄ ⊢ T1 ➡[h] T2 ∨ ⦃G,L⦄ ⊢ T2 ➡[h] T1.
+                λh,G,L,T1,T2. ❪G,L❫ ⊢ T1 ➡[h] T2 ∨ ❪G,L❫ ⊢ T2 ➡[h] T1.
 
 interpretation
    "context-sensitive parallel r-conversion (term)"
@@ -35,7 +35,7 @@ qed-.
 
 (* Basic forward lemmas *****************************************************)
 
-lemma cpc_fwd_cpr: ∀h,G,L,T1,T2. ⦃G,L⦄ ⊢ T1 ⬌[h] T2 →
-                   ∃∃T. ⦃G,L⦄ ⊢ T1 ➡[h] T & ⦃G,L⦄ ⊢ T2 ➡[h] T.
+lemma cpc_fwd_cpr: ∀h,G,L,T1,T2. ❪G,L❫ ⊢ T1 ⬌[h] T2 →
+                   ∃∃T. ❪G,L❫ ⊢ T1 ➡[h] T & ❪G,L❫ ⊢ T2 ➡[h] T.
 #h #G #L #T1 #T2 * /2 width=3 by ex2_intro/
 qed-.

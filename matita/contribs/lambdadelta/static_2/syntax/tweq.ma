@@ -23,8 +23,8 @@ inductive tweq: relation term ≝
 | tweq_sort: ∀s1,s2. tweq (⋆s1) (⋆s2)
 | tweq_lref: ∀i. tweq (#i) (#i)
 | tweq_gref: ∀l. tweq (§l) (§l)
-| tweq_abbr: ∀p,V1,V2,T1,T2. (p=Ⓣ→tweq T1 T2) → tweq (ⓓ{p}V1.T1) (ⓓ{p}V2.T2)
-| tweq_abst: ∀p,V1,V2,T1,T2. tweq (ⓛ{p}V1.T1) (ⓛ{p}V2.T2)
+| tweq_abbr: ∀p,V1,V2,T1,T2. (p=Ⓣ→tweq T1 T2) → tweq (ⓓ[p]V1.T1) (ⓓ[p]V2.T2)
+| tweq_abst: ∀p,V1,V2,T1,T2. tweq (ⓛ[p]V1.T1) (ⓛ[p]V2.T2)
 | tweq_appl: ∀V1,V2,T1,T2. tweq T1 T2 → tweq (ⓐV1.T1) (ⓐV2.T2)
 | tweq_cast: ∀V1,V2,T1,T2. tweq V1 V2 → tweq T1 T2 → tweq (ⓝV1.T1) (ⓝV2.T2)
 .
@@ -103,8 +103,8 @@ lemma tweq_inv_gref_sn:
 /2 width=5 by tweq_inv_gref_sn_aux/ qed-.
 
 fact tweq_inv_abbr_sn_aux:
-     ∀X,Y. X ≅ Y → ∀p,V1,T1. X = ⓓ{p}V1.T1 →
-     ∃∃V2,T2. p = Ⓣ → T1 ≅ T2 & Y = ⓓ{p}V2.T2.
+     ∀X,Y. X ≅ Y → ∀p,V1,T1. X = ⓓ[p]V1.T1 →
+     ∃∃V2,T2. p = Ⓣ → T1 ≅ T2 & Y = ⓓ[p]V2.T2.
 #X #Y * -X -Y
 [1  : #s1 #s2 #q #W1 #U1 #H destruct
 |2,3: #i #q #W1 #U1 #H destruct
@@ -116,13 +116,13 @@ fact tweq_inv_abbr_sn_aux:
 qed-.
 
 lemma tweq_inv_abbr_sn:
-      ∀p,V1,T1,Y. ⓓ{p}V1.T1 ≅ Y →
-      ∃∃V2,T2. p = Ⓣ → T1 ≅ T2 & Y = ⓓ{p}V2.T2.
+      ∀p,V1,T1,Y. ⓓ[p]V1.T1 ≅ Y →
+      ∃∃V2,T2. p = Ⓣ → T1 ≅ T2 & Y = ⓓ[p]V2.T2.
 /2 width=4 by tweq_inv_abbr_sn_aux/ qed-.
 
 fact tweq_inv_abst_sn_aux:
-     ∀X,Y. X ≅ Y → ∀p,V1,T1. X = ⓛ{p}V1.T1 →
-     ∃∃V2,T2. Y = ⓛ{p}V2.T2.
+     ∀X,Y. X ≅ Y → ∀p,V1,T1. X = ⓛ[p]V1.T1 →
+     ∃∃V2,T2. Y = ⓛ[p]V2.T2.
 #X #Y * -X -Y
 [1  : #s1 #s2 #q #W1 #U1 #H destruct
 |2,3: #i #q #W1 #U1 #H destruct
@@ -134,8 +134,8 @@ fact tweq_inv_abst_sn_aux:
 qed-.
 
 lemma tweq_inv_abst_sn:
-      ∀p,V1,T1,Y. ⓛ{p}V1.T1 ≅ Y →
-      ∃∃V2,T2. Y = ⓛ{p}V2.T2.
+      ∀p,V1,T1,Y. ⓛ[p]V1.T1 ≅ Y →
+      ∃∃V2,T2. Y = ⓛ[p]V2.T2.
 /2 width=5 by tweq_inv_abst_sn_aux/ qed-.
 
 fact tweq_inv_appl_sn_aux:
@@ -218,7 +218,7 @@ qed-.
 (* Advanced forward lemmas **************************************************)
 
 lemma tweq_fwd_pair_sn (I):
-      ∀V1,T1,X2. ②{I}V1.T1 ≅ X2 → ∃∃V2,T2. X2 = ②{I}V2.T2.
+      ∀V1,T1,X2. ②[I]V1.T1 ≅ X2 → ∃∃V2,T2. X2 = ②[I]V2.T2.
 * [ #p ] * [ cases p -p ] #V1 #T1 #X2 #H
 [ elim (tweq_inv_abbr_pos_sn … H) -H #V2 #T2 #_ #H
 | elim (tweq_inv_abbr_neg_sn … H) -H #V2 #T2 #H
@@ -229,7 +229,7 @@ lemma tweq_fwd_pair_sn (I):
 qed-.
 
 lemma tweq_fwd_pair_bi (I1) (I2):
-      ∀V1,V2,T1,T2. ②{I1}V1.T1 ≅ ②{I2}V2.T2 → I1 = I2.
+      ∀V1,V2,T1,T2. ②[I1]V1.T1 ≅ ②[I2]V2.T2 → I1 = I2.
 #I1 #I2 #V1 #V2 #T1 #T2 #H
 elim (tweq_fwd_pair_sn … H) -H #W2 #U2 #H destruct //
 qed-.

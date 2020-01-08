@@ -20,11 +20,11 @@ include "basic_2/rt_computation/cpms_cpxs.ma".
 (* Properties with sort-irrelevant equivalence for local environments *******)
 
 lemma cpms_reqx_conf_sn (h) (n) (G) (L1) (L2):
-                        ∀T1,T2. ⦃G,L1⦄ ⊢ T1 ➡*[n,h] T2 →
+                        ∀T1,T2. ❪G,L1❫ ⊢ T1 ➡*[n,h] T2 →
                         L1 ≛[T1] L2 → L1 ≛[T2] L2.
 /3 width=5 by cpms_fwd_cpxs, cpxs_reqx_conf_sn/ qed-.
 
 lemma cpms_reqx_conf_dx (h) (n) (G) (L1) (L2):
-                        ∀T1,T2. ⦃G,L2⦄ ⊢ T1 ➡*[n,h] T2 →
+                        ∀T1,T2. ❪G,L2❫ ⊢ T1 ➡*[n,h] T2 →
                         L1 ≛[T1] L2 → L1 ≛[T2] L2.
 /3 width=5 by cpms_fwd_cpxs, cpxs_reqx_conf_dx/ qed-.

@@ -22,7 +22,7 @@ include "basic_2/rt_computation/lprs_cpms.ma".
 (* Advanced inversion lemmas ************************************************)
 
 lemma cnuw_inv_abbr_pos (h) (G) (L):
-      ∀V,T. ⦃G,L⦄ ⊢ ➡𝐍𝐖*[h] +ⓓV.T → ⊥.
+      ∀V,T. ❪G,L❫ ⊢ ➡𝐍𝐖*[h] +ⓓV.T → ⊥.
 #h #G #L #V #T1 #H
 elim (cprs_abbr_pos_twneq h G L V T1) #T2 #HT12 #HnT12
 /3 width=2 by/
@@ -30,7 +30,7 @@ qed-.
 
 (* Advanced properties ******************************************************)
 
-lemma cnuw_abbr_neg (h) (G) (L): ∀V,T. ⦃G,L⦄ ⊢ ➡𝐍𝐖*[h] -ⓓV.T.
+lemma cnuw_abbr_neg (h) (G) (L): ∀V,T. ❪G,L❫ ⊢ ➡𝐍𝐖*[h] -ⓓV.T.
 #h #G #L #V1 #T1 #n #X #H
 elim (cpms_inv_abbr_sn_dx … H) -H *
 [ #V2 #T2 #_ #_ #H destruct /1 width=1 by tweq_abbr_neg/
@@ -38,33 +38,33 @@ elim (cpms_inv_abbr_sn_dx … H) -H *
 ]
 qed.
 
-lemma cnuw_abst (h) (p) (G) (L): ∀W,T. ⦃G,L⦄ ⊢ ➡𝐍𝐖*[h] ⓛ{p}W.T.
+lemma cnuw_abst (h) (p) (G) (L): ∀W,T. ❪G,L❫ ⊢ ➡𝐍𝐖*[h] ⓛ[p]W.T.
 #h #p #G #L #W1 #T1 #n #X #H
 elim (cpms_inv_abst_sn … H) -H #W2 #T2 #_ #_ #H destruct
 /1 width=1 by tweq_abst/
 qed.
 
 lemma cnuw_cpms_trans (h) (n) (G) (L):
-      ∀T1. ⦃G,L⦄ ⊢ ➡𝐍𝐖*[h] T1 →
-      ∀T2. ⦃G,L⦄ ⊢ T1 ➡*[n,h] T2 → ⦃G,L⦄ ⊢ ➡𝐍𝐖*[h] T2.
+      ∀T1. ❪G,L❫ ⊢ ➡𝐍𝐖*[h] T1 →
+      ∀T2. ❪G,L❫ ⊢ T1 ➡*[n,h] T2 → ❪G,L❫ ⊢ ➡𝐍𝐖*[h] T2.
 #h #n1 #G #L #T1 #HT1 #T2 #HT12 #n2 #T3 #HT23
 /4 width=5 by cpms_trans, tweq_canc_sn/
 qed-.
 
 lemma cnuw_dec_ex (h) (G) (L):
-      ∀T1. ∨∨ ⦃G,L⦄ ⊢ ➡𝐍𝐖*[h] T1
-            | ∃∃n,T2. ⦃G,L⦄ ⊢ T1 ➡*[n,h] T2 & (T1 ≅ T2 → ⊥).
+      ∀T1. ∨∨ ❪G,L❫ ⊢ ➡𝐍𝐖*[h] T1
+            | ∃∃n,T2. ❪G,L❫ ⊢ T1 ➡*[n,h] T2 & (T1 ≅ T2 → ⊥).
 #h #G #L #T1 elim T1 -T1 *
 [ #s /3 width=5 by cnuw_sort, or_introl/
 | #i elim (drops_F_uni L i)
   [ /3 width=7 by cnuw_atom_drops, or_introl/
   | * * [ #I | * #V ] #K #HLK
     [ /3 width=8 by cnuw_unit_drops, or_introl/
-    | elim (lifts_total V 𝐔❴↑i❵) #W #HVW
+    | elim (lifts_total V 𝐔❨↑i❩) #W #HVW
       @or_intror @(ex2_2_intro … W) [1,2: /2 width=7 by cpms_delta_drops/ ] #H
       lapply (tweq_inv_lref_sn … H) -H #H destruct
       /2 width=5 by lifts_inv_lref2_uni_lt/
-    | elim (lifts_total V 𝐔❴↑i❵) #W #HVW
+    | elim (lifts_total V 𝐔❨↑i❩) #W #HVW
       @or_intror @(ex2_2_intro … W) [1,2: /2 width=7 by cpms_ell_drops/ ] #H
       lapply (tweq_inv_lref_sn … H) -H #H destruct
       /2 width=5 by lifts_inv_lref2_uni_lt/
@@ -85,10 +85,10 @@ lemma cnuw_dec_ex (h) (G) (L):
         @or_intror @(ex2_2_intro … n (ⓐV1.T2)) [ /2 width=1 by cpms_appl_dx/ ] #H
         lapply (tweq_inv_appl_bi … H) -H /2 width=1 by/
       ]
-    | elim (lifts_total V1 𝐔❴1❵) #X1 #HVX1
-      @or_intror @(ex2_2_intro … (ⓓ{p}W1.ⓐX1.U1)) [1,2: /2 width=3 by cpms_theta/ ] #H
+    | elim (lifts_total V1 𝐔❨1❩) #X1 #HVX1
+      @or_intror @(ex2_2_intro … (ⓓ[p]W1.ⓐX1.U1)) [1,2: /2 width=3 by cpms_theta/ ] #H
       elim (tweq_inv_appl_sn … H) -H #X1 #X2 #_ #H destruct
-    | @or_intror @(ex2_2_intro … (ⓓ{p}ⓝW1.V1.U1)) [1,2: /2 width=2 by cpms_beta/ ] #H
+    | @or_intror @(ex2_2_intro … (ⓓ[p]ⓝW1.V1.U1)) [1,2: /2 width=2 by cpms_beta/ ] #H
       elim (tweq_inv_appl_sn … H) -H #X1 #X2 #_ #H destruct
     ]
   | @or_intror @(ex2_2_intro … T1) [1,2: /2 width=2 by cpms_eps/ ] #H
@@ -97,7 +97,7 @@ lemma cnuw_dec_ex (h) (G) (L):
 ]
 qed-.
 
-lemma cnuw_dec (h) (G) (L): ∀T. Decidable (⦃G,L⦄ ⊢ ➡𝐍𝐖*[h] T).
+lemma cnuw_dec (h) (G) (L): ∀T. Decidable (❪G,L❫ ⊢ ➡𝐍𝐖*[h] T).
 #h #G #L #T1
 elim (cnuw_dec_ex h G L T1)
 [ /2 width=1 by or_introl/

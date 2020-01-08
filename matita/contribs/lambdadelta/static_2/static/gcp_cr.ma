@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/notation/relations/ineint_5.ma".
+include "static_2/notation/relations/inwbrackets_5.ma".
 include "static_2/syntax/aarity.ma".
 include "static_2/relocation/lifts_simple.ma".
 include "static_2/relocation/lifts_lifts_vector.ma".
@@ -28,20 +28,20 @@ definition S1 ≝ λRP,C:candidate.
 (* Note: this is Tait's iii, or Girard's CR4 *)
 definition S2 ≝ λRR:relation4 genv lenv term term. λRS:relation term. λRP,C:candidate.
                 ∀G,L,Vs. all … (RP G L) Vs →
-                ∀T. 𝐒⦃T⦄ → nf RR RS G L T → C G L (ⒶVs.T).
+                ∀T. 𝐒❪T❫ → nf RR RS G L T → C G L (ⒶVs.T).
 
 (* Note: this generalizes Tait's ii *)
 definition S3 ≝ λC:candidate.
                 ∀a,G,L,Vs,V,T,W.
-                C G L (ⒶVs.ⓓ{a}ⓝW.V.T) → C G L (ⒶVs.ⓐV.ⓛ{a}W.T).
+                C G L (ⒶVs.ⓓ[a]ⓝW.V.T) → C G L (ⒶVs.ⓐV.ⓛ[a]W.T).
 
 definition S5 ≝ λC:candidate. ∀I,G,L,K,Vs,V1,V2,i.
                 C G L (ⒶVs.V2) → ⇧*[↑i] V1 ≘ V2 →
-                ⇩*[i] L ≘ K.ⓑ{I}V1 → C G L (ⒶVs.#i).
+                ⇩*[i] L ≘ K.ⓑ[I]V1 → C G L (ⒶVs.#i).
 
 definition S6 ≝ λRP,C:candidate.
                 ∀G,L,V1b,V2b. ⇧*[1] V1b ≘ V2b →
-                ∀a,V,T. C G (L.ⓓV) (ⒶV2b.T) → RP G L V → C G L (ⒶV1b.ⓓ{a}V.T).
+                ∀a,V,T. C G (L.ⓓV) (ⒶV2b.T) → RP G L V → C G L (ⒶV1b.ⓓ[a]V.T).
 
 definition S7 ≝ λC:candidate.
                 ∀G,L,Vs,T,W. C G L (ⒶVs.T) → C G L (ⒶVs.W) → C G L (ⒶVs.ⓝW.T).
@@ -70,7 +70,7 @@ match A with
 
 interpretation
    "reducibility candidate of an atomic arity (abstract)"
-   'InEInt RP G L T A = (acr RP A G L T).
+   'InWBrackets RP G L T A = (acr RP A G L T).
 
 (* Basic properties *********************************************************)
 
@@ -123,20 +123,20 @@ lemma acr_gcr: ∀RR,RS,RP. gcp RR RS RP → gcr RR RS RP RP →
   lapply (drops_tls_at … Hf … HY) -HY #HY
   elim (drops_inv_skip2 … HY) -HY #Z #K0 #HK0 #HZ #H destruct
   elim (liftsb_inv_pair_sn … HZ) -HZ #W1 #HVW1 #H destruct
-  elim (lifts_total W1 (𝐔❴↑j❵)) #W2 #HW12
+  elim (lifts_total W1 (𝐔❨↑j❩)) #W2 #HW12
   lapply (lifts_trans … HVW1 … HW12 ??) -HVW1 [3: |*: // ] #H
   lapply (lifts_conf … HV12 … H f ?) -V1 [ /2 width=3 by after_uni_succ_sn/ ] #HVW2
   @(s5 … IHA … (V0⨮V0s) … HW12) /3 width=4 by drops_inv_gen, lifts_applv/
 | #G #L #V1s #V2s #HV12s #p #V #T #HA #HV #f #L0 #V10 #X #HL0 #H #HB
   elim (lifts_inv_applv1 … H) -H #V10s #X0 #HV10s #H0 #H destruct
   elim (lifts_inv_bind1 … H0) -H0 #V0 #T0 #HV0 #HT0 #H destruct
-  elim (lifts_total V10 (𝐔❴1❵)) #V20 #HV120
-  elim (liftsv_total (𝐔❴1❵) V10s) #V20s #HV120s
+  elim (lifts_total V10 (𝐔❨1❩)) #V20 #HV120
+  elim (liftsv_total (𝐔❨1❩) V10s) #V20s #HV120s
   @(s6 … IHA … (V10⨮V10s) (V20⨮V20s)) /3 width=7 by cp2, liftsv_cons/
   @(HA … (⫯f)) /3 width=2 by drops_skip, ext2_pair/
   [ @lifts_applv //
     lapply (liftsv_trans … HV10s … HV120s ??) -V10s [3: |*: // ] #H
-    elim (liftsv_split_trans … H (𝐔❴1❵) (⫯f)) /2 width=1 by after_uni_one_sn/ #V10s #HV10s #HV120s
+    elim (liftsv_split_trans … H (𝐔❨1❩) (⫯f)) /2 width=1 by after_uni_one_sn/ #V10s #HV10s #HV120s
     >(liftsv_mono … HV12s … HV10s) -V1s //
   | @(acr_lifts … H1RP … HB … HV120) /3 width=2 by drops_refl, drops_drop/
   ]
@@ -148,11 +148,11 @@ lemma acr_gcr: ∀RR,RS,RP. gcp RR RS RP → gcr RR RS RP RP →
 qed.
 
 lemma acr_abst: ∀RR,RS,RP. gcp RR RS RP → gcr RR RS RP RP →
-                ∀p,G,L,W,T,A,B. ⦃G,L,W⦄ ϵ[RP] 〚B〛 → (
+                ∀p,G,L,W,T,A,B. ❪G,L,W❫ ϵ ⟦B⟧[RP] → (
                    ∀b,f,L0,V0,W0,T0. ⇩*[b,f] L0 ≘ L → ⇧*[f] W ≘ W0 → ⇧*[⫯f] T ≘ T0 →
-                                   ⦃G,L0,V0⦄ ϵ[RP] 〚B〛 → ⦃G,L0,W0⦄ ϵ[RP] 〚B〛 → ⦃G,L0.ⓓⓝW0.V0,T0⦄ ϵ[RP] 〚A〛
+                                   ❪G,L0,V0❫ ϵ ⟦B⟧[RP] → ❪G,L0,W0❫ ϵ ⟦B⟧[RP] → ❪G,L0.ⓓⓝW0.V0,T0❫ ϵ ⟦A⟧[RP]
                 ) →
-                ⦃G,L,ⓛ{p}W.T⦄ ϵ[RP] 〚②B.A〛.
+                ❪G,L,ⓛ[p]W.T❫ ϵ ⟦②B.A⟧[RP].
 #RR #RS #RP #H1RP #H2RP #p #G #L #W #T #A #B #HW #HA #f #L0 #V0 #X #HL0 #H #HB
 lapply (acr_gcr … H1RP H2RP A) #HCA
 lapply (acr_gcr … H1RP H2RP B) #HCB

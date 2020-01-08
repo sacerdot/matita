@@ -310,19 +310,19 @@ qed.
 
 (* Properies with test for identity *****************************************)
 
-corec lemma sor_isid_sn: ∀f1. 𝐈⦃f1⦄ → ∀f2. f1 ⋓ f2 ≘ f2.
+corec lemma sor_isid_sn: ∀f1. 𝐈❪f1❫ → ∀f2. f1 ⋓ f2 ≘ f2.
 #f1 * -f1
 #f1 #g1 #Hf1 #H1 #f2 cases (pn_split f2) *
 /3 width=7 by sor_pp, sor_pn/
 qed.
 
-corec lemma sor_isid_dx: ∀f2. 𝐈⦃f2⦄ → ∀f1. f1 ⋓ f2 ≘ f1.
+corec lemma sor_isid_dx: ∀f2. 𝐈❪f2❫ → ∀f1. f1 ⋓ f2 ≘ f1.
 #f2 * -f2
 #f2 #g2 #Hf2 #H2 #f1 cases (pn_split f1) *
 /3 width=7 by sor_pp, sor_np/
 qed.
 
-lemma sor_isid: ∀f1,f2,f. 𝐈⦃f1⦄ → 𝐈⦃f2⦄ → 𝐈⦃f⦄ → f1 ⋓ f2 ≘ f.
+lemma sor_isid: ∀f1,f2,f. 𝐈❪f1❫ → 𝐈❪f2❫ → 𝐈❪f❫ → f1 ⋓ f2 ≘ f.
 /4 width=3 by sor_eq_repl_back2, sor_eq_repl_back1, isid_inv_eq_repl/ qed.
 
 (* Inversion lemmas with tail ***********************************************)
@@ -339,35 +339,35 @@ qed-.
 
 (* Inversion lemmas with test for identity **********************************)
 
-lemma sor_isid_inv_sn: ∀f1,f2,f. f1 ⋓ f2 ≘ f → 𝐈⦃f1⦄ → f2 ≡ f.
+lemma sor_isid_inv_sn: ∀f1,f2,f. f1 ⋓ f2 ≘ f → 𝐈❪f1❫ → f2 ≡ f.
 /3 width=4 by sor_isid_sn, sor_mono/
 qed-.
 
-lemma sor_isid_inv_dx: ∀f1,f2,f. f1 ⋓ f2 ≘ f → 𝐈⦃f2⦄ → f1 ≡ f.
+lemma sor_isid_inv_dx: ∀f1,f2,f. f1 ⋓ f2 ≘ f → 𝐈❪f2❫ → f1 ≡ f.
 /3 width=4 by sor_isid_dx, sor_mono/
 qed-.
 
-corec lemma sor_fwd_isid1: ∀f1,f2,f. f1 ⋓ f2 ≘ f → 𝐈⦃f⦄ → 𝐈⦃f1⦄.
+corec lemma sor_fwd_isid1: ∀f1,f2,f. f1 ⋓ f2 ≘ f → 𝐈❪f❫ → 𝐈❪f1❫.
 #f1 #f2 #f * -f1 -f2 -f
 #f1 #f2 #f #g1 #g2 #g #Hf #H1 #H2 #H #Hg
 [ /4 width=6 by isid_inv_push, isid_push/ ]
 cases (isid_inv_next … Hg … H)
 qed-.
 
-corec lemma sor_fwd_isid2: ∀f1,f2,f. f1 ⋓ f2 ≘ f → 𝐈⦃f⦄ → 𝐈⦃f2⦄.
+corec lemma sor_fwd_isid2: ∀f1,f2,f. f1 ⋓ f2 ≘ f → 𝐈❪f❫ → 𝐈❪f2❫.
 #f1 #f2 #f * -f1 -f2 -f
 #f1 #f2 #f #g1 #g2 #g #Hf #H1 #H2 #H #Hg
 [ /4 width=6 by isid_inv_push, isid_push/ ]
 cases (isid_inv_next … Hg … H)
 qed-.
 
-lemma sor_inv_isid3: ∀f1,f2,f. f1 ⋓ f2 ≘ f → 𝐈⦃f⦄ → 𝐈⦃f1⦄ ∧ 𝐈⦃f2⦄.
+lemma sor_inv_isid3: ∀f1,f2,f. f1 ⋓ f2 ≘ f → 𝐈❪f❫ → 𝐈❪f1❫ ∧ 𝐈❪f2❫.
 /3 width=4 by sor_fwd_isid2, sor_fwd_isid1, conj/ qed-.
 
 (* Properties with finite colength assignment *******************************)
 
-lemma sor_fcla_ex: ∀f1,n1. 𝐂⦃f1⦄ ≘ n1 → ∀f2,n2. 𝐂⦃f2⦄ ≘ n2 →
-                   ∃∃f,n. f1 ⋓ f2 ≘ f & 𝐂⦃f⦄ ≘ n & (n1 ∨ n2) ≤ n & n ≤ n1 + n2.
+lemma sor_fcla_ex: ∀f1,n1. 𝐂❪f1❫ ≘ n1 → ∀f2,n2. 𝐂❪f2❫ ≘ n2 →
+                   ∃∃f,n. f1 ⋓ f2 ≘ f & 𝐂❪f❫ ≘ n & (n1 ∨ n2) ≤ n & n ≤ n1 + n2.
 #f1 #n1 #Hf1 elim Hf1 -f1 -n1 /3 width=6 by sor_isid_sn, ex4_2_intro/
 #f1 #n1 #Hf1 #IH #f2 #n2 * -f2 -n2 /3 width=6 by fcla_push, fcla_next, ex4_2_intro, sor_isid_dx/
 #f2 #n2 #Hf2 elim (IH … Hf2) -IH -Hf2 -Hf1 [2,4: #f #n <plus_n_Sm ] (**) (* full auto fails *)
@@ -378,16 +378,16 @@ lemma sor_fcla_ex: ∀f1,n1. 𝐂⦃f1⦄ ≘ n1 → ∀f2,n2. 𝐂⦃f2⦄ ≘ 
 ]
 qed-.
 
-lemma sor_fcla: ∀f1,n1. 𝐂⦃f1⦄ ≘ n1 → ∀f2,n2. 𝐂⦃f2⦄ ≘ n2 → ∀f. f1 ⋓ f2 ≘ f →
-                ∃∃n. 𝐂⦃f⦄ ≘ n & (n1 ∨ n2) ≤ n & n ≤ n1 + n2.
+lemma sor_fcla: ∀f1,n1. 𝐂❪f1❫ ≘ n1 → ∀f2,n2. 𝐂❪f2❫ ≘ n2 → ∀f. f1 ⋓ f2 ≘ f →
+                ∃∃n. 𝐂❪f❫ ≘ n & (n1 ∨ n2) ≤ n & n ≤ n1 + n2.
 #f1 #n1 #Hf1 #f2 #n2 #Hf2 #f #Hf elim (sor_fcla_ex … Hf1 … Hf2) -Hf1 -Hf2
 /4 width=6 by sor_mono, fcla_eq_repl_back, ex3_intro/
 qed-.
 
 (* Forward lemmas with finite colength **************************************)
 
-lemma sor_fwd_fcla_sn_ex: ∀f,n. 𝐂⦃f⦄ ≘ n → ∀f1,f2. f1 ⋓ f2 ≘ f →
-                          ∃∃n1.  𝐂⦃f1⦄ ≘ n1 & n1 ≤ n.
+lemma sor_fwd_fcla_sn_ex: ∀f,n. 𝐂❪f❫ ≘ n → ∀f1,f2. f1 ⋓ f2 ≘ f →
+                          ∃∃n1.  𝐂❪f1❫ ≘ n1 & n1 ≤ n.
 #f #n #H elim H -f -n
 [ /4 width=4 by sor_fwd_isid1, fcla_isid, ex2_intro/
 | #f #n #_ #IH #f1 #f2 #H
@@ -399,37 +399,37 @@ lemma sor_fwd_fcla_sn_ex: ∀f,n. 𝐂⦃f⦄ ≘ n → ∀f1,f2. f1 ⋓ f2 ≘ 
 ]
 qed-.
 
-lemma sor_fwd_fcla_dx_ex: ∀f,n. 𝐂⦃f⦄ ≘ n → ∀f1,f2. f1 ⋓ f2 ≘ f →
-                          ∃∃n2.  𝐂⦃f2⦄ ≘ n2 & n2 ≤ n.
+lemma sor_fwd_fcla_dx_ex: ∀f,n. 𝐂❪f❫ ≘ n → ∀f1,f2. f1 ⋓ f2 ≘ f →
+                          ∃∃n2.  𝐂❪f2❫ ≘ n2 & n2 ≤ n.
 /3 width=4 by sor_fwd_fcla_sn_ex, sor_comm/ qed-.
 
 (* Properties with test for finite colength *********************************)
 
-lemma sor_isfin_ex: ∀f1,f2. 𝐅⦃f1⦄ → 𝐅⦃f2⦄ → ∃∃f. f1 ⋓ f2 ≘ f & 𝐅⦃f⦄.
+lemma sor_isfin_ex: ∀f1,f2. 𝐅❪f1❫ → 𝐅❪f2❫ → ∃∃f. f1 ⋓ f2 ≘ f & 𝐅❪f❫.
 #f1 #f2 * #n1 #H1 * #n2 #H2 elim (sor_fcla_ex … H1 … H2) -H1 -H2
 /3 width=4 by ex2_intro, ex_intro/
 qed-.
 
-lemma sor_isfin: ∀f1,f2. 𝐅⦃f1⦄ → 𝐅⦃f2⦄ → ∀f. f1 ⋓ f2 ≘ f → 𝐅⦃f⦄.
+lemma sor_isfin: ∀f1,f2. 𝐅❪f1❫ → 𝐅❪f2❫ → ∀f. f1 ⋓ f2 ≘ f → 𝐅❪f❫.
 #f1 #f2 #Hf1 #Hf2 #f #Hf elim (sor_isfin_ex … Hf1 … Hf2) -Hf1 -Hf2
 /3 width=6 by sor_mono, isfin_eq_repl_back/
 qed-.
 
 (* Forward lemmas with test for finite colength *****************************)
 
-lemma sor_fwd_isfin_sn: ∀f. 𝐅⦃f⦄ → ∀f1,f2. f1 ⋓ f2 ≘ f → 𝐅⦃f1⦄.
+lemma sor_fwd_isfin_sn: ∀f. 𝐅❪f❫ → ∀f1,f2. f1 ⋓ f2 ≘ f → 𝐅❪f1❫.
 #f * #n #Hf #f1 #f2 #H
 elim (sor_fwd_fcla_sn_ex … Hf … H) -f -f2 /2 width=2 by ex_intro/
 qed-.
 
-lemma sor_fwd_isfin_dx: ∀f. 𝐅⦃f⦄ → ∀f1,f2. f1 ⋓ f2 ≘ f → 𝐅⦃f2⦄.
+lemma sor_fwd_isfin_dx: ∀f. 𝐅❪f❫ → ∀f1,f2. f1 ⋓ f2 ≘ f → 𝐅❪f2❫.
 #f * #n #Hf #f1 #f2 #H
 elim (sor_fwd_fcla_dx_ex … Hf … H) -f -f1 /2 width=2 by ex_intro/
 qed-.
 
 (* Inversion lemmas with test for finite colength ***************************)
 
-lemma sor_inv_isfin3: ∀f1,f2,f. f1 ⋓ f2 ≘ f → 𝐅⦃f⦄ → 𝐅⦃f1⦄ ∧ 𝐅⦃f2⦄.
+lemma sor_inv_isfin3: ∀f1,f2,f. f1 ⋓ f2 ≘ f → 𝐅❪f❫ → 𝐅❪f1❫ ∧ 𝐅❪f2❫.
 /3 width=4 by sor_fwd_isfin_dx, sor_fwd_isfin_sn, conj/ qed-.
 
 (* Inversion lemmas with inclusion ******************************************)

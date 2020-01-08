@@ -25,12 +25,12 @@ lemma rexs_refl: ∀R. c_reflexive … R →
 
 (* Basic_2A1: uses: TC_lpx_sn_pair TC_lpx_sn_pair_refl *)
 lemma rexs_pair_refl: ∀R. c_reflexive … R →
-                      ∀L,V1,V2. CTC … R L V1 V2 → ∀I,T. L.ⓑ{I}V1 ⪤*[R,T] L.ⓑ{I}V2.
+                      ∀L,V1,V2. CTC … R L V1 V2 → ∀I,T. L.ⓑ[I]V1 ⪤*[R,T] L.ⓑ[I]V2.
 #R #HR #L #V1 #V2 #H elim H -V2
 /3 width=3 by rexs_step_dx, rex_pair_refl, inj/
 qed.
 
-lemma rexs_tc: ∀R,L1,L2,T,f. 𝐈⦃f⦄ → TC … (sex cfull (cext2 R) f) L1 L2 →
+lemma rexs_tc: ∀R,L1,L2,T,f. 𝐈❪f❫ → TC … (sex cfull (cext2 R) f) L1 L2 →
                L1 ⪤*[R,T] L2.
 #R #L1 #L2 #T #f #Hf #H elim H -L2
 [ elim (frees_total L1 T) | #L elim (frees_total L T) ]
@@ -58,7 +58,7 @@ qed-.
 (* Advanced inversion lemmas ************************************************)
 
 lemma rexs_inv_bind_void: ∀R. c_reflexive … R →
-                          ∀p,I,L1,L2,V,T. L1 ⪤*[R,ⓑ{p,I}V.T] L2 →
+                          ∀p,I,L1,L2,V,T. L1 ⪤*[R,ⓑ[p,I]V.T] L2 →
                           ∧∧ L1 ⪤*[R,V] L2 & L1.ⓧ ⪤*[R,T] L2.ⓧ.
 #R #HR #p #I #L1 #L2 #V #T #H @(rexs_ind_sn … HR … H) -L2
 [ /3 width=1 by rexs_refl, conj/
@@ -69,7 +69,7 @@ qed-.
 (* Advanced forward lemmas **************************************************)
 
 lemma rexs_fwd_bind_dx_void: ∀R. c_reflexive … R →
-                             ∀p,I,L1,L2,V,T. L1 ⪤*[R,ⓑ{p,I}V.T] L2 →
+                             ∀p,I,L1,L2,V,T. L1 ⪤*[R,ⓑ[p,I]V.T] L2 →
                              L1.ⓧ ⪤*[R,T] L2.ⓧ.
 #R #HR #p #I #L1 #L2 #V #T #H elim (rexs_inv_bind_void … H) -H //
 qed-.

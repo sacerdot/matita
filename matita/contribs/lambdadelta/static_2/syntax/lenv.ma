@@ -70,13 +70,13 @@ lemma cfull_dec: ∀L,T1,T2. Decidable (cfull L T1 T2).
 
 (* Basic inversion lemmas ***************************************************)
 
-fact destruct_lbind_lbind_aux: ∀I1,I2,L1,L2. L1.ⓘ{I1} = L2.ⓘ{I2} →
+fact destruct_lbind_lbind_aux: ∀I1,I2,L1,L2. L1.ⓘ[I1] = L2.ⓘ[I2] →
                                L1 = L2 ∧ I1 = I2.
 #I1 #I2 #L1 #L2 #H destruct /2 width=1 by conj/
 qed-.
 
 (* Basic_2A1: uses: discr_lpair_x_xy *)
-lemma discr_lbind_x_xy: ∀I,L. L = L.ⓘ{I} → ⊥.
+lemma discr_lbind_x_xy: ∀I,L. L = L.ⓘ[I] → ⊥.
 #I #L elim L -L
 [ #H destruct
 | #L #J #IHL #H elim (destruct_lbind_lbind_aux … H) -H  (**) (* destruct lemma needed *)
@@ -85,5 +85,5 @@ lemma discr_lbind_x_xy: ∀I,L. L = L.ⓘ{I} → ⊥.
 qed-.
 
 (* Basic_2A1: uses: discr_lpair_xy_x *)
-lemma discr_lbind_xy_x: ∀I,L. L.ⓘ{I} = L → ⊥.
+lemma discr_lbind_xy_x: ∀I,L. L.ⓘ[I] = L → ⊥.
 /2 width=4 by discr_lbind_x_xy/ qed-.

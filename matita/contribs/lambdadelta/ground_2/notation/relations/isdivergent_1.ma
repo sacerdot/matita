@@ -14,6 +14,6 @@
 
 (* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
 
-notation "hvbox( 𝛀 ⦃ term 46 f ⦄ )"
+notation "hvbox( 𝛀❪ term 46 f ❫ )"
    non associative with precedence 45
    for @{ 'IsDivergent $f }.

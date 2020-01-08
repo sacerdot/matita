@@ -19,7 +19,7 @@ include "static_2/static/aaa_aaa.ma".
 
 (* Main properties **********************************************************)
 
-theorem aaa_dec (G) (L) (T): Decidable (∃A. ⦃G,L⦄ ⊢ T ⁝ A).
+theorem aaa_dec (G) (L) (T): Decidable (∃A. ❪G,L❫ ⊢ T ⁝ A).
 #G #L #T @(fqup_wf_ind_eq (Ⓣ) … G L T) -G -L -T
 #G0 #L0 #T0 #IH #G #L * * [||| #p * | * ]
 [ #s #HG #HL #HT destruct -IH

@@ -22,7 +22,7 @@ inductive vpushs (M) (gv) (lv): relation2 lenv (evaluation M) ≝
 | vpushs_atom: vpushs M gv lv (⋆) lv
 | vpushs_abbr: ∀v,d,K,V. vpushs M gv lv K v → ⟦V⟧[gv,v] = d → vpushs M gv lv (K.ⓓV) (⫯[0←d]v)
 | vpushs_abst: ∀v,d,K,V. vpushs M gv lv K v → vpushs M gv lv (K.ⓛV) (⫯[0←d]v)
-| vpushs_unit: ∀v,d,I,K. vpushs M gv lv K v → vpushs M gv lv (K.ⓤ{I}) (⫯[0←d]v)
+| vpushs_unit: ∀v,d,I,K. vpushs M gv lv K v → vpushs M gv lv (K.ⓤ[I]) (⫯[0←d]v)
 | vpushs_repl: ∀v1,v2,L. vpushs M gv lv L v1 → v1 ≗ v2 → vpushs M gv lv L v2
 .
 
@@ -92,7 +92,7 @@ lemma vpushs_inv_abst (M) (gv) (lv): is_model M →
 
 fact vpushs_inv_unit_aux (M) (gv) (lv): is_model M →
                                         ∀y,L. L ⨁{M}[gv] lv ≘ y →
-                                        ∀I,K. K.ⓤ{I} = L →
+                                        ∀I,K. K.ⓤ[I] = L →
                                         ∃∃v,d. K ⨁[gv] lv ≘ v & ⫯[0←d]v ≗ y.
 #M #gv #lv #HM #y #L #H elim H -y -L
 [ #Z #Y #H destruct
@@ -107,14 +107,14 @@ fact vpushs_inv_unit_aux (M) (gv) (lv): is_model M →
 qed-.
 
 lemma vpushs_inv_unit (M) (gv) (lv): is_model M →
-                                     ∀y,I,K. K.ⓤ{I} ⨁{M}[gv] lv ≘ y →
+                                     ∀y,I,K. K.ⓤ[I] ⨁{M}[gv] lv ≘ y →
                                      ∃∃v,d. K ⨁[gv] lv ≘ v & ⫯[0←d]v ≗ y.
 /2 width=4 by vpushs_inv_unit_aux/ qed-.
 
 (* Basic forward lemmas *****************************************************)
 
 lemma vpushs_fwd_bind (M) (gv) (lv): is_model M →
-                                     ∀y,I,K. K.ⓘ{I} ⨁{M}[gv] lv ≘ y →
+                                     ∀y,I,K. K.ⓘ[I] ⨁{M}[gv] lv ≘ y →
                                      ∃∃v,d. K ⨁[gv] lv ≘ v & ⫯[0←d]v ≗ y.
 #M #gv #lv #HM #y * [ #I | * #V ] #L #H
 [ /2 width=2 by vpushs_inv_unit/

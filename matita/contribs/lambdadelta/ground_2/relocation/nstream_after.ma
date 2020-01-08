@@ -18,7 +18,7 @@ include "ground_2/relocation/rtmap_after.ma".
 (* RELOCATION N-STREAM ******************************************************)
 
 corec definition compose: rtmap → rtmap → rtmap.
-#f2 * #n1 #f1 @(seq … (f2@❴n1❵)) @(compose ? f1) -compose -f1
+#f2 * #n1 #f1 @(seq … (f2@❨n1❩)) @(compose ? f1) -compose -f1
 @(⫰*[↑n1] f2)
 defined.
 
@@ -27,7 +27,7 @@ interpretation "functional composition (nstream)"
 
 (* Basic properies on compose ***********************************************)
 
-lemma compose_rew: ∀f2,f1,n1. f2@❴n1❵⨮(⫰*[↑n1]f2)∘f1 = f2∘(n1⨮f1).
+lemma compose_rew: ∀f2,f1,n1. f2@❨n1❩⨮(⫰*[↑n1]f2)∘f1 = f2∘(n1⨮f1).
 #f2 #f1 #n1 <(stream_rew … (f2∘(n1⨮f1))) normalize //
 qed.
 
@@ -39,7 +39,7 @@ qed.
 (* Basic inversion lemmas on compose ****************************************)
 
 lemma compose_inv_rew: ∀f2,f1,f,n1,n. f2∘(n1⨮f1) = n⨮f →
-                       f2@❴n1❵ = n ∧ (⫰*[↑n1]f2)∘f1 = f.
+                       f2@❨n1❩ = n ∧ (⫰*[↑n1]f2)∘f1 = f.
 #f2 #f1 #f #n1 #n <(stream_rew … (f2∘(n1⨮f1))) normalize
 #H destruct /2 width=1 by conj/
 qed-.
@@ -51,13 +51,13 @@ lemma compose_inv_O2: ∀f2,f1,f,n2,n. (n2⨮f2)∘(⫯f1) = n⨮f →
 qed-.
 
 lemma compose_inv_S2: ∀f2,f1,f,n2,n1,n. (n2⨮f2)∘(↑n1⨮f1) = n⨮f →
-                      ↑(n2+f2@❴n1❵) = n ∧ f2∘(n1⨮f1) = f2@❴n1❵⨮f.
+                      ↑(n2+f2@❨n1❩) = n ∧ f2∘(n1⨮f1) = f2@❨n1❩⨮f.
 #f2 #f1 #f #n2 #n1 #n <compose_rew
 #H destruct <tls_S1 /2 width=1 by conj/
 qed-.
 
 lemma compose_inv_S1: ∀f2,f1,f,n1,n. (↑f2)∘(n1⨮f1) = n⨮f →
-                      ↑(f2@❴n1❵) = n ∧ f2∘(n1⨮f1) = f2@❴n1❵⨮f.
+                      ↑(f2@❨n1❩) = n ∧ f2∘(n1⨮f1) = f2@❨n1❩⨮f.
 #f2 #f1 #f #n1 #n <compose_rew
 #H destruct <tls_S1 /2 width=1 by conj/
 qed-.
@@ -74,7 +74,7 @@ lemma after_S2: ∀f2,f1,f,n1,n. f2 ⊚ n1⨮f1 ≘ n⨮f →
 #f2 #f1 #f #n1 #n #Hf #n2 elim n2 -n2 /2 width=7 by after_next, after_push/
 qed.
 
-lemma after_apply: ∀n1,f2,f1,f. (⫰*[↑n1] f2) ⊚ f1 ≘ f → f2 ⊚ n1⨮f1 ≘ f2@❴n1❵⨮f.
+lemma after_apply: ∀n1,f2,f1,f. (⫰*[↑n1] f2) ⊚ f1 ≘ f → f2 ⊚ n1⨮f1 ≘ f2@❨n1❩⨮f.
 #n1 elim n1 -n1
 [ * /2 width=1 by after_O2/
 | #n1 #IH * /3 width=1 by after_S2/
@@ -134,7 +134,7 @@ lemma after_inv_total: ∀f2,f1,f. f2 ⊚ f1 ≘ f → f2 ∘ f1 ≡ f.
 
 (* Specific forward lemmas on after *****************************************)
 
-lemma after_fwd_hd: ∀f2,f1,f,n1,n. f2 ⊚ n1⨮f1 ≘ n⨮f → f2@❴n1❵ = n.
+lemma after_fwd_hd: ∀f2,f1,f,n1,n. f2 ⊚ n1⨮f1 ≘ n⨮f → f2@❨n1❩ = n.
 #f2 #f1 #f #n1 #n #H lapply (after_fwd_at ? n1 0 … H) -H [1,2,3: // ]
 /3 width=2 by at_inv_O1, sym_eq/
 qed-.
@@ -149,10 +149,10 @@ lemma after_fwd_tls: ∀f,f1,n1,f2,n2,n. n2⨮f2 ⊚ n1⨮f1 ≘ n⨮f →
 qed-.
 
 lemma after_inv_apply: ∀f2,f1,f,n2,n1,n. n2⨮f2 ⊚ n1⨮f1 ≘ n⨮f →
-                       (n2⨮f2)@❴n1❵ = n ∧ (⫰*[n1]f2) ⊚ f1 ≘ f.
+                       (n2⨮f2)@❨n1❩ = n ∧ (⫰*[n1]f2) ⊚ f1 ≘ f.
 /3 width=3 by after_fwd_tls, after_fwd_hd, conj/ qed-.
 
 (* Properties on apply ******************************************************)
 
-lemma compose_apply (f2) (f1) (i): f2@❴f1@❴i❵❵ = (f2∘f1)@❴i❵.
+lemma compose_apply (f2) (f1) (i): f2@❨f1@❨i❩❩ = (f2∘f1)@❨i❩.
 /4 width=6 by after_fwd_at, at_inv_total, sym_eq/ qed.

@@ -20,6 +20,6 @@ include "static_2/relocation/lifts_bind.ma".
 
 (* Forward lemmas with weight for binders ***********************************)
 
-lemma liftsb_fwd_bw: ∀f,I1,I2. ⇧*[f] I1 ≘ I2 → ♯{I1} = ♯{I2}.
+lemma liftsb_fwd_bw: ∀f,I1,I2. ⇧*[f] I1 ≘ I2 → ♯❨I1❩ = ♯❨I2❩.
 #f #I1 #I2 * -I1 -I2 /2 width=2 by lifts_fwd_tw/
 qed-.

@@ -25,8 +25,8 @@ include "basic_2/dynamic/lsubv_cnv.ma".
 
 fact cnv_cpm_trans_lpr_aux (h) (a):
      ∀G0,L0,T0.
-     (∀G1,L1,T1. ⦃G0,L0,T0⦄ >[h] ⦃G1,L1,T1⦄ → IH_cnv_cpms_conf_lpr h a G1 L1 T1) →
-     (∀G1,L1,T1. ⦃G0,L0,T0⦄ >[h] ⦃G1,L1,T1⦄ → IH_cnv_cpm_trans_lpr h a G1 L1 T1) →
+     (∀G1,L1,T1. ❪G0,L0,T0❫ >[h] ❪G1,L1,T1❫ → IH_cnv_cpms_conf_lpr h a G1 L1 T1) →
+     (∀G1,L1,T1. ❪G0,L0,T0❫ >[h] ❪G1,L1,T1❫ → IH_cnv_cpm_trans_lpr h a G1 L1 T1) →
      ∀G1,L1,T1. G0 = G1 → L0 = L1 → T0 = T1 → IH_cnv_cpm_trans_lpr h a G1 L1 T1.
 #h #a #G0 #L0 #T0 #IH2 #IH1 #G1 #L1 * * [|||| * ]
 [ #s #HG0 #HL0 #HT0 #H1 #x #X #H2 #L2 #_ destruct -IH2 -IH1 -H1
@@ -67,7 +67,7 @@ fact cnv_cpm_trans_lpr_aux (h) (a):
     elim (cpms_inv_abst_sn … H) -H #W2 #X2 #HW12 #_ #H destruct
     elim (cprs_conf … HXW1 … HW12) -W1 #W1 #HXW1 #HW21
     lapply (cpms_trans … HXV2 … HXW1) -XW1 <plus_n_O #HV2W1
-    lapply (cpms_trans … HTX2 … (ⓛ{p}W1.X2) ?)
+    lapply (cpms_trans … HTX2 … (ⓛ[p]W1.X2) ?)
     [3:|*: /2 width=2 by cpms_bind/ ] -W2 <plus_n_O #HTX2
     elim (cnv_fwd_cpms_abst_dx_le … HT2 … HTX2 n) -HTX2 [| // ] #U2 #HTU2 #_ -X2
     /2 width=7 by cnv_appl/
@@ -102,7 +102,7 @@ fact cnv_cpm_trans_lpr_aux (h) (a):
     lapply (cpms_lifts_bi … HXW1 (Ⓣ) … (L2.ⓓW2) … HW13 … HXW12) /3 width=1 by drops_refl, drops_drop/ -W1 -XW1 #HXW32
     elim (cprs_conf … HXW32 … HW3) -W3 #W3 #HXW23 #HW3
     lapply (cpms_trans … HXVW2 … HXW23) -XW2 <plus_n_O #H1
-    lapply (cpms_trans … HTX2 ? (ⓛ{p}W3.X2) ?) [3:|*:/2 width=2 by cpms_bind/ ] -W #H2
+    lapply (cpms_trans … HTX2 ? (ⓛ[p]W3.X2) ?) [3:|*:/2 width=2 by cpms_bind/ ] -W #H2
     elim (cnv_fwd_cpms_abst_dx_le … HT2 … H2 n) -H2 [| // ] #U2 #HTU2 #_ -X2
     /3 width=7 by cnv_appl, cnv_bind/
   ]

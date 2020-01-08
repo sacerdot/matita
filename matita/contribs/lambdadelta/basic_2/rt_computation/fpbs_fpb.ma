@@ -19,6 +19,6 @@ include "basic_2/rt_computation/fpbs.ma".
 
 (* Properties with proper parallel rst-reduction on closures ****************)
 
-lemma fpb_fpbs: ∀h,G1,G2,L1,L2,T1,T2. ⦃G1,L1,T1⦄ ≻[h] ⦃G2,L2,T2⦄ →
-                ⦃G1,L1,T1⦄ ≥[h] ⦃G2,L2,T2⦄.
+lemma fpb_fpbs: ∀h,G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ≻[h] ❪G2,L2,T2❫ →
+                ❪G1,L1,T1❫ ≥[h] ❪G2,L2,T2❫.
 /3 width=1 by fpbq_fpbs, fpb_fpbq/ qed.

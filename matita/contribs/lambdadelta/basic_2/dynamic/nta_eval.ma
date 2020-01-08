@@ -20,12 +20,12 @@ include "basic_2/dynamic/nta_preserve.ma".
 (* Properties with evaluations for rt-transition on terms *******************)
 
 lemma nta_typecheck_dec (h) (a) (G) (L): ac_props a →
-      ∀T,U. Decidable … (⦃G,L⦄ ⊢ T :[h,a] U).
+      ∀T,U. Decidable … (❪G,L❫ ⊢ T :[h,a] U).
 /2 width=1 by cnv_dec/ qed-.
 
 (* Basic_1: uses: ty3_inference *)
 lemma nta_inference_dec (h) (a) (G) (L) (T): ac_props a →
-      Decidable (∃U. ⦃G,L⦄ ⊢ T :[h,a] U).
+      Decidable (∃U. ❪G,L❫ ⊢ T :[h,a] U).
 #h #a #G #L #T #Ha
 elim (cnv_dec h … G L T Ha) -Ha #HT
 [ /3 width=1 by cnv_nta_sn, or_introl/

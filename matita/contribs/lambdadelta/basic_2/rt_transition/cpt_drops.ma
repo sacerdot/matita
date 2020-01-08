@@ -48,15 +48,15 @@ qed-.
 (* Advanced properties ******************************************************)
 
 lemma cpt_delta_drops (h) (n) (G):
-      ∀L,K,V,i. ⇩*[i] L ≘ K.ⓓV → ∀V2. ⦃G,K⦄ ⊢ V ⬆[h,n] V2 →
-      ∀W2. ⇧*[↑i] V2 ≘ W2 → ⦃G,L⦄ ⊢ #i ⬆[h,n] W2.
+      ∀L,K,V,i. ⇩*[i] L ≘ K.ⓓV → ∀V2. ❪G,K❫ ⊢ V ⬆[h,n] V2 →
+      ∀W2. ⇧*[↑i] V2 ≘ W2 → ❪G,L❫ ⊢ #i ⬆[h,n] W2.
 #h #n #G #L #K #V #i #HLK #V2 *
 /3 width=8 by cpg_delta_drops, ex2_intro/
 qed.
 
 lemma cpt_ell_drops (h) (n) (G):
-      ∀L,K,V,i. ⇩*[i] L ≘ K.ⓛV → ∀V2. ⦃G,K⦄ ⊢ V ⬆[h,n] V2 →
-      ∀W2. ⇧*[↑i] V2 ≘ W2 → ⦃G,L⦄ ⊢ #i ⬆[h,↑n] W2.
+      ∀L,K,V,i. ⇩*[i] L ≘ K.ⓛV → ∀V2. ❪G,K❫ ⊢ V ⬆[h,n] V2 →
+      ∀W2. ⇧*[↑i] V2 ≘ W2 → ❪G,L❫ ⊢ #i ⬆[h,↑n] W2.
 #h #n #G #L #K #V #i #HLK #V2 *
 /3 width=8 by cpg_ell_drops, ist_succ, ex2_intro/
 qed.
@@ -64,11 +64,11 @@ qed.
 (* Advanced inversion lemmas ************************************************)
 
 lemma cpt_inv_atom_sn_drops (h) (n) (I) (G) (L):
-      ∀X2. ⦃G,L⦄ ⊢ ⓪{I} ⬆[h,n] X2 →
-      ∨∨ ∧∧ X2 = ⓪{I} & n = 0
+      ∀X2. ❪G,L❫ ⊢ ⓪[I] ⬆[h,n] X2 →
+      ∨∨ ∧∧ X2 = ⓪[I] & n = 0
        | ∃∃s. X2 = ⋆(⫯[h]s) & I = Sort s & n = 1
-       | ∃∃K,V,V2,i. ⇩*[i] L ≘ K.ⓓV & ⦃G,K⦄ ⊢ V ⬆[h,n] V2 & ⇧*[↑i] V2 ≘ X2 & I = LRef i
-       | ∃∃m,K,V,V2,i. ⇩*[i] L ≘ K.ⓛV & ⦃G,K⦄ ⊢ V ⬆[h,m] V2 & ⇧*[↑i] V2 ≘ X2 & I = LRef i & n = ↑m.
+       | ∃∃K,V,V2,i. ⇩*[i] L ≘ K.ⓓV & ❪G,K❫ ⊢ V ⬆[h,n] V2 & ⇧*[↑i] V2 ≘ X2 & I = LRef i
+       | ∃∃m,K,V,V2,i. ⇩*[i] L ≘ K.ⓛV & ❪G,K❫ ⊢ V ⬆[h,m] V2 & ⇧*[↑i] V2 ≘ X2 & I = LRef i & n = ↑m.
 #h #n #I #G #L #X2 * #c #Hc #H elim (cpg_inv_atom1_drops … H) -H *
 [ #H1 #H2 destruct
   /3 width=1 by or4_intro0, conj/
@@ -83,10 +83,10 @@ lemma cpt_inv_atom_sn_drops (h) (n) (I) (G) (L):
 qed-.
 
 lemma cpt_inv_lref_sn_drops (h) (n) (G) (L) (i):
-      ∀X2. ⦃G,L⦄ ⊢ #i ⬆[h,n] X2 →
+      ∀X2. ❪G,L❫ ⊢ #i ⬆[h,n] X2 →
       ∨∨ ∧∧ X2 = #i & n = 0
-       | ∃∃K,V,V2. ⇩*[i] L ≘ K.ⓓV & ⦃G,K⦄ ⊢ V ⬆[h,n] V2 & ⇧*[↑i] V2 ≘ X2
-       | ∃∃m,K,V,V2. ⇩*[i] L ≘ K. ⓛV & ⦃G,K⦄ ⊢ V ⬆[h,m] V2 & ⇧*[↑i] V2 ≘ X2 & n = ↑m.
+       | ∃∃K,V,V2. ⇩*[i] L ≘ K.ⓓV & ❪G,K❫ ⊢ V ⬆[h,n] V2 & ⇧*[↑i] V2 ≘ X2
+       | ∃∃m,K,V,V2. ⇩*[i] L ≘ K. ⓛV & ❪G,K❫ ⊢ V ⬆[h,m] V2 & ⇧*[↑i] V2 ≘ X2 & n = ↑m.
 #h #n #G #L #i #X2 * #c #Hc #H elim (cpg_inv_lref1_drops … H) -H *
 [ #H1 #H2 destruct
   /3 width=1 by or3_intro0, conj/
@@ -101,8 +101,8 @@ qed-.
 (* Advanced forward lemmas **************************************************)
 
 fact cpt_fwd_plus_aux (h) (n) (G) (L):
-     ∀T1,T2. ⦃G,L⦄ ⊢ T1 ⬆[h,n] T2 → ∀n1,n2. n1+n2 = n →
-     ∃∃T. ⦃G,L⦄ ⊢ T1 ⬆[h,n1] T & ⦃G,L⦄ ⊢ T ⬆[h,n2] T2.
+     ∀T1,T2. ❪G,L❫ ⊢ T1 ⬆[h,n] T2 → ∀n1,n2. n1+n2 = n →
+     ∃∃T. ❪G,L❫ ⊢ T1 ⬆[h,n1] T & ❪G,L❫ ⊢ T ⬆[h,n2] T2.
 #h #n #G #L #T1 #T2 #H @(cpt_ind … H) -G -L -T1 -T2 -n
 [ #I #G #L #n1 #n2 #H
   elim (plus_inv_O3 … H) -H #H1 #H2 destruct
@@ -115,19 +115,19 @@ fact cpt_fwd_plus_aux (h) (n) (G) (L):
   ]
 | #n #G #K #V1 #V2 #W2 #_ #IH #HVW2 #n1 #n2 #H destruct
   elim IH [|*: // ] -IH #V #HV1 #HV2
-  elim (lifts_total V 𝐔❴↑O❵) #W #HVW
+  elim (lifts_total V 𝐔❨↑O❩) #W #HVW
   /5 width=11 by cpt_lifts_bi, cpt_delta, drops_refl, drops_drop, ex2_intro/
 | #n #G #K #V1 #V2 #W2 #HV12 #IH #HVW2 #x1 #n2 #H
   elim (plus_inv_S3_sn … H) -H *
   [ #H1 #H2 destruct -IH /3 width=3 by cpt_ell, ex2_intro/
   | #n1 #H1 #H2 destruct -HV12
     elim (IH n1) [|*: // ] -IH #V #HV1 #HV2
-    elim (lifts_total V 𝐔❴↑O❵) #W #HVW
+    elim (lifts_total V 𝐔❨↑O❩) #W #HVW
     /5 width=11 by cpt_lifts_bi, cpt_ell, drops_refl, drops_drop, ex2_intro/
   ]
 | #n #I #G #K #T2 #U2 #i #_ #IH #HTU2 #n1 #n2 #H destruct
   elim IH [|*: // ] -IH #T #HT1 #HT2
-  elim (lifts_total T 𝐔❴↑O❵) #U #HTU
+  elim (lifts_total T 𝐔❨↑O❩) #U #HTU
   /5 width=11 by cpt_lifts_bi, cpt_lref, drops_refl, drops_drop, ex2_intro/
 | #n #p #I #G #L #V1 #V2 #T1 #T2 #HV12 #_ #_ #IHT #n1 #n2 #H destruct
   elim IHT [|*: // ] -IHT #T #HT1 #HT2
@@ -150,6 +150,6 @@ fact cpt_fwd_plus_aux (h) (n) (G) (L):
 qed-.
 
 lemma cpt_fwd_plus (h) (n1) (n2) (G) (L):
-      ∀T1,T2. ⦃G,L⦄ ⊢ T1 ⬆[h,n1+n2] T2 →
-      ∃∃T. ⦃G,L⦄ ⊢ T1 ⬆[h,n1] T & ⦃G,L⦄ ⊢ T ⬆[h,n2] T2.
+      ∀T1,T2. ❪G,L❫ ⊢ T1 ⬆[h,n1+n2] T2 →
+      ∃∃T. ❪G,L❫ ⊢ T1 ⬆[h,n1] T & ❪G,L❫ ⊢ T ⬆[h,n2] T2.
 /2 width=3 by cpt_fwd_plus_aux/ qed-.

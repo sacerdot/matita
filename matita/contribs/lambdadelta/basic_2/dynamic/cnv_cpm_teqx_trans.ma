@@ -18,16 +18,16 @@ include "basic_2/dynamic/cnv_cpm_teqx.ma".
 (* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
 
 definition IH_cnv_cpm_teqx_cpm_trans (h) (a): relation3 genv lenv term ≝
-           λG,L,T1. ⦃G,L⦄ ⊢ T1 ![h,a] →
-           ∀n1,T. ⦃G,L⦄ ⊢ T1 ➡[n1,h] T → T1 ≛ T →
-           ∀n2,T2. ⦃G,L⦄ ⊢ T ➡[n2,h] T2 →
-           ∃∃T0. ⦃G,L⦄ ⊢ T1 ➡[n2,h] T0 & ⦃G,L⦄ ⊢ T0 ➡[n1,h] T2 & T0 ≛ T2.
+           λG,L,T1. ❪G,L❫ ⊢ T1 ![h,a] →
+           ∀n1,T. ❪G,L❫ ⊢ T1 ➡[n1,h] T → T1 ≛ T →
+           ∀n2,T2. ❪G,L❫ ⊢ T ➡[n2,h] T2 →
+           ∃∃T0. ❪G,L❫ ⊢ T1 ➡[n2,h] T0 & ❪G,L❫ ⊢ T0 ➡[n1,h] T2 & T0 ≛ T2.
 
 (* Transitive properties restricted rt-transition for terms *****************)
 
 fact cnv_cpm_teqx_cpm_trans_sub (h) (a) (G0) (L0) (T0):
-     (∀G,L,T. ⦃G0,L0,T0⦄ >[h] ⦃G,L,T⦄ → IH_cnv_cpm_trans_lpr h a G L T) →
-     (∀G,L,T. ⦃G0,L0,T0⦄ ⬂+ ⦃G,L,T⦄ → IH_cnv_cpm_teqx_cpm_trans h a G L T) →
+     (∀G,L,T. ❪G0,L0,T0❫ >[h] ❪G,L,T❫ → IH_cnv_cpm_trans_lpr h a G L T) →
+     (∀G,L,T. ❪G0,L0,T0❫ ⬂+ ❪G,L,T❫ → IH_cnv_cpm_teqx_cpm_trans h a G L T) →
      ∀G,L,T1. G0 = G → L0 = L → T0 = T1 → IH_cnv_cpm_teqx_cpm_trans h a G L T1.
 #h #a #G0 #L0 #T0 #IH2 #IH1 #G #L * [| * [| * ]]
 [ #I #_ #_ #_ #_ #n1 #X1 #H1X #H2X #n2 #X2 #HX2 destruct -G0 -L0 -T0
@@ -42,8 +42,8 @@ fact cnv_cpm_teqx_cpm_trans_sub (h) (a) (G0) (L0) (T0):
   elim (cpm_inv_bind1 … HX2) -HX2 *
   [ #V2 #T2 #HV12 #HT2 #H destruct
     elim (IH1 … H0T1 … H1T1 H2T1 … HT2) -T -IH1 [| // ] #T0 #HT10 #H1T02 #H2T02
-    lapply (IH2 … H0T1 … HT10 (L.ⓑ{I}V1) ?) -IH2 -H0T1 [3:|*: /2 width=1 by fqup_fpbg/ ] #HT0
-    lapply (cpm_teqx_free … HT0 … H1T02 H2T02 G (L.ⓑ{I}V2)) -H1T02 #H1T02
+    lapply (IH2 … H0T1 … HT10 (L.ⓑ[I]V1) ?) -IH2 -H0T1 [3:|*: /2 width=1 by fqup_fpbg/ ] #HT0
+    lapply (cpm_teqx_free … HT0 … H1T02 H2T02 G (L.ⓑ[I]V2)) -H1T02 #H1T02
     /3 width=6 by cpm_bind, teqx_pair, ex3_intro/
   | #T2 #HT2 #HTX2 #H1 #H2 destruct -IH2
     elim (teqx_inv_lifts_dx … H2T1 … HT2) -H2T1 #XT #HXT1 #H2XT2
@@ -89,7 +89,7 @@ fact cnv_cpm_teqx_cpm_trans_sub (h) (a) (G0) (L0) (T0):
 qed-.
 
 fact cnv_cpm_teqx_cpm_trans_aux (h) (a) (G0) (L0) (T0):
-     (∀G,L,T. ⦃G0,L0,T0⦄ >[h] ⦃G,L,T⦄ → IH_cnv_cpm_trans_lpr h a G L T) →
+     (∀G,L,T. ❪G0,L0,T0❫ >[h] ❪G,L,T❫ → IH_cnv_cpm_trans_lpr h a G L T) →
      IH_cnv_cpm_teqx_cpm_trans h a G0 L0 T0.
 #h #a #G0 #L0 #T0
 @(fqup_wf_ind (Ⓣ) … G0 L0 T0) -G0 -L0 -T0 #G0 #L0 #T0 #IH #IH0

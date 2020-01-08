@@ -19,13 +19,13 @@ include "static_2/syntax/bind.ma".
 
 rec definition bw I ≝ match I with
 [ BUnit _   ⇒ 1
-| BPair _ V ⇒ ♯{V}
+| BPair _ V ⇒ ♯❨V❩
 ].
 
 interpretation "weight (binder for local environments)" 'Weight I = (bw I).
 
 (* Basic properties *********************************************************)
 
-lemma bw_pos: ∀I. 1 ≤ ♯{I}.
+lemma bw_pos: ∀I. 1 ≤ ♯❨I❩.
 * //
 qed.
