@@ -25,10 +25,10 @@ interpretation "test for costrained rt-transition counter (rtc)"
 
 (* Basic properties *********************************************************)
 
-lemma isr_00: 𝐑𝐓❪0,𝟘𝟘❫.
+lemma isrt_00: 𝐑𝐓❪0,𝟘𝟘❫.
 /2 width=3 by ex1_2_intro/ qed.
 
-lemma isr_10: 𝐑𝐓❪0,𝟙𝟘❫.
+lemma isrt_10: 𝐑𝐓❪0,𝟙𝟘❫.
 /2 width=3 by ex1_2_intro/ qed.
 
 lemma isrt_01: 𝐑𝐓❪1,𝟘𝟙❫.

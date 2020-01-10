@@ -34,7 +34,7 @@ inductive fqu (b:bool): tri_relation genv lenv term ≝
 | fqu_bind_dx: ∀p,I,G,L,V,T. b = Ⓣ → fqu b G L (ⓑ[p,I]V.T) G (L.ⓑ[I]V) T
 | fqu_clear  : ∀p,I,G,L,V,T. b = Ⓕ → fqu b G L (ⓑ[p,I]V.T) G (L.ⓧ) T
 | fqu_flat_dx: ∀I,G,L,V,T. fqu b G L (ⓕ[I]V.T) G L T
-| fqu_drop   : ∀I,G,L,T,U. ⇧*[1] T ≘ U → fqu b G (L.ⓘ[I]) U G L T
+| fqu_drop   : ∀I,G,L,T,U. ⇧[1] T ≘ U → fqu b G (L.ⓘ[I]) U G L T
 .
 
 interpretation
@@ -119,7 +119,7 @@ fact fqu_inv_bind1_aux: ∀b,G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ⬂[b] ❪G2,L2,T
                         ∨∨ ∧∧ G1 = G2 & L1 = L2 & V1 = T2
                          | ∧∧ G1 = G2 & L1.ⓑ[I]V1 = L2 & U1 = T2 & b = Ⓣ
                          | ∧∧ G1 = G2 & L1.ⓧ = L2 & U1 = T2 & b = Ⓕ
-                         | ∃∃J. G1 = G2 & L1 = L2.ⓘ[J] & ⇧*[1] T2 ≘ ⓑ[p,I]V1.U1.
+                         | ∃∃J. G1 = G2 & L1 = L2.ⓘ[J] & ⇧[1] T2 ≘ ⓑ[p,I]V1.U1.
 #b #G1 #G2 #L1 #L2 #T1 #T2 * -G1 -G2 -L1 -L2 -T1 -T2
 [ #I #G #L #T #q #J #V0 #U0 #H destruct
 | #I #G #L #V #T #q #J #V0 #U0 #H destruct /3 width=1 by and3_intro, or4_intro0/
@@ -134,13 +134,13 @@ lemma fqu_inv_bind1: ∀b,p,I,G1,G2,L1,L2,V1,U1,T2. ❪G1,L1,ⓑ[p,I]V1.U1❫ �
                      ∨∨ ∧∧ G1 = G2 & L1 = L2 & V1 = T2
                       | ∧∧ G1 = G2 & L1.ⓑ[I]V1 = L2 & U1 = T2 & b = Ⓣ
                       | ∧∧ G1 = G2 & L1.ⓧ = L2 & U1 = T2 & b = Ⓕ
-                      | ∃∃J. G1 = G2 & L1 = L2.ⓘ[J] & ⇧*[1] T2 ≘ ⓑ[p,I]V1.U1.
+                      | ∃∃J. G1 = G2 & L1 = L2.ⓘ[J] & ⇧[1] T2 ≘ ⓑ[p,I]V1.U1.
 /2 width=4 by fqu_inv_bind1_aux/ qed-.
 
 lemma fqu_inv_bind1_true: ∀p,I,G1,G2,L1,L2,V1,U1,T2. ❪G1,L1,ⓑ[p,I]V1.U1❫ ⬂ ❪G2,L2,T2❫ →
                           ∨∨ ∧∧ G1 = G2 & L1 = L2 & V1 = T2
                            | ∧∧ G1 = G2 & L1.ⓑ[I]V1 = L2 & U1 = T2
-                           | ∃∃J. G1 = G2 & L1 = L2.ⓘ[J] & ⇧*[1] T2 ≘ ⓑ[p,I]V1.U1.
+                           | ∃∃J. G1 = G2 & L1 = L2.ⓘ[J] & ⇧[1] T2 ≘ ⓑ[p,I]V1.U1.
 #p #I #G1 #G2 #L1 #L2 #V1 #U1 #T2 #H elim (fqu_inv_bind1 … H) -H
 /3 width=1 by or3_intro0, or3_intro2/
 * #HG #HL #HU #H destruct
@@ -151,7 +151,7 @@ fact fqu_inv_flat1_aux: ∀b,G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ⬂[b] ❪G2,L2,T
                         ∀I,V1,U1. T1 = ⓕ[I]V1.U1 →
                         ∨∨ ∧∧ G1 = G2 & L1 = L2 & V1 = T2
                          | ∧∧ G1 = G2 & L1 = L2 & U1 = T2
-                         | ∃∃J. G1 = G2 & L1 = L2.ⓘ[J] & ⇧*[1] T2 ≘ ⓕ[I]V1.U1.
+                         | ∃∃J. G1 = G2 & L1 = L2.ⓘ[J] & ⇧[1] T2 ≘ ⓕ[I]V1.U1.
 #b #G1 #G2 #L1 #L2 #T1 #T2 * -G1 -G2 -L1 -L2 -T1 -T2
 [ #I #G #L #T #J #V0 #U0 #H destruct
 | #I #G #L #V #T #J #V0 #U0 #H destruct /3 width=1 by and3_intro, or3_intro0/
@@ -165,7 +165,7 @@ qed-.
 lemma fqu_inv_flat1: ∀b,I,G1,G2,L1,L2,V1,U1,T2. ❪G1,L1,ⓕ[I]V1.U1❫ ⬂[b] ❪G2,L2,T2❫ →
                      ∨∨ ∧∧ G1 = G2 & L1 = L2 & V1 = T2
                       | ∧∧ G1 = G2 & L1 = L2 & U1 = T2
-                      | ∃∃J. G1 = G2 & L1 = L2.ⓘ[J] & ⇧*[1] T2 ≘ ⓕ[I]V1.U1.
+                      | ∃∃J. G1 = G2 & L1 = L2.ⓘ[J] & ⇧[1] T2 ≘ ⓕ[I]V1.U1.
 /2 width=4 by fqu_inv_flat1_aux/ qed-.
 
 (* Advanced inversion lemmas ************************************************)

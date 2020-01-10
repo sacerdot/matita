@@ -25,7 +25,7 @@ interpretation "test for t-transition counter (rtc)"
 
 (* Basic properties *********************************************************)
 
-lemma isr_00: 𝐓❪0,𝟘𝟘❫.
+lemma ist_00: 𝐓❪0,𝟘𝟘❫.
 // qed.
 
 lemma ist_01: 𝐓❪1,𝟘𝟙❫.

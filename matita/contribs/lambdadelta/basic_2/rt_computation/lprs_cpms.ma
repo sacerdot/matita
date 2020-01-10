@@ -75,7 +75,7 @@ qed-.
 lemma cpms_inv_abbr_sn_dx (n) (h) (G) (L):
                           ∀p,V1,T1,X2. ❪G,L❫ ⊢ ⓓ[p]V1.T1 ➡*[n,h] X2 →
                           ∨∨ ∃∃V2,T2. ❪G,L❫ ⊢ V1 ➡*[h] V2 & ❪G,L.ⓓV1❫ ⊢ T1 ➡*[n,h] T2 & X2 = ⓓ[p]V2.T2
-                           | ∃∃T2. ❪G,L.ⓓV1❫ ⊢ T1 ➡*[n ,h] T2 & ⇧*[1] X2 ≘ T2 & p = Ⓣ.
+                           | ∃∃T2. ❪G,L.ⓓV1❫ ⊢ T1 ➡*[n ,h] T2 & ⇧[1] X2 ≘ T2 & p = Ⓣ.
 #n #h #G #L #p #V1 #T1 #X2 #H
 @(cpms_ind_dx … H) -X2 -n /3 width=5 by ex3_2_intro, or_introl/
 #n1 #n2 #X #X2 #_ * *
@@ -96,7 +96,7 @@ qed-.
 (* Basic_2A1: uses: scpds_inv_abbr_abst *)
 lemma cpms_inv_abbr_abst (n) (h) (G) (L):
                          ∀p1,p2,V1,W2,T1,T2. ❪G,L❫ ⊢ ⓓ[p1]V1.T1 ➡*[n,h] ⓛ[p2]W2.T2 →
-                         ∃∃T. ❪G,L.ⓓV1❫ ⊢ T1 ➡*[n,h] T & ⇧*[1] ⓛ[p2]W2.T2 ≘ T & p1 = Ⓣ.
+                         ∃∃T. ❪G,L.ⓓV1❫ ⊢ T1 ➡*[n,h] T & ⇧[1] ⓛ[p2]W2.T2 ≘ T & p1 = Ⓣ.
 #n #h #G #L #p1 #p2 #V1 #W2 #T1 #T2 #H
 elim (cpms_inv_abbr_sn_dx … H) -H *
 [ #V #T #_ #_ #H destruct

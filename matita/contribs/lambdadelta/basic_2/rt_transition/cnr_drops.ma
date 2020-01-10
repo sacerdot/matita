@@ -30,7 +30,7 @@ qed.
 
 (* Basic_1: was: nf2_lref_abst *)
 lemma cnr_lref_abst (h) (G) (L):
-      ∀K,V,i. ⇩*[i] L ≘ K.ⓛV → ❪G,L❫ ⊢ ➡[h] 𝐍❪#i❫.
+      ∀K,V,i. ⇩[i] L ≘ K.ⓛV → ❪G,L❫ ⊢ ➡[h] 𝐍❪#i❫.
 #h #G #L #K #V #i #HLK #X #H
 elim (cpr_inv_lref1_drops … H) -H // *
 #K0 #V1 #V2 #HLK0 #_ #_
@@ -38,7 +38,7 @@ lapply (drops_mono … HLK … HLK0) -L #H destruct
 qed.
 
 lemma cnr_lref_unit (h) (I) (G) (L):
-      ∀K,i. ⇩*[i] L ≘ K.ⓤ[I] → ❪G,L❫ ⊢ ➡[h] 𝐍❪#i❫.
+      ∀K,i. ⇩[i] L ≘ K.ⓤ[I] → ❪G,L❫ ⊢ ➡[h] 𝐍❪#i❫.
 #h #I #G #L #K #i #HLK #X #H
 elim (cpr_inv_lref1_drops … H) -H // *
 #K0 #V1 #V2 #HLK0 #_ #_
@@ -59,7 +59,7 @@ qed-.
 
 (* Basic_2A1: was: cnr_inv_delta *)
 lemma cnr_inv_lref_abbr (h) (G) (L):
-      ∀K,V,i. ⇩*[i] L ≘ K.ⓓV → ❪G,L❫ ⊢ ➡[h] 𝐍❪#i❫ → ⊥.
+      ∀K,V,i. ⇩[i] L ≘ K.ⓓV → ❪G,L❫ ⊢ ➡[h] 𝐍❪#i❫ → ⊥.
 #h #G #L #K #V #i #HLK #H
 elim (lifts_total V 𝐔❨↑i❩) #W #HVW
 lapply (H W ?) -H [ /3 width=6 by cpm_delta_drops/ ] -HLK #H destruct

@@ -34,9 +34,9 @@ fact cnv_cpm_conf_lpr_atom_ess_aux (h) (G) (L1) (L2) (s):
 fact cnv_cpm_conf_lpr_atom_delta_aux (h) (a) (G) (L) (i):
      (∀G0,L0,T0. ❪G,L,#i❫ >[h] ❪G0,L0,T0❫ → IH_cnv_cpms_conf_lpr h a G0 L0 T0) →
      ❪G,L❫⊢#i![h,a] →
-     ∀K,V. ⇩*[i]L ≘ K.ⓓV →
+     ∀K,V. ⇩[i]L ≘ K.ⓓV →
      ∀n,XV. ❪G,K❫ ⊢ V ➡[n,h] XV →
-     ∀X. ⇧*[↑i]XV ≘ X →
+     ∀X. ⇧[↑i]XV ≘ X →
      ∀L1. ❪G,L❫ ⊢ ➡[h] L1 → ∀L2. ❪G,L❫ ⊢ ➡[h] L2 →
      ∃∃T. ❪G,L1❫ ⊢ #i ➡*[n,h] T & ❪G,L2❫ ⊢ X ➡*[h] T.
 #h #a #G #L #i #IH #HT #K #V #HLK #n #XV #HVX #X #HXV #L1 #HL1 #L2 #HL2
@@ -56,9 +56,9 @@ qed-.
 fact cnv_cpm_conf_lpr_atom_ell_aux (h) (a) (G) (L) (i):
      (∀G0,L0,T0. ❪G,L,#i❫ >[h] ❪G0,L0,T0❫ → IH_cnv_cpms_conf_lpr h a G0 L0 T0) →
      ❪G,L❫⊢#i![h,a] →
-     ∀K,W. ⇩*[i]L ≘ K.ⓛW →
+     ∀K,W. ⇩[i]L ≘ K.ⓛW →
      ∀n,XW. ❪G,K❫ ⊢ W ➡[n,h] XW →
-     ∀X. ⇧*[↑i]XW ≘ X →
+     ∀X. ⇧[↑i]XW ≘ X →
      ∀L1. ❪G,L❫ ⊢ ➡[h] L1 → ∀L2. ❪G,L❫ ⊢ ➡[h] L2 →
      ∃∃T. ❪G,L1❫ ⊢ #i ➡*[↑n,h] T & ❪G,L2❫ ⊢ X ➡*[h] T.
 #h #a #G #L #i #IH #HT #K #W #HLK #n #XW #HWX #X #HXW #L1 #HL1 #L2 #HL2
@@ -78,9 +78,9 @@ qed-.
 fact cnv_cpm_conf_lpr_delta_delta_aux (h) (a) (I) (G) (L) (i):
      (∀G0,L0,T0. ❪G,L,#i❫ >[h] ❪G0,L0,T0❫ → IH_cnv_cpms_conf_lpr h a G0 L0 T0) →
      ❪G,L❫⊢#i![h,a] →
-     ∀K1,V1. ⇩*[i]L ≘ K1.ⓑ[I]V1 → ∀K2,V2. ⇩*[i]L ≘ K2.ⓑ[I]V2 →
+     ∀K1,V1. ⇩[i]L ≘ K1.ⓑ[I]V1 → ∀K2,V2. ⇩[i]L ≘ K2.ⓑ[I]V2 →
      ∀n1,XV1. ❪G,K1❫ ⊢ V1 ➡[n1,h] XV1 → ∀n2,XV2. ❪G,K2❫ ⊢ V2 ➡[n2,h] XV2 →
-     ∀X1. ⇧*[↑i]XV1 ≘ X1 → ∀X2. ⇧*[↑i]XV2 ≘ X2 →
+     ∀X1. ⇧[↑i]XV1 ≘ X1 → ∀X2. ⇧[↑i]XV2 ≘ X2 →
      ∀L1. ❪G,L❫ ⊢ ➡[h] L1 → ∀L2. ❪G,L❫ ⊢ ➡[h] L2 →
      ∃∃T. ❪G,L1❫ ⊢ X1 ➡*[n2-n1,h] T & ❪G,L2❫ ⊢ X2 ➡*[n1-n2,h] T.
 #h #a #I #G #L #i #IH #HT
@@ -102,7 +102,7 @@ elim (cpms_lifts_sn … HVX1 … HLK1 … HXV1) -XV1 -HLK1 #W1 #HVW1 #HXW1
 qed-.
 
 fact cnv_cpm_conf_lpr_delta_ell_aux (L) (K1) (K2) (V) (W) (i):
-     ⇩*[i]L ≘ K1.ⓓV → ⇩*[i]L ≘ K2.ⓛW → ⊥.
+     ⇩[i]L ≘ K1.ⓓV → ⇩[i]L ≘ K2.ⓛW → ⊥.
 #L #K1 #K2 #V #W #i #HLK1 #HLK2
 lapply (drops_mono … HLK2 … HLK1) -L -i #H destruct
 qed-.
@@ -128,7 +128,7 @@ fact cnv_cpm_conf_lpr_bind_zeta_aux (h) (a) (G) (L) (V) (T):
      (∀G0,L0,T0. ❪G,L,+ⓓV.T❫ >[h] ❪G0,L0,T0❫ → IH_cnv_cpms_conf_lpr h a G0 L0 T0) →
      ❪G,L❫ ⊢ +ⓓV.T ![h,a] →
      ∀V1. ❪G,L❫ ⊢V ➡[h] V1 → ∀n1,T1. ❪G,L.ⓓV❫ ⊢ T ➡[n1,h] T1 →
-     ∀T2. ⇧*[1]T2 ≘ T → ∀n2,XT2. ❪G,L❫ ⊢ T2 ➡[n2,h] XT2 →
+     ∀T2. ⇧[1]T2 ≘ T → ∀n2,XT2. ❪G,L❫ ⊢ T2 ➡[n2,h] XT2 →
      ∀L1. ❪G,L❫ ⊢ ➡[h] L1 → ∀L2. ❪G,L❫ ⊢ ➡[h] L2 →
      ∃∃T. ❪G,L1❫ ⊢ +ⓓV1.T1 ➡*[n2-n1,h] T & ❪G,L2❫ ⊢ XT2 ➡*[n1-n2,h] T.
 #h #a #G0 #L0 #V0 #T0 #IH #H0
@@ -147,7 +147,7 @@ qed-.
 fact cnv_cpm_conf_lpr_zeta_zeta_aux (h) (a) (G) (L) (V) (T):
      (∀G0,L0,T0. ❪G,L,+ⓓV.T❫ >[h] ❪G0,L0,T0❫ → IH_cnv_cpms_conf_lpr h a G0 L0 T0) →
      ❪G,L❫ ⊢ +ⓓV.T ![h,a] →
-     ∀T1. ⇧*[1]T1 ≘ T → ∀T2. ⇧*[1]T2 ≘ T →
+     ∀T1. ⇧[1]T1 ≘ T → ∀T2. ⇧[1]T2 ≘ T →
      ∀n1,XT1. ❪G,L❫ ⊢ T1 ➡[n1,h] XT1 → ∀n2,XT2. ❪G,L❫ ⊢ T2 ➡[n2,h] XT2 →
      ∀L1. ❪G,L❫ ⊢ ➡[h] L1 → ∀L2. ❪G,L❫ ⊢ ➡[h] L2 →
      ∃∃T. ❪G,L1❫ ⊢ XT1 ➡*[n2-n1,h] T & ❪G,L2❫ ⊢ XT2 ➡*[n1-n2,h] T.
@@ -208,7 +208,7 @@ fact cnv_cpm_conf_lpr_appl_theta_aux (h) (a) (p) (G) (L) (V) (W) (T):
      ∀V1. ❪G,L❫ ⊢ V ➡[h] V1 → ∀V2. ❪G,L❫ ⊢ V ➡[h] V2 →
      ∀W2. ❪G,L❫ ⊢ W ➡[h] W2 →
      ∀n1,T1. ❪G,L❫ ⊢ ⓓ[p]W.T ➡[n1,h] T1 → ∀n2,T2. ❪G,L.ⓓW❫ ⊢ T ➡[n2,h] T2 →
-     ∀U2. ⇧*[1]V2 ≘ U2 →
+     ∀U2. ⇧[1]V2 ≘ U2 →
      ∀L1. ❪G,L❫ ⊢ ➡[h] L1 → ∀L2. ❪G,L❫ ⊢ ➡[h] L2 →
      ∃∃T. ❪G,L1❫ ⊢ ⓐV1.T1 ➡*[n2-n1,h] T & ❪G,L2❫ ⊢ ⓓ[p]W2.ⓐU2.T2 ➡*[n1-n2,h] T.
 #h #a #p #G0 #L0 #V0 #W0 #T0 #IH #H0
@@ -261,7 +261,7 @@ fact cnv_cpm_conf_lpr_theta_theta_aux (h) (a) (p) (G) (L) (V) (W) (T):
      ∀V1. ❪G,L❫ ⊢ V ➡[h] V1 → ∀V2. ❪G,L❫ ⊢ V ➡[h] V2 →
      ∀W1. ❪G,L❫ ⊢ W ➡[h] W1 → ∀W2. ❪G,L❫ ⊢ W ➡[h] W2 →
      ∀n1,T1. ❪G,L.ⓓW❫ ⊢ T ➡[n1,h] T1 → ∀n2,T2. ❪G,L.ⓓW❫ ⊢ T ➡[n2,h] T2 →
-     ∀U1. ⇧*[1]V1 ≘ U1 → ∀U2. ⇧*[1]V2 ≘ U2 →
+     ∀U1. ⇧[1]V1 ≘ U1 → ∀U2. ⇧[1]V2 ≘ U2 →
      ∀L1. ❪G,L❫ ⊢ ➡[h] L1 → ∀L2. ❪G,L❫ ⊢ ➡[h] L2 →
      ∃∃T. ❪G,L1❫ ⊢ ⓓ[p]W1.ⓐU1.T1 ➡*[n2-n1,h] T & ❪G,L2❫ ⊢ ⓓ[p]W2.ⓐU2.T2 ➡*[n1-n2,h] T.
 #h #a #p #G0 #L0 #V0 #W0 #T0 #IH #H0

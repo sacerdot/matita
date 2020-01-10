@@ -36,20 +36,20 @@ lemma cpt_ess (h) (G) (L):
 
 lemma cpt_delta (h) (n) (G) (K):
       ∀V1,V2. ❪G,K❫ ⊢ V1 ⬆[h,n] V2 →
-      ∀W2. ⇧*[1] V2 ≘ W2 → ❪G,K.ⓓV1❫ ⊢ #0 ⬆[h,n] W2.
+      ∀W2. ⇧[1] V2 ≘ W2 → ❪G,K.ⓓV1❫ ⊢ #0 ⬆[h,n] W2.
 #h #n #G #K #V1 #V2 *
 /3 width=5 by cpg_delta, ex2_intro/
 qed.
 
 lemma cpt_ell (h) (n) (G) (K):
       ∀V1,V2. ❪G,K❫ ⊢ V1 ⬆[h,n] V2 →
-      ∀W2. ⇧*[1] V2 ≘ W2 → ❪G,K.ⓛV1❫ ⊢ #0 ⬆[h,↑n] W2.
+      ∀W2. ⇧[1] V2 ≘ W2 → ❪G,K.ⓛV1❫ ⊢ #0 ⬆[h,↑n] W2.
 #h #n #G #K #V1 #V2 *
 /3 width=5 by cpg_ell, ex2_intro, ist_succ/
 qed.
 
 lemma cpt_lref (h) (n) (G) (K):
-      ∀T,i. ❪G,K❫ ⊢ #i ⬆[h,n] T → ∀U. ⇧*[1] T ≘ U →
+      ∀T,i. ❪G,K❫ ⊢ #i ⬆[h,n] T → ∀U. ⇧[1] T ≘ U →
       ∀I. ❪G,K.ⓘ[I]❫ ⊢ #↑i ⬆[h,n] U.
 #h #n #G #K #T #i *
 /3 width=5 by cpg_lref, ex2_intro/
@@ -99,9 +99,9 @@ lemma cpt_inv_atom_sn (h) (n) (J) (G) (L):
       ∀X2. ❪G,L❫ ⊢ ⓪[J] ⬆[h,n] X2 →
       ∨∨ ∧∧ X2 = ⓪[J] & n = 0
        | ∃∃s. X2 = ⋆(⫯[h]s) & J = Sort s & n =1
-       | ∃∃K,V1,V2. ❪G,K❫ ⊢ V1 ⬆[h,n] V2 & ⇧*[1] V2 ≘ X2 & L = K.ⓓV1 & J = LRef 0
-       | ∃∃m,K,V1,V2. ❪G,K❫ ⊢ V1 ⬆[h,m] V2 & ⇧*[1] V2 ≘ X2 & L = K.ⓛV1 & J = LRef 0 & n = ↑m
-       | ∃∃I,K,T,i. ❪G,K❫ ⊢ #i ⬆[h,n] T & ⇧*[1] T ≘ X2 & L = K.ⓘ[I] & J = LRef (↑i).
+       | ∃∃K,V1,V2. ❪G,K❫ ⊢ V1 ⬆[h,n] V2 & ⇧[1] V2 ≘ X2 & L = K.ⓓV1 & J = LRef 0
+       | ∃∃m,K,V1,V2. ❪G,K❫ ⊢ V1 ⬆[h,m] V2 & ⇧[1] V2 ≘ X2 & L = K.ⓛV1 & J = LRef 0 & n = ↑m
+       | ∃∃I,K,T,i. ❪G,K❫ ⊢ #i ⬆[h,n] T & ⇧[1] T ≘ X2 & L = K.ⓘ[I] & J = LRef (↑i).
 #h #n #J #G #L #X2 * #c #Hc #H
 elim (cpg_inv_atom1 … H) -H *
 [ #H1 #H2 destruct /3 width=1 by or5_intro0, conj/
@@ -127,10 +127,10 @@ qed-.
 lemma cpt_inv_zero_sn (h) (n) (G) (L):
       ∀X2. ❪G,L❫ ⊢ #0 ⬆[h,n] X2 →
       ∨∨ ∧∧ X2 = #0 & n = 0
-       | ∃∃K,V1,V2. ❪G,K❫ ⊢ V1 ⬆[h,n] V2 & ⇧*[1] V2 ≘ X2 & L = K.ⓓV1
-       | ∃∃m,K,V1,V2. ❪G,K❫ ⊢ V1 ⬆[h,m] V2 & ⇧*[1] V2 ≘ X2 & L = K.ⓛV1 & n = ↑m.
+       | ∃∃K,V1,V2. ❪G,K❫ ⊢ V1 ⬆[h,n] V2 & ⇧[1] V2 ≘ X2 & L = K.ⓓV1
+       | ∃∃m,K,V1,V2. ❪G,K❫ ⊢ V1 ⬆[h,m] V2 & ⇧[1] V2 ≘ X2 & L = K.ⓛV1 & n = ↑m.
 #h #n #G #L #X2 * #c #Hc #H elim (cpg_inv_zero1 … H) -H *
-[ #H1 #H2 destruct /4 width=1 by isrt_inv_00, or3_intro0, conj/
+[ #H1 #H2 destruct /4 width=1 by ist_inv_00, or3_intro0, conj/
 | #cV #K #V1 #V2 #HV12 #HVT2 #H1 #H2 destruct
   /4 width=8 by or3_intro1, ex3_3_intro, ex2_intro/
 | #cV #K #V1 #V2 #HV12 #HVT2 #H1 #H2 destruct
@@ -152,9 +152,9 @@ qed.
 lemma cpt_inv_lref_sn (h) (n) (G) (L) (i):
       ∀X2. ❪G,L❫ ⊢ #↑i ⬆[h,n] X2 →
       ∨∨ ∧∧ X2 = #(↑i) & n = 0
-       | ∃∃I,K,T. ❪G,K❫ ⊢ #i ⬆[h,n] T & ⇧*[1] T ≘ X2 & L = K.ⓘ[I].
+       | ∃∃I,K,T. ❪G,K❫ ⊢ #i ⬆[h,n] T & ⇧[1] T ≘ X2 & L = K.ⓘ[I].
 #h #n #G #L #i #X2 * #c #Hc #H elim (cpg_inv_lref1 … H) -H *
-[ #H1 #H2 destruct /4 width=1 by isrt_inv_00, or_introl, conj/
+[ #H1 #H2 destruct /4 width=1 by ist_inv_00, or_introl, conj/
 | #I #K #V2 #HV2 #HVT2 #H destruct
  /4 width=6 by ex3_3_intro, ex2_intro, or_intror/
 ]

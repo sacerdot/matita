@@ -13,7 +13,8 @@ table {
    [ { "generic rt-transition counter" * } {
         [ { "" * } {
              [ "rtc_ist ( 𝐓❪?,?❫ )" "rtc_ist_shift" "rtc_ist_plus" "rtc_ist_max" * ]
-             [ "rtc ( 〈?,?,?,?〉 ) ( 𝟘𝟘 ) ( 𝟙𝟘 ) ( 𝟘𝟙 )" "rtc_isrc ( 𝐑𝐓❪?,?❫ )" "rtc_shift ( ↕*? )" "rtc_max ( ? ∨ ? )" "rtc_plus ( ? + ? )" * ]
+             [ "rtc_isrc ( 𝐑𝐓❪?,?❫ )" "rtc_isrt_shift" "rtc_isrt_plus" "rtc_isrt_max" "rtc_isrt_max_shift" * ]
+             [ "rtc ( 〈?,?,?,?〉 ) ( 𝟘𝟘 ) ( 𝟙𝟘 ) ( 𝟘𝟙 )" "rtc_shift ( ↕*? )" "rtc_plus ( ? + ? )" "rtc_max ( ? ∨ ? )" "rtc_max_shift" * ]
           }
         ]
      }

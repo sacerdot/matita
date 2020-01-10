@@ -32,8 +32,8 @@ definition ApplOmega4 (s0) (s): term ≝ ⓐ⋆s.(ApplOmega1 s0 s).
 
 (* Basic properties *********************************************************)
 
-lemma ApplDelta_lifts (f:rtmap) (s0) (s):
-                      ⇧*[f] (ApplDelta s0 s) ≘ (ApplDelta s0 s).
+lemma ApplDelta_lifts (f) (s0) (s):
+      ⇧*[f] (ApplDelta s0 s) ≘ (ApplDelta s0 s).
 /5 width=1 by lifts_sort, lifts_lref, lifts_bind, lifts_flat/ qed.
 
 lemma cpr_ApplOmega_12 (h) (G) (L) (s0) (s): ❪G,L❫ ⊢ ApplOmega1 s0 s ➡[h] ApplOmega2 s0 s.

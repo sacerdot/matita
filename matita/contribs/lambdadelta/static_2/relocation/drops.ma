@@ -15,8 +15,8 @@
 include "ground_2/xoa/ex_1_2.ma".
 include "ground_2/xoa/ex_4_3.ma".
 include "ground_2/relocation/rtmap_coafter.ma".
-include "static_2/notation/relations/rdropstar_3.ma".
 include "static_2/notation/relations/rdropstar_4.ma".
+include "static_2/notation/relations/rdrop_3.ma".
 include "static_2/relocation/seq.ma".
 include "static_2/relocation/lifts_bind.ma".
 
@@ -34,11 +34,11 @@ inductive drops (b:bool): rtmap → relation lenv ≝
               drops b (⫯f) (L1.ⓘ[I1]) (L2.ⓘ[I2])
 .
 
-interpretation "uniform slicing (local environment)"
-   'RDropStar i L1 L2 = (drops true (uni i) L1 L2).
-
 interpretation "generic slicing (local environment)"
    'RDropStar b f L1 L2 = (drops b f L1 L2).
+
+interpretation "uniform slicing (local environment)"
+   'RDrop i L1 L2 = (drops true (uni i) L1 L2).
 
 definition d_liftable1: predicate (relation2 lenv term) ≝
                         λR. ∀K,T. R K T → ∀b,f,L. ⇩*[b,f] L ≘ K →
@@ -56,42 +56,42 @@ definition d_deliftable1_isuni: predicate (relation2 lenv term) ≝
                                 λR. ∀L,U. R L U → ∀b,f,K. ⇩*[b,f] L ≘ K → 𝐔❪f❫ →
                                 ∀T. ⇧*[f] T ≘ U → R K T.
 
-definition d_liftable2_sn: ∀C:Type[0]. ∀S:rtmap → relation C.
-                           predicate (lenv → relation C) ≝
+definition d_liftable2_sn: ∀C:Type[0]. ∀S:?→relation C.
+                           predicate (lenv→relation C) ≝
                            λC,S,R. ∀K,T1,T2. R K T1 T2 → ∀b,f,L. ⇩*[b,f] L ≘ K →
                            ∀U1. S f T1 U1 →
                            ∃∃U2. S f T2 U2 & R L U1 U2.
 
-definition d_deliftable2_sn: ∀C:Type[0]. ∀S:rtmap → relation C.
-                             predicate (lenv → relation C) ≝
+definition d_deliftable2_sn: ∀C:Type[0]. ∀S:?→relation C.
+                             predicate (lenv→relation C) ≝
                              λC,S,R. ∀L,U1,U2. R L U1 U2 → ∀b,f,K. ⇩*[b,f] L ≘ K →
                              ∀T1. S f T1 U1 →
                              ∃∃T2. S f T2 U2 & R K T1 T2.
 
-definition d_liftable2_bi: ∀C:Type[0]. ∀S:rtmap → relation C.
-                           predicate (lenv → relation C) ≝
+definition d_liftable2_bi: ∀C:Type[0]. ∀S:?→relation C.
+                           predicate (lenv→relation C) ≝
                            λC,S,R. ∀K,T1,T2. R K T1 T2 → ∀b,f,L. ⇩*[b,f] L ≘ K →
                            ∀U1. S f T1 U1 →
                            ∀U2. S f T2 U2 → R L U1 U2.
 
-definition d_deliftable2_bi: ∀C:Type[0]. ∀S:rtmap → relation C.
-                             predicate (lenv → relation C) ≝
+definition d_deliftable2_bi: ∀C:Type[0]. ∀S:?→relation C.
+                             predicate (lenv→relation C) ≝
                              λC,S,R. ∀L,U1,U2. R L U1 U2 → ∀b,f,K. ⇩*[b,f] L ≘ K →
                              ∀T1. S f T1 U1 →
                              ∀T2. S f T2 U2 → R K T1 T2.
 
-definition co_dropable_sn: predicate (rtmap → relation lenv) ≝
+definition co_dropable_sn: predicate (?→relation lenv) ≝
                            λR. ∀b,f,L1,K1. ⇩*[b,f] L1 ≘ K1 → 𝐔❪f❫ →
                            ∀f2,L2. R f2 L1 L2 → ∀f1. f ~⊚ f1 ≘ f2 →
                            ∃∃K2. R f1 K1 K2 & ⇩*[b,f] L2 ≘ K2.
 
-definition co_dropable_dx: predicate (rtmap → relation lenv) ≝
+definition co_dropable_dx: predicate (?→relation lenv) ≝
                            λR. ∀f2,L1,L2. R f2 L1 L2 →
                            ∀b,f,K2. ⇩*[b,f] L2 ≘ K2 → 𝐔❪f❫ →
                            ∀f1. f ~⊚ f1 ≘ f2 →
                            ∃∃K1. ⇩*[b,f] L1 ≘ K1 & R f1 K1 K2.
 
-definition co_dedropable_sn: predicate (rtmap → relation lenv) ≝
+definition co_dedropable_sn: predicate (?→relation lenv) ≝
                              λR. ∀b,f,L1,K1. ⇩*[b,f] L1 ≘ K1 → ∀f1,K2. R f1 K1 K2 →
                              ∀f2. f ~⊚ f1 ≘ f2 →
                              ∃∃L2. R f2 L1 L2 & ⇩*[b,f] L2 ≘ K2 & L1 ≡[f] L2.
@@ -360,8 +360,8 @@ lemma drops_inv_atom2: ∀b,L,f. ⇩*[b,f] L ≘ ⋆ →
 ]
 qed-.
 
-lemma drops_inv_succ: ∀L1,L2,i. ⇩*[↑i] L1 ≘ L2 →
-                      ∃∃I,K. ⇩*[i] K ≘ L2 & L1 = K.ⓘ[I].
+lemma drops_inv_succ: ∀L1,L2,i. ⇩[↑i] L1 ≘ L2 →
+                      ∃∃I,K. ⇩[i] K ≘ L2 & L1 = K.ⓘ[I].
 #L1 #L2 #i #H elim (drops_inv_isuni … H) -H // *
 [ #H elim (isid_inv_next … H) -H //
 | /2 width=4 by ex2_2_intro/
@@ -370,7 +370,7 @@ qed-.
 
 (* Properties with uniform relocations **************************************)
 
-lemma drops_F_uni: ∀L,i. ⇩*[Ⓕ,𝐔❨i❩] L ≘ ⋆ ∨ ∃∃I,K. ⇩*[i] L ≘ K.ⓘ[I].
+lemma drops_F_uni: ∀L,i. ⇩*[Ⓕ,𝐔❨i❩] L ≘ ⋆ ∨ ∃∃I,K. ⇩[i] L ≘ K.ⓘ[I].
 #L elim L -L /2 width=1 by or_introl/
 #L #I #IH * /4 width=3 by drops_refl, ex1_2_intro, or_intror/
 #i elim (IH i) -IH /3 width=1 by drops_drop, or_introl/
@@ -424,7 +424,7 @@ lemma drops_tls_at: ∀f,i1,i2. @❪i1,f❫ ≘ i2 →
 /3 width=3 by drops_eq_repl_fwd, at_inv_tls/ qed-.
 
 lemma drops_split_trans_bind2: ∀b,f,I,L,K0. ⇩*[b,f] L ≘ K0.ⓘ[I] → ∀i. @❪O,f❫ ≘ i →
-                               ∃∃J,K. ⇩*[i]L ≘ K.ⓘ[J] & ⇩*[b,⫱*[↑i]f] K ≘ K0 & ⇧*[⫱*[↑i]f] I ≘ J.
+                               ∃∃J,K. ⇩[i]L ≘ K.ⓘ[J] & ⇩*[b,⫱*[↑i]f] K ≘ K0 & ⇧*[⫱*[↑i]f] I ≘ J.
 #b #f #I #L #K0 #H #i #Hf
 elim (drops_split_trans … H) -H [ |5: @(after_uni_dx … Hf) |2,3: skip ] /2 width=1 by after_isid_dx/ #Y #HLY #H
 lapply (drops_tls_at … Hf … H) -H #H

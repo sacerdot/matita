@@ -66,6 +66,6 @@ fact lifts_fwd_vpush_aux (M): is_model M → is_extensional M →
 qed-.
 
 lemma lifts_SO_fwd_vpush (M) (gv): is_model M → is_extensional M →
-                                   ∀T1,T2. ⇧*[1] T1 ≘ T2 →
+                                   ∀T1,T2. ⇧[1] T1 ≘ T2 →
                                    ∀lv,d. ⟦T1⟧[gv,lv] ≗{M} ⟦T2⟧[gv,⫯[0←d]lv].
 /2 width=3 by lifts_fwd_vpush_aux/ qed-.

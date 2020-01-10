@@ -73,7 +73,7 @@ qed.
 
 (* Basic_2A1: includes: cprs_theta_rc *)
 theorem cpms_theta_rc (n) (h) (G) (L):
-                      ∀V1,V. ❪G,L❫ ⊢ V1 ➡[h] V → ∀V2. ⇧*[1] V ≘ V2 →
+                      ∀V1,V. ❪G,L❫ ⊢ V1 ➡[h] V → ∀V2. ⇧[1] V ≘ V2 →
                       ∀W1,T1,T2. ❪G,L.ⓓW1❫ ⊢ T1 ➡*[n,h] T2 →
                       ∀W2. ❪G,L❫ ⊢ W1 ➡*[h] W2 →
                       ∀p. ❪G,L❫ ⊢ ⓐV1.ⓓ[p]W1.T1 ➡*[n,h] ⓓ[p]W2.ⓐV2.T2.
@@ -86,7 +86,7 @@ qed.
 
 (* Basic_2A1: includes: cprs_theta *)
 theorem cpms_theta (n) (h) (G) (L):
-                   ∀V,V2. ⇧*[1] V ≘ V2 → ∀W1,W2. ❪G,L❫ ⊢ W1 ➡*[h] W2 →
+                   ∀V,V2. ⇧[1] V ≘ V2 → ∀W1,W2. ❪G,L❫ ⊢ W1 ➡*[h] W2 →
                    ∀T1,T2. ❪G,L.ⓓW1❫ ⊢ T1 ➡*[n,h] T2 →
                    ∀V1. ❪G,L❫ ⊢ V1 ➡*[h] V →
                    ∀p. ❪G,L❫ ⊢ ⓐV1.ⓓ[p]W1.T1 ➡*[n,h] ⓓ[p]W2.ⓐV2.T2.
@@ -121,7 +121,7 @@ lemma cpms_inv_appl_sn (n) (h) (G) (L):
                             ❪G,L❫ ⊢ T1 ➡*[n1,h] ⓛ[p]W.T & ❪G,L❫ ⊢ ⓓ[p]ⓝW.V1.T ➡*[n2,h] X2 &
                             n1 + n2 = n
                         | ∃∃n1,n2,p,V0,V2,V,T.
-                            ❪G,L❫ ⊢ V1 ➡*[h] V0 & ⇧*[1] V0 ≘ V2 &
+                            ❪G,L❫ ⊢ V1 ➡*[h] V0 & ⇧[1] V0 ≘ V2 &
                             ❪G,L❫ ⊢ T1 ➡*[n1,h] ⓓ[p]V.T & ❪G,L❫ ⊢ ⓓ[p]V.ⓐV2.T ➡*[n2,h] X2 &
                             n1 + n2 = n.
 #n #h #G #L #V1 #T1 #U2 #H

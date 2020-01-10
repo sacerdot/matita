@@ -12,15 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/s_computation/fqup_drops.ma".
-include "static_2/s_computation/fqus_fqup.ma".
+include "ground_2/steps/rtc_isrt_shift.ma".
+include "ground_2/steps/rtc_isrt_max.ma".
 
-(* STAR-ITERATED SUPCLOSURE *************************************************)
+(* RT-TRANSITION COUNTER ****************************************************)
 
-(* Properties with generic slicing for local environments *******************)
+(* Inversion properties with test for constrained rt-transition counter *****)
 
-lemma fqus_drops: ∀b,G,L,K,T,U,i. ⇩[i] L ≘ K → ⇧[i] T ≘ U →
-                  ❪G,L,U❫ ⬂*[b] ❪G,K,T❫.
-#b #G #L #K #T #U * /3 width=3 by fqup_drops_succ, fqup_fqus/
-#HLK #HTU <(lifts_fwd_isid … HTU) -U // <(drops_fwd_isid … HLK) -K //
-qed.
+lemma isrt_inv_max_shift_sn: ∀n,c1,c2. 𝐑𝐓❪n,↕*c1 ∨ c2❫ →
+                             ∧∧ 𝐑𝐓❪0,c1❫ & 𝐑𝐓❪n,c2❫.
+#n #c1 #c2 #H
+elim (isrt_inv_max … H) -H #n1 #n2 #Hc1 #Hc2 #H destruct
+elim (isrt_inv_shift … Hc1) -Hc1 #Hc1 * -n1
+/2 width=1 by conj/
+qed-.

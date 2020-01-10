@@ -48,15 +48,15 @@ qed-.
 (* Advanced properties ******************************************************)
 
 lemma cpt_delta_drops (h) (n) (G):
-      ∀L,K,V,i. ⇩*[i] L ≘ K.ⓓV → ∀V2. ❪G,K❫ ⊢ V ⬆[h,n] V2 →
-      ∀W2. ⇧*[↑i] V2 ≘ W2 → ❪G,L❫ ⊢ #i ⬆[h,n] W2.
+      ∀L,K,V,i. ⇩[i] L ≘ K.ⓓV → ∀V2. ❪G,K❫ ⊢ V ⬆[h,n] V2 →
+      ∀W2. ⇧[↑i] V2 ≘ W2 → ❪G,L❫ ⊢ #i ⬆[h,n] W2.
 #h #n #G #L #K #V #i #HLK #V2 *
 /3 width=8 by cpg_delta_drops, ex2_intro/
 qed.
 
 lemma cpt_ell_drops (h) (n) (G):
-      ∀L,K,V,i. ⇩*[i] L ≘ K.ⓛV → ∀V2. ❪G,K❫ ⊢ V ⬆[h,n] V2 →
-      ∀W2. ⇧*[↑i] V2 ≘ W2 → ❪G,L❫ ⊢ #i ⬆[h,↑n] W2.
+      ∀L,K,V,i. ⇩[i] L ≘ K.ⓛV → ∀V2. ❪G,K❫ ⊢ V ⬆[h,n] V2 →
+      ∀W2. ⇧[↑i] V2 ≘ W2 → ❪G,L❫ ⊢ #i ⬆[h,↑n] W2.
 #h #n #G #L #K #V #i #HLK #V2 *
 /3 width=8 by cpg_ell_drops, ist_succ, ex2_intro/
 qed.
@@ -67,8 +67,8 @@ lemma cpt_inv_atom_sn_drops (h) (n) (I) (G) (L):
       ∀X2. ❪G,L❫ ⊢ ⓪[I] ⬆[h,n] X2 →
       ∨∨ ∧∧ X2 = ⓪[I] & n = 0
        | ∃∃s. X2 = ⋆(⫯[h]s) & I = Sort s & n = 1
-       | ∃∃K,V,V2,i. ⇩*[i] L ≘ K.ⓓV & ❪G,K❫ ⊢ V ⬆[h,n] V2 & ⇧*[↑i] V2 ≘ X2 & I = LRef i
-       | ∃∃m,K,V,V2,i. ⇩*[i] L ≘ K.ⓛV & ❪G,K❫ ⊢ V ⬆[h,m] V2 & ⇧*[↑i] V2 ≘ X2 & I = LRef i & n = ↑m.
+       | ∃∃K,V,V2,i. ⇩[i] L ≘ K.ⓓV & ❪G,K❫ ⊢ V ⬆[h,n] V2 & ⇧[↑i] V2 ≘ X2 & I = LRef i
+       | ∃∃m,K,V,V2,i. ⇩[i] L ≘ K.ⓛV & ❪G,K❫ ⊢ V ⬆[h,m] V2 & ⇧[↑i] V2 ≘ X2 & I = LRef i & n = ↑m.
 #h #n #I #G #L #X2 * #c #Hc #H elim (cpg_inv_atom1_drops … H) -H *
 [ #H1 #H2 destruct
   /3 width=1 by or4_intro0, conj/
@@ -85,8 +85,8 @@ qed-.
 lemma cpt_inv_lref_sn_drops (h) (n) (G) (L) (i):
       ∀X2. ❪G,L❫ ⊢ #i ⬆[h,n] X2 →
       ∨∨ ∧∧ X2 = #i & n = 0
-       | ∃∃K,V,V2. ⇩*[i] L ≘ K.ⓓV & ❪G,K❫ ⊢ V ⬆[h,n] V2 & ⇧*[↑i] V2 ≘ X2
-       | ∃∃m,K,V,V2. ⇩*[i] L ≘ K. ⓛV & ❪G,K❫ ⊢ V ⬆[h,m] V2 & ⇧*[↑i] V2 ≘ X2 & n = ↑m.
+       | ∃∃K,V,V2. ⇩[i] L ≘ K.ⓓV & ❪G,K❫ ⊢ V ⬆[h,n] V2 & ⇧[↑i] V2 ≘ X2
+       | ∃∃m,K,V,V2. ⇩[i] L ≘ K. ⓛV & ❪G,K❫ ⊢ V ⬆[h,m] V2 & ⇧[↑i] V2 ≘ X2 & n = ↑m.
 #h #n #G #L #i #X2 * #c #Hc #H elim (cpg_inv_lref1_drops … H) -H *
 [ #H1 #H2 destruct
   /3 width=1 by or3_intro0, conj/

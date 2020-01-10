@@ -21,26 +21,26 @@ include "apps_2/functional/mf_exteq.ma".
 (* Properties with relocation ***********************************************)
 
 lemma mf_delta_drops (h) (G): ∀K,V1,V2. ❪G,K❫ ⊢ V1 ➡[h] V2 →
-                              ∀T,L,l. ⇩*[l] L ≘ K.ⓓV1 →
-                              ∀gv,lv. ❪G,L❫ ⊢ ●[gv,⇡[l←#l]lv]T ➡[h] ●[gv,⇡[l←↑[↑l]V2]lv]T.
+                              ∀T,L,i. ⇩[i] L ≘ K.ⓓV1 →
+                              ∀gv,lv. ❪G,L❫ ⊢ ●[gv,⇡[i←#i]lv]T ➡[h] ●[gv,⇡[i←↑[↑i]V2]lv]T.
 #h #G #K #V1 #V2 #HV #T elim T -T * //
-[ #i #L #l #HKL #gv #lv
+[ #i #L #j #HKL #gv #lv
   >mf_lref >mf_lref
-  elim (lt_or_eq_or_gt i l) #Hl destruct
-  [ >(mf_vpush_lt … Hl) >(mf_vpush_lt … Hl) //
+  elim (lt_or_eq_or_gt i j) #Hj destruct
+  [ >(mf_vpush_lt … Hj) >(mf_vpush_lt … Hj) //
   | >mf_vpush_eq >mf_vpush_eq
     /2 width=6 by cpm_delta_drops/
-  | >(mf_vpush_gt … Hl) >(mf_vpush_gt … Hl) //
+  | >(mf_vpush_gt … Hj) >(mf_vpush_gt … Hj) //
   ]
-| #p #I #V #T #IHV #IHT #L #l #HLK #gv #lv
+| #p #I #V #T #IHV #IHT #L #j #HLK #gv #lv
   >mf_bind >mf_bind
   >(mf_comp … T) in ⊢ (?????%?);
   [2: @mf_vpush_swap // |4: @exteq_refl |3,5: skip ]
   >(mf_comp … T) in ⊢ (??????%);
   [2: @mf_vpush_swap // |4: @exteq_refl |3,5: skip ]
-  >(flifts_lref_uni 1 l) >(flifts_compose_uni 1 (↑l))
+  >(flifts_lref_uni 1 j) >(flifts_compose_uni 1 (↑j))
   /4 width=1 by cpm_bind, drops_drop/
-| #I #V #T #IHV #IHT #L #l #HLK #gv #lv
+| #I #V #T #IHV #IHT #L #j #HLK #gv #lv
   >mf_flat >mf_flat /3 width=1 by cpr_flat/
 ]
 qed.

@@ -22,7 +22,7 @@ include "static_2/static/aaa.ma".
 (* Advanced properties ******************************************************)
 
 (* Basic_2A1: was: aaa_lref *)
-lemma aaa_lref_drops: ∀I,G,K,V,B,i,L. ⇩*[i] L ≘ K.ⓑ[I]V → ❪G,K❫ ⊢ V ⁝ B → ❪G,L❫ ⊢ #i ⁝ B.
+lemma aaa_lref_drops: ∀I,G,K,V,B,i,L. ⇩[i] L ≘ K.ⓑ[I]V → ❪G,K❫ ⊢ V ⁝ B → ❪G,L❫ ⊢ #i ⁝ B.
 #I #G #K #V #B #i elim i -i
 [ #L #H lapply (drops_fwd_isid … H ?) -H //
   #H destruct /2 width=1 by aaa_zero/
@@ -35,7 +35,7 @@ qed.
 
 (* Basic_2A1: was: aaa_inv_lref *)
 lemma aaa_inv_lref_drops: ∀G,A,i,L. ❪G,L❫ ⊢ #i ⁝ A →
-                          ∃∃I,K,V. ⇩*[i] L ≘ K.ⓑ[I]V & ❪G,K❫ ⊢ V ⁝ A.
+                          ∃∃I,K,V. ⇩[i] L ≘ K.ⓑ[I]V & ❪G,K❫ ⊢ V ⁝ A.
 #G #A #i elim i -i
 [ #L #H elim (aaa_inv_zero … H) -H /3 width=5 by drops_refl, ex2_3_intro/
 | #i #IH #L #H elim (aaa_inv_lref … H) -H
@@ -44,7 +44,7 @@ lemma aaa_inv_lref_drops: ∀G,A,i,L. ❪G,L❫ ⊢ #i ⁝ A →
 qed-.
 
 lemma aaa_pair_inv_lref (G) (L) (i):
-      ∀A. ❪G,L❫ ⊢ #i ⁝ A → ∀I,K,V. ⇩*[i] L ≘ K.ⓑ[I]V → ❪G,K❫ ⊢ V ⁝ A.
+      ∀A. ❪G,L❫ ⊢ #i ⁝ A → ∀I,K,V. ⇩[i] L ≘ K.ⓑ[I]V → ❪G,K❫ ⊢ V ⁝ A.
 #G #L #i #A #H #I #K #V #HLK
 elim (aaa_inv_lref_drops … H) -H #J #Y #X #HLY #HX
 lapply (drops_mono … HLY … HLK) -L -i #H destruct //

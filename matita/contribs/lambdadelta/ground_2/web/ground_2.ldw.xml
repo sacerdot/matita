@@ -13,6 +13,13 @@
          and its timeline.
    </body>
    <table name="ground_2_sum"/>
+
+   <news class="alpha" date="2020 January 6.">
+         Centralized xoa infrastructure removed.
+   </news>
+   <news class="alpha" date="2018 June 6.">
+         Decentralized xoa infrastructure.
+   </news>
    <news class="alpha" date="2016 April 18.">
          Generic rt-transition counter (rtc).
    </news>

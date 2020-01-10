@@ -14,6 +14,7 @@
 
 include "ground_2/relocation/nstream_after.ma".
 include "static_2/notation/relations/rliftstar_3.ma".
+include "static_2/notation/relations/rlift_3.ma".
 include "static_2/syntax/term.ma".
 
 (* GENERIC RELOCATION FOR TERMS *********************************************)
@@ -34,11 +35,11 @@ inductive lifts: rtmap → relation term ≝
               lifts f (ⓕ[I]V1.T1) (ⓕ[I]V2.T2)
 .
 
-interpretation "uniform relocation (term)"
-   'RLiftStar i T1 T2 = (lifts (uni i) T1 T2).
-
 interpretation "generic relocation (term)"
    'RLiftStar f T1 T2 = (lifts f T1 T2).
+
+interpretation "uniform relocation (term)"
+   'RLift i T1 T2 = (lifts (uni i) T1 T2).
 
 definition liftable2_sn: predicate (relation term) ≝
                          λR. ∀T1,T2. R T1 T2 → ∀f,U1. ⇧*[f] T1 ≘ U1 →
@@ -128,7 +129,7 @@ lemma lifts_inv_bind1: ∀f,p,I,V1,T1,Y. ⇧*[f] ⓑ[p,I]V1.T1 ≘ Y →
                                 Y = ⓑ[p,I]V2.T2.
 /2 width=3 by lifts_inv_bind1_aux/ qed-.
 
-fact lifts_inv_flat1_aux: ∀f:rtmap. ∀X,Y. ⇧*[f] X ≘ Y →
+fact lifts_inv_flat1_aux: ∀f,X,Y. ⇧*[f] X ≘ Y →
                           ∀I,V1,T1. X = ⓕ[I]V1.T1 →
                           ∃∃V2,T2. ⇧*[f] V1 ≘ V2 & ⇧*[f] T1 ≘ T2 &
                                    Y = ⓕ[I]V2.T2.
@@ -143,7 +144,7 @@ qed-.
 
 (* Basic_1: was: lift1_flat *)
 (* Basic_2A1: includes: lift_inv_flat1 *)
-lemma lifts_inv_flat1: ∀f:rtmap. ∀I,V1,T1,Y. ⇧*[f] ⓕ[I]V1.T1 ≘ Y →
+lemma lifts_inv_flat1: ∀f,I,V1,T1,Y. ⇧*[f] ⓕ[I]V1.T1 ≘ Y →
                        ∃∃V2,T2. ⇧*[f] V1 ≘ V2 & ⇧*[f] T1 ≘ T2 &
                                 Y = ⓕ[I]V2.T2.
 /2 width=3 by lifts_inv_flat1_aux/ qed-.
@@ -210,7 +211,7 @@ lemma lifts_inv_bind2: ∀f,p,I,V2,T2,X. ⇧*[f] X ≘ ⓑ[p,I]V2.T2 →
                                 X = ⓑ[p,I]V1.T1.
 /2 width=3 by lifts_inv_bind2_aux/ qed-.
 
-fact lifts_inv_flat2_aux: ∀f:rtmap. ∀X,Y. ⇧*[f] X ≘ Y →
+fact lifts_inv_flat2_aux: ∀f,X,Y. ⇧*[f] X ≘ Y →
                           ∀I,V2,T2. Y = ⓕ[I]V2.T2 →
                           ∃∃V1,T1. ⇧*[f] V1 ≘ V2 & ⇧*[f] T1 ≘ T2 &
                                    X = ⓕ[I]V1.T1.
@@ -225,7 +226,7 @@ qed-.
 
 (* Basic_1: includes: lift_gen_flat *)
 (* Basic_2A1: includes: lift_inv_flat2 *)
-lemma lifts_inv_flat2: ∀f:rtmap. ∀I,V2,T2,X. ⇧*[f] X ≘ ⓕ[I]V2.T2 →
+lemma lifts_inv_flat2: ∀f,I,V2,T2,X. ⇧*[f] X ≘ ⓕ[I]V2.T2 →
                        ∃∃V1,T1. ⇧*[f] V1 ≘ V2 & ⇧*[f] T1 ≘ T2 &
                                 X = ⓕ[I]V1.T1.
 /2 width=3 by lifts_inv_flat2_aux/ qed-.
@@ -305,22 +306,22 @@ qed-.
 
 (* Inversion lemmas with uniform relocations ********************************)
 
-lemma lifts_inv_lref1_uni: ∀l,Y,i. ⇧*[l] #i ≘ Y → Y = #(l+i).
+lemma lifts_inv_lref1_uni: ∀l,Y,i. ⇧[l] #i ≘ Y → Y = #(l+i).
 #l #Y #i1 #H elim (lifts_inv_lref1 … H) -H /4 width=4 by at_mono, eq_f/
 qed-.
 
-lemma lifts_inv_lref2_uni: ∀l,X,i2. ⇧*[l] X ≘ #i2 →
+lemma lifts_inv_lref2_uni: ∀l,X,i2. ⇧[l] X ≘ #i2 →
                            ∃∃i1. X = #i1 & i2 = l + i1.
 #l #X #i2 #H elim (lifts_inv_lref2 … H) -H
 /3 width=3 by at_inv_uni, ex2_intro/
 qed-.
 
-lemma lifts_inv_lref2_uni_ge: ∀l,X,i. ⇧*[l] X ≘ #(l + i) → X = #i.
+lemma lifts_inv_lref2_uni_ge: ∀l,X,i. ⇧[l] X ≘ #(l + i) → X = #i.
 #l #X #i2 #H elim (lifts_inv_lref2_uni … H) -H
 #i1 #H1 #H2 destruct /4 width=2 by injective_plus_r, eq_f, sym_eq/
 qed-.
 
-lemma lifts_inv_lref2_uni_lt: ∀l,X,i. ⇧*[l] X ≘ #i → i < l → ⊥.
+lemma lifts_inv_lref2_uni_lt: ∀l,X,i. ⇧[l] X ≘ #i → i < l → ⊥.
 #l #X #i2 #H elim (lifts_inv_lref2_uni … H) -H
 #i1 #_ #H1 #H2 destruct /2 width=4 by lt_le_false/
 qed-.
@@ -334,7 +335,7 @@ lemma lifts_fwd_isid: ∀f,T1,T2. ⇧*[f] T1 ≘ T2 → 𝐈❪f❫ → T1 = T2.
 qed-.
 
 (* Basic_2A1: includes: lift_fwd_pair1 *)
-lemma lifts_fwd_pair1: ∀f:rtmap. ∀I,V1,T1,Y. ⇧*[f] ②[I]V1.T1 ≘ Y →
+lemma lifts_fwd_pair1: ∀f,I,V1,T1,Y. ⇧*[f] ②[I]V1.T1 ≘ Y →
                        ∃∃V2,T2. ⇧*[f] V1 ≘ V2 & Y = ②[I]V2.T2.
 #f * [ #p ] #I #V1 #T1 #Y #H
 [ elim (lifts_inv_bind1 … H) -H /2 width=4 by ex2_2_intro/
@@ -343,7 +344,7 @@ lemma lifts_fwd_pair1: ∀f:rtmap. ∀I,V1,T1,Y. ⇧*[f] ②[I]V1.T1 ≘ Y →
 qed-.
 
 (* Basic_2A1: includes: lift_fwd_pair2 *)
-lemma lifts_fwd_pair2: ∀f:rtmap. ∀I,V2,T2,X. ⇧*[f] X ≘ ②[I]V2.T2 →
+lemma lifts_fwd_pair2: ∀f,I,V2,T2,X. ⇧*[f] X ≘ ②[I]V2.T2 →
                        ∃∃V1,T1. ⇧*[f] V1 ≘ V2 & X = ②[I]V1.T1.
 #f * [ #p ] #I #V2 #T2 #X #H
 [ elim (lifts_inv_bind2 … H) -H /2 width=4 by ex2_2_intro/
@@ -399,7 +400,7 @@ elim (lifts_inv_lref1 … H) -H #j #Hij #H destruct
 /3 width=7 by lifts_lref, at_push/
 qed.
 
-lemma lifts_lref_uni: ∀l,i. ⇧*[l] #i ≘ #(l+i).
+lemma lifts_lref_uni: ∀l,i. ⇧[l] #i ≘ #(l+i).
 #l elim l -l /2 width=1 by lifts_lref/
 qed.
 
@@ -476,7 +477,7 @@ qed-.
 
 (* Properties with uniform relocation ***************************************)
 
-lemma lifts_uni: ∀n1,n2,T,U. ⇧*[𝐔❨n1❩∘𝐔❨n2❩] T ≘ U → ⇧*[n1+n2] T ≘ U.
+lemma lifts_uni: ∀n1,n2,T,U. ⇧*[𝐔❨n1❩∘𝐔❨n2❩] T ≘ U → ⇧[n1+n2] T ≘ U.
 /3 width=4 by lifts_eq_repl_back, after_inv_total/ qed.
 
 (* Basic_2A1: removed theorems 14:

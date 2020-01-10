@@ -36,11 +36,11 @@ definition S3 ≝ λC:candidate.
                 C G L (ⒶVs.ⓓ[a]ⓝW.V.T) → C G L (ⒶVs.ⓐV.ⓛ[a]W.T).
 
 definition S5 ≝ λC:candidate. ∀I,G,L,K,Vs,V1,V2,i.
-                C G L (ⒶVs.V2) → ⇧*[↑i] V1 ≘ V2 →
-                ⇩*[i] L ≘ K.ⓑ[I]V1 → C G L (ⒶVs.#i).
+                C G L (ⒶVs.V2) → ⇧[↑i] V1 ≘ V2 →
+                ⇩[i] L ≘ K.ⓑ[I]V1 → C G L (ⒶVs.#i).
 
 definition S6 ≝ λRP,C:candidate.
-                ∀G,L,V1b,V2b. ⇧*[1] V1b ≘ V2b →
+                ∀G,L,V1b,V2b. ⇧[1] V1b ≘ V2b →
                 ∀a,V,T. C G (L.ⓓV) (ⒶV2b.T) → RP G L V → C G L (ⒶV1b.ⓓ[a]V.T).
 
 definition S7 ≝ λC:candidate.

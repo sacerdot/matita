@@ -36,17 +36,17 @@ lemma reqx_inv_lifts_bi: ∀L1,L2,U. L1 ≛[U] L2 → ∀b,f. 𝐔❪f❫ →
                          ∀T. ⇧*[f] T ≘ U → K1 ≛[T] K2.
 /2 width=10 by rex_inv_lifts_bi/ qed-.
 
-lemma reqx_inv_lref_pair_sn: ∀L1,L2,i. L1 ≛[#i] L2 → ∀I,K1,V1. ⇩*[i] L1 ≘ K1.ⓑ[I]V1 →
-                             ∃∃K2,V2. ⇩*[i] L2 ≘ K2.ⓑ[I]V2 & K1 ≛[V1] K2 & V1 ≛ V2.
+lemma reqx_inv_lref_pair_sn: ∀L1,L2,i. L1 ≛[#i] L2 → ∀I,K1,V1. ⇩[i] L1 ≘ K1.ⓑ[I]V1 →
+                             ∃∃K2,V2. ⇩[i] L2 ≘ K2.ⓑ[I]V2 & K1 ≛[V1] K2 & V1 ≛ V2.
 /2 width=3 by rex_inv_lref_pair_sn/ qed-.
 
-lemma reqx_inv_lref_pair_dx: ∀L1,L2,i. L1 ≛[#i] L2 → ∀I,K2,V2. ⇩*[i] L2 ≘ K2.ⓑ[I]V2 →
-                             ∃∃K1,V1. ⇩*[i] L1 ≘ K1.ⓑ[I]V1 & K1 ≛[V1] K2 & V1 ≛ V2.
+lemma reqx_inv_lref_pair_dx: ∀L1,L2,i. L1 ≛[#i] L2 → ∀I,K2,V2. ⇩[i] L2 ≘ K2.ⓑ[I]V2 →
+                             ∃∃K1,V1. ⇩[i] L1 ≘ K1.ⓑ[I]V1 & K1 ≛[V1] K2 & V1 ≛ V2.
 /2 width=3 by rex_inv_lref_pair_dx/ qed-.
 
 lemma reqx_inv_lref_pair_bi (L1) (L2) (i):
                             L1 ≛[#i] L2 →
-                            ∀I1,K1,V1. ⇩*[i] L1 ≘ K1.ⓑ[I1]V1 →
-                            ∀I2,K2,V2. ⇩*[i] L2 ≘ K2.ⓑ[I2]V2 →
+                            ∀I1,K1,V1. ⇩[i] L1 ≘ K1.ⓑ[I1]V1 →
+                            ∀I2,K2,V2. ⇩[i] L2 ≘ K2.ⓑ[I2]V2 →
                             ∧∧ K1 ≛[V1] K2 & V1 ≛ V2 & I1 = I2.
 /2 width=6 by rex_inv_lref_pair_bi/ qed-.

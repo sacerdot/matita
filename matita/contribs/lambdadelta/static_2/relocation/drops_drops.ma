@@ -91,13 +91,13 @@ lemma drops_mono: ∀b1,f,L,L1. ⇩*[b1,f] L ≘ L1 →
 /3 width=8 by drops_conf, drops_fwd_isid/
 qed-.
 
-lemma drops_inv_uni: ∀L,i. ⇩*[Ⓕ,𝐔❨i❩] L ≘ ⋆ → ∀I,K. ⇩*[i] L ≘ K.ⓘ[I] → ⊥.
+lemma drops_inv_uni: ∀L,i. ⇩*[Ⓕ,𝐔❨i❩] L ≘ ⋆ → ∀I,K. ⇩[i] L ≘ K.ⓘ[I] → ⊥.
 #L #i #H1 #I #K #H2
 lapply (drops_F … H2) -H2 #H2
 lapply (drops_mono … H2 … H1) -L -i #H destruct
 qed-.
 
-lemma drops_ldec_dec: ∀L,i. Decidable (∃∃K,W. ⇩*[i] L ≘ K.ⓛW).
+lemma drops_ldec_dec: ∀L,i. Decidable (∃∃K,W. ⇩[i] L ≘ K.ⓛW).
 #L #i elim (drops_F_uni L i) [| * * [ #I #K1 | * #W1 #K1 ] ]
 [4: /3 width=3 by ex1_2_intro, or_introl/
 |*: #H1L @or_intror * #K2 #W2 #H2L

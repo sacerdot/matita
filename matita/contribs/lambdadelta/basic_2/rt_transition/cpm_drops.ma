@@ -50,15 +50,15 @@ qed-.
 (* Basic_1: includes: pr2_delta1 *)
 (* Basic_2A1: includes: cpr_delta *)
 lemma cpm_delta_drops: ∀n,h,G,L,K,V,V2,W2,i.
-                       ⇩*[i] L ≘ K.ⓓV → ❪G,K❫ ⊢ V ➡[n,h] V2 →
-                       ⇧*[↑i] V2 ≘ W2 → ❪G,L❫ ⊢ #i ➡[n,h] W2.
+                       ⇩[i] L ≘ K.ⓓV → ❪G,K❫ ⊢ V ➡[n,h] V2 →
+                       ⇧[↑i] V2 ≘ W2 → ❪G,L❫ ⊢ #i ➡[n,h] W2.
 #n #h #G #L #K #V #V2 #W2 #i #HLK *
 /3 width=8 by cpg_delta_drops, ex2_intro/
 qed.
 
 lemma cpm_ell_drops: ∀n,h,G,L,K,V,V2,W2,i.
-                     ⇩*[i] L ≘ K.ⓛV → ❪G,K❫ ⊢ V ➡[n,h] V2 →
-                     ⇧*[↑i] V2 ≘ W2 → ❪G,L❫ ⊢ #i ➡[↑n,h] W2.
+                     ⇩[i] L ≘ K.ⓛV → ❪G,K❫ ⊢ V ➡[n,h] V2 →
+                     ⇧[↑i] V2 ≘ W2 → ❪G,L❫ ⊢ #i ➡[↑n,h] W2.
 #n #h #G #L #K #V #V2 #W2 #i #HLK *
 /3 width=8 by cpg_ell_drops, isrt_succ, ex2_intro/
 qed.
@@ -68,10 +68,10 @@ qed.
 lemma cpm_inv_atom1_drops: ∀n,h,I,G,L,T2. ❪G,L❫ ⊢ ⓪[I] ➡[n,h] T2 →
                            ∨∨ T2 = ⓪[I] ∧ n = 0
                             | ∃∃s. T2 = ⋆(⫯[h]s) & I = Sort s & n = 1
-                            | ∃∃K,V,V2,i. ⇩*[i] L ≘ K.ⓓV & ❪G,K❫ ⊢ V ➡[n,h] V2 &
-                                          ⇧*[↑i] V2 ≘ T2 & I = LRef i
-                            | ∃∃m,K,V,V2,i. ⇩*[i] L ≘ K.ⓛV & ❪G,K❫ ⊢ V ➡[m,h] V2 &
-                                            ⇧*[↑i] V2 ≘ T2 & I = LRef i & n = ↑m.
+                            | ∃∃K,V,V2,i. ⇩[i] L ≘ K.ⓓV & ❪G,K❫ ⊢ V ➡[n,h] V2 &
+                                          ⇧[↑i] V2 ≘ T2 & I = LRef i
+                            | ∃∃m,K,V,V2,i. ⇩[i] L ≘ K.ⓛV & ❪G,K❫ ⊢ V ➡[m,h] V2 &
+                                            ⇧[↑i] V2 ≘ T2 & I = LRef i & n = ↑m.
 #n #h #I #G #L #T2 * #c #Hc #H elim (cpg_inv_atom1_drops … H) -H *
 [ #H1 #H2 destruct lapply (isrt_inv_00 … Hc) -Hc
   /3 width=1 by or4_intro0, conj/
@@ -87,10 +87,10 @@ qed-.
 
 lemma cpm_inv_lref1_drops: ∀n,h,G,L,T2,i. ❪G,L❫ ⊢ #i ➡[n,h] T2 →
                            ∨∨ T2 = #i ∧ n = 0
-                            | ∃∃K,V,V2. ⇩*[i] L ≘ K.ⓓV & ❪G,K❫ ⊢ V ➡[n,h] V2 &
-                                        ⇧*[↑i] V2 ≘ T2
-                            | ∃∃m,K,V,V2. ⇩*[i] L ≘ K. ⓛV & ❪G,K❫ ⊢ V ➡[m,h] V2 &
-                                          ⇧*[↑i] V2 ≘ T2 & n = ↑m.
+                            | ∃∃K,V,V2. ⇩[i] L ≘ K.ⓓV & ❪G,K❫ ⊢ V ➡[n,h] V2 &
+                                        ⇧[↑i] V2 ≘ T2
+                            | ∃∃m,K,V,V2. ⇩[i] L ≘ K. ⓛV & ❪G,K❫ ⊢ V ➡[m,h] V2 &
+                                          ⇧[↑i] V2 ≘ T2 & n = ↑m.
 #n #h #G #L #T2 #i * #c #Hc #H elim (cpg_inv_lref1_drops … H) -H *
 [ #H1 #H2 destruct lapply (isrt_inv_00 … Hc) -Hc
   /3 width=1 by or3_intro0, conj/

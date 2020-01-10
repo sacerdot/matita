@@ -57,7 +57,7 @@ lapply (drops_mono … Hi … HLK) -L #H destruct
 qed.
 
 lemma cnuw_unit_drops (h) (I) (G) (L):
-      ∀K,i. ⇩*[i] L ≘ K.ⓤ[I] → ❪G,L❫ ⊢ ➡𝐍𝐖*[h] #i.
+      ∀K,i. ⇩[i] L ≘ K.ⓤ[I] → ❪G,L❫ ⊢ ➡𝐍𝐖*[h] #i.
 #h #I #G #L #K #i #HLK #n #X #H
 elim (cpms_inv_lref1_drops … H) -H * [ // || #m ] #Y #V1 #V2 #HLY
 lapply (drops_mono … HLK … HLY) -L #H destruct

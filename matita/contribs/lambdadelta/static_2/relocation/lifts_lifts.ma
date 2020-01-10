@@ -47,8 +47,8 @@ theorem lifts_div4: ∀f2,Tf,T. ⇧*[f2] Tf ≘ T → ∀g2,Tg. ⇧*[g2] Tg ≘ 
 qed-.
 
 lemma lifts_div4_one: ∀f,Tf,T. ⇧*[⫯f] Tf ≘ T →
-                      ∀T1. ⇧*[1] T1 ≘ T →
-                      ∃∃T0. ⇧*[1] T0 ≘ Tf & ⇧*[f] T0 ≘ T1.
+                      ∀T1. ⇧[1] T1 ≘ T →
+                      ∃∃T0. ⇧[1] T0 ≘ Tf & ⇧*[f] T0 ≘ T1.
 /4 width=6 by lifts_div4, at_div_id_dx, at_div_pn/ qed-.
 
 theorem lifts_div3: ∀f2,T,T2. ⇧*[f2] T2 ≘ T → ∀f,T1. ⇧*[f] T1 ≘ T →
@@ -87,8 +87,8 @@ theorem lifts_trans: ∀f1,T1,T. ⇧*[f1] T1 ≘ T → ∀f2,T2. ⇧*[f2] T ≘ 
 qed-.
 
 lemma lifts_trans4_one (f) (T1) (T2):
-                       ∀T. ⇧*[1]T1 ≘ T → ⇧*[⫯f]T ≘ T2 →
-                       ∃∃T0. ⇧*[f]T1 ≘ T0 & ⇧*[1]T0 ≘ T2.
+                       ∀T. ⇧[1]T1 ≘ T → ⇧*[⫯f]T ≘ T2 →
+                       ∃∃T0. ⇧*[f]T1 ≘ T0 & ⇧[1]T0 ≘ T2.
 /4 width=6 by lifts_trans, lifts_split_trans, after_uni_one_dx/ qed-.
 
 (* Basic_2A1: includes: lift_conf_O1 lift_conf_be *)
@@ -135,8 +135,8 @@ elim (HR … HU12 … HTU1) -HR -U1 #X #HUX #HTX
 qed-.
 
 lemma lifts_trans_uni (T):
-      ∀l1,T1. ⇧*[l1] T1 ≘ T →
-      ∀l2,T2. ⇧*[l2] T ≘ T2 → ⇧*[l1+l2] T1 ≘ T2.
+      ∀l1,T1. ⇧[l1] T1 ≘ T →
+      ∀l2,T2. ⇧[l2] T ≘ T2 → ⇧[l1+l2] T1 ≘ T2.
 #T #l1 #T1 #HT1 #l2 #T2 #HT2
 @(lifts_trans … HT1 … HT2) //
 qed-.

@@ -59,7 +59,7 @@ lemma cprs_inv_appl_sn (h) (G) (L):
                                          X2 = ⓐV2. T2
                         | ∃∃p,W,T.       ❪G,L❫ ⊢ T1 ➡*[h] ⓛ[p]W.T &
                                          ❪G,L❫ ⊢ ⓓ[p]ⓝW.V1.T ➡*[h] X2
-                        | ∃∃p,V0,V2,V,T. ❪G,L❫ ⊢ V1 ➡*[h] V0 & ⇧*[1] V0 ≘ V2 &
+                        | ∃∃p,V0,V2,V,T. ❪G,L❫ ⊢ V1 ➡*[h] V0 & ⇧[1] V0 ≘ V2 &
                                          ❪G,L❫ ⊢ T1 ➡*[h] ⓓ[p]V.T &
                                          ❪G,L❫ ⊢ ⓓ[p]V.ⓐV2.T ➡*[h] X2.
 #h #G #L #V1 #T1 #X2 #H elim (cpms_inv_appl_sn … H) -H *

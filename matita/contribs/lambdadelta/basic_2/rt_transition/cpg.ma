@@ -19,8 +19,9 @@ include "ground_2/xoa/ex_5_2.ma".
 include "ground_2/xoa/ex_6_9.ma".
 include "ground_2/xoa/ex_7_10.ma".
 include "ground_2/xoa/or_5.ma".
-include "ground_2/steps/rtc_max.ma".
+include "ground_2/steps/rtc_shift.ma".
 include "ground_2/steps/rtc_plus.ma".
+include "ground_2/steps/rtc_max.ma".
 include "basic_2/notation/relations/predty_7.ma".
 include "static_2/syntax/sh.ma".
 include "static_2/syntax/lenv.ma".
@@ -34,11 +35,11 @@ inductive cpg (Rt:relation rtc) (h): rtc → relation4 genv lenv term term ≝
 | cpg_atom : ∀I,G,L. cpg Rt h (𝟘𝟘) G L (⓪[I]) (⓪[I])
 | cpg_ess  : ∀G,L,s. cpg Rt h (𝟘𝟙) G L (⋆s) (⋆(⫯[h]s))
 | cpg_delta: ∀c,G,L,V1,V2,W2. cpg Rt h c G L V1 V2 →
-             ⇧*[1] V2 ≘ W2 → cpg Rt h c G (L.ⓓV1) (#0) W2
+             ⇧[1] V2 ≘ W2 → cpg Rt h c G (L.ⓓV1) (#0) W2
 | cpg_ell  : ∀c,G,L,V1,V2,W2. cpg Rt h c G L V1 V2 →
-             ⇧*[1] V2 ≘ W2 → cpg Rt h (c+𝟘𝟙) G (L.ⓛV1) (#0) W2
+             ⇧[1] V2 ≘ W2 → cpg Rt h (c+𝟘𝟙) G (L.ⓛV1) (#0) W2
 | cpg_lref : ∀c,I,G,L,T,U,i. cpg Rt h c G L (#i) T →
-             ⇧*[1] T ≘ U → cpg Rt h c G (L.ⓘ[I]) (#↑i) U
+             ⇧[1] T ≘ U → cpg Rt h c G (L.ⓘ[I]) (#↑i) U
 | cpg_bind : ∀cV,cT,p,I,G,L,V1,V2,T1,T2.
              cpg Rt h cV G L V1 V2 → cpg Rt h cT G (L.ⓑ[I]V1) T1 T2 →
              cpg Rt h ((↕*cV)∨cT) G L (ⓑ[p,I]V1.T1) (ⓑ[p,I]V2.T2)
@@ -48,7 +49,7 @@ inductive cpg (Rt:relation rtc) (h): rtc → relation4 genv lenv term term ≝
 | cpg_cast : ∀cU,cT,G,L,U1,U2,T1,T2. Rt cU cT →
              cpg Rt h cU G L U1 U2 → cpg Rt h cT G L T1 T2 →
              cpg Rt h (cU∨cT) G L (ⓝU1.T1) (ⓝU2.T2)
-| cpg_zeta : ∀c,G,L,V,T1,T,T2. ⇧*[1] T ≘ T1 → cpg Rt h c G L T T2 →
+| cpg_zeta : ∀c,G,L,V,T1,T,T2. ⇧[1] T ≘ T1 → cpg Rt h c G L T T2 →
              cpg Rt h (c+𝟙𝟘) G L (+ⓓV.T1) T2
 | cpg_eps  : ∀c,G,L,V,T1,T2. cpg Rt h c G L T1 T2 → cpg Rt h (c+𝟙𝟘) G L (ⓝV.T1) T2
 | cpg_ee   : ∀c,G,L,V1,V2,T. cpg Rt h c G L V1 V2 → cpg Rt h (c+𝟘𝟙) G L (ⓝV1.T) V2
@@ -56,7 +57,7 @@ inductive cpg (Rt:relation rtc) (h): rtc → relation4 genv lenv term term ≝
              cpg Rt h cV G L V1 V2 → cpg Rt h cW G L W1 W2 → cpg Rt h cT G (L.ⓛW1) T1 T2 →
              cpg Rt h (((↕*cV)∨(↕*cW)∨cT)+𝟙𝟘) G L (ⓐV1.ⓛ[p]W1.T1) (ⓓ[p]ⓝW2.V2.T2)
 | cpg_theta: ∀cV,cW,cT,p,G,L,V1,V,V2,W1,W2,T1,T2.
-             cpg Rt h cV G L V1 V → ⇧*[1] V ≘ V2 → cpg Rt h cW G L W1 W2 →
+             cpg Rt h cV G L V1 V → ⇧[1] V ≘ V2 → cpg Rt h cW G L W1 W2 →
              cpg Rt h cT G (L.ⓓW1) T1 T2 →
              cpg Rt h (((↕*cV)∨(↕*cW)∨cT)+𝟙𝟘) G L (ⓐV1.ⓓ[p]W1.T1) (ⓓ[p]W2.ⓐV2.T2)
 .
@@ -78,11 +79,11 @@ qed.
 fact cpg_inv_atom1_aux: ∀Rt,c,h,G,L,T1,T2. ❪G,L❫ ⊢ T1 ⬈[Rt,c,h] T2 → ∀J. T1 = ⓪[J] →
                         ∨∨ T2 = ⓪[J] ∧ c = 𝟘𝟘
                          | ∃∃s. J = Sort s & T2 = ⋆(⫯[h]s) & c = 𝟘𝟙
-                         | ∃∃cV,K,V1,V2. ❪G,K❫ ⊢ V1 ⬈[Rt,cV,h] V2 & ⇧*[1] V2 ≘ T2 &
+                         | ∃∃cV,K,V1,V2. ❪G,K❫ ⊢ V1 ⬈[Rt,cV,h] V2 & ⇧[1] V2 ≘ T2 &
                                          L = K.ⓓV1 & J = LRef 0 & c = cV
-                         | ∃∃cV,K,V1,V2. ❪G,K❫ ⊢ V1 ⬈[Rt,cV,h] V2 & ⇧*[1] V2 ≘ T2 &
+                         | ∃∃cV,K,V1,V2. ❪G,K❫ ⊢ V1 ⬈[Rt,cV,h] V2 & ⇧[1] V2 ≘ T2 &
                                          L = K.ⓛV1 & J = LRef 0 & c = cV+𝟘𝟙
-                         | ∃∃I,K,T,i. ❪G,K❫ ⊢ #i ⬈[Rt,c,h] T & ⇧*[1] T ≘ T2 &
+                         | ∃∃I,K,T,i. ❪G,K❫ ⊢ #i ⬈[Rt,c,h] T & ⇧[1] T ≘ T2 &
                                       L = K.ⓘ[I] & J = LRef (↑i).
 #Rt #c #h #G #L #T1 #T2 * -c -G -L -T1 -T2
 [ #I #G #L #J #H destruct /3 width=1 by or5_intro0, conj/
@@ -104,11 +105,11 @@ qed-.
 lemma cpg_inv_atom1: ∀Rt,c,h,J,G,L,T2. ❪G,L❫ ⊢ ⓪[J] ⬈[Rt,c,h] T2 →
                      ∨∨ T2 = ⓪[J] ∧ c = 𝟘𝟘
                       | ∃∃s. J = Sort s & T2 = ⋆(⫯[h]s) & c = 𝟘𝟙
-                      | ∃∃cV,K,V1,V2. ❪G,K❫ ⊢ V1 ⬈[Rt,cV,h] V2 & ⇧*[1] V2 ≘ T2 &
+                      | ∃∃cV,K,V1,V2. ❪G,K❫ ⊢ V1 ⬈[Rt,cV,h] V2 & ⇧[1] V2 ≘ T2 &
                                       L = K.ⓓV1 & J = LRef 0 & c = cV
-                      | ∃∃cV,K,V1,V2. ❪G,K❫ ⊢ V1 ⬈[Rt,cV,h] V2 & ⇧*[1] V2 ≘ T2 &
+                      | ∃∃cV,K,V1,V2. ❪G,K❫ ⊢ V1 ⬈[Rt,cV,h] V2 & ⇧[1] V2 ≘ T2 &
                                       L = K.ⓛV1 & J = LRef 0 & c = cV+𝟘𝟙
-                      | ∃∃I,K,T,i. ❪G,K❫ ⊢ #i ⬈[Rt,c,h] T & ⇧*[1] T ≘ T2 &
+                      | ∃∃I,K,T,i. ❪G,K❫ ⊢ #i ⬈[Rt,c,h] T & ⇧[1] T ≘ T2 &
                                    L = K.ⓘ[I] & J = LRef (↑i).
 /2 width=3 by cpg_inv_atom1_aux/ qed-.
 
@@ -124,9 +125,9 @@ qed-.
 
 lemma cpg_inv_zero1: ∀Rt,c,h,G,L,T2. ❪G,L❫ ⊢ #0 ⬈[Rt,c,h] T2 →
                      ∨∨ T2 = #0 ∧ c = 𝟘𝟘
-                      | ∃∃cV,K,V1,V2. ❪G,K❫ ⊢ V1 ⬈[Rt,cV,h] V2 & ⇧*[1] V2 ≘ T2 &
+                      | ∃∃cV,K,V1,V2. ❪G,K❫ ⊢ V1 ⬈[Rt,cV,h] V2 & ⇧[1] V2 ≘ T2 &
                                       L = K.ⓓV1 & c = cV
-                      | ∃∃cV,K,V1,V2. ❪G,K❫ ⊢ V1 ⬈[Rt,cV,h] V2 & ⇧*[1] V2 ≘ T2 &
+                      | ∃∃cV,K,V1,V2. ❪G,K❫ ⊢ V1 ⬈[Rt,cV,h] V2 & ⇧[1] V2 ≘ T2 &
                                       L = K.ⓛV1 & c = cV+𝟘𝟙.
 #Rt #c #h #G #L #T2 #H
 elim (cpg_inv_atom1 … H) -H * /3 width=1 by or3_intro0, conj/
@@ -138,7 +139,7 @@ qed-.
 
 lemma cpg_inv_lref1: ∀Rt,c,h,G,L,T2,i. ❪G,L❫ ⊢ #↑i ⬈[Rt,c,h] T2 →
                      ∨∨ T2 = #(↑i) ∧ c = 𝟘𝟘
-                      | ∃∃I,K,T. ❪G,K❫ ⊢ #i ⬈[Rt,c,h] T & ⇧*[1] T ≘ T2 & L = K.ⓘ[I].
+                      | ∃∃I,K,T. ❪G,K❫ ⊢ #i ⬈[Rt,c,h] T & ⇧[1] T ≘ T2 & L = K.ⓘ[I].
 #Rt #c #h #G #L #T2 #i #H
 elim (cpg_inv_atom1 … H) -H * /3 width=1 by or_introl, conj/
 [ #s #H destruct
@@ -160,7 +161,7 @@ fact cpg_inv_bind1_aux: ∀Rt,c,h,G,L,U,U2. ❪G,L❫ ⊢ U ⬈[Rt,c,h] U2 →
                         ∀p,J,V1,U1. U = ⓑ[p,J]V1.U1 →
                         ∨∨ ∃∃cV,cT,V2,T2. ❪G,L❫ ⊢ V1 ⬈[Rt,cV,h] V2 & ❪G,L.ⓑ[J]V1❫ ⊢ U1 ⬈[Rt,cT,h] T2 &
                                           U2 = ⓑ[p,J]V2.T2 & c = ((↕*cV)∨cT)
-                         | ∃∃cT,T. ⇧*[1] T ≘ U1 & ❪G,L❫ ⊢ T ⬈[Rt,cT,h] U2 &
+                         | ∃∃cT,T. ⇧[1] T ≘ U1 & ❪G,L❫ ⊢ T ⬈[Rt,cT,h] U2 &
                                    p = true & J = Abbr & c = cT+𝟙𝟘.
 #Rt #c #h #G #L #U #U2 * -c -G -L -U -U2
 [ #I #G #L #q #J #W #U1 #H destruct
@@ -182,14 +183,14 @@ qed-.
 lemma cpg_inv_bind1: ∀Rt,c,h,p,I,G,L,V1,T1,U2. ❪G,L❫ ⊢ ⓑ[p,I]V1.T1 ⬈[Rt,c,h] U2 →
                      ∨∨ ∃∃cV,cT,V2,T2. ❪G,L❫ ⊢ V1 ⬈[Rt,cV,h] V2 & ❪G,L.ⓑ[I]V1❫ ⊢ T1 ⬈[Rt,cT,h] T2 &
                                        U2 = ⓑ[p,I]V2.T2 & c = ((↕*cV)∨cT)
-                      | ∃∃cT,T. ⇧*[1] T ≘ T1 & ❪G,L❫ ⊢ T ⬈[Rt,cT,h] U2 &
+                      | ∃∃cT,T. ⇧[1] T ≘ T1 & ❪G,L❫ ⊢ T ⬈[Rt,cT,h] U2 &
                                 p = true & I = Abbr & c = cT+𝟙𝟘.
 /2 width=3 by cpg_inv_bind1_aux/ qed-.
 
 lemma cpg_inv_abbr1: ∀Rt,c,h,p,G,L,V1,T1,U2. ❪G,L❫ ⊢ ⓓ[p]V1.T1 ⬈[Rt,c,h] U2 →
                      ∨∨ ∃∃cV,cT,V2,T2. ❪G,L❫ ⊢ V1 ⬈[Rt,cV,h] V2 & ❪G,L.ⓓV1❫ ⊢ T1 ⬈[Rt,cT,h] T2 &
                                        U2 = ⓓ[p]V2.T2 & c = ((↕*cV)∨cT)
-                      | ∃∃cT,T. ⇧*[1] T ≘ T1 & ❪G,L❫ ⊢ T ⬈[Rt,cT,h] U2 &
+                      | ∃∃cT,T. ⇧[1] T ≘ T1 & ❪G,L❫ ⊢ T ⬈[Rt,cT,h] U2 &
                                 p = true & c = cT+𝟙𝟘.
 #Rt #c #h #p #G #L #V1 #T1 #U2 #H elim (cpg_inv_bind1 … H) -H *
 /3 width=8 by ex4_4_intro, ex4_2_intro, or_introl, or_intror/
@@ -210,7 +211,7 @@ fact cpg_inv_appl1_aux: ∀Rt,c,h,G,L,U,U2. ❪G,L❫ ⊢ U ⬈[Rt,c,h] U2 →
                                           U2 = ⓐV2.T2 & c = ((↕*cV)∨cT)
                          | ∃∃cV,cW,cT,p,V2,W1,W2,T1,T2. ❪G,L❫ ⊢ V1 ⬈[Rt,cV,h] V2 & ❪G,L❫ ⊢ W1 ⬈[Rt,cW,h] W2 & ❪G,L.ⓛW1❫ ⊢ T1 ⬈[Rt,cT,h] T2 &
                                                         U1 = ⓛ[p]W1.T1 & U2 = ⓓ[p]ⓝW2.V2.T2 & c = ((↕*cV)∨(↕*cW)∨cT)+𝟙𝟘
-                         | ∃∃cV,cW,cT,p,V,V2,W1,W2,T1,T2. ❪G,L❫ ⊢ V1 ⬈[Rt,cV,h] V & ⇧*[1] V ≘ V2 & ❪G,L❫ ⊢ W1 ⬈[Rt,cW,h] W2 & ❪G,L.ⓓW1❫ ⊢ T1 ⬈[Rt,cT,h] T2 &
+                         | ∃∃cV,cW,cT,p,V,V2,W1,W2,T1,T2. ❪G,L❫ ⊢ V1 ⬈[Rt,cV,h] V & ⇧[1] V ≘ V2 & ❪G,L❫ ⊢ W1 ⬈[Rt,cW,h] W2 & ❪G,L.ⓓW1❫ ⊢ T1 ⬈[Rt,cT,h] T2 &
                                                           U1 = ⓓ[p]W1.T1 & U2 = ⓓ[p]W2.ⓐV2.T2 & c = ((↕*cV)∨(↕*cW)∨cT)+𝟙𝟘.
 #Rt #c #h #G #L #U #U2 * -c -G -L -U -U2
 [ #I #G #L #W #U1 #H destruct
@@ -234,7 +235,7 @@ lemma cpg_inv_appl1: ∀Rt,c,h,G,L,V1,U1,U2. ❪G,L❫ ⊢ ⓐV1.U1 ⬈[Rt,c,h] 
                                        U2 = ⓐV2.T2 & c = ((↕*cV)∨cT)
                       | ∃∃cV,cW,cT,p,V2,W1,W2,T1,T2. ❪G,L❫ ⊢ V1 ⬈[Rt,cV,h] V2 & ❪G,L❫ ⊢ W1 ⬈[Rt,cW,h] W2 & ❪G,L.ⓛW1❫ ⊢ T1 ⬈[Rt,cT,h] T2 &
                                                      U1 = ⓛ[p]W1.T1 & U2 = ⓓ[p]ⓝW2.V2.T2 & c = ((↕*cV)∨(↕*cW)∨cT)+𝟙𝟘
-                      | ∃∃cV,cW,cT,p,V,V2,W1,W2,T1,T2. ❪G,L❫ ⊢ V1 ⬈[Rt,cV,h] V & ⇧*[1] V ≘ V2 & ❪G,L❫ ⊢ W1 ⬈[Rt,cW,h] W2 & ❪G,L.ⓓW1❫ ⊢ T1 ⬈[Rt,cT,h] T2 &
+                      | ∃∃cV,cW,cT,p,V,V2,W1,W2,T1,T2. ❪G,L❫ ⊢ V1 ⬈[Rt,cV,h] V & ⇧[1] V ≘ V2 & ❪G,L❫ ⊢ W1 ⬈[Rt,cW,h] W2 & ❪G,L.ⓓW1❫ ⊢ T1 ⬈[Rt,cT,h] T2 &
                                                        U1 = ⓓ[p]W1.T1 & U2 = ⓓ[p]W2.ⓐV2.T2 & c = ((↕*cV)∨(↕*cW)∨cT)+𝟙𝟘.
 /2 width=3 by cpg_inv_appl1_aux/ qed-.
 
@@ -272,9 +273,9 @@ lemma cpg_inv_cast1: ∀Rt,c,h,G,L,V1,U1,U2. ❪G,L❫ ⊢ ⓝV1.U1 ⬈[Rt,c,h] 
 
 lemma cpg_inv_zero1_pair: ∀Rt,c,h,I,G,K,V1,T2. ❪G,K.ⓑ[I]V1❫ ⊢ #0 ⬈[Rt,c,h] T2 →
                           ∨∨ T2 = #0 ∧ c = 𝟘𝟘
-                           | ∃∃cV,V2. ❪G,K❫ ⊢ V1 ⬈[Rt,cV,h] V2 & ⇧*[1] V2 ≘ T2 &
+                           | ∃∃cV,V2. ❪G,K❫ ⊢ V1 ⬈[Rt,cV,h] V2 & ⇧[1] V2 ≘ T2 &
                                       I = Abbr & c = cV
-                           | ∃∃cV,V2. ❪G,K❫ ⊢ V1 ⬈[Rt,cV,h] V2 & ⇧*[1] V2 ≘ T2 &
+                           | ∃∃cV,V2. ❪G,K❫ ⊢ V1 ⬈[Rt,cV,h] V2 & ⇧[1] V2 ≘ T2 &
                                       I = Abst & c = cV+𝟘𝟙.
 #Rt #c #h #I #G #K #V1 #T2 #H elim (cpg_inv_zero1 … H) -H /2 width=1 by or3_intro0/
 * #z #Y #X1 #X2 #HX12 #HXT2 #H1 #H2 destruct /3 width=5 by or3_intro1, or3_intro2, ex4_2_intro/
@@ -282,7 +283,7 @@ qed-.
 
 lemma cpg_inv_lref1_bind: ∀Rt,c,h,I,G,K,T2,i. ❪G,K.ⓘ[I]❫ ⊢ #↑i ⬈[Rt,c,h] T2 →
                           ∨∨ T2 = #(↑i) ∧ c = 𝟘𝟘
-                           | ∃∃T. ❪G,K❫ ⊢ #i ⬈[Rt,c,h] T & ⇧*[1] T ≘ T2.
+                           | ∃∃T. ❪G,K❫ ⊢ #i ⬈[Rt,c,h] T & ⇧[1] T ≘ T2.
 #Rt #c #h #I #G #L #T2 #i #H elim (cpg_inv_lref1 … H) -H /2 width=1 by or_introl/
 * #Z #Y #T #HT #HT2 #H destruct /3 width=3 by ex2_intro, or_intror/
 qed-.

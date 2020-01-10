@@ -48,12 +48,12 @@ qed-.
 lemma nta_ind_cnv (h) (a) (Q:relation4 …):
       (∀G,L,s. Q G L (⋆s) (⋆(⫯[h]s))) →
       (∀G,K,V,W,U.
-        ❪G,K❫ ⊢ V :[h,a] W → ⇧*[1] W ≘ U →
+        ❪G,K❫ ⊢ V :[h,a] W → ⇧[1] W ≘ U →
         Q G K V W → Q G (K.ⓓV) (#0) U
       ) →
-      (∀G,K,W,U. ❪G,K❫ ⊢ W ![h,a] → ⇧*[1] W ≘ U → Q G (K.ⓛW) (#0) U) →
+      (∀G,K,W,U. ❪G,K❫ ⊢ W ![h,a] → ⇧[1] W ≘ U → Q G (K.ⓛW) (#0) U) →
       (∀I,G,K,W,U,i.
-        ❪G,K❫ ⊢ #i :[h,a] W → ⇧*[1] W ≘ U →
+        ❪G,K❫ ⊢ #i :[h,a] W → ⇧[1] W ≘ U →
         Q G K (#i) W → Q G (K.ⓘ[I]) (#↑i) U
       ) →
       (∀p,I,G,K,V,T,U.

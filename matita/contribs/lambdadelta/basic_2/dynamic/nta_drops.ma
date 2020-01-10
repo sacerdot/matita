@@ -21,7 +21,7 @@ include "basic_2/dynamic/nta.ma".
 
 lemma nta_ldef (h) (a) (G) (K):
       ∀V,W. ❪G,K❫ ⊢ V :[h,a] W →
-      ∀U. ⇧*[1] W ≘ U → ❪G,K.ⓓV❫ ⊢ #0 :[h,a] U.
+      ∀U. ⇧[1] W ≘ U → ❪G,K.ⓓV❫ ⊢ #0 :[h,a] U.
 #h #a #G #K #V #W #H #U #HWU
 elim (cnv_inv_cast … H) -H #X #HW #HV #HWX #HVX
 lapply (cnv_lifts … HW (Ⓣ) … (K.ⓓV) … HWU) -HW
@@ -33,7 +33,7 @@ qed.
 
 lemma nta_ldec_cnv (h) (a) (G) (K):
       ∀W. ❪G,K❫ ⊢ W ![h,a] →
-      ∀U. ⇧*[1] W ≘ U → ❪G,K.ⓛW❫ ⊢ #0 :[h,a] U.
+      ∀U. ⇧[1] W ≘ U → ❪G,K.ⓛW❫ ⊢ #0 :[h,a] U.
 #h #a #G #K #W #HW #U #HWU
 lapply (cnv_lifts … HW (Ⓣ) … (K.ⓛW) … HWU)
 /3 width=5 by cnv_zero, cnv_cast, cpms_ell, drops_refl, drops_drop/
@@ -41,7 +41,7 @@ qed.
 
 lemma nta_lref (h) (a) (I) (G) (K):
       ∀T,i. ❪G,K❫ ⊢ #i :[h,a] T →
-      ∀U. ⇧*[1] T ≘ U → ❪G,K.ⓘ[I]❫ ⊢ #(↑i) :[h,a] U.
+      ∀U. ⇧[1] T ≘ U → ❪G,K.ⓘ[I]❫ ⊢ #(↑i) :[h,a] U.
 #h #a #I #G #K #T #i #H #U #HTU
 elim (cnv_inv_cast … H) -H #X #HT #Hi #HTX #H2
 lapply (cnv_lifts … HT (Ⓣ) … (K.ⓘ[I]) … HTU) -HT
@@ -76,7 +76,7 @@ lemma nta_lifts_bi (h) (a) (G): d_liftable2_bi … lifts (nta a h G).
 (* Basic_2A1: was by definition: nta_ldef ntaa_ldef *)
 lemma nta_ldef_drops (h) (a) (G) (K) (L) (i):
       ∀V,W. ❪G,K❫ ⊢ V :[h,a] W →
-      ∀U. ⇧*[↑i] W ≘ U → ⇩*[i] L ≘ K.ⓓV → ❪G,L❫ ⊢ #i :[h,a] U.
+      ∀U. ⇧[↑i] W ≘ U → ⇩[i] L ≘ K.ⓓV → ❪G,L❫ ⊢ #i :[h,a] U.
 #h #a #G #K #L #i #V #W #HVW #U #HWU #HLK
 elim (lifts_split_trans … HWU (𝐔❨1❩) (𝐔❨i❩)) [| // ] #X #HWX #HXU
 /3 width=9 by nta_lifts_bi, nta_ldef/
@@ -84,7 +84,7 @@ qed.
 
 lemma nta_ldec_drops_cnv (h) (a) (G) (K) (L) (i):
       ∀W. ❪G,K❫ ⊢ W ![h,a] →
-      ∀U. ⇧*[↑i] W ≘ U → ⇩*[i] L ≘ K.ⓛW → ❪G,L❫ ⊢ #i :[h,a] U.
+      ∀U. ⇧[↑i] W ≘ U → ⇩[i] L ≘ K.ⓛW → ❪G,L❫ ⊢ #i :[h,a] U.
 #h #a #G #K #L #i #W #HW #U #HWU #HLK
 elim (lifts_split_trans … HWU (𝐔❨1❩) (𝐔❨i❩)) [| // ] #X #HWX #HXU
 /3 width=9 by nta_lifts_bi, nta_ldec_cnv/

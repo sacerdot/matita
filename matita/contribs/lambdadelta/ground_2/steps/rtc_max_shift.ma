@@ -12,15 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/s_computation/fqup_drops.ma".
-include "static_2/s_computation/fqus_fqup.ma".
+include "ground_2/steps/rtc_shift.ma".
+include "ground_2/steps/rtc_max.ma".
 
-(* STAR-ITERATED SUPCLOSURE *************************************************)
+(* RT-TRANSITION COUNTER ****************************************************)
 
-(* Properties with generic slicing for local environments *******************)
+(* Properties with max and shift ********************************************)
 
-lemma fqus_drops: ∀b,G,L,K,T,U,i. ⇩[i] L ≘ K → ⇧[i] T ≘ U →
-                  ❪G,L,U❫ ⬂*[b] ❪G,K,T❫.
-#b #G #L #K #T #U * /3 width=3 by fqup_drops_succ, fqup_fqus/
-#HLK #HTU <(lifts_fwd_isid … HTU) -U // <(drops_fwd_isid … HLK) -K //
+lemma max_shift: ∀c1,c2. ((↕*c1) ∨ (↕*c2)) = ↕*(c1∨c2).
+* #ri1 #rs1 #ti1 #ts1 * #ri2 #rs2 #ti2 #ts2
+<shift_rew <shift_rew <shift_rew <max_rew //
 qed.
