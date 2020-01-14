@@ -19,10 +19,10 @@ include "basic_2/rt_computation/cpms_cpms.ma".
 
 (* Properties with parallel rt-transition for full local environments *******)
 
-lemma lpr_cpm_trans (n) (h) (G):
-                    ∀L2,T1,T2. ❪G,L2❫ ⊢ T1 ➡[n,h] T2 →
-                    ∀L1. ❪G,L1❫ ⊢ ➡[h] L2 → ❪G,L1❫ ⊢ T1 ➡*[n,h] T2.
-#n #h #G #L2 #T1 #T2 #H @(cpm_ind … H) -n -G -L2 -T1 -T2
+lemma lpr_cpm_trans (h) (n) (G):
+                    ∀L2,T1,T2. ❪G,L2❫ ⊢ T1 ➡[h,n] T2 →
+                    ∀L1. ❪G,L1❫ ⊢ ➡[h,0] L2 → ❪G,L1❫ ⊢ T1 ➡*[h,n] T2.
+#h #n #G #L2 #T1 #T2 #H @(cpm_ind … H) -n -G -L2 -T1 -T2
 [ /2 width=3 by/
 | /3 width=2 by cpm_cpms/
 | #n #G #K2 #V2 #V4 #W4 #_ #IH #HVW4 #L1 #H
@@ -45,25 +45,25 @@ lemma lpr_cpm_trans (n) (h) (G):
 ]
 qed-.
 
-lemma lpr_cpms_trans (n) (h) (G):
-                     ∀L1,L2. ❪G,L1❫ ⊢ ➡[h] L2 →
-                     ∀T1,T2. ❪G,L2❫ ⊢ T1 ➡*[n,h] T2 → ❪G,L1❫ ⊢ T1 ➡*[n,h] T2.
-#n #h #G #L1 #L2 #HL12 #T1 #T2 #H @(cpms_ind_sn … H) -n -T1
+lemma lpr_cpms_trans (h) (n) (G):
+                     ∀L1,L2. ❪G,L1❫ ⊢ ➡[h,0] L2 →
+                     ∀T1,T2. ❪G,L2❫ ⊢ T1 ➡*[h,n] T2 → ❪G,L1❫ ⊢ T1 ➡*[h,n] T2.
+#h #n #G #L1 #L2 #HL12 #T1 #T2 #H @(cpms_ind_sn … H) -n -T1
 /3 width=3 by lpr_cpm_trans, cpms_trans/
 qed-.
 
 (* Advanced properties ******************************************************)
 
 (* Basic_2A1: includes cpr_bind2 *)
-lemma cpm_bind2 (n) (h) (G) (L):
-                ∀V1,V2. ❪G,L❫ ⊢ V1 ➡[h] V2 →
-                ∀I,T1,T2. ❪G,L.ⓑ[I]V2❫ ⊢ T1 ➡[n,h] T2 →
-                ∀p. ❪G,L❫ ⊢ ⓑ[p,I]V1.T1 ➡*[n,h] ⓑ[p,I]V2.T2.
+lemma cpm_bind2 (h) (n) (G) (L):
+                ∀V1,V2. ❪G,L❫ ⊢ V1 ➡[h,0] V2 →
+                ∀I,T1,T2. ❪G,L.ⓑ[I]V2❫ ⊢ T1 ➡[h,n] T2 →
+                ∀p. ❪G,L❫ ⊢ ⓑ[p,I]V1.T1 ➡*[h,n] ⓑ[p,I]V2.T2.
 /4 width=5 by lpr_cpm_trans, cpms_bind_dx, lpr_pair/ qed.
 
 (* Basic_2A1: includes cprs_bind2_dx *)
-lemma cpms_bind2_dx (n) (h) (G) (L):
-                    ∀V1,V2. ❪G,L❫ ⊢ V1 ➡[h] V2 →
-                    ∀I,T1,T2. ❪G,L.ⓑ[I]V2❫ ⊢ T1 ➡*[n,h] T2 →
-                    ∀p. ❪G,L❫ ⊢ ⓑ[p,I]V1.T1 ➡*[n,h] ⓑ[p,I]V2.T2.
+lemma cpms_bind2_dx (h) (n) (G) (L):
+                    ∀V1,V2. ❪G,L❫ ⊢ V1 ➡[h,0] V2 →
+                    ∀I,T1,T2. ❪G,L.ⓑ[I]V2❫ ⊢ T1 ➡*[h,n] T2 →
+                    ∀p. ❪G,L❫ ⊢ ⓑ[p,I]V1.T1 ➡*[h,n] ⓑ[p,I]V2.T2.
 /4 width=5 by lpr_cpms_trans, cpms_bind_dx, lpr_pair/ qed.

@@ -22,7 +22,7 @@ include "basic_2/rt_computation/cprre_cpms.ma".
 (* Properties with atomic atomic arity assignment on terms ******************)
 
 lemma cpmre_total_aaa (h) (n) (A) (G) (L):
-      ∀T1. ❪G,L❫ ⊢ T1 ⁝ A → ∃T2. ❪G,L❫ ⊢ T1 ➡*[h,n] 𝐍❪T2❫.
+      ∀T1. ❪G,L❫ ⊢ T1 ⁝ A → ∃T2. ❪G,L❫ ⊢ T1 ➡*𝐍[h,n] T2.
 #h #n #A #G #L #T1 #HT1
 elim (cpms_total_aaa h … n … HT1) #T0 #HT10
 elim (cprre_total_csx h G L T0)

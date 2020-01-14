@@ -19,9 +19,9 @@ include "basic_2/dynamic/cnv_cpm_teqx.ma".
 
 definition IH_cnv_cpm_teqx_cpm_trans (h) (a): relation3 genv lenv term ≝
            λG,L,T1. ❪G,L❫ ⊢ T1 ![h,a] →
-           ∀n1,T. ❪G,L❫ ⊢ T1 ➡[n1,h] T → T1 ≛ T →
-           ∀n2,T2. ❪G,L❫ ⊢ T ➡[n2,h] T2 →
-           ∃∃T0. ❪G,L❫ ⊢ T1 ➡[n2,h] T0 & ❪G,L❫ ⊢ T0 ➡[n1,h] T2 & T0 ≛ T2.
+           ∀n1,T. ❪G,L❫ ⊢ T1 ➡[h,n1] T → T1 ≛ T →
+           ∀n2,T2. ❪G,L❫ ⊢ T ➡[h,n2] T2 →
+           ∃∃T0. ❪G,L❫ ⊢ T1 ➡[h,n2] T0 & ❪G,L❫ ⊢ T0 ➡[h,n1] T2 & T0 ≛ T2.
 
 (* Transitive properties restricted rt-transition for terms *****************)
 

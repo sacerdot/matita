@@ -46,14 +46,14 @@ qed.
 
 lemma cnuw_cpms_trans (h) (n) (G) (L):
       ∀T1. ❪G,L❫ ⊢ ➡𝐍𝐖*[h] T1 →
-      ∀T2. ❪G,L❫ ⊢ T1 ➡*[n,h] T2 → ❪G,L❫ ⊢ ➡𝐍𝐖*[h] T2.
+      ∀T2. ❪G,L❫ ⊢ T1 ➡*[h,n] T2 → ❪G,L❫ ⊢ ➡𝐍𝐖*[h] T2.
 #h #n1 #G #L #T1 #HT1 #T2 #HT12 #n2 #T3 #HT23
 /4 width=5 by cpms_trans, tweq_canc_sn/
 qed-.
 
 lemma cnuw_dec_ex (h) (G) (L):
       ∀T1. ∨∨ ❪G,L❫ ⊢ ➡𝐍𝐖*[h] T1
-            | ∃∃n,T2. ❪G,L❫ ⊢ T1 ➡*[n,h] T2 & (T1 ≅ T2 → ⊥).
+            | ∃∃n,T2. ❪G,L❫ ⊢ T1 ➡*[h,n] T2 & (T1 ≅ T2 → ⊥).
 #h #G #L #T1 elim T1 -T1 *
 [ #s /3 width=5 by cnuw_sort, or_introl/
 | #i elim (drops_F_uni L i)

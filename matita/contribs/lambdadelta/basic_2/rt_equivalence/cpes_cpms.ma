@@ -21,7 +21,7 @@ include "basic_2/rt_equivalence/cpes.ma".
 
 lemma cpes_cprs_trans (h) (n) (G) (L) (T0):
       ∀T1.  ❪G,L❫ ⊢ T1 ⬌*[h,n,0] T0 →
-      ∀T2.  ❪G,L❫ ⊢ T0 ➡*[h] T2 → ❪G,L❫ ⊢ T1 ⬌*[h,n,0] T2.
+      ∀T2.  ❪G,L❫ ⊢ T0 ➡*[h,0] T2 → ❪G,L❫ ⊢ T1 ⬌*[h,n,0] T2.
 #h #n #G #L #T0 #T1 * #T #HT1 #HT0 #T2 #HT02
 elim (cprs_conf … HT0 … HT02) -T0 #T0 #HT0 #HT20
 /3 width=3 by cpms_div, cpms_cprs_trans/
@@ -29,7 +29,7 @@ qed-.
 
 lemma cpes_cpms_div (h) (n) (n1) (n2) (G) (L) (T0):
       ∀T1.  ❪G,L❫ ⊢ T1 ⬌*[h,n,n1] T0 →
-      ∀T2.  ❪G,L❫ ⊢ T2 ➡*[n2,h] T0 → ❪G,L❫ ⊢ T1 ⬌*[h,n,n2+n1] T2.
+      ∀T2.  ❪G,L❫ ⊢ T2 ➡*[h,n2] T0 → ❪G,L❫ ⊢ T1 ⬌*[h,n,n2+n1] T2.
 #h #n #n1 #n2 #G #L #T0 #T1 * #T #HT1 #HT0 #T2 #HT20
 lapply (cpms_trans … HT20 … HT0) -T0 #HT2
 /2 width=3 by cpms_div/

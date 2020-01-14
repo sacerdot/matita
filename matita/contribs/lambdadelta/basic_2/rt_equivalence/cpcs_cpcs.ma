@@ -44,7 +44,7 @@ lemma cpcs_bind2 (h) (G) (L): ∀V1,V2. ❪G,L❫ ⊢ V1 ⬌*[h] V2 →
 (* Advanced properties with r-transition for full local environments ********)
 
 (* Basic_1: was: pc3_wcpr0 *)
-lemma lpr_cpcs_conf (h) (G): ∀L1,L2. ❪G,L1❫ ⊢ ➡[h] L2 →
+lemma lpr_cpcs_conf (h) (G): ∀L1,L2. ❪G,L1❫ ⊢ ➡[h,0] L2 →
                              ∀T1,T2. ❪G,L1❫ ⊢ T1 ⬌*[h] T2 → ❪G,L2❫ ⊢ T1 ⬌*[h] T2.
 #h #G #L1 #L2 #HL12 #T1 #T2 #H elim (cpcs_inv_cprs … H) -H
 /3 width=5 by cpcs_canc_dx, lpr_cprs_conf/

@@ -19,5 +19,6 @@ include "basic_2/rt_computation/lprs_lpxs.ma".
 
 (* Properties with atomic arity assignment for terms ************************)
 
-lemma lprs_aaa_conf (h) (G) (T): Conf3 … (λL. aaa G L T) (lprs h G).
+lemma lprs_aaa_conf (h) (G) (T):
+      Conf3 … (λL. aaa G L T) (lprs h 0 G).
 /3 width=5 by lprs_fwd_lpxs, lpxs_aaa_conf/ qed-.

@@ -23,7 +23,7 @@ include "basic_2/dynamic/cnv_preserve_cpcs.ma".
 
 lemma cpts_cpms_conf_eq (h) (n) (a) (G) (L):
       ∀T0. ❪G,L❫ ⊢ T0 ![h,a] → ∀T1. ❪G,L❫ ⊢ T0 ⬆*[h,n] T1 →
-      ∀T2. ❪G,L❫ ⊢ T0 ➡*[n,h] T2 → ❪G,L❫ ⊢ T1 ⬌*[h] T2.
+      ∀T2. ❪G,L❫ ⊢ T0 ➡*[h,n] T2 → ❪G,L❫ ⊢ T1 ⬌*[h] T2.
 #h #a #n #G #L #T0 #HT0 #T1 #HT01 #T2 #HT02
 /3 width=6 by cpts_fwd_cpms, cnv_cpms_conf_eq/
 qed-.
@@ -41,8 +41,8 @@ qed-.
 lemma cnv_inv_appl_cpts (h) (a) (nv) (nt) (p) (G) (L):
       ∀V1. ❪G,L❫ ⊢ V1 ![h,a] → ∀V2. ❪G,L❫ ⊢ V1 ⬆*[h,nv] V2 →
       ∀T1. ❪G,L❫ ⊢ T1 ![h,a] → ∀T2. ❪G,L❫ ⊢ T1 ⬆*[h,nt] T2 →
-      ∀V0. ❪G,L❫ ⊢ V1 ➡*[nv,h] V0 → ∀T0. ❪G,L❫ ⊢ T1 ➡*[nt,h] ⓛ[p]V0.T0 →
-      ∃∃W0,U0. ❪G,L❫ ⊢ V2 ➡*[h] W0 & ❪G,L❫ ⊢ T2 ➡*[h] ⓛ[p]W0.U0.
+      ∀V0. ❪G,L❫ ⊢ V1 ➡*[h,nv] V0 → ∀T0. ❪G,L❫ ⊢ T1 ➡*[h,nt] ⓛ[p]V0.T0 →
+      ∃∃W0,U0. ❪G,L❫ ⊢ V2 ➡*[h,0] W0 & ❪G,L❫ ⊢ T2 ➡*[h,0] ⓛ[p]W0.U0.
 #h #a #nv #nt #p #G #L #V1 #HV1 #V2 #HV12 #T1 #HT1 #T2 #HT12 #V0 #HV20 #T0 #HT20
 lapply (cpts_cpms_conf_eq … HV1 … HV12 … HV20) -nv -V1 #HV20
 lapply (cpts_cpms_conf_eq … HT1 … HT12 … HT20) -nt -T1 #HT20
@@ -67,8 +67,8 @@ qed-.
 lemma cnv_appl_cpts (h) (a) (nv) (nt) (p) (G) (L):
       ∀V1. ❪G,L❫ ⊢ V1 ![h,a] → ∀V2. ❪G,L❫ ⊢ V1 ⬆*[h,nv] V2 →
       ∀T1. ❪G,L❫ ⊢ T1 ![h,a] → ∀T2. ❪G,L❫ ⊢ T1 ⬆*[h,nt] T2 →
-      ∀V0. ❪G,L❫ ⊢ V2 ➡*[h] V0 → ∀T0. ❪G,L❫ ⊢ T2 ➡*[h] ⓛ[p]V0.T0 →
-      ∃∃W0,U0. ❪G,L❫ ⊢ V1 ➡*[nv,h] W0 & ❪G,L❫ ⊢ T1 ➡*[nt,h] ⓛ[p]W0.U0.
+      ∀V0. ❪G,L❫ ⊢ V2 ➡*[h,0] V0 → ∀T0. ❪G,L❫ ⊢ T2 ➡*[h,0] ⓛ[p]V0.T0 →
+      ∃∃W0,U0. ❪G,L❫ ⊢ V1 ➡*[h,nv] W0 & ❪G,L❫ ⊢ T1 ➡*[h,nt] ⓛ[p]W0.U0.
 #h #a #nv #nt #p #G #L #V1 #HV1 #V2 #HV12 #T1 #HT1 #T2 #HT12 #V0 #HV20 #T0 #HT20
 /3 width=6 by cpts_cprs_trans, ex2_2_intro/
 qed-.

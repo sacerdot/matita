@@ -43,8 +43,8 @@ qed-.
 
 lemma cnv_cpms_conf (h) (a) (G) (L):
       ∀T0. ❪G,L❫ ⊢ T0 ![h,a] →
-      ∀n1,T1. ❪G,L❫ ⊢ T0 ➡*[n1,h] T1 → ∀n2,T2. ❪G,L❫ ⊢ T0 ➡*[n2,h] T2 →
-      ∃∃T. ❪G,L❫ ⊢ T1 ➡*[n2-n1,h] T & ❪G,L❫ ⊢ T2 ➡*[n1-n2,h] T.
+      ∀n1,T1. ❪G,L❫ ⊢ T0 ➡*[h,n1] T1 → ∀n2,T2. ❪G,L❫ ⊢ T0 ➡*[h,n2] T2 →
+      ∃∃T. ❪G,L❫ ⊢ T1 ➡*[h,n2-n1] T & ❪G,L❫ ⊢ T2 ➡*[h,n1-n2] T.
 /2 width=8 by cnv_cpms_conf_lpr/ qed-.
 
 (* Basic_2A1: uses: snv_cprs_lpr *)
@@ -55,21 +55,21 @@ qed-.
 
 lemma cnv_cpm_trans (h) (a) (G) (L):
       ∀T1. ❪G,L❫ ⊢ T1 ![h,a] →
-      ∀n,T2. ❪G,L❫ ⊢ T1 ➡[n,h] T2 → ❪G,L❫ ⊢ T2 ![h,a].
+      ∀n,T2. ❪G,L❫ ⊢ T1 ➡[h,n] T2 → ❪G,L❫ ⊢ T2 ![h,a].
 /2 width=6 by cnv_cpm_trans_lpr/ qed-.
 
 (* Note: this is the preservation property *)
 lemma cnv_cpms_trans (h) (a) (G) (L):
       ∀T1. ❪G,L❫ ⊢ T1 ![h,a] →
-      ∀n,T2. ❪G,L❫ ⊢ T1 ➡*[n,h] T2 → ❪G,L❫ ⊢ T2 ![h,a].
+      ∀n,T2. ❪G,L❫ ⊢ T1 ➡*[h,n] T2 → ❪G,L❫ ⊢ T2 ![h,a].
 /2 width=6 by cnv_cpms_trans_lpr/ qed-.
 
 lemma cnv_lpr_trans (h) (a) (G):
-      ∀L1,T. ❪G,L1❫ ⊢ T ![h,a] → ∀L2. ❪G,L1❫ ⊢ ➡[h] L2 → ❪G,L2❫ ⊢ T ![h,a].
+      ∀L1,T. ❪G,L1❫ ⊢ T ![h,a] → ∀L2. ❪G,L1❫ ⊢ ➡[h,0] L2 → ❪G,L2❫ ⊢ T ![h,a].
 /2 width=6 by cnv_cpm_trans_lpr/ qed-.
 
 lemma cnv_lprs_trans (h) (a) (G):
-      ∀L1,T. ❪G,L1❫ ⊢ T ![h,a] → ∀L2. ❪G,L1❫ ⊢ ➡*[h] L2 → ❪G,L2❫ ⊢ T ![h,a].
+      ∀L1,T. ❪G,L1❫ ⊢ T ![h,a] → ∀L2. ❪G,L1❫ ⊢ ➡*[h,0] L2 → ❪G,L2❫ ⊢ T ![h,a].
 #h #a #G #L1 #T #HT #L2 #H
 @(lprs_ind_dx … H) -L2 /2 width=3 by cnv_lpr_trans/
 qed-.

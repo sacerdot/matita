@@ -12,12 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/predeval_5.ma".
 include "basic_2/rt_computation/cpmre.ma".
 include "basic_2/rt_computation/cprs.ma".
 
 (* EVALUATION FOR CONTEXT-SENSITIVE PARALLEL R-TRANSITION ON TERMS ***********)
-
-(* Basic_2A1: was: cpre *)
-interpretation "evaluation for context-sensitive parallel r-transition (term)"
-   'PRedEval h G L T1 T2 = (cpmre h O G L T1 T2).

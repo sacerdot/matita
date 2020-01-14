@@ -22,5 +22,5 @@ include "basic_2/rt_computation/lprs.ma".
 
 (* Basic_2A1: was: lprs_lpxs *)
 (* Note: original proof uses lpr_fwd_lpx and monotonic_TC *)
-lemma lprs_fwd_lpxs (h) (G) : ∀L1,L2. ❪G,L1❫ ⊢ ➡*[h] L2 → ❪G,L1❫ ⊢ ⬈*[h] L2.
+lemma lprs_fwd_lpxs (h) (G) : ∀L1,L2. ❪G,L1❫ ⊢ ➡*[h,0] L2 → ❪G,L1❫ ⊢ ⬈*[h] L2.
 /3 width=3 by cpms_fwd_cpxs, lex_co/ qed-.

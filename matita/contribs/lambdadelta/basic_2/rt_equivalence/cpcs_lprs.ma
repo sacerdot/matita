@@ -19,20 +19,20 @@ include "basic_2/rt_equivalence/cpcs_cprs.ma".
 
 (* Properties with parallel r-computation for full local environments *******)
 
-lemma lpr_cpcs_trans (h) (G): ∀L1,L2. ❪G,L1❫ ⊢ ➡[h] L2 →
+lemma lpr_cpcs_trans (h) (G): ∀L1,L2. ❪G,L1❫ ⊢ ➡[h,0] L2 →
                               ∀T1,T2. ❪G,L2❫ ⊢ T1 ⬌*[h] T2 → ❪G,L1❫ ⊢ T1 ⬌*[h] T2.
 #h #G #L1 #L2 #HL12 #T1 #T2 #H elim (cpcs_inv_cprs … H) -H
  /4 width=5 by cprs_div, lpr_cpms_trans/
 qed-.
 
-lemma lprs_cpcs_trans (h) (G): ∀L1,L2. ❪G,L1❫ ⊢ ➡*[h] L2 →
+lemma lprs_cpcs_trans (h) (G): ∀L1,L2. ❪G,L1❫ ⊢ ➡*[h,0] L2 →
                                ∀T1,T2. ❪G,L2❫ ⊢ T1 ⬌*[h] T2 → ❪G,L1❫ ⊢ T1 ⬌*[h] T2.
 #h #G #L1 #L2 #HL12 #T1 #T2 #H elim (cpcs_inv_cprs … H) -H
 /4 width=5 by cprs_div, lprs_cpms_trans/
 qed-.
 
-lemma lprs_cprs_conf (h) (G): ∀L1,L2. ❪G,L1❫ ⊢ ➡*[h] L2 →
-                              ∀T1,T2. ❪G,L1❫ ⊢ T1 ➡*[h] T2 → ❪G,L2❫ ⊢ T1 ⬌*[h] T2.
+lemma lprs_cprs_conf (h) (G): ∀L1,L2. ❪G,L1❫ ⊢ ➡*[h,0] L2 →
+                              ∀T1,T2. ❪G,L1❫ ⊢ T1 ➡*[h,0] T2 → ❪G,L2❫ ⊢ T1 ⬌*[h] T2.
 #h #G #L1 #L2 #HL12 #T1 #T2 #HT12 elim (lprs_cprs_conf_dx … HT12 … HL12) -L1
 /2 width=3 by cprs_div/
 qed-.
@@ -40,16 +40,16 @@ qed-.
 (* Basic_1: was: pc3_wcpr0_t *)
 (* Basic_1: note: pc3_wcpr0_t should be renamed *)
 (* Note: alternative proof /3 width=5 by lprs_cprs_conf, lpr_lprs/ *)
-lemma lpr_cprs_conf (h) (G): ∀L1,L2. ❪G,L1❫ ⊢ ➡[h] L2 →
-                             ∀T1,T2. ❪G,L1❫ ⊢ T1 ➡*[h] T2 → ❪G,L2❫ ⊢ T1 ⬌*[h] T2.
+lemma lpr_cprs_conf (h) (G): ∀L1,L2. ❪G,L1❫ ⊢ ➡[h,0] L2 →
+                             ∀T1,T2. ❪G,L1❫ ⊢ T1 ➡*[h,0] T2 → ❪G,L2❫ ⊢ T1 ⬌*[h] T2.
 #h #G #L1 #L2 #HL12 #T1 #T2 #HT12 elim (cprs_lpr_conf_dx … HT12 … HL12) -L1
 /2 width=3 by cprs_div/
 qed-.
 
 (* Basic_1: was only: pc3_pr0_pr2_t *)
 (* Basic_1: note: pc3_pr0_pr2_t should be renamed *)
-lemma lpr_cpr_conf (h) (G): ∀L1,L2. ❪G,L1❫ ⊢ ➡[h] L2 →
-                            ∀T1,T2. ❪G,L1❫ ⊢ T1 ➡[h] T2 → ❪G,L2❫ ⊢ T1 ⬌*[h] T2.
+lemma lpr_cpr_conf (h) (G): ∀L1,L2. ❪G,L1❫ ⊢ ➡[h,0] L2 →
+                            ∀T1,T2. ❪G,L1❫ ⊢ T1 ➡[h,0] T2 → ❪G,L2❫ ⊢ T1 ⬌*[h] T2.
 /3 width=5 by lpr_cprs_conf, cpm_cpms/ qed-.
 
 (* Advanced inversion lemmas ************************************************)

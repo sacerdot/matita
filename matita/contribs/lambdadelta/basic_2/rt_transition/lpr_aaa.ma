@@ -19,5 +19,5 @@ include "basic_2/rt_transition/lpx_aaa.ma".
 
 (* Properties with atomic arity assignment for terms ************************)
 
-lemma lpr_aaa_conf (h): ∀G,T. Conf3 … (λL. aaa G L T) (lpr h G).
+lemma lpr_aaa_conf (h): ∀G,T. Conf3 … (λL. aaa G L T) (lpr h 0 G).
 /3 width=5 by lpx_aaa_conf, lpr_fwd_lpx/ qed-.

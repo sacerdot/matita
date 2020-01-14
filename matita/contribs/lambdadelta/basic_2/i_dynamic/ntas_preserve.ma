@@ -22,7 +22,7 @@ include "basic_2/i_dynamic/ntas.ma".
 (* Properties based on preservation *****************************************)
 
 lemma cnv_cpms_ntas (h) (a) (G) (L):
-      ∀T. ❪G,L❫ ⊢ T ![h,a] → ∀n,U.❪G,L❫ ⊢ T ➡*[n,h] U → ❪G,L❫ ⊢ T :*[h,a,n] U.
+      ∀T. ❪G,L❫ ⊢ T ![h,a] → ∀n,U.❪G,L❫ ⊢ T ➡*[h,n] U → ❪G,L❫ ⊢ T :*[h,a,n] U.
 /3 width=4 by ntas_intro, cnv_cpms_trans/ qed.
 
 (* Inversion lemmas based on preservation ***********************************)

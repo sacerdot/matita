@@ -17,9 +17,9 @@ include "basic_2/rt_transition/cpm.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL R-TRANSITION FOR BINDERS **********************)
 
-definition cpr_ext (h) (G): relation3 lenv bind bind ≝
-                            cext2 (λL. cpm h G L 0).
+definition cpr_ext (h) (n) (G): relation3 lenv bind bind ≝
+           cext2 (λL. cpm h G L n).
 
 interpretation
    "context-sensitive parallel r-transition (binder)"
-   'PRed h G L I1 I2 = (cpr_ext h G L I1 I2).
+   'PRed h n G L I1 I2 = (cpr_ext h n G L I1 I2).

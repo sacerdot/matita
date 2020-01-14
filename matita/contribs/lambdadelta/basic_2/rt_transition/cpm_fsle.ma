@@ -19,7 +19,7 @@ include "basic_2/rt_transition/cpm_cpx.ma".
 
 (* Forward lemmas with free variables inclusion for restricted closures *****)
 
-lemma cpm_fsge_comp: ∀n,h,G. R_fsge_compatible (λL. cpm h G L n).
+lemma cpm_fsge_comp: ∀h,n,G. R_fsge_compatible (λL. cpm h G L n).
 /3 width=6 by cpm_fwd_cpx, cpx_fsge_comp/ qed-.
 
 lemma rpr_fsge_comp: ∀h,G. rex_fsge_compatible (λL. cpm h G L 0).

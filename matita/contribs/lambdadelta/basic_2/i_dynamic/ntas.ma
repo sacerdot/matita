@@ -18,7 +18,7 @@ include "basic_2/dynamic/cnv.ma".
 (* ITERATED NATIVE TYPE ASSIGNMENT FOR TERMS ********************************)
 
 definition ntas (h) (a) (n) (G) (L): relation term ≝ λT,U.
-           ∃∃U0. ❪G,L❫ ⊢ U ![h,a] & ❪G,L❫ ⊢ T ![h,a] & ❪G,L❫ ⊢ U ➡*[h] U0 & ❪G,L❫ ⊢ T ➡*[n,h] U0.
+           ∃∃U0. ❪G,L❫ ⊢ U ![h,a] & ❪G,L❫ ⊢ T ![h,a] & ❪G,L❫ ⊢ U ➡*[h,0] U0 & ❪G,L❫ ⊢ T ➡*[h,n] U0.
 
 interpretation "iterated native type assignment (term)"
    'ColonStar h a n G L T U = (ntas h a n G L T U).
@@ -27,7 +27,7 @@ interpretation "iterated native type assignment (term)"
 
 lemma ntas_intro (h) (a) (n) (G) (L):
       ∀U. ❪G,L❫ ⊢ U ![h,a] → ∀T. ❪G,L❫ ⊢ T ![h,a] →
-      ∀U0. ❪G,L❫ ⊢ U ➡*[h] U0 → ❪G,L❫ ⊢ T ➡*[n,h] U0 → ❪G,L❫ ⊢ T :*[h,a,n] U.
+      ∀U0. ❪G,L❫ ⊢ U ➡*[h,0] U0 → ❪G,L❫ ⊢ T ➡*[h,n] U0 → ❪G,L❫ ⊢ T :*[h,a,n] U.
 /2 width=3 by ex4_intro/ qed.
 
 lemma ntas_refl (h) (a) (G) (L):

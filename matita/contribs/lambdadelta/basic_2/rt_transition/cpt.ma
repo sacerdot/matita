@@ -160,7 +160,7 @@ lemma cpt_inv_lref_sn (h) (n) (G) (L) (i):
 ]
 qed-.
 
-lemma cpt_inv_lref_sn_ctop (n) (h) (G) (i):
+lemma cpt_inv_lref_sn_ctop (h) (n) (G) (i):
       ∀X2. ❪G,⋆❫ ⊢ #i ⬆[h,n] X2 → ∧∧ X2 = #i & n = 0.
 #h #n #G * [| #i ] #X2 #H
 [ elim (cpt_inv_zero_sn … H) -H *

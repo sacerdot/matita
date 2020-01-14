@@ -22,7 +22,7 @@ include "basic_2/dynamic/nta.ma".
 (* Properties based on preservation *****************************************)
 
 lemma cnv_cpms_nta (h) (a) (G) (L):
-      ∀T. ❪G,L❫ ⊢ T ![h,a] → ∀U.❪G,L❫ ⊢ T ➡*[1,h] U → ❪G,L❫ ⊢ T :[h,a] U.
+      ∀T. ❪G,L❫ ⊢ T ![h,a] → ∀U.❪G,L❫ ⊢ T ➡*[h,1] U → ❪G,L❫ ⊢ T :[h,a] U.
 /3 width=4 by cnv_cast, cnv_cpms_trans/ qed.
 
 lemma cnv_nta_sn (h) (a) (G) (L):
@@ -58,8 +58,8 @@ qed.
 
 (* Basic_1: uses: ty3_sred_wcpr0_pr0 *)
 lemma nta_cpr_conf_lpr (h) (a) (G):
-      ∀L1,T1,U. ❪G,L1❫ ⊢ T1 :[h,a] U → ∀T2. ❪G,L1❫ ⊢ T1 ➡[h] T2 →
-      ∀L2. ❪G,L1❫ ⊢ ➡[h] L2 → ❪G,L2❫ ⊢ T2 :[h,a] U.
+      ∀L1,T1,U. ❪G,L1❫ ⊢ T1 :[h,a] U → ∀T2. ❪G,L1❫ ⊢ T1 ➡[h,0] T2 →
+      ∀L2. ❪G,L1❫ ⊢ ➡[h,0] L2 → ❪G,L2❫ ⊢ T2 :[h,a] U.
 #h #a #G #L1 #T1 #U #H #T2 #HT12 #L2 #HL12
 /3 width=6 by cnv_cpm_trans_lpr, cpm_cast/
 qed-.
@@ -67,7 +67,7 @@ qed-.
 (* Basic_1: uses: ty3_sred_pr2 ty3_sred_pr0 *)
 lemma nta_cpr_conf (h) (a) (G) (L):
       ∀T1,U. ❪G,L❫ ⊢ T1 :[h,a] U →
-      ∀T2. ❪G,L❫ ⊢ T1 ➡[h] T2 → ❪G,L❫ ⊢ T2 :[h,a] U.
+      ∀T2. ❪G,L❫ ⊢ T1 ➡[h,0] T2 → ❪G,L❫ ⊢ T2 :[h,a] U.
 #h #a #G #L #T1 #U #H #T2 #HT12
 /3 width=6 by cnv_cpm_trans, cpm_cast/
 qed-.
@@ -76,7 +76,7 @@ qed-.
 (* Basic_1: uses: ty3_sred_pr3 ty3_sred_pr1 *)
 lemma nta_cprs_conf (h) (a) (G) (L):
       ∀T1,U. ❪G,L❫ ⊢ T1 :[h,a] U →
-      ∀T2. ❪G,L❫ ⊢ T1 ➡*[h] T2 → ❪G,L❫ ⊢ T2 :[h,a] U.
+      ∀T2. ❪G,L❫ ⊢ T1 ➡*[h,0] T2 → ❪G,L❫ ⊢ T2 :[h,a] U.
 #h #a #G #L #T1 #U #H #T2 #HT12
 /3 width=6 by cnv_cpms_trans, cpms_cast/
 qed-.
@@ -84,7 +84,7 @@ qed-.
 (* Basic_1: uses: ty3_cred_pr2 *)
 lemma nta_lpr_conf (h) (a) (G):
       ∀L1,T,U. ❪G,L1❫ ⊢ T :[h,a] U →
-      ∀L2. ❪G,L1❫ ⊢ ➡[h] L2 → ❪G,L2❫ ⊢ T :[h,a] U.
+      ∀L2. ❪G,L1❫ ⊢ ➡[h,0] L2 → ❪G,L2❫ ⊢ T :[h,a] U.
 #h #a #G #L1 #T #U #HTU #L2 #HL12
 /2 width=3 by cnv_lpr_trans/
 qed-.
@@ -92,7 +92,7 @@ qed-.
 (* Basic_1: uses: ty3_cred_pr3 *)
 lemma nta_lprs_conf (h) (a) (G):
       ∀L1,T,U. ❪G,L1❫ ⊢ T :[h,a] U →
-      ∀L2. ❪G,L1❫ ⊢ ➡*[h] L2 → ❪G,L2❫ ⊢ T :[h,a] U.
+      ∀L2. ❪G,L1❫ ⊢ ➡*[h,0] L2 → ❪G,L2❫ ⊢ T :[h,a] U.
 #h #a #G #L1 #T #U #HTU #L2 #HL12
 /2 width=3 by cnv_lprs_trans/
 qed-.
@@ -242,7 +242,7 @@ elim (cpms_inv_cast1 … H2) -H2 [ * || * ]
 qed-.
 
 (* Basic_1: uses: ty3_gen_lift *)
-(* Note: "❪G, L❫ ⊢ U2 ⬌*[h] X2" can be "❪G, L❫ ⊢ X2 ➡*[h] U2" *)
+(* Note: "❪G, L❫ ⊢ U2 ⬌*[h] X2" can be "❪G, L❫ ⊢ X2 ➡*[h,0] U2" *)
 lemma nta_inv_lifts_sn (h) (a) (G):
       ∀L,T2,X2. ❪G,L❫ ⊢ T2 :[h,a] X2 →
       ∀b,f,K. ⇩*[b,f] L ≘ K → ∀T1. ⇧*[f] T1 ≘ T2 →

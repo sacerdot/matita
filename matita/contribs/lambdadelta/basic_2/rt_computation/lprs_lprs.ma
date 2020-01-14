@@ -19,10 +19,10 @@ include "basic_2/rt_computation/lprs_cpms.ma".
 
 (* Main properties **********************************************************)
 
-theorem lprs_trans (h) (G): Transitive … (lprs h G).
+theorem lprs_trans (h) (G): Transitive … (lprs h 0 G).
 /4 width=5 by lprs_cpms_trans, cprs_trans, lex_trans/ qed-.
 
-theorem lprs_conf (h) (G): confluent2 … (lprs h G) (lprs h G).
+theorem lprs_conf (h) (G): confluent2 … (lprs h 0 G) (lprs h 0 G).
 #h #G #L0 #L1 #HL01 #L2 #HL02
 elim (TC_confluent2 … L0 L1 … L2)
 [ /3 width=3 by lprs_TC, ex2_intro/ |5,6: skip

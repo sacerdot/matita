@@ -70,33 +70,33 @@ normalize /2 width=3 by step/
 qed-.
 
 (* Basic_1: was: pc3_pr2_r *)
-lemma cpr_cpcs_dx (h) (G) (L): ∀T1,T2. ❪G,L❫ ⊢ T1 ➡[h] T2 → ❪G,L❫ ⊢ T1 ⬌*[h] T2.
+lemma cpr_cpcs_dx (h) (G) (L): ∀T1,T2. ❪G,L❫ ⊢ T1 ➡[h,0] T2 → ❪G,L❫ ⊢ T1 ⬌*[h] T2.
 /3 width=1 by cpc_cpcs, or_introl/ qed.
 
 (* Basic_1: was: pc3_pr2_x *)
-lemma cpr_cpcs_sn (h) (G) (L): ∀T1,T2. ❪G,L❫ ⊢ T2 ➡[h] T1 → ❪G,L❫ ⊢ T1 ⬌*[h] T2.
+lemma cpr_cpcs_sn (h) (G) (L): ∀T1,T2. ❪G,L❫ ⊢ T2 ➡[h,0] T1 → ❪G,L❫ ⊢ T1 ⬌*[h] T2.
 /3 width=1 by cpc_cpcs, or_intror/ qed.
 
 (* Basic_1: was: pc3_pr2_u *)
 (* Basic_2A1: was: cpcs_cpr_strap2 *)
-lemma cpcs_cpr_step_sn (h) (G) (L): ∀T1,T. ❪G,L❫ ⊢ T1 ➡[h] T → ∀T2. ❪G,L❫ ⊢ T ⬌*[h] T2 → ❪G,L❫ ⊢ T1 ⬌*[h] T2.
+lemma cpcs_cpr_step_sn (h) (G) (L): ∀T1,T. ❪G,L❫ ⊢ T1 ➡[h,0] T → ∀T2. ❪G,L❫ ⊢ T ⬌*[h] T2 → ❪G,L❫ ⊢ T1 ⬌*[h] T2.
 /3 width=3 by cpcs_step_sn, or_introl/ qed-.
 
 (* Basic_2A1: was: cpcs_cpr_strap1 *)
 lemma cpcs_cpr_step_dx (h) (G) (L): ∀T1,T. ❪G,L❫ ⊢ T1 ⬌*[h] T →
-                                    ∀T2. ❪G,L❫ ⊢ T ➡[h] T2 → ❪G,L❫ ⊢ T1 ⬌*[h] T2.
+                                    ∀T2. ❪G,L❫ ⊢ T ➡[h,0] T2 → ❪G,L❫ ⊢ T1 ⬌*[h] T2.
 /3 width=3 by cpcs_step_dx, or_introl/ qed-.
 
 lemma cpcs_cpr_div (h) (G) (L): ∀T1,T. ❪G,L❫ ⊢ T1 ⬌*[h] T →
-                                ∀T2. ❪G,L❫ ⊢ T2 ➡[h] T → ❪G,L❫ ⊢ T1 ⬌*[h] T2.
+                                ∀T2. ❪G,L❫ ⊢ T2 ➡[h,0] T → ❪G,L❫ ⊢ T1 ⬌*[h] T2.
 /3 width=3 by cpcs_step_dx, or_intror/ qed-.
 
-lemma cpr_div (h) (G) (L): ∀T1,T. ❪G,L❫ ⊢ T1 ➡[h] T →
-                           ∀T2. ❪G,L❫ ⊢ T2 ➡[h] T → ❪G,L❫ ⊢ T1 ⬌*[h] T2.
+lemma cpr_div (h) (G) (L): ∀T1,T. ❪G,L❫ ⊢ T1 ➡[h,0] T →
+                           ∀T2. ❪G,L❫ ⊢ T2 ➡[h,0] T → ❪G,L❫ ⊢ T1 ⬌*[h] T2.
 /3 width=3 by cpr_cpcs_dx, cpcs_step_dx, or_intror/ qed-.
 
 (* Basic_1: was: pc3_pr2_u2 *)
-lemma cpcs_cpr_conf (h) (G) (L): ∀T1,T. ❪G,L❫ ⊢ T ➡[h] T1 →
+lemma cpcs_cpr_conf (h) (G) (L): ∀T1,T. ❪G,L❫ ⊢ T ➡[h,0] T1 →
                                  ∀T2. ❪G,L❫ ⊢ T ⬌*[h] T2 → ❪G,L❫ ⊢ T1 ⬌*[h] T2.
 /3 width=3 by cpcs_step_sn, or_intror/ qed-.
 

@@ -22,8 +22,8 @@ include "basic_2/rt_computation/cpms.ma".
 (* Basic_2A1: was: cprs_ind_dx *)
 lemma cprs_ind_sn (h) (G) (L) (T2) (Q:predicate …):
                   Q T2 →
-                  (∀T1,T. ❪G,L❫ ⊢ T1 ➡[h] T → ❪G,L❫ ⊢ T ➡*[h] T2 → Q T → Q T1) →
-                  ∀T1. ❪G,L❫ ⊢ T1 ➡*[h] T2 → Q T1.
+                  (∀T1,T. ❪G,L❫ ⊢ T1 ➡[h,0] T → ❪G,L❫ ⊢ T ➡*[h,0] T2 → Q T → Q T1) →
+                  ∀T1. ❪G,L❫ ⊢ T1 ➡*[h,0] T2 → Q T1.
 #h #G #L #T2 #Q #IH1 #IH2 #T1
 @(insert_eq_0 … 0) #n #H
 @(cpms_ind_sn … H) -n -T1 //
@@ -35,8 +35,8 @@ qed-.
 (* Basic_2A1: was: cprs_ind *)
 lemma cprs_ind_dx (h) (G) (L) (T1) (Q:predicate …):
                   Q T1 →
-                  (∀T,T2. ❪G,L❫ ⊢ T1 ➡*[h] T → ❪G,L❫ ⊢ T ➡[h] T2 → Q T → Q T2) →
-                  ∀T2. ❪G,L❫ ⊢ T1 ➡*[h] T2 → Q T2.
+                  (∀T,T2. ❪G,L❫ ⊢ T1 ➡*[h,0] T → ❪G,L❫ ⊢ T ➡[h,0] T2 → Q T → Q T2) →
+                  ∀T2. ❪G,L❫ ⊢ T1 ➡*[h,0] T2 → Q T2.
 #h #G #L #T1 #Q #IH1 #IH2 #T2
 @(insert_eq_0 … 0) #n #H
 @(cpms_ind_dx … H) -n -T2 //
@@ -50,28 +50,28 @@ qed-.
 (* Basic_1: was: pr3_step *)
 (* Basic_2A1: was: cprs_strap2 *)
 lemma cprs_step_sn (h) (G) (L):
-                   ∀T1,T. ❪G,L❫ ⊢ T1 ➡[h] T →
-                   ∀T2. ❪G,L❫ ⊢ T ➡*[h] T2 → ❪G,L❫ ⊢ T1 ➡*[h] T2.
+                   ∀T1,T. ❪G,L❫ ⊢ T1 ➡[h,0] T →
+                   ∀T2. ❪G,L❫ ⊢ T ➡*[h,0] T2 → ❪G,L❫ ⊢ T1 ➡*[h,0] T2.
 /2 width=3 by cpms_step_sn/ qed-.
 
 (* Basic_2A1: was: cprs_strap1 *)
 lemma cprs_step_dx (h) (G) (L):
-                   ∀T1,T. ❪G,L❫ ⊢ T1 ➡*[h] T →
-                   ∀T2. ❪G,L❫ ⊢ T ➡[h] T2 → ❪G,L❫ ⊢ T1 ➡*[h] T2.
+                   ∀T1,T. ❪G,L❫ ⊢ T1 ➡*[h,0] T →
+                   ∀T2. ❪G,L❫ ⊢ T ➡[h,0] T2 → ❪G,L❫ ⊢ T1 ➡*[h,0] T2.
 /2 width=3 by cpms_step_dx/ qed-.
 
 (* Basic_1: was only: pr3_thin_dx *)
 lemma cprs_flat_dx (h) (I) (G) (L):
-                   ∀V1,V2. ❪G,L❫ ⊢ V1 ➡[h] V2 →
-                   ∀T1,T2. ❪G,L❫ ⊢ T1 ➡*[h] T2 →
-                   ❪G,L❫ ⊢ ⓕ[I]V1.T1 ➡*[h] ⓕ[I]V2.T2.
+                   ∀V1,V2. ❪G,L❫ ⊢ V1 ➡[h,0] V2 →
+                   ∀T1,T2. ❪G,L❫ ⊢ T1 ➡*[h,0] T2 →
+                   ❪G,L❫ ⊢ ⓕ[I]V1.T1 ➡*[h,0] ⓕ[I]V2.T2.
 #h #I #G #L #V1 #V2 #HV12 #T1 #T2 #H @(cprs_ind_sn … H) -T1
 /3 width=3 by cprs_step_sn, cpm_cpms, cpr_flat/
 qed.
 
 lemma cprs_flat_sn (h) (I) (G) (L):
-                   ∀T1,T2. ❪G,L❫ ⊢ T1 ➡[h] T2 → ∀V1,V2. ❪G,L❫ ⊢ V1 ➡*[h] V2 →
-                   ❪G,L❫ ⊢ ⓕ[I] V1. T1 ➡*[h] ⓕ[I] V2. T2.
+                   ∀T1,T2. ❪G,L❫ ⊢ T1 ➡[h,0] T2 → ∀V1,V2. ❪G,L❫ ⊢ V1 ➡*[h,0] V2 →
+                   ❪G,L❫ ⊢ ⓕ[I] V1. T1 ➡*[h,0] ⓕ[I] V2. T2.
 #h #I #G #L #T1 #T2 #HT12 #V1 #V2 #H @(cprs_ind_sn … H) -V1
 /3 width=3 by cprs_step_sn, cpm_cpms, cpr_flat/
 qed.
@@ -79,13 +79,13 @@ qed.
 (* Basic inversion lemmas ***************************************************)
 
 (* Basic_1: was: pr3_gen_sort *)
-lemma cprs_inv_sort1 (h) (G) (L): ∀X2,s. ❪G,L❫ ⊢ ⋆s ➡*[h] X2 → X2 = ⋆s.
+lemma cprs_inv_sort1 (h) (G) (L): ∀X2,s. ❪G,L❫ ⊢ ⋆s ➡*[h,0] X2 → X2 = ⋆s.
 /2 width=4 by cpms_inv_sort1/ qed-.
 
 (* Basic_1: was: pr3_gen_cast *)
-lemma cprs_inv_cast1 (h) (G) (L): ∀W1,T1,X2. ❪G,L❫ ⊢ ⓝW1.T1 ➡*[h] X2 →
-                                  ∨∨ ∃∃W2,T2. ❪G,L❫ ⊢ W1 ➡*[h] W2 & ❪G,L❫ ⊢ T1 ➡*[h] T2 & X2 = ⓝW2.T2
-                                   | ❪G,L❫ ⊢ T1 ➡*[h] X2.
+lemma cprs_inv_cast1 (h) (G) (L): ∀W1,T1,X2. ❪G,L❫ ⊢ ⓝW1.T1 ➡*[h,0] X2 →
+                                  ∨∨ ∃∃W2,T2. ❪G,L❫ ⊢ W1 ➡*[h,0] W2 & ❪G,L❫ ⊢ T1 ➡*[h,0] T2 & X2 = ⓝW2.T2
+                                   | ❪G,L❫ ⊢ T1 ➡*[h,0] X2.
 #h #G #L #W1 #T1 #X2 #H
 elim (cpms_inv_cast1 … H) -H
 [ /2 width=1 by or_introl/

@@ -21,14 +21,14 @@ include "basic_2/dynamic/nta_preserve.ma".
 
 (* Basic_1: uses: ty3_tred *)
 lemma nta_cprs_trans (h) (a) (G) (L):
-      ∀T,U1. ❪G,L❫ ⊢ T :[h,a] U1 → ∀U2. ❪G,L❫ ⊢ U1 ➡*[h] U2 → ❪G,L❫ ⊢ T :[h,a] U2.
+      ∀T,U1. ❪G,L❫ ⊢ T :[h,a] U1 → ∀U2. ❪G,L❫ ⊢ U1 ➡*[h,0] U2 → ❪G,L❫ ⊢ T :[h,a] U2.
 #h #a #G #L #T #U1 #H #U2 #HU12
 /4 width=4 by nta_conv_cnv, nta_fwd_cnv_dx, cnv_cpms_trans, cpcs_cprs_dx/
 qed-.
 
 (* Basic_1: uses: ty3_sred_back *)
 lemma cprs_nta_trans (h) (a) (G) (L):
-      ∀T1,U0. ❪G,L❫ ⊢ T1 :[h,a] U0 → ∀T2. ❪G,L❫ ⊢ T1 ➡*[h] T2 →
+      ∀T1,U0. ❪G,L❫ ⊢ T1 :[h,a] U0 → ∀T2. ❪G,L❫ ⊢ T1 ➡*[h,0] T2 →
       ∀U. ❪G,L❫ ⊢ T2 :[h,a] U →  ❪G,L❫ ⊢ T1 :[h,a] U.
 #h #a #G #L #T1 #U0 #HT1 #T2 #HT12 #U #H
 lapply (nta_cprs_conf … HT1 … HT12) -HT12 #HT2
@@ -36,7 +36,7 @@ lapply (nta_cprs_conf … HT1 … HT12) -HT12 #HT2
 qed-.
 
 lemma cprs_nta_trans_cnv (h) (a) (G) (L):
-      ∀T1. ❪G,L❫ ⊢ T1 ![h,a] → ∀T2. ❪G,L❫ ⊢ T1 ➡*[h] T2 →
+      ∀T1. ❪G,L❫ ⊢ T1 ![h,a] → ∀T2. ❪G,L❫ ⊢ T1 ➡*[h,0] T2 →
       ∀U. ❪G,L❫ ⊢ T2 :[h,a] U → ❪G,L❫ ⊢ T1 :[h,a] U.
 #h #a #G #L #T1 #HT1 #T2 #HT12 #U #H
 elim (cnv_nta_sn … HT1) -HT1 #U0 #HT1

@@ -24,7 +24,7 @@ lemma cnv_appl_cpes (h) (a) (G) (L):
       ∀n. ad a n →
       ∀V. ❪G,L❫ ⊢ V ![h,a] → ∀T. ❪G,L❫ ⊢ T ![h,a] →
       ∀W. ❪G,L❫ ⊢ V ⬌*[h,1,0] W →
-      ∀p,U. ❪G,L❫ ⊢ T ➡*[n,h] ⓛ[p]W.U → ❪G,L❫ ⊢ ⓐV.T ![h,a].
+      ∀p,U. ❪G,L❫ ⊢ T ➡*[h,n] ⓛ[p]W.U → ❪G,L❫ ⊢ ⓐV.T ![h,a].
 #h #a #G #L #n #Hn #V #HV #T #HT #W *
 /4 width=11 by cnv_appl, cpms_cprs_trans, cpms_bind/
 qed.
@@ -40,7 +40,7 @@ qed.
 lemma cnv_inv_appl_cpes (h) (a) (G) (L):
       ∀V,T. ❪G,L❫ ⊢ ⓐV.T ![h,a] →
       ∃∃n,p,W,U. ad a n & ❪G,L❫ ⊢ V ![h,a] & ❪G,L❫ ⊢ T ![h,a] &
-                 ❪G,L❫ ⊢ V ⬌*[h,1,0] W & ❪G,L❫ ⊢ T ➡*[n,h] ⓛ[p]W.U.
+                 ❪G,L❫ ⊢ V ⬌*[h,1,0] W & ❪G,L❫ ⊢ T ➡*[h,n] ⓛ[p]W.U.
 #h #a #G #L #V #T #H
 elim (cnv_inv_appl … H) -H #n #p #W #U #Hn #HV #HT #HVW #HTU
 /3 width=7 by cpms_div, ex5_4_intro/
@@ -64,7 +64,7 @@ lemma cnv_ind_cpes (h) (a) (Q:relation3 genv lenv term):
                      Q G L V →Q G (L.ⓑ[I]V) T →Q G L (ⓑ[p,I]V.T)
       ) →
       (∀n,p,G,L,V,W,T,U. ad a n → ❪G,L❫ ⊢ V![h,a] → ❪G,L❫ ⊢ T![h,a] →
-                         ❪G,L❫ ⊢ V ⬌*[h,1,0]W → ❪G,L❫ ⊢ T ➡*[n,h] ⓛ[p]W.U →
+                         ❪G,L❫ ⊢ V ⬌*[h,1,0]W → ❪G,L❫ ⊢ T ➡*[h,n] ⓛ[p]W.U →
                          Q G L V → Q G L T → Q G L (ⓐV.T)
       ) →
       (∀G,L,U,T. ❪G,L❫⊢ U![h,a] → ❪G,L❫ ⊢ T![h,a] → ❪G,L❫ ⊢ U ⬌*[h,0,1] T →

@@ -27,9 +27,9 @@ inductive cnv (h) (a): relation3 genv lenv term ≝
 | cnv_lref: ∀I,G,K,i. cnv h a G K (#i) → cnv h a G (K.ⓘ[I]) (#↑i)
 | cnv_bind: ∀p,I,G,L,V,T. cnv h a G L V → cnv h a G (L.ⓑ[I]V) T → cnv h a G L (ⓑ[p,I]V.T)
 | cnv_appl: ∀n,p,G,L,V,W0,T,U0. ad a n → cnv h a G L V → cnv h a G L T →
-            ❪G,L❫ ⊢ V ➡*[1,h] W0 → ❪G,L❫ ⊢ T ➡*[n,h] ⓛ[p]W0.U0 → cnv h a G L (ⓐV.T)
+            ❪G,L❫ ⊢ V ➡*[h,1] W0 → ❪G,L❫ ⊢ T ➡*[h,n] ⓛ[p]W0.U0 → cnv h a G L (ⓐV.T)
 | cnv_cast: ∀G,L,U,T,U0. cnv h a G L U → cnv h a G L T →
-            ❪G,L❫ ⊢ U ➡*[h] U0 → ❪G,L❫ ⊢ T ➡*[1,h] U0 → cnv h a G L (ⓝU.T)
+            ❪G,L❫ ⊢ U ➡*[h,0] U0 → ❪G,L❫ ⊢ T ➡*[h,1] U0 → cnv h a G L (ⓝU.T)
 .
 
 interpretation "context-sensitive native validity (term)"
@@ -111,7 +111,7 @@ lemma cnv_inv_bind (h) (a):
 fact cnv_inv_appl_aux (h) (a):
      ∀G,L,X. ❪G,L❫ ⊢ X ![h,a] → ∀V,T. X = ⓐV.T →
      ∃∃n,p,W0,U0. ad a n & ❪G,L❫ ⊢ V ![h,a] & ❪G,L❫ ⊢ T ![h,a] &
-                  ❪G,L❫ ⊢ V ➡*[1,h] W0 & ❪G,L❫ ⊢ T ➡*[n,h] ⓛ[p]W0.U0.
+                  ❪G,L❫ ⊢ V ➡*[h,1] W0 & ❪G,L❫ ⊢ T ➡*[h,n] ⓛ[p]W0.U0.
 #h #a #G #L #X * -L -X
 [ #G #L #s #X1 #X2 #H destruct
 | #I #G #K #V #_ #X1 #X2 #H destruct
@@ -126,13 +126,13 @@ qed-.
 lemma cnv_inv_appl (h) (a):
       ∀G,L,V,T. ❪G,L❫ ⊢ ⓐV.T ![h,a] →
       ∃∃n,p,W0,U0. ad a n & ❪G,L❫ ⊢ V ![h,a] & ❪G,L❫ ⊢ T ![h,a] &
-                   ❪G,L❫ ⊢ V ➡*[1,h] W0 & ❪G,L❫ ⊢ T ➡*[n,h] ⓛ[p]W0.U0.
+                   ❪G,L❫ ⊢ V ➡*[h,1] W0 & ❪G,L❫ ⊢ T ➡*[h,n] ⓛ[p]W0.U0.
 /2 width=3 by cnv_inv_appl_aux/ qed-.
 
 fact cnv_inv_cast_aux (h) (a):
      ∀G,L,X. ❪G,L❫ ⊢ X ![h,a] → ∀U,T. X = ⓝU.T →
      ∃∃U0. ❪G,L❫ ⊢ U ![h,a] & ❪G,L❫ ⊢ T ![h,a] &
-           ❪G,L❫ ⊢ U ➡*[h] U0 & ❪G,L❫ ⊢ T ➡*[1,h] U0.
+           ❪G,L❫ ⊢ U ➡*[h,0] U0 & ❪G,L❫ ⊢ T ➡*[h,1] U0.
 #h #a #G #L #X * -G -L -X
 [ #G #L #s #X1 #X2 #H destruct
 | #I #G #K #V #_ #X1 #X2 #H destruct
@@ -147,7 +147,7 @@ qed-.
 lemma cnv_inv_cast (h) (a):
       ∀G,L,U,T. ❪G,L❫ ⊢ ⓝU.T ![h,a] →
       ∃∃U0. ❪G,L❫ ⊢ U ![h,a] & ❪G,L❫ ⊢ T ![h,a] &
-            ❪G,L❫ ⊢ U ➡*[h] U0 & ❪G,L❫ ⊢ T ➡*[1,h] U0.
+            ❪G,L❫ ⊢ U ➡*[h,0] U0 & ❪G,L❫ ⊢ T ➡*[h,1] U0.
 /2 width=3 by cnv_inv_cast_aux/ qed-.
 
 (* Basic forward lemmas *****************************************************)

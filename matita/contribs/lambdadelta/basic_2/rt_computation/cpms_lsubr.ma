@@ -20,6 +20,6 @@ include "basic_2/rt_computation/cpms.ma".
 (* Properties with restricted refinement for local environments *************)
 
 (* Basic_2A1: uses: lsubr_cprs_trans *)
-lemma lsubr_cpms_trans (n) (h): ∀G. lsub_trans … (λL. cpms h G L n) lsubr.
+lemma lsubr_cpms_trans (h) (n): ∀G. lsub_trans … (λL. cpms h G L n) lsubr.
 /3 width=5 by lsubr_cpm_trans, ltc_lsub_trans/
 qed-.

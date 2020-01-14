@@ -19,7 +19,7 @@ include "basic_2/rt_computation/cpms.ma".
 (* NORMAL TERMS FOR T-UNUNBOUND WHD RT-TRANSITION ***************************)
 
 definition cnuw (h) (G) (L): predicate term ≝
-           λT1. ∀n,T2. ❪G,L❫ ⊢ T1 ➡*[n,h] T2 → T1 ≅ T2.
+           λT1. ∀n,T2. ❪G,L❫ ⊢ T1 ➡*[h,n] T2 → T1 ≅ T2.
 
 interpretation
   "normality for t-unbound weak head context-sensitive parallel rt-transition (term)"

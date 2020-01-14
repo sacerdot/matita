@@ -32,10 +32,10 @@ interpretation
 (* Basic properties *********************************************************)
 
 (* Basic_2A1: includes: cpr_fpb *)
-lemma cpm_fpb (n) (h) (G) (L): ∀T1,T2. ❪G,L❫ ⊢ T1 ➡[n,h] T2 → (T1 ≛ T2 → ⊥) →
+lemma cpm_fpb (h) (n) (G) (L): ∀T1,T2. ❪G,L❫ ⊢ T1 ➡[h,n] T2 → (T1 ≛ T2 → ⊥) →
                                    ❪G,L,T1❫ ≻[h] ❪G,L,T2❫.
 /3 width=2 by fpb_cpx, cpm_fwd_cpx/ qed.
 
-lemma lpr_fpb (h) (G) (T): ∀L1,L2. ❪G,L1❫ ⊢ ➡[h] L2 → (L1 ≛[T] L2 → ⊥) →
+lemma lpr_fpb (h) (G) (T): ∀L1,L2. ❪G,L1❫ ⊢ ➡[h,0] L2 → (L1 ≛[T] L2 → ⊥) →
                            ❪G,L1,T❫ ≻[h] ❪G,L2,T❫.
 /3 width=1 by fpb_lpx, lpr_fwd_lpx/ qed.
