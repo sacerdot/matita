@@ -23,7 +23,7 @@ include "basic_2/rt_computation/cpmuwe.ma".
 (* Properties with strong normalization for unbound rt-transition for terms *)
 
 lemma cpmuwe_total_csx (h) (G) (L):
-      ∀T1. ❪G,L❫ ⊢ ⬈*[h] 𝐒❪T1❫ → ∃∃T2,n. ❪G,L❫ ⊢ T1 ➡*𝐍𝐖*[h,n] T2.
+      ∀T1. ❪G,L❫ ⊢ ⬈*𝐒[h] T1 → ∃∃T2,n. ❪G,L❫ ⊢ T1 ➡*𝐍𝐖*[h,n] T2.
 #h #G #L #T1 #H
 @(csx_ind_cpxs … H) -T1 #T1 #_ #IHT1
 elim (cnuw_dec_ex h G L T1)
@@ -38,7 +38,7 @@ elim (cnuw_dec_ex h G L T1)
 qed-.
 
 lemma R_cpmuwe_total_csx (h) (G) (L):
-      ∀T1. ❪G,L❫ ⊢ ⬈*[h] 𝐒❪T1❫ → ∃n. R_cpmuwe h G L T1 n.
+      ∀T1. ❪G,L❫ ⊢ ⬈*𝐒[h] T1 → ∃n. R_cpmuwe h G L T1 n.
 #h #G #L #T1 #H
 elim (cpmuwe_total_csx … H) -H #T2 #n #HT12
 /3 width=3 by ex_intro (* 2x *)/

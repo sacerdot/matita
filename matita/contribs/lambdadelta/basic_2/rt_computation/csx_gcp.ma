@@ -20,7 +20,8 @@ include "basic_2/rt_computation/csx_drops.ma".
 
 (* Main properties with generic computation properties **********************)
 
-theorem csx_gcp: ∀h. gcp (cpx h) teqx (csx h).
+theorem csx_gcp (h):
+        gcp (cpx h) teqx (csx h).
 #h @mk_gcp
 [ normalize /3 width=13 by cnx_lifts/
 | /2 width=4 by cnx_sort/

@@ -97,6 +97,6 @@ elim (cpxs_inv_cast1 … H) -H /2 width=1 by or3_intro1, or3_intro2/ *
 qed-.
 
 lemma cpxs_fwd_cnx (h) (G) (L):
-      ∀T1. ❪G,L❫ ⊢ ⬈[h] 𝐍❪T1❫ →
+      ∀T1. ❪G,L❫ ⊢ ⬈𝐍[h] T1 →
       ∀X2. ❪G,L❫ ⊢ T1 ⬈*[h] X2 → T1 ⩳ X2.
 /3 width=5 by cpxs_inv_cnx1, teqx_teqo/ qed-.

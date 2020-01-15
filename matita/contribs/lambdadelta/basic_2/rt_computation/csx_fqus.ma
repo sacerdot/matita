@@ -21,7 +21,7 @@ include "basic_2/rt_computation/csx_lsubr.ma".
 
 lemma csx_fqu_conf (h) (b):
       ∀G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ⬂[b] ❪G2,L2,T2❫ →
-      ❪G1,L1❫ ⊢ ⬈*[h] 𝐒❪T1❫ → ❪G2,L2❫ ⊢ ⬈*[h] 𝐒❪T2❫.
+      ❪G1,L1❫ ⊢ ⬈*𝐒[h] T1 → ❪G2,L2❫ ⊢ ⬈*𝐒[h] T2.
 #h #b #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2
 [ /3 width=5 by csx_inv_lref_pair_drops, drops_refl/
 | /2 width=3 by csx_fwd_pair_sn/
@@ -34,21 +34,21 @@ qed-.
 
 lemma csx_fquq_conf (h) (b):
       ∀G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ⬂⸮[b] ❪G2,L2,T2❫ →
-      ❪G1,L1❫ ⊢ ⬈*[h] 𝐒❪T1❫ → ❪G2,L2❫ ⊢ ⬈*[h] 𝐒❪T2❫.
+      ❪G1,L1❫ ⊢ ⬈*𝐒[h] T1 → ❪G2,L2❫ ⊢ ⬈*𝐒[h] T2.
 #h #b #G1 #G2 #L1 #L2 #T1 #T2 * /2 width=6 by csx_fqu_conf/
 * #HG #HL #HT destruct //
 qed-.
 
 lemma csx_fqup_conf (h) (b):
       ∀G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ⬂+[b] ❪G2,L2,T2❫ →
-      ❪G1,L1❫ ⊢ ⬈*[h] 𝐒❪T1❫ → ❪G2,L2❫ ⊢ ⬈*[h] 𝐒❪T2❫.
+      ❪G1,L1❫ ⊢ ⬈*𝐒[h] T1 → ❪G2,L2❫ ⊢ ⬈*𝐒[h] T2.
 #h #b #G1 #G2 #L1 #L2 #T1 #T2 #H @(fqup_ind … H) -G2 -L2 -T2
 /3 width=6 by csx_fqu_conf/
 qed-.
 
 lemma csx_fqus_conf (h) (b):
       ∀G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ⬂*[b] ❪G2,L2,T2❫ →
-      ❪G1,L1❫ ⊢ ⬈*[h] 𝐒❪T1❫ → ❪G2,L2❫ ⊢ ⬈*[h] 𝐒❪T2❫.
+      ❪G1,L1❫ ⊢ ⬈*𝐒[h] T1 → ❪G2,L2❫ ⊢ ⬈*𝐒[h] T2.
 #h #b #G1 #G2 #L1 #L2 #T1 #T2 #H @(fqus_ind … H) -H
 /3 width=6 by csx_fquq_conf/
 qed-.

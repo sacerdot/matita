@@ -172,7 +172,7 @@ qed-.
 
 (* Basic_1: was just: nf2_iso_appls_lref *)
 lemma cpxs_fwd_cnx_vector (h) (G) (L):
-      ∀T. 𝐒❪T❫ → ❪G,L❫ ⊢ ⬈[h] 𝐍❪T❫ →
+      ∀T. 𝐒❪T❫ → ❪G,L❫ ⊢ ⬈𝐍[h] T →
       ∀Vs,X2. ❪G,L❫ ⊢ ⒶVs.T ⬈*[h] X2 → ⒶVs.T ⩳ X2.
 #h #G #L #T #H1T #H2T #Vs elim Vs -Vs [ @(cpxs_fwd_cnx … H2T) ] (**) (* /2 width=3 by cpxs_fwd_cnx/ does not work *)
 #V #Vs #IHVs #X2 #H

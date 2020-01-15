@@ -79,16 +79,16 @@ table {
           }
         ]
         [ { "unbound context-sensitive parallel rst-computation" * } {
-             [ [ "strongly normalizing for closures" ] "fsb" + "( ≥[?] 𝐒❪?,?,?❫ )" "fsb_feqx" + "fsb_aaa" + "fsb_csx" + "fsb_fpbg" * ]
+             [ [ "strongly normalizing for closures" ] "fsb" + "( ≥𝐒[?] ❪?,?,?❫ )" "fsb_feqx" + "fsb_aaa" + "fsb_csx" + "fsb_fpbg" * ]
              [ [ "proper for closures" ] "fpbg" + "( ❪?,?,?❫ >[?] ❪?,?,?❫ )" "fpbg_fqup" + "fpbg_cpxs" + "fpbg_lpxs" + "fpbg_fpbs" + "fpbg_fpbg" * ]
              [ [ "for closures" ] "fpbs" + "( ❪?,?,?❫ ≥[?] ❪?,?,?❫ )" "fpbs_fqup" + "fpbs_fqus" + "fpbs_aaa" + "fpbs_cpx" + "fpbs_fpb" + "fpbs_cpxs" + "fpbs_lpxs" + "fpbs_csx" + "fpbs_fpbs" * ]
           }
         ]
         [ { "unbound context-sensitive parallel rt-computation" * } {
              [ [ "compatibility for lenvs" ] "jsx" + "( ? ⊢ ? ⊒[?] ? )" "jsx_drops" + "jsx_lsubr" + "jsx_csx" + "jsx_rsx" + "jsx_jsx" * ]
-             [ [ "strongly normalizing for lenvs on referred entries" ] "rsx" + "( ? ⊢ ⬈*[?,?] 𝐒❪?❫ )" "rsx_length" + "rsx_drops" + "rsx_fqup" + "rsx_cpxs" + "rsx_csx" + "rsx_rsx" * ]
-             [ [ "strongly normalizing for term vectors" ] "csx_vector" + "( ❪?,?❫ ⊢ ⬈*[?] 𝐒❪?❫ )" "csx_cnx_vector" + "csx_csx_vector" * ]
-             [ [ "strongly normalizing for terms" ] "csx" + "( ❪?,?❫ ⊢ ⬈*[?] 𝐒❪?❫ )" "csx_simple" + "csx_simple_teqo" + "csx_drops" + "csx_fqus" + "csx_lsubr" + "csx_reqx" + "csx_feqx" + "csx_aaa" + "csx_gcp" + "csx_gcr" + "csx_lpx" + "csx_cnx" + "csx_fpbq" + "csx_cpxs" + "csx_lpxs" + "csx_csx" * ]
+             [ [ "strongly normalizing for lenvs on referred entries" ] "rsx" + "( ? ⊢ ⬈*𝐒[?,?] ? )" "rsx_length" + "rsx_drops" + "rsx_fqup" + "rsx_cpxs" + "rsx_csx" + "rsx_rsx" * ]
+             [ [ "strongly normalizing for term vectors" ] "csx_vector" + "( ❪?,?❫ ⊢ ⬈*𝐒[?] ? )" "csx_cnx_vector" + "csx_csx_vector" * ]
+             [ [ "strongly normalizing for terms" ] "csx" + "( ❪?,?❫ ⊢ ⬈*𝐒[?] ? )" "csx_simple" + "csx_simple_teqo" + "csx_drops" + "csx_fqus" + "csx_lsubr" + "csx_reqx" + "csx_feqx" + "csx_aaa" + "csx_gcp" + "csx_gcr" + "csx_lpx" + "csx_cnx" + "csx_fpbq" + "csx_cpxs" + "csx_lpxs" + "csx_csx" * ]
              [ [ "for lenvs on all entries" ] "lpxs" + "( ❪?,?❫ ⊢ ⬈*[?] ? )" "lpxs_length" + "lpxs_drops" + "lpxs_reqx" + "lpxs_feqx" + "lpxs_aaa" + "lpxs_lpx" + "lpxs_cpxs" + "lpxs_lpxs" * ]
              [ [ "for binders" ] "cpxs_ext" + "( ❪?,?❫ ⊢ ? ⬈*[?] ? )" * ]
              [ [ "for terms" ] "cpxs" + "( ❪?,?❫ ⊢ ? ⬈*[?] ? )" "cpxs_teqx" + "cpxs_teqo" + "cpxs_teqo_vector" + "cpxs_drops" + "cpxs_fqus" + "cpxs_lsubr" + "cpxs_reqx" + "cpxs_feqx" + "cpxs_aaa" + "cpxs_lpx" + "cpxs_cnx" + "cpxs_cpxs" * ]
@@ -119,7 +119,7 @@ table {
           }
         ]
         [ { "unbound context-sensitive parallel rt-transition" * } {
-             [ [ "normal form for terms" ] "cnx" + "( ❪?,?❫ ⊢ ⬈[?] 𝐍❪?❫ )" "cnx_simple" + "cnx_drops" + "cnx_basic" + "cnx_cnx" * ]
+             [ [ "normal form for terms" ] "cnx" + "( ❪?,?❫ ⊢ ⬈𝐍[?] ? )" "cnx_simple" + "cnx_drops" + "cnx_basic" + "cnx_cnx" * ]
              [ [ "for lenvs on referred entries" ] "rpx" + "( ❪?,?❫ ⊢ ⬈[?,?] ? )" "rpx_length" + "rpx_drops" + "rpx_fqup" + "rpx_fsle" + "rpx_reqx" + "rpx_lpx" + "rpx_rpx" * ]
              [ [ "for lenvs on all entries" ] "lpx" + "( ❪?,?❫ ⊢ ⬈[?] ? )" "lpx_length" + "lpx_drops" + "lpx_fquq" + "lpx_fsle" + "lpx_reqx" + "lpx_aaa" * ]
              [ [ "for binders" ] "cpx_ext" + "( ❪?,?❫ ⊢ ? ⬈[?] ? )" * ]

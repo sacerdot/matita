@@ -23,7 +23,7 @@ include "basic_2/rt_computation/jsx.ma".
 (* Basic_2A1: uses: lsx_cpx_trans_lcosx *)
 lemma rsx_cpx_trans_jsx (h) (G):
       ∀L0,T1,T2. ❪G,L0❫ ⊢ T1 ⬈[h] T2 →
-      ∀L. G ⊢ L0 ⊒[h] L → G ⊢ ⬈*[h,T1] 𝐒❪L❫ → G ⊢ ⬈*[h,T2] 𝐒❪L❫.
+      ∀L. G ⊢ L0 ⊒[h] L → G ⊢ ⬈*𝐒[h,T1] L → G ⊢ ⬈*𝐒[h,T2] L.
 #h #G #L0 #T1 #T2 #H @(cpx_ind … H) -G -L0 -T1 -T2
 [ //
 | //
@@ -65,12 +65,12 @@ qed-.
 (* Basic_2A1: uses: lsx_cpx_trans_O *)
 lemma rsx_cpx_trans (h) (G):
       ∀L,T1,T2. ❪G,L❫ ⊢ T1 ⬈[h] T2 →
-      G ⊢ ⬈*[h,T1] 𝐒❪L❫ → G ⊢ ⬈*[h,T2] 𝐒❪L❫.
+      G ⊢ ⬈*𝐒[h,T1] L → G ⊢ ⬈*𝐒[h,T2] L.
 /3 width=6 by rsx_cpx_trans_jsx, jsx_refl/ qed-.
 
 lemma rsx_cpxs_trans (h) (G):
       ∀L,T1,T2. ❪G,L❫ ⊢ T1 ⬈*[h] T2 →
-      G ⊢ ⬈*[h,T1] 𝐒❪L❫ → G ⊢ ⬈*[h,T2] 𝐒❪L❫.
+      G ⊢ ⬈*𝐒[h,T1] L → G ⊢ ⬈*𝐒[h,T2] L.
 #h #G #L #T1 #T2 #H
 @(cpxs_ind_dx ???????? H) -T1 //
 /3 width=3 by rsx_cpx_trans/

@@ -20,7 +20,7 @@ include "basic_2/rt_computation/rsx.ma".
 (* Advanced properties ******************************************************)
 
 (* Basic_2A1: uses: lsx_atom *)
-lemma lfsx_atom (h) (G) (T): G ⊢ ⬈*[h,T] 𝐒❪⋆❫.
+lemma lfsx_atom (h) (G) (T): G ⊢ ⬈*𝐒[h,T] ⋆.
 #h #G #T
 @rsx_intro #Y #H #HnT
 lapply (lpx_inv_atom_sn … H) -H #H destruct
@@ -33,7 +33,7 @@ qed.
 (* Note: the exclusion binder (ⓧ) makes this more elegant and much simpler *)
 (* Note: the old proof without the exclusion binder requires lreq *)
 lemma rsx_fwd_bind_dx_void (h) (G):
-      ∀p,I,L,V,T. G ⊢ ⬈*[h,ⓑ[p,I]V.T] 𝐒❪L❫ → G ⊢ ⬈*[h,T] 𝐒❪L.ⓧ❫.
+      ∀p,I,L,V,T. G ⊢ ⬈*𝐒[h,ⓑ[p,I]V.T] L → G ⊢ ⬈*𝐒[h,T] L.ⓧ.
 #h #G #p #I #L #V #T #H
 @(rsx_ind … H) -L #L1 #_ #IH
 @rsx_intro #Y #H #HT
@@ -45,6 +45,6 @@ qed-.
 
 (* Basic_2A1: uses: lsx_inv_bind *)
 lemma rsx_inv_bind_void (h) (G):
-      ∀p,I,L,V,T. G ⊢ ⬈*[h,ⓑ[p,I]V.T] 𝐒❪L❫ →
-      ∧∧ G ⊢ ⬈*[h,V] 𝐒❪L❫ & G ⊢ ⬈*[h,T] 𝐒❪L.ⓧ❫.
+      ∀p,I,L,V,T. G ⊢ ⬈*𝐒[h,ⓑ[p,I]V.T] L →
+      ∧∧ G ⊢ ⬈*𝐒[h,V] L & G ⊢ ⬈*𝐒[h,T] L.ⓧ.
 /3 width=4 by rsx_fwd_pair_sn, rsx_fwd_bind_dx_void, conj/ qed-.

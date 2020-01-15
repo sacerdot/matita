@@ -21,8 +21,8 @@ include "basic_2/rt_computation/rsx.ma".
 
 (* Basic_2A1: uses: lsx_lleq_trans *)
 lemma rsx_reqx_trans (h) (G):
-      ∀L1,T. G ⊢ ⬈*[h,T] 𝐒❪L1❫ →
-      ∀L2. L1 ≛[T] L2 → G ⊢ ⬈*[h,T] 𝐒❪L2❫.
+      ∀L1,T. G ⊢ ⬈*𝐒[h,T] L1 →
+      ∀L2. L1 ≛[T] L2 → G ⊢ ⬈*𝐒[h,T] L2.
 #h #G #L1 #T #H @(rsx_ind … H) -L1
 #L1 #_ #IHL1 #L2 #HL12 @rsx_intro
 #L #HL2 #HnL2 elim (reqx_lpx_trans … HL2 … HL12) -HL2
@@ -31,8 +31,8 @@ qed-.
 
 (* Basic_2A1: uses: lsx_lpx_trans *)
 lemma rsx_lpx_trans (h) (G):
-      ∀L1,T. G ⊢ ⬈*[h,T] 𝐒❪L1❫ →
-      ∀L2. ❪G,L1❫ ⊢ ⬈[h] L2 → G ⊢ ⬈*[h,T] 𝐒❪L2❫.
+      ∀L1,T. G ⊢ ⬈*𝐒[h,T] L1 →
+      ∀L2. ❪G,L1❫ ⊢ ⬈[h] L2 → G ⊢ ⬈*𝐒[h,T] L2.
 #h #G #L1 #T #H @(rsx_ind … H) -L1 #L1 #HL1 #IHL1 #L2 #HL12
 elim (reqx_dec L1 L2 T) /3 width=4 by rsx_reqx_trans/
 qed-.

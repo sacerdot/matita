@@ -25,7 +25,7 @@ include "basic_2/dynamic/nta.ma".
 (* Basic_2A1: uses: nta_fwd_csn *)
 theorem nta_fwd_fsb (h) (a) (G) (L):
         ∀T,U. ❪G,L❫ ⊢ T :[h,a] U →
-        ∧∧ ≥[h] 𝐒❪G,L,T❫ & ≥[h] 𝐒❪G,L,U❫.
+        ∧∧ ≥𝐒[h] ❪G,L,T❫ & ≥𝐒[h] ❪G,L,U❫.
 #h #a #G #L #T #U #H
 elim (cnv_inv_cast … H) #X #HU #HT #_ #_ -X
 /3 width=2 by cnv_fwd_fsb, conj/
