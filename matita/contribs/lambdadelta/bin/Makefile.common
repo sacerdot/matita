@@ -1,0 +1,36 @@
+H=@
+
+OCAMLOPTIONS = -linkpkg -package \"$(REQUIRES)\" $(CAMLOPTIONS)
+OCAMLFIND = OCAMLPATH=$(OCAMLPATH) ocamlfind
+OCAMLC = $(OCAMLFIND) ocamlc -g $(OCAMLOPTIONS)
+OCAMLOPT = $(OCAMLFIND) opt $(OCAMLOPTIONS)
+
+CAMLP_FEATURES = $(F:%=-D%)
+
+AMLS = $(wildcard *.aml)
+
+define BUILD_TEMPLATE
+$(1).all:
+	@echo "  OCAMLBUILD $(1)"
+	$(H)ocamlbuild $$(BUILDOPTIONS) -ocamlc "$$(OCAMLC)" -ocamlopt "$$(OCAMLOPT)" -yaccflags "-v" -pp "$$(CAMLP)" $(1)
+
+.PHONY: $(1).all
+endef
+
+all:: $(AMLS:%.aml=%.ml) $(EXECS:%=%.native.all)
+
+byte:: $(AMLS:%.aml=%.ml) $(EXECS:%=%.byte.all)
+
+$(foreach EXEC, $(EXECS), $(eval $(call BUILD_TEMPLATE,$(EXEC:%=%.native))))
+
+$(foreach EXEC, $(EXECS), $(eval $(call BUILD_TEMPLATE,$(EXEC:%=%.byte))))
+
+clean::
+	@echo "  OCAMLBUILD -clean"
+	$(H)ocamlbuild -clean
+	$(H)$(RM) $(AMLS:%.aml=%.ml) *~
+
+.PHONY: all clean
+
+%.ml: %.aml
+	$(H)$(ALPHA) < $< > $@

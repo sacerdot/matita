@@ -1,0 +1,3 @@
+T_rect
+A_rect
+C_rect

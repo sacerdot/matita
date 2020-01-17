@@ -1,0 +1,78 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "basic_2A/substitution/drop_drop.ma".
+include "basic_2A/static/da.ma".
+
+(* DEGREE ASSIGNMENT FOR TERMS **********************************************)
+
+(* Properties on relocation *************************************************)
+
+lemma da_lift: ∀h,g,G,L1,T1,d. ⦃G, L1⦄ ⊢ T1 ▪[h, g] d →
+               ∀L2,s,l,m. ⬇[s, l, m] L2 ≡ L1 → ∀T2. ⬆[l, m] T1 ≡ T2 →
+               ⦃G, L2⦄ ⊢ T2 ▪[h, g] d.
+#h #g #G #L1 #T1 #d #H elim H -G -L1 -T1 -d
+[ #G #L1 #k #d #Hkd #L2 #s #l #m #_ #X #H
+  >(lift_inv_sort1 … H) -X /2 width=1 by da_sort/
+| #G #L1 #K1 #V1 #i #d #HLK1 #_ #IHV1 #L2 #s #l #m #HL21 #X #H
+  elim (lift_inv_lref1 … H) * #Hil #H destruct
+  [ elim (drop_trans_le … HL21 … HLK1) -L1 /2 width=2 by lt_to_le/ #X #HLK2 #H
+    elim (drop_inv_skip2 … H) -H /2 width=1 by lt_plus_to_minus_r/ -Hil #K2 #V2 #HK21 #HV12 #H destruct
+    /3 width=9 by da_ldef/
+  | lapply (drop_trans_ge … HL21 … HLK1 ?) -L1
+    /3 width=8 by da_ldef, drop_inv_gen/
+  ]
+| #G #L1 #K1 #W1 #i #d #HLK1 #_ #IHW1 #L2 #s #l #m #HL21 #X #H
+  elim (lift_inv_lref1 … H) * #Hil #H destruct
+  [ elim (drop_trans_le … HL21 … HLK1) -L1 /2 width=2 by lt_to_le/ #X #HLK2 #H
+    elim (drop_inv_skip2 … H) -H /2 width=1 by lt_plus_to_minus_r/ -Hil #K2 #W2 #HK21 #HW12 #H destruct
+    /3 width=8 by da_ldec/
+  | lapply (drop_trans_ge … HL21 … HLK1 ?) -L1
+    /3 width=8 by da_ldec, drop_inv_gen/
+  ]
+| #a #I #G #L1 #V1 #T1 #d #_ #IHT1 #L2 #s #l #m #HL21 #X #H
+  elim (lift_inv_bind1 … H) -H #V2 #T2 #HV12 #HU12 #H destruct
+  /4 width=5 by da_bind, drop_skip/
+| #I #G #L1 #V1 #T1 #d #_ #IHT1 #L2 #s #l #m #HL21 #X #H
+  elim (lift_inv_flat1 … H) -H #V2 #T2 #HV12 #HU12 #H destruct
+  /3 width=5 by da_flat/
+]
+qed.
+
+(* Inversion lemmas on relocation *******************************************)
+
+lemma da_inv_lift: ∀h,g,G,L2,T2,d. ⦃G, L2⦄ ⊢ T2 ▪[h, g] d →
+                   ∀L1,s,l,m. ⬇[s, l, m] L2 ≡ L1 → ∀T1. ⬆[l, m] T1 ≡ T2 →
+                   ⦃G, L1⦄ ⊢ T1 ▪[h, g] d.
+#h #g #G #L2 #T2 #d #H elim H -G -L2 -T2 -d
+[ #G #L2 #k #d #Hkd #L1 #s #l #m #_ #X #H
+  >(lift_inv_sort2 … H) -X /2 width=1 by da_sort/
+| #G #L2 #K2 #V2 #i #d #HLK2 #HV2 #IHV2 #L1 #s #l #m #HL21 #X #H
+  elim (lift_inv_lref2 … H) * #Hil #H destruct [ -HV2 | -IHV2 ]
+  [ elim (drop_conf_lt … HL21 … HLK2) -L2 /3 width=8 by da_ldef/
+  | lapply (drop_conf_ge … HL21 … HLK2 ?) -L2 /2 width=4 by da_ldef/
+  ]
+| #G #L2 #K2 #W2 #i #d #HLK2 #HW2 #IHW2 #L1 #s #l #m #HL21 #X #H
+  elim (lift_inv_lref2 … H) * #Hil #H destruct [ -HW2 | -IHW2 ]
+  [ elim (drop_conf_lt … HL21 … HLK2) -L2 /3 width=8 by da_ldec/
+  | lapply (drop_conf_ge … HL21 … HLK2 ?) -L2 /2 width=4 by da_ldec/
+  ]
+| #a #I #G #L2 #V2 #T2 #d #_ #IHT2 #L1 #s #l #m #HL21 #X #H
+  elim (lift_inv_bind2 … H) -H #V1 #T1 #HV12 #HT12 #H destruct
+  /4 width=5 by da_bind, drop_skip/
+| #I #G #L2 #V2 #T2 #d #_ #IHT2 #L1 #s #l #m #HL21 #X #H
+  elim (lift_inv_flat2 … H) -H #V1 #T1 #HV12 #HT12 #H destruct
+  /3 width=5 by da_flat/
+]
+qed-.
