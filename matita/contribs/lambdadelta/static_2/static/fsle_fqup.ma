@@ -31,7 +31,7 @@ lemma fsle_shift: ∀L1,L2. |L1| = |L2| →
 #L1 #L2 #H1L #I #T1 #T2 #V
 * #n #m #f2 #g2 #Hf2 #Hg2 #H2L #Hfg2 #p
 elim (lveq_inj_length … H2L) // -H1L #H1 #H2 destruct
-lapply (lveq_inv_bind … H2L) -H2L #HL
+lapply (lveq_inv_bind_O … H2L) -H2L #HL
 elim (frees_total L2 V) #g1 #Hg1
 elim (sor_isfin_ex g1 (⫱g2)) /3 width=3 by frees_fwd_isfin, isfin_tl/ #g #Hg #_
 lapply (sor_inv_sle_dx … Hg) #H0g

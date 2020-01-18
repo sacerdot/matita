@@ -17,14 +17,14 @@ PRB_DIR      := ../../../components/binaries/probe
 PRB          := probe.native
 PRB_OPTS     := $(XOA_OPTS) -g -i
 
-ORIG         := . ./orig.sh 
+ORIG         := . ./orig.sh
 ORIGS        := basic_2/basic_1.orig
 
 CONTRIB      := lambdadelta_2B
 
 WWW          := ../../../../helm/www/lambdadelta
 
-TAGS := all xoa orig elim deps top leaf stats tbls odeps trim contrib clean \
+TAGS := all names xoa orig elim deps top leaf stats tbls odeps trim contrib clean \
         home up-home
 
 PACKAGES  := ground_2 static_2 basic_2 apps_2 alpha_1
@@ -63,6 +63,16 @@ endef
 
 $(foreach PKG, $(XPACKAGES), $(eval $(call XMAS_TEMPLATE,$(PKG))))
 
+# names ######################################################################
+
+NAMES = basic_1A basic_2A static_2 basic_2
+
+%/names.txt: %/*/*.ma
+	@echo "PROBE $* -ns"
+	$(H)$(PRB_DIR)/$(PRB) $(PRB_OPTS) $* -ns | sort > $@
+
+names: $(NAMES:%=%/names.txt)
+
 # xoa ########################################################################
 
 xoa: $(XOA_CONF)
@@ -88,7 +98,7 @@ $(DEP_INPUT): LINE = $(MAS:%=%:include \"\".)
 $(DEP_INPUT): $(MAS) Makefile
 	@echo "  GREP include"
 	$(H)grep "include \"" $(MAS) > $(DEP_INPUT)
-	$(H)echo "$(LINE)" | sed -e 's/\"\. /\"\.\n/g' >> $(DEP_INPUT) 
+	$(H)echo "$(LINE)" | sed -e 's/\"\. /\"\.\n/g' >> $(DEP_INPUT)
 
 # dep ########################################################################
 
@@ -126,7 +136,7 @@ define STATS_TEMPLATE
   $$(STT_$(1)): P4 = $$(shell grep "qed[.-]" $$(MAS_$(1)) | wc -l)
   $$(STT_$(1)): D1 = $$(word 5, $$(C0))
   $$(STT_$(1)): D2 = $$(word 7, $$(C0))
-  $$(STT_$(1)): D3 = $$(shell grep "defined[.-]" $$(MAS_$(1)) | wc -l)  
+  $$(STT_$(1)): D3 = $$(shell grep "defined[.-]" $$(MAS_$(1)) | wc -l)
   $$(STT_$(1)): M1 = $$(word 6, $$(C0))
   $$(STT_$(1)): M2 = $$(shell grep "$$(OPEN)\*[^*:]*$$$$" $$(MAS_$(1)) | wc -l)
   $$(STT_$(1)): M3 = $$(shell grep "(\*\*)" $$(MAS_$(1)) | wc -l)
@@ -136,7 +146,7 @@ $$(STT_$(1)): $$(MAS_$(1)) $(1)/probe.txt
 	@printf '%-15s %-46s' 'Statistics for:' $(1)
 	@printf '\x1B[0m\n'
 	@printf '\x1B[1;40;35m'
-	@printf '%-12s' '' 
+	@printf '%-12s' ''
 	@printf '   %-8s %6i' Chars $$(C2)
 	@printf '   %-7s %7i' Nodes $$(C3)
 	@printf '   %-11s' ''

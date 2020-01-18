@@ -32,7 +32,7 @@ lemma lprs_cpm_trans (h) (n) (G) (T1:term) (T2:term):
 /3 width=3 by lprs_cpms_trans, cpm_cpms/ qed-.
 
 (* Basic_2A1: includes cprs_bind2 *)
-lemma cpms_bind_dx (h) (n) (G) (L):
+lemma cpms_bind_alt (h) (n) (G) (L):
       ∀V1,V2. ❪G,L❫ ⊢ V1 ➡*[h,0] V2 →
       ∀I,T1,T2. ❪G,L.ⓑ[I]V2❫ ⊢ T1 ➡*[h,n] T2 →
       ∀p. ❪G,L❫ ⊢ ⓑ[p,I]V1.T1 ➡*[h,n] ⓑ[p,I]V2.T2.

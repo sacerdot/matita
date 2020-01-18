@@ -1,12 +1,12 @@
 (*
-    ||M||  This file is part of HELM, an Hypertextual, Electronic        
-    ||A||  Library of Mathematics, developed at the Computer Science     
-    ||T||  Department, University of Bologna, Italy.                     
-    ||I||                                                                
-    ||T||  HELM is free software; you can redistribute it and/or         
-    ||A||  modify it under the terms of the GNU General Public License   
-    \   /  version 2 or (at your option) any later version.      
-     \ /   This software is distributed as is, NO WARRANTY.     
+    ||M||  This file is part of HELM, an Hypertextual, Electronic
+    ||A||  Library of Mathematics, developed at the Computer Science
+    ||T||  Department, University of Bologna, Italy.
+    ||I||
+    ||T||  HELM is free software; you can redistribute it and/or
+    ||A||  modify it under the terms of the GNU General Public License
+    \   /  version 2 or (at your option) any later version.
+     \ /   This software is distributed as is, NO WARRANTY.
       V_______________________________________________________________ *)
 
 module A = Arg
@@ -52,6 +52,10 @@ let set_p () = O.exclude := `Provided :: !O.exclude
 
 let out_f () = O.iter_xflavours E.out_int
 
+let out_nn () = E.out_length !O.names
+
+let out_ns () = E.out_uris !O.names
+
 let out_oc () = E.out_int !O.net
 
 let out_on () = E.out_length !O.objs
@@ -82,6 +86,8 @@ let _ =
    let help_f  = " Print the number of objects grouped by flavour" in
    let help_g  = " Exclude generated objects" in
    let help_i  = " Exclude implied objects" in
+   let help_nn = " Print the number of names" in
+   let help_ns = " Print the list of names" in
    let help_oc = " Print the total intrinsic complexity (objects)" in
    let help_on = " Print the number of objects" in
    let help_os = " Print the list of objects" in
@@ -96,6 +102,8 @@ let _ =
       "-f" , A.Unit out_f , help_f;
       "-g" , A.Unit set_g , help_g;
       "-i" , A.Unit set_i , help_i;
+      "-nn", A.Unit out_nn, help_nn;
+      "-ns", A.Unit out_ns, help_ns;
       "-oc", A.Unit out_oc, help_oc;
       "-on", A.Unit out_on, help_on;
       "-os", A.Unit out_os, help_os;

@@ -1,12 +1,12 @@
 (*
-    ||M||  This file is part of HELM, an Hypertextual, Electronic        
-    ||A||  Library of Mathematics, developed at the Computer Science     
-    ||T||  Department, University of Bologna, Italy.                     
-    ||I||                                                                
-    ||T||  HELM is free software; you can redistribute it and/or         
-    ||A||  modify it under the terms of the GNU General Public License   
-    \   /  version 2 or (at your option) any later version.      
-     \ /   This software is distributed as is, NO WARRANTY.     
+    ||M||  This file is part of HELM, an Hypertextual, Electronic
+    ||A||  Library of Mathematics, developed at the Computer Science
+    ||T||  Department, University of Bologna, Italy.
+    ||I||
+    ||T||  HELM is free software; you can redistribute it and/or
+    ||A||  modify it under the terms of the GNU General Public License
+    \   /  version 2 or (at your option) any later version.
+     \ /   This software is distributed as is, NO WARRANTY.
       V_______________________________________________________________ *)
 
 module L  = List
@@ -32,6 +32,11 @@ let status = new P.status
 let malformed () =
   failwith "probe: malformed term"
 
+let add_name str =
+  let u = U.uri_of_string str in
+  if US.mem u !O.names then Printf.eprintf "probe: name clash: %S\n" str;
+  O.names := US.add u !O.names
+
 let add_attr n (_, xf, _) = O.add_xflavour n (xf:>O.def_xflavour)
 
 let add_ind n = O.add_xflavour n `Inductive
@@ -41,12 +46,15 @@ let rec set_list c ts cts =
   L.fold_left map cts ts
 
 let set_funs c rfs cts =
-  let map cts (_, _, _, t0, t1) = set_list c [t0; t1] cts in
+  let map cts (_, s, _, t0, t1) =
+    add_name s;
+    set_list c [t0; t1] cts
+  in
   L.fold_left map cts rfs
 
-let set_type c cts (_, _, t, css) =
-  let map cts (_, _, t) = (c, t) :: cts in
-  (c, t) :: L.fold_left map cts css
+let set_type c cts (_, s, t, css) =
+  let map cts (_, s, t) = add_name s; (c, t) :: cts in
+  add_name s; (c, t) :: L.fold_left map cts css
 
 let inc st = {st with c = succ st.c}
 
@@ -93,11 +101,11 @@ let scan_obj u c =
   let st = {c; u} in
   let _, _, _, _, obj = E.get_checked_obj status u in
   let st = match obj with
-    | C.Constant (_, _, None, t, m)     ->
-      add_attr 1 m;
+    | C.Constant (_, s, None, t, m)     ->
+      add_name s; add_attr 1 m;
       scan_term (inc st) [[], t]
-    | C.Constant (_, _, Some t0, t1, m) ->
-      add_attr 1 m;
+    | C.Constant (_, s, Some t0, t1, m) ->
+      add_name s; add_attr 1 m;
       scan_term (inc st) (set_list [] [t0; t1] [])
     | C.Fixpoint (_, rfs, m)            ->
       add_attr (L.length rfs) m;

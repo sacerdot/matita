@@ -96,7 +96,7 @@ lemma lveq_inv_succ: ∀L1,L2,n1,n2. L1 ≋ⓧ*[↑n1,↑n2] L2 → ⊥.
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma lveq_inv_bind: ∀I1,I2,K1,K2. K1.ⓘ[I1] ≋ⓧ*[0,0] K2.ⓘ[I2] → K1 ≋ⓧ*[0,0] K2.
+lemma lveq_inv_bind_O: ∀I1,I2,K1,K2. K1.ⓘ[I1] ≋ⓧ*[0,0] K2.ⓘ[I2] → K1 ≋ⓧ*[0,0] K2.
 #I1 #I2 #K1 #K2 #H
 elim (lveq_inv_zero … H) -H * [| #Z1 #Z2 #Y1 #Y2 #HY ] #H1 #H2 destruct //
 qed-.

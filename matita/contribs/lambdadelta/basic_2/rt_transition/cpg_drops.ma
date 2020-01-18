@@ -61,7 +61,7 @@ lemma cpg_inv_lref1_drops: ∀Rt,c,h,G,i,L,T2. ❪G,L❫ ⊢ #i ⬈[Rt,c,h] T2 �
   ] *
   #cV #L #W #W2 #HKL #HW2 #HWV2 #H destruct
   lapply (lifts_trans … HWV2 … HVT2 ??) -V2 [3,6: |*: // ] #H
-  lapply (lifts_uni … H) -H #H
+(* lapply (lifts_uni … H) -H #H *) (**)
   /4 width=8 by drops_drop, ex4_4_intro, or3_intro2, or3_intro1/
 ]
 qed-.

@@ -59,8 +59,9 @@ theorem drops_trans: ∀b1,f1,L1,L. ⇩*[b1,f1] L1 ≘ L →
 ]
 qed-.
 
-theorem drops_conf_div: ∀f1,L,K. ⇩*[Ⓣ,f1] L ≘ K → ∀f2. ⇩*[Ⓣ,f2] L ≘ K →
-                        𝐔❪f1❫ → 𝐔❪f2❫ → f1 ≡ f2.
+theorem drops_conf_div_isuni:
+        ∀f1,L,K. ⇩*[Ⓣ,f1] L ≘ K → ∀f2. ⇩*[Ⓣ,f2] L ≘ K →
+        𝐔❪f1❫ → 𝐔❪f2❫ → f1 ≡ f2.
 #f1 #L #K #H elim H -f1 -L -K
 [ #f1 #Hf1 #f2 #Hf2 elim (drops_inv_atom1 … Hf2) -Hf2
   /3 width=1 by isid_inv_eq_repl/
@@ -127,13 +128,14 @@ lapply (drops_trans … H1 … H2 … Hf) -L -Hf
 qed-.
 
 (* Basic_2A1: includes: drops_conf_div *)
-lemma drops_conf_div_bind: ∀f1,f2,I1,I2,L,K.
-                           ⇩*[Ⓣ,f1] L ≘ K.ⓘ[I1] → ⇩*[Ⓣ,f2] L ≘ K.ⓘ[I2] →
-                           𝐔❪f1❫ → 𝐔❪f2❫ → f1 ≡ f2 ∧ I1 = I2.
+lemma drops_conf_div_bind_isuni:
+      ∀f1,f2,I1,I2,L,K.
+      ⇩*[Ⓣ,f1] L ≘ K.ⓘ[I1] → ⇩*[Ⓣ,f2] L ≘ K.ⓘ[I2] →
+      𝐔❪f1❫ → 𝐔❪f2❫ → f1 ≡ f2 ∧ I1 = I2.
 #f1 #f2 #I1 #I2 #L #K #Hf1 #Hf2 #HU1 #HU2
 lapply (drops_isuni_fwd_drop2 … Hf1) // #H1
 lapply (drops_isuni_fwd_drop2 … Hf2) // #H2
-lapply (drops_conf_div … H1 … H2 ??) /2 width=3 by isuni_next/ -H1 -H2 -HU1 -HU2 #H
+lapply (drops_conf_div_isuni … H1 … H2 ??) /2 width=3 by isuni_next/ -H1 -H2 -HU1 -HU2 #H
 lapply (eq_inv_nn … H ????) -H [5: |*: // ] #H12
 lapply (drops_eq_repl_back … Hf1 … H12) -Hf1 #H0
 lapply (drops_mono … H0 … Hf2) -L #H

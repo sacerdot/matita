@@ -1,0 +1,105 @@
+NAMING CONVENTIONS FOR METAVARIABLES
+
+A,B    : arity
+C      : candidate of reducibility
+D,E    : RTM environment
+F,G    : global environment
+H      : reserved: transient premise
+IH     : reserved: inductive premise
+I,J    : item
+K,L    : local environment
+M,N    : reserved: future use
+O      :
+P      : relocation environment
+Q      : elimination predicate
+R      : generic predicate/relation
+S      : RTM stack
+T,U,V,W: term
+X,Y,Z  : reserved: transient objet denoted by a capital letter
+
+a      : applicability condition (true = restricted, false = general)
+b      : local dropping kind parameter (true = restricted, false = general)
+c      : rt-reduction count parameter
+d      : term degree
+e      : reserved: future use (\lambda\delta 3)
+f,g    : local reference transforming map
+h      : sort hierarchy parameter
+i,j    : local reference depth (de Bruijn's)
+k,l    : global reference level
+m,n    : iterations
+o      : sort degree parameter (origin)
+p,q    : binder polarity
+r      :
+s      : sort index
+t,u    :
+v,w    : local reference position level (de Bruijn's) (RTM)
+x,y,z  : reserved: transient objet denoted by a small letter
+
+NAMING CONVENTIONS FOR CONSTRUCTORS
+
+0: atomic
+2: binary
+
+A: application to vector
+E: empty list
+F: boolean false
+T: boolean true
+
+a: application
+b: generic binder with one argument
+d: abbreviation
+f: generic flat with one argument
+i: generic binder for local environments
+l: typed abstraction
+n: native type annotation
+u: generic binder with zero argument
+x: exclusion
+
+NAMING CONVENTIONS FOR TRANSFORMATIONS AND RELATED FORMS
+
+- prefix and first letter
+
+b: bi contex-sensitive for local environments
+c: contex-sensitive for terms
+f: context-freee for closures
+l: sn contex-sensitive for local environments
+r: dx contex-sensitive for local environments
+s: stratified (prefix)
+t: context-free for terms
+
+- second letter
+
+e: reserved for generic entrywise extension
+i: irreducible form
+n: normal form
+p: reflexive parallel transformation
+q: sequential transformation
+r: reducible form
+s: strongly normalizing form
+
+- third letter
+
+b: (q)rst-reduction
+c: conversion
+d: decomposed rt-reduction
+e: decomposed rt-conversion
+g: counted rt-transition (generic)
+m: semi-counted rt-transition (mixed)
+q: restricted reduction
+r: reduction
+s: substitution
+u: supclosure
+w: reserved for generic pointwise extension
+x: uncounted rt-transition (extended)
+y: rt-substitution
+
+- forth letter (if present)
+
+c: proper single step (general)                (successor)
+e: reflexive transitive closure to normal form (evaluation)
+g: proper multiple step (general)              (greater)
+p: non-reflexive transitive closure            (plus)
+q: reflexive closure                           (question)
+r: proper multiple step (restricted)           (restricted)
+s: reflexive transitive closure                (star)
+u: proper single step (restricted)             (unit)

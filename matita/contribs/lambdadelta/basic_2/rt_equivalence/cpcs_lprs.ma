@@ -55,8 +55,9 @@ lemma lpr_cpr_conf (h) (G): ∀L1,L2. ❪G,L1❫ ⊢ ➡[h,0] L2 →
 (* Advanced inversion lemmas ************************************************)
 
 (* Note: there must be a proof suitable for lfpr *)
-lemma cpcs_inv_abst_sn (h) (G) (L): ∀p1,p2,W1,W2,T1,T2. ❪G,L❫ ⊢ ⓛ[p1]W1.T1 ⬌*[h] ⓛ[p2]W2.T2 →
-                                    ∧∧ ❪G,L❫ ⊢ W1 ⬌*[h] W2 & ❪G,L.ⓛW1❫ ⊢ T1 ⬌*[h] T2 & p1 = p2.
+lemma cpcs_inv_abst_bi_sn (h) (G) (L):
+      ∀p1,p2,W1,W2,T1,T2. ❪G,L❫ ⊢ ⓛ[p1]W1.T1 ⬌*[h] ⓛ[p2]W2.T2 →
+      ∧∧ ❪G,L❫ ⊢ W1 ⬌*[h] W2 & ❪G,L.ⓛW1❫ ⊢ T1 ⬌*[h] T2 & p1 = p2.
 #h #G #L #p1 #p2 #W1 #W2 #T1 #T2 #H
 elim (cpcs_inv_cprs … H) -H #T #H1 #H2
 elim (cpms_inv_abst_sn … H1) -H1 #W0 #T0 #HW10 #HT10 #H destruct
@@ -66,8 +67,9 @@ lapply (lprs_cpcs_trans … (L.ⓛW1) … HT2) /2 width=1 by lprs_pair/ -HT2 #HT
 /4 width=3 by and3_intro, cprs_div, cpcs_cprs_div, cpcs_sym/
 qed-.
 
-lemma cpcs_inv_abst_dx (h) (G) (L): ∀p1,p2,W1,W2,T1,T2. ❪G,L❫ ⊢ ⓛ[p1]W1.T1 ⬌*[h] ⓛ[p2]W2.T2 →
-                                   ∧∧ ❪G,L❫ ⊢ W1 ⬌*[h] W2 & ❪G,L.ⓛW2❫ ⊢ T1 ⬌*[h] T2 & p1 = p2.
+lemma cpcs_inv_abst_bi_dx (h) (G) (L):
+      ∀p1,p2,W1,W2,T1,T2. ❪G,L❫ ⊢ ⓛ[p1]W1.T1 ⬌*[h] ⓛ[p2]W2.T2 →
+      ∧∧ ❪G,L❫ ⊢ W1 ⬌*[h] W2 & ❪G,L.ⓛW2❫ ⊢ T1 ⬌*[h] T2 & p1 = p2.
 #h #G #L #p1 #p2 #W1 #W2 #T1 #T2 #HT12 lapply (cpcs_sym … HT12) -HT12
-#HT12 elim (cpcs_inv_abst_sn … HT12) -HT12 /3 width=1 by cpcs_sym, and3_intro/
+#HT12 elim (cpcs_inv_abst_bi_sn … HT12) -HT12 /3 width=1 by cpcs_sym, and3_intro/
 qed-.

@@ -67,7 +67,7 @@ fact lsuba_inv_atom2_aux: ∀G,L1,L2. G ⊢ L1 ⫃⁝ L2 → L2 = ⋆ → L1 = �
 ]
 qed-.
 
-lemma lsubc_inv_atom2: ∀G,L1. G ⊢ L1 ⫃⁝ ⋆ → L1 = ⋆.
+lemma lsuba_inv_atom2: ∀G,L1. G ⊢ L1 ⫃⁝ ⋆ → L1 = ⋆.
 /2 width=4 by lsuba_inv_atom2_aux/ qed-.
 
 fact lsuba_inv_bind2_aux: ∀G,L1,L2. G ⊢ L1 ⫃⁝ L2 → ∀I,K2. L2 = K2.ⓘ[I] →

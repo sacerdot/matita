@@ -1,12 +1,12 @@
 (*
-    ||M||  This file is part of HELM, an Hypertextual, Electronic        
-    ||A||  Library of Mathematics, developed at the Computer Science     
-    ||T||  Department, University of Bologna, Italy.                     
-    ||I||                                                                
-    ||T||  HELM is free software; you can redistribute it and/or         
-    ||A||  modify it under the terms of the GNU General Public License   
-    \   /  version 2 or (at your option) any later version.      
-     \ /   This software is distributed as is, NO WARRANTY.     
+    ||M||  This file is part of HELM, an Hypertextual, Electronic
+    ||A||  Library of Mathematics, developed at the Computer Science
+    ||T||  Department, University of Bologna, Italy.
+    ||I||
+    ||T||  HELM is free software; you can redistribute it and/or
+    ||A||  modify it under the terms of the GNU General Public License
+    \   /  version 2 or (at your option) any later version.
+     \ /   This software is distributed as is, NO WARRANTY.
       V_______________________________________________________________ *)
 
 module A = Array
@@ -44,6 +44,8 @@ let default_objs = US.empty
 
 let default_srcs = US.empty
 
+let default_names = US.empty
+
 let default_remove = []
 
 let default_exclude = []
@@ -65,6 +67,8 @@ let slot = A.make xflavours 0
 let objs = ref default_objs
 
 let srcs = ref default_srcs
+
+let names = ref default_names
 
 let remove = ref default_remove
 
@@ -113,8 +117,8 @@ let out_deps file =
 
 let clear () =
   R.clear (); A.iteri clear_slot slot;
-  objs := default_objs; srcs := default_srcs; remove := default_remove;
-  exclude := default_exclude; net := default_net;
+  objs := default_objs; srcs := default_srcs; names := default_names;
+  remove := default_remove; exclude := default_exclude; net := default_net;
   chars := default_chars; debug_lexer := default_debug_lexer;
   no_devel := default_no_devel; no_init := default_no_init;
   deps := UPS.empty

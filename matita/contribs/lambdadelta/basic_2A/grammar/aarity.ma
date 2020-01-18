@@ -46,7 +46,7 @@ lemma discr_apair_xy_x: ∀A,B. ②B. A = B → ⊥.
 ]
 qed-.
 
-lemma discr_tpair_xy_y: ∀B,A. ②B. A = A → ⊥.
+lemma discr_apair_xy_y: ∀B,A. ②B. A = A → ⊥.
 #B #A elim A -A
 [ #H destruct
 | #Y #X #_ #IHX #H elim (destruct_apair_apair_aux … H) -H /2 width=1 by/ (**) (* destruct lemma needed *)
