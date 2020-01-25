@@ -1,0 +1,10 @@
+EXECS = roles
+
+REQUIRES =
+
+include ../Makefile.common
+
+test:
+#	@$(MAKE) --no-print-directory -C ../../ www
+
+.PHONY: test

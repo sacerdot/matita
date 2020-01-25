@@ -34,7 +34,7 @@ let out_int i = P.printf "%u\n" i
 let out_length uris = out_int (US.cardinal uris)
 
 let out_uris uris =
-   let map uri = P.printf "%s\n" (U.string_of_uri uri) in
+   let map uri = P.printf "%S\n" (U.string_of_uri uri) in
    US.iter map uris
 
 let is_registry str =
