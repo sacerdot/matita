@@ -22,12 +22,12 @@ let TEXT = ['0'-'9' 'A'-'Z' 'a'-'z' '/' '.' '_']+
 
 rule token = parse
   | SPC          { token lexbuf           }
-  | QT           { let s = text lexbuf in 
+  | QT           { let s = text lexbuf in
                    out s; EP.TEXT s       }
   | ":"          { out ":"; EP.SC         }
   | "("          { out "("; EP.OP         }
   | ")"          { out ")"; EP.CP         }
-  | "ver"   as s { out s; EP.VER          } 
+  | "ver"   as s { out s; EP.VER          }
   | "old"   as s { out s; EP.OLD          }
   | "new"   as s { out s; EP.NEW          }
   | "rel"   as s { out s; EP.REL          }

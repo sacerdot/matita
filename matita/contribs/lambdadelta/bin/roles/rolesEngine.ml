@@ -27,13 +27,13 @@ let toggle_entry = function
   | [0;m;1]   ->
     let r = EU.list_nth m st.ET.r in
     r.ET.o <- EU.list_toggle_all r.ET.o
-  | [0;m;1;n] -> 
+  | [0;m;1;n] ->
     let r = EU.list_nth m st.ET.r in
     r.ET.o <- EU.list_toggle n r.ET.o
-  | [0;m;2]   -> 
+  | [0;m;2]   ->
     let r = EU.list_nth m st.ET.r in
     r.ET.n <- EU.list_toggle_all r.ET.n
-  | [0;m;2;n] -> 
+  | [0;m;2;n] ->
     let r = EU.list_nth m st.ET.r in
     r.ET.n <- EU.list_toggle n r.ET.n
   | [1]        -> st.ET.t <- EU.list_toggle_all st.ET.t
@@ -42,13 +42,27 @@ let toggle_entry = function
   | [2;m]      -> st.ET.w <- EU.list_toggle m st.ET.w
   | _          -> EU.raise_error ET.ENoEntry
 
+let add_role () =
+  let ts,os = EU.list_split st.ET.t in
+  let ws,ns = EU.list_split st.ET.w in
+  if os = [] && ns = [] then () else
+  begin match EU.list_select None st.ET.r with
+  | None   ->
+    let r = {ET.v = st.ET.s; ET.o = os; ET.n = ns} in
+    st.ET.r <- EU.roles_union [false, r] st.ET.r
+  | Some r ->
+    if r.ET.v <> st.ET.s then EU.raise_error ET.EWrongVersion else
+    r.ET.o <- EU.objs_union os r.ET.o;
+    r.ET.n <- EU.names_union ns r.ET.n;
+  end;
+  st.ET.t <- ts; st.ET.w <- ws
+
 let read_waiting fname =
   if st.ET.s = [] then EU.raise_error ET.ENoStage else
   let ich = Scanf.Scanning.open_in fname in
   let w = EI.read_names ich [] in
   Scanf.Scanning.close_in ich;
-  let error n = ET.ENameClash n in
-  st.ET.w <- EU.list_union error EU.compare_names st.ET.w (List.rev w)
+  st.ET.w <- EU.names_union st.ET.w (List.rev w)
 
 let read_status () =
   if st.ET.s <> [] then EU.raise_error (ET.EStage st.ET.s) else

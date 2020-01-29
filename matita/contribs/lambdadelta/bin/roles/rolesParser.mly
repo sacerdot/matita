@@ -36,7 +36,7 @@ name:
 
 role:
   | OP REL ver olds news CP {
-      false, {ET.v = $3; ET.o = $4; ET.n = $5} 
+      false, {ET.v = $3; ET.o = $4; ET.n = $5}
     }
 ;
 
@@ -73,6 +73,6 @@ base:
 
 status:
   | ROLES SC OP TOP base ver olds news CP EOF {
-      {ET.r = $5; ET.s = $6; ET.t = $7; ET.w = $8} 
+      {ET.r = $5; ET.s = $6; ET.t = $7; ET.w = $8}
     }
 ;

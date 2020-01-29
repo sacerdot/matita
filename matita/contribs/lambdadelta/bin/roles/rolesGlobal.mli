@@ -11,6 +11,6 @@
 
 val wd: string ref
 
-val debug_lexer: bool ref 
+val debug_lexer: bool ref
 
 val clear: unit -> unit

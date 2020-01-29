@@ -41,6 +41,10 @@ type error = EExt of string
            | ENoStage
            | ENews
            | ENameClash of name
+           | EObjClash of obj
+           | ERoleClash of role
            | ENoEntry
+           | EWrongSelect
+           | EWrongVersion
 
 exception Error of error
