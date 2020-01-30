@@ -18,12 +18,14 @@ let help_C = "<dir>  Set this working directory (default: current directory)"
 let help_L = " Debug osn lexer"
 let help_X = " Reset all options to defaults"
 let help_a = " Add selected names to a role"
+let help_m = " Add roles relating matching names"
 let help_o = "<version>  Add top objects for this stage"
+let help_p = " Print current status on standard output"
 let help_r = " Load current status"
 let help_s = "<version>  Start a stage with this version"
 let help_t = "<pointer>  Toggle the selection of this pointed entry"
 let help_w = " Save current status"
-let help   = "Usage: roles [ -LXarw | -C <dir> | -os <version> | -t <pointer> | <file> ]*"
+let help   = "Usage: roles [ -LXamprw | -C <dir> | -os <version> | -t <pointer> | <file> ]*"
 
 let add_tops s =
   EE.add_tops (EU.version_of_string s)
@@ -45,7 +47,9 @@ let _main = try
     "-L", Arg.Set EG.debug_lexer, help_L;
     "-X", Arg.Unit EG.clear, help_X;
     "-a", Arg.Unit EE.add_role, help_a;
+    "-m", Arg.Unit EE.add_matching, help_m;
     "-o", Arg.String add_tops, help_o;
+    "-p", Arg.Unit EE.print_status, help_p;
     "-r", Arg.Unit EE.read_status, help_r;
     "-s", Arg.String new_stage, help_s;
     "-t", Arg.String toggle_entry, help_t;

@@ -17,8 +17,12 @@ val add_role: unit -> unit
 
 val add_tops: RolesTypes.version -> unit
 
+val add_matching: unit -> unit
+
 val read_waiting: string -> unit
 
 val read_status: unit -> unit
 
 val write_status: unit -> unit
+
+val print_status: unit -> unit

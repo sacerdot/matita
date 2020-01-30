@@ -43,6 +43,8 @@ val exists_role_deleted: RolesTypes.version -> RolesTypes.roles -> bool
 
 val get_tops: RolesTypes.version -> RolesTypes.roles -> RolesTypes.objs * RolesTypes.objs
 
+val match_names: int -> int -> RolesTypes.objs -> RolesTypes.names -> (int * int) option
+
 val new_status: RolesTypes.status
 
 val pointer_of_string: string -> RolesTypes.pointer

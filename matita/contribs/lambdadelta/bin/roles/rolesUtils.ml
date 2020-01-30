@@ -149,6 +149,16 @@ let rec get_tops v = function
     end else
       ds, ts
 
+let rec match_names oi ni os ns =
+  match os, ns with
+  | _         , []        -> None
+  | []        , _         -> None
+  | (_,o)::otl,(_,n)::ntl ->
+    let b = compare_names (snd o) n in
+    if b > 0 then match_names oi (succ ni) os ntl else
+    if b < 0 then match_names (succ oi) ni otl ns else
+    Some (oi, ni)
+
 let new_status = {
   ET.r = []; ET.s = []; ET.t = []; ET.w = [];
 }

@@ -67,6 +67,15 @@ let add_tops v =
   end;
   if ts <> [] then st.ET.t <- ts
 
+let rec add_matching () =
+  match EU.match_names 0 0 st.ET.t st.ET.w with
+  | None          -> ()
+  | Some  (ti,wi) ->
+    toggle_entry [1;ti];
+    toggle_entry [2;wi];
+    add_role ();
+    add_matching ()
+
 let read_waiting fname =
   if st.ET.s = [] then EU.raise_error ET.ENoStage else
   let ich = Scanf.Scanning.open_in fname in
@@ -90,3 +99,6 @@ let write_status () =
   let och = open_out fname in
   EO.out_status och st;
   close_out och
+
+let print_status () =
+  EO.out_status stdout st
