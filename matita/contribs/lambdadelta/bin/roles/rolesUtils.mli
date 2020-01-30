@@ -39,6 +39,10 @@ val objs_union: RolesTypes.objs -> RolesTypes.objs -> RolesTypes.objs
 
 val roles_union: RolesTypes.roles -> RolesTypes.roles -> RolesTypes.roles
 
+val exists_role_deleted: RolesTypes.version -> RolesTypes.roles -> bool
+
+val get_tops: RolesTypes.version -> RolesTypes.roles -> RolesTypes.objs * RolesTypes.objs
+
 val new_status: RolesTypes.status
 
 val pointer_of_string: string -> RolesTypes.pointer

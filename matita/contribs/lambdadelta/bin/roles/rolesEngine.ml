@@ -19,7 +19,7 @@ let st = EU.new_status
 
 let new_stage v =
   if st.ET.w = [] then st.ET.s <- v
-  else EU.raise_error ET.ENews
+  else EU.raise_error ET.EWaiting
 
 let toggle_entry = function
   | [0]       -> st.ET.r <- EU.list_toggle_all st.ET.r
@@ -57,12 +57,22 @@ let add_role () =
   end;
   st.ET.t <- ts; st.ET.w <- ws
 
+let add_tops v =
+  if EU.exists_role_deleted st.ET.s st.ET.r || st.ET.t <> []
+  then EU.raise_error ET.ETops else
+  let ds, ts = EU.get_tops v st.ET.r in
+  if ds <> [] then begin
+    let r = {ET.v = st.ET.s; ET.o = ds; ET.n = []} in
+    st.ET.r <- EU.roles_union [false, r] st.ET.r
+  end;
+  if ts <> [] then st.ET.t <- ts
+
 let read_waiting fname =
   if st.ET.s = [] then EU.raise_error ET.ENoStage else
   let ich = Scanf.Scanning.open_in fname in
-  let w = EI.read_names ich [] in
+  let w = EI.read_rev_names ich [] in
   Scanf.Scanning.close_in ich;
-  st.ET.w <- EU.names_union st.ET.w (List.rev w)
+  st.ET.w <- EU.names_union (List.rev w) st.ET.w
 
 let read_status () =
   if st.ET.s <> [] then EU.raise_error (ET.EStage st.ET.s) else

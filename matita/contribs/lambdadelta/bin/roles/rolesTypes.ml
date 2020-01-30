@@ -36,15 +36,16 @@ type status = {
 
 type pointer = int list
 
-type error = EExt of string
+type error = EWrongExt of string
            | EStage of version
            | ENoStage
-           | ENews
+           | EWaiting
            | ENameClash of name
            | EObjClash of obj
            | ERoleClash of role
            | ENoEntry
            | EWrongSelect
            | EWrongVersion
+           | ETops
 
 exception Error of error

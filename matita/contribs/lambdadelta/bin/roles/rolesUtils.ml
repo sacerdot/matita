@@ -67,6 +67,13 @@ let rec list_select r = function
     | true , Some _ -> raise_error (ET.EWrongSelect)
     end
 
+let rec list_exists compare = function
+  | []        -> false
+  | (_,a)::tl ->
+    let b = compare a in
+    if b <= 0 then b = 0 else
+    list_exists compare tl
+
 let string_of_version v =
   String.concat "." (List.map string_of_int v)
 
@@ -105,6 +112,10 @@ let objs_union os1 os2 =
   let error o = ET.EObjClash o in
   list_union error compare_objs os1 os2
 
+let rec rev_objs_of_names v os = function
+  | []        -> os
+  | (b,n)::tl -> rev_objs_of_names v ((b,(v,n))::os) tl
+
 let obj_of_role r =
   let n = match r.ET.n with
     | []        -> []
@@ -122,6 +133,22 @@ let roles_union rs1 rs2 =
   let error r = ET.ERoleClash r in
   list_union error compare_roles rs1 rs2
 
+let exists_role_deleted v r =
+  let o = v, [] in
+  let compare r = compare_objs o (obj_of_role r) in
+  list_exists compare r
+
+let rec get_tops v = function
+  | []        -> [], []
+  | (_,r)::tl ->
+    let ds, ts = get_tops v tl in
+    if compare_versions v r.ET.v = 0 then begin
+      if r.ET.n = [] then objs_union r.ET.o ds, ts else
+      let tops = rev_objs_of_names v [] r.ET.n in
+      ds, objs_union (List.rev tops) ts
+    end else
+      ds, ts
+
 let new_status = {
   ET.r = []; ET.s = []; ET.t = []; ET.w = [];
 }
@@ -129,13 +156,13 @@ let new_status = {
 let pointer_of_string = version_of_string
 
 let string_of_error = function
-  | ET.EExt x        ->
+  | ET.EWrongExt x   ->
     Printf.sprintf "unknown input file type %S" x
   | ET.EStage v      ->
     Printf.sprintf "current stage %S" (string_of_version v)
   | ET.ENoStage      ->
     Printf.sprintf "current stage not defined"
-  | ET.ENews         ->
+  | ET.EWaiting      ->
     Printf.sprintf "current stage not finished"
   | ET.ENameClash n  ->
     Printf.sprintf "name clash %S" (string_of_name n)
@@ -149,3 +176,5 @@ let string_of_error = function
     Printf.sprintf "selected role is not unique"
   | ET.EWrongVersion ->
     Printf.sprintf "selected role is not in the current stage"
+  | ET.ETops         ->
+    Printf.sprintf "top objects already computed"

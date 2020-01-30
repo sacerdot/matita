@@ -18,11 +18,15 @@ let help_C = "<dir>  Set this working directory (default: current directory)"
 let help_L = " Debug osn lexer"
 let help_X = " Reset all options to defaults"
 let help_a = " Add selected names to a role"
+let help_o = "<version>  Add top objects for this stage"
 let help_r = " Load current status"
 let help_s = "<version>  Start a stage with this version"
 let help_t = "<pointer>  Toggle the selection of this pointed entry"
 let help_w = " Save current status"
-let help   = "Usage: roles [ -LXarw | -C <dir> | -s <version> | -t <pointer> | <file> ]*"
+let help   = "Usage: roles [ -LXarw | -C <dir> | -os <version> | -t <pointer> | <file> ]*"
+
+let add_tops s =
+  EE.add_tops (EU.version_of_string s)
 
 let new_stage s =
   EE.new_stage (EU.version_of_string s)
@@ -33,7 +37,7 @@ let toggle_entry s =
 let process s =
   match Filename.extension s with
   | ".txt" -> EE.read_waiting s
-  | x      -> EU.raise_error (ET.EExt x)
+  | x      -> EU.raise_error (ET.EWrongExt x)
 
 let _main = try
   Arg.parse [
@@ -41,6 +45,7 @@ let _main = try
     "-L", Arg.Set EG.debug_lexer, help_L;
     "-X", Arg.Unit EG.clear, help_X;
     "-a", Arg.Unit EE.add_role, help_a;
+    "-o", Arg.String add_tops, help_o;
     "-r", Arg.Unit EE.read_status, help_r;
     "-s", Arg.String new_stage, help_s;
     "-t", Arg.String toggle_entry, help_t;

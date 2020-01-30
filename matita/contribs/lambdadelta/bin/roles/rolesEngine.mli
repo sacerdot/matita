@@ -15,6 +15,8 @@ val toggle_entry: RolesTypes.pointer -> unit
 
 val add_role: unit -> unit
 
+val add_tops: RolesTypes.version -> unit
+
 val read_waiting: string -> unit
 
 val read_status: unit -> unit
