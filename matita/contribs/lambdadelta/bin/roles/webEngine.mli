@@ -9,19 +9,4 @@
      \ /   This software is distributed as is, NO WARRANTY.
       V_______________________________________________________________ *)
 
-let default_base_url = "http://helm.cs.unibo.it/lambdadelta/"
-
-let default_wd = ""
-
-let default_debug_lexer = false
-
-let base_url = ref default_base_url
-
-let wd = ref default_wd
-
-let debug_lexer = ref default_debug_lexer
-
-let clear () =
-  base_url := default_base_url;
-  wd := default_wd;
-  debug_lexer := default_debug_lexer
+val init: unit -> unit

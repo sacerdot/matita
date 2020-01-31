@@ -9,6 +9,8 @@
      \ /   This software is distributed as is, NO WARRANTY.
       V_______________________________________________________________ *)
 
+val base_url: string ref
+
 val wd: string ref
 
 val debug_lexer: bool ref
