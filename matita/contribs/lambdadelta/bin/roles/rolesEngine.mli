@@ -26,3 +26,8 @@ val read_status: unit -> unit
 val write_status: unit -> unit
 
 val print_status: unit -> unit
+
+val visit_status:
+  (string -> string -> unit) -> (string -> bool -> string -> unit) -> (unit -> unit) ->
+  (string -> string -> unit) -> (string -> bool -> string -> unit) -> (unit -> unit) ->
+  unit

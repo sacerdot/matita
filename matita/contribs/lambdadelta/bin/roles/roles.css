@@ -1,0 +1,57 @@
+@charset "UTF-8";
+
+/* anchors ******************************************************************/
+
+a:link {
+  text-decoration: initial;
+  color: inherit;
+}
+
+/* visited link */
+a:visited {
+  text-decoration: initial;
+  color: inherit;
+}
+
+/* mouse over link */
+a:hover {
+  text-decoration: underline;
+  color: inherit;
+}
+
+/* selected link */
+a:active {
+  text-decoration: underline;
+  color: inherit;
+}
+
+/* layouts ******************************************************************/
+
+.atoms-head {
+}
+
+.count {
+}
+
+.atoms {
+  overflow-x: auto;
+  border-bottom: 0.5em solid white;
+}
+
+.atom {
+  padding: 0.25em 0.5em;
+}
+
+.selected {
+  border: 1pt dotted;
+}
+
+/* colors *******************************************************************/
+
+.object {
+  color: skyblue;
+}
+
+.name {
+  color: darkseagreen;
+}

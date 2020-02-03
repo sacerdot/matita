@@ -74,6 +74,10 @@ let rec list_exists compare = function
     if b <= 0 then b = 0 else
     list_exists compare tl
 
+let rec list_count s c = function
+  | []         -> s, c
+  | (b, _)::tl -> list_count (s + if b then 1 else 0) (succ c) tl
+
 let string_of_version v =
   String.concat "." (List.map string_of_int v)
 
@@ -163,7 +167,23 @@ let new_status = {
   ET.r = []; ET.s = []; ET.t = []; ET.w = [];
 }
 
+let string_of_pointer = string_of_version 
+
 let pointer_of_string = version_of_string
+
+let list_visit before each after string_of p l =
+  let ptr p = string_of_pointer (List.rev p) in
+  let rec aux i = function
+    | []         -> ()
+    | (b, x)::tl ->
+      each (ptr (i::p)) b (string_of x);
+      aux (succ i) tl
+  in
+  let s, c = list_count 0 0 l in
+  let count = Printf.sprintf "%u/%u" s c in
+  before (ptr p) count;
+  aux 0 l;
+  after ()
 
 let string_of_error = function
   | ET.EWrongExt x   ->

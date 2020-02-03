@@ -21,6 +21,10 @@ val list_split: (bool * 'b) list -> (bool * 'b) list * (bool * 'b) list
 
 val list_select: 'b option -> (bool * 'b) list -> 'b option
 
+val list_visit:
+  (string -> string -> unit) -> (string -> bool -> string -> unit) -> (unit -> unit) ->
+  ('a -> string) -> RolesTypes.pointer -> (bool * 'a) list -> unit
+
 val string_of_version: RolesTypes.version -> string
 
 val version_of_string: string -> RolesTypes.version

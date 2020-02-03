@@ -5,6 +5,9 @@ REQUIRES =
 include ../Makefile.common
 
 test:
-#	@$(MAKE) --no-print-directory -C ../../ www
+	@./roles.native -C ../.. -r -W > roles.html
 
-.PHONY: test
+up-css:
+	@scp roles.css lahar.helm.cs.unibo.it:/projects/helm/public_html/lambdadelta/css/
+
+.PHONY: test up-css

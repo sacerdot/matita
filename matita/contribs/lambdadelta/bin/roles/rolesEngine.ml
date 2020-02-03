@@ -102,3 +102,7 @@ let write_status () =
 
 let print_status () =
   EO.out_status stdout st
+
+let visit_status before_t each_t after_t before_w each_w after_w =
+  EU.list_visit before_t each_t after_t EU.string_of_obj [1] st.ET.t;
+  EU.list_visit before_w each_w after_w EU.string_of_name [2] st.ET.w

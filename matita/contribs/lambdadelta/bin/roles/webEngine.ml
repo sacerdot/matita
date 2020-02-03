@@ -53,6 +53,31 @@ let open_out () =
 let close_out () =
   close_out_html ()
 
+let status_out () =
+  let before_atoms a p count =
+    let c, str =
+      if a then "object", "objects"
+      else "name", "names"
+    in
+    KP.printf "<div class=\"atoms-head %s\">\n" c;
+    KP.printf "<a href=\"\">%s:</a>\n" str;
+    KP.printf "<span class=\"count\">%s</span>\n" count;
+    KP.printf "</div>\n";
+    KP.printf "<div class=\"atoms\"><table><tr>\n"
+  in
+  let each_atom a p b str =
+    let c = if a then "object" else "name" in
+    let s = if b then " selected" else "" in
+    KP.printf "<td class=\"atom %s%s\"><a href=\"\">%s</a></td>\n" c s str
+  in
+  let after_atoms () =
+    KP.printf "</tr></table></div>\n"
+  in
+  EE.visit_status
+    (before_atoms true) (each_atom true) after_atoms
+    (before_atoms false) (each_atom false) after_atoms
+
 let init () =
   open_out ();
+  status_out ();
   close_out ()
