@@ -167,16 +167,17 @@ let new_status = {
   ET.r = []; ET.s = []; ET.t = []; ET.w = [];
 }
 
-let string_of_pointer = string_of_version 
+let string_of_pointer = string_of_version
 
 let pointer_of_string = version_of_string
 
-let list_visit before each after string_of p l =
+let list_visit before each visit after string_of p l =
   let ptr p = string_of_pointer (List.rev p) in
   let rec aux i = function
     | []         -> ()
     | (b, x)::tl ->
       each (ptr (i::p)) b (string_of x);
+      visit (i::p) x;
       aux (succ i) tl
   in
   let s, c = list_count 0 0 l in
@@ -186,25 +187,27 @@ let list_visit before each after string_of p l =
   after ()
 
 let string_of_error = function
-  | ET.EWrongExt x   ->
+  | ET.EWrongExt x         ->
     Printf.sprintf "unknown input file type %S" x
-  | ET.EStage v      ->
+  | ET.EStage v            ->
     Printf.sprintf "current stage %S" (string_of_version v)
-  | ET.ENoStage      ->
+  | ET.ENoStage            ->
     Printf.sprintf "current stage not defined"
-  | ET.EWaiting      ->
+  | ET.EWaiting            ->
     Printf.sprintf "current stage not finished"
-  | ET.ENameClash n  ->
+  | ET.ENameClash n        ->
     Printf.sprintf "name clash %S" (string_of_name n)
-  | ET.EObjClash o   ->
+  | ET.EObjClash o         ->
     Printf.sprintf "object clash %S" (string_of_obj o)
-  | ET.ERoleClash r  ->
+  | ET.ERoleClash r        ->
     Printf.sprintf "role clash %S" (string_of_role r)
-  | ET.ENoEntry      ->
+  | ET.ENoEntry            ->
     Printf.sprintf "entry not found"
-  | ET.EWrongSelect  ->
+  | ET.EWrongSelect        ->
     Printf.sprintf "selected role is not unique"
-  | ET.EWrongVersion ->
+  | ET.EWrongVersion       ->
     Printf.sprintf "selected role is not in the current stage"
-  | ET.ETops         ->
+  | ET.ETops               ->
     Printf.sprintf "top objects already computed"
+  | ET.EWrongRequest (r,a) ->
+    Printf.sprintf "unknown request \"%s=%s\"" r a

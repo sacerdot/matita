@@ -79,13 +79,14 @@ let rec add_matching () =
 let read_waiting fname =
   if st.ET.s = [] then EU.raise_error ET.ENoStage else
   let ich = Scanf.Scanning.open_in fname in
-  let w = EI.read_rev_names ich [] in
+  let ws = EI.read_rev_names ich [] in
   Scanf.Scanning.close_in ich;
-  st.ET.w <- EU.names_union (List.rev w) st.ET.w
+  let map ws w = EU.names_union ws [w] in
+  st.ET.w <- List.fold_left map st.ET.w ws
 
 let read_status () =
   if st.ET.s <> [] then EU.raise_error (ET.EStage st.ET.s) else
-  let fname = Filename.concat !EG.wd "roles.osn" in
+  let fname = Filename.concat !EG.cwd "roles.osn" in
   let ich = open_in fname in
   let tmp = EI.read_status ich in
   close_in ich;
@@ -95,7 +96,7 @@ let read_status () =
   st.ET.w <- tmp.ET.w
 
 let write_status () =
-  let fname = Filename.concat !EG.wd "roles.osn" in
+  let fname = Filename.concat !EG.cwd "roles.osn" in
   let och = open_out fname in
   EO.out_status och st;
   close_out och
@@ -103,6 +104,17 @@ let write_status () =
 let print_status () =
   EO.out_status stdout st
 
-let visit_status before_t each_t after_t before_w each_w after_w =
-  EU.list_visit before_t each_t after_t EU.string_of_obj [1] st.ET.t;
-  EU.list_visit before_w each_w after_w EU.string_of_name [2] st.ET.w
+let visit_status
+  before_r each_r before after after_r stage
+  before_t each_t after_t before_w each_w after_w =
+  let visit_tw _ _ = () in
+  let visit_r p r =
+    before (EU.string_of_pointer (List.rev p));
+    EU.list_visit before_t each_t visit_tw after_t EU.string_of_obj (1::p) r.ET.o;
+    EU.list_visit before_w each_w visit_tw after_w EU.string_of_name (2::p) r.ET.n;
+    after ()
+  in
+  EU.list_visit before_r each_r visit_r after_r EU.string_of_role [0] st.ET.r;
+  stage (EU.string_of_version st.ET.s);
+  EU.list_visit before_t each_t visit_tw after_t EU.string_of_obj [1] st.ET.t;
+  EU.list_visit before_w each_w visit_tw after_w EU.string_of_name [2] st.ET.w

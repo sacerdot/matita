@@ -47,5 +47,6 @@ type error = EWrongExt of string
            | EWrongSelect
            | EWrongVersion
            | ETops
+           | EWrongRequest of string * string
 
 exception Error of error

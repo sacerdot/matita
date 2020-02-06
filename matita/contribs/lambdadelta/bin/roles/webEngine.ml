@@ -11,73 +11,117 @@
 
 module KP = Printf
 
-module EG = RolesGlobal
 module EE = RolesEngine
+module EG = RolesGlobal
+module ET = RolesTypes
+module EU = RolesUtils
+module WS = WebLWS
 
-let open_out_html author description title css icon =
-(*
-  YW.open_out "application/xhtml+xml" 0;
-*)
-  KP.printf "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-  KP.printf "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n";
-  KP.printf "<html xmlns=\"http://www.w3.org/1999/xhtml\" dir=\"ltr\" lang=\"en-us\">\n";
-  KP.printf "<head>\n";
-  KP.printf "  <meta http-equiv=\"Pragma\" content=\"no-cache\"/>\n";
-  KP.printf "  <meta http-equiv=\"Expires\" content=\"-1\"/>\n";
-  KP.printf "  <meta http-equiv=\"CACHE-CONTROL\" content=\"NO-CACHE\"/>\n";
-  KP.printf "  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"/>\n";
-  KP.printf "  <meta http-equiv=\"Content-Language\" content=\"en-us\"/>\n";
-  KP.printf "  <meta http-equiv=\"Content-Style-Type\" content=\"text/css\"/>\n";  
-  KP.printf "  <meta name=\"author\" content=\"%s\"/>\n" author;
-  KP.printf "  <meta name=\"description\" content=\"%s\"/>\n" description;
-  KP.printf "  <title>%s</title>" title;
-  KP.printf "  <link rel=\"stylesheet\" type=\"text/css\" href=\"%s\"/>\n" css;
-  KP.printf "  <link rel=\"shortcut icon\" href=\"%s\"/>\n" icon;
-  KP.printf "</head>\n";
-  KP.printf "<body lang=\"en-US\">\n"
+let error = ref ""
 
-let close_out_html () =
-  KP.printf "</body>\n";
-  KP.printf "</html>\n"
-(*
-  YW.close_out ()
-*)
 let open_out () =
   let author = "λδ development binary: roles manager" in
   let description = "λδ development binary: roles manager" in
   let title = "Roles Manager" in
   let css = Filename.concat !EG.base_url "css/roles.css" in
   let icon = Filename.concat !EG.base_url "images/crux_32.ico" in
-  open_out_html author description title css icon
+  WS.open_out_html author description title css icon
 
 let close_out () =
-  close_out_html ()
+  WS.close_out_html ()
+
+let string_of_request req arg =
+  WS.string_of_request "roles" (["system-"^req, arg], "")
 
 let status_out () =
+  let button_specs = [
+    "default", "Refresh";
+    "save", "Save";
+    "add", "Add";
+    "match", "Match";
+    "remove", "Remove";
+  ] in
+  let each_button (action, str) =
+    let req = string_of_request action "" in 
+    KP.printf "<span class=\"button\"><a href=\"%s\">%s</a></span>\n" req str
+  in
+  let before_roles p count =
+    let req = string_of_request "toggle" p in
+    KP.printf "<div class=\"roles-head role-color\">\n";
+    KP.printf "<a href=\"%s\">Roles:</a>\n" req;
+    KP.printf "<span class=\"count\">%s</span>\n" count
+  in
+  let each_role p b str =
+    let req = string_of_request "toggle" p in
+    let s = if b then " selected" else "" in
+    KP.printf "<div class=\"role role-color%s\">" s;
+    KP.printf "<a href=\"#%s\">⮞</a> " p;
+    KP.printf "<a href=\"%s\">%s</a>" req str;
+    KP.printf "</div>\n"
+  in
+  let before_role p =
+    KP.printf "<div id=\"%s\" class=\"roles\">\n" p;
+  in
+  let after_role () =
+    KP.printf "</div>\n"
+  in
+  let after_roles () =
+    KP.printf "</div>\n";
+    KP.printf "<div class=\"buttons\">\n";
+    List.iter each_button button_specs;
+    KP.printf "</div>\n"
+  in
+  let stage s =
+    KP.printf "<div class=\"stage role-color\">";
+    KP.printf "Stage: %s" s;
+    KP.printf "</div>\n"
+  in
   let before_atoms a p count =
     let c, str =
-      if a then "object", "objects"
-      else "name", "names"
+      if a then "object-color", "objects"
+      else "name-color", "names"
     in
+    let req = string_of_request "toggle" p in
     KP.printf "<div class=\"atoms-head %s\">\n" c;
-    KP.printf "<a href=\"\">%s:</a>\n" str;
+    KP.printf "<a href=\"%s\">%s:</a>\n" req str;
     KP.printf "<span class=\"count\">%s</span>\n" count;
     KP.printf "</div>\n";
-    KP.printf "<div class=\"atoms\"><table><tr>\n"
+    KP.printf "<div class=\"atoms\"><table class=\"atoms-table\"><tr>\n"
   in
   let each_atom a p b str =
-    let c = if a then "object" else "name" in
+    let c = if a then "object-color" else "name-color" in
     let s = if b then " selected" else "" in
-    KP.printf "<td class=\"atom %s%s\"><a href=\"\">%s</a></td>\n" c s str
+    let req = string_of_request "toggle" p in
+    KP.printf "<td class=\"atom %s%s\"><a href=\"%s\">%s</a></td>\n" c s req str
   in
   let after_atoms () =
     KP.printf "</tr></table></div>\n"
   in
+  KP.printf "<div class=\"head\">Role Manager</div>\n";
   EE.visit_status
+    before_roles each_role before_role after_role after_roles stage
     (before_atoms true) (each_atom true) after_atoms
-    (before_atoms false) (each_atom false) after_atoms
+    (before_atoms false) (each_atom false) after_atoms;
+  if !error <> "" then
+    KP.printf "<div class=\"error error-color\">Error: %s</div>\n" !error
 
-let init () =
+let handler opt arg () =
+  begin try match opt with
+  | "system-default" -> ()
+  | "system-add"     -> EE.add_role ()
+  | "system-remove"  -> ()
+  | "system-match"   -> EE.add_matching ()
+  | "system-toggle"  -> EE.toggle_entry (EU.pointer_of_string arg)
+  | "system-save"    -> EE.write_status ()
+  | _                -> EU.raise_error (ET.EWrongRequest (opt, arg))
+  with
+  | ET.Error e -> error := EU.string_of_error e
+  | e          -> error := Printexc.to_string e 
+  end;
   open_out ();
   status_out ();
-  close_out ()
+  close_out ();
+  error := ""
+
+let init () =
+  WS.loop_in ignore handler ignore ()

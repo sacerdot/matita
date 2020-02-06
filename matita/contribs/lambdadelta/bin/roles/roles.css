@@ -25,12 +25,67 @@ a:active {
   color: inherit;
 }
 
-/* layouts ******************************************************************/
+/* headings layouts *********************************************************/
+
+.head {
+  font-size: 2em;
+  font-weight: bold;
+  margin: 0.67em 0;
+  text-align: center;
+}
+
+.error {
+  margin-top: 1em;
+}
+
+/* button layouts ***********************************************************/
+
+.buttons {
+  padding-bottom: 1em;
+/*  border-bottom: 1px solid black; */
+  margin: 1em 0;
+}
+
+.button {
+  padding: 0.25em 0.5em;
+  border: 1px solid black;
+  margin-right: 1em;
+}
+
+/* status layouts ***********************************************************/
+
+.stage {
+  padding-bottom: 0.75em;
+}
+
+.roles-head {
+  height: 36ex;
+  overflow-y: auto;
+  padding: 1em 0;
+  margin-bottom: 1em;
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+}
+
+.role {
+  margin: 0.5em 0.5em;
+  padding: 0.25em 0.25em;
+}
+
+.roles {
+  display: none;
+  border-left: 2em solid white;
+}
+
+.roles:target {
+  display: block;
+}
 
 .atoms-head {
 }
 
-.count {
+.atoms-table {
+  border-spacing: 0.25em;
 }
 
 .atoms {
@@ -39,19 +94,30 @@ a:active {
 }
 
 .atom {
-  padding: 0.25em 0.5em;
+  padding: 0.25em 0.25em;
+}
+
+.count {
 }
 
 .selected {
-  border: 1pt dotted;
+  border: 1pt solid;
 }
 
 /* colors *******************************************************************/
 
-.object {
-  color: skyblue;
+.role-color {
+  color: darkviolet;
 }
 
-.name {
-  color: darkseagreen;
+.object-color {
+  color: deepskyblue;
+}
+
+.name-color {
+  color: seagreen;
+}
+
+.error-color {
+  color: red;
 }

@@ -11,7 +11,7 @@
 
 val base_url: string ref
 
-val wd: string ref
+val cwd: string ref
 
 val debug_lexer: bool ref
 

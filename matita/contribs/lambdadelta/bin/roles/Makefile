@@ -5,7 +5,7 @@ REQUIRES =
 include ../Makefile.common
 
 test:
-	@./roles.native -C ../.. -r -W > roles.html
+	@./roles.native -C ../.. -r -p
 
 up-css:
 	@scp roles.css lahar.helm.cs.unibo.it:/projects/helm/public_html/lambdadelta/css/

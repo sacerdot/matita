@@ -22,7 +22,8 @@ val list_split: (bool * 'b) list -> (bool * 'b) list * (bool * 'b) list
 val list_select: 'b option -> (bool * 'b) list -> 'b option
 
 val list_visit:
-  (string -> string -> unit) -> (string -> bool -> string -> unit) -> (unit -> unit) ->
+  (string -> string -> unit) -> (string -> bool -> string -> unit) ->
+  (RolesTypes.pointer -> 'a -> unit) -> (unit -> unit) ->
   ('a -> string) -> RolesTypes.pointer -> (bool * 'a) list -> unit
 
 val string_of_version: RolesTypes.version -> string
@@ -41,6 +42,8 @@ val obj_of_string: string -> RolesTypes.obj
 
 val objs_union: RolesTypes.objs -> RolesTypes.objs -> RolesTypes.objs
 
+val string_of_role: RolesTypes.role -> string
+
 val roles_union: RolesTypes.roles -> RolesTypes.roles -> RolesTypes.roles
 
 val exists_role_deleted: RolesTypes.version -> RolesTypes.roles -> bool
@@ -50,6 +53,8 @@ val get_tops: RolesTypes.version -> RolesTypes.roles -> RolesTypes.objs * RolesT
 val match_names: int -> int -> RolesTypes.objs -> RolesTypes.names -> (int * int) option
 
 val new_status: RolesTypes.status
+
+val string_of_pointer: RolesTypes.pointer -> string
 
 val pointer_of_string: string -> RolesTypes.pointer
 

@@ -9,19 +9,18 @@
      \ /   This software is distributed as is, NO WARRANTY.
       V_______________________________________________________________ *)
 
-let default_base_url = "http://helm.cs.unibo.it/lambdadelta/"
+type request = (string * string) list * string
 
-let default_cwd = Filename.dirname Sys.argv.(0)
+val open_out: string -> int -> unit
 
-let default_debug_lexer = false
+val close_out: unit -> unit
 
-let base_url = ref default_base_url
+val loop_in: ('a -> 'a) -> (string -> string -> 'a -> 'a) -> ('a -> 'a) -> 'a -> 'a
 
-let cwd = ref default_cwd
+val string_of_request: string -> request -> string
 
-let debug_lexer = ref default_debug_lexer
+val control_input: string -> unit
 
-let clear () =
-  base_url := default_base_url;
-  cwd := default_cwd;
-  debug_lexer := default_debug_lexer
+val open_out_html: string -> string -> string -> string -> string -> unit
+
+val close_out_html: unit -> unit
