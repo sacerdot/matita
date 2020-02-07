@@ -164,7 +164,7 @@ let rec match_names oi ni os ns =
     Some (oi, ni)
 
 let new_status = {
-  ET.r = []; ET.s = []; ET.t = []; ET.w = [];
+  ET.m = false; ET.r = []; ET.s = []; ET.t = []; ET.w = [];
 }
 
 let string_of_pointer = string_of_version

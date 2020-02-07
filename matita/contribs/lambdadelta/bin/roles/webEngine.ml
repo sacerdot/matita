@@ -46,21 +46,21 @@ let status_out () =
     KP.printf "<span class=\"button\"><a href=\"%s\">%s</a></span>\n" req str
   in
   let before_roles p count =
-    let req = string_of_request "toggle" p in
+    let req = string_of_request "select" p in
     KP.printf "<div class=\"roles-head role-color\">\n";
     KP.printf "<a href=\"%s\">Roles:</a>\n" req;
     KP.printf "<span class=\"count\">%s</span>\n" count
   in
   let each_role p b str =
-    let req = string_of_request "toggle" p in
+    let req = string_of_request "select" p in
     let s = if b then " selected" else "" in
     KP.printf "<div class=\"role role-color%s\">" s;
     KP.printf "<a href=\"#%s\">⮞</a> " p;
     KP.printf "<a href=\"%s\">%s</a>" req str;
     KP.printf "</div>\n"
   in
-  let before_role p =
-    KP.printf "<div id=\"%s\" class=\"roles\">\n" p;
+  let before_role () =
+    KP.printf "<div class=\"roles\">\n";
   in
   let after_role () =
     KP.printf "</div>\n"
@@ -71,9 +71,10 @@ let status_out () =
     List.iter each_button button_specs;
     KP.printf "</div>\n"
   in
-  let stage s =
+  let stage s m =
+    let msg_m = if m then " (modified)" else "" in
     KP.printf "<div class=\"stage role-color\">";
-    KP.printf "Stage: %s" s;
+    KP.printf "Stage: %s%s" s msg_m;
     KP.printf "</div>\n"
   in
   let before_atoms a p count =
@@ -81,7 +82,7 @@ let status_out () =
       if a then "object-color", "objects"
       else "name-color", "names"
     in
-    let req = string_of_request "toggle" p in
+    let req = string_of_request "select" p in
     KP.printf "<div class=\"atoms-head %s\">\n" c;
     KP.printf "<a href=\"%s\">%s:</a>\n" req str;
     KP.printf "<span class=\"count\">%s</span>\n" count;
@@ -91,7 +92,7 @@ let status_out () =
   let each_atom a p b str =
     let c = if a then "object-color" else "name-color" in
     let s = if b then " selected" else "" in
-    let req = string_of_request "toggle" p in
+    let req = string_of_request "select" p in
     KP.printf "<td class=\"atom %s%s\"><a href=\"%s\">%s</a></td>\n" c s req str
   in
   let after_atoms () =
@@ -111,7 +112,7 @@ let handler opt arg () =
   | "system-add"     -> EE.add_role ()
   | "system-remove"  -> ()
   | "system-match"   -> EE.add_matching ()
-  | "system-toggle"  -> EE.toggle_entry (EU.pointer_of_string arg)
+  | "system-select"  -> EE.select_entry (EU.pointer_of_string arg)
   | "system-save"    -> EE.write_status ()
   | _                -> EU.raise_error (ET.EWrongRequest (opt, arg))
   with

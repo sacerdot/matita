@@ -20,6 +20,7 @@ type obj = version * name
 type objs = (bool*obj) list
 
 type role = {
+  mutable x: bool;
   mutable v: version;
   mutable o: objs;
   mutable n: names;
@@ -28,6 +29,7 @@ type role = {
 type roles = (bool*role) list
 
 type status = {
+  mutable m: bool;
   mutable r: roles;
   mutable s: version;
   mutable t: objs;

@@ -11,7 +11,7 @@
 
 val new_stage: RolesTypes.version -> unit
 
-val toggle_entry: RolesTypes.pointer -> unit
+val select_entry: RolesTypes.pointer -> unit
 
 val add_role: unit -> unit
 
@@ -29,7 +29,7 @@ val print_status: unit -> unit
 
 val visit_status:
   (string -> string -> unit) -> (string -> bool -> string -> unit) ->
-  (string -> unit) -> (unit -> unit) -> (unit -> unit) -> (string -> unit) ->
+  (unit -> unit) -> (unit -> unit) -> (unit -> unit) -> (string -> bool -> unit) ->
   (string -> string -> unit) -> (string -> bool -> string -> unit) -> (unit -> unit) ->
   (string -> string -> unit) -> (string -> bool -> string -> unit) -> (unit -> unit) ->
   unit

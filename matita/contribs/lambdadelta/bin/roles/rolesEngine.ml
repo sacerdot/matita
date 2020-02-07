@@ -18,10 +18,13 @@ module ET = RolesTypes
 let st = EU.new_status
 
 let new_stage v =
-  if st.ET.w = [] then st.ET.s <- v
-  else EU.raise_error ET.EWaiting
+  if st.ET.w = [] then begin
+    if EU.compare_versions st.ET.s v <> 0 then begin
+      st.ET.s <- v; st.ET.m <- true
+    end
+  end else EU.raise_error ET.EWaiting
 
-let toggle_entry = function
+let select_entry = function
   | [0]       -> st.ET.r <- EU.list_toggle_all st.ET.r
   | [0;m]     -> st.ET.r <- EU.list_toggle m st.ET.r
   | [0;m;1]   ->
@@ -48,31 +51,32 @@ let add_role () =
   if os = [] && ns = [] then () else
   begin match EU.list_select None st.ET.r with
   | None   ->
-    let r = {ET.v = st.ET.s; ET.o = os; ET.n = ns} in
+    let r = {ET.x = false; ET.v = st.ET.s; ET.o = os; ET.n = ns} in
     st.ET.r <- EU.roles_union [false, r] st.ET.r
   | Some r ->
     if r.ET.v <> st.ET.s then EU.raise_error ET.EWrongVersion else
     r.ET.o <- EU.objs_union os r.ET.o;
     r.ET.n <- EU.names_union ns r.ET.n;
   end;
-  st.ET.t <- ts; st.ET.w <- ws
+  st.ET.t <- ts; st.ET.w <- ws; st.ET.m <- true
 
 let add_tops v =
   if EU.exists_role_deleted st.ET.s st.ET.r || st.ET.t <> []
   then EU.raise_error ET.ETops else
   let ds, ts = EU.get_tops v st.ET.r in
   if ds <> [] then begin
-    let r = {ET.v = st.ET.s; ET.o = ds; ET.n = []} in
+    let r = {ET.x = false; ET.v = st.ET.s; ET.o = ds; ET.n = []} in
     st.ET.r <- EU.roles_union [false, r] st.ET.r
   end;
-  if ts <> [] then st.ET.t <- ts
+  if ts <> [] then st.ET.t <- ts;
+  if ds <> [] || ts <> [] then st.ET.m <- true
 
 let rec add_matching () =
   match EU.match_names 0 0 st.ET.t st.ET.w with
   | None          -> ()
   | Some  (ti,wi) ->
-    toggle_entry [1;ti];
-    toggle_entry [2;wi];
+    select_entry [1;ti];
+    select_entry [2;wi];
     add_role ();
     add_matching ()
 
@@ -82,7 +86,8 @@ let read_waiting fname =
   let ws = EI.read_rev_names ich [] in
   Scanf.Scanning.close_in ich;
   let map ws w = EU.names_union ws [w] in
-  st.ET.w <- List.fold_left map st.ET.w ws
+  st.ET.w <- List.fold_left map st.ET.w ws;
+  if ws <> [] then st.ET.m <- true
 
 let read_status () =
   if st.ET.s <> [] then EU.raise_error (ET.EStage st.ET.s) else
@@ -90,6 +95,7 @@ let read_status () =
   let ich = open_in fname in
   let tmp = EI.read_status ich in
   close_in ich;
+  st.ET.m <- tmp.ET.m;
   st.ET.r <- tmp.ET.r;
   st.ET.s <- tmp.ET.s;
   st.ET.t <- tmp.ET.t;
@@ -99,7 +105,8 @@ let write_status () =
   let fname = Filename.concat !EG.cwd "roles.osn" in
   let och = open_out fname in
   EO.out_status och st;
-  close_out och
+  close_out och;
+  st.ET.m <- false
 
 let print_status () =
   EO.out_status stdout st
@@ -109,12 +116,14 @@ let visit_status
   before_t each_t after_t before_w each_w after_w =
   let visit_tw _ _ = () in
   let visit_r p r =
-    before (EU.string_of_pointer (List.rev p));
-    EU.list_visit before_t each_t visit_tw after_t EU.string_of_obj (1::p) r.ET.o;
-    EU.list_visit before_w each_w visit_tw after_w EU.string_of_name (2::p) r.ET.n;
-    after ()
+    if r.ET.x then begin
+      before ();
+      EU.list_visit before_t each_t visit_tw after_t EU.string_of_obj (1::p) r.ET.o;
+      EU.list_visit before_w each_w visit_tw after_w EU.string_of_name (2::p) r.ET.n;
+      after ()
+    end
   in
   EU.list_visit before_r each_r visit_r after_r EU.string_of_role [0] st.ET.r;
-  stage (EU.string_of_version st.ET.s);
+  stage (EU.string_of_version st.ET.s) st.ET.m;
   EU.list_visit before_t each_t visit_tw after_t EU.string_of_obj [1] st.ET.t;
   EU.list_visit before_w each_w visit_tw after_w EU.string_of_name [2] st.ET.w

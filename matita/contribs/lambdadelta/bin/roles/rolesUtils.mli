@@ -30,6 +30,8 @@ val string_of_version: RolesTypes.version -> string
 
 val version_of_string: string -> RolesTypes.version
 
+val compare_versions: RolesTypes.version -> RolesTypes.version -> int
+
 val string_of_name: RolesTypes.name -> string
 
 val name_of_string: string -> RolesTypes.name
