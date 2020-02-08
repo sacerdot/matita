@@ -13,13 +13,13 @@ val raise_error: RolesTypes.error -> 'a
 
 val list_nth: int -> ('a * 'b) list -> 'b
 
-val list_toggle: int -> (bool * 'b) list -> (bool * 'b) list
+val list_select: int -> (bool * 'b) list -> (bool * 'b) list
 
-val list_toggle_all: (bool * 'b) list -> (bool * 'b) list
+val list_select_all: (bool * 'b) list -> (bool * 'b) list
 
 val list_split: (bool * 'b) list -> (bool * 'b) list * (bool * 'b) list
 
-val list_select: 'b option -> (bool * 'b) list -> 'b option
+val list_find_selected: 'b option -> (bool * 'b) list -> 'b option
 
 val list_visit:
   (string -> string -> unit) -> (string -> bool -> string -> unit) ->
@@ -38,21 +38,29 @@ val name_of_string: string -> RolesTypes.name
 
 val names_union: RolesTypes.names -> RolesTypes.names -> RolesTypes.names
 
+val match_names: int -> int -> RolesTypes.objs -> RolesTypes.names -> (int * int) option
+
 val string_of_obj: RolesTypes.obj -> string
 
 val obj_of_string: string -> RolesTypes.obj
 
 val objs_union: RolesTypes.objs -> RolesTypes.objs -> RolesTypes.objs
 
+val get_tops: RolesTypes.version -> RolesTypes.roles -> RolesTypes.objs * RolesTypes.objs
+
 val string_of_role: RolesTypes.role -> string
 
 val roles_union: RolesTypes.roles -> RolesTypes.roles -> RolesTypes.roles
 
+val roles_expand_all: RolesTypes.roles -> unit
+
+val roles_expand: int -> RolesTypes.roles -> unit
+
 val exists_role_deleted: RolesTypes.version -> RolesTypes.roles -> bool
 
-val get_tops: RolesTypes.version -> RolesTypes.roles -> RolesTypes.objs * RolesTypes.objs
-
-val match_names: int -> int -> RolesTypes.objs -> RolesTypes.names -> (int * int) option
+val roles_split:
+  RolesTypes.version -> RolesTypes.roles ->
+  RolesTypes.roles * RolesTypes.objs * RolesTypes.names
 
 val new_status: RolesTypes.status
 

@@ -52,11 +52,12 @@ let status_out () =
     KP.printf "<span class=\"count\">%s</span>\n" count
   in
   let each_role p b str =
-    let req = string_of_request "select" p in
+    let req_x = string_of_request "expand" p in
+    let req_s = string_of_request "select" p in
     let s = if b then " selected" else "" in
     KP.printf "<div class=\"role role-color%s\">" s;
-    KP.printf "<a href=\"#%s\">⮞</a> " p;
-    KP.printf "<a href=\"%s\">%s</a>" req str;
+    KP.printf "<a href=\"%s\">⮞</a> " req_x;
+    KP.printf "<a href=\"%s\">%s</a>" req_s str;
     KP.printf "</div>\n"
   in
   let before_role () =
@@ -110,10 +111,11 @@ let handler opt arg () =
   begin try match opt with
   | "system-default" -> ()
   | "system-add"     -> EE.add_role ()
-  | "system-remove"  -> ()
+  | "system-remove"  -> EE.remove_roles ()
   | "system-match"   -> EE.add_matching ()
   | "system-select"  -> EE.select_entry (EU.pointer_of_string arg)
   | "system-save"    -> EE.write_status ()
+  | "system-expand"  -> EE.expand_entry (EU.pointer_of_string arg)
   | _                -> EU.raise_error (ET.EWrongRequest (opt, arg))
   with
   | ET.Error e -> error := EU.string_of_error e

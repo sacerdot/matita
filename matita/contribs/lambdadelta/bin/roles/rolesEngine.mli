@@ -13,11 +13,15 @@ val new_stage: RolesTypes.version -> unit
 
 val select_entry: RolesTypes.pointer -> unit
 
+val expand_entry: RolesTypes.pointer -> unit
+
 val add_role: unit -> unit
 
 val add_tops: RolesTypes.version -> unit
 
 val add_matching: unit -> unit
+
+val remove_roles: unit -> unit
 
 val read_waiting: string -> unit
 

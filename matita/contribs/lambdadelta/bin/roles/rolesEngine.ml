@@ -25,31 +25,36 @@ let new_stage v =
   end else EU.raise_error ET.EWaiting
 
 let select_entry = function
-  | [0]       -> st.ET.r <- EU.list_toggle_all st.ET.r
-  | [0;m]     -> st.ET.r <- EU.list_toggle m st.ET.r
+  | [0]       -> st.ET.r <- EU.list_select_all st.ET.r
+  | [0;m]     -> st.ET.r <- EU.list_select m st.ET.r
   | [0;m;1]   ->
     let r = EU.list_nth m st.ET.r in
-    r.ET.o <- EU.list_toggle_all r.ET.o
+    r.ET.o <- EU.list_select_all r.ET.o
   | [0;m;1;n] ->
     let r = EU.list_nth m st.ET.r in
-    r.ET.o <- EU.list_toggle n r.ET.o
+    r.ET.o <- EU.list_select n r.ET.o
   | [0;m;2]   ->
     let r = EU.list_nth m st.ET.r in
-    r.ET.n <- EU.list_toggle_all r.ET.n
+    r.ET.n <- EU.list_select_all r.ET.n
   | [0;m;2;n] ->
     let r = EU.list_nth m st.ET.r in
-    r.ET.n <- EU.list_toggle n r.ET.n
-  | [1]        -> st.ET.t <- EU.list_toggle_all st.ET.t
-  | [1;m]      -> st.ET.t <- EU.list_toggle m st.ET.t
-  | [2]        -> st.ET.w <- EU.list_toggle_all st.ET.w
-  | [2;m]      -> st.ET.w <- EU.list_toggle m st.ET.w
-  | _          -> EU.raise_error ET.ENoEntry
+    r.ET.n <- EU.list_select n r.ET.n
+  | [1]       -> st.ET.t <- EU.list_select_all st.ET.t
+  | [1;m]     -> st.ET.t <- EU.list_select m st.ET.t
+  | [2]       -> st.ET.w <- EU.list_select_all st.ET.w
+  | [2;m]     -> st.ET.w <- EU.list_select m st.ET.w
+  | _         -> EU.raise_error ET.ENoEntry
+
+let expand_entry = function
+  | [0]   -> EU.roles_expand_all st.ET.r
+  | [0;m] -> EU.roles_expand m st.ET.r
+  | _     -> EU.raise_error ET.ENoEntry
 
 let add_role () =
   let ts,os = EU.list_split st.ET.t in
   let ws,ns = EU.list_split st.ET.w in
   if os = [] && ns = [] then () else
-  begin match EU.list_select None st.ET.r with
+  begin match EU.list_find_selected None st.ET.r with
   | None   ->
     let r = {ET.x = false; ET.v = st.ET.s; ET.o = os; ET.n = ns} in
     st.ET.r <- EU.roles_union [false, r] st.ET.r
@@ -79,6 +84,14 @@ let rec add_matching () =
     select_entry [2;wi];
     add_role ();
     add_matching ()
+
+let remove_roles () =
+  let rs, os, ns = EU.roles_split st.ET.s st.ET.r in
+  if os = [] && ns = [] then () else begin
+    st.ET.t <- EU.objs_union os st.ET.t; 
+    st.ET.w <- EU.names_union ns st.ET.w; 
+    st.ET.r <- rs; st.ET.m <- true
+  end
 
 let read_waiting fname =
   if st.ET.s = [] then EU.raise_error ET.ENoStage else

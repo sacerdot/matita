@@ -43,13 +43,13 @@ let rec list_nth n = function
   | []         -> raise_error ET.ENoEntry
   | (_,hd)::tl -> if n = 0 then hd else list_nth (pred n) tl
 
-let rec list_toggle n = function
+let rec list_select n = function
   | []         -> raise_error ET.ENoEntry
-  | (b,hd)::tl -> if n = 0 then (not b,hd)::tl else (b,hd)::list_toggle (pred n) tl
+  | (b,hd)::tl -> if n = 0 then (not b,hd)::tl else (b,hd)::list_select (pred n) tl
 
-let rec list_toggle_all = function
+let rec list_select_all = function
   | []         -> []
-  | (b,hd)::tl -> (not b,hd)::list_toggle_all tl
+  | (b,hd)::tl -> (not b,hd)::list_select_all tl
 
 let rec list_split = function
   | []                -> [], []
@@ -58,12 +58,12 @@ let rec list_split = function
     if fst hd then fs,((false,a)::ts)
     else (hd::fs),ts
 
-let rec list_select r = function
+let rec list_find_selected r = function
   | []         -> r
   | (b,hd)::tl ->
     begin match b, r with
-    | false, _      -> list_select r tl
-    | true , None   -> list_select (Some hd) tl
+    | false, _      -> list_find_selected r tl
+    | true , None   -> list_find_selected (Some hd) tl
     | true , Some _ -> raise_error (ET.EWrongSelect)
     end
 
@@ -100,6 +100,16 @@ let names_union ns1 ns2 =
   let error n = ET.ENameClash n in
   list_union error compare_names ns1 ns2
 
+let rec match_names oi ni os ns =
+  match os, ns with
+  | _         , []        -> None
+  | []        , _         -> None
+  | (_,o)::otl,(_,n)::ntl ->
+    let b = compare_names (snd o) n in
+    if b > 0 then match_names oi (succ ni) os ntl else
+    if b < 0 then match_names (succ oi) ni otl ns else
+    Some (oi, ni)
+
 let string_of_obj (v,n) =
   Printf.sprintf "%s/%s" (string_of_version v) (string_of_name n)
 
@@ -120,6 +130,17 @@ let rec rev_objs_of_names v os = function
   | []        -> os
   | (b,n)::tl -> rev_objs_of_names v ((b,(v,n))::os) tl
 
+let rec get_tops v = function
+  | []        -> [], []
+  | (_,r)::tl ->
+    let ds, ts = get_tops v tl in
+    if compare_versions v r.ET.v = 0 then begin
+      if r.ET.n = [] then objs_union r.ET.o ds, ts else
+      let tops = rev_objs_of_names v [] r.ET.n in
+      ds, objs_union (List.rev tops) ts
+    end else
+      ds, ts
+
 let obj_of_role r =
   let n = match r.ET.n with
     | []        -> []
@@ -137,31 +158,35 @@ let roles_union rs1 rs2 =
   let error r = ET.ERoleClash r in
   list_union error compare_roles rs1 rs2
 
+let roles_expand_all rs =
+  let map (b, r) = r.ET.x <- not r.ET.x in
+  List.iter map rs
+
+let rec roles_expand n = function
+  | []        -> ()
+  | (_,r)::tl ->
+    if n = 0 then r.ET.x <- not r.ET.x else
+    roles_expand (pred n) tl
+
 let exists_role_deleted v r =
   let o = v, [] in
   let compare r = compare_objs o (obj_of_role r) in
   list_exists compare r
 
-let rec get_tops v = function
-  | []        -> [], []
-  | (_,r)::tl ->
-    let ds, ts = get_tops v tl in
-    if compare_versions v r.ET.v = 0 then begin
-      if r.ET.n = [] then objs_union r.ET.o ds, ts else
-      let tops = rev_objs_of_names v [] r.ET.n in
-      ds, objs_union (List.rev tops) ts
-    end else
-      ds, ts
-
-let rec match_names oi ni os ns =
-  match os, ns with
-  | _         , []        -> None
-  | []        , _         -> None
-  | (_,o)::otl,(_,n)::ntl ->
-    let b = compare_names (snd o) n in
-    if b > 0 then match_names oi (succ ni) os ntl else
-    if b < 0 then match_names (succ oi) ni otl ns else
-    Some (oi, ni)
+let roles_split s rs =
+  let rec aux rs os ns = function
+  | []           -> List.rev rs, os, ns
+  | (b, r) :: tl ->
+    if compare_versions s r.ET.v <> 0 then aux ((b, r)::rs) os ns tl else
+    if b then aux rs (objs_union os r.ET.o) (names_union ns r.ET.n) tl else
+    let ro, so = list_split r.ET.o in
+    let rn, sn = list_split r.ET.n in
+    if ro = [] && rn = [] then aux rs (objs_union os so) (names_union ns sn) tl else begin
+      r.ET.o <- ro; r.ET.o <- ro;
+      aux ((b, r)::rs) (objs_union os so) (names_union ns sn) tl
+    end
+  in
+  aux [] [] [] rs
 
 let new_status = {
   ET.m = false; ET.r = []; ET.s = []; ET.t = []; ET.w = [];

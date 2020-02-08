@@ -59,7 +59,7 @@ a:active {
 }
 
 .roles-head {
-  height: 36ex;
+  height: 25vh;
   overflow-y: auto;
   padding: 1em 0;
   margin-bottom: 1em;
@@ -73,12 +73,7 @@ a:active {
 }
 
 .roles {
-  display: none;
   border-left: 2em solid white;
-}
-
-.roles:target {
-  display: block;
 }
 
 .atoms-head {
