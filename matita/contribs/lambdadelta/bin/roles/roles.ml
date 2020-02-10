@@ -36,10 +36,10 @@ let change_cwd s =
   EG.cwd := Filename.concat !EG.cwd s
 
 let add_tops s =
-  EE.add_tops (EU.version_of_string s)
+  EE.add_tops (EU.stage_of_string s)
 
 let new_stage s =
-  EE.new_stage (EU.version_of_string s)
+  EE.new_stage (EU.stage_of_string s)
 
 let select_entry s =
   EE.select_entry (EU.pointer_of_string s)

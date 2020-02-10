@@ -20,10 +20,10 @@ let list_union error compare l1 l2 =
   | hd1::tl1 -> match l2 with
   | []       -> l1
   | hd2::tl2 ->
-    let b = compare (snd hd1) (snd hd2) in
+    let b = compare hd1 hd2 in
     if b > 0 then hd2 :: aux l1 tl2
     else if b < 0 then hd1 :: aux tl1 l2
-    else raise_error (error (snd hd1))
+    else raise_error (error hd1)
   in
   aux l1 l2
 
@@ -39,53 +39,36 @@ let list_compare compare l1 l2 =
   in
   aux l1 l2
 
-let rec list_nth n = function
-  | []         -> raise_error ET.ENoEntry
-  | (_,hd)::tl -> if n = 0 then hd else list_nth (pred n) tl
+let rec list_apply prop map n = function
+  | []       -> false
+  | hd :: tl ->
+    if prop n hd then begin map hd; true end
+    else list_apply prop map (succ n) tl
 
-let rec list_select n = function
-  | []         -> raise_error ET.ENoEntry
-  | (b,hd)::tl -> if n = 0 then (not b,hd)::tl else (b,hd)::list_select (pred n) tl
+let list_nth map n l =
+  let prop m _ = m = n in
+  if list_apply prop map 0 l then () else raise_error ET.ENoEntry
 
-let rec list_select_all = function
-  | []         -> []
-  | (b,hd)::tl -> (not b,hd)::list_select_all tl
+let list_split prop map l =
+  let lt, lf = List.partition prop l in
+  List.iter map lt; lf, lt
 
-let rec list_split = function
-  | []                -> [], []
-  | (b,a) as hd :: tl ->
-    let fs,ts = list_split tl in
-    if fst hd then fs,((false,a)::ts)
-    else (hd::fs),ts
+let rec list_count p s c = function
+  | []      -> s, c
+  | x :: tl -> list_count p (s + if p x then 1 else 0) (succ c) tl
 
-let rec list_find_selected r = function
-  | []         -> r
-  | (b,hd)::tl ->
-    begin match b, r with
-    | false, _      -> list_find_selected r tl
-    | true , None   -> list_find_selected (Some hd) tl
-    | true , Some _ -> raise_error (ET.EWrongSelect)
-    end
+(* stage *)
 
-let rec list_exists compare = function
-  | []        -> false
-  | (_,a)::tl ->
-    let b = compare a in
-    if b <= 0 then b = 0 else
-    list_exists compare tl
-
-let rec list_count s c = function
-  | []         -> s, c
-  | (b, _)::tl -> list_count (s + if b then 1 else 0) (succ c) tl
-
-let string_of_version v =
+let string_of_stage v =
   String.concat "." (List.map string_of_int v)
 
-let version_of_string s =
+let stage_of_string s =
   List.map int_of_string (String.split_on_char '.' s)
 
-let compare_versions v1 v2 =
+let stage_compare v1 v2 =
   list_compare compare v1 v2
+
+(* name *)
 
 let string_of_name n =
   String.concat "_" n
@@ -93,139 +76,163 @@ let string_of_name n =
 let name_of_string s =
   String.split_on_char '_' s
 
-let compare_names n1 n2 =
+let name_compare n1 n2 =
   list_compare compare n1 n2
 
-let names_union ns1 ns2 =
-  let error n = ET.ENameClash n in
-  list_union error compare_names ns1 ns2
+(* nobj *)
 
-let rec match_names oi ni os ns =
+let string_of_nobj n =
+  string_of_name n.ET.nn
+
+let nobj_of_string s = {
+  ET.nb = false; ET.nn = name_of_string s;
+}
+
+let nobj_selected n = n.ET.nb
+
+let nobj_select n =
+  n.ET.nb <- not n.ET.nb
+
+let nobj_compare n1 n2 =
+  name_compare n1.ET.nn n2.ET.nn
+
+let nobj_union ns1 ns2 =
+  let error n = ET.ENClash n in
+  list_union error nobj_compare ns1 ns2
+
+(* oobj *)
+
+let string_of_oobj o =
+  Printf.sprintf "%s/%s" (string_of_stage o.ET.os) (string_of_name o.ET.on)
+
+let oobj_of_string s =
+  match String.split_on_char '/' s with
+  | [ss;sn] -> {ET.ob = false; ET.os = stage_of_string ss; ET.on = name_of_string sn}
+  | _       -> failwith "oobj_of_string"
+
+let oobj_selected o = o.ET.ob
+
+let oobj_select o =
+  o.ET.ob <- not o.ET.ob
+
+let oobj_compare o1 o2 =
+  let b = stage_compare o1.ET.os o2.ET.os in
+  if b = 0 then name_compare o1.ET.on o2.ET.on else b
+
+let oobj_union os1 os2 =
+  let error o = ET.EOClash o in
+  list_union error oobj_compare os1 os2
+
+let oobj_of_nobj v n =
+  {ET.ob = n.ET.nb; ET.os = v; ET.on = n.ET.nn} 
+
+let rec oobj_match oi ni os ns =
   match os, ns with
-  | _         , []        -> None
-  | []        , _         -> None
-  | (_,o)::otl,(_,n)::ntl ->
-    let b = compare_names (snd o) n in
-    if b > 0 then match_names oi (succ ni) os ntl else
-    if b < 0 then match_names (succ oi) ni otl ns else
+  | _       , []       -> None
+  | []      , _        -> None
+  | o :: otl, n :: ntl ->
+    let b = name_compare o.ET.on n.ET.nn in
+    if b > 0 then oobj_match oi (succ ni) os ntl else
+    if b < 0 then oobj_match (succ oi) ni otl ns else
     Some (oi, ni)
 
-let string_of_obj (v,n) =
-  Printf.sprintf "%s/%s" (string_of_version v) (string_of_name n)
+(* robj *)
 
-let obj_of_string s =
-  match String.split_on_char '/' s with
-  | [sv;sn] -> version_of_string sv, name_of_string sn
-  | _       -> failwith "obj_of_string"
+let oobj_of_robj r =
+  let n = match r.ET.rn with
+    | []     -> []
+    | n :: _ -> n.ET.nn
+  in
+  {ET.ob = r.ET.rb; ET.os = r.ET.rs; ET.on = n}
 
-let compare_objs (v1,n1) (v2,n2) =
-  let b = compare_versions v1 v2 in
-  if b = 0 then compare_names n1 n2 else b
+let string_of_robj r =
+  string_of_oobj (oobj_of_robj r)
 
-let objs_union os1 os2 =
-  let error o = ET.EObjClash o in
-  list_union error compare_objs os1 os2
+let robj_selected r = r.ET.rb
 
-let rec rev_objs_of_names v os = function
-  | []        -> os
-  | (b,n)::tl -> rev_objs_of_names v ((b,(v,n))::os) tl
+let robj_select r =
+  r.ET.rb <- not r.ET.rb
 
-let rec get_tops v = function
-  | []        -> [], []
-  | (_,r)::tl ->
-    let ds, ts = get_tops v tl in
-    if compare_versions v r.ET.v = 0 then begin
-      if r.ET.n = [] then objs_union r.ET.o ds, ts else
-      let tops = rev_objs_of_names v [] r.ET.n in
-      ds, objs_union (List.rev tops) ts
+let robj_expand r =
+  r.ET.rx <- not r.ET.rx
+
+let robj_compare r1 r2 =
+  oobj_compare (oobj_of_robj r1) (oobj_of_robj r2)
+
+let robj_union rs1 rs2 =
+  let error r = ET.ERClash r in
+  list_union error robj_compare rs1 rs2
+
+let rec robj_tops v = function
+  | []      -> [], []
+  | r :: tl ->
+    let ds, ts = robj_tops v tl in
+    if stage_compare v r.ET.rs = 0 then begin
+      if r.ET.rn = [] then oobj_union r.ET.ro ds, ts else
+      let tops = List.rev_map (oobj_of_nobj v) r.ET.rn in
+      ds, oobj_union (List.rev tops) ts
     end else
       ds, ts
 
-let obj_of_role r =
-  let n = match r.ET.n with
-    | []        -> []
-    | (_,n):: _ -> n
-  in
-  r.ET.v, n
-
-let string_of_role r =
-  string_of_obj (obj_of_role r)
-
-let compare_roles r1 r2 =
-  compare_objs (obj_of_role r1) (obj_of_role r2)
-
-let roles_union rs1 rs2 =
-  let error r = ET.ERoleClash r in
-  list_union error compare_roles rs1 rs2
-
-let roles_expand_all rs =
-  let map (b, r) = r.ET.x <- not r.ET.x in
-  List.iter map rs
-
-let rec roles_expand n = function
-  | []        -> ()
-  | (_,r)::tl ->
-    if n = 0 then r.ET.x <- not r.ET.x else
-    roles_expand (pred n) tl
-
-let exists_role_deleted v r =
-  let o = v, [] in
-  let compare r = compare_objs o (obj_of_role r) in
-  list_exists compare r
-
-let roles_split s rs =
+let robj_split s rs =
   let rec aux rs os ns = function
-  | []           -> List.rev rs, os, ns
-  | (b, r) :: tl ->
-    if compare_versions s r.ET.v <> 0 then aux ((b, r)::rs) os ns tl else
-    if b then aux rs (objs_union os r.ET.o) (names_union ns r.ET.n) tl else
-    let ro, so = list_split r.ET.o in
-    let rn, sn = list_split r.ET.n in
-    if ro = [] && rn = [] then aux rs (objs_union os so) (names_union ns sn) tl else begin
-      r.ET.o <- ro; r.ET.o <- ro;
-      aux ((b, r)::rs) (objs_union os so) (names_union ns sn) tl
+  | []      -> List.rev rs, os, ns
+  | r :: tl ->
+    if stage_compare s r.ET.rs <> 0 then aux (r :: rs) os ns tl else
+    if r.ET.rb then aux rs (oobj_union os r.ET.ro) (nobj_union ns r.ET.rn) tl else
+    let ro, so = list_split oobj_selected oobj_select r.ET.ro in
+    let rn, sn = list_split nobj_selected nobj_select r.ET.rn in
+    if ro = [] && rn = [] then aux rs (oobj_union os so) (nobj_union ns sn) tl else begin
+      r.ET.ro <- ro; r.ET.rn <- rn;
+      aux (r :: rs) (oobj_union os so) (nobj_union ns sn) tl
     end
   in
   aux [] [] [] rs
 
+(* status *)
+
 let new_status = {
-  ET.m = false; ET.r = []; ET.s = []; ET.t = []; ET.w = [];
+  ET.sm = false; ET.sr = []; ET.ss = []; ET.so = []; ET.sn = [];
 }
 
-let string_of_pointer = string_of_version
+(* pointer *)
 
-let pointer_of_string = version_of_string
+let string_of_pointer = string_of_stage
 
-let list_visit before each visit after string_of p l =
+let pointer_of_string = stage_of_string
+
+let list_visit before each visit after selected string_of p l =
   let ptr p = string_of_pointer (List.rev p) in
   let rec aux i = function
-    | []         -> ()
-    | (b, x)::tl ->
-      each (ptr (i::p)) b (string_of x);
+    | []      -> ()
+    | x :: tl ->
+      each (ptr (i::p)) (selected x) (string_of x);
       visit (i::p) x;
       aux (succ i) tl
   in
-  let s, c = list_count 0 0 l in
+  let s, c = list_count selected 0 0 l in
   let count = Printf.sprintf "%u/%u" s c in
   before (ptr p) count;
   aux 0 l;
   after ()
 
+(* error *)
+
 let string_of_error = function
   | ET.EWrongExt x         ->
     Printf.sprintf "unknown input file type %S" x
   | ET.EStage v            ->
-    Printf.sprintf "current stage %S" (string_of_version v)
+    Printf.sprintf "current stage %S" (string_of_stage v)
   | ET.ENoStage            ->
     Printf.sprintf "current stage not defined"
   | ET.EWaiting            ->
     Printf.sprintf "current stage not finished"
-  | ET.ENameClash n        ->
-    Printf.sprintf "name clash %S" (string_of_name n)
-  | ET.EObjClash o         ->
-    Printf.sprintf "object clash %S" (string_of_obj o)
-  | ET.ERoleClash r        ->
-    Printf.sprintf "role clash %S" (string_of_role r)
+  | ET.ENClash n           ->
+    Printf.sprintf "name clash %S" (string_of_nobj n)
+  | ET.EOClash o           ->
+    Printf.sprintf "object clash %S" (string_of_oobj o)
+  | ET.ERClash r           ->
+    Printf.sprintf "role clash %S" (string_of_robj r)
   | ET.ENoEntry            ->
     Printf.sprintf "entry not found"
   | ET.EWrongSelect        ->

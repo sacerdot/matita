@@ -9,42 +9,52 @@
      \ /   This software is distributed as is, NO WARRANTY.
       V_______________________________________________________________ *)
 
-type version = int list
+type stage = int list
 
 type name = string list
 
-type names = (bool*name) list
-
-type obj = version * name
-
-type objs = (bool*obj) list
-
-type role = {
-  mutable x: bool;
-  mutable v: version;
-  mutable o: objs;
-  mutable n: names;
+type nobj = {
+  mutable nb: bool;
+  mutable nn: name;
 }
 
-type roles = (bool*role) list
+type nobjs = nobj list
+
+type oobj = {
+  mutable ob: bool;
+  mutable os: stage;
+  mutable on: name;
+}
+
+type oobjs = oobj list
+
+type robj = {
+  mutable rb: bool;
+  mutable rx: bool;
+  mutable rs: stage;
+  mutable ro: oobjs;
+  mutable rn: nobjs;
+}
+
+type robjs = robj list
 
 type status = {
-  mutable m: bool;
-  mutable r: roles;
-  mutable s: version;
-  mutable t: objs;
-  mutable w: names;
+  mutable sm: bool;
+  mutable sr: robjs;
+  mutable so: oobjs;
+  mutable ss: stage;
+  mutable sn: nobjs;
 }
 
 type pointer = int list
 
 type error = EWrongExt of string
-           | EStage of version
+           | EStage of stage
            | ENoStage
            | EWaiting
-           | ENameClash of name
-           | EObjClash of obj
-           | ERoleClash of role
+           | ENClash of nobj
+           | EOClash of oobj
+           | ERClash of robj
            | ENoEntry
            | EWrongSelect
            | EWrongVersion

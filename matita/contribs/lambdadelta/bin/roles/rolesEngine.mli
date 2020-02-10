@@ -9,7 +9,7 @@
      \ /   This software is distributed as is, NO WARRANTY.
       V_______________________________________________________________ *)
 
-val new_stage: RolesTypes.version -> unit
+val new_stage: RolesTypes.stage -> unit
 
 val select_entry: RolesTypes.pointer -> unit
 
@@ -17,7 +17,7 @@ val expand_entry: RolesTypes.pointer -> unit
 
 val add_role: unit -> unit
 
-val add_tops: RolesTypes.version -> unit
+val add_tops: RolesTypes.stage -> unit
 
 val add_matching: unit -> unit
 
@@ -33,7 +33,8 @@ val print_status: unit -> unit
 
 val visit_status:
   (string -> string -> unit) -> (string -> bool -> string -> unit) ->
-  (unit -> unit) -> (unit -> unit) -> (unit -> unit) -> (string -> bool -> unit) ->
+  (bool -> bool -> bool -> unit) -> (bool -> unit) -> (unit -> unit) ->
+  (string -> bool -> unit) ->
   (string -> string -> unit) -> (string -> bool -> string -> unit) -> (unit -> unit) ->
   (string -> string -> unit) -> (string -> bool -> string -> unit) -> (unit -> unit) ->
   unit

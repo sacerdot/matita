@@ -20,9 +20,9 @@ module WS = WebLWS
 let error = ref ""
 
 let open_out () =
-  let author = "λδ development binary: roles manager" in
-  let description = "λδ development binary: roles manager" in
-  let title = "Roles Manager" in
+  let author = "λδ development binary: role manager" in
+  let description = "λδ development binary: role manager" in
+  let title = "Role Manager" in
   let css = Filename.concat !EG.base_url "css/roles.css" in
   let icon = Filename.concat !EG.base_url "images/crux_32.ico" in
   WS.open_out_html author description title css icon
@@ -57,14 +57,16 @@ let status_out () =
     let s = if b then " selected" else "" in
     KP.printf "<div class=\"role role-color%s\">" s;
     KP.printf "<a href=\"%s\">⮞</a> " req_x;
-    KP.printf "<a href=\"%s\">%s</a>" req_s str;
-    KP.printf "</div>\n"
+    KP.printf "<a href=\"%s\">%s</a>" req_s str
   in
-  let before_role () =
-    KP.printf "<div class=\"roles\">\n";
+  let before_role x n o =
+    let msg_n = if n then " (added)" else "" in
+    let msg_o = if o then " (removed)" else "" in
+    KP.printf "%s%s</div>\n" msg_n msg_o;
+    if x then KP.printf "<div class=\"roles\">\n"
   in
-  let after_role () =
-    KP.printf "</div>\n"
+  let after_role x =
+    if x then KP.printf "</div>\n"
   in
   let after_roles () =
     KP.printf "</div>\n";

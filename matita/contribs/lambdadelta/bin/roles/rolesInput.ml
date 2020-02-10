@@ -18,10 +18,10 @@ let input_string_opt ich =
   try Scanf.bscanf ich " %S" map
   with End_of_file -> None
 
-let rec read_rev_names ich names =
+let rec read_rev_nobjs ich nobjs =
   match input_string_opt ich with
-  | None   -> names
-  | Some s -> read_rev_names ich ((false,EU.name_of_string s)::names)
+  | None   -> nobjs
+  | Some s -> read_rev_nobjs ich (EU.nobj_of_string s :: nobjs)
 
 let read_status ich =
   let lexbuf = Lexing.from_channel ich in

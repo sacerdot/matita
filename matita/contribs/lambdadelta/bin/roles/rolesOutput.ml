@@ -23,22 +23,20 @@ let out_tag i tag h map och l =
 let string_map f _i och x =
   Printf.fprintf och " %S" (f x)
 
-let out_version i och v =
-  out_tag i "ver" true (string_map EU.string_of_version) och [v]
+let out_stage i och v =
+  out_tag i "ver" true (string_map EU.string_of_stage) och [v]
 
 let out_old i och os =
-  let map (_,o) = EU.string_of_obj o in
-  out_tag i "old" true (string_map map) och os
+  out_tag i "old" true (string_map EU.string_of_oobj) och os
 
 let out_new i och ns =
-  let map (_,n) = EU.string_of_name n in
-  out_tag i "new" true (string_map map) och ns
+  out_tag i "new" true (string_map EU.string_of_nobj) och ns
 
-let out_role i och (_,r) =
+let out_role i och r =
   let map i och r =
-    out_version i och r.ET.v;
-    out_old i och r.ET.o;
-    out_new i och r.ET.n
+    out_stage i och r.ET.rs;
+    out_old i och r.ET.ro;
+    out_new i och r.ET.rn
   in
   out_tag i "rel" false map och [r]
 
@@ -47,10 +45,10 @@ let out_roles i och rs =
 
 let out_status och st =
   let map i och st =
-    out_roles i och st.ET.r;
-    out_version i och st.ET.s;
-    out_old i och st.ET.t;
-    out_new i och st.ET.w
+    out_roles i och st.ET.sr;
+    out_stage i och st.ET.ss;
+    out_old i och st.ET.so;
+    out_new i och st.ET.sn
   in
   output_string och "roles:";
   out_tag 0 "top" false map och [st]

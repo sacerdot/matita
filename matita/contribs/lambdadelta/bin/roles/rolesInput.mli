@@ -9,6 +9,6 @@
      \ /   This software is distributed as is, NO WARRANTY.
       V_______________________________________________________________ *)
 
-val read_rev_names: Scanf.Scanning.in_channel -> RolesTypes.names -> RolesTypes.names
+val read_rev_nobjs: Scanf.Scanning.in_channel -> RolesTypes.nobjs -> RolesTypes.nobjs
 
 val read_status: in_channel -> RolesTypes.status

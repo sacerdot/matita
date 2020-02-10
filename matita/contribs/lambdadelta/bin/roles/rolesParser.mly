@@ -22,57 +22,57 @@
 
 %%
 
-version:
-  | TEXT { EU.version_of_string $1 }
+stage:
+  | TEXT { EU.stage_of_string $1 }
 ;
 
-obj:
-  | TEXT { false, EU.obj_of_string $1 }
+oobj:
+  | TEXT { EU.oobj_of_string $1 }
 ;
 
-name:
-  | TEXT { false, EU.name_of_string $1 }
+nobj:
+  | TEXT { EU.nobj_of_string $1 }
 ;
 
-role:
+robj:
   | OP REL ver olds news CP {
-      false, {ET.x = false; ET.v = $3; ET.o = $4; ET.n = $5}
+      {ET.rb = false; ET.rx = false; ET.rs = $3; ET.ro = $4; ET.rn = $5}
     }
 ;
 
-objs:
-  |          { []       }
-  | obj objs { $1 :: $2 }
+oobjs:
+  |            { []       }
+  | oobj oobjs { $1 :: $2 }
 ;
 
-names:
+nobjs:
   |            { []       }
-  | name names { $1 :: $2 }
+  | nobj nobjs { $1 :: $2 }
 ;
 
-roles:
+robjs:
   |            { []       }
-  | role roles { $1 :: $2 }
+  | robj robjs { $1 :: $2 }
 ;
 
 ver:
-  | OP VER version CP { $3 }
+  | OP VER stage CP { $3 }
 ;
 
 olds:
-  | OP OLD objs CP { $3 }
+  | OP OLD oobjs CP { $3 }
 ;
 
 news:
-  | OP NEW names CP { $3 }
+  | OP NEW nobjs CP { $3 }
 ;
 
 base:
-  | OP BASE roles CP { $3 }
+  | OP BASE robjs CP { $3 }
 ;
 
 status:
   | ROLES SC OP TOP base ver olds news CP EOF {
-      {ET.m = false; ET.r = $5; ET.s = $6; ET.t = $7; ET.w = $8}
+      {ET.sm = false; ET.sr = $5; ET.ss = $6; ET.so = $7; ET.sn = $8}
     }
 ;
