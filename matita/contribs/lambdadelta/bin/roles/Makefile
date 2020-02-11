@@ -10,4 +10,7 @@ test:
 up-css:
 	@scp roles.css lahar.helm.cs.unibo.it:/projects/helm/public_html/lambdadelta/css/
 
-.PHONY: test up-css
+up-js:
+	@scp roles.js lahar.helm.cs.unibo.it:/projects/helm/public_html/lambdadelta/js/
+
+.PHONY: test up-css up-js

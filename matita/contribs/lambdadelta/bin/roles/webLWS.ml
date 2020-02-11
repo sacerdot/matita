@@ -62,7 +62,7 @@ let control_input form =
   KP.printf "<input form=\"%s\" type=\"hidden\" name=\"%s\" value=\"%s\"/>"
     form "control-random" (get_random ())
 
-let open_out_html author description title css icon =
+let open_out_html author description title icon css js =
   open_out "application/xhtml+xml" 0;
   KP.printf "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
   KP.printf "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n";
@@ -74,13 +74,15 @@ let open_out_html author description title css icon =
   KP.printf "  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"/>\n";
   KP.printf "  <meta http-equiv=\"Content-Language\" content=\"en-us\"/>\n";
   KP.printf "  <meta http-equiv=\"Content-Style-Type\" content=\"text/css\"/>\n";
+  KP.printf "  <meta http-equiv=\"content-script-type\" content=\"text/javascript\"/>\n";
   KP.printf "  <meta name=\"author\" content=\"%s\"/>\n" author;
   KP.printf "  <meta name=\"description\" content=\"%s\"/>\n" description;
   KP.printf "  <title>%s</title>" title;
-  KP.printf "  <link rel=\"stylesheet\" type=\"text/css\" href=\"%s\"/>\n" css;
   KP.printf "  <link rel=\"shortcut icon\" href=\"%s\"/>\n" icon;
+  KP.printf "  <link rel=\"stylesheet\" type=\"text/css\" href=\"%s\"/>\n" css;
   KP.printf "</head>\n";
-  KP.printf "<body lang=\"en-US\">\n"
+  KP.printf "<body lang=\"en-US\">\n";
+  KP.printf "<script type=\"text/javascript\" src=\"%s\"/>\n" js
 
 let close_out_html () =
   KP.printf "</body>\n";

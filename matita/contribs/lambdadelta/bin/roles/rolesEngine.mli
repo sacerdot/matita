@@ -32,9 +32,9 @@ val write_status: unit -> unit
 val print_status: unit -> unit
 
 val visit_status:
-  (string -> string -> unit) -> (string -> bool -> string -> unit) ->
+  (string -> string -> unit) -> RolesTypes.each ->
   (bool -> bool -> bool -> unit) -> (bool -> unit) -> (unit -> unit) ->
   (string -> bool -> unit) ->
-  (string -> string -> unit) -> (string -> bool -> string -> unit) -> (unit -> unit) ->
-  (string -> string -> unit) -> (string -> bool -> string -> unit) -> (unit -> unit) ->
+  (string -> string -> unit) -> RolesTypes.each -> (unit -> unit) ->
+  (string -> string -> unit) -> RolesTypes.each -> (unit -> unit) ->
   unit

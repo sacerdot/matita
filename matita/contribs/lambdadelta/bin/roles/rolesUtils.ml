@@ -88,6 +88,8 @@ let nobj_of_string s = {
   ET.nb = false; ET.nn = name_of_string s;
 }
 
+let key_of_nobj n = string_of_nobj n
+
 let nobj_selected n = n.ET.nb
 
 let nobj_select n =
@@ -109,6 +111,8 @@ let oobj_of_string s =
   match String.split_on_char '/' s with
   | [ss;sn] -> {ET.ob = false; ET.os = stage_of_string ss; ET.on = name_of_string sn}
   | _       -> failwith "oobj_of_string"
+
+let key_of_oobj o = string_of_name o.ET.on
 
 let oobj_selected o = o.ET.ob
 
@@ -147,6 +151,8 @@ let oobj_of_robj r =
 
 let string_of_robj r =
   string_of_oobj (oobj_of_robj r)
+
+let key_of_robj r = key_of_oobj (oobj_of_robj r)
 
 let robj_selected r = r.ET.rb
 
@@ -201,12 +207,12 @@ let string_of_pointer = string_of_stage
 
 let pointer_of_string = stage_of_string
 
-let list_visit before each visit after selected string_of p l =
+let list_visit before each visit after selected key_of string_of p l =
   let ptr p = string_of_pointer (List.rev p) in
   let rec aux i = function
     | []      -> ()
     | x :: tl ->
-      each (ptr (i::p)) (selected x) (string_of x);
+      each (ptr p) (ptr (i::p)) (selected x) (key_of x) (string_of x);
       visit (i::p) x;
       aux (succ i) tl
   in

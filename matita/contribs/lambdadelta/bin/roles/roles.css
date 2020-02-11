@@ -95,6 +95,13 @@ a:active {
 .count {
 }
 
+.filter {
+}
+
+.hidden {
+  display: none;
+}
+
 .selected {
   border: 1pt solid;
 }

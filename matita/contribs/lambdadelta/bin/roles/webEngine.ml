@@ -23,9 +23,10 @@ let open_out () =
   let author = "λδ development binary: role manager" in
   let description = "λδ development binary: role manager" in
   let title = "Role Manager" in
-  let css = Filename.concat !EG.base_url "css/roles.css" in
   let icon = Filename.concat !EG.base_url "images/crux_32.ico" in
-  WS.open_out_html author description title css icon
+  let css = Filename.concat !EG.base_url "css/roles.css" in
+  let js = Filename.concat !EG.base_url "js/roles.js" in
+  WS.open_out_html author description title icon css js
 
 let close_out () =
   WS.close_out_html ()
@@ -34,6 +35,10 @@ let string_of_request req arg =
   WS.string_of_request "roles" (["system-"^req, arg], "")
 
 let status_out () =
+  let filter p =
+    KP.printf "<input class=\"filter\" type=\"text\" placeholder=\"Filter...\" \
+      onkeyup=\"filter('%s');\" id=\"f.%s\"\n/>" p p 
+  in
   let button_specs = [
     "default", "Refresh";
     "save", "Save";
@@ -49,13 +54,14 @@ let status_out () =
     let req = string_of_request "select" p in
     KP.printf "<div class=\"roles-head role-color\">\n";
     KP.printf "<a href=\"%s\">Roles:</a>\n" req;
-    KP.printf "<span class=\"count\">%s</span>\n" count
+    KP.printf "<span class=\"count\">%s</span>\n" count;
+    filter p
   in
-  let each_role p b str =
+  let each_role n p b k str =
     let req_x = string_of_request "expand" p in
     let req_s = string_of_request "select" p in
     let s = if b then " selected" else "" in
-    KP.printf "<div class=\"role role-color%s\">" s;
+    KP.printf "<div class=\"role role-color%s\" name=%S key=%S>" s n k;
     KP.printf "<a href=\"%s\">⮞</a> " req_x;
     KP.printf "<a href=\"%s\">%s</a>" req_s str
   in
@@ -89,14 +95,16 @@ let status_out () =
     KP.printf "<div class=\"atoms-head %s\">\n" c;
     KP.printf "<a href=\"%s\">%s:</a>\n" req str;
     KP.printf "<span class=\"count\">%s</span>\n" count;
+    filter p;
     KP.printf "</div>\n";
     KP.printf "<div class=\"atoms\"><table class=\"atoms-table\"><tr>\n"
   in
-  let each_atom a p b str =
+  let each_atom a n p b k str =
     let c = if a then "object-color" else "name-color" in
     let s = if b then " selected" else "" in
     let req = string_of_request "select" p in
-    KP.printf "<td class=\"atom %s%s\"><a href=\"%s\">%s</a></td>\n" c s req str
+    KP.printf "<td class=\"atom %s%s\" name=%S key=%S>\
+      <a href=\"%s\">%s</a></td>\n" c s n k req str
   in
   let after_atoms () =
     KP.printf "</tr></table></div>\n"

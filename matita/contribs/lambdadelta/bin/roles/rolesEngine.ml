@@ -138,12 +138,12 @@ let visit_status
   let visit_r p r =
     before r.ET.rx (r.ET.ro=[]) (r.ET.rn=[]);
     if r.ET.rx then begin
-      EU.list_visit before_t each_t visit_tw after_t EU.oobj_selected EU.string_of_oobj (1::p) r.ET.ro;
-      EU.list_visit before_w each_w visit_tw after_w EU.nobj_selected EU.string_of_nobj (2::p) r.ET.rn
+      EU.list_visit before_t each_t visit_tw after_t EU.oobj_selected EU.key_of_oobj EU.string_of_oobj (1::p) r.ET.ro;
+      EU.list_visit before_w each_w visit_tw after_w EU.nobj_selected EU.key_of_nobj EU.string_of_nobj (2::p) r.ET.rn
     end;
     after r.ET.rx
   in
-  EU.list_visit before_r each_r visit_r after_r EU.robj_selected EU.string_of_robj [0] st.ET.sr;
+  EU.list_visit before_r each_r visit_r after_r EU.robj_selected EU.key_of_robj EU.string_of_robj [0] st.ET.sr;
   stage (EU.string_of_stage st.ET.ss) st.ET.sm;
-  EU.list_visit before_t each_t visit_tw after_t EU.oobj_selected EU.string_of_oobj [1] st.ET.so;
-  EU.list_visit before_w each_w visit_tw after_w EU.nobj_selected EU.string_of_nobj [2] st.ET.sn
+  EU.list_visit before_t each_t visit_tw after_t EU.oobj_selected EU.key_of_oobj EU.string_of_oobj [1] st.ET.so;
+  EU.list_visit before_w each_w visit_tw after_w EU.nobj_selected EU.key_of_nobj EU.string_of_nobj [2] st.ET.sn

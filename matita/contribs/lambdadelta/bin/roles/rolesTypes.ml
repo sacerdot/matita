@@ -62,3 +62,5 @@ type error = EWrongExt of string
            | EWrongRequest of string * string
 
 exception Error of error
+
+type each = string -> string -> bool -> string -> string -> unit

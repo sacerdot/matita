@@ -18,9 +18,9 @@ val list_nth: ('a -> unit) -> int -> 'a list -> unit
 val list_split: ('a -> bool) -> ('a -> unit) -> 'a list -> 'a list * 'a list
 
 val list_visit:
-  (string -> string -> unit) -> (string -> bool -> string -> unit) ->
+  (string -> string -> unit) -> RolesTypes.each ->
   (RolesTypes.pointer -> 'a -> unit) -> (unit -> unit) ->
-  ('a -> bool) -> ('a -> string) -> RolesTypes.pointer -> 'a list -> unit
+  ('a -> bool) -> ('a -> string) -> ('a -> string) -> RolesTypes.pointer -> 'a list -> unit
 
 val string_of_stage: RolesTypes.stage -> string
 
@@ -32,6 +32,8 @@ val string_of_nobj: RolesTypes.nobj -> string
 
 val nobj_of_string: string -> RolesTypes.nobj
 
+val key_of_nobj: RolesTypes.nobj -> string
+
 val nobj_selected: RolesTypes.nobj -> bool
 
 val nobj_select: RolesTypes.nobj -> unit
@@ -42,6 +44,8 @@ val string_of_oobj: RolesTypes.oobj -> string
 
 val oobj_of_string: string -> RolesTypes.oobj
 
+val key_of_oobj: RolesTypes.oobj -> string
+
 val oobj_selected: RolesTypes.oobj -> bool
 
 val oobj_select: RolesTypes.oobj -> unit
@@ -51,6 +55,8 @@ val oobj_union: RolesTypes.oobjs -> RolesTypes.oobjs -> RolesTypes.oobjs
 val oobj_match: int -> int -> RolesTypes.oobjs -> RolesTypes.nobjs -> (int * int) option
 
 val string_of_robj: RolesTypes.robj -> string
+
+val key_of_robj: RolesTypes.robj -> string
 
 val robj_selected: RolesTypes.robj -> bool
 

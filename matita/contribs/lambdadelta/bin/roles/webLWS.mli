@@ -21,6 +21,6 @@ val string_of_request: string -> request -> string
 
 val control_input: string -> unit
 
-val open_out_html: string -> string -> string -> string -> string -> unit
+val open_out_html: string -> string -> string -> string -> string -> string -> unit
 
 val close_out_html: unit -> unit
