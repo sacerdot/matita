@@ -1,0 +1,5 @@
+λδ-1A
+ahead_inj_snd -> leq_ahead_inj_dx
+arity_abbr    -> arity_ldef
+arity_abst    -> arity_ldec
+arity_head    -> arity_abst

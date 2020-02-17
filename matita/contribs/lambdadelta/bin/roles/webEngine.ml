@@ -36,8 +36,10 @@ let string_of_request req arg =
 
 let status_out () =
   let filter p =
-    KP.printf "<input class=\"filter\" type=\"text\" placeholder=\"Filter...\" \
-      onkeyup=\"filter('%s');\" id=\"f.%s\"\n/>" p p 
+    let req = string_of_request "select" p in
+    let ph = "Filter..." in
+    KP.printf "<input class=\"filter\" type=\"text\" autocomplete=\"on\" \
+      placeholder=%S onkeyup=\"filter('%s','%s');\" id=\"f.%s\"\n/>" ph req p p
   in
   let button_specs = [
     "default", "Refresh";
@@ -47,21 +49,21 @@ let status_out () =
     "remove", "Remove";
   ] in
   let each_button (action, str) =
-    let req = string_of_request action "" in 
+    let req = string_of_request action "" in
     KP.printf "<span class=\"button\"><a href=\"%s\">%s</a></span>\n" req str
   in
   let before_roles p count =
     let req = string_of_request "select" p in
     KP.printf "<div class=\"roles-head role-color\">\n";
-    KP.printf "<a href=\"%s\">Roles:</a>\n" req;
+    KP.printf "<a id=\"s.%s\" href=\"%s\">Roles:</a>\n" p req;
     KP.printf "<span class=\"count\">%s</span>\n" count;
     filter p
   in
-  let each_role n p b k str =
+  let each_role n p b k o str =
     let req_x = string_of_request "expand" p in
     let req_s = string_of_request "select" p in
     let s = if b then " selected" else "" in
-    KP.printf "<div class=\"role role-color%s\" name=%S key=%S>" s n k;
+    KP.printf "<div class=\"role role-color%s\" name=%S key=%S ord=%S>" s n k o;
     KP.printf "<a href=\"%s\">⮞</a> " req_x;
     KP.printf "<a href=\"%s\">%s</a>" req_s str
   in
@@ -93,18 +95,18 @@ let status_out () =
     in
     let req = string_of_request "select" p in
     KP.printf "<div class=\"atoms-head %s\">\n" c;
-    KP.printf "<a href=\"%s\">%s:</a>\n" req str;
+    KP.printf "<a id=\"s.%s\" href=\"%s\">%s:</a>\n" p req str;
     KP.printf "<span class=\"count\">%s</span>\n" count;
     filter p;
     KP.printf "</div>\n";
     KP.printf "<div class=\"atoms\"><table class=\"atoms-table\"><tr>\n"
   in
-  let each_atom a n p b k str =
+  let each_atom a n p b k o str =
     let c = if a then "object-color" else "name-color" in
     let s = if b then " selected" else "" in
     let req = string_of_request "select" p in
-    KP.printf "<td class=\"atom %s%s\" name=%S key=%S>\
-      <a href=\"%s\">%s</a></td>\n" c s n k req str
+    KP.printf "<td class=\"atom %s%s\" name=%S key=%S ord=%S>\
+      <a href=\"%s\">%s</a></td>\n" c s n k o req str
   in
   let after_atoms () =
     KP.printf "</tr></table></div>\n"
@@ -129,7 +131,7 @@ let handler opt arg () =
   | _                -> EU.raise_error (ET.EWrongRequest (opt, arg))
   with
   | ET.Error e -> error := EU.string_of_error e
-  | e          -> error := Printexc.to_string e 
+  | e          -> error := Printexc.to_string e
   end;
   open_out ();
   status_out ();

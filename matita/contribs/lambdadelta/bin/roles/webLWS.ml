@@ -56,7 +56,8 @@ let string_of_request cx (opts, fi) =
     let str = KT.concat "&amp;" (KL.map opt_map opts) in
     KP.sprintf "/%s?%s" cx str
   in
-  KP.sprintf "%s#%s" str fi
+  let fi = if fi = "" then "" else "#" ^ fi in
+  KP.sprintf "%s%s" str fi
 
 let control_input form =
   KP.printf "<input form=\"%s\" type=\"hidden\" name=\"%s\" value=\"%s\"/>"

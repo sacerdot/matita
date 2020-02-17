@@ -15,6 +15,8 @@ val select_entry: RolesTypes.pointer -> unit
 
 val expand_entry: RolesTypes.pointer -> unit
 
+val make_tops: unit -> unit
+
 val add_role: unit -> unit
 
 val add_tops: RolesTypes.stage -> unit

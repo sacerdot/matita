@@ -52,6 +52,8 @@ val oobj_select: RolesTypes.oobj -> unit
 
 val oobj_union: RolesTypes.oobjs -> RolesTypes.oobjs -> RolesTypes.oobjs
 
+val oobj_of_nobj: RolesTypes.stage -> RolesTypes.nobj -> RolesTypes.oobj
+
 val oobj_match: int -> int -> RolesTypes.oobjs -> RolesTypes.nobjs -> (int * int) option
 
 val string_of_robj: RolesTypes.robj -> string
@@ -66,7 +68,7 @@ val robj_expand: RolesTypes.robj -> unit
 
 val robj_union: RolesTypes.robjs -> RolesTypes.robjs -> RolesTypes.robjs
 
-val robj_tops: RolesTypes.stage -> RolesTypes.robjs -> RolesTypes.oobjs * RolesTypes.oobjs 
+val robj_tops: RolesTypes.stage -> RolesTypes.robjs -> RolesTypes.oobjs * RolesTypes.oobjs
 
 val robj_split:
   RolesTypes.stage -> RolesTypes.robjs ->
@@ -77,5 +79,7 @@ val new_status: RolesTypes.status
 val string_of_pointer: RolesTypes.pointer -> string
 
 val pointer_of_string: string -> RolesTypes.pointer
+
+val pointer_visit: (RolesTypes.stage -> unit) -> RolesTypes.stage -> RolesTypes.pointer -> unit
 
 val string_of_error: RolesTypes.error -> string

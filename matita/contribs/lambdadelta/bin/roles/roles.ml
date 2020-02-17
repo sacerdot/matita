@@ -24,6 +24,7 @@ let help_a = " Add selected names to a role"
 let help_d = " Remove selected names from roles"
 let help_m = " Add roles relating matching names"
 let help_n = "<version>  Start a stage with this version"
+let help_o = " Turn waiting names into top objects"
 let help_p = " Print current status on standard output"
 let help_r = " Load current status"
 let help_s = "<pointer>  Toggle the selection of this pointed entry"
@@ -63,6 +64,7 @@ let _main = try
     "-d", Arg.Unit EE.remove_roles, help_d;
     "-m", Arg.Unit EE.add_matching, help_m;
     "-n", Arg.String new_stage, help_n;
+    "-o", Arg.Unit EE.make_tops, help_o;
     "-p", Arg.Unit EE.print_status, help_p;
     "-r", Arg.Unit EE.read_status, help_r;
     "-s", Arg.String select_entry, help_s;

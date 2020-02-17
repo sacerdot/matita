@@ -14,6 +14,14 @@ module ET = RolesTypes
 let raise_error e =
   raise (ET.Error e)
 
+let rec list_map_filter map l = function
+  | []       -> List.rev l
+  | hd :: tl ->
+    begin match map hd with
+    | None   -> list_map_filter map l tl
+    | Some x -> list_map_filter map (x :: l) tl
+    end
+
 let list_union error compare l1 l2 =
   let rec aux l1 l2 = match l1 with
   | []       -> l2
@@ -63,7 +71,7 @@ let string_of_stage v =
   String.concat "." (List.map string_of_int v)
 
 let stage_of_string s =
-  List.map int_of_string (String.split_on_char '.' s)
+  list_map_filter int_of_string_opt [] (String.split_on_char '.' s)
 
 let stage_compare v1 v2 =
   list_compare compare v1 v2
@@ -128,7 +136,7 @@ let oobj_union os1 os2 =
   list_union error oobj_compare os1 os2
 
 let oobj_of_nobj v n =
-  {ET.ob = n.ET.nb; ET.os = v; ET.on = n.ET.nn} 
+  {ET.ob = n.ET.nb; ET.os = v; ET.on = n.ET.nn}
 
 let rec oobj_match oi ni os ns =
   match os, ns with
@@ -203,17 +211,37 @@ let new_status = {
 
 (* pointer *)
 
-let string_of_pointer = string_of_stage
+let string_of_pointer p =
+  let map = function
+  | ET.One i   -> string_of_int i
+  | ET.Many is -> String.concat "," (List.map string_of_int is)
+  in
+  String.concat "." (List.map map p)
 
-let pointer_of_string = stage_of_string
+let pointer_of_string s =
+  let map s =
+    match list_map_filter int_of_string_opt [] (String.split_on_char ',' s) with
+    | []  -> None
+    | [i] -> Some (ET.One i)
+    | is  -> Some (ET.Many is)
+  in
+  list_map_filter map [] (String.split_on_char '.' s)
+
+let rec pointer_visit f l = function
+  | []               -> f (List.rev l)
+  | ET.One i :: tl   -> pointer_visit f (i::l) tl
+  | ET.Many is :: tl ->
+    let map i = pointer_visit f (i::l) tl in
+    List.iter map is
 
 let list_visit before each visit after selected key_of string_of p l =
   let ptr p = string_of_pointer (List.rev p) in
   let rec aux i = function
     | []      -> ()
     | x :: tl ->
-      each (ptr p) (ptr (i::p)) (selected x) (key_of x) (string_of x);
-      visit (i::p) x;
+      let q = ET.One i :: p in
+      each (ptr p) (ptr q) (selected x) (key_of x) (string_of_int i) (string_of x);
+      visit q x;
       aux (succ i) tl
   in
   let s, c = list_count selected 0 0 l in

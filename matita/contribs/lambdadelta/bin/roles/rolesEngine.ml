@@ -45,10 +45,24 @@ let select_entry = function
   | [2;n]     -> EU.list_nth EU.nobj_select n st.ET.sn
   | _         -> EU.raise_error ET.ENoEntry
 
+let select_entry p =
+  EU.pointer_visit select_entry [] p
+
 let expand_entry = function
   | [0]   -> List.iter EU.robj_expand st.ET.sr
   | [0;m] -> EU.list_nth EU.robj_expand m st.ET.sr
   | _     -> EU.raise_error ET.ENoEntry
+
+let expand_entry p =
+  EU.pointer_visit expand_entry [] p
+
+let make_tops () =
+  if EU.stage_compare st.ET.ss [] = 0 then EU.raise_error ET.ENoStage else
+  if st.ET.so <> [] then EU.raise_error ET.ETops else
+  if st.ET.sn <> [] then begin
+    st.ET.so <- List.map (EU.oobj_of_nobj st.ET.ss) st.ET.sn;
+    st.ET.sm <- true
+  end
 
 let add_role () =
   let ts, os = EU.list_split EU.oobj_selected EU.oobj_select st.ET.so in
@@ -62,7 +76,7 @@ let add_role () =
   let is_selected _ r = r.ET.rb && EU.stage_compare r.ET.rs st.ET.ss = 0 in
   let is_new _ r = r.ET.ro = [] && EU.stage_compare r.ET.rs st.ET.ss = 0 in
   let is_deleted _ r = r.ET.rn = [] && EU.stage_compare r.ET.rs st.ET.ss = 0 in
-  begin 
+  begin
     if EU.list_apply is_selected add 0 st.ET.sr then () else
     if os = [] && EU.list_apply is_new add 0 st.ET.sr then () else
     if ns = [] && EU.list_apply is_deleted add 0 st.ET.sr then () else
@@ -87,16 +101,16 @@ let rec add_matching () =
   match EU.oobj_match 0 0 st.ET.so st.ET.sn with
   | None          -> ()
   | Some  (ti,wi) ->
-    select_entry [1;ti];
-    select_entry [2;wi];
+    select_entry [ET.One 1; ET.One ti];
+    select_entry [ET.One 2; ET.One wi];
     add_role ();
     add_matching ()
 
 let remove_roles () =
   let rs, os, ns = EU.robj_split st.ET.ss st.ET.sr in
   if os = [] && ns = [] then () else begin
-    st.ET.so <- EU.oobj_union os st.ET.so; 
-    st.ET.sn <- EU.nobj_union ns st.ET.sn; 
+    st.ET.so <- EU.oobj_union os st.ET.so;
+    st.ET.sn <- EU.nobj_union ns st.ET.sn;
     st.ET.sr <- rs; st.ET.sm <- true
   end
 
@@ -138,12 +152,12 @@ let visit_status
   let visit_r p r =
     before r.ET.rx (r.ET.ro=[]) (r.ET.rn=[]);
     if r.ET.rx then begin
-      EU.list_visit before_t each_t visit_tw after_t EU.oobj_selected EU.key_of_oobj EU.string_of_oobj (1::p) r.ET.ro;
-      EU.list_visit before_w each_w visit_tw after_w EU.nobj_selected EU.key_of_nobj EU.string_of_nobj (2::p) r.ET.rn
+      EU.list_visit before_t each_t visit_tw after_t EU.oobj_selected EU.key_of_oobj EU.string_of_oobj (ET.One 1::p) r.ET.ro;
+      EU.list_visit before_w each_w visit_tw after_w EU.nobj_selected EU.key_of_nobj EU.string_of_nobj (ET.One 2::p) r.ET.rn
     end;
     after r.ET.rx
   in
-  EU.list_visit before_r each_r visit_r after_r EU.robj_selected EU.key_of_robj EU.string_of_robj [0] st.ET.sr;
+  EU.list_visit before_r each_r visit_r after_r EU.robj_selected EU.key_of_robj EU.string_of_robj [ET.One 0] st.ET.sr;
   stage (EU.string_of_stage st.ET.ss) st.ET.sm;
-  EU.list_visit before_t each_t visit_tw after_t EU.oobj_selected EU.key_of_oobj EU.string_of_oobj [1] st.ET.so;
-  EU.list_visit before_w each_w visit_tw after_w EU.nobj_selected EU.key_of_nobj EU.string_of_nobj [2] st.ET.sn
+  EU.list_visit before_t each_t visit_tw after_t EU.oobj_selected EU.key_of_oobj EU.string_of_oobj [ET.One 1] st.ET.so;
+  EU.list_visit before_w each_w visit_tw after_w EU.nobj_selected EU.key_of_nobj EU.string_of_nobj [ET.One 2] st.ET.sn

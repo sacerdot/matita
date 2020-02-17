@@ -46,7 +46,10 @@ type status = {
   mutable sn: nobjs;
 }
 
-type pointer = int list
+type step = One of int
+          | Many of int list
+
+type pointer = step list
 
 type error = EWrongExt of string
            | EStage of stage
@@ -63,4 +66,4 @@ type error = EWrongExt of string
 
 exception Error of error
 
-type each = string -> string -> bool -> string -> string -> unit
+type each = string -> string -> bool -> string -> string -> string -> unit
