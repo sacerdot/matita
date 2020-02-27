@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/relocation/rtmap_sle.ma".
-include "ground_2/relocation/rtmap_sdj.ma".
+include "ground/relocation/rtmap_sle.ma".
+include "ground/relocation/rtmap_sdj.ma".
 include "static_2/notation/relations/relation_5.ma".
 include "static_2/syntax/lenv.ma".
 

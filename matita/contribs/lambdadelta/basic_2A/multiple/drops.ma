@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/xoa/ex_4_3.ma".
-include "ground_2/relocation/mr2_minus.ma".
+include "ground/xoa/ex_4_3.ma".
+include "ground/relocation/mr2_minus.ma".
 include "basic_2A/notation/relations/rdropstar_3.ma".
 include "basic_2A/notation/relations/rdropstar_4.ma".
 include "basic_2A/substitution/drop.ma".

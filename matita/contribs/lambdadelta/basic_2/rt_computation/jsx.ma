@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/xoa/ex_4_3.ma".
+include "ground/xoa/ex_4_3.ma".
 include "basic_2/notation/relations/topredtysnstrong_4.ma".
 include "basic_2/rt_computation/rsx.ma".
 

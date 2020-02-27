@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/lib/arith.ma".
+include "ground/lib/arith.ma".
 include "static_2/notation/functions/one_0.ma".
 include "static_2/notation/functions/two_0.ma".
 include "static_2/notation/functions/omega_0.ma".

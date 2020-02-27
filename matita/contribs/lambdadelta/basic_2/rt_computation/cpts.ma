@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/lib/ltc.ma".
+include "ground/lib/ltc.ma".
 include "basic_2/notation/relations/ptystar_6.ma".
 include "basic_2/rt_transition/cpt.ma".
 

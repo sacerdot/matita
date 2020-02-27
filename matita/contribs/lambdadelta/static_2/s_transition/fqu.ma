@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/xoa/and_4.ma".
-include "ground_2/xoa/ex_4_2.ma".
-include "ground_2/xoa/or_4.ma".
+include "ground/xoa/and_4.ma".
+include "ground/xoa/ex_4_2.ma".
+include "ground/xoa/or_4.ma".
 include "static_2/notation/relations/supterm_6.ma".
 include "static_2/notation/relations/supterm_7.ma".
 include "static_2/syntax/lenv.ma".

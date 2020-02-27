@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/notation/functions/uparrowstar_2.ma".
+include "ground/notation/functions/uparrowstar_2.ma".
 include "apps_2/notation/functional/uparrow_2.ma".
 include "static_2/relocation/lifts.ma".
 

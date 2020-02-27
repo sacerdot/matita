@@ -5,7 +5,7 @@ TRIM := sed "s/ \\+$$//"
 
 XOA_DIR      := ../../../components/binaries/xoa
 XOA          := xoa.native
-XOA_CONF     := ground_2/xoa.conf.xml
+XOA_CONF     := ground/xoa.conf.xml
 XOA_OPTS     := ../../matita.conf.xml $(XOA_CONF)
 
 DEP_INPUT    := .depend
@@ -26,7 +26,7 @@ TAGS := all names xoa orig elim deps top leaf stats tbls odeps trim clean \
         pack-ground pack-2a pack-2b \
         home up-home \
 
-PACKAGES  := ground_2 basic_2A static_2 basic_2 apps_2 alpha_1
+PACKAGES  := ground basic_2A static_2 basic_2 apps_2 alpha_1
 
 LDWS := $(shell find -name "*.ldw.xml")
 TBLS := $(shell find -name "*.tbl")
@@ -248,7 +248,7 @@ trim: $(TRIMS:%=%.trimmed)
 
 pack-ground: PKG = lambdadelta_ground
 
-pack-ground: DIRS = ground_2
+pack-ground: DIRS = ground
 
 pack-ground: PMAS = $(shell find $(DIRS) -name *.ma)
 

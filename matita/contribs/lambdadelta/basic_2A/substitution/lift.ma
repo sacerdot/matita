@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/xoa/ex_3_2.ma".
+include "ground/xoa/ex_3_2.ma".
 include "basic_2A/notation/relations/rlift_4.ma".
 include "basic_2A/grammar/term_weight.ma".
 include "basic_2A/grammar/term_simple.ma".

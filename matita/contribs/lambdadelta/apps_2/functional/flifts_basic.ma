@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/relocation/nstream_basic.ma".
+include "ground/relocation/nstream_basic.ma".
 include "apps_2/functional/flifts.ma".
 include "apps_2/notation/functional/uparrow_3.ma".
 

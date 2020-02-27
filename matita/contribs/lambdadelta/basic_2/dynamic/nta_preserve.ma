@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/xoa/ex_5_3.ma".
+include "ground/xoa/ex_5_3.ma".
 include "basic_2/rt_equivalence/cpcs_cpcs.ma".
 include "basic_2/dynamic/cnv_preserve_cpcs.ma".
 include "basic_2/dynamic/nta.ma".

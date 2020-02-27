@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/lib/arith_2b.ma".
+include "ground/lib/arith_2b.ma".
 include "basic_2/rt_computation/cprs_cprs.ma".
 include "basic_2/dynamic/cnv_drops.ma".
 include "basic_2/dynamic/cnv_preserve_sub.ma".

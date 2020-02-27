@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/ynat/ynat_lt.ma".
+include "ground/ynat/ynat_lt.ma".
 include "basic_2A/notation/relations/midiso_4.ma".
 include "basic_2A/grammar/lenv_length.ma".
 

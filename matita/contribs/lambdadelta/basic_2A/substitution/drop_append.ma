@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/lib/arith_2a.ma".
+include "ground/lib/arith_2a.ma".
 include "basic_2A/grammar/lenv_append.ma".
 include "basic_2A/substitution/drop.ma".
 

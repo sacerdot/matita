@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/lib/ltc.ma".
+include "ground/lib/ltc.ma".
 include "static_2/relocation/seq_seq.ma".
 
 (* GENERIC SLICING FOR LOCAL ENVIRONMENTS ***********************************)

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/notation/relations/ringeq_3.ma".
+include "ground/notation/relations/ringeq_3.ma".
 include "apps_2/notation/models/at_3.ma".
 include "apps_2/notation/models/oplus_4.ma".
 include "apps_2/notation/models/wbrackets_4.ma".

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/relocation/rtmap_basic.ma".
+include "ground/relocation/rtmap_basic.ma".
 include "static_2/relocation/lifts.ma".
 include "apps_2/models/veq.ma".
 

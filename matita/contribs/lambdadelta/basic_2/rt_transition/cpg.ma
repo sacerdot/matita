@@ -12,16 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/xoa/ex_3_3.ma".
-include "ground_2/xoa/ex_4_2.ma".
-include "ground_2/xoa/ex_4_4.ma".
-include "ground_2/xoa/ex_5_2.ma".
-include "ground_2/xoa/ex_6_9.ma".
-include "ground_2/xoa/ex_7_10.ma".
-include "ground_2/xoa/or_5.ma".
-include "ground_2/steps/rtc_shift.ma".
-include "ground_2/steps/rtc_plus.ma".
-include "ground_2/steps/rtc_max.ma".
+include "ground/xoa/ex_3_3.ma".
+include "ground/xoa/ex_4_2.ma".
+include "ground/xoa/ex_4_4.ma".
+include "ground/xoa/ex_5_2.ma".
+include "ground/xoa/ex_6_9.ma".
+include "ground/xoa/ex_7_10.ma".
+include "ground/xoa/or_5.ma".
+include "ground/steps/rtc_shift.ma".
+include "ground/steps/rtc_plus.ma".
+include "ground/steps/rtc_max.ma".
 include "basic_2/notation/relations/predty_7.ma".
 include "static_2/syntax/sh.ma".
 include "static_2/syntax/lenv.ma".

@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/xoa/ex_5_5.ma".
-include "ground_2/ynat/ynat_plus.ma".
+include "ground/xoa/ex_5_5.ma".
+include "ground/ynat/ynat_plus.ma".
 include "basic_2A/substitution/drop.ma".
 
 (* LAZY SN POINTWISE EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS ****)

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/lib/star.ma".
+include "ground/lib/star.ma".
 include "basic_2/notation/relations/pconvstar_5.ma".
 include "basic_2/rt_conversion/cpc.ma".
 

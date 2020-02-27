@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/xoa/ex_1_2.ma".
-include "ground_2/xoa/ex_4_3.ma".
-include "ground_2/relocation/rtmap_coafter.ma".
+include "ground/xoa/ex_1_2.ma".
+include "ground/xoa/ex_4_3.ma".
+include "ground/relocation/rtmap_coafter.ma".
 include "static_2/notation/relations/rdropstar_4.ma".
 include "static_2/notation/relations/rdrop_3.ma".
 include "static_2/relocation/seq.ma".

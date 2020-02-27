@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/xoa/and_4.ma".
+include "ground/xoa/and_4.ma".
 include "basic_2A/notation/relations/lazyor_5.ma".
 include "basic_2A/multiple/frees.ma".
 

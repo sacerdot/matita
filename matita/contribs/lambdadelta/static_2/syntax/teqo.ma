@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/xoa/ex_1_2.ma".
+include "ground/xoa/ex_1_2.ma".
 include "static_2/notation/relations/topiso_2.ma".
 include "static_2/syntax/term.ma".
 

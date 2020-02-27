@@ -12,12 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/xoa/ex_4_1.ma".
-include "ground_2/xoa/ex_5_6.ma".
-include "ground_2/xoa/ex_6_6.ma".
-include "ground_2/xoa/ex_6_7.ma".
-include "ground_2/xoa/ex_7_7.ma".
-include "ground_2/xoa/or_4.ma".
+include "ground/xoa/ex_4_1.ma".
+include "ground/xoa/ex_5_6.ma".
+include "ground/xoa/ex_6_6.ma".
+include "ground/xoa/ex_6_7.ma".
+include "ground/xoa/ex_7_7.ma".
+include "ground/xoa/or_4.ma".
 include "basic_2A/notation/relations/pred_4.ma".
 include "basic_2A/static/lsubr.ma".
 include "basic_2A/unfold/lstas.ma".

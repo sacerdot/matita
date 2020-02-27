@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/lib/exteq.ma".
+include "ground/lib/exteq.ma".
 include "apps_2/models/model_vpush.ma".
 include "apps_2/models/tm.ma".
 

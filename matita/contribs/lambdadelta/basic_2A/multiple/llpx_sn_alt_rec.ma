@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/xoa/and_4.ma".
+include "ground/xoa/and_4.ma".
 include "basic_2A/substitution/lift_neg.ma".
 include "basic_2A/substitution/drop_drop.ma".
 include "basic_2A/multiple/llpx_sn.ma".

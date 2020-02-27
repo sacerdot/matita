@@ -12,13 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/xoa/ex_4_1.ma".
-include "ground_2/xoa/ex_4_3.ma".
-include "ground_2/xoa/ex_5_6.ma".
-include "ground_2/xoa/ex_6_7.ma".
-include "ground_2/steps/rtc_max_shift.ma".
-include "ground_2/steps/rtc_isrt_plus.ma".
-include "ground_2/steps/rtc_isrt_max_shift.ma".
+include "ground/xoa/ex_4_1.ma".
+include "ground/xoa/ex_4_3.ma".
+include "ground/xoa/ex_5_6.ma".
+include "ground/xoa/ex_6_7.ma".
+include "ground/steps/rtc_max_shift.ma".
+include "ground/steps/rtc_isrt_plus.ma".
+include "ground/steps/rtc_isrt_max_shift.ma".
 include "basic_2/notation/relations/pred_6.ma".
 include "basic_2/rt_transition/cpg.ma".
 

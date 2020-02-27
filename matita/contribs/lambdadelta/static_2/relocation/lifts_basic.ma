@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/relocation/rtmap_basic_after.ma".
+include "ground/relocation/rtmap_basic_after.ma".
 include "static_2/notation/relations/rlift_4.ma".
 include "static_2/relocation/lifts.ma".
 

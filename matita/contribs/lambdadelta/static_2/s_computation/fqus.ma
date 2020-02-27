@@ -12,10 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/xoa/ex_2_3.ma".
-include "ground_2/xoa/ex_3_3.ma".
-include "ground_2/xoa/or_5.ma".
-include "ground_2/lib/star.ma".
+include "ground/xoa/ex_2_3.ma".
+include "ground/xoa/ex_3_3.ma".
+include "ground/xoa/or_5.ma".
+include "ground/lib/star.ma".
 include "static_2/notation/relations/suptermstar_6.ma".
 include "static_2/notation/relations/suptermstar_7.ma".
 include "static_2/s_transition/fquq.ma".

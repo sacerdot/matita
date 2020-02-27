@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/relocation/nstream_coafter.ma".
+include "ground/relocation/nstream_coafter.ma".
 include "static_2/relocation/drops_drops.ma".
 include "static_2/static/frees_fqup.ma".
 

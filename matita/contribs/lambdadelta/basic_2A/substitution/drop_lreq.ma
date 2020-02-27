@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/ynat/ynat_minus_sn.ma".
+include "ground/ynat/ynat_minus_sn.ma".
 include "basic_2A/grammar/lreq_lreq.ma".
 include "basic_2A/substitution/drop.ma".
 

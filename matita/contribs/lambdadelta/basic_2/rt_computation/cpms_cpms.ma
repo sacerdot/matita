@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/xoa/ex_3_5.ma".
-include "ground_2/xoa/ex_5_7.ma".
+include "ground/xoa/ex_3_5.ma".
+include "ground/xoa/ex_5_7.ma".
 include "basic_2/rt_transition/cpm_lsubr.ma".
 include "basic_2/rt_computation/cpms_drops.ma".
 include "basic_2/rt_computation/cprs.ma".

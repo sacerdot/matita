@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/xoa/ex_2_3.ma".
+include "ground/xoa/ex_2_3.ma".
 include "static_2/syntax/ac.ma".
 include "basic_2/notation/relations/exclaim_5.ma".
 include "basic_2/rt_computation/cpms.ma".

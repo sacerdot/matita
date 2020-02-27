@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/relocation/nstream_after.ma".
+include "ground/relocation/nstream_after.ma".
 include "static_2/notation/relations/rliftstar_3.ma".
 include "static_2/notation/relations/rlift_3.ma".
 include "static_2/syntax/term.ma".

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/lib/ltc_ctc.ma".
+include "ground/lib/ltc_ctc.ma".
 include "basic_2/rt_computation/cpms.ma".
 
 (* CONTEXT-SENSITIVE PARALLEL R-COMPUTATION FOR TERMS ***********************)

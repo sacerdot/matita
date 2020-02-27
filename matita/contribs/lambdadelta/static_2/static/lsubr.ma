@@ -12,10 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/xoa/ex_2_3.ma".
-include "ground_2/xoa/ex_3_2.ma".
-include "ground_2/xoa/ex_3_3.ma".
-include "ground_2/xoa/ex_3_4.ma".
+include "ground/xoa/ex_2_3.ma".
+include "ground/xoa/ex_3_2.ma".
+include "ground/xoa/ex_3_3.ma".
+include "ground/xoa/ex_3_4.ma".
 include "static_2/notation/relations/lrsubeqc_2.ma".
 include "static_2/syntax/lenv.ma".
 

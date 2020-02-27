@@ -38,6 +38,7 @@ and str = parse
    | QT       { ""                              }
    | "\\\\"   { "\\" ^ str lexbuf               }
    | "\\\""   { "\"" ^ str lexbuf               }
+   | "\\ "    { "\xC2\xA0" ^ str lexbuf         }
    | _ as c   { S.make 1 c ^ str lexbuf         }
 and block = parse
    | "*)"     { ()                              }

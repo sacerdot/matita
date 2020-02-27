@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/xoa/ex_4_3.ma".
-include "ground_2/xoa/ex_5_4.ma".
-include "ground_2/ynat/ynat_plus.ma".
+include "ground/xoa/ex_4_3.ma".
+include "ground/xoa/ex_5_4.ma".
+include "ground/ynat/ynat_plus.ma".
 include "basic_2A/notation/relations/freestar_4.ma".
 include "basic_2A/substitution/lift_neg.ma".
 include "basic_2A/substitution/drop.ma".

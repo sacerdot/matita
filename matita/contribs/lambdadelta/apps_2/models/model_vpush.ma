@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/lib/functions.ma".
+include "ground/lib/functions.ma".
 include "apps_2/notation/models/upspoon_4.ma".
 include "apps_2/models/model.ma".
 

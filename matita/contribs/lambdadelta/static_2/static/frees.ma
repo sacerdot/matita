@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/relocation/rtmap_sor.ma".
+include "ground/relocation/rtmap_sor.ma".
 include "static_2/notation/relations/freeplus_3.ma".
 include "static_2/syntax/lenv.ma".
 

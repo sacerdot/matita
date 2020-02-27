@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/ynat/ynat_minus_sn.ma".
+include "ground/ynat/ynat_minus_sn.ma".
 include "basic_2A/notation/relations/cosn_5.ma".
 include "basic_2A/computation/lsx.ma".
 

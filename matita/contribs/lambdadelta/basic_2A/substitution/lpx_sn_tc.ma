@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/lib/star.ma".
+include "ground/lib/star.ma".
 include "basic_2A/substitution/lpx_sn.ma".
 
 (* SN POINTWISE EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS *********)

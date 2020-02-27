@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/pull/pull_4.ma".
-include "ground_2/relocation/rtmap_uni.ma".
+include "ground/pull/pull_4.ma".
+include "ground/relocation/rtmap_uni.ma".
 include "static_2/notation/relations/relation_3.ma".
 include "static_2/syntax/cext2.ma".
 include "static_2/relocation/sex.ma".

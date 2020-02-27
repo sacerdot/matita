@@ -16,7 +16,7 @@
  * Initial invocation: - Patience on me to gain peace and perfection! -
  *)
 
-include "ground_2/lib/relations.ma".
+include "ground/lib/relations.ma".
 include "static_2/notation/functions/item0_0.ma".
 include "static_2/notation/functions/snitem2_2.ma".
 

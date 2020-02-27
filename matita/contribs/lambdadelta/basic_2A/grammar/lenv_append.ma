@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/notation/functions/append_2.ma".
+include "ground/notation/functions/append_2.ma".
 include "basic_2A/notation/functions/snbind2_3.ma".
 include "basic_2A/notation/functions/snabbr_2.ma".
 include "basic_2A/notation/functions/snabst_2.ma".

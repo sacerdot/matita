@@ -12,11 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/xoa/ex_1_2.ma".
-include "ground_2/xoa/ex_1_3.ma".
-include "ground_2/xoa/ex_3_3.ma".
-include "ground_2/lib/star.ma".
-include "ground_2/lib/lstar_2a.ma".
+include "ground/xoa/ex_1_2.ma".
+include "ground/xoa/ex_1_3.ma".
+include "ground/xoa/ex_3_3.ma".
+include "ground/lib/star.ma".
+include "ground/lib/lstar_2a.ma".
 include "basic_2A/notation/relations/rdrop_5.ma".
 include "basic_2A/notation/relations/rdrop_4.ma".
 include "basic_2A/notation/relations/rdrop_3.ma".

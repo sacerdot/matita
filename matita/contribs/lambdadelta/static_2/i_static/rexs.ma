@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/lib/star.ma".
+include "ground/lib/star.ma".
 include "static_2/notation/relations/relationstar_4.ma".
 include "static_2/static/rex.ma".
 

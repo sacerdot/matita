@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/xoa/ex_4_5.ma".
+include "ground/xoa/ex_4_5.ma".
 include "basic_2A/reduction/lpr_lpr.ma".
 include "basic_2A/computation/cprs_lift.ma".
 

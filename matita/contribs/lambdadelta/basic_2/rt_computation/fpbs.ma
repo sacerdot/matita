@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/lib/star.ma".
+include "ground/lib/star.ma".
 include "basic_2/notation/relations/predsubtystar_7.ma".
 include "basic_2/rt_transition/fpbq.ma".
 

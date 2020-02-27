@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/lib/arith_2a.ma".
-include "ground_2/ynat/ynat_minus_sn.ma".
+include "ground/lib/arith_2a.ma".
+include "ground/ynat/ynat_minus_sn.ma".
 include "basic_2A/substitution/drop_drop.ma".
 include "basic_2A/multiple/frees.ma".
 

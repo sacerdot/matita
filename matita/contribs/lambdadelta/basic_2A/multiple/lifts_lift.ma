@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/relocation/mr2_minus.ma".
+include "ground/relocation/mr2_minus.ma".
 include "basic_2A/substitution/lift_lift.ma".
 include "basic_2A/multiple/lifts.ma".
 

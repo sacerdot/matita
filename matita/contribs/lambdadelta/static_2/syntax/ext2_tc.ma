@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/lib/star.ma".
+include "ground/lib/star.ma".
 include "static_2/syntax/ext2.ma".
 
 (* EXTENSION TO BINDERS OF A RELATION FOR TERMS *****************************)

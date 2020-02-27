@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/xoa/ex_4_5.ma".
+include "ground/xoa/ex_4_5.ma".
 include "basic_2/rt_transition/cpx_lsubr.ma".
 include "basic_2/rt_computation/cpxs.ma".
 

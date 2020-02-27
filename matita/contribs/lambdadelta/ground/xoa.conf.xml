@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<helm_registry>
+  <section name="xoa">
+    <key name="output_dir">.</key>
+    <key name="objects">ground/xoa</key>
+    <key name="notations">ground/notation/xoa</key>
+    <key name="include">basics/pts.ma</key>
+    <key name="and">3</key>
+    <key name="and">4</key>
+    <key name="ex">1 2</key>
+    <key name="ex">1 3</key>
+    <key name="ex">1 4</key>
+    <key name="ex">2 2</key>
+    <key name="ex">2 3</key>
+    <key name="ex">3 1</key>
+    <key name="ex">3 2</key>
+    <key name="ex">3 3</key>
+    <key name="ex">3 4</key>
+    <key name="ex">3 5</key>
+    <key name="ex">4 1</key>
+    <key name="ex">4 2</key>
+    <key name="ex">4 3</key>
+    <key name="ex">4 4</key>
+    <key name="ex">4 5</key>
+    <key name="ex">5 1</key>
+    <key name="ex">5 2</key>
+    <key name="ex">5 3</key>
+    <key name="ex">5 4</key>
+    <key name="ex">5 5</key>
+    <key name="ex">5 6</key>
+    <key name="ex">5 7</key>
+    <key name="ex">6 3</key>
+    <key name="ex">6 4</key>
+    <key name="ex">6 5</key>
+    <key name="ex">6 6</key>
+    <key name="ex">6 7</key>
+    <key name="ex">6 8</key>
+    <key name="ex">6 9</key>
+    <key name="ex">7 3</key>
+    <key name="ex">7 4</key>
+    <key name="ex">7 5</key>
+    <key name="ex">7 6</key>
+    <key name="ex">7 7</key>
+    <key name="ex">7 10</key>
+    <key name="ex">8 4</key>
+    <key name="ex">8 5</key>
+    <key name="ex">9 3</key>
+    <key name="or">3</key>
+    <key name="or">4</key>
+    <key name="or">5</key>
+  </section>
+</helm_registry>

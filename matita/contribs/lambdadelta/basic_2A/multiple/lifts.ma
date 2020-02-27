@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/relocation/mr2_at.ma".
-include "ground_2/relocation/mr2_plus.ma".
+include "ground/relocation/mr2_at.ma".
+include "ground/relocation/mr2_plus.ma".
 include "basic_2A/notation/relations/rliftstar_3.ma".
 include "basic_2A/substitution/lift.ma".
 

@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/lib/functions.ma".
-include "ground_2/lib/exteq.ma".
+include "ground/lib/functions.ma".
+include "ground/lib/exteq.ma".
 include "apps_2/functional/flifts_flifts_basic.ma".
 include "apps_2/functional/mf_vlift.ma".
 

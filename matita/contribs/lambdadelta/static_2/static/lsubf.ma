@@ -12,14 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/xoa/ex_3_3.ma".
-include "ground_2/xoa/ex_4_3.ma".
-include "ground_2/xoa/ex_5_5.ma".
-include "ground_2/xoa/ex_5_6.ma".
-include "ground_2/xoa/ex_6_5.ma".
-include "ground_2/xoa/ex_7_6.ma".
+include "ground/xoa/ex_3_3.ma".
+include "ground/xoa/ex_4_3.ma".
+include "ground/xoa/ex_5_5.ma".
+include "ground/xoa/ex_5_6.ma".
+include "ground/xoa/ex_6_5.ma".
+include "ground/xoa/ex_7_6.ma".
 include "static_2/notation/relations/lrsubeqf_4.ma".
-include "ground_2/relocation/nstream_sor.ma".
+include "ground/relocation/nstream_sor.ma".
 include "static_2/static/frees.ma".
 
 (* RESTRICTED REFINEMENT FOR CONTEXT-SENSITIVE FREE VARIABLES ***************)

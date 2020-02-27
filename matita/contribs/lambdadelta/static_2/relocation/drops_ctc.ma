@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/lib/star.ma".
+include "ground/lib/star.ma".
 include "static_2/relocation/seq_seq.ma".
 
 (* GENERIC SLICING FOR LOCAL ENVIRONMENTS ***********************************)

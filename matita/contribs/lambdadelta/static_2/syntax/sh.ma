@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/lib/arith.ma".
+include "ground/lib/arith.ma".
 include "static_2/notation/functions/upspoon_2.ma".
 
 (* SORT HIERARCHY ***********************************************************)

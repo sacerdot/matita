@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page xmlns="http://lambdadelta.info/"
+      description = "\lambda\delta home page"
+      title = "\lambda\delta home page"
+      logo = "crux"
+      head = "cic:/matita/lambdadelta/ground/ (background for λδ version 2)"
+>
+   <sitemap name="sitemap"/>
+
+   <section4 name="summary">Summary of the Specification</section4>
+   <body>Here is a numerical account of the specification's contents
+         and its timeline.
+   </body>
+   <table name="ground_sum"/>
+
+   <news class="gamma" date="2020 February 27.">
+         Specification is released as an independent package (was ground_2).
+   </news>
+   <news class="beta" date="2020 January 6.">
+         Centralized xoa infrastructure removed.
+   </news>
+   <news class="beta" date="2018 June 6.">
+         Decentralized xoa infrastructure.
+   </news>
+   <news class="beta" date="2016 April 18.">
+         Generic rt-transition counter (rtc).
+   </news>
+   <news class="beta" date="2016 March 4.">
+         Platform-independent multiple relocation (rtmap).
+   </news>
+   <news class="alpha" date="2016 January 20.">
+         Multiple relocation with streams of naturals.
+   </news>
+   <news class="alpha" date="2015 October 11.">
+         Multiple relocation with lists of booleans.
+   </news>
+   <news class="alpha" date="2013 November 27.">
+         Natural numbers with infinity (ynat).
+   </news>
+   <news class="alpha" date="2011 August 10.">
+         Specification starts.
+   </news>
+
+   <section4 name="structure">Logical Structure of the Specification</section4>
+   <body>This table reports the specification's components and their planes.
+   </body>
+   <table name="ground_2_src"/>
+
+   <footer/>
+</page>

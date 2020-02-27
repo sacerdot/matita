@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/xoa/ex_5_5.ma".
+include "ground/xoa/ex_5_5.ma".
 include "static_2/relocation/drops_drops.ma".
 include "static_2/s_computation/fqup_weight.ma".
 include "static_2/s_computation/fqup_drops.ma".

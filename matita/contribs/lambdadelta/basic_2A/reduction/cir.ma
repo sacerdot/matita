@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/xoa/and_4.ma".
+include "ground/xoa/and_4.ma".
 include "basic_2A/notation/relations/prednotreducible_3.ma".
 include "basic_2A/reduction/crr.ma".
 

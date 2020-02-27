@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/xoa/ex_4_1_props.ma".
+include "ground/xoa/ex_4_1_props.ma".
 include "basic_2/dynamic/cnv_cpm_teqx.ma".
 
 (* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)

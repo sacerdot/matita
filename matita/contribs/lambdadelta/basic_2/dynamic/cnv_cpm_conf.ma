@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/lib/arith_2b.ma".
+include "ground/lib/arith_2b.ma".
 include "basic_2/rt_transition/lpr_lpr.ma".
 include "basic_2/rt_computation/cpms_lsubr.ma".
 include "basic_2/rt_computation/cpms_cpms.ma".
