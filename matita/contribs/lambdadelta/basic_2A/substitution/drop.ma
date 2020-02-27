@@ -12,7 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2A/lib/lstar.ma".
+include "ground_2/xoa/ex_1_2.ma".
+include "ground_2/xoa/ex_1_3.ma".
+include "ground_2/xoa/ex_3_3.ma".
+include "ground_2/lib/star.ma".
+include "ground_2/lib/lstar_2a.ma".
 include "basic_2A/notation/relations/rdrop_5.ma".
 include "basic_2A/notation/relations/rdrop_4.ma".
 include "basic_2A/notation/relations/rdrop_3.ma".
@@ -273,7 +277,7 @@ lemma drop_T: ∀L1,L2,s,l,m. ⬇[s, l, m] L1 ≡ L2 → ⬇[Ⓣ, l, m] L1 ≡ L
 #L1 #L2 * /2 width=1 by drop_FT/
 qed-.
 
-lemma d_liftable_LTC: ∀R. d_liftable R → d_liftable (LTC … R).
+lemma d_liftable_LTC: ∀R. d_liftable R → d_liftable (CTC … R).
 #R #HR #K #T1 #T2 #H elim H -T2
 [ /3 width=10 by inj/
 | #T #T2 #_ #HT2 #IHT1 #L #s #l #m #HLK #U1 #HTU1 #U2 #HTU2
@@ -281,7 +285,7 @@ lemma d_liftable_LTC: ∀R. d_liftable R → d_liftable (LTC … R).
 ]
 qed-.
 
-lemma d_deliftable_sn_LTC: ∀R. d_deliftable_sn R → d_deliftable_sn (LTC … R).
+lemma d_deliftable_sn_LTC: ∀R. d_deliftable_sn R → d_deliftable_sn (CTC … R).
 #R #HR #L #U1 #U2 #H elim H -U2
 [ #U2 #HU12 #K #s #l #m #HLK #T1 #HTU1
   elim (HR … HU12 … HLK … HTU1) -HR -L -U1 /3 width=3 by inj, ex2_intro/
@@ -361,7 +365,8 @@ lemma drop_fwd_length_le_ge: ∀L1,L2,l,m,s. ⬇[s, l, m] L1 ≡ L2 → l ≤ |L
 qed-.
 
 lemma drop_fwd_length: ∀L1,L2,l,m. ⬇[Ⓕ, l, m] L1 ≡ L2 → |L1| = |L2| + m.
-#L1 #L2 #l #m #H elim H -L1 -L2 -l -m // normalize /2 width=1 by/
+#L1 #L2 #l #m #H elim H -L1 -L2 -l -m // normalize
+/2 width=1 by le_to_le_to_eq, le_n/
 qed-.
 
 lemma drop_fwd_length_minus2: ∀L1,L2,l,m. ⬇[Ⓕ, l, m] L1 ≡ L2 → |L2| = |L1| - m.

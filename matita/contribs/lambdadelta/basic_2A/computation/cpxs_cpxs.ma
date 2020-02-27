@@ -116,7 +116,7 @@ lemma cpx_bind2: ∀h,g,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡[h, g] V2 →
 (* Advanced properties ******************************************************)
 
 lemma lpx_cpxs_trans: ∀h,g,G. s_rs_transitive … (cpx h g G) (λ_.lpx h g G).
-#h #g #G @s_r_trans_LTC1 /2 width=3 by lpx_cpx_trans/ (**) (* full auto fails *)
+#h #g #G @s_r_trans_CTC1 /2 width=3 by lpx_cpx_trans/ (**) (* full auto fails *)
 qed-.
 
 lemma cpxs_bind2_dx: ∀h,g,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡[h, g] V2 →

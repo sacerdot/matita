@@ -19,8 +19,8 @@ include "basic_2A/multiple/llpx_sn_drop.ma".
 (* Properties about transitive closure **************************************)
 
 lemma llpx_sn_TC_pair_dx: ∀R. (∀L. reflexive … (R L)) →
-                          ∀I,L,V1,V2,T. LTC … R L V1 V2 →
-                          LTC … (llpx_sn R 0) T (L.ⓑ{I}V1) (L.ⓑ{I}V2).
+                          ∀I,L,V1,V2,T. CTC … R L V1 V2 →
+                          CTC … (llpx_sn R 0) T (L.ⓑ{I}V1) (L.ⓑ{I}V2).
 #R #HR #I #L #V1 #V2 #T #H @(TC_star_ind … V2 H) -V2
 /4 width=9 by llpx_sn_bind_repl_O, llpx_sn_refl, step, inj/
 qed.

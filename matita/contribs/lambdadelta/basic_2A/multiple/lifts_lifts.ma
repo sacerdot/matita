@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/relocation/mr2_append.ma".
 include "basic_2A/multiple/lifts_lift.ma".
 
 (* GENERIC RELOCATION *******************************************************)

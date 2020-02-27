@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2A/notation/relations/rdrop_3.ma".
-include "basic_2A/grammar/genv.ma".
+include "basic_2A/grammar/genv_length.ma".
 
 (* GLOBAL ENVIRONMENT READING ***********************************************)
 
@@ -65,14 +65,14 @@ fact gget_inv_lt_aux: ∀I,G,G1,G2,V,m. ⬇[m] G ≡ G2 → G = G1. ⓑ{I} V →
 qed-.
 
 lemma gget_inv_lt: ∀I,G1,G2,V,m.
-                    ⬇[m] G1. ⓑ{I} V ≡ G2 → m < |G1| → ⬇[m] G1 ≡ G2.
+                   ⬇[m] G1. ⓑ{I} V ≡ G2 → m < |G1| → ⬇[m] G1 ≡ G2.
 /2 width=5 by gget_inv_lt_aux/ qed-.
 
 (* Basic properties *********************************************************)
 
 lemma gget_total: ∀m,G1. ∃G2. ⬇[m] G1 ≡ G2.
 #m #G1 elim G1 -G1 /3 width=2 by gget_gt, ex_intro/
-#I #V #G1 * #G2 #HG12
+#G1 #I #V * #G2 #HG12
 elim (lt_or_eq_or_gt m (|G1|)) #Hm
 [ /3 width=2 by gget_lt, ex_intro/
 | destruct /3 width=2 by gget_eq, ex_intro/

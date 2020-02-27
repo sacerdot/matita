@@ -20,15 +20,13 @@ PRB_OPTS     := $(XOA_OPTS) -g -i
 ORIG         := . ./orig.sh
 ORIGS        := basic_2/basic_1.orig
 
-CONTRIB      := lambdadelta_2B
-
 WWW          := ../../../../helm/www/lambdadelta
 
-TAGS := all names xoa orig elim deps top leaf stats tbls odeps trim contrib clean \
-        home up-home
+TAGS := all names xoa orig elim deps top leaf stats tbls odeps trim clean \
+        pack-ground pack-2a pack-2b \
+        home up-home \
 
-PACKAGES  := ground_2 static_2 basic_2 apps_2 alpha_1
-XPACKAGES := ground_2 static_2 basic_2
+PACKAGES  := ground_2 basic_2A static_2 basic_2 apps_2 alpha_1
 
 LDWS := $(shell find -name "*.ldw.xml")
 TBLS := $(shell find -name "*.tbl")
@@ -54,14 +52,6 @@ $(1)/deps.txt: $$(MAS_$(1))
 endef
 
 $(foreach PKG, $(PACKAGES), $(eval $(call MAS_TEMPLATE,$(PKG))))
-
-# XMAS #######################################################################
-
-define XMAS_TEMPLATE
-  XMAS += $$(MAS_$(1))
-endef
-
-$(foreach PKG, $(XPACKAGES), $(eval $(call XMAS_TEMPLATE,$(PKG))))
 
 # names ######################################################################
 
@@ -254,11 +244,41 @@ TRIMS := $(MAS) $(TBLS) $(LDWS)
 
 trim: $(TRIMS:%=%.trimmed)
 
-# contrib ####################################################################
+# package ground #############################################################
 
-contrib:
-	@echo "  TAR -cjf $(CONTRIB).tar.bz2 root $(XPACKAGES)"
-	$(H)tar -cjf $(CONTRIB).tar.bz2 ../lambdadelta/root $(XMAS:%=../lambdadelta/%)
+pack-ground: PKG = lambdadelta_ground
+
+pack-ground: DIRS = ground_2
+
+pack-ground: PMAS = $(shell find $(DIRS) -name *.ma)
+
+pack-ground:
+	@echo "  TAR -cjf $(PKG).tar.bz2 root $(DIRS)"
+	$(H)tar -cjf $(PKG).tar.bz2 ../lambdadelta/root $(PMAS:%=../lambdadelta/%)
+
+# package 2A ###################################################################
+
+pack-2a: PKG = lambdadelta_2A
+
+pack-2a: DIRS = basic_2A
+
+pack-2a: PMAS = $(shell find $(DIRS) -name *.ma)
+
+pack-2a:
+	@echo "  TAR -cjf $(PKG).tar.bz2 $(DIRS)"
+	$(H)tar -cjf $(PKG).tar.bz2 $(PMAS:%=../lambdadelta/%)
+
+# package 2B ###################################################################
+
+pack-2b: PKG = lambdadelta_2B
+
+pack-2b: DIRS = static_2 basic_2
+
+pack-2b: PMAS = $(shell find $(DIRS) -name *.ma)
+
+pack-2b:
+	@echo "  TAR -cjf $(PKG).tar.bz2 $(DIRS)"
+	$(H)tar -cjf $(PKG).tar.bz2 $(PMAS:%=../lambdadelta/%)
 
 # clean ######################################################################
 

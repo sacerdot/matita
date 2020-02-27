@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2A/ynat/ynat_lt.ma".
+include "ground_2/ynat/ynat_lt.ma".
 include "basic_2A/notation/relations/midiso_4.ma".
 include "basic_2A/grammar/lenv_length.ma".
 
@@ -23,9 +23,9 @@ inductive lreq: relation4 ynat ynat lenv lenv ≝
 | lreq_zero: ∀I1,I2,L1,L2,V1,V2.
              lreq 0 0 L1 L2 → lreq 0 0 (L1.ⓑ{I1}V1) (L2.ⓑ{I2}V2)
 | lreq_pair: ∀I,L1,L2,V,m. lreq 0 m L1 L2 →
-             lreq 0 (⫯m) (L1.ⓑ{I}V) (L2.ⓑ{I}V)
+             lreq 0 (↑m) (L1.ⓑ{I}V) (L2.ⓑ{I}V)
 | lreq_succ: ∀I1,I2,L1,L2,V1,V2,l,m.
-             lreq l m L1 L2 → lreq (⫯l) m (L1.ⓑ{I1}V1) (L2.ⓑ{I2}V2)
+             lreq l m L1 L2 → lreq (↑l) m (L1.ⓑ{I1}V1) (L2.ⓑ{I2}V2)
 .
 
 interpretation
@@ -34,12 +34,12 @@ interpretation
 
 (* Basic properties *********************************************************)
 
-lemma lreq_pair_lt: ∀I,L1,L2,V,m. L1 ⩬[0, ⫰m] L2 → 0 < m →
+lemma lreq_pair_lt: ∀I,L1,L2,V,m. L1 ⩬[0, ↓m] L2 → 0 < m →
                     L1.ⓑ{I}V ⩬[0, m] L2.ⓑ{I}V.
 #I #L1 #L2 #V #m #HL12 #Hm <(ylt_inv_O1 … Hm) /2 width=1 by lreq_pair/
 qed.
 
-lemma lreq_succ_lt: ∀I1,I2,L1,L2,V1,V2,l,m. L1 ⩬[⫰l, m] L2 → 0 < l →
+lemma lreq_succ_lt: ∀I1,I2,L1,L2,V1,V2,l,m. L1 ⩬[↓l, m] L2 → 0 < l →
                     L1.ⓑ{I1}V1 ⩬[l, m] L2. ⓑ{I2}V2.
 #I1 #I2 #L1 #L2 #V1 #V2 #l #m #HL12 #Hl <(ylt_inv_O1 … Hl) /2 width=1 by lreq_succ/
 qed.
@@ -104,7 +104,7 @@ lemma lreq_inv_zero1: ∀I1,K1,L2,V1. K1.ⓑ{I1}V1 ⩬[0, 0] L2 →
 
 fact lreq_inv_pair1_aux: ∀L1,L2,l,m. L1 ⩬[l, m] L2 →
                          ∀J,K1,W. L1 = K1.ⓑ{J}W → l = 0 → 0 < m →
-                         ∃∃K2. K1 ⩬[0, ⫰m] K2 & L2 = K2.ⓑ{J}W.
+                         ∃∃K2. K1 ⩬[0, ↓m] K2 & L2 = K2.ⓑ{J}W.
 #L1 #L2 #l #m * -L1 -L2 -l -m
 [ #l #m #J #K1 #W #H destruct
 | #I1 #I2 #L1 #L2 #V1 #V2 #_ #J #K1 #W #_ #_ #H
@@ -117,18 +117,18 @@ fact lreq_inv_pair1_aux: ∀L1,L2,l,m. L1 ⩬[l, m] L2 →
 qed-.
 
 lemma lreq_inv_pair1: ∀I,K1,L2,V,m. K1.ⓑ{I}V ⩬[0, m] L2 → 0 < m →
-                      ∃∃K2. K1 ⩬[0, ⫰m] K2 & L2 = K2.ⓑ{I}V.
+                      ∃∃K2. K1 ⩬[0, ↓m] K2 & L2 = K2.ⓑ{I}V.
 /2 width=6 by lreq_inv_pair1_aux/ qed-.
 
 lemma lreq_inv_pair: ∀I1,I2,L1,L2,V1,V2,m. L1.ⓑ{I1}V1 ⩬[0, m] L2.ⓑ{I2}V2 → 0 < m →
-                    ∧∧ L1 ⩬[0, ⫰m] L2 & I1 = I2 & V1 = V2.
+                    ∧∧ L1 ⩬[0, ↓m] L2 & I1 = I2 & V1 = V2.
 #I1 #I2 #L1 #L2 #V1 #V2 #m #H #Hm elim (lreq_inv_pair1 … H) -H //
 #Y #HL12 #H destruct /2 width=1 by and3_intro/
 qed-.
 
 fact lreq_inv_succ1_aux: ∀L1,L2,l,m. L1 ⩬[l, m] L2 →
                          ∀J1,K1,W1. L1 = K1.ⓑ{J1}W1 → 0 < l →
-                         ∃∃J2,K2,W2. K1 ⩬[⫰l, m] K2 & L2 = K2.ⓑ{J2}W2.
+                         ∃∃J2,K2,W2. K1 ⩬[↓l, m] K2 & L2 = K2.ⓑ{J2}W2.
 #L1 #L2 #l #m * -L1 -L2 -l -m
 [ #l #m #J1 #K1 #W1 #H destruct
 | #I1 #I2 #L1 #L2 #V1 #V2 #_ #J1 #K1 #W1 #_ #H
@@ -141,7 +141,7 @@ fact lreq_inv_succ1_aux: ∀L1,L2,l,m. L1 ⩬[l, m] L2 →
 qed-.
 
 lemma lreq_inv_succ1: ∀I1,K1,L2,V1,l,m. K1.ⓑ{I1}V1 ⩬[l, m] L2 → 0 < l →
-                      ∃∃I2,K2,V2. K1 ⩬[⫰l, m] K2 & L2 = K2.ⓑ{I2}V2.
+                      ∃∃I2,K2,V2. K1 ⩬[↓l, m] K2 & L2 = K2.ⓑ{I2}V2.
 /2 width=5 by lreq_inv_succ1_aux/ qed-.
 
 lemma lreq_inv_atom2: ∀L1,l,m. L1 ⩬[l, m] ⋆ → L1 = ⋆.
@@ -149,7 +149,7 @@ lemma lreq_inv_atom2: ∀L1,l,m. L1 ⩬[l, m] ⋆ → L1 = ⋆.
 qed-.
 
 lemma lreq_inv_succ: ∀I1,I2,L1,L2,V1,V2,l,m. L1.ⓑ{I1}V1 ⩬[l, m] L2.ⓑ{I2}V2 → 0 < l →
-                     L1 ⩬[⫰l, m] L2.
+                     L1 ⩬[↓l, m] L2.
 #I1 #I2 #L1 #L2 #V1 #V2 #l #m #H #Hl elim (lreq_inv_succ1 … H) -H //
 #Z #Y #X #HL12 #H destruct //
 qed-.
@@ -161,13 +161,13 @@ lemma lreq_inv_zero2: ∀I2,K2,L1,V2. L1 ⩬[0, 0] K2.ⓑ{I2}V2 →
 qed-.
 
 lemma lreq_inv_pair2: ∀I,K2,L1,V,m. L1 ⩬[0, m] K2.ⓑ{I}V → 0 < m →
-                      ∃∃K1. K1 ⩬[0, ⫰m] K2 & L1 = K1.ⓑ{I}V.
+                      ∃∃K1. K1 ⩬[0, ↓m] K2 & L1 = K1.ⓑ{I}V.
 #I #K2 #L1 #V #m #H #Hm elim (lreq_inv_pair1 … (lreq_sym … H)) -H
 /3 width=3 by lreq_sym, ex2_intro/
 qed-.
 
 lemma lreq_inv_succ2: ∀I2,K2,L1,V2,l,m. L1 ⩬[l, m] K2.ⓑ{I2}V2 → 0 < l →
-                      ∃∃I1,K1,V1. K1 ⩬[⫰l, m] K2 & L1 = K1.ⓑ{I1}V1.
+                      ∃∃I1,K1,V1. K1 ⩬[↓l, m] K2 & L1 = K1.ⓑ{I1}V1.
 #I2 #K2 #L1 #V2 #l #m #H #Hl elim (lreq_inv_succ1 … (lreq_sym … H)) -H 
 /3 width=5 by lreq_sym, ex2_3_intro/
 qed-.

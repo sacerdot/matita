@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/ynat/ynat_minus_sn.ma".
 include "basic_2A/grammar/lreq_lreq.ma".
 include "basic_2A/substitution/drop.ma".
 
@@ -26,7 +27,7 @@ definition dedropable_sn: predicate (relation lenv) ≝
 lemma lreq_drop_trans_be: ∀L1,L2,l,m. L1 ⩬[l, m] L2 →
                           ∀I,K2,W,s,i. ⬇[s, 0, i] L2 ≡ K2.ⓑ{I}W →
                           l ≤ i → i < l + m →
-                          ∃∃K1. K1 ⩬[0, ⫰(l+m-i)] K2 & ⬇[s, 0, i] L1 ≡ K1.ⓑ{I}W.
+                          ∃∃K1. K1 ⩬[0, ↓(l+m-i)] K2 & ⬇[s, 0, i] L1 ≡ K1.ⓑ{I}W.
 #L1 #L2 #l #m #H elim H -L1 -L2 -l -m
 [ #l #m #J #K2 #W #s #i #H
   elim (drop_inv_atom1 … H) -H #H destruct
@@ -36,24 +37,26 @@ lemma lreq_drop_trans_be: ∀L1,L2,l,m. L1 ⩬[l, m] L2 →
   elim (drop_inv_O1_pair1 … H) -H * #Hi #HLK1 [ -IHL12 | -HL12 ]
   [ #_ destruct >ypred_succ
     /2 width=3 by drop_pair, ex2_intro/
-  | lapply (ylt_inv_O1 i ?) /2 width=1 by ylt_inj/
-    #H <H -H #H lapply (ylt_inv_succ … H) -H
-    #Him elim (IHL12 … HLK1) -IHL12 -HLK1 // -Him
-    >yminus_succ <yminus_inj /3 width=3 by drop_drop_lt, ex2_intro/
+  | <(S_pred … Hi) <ysucc_inj #Him
+    lapply (ylt_inv_succ … Him) -Him #Him
+    elim (IHL12 … HLK1) -IHL12 -HLK1 // -Him
+    >yminus_succ /3 width=3 by drop_drop_lt, ex2_intro/
   ]
 | #I1 #I2 #L1 #L2 #V1 #V2 #l #m #_ #IHL12 #J #K2 #W #s #i #HLK2 #Hli
-  elim (yle_inv_succ1 … Hli) -Hli
-  #Hli #Hi <Hi >yplus_succ1 #H lapply (ylt_inv_succ … H) -H
-  #Hilm lapply (drop_inv_drop1_lt … HLK2 ?) -HLK2 /2 width=1 by ylt_O/
-  #HLK1 elim (IHL12 … HLK1) -IHL12 -HLK1 <yminus_inj >yminus_SO2
-  /4 width=3 by ylt_O, drop_drop_lt, ex2_intro/
+  elim (yle_inv_succ_sn_lt … Hli) -Hli #Hli #Hi
+  lapply (ylt_inv_inj … Hi) -Hi #Hi
+  <(S_pred … Hi) >yplus_succ1 <ysucc_inj #H
+  lapply (ylt_inv_succ … H) -H #Hilm
+  lapply (drop_inv_drop1_lt … HLK2 Hi) -HLK2 #HLK1
+  elim (IHL12 … HLK1) -IHL12 -HLK1 >minus_SO_dx
+  /3 width=3 by drop_drop_lt, ex2_intro/
 ]
 qed-.
 
 lemma lreq_drop_conf_be: ∀L1,L2,l,m. L1 ⩬[l, m] L2 →
                          ∀I,K1,W,s,i. ⬇[s, 0, i] L1 ≡ K1.ⓑ{I}W →
                          l ≤ i → i < l + m →
-                         ∃∃K2. K1 ⩬[0, ⫰(l+m-i)] K2 & ⬇[s, 0, i] L2 ≡ K2.ⓑ{I}W.
+                         ∃∃K2. K1 ⩬[0, ↓(l+m-i)] K2 & ⬇[s, 0, i] L2 ≡ K2.ⓑ{I}W.
 #L1 #L2 #l #m #HL12 #I #K1 #W #s #i #HLK1 #Hli #Hilm
 elim (lreq_drop_trans_be … (lreq_sym … HL12) … HLK1) // -L1 -Hli -Hilm
 /3 width=3 by lreq_sym, ex2_intro/

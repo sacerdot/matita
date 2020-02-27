@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/xoa/ex_4_3.ma".
 include "basic_2A/static/lsubr.ma".
 
 (* RESTRICTED LOCAL ENVIRONMENT REFINEMENT **********************************)

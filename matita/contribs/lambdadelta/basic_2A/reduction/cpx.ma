@@ -12,6 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/xoa/ex_3_4.ma".
+include "ground_2/xoa/ex_4_5.ma".
+include "ground_2/xoa/or_5.ma".
 include "basic_2A/notation/relations/pred_6.ma".
 include "basic_2A/static/sd.ma".
 include "basic_2A/reduction/cpr.ma".

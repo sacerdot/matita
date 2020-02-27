@@ -19,7 +19,7 @@ include "basic_2A/computation/cprs.ma".
 (* CONTEXT-SENSITIVE EXTENDED PARALLEL COMPUTATION ON TERMS *****************)
 
 definition cpxs: ∀h. sd h → relation4 genv lenv term term ≝
-                 λh,g,G. LTC … (cpx h g G).
+                 λh,g,G. CTC … (cpx h g G).
 
 interpretation "extended context-sensitive parallel computation (term)"
    'PRedStar h g G L T1 T2 = (cpxs h g G L T1 T2).
@@ -57,7 +57,7 @@ lemma cpxs_strap2: ∀h,g,G,L,T1,T. ⦃G, L⦄ ⊢ T1 ➡[h, g] T →
 normalize /2 width=3 by TC_strap/ qed.
 
 lemma lsubr_cpxs_trans: ∀h,g,G. lsub_trans … (cpxs h g G) lsubr.
-/3 width=5 by lsubr_cpx_trans, LTC_lsub_trans/
+/3 width=5 by lsubr_cpx_trans, CTC_lsub_trans/
 qed-.
 
 lemma cprs_cpxs: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡* T2 → ⦃G, L⦄ ⊢ T1 ➡*[h, g] T2.
@@ -145,7 +145,10 @@ lemma cpxs_inv_sort1: ∀h,g,G,L,U2,k. ⦃G, L⦄ ⊢ ⋆k ➡*[h, g] U2 →
   elim (cpx_inv_sort1 … HU2) -HU2
   [ #H destruct /2 width=4 by ex2_2_intro/
   | * #d0 #Hkd0 #H destruct -d
-    @(ex2_2_intro … (n+1) d0) /2 width=1 by deg_inv_prec/ >iter_SO //
+    @(ex2_2_intro … (n+1) d0)
+    [ <plus_plus_comm_23 /2 width=1 by deg_inv_prec/
+    | >iter_SO //
+    ]
   ]
 ]
 qed-.

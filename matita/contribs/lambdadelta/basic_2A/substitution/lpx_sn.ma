@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/xoa/ex_3_2.ma".
 include "basic_2A/grammar/lenv_length.ma".
 
 (* SN POINTWISE EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS *********)

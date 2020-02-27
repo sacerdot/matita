@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/relocation/mr2_append.ma".
 include "basic_2A/multiple/drops_drop.ma".
 
 (* ITERATED LOCAL ENVIRONMENT SLICING ***************************************)

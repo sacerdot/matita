@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/xoa/ex_3_2.ma".
 include "basic_2A/notation/relations/rlift_4.ma".
 include "basic_2A/grammar/term_weight.ma".
 include "basic_2A/grammar/term_simple.ma".
@@ -345,7 +346,7 @@ lemma lift_split: ∀l1,m2,T1,T2. ⬆[l1, m2] T1 ≡ T2 →
 | /3 width=3 by lift_gref, ex2_intro/
 | #a #I #V1 #V2 #T1 #T2 #l1 #m2 #_ #_ #IHV #IHT #l2 #m1 #Hl12 #Hl21 #Hm12
   elim (IHV … Hl12 Hl21 Hm12) -IHV #V0 #HV0a #HV0b
-  elim (IHT (l2+1) … ? ? Hm12) /3 width=5 by lift_bind, le_S_S, ex2_intro/
+  elim (IHT (l2+1) … ? ? Hm12) /3 width=5 by lift_bind, monotonic_le_plus_l, ex2_intro/
 | #I #V1 #V2 #T1 #T2 #l1 #m2 #_ #_ #IHV #IHT #l2 #m1 #Hl12 #Hl21 #Hm12
   elim (IHV … Hl12 Hl21 Hm12) -IHV #V0 #HV0a #HV0b
   elim (IHT l2 … ? ? Hm12) /3 width=5 by lift_flat, ex2_intro/

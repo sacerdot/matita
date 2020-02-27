@@ -27,7 +27,7 @@ lemma csx_lift: ∀h,g,G,L2,L1,T1,s,l,m. ⦃G, L1⦄ ⊢ ⬊*[h, g] T1 →
 @csx_intro #T #HLT2 #HT2
 elim (cpx_inv_lift1 … HLT2 … HL21 … HT12) -HLT2 #T0 #HT0 #HLT10
 @(IHT1 … HLT10) // -L1 -L2 #H destruct
->(lift_mono … HT0 … HT12) in HT2; -T1 /2 width=1 by/
+>(lift_mono … HT0 … HT12) in HT2; -T0 /2 width=1 by/
 qed.
 
 (* Basic_1: was just: sn3_gen_lift *)
@@ -38,7 +38,7 @@ lemma csx_inv_lift: ∀h,g,G,L2,L1,T1,s,l,m. ⦃G, L1⦄ ⊢ ⬊*[h, g] T1 →
 elim (lift_total T l m) #T0 #HT0
 lapply (cpx_lift … HLT2 … HL12 … HT21 … HT0) -HLT2 #HLT10
 @(IHT1 … HLT10) // -L1 -L2 #H destruct
->(lift_inj … HT0 … HT21) in HT2; -T1 /2 width=1 by/
+>(lift_inj … HT0 … HT21) in HT2; -T0 /2 width=1 by/
 qed.
 
 (* Advanced inversion lemmas ************************************************)

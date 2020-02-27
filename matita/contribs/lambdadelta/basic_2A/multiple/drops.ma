@@ -12,18 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/xoa/ex_4_3.ma".
+include "ground_2/relocation/mr2_minus.ma".
 include "basic_2A/notation/relations/rdropstar_3.ma".
 include "basic_2A/notation/relations/rdropstar_4.ma".
 include "basic_2A/substitution/drop.ma".
-include "basic_2A/multiple/mr2_minus.ma".
 include "basic_2A/multiple/lifts_vector.ma".
 
 (* ITERATED LOCAL ENVIRONMENT SLICING ***************************************)
 
-inductive drops (s:bool): list2 nat nat → relation lenv ≝
+inductive drops (s:bool): mr2 → relation lenv ≝
 | drops_nil : ∀L. drops s (◊) L L
 | drops_cons: ∀L1,L,L2,cs,l,m.
-              drops s cs L1 L → ⬇[s, l, m] L ≡ L2 → drops s ({l, m} @ cs) L1 L2
+              drops s cs L1 L → ⬇[s, l, m] L ≡ L2 → drops s (❨l, m❩; cs) L1 L2
 .
 
 interpretation "iterated slicing (local environment) abstract"
@@ -58,7 +59,7 @@ lemma drops_inv_nil: ∀L1,L2,s. ⬇*[s, ◊] L1 ≡ L2 → L1 = L2.
 /2 width=4 by drops_inv_nil_aux/ qed-.
 
 fact drops_inv_cons_aux: ∀L1,L2,s,cs. ⬇*[s, cs] L1 ≡ L2 →
-                         ∀l,m,tl. cs = {l, m} @ tl →
+                         ∀l,m,tl. cs = ❨l, m❩; tl →
                          ∃∃L. ⬇*[s, tl] L1 ≡ L & ⬇[s, l, m] L ≡ L2.
 #L1 #L2 #s #cs * -L1 -L2 -cs
 [ #L #l #m #tl #H destruct
@@ -68,13 +69,13 @@ fact drops_inv_cons_aux: ∀L1,L2,s,cs. ⬇*[s, cs] L1 ≡ L2 →
 qed-.
 
 (* Basic_1: was: drop1_gen_pcons *)
-lemma drops_inv_cons: ∀L1,L2,s,l,m,cs. ⬇*[s, {l, m} @ cs] L1 ≡ L2 →
+lemma drops_inv_cons: ∀L1,L2,s,l,m,cs. ⬇*[s, ❨l, m❩; cs] L1 ≡ L2 →
                       ∃∃L. ⬇*[s, cs] L1 ≡ L & ⬇[s, l, m] L ≡ L2.
 /2 width=3 by drops_inv_cons_aux/ qed-.
 
-lemma drops_inv_skip2: ∀I,s,cs,cs2,i. cs ▭ i ≡ cs2 →
+lemma drops_inv_skip2: ∀I,s,cs,cs2,i. cs ▭ i ≘ cs2 →
                        ∀L1,K2,V2. ⬇*[s, cs2] L1 ≡ K2. ⓑ{I} V2 →
-                       ∃∃K1,V1,cs1. cs + 1 ▭ i + 1 ≡ cs1 + 1 &
+                       ∃∃K1,V1,cs1. cs + 1 ▭ i + 1 ≘ cs1 + 1 &
                                      ⬇*[s, cs1] K1 ≡ K2 &
                                      ⬆*[cs1] V2 ≡ V1 &
                                      L1 = K1. ⓑ{I} V1.

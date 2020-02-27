@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/lib/star.ma".
 include "basic_2A/substitution/lpx_sn.ma".
 
 (* SN POINTWISE EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS *********)
@@ -30,7 +31,7 @@ qed-.
 
 lemma TC_lpx_sn_pair: ∀R. (∀L. reflexive … (R L)) →
                       ∀I,L1,L2. TC … (lpx_sn R) L1 L2 →
-                      ∀V1,V2. LTC … R L1 V1 V2 →
+                      ∀V1,V2. CTC … R L1 V1 V2 →
                       TC … (lpx_sn R) (L1. ⓑ{I} V1) (L2. ⓑ{I} V2).
 #R #HR #I #L1 #L2 #HL12 #V1 #V2 #H @(TC_star_ind_dx … V1 H) -V1 //
 [ /2 width=1 by TC_lpx_sn_pair_refl/
@@ -39,7 +40,7 @@ lemma TC_lpx_sn_pair: ∀R. (∀L. reflexive … (R L)) →
 qed-.
 
 lemma lpx_sn_LTC_TC_lpx_sn: ∀R. (∀L. reflexive … (R L)) →
-                            ∀L1,L2. lpx_sn (LTC … R) L1 L2 →
+                            ∀L1,L2. lpx_sn (CTC … R) L1 L2 →
                             TC … (lpx_sn R) L1 L2.
 #R #HR #L1 #L2 #H elim H -L1 -L2
 /2 width=1 by TC_lpx_sn_pair, lpx_sn_atom, inj/
@@ -56,7 +57,7 @@ qed-.
 
 lemma TC_lpx_sn_inv_pair2: ∀R. s_rs_transitive … R (λ_. lpx_sn R) →
                            ∀I,L1,K2,V2. TC  … (lpx_sn R) L1 (K2.ⓑ{I}V2) →
-                           ∃∃K1,V1. TC … (lpx_sn R) K1 K2 & LTC … R K1 V1 V2 & L1 = K1. ⓑ{I} V1.
+                           ∃∃K1,V1. TC … (lpx_sn R) K1 K2 & CTC … R K1 V1 V2 & L1 = K1. ⓑ{I} V1.
 #R #HR #I #L1 #K2 #V2 #H @(TC_ind_dx … L1 H) -L1
 [ #L1 #H elim (lpx_sn_inv_pair2 … H) -H /3 width=5 by inj, ex3_2_intro/
 | #L1 #L #HL1 #_ * #K #V #HK2 #HV2 #H destruct
@@ -69,7 +70,7 @@ lemma TC_lpx_sn_ind: ∀R. s_rs_transitive … R (λ_. lpx_sn R) →
                      ∀S:relation lenv.
                      S (⋆) (⋆) → (
                         ∀I,K1,K2,V1,V2.
-                        TC … (lpx_sn R) K1 K2 → LTC … R K1 V1 V2 →
+                        TC … (lpx_sn R) K1 K2 → CTC … R K1 V1 V2 →
                         S K1 K2 → S (K1.ⓑ{I}V1) (K2.ⓑ{I}V2)
                      ) →
                      ∀L2,L1. TC … (lpx_sn R) L1 L2 → S L1 L2.
@@ -91,7 +92,7 @@ qed-.
 fact TC_lpx_sn_inv_pair1_aux: ∀R. s_rs_transitive … R (λ_. lpx_sn R) →
                               ∀L1,L2. TC … (lpx_sn R) L1 L2 →
                               ∀I,K1,V1. L1 = K1.ⓑ{I}V1 →
-                              ∃∃K2,V2. TC … (lpx_sn R) K1 K2 & LTC … R K1 V1 V2 & L2 = K2. ⓑ{I} V2.
+                              ∃∃K2,V2. TC … (lpx_sn R) K1 K2 & CTC … R K1 V1 V2 & L2 = K2. ⓑ{I} V2.
 #R #HR #L1 #L2 #H @(TC_lpx_sn_ind … H) // -HR -L1 -L2
 [ #J #K #W #H destruct
 | #I #L1 #L2 #V1 #V2 #HL12 #HV12 #_ #J #K #W #H destruct /2 width=5 by ex3_2_intro/
@@ -100,12 +101,12 @@ qed-.
 
 lemma TC_lpx_sn_inv_pair1: ∀R. s_rs_transitive … R (λ_. lpx_sn R) →
                            ∀I,K1,L2,V1. TC … (lpx_sn R) (K1.ⓑ{I}V1) L2 →
-                           ∃∃K2,V2. TC … (lpx_sn R) K1 K2 & LTC … R K1 V1 V2 & L2 = K2. ⓑ{I} V2.
+                           ∃∃K2,V2. TC … (lpx_sn R) K1 K2 & CTC … R K1 V1 V2 & L2 = K2. ⓑ{I} V2.
 /2 width=3 by TC_lpx_sn_inv_pair1_aux/ qed-.
 
 lemma TC_lpx_sn_inv_lpx_sn_LTC: ∀R. s_rs_transitive … R (λ_. lpx_sn R) →
                                 ∀L1,L2. TC … (lpx_sn R) L1 L2 →
-                                lpx_sn (LTC … R) L1 L2.
+                                lpx_sn (CTC … R) L1 L2.
 /3 width=4 by TC_lpx_sn_ind, lpx_sn_pair/ qed-.
 
 (* Forward lemmas on transitive closure *************************************)

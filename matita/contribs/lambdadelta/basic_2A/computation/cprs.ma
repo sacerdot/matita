@@ -19,7 +19,7 @@ include "basic_2A/reduction/cnr.ma".
 
 (* Basic_1: includes: pr1_pr0 *)
 definition cprs: relation4 genv lenv term term ≝
-                 λG. LTC … (cpr G).
+                 λG. CTC … (cpr G).
 
 interpretation "context-sensitive parallel computation (term)"
    'PRedStar G L T1 T2 = (cprs G L T1 T2).
@@ -60,7 +60,7 @@ lemma cprs_strap2: ∀G,L,T1,T,T2.
 normalize /2 width=3 by TC_strap/ qed-.
 
 lemma lsubr_cprs_trans: ∀G. lsub_trans … (cprs G) lsubr.
-/3 width=5 by lsubr_cpr_trans, LTC_lsub_trans/
+/3 width=5 by lsubr_cpr_trans, CTC_lsub_trans/
 qed-.
 
 (* Basic_1: was: pr3_pr1 *)

@@ -18,37 +18,37 @@ include "basic_2A/substitution/lift.ma".
 (* BASIC TERM VECTOR RELOCATION *********************************************)
 
 inductive liftv (l,m:nat) : relation (list term) ≝
-| liftv_nil : liftv l m (◊) (◊)
+| liftv_nil : liftv l m (Ⓔ) (Ⓔ)
 | liftv_cons: ∀T1s,T2s,T1,T2.
               ⬆[l, m] T1 ≡ T2 → liftv l m T1s T2s →
-              liftv l m (T1 @ T1s) (T2 @ T2s)
+              liftv l m (T1 ⨮ T1s) (T2 ⨮ T2s)
 .
 
 interpretation "relocation (vector)" 'RLift l m T1s T2s = (liftv l m T1s T2s).
 
 (* Basic inversion lemmas ***************************************************)
 
-fact liftv_inv_nil1_aux: ∀T1s,T2s,l,m. ⬆[l, m] T1s ≡ T2s → T1s = ◊ → T2s = ◊.
+fact liftv_inv_nil1_aux: ∀T1s,T2s,l,m. ⬆[l, m] T1s ≡ T2s → T1s = Ⓔ → T2s = Ⓔ.
 #T1s #T2s #l #m * -T1s -T2s //
 #T1s #T2s #T1 #T2 #_ #_ #H destruct
 qed-.
 
-lemma liftv_inv_nil1: ∀T2s,l,m. ⬆[l, m] ◊ ≡ T2s → T2s = ◊.
+lemma liftv_inv_nil1: ∀T2s,l,m. ⬆[l, m] Ⓔ ≡ T2s → T2s = Ⓔ.
 /2 width=5 by liftv_inv_nil1_aux/ qed-.
 
 fact liftv_inv_cons1_aux: ∀T1s,T2s,l,m. ⬆[l, m] T1s ≡ T2s →
-                          ∀U1,U1s. T1s = U1 @ U1s →
+                          ∀U1,U1s. T1s = U1 ⨮ U1s →
                           ∃∃U2,U2s. ⬆[l, m] U1 ≡ U2 & ⬆[l, m] U1s ≡ U2s &
-                                    T2s = U2 @ U2s.
+                                    T2s = U2 ⨮ U2s.
 #T1s #T2s #l #m * -T1s -T2s
 [ #U1 #U1s #H destruct
 | #T1s #T2s #T1 #T2 #HT12 #HT12s #U1 #U1s #H destruct /2 width=5 by ex3_2_intro/
 ]
 qed-.
 
-lemma liftv_inv_cons1: ∀U1,U1s,T2s,l,m. ⬆[l, m] U1 @ U1s ≡ T2s →
+lemma liftv_inv_cons1: ∀U1,U1s,T2s,l,m. ⬆[l, m] U1 ⨮ U1s ≡ T2s →
                        ∃∃U2,U2s. ⬆[l, m] U1 ≡ U2 & ⬆[l, m] U1s ≡ U2s &
-                                 T2s = U2 @ U2s.
+                                 T2s = U2 ⨮ U2s.
 /2 width=3 by liftv_inv_cons1_aux/ qed-.
 
 (* Basic properties *********************************************************)

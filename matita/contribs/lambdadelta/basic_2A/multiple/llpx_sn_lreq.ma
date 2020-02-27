@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/lib/arith_2a.ma".
 include "basic_2A/substitution/drop_lreq.ma".
 include "basic_2A/multiple/llpx_sn.ma".
 

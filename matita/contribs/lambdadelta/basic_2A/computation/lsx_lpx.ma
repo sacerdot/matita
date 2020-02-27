@@ -45,7 +45,7 @@ qed-.
 (* Advanced forward lemmas **************************************************)
 
 lemma lsx_fwd_bind_dx: ∀h,g,a,I,G,L,V,T,l. G ⊢ ⬊*[h, g, ⓑ{a,I}V.T, l] L →
-                       G ⊢ ⬊*[h, g, T, ⫯l] L.ⓑ{I}V.
+                       G ⊢ ⬊*[h, g, T, ↑l] L.ⓑ{I}V.
 #h #g #a #I #G #L #V1 #T #l #H @(lsx_ind … H) -L
 #L1 #_ #IHL1 @lsx_intro
 #Y #H #HT elim (lpx_inv_pair1 … H) -H
@@ -59,5 +59,5 @@ qed-.
 (* Advanced inversion lemmas ************************************************)
 
 lemma lsx_inv_bind: ∀h,g,a,I,G,L,V,T,l. G ⊢ ⬊*[h, g, ⓑ{a, I}V.T, l] L →
-                    G ⊢ ⬊*[h, g, V, l] L ∧ G ⊢ ⬊*[h, g, T, ⫯l] L.ⓑ{I}V.
+                    G ⊢ ⬊*[h, g, V, l] L ∧ G ⊢ ⬊*[h, g, T, ↑l] L.ⓑ{I}V.
 /3 width=4 by lsx_fwd_bind_sn, lsx_fwd_bind_dx, conj/ qed-.

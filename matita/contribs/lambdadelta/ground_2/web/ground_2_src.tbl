@@ -40,7 +40,7 @@ table {
              [ "trace ( ∥?∥ )" "trace_at ( @❪?,?❫ ≘ ? )" "trace_after ( ? ⊚ ? ≘ ? )" "trace_isid ( 𝐈❪?❫ )" "trace_isun ( 𝐔❪?❫ )"
                "trace_sle ( ? ⊆ ? )" "trace_sor ( ? ⋓ ? ≘ ? )" "trace_snot ( ∁ ? )" * ]
 *)
-             [ "mr2 ( ◊ ) ( ❨?,?❩;? )" "mr2_at ( @❪?,?❫ ≘ ? )" "mr2_plus ( ? + ? )" "mr2_minus ( ? ▭ ? ≘ ? )" * ]
+             [ "mr2 ( ◊ ) ( ❨?,?❩;? )" "mr2_append ( ? @@? )" "mr2_at ( @❪?,?❫ ≘ ? )" "mr2_plus ( ? + ? )" "mr2_minus ( ? ▭ ? ≘ ? )" * ]
           }
         ]
      }
@@ -50,7 +50,7 @@ table {
         [ { "" * } {
            [ "ynat ( ∞ )" "ynat_pred ( ↓? )" "ynat_succ ( ↑? )"
              "ynat_le ( ? ≤ ? )" "ynat_lt ( ? &lt; ? )"
-             "ynat_plus ( ? + ? )" *
+             "ynat_plus ( ? + ? )" "ynat_minus_sn ( ? - ? )" *
            ]
           }
         ]
@@ -63,7 +63,7 @@ table {
              [ "list ( Ⓔ{?} ) ( ? ⨮{?} ? )" "list_length ( |?| )" * ]
              [ "bool ( Ⓕ ) ( Ⓣ )" "arith ( ?^? ) ( ↑? ) ( ↓? ) ( ? ∨ ? ) ( ? ∧ ? )" "arith_2a" "arith_2b" * ]
              [ "ltc" "ltc_ctc" * ]
-             [ "logic ( ⊥ ) ( ⊤ )" "relations ( ? ⊆ ? )" "functions" "exteq ( ? ≐{?,?} ? )" "star" * ]
+             [ "logic ( ⊥ ) ( ⊤ )" "relations ( ? ⊆ ? )" "functions" "exteq ( ? ≐{?,?} ? )" "star" "lstar_2a" * ]
           }
         ]
      }

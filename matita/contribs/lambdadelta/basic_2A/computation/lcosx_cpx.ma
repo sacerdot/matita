@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2A/ynat/ynat_max.ma".
 include "basic_2A/computation/lsx_drop.ma".
 include "basic_2A/computation/lsx_lpx.ma".
 include "basic_2A/computation/lsx_lpxs.ma".
@@ -28,9 +27,11 @@ lemma lsx_cpx_trans_lcosx: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[h, g] T2 →
 #h #g #G #L #T1 #T2 #H elim H -G -L -T1 -T2 //
 [ #I #G #L #K #V1 #V2 #W2 #i #HLK #_ #HVW2 #IHV12 #l #HL #H
   elim (ylt_split i l) #Hli [ -H | -HL ]
-  [ <(ymax_pre_sn l (⫯i)) /2 width=1 by ylt_fwd_le_succ/
-    elim (lcosx_drop_trans_lt … HL … HLK) // -HL -Hli
-    lapply (drop_fwd_drop2 … HLK) -HLK /3 width=7 by lsx_lift_ge/
+  [ elim (lcosx_drop_trans_lt … HL … HLK) // -HL
+    <yminus_succ2 #H1K #H2K
+    lapply (ylt_fwd_le_succ1 … Hli) -Hli #Hli
+    >(yminus_plus l (↑i))
+    /4 width=7 by lsx_lift_ge, drop_fwd_drop2/
   | lapply (lsx_fwd_lref_be … H … HLK) // -H -Hli
     lapply (drop_fwd_drop2 … HLK) -HLK
     /4 width=10 by lsx_ge, lsx_lift_le/
@@ -42,7 +43,7 @@ lemma lsx_cpx_trans_lcosx: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[h, g] T2 →
 | #I #G #L #V1 #V2 #T1 #T2 #_ #_ #IHV12 #IHT12 #l #HL #H
   elim (lsx_inv_flat … H) -H /3 width=1 by lsx_flat/
 | #G #L #V #U1 #U2 #T2 #_ #HTU2 #IHU12 #l #HL #H
-  elim (lsx_inv_bind … H) -H
+  elim (lsx_inv_bind … H) -H #H1L #H2L <(yplus_minus l 1)
   /4 width=9 by lcosx_pair, lsx_inv_lift_ge, drop_drop/
 | #G #L #V #T1 #T2 #_ #IHT12 #l #HL #H
   elim (lsx_inv_flat … H) -H /2 width=1 by/
@@ -57,7 +58,7 @@ lemma lsx_cpx_trans_lcosx: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡[h, g] T2 →
   elim (lsx_inv_flat … H) -H #HV1 #H
   elim (lsx_inv_bind … H) -H #HW1 #HT1
   @lsx_bind /2 width=1 by/ (**) (* explicit constructor *)
-  @lsx_flat [ /3 width=7 by lsx_lift_ge, drop_drop/ ]
+  @lsx_flat [ <(yplus_SO2 l) /3 width=7 by lsx_lift_ge, drop_drop/ ]
   @(lsx_lreq_conf … (L.ⓓW1)) /3 width=1 by lcosx_pair, lreq_succ/
 ]
 qed-.

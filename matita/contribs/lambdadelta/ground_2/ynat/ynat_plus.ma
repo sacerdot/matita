@@ -47,7 +47,7 @@ qed.
 lemma yplus_succ_swap: ∀m,n. m + ↑n = ↑m + n.
 // qed.
 
-lemma yplus_SO2: ∀m. m + 1 = ↑m.
+lemma yplus_SO2: ∀m:ynat. m + 1 = ↑m.
 * //
 qed.
 

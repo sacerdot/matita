@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/relocation/mr2_minus.ma".
 include "basic_2A/substitution/lift_lift.ma".
-include "basic_2A/multiple/mr2_minus.ma".
 include "basic_2A/multiple/lifts.ma".
 
 (* GENERIC TERM RELOCATION **************************************************)
@@ -32,8 +32,8 @@ lemma lifts_lift_trans_le: ∀T1,T,cs. ⬆*[cs] T1 ≡ T → ∀T2. ⬆[0, 1] T 
 qed-.
 
 (* Basic_1: was: lift1_free (right to left) *)
-lemma lifts_lift_trans: ∀cs,i,i0. @⦃i, cs⦄ ≡ i0 →
-                        ∀cs0. cs + 1 ▭ i + 1 ≡ cs0 + 1 →
+lemma lifts_lift_trans: ∀cs,i,i0. @❪i, cs❫ ≘ i0 →
+                        ∀cs0. cs + 1 ▭ i + 1 ≘ cs0 + 1 →
                         ∀T1,T0. ⬆*[cs0] T1 ≡ T0 →
                         ∀T2. ⬆[O, i0 + 1] T0 ≡ T2 →
                         ∃∃T. ⬆[0, i + 1] T1 ≡ T & ⬆*[cs] T ≡ T2.

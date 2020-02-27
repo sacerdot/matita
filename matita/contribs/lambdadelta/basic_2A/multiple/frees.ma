@@ -12,7 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2A/ynat/ynat_plus.ma".
+include "ground_2/xoa/ex_4_3.ma".
+include "ground_2/xoa/ex_5_4.ma".
+include "ground_2/ynat/ynat_plus.ma".
 include "basic_2A/notation/relations/freestar_4.ma".
 include "basic_2A/substitution/lift_neg.ma".
 include "basic_2A/substitution/drop.ma".
@@ -84,7 +86,7 @@ lemma frees_inv_lref_lt: ∀L,l,j,i.L ⊢ i ϵ 𝐅*[l]⦃#j⦄ → j < i →
 qed-.
 
 lemma frees_inv_bind: ∀a,I,L,W,U,l,i. L ⊢ i ϵ 𝐅*[l]⦃ⓑ{a,I}W.U⦄ →
-                      L ⊢ i ϵ 𝐅*[l]⦃W⦄ ∨ L.ⓑ{I}W ⊢ i+1 ϵ 𝐅*[⫯l]⦃U⦄ .
+                      L ⊢ i ϵ 𝐅*[l]⦃W⦄ ∨ L.ⓑ{I}W ⊢ i+1 ϵ 𝐅*[↑l]⦃U⦄ .
 #a #J #L #V #U #l #i #H elim (frees_inv … H) -H
 [ #HnX elim (nlift_inv_bind … HnX) -HnX
   /4 width=2 by frees_eq, or_intror, or_introl/
@@ -124,15 +126,18 @@ lemma frees_bind_sn: ∀a,I,L,W,U,l,i. L ⊢ i ϵ 𝐅*[l]⦃W⦄ →
 /4 width=9 by frees_be, frees_eq, nlift_bind_sn/
 qed.
 
-lemma frees_bind_dx: ∀a,I,L,W,U,l,i. L.ⓑ{I}W ⊢ i+1 ϵ 𝐅*[⫯l]⦃U⦄ →
+lemma pippo (j) (i): O < j → j < i+1 → ↓j< i.
+/2 width=1 by lt_plus_to_minus/ qed-.
+
+lemma frees_bind_dx: ∀a,I,L,W,U,l,i. L.ⓑ{I}W ⊢ i+1 ϵ 𝐅*[↑l]⦃U⦄ →
                      L ⊢ i ϵ 𝐅*[l]⦃ⓑ{a,I}W.U⦄.
 #a #J #L #V #U #l #i #H elim (frees_inv … H) -H
 [ /4 width=9 by frees_eq, nlift_bind_dx/
 | * #I #K #W #j #Hlj #Hji #HnU #HLK #HW
-  elim (yle_inv_succ1 … Hlj) -Hlj <yminus_SO2 #Hyj #H
-  lapply (ylt_O … H) -H #Hj
+  elim (yle_inv_succ_sn_lt … Hlj) -Hlj #Hyj #H
+  lapply (ylt_inv_inj … H) -H #Hi
   >(plus_minus_m_m j 1) in HnU; // <minus_le_minus_minus_comm in HW;
-  /4 width=9 by frees_be, nlift_bind_dx, drop_inv_drop1_lt, lt_plus_to_minus/
+  /4 width=9 by frees_be, nlift_bind_dx, drop_inv_drop1_lt, yle_plus_dx1_trans, monotonic_lt_minus_l/
 ]
 qed.
 

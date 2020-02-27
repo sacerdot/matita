@@ -33,7 +33,7 @@ lemma cnx_inv_sort: ∀h,g,G,L,k. ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃⋆k⦄ → de
 lapply (H (⋆(next h k)) ?) -H /2 width=2 by cpx_st/ -L -d #H
 lapply (destruct_tatom_tatom_aux … H) -H #H (**) (* destruct lemma needed *)
 lapply (destruct_sort_sort_aux … H) -H #H (**) (* destruct lemma needed *)
-lapply (next_lt h k) >H -H #H elim (lt_refl_false … H)
+lapply (next_lt h k) <H -H #H elim (lt_refl_false … H)
 qed-.
 
 lemma cnx_inv_delta: ∀h,g,I,G,L,K,V,i. ⬇[i] L ≡ K.ⓑ{I}V → ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃#i⦄ → ⊥.
@@ -122,14 +122,14 @@ lemma cnx_abst: ∀h,g,a,G,L,W,T. ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃W⦄ → ⦃G,
                 ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃ⓛ{a}W.T⦄.
 #h #g #a #G #L #W #T #HW #HT #X #H
 elim (cpx_inv_abst1 … H) -H #W0 #T0 #HW0 #HT0 #H destruct
->(HW … HW0) -W0 >(HT … HT0) -T0 //
+<(HW … HW0) -W0 <(HT … HT0) -T0 //
 qed.
 
 lemma cnx_appl_simple: ∀h,g,G,L,V,T. ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃V⦄ → ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃T⦄ → 𝐒⦃T⦄ →
                        ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃ⓐV.T⦄.
 #h #g #G #L #V #T #HV #HT #HS #X #H
 elim (cpx_inv_appl1_simple … H) -H // #V0 #T0 #HV0 #HT0 #H destruct
->(HV … HV0) -V0 >(HT … HT0) -T0 //
+<(HV … HV0) -V0 <(HT … HT0) -T0 //
 qed.
 
 axiom cnx_dec: ∀h,g,G,L,T1. ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃T1⦄ ∨

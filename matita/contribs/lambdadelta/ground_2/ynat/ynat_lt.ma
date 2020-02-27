@@ -135,6 +135,11 @@ lemma ylt_O1: ∀x:ynat. ↑↓x = x → 0 < x.
 #H destruct
 qed.
 
+lemma yle_inv_succ_sn_lt (x:ynat) (y:ynat):
+      ↑x ≤ y → ∧∧ x ≤ ↓y & 0 < y.
+#x #y #H elim (yle_inv_succ1 … H) -H /3 width=2 by ylt_O1, conj/
+qed-.
+
 (* Properties on predecessor ************************************************)
 
 lemma ylt_pred: ∀m,n:ynat. m < n → 0 < m → ↓m < ↓n.
@@ -144,7 +149,7 @@ qed.
 
 (* Properties on successor **************************************************)
 
-lemma ylt_O_succ: ∀n. 0 < ↑n.
+lemma ylt_O_succ: ∀x:ynat. 0 < ↑x.
 * /2 width=1 by ylt_inj/
 qed.
 

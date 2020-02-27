@@ -16,7 +16,7 @@
  * Initial invocation: - Patience on me to gain peace and perfection! -
  *)
 
-include "ground_2A/lib/star.ma".
+include "ground_2/lib/star.ma".
 include "basic_2A/notation/constructors/item0_0.ma".
 include "basic_2A/notation/constructors/snitem2_2.ma".
 

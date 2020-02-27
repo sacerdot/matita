@@ -12,6 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/lib/arith_2a.ma".
+include "ground_2/ynat/ynat_minus_sn.ma".
 include "basic_2A/substitution/drop_drop.ma".
 include "basic_2A/multiple/frees.ma".
 
@@ -43,7 +45,7 @@ lemma frees_dec: ∀L,U,l,i. Decidable (frees l L U i).
 | -IH /3 width=5 by frees_inv_gref, or_intror/
 | #a #I #W #U #Hx #l #i destruct
   elim (IH L W … l i) [1,3: /3 width=1 by frees_bind_sn, or_introl/ ] #HnW
-  elim (IH (L.ⓑ{I}W) U … (⫯l) (i+1)) -IH [1,3: /3 width=1 by frees_bind_dx, or_introl/ ] #HnU
+  elim (IH (L.ⓑ{I}W) U … (↑l) (i+1)) -IH [1,3: /3 width=1 by frees_bind_dx, or_introl/ ] #HnU
   @or_intror #H elim (frees_inv_bind … H) -H /2 width=1 by/
 | #I #W #U #Hx #l #i destruct
   elim (IH L W … l i) [1,3: /3 width=1 by frees_flat_sn, or_introl/ ] #HnW
@@ -52,8 +54,12 @@ lemma frees_dec: ∀L,U,l,i. Decidable (frees l L U i).
 ]
 qed-.
 
+alias symbol "UpArrow" (instance 2) = "ynat successor".
+alias symbol "minus" (instance 6) = "natural minus".
+alias symbol "minus" (instance 5) = "natural minus".
+alias symbol "RDrop" (instance 9) = "basic slicing (local environment) lget".
 lemma frees_S: ∀L,U,l,i. L ⊢ i ϵ 𝐅*[yinj l]⦃U⦄ → ∀I,K,W. ⬇[l] L ≡ K.ⓑ{I}W →
-               (K ⊢ i-l-1 ϵ 𝐅*[0]⦃W⦄ → ⊥) → L ⊢ i ϵ 𝐅*[⫯l]⦃U⦄.
+               (K ⊢ i-l-1 ϵ 𝐅*[0]⦃W⦄ → ⊥) → L ⊢ i ϵ 𝐅*[↑l]⦃U⦄.
 #L #U #l #i #H elim (frees_inv … H) -H /3 width=2 by frees_eq/
 * #I #K #W #j #Hlj #Hji #HnU #HLK #HW #I0 #K0 #W0 #HLK0 #HnW0
 lapply (yle_inv_inj … Hlj) -Hlj #Hlj
@@ -123,7 +129,7 @@ qed-.
 lemma frees_inv_lift_ge: ∀L,U,l,i. L ⊢ i ϵ 𝐅*[l]⦃U⦄ →
                          ∀K,s,l0,m0. ⬇[s, l0, m0] L ≡ K →
                          ∀T. ⬆[l0, m0] T ≡ U → l0 + m0 ≤ i →
-                         K ⊢ i-m0 ϵ𝐅*[l-yinj m0]⦃T⦄.
+                         K ⊢ i-m0 ϵ𝐅*[l-m0]⦃T⦄.
 #L #U #l #i #H elim H -L -U -l -i
 [ #L #U #l #i #HnU #K #s #l0 #m0 #HLK #T #HTU #Hlm0i -L -s
   elim (le_inv_plus_l … Hlm0i) -Hlm0i #Hl0im0 #Hm0i @frees_eq #X #HXT -K

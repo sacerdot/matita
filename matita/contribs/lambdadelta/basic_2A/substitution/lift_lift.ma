@@ -136,7 +136,7 @@ theorem lift_trans_be: ∀l1,m1,T1,T. ⬆[l1, m1] T1 ≡ T →
 | #a #I #V1 #V2 #T1 #T2 #l1 #m1 #_ #_ #IHV12 #IHT12 #l2 #m2 #X #HX #Hl12 #Hl21
   elim (lift_inv_bind1 … HX) -HX #V0 #T0 #HV20 #HT20 #HX destruct 
   lapply (IHV12 … HV20 ? ?) // -IHV12 -HV20 #HV10
-  lapply (IHT12 … HT20 ? ?) /2 width=1 by lift_bind, le_S_S/ (**) (* full auto a bit slow *)
+  lapply (IHT12 … HT20 ? ?) /2 width=1 by lift_bind, monotonic_le_plus_l, le_S_S/ (* full auto a bit slow *)
 | #I #V1 #V2 #T1 #T2 #l1 #m1 #_ #_ #IHV12 #IHT12 #l2 #m2 #X #HX #Hl12 #Hl21
   elim (lift_inv_flat1 … HX) -HX #V0 #T0 #HV20 #HT20 #HX destruct
   lapply (IHV12 … HV20 ? ?) // -IHV12 -HV20 #HV10
@@ -190,7 +190,7 @@ theorem lift_trans_ge: ∀l1,m1,T1,T. ⬆[l1, m1] T1 ≡ T →
 | #a #I #V1 #V2 #T1 #T2 #l1 #m1 #_ #_ #IHV12 #IHT12 #l2 #m2 #X #HX #Hlml
   elim (lift_inv_bind1 … HX) -HX #V0 #T0 #HV20 #HT20 #HX destruct
   elim (IHV12 … HV20) -IHV12 -HV20 //
-  elim (IHT12 … HT20) -IHT12 -HT20 /2 width=1 by le_S_S/ #T
+  elim (IHT12 … HT20) -IHT12 -HT20 [2: <assoc_plus1 /2 width=1 by le_S_S/ ]
   <plus_minus /3 width=5 by lift_bind, le_plus_to_minus_r, le_plus_b, ex2_intro/
 | #I #V1 #V2 #T1 #T2 #l1 #m1 #_ #_ #IHV12 #IHT12 #l2 #m2 #X #HX #Hlml
   elim (lift_inv_flat1 … HX) -HX #V0 #T0 #HV20 #HT20 #HX destruct

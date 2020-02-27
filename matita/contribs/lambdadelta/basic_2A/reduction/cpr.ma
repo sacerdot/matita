@@ -12,6 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/xoa/ex_4_1.ma".
+include "ground_2/xoa/ex_5_6.ma".
+include "ground_2/xoa/ex_6_6.ma".
+include "ground_2/xoa/ex_6_7.ma".
+include "ground_2/xoa/ex_7_7.ma".
+include "ground_2/xoa/or_4.ma".
 include "basic_2A/notation/relations/pred_4.ma".
 include "basic_2A/static/lsubr.ma".
 include "basic_2A/unfold/lstas.ma".
@@ -97,8 +103,7 @@ fact lstas_cpr_aux: ∀h,G,L,T1,T2,d. ⦃G, L⦄ ⊢ T1 •*[h, d] T2 →
                     d = 0 → ⦃G, L⦄ ⊢ T1 ➡ T2.
 #h #G #L #T1 #T2 #d #H elim H -G -L -T1 -T2 -d
 /3 width=1 by cpr_eps, cpr_flat, cpr_bind/
-[ #G #L #d #k #H0 destruct normalize //
-| #G #L #K #V1 #V2 #W2 #i #d #HLK #_ #HVW2 #IHV12 #H destruct
+[ #G #L #K #V1 #V2 #W2 #i #d #HLK #_ #HVW2 #IHV12 #H destruct
   /3 width=6 by cpr_delta/
 | #G #L #K #V1 #V2 #W2 #i #d #_ #_ #_ #_ <plus_n_Sm #H destruct
 ]

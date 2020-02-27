@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/xoa/and_4.ma".
 include "basic_2A/substitution/lift_neg.ma".
 include "basic_2A/substitution/drop_drop.ma".
 include "basic_2A/multiple/llpx_sn.ma".
@@ -77,17 +78,17 @@ elim (IH … HLK1 HLK2) -IH -HLK1 -HLK2 //
 qed-.
 
 lemma llpx_sn_alt_r_inv_bind: ∀R,a,I,L1,L2,V,T,l. llpx_sn_alt_r R l (ⓑ{a,I}V.T) L1 L2 →
-                              llpx_sn_alt_r R l V L1 L2 ∧ llpx_sn_alt_r R (⫯l) T (L1.ⓑ{I}V) (L2.ⓑ{I}V).
+                              llpx_sn_alt_r R l V L1 L2 ∧ llpx_sn_alt_r R (↑l) T (L1.ⓑ{I}V) (L2.ⓑ{I}V).
 #R #a #I #L1 #L2 #V #T #l #H elim (llpx_sn_alt_r_inv_alt … H) -H
 #HL12 #IH @conj @llpx_sn_alt_r_intro_alt [1,3: normalize // ] -HL12
 #I1 #I2 #K1 #K2 #V1 #V2 #i #Hli #H #HLK1 #HLK2
 [ elim (IH … HLK1 HLK2) -IH -HLK1 -HLK2
   /3 width=9 by nlift_bind_sn, and3_intro/
-| lapply (yle_inv_succ1 … Hli) -Hli * #Hli #Hi
-  lapply (drop_inv_drop1_lt … HLK1 ?) -HLK1 /2 width=1 by ylt_O/ #HLK1
-  lapply (drop_inv_drop1_lt … HLK2 ?) -HLK2 /2 width=1 by ylt_O/ #HLK2
-  elim (IH … HLK1 HLK2) -IH -HLK1 -HLK2 /2 width=1 by and3_intro/
-  @nlift_bind_dx <plus_minus_m_m /2 width=2 by ylt_O/
+| lapply (yle_inv_succ_sn_lt … Hli) -Hli * #Hli #Hi
+  lapply (drop_inv_drop1_lt … HLK1 ?) -HLK1 /2 width=1 by ylt_inv_inj/ #HLK1
+  lapply (drop_inv_drop1_lt … HLK2 ?) -HLK2 /2 width=1 by ylt_inv_inj/ #HLK2
+  elim (IH … HLK1 HLK2) -IH -HLK1 -HLK2 /2 width=1 by yle_plus_dx1_trans, and3_intro/
+  @nlift_bind_dx <plus_minus_m_m /2 width=2 by ylt_inv_inj/
 ]
 qed-.
 
@@ -172,7 +173,7 @@ qed.
 
 lemma llpx_sn_alt_r_bind: ∀R,a,I,L1,L2,V,T,l.
                           llpx_sn_alt_r R l V L1 L2 →
-                          llpx_sn_alt_r R (⫯l) T (L1.ⓑ{I}V) (L2.ⓑ{I}V) →
+                          llpx_sn_alt_r R (↑l) T (L1.ⓑ{I}V) (L2.ⓑ{I}V) →
                           llpx_sn_alt_r R l (ⓑ{a,I}V.T) L1 L2.
 #R #a #I #L1 #L2 #V #T #l #HV #HT
 elim (llpx_sn_alt_r_inv_alt … HV) -HV #HL12 #IHV

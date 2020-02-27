@@ -60,6 +60,9 @@ lemma plus_SO_sn (n): 1 + n = ↑n.
 lemma plus_SO_dx (n): n + 1 = ↑n.
 // qed.
 
+lemma minus_SO_dx (n): n-1 = ↓n.
+// qed.
+
 lemma minus_plus_m_m_commutative: ∀n,m:nat. n = m + n - m.
 // qed-.
 
@@ -222,11 +225,20 @@ lemma discr_plus_xy_y: ∀x,y. x + y = y → x = 0.
 lemma discr_plus_x_xy: ∀x,y. x = x + y → y = 0.
 /2 width=2 by le_plus_minus_comm/ qed-.
 
-lemma plus2_inv_le_sn: ∀m1,m2,n1,n2. m1 + n1 = m2 + n2 → m1 ≤ m2 → n2 ≤ n1.
+lemma plus2_le_sn_sn: ∀m1,m2,n1,n2. m1 + n1 = m2 + n2 → m1 ≤ m2 → n2 ≤ n1.
 #m1 #m2 #n1 #n2 #H #Hm
 lapply (monotonic_le_plus_l n1 … Hm) -Hm >H -H
 /2 width=2 by le_plus_to_le/
 qed-.
+
+lemma plus2_le_sn_dx: ∀m1,m2,n1,n2. m1 + n1 = n2 + m2 → m1 ≤ m2 → n2 ≤ n1.
+/2 width=4 by plus2_le_sn_sn/ qed-.
+
+lemma plus2_le_dx_sn: ∀m1,m2,n1,n2. n1 + m1 = m2 + n2 → m1 ≤ m2 → n2 ≤ n1.
+/2 width=4 by plus2_le_sn_sn/ qed-.
+
+lemma plus2_le_dx_dx: ∀m1,m2,n1,n2. n1 + m1 = n2 + m2 → m1 ≤ m2 → n2 ≤ n1.
+/2 width=4 by plus2_le_sn_sn/ qed-.
 
 lemma lt_S_S_to_lt: ∀x,y. ↑x < ↑y → x < y.
 /2 width=1 by le_S_S_to_le/ qed-.

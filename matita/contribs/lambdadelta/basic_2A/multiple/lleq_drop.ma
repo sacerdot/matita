@@ -138,7 +138,7 @@ lemma lleq_inv_lift_ge: ∀L1,L2,U,lt. L1 ≡[U, lt] L2 →
 (* Inversion lemmas on negated lazy quivalence for local environments *******)
 
 lemma nlleq_inv_bind: ∀a,I,L1,L2,V,T,l. (L1 ≡[ⓑ{a,I}V.T, l] L2 → ⊥) →
-                      (L1 ≡[V, l] L2 → ⊥) ∨ (L1.ⓑ{I}V ≡[T, ⫯l] L2.ⓑ{I}V → ⊥).
+                      (L1 ≡[V, l] L2 → ⊥) ∨ (L1.ⓑ{I}V ≡[T, ↑l] L2.ⓑ{I}V → ⊥).
 /3 width=2 by nllpx_sn_inv_bind, eq_term_dec/ qed-.
 
 lemma nlleq_inv_flat: ∀I,L1,L2,V,T,l. (L1 ≡[ⓕ{I}V.T, l] L2 → ⊥) →

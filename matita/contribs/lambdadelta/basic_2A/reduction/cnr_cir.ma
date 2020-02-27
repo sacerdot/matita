@@ -20,7 +20,7 @@ include "basic_2A/reduction/cnr_crr.ma".
 (* Main properties on irreducibility ****************************************)
 
 theorem cir_cnr: ∀G,L,T. ⦃G, L⦄ ⊢ ➡ 𝐈⦃T⦄ → ⦃G, L⦄ ⊢ ➡ 𝐍⦃T⦄.
-/2 width=4 by cpr_fwd_cir/ qed.
+/3 width=4 by cpr_fwd_cir, sym_eq/ qed.
 
 (* Main inversion lemmas on irreducibility **********************************)
 

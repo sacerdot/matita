@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/xoa/ex_4_2.ma".
 include "basic_2A/substitution/drop_drop.ma".
 include "basic_2A/multiple/llpx_sn_lreq.ma".
 
@@ -155,7 +156,7 @@ lemma llpx_sn_dec: ∀R. (∀L,T1,T2. Decidable (R L T1 T2)) →
 | #p #Hx #L2 elim (eq_nat_dec (|L1|) (|L2|)) /3 width=1 by or_introl, llpx_sn_gref/
 | #a #I #V #T #Hx #L2 #l destruct
   elim (IH L1 V … L2 l) /2 width=1 by/
-  elim (IH (L1.ⓑ{I}V) T … (L2.ⓑ{I}V) (⫯l)) -IH /3 width=1 by or_introl, llpx_sn_bind/
+  elim (IH (L1.ⓑ{I}V) T … (L2.ⓑ{I}V) (↑l)) -IH /3 width=1 by or_introl, llpx_sn_bind/
   #H1 #H2 @or_intror
   #H elim (llpx_sn_inv_bind … H) -H /2 width=1 by/
 | #I #V #T #Hx #L2 #l destruct
@@ -221,7 +222,7 @@ lemma llpx_sn_lift_ge: ∀R,K1,K2,T,l0. llpx_sn R l0 T K1 K2 →
 | #K1 #K2 #l0 #i #HK12 #Hil0 #L1 #L2 #l #m #HLK1 #HLK2 #X #H #_ elim (lift_inv_lref1 … H) -H
   * #_ #H destruct
   lapply (drop_fwd_length_eq2 … HLK1 HLK2 HK12) -K1 -K2
-  [ /3 width=3 by llpx_sn_skip, ylt_plus_dx2_trans/
+  [ /3 width=3 by llpx_sn_skip, ylt_plus_dx1_trans/
   | /3 width=3 by llpx_sn_skip, monotonic_ylt_plus_dx/
   ]
 | #I #K1 #K2 #K11 #K22 #V1 #V2 #l0 #i #Hil0 #HK11 #HK22 #HK12 #HV12 #_ #L1 #L2 #l #m #HLK1 #HLK2 #X #H #Hl0 elim (lift_inv_lref1 … H) -H
@@ -411,7 +412,7 @@ qed-.
 
 lemma nllpx_sn_inv_bind: ∀R. (∀L,T1,T2. Decidable (R L T1 T2)) →
                          ∀a,I,L1,L2,V,T,l. (llpx_sn R l (ⓑ{a,I}V.T) L1 L2 → ⊥) →
-                         (llpx_sn R l V L1 L2 → ⊥) ∨ (llpx_sn R (⫯l) T (L1.ⓑ{I}V) (L2.ⓑ{I}V) → ⊥).
+                         (llpx_sn R l V L1 L2 → ⊥) ∨ (llpx_sn R (↑l) T (L1.ⓑ{I}V) (L2.ⓑ{I}V) → ⊥).
 #R #HR #a #I #L1 #L2 #V #T #l #H elim (llpx_sn_dec … HR V L1 L2 l)
 /4 width=1 by llpx_sn_bind, or_intror, or_introl/
 qed-.

@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/xoa/ex_1_2.ma".
 include "basic_2A/notation/relations/topiso_2.ma".
 include "basic_2A/grammar/term_simple.ma".
 

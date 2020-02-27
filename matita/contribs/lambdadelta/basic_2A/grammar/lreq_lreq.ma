@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2A/ynat/ynat_plus.ma".
+include "ground_2/ynat/ynat_plus.ma".
 include "basic_2A/grammar/lreq.ma".
 
 (* EQUIVALENCE FOR LOCAL ENVIRONMENTS ***************************************)

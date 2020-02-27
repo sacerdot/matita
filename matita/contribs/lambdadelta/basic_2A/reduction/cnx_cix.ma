@@ -20,7 +20,7 @@ include "basic_2A/reduction/cnx_crx.ma".
 (* Main properties on irreducibility ****************************************)
 
 theorem cix_cnx: ∀h,g,G,L,T. ⦃G, L⦄ ⊢ ➡[h, g] 𝐈⦃T⦄ → ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃T⦄.
-/2 width=6 by cpx_fwd_cix/ qed.
+/3 width=6 by cpx_fwd_cix, sym_eq/ qed.
 
 (* Main inversion lemmas on irreducibility **********************************)
 

@@ -26,157 +26,80 @@
    </body>
    <table name="basic_2_sum"/>
 
-   <subsection name="B">Stage "B"</subsection>
-   <news class="gamma" date="2019 November 19.">
+   <news class="gamma" date="2020-02-27.">
+         λδ-2B is repackaged without λδ-ground-2.
+   </news>
+   <news class="gamma" date="2019-11-19.">
          λδ-2B is released.
    </news>
-   <news class="beta" date="2019 September 3.">
+   <news class="beta" date="2019-09-03.">
          Applicability condition is now parametrized
          with a generic subset of numbers.
    </news>
-   <news class="beta" date="2019 June 2.">
+   <news class="beta" date="2019-06-02.">
          Applicability condition parametrized
          with an initial interval of numbers
          allows λδ-2B to generalize both λδ-2A and λδ-1B.
    </news>
-   <news class="beta" date="2019 April 16.">
+   <news class="beta" date="2019-04-16.">
          Extended (λδ-2A) and restricted (λδ-1B) validity is decidable
          (anniversary milestone).
    </news>
-   <news class="beta" date="2019 March 25.">
+   <news class="beta" date="2019-03-25.">
          Preservation of validity for rt-computation
          does not need the sort degree parameter
          (i.e. no induction on the degree).
    </news>
-   <news class="beta" date="2018 November 1.">
+   <news class="beta" date="2018-11-01.">
          Extended (λδ-2A) and restricted (λδ-1B) validity rules justified.
    </news>
-   <news class="alpha" date="2018 September 21.">
+   <news class="alpha" date="2018-09-21.">
          λδ-2A completed with
          confluence of rt-computation and
          preservation of validity for rt-computation.
    </news>
-   <news class="alpha" date="2018 June 8.">
+   <news class="alpha" date="2018-06-08.">
          Behavioral component rt_computation completed.
    </news>
-   <news class="alpha" date="2018 April 16.">
+   <news class="alpha" date="2018-04-16.">
          "Big tree" theorem
          (anniversary milestone).
    </news>
-   <news class="alpha" date="2018 March 9.">
+   <news class="alpha" date="2018-03-09.">
          Support for rt-computation completed.
    </news>
-   <news class="alpha" date="2017 October 17.">
+   <news class="alpha" date="2017-10-17.">
          Exclusion binder in local environments.
          Syntactic component updated:
          syntax, relocation, s_transition, s_computation, static, i_static.
    </news>
-   <news class="alpha" date="2017 April 16.">
+   <news class="alpha" date="2017-04-16.">
          Strong rt-normalization
          for simply typed terms
          (anniversary milestone).
    </news>
-   <news class="alpha" date="2017 March 16.">
+   <news class="alpha" date="2017-03-16.">
          Behavioral component rt_transition completed.
    </news>
-   <news class="alpha" date="2017 February 19.">
+   <news class="alpha" date="2017-02-19.">
          Generic candidates of reducibility.
    </news>
-   <news class="alpha" date="2017 January 17.">
+   <news class="alpha" date="2017-01-17.">
          Confluence for parallel r-transition on referred entries of local environments.
    </news>
-   <news class="alpha" date="2016 September 15.">
+   <news class="alpha" date="2016-09-15.">
          Confluence for context-sensitive parallel r-transition on terms.
    </news>
-   <news class="alpha" date="2016 April 16.">
+   <news class="alpha" date="2016-04-16.">
          Syntactic component completed:
          syntax, relocation, s_transition, s_computation, static
          (anniversary milestone).
    </news>
-   <news class="alpha" date="2016 March 25.">
+   <news class="alpha" date="2016-03-25.">
          Relocation with reference transforming maps (rtmap).
    </news>
-   <news class="alpha" date="2015 October 9.">
+   <news class="alpha" date="2015-10-09.">
          λδ-2B is started.
-   </news>
-
-   <subsection name="A">Stage "A" </subsection>
-   <news class="delta" date="2019 November 20.">
-         λδ-2A is repackaged (was λδ-2A1).
-   </news>
-   <news class="delta" date="2015 August 27.">
-         λδ-2A appears too complex and is dismissed.
-   </news>
-   <news class="gamma" date="2014 October 28.">
-         λδ-2A is released.
-   </news>
-   <news class="beta" date="2014 September 9.">
-         Iterated static type assignment defined (more elegantly)
-         as a primitive notion.
-   </news>
-   <news class="beta" date="2014 June 18.">
-         Preservation of stratified native validity
-         for context-sensitive computation on terms.
-   </news>
-   <news class="alpha" date="2014 June 9.">
-         Strong qrst-normalization
-         for simply typed terms.
-   </news>
-   <news class="alpha" date="2014 April 16.">
-         Lazy equivalence on local environments
-         added as q-step to rst-computation on closures
-         (anniversary milestone).
-   </news>
-   <news class="alpha" date="2014 January 20.">
-         Parametrized slicing on local environments
-         comprises both versions of this operation
-         (one from basic_1, the other used in basic_2 till now).
-   </news>
-   <news class="alpha" date="2013 August 7.">
-         Passive support for global environments.
-   </news>
-   <news class="alpha" date="2013 July 27.">
-         Reaxiomatized β-reductum as in rt-reduction.
-   </news>
-   <news class="alpha" date="2013 July 20.">
-         Context-sensitive strong rt-normalization
-         for simply typed terms.
-   </news>
-   <news class="alpha" date="2013 April 16.">
-         Reaxiomatized substitution and reduction
-         commute with respect to subclosure
-         (anniversary milestone).
-   </news>
-   <news class="alpha" date="2013 March 16.">
-         Mutual recursive preservation of stratified native validity
-         for rst-computation on closures.
-   </news>
-   <news class="alpha" date="2012 October 16.">
-         Confluence for context-free parallel reduction on closures.
-   </news>
-   <news class="alpha" date="2012 July 26.">
-         Term binders polarized to control ζ-reduction (not released).
-   </news>
-   <news class="alpha" date="2012 April 16.">
-         Context-sensitive subject equivalence
-         for atomic arity assignment
-         (anniversary milestone).
-   </news>
-   <news class="alpha" date="2012 March 15.">
-         Context-sensitive strong normalization
-         for simply typed terms.
-   </news>
-   <news class="alpha" date="2012 January 27.">
-         Generic candidates of reducibility.
-   </news>
-   <news class="alpha" date="2011 September 21.">
-         Confluence for context-sensitive parallel reduction on terms.
-   </news>
-   <news class="alpha" date="2011 September 6.">
-         Confluence for context-free parallel reduction on terms.
-   </news>
-   <news class="alpha" date="2011 April 17.">
-         λδ-2A is started.
    </news>
 
    <section4 name="structure">Logical Structure of the Specification</section4>

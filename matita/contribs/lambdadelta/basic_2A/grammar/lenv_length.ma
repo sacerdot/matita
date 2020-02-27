@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/xoa/ex_2_3.ma".
 include "basic_2A/grammar/lenv.ma".
 
 (* LENGTH OF A LOCAL ENVIRONMENT ********************************************)

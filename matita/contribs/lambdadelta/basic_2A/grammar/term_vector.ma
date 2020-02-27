@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2A/lib/list.ma".
+include "ground_2/lib/list.ma".
 include "basic_2A/notation/functions/snapplvector_2.ma".
 include "basic_2A/grammar/term_simple.ma".
 

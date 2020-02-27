@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/xoa/ex_4_5.ma".
 include "basic_2A/reduction/lpr_lpr.ma".
 include "basic_2A/computation/cprs_lift.ma".
 
@@ -125,7 +126,7 @@ lemma cpr_bind2: ∀G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡ V2 → ∀I,T1,T2. ⦃G, L.
 
 (* Basic_1: was only: pr3_pr2_pr3_t pr3_wcpr0_t *)
 lemma lpr_cprs_trans: ∀G. s_rs_transitive … (cpr G) (λ_. lpr G).
-#G @s_r_trans_LTC1 /2 width=3 by lpr_cpr_trans/ (**) (* full auto fails *)
+#G @s_r_trans_CTC1 /2 width=3 by lpr_cpr_trans/ (**) (* full auto fails *)
 qed-.
 
 (* Basic_1: was: pr3_strip *)

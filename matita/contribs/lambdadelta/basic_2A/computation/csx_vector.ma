@@ -26,7 +26,7 @@ interpretation
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma csxv_inv_cons: ∀h,g,G,L,T,Ts. ⦃G, L⦄ ⊢ ⬊*[h, g] T @ Ts →
+lemma csxv_inv_cons: ∀h,g,G,L,T,Ts. ⦃G, L⦄ ⊢ ⬊*[h, g] T ⨮ Ts →
                      ⦃G, L⦄ ⊢ ⬊*[h, g] T ∧ ⦃G, L⦄ ⊢ ⬊*[h, g] Ts.
 normalize // qed-.
 

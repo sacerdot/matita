@@ -34,7 +34,7 @@ lemma cnr_lift: ∀G,L0,L,T,T0,s,l,m. ⦃G, L⦄ ⊢ ➡ 𝐍⦃T⦄ →
                 ⬇[s, l, m] L0 ≡ L → ⬆[l, m] T ≡ T0 → ⦃G, L0⦄ ⊢ ➡ 𝐍⦃T0⦄.
 #G #L0 #L #T #T0 #s #l #m #HLT #HL0 #HT0 #X #H
 elim (cpr_inv_lift1 … H … HL0 … HT0) -L0 #T1 #HT10 #HT1
-<(HLT … HT1) in HT0; -L #HT0
+>(HLT … HT1) in HT0; -L #HT0
 >(lift_mono … HT10 … HT0) -T1 -X //
 qed.
 
@@ -44,6 +44,6 @@ lemma cnr_inv_lift: ∀G,L0,L,T,T0,s,l,m. ⦃G, L0⦄ ⊢ ➡ 𝐍⦃T0⦄ →
 #G #L0 #L #T #T0 #s #l #m #HLT0 #HL0 #HT0 #X #H
 elim (lift_total X l m) #X0 #HX0
 lapply (cpr_lift … H … HL0 … HT0 … HX0) -L #HTX0
->(HLT0 … HTX0) in HX0; -L0 -X0 #H
+<(HLT0 … HTX0) in HX0; -L0 -X0 #H
 >(lift_inj … H … HT0) -T0 -X -s -l -m //
 qed-.

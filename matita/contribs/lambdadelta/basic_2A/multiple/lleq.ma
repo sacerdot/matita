@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/xoa/ex_4_4.ma".
 include "basic_2A/notation/relations/lazyeq_4.ma".
 include "basic_2A/multiple/llpx_sn.ma".
 
@@ -44,8 +45,8 @@ lemma lleq_ind: ∀R:relation4 ynat term lenv lenv. (
                    ∀L1,L2,l,p. |L1| = |L2| → R l (§p) L1 L2
                 ) → (
                    ∀a,I,L1,L2,V,T,l.
-                   L1 ≡[V, l]L2 → L1.ⓑ{I}V ≡[T, ⫯l] L2.ⓑ{I}V →
-                   R l V L1 L2 → R (⫯l) T (L1.ⓑ{I}V) (L2.ⓑ{I}V) → R l (ⓑ{a,I}V.T) L1 L2
+                   L1 ≡[V, l]L2 → L1.ⓑ{I}V ≡[T, ↑l] L2.ⓑ{I}V →
+                   R l V L1 L2 → R (↑l) T (L1.ⓑ{I}V) (L2.ⓑ{I}V) → R l (ⓑ{a,I}V.T) L1 L2
                 ) → (
                    ∀I,L1,L2,V,T,l.
                    L1 ≡[V, l]L2 → L1 ≡[T, l] L2 →
@@ -56,7 +57,7 @@ lemma lleq_ind: ∀R:relation4 ynat term lenv lenv. (
 qed-.
 
 lemma lleq_inv_bind: ∀a,I,L1,L2,V,T,l. L1 ≡[ⓑ{a,I}V.T, l] L2 →
-                     L1 ≡[V, l] L2 ∧ L1.ⓑ{I}V ≡[T, ⫯l] L2.ⓑ{I}V.
+                     L1 ≡[V, l] L2 ∧ L1.ⓑ{I}V ≡[T, ↑l] L2.ⓑ{I}V.
 /2 width=2 by llpx_sn_inv_bind/ qed-.
 
 lemma lleq_inv_flat: ∀I,L1,L2,V,T,l. L1 ≡[ⓕ{I}V.T, l] L2 →
@@ -91,7 +92,7 @@ lemma lleq_fwd_bind_sn: ∀a,I,L1,L2,V,T,l.
 /2 width=4 by llpx_sn_fwd_bind_sn/ qed-.
 
 lemma lleq_fwd_bind_dx: ∀a,I,L1,L2,V,T,l.
-                        L1 ≡[ⓑ{a,I}V.T, l] L2 → L1.ⓑ{I}V ≡[T, ⫯l] L2.ⓑ{I}V.
+                        L1 ≡[ⓑ{a,I}V.T, l] L2 → L1.ⓑ{I}V ≡[T, ↑l] L2.ⓑ{I}V.
 /2 width=2 by llpx_sn_fwd_bind_dx/ qed-.
 
 lemma lleq_fwd_flat_sn: ∀I,L1,L2,V,T,l.
@@ -122,7 +123,7 @@ lemma lleq_gref: ∀L1,L2,l,p. |L1| = |L2| → L1 ≡[§p, l] L2.
 /2 width=1 by llpx_sn_gref/ qed.
 
 lemma lleq_bind: ∀a,I,L1,L2,V,T,l.
-                 L1 ≡[V, l] L2 → L1.ⓑ{I}V ≡[T, ⫯l] L2.ⓑ{I}V →
+                 L1 ≡[V, l] L2 → L1.ⓑ{I}V ≡[T, ↑l] L2.ⓑ{I}V →
                  L1 ≡[ⓑ{a,I}V.T, l] L2.
 /2 width=1 by llpx_sn_bind/ qed.
 

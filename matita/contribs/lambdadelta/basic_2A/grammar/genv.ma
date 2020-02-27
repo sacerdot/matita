@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2A/lib/list.ma".
 include "basic_2A/notation/constructors/star_0.ma".
 include "basic_2A/notation/constructors/dxbind2_3.ma".
 include "basic_2A/notation/constructors/dxabbr_2.ma".
@@ -22,19 +21,22 @@ include "basic_2A/grammar/term.ma".
 (* GLOBAL ENVIRONMENTS ******************************************************)
 
 (* global environments *)
-definition genv ≝ list2 bind2 term.
+inductive genv: Type[0] ≝
+| GAtom: genv                       (* empty *)
+| GPair: genv → bind2 → term → genv (* binary binding construction *)
+.
 
 interpretation "sort (global environment)"
-   'Star = (nil2 bind2 term).
+   'Star = (GAtom).
 
 interpretation "global environment binding construction (binary)"
-   'DxBind2 L I T = (cons2 bind2 term I T L).
+   'DxBind2 G I T = (GPair G I T).
 
 interpretation "abbreviation (global environment)"
-   'DxAbbr L T = (cons2 bind2 term Abbr T L).
+   'DxAbbr G T = (GPair G Abbr T).
 
 interpretation "abstraction (global environment)"
-   'DxAbst L T = (cons2 bind2 term Abst T L).
+   'DxAbst G T = (GPair G Abst T).
 
 (* Basic properties *********************************************************)
 

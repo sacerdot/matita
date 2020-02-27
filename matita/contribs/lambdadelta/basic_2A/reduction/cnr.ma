@@ -97,14 +97,14 @@ qed.
 lemma cnr_abst: ∀a,G,L,W,T. ⦃G, L⦄ ⊢ ➡ 𝐍⦃W⦄ → ⦃G, L.ⓛW⦄ ⊢ ➡ 𝐍⦃T⦄ → ⦃G, L⦄ ⊢ ➡ 𝐍⦃ⓛ{a}W.T⦄.
 #a #G #L #W #T #HW #HT #X #H
 elim (cpr_inv_abst1 … H) -H #W0 #T0 #HW0 #HT0 #H destruct
->(HW … HW0) -W0 >(HT … HT0) -T0 //
+<(HW … HW0) -W0 <(HT … HT0) -T0 //
 qed.
 
 (* Basic_1: was only: nf2_appl_lref *)
 lemma cnr_appl_simple: ∀G,L,V,T. ⦃G, L⦄ ⊢ ➡ 𝐍⦃V⦄ → ⦃G, L⦄ ⊢ ➡ 𝐍⦃T⦄ → 𝐒⦃T⦄ → ⦃G, L⦄ ⊢ ➡ 𝐍⦃ⓐV.T⦄.
 #G #L #V #T #HV #HT #HS #X #H
 elim (cpr_inv_appl1_simple … H) -H // #V0 #T0 #HV0 #HT0 #H destruct
->(HV … HV0) -V0 >(HT … HT0) -T0 //
+<(HV … HV0) -V0 <(HT … HT0) -T0 //
 qed.
 
 (* Basic_1: was: nf2_dec *)

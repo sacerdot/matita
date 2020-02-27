@@ -20,7 +20,7 @@ include "basic_2A/computation/lsx_alt.ma".
 (* Advanced properties ******************************************************)
 
 fact lsx_bind_lpxs_aux: ∀h,g,a,I,G,L1,V,l. G ⊢ ⬊*[h, g, V, l] L1 →
-                        ∀Y,T. G ⊢ ⬊*[h, g, T, ⫯l] Y →
+                        ∀Y,T. G ⊢ ⬊*[h, g, T, ↑l] Y →
                         ∀L2. Y = L2.ⓑ{I}V → ⦃G, L1⦄ ⊢ ➡*[h, g] L2 →
                         G ⊢ ⬊*[h, g, ⓑ{a,I}V.T, l] L2.
 #h #g #a #I #G #L1 #V #l #H @(lsx_ind_alt … H) -L1
@@ -37,7 +37,7 @@ fact lsx_bind_lpxs_aux: ∀h,g,a,I,G,L1,V,l. G ⊢ ⬊*[h, g, V, l] L1 →
 qed-.
 
 lemma lsx_bind: ∀h,g,a,I,G,L,V,l. G ⊢ ⬊*[h, g, V, l] L →
-                ∀T. G ⊢ ⬊*[h, g, T, ⫯l] L.ⓑ{I}V →
+                ∀T. G ⊢ ⬊*[h, g, T, ↑l] L.ⓑ{I}V →
                 G ⊢ ⬊*[h, g, ⓑ{a,I}V.T, l] L.
 /2 width=3 by lsx_bind_lpxs_aux/ qed.
 

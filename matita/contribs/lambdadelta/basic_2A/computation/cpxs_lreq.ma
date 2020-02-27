@@ -20,5 +20,5 @@ include "basic_2A/computation/cpxs.ma".
 (* Properties on equivalence for local environments *************************)
 
 lemma lreq_cpxs_trans: ∀h,g,G. lsub_trans … (cpxs h g G) (lreq 0 (∞)).
-/3 width=5 by lreq_cpx_trans, LTC_lsub_trans/
+/3 width=5 by lreq_cpx_trans, CTC_lsub_trans/
 qed-.

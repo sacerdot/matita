@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2A/lib/bool.ma".
-include "ground_2A/lib/arith.ma".
+include "ground_2/lib/bool.ma".
+include "ground_2/lib/arith.ma".
 
 (* ITEMS ********************************************************************)
 

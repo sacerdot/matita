@@ -95,7 +95,7 @@ lemma lveq_inv_void_dx_length: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1,n2] L2.ⓧ → |L1|
                                ∃∃m2. L1 ≋ ⓧ*[n1,m2] L2 & 0 = n1 & ↑m2 = n2.
 #L1 #L2 #n1 #n2 #H #HL12
 lapply (lveq_fwd_length_plus … H) normalize >plus_n_Sm #H0
-lapply (plus2_inv_le_sn … H0 HL12) -H0 -HL12 #H0
+lapply (plus2_le_sn_sn … H0 HL12) -H0 -HL12 #H0
 elim (le_inv_S1 … H0) -H0 #m2 #_ #H0 destruct
 elim (lveq_inv_void_succ_dx … H) -H /2 width=3 by ex3_intro/
 qed-.

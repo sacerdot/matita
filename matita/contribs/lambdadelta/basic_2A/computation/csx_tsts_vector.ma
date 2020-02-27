@@ -44,7 +44,7 @@ elim (csxv_inv_cons … HVVs) #HV #HVs
 #X #H #H0
 elim (cpxs_fwd_sort_vector … H) -H #H
 [ elim H0 -H0 //
-| -H0 @(csx_cpxs_trans … (Ⓐ(V@Vs).⋆(next h k))) /2 width=1 by cpxs_flat_dx/
+| -H0 @(csx_cpxs_trans … (Ⓐ(V⨮Vs).⋆(next h k))) /2 width=1 by cpxs_flat_dx/
 ]
 qed.
 
@@ -93,7 +93,7 @@ lapply (csx_appl_theta … HW12 … H) -H -HW12 #H
 lapply (csx_fwd_pair_sn … H) #HW1
 lapply (csx_fwd_flat_dx … H) #H1
 @csx_appl_simple_tsts /2 width=3 by simple_flat/ -IHV12s -HW1 -H1 #X #H1 #H2
-elim (cpxs_fwd_theta_vector … (V2@V2s) … H1) -H1 /2 width=1 by liftv_cons/ -HV12s -HV12
+elim (cpxs_fwd_theta_vector … (V2⨮V2s) … H1) -H1 /2 width=1 by liftv_cons/ -HV12s -HV12
 [ -H #H elim H2 -H2 //
 | -H2 /3 width=5 by csx_cpxs_trans, cpxs_flat_dx/
 ]

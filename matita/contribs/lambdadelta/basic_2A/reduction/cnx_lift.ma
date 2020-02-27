@@ -23,7 +23,7 @@ lemma cnx_lift: ∀h,g,G,L0,L,T,T0,s,l,m. ⦃G, L⦄ ⊢ ➡[h, g] 𝐍⦃T⦄ �
                 ⬆[l, m] T ≡ T0 → ⦃G, L0⦄ ⊢ ➡[h, g] 𝐍⦃T0⦄.
 #h #g #G #L0 #L #T #T0 #s #l #m #HLT #HL0 #HT0 #X #H
 elim (cpx_inv_lift1 … H … HL0 … HT0) -L0 #T1 #HT10 #HT1
-<(HLT … HT1) in HT0; -L #HT0
+>(HLT … HT1) in HT0; -L #HT0
 >(lift_mono … HT10 … HT0) -T1 -X //
 qed.
 
@@ -32,6 +32,6 @@ lemma cnx_inv_lift: ∀h,g,G,L0,L,T,T0,s,l,m. ⦃G, L0⦄ ⊢ ➡[h, g] 𝐍⦃T
 #h #g #G #L0 #L #T #T0 #s #l #m #HLT0 #HL0 #HT0 #X #H
 elim (lift_total X l m) #X0 #HX0
 lapply (cpx_lift … H … HL0 … HT0 … HX0) -L #HTX0
->(HLT0 … HTX0) in HX0; -L0 -X0 #H
+<(HLT0 … HTX0) in HX0; -L0 -X0 #H
 >(lift_inj … H … HT0) -T0 -X -l -m //
 qed-.

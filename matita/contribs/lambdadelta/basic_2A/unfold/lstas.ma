@@ -12,6 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/xoa/ex_4_3.ma".
+include "ground_2/xoa/ex_4_4.ma".
 include "basic_2A/notation/relations/statictypestar_6.ma".
 include "basic_2A/grammar/genv.ma".
 include "basic_2A/substitution/drop.ma".

@@ -48,11 +48,11 @@ lemma lpxs_ind_alt: ∀h,g,G. ∀R:relation lenv.
 (* Properties on context-sensitive extended parallel computation for terms **)
 
 lemma lpxs_cpx_trans: ∀h,g,G. s_r_transitive … (cpx h g G) (λ_.lpxs h g G).
-/3 width=5 by s_r_trans_LTC2, lpx_cpxs_trans/ qed-.
+/3 width=5 by s_r_trans_CTC2, lpx_cpxs_trans/ qed-.
 
 (* Note: alternative proof: /3 width=5 by s_r_trans_TC1, lpxs_cpx_trans/ *)
 lemma lpxs_cpxs_trans: ∀h,g,G. s_rs_transitive … (cpx h g G) (λ_.lpxs h g G).
-#h #g #G @s_r_to_s_rs_trans @s_r_trans_LTC2
+#h #g #G @s_r_to_s_rs_trans @s_r_trans_CTC2
 @s_rs_trans_TC1 /2 width=3 by lpx_cpxs_trans/ (**) (* full auto too slow *)
 qed-.
 

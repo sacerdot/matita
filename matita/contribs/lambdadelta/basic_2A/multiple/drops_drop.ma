@@ -21,7 +21,7 @@ include "basic_2A/multiple/drops.ma".
 
 lemma drops_drop_trans: ∀L1,L,cs. ⬇*[Ⓕ, cs] L1 ≡ L → ∀L2,i. ⬇[i] L ≡ L2 →
                         ∃∃L0,cs0,i0. ⬇[i0] L1 ≡ L0 & ⬇*[Ⓕ, cs0] L0 ≡ L2 &
-                                      @⦃i, cs⦄ ≡ i0 & cs ▭ i ≡ cs0.
+                                      @❪i, cs❫ ≘ i0 & cs ▭ i ≘ cs0.
 #L1 #L #cs #H elim H -L1 -L -cs
 [ /2 width=7 by drops_nil, minuss_nil, at_nil, ex4_3_intro/
 | #L1 #L0 #L #cs #l #m #_ #HL0 #IHL0 #L2 #i #HL2

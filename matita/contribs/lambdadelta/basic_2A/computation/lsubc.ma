@@ -12,6 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground_2/xoa/ex_6_3.ma".
+include "ground_2/xoa/ex_7_4.ma".
 include "basic_2A/notation/relations/lrsubeqc_4.ma".
 include "basic_2A/static/lsubr.ma".
 include "basic_2A/static/aaa.ma".

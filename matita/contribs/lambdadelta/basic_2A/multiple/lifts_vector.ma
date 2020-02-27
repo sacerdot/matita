@@ -17,11 +17,11 @@ include "basic_2A/multiple/lifts.ma".
 
 (* GENERIC TERM VECTOR RELOCATION *******************************************)
 
-inductive liftsv (cs:list2 nat nat) : relation (list term) ≝
-| liftsv_nil : liftsv cs (◊) (◊)
+inductive liftsv (cs:mr2) : relation (list term) ≝
+| liftsv_nil : liftsv cs (Ⓔ) (Ⓔ)
 | liftsv_cons: ∀T1s,T2s,T1,T2.
                ⬆*[cs] T1 ≡ T2 → liftsv cs T1s T2s →
-               liftsv cs (T1 @ T1s) (T2 @ T2s)
+               liftsv cs (T1 ⨮ T1s) (T2 ⨮ T2s)
 .
 
 interpretation "generic relocation (vector)"

@@ -12,7 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2A/ynat/ynat_plus.ma".
+include "ground_2/xoa/ex_5_5.ma".
+include "ground_2/ynat/ynat_plus.ma".
 include "basic_2A/substitution/drop.ma".
 
 (* LAZY SN POINTWISE EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS ****)
@@ -26,7 +27,7 @@ inductive llpx_sn (R:relation3 lenv term term): relation4 ynat term lenv lenv �
 | llpx_sn_free: ∀L1,L2,l,i. |L1| ≤ i → |L2| ≤ i → |L1| = |L2| → llpx_sn R l (#i) L1 L2
 | llpx_sn_gref: ∀L1,L2,l,p. |L1| = |L2| → llpx_sn R l (§p) L1 L2
 | llpx_sn_bind: ∀a,I,L1,L2,V,T,l.
-                llpx_sn R l V L1 L2 → llpx_sn R (⫯l) T (L1.ⓑ{I}V) (L2.ⓑ{I}V) →
+                llpx_sn R l V L1 L2 → llpx_sn R (↑l) T (L1.ⓑ{I}V) (L2.ⓑ{I}V) →
                 llpx_sn R l (ⓑ{a,I}V.T) L1 L2
 | llpx_sn_flat: ∀I,L1,L2,V,T,l.
                 llpx_sn R l V L1 L2 → llpx_sn R l T L1 L2 → llpx_sn R l (ⓕ{I}V.T) L1 L2
@@ -36,7 +37,7 @@ inductive llpx_sn (R:relation3 lenv term term): relation4 ynat term lenv lenv �
 
 fact llpx_sn_inv_bind_aux: ∀R,L1,L2,X,l. llpx_sn R l X L1 L2 →
                            ∀a,I,V,T. X = ⓑ{a,I}V.T →
-                           llpx_sn R l V L1 L2 ∧ llpx_sn R (⫯l) T (L1.ⓑ{I}V) (L2.ⓑ{I}V).
+                           llpx_sn R l V L1 L2 ∧ llpx_sn R (↑l) T (L1.ⓑ{I}V) (L2.ⓑ{I}V).
 #R #L1 #L2 #X #l * -L1 -L2 -X -l
 [ #L1 #L2 #l #k #_ #b #J #W #U #H destruct
 | #L1 #L2 #l #i #_ #_ #b #J #W #U #H destruct
@@ -49,7 +50,7 @@ fact llpx_sn_inv_bind_aux: ∀R,L1,L2,X,l. llpx_sn R l X L1 L2 →
 qed-.
 
 lemma llpx_sn_inv_bind: ∀R,a,I,L1,L2,V,T,l. llpx_sn R l (ⓑ{a,I}V.T) L1 L2 →
-                        llpx_sn R l V L1 L2 ∧ llpx_sn R (⫯l) T (L1.ⓑ{I}V) (L2.ⓑ{I}V).
+                        llpx_sn R l V L1 L2 ∧ llpx_sn R (↑l) T (L1.ⓑ{I}V) (L2.ⓑ{I}V).
 /2 width=4 by llpx_sn_inv_bind_aux/ qed-.
 
 fact llpx_sn_inv_flat_aux: ∀R,L1,L2,X,l. llpx_sn R l X L1 L2 →
@@ -126,7 +127,7 @@ lemma llpx_sn_fwd_bind_sn: ∀R,a,I,L1,L2,V,T,l. llpx_sn R l (ⓑ{a,I}V.T) L1 L2
 qed-.
 
 lemma llpx_sn_fwd_bind_dx: ∀R,a,I,L1,L2,V,T,l. llpx_sn R l (ⓑ{a,I}V.T) L1 L2 →
-                           llpx_sn R (⫯l) T (L1.ⓑ{I}V) (L2.ⓑ{I}V).
+                           llpx_sn R (↑l) T (L1.ⓑ{I}V) (L2.ⓑ{I}V).
 #R #a #I #L1 #L2 #V #T #l #H elim (llpx_sn_inv_bind … H) -H //
 qed-.
 

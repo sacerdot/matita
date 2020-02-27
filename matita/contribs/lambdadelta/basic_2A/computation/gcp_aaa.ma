@@ -32,7 +32,7 @@ theorem acr_aaa_csubc_lifts: ∀RR,RS,RP.
 [ #G #L #k #L0 #cs #HL0 #X #H #L2 #HL20
   >(lifts_inv_sort1 … H) -H
   lapply (acr_gcr … H1RP H2RP (⓪)) #HAtom
-  lapply (s4 … HAtom G L2 (◊)) /2 width=1 by/
+  lapply (s4 … HAtom G L2 (Ⓔ)) /2 width=1 by/
 | #I #G #L1 #K1 #V1 #B #i #HLK1 #HKV1B #IHB #L0 #cs #HL01 #X #H #L2 #HL20
   lapply (acr_gcr … H1RP H2RP B) #HB
   elim (lifts_inv_lref1 … H) -H #i1 #Hi1 #H destruct
@@ -45,7 +45,7 @@ theorem acr_aaa_csubc_lifts: ∀RR,RS,RP.
   [ #K2 #HK20 #H destruct
     elim (lift_total V0 0 (i0 +1)) #V #HV0
     elim (lifts_lift_trans  … Hi0 … Hcs0 … HV10 … HV0) -HV10 #V2 #HV12 #HV2
-    lapply (s5 … HB ? G ? ? (◊) … HV0 HLK2) /3 width=7 by drops_cons, lifts_cons/ (* Note: uses IHB HL20 V2 HV0 *)
+    lapply (s5 … HB ? G ? ? (Ⓔ) … HV0 HLK2) /3 width=7 by drops_cons, lifts_cons/ (* Note: uses IHB HL20 V2 HV0 *)
   | -HLK1 -IHB -HL01 -HL20 -HK1b -Hi0 -Hcs0
     #K2 #V2 #A2 #HKV2A #H1KV0A #H2KV0A #_ #H1 #H2 destruct
     lapply (drop_fwd_drop2 … HLK2) #HLK2b
@@ -53,15 +53,15 @@ theorem acr_aaa_csubc_lifts: ∀RR,RS,RP.
     lapply (aaa_mono … H2KV0A … HKV0B) #H destruct -H2KV0A -HKV0B
     elim (lift_total V0 0 (i0 +1)) #V3 #HV03
     elim (lift_total V2 0 (i0 +1)) #V #HV2
-    lapply (s5 … HB ? G ? ? (◊) … (ⓝV3.V) … HLK2) /2 width=1 by lift_flat/
-    lapply (s7 … HB G L2 (◊)) /3 width=7 by gcr_lift/
+    lapply (s5 … HB ? G ? ? (Ⓔ) … (ⓝV3.V) … HLK2) /2 width=1 by lift_flat/
+    lapply (s7 … HB G L2 (Ⓔ)) /3 width=7 by gcr_lift/
   ]
 | #a #G #L #V #T #B #A #_ #_ #IHB #IHA #L0 #cs #HL0 #X #H #L2 #HL20
   elim (lifts_inv_bind1 … H) -H #V0 #T0 #HV0 #HT0 #H destruct
   lapply (acr_gcr … H1RP H2RP A) #HA
   lapply (acr_gcr … H1RP H2RP B) #HB
   lapply (s1 … HB) -HB #HB
-  lapply (s6 … HA G L2 (◊) (◊)) /4 width=5 by lsubc_pair, drops_skip, liftv_nil/
+  lapply (s6 … HA G L2 (Ⓔ) (Ⓔ)) /4 width=5 by lsubc_pair, drops_skip, liftv_nil/
 | #a #G #L #W #T #B #A #HLWB #_ #IHB #IHA #L0 #cs #HL0 #X #H #L2 #HL02
   elim (lifts_inv_bind1 … H) -H #W0 #T0 #HW0 #HT0 #H destruct
   @(acr_abst  … H1RP H2RP) /2 width=5 by/
@@ -76,7 +76,7 @@ theorem acr_aaa_csubc_lifts: ∀RR,RS,RP.
 | #G #L #V #T #A #_ #_ #IH1A #IH2A #L0 #cs #HL0 #X #H #L2 #HL20
   elim (lifts_inv_flat1 … H) -H #V0 #T0 #HV0 #HT0 #H destruct
   lapply (acr_gcr … H1RP H2RP A) #HA
-  lapply (s7 … HA G L2 (◊)) /3 width=5 by/
+  lapply (s7 … HA G L2 (Ⓔ)) /3 width=5 by/
 ]
 qed.
 

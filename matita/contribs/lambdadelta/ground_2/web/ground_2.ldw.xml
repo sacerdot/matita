@@ -14,6 +14,9 @@
    </body>
    <table name="ground_2_sum"/>
 
+   <news class="alpha" date="2020 February 27.">
+         Specification becomes an independent package.
+   </news>
    <news class="alpha" date="2020 January 6.">
          Centralized xoa infrastructure removed.
    </news>
