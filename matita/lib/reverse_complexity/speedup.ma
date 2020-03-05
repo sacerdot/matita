@@ -1,4 +1,5 @@
 include "reverse_complexity/bigops_compl.ma".
+include "basics/core_notation/napart_2.ma".
 
 (********************************* the speedup ********************************)
 

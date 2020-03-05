@@ -14,6 +14,7 @@
 
 include "formal_topology/cprop_connectives.ma".
 include "basics/core_notation/compose_2.ma".
+include "basics/core_notation/invert_1.ma".
 
 inductive eq (A:Type[0]) (x:A) : A → CProp[0] ≝
     refl: eq A x x.

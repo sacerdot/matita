@@ -10,6 +10,7 @@
       V_______________________________________________________________ *)
 
 include "arithmetics/nat.ma".
+include "basics/core_notation/exp_2.ma".
 
 (* iteration *) 
 

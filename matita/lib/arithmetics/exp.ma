@@ -10,6 +10,7 @@
       V_______________________________________________________________ *)
 
 include "arithmetics/div_and_mod.ma".
+include "basics/core_notation/exp_2.ma".
 
 let rec exp n m on m ≝ 
  match m with 

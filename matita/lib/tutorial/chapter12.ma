@@ -16,6 +16,7 @@ include "basics/relations.ma".
 include "basics/types.ma".
 include "arithmetics/nat.ma".
 include "hints_declaration.ma".
+include "basics/core_notation/invert_1.ma".
 
 (******************* Quotienting in type theory **********************)
 

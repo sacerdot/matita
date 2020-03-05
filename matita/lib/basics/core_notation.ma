@@ -280,13 +280,6 @@ for @{ 'union $a $b }. (* \cup *)
 
 (* other notations **********************************************************)
 
-notation < "term 76 a \sup term 90 b" non associative with precedence 75 for @{ 'exp $a $b}.
-notation > "a \sup term 90 b" non associative with precedence 75 for @{ 'exp $a $b}.
-notation > "a ^ term 90 b"  non associative with precedence 75 for @{ 'exp $a $b}.
-notation "s \sup (-1)" non associative with precedence 75 for @{ 'invert $s }.
-notation > "s ^ (-1)" non associative with precedence 75 for @{ 'invert $s }.
-notation < "s \sup (-1) x" non associative with precedence 90 for @{ 'invert_appl $s $x}. 
-
 notation "| term 19 C |" with precedence 70 for @{ 'card $C }.
 
 notation "\naturals" non associative with precedence 90 for @{'N}.
