@@ -102,14 +102,14 @@ lemma pred_dsubst: dsubstable pred.
 ]
 qed.
 
-lemma pred_conf1_vref: ∀i. confluent1 … pred (#i).
+lemma pred_conf1_vref: ∀i. pw_confluent … pred (#i).
 #i #M1 #H1 #M2 #H2
 <(pred_inv_vref … H1) -H1 [3: // |2: skip ] (**) (* simplify line *)
 <(pred_inv_vref … H2) -H2 [3: // |2: skip ] (**) (* simplify line *)
 /2 width=3/
 qed-.
 
-lemma pred_conf1_abst: ∀A. confluent1 … pred A → confluent1 … pred (𝛌.A).
+lemma pred_conf1_abst: ∀A. pw_confluent … pred A → pw_confluent … pred (𝛌.A).
 #A #IH #M1 #H1 #M2 #H2
 elim (pred_inv_abst … H1 …) -H1 [3: // |2: skip ] #A1 #HA1 #H destruct (**) (* simplify line *)
 elim (pred_inv_abst … H2 …) -H2 [3: // |2: skip ] #A2 #HA2 #H destruct (**) (* simplify line *)
@@ -117,7 +117,7 @@ elim (IH … HA1 … HA2) -A /3 width=3/
 qed-.
 
 lemma pred_conf1_appl_beta: ∀B,B1,B2,C,C2,M1.
-                            (∀M0. |M0| < |B|+|𝛌.C|+1 → confluent1 ? pred M0) → (**) (* ? needed in place of … *)
+                            (∀M0. |M0| < |B|+|𝛌.C|+1 →  pw_confluent ? pred M0) → (**) (* ? needed in place of … *)
                             B ⤇ B1 → B ⤇ B2 → 𝛌.C ⤇ M1 → C ⤇ C2 →
                             ∃∃M. @B1.M1 ⤇ M & [↙B2]C2 ⤇ M.
 #B #B1 #B2 #C #C2 #M1 #IH #HB1 #HB2 #H1 #HC2
