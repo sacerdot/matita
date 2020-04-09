@@ -27,7 +27,6 @@ definition ib2: relation2 bool bind2 ≝
                 λa,I. I = Abst ∨ Bind2 a I = Bind2 false Abbr.
 
 (* activate genv *)
-(* reducible terms *)
 inductive crr (G:genv): relation2 lenv term ≝
 | crr_delta  : ∀L,K,V,i. ⬇[i] L ≡ K.ⓓV → crr G L (#i)
 | crr_appl_sn: ∀L,V,T. crr G L V → crr G L (ⓐV.T)

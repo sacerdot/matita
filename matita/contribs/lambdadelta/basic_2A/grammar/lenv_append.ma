@@ -57,7 +57,6 @@ lemma ltail_length: ∀I,L,V. |ⓑ{I}V.L| = |L| + 1.
 #I #L #V >append_length //
 qed.
 
-(* Basic_1: was just: chead_ctail *)
 lemma lpair_ltail: ∀L,I,V. ∃∃J,K,W. L.ⓑ{I}V = ⓑ{J}W.K & |L| = |K|.
 #L elim L -L /2 width=5 by ex2_3_intro/
 #L #Z #X #IHL #I #V elim (IHL Z X) -IHL
@@ -122,7 +121,6 @@ qed-.
 
 (* Basic eliminators ********************************************************)
 
-(* Basic_1: was: c_tail_ind *)
 lemma lenv_ind_alt: ∀R:predicate lenv.
                     R (⋆) → (∀I,L,T. R L → R (ⓑ{I}T.L)) →
                     ∀L. R L.

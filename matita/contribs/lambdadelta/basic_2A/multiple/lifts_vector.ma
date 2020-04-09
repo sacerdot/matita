@@ -29,7 +29,6 @@ interpretation "generic relocation (vector)"
 
 (* Basic inversion lemmas ***************************************************)
 
-(* Basic_1: was: lifts1_flat (left to right) *)
 lemma lifts_inv_applv1: ∀V1s,U1,T2,cs. ⬆*[cs] Ⓐ V1s. U1 ≡ T2 →
                         ∃∃V2s,U2. ⬆*[cs] V1s ≡ V2s & ⬆*[cs] U1 ≡ U2 &
                                   T2 = Ⓐ V2s. U2.
@@ -45,7 +44,6 @@ qed-.
 
 (* Basic properties *********************************************************)
 
-(* Basic_1: was: lifts1_flat (right to left) *)
 lemma lifts_applv: ∀V1s,V2s,cs. ⬆*[cs] V1s ≡ V2s →
                    ∀T1,T2. ⬆*[cs] T1 ≡ T2 →
                    ⬆*[cs] Ⓐ V1s. T1 ≡ Ⓐ V2s. T2.

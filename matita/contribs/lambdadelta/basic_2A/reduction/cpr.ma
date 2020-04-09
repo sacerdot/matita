@@ -25,7 +25,6 @@ include "basic_2A/unfold/lstas.ma".
 (* CONTEXT-SENSITIVE PARALLEL REDUCTION FOR TERMS ***************************)
 
 (* activate genv *)
-(* Basic_1: includes: pr0_delta1 pr2_delta1 pr2_thin_dx *)
 (* Note: cpr_flat: does not hold in basic_1 *)
 inductive cpr: relation4 genv lenv term term ≝
 | cpr_atom : ∀I,G,L. cpr G L (⓪{I}) (⓪{I})
@@ -66,18 +65,15 @@ lemma lsubr_cpr_trans: ∀G. lsub_trans … (cpr G) lsubr.
 ]
 qed-.
 
-(* Basic_1: was by definition: pr2_free *)
 lemma tpr_cpr: ∀G,T1,T2. ⦃G, ⋆⦄ ⊢ T1 ➡ T2 → ∀L. ⦃G, L⦄ ⊢ T1 ➡ T2.
 #G #T1 #T2 #HT12 #L
 lapply (lsubr_cpr_trans … HT12 L ?) //
 qed.
 
-(* Basic_1: includes by definition: pr0_refl *)
 lemma cpr_refl: ∀G,T,L. ⦃G, L⦄ ⊢ T ➡ T.
 #G #T elim T -T // * /2 width=1 by cpr_bind, cpr_flat/
 qed.
 
-(* Basic_1: was: pr2_head_1 *)
 lemma cpr_pair_sn: ∀I,G,L,V1,V2. ⦃G, L⦄ ⊢ V1 ➡ V2 →
                    ∀T. ⦃G, L⦄ ⊢ ②{I}V1.T ➡ ②{I}V2.T.
 * /2 width=1 by cpr_bind, cpr_flat/ qed.
@@ -136,14 +132,12 @@ lemma cpr_inv_atom1: ∀I,G,L,T2. ⦃G, L⦄ ⊢ ⓪{I} ➡ T2 →
                                  ⬆[O, i + 1] V2 ≡ T2 & I = LRef i.
 /2 width=3 by cpr_inv_atom1_aux/ qed-.
 
-(* Basic_1: includes: pr0_gen_sort pr2_gen_sort *)
 lemma cpr_inv_sort1: ∀G,L,T2,k. ⦃G, L⦄ ⊢ ⋆k ➡ T2 → T2 = ⋆k.
 #G #L #T2 #k #H
 elim (cpr_inv_atom1 … H) -H //
 * #K #V #V2 #i #_ #_ #_ #H destruct
 qed-.
 
-(* Basic_1: includes: pr0_gen_lref pr2_gen_lref *)
 lemma cpr_inv_lref1: ∀G,L,T2,i. ⦃G, L⦄ ⊢ #i ➡ T2 →
                      T2 = #i ∨
                      ∃∃K,V,V2. ⬇[i] L ≡ K. ⓓV & ⦃G, K⦄ ⊢ V ➡ V2 &
@@ -186,7 +180,6 @@ lemma cpr_inv_bind1: ∀a,I,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓑ{a,I}V1.T1 ➡ U2 �
                           a = true & I = Abbr.
 /2 width=3 by cpr_inv_bind1_aux/ qed-.
 
-(* Basic_1: includes: pr0_gen_abbr pr2_gen_abbr *)
 lemma cpr_inv_abbr1: ∀a,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓓ{a}V1.T1 ➡ U2 → (
                      ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡ V2 & ⦃G, L. ⓓV1⦄ ⊢ T1 ➡ T2 &
                               U2 = ⓓ{a}V2.T2
@@ -197,7 +190,6 @@ elim (cpr_inv_bind1 … H) -H *
 /3 width=5 by ex3_2_intro, ex3_intro, or_introl, or_intror/
 qed-.
 
-(* Basic_1: includes: pr0_gen_abst pr2_gen_abst *)
 lemma cpr_inv_abst1: ∀a,G,L,V1,T1,U2. ⦃G, L⦄ ⊢ ⓛ{a}V1.T1 ➡ U2 →
                      ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡ V2 & ⦃G, L.ⓛV1⦄ ⊢ T1 ➡ T2 &
                               U2 = ⓛ{a}V2.T2.
@@ -245,7 +237,6 @@ lemma cpr_inv_flat1: ∀I,G,L,V1,U1,U2. ⦃G, L⦄ ⊢ ⓕ{I}V1.U1 ➡ U2 →
                                               U2 = ⓓ{a}W2.ⓐV2.T2 & I = Appl.
 /2 width=3 by cpr_inv_flat1_aux/ qed-.
 
-(* Basic_1: includes: pr0_gen_appl pr2_gen_appl *)
 lemma cpr_inv_appl1: ∀G,L,V1,U1,U2. ⦃G, L⦄ ⊢ ⓐV1.U1 ➡ U2 →
                      ∨∨ ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡ V2 & ⦃G, L⦄ ⊢ U1 ➡ T2 &
                                  U2 = ⓐV2.T2
@@ -277,7 +268,6 @@ elim (cpr_inv_appl1 … H) -H *
 ]
 qed-.
 
-(* Basic_1: includes: pr0_gen_cast pr2_gen_cast *)
 lemma cpr_inv_cast1: ∀G,L,V1,U1,U2. ⦃G, L⦄ ⊢ ⓝ V1. U1 ➡ U2 → (
                      ∃∃V2,T2. ⦃G, L⦄ ⊢ V1 ➡ V2 & ⦃G, L⦄ ⊢ U1 ➡ T2 &
                               U2 = ⓝ V2. T2
@@ -301,14 +291,3 @@ elim (cpr_inv_bind1 … H) -H *
 | #T2 #_ #_ #H destruct
 ]
 qed-.
-
-(* Basic_1: removed theorems 11:
-            pr0_subst0_back pr0_subst0_fwd pr0_subst0
-            pr2_head_2 pr2_cflat clear_pr2_trans
-            pr2_gen_csort pr2_gen_cflat pr2_gen_cbind
-            pr2_gen_ctail pr2_ctail
-*)
-(* Basic_1: removed local theorems 4:
-            pr0_delta_eps pr0_cong_delta
-            pr2_free_free pr2_free_delta
-*)

@@ -20,7 +20,6 @@ include "basic_2A/multiple/lifts_vector.ma".
 
 (* Main properties **********************************************************)
 
-(* Basic_1: was: lifts1_xhg (right to left) *)
 lemma liftsv_liftv_trans_le: ∀T1s,Ts,cs. ⬆*[cs] T1s ≡ Ts →
                              ∀T2s:list term. ⬆[0, 1] Ts ≡ T2s →
                              ∃∃T0s. ⬆[0, 1] T1s ≡ T0s & ⬆*[cs + 1] T0s ≡ T2s.

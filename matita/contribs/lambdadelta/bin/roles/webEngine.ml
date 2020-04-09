@@ -39,7 +39,7 @@ let status_out () =
     let req = string_of_request "select" p in
     let ph = "Filter..." in
     KP.printf "<input class=\"filter\" type=\"text\" autocomplete=\"on\" \
-      placeholder=%S onkeyup=\"filter('%s','%s');\" id=\"f.%s\"\n/>" ph req p p
+      placeholder=%S oninput=\"filter('%s','%s');\" id=\"f.%s\"\n/>" ph req p p
   in
   let button_specs = [
     "default", "Refresh";

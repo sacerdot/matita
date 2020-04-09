@@ -56,19 +56,16 @@ elim (eq_nat_dec i1 i2) /2 width=1 by or_introl/
 #Hni12 @or_intror #H destruct /2 width=1 by/ 
 qed-.
 
-(* Basic_1: was: bind_dec *)
 lemma eq_bind2_dec: ∀I1,I2:bind2. Decidable (I1 = I2).
 * * /2 width=1 by or_introl/
 @or_intror #H destruct
 qed-.
 
-(* Basic_1: was: flat_dec *)
 lemma eq_flat2_dec: ∀I1,I2:flat2. Decidable (I1 = I2).
 * * /2 width=1 by or_introl/
 @or_intror #H destruct
 qed-.
 
-(* Basic_1: was: kind_dec *)
 lemma eq_item2_dec: ∀I1,I2:item2. Decidable (I1 = I2).
 * [ #a1 ] #I1 * [1,3: #a2 ] #I2
 [2,3: @or_intror #H destruct
@@ -79,10 +76,3 @@ lemma eq_item2_dec: ∀I1,I2:item2. Decidable (I1 = I2).
   @or_intror #H destruct /2 width=1 by/
 ]
 qed-.
-
-(* Basic_1: removed theorems 21:
-            s_S s_plus s_plus_sym s_minus minus_s_s s_le s_lt s_inj s_inc
-            s_arith0 s_arith1
-            r_S r_plus r_plus_sym r_minus r_dis s_r r_arith0 r_arith1
-            not_abbr_abst bind_dec_not
-*)

@@ -17,7 +17,7 @@ include "basic_2A/substitution/lpx_sn.ma".
 
 (* SN POINTWISE EXTENSION OF A CONTEXT-SENSITIVE REALTION FOR TERMS *********)
 
-(* alternative definition of lpx_sn *)
+(* Note: alternative definition of lpx_sn *)
 definition lpx_sn_alt: relation3 lenv term term → relation lenv ≝
                        λR,L1,L2. |L1| = |L2| ∧
                        (∀I1,I2,K1,K2,V1,V2,i.

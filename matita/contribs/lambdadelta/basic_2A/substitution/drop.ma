@@ -26,7 +26,6 @@ include "basic_2A/substitution/lift.ma".
 
 (* BASIC SLICING FOR LOCAL ENVIRONMENTS *************************************)
 
-(* Basic_1: includes: drop_skip_bind *)
 inductive drop (s:bool): relation4 nat nat lenv lenv ≝
 | drop_atom: ∀l,m. (s = Ⓕ → m = 0) → drop s l m (⋆) (⋆)
 | drop_pair: ∀I,L,V. drop s 0 0 (L.ⓑ{I}V) (L.ⓑ{I}V)
@@ -77,7 +76,6 @@ fact drop_inv_atom1_aux: ∀L1,L2,s,l,m. ⬇[s, l, m] L1 ≡ L2 → L1 = ⋆ →
 ]
 qed-.
 
-(* Basic_1: was: drop_gen_sort *)
 lemma drop_inv_atom1: ∀L2,s,l,m. ⬇[s, l, m] ⋆ ≡ L2 → L2 = ⋆ ∧ (s = Ⓕ → m = 0).
 /2 width=4 by drop_inv_atom1_aux/ qed-.
 
@@ -104,7 +102,6 @@ elim (drop_inv_O1_pair1 … H) -H * // #H destruct
 elim (lt_refl_false … H)
 qed-.
 
-(* Basic_1: was: drop_gen_drop *)
 lemma drop_inv_drop1_lt: ∀I,K,L2,V,s,m.
                          ⬇[s, 0, m] K.ⓑ{I}V ≡ L2 → 0 < m → ⬇[s, 0, m-1] K ≡ L2.
 #I #K #L2 #V #s #m #H #Hm
@@ -130,7 +127,6 @@ fact drop_inv_skip1_aux: ∀L1,L2,s,l,m. ⬇[s, l, m] L1 ≡ L2 → 0 < l →
 ]
 qed-.
 
-(* Basic_1: was: drop_gen_skip_l *)
 lemma drop_inv_skip1: ∀I,K1,V1,L2,s,l,m. ⬇[s, l, m] K1.ⓑ{I}V1 ≡ L2 → 0 < l →
                       ∃∃K2,V2. ⬇[s, l-1, m] K1 ≡ K2 &
                                ⬆[l-1, m] V2 ≡ V1 &
@@ -163,7 +159,6 @@ fact drop_inv_skip2_aux: ∀L1,L2,s,l,m. ⬇[s, l, m] L1 ≡ L2 → 0 < l →
 ]
 qed-.
 
-(* Basic_1: was: drop_gen_skip_r *)
 lemma drop_inv_skip2: ∀I,L1,K2,V2,s,l,m. ⬇[s, l, m] L1 ≡ K2.ⓑ{I}V2 → 0 < l →
                       ∃∃K1,V1. ⬇[s, l-1, m] K1 ≡ K2 & ⬆[l-1, m] V2 ≡ V1 &
                                L1 = K1.ⓑ{I}V1.
@@ -186,7 +181,6 @@ qed-.
 lemma drop_refl_atom_O2: ∀s,l. ⬇[s, l, O] ⋆ ≡ ⋆.
 /2 width=1 by drop_atom/ qed.
 
-(* Basic_1: was by definition: drop_refl *)
 lemma drop_refl: ∀L,l,s. ⬇[s, l, 0] L ≡ L.
 #L elim L -L //
 #L #I #V #IHL #l #s @(nat_ind_plus … l) -l /2 width=1 by drop_pair, drop_skip/
@@ -326,7 +320,6 @@ qed-.
 
 (* Basic forward lemmas *****************************************************)
 
-(* Basic_1: was: drop_S *)
 lemma drop_fwd_drop2: ∀L1,I2,K2,V2,s,m. ⬇[s, O, m] L1 ≡ K2. ⓑ{I2} V2 →
                       ⬇[s, O, m + 1] L1 ≡ K2.
 #L1 elim L1 -L1
@@ -447,7 +440,6 @@ fact drop_inv_O2_aux: ∀L1,L2,s,l,m. ⬇[s, l, m] L1 ≡ L2 → m = 0 → L1 = 
 ]
 qed-.
 
-(* Basic_1: was: drop_gen_refl *)
 lemma drop_inv_O2: ∀L1,L2,s,l. ⬇[s, l, 0] L1 ≡ L2 → L1 = L2.
 /2 width=5 by drop_inv_O2_aux/ qed-.
 
@@ -481,18 +473,3 @@ qed-.
 lemma drop_inv_T: ∀I,L,K,V,s,m. ⬇[Ⓣ, 0, m] L ≡ K.ⓑ{I}V → ⬇[s, 0, m] L ≡ K.ⓑ{I}V.
 #I #L #K #V * /2 width=1 by drop_inv_FT/
 qed-.
-
-(* Basic_1: removed theorems 50:
-            drop_ctail drop_skip_flat
-            cimp_flat_sx cimp_flat_dx cimp_bind cimp_getl_conf
-            drop_clear drop_clear_O drop_clear_S
-            clear_gen_sort clear_gen_bind clear_gen_flat clear_gen_flat_r
-            clear_gen_all clear_clear clear_mono clear_trans clear_ctail clear_cle
-            getl_ctail_clen getl_gen_tail clear_getl_trans getl_clear_trans
-            getl_clear_bind getl_clear_conf getl_dec getl_drop getl_drop_conf_lt
-            getl_drop_conf_ge getl_conf_ge_drop getl_drop_conf_rev
-            drop_getl_trans_lt drop_getl_trans_le drop_getl_trans_ge
-            getl_drop_trans getl_flt getl_gen_all getl_gen_sort getl_gen_O
-            getl_gen_S getl_gen_2 getl_gen_flat getl_gen_bind getl_conf_le
-            getl_trans getl_refl getl_head getl_flat getl_ctail getl_mono
-*)

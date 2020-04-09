@@ -17,7 +17,7 @@ include "basic_2A/substitution/fquq.ma".
 
 (* OPTIONAL SUPCLOSURE ******************************************************)
 
-(* alternative definition of fquq *)
+(* Note: alternative definition of fquq *)
 definition fquqa: tri_relation genv lenv term ≝ tri_RC … fqu.
 
 interpretation

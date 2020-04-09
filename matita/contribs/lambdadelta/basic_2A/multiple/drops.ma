@@ -54,7 +54,6 @@ fact drops_inv_nil_aux: ∀L1,L2,s,cs. ⬇*[s, cs] L1 ≡ L2 → cs = ◊ → L1
 #L1 #L #L2 #l #m #cs #_ #_ #H destruct
 qed-.
 
-(* Basic_1: was: drop1_gen_pnil *)
 lemma drops_inv_nil: ∀L1,L2,s. ⬇*[s, ◊] L1 ≡ L2 → L1 = L2.
 /2 width=4 by drops_inv_nil_aux/ qed-.
 
@@ -68,7 +67,6 @@ fact drops_inv_cons_aux: ∀L1,L2,s,cs. ⬇*[s, cs] L1 ≡ L2 →
 ]
 qed-.
 
-(* Basic_1: was: drop1_gen_pcons *)
 lemma drops_inv_cons: ∀L1,L2,s,l,m,cs. ⬇*[s, ❨l, m❩; cs] L1 ≡ L2 →
                       ∃∃L. ⬇*[s, cs] L1 ≡ L & ⬇[s, l, m] L ≡ L2.
 /2 width=3 by drops_inv_cons_aux/ qed-.
@@ -96,7 +94,6 @@ qed-.
 
 (* Basic properties *********************************************************)
 
-(* Basic_1: was: drop1_skip_bind *)
 lemma drops_skip: ∀L1,L2,s,cs. ⬇*[s, cs] L1 ≡ L2 → ∀V1,V2. ⬆*[cs] V2 ≡ V1 →
                   ∀I. ⬇*[s, cs + 1] L1.ⓑ{I}V1 ≡ L2.ⓑ{I}V2.
 #L1 #L2 #s #cs #H elim H -L1 -L2 -cs
@@ -119,5 +116,3 @@ lemma d1_liftables_liftables_all: ∀R,s. d_liftables1 R s → d_liftables1_all 
 #R #s #HR #L #K #cs #HLK #Ts #Us #H elim H -Ts -Us normalize //
 #Ts #Us #T #U #HTU #_ #IHTUs * /3 width=7 by conj/
 qed.
-
-(* Basic_1: removed theorems 1: drop1_getl_trans *)

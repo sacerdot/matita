@@ -53,7 +53,6 @@ fact lstas_inv_sort1_aux: ∀h,G,L,T,U,d. ⦃G, L⦄ ⊢ T •*[h, d] U → ∀k
 | #G #L #W #T #U #d #_ #k0 #H destruct
 qed-.
 
-(* Basic_1: was just: sty0_gen_sort *)
 lemma lstas_inv_sort1: ∀h,G,L,X,k,d. ⦃G, L⦄ ⊢ ⋆k •*[h, d] X → X = ⋆((next h)^d k).
 /2 width=5 by lstas_inv_sort1_aux/
 qed-.
@@ -103,7 +102,6 @@ lemma lstas_inv_lref1_O: ∀h,G,L,X,i. ⦃G, L⦄ ⊢ #i •*[h, 0] X →
 #K #W #V #d #_ #_ #_ <plus_n_Sm #H destruct
 qed-.
 
-(* Basic_1: was just: sty0_gen_lref *)
 lemma lstas_inv_lref1_S: ∀h,G,L,X,i,d. ⦃G, L⦄ ⊢ #i •*[h, d+1] X →
                          (∃∃K,V,W. ⬇[i] L ≡ K.ⓓV & ⦃G, K⦄ ⊢ V •*[h, d+1] W &
                                    ⬆[0, i+1] W ≡ X
@@ -143,7 +141,6 @@ fact lstas_inv_bind1_aux: ∀h,G,L,T,U,d. ⦃G, L⦄ ⊢ T •*[h, d] U → ∀b
 ]
 qed-.
 
-(* Basic_1: was just: sty0_gen_bind *)
 lemma lstas_inv_bind1: ∀h,a,I,G,L,V,T,X,d. ⦃G, L⦄ ⊢ ⓑ{a,I}V.T •*[h, d] X →
                        ∃∃U. ⦃G, L.ⓑ{I}V⦄ ⊢ T •*[h, d] U & X = ⓑ{a,I}V.U.
 /2 width=3 by lstas_inv_bind1_aux/
@@ -162,7 +159,6 @@ fact lstas_inv_appl1_aux: ∀h,G,L,T,U,d. ⦃G, L⦄ ⊢ T •*[h, d] U → ∀X
 ]
 qed-.
 
-(* Basic_1: was just: sty0_gen_appl *)
 lemma lstas_inv_appl1: ∀h,G,L,V,T,X,d. ⦃G, L⦄ ⊢ ⓐV.T •*[h, d] X →
                        ∃∃U. ⦃G, L⦄ ⊢ T •*[h, d] U & X = ⓐV.U.
 /2 width=3 by lstas_inv_appl1_aux/
@@ -181,12 +177,6 @@ fact lstas_inv_cast1_aux: ∀h,G,L,T,U,d. ⦃G, L⦄ ⊢ T •*[h, d] U → ∀X
 ]
 qed-.
 
-(* Basic_1: was just: sty0_gen_cast *)
 lemma lstas_inv_cast1: ∀h,G,L,W,T,U,d. ⦃G, L⦄ ⊢ ⓝW.T •*[h, d] U → ⦃G, L⦄ ⊢ T •*[h, d] U.
 /2 width=4 by lstas_inv_cast1_aux/
 qed-.
-
-(* Basic_1: removed theorems 7:
-            sty1_abbr sty1_appl sty1_bind sty1_cast2
-            sty1_correct sty1_lift sty1_trans
-*)

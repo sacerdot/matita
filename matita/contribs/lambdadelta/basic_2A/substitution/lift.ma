@@ -19,9 +19,6 @@ include "basic_2A/grammar/term_simple.ma".
 
 (* BASIC TERM RELOCATION ****************************************************)
 
-(* Basic_1: includes:
-            lift_sort lift_lref_lt lift_lref_ge lift_bind lift_flat
-*)
 inductive lift: relation4 nat nat term term ≝
 | lift_sort   : ∀k,l,m. lift l m (⋆k) (⋆k)
 | lift_lref_lt: ∀i,l,m. i < l → lift l m (#i) (#i)
@@ -142,7 +139,6 @@ fact lift_inv_sort2_aux: ∀l,m,T1,T2. ⬆[l,m] T1 ≡ T2 → ∀k. T2 = ⋆k �
 ]
 qed-.
 
-(* Basic_1: was: lift_gen_sort *)
 lemma lift_inv_sort2: ∀l,m,T1,k. ⬆[l,m] T1 ≡ ⋆k → T1 = ⋆k.
 /2 width=5 by lift_inv_sort2_aux/ qed-.
 
@@ -158,12 +154,10 @@ fact lift_inv_lref2_aux: ∀l,m,T1,T2. ⬆[l,m] T1 ≡ T2 → ∀i. T2 = #i →
 ]
 qed-.
 
-(* Basic_1: was: lift_gen_lref *)
 lemma lift_inv_lref2: ∀l,m,T1,i. ⬆[l,m] T1 ≡ #i →
                       (i < l ∧ T1 = #i) ∨ (l + m ≤ i ∧ T1 = #(i - m)).
 /2 width=3 by lift_inv_lref2_aux/ qed-.
 
-(* Basic_1: was: lift_gen_lref_lt *)
 lemma lift_inv_lref2_lt: ∀l,m,T1,i. ⬆[l,m] T1 ≡ #i → i < l → T1 = #i.
 #l #m #T1 #i #H elim (lift_inv_lref2 … H) -H * //
 #Hli #_ #Hil lapply (le_to_lt_to_lt … Hli Hil) -Hli -Hil #Hll
@@ -171,7 +165,6 @@ elim (lt_inv_plus_l … Hll) -Hll #Hll
 elim (lt_refl_false … Hll)
 qed-.
 
-(* Basic_1: was: lift_gen_lref_false *)
 lemma lift_inv_lref2_be: ∀l,m,T1,i. ⬆[l,m] T1 ≡ #i →
                          l ≤ i → i < l + m → ⊥.
 #l #m #T1 #i #H elim (lift_inv_lref2 … H) -H *
@@ -180,7 +173,6 @@ lapply (le_to_lt_to_lt … H2 H1) -H2 -H1 #H
 elim (lt_refl_false … H)
 qed-.
 
-(* Basic_1: was: lift_gen_lref_ge *)
 lemma lift_inv_lref2_ge: ∀l,m,T1,i. ⬆[l,m] T1 ≡ #i → l + m ≤ i → T1 = #(i - m).
 #l #m #T1 #i #H elim (lift_inv_lref2 … H) -H * //
 #Hil #_ #Hli lapply (le_to_lt_to_lt … Hli Hil) -Hli -Hil #Hll
@@ -213,7 +205,6 @@ fact lift_inv_bind2_aux: ∀l,m,T1,T2. ⬆[l,m] T1 ≡ T2 →
 ]
 qed-.
 
-(* Basic_1: was: lift_gen_bind *)
 lemma lift_inv_bind2: ∀l,m,T1,a,I,V2,U2. ⬆[l,m] T1 ≡ ⓑ{a,I} V2. U2 →
                       ∃∃V1,U1. ⬆[l,m] V1 ≡ V2 & ⬆[l+1,m] U1 ≡ U2 &
                                T1 = ⓑ{a,I} V1. U1.
@@ -233,7 +224,6 @@ fact lift_inv_flat2_aux: ∀l,m,T1,T2. ⬆[l,m] T1 ≡ T2 →
 ]
 qed-.
 
-(* Basic_1: was: lift_gen_flat *)
 lemma lift_inv_flat2: ∀l,m,T1,I,V2,U2. ⬆[l,m] T1 ≡  ⓕ{I} V2. U2 →
                       ∃∃V1,U1. ⬆[l,m] V1 ≡ V2 & ⬆[l,m] U1 ≡ U2 &
                                T1 = ⓕ{I} V1. U1.
@@ -253,7 +243,6 @@ lemma lift_inv_pair_xy_x: ∀l,m,I,V,T. ⬆[l, m] ②{I} V. T ≡ V → ⊥.
 ]
 qed-.
 
-(* Basic_1: was: thead_x_lift_y_y *)
 lemma lift_inv_pair_xy_y: ∀I,T,V,l,m. ⬆[l, m] ②{I} V. T ≡ T → ⊥.
 #J #T elim T -T
 [ * #i #V #l #m #H
@@ -304,7 +293,6 @@ qed-.
 
 (* Basic properties *********************************************************)
 
-(* Basic_1: was: lift_lref_gt *)
 lemma lift_lref_ge_minus: ∀l,m,i. l + m ≤ i → ⬆[l, m] #(i - m) ≡ #i.
 #l #m #i #H >(plus_minus_m_m i m) in ⊢ (? ? ? ? %); /3 width=2 by lift_lref_ge, le_plus_to_minus_r, le_plus_b/
 qed.
@@ -312,7 +300,6 @@ qed.
 lemma lift_lref_ge_minus_eq: ∀l,m,i,j. l + m ≤ i → j = i - m → ⬆[l, m] #j ≡ #i.
 /2 width=1 by lift_lref_ge_minus/ qed-.
 
-(* Basic_1: was: lift_r *)
 lemma lift_refl: ∀T,l. ⬆[l, 0] T ≡ T.
 #T elim T -T
 [ * #i // #l elim (lt_or_ge i l) /2 width=1 by lift_lref_lt, lift_lref_ge/
@@ -332,7 +319,6 @@ lemma lift_total: ∀T1,l,m. ∃T2. ⬆[l,m] T1 ≡ T2.
 ]
 qed.
 
-(* Basic_1: was: lift_free (right to left) *)
 lemma lift_split: ∀l1,m2,T1,T2. ⬆[l1, m2] T1 ≡ T2 →
                   ∀l2,m1. l1 ≤ l2 → l2 ≤ l1 + m1 → m1 ≤ m2 →
                   ∃∃T. ⬆[l1, m1] T1 ≡ T & ⬆[l2, m2 - m1] T ≡ T2.
@@ -353,7 +339,6 @@ lemma lift_split: ∀l1,m2,T1,T2. ⬆[l1, m2] T1 ≡ T2 →
 ]
 qed.
 
-(* Basic_1: was only: dnf_dec2 dnf_dec *)
 lemma is_lift_dec: ∀T2,l,m. Decidable (∃T1. ⬆[l,m] T1 ≡ T2).
 #T1 elim T1 -T1
 [ * [1,3: /3 width=2 by lift_sort, lift_gref, ex_intro, or_introl/ ] #i #l #m
@@ -386,9 +371,3 @@ lemma is_lift_dec: ∀T2,l,m. Decidable (∃T1. ⬆[l,m] T1 ≡ T2).
   ]
 ]
 qed.
-
-(* Basic_1: removed theorems 7:
-            lift_head lift_gen_head
-            lift_weight_map lift_weight lift_weight_add lift_weight_add_O
-            lift_tlt_dx
-*)

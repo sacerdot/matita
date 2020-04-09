@@ -51,7 +51,6 @@ lemma lifts_inv_cons: ∀T1,T2,l,m,cs. ⬆*[❨l, m❩; cs] T1 ≡ T2 →
                       ∃∃T. ⬆[l, m] T1 ≡ T & ⬆*[cs] T ≡ T2.
 /2 width=3 by lifts_inv_cons_aux/ qed-.
 
-(* Basic_1: was: lift1_sort *)
 lemma lifts_inv_sort1: ∀T2,k,cs. ⬆*[cs] ⋆k ≡ T2 → T2 = ⋆k.
 #T2 #k #cs elim cs -cs
 [ #H <(lifts_inv_nil … H) -H //
@@ -61,7 +60,6 @@ lemma lifts_inv_sort1: ∀T2,k,cs. ⬆*[cs] ⋆k ≡ T2 → T2 = ⋆k.
 ]
 qed-.
 
-(* Basic_1: was: lift1_lref *)
 lemma lifts_inv_lref1: ∀T2,cs,i1. ⬆*[cs] #i1 ≡ T2 →
                        ∃∃i2. @❪i1, cs❫ ≘ i2 & T2 = #i2.
 #T2 #cs elim cs -cs
@@ -82,7 +80,6 @@ lemma lifts_inv_gref1: ∀T2,p,cs. ⬆*[cs] §p ≡ T2 → T2 = §p.
 ]
 qed-.
 
-(* Basic_1: was: lift1_bind *)
 lemma lifts_inv_bind1: ∀a,I,T2,cs,V1,U1. ⬆*[cs] ⓑ{a,I} V1. U1 ≡ T2 →
                        ∃∃V2,U2. ⬆*[cs] V1 ≡ V2 & ⬆*[cs + 1] U1 ≡ U2 &
                                 T2 = ⓑ{a,I} V2. U2.
@@ -97,7 +94,6 @@ lemma lifts_inv_bind1: ∀a,I,T2,cs,V1,U1. ⬆*[cs] ⓑ{a,I} V1. U1 ≡ T2 →
 ]
 qed-.
 
-(* Basic_1: was: lift1_flat *)
 lemma lifts_inv_flat1: ∀I,T2,cs,V1,U1. ⬆*[cs] ⓕ{I} V1. U1 ≡ T2 →
                        ∃∃V2,U2. ⬆*[cs] V1 ≡ V2 & ⬆*[cs] U1 ≡ U2 &
                                 T2 = ⓕ{I} V2. U2.

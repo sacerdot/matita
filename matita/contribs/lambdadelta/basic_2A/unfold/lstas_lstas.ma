@@ -42,7 +42,6 @@ theorem lstas_trans: ∀h,G,L,T1,T,d1. ⦃G, L⦄ ⊢ T1 •*[h, d1] T →
 ]
 qed-.
 
-(* Note: apparently this was missing in basic_1 *)
 theorem lstas_mono: ∀h,G,L,d. singlevalued … (lstas h d G L).
 #h #G #L #d #T #T1 #H elim H -G -L -T -T1 -d
 [ #G #L #d #k #X #H >(lstas_inv_sort1 … H) -X //
@@ -72,7 +71,6 @@ qed-.
 
 (* Advanced inversion lemmas ************************************************)
 
-(* Basic_1: was just: sty0_correct *)
 lemma lstas_correct: ∀h,G,L,T1,T,d1. ⦃G, L⦄ ⊢ T1 •*[h, d1] T →
                      ∀d2. ∃T2. ⦃G, L⦄ ⊢ T •*[h, d2] T2.
 #h #G #L #T1 #T #d1 #H elim H -G -L -T1 -T -d1

@@ -19,7 +19,6 @@ include "basic_2A/reduction/cnr.ma".
 
 (* Advanced properties ******************************************************)
 
-(* Basic_1: was: nf2_lref_abst *)
 lemma cnr_lref_abst: ∀G,L,K,V,i. ⬇[i] L ≡ K. ⓛV → ⦃G, L⦄ ⊢ ➡ 𝐍⦃#i⦄.
 #G #L #K #V #i #HLK #X #H
 elim (cpr_inv_lref1 … H) -H // *
@@ -29,7 +28,6 @@ qed.
 
 (* Relocation properties ****************************************************)
 
-(* Basic_1: was: nf2_lift *)
 lemma cnr_lift: ∀G,L0,L,T,T0,s,l,m. ⦃G, L⦄ ⊢ ➡ 𝐍⦃T⦄ →
                 ⬇[s, l, m] L0 ≡ L → ⬆[l, m] T ≡ T0 → ⦃G, L0⦄ ⊢ ➡ 𝐍⦃T0⦄.
 #G #L0 #L #T #T0 #s #l #m #HLT #HL0 #HT0 #X #H
@@ -38,7 +36,6 @@ elim (cpr_inv_lift1 … H … HL0 … HT0) -L0 #T1 #HT10 #HT1
 >(lift_mono … HT10 … HT0) -T1 -X //
 qed.
 
-(* Note: this was missing in basic_1 *)
 lemma cnr_inv_lift: ∀G,L0,L,T,T0,s,l,m. ⦃G, L0⦄ ⊢ ➡ 𝐍⦃T0⦄ →
                     ⬇[s, l, m] L0 ≡ L → ⬆[l, m] T ≡ T0 → ⦃G, L⦄ ⊢ ➡ 𝐍⦃T⦄.
 #G #L0 #L #T #T0 #s #l #m #HLT0 #HL0 #HT0 #X #H

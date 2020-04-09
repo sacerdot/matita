@@ -32,7 +32,6 @@ fact tsts_inv_atom1_aux: ∀T1,T2. T1 ≂ T2 → ∀I. T1 = ⓪{I} → T2 = ⓪{
 #J #V1 #V2 #T1 #T2 #I #H destruct
 qed-.
 
-(* Basic_1: was: iso_gen_sort iso_gen_lref *)
 lemma tsts_inv_atom1: ∀I,T2. ⓪{I} ≂ T2 → T2 = ⓪{I}.
 /2 width=3 by tsts_inv_atom1_aux/ qed-.
 
@@ -44,7 +43,6 @@ fact tsts_inv_pair1_aux: ∀T1,T2. T1 ≂ T2 → ∀I,W1,U1. T1 = ②{I}W1.U1 �
 ]
 qed-.
 
-(* Basic_1: was: iso_gen_head *)
 lemma tsts_inv_pair1: ∀I,W1,U1,T2. ②{I}W1.U1 ≂ T2 →
                       ∃∃W2,U2. T2 = ②{I}W2. U2.
 /2 width=5 by tsts_inv_pair1_aux/ qed-.
@@ -71,7 +69,6 @@ lemma tsts_inv_pair2: ∀I,T1,W2,U2. T1 ≂ ②{I}W2.U2 →
 
 (* Basic properties *********************************************************)
 
-(* Basic_1: was: iso_refl *)
 lemma tsts_refl: reflexive … tsts.
 #T elim T -T //
 qed.

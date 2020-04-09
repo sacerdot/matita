@@ -21,11 +21,9 @@ include "basic_2A/reduction/lpr.ma".
 
 (* Properties on local environment slicing ***********************************)
 
-(* Basic_1: includes: wcpr0_drop *)
 lemma lpr_drop_conf: ∀G. dropable_sn (lpr G).
 /3 width=6 by lpx_sn_deliftable_dropable, cpr_inv_lift1/ qed-.
 
-(* Basic_1: includes: wcpr0_drop_back *)
 lemma drop_lpr_trans: ∀G. dedropable_sn (lpr G).
 /3 width=10 by lpx_sn_liftable_dedropable, cpr_lift/ qed-.
 

@@ -19,7 +19,6 @@ include "basic_2A/unfold/lstas.ma".
 
 (* Properties on relocation *************************************************)
 
-(* Basic_1: was just: sty0_lift *)
 lemma lstas_lift: ∀h,G,d. d_liftable (lstas h G d).
 #h #G #d #L1 #T1 #U1 #H elim H -G -L1 -T1 -U1 -d
 [ #G #L1 #d #k #L2 #s #l #m #HL21 #X1 #H1 #X2 #H2
@@ -68,7 +67,6 @@ qed.
 
 (* Inversion lemmas on relocation *******************************************)
 
-(* Note: apparently this was missing in basic_1 *)
 lemma lstas_inv_lift1: ∀h,G,d. d_deliftable_sn (lstas h G d).
 #h #G #d #L2 #T2 #U2 #H elim H -G -L2 -T2 -U2 -d
 [ #G #L2 #d #k #L1 #s #l #m #_ #X #H

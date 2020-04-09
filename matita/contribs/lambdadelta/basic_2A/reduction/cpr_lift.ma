@@ -19,7 +19,6 @@ include "basic_2A/reduction/cpr.ma".
 
 (* Relocation properties ****************************************************)
 
-(* Basic_1: includes: pr0_lift pr2_lift *)
 lemma cpr_lift: ∀G. d_liftable (cpr G).
 #G #K #T1 #T2 #H elim H -G -K -T1 -T2
 [ #I #G #K #L #s #l #m #_ #U1 #H1 #U2 #H2
@@ -58,7 +57,6 @@ lemma cpr_lift: ∀G. d_liftable (cpr G).
 ]
 qed.
 
-(* Basic_1: includes: pr0_gen_lift pr2_gen_lift *)
 lemma cpr_inv_lift1: ∀G. d_deliftable_sn (cpr G).
 #G #L #U1 #U2 #H elim H -G -L -U1 -U2
 [ * #i #G #L #K #s #l #m #_ #T1 #H

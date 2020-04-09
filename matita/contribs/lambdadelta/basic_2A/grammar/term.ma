@@ -92,7 +92,6 @@ interpretation "native type annotation (term)"
 
 (* Basic properties *********************************************************)
 
-(* Basic_1: was: term_dec *)
 lemma eq_term_dec: ∀T1,T2:term. Decidable (T1 = T2).
 #T1 elim T1 -T1 #I1 [| #V1 #T1 #IHV1 #IHT1 ] * #I2 [2,4: #V2 #T2 ]
 [1,4: @or_intror #H destruct
@@ -124,7 +123,6 @@ lemma discr_tpair_xy_x: ∀I,T,V. ②{I} V. T = V → ⊥.
 ]
 qed-.
 
-(* Basic_1: was: thead_x_y_y *)
 lemma discr_tpair_xy_y: ∀I,V,T. ②{I} V. T = T → ⊥.
 #I #V #T elim T -T
 [ #J #H destruct
@@ -147,7 +145,3 @@ lemma eq_false_inv_tpair_dx: ∀I,V1,T1,V2,T2.
 elim (eq_term_dec T1 T2) /3 width=1 by or_introl/ #HT12 destruct
 @or_intror @conj // #HT12 destruct /2 width=1 by/
 qed-.
-
-(* Basic_1: removed theorems 3:
-            not_void_abst not_abbr_void not_abst_void
-*)

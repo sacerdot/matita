@@ -25,7 +25,7 @@ include "basic_2A/reduction/lpx_frees.ma".
 
 (* Properties on lazy equivalence for local environments ********************)
 
-(* Note: contains a proof of llpx_cpx_conf *)
+(* Note: this contains a proof of llpx_cpx_conf *)
 lemma lleq_lpx_trans: ∀h,g,G,L2,K2. ⦃G, L2⦄ ⊢ ➡[h, g] K2 →
                       ∀L1,T,l. L1 ≡[T, l] L2 →
                       ∃∃K1. ⦃G, L1⦄ ⊢ ➡[h, g] K1 & K1 ≡[T, l] K2.

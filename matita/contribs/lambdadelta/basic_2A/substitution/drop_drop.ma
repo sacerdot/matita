@@ -19,7 +19,6 @@ include "basic_2A/substitution/drop.ma".
 
 (* Main properties **********************************************************)
 
-(* Basic_1: was: drop_mono *)
 theorem drop_mono: ∀L,L1,s1,l,m. ⬇[s1, l, m] L ≡ L1 →
                    ∀L2,s2. ⬇[s2, l, m] L ≡ L2 → L1 = L2.
 #L #L1 #s1 #l #m #H elim H -L -L1 -l -m
@@ -34,7 +33,6 @@ theorem drop_mono: ∀L,L1,s1,l,m. ⬇[s1, l, m] L ≡ L1 →
 ]
 qed-.
 
-(* Basic_1: was: drop_conf_ge *)
 theorem drop_conf_ge: ∀L,L1,s1,l1,m1. ⬇[s1, l1, m1] L ≡ L1 →
                       ∀L2,s2,m2. ⬇[s2, 0, m2] L ≡ L2 → l1 + m1 ≤ m2 →
                       ⬇[s2, 0, m2 - m1] L1 ≡ L2.
@@ -53,7 +51,6 @@ theorem drop_conf_ge: ∀L,L1,s1,l1,m1. ⬇[s1, l1, m1] L ≡ L1 →
 ]
 qed.
 
-(* Note: apparently this was missing in basic_1 *)
 theorem drop_conf_be: ∀L0,L1,s1,l1,m1. ⬇[s1, l1, m1] L0 ≡ L1 →
                       ∀L2,m2. ⬇[m2] L0 ≡ L2 → l1 ≤ m2 → m2 ≤ l1 + m1 →
                       ∃∃L. ⬇[s1, 0, l1 + m1 - m2] L2 ≡ L & ⬇[l1] L1 ≡ L.
@@ -78,7 +75,6 @@ theorem drop_conf_be: ∀L0,L1,s1,l1,m1. ⬇[s1, l1, m1] L0 ≡ L1 →
 ]
 qed-.
 
-(* Note: apparently this was missing in basic_1 *)
 theorem drop_conf_le: ∀L0,L1,s1,l1,m1. ⬇[s1, l1, m1] L0 ≡ L1 →
                       ∀L2,s2,m2. ⬇[s2, 0, m2] L0 ≡ L2 → m2 ≤ l1 →
                       ∃∃L. ⬇[s2, 0, m2] L1 ≡ L & ⬇[s1, l1 - m2, m1] L2 ≡ L.
@@ -102,7 +98,6 @@ theorem drop_conf_le: ∀L0,L1,s1,l1,m1. ⬇[s1, l1, m1] L0 ≡ L1 →
 qed-.
 
 (* Note: with "s2", the conclusion parameter is "s1 ∨ s2" *)
-(* Basic_1: was: drop_trans_ge *)
 theorem drop_trans_ge: ∀L1,L,s1,l1,m1. ⬇[s1, l1, m1] L1 ≡ L →
                        ∀L2,m2. ⬇[m2] L ≡ L2 → l1 ≤ m2 → ⬇[s1, 0, m1 + m2] L1 ≡ L2.
 #L1 #L #s1 #l1 #m1 #H elim H -L1 -L -l1 -m1
@@ -118,7 +113,6 @@ theorem drop_trans_ge: ∀L1,L,s1,l1,m1. ⬇[s1, l1, m1] L1 ≡ L →
 ]
 qed.
 
-(* Basic_1: was: drop_trans_le *)
 theorem drop_trans_le: ∀L1,L,s1,l1,m1. ⬇[s1, l1, m1] L1 ≡ L →
                        ∀L2,s2,m2. ⬇[s2, 0, m2] L ≡ L2 → m2 ≤ l1 →
                        ∃∃L0. ⬇[s2, 0, m2] L1 ≡ L0 & ⬇[s1, l1 - m2, m1] L0 ≡ L2.
@@ -151,7 +145,6 @@ lemma d_liftable_llstar: ∀R. d_liftable R → ∀d. d_liftable (llstar … R d
 ]
 qed-.
 
-(* Basic_1: was: drop_conf_lt *)
 lemma drop_conf_lt: ∀L,L1,s1,l1,m1. ⬇[s1, l1, m1] L ≡ L1 →
                     ∀I,K2,V2,s2,m2. ⬇[s2, 0, m2] L ≡ K2.ⓑ{I}V2 →
                     m2 < l1 → let l ≝ l1 - m2 - 1 in
@@ -163,7 +156,6 @@ elim (drop_inv_skip1 … HK2) -HK2 /2 width=1 by lt_plus_to_minus_r/
 #K1 #V1 #HK21 #HV12 #H destruct /2 width=5 by ex3_2_intro/
 qed-.
 
-(* Note: apparently this was missing in basic_1 *)
 lemma drop_trans_lt: ∀L1,L,s1,l1,m1. ⬇[s1, l1, m1] L1 ≡ L →
                      ∀I,L2,V2,s2,m2. ⬇[s2, 0, m2] L ≡ L2.ⓑ{I}V2 →
                      m2 < l1 → let l ≝ l1 - m2 - 1 in

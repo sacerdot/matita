@@ -18,7 +18,7 @@ include "basic_2A/reduction/fpbq.ma".
 
 (* "QRST" PARALLEL REDUCTION FOR CLOSURES ***********************************)
 
-(* alternative definition of fpbq *)
+(* Note: alternative definition of fpbq *)
 definition fpbqa: ∀h. sd h → tri_relation genv lenv term ≝
                   λh,g,G1,L1,T1,G2,L2,T2.
                   ⦃G1, L1, T1⦄ ≡[0] ⦃G2, L2, T2⦄ ∨ ⦃G1, L1, T1⦄ ≻[h, g] ⦃G2, L2, T2⦄.

@@ -3,3 +3,4 @@ ahead_inj_snd -> leq_ahead_inj_dx
 arity_abbr    -> arity_ldef
 arity_abst    -> arity_ldec
 arity_head    -> arity_abst
+clt_thead     -> clt_ctail

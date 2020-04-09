@@ -19,7 +19,6 @@ include "basic_2A/reduction/crr.ma".
 (* REDUCIBLE TERMS FOR CONTEXT-SENSITIVE EXTENDED REDUCTION *****************)
 
 (* activate genv *)
-(* extended reducible terms *)
 inductive crx (h) (g) (G:genv): relation2 lenv term ≝
 | crx_sort   : ∀L,k,d. deg h g k (d+1) → crx h g G L (⋆k)
 | crx_delta  : ∀I,L,K,V,i. ⬇[i] L ≡ K.ⓑ{I}V → crx h g G L (#i)

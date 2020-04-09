@@ -76,7 +76,6 @@ qed-.
 
 (* Basic properties *********************************************************)
 
-(* Basic_1: was: nf2_sort *)
 lemma cnr_sort: ∀G,L,k. ⦃G, L⦄ ⊢ ➡ 𝐍⦃⋆k⦄.
 #G #L #k #X #H
 >(cpr_inv_sort1 … H) //
@@ -88,27 +87,21 @@ lemma cnr_lref_free: ∀G,L,i. |L| ≤ i → ⦃G, L⦄ ⊢ ➡ 𝐍⦃#i⦄.
 #H elim (lt_refl_false i) /2 width=3 by lt_to_le_to_lt/
 qed.
 
-(* Basic_1: was only: nf2_csort_lref *)
 lemma cnr_lref_atom: ∀G,L,i. ⬇[i] L ≡ ⋆ → ⦃G, L⦄ ⊢ ➡ 𝐍⦃#i⦄.
 #G #L #i #HL @cnr_lref_free >(drop_fwd_length … HL) -HL //
 qed.
 
-(* Basic_1: was: nf2_abst *)
 lemma cnr_abst: ∀a,G,L,W,T. ⦃G, L⦄ ⊢ ➡ 𝐍⦃W⦄ → ⦃G, L.ⓛW⦄ ⊢ ➡ 𝐍⦃T⦄ → ⦃G, L⦄ ⊢ ➡ 𝐍⦃ⓛ{a}W.T⦄.
 #a #G #L #W #T #HW #HT #X #H
 elim (cpr_inv_abst1 … H) -H #W0 #T0 #HW0 #HT0 #H destruct
 <(HW … HW0) -W0 <(HT … HT0) -T0 //
 qed.
 
-(* Basic_1: was only: nf2_appl_lref *)
 lemma cnr_appl_simple: ∀G,L,V,T. ⦃G, L⦄ ⊢ ➡ 𝐍⦃V⦄ → ⦃G, L⦄ ⊢ ➡ 𝐍⦃T⦄ → 𝐒⦃T⦄ → ⦃G, L⦄ ⊢ ➡ 𝐍⦃ⓐV.T⦄.
 #G #L #V #T #HV #HT #HS #X #H
 elim (cpr_inv_appl1_simple … H) -H // #V0 #T0 #HV0 #HT0 #H destruct
 <(HV … HV0) -V0 <(HT … HT0) -T0 //
 qed.
 
-(* Basic_1: was: nf2_dec *)
 axiom cnr_dec: ∀G,L,T1. ⦃G, L⦄ ⊢ ➡ 𝐍⦃T1⦄ ∨
                ∃∃T2. ⦃G, L⦄ ⊢ T1 ➡ T2 & (T1 = T2 → ⊥).
-
-(* Basic_1: removed theorems 1: nf2_abst_shift *)

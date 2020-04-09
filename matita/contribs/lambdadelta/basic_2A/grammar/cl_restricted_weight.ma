@@ -23,7 +23,6 @@ interpretation "weight (restricted closure)" 'Weight L T = (rfw L T).
 
 (* Basic properties *********************************************************)
 
-(* Basic_1: was: flt_shift *)
 lemma rfw_shift: ∀a,I,K,V,T. ♯{K.ⓑ{I}V, T} < ♯{K, ⓑ{a,I}V.T}.
 normalize //
 qed.
@@ -43,9 +42,3 @@ qed.
 lemma rfw_lpair_dx: ∀I,L,V,T. ♯{L, T} < ♯{L.ⓑ{I}V, T}.
 normalize /3 width=1 by monotonic_lt_plus_l, monotonic_le_plus_r/
 qed.
-
-(* Basic_1: removed theorems 7:
-            flt_thead_sx flt_thead_dx flt_trans
-            flt_arith0 flt_arith1 flt_arith2 flt_wf_ind
-*)
-(* Basic_1: removed local theorems 1: q_ind *)

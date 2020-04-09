@@ -47,7 +47,6 @@ elim (lift_total V 0 (i+1))
 /3 width=12 by cpr_lift, cpr_delta, ex2_intro/
 qed-.
 
-(* Basic_1: includes: pr0_delta_delta pr2_delta_delta *)
 fact cpr_conf_lpr_delta_delta:
    ∀G,L0,i. (
       ∀L,T. ⦃G, L0, #i⦄ ⊐+ ⦃G, L, T⦄ →
@@ -197,10 +196,6 @@ lapply (lsubr_cpr_trans … HT2 (L2.ⓓⓝW2.V2) ?) -HT2 /2 width=1 by lsubr_bet
 /4 width=5 by cpr_bind, cpr_flat, cpr_beta, ex2_intro/
 qed-.
 
-(* Basic-1: includes:
-            pr0_cong_upsilon_refl pr0_cong_upsilon_zeta
-            pr0_cong_upsilon_cong pr0_cong_upsilon_delta
-*)
 fact cpr_conf_lpr_flat_theta:
    ∀a,G,L0,V0,W0,T0. (
       ∀L,T. ⦃G, L0, ⓐV0.ⓓ{a}W0.T0⦄ ⊐+ ⦃G, L, T⦄ →
@@ -251,7 +246,6 @@ lapply (lsubr_cpr_trans … HT2 (L2.ⓓⓝW2.V2) ?) -HT2 /2 width=1 by lsubr_bet
 /4 width=5 by cpr_bind, cpr_flat, ex2_intro/ (**) (* full auto not tried *)
 qed-.
 
-(* Basic_1: was: pr0_upsilon_upsilon *)
 fact cpr_conf_lpr_theta_theta:
    ∀a,G,L0,V0,W0,T0. (
       ∀L,T. ⦃G, L0, ⓐV0.ⓓ{a}W0.T0⦄ ⊐+ ⦃G, L, T⦄ →
@@ -332,7 +326,6 @@ theorem cpr_conf_lpr: ∀G. lpx_sn_confluent (cpr G) (cpr G).
 ]
 qed-.
 
-(* Basic_1: includes: pr0_confluence pr2_confluence *)
 theorem cpr_conf: ∀G,L. confluent … (cpr G L).
 /2 width=6 by cpr_conf_lpr/ qed-.
 

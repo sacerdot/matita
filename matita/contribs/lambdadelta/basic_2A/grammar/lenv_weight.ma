@@ -28,7 +28,3 @@ interpretation "weight (local environment)" 'Weight L = (lw L).
 
 lemma lw_pair: ∀I,L,V. ♯{L} < ♯{L.ⓑ{I}V}.
 /3 width=1 by lt_plus_to_minus_r, monotonic_lt_plus_r/ qed.
-
-(* Basic_1: removed theorems 4: clt_cong clt_head clt_thead clt_wf_ind *)
-(* Basic_1: removed local theorems 1: clt_wf__q_ind *)
-(* Basic_1: note: clt_thead should be renamed clt_ctail *)

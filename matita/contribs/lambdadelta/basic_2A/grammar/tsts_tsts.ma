@@ -18,7 +18,6 @@ include "basic_2A/grammar/tsts.ma".
 
 (* Main properties **********************************************************)
 
-(* Basic_1: was: iso_trans *)
 theorem tsts_trans: Transitive … tsts.
 #T1 #T * -T1 -T //
 #I #V1 #V #T1 #T #X #H

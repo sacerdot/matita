@@ -19,7 +19,6 @@ include "basic_2A/computation/cprs.ma".
 
 (* Advanced properties ******************************************************)
 
-(* Note: apparently this was missing in basic_1 *)
 lemma cprs_delta: ∀G,L,K,V,V2,i.
                   ⬇[i] L ≡ K.ⓓV → ⦃G, K⦄ ⊢ V ➡* V2 →
                   ∀W2. ⬆[0, i + 1] V2 ≡ W2 → ⦃G, L⦄ ⊢ #i ➡* W2.

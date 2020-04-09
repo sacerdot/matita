@@ -18,7 +18,6 @@ include "basic_2A/substitution/lift.ma".
 
 (* Main properties ***********************************************************)
 
-(* Basic_1: was: lift_inj *)
 theorem lift_inj: ∀l,m,T1,U. ⬆[l,m] T1 ≡ U → ∀T2. ⬆[l,m] T2 ≡ U → T1 = T2.
 #l #m #T1 #U #H elim H -l -m -T1 -U
 [ #k #l #m #X #HX
@@ -36,7 +35,6 @@ theorem lift_inj: ∀l,m,T1,U. ⬆[l,m] T1 ≡ U → ∀T2. ⬆[l,m] T2 ≡ U �
 ]
 qed-.
 
-(* Basic_1: was: lift_gen_lift *)
 theorem lift_div_le: ∀l1,m1,T1,T. ⬆[l1, m1] T1 ≡ T →
                      ∀l2,m2,T2. ⬆[l2 + m1, m2] T2 ≡ T →
                      l1 ≤ l2 →
@@ -69,7 +67,6 @@ theorem lift_div_le: ∀l1,m1,T1,T. ⬆[l1, m1] T1 ≡ T →
 ]
 qed.
 
-(* Note: apparently this was missing in basic_1 *)
 theorem lift_div_be: ∀l1,m1,T1,T. ⬆[l1, m1] T1 ≡ T →
                      ∀m,m2,T2. ⬆[l1 + m, m2] T2 ≡ T →
                      m ≤ m1 → m1 ≤ m + m2 →
@@ -116,7 +113,6 @@ theorem lift_mono: ∀l,m,T,U1. ⬆[l,m] T ≡ U1 → ∀U2. ⬆[l,m] T ≡ U2 �
 ]
 qed-.
 
-(* Basic_1: was: lift_free (left to right) *)
 theorem lift_trans_be: ∀l1,m1,T1,T. ⬆[l1, m1] T1 ≡ T →
                        ∀l2,m2,T2. ⬆[l2, m2] T ≡ T2 →
                        l1 ≤ l2 → l2 ≤ l1 + m1 → ⬆[l1, m1 + m2] T1 ≡ T2.
@@ -144,7 +140,6 @@ theorem lift_trans_be: ∀l1,m1,T1,T. ⬆[l1, m1] T1 ≡ T →
 ]
 qed.
 
-(* Basic_1: was: lift_d (right to left) *)
 theorem lift_trans_le: ∀l1,m1,T1,T. ⬆[l1, m1] T1 ≡ T →
                        ∀l2,m2,T2. ⬆[l2, m2] T ≡ T2 → l2 ≤ l1 →
                        ∃∃T0. ⬆[l2, m2] T1 ≡ T0 & ⬆[l1 + m2, m1] T0 ≡ T2.
@@ -171,7 +166,6 @@ theorem lift_trans_le: ∀l1,m1,T1,T. ⬆[l1, m1] T1 ≡ T →
 ]
 qed.
 
-(* Basic_1: was: lift_d (left to right) *)
 theorem lift_trans_ge: ∀l1,m1,T1,T. ⬆[l1, m1] T1 ≡ T →
                        ∀l2,m2,T2. ⬆[l2, m2] T ≡ T2 → l1 + m1 ≤ l2 →
                        ∃∃T0. ⬆[l2 - m1, m2] T1 ≡ T0 & ⬆[l1, m1] T0 ≡ T2.
