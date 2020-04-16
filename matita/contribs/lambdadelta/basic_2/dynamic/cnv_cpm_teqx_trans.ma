@@ -26,7 +26,7 @@ definition IH_cnv_cpm_teqx_cpm_trans (h) (a): relation3 genv lenv term ≝
 (* Transitive properties restricted rt-transition for terms *****************)
 
 fact cnv_cpm_teqx_cpm_trans_sub (h) (a) (G0) (L0) (T0):
-     (∀G,L,T. ❪G0,L0,T0❫ >[h] ❪G,L,T❫ → IH_cnv_cpm_trans_lpr h a G L T) →
+     (∀G,L,T. ❪G0,L0,T0❫ > ❪G,L,T❫ → IH_cnv_cpm_trans_lpr h a G L T) →
      (∀G,L,T. ❪G0,L0,T0❫ ⬂+ ❪G,L,T❫ → IH_cnv_cpm_teqx_cpm_trans h a G L T) →
      ∀G,L,T1. G0 = G → L0 = L → T0 = T1 → IH_cnv_cpm_teqx_cpm_trans h a G L T1.
 #h #a #G0 #L0 #T0 #IH2 #IH1 #G #L * [| * [| * ]]
@@ -89,7 +89,7 @@ fact cnv_cpm_teqx_cpm_trans_sub (h) (a) (G0) (L0) (T0):
 qed-.
 
 fact cnv_cpm_teqx_cpm_trans_aux (h) (a) (G0) (L0) (T0):
-     (∀G,L,T. ❪G0,L0,T0❫ >[h] ❪G,L,T❫ → IH_cnv_cpm_trans_lpr h a G L T) →
+     (∀G,L,T. ❪G0,L0,T0❫ > ❪G,L,T❫ → IH_cnv_cpm_trans_lpr h a G L T) →
      IH_cnv_cpm_teqx_cpm_trans h a G0 L0 T0.
 #h #a #G0 #L0 #T0
 @(fqup_wf_ind (Ⓣ) … G0 L0 T0) -G0 -L0 -T0 #G0 #L0 #T0 #IH #IH0

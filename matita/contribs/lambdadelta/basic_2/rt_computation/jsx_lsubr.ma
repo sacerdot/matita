@@ -15,12 +15,12 @@
 include "static_2/static/lsubr.ma".
 include "basic_2/rt_computation/jsx.ma".
 
-(* COMPATIBILITY OF STRONG NORMALIZATION FOR UNBOUND RT-TRANSITION **********)
+(* COMPATIBILITY OF STRONG NORMALIZATION FOR EXTENDED RT-TRANSITION *********)
 
 (* Forward lemmas with restricted refinement for local environments *********)
 
-lemma jsx_fwd_lsubr (h) (G):
-      ∀L1,L2. G ⊢ L1 ⊒[h] L2 → L1 ⫃ L2.
-#h #G #L1 #L2 #H elim H -L1 -L2
+lemma jsx_fwd_lsubr (G):
+      ∀L1,L2. G ⊢ L1 ⊒ L2 → L1 ⫃ L2.
+#G #L1 #L2 #H elim H -L1 -L2
 /2 width=1 by lsubr_bind, lsubr_unit/
 qed-.

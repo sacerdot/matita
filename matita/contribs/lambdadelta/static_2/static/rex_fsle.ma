@@ -20,17 +20,17 @@ include "static_2/static/rex_rex.ma".
 (* GENERIC EXTENSION ON REFERRED ENTRIES OF A CONTEXT-SENSITIVE REALTION ****)
 
 definition R_fsge_compatible: predicate (relation3 …) ≝ λRN.
-                              ∀L,T1,T2. RN L T1 T2 → ❪L,T2❫ ⊆ ❪L,T1❫.
+           ∀L,T1,T2. RN L T1 T2 → ❪L,T2❫ ⊆ ❪L,T1❫.
 
 definition rex_fsge_compatible: predicate (relation3 …) ≝ λRN.
-                                ∀L1,L2,T. L1 ⪤[RN,T] L2 → ❪L2,T❫ ⊆ ❪L1,T❫.
+           ∀L1,L2,T. L1 ⪤[RN,T] L2 → ❪L2,T❫ ⊆ ❪L1,T❫.
 
 definition rex_fsle_compatible: predicate (relation3 …) ≝ λRN.
-                                ∀L1,L2,T. L1 ⪤[RN,T] L2 → ❪L1,T❫ ⊆ ❪L2,T❫.
+           ∀L1,L2,T. L1 ⪤[RN,T] L2 → ❪L1,T❫ ⊆ ❪L2,T❫.
 
 (* Basic inversions with free variables inclusion for restricted closures ***)
 
-lemma frees_sex_conf (R):
+lemma frees_sex_conf_fsge (R):
       rex_fsge_compatible R →
       ∀L1,T,f1. L1 ⊢ 𝐅+❪T❫ ≘ f1 →
       ∀L2. L1 ⪤[cext2 R,cfull,f1] L2 →
@@ -38,6 +38,16 @@ lemma frees_sex_conf (R):
 #R #HR #L1 #T #f1 #Hf1 #L2 #H1L
 lapply (HR L1 L2 T ?) /2 width=3 by ex2_intro/ #H2L
 @(fsle_frees_trans_eq … H2L … Hf1) /3 width=4 by sex_fwd_length, sym_eq/
+qed-.
+
+lemma frees_sex_conf_fsle (R):
+      rex_fsle_compatible R →
+      ∀L1,T,f1. L1 ⊢ 𝐅+❪T❫ ≘ f1 →
+      ∀L2. L1 ⪤[cext2 R,cfull,f1] L2 →
+      ∃∃f2. L2 ⊢ 𝐅+❪T❫ ≘ f2 & f1 ⊆ f2.
+#R #HR #L1 #T #f1 #Hf1 #L2 #H1L
+lapply (HR L1 L2 T ?) /2 width=3 by ex2_intro/ #H2L
+@(fsle_frees_conf_eq … H2L … Hf1) /3 width=4 by sex_fwd_length, sym_eq/
 qed-.
 
 (* Properties with free variables inclusion for restricted closures *********)
@@ -57,7 +67,7 @@ lemma rex_sym (R):
       ∀T. symmetric … (rex R T).
 #R #H1R #H2R #T #L1 #L2
 * #f1 #Hf1 #HL12
-elim (frees_sex_conf … Hf1 … HL12) -Hf1 //
+elim (frees_sex_conf_fsge … Hf1 … HL12) -Hf1 //
 /5 width=5 by sle_sex_trans, sex_sym, cext2_sym, ex2_intro/
 qed-.
 
@@ -77,7 +87,7 @@ lapply (sor_eq_repl_back1 … Hy … H1) -y1 #Hy
 lapply (sor_inv_sle_sn … Hy) -y2 #Hfg
 elim (sex_sle_split (cext2 R1) (cext2 R2) … HL12 … Hfg) -HL12 /2 width=1 by ext2_refl/ #L #HL1 #HL2
 lapply (sle_sex_trans … HL1 … Hfg) // #H
-elim (frees_sex_conf … Hf … H) -Hf -H
+elim (frees_sex_conf_fsge … Hf … H) -Hf -H
 /4 width=7 by sle_sex_trans, ex2_intro/
 qed-.
 
@@ -94,7 +104,7 @@ lapply (sor_eq_repl_back2 … Hy … H2) -y2 #Hy
 lapply (sor_inv_sle_dx … Hy) -y1 #Hfg
 elim (sex_sle_split (cext2 R1) (cext2 R2) … HL12 … Hfg) -HL12 /2 width=1 by ext2_refl/ #L #HL1 #HL2
 lapply (sle_sex_trans … HL1 … Hfg) // #H
-elim (frees_sex_conf … Hf … H) -Hf -H
+elim (frees_sex_conf_fsge … Hf … H) -Hf -H
 /4 width=7 by sle_sex_trans, ex2_intro/
 qed-.
 
@@ -115,7 +125,7 @@ elim (sex_sle_split (cext2 R1) (cext2 R2) … HL12 … Hfg) -HL12 /2 width=1 by 
 lapply (sle_sex_trans … H … Hfg) // #H0
 elim (sex_inv_next1 … H) -H #Z #L #HL1 #H
 elim (ext2_inv_pair_sn … H) -H #V #HV #H1 #H2 destruct
-elim (frees_sex_conf … Hf … H0) -Hf -H0
+elim (frees_sex_conf_fsge … Hf … H0) -Hf -H0
 /4 width=7 by sle_sex_trans, ex3_2_intro, ex2_intro/
 qed-.
 
@@ -136,11 +146,38 @@ elim (sex_sle_split (cext2 R1) (cext2 R2) … HL12 … Hfg) -HL12 /2 width=1 by 
 lapply (sle_sex_trans … H … Hfg) // #H0
 elim (sex_inv_next1 … H) -H #Z #L #HL1 #H
 elim (ext2_inv_unit_sn … H) -H #H destruct
-elim (frees_sex_conf … Hf … H0) -Hf -H0
+elim (frees_sex_conf_fsge … Hf … H0) -Hf -H0
 /4 width=7 by sle_sex_trans, ex2_intro/ (* note: 2 ex2_intro *)
 qed-.
 
 (* Main properties with free variables inclusion for restricted closures ****)
+
+theorem rex_conf1 (R1) (R2):
+        rex_fsge_compatible R2 → (c_reflexive … R2) →
+        R_replace3_rex R1 R2 R1 R2 →
+        ∀T. confluent1 … (rex R1 T) (rex R2 T).
+#R1 #R2 #H1R #H2R #H3R #T #L1 #L * #f1 #Hf1 #HL1 #L2 * #f2 #Hf2 #HL12
+lapply (frees_mono … Hf1 … Hf2) -Hf1 #Hf12
+lapply (sex_eq_repl_back … HL1 … Hf12) -f1 #HL1
+elim (frees_sex_conf_fsge … Hf2 … HL12) // #g2 #Hg2 #Hfg2
+lapply (sex_repl … HL1 … HL12 L ?) //
+[ /3 width=1 by sex_refl, ext2_refl/
+| -g2 #g2 * #I1 [| #V1 ] #K1 #n #HLK1 #Hgf2 #Z1 #H1 #Z2 #H2 #Y1 #HY1 #Y2 #HY2 #Z #HZ
+  [ lapply (ext2_inv_unit_sn … H1) -H1 #H destruct
+    lapply (ext2_inv_unit_sn … H2) -H2 #H destruct
+    lapply (ext2_inv_unit_sn … HZ) -HZ #H destruct
+    /2 width=1 by ext2_unit/
+  | elim (ext2_inv_pair_sn … H1) -H1 #W1 #HW1 #H destruct
+    elim (ext2_inv_pair_sn … H2) -H2 #W2 #HW2 #H destruct
+    elim (ext2_inv_pair_sn … HZ) -HZ #W #HW #H destruct
+    elim (frees_inv_drops_next … Hf2 … HLK1 … Hgf2) -Hf2 -HLK1 -Hgf2 #g0 #Hg0 #Hg02
+    lapply (sle_sex_trans … HY1 … Hg02) // -HY1 #HY1
+    lapply (sle_sex_trans … HY2 … Hg02) // -HY2 #HY2
+    /4 width=9 by ext2_pair, ex2_intro/
+  ]
+| /3 width=5 by sle_sex_trans, ex2_intro/
+]
+qed-.
 
 theorem rex_conf (R1) (R2):
         rex_fsge_compatible R1 → rex_fsge_compatible R2 →
@@ -151,21 +188,21 @@ lapply (frees_mono … Hf1 … Hf) -Hf1 #Hf12
 lapply (sex_eq_repl_back … HL01 … Hf12) -f1 #HL01
 elim (sex_conf … HL01 … HL02) /2 width=3 by ex2_intro/ [ | -HL01 -HL02 ]
 [ #L #HL1 #HL2
-  elim (frees_sex_conf … Hf … HL01) // -HR1 -HL01 #f1 #Hf1 #H1
-  elim (frees_sex_conf … Hf … HL02) // -HR2 -HL02 #f2 #Hf2 #H2
+  elim (frees_sex_conf_fsge … Hf … HL01) // -HR1 -HL01 #f1 #Hf1 #H1
+  elim (frees_sex_conf_fsge … Hf … HL02) // -HR2 -HL02 #f2 #Hf2 #H2
   lapply (sle_sex_trans … HL1 … H1) // -HL1 -H1 #HL1
   lapply (sle_sex_trans … HL2 … H2) // -HL2 -H2 #HL2
   /3 width=5 by ex2_intro/
-| #g * #I0 [2: #V0 ] #K0 #n #HLK0 #Hgf #Z1 #H1 #Z2 #H2 #K1 #HK01 #K2 #HK02
-  [ elim (ext2_inv_pair_sn … H1) -H1 #V1 #HV01 #H destruct
+| #g * #I0 [| #V0 ] #K0 #n #HLK0 #Hgf #Z1 #H1 #Z2 #H2 #K1 #HK01 #K2 #HK02
+  [ lapply (ext2_inv_unit_sn … H1) -H1 #H destruct
+    lapply (ext2_inv_unit_sn … H2) -H2 #H destruct
+    /3 width=3 by ext2_unit, ex2_intro/
+  | elim (ext2_inv_pair_sn … H1) -H1 #V1 #HV01 #H destruct
     elim (ext2_inv_pair_sn … H2) -H2 #V2 #HV02 #H destruct
     elim (frees_inv_drops_next … Hf … HLK0 … Hgf) -Hf -HLK0 -Hgf #g0 #Hg0 #H0
     lapply (sle_sex_trans … HK01 … H0) // -HK01 #HK01
     lapply (sle_sex_trans … HK02 … H0) // -HK02 #HK02
     elim (HR12 … HV01 … HV02 K1 … K2) /3 width=3 by ext2_pair, ex2_intro/
-  | lapply (ext2_inv_unit_sn … H1) -H1 #H destruct
-    lapply (ext2_inv_unit_sn … H2) -H2 #H destruct
-    /3 width=3 by ext2_unit, ex2_intro/
   ]
 ]
 qed-.

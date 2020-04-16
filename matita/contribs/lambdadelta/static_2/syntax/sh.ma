@@ -24,3 +24,6 @@ record sh: Type[0] ≝ {
 
 interpretation "next sort (sort hierarchy)"
    'UpSpoon h s = (next h s).
+
+definition sh_is_next (h): relation nat ≝
+           λs1,s2. ⫯[h]s1 = s2.

@@ -15,14 +15,14 @@
 include "basic_2/rt_transition/cpx_lsubr.ma".
 include "basic_2/rt_computation/csx_csx.ma".
 
-(* STRONGLY NORMALIZING TERMS FOR UNBOUND PARALLEL RT-TRANSITION ************)
+(* STRONGLY NORMALIZING TERMS FOR EXTENDED PARALLEL RT-TRANSITION ***********)
 
 (* Advanced properties ******************************************************)
 
-fact csx_appl_beta_aux (h) (G) (L):
-     ∀p,U1. ❪G,L❫ ⊢ ⬈*𝐒[h] U1 →
-     ∀V,W,T1. U1 = ⓓ[p]ⓝW.V.T1 → ❪G,L❫ ⊢ ⬈*𝐒[h] ⓐV.ⓛ[p]W.T1.
-#h #G #L #p #X #H @(csx_ind … H) -X
+fact csx_appl_beta_aux (G) (L):
+     ∀p,U1. ❪G,L❫ ⊢ ⬈*𝐒 U1 →
+     ∀V,W,T1. U1 = ⓓ[p]ⓝW.V.T1 → ❪G,L❫ ⊢ ⬈*𝐒 ⓐV.ⓛ[p]W.T1.
+#G #L #p #X #H @(csx_ind … H) -X
 #X #HT1 #IHT1 #V #W #T1 #H1 destruct
 @csx_intro #X #H1 #H2
 elim (cpx_inv_appl1 … H1) -H1 *
@@ -43,36 +43,36 @@ elim (cpx_inv_appl1 … H1) -H1 *
 qed-.
 
 (* Basic_1: was just: sn3_beta *)
-lemma csx_appl_beta (h) (G) (L):
-      ∀p,V,W,T. ❪G,L❫ ⊢ ⬈*𝐒[h] ⓓ[p]ⓝW.V.T → ❪G,L❫ ⊢ ⬈*𝐒[h] ⓐV.ⓛ[p]W.T.
+lemma csx_appl_beta (G) (L):
+      ∀p,V,W,T. ❪G,L❫ ⊢ ⬈*𝐒 ⓓ[p]ⓝW.V.T → ❪G,L❫ ⊢ ⬈*𝐒 ⓐV.ⓛ[p]W.T.
 /2 width=3 by csx_appl_beta_aux/ qed.
 
 (* Advanced forward lemmas **************************************************)
 
-fact csx_fwd_bind_dx_unit_aux (h) (G) (L):
-     ∀U. ❪G,L❫ ⊢ ⬈*𝐒[h] U →
-     ∀p,I,J,V,T. U = ⓑ[p,I]V.T → ❪G,L.ⓤ[J]❫ ⊢ ⬈*𝐒[h] T.
-#h #G #L #U #H elim H -H #U0 #_ #IH #p #I #J #V #T #H destruct
+fact csx_fwd_bind_dx_unit_aux (G) (L):
+     ∀U. ❪G,L❫ ⊢ ⬈*𝐒 U →
+     ∀p,I,J,V,T. U = ⓑ[p,I]V.T → ❪G,L.ⓤ[J]❫ ⊢ ⬈*𝐒 T.
+#G #L #U #H elim H -H #U0 #_ #IH #p #I #J #V #T #H destruct
 @csx_intro #T2 #HLT2 #HT2
-@(IH (ⓑ[p, I]V.T2)) -IH /2 width=4 by cpx_bind_unit/ -HLT2
-#H elim (teqx_inv_pair … H) -H /2 width=1 by/
+@(IH (ⓑ[p, I]V.T2)) -IH /2 width=4 by cpx_bind_unit/ -HLT2 #H
+elim (teqx_inv_pair … H) -H /2 width=1 by/
 qed-.
 
-lemma csx_fwd_bind_dx_unit (h) (G) (L):
-      ∀p,I,V,T. ❪G,L❫ ⊢ ⬈*𝐒[h] ⓑ[p,I]V.T →
-      ∀J. ❪G,L.ⓤ[J]❫ ⊢ ⬈*𝐒[h] T.
+lemma csx_fwd_bind_dx_unit (G) (L):
+      ∀p,I,V,T. ❪G,L❫ ⊢ ⬈*𝐒 ⓑ[p,I]V.T →
+      ∀J. ❪G,L.ⓤ[J]❫ ⊢ ⬈*𝐒 T.
 /2 width=6 by csx_fwd_bind_dx_unit_aux/ qed-.
 
-lemma csx_fwd_bind_unit (h) (G) (L):
-      ∀p,I,V,T. ❪G,L❫ ⊢ ⬈*𝐒[h] ⓑ[p,I]V.T →
-      ∀J. ∧∧ ❪G,L❫ ⊢ ⬈*𝐒[h] V & ❪G,L.ⓤ[J]❫ ⊢ ⬈*𝐒[h] T.
+lemma csx_fwd_bind_unit (G) (L):
+      ∀p,I,V,T. ❪G,L❫ ⊢ ⬈*𝐒 ⓑ[p,I]V.T →
+      ∀J. ∧∧ ❪G,L❫ ⊢ ⬈*𝐒 V & ❪G,L.ⓤ[J]❫ ⊢ ⬈*𝐒 T.
 /3 width=4 by csx_fwd_pair_sn, csx_fwd_bind_dx_unit, conj/ qed-.
 
 (* Properties with restricted refinement for local environments *************)
 
-lemma csx_lsubr_conf (h) (G) (L1):
-      ∀T. ❪G,L1❫ ⊢ ⬈*𝐒[h] T → ∀L2. L1 ⫃ L2 → ❪G,L2❫ ⊢ ⬈*𝐒[h] T.
-#h #G #L1 #T #H
+lemma csx_lsubr_conf (G) (L1):
+      ∀T. ❪G,L1❫ ⊢ ⬈*𝐒 T → ∀L2. L1 ⫃ L2 → ❪G,L2❫ ⊢ ⬈*𝐒 T.
+#G #L1 #T #H
 @(csx_ind … H) -T #T1 #_ #IH #L2 #HL12
 @csx_intro #T2 #HT12 #HnT12
 /3 width=3 by lsubr_cpx_trans/

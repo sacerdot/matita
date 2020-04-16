@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basics/core_notation/exp_2.ma".
 include "arithmetics/nat.ma".
 include "ground/xoa/ex_3_1.ma".
 include "ground/xoa/or_3.ma".

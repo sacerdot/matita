@@ -15,14 +15,14 @@
 include "static_2/relocation/drops.ma".
 include "basic_2/rt_computation/jsx.ma".
 
-(* COMPATIBILITY OF STRONG NORMALIZATION FOR UNBOUND RT-TRANSITION **********)
+(* COMPATIBILITY OF STRONG NORMALIZATION FOR EXTENDED RT-TRANSITION *********)
 
 (* Forward lemmas with uniform slicing for local environments ***************)
 
-lemma jsx_fwd_drops_atom_sn (h) (b) (G):
-      ∀L1,L2. G ⊢ L1 ⊒[h] L2 →
+lemma jsx_fwd_drops_atom_sn (b) (G):
+      ∀L1,L2. G ⊢ L1 ⊒ L2 →
       ∀f. 𝐔❪f❫ → ⇩*[b,f]L1 ≘ ⋆ → ⇩*[b,f]L2 ≘ ⋆.
-#h #b #G #L1 #L2 #H elim H -L1 -L2
+#b #G #L1 #L2 #H elim H -L1 -L2
 [ #f #_ #H //
 | #I #K1 #K2 #_ #IH #f #Hf #H
 | #I #K1 #K2 #V #_ #HV #IH #f #Hf #H
@@ -33,11 +33,11 @@ elim (drops_inv_bind1_isuni … H) -H [3,6: // |*: * -Hf ]
 ]
 qed-.
 
-lemma jsx_fwd_drops_unit_sn (h) (b) (G):
-      ∀L1,L2. G ⊢ L1 ⊒[h] L2 →
+lemma jsx_fwd_drops_unit_sn (b) (G):
+      ∀L1,L2. G ⊢ L1 ⊒ L2 →
       ∀f. 𝐔❪f❫ → ∀I,K1. ⇩*[b,f]L1 ≘ K1.ⓤ[I] →
-      ∃∃K2. G ⊢ K1 ⊒[h] K2 & ⇩*[b,f]L2 ≘ K2.ⓤ[I].
-#h #b #G #L1 #L2 #H elim H -L1 -L2
+      ∃∃K2. G ⊢ K1 ⊒ K2 & ⇩*[b,f]L2 ≘ K2.ⓤ[I].
+#b #G #L1 #L2 #H elim H -L1 -L2
 [ #f #_ #J #Y1 #H
   lapply (drops_inv_atom1 … H) -H * #H #_ destruct
 | #I #K1 #K2 #HK12 #IH #f #Hf #J #Y1 #H
@@ -52,12 +52,12 @@ elim (drops_inv_bind1_isuni … H) -H [3,6: // |*: * -Hf ]
 ]
 qed-.
 
-lemma jsx_fwd_drops_pair_sn (h) (b) (G):
-      ∀L1,L2. G ⊢ L1 ⊒[h] L2 →
+lemma jsx_fwd_drops_pair_sn (b) (G):
+      ∀L1,L2. G ⊢ L1 ⊒ L2 →
       ∀f. 𝐔❪f❫ → ∀I,K1,V. ⇩*[b,f]L1 ≘ K1.ⓑ[I]V →
-      ∨∨ ∃∃K2. G ⊢ K1 ⊒[h] K2 & ⇩*[b,f]L2 ≘ K2.ⓑ[I]V
-       | ∃∃K2. G ⊢ K1 ⊒[h] K2 & ⇩*[b,f]L2 ≘ K2.ⓧ & G ⊢ ⬈*𝐒[h,V] K2.
-#h #b #G #L1 #L2 #H elim H -L1 -L2
+      ∨∨ ∃∃K2. G ⊢ K1 ⊒ K2 & ⇩*[b,f]L2 ≘ K2.ⓑ[I]V
+       | ∃∃K2. G ⊢ K1 ⊒ K2 & ⇩*[b,f]L2 ≘ K2.ⓧ & G ⊢ ⬈*𝐒[V] K2.
+#b #G #L1 #L2 #H elim H -L1 -L2
 [ #f #_ #J #Y1 #X1 #H
   lapply (drops_inv_atom1 … H) -H * #H #_ destruct
 | #I #K1 #K2 #HK12 #IH #f #Hf #J #Y1 #X1 #H

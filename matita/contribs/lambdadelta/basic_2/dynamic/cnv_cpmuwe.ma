@@ -27,7 +27,7 @@ lemma cnv_cpmuwe_trans (h) (a) (G) (L):
 
 lemma cnv_R_cpmuwe_total (h) (a) (G) (L):
       ∀T1. ❪G,L❫ ⊢ T1 ![h,a] → ∃n. R_cpmuwe h G L T1 n.
-/4 width=2 by cnv_fwd_fsb, fsb_inv_csx, R_cpmuwe_total_csx/ qed-.
+/4 width=3 by cnv_fwd_fsb, fsb_inv_csx, R_cpmuwe_total_csx/ qed-.
 
 (* Main inversions with head evaluation for t-bound rt-transition on terms **)
 

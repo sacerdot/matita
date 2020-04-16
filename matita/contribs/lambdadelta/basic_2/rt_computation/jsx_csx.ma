@@ -16,22 +16,22 @@ include "basic_2/rt_computation/rsx_csx.ma".
 include "basic_2/rt_computation/jsx_drops.ma".
 include "basic_2/rt_computation/jsx_lsubr.ma".
 
-(* COMPATIBILITY OF STRONG NORMALIZATION FOR UNBOUND RT-TRANSITION **********)
+(* COMPATIBILITY OF STRONG NORMALIZATION FOR EXTENDED RT-TRANSITION *********)
 
 (* Properties with strongly rt-normalizing terms ****************************)
 
-lemma jsx_csx_conf (h) (G):
-      ∀L1,L2. G ⊢ L1 ⊒[h] L2 →
-      ∀T. ❪G,L1❫ ⊢ ⬈*𝐒[h] T → ❪G,L2❫ ⊢ ⬈*𝐒[h] T.
+lemma jsx_csx_conf (G):
+      ∀L1,L2. G ⊢ L1 ⊒ L2 →
+      ∀T. ❪G,L1❫ ⊢ ⬈*𝐒 T → ❪G,L2❫ ⊢ ⬈*𝐒 T.
 /3 width=5 by jsx_fwd_lsubr, csx_lsubr_conf/ qed-.
 
 (* Properties with strongly rt-normalizing referred local environments ******)
 
 (* Note: Try by induction on the 2nd premise by generalizing V with f *)
-lemma rsx_jsx_trans (h) (G):
-      ∀L1,V. G ⊢ ⬈*𝐒[h,V] L1 →
-      ∀L2. G ⊢ L1 ⊒[h] L2 → G ⊢ ⬈*𝐒[h,V] L2.
-#h #G #L1 #V @(fqup_wf_ind_eq (Ⓕ) … G L1 V) -G -L1 -V
+lemma rsx_jsx_trans (G):
+      ∀L1,V. G ⊢ ⬈*𝐒[V] L1 →
+      ∀L2. G ⊢ L1 ⊒ L2 → G ⊢ ⬈*𝐒[V] L2.
+#G #L1 #V @(fqup_wf_ind_eq (Ⓕ) … G L1 V) -G -L1 -V
 #G0 #L0 #V0 #IH #G #L1 * *
 [ //
 | #i #HG #HL #HV #H #L2 #HL12 destruct

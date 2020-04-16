@@ -50,6 +50,27 @@ elim (fsle_frees_trans_eq … H2L … Hf2) // -L2 -T2
 /3 width=6 by frees_mono, sle_eq_repl_back1/
 qed-.
 
+lemma fsle_frees_conf:
+      ∀L1,L2,T1,T2. ❪L1,T1❫ ⊆ ❪L2,T2❫ →
+      ∀f1. L1 ⊢ 𝐅+❪T1❫ ≘ f1 →
+      ∃∃n1,n2,f2. L2 ⊢ 𝐅+❪T2❫ ≘ f2 & L1 ≋ⓧ*[n1,n2] L2 & ⫱*[n1]f1 ⊆ ⫱*[n2]f2.
+#L1 #L2 #T1 #T2 * #n1 #n2 #g1 #g2 #Hg1 #Hg2 #HL #Hn #f1 #Hf1
+lapply (frees_mono … Hg1 … Hf1) -Hg1 -Hf1 #Hgf1
+lapply (tls_eq_repl n1 … Hgf1) -Hgf1 #Hgf1
+lapply (sle_eq_repl_back1 … Hn … Hgf1) -g1
+/2 width=6 by ex3_3_intro/
+qed-.
+
+lemma fsle_frees_conf_eq:
+      ∀L1,L2. |L1| = |L2| →
+      ∀T1,T2. ❪L1,T1❫ ⊆ ❪L2,T2❫ → ∀f1. L1 ⊢ 𝐅+❪T1❫ ≘ f1 →
+      ∃∃f2. L2 ⊢ 𝐅+❪T2❫ ≘ f2 & f1 ⊆ f2.
+#L1 #L2 #H1L #T1 #T2 #H2L #f1 #Hf1
+elim (fsle_frees_conf … H2L … Hf1) -T1 #n1 #n2 #f2 #Hf2 #H2L #Hf12
+elim (lveq_inj_length … H2L) // -L1 #H1 #H2 destruct
+/2 width=3 by ex2_intro/
+qed-.
+
 (* Main properties **********************************************************)
 
 theorem fsle_trans_sn:

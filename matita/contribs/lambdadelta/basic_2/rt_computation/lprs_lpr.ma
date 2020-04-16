@@ -32,7 +32,7 @@ lemma lprs_ind_dx (h) (G) (L1):
       ∀L2. ❪G,L1❫ ⊢ ➡*[h,0] L2 → Q L2.
 /4 width=8 by lprs_inv_CTC, lprs_CTC, lpr_cprs_trans, cpr_refl, lex_CTC_ind_dx/ qed-.
 
-(* Properties with unbound rt-transition for full local environments ********)
+(* Properties with extended rt-transition for full local environments *******)
 
 lemma lpr_lprs (h) (G):
       ∀L1,L2. ❪G,L1❫ ⊢ ➡[h,0] L2 → ❪G,L1❫ ⊢ ➡*[h,0] L2.

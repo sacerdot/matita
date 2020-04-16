@@ -15,9 +15,9 @@
 include "static_2/relocation/lex_lex.ma".
 include "basic_2/rt_computation/lpxs_lpx.ma".
 
-(* UNBOUND PARALLEL RT-COMPUTATION FOR FULL LOCAL ENVIRONMENTS **************)
+(* EXTENDED PARALLEL RT-COMPUTATION FOR FULL LOCAL ENVIRONMENTS *************)
 
 (* Main properties **********************************************************)
 
-theorem lpxs_trans (h) (G): Transitive … (lpxs h G).
+theorem lpxs_trans (G): Transitive … (lpxs G).
 /4 width=5 by lpxs_cpxs_trans, cpxs_trans, lex_trans/ qed-.

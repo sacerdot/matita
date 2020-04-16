@@ -16,13 +16,13 @@ include "static_2/static/gcp_cr.ma".
 include "basic_2/rt_computation/csx_cnx_vector.ma".
 include "basic_2/rt_computation/csx_csx_vector.ma".
 
-(* STRONGLY NORMALIZING TERMS FOR UNBOUND PARALLEL RT-TRANSITION ************)
+(* STRONGLY NORMALIZING TERMS FOR EXTENDED PARALLEL RT-TRANSITION ***********)
 
 (* Main properties with generic candidates of reducibility ******************)
 
-theorem csx_gcr (h):
-        gcr (cpx h) teqx (csx h) (csx h).
-#h @mk_gcr
+theorem csx_gcr:
+        gcr cpx teqx csx csx.
+@mk_gcr
 [ //
 | #G #L #Vs #Hvs #T #HT #H
   @(csx_applv_cnx … H) -H // (**) (* auto fails *)

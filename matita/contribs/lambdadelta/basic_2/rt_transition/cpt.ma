@@ -16,13 +16,14 @@ include "ground/xoa/ex_4_3.ma".
 include "ground/steps/rtc_ist_shift.ma".
 include "ground/steps/rtc_ist_plus.ma".
 include "ground/steps/rtc_ist_max.ma".
+include "static_2/syntax/sh.ma".
 include "basic_2/notation/relations/pty_6.ma".
 include "basic_2/rt_transition/cpg.ma".
 
 (* T-BOUND CONTEXT-SENSITIVE PARALLEL T-TRANSITION FOR TERMS ****************)
 
 definition cpt (h) (G) (L) (n): relation2 term term ≝
-           λT1,T2. ∃∃c. 𝐓❪n,c❫ & ❪G,L❫ ⊢ T1 ⬈[eq …,c,h] T2.
+           λT1,T2. ∃∃c. 𝐓❪n,c❫ & ❪G,L❫ ⊢ T1 ⬈[sh_is_next h,eq …,c] T2.
 
 interpretation
   "t-bound context-sensitive parallel t-transition (term)"
@@ -32,7 +33,7 @@ interpretation
 
 lemma cpt_ess (h) (G) (L):
       ∀s. ❪G,L❫ ⊢ ⋆s ⬆[h,1] ⋆(⫯[h]s).
-/2 width=3 by cpg_ess, ex2_intro/ qed.
+/3 width=3 by cpg_ess, ex2_intro/ qed.
 
 lemma cpt_delta (h) (n) (G) (K):
       ∀V1,V2. ❪G,K❫ ⊢ V1 ⬆[h,n] V2 →
@@ -105,7 +106,7 @@ lemma cpt_inv_atom_sn (h) (n) (J) (G) (L):
 #h #n #J #G #L #X2 * #c #Hc #H
 elim (cpg_inv_atom1 … H) -H *
 [ #H1 #H2 destruct /3 width=1 by or5_intro0, conj/
-| #s #H1 #H2 #H3 destruct /3 width=3 by or5_intro1, ex3_intro/
+| #s1 #s2 #H1 #H2 #H3 #H4 destruct /3 width=3 by or5_intro1, ex3_intro/
 | #cV #K #V1 #V2 #HV12 #HVT2 #H1 #H2 #H3 destruct
   /4 width=6 by or5_intro2, ex4_3_intro, ex2_intro/
 | #cV #K #V1 #V2 #HV12 #HVT2 #H1 #H2 #H3 destruct
@@ -121,7 +122,9 @@ lemma cpt_inv_sort_sn (h) (n) (G) (L) (s):
       ∧∧ X2 = ⋆(((next h)^n) s) & n ≤ 1.
 #h #n #G #L #s #X2 * #c #Hc #H
 elim (cpg_inv_sort1 … H) -H * #H1 #H2 destruct
-/2 width=1 by conj/
+[ /2 width=1 by conj/
+| #H1 #H2 destruct /2 width=1 by conj/
+] 
 qed-.
 
 lemma cpt_inv_zero_sn (h) (n) (G) (L):

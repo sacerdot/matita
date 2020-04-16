@@ -15,22 +15,24 @@
 include "basic_2/rt_transition/rpx_reqx.ma".
 include "basic_2/rt_computation/cpxs.ma".
 
-(* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS **************)
+(* EXTENDED CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS *************)
 
 (* Properties with sort-irrelevant equivalence for terms ********************)
 
-lemma teqx_cpxs_trans: ∀h,U1,T1. U1 ≛ T1 → ∀G,L,T2. ❪G,L❫ ⊢ T1 ⬈*[h] T2 →
-                       ∃∃U2. ❪G,L❫ ⊢ U1 ⬈*[h] U2 & U2 ≛ T2.
-#h #U1 #T1 #HUT1 #G #L #T2 #HT12 @(cpxs_ind … HT12) -T2 /2 width=3 by ex2_intro/
+lemma teqx_cpxs_trans (G) (L):
+      ∀U1,T1. U1 ≛ T1 → ∀T2. ❪G,L❫ ⊢ T1 ⬈* T2 →
+      ∃∃U2. ❪G,L❫ ⊢ U1 ⬈* U2 & U2 ≛ T2.
+#G #L #U1 #T1 #HUT1 #T2 #HT12 @(cpxs_ind … HT12) -T2 /2 width=3 by ex2_intro/
 #T #T2 #_ #HT2 * #U #HU1 #HUT elim (teqx_cpx_trans … HUT … HT2) -T -T1
 /3 width=3 by ex2_intro, cpxs_strap1/
 qed-.
 
 (* Note: this requires teqx to be symmetric *)
 (* Nasic_2A1: uses: cpxs_neq_inv_step_sn *)
-lemma cpxs_tneqx_fwd_step_sn: ∀h,G,L,T1,T2. ❪G,L❫ ⊢ T1 ⬈*[h] T2 → (T1 ≛ T2 → ⊥) →
-                              ∃∃T,T0. ❪G,L❫ ⊢ T1 ⬈[h] T & T1 ≛ T → ⊥ & ❪G,L❫ ⊢ T ⬈*[h] T0 & T0 ≛ T2.
-#h #G #L #T1 #T2 #H @(cpxs_ind_dx … H) -T1
+lemma cpxs_tneqx_fwd_step_sn (G) (L):
+      ∀T1,T2. ❪G,L❫ ⊢ T1 ⬈* T2 → (T1 ≛ T2 → ⊥) →
+      ∃∃T,T0. ❪G,L❫ ⊢ T1 ⬈ T & T1 ≛ T → ⊥ & ❪G,L❫ ⊢ T ⬈* T0 & T0 ≛ T2.
+#G #L #T1 #T2 #H @(cpxs_ind_dx … H) -T1
 [ #H elim H -H //
 | #T1 #T0 #HT10 #HT02 #IH #Hn12
   elim (teqx_dec T1 T0) [ -HT10 -HT02 #H10 | -IH #Hn10 ]

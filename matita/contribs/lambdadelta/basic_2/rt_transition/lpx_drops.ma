@@ -21,15 +21,15 @@ include "basic_2/rt_transition/lpx.ma".
 (* Properties with generic slicing for local environments *******************)
 
 (* Basic_2A1: was: drop_lpx_trans *)
-lemma drops_lpx_trans (h) (G): dedropable_sn (cpx h G).
+lemma drops_lpx_trans (G): dedropable_sn (cpx G).
 /3 width=6 by lex_liftable_dedropable_sn, cpx_lifts_sn/ qed-.
 
 (* Inversion lemmas with generic slicing for local environments *************)
 
 (* Basic_2A1: was: lpx_drop_conf *)
-lemma lpx_drops_conf (h) (G): dropable_sn (cpx h G).
+lemma lpx_drops_conf (G): dropable_sn (cpx G).
 /2 width=3 by lex_dropable_sn/ qed-.
 
 (* Basic_2A1: was: lpx_drop_trans_O1 *)
-lemma lpx_drops_trans (h) (G): dropable_dx (cpx h G).
+lemma lpx_drops_trans (G): dropable_dx (cpx G).
 /2 width=3 by lex_dropable_dx/ qed-.

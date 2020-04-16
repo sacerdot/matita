@@ -30,22 +30,31 @@ definition rex (R) (T): relation lenv ≝
 interpretation "generic extension on referred entries (local environment)"
    'Relation R T L1 L2 = (rex R T L1 L2).
 
-definition R_confluent2_rex: relation4 (relation3 lenv term term)
-                                       (relation3 lenv term term) … ≝
-                             λR1,R2,RP1,RP2.
-                             ∀L0,T0,T1. R1 L0 T0 T1 → ∀T2. R2 L0 T0 T2 →
-                             ∀L1. L0 ⪤[RP1,T0] L1 → ∀L2. L0 ⪤[RP2,T0] L2 →
-                             ∃∃T. R2 L1 T1 T & R1 L2 T2 T.
+definition R_confluent2_rex:
+           relation4 (relation3 lenv term term)
+                     (relation3 lenv term term) … ≝
+           λR1,R2,RP1,RP2.
+           ∀L0,T0,T1. R1 L0 T0 T1 → ∀T2. R2 L0 T0 T2 →
+           ∀L1. L0 ⪤[RP1,T0] L1 → ∀L2. L0 ⪤[RP2,T0] L2 →
+           ∃∃T. R2 L1 T1 T & R1 L2 T2 T.
+
+definition R_replace3_rex:
+           relation4 (relation3 lenv term term)
+                     (relation3 lenv term term) … ≝
+           λR1,R2,RP1,RP2.
+           ∀L0,T0,T1. R1 L0 T0 T1 → ∀T2. R2 L0 T0 T2 →
+           ∀L1. L0 ⪤[RP1,T0] L1 → ∀L2. L0 ⪤[RP2,T0] L2 →
+           ∀T. R2 L1 T1 T → R1 L2 T2 T.
 
 definition rex_confluent: relation … ≝
-                          λR1,R2.
-                          ∀K1,K,V1. K1 ⪤[R1,V1] K → ∀V. R1 K1 V1 V →
-                          ∀K2. K ⪤[R2,V] K2 → K ⪤[R2,V1] K2.
+           λR1,R2.
+           ∀K1,K,V1. K1 ⪤[R1,V1] K → ∀V. R1 K1 V1 V →
+           ∀K2. K ⪤[R2,V] K2 → K ⪤[R2,V1] K2.
 
 definition rex_transitive: relation3 ? (relation3 ?? term) … ≝
-                           λR1,R2,R3.
-                           ∀K1,K,V1. K1 ⪤[R1,V1] K →
-                           ∀V. R1 K1 V1 V → ∀V2. R2 K V V2 → R3 K1 V1 V2.
+           λR1,R2,R3.
+           ∀K1,K,V1. K1 ⪤[R1,V1] K →
+           ∀V. R1 K1 V1 V → ∀V2. R2 K V V2 → R3 K1 V1 V2.
 
 (* Basic inversion lemmas ***************************************************)
 

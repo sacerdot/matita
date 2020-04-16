@@ -21,10 +21,11 @@ include "basic_2/rt_transition/fpb.ma".
 
 (* Properties with sort-irrelevant equivalence for local environments *******)
 
-lemma teqx_fpb_trans: ∀h,U2,U1. U2 ≛ U1 →
-                      ∀G1,G2,L1,L2,T1. ❪G1,L1,U1❫ ≻[h] ❪G2,L2,T1❫ →
-                      ∃∃L,T2. ❪G1,L1,U2❫ ≻[h] ❪G2,L,T2❫ & T2 ≛ T1 & L ≛[T1] L2.
-#h #U2 #U1 #HU21 #G1 #G2 #L1 #L2 #T1 * -G2 -L2 -T1
+lemma teqx_fpb_trans:
+      ∀U2,U1. U2 ≛ U1 →
+      ∀G1,G2,L1,L2,T1. ❪G1,L1,U1❫ ≻ ❪G2,L2,T1❫ →
+      ∃∃L,T2. ❪G1,L1,U2❫ ≻ ❪G2,L,T2❫ & T2 ≛ T1 & L ≛[T1] L2.
+#U2 #U1 #HU21 #G1 #G2 #L1 #L2 #T1 * -G2 -L2 -T1
 [ #G2 #L2 #T1 #H
   elim (teqx_fqu_trans … H … HU21) -H
   /3 width=5 by fpb_fqu, ex3_2_intro/
@@ -36,10 +37,11 @@ lemma teqx_fpb_trans: ∀h,U2,U1. U2 ≛ U1 →
 qed-.
 
 (* Basic_2A1: was just: lleq_fpb_trans *)
-lemma reqx_fpb_trans: ∀h,F,K1,K2,T. K1 ≛[T] K2 →
-                      ∀G,L2,U. ❪F,K2,T❫ ≻[h] ❪G,L2,U❫ →
-                      ∃∃L1,U0. ❪F,K1,T❫ ≻[h] ❪G,L1,U0❫ & U0 ≛ U & L1 ≛[U] L2.
-#h #F #K1 #K2 #T #HT #G #L2 #U * -G -L2 -U
+lemma reqx_fpb_trans:
+      ∀F,K1,K2,T. K1 ≛[T] K2 →
+      ∀G,L2,U. ❪F,K2,T❫ ≻ ❪G,L2,U❫ →
+      ∃∃L1,U0. ❪F,K1,T❫ ≻ ❪G,L1,U0❫ & U0 ≛ U & L1 ≛[U] L2.
+#F #K1 #K2 #T #HT #G #L2 #U * -G -L2 -U
 [ #G #L2 #U #H2 elim (reqx_fqu_trans … H2 … HT) -K2
   /3 width=5 by fpb_fqu, ex3_2_intro/
 | #U #HTU #HnTU elim (reqx_cpx_trans … HT … HTU) -HTU

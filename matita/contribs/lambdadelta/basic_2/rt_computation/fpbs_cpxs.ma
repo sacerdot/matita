@@ -17,42 +17,48 @@ include "basic_2/rt_computation/fpbs_fqup.ma".
 
 (* PARALLEL RST-COMPUTATION FOR CLOSURES ************************************)
 
-(* Properties with unbound context-sensitive parallel rt-computation ********)
+(* Properties with extended context-sensitive parallel rt-computation *******)
 
-lemma cpxs_fpbs: ∀h,G,L,T1,T2. ❪G,L❫ ⊢ T1 ⬈*[h] T2 → ❪G,L,T1❫ ≥[h] ❪G,L,T2❫.
-#h #G #L #T1 #T2 #H @(cpxs_ind … H) -T2
+lemma cpxs_fpbs:
+      ∀G,L,T1,T2. ❪G,L❫ ⊢ T1 ⬈* T2 → ❪G,L,T1❫ ≥ ❪G,L,T2❫.
+#G #L #T1 #T2 #H @(cpxs_ind … H) -T2
 /3 width=5 by fpbq_cpx, fpbs_strap1/
 qed.
 
-lemma fpbs_cpxs_trans: ∀h,G1,G,L1,L,T1,T. ❪G1,L1,T1❫ ≥[h] ❪G,L,T❫ →
-                       ∀T2. ❪G,L❫ ⊢ T ⬈*[h] T2 → ❪G1,L1,T1❫ ≥[h] ❪G,L,T2❫.
-#h #G1 #G #L1 #L #T1 #T #H1 #T2 #H @(cpxs_ind … H) -T2
+lemma fpbs_cpxs_trans:
+      ∀G1,G,L1,L,T1,T. ❪G1,L1,T1❫ ≥ ❪G,L,T❫ →
+      ∀T2. ❪G,L❫ ⊢ T ⬈* T2 → ❪G1,L1,T1❫ ≥ ❪G,L,T2❫.
+#G1 #G #L1 #L #T1 #T #H1 #T2 #H @(cpxs_ind … H) -T2
 /3 width=5 by fpbs_strap1, fpbq_cpx/
 qed-.
 
-lemma cpxs_fpbs_trans: ∀h,G1,G2,L1,L2,T,T2. ❪G1,L1,T❫ ≥[h] ❪G2,L2,T2❫ →
-                       ∀T1. ❪G1,L1❫ ⊢ T1 ⬈*[h] T → ❪G1,L1,T1❫ ≥[h] ❪G2,L2,T2❫.
-#h #G1 #G2 #L1 #L2 #T #T2 #H1 #T1 #H @(cpxs_ind_dx … H) -T1
+lemma cpxs_fpbs_trans:
+      ∀G1,G2,L1,L2,T,T2. ❪G1,L1,T❫ ≥ ❪G2,L2,T2❫ →
+      ∀T1. ❪G1,L1❫ ⊢ T1 ⬈* T → ❪G1,L1,T1❫ ≥ ❪G2,L2,T2❫.
+#G1 #G2 #L1 #L2 #T #T2 #H1 #T1 #H @(cpxs_ind_dx … H) -T1
 /3 width=5 by fpbs_strap2, fpbq_cpx/
 qed-.
 
-lemma cpxs_teqx_fpbs_trans: ∀h,G1,L1,T1,T. ❪G1,L1❫ ⊢ T1 ⬈*[h] T →
-                            ∀T0. T ≛ T0 →
-                            ∀G2,L2,T2. ❪G1,L1,T0❫ ≥[h] ❪G2,L2,T2❫ → ❪G1,L1,T1❫ ≥[h] ❪G2,L2,T2❫.
+lemma cpxs_teqx_fpbs_trans:
+      ∀G1,L1,T1,T. ❪G1,L1❫ ⊢ T1 ⬈* T → ∀T0. T ≛ T0 →
+      ∀G2,L2,T2. ❪G1,L1,T0❫ ≥ ❪G2,L2,T2❫ → ❪G1,L1,T1❫ ≥ ❪G2,L2,T2❫.
 /3 width=3 by cpxs_fpbs_trans, teqx_fpbs_trans/ qed-.
 
-lemma cpxs_teqx_fpbs: ∀h,G,L,T1,T. ❪G,L❫ ⊢ T1 ⬈*[h] T →
-                      ∀T2. T ≛ T2 → ❪G,L,T1❫ ≥[h] ❪G,L,T2❫.
+lemma cpxs_teqx_fpbs:
+      ∀G,L,T1,T. ❪G,L❫ ⊢ T1 ⬈* T →
+      ∀T2. T ≛ T2 → ❪G,L,T1❫ ≥ ❪G,L,T2❫.
 /4 width=3 by cpxs_fpbs_trans, feqx_fpbs, teqx_feqx/ qed.
 
 (* Properties with star-iterated structural successor for closures **********)
 
-lemma cpxs_fqus_fpbs: ∀h,G1,L1,T1,T. ❪G1,L1❫ ⊢ T1 ⬈*[h] T →
-                      ∀G2,L2,T2. ❪G1,L1,T❫ ⬂* ❪G2,L2,T2❫ → ❪G1,L1,T1❫ ≥[h] ❪G2,L2,T2❫.
+lemma cpxs_fqus_fpbs:
+      ∀G1,L1,T1,T. ❪G1,L1❫ ⊢ T1 ⬈* T →
+      ∀G2,L2,T2. ❪G1,L1,T❫ ⬂* ❪G2,L2,T2❫ → ❪G1,L1,T1❫ ≥ ❪G2,L2,T2❫.
 /3 width=5 by fpbs_fqus_trans, cpxs_fpbs/ qed.
 
 (* Properties with plus-iterated structural successor for closures **********)
 
-lemma cpxs_fqup_fpbs: ∀h,G1,L1,T1,T. ❪G1,L1❫ ⊢ T1 ⬈*[h] T →
-                      ∀G2,L2,T2. ❪G1,L1,T❫ ⬂+ ❪G2,L2,T2❫ → ❪G1,L1,T1❫ ≥[h] ❪G2,L2,T2❫.
+lemma cpxs_fqup_fpbs:
+      ∀G1,L1,T1,T. ❪G1,L1❫ ⊢ T1 ⬈* T →
+      ∀G2,L2,T2. ❪G1,L1,T❫ ⬂+ ❪G2,L2,T2❫ → ❪G1,L1,T1❫ ≥ ❪G2,L2,T2❫.
 /3 width=5 by fpbs_fqup_trans, cpxs_fpbs/ qed.

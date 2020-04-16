@@ -16,13 +16,13 @@ include "static_2/static/gcp.ma".
 include "basic_2/rt_transition/cnx_drops.ma".
 include "basic_2/rt_computation/csx_drops.ma".
 
-(* STRONGLY NORMALIZING TERMS FOR UNBOUND PARALLEL RT-TRANSITION ************)
+(* STRONGLY NORMALIZING TERMS FOR EXTENDED PARALLEL RT-TRANSITION ***********)
 
 (* Main properties with generic computation properties **********************)
 
-theorem csx_gcp (h):
-        gcp (cpx h) teqx (csx h).
-#h @mk_gcp
+theorem csx_gcp:
+        gcp cpx teqx csx.
+@mk_gcp
 [ normalize /3 width=13 by cnx_lifts/
 | /2 width=4 by cnx_sort/
 | /2 width=8 by csx_lifts/

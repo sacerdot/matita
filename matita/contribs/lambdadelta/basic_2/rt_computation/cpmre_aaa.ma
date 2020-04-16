@@ -27,6 +27,6 @@ lemma cpmre_total_aaa (h) (n) (A) (G) (L):
 elim (cpms_total_aaa h … n … HT1) #T0 #HT10
 elim (cprre_total_csx h G L T0)
 [ #T2 /3 width=4 by cpms_cprre_trans, ex_intro/
-| /4 width=4 by cpms_fwd_cpxs, aaa_csx, csx_cpxs_trans/
+| /4 width=5 by cpms_fwd_cpxs, aaa_csx, csx_cpxs_trans/
 ]
 qed-.

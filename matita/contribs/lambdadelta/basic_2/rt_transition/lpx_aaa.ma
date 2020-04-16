@@ -16,18 +16,19 @@ include "static_2/static/aaa_drops.ma".
 include "static_2/static/lsuba_aaa.ma".
 include "basic_2/rt_transition/lpx_drops.ma".
 
-(* UNBOUND PARALLEL RT-TRANSITION FOR FULL LOCAL ENVIRONMENTS ***************)
+(* EXTENDED PARALLEL RT-TRANSITION FOR FULL LOCAL ENVIRONMENTS **************)
 
 (* Properties with atomic arity assignment for terms ************************)
 
 (* Note: lemma 500 *)
 (* Basic_2A1: was: cpx_lpx_aaa_conf *)
-lemma cpx_aaa_conf_lpx (h): ∀G,L1,T1,A. ❪G,L1❫ ⊢ T1 ⁝ A →
-                            ∀T2. ❪G,L1❫ ⊢ T1 ⬈[h] T2 →
-                            ∀L2. ❪G,L1❫ ⊢ ⬈[h] L2 → ❪G,L2❫ ⊢ T2 ⁝ A.
-#h #G #L1 #T1 #A #H elim H -G -L1 -T1 -A
-[ #G #L1 #s #X #H
-  elim (cpx_inv_sort1 … H) -H #H destruct //
+lemma cpx_aaa_conf_lpx (G) (L1):
+      ∀T1,A. ❪G,L1❫ ⊢ T1 ⁝ A →
+      ∀T2. ❪G,L1❫ ⊢ T1 ⬈ T2 →
+      ∀L2. ❪G,L1❫ ⊢ ⬈ L2 → ❪G,L2❫ ⊢ T2 ⁝ A.
+#G #L1 #T1 #A #H elim H -G -L1 -T1 -A
+[ #G #L1 #s1 #X #H
+  elim (cpx_inv_sort1 … H) -H #s2 #H destruct //
 | #I #G #K1 #V1 #B #_ #IH #X #HX #Y #HY
   elim (lpx_inv_pair_sn … HY) -HY #K2 #V2 #HK12 #HV12 #H destruct
   elim (cpx_inv_zero1_pair … HX) -HX
@@ -74,8 +75,9 @@ lemma cpx_aaa_conf_lpx (h): ∀G,L1,T1,A. ❪G,L1❫ ⊢ T1 ⁝ A →
 ]
 qed-.
 
-lemma cpx_aaa_conf (h): ∀G,L. Conf3 … (aaa G L) (cpx h G L).
+lemma cpx_aaa_conf (G) (L): Conf3 … (aaa G L) (cpx G L).
 /2 width=7 by cpx_aaa_conf_lpx/ qed-.
 
-lemma lpx_aaa_conf (h): ∀G,T. Conf3 … (λL. aaa G L T) (lpx h G).
+lemma lpx_aaa_conf (G):
+      ∀T. Conf3 … (λL. aaa G L T) (lpx G).
 /2 width=7 by cpx_aaa_conf_lpx/ qed-.

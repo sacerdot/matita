@@ -82,6 +82,30 @@ theorem sex_conf (RN1) (RP1) (RN2) (RP2):
 ]
 qed-.
 
+lemma sex_repl (RN) (RP) (SN) (SP) (L1) (f):
+      (∀g,I,K1,n. ⇩[n] L1 ≘ K1.ⓘ[I] → ↑g = ⫱*[n] f → R_pw_replace3_sex … RN SN RN RP SN SP g K1 I) →
+      (∀g,I,K1,n. ⇩[n] L1 ≘ K1.ⓘ[I] → ⫯g = ⫱*[n] f → R_pw_replace3_sex … RP SP RN RP SN SP g K1 I) →
+      ∀L2. L1 ⪤[RN,RP,f] L2 → ∀K1. L1 ⪤[SN,SP,f] K1 →
+      ∀K2. L2 ⪤[SN,SP,f] K2 → K1 ⪤[RN,RP,f] K2.
+#RN #RP #SN #SP #L1 elim L1 -L1
+[ #f #_ #_ #Y #HY #Y1 #HY1 #Y2 #HY2
+  lapply (sex_inv_atom1 … HY) -HY #H destruct
+  lapply (sex_inv_atom1 … HY1) -HY1 #H destruct
+  lapply (sex_inv_atom1 … HY2) -HY2 #H destruct //
+| #L1 #I1 #IH #f elim (pn_split f) * #g #H destruct
+  #HN #HP #Y #HY #Y1 #HY1 #Y2 #HY2
+  [ elim (sex_inv_push1 … HY) -HY #I2 #L2 #HL12 #HI12 #H destruct
+    elim (sex_inv_push1 … HY1) -HY1 #J1 #K1 #HLK1 #HIJ1 #H destruct
+    elim (sex_inv_push1 … HY2) -HY2 #J2 #K2 #HLK2 #HIJ2 #H destruct
+    /5 width=13 by sex_push, drops_refl, drops_drop/
+  | elim (sex_inv_next1 … HY) -HY #I2 #L2 #HL12 #HI12 #H destruct
+    elim (sex_inv_next1 … HY1) -HY1 #J1 #K1 #HLK1 #HIJ1 #H destruct
+    elim (sex_inv_next1 … HY2) -HY2 #J2 #K2 #HLK2 #HIJ2 #H destruct
+    /5 width=13 by sex_next, drops_refl, drops_drop/
+  ]
+]
+qed-.
+
 theorem sex_canc_sn: ∀RN,RP,f. Transitive … (sex RN RP f) →
                                symmetric … (sex RN RP f) →
                                left_cancellable … (sex RN RP f).

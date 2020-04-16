@@ -14,12 +14,12 @@
 
 include "basic_2/rt_computation/jsx_csx.ma".
 
-(* COMPATIBILITY OF STRONG NORMALIZATION FOR UNBOUND RT-TRANSITION **********)
+(* COMPATIBILITY OF STRONG NORMALIZATION FOR EXTENDED RT-TRANSITION *********)
 
 (* Main properties **********************************************************)
 
-theorem jsx_trans (h) (G): Transitive … (jsx h G).
-#h #G #L1 #L #H elim H -L1 -L
+theorem jsx_trans (G): Transitive … (jsx G).
+#G #L1 #L #H elim H -L1 -L
 [ #L2 #H
   >(jsx_inv_atom_sn … H) -L2 //
 | #I #K1 #K #_ #IH #L2 #H

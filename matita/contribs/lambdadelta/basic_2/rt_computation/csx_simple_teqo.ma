@@ -18,17 +18,17 @@ include "basic_2/rt_transition/cpx_simple.ma".
 include "basic_2/rt_computation/cpxs.ma".
 include "basic_2/rt_computation/csx_csx.ma".
 
-(* STRONGLY NORMALIZING TERMS FOR UNBOUND PARALLEL RT-TRANSITION ************)
+(* STRONGLY NORMALIZING TERMS FOR EXTENDED PARALLEL RT-TRANSITION ***********)
 
 (* Properties with outer equivalence for terms ******************************)
 
 (* Basic_1: was just: sn3_appl_appl *)
 (* Basic_2A1: was: csx_appl_simple_tsts *)
-lemma csx_appl_simple_teqo (h) (G) (L):
-      ∀V. ❪G,L❫ ⊢ ⬈*𝐒[h] V → ∀T1. ❪G,L❫ ⊢ ⬈*𝐒[h] T1 →
-      (∀T2. ❪G,L❫ ⊢ T1 ⬈*[h] T2 → (T1 ⩳ T2 → ⊥) → ❪G,L❫ ⊢ ⬈*𝐒[h] ⓐV.T2) →
-      𝐒❪T1❫ → ❪G,L❫ ⊢ ⬈*𝐒[h] ⓐV.T1.
-#h #G #L #V #H @(csx_ind … H) -V
+lemma csx_appl_simple_teqo (G) (L):
+      ∀V. ❪G,L❫ ⊢ ⬈*𝐒 V → ∀T1. ❪G,L❫ ⊢ ⬈*𝐒 T1 →
+      (∀T2. ❪G,L❫ ⊢ T1 ⬈* T2 → (T1 ⩳ T2 → ⊥) → ❪G,L❫ ⊢ ⬈*𝐒 ⓐV.T2) →
+      𝐒❪T1❫ → ❪G,L❫ ⊢ ⬈*𝐒 ⓐV.T1.
+#G #L #V #H @(csx_ind … H) -V
 #V #_ #IHV #T1 #H @(csx_ind … H) -T1
 #T1 #H1T1 #IHT1 #H2T1 #H3T1
 @csx_intro #X #HL #H

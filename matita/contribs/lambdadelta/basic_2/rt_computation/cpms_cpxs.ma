@@ -18,10 +18,11 @@ include "basic_2/rt_computation/cpms.ma".
 
 (* T-BOUND CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS **************)
 
-(* Forward lemmas with unbound context-sensitive rt-computation for terms ***)
+(* Forward lemmas with extended context-sensitive rt-computation for terms **)
 
 (* Basic_2A1: includes: scpds_fwd_cpxs cprs_cpxs *)
-lemma cpms_fwd_cpxs (h) (n): ∀G,L,T1,T2. ❪G,L❫ ⊢ T1 ➡*[h,n] T2 → ❪G,L❫ ⊢ T1 ⬈*[h] T2.
+lemma cpms_fwd_cpxs (h) (n) (G) (L):
+      ∀T1,T2. ❪G,L❫ ⊢ T1 ➡*[h,n] T2 → ❪G,L❫ ⊢ T1 ⬈* T2.
 #h #n #G #L #T1 #T2 #H @(cpms_ind_dx … H) -T2
-/3 width=4 by cpxs_strap1, cpm_fwd_cpx/
+/3 width=5 by cpxs_strap1, cpm_fwd_cpx/
 qed-.

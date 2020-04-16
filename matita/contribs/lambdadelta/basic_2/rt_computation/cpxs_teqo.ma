@@ -17,24 +17,24 @@ include "basic_2/rt_computation/cpxs_lsubr.ma".
 include "basic_2/rt_computation/cpxs_cnx.ma".
 include "basic_2/rt_computation/lpxs_cpxs.ma".
 
-(* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS **************)
+(* EXTENDED CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS *************)
 
 (* Forward lemmas with sort-irrelevant outer equivalence for terms **********)
 
-lemma cpxs_fwd_sort (h) (G) (L):
-      ∀X2,s1. ❪G,L❫ ⊢ ⋆s1 ⬈*[h] X2 → ⋆s1 ⩳ X2.
-#h #G #L #X2 #s1 #H
+lemma cpxs_fwd_sort (G) (L):
+      ∀X2,s1. ❪G,L❫ ⊢ ⋆s1 ⬈* X2 → ⋆s1 ⩳ X2.
+#G #L #X2 #s1 #H
 elim (cpxs_inv_sort1 … H) -H #s2 #H destruct //
 qed-.
 
 (* Note: probably this is an inversion lemma *)
 (* Basic_2A1: was: cpxs_fwd_delta *)
-lemma cpxs_fwd_delta_drops (h) (I) (G) (L) (K):
+lemma cpxs_fwd_delta_drops (I) (G) (L) (K):
       ∀V1,i. ⇩[i] L ≘ K.ⓑ[I]V1 →
       ∀V2. ⇧[↑i] V1 ≘ V2 →
-      ∀X2. ❪G,L❫ ⊢ #i ⬈*[h] X2 →
-      ∨∨ #i ⩳ X2 | ❪G,L❫ ⊢ V2 ⬈*[h] X2.
-#h #I #G #L #K #V1 #i #HLK #V2 #HV12 #X2 #H
+      ∀X2. ❪G,L❫ ⊢ #i ⬈* X2 →
+      ∨∨ #i ⩳ X2 | ❪G,L❫ ⊢ V2 ⬈* X2.
+#I #G #L #K #V1 #i #HLK #V2 #HV12 #X2 #H
 elim (cpxs_inv_lref1_drops … H) -H /2 width=1 by or_introl/
 * #I0 #K0 #V0 #U0 #HLK0 #HVU0 #HU0
 lapply (drops_mono … HLK0 … HLK) -HLK0 #H destruct
@@ -42,10 +42,10 @@ lapply (drops_mono … HLK0 … HLK) -HLK0 #H destruct
 qed-.
 
 (* Basic_1: was just: pr3_iso_beta *)
-lemma cpxs_fwd_beta (h) (p) (G) (L):
-      ∀V,W,T,X2. ❪G,L❫ ⊢ ⓐV.ⓛ[p]W.T ⬈*[h] X2 →
-      ∨∨ ⓐV.ⓛ[p]W.T ⩳ X2 | ❪G,L❫ ⊢ ⓓ[p]ⓝW.V.T ⬈*[h] X2.
-#h #p #G #L #V #W #T #X2 #H elim (cpxs_inv_appl1 … H) -H *
+lemma cpxs_fwd_beta (p) (G) (L):
+      ∀V,W,T,X2. ❪G,L❫ ⊢ ⓐV.ⓛ[p]W.T ⬈* X2 →
+      ∨∨ ⓐV.ⓛ[p]W.T ⩳ X2 | ❪G,L❫ ⊢ ⓓ[p]ⓝW.V.T ⬈* X2.
+#p #G #L #V #W #T #X2 #H elim (cpxs_inv_appl1 … H) -H *
 [ #V0 #T0 #_ #_ #H destruct /2 width=1 by teqo_pair, or_introl/
 | #b #W0 #T0 #HT0 #HU
   elim (cpxs_inv_abst1 … HT0) -HT0 #W1 #T1 #HW1 #HT1 #H destruct
@@ -56,11 +56,11 @@ lemma cpxs_fwd_beta (h) (p) (G) (L):
 ]
 qed-.
 
-lemma cpxs_fwd_theta (h) (p) (G) (L):
-           ∀V1,V,T,X2. ❪G,L❫ ⊢ ⓐV1.ⓓ[p]V.T ⬈*[h] X2 →
+lemma cpxs_fwd_theta (p) (G) (L):
+           ∀V1,V,T,X2. ❪G,L❫ ⊢ ⓐV1.ⓓ[p]V.T ⬈* X2 →
            ∀V2. ⇧[1] V1 ≘ V2 →
-           ∨∨ ⓐV1.ⓓ[p]V.T ⩳ X2 | ❪G,L❫ ⊢ ⓓ[p]V.ⓐV2.T ⬈*[h] X2.
-#h #p #G #L #V1 #V #T #X2 #H #V2 #HV12
+           ∨∨ ⓐV1.ⓓ[p]V.T ⩳ X2 | ❪G,L❫ ⊢ ⓓ[p]V.ⓐV2.T ⬈* X2.
+#p #G #L #V1 #V #T #X2 #H #V2 #HV12
 elim (cpxs_inv_appl1 … H) -H *
 [ -HV12 #V0 #T0 #_ #_ #H destruct /2 width=1 by teqo_pair, or_introl/
 | #q #W #T0 #HT0 #HU
@@ -88,15 +88,15 @@ elim (cpxs_inv_appl1 … H) -H *
 ]
 qed-.
 
-lemma cpxs_fwd_cast (h) (G) (L):
-      ∀W,T,X2. ❪G,L❫ ⊢ ⓝW.T ⬈*[h] X2 →
-      ∨∨ ⓝW. T ⩳ X2 | ❪G,L❫ ⊢ T ⬈*[h] X2 | ❪G,L❫ ⊢ W ⬈*[h] X2.
-#h #G #L #W #T #X2 #H
+lemma cpxs_fwd_cast (G) (L):
+      ∀W,T,X2. ❪G,L❫ ⊢ ⓝW.T ⬈* X2 →
+      ∨∨ ⓝW. T ⩳ X2 | ❪G,L❫ ⊢ T ⬈* X2 | ❪G,L❫ ⊢ W ⬈* X2.
+#G #L #W #T #X2 #H
 elim (cpxs_inv_cast1 … H) -H /2 width=1 by or3_intro1, or3_intro2/ *
 #W0 #T0 #_ #_ #H destruct /2 width=1 by teqo_pair, or3_intro0/
 qed-.
 
-lemma cpxs_fwd_cnx (h) (G) (L):
-      ∀T1. ❪G,L❫ ⊢ ⬈𝐍[h] T1 →
-      ∀X2. ❪G,L❫ ⊢ T1 ⬈*[h] X2 → T1 ⩳ X2.
+lemma cpxs_fwd_cnx (G) (L):
+      ∀T1. ❪G,L❫ ⊢ ⬈𝐍 T1 →
+      ∀X2. ❪G,L❫ ⊢ T1 ⬈* X2 → T1 ⩳ X2.
 /3 width=5 by cpxs_inv_cnx1, teqx_teqo/ qed-.

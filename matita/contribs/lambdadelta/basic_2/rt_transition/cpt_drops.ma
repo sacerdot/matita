@@ -72,7 +72,7 @@ lemma cpt_inv_atom_sn_drops (h) (n) (I) (G) (L):
 #h #n #I #G #L #X2 * #c #Hc #H elim (cpg_inv_atom1_drops … H) -H *
 [ #H1 #H2 destruct
   /3 width=1 by or4_intro0, conj/
-| #s #H1 #H2 #H3 destruct
+| #s1 #s2 #H1 #H2 #H3 #H4 destruct
   /3 width=3 by or4_intro1, ex3_intro/
 | #cV #i #K #V1 #V2 #HLK #HV12 #HVT2 #H1 #H2 destruct
   /4 width=8 by ex4_4_intro, ex2_intro, or4_intro2/

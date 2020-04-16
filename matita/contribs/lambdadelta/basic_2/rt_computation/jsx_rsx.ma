@@ -16,15 +16,15 @@ include "basic_2/rt_computation/rsx_drops.ma".
 include "basic_2/rt_computation/rsx_lpxs.ma".
 include "basic_2/rt_computation/jsx.ma".
 
-(* COMPATIBILITY OF STRONG NORMALIZATION FOR UNBOUND RT-TRANSITION **********)
+(* COMPATIBILITY OF STRONG NORMALIZATION FOR EXTENDED RT-TRANSITION *********)
 
 (* Properties with strongly normalizing referred local environments *********)
 
 (* Basic_2A1: uses: lsx_cpx_trans_lcosx *)
-lemma rsx_cpx_trans_jsx (h) (G):
-      ∀L0,T1,T2. ❪G,L0❫ ⊢ T1 ⬈[h] T2 →
-      ∀L. G ⊢ L0 ⊒[h] L → G ⊢ ⬈*𝐒[h,T1] L → G ⊢ ⬈*𝐒[h,T2] L.
-#h #G #L0 #T1 #T2 #H @(cpx_ind … H) -G -L0 -T1 -T2
+lemma rsx_cpx_trans_jsx (G):
+      ∀L0,T1,T2. ❪G,L0❫ ⊢ T1 ⬈ T2 →
+      ∀L. G ⊢ L0 ⊒ L → G ⊢ ⬈*𝐒[T1] L → G ⊢ ⬈*𝐒[T2] L.
+#G #L0 #T1 #T2 #H @(cpx_ind … H) -G -L0 -T1 -T2
 [ //
 | //
 | #I0 #G #K0 #V1 #V2 #W2 #_ #IH #HVW2 #L #HK0 #HL
@@ -63,15 +63,15 @@ qed-.
 (* Advanced properties of strongly normalizing referred local environments **)
 
 (* Basic_2A1: uses: lsx_cpx_trans_O *)
-lemma rsx_cpx_trans (h) (G):
-      ∀L,T1,T2. ❪G,L❫ ⊢ T1 ⬈[h] T2 →
-      G ⊢ ⬈*𝐒[h,T1] L → G ⊢ ⬈*𝐒[h,T2] L.
+lemma rsx_cpx_trans (G):
+      ∀L,T1,T2. ❪G,L❫ ⊢ T1 ⬈ T2 →
+      G ⊢ ⬈*𝐒[T1] L → G ⊢ ⬈*𝐒[T2] L.
 /3 width=6 by rsx_cpx_trans_jsx, jsx_refl/ qed-.
 
-lemma rsx_cpxs_trans (h) (G):
-      ∀L,T1,T2. ❪G,L❫ ⊢ T1 ⬈*[h] T2 →
-      G ⊢ ⬈*𝐒[h,T1] L → G ⊢ ⬈*𝐒[h,T2] L.
-#h #G #L #T1 #T2 #H
-@(cpxs_ind_dx ???????? H) -T1 //
+lemma rsx_cpxs_trans (G):
+      ∀L,T1,T2. ❪G,L❫ ⊢ T1 ⬈* T2 →
+      G ⊢ ⬈*𝐒[T1] L → G ⊢ ⬈*𝐒[T2] L.
+#G #L #T1 #T2 #H
+@(cpxs_ind_dx ??????? H) -T1 //
 /3 width=3 by rsx_cpx_trans/
 qed-.

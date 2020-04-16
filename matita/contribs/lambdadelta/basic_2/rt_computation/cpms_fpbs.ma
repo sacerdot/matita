@@ -21,5 +21,5 @@ include "basic_2/rt_computation/cpms_cpxs.ma".
 
 (* Basic_2A1: uses: cprs_fpbs *)
 lemma cpms_fwd_fpbs (h) (n):
-      ∀G,L,T1,T2. ❪G,L❫ ⊢ T1 ➡*[h,n] T2 → ❪G,L,T1❫ ≥[h] ❪G,L,T2❫.
-/3 width=2 by cpms_fwd_cpxs, cpxs_fpbs/ qed-.
+      ∀G,L,T1,T2. ❪G,L❫ ⊢ T1 ➡*[h,n] T2 → ❪G,L,T1❫ ≥ ❪G,L,T2❫.
+/3 width=3 by cpms_fwd_cpxs, cpxs_fpbs/ qed-.

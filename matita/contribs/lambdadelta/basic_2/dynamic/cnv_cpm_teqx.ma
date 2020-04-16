@@ -46,7 +46,7 @@ lemma cnv_cpr_teqx_fwd_refl (h) (a) (G) (L):
 | #G #L #U #T1 #T2 #HT12 #_ #H1 #H2
   elim (cnv_fpbg_refl_false … H2) -a
   @(fpbg_teqx_div … H1) -H1
-  /3 width=6 by cpm_tneqx_cpm_fpbg, cpm_eps, teqx_inv_pair_xy_y/
+  /3 width=7 by cpm_tneqx_cpm_fpbg, cpm_eps, teqx_inv_pair_xy_y/
 | #p #G #L #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #_ #_ #_ #H1 #_
   elim (teqx_inv_pair … H1) -H1 #H #_ #_ destruct
 | #p #G #L #V1 #V2 #X2 #W1 #W2 #T1 #T2 #_ #_ #_ #_ #_ #_ #_ #H1 #_
@@ -106,11 +106,11 @@ elim (cpm_inv_cast1 … H1) -H1 [ * || * ]
 | #HT1X
   elim (cnv_fpbg_refl_false … H0) -a
   @(fpbg_teqx_div … H2) -H2
-  /3 width=6 by cpm_tneqx_cpm_fpbg, cpm_eps, teqx_inv_pair_xy_y/
+  /3 width=7 by cpm_tneqx_cpm_fpbg, cpm_eps, teqx_inv_pair_xy_y/
 | #m #HU1X #H destruct
   elim (cnv_fpbg_refl_false … H0) -a
   @(fpbg_teqx_div … H2) -H2
-  /3 width=6 by cpm_tneqx_cpm_fpbg, cpm_ee, teqx_inv_pair_xy_x/
+  /3 width=7 by cpm_tneqx_cpm_fpbg, cpm_ee, teqx_inv_pair_xy_x/
 ]
 qed-.
 

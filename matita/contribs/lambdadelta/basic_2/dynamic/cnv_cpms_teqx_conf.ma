@@ -20,8 +20,8 @@ include "basic_2/dynamic/cnv_cpms_teqx.ma".
 (* Sub confluence propery with restricted rt-transition for terms ***********)
 
 fact cnv_cpms_teqx_strip_lpr_aux (h) (a) (G0) (L0) (T0):
-     (∀G,L,T. ❪G0,L0,T0❫ >[h] ❪G,L,T❫ → IH_cnv_cpm_trans_lpr h a G L T) →
-     (∀G,L,T. ❪G0,L0,T0❫ >[h] ❪G,L,T❫ → IH_cnv_cpms_conf_lpr h a G L T) →
+     (∀G,L,T. ❪G0,L0,T0❫ > ❪G,L,T❫ → IH_cnv_cpm_trans_lpr h a G L T) →
+     (∀G,L,T. ❪G0,L0,T0❫ > ❪G,L,T❫ → IH_cnv_cpms_conf_lpr h a G L T) →
      ∀n1,T1. ❪G0,L0❫ ⊢ T0 ➡*[h,n1] T1 → ❪G0,L0❫ ⊢ T0 ![h,a] → T0 ≛ T1 →
      ∀n2,T2. ❪G0,L0❫ ⊢ T0 ➡[h,n2] T2 → T0 ≛ T2 →
      ∀L1. ❪G0,L0❫ ⊢ ➡[h,0] L1 → ∀L2. ❪G0,L0❫ ⊢ ➡[h,0] L2 →
@@ -45,8 +45,8 @@ fact cnv_cpms_teqx_strip_lpr_aux (h) (a) (G0) (L0) (T0):
 qed-.
 
 fact cnv_cpms_teqx_conf_lpr_aux (h) (a) (G0) (L0) (T0):
-     (∀G,L,T. ❪G0,L0,T0❫ >[h] ❪G,L,T❫ → IH_cnv_cpm_trans_lpr h a G L T) →
-     (∀G,L,T. ❪G0,L0,T0❫ >[h] ❪G,L,T❫ → IH_cnv_cpms_conf_lpr h a G L T) →
+     (∀G,L,T. ❪G0,L0,T0❫ > ❪G,L,T❫ → IH_cnv_cpm_trans_lpr h a G L T) →
+     (∀G,L,T. ❪G0,L0,T0❫ > ❪G,L,T❫ → IH_cnv_cpms_conf_lpr h a G L T) →
      ∀n1,T1. ❪G0,L0❫ ⊢ T0 ➡*[h,n1] T1 → ❪G0,L0❫ ⊢ T0 ![h,a] → T0 ≛ T1 →
      ∀n2,T2. ❪G0,L0❫ ⊢ T0 ➡*[h,n2] T2 → T0 ≛ T2 →
      ∀L1. ❪G0,L0❫ ⊢ ➡[h,0] L1 → ∀L2. ❪G0,L0❫ ⊢ ➡[h,0] L2 →

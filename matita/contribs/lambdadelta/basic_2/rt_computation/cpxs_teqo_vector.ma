@@ -16,13 +16,13 @@ include "static_2/syntax/teqo_simple_vector.ma".
 include "static_2/relocation/lifts_vector.ma".
 include "basic_2/rt_computation/cpxs_teqo.ma".
 
-(* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS **************)
+(* EXTENDED CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS *************)
 
 (* Vector form of forward lemmas with outer equivalence for terms ***********)
 
-lemma cpxs_fwd_sort_vector (h) (G) (L):
-      ∀s,Vs,X2. ❪G,L❫ ⊢ ⒶVs.⋆s ⬈*[h] X2 → ⒶVs.⋆s ⩳ X2.
-#h #G #L #s #Vs elim Vs -Vs /2 width=4 by cpxs_fwd_sort/
+lemma cpxs_fwd_sort_vector (G) (L):
+      ∀s,Vs,X2. ❪G,L❫ ⊢ ⒶVs.⋆s ⬈* X2 → ⒶVs.⋆s ⩳ X2.
+#G #L #s #Vs elim Vs -Vs /2 width=4 by cpxs_fwd_sort/
 #V #Vs #IHVs #X2 #H
 elim (cpxs_inv_appl1 … H) -H *
 [ -IHVs #V1 #T1 #_ #_ #H destruct /2 width=1 by teqo_pair/
@@ -36,12 +36,12 @@ elim (cpxs_inv_appl1 … H) -H *
 qed-.
 
 (* Basic_2A1: was: cpxs_fwd_delta_vector *)
-lemma cpxs_fwd_delta_drops_vector (h) (I) (G) (L) (K):
+lemma cpxs_fwd_delta_drops_vector (I) (G) (L) (K):
       ∀V1,i. ⇩[i] L ≘ K.ⓑ[I]V1 →
       ∀V2. ⇧[↑i] V1 ≘ V2 →
-      ∀Vs,X2. ❪G,L❫ ⊢ ⒶVs.#i ⬈*[h] X2 →
-      ∨∨ ⒶVs.#i ⩳ X2 | ❪G,L❫ ⊢ ⒶVs.V2 ⬈*[h] X2.
-#h #I #G #L #K #V1 #i #HLK #V2 #HV12 #Vs
+      ∀Vs,X2. ❪G,L❫ ⊢ ⒶVs.#i ⬈* X2 →
+      ∨∨ ⒶVs.#i ⩳ X2 | ❪G,L❫ ⊢ ⒶVs.V2 ⬈* X2.
+#I #G #L #K #V1 #i #HLK #V2 #HV12 #Vs
 elim Vs -Vs /2 width=5 by cpxs_fwd_delta_drops/
 #V #Vs #IHVs #X2 #H -K -V1
 elim (cpxs_inv_appl1 … H) -H *
@@ -64,10 +64,10 @@ elim (cpxs_inv_appl1 … H) -H *
 qed-.
 
 (* Basic_1: was just: pr3_iso_appls_beta *)
-lemma cpxs_fwd_beta_vector (h) (p) (G) (L):
-      ∀Vs,V,W,T,X2. ❪G,L❫ ⊢ ⒶVs.ⓐV.ⓛ[p]W.T ⬈*[h] X2 →
-      ∨∨ ⒶVs.ⓐV.ⓛ[p]W. T ⩳ X2 | ❪G,L❫ ⊢ ⒶVs.ⓓ[p]ⓝW.V.T ⬈*[h] X2.
-#h #p #G #L #Vs elim Vs -Vs /2 width=1 by cpxs_fwd_beta/
+lemma cpxs_fwd_beta_vector (p) (G) (L):
+      ∀Vs,V,W,T,X2. ❪G,L❫ ⊢ ⒶVs.ⓐV.ⓛ[p]W.T ⬈* X2 →
+      ∨∨ ⒶVs.ⓐV.ⓛ[p]W. T ⩳ X2 | ❪G,L❫ ⊢ ⒶVs.ⓓ[p]ⓝW.V.T ⬈* X2.
+#p #G #L #Vs elim Vs -Vs /2 width=1 by cpxs_fwd_beta/
 #V0 #Vs #IHVs #V #W #T #X2 #H
 elim (cpxs_inv_appl1 … H) -H *
 [ -IHVs #V1 #T1 #_ #_ #H destruct /2 width=1 by teqo_pair, or_introl/
@@ -89,11 +89,11 @@ elim (cpxs_inv_appl1 … H) -H *
 qed-.
 
 (* Basic_1: was just: pr3_iso_appls_abbr *)
-lemma cpxs_fwd_theta_vector (h) (G) (L):
+lemma cpxs_fwd_theta_vector (G) (L):
       ∀V1b,V2b. ⇧[1] V1b ≘ V2b →
-      ∀p,V,T,X2. ❪G,L❫ ⊢ ⒶV1b.ⓓ[p]V.T ⬈*[h] X2 →
-      ∨∨ ⒶV1b.ⓓ[p]V.T ⩳ X2 | ❪G,L❫ ⊢ ⓓ[p]V.ⒶV2b.T ⬈*[h] X2.
-#h #G #L #V1b #V2b * -V1b -V2b /3 width=1 by or_intror/
+      ∀p,V,T,X2. ❪G,L❫ ⊢ ⒶV1b.ⓓ[p]V.T ⬈* X2 →
+      ∨∨ ⒶV1b.ⓓ[p]V.T ⩳ X2 | ❪G,L❫ ⊢ ⓓ[p]V.ⒶV2b.T ⬈* X2.
+#G #L #V1b #V2b * -V1b -V2b /3 width=1 by or_intror/
 #V1b #V2b #V1a #V2a #HV12a #HV12b #p
 generalize in match HV12a; -HV12a
 generalize in match V2a; -V2a
@@ -139,12 +139,12 @@ elim (cpxs_inv_appl1 … H) -H *
 qed-.
 
 (* Basic_1: was just: pr3_iso_appls_cast *)
-lemma cpxs_fwd_cast_vector (h) (G) (L):
-      ∀Vs,W,T,X2. ❪G,L❫ ⊢ ⒶVs.ⓝW.T ⬈*[h] X2 →
+lemma cpxs_fwd_cast_vector (G) (L):
+      ∀Vs,W,T,X2. ❪G,L❫ ⊢ ⒶVs.ⓝW.T ⬈* X2 →
       ∨∨ ⒶVs. ⓝW. T ⩳ X2
-       | ❪G,L❫ ⊢ ⒶVs.T ⬈*[h] X2
-       | ❪G,L❫ ⊢ ⒶVs.W ⬈*[h] X2.
-#h #G #L #Vs elim Vs -Vs /2 width=1 by cpxs_fwd_cast/
+       | ❪G,L❫ ⊢ ⒶVs.T ⬈* X2
+       | ❪G,L❫ ⊢ ⒶVs.W ⬈* X2.
+#G #L #Vs elim Vs -Vs /2 width=1 by cpxs_fwd_cast/
 #V #Vs #IHVs #W #T #X2 #H
 elim (cpxs_inv_appl1 … H) -H *
 [ -IHVs #V0 #T0 #_ #_ #H destruct /2 width=1 by teqo_pair, or3_intro0/
@@ -171,10 +171,10 @@ elim (cpxs_inv_appl1 … H) -H *
 qed-.
 
 (* Basic_1: was just: nf2_iso_appls_lref *)
-lemma cpxs_fwd_cnx_vector (h) (G) (L):
-      ∀T. 𝐒❪T❫ → ❪G,L❫ ⊢ ⬈𝐍[h] T →
-      ∀Vs,X2. ❪G,L❫ ⊢ ⒶVs.T ⬈*[h] X2 → ⒶVs.T ⩳ X2.
-#h #G #L #T #H1T #H2T #Vs elim Vs -Vs [ @(cpxs_fwd_cnx … H2T) ] (**) (* /2 width=3 by cpxs_fwd_cnx/ does not work *)
+lemma cpxs_fwd_cnx_vector (G) (L):
+      ∀T. 𝐒❪T❫ → ❪G,L❫ ⊢ ⬈𝐍 T →
+      ∀Vs,X2. ❪G,L❫ ⊢ ⒶVs.T ⬈* X2 → ⒶVs.T ⩳ X2.
+#G #L #T #H1T #H2T #Vs elim Vs -Vs [ @(cpxs_fwd_cnx … H2T) ] (**) (* /2 width=3 by cpxs_fwd_cnx/ does not work *)
 #V #Vs #IHVs #X2 #H
 elim (cpxs_inv_appl1 … H) -H *
 [ -IHVs #V0 #T0 #_ #_ #H destruct /2 width=1 by teqo_pair/

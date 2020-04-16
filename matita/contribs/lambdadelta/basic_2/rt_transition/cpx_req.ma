@@ -15,13 +15,13 @@
 include "static_2/static/req_drops.ma".
 include "basic_2/rt_transition/rpx_fsle.ma".
 
-(* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS ***************)
+(* EXTENDED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS **************)
 
 (* Properties with syntactic equivalence for lenvs on referred entries ******)
 
 (* Basic_2A1: was: lleq_cpx_trans *)
-lemma req_cpx_trans (h) (G): req_transitive (cpx h G).
-#h #G #L2 #T1 #T2 #H @(cpx_ind … H) -G -L2 -T1 -T2 /2 width=2 by cpx_ess/
+lemma req_cpx_trans (G): req_transitive (cpx G).
+#G #L2 #T1 #T2 #H @(cpx_ind … H) -G -L2 -T1 -T2 /2 width=2 by cpx_qu/
 [ #I #G #K2 #V1 #V2 #W2 #_ #IH #HVW2 #L1 #H
   elim (req_inv_zero_pair_dx … H) -H #K1 #HK12 #H destruct
   /3 width=3 by cpx_delta/
@@ -50,5 +50,5 @@ lemma req_cpx_trans (h) (G): req_transitive (cpx h G).
 qed-.
 
 (* Basic_2A1: was: cpx_lleq_conf_sn *)
-lemma cpx_req_conf_sn (h) (G): s_r_confluent1 … (cpx h G) req.
+lemma cpx_req_conf_sn (G): s_r_confluent1 … (cpx G) req.
 /2 width=5 by cpx_rex_conf/ qed-.

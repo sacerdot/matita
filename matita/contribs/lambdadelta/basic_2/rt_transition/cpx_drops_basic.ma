@@ -15,14 +15,14 @@
 include "static_2/relocation/lifts_basic.ma".
 include "basic_2/rt_transition/cpx_drops.ma".
 
-(* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS ***************)
+(* EXTENDED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS **************)
 
 (* Properties with basic relocation *****************************************)
 
-lemma cpx_subst (h) (G) (L) (U1) (i):
-                ∀I,K,V. ⇩[i] L ≘ K.ⓑ[I]V →
-                ∃∃U2,T2. ❪G,L❫ ⊢ U1 ⬈[h] U2 & ⇧[i,1] T2 ≘ U2.
-#h #G #L #U1 @(fqup_wf_ind_eq (Ⓣ) … G L U1) -G -L -U1
+lemma cpx_subst (G) (L) (U1) (i):
+      ∀I,K,V. ⇩[i] L ≘ K.ⓑ[I]V →
+      ∃∃U2,T2. ❪G,L❫ ⊢ U1 ⬈ U2 & ⇧[i,1] T2 ≘ U2.
+#G #L #U1 @(fqup_wf_ind_eq (Ⓣ) … G L U1) -G -L -U1
 #G0 #L0 #U0 #IH #G #L * *
 [ #s #HG #HL #HT #i #I #K #V #_ destruct -IH
   /2 width=4 by lifts_sort, ex2_2_intro/

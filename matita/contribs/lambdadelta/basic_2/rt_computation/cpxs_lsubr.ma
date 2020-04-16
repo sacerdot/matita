@@ -15,10 +15,10 @@
 include "basic_2/rt_transition/cpx_lsubr.ma".
 include "basic_2/rt_computation/cpxs.ma".
 
-(* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS **************)
+(* EXTENDED CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS *************)
 
 (* Properties with restricted refinement for local environments *************)
 
-lemma lsubr_cpxs_trans: ∀h,G. lsub_trans … (cpxs h G) lsubr.
+lemma lsubr_cpxs_trans (G): lsub_trans … (cpxs G) lsubr.
 /3 width=5 by lsubr_cpx_trans, CTC_lsub_trans/
 qed-.

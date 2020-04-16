@@ -72,6 +72,9 @@ definition transitive2 (A) (R1,R2:relation A): Prop ≝
            ∀a1,a0. R1 a1 a0 → ∀a2. R2 a0 a2 →
            ∃∃a. R2 a1 a & R1 a a2.
 
+definition confluent1 (A) (B): relation2 (relation2 A B) (relation A) ≝
+           λR1,R2. ∀a1,b. R1 a1 b → ∀a2. R2 a1 a2 → R1 a2 b.
+
 definition bi_confluent (A) (B) (R: bi_relation A B): Prop ≝
            ∀a0,a1,b0,b1. R a0 b0 a1 b1 → ∀a2,b2. R a0 b0 a2 b2 →
            ∃∃a,b. R a1 b1 a b & R a2 b2 a b.

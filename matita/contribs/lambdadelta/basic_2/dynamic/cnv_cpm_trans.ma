@@ -25,8 +25,8 @@ include "basic_2/dynamic/lsubv_cnv.ma".
 
 fact cnv_cpm_trans_lpr_aux (h) (a):
      ∀G0,L0,T0.
-     (∀G1,L1,T1. ❪G0,L0,T0❫ >[h] ❪G1,L1,T1❫ → IH_cnv_cpms_conf_lpr h a G1 L1 T1) →
-     (∀G1,L1,T1. ❪G0,L0,T0❫ >[h] ❪G1,L1,T1❫ → IH_cnv_cpm_trans_lpr h a G1 L1 T1) →
+     (∀G1,L1,T1. ❪G0,L0,T0❫ > ❪G1,L1,T1❫ → IH_cnv_cpms_conf_lpr h a G1 L1 T1) →
+     (∀G1,L1,T1. ❪G0,L0,T0❫ > ❪G1,L1,T1❫ → IH_cnv_cpm_trans_lpr h a G1 L1 T1) →
      ∀G1,L1,T1. G0 = G1 → L0 = L1 → T0 = T1 → IH_cnv_cpm_trans_lpr h a G1 L1 T1.
 #h #a #G0 #L0 #T0 #IH2 #IH1 #G1 #L1 * * [|||| * ]
 [ #s #HG0 #HL0 #HT0 #H1 #x #X #H2 #L2 #_ destruct -IH2 -IH1 -H1
@@ -117,7 +117,7 @@ fact cnv_cpm_trans_lpr_aux (h) (a):
     <minus_n_O <minus_O_n #XW1 #HXUW1 #HXW21
     elim (cnv_cpms_strip_lpr_sub … IH2 … HTU1 … HT12 … L1 … HL12) [|*: /2 width=2 by fqup_fpbg/ ] -HTU1 -HT12
     #XT1 #HXUT1 #HXT21
-    elim (IH2 … HXUW1 … HXUT1 … HL12 … HL12) [|*: /2 width=4 by fqup_cpms_fwd_fpbg/ ] -HXUW1 -HXUT1 -HWU1
+    elim (IH2 … HXUW1 … HXUT1 … HL12 … HL12) [|*: /2 width=5 by fqup_cpms_fwd_fpbg/ ] -HXUW1 -HXUT1 -HWU1
     >eq_minus_O // #W0 #H1 #H2 -IH2 -IH1 -L1 -W1 -T1 -U1
     lapply (cprs_trans … HXW21 … H1) -XW1 #H1
     lapply (cpms_trans … HXT21 … H2) -XT1 <arith_l1 #H2

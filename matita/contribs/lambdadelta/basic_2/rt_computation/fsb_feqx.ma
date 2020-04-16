@@ -19,9 +19,10 @@ include "basic_2/rt_computation/fsb.ma".
 
 (* Properties with sort-irrelevant equivalence for closures *****************)
 
-lemma fsb_feqx_trans: ∀h,G1,L1,T1. ≥𝐒[h] ❪G1,L1,T1❫ →
-                      ∀G2,L2,T2. ❪G1,L1,T1❫ ≛ ❪G2,L2,T2❫ → ≥𝐒[h] ❪G2,L2,T2❫.
-#h #G1 #L1 #T1 #H @(fsb_ind_alt … H) -G1 -L1 -T1
+lemma fsb_feqx_trans:
+      ∀G1,L1,T1. ≥𝐒 ❪G1,L1,T1❫ →
+      ∀G2,L2,T2. ❪G1,L1,T1❫ ≛ ❪G2,L2,T2❫ → ≥𝐒 ❪G2,L2,T2❫.
+#G1 #L1 #T1 #H @(fsb_ind_alt … H) -G1 -L1 -T1
 #G1 #L1 #T1 #_ #IH #G2 #L2 #T2 #H12
 @fsb_intro #G #L #T #H2
 elim (feqx_fpb_trans … H12 … H2) -G2 -L2 -T2

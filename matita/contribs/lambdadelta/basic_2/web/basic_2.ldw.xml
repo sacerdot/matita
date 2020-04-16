@@ -26,6 +26,10 @@
    </body>
    <table name="basic_2_sum"/>
 
+   <news class="gamma" date="2020-04-16.">
+         Sort hierarchy parameter removed from unbound rt-transition
+         (anniversary milestone).
+   </news>
    <news class="gamma" date="2020-02-27.">
          λδ-2B is repackaged without λδ-ground_2.
    </news>

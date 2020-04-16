@@ -24,13 +24,14 @@ include "basic_2/rt_transition/rpx_fqup.ma".
 
 (* Note: "❪L2, T1❫ ⊆ ❪L2, T0❫" does not hold *)
 (* Note: Take L0 = K0.ⓓ(ⓝW.V), L2 = K0.ⓓW, T0 = #0, T1 = ⇧[1]V *)
-(* Note: This invalidates rpxs_cpx_conf: "∀h, G. s_r_confluent1 … (cpx h G) (rpxs h G)" *)
-lemma rpx_cpx_conf_fsge (h) (G): ∀L0,T0,T1. ❪G,L0❫ ⊢ T0 ⬈[h] T1 →
-                                 ∀L2. ❪G,L0❫ ⊢⬈[h,T0] L2 → ❪L2,T1❫ ⊆ ❪L0,T0❫.
-#h #G0 #L0 #T0 @(fqup_wf_ind_eq (Ⓣ) … G0 L0 T0) -G0 -L0 -T0
+(* Note: This invalidates rpxs_cpx_conf: "∀G. s_r_confluent1 … (cpx G) (rpxs G)" *)
+lemma rpx_cpx_conf_fsge (G):
+      ∀L0,T0,T1. ❪G,L0❫ ⊢ T0 ⬈ T1 →
+      ∀L2. ❪G,L0❫ ⊢⬈[T0] L2 → ❪L2,T1❫ ⊆ ❪L0,T0❫.
+#G0 #L0 #T0 @(fqup_wf_ind_eq (Ⓣ) … G0 L0 T0) -G0 -L0 -T0
 #G #L #T #IH #G0 #L0 * *
-[ #s #HG #HL #HT #X #HX #Y #HY destruct -IH
-  elim (cpx_inv_sort1 … HX) -HX #H destruct
+[ #s0 #HG #HL #HT #X #HX #Y #HY destruct -IH
+  elim (cpx_inv_sort1 … HX) -HX #s1 #H destruct
   lapply (rpx_fwd_length … HY) -HY #H0
   /2 width=1 by fsle_sort_bi/
 | * [| #i ] #HG #HL #HT #X #HX #Y #HY destruct
@@ -113,26 +114,27 @@ lemma rpx_cpx_conf_fsge (h) (G): ∀L0,T0,T1. ❪G,L0❫ ⊢ T0 ⬈[h] T1 →
 ]
 qed-.
 
-lemma rpx_fsge_comp (h) (G): rex_fsge_compatible (cpx h G).
+lemma rpx_fsge_comp (G): rex_fsge_compatible (cpx G).
 /2 width=4 by rpx_cpx_conf_fsge/ qed-.
 
 (**) (* this section concerns cpx *)
 (* Properties with generic extension on referred entries ********************)
 
 (* Basic_2A1: uses: cpx_frees_trans *)
-lemma cpx_fsge_comp (h) (G): R_fsge_compatible (cpx h G).
+lemma cpx_fsge_comp (G): R_fsge_compatible (cpx G).
 /2 width=4 by rpx_cpx_conf_fsge/ qed-.
 
 (* Note: lemma 1000 *)
 (* Basic_2A1: uses: cpx_llpx_sn_conf *)
-lemma cpx_rex_conf (R) (h) (G): s_r_confluent1 … (cpx h G) (rex R).
+lemma cpx_rex_conf (R) (G): s_r_confluent1 … (cpx G) (rex R).
 /3 width=3 by fsge_rex_trans, cpx_fsge_comp/ qed-.
 
 (* Advanced properties ******************************************************)
 
-lemma rpx_cpx_conf (h) (G): s_r_confluent1 … (cpx h G) (rpx h G).
+lemma rpx_cpx_conf (G): s_r_confluent1 … (cpx G) (rpx G).
 /2 width=5 by cpx_rex_conf/ qed-.
 
-lemma rpx_cpx_conf_fsge_dx (h) (G): ∀L0,T0,T1. ❪G,L0❫ ⊢ T0 ⬈[h] T1 →
-                                    ∀L2. ❪G,L0❫ ⊢⬈[h,T0] L2 → ❪L2,T1❫ ⊆ ❪L0,T1❫.
+lemma rpx_cpx_conf_fsge_dx (G):
+      ∀L0,T0,T1. ❪G,L0❫ ⊢ T0 ⬈ T1 →
+      ∀L2. ❪G,L0❫ ⊢⬈[T0] L2 → ❪L2,T1❫ ⊆ ❪L0,T1❫.
 /3 width=5 by rpx_cpx_conf, rpx_fsge_comp/ qed-.

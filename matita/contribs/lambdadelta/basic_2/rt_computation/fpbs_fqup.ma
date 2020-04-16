@@ -20,26 +20,30 @@ include "basic_2/rt_computation/fpbs_fqus.ma".
 
 (* Advanced properties ******************************************************)
 
-lemma teqx_fpbs_trans: ∀h,T1,T. T1 ≛ T →
-                       ∀G1,G2,L1,L2,T2. ❪G1,L1,T❫ ≥[h] ❪G2,L2,T2❫ → ❪G1,L1,T1❫ ≥[h] ❪G2,L2,T2❫.
+lemma teqx_fpbs_trans:
+      ∀T1,T. T1 ≛ T →
+      ∀G1,G2,L1,L2,T2. ❪G1,L1,T❫ ≥ ❪G2,L2,T2❫ → ❪G1,L1,T1❫ ≥ ❪G2,L2,T2❫.
 /3 width=5 by feqx_fpbs_trans, teqx_feqx/ qed-.
 
-lemma fpbs_teqx_trans: ∀h,G1,G2,L1,L2,T1,T. ❪G1,L1,T1❫ ≥[h] ❪G2,L2,T❫ →
-                       ∀T2. T ≛ T2 →  ❪G1,L1,T1❫ ≥[h] ❪G2,L2,T2❫.
+lemma fpbs_teqx_trans:
+      ∀G1,G2,L1,L2,T1,T. ❪G1,L1,T1❫ ≥ ❪G2,L2,T❫ →
+      ∀T2. T ≛ T2 → ❪G1,L1,T1❫ ≥ ❪G2,L2,T2❫.
 /3 width=5 by fpbs_feqx_trans, teqx_feqx/ qed-.
 
 (* Properties with plus-iterated structural successor for closures **********)
 
-lemma fqup_fpbs: ∀h,G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ⬂+ ❪G2,L2,T2❫ →
-                 ❪G1,L1,T1❫ ≥[h] ❪G2,L2,T2❫.
-#h #G1 #G2 #L1 #L2 #T1 #T2 #H @(fqup_ind … H) -G2 -L2 -T2
+lemma fqup_fpbs:
+      ∀G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ⬂+ ❪G2,L2,T2❫ → ❪G1,L1,T1❫ ≥ ❪G2,L2,T2❫.
+#G1 #G2 #L1 #L2 #T1 #T2 #H @(fqup_ind … H) -G2 -L2 -T2
 /4 width=5 by fqu_fquq, fpbq_fquq, tri_step/
 qed.
 
-lemma fpbs_fqup_trans: ∀h,G1,G,L1,L,T1,T. ❪G1,L1,T1❫ ≥[h] ❪G,L,T❫ →
-                       ∀G2,L2,T2. ❪G,L,T❫ ⬂+ ❪G2,L2,T2❫ → ❪G1,L1,T1❫ ≥[h] ❪G2,L2,T2❫.
+lemma fpbs_fqup_trans:
+      ∀G1,G,L1,L,T1,T. ❪G1,L1,T1❫ ≥ ❪G,L,T❫ →
+      ∀G2,L2,T2. ❪G,L,T❫ ⬂+ ❪G2,L2,T2❫ → ❪G1,L1,T1❫ ≥ ❪G2,L2,T2❫.
 /3 width=5 by fpbs_fqus_trans, fqup_fqus/ qed-.
 
-lemma fqup_fpbs_trans: ∀h,G,G2,L,L2,T,T2. ❪G,L,T❫ ≥[h] ❪G2,L2,T2❫ →
-                       ∀G1,L1,T1. ❪G1,L1,T1❫ ⬂+ ❪G,L,T❫ → ❪G1,L1,T1❫ ≥[h] ❪G2,L2,T2❫.
+lemma fqup_fpbs_trans:
+      ∀G,G2,L,L2,T,T2. ❪G,L,T❫ ≥ ❪G2,L2,T2❫ →
+      ∀G1,L1,T1. ❪G1,L1,T1❫ ⬂+ ❪G,L,T❫ → ❪G1,L1,T1❫ ≥ ❪G2,L2,T2❫.
 /3 width=5 by fqus_fpbs_trans, fqup_fqus/ qed-.

@@ -15,11 +15,11 @@
 include "static_2/syntax/cext2.ma".
 include "basic_2/rt_computation/cpxs.ma".
 
-(* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR BINDERS ************)
+(* EXTENDED CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR BINDERS ***********)
 
-definition cpxs_ext (h) (G): relation3 lenv bind bind ≝
-                             cext2 (cpxs h G).
+definition cpxs_ext (G): relation3 lenv bind bind ≝
+           cext2 (cpxs G).
 
 interpretation
-   "unbound context-sensitive parallel rt-computation (binder)"
-   'PRedTyStar h G L I1 I2 = (cpxs_ext h G L I1 I2).
+  "extended context-sensitive parallel rt-computation (binder)"
+  'PRedTyStar G L I1 I2 = (cpxs_ext G L I1 I2).

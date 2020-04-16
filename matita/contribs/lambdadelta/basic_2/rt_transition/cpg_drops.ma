@@ -22,9 +22,10 @@ include "basic_2/rt_transition/cpg.ma".
 
 (* Advanced properties ******************************************************)
 
-lemma cpg_delta_drops: ∀Rt,c,h,G,K,V,V2,i,L,T2. ⇩[i] L ≘ K.ⓓV → ❪G,K❫ ⊢ V ⬈[Rt,c,h] V2 →
-                       ⇧[↑i] V2 ≘ T2 →  ❪G,L❫ ⊢ #i ⬈[Rt,c,h] T2.
-#Rt #c #h #G #K #V #V2 #i elim i -i
+lemma cpg_delta_drops (Rs) (Rk) (c) (G) (K):
+      ∀V,V2,i,L,T2. ⇩[i] L ≘ K.ⓓV → ❪G,K❫ ⊢ V ⬈[Rs,Rk,c] V2 →
+      ⇧[↑i] V2 ≘ T2 → ❪G,L❫ ⊢ #i ⬈[Rs,Rk,c] T2.
+#Rs #Rk #c #G #K #V #V2 #i elim i -i
 [ #L #T2 #HLK lapply (drops_fwd_isid … HLK ?) // #H destruct /3 width=3 by cpg_delta/
 | #i #IH #L0 #T0 #H0 #HV2 #HVT2
   elim (drops_inv_succ … H0) -H0 #I #L #HLK #H destruct
@@ -32,9 +33,10 @@ lemma cpg_delta_drops: ∀Rt,c,h,G,K,V,V2,i,L,T2. ⇩[i] L ≘ K.ⓓV → ❪G,K
 ]
 qed.
 
-lemma cpg_ell_drops: ∀Rt,c,h,G,K,V,V2,i,L,T2. ⇩[i] L ≘ K.ⓛV → ❪G,K❫ ⊢ V ⬈[Rt,c,h] V2 →
-                     ⇧[↑i] V2 ≘ T2 →  ❪G,L❫ ⊢ #i ⬈[Rt,c+𝟘𝟙,h] T2.
-#Rt #c #h #G #K #V #V2 #i elim i -i
+lemma cpg_ell_drops (Rs) (Rk) (c) (G) (K):
+      ∀V,V2,i,L,T2. ⇩[i] L ≘ K.ⓛV → ❪G,K❫ ⊢ V ⬈[Rs,Rk,c] V2 →
+      ⇧[↑i] V2 ≘ T2 → ❪G,L❫ ⊢ #i ⬈[Rs,Rk,c+𝟘𝟙] T2.
+#Rs #Rk #c #G #K #V #V2 #i elim i -i
 [ #L #T2 #HLK lapply (drops_fwd_isid … HLK ?) // #H destruct /3 width=3 by cpg_ell/
 | #i #IH #L0 #T0 #H0 #HV2 #HVT2
   elim (drops_inv_succ … H0) -H0 #I #L #HLK #H destruct
@@ -44,13 +46,12 @@ qed.
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma cpg_inv_lref1_drops: ∀Rt,c,h,G,i,L,T2. ❪G,L❫ ⊢ #i ⬈[Rt,c,h] T2 →
-                           ∨∨ T2 = #i ∧ c = 𝟘𝟘
-                            | ∃∃cV,K,V,V2. ⇩[i] L ≘ K.ⓓV & ❪G,K❫ ⊢ V ⬈[Rt,cV,h] V2 &
-                                           ⇧[↑i] V2 ≘ T2 & c = cV
-                            | ∃∃cV,K,V,V2. ⇩[i] L ≘ K.ⓛV & ❪G,K❫ ⊢ V ⬈[Rt,cV,h] V2 &
-                                           ⇧[↑i] V2 ≘ T2 & c = cV + 𝟘𝟙.
-#Rt #c #h #G #i elim i -i
+lemma cpg_inv_lref1_drops (Rs) (Rk) (c) (G):
+      ∀i,L,T2. ❪G,L❫ ⊢ #i ⬈[Rs,Rk,c] T2 →
+      ∨∨ ∧∧ T2 = #i & c = 𝟘𝟘
+       | ∃∃cV,K,V,V2. ⇩[i] L ≘ K.ⓓV & ❪G,K❫ ⊢ V ⬈[Rs,Rk,cV] V2 & ⇧[↑i] V2 ≘ T2 & c = cV
+       | ∃∃cV,K,V,V2. ⇩[i] L ≘ K.ⓛV & ❪G,K❫ ⊢ V ⬈[Rs,Rk,cV] V2 & ⇧[↑i] V2 ≘ T2 & c = cV + 𝟘𝟙.
+#Rs #Rk #c #G #i elim i -i
 [ #L #T2 #H elim (cpg_inv_zero1 … H) -H * /3 width=1 by or3_intro0, conj/
   /4 width=8 by drops_refl, ex4_4_intro, or3_intro2, or3_intro1/
 | #i #IH #L #T2 #H elim (cpg_inv_lref1 … H) -H * /3 width=1 by or3_intro0, conj/
@@ -65,16 +66,15 @@ lemma cpg_inv_lref1_drops: ∀Rt,c,h,G,i,L,T2. ❪G,L❫ ⊢ #i ⬈[Rt,c,h] T2 �
 ]
 qed-.
 
-lemma cpg_inv_atom1_drops: ∀Rt,c,h,I,G,L,T2. ❪G,L❫ ⊢ ⓪[I] ⬈[Rt,c,h] T2 →
-                           ∨∨ T2 = ⓪[I] ∧ c = 𝟘𝟘
-                            | ∃∃s. T2 = ⋆(⫯[h]s) & I = Sort s & c = 𝟘𝟙
-                            | ∃∃cV,i,K,V,V2. ⇩[i] L ≘ K.ⓓV & ❪G,K❫ ⊢ V ⬈[Rt,cV,h] V2 &
-                                             ⇧[↑i] V2 ≘ T2 & I = LRef i & c = cV
-                            | ∃∃cV,i,K,V,V2. ⇩[i] L ≘ K.ⓛV & ❪G,K❫ ⊢ V ⬈[Rt,cV,h] V2 &
-                                             ⇧[↑i] V2 ≘ T2 & I = LRef i & c = cV + 𝟘𝟙.
-#Rt #c #h * #n #G #L #T2 #H
+lemma cpg_inv_atom1_drops (Rs) (Rk) (c) (G) (L):
+      ∀I,T2. ❪G,L❫ ⊢ ⓪[I] ⬈[Rs,Rk,c] T2 →
+      ∨∨ ∧∧ T2 = ⓪[I] & c = 𝟘𝟘
+       | ∃∃s1,s2. Rs s1 s2 & T2 = ⋆s2 & I = Sort s1 & c = 𝟘𝟙
+       | ∃∃cV,i,K,V,V2. ⇩[i] L ≘ K.ⓓV & ❪G,K❫ ⊢ V ⬈[Rs,Rk,cV] V2 & ⇧[↑i] V2 ≘ T2 & I = LRef i & c = cV
+       | ∃∃cV,i,K,V,V2. ⇩[i] L ≘ K.ⓛV & ❪G,K❫ ⊢ V ⬈[Rs,Rk,cV] V2 & ⇧[↑i] V2 ≘ T2 & I = LRef i & c = cV + 𝟘𝟙.
+#Rs #Rk #c #G #L * #x #T2 #H
 [ elim (cpg_inv_sort1 … H) -H *
-  /3 width=3 by or4_intro0, or4_intro1, ex3_intro, conj/
+  /3 width=5 by or4_intro0, or4_intro1, ex4_2_intro, conj/
 | elim (cpg_inv_lref1_drops … H) -H *
   /3 width=10 by or4_intro0, or4_intro2, or4_intro3, ex5_5_intro, conj/
 | elim (cpg_inv_gref1 … H) -H
@@ -85,14 +85,16 @@ qed-.
 (* Properties with generic slicing for local environments *******************)
 
 (* Note: it should use drops_split_trans_pair2 *)
-lemma cpg_lifts_sn: ∀Rt. reflexive … Rt →
-                    ∀c,h,G. d_liftable2_sn … lifts (cpg Rt h c G).
-#Rt #HRt #c #h #G #K #T generalize in match c; -c
+lemma cpg_lifts_sn (Rs) (Rk) (c) (G): reflexive … Rk →
+      d_liftable2_sn … lifts (cpg Rs Rk c G).
+#Rs #Rk #c #G #HRk #K #T generalize in match c; -c
 @(fqup_wf_ind_eq (Ⓣ) … G K T) -G -K -T #G0 #K0 #T0 #IH #G #K * *
-[ #s #HG #HK #HT #c #X2 #H2 #b #f #L #HLK #X1 #H1 destruct -IH
+[ #s1 #HG #HK #HT #c #X2 #H2 #b #f #L #HLK #X1 #H1 destruct -IH
   lapply (lifts_inv_sort1 … H1) -H1 #H destruct
-  elim (cpg_inv_sort1 … H2) -H2 * #H1 #H2 destruct
-  /2 width=3 by cpg_atom, cpg_ess, lifts_sort, ex2_intro/
+  elim (cpg_inv_sort1 … H2) -H2 *
+  [ #H1 #H2 destruct /2 width=3 by cpg_atom, lifts_sort, ex2_intro/
+  | #s2 #HRs #H1 #H2 destruct /3 width=3 by cpg_ess, lifts_sort, ex2_intro/
+  ]
 | #i1 #HG #HK #HT #c #T2 #H2 #b #f #L #HLK #X1 #H1 destruct
   elim (cpg_inv_lref1_drops … H2) -H2 *
   [ #H1 #H2 destruct /3 width=3 by cpg_refl, ex2_intro/ ]
@@ -163,20 +165,22 @@ lemma cpg_lifts_sn: ∀Rt. reflexive … Rt →
 ]
 qed-.
 
-lemma cpg_lifts_bi: ∀Rt. reflexive … Rt →
-                    ∀c,h,G. d_liftable2_bi … lifts (cpg Rt h c G).
+lemma cpg_lifts_bi (Rs) (Rk) (c) (G): reflexive … Rk →
+      d_liftable2_bi … lifts (cpg Rs Rk c G).
 /3 width=12 by cpg_lifts_sn, d_liftable2_sn_bi, lifts_mono/ qed-.
 
 (* Inversion lemmas with generic slicing for local environments *************)
 
-lemma cpg_inv_lifts_sn: ∀Rt. reflexive … Rt →
-                        ∀c,h,G. d_deliftable2_sn … lifts (cpg Rt h c G).
-#Rt #HRt #c #h #G #L #U generalize in match c; -c
+lemma cpg_inv_lifts_sn (Rs) (Rk) (c) (G): reflexive … Rk →
+      d_deliftable2_sn … lifts (cpg Rs Rk c G).
+#Rs #Rk #c #G #HRk #L #U generalize in match c; -c
 @(fqup_wf_ind_eq (Ⓣ) … G L U) -G -L -U #G0 #L0 #U0 #IH #G #L * *
-[ #s #HG #HL #HU #c #X2 #H2 #b #f #K #HLK #X1 #H1 destruct -IH
+[ #s1 #HG #HL #HU #c #X2 #H2 #b #f #K #HLK #X1 #H1 destruct -IH
   lapply (lifts_inv_sort2 … H1) -H1 #H destruct
-  elim (cpg_inv_sort1 … H2) -H2 * #H1 #H2 destruct
-  /2 width=3 by cpg_atom, cpg_ess, lifts_sort, ex2_intro/
+  elim (cpg_inv_sort1 … H2) -H2 *
+  [ #H1 #H2 destruct /2 width=3 by cpg_atom, lifts_sort, ex2_intro/
+  | #s2 #HRs #H1 #H2 destruct /3 width=3 by cpg_ess, lifts_sort, ex2_intro/
+  ] 
 | #i2 #HG #HL #HU #c #U2 #H2 #b #f #K #HLK #X1 #H1 destruct
   elim (cpg_inv_lref1_drops … H2) -H2 *
   [ #H1 #H2 destruct /3 width=3 by cpg_refl, ex2_intro/ ]
@@ -245,6 +249,6 @@ lemma cpg_inv_lifts_sn: ∀Rt. reflexive … Rt →
 ]
 qed-.
 
-lemma cpg_inv_lifts_bi: ∀Rt. reflexive … Rt →
-                        ∀c,h,G. d_deliftable2_bi … lifts (cpg Rt h c G).
+lemma cpg_inv_lifts_bi (Rs) (Rk) (c) (G): reflexive … Rk →
+      d_deliftable2_bi … lifts (cpg Rs Rk c G).
 /3 width=12 by cpg_inv_lifts_sn, d_deliftable2_sn_bi, lifts_inj/ qed-.

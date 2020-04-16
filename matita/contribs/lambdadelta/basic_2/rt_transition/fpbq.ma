@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/predsubty_7.ma".
+include "basic_2/notation/relations/predsubty_6.ma".
 include "static_2/static/feqx.ma".
 include "static_2/s_transition/fquq.ma".
 include "basic_2/rt_transition/lpr_lpx.ma".
@@ -20,28 +20,30 @@ include "basic_2/rt_transition/lpr_lpx.ma".
 (* PARALLEL RST-TRANSITION FOR CLOSURES *************************************)
 
 (* Basic_2A1: includes: fleq_fpbq fpbq_lleq *)
-inductive fpbq (h) (G1) (L1) (T1): relation3 genv lenv term ≝
-| fpbq_fquq: ∀G2,L2,T2. ❪G1,L1,T1❫ ⬂⸮ ❪G2,L2,T2❫ → fpbq h G1 L1 T1 G2 L2 T2
-| fpbq_cpx : ∀T2. ❪G1,L1❫ ⊢ T1 ⬈[h] T2 → fpbq h G1 L1 T1 G1 L1 T2
-| fpbq_lpx : ∀L2. ❪G1,L1❫ ⊢ ⬈[h] L2 → fpbq h G1 L1 T1 G1 L2 T1
-| fpbq_feqx: ∀G2,L2,T2. ❪G1,L1,T1❫ ≛ ❪G2,L2,T2❫ → fpbq h G1 L1 T1 G2 L2 T2
+inductive fpbq (G1) (L1) (T1): relation3 genv lenv term ≝
+| fpbq_fquq: ∀G2,L2,T2. ❪G1,L1,T1❫ ⬂⸮ ❪G2,L2,T2❫ → fpbq G1 L1 T1 G2 L2 T2
+| fpbq_cpx : ∀T2. ❪G1,L1❫ ⊢ T1 ⬈ T2 → fpbq G1 L1 T1 G1 L1 T2
+| fpbq_lpx : ∀L2. ❪G1,L1❫ ⊢ ⬈ L2 → fpbq G1 L1 T1 G1 L2 T1
+| fpbq_feqx: ∀G2,L2,T2. ❪G1,L1,T1❫ ≛ ❪G2,L2,T2❫ → fpbq G1 L1 T1 G2 L2 T2
 .
 
 interpretation
-   "parallel rst-transition (closure)"
-   'PRedSubTy h G1 L1 T1 G2 L2 T2 = (fpbq h G1 L1 T1 G2 L2 T2).
+  "parallel rst-transition (closure)"
+  'PRedSubTy G1 L1 T1 G2 L2 T2 = (fpbq G1 L1 T1 G2 L2 T2).
 
 (* Basic properties *********************************************************)
 
-lemma fpbq_refl (h): tri_reflexive … (fpbq h).
+lemma fpbq_refl: tri_reflexive … fpbq.
 /2 width=1 by fpbq_cpx/ qed.
 
 (* Basic_2A1: includes: cpr_fpbq *)
-lemma cpm_fpbq (h) (n) (G) (L): ∀T1,T2. ❪G,L❫ ⊢ T1 ➡[h,n] T2 → ❪G,L,T1❫ ≽[h] ❪G,L,T2❫.
-/3 width=2 by fpbq_cpx, cpm_fwd_cpx/ qed.
+lemma cpm_fpbq (h) (n) (G) (L):
+      ∀T1,T2. ❪G,L❫ ⊢ T1 ➡[h,n] T2 → ❪G,L,T1❫ ≽ ❪G,L,T2❫.
+/3 width=3 by fpbq_cpx, cpm_fwd_cpx/ qed.
 
-lemma lpr_fpbq (h) (G) (T): ∀L1,L2. ❪G,L1❫ ⊢ ➡[h,0] L2 → ❪G,L1,T❫ ≽[h] ❪G,L2,T❫.
-/3 width=1 by fpbq_lpx, lpr_fwd_lpx/ qed.
+lemma lpr_fpbq (h) (G) (T):
+      ∀L1,L2. ❪G,L1❫ ⊢ ➡[h,0] L2 → ❪G,L1,T❫ ≽ ❪G,L2,T❫.
+/3 width=2 by fpbq_lpx, lpr_fwd_lpx/ qed.
 
 (* Basic_2A1: removed theorems 2:
               fpbq_fpbqa fpbqa_inv_fpbq

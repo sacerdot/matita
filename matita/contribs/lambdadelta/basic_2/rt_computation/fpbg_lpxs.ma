@@ -17,12 +17,13 @@ include "basic_2/rt_computation/fpbg.ma".
 
 (* PROPER PARALLEL RST-COMPUTATION FOR CLOSURES *****************************)
 
-(* Properties with unbound rt-computation on full local environments ********)
+(* Properties with extended rt-computation on full local environments *******)
 
 (* Basic_2A1: uses: lpxs_fpbg *)
-lemma lpxs_rneqx_fpbg: ∀h,G,L1,L2,T. ❪G,L1❫ ⊢ ⬈*[h] L2 →
-                       (L1 ≛[T] L2 → ⊥) → ❪G,L1,T❫ >[h] ❪G,L2,T❫.
-#h #G #L1 #L2 #T #H #H0
+lemma lpxs_rneqx_fpbg:
+      ∀G,L1,L2,T. ❪G,L1❫ ⊢ ⬈* L2 →
+      (L1 ≛[T] L2 → ⊥) → ❪G,L1,T❫ > ❪G,L2,T❫.
+#G #L1 #L2 #T #H #H0
 elim (lpxs_rneqx_inv_step_sn … H … H0) -H -H0
 /4 width=7 by fpb_lpx, lpxs_feqx_fpbs, feqx_intro_sn, ex2_3_intro/
 qed.

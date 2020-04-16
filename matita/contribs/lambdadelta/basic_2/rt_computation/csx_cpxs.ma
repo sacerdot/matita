@@ -16,34 +16,34 @@ include "basic_2/rt_computation/cpxs_teqx.ma".
 include "basic_2/rt_computation/cpxs_cpxs.ma".
 include "basic_2/rt_computation/csx_csx.ma".
 
-(* UNBOUND CONTEXT-SENSITIVE PARALLEL RT-COMPUTATION FOR TERMS **************)
+(* STRONGLY NORMALIZING TERMS FOR EXTENDED PARALLEL RT-TRANSITION ***********)
 
-(* Properties with unbound context-sensitive rt-computation for terms *******)
+(* Properties with extended context-sensitive rt-computation for terms ******)
 
 (* Basic_1: was just: sn3_intro *)
-lemma csx_intro_cpxs (h) (G) (L):
-      ∀T1. (∀T2. ❪G,L❫ ⊢ T1 ⬈*[h] T2 → (T1 ≛ T2 → ⊥) → ❪G,L❫ ⊢ ⬈*𝐒[h] T2) →
-      ❪G,L❫ ⊢ ⬈*𝐒[h] T1.
+lemma csx_intro_cpxs (G) (L):
+      ∀T1. (∀T2. ❪G,L❫ ⊢ T1 ⬈* T2 → (T1 ≛ T2 → ⊥) → ❪G,L❫ ⊢ ⬈*𝐒 T2) →
+      ❪G,L❫ ⊢ ⬈*𝐒 T1.
 /4 width=1 by cpx_cpxs, csx_intro/ qed-.
 
 (* Basic_1: was just: sn3_pr3_trans *)
-lemma csx_cpxs_trans (h) (G) (L):
-      ∀T1. ❪G,L❫ ⊢ ⬈*𝐒[h] T1 →
-      ∀T2. ❪G,L❫ ⊢ T1 ⬈*[h] T2 → ❪G,L❫ ⊢ ⬈*𝐒[h] T2.
-#h #G #L #T1 #HT1 #T2 #H @(cpxs_ind … H) -T2
+lemma csx_cpxs_trans (G) (L):
+      ∀T1. ❪G,L❫ ⊢ ⬈*𝐒 T1 →
+      ∀T2. ❪G,L❫ ⊢ T1 ⬈* T2 → ❪G,L❫ ⊢ ⬈*𝐒 T2.
+#G #L #T1 #HT1 #T2 #H @(cpxs_ind … H) -T2
 /2 width=3 by csx_cpx_trans/
 qed-.
 
-(* Eliminators with unbound context-sensitive rt-computation for terms ******)
+(* Eliminators with extended context-sensitive rt-computation for terms *****)
 
-lemma csx_ind_cpxs_teqx (h) (G) (L):
+lemma csx_ind_cpxs_teqx (G) (L):
       ∀Q:predicate term.
-      (∀T1. ❪G,L❫ ⊢ ⬈*𝐒[h] T1 →
-        (∀T2. ❪G,L❫ ⊢ T1 ⬈*[h] T2 → (T1 ≛ T2 → ⊥) → Q T2) → Q T1
+      (∀T1. ❪G,L❫ ⊢ ⬈*𝐒 T1 →
+        (∀T2. ❪G,L❫ ⊢ T1 ⬈* T2 → (T1 ≛ T2 → ⊥) → Q T2) → Q T1
       ) →
-      ∀T1. ❪G,L❫ ⊢ ⬈*𝐒[h] T1 →
-      ∀T0. ❪G,L❫ ⊢ T1 ⬈*[h] T0 → ∀T2. T0 ≛ T2 → Q T2.
-#h #G #L #Q #IH #T1 #H @(csx_ind … H) -T1
+      ∀T1. ❪G,L❫ ⊢ ⬈*𝐒 T1 →
+      ∀T0. ❪G,L❫ ⊢ T1 ⬈* T0 → ∀T2. T0 ≛ T2 → Q T2.
+#G #L #Q #IH #T1 #H @(csx_ind … H) -T1
 #T1 #HT1 #IH1 #T0 #HT10 #T2 #HT02
 @IH -IH /3 width=3 by csx_cpxs_trans, csx_teqx_trans/ -HT1 #V2 #HTV2 #HnTV2
 lapply (teqx_tneqx_trans … HT02 … HnTV2) -HnTV2 #H
@@ -61,11 +61,11 @@ elim (teqx_dec T1 T0) #H
 qed-.
 
 (* Basic_2A1: was: csx_ind_alt *)
-lemma csx_ind_cpxs (h) (G) (L) (Q:predicate …):
-      (∀T1. ❪G,L❫ ⊢ ⬈*𝐒[h] T1 →
-        (∀T2. ❪G,L❫ ⊢ T1 ⬈*[h] T2 → (T1 ≛ T2 → ⊥) → Q T2) → Q T1
+lemma csx_ind_cpxs (G) (L) (Q:predicate …):
+      (∀T1. ❪G,L❫ ⊢ ⬈*𝐒 T1 →
+        (∀T2. ❪G,L❫ ⊢ T1 ⬈* T2 → (T1 ≛ T2 → ⊥) → Q T2) → Q T1
       ) →
-      ∀T. ❪G,L❫ ⊢ ⬈*𝐒[h] T → Q T.
-#h #G #L #Q #IH #T #HT
+      ∀T. ❪G,L❫ ⊢ ⬈*𝐒 T → Q T.
+#G #L #Q #IH #T #HT
 @(csx_ind_cpxs_teqx … IH … HT) -IH -HT // (**) (* full auto fails *)
 qed-.

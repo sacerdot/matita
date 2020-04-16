@@ -15,9 +15,10 @@
 include "static_2/relocation/lex_length.ma".
 include "basic_2/rt_computation/lpxs.ma".
 
-(* UNBOUND PARALLEL RT-COMPUTATION FOR FULL LOCAL ENVIRONMENTS **************)
+(* EXTENDED PARALLEL RT-COMPUTATION FOR FULL LOCAL ENVIRONMENTS *************)
 
 (* Forward lemmas with length for local environments ************************)
 
-lemma lpxs_fwd_length (h) (G): ∀L1,L2. ❪G,L1❫ ⊢ ⬈*[h] L2 → |L1| = |L2|.
+lemma lpxs_fwd_length (G):
+      ∀L1,L2. ❪G,L1❫ ⊢ ⬈* L2 → |L1| = |L2|.
 /2 width=2 by lex_fwd_length/ qed-.

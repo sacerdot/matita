@@ -16,34 +16,34 @@ include "basic_2/rt_computation/lpxs_reqx.ma".
 include "basic_2/rt_computation/lpxs_lpxs.ma".
 include "basic_2/rt_computation/rsx_rsx.ma".
 
-(* STRONGLY NORMALIZING REFERRED LOCAL ENV.S FOR UNBOUND RT-TRANSITION ******)
+(* STRONGLY NORMALIZING REFERRED LOCAL ENVS FOR EXTENDED RT-TRANSITION ******)
 
-(* Properties with unbound rt-computation for full local environments *******)
+(* Properties with extended rt-computation for full local environments ******)
 
 (* Basic_2A1: uses: lsx_intro_alt *)
-lemma rsx_intro_lpxs (h) (G):
-      ∀L1,T. (∀L2. ❪G,L1❫ ⊢ ⬈*[h] L2 → (L1 ≛[T] L2 → ⊥) → G ⊢ ⬈*𝐒[h,T] L2) →
-      G ⊢ ⬈*𝐒[h,T] L1.
+lemma rsx_intro_lpxs (G):
+      ∀L1,T. (∀L2. ❪G,L1❫ ⊢ ⬈* L2 → (L1 ≛[T] L2 → ⊥) → G ⊢ ⬈*𝐒[T] L2) →
+      G ⊢ ⬈*𝐒[T] L1.
 /4 width=1 by lpx_lpxs, rsx_intro/ qed-.
 
 (* Basic_2A1: uses: lsx_lpxs_trans *)
-lemma rsx_lpxs_trans (h) (G):
-      ∀L1,T. G ⊢ ⬈*𝐒[h,T] L1 →
-      ∀L2. ❪G,L1❫ ⊢ ⬈*[h] L2 → G ⊢ ⬈*𝐒[h,T] L2.
-#h #G #L1 #T #HL1 #L2 #H @(lpxs_ind_dx … H) -L2
+lemma rsx_lpxs_trans (G):
+      ∀L1,T. G ⊢ ⬈*𝐒[T] L1 →
+      ∀L2. ❪G,L1❫ ⊢ ⬈* L2 → G ⊢ ⬈*𝐒[T] L2.
+#G #L1 #T #HL1 #L2 #H @(lpxs_ind_dx … H) -L2
 /2 width=3 by rsx_lpx_trans/
 qed-.
 
-(* Eliminators with unbound rt-computation for full local environments ******)
+(* Eliminators with extended rt-computation for full local environments *****)
 
-lemma rsx_ind_lpxs_reqx (h) (G) (T) (Q:predicate lenv):
-      (∀L1. G ⊢ ⬈*𝐒[h,T] L1 →
-        (∀L2. ❪G,L1❫ ⊢ ⬈*[h] L2 → (L1 ≛[T] L2 → ⊥) → Q L2) →
+lemma rsx_ind_lpxs_reqx (G) (T) (Q:predicate lenv):
+      (∀L1. G ⊢ ⬈*𝐒[T] L1 →
+        (∀L2. ❪G,L1❫ ⊢ ⬈* L2 → (L1 ≛[T] L2 → ⊥) → Q L2) →
         Q L1
       ) →
-      ∀L1. G ⊢ ⬈*𝐒[h,T] L1 →
-      ∀L0. ❪G,L1❫ ⊢ ⬈*[h] L0 → ∀L2. L0 ≛[T] L2 → Q L2.
-#h #G #T #Q #IH #L1 #H @(rsx_ind … H) -L1
+      ∀L1. G ⊢ ⬈*𝐒[T] L1 →
+      ∀L0. ❪G,L1❫ ⊢ ⬈* L0 → ∀L2. L0 ≛[T] L2 → Q L2.
+#G #T #Q #IH #L1 #H @(rsx_ind … H) -L1
 #L1 #HL1 #IH1 #L0 #HL10 #L2 #HL02
 @IH -IH /3 width=3 by rsx_lpxs_trans, rsx_reqx_trans/ -HL1 #K2 #HLK2 #HnLK2
 lapply (reqx_rneqx_trans … HL02 … HnLK2) -HnLK2 #H
@@ -61,24 +61,24 @@ elim (reqx_dec L1 L0 T) #H
 qed-.
 
 (* Basic_2A1: uses: lsx_ind_alt *)
-lemma rsx_ind_lpxs (h) (G) (T) (Q:predicate lenv):
-      (∀L1. G ⊢ ⬈*𝐒[h,T] L1 →
-        (∀L2. ❪G,L1❫ ⊢ ⬈*[h] L2 → (L1 ≛[T] L2 → ⊥) → Q L2) →
+lemma rsx_ind_lpxs (G) (T) (Q:predicate lenv):
+      (∀L1. G ⊢ ⬈*𝐒[T] L1 →
+        (∀L2. ❪G,L1❫ ⊢ ⬈* L2 → (L1 ≛[T] L2 → ⊥) → Q L2) →
         Q L1
       ) →
-      ∀L. G ⊢ ⬈*𝐒[h,T] L → Q L.
-#h #G #T #Q #IH #L #HL
+      ∀L. G ⊢ ⬈*𝐒[T] L → Q L.
+#G #T #Q #IH #L #HL
 @(rsx_ind_lpxs_reqx … IH … HL) -IH -HL // (**) (* full auto fails *)
 qed-.
 
 (* Advanced properties ******************************************************)
 
-fact rsx_bind_lpxs_aux (h) (G):
-     ∀p,I,L1,V. G ⊢ ⬈*𝐒[h,V] L1 →
-     ∀Y,T. G ⊢ ⬈*𝐒[h,T] Y →
-     ∀L2. Y = L2.ⓑ[I]V → ❪G,L1❫ ⊢ ⬈*[h] L2 →
-     G ⊢ ⬈*𝐒[h,ⓑ[p,I]V.T] L2.
-#h #G #p #I #L1 #V #H @(rsx_ind_lpxs … H) -L1
+fact rsx_bind_lpxs_aux (G):
+     ∀p,I,L1,V. G ⊢ ⬈*𝐒[V] L1 →
+     ∀Y,T. G ⊢ ⬈*𝐒[T] Y →
+     ∀L2. Y = L2.ⓑ[I]V → ❪G,L1❫ ⊢ ⬈* L2 →
+     G ⊢ ⬈*𝐒[ⓑ[p,I]V.T] L2.
+#G #p #I #L1 #V #H @(rsx_ind_lpxs … H) -L1
 #L1 #_ #IHL1 #Y #T #H @(rsx_ind_lpxs … H) -Y
 #Y #HY #IHY #L2 #H #HL12 destruct
 @rsx_intro_lpxs #L0 #HL20
@@ -94,18 +94,18 @@ elim (rneqx_inv_bind … H) -H [ -IHY | -HY -IHL1 -HL12 ]
 qed-.
 
 (* Basic_2A1: uses: lsx_bind *)
-lemma rsx_bind (h) (G):
-      ∀p,I,L,V. G ⊢ ⬈*𝐒[h,V] L →
-      ∀T. G ⊢ ⬈*𝐒[h,T] L.ⓑ[I]V →
-      G ⊢ ⬈*𝐒[h,ⓑ[p,I]V.T] L.
+lemma rsx_bind (G):
+      ∀p,I,L,V. G ⊢ ⬈*𝐒[V] L →
+      ∀T. G ⊢ ⬈*𝐒[T] L.ⓑ[I]V →
+      G ⊢ ⬈*𝐒[ⓑ[p,I]V.T] L.
 /2 width=3 by rsx_bind_lpxs_aux/ qed.
 
 (* Basic_2A1: uses: lsx_flat_lpxs *)
-lemma rsx_flat_lpxs (h) (G):
-      ∀I,L1,V. G ⊢ ⬈*𝐒[h,V] L1 →
-      ∀L2,T. G ⊢ ⬈*𝐒[h,T] L2 → ❪G,L1❫ ⊢ ⬈*[h] L2 →
-      G ⊢ ⬈*𝐒[h,ⓕ[I]V.T] L2.
-#h #G #I #L1 #V #H @(rsx_ind_lpxs … H) -L1
+lemma rsx_flat_lpxs (G):
+      ∀I,L1,V. G ⊢ ⬈*𝐒[V] L1 →
+      ∀L2,T. G ⊢ ⬈*𝐒[T] L2 → ❪G,L1❫ ⊢ ⬈* L2 →
+      G ⊢ ⬈*𝐒[ⓕ[I]V.T] L2.
+#G #I #L1 #V #H @(rsx_ind_lpxs … H) -L1
 #L1 #HL1 #IHL1 #L2 #T #H @(rsx_ind_lpxs … H) -L2
 #L2 #HL2 #IHL2 #HL12 @rsx_intro_lpxs
 #L0 #HL20 lapply (lpxs_trans … HL12 … HL20)
@@ -120,17 +120,17 @@ lemma rsx_flat_lpxs (h) (G):
 qed-.
 
 (* Basic_2A1: uses: lsx_flat *)
-lemma rsx_flat (h) (G):
-      ∀I,L,V. G ⊢ ⬈*𝐒[h,V] L →
-      ∀T. G ⊢ ⬈*𝐒[h,T] L → G ⊢ ⬈*𝐒[h,ⓕ[I]V.T] L.
+lemma rsx_flat (G):
+      ∀I,L,V. G ⊢ ⬈*𝐒[V] L →
+      ∀T. G ⊢ ⬈*𝐒[T] L → G ⊢ ⬈*𝐒[ⓕ[I]V.T] L.
 /2 width=3 by rsx_flat_lpxs/ qed.
 
-fact rsx_bind_lpxs_void_aux (h) (G):
-     ∀p,I,L1,V. G ⊢ ⬈*𝐒[h,V] L1 →
-     ∀Y,T. G ⊢ ⬈*𝐒[h,T] Y →
-     ∀L2. Y = L2.ⓧ → ❪G,L1❫ ⊢ ⬈*[h] L2 →
-     G ⊢ ⬈*𝐒[h,ⓑ[p,I]V.T] L2.
-#h #G #p #I #L1 #V #H @(rsx_ind_lpxs … H) -L1
+fact rsx_bind_lpxs_void_aux (G):
+     ∀p,I,L1,V. G ⊢ ⬈*𝐒[V] L1 →
+     ∀Y,T. G ⊢ ⬈*𝐒[T] Y →
+     ∀L2. Y = L2.ⓧ → ❪G,L1❫ ⊢ ⬈* L2 →
+     G ⊢ ⬈*𝐒[ⓑ[p,I]V.T] L2.
+#G #p #I #L1 #V #H @(rsx_ind_lpxs … H) -L1
 #L1 #_ #IHL1 #Y #T #H @(rsx_ind_lpxs … H) -Y
 #Y #HY #IHY #L2 #H #HL12 destruct
 @rsx_intro_lpxs #L0 #HL20
@@ -145,8 +145,8 @@ elim (rneqx_inv_bind_void … H) -H [ -IHY | -HY -IHL1 -HL12 ]
 ]
 qed-.
 
-lemma rsx_bind_void (h) (G):
-      ∀p,I,L,V. G ⊢ ⬈*𝐒[h,V] L →
-      ∀T. G ⊢ ⬈*𝐒[h,T] L.ⓧ →
-      G ⊢ ⬈*𝐒[h,ⓑ[p,I]V.T] L.
+lemma rsx_bind_void (G):
+      ∀p,I,L,V. G ⊢ ⬈*𝐒[V] L →
+      ∀T. G ⊢ ⬈*𝐒[T] L.ⓧ →
+      G ⊢ ⬈*𝐒[ⓑ[p,I]V.T] L.
 /2 width=3 by rsx_bind_lpxs_void_aux/ qed.

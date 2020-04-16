@@ -37,6 +37,6 @@ lemma rex_inv_lex_req (R):
 elim (sex_sdj_split … ceq_ext … HL 𝐈𝐝 ?) -HL
 [ #L0 #HL10 #HL02 |*: /2 width=1 by ext2_refl, sdj_isid_dx/ ] -H1R
 lapply (sex_sdj … HL10 f1 ?) /2 width=1 by sdj_isid_sn/ #H
-elim (frees_sex_conf … Hf1 … H) // -H2R -H #f0 #Hf0 #Hf01
+elim (frees_sex_conf_fsge … Hf1 … H) // -H2R -H #f0 #Hf0 #Hf01
 /4 width=7 by sle_sex_trans, (* 2x *) ex2_intro/
 qed-.
