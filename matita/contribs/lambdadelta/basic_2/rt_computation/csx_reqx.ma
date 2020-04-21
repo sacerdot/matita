@@ -26,8 +26,8 @@ lemma csx_reqx_conf (G) (L1):
 #G #L1 #T #H
 @(csx_ind … H) -T #T1 #_ #IH #L2 #HL12
 @csx_intro #T2 #HT12 #HnT12
-elim (reqx_cpx_trans … HL12 … HT12) -HT12
-/5 width=5 by cpx_reqx_conf_sn, csx_teqx_trans, teqx_trans/
+lapply (reqx_cpx_trans … HL12 … HT12) -HT12
+/3 width=4 by cpx_reqx_conf_sn/
 qed-.
 
 (* Basic_2A1: uses: csx_lleq_trans *)

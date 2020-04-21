@@ -30,7 +30,7 @@ lemma teqx_fpb_trans:
   elim (teqx_fqu_trans … H … HU21) -H
   /3 width=5 by fpb_fqu, ex3_2_intro/
 | #T1 #HUT1 #HnUT1
-  elim (teqx_cpx_trans … HU21 … HUT1) -HUT1
+  lapply (teqx_cpx_trans … HU21 … HUT1) -HUT1
   /6 width=5 by fpb_cpx, teqx_canc_sn, teqx_trans, ex3_2_intro/
 | /6 width=5 by fpb_lpx, rpx_teqx_div, teqx_reqx_conf, ex3_2_intro/
 ]
@@ -44,7 +44,7 @@ lemma reqx_fpb_trans:
 #F #K1 #K2 #T #HT #G #L2 #U * -G -L2 -U
 [ #G #L2 #U #H2 elim (reqx_fqu_trans … H2 … HT) -K2
   /3 width=5 by fpb_fqu, ex3_2_intro/
-| #U #HTU #HnTU elim (reqx_cpx_trans … HT … HTU) -HTU
+| #U #HTU #HnTU lapply (reqx_cpx_trans … HT … HTU) -HTU
   /5 width=11 by fpb_cpx, cpx_reqx_conf_sn, teqx_trans, teqx_reqx_conf, ex3_2_intro/ (**) (* time: 36s on dev *)
 | #L2 #HKL2 #HnKL2 elim (reqx_lpx_trans … HKL2 … HT) -HKL2
   /6 width=5 by fpb_lpx, (* 2x *) reqx_canc_sn, ex3_2_intro/

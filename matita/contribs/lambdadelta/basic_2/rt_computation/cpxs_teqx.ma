@@ -19,29 +19,28 @@ include "basic_2/rt_computation/cpxs.ma".
 
 (* Properties with sort-irrelevant equivalence for terms ********************)
 
-lemma teqx_cpxs_trans (G) (L):
-      ∀U1,T1. U1 ≛ T1 → ∀T2. ❪G,L❫ ⊢ T1 ⬈* T2 →
-      ∃∃U2. ❪G,L❫ ⊢ U1 ⬈* U2 & U2 ≛ T2.
-#G #L #U1 #T1 #HUT1 #T2 #HT12 @(cpxs_ind … HT12) -T2 /2 width=3 by ex2_intro/
-#T #T2 #_ #HT2 * #U #HU1 #HUT elim (teqx_cpx_trans … HUT … HT2) -T -T1
-/3 width=3 by ex2_intro, cpxs_strap1/
+lemma teqx_cpxs_trans (G) (L) (T):
+      ∀T1. T1 ≛ T → ∀T2. ❪G,L❫ ⊢ T ⬈* T2 → ❪G,L❫ ⊢ T1 ⬈* T2.
+#G #L #T #T1 #HT1 #T2 #HT2 @(cpxs_ind … HT2) -T2
+[ /3 width=1 by teqx_cpx, cpx_cpxs/
+| /2 width=3 by cpxs_strap1/
+]
 qed-.
 
 (* Note: this requires teqx to be symmetric *)
 (* Nasic_2A1: uses: cpxs_neq_inv_step_sn *)
 lemma cpxs_tneqx_fwd_step_sn (G) (L):
       ∀T1,T2. ❪G,L❫ ⊢ T1 ⬈* T2 → (T1 ≛ T2 → ⊥) →
-      ∃∃T,T0. ❪G,L❫ ⊢ T1 ⬈ T & T1 ≛ T → ⊥ & ❪G,L❫ ⊢ T ⬈* T0 & T0 ≛ T2.
+      ∃∃T. ❪G,L❫ ⊢ T1 ⬈ T & T1 ≛ T → ⊥ & ❪G,L❫ ⊢ T ⬈* T2.
 #G #L #T1 #T2 #H @(cpxs_ind_dx … H) -T1
 [ #H elim H -H //
-| #T1 #T0 #HT10 #HT02 #IH #Hn12
-  elim (teqx_dec T1 T0) [ -HT10 -HT02 #H10 | -IH #Hn10 ]
-  [ elim IH -IH /3 width=3 by teqx_trans/ -Hn12
-    #T3 #T4 #HT03 #Hn03 #HT34 #H42
-    elim (teqx_cpx_trans … H10 … HT03) -HT03 #T5 #HT15 #H53
-    elim (teqx_cpxs_trans … H53 … HT34) -HT34 #T6 #HT56 #H64
-    /5 width=8 by teqx_canc_sn, (* 2x *) teqx_trans, ex4_2_intro/
-  | /3 width=6 by ex4_2_intro/
+| #T1 #T0 #HT10 #HT02 #IH #HnT12
+  elim (teqx_dec T1 T0) [ -HT10 -HT02 #HT10 | -IH #HnT10 ]
+  [ elim IH -IH /3 width=3 by teqx_trans/ -HnT12
+    #T #HT0 #HnT0 #HT2
+    lapply (teqx_cpx_trans … HT10 … HT0) -HT0 #HT1
+    /4 width=4 by teqx_canc_sn, ex3_intro/
+  | /3 width=4 by ex3_intro/
   ]
 ]
 qed-.

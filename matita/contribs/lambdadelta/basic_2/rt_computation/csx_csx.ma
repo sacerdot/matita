@@ -23,7 +23,8 @@ lemma csx_teqx_trans (G) (L):
       ∀T1. ❪G,L❫ ⊢ ⬈*𝐒 T1 →
       ∀T2. T1 ≛ T2 → ❪G,L❫ ⊢ ⬈*𝐒 T2.
 #G #L #T1 #H @(csx_ind … H) -T1 #T #_ #IH #T2 #HT2
-@csx_intro #T1 #HT21 #HnT21 elim (teqx_cpx_trans … HT2 … HT21) -HT21
+@csx_intro #T1 #HT21 #HnT21
+lapply (teqx_cpx_trans … HT2 … HT21) -HT21 #HT1
 /4 width=5 by teqx_repl/
 qed-.
 

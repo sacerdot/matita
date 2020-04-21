@@ -20,13 +20,14 @@ include "basic_2/rt_transition/rpx_lpx.ma".
 
 (* Properties with sort-irrelevant equivalence for local environments *******)
 
+(**) (* to update as reqx_rpx_trans *)
 (* Basic_2A1: uses: lleq_lpx_trans *)
 lemma reqx_lpx_trans (G):
       ∀L2,K2. ❪G,L2❫ ⊢ ⬈ K2 → ∀L1. ∀T:term. L1 ≛[T] L2 →
       ∃∃K1. ❪G,L1❫ ⊢ ⬈ K1 & K1 ≛[T] K2.
 #G #L2 #K2 #HLK2 #L1 #T #HL12
 lapply (lpx_rpx … T HLK2) -HLK2 #HLK2
-elim (reqx_rpx_trans … HLK2 … HL12) -L2 #K #H #HK2
-elim (rpx_inv_lpx_req … H) -H #K1 #HLK1 #HK1
-/3 width=5 by req_reqx_trans, ex2_intro/
+lapply (reqx_rpx_trans … HL12 … HLK2) -L2 #H
+elim (rpx_inv_lpx_req … H) -H #K1 #HLK1 #HK12
+/3 width=3 by req_reqx, ex2_intro/
 qed-.
