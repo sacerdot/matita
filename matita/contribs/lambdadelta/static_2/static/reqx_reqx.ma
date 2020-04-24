@@ -20,7 +20,6 @@ include "static_2/static/reqx_length.ma".
 
 (* Advanced properties ******************************************************)
 
-(* Basic_2A1: uses: lleq_sym *)
 lemma reqx_sym: ∀T. symmetric … (reqx T).
 /3 width=3 by reqx_fsge_comp, rex_sym, teqx_sym/ qed-.
 

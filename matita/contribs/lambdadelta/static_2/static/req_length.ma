@@ -12,21 +12,25 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/static/reqx_fqus.ma".
-include "static_2/static/feqx.ma".
+include "static_2/static/rex_length.ma".
+include "static_2/static/rex_fsle.ma".
+include "static_2/static/req.ma".
 
-(* SORT-IRRELEVANT EQUIVALENCE FOR CLOSURES ON REFERRED ENTRIES *************)
+(* SYNTACTIC EQUIVALENCE FOR LOCAL ENVIRONMENTS ON REFERRED ENTRIES *********)
 
-(* Properties with star-iterated structural successor for closures **********)
+(* Advanved properties with free variables inclusion ************************)
 
-lemma feqx_fqus_trans (b):
-      ∀G1,G,L1,L,T1,T. ❪G1,L1,T1❫ ≛ ❪G,L,T❫ →
-      ∀G2,L2,T2. ❪G,L,T❫ ⬂*[b] ❪G2,L2,T2❫ →
-      ∃∃G,L0,T0. ❪G1,L1,T1❫ ⬂*[b] ❪G,L0,T0❫ & ❪G,L0,T0❫ ≛ ❪G2,L2,T2❫.
-#b #G1 #G #L1 #L #T1 #T #H1 #G2 #L2 #T2 #H2
-elim(feqx_inv_gen_dx … H1) -H1 #HG #HL1 #HT1 destruct
-elim (reqx_fqus_trans … H2 … HL1) -L #L #T0 #H2 #HT02 #HL2
-elim (teqx_fqus_trans … H2 … HT1) -T #L0 #T #H2 #HT0 #HL0
-lapply (teqx_reqx_conf_sn … HT02 … HL0) -HL0 #HL0
-/4 width=7 by feqx_intro_dx, reqx_trans, teqx_trans, ex2_3_intro/
+lemma req_fsge_comp:
+      rex_fsge_compatible ceq.
+#L1 #L2 #T #H elim H #f1 #Hf1 #HL12
+lapply (frees_req_conf … Hf1 … H) -H
+lapply (sex_fwd_length … HL12)
+/3 width=8 by lveq_length_eq, ex4_4_intro/ (**) (* full auto fails *)
 qed-.
+
+(* Advanced properties ******************************************************)
+
+(* Basic_2A1: uses: lleq_sym *)
+lemma req_sym (T):
+      symmetric … (req T).
+/3 width=1 by req_fsge_comp, rex_sym/ qed-.

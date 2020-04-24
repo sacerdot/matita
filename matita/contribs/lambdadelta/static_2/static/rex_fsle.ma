@@ -85,7 +85,7 @@ lemma rex_pair_sn_split (R1) (R2):
 lapply(frees_mono … H … Hf) -H #H1
 lapply (sor_eq_repl_back1 … Hy … H1) -y1 #Hy
 lapply (sor_inv_sle_sn … Hy) -y2 #Hfg
-elim (sex_sle_split (cext2 R1) (cext2 R2) … HL12 … Hfg) -HL12 /2 width=1 by ext2_refl/ #L #HL1 #HL2
+elim (sex_sle_split_sn (cext2 R1) (cext2 R2) … HL12 … Hfg) -HL12 /2 width=1 by ext2_refl/ #L #HL1 #HL2
 lapply (sle_sex_trans … HL1 … Hfg) // #H
 elim (frees_sex_conf_fsge … Hf … H) -Hf -H
 /4 width=7 by sle_sex_trans, ex2_intro/
@@ -102,7 +102,7 @@ elim (frees_inv_flat … Hg) #y1 #y2 #_ #H #Hy
 lapply(frees_mono … H … Hf) -H #H2
 lapply (sor_eq_repl_back2 … Hy … H2) -y2 #Hy
 lapply (sor_inv_sle_dx … Hy) -y1 #Hfg
-elim (sex_sle_split (cext2 R1) (cext2 R2) … HL12 … Hfg) -HL12 /2 width=1 by ext2_refl/ #L #HL1 #HL2
+elim (sex_sle_split_sn (cext2 R1) (cext2 R2) … HL12 … Hfg) -HL12 /2 width=1 by ext2_refl/ #L #HL1 #HL2
 lapply (sle_sex_trans … HL1 … Hfg) // #H
 elim (frees_sex_conf_fsge … Hf … H) -Hf -H
 /4 width=7 by sle_sex_trans, ex2_intro/
@@ -121,7 +121,7 @@ lapply (tl_eq_repl … H2) -H2 #H2
 lapply (sor_eq_repl_back2 … Hy … H2) -y2 #Hy
 lapply (sor_inv_sle_dx … Hy) -y1 #Hfg
 lapply (sle_inv_tl_sn … Hfg) -Hfg #Hfg
-elim (sex_sle_split (cext2 R1) (cext2 R2) … HL12 … Hfg) -HL12 /2 width=1 by ext2_refl/ #Y #H #HL2
+elim (sex_sle_split_sn (cext2 R1) (cext2 R2) … HL12 … Hfg) -HL12 /2 width=1 by ext2_refl/ #Y #H #HL2
 lapply (sle_sex_trans … H … Hfg) // #H0
 elim (sex_inv_next1 … H) -H #Z #L #HL1 #H
 elim (ext2_inv_pair_sn … H) -H #V #HV #H1 #H2 destruct
@@ -142,7 +142,7 @@ lapply (tl_eq_repl … H2) -H2 #H2
 lapply (sor_eq_repl_back2 … Hy … H2) -y2 #Hy
 lapply (sor_inv_sle_dx … Hy) -y1 #Hfg
 lapply (sle_inv_tl_sn … Hfg) -Hfg #Hfg
-elim (sex_sle_split (cext2 R1) (cext2 R2) … HL12 … Hfg) -HL12 /2 width=1 by ext2_refl/ #Y #H #HL2
+elim (sex_sle_split_sn (cext2 R1) (cext2 R2) … HL12 … Hfg) -HL12 /2 width=1 by ext2_refl/ #Y #H #HL2
 lapply (sle_sex_trans … H … Hfg) // #H0
 elim (sex_inv_next1 … H) -H #Z #L #HL1 #H
 elim (ext2_inv_unit_sn … H) -H #H destruct

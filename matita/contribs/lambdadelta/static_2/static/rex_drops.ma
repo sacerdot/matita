@@ -19,25 +19,34 @@ include "static_2/static/rex.ma".
 
 (* GENERIC EXTENSION ON REFERRED ENTRIES OF A CONTEXT-SENSITIVE REALTION ****)
 
-definition f_dedropable_sn: predicate (relation3 lenv term term) ≝
-                            λR. ∀b,f,L1,K1. ⇩*[b,f] L1 ≘ K1 →
-                            ∀K2,T. K1 ⪤[R,T] K2 → ∀U. ⇧*[f] T ≘ U →
-                            ∃∃L2. L1 ⪤[R,U] L2 & ⇩*[b,f] L2 ≘ K2 & L1 ≡[f] L2.
+definition f_dedropable_sn:
+           predicate (relation3 lenv term term) ≝ λR.
+           ∀b,f,L1,K1. ⇩*[b,f] L1 ≘ K1 →
+           ∀K2,T. K1 ⪤[R,T] K2 → ∀U. ⇧*[f] T ≘ U →
+           ∃∃L2. L1 ⪤[R,U] L2 & ⇩*[b,f] L2 ≘ K2 & L1 ≡[f] L2.
 
-definition f_dropable_sn: predicate (relation3 lenv term term) ≝
-                          λR. ∀b,f,L1,K1. ⇩*[b,f] L1 ≘ K1 → 𝐔❪f❫ →
-                          ∀L2,U. L1 ⪤[R,U] L2 → ∀T. ⇧*[f] T ≘ U →
-                          ∃∃K2. K1 ⪤[R,T] K2 & ⇩*[b,f] L2 ≘ K2.
+definition f_dropable_sn:
+           predicate (relation3 lenv term term) ≝ λR.
+           ∀b,f,L1,K1. ⇩*[b,f] L1 ≘ K1 → 𝐔❪f❫ →
+           ∀L2,U. L1 ⪤[R,U] L2 → ∀T. ⇧*[f] T ≘ U →
+           ∃∃K2. K1 ⪤[R,T] K2 & ⇩*[b,f] L2 ≘ K2.
 
-definition f_dropable_dx: predicate (relation3 lenv term term) ≝
-                          λR. ∀L1,L2,U. L1 ⪤[R,U] L2 →
-                          ∀b,f,K2. ⇩*[b,f] L2 ≘ K2 → 𝐔❪f❫ → ∀T. ⇧*[f] T ≘ U →
-                          ∃∃K1. ⇩*[b,f] L1 ≘ K1 & K1 ⪤[R,T] K2.
+definition f_dropable_dx:
+           predicate (relation3 lenv term term) ≝ λR.
+           ∀L1,L2,U. L1 ⪤[R,U] L2 →
+           ∀b,f,K2. ⇩*[b,f] L2 ≘ K2 → 𝐔❪f❫ → ∀T. ⇧*[f] T ≘ U →
+           ∃∃K1. ⇩*[b,f] L1 ≘ K1 & K1 ⪤[R,T] K2.
 
-definition f_transitive_next: relation3 … ≝ λR1,R2,R3.
-                              ∀f,L,T. L ⊢ 𝐅+❪T❫ ≘ f →
-                              ∀g,I,K,i. ⇩[i] L ≘ K.ⓘ[I] → ↑g = ⫱*[i] f →
-                              sex_transitive (cext2 R1) (cext2 R2) (cext2 R3) (cext2 R1) cfull g K I.
+definition f_transitive_next:
+           relation3 … ≝ λR1,R2,R3.
+           ∀f,L,T. L ⊢ 𝐅+❪T❫ ≘ f →
+           ∀g,I,K,i. ⇩[i] L ≘ K.ⓘ[I] → ↑g = ⫱*[i] f →
+           R_pw_transitive_sex (cext2 R1) (cext2 R2) (cext2 R3) (cext2 R1) cfull g K I.
+
+definition f_confluent1_next: relation2 … ≝ λR1,R2.
+           ∀f,L,T. L ⊢ 𝐅+❪T❫ ≘ f →
+           ∀g,I,K,i. ⇩[i] L ≘ K.ⓘ[I] → ↑g = ⫱*[i] f →
+           R_pw_confluent1_sex (cext2 R1) (cext2 R1) (cext2 R2) cfull g K I.
 
 (* Properties with generic slicing for local environments *******************)
 
@@ -52,7 +61,7 @@ elim (sex_liftable_co_dedropable_sn … HLK1 … HK12 … Hf) -f1 -K1
 qed-.
 
 lemma rex_trans_next (R1) (R2) (R3):
-      rex_transitive R1 R2 R3 → f_transitive_next R1 R2 R3.
+      R_transitive_rex R1 R2 R3 → f_transitive_next R1 R2 R3.
 #R1 #R2 #R3 #HR #f #L1 #T #Hf #g #I1 #K1 #n #HLK #Hgf #I #H
 generalize in match HLK; -HLK elim H -I1 -I
 [ #I #_ #L2 #_ #I2 #H
@@ -65,11 +74,23 @@ generalize in match HLK; -HLK elim H -I1 -I
 ]
 qed.
 
+lemma rex_conf1_next (R1) (R2):
+      R_confluent1_rex R1 R2 → f_confluent1_next R1 R2.
+#R1 #R2 #HR #f #L1 #T #Hf #g #I1 #K1 #n #HLK #Hgf #I #H
+generalize in match HLK; -HLK elim H -I1 -I
+[ /2 width=1 by ext2_unit/
+| #I #V1 #V2 #HV12 #HLK1 #K2 #HK12
+  elim (frees_inv_drops_next … Hf … HLK1 … Hgf) -f -HLK1 #f #Hf #Hfg
+  /5 width=5 by ext2_pair, sle_sex_trans, ex2_intro/
+]
+qed.
+
 (* Inversion lemmas with generic slicing for local environments *************)
 
 (* Basic_2A1: uses: llpx_sn_inv_lift_le llpx_sn_inv_lift_be llpx_sn_inv_lift_ge *)
 (* Basic_2A1: was: llpx_sn_drop_conf_O *)
-lemma rex_dropable_sn (R): f_dropable_sn R.
+lemma rex_dropable_sn (R):
+      f_dropable_sn R.
 #R #b #f #L1 #K1 #HLK1 #H1f #L2 #U * #f2 #Hf2 #HL12 #T #HTU
 elim (frees_total K1 T) #f1 #Hf1
 lapply (frees_fwd_coafter … Hf2 … HLK1 … HTU … Hf1) -HTU #H2f
@@ -79,7 +100,8 @@ qed-.
 
 (* Basic_2A1: was: llpx_sn_drop_trans_O *)
 (* Note: the proof might be simplified *)
-lemma rex_dropable_dx (R): f_dropable_dx R.
+lemma rex_dropable_dx (R):
+      f_dropable_dx R.
 #R #L1 #L2 #U * #f2 #Hf2 #HL12 #b #f #K2 #HLK2 #H1f #T #HTU
 elim (drops_isuni_ex … H1f L1) #K1 #HLK1
 elim (frees_total K1 T) #f1 #Hf1

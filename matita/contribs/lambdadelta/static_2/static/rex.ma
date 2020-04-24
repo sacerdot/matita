@@ -27,8 +27,9 @@ include "static_2/static/frees.ma".
 definition rex (R) (T): relation lenv ≝
                λL1,L2. ∃∃f. L1 ⊢ 𝐅+❪T❫ ≘ f & L1 ⪤[cext2 R,cfull,f] L2.
 
-interpretation "generic extension on referred entries (local environment)"
-   'Relation R T L1 L2 = (rex R T L1 L2).
+interpretation
+  "generic extension on referred entries (local environment)"
+  'Relation R T L1 L2 = (rex R T L1 L2).
 
 definition R_confluent2_rex:
            relation4 (relation3 lenv term term)
@@ -46,23 +47,29 @@ definition R_replace3_rex:
            ∀L1. L0 ⪤[RP1,T0] L1 → ∀L2. L0 ⪤[RP2,T0] L2 →
            ∀T. R2 L1 T1 T → R1 L2 T2 T.
 
+definition R_transitive_rex: relation3 ? (relation3 ?? term) … ≝
+           λR1,R2,R3.
+           ∀K1,K,V1. K1 ⪤[R1,V1] K →
+           ∀V. R1 K1 V1 V → ∀V2. R2 K V V2 → R3 K1 V1 V2.
+
+definition R_confluent1_rex: relation … ≝
+           λR1,R2.
+           ∀K1,K2,V1. K1 ⪤[R2,V1] K2 → ∀V2. R1 K1 V1 V2 → R1 K2 V1 V2.
+
 definition rex_confluent: relation … ≝
            λR1,R2.
            ∀K1,K,V1. K1 ⪤[R1,V1] K → ∀V. R1 K1 V1 V →
            ∀K2. K ⪤[R2,V] K2 → K ⪤[R2,V1] K2.
 
-definition rex_transitive: relation3 ? (relation3 ?? term) … ≝
-           λR1,R2,R3.
-           ∀K1,K,V1. K1 ⪤[R1,V1] K →
-           ∀V. R1 K1 V1 V → ∀V2. R2 K V V2 → R3 K1 V1 V2.
-
 (* Basic inversion lemmas ***************************************************)
 
-lemma rex_inv_atom_sn (R): ∀Y2,T. ⋆ ⪤[R,T] Y2 → Y2 = ⋆.
+lemma rex_inv_atom_sn (R):
+      ∀Y2,T. ⋆ ⪤[R,T] Y2 → Y2 = ⋆.
 #R #Y2 #T * /2 width=4 by sex_inv_atom1/
 qed-.
 
-lemma rex_inv_atom_dx (R): ∀Y1,T. Y1 ⪤[R,T] ⋆ → Y1 = ⋆.
+lemma rex_inv_atom_dx (R):
+      ∀Y1,T. Y1 ⪤[R,T] ⋆ → Y1 = ⋆.
 #R #I #Y1 * /2 width=4 by sex_inv_atom2/
 qed-.
 
@@ -81,11 +88,9 @@ qed-.
 
 lemma rex_inv_zero (R):
       ∀Y1,Y2. Y1 ⪤[R,#0] Y2 →
-      ∨∨ Y1 = ⋆ ∧ Y2 = ⋆
-       | ∃∃I,L1,L2,V1,V2. L1 ⪤[R,V1] L2 & R L1 V1 V2 &
-           Y1 = L1.ⓑ[I]V1 & Y2 = L2.ⓑ[I]V2
-       | ∃∃f,I,L1,L2. 𝐈❪f❫ & L1 ⪤[cext2 R,cfull,f] L2 &
-           Y1 = L1.ⓤ[I] & Y2 = L2.ⓤ[I].
+      ∨∨ ∧∧ Y1 = ⋆ & Y2 = ⋆
+       | ∃∃I,L1,L2,V1,V2. L1 ⪤[R,V1] L2 & R L1 V1 V2 & Y1 = L1.ⓑ[I]V1 & Y2 = L2.ⓑ[I]V2
+       | ∃∃f,I,L1,L2. 𝐈❪f❫ & L1 ⪤[cext2 R,cfull,f] L2 & Y1 = L1.ⓤ[I] & Y2 = L2.ⓤ[I].
 #R * [ | #Y1 * #I1 [ | #X ] ] #Y2 * #f #H1 #H2
 [ lapply (sex_inv_atom1 … H2) -H2 /3 width=1 by or3_intro0, conj/
 | elim (frees_inv_unit … H1) -H1 #g #HX #H destruct
@@ -246,7 +251,8 @@ elim (rex_inv_zero_pair_sn … H) -H #Y #X #HK12 #_ #H destruct //
 qed-.
 
 (* Basic_2A1: uses: llpx_sn_fwd_pair_sn llpx_sn_fwd_bind_sn llpx_sn_fwd_flat_sn *)
-lemma rex_fwd_pair_sn (R): ∀I,L1,L2,V,T. L1 ⪤[R,②[I]V.T] L2 → L1 ⪤[R,V] L2.
+lemma rex_fwd_pair_sn (R):
+      ∀I,L1,L2,V,T. L1 ⪤[R,②[I]V.T] L2 → L1 ⪤[R,V] L2.
 #R * [ #p ] #I #L1 #L2 #V #T * #f #Hf #HL
 [ elim (frees_inv_bind … Hf) | elim (frees_inv_flat … Hf) ] -Hf
 /4 width=6 by sle_sex_trans, sor_inv_sle_sn, ex2_intro/
@@ -260,7 +266,8 @@ lemma rex_fwd_bind_dx (R):
 qed-.
 
 (* Basic_2A1: uses: llpx_sn_fwd_flat_dx *)
-lemma rex_fwd_flat_dx (R): ∀I,L1,L2,V,T. L1 ⪤[R,ⓕ[I]V.T] L2 → L1 ⪤[R,T] L2.
+lemma rex_fwd_flat_dx (R):
+      ∀I,L1,L2,V,T. L1 ⪤[R,ⓕ[I]V.T] L2 → L1 ⪤[R,T] L2.
 #R #I #L1 #L2 #V #T #H elim (rex_inv_flat … H) -H //
 qed-.
 
@@ -274,7 +281,8 @@ qed-.
 
 (* Basic properties *********************************************************)
 
-lemma rex_atom (R): ∀I. ⋆ ⪤[R,⓪[I]] ⋆.
+lemma rex_atom (R):
+      ∀I. ⋆ ⪤[R,⓪[I]] ⋆.
 #R * /3 width=3 by frees_sort, frees_atom, frees_gref, sex_atom, ex2_intro/
 qed.
 

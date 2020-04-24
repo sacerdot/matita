@@ -20,12 +20,12 @@ include "static_2/relocation/drops.ma".
 (* Main properties **********************************************************)
 
 theorem sex_trans_gen (RN1) (RP1) (RN2) (RP2) (RN) (RP):
-                      ∀L1,f.
-                      (∀g,I,K,n. ⇩[n] L1 ≘ K.ⓘ[I] → ↑g = ⫱*[n] f → sex_transitive RN1 RN2 RN RN1 RP1 g K I) →
-                      (∀g,I,K,n. ⇩[n] L1 ≘ K.ⓘ[I] → ⫯g = ⫱*[n] f → sex_transitive RP1 RP2 RP RN1 RP1 g K I) →
-                      ∀L0. L1 ⪤[RN1,RP1,f] L0 →
-                      ∀L2. L0 ⪤[RN2,RP2,f] L2 →
-                      L1 ⪤[RN,RP,f] L2.
+        ∀L1,f.
+        (∀g,I,K,n. ⇩[n] L1 ≘ K.ⓘ[I] → ↑g = ⫱*[n] f → R_pw_transitive_sex RN1 RN2 RN RN1 RP1 g K I) →
+        (∀g,I,K,n. ⇩[n] L1 ≘ K.ⓘ[I] → ⫯g = ⫱*[n] f → R_pw_transitive_sex RP1 RP2 RP RN1 RP1 g K I) →
+        ∀L0. L1 ⪤[RN1,RP1,f] L0 →
+        ∀L2. L0 ⪤[RN2,RP2,f] L2 →
+        L1 ⪤[RN,RP,f] L2.
 #RN1 #RP1 #RN2 #RP2 #RN #RP #L1 elim L1 -L1
 [ #f #_ #_ #L0 #H1 #L2 #H2
   lapply (sex_inv_atom1 … H1) -H1 #H destruct
@@ -45,13 +45,15 @@ theorem sex_trans_gen (RN1) (RP1) (RN2) (RP2) (RN) (RP):
 ]
 qed-.
 
-theorem sex_trans (RN) (RP) (f): (∀g,I,K. sex_transitive RN RN RN RN RP g K I) →
-                                 (∀g,I,K. sex_transitive RP RP RP RN RP g K I) →
-                                 Transitive … (sex RN RP f).
+theorem sex_trans (RN) (RP) (f):
+        (∀g,I,K. R_pw_transitive_sex RN RN RN RN RP g K I) →
+        (∀g,I,K. R_pw_transitive_sex RP RP RP RN RP g K I) →
+        Transitive … (sex RN RP f).
 /2 width=9 by sex_trans_gen/ qed-.
 
-theorem sex_trans_id_cfull: ∀R1,R2,R3,L1,L,f. L1 ⪤[R1,cfull,f] L → 𝐈❪f❫ →
-                            ∀L2. L ⪤[R2,cfull,f] L2 → L1 ⪤[R3,cfull,f] L2.
+theorem sex_trans_id_cfull (R1) (R2) (R3):
+        ∀L1,L,f. L1 ⪤[R1,cfull,f] L → 𝐈❪f❫ →
+        ∀L2. L ⪤[R2,cfull,f] L2 → L1 ⪤[R3,cfull,f] L2.
 #R1 #R2 #R3 #L1 #L #f #H elim H -L1 -L -f
 [ #f #Hf #L2 #H >(sex_inv_atom1 … H) -L2 // ]
 #f #I1 #I #K1 #K #HK1 #_ #IH #Hf #L2 #H
@@ -61,10 +63,10 @@ elim (sex_inv_push1 … H) -H #I2 #K2 #HK2 #_ #H destruct
 qed-.
 
 theorem sex_conf (RN1) (RP1) (RN2) (RP2):
-                 ∀L,f.
-                 (∀g,I,K,n. ⇩[n] L ≘ K.ⓘ[I] → ↑g = ⫱*[n] f → R_pw_confluent2_sex RN1 RN2 RN1 RP1 RN2 RP2 g K I) →
-                 (∀g,I,K,n. ⇩[n] L ≘ K.ⓘ[I] → ⫯g = ⫱*[n] f → R_pw_confluent2_sex RP1 RP2 RN1 RP1 RN2 RP2 g K I) →
-                 pw_confluent2 … (sex RN1 RP1 f) (sex RN2 RP2 f) L.
+        ∀L,f.
+        (∀g,I,K,n. ⇩[n] L ≘ K.ⓘ[I] → ↑g = ⫱*[n] f → R_pw_confluent2_sex RN1 RN2 RN1 RP1 RN2 RP2 g K I) →
+        (∀g,I,K,n. ⇩[n] L ≘ K.ⓘ[I] → ⫯g = ⫱*[n] f → R_pw_confluent2_sex RP1 RP2 RN1 RP1 RN2 RP2 g K I) →
+        pw_confluent2 … (sex RN1 RP1 f) (sex RN2 RP2 f) L.
 #RN1 #RP1 #RN2 #RP2 #L elim L -L
 [ #f #_ #_ #L1 #H1 #L2 #H2 >(sex_inv_atom1 … H1) >(sex_inv_atom1 … H2) -H2 -H1
   /2 width=3 by sex_atom, ex2_intro/
@@ -106,20 +108,20 @@ lemma sex_repl (RN) (RP) (SN) (SP) (L1) (f):
 ]
 qed-.
 
-theorem sex_canc_sn: ∀RN,RP,f. Transitive … (sex RN RP f) →
-                               symmetric … (sex RN RP f) →
-                               left_cancellable … (sex RN RP f).
+theorem sex_canc_sn (RN) (RP):
+        ∀f. Transitive … (sex RN RP f) → symmetric … (sex RN RP f) →
+        left_cancellable … (sex RN RP f).
 /3 width=3 by/ qed-.
 
-theorem sex_canc_dx: ∀RN,RP,f. Transitive … (sex RN RP f) →
-                               symmetric … (sex RN RP f) →
-                               right_cancellable … (sex RN RP f).
+theorem sex_canc_dx (RN) (RP):
+        ∀f. Transitive … (sex RN RP f) → symmetric … (sex RN RP f) →
+        right_cancellable … (sex RN RP f).
 /3 width=3 by/ qed-.
 
-lemma sex_meet: ∀RN,RP,L1,L2.
-                ∀f1. L1 ⪤[RN,RP,f1] L2 →
-                ∀f2. L1 ⪤[RN,RP,f2] L2 →
-                ∀f. f1 ⋒ f2 ≘ f → L1 ⪤[RN,RP,f] L2.
+lemma sex_meet (RN) (RP) (L1) (L2):
+      ∀f1. L1 ⪤[RN,RP,f1] L2 →
+      ∀f2. L1 ⪤[RN,RP,f2] L2 →
+      ∀f. f1 ⋒ f2 ≘ f → L1 ⪤[RN,RP,f] L2.
 #RN #RP #L1 #L2 #f1 #H elim H -f1 -L1 -L2 //
 #f1 #I1 #I2 #L1 #L2 #_ #HI12 #IH #f2 #H #f #Hf
 elim (pn_split f2) * #g2 #H2 destruct
@@ -129,10 +131,10 @@ try elim (sex_inv_push … H) try elim (sex_inv_next … H) -H
 ] -Hf /3 width=5 by sex_next, sex_push/
 qed-.
 
-lemma sex_join: ∀RN,RP,L1,L2.
-                ∀f1. L1 ⪤[RN,RP,f1] L2 →
-                ∀f2. L1 ⪤[RN,RP,f2] L2 →
-                ∀f. f1 ⋓ f2 ≘ f → L1 ⪤[RN,RP,f] L2.
+lemma sex_join (RN) (RP) (L1) (L2):
+      ∀f1. L1 ⪤[RN,RP,f1] L2 →
+      ∀f2. L1 ⪤[RN,RP,f2] L2 →
+      ∀f. f1 ⋓ f2 ≘ f → L1 ⪤[RN,RP,f] L2.
 #RN #RP #L1 #L2 #f1 #H elim H -f1 -L1 -L2 //
 #f1 #I1 #I2 #L1 #L2 #_ #HI12 #IH #f2 #H #f #Hf
 elim (pn_split f2) * #g2 #H2 destruct

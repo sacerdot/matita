@@ -126,15 +126,15 @@ lemma cpx_fsge_comp (G): R_fsge_compatible (cpx G).
 
 (* Note: lemma 1000 *)
 (* Basic_2A1: uses: cpx_llpx_sn_conf *)
-lemma cpx_rex_conf (R) (G): s_r_confluent1 … (cpx G) (rex R).
+lemma cpx_rex_conf_sn (R) (G): s_r_confluent1 … (cpx G) (rex R).
 /3 width=3 by fsge_rex_trans, cpx_fsge_comp/ qed-.
 
 (* Advanced properties ******************************************************)
 
-lemma rpx_cpx_conf (G): s_r_confluent1 … (cpx G) (rpx G).
-/2 width=5 by cpx_rex_conf/ qed-.
+lemma rpx_cpx_conf_sn (G): s_r_confluent1 … (cpx G) (rpx G).
+/2 width=5 by cpx_rex_conf_sn/ qed-.
 
 lemma rpx_cpx_conf_fsge_dx (G):
       ∀L0,T0,T1. ❪G,L0❫ ⊢ T0 ⬈ T1 →
       ∀L2. ❪G,L0❫ ⊢⬈[T0] L2 → ❪L2,T1❫ ⊆ ❪L0,T1❫.
-/3 width=5 by rpx_cpx_conf, rpx_fsge_comp/ qed-.
+/3 width=5 by rpx_cpx_conf_sn, rpx_fsge_comp/ qed-.

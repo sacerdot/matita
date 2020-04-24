@@ -41,8 +41,8 @@ lemma rpx_bind_dx_split_void (G):
       ∃∃K2. ❪G,K1❫ ⊢ ⬈[ⓑ[p,I]V.T] K2 & K2.ⓧ ≛[T] L2.
 /3 width=5 by rpx_fsge_comp, rex_bind_dx_split_void/ qed-.
 
-lemma rpx_teqx_conf (G): s_r_confluent1 … cdeq (rpx G).
-/2 width=5 by teqx_rex_conf/ qed-.
+lemma rpx_teqx_conf_sn (G): s_r_confluent1 … cdeq (rpx G).
+/2 width=5 by teqx_rex_conf_sn/ qed-.
 
 lemma rpx_teqx_div (G):
       ∀T1,T2. T1 ≛ T2 → ∀L1,L2. ❪G,L1❫ ⊢ ⬈[T2] L2 → ❪G,L1❫ ⊢ ⬈[T1] L2.

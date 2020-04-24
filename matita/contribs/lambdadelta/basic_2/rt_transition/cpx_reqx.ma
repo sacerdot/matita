@@ -22,7 +22,7 @@ include "basic_2/rt_transition/rpx_fsle.ma".
 (* Basic_2A1: was just: cpx_lleq_conf_sn *)
 lemma cpx_reqx_conf_sn (G):
       s_r_confluent1 … (cpx G) reqx.
-/3 width=6 by cpx_rex_conf/ qed-.
+/3 width=6 by cpx_rex_conf_sn/ qed-.
 
 (* Basic_2A1: was just: cpx_lleq_conf_dx *)
 lemma cpx_reqx_conf_dx (G) (L2):

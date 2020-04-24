@@ -30,7 +30,7 @@ lemma feqx_fpb_trans:
 elim (teqx_fpb_trans … HT12 … H12) -T2 #K0 #T0 #H #HT0 #HK0
 elim (reqx_fpb_trans … HK12 … H) -K2 #L0 #U0 #H #HUT0 #HLK0
 @(ex2_3_intro … H) -H (**) (* full auto too slow *)
-/4 width=3 by feqx_intro_dx, reqx_trans, teqx_reqx_conf, teqx_trans/
+/4 width=3 by feqx_intro_dx, reqx_trans, teqx_reqx_conf_sn, teqx_trans/
 qed-.
 
 (* Inversion lemmas with degree-based equivalence for closures **************)
