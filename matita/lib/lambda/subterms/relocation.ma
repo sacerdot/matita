@@ -14,6 +14,8 @@
 
 include "lambda/subterms/subterms.ma".
 
+include "lambda/notation/functions/lift_3.ma".
+
 (* RELOCATION FOR SUBTERMS **************************************************)
 
 let rec slift h d E on E ≝ match E with

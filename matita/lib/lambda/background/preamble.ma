@@ -16,9 +16,15 @@ include "basics/star1.ma".
 include "basics/lists/lstar.ma".
 include "arithmetics/exp.ma".
 
-include "lambda/background/xoa_notation.ma".
-include "lambda/background/xoa.ma".
-include "lambda/background/notation.ma".
+include "lambda/notation/xoa/false_0.ma".
+include "lambda/notation/xoa/true_0.ma".
+include "lambda/xoa/or_3.ma".
+include "lambda/xoa/ex_1_2.ma".
+include "lambda/xoa/ex_3_2.ma".
+include "lambda/xoa/ex_3_3.ma".
+
+include "lambda/notation/functions/nil_0.ma".
+include "lambda/notation/functions/hocons_2.ma".
 
 (* logic *)
 
@@ -82,11 +88,6 @@ qed.
 
 (* lists *)
 
-(* Note: notation for nil not involving brackets *)
-notation > "◊"
-  non associative with precedence 90
-  for @{'nil}.
-
 lemma list_inv: ∀A. ∀l:list A. ◊ = l ∨ ∃∃a0,l0. a0 :: l0 = l.
 #A * /2 width=1/ /3 width=3/
 qed-.
@@ -95,10 +96,6 @@ definition map_cons: ∀A. A → list (list A) → list (list A) ≝ λA,a.
                      map … (cons … a).
 
 interpretation "map_cons" 'ho_cons a l = (map_cons ? a l).
-
-notation "hvbox(a ::: break l)"
-  right associative with precedence 47
-  for @{'ho_cons $a $l}.
 
 lemma map_cons_inv_nil: ∀A,a,l1. map_cons A a l1 = ◊ → ◊ = l1.
 #A #a * // normalize #a1 #l1 #H destruct

@@ -13,5 +13,5 @@
 (**************************************************************************)
 
 notation "hvbox( ⇑ [ term 46 d, break term 46 h ] break term 46 M )"
-   non associative with precedence 46
-   for @{ 'Forward $h $d $M }.
+  non associative with precedence 46
+  for @{ 'Forward $h $d $M }.

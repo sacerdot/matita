@@ -14,6 +14,8 @@
 
 include "lambda/terms/parallel_computation.ma".
 
+include "lambda/notation/relations/seqredstar_2.ma".
+
 (* SEQUENTIAL COMPUTATION (MULTISTEP) ***************************************)
 
 definition sreds: relation term ≝ star … sred.

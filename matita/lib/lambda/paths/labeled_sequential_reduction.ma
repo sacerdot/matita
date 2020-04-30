@@ -15,6 +15,10 @@
 include "lambda/paths/path.ma".
 include "lambda/terms/sequential_reduction.ma".
 
+include "lambda/notation/relations/seqred_3.ma".
+
+include "lambda/xoa/ex_2_2.ma".
+
 (* PATH-LABELED SEQUENTIAL REDUCTION (SINGLE STEP) **************************)
 
 inductive pl_sred: path → relation term ≝

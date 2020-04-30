@@ -14,6 +14,8 @@
 
 include "lambda/terms/parallel_reduction.ma".
 
+include "lambda/notation/relations/parredstar_2.ma".
+
 (* PARALLEL COMPUTATION (MULTISTEP) *****************************************)
 
 definition preds: relation term ≝ star … pred.

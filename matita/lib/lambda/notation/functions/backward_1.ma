@@ -13,5 +13,5 @@
 (**************************************************************************)
 
 notation "hvbox( ⇓ term 46 M )"
-   non associative with precedence 46
-   for @{ 'Backward $M }.
+  non associative with precedence 46
+  for @{ 'Backward $M }.

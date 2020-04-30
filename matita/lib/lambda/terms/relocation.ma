@@ -14,6 +14,8 @@
 
 include "lambda/terms/term.ma".
 
+include "lambda/notation/functions/lift_3.ma".
+
 (* RELOCATION ***************************************************************)
 
 (* Policy: level metavariables : d, e

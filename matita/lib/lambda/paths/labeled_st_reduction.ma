@@ -16,6 +16,11 @@ include "lambda/subterms/booleanized.ma".
 include "lambda/paths/labeled_sequential_reduction.ma".
 include "lambda/paths/standard_order.ma".
 
+include "lambda/notation/relations/std_3.ma".
+
+include "lambda/xoa/ex_4_1.ma".
+include "lambda/xoa/ex_3_4.ma".
+
 (* PATH-LABELED STANDARD REDUCTION ON SUBTERMS (SINGLE STEP) ****************)
 
 (* Note: this is standard reduction on marked redexes,
@@ -30,10 +35,6 @@ inductive pl_st: path → relation subterms ≝
 
 interpretation "path-labeled standard reduction"
     'Std F p G = (pl_st p F G).
-
-notation "hvbox( F break Ⓡ ↦ [ term 46 p ] break term 46 G )"
-   non associative with precedence 45
-   for @{ 'Std $F $p $G }.
 
 lemma pl_st_fwd_pl_sred: ∀p,F1,F2. F1 Ⓡ↦[p] F2 → ⇓F1 ↦[p] ⇓F2.
 #p #F1 #F2 #H elim H -p -F1 -F2 normalize /2 width=1/

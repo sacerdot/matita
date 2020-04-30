@@ -15,6 +15,10 @@
 include "lambda/terms/relocating_substitution.ma".
 include "lambda/subterms/relocating_substitution.ma".
 
+include "lambda/notation/functions/projectdown_1.ma".
+
+include "lambda/xoa/ex_2_2.ma".
+
 (* CARRIER (UNDERLYING TERM) ************************************************)
 
 let rec carrier F on F ≝ match F with
@@ -25,10 +29,6 @@ let rec carrier F on F ≝ match F with
 
 interpretation "carrier (subterms)"
    'ProjectDown F = (carrier F).
-
-notation "hvbox(⇓ term 46 F)"
-   non associative with precedence 46
-   for @{ 'ProjectDown $F }.
 
 lemma carrier_inv_vref: ∀j,F. ⇓F = #j → ∃b. F = {b}#j.
 #j * normalize

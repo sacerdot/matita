@@ -16,6 +16,10 @@
 
 include "lambda/background/preamble.ma".
 
+include "lambda/notation/functions/variablereferencebyindex_1.ma".
+include "lambda/notation/functions/abstraction_1.ma".
+include "lambda/notation/functions/application_2.ma".
+
 (* TERM STRUCTURE ***********************************************************)
 
 (* Policy: term metavariables : A, B, C, D, M, N

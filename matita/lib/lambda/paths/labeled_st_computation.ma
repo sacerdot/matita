@@ -16,6 +16,10 @@ include "lambda/paths/standard_trace.ma".
 include "lambda/paths/labeled_sequential_computation.ma".
 include "lambda/paths/labeled_st_reduction.ma".
 
+include "lambda/notation/relations/stdstar_3.ma".
+
+include "lambda/xoa/ex_2_3.ma".
+
 (* PATH-LABELED STANDARD COMPUTATION (MULTISTEP) ****************************)
 
 (* Note: lstar shuld be replaced by l_sreds *)
@@ -23,10 +27,6 @@ definition pl_sts: trace → relation subterms ≝ lstar … pl_st.
 
 interpretation "path-labeled standard reduction"
     'StdStar F p G = (pl_sts p F G).
-
-notation "hvbox( F break Ⓡ ↦* [ term 46 p ] break term 46 G )"
-   non associative with precedence 45
-   for @{ 'StdStar $F $p $G }.
 
 lemma pl_sts_fwd_pl_sreds: ∀s,F1,F2. F1 Ⓡ↦*[s] F2 → ⇓F1 ↦*[s] ⇓F2.
 #s #F1 #F2 #H @(lstar_ind_r … s F2 H) -s -F2 //

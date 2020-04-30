@@ -14,6 +14,10 @@
 
 include "lambda/background/preamble.ma".
 
+include "lambda/notation/functions/variablereferencebyindex_2.ma".
+include "lambda/notation/functions/abstraction_2.ma".
+include "lambda/notation/functions/application_3.ma".
+
 (* SUBSETS OF SUBTERMS ******************************************************)
 
 (* Policy: boolean marks metavariables: b,c

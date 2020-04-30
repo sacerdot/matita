@@ -14,6 +14,8 @@
 
 include "lambda/levels/term.ma".
 
+include "lambda/notation/functions/annotatedabstraction_2.ma".
+
 (* ITERATED ABSTRACTION *****************************************************)
 
 definition labst: nat → lterm → lterm ≝ λh,M. match M with

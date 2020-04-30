@@ -1,29 +1,53 @@
-H        = @
-XOA_DIR  = ../../../components/binaries/xoa
-XOA      = xoa.native
-DEP_DIR  = ../../../components/binaries/matitadep
-DEP      = matitadep.native
-MAC_DIR  = ../../../components/binaries/mac
-MAC      = mac.native
+H    := @
 
-XOA_CONF    = xoa.conf.xml
-XOA_TARGETS = background/xoa_notation.ma background/xoa.ma
+TAGS := all xoa deps top
 
-all: xoa
-	$(H)../../matitac.opt */*.ma
+all:
+	$(H)../../matitac.opt .
 
 # xoa ########################################################################
 
-xoa: $(XOA_TARGETS)
+XOA_DIR      := ../../../components/binaries/xoa
+XOA          := xoa.native
+XOA_CONF     := xoa.conf.xml
+XOA_OPTS     := ../../matita.conf.xml $(XOA_CONF)
 
-$(XOA_TARGETS): $(XOA_CONF)
+xoa: $(XOA_CONF)
 	@echo "  EXEC $(XOA) $(XOA_CONF)"
-	$(H)MATITA_RT_BASE_DIR=../.. $(XOA_DIR)/$(XOA) $(XOA_CONF)
+	$(H)$(XOA_DIR)/$(XOA) -s $(XOA_OPTS)
+
+# dep input ##################################################################
+
+DEP_INPUT    := .depend
+DEP_DIR      := ../../../components/binaries/matitadep
+DEP          := matitadep.native
+DEP_OPTS     :=
+
+$(DEP_INPUT): MAS = $(shell find $* -name "*.ma")
+
+$(DEP_INPUT): LINE = $(MAS:%=%:include \"\".)
+
+$(DEP_INPUT): REPL = sed -e 's/^\./lambda/'
+
+$(DEP_INPUT): $(MAS) Makefile
+	@echo "  GREP include"
+	$(H)grep "include \"" $(MAS) | $(REPL) > $(DEP_INPUT)
+	$(H)echo "$(LINE)" | sed -e 's/\"\. /\"\.\n/g' | $(REPL) >> $(DEP_INPUT)
 
 # dep ########################################################################
 
-deps: MAS = $(shell find $* -name "*.ma")
+deps: $(DEP_INPUT)
+	@echo "  MATITADEP -c"
+	$(H)$(DEP_DIR)/$(DEP) -c $(DEP_OPTS) $<
 
-deps: $(DEP_DIR)/$(DEP)
-	@echo "  MATITADEP"
-	$(H)grep "include \"" $(MAS) | $<
+# top ########################################################################
+
+top: $(DEP_INPUT)
+	@echo "  MATITADEP -t"
+	$(H)$(DEP_DIR)/$(DEP) -t $(DEP_OPTS) $<
+
+##############################################################################
+
+.PHONY: $(TAGS)
+
+.SUFFIXES:

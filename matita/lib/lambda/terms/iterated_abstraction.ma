@@ -14,6 +14,8 @@
 
 include "lambda/terms/term.ma".
 
+include "lambda/notation/functions/annotatedabstraction_2.ma".
+
 (* ITERATED ABSTRACTION *****************************************************)
 
 let rec abst d M on d ≝ match d with

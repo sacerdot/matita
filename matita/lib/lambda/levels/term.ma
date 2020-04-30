@@ -14,6 +14,9 @@
 
 include "lambda/background/preamble.ma".
 
+include "lambda/notation/functions/variablereferencebylevel_2.ma".
+include "lambda/notation/functions/application_3.ma".
+
 (* PER LEVEL TERM STRUCTURE *************************************************)
 
 (* Policy: term metavariables          : A, B, C, D, M, N
@@ -31,7 +34,3 @@ interpretation "stratified term construction (variable reference by level)"
 
 interpretation "stratified term construction (application)"
    'Application i C A = (LAppl i C A).
-
-notation "hvbox( { term 46 b } § break term 90 d )"
- non associative with precedence 46
- for @{ 'VariableReferenceByLevel $b $d }.

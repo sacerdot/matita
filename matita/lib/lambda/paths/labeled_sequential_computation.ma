@@ -16,6 +16,8 @@ include "lambda/terms/labeled_sequential_computation.ma".
 include "lambda/paths/trace.ma".
 include "lambda/paths/labeled_sequential_reduction.ma".
 
+include "lambda/notation/relations/seqredstar_3.ma".
+
 (* PATH-LABELED SEQUENTIAL COMPUTATION (MULTISTEP) *******************************)
 
 (* Note: lstar shuld be replaced by l_sreds *)

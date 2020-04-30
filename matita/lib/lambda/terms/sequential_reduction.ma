@@ -14,6 +14,8 @@
 
 include "lambda/terms/multiplicity.ma".
 
+include "lambda/notation/relations/seqred_2.ma".
+
 (* SEQUENTIAL REDUCTION (SINGLE STEP) ***************************************)
 
 (* Note: the application "(A B)" is represented by "@B.A" following:

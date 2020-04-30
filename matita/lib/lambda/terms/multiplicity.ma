@@ -14,6 +14,8 @@
 
 include "lambda/terms/relocating_substitution.ma".
 
+include "lambda/notation/functions/multiplicity_1.ma".
+
 (* MULTIPLICITY *************************************************************)
 
 (* Note: this gives the number of variable references in M *)
@@ -25,10 +27,6 @@ let rec mult M on M ≝ match M with
 
 interpretation "term multiplicity"
    'Multiplicity M = (mult M).
-
-notation "hvbox( ♯{ term 46 M } )"
-   non associative with precedence 90
-   for @{ 'Multiplicity $M }.
 
 lemma mult_positive: ∀M. 0 < ♯{M}.
 #M elim M -M // /2 width=1/

@@ -14,6 +14,8 @@
 
 include "lambda/paths/path.ma".
 
+include "lambda/notation/relations/prec_2.ma".
+
 (* STANDARD PRECEDENCE ******************************************************)
 
 (* Note: standard precedence relation on paths: p ≺ q

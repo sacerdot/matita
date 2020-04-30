@@ -14,6 +14,8 @@
 
 include "lambda/subterms/relocation.ma".
 
+include "lambda/notation/functions/dsubst_3.ma".
+
 (* RELOCATING SUBSTITUTION **************************************************)
 
 (* Policy: depth (level) metavariables: d, e (as for lift) *)

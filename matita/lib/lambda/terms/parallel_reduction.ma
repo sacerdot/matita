@@ -15,6 +15,10 @@
 include "lambda/terms/size.ma".
 include "lambda/terms/sequential_reduction.ma".
 
+include "lambda/notation/relations/parred_2.ma".
+
+include "lambda/xoa/ex_4_3.ma".
+
 (* PARALLEL REDUCTION (SINGLE STEP) *****************************************)
 
 (* Note: the application "(A B)" is represented by "@B.A"

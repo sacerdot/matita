@@ -14,6 +14,10 @@
 
 include "lambda/subterms/boolean.ma".
 
+include "lambda/notation/functions/projectsame_2.ma".
+
+include "lambda/xoa/ex_4_3.ma".
+
 (* BOOLEANIZED SUBSET (EMPTY OR FULL) ***************************************)
 
 definition booleanized: bool → subterms → subterms ≝
@@ -21,10 +25,6 @@ definition booleanized: bool → subterms → subterms ≝
 
 interpretation "booleanized (subterms)"
    'ProjectSame b F = (booleanized b F).
-
-notation "hvbox( { term 46 b } ⇕ break term 46 F)"
-   non associative with precedence 46
-   for @{ 'ProjectSame $b $F }.
 
 lemma booleanized_inv_vref: ∀j,c,b,F. {b}⇕ F = {c}#j →
                             ∃∃b1. b = c & F = {b1}#j.

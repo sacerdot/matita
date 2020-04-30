@@ -14,6 +14,11 @@
 
 include "lambda/subterms/carrier.ma".
 
+include "lambda/notation/functions/projectup_2.ma".
+
+include "lambda/xoa/ex_3_1.ma".
+include "lambda/xoa/ex_4_2.ma".
+
 (* BOOLEAN (EMPTY OR FULL) SUBSET *******************************************)
 
 let rec boolean b M on M ≝ match M with
@@ -24,10 +29,6 @@ let rec boolean b M on M ≝ match M with
 
 interpretation "boolean subset (subterms)"
    'ProjectUp b M = (boolean b M).
-
-notation "hvbox( { term 46 b } ⇑ break term 46 M)"
-   non associative with precedence 46
-   for @{ 'ProjectUp $b $M }.
 
 lemma boolean_inv_vref: ∀j,c,b,M. {b}⇑ M = {c}#j → b = c ∧ M = #j.
 #j #c #b * normalize
