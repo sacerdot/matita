@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "static_2/s_computation/fqus_fqup.ma".
-include "static_2/static/feqx_fqup.ma".
+include "static_2/static/feqg_fqup.ma".
 include "basic_2/rt_computation/fpbs_fqus.ma".
 
 (* PARALLEL RST-COMPUTATION FOR CLOSURES ************************************)
@@ -21,14 +21,14 @@ include "basic_2/rt_computation/fpbs_fqus.ma".
 (* Advanced properties ******************************************************)
 
 lemma teqx_fpbs_trans:
-      ∀T1,T. T1 ≛ T →
+      ∀T1,T. T1 ≅ T →
       ∀G1,G2,L1,L2,T2. ❪G1,L1,T❫ ≥ ❪G2,L2,T2❫ → ❪G1,L1,T1❫ ≥ ❪G2,L2,T2❫.
-/3 width=5 by feqx_fpbs_trans, teqx_feqx/ qed-.
+/3 width=5 by feqx_fpbs_trans, teqg_feqg/ qed-.
 
 lemma fpbs_teqx_trans:
       ∀G1,G2,L1,L2,T1,T. ❪G1,L1,T1❫ ≥ ❪G2,L2,T❫ →
-      ∀T2. T ≛ T2 → ❪G1,L1,T1❫ ≥ ❪G2,L2,T2❫.
-/3 width=5 by fpbs_feqx_trans, teqx_feqx/ qed-.
+      ∀T2. T ≅ T2 → ❪G1,L1,T1❫ ≥ ❪G2,L2,T2❫.
+/3 width=5 by fpbs_feqx_trans, teqg_feqg/ qed-.
 
 (* Properties with plus-iterated structural successor for closures **********)
 

@@ -12,7 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/static/feqx_feqx.ma".
+include "static_2/static/feqg_fqup.ma".
+include "static_2/static/feqg_feqg.ma".
 include "basic_2/rt_transition/fpbq_fpb.ma".
 include "basic_2/rt_computation/fpbs_fqup.ma".
 include "basic_2/rt_computation/fpbg.ma".
@@ -33,9 +34,9 @@ qed-.
 (* Basic_2A1: uses: fleq_fpbg_trans *)
 lemma feqx_fpbg_trans:
       ∀G,G2,L,L2,T,T2. ❪G,L,T❫ > ❪G2,L2,T2❫ →
-      ∀G1,L1,T1. ❪G1,L1,T1❫ ≛ ❪G,L,T❫ → ❪G1,L1,T1❫ > ❪G2,L2,T2❫.
+      ∀G1,L1,T1. ❪G1,L1,T1❫ ≅ ❪G,L,T❫ → ❪G1,L1,T1❫ > ❪G2,L2,T2❫.
 #G #G2 #L #L2 #T #T2 * #G0 #L0 #T0 #H0 #H02 #G1 #L1 #T1 #H1
-elim (feqx_fpb_trans …  H1 … H0) -G -L -T
+elim (feqg_fpb_trans …  H1 … H0) -G -L -T
 /4 width=9 by fpbs_strap2, fpbq_feqx, ex2_3_intro/
 qed-.
 
@@ -78,14 +79,14 @@ lemma fqup_fpbg_trans:
 (* Basic_2A1: was: fpbs_fpbg *)
 lemma fpbs_inv_fpbg:
       ∀G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ≥ ❪G2,L2,T2❫ →
-      ∨∨ ❪G1,L1,T1❫ ≛ ❪G2,L2,T2❫
+      ∨∨ ❪G1,L1,T1❫ ≅ ❪G2,L2,T2❫
        | ❪G1,L1,T1❫ > ❪G2,L2,T2❫.
 #G1 #G2 #L1 #L2 #T1 #T2 #H @(fpbs_ind … H) -G2 -L2 -T2
-[ /2 width=1 by or_introl/
+[ /3 width=1 by feqg_refl, or_introl/
 | #G #G2 #L #L2 #T #T2 #_ #H2 * #H1
   elim (fpbq_inv_fpb … H2) -H2 #H2
-  [ /3 width=5 by feqx_trans, or_introl/
-  | elim (feqx_fpb_trans … H1 … H2) -G -L -T
+  [ /3 width=5 by feqg_trans, or_introl/
+  | elim (feqg_fpb_trans … H1 … H2) -G -L -T
     /4 width=5 by ex2_3_intro, or_intror, feqx_fpbs/
   | /3 width=5 by fpbg_feqx_trans, or_intror/
   | /4 width=5 by fpbg_fpbq_trans, fpb_fpbq, or_intror/
@@ -100,7 +101,7 @@ lemma fpbs_fpb_trans:
       ∀G2,L2,U2. ❪F2,K2,T2❫ ≻ ❪G2,L2,U2❫ →
       ∃∃G1,L1,U1. ❪F1,K1,T1❫ ≻ ❪G1,L1,U1❫ & ❪G1,L1,U1❫ ≥ ❪G2,L2,U2❫.
 #F1 #F2 #K1 #K2 #T1 #T2 #H elim (fpbs_inv_fpbg … H) -H
-[ #H12 #G2 #L2 #U2 #H2 elim (feqx_fpb_trans … H12 … H2) -F2 -K2 -T2
+[ #H12 #G2 #L2 #U2 #H2 elim (feqg_fpb_trans … H12 … H2) -F2 -K2 -T2
   /3 width=5 by feqx_fpbs, ex2_3_intro/
 | * #H1 #H2 #H3 #H4 #H5 #H6 #H7 #H8 #H9
   @(ex2_3_intro … H4) -H4 /3 width=5 by fpbs_strap1, fpb_fpbq/

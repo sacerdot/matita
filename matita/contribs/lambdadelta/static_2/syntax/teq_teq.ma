@@ -12,8 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
+include "static_2/syntax/teq.ma".
 
-notation "hvbox( T1 ≛ break term 46 T2 )"
-   non associative with precedence 45
-   for @{ 'StarEq $T1 $T2 }.
+(* SYNTACTIC EQUIVALENCE ON TERMS *******************************************)
+
+(* Main forward properties **************************************************)
+
+theorem teq_trans:
+        Transitive … teq.
+/2 width=3 by teq_repl_1/ qed-.
+(*
+theorem teq_repl_2 (R):
+        replace_2 … R teq teq.
+#R #T1 #U1 #HTU1 #T2 #HT12 #U2 #HU12
+<(teq_inv_eq … HT12) -T2 <(teq_inv_eq … HU12) -U2 //
+qed-.
+*)

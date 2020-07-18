@@ -20,12 +20,12 @@ include "static_2/syntax/teqo.ma".
 (* Properies with simple (neutral) terms ************************************)
 
 (* Basic_2A1: was: simple_tsts_repl_dx *)
-lemma simple_teqo_repl_dx: ∀T1,T2. T1 ⩳ T2 → 𝐒❪T1❫ → 𝐒❪T2❫.
+lemma simple_teqo_repl_dx: ∀T1,T2. T1 ~ T2 → 𝐒❪T1❫ → 𝐒❪T2❫.
 #T1 #T2 * -T1 -T2 //
 #I #V1 #V2 #T1 #T2 #H
 elim (simple_inv_pair … H) -H #J #H destruct //
 qed-.
 
 (* Basic_2A1: was: simple_tsts_repl_sn *)
-lemma simple_teqo_repl_sn: ∀T1,T2. T1 ⩳ T2 → 𝐒❪T2❫ → 𝐒❪T1❫.
+lemma simple_teqo_repl_sn: ∀T1,T2. T1 ~ T2 → 𝐒❪T2❫ → 𝐒❪T1❫.
 /3 width=3 by simple_teqo_repl_dx, teqo_sym/ qed-.

@@ -59,12 +59,12 @@ qed-.
 (* Basic_2A1: uses: fpbg_fleq_trans *)
 lemma fpbg_feqx_trans:
       ∀G1,G,L1,L,T1,T. ❪G1,L1,T1❫ > ❪G,L,T❫ →
-      ∀G2,L2,T2. ❪G,L,T❫ ≛ ❪G2,L2,T2❫ → ❪G1,L1,T1❫ > ❪G2,L2,T2❫.
+      ∀G2,L2,T2. ❪G,L,T❫ ≅ ❪G2,L2,T2❫ → ❪G1,L1,T1❫ > ❪G2,L2,T2❫.
 /3 width=5 by fpbg_fpbq_trans, fpbq_feqx/ qed-.
 
 (* Properties with t-bound rt-transition for terms **************************)
 
 lemma cpm_tneqx_cpm_fpbg (h) (G) (L):
-      ∀n1,T1,T. ❪G,L❫ ⊢ T1 ➡[h,n1] T → (T1 ≛ T → ⊥) →
+      ∀n1,T1,T. ❪G,L❫ ⊢ T1 ➡[h,n1] T → (T1 ≅ T → ⊥) →
       ∀n2,T2. ❪G,L❫ ⊢ T ➡[h,n2] T2 → ❪G,L,T1❫ > ❪G,L,T2❫.
 /4 width=5 by fpbq_fpbs, cpm_fpbq, cpm_fpb, ex2_3_intro/ qed.

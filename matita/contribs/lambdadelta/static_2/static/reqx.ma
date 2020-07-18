@@ -12,25 +12,25 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/notation/relations/stareqsn_3.ma".
+include "static_2/notation/relations/approxeqsn_3.ma".
 include "static_2/syntax/teqx_ext.ma".
-include "static_2/static/rex.ma".
+include "static_2/static/reqg.ma".
 
 (* SORT-IRRELEVANT EQUIVALENCE FOR LOCAL ENVIRONMENTS ON REFERRED ENTRIES ***)
-
+(*
 definition reqx: relation3 … ≝
-           rex cdeq.
-
+           reqg sfull.
+*)
 interpretation
   "sort-irrelevant equivalence on referred entries (local environment)"
-  'StarEqSn T L1 L2 = (reqx T L1 L2).
+  'ApproxEqSn T L1 L2 = (reqg sfull T L1 L2).
 
 interpretation
   "sort-irrelevant ranged equivalence (local environment)"
-  'StarEqSn f L1 L2 = (sex cdeq_ext cfull f L1 L2).
+  'StarEqSn f L1 L2 = (sex ceqx_ext cfull f L1 L2).
 
 (* Basic properties ***********************************************************)
-
+(*
 lemma frees_teqx_conf_reqx:
       ∀f,L1,T1. L1 ⊢ 𝐅+❪T1❫ ≘ f → ∀T2. T1 ≛ T2 →
       ∀L2. L1 ≛[f] L2 → L2 ⊢ 𝐅+❪T2❫ ≘ f.
@@ -128,7 +128,11 @@ lemma reqx_bind_repl_dx:
       ∀I,I1,L1,L2.∀T:term. L1.ⓘ[I] ≛[T] L2.ⓘ[I1] →
       ∀I2. I ≛ I2 → L1.ⓘ[I] ≛[T] L2.ⓘ[I2].
 /2 width=2 by rex_bind_repl_dx/ qed-.
-
+*)
+lemma reqg_reqx (S) (T):
+      ∀L1,L2. L1 ≛[S,T] L2 → L1 ≅[T] L2.
+/2 width=3 by reqg_co/ qed.
+(*
 (* Basic inversion lemmas ***************************************************)
 
 lemma reqx_inv_atom_sn:
@@ -215,3 +219,4 @@ lemma reqx_fwd_dx:
       ∀I2,L1,K2. ∀T:term. L1 ≛[T] K2.ⓘ[I2] →
       ∃∃I1,K1. L1 = K1.ⓘ[I1].
 /2 width=5 by rex_fwd_dx/ qed-.
+*)

@@ -19,7 +19,7 @@ include "basic_2/rt_transition/lpx.ma".
 (* STRONGLY NORMALIZING REFERRED LOCAL ENVS FOR EXTENDED RT-TRANSITION ******)
 
 definition rsx (G) (T): predicate lenv ≝
-           SN … (lpx G) (reqx T).
+           SN … (lpx G) (λL1,L2. L1 ≅[T] L2).
 
 interpretation
   "strong normalization for extended context-sensitive parallel rt-transition on referred entries (local environment)"
@@ -30,7 +30,7 @@ interpretation
 (* Basic_2A1: uses: lsx_ind *)
 lemma rsx_ind (G) (T) (Q:predicate …):
       (∀L1. G ⊢ ⬈*𝐒[T] L1 →
-        (∀L2. ❪G,L1❫ ⊢ ⬈ L2 → (L1 ≛[T] L2 → ⊥) → Q L2) →
+        (∀L2. ❪G,L1❫ ⊢ ⬈ L2 → (L1 ≅[T] L2 → ⊥) → Q L2) →
         Q L1
       ) →
       ∀L. G ⊢ ⬈*𝐒[T] L →  Q L.
@@ -43,7 +43,7 @@ qed-.
 (* Basic_2A1: uses: lsx_intro *)
 lemma rsx_intro (G) (T):
       ∀L1.
-      (∀L2. ❪G,L1❫ ⊢ ⬈ L2 → (L1 ≛[T] L2 → ⊥) → G ⊢ ⬈*𝐒[T] L2) →
+      (∀L2. ❪G,L1❫ ⊢ ⬈ L2 → (L1 ≅[T] L2 → ⊥) → G ⊢ ⬈*𝐒[T] L2) →
       G ⊢ ⬈*𝐒[T] L1.
 /5 width=1 by SN_intro/ qed.
 
@@ -56,7 +56,7 @@ lemma rsx_fwd_pair_sn (G):
 #G #I #L #V #T #H
 @(rsx_ind … H) -L #L1 #_ #IHL1
 @rsx_intro #L2 #HL12 #HnL12
-/4 width=3 by reqx_fwd_pair_sn/
+/4 width=3 by reqg_fwd_pair_sn/
 qed-.
 
 (* Basic_2A1: uses: lsx_fwd_flat_dx *)
@@ -66,7 +66,7 @@ lemma rsx_fwd_flat_dx (G):
 #G #I #L #V #T #H
 @(rsx_ind … H) -L #L1 #_ #IHL1
 @rsx_intro #L2 #HL12 #HnL12
-/4 width=3 by reqx_fwd_flat_dx/
+/4 width=3 by reqg_fwd_flat_dx/
 qed-.
 
 fact rsx_fwd_pair_aux (G):
@@ -74,7 +74,7 @@ fact rsx_fwd_pair_aux (G):
      ∀I,K,V. L = K.ⓑ[I]V → G ⊢ ⬈*𝐒[V] K.
 #G #L #H
 @(rsx_ind … H) -L #L1 #_ #IH #I #K1 #V #H destruct
-/5 width=5 by lpx_pair, rsx_intro, reqx_fwd_zero_pair/
+/5 width=5 by lpx_pair, rsx_intro, reqg_fwd_zero_pair/
 qed-.
 
 lemma rsx_fwd_pair (G):

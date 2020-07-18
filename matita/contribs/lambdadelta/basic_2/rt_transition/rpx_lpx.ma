@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "static_2/static/rex_lex.ma".
-include "basic_2/rt_transition/cpx_req.ma".
+include "basic_2/rt_transition/rpx_reqg.ma".
 include "basic_2/rt_transition/lpx.ma".
 
 (* EXTENDED PARALLEL RT-TRANSITION FOR REFERRED LOCAL ENVIRONMENTS **********)
@@ -35,7 +35,7 @@ lemma lpx_rpx (G) (T):
 lemma rpx_inv_req_lpx (G) (T):
       ∀L1,L2. ❪G,L1❫ ⊢ ⬈[T] L2 →
       ∃∃L. L1 ≡[T] L & ❪G,L❫ ⊢ ⬈ L2.
-/4 width=13 by cpx_req_conf, rex_inv_req_lex, rex_conf1_next/ qed-.
+/4 width=13 by cpx_reqg_conf, rex_inv_req_lex, rex_conf1_next/ qed-.
 
 (* Forward lemmas with extended rt-transition for full local envs ***********)
 

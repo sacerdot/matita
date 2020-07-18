@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/relocation/lifts_tweq.ma".
+include "static_2/relocation/lifts_teqw.ma".
 include "basic_2/rt_computation/cpms_drops.ma".
 include "basic_2/rt_computation/cnuw.ma".
 
@@ -23,7 +23,7 @@ include "basic_2/rt_computation/cnuw.ma".
 lemma cnuw_lifts (h) (G): d_liftable1 … (cnuw h G).
 #h #G #K #T #HT #b #f #L #HLK #U #HTU #n #U0 #H
 elim (cpms_inv_lifts_sn … H … HLK … HTU) -b -L #T0 #HTU0 #HT0
-lapply (HT … HT0) -G -K /2 width=6 by tweq_lifts_bi/
+lapply (HT … HT0) -G -K /2 width=6 by teqw_lifts_bi/
 qed-.
 
 (* Inversion lemmas with generic relocation *********************************)
@@ -31,7 +31,7 @@ qed-.
 lemma cnuw_inv_lifts (h) (G): d_deliftable1 … (cnuw h G).
 #h #G #L #U #HU #b #f #K #HLK #T #HTU #n #T0 #H
 elim (cpms_lifts_sn … H … HLK … HTU) -b -K #U0 #HTU0 #HU0
-lapply (HU … HU0) -G -L /2 width=6 by tweq_inv_lifts_bi/
+lapply (HU … HU0) -G -L /2 width=6 by teqw_inv_lifts_bi/
 qed-.
 
 (* Advanced properties ******************************************************)
@@ -43,7 +43,7 @@ elim (cpms_inv_lref_sn … H) -H *
 [ #H #_ destruct //
 | #T2 #HT2 #HTX2
   lapply (Hi … HT2) -Hi -HT2 #H
-  lapply (tweq_inv_lref_sn … H) -H #H destruct
+  lapply (teqw_inv_lref_sn … H) -H #H destruct
   lapply (lifts_inv_lref1_uni … HTX2) -HTX2 #H destruct //
 ]
 qed.

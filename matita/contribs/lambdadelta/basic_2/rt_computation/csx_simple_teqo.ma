@@ -26,7 +26,7 @@ include "basic_2/rt_computation/csx_csx.ma".
 (* Basic_2A1: was: csx_appl_simple_tsts *)
 lemma csx_appl_simple_teqo (G) (L):
       ∀V. ❪G,L❫ ⊢ ⬈*𝐒 V → ∀T1. ❪G,L❫ ⊢ ⬈*𝐒 T1 →
-      (∀T2. ❪G,L❫ ⊢ T1 ⬈* T2 → (T1 ⩳ T2 → ⊥) → ❪G,L❫ ⊢ ⬈*𝐒 ⓐV.T2) →
+      (∀T2. ❪G,L❫ ⊢ T1 ⬈* T2 → (T1 ~ T2 → ⊥) → ❪G,L❫ ⊢ ⬈*𝐒 ⓐV.T2) →
       𝐒❪T1❫ → ❪G,L❫ ⊢ ⬈*𝐒 ⓐV.T1.
 #G #L #V #H @(csx_ind … H) -V
 #V #_ #IHV #T1 #H @(csx_ind … H) -T1

@@ -12,18 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/syntax/term_simple.ma".
-include "static_2/syntax/tweq.ma".
+include "static_2/static/reqg_reqg.ma".
+include "static_2/static/req.ma".
 
-(* SORT-IRRELEVANT WHD EQUIVALENCE ON TERMS *********************************)
+(* SYNTACTIC EQUIVALENCE FOR LOCAL ENVIRONMENTS ON REFERRED ENTRIES *********)
 
-(* Properties with simple terms *********************************************)
+(* Advanced Forward lemmas **************************************************)
 
-lemma tweq_simple_trans:
-      ∀T1,T2. T1 ≅ T2 → 𝐒❪T1❫ → 𝐒❪T2❫.
-#T1 #T2 * -T1 -T2
-[4,5: #p #V1 #V2 #T1 #T2 [ #_ ] #H
-      elim (simple_inv_bind … H)
-|*  : /1 width=1 by simple_atom, simple_flat/
-]
+lemma req_rex_trans (R) (L) (T):
+      R_transitive_req R →
+      ∀L1. L1 ≡[T] L → ∀L2. L ⪤[R,T] L2 → L1 ⪤[R,T] L2.
+#R #L #T #HR #L1 #HL1 #L2 #HL2
+@(rex_trans_fsle … HL1 … HL2) -L (**) (* fulll auto too slow *)
+/3 width=16 by transitive_req_fwd_rex, reqg_fsle_comp, rex_trans_next/
 qed-.
+
+lemma req_reqg_trans (S) (T:term) (L):
+      ∀L1. L1 ≡[T] L → ∀L2. L ≛[S,T] L2 → L1 ≛[S,T] L2.
+/2 width=3 by req_rex_trans/ qed-.

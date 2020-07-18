@@ -12,20 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/syntax/cext2.ma".
+(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-(* CONTEXT-AWARE SYNTACTIC EQUIVALENCE FOR BINDERS **************************)
-
-definition ceq_ext: lenv → relation bind ≝
-                    cext2 ceq.
-
-(* Basic properties *********************************************************)
-
-lemma ceq_ext_refl (L): reflexive … (ceq_ext L).
-/2 width=1 by ext2_refl/ qed.
-
-(* Basic inversion lemmas ***************************************************)
-
-lemma ceq_ext_inv_eq: ∀L,I1,I2. ceq_ext L I1 I2 → I1 = I2.
-#L #I1 #I2 * -I1 -I2 //
-qed-.
+notation "hvbox( L ⊢ break term 46 T1 ≛[ break term 46 S ] break term 46 T2 )"
+   non associative with precedence 45
+   for @{ 'StarEq $S $L $T1 $T2 }.

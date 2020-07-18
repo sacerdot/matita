@@ -13,8 +13,8 @@
 (**************************************************************************)
 
 include "static_2/relocation/lex_tc.ma".
-include "static_2/static/req_fqup.ma".
-include "static_2/static/req_fsle.ma".
+include "static_2/static/reqg_fqup.ma".
+include "static_2/static/req_req.ma".
 include "static_2/i_static/rexs_fqup.ma".
 
 (* ITERATED EXTENSION ON REFERRED ENTRIES OF A CONTEXT-SENSITIVE REALTION ***)
@@ -44,7 +44,7 @@ lemma rexs_inv_lex_req (R):
 #R #H1R #H2R #H3R #H4R #L1 #L2 #T #H
 lapply (s_rs_transitive_lex_inv_isid … H3R) -H3R #H3R
 @(rexs_ind_sn … H1R … H) -H -L2
-[ /4 width=3 by req_refl, lex_refl, inj, ex2_intro/
+[ /4 width=3 by reqg_refl, lex_refl, inj, ex2_intro/
 | #L0 #L2 #_ #HL02 * #L * #f0 #Hf0 #HL1 #HL0
   lapply (req_rex_trans … HL0 … HL02) -L0 // * #f1 #Hf1 #HL2
   elim (sex_sdj_split_sn … ceq_ext … HL2 f0 ?) -HL2

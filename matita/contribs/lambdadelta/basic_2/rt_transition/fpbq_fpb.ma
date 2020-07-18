@@ -12,7 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_transition/fpb_feqx.ma".
+include "static_2/static/feqg_fqup.ma".
+include "static_2/static/feqg_feqg.ma".
+include "basic_2/rt_transition/fpb_feqg.ma".
 include "basic_2/rt_transition/fpbq.ma".
 
 (* PARALLEL RST-TRANSITION FOR CLOSURES *************************************)
@@ -27,33 +29,37 @@ lemma fpb_fpbq:
 qed.
 
 (* Basic_2A1: fpb_fpbq_alt *)
-lemma fpb_fpbq_fneqx:
+lemma fpb_fpbq_fneqx (S):
       ∀G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ≻ ❪G2,L2,T2❫ →
-      ∧∧ ❪G1,L1,T1❫ ≽ ❪G2,L2,T2❫ & (❪G1,L1,T1❫ ≛ ❪G2,L2,T2❫ → ⊥).
-/3 width=10 by fpb_fpbq, fpb_inv_feqx, conj/ qed-.
+      ∧∧ ❪G1,L1,T1❫ ≽ ❪G2,L2,T2❫ & (❪G1,L1,T1❫ ≛[S] ❪G2,L2,T2❫ → ⊥).
+/3 width=10 by fpb_fpbq, fpb_inv_feqg, conj/ qed-.
 
 (* Inversrion lemmas with proper parallel rst-transition for closures *******)
-
-(* Basic_2A1: uses: fpbq_ind_alt *)
-lemma fpbq_inv_fpb:
-      ∀G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ≽ ❪G2,L2,T2❫ →
-      ∨∨ ❪G1,L1,T1❫ ≛ ❪G2,L2,T2❫
-       | ❪G1,L1,T1❫ ≻ ❪G2,L2,T2❫.
-#G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2
-[ #G2 #L2 #T2 * [2: * #H1 #H2 #H3 destruct ]
-  /3 width=1 by fpb_fqu, feqx_intro_sn, or_intror, or_introl/
-| #T2 #H elim (teqx_dec T1 T2)
-  /4 width=1 by fpb_cpx, feqx_intro_sn, or_intror, or_introl/
-| #L2 elim (reqx_dec L1 L2 T1)
-  /4 width=1 by fpb_lpx, feqx_intro_sn, or_intror, or_introl/
-| /2 width=1 by or_introl/
-]
-qed-.
 
 (* Basic_2A1: fpbq_inv_fpb_alt *)
 lemma fpbq_fneqx_inv_fpb:
       ∀G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ≽ ❪G2,L2,T2❫ →
-      (❪G1,L1,T1❫ ≛ ❪G2,L2,T2❫ → ⊥) → ❪G1,L1,T1❫ ≻ ❪G2,L2,T2❫.
-#G1 #G2 #L1 #L2 #T1 #T2 #H #H0
-elim (fpbq_inv_fpb … H) -H // #H elim H0 -H0 //
+      (❪G1,L1,T1❫ ≅ ❪G2,L2,T2❫ → ⊥) → ❪G1,L1,T1❫ ≻ ❪G2,L2,T2❫.
+#G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2
+[ #G2 #L2 #T2 * [2: * #H1 #H2 #H3 destruct ]
+  [ #H elim H -H /2 width=1 by feqg_refl/
+  | /2 width=1 by fpb_fqu/
+  ]
+| /4 width=1 by fpb_cpx, teqg_feqg/
+| /4 width=1 by fpb_lpx, feqg_intro_sn/
+| #G2 #L2 #T2 #H12 #Hn12
+  elim Hn12 -Hn12 //
+]
+qed-.
+
+(* Basic_2A1: uses: fpbq_ind_alt *)
+lemma fpbq_inv_fpb:
+      ∀G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ≽ ❪G2,L2,T2❫ →
+      ∨∨ ❪G1,L1,T1❫ ≅ ❪G2,L2,T2❫
+       | ❪G1,L1,T1❫ ≻ ❪G2,L2,T2❫.
+#G1 #G2 #L1 #L2 #T1 #T2 #H 
+elim (feqg_dec sfull … G1 G2 L1 L2 T1 T2) //
+[ /2 width=1 by or_introl/
+| /4 width=1 by fpbq_fneqx_inv_fpb, or_intror/
+]
 qed-.

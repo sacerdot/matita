@@ -35,8 +35,8 @@ theorem cnv_cpmuwe_mono (h) (a) (G) (L):
         ∀T0. ❪G,L❫ ⊢ T0 ![h,a] →
         ∀n1,T1. ❪G,L❫ ⊢ T0 ➡*𝐍𝐖*[h,n1] T1 →
         ∀n2,T2. ❪G,L❫ ⊢ T0 ➡*𝐍𝐖*[h,n2] T2 →
-        ∧∧ ❪G,L❫ ⊢ T1 ⬌*[h,n2-n1,n1-n2] T2 & T1 ≅ T2.
+        ∧∧ ❪G,L❫ ⊢ T1 ⬌*[h,n2-n1,n1-n2] T2 & T1 ≃ T2.
 #h #a #G #L #T0 #HT0 #n1 #T1 * #HT01 #HT1 #n2 #T2 * #HT02 #HT2
 elim (cnv_cpms_conf … HT0 … HT01 … HT02) -T0 #T0 #HT10 #HT20
-/4 width=4 by cpms_div, tweq_canc_dx, conj/
+/4 width=4 by cpms_div, teqw_canc_dx, conj/
 qed-.

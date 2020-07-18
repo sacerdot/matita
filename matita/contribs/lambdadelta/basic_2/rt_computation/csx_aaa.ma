@@ -32,7 +32,7 @@ qed.
 fact aaa_ind_csx_aux (G) (L):
      ∀A. ∀Q:predicate ….
      (∀T1. ❪G,L❫ ⊢ T1 ⁝ A →
-       (∀T2. ❪G,L❫ ⊢ T1 ⬈ T2 → (T1 ≛ T2 → ⊥) → Q T2) → Q T1
+       (∀T2. ❪G,L❫ ⊢ T1 ⬈ T2 → (T1 ≅ T2 → ⊥) → Q T2) → Q T1
      ) →
      ∀T. ❪G,L❫ ⊢ ⬈*𝐒 T → ❪G,L❫ ⊢ T ⁝ A →  Q T.
 #G #L #A #Q #IH #T #H @(csx_ind … H) -T /4 width=5 by cpx_aaa_conf/
@@ -41,7 +41,7 @@ qed-.
 lemma aaa_ind_csx (G) (L):
       ∀A. ∀Q:predicate ….
       (∀T1. ❪G,L❫ ⊢ T1 ⁝ A →
-        (∀T2. ❪G,L❫ ⊢ T1 ⬈ T2 → (T1 ≛ T2 → ⊥) → Q T2) → Q T1
+        (∀T2. ❪G,L❫ ⊢ T1 ⬈ T2 → (T1 ≅ T2 → ⊥) → Q T2) → Q T1
       ) →
       ∀T. ❪G,L❫ ⊢ T ⁝ A → Q T.
 /5 width=9 by aaa_ind_csx_aux, aaa_csx/ qed-.
@@ -49,7 +49,7 @@ lemma aaa_ind_csx (G) (L):
 fact aaa_ind_csx_cpxs_aux (G) (L):
      ∀A. ∀Q:predicate ….
      (∀T1. ❪G,L❫ ⊢ T1 ⁝ A →
-       (∀T2. ❪G,L❫ ⊢ T1 ⬈* T2 → (T1 ≛ T2 → ⊥) → Q T2) → Q T1
+       (∀T2. ❪G,L❫ ⊢ T1 ⬈* T2 → (T1 ≅ T2 → ⊥) → Q T2) → Q T1
      ) →
      ∀T. ❪G,L❫ ⊢ ⬈*𝐒 T → ❪G,L❫ ⊢ T ⁝ A →  Q T.
 #G #L #A #Q #IH #T #H @(csx_ind_cpxs … H) -T /4 width=5 by cpxs_aaa_conf/
@@ -59,7 +59,7 @@ qed-.
 lemma aaa_ind_csx_cpxs (G) (L):
       ∀A. ∀Q:predicate ….
       (∀T1. ❪G,L❫ ⊢ T1 ⁝ A →
-        (∀T2. ❪G,L❫ ⊢ T1 ⬈* T2 → (T1 ≛ T2 → ⊥) → Q T2) → Q T1
+        (∀T2. ❪G,L❫ ⊢ T1 ⬈* T2 → (T1 ≅ T2 → ⊥) → Q T2) → Q T1
       ) →
       ∀T. ❪G,L❫ ⊢ T ⁝ A → Q T.
 /5 width=9 by aaa_ind_csx_cpxs_aux, aaa_csx/ qed-.

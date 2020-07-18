@@ -52,7 +52,7 @@ qed-.
 lemma cnx_inv_cast (G) (L):
       ∀V,T. ❪G,L❫ ⊢ ⬈𝐍 ⓝV.T → ⊥.
 #G #L #V #T #H lapply (H T ?) -H
-/2 width=6 by cpx_eps, teqx_inv_pair_xy_y/
+/2 width=6 by cpx_eps, teqg_inv_pair_xy_y/
 qed-.
 
 (* Basic properties *********************************************************)
@@ -60,7 +60,7 @@ qed-.
 lemma cnx_sort (G) (L):
       ∀s. ❪G,L❫ ⊢ ⬈𝐍 ⋆s.
 #G #L #s #X #H elim (cpx_inv_sort1 … H) -H
-/2 width=1 by teqx_sort/
+/2 width=1 by teqg_sort/
 qed.
 
 lemma cnx_abst (G) (L):

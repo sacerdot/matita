@@ -18,8 +18,8 @@ table {
        }
      ]
      [ [{ "equivalences" * }]
-       { "" "" "" "" "" "" "" }
-       { "+" "-" "+" "+" "+" "+" "-" }
+       { "" "" "" "" "" "" "" "" }
+       { "+" "-" "+" "+" "+" "+" "-" "+" }
        { "derived rt-equivalence (terms)"
          "primitive decomposed rt-equivalence (terms) removed"
          "equivalence for whd rt-reduction (terms)"
@@ -27,6 +27,7 @@ table {
          "equivalence up to exclusion binders (selected lenvs)"
          "syntactic equivalence (items)"
          "syntactic equivalence (selected closures) removed"
+         "generic quivalence (terms, items, referred lenvs, referred closures)"
        }
      ]
      [ [{ "partial orders" * }]

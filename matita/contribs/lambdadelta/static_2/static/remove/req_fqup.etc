@@ -12,13 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/syntax/teqx.ma".
-include "static_2/syntax/teqo.ma".
+include "static_2/static/rex_fqup.ma".
+include "static_2/static/req.ma".
 
-(* SORT-IRRELEVANT OUTER EQUIVALENCE FOR TERMS ******************************)
+(* SYNTACTIC EQUIVALENCE FOR LOCAL ENVIRONMENTS ON REFERRED ENTRIES *********)
 
-(* Properties with sort-irrelevant equivalence for terms ********************)
+(* Advanced properties ******************************************************)
 
-lemma teqx_teqo: ∀T1,T2. T1 ≛ T2 → T1 ⩳ T2.
-#T1 #T2 * -T1 -T2 /2 width=1 by teqo_sort, teqo_pair/
-qed.
+(* Basic_2A1: was: lleq_refl *)
+lemma req_refl: ∀T. reflexive … (req T).
+/2 width=1 by rex_refl/ qed.

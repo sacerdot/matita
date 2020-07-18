@@ -12,27 +12,28 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_transition/lpx_reqx.ma".
+include "basic_2/rt_transition/lpx_reqg.ma".
 include "basic_2/rt_computation/csx_drops.ma".
 
 (* STRONGLY NORMALIZING TERMS FOR EXTENDED PARALLEL RT-TRANSITION ***********)
 
 (* Advanced properties ******************************************************)
 
-lemma csx_teqx_trans (G) (L):
+lemma csx_teqg_trans (S) (G) (L):
+      reflexive … S → symmetric … S →
       ∀T1. ❪G,L❫ ⊢ ⬈*𝐒 T1 →
-      ∀T2. T1 ≛ T2 → ❪G,L❫ ⊢ ⬈*𝐒 T2.
-#G #L #T1 #H @(csx_ind … H) -T1 #T #_ #IH #T2 #HT2
+      ∀T2. T1 ≛[S] T2 → ❪G,L❫ ⊢ ⬈*𝐒 T2.
+#S #G #L #H1S #H2S  #T1 #H @(csx_ind … H) -T1 #T #_ #IH #T2 #HT2
 @csx_intro #T1 #HT21 #HnT21
-lapply (teqx_cpx_trans … HT2 … HT21) -HT21 #HT1
-/4 width=5 by teqx_repl/
+lapply (teqg_cpx_trans … HT2 … HT21) // -HT21 #HT1
+/5 width=4 by teqg_teqx, teqg_canc_sn, teqg_refl/
 qed-.
 
 lemma csx_cpx_trans (G) (L):
       ∀T1. ❪G,L❫ ⊢ ⬈*𝐒 T1 →
       ∀T2. ❪G,L❫ ⊢ T1 ⬈ T2 → ❪G,L❫ ⊢ ⬈*𝐒 T2.
 #G #L #T1 #H @(csx_ind … H) -T1 #T1 #HT1 #IHT1 #T2 #HLT12
-elim (teqx_dec T1 T2) /3 width=4 by csx_teqx_trans/
+elim (teqx_dec T1 T2) /3 width=6 by csx_teqg_trans/
 qed-.
 
 (* Basic_1: was just: sn3_cast *)

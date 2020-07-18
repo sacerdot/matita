@@ -19,9 +19,9 @@ include "basic_2/dynamic/cnv_cpm_teqx.ma".
 
 definition IH_cnv_cpm_teqx_cpm_trans (h) (a): relation3 genv lenv term ≝
            λG,L,T1. ❪G,L❫ ⊢ T1 ![h,a] →
-           ∀n1,T. ❪G,L❫ ⊢ T1 ➡[h,n1] T → T1 ≛ T →
+           ∀n1,T. ❪G,L❫ ⊢ T1 ➡[h,n1] T → T1 ≅ T →
            ∀n2,T2. ❪G,L❫ ⊢ T ➡[h,n2] T2 →
-           ∃∃T0. ❪G,L❫ ⊢ T1 ➡[h,n2] T0 & ❪G,L❫ ⊢ T0 ➡[h,n1] T2 & T0 ≛ T2.
+           ∃∃T0. ❪G,L❫ ⊢ T1 ➡[h,n2] T0 & ❪G,L❫ ⊢ T0 ➡[h,n1] T2 & T0 ≅ T2.
 
 (* Transitive properties restricted rt-transition for terms *****************)
 
@@ -35,7 +35,7 @@ fact cnv_cpm_teqx_cpm_trans_sub (h) (a) (G0) (L0) (T0):
   [ #H1 #H2 destruct /2 width=4 by ex3_intro/
   | #s #H1 #H2 #H3 destruct
     elim (cpm_inv_sort1 … HX2) -HX2 #H #Hn2 destruct >iter_n_Sm
-    /3 width=4 by cpm_sort, teqx_sort, ex3_intro/
+    /3 width=4 by cpm_sort, teqg_sort, ex3_intro/
   ]
 | #p #I #V1 #T1 #HG #HL #HT #H0 #n1 #X1 #H1X #H2X #n2 #X2 #HX2 destruct
   elim (cpm_teqx_inv_bind_sn … H0 … H1X H2X) -H0 -H1X -H2X #T #_ #H0T1 #H1T1 #H2T1 #H destruct

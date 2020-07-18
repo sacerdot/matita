@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/syntax/tweq_teqx.ma".
+include "static_2/syntax/teqw_teqg.ma".
 include "basic_2/rt_computation/csx_cpxs.ma".
 include "basic_2/rt_computation/cpms_cpxs.ma".
 include "basic_2/rt_computation/cnuw_cnuw.ma".
@@ -31,7 +31,7 @@ elim (cnuw_dec_ex h G L T1)
 | * #n1 #T0 #HT10 #HnT10
   elim (IHT1 … T0) -IHT1
   [ #T2 #n2 * #HT02 #HT2 /4 width=5 by cpms_trans, cpmuwe_intro, ex1_2_intro/
-  | /3 width=1 by teqx_tweq/
+  | /3 width=2 by teqg_teqw/
   | /2 width=3 by cpms_fwd_cpxs/
   ]
 ]

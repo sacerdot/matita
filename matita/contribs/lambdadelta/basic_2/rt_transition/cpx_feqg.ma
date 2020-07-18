@@ -12,25 +12,24 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/syntax/teqx.ma".
-include "static_2/s_transition/fqu_length.ma".
+include "static_2/static/feqg.ma".
+include "basic_2/rt_transition/cpx_reqg.ma".
+include "basic_2/rt_transition/rpx_reqg.ma".
 
-(* SUPCLOSURE ***************************************************************)
+(* EXTENDED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS **************)
 
-(* Inversion lemmas with context-free sort-irrelevant equivalence for terms *)
+(* Properties with generic equivalence for closures *************************)
 
-fact fqu_inv_teqx_aux: ∀b,G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ⬂[b] ❪G2,L2,T2❫ →
-                       G1 = G2 → |L1| = |L2| → T1 ≛ T2 → ⊥.
-#b #G1 #G2 #L1 #L2 #T1 #T2 * -G1 -G2 -L1 -L2 -T1 -T2
-[1: #I #G #L #V #_ #H elim (succ_inv_refl_sn … H)
-|6: #I #G #L #T #U #_ #_ #H elim (succ_inv_refl_sn … H)
-]
-/2 width=6 by teqx_inv_pair_xy_y, teqx_inv_pair_xy_x/
-qed-.
-
-(* Basic_2A1: uses: fqu_inv_eq *)
-lemma fqu_inv_teqx: ∀b,G,L1,L2,T1,T2. ❪G,L1,T1❫ ⬂[b] ❪G,L2,T2❫ →
-                    |L1| = |L2| → T1 ≛ T2 → ⊥.
-#b #G #L1 #L2 #T1 #T2 #H
-@(fqu_inv_teqx_aux … H) // (**) (* full auto fails *)
+(**) (* to update *)
+lemma feqg_cpx_trans (S):
+      reflexive … S → symmetric … S →
+      ∀G1,G2,L1,L2,T1,T. ❪G1,L1,T1❫ ≛[S] ❪G2,L2,T❫ →
+      ∀T2. ❪G2,L2❫ ⊢ T ⬈ T2 →
+      ∃∃T0. ❪G1,L1❫ ⊢ T1 ⬈ T0 & ❪G1,L1,T0❫ ≛[S] ❪G2,L2,T2❫.
+#S #H1S #H2S #G1 #G2 #L1 #L2 #T1 #T #H #T2 #HT2
+elim (feqg_inv_gen_dx … H) -H // #H #HL12 #HT1 destruct
+lapply (reqg_cpx_trans … HL12 … HT2) // #H
+lapply (cpx_reqg_conf_dx … HT2 … HL12) -HT2 -HL12 // #HL12
+lapply (teqg_cpx_trans … HT1 … H) -T // #HT12
+/4 width=4 by feqg_intro_sn, teqg_refl, ex2_intro/
 qed-.

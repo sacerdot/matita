@@ -12,14 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/static/feqx.ma".
-include "static_2/static/aaa_reqx.ma".
+(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-(* ATONIC ARITY ASSIGNMENT ON TERMS *****************************************)
-
-(* Properties with sort-irrelevant equivalence on referred entries **********)
-
-lemma aaa_feqx_conf: ∀G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ≛ ❪G2,L2,T2❫ →
-                     ∀A. ❪G1,L1❫ ⊢ T1 ⁝ A → ❪G2,L2❫ ⊢ T2 ⁝ A.
-#G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2
-/2 width=5 by aaa_teqx_conf_reqx/ qed-.
+notation "hvbox( L1 ≛[ break term 46 S, break term 46 T ] break term 46 L2 )"
+   non associative with precedence 45
+   for @{ 'StarEqSn $S $T $L1 $L2 }.

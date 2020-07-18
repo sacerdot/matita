@@ -27,16 +27,21 @@ table {
         ]
         [ { "atomic arity assignment" * } {
              [ [ "restricted refinement for lenvs" ] "lsuba" + "( ? ⊢ ? ⫃⁝ ? )" "lsuba_drops" + "lsuba_lsubr" + "lsuba_aaa" + "lsuba_lsuba" * ]
-             [ [ "for terms" ] "aaa" + "( ❪?,?❫ ⊢ ? ⁝ ? )" "aaa_drops" + "aaa_fqus" + "aaa_reqx" + "aaa_feqx" + "aaa_aaa" + "aaa_dec" * ]
+             [ [ "for terms" ] "aaa" + "( ❪?,?❫ ⊢ ? ⁝ ? )" "aaa_drops" + "aaa_fqus" + "aaa_reqg" + "aaa_feqg" + "aaa_aaa" + "aaa_dec" * ]
           }
         ]
-        [ { "degree-based equivalence" * } {
-             [ [ "for closures on referred entries" ] "feqx" + "( ❪?,?,?❫ ≛ ❪?,?,?❫ )" "feqx_fqup" + "feqx_fqus" + "feqx_req" + "feqx_feqx" * ]
-             [ [ "for lenvs on referred entries" ] "reqx" + "( ? ≛[?] ? )" "reqx_length" + "reqx_drops" + "reqx_fqup" + "reqx_fqus" + "reqx_req" + "reqx_reqx" * ]
+        [ { "sort-irrelevant equivalence" * } {
+             [ [ "for closures on referred entries" ] "feqx" + "( ❪?,?,?❫ ≅ ❪?,?,?❫ )" * ]
+             [ [ "for lenvs on referred entries" ] "reqx" + "( ? ≅[?] ? )" "reqx_reqx" * ]
           }
         ]
         [ { "syntactic equivalence" * } {
-             [ [ "for lenvs on referred entries" ] "req" + "( ? ≡[?] ? )" "req_length" + "req_drops" + "req_fqup" + "req_fsle" * ]
+             [ [ "for lenvs on referred entries" ] "req" + "( ? ≡[?] ? )" * ]
+          }
+        ]
+        [ { "generic equivalence" * } {
+             [ [ "for closures on referred entries" ] "feqg" + "( ❪?,?,?❫ ≛[?] ❪?,?,?❫ )" "feqg_fqup" + "feqg_fqus" + "feqg_feqg" * ]
+             [ [ "for lenvs on referred entries" ] "reqg" + "( ? ≛[?,?] ? )" "reqg_length" + "reqg_drops" + "reqg_fqup" + "reqg_fqus" + "reqg_reqg" * ]
           }
         ]
         [ { "generic extension of a context-sensitive relation" * } {
@@ -68,7 +73,7 @@ table {
    [ { "s-transition" * } {
         [ { "structural successor" * } {
              [ [ "for closures" ] "fquq" + "( ❪?,?,?❫ ⬂⸮[?] ❪?,?,?❫ )" + "( ❪?,?,?❫ ⬂⸮ ❪?,?,?❫ )" "fquq_length" + "fquq_weight" * ]
-             [ [ "proper for closures" ] "fqu" + "( ❪?,?,?❫ ⬂[?] ❪?,?,?❫ )" + "( ❪?,?,?❫ ⬂ ❪?,?,?❫ )" "fqu_length" + "fqu_weight" + "fqu_teqx" * ]
+             [ [ "proper for closures" ] "fqu" + "( ❪?,?,?❫ ⬂[?] ❪?,?,?❫ )" + "( ❪?,?,?❫ ⬂ ❪?,?,?❫ )" "fqu_length" + "fqu_weight" + "fqu_teqg" * ]
           }
         ]
      }
@@ -86,7 +91,7 @@ table {
         [ { "generic and uniform relocation" * } {
              [ [ "for binders" ] "lifts_bind" + "( ⇧*[?] ? ≘ ? )" + "( ⇧[?] ? ≘ ? )" "lifts_weight_bind" + "lifts_lifts_bind" * ]
              [ [ "for term vectors" ] "lifts_vector" + "( ⇧*[?] ? ≘ ? )" + "( ⇧[?] ? ≘ ? )" "lifts_lifts_vector" * ]
-             [ [ "for terms" ] "lifts" + "( ⇧*[?] ? ≘ ? )" + "( ⇧[?] ? ≘ ? )" "lifts_simple" + "lifts_weight" + "lifts_teqx" + "lifts_tweq" + "lifts_teqo" + "lifts_lifts" * ]
+             [ [ "for terms" ] "lifts" + "( ⇧*[?] ? ≘ ? )" + "( ⇧[?] ? ≘ ? )" "lifts_simple" + "lifts_weight" + "lifts_teqg" + "lifts_teqx" + "lifts_teqw" + "lifts_teqo" + "lifts_lifts" * ]
           }
         ]
         [ { "syntactic equivalence" * } {
@@ -117,16 +122,26 @@ table {
           }
         ]
         [ { "sort-irrelevant outer equivalence" * } {
-             [ [ "for terms" ] "teqo" + "( ? ⩳ ? )" "teqo_simple" + "teqo_teqx" + "teqo_teqo" + "teqo_simple_vector" * ]
+             [ [ "for terms" ] "teqo" + "( ? ~ ? )" "teqo_simple" + "teqo_teqg" + "teqo_teqo" + "teqo_simple_vector" * ]
           }
         ]
         [ { "sort-irrelevant whd equivalence" * } {
-             [ [ "for terms" ] "tweq" + "( ? ≅ ? )" "tweq_simple" + "tweq_teqx" + "tweq_tueq" * ]
+             [ [ "for terms" ] "teqw" + "( ? ≃ ? )" "teqw_simple" + "teqw_teqg" + "teqw_teqw" * ]
           }
         ]
         [ { "sort-irrelevant equivalence" * } {
-             [ [ "" ] "teqx_ext" + "( ? ≛ ? )" + "( ? ⊢ ? ≛ ? )" * ]
-             [ [ "" ] "teqx" + "( ? ≛ ? )" "teqx_teqx" * ]
+             [ [ "" ] "teqx_ext" + "( ? ≅ ? )" + "( ? ⊢ ? ≅ ? )" * ]
+             [ [ "" ] "teqx" + "( ? ≅ ? )" "teqx_teqx" * ]
+          }
+        ]
+        [ { "syntactic equivalence" * } {
+             [ [ "" ] "teq_ext" + "( ? ≡ ? )" + "( ? ⊢ ? ≡ ? )" "teq_ext_teq_ext" * ]
+             [ [ "" ] "teq" + "( ? ≡ ? )" "teq_teq" * ]
+          }
+        ]
+        [ { "generic equivalence" * } {
+             [ [ "" ] "teqg_ext" + "( ? ≛[?] ? )" + "( ? ⊢ ? ≛[?] ? )" * ]
+             [ [ "" ] "teqg" + "( ? ≛[?] ? )" "teqg_teqg" * ]
           }
         ]
         [ { "closures" * } {
@@ -141,7 +156,6 @@ table {
           }
         ]
         [ { "local environments" * } {
-             [ [ "" ] "ceq_ext" "ceq_ext_ceq_ext" * ]
              [ [ "" ] "cext2" * ]
              [ [ "" ] "lenv_length" + "( |?| )" * ]
              [ [ "" ] "lenv_weight" + "( ♯❨?❩ )" * ]

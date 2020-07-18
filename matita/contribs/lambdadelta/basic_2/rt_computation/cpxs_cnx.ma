@@ -20,13 +20,13 @@ include "basic_2/rt_computation/cpxs.ma".
 (* Properties with normal forms *********************************************)
 
 lemma cpxs_cnx (G) (L) (T1):
-      (∀T2. ❪G,L❫ ⊢ T1 ⬈* T2 → T1 ≛ T2) → ❪G,L❫ ⊢ ⬈𝐍 T1.
+      (∀T2. ❪G,L❫ ⊢ T1 ⬈* T2 → T1 ≅ T2) → ❪G,L❫ ⊢ ⬈𝐍 T1.
 /3 width=1 by cpx_cpxs/ qed.
 
 (* Inversion lemmas with normal terms ***************************************)
 
 lemma cpxs_inv_cnx1 (G) (L):
-      ∀T1,T2. ❪G,L❫ ⊢ T1 ⬈* T2 → ❪G,L❫ ⊢ ⬈𝐍 T1 → T1 ≛ T2.
+      ∀T1,T2. ❪G,L❫ ⊢ T1 ⬈* T2 → ❪G,L❫ ⊢ ⬈𝐍 T1 → T1 ≅ T2.
 #G #L #T1 #T2 #H @(cpxs_ind_dx … H) -T1
 /5 width=9 by cnx_teqx_trans, teqx_trans/
 qed-.

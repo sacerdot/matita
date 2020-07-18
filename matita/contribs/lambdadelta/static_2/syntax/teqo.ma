@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "ground/xoa/ex_1_2.ma".
-include "static_2/notation/relations/topiso_2.ma".
+include "static_2/notation/relations/tilde_2.ma".
 include "static_2/syntax/term.ma".
 
 (* SORT-IRRELEVANT OUTER EQUIVALENCE FOR TERMS ******************************)
@@ -28,11 +28,11 @@ inductive teqo: relation term ≝
 
 interpretation
   "sort-irrelevant outer equivalence (term)"
-  'TopIso T1 T2 = (teqo T1 T2).
+  'Tilde T1 T2 = (teqo T1 T2).
 
 (* Basic inversion lemmas ***************************************************)
 
-fact teqo_inv_sort1_aux: ∀X,Y. X ⩳ Y → ∀s1. X = ⋆s1 →
+fact teqo_inv_sort1_aux: ∀X,Y. X ~ Y → ∀s1. X = ⋆s1 →
                          ∃s2. Y = ⋆s2.
 #X #Y * -X -Y
 [ #s1 #s2 #s #H destruct /2 width=2 by ex_intro/
@@ -43,11 +43,11 @@ fact teqo_inv_sort1_aux: ∀X,Y. X ⩳ Y → ∀s1. X = ⋆s1 →
 qed-.
 
 (* Basic_1: was just: iso_gen_sort *)
-lemma teqo_inv_sort1: ∀Y,s1. ⋆s1 ⩳ Y →
+lemma teqo_inv_sort1: ∀Y,s1. ⋆s1 ~ Y →
                       ∃s2. Y = ⋆s2.
 /2 width=4 by teqo_inv_sort1_aux/ qed-.
 
-fact teqo_inv_lref1_aux: ∀X,Y. X ⩳ Y → ∀i. X = #i → Y = #i.
+fact teqo_inv_lref1_aux: ∀X,Y. X ~ Y → ∀i. X = #i → Y = #i.
 #X #Y * -X -Y //
 [ #s1 #s2 #j #H destruct
 | #I #V1 #V2 #T1 #T2 #j #H destruct
@@ -55,20 +55,20 @@ fact teqo_inv_lref1_aux: ∀X,Y. X ⩳ Y → ∀i. X = #i → Y = #i.
 qed-.
 
 (* Basic_1: was: iso_gen_lref *)
-lemma teqo_inv_lref1: ∀Y,i. #i ⩳ Y → Y = #i.
+lemma teqo_inv_lref1: ∀Y,i. #i ~ Y → Y = #i.
 /2 width=5 by teqo_inv_lref1_aux/ qed-.
 
-fact teqo_inv_gref1_aux: ∀X,Y. X ⩳ Y → ∀l. X = §l → Y = §l.
+fact teqo_inv_gref1_aux: ∀X,Y. X ~ Y → ∀l. X = §l → Y = §l.
 #X #Y * -X -Y //
 [ #s1 #s2 #k #H destruct
 | #I #V1 #V2 #T1 #T2 #k #H destruct
 ]
 qed-.
 
-lemma teqo_inv_gref1: ∀Y,l. §l ⩳ Y → Y = §l.
+lemma teqo_inv_gref1: ∀Y,l. §l ~ Y → Y = §l.
 /2 width=5 by teqo_inv_gref1_aux/ qed-.
 
-fact teqo_inv_pair1_aux: ∀T1,T2. T1 ⩳ T2 →
+fact teqo_inv_pair1_aux: ∀T1,T2. T1 ~ T2 →
                          ∀J,W1,U1. T1 = ②[J]W1.U1 →
                          ∃∃W2,U2. T2 = ②[J]W2.U2.
 #T1 #T2 * -T1 -T2
@@ -81,11 +81,11 @@ qed-.
 
 (* Basic_1: was: iso_gen_head *)
 (* Basic_2A1: was: tsts_inv_pair1 *)
-lemma teqo_inv_pair1: ∀J,W1,U1,T2. ②[J]W1.U1 ⩳ T2 →
+lemma teqo_inv_pair1: ∀J,W1,U1,T2. ②[J]W1.U1 ~ T2 →
                       ∃∃W2,U2. T2 = ②[J]W2. U2.
 /2 width=7 by teqo_inv_pair1_aux/ qed-.
 
-fact teqo_inv_pair2_aux: ∀T1,T2. T1 ⩳ T2 →
+fact teqo_inv_pair2_aux: ∀T1,T2. T1 ~ T2 →
                          ∀J,W2,U2. T2 = ②[J]W2.U2 →
                          ∃∃W1,U1. T1 = ②[J]W1.U1.
 #T1 #T2 * -T1 -T2
@@ -97,13 +97,13 @@ fact teqo_inv_pair2_aux: ∀T1,T2. T1 ⩳ T2 →
 qed-.
 
 (* Basic_2A1: was: tsts_inv_pair2 *)
-lemma teqo_inv_pair2: ∀J,T1,W2,U2. T1 ⩳ ②[J]W2.U2 →
+lemma teqo_inv_pair2: ∀J,T1,W2,U2. T1 ~ ②[J]W2.U2 →
                       ∃∃W1,U1. T1 = ②[J]W1.U1.
 /2 width=7 by teqo_inv_pair2_aux/ qed-.
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma teqo_inv_pair: ∀I1,I2,V1,V2,T1,T2. ②[I1]V1.T1 ⩳ ②[I2]V2.T2 →
+lemma teqo_inv_pair: ∀I1,I2,V1,V2,T1,T2. ②[I1]V1.T1 ~ ②[I2]V2.T2 →
                      I1 = I2.
 #I1 #I2 #V1 #V2 #T1 #T2 #H elim (teqo_inv_pair1 … H) -H
 #V0 #T0 #H destruct //
@@ -124,7 +124,7 @@ lemma teqo_sym: symmetric … teqo.
 qed-.
 
 (* Basic_2A1: was: tsts_dec *)
-lemma teqo_dec: ∀T1,T2. Decidable (T1 ⩳ T2).
+lemma teqo_dec: ∀T1,T2. Decidable (T1 ~ T2).
 * [ * #s1 | #I1 #V1 #T1 ] * [1,3,5,7: * #s2 |*: #I2 #V2 #T2 ]
 [ /3 width=1 by teqo_sort, or_introl/
 |2,3,13:

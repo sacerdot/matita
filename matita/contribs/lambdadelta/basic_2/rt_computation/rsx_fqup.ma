@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/static/reqx_fqup.ma".
+include "static_2/static/reqg_fqup.ma".
 include "basic_2/rt_computation/rsx.ma".
 
 (* STRONGLY NORMALIZING REFERRED LOCAL ENVS FOR EXTENDED RT-TRANSITION ******)
@@ -24,7 +24,7 @@ lemma lfsx_atom (G) (T): G ⊢ ⬈*𝐒[T] ⋆.
 #G #T
 @rsx_intro #Y #H #HnT
 lapply (lpx_inv_atom_sn … H) -H #H destruct
-elim HnT -HnT //
+elim HnT -HnT /2 width=1 by rex_refl/
 qed.
 
 (* Advanced forward lemmas **************************************************)
@@ -38,7 +38,7 @@ lemma rsx_fwd_bind_dx_void (G):
 @(rsx_ind … H) -L #L1 #_ #IH
 @rsx_intro #Y #H #HT
 elim (lpx_inv_unit_sn … H) -H #L2 #HL12 #H destruct
-/4 width=4 by reqx_fwd_bind_dx_void/
+/4 width=4 by reqg_fwd_bind_dx_void/
 qed-.
 
 (* Advanced inversion lemmas ************************************************)

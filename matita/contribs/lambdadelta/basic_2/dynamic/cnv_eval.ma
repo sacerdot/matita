@@ -79,7 +79,7 @@ theorem cnv_dec (h) (a) (G) (L) (T): ac_props a →
           elim (cnv_inv_appl_cpes … H) -H #m0 #q #W0 #U0 #_ #_ #_ #_ #HTU0
           lapply (cpmuwe_abst … HTU0) -HTU0 #HTU0
           elim (cnv_cpmuwe_mono … HT … HTU0 … HX0) -T #_ #H
-          elim (tweq_inv_abst_sn … H) -W0 -U0 #W0 #U0 #H destruct
+          elim (teqw_inv_abst_sn … H) -W0 -U0 #W0 #U0 #H destruct
           /2 width=4 by/
         ]
 (* Note: failed applicability *)

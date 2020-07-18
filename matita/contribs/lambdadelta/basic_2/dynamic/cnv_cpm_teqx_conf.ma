@@ -19,32 +19,32 @@ include "basic_2/dynamic/cnv_cpm_teqx.ma".
 
 definition IH_cnv_cpm_teqx_conf_lpr (h) (a): relation3 genv lenv term ≝
            λG,L0,T0. ❪G,L0❫ ⊢ T0 ![h,a] →
-           ∀n1,T1. ❪G,L0❫ ⊢ T0 ➡[h,n1] T1 → T0 ≛ T1 →
-           ∀n2,T2. ❪G,L0❫ ⊢ T0 ➡[h,n2] T2 → T0 ≛ T2 →
+           ∀n1,T1. ❪G,L0❫ ⊢ T0 ➡[h,n1] T1 → T0 ≅ T1 →
+           ∀n2,T2. ❪G,L0❫ ⊢ T0 ➡[h,n2] T2 → T0 ≅ T2 →
            ∀L1. ❪G,L0❫ ⊢ ➡[h,0] L1 → ∀L2. ❪G,L0❫ ⊢ ➡[h,0] L2 →
-           ∃∃T. ❪G,L1❫ ⊢ T1 ➡[h,n2-n1] T & T1 ≛ T & ❪G,L2❫ ⊢ T2 ➡[h,n1-n2] T & T2 ≛ T.
+           ∃∃T. ❪G,L1❫ ⊢ T1 ➡[h,n2-n1] T & T1 ≅ T & ❪G,L2❫ ⊢ T2 ➡[h,n1-n2] T & T2 ≅ T.
 
 (* Diamond propery with restricted rt-transition for terms ******************)
 
 fact cnv_cpm_teqx_conf_lpr_atom_atom_aux (h) (G0) (L1) (L2) (I):
-     ∃∃T. ❪G0,L1❫ ⊢ ⓪[I] ➡[h,0] T & ⓪[I] ≛ T & ❪G0,L2❫ ⊢ ⓪[I] ➡[h,0] T & ⓪[I] ≛ T.
+     ∃∃T. ❪G0,L1❫ ⊢ ⓪[I] ➡[h,0] T & ⓪[I] ≅ T & ❪G0,L2❫ ⊢ ⓪[I] ➡[h,0] T & ⓪[I] ≅ T.
 #h #G0 #L1 #L2 #I
 /2 width=5 by ex4_intro/
 qed-.
 
 fact cnv_cpm_teqx_conf_lpr_atom_ess_aux (h) (G0) (L1) (L2) (s):
-     ∃∃T. ❪G0,L1❫ ⊢ ⋆s ➡[h,1] T & ⋆s ≛ T & ❪G0,L2❫ ⊢ ⋆(⫯[h]s) ➡[h,0] T & ⋆(⫯[h]s) ≛ T.
+     ∃∃T. ❪G0,L1❫ ⊢ ⋆s ➡[h,1] T & ⋆s ≅ T & ❪G0,L2❫ ⊢ ⋆(⫯[h]s) ➡[h,0] T & ⋆(⫯[h]s) ≅ T.
 #h #G0 #L1 #L2 #s
-/3 width=5 by teqx_sort, ex4_intro/
+/3 width=5 by teqg_sort, ex4_intro/
 qed-.
 
 fact cnv_cpm_teqx_conf_lpr_bind_bind_aux (h) (a) (p) (I) (G0) (L0) (V0) (T0):
      (∀G,L,T. ❪G0,L0,ⓑ[p,I]V0.T0❫ ⬂+ ❪G,L,T❫ → IH_cnv_cpm_teqx_conf_lpr h a G L T) →
      ❪G0,L0❫ ⊢ ⓑ[p,I]V0.T0 ![h,a] →
-     ∀n1,T1. ❪G0,L0.ⓑ[I]V0❫ ⊢ T0 ➡[h,n1] T1 → T0 ≛ T1 →
-     ∀n2,T2. ❪G0,L0.ⓑ[I]V0❫ ⊢ T0 ➡[h,n2] T2 → T0 ≛ T2 →
+     ∀n1,T1. ❪G0,L0.ⓑ[I]V0❫ ⊢ T0 ➡[h,n1] T1 → T0 ≅ T1 →
+     ∀n2,T2. ❪G0,L0.ⓑ[I]V0❫ ⊢ T0 ➡[h,n2] T2 → T0 ≅ T2 →
      ∀L1. ❪G0,L0❫ ⊢ ➡[h,0] L1 → ∀L2. ❪G0,L0❫ ⊢ ➡[h,0] L2 →
-     ∃∃T. ❪G0,L1❫ ⊢ ⓑ[p,I]V0.T1 ➡[h,n2-n1] T & ⓑ[p,I]V0.T1 ≛ T & ❪G0,L2❫ ⊢ ⓑ[p,I]V0.T2 ➡[h,n1-n2] T & ⓑ[p,I]V0.T2 ≛ T.
+     ∃∃T. ❪G0,L1❫ ⊢ ⓑ[p,I]V0.T1 ➡[h,n2-n1] T & ⓑ[p,I]V0.T1 ≅ T & ❪G0,L2❫ ⊢ ⓑ[p,I]V0.T2 ➡[h,n1-n2] T & ⓑ[p,I]V0.T2 ≅ T.
 #h #a #p #I #G0 #L0 #V0 #T0 #IH #H0
 #n1 #T1 #H1T01 #H2T01 #n2 #T2 #H1T02 #H2T02
 #L1 #HL01 #L2 #HL02
@@ -57,10 +57,10 @@ qed-.
 fact cnv_cpm_teqx_conf_lpr_appl_appl_aux (h) (a) (G0) (L0) (V0) (T0):
      (∀G,L,T. ❪G0,L0,ⓐV0.T0❫ ⬂+ ❪G,L,T❫ → IH_cnv_cpm_teqx_conf_lpr h a G L T) →
      ❪G0,L0❫ ⊢ ⓐV0.T0 ![h,a] →
-     ∀n1,T1. ❪G0,L0❫ ⊢ T0 ➡[h,n1] T1 → T0 ≛ T1 →
-     ∀n2,T2. ❪G0,L0❫ ⊢ T0 ➡[h,n2] T2 → T0 ≛ T2 →
+     ∀n1,T1. ❪G0,L0❫ ⊢ T0 ➡[h,n1] T1 → T0 ≅ T1 →
+     ∀n2,T2. ❪G0,L0❫ ⊢ T0 ➡[h,n2] T2 → T0 ≅ T2 →
      ∀L1. ❪G0,L0❫ ⊢ ➡[h,0] L1 → ∀L2. ❪G0,L0❫ ⊢ ➡[h,0] L2 →
-     ∃∃T. ❪G0,L1❫ ⊢ ⓐV0.T1 ➡[h,n2-n1] T & ⓐV0.T1 ≛ T & ❪G0,L2❫ ⊢ ⓐV0.T2 ➡[h,n1-n2] T & ⓐV0.T2 ≛ T.
+     ∃∃T. ❪G0,L1❫ ⊢ ⓐV0.T1 ➡[h,n2-n1] T & ⓐV0.T1 ≅ T & ❪G0,L2❫ ⊢ ⓐV0.T2 ➡[h,n1-n2] T & ⓐV0.T2 ≅ T.
 #h #a #G0 #L0 #V0 #T0 #IH #H0
 #n1 #T1 #H1T01 #H2T01 #n2 #T2 #H1T02 #H2T02
 #L1 #HL01 #L2 #HL02
@@ -73,12 +73,12 @@ qed-.
 fact cnv_cpm_teqx_conf_lpr_cast_cast_aux (h) (a) (G0) (L0) (V0) (T0):
      (∀G,L,T. ❪G0,L0,ⓝV0.T0❫ ⬂+ ❪G,L,T❫ → IH_cnv_cpm_teqx_conf_lpr h a G L T) →
      ❪G0,L0❫ ⊢ ⓝV0.T0 ![h,a] →
-     ∀n1,V1. ❪G0,L0❫ ⊢ V0 ➡[h,n1] V1 → V0 ≛ V1 →
-     ∀n2,V2. ❪G0,L0❫ ⊢ V0 ➡[h,n2] V2 → V0 ≛ V2 →
-     ∀T1. ❪G0,L0❫ ⊢ T0 ➡[h,n1] T1 → T0 ≛ T1 →
-     ∀T2. ❪G0,L0❫ ⊢ T0 ➡[h,n2] T2 → T0 ≛ T2 →
+     ∀n1,V1. ❪G0,L0❫ ⊢ V0 ➡[h,n1] V1 → V0 ≅ V1 →
+     ∀n2,V2. ❪G0,L0❫ ⊢ V0 ➡[h,n2] V2 → V0 ≅ V2 →
+     ∀T1. ❪G0,L0❫ ⊢ T0 ➡[h,n1] T1 → T0 ≅ T1 →
+     ∀T2. ❪G0,L0❫ ⊢ T0 ➡[h,n2] T2 → T0 ≅ T2 →
      ∀L1. ❪G0,L0❫ ⊢ ➡[h,0] L1 → ∀L2. ❪G0,L0❫ ⊢ ➡[h,0] L2 →
-     ∃∃T. ❪G0,L1❫ ⊢ ⓝV1.T1 ➡[h,n2-n1] T & ⓝV1.T1 ≛ T & ❪G0,L2❫ ⊢ ⓝV2.T2 ➡[h,n1-n2] T & ⓝV2.T2 ≛ T.
+     ∃∃T. ❪G0,L1❫ ⊢ ⓝV1.T1 ➡[h,n2-n1] T & ⓝV1.T1 ≅ T & ❪G0,L2❫ ⊢ ⓝV2.T2 ➡[h,n1-n2] T & ⓝV2.T2 ≅ T.
 #h #a #G0 #L0 #V0 #T0 #IH #H0
 #n1 #V1 #H1V01 #H2V01 #n2 #V2 #H1V02 #H2V02 #T1 #H1T01 #H2T01 #T2 #H1T02 #H2T02
 #L1 #HL01 #L2 #HL02

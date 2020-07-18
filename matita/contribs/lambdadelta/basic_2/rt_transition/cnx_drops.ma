@@ -47,7 +47,7 @@ lemma cnx_inv_lref_pair (G) (L):
 #G #L #I #K #V #i #HLK #H
 elim (lifts_total V (𝐔❨↑i❩)) #W #HVW
 lapply (H W ?) -H /2 width=7 by cpx_delta_drops/ -HLK
-#H lapply (teqx_inv_lref1 … H) -H #H destruct
+#H lapply (teqg_inv_lref1 … H) -H #H destruct
 /2 width=5 by lifts_inv_lref2_uni_lt/
 qed-.
 

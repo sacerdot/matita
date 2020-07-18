@@ -12,21 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/syntax/ext2_ext2.ma".
-include "static_2/syntax/teqx_teqx.ma".
-include "static_2/static/reqx_length.ma".
+include "static_2/static/reqg_reqg.ma".
+include "static_2/static/reqx.ma".
 
 (* SORT-IRRELEVANT EQUIVALENCE FOR LOCAL ENVIRONMENTS ON REFERRED ENTRIES ***)
 
 (* Advanced properties ******************************************************)
-
+(*
 lemma reqx_sym: ∀T. symmetric … (reqx T).
 /3 width=3 by reqx_fsge_comp, rex_sym, teqx_sym/ qed-.
-
+*)
 (* Basic_2A1: uses: lleq_dec *)
-lemma reqx_dec: ∀L1,L2. ∀T:term. Decidable (L1 ≛[T] L2).
-/3 width=1 by rex_dec, teqx_dec/ qed-.
-
+lemma reqx_dec: ∀L1,L2. ∀T:term. Decidable (L1 ≅[T] L2).
+/2 width=1 by reqg_dec/ qed-.
+(*
 (* Main properties **********************************************************)
 
 (* Basic_2A1: uses: lleq_bind lleq_bind_O *)
@@ -60,9 +59,9 @@ theorem reqx_canc_sn: ∀T. left_cancellable … (reqx T).
 theorem reqx_canc_dx: ∀T. right_cancellable … (reqx T).
 /3 width=3 by reqx_trans, reqx_sym/ qed-.
 
-theorem reqx_repl: ∀L1,L2. ∀T:term. L1 ≛[T] L2 →
-                   ∀K1. L1 ≛[T] K1 → ∀K2. L2 ≛[T] K2 → K1 ≛[T] K2.
-/3 width=3 by reqx_canc_sn, reqx_trans/ qed-.
+theorem reqx_repl: ∀L1,L2. ∀T:term. L1 ≅[T] L2 →
+                   ∀K1. L1 ≅[T] K1 → ∀K2. L2 ≅[T] K2 → K1 ≅[T] K2.
+/2 width=5 by reqg_repl/ qed-.
 
 (* Negated properties *******************************************************)
 
@@ -96,3 +95,4 @@ lemma rneqx_inv_flat: ∀I,L1,L2,V,T. (L1 ≛[ⓕ[I]V.T] L2 → ⊥) →
 lemma rneqx_inv_bind_void: ∀p,I,L1,L2,V,T. (L1 ≛[ⓑ[p,I]V.T] L2 → ⊥) →
                            (L1 ≛[V] L2 → ⊥) ∨ (L1.ⓧ ≛[T] L2.ⓧ → ⊥).
 /3 width=3 by rnex_inv_bind_void, teqx_dec/ qed-.
+*)

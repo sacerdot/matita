@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/static/reqx_drops.ma".
+include "static_2/static/reqg_drops.ma".
 include "basic_2/rt_transition/lpx_drops.ma".
 include "basic_2/rt_computation/rsx_length.ma".
 include "basic_2/rt_computation/rsx_fqup.ma".
@@ -28,7 +28,7 @@ lemma rsx_lifts (G):
 #G #K #T #H @(rsx_ind … H) -K
 #K1 #_ #IH #b #f #L1 #HLK1 #Hf #U #HTU @rsx_intro
 #L2 #HL12 #HnL12 elim (lpx_drops_conf … HLK1 … HL12)
-/5 width=9 by reqx_lifts_bi, lpx_fwd_length/
+/5 width=9 by reqg_lifts_bi, lpx_fwd_length/
 qed-.
 
 (* Inversion lemmas on relocation *******************************************)
@@ -39,7 +39,7 @@ lemma rsx_inv_lifts (G):
 #G #L #U #H @(rsx_ind … H) -L
 #L1 #_ #IH #b #f #K1 #HLK1 #Hf #T #HTU @rsx_intro
 #K2 #HK12 #HnK12 elim (drops_lpx_trans … HLK1 … HK12) -HK12
-/4 width=10 by reqx_inv_lifts_bi/
+/4 width=10 by reqg_inv_lifts_bi/
 qed-.
 
 (* Advanced properties ******************************************************)

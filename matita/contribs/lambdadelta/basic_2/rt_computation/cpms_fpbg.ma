@@ -22,7 +22,7 @@ include "basic_2/rt_computation/cpms_fpbs.ma".
 
 lemma cpms_tneqx_fwd_fpbg (h) (n):
       ∀G,L,T1,T2. ❪G,L❫ ⊢ T1 ➡*[h,n] T2 →
-      (T1 ≛ T2 → ⊥) → ❪G,L,T1❫ > ❪G,L,T2❫.
+      (T1 ≅ T2 → ⊥) → ❪G,L,T1❫ > ❪G,L,T2❫.
 /3 width=3 by cpms_fwd_cpxs, cpxs_tneqx_fpbg/ qed-.
 
 lemma fpbg_cpms_trans (h) (n):
@@ -41,8 +41,8 @@ lemma fqup_cpms_fwd_fpbg (h):
 /3 width=5 by cpms_fwd_fpbs, fqup_fpbg, fpbg_fpbs_trans/ qed-.
 
 lemma cpm_tneqx_cpm_cpms_teqx_sym_fwd_fpbg (h) (G) (L) (T1):
-      ∀n1,T. ❪G,L❫ ⊢ T1 ➡[h,n1] T → (T1 ≛ T → ⊥) →
-      ∀n2,T2. ❪G,L❫⊢ T ➡*[h,n2] T2 → T1 ≛ T2 → ❪G,L,T1❫ > ❪G,L,T1❫.
+      ∀n1,T. ❪G,L❫ ⊢ T1 ➡[h,n1] T → (T1 ≅ T → ⊥) →
+      ∀n2,T2. ❪G,L❫⊢ T ➡*[h,n2] T2 → T1 ≅ T2 → ❪G,L,T1❫ > ❪G,L,T1❫.
 #h #G #L #T1 #n1 #T #H1T1 #H2T1 #n2 #T2 #H1T2 #H2T12
 /4 width=7 by cpms_fwd_fpbs, cpm_fpb, fpbs_teqx_trans, teqx_sym, ex2_3_intro/
 qed-.

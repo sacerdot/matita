@@ -40,14 +40,14 @@ lemma cpxs_fpbs_trans:
 qed-.
 
 lemma cpxs_teqx_fpbs_trans:
-      ∀G1,L1,T1,T. ❪G1,L1❫ ⊢ T1 ⬈* T → ∀T0. T ≛ T0 →
+      ∀G1,L1,T1,T. ❪G1,L1❫ ⊢ T1 ⬈* T → ∀T0. T ≅ T0 →
       ∀G2,L2,T2. ❪G1,L1,T0❫ ≥ ❪G2,L2,T2❫ → ❪G1,L1,T1❫ ≥ ❪G2,L2,T2❫.
 /3 width=3 by cpxs_fpbs_trans, teqx_fpbs_trans/ qed-.
 
 lemma cpxs_teqx_fpbs:
       ∀G,L,T1,T. ❪G,L❫ ⊢ T1 ⬈* T →
-      ∀T2. T ≛ T2 → ❪G,L,T1❫ ≥ ❪G,L,T2❫.
-/4 width=3 by cpxs_fpbs_trans, feqx_fpbs, teqx_feqx/ qed.
+      ∀T2. T ≅ T2 → ❪G,L,T1❫ ≥ ❪G,L,T2❫.
+/4 width=3 by cpxs_fpbs_trans, feqx_fpbs, teqg_feqg/ qed.
 
 (* Properties with star-iterated structural successor for closures **********)
 

@@ -12,13 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/static/reqx_drops.ma".
-include "static_2/static/reqx_fqup.ma".
-include "static_2/static/reqx_reqx.ma".
-include "basic_2/rt_transition/rpx_fsle.ma".
+include "static_2/syntax/teqx.ma".
+include "basic_2/rt_transition/rpx_reqg.ma".
 
 (* EXTENDED PARALLEL RT-TRANSITION FOR REFERRED LOCAL ENVIRONMENTS **********)
-
+(*
 (* Properties with sort-irrelevant equivalence for local environments *******)
 
 lemma rpx_pair_sn_split (G):
@@ -127,12 +125,11 @@ qed-.
 lemma cpx_teqx_conf (G) (L):
       ∀T0:term. ∀T1. ❪G,L❫ ⊢ T0 ⬈ T1 → ∀T2. T0 ≛ T2 → ❪G,L❫ ⊢ T2 ⬈ T1.
 /2 width=7 by cpx_teqx_repl_reqx/ qed-.
-
+*)
 lemma teqx_cpx_trans (G) (L):
-      ∀T2. ∀T0:term. T2 ≛ T0 → ∀T1. ❪G,L❫ ⊢ T0 ⬈ T1 → ❪G,L❫ ⊢ T2 ⬈ T1.
-/3 width=3 by cpx_teqx_conf, teqx_sym/
-qed-.
-
+      ∀T2. ∀T0:term. T2 ≅ T0 → ∀T1. ❪G,L❫ ⊢ T0 ⬈ T1 → ❪G,L❫ ⊢ T2 ⬈ T1.
+/2 width=6 by teqg_cpx_trans/ qed-.
+(*
 lemma teqx_cpx (G) (L):
       ∀T1,T2:term. T1 ≛ T2 → ❪G,L❫ ⊢ T1 ⬈ T2.
 /2 width=3 by teqx_cpx_trans/ qed.
@@ -159,3 +156,4 @@ lemma reqx_rpx_trans (G) (T) (L):
 lemma reqx_rpx (G) (T):
       ∀L1,L2. L1 ≛[T] L2 → ❪G,L1❫ ⊢ ⬈[T] L2.
 /2 width=3 by reqx_rpx_trans/ qed.
+*)

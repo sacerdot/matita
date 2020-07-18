@@ -24,7 +24,7 @@ inductive fpbq (G1) (L1) (T1): relation3 genv lenv term ≝
 | fpbq_fquq: ∀G2,L2,T2. ❪G1,L1,T1❫ ⬂⸮ ❪G2,L2,T2❫ → fpbq G1 L1 T1 G2 L2 T2
 | fpbq_cpx : ∀T2. ❪G1,L1❫ ⊢ T1 ⬈ T2 → fpbq G1 L1 T1 G1 L1 T2
 | fpbq_lpx : ∀L2. ❪G1,L1❫ ⊢ ⬈ L2 → fpbq G1 L1 T1 G1 L2 T1
-| fpbq_feqx: ∀G2,L2,T2. ❪G1,L1,T1❫ ≛ ❪G2,L2,T2❫ → fpbq G1 L1 T1 G2 L2 T2
+| fpbq_feqx: ∀G2,L2,T2. ❪G1,L1,T1❫ ≅ ❪G2,L2,T2❫ → fpbq G1 L1 T1 G2 L2 T2
 .
 
 interpretation

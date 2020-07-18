@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/syntax/tweq_simple.ma".
+include "static_2/syntax/teqw_simple.ma".
 include "basic_2/rt_computation/cpms_cpms.ma".
 include "basic_2/rt_computation/cnuw.ma".
 
@@ -25,14 +25,14 @@ lemma cnuw_appl_simple (h) (G) (L):
 #h #G #L #V1 #T1 #H1T1 #H2T1 #n #X #H
 elim (cpms_inv_appl_sn … H) -H *
 [ #V2 #T2 #_ #HT12 #H destruct -H1T1
-  /3 width=2 by tweq_appl/
+  /3 width=2 by teqw_appl/
 | #n1 #n2 #p #V2 #T2 #HT12 #_ #_ -n -n2
   lapply (H2T1 … HT12) -H2T1 -n1 #H
-  lapply (tweq_simple_trans … H H1T1) -H -H1T1 #H
+  lapply (teqw_simple_trans … H H1T1) -H -H1T1 #H
   elim (simple_inv_bind … H)
 | #n1 #n2 #p #V2 #W2 #W #T2 #_ #_ #HT12 #_ #_ -n -n2 -V2 -W2
   lapply (H2T1 … HT12) -H2T1 -n1 #H
-  lapply (tweq_simple_trans … H H1T1) -H -H1T1 #H
+  lapply (teqw_simple_trans … H H1T1) -H -H1T1 #H
   elim (simple_inv_bind … H)
 ]
 qed.
