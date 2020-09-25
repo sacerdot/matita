@@ -12,16 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/static/req.ma".
-include "basic_2/rt_transition/rpx_lpx.ma".
+include "basic_2/rt_transition/rpx_lpx.ma". (**) (* one dependence *)
 
 (* EXTENDED PARALLEL RT-TRANSITION FOR FULL LOCAL ENVIRONMENTS **************)
 
 (* Properties with generic equivalence for local environments ***************)
 
 lemma reqg_lpx_trans_rpx (S) (G) (L) (T:term):
-      ∀L1. L1 ≛[S,T] L → ∀L2. ❪G,L❫ ⊢ ⬈ L2 → ❪G,L❫ ⊢ ⬈[T] L2.
-/3 width=1 by lpx_rpx, reqg_rpx_trans/ qed.
+      reflexive … S → symmetric … S →
+      ∀L1. L1 ≛[S,T] L → ∀L2. ❪G,L❫ ⊢ ⬈ L2 → ❪G,L1❫ ⊢ ⬈[T] L2.
+/3 width=6 by lpx_rpx, reqg_rpx_trans/ qed.
 
 (* Basic_2A1: uses: lleq_lpx_trans *)
 lemma reqg_lpx_trans (S) (G) (T:term):
@@ -35,7 +35,7 @@ elim (rpx_fwd_lpx_req … H) -H #K1 #HLK1 #HK12
 /3 width=3 by req_fwd_reqg, ex2_intro/
 qed-.
 
-(* Inversion lemmas with sort-irrelevant equivalence for local environments *)
+(* Inversion lemmas with generic equivalence for local environments *********)
 
 lemma rpx_inv_reqg_lpx (S) (G) (T):
       reflexive … S →
@@ -46,7 +46,7 @@ elim (rpx_inv_req_lpx … H) -H #L #HL1 #HL2
 /3 width=3 by req_fwd_reqg, ex2_intro/
 qed-.
 
-(* Forward lemmas with sort-irrelevant equivalence for local environments ***)
+(* Forward lemmas with generic equivalence for local environments ***********)
 
 lemma rpx_fwd_lpx_reqg (S) (G) (T):
       reflexive … S →

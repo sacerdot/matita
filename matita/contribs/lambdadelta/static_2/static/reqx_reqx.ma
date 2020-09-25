@@ -24,7 +24,7 @@ lemma reqx_sym: ∀T. symmetric … (reqx T).
 *)
 (* Basic_2A1: uses: lleq_dec *)
 lemma reqx_dec: ∀L1,L2. ∀T:term. Decidable (L1 ≅[T] L2).
-/2 width=1 by reqg_dec/ qed-.
+/3 width=1 by reqg_dec, sfull_dec/ qed-.
 (*
 (* Main properties **********************************************************)
 

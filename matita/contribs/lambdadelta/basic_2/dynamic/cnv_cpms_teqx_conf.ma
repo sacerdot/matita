@@ -63,7 +63,7 @@ generalize in match IH1; generalize in match IH2;
   #n2 #T2 #H1T02 #H2T02 #L1 #HL01 #L2 #HL02
   elim (cnv_cpms_teqx_strip_lpr_aux … IH2 IH1 … H1T02 H0T0 H2T02 … H1T03 H2T03 … HL02 L0) -H0T0 -H2T03 //
   #T4 #H1T24 #H2T24 #H1T34 #H2T34
-  elim (IH … H1T34 H2T34 … HL01 … HL02) [|*: /4 width=5 by cpm_fpbq, fpbq_fpbg_trans/ ] -L0 -T0 -T3 (**)
+  elim (IH … H1T34 H2T34 … HL01 … HL02) [|*: /4 width=5 by cpm_fwd_fpb, fpb_fpbg_trans/ ] -L0 -T0 -T3 (**)
   #T3 #H1T13 #H2T13 #H1T43 #H2T43
   <minus_plus >arith_l3
   /3 width=7 by cpms_step_sn, teqx_trans, ex4_intro/

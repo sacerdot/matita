@@ -12,30 +12,38 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/notation/relations/predsubtyproper_6.ma".
-include "static_2/s_transition/fqu.ma".
-include "static_2/static/reqx.ma".
-include "basic_2/rt_transition/lpr_lpx.ma".
+include "basic_2/notation/relations/predsubty_6.ma".
+include "static_2/s_transition/fquq.ma".
+include "basic_2/rt_transition/rpx.ma".
 
-(* PROPER PARALLEL RST-TRANSITION FOR CLOSURES ******************************)
+(* PARALLEL RST-TRANSITION FOR CLOSURES *************************************)
 
-inductive fpb (G1) (L1) (T1): relation3 genv lenv term ≝
-| fpb_fqu: ∀G2,L2,T2. ❪G1,L1,T1❫ ⬂ ❪G2,L2,T2❫ → fpb G1 L1 T1 G2 L2 T2
-| fpb_cpx: ∀T2. ❪G1,L1❫ ⊢ T1 ⬈ T2 → (T1 ≅ T2 → ⊥) → fpb G1 L1 T1 G1 L1 T2
-| fpb_lpx: ∀L2. ❪G1,L1❫ ⊢ ⬈ L2 → (L1 ≅[T1] L2 → ⊥) → fpb G1 L1 T1 G1 L2 T1
-.
+(* Basic_2A1: uses: fpbq *)
+definition fpb (G1) (L1) (T1) (G2) (L2) (T2): Prop ≝
+           ∃∃L,T. ❪G1,L1,T1❫ ⬂⸮ ❪G2,L,T❫ & ❪G2,L❫ ⊢ T ⬈ T2 & ❪G2,L❫ ⊢ ⬈[T] L2.
 
 interpretation
-  "proper parallel rst-transition (closure)"
-  'PRedSubTyProper G1 L1 T1 G2 L2 T2 = (fpb G1 L1 T1 G2 L2 T2).
+  "parallel rst-transition (closure)"
+  'PRedSubTy G1 L1 T1 G2 L2 T2 = (fpb G1 L1 T1 G2 L2 T2).
 
 (* Basic properties *********************************************************)
 
-(* Basic_2A1: includes: cpr_fpb *)
-lemma cpm_fpb (h) (n) (G) (L):
-      ∀T1,T2. ❪G,L❫ ⊢ T1 ➡[h,n] T2 → (T1 ≅ T2 → ⊥) → ❪G,L,T1❫ ≻ ❪G,L,T2❫.
-/3 width=3 by fpb_cpx, cpm_fwd_cpx/ qed.
+lemma fpb_intro (G1) (L1) (T1) (G2) (L2) (T2):
+      ∀L,T. ❪G1,L1,T1❫ ⬂⸮ ❪G2,L,T❫ → ❪G2,L❫ ⊢ T ⬈ T2 → 
+      ❪G2,L❫ ⊢ ⬈[T] L2 → ❪G1,L1,T1❫ ≽ ❪G2,L2,T2❫.
+/2 width=5 by ex3_2_intro/ qed.
 
-lemma lpr_fpb (h) (G) (T):
-      ∀L1,L2. ❪G,L1❫ ⊢ ➡[h,0] L2 → (L1 ≅[T] L2 → ⊥) → ❪G,L1,T❫ ≻ ❪G,L2,T❫.
-/3 width=2 by fpb_lpx, lpr_fwd_lpx/ qed.
+lemma rpx_fpb (G) (T):
+      ∀L1,L2. ❪G,L1❫ ⊢ ⬈[T] L2 → ❪G,L1,T❫ ≽ ❪G,L2,T❫.
+/2 width=5 by fpb_intro/ qed.
+
+(* Basic inversion lemmas ***************************************************)
+
+lemma fpb_inv_gen (G1) (L1) (T1) (G2) (L2) (T2):
+      ❪G1,L1,T1❫ ≽ ❪G2,L2,T2❫ →
+      ∃∃L,T. ❪G1,L1,T1❫ ⬂⸮ ❪G2,L,T❫ & ❪G2,L❫ ⊢ T ⬈ T2 & ❪G2,L❫ ⊢ ⬈[T] L2.
+// qed-.
+
+(* Basic_2A1: removed theorems 2:
+              fpbq_fpbqa fpbqa_inv_fpbq
+*)

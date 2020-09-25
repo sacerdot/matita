@@ -53,8 +53,8 @@ elim (reqx_dec L1 L0 T) #H
 [ lapply (reqg_rneqg_trans … H … HnLK0) -H -HnLK0 // #Hn10
   lapply (lpxs_trans … HL10 … HLK0) -L0 #H10
   elim (lpxs_rneqg_inv_step_sn … H10 …  Hn10) -H10 -Hn10
-  /3 width=8 by reqg_trans/
-| elim (lpxs_rneqg_inv_step_sn … HL10 … H) -HL10 -H // #L #K #HL1 #HnL1 #HLK #HKL0
+  /3 width=8 by reqg_trans, sfull_dec/
+| elim (lpxs_rneqg_inv_step_sn … HL10 … H) -HL10 -H /2 width=1 by sfull_dec/ #L #K #HL1 #HnL1 #HLK #HKL0
   elim (reqg_lpxs_trans … HLK0 … HKL0) -L0
   /3 width=8 by lpxs_trans, reqg_trans/
 ]
@@ -84,7 +84,7 @@ fact rsx_bind_lpxs_aux (G):
 #Y #HY #IHY #L2 #H #HL12 destruct
 @rsx_intro_lpxs #L0 #HL20
 lapply (lpxs_trans … HL12 … HL20) #HL10 #H
-elim (rneqg_inv_bind … H) -H // [ -IHY | -HY -IHL1 -HL12 ]
+elim (rneqg_inv_bind … H) -H /2 width=1 by sfull_dec/ [ -IHY | -HY -IHL1 -HL12 ]
 [ #HnV elim (reqx_dec L1 L2 V)
   [ #HV @(IHL1 … HL10) -IHL1 -HL12 -HL10
     /3 width=4 by rsx_lpxs_trans, lpxs_bind_refl_dx, reqg_canc_sn/ (**) (* full auto too slow *)
@@ -110,7 +110,7 @@ lemma rsx_flat_lpxs (G):
 #L1 #HL1 #IHL1 #L2 #T #H @(rsx_ind_lpxs … H) -L2
 #L2 #HL2 #IHL2 #HL12 @rsx_intro_lpxs
 #L0 #HL20 lapply (lpxs_trans … HL12 … HL20)
-#HL10 #H elim (rneqg_inv_flat … H) -H // [ -HL1 -IHL2 | -HL2 -IHL1 ]
+#HL10 #H elim (rneqg_inv_flat … H) -H /2 width=1 by sfull_dec/ [ -HL1 -IHL2 | -HL2 -IHL1 ]
 [ #HnV elim (reqx_dec L1 L2 V)
   [ #HV @(IHL1 … HL10) -IHL1 -HL12 -HL10
     /3 width=5 by rsx_lpxs_trans, reqg_canc_sn/ (**) (* full auto too slow: 47s *)
@@ -136,7 +136,7 @@ fact rsx_bind_lpxs_void_aux (G):
 #Y #HY #IHY #L2 #H #HL12 destruct
 @rsx_intro_lpxs #L0 #HL20
 lapply (lpxs_trans … HL12 … HL20) #HL10 #H
-elim (rneqg_inv_bind_void … H) -H // [ -IHY | -HY -IHL1 -HL12 ]
+elim (rneqg_inv_bind_void … H) -H /2 width=1 by sfull_dec/ [ -IHY | -HY -IHL1 -HL12 ]
 [ #HnV elim (reqx_dec L1 L2 V)
   [ #HV @(IHL1 … HL10) -IHL1 -HL12 -HL10
     /3 width=6 by rsx_lpxs_trans, lpxs_bind_refl_dx, reqg_canc_sn/ (**) (* full auto too slow *)

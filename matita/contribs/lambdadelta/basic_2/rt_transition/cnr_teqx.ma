@@ -12,8 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/syntax/teqx.ma".
-include "basic_2/rt_transition/cnr_teqg.ma".
+include "basic_2/rt_transition/cnr_teqg.ma". (**) (* one dependence *)
 
 (* NORMAL TERMS FOR CONTEXT-SENSITIVE R-TRANSITION **************************)
 

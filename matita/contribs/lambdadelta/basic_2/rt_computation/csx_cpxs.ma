@@ -37,22 +37,22 @@ qed-.
 (* Eliminators with extended context-sensitive rt-computation for terms *****)
 
 fact csx_ind_cpxs_aux (G) (L):
-      ∀Q:predicate term.
-      (∀T1. ❪G,L❫ ⊢ ⬈*𝐒 T1 →
-        (∀T2. ❪G,L❫ ⊢ T1 ⬈* T2 → (T1 ≅ T2 → ⊥) → Q T2) → Q T1
-      ) →
-      ∀T1. ❪G,L❫ ⊢ ⬈*𝐒 T1 →
-      ∀T2. ❪G,L❫ ⊢ T1 ⬈* T2 → Q T2.
+     ∀Q:predicate term.
+     (∀T1. ❪G,L❫ ⊢ ⬈*𝐒 T1 →
+       (∀T2. ❪G,L❫ ⊢ T1 ⬈* T2 → (T1 ≅ T2 → ⊥) → Q T2) → Q T1
+     ) →
+     ∀T1. ❪G,L❫ ⊢ ⬈*𝐒 T1 →
+     ∀T2. ❪G,L❫ ⊢ T1 ⬈* T2 → Q T2.
 #G #L #Q #IH #T1 #H @(csx_ind … H) -T1
 #T1 #HT1 #IH1 #T2 #HT12
 @IH -IH /2 width=3 by csx_cpxs_trans/ -HT1 #V2 #HTV2 #HnTV2
 elim (teqx_dec T1 T2) #H
 [ lapply (teqg_tneqg_trans … H … HnTV2) // -H -HnTV2 #Hn12
   lapply (cpxs_trans … HT12 … HTV2) -T2 #H12
-  elim (cpxs_tneqg_fwd_step_sn … H12 …  Hn12) // -H12 -Hn12
+  elim (cpxs_tneqg_fwd_step_sn … H12 …  Hn12) /2 width=1 by sfull_dec/ -H12 -Hn12
   /3 width=4 by/
 | elim (cpxs_tneqg_fwd_step_sn … HT12 … H) -HT12 -H
-  /3 width=6 by cpxs_trans/
+  /3 width=6 by cpxs_trans, sfull_dec/
 ]
 qed-.
 

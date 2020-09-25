@@ -12,19 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_transition/fpbq.ma".
-include "basic_2/rt_computation/csx_fqus.ma".
-include "basic_2/rt_computation/csx_feqg.ma".
-include "basic_2/rt_computation/csx_lpx.ma".
+include "static_2/static/feqg_fqu.ma".
+include "basic_2/rt_transition/fpb_fqup.ma".
+include "basic_2/rt_transition/fpbc.ma".
 
-(* STRONGLY NORMALIZING TERMS FOR EXTENDED PARALLEL RT-TRANSITION ***********)
+(* PROPER PARALLEL RST-TRANSITION FOR CLOSURES ******************************)
 
-(* Properties with parallel rst-transition for closures *********************)
+(* Advanced properties ******************************************************)
 
-(* Basic_2A1: was: csx_fpb_conf *)
-lemma csx_fpbq_conf:
-      ∀G1,L1,T1. ❪G1,L1❫ ⊢ ⬈*𝐒 T1 →
-      ∀G2,L2,T2. ❪G1,L1,T1❫ ≽ ❪G2,L2,T2❫ → ❪G2,L2❫ ⊢ ⬈*𝐒 T2.
-#G1 #L1 #T1 #HT1 #G2 #L2 #T2 *
-/2 width=8 by csx_cpx_trans, csx_fquq_conf, csx_lpx_conf, csx_feqg_conf/
-qed-.
+(* Basic_2A1: uses: fpb_cpx *)
+lemma cpx_fpbc (G) (L):
+      ∀T1,T2. ❪G,L❫ ⊢ T1 ⬈ T2 → (T1 ≅ T2 → ⊥) → ❪G,L,T1❫ ≻ ❪G,L,T2❫.
+/4 width=5 by fpbc_intro, cpx_fpb, feqg_fwd_teqg/ qed.
+
+(* Basic_2A1: uses: fpb_fqu *)
+lemma fqu_fpbc (G1) (G2) (L1) (L2) (T1) (T2):
+      ❪G1,L1,T1❫ ⬂ ❪G2,L2,T2❫ → ❪G1,L1,T1❫ ≻ ❪G2,L2,T2❫.
+/4 width=10 by fpbc_intro, fquq_fpb, fqu_fquq, fqu_fneqg/ qed.

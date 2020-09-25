@@ -16,7 +16,7 @@ include "ground/xoa/ex_5_1.ma".
 include "ground/xoa/ex_8_5.ma".
 include "ground/xoa/ex_9_3.ma".
 include "basic_2/rt_transition/cpm_teqx.ma".
-include "basic_2/rt_computation/fpbg_fqup.ma".
+include "basic_2/rt_computation/fpbg_cpm.ma".
 include "basic_2/dynamic/cnv_fsb.ma".
 
 (* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
@@ -41,11 +41,11 @@ lemma cnv_cpr_teqx_fwd_refl (h) (a) (G) (L):
   /3 width=3 by eq_f2/
 | #G #K #V #T1 #X1 #X2 #HXT1 #HX12 #_ #H1 #H2
   elim (cnv_fpbg_refl_false … H2) -a
-  @(fpbg_teqx_div … H1) -H1
-  /3 width=9 by cpm_tneqx_cpm_fpbg, cpm_zeta, teqx_lifts_inv_pair_sn/
+  @(fpbg_teqg_div … H1) -H1
+  /3 width=9 by cpm_tneqx_cpm_fpbg, cpm_zeta, teqg_lifts_inv_pair_sn/
 | #G #L #U #T1 #T2 #HT12 #_ #H1 #H2
   elim (cnv_fpbg_refl_false … H2) -a
-  @(fpbg_teqx_div … H1) -H1
+  @(fpbg_teqg_div … H1) -H1
   /3 width=7 by cpm_tneqx_cpm_fpbg, cpm_eps, teqg_inv_pair_xy_y/
 | #p #G #L #V1 #V2 #W1 #W2 #T1 #T2 #_ #_ #_ #_ #_ #_ #H1 #_
   elim (teqx_inv_pair … H1) -H1 #H #_ #_ destruct
@@ -67,7 +67,7 @@ elim (cpm_inv_bind1 … H1) -H1 *
   /2 width=4 by ex5_intro/
 | #X1 #HXT1 #HX1 #H1 #H destruct
   elim (cnv_fpbg_refl_false … H0) -a
-  @(fpbg_teqx_div … H2) -H2
+  @(fpbg_teqg_div … H2) -H2
   /3 width=9 by cpm_tneqx_cpm_fpbg, cpm_zeta, teqx_lifts_inv_pair_sn/
 ]
 qed-.
@@ -105,11 +105,11 @@ elim (cpm_inv_cast1 … H1) -H1 [ * || * ]
   /2 width=7 by ex9_3_intro/
 | #HT1X
   elim (cnv_fpbg_refl_false … H0) -a
-  @(fpbg_teqx_div … H2) -H2
+  @(fpbg_teqg_div … H2) -H2
   /3 width=7 by cpm_tneqx_cpm_fpbg, cpm_eps, teqg_inv_pair_xy_y/
 | #m #HU1X #H destruct
   elim (cnv_fpbg_refl_false … H0) -a
-  @(fpbg_teqx_div … H2) -H2
+  @(fpbg_teqg_div … H2) -H2
   /3 width=7 by cpm_tneqx_cpm_fpbg, cpm_ee, teqg_inv_pair_xy_x/
 ]
 qed-.

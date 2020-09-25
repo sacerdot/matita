@@ -17,34 +17,37 @@ include "ground/lib/arith.ma".
 
 (* ITEMS ********************************************************************)
 
+definition sfull: relation2 nat nat ≝
+           λs1,s2. ⊤.
+
 (* atomic items *)
 inductive item0: Type[0] ≝
-   | Sort: nat → item0 (* sort: starting at 0 *)
-   | LRef: nat → item0 (* reference by index: starting at 0 *)
-   | GRef: nat → item0 (* reference by position: starting at 0 *)
+| Sort: nat → item0 (* sort: starting at 0 *)
+| LRef: nat → item0 (* reference by index: starting at 0 *)
+| GRef: nat → item0 (* reference by position: starting at 0 *)
 .
 
 (* unary binding items *)
 inductive bind1: Type[0] ≝
-  | Void: bind1 (* exclusion *)
+| Void: bind1 (* exclusion *)
 .
 
 (* binary binding items *)
 inductive bind2: Type[0] ≝
-  | Abbr: bind2 (* abbreviation *)
-  | Abst: bind2 (* abstraction *)
+| Abbr: bind2 (* abbreviation *)
+| Abst: bind2 (* abstraction *)
 .
 
 (* binary non-binding items *)
 inductive flat2: Type[0] ≝
-  | Appl: flat2 (* application *)
-  | Cast: flat2 (* explicit type annotation *)
+| Appl: flat2 (* application *)
+| Cast: flat2 (* explicit type annotation *)
 .
 
 (* binary items *)
 inductive item2: Type[0] ≝
-  | Bind2: bool → bind2 → item2 (* polarized binding item *)
-  | Flat2: flat2 → item2        (* non-binding item *)
+| Bind2: bool → bind2 → item2 (* polarized binding item *)
+| Flat2: flat2 → item2        (* non-binding item *)
 .
 
 (* Basic inversion lemmas ***************************************************)
@@ -55,30 +58,39 @@ qed-.
 
 (* Basic properties *********************************************************)
 
-lemma eq_item0_dec: ∀I1,I2:item0. Decidable (I1 = I2).
+lemma sfull_dec:
+      ∀s1,s2. Decidable (sfull s1 s2).
+/2 width=1 by or_introl/ qed-.
+
+lemma eq_item0_dec:
+      ∀I1,I2:item0. Decidable (I1 = I2).
 * #i1 * #i2 [2,3,4,6,7,8: @or_intror #H destruct ]
 [2: elim (eq_nat_dec i1 i2) |1,3: elim (eq_nat_dec i1 i2) ] /2 width=1 by or_introl/
 #Hni12 @or_intror #H destruct /2 width=1 by/
 qed-.
 
-lemma eq_bind1_dec: ∀I1,I2:bind1. Decidable (I1 = I2).
+lemma eq_bind1_dec:
+      ∀I1,I2:bind1. Decidable (I1 = I2).
 * * /2 width=1 by or_introl/
 qed-.
 
 (* Basic_1: was: bind_dec *)
-lemma eq_bind2_dec: ∀I1,I2:bind2. Decidable (I1 = I2).
+lemma eq_bind2_dec:
+      ∀I1,I2:bind2. Decidable (I1 = I2).
 * * /2 width=1 by or_introl/
 @or_intror #H destruct
 qed-.
 
 (* Basic_1: was: flat_dec *)
-lemma eq_flat2_dec: ∀I1,I2:flat2. Decidable (I1 = I2).
+lemma eq_flat2_dec:
+      ∀I1,I2:flat2. Decidable (I1 = I2).
 * * /2 width=1 by or_introl/
 @or_intror #H destruct
 qed-.
 
 (* Basic_1: was: kind_dec *)
-lemma eq_item2_dec: ∀I1,I2:item2. Decidable (I1 = I2).
+lemma eq_item2_dec:
+      ∀I1,I2:item2. Decidable (I1 = I2).
 * [ #p1 ] #I1 * [1,3: #p2 ] #I2
 [2,3: @or_intror #H destruct
 | elim (eq_bool_dec p1 p2) #Hp

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/static/reqg.ma".
+include "static_2/static/reqg_fqup.ma".
 include "static_2/static/aaa.ma".
 
 (* ATONIC ARITY ASSIGNMENT ON TERMS *****************************************)
@@ -45,3 +45,13 @@ lemma aaa_teqg_conf_reqg (S) (G):
   /3 width=1 by aaa_cast/
 ]
 qed-.
+
+lemma aaa_teqg_conf (S) (G) (L) (A):
+      reflexive … S →
+      ∀T1. ❪G,L❫ ⊢ T1 ⁝ A → ∀T2. T1 ≛[S] T2 → ❪G,L❫ ⊢ T2 ⁝ A.
+/3 width=7 by aaa_teqg_conf_reqg, reqg_refl/ qed-.
+
+lemma aaa_reqg_conf (S) (G) (T) (A):
+      reflexive … S →
+      ∀L1. ❪G,L1❫ ⊢ T ⁝ A → ∀L2. L1 ≛[S,T] L2 → ❪G,L2❫ ⊢ T ⁝ A.
+/3 width=7 by aaa_teqg_conf_reqg, teqg_refl/ qed-.

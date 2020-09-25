@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_computation/fpbg_fqup.ma".
+include "basic_2/rt_computation/fpbg_fqus.ma".
 include "basic_2/rt_computation/fpbs_cpxs.ma".
 include "basic_2/rt_computation/fpbg_fpbs.ma".
 

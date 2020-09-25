@@ -31,7 +31,7 @@ fact cpms_tneqx_fwd_step_sn_aux (h) (a) (n) (G) (L) (T1):
   [ elim (teqx_dec T T2) #H2T2
     [ -IH -IH2 -IH1 -H0T1 /4 width=7 by teqx_trans, ex4_3_intro/
     | lapply (cnv_cpm_trans_lpr_aux … IH2 IH1 … H1T1 L ?) [6:|*: // ] -H1T2 -H2T12 #H0T
-      elim (IH H0T H2T2) [|*: /4 width=5 by cpm_fpbq, fpbq_fpbg_trans/ ] -IH -IH2 -H0T -H2T2 (**)
+      elim (IH H0T H2T2) [|*: /4 width=5 by cpm_fwd_fpb, fpb_fpbg_trans/ ] -IH -IH2 -H0T -H2T2 (**)
       #m1 #m2 #T0 #H1T0 #H2T0 #H1T02 #H destruct
       elim (cnv_cpm_teqx_cpm_trans_aux … IH1 … H0T1 … H1T1 H2T1 … H1T0) -IH1 -H0T1 -H1T1 -H1T0
       #T3 #H1T13 #H1T30 #H2T30
@@ -56,7 +56,7 @@ fact cpms_teqx_ind_sn (h) (a) (G) (L) (T2) (Q:relation2 …):
   elim (teqx_dec T1 T) #H2T1
   [ lapply (cnv_cpm_trans_lpr_aux … IH2 IH1 … H1T1 L ?) [6:|*: // ] #H0T
     lapply (teqx_canc_sn … H2T1 … H2T12) -H2T12 #H2T2
-    /6 width=7 by cpm_fpbq, fpbq_fpbg_trans/ (**)
+    /6 width=7 by cpm_fwd_fpb, fpb_fpbg_trans/ (**)
   | -IB2 -IH -IH2 -IH1
     elim (cnv_fpbg_refl_false … H0T1) -a -Q
     /3 width=9 by cpm_tneqx_cpm_cpms_teqx_sym_fwd_fpbg/

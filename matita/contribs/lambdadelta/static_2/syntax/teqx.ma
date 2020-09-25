@@ -17,9 +17,6 @@ include "static_2/syntax/teqg.ma".
 
 (* SORT-IRRELEVANT EQUIVALENCE ON TERMS *************************************)
 
-definition sfull: relation2 nat nat ≝
-           λs1,s2. ⊤.
-
 definition teqx: relation term ≝
            teqg sfull.
 
@@ -28,10 +25,6 @@ interpretation
   'ApproxEq T1 T2 = (teqx T1 T2).
 
 (* Basic properties *********************************************************)
-
-lemma sfull_dec:
-      ∀s1,s2. Decidable (sfull s1 s2).
-/2 width=1 by or_introl/ qed.
 
 lemma teqx_pair:
       ∀V1,V2. V1 ≅ V2 → ∀T1,T2. T1 ≅ T2 →

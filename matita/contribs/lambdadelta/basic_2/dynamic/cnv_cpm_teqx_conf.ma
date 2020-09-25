@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "ground/xoa/ex_4_1_props.ma".
+include "basic_2/rt_computation/fpbg_fqus.ma".
 include "basic_2/dynamic/cnv_cpm_teqx.ma".
 
 (* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)

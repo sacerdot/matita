@@ -17,18 +17,13 @@ include "basic_2/rt_computation/fpbg.ma".
 
 (* PROPER PARALLEL RST-COMPUTATION FOR CLOSURES *****************************)
 
-(* Advanced properties with sort-irrelevant equivalence for terms ***********)
+(* Advanced properties ******************************************************)
 
-lemma fpbg_teqx_div:
-      ∀G1,G2,L1,L2,T1,T. ❪G1,L1,T1❫ > ❪G2,L2,T❫ →
-      ∀T2. T2 ≅ T → ❪G1,L1,T1❫ > ❪G2,L2,T2❫.
-/4 width=5 by fpbg_feqx_trans, teqg_feqg, teqx_sym/ qed-.
+lemma fpbc_fpbg (G1) (G2) (L1) (L2) (T1) (T2):
+      ❪G1,L1,T1❫ ≻ ❪G2,L2,T2❫ → ❪G1,L1,T1❫ > ❪G2,L2,T2❫.
+/3 width=13 by fpbg_intro, fpb_fpbs/ qed.
 
-(* Properties with plus-iterated structural successor for closures **********)
-
-(* Note: this is used in the closure proof *)
-lemma fqup_fpbg:
-      ∀G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ⬂+ ❪G2,L2,T2❫ → ❪G1,L1,T1❫ > ❪G2,L2,T2❫.
-#G1 #G2 #L1 #L2 #T1 #T2 #H elim (fqup_inv_step_sn … H) -H
-/3 width=5 by fqus_fpbs, fpb_fqu, ex2_3_intro/
-qed.
+lemma fpbc_fpbs_fpbg (G) (L) (T):
+      ∀G1,L1,T1. ❪G1,L1,T1❫ ≻ ❪G,L,T❫ →
+      ∀G2,L2,T2. ❪G,L,T❫ ≥ ❪G2,L2,T2❫ → ❪G1,L1,T1❫ > ❪G2,L2,T2❫.
+/2 width=9 by fpbg_intro/ qed.

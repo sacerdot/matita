@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basic_2/rt_transition/cpx_feqg.ma".
 include "basic_2/rt_computation/lpxs_cpxs.ma".
 include "basic_2/rt_computation/fpbs_lpxs.ma".
 
@@ -21,21 +20,25 @@ include "basic_2/rt_computation/fpbs_lpxs.ma".
 (* Properties with extended context-sensitive parallel rt-transition ********)
 
 (* Basic_2A1: uses: fpbs_cpx_trans_neq *)
-lemma fpbs_cpx_tneqx_trans:
+lemma fpbs_cpx_tneqg_trans (S):
+      reflexive … S → symmetric … S → Transitive … S →
+      (∀s1,s2. Decidable (S s1 s2)) →
       ∀G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ≥ ❪G2,L2,T2❫ →
-      ∀U2. ❪G2,L2❫ ⊢ T2 ⬈ U2 → (T2 ≅ U2 → ⊥) →
-      ∃∃U1. ❪G1,L1❫ ⊢ T1 ⬈ U1 & T1 ≅ U1 → ⊥ & ❪G1,L1,U1❫ ≥ ❪G2,L2,U2❫.
-#G1 #G2 #L1 #L2 #T1 #T2 #H #U2 #HTU2 #HnTU2
-elim (fpbs_inv_star … H) -H #G0 #L0 #L3 #T0 #T3 #HT10 #H10 #HL03 #H32
-elim (feqg_cpx_trans … H32 … HTU2) -HTU2 // #T4 #HT34 #H42
-lapply (feqg_tneqg_repl_dx … H32 … H42 … HnTU2) -T2 // #HnT34
-lapply (lpxs_cpx_trans … HT34 … HL03) -HT34 #HT34
-elim (fqus_cpxs_trans_tneqx … H10 … HT34 HnT34) -T3 #T2 #HT02 #HnT02 #H24
-elim (teqx_dec T1 T0) [ #H10 | -HnT02 #HnT10 ]
+      ∀U2. ❪G2,L2❫ ⊢ T2 ⬈ U2 → (T2 ≛[S] U2 → ⊥) →
+      ∃∃U1. ❪G1,L1❫ ⊢ T1 ⬈ U1 & T1 ≛[S] U1 → ⊥ & ❪G1,L1,U1❫ ≥ ❪G2,L2,U2❫.
+#S #H1S #H2S #H3S #H4S #G1 #G2 #L1 #L2 #T1 #T2 #H #U2 #HTU2 #HnTU2
+elim (fpbs_inv_star S … H) -H // #G0 #L0 #L3 #T0 #T3 #HT10 #H10 #HL03 #H32
+lapply (feqg_cpx_trans_cpx … H32 … HTU2) // #HTU32
+lapply (feqg_tneqg_trans … H32 … HnTU2) -HnTU2 // #HnTU34
+lapply (feqg_cpx_trans_feqg … H32 … HTU2) // -T2 #H32
+lapply (lpxs_cpx_trans … HTU32 … HL03) -HTU32 #HTU32
+elim (fqus_cpxs_trans_tneqg … H10 … HTU32 HnTU34) -T3 #T2 #HT02 #HnT02 #H2
+elim (teqg_dec S … T1 T0) [ #H10 | -HnT02 #HnT10 | // ]
 [ lapply (cpxs_trans … HT10 … HT02) -HT10 -HT02 #HT12
   elim (cpxs_tneqg_fwd_step_sn … HT12)
-  [2,7: /3 width=3 by teqg_canc_sn/ ] -T0 -HT12 //
-| elim (cpxs_tneqg_fwd_step_sn … HT10 … HnT10) -HT10 -HnT10 //
+  [2,7: /3 width=3 by teqg_canc_sn/ ] -T0 -HT12 /2 width=1 by sfull_dec/
+  /3 width=15 by fpbs_intro_star, ex3_intro/
+| elim (cpxs_tneqg_fwd_step_sn … HT10 … HnT10) -HT10 -HnT10 /2 width=1 by sfull_dec/
+  /4 width=15 by fpbs_intro_star, cpxs_trans, ex3_intro/
 ]
-/4 width=16 by fpbs_intro_star, cpxs_teqx_fpbs_trans, ex3_intro/
 qed-.

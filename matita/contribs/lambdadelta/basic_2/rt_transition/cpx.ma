@@ -24,10 +24,8 @@ include "basic_2/rt_transition/cpg.ma".
 
 (* EXTENDED CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS **************)
 
-definition sort_eq_f: relation nat ≝ λs1,s2. ⊤.
-
 definition cpx (G) (L): relation2 term term ≝
-           λT1,T2. ∃c. ❪G,L❫ ⊢ T1 ⬈[sort_eq_f,rtc_eq_f,c] T2.
+           λT1,T2. ∃c. ❪G,L❫ ⊢ T1 ⬈[sfull,rtc_eq_f,c] T2.
 
 interpretation
   "extended context-sensitive parallel rt-transition (term)"

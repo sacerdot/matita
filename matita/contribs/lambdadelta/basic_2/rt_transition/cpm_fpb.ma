@@ -12,18 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/static/aaa_fqus.ma".
-include "static_2/static/aaa_feqg.ma".
-include "basic_2/rt_transition/lpx_aaa.ma".
-include "basic_2/rt_transition/fpbq.ma".
+include "basic_2/rt_transition/fpb_fqup.ma".
+include "basic_2/rt_transition/cpm_cpx.ma".
 
-(* PARALLEL RST-TRANSITION FOR CLOSURES *************************************)
+(* T-BOUND CONTEXT-SENSITIVE PARALLEL RT-TRANSITION FOR TERMS ***************)
 
-(* Properties with atomic arity assignment for terms ************************)
+(* Forward lemmas with rst-transition for closures **************************)
 
-lemma fpbq_aaa_conf:
-      ∀G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ≽ ❪G2,L2,T2❫ →
-      ∀A1. ❪G1,L1❫ ⊢ T1 ⁝ A1 → ∃A2. ❪G2,L2❫ ⊢ T2 ⁝ A2.
-#G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2
-/3 width=8 by lpx_aaa_conf, cpx_aaa_conf, aaa_feqg_conf, aaa_fquq_conf, ex_intro/
-qed-.
+(* Basic_2A1: includes: cpr_fpbq *)
+(* Basic_2A1: uses: cpm_fpbq *)
+lemma cpm_fwd_fpb (h) (n) (G) (L):
+      ∀T1,T2. ❪G,L❫ ⊢ T1 ➡[h,n] T2 → ❪G,L,T1❫ ≽ ❪G,L,T2❫.
+/3 width=3 by cpx_fpb, cpm_fwd_cpx/ qed-.

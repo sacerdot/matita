@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 (*
-include "static_2/notation/relations/stareq_3.ma".
+include "static_2/notation/relations/approxeq_3.ma".
 *)
 include "static_2/syntax/teqg_ext.ma".
 include "static_2/syntax/teqx.ma".

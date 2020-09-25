@@ -31,7 +31,7 @@ table {
           }
         ]
         [ { "sort-irrelevant equivalence" * } {
-             [ [ "for closures on referred entries" ] "feqx" + "( ❪?,?,?❫ ≅ ❪?,?,?❫ )" * ]
+             [ [ "for closures on referred entries" ] "feqx" + "( ❪?,?,?❫ ≅ ❪?,?,?❫ )" "feqx_feqx" * ]
              [ [ "for lenvs on referred entries" ] "reqx" + "( ? ≅[?] ? )" "reqx_reqx" * ]
           }
         ]
@@ -40,7 +40,7 @@ table {
           }
         ]
         [ { "generic equivalence" * } {
-             [ [ "for closures on referred entries" ] "feqg" + "( ❪?,?,?❫ ≛[?] ❪?,?,?❫ )" "feqg_fqup" + "feqg_fqus" + "feqg_feqg" * ]
+             [ [ "for closures on referred entries" ] "feqg" + "( ❪?,?,?❫ ≛[?] ❪?,?,?❫ )" "feqg_length" + "feqg_fqu" + "feqg_fqup" + "feqg_fqus" + "feqg_feqg" * ]
              [ [ "for lenvs on referred entries" ] "reqg" + "( ? ≛[?,?] ? )" "reqg_length" + "reqg_drops" + "reqg_fqup" + "reqg_fqus" + "reqg_reqg" * ]
           }
         ]

@@ -12,13 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/static/reqx_reqx.ma".
+include "static_2/static/feqg_feqg.ma".
 include "static_2/static/feqx.ma".
 
 (* SORT-IRRELEVANT EQUIVALENCE FOR CLOSURES ON REFERRED ENTRIES *************)
 
 (* Advanced properties ******************************************************)
 
+lemma feqx_dec (G1) (G2) (L1) (L2) (T1) (T2):
+      Decidable (❪G1,L1,T1❫ ≅ ❪G2,L2,T2❫).
+/3 width=1 by feqg_dec, sfull_dec/ qed-.
+(*
 lemma feqx_sym: tri_symmetric … feqx.
 #G1 #G2 #L1 #L2 #T1 #T2 * -G1 -L1 -T1
 /3 width=1 by feqx_intro_dx, reqx_sym, teqx_sym/
@@ -50,3 +54,4 @@ elim (feqx_inv_gen_sn … HT) -HT #_ #_ #HT
 elim (feqx_inv_gen_sn … HU) -HU #_ #_ #HU
 /3 width=5 by teqx_repl/
 qed-.
+*)

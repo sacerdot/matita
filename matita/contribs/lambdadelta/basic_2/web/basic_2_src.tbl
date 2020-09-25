@@ -80,15 +80,15 @@ table {
         ]
         [ { "extended context-sensitive parallel rst-computation" * } {
              [ [ "strongly normalizing for closures" ] "fsb" + "( ≥𝐒 ❪?,?,?❫ )" "fsb_feqg" + "fsb_aaa" + "fsb_csx" + "fsb_fpbg" * ]
-             [ [ "proper for closures" ] "fpbg" + "( ❪?,?,?❫ > ❪?,?,?❫ )" "fpbg_fqup" + "fpbg_cpxs" + "fpbg_lpxs" + "fpbg_fpbs" + "fpbg_fpbg" * ]
-             [ [ "for closures" ] "fpbs" + "( ❪?,?,?❫ ≥ ❪?,?,?❫ )" "fpbs_fqup" + "fpbs_fqus" + "fpbs_aaa" + "fpbs_cpx" + "fpbs_fpb" + "fpbs_cpxs" + "fpbs_lpxs" + "fpbs_csx" + "fpbs_fpbs" * ]
+             [ [ "proper for closures" ] "fpbg" + "( ❪?,?,?❫ > ❪?,?,?❫ )" "fpbg_fqup" + "fpbg_fqus" + "fpbg_feqg" + "fpbg_cpm" + "fpbg_cpxs" + "fpbg_lpxs" + "fpbg_fpbs" + "fpbg_fpbg" * ]
+             [ [ "for closures" ] "fpbs" + "( ❪?,?,?❫ ≥ ❪?,?,?❫ )" "fpbs_fqup" + "fpbs_fqus" + "fpbs_feqg" + "fpbs_aaa" + "fpbs_cpx" + "fpbs_fpbc" + "fpbs_cpxs" + "fpbs_lpxs" + "fpbs_csx" + "fpbs_fpbs" * ]
           }
         ]
         [ { "extended context-sensitive parallel rt-computation" * } {
              [ [ "compatibility for lenvs" ] "jsx" + "( ? ⊢ ? ⊒ ? )" "jsx_drops" + "jsx_lsubr" + "jsx_csx" + "jsx_rsx" + "jsx_jsx" * ]
              [ [ "strongly normalizing for lenvs on referred entries" ] "rsx" + "( ? ⊢ ⬈*𝐒[?] ? )" "rsx_length" + "rsx_drops" + "rsx_fqup" + "rsx_cpxs" + "rsx_csx" + "rsx_rsx" * ]
              [ [ "strongly normalizing for term vectors" ] "csx_vector" + "( ❪?,?❫ ⊢ ⬈*𝐒 ? )" "csx_cnx_vector" + "csx_csx_vector" * ]
-             [ [ "strongly normalizing for terms" ] "csx" + "( ❪?,?❫ ⊢ ⬈*𝐒 ? )" "csx_simple" + "csx_simple_teqo" + "csx_drops" + "csx_fqus" + "csx_lsubr" + "csx_reqg" + "csx_feqg" + "csx_aaa" + "csx_gcp" + "csx_gcr" + "csx_lpx" + "csx_cnx" + "csx_fpbq" + "csx_cpxs" + "csx_lpxs" + "csx_csx" * ]
+             [ [ "strongly normalizing for terms" ] "csx" + "( ❪?,?❫ ⊢ ⬈*𝐒 ? )" "csx_simple" + "csx_simple_teqo" + "csx_drops" + "csx_fqus" + "csx_lsubr" + "csx_reqg" + "csx_feqg" + "csx_aaa" + "csx_gcp" + "csx_gcr" + "csx_lpx" + "csx_cnx" + "csx_fpb" + "csx_cpxs" + "csx_lpxs" + "csx_csx" * ]
              [ [ "for lenvs on all entries" ] "lpxs" + "( ❪?,?❫ ⊢ ⬈* ? )" "lpxs_length" + "lpxs_drops" + "lpxs_reqg" + "lpxs_feqg" + "lpxs_aaa" + "lpxs_lpx" + "lpxs_cpxs" + "lpxs_lpxs" * ]
              [ [ "for binders" ] "cpxs_ext" + "( ❪?,?❫ ⊢ ? ⬈* ? )" * ]
              [ [ "for terms" ] "cpxs" + "( ❪?,?❫ ⊢ ? ⬈* ? )" "cpxs_teqg" + "cpxs_teqo" + "cpxs_teqo_vector" + "cpxs_drops" + "cpxs_fqus" + "cpxs_lsubr" + "cpxs_reqg" + "cpxs_feqg" + "cpxs_aaa" + "cpxs_lpx" + "cpxs_cnx" + "cpxs_cpxs" * ]
@@ -104,18 +104,18 @@ table {
         ]
         [ { "context-sensitive parallel r-transition" * } {
              [ [ "normal form for terms" ] "cnr ( ❪?,?❫ ⊢ ➡𝐍[?,?] ? )" "cnr_simple" + "cnr_teqg" + "cnr_teqx" + "cnr_drops" * ]
-             [ [ "for lenvs on all entries" ] "lpr" + "( ❪?,?❫ ⊢ ➡[?,?] ? )" "lpr_length" + "lpr_drops" + "lpr_fquq" + "lpr_aaa" + "lpr_lpx" + "lpr_lpr" * ]
+             [ [ "for lenvs on all entries" ] "lpr" + "( ❪?,?❫ ⊢ ➡[?,?] ? )" "lpr_length" + "lpr_drops" + "lpr_fquq" + "lpr_aaa" + "lpr_lpx" + "lpr_fpb" + "lpr_fpbc" + "lpr_lpr" * ]
              [ [ "for binders" ] "cpr_ext" * ]
              [ [ "for terms" ] "cpr" "cpr_drops" + "cpr_drops_basic" + "cpr_teqg" + "cpr_cpr" * ]
           }
         ]
         [ { "t-bound context-sensitive parallel rt-transition" * } {
-             [ [ "for terms" ] "cpm" + "( ❪?,?❫ ⊢ ? ➡[?,?] ? )" "cpm_simple" + "cpm_teqx" + "cpm_drops" + "cpm_lsubr" + "cpm_fsle" + "cpm_aaa" + "cpm_cpx" * ]
+             [ [ "for terms" ] "cpm" + "( ❪?,?❫ ⊢ ? ➡[?,?] ? )" "cpm_simple" + "cpm_teqx" + "cpm_drops" + "cpm_lsubr" + "cpm_fsle" + "cpm_aaa" + "cpm_cpx" + "cpm_fpb" + "cpm_fpbc" * ]
           }
         ]
         [ { "extended parallel rst-transition" * } {
-             [ [ "for closures" ] "fpbq" + "( ❪?,?,?❫ ≽ ❪?,?,?❫ )" "fpbq_aaa" + "fpbq_fpb" * ]
-             [ [ "proper for closures" ] "fpb" + "( ❪?,?,?❫ ≻ ❪?,?,?❫ )" "fpb_reqg" + "fpb_feqg" * ]
+             [ [ "proper for closures" ] "fpbc" + "( ❪?,?,?❫ ≻ ❪?,?,?❫ )" "fpbc_fqup" + "fpbc_feqg" + "fpbc_lpx" + "fpbc_fpb" * ]
+             [ [ "for closures" ] "fpb" + "( ❪?,?,?❫ ≽ ❪?,?,?❫ )" "fpb_fqup" + "fpb_feqg" + "fpb_aaa" + "fpb_lpx" * ]
           }
         ]
         [ { "extended context-sensitive parallel rt-transition" * } {

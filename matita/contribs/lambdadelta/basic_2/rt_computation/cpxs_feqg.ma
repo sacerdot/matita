@@ -19,7 +19,7 @@ include "basic_2/rt_computation/cpxs_reqg.ma".
 
 (* Properties with generic equivalence for closures *************************)
 
-(* to be updated *)
+(* to update *)
 lemma feqg_cpxs_trans (S):
       reflexive … S → symmetric … S →
       ∀G1,G2,L1,L2,T1,T. ❪G1,L1,T1❫ ≛[S] ❪G2,L2,T❫ →

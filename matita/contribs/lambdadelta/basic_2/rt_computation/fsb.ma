@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "basic_2/notation/relations/predsubtystrong_3.ma".
-include "basic_2/rt_transition/fpb.ma".
+include "basic_2/rt_transition/fpbc.ma".
 
 (* STRONGLY NORMALIZING CLOSURES FOR PARALLEL RST-TRANSITION ****************)
 

@@ -14,7 +14,6 @@
 
 include "static_2/syntax/ext2_ext2.ma".
 include "static_2/syntax/teqg_teqg.ma".
-include "static_2/static/rex_rex.ma".
 include "static_2/static/reqg_length.ma".
 
 (* GENERIC EQUIVALENCE FOR LOCAL ENVIRONMENTS ON REFERRED ENTRIES ***********)

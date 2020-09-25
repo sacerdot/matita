@@ -13,41 +13,23 @@
 (**************************************************************************)
 
 include "static_2/notation/relations/approxeqsn_6.ma".
-include "static_2/syntax/teqx.ma".
+include "static_2/static/reqx.ma".
 include "static_2/static/feqg.ma".
 
 (* SORT-IRRELEVANT EQUIVALENCE FOR CLOSURES ON REFERRED ENTRIES *************)
-
+(*
 definition feqx: relation6 genv lenv term genv lenv term ≝
            feqg sfull.
-
+*)
 interpretation
   "sort-irrelevant equivalence on referred entries (closure)"
-  'ApproxEqSn G1 L1 T1 G2 L2 T2 = (feqx G1 L1 T1 G2 L2 T2).
+  'ApproxEqSn G1 L1 T1 G2 L2 T2 = (feqg sfull G1 L1 T1 G2 L2 T2).
 
 (* Basic_properties *********************************************************)
-(*
-lemma feqx_intro_dx (G):
-      ∀L1,L2,T2. L1 ≛[T2] L2 →
-      ∀T1. T1 ≛ T2 → ❪G,L1,T1❫ ≛ ❪G,L2,T2❫.
-/3 width=3 by feqx_intro_sn, teqx_reqx_div/ qed.
 
-(* Basic inversion lemmas ***************************************************)
-
-lemma feqx_inv_gen_sn:
-      ∀G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ≛ ❪G2,L2,T2❫ →
-      ∧∧ G1 = G2 & L1 ≛[T1] L2 & T1 ≛ T2.
-#G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2 /2 width=1 by and3_intro/
-qed-.
-
-lemma feqx_inv_gen_dx:
-      ∀G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ≛ ❪G2,L2,T2❫ →
-      ∧∧ G1 = G2 & L1 ≛[T2] L2 & T1 ≛ T2.
-#G1 #G2 #L1 #L2 #T1 #T2 * -G2 -L2 -T2
-/3 width=3 by teqx_reqx_conf_sn, and3_intro/
-qed-.
-*)
-(* Basic_2A1: removed theorems 6:
-              fleq_refl fleq_sym fleq_inv_gen
-              fleq_trans fleq_canc_sn fleq_canc_dx
-*)
+lemma feqg_feqx (S) (G1) (G2) (L1) (L2) (T1) (T2):
+      ❪G1,L1,T1❫ ≛[S] ❪G2,L2,T2❫ → ❪G1,L1,T1❫ ≅ ❪G2,L2,T2❫.
+#S #G1 #G2 #L1 #L2 #T1 #T2 #H
+elim (feqg_inv_gen_sn … H) -H
+/3 width=2 by feqg_intro_sn, reqg_reqx, teqg_teqx/ 
+qed.

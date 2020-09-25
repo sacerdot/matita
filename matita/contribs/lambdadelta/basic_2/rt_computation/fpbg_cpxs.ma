@@ -12,8 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basic_2/rt_transition/fpbc_fqup.ma".
 include "basic_2/rt_computation/cpxs_teqg.ma".
 include "basic_2/rt_computation/fpbs_cpxs.ma".
+include "basic_2/rt_computation/fpbg_fqup.ma".
 include "basic_2/rt_computation/fpbg_fpbs.ma".
 
 (* PROPER PARALLEL RST-COMPUTATION FOR CLOSURES *****************************)
@@ -26,7 +28,7 @@ lemma cpxs_tneqx_fpbg:
       (T1 ≅ T2 → ⊥) → ❪G,L,T1❫ > ❪G,L,T2❫.
 #G #L #T1 #T2 #H #H0
 elim (cpxs_tneqg_fwd_step_sn … H … H0) -H -H0
-/4 width=5 by cpxs_teqx_fpbs, fpb_cpx, ex2_3_intro/
+/4 width=5 by fpbc_fpbs_fpbg, cpxs_fpbs, cpx_fpbc, sfull_dec/
 qed.
 
 lemma cpxs_fpbg_trans:
