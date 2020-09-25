@@ -1,0 +1,7 @@
+notation "hvbox(l ⨭ break a)"
+  left associative with precedence 47
+  for @{'cons_r $l $a}.
+
+interpretation "" 'nil = (Atom).
+
+interpretation "" 'cons_r tl hd = (tl hd).
