@@ -27,14 +27,16 @@ definition replace_2 (A) (B): relation3 (relation2 A B) (relation A) (relation B
 definition subR2 (S1) (S2): relation (relation2 S1 S2) ≝
            λR1,R2. (∀a1,a2. R1 a1 a2 → R2 a1 a2).
 
-interpretation "2-relation inclusion"
-   'subseteq R1 R2 = (subR2 ?? R1 R2).
+interpretation
+  "2-relation inclusion"
+  'subseteq R1 R2 = (subR2 ?? R1 R2).
 
 definition subR3 (S1) (S2) (S3): relation (relation3 S1 S2 S3) ≝
            λR1,R2. (∀a1,a2,a3. R1 a1 a2 a3 → R2 a1 a2 a3).
 
-interpretation "3-relation inclusion"
-   'subseteq R1 R2 = (subR3 ??? R1 R2).
+interpretation
+  "3-relation inclusion"
+  'subseteq R1 R2 = (subR3 ??? R1 R2).
 
 (* Properties of relations **************************************************)
 
@@ -107,11 +109,11 @@ definition NF (A): relation A → relation A → predicate A ≝
            λR,S,a1. ∀a2. R a1 a2 → S a1 a2.
 
 definition NF_dec (A): relation A → relation A → Prop ≝
-           λR,S. ∀a1. NF A R S a1 ∨
+           λR,S. ∀a1. NF … R S a1 ∨
            ∃∃a2. R … a1 a2 & (S a1 a2 → ⊥).
 
 inductive SN (A) (R,S:relation A): predicate A ≝
-| SN_intro: ∀a1. (∀a2. R a1 a2 → (S a1 a2 → ⊥) → SN A R S a2) → SN A R S a1
+| SN_intro: ∀a1. (∀a2. R a1 a2 → (S a1 a2 → ⊥) → SN … R S a2) → SN … R S a1
 .
 
 lemma NF_to_SN (A) (R) (S): ∀a. NF A R S a → SN A R S a.
@@ -121,10 +123,10 @@ elim HSa12 -HSa12 /2 width=1 by/
 qed.
 
 definition NF_sn (A): relation A → relation A → predicate A ≝
-   λR,S,a2. ∀a1. R a1 a2 → S a1 a2.
+           λR,S,a2. ∀a1. R a1 a2 → S a1 a2.
 
 inductive SN_sn (A) (R,S:relation A): predicate A ≝
-| SN_sn_intro: ∀a2. (∀a1. R a1 a2 → (S a1 a2 → ⊥) → SN_sn A R S a1) → SN_sn A R S a2
+| SN_sn_intro: ∀a2. (∀a1. R a1 a2 → (S a1 a2 → ⊥) → SN_sn … R S a1) → SN_sn … R S a2
 .
 
 lemma NF_to_SN_sn (A) (R) (S): ∀a. NF_sn A R S a → SN_sn A R S a.
@@ -132,6 +134,12 @@ lemma NF_to_SN_sn (A) (R) (S): ∀a. NF_sn A R S a → SN_sn A R S a.
 @SN_sn_intro #a1 #HRa12 #HSa12
 elim HSa12 -HSa12 /2 width=1 by/
 qed.
+
+(* Normal form and strong normalization on unboxed triples ******************)
+
+inductive SN3 (A) (B) (C) (R,S:relation6 A B C A B C): relation3 A B C ≝
+| SN3_intro: ∀a1,b1,c1. (∀a2,b2,c2. R a1 b1 c1 a2 b2 c2 → (S a1 b1 c1 a2 b2 c2 → ⊥) → SN3 … R S a2 b2 c2) → SN3 … R S a1 b1 c1
+.
 
 (* Relations on unboxed triples *********************************************)
 

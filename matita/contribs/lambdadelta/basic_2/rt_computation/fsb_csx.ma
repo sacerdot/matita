@@ -25,7 +25,7 @@ include "basic_2/rt_computation/fsb_fpbg.ma".
 
 lemma fsb_inv_csx:
       ∀G,L,T. ≥𝐒 ❪G,L,T❫ → ❪G,L❫ ⊢ ⬈*𝐒 T.
-#G #L #T #H @(fsb_ind_alt … H) -G -L -T
+#G #L #T #H @(fsb_ind … H) -G -L -T
 /5 width=1 by csx_intro, cpx_fpbc/
 qed-.
 
@@ -76,7 +76,7 @@ lemma csx_ind_fpbc (Q:relation3 …):
         Q G1 L1 T1
       ) →
       ∀G,L,T. ❪G,L❫ ⊢ ⬈*𝐒 T → Q G L T.
-/4 width=4 by fsb_inv_csx, csx_fsb, fsb_ind_alt/ qed-.
+/4 width=4 by fsb_inv_csx, csx_fsb, fsb_ind/ qed-.
 
 lemma csx_ind_fpbg (Q:relation3 …):
       (∀G1,L1,T1.

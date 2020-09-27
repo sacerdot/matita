@@ -17,10 +17,7 @@ include "static_2/static/reqx.ma".
 include "static_2/static/feqg.ma".
 
 (* SORT-IRRELEVANT EQUIVALENCE FOR CLOSURES ON REFERRED ENTRIES *************)
-(*
-definition feqx: relation6 genv lenv term genv lenv term ≝
-           feqg sfull.
-*)
+
 interpretation
   "sort-irrelevant equivalence on referred entries (closure)"
   'ApproxEqSn G1 L1 T1 G2 L2 T2 = (feqg sfull G1 L1 T1 G2 L2 T2).

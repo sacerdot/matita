@@ -27,7 +27,7 @@
    <table name="basic_2_sum"/>
 
    <news class="gamma" date="2020-09-25.">
-         Improved rst-transition and related theory.
+         Improved theory of rst-transition.
    </news>
    <news class="gamma" date="2020-04-16.">
          Sort hierarchy parameter removed from unbound rt-transition

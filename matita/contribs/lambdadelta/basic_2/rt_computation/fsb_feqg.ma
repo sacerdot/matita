@@ -24,7 +24,7 @@ lemma fsb_feqg_trans (S):
       reflexive … S → symmetric … S → Transitive … S →
       ∀G1,L1,T1. ≥𝐒 ❪G1,L1,T1❫ →
       ∀G2,L2,T2. ❪G1,L1,T1❫ ≛[S] ❪G2,L2,T2❫ → ≥𝐒 ❪G2,L2,T2❫.
-#S #H1S #H2S #H3S #G1 #L1 #T1 #H @(fsb_ind_alt … H) -G1 -L1 -T1
+#S #H1S #H2S #H3S #G1 #L1 #T1 #H @(fsb_ind … H) -G1 -L1 -T1
 #G1 #L1 #T1 #_ #IH #G2 #L2 #T2 #H12
 @fsb_intro #G #L #T #H2
 elim (feqg_fpbc_trans … H12 … H2) -G2 -L2 -T2
