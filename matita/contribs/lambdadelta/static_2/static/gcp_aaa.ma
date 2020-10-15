@@ -20,11 +20,11 @@ include "static_2/static/lsubc_drops.ma".
 (* Main properties **********************************************************)
 
 (* Basic_1: was: sc3_arity_csubc *)
-theorem acr_aaa_csubc_lifts: ∀RR,RS,RP.
-                             gcp RR RS RP → gcr RR RS RP RP →
-                             ∀G,L1,T,A. ❪G,L1❫ ⊢ T ⁝ A → ∀b,f,L0. ⇩*[b,f] L0 ≘ L1 →
-                             ∀T0. ⇧*[f] T ≘ T0 → ∀L2. G ⊢ L2 ⫃[RP] L0 →
-                             ❪G,L2,T0❫ ϵ ⟦A⟧[RP].
+theorem acr_aaa_lsubc_lifts (RR) (RS) (RP):
+        gcp RR RS RP → gcr RR RS RP RP →
+        ∀G,L1,T,A. ❪G,L1❫ ⊢ T ⁝ A → ∀b,f,L0. ⇩*[b,f] L0 ≘ L1 →
+        ∀T0. ⇧*[f] T ≘ T0 → ∀L2. G ⊢ L2 ⫃[RP] L0 →
+        ❪G,L2,T0❫ ϵ ⟦A⟧[RP].
 #RR #RS #RP #H1RP #H2RP #G #L1 #T @(fqup_wf_ind_eq (Ⓣ) … G L1 T) -G -L1 -T
 #Z #Y #X #IH #G #L1 * [ * | * [ #p ] * ]
 [ #s #HG #HL #HT #A #HA #b #f #L0 #HL01 #X0 #H0 #L2 #HL20 destruct -IH
@@ -90,12 +90,14 @@ theorem acr_aaa_csubc_lifts: ∀RR,RS,RP.
 qed.
 
 (* Basic_1: was: sc3_arity *)
-lemma acr_aaa: ∀RR,RS,RP. gcp RR RS RP → gcr RR RS RP RP →
-               ∀G,L,T,A. ❪G,L❫ ⊢ T ⁝ A → ❪G,L,T❫ ϵ ⟦A⟧[RP].
-/3 width=9 by drops_refl, lifts_refl, acr_aaa_csubc_lifts/ qed.
+lemma acr_aaa (RR) (RS) (RP):
+      gcp RR RS RP → gcr RR RS RP RP →
+      ∀G,L,T,A. ❪G,L❫ ⊢ T ⁝ A → ❪G,L,T❫ ϵ ⟦A⟧[RP].
+/3 width=9 by drops_refl, lifts_refl, acr_aaa_lsubc_lifts/ qed.
 
-lemma gcr_aaa: ∀RR,RS,RP. gcp RR RS RP → gcr RR RS RP RP →
-               ∀G,L,T,A. ❪G,L❫ ⊢ T ⁝ A → RP G L T.
+lemma gcr_aaa (RR) (RS) (RP):
+      gcp RR RS RP → gcr RR RS RP RP →
+      ∀G,L,T,A. ❪G,L❫ ⊢ T ⁝ A → RP G L T.
 #RR #RS #RP #H1RP #H2RP #G #L #T #A #HT
 lapply (acr_gcr … H1RP H2RP A) #HA
 @(s1 … HA) /2 width=4 by acr_aaa/
