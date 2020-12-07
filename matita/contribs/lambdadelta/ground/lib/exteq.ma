@@ -36,4 +36,3 @@ lemma exteq_sym (A) (B): symmetric … (exteq A B).
 
 lemma exteq_trans (A) (B): Transitive … (exteq A B).
 /2 width=1 by exteq_repl/ qed-.
-
