@@ -1,4 +1,4 @@
-name "ground_2_src"
+name "ground_src"
 
 table {
    class "gray"
