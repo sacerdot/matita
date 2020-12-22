@@ -1,97 +1,115 @@
 name "ground_src"
 
 table {
-   class "gray"
-   [ { "component" * } {
-        [ { "plane" * } {
-             [ "files" * ]
-          }
-        ]
-     }
-   ]
-   class "water"
-   [ { "generic rt-transition counter" * } {
-        [ { "" * } {
-             [ "rtc_ist ( 𝐓❪?,?❫ )" "rtc_ist_shift" "rtc_ist_plus" "rtc_ist_max" * ]
-             [ "rtc_isrc ( 𝐑𝐓❪?,?❫ )" "rtc_isrt_shift" "rtc_isrt_plus" "rtc_isrt_max" "rtc_isrt_max_shift" * ]
-             [ "rtc ( 〈?,?,?,?〉 ) ( 𝟘𝟘 ) ( 𝟙𝟘 ) ( 𝟘𝟙 )" "rtc_shift ( ↕*? )" "rtc_plus ( ? + ? )" "rtc_max ( ? ∨ ? )" "rtc_max_shift" * ]
-          }
-        ]
-     }
-   ]
-   class "green"
-   [ { "multiple relocation" * } {
-        [ { "" * } {
-             [ "rtmap" "rtmap_eq ( ? ≡ ? )" "rtmap_pushs ( ⫯*[?]? )" "rtmap_nexts ( ↑*[?]? )"
-               "rtmap_tl ( ⫱? )" "rtmap_tls ( ⫱*[?]? )" "rtmap_isid ( 𝐈❪?❫ )" "rtmap_id" "rtmap_isdiv ( 𝛀❪?❫ )"
-               "rtmap_fcla ( 𝐂❪?❫ ≘ ? )" "rtmap_isfin ( 𝐅❪?❫ )" "rtmap_isuni ( 𝐔❪?❫ )" "rtmap_uni ( 𝐔❨?❩ )"
-               "rtmap_sle ( ? ⊆ ? )" "rtmap_sdj ( ? ∥ ? )" "rtmap_sand ( ? ⋒ ? ≘ ? )" "rtmap_sor ( ? ⋓ ? ≘ ? )"
-               "rtmap_at ( @❪?,?❫ ≘ ? )" "rtmap_istot ( 𝐓❪?❫ )" "rtmap_after ( ? ⊚ ? ≘ ? )" "rtmap_coafter ( ? ~⊚ ? ≘ ? )"
-               "rtmap_basic ( 𝐁❨?,?❩ )" "rtmap_basic_after"
-             * ]
-             [ "nstream ( ⫯? ) ( ↑? )" "nstream_eq" "" ""
-               "" "" "nstream_isid" "nstream_id ( 𝐈𝐝 )" ""
-               "" "" "" ""
-               "" "" "" "nstream_sor"
-               "" "nstream_istot ( ?@❨?❩ )" "nstream_after ( ? ∘ ? )" "nstream_coafter ( ? ~∘ ? )"
-               "nstream_basic" ""
-             * ]
+  class "gray"
+  [ { "component" * } {
+      [ { "plane" * } {
+          [ "files" * ]
+        }
+      ]
+    }
+  ]
+  class "water"
+  [ { "generic rt-transition counter" * } {
+      [ { "" * } {
+          [ "rtc_ist ( 𝐓❪?,?❫ )" "rtc_ist_shift" "rtc_ist_plus" "rtc_ist_max" * ]
+          [ "rtc_isrc ( 𝐑𝐓❪?,?❫ )" "rtc_isrt_shift" "rtc_isrt_plus" "rtc_isrt_max" "rtc_isrt_max_shift" * ]
+          [ "rtc ( 〈?,?,?,?〉 ) ( 𝟘𝟘 ) ( 𝟙𝟘 ) ( 𝟘𝟙 )" "rtc_shift ( ↕*? )" "rtc_plus ( ? + ? )" "rtc_max ( ? ∨ ? )" "rtc_max_shift" * ]
+        }
+      ]
+    }
+  ]
+  class "green"
+  [ { "multiple relocation" * } {
+      [ { "" * } {
+          [ "rtmap" "rtmap_eq ( ? ≡ ? )" "rtmap_pushs ( ⫯*[?]? )" "rtmap_nexts ( ↑*[?]? )"
+            "rtmap_tl ( ⫱? )" "rtmap_tls ( ⫱*[?]? )" "rtmap_isid ( 𝐈❪?❫ )" "rtmap_id" "rtmap_isdiv ( 𝛀❪?❫ )"
+            "rtmap_fcla ( 𝐂❪?❫ ≘ ? )" "rtmap_isfin ( 𝐅❪?❫ )" "rtmap_isuni ( 𝐔❪?❫ )" "rtmap_uni ( 𝐔❨?❩ )"
+            "rtmap_sle ( ? ⊆ ? )" "rtmap_sdj ( ? ∥ ? )" "rtmap_sand ( ? ⋒ ? ≘ ? )" "rtmap_sor ( ? ⋓ ? ≘ ? )"
+            "rtmap_at ( @❪?,?❫ ≘ ? )" "rtmap_istot ( 𝐓❪?❫ )" "rtmap_after ( ? ⊚ ? ≘ ? )" "rtmap_coafter ( ? ~⊚ ? ≘ ? )"
+            "rtmap_basic ( 𝐁❨?,?❩ )" "rtmap_basic_after"
+          * ]
+          [ "nstream ( ⫯? ) ( ↑? )" "nstream_eq" "" ""
+            "" "" "nstream_isid" "nstream_id ( 𝐈𝐝 )" ""
+            "" "" "" ""
+            "" "" "" "nstream_sor"
+            "" "nstream_istot ( ?@❨?❩ )" "nstream_after ( ? ∘ ? )" "nstream_coafter ( ? ~∘ ? )"
+            "nstream_basic" ""
+          * ]
 (*
-             [ "trace ( ∥?∥ )" "trace_at ( @❪?,?❫ ≘ ? )" "trace_after ( ? ⊚ ? ≘ ? )" "trace_isid ( 𝐈❪?❫ )" "trace_isun ( 𝐔❪?❫ )"
-               "trace_sle ( ? ⊆ ? )" "trace_sor ( ? ⋓ ? ≘ ? )" "trace_snot ( ∁ ? )" * ]
+          [ "trace ( ∥?∥ )" "trace_at ( @❪?,?❫ ≘ ? )" "trace_after ( ? ⊚ ? ≘ ? )" "trace_isid ( 𝐈❪?❫ )" "trace_isun ( 𝐔❪?❫ )"
+            "trace_sle ( ? ⊆ ? )" "trace_sor ( ? ⋓ ? ≘ ? )" "trace_snot ( ∁ ? )" * ]
 *)
-             [ "mr2 ( ◊ ) ( ❨?,?❩;? )" "mr2_append ( ? @@? )" "mr2_at ( @❪?,?❫ ≘ ? )" "mr2_plus ( ? + ? )" "mr2_minus ( ? ▭ ? ≘ ? )" * ]
-          }
-        ]
-     }
-   ]
-   class "grass"
-   [ { "natural numbers with infinity" * } {
-        [ { "" * } {
-           [ "ynat ( ∞ )" "ynat_pred ( ↓? )" "ynat_succ ( ↑? )"
-             "ynat_le ( ? ≤ ? )" "ynat_lt ( ? &lt; ? )"
-             "ynat_plus ( ? + ? )" "ynat_minus_sn ( ? - ? )" *
-           ]
-          }
-        ]
-     }
-   ]
-   class "yellow"
-   [ { "extensions to the library" * } {
-        [ { "" * } {
-             [ "stream ( ? ⨮{?} ? )" "stream_eq ( ? ≗{?} ? )" "stream_hdtl ( ⫰{?}? )" "stream_tls ( ⫰*{?}[?]? )" * ]
-             [ "list ( Ⓔ{?} ) ( ? ⨮{?} ? )" "list_length ( |?| )" * ]
-             [ "bool ( Ⓕ ) ( Ⓣ )" "arith ( ?^? ) ( ↑? ) ( ↓? ) ( ? ∨ ? ) ( ? ∧ ? )" "arith_2a" "arith_2b" * ]
-             [ "ltc" "ltc_ctc" * ]
-             [ "logic ( ⊥ ) ( ⊤ )" "relations ( ? ⊆ ? )" "functions" "exteq ( ? ≐{?,?} ? )" "star" "lstar_2a" * ]
-          }
-        ]
-     }
-   ]
-   class "orange"
-   [ { "generated library" * } {
-        [ { "generalization with equality" * } {
-             [ "insert_eq" * ]
-          }
-        ]
-        [ { "permutation of quantifiers" * } {
-             [ "pull" * ]
-          }
-        ]
-        [ { "logical decomposables" * } {
-             [ "xoa ( ∃∃ ) ( ∨∨ ) ( ∧∧ )" * ]
-          }
-        ]
-     }
-   ]
-   class "red"
-   [ { "" * } {
-        [ { "" * } {
-             [ * ]
-          }
-        ]
-     }
-   ]
+          [ "mr2 ( ◊ ) ( ❨?,?❩;? )" "mr2_append ( ? @@? )" "mr2_at ( @❪?,?❫ ≘ ? )" "mr2_plus ( ? + ? )" "mr2_minus ( ? ▭ ? ≘ ? )" * ]
+        }
+      ]
+    }
+  ]
+  class "grass"
+  [ { "natural numbers with infinity" * } {
+      [ { "" * } {
+          [ "ynat ( ∞ )" "ynat_pred ( ↓? )" "ynat_succ ( ↑? )"
+            "ynat_le ( ? ≤ ? )" "ynat_lt ( ? &lt; ? )"
+            "ynat_plus ( ? + ? )" "ynat_minus_sn ( ? - ? )" *
+          ]
+        }
+      ]
+    }
+  ]
+  class "grass"
+  [ { "arithmetics" * } {
+      [ { "non-negative integers" * } {
+          [ "nat_lt ( ?&lt;? )" "nat_lt_pred" "nat_lt_plus" * ]
+          [ "nat_le ( ?≤? )" "nat_le_pred" "nat_le_plus" * ]
+          [ "nat_plus ( ?+? )" * ]
+          [ "nat_pred ( ↓? )" "nat_pred_succ" * ]
+          [ "nat_succ ( ↑? )" "nat_succ_iter" * ]
+          [ "nat ( 𝟎 )" "nat_iter ( ?^{?}? )" * ]
+        }
+      ]
+      [ { "positive integers" * } {
+          [ "pnat_plus ( ?+? )" * ]
+          [ "pnat ( 𝟏 ) ( ↑? )" "pnat_dis" "pnat_iter ( ?^{?}? )" * ]
+        }
+      ]
+    }
+  ]
+  class "yellow"
+  [ { "extensions to the library" * } {
+      [ { "" * } {
+          [ "stream ( ? ⨮{?} ? )" "stream_eq ( ? ≗{?} ? )" "stream_hdtl ( ⫰{?}? )" "stream_tls ( ⫰*{?}[?]? )" * ]
+          [ "list ( Ⓔ{?} ) ( ? ⨮{?} ? )" "list_length ( |?| )" * ]
+          [ "bool ( Ⓕ ) ( Ⓣ )" "arith ( ?^? ) ( ↑? ) ( ↓? ) ( ? ∨ ? ) ( ? ∧ ? )" "arith_2a" "arith_2b" * ]
+          [ "ltc" "ltc_ctc" * ]
+          [ "logic ( ⊥ ) ( ⊤ )" "relations ( ? ⊆ ? )" "functions" "exteq ( ? ≐{?,?} ? )" "star" "lstar_2a" * ]
+        }
+      ]
+    }
+  ]
+  class "orange"
+  [ { "generated library" * } {
+      [ { "generalization with equality" * } {
+          [ "insert_eq" * ]
+        }
+      ]
+      [ { "permutation of quantifiers" * } {
+          [ "pull" * ]
+        }
+      ]
+      [ { "logical decomposables" * } {
+          [ "xoa ( ∃∃ ) ( ∨∨ ) ( ∧∧ )" * ]
+        }
+      ]
+    }
+  ]
+  class "red"
+  [ { "" * } {
+      [ { "" * } {
+          [ * ]
+        }
+      ]
+    }
+  ]
 }
 
 class "top"               { * }

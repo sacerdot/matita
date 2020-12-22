@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/nat_iter_succ.ma".
+include "ground/arith/nat_succ_iter.ma".
 
 (* NON-NEGATIVE INTEGERS ****************************************************)
 

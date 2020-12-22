@@ -12,13 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/nat_succ.ma".
-include "ground/arith/nat_iter.ma".
+include "ground/arith/nat_pred_succ.ma".
+include "ground/arith/nat_lt.ma".
 
 (* NON-NEGATIVE INTEGERS ****************************************************)
 
-(* Rewrites with nsucc ******************************************************)
+(* Basic constructions with pred ********************************************)
 
-lemma niter_succ (A) (f) (n) (a): f (f^n a) = f^{A}(↑n) a.
-#A #f * //
-qed.
+lemma nlt_zero_sn (m): m = ↑↓m → 𝟎 < m.
+// qed.
+
+(* Basic inversions with pred ***********************************************)
+
+(*** S_pred *)
+lemma nlt_inv_zero_sn (m): 𝟎 < m → m = ↑↓m.
+#m @(nat_ind … m) -m //
+#H elim (nlt_inv_refl … H)
+qed-.

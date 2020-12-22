@@ -26,6 +26,12 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
+lemma nlt_i (m) (n): ↑m ≤ n → m < n.
+// qed.
+
+lemma nlt_refl_succ (n): n < ↑n.
+// qed.
+
 (*** lt_O_S *)
 lemma nlt_zero_succ (m): 𝟎 < ↑m.
 /2 width=1 by nle_succ_bi/ qed.
