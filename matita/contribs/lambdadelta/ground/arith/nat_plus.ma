@@ -14,7 +14,7 @@
 
 include "ground/arith/nat_succ_iter.ma".
 
-(* NON-NEGATIVE INTEGERS ****************************************************)
+(* ADDITION FOR NON-NEGATIVE INTEGERS ***************************************)
 
 (*** plus *)
 definition nplus: nat → nat → nat ≝
@@ -33,7 +33,7 @@ lemma nplus_zero_dx (m): m = m + 𝟎.
 lemma nplus_one_dx (n): ↑n = n + 𝟏.
 // qed.
 
-(* Semigroup properties *****************************************************)
+(* Advanved rewrites (semigroup properties) *********************************)
 
 (*** plus_n_Sm *)
 lemma nplus_succ_dx (m) (n): ↑(m+n) = m + ↑n.
@@ -54,14 +54,19 @@ lemma nplus_comm: commutative … nplus.
 #m @(nat_ind … m) -m //
 qed-.
 
-lemma nplus_one_sn (n): ↑n = 𝟏 + n.
-#n <nplus_comm // qed.
-
 (*** associative_plus *)
 lemma nplus_assoc: associative … nplus.
 #m #n #o @(nat_ind … o) -o //
 #o #IH <nplus_succ_dx <nplus_succ_dx <nplus_succ_dx <IH -IH //
 qed.
+
+(* Advanced constructions ***************************************************)
+
+lemma nplus_one_sn (n): ↑n = 𝟏 + n.
+#n <nplus_comm // qed.
+
+lemma nplus_succ_shift (m) (n): ↑m + n = m + ↑n.
+// qed-.
 
 (*** assoc_plus1 *)
 lemma nplus_plus_comm_12 (o) (m) (n): m + n + o = n + (m + o).
@@ -88,7 +93,8 @@ qed-.
 (*** injective_plus_r *)
 lemma eq_inv_nplus_bi_sn (o) (m) (n): o + m = o + n → m = n.
 #o #m #n <nplus_comm <nplus_comm in ⊢ (???%→?);
-/2 width=2 by eq_inv_nplus_bi_dx/ qed-.
+/2 width=2 by eq_inv_nplus_bi_dx/
+qed-.
 
 (* Advanced eliminations ****************************************************)
 

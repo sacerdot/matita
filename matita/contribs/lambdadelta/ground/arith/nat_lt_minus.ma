@@ -12,35 +12,26 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/nat_le_plus.ma".
-include "ground/arith/nat_lt.ma".
+include "ground/arith/nat_le_minus.ma".
+include "ground/arith/nat_lt_pred.ma".
 
 (* STRICT ORDER FOR NON-NEGATIVE INTEGERS ***********************************)
 
-(* Constructions with nplus *************************************************)
+(* Rewrites with nminus *****************************************************)
 
-(*** monotonic_lt_plus_l *)
-lemma nlt_plus_bi_dx (m) (n1) (n2): n1 < n2 → n1 + m < n2 + m.
-#m #n1 #n2 #H
-@nlt_i >nplus_succ_sn /2 width=1 by nle_plus_bi_dx/
+(*** minus_pred_pred *)
+lemma nminus_pred_bi (m) (n): 𝟎 < m → 𝟎 < n → n - m = ↓n - ↓m.
+#m #n #Hm #Hn
+>(nlt_inv_zero_sn … Hm) in ⊢ (??%?); -Hm
+>(nlt_inv_zero_sn … Hn) in ⊢ (??%?); -Hn
+//
+qed-.
+
+(* Constructions with nminus ************************************************)
+
+(*** monotonic_lt_minus_l *)
+lemma nlt_minus_sn_bi (o) (m) (n): o ≤ m → m < n → m - o < n - o.
+#o #m #n #Hom #Hmn
+lapply (nle_minus_sn_bi … o Hmn) -Hmn
+<(nminus_succ_sn … Hom) //
 qed.
-
-(*** monotonic_lt_plus_r *)
-lemma nlt_plus_bi_sn (m) (n1) (n2): n1 < n2 → m + n1 < m + n2.
-#m #n1 #n2 #H
-@nlt_i >nplus_succ_dx /2 width=1 by nle_plus_bi_sn/
-qed.
-
-(*** lt_plus_Sn_r *) (**)
-lemma lt_plus_Sn_r: ∀a,x,n. a < a + x + ↑n.
-/2 width=1/ qed-.
-
-(* Inversions with nplus ****************************************************)
-
-(*** lt_plus_to_lt_l *)
-lemma nlt_inv_plus_bi_dx (m) (n1) (n2): n1 + m < n2 + m → n1 < n2.
-/2 width=2 by nle_inv_plus_bi_dx/ qed-.
-
-(*** lt_plus_to_lt_r *)
-lemma nlt_inv_plus_bi_sn (m) (n1) (n2): m + n1 < m + n2 → n1 < n2.
-/2 width=2 by nle_inv_plus_bi_sn/ qed-.

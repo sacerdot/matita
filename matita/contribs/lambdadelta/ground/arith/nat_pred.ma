@@ -16,7 +16,7 @@ include "ground/notation/functions/downarrow_1.ma".
 include "ground/arith/pnat_dis.ma".
 include "ground/arith/nat.ma".
 
-(* NON-NEGATIVE INTEGERS ****************************************************)
+(* PREDECESSOR FOR NON-NEGATIVE INTEGERS ************************************)
 
 (*** pred *)
 definition npred (m): nat ≝ match m with

@@ -15,9 +15,9 @@
 include "ground/arith/nat_pred_succ.ma".
 include "ground/arith/nat_le.ma".
 
-(* NON-NEGATIVE INTEGERS ****************************************************)
+(* ORDER FOR NON-NEGATIVE INTEGERS ******************************************)
 
-(* Basic constructions with pred ********************************************)
+(* Constructions with npred *************************************************)
 
 (*** le_pred_n *)
 lemma nle_pred_sn_refl (m): ↓m ≤ m.
@@ -26,6 +26,18 @@ qed.
 
 (*** monotonic_pred *)
 lemma nle_pred_bi (m) (n): m ≤ n → ↓m ≤ ↓n.
-#m #n #H elim H -n
+#m #n #H elim H -n //
 /2 width=3 by nle_trans/
 qed.
+
+lemma nle_pred_sn (m) (n): m ≤ ↑n → ↓m ≤ n.
+#m #n elim m -m //
+/2 width=1 by nle_pred_bi/
+qed-.
+
+(* Destructions with npred **************************************************)
+
+lemma nle_inv_pred_sn (m) (n): ↓m ≤ n → m ≤ ↑n.
+#m #n elim m -m
+/2 width=1 by nle_succ_bi/
+qed-.

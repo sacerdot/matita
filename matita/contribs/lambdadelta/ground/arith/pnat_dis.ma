@@ -14,7 +14,7 @@
 
 include "ground/arith/pnat.ma".
 
-(* POSITIVE INTEGERS ********************************************************)
+(* DISCRIMINATOR FOR POSITIVE INTEGERS **************************************)
 
 definition pdis (A:Type[0]) (a) (f) (p): A ≝
 match p with

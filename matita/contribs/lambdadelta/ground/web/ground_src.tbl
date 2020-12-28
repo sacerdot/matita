@@ -59,8 +59,9 @@ table {
   class "grass"
   [ { "arithmetics" * } {
       [ { "non-negative integers" * } {
-          [ "nat_lt ( ?&lt;? )" "nat_lt_pred" "nat_lt_plus" * ]
-          [ "nat_le ( ?≤? )" "nat_le_pred" "nat_le_plus" * ]
+          [ "nat_lt ( ?&lt;? )" "nat_lt_pred" "nat_lt_plus" "nat_lt_minus" "nat_lt_minus_plus" * ]
+          [ "nat_le ( ?≤? )" "nat_le_pred" "nat_le_plus" "nat_le_minus" "nat_le_minus_plus" * ]
+          [ "nat_minus ( ?-? )" "nat_minus_plus" * ]
           [ "nat_plus ( ?+? )" * ]
           [ "nat_pred ( ↓? )" "nat_pred_succ" * ]
           [ "nat_succ ( ↑? )" "nat_succ_iter" * ]
@@ -88,6 +89,10 @@ table {
   ]
   class "orange"
   [ { "generated library" * } {
+      [ { "well-founded induction" * } {
+          [ "wf1_ind_nlt" "wf2_ind_nlt" "wf3_ind_nlt.ma" * ]
+        }
+      ]
       [ { "generalization with equality" * } {
           [ "insert_eq" * ]
         }

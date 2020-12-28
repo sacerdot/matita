@@ -15,7 +15,7 @@
 include "ground/arith/nat_iter.ma".
 include "ground/arith/nat_succ.ma".
 
-(* NON-NEGATIVE INTEGERS ****************************************************)
+(* SUCCESSOR FOR NON-NEGATIVE INTEGERS **************************************)
 
 (* Rewrites with niter ******************************************************)
 

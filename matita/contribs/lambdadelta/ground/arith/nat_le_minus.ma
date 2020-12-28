@@ -1,0 +1,64 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "ground/arith/nat_minus.ma".
+include "ground/arith/nat_le_pred.ma".
+
+(* ORDER FOR NON-NEGATIVE INTEGERS ******************************************)
+
+(* Constructions with nminus ************************************************)
+
+(*** minus_le *)
+lemma nle_minus_sn_refl_sn (m) (n): m - n ≤ m.
+#m #n elim n -n //
+#n #IH /2 width=3 by nle_trans/
+qed.
+
+(*** inv_eq_minus_O *)
+lemma nle_eq_minus_O (m) (n): 𝟎 = m - n → m ≤ n.
+#m #n @(nat_ind_2 … m n) //
+/3 width=1 by nle_succ_bi/
+qed.
+
+(*** monotonic_le_minus_l *)
+lemma nle_minus_sn_bi (m) (n) (o): m ≤ n → m-o ≤ n-o.
+#m #n #o elim o -o //
+#o #IH #Hmn /3 width=1 by nle_pred_bi/
+qed.
+
+(*** monotonic_le_minus_r *)
+lemma nle_minus_dx_bi (m) (n) (o): m ≤ n → o-n ≤ o-m.
+#m #n #o #H elim H -n //
+#n #_ #IH /2 width=3 by nle_trans/
+qed.
+
+(* Inversions with nminus ***************************************************)
+
+(*** eq_minus_O *)
+lemma nle_inv_eq_minus_O (m) (n): m ≤ n → 𝟎 = m - n.
+#m #n #H elim H -n //
+qed-.
+
+(* Destructions with nminus *************************************************)
+
+(*** minus_Sn_m *)
+lemma nminus_succ_sn (m) (n): m ≤ n → ↑(n-m) = ↑n - m.
+#m #n #H @(nle_ind_alt … H) -m -n //
+qed-.
+
+(*** minus_minus_m_m *)
+lemma nminus_minus_dx_refl_sn (m) (n): m ≤ n → m = n - (n - m).
+#m #n #H elim H -n //
+#n #Hmn #IH <(nminus_succ_sn … Hmn) -Hmn //
+qed-.

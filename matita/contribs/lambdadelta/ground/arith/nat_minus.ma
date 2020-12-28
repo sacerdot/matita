@@ -12,33 +12,60 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/pnat_iter.ma".
-include "ground/arith/nat.ma".
+include "ground/arith/nat_succ_iter.ma".
+include "ground/arith/nat_pred_succ.ma".
 
-(* ITERATED FUNCTION FOR NON-NEGATIVE INTEGERS ******************************)
+(* SUBTRACTION FOR NON-NEGATIVE INTEGERS ************************************)
 
-definition niter (n:nat) (A:Type[0]) (f:A→A) (a:A) ≝
-match n with
-[ nzero  ⇒ a
-| ninj p ⇒ f^{A}p a
-]
-.
+(*** minus *)
+definition nminus: nat → nat → nat ≝
+           λm,n. npred^n m.
 
 interpretation
-  "iterated function (non-negative integers)"
-  'Exp A f n = (niter n A f).
+  "minus (positive integers"
+  'minus m n = (nminus m n).
 
 (* Basic rewrites ***********************************************************)
 
-lemma niter_zero (A) (f) (a): a = (f^{A}𝟎) a.
+(*** minus_n_O *)
+lemma nminus_zero_dx (m): m = m - 𝟎.
 // qed.
 
-lemma niter_inj (A) (f) (p) (a): f^p a = f^{A}(ninj p) a.
-// qed.
+lemma nminus_pred_sn (m) (n): ↓(m - n) = ↓m - n.
+#m #n @(niter_appl … npred)
+qed.
+
+(*** eq_minus_S_pred *)
+lemma nminus_succ_dx (m) (n): ↓(m - n) = m - ↑n.
+#m #n @(niter_succ … npred)
+qed.
+
+(*** minus_O_n *)
+lemma nminus_zero_sn (n): 𝟎 = 𝟎 - n.
+#n elim n -n //
+qed.
+
+(*** minus_S_S *)
+lemma nminus_succ_bi (m) (n): m - n = ↑m - ↑n.
+#m #n elim n -n //
+qed.
 
 (* Advanced rewrites ********************************************************)
 
-lemma niter_appl (A) (f) (n) (a): f (f^n a) = f^{A}n (f a).
-#A #f * //
-#p #a <niter_inj <niter_inj <piter_appl //
+lemma nminus_succ_dx_pred_sn (m) (n): ↓m - n = m - ↑n.
+// qed-.
+
+(*** minus_n_n *)
+lemma nminus_refl (m): 𝟎 = m - m.
+#m elim m -m //
 qed.
+
+(*** minus_Sn_n *)
+lemma nminus_succ_sn_refl (m): ninj (𝟏) = ↑m - m.
+#m elim m -m //
+qed.
+
+(*** minus_minus_comm *)
+lemma nminus_minus_comm (o) (m) (n): o - m - n = o - n - m.
+#o #m #n elim n -n //
+qed-.

@@ -14,7 +14,7 @@
 
 include "ground/arith/pnat_iter.ma".
 
-(* POSITIVE INTEGERS ********************************************************)
+(* ADDITION FOR POSITIVE INTEGERS *******************************************)
 
 definition pplus: pnat → pnat → pnat ≝
            λp,q. psucc^q p.
@@ -31,7 +31,7 @@ lemma pplus_one_dx (p): ↑p = p + 𝟏.
 lemma pplus_succ_dx (p) (q): ↑(p+q) = p + ↑q.
 // qed.
 
-(* Semigroup properties *****************************************************)
+(* Advanced reweites (semigroup properties) *********************************)
 
 lemma pplus_succ_sn (p) (q): ↑(p+q) = ↑p + q.
 #p #q @(piter_appl … psucc)

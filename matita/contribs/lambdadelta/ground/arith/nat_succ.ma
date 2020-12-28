@@ -14,7 +14,7 @@
 
 include "ground/arith/nat.ma".
 
-(* NON-NEGATIVE INTEGERS ****************************************************)
+(* SUCCESSOR FOR NON-NEGATIVE INTEGERS **************************************)
 
 definition nsucc: nat → nat ≝ λm. match m with
 [ nzero  ⇒ ninj (𝟏)
@@ -52,7 +52,7 @@ lemma nat_ind_2 (Q:relation2 …):
 #m #IH #n elim n -n /2 width=1 by/
 qed-.
 
-(* Basic inversions *********************************************************)
+(* Basic inversions ***************************************************************)
 
 (*** injective_S *)
 lemma eq_inv_nsucc_bi: injective … nsucc.

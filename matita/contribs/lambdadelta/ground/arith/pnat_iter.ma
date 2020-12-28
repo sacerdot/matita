@@ -15,7 +15,7 @@
 include "ground/notation/functions/exp_3.ma".
 include "ground/arith/pnat.ma".
 
-(* POSITIVE INTEGERS ********************************************************)
+(* ITERATED FUNCTION FOR POSITIVE INTEGERS **********************************)
 
 rec definition piter (p:pnat) (A:Type[0]) (f:A→A) (a:A) ≝
 match p with

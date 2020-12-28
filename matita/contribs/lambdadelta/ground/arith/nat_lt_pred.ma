@@ -15,14 +15,14 @@
 include "ground/arith/nat_pred_succ.ma".
 include "ground/arith/nat_lt.ma".
 
-(* NON-NEGATIVE INTEGERS ****************************************************)
+(* STRICT ORDER FOR NON-NEGATIVE INTEGERS ***********************************)
 
-(* Basic constructions with pred ********************************************)
+(* Constructions with npred *************************************************)
 
 lemma nlt_zero_sn (m): m = ↑↓m → 𝟎 < m.
 // qed.
 
-(* Basic inversions with pred ***********************************************)
+(* Inversions with npred ****************************************************)
 
 (*** S_pred *)
 lemma nlt_inv_zero_sn (m): 𝟎 < m → m = ↑↓m.

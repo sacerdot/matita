@@ -15,9 +15,9 @@
 include "ground/arith/nat_plus.ma".
 include "ground/arith/nat_le.ma".
 
-(* NON-NEGATIVE INTEGERS ****************************************************)
+(* ORDER FOR NON-NEGATIVE INTEGERS ****************************************************)
 
-(* Basic constructions with plus ********************************************)
+(* Constructions with nplus ***********************************************************)
 
 (*** monotonic_le_plus_l *)
 lemma nle_plus_bi_dx (m) (n1) (n2): n1 ≤ n2 → n1 + m ≤ n2 + m.
@@ -46,14 +46,14 @@ lemma nle_plus_dx_dx (m) (n) (o): n + o ≤ m → n ≤ m.
 lemma nle_plus_dx_sn (m) (n) (o): n ≤ m → n ≤ o + m.
 /2 width=3 by nle_trans/ qed.
 
-(* Main constructions with plus *********************************************)
+(* Main constructions with nplus ********************************************)
 
 (*** le_plus *)
 theorem nle_plus_bi (m1) (m2) (n1) (n2):
         m1 ≤ m2 → n1 ≤ n2 → m1 + n1 ≤ m2 + n2.
 /3 width=3 by nle_plus_bi_dx, nle_plus_bi_sn, nle_trans/ qed.
 
-(* Basic inversions with plus ***********************************************)
+(* Inversions with nplus ****************************************************)
 
 (*** plus_le_0 *)
 lemma nle_inv_plus_zero (m) (n): m + n ≤ 𝟎 → ∧∧ 𝟎 = m & 𝟎 = n.
@@ -67,4 +67,3 @@ qed-.
 (*** le_plus_to_le *)
 lemma nle_inv_plus_bi_sn (o) (m) (n): o + n ≤ o + m → n ≤ m.
 /2 width=2 by nle_inv_plus_bi_dx/ qed-.
-

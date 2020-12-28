@@ -15,7 +15,7 @@
 include "ground/insert_eq/insert_eq_0.ma".
 include "ground/arith/nat_succ.ma".
 
-(* NON-NEGATIVE INTEGERS ****************************************************)
+(* ORDER FOR NON-NEGATIVE INTEGERS ******************************************)
 
 (*** le *)
 (*** le_ind *)
@@ -75,14 +75,17 @@ lemma nle_inv_zero_dx (m): m ≤ 𝟎 → 𝟎 = m.
 ]
 qed-.
 
+(* Advanced inversions ******************************************************)
+
+lemma nle_inv_succ_zero (m): ↑m ≤ 𝟎 → ⊥.
+/3 width=2 by nle_inv_zero_dx, eq_inv_nzero_succ/ qed-.
+
 lemma nle_inv_succ_sn_refl (m): ↑m ≤ m → ⊥.
 #m @(nat_ind … m) -m [| #m #IH ] #H
 [ /3 width=2 by nle_inv_zero_dx, eq_inv_nzero_succ/
 | /3 width=1 by nle_inv_succ_bi/
 ]
 qed-.
-
-(* Order properties *********************************************************)
 
 (*** le_to_le_to_eq *)
 theorem nle_antisym (m) (n): m ≤ n → n ≤ m → m = n.
@@ -93,12 +96,24 @@ lapply (IH H) -IH -H #H destruct
 elim (nle_inv_succ_sn_refl … Hn)
 qed-.
 
+(* Advanced eliminations ****************************************************)
+
+lemma nle_ind_alt (Q: relation2 nat nat):
+      (∀n. Q (𝟎) (n)) →
+      (∀m,n. m ≤ n → Q m n → Q (↑m) (↑n)) →
+      ∀m,n. m ≤ n → Q m n.
+#Q #IH1 #IH2 #m #n @(nat_ind_2 … m n) -m -n //
+[ #m #H elim (nle_inv_succ_zero … H)
+| /4 width=1 by nle_inv_succ_bi/
+]
+qed-.
+
+(* Advanced constructions ***************************************************)
+
 (*** transitive_le *)
 theorem nle_trans: Transitive … nle.
 #m #n #H elim H -n /3 width=1 by nle_inv_succ_sn/
 qed-.
-
-(* Advanced constructions ***************************************************)
 
 (*** decidable_le *)
 lemma nle_dec (m) (n): Decidable … (m ≤ n).

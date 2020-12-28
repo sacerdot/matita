@@ -14,7 +14,7 @@
 
 include "ground/arith/nat_le.ma".
 
-(* NON-NEGATIVE INTEGERS ****************************************************)
+(* STRICT ORDER FOR NON-NEGATIVE INTEGERS ***********************************)
 
 (*** lt *)
 definition nlt: relation2 nat nat ≝
