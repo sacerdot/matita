@@ -12,37 +12,40 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/nat_le_minus.ma".
-include "ground/arith/nat_lt_pred.ma".
+include "ground/arith/nat_le_minus_plus.ma".
+include "ground/arith/nat_lt_minus.ma".
 
 (* STRICT ORDER FOR NON-NEGATIVE INTEGERS ***********************************)
 
-(* Rewrites with nminus *****************************************************)
+(* Constructions with nminus and nplus **************************************)
 
-(*** minus_pred_pred *)
-lemma nminus_pred_bi (m) (n): 𝟎 < m → 𝟎 < n → n - m = ↓n - ↓m.
-#m #n #Hm #Hn
->(nlt_inv_zero_sn … Hm) in ⊢ (??%?); -Hm
->(nlt_inv_zero_sn … Hn) in ⊢ (??%?); -Hn
-//
-qed-.
-
-(* Constructions with nminus ************************************************)
-
-(*** monotonic_lt_minus_l *)
-lemma nlt_minus_sn_bi (o) (m) (n): o ≤ m → m < n → m - o < n - o.
-#o #m #n #Hom #Hmn
-lapply (nle_minus_sn_bi … o Hmn) -Hmn
-<(nminus_succ_sn … Hom) //
+(*** lt_plus_to_minus *)
+lemma nlt_minus_sn (o) (m) (n): m ≤ n → n < o + m → n - m < o.
+#o #m #n #Hmn #Ho
+lapply (nle_minus_sn … Ho) -Ho
+<nminus_succ_sn //
 qed.
 
-(* Destructions with nminus *************************************************)
+(*** lt_plus_to_minus_r *)
+lemma nlt_minus_dx (o) (m) (n): m + o < n → m < n - o.
+/2 width=1 by nle_minus_dx/ qed.
 
-lemma nlt_fwd_minus_dx (o) (m) (n): m < n - o → o < n.
-#o elim o -o
-[ #m #n <nminus_zero_dx
-  /2 width=3 by le_nlt_trans/
-| #o #IH #m #n <nminus_succ_dx_pred_sn #H
-  /3 width=2 by nlt_inv_pred_dx/
-]
+(*** lt_inv_plus_l *)
+lemma nlt_minus_dx_full (o) (m) (n): m + o < n → ∧∧ o < n & m < n - o.
+/3 width=3 by nlt_minus_dx, le_nlt_trans, conj/ qed-.
+
+(* Inversions with nminus and nplus *****************************************)
+
+(*** lt_minus_to_plus *)
+lemma nlt_inv_minus_sn (o) (m) (n): m - o < n → m < n + o.
+#o #m #n #Ho
+@nle_inv_minus_sn
+@(nle_trans … Ho) -Ho //
+qed-.
+
+(*** lt_minus_to_plus_r *)
+lemma nlt_inv_minus_dx (o) (m) (n): m < n - o → m + o < n.
+#o #m #n #Ho
+lapply (nle_inv_minus_dx ???? Ho) //
+/3 width=2 by nlt_fwd_minus_dx, nlt_des_le/
 qed-.

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/nat_pred_succ.ma".
+include "ground/arith/nat_le_pred.ma".
 include "ground/arith/nat_lt.ma".
 
 (* STRICT ORDER FOR NON-NEGATIVE INTEGERS ***********************************)
@@ -28,4 +28,11 @@ lemma nlt_zero_sn (m): m = ↑↓m → 𝟎 < m.
 lemma nlt_inv_zero_sn (m): 𝟎 < m → m = ↑↓m.
 #m @(nat_ind … m) -m //
 #H elim (nlt_inv_refl … H)
+qed-.
+
+lemma nlt_inv_pred_dx (m) (n): m < ↓n → ↑m < n.
+#m #n #H >(nlt_inv_zero_sn n)
+[ /2 width=1 by nlt_succ_bi/
+| /3 width=3 by le_nlt_trans, nlt_le_trans/
+]
 qed-.

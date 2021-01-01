@@ -30,14 +30,14 @@ lemma nminus_plus_sn_refl_dx (m) (n): m = n + m - n.
 qed.
 
 (*** minus_plus *)
-theorem nminus_assoc (o) (m) (n): o-m-n = o-(m+n).
+theorem nminus_plus_assoc (o) (m) (n): o-m-n = o-(m+n).
 #o #m #n elim n -n //
 #n #IH <nplus_succ_dx <nminus_succ_dx <nminus_succ_dx //
 qed-.
 
 (*** minus_plus_plus_l *)
 lemma nminus_plus_dx_bi (m) (n) (o): m - n = (m + o) - (n + o).
-#m #n #o <nminus_assoc <nminus_minus_comm //
+#m #n #o <nminus_plus_assoc <nminus_minus_comm //
 qed.
 
 (*** plus_minus_plus_plus_l *) (**)

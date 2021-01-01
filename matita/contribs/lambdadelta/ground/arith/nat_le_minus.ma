@@ -25,6 +25,9 @@ lemma nle_minus_sn_refl_sn (m) (n): m - n ≤ m.
 #n #IH /2 width=3 by nle_trans/
 qed.
 
+lemma nle_minus_succ_sn (m) (n): ↑n - m ≤ ↑(n - m).
+// qed.
+
 (*** inv_eq_minus_O *)
 lemma nle_eq_minus_O (m) (n): 𝟎 = m - n → m ≤ n.
 #m #n @(nat_ind_2 … m n) //

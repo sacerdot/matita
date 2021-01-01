@@ -111,12 +111,12 @@
 #
 "cic:/matita/arithmetics/nat/minus_pred_pred.con"
 "cic:/matita/arithmetics/nat/monotonic_lt_minus_l.con"
-
-"cic:/matita/arithmetics/nat/lt_minus_to_plus.con"
-"cic:/matita/arithmetics/nat/lt_minus_to_plus_r.con"
+#
 "cic:/matita/arithmetics/nat/lt_plus_to_minus.con"
 "cic:/matita/arithmetics/nat/lt_plus_to_minus_r.con"
 "cic:/matita/arithmetics/nat/lt_inv_plus_l.con"
+"cic:/matita/arithmetics/nat/lt_minus_to_plus.con"
+"cic:/matita/arithmetics/nat/lt_minus_to_plus_r.con"
 
 ####################################
 

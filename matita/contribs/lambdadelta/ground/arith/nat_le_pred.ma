@@ -17,7 +17,17 @@ include "ground/arith/nat_le.ma".
 
 (* ORDER FOR NON-NEGATIVE INTEGERS ******************************************)
 
+(* Destructions with npred **************************************************)
+
+lemma nle_inv_pred_sn (m) (n): ↓m ≤ n → m ≤ ↑n.
+#m #n elim m -m
+/2 width=1 by nle_succ_bi/
+qed-.
+
 (* Constructions with npred *************************************************)
+
+lemma nle_succ_pred_dx_refl (m): m ≤ ↑↓m.
+#m @nle_inv_pred_sn // qed.
 
 (*** le_pred_n *)
 lemma nle_pred_sn_refl (m): ↓m ≤ m.
@@ -33,11 +43,4 @@ qed.
 lemma nle_pred_sn (m) (n): m ≤ ↑n → ↓m ≤ n.
 #m #n elim m -m //
 /2 width=1 by nle_pred_bi/
-qed-.
-
-(* Destructions with npred **************************************************)
-
-lemma nle_inv_pred_sn (m) (n): ↓m ≤ n → m ≤ ↑n.
-#m #n elim m -m
-/2 width=1 by nle_succ_bi/
 qed-.

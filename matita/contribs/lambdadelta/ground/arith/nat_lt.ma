@@ -36,6 +36,9 @@ lemma nlt_refl_succ (n): n < ↑n.
 lemma nlt_zero_succ (m): 𝟎 < ↑m.
 /2 width=1 by nle_succ_bi/ qed.
 
+lemma nlt_succ_bi (m) (n): m < n → ↑m < ↑n.
+/2 width=1 by nle_succ_bi/ qed.
+
 (*** le_to_or_lt_eq *)
 lemma nle_lt_eq_e (m) (n): m ≤ n → ∨∨ m < n | m = n.
 #m #n * -n /3 width=1 by nle_succ_bi, or_introl/
