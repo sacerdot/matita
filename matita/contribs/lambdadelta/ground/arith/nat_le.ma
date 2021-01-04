@@ -45,7 +45,7 @@ lemma nle_succ_bi (m) (n): m ≤ n → ↑m ≤ ↑n.
 qed.
 
 (*** le_or_ge *)
-lemma nle_ge_e (m) (n): ∨∨ m ≤ n | n ≤ m.
+lemma nle_ge_dis (m) (n): ∨∨ m ≤ n | n ≤ m.
 #m @(nat_ind … m) -m [ /2 width=1 by or_introl/ ]
 #m #IH #n @(nat_ind … n) -n [ /2 width=1 by or_intror/ ]
 #n #_ elim (IH n) -IH /3 width=2 by nle_succ_bi, or_introl, or_intror/
@@ -117,7 +117,7 @@ qed-.
 
 (*** decidable_le *)
 lemma nle_dec (m) (n): Decidable … (m ≤ n).
-#m #n elim (nle_ge_e m n) [ /2 width=1 by or_introl/ ]
+#m #n elim (nle_ge_dis m n) [ /2 width=1 by or_introl/ ]
 #Hnm elim (eq_nat_dec m n) [ #H destruct /2 width=1 by nle_refl, or_introl/ ]
 /4 width=1 by nle_antisym, or_intror/
 qed-.

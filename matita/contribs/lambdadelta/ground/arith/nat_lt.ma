@@ -40,25 +40,25 @@ lemma nlt_succ_bi (m) (n): m < n → ↑m < ↑n.
 /2 width=1 by nle_succ_bi/ qed.
 
 (*** le_to_or_lt_eq *)
-lemma nle_lt_eq_e (m) (n): m ≤ n → ∨∨ m < n | m = n.
+lemma nle_lt_eq_dis (m) (n): m ≤ n → ∨∨ m < n | m = n.
 #m #n * -n /3 width=1 by nle_succ_bi, or_introl/
 qed-.
 
 (*** eq_or_gt *)
-lemma eq_gt_e (n): ∨∨ 𝟎 = n | 𝟎 < n.
-#n elim (nle_lt_eq_e (𝟎) n ?)
+lemma eq_gt_dis (n): ∨∨ 𝟎 = n | 𝟎 < n.
+#n elim (nle_lt_eq_dis (𝟎) n ?)
 /2 width=1 by or_introl, or_intror/
 qed-.
 
 (*** lt_or_ge *)
-lemma nlt_ge_e (m) (n): ∨∨ m < n | n ≤ m.
-#m #n elim (nle_ge_e m n) /2 width=1 by or_intror/
-#H elim (nle_lt_eq_e … H) -H /2 width=1 by nle_refl, or_introl, or_intror/
+lemma nlt_ge_dis (m) (n): ∨∨ m < n | n ≤ m.
+#m #n elim (nle_ge_dis m n) /2 width=1 by or_intror/
+#H elim (nle_lt_eq_dis … H) -H /2 width=1 by nle_refl, or_introl, or_intror/
 qed-.
 
 (*** not_le_to_lt *)
 lemma le_false_nlt (m) (n): (n ≤ m → ⊥) → m < n.
-#m #n elim (nlt_ge_e m n) [ // ]
+#m #n elim (nlt_ge_dis m n) [ // ]
 #H #Hn elim Hn -Hn // 
 qed.
 

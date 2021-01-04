@@ -22,7 +22,7 @@ definition nsucc: nat → nat ≝ λm. match m with
 ].
 
 interpretation
-  "successor (non-negative integers"
+  "successor (non-negative integers)"
   'UpArrow m = (nsucc m).
 
 (* Basic rewrites ***********************************************************)

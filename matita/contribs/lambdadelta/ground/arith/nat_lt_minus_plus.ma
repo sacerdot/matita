@@ -47,5 +47,5 @@ qed-.
 lemma nlt_inv_minus_dx (o) (m) (n): m < n - o → m + o < n.
 #o #m #n #Ho
 lapply (nle_inv_minus_dx ???? Ho) //
-/3 width=2 by nlt_fwd_minus_dx, nlt_des_le/
+/3 width=2 by nlt_des_minus_dx, nlt_des_le/
 qed-.

@@ -20,7 +20,7 @@ definition pplus: pnat → pnat → pnat ≝
            λp,q. psucc^q p.
 
 interpretation
-  "plus (positive integers"
+  "plus (positive integers)"
   'plus p q = (pplus p q).
 
 (* Basic rewrites ***********************************************************)

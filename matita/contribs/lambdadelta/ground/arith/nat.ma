@@ -25,7 +25,9 @@ inductive nat: Type[0] ≝
 
 coercion ninj.
 
-interpretation "zero (non-negative integers" 'Zero = nzero.
+interpretation
+  "zero (non-negative integers)"
+  'Zero = nzero.
 
 (* Basic inversions *********************************************************)
 

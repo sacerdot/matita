@@ -38,7 +38,7 @@ qed.
 
 (* Destructions with nminus *************************************************)
 
-lemma nlt_fwd_minus_dx (o) (m) (n): m < n - o → o < n.
+lemma nlt_des_minus_dx (o) (m) (n): m < n - o → o < n.
 #o elim o -o
 [ #m #n <nminus_zero_dx
   /2 width=3 by le_nlt_trans/

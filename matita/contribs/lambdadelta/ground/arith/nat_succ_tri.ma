@@ -12,24 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/downarrow_1.ma".
-include "ground/arith/pnat_dis.ma".
-include "ground/arith/nat.ma".
+include "ground/arith/nat_tri.ma".
+include "ground/arith/nat_succ.ma".
 
-(* PREDECESSOR FOR NON-NEGATIVE INTEGERS ************************************)
+(* SUCCESSOR FOR NON-NEGATIVE INTEGERS **************************************)
 
-(*** pred *)
-definition npred (m): nat ≝ match m with
-[ nzero  ⇒ 𝟎
-| ninj p ⇒ pdis … (𝟎) ninj p
-].
+(* Rewrites with ntri *******************************************************)
 
-interpretation
-  "predecessor (non-negative integers)"
-  'DownArrow m = (npred m).
-
-(* Basic rewrites ***********************************************************)
-
-(*** pred_O *)
-lemma npred_zero: 𝟎 = ↓𝟎.
-// qed.
+lemma ntri_succ_bi (A) (a1) (a2) (a3) (n1) (n2):
+      ntri A (n1) (n2) a1 a2 a3 = ntri A (↑n1) (↑n2) a1 a2 a3.
+#A #a1 #a2 #a3 * [| #p1 ] * //
+qed.

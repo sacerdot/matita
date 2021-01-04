@@ -117,17 +117,18 @@
 "cic:/matita/arithmetics/nat/lt_inv_plus_l.con"
 "cic:/matita/arithmetics/nat/lt_minus_to_plus.con"
 "cic:/matita/arithmetics/nat/lt_minus_to_plus_r.con"
+#
+"cic:/matita/arithmetics/nat/max.con"
+"cic:/matita/arithmetics/nat/commutative_max.con"
 
 ####################################
 
 "cic:/matita/arithmetics/nat/to_max.con"
-"cic:/matita/arithmetics/nat/commutative_max.con"
 "cic:/matita/arithmetics/nat/leb.con"
 "cic:/matita/arithmetics/nat/leb_elim.con"
 "cic:/matita/arithmetics/nat/le_maxl.con"
 "cic:/matita/arithmetics/nat/le_maxr.con"
 "cic:/matita/arithmetics/nat/le_to_leb_true.con"
-"cic:/matita/arithmetics/nat/max.con"
 "cic:/matita/arithmetics/nat/not_le_to_leb_false.con"
 
 "cic:/matita/arithmetics/nat/nat_discr.con"

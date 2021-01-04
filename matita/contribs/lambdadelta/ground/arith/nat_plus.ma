@@ -21,7 +21,7 @@ definition nplus: nat → nat → nat ≝
            λm,n. nsucc^n m.
 
 interpretation
-  "plus (positive integers"
+  "plus (positive integers)"
   'plus m n = (nplus m n).
 
 (* Basic rewrites ***********************************************************)
@@ -40,6 +40,7 @@ lemma nplus_succ_dx (m) (n): ↑(m+n) = m + ↑n.
 #m #n @(niter_succ … nsucc)
 qed.
 
+(*** plus_S1 *)
 lemma nplus_succ_sn (m) (n): ↑(m+n) = ↑m + n.
 #m #n @(niter_appl … nsucc)
 qed.

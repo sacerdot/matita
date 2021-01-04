@@ -19,7 +19,7 @@ include "ground/arith/nat_pred.ma".
 
 (* Rewrites with nsucc ******************************************************)
 
-(*** pred_Sn *)
+(*** pred_Sn pred_S *)
 lemma npred_succ (n): n = ↓↑n.
 * //
 qed.

@@ -12,60 +12,42 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/nat_succ_iter.ma".
-include "ground/arith/nat_pred_succ.ma".
+include "ground/arith/pnat.ma".
 
-(* SUBTRACTION FOR NON-NEGATIVE INTEGERS ************************************)
+(* TRICHOTOMY OPERATOR FOR POSITIVE INTEGERS ********************************)
 
-(*** minus *)
-definition nminus: nat → nat → nat ≝
-           λm,n. npred^n m.
-
-interpretation
-  "minus (positive integers)"
-  'minus m n = (nminus m n).
+rec definition ptri (A:Type[0]) p1 p2 a1 a2 a3 on p1 : A ≝
+  match p1 with
+  [ punit    ⇒ match p2 with [ punit ⇒ a2 | psucc p2 ⇒ a1 ]
+  | psucc p1 ⇒ match p2 with [ punit ⇒ a3 | psucc p2 ⇒ ptri A p1 p2 a1 a2 a3 ]
+  ].
 
 (* Basic rewrites ***********************************************************)
 
-(*** minus_n_O *)
-lemma nminus_zero_dx (m): m = m - 𝟎.
+lemma ptri_unit_bi (A) (a1) (a2) (a3):
+      a2 = ptri A (𝟏) (𝟏) a1 a2 a3.
 // qed.
 
-lemma nminus_pred_sn (m) (n): ↓(m - n) = ↓m - n.
-#m #n @(niter_appl … npred)
-qed.
+lemma ptri_unit_succ (A) (a1) (a2) (a3) (p):
+      a1 = ptri A (𝟏) (↑p) a1 a2 a3.
+// qed.
 
-(*** eq_minus_S_pred *)
-lemma nminus_succ_dx (m) (n): ↓(m - n) = m - ↑n.
-#m #n @(niter_succ … npred)
-qed.
+lemma ptri_succ_unit (A) (a1) (a2) (a3) (p):
+      a3 = ptri A (↑p) (𝟏) a1 a2 a3.
+// qed.
 
-(*** minus_O_n *)
-lemma nminus_zero_sn (n): 𝟎 = 𝟎 - n.
-#n elim n -n //
-qed.
-
-(*** minus_S_S *)
-lemma nminus_succ_bi (m) (n): m - n = ↑m - ↑n.
-#m #n elim n -n //
-qed.
+lemma ptri_succ_bi (A) (a1) (a2) (a3) (p1) (p2):
+      ptri A (p1) (p2) a1 a2 a3 = ptri A (↑p1) (↑p2) a1 a2 a3.
+// qed.
 
 (* Advanced rewrites ********************************************************)
 
-lemma nminus_succ_dx_pred_sn (m) (n): ↓m - n = m - ↑n.
-// qed-.
-
-(*** minus_n_n *)
-lemma nminus_refl (m): 𝟎 = m - m.
-#m elim m -m //
+lemma ptri_eq (A) (a1) (a2) (a3) (p): a2 = ptri A p p a1 a2 a3.
+#A #a1 #a2 #a3 #p elim p -p //
 qed.
 
-(*** minus_Sn_n *)
-lemma nminus_succ_sn_refl (m): ninj (𝟏) = ↑m - m.
-#m elim m -m //
+lemma ptri_f_tri (A) (B) (f) (a1) (a2) (a3) (p1) (p2):
+      f (ptri A p1 p2 a1 a2 a3) = ptri B p1 p2 (f a1) (f a2) (f a3).
+#A #B #f #a1 #a2 #a3 #p1
+elim p1 -p1 [| #p1 #IH ] * //
 qed.
-
-(*** minus_minus_comm *)
-lemma nminus_minus_comm (o) (m) (n): o - m - n = o - n - m.
-#o #m #n elim n -n //
-qed-.
