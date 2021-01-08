@@ -25,7 +25,7 @@ definition ntri (A:Type[0]) (n1) (n2) (a1) (a2) (a3): A ≝
   | ninj  p1 ⇒ match n2 with [ nzero ⇒ a3 | ninj p2 ⇒ ptri A p1 p2 a1 a2 a3 ]
   ].
 
-(* Basic rewrites ***********************************************************)
+(* Basic constructions ******************************************************)
 
 lemma ntri_zero_bi (A) (a1) (a2) (a3):
       a2 = ntri A (𝟎) (𝟎) a1 a2 a3.
@@ -43,7 +43,7 @@ lemma ntri_inj_bi (A) (a1) (a2) (a3) (p1) (p2):
       ptri A (p1) (p2) a1 a2 a3 = ntri A (p1) (p2) a1 a2 a3.
 // qed.
 
-(* Advanced rewrites ********************************************************)
+(* Advanced constructions ***************************************************)
 
 (*** tri_eq *)
 lemma ntri_eq (A) (a1) (a2) (a3) (n): a2 = ntri A n n a1 a2 a3.

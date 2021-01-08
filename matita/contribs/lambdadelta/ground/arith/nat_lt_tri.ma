@@ -12,35 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/nat_pred_succ.ma".
-include "ground/arith/nat_le.ma".
+include "ground/arith/nat_succ_tri.ma".
+include "ground/arith/nat_lt.ma".
 
-(* ORDER FOR NON-NEGATIVE INTEGERS ******************************************)
+(* STRICT ORDER FOR NON-NEGATIVE INTEGERS ***********************************)
 
-(* Destructions with npred **************************************************)
+(* Destructions with ntri ***************************************************)
 
-lemma nle_inv_pred_sn (m) (n): ↓m ≤ n → m ≤ ↑n.
-#m #n @(nat_ind_succ … m) -m
-/2 width=1 by nle_succ_bi/
+(*** tri_lt *)
+lemma ntri_lt (A) (a1) (a2) (a3) (n1) (n2):
+      n1 < n2 → a1 = ntri A n1 n2 a1 a2 a3.
+#A #a1 #a2 #a3 #n1 #n2 #H @(nlt_ind_alt … H) -H //
 qed-.
 
-(* Constructions with npred *************************************************)
-
-lemma nle_succ_pred_dx_refl (m): m ≤ ↑↓m.
-#m @nle_inv_pred_sn // qed.
-
-(*** le_pred_n *)
-lemma nle_pred_sn_refl (m): ↓m ≤ m.
-#m @(nat_ind_succ … m) -m //
-qed.
-
-(*** monotonic_pred *)
-lemma nle_pred_bi (m) (n): m ≤ n → ↓m ≤ ↓n.
-#m #n #H elim H -n //
-/2 width=3 by nle_trans/
-qed.
-
-lemma nle_pred_sn (m) (n): m ≤ ↑n → ↓m ≤ n.
-#m #n @(nat_ind_succ … m) -m //
-/2 width=1 by nle_pred_bi/
+(*** tri_gt *)
+lemma ntri_gt (A) (a1) (a2) (a3) (n1) (n2):
+      n2 < n1 → a3 = ntri A n1 n2 a1 a2 a3.
+#A #a1 #a2 #a3 #n1 #n2 #H @(nlt_ind_alt … H) -H //
 qed-.

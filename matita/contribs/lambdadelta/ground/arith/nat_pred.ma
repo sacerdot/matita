@@ -28,7 +28,7 @@ interpretation
   "predecessor (non-negative integers)"
   'DownArrow m = (npred m).
 
-(* Basic rewrites ***********************************************************)
+(* Basic constructions ******************************************************)
 
 (*** pred_O *)
 lemma npred_zero: 𝟎 = ↓𝟎.

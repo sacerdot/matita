@@ -17,16 +17,6 @@ include "ground/arith/nat_lt_pred.ma".
 
 (* STRICT ORDER FOR NON-NEGATIVE INTEGERS ***********************************)
 
-(* Rewrites with nminus *****************************************************)
-
-(*** minus_pred_pred *)
-lemma nminus_pred_bi (m) (n): 𝟎 < m → 𝟎 < n → n - m = ↓n - ↓m.
-#m #n #Hm #Hn
->(nlt_inv_zero_sn … Hm) in ⊢ (??%?); -Hm
->(nlt_inv_zero_sn … Hn) in ⊢ (??%?); -Hn
-//
-qed-.
-
 (* Constructions with nminus ************************************************)
 
 (*** monotonic_lt_minus_l *)
@@ -38,8 +28,16 @@ qed.
 
 (* Destructions with nminus *************************************************)
 
+(*** minus_pred_pred *)
+lemma nminus_pred_bi (m) (n): 𝟎 < m → 𝟎 < n → n - m = ↓n - ↓m.
+#m #n #Hm #Hn
+>(nlt_inv_zero_sn … Hm) in ⊢ (??%?); -Hm
+>(nlt_inv_zero_sn … Hn) in ⊢ (??%?); -Hn
+//
+qed-.
+
 lemma nlt_des_minus_dx (o) (m) (n): m < n - o → o < n.
-#o elim o -o
+#o @(nat_ind_succ … o) -o
 [ #m #n <nminus_zero_dx
   /2 width=3 by le_nlt_trans/
 | #o #IH #m #n <nminus_succ_dx_pred_sn #H

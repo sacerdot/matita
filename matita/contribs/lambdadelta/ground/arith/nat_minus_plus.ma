@@ -17,11 +17,11 @@ include "ground/arith/nat_minus.ma".
 
 (* SUBTRACTION FOR NON-NEGATIVE INTEGERS ************************************)
 
-(* Rewrites with nplus ******************************************************)
+(* Constructions with nplus *************************************************)
 
 (*** minus_plus_m_m *)
 lemma nminus_plus_sn_refl_sn (m) (n): m = m + n - n.
-#m #n elim n -n //
+#m #n @(nat_ind_succ … n) -n //
 #n #IH <nplus_succ_dx <nminus_succ_bi //
 qed.
 
@@ -31,7 +31,7 @@ qed.
 
 (*** minus_plus *)
 theorem nminus_plus_assoc (o) (m) (n): o-m-n = o-(m+n).
-#o #m #n elim n -n //
+#o #m #n @(nat_ind_succ … n) -n //
 #n #IH <nplus_succ_dx <nminus_succ_dx <nminus_succ_dx //
 qed-.
 
@@ -62,17 +62,15 @@ lemma eq_inv_plus_nminus_refl_sn (m) (n) (o):
       m + o = m - n →
       ∨∨ ∧∧ 𝟎 = m & 𝟎 = o
        | ∧∧ 𝟎 = n & 𝟎 = o.
-#m elim m -m
+#m #n @(nat_ind_succ_2 … m n) -m -n
 [ /3 width=1 by or_introl, conj/
-| #m #IH #n @(nat_ind … n) -n
-  [ #o #Ho
-    lapply (eq_inv_nplus_bi_sn … (𝟎) Ho) -Ho
-    /3 width=1 by or_intror, conj/
-  | #n #_ #o
-    <nminus_succ_bi >nplus_succ_shift #Ho
-    elim (IH … Ho) -IH -Ho * #_ #H
-    elim (eq_inv_nzero_succ … H)
-  ]
+| #m #o #Ho
+  lapply (eq_inv_nplus_bi_sn … (𝟎) Ho) -Ho
+  /3 width=1 by or_intror, conj/
+| #m #n #IH #o
+  <nminus_succ_bi >nplus_succ_shift #Ho
+  elim (IH … Ho) -IH -Ho * #_ #H
+  elim (eq_inv_nzero_succ … H)
 ]
 qed-.
 

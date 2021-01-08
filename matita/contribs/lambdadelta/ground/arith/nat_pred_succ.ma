@@ -17,7 +17,7 @@ include "ground/arith/nat_pred.ma".
 
 (* PREDECESSOR FOR NON-NEGATIVE INTEGERS ************************************)
 
-(* Rewrites with nsucc ******************************************************)
+(* Constructions with nsucc *************************************************)
 
 (*** pred_Sn pred_S *)
 lemma npred_succ (n): n = ↓↑n.

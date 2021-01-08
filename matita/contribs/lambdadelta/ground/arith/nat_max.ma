@@ -25,7 +25,7 @@ interpretation
   "maximum (non-negative integers)"
   'or m n = (nmax m n).
 
-(* Basic rewrites ***********************************************************)
+(* Basic constructions ******************************************************)
 
 (*** max_O1 *)
 lemma nmax_zero_sn (n2): n2 = (𝟎 ∨ n2).
@@ -44,7 +44,7 @@ lemma nmax_succ_bi (n1) (n2): ↑(n1 ∨ n2) = (↑n1 ∨ ↑n2).
 <ntri_f_tri //
 qed.
 
-(* Advanced rewrites ********************************************************)
+(* Advanced constructions ***************************************************)
 
 (*** idempotent_max *)
 lemma nmax_idem (n): n = (n ∨ n).
@@ -52,22 +52,20 @@ lemma nmax_idem (n): n = (n ∨ n).
 
 (*** commutative_max *)
 lemma nmax_comm: commutative … nmax.
-#m #n @(nat_ind_2 … m n) -m -n //
+#m #n @(nat_ind_succ_2 … m n) -m -n //
 qed-.
 
 (*** associative_max *)
 lemma nmax_assoc: associative … nmax.
-#n1 elim n1 -n1 //
-#n1 #IH #n2 elim n2 -n2 //
-#n2 #_ #n3 elim n3 -n3 //
-qed-.
+#n1 #n2 @(nat_ind_succ_2 … n1 n2) -n1 -n2 //
+#n1 #n2 #IH #n3 @(nat_ind_succ … n3) -n3 //
+qed.
 
 (* Basic inversions *********************************************************)
 
 (*** max_inv_O3 *)
 lemma nmax_inv_zero (n1) (n2): 𝟎 = (n1 ∨ n2) → ∧∧ 𝟎 = n1 & 𝟎 = n2.
-#n1 elim n1 -n1 [ /2 width=1 by conj/ ]
-#n1 #_ #n2 elim n2 -n2 [ /2 width=1 by conj/ ]
-#n2 #_ <nmax_succ_bi #H
+#n1 #n2 @(nat_ind_succ_2 … n1 n2) -n1 -n2 /2 width=1 by conj/
+#n1 #n2 #_ <nmax_succ_bi #H
 elim (eq_inv_nzero_succ … H)
 qed-.

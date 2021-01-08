@@ -23,7 +23,7 @@ interpretation
   "plus (positive integers)"
   'plus p q = (pplus p q).
 
-(* Basic rewrites ***********************************************************)
+(* Basic constructions ******************************************************)
 
 lemma pplus_one_dx (p): ↑p = p + 𝟏.
 // qed.
@@ -31,7 +31,7 @@ lemma pplus_one_dx (p): ↑p = p + 𝟏.
 lemma pplus_succ_dx (p) (q): ↑(p+q) = p + ↑q.
 // qed.
 
-(* Advanced reweites (semigroup properties) *********************************)
+(* Advanced constructions (semigroup properties) ****************************)
 
 lemma pplus_succ_sn (p) (q): ↑(p+q) = ↑p + q.
 #p #q @(piter_appl … psucc)
@@ -43,7 +43,7 @@ qed.
 
 lemma pplus_comm: commutative … pplus.
 #p elim p -p //
-qed.
+qed-.
 
 lemma pplus_assoc: associative … pplus.
 #p #q #r elim r -r //

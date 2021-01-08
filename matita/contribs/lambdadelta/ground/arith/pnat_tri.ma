@@ -22,7 +22,7 @@ rec definition ptri (A:Type[0]) p1 p2 a1 a2 a3 on p1 : A ≝
   | psucc p1 ⇒ match p2 with [ punit ⇒ a3 | psucc p2 ⇒ ptri A p1 p2 a1 a2 a3 ]
   ].
 
-(* Basic rewrites ***********************************************************)
+(* Basic constructions ******************************************************)
 
 lemma ptri_unit_bi (A) (a1) (a2) (a3):
       a2 = ptri A (𝟏) (𝟏) a1 a2 a3.
@@ -40,7 +40,7 @@ lemma ptri_succ_bi (A) (a1) (a2) (a3) (p1) (p2):
       ptri A (p1) (p2) a1 a2 a3 = ptri A (↑p1) (↑p2) a1 a2 a3.
 // qed.
 
-(* Advanced rewrites ********************************************************)
+(* Advanced constructions ***************************************************)
 
 lemma ptri_eq (A) (a1) (a2) (a3) (p): a2 = ptri A p p a1 a2 a3.
 #A #a1 #a2 #a3 #p elim p -p //

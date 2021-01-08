@@ -17,6 +17,7 @@ include "ground/arith/nat.ma".
 
 (* ITERATED FUNCTION FOR NON-NEGATIVE INTEGERS ******************************)
 
+(*** iter *)
 definition niter (n:nat) (A:Type[0]) (f:A→A) (a:A) ≝
 match n with
 [ nzero  ⇒ a
@@ -28,16 +29,18 @@ interpretation
   "iterated function (non-negative integers)"
   'Exp A f n = (niter n A f).
 
-(* Basic rewrites ***********************************************************)
+(* Basic constructions ******************************************************)
 
+(*** iter_O *)
 lemma niter_zero (A) (f) (a): a = (f^{A}𝟎) a.
 // qed.
 
 lemma niter_inj (A) (f) (p) (a): f^p a = f^{A}(ninj p) a.
 // qed.
 
-(* Advanced rewrites ********************************************************)
+(* Advanced constructions ***************************************************)
 
+(*** iter_n_Sm *)
 lemma niter_appl (A) (f) (n) (a): f (f^n a) = f^{A}n (f a).
 #A #f * //
 #p #a <niter_inj <niter_inj <piter_appl //

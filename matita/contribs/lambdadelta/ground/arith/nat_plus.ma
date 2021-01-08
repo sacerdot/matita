@@ -24,21 +24,31 @@ interpretation
   "plus (positive integers)"
   'plus m n = (nplus m n).
 
-(* Basic rewrites ***********************************************************)
+(* Basic constructions ******************************************************)
 
 (*** plus_n_O *)
 lemma nplus_zero_dx (m): m = m + 𝟎.
 // qed.
 
+(*** plus_SO_dx *)
 lemma nplus_one_dx (n): ↑n = n + 𝟏.
 // qed.
-
-(* Advanved rewrites (semigroup properties) *********************************)
 
 (*** plus_n_Sm *)
 lemma nplus_succ_dx (m) (n): ↑(m+n) = m + ↑n.
 #m #n @(niter_succ … nsucc)
 qed.
+
+(* Constructions with niter *************************************************)
+
+(*** iter_plus *)
+lemma niter_plus (A) (f) (a) (n1) (n2):
+      f^n1 (f^n2 a) = f^{A}(n1+n2) a.
+#A #f #a #n1 #n2 @(nat_ind_succ … n2) -n2 //
+#n2 #IH <nplus_succ_dx <niter_succ <niter_succ <niter_appl //
+qed.
+
+(* Advanved constructions (semigroup properties) ****************************)
 
 (*** plus_S1 *)
 lemma nplus_succ_sn (m) (n): ↑(m+n) = ↑m + n.
@@ -47,22 +57,23 @@ qed.
 
 (*** plus_O_n.con *)
 lemma nplus_zero_sn (m): m = 𝟎 + m.
-#m @(nat_ind … m) -m //
+#m @(nat_ind_succ … m) -m //
 qed.
 
 (*** commutative_plus *)
 lemma nplus_comm: commutative … nplus.
-#m @(nat_ind … m) -m //
+#m @(nat_ind_succ … m) -m //
 qed-.
 
 (*** associative_plus *)
 lemma nplus_assoc: associative … nplus.
-#m #n #o @(nat_ind … o) -o //
+#m #n #o @(nat_ind_succ … o) -o //
 #o #IH <nplus_succ_dx <nplus_succ_dx <nplus_succ_dx <IH -IH //
 qed.
 
-(* Advanced constructions ***************************************************)
+(* Helper constructions *****************************************************)
 
+(*** plus_SO_sn *)
 lemma nplus_one_sn (n): ↑n = 𝟏 + n.
 #n <nplus_comm // qed.
 
@@ -81,14 +92,16 @@ qed-.
 (* Basic inversions *********************************************************)
 
 lemma eq_inv_nzero_plus (m) (n): 𝟎 = m + n → ∧∧ 𝟎 = m & 𝟎 = n.
-#m #n @(nat_ind … n) -n /2 width=1 by conj/
-#n #_ <nplus_succ_dx #H
-elim (eq_inv_nzero_succ … H)
+#m #n @(nat_ind_succ … n) -n
+[ /2 width=1 by conj/
+| #n #_ <nplus_succ_dx #H
+  elim (eq_inv_nzero_succ … H)
+]
 qed-.
 
 (*** injective_plus_l *)
 lemma eq_inv_nplus_bi_dx (o) (m) (n): m + o = n + o → m = n.
-#o @(nat_ind … o) -o /3 width=1 by eq_inv_nsucc_bi/
+#o @(nat_ind_succ … o) -o /3 width=1 by eq_inv_nsucc_bi/
 qed-.
 
 (*** injective_plus_r *)
@@ -102,5 +115,5 @@ qed-.
 (*** nat_ind_plus *)
 lemma nat_ind_plus (Q:predicate …):
       Q (𝟎) → (∀n. Q n → Q (𝟏+n)) → ∀n. Q n.
-#Q #IH1 #IH2 #n @(nat_ind … n) -n /2 width=1 by/
+#Q #IH1 #IH2 #n @(nat_ind_succ … n) -n /2 width=1 by/
 qed-.

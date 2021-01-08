@@ -22,7 +22,7 @@ include "ground/arith/nat_le_minus.ma".
 
 (*** le_plus_minus_m_m *)
 lemma nle_plus_minus_sn_refl_sn (n) (m): m ≤ m - n + n.
-#n elim n -n //
+#n @(nat_ind_succ … n) -n //
 #n #IH #m <nminus_succ_dx_pred_sn <nplus_succ_dx
 /2 width=1 by nle_inv_pred_sn/
 qed.

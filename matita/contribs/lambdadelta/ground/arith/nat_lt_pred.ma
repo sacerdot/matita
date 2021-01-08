@@ -26,7 +26,7 @@ lemma nlt_zero_sn (m): m = ↑↓m → 𝟎 < m.
 
 (*** S_pred *)
 lemma nlt_inv_zero_sn (m): 𝟎 < m → m = ↑↓m.
-#m @(nat_ind … m) -m //
+#m @(nat_ind_succ … m) -m //
 #H elim (nlt_inv_refl … H)
 qed-.
 

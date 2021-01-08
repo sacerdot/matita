@@ -25,47 +25,51 @@ interpretation
   "minus (positive integers)"
   'minus m n = (nminus m n).
 
-(* Basic rewrites ***********************************************************)
+(* Basic constructions ******************************************************)
 
 (*** minus_n_O *)
 lemma nminus_zero_dx (m): m = m - 𝟎.
 // qed.
 
-lemma nminus_pred_sn (m) (n): ↓(m - n) = ↓m - n.
-#m #n @(niter_appl … npred)
-qed.
+(*** minus_SO_dx *)
+lemma nminus_one_dx (m): ↓m = m - 𝟏 .
+// qed.
 
 (*** eq_minus_S_pred *)
 lemma nminus_succ_dx (m) (n): ↓(m - n) = m - ↑n.
 #m #n @(niter_succ … npred)
 qed.
 
+(* Advanced constructions ***************************************************)
+
+lemma nminus_pred_sn (m) (n): ↓(m - n) = ↓m - n.
+#m #n @(niter_appl … npred)
+qed.
+
 (*** minus_O_n *)
 lemma nminus_zero_sn (n): 𝟎 = 𝟎 - n.
-#n elim n -n //
+#n @(nat_ind_succ … n) -n //
 qed.
 
 (*** minus_S_S *)
 lemma nminus_succ_bi (m) (n): m - n = ↑m - ↑n.
-#m #n elim n -n //
+#m #n @(nat_ind_succ … n) -n //
 qed.
-
-(* Advanced rewrites ********************************************************)
 
 lemma nminus_succ_dx_pred_sn (m) (n): ↓m - n = m - ↑n.
 // qed-.
 
 (*** minus_n_n *)
 lemma nminus_refl (m): 𝟎 = m - m.
-#m elim m -m //
+#m @(nat_ind_succ … m) -m //
 qed.
 
 (*** minus_Sn_n *)
 lemma nminus_succ_sn_refl (m): ninj (𝟏) = ↑m - m.
-#m elim m -m //
+#m @(nat_ind_succ … m) -m //
 qed.
 
 (*** minus_minus_comm *)
 lemma nminus_minus_comm (o) (m) (n): o - m - n = o - n - m.
-#o #m #n elim n -n //
+#o #m #n @(nat_ind_succ … n) -n //
 qed-.

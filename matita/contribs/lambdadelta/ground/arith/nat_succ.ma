@@ -25,7 +25,7 @@ interpretation
   "successor (non-negative integers)"
   'UpArrow m = (nsucc m).
 
-(* Basic rewrites ***********************************************************)
+(* Basic constructions ******************************************************)
 
 lemma nsucc_zero: ninj (𝟏) = ↑𝟎.
 // qed.
@@ -36,20 +36,20 @@ lemma nsucc_inj (p): ninj (↑p) = ↑(ninj p).
 (* Basic eliminations *******************************************************)
 
 (*** nat_ind *)
-lemma nat_ind (Q:predicate …):
+lemma nat_ind_succ (Q:predicate …):
       Q (𝟎) → (∀n. Q n → Q (↑n)) → ∀n. Q n.
 #Q #IH1 #IH2 * //
 #p elim p -p /2 width=1 by/
 qed-.
 
 (*** nat_elim2 *)
-lemma nat_ind_2 (Q:relation2 …):
+lemma nat_ind_succ_2 (Q:relation2 …):
       (∀n. Q (𝟎) n) →
       (∀m. Q (↑m) (𝟎)) →
       (∀m,n. Q m n → Q (↑m) (↑n)) →
       ∀m,n. Q m n.
-#Q #IH1 #IH2 #IH3 #m elim m -m [ // ]
-#m #IH #n elim n -n /2 width=1 by/
+#Q #IH1 #IH2 #IH3 #m @(nat_ind_succ … m) -m [ // ]
+#m #IH #n @(nat_ind_succ … n) -n /2 width=1 by/
 qed-.
 
 (* Basic inversions ***************************************************************)

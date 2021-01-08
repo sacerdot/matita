@@ -61,7 +61,7 @@ lemma nle_inv_plus_zero (m) (n): m + n ≤ 𝟎 → ∧∧ 𝟎 = m & 𝟎 = n.
 
 (*** le_plus_to_le_r *)
 lemma nle_inv_plus_bi_dx (o) (m) (n): n + o ≤ m + o → n ≤ m.
-#o @(nat_ind … o) -o /3 width=1 by nle_inv_succ_bi/
+#o @(nat_ind_succ … o) -o /3 width=1 by nle_inv_succ_bi/
 qed-.
 
 (*** le_plus_to_le *)

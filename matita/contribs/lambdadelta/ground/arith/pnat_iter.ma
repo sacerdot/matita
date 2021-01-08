@@ -17,6 +17,7 @@ include "ground/arith/pnat.ma".
 
 (* ITERATED FUNCTION FOR POSITIVE INTEGERS **********************************)
 
+(* Note: see also: lib/arithemetics/bigops.ma *)
 rec definition piter (p:pnat) (A:Type[0]) (f:A→A) (a:A) ≝
 match p with
 [ punit   ⇒ f a
@@ -27,7 +28,7 @@ interpretation
   "iterated function (positive integers)"
   'Exp A f p = (piter p A f).
 
-(* Basic rewrites ***********************************************************)
+(* Basic constructions ******************************************************)
 
 lemma piter_unit (A) (f) (a): f a = (f^{A}𝟏) a.
 // qed.
@@ -35,7 +36,7 @@ lemma piter_unit (A) (f) (a): f a = (f^{A}𝟏) a.
 lemma piter_succ (A) (f) (p) (a): f (f^p a) = f^{A}(↑p) a.
 // qed.
 
-(* Advanced rewrites ********************************************************)
+(* Advanced constructions ***************************************************)
 
 lemma piter_appl (A) (f) (p) (a): f (f^p a) = f^{A}p (f a).
 #A #f #p elim p -p //

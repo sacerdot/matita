@@ -36,7 +36,7 @@ lemma nle_succ_dx_refl (m): m ≤ ↑m.
 
 (*** le_O_n *)
 lemma nle_zero_sx (m): 𝟎 ≤ m.
-#m @(nat_ind … m) -m /2 width=1 by nle_succ_dx/
+#m @(nat_ind_succ … m) -m /2 width=1 by nle_succ_dx/
 qed.
 
 (*** le_S_S *)
@@ -46,9 +46,11 @@ qed.
 
 (*** le_or_ge *)
 lemma nle_ge_dis (m) (n): ∨∨ m ≤ n | n ≤ m.
-#m @(nat_ind … m) -m [ /2 width=1 by or_introl/ ]
-#m #IH #n @(nat_ind … n) -n [ /2 width=1 by or_intror/ ]
-#n #_ elim (IH n) -IH /3 width=2 by nle_succ_bi, or_introl, or_intror/
+#m #n @(nat_ind_succ_2 … m n) -m -n
+[ /2 width=1 by or_introl/
+| /2 width=1 by or_intror/
+| #m #n * /3 width=2 by nle_succ_bi, or_introl, or_intror/
+]
 qed-.
 
 (* Basic inversions *********************************************************)
@@ -81,7 +83,7 @@ lemma nle_inv_succ_zero (m): ↑m ≤ 𝟎 → ⊥.
 /3 width=2 by nle_inv_zero_dx, eq_inv_nzero_succ/ qed-.
 
 lemma nle_inv_succ_sn_refl (m): ↑m ≤ m → ⊥.
-#m @(nat_ind … m) -m [| #m #IH ] #H
+#m @(nat_ind_succ … m) -m [| #m #IH ] #H
 [ /3 width=2 by nle_inv_zero_dx, eq_inv_nzero_succ/
 | /3 width=1 by nle_inv_succ_bi/
 ]
@@ -98,11 +100,12 @@ qed-.
 
 (* Advanced eliminations ****************************************************)
 
+(*** le_elim *)
 lemma nle_ind_alt (Q: relation2 nat nat):
       (∀n. Q (𝟎) (n)) →
       (∀m,n. m ≤ n → Q m n → Q (↑m) (↑n)) →
       ∀m,n. m ≤ n → Q m n.
-#Q #IH1 #IH2 #m #n @(nat_ind_2 … m n) -m -n //
+#Q #IH1 #IH2 #m #n @(nat_ind_succ_2 … m n) -m -n //
 [ #m #H elim (nle_inv_succ_zero … H)
 | /4 width=1 by nle_inv_succ_bi/
 ]

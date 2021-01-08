@@ -17,8 +17,9 @@ include "ground/arith/nat_succ.ma".
 
 (* SUCCESSOR FOR NON-NEGATIVE INTEGERS **************************************)
 
-(* Rewrites with niter ******************************************************)
+(* Constructions with niter *************************************************)
 
+(*** iter_S *)
 lemma niter_succ (A) (f) (n) (a): f (f^n a) = f^{A}(↑n) a.
 #A #f * //
 qed.

@@ -66,10 +66,14 @@ qed.
 lemma nlt_le_trans (o) (m) (n): m < o → o ≤ n → m < n.
 /2 width=3 by nle_trans/ qed-.
 
+(*** le_to_lt_to_lt *)
 lemma le_nlt_trans (o) (m) (n): m ≤ o → o < n → m < n.
 /3 width=3 by nle_succ_bi, nle_trans/ qed-.
 
 (* Basic inversions *********************************************************)
+
+lemma nlt_inv_succ_bi (m) (n): ↑m < ↑n → m < n.
+/2 width=1 by nle_inv_succ_bi/ qed-.
 
 (*** lt_to_not_le *)
 lemma nlt_ge_false (m) (n): m < n → n ≤ m → ⊥.
@@ -102,7 +106,7 @@ theorem nlt_trans: Transitive … nlt.
 
 lemma nat_ind_lt_le (Q:predicate …):
       (∀n. (∀m. m < n → Q m) → Q n) → ∀n,m. m ≤ n → Q m.
-#Q #H1 #n @(nat_ind … n) -n
+#Q #H1 #n @(nat_ind_succ … n) -n
 [ #m #H <(nle_inv_zero_dx … H) -m
   @H1 -H1 #o #H elim (nlt_inv_zero_dx … H)
 | /5 width=3 by nlt_le_trans, nle_inv_succ_bi/
@@ -113,3 +117,15 @@ qed-.
 lemma nat_ind_lt (Q:predicate …):
       (∀n. (∀m. m < n → Q m) → Q n) → ∀n. Q n.
 /4 width=2 by nat_ind_lt_le/ qed-.
+
+(*** lt_elim *)
+lemma nlt_ind_alt (Q: relation2 nat nat):
+      (∀n. Q (𝟎) (↑n)) →
+      (∀m,n. m < n → Q m n → Q (↑m) (↑n)) →
+      ∀m,n. m < n → Q m n.
+#Q #IH1 #IH2 #m #n @(nat_ind_succ_2 … n m) -m -n //
+[ #m #H
+  elim (nlt_inv_zero_dx … H)
+| /4 width=1 by nlt_inv_succ_bi/
+]
+qed-.
