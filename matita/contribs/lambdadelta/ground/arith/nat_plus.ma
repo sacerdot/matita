@@ -63,7 +63,7 @@ qed.
 (*** commutative_plus *)
 lemma nplus_comm: commutative … nplus.
 #m @(nat_ind_succ … m) -m //
-qed-.
+qed-. (**) (* gets in the way with auto *)
 
 (*** associative_plus *)
 lemma nplus_assoc: associative … nplus.
@@ -91,11 +91,12 @@ qed-.
 
 (* Basic inversions *********************************************************)
 
-lemma eq_inv_nzero_plus (m) (n): 𝟎 = m + n → ∧∧ 𝟎 = m & 𝟎 = n.
+(*** plus_inv_O3 zero_eq_plus *) 
+lemma eq_inv_zero_nplus (m) (n): 𝟎 = m + n → ∧∧ 𝟎 = m & 𝟎 = n.
 #m #n @(nat_ind_succ … n) -n
 [ /2 width=1 by conj/
 | #n #_ <nplus_succ_dx #H
-  elim (eq_inv_nzero_succ … H)
+  elim (eq_inv_zero_nsucc … H)
 ]
 qed-.
 
@@ -108,6 +109,27 @@ qed-.
 lemma eq_inv_nplus_bi_sn (o) (m) (n): o + m = o + n → m = n.
 #o #m #n <nplus_comm <nplus_comm in ⊢ (???%→?);
 /2 width=2 by eq_inv_nplus_bi_dx/
+qed-.
+
+(*** plus_xSy_x_false *)
+lemma succ_nplus_refl_sn (m) (n): m = ↑(m + n) → ⊥.
+#m @(nat_ind_succ … m) -m
+[ /2 width=2 by eq_inv_zero_nsucc/
+| #m #IH #n #H
+  @(IH n) /2 width=1 by eq_inv_nsucc_bi/
+]
+qed-.
+
+(*** discr_plus_xy_y *)
+lemma nplus_refl_dx (m) (n): n = m + n → 𝟎 = m.
+#m #n @(nat_ind_succ … n) -n //
+#n #IH /3 width=1 by eq_inv_nsucc_bi/
+qed-.
+
+(*** discr_plus_x_xy *)
+lemma nplus_refl_sn (m) (n): m = m + n → 𝟎 = n.
+#m #n <nplus_comm
+/2 width=2 by nplus_refl_dx/
 qed-.
 
 (* Advanced eliminations ****************************************************)

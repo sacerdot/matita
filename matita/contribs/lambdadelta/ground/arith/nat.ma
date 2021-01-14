@@ -38,6 +38,7 @@ qed-.
 
 (* Basic constructions ******************************************************)
 
+(*** eq_nat_dec *)
 lemma eq_nat_dec (n1,n2:nat): Decidable (n1 = n2).
 * [| #p1 ] * [2,4: #p2 ]
 [1,4: @or_intror #H destruct

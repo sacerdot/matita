@@ -22,13 +22,13 @@ include "ground/arith/nat_lt_minus.ma".
 (*** lt_plus_to_minus *)
 lemma nlt_minus_sn (o) (m) (n): m ≤ n → n < o + m → n - m < o.
 #o #m #n #Hmn #Ho
-lapply (nle_minus_sn … Ho) -Ho
+lapply (nle_minus_sn_sn … Ho) -Ho
 <nminus_succ_sn //
 qed.
 
 (*** lt_plus_to_minus_r *)
 lemma nlt_minus_dx (o) (m) (n): m + o < n → m < n - o.
-/2 width=1 by nle_minus_dx/ qed.
+/2 width=1 by nle_minus_dx_sn/ qed.
 
 (*** lt_inv_plus_l *)
 lemma nlt_minus_dx_full (o) (m) (n): m + o < n → ∧∧ o < n & m < n - o.

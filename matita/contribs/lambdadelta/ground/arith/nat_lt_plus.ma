@@ -31,9 +31,8 @@ lemma nlt_plus_bi_sn (m) (n1) (n2): n1 < n2 → m + n1 < m + n2.
 @nlt_i >nplus_succ_dx /2 width=1 by nle_plus_bi_sn/
 qed.
 
-(*** lt_plus_Sn_r *) (**)
-lemma lt_plus_Sn_r: ∀a,x,n. a < a + x + ↑n.
-/2 width=1/ qed-.
+lemma nlt_succ_plus_dx_refl_sn (m) (n): m < ↑(m + n).
+/2 width=1/ qed.
 
 (* Inversions with nplus ****************************************************)
 

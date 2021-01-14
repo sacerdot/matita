@@ -70,6 +70,11 @@ lemma nminus_succ_sn_refl (m): ninj (𝟏) = ↑m - m.
 qed.
 
 (*** minus_minus_comm *)
-lemma nminus_minus_comm (o) (m) (n): o - m - n = o - n - m.
+lemma nminus_comm (o) (m) (n): o - m - n = o - n - m.
 #o #m #n @(nat_ind_succ … n) -n //
-qed-.
+qed.
+
+(*** minus_minus_comm3 *)
+lemma nminus_comm_231 (n) (m1) (m2) (m3):
+      n-m1-m2-m3 = n-m2-m3-m1.
+// qed.

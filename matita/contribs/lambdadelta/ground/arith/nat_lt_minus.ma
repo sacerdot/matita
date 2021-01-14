@@ -26,13 +26,22 @@ lapply (nle_minus_sn_bi … o Hmn) -Hmn
 <(nminus_succ_sn … Hom) //
 qed.
 
+(*** monotonic_lt_minus_r *)
+lemma nlt_minus_dx_bi (o) (m) (n):
+      m < o -> m < n → o-n < o-m.
+#o #m #n #Ho #H
+lapply (nle_minus_dx_bi … o H) -H #H
+@(le_nlt_trans … H) -n
+@nlt_i >(nminus_succ_sn … Ho) //
+qed.
+
 (* Destructions with nminus *************************************************)
 
 (*** minus_pred_pred *)
 lemma nminus_pred_bi (m) (n): 𝟎 < m → 𝟎 < n → n - m = ↓n - ↓m.
 #m #n #Hm #Hn
->(nlt_inv_zero_sn … Hm) in ⊢ (??%?); -Hm
->(nlt_inv_zero_sn … Hn) in ⊢ (??%?); -Hn
+>(nlt_des_gen … Hm) in ⊢ (??%?); -Hm
+>(nlt_des_gen … Hn) in ⊢ (??%?); -Hn
 //
 qed-.
 

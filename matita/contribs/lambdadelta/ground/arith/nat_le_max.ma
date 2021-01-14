@@ -30,12 +30,12 @@ lemma nle_max_sn (n):
 qed.
 
 lemma nle_max_dx_refl_sn (m) (n): m ≤ (m ∨ n).
-#m #n @(nat_ind_succ_2 … m n) -m -n //
+#m #n @(nat_ind_2_succ … m n) -m -n //
 #m #n #IH <nmax_succ_bi /2 width=1 by nle_succ_bi/
 qed.
 
 lemma nle_max_dx_refl_dx (m) (n): n ≤ (m ∨ n).
-#m #n @(nat_ind_succ_2 … n m) -m -n //
+#m #n @(nat_ind_2_succ … n m) -m -n //
 #m #n #IH <nmax_succ_bi /2 width=1 by nle_succ_bi/
 qed.
 

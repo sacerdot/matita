@@ -63,7 +63,7 @@ table {
           [ "nat_le ( ?≤? )" "nat_le_pred" "nat_le_plus" "nat_le_minus" "nat_le_minus_plus" "nat_le_max" * ]
           [ "nat_max ( ?∨? )" * ]
           [ "nat_minus ( ?-? )" "nat_minus_plus" * ]
-          [ "nat_plus ( ?+? )" * ]
+          [ "nat_plus ( ?+? )" "nat_plus_pred" * ]
           [ "nat_pred ( ↓? )" "nat_pred_succ" * ]
           [ "nat_succ ( ↑? )" "nat_succ_iter" "nat_succ_tri" * ]
           [ "nat ( 𝟎 )" "nat_iter ( ?^{?}? )" *"nat_tri"  ]

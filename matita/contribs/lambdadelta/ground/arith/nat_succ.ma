@@ -43,7 +43,7 @@ lemma nat_ind_succ (Q:predicate …):
 qed-.
 
 (*** nat_elim2 *)
-lemma nat_ind_succ_2 (Q:relation2 …):
+lemma nat_ind_2_succ (Q:relation2 …):
       (∀n. Q (𝟎) n) →
       (∀m. Q (↑m) (𝟎)) →
       (∀m,n. Q m n → Q (↑m) (↑n)) →
@@ -67,6 +67,14 @@ lemma eq_inv_nsucc_zero (m): ↑m = 𝟎 → ⊥.
 * [ <nsucc_zero | #p <nsucc_inj ] #H destruct
 qed-.
 
-lemma eq_inv_nzero_succ (m): 𝟎 = ↑m → ⊥.
+lemma eq_inv_zero_nsucc (m): 𝟎 = ↑m → ⊥.
 * [ <nsucc_zero | #p <nsucc_inj ] #H destruct
+qed-.
+
+(*** succ_inv_refl_sn *)
+lemma nsucc_inv_refl (n): n = ↑n → ⊥.
+#n @(nat_ind_succ … n) -n
+[ /2 width=2 by eq_inv_zero_nsucc/
+| #n #IH #H /3 width=1 by eq_inv_nsucc_bi/
+]
 qed-.

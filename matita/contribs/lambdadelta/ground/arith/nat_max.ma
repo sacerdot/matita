@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/zero_0.ma".
 include "ground/arith/nat_succ_tri.ma".
 
 (* MAXIMUM FOR NON-NEGATIVE INTEGERS ****************************************)
@@ -40,7 +39,7 @@ qed.
 (*** max_SS *)
 lemma nmax_succ_bi (n1) (n2): ↑(n1 ∨ n2) = (↑n1 ∨ ↑n2).
 #n1 #n2
-@trans_eq [3: @ntri_succ_bi | skip ] (**) (* rewrite fails because δ-expansion  gets in the way *)
+@trans_eq [3: @ntri_succ_bi | skip ] (**) (* rewrite fails because δ-expansion gets in the way *)
 <ntri_f_tri //
 qed.
 
@@ -52,12 +51,12 @@ lemma nmax_idem (n): n = (n ∨ n).
 
 (*** commutative_max *)
 lemma nmax_comm: commutative … nmax.
-#m #n @(nat_ind_succ_2 … m n) -m -n //
+#m #n @(nat_ind_2_succ … m n) -m -n //
 qed-.
 
 (*** associative_max *)
 lemma nmax_assoc: associative … nmax.
-#n1 #n2 @(nat_ind_succ_2 … n1 n2) -n1 -n2 //
+#n1 #n2 @(nat_ind_2_succ … n1 n2) -n1 -n2 //
 #n1 #n2 #IH #n3 @(nat_ind_succ … n3) -n3 //
 qed.
 
@@ -65,7 +64,7 @@ qed.
 
 (*** max_inv_O3 *)
 lemma nmax_inv_zero (n1) (n2): 𝟎 = (n1 ∨ n2) → ∧∧ 𝟎 = n1 & 𝟎 = n2.
-#n1 #n2 @(nat_ind_succ_2 … n1 n2) -n1 -n2 /2 width=1 by conj/
+#n1 #n2 @(nat_ind_2_succ … n1 n2) -n1 -n2 /2 width=1 by conj/
 #n1 #n2 #_ <nmax_succ_bi #H
-elim (eq_inv_nzero_succ … H)
+elim (eq_inv_zero_nsucc … H)
 qed-.

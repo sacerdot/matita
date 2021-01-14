@@ -12,40 +12,33 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/pnat_iter.ma".
+include "ground/arith/nat_pred_succ.ma".
+include "ground/arith/nat_plus.ma".
 
-(* ADDITION FOR POSITIVE INTEGERS *******************************************)
+(* ADDITION FOR NON-NEGATIVE INTEGERS ***************************************)
 
-definition pplus: pnat → pnat → pnat ≝
-           λp,q. psucc^q p.
+(* Inversions with npred ****************************************************)
 
-interpretation
-  "plus (positive integers)"
-  'plus p q = (pplus p q).
+(*** plus_inv_S3_sn *)
+lemma eq_inv_succ_nplus_sn (o) (m) (n):
+      ↑o = m + n →
+      ∨∨ ∧∧ 𝟎 = m & n = ↑o
+       | ∧∧ m = ↑↓m & o = ↓m + n.
+#o #m @(nat_ind_succ … m) -m
+[ /3 width=1 by or_introl, conj/
+| #m #_ #n <nplus_succ_sn
+  /4 width=1 by eq_inv_nsucc_bi, or_intror, conj/
+]
+qed-.
 
-(* Basic constructions ******************************************************)
-
-lemma pplus_one_dx (p): ↑p = p + 𝟏.
-// qed.
-
-lemma pplus_succ_dx (p) (q): ↑(p+q) = p + ↑q.
-// qed.
-
-(* Advanced constructions (semigroup properties) ****************************)
-
-lemma pplus_succ_sn (p) (q): ↑(p+q) = ↑p + q.
-#p #q @(piter_appl … psucc)
-qed.
-
-lemma pplus_one_sn (p): ↑p = 𝟏 + p.
-#p elim p -p //
-qed.
-
-lemma pplus_comm: commutative … pplus.
-#p elim p -p //
-qed-. (**) (* gets in the way with auto *)
-
-lemma pplus_assoc: associative … pplus.
-#p #q #r elim r -r //
-#r #IH <pplus_succ_dx <pplus_succ_dx <IH -IH //
-qed.
+(*** plus_inv_S3_dx *)
+lemma eq_inv_succ_nplus_dx (o) (m) (n):
+      ↑o = m + n →
+      ∨∨ ∧∧ 𝟎 = n & m = ↑o
+       | ∧∧ n = ↑↓n & o = m + ↓n.
+#o #m #n @(nat_ind_succ … n) -n
+[ /3 width=1 by or_introl, conj/
+| #n #_ <nplus_succ_sn
+  /4 width=1 by eq_inv_nsucc_bi, or_intror, conj/
+]
+qed-.

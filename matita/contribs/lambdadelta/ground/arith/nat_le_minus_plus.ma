@@ -31,18 +31,28 @@ lemma plus_minus_sn_refl_sn_nle (m) (n): n = n - m + m → m ≤ n.
 // qed.
 
 (*** le_plus_to_minus *)
-lemma nle_minus_sn (o) (m) (n): m ≤ n + o → m - o ≤ n.
+lemma nle_minus_sn_sn (o) (m) (n): m ≤ n + o → m - o ≤ n.
+/2 width=1 by nle_minus_sn_bi/ qed.
+
+(*** le_plus_to_minus_comm *)
+lemma nle_minus_sn_dx (o) (m) (n): m ≤ o + n → m - o ≤ n.
 /2 width=1 by nle_minus_sn_bi/ qed.
 
 (*** le_plus_to_minus_r *)
-lemma nle_minus_dx (o) (m) (n): m + o ≤ n → m ≤ n - o.
+lemma nle_minus_dx_sn (o) (m) (n): m + o ≤ n → m ≤ n - o.
 #o #m #n #H >(nminus_plus_sn_refl_sn m o)
+/2 width=1 by nle_minus_sn_bi/
+qed.
+
+(*** le_plus_to_minus_l *)
+lemma nle_minus_dx_dx (o) (m) (n): o + m ≤ n → m ≤ n - o.
+#o #m #n #H >(nminus_plus_sn_refl_dx m o)
 /2 width=1 by nle_minus_sn_bi/
 qed.
 
 (*** le_inv_plus_l *)
 lemma nle_minus_dx_full (o) (m) (n): m + o ≤ n → ∧∧ m ≤ n - o & o ≤ n.
-/3 width=3 by nle_minus_dx, nle_trans, conj/ qed-.
+/3 width=3 by nle_minus_dx_sn, nle_trans, conj/ qed-.
 
 (* Inversions with nminus and nplus *****************************************)
 
@@ -53,6 +63,7 @@ lemma nplus_minus_sn_refl_sn (m) (n): m ≤ n → n = n - m + m.
 <nplus_succ_sn //
 qed-.
 
+(*** plus_minus_m_m_commutative *)
 lemma nplus_minus_dx_refl_sn (m) (n): m ≤ n → n = m + (n - m).
 #m #n <nplus_comm
 /2 width=1 by nplus_minus_sn_refl_sn/
@@ -71,7 +82,7 @@ qed-.
 
 (* Destructions with nminus and nplus ***************************************)
 
-(*** plus_minus *)
+(*** plus_minus le_plus_minus_comm *)
 lemma nminus_plus_comm_23 (o) (m) (n):
       m ≤ n → n - m + o = n + o - m.
 #o #m #n #H elim H -n //
@@ -80,7 +91,7 @@ lemma nminus_plus_comm_23 (o) (m) (n):
 /2 width=3 by nle_trans/
 qed-.
 
-(*** plus_minus_associative *)
+(*** plus_minus_associative le_plus_minus *)
 lemma nplus_minus_assoc (m1) (m2) (n):
       n ≤ m2 → m1 + m2 - n = m1 + (m2 - n).
 /2 width=1 by nminus_plus_comm_23/ qed-.
@@ -106,4 +117,18 @@ theorem minus_assoc_comm_23 (m1) (m2) (m3):
         m3 ≤ m2 → m1 + m3 - m2 = m1 - (m2 - m3).
 #m1 #m2 #m3 #Hm
 >(nplus_minus_sn_refl_sn … Hm) in ⊢ (??%?); //
+qed-.
+
+(*** plus_minus_minus_be *)
+lemma nplus_minus_be_be (m1) (m2) (m3):
+      m1 ≤ m2 → m2 ≤ m3 → (m3 - m2) + (m2 - m1) = m3 - m1.
+#m1 #m2 #m3 #Hm12 #Hm23
+>nminus_assoc // <nminus_minus_dx_refl_sn //
+qed-.
+
+(*** plus_to_minus_2 *)
+lemma nminus_plus_swap (m1) (m2) (n1) (n2):
+      m1 ≤ n1 → m2 ≤ n2 → m2+n1 = m1+n2 → n1-m1 = n2-m2.
+#m1 #m2 #n1 #n2 #H1 #H2 #H
+@nminus_plus_dx <nplus_minus_assoc //
 qed-.

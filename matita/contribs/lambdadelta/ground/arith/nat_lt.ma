@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground/xoa/or_3.ma".
 include "ground/arith/nat_le.ma".
 
 (* STRICT ORDER FOR NON-NEGATIVE INTEGERS ***********************************)
@@ -32,10 +33,15 @@ lemma nlt_i (m) (n): ↑m ≤ n → m < n.
 lemma nlt_refl_succ (n): n < ↑n.
 // qed.
 
+(*** lt_S *)
+lemma nlt_succ_dx (m) (n): m < n → m < ↑n.
+/2 width=1 by nle_succ_dx/ qed.
+
 (*** lt_O_S *)
 lemma nlt_zero_succ (m): 𝟎 < ↑m.
 /2 width=1 by nle_succ_bi/ qed.
 
+(*** lt_S_S *)
 lemma nlt_succ_bi (m) (n): m < n → ↑m < ↑n.
 /2 width=1 by nle_succ_bi/ qed.
 
@@ -56,6 +62,12 @@ lemma nlt_ge_dis (m) (n): ∨∨ m < n | n ≤ m.
 #H elim (nle_lt_eq_dis … H) -H /2 width=1 by nle_refl, or_introl, or_intror/
 qed-.
 
+(*** lt_or_eq_or_gt *)
+lemma nlt_eq_gt_dis (m) (n): ∨∨ m < n | n = m | n < m.
+#m #n elim (nlt_ge_dis m n) /2 width=1 by or3_intro0/
+#H elim (nle_lt_eq_dis … H) -H /2 width=1 by or3_intro1, or3_intro2/
+qed-.
+
 (*** not_le_to_lt *)
 lemma le_false_nlt (m) (n): (n ≤ m → ⊥) → m < n.
 #m #n elim (nlt_ge_dis m n) [ // ]
@@ -72,17 +84,19 @@ lemma le_nlt_trans (o) (m) (n): m ≤ o → o < n → m < n.
 
 (* Basic inversions *********************************************************)
 
+(*** lt_S_S_to_lt *)
 lemma nlt_inv_succ_bi (m) (n): ↑m < ↑n → m < n.
 /2 width=1 by nle_inv_succ_bi/ qed-.
 
-(*** lt_to_not_le *)
+(*** lt_to_not_le lt_le_false *)
 lemma nlt_ge_false (m) (n): m < n → n ≤ m → ⊥.
 /3 width=4 by nle_inv_succ_sn_refl, nlt_le_trans/ qed-.
 
-(*** lt_to_not_eq *)
+(*** lt_to_not_eq lt_refl_false *)
 lemma nlt_inv_refl (m): m < m → ⊥.
 /2 width=4 by nlt_ge_false/ qed-.
 
+(*** lt_zero_false *)
 lemma nlt_inv_zero_dx (m): m < 𝟎 → ⊥.
 /2 width=4 by nlt_ge_false/ qed-.
 
@@ -123,7 +137,7 @@ lemma nlt_ind_alt (Q: relation2 nat nat):
       (∀n. Q (𝟎) (↑n)) →
       (∀m,n. m < n → Q m n → Q (↑m) (↑n)) →
       ∀m,n. m < n → Q m n.
-#Q #IH1 #IH2 #m #n @(nat_ind_succ_2 … n m) -m -n //
+#Q #IH1 #IH2 #m #n @(nat_ind_2_succ … n m) -m -n //
 [ #m #H
   elim (nlt_inv_zero_dx … H)
 | /4 width=1 by nlt_inv_succ_bi/

@@ -46,25 +46,28 @@ qed.
 
 (*** le_or_ge *)
 lemma nle_ge_dis (m) (n): ∨∨ m ≤ n | n ≤ m.
-#m #n @(nat_ind_succ_2 … m n) -m -n
+#m #n @(nat_ind_2_succ … m n) -m -n
 [ /2 width=1 by or_introl/
 | /2 width=1 by or_intror/
 | #m #n * /3 width=2 by nle_succ_bi, or_introl, or_intror/
 ]
 qed-.
 
-(* Basic inversions *********************************************************)
+(* Basic destructions *******************************************************)
 
-lemma nle_inv_succ_sn (m) (n): ↑m ≤ n → m ≤ n.
+lemma nle_des_succ_sn (m) (n): ↑m ≤ n → m ≤ n.
 #m #n #H elim H -n /2 width=1 by nle_succ_dx/
 qed-.
+
+(* Basic inversions *********************************************************)
 
 (*** le_S_S_to_le *)
 lemma nle_inv_succ_bi (m) (n): ↑m ≤ ↑n → m ≤ n.
 #m #n @(insert_eq_0 … (↑n))
-#y * -y
-[ #H <(eq_inv_nsucc_bi … H) -m //
-| #y #Hy #H >(eq_inv_nsucc_bi … H) -n /2 width=1 by nle_inv_succ_sn/
+#x * -x
+[ #H >(eq_inv_nsucc_bi … H) -n //
+| #o #Ho #H >(eq_inv_nsucc_bi … H) -n
+  /2 width=1 by nle_des_succ_sn/ 
 ]
 qed-.
 
@@ -73,18 +76,19 @@ lemma nle_inv_zero_dx (m): m ≤ 𝟎 → 𝟎 = m.
 #m @(insert_eq_0 … (𝟎))
 #y * -y
 [ #H destruct //
-| #y #_ #H elim (eq_inv_nzero_succ … H)
+| #y #_ #H elim (eq_inv_zero_nsucc … H)
 ]
 qed-.
 
 (* Advanced inversions ******************************************************)
 
+(*** le_plus_xSy_O_false *)
 lemma nle_inv_succ_zero (m): ↑m ≤ 𝟎 → ⊥.
-/3 width=2 by nle_inv_zero_dx, eq_inv_nzero_succ/ qed-.
+/3 width=2 by nle_inv_zero_dx, eq_inv_zero_nsucc/ qed-.
 
 lemma nle_inv_succ_sn_refl (m): ↑m ≤ m → ⊥.
 #m @(nat_ind_succ … m) -m [| #m #IH ] #H
-[ /3 width=2 by nle_inv_zero_dx, eq_inv_nzero_succ/
+[ /3 width=2 by nle_inv_zero_dx, eq_inv_zero_nsucc/
 | /3 width=1 by nle_inv_succ_bi/
 ]
 qed-.
@@ -93,7 +97,7 @@ qed-.
 theorem nle_antisym (m) (n): m ≤ n → n ≤ m → m = n.
 #m #n #H elim H -n //
 #n #_ #IH #Hn
-lapply (nle_inv_succ_sn … Hn) #H
+lapply (nle_des_succ_sn … Hn) #H
 lapply (IH H) -IH -H #H destruct
 elim (nle_inv_succ_sn_refl … Hn)
 qed-.
@@ -105,7 +109,7 @@ lemma nle_ind_alt (Q: relation2 nat nat):
       (∀n. Q (𝟎) (n)) →
       (∀m,n. m ≤ n → Q m n → Q (↑m) (↑n)) →
       ∀m,n. m ≤ n → Q m n.
-#Q #IH1 #IH2 #m #n @(nat_ind_succ_2 … m n) -m -n //
+#Q #IH1 #IH2 #m #n @(nat_ind_2_succ … m n) -m -n //
 [ #m #H elim (nle_inv_succ_zero … H)
 | /4 width=1 by nle_inv_succ_bi/
 ]
@@ -115,10 +119,10 @@ qed-.
 
 (*** transitive_le *)
 theorem nle_trans: Transitive … nle.
-#m #n #H elim H -n /3 width=1 by nle_inv_succ_sn/
+#m #n #H elim H -n /3 width=1 by nle_des_succ_sn/
 qed-.
 
-(*** decidable_le *)
+(*** decidable_le le_dec *)
 lemma nle_dec (m) (n): Decidable … (m ≤ n).
 #m #n elim (nle_ge_dis m n) [ /2 width=1 by or_introl/ ]
 #Hnm elim (eq_nat_dec m n) [ #H destruct /2 width=1 by nle_refl, or_introl/ ]

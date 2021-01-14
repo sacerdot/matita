@@ -57,7 +57,7 @@ theorem nle_plus_bi (m1) (m2) (n1) (n2):
 
 (*** plus_le_0 *)
 lemma nle_inv_plus_zero (m) (n): m + n ≤ 𝟎 → ∧∧ 𝟎 = m & 𝟎 = n.
-/3 width=1 by nle_inv_zero_dx, eq_inv_nzero_plus/ qed-.
+/3 width=1 by nle_inv_zero_dx, eq_inv_zero_nplus/ qed-.
 
 (*** le_plus_to_le_r *)
 lemma nle_inv_plus_bi_dx (o) (m) (n): n + o ≤ m + o → n ≤ m.
@@ -67,3 +67,31 @@ qed-.
 (*** le_plus_to_le *)
 lemma nle_inv_plus_bi_sn (o) (m) (n): o + n ≤ o + m → n ≤ m.
 /2 width=2 by nle_inv_plus_bi_dx/ qed-.
+
+(* Destructions with nplus **************************************************)
+
+(*** plus2_le_sn_sn *)
+lemma nplus_2_des_le_sn_sn (m1) (m2) (n1) (n2):
+      m1 + n1 = m2 + n2 → m1 ≤ m2 → n2 ≤ n1.
+#m1 #m2 #n1 #n2 #H #Hm
+lapply (nle_plus_bi_dx n1 … Hm) -Hm >H -H
+/2 width=2 by nle_inv_plus_bi_sn/
+qed-.
+
+(*** plus2_le_sn_dx *)
+lemma nplus_2_des_le_sn_dx (m1) (m2) (n1) (n2):
+      m1 + n1 = n2 + m2 → m1 ≤ m2 → n2 ≤ n1.
+#m1 #m2 #n1 #n2 <nplus_comm in ⊢ (???%→?);
+/2 width=4 by nplus_2_des_le_sn_sn/ qed-.
+
+(*** plus2_le_dx_sn *)
+lemma nplus_2_des_le_dx_sn (m1) (m2) (n1) (n2):
+      n1 + m1 = m2 + n2 → m1 ≤ m2 → n2 ≤ n1.
+#m1 #m2 #n1 #n2 <nplus_comm in ⊢ (??%?→?);
+/2 width=4 by nplus_2_des_le_sn_sn/ qed-.
+
+(*** plus2_le_dx_dx *)
+lemma nplus_2_des_le_dx_dx (m1) (m2) (n1) (n2):
+      n1 + m1 = n2 + m2 → m1 ≤ m2 → n2 ≤ n1.
+#m1 #m2 #n1 #n2 <nplus_comm in ⊢ (??%?→?);
+/2 width=4 by nplus_2_des_le_sn_dx/ qed-.
