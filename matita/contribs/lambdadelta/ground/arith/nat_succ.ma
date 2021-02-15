@@ -16,10 +16,18 @@ include "ground/arith/nat.ma".
 
 (* SUCCESSOR FOR NON-NEGATIVE INTEGERS **************************************)
 
-definition nsucc: nat → nat ≝ λm. match m with
-[ nzero  ⇒ ninj (𝟏)
-| ninj p ⇒ ninj (↑p)
+definition nsucc_pos (m): pnat ≝
+match m with
+[ nzero  ⇒ 𝟏
+| ninj p ⇒ ↑p
 ].
+
+interpretation
+  "positive successor (non-negative integers)"
+  'UpArrow m = (nsucc_pos m).
+
+definition nsucc (m): nat ≝
+           ninj (↑m).
 
 interpretation
   "successor (non-negative integers)"

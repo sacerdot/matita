@@ -22,7 +22,7 @@ definition nminus: nat → nat → nat ≝
            λm,n. npred^n m.
 
 interpretation
-  "minus (positive integers)"
+  "minus (non-negative integers)"
   'minus m n = (nminus m n).
 
 (* Basic constructions ******************************************************)

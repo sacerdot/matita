@@ -46,18 +46,26 @@ table {
     }
   ]
   class "grass"
-  [ { "natural numbers with infinity" * } {
-      [ { "" * } {
-          [ "ynat ( ∞ )" "ynat_pred ( ↓? )" "ynat_succ ( ↑? )"
-            "ynat_le ( ? ≤ ? )" "ynat_lt ( ? &lt; ? )"
-            "ynat_plus ( ? + ? )" "ynat_minus_sn ( ? - ? )" *
-          ]
+  [ { "arithmetics" * } {
+      [ { "extensions" * } {
+          [ "arith_2a ( 𝟐 )" "arith_2b" * ]
         }
       ]
-    }
-  ]
-  class "grass"
-  [ { "arithmetics" * } {
+      [ { "well-founded induction" * } {
+          [ "wf1_ind_ylt" * ]
+          [ "wf1_ind_nlt" "wf2_ind_nlt" "wf3_ind_nlt.ma" * ]
+        }
+      ]
+      [ { "non-negative integers with infinity" * } {
+          [ "ynat_lt ( ?&lt;? )" "ynat_lt_succ" "ynat_lt_pred" "ynat_lt_pred_succ" "ynat_lt_plus" "ynat_lt_plus_pred" "ynat_lt_minus1" "ynat_lt_minus1_plus" "ynat_lt_le" "ynat_lt_le_succ" "ynat_lt_le_pred" "ynat_lt_le_pred_succ" "ynat_lt_le_plus" "ynat_lt_le_minus1" "ynat_lt_le_minus1_plus" * ]
+          [ "ynat_le ( ?≤? )" "ynat_le_succ" "ynat_le_pred" "ynat_le_pred_succ" "ynat_le_plus" "ynat_le_minus1" "ynat_le_minus1_succ" "ynat_le_minus1_plus" * ]
+          [ "ynat_minus1 ( ?-? )" "ynat_minus1_succ" "ynat_minus1_plus" * ]
+          [ "ynat_plus ( ?+? )" * ]
+          [ "ynat_pred ( ↓? )" "ynat_pred_succ" * ]
+          [ "ynat_succ ( ↑? )" * ]
+          [ "ynat ( 𝟎 ) ( ∞ )" "ynat_nat" * ]
+        }
+      ]
       [ { "non-negative integers" * } {
           [ "nat_lt ( ?&lt;? )" "nat_lt_tri" "nat_lt_pred" "nat_lt_plus" "nat_lt_minus" "nat_lt_minus_plus" * ]
           [ "nat_le ( ?≤? )" "nat_le_pred" "nat_le_plus" "nat_le_minus" "nat_le_minus_plus" "nat_le_max" * ]
@@ -71,7 +79,7 @@ table {
       ]
       [ { "positive integers" * } {
           [ "pnat_plus ( ?+? )" * ]
-          [ "pnat ( 𝟏 ) ( ↑? )" "pnat_dis" "pnat_iter ( ?^{?}? )" *"pnat_tri"  ]
+          [ "pnat ( 𝟏 ) ( ↑? )" "pnat_dis" "pnat_iter ( ?^{?}? )" "pnat_tri" * ]
         }
       ]
     }
@@ -81,7 +89,7 @@ table {
       [ { "" * } {
           [ "stream ( ? ⨮{?} ? )" "stream_eq ( ? ≗{?} ? )" "stream_hdtl ( ⫰{?}? )" "stream_tls ( ⫰*{?}[?]? )" * ]
           [ "list ( Ⓔ{?} ) ( ? ⨮{?} ? )" "list_length ( |?| )" * ]
-          [ "bool ( Ⓕ ) ( Ⓣ )" "arith ( ?^? ) ( ↑? ) ( ↓? ) ( ? ∨ ? ) ( ? ∧ ? )" "arith_2a" "arith_2b" * ]
+          [ "bool ( Ⓕ ) ( Ⓣ )" * ]
           [ "ltc" "ltc_ctc" * ]
           [ "logic ( ⊥ ) ( ⊤ )" "relations ( ? ⊆ ? )" "functions" "exteq ( ? ≐{?,?} ? )" "star" "lstar_2a" * ]
         }
@@ -90,10 +98,6 @@ table {
   ]
   class "orange"
   [ { "generated library" * } {
-      [ { "well-founded induction" * } {
-          [ "wf1_ind_nlt" "wf2_ind_nlt" "wf3_ind_nlt.ma" * ]
-        }
-      ]
       [ { "generalization with equality" * } {
           [ "insert_eq" * ]
         }

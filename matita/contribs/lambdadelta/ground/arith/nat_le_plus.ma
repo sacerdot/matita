@@ -38,10 +38,6 @@ lemma nle_plus_dx_dx_refl (m) (n): m ≤ m + n.
 lemma nle_plus_dx_sn_refl (m) (n): m ≤ n + m.
 /2 width=1 by nle_plus_bi_sn/ qed.
 
-(*** le_plus_b *)
-lemma nle_plus_dx_dx (m) (n) (o): n + o ≤ m → n ≤ m.
-/2 width=3 by nle_trans/ qed.
-
 (*** le_plus_a *)
 lemma nle_plus_dx_sn (m) (n) (o): n ≤ m → n ≤ o + m.
 /2 width=3 by nle_trans/ qed.
@@ -54,6 +50,10 @@ theorem nle_plus_bi (m1) (m2) (n1) (n2):
 /3 width=3 by nle_plus_bi_dx, nle_plus_bi_sn, nle_trans/ qed.
 
 (* Inversions with nplus ****************************************************)
+
+(*** le_plus_b *)
+lemma nle_inv_plus_sn_dx (m) (n) (o): n + o ≤ m → n ≤ m.
+/2 width=3 by nle_trans/ qed.
 
 (*** plus_le_0 *)
 lemma nle_inv_plus_zero (m) (n): m + n ≤ 𝟎 → ∧∧ 𝟎 = m & 𝟎 = n.

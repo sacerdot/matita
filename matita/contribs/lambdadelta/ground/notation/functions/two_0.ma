@@ -12,12 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/pnat.ma".
+(* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
 
-(* DISCRIMINATOR FOR POSITIVE INTEGERS **************************************)
-
-definition pdis (A:Type[0]) (a) (f) (p): A ≝
-match p with
-[ punit   ⇒ a
-| psucc q ⇒ f q
-].
+notation "𝟐"
+  non associative with precedence 55
+  for @{ 'Two }.

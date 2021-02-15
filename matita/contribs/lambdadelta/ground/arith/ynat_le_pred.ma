@@ -12,30 +12,26 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/ynat/ynat.ma".
+include "ground/arith/nat_le_pred.ma".
+include "ground/arith/ynat_pred.ma".
+include "ground/arith/ynat_le.ma".
 
-(* NATURAL NUMBERS WITH INFINITY ********************************************)
+(* ORDER FOR NON-NEGATIVE INTEGERS WITH INFINITY ****************************)
 
-(* the predecessor function *)
-definition ypred: ynat → ynat ≝ λm. match m with
-[ yinj m ⇒ ↓m
-| Y      ⇒ Y
-].
+(* Constructions with ypred *************************************************)
 
-interpretation "ynat predecessor" 'DownArrow m = (ypred m).
+(*** yle_pred_sn *)
+lemma yle_pred_sn_trans (x) (y): x ≤ y → ↓x ≤ y.
+#x #y * -x -y
+/3 width=3 by yle_inj, nle_trans/
+qed.
 
-lemma ypred_O: ↓(yinj 0) = yinj 0.
-// qed.
+(*** yle_refl_pred_sn *)
+lemma yle_pred_sn_refl (x): ↓x ≤ x.
+/2 width=1 by yle_pred_sn_trans, yle_refl/ qed.
 
-lemma ypred_S: ∀m:nat. ↓(↑m) = yinj m.
-// qed.
-
-lemma ypred_Y: (↓∞) = ∞.
-// qed.
-
-(* Inversion lemmas *********************************************************)
-
-lemma ypred_inv_refl: ∀m:ynat. ↓m = m → m = 0 ∨ m = ∞.
-* // #m #H lapply (yinj_inj … H) -H (**) (* destruct lemma needed *)
-/4 width=1 by pred_inv_fix_sn, or_introl, eq_f/
-qed-.
+(*** yle_pred *)
+lemma yle_pred_bi (x) (y): x ≤ y → ↓x ≤ ↓y.
+#x #y * -x -y
+/3 width=1 by yle_inj, nle_pred_bi/
+qed.

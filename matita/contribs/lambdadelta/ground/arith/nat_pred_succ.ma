@@ -27,7 +27,7 @@ qed.
 (* Inversion with nsucc *****************************************************)
 
 (*** nat_split *)
-lemma nat_split (n): ∨∨ 𝟎 = n | n = ↑↓n.
+lemma nat_split_zero_pos (n): ∨∨ 𝟎 = n | n = ↑↓n.
 #n @(nat_ind_succ … n) -n
 /2 width=1 by or_introl, or_intror/
 qed-.

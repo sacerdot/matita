@@ -12,44 +12,45 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/downarrow_1.ma".
-include "ground/arith/pnat_split.ma".
-include "ground/arith/nat.ma".
+include "ground/arith/pnat.ma".
+include "ground/notation/functions/zero_0.ma".
+include "ground/notation/functions/infinity_0.ma".
 
-(* PREDECESSOR FOR NON-NEGATIVE INTEGERS ************************************)
+(* NON-NEGATIVE INTEGERS WITH INFINITY **************************************)
 
-(*** pred *)
-definition npred (m): nat ≝ match m with
-[ nzero  ⇒ 𝟎
-| ninj p ⇒ psplit … (𝟎) ninj p
-].
+(*** ynat *)
+inductive ynat: Type[0] ≝
+| yzero: ynat
+| yinj : pnat → ynat
+| yinf : ynat
+.
+
+coercion yinj.
 
 interpretation
-  "predecessor (non-negative integers)"
-  'DownArrow m = (npred m).
+  "zero (non-negative integers with infinity)"
+  'Zero = yzero.
 
-(* Basic constructions ******************************************************)
+interpretation
+  "infinity (non-negative integers with infinity)"
+  'Infinity = yinf.
 
-(*** pred_O *)
-lemma npred_zero: 𝟎 = ↓𝟎.
-// qed.
+(* Inversion lemmas *********************************************************)
 
-lemma npred_one: 𝟎 = ↓𝟏.
-// qed.
-
-lemma npred_psucc (p): ninj p = ↓↑p.
-// qed.
-
-(* Basic inversions *********************************************************)
-
-lemma npred_pnat_inv_refl (p): ninj p = ↓p → ⊥.
-*
-[ <npred_one #H destruct
-| #p /3 width=2 by psucc_inv_refl, eq_inv_ninj_bi/
-]
+(* Note: destruct *)
+(*** yinj_inj *)
+lemma eq_inv_yinj_bi (y1) (y2): yinj y1 = yinj y2 → y1 = y2.
+#x #y #H destruct //
 qed-.
 
-(*** pred_inv_fix_sn *)
-lemma npred_inv_refl (n): n = ↓n → 𝟎 = n.
-* // #p #H elim (npred_pnat_inv_refl … H)
+(* Basic properties *********************************************************)
+
+(*** eq_ynat_dec *)
+lemma eq_ynat_dec (y1,y2:ynat): Decidable (y1 = y2).
+* [| #p1 |] *
+[1,9: /2 width=1 by or_introl/ |2,5,8: #p2 ]
+[2: elim (eq_pnat_dec p1 p2)
+    /4 width=1 by eq_inv_yinj_bi, or_intror, or_introl/
+|*: @or_intror #H destruct
+]
 qed-.

@@ -12,9 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basics/relations.ma".
+include "ground/arith/pnat.ma".
 
-(* GENERATED LIBRARY ********************************************************)
+(* DISCRIMINATOR FOR POSITIVE INTEGERS **************************************)
 
-lemma insert_eq_0: ∀A,a. ∀Q1,Q2:predicate A. (∀a0. Q1 a0 → a = a0 → Q2 a0) → Q1 a → Q2 a.
-/2 width=1 by/ qed-.
+definition psplit (A:Type[0]) (a) (f) (p): A ≝
+match p with
+[ punit   ⇒ a
+| psucc q ⇒ f q
+].

@@ -29,19 +29,19 @@ lemma nle_minus_succ_sn (m) (n): ↑n - m ≤ ↑(n - m).
 // qed.
 
 (*** inv_eq_minus_O *)
-lemma nle_eq_minus_O (m) (n): 𝟎 = m - n → m ≤ n.
+lemma nle_eq_zero_minus (m) (n): 𝟎 = m - n → m ≤ n.
 #m #n @(nat_ind_2_succ … m n) //
 /3 width=1 by nle_succ_bi/
 qed.
 
 (*** monotonic_le_minus_l *)
-lemma nle_minus_sn_bi (m) (n) (o): m ≤ n → m-o ≤ n-o.
+lemma nle_minus_bi_dx (m) (n) (o): m ≤ n → m-o ≤ n-o.
 #m #n #o @(nat_ind_succ … o) -o //
 #o #IH #Hmn /3 width=1 by nle_pred_bi/
 qed.
 
 (*** monotonic_le_minus_r *)
-lemma nle_minus_dx_bi (m) (n) (o): m ≤ n → o-n ≤ o-m.
+lemma nle_minus_bi_sn (m) (n) (o): m ≤ n → o-n ≤ o-m.
 #m #n #o #H elim H -n //
 #n #_ #IH /2 width=3 by nle_trans/
 qed.
@@ -53,7 +53,7 @@ lemma nle_minus_sn (o) (m) (n): m ≤ n → m - o ≤ n.
 (* Inversions with nminus ***************************************************)
 
 (*** eq_minus_O *)
-lemma nle_inv_eq_minus_O (m) (n): m ≤ n → 𝟎 = m - n.
+lemma nle_inv_eq_zero_minus (m) (n): m ≤ n → 𝟎 = m - n.
 #m #n #H elim H -n //
 qed-.
 

@@ -12,44 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/downarrow_1.ma".
-include "ground/arith/pnat_split.ma".
-include "ground/arith/nat.ma".
+include "ground/arith/ynat_le_pred_succ.ma".
+include "ground/arith/ynat_lt_pred_succ.ma".
 
-(* PREDECESSOR FOR NON-NEGATIVE INTEGERS ************************************)
+(* STRICT ORDER FOR NON-NEGATIVE INTEGERS WITH INFINITY *********************)
 
-(*** pred *)
-definition npred (m): nat ≝ match m with
-[ nzero  ⇒ 𝟎
-| ninj p ⇒ psplit … (𝟎) ninj p
-].
+(* Constructions with yle and ypred and ysucc *******************************)
 
-interpretation
-  "predecessor (non-negative integers)"
-  'DownArrow m = (npred m).
-
-(* Basic constructions ******************************************************)
-
-(*** pred_O *)
-lemma npred_zero: 𝟎 = ↓𝟎.
-// qed.
-
-lemma npred_one: 𝟎 = ↓𝟏.
-// qed.
-
-lemma npred_psucc (p): ninj p = ↓↑p.
-// qed.
-
-(* Basic inversions *********************************************************)
-
-lemma npred_pnat_inv_refl (p): ninj p = ↓p → ⊥.
-*
-[ <npred_one #H destruct
-| #p /3 width=2 by psucc_inv_refl, eq_inv_ninj_bi/
-]
-qed-.
-
-(*** pred_inv_fix_sn *)
-lemma npred_inv_refl (n): n = ↓n → 𝟎 = n.
-* // #p #H elim (npred_pnat_inv_refl … H)
+(*** yle_inv_succ_sn_lt yle_inv_succ1_lt *)
+lemma le_succ_sn_ylt (x) (y):
+      ↑x ≤ y → ∧∧ x ≤ ↓y & 𝟎 < y.
+#x #y #H elim (yle_inv_succ_sn … H) -H
+/4 width=2 by ylt_zero_sn, conj/
 qed-.

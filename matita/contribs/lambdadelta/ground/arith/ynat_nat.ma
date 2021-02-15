@@ -12,44 +12,66 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/downarrow_1.ma".
-include "ground/arith/pnat_split.ma".
 include "ground/arith/nat.ma".
+include "ground/arith/ynat.ma".
 
-(* PREDECESSOR FOR NON-NEGATIVE INTEGERS ************************************)
+(* NON-NEGATIVE INTEGERS TO NON-NEGATIVE INTEGERS WITH INFINITY *************)
 
-(*** pred *)
-definition npred (m): nat ≝ match m with
+(*** yinj *)
+definition yinj_nat (n) ≝ match n with
 [ nzero  ⇒ 𝟎
-| ninj p ⇒ psplit … (𝟎) ninj p
+| ninj p ⇒ yinj p
 ].
 
-interpretation
-  "predecessor (non-negative integers)"
-  'DownArrow m = (npred m).
+definition ynat_bind_nat: (nat → ynat) → ynat → (ynat → ynat).
+#f #y *
+[ @f @(𝟎)
+| #p @f @p
+| @y
+]
+qed-.
 
 (* Basic constructions ******************************************************)
 
-(*** pred_O *)
-lemma npred_zero: 𝟎 = ↓𝟎.
+lemma yinj_nat_zero: 𝟎 = yinj_nat (𝟎).
 // qed.
 
-lemma npred_one: 𝟎 = ↓𝟏.
+lemma yinj_nat_inj (p): yinj p = yinj_nat (ninj p).
 // qed.
 
-lemma npred_psucc (p): ninj p = ↓↑p.
+lemma ynat_bind_nat_inj (f) (y) (n):
+      f n = ynat_bind_nat f y (yinj_nat n).
+#f #y * // qed.
+
+lemma ynat_bind_nat_inf (f) (y):
+      y = ynat_bind_nat f y (∞).
 // qed.
 
 (* Basic inversions *********************************************************)
 
-lemma npred_pnat_inv_refl (p): ninj p = ↓p → ⊥.
-*
-[ <npred_one #H destruct
-| #p /3 width=2 by psucc_inv_refl, eq_inv_ninj_bi/
+lemma eq_inv_yinj_nat_inf (n1): yinj_nat n1 = ∞ → ⊥.
+* [| #p1 ]
+[ <yinj_nat_zero #H destruct
+| <yinj_nat_inj #H destruct
+]
+qed.
+
+lemma eq_inv_inf_yinj_nat (n2): ∞ = yinj_nat n2 → ⊥.
+/2 width=2 by eq_inv_yinj_nat_inf/ qed-.
+
+(*** yinj_inj *)
+lemma eq_inv_yinj_nat_bi (n1) (n2): yinj_nat n1 = yinj_nat n2 → n1 = n2.
+* [| #p1 ] * [2,4: #p2 ]
+[ <yinj_nat_zero <yinj_nat_inj #H destruct
+| <yinj_nat_inj <yinj_nat_inj #H destruct //
+| //
+| <yinj_nat_inj <yinj_nat_zero #H destruct
 ]
 qed-.
 
-(*** pred_inv_fix_sn *)
-lemma npred_inv_refl (n): n = ↓n → 𝟎 = n.
-* // #p #H elim (npred_pnat_inv_refl … H)
+(* Basic eliminations *******************************************************)
+
+lemma ynat_split_nat_inf (Q:predicate …):
+      (∀n. Q (yinj_nat n)) → Q (∞) → ∀y. Q y.
+#Q #H1 #H2 * //
 qed-.

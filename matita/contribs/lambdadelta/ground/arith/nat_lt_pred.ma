@@ -38,8 +38,13 @@ lemma nlt_inv_succ_sn (m) (n): ↑m < n → ∧∧ m < ↓n & n = ↑↓n.
 lemma nlt_inv_pred_dx (m) (n): m < ↓n → ↑m < n.
 #m #n #H >(nlt_des_gen (𝟎) n)
 [ /2 width=1 by nlt_succ_bi/
-| /3 width=3 by le_nlt_trans, nlt_le_trans/
+| /3 width=3 by nle_nlt_trans, nlt_nle_trans/
 ]
+qed-.
+
+lemma nlt_inv_pred_bi (m) (n):
+      ↓m < ↓n → m < n.
+/3 width=3 by nlt_inv_pred_dx, nle_nlt_trans/
 qed-.
 
 (* Constructions with npred *************************************************)

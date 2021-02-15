@@ -34,7 +34,7 @@ qed.
 theorem nminus_plus_assoc (o) (m) (n): o-m-n = o-(m+n).
 #o #m #n @(nat_ind_succ … n) -n //
 #n #IH <nplus_succ_dx <nminus_succ_dx <nminus_succ_dx //
-qed-.
+qed.
 
 (*** minus_plus_plus_l *)
 lemma nminus_plus_dx_bi (m) (n) (o): m - n = (m + o) - (n + o).

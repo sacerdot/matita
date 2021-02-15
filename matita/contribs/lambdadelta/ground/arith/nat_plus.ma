@@ -21,7 +21,7 @@ definition nplus: nat → nat → nat ≝
            λm,n. nsucc^n m.
 
 interpretation
-  "plus (positive integers)"
+  "plus (non-negative integers)"
   'plus m n = (nplus m n).
 
 (* Basic constructions ******************************************************)
@@ -42,10 +42,12 @@ qed.
 (* Constructions with niter *************************************************)
 
 (*** iter_plus *)
-lemma niter_plus (A) (f) (a) (n1) (n2):
-      f^n1 (f^n2 a) = f^{A}(n1+n2) a.
-#A #f #a #n1 #n2 @(nat_ind_succ … n2) -n2 //
-#n2 #IH <nplus_succ_dx <niter_succ <niter_succ <niter_appl //
+lemma niter_plus (A) (f) (n1) (n2):
+      f^n2 ∘ f^n1 ≐ f^{A}(n1+n2).
+#A #f #n1 #n2 @(nat_ind_succ … n2) -n2 //
+#n2 #IH <nplus_succ_dx
+@exteq_repl
+/3 width=5 by compose_repl_fwd_sn, compose_repl_fwd_dx/
 qed.
 
 (* Advanved constructions (semigroup properties) ****************************)

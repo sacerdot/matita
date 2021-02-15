@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "ground/notation/functions/exp_3.ma".
+include "ground/lib/exteq.ma".
 include "ground/arith/pnat.ma".
 
 (* ITERATED FUNCTION FOR POSITIVE INTEGERS **********************************)
@@ -30,15 +31,33 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma piter_unit (A) (f) (a): f a = (f^{A}𝟏) a.
+lemma piter_unit (A) (f): f ≐ f^{A}𝟏.
 // qed.
 
-lemma piter_succ (A) (f) (p) (a): f (f^p a) = f^{A}(↑p) a.
+lemma piter_succ (A) (f) (p): f ∘ f^p ≐ f^{A}(↑p).
 // qed.
 
 (* Advanced constructions ***************************************************)
 
-lemma piter_appl (A) (f) (p) (a): f (f^p a) = f^{A}p (f a).
+lemma piter_appl (A) (f) (p): f ∘ f^p ≐ f^{A}p ∘ f.
 #A #f #p elim p -p //
-#p #IH #a <piter_succ <piter_succ //
+#p #IH @exteq_repl
+/3 width=5 by compose_repl_fwd_dx, compose_repl_fwd_sn, exteq_canc_dx/
+qed.
+
+lemma piter_compose (A) (B) (f) (g) (h) (p):
+      h ∘ f ≐ g ∘ h → h ∘ (f^{A}p) ≐ (g^{B}p) ∘ h.
+#A #B #f #g #h #p elim p -p
+[ #H @exteq_repl
+  /2 width=5 by compose_repl_fwd_sn, compose_repl_fwd_dx/
+| #p #IH #H @exteq_repl
+  [4: @compose_repl_fwd_dx [| @piter_succ ]
+  |5: @compose_repl_fwd_sn [| @piter_succ ]
+  |1,2: skip
+  ]
+  @exteq_trans [2: @compose_assoc |1: skip ]
+  @exteq_trans [2: @(compose_repl_fwd_sn … H) | 1:skip ]
+  @exteq_canc_sn [2: @compose_assoc |1: skip ]
+  /3 width=1 by compose_repl_fwd_dx/
+]
 qed.

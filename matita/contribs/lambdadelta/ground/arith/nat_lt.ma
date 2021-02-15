@@ -33,8 +33,11 @@ lemma nlt_i (m) (n): ↑m ≤ n → m < n.
 lemma nlt_refl_succ (n): n < ↑n.
 // qed.
 
+lemma nlt_succ_dx (m) (n): m ≤ n → m < ↑n.
+/2 width=1 by nle_succ_bi/ qed.
+
 (*** lt_S *)
-lemma nlt_succ_dx (m) (n): m < n → m < ↑n.
+lemma nlt_succ_dx_trans (m) (n): m < n → m < ↑n.
 /2 width=1 by nle_succ_dx/ qed.
 
 (*** lt_O_S *)
@@ -46,43 +49,46 @@ lemma nlt_succ_bi (m) (n): m < n → ↑m < ↑n.
 /2 width=1 by nle_succ_bi/ qed.
 
 (*** le_to_or_lt_eq *)
-lemma nle_lt_eq_dis (m) (n): m ≤ n → ∨∨ m < n | m = n.
+lemma nle_split_lt_eq (m) (n): m ≤ n → ∨∨ m < n | m = n.
 #m #n * -n /3 width=1 by nle_succ_bi, or_introl/
 qed-.
 
 (*** eq_or_gt *)
-lemma eq_gt_dis (n): ∨∨ 𝟎 = n | 𝟎 < n.
-#n elim (nle_lt_eq_dis (𝟎) n ?)
+lemma nat_split_zero_gt (n): ∨∨ 𝟎 = n | 𝟎 < n.
+#n elim (nle_split_lt_eq (𝟎) n ?)
 /2 width=1 by or_introl, or_intror/
 qed-.
 
 (*** lt_or_ge *)
-lemma nlt_ge_dis (m) (n): ∨∨ m < n | n ≤ m.
-#m #n elim (nle_ge_dis m n) /2 width=1 by or_intror/
-#H elim (nle_lt_eq_dis … H) -H /2 width=1 by nle_refl, or_introl, or_intror/
+lemma nat_split_lt_ge (m) (n): ∨∨ m < n | n ≤ m.
+#m #n elim (nat_split_le_ge m n) /2 width=1 by or_intror/
+#H elim (nle_split_lt_eq … H) -H /2 width=1 by nle_refl, or_introl, or_intror/
 qed-.
 
 (*** lt_or_eq_or_gt *)
-lemma nlt_eq_gt_dis (m) (n): ∨∨ m < n | n = m | n < m.
-#m #n elim (nlt_ge_dis m n) /2 width=1 by or3_intro0/
-#H elim (nle_lt_eq_dis … H) -H /2 width=1 by or3_intro1, or3_intro2/
+lemma nat_split_lt_eq_gt (m) (n): ∨∨ m < n | n = m | n < m.
+#m #n elim (nat_split_lt_ge m n) /2 width=1 by or3_intro0/
+#H elim (nle_split_lt_eq … H) -H /2 width=1 by or3_intro1, or3_intro2/
 qed-.
 
 (*** not_le_to_lt *)
 lemma le_false_nlt (m) (n): (n ≤ m → ⊥) → m < n.
-#m #n elim (nlt_ge_dis m n) [ // ]
+#m #n elim (nat_split_lt_ge m n) [ // ]
 #H #Hn elim Hn -Hn // 
 qed.
 
 (*** lt_to_le_to_lt *)
-lemma nlt_le_trans (o) (m) (n): m < o → o ≤ n → m < n.
+lemma nlt_nle_trans (o) (m) (n): m < o → o ≤ n → m < n.
 /2 width=3 by nle_trans/ qed-.
 
 (*** le_to_lt_to_lt *)
-lemma le_nlt_trans (o) (m) (n): m ≤ o → o < n → m < n.
+lemma nle_nlt_trans (o) (m) (n): m ≤ o → o < n → m < n.
 /3 width=3 by nle_succ_bi, nle_trans/ qed-.
 
 (* Basic inversions *********************************************************)
+
+lemma nlt_inv_succ_dx (m) (n): m < ↑n → m ≤ n.
+/2 width=1 by nle_inv_succ_bi/ qed-.
 
 (*** lt_S_S_to_lt *)
 lemma nlt_inv_succ_bi (m) (n): ↑m < ↑n → m < n.
@@ -90,7 +96,7 @@ lemma nlt_inv_succ_bi (m) (n): ↑m < ↑n → m < n.
 
 (*** lt_to_not_le lt_le_false *)
 lemma nlt_ge_false (m) (n): m < n → n ≤ m → ⊥.
-/3 width=4 by nle_inv_succ_sn_refl, nlt_le_trans/ qed-.
+/3 width=4 by nle_inv_succ_sn_refl, nlt_nle_trans/ qed-.
 
 (*** lt_to_not_eq lt_refl_false *)
 lemma nlt_inv_refl (m): m < m → ⊥.
@@ -107,14 +113,14 @@ lemma nlt_des_le (m) (n): m < n → m ≤ n.
 /2 width=3 by nle_trans/ qed-.
 
 (*** ltn_to_ltO *)
-lemma nlt_des_lt_O_sn (m) (n): m < n → 𝟎 < n.
-/3 width=3 by le_nlt_trans/ qed-.
+lemma nlt_des_lt_zero_sn (m) (n): m < n → 𝟎 < n.
+/3 width=3 by nle_nlt_trans/ qed-.
 
 (* Main constructions *******************************************************)
 
 (*** transitive_lt *)
 theorem nlt_trans: Transitive … nlt.
-/3 width=3 by nlt_des_le, nlt_le_trans/ qed-.
+/3 width=3 by nlt_des_le, nlt_nle_trans/ qed-.
 
 (* Advanced eliminations ****************************************************)
 
@@ -123,7 +129,7 @@ lemma nat_ind_lt_le (Q:predicate …):
 #Q #H1 #n @(nat_ind_succ … n) -n
 [ #m #H <(nle_inv_zero_dx … H) -m
   @H1 -H1 #o #H elim (nlt_inv_zero_dx … H)
-| /5 width=3 by nlt_le_trans, nle_inv_succ_bi/
+| /5 width=3 by nlt_nle_trans, nle_inv_succ_bi/
 ]
 qed-.
 

@@ -12,44 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/downarrow_1.ma".
-include "ground/arith/pnat_split.ma".
-include "ground/arith/nat.ma".
+include "ground/arith/ynat_plus.ma".
+include "ground/arith/ynat_minus1.ma".
+include "ground/arith/ynat_lt_pred_succ.ma".
 
-(* PREDECESSOR FOR NON-NEGATIVE INTEGERS ************************************)
+(* STRICT ORDER FOR NON-NEGATIVE INTEGERS WITH INFINITY *********************)
 
-(*** pred *)
-definition npred (m): nat ≝ match m with
-[ nzero  ⇒ 𝟎
-| ninj p ⇒ psplit … (𝟎) ninj p
-].
+(* Constructions with yminus1 and yplus *************************************)
 
-interpretation
-  "predecessor (non-negative integers)"
-  'DownArrow m = (npred m).
+(*** ylt_plus1_to_minus_inj2 *)
+lemma ylt_plus_sn_dx_minus1_dx (n) (x) (z):
+      x + yinj_nat n < z → x < z - n.
+#n @(nat_ind_succ … n) -n //
+#n #IH #x #z >ysucc_inj <yplus_succ_shift
+/3 width=1 by ylt_des_succ_sn/
+qed.
 
-(* Basic constructions ******************************************************)
-
-(*** pred_O *)
-lemma npred_zero: 𝟎 = ↓𝟎.
-// qed.
-
-lemma npred_one: 𝟎 = ↓𝟏.
-// qed.
-
-lemma npred_psucc (p): ninj p = ↓↑p.
-// qed.
-
-(* Basic inversions *********************************************************)
-
-lemma npred_pnat_inv_refl (p): ninj p = ↓p → ⊥.
-*
-[ <npred_one #H destruct
-| #p /3 width=2 by psucc_inv_refl, eq_inv_ninj_bi/
-]
-qed-.
-
-(*** pred_inv_fix_sn *)
-lemma npred_inv_refl (n): n = ↓n → 𝟎 = n.
-* // #p #H elim (npred_pnat_inv_refl … H)
-qed-.
+(*** ylt_plus1_to_minus_inj1 *)
+lemma ylt_plus_sn_sn_minus1_dx (n) (x) (z):
+      yinj_nat n + x < z → x < z - n.
+/2 width=1 by ylt_plus_sn_dx_minus1_dx/ qed.

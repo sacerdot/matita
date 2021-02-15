@@ -225,3 +225,33 @@ lemma yle_inv_plus_inj_dx: ∀x,y:ynat. ∀z:nat. x + y ≤ z →
 #m #n #H1 #H2 #H3 destruct
 elim (yle_inv_plus_inj2 … Hz) -Hz /2 width=2 by ex4_2_intro/
 qed-.
+
+(* Inversions with yplus ****************************************************)
+
+(*** yle_inv_plus_dx *)
+lemma yle_inv_plus_dx (x) (y):
+      x ≤ y → ∃z. x + z = y.
+#x #y * -x -y
+[ #m #n #H
+
+ @(ex_intro … (yinj (n-m))) (**) (* explicit constructor *)
+  /3 width=1 by plus_minus, eq_f/
+| /2 width=2 by ex_intro/
+]
+qed-.
+
+lemma yle_inv_plus_sn: ∀x,y. x ≤ y → ∃z. z + x = y.
+#x #y #H elim (yle_inv_plus_dx … H) -H
+/2 width=2 by ex_intro/
+qed-.
+
+lemma ylt_inv_plus_sn: ∀x,y. x < y → ∃∃z. ↑z + x = y & x < ∞.
+#x #y #H elim (ylt_inv_le … H) -H
+#Hx #H elim (yle_inv_plus_sn … H) -H
+/2 width=2 by ex2_intro/
+qed-.
+
+lemma ylt_inv_plus_dx: ∀x,y. x < y → ∃∃z. x + ↑z = y & x < ∞.
+#x #y #H elim (ylt_inv_plus_sn … H) -H
+#z >yplus_comm /2 width=2 by ex2_intro/
+qed-.

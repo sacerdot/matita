@@ -14,9 +14,6 @@ fact plus_minus_minus_be_aux: ∀i,x,y,z. y ≤ z → z ≤ x → i = z - y → 
 lemma lt_plus_Sn_r: ∀a,x,n. a < a + x + ↑n.
 /2 width=1/ qed-.
 
-lemma monotonic_le_minus_l2: ∀x1,x2,y,z. x1 ≤ x2 → x1 - y - z ≤ x2 - y - z.
-/3 width=1 by monotonic_le_minus_l/ qed.
-
 (* Inversion & forward lemmas ***********************************************)
 
 lemma le_plus_xySz_x_false: ∀y,z,x. x + y + S z ≤ x → ⊥.

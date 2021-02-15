@@ -32,7 +32,7 @@ lemma nlt_minus_dx (o) (m) (n): m + o < n → m < n - o.
 
 (*** lt_inv_plus_l *)
 lemma nlt_minus_dx_full (o) (m) (n): m + o < n → ∧∧ o < n & m < n - o.
-/3 width=3 by nlt_minus_dx, le_nlt_trans, conj/ qed-.
+/3 width=3 by nlt_minus_dx, nle_nlt_trans, conj/ qed-.
 
 (* Inversions with nminus and nplus *****************************************)
 

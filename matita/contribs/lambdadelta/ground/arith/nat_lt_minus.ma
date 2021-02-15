@@ -20,20 +20,28 @@ include "ground/arith/nat_lt_pred.ma".
 (* Constructions with nminus ************************************************)
 
 (*** monotonic_lt_minus_l *)
-lemma nlt_minus_sn_bi (o) (m) (n): o ≤ m → m < n → m - o < n - o.
+lemma nlt_minus_bi_dx (o) (m) (n): o ≤ m → m < n → m - o < n - o.
 #o #m #n #Hom #Hmn
-lapply (nle_minus_sn_bi … o Hmn) -Hmn
+lapply (nle_minus_bi_dx … o Hmn) -Hmn
 <(nminus_succ_sn … Hom) //
 qed.
 
 (*** monotonic_lt_minus_r *)
-lemma nlt_minus_dx_bi (o) (m) (n):
+lemma nlt_minus_bi_sn (o) (m) (n):
       m < o -> m < n → o-n < o-m.
 #o #m #n #Ho #H
-lapply (nle_minus_dx_bi … o H) -H #H
-@(le_nlt_trans … H) -n
+lapply (nle_minus_bi_sn … o H) -H #H
+@(nle_nlt_trans … H) -n
 @nlt_i >(nminus_succ_sn … Ho) //
 qed.
+
+(* Inversions with nminus ***************************************************)
+
+lemma nlt_inv_minus_bi_dx (o) (m) (n):
+      m - o < n - o → m < n.
+#o @(nat_ind_succ … o) -o
+/3 width=1 by nlt_inv_pred_bi/
+qed-.
 
 (* Destructions with nminus *************************************************)
 
@@ -48,7 +56,7 @@ qed-.
 lemma nlt_des_minus_dx (o) (m) (n): m < n - o → o < n.
 #o @(nat_ind_succ … o) -o
 [ #m #n <nminus_zero_dx
-  /2 width=3 by le_nlt_trans/
+  /2 width=3 by nle_nlt_trans/
 | #o #IH #m #n <nminus_succ_dx_pred_sn #H
   /3 width=2 by nlt_inv_pred_dx/
 ]

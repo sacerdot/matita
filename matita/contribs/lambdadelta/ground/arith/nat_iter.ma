@@ -35,13 +35,21 @@ interpretation
 lemma niter_zero (A) (f) (a): a = (f^{A}𝟎) a.
 // qed.
 
-lemma niter_inj (A) (f) (p) (a): f^p a = f^{A}(ninj p) a.
+lemma niter_inj (A) (f) (p): f^p ≐ f^{A}(ninj p).
 // qed.
 
 (* Advanced constructions ***************************************************)
 
 (*** iter_n_Sm *)
-lemma niter_appl (A) (f) (n) (a): f (f^n a) = f^{A}n (f a).
+lemma niter_appl (A) (f) (n): f ∘ f^n ≐ f^{A}n ∘ f.
 #A #f * //
-#p #a <niter_inj <niter_inj <piter_appl //
+#p @exteq_repl
+/2 width=5 by piter_appl, compose_repl_fwd_dx/
+qed.
+
+lemma niter_compose (A) (B) (f) (g) (h) (n):
+      h ∘ f ≐ g ∘ h → h ∘ (f^{A}n) ≐ (g^{B}n) ∘ h.
+#A #B #f #g #h * //
+#p #H @exteq_repl
+/2 width=5 by piter_compose, compose_repl_fwd_dx/
 qed.

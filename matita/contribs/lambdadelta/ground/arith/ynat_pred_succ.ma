@@ -12,44 +12,24 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/downarrow_1.ma".
-include "ground/arith/pnat_split.ma".
-include "ground/arith/nat.ma".
+include "ground/arith/nat_pred_succ.ma".
+include "ground/arith/ynat_succ.ma".
+include "ground/arith/ynat_pred.ma".
 
-(* PREDECESSOR FOR NON-NEGATIVE INTEGERS ************************************)
+(* PREDECESSOR FOR NON-NEGATIVE INTEGERS WITH INFINITY **********************)
 
-(*** pred *)
-definition npred (m): nat ≝ match m with
-[ nzero  ⇒ 𝟎
-| ninj p ⇒ psplit … (𝟎) ninj p
-].
+(* Constructions with ysucc *************************************************)
 
-interpretation
-  "predecessor (non-negative integers)"
-  'DownArrow m = (npred m).
+(*** ypred_succ ypred_S *)
+lemma ypred_succ (x): x = ↓↑x.
+#x @(ynat_split_nat_inf … x) -x //
+qed.
 
-(* Basic constructions ******************************************************)
+(* Inversion with ysucc *****************************************************)
 
-(*** pred_O *)
-lemma npred_zero: 𝟎 = ↓𝟎.
-// qed.
-
-lemma npred_one: 𝟎 = ↓𝟏.
-// qed.
-
-lemma npred_psucc (p): ninj p = ↓↑p.
-// qed.
-
-(* Basic inversions *********************************************************)
-
-lemma npred_pnat_inv_refl (p): ninj p = ↓p → ⊥.
-*
-[ <npred_one #H destruct
-| #p /3 width=2 by psucc_inv_refl, eq_inv_ninj_bi/
-]
-qed-.
-
-(*** pred_inv_fix_sn *)
-lemma npred_inv_refl (n): n = ↓n → 𝟎 = n.
-* // #p #H elim (npred_pnat_inv_refl … H)
+(*** ynat_cases *)
+lemma ynat_split_zero_pos (x): ∨∨ 𝟎 = x | x = ↑↓x.
+#x @(ynat_split_nat_inf … x) -x //
+#n elim (nat_split_zero_pos n)
+/2 width=1 by or_introl, or_intror/
 qed-.

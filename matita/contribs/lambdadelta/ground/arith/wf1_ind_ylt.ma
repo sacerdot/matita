@@ -12,44 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/downarrow_1.ma".
-include "ground/arith/pnat_split.ma".
-include "ground/arith/nat.ma".
+include "ground/arith/ynat_lt_le.ma".
 
-(* PREDECESSOR FOR NON-NEGATIVE INTEGERS ************************************)
+(* WELL-FOUNDED INDUCTION ***************************************************)
 
-(*** pred *)
-definition npred (m): nat ≝ match m with
-[ nzero  ⇒ 𝟎
-| ninj p ⇒ psplit … (𝟎) ninj p
-].
-
-interpretation
-  "predecessor (non-negative integers)"
-  'DownArrow m = (npred m).
-
-(* Basic constructions ******************************************************)
-
-(*** pred_O *)
-lemma npred_zero: 𝟎 = ↓𝟎.
-// qed.
-
-lemma npred_one: 𝟎 = ↓𝟏.
-// qed.
-
-lemma npred_psucc (p): ninj p = ↓↑p.
-// qed.
-
-(* Basic inversions *********************************************************)
-
-lemma npred_pnat_inv_refl (p): ninj p = ↓p → ⊥.
-*
-[ <npred_one #H destruct
-| #p /3 width=2 by psucc_inv_refl, eq_inv_ninj_bi/
-]
+(*** ynat_f_ind_aux *)
+fact wf1_ind_ylt_aux (A1) (f:A1→ynat) (Q:predicate …):
+     (∀y. (∀a1. f a1 < y → Q a1) → ∀a1. f a1 = y → Q a1) →
+     ∀y,a1. f a1 = y → Q a1.
+#A1 #f #Q #H #y @(ynat_ind_lt … y) -y /3 width=3 by/
 qed-.
 
-(*** pred_inv_fix_sn *)
-lemma npred_inv_refl (n): n = ↓n → 𝟎 = n.
-* // #p #H elim (npred_pnat_inv_refl … H)
+(*** ynat_f_ind *)
+lemma wf1_ind_ylt (A1) (f:A1→ynat) (Q:predicate …):
+      (∀y. (∀a1. f a1 < y → Q a1) → ∀a1. f a1 = y → Q a1) →
+      ∀a1. Q a1.
+#A #f #Q #H #a1 @(wf1_ind_ylt_aux … H) -H //
 qed-.

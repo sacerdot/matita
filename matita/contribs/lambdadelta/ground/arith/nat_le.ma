@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/insert_eq/insert_eq_0.ma".
+include "ground/insert_eq/insert_eq_1.ma".
 include "ground/arith/nat_succ.ma".
 
 (* ORDER FOR NON-NEGATIVE INTEGERS ******************************************)
@@ -45,7 +45,7 @@ lemma nle_succ_bi (m) (n): m ≤ n → ↑m ≤ ↑n.
 qed.
 
 (*** le_or_ge *)
-lemma nle_ge_dis (m) (n): ∨∨ m ≤ n | n ≤ m.
+lemma nat_split_le_ge (m) (n): ∨∨ m ≤ n | n ≤ m.
 #m #n @(nat_ind_2_succ … m n) -m -n
 [ /2 width=1 by or_introl/
 | /2 width=1 by or_intror/
@@ -63,7 +63,7 @@ qed-.
 
 (*** le_S_S_to_le *)
 lemma nle_inv_succ_bi (m) (n): ↑m ≤ ↑n → m ≤ n.
-#m #n @(insert_eq_0 … (↑n))
+#m #n @(insert_eq_1 … (↑n))
 #x * -x
 [ #H >(eq_inv_nsucc_bi … H) -n //
 | #o #Ho #H >(eq_inv_nsucc_bi … H) -n
@@ -73,7 +73,7 @@ qed-.
 
 (*** le_n_O_to_eq *)
 lemma nle_inv_zero_dx (m): m ≤ 𝟎 → 𝟎 = m.
-#m @(insert_eq_0 … (𝟎))
+#m @(insert_eq_1 … (𝟎))
 #y * -y
 [ #H destruct //
 | #y #_ #H elim (eq_inv_zero_nsucc … H)
@@ -124,7 +124,7 @@ qed-.
 
 (*** decidable_le le_dec *)
 lemma nle_dec (m) (n): Decidable … (m ≤ n).
-#m #n elim (nle_ge_dis m n) [ /2 width=1 by or_introl/ ]
+#m #n elim (nat_split_le_ge m n) [ /2 width=1 by or_introl/ ]
 #Hnm elim (eq_nat_dec m n) [ #H destruct /2 width=1 by nle_refl, or_introl/ ]
 /4 width=1 by nle_antisym, or_intror/
 qed-.

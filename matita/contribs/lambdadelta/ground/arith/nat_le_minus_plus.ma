@@ -32,22 +32,22 @@ lemma plus_minus_sn_refl_sn_nle (m) (n): n = n - m + m → m ≤ n.
 
 (*** le_plus_to_minus *)
 lemma nle_minus_sn_sn (o) (m) (n): m ≤ n + o → m - o ≤ n.
-/2 width=1 by nle_minus_sn_bi/ qed.
+/2 width=1 by nle_minus_bi_dx/ qed.
 
 (*** le_plus_to_minus_comm *)
 lemma nle_minus_sn_dx (o) (m) (n): m ≤ o + n → m - o ≤ n.
-/2 width=1 by nle_minus_sn_bi/ qed.
+/2 width=1 by nle_minus_bi_dx/ qed.
 
 (*** le_plus_to_minus_r *)
 lemma nle_minus_dx_sn (o) (m) (n): m + o ≤ n → m ≤ n - o.
 #o #m #n #H >(nminus_plus_sn_refl_sn m o)
-/2 width=1 by nle_minus_sn_bi/
+/2 width=1 by nle_minus_bi_dx/
 qed.
 
 (*** le_plus_to_minus_l *)
 lemma nle_minus_dx_dx (o) (m) (n): o + m ≤ n → m ≤ n - o.
 #o #m #n #H >(nminus_plus_sn_refl_dx m o)
-/2 width=1 by nle_minus_sn_bi/
+/2 width=1 by nle_minus_bi_dx/
 qed.
 
 (*** le_inv_plus_l *)
@@ -113,7 +113,7 @@ theorem nminus_assoc_comm (m1) (m2) (m3):
 qed-.
 
 (*** minus_le_minus_minus_comm *)
-theorem minus_assoc_comm_23 (m1) (m2) (m3):
+theorem nminus_assoc_comm_23 (m1) (m2) (m3):
         m3 ≤ m2 → m1 + m3 - m2 = m1 - (m2 - m3).
 #m1 #m2 #m3 #Hm
 >(nplus_minus_sn_refl_sn … Hm) in ⊢ (??%?); //
