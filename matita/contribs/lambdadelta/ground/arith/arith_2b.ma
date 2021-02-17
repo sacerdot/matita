@@ -22,7 +22,8 @@ lemma arith_l4 (m11) (m12) (m21) (m22):
 elim (nat_split_le_ge (m11+m12) m21) #Hm1121
 [ lapply (nle_trans m11 ??? Hm1121) // #Hm121
   lapply (nle_minus_dx_dx … Hm1121) #Hm12211
-  <nminus_plus_comm_23 // @eq_f2 // <(nle_inv_eq_zero_minus m11 ?) // <(nle_inv_eq_zero_minus m12 ?) //
+  <nminus_plus_comm_23 // @eq_f2 //
+  <(nle_inv_eq_zero_minus m11 ?) // <(nle_inv_eq_zero_minus m12 ?) //
 | <(nle_inv_eq_zero_minus m21 ?) // <nplus_zero_sn <nminus_plus_assoc <nplus_comm
   elim (nat_split_le_ge m11 m21) #Hm121
   [ lapply (nle_minus_sn_dx … Hm1121) #Hm2112

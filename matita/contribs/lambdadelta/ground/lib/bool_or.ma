@@ -12,29 +12,27 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/ynat/ynat.ma".
+include "ground/lib/bool.ma".
 
-(* INFINITARY NATURAL NUMBERS ***********************************************)
+(* DISJUNCTION FOR BOOLEANS *************************************************)
 
-(* the predecessor on ynat *)
-definition ypred: ynat → ynat ≝ λm. match m with
-[ YO   ⇒ 0
-| YS n ⇒ n
-].
+(* Advanced constructions ***************************************************)
 
-notation "hvbox( ⫰ term 55 T )" 
-   non associative with precedence 55
-   for @{ 'Predecessor $T }.
+lemma commutative_orb:
+      commutative … orb.
+* * // qed.
 
-interpretation "ynat predecessor" 'Predecessor m = (ypred m).
+lemma orb_true_dx (b):
+      (b ∨ Ⓣ) = Ⓣ.
+* // qed.
 
-(* Properties ***************************************************************)
-
-lemma ypred_S: ∀m. ⫰⫯m = m.
+lemma orb_true_sn (b):
+      (Ⓣ ∨ b) = Ⓣ.
 // qed.
 
-(* Inversion lemmas *********************************************************)
+(* Advanced inversions ******************************************************)
 
-lemma YS_inj: ∀m,n. ⫯m = ⫯n → m = n.
-#m #n #H <(ypred_S m) <(ypred_S n) //
+lemma orb_inv_false_dx (b1) (b2):
+      (b1 ∨ b2) = Ⓕ → ∧∧ b1 = Ⓕ & b2 = Ⓕ.
+* normalize /2 width=1 by conj/ #b2 #H destruct
 qed-.

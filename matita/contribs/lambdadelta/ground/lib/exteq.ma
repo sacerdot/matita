@@ -24,7 +24,7 @@ interpretation
   "extensional equivalence"
   'DotEq A B f1 f2 = (exteq A B f1 f2).
 
-(* Basic Constructions ******************************************************)
+(* Basic constructions ******************************************************)
 
 lemma exteq_refl (A) (B): reflexive … (exteq A B).
 // qed.

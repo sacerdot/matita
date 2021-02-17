@@ -14,26 +14,30 @@
 
 include "ground/notation/functions/downspoon_2.ma".
 include "ground/lib/stream_eq.ma".
-include "ground/lib/arith.ma".
 
-(* STREAMS ******************************************************************)
+(* HEAD AND TAIL FOR STREAMS ************************************************)
 
-definition hd (A:Type[0]): stream A → A ≝
-              λt. match t with [ seq a _ ⇒ a ].
+definition stream_hd (A:Type[0]): stream A → A ≝
+           λt. match t with [ stream_cons a _ ⇒ a ].
 
-definition tl (A:Type[0]): stream A → stream A ≝
-              λt. match t with [ seq _ t ⇒ t ].
+definition stream_tl (A:Type[0]): stream A → stream A ≝
+           λt. match t with [ stream_cons _ t ⇒ t ].
 
-interpretation "tail (stream)" 'DownSpoon A t = (tl A t).
+interpretation
+  "tail (streams)"
+  'DownSpoon A t = (stream_tl A t).
 
-(* basic properties *********************************************************)
+(* Basic constructions ******************************************************)
 
-lemma hd_rew (A) (a) (t): a = hd A (a⨮t).
+lemma stream_hd_cons (A) (a) (t):
+      a = stream_hd A (a⨮t).
 // qed.
 
-lemma tl_rew (A) (a) (t): t = tl A (a⨮t).
+lemma stream_tl_cons (A) (a) (t):
+      t = ⫰{A}(a⨮t).
 // qed.
 
-lemma eq_stream_split (A) (t): (hd … t) ⨮ ⫰t ≗{A} t.
+lemma eq_stream_split_hd_tl (A) (t):
+      stream_hd … t ⨮ ⫰t ≗{A} t.
 #A * //
 qed.

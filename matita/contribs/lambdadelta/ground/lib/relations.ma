@@ -135,13 +135,13 @@ lemma NF_to_SN_sn (A) (R) (S): ∀a. NF_sn A R S a → SN_sn A R S a.
 elim HSa12 -HSa12 /2 width=1 by/
 qed.
 
-(* Normal form and strong normalization on unboxed triples ******************)
+(* Normal form and strong normalization with unboxed triples ****************)
 
 inductive SN3 (A) (B) (C) (R,S:relation6 A B C A B C): relation3 A B C ≝
 | SN3_intro: ∀a1,b1,c1. (∀a2,b2,c2. R a1 b1 c1 a2 b2 c2 → (S a1 b1 c1 a2 b2 c2 → ⊥) → SN3 … R S a2 b2 c2) → SN3 … R S a1 b1 c1
 .
 
-(* Relations on unboxed triples *********************************************)
+(* Relations with unboxed triples *******************************************)
 
 definition tri_RC (A,B,C): tri_relation A B C → tri_relation A B C ≝
            λR,a1,b1,c1,a2,b2,c2.

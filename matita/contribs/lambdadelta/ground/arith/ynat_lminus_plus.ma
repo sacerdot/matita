@@ -12,24 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground_2/notation.ma".
-include "ground_2/xoa_props.ma".
-include "ground_2/ynat/ynat.ma".
+include "ground/arith/nat_minus_plus.ma".
+include "ground/arith/ynat_plus.ma".
+include "ground/arith/ynat_lminus_succ.ma".
 
-(* INFINITARY NATURAL NUMBERS ***********************************************)
+(* LEFT SUBTRACTION FOR NON-NEGATIVE INTEGERS WITH INFINITY *****************)
 
-(* "is_zero" predicate *)
-definition yzero: predicate ynat ≝ λx. match x with
-[ YO   ⇒ ⊤
-| YS _ ⇒ ⊥
-].
+(* Constructions with yplus *************************************************)
 
-(* Inversion lemmas *********************************************************)
+(*** yplus_minus *)
+lemma ylminus_plus_sn_refl_sn (x) (n):
+      x = x + yinj_nat n - n.
+#x @(ynat_split_nat_inf … x) -x //
+#n <yplus_inf_sn //
+qed.
 
-lemma discr_YS_YO: ∀n. ⫯n = 0 → ⊥.
-#n #H change with (yzero (⫯n))
->H -H //
-qed-.
-
-lemma discr_YO_YS: ∀n. ynat_of_nat 0 = ⫯n → ⊥. (**) (* explicit coercion *)
-/2 width=2 by discr_YS_YO/ qed-.
+(*** yminus_plus2 *)
+lemma yminus_plus_dx (x:ynat) (n) (o):
+      x - n - o = x - (n + o).
+#x @(ynat_split_nat_inf … x) -x //
+qed.

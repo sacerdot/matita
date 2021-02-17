@@ -18,13 +18,15 @@ include "ground/lib/relations.ma".
 (* STREAMS ******************************************************************)
 
 coinductive stream (A:Type[0]): Type[0] ≝
-| seq: A → stream A → stream A
+| stream_cons: A → stream A → stream A
 .
 
-interpretation "cons (stream)" 'OPlusRight A a u = (seq A a u).
+interpretation
+  "cons (streams)"
+  'OPlusRight A a u = (stream_cons A a u).
 
-(* Basic properties *********************************************************)
+(* Basic constructions ******************************************************)
 
-lemma stream_rew (A) (t:stream A): match t with [ seq a u ⇒ a ⨮ u ] = t.
+lemma stream_rew (A) (t:stream A): match t with [ stream_cons a u ⇒ a ⨮ u ] = t.
 #A * //
 qed.

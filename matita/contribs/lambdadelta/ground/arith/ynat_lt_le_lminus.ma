@@ -12,42 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "arithmetics/nat.ma".
+include "ground/arith/nat_lt_minus.ma".
+include "ground/arith/ynat_lminus.ma".
+include "ground/arith/ynat_le.ma".
+include "ground/arith/ynat_lt.ma".
 
-(* INFINITARY NATURAL NUMBERS ***********************************************)
+(* STRICT ORDER FOR NON-NEGATIVE INTEGERS WITH INFINITY *********************)
 
-(* the type of infinitary natural numbers *)
-coinductive ynat: Type[0] ≝
-| YO: ynat
-| YS: ynat → ynat
-.
+(* Cobstructions with yle and ylminus  **************************************)
 
-interpretation "ynat successor" 'Successor m = (YS m).
-
-(* the coercion of nat to ynat *)
-let rec ynat_of_nat n ≝ match n with
-[ O   ⇒ YO
-| S m ⇒ YS (ynat_of_nat m)
-].
-
-coercion ynat_of_nat.
-
-(* the infinity *)
-let corec Y : ynat ≝ ⫯Y.
-
-interpretation "ynat infinity" 'Infinity = Y.
-
-(* destructing identity on ynat *)
-definition yid: ynat → ynat ≝ λm. match m with
-[ YO   ⇒ 0
-| YS n ⇒ ⫯n
-].
-
-(* Properties ***************************************************************)
-
-fact yid_rew: ∀n. yid n = n.
-* // qed-.
-
-lemma Y_rew: ⫯∞ = ∞.
-<(yid_rew ∞) in ⊢ (???%); //
+(*** monotonic_ylt_minus_dx *)
+lemma ylt_lminus_bi_dx (o) (x) (y):
+      x < y → yinj_nat o ≤ x → x - o < y - o.
+#o #x #y * -x -y
+/4 width=1 by ylt_inj, yle_inv_inj_bi, nlt_minus_bi_dx/
 qed.

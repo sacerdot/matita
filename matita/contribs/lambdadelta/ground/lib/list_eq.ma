@@ -17,37 +17,38 @@ include "ground/lib/list.ma".
 
 (* EXTENSIONAL EQUIVALENCE OF LISTS *****************************************)
 
-rec definition eq_list A (l1,l2:list A) on l1 ≝
+rec definition list_eq A (l1,l2:list A) on l1 ≝
 match l1 with
-[ nil        ⇒
+[ list_nil        ⇒
   match l2 with
-  [ nil      ⇒ ⊤
-  | cons _ _ ⇒ ⊥
+  [ list_nil      ⇒ ⊤
+  | list_cons _ _ ⇒ ⊥
   ]
-| cons a1 l1 ⇒
+| list_cons a1 l1 ⇒
   match l2 with
-  [ nil        ⇒ ⊥
-  | cons a2 l2 ⇒ a1 = a2 ∧ eq_list A l1 l2
+  [ list_nil        ⇒ ⊥
+  | list_cons a2 l2 ⇒ a1 = a2 ∧ list_eq A l1 l2
   ]
 ].
 
-interpretation "extensional equivalence (list)"
-   'RingEq A l1 l2 = (eq_list A l1 l2).
+interpretation
+  "extensional equivalence (lists)"
+  'RingEq A l1 l2 = (list_eq A l1 l2).
 
-(* Basic properties *********************************************************)
+(* Basic constructions ******************************************************)
 
-lemma eq_list_refl (A): reflexive … (eq_list A).
+lemma list_eq_refl (A): reflexive … (list_eq A).
 #A #l elim l -l /2 width=1 by conj/
 qed.
 
-(* Main properties **********************************************************)
+(* Main constructions *******************************************************)
 
-theorem eq_eq_list (A,l1,l2): l1 = l2 → l1 ≗{A} l2.
+theorem eq_list_eq (A,l1,l2): l1 = l2 → l1 ≗{A} l2.
 // qed.
 
-(* Main inversion propertiess ***********************************************)
+(* Main inversions **********************************************************)
 
-theorem eq_list_inv_eq (A,l1,l2): l1 ≗{A} l2 → l1 = l2.
+theorem list_eq_inv_eq (A,l1,l2): l1 ≗{A} l2 → l1 = l2.
 #A #l1 elim l1 -l1 [| #a1 #l1 #IH ] *
 [ //
 | #a2 #l2 #H elim H

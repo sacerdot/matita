@@ -12,13 +12,27 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/ynat_pred_succ.ma".
-include "ground/arith/ynat_minus1.ma".
+include "ground/lib/bool.ma".
 
-(* LEFT SUBTRACTION FOR NON-NEGATIVE INTEGERS WITH INFINITY *****************)
+(* CONJUNCTION FOR BOOLEANS *************************************************)
 
-(* Constructions with ysucc *************************************************)
+(* Advanced constructions ***************************************************)
 
-(*** yminus_succ *)
-lemma yminus1_succ_bi (x:ynat) (n): x - n = ↑x - ↑n.
+lemma commutative_andb:
+      commutative … andb.
+* * // qed.
+
+lemma andb_false_dx (b):
+      (b ∧ Ⓕ) = Ⓕ.
+* // qed.
+
+lemma andb_false_sn (b):
+      (Ⓕ ∧ b) = Ⓕ.
 // qed.
+
+(* Advanced inversions ******************************************************)
+
+lemma andb_inv_true_dx (b1) (b2):
+      (b1 ∧ b2) = Ⓣ → ∧∧ b1 = Ⓣ & b2 = Ⓣ.
+* normalize /2 width=1 by conj/ #b2 #H destruct
+qed-.

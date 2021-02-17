@@ -57,9 +57,9 @@ table {
         }
       ]
       [ { "non-negative integers with infinity" * } {
-          [ "ynat_lt ( ?&lt;? )" "ynat_lt_succ" "ynat_lt_pred" "ynat_lt_pred_succ" "ynat_lt_plus" "ynat_lt_plus_pred" "ynat_lt_minus1" "ynat_lt_minus1_plus" "ynat_lt_le" "ynat_lt_le_succ" "ynat_lt_le_pred" "ynat_lt_le_pred_succ" "ynat_lt_le_plus" "ynat_lt_le_minus1" "ynat_lt_le_minus1_plus" * ]
-          [ "ynat_le ( ?≤? )" "ynat_le_succ" "ynat_le_pred" "ynat_le_pred_succ" "ynat_le_plus" "ynat_le_minus1" "ynat_le_minus1_succ" "ynat_le_minus1_plus" * ]
-          [ "ynat_minus1 ( ?-? )" "ynat_minus1_succ" "ynat_minus1_plus" * ]
+          [ "ynat_lt ( ?&lt;? )" "ynat_lt_succ" "ynat_lt_pred" "ynat_lt_pred_succ" "ynat_lt_plus" "ynat_lt_plus_pred" "ynat_lt_lminus" "ynat_lt_lminus_plus" "ynat_lt_le" "ynat_lt_le_succ" "ynat_lt_le_pred" "ynat_lt_le_pred_succ" "ynat_lt_le_plus" "ynat_lt_le_lminus" "ynat_lt_le_lminus_plus" * ]
+          [ "ynat_le ( ?≤? )" "ynat_le_succ" "ynat_le_pred" "ynat_le_pred_succ" "ynat_le_plus" "ynat_le_lminus" "ynat_le_lminus_succ" "ynat_le_lminus_plus" * ]
+          [ "ynat_lminus ( ?-? )" "ynat_lminus_succ" "ynat_lminus_plus" * ]
           [ "ynat_plus ( ?+? )" * ]
           [ "ynat_pred ( ↓? )" "ynat_pred_succ" * ]
           [ "ynat_succ ( ↑? )" * ]
@@ -88,8 +88,8 @@ table {
   [ { "extensions to the library" * } {
       [ { "" * } {
           [ "stream ( ? ⨮{?} ? )" "stream_eq ( ? ≗{?} ? )" "stream_hdtl ( ⫰{?}? )" "stream_tls ( ⫰*{?}[?]? )" * ]
-          [ "list ( Ⓔ{?} ) ( ? ⨮{?} ? )" "list_length ( |?| )" * ]
-          [ "bool ( Ⓕ ) ( Ⓣ )" * ]
+          [ "list ( Ⓔ{?} ) ( ? ⨮{?} ? )" "list_eq" "list_length ( |?| )" * ]
+          [ "bool ( Ⓕ ) ( Ⓣ )" "bool_or" "bool_and" * ]
           [ "ltc" "ltc_ctc" * ]
           [ "logic ( ⊥ ) ( ⊤ )" "relations ( ? ⊆ ? )" "functions" "exteq ( ? ≐{?,?} ? )" "star" "lstar_2a" * ]
         }

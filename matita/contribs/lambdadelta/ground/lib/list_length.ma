@@ -12,44 +12,53 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/arith.ma".
 include "ground/lib/list.ma".
+include "ground/arith/nat_succ.ma".
 
-(* LENGTH OF A LIST *********************************************************)
+(* LENGTH FOR LISTS *********************************************************)
 
-rec definition length A (l:list A) on l ≝ match l with
-[ nil      ⇒ 0
-| cons _ l ⇒ ↑(length A l)
+rec definition list_length A (l:list A) on l ≝
+match l with
+[ list_nil      ⇒ 𝟎
+| list_cons _ l ⇒ ↑(list_length A l)
 ].
 
-interpretation "length (list)"
-   'card l = (length ? l).
+interpretation
+  "length (lists)"
+  'card l = (list_length ? l).
 
-(* Basic properties *********************************************************)
+(* Basic constructions ******************************************************)
 
-lemma length_nil (A:Type[0]): |nil A| = 0.
+lemma list_length_nil (A:Type[0]): |list_nil A| = 𝟎.
 // qed.
 
-lemma length_cons (A:Type[0]) (l:list A) (a:A): |a⨮l| = ↑|l|.
+lemma list_length_cons (A:Type[0]) (l:list A) (a:A): |a⨮l| = ↑|l|.
 // qed.
 
-(* Basic inversion lemmas ***************************************************)
+(* Basic inversions *********************************************************)
 
-lemma length_inv_zero_dx (A:Type[0]) (l:list A): |l| = 0 → l = Ⓔ.
-#A * // #a #l >length_cons #H destruct
+lemma list_length_inv_zero_dx (A:Type[0]) (l:list A):
+      |l| = 𝟎 → l = Ⓔ.
+#A * // #a #l >list_length_cons #H
+elim (eq_inv_nsucc_zero … H)
 qed-.
 
-lemma length_inv_zero_sn (A:Type[0]) (l:list A): 0 = |l| → l = Ⓔ.
-/2 width=1 by length_inv_zero_dx/ qed-.
+lemma list_length_inv_zero_sn (A:Type[0]) (l:list A):
+      (𝟎) = |l| → l = Ⓔ.
+/2 width=1 by list_length_inv_zero_dx/ qed-.
 
-lemma length_inv_succ_dx (A:Type[0]) (l:list A) (x): |l| = ↑x →
-                         ∃∃tl,a. x = |tl| & l = a ⨮ tl.
+lemma list_length_inv_succ_dx (A:Type[0]) (l:list A) (x):
+      |l| = ↑x →
+      ∃∃tl,a. x = |tl| & l = a ⨮ tl.
 #A *
-[ #x >length_nil #H destruct
-| #a #l #x >length_cons #H destruct /2 width=4 by ex2_2_intro/
+[ #x >list_length_nil #H
+  elim (eq_inv_zero_nsucc … H)
+| #a #l #x >list_length_cons #H
+  /3 width=4 by eq_inv_nsucc_bi, ex2_2_intro/
 ]
 qed-.
 
-lemma length_inv_succ_sn (A:Type[0]) (l:list A) (x): ↑x = |l| →
-                         ∃∃tl,a. x = |tl| & l = a ⨮ tl.
-/2 width=1 by length_inv_succ_dx/ qed.
+lemma list_length_inv_succ_sn (A:Type[0]) (l:list A) (x):
+      ↑x = |l| →
+      ∃∃tl,a. x = |tl| & l = a ⨮ tl.
+/2 width=1 by list_length_inv_succ_dx/ qed-.

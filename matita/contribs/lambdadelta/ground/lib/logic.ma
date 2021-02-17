@@ -18,11 +18,17 @@ include "ground/notation/xoa/true_0.ma".
 include "ground/notation/xoa/or_2.ma".
 include "ground/notation/xoa/and_2.ma".
 
-interpretation "logical false" 'false = False.
+interpretation
+  "false (logic)"
+  'false = False.
 
-interpretation "logical true" 'true = True.
+interpretation
+  "true (logic)"
+  'true = True.
 
-(* Logical properties missing in the basic library **************************)
+(* LOGIC ********************************************************************)
+
+(* Constructions with And ***************************************************)
 
 lemma commutative_and: ∀A,B. A ∧ B → B ∧ A.
 #A #B * /2 width=1 by conj/

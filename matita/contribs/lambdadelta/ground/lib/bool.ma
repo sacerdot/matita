@@ -17,43 +17,20 @@ include "ground/lib/relations.ma".
 include "ground/notation/functions/no_0.ma".
 include "ground/notation/functions/yes_0.ma".
 
-(* BOOLEAN PROPERTIES *******************************************************)
+(* BOOLEANS *****************************************************************)
 
-interpretation "boolean false" 'no = false.
+interpretation
+  "false (booleans)"
+  'no = false.
 
-interpretation "boolean true" 'yes = true.
+interpretation
+  "true (booleans)"
+  'yes = true.
 
-(* Basic properties *********************************************************)
+(* Advanced constructions ***************************************************)
 
-lemma commutative_orb: commutative … orb.
-* * // qed.
-
-lemma orb_true_dx: ∀b. (b ∨ Ⓣ) = Ⓣ.
-* // qed.
-
-lemma orb_true_sn: ∀b. (Ⓣ ∨ b) = Ⓣ.
-// qed.
-
-lemma commutative_andb: commutative … andb.
-* * // qed.
-
-lemma andb_false_dx: ∀b. (b ∧ Ⓕ) = Ⓕ.
-* // qed.
-
-lemma andb_false_sn: ∀b. (Ⓕ ∧ b) = Ⓕ.
-// qed.
-
-lemma eq_bool_dec: ∀b1,b2:bool. Decidable (b1 = b2).
+lemma eq_bool_dec (b1:bool) (b2:bool):
+      Decidable (b1 = b2).
 * * /2 width=1 by or_introl/
 @or_intror #H destruct
-qed-.
-
-(* Basic inversion lemmas ***************************************************)
-
-lemma orb_inv_false_dx: ∀b1,b2:bool. (b1 ∨ b2) = Ⓕ → b1 = Ⓕ ∧ b2 = Ⓕ.
-* normalize /2 width=1 by conj/ #b2 #H destruct
-qed-.
-
-lemma andb_inv_true_dx: ∀b1,b2:bool. (b1 ∧ b2) = Ⓣ → b1 = Ⓣ ∧ b2 = Ⓣ.
-* normalize /2 width=1 by conj/ #b2 #H destruct
 qed-.

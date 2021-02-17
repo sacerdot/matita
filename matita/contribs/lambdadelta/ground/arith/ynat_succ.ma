@@ -72,7 +72,7 @@ lemma eq_inv_ysucc_bi: injective … ysucc.
 #x1 @(ynat_split_nat_inf … x1) -x1
 [ #n1 #x2 <ysucc_inj #H
   elim (eq_inv_inj_ysucc … H) -H #n2 #H1 #H2 destruct
-  /3 width=1 by eq_inv_nsucc_bi, eq_f/
+  <(eq_inv_nsucc_bi … H2) -H2 //
 | #x2 #H <(eq_inv_inf_ysucc … H) -H //
 ]
 qed-.

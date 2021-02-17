@@ -12,23 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/nat_minus_plus.ma".
-include "ground/arith/ynat_plus.ma".
-include "ground/arith/ynat_minus1_succ.ma".
+include "ground/arith/ynat_lminus_plus.ma".
+include "ground/arith/ynat_lt_le_lminus.ma".
 
-(* LEFT SUBTRACTION FOR NON-NEGATIVE INTEGERS WITH INFINITY *****************)
+(* STRICT ORDER FOR NON-NEGATIVE INTEGERS WITH INFINITY *********************)
 
-(* Constructions with yplus *************************************************)
+(* Constructions with yle and ylminus and yplus  ****************************)
 
-(*** yplus_minus *)
-lemma yminus1_plus_sn_refl_sn (x) (n):
-      x = x + yinj_nat n - n.
-#x @(ynat_split_nat_inf … x) -x //
-#n <yplus_inf_sn //
-qed.
+(*** ylt_plus2_to_minus_inj2 *)
+lemma ylt_plus_dx_dx_lminus_sn (o) (x) (y):
+      yinj_nat o ≤ x → x < y + yinj_nat o → x - o < y.
+/2 width=1 by ylt_lminus_bi_dx/ qed.
 
-(*** yminus_plus2 *)
-lemma yminus_plus_dx (x:ynat) (n) (o):
-      x - n - o = x - (n + o).
-#x @(ynat_split_nat_inf … x) -x //
-qed.
+(*** ylt_plus2_to_minus_inj1 *)
+lemma ylt_plus_dx_sn_lminus_sn (o) (x) (y):
+      yinj_nat o ≤ x → x < yinj_nat o + y → x - o < y.
+/2 width=1 by ylt_plus_dx_dx_lminus_sn/ qed.

@@ -149,7 +149,7 @@ lemma SN_to_NF: ∀A,R,S. NF_dec A R S →
 * #a0 #Ha10 #Ha01 elim (IHa1 … Ha10 Ha01) -IHa1 -Ha01 /3 width=3 by star_compl, ex2_intro/
 qed-.
 
-(* Relations on unboxed pairs ***********************************************)
+(* Relations with unboxed pairs *********************************************)
 
 lemma bi_TC_strip: ∀A,B,R. bi_confluent A B R →
                    ∀a0,a1,b0,b1. R a0 b0 a1 b1 → ∀a2,b2. bi_TC … R a0 b0 a2 b2 →
@@ -190,7 +190,7 @@ lemma bi_TC_decomp_l: ∀A,B. ∀R:bi_relation A B.
 ]
 qed-.
 
-(* Relations on unboxed triples *********************************************)
+(* Relations with unboxed triples *******************************************)
 
 definition tri_star: ∀A,B,C,R. tri_relation A B C ≝
                      λA,B,C,R. tri_RC A B C (tri_TC … R).

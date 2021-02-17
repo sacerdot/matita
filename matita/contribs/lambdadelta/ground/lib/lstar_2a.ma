@@ -12,9 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "arithmetics/lstar.ma".
+include "ground/lib/ltc.ma".
+include "ground/arith/nat_plus.ma".
 
-(* PROPERTIES OF NAT-LABELED REFLEXIVE AND TRANSITIVE CLOSURE ***************)
+(* NAT-LABELED REFLEXIVE AND TRANSITIVE CLOSURE FOR FOR λδ-2A ***************)
 
-definition llstar: ∀A:Type[0]. ∀B. (A→relation B) → nat → (A→relation B) ≝
-                   λA,B,R,l,a. lstar … (R a) l.
+definition lstar_aux (B) (R:relation B) (l): relation B ≝
+           λb1,b2. ∨∨ (∧∧ l = 𝟎 & b1 = b2) | (∧∧ l = 𝟏  & R b1 b2).
+
+definition lstar (B) (R:relation B): nat → relation B ≝
+           ltc … nplus … (lstar_aux … R).
+
+definition llstar (A) (B) (R:relation3 A B B) (l:nat): relation3 A B B ≝
+           λa. lstar … (R a) l.

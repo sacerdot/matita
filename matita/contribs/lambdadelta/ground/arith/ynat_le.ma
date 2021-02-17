@@ -71,7 +71,8 @@ qed-.
 lemma yle_antisym (x) (y):
       x ≤ y → y ≤ x → x = y.
 #x #y #H elim H -x -y
-[ /4 width=1 by yle_inv_inj_bi, nle_antisym, eq_f/
+[ #m #n #Hmn #Hnm
+  <(nle_antisym … Hmn) -Hmn /2 width=1 by yle_inv_inj_bi/
 | /2 width=1 by yle_inv_inf_sn/
 ] 
 qed-.

@@ -12,19 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/ynat_minus1_plus.ma".
-include "ground/arith/ynat_lt_le_minus1.ma".
+include "ground/arith/ynat_plus.ma".
+include "ground/arith/ynat_lminus.ma".
+include "ground/arith/ynat_lt_pred_succ.ma".
 
 (* STRICT ORDER FOR NON-NEGATIVE INTEGERS WITH INFINITY *********************)
 
-(* Constructions with yle and yminus1 and yplus  ****************************)
+(* Constructions with ylminus and yplus *************************************)
 
-(*** ylt_plus2_to_minus_inj2 *)
-lemma ylt_plus_dx_dx_minus1_sn (o) (x) (y):
-      yinj_nat o ≤ x → x < y + yinj_nat o → x - o < y.
-/2 width=1 by ylt_minus1_bi_dx/ qed.
+(*** ylt_plus1_to_minus_inj2 *)
+lemma ylt_plus_sn_dx_lminus_dx (n) (x) (z):
+      x + yinj_nat n < z → x < z - n.
+#n @(nat_ind_succ … n) -n //
+#n #IH #x #z >ysucc_inj <yplus_succ_shift
+/3 width=1 by ylt_des_succ_sn/
+qed.
 
-(*** ylt_plus2_to_minus_inj1 *)
-lemma ylt_plus_dx_sn_minus1_sn (o) (x) (y):
-      yinj_nat o ≤ x → x < yinj_nat o + y → x - o < y.
-/2 width=1 by ylt_plus_dx_dx_minus1_sn/ qed.
+(*** ylt_plus1_to_minus_inj1 *)
+lemma ylt_plus_sn_sn_lminus_dx (n) (x) (z):
+      yinj_nat n + x < z → x < z - n.
+/2 width=1 by ylt_plus_sn_dx_lminus_dx/ qed.
