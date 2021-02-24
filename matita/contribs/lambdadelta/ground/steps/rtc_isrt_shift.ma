@@ -17,13 +17,13 @@ include "ground/steps/rtc_isrt.ma".
 
 (* RT-TRANSITION COUNTER ****************************************************)
 
-(* Properties with test for costrained rt-transition counter ****************)
+(* Properties with test for constrained rt-transition counter ***************)
 
 lemma isr_shift: ∀c. 𝐑𝐓❪0,c❫ → 𝐑𝐓❪0,↕*c❫.
 #c * #ri #rs #H destruct /2 width=3 by ex1_2_intro/
 qed.
 
-(* Inversion properties with test for costrained rt-counter *****************)
+(* Inversion properties with test for constrained rt-transition counter *****)
 
 lemma isrt_inv_shift: ∀n,c. 𝐑𝐓❪n,↕*c❫ → 𝐑𝐓❪0,c❫ ∧ 0 = n.
 #n #c * #ri #rs #H

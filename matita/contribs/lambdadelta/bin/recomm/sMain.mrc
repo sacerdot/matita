@@ -1,0 +1,5 @@
+check s "GcsAttr" false true
+constructions, properties
+inversions, inversion properties, inversion lemmas
+destructions, forward properties, forward lemmas
+eliminations, eliminators

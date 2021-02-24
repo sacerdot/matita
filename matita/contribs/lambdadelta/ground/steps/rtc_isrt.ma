@@ -20,7 +20,7 @@ include "ground/steps/rtc.ma".
 definition isrt: relation2 nat rtc ≝ λts,c.
                  ∃∃ri,rs. 〈ri,rs,0,ts〉 = c.
 
-interpretation "test for costrained rt-transition counter (rtc)"
+interpretation "test for constrained rt-transition counter (rtc)"
    'IsRedType ts c = (isrt ts c).
 
 (* Basic properties *********************************************************)

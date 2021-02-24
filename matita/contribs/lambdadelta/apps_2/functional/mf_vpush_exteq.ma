@@ -13,7 +13,6 @@
 (**************************************************************************)
 
 include "ground/lib/functions.ma".
-include "ground/lib/exteq.ma".
 include "apps_2/functional/flifts_flifts_basic.ma".
 include "apps_2/functional/mf_vpush.ma".
 

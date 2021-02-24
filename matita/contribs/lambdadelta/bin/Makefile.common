@@ -32,5 +32,7 @@ clean::
 
 .PHONY: all clean
 
+.SUFFIXES:
+
 %.ml: %.aml
 	$(H)$(ALPHA) < $< > $@
