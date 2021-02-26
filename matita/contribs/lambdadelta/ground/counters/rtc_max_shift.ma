@@ -12,17 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/steps/rtc_isrt_shift.ma".
-include "ground/steps/rtc_isrt_max.ma".
+include "ground/counters/rtc_shift.ma".
+include "ground/counters/rtc_max.ma".
 
-(* RT-TRANSITION COUNTER ****************************************************)
+(* MAXIMUM FOR RT-TRANSITION COUNTERS ***************************************)
 
-(* Inversion properties with test for constrained rt-transition counter *****)
+(* Constructions with rtc_shift *********************************************)
 
-lemma isrt_inv_max_shift_sn: ∀n,c1,c2. 𝐑𝐓❪n,↕*c1 ∨ c2❫ →
-                             ∧∧ 𝐑𝐓❪0,c1❫ & 𝐑𝐓❪n,c2❫.
-#n #c1 #c2 #H
-elim (isrt_inv_max … H) -H #n1 #n2 #Hc1 #Hc2 #H destruct
-elim (isrt_inv_shift … Hc1) -Hc1 #Hc1 * -n1
-/2 width=1 by conj/
-qed-.
+lemma rtc_max_shift (c1) (c2): ((↕*c1) ∨ (↕*c2)) = ↕*(c1∨c2).
+* #ri1 #rs1 #ti1 #ts1 * #ri2 #rs2 #ti2 #ts2
+<rtc_shift_rew <rtc_shift_rew <rtc_shift_rew <rtc_max_rew
+<nmax_assoc <nmax_assoc <nmax_assoc <nmax_assoc //
+qed.

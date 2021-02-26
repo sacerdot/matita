@@ -8,7 +8,7 @@ clean::
 	@$(RM) recommGc*.ml*
 
 test:
-	@./recomm.native $(O) -C ../../ground/steps . | sort | uniq > log.txt
+	@./recomm.native -r $(O) -C srcs . | sort | uniq > log.txt
 
 MRCS = $(wildcard *.mrc)
 

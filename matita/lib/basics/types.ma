@@ -9,6 +9,7 @@
      \ /   GNU General Public License Version 2   
       V_______________________________________________________________ *)
 
+include "basics/core_notation/pair_2.ma".
 include "basics/logic.ma".
 
 (* void *)

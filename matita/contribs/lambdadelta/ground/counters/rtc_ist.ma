@@ -12,45 +12,46 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/relations/istype_2.ma".
-include "ground/steps/rtc.ma".
+include "ground/notation/relations/ist_2.ma".
+include "ground/counters/rtc.ma".
 
-(* T-TRANSITION COUNTER *****************************************************)
+(* T-TRANSITION COUNTERS ****************************************************)
 
-definition ist: relation2 nat rtc ≝
-           λts,c. 〈0,0,0,ts〉 = c.
+definition rtc_ist: relation2 nat rtc ≝
+           λts,c. 〈𝟎,𝟎,𝟎,ts〉 = c.
 
-interpretation "test for t-transition counter (rtc)"
-   'IsType ts c = (ist ts c).
+interpretation
+  "t-transition counters (rtc)"
+  'IsT ts c = (rtc_ist ts c).
 
-(* Basic properties *********************************************************)
+(* Basic constructions ******************************************************)
 
-lemma ist_00: 𝐓❪0,𝟘𝟘❫.
+lemma rtc_ist_zz: 𝐓❪𝟎,𝟘𝟘❫.
 // qed.
 
-lemma ist_01: 𝐓❪1,𝟘𝟙❫.
+lemma rtc_ist_zu: 𝐓❪𝟏,𝟘𝟙❫.
 // qed.
 
-(* Basic inversion properties ***********************************************)
+(* Basic inversions *********************************************************)
 
-lemma ist_inv_00: ∀n. 𝐓❪n,𝟘𝟘❫ → 0 = n.
+lemma rtc_ist_inv_zz (n): 𝐓❪n,𝟘𝟘❫ → 𝟎 = n.
 #n #H destruct //
 qed-.
 
-lemma ist_inv_01: ∀n. 𝐓❪n,𝟘𝟙❫ → 1 = n.
+lemma rtc_ist_inv_zu (n): 𝐓❪n,𝟘𝟙❫ → ninj (𝟏) = n.
 #n #H destruct //
 qed-.
 
-lemma ist_inv_10: ∀n. 𝐓❪n,𝟙𝟘❫ → ⊥.
+lemma rtc_ist_inv_uz (n): 𝐓❪n,𝟙𝟘❫ → ⊥.
 #h #H destruct
 qed-.
 
-(* Main inversion properties ************************************************)
+(* Main inversions **********************************************************)
 
-theorem ist_inj: ∀n1,n2,c. 𝐓❪n1,c❫ → 𝐓❪n2,c❫ → n1 = n2.
+theorem rtc_ist_inj (n1) (n2) (c): 𝐓❪n1,c❫ → 𝐓❪n2,c❫ → n1 = n2.
 #n1 #n2 #c #H1 #H2 destruct //
 qed-.
 
-theorem ist_mono: ∀n,c1,c2. 𝐓❪n,c1❫ → 𝐓❪n,c2❫ → c1 = c2.
+theorem rtc_ist_mono (n) (c1) (c2): 𝐓❪n,c1❫ → 𝐓❪n,c2❫ → c1 = c2.
 #n #c1 #c2 #H1 #H2 destruct //
 qed-.

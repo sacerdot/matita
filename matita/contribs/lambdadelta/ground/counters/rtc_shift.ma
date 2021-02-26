@@ -14,30 +14,36 @@
 
 include "ground/xoa/ex_5_4.ma".
 include "ground/notation/functions/updownarrowstar_1.ma".
-include "ground/steps/rtc.ma".
+include "ground/arith/nat_max.ma".
+include "ground/counters/rtc.ma".
 
-(* RT-TRANSITION COUNTER ****************************************************)
+(* SHIFT FOR RT-TRANSITION COUNTERS *****************************************)
 
-definition shift (c:rtc): rtc ≝ match c with
-[ mk_rtc ri rs ti ts ⇒ 〈ri∨rs,0,ti∨ts,0〉 ].
+definition rtc_shift (c:rtc): rtc ≝
+match c with
+[ mk_rtc ri rs ti ts ⇒ 〈ri ∨ rs, 𝟎, ti ∨ ts, 𝟎〉 
+].
 
-interpretation "shift (rtc)"
-   'UpDownArrowStar c = (shift c).
+interpretation
+  "shift (rtc)"
+  'UpDownArrowStar c = (rtc_shift c).
 
-(* Basic properties *********************************************************)
+(* Basic constructions ******************************************************)
 
-lemma shift_rew: ∀ri,rs,ti,ts. 〈ri∨rs,0,ti∨ts,0〉 = ↕*〈ri,rs,ti,ts〉.
-normalize //
+lemma rtc_shift_rew (ri) (rs) (ti) (ts):
+      〈ri ∨ rs, 𝟎, ti ∨ ts, 𝟎〉 = ↕*〈ri,rs,ti,ts〉.
+//
 qed.
 
-lemma shift_O: 𝟘𝟘 = ↕*𝟘𝟘.
+lemma rtc_shift_zz: 𝟘𝟘 = ↕*𝟘𝟘.
 // qed.
 
-(* Basic inversion properties ***********************************************)
+(* Basic inversions *********************************************************)
 
-lemma shift_inv_dx: ∀ri,rs,ti,ts,c. 〈ri,rs,ti,ts〉 = ↕*c →
-                    ∃∃ri0,rs0,ti0,ts0. (ri0∨rs0) = ri & 0 = rs & (ti0∨ts0) = ti & 0 = ts &
-                                       〈ri0,rs0,ti0,ts0〉 = c.
-#ri #rs #ti #ts * #ri0 #rs0 #ti0 #ts0 <shift_rew #H destruct
+lemma rtc_shift_inv_dx (ri) (rs) (ti) (ts) (c):
+      〈ri,rs,ti,ts〉 = ↕*c →
+      ∃∃ri0,rs0,ti0,ts0.
+      (ri0∨rs0) = ri & 𝟎 = rs & (ti0∨ts0) = ti & 𝟎 = ts & 〈ri0,rs0,ti0,ts0〉 = c.
+#ri #rs #ti #ts * #ri0 #rs0 #ti0 #ts0 <rtc_shift_rew #H destruct
 /2 width=7 by ex5_4_intro/
 qed-.

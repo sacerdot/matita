@@ -8,7 +8,7 @@ let r_line = ref ES.id
 let k_for k ok outs ins =
   if ok then begin
     match ins with
-    | "for" :: tl -> !d_line k false ("for" :: outs) tl
+    | "FOR" :: tl -> !d_line k false ("FOR" :: outs) tl
     | _           -> k true outs ins
   end else begin
     k true outs ins

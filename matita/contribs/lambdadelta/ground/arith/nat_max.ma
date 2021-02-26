@@ -60,11 +60,18 @@ lemma nmax_assoc: associative … nmax.
 #n1 #n2 #IH #n3 @(nat_ind_succ … n3) -n3 //
 qed.
 
+lemma nmax_max_comm_23 (o:nat) (m) (n): (o ∨ m ∨ n) = (o ∨ n ∨ m).
+#o #m #n >nmax_assoc >nmax_assoc <nmax_comm in ⊢ (??(??%)?); //
+qed.
+
 (* Basic inversions *********************************************************)
 
-(*** max_inv_O3 *)
-lemma nmax_inv_zero (n1) (n2): 𝟎 = (n1 ∨ n2) → ∧∧ 𝟎 = n1 & 𝟎 = n2.
+lemma eq_inv_zero_nmax (n1) (n2): 𝟎 = (n1 ∨ n2) → ∧∧ 𝟎 = n1 & 𝟎 = n2.
 #n1 #n2 @(nat_ind_2_succ … n1 n2) -n1 -n2 /2 width=1 by conj/
 #n1 #n2 #_ <nmax_succ_bi #H
 elim (eq_inv_zero_nsucc … H)
 qed-.
+
+(*** max_inv_O3 *)
+lemma eq_inv_nmax_zero (n1) (n2): (n1 ∨ n2) = 𝟎 → ∧∧ 𝟎 = n1 & 𝟎 = n2.
+/2 width=1 by eq_inv_zero_nmax/ qed-.

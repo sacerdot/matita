@@ -13,9 +13,9 @@
 (**************************************************************************)
 
 include "ground/xoa/ex_4_3.ma".
-include "ground/steps/rtc_ist_shift.ma".
-include "ground/steps/rtc_ist_plus.ma".
-include "ground/steps/rtc_ist_max.ma".
+include "ground/counters/rtc_ist_shift.ma".
+include "ground/counters/rtc_ist_plus.ma".
+include "ground/counters/rtc_ist_max.ma".
 include "static_2/syntax/sh.ma".
 include "basic_2/notation/relations/pty_6.ma".
 include "basic_2/rt_transition/cpg.ma".

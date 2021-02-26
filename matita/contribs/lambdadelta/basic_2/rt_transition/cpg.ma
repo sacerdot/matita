@@ -19,9 +19,9 @@ include "ground/xoa/ex_5_2.ma".
 include "ground/xoa/ex_6_9.ma".
 include "ground/xoa/ex_7_10.ma".
 include "ground/xoa/or_5.ma".
-include "ground/steps/rtc_shift.ma".
-include "ground/steps/rtc_plus.ma".
-include "ground/steps/rtc_max.ma".
+include "ground/counters/rtc_shift.ma".
+include "ground/counters/rtc_plus.ma".
+include "ground/counters/rtc_max.ma".
 include "basic_2/notation/relations/predty_7.ma".
 include "static_2/syntax/lenv.ma".
 include "static_2/syntax/genv.ma".

@@ -2,6 +2,8 @@ module ET = RecommTypes
 
 let width = ref 78
 
+let replace = ref false
+
 let complete s =
   let l = !width - String.length s - 6 in
   if l < 0 then begin
@@ -19,7 +21,7 @@ let out_src och = function
   | ET.Mark s             ->
     Printf.fprintf och "(* %s**)" s
   | ET.Key (s1, s2)       ->
-    Printf.fprintf och "(* %s1%s2*)" s1 s2
+    Printf.fprintf och "(* %s%s*)" s1 s2
   | ET.Title ss           ->
     let s = String.concat " " ss in
     Printf.fprintf och "(* %s %s*)" s (complete s)
@@ -30,6 +32,14 @@ let out_src och = function
     Printf.fprintf och "%s%s%s" s1 s2 s3
 
 let write_srcs file srcs =
-  let och = open_out (file ^ ".new") in
+  let target =  
+    if !replace then begin
+      Sys.rename file (file ^ ".old");
+      file
+    end else begin
+      file ^ ".new"
+    end
+  in
+  let och = open_out target in
   List.iter (out_src och) srcs;
   close_out och

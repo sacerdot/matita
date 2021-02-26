@@ -76,7 +76,7 @@ let rec recomm srcs st =
     if middle st then Printf.eprintf "middle: %S\n" s1;
     if !log_k then log prune (s1^s2);
     recomm tl @@ add hd @@ st
-  | ET.Title ss as hd :: tl        ->
+  | ET.Title ss :: tl              ->
     if middle st then Printf.eprintf "middle: TITLE\n";
     let b, ss1, ss2 = !c_line k_final false [] ss in
     let ss2 =
@@ -85,8 +85,8 @@ let rec recomm srcs st =
     let ss = List.rev_append ss1 ss2 in
     let s = String.concat " " ss in
     if !log_t then log blue s;
-    recomm tl @@ add hd @@ st
-  | ET.Slice ss as hd :: tl        ->
+    recomm tl @@ add (ET.Title ss) @@ st
+  | ET.Slice ss :: tl              ->
     if middle st then Printf.eprintf "middle: Section\n";
     let b, ss1, ss2 = !s_line k_final false [] ss in
     let ss2 =
@@ -95,7 +95,7 @@ let rec recomm srcs st =
     let ss = List.rev_append ss1 ss2 in
     let s = String.capitalize_ascii (String.concat " " ss) in
     if !log_s then log sky s;
-    recomm tl @@ add hd @@ st
+    recomm tl @@ add (ET.Slice ss) @@ st
   | ET.Other (_, s, _) as hd :: tl ->
     if !log_o && not (Array.mem s mute_o) then log black s;
     recomm tl @@ add hd @@ st

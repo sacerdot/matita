@@ -80,7 +80,7 @@ lemma nplus_one_sn (n): ↑n = 𝟏 + n.
 #n <nplus_comm // qed.
 
 lemma nplus_succ_shift (m) (n): ↑m + n = m + ↑n.
-// qed-.
+// qed.
 
 (*** assoc_plus1 *)
 lemma nplus_plus_comm_12 (o) (m) (n): m + n + o = n + (m + o).
@@ -89,11 +89,11 @@ lemma nplus_plus_comm_12 (o) (m) (n): m + n + o = n + (m + o).
 (*** plus_plus_comm_23 *)
 lemma nplus_plus_comm_23 (o) (m) (n): o + m + n = o + n + m.
 #o #m #n >nplus_assoc >nplus_assoc <nplus_comm in ⊢ (??(??%)?); //
-qed-.
+qed.
 
 (* Basic inversions *********************************************************)
 
-(*** plus_inv_O3 zero_eq_plus *) 
+(*** zero_eq_plus *)
 lemma eq_inv_zero_nplus (m) (n): 𝟎 = m + n → ∧∧ 𝟎 = m & 𝟎 = n.
 #m #n @(nat_ind_succ … n) -n
 [ /2 width=1 by conj/
@@ -101,6 +101,11 @@ lemma eq_inv_zero_nplus (m) (n): 𝟎 = m + n → ∧∧ 𝟎 = m & 𝟎 = n.
   elim (eq_inv_zero_nsucc … H)
 ]
 qed-.
+
+(*** plus_inv_O3 *)
+lemma eq_inv_nplus_zero (m) (n):
+      m + n = 𝟎 → ∧∧ 𝟎 = m & 𝟎 = n.
+/2 width=1 by eq_inv_zero_nplus/ qed-.
 
 (*** injective_plus_l *)
 lemma eq_inv_nplus_bi_dx (o) (m) (n): m + o = n + o → m = n.

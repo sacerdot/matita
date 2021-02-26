@@ -12,25 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/steps/rtc_shift.ma".
-include "ground/steps/rtc_isrt.ma".
+(* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
 
-(* RT-TRANSITION COUNTER ****************************************************)
-
-(* Properties with test for constrained rt-transition counter ***************)
-
-lemma isr_shift: ∀c. 𝐑𝐓❪0,c❫ → 𝐑𝐓❪0,↕*c❫.
-#c * #ri #rs #H destruct /2 width=3 by ex1_2_intro/
-qed.
-
-(* Inversion properties with test for constrained rt-transition counter *****)
-
-lemma isrt_inv_shift: ∀n,c. 𝐑𝐓❪n,↕*c❫ → 𝐑𝐓❪0,c❫ ∧ 0 = n.
-#n #c * #ri #rs #H
-elim (shift_inv_dx … H) -H #rt0 #rs0 #ti0 #ts0 #_ #_ #H1 #H2 #H3
-elim (max_inv_O3 … H1) -H1 /3 width=3 by ex1_2_intro, conj/
-qed-.
-
-lemma isr_inv_shift: ∀c. 𝐑𝐓❪0,↕*c❫ → 𝐑𝐓❪0,c❫.
-#c #H elim (isrt_inv_shift … H) -H //
-qed-.
+notation "hvbox( 𝐓❪ term 46 f ❫ )"
+   non associative with precedence 45
+   for @{ 'IsT $f }.

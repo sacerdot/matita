@@ -135,9 +135,6 @@ for @{ 'equiv $n $m }.
 (*
 (* other notations **********************************************************)
 
-notation "hvbox(\langle term 19 a, break term 19 b\rangle)" 
-with precedence 90 for @{ 'pair $a $b}.
-
 notation "hvbox(x break \times y)" with precedence 70
 for @{ 'product $x $y}.
 

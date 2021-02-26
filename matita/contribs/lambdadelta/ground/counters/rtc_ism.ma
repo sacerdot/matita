@@ -12,53 +12,54 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/relations/isredtype_2.ma".
-include "ground/steps/rtc.ma".
+include "ground/notation/relations/ism_2.ma".
+include "ground/counters/rtc.ma".
 
-(* RT-TRANSITION COUNTER ****************************************************)
+(* T-BOUND RT-TRANSITION COUNTERS *******************************************)
 
-definition isrt: relation2 nat rtc ≝ λts,c.
-                 ∃∃ri,rs. 〈ri,rs,0,ts〉 = c.
+definition rtc_ism: relation2 nat rtc ≝ λts,c.
+           ∃∃ri,rs. 〈ri,rs,𝟎,ts〉 = c.
 
-interpretation "test for constrained rt-transition counter (rtc)"
-   'IsRedType ts c = (isrt ts c).
+interpretation
+  "t-bound rt-transition counters (rtc)"
+  'IsM ts c = (rtc_ism ts c).
 
-(* Basic properties *********************************************************)
+(* Basic constructions ******************************************************)
 
-lemma isrt_00: 𝐑𝐓❪0,𝟘𝟘❫.
+lemma rtc_ism_zz: 𝐌❪𝟎,𝟘𝟘❫.
 /2 width=3 by ex1_2_intro/ qed.
 
-lemma isrt_10: 𝐑𝐓❪0,𝟙𝟘❫.
+lemma rtc_ism_zu: 𝐌❪𝟎,𝟙𝟘❫.
 /2 width=3 by ex1_2_intro/ qed.
 
-lemma isrt_01: 𝐑𝐓❪1,𝟘𝟙❫.
+lemma rtc_ism_uz: 𝐌❪𝟏,𝟘𝟙❫.
 /2 width=3 by ex1_2_intro/ qed.
 
-lemma isrt_eq_t_trans: ∀n,c1,c2. 𝐑𝐓❪n,c1❫ → rtc_eq_t c1 c2 → 𝐑𝐓❪n,c2❫.
+lemma rtc_ism_eq_t_trans (n) (c1) (c2): 𝐌❪n,c1❫ → rtc_eq_t c1 c2 → 𝐌❪n,c2❫.
 #n #c1 #c2 * #ri1 #rs1 #H destruct
 #H elim (rtc_eq_t_inv_dx … H) -H /2 width=3 by ex1_2_intro/
 qed-.
 
-(* Basic inversion properties ***********************************************)
+(* Basic destructions *******************************************************)
 
-lemma isrt_inv_00: ∀n. 𝐑𝐓❪n,𝟘𝟘❫ → 0 = n.
+lemma rtc_ism_des_zz (n): 𝐌❪n,𝟘𝟘❫ → 𝟎 = n.
 #n * #ri #rs #H destruct //
 qed-.
 
-lemma isrt_inv_10: ∀n. 𝐑𝐓❪n,𝟙𝟘❫ → 0 = n.
+lemma rtc_ism_des_uz (n): 𝐌❪n,𝟙𝟘❫ → 𝟎 = n.
 #n * #ri #rs #H destruct //
 qed-.
 
-lemma isrt_inv_01: ∀n. 𝐑𝐓❪n,𝟘𝟙❫ → 1 = n.
+lemma rtc_ism_des_01 (n): 𝐌❪n,𝟘𝟙❫ → ninj (𝟏) = n.
 #n * #ri #rs #H destruct //
 qed-.
 
-(* Main inversion properties ************************************************)
+(* Main inversions **********************************************************)
 
-theorem isrt_inj: ∀n1,n2,c. 𝐑𝐓❪n1,c❫ → 𝐑𝐓❪n2,c❫ → n1 = n2.
+theorem rtc_ism_inj (n1) (n2) (c): 𝐌❪n1,c❫ → 𝐌❪n2,c❫ → n1 = n2.
 #n1 #n2 #c * #ri1 #rs1 #H1 * #ri2 #rs2 #H2 destruct //
 qed-.
 
-theorem isrt_mono: ∀n,c1,c2. 𝐑𝐓❪n,c1❫ → 𝐑𝐓❪n,c2❫ → rtc_eq_t c1 c2.
+theorem rtc_ism_mono (n) (c1) (c2): 𝐌❪n,c1❫ → 𝐌❪n,c2❫ → rtc_eq_t c1 c2.
 #n #c1 #c2 * #ri1 #rs1 #H1 * #ri2 #rs2 #H2 destruct //
 qed-.

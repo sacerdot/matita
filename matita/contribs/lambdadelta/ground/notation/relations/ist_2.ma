@@ -14,6 +14,6 @@
 
 (* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
 
-notation "hvbox( 𝐓❪ term 46 f ❫ )"
+notation "hvbox( 𝐓❪ term 46 n, break term 46 c ❫ )"
    non associative with precedence 45
-   for @{ 'IsTotal $f }.
+   for @{ 'IsT $n $c }.

@@ -16,9 +16,9 @@ include "ground/xoa/ex_4_1.ma".
 include "ground/xoa/ex_4_3.ma".
 include "ground/xoa/ex_5_6.ma".
 include "ground/xoa/ex_6_7.ma".
-include "ground/steps/rtc_max_shift.ma".
-include "ground/steps/rtc_isrt_plus.ma".
-include "ground/steps/rtc_isrt_max_shift.ma".
+include "ground/counters/rtc_max_shift.ma".
+include "ground/counters/rtc_isrt_plus.ma".
+include "ground/counters/rtc_isrt_max_shift.ma".
 include "static_2/syntax/sh.ma".
 include "basic_2/notation/relations/pred_6.ma".
 include "basic_2/rt_transition/cpg.ma".
