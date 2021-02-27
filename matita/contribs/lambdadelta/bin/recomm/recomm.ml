@@ -5,6 +5,7 @@ module EO = RecommOutput
 
 module P1 = RecommPccFor
 module P2 = RecommPcsAnd
+module P3 = RecommPcsPar
 
 module G = RecommGc
 

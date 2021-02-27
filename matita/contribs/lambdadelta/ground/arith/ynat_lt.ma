@@ -29,7 +29,7 @@ interpretation
 
 (* Basic destructions *******************************************************)
 
-(* ylt_fwd_gen ylt_inv_Y2 *)
+(*** ylt_fwd_gen ylt_inv_Y2 *)
 lemma ylt_des_gen_sn (x) (y):
       x < y → ∃m. x = yinj_nat m.
 #x #y * -x -y

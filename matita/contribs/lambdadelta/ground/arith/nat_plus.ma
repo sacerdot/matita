@@ -50,7 +50,7 @@ lemma niter_plus (A) (f) (n1) (n2):
 /3 width=5 by compose_repl_fwd_sn, compose_repl_fwd_dx/
 qed.
 
-(* Advanved constructions (semigroup properties) ****************************)
+(* Advanced constructions (semigroup properties) ****************************)
 
 (*** plus_S1 *)
 lemma nplus_succ_sn (m) (n): ↑(m+n) = ↑m + n.
@@ -65,7 +65,7 @@ qed.
 (*** commutative_plus *)
 lemma nplus_comm: commutative … nplus.
 #m @(nat_ind_succ … m) -m //
-qed-. (**) (* gets in the way with auto *)
+qed-. (* * gets in the way with auto *)
 
 (*** associative_plus *)
 lemma nplus_assoc: associative … nplus.

@@ -61,7 +61,7 @@ qed.
 
 (* Advanced constructions ***************************************************)
 
-(* yminus_O1 *)
+(*** yminus_O1 *)
 lemma ylminus_zero_sn (n): 𝟎 = 𝟎 - n.
 // qed.
 

@@ -88,7 +88,7 @@ lemma yplus_inv_plus_bi_23 (z) (x1) (x2) (y1) (y2):
       z < ∞ → x1 + z + y1 = x2 + z + y2 → x1 + y1 = x2 + y2.
 #z #x1 #x2 #y1 #y2 #Hz
 <yplus_plus_comm_23 <yplus_plus_comm_23 in ⊢ (???%→?); #H
-@(eq_inv_yplus_bi_dx … H) // (**) (* auto does not work *)
+@(eq_inv_yplus_bi_dx … H) // (* * auto does not work *)
 qed-.
 
 (*** ylt_inv_plus_Y *)

@@ -5,7 +5,7 @@ let c_line = ref ES.id
 
 let s_line = ref ES.id
 
-let k_final b ws1 ws2 = b, ws1, ws2  
+let k_final r ws1 ws2 = r, ws1, ws2
 
 type status =
   {
@@ -29,16 +29,17 @@ let middle st =
   | _              -> true
 
 let mute_o = [|
-  "___                                                              ";
-  "||M||                                                             ";
-  "||A||       A project by Andrea Asperti                           ";
-  "||T||                                                             ";
-  "||I||       Developers:                                           ";
-  "||T||         The HELM team.                                      ";
-  "||A||         http://helm.cs.unibo.it                             ";
-  "\\   /                                                             ";
-  "\\ /        This file is distributed under the terms of the       ";
-  "v         GNU General Public License Version 2                  ";
+  "                                                                        ";
+  "       ___                                                              ";
+  "      ||M||                                                             ";
+  "      ||A||       A project by Andrea Asperti                           ";
+  "      ||T||                                                             ";
+  "      ||I||       Developers:                                           ";
+  "      ||T||         The HELM team.                                      ";
+  "      ||A||         http://helm.cs.unibo.it                             ";
+  "      \\   /                                                             ";
+  "       \\ /        This file is distributed under the terms of the       ";
+  "        v         GNU General Public License Version 2                  ";
   "";
 |]
 
@@ -78,9 +79,9 @@ let rec recomm srcs st =
     recomm tl @@ add hd @@ st
   | ET.Title ss :: tl              ->
     if middle st then Printf.eprintf "middle: TITLE\n";
-    let b, ss1, ss2 = !c_line k_final false [] ss in
+    let r, ss1, ss2 = !c_line k_final ET.OO [] ss in
     let ss2 =
-      if ss2 = [] then ss2 else "*" :: ss2
+      if r <> ET.KO && ss2 = [] then ss2 else "*" :: ss2
     in
     let ss = List.rev_append ss1 ss2 in
     let s = String.concat " " ss in
@@ -88,9 +89,9 @@ let rec recomm srcs st =
     recomm tl @@ add (ET.Title ss) @@ st
   | ET.Slice ss :: tl              ->
     if middle st then Printf.eprintf "middle: Section\n";
-    let b, ss1, ss2 = !s_line k_final false [] ss in
+    let r, ss1, ss2 = !s_line k_final ET.OO [] ss in
     let ss2 =
-      if ss2 = [] then ss2 else "*" :: ss2
+      if r <> ET.KO && ss2 = [] then ss2 else "*" :: ss2
     in
     let ss = List.rev_append ss1 ss2 in
     let s = String.capitalize_ascii (String.concat " " ss) in

@@ -17,7 +17,7 @@ include "ground/arith/ynat_lt_le_lminus.ma".
 
 (* STRICT ORDER FOR NON-NEGATIVE INTEGERS WITH INFINITY *********************)
 
-(* Constructions with yle and ylminus and yplus  ****************************)
+(* Constructions with yle and ylminus and yplus *****************************)
 
 (*** ylt_plus2_to_minus_inj2 *)
 lemma ylt_plus_dx_dx_lminus_sn (o) (x) (y):

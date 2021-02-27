@@ -8,15 +8,18 @@
   |]
 
   let heads = [|
-    "Advanved";
+    "Advanced";
     "Basic";
     "Constructions";
     "Forward";
     "Destructions";
     "Eliminations";
     "Eliminators";
+    "Equalities";
+    "Helper";
     "Inversion";
     "Inversions";
+    "Iterators";
     "Main";
     "Properties";
   |]
@@ -53,7 +56,7 @@ let CR = "\r"
 let SP = " "
 let NL = "\n"
 let SR = "*"
-let OP = "(*" SP*
+let OP = "(*"
 let CP = SR* "*)"  
 let PP = CP SP* OP
 let WF = ['A'-'Z' 'a'-'z']

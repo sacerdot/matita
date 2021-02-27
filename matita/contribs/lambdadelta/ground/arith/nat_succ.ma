@@ -60,7 +60,7 @@ lemma nat_ind_2_succ (Q:relation2 …):
 #m #IH #n @(nat_ind_succ … n) -n /2 width=1 by/
 qed-.
 
-(* Basic inversions ***************************************************************)
+(* Basic inversions *********************************************************)
 
 (*** injective_S *)
 lemma eq_inv_nsucc_bi: injective … nsucc.

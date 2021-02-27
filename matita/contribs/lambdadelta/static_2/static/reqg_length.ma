@@ -19,7 +19,7 @@ include "static_2/static/reqg.ma".
 
 (* GENERIC EQUIVALENCE FOR LOCAL ENVIRONMENTS ON REFERRED ENTRIES ***********)
 
-(* Advanved properties with free variables inclusion ************************)
+(* Advanced properties with free variables inclusion ************************)
 
 lemma reqg_fsge_comp (S):
       reflexive … S →

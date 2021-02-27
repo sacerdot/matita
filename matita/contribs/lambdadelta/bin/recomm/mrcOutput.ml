@@ -2,8 +2,8 @@ module ET = MrcTypes
 
 let cap = String.capitalize_ascii
 
-let ok b =
-  if b then "true" else "ok"
+let ko b =
+  if b then "KO" else "OO"
 
 let write_mli name = 
   let file = name ^ ".mli" in
@@ -17,8 +17,8 @@ let write_subst st och subst =
   let iter hd words =
     let lhs = List.map (Printf.sprintf "%S :: ") words in
     let rhs = List.map (Printf.sprintf "%S :: ") hd in
-    Printf.fprintf och "  | %stl -> k %s (%souts) tl\n"
-      (String.concat "" lhs) (ok st.ET.para) (String.concat "" rhs)
+    Printf.fprintf och "  | %stl -> k T.OK (%souts) tl\n"
+      (String.concat "" lhs) (String.concat "" rhs)
   in
   match subst with
   | []      -> ()
@@ -27,16 +27,23 @@ let write_subst st och subst =
 let write_component st =
   let cmod = "recommGc" ^ st.ET.cmod in
   let och = open_out (cmod ^ ".ml") in
+  Printf.fprintf och "module T = RecommTypes\n";
+  Printf.fprintf och "module R = Recomm%s\n" (cap st.ET.rmod);
   if st.ET.dmod <> "" then begin
-    Printf.fprintf och "module D = Recomm%s\n\n" (cap st.ET.dmod)
+    Printf.fprintf och "module D = Recomm%s\n" (cap st.ET.dmod)
   end;
-  Printf.fprintf och "let step k ok outs ins =\n";
-  Printf.fprintf och "  if ok then k ok outs ins else\n";
+  Printf.fprintf och "\n";
+  Printf.fprintf och "let step k st outs ins =\n";
+  if st.ET.para then begin
+    Printf.fprintf och "  if st <> T.OO then k st outs ins else\n"
+  end else begin
+    Printf.fprintf och "  if st = T.KO then k st outs ins else\n"
+  end;
   Printf.fprintf och "  match ins with\n";
   List.iter (write_subst st och) st.ET.substs;
-  Printf.fprintf och "  | _ -> k %s outs ins\n\n" (ok st.ET.optn);
+  Printf.fprintf och "  | _ -> k T.%s outs ins\n\n" (ko st.ET.optn);
   Printf.fprintf och "let main =\n";
-  Printf.fprintf och "  Recomm%s.register_%s step\n" (cap st.ET.rmod) st.ET.rfun;
+  Printf.fprintf och "  R.register_%s step\n" st.ET.rfun;
   close_out och;
   write_mli cmod
 
@@ -44,7 +51,7 @@ let write_index st =
   let cmod = Filename.concat st.ET.cdir "recommGc" in
   let och = open_out (cmod ^ ".ml") in
   let iter i name =
-    Printf.fprintf och "module G%u = RecommGc%s\n" (succ i) name
+    Printf.fprintf och "module G%03u = RecommGc%s\n" (succ i) name
   in
   List.iteri iter st.ET.mods;
   close_out och;

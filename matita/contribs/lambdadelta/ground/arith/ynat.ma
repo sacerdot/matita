@@ -35,7 +35,7 @@ interpretation
   "infinity (non-negative integers with infinity)"
   'Infinity = yinf.
 
-(* Inversion lemmas *********************************************************)
+(* Inversions ***************************************************************)
 
 (* Note: destruct *)
 (*** yinj_inj *)
@@ -43,7 +43,7 @@ lemma eq_inv_yinj_bi (y1) (y2): yinj y1 = yinj y2 → y1 = y2.
 #x #y #H destruct //
 qed-.
 
-(* Basic properties *********************************************************)
+(* Basic constructions ******************************************************)
 
 (*** eq_ynat_dec *)
 lemma eq_ynat_dec (y1,y2:ynat): Decidable (y1 = y2).

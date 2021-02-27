@@ -15,9 +15,9 @@
 include "ground/arith/nat_plus.ma".
 include "ground/arith/nat_le.ma".
 
-(* ORDER FOR NON-NEGATIVE INTEGERS ****************************************************)
+(* ORDER FOR NON-NEGATIVE INTEGERS ******************************************)
 
-(* Constructions with nplus ***********************************************************)
+(* Constructions with nplus *************************************************)
 
 (*** monotonic_le_plus_l *)
 lemma nle_plus_bi_dx (m) (n1) (n2): n1 ≤ n2 → n1 + m ≤ n2 + m.

@@ -1,10 +1,12 @@
+module T = RecommTypes
+module R = RecommCheck
 module D = RecommGcsMain
 
-let step k ok outs ins =
-  if ok then k ok outs ins else
+let step k st outs ins =
+  if st = T.KO then k st outs ins else
   match ins with
-  | "with" :: tl -> k ok ("with" :: outs) tl
-  | _ -> k true outs ins
+  | "with" :: tl -> k T.OK ("with" :: outs) tl
+  | _ -> k T.OO outs ins
 
 let main =
-  RecommCheck.register_s step
+  R.register_s step

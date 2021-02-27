@@ -39,7 +39,7 @@ qed.
 (*** max_SS *)
 lemma nmax_succ_bi (n1) (n2): ↑(n1 ∨ n2) = (↑n1 ∨ ↑n2).
 #n1 #n2
-@trans_eq [3: @ntri_succ_bi | skip ] (**) (* rewrite fails because δ-expansion gets in the way *)
+@trans_eq [3: @ntri_succ_bi | skip ] (* * rewrite fails because δ-expansion gets in the way *)
 <ntri_f_tri //
 qed.
 

@@ -78,7 +78,7 @@ lemma yplus_inj_bi (n) (m):
 <nplus_succ_dx >ysucc_inj >ysucc_inj <yplus_succ_dx //
 qed.
 
-(* Advaced constructions ****************************************************)
+(* Advanced constructions ***************************************************)
 
 (*** ysucc_iter_Y yplus_Y1 *)
 lemma yplus_inf_sn (x): ∞ = ∞ + x.

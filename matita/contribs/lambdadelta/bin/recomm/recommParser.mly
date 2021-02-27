@@ -14,17 +14,21 @@
 
 %%
 
-inn_r:
+sp:
+  |    { "" }
   | SP { $1 }
+
+inn_r:
   | NL { $1 }
   | SW { $1 }
   | OT { $1 }
 
 inn:
   | inn_r { $1 }
-  | KW      { $1 }
-  | CW      { $1 }
-  | HW      { $1 }
+  | SP    { $1 }
+  | KW    { $1 }
+  | CW    { $1 }
+  | HW    { $1 }
 
 inns_r:
   | inn_r      { $1      }
@@ -47,14 +51,27 @@ outs:
   | out      { $1      }
   | out outs { $1 ^ $2 } 
 
-sw:
-  | HW { lc $1 }
-  | SW { lc $1 }
+cc:
+  | CW { $1 }
+  | OT { $1 }
+
+cw:
+  | cc    { $1      }
+  | cc cw { $1 ^ $2 }
 
 cws:
   |           { []       }
   | SP        { []       }
-  | SP CW cws { $2 :: $3 }
+  | SP cw cws { $2 :: $3 }
+
+sc:
+  | HW { lc $1 }
+  | SW { lc $1 }
+  | OT { $1    }
+
+sw:
+  | sc    { $1      }
+  | sc sw { $1 ^ $2 }
 
 sws:
   |           { []       }
@@ -63,14 +80,15 @@ sws:
 
 src_l:
   | NL               { ET.Line  $1                     }
-  | OP PP inns CP    { ET.Mark  $3                     }
-  | OP KW inns CP    { ET.Key   ($2, $3)               }
-  | OP CW cws CP     { ET.Title ($2 :: $3)             }
-  | OP HW sws CP     { ET.Slice (lc $2 :: $3)          }
-  | OP CP            { ET.Other ($1, "", $2)           }
-  | OP inns_r CP     { ET.Other ($1, $2, $3)           }
+  | OP sp PP inns CP { ET.Mark  $4                     }
+  | OP sp KW inns CP { ET.Key   ($3, $4)               }
+  | OP sp CW cws CP  { ET.Title ($3 :: $4)             }
+  | OP sp HW sws CP  { ET.Slice (lc $3 :: $4)          }
+  | OP sp CP         { ET.Other ($1, $2, $3)           }
+  | OP sp inns_r CP  { ET.Other ($1, $2 ^ $3, $4)      }
   | OP SR inns CP    { ET.Other ($1, $2 ^ $3, $4)      }
   | OP SR SR inns CP { ET.Other ($1, $2 ^ $3 ^ $4, $5) }
+  | OP SP SR inns CP { ET.Mark  $4                     }
 
 src:
   | outs { ET.Text $1 }

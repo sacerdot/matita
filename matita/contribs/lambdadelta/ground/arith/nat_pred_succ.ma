@@ -24,7 +24,7 @@ lemma npred_succ (n): n = ↓↑n.
 * //
 qed.
 
-(* Inversion with nsucc *****************************************************)
+(* Inversions with nsucc ****************************************************)
 
 (*** nat_split *)
 lemma nat_split_zero_pos (n): ∨∨ 𝟎 = n | n = ↑↓n.

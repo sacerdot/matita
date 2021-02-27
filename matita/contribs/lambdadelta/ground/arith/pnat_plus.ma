@@ -43,7 +43,7 @@ qed.
 
 lemma pplus_comm: commutative … pplus.
 #p elim p -p //
-qed-. (**) (* gets in the way with auto *)
+qed-. (* * gets in the way with auto *)
 
 lemma pplus_assoc: associative … pplus.
 #p #q #r elim r -r //

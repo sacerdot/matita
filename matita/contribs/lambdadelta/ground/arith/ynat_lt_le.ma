@@ -67,7 +67,7 @@ lemma nle_ylt_trans (m) (n) (z):
 
 (* Inversions with yle ******************************************************)
 
-(* ylt_yle_false *)
+(*** ylt_yle_false *)
 lemma ylt_ge_false (x) (y): x < y → y ≤ x → ⊥.
 /3 width=4 by yle_ylt_trans, ylt_inv_refl/ qed-.
 

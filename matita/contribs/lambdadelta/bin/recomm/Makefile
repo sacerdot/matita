@@ -15,7 +15,7 @@ MRCS = $(wildcard *.mrc)
 mrc: $(MRCS:%.mrc=recommGc%.ml)
 	@./mrc.native .
 
-recommGc%.ml recommGc%.mli: %.mrc mrc.ml
+recommGc%.ml recommGc%.mli: %.mrc mrc*.ml mrc*.mli
 	@./mrc.native $<
 
 .PHONY: test mrc

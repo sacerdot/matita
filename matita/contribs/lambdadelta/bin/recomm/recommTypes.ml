@@ -26,4 +26,8 @@ type ('s, 't) aproc = 's -> words -> words -> 't
 
 type ('s, 't) astep = ('s, 't) aproc -> ('s, 't) aproc
 
-type step = (bool, bool * words * words) astep
+type return = KO
+            | OK
+            | OO
+
+type step = (return, return * words * words) astep

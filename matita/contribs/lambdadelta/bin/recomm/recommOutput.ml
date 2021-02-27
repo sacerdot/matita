@@ -4,8 +4,17 @@ let width = ref 78
 
 let replace = ref false
 
+let string_length_utf8 s =
+  let l = String.length s in
+  let rec aux r i =
+    if i >= l then r else
+    if '\x80' <= s.[i] && s.[i] <= '\xBF'
+    then aux (succ r) (succ i) else aux r (succ i)  
+  in
+  l - aux 0 0
+
 let complete s =
-  let l = !width - String.length s - 6 in
+  let l = !width - string_length_utf8 s - 6 in
   if l < 0 then begin
     Printf.eprintf "overfull: %S\n" s;
     ""
@@ -19,7 +28,7 @@ let out_src och = function
   | ET.Text s             ->
     Printf.fprintf och "%s" s
   | ET.Mark s             ->
-    Printf.fprintf och "(* %s**)" s
+    Printf.fprintf och "(* *%s*)" s
   | ET.Key (s1, s2)       ->
     Printf.fprintf och "(* %s%s*)" s1 s2
   | ET.Title ss           ->

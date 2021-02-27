@@ -19,7 +19,7 @@ include "ground/arith/ynat_lt.ma".
 
 (* STRICT ORDER FOR NON-NEGATIVE INTEGERS WITH INFINITY *********************)
 
-(* Cobstructions with yle and ylminus  **************************************)
+(* Constructions with yle and ylminus ***************************************)
 
 (*** monotonic_ylt_minus_dx *)
 lemma ylt_lminus_bi_dx (o) (x) (y):

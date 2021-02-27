@@ -15,7 +15,7 @@
 include "ground/arith/nat.ma".
 include "ground/arith/ynat.ma".
 
-(* NON-NEGATIVE INTEGERS TO NON-NEGATIVE INTEGERS WITH INFINITY *************)
+(* NAT-INJECTION FOR NON-NEGATIVE INTEGERS WITH INFINITY ********************)
 
 (*** yinj *)
 definition yinj_nat (n) ≝ match n with

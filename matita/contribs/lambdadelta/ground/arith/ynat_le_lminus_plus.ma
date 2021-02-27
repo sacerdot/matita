@@ -19,7 +19,7 @@ include "ground/arith/ynat_le_lminus.ma".
 
 (* ORDER FOR NON-NEGATIVE INTEGERS WITH INFINITY ****************************)
 
-(* Constructions with yminus and yplus **************************************)
+(* Constructions with ylminus and yplus *************************************)
 
 (*** yle_plus1_to_minus_inj2 *)
 lemma yle_plus_sn_dx_lminus_dx (n) (x) (z):
@@ -43,7 +43,7 @@ lemma yle_plus_dx_sn_lminus_sn (o) (x) (y):
       x ≤ yinj_nat o + y → x - o ≤ y.
 /2 width=1 by yle_plus_dx_dx_lminus_sn/ qed.
 
-(* Destructions with yminus and yplus ***************************************)
+(* Destructions with ylminus and yplus **************************************)
 
 (*** yplus_minus_comm_inj *)
 lemma ylminus_plus_comm_23 (n) (x) (z):
@@ -77,7 +77,7 @@ lemma ylminus_assoc_comm_23 (n) (o) (x):
 ]
 qed-.
 
-(* Inversions with yminus and yplus *****************************************)
+(* Inversions with ylminus and yplus ****************************************)
 
 (*** yminus_plus *)
 lemma yplus_lminus_sn_refl_sn (n) (x):
@@ -95,7 +95,7 @@ lemma eq_inv_yplus_bi_inj_md (n1) (m2) (x1) (y2):
 #n1 #m2 #x1 #y2 #Hnx1 #H12
 lapply (yle_plus_bi_dx (yinj_nat m2) … Hnx1) >H12 #H
 lapply (yle_inv_plus_bi_sn_inj … H) -H #Hmy2
-generalize in match H12; -H12 (**) (* rewrite in hyp *)
+generalize in match H12; -H12 (* * rewrite in hyp *)
 >(yplus_lminus_sn_refl_sn … Hmy2) in ⊢ (%→?); <yplus_assoc #H
 lapply (eq_inv_yplus_bi_dx_inj … H) -H
 >(yplus_lminus_dx_refl_sn … Hnx1) in ⊢ (%→?); -Hnx1 #H

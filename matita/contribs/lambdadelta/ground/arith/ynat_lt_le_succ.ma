@@ -24,7 +24,7 @@ lemma ylt_le_succ_sn (x) (y):
       x < ∞ → ↑x ≤ y → x < y.
 /3 width=3 by ylt_yle_trans, ylt_succ_dx_refl/ qed.
 
-(* Inversions and destructions on yle ***************************************)
+(* Inversions with yle and ysucc ********************************************)
 
 (*** ylt_inv_le *)
 lemma ylt_inv_le_succ_sn (x) (y):

@@ -25,7 +25,7 @@ lemma ypred_succ (x): x = ↓↑x.
 #x @(ynat_split_nat_inf … x) -x //
 qed.
 
-(* Inversion with ysucc *****************************************************)
+(* Inversions with ysucc ****************************************************)
 
 (*** ynat_cases *)
 lemma ynat_split_zero_pos (x): ∨∨ 𝟎 = x | x = ↑↓x.

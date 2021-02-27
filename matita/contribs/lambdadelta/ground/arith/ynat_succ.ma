@@ -39,7 +39,7 @@ qed.
 lemma ysucc_inf: ∞ = ↑(∞).
 // qed.
 
-(* Inversion lemmas *********************************************************)
+(* Inversions ***************************************************************)
 
 (*** ysucc_inv_inj_sn *)
 lemma eq_inv_inj_ysucc (n1) (x2):
@@ -96,7 +96,7 @@ qed-.
 lemma eq_inv_ysucc_zero (x): ↑x = 𝟎 → ⊥.
 /2 width=2 by eq_inv_zero_ysucc/ qed-.
 
-(* Eliminators **************************************************************)
+(* Eliminations *************************************************************)
 
 (*** ynat_ind *)
 lemma ynat_ind_succ (Q:predicate …):
