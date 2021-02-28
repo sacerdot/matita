@@ -5,6 +5,7 @@
 
   let keys = [|
     "Note";
+    "NOTE";
   |]
 
   let heads = [|
@@ -37,9 +38,9 @@
     aux (String.length s - 1)
 
   let disambiguate_word s =
-    if is_uppercase_ascii s then EP.CW s else
     if Array.mem s keys then EP.KW s else
     if Array.mem s heads then EP.HW s else
+    if is_uppercase_ascii s then EP.CW s else
     EP.SW s
 
   let log s =

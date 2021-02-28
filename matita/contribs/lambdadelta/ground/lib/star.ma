@@ -15,7 +15,7 @@
 include "basics/star1.ma".
 include "ground/lib/relations.ma".
 
-(* TRANSITIVE CLOSURE *******************************************************)
+(* TRANSITIVE CLOSURE FOR RELATIONS *****************************************)
 
 definition CTC: ∀A:Type[0]. ∀B. (A→relation B) → (A→relation B) ≝
                 λA,B,R,a. TC … (R a).
@@ -139,7 +139,7 @@ elim (TC_idem … (S L2) …  T1 T2)
 #_ #H1 #H2 #_ @H2 @HSR /3 width=3 by/
 qed-.
 
-(* Normal form and strong normalization *************************************)
+(* NOTE: Normal form and strong normalization *******************************)
 
 lemma SN_to_NF: ∀A,R,S. NF_dec A R S →
                 ∀a1. SN A R S a1 →
@@ -149,7 +149,7 @@ lemma SN_to_NF: ∀A,R,S. NF_dec A R S →
 * #a0 #Ha10 #Ha01 elim (IHa1 … Ha10 Ha01) -IHa1 -Ha01 /3 width=3 by star_compl, ex2_intro/
 qed-.
 
-(* Relations with unboxed pairs *********************************************)
+(* NOTE: Relations with unboxed pairs ***************************************)
 
 lemma bi_TC_strip: ∀A,B,R. bi_confluent A B R →
                    ∀a0,a1,b0,b1. R a0 b0 a1 b1 → ∀a2,b2. bi_TC … R a0 b0 a2 b2 →
@@ -186,11 +186,11 @@ lemma bi_TC_decomp_l: ∀A,B. ∀R:bi_relation A B.
                       ∃∃a,b. R a1 b1 a b & bi_TC … R a b a2 b2.
 #A #B #R #a1 #a2 #b1 #b2 #H @(bi_TC_ind_dx … a1 b1 H) -a1 -b1
 [ /2 width=1 by or_introl/
-| #a1 #a #b1 #b #Hab1 #Hab2 #_ /3 width=4 by ex2_2_intro, or_intror/ (**) (* auto fails without #_ *)
+| #a1 #a #b1 #b #Hab1 #Hab2 #_ /3 width=4 by ex2_2_intro, or_intror/ (* * auto fails without #_ *)
 ]
 qed-.
 
-(* Relations with unboxed triples *******************************************)
+(* NOTE: Relations with unboxed triples *************************************)
 
 definition tri_star: ∀A,B,C,R. tri_relation A B C ≝
                      λA,B,C,R. tri_RC A B C (tri_TC … R).

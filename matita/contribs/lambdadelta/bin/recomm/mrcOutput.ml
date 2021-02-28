@@ -48,10 +48,16 @@ let write_component st =
   write_mli cmod
 
 let write_index st =
+  let p = float (List.length st.ET.mods) in
+  let p =
+    if p > 0. then truncate (log10 p) else -1
+  in
+  let ps = Printf.sprintf "%%0%uu" (succ p) in
+  let fmt = Scanf.format_from_string ps "%u" in
   let cmod = Filename.concat st.ET.cdir "recommGc" in
   let och = open_out (cmod ^ ".ml") in
   let iter i name =
-    Printf.fprintf och "module G%03u = RecommGc%s\n" (succ i) name
+    Printf.fprintf och "module G%(%u%) = RecommGc%s\n" fmt (succ i) name
   in
   List.iteri iter st.ET.mods;
   close_out och;

@@ -17,28 +17,7 @@ include "ground/xoa/and_3.ma".
 include "ground/xoa/ex_2_2.ma".
 include "ground/lib/logic.ma".
 
-(* GENERIC RELATIONS ********************************************************)
-
-definition replace_2 (A) (B): relation3 (relation2 A B) (relation A) (relation B) ≝
-           λR,Sa,Sb. ∀a1,b1. R a1 b1 → ∀a2. Sa a1 a2 → ∀b2. Sb b1 b2 → R a2 b2.
-
-(* Inclusion ****************************************************************)
-
-definition subR2 (S1) (S2): relation (relation2 S1 S2) ≝
-           λR1,R2. (∀a1,a2. R1 a1 a2 → R2 a1 a2).
-
-interpretation
-  "2-relation inclusion"
-  'subseteq R1 R2 = (subR2 ?? R1 R2).
-
-definition subR3 (S1) (S2) (S3): relation (relation3 S1 S2 S3) ≝
-           λR1,R2. (∀a1,a2,a3. R1 a1 a2 a3 → R2 a1 a2 a3).
-
-interpretation
-  "3-relation inclusion"
-  'subseteq R1 R2 = (subR3 ??? R1 R2).
-
-(* Properties of relations **************************************************)
+(* RELATIONS ****************************************************************)
 
 definition relation5: Type[0] → Type[0] → Type[0] → Type[0] → Type[0] → Type[0] ≝
            λA,B,C,D,E.A→B→C→D→E→Prop.
@@ -46,7 +25,10 @@ definition relation5: Type[0] → Type[0] → Type[0] → Type[0] → Type[0] �
 definition relation6: Type[0] → Type[0] → Type[0] → Type[0] → Type[0] → Type[0] → Type[0] ≝
            λA,B,C,D,E,F.A→B→C→D→E→F→Prop.
 
-(**) (* we don't use "∀a. reflexive … (R a)" since auto seems to dislike repeatd δ-expansion *)
+definition replace_2 (A) (B): relation3 (relation2 A B) (relation A) (relation B) ≝
+           λR,Sa,Sb. ∀a1,b1. R a1 b1 → ∀a2. Sa a1 a2 → ∀b2. Sb b1 b2 → R a2 b2.
+
+(* * we don't use "∀a. reflexive … (R a)" since auto seems to dislike repeatd δ-expansion *)
 definition c_reflexive (A) (B): predicate (relation3 A B B) ≝
            λR. ∀a,b. R a b b.
 
@@ -95,15 +77,7 @@ definition is_mono (B:Type[0]): predicate (predicate B) ≝
 definition is_inj2 (A,B:Type[0]): predicate (relation2 A B) ≝
            λR. ∀a1,b. R a1 b → ∀a2. R a2 b → a1 = a2.
 
-(* Main properties of equality **********************************************)
-
-theorem canc_sn_eq (A): left_cancellable A (eq …).
-// qed-.
-
-theorem canc_dx_eq (A): right_cancellable A (eq …).
-// qed-.
-
-(* Normal form and strong normalization *************************************)
+(* NOTE: Normal form and strong normalization *******************************)
 
 definition NF (A): relation A → relation A → predicate A ≝
            λR,S,a1. ∀a2. R a1 a2 → S a1 a2.
@@ -135,13 +109,13 @@ lemma NF_to_SN_sn (A) (R) (S): ∀a. NF_sn A R S a → SN_sn A R S a.
 elim HSa12 -HSa12 /2 width=1 by/
 qed.
 
-(* Normal form and strong normalization with unboxed triples ****************)
+(* NOTE: Normal form and strong normalization with unboxed triples **********)
 
 inductive SN3 (A) (B) (C) (R,S:relation6 A B C A B C): relation3 A B C ≝
 | SN3_intro: ∀a1,b1,c1. (∀a2,b2,c2. R a1 b1 c1 a2 b2 c2 → (S a1 b1 c1 a2 b2 c2 → ⊥) → SN3 … R S a2 b2 c2) → SN3 … R S a1 b1 c1
 .
 
-(* Relations with unboxed triples *******************************************)
+(* NOTE: Reflexive closure with unboxed triples *****************************)
 
 definition tri_RC (A,B,C): tri_relation A B C → tri_relation A B C ≝
            λR,a1,b1,c1,a2,b2,c2.
@@ -150,3 +124,27 @@ definition tri_RC (A,B,C): tri_relation A B C → tri_relation A B C ≝
 
 lemma tri_RC_reflexive (A) (B) (C): ∀R. tri_reflexive A B C (tri_RC … R).
 /3 width=1 by and3_intro, or_intror/ qed.
+
+(* NOTE: Inclusion for relations ********************************************)
+
+definition subR2 (S1) (S2): relation (relation2 S1 S2) ≝
+           λR1,R2. (∀a1,a2. R1 a1 a2 → R2 a1 a2).
+
+interpretation
+  "2-relation inclusion"
+  'subseteq R1 R2 = (subR2 ?? R1 R2).
+
+definition subR3 (S1) (S2) (S3): relation (relation3 S1 S2 S3) ≝
+           λR1,R2. (∀a1,a2,a3. R1 a1 a2 a3 → R2 a1 a2 a3).
+
+interpretation
+  "3-relation inclusion"
+  'subseteq R1 R2 = (subR3 ??? R1 R2).
+
+(* Main constructions with eq ***********************************************)
+
+theorem canc_sn_eq (A): left_cancellable A (eq …).
+// qed-.
+
+theorem canc_dx_eq (A): right_cancellable A (eq …).
+// qed-.

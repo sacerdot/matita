@@ -14,6 +14,7 @@ let k_for k st outs ins =
   if st <> ET.OK then k ET.KO outs ins else
   match ins with
   | "FOR" :: tl -> !d_line (k_exit k) ET.OO ("FOR" :: outs) tl
+  | "OF" :: tl -> !d_line (k_exit k) ET.OO ("FOR" :: outs) tl
   | _           -> k ET.KO outs ins
 
 let k_or k st outs ins =

@@ -15,7 +15,7 @@
 include "ground/notation/relations/ringeq_3.ma".
 include "ground/lib/list.ma".
 
-(* EXTENSIONAL EQUIVALENCE OF LISTS *****************************************)
+(* EXTENSIONAL EQUIVALENCE FOR LISTS ****************************************)
 
 rec definition list_eq A (l1,l2:list A) on l1 ≝
 match l1 with

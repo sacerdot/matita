@@ -8,7 +8,6 @@ let step k st outs ins =
   | "STRICT" :: "ORDER" :: tl -> k T.OK ("ORDER" :: "STRICT" :: outs) tl
   | "ORDER" :: tl -> k T.OK ("ORDER" :: outs) tl
   | "MAXIMUM" :: tl -> k T.OK ("MAXIMUM" :: outs) tl
-  | "MAXIMUN" :: tl -> k T.OK ("MAXIMUM" :: outs) tl
   | "LEFT" :: "SUBTRACTION" :: tl -> k T.OK ("SUBTRACTION" :: "LEFT" :: outs) tl
   | "SUBTRACTION" :: tl -> k T.OK ("SUBTRACTION" :: outs) tl
   | "ADDITION" :: tl -> k T.OK ("ADDITION" :: outs) tl

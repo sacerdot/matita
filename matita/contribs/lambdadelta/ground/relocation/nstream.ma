@@ -88,7 +88,7 @@ lemma iota_next: ∀R,a,b,f. b f = case_type0 R a b (↑f).
 #R #a #b * //
 qed.
 
-(* Specific properties ******************************************************)
+(* Poperties with stream_tl *************************************************)
 
 lemma tl_push: ∀f. f = ⫰⫯f.
 // qed.

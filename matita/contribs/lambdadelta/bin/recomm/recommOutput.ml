@@ -13,8 +13,8 @@ let string_length_utf8 s =
   in
   l - aux 0 0
 
-let complete s =
-  let l = !width - string_length_utf8 s - 6 in
+let complete s n =
+  let l = !width - string_length_utf8 s - 5 - n in
   if l < 0 then begin
     Printf.eprintf "overfull: %S\n" s;
     ""
@@ -30,13 +30,16 @@ let out_src och = function
   | ET.Mark s             ->
     Printf.fprintf och "(* *%s*)" s
   | ET.Key (s1, s2)       ->
-    Printf.fprintf och "(* %s%s*)" s1 s2
+    let s3 =
+      if s1 = "NOTE" then complete (s1^s2) 0 else ""
+    in
+    Printf.fprintf och "(* %s%s%s*)" s1 s2 s3
   | ET.Title ss           ->
     let s = String.concat " " ss in
-    Printf.fprintf och "(* %s %s*)" s (complete s)
+    Printf.fprintf och "(* %s %s*)" s (complete s 1)
   | ET.Slice ss           ->
     let s = String.capitalize_ascii (String.concat " " ss) in
-    Printf.fprintf och "(* %s %s*)" s (complete s)
+    Printf.fprintf och "(* %s %s*)" s (complete s 1)
   | ET.Other (s1, s2, s3) ->
     Printf.fprintf och "%s%s%s" s1 s2 s3
 

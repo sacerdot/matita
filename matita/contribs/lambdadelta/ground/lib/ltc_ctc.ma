@@ -15,11 +15,11 @@
 include "ground/lib/star.ma".
 include "ground/lib/ltc.ma".
 
-(* LABELLED TRANSITIVE CLOSURE **********************************************)
+(* LABELLED TRANSITIVE CLOSURE FOR RELATIONS ********************************)
 
-alias symbol "subseteq" = "relation inclusion". (**)
+alias symbol "subseteq" = "relation inclusion". (* * alias *)
 
-(* Constructions with contextual transitive closure *************************)
+(* Constructions with ctc ***************************************************)
 
 lemma ltc_CTC (C) (A) (i) (f) (B) (R:relation4 C A B B):
               left_identity … f i →
@@ -28,7 +28,7 @@ lemma ltc_CTC (C) (A) (i) (f) (B) (R:relation4 C A B B):
 #b #b2 #_ #Hb2 #IH >(Hf i) -Hf /2 width=3 by ltc_dx/
 qed.
 
-(* Inversions with contextual transitive closure ****************************)
+(* Inversions with ctc ******************************************************)
 
 lemma ltc_inv_CTC (C) (A) (i) (f) (B) (R:relation4 C A B B):
                   associative … f → annulment_2 … f i →

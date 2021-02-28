@@ -15,7 +15,7 @@
 include "ground/notation/relations/doteq_4.ma".
 include "ground/lib/relations.ma".
 
-(* EXTENSIONAL EQUIVALENCE **************************************************)
+(* EXTENSIONAL EQUIVALENCE FOR FUNCTIONS ************************************)
 
 definition exteq (A,B:Type[0]): relation (A → B) ≝
            λf1,f2. ∀a. f1 a = f2 a.
@@ -44,7 +44,7 @@ lemma exteq_canc_sn (A) (B): left_cancellable … (exteq A B).
 lemma exteq_canc_dx (A) (B): right_cancellable … (exteq A B).
 /2 width=1 by exteq_repl/ qed-.
 
-(* Constructions with function composition **********************************)
+(* Constructions with compose ***********************************************)
 
 lemma compose_repl_fwd_dx (A) (B) (C) (g) (f1) (f2):
       f1 ≐{A,B} f2 → g ∘ f1 ≐{A,C} g ∘ f2.

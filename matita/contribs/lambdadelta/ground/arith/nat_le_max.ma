@@ -35,9 +35,7 @@ lemma nle_max_dx_refl_sn (m) (n): m ≤ (m ∨ n).
 qed.
 
 lemma nle_max_dx_refl_dx (m) (n): n ≤ (m ∨ n).
-#m #n @(nat_ind_2_succ … n m) -m -n //
-#m #n #IH <nmax_succ_bi /2 width=1 by nle_succ_bi/
-qed.
+// qed.
 
 (* Basic destructions with nmax *********************************************)
 

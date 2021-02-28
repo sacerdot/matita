@@ -15,7 +15,7 @@
 include "ground/insert_eq/insert_eq_1.ma".
 include "ground/lib/functions.ma".
 
-(* LABELLED TRANSITIVE CLOSURE **********************************************)
+(* LABELLED TRANSITIVE CLOSURE FOR RELATIONS ********************************)
 
 inductive ltc (A:Type[0]) (f) (B) (R:relation3 A B B): relation3 A B B ≝
 | ltc_rc   : ∀a,b1,b2. R a b1 b2 → ltc … a b1 b2
@@ -56,7 +56,7 @@ generalize in match IHb0; generalize in match Hb0; generalize in match a1; -IHb0
 elim H -a2 -b -b2 /4 width=4 by ltc_trans/
 qed-.
 
-(* Advanced elimiations with reflexivity ************************************)
+(* Advanced eliminations (with reflexivity) *********************************)
 
 lemma ltc_ind_sn_refl (A) (i) (f) (B) (R) (Q:relation2 A B) (b2):
                       associative … f → right_identity … f i → reflexive B (R i) →

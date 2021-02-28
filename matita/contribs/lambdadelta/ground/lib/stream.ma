@@ -30,3 +30,11 @@ interpretation
 lemma stream_rew (A) (t:stream A): match t with [ stream_cons a u ⇒ a ⨮ u ] = t.
 #A * //
 qed.
+
+(* Basic inversions *********************************************************)
+
+lemma eq_inv_stream_cons_bi (A) (a1,a2:A) (u1) (u2):
+      a1 ⨮ u1 = a2 ⨮ u2 → ∧∧ a1 = a2 & u1 = u2.
+#A #a1 #a2 #u1 #u2 #H destruct
+/2 width=1 by conj/
+qed-.
