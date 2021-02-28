@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/insert_eq/insert_eq_1.ma".
+include "ground/generated/insert_eq_1.ma".
 include "ground/lib/functions.ma".
 
 (* LABELLED TRANSITIVE CLOSURE FOR RELATIONS ********************************)

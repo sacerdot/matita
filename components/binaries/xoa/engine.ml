@@ -70,22 +70,22 @@ let mk_exists ooch noch c v =
    let full b n   = P.sprintf "(%s.$P%u)" (abst_clo b) (c - n) in
    let full_seq b = string_iter " " (full b) c in
 
-   P.fprintf ooch "(* %s (%u, %u) *)\n\n" description c v;
+   P.fprintf ooch "(* Note: %s (%u, %u) *)\n" description c v;
 
    P.fprintf ooch "inductive %s (%s:Type[0]) (%s:%s→Prop) : Prop ≝\n"
       o_name set_list pre_list set_type;
-   P.fprintf ooch "   | %s_intro: ∀%s. %s → %s %s %s\n.\n\n"
+   P.fprintf ooch "  | %s_intro: ∀%s. %s → %s %s %s\n.\n\n"
       o_name ele_list pre_type o_name qm_set qm_pre;
 
    P.fprintf ooch "interpretation \"%s (%u, %u)\" %s %s = (%s %s %s).\n\n"
       description c v i_name pre_seq o_name qm_set pre_seq;
 
-   P.fprintf noch "(* %s (%u, %u) *)\n\n" description c v;
+   P.fprintf noch "(* Note: %s (%u, %u) *)\n" description c v;
 
-   P.fprintf noch "notation > \"hvbox(∃∃ %s break . %s)\"\n %s for @{ %s %s }.\n\n"
+   P.fprintf noch "notation > \"hvbox(∃∃ %s break . %s)\"\n  %s  for @{ %s %s }.\n\n"
       id_list term_conj prec i_name (full_seq false);
 
-   P.fprintf noch "notation < \"hvbox(∃∃ %s break . %s)\"\n %s for @{ %s %s }.\n\n"
+   P.fprintf noch "notation < \"hvbox(∃∃ %s break . %s)\"\n  %s  for @{ %s %s }.\n\n"
       id_list term_conj prec i_name (full_seq true)
 
 let mk_or ooch noch c =
@@ -108,11 +108,11 @@ let mk_or ooch noch c =
    let par n     = P.sprintf "$P%u" (c - n) in
    let par_seq   = string_iter " " par c in
 
-   let mk_con n   = P.fprintf ooch "   | %s_intro%u: %s → %s %s\n"
+   let mk_con n   = P.fprintf ooch "  | %s_intro%u: %s → %s %s\n"
                        o_name (c - n) (pre n) o_name qm_pre
    in
 
-   P.fprintf ooch "(* %s (%u) *)\n\n" description c;
+   P.fprintf ooch "(* Note: %s (%u) *)\n" description c;
 
    P.fprintf ooch "inductive %s (%s:Prop) : Prop ≝\n"
       o_name pre_list;
@@ -122,9 +122,9 @@ let mk_or ooch noch c =
    P.fprintf ooch "interpretation \"%s (%u)\" %s %s = (%s %s).\n\n"
       description c i_name pre_seq o_name pre_seq;
 
-   P.fprintf noch "(* %s (%u) *)\n\n" description c;
+   P.fprintf noch "(* Note: %s (%u) *)\n" description c;
 
-   P.fprintf noch "notation \"hvbox(∨∨ %s)\"\n %s for @{ %s %s }.\n\n"
+   P.fprintf noch "notation \"hvbox(∨∨ %s)\"\n  %s  for @{ %s %s }.\n\n"
       term_disj prec i_name par_seq
 
 let mk_and ooch noch c =
@@ -148,19 +148,19 @@ let mk_and ooch noch c =
    let par n     = P.sprintf "$P%u" (c - n) in
    let par_seq   = string_iter " " par c in
 
-   P.fprintf ooch "(* %s (%u) *)\n\n" description c;
+   P.fprintf ooch "(* Note: %s (%u) *)\n" description c;
 
    P.fprintf ooch "inductive %s (%s:Prop) : Prop ≝\n"
       o_name pre_list;
-   P.fprintf ooch "   | %s_intro: %s → %s %s\n.\n\n"
+   P.fprintf ooch "  | %s_intro: %s → %s %s\n.\n\n"
       o_name pre_type o_name qm_pre;
 
    P.fprintf ooch "interpretation \"%s (%u)\" %s %s = (%s %s).\n\n"
       description c i_name pre_seq o_name pre_seq;
 
-   P.fprintf noch "(* %s (%u) *)\n\n" description c;
+   P.fprintf noch "(* Note: %s (%u) *)\n" description c;
 
-   P.fprintf noch "notation \"hvbox(∧∧ %s)\"\n %s for @{ %s %s }.\n\n"
+   P.fprintf noch "notation \"hvbox(∧∧ %s)\"\n  %s  for  @{ %s %s }.\n\n"
       term_conj prec i_name par_seq
 
 let generate ooch noch = function

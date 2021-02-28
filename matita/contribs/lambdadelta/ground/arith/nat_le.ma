@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/insert_eq/insert_eq_1.ma".
+include "ground/generated/insert_eq_1.ma".
 include "ground/arith/nat_succ.ma".
 
 (* ORDER FOR NON-NEGATIVE INTEGERS ******************************************)

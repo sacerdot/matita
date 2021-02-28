@@ -11,6 +11,7 @@ let step k st outs ins =
   | "lsub" :: tl -> k T.OK ("lsub" :: outs) tl
   | "land" :: tl -> k T.OK ("land" :: outs) tl
   | "eq" :: tl -> k T.OK ("eq" :: outs) tl
+  | "ex4" :: tl -> k T.OK ("ex4" :: outs) tl
   | _ -> k T.OO outs ins
 
 let main =

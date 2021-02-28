@@ -17,7 +17,7 @@ include "ground/notation/functions/tuple_4.ma".
 include "ground/notation/functions/zerozero_0.ma".
 include "ground/notation/functions/zeroone_0.ma".
 include "ground/notation/functions/onezero_0.ma".
-include "ground/insert_eq/insert_eq_1.ma".
+include "ground/generated/insert_eq_1.ma".
 include "ground/arith/nat.ma".
 
 (* RT-TRANSITION COUNTERS ***************************************************)

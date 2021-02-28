@@ -35,8 +35,8 @@ let unm_and s =
 let process_centralized conf =
   let preamble = L.get_preamble conf in
   if R.has "xoa.objects" && R.has "xoa.notations" then begin
-    let ooch = L.open_out preamble (R.get_string "xoa.objects") in
-    let noch = L.open_out preamble (R.get_string "xoa.notations") in
+    let ooch = L.open_out true preamble (R.get_string "xoa.objects") in
+    let noch = L.open_out false preamble (R.get_string "xoa.notations") in
     List.iter (L.out_include ooch) (R.get_list R.string "xoa.include");
     L.out_include ooch (R.get_string "xoa.notations" ^ ".ma");
     List.iter (E.generate ooch noch) (R.get_list unm_ex "xoa.ex");
@@ -62,8 +62,8 @@ let generate (p, o, n) d =
   in
   if !incremental && L.exists_out oname && L.exists_out nname then () else
   begin
-    let ooch = L.open_out p oname in
-    let noch = L.open_out p nname in
+    let ooch = L.open_out true p oname in
+    let noch = L.open_out false p nname in
     List.iter (L.out_include ooch) (R.get_list R.string "xoa.include");
     L.out_include ooch (nname ^ ".ma");
     E.generate ooch noch d;
