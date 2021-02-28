@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
+(* GROUND NOTATION **********************************************************)
 
 notation "hvbox( 𝐓❪ term 46 f ❫ )"
-   non associative with precedence 45
-   for @{ 'IsT $f }.
+  non associative with precedence 45
+  for @{ 'IsT $f }.

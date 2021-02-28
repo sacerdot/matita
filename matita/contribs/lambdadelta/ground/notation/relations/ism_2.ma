@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
+(* GROUND NOTATION **********************************************************)
 
 notation "hvbox( 𝐌❪ term 46 n, break term 46 c ❫ )"
-   non associative with precedence 45
-   for @{ 'IsM $n $c }.
+  non associative with precedence 45
+  for @{ 'IsM $n $c }.

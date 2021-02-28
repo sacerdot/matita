@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
+(* GROUND NOTATION **********************************************************)
 
 notation "hvbox( ↓ term 70 T )"
-   non associative with precedence 70
-   for @{ 'DownArrow $T }.
+  non associative with precedence 70
+  for @{ 'DownArrow $T }.

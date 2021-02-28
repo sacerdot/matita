@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
+(* GROUND NOTATION **********************************************************)
 
 notation "hvbox( L1 ⋒ break term 46 L2 ≘ break term 46 L )"
-   non associative with precedence 45
-   for @{ 'RIntersection $L1 $L2 $L }.
+  non associative with precedence 45
+  for @{ 'RIntersection $L1 $L2 $L }.

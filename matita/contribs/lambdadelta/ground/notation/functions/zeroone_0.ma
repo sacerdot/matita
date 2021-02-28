@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
+(* GROUND NOTATION **********************************************************)
 
 notation "𝟘𝟙"
-   non associative with precedence 55
-   for @{ 'ZeroOne }.
+  non associative with precedence 55
+  for @{ 'ZeroOne }.

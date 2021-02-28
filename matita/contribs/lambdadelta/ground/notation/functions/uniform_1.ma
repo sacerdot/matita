@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
+(* GROUND NOTATION **********************************************************)
 
 notation "hvbox( 𝐔 ❨ break term 46 a ❩ )"
   non associative with precedence 90

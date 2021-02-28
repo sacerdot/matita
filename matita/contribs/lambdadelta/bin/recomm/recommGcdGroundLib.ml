@@ -12,7 +12,6 @@ let step k st outs ins =
   | "FUNCTIONS" :: tl -> k T.OK ("FUNCTIONS" :: outs) tl
   | "RELATIONS" :: tl -> k T.OK ("RELATIONS" :: outs) tl
   | "GROUND" :: "NOTATION" :: tl -> k T.OK ("NOTATION" :: "GROUND" :: outs) tl
-  | "GENERAL" :: "NOTATION" :: "USED" :: "BY" :: "THE" :: "FORMAL" :: "SYSTEM" :: "\206\187\206\180" :: tl -> k T.OK ("NOTATION" :: "GROUND" :: outs) tl
   | _ -> k T.OO outs ins
 
 let main =

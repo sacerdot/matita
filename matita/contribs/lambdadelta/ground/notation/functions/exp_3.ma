@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
+(* GROUND NOTATION **********************************************************)
 
 notation < "hvbox( f ^ break x )"
   left associative with precedence 75

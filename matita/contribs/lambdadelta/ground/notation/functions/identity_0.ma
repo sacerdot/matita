@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
+(* GROUND NOTATION **********************************************************)
 
 notation "hvbox( 𝐈𝐝 )"
-   non associative with precedence 90
-   for @{ 'Identity }.
+  non associative with precedence 90
+  for @{ 'Identity }.

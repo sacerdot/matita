@@ -12,16 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
+(* GROUND NOTATION **********************************************************)
 
 notation < "hvbox( ⫰ term 46 a )"
-   non associative with precedence 46
-   for @{ 'DownSpoon $S $a }.
+  non associative with precedence 46
+  for @{ 'DownSpoon $S $a }.
 
 notation > "hvbox( ⫰ term 46 a )"
-   non associative with precedence 46
-   for @{ 'DownSpoon ? $a }.
+  non associative with precedence 46
+  for @{ 'DownSpoon ? $a }.
 
 notation > "hvbox( ⫰{ term 46 S } break term 46 a )"
-   non associative with precedence 46
-   for @{ 'DownSpoon $S $a }.
+  non associative with precedence 46
+  for @{ 'DownSpoon $S $a }.

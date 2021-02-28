@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
+(* GROUND NOTATION **********************************************************)
 
 notation "hvbox( 𝐂❪ term 46 f ❫ ≘ break term 46 n )"
-   non associative with precedence 45
-   for @{ 'RCoLength $f $n }.
+  non associative with precedence 45
+  for @{ 'RCoLength $f $n }.

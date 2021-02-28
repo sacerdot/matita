@@ -12,16 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
+(* GROUND NOTATION **********************************************************)
 
 notation < "hvbox( Ⓔ )"
-   non associative with precedence 55
-   for @{ 'CircledE $S }.
+  non associative with precedence 55
+  for @{ 'CircledE $S }.
 
 notation > "hvbox( Ⓔ )"
-   non associative with precedence 55
-   for @{ 'CircledE ? }.
+  non associative with precedence 55
+  for @{ 'CircledE ? }.
 
 notation > "hvbox( Ⓔ{ term 46 C } )"
-   non associative with precedence 55
-   for @{ 'CircledE $S }.
+  non associative with precedence 55
+  for @{ 'CircledE $S }.

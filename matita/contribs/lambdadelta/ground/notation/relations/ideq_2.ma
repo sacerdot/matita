@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
+(* GROUND NOTATION **********************************************************)
 
 notation "hvbox( f1 ≡ break term 46 f2 )"
-   non associative with precedence 45
-   for @{ 'IdEq $f1 $f2 }.
+  non associative with precedence 45
+  for @{ 'IdEq $f1 $f2 }.

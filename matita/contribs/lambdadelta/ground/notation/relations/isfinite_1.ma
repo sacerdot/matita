@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
+(* GROUND NOTATION **********************************************************)
 
 notation "hvbox( 𝐅❪ term 46 f ❫ )"
-   non associative with precedence 45
-   for @{ 'IsFinite $f }.
+  non associative with precedence 45
+  for @{ 'IsFinite $f }.

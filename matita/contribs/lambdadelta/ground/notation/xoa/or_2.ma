@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* GENERAL NOTATION USED BY THE FORMAL SYSTEM λδ ****************************)
+(* GROUND NOTATION **********************************************************)
 
 notation > "hvbox(∨∨ term 29 P0 break | term 29 P1)"
- non associative with precedence 30
- for @{ 'or $P0 $P1 }.
+  non associative with precedence 30
+  for @{ 'or $P0 $P1 }.
