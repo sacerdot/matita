@@ -12,36 +12,43 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/nat_minus_plus.ma".
-include "ground/relocation/mr2.ma".
+include "ground/arith/pnat_pred.ma".
+include "ground/arith/pnat_le.ma".
 
-(* MULTIPLE RELOCATION WITH PAIRS *******************************************)
+(* ORDER FOR POSITIVE INTEGERS **********************************************)
 
-rec definition pluss (cs:mr2) (i:nat) on cs ≝ match cs with
-[ nil2         ⇒ ◊
-| cons2 l m cs ⇒ ❨l + i,m❩;pluss cs i
-].
+(* Destructions with ppred **************************************************)
 
-interpretation "plus (multiple relocation with pairs)"
-   'plus x y = (pluss x y).
+lemma ple_inv_pred_sn (p) (q): ↓p ≤ q → p ≤ ↑q.
+#p #q elim p -p
+/2 width=1 by ple_succ_bi/
+qed-.
 
-(* Basic properties *********************************************************)
+(* Constructions with ppred *************************************************)
 
-lemma pluss_SO2: ∀l,m,cs. ((❨l,m❩;cs) + 𝟏) = ❨↑l,m❩;cs + 𝟏.
-normalize // qed.
+lemma ple_succ_pred_dx_refl (p): p ≤ ↑↓p.
+#p @ple_inv_pred_sn // qed.
 
-(* Basic inversion lemmas ***************************************************)
-
-lemma pluss_inv_nil2: ∀i,cs. cs + i = ◊ → cs = ◊.
-#i * // normalize
-#l #m #cs #H destruct
+lemma ple_pred_sn_refl (p): ↓p ≤ p.
+#p elim p -p //
 qed.
 
-lemma pluss_inv_cons2: ∀i,l,m,cs2,cs. cs + i = ❨l,m❩;cs2 →
-                       ∃∃cs1. cs1 + i = cs2 & cs = ❨l - i,m❩;cs1.
-#i #l #m #cs2 *
-[ normalize #H destruct
-| #l1 #m1 #cs1 whd in ⊢ (??%?→?); #H destruct
-  <nminus_plus_sn_refl_sn /2 width=3 by ex2_intro/
+lemma ple_pred_bi (p) (q): p ≤ q → ↓p ≤ ↓q.
+#p #q #H elim H -q //
+/2 width=3 by ple_trans/
+qed.
+
+lemma ple_pred_sn (p) (q): p ≤ ↑q → ↓p ≤ q.
+#p #q elim p -p //
+/2 width=1 by ple_pred_bi/
+qed-.
+
+(* Inversions with ppred ****************************************************)
+
+lemma ple_inv_succ_sn (p) (q):
+      ↑p ≤ q → ∧∧ p ≤ ↓q & q = ↑↓q.
+#p #q * -q
+[ /2 width=3 by ple_refl, conj/
+| #q #Hq /3 width=1 by ple_des_succ_sn, conj/
 ]
 qed-.

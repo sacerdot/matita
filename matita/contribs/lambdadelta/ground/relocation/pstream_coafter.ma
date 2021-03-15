@@ -17,26 +17,27 @@ include "ground/relocation/rtmap_coafter.ma".
 
 (* RELOCATION N-STREAM ******************************************************)
 
-rec definition fun0 (n1:nat) on n1: rtmap → nat.
-* * [ | #n2 #f2 @0 ]
-#f2 cases n1 -n1 [ @0 ]
-#n1 @(↑(fun0 n1 f2))
+rec definition fun0 (p1:pnat) on p1: rtmap → pnat.
+* * [ | #p2 #f2 @(𝟏) ]
+#f2 cases p1 -p1 [ @(𝟏) ]
+#p1 @(↑(fun0 p1 f2))
 defined.
 
-rec definition fun2 (n1:nat) on n1: rtmap → rtmap.
-* * [ | #n2 #f2 @(n2⨮f2) ]
-#f2 cases n1 -n1 [ @f2 ]
-#n1 @(fun2 n1 f2)
+rec definition fun2 (p1:pnat) on p1: rtmap → rtmap.
+* * [ | #p2 #f2 @(p2⨮f2) ]
+#f2 cases p1 -p1 [ @f2 ]
+#p1 @(fun2 p1 f2)
 defined.
 
-rec definition fun1 (n1:nat) (f1:rtmap) on n1: rtmap → rtmap.
-* * [ | #n2 #f2 @(n1⨮f1) ]
-#f2 cases n1 -n1 [ @f1 ]
-#n1 @(fun1 n1 f1 f2)
+rec definition fun1 (p1:pnat) (f1:rtmap) on p1: rtmap → rtmap.
+* * [ | #p2 #f2 @(p1⨮f1) ]
+#f2 cases p1 -p1 [ @f1 ]
+#p1 @(fun1 p1 f1 f2)
 defined.
 
 corec definition cocompose: rtmap → rtmap → rtmap.
-#f2 * #n1 #f1 @(seq … (fun0 n1 f2)) @(cocompose (fun2 n1 f2) (fun1 n1 f1 f2))
+#f2 * #p1 #f1
+@(stream_cons … (fun0 p1 f2)) @(cocompose (fun2 p1 f2) (fun1 p1 f1 f2))
 defined.
 
 interpretation "functional co-composition (nstream)"
@@ -45,44 +46,44 @@ interpretation "functional co-composition (nstream)"
 (* Basic properties on funs *************************************************)
 
 (* Note: we need theese since matita blocks recursive δ when ι is blocked *)
-lemma fun0_xn: ∀f2,n1. 0 = fun0 n1 (↑f2).
-* #n2 #f2 * //
+lemma fun0_xn: ∀f2,p1. 𝟏 = fun0 p1 (↑f2).
+* #p2 #f2 * //
 qed.
 
-lemma fun2_xn: ∀f2,n1. f2 = fun2 n1 (↑f2).
-* #n2 #f2 * //
+lemma fun2_xn: ∀f2,p1. f2 = fun2 p1 (↑f2).
+* #p2 #f2 * //
 qed.
 
-lemma fun1_xxn: ∀f2,f1,n1. fun1 n1 f1 (↑f2) = n1⨮f1.
-* #n2 #f2 #f1 * //
+lemma fun1_xxn: ∀f2,f1,p1. fun1 p1 f1 (↑f2) = p1⨮f1.
+* #p2 #f2 #f1 * //
 qed.
 
 (* Basic properies on cocompose *********************************************)
 
-lemma cocompose_rew: ∀f2,f1,n1. (fun0 n1 f2)⨮(fun2 n1 f2)~∘(fun1 n1 f1 f2) = f2 ~∘ (n1⨮f1).
-#f2 #f1 #n1 <(stream_rew … (f2~∘(n1⨮f1))) normalize //
+lemma cocompose_rew: ∀f2,f1,p1. (fun0 p1 f2)⨮(fun2 p1 f2)~∘(fun1 p1 f1 f2) = f2 ~∘ (p1⨮f1).
+#f2 #f1 #p1 <(stream_rew … (f2~∘(p1⨮f1))) normalize //
 qed.
 
 (* Basic inversion lemmas on compose ****************************************)
 
 lemma cocompose_inv_ppx: ∀f2,f1,f,x. (⫯f2) ~∘ (⫯f1) = x⨮f →
-                         0 = x ∧ f2 ~∘ f1 = f.
+                         ∧∧ 𝟏 = x & f2 ~∘ f1 = f.
 #f2 #f1 #f #x
 <cocompose_rew #H destruct
 normalize /2 width=1 by conj/
 qed-.
 
-lemma cocompose_inv_pnx: ∀f2,f1,f,n1,x. (⫯f2) ~∘ (↑n1⨮f1) = x⨮f →
-                         ∃∃n. ↑n = x & f2 ~∘ (n1⨮f1) = n⨮f.
-#f2 #f1 #f #n1 #x
+lemma cocompose_inv_pnx: ∀f2,f1,f,p1,x. (⫯f2) ~∘ (↑p1⨮f1) = x⨮f →
+                         ∃∃p. ↑p = x & f2 ~∘ (p1⨮f1) = p⨮f.
+#f2 #f1 #f #p1 #x
 <cocompose_rew #H destruct
-@(ex2_intro … (fun0 n1 f2)) // <cocompose_rew
+@(ex2_intro … (fun0 p1 f2)) // <cocompose_rew
 /3 width=1 by eq_f2/
 qed-.
 
-lemma cocompose_inv_nxx: ∀f2,f1,f,n1,x. (↑f2) ~∘ (n1⨮f1) = x⨮f →
-                         0 = x ∧ f2 ~∘ (n1⨮f1) = f.
-#f2 #f1 #f #n1 #x
+lemma cocompose_inv_nxx: ∀f2,f1,f,p1,x. (↑f2) ~∘ (p1⨮f1) = x⨮f →
+                         ∧∧ 𝟏 = x & f2 ~∘ (p1⨮f1) = f.
+#f2 #f1 #f #p1 #x
 <cocompose_rew #H destruct
 /2 width=1 by conj/
 qed-.
@@ -90,12 +91,12 @@ qed-.
 (* Specific properties on coafter *******************************************)
 
 corec lemma coafter_total_aux: ∀f2,f1,f. f2 ~∘ f1 = f → f2 ~⊚ f1 ≘ f.
-* #n2 #f2 * #n1 #f1 * #n #f cases n2 -n2
-[ cases n1 -n1
+* #p2 #f2 * #p1 #f1 * #p #f cases p2 -p2
+[ cases p1 -p1
   [ #H cases (cocompose_inv_ppx … H) -H /3 width=7 by coafter_refl, eq_f2/
-  | #n1 #H cases (cocompose_inv_pnx … H) -H /3 width=7 by coafter_push/
+  | #p1 #H cases (cocompose_inv_pnx … H) -H /3 width=7 by coafter_push/
   ]
-| #n2 >next_rew #H cases (cocompose_inv_nxx … H) -H /3 width=5 by coafter_next/
+| #p2 >next_rew #H cases (cocompose_inv_nxx … H) -H /3 width=5 by coafter_next/
 ]
 qed-.
 

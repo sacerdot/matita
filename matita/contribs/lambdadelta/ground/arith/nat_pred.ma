@@ -18,10 +18,17 @@ include "ground/arith/nat.ma".
 
 (* PREDECESSOR FOR NON-NEGATIVE INTEGERS ************************************)
 
+definition pnpred (p): nat ≝
+           psplit … (𝟎) ninj p.
+
+interpretation
+  "positive predecessor (non-negative integers)"
+  'DownArrow p = (pnpred p).
+
 (*** pred *)
 definition npred (m): nat ≝ match m with
 [ nzero  ⇒ 𝟎
-| ninj p ⇒ psplit … (𝟎) ninj p
+| ninj p ⇒ ↓p
 ].
 
 interpretation
@@ -32,6 +39,9 @@ interpretation
 
 (*** pred_O *)
 lemma npred_zero: 𝟎 = ↓𝟎.
+// qed.
+
+lemma npred_inj (p): ↓p = ↓(ninj p).
 // qed.
 
 lemma npred_one: 𝟎 = ↓𝟏.

@@ -79,16 +79,16 @@ sws:
   | SP sw sws { $2 :: $3 }
 
 src_l:
-  | NL               { ET.Line  $1                     }
-  | OP sp PP inns CP { ET.Mark  $4                     }
-  | OP sp KW inns CP { ET.Key   ($3, $4)               }
-  | OP sp CW cws CP  { ET.Title ($3 :: $4)             }
-  | OP sp HW sws CP  { ET.Slice (lc $3 :: $4)          }
-  | OP sp CP         { ET.Other ($1, $2, $3)           }
-  | OP sp inns_r CP  { ET.Other ($1, $2 ^ $3, $4)      }
-  | OP SR inns CP    { ET.Other ($1, $2 ^ $3, $4)      }
-  | OP SR SR inns CP { ET.Other ($1, $2 ^ $3 ^ $4, $5) }
-  | OP SP SR inns CP { ET.Mark  $4                     }
+  | NL               { ET.Line  $1                        }
+  | OP sp PP inns CP { ET.Mark  $4                        }
+  | OP sp KW inns CP { ET.Key   ($3, $4)                  }
+  | OP sp CW cws CP  { ET.Title ($3 :: $4)                }
+  | OP sp HW sws CP  { ET.Slice (lc $3 :: $4)             }
+  | OP sp CP         { ET.Other (0, $1, $2, $3)           }
+  | OP sp inns_r CP  { ET.Other (0, $1, $2 ^ $3, $4)      }
+  | OP SR inns CP    { ET.Other (1, $1, $2 ^ $3, $4)      }
+  | OP SR SR inns CP { ET.Other (2, $1, $2 ^ $3 ^ $4, $5) }
+  | OP SP SR inns CP { ET.Mark  $4                        }
 
 src:
   | outs { ET.Text $1 }

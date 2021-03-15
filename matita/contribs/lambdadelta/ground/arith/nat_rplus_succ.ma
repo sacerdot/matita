@@ -12,10 +12,27 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/pstream.ma".
+include "ground/arith/nat_succ_iter.ma".
+include "ground/arith/nat_rplus.ma".
 
-(* RELOCATION MAP ***********************************************************)
+(* RIGHT ADDITION FOR NON-NEGATIVE INTEGERS *********************************)
 
-lemma pn_split: ∀f. (∃g. ⫯g = f) ∨ (∃g. ↑g = f).
-@case_prop /3 width=2 by or_introl, or_intror, ex_intro/
-qed-.
+(* Constructions with nsucc *************************************************)
+
+lemma nrplus_succ_dx (p) (n): ↑(p+n) = p + ↑n.
+#p #n @(niter_succ … psucc)
+qed.
+
+lemma nrplus_succ_shift (p) (n): ↑p + n = p + ↑n.
+// qed.
+
+lemma nrplus_unit_sn (n): ↑n = 𝟏 + n.
+#n @(nat_ind_succ … n) -n //
+qed.
+
+(* Advanced constructions ***************************************************)
+
+lemma nrplus_comm_23 (p) (n1) (n2):
+      p + n1 + n2 = p + n2 + n1.
+#p #n1 @(nat_ind_succ … n1) -n1 //
+qed.

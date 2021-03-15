@@ -67,13 +67,13 @@ qed.
 (* Properties with iterated push ********************************************)
 
 lemma isfin_pushs: ∀n,f. 𝐅❪f❫ → 𝐅❪⫯*[n]f❫.
-#n elim n -n /3 width=3 by isfin_push/
+#n @(nat_ind_succ … n) -n /3 width=3 by isfin_push/
 qed.
 
 (* Inversion lemmas with iterated push **************************************)
 
 lemma isfin_inv_pushs: ∀n,g. 𝐅❪⫯*[n]g❫ → 𝐅❪g❫.
-#n elim n -n /3 width=3 by isfin_inv_push/
+#n @(nat_ind_succ … n) -n /3 width=3 by isfin_inv_push/
 qed.
 
 (* Properties with tail *****************************************************)
@@ -92,5 +92,5 @@ qed-.
 (* Inversion lemmas with iterated tail **************************************)
 
 lemma isfin_inv_tls: ∀n,f. 𝐅❪⫱*[n]f❫ → 𝐅❪f❫.
-#n elim n -n /3 width=1 by isfin_inv_tl/
+#n @(nat_ind_succ … n) -n /3 width=1 by isfin_inv_tl/
 qed-.

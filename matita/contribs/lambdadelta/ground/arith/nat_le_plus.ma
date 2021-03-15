@@ -39,7 +39,11 @@ lemma nle_plus_dx_sn_refl (m) (n): m ≤ n + m.
 /2 width=1 by nle_plus_bi_sn/ qed.
 
 (*** le_plus_a *)
-lemma nle_plus_dx_sn (m) (n) (o): n ≤ m → n ≤ o + m.
+lemma nle_plus_dx_sn (o) (m) (n): n ≤ m → n ≤ o + m.
+/2 width=3 by nle_trans/ qed.
+
+(*** le_plus_b *)
+lemma nle_plus_dx_dx (o) (m) (n): n ≤ m → n ≤ m + o.
 /2 width=3 by nle_trans/ qed.
 
 (* Main constructions with nplus ********************************************)

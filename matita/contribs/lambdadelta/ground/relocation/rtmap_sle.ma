@@ -111,10 +111,11 @@ corec theorem sle_trans: Transitive … sle.
 /3 width=5 by sle_push, sle_next, sle_weak/
 qed-.
 
-(* Properties with iteraded push ********************************************)
+(* Properties with iterated push ********************************************)
 
-lemma sle_pushs: ∀f1,f2. f1 ⊆ f2 → ∀i. ⫯*[i] f1 ⊆ ⫯*[i] f2.
-#f1 #f2 #Hf12 #i elim i -i /2 width=5 by sle_push/
+lemma sle_pushs: ∀f1,f2. f1 ⊆ f2 → ∀n. ⫯*[n] f1 ⊆ ⫯*[n] f2.
+#f1 #f2 #Hf12 #n @(nat_ind_succ … n) -n
+/2 width=5 by sle_push/
 qed.
 
 (* Properties with tail *****************************************************)
@@ -148,8 +149,9 @@ qed-.
 
 (* Properties with iteraded tail ********************************************)
 
-lemma sle_tls: ∀f1,f2. f1 ⊆ f2 → ∀i. ⫱*[i] f1 ⊆ ⫱*[i] f2.
-#f1 #f2 #Hf12 #i elim i -i /2 width=5 by sle_tl/
+lemma sle_tls: ∀f1,f2. f1 ⊆ f2 → ∀n. ⫱*[n] f1 ⊆ ⫱*[n] f2.
+#f1 #f2 #Hf12 #n @(nat_ind_succ … n) -n
+/2 width=5 by sle_tl/
 qed.
 
 (* Properties with isid *****************************************************)

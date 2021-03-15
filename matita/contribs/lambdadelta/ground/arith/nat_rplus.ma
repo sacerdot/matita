@@ -12,10 +12,25 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/pstream.ma".
+include "ground/arith/nat_iter.ma".
 
-(* RELOCATION MAP ***********************************************************)
+(* RIGHT ADDITION FOR NON-NEGATIVE INTEGERS *********************************)
 
-lemma pn_split: ∀f. (∃g. ⫯g = f) ∨ (∃g. ↑g = f).
-@case_prop /3 width=2 by or_introl, or_intror, ex_intro/
-qed-.
+definition nrplus: pnat → nat → pnat ≝
+           λp,n. psucc^n p.
+
+interpretation
+  "right plus (non-negative integers)"
+  'plus p n = (nrplus p n).
+
+(* Basic constructions ******************************************************)
+
+lemma nrplus_zero_dx (p): p = p + 𝟎.
+// qed.
+
+lemma nrplus_unit_dx (p): ↑p = p + 𝟏.
+// qed.
+
+lemma nrplus_succ_sn (p) (n): ↑(p+n) = ↑p + n.
+#p #n @(niter_appl … psucc)
+qed.

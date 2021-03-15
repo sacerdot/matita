@@ -12,10 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/pstream.ma".
+(* GROUND NOTATION **********************************************************)
 
-(* RELOCATION MAP ***********************************************************)
-
-lemma pn_split: ∀f. (∃g. ⫯g = f) ∨ (∃g. ↑g = f).
-@case_prop /3 width=2 by or_introl, or_intror, ex_intro/
-qed-.
+notation "hvbox( @↑❪ term 46 T1 , break term 46 f ❫ ≘ break term 46 T2 )"
+  non associative with precedence 45
+  for @{ 'RAtSucc $T1 $f $T2 }.

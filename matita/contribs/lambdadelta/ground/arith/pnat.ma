@@ -55,3 +55,14 @@ lemma eq_pnat_dec (p1,p2:pnat): Decidable (p1 = p2).
 | /2 width=1 by or_introl/
 ]
 qed-.
+
+(* Basic eliminations *******************************************************)
+
+lemma pnat_ind_2 (Q:relation2 …):
+      (∀q. Q (𝟏) q) →
+      (∀p. Q p (𝟏) → Q (↑p) (𝟏)) →
+      (∀p,q. Q p q → Q (↑p) (↑q)) →
+      ∀p,q. Q p q.
+#Q #IH1 #IH2 #IH3 #p elim p -p [ // ]
+#p #IH #q elim q -q /2 width=1 by/
+qed-.

@@ -12,10 +12,33 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/pstream.ma".
+include "ground/notation/functions/downarrow_1.ma".
+include "ground/arith/pnat_split.ma".
 
-(* RELOCATION MAP ***********************************************************)
+(* PREDECESSOR FOR POSITIVE INTEGERS ****************************************)
 
-lemma pn_split: ∀f. (∃g. ⫯g = f) ∨ (∃g. ↑g = f).
-@case_prop /3 width=2 by or_introl, or_intror, ex_intro/
+definition ppred (p): pnat ≝ psplit … (𝟏) (λp.p) p.
+
+interpretation
+  "predecessor (positive integers)"
+  'DownArrow p = (ppred p).
+
+(* Basic constructions ******************************************************)
+
+lemma ppred_unit: 𝟏 = ↓𝟏.
+// qed.
+
+lemma ppred_succ (p): p = ↓↑p.
+// qed.
+
+(* Basic inversions *********************************************************)
+
+lemma ppred_inv_refl (p): p = ↓p → 𝟏 = p.
+#p elim p -p //
+#p #IH #H /2 width=1 by/
+qed-.
+
+lemma pnat_split_unit_pos (p): ∨∨ 𝟏 = p | p = ↑↓p.
+#p elim p -p
+/2 width=1 by or_introl, or_intror/
 qed-.

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/relations/istotal_1.ma".
+include "ground/notation/relations/ist_1.ma".
 include "ground/relocation/rtmap_at.ma".
 
 (* RELOCATION MAP ***********************************************************)
@@ -20,7 +20,7 @@ include "ground/relocation/rtmap_at.ma".
 definition istot: predicate rtmap ≝ λf. ∀i. ∃j. @❪i,f❫ ≘ j.
 
 interpretation "test for totality (rtmap)"
-   'IsTotal f = (istot f).
+   'IsT f = (istot f).
 
 (* Basic inversion lemmas ***************************************************)
 
@@ -44,7 +44,9 @@ qed.
 (* Properties on tls ********************************************************)
 
 lemma istot_tls: ∀n,f. 𝐓❪f❫ → 𝐓❪⫱*[n]f❫.
-#n elim n -n /3 width=1 by istot_tl/
+#n @(nat_ind_succ … n) -n //
+#n #IH #f #Hf <tls_S
+/3 width=1 by istot_tl/
 qed.
 
 (* Main forward lemmas on at ************************************************)
@@ -57,14 +59,14 @@ corec theorem at_ext: ∀f1,f2. 𝐓❪f1❫ → 𝐓❪f2❫ →
 #Hf1 #Hf2 #Hi
 [ @(eq_push … H1 H2) @at_ext -at_ext /2 width=3 by istot_inv_push/ -Hf1 -Hf2
   #i #i1 #i2 #Hg1 #Hg2 lapply (Hi (↑i) (↑i1) (↑i2) ??) /2 width=7 by at_push/
-| cases (Hf2 0) -Hf1 -Hf2 -at_ext
+| cases (Hf2 (𝟏)) -Hf1 -Hf2 -at_ext
   #j2 #Hf2 cases (at_increasing_strict … Hf2 … H2) -H2
-  lapply (Hi 0 0 j2 … Hf2) /2 width=2 by at_refl/ -Hi -Hf2 -H1
-  #H2 #H cases (lt_le_false … H) -H //
-| cases (Hf1 0) -Hf1 -Hf2 -at_ext
+  lapply (Hi (𝟏) (𝟏) j2 … Hf2) /2 width=2 by at_refl/ -Hi -Hf2 -H1
+  #H2 #H cases (plt_ge_false … H) -H //
+| cases (Hf1 (𝟏)) -Hf1 -Hf2 -at_ext
   #j1 #Hf1 cases (at_increasing_strict … Hf1 … H1) -H1
-  lapply (Hi 0 j1 0 Hf1 ?) /2 width=2 by at_refl/ -Hi -Hf1 -H2
-  #H1 #H cases (lt_le_false … H) -H //
+  lapply (Hi (𝟏) j1 (𝟏) Hf1 ?) /2 width=2 by at_refl/ -Hi -Hf1 -H2
+  #H1 #H cases (plt_ge_false … H) -H //
 | @(eq_next … H1 H2) @at_ext -at_ext /2 width=3 by istot_inv_next/ -Hf1 -Hf2
   #i #i1 #i2 #Hg1 #Hg2 lapply (Hi i (↑i1) (↑i2) ??) /2 width=5 by at_next/
 ]
@@ -74,24 +76,20 @@ qed-.
 
 lemma at_dec: ∀f,i1,i2. 𝐓❪f❫ → Decidable (@❪i1,f❫ ≘ i2).
 #f #i1 #i2 #Hf lapply (Hf i1) -Hf *
-#j2 #Hf elim (eq_nat_dec i2 j2)
+#j2 #Hf elim (eq_pnat_dec i2 j2)
 [ #H destruct /2 width=1 by or_introl/
 | /4 width=6 by at_mono, or_intror/
 ]
 qed-.
 
-lemma is_at_dec_le: ∀f,i2,i. 𝐓❪f❫ → (∀i1. i1 + i ≤ i2 → @❪i1,f❫ ≘ i2 → ⊥) →
-                    Decidable (∃i1. @❪i1,f❫ ≘ i2).
-#f #i2 #i #Hf elim i -i
-[ #Ht @or_intror * /3 width=3 by at_increasing/
-| #i #IH #Ht elim (at_dec f (i2-i) i2) /3 width=2 by ex_intro, or_introl/
-  #Hi2 @IH -IH #i1 #H #Hi elim (le_to_or_lt_eq … H) -H /2 width=3 by/
-  #H destruct -Ht /2 width=1 by/
-]
-qed-.
-
 lemma is_at_dec: ∀f,i2. 𝐓❪f❫ → Decidable (∃i1. @❪i1,f❫ ≘ i2).
-#f #i2 #Hf @(is_at_dec_le ?? (↑i2)) /2 width=4 by lt_le_false/
+#f #i2 #Hf
+lapply (dec_plt (λi1.@❪i1,f❫ ≘ i2) … (↑i2)) [| * ]
+[ /2 width=1 by at_dec/
+| * /3 width=2 by ex_intro, or_introl/
+| #H @or_intror * #i1 #Hi12
+  /5 width=3 by at_increasing, plt_succ_dx, ex2_intro/
+]
 qed-.
 
 (* Advanced properties on isid **********************************************)

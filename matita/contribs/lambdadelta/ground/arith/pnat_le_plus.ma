@@ -12,10 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/pstream.ma".
+include "ground/arith/pnat_plus.ma".
+include "ground/arith/pnat_le.ma".
 
-(* RELOCATION MAP ***********************************************************)
+(* ORDER FOR POSITIVE INTEGERS **********************************************)
 
-lemma pn_split: ∀f. (∃g. ⫯g = f) ∨ (∃g. ↑g = f).
-@case_prop /3 width=2 by or_introl, or_intror, ex_intro/
-qed-.
+(* Constructions with pplus *************************************************)
+
+lemma ple_plus_bi_dx (p) (q1) (q2): q1 ≤ q2 → q1 + p ≤ q2 + p.
+#p #q1 #q2 #H elim H -q2 /2 width=3 by ple_trans/
+qed.
+
+lemma ple_plus_bi_sn (p) (q1) (q2): q1 ≤ q2 → p + q1 ≤ p + q2.
+#p #q1 #q2 #H <pplus_comm <pplus_comm in ⊢ (??%);
+/2 width=1 by ple_plus_bi_dx/
+qed.

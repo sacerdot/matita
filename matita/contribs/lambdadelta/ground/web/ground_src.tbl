@@ -71,14 +71,18 @@ table {
           [ "nat_le ( ?≤? )" "nat_le_pred" "nat_le_plus" "nat_le_minus" "nat_le_minus_plus" "nat_le_max" * ]
           [ "nat_max ( ?∨? )" * ]
           [ "nat_minus ( ?-? )" "nat_minus_plus" * ]
-          [ "nat_plus ( ?+? )" "nat_plus_pred" * ]
+          [ "nat_plus ( ?+? )" "nat_plus_pred" "nat_plus_rplus" * ]
+          [ "nat_rplus ( ?+? )" "nat_rplus_succ" * ]
           [ "nat_pred ( ↓? )" "nat_pred_succ" * ]
           [ "nat_succ ( ↑? )" "nat_succ_iter" "nat_succ_tri" * ]
           [ "nat ( 𝟎 )" "nat_iter ( ?^{?}? )" *"nat_tri"  ]
         }
       ]
       [ { "positive integers" * } {
+          [ "nat_lt ( ?&lt;? )" "pnat_lt_pred" * ]
+          [ "pnat_le ( ?≤? )" "pnat_le_pred" "pnat_le_plus" * ]
           [ "pnat_plus ( ?+? )" * ]
+          [ "nat_pred ( ↓? )" * ]
           [ "pnat ( 𝟏 ) ( ↑? )" "pnat_dis" "pnat_iter ( ?^{?}? )" "pnat_tri" * ]
         }
       ]

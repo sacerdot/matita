@@ -17,6 +17,21 @@ include "ground/arith/nat_pred.ma".
 
 (* PREDECESSOR FOR NON-NEGATIVE INTEGERS ************************************)
 
+(* Constructions with npsucc ************************************************)
+
+lemma pnpred_succ (n): n = pnpred (npsucc n).
+* //
+qed.
+
+lemma npsucc_pred (p): p = npsucc (pnpred p).
+* //
+qed.
+
+(* Constructions with nsucc and psucc ***************************************)
+
+lemma pnpred_psucc (p): pnpred (psucc p) = nsucc (pnpred p).
+* // qed.
+
 (* Constructions with nsucc *************************************************)
 
 (*** pred_Sn pred_S *)

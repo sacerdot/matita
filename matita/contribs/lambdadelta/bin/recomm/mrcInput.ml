@@ -1,14 +1,11 @@
 module ET = MrcTypes
+module RL = RecommLib
 
 let read_substs substs ich =
-  let map subst =
-    let words = String.split_on_char ' ' subst in
-    List.filter ((<>) "") words
-  in
   while true do
     let line = input_line ich in
-    let subst = String.split_on_char ',' line in   
-    substs := List.map map subst :: !substs
+    let subst = RL.split_on_char ',' line in
+    substs := List.map (RL.split_on_char ' ') subst :: !substs
   done
 
 let read_file file =

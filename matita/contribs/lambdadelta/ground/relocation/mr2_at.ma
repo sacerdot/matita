@@ -13,6 +13,8 @@
 (**************************************************************************)
 
 include "ground/notation/relations/rat_3.ma".
+include "ground/arith/nat_plus.ma".
+include "ground/arith/nat_lt.ma".
 include "ground/relocation/mr2.ma".
 
 (* MULTIPLE RELOCATION WITH PAIRS *******************************************)
@@ -61,14 +63,14 @@ lemma at_inv_cons_lt: ∀cs,l,m,i1,i2. @❪i1, ❨l, m❩;cs❫ ≘ i2 →
                       i1 < l → @❪i1, cs❫ ≘ i2.
 #cs #l #m #i1 #m2 #H
 elim (at_inv_cons … H) -H * // #Hli1 #_ #Hi1l
-elim (lt_le_false … Hi1l Hli1)
+elim (nlt_ge_false … Hi1l Hli1)
 qed-.
 
 lemma at_inv_cons_ge: ∀cs,l,m,i1,i2. @❪i1, ❨l, m❩;cs❫ ≘ i2 →
                       l ≤ i1 → @❪i1 + m, cs❫ ≘ i2.
 #cs #l #m #i1 #m2 #H
 elim (at_inv_cons … H) -H * // #Hi1l #_ #Hli1
-elim (lt_le_false … Hi1l Hli1)
+elim (nlt_ge_false … Hi1l Hli1)
 qed-.
 
 (* Main properties **********************************************************)

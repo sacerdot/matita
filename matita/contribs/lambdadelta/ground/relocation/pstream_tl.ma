@@ -12,10 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground/lib/stream_hdtl.ma".
 include "ground/relocation/pstream.ma".
 
-(* RELOCATION MAP ***********************************************************)
+(* RELOCATION P-STREAM ******************************************************)
 
-lemma pn_split: ∀f. (∃g. ⫯g = f) ∨ (∃g. ↑g = f).
-@case_prop /3 width=2 by or_introl, or_intror, ex_intro/
-qed-.
+(* Poperties with stream_tl *************************************************)
+
+lemma tl_push: ∀f. f = ⫰⫯f.
+// qed.
+
+lemma tl_next: ∀f. ⫰f = ⫰↑f.
+* // qed.

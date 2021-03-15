@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "ground/notation/relations/rafter_3.ma".
+include "ground/arith/nat_pred_succ.ma".
 include "ground/relocation/rtmap_istot.ma".
 
 (* RELOCATION MAP ***********************************************************)
@@ -267,9 +268,10 @@ lemma after_mono_eq: ∀f1,f2,f. f1 ⊚ f2 ≘ f → ∀g1,g2,g. g1 ⊚ g2 ≘ g
 
 (* Properties on tls ********************************************************)
 
-lemma after_tls: ∀n,f1,f2,f. @❪0, f1❫ ≘ n →
+(* Note: this requires ↑ on first n *)
+lemma after_tls: ∀n,f1,f2,f. @❪𝟏, f1❫ ≘ ↑n →
                  f1 ⊚ f2 ≘ f → ⫱*[n]f1 ⊚ f2 ≘ ⫱*[n]f.
-#n elim n -n //
+#n @(nat_ind_succ … n) -n //
 #n #IH #f1 #f2 #f #Hf1 #Hf
 cases (at_inv_pxn … Hf1) -Hf1 [ |*: // ] #g1 #Hg1 #H1
 cases (after_inv_nxx … Hf … H1) -Hf #g #Hg #H0 destruct
@@ -314,31 +316,6 @@ qed-.
 
 lemma after_inv_isid3: ∀f1,f2,f. f1 ⊚ f2 ≘ f → 𝐈❪f❫ → 𝐈❪f1❫ ∧ 𝐈❪f2❫.
 /3 width=4 by after_fwd_isid2, after_fwd_isid1, conj/ qed-.
-
-(* Properties on isuni ******************************************************)
-
-lemma after_isid_isuni: ∀f1,f2. 𝐈❪f2❫ → 𝐔❪f1❫ → f1 ⊚ ↑f2 ≘ ↑f1.
-#f1 #f2 #Hf2 #H elim H -H
-/5 width=7 by after_isid_dx, after_eq_repl_back2, after_next, after_push, eq_push_inv_isid/
-qed.
-
-lemma after_uni_next2: ∀f2. 𝐔❪f2❫ → ∀f1,f. ↑f2 ⊚ f1 ≘ f → f2 ⊚ ↑f1 ≘ f.
-#f2 #H elim H -f2
-[ #f2 #Hf2 #f1 #f #Hf
-  elim (after_inv_nxx … Hf) -Hf [2,3: // ] #g #Hg #H0 destruct
-  /4 width=7 by after_isid_inv_sn, after_isid_sn, after_eq_repl_back0, eq_next/
-| #f2 #_ #g2 #H2 #IH #f1 #f #Hf
-  elim (after_inv_nxx … Hf) -Hf [2,3: // ] #g #Hg #H0 destruct
-  /3 width=5 by after_next/
-]
-qed.
-
-(* Properties on uni ********************************************************)
-
-lemma after_uni: ∀n1,n2. 𝐔❨n1❩ ⊚ 𝐔❨n2❩ ≘ 𝐔❨n1+n2❩.
-@nat_elim2 [3: #n #m <plus_n_Sm ] (**) (* full auto fails *)
-/4 width=5 by after_uni_next2, after_isid_dx, after_isid_sn, after_next/
-qed.
 
 (* Forward lemmas on at *****************************************************)
 
@@ -401,87 +378,6 @@ lemma after_fwd_at1: ∀i,i2,i1,f,f2. @❪i1, f❫ ≘ i → @❪i2, f2❫ ≘ i
 ]
 qed-.
 
-(* Properties with at *******************************************************)
-
-lemma after_uni_dx: ∀i2,i1,f2. @❪i1, f2❫ ≘ i2 →
-                    ∀f. f2 ⊚ 𝐔❨i1❩ ≘ f → 𝐔❨i2❩ ⊚ ⫱*[i2] f2 ≘ f.
-#i2 elim i2 -i2
-[ #i1 #f2 #Hf2 #f #Hf
-  elim (at_inv_xxp … Hf2) -Hf2 // #g2 #H1 #H2 destruct
-  lapply (after_isid_inv_dx … Hf ?) -Hf
-  /3 width=3 by after_isid_sn, after_eq_repl_back0/
-| #i2 #IH #i1 #f2 #Hf2 #f #Hf
-  elim (at_inv_xxn … Hf2) -Hf2 [1,3: * |*: // ]
-  [ #g2 #j1 #Hg2 #H1 #H2 destruct
-    elim (after_inv_pnx … Hf) -Hf [ |*: // ] #g #Hg #H destruct
-    <tls_xn /3 width=5 by after_next/
-  | #g2 #Hg2 #H2 destruct
-    elim (after_inv_nxx … Hf) -Hf [2,3: // ] #g #Hg #H destruct
-    <tls_xn /3 width=5 by after_next/
-  ]
-]
-qed.
-
-lemma after_uni_sn: ∀i2,i1,f2. @❪i1, f2❫ ≘ i2 →
-                    ∀f. 𝐔❨i2❩ ⊚ ⫱*[i2] f2 ≘ f → f2 ⊚ 𝐔❨i1❩ ≘ f.
-#i2 elim i2 -i2
-[ #i1 #f2 #Hf2 #f #Hf
-  elim (at_inv_xxp … Hf2) -Hf2 // #g2 #H1 #H2 destruct
-  lapply (after_isid_inv_sn … Hf ?) -Hf
-  /3 width=3 by after_isid_dx, after_eq_repl_back0/
-| #i2 #IH #i1 #f2 #Hf2 #f #Hf
-  elim (after_inv_nxx … Hf) -Hf [2,3: // ] #g #Hg #H destruct
-  elim (at_inv_xxn … Hf2) -Hf2 [1,3: * |*: // ]
-  [ #g2 #j1 #Hg2 #H1 #H2 destruct /3 width=7 by after_push/
-  | #g2 #Hg2 #H2 destruct /3 width=5 by after_next/
-  ]
-]
-qed-.
-
-lemma after_uni_succ_dx: ∀i2,i1,f2. @❪i1, f2❫ ≘ i2 →
-                         ∀f. f2 ⊚ 𝐔❨↑i1❩ ≘ f → 𝐔❨↑i2❩ ⊚ ⫱*[↑i2] f2 ≘ f.
-#i2 elim i2 -i2
-[ #i1 #f2 #Hf2 #f #Hf
-  elim (at_inv_xxp … Hf2) -Hf2 // #g2 #H1 #H2 destruct
-  elim (after_inv_pnx … Hf) -Hf [ |*: // ] #g #Hg #H
-  lapply (after_isid_inv_dx … Hg ?) -Hg
-  /4 width=5 by after_isid_sn, after_eq_repl_back0, after_next/
-| #i2 #IH #i1 #f2 #Hf2 #f #Hf
-  elim (at_inv_xxn … Hf2) -Hf2 [1,3: * |*: // ]
-  [ #g2 #j1 #Hg2 #H1 #H2 destruct
-    elim (after_inv_pnx … Hf) -Hf [ |*: // ] #g #Hg #H destruct
-    <tls_xn /3 width=5 by after_next/
-  | #g2 #Hg2 #H2 destruct
-    elim (after_inv_nxx … Hf) -Hf [2,3: // ] #g #Hg #H destruct
-    <tls_xn /3 width=5 by after_next/
-  ]
-]
-qed.
-
-lemma after_uni_succ_sn: ∀i2,i1,f2. @❪i1, f2❫ ≘ i2 →
-                         ∀f. 𝐔❨↑i2❩ ⊚ ⫱*[↑i2] f2 ≘ f → f2 ⊚ 𝐔❨↑i1❩ ≘ f.
-#i2 elim i2 -i2
-[ #i1 #f2 #Hf2 #f #Hf
-  elim (at_inv_xxp … Hf2) -Hf2 // #g2 #H1 #H2 destruct
-  elim (after_inv_nxx … Hf) -Hf [ |*: // ] #g #Hg #H destruct
-  lapply (after_isid_inv_sn … Hg ?) -Hg
-  /4 width=7 by after_isid_dx, after_eq_repl_back0, after_push/
-| #i2 #IH #i1 #f2 #Hf2 #f #Hf
-  elim (after_inv_nxx … Hf) -Hf [2,3: // ] #g #Hg #H destruct
-  elim (at_inv_xxn … Hf2) -Hf2 [1,3: * |*: // ]
-  [ #g2 #j1 #Hg2 #H1 #H2 destruct <tls_xn in Hg; /3 width=7 by after_push/
-  | #g2 #Hg2 #H2 destruct <tls_xn in Hg; /3 width=5 by after_next/
-  ]
-]
-qed-.
-
-lemma after_uni_one_dx: ∀f2,f. ⫯f2 ⊚ 𝐔❨↑O❩ ≘ f → 𝐔❨↑O❩ ⊚ f2 ≘ f.
-#f2 #f #H @(after_uni_succ_dx … (⫯f2)) /2 width=3 by at_refl/
-qed.
-
-lemma after_uni_one_sn: ∀f1,f. 𝐔❨↑O❩ ⊚ f1 ≘ f → ⫯f1 ⊚ 𝐔❨↑O❩ ≘ f.
-/3 width=3 by after_uni_succ_sn, at_refl/ qed-.
-
 (* Forward lemmas on istot **************************************************)
 
 lemma after_istot_fwd: ∀f2,f1,f. f2 ⊚ f1 ≘ f → 𝐓❪f2❫ → 𝐓❪f1❫ → 𝐓❪f❫.
@@ -527,23 +423,23 @@ lemma after_fwd_isid_dx: ∀f2,f1,f.  𝐓❪f❫ → f2 ⊚ f1 ≘ f → f2 ≡
 /3 width=8 by at_inj, at_eq_repl_back/
 qed-.
 
-corec fact after_inj_O_aux: ∀f1. @❪0, f1❫ ≘ 0 → H_after_inj f1.
+corec fact after_inj_O_aux: ∀f1. @❪𝟏, f1❫ ≘ 𝟏 → H_after_inj f1.
 #f1 #H1f1 #H2f1 #f #f21 #f22 #H1f #H2f
 cases (at_inv_pxp … H1f1) -H1f1 [ |*: // ] #g1 #H1
 lapply (istot_inv_push … H2f1 … H1) -H2f1 #H2g1
-cases (H2g1 0) #n #Hn
+cases (H2g1 (𝟏)) #p #Hp
 cases (after_inv_pxx … H1f … H1) -H1f * #g21 #g #H1g #H21 #H
 [ cases (after_inv_pxp … H2f … H1 H) -f1 -f #g22 #H2g #H22
   @(eq_push … H21 H22) -f21 -f22
 | cases (after_inv_pxn … H2f … H1 H) -f1 -f #g22 #H2g #H22
   @(eq_next … H21 H22) -f21 -f22
 ]
-@(after_inj_O_aux (⫱*[n]g1) … (⫱*[n]g)) -after_inj_O_aux
+@(after_inj_O_aux (⫱*[↓p]g1) … (⫱*[↓p]g)) -after_inj_O_aux
 /2 width=1 by after_tls, istot_tls, at_pxx_tls/
 qed-.
 
-fact after_inj_aux: (∀f1. @❪0, f1❫ ≘ 0 → H_after_inj f1) →
-                    ∀i2,f1. @❪0, f1❫ ≘ i2 → H_after_inj f1.
+fact after_inj_aux: (∀f1. @❪𝟏, f1❫ ≘ 𝟏 → H_after_inj f1) →
+                    ∀i2,f1. @❪𝟏, f1❫ ≘ i2 → H_after_inj f1.
 #H0 #i2 elim i2 -i2 /2 width=1 by/ -H0
 #i2 #IH #f1 #H1f1 #H2f1 #f #f21 #f22 #H1f #H2f
 elim (at_inv_pxn … H1f1) -H1f1 [ |*: // ] #g1 #H1g1 #H1
@@ -553,5 +449,5 @@ lapply (after_inv_nxn … H2f … H1 H) -f #H2g
 qed-.
 
 theorem after_inj: ∀f1. H_after_inj f1.
-#f1 #H cases (H 0) /3 width=7 by after_inj_aux, after_inj_O_aux/
+#f1 #H cases (H (𝟏)) /3 width=7 by after_inj_aux, after_inj_O_aux/
 qed-.

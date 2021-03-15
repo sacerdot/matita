@@ -149,3 +149,22 @@ lemma nlt_ind_alt (Q: relation2 nat nat):
 | /4 width=1 by nlt_inv_succ_bi/
 ]
 qed-.
+
+(* Advanced constructions (decidability) ************************************)
+
+(*** dec_lt *)
+lemma dec_nlt (R:predicate nat):
+      (∀n. Decidable … (R n)) →
+      ∀n. Decidable … (∃∃m. m < n & R m).
+#R #HR #n @(nat_ind_succ … n) -n [| #n * ]
+[ @or_intror * /2 width=2 by nlt_inv_zero_dx/
+| * /4 width=3 by nlt_succ_dx_trans, ex2_intro, or_introl/
+| #H0 elim (HR n) -HR
+  [ /3 width=3 by or_introl, ex2_intro/
+  | #Hn @or_intror * #m #Hmn #Hm
+    elim (nle_split_lt_eq … Hmn) -Hmn #H destruct [ -Hn | -H0 ]
+    [ /4 width=3 by nlt_inv_succ_bi, ex2_intro/
+    | lapply (eq_inv_nsucc_bi … H) -H /2 width=1 by/
+  ]
+]
+qed-.

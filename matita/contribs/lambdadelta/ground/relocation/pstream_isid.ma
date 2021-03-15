@@ -12,10 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/pstream.ma".
+include "ground/relocation/rtmap_isid.ma".
 
-(* RELOCATION MAP ***********************************************************)
+(* RELOCATION N-STREAM ******************************************************)
 
-lemma pn_split: ∀f. (∃g. ⫯g = f) ∨ (∃g. ↑g = f).
-@case_prop /3 width=2 by or_introl, or_intror, ex_intro/
+(* Specific inversion lemmas ************************************************)
+
+lemma isid_inv_seq: ∀f,p. 𝐈❪p⨮f❫ → 𝐈❪f❫ ∧ 𝟏 = p.
+#f #p #H elim (isid_inv_gen … H) -H
+#g #Hg #H elim (push_inv_seq_dx … H) -H /2 width=1 by conj/
 qed-.

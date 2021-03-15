@@ -25,7 +25,7 @@ lemma nminus_plus_sn_refl_sn (m) (n): m = m + n - n.
 #n #IH <nplus_succ_dx <nminus_succ_bi //
 qed.
 
-(*** minus_plus_m_m *)
+(*** minus_plus_m_m_commutative *)
 lemma nminus_plus_sn_refl_dx (m) (n): m = n + m - n.
 #m #n <nplus_comm //
 qed.
@@ -61,7 +61,7 @@ lemma eq_inv_plus_nminus_refl_sn (m) (n) (o):
        | ∧∧ 𝟎 = n & 𝟎 = o.
 #m #n @(nat_ind_2_succ … m n) -m -n
 [ /3 width=1 by or_introl, conj/
-| #m #o #Ho
+| #m #_ #o #Ho
   lapply (eq_inv_nplus_bi_sn … (𝟎) Ho) -Ho
   /3 width=1 by or_intror, conj/
 | #m #n #IH #o

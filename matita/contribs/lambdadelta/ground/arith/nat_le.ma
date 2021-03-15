@@ -18,7 +18,6 @@ include "ground/arith/nat_succ.ma".
 (* ORDER FOR NON-NEGATIVE INTEGERS ******************************************)
 
 (*** le *)
-(*** le_ind *)
 inductive nle (m:nat): predicate nat ≝
 | nle_refl   : nle m m
 | nle_succ_dx: ∀n. nle m n → nle m (↑n)
@@ -88,7 +87,7 @@ lemma nle_inv_succ_zero (m): ↑m ≤ 𝟎 → ⊥.
 
 lemma nle_inv_succ_sn_refl (m): ↑m ≤ m → ⊥.
 #m @(nat_ind_succ … m) -m [| #m #IH ] #H
-[ /3 width=2 by nle_inv_zero_dx, eq_inv_zero_nsucc/
+[ /2 width=2 by nle_inv_succ_zero/
 | /3 width=1 by nle_inv_succ_bi/
 ]
 qed-.
@@ -110,7 +109,7 @@ lemma nle_ind_alt (Q: relation2 nat nat):
       (∀m,n. m ≤ n → Q m n → Q (↑m) (↑n)) →
       ∀m,n. m ≤ n → Q m n.
 #Q #IH1 #IH2 #m #n @(nat_ind_2_succ … m n) -m -n //
-[ #m #H elim (nle_inv_succ_zero … H)
+[ #m #_ #H elim (nle_inv_succ_zero … H)
 | /4 width=1 by nle_inv_succ_bi/
 ]
 qed-.

@@ -12,26 +12,40 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/nat_le_pred.ma".
-include "ground/relocation/rtmap_after_uni.ma".
+include "ground/relocation/rtmap_nat_uni.ma".
 include "ground/relocation/rtmap_basic.ma".
 
 (* RELOCATION MAP ***********************************************************)
 
-(* Properties with composition **********************************************)
+(* Prioerties with application **********************************************)
 
-lemma after_basic_rc (m2,m1):
-      m1 ≤ m2 → ∀n2,n1.m2 ≤ n1+m1 → 𝐁❨m2,n2❩ ⊚ 𝐁❨m1,n1❩ ≘ 𝐁❨m1,n1+n2❩.
-#m2 #m1 @(nat_ind_2_succ … m2 m1) -m2 -m1
-[ #m1 #H #n2 #n1 #_
-  <(nle_inv_zero_dx … H) -m1 //
-| #m2 #IH #_ #n2 #n1 <nplus_zero_dx #H
-  elim (nle_inv_succ_sn … H) -H #Hm2 #Hn1
-  >Hn1 -Hn1 <nplus_succ_sn
-  /3 width=7 by after_push/
-| #m2 #m1 #IH #H1 #n2 #n1 <nplus_succ_dx #H2
-  lapply (nle_inv_succ_bi … H1) -H1 #H1
-  lapply (nle_inv_succ_bi … H2) -H2 #H2
-  /3 width=7 by after_refl/
+lemma rm_nat_basic_lt (m) (n) (l):
+      l < m → @↑❪l, 𝐁❨m,n❩❫ ≘ l.
+#m @(nat_ind_succ … m) -m
+[ #n #i #H elim (nlt_inv_zero_dx … H)
+| #m #IH #n #l @(nat_ind_succ … l) -l
+  [ #_ /2 width=2 by refl, at_refl/
+  | #l #_ #H
+    lapply (nlt_inv_succ_bi … H) -H #Hlm
+    /3 width=7 by refl, at_push/
+  ]
 ]
 qed.
+
+lemma rm_nat_basic_ge (m) (n) (l):
+      m ≤ l → @↑❪l, 𝐁❨m,n❩❫ ≘ l+n.
+#m @(nat_ind_succ … m) -m //
+#m #IH #n #l #H
+elim (nle_inv_succ_sn … H) -H #Hml #H >H -H
+/3 width=7 by rm_nat_push/
+qed.
+
+(* Inversion lemmas with application ****************************************)
+
+lemma rm_nat_basic_inv_lt (m) (n) (l) (k):
+      l < m → @↑❪l, 𝐁❨m,n❩❫ ≘ k → l = k.
+/3 width=4 by rm_nat_basic_lt, rm_nat_mono/ qed-.
+
+lemma rm_nat_basic_inv_ge (m) (n) (l) (k):
+      m ≤ l → @↑❪l, 𝐁❨m,n❩❫ ≘ k → l+n = k.
+/3 width=4 by rm_nat_basic_ge, rm_nat_mono/ qed-.

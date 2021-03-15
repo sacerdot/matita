@@ -79,13 +79,13 @@ qed-.
 (* Properties with iterated next ********************************************)
 
 lemma isdiv_nexts: ∀n,f. 𝛀❪f❫ → 𝛀❪↑*[n]f❫.
-#n elim n -n /3 width=3 by isdiv_next/
+#n @(nat_ind_succ … n) -n /3 width=3 by isdiv_next/
 qed.
 
 (* Inversion lemmas with iterated next **************************************)
 
 lemma isdiv_inv_nexts: ∀n,g. 𝛀❪↑*[n]g❫ → 𝛀❪g❫.
-#n elim n -n /3 width=3 by isdiv_inv_next/
+#n @(nat_ind_succ … n) -n /3 width=3 by isdiv_inv_next/
 qed.
 
 (* Properties with tail *****************************************************)
@@ -100,5 +100,5 @@ qed.
 (* Properties with iterated tail ********************************************)
 
 lemma isdiv_tls: ∀n,g. 𝛀❪g❫ → 𝛀❪⫱*[n]g❫.
-#n elim n -n /3 width=1 by isdiv_tl/
+#n @(nat_ind_succ … n) -n /3 width=1 by isdiv_tl/
 qed.

@@ -14,7 +14,7 @@
 
 include "ground/notation/functions/diamond_0.ma".
 include "ground/notation/functions/semicolon_3.ma".
-include "ground/lib/arith.ma".
+include "ground/arith/nat.ma".
 
 (* MULTIPLE RELOCATION WITH PAIRS *******************************************)
 

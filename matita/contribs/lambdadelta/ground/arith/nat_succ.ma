@@ -16,7 +16,7 @@ include "ground/arith/nat.ma".
 
 (* SUCCESSOR FOR NON-NEGATIVE INTEGERS **************************************)
 
-definition nsucc_pos (m): pnat ≝
+definition npsucc (m): pnat ≝
 match m with
 [ nzero  ⇒ 𝟏
 | ninj p ⇒ ↑p
@@ -24,7 +24,7 @@ match m with
 
 interpretation
   "positive successor (non-negative integers)"
-  'UpArrow m = (nsucc_pos m).
+  'UpArrow m = (npsucc m).
 
 definition nsucc (m): nat ≝
            ninj (↑m).
@@ -35,10 +35,19 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
+lemma npsucc_zero: (𝟏) = ↑𝟎.
+// qed.
+
+lemma npsucc_inj (p): (↑p) = ↑(ninj p).
+// qed.
+
 lemma nsucc_zero: ninj (𝟏) = ↑𝟎.
 // qed.
 
 lemma nsucc_inj (p): ninj (↑p) = ↑(ninj p).
+// qed.
+
+lemma npsucc_succ (n): psucc (npsucc n) = npsucc (nsucc n).
 // qed.
 
 (* Basic eliminations *******************************************************)
@@ -53,7 +62,7 @@ qed-.
 (*** nat_elim2 *)
 lemma nat_ind_2_succ (Q:relation2 …):
       (∀n. Q (𝟎) n) →
-      (∀m. Q (↑m) (𝟎)) →
+      (∀m. Q m (𝟎) → Q (↑m) (𝟎)) →
       (∀m,n. Q m n → Q (↑m) (↑n)) →
       ∀m,n. Q m n.
 #Q #IH1 #IH2 #IH3 #m @(nat_ind_succ … m) -m [ // ]
@@ -62,13 +71,18 @@ qed-.
 
 (* Basic inversions *********************************************************)
 
-(*** injective_S *)
-lemma eq_inv_nsucc_bi: injective … nsucc.
+lemma eq_inv_npsucc_bi: injective … npsucc.
 * [| #p1 ] * [2,4: #p2 ]
-[1,4: <nsucc_zero <nsucc_inj #H destruct
-| <nsucc_inj <nsucc_inj #H destruct //
+[ 1,4: <npsucc_zero <npsucc_inj #H destruct
+| <npsucc_inj <npsucc_inj #H destruct //
 | //
 ]
+qed-.
+
+(*** injective_S *)
+lemma eq_inv_nsucc_bi: injective … nsucc.
+#n1 #n2 #H
+@eq_inv_npsucc_bi @eq_inv_ninj_bi @H
 qed-.
 
 lemma eq_inv_nsucc_zero (m): ↑m = 𝟎 → ⊥.

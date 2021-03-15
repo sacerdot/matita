@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/nstream_id.ma".
+include "ground/relocation/pstream_id.ma".
 include "ground/relocation/rtmap_isid.ma".
 
 (* RELOCATION MAP ***********************************************************)

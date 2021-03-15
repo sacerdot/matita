@@ -31,6 +31,12 @@ lemma nlt_plus_bi_sn (m) (n1) (n2): n1 < n2 → m + n1 < m + n2.
 @nlt_i >nplus_succ_dx /2 width=1 by nle_plus_bi_sn/
 qed.
 
+lemma nlt_plus_dx_dx (o) (m) (n): m < n → m < n + o.
+/2 width=1 by nle_plus_dx_dx/ qed.
+
+lemma nlt_plus_dx_sn (o) (m) (n) : m < n → m < o + n.
+/2 width=1 by nle_plus_dx_sn/ qed.
+
 lemma nlt_succ_plus_dx_refl_sn (m) (n): m < ↑(m + n).
 /2 width=1/ qed.
 

@@ -12,10 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/pstream.ma".
+include "ground/lib/stream_tls.ma".
+include "ground/arith/nat_pred_succ.ma".
+include "ground/relocation/pstream_tl.ma".
 
-(* RELOCATION MAP ***********************************************************)
+(* RELOCATION P-STREAM ******************************************************)
 
-lemma pn_split: ∀f. (∃g. ⫯g = f) ∨ (∃g. ↑g = f).
-@case_prop /3 width=2 by or_introl, or_intror, ex_intro/
-qed-.
+(* Poperties with stream_tls ************************************************)
+
+lemma tls_next: ∀f. ∀p:pnat. ⫰*[p]f = ⫰*[p]↑f.
+#f #p >(npsucc_pred p) <stream_tls_swap <stream_tls_swap //
+qed.

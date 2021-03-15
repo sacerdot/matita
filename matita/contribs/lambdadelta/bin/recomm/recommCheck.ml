@@ -64,20 +64,20 @@ let log color s =
 
 let rec recomm srcs st =
   match srcs with
-  | []                             ->
+  | []                                ->
     st
-  | ET.Line _ as hd :: tl          ->
+  | ET.Line _ as hd :: tl             ->
     recomm tl @@ add hd @@ st
-  | ET.Text _ as hd :: tl          ->
+  | ET.Text _ as hd :: tl             ->
     recomm tl @@ add hd @@ st
-  | ET.Mark s as hd :: tl          ->
+  | ET.Mark s as hd :: tl             ->
     if !log_m then log red s;
     recomm tl @@ add hd @@ st
-  | ET.Key (s1, s2) as hd :: tl    ->
+  | ET.Key (s1, s2) as hd :: tl       ->
     if middle st then Printf.eprintf "middle: %S\n" s1;
     if !log_k then log prune (s1^s2);
     recomm tl @@ add hd @@ st
-  | ET.Title ss :: tl              ->
+  | ET.Title ss :: tl                 ->
     if middle st then Printf.eprintf "middle: TITLE\n";
     let r, ss1, ss2 = !c_line k_final ET.OO [] ss in
     let ss2 =
@@ -87,7 +87,7 @@ let rec recomm srcs st =
     let s = String.concat " " ss in
     if !log_t then log blue s;
     recomm tl @@ add (ET.Title ss) @@ st
-  | ET.Slice ss :: tl              ->
+  | ET.Slice ss :: tl                 ->
     if middle st then Printf.eprintf "middle: Section\n";
     let r, ss1, ss2 = !s_line k_final ET.OO [] ss in
     let ss2 =
@@ -97,7 +97,7 @@ let rec recomm srcs st =
     let s = String.capitalize_ascii (String.concat " " ss) in
     if !log_s then log sky s;
     recomm tl @@ add (ET.Slice ss) @@ st
-  | ET.Other (_, s, _) as hd :: tl ->
+  | ET.Other (_, _, s, _) as hd :: tl ->
     if !log_o && not (Array.mem s mute_o) then log black s;
     recomm tl @@ add hd @@ st
 

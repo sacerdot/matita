@@ -12,7 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground/xoa/ex_3_1.ma".
 include "ground/notation/relations/rminus_3.ma".
+include "ground/arith/nat_plus.ma".
+include "ground/arith/nat_minus.ma".
+include "ground/arith/nat_lt.ma".
 include "ground/relocation/mr2.ma".
 
 (* MULTIPLE RELOCATION WITH PAIRS *******************************************)
@@ -63,12 +67,12 @@ lemma minuss_inv_cons1_ge: ∀cs1,cs2,l,m,i. ❨l, m❩;cs1 ▭ i ≘ cs2 →
                            l ≤ i → cs1 ▭ m + i ≘ cs2.
 #cs1 #cs2 #l #m #i #H
 elim (minuss_inv_cons1 … H) -H * // #cs #Hil #_ #_ #Hli
-elim (lt_le_false … Hil Hli)
+elim (nlt_ge_false … Hil Hli)
 qed-.
 
 lemma minuss_inv_cons1_lt: ∀cs1,cs2,l,m,i. ❨l, m❩;cs1 ▭ i ≘ cs2 →
                            i < l →
                            ∃∃cs. cs1 ▭ i ≘ cs & cs2 = ❨l - i, m❩;cs.
 #cs1 #cs2 #l #m #i #H elim (minuss_inv_cons1 … H) -H * /2 width=3 by ex2_intro/
-#Hli #_ #Hil elim (lt_le_false … Hil Hli)
+#Hli #_ #Hil elim (nlt_ge_false … Hil Hli)
 qed-.

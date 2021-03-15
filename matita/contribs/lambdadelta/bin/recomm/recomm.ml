@@ -13,8 +13,21 @@ let write = ref false
 
 let force = ref false
 
+let subst = ref None
+
 let chdir path =
   Sys.chdir path
+
+let start_substs () =
+  subst := Some (open_out "subst.txt")
+
+let write_substs lint = function
+  | None     -> ()
+  | Some och -> EO.write_substs och lint
+
+let stop_substs = function
+  | None     -> ()
+  | Some och -> close_out och
 
 let rec process path name =
   let file = Filename.concat path name in 
@@ -26,6 +39,7 @@ let rec process path name =
     Printf.eprintf "processing: %S\n" file;
     let orig = EI.read_srcs file in
     let lint = EC.recomm_srcs orig in
+    write_substs lint !subst;
     if !force || (!write && lint <> orig) then EO.write_srcs file lint
   end else begin
     Printf.eprintf "skipping: %S\n" file
@@ -43,6 +57,7 @@ let msg_o = " Log other comments (default: no)"
 let msg_r = " Replace the input files (default: no)"
 let msg_s = " Log section comments (default: no)"
 let msg_t = " Log title comments (default: no)"
+let msg_u = " Write substitution file (default: no)"
 let msg_w = " Write the changed output files (default: no)"
 
 let main =
@@ -59,5 +74,7 @@ let main =
     "-r", Arg.Set EO.replace, msg_r;
     "-s", Arg.Set EC.log_s, msg_s;
     "-t", Arg.Set EC.log_t, msg_t;
+    "-u", Arg.Unit start_substs, msg_u;
     "-w", Arg.Set write, msg_w;
-  ] (process "") ""
+  ] (process "") "";
+  stop_substs !subst

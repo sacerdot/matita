@@ -41,21 +41,6 @@ qed-.
 
 (* Decidability of predicates ***********************************************)
 
-lemma dec_lt (R:predicate nat):
-      (∀n. Decidable … (R n)) →
-      ∀n. Decidable … (∃∃m. m < n & R m).
-#R #HR #n elim n -n [| #n * ]
-[ @or_intror * /2 width=2 by lt_zero_false/
-| * /4 width=3 by lt_S, or_introl, ex2_intro/
-| #H0 elim (HR n) -HR
-  [ /3 width=3 by or_introl, ex2_intro/
-  | #Hn @or_intror * #m #Hmn #Hm
-    elim (le_to_or_lt_eq … Hmn) -Hmn #H destruct [ -Hn | -H0 ]
-    /4 width=3 by lt_S_S_to_lt, ex2_intro/
-  ]
-]
-qed-.
-
 lemma dec_min (R:predicate nat):
       (∀n. Decidable … (R n)) → ∀n. R n →
       ∃∃m. m ≤ n & R m & (∀p. p < m → R p → ⊥).

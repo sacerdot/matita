@@ -18,7 +18,7 @@ type src =
 (* section *)
   | Slice of words
 (* other comment *)
-  | Other of text * text * text
+  | Other of int * text * text * text
 
 type srcs = src list
 

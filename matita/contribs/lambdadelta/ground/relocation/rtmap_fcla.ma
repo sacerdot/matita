@@ -18,7 +18,7 @@ include "ground/relocation/rtmap_isid.ma".
 (* RELOCATION MAP ***********************************************************)
 
 inductive fcla: relation2 rtmap nat ≝
-| fcla_isid: ∀f. 𝐈❪f❫ → fcla f 0
+| fcla_isid: ∀f. 𝐈❪f❫ → fcla f (𝟎)
 | fcla_push: ∀f,n. fcla f n → fcla (⫯f) n
 | fcla_next: ∀f,n. fcla f n → fcla (↑f) (↑n)
 .
@@ -45,20 +45,20 @@ qed-.
 
 lemma cla_inv_nn: ∀g,m. 𝐂❪g❫ ≘ m → ∀f,n. ↑f = g → ↑n = m → 𝐂❪f❫ ≘ n.
 #g #m #H #f #n #H1 #H2 elim (fcla_inv_nx … H … H1) -g
-#x #Hf #H destruct //
+#x #Hf #H destruct <(eq_inv_nsucc_bi … H) -n //
 qed-.
 
-lemma cla_inv_np: ∀g,m. 𝐂❪g❫ ≘ m → ∀f. ↑f = g → 0 = m → ⊥.
+lemma cla_inv_np: ∀g,m. 𝐂❪g❫ ≘ m → ∀f. ↑f = g → 𝟎 = m → ⊥.
 #g #m #H #f #H1 elim (fcla_inv_nx … H … H1) -g
-#x #_ #H1 #H2 destruct
+#x #_ #H1 #H2 destruct /2 width=2 by eq_inv_zero_nsucc/
 qed-.
 
-lemma fcla_inv_xp: ∀g,m. 𝐂❪g❫ ≘ m → 0 = m → 𝐈❪g❫.
+lemma fcla_inv_xp: ∀g,m. 𝐂❪g❫ ≘ m → 𝟎 = m → 𝐈❪g❫.
 #g #m #H elim H -g -m /3 width=3 by isid_push/
-#g #m #_ #_ #H destruct
+#g #m #_ #_ #H destruct elim (eq_inv_zero_nsucc … H)
 qed-.
 
-lemma fcla_inv_isid: ∀f,n. 𝐂❪f❫ ≘ n → 𝐈❪f❫ → 0 = n.
+lemma fcla_inv_isid: ∀f,n. 𝐂❪f❫ ≘ n → 𝐈❪f❫ → 𝟎 = n.
 #f #n #H elim H -f -n /3 width=3 by isid_inv_push/
 #f #n #_ #_ #H elim (isid_inv_next … H) -H //
 qed-.
@@ -70,7 +70,7 @@ theorem fcla_mono: ∀f,n1. 𝐂❪f❫ ≘ n1 → ∀n2. 𝐂❪f❫ ≘ n2 →
 [ /2 width=3 by fcla_inv_isid/
 | /3 width=3 by fcla_inv_px/
 | #f #n1 #_ #IH #n2 #H elim (fcla_inv_nx … H) -H [2,3 : // ]
-  #g #Hf #H destruct /3 width=1 by eq_f/
+  #g #Hf #H destruct >IH //
 ]
 qed-.
 
