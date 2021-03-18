@@ -94,7 +94,11 @@ let mk_parser statement lstatus =
   (* {{{ parser initialization *)
 EXTEND
   GLOBAL: term statement;
-  constructor: [ [ name = IDENT; SYMBOL ":"; typ = term -> (name, typ) ] ];
+  constructor: [
+    [ name = IDENT; params = LIST0 protected_binder_vars; SYMBOL ":"; typ = term -> (* FG: params added *)
+      (name, shift_params `Forall params typ)
+    ]
+  ];
   tactic_term: [ [ t = term LEVEL "90" -> t ] ];
   ident_list1: [ [ LPAREN; idents = LIST1 IDENT; RPAREN -> idents ] ];
   nreduction_kind: [
