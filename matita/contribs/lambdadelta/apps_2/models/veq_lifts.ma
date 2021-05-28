@@ -21,7 +21,7 @@ include "apps_2/models/veq.ma".
 (* Forward lemmas with generic relocation ***********************************)
 
 fact lifts_fwd_vpush_aux (M): is_model M → is_extensional M →
-                              ∀f,T1,T2. ⇧*[f] T1 ≘ T2 → ∀m. 𝐁❨m,1❩ = f →
+                              ∀f,T1,T2. ⇧*[f] T1 ≘ T2 → ∀m. 𝐛❨m,1❩ = f →
                               ∀gv,lv,d. ⟦T1⟧[gv,lv] ≗{M} ⟦T2⟧[gv,⫯[m←d]lv].
 #M #H1M #H2M #f #T1 #T2 #H elim H -f -T1 -T2
 [ #f #s #m #Hf #gv #lv #d

@@ -88,7 +88,7 @@ qed-.
 (* Basic_2A1: includes: drop_mono *)
 lemma drops_mono: ∀b1,f,L,L1. ⇩*[b1,f] L ≘ L1 →
                   ∀b2,L2. ⇩*[b2,f] L ≘ L2 → L1 = L2.
-#b1 #f #L #L1 lapply (after_isid_dx 𝐈𝐝 … f)
+#b1 #f #L #L1 lapply (after_isid_dx 𝐢 … f)
 /3 width=8 by drops_conf, drops_fwd_isid/
 qed-.
 

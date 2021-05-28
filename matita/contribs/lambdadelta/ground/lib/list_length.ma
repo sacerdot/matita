@@ -17,8 +17,7 @@ include "ground/arith/nat_succ.ma".
 
 (* LENGTH FOR LISTS *********************************************************)
 
-rec definition list_length A (l:list A) on l ≝
-match l with
+rec definition list_length A (l:list A) on l ≝ match l with
 [ list_nil      ⇒ 𝟎
 | list_cons _ l ⇒ ↑(list_length A l)
 ].

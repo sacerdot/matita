@@ -34,19 +34,19 @@ record rtc: Type[0] ≝ {
 }.
 
 interpretation
-  "constructor (rtc)"
+  "construction (rt-transition counters)"
   'Tuple ri rs ti ts = (mk_rtc ri rs ti ts).
 
 interpretation
-  "one structural step (rtc)"
+  "one structural step (rt-transition counters)"
   'ZeroZero = (mk_rtc nzero nzero nzero nzero).
 
 interpretation
-  "one r-step (rtc)"
+  "one r-step (rt-transition counters)"
   'OneZero = (mk_rtc nzero (ninj punit) nzero nzero).
 
 interpretation
-  "one t-step (rtc)"
+  "one t-step (rt-transition counters)"
   'ZeroOne = (mk_rtc nzero nzero nzero (ninj punit)).
 
 definition rtc_eq_f: relation rtc ≝ λc1,c2. ⊤.
@@ -58,7 +58,8 @@ inductive rtc_eq_t: relation rtc ≝
 
 (* Basic constructions ******************************************************)
 
-lemma rtc_eq_t_refl: reflexive …  rtc_eq_t.
+lemma rtc_eq_t_refl:
+      reflexive …  rtc_eq_t.
 * // qed.
 
 (* Basic inversions *********************************************************)

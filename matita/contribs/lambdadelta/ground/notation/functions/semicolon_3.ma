@@ -15,5 +15,5 @@
 (* GROUND NOTATION **********************************************************)
 
 notation "hvbox( ❨ term 46 hd1, break term 46 hd2 ❩; break term 46 tl )"
-  non associative with precedence 47
+  non associative with precedence 75
   for @{ 'Semicolon $hd1 $hd2 $tl }.

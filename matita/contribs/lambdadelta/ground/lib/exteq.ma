@@ -26,22 +26,28 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma exteq_refl (A) (B): reflexive … (exteq A B).
+lemma exteq_refl (A) (B):
+      reflexive … (exteq A B).
 // qed.
 
-lemma exteq_repl (A) (B): replace_2 … (exteq A B) (exteq A B) (exteq A B).
+lemma exteq_repl (A) (B):
+      replace_2 … (exteq A B) (exteq A B) (exteq A B).
 // qed-.
 
-lemma exteq_sym (A) (B): symmetric … (exteq A B).
+lemma exteq_sym (A) (B):
+      symmetric … (exteq A B).
 /2 width=1 by exteq_repl/ qed-.
 
-lemma exteq_trans (A) (B): Transitive … (exteq A B).
+lemma exteq_trans (A) (B):
+      Transitive … (exteq A B).
 /2 width=1 by exteq_repl/ qed-.
 
-lemma exteq_canc_sn (A) (B): left_cancellable … (exteq A B).
+lemma exteq_canc_sn (A) (B):
+      left_cancellable … (exteq A B).
 /2 width=1 by exteq_repl/ qed-.
 
-lemma exteq_canc_dx (A) (B): right_cancellable … (exteq A B).
+lemma exteq_canc_dx (A) (B):
+      right_cancellable … (exteq A B).
 /2 width=1 by exteq_repl/ qed-.
 
 (* Constructions with compose ***********************************************)

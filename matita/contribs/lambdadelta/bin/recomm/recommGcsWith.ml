@@ -8,6 +8,7 @@ let step k st outs ins =
   | "with" :: tl -> k T.OK ("with" :: outs) tl
   | "of" :: tl -> k T.OK ("with" :: outs) tl
   | "for" :: tl -> k T.OK ("with" :: outs) tl
+  | "on" :: tl -> k T.OK ("with" :: outs) tl
   | _ -> k T.OO outs ins
 
 let main =

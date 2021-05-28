@@ -19,7 +19,7 @@ include "ground/arith/nat_pred_succ.ma".
 
 (*** minus *)
 definition nminus: nat → nat → nat ≝
-           λm,n. npred^n m.
+           λm,n. (npred^n) m.
 
 interpretation
   "minus (non-negative integers)"

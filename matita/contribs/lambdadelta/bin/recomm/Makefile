@@ -15,7 +15,11 @@ MRCS = $(wildcard *.mrc)
 mrc: $(MRCS:%.mrc=recommGc%.ml)
 	@./mrc.native .
 
+subst: subst.txt
+	@sed s/://g <subst_cn.txt >subst.txt  
+	@cd ../token; . ./subst.sh
+
 recommGc%.ml recommGc%.mli: %.mrc mrc*.ml mrc*.mli
 	@./mrc.native $<
 
-.PHONY: test mrc
+.PHONY: test mrc subst

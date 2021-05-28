@@ -143,8 +143,10 @@ interpretation
 
 (* Main constructions with eq ***********************************************)
 
-theorem canc_sn_eq (A): left_cancellable A (eq …).
+theorem canc_sn_eq (A):
+        left_cancellable A (eq …).
 // qed-.
 
-theorem canc_dx_eq (A): right_cancellable A (eq …).
+theorem canc_dx_eq (A):
+        right_cancellable A (eq …).
 // qed-.

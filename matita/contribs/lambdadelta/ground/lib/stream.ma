@@ -27,7 +27,9 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma stream_rew (A) (t:stream A): match t with [ stream_cons a u ⇒ a ⨮ u ] = t.
+(*** stream_rew *)
+lemma stream_unfold (A) (t:stream A):
+      match t with [ stream_cons a u ⇒ a ⨮ u ] = t.
 #A * //
 qed.
 

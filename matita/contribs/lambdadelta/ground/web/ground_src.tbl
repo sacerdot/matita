@@ -10,7 +10,7 @@ table {
     }
   ]
   class "water"
-  [ { "generic rt-transition counter" * } {
+  [ { "generic rt-transition counters" * } {
       [ { "" * } {
           [ "rtc_ist ( 𝐓❪?,?❫ )" "rtc_ist_shift" "rtc_ist_plus" "rtc_ist_max" * ]
           [ "rtc_ism ( 𝐌❪?,?❫ )" "rtc_ism_shift" "rtc_ism_plus" "rtc_ism_max" "rtc_ism_max_shift" * ]
@@ -20,27 +20,53 @@ table {
     }
   ]
   class "green"
-  [ { "multiple relocation" * } {
+  [ { "relocation maps" * } {
+      [ { "finite relocation with pairs" * } {
+          [ "fr2_nat ( @❪?,?❫ ≘ ? )" "fr2_nat_nat" * ]
+          [ "fr2_minus ( ? ▭ ? ≘ ? )" * ]
+          [ "fr2_append ( ?@@? )" * ]
+          [ "fr2_plus ( ?+? )" * ]
+          [ "fr2_map ( ◊ ) ( ❨?,?❩;? )" * ]
+      ]
+      [ { "generic relocation" * } {
+          [ "gr_sor ( ? ⋓ ? ≘ ? )" "gr_sor_eq" "gr_sor_tls" "gr_sor_isi" "gr_sor_fcla" "gr_sor_isf" "gr_sor_coafter_ist_isf" "gr_sor_sle" "gr_sor_sor" "gr_sor_sor_sle" * ]
+          [ "gr_sand ( ? ⋒ ? ≘ ? )" "gr_sand_eq" * ]
+          [ "gr_sdj ( ? ∥ ? )" "gr_sdj_eq" "gr_sdj_isi" * ]
+          [ "gr_sle ( ? ⊆ ? )" "gr_sle_eq" "gr_sle_pushs" "gr_sle_tls" "gr_sle_isi" "gr_sle_isd" "gr_sle_sle" * ]
+          [ "gr_coafter ( ? ~⊚ ? ≘ ? )" "gr_coafter_eq" "gr_coafter_uni_pushs" "gr_coafter_pat_tls" "gr_coafter_nat_tls" "gr_coafter_nat_tls_pushs" "gr_coafter_isi" "gr_coafter_isu" "gr_coafter_ist_isi" "gr_coafter_ist_isf" "gr_coafter_coafter" "gr_coafter_coafter_ist" * ]
+          [ "gr_after ( ? ⊚ ? ≘ ? )" "gr_after_eq" "gr_after_uni" "gr_after_basic" "gr_after_pat" "gr_after_pat_tls" "gr_after_pat_uni" "gr_after_nat_uni" "gr_after_isi" "gr_after_isu" "gr_after_ist" "gr_after_ist_isi" "gr_after_after" "gr_after_after_ist" * ]
+          [ "gr_isd ( 𝛀❪?❫ )" "gr_isd_eq" "gr_isd_tl" "gr_isd_nexts" "gr_isd_tls" * ]
+          [ "gr_ist ( 𝐓❪?❫ )" "gr_ist_tls" "gr_ist_isi" "gr_ist_ist" * ]
+          [ "gr_isf ( 𝐅❪?❫ )" "gr_isf_eq" "gr_isf_tl" "gr_isf_pushs" "fr_isf_tls" "gr_ifs_uni" "gr_isf_isu" * ]
+          [ "gr_fcla ( 𝐂❪?❫ ≘ ? )" "gr_fcla_eq" "fcla_uni" "gr_fcla_fcla" * ]
+          [ "gr_isu ( 𝐔❪?❫ )" "gr_isu_tl" "gr_isu_uni" * ]
+          [ "gr_isi ( 𝐈❪?❫ )" "gr_isi_eq" "gr_isi_tl" "gr_isi_pushs" "gr_isi_tls" "gr_isi_id" "gr_isi_uni" "gr_isi_pat" * ]
+          [ "gr_nat ( @↑❪?,?❫ ≘ ? )" "gr_nat_uni" "gr_nat_basic" "gr_nat_nat" * ]
+          [ "gr_pat ( @❪?,?❫ ≘ ? )" "gr_pat_lt" "gr_pat_eq" "gr_pat_tls" "gr_pat_id" "gr_pat_uni" "gr_pat_basic" "gr_pat_pat" "gr_pat_pat_id" * ]
+          [ "gr_basic ( 𝐛❨?,?❩ )" * ]
+          [ "gr_uni ( 𝐮❨?❩ )" "gr_uni_eq" * ]
+          [ "gr_id ( 𝐢 ) " "gr_id_eq" * ]
+          [ "gr_tls ( ⫱*[?]? )" "gr_tls_eq" "gr_tls_pushs" "gr_tls_pushs_eq" "gr_tls_nexts_eq" * ]
+          [ "gr_nexts ( ↑*[?]? )" "gr_nexts_eq" * ]
+          [ "gr_pushs ( ⫯*[?]? )" "gr_pushs_eq" * ]
+          [ "gr_tl ( ⫱? )" "gr_tl_eq" "gr_tl_eq_eq" * ]
+          [ "gr_eq ( ? ≡ ? )" * ]
+          [ "gr_map ( ⫯? ) ( ↑? )" * ]
+      ]
+(*
       [ { "" * } {
-          [ "rtmap" "rtmap_eq ( ? ≡ ? )" "rtmap_pushs ( ⫯*[?]? )" "rtmap_nexts ( ↑*[?]? )"
-            "rtmap_tl ( ⫱? )" "rtmap_tls ( ⫱*[?]? )" "rtmap_isid ( 𝐈❪?❫ )" "rtmap_id" "rtmap_isdiv ( 𝛀❪?❫ )"
-            "rtmap_fcla ( 𝐂❪?❫ ≘ ? )" "rtmap_isfin ( 𝐅❪?❫ )" "rtmap_isuni ( 𝐔❪?❫ )" "rtmap_uni ( 𝐔❨?❩ )"
-            "rtmap_sle ( ? ⊆ ? )" "rtmap_sdj ( ? ∥ ? )" "rtmap_sand ( ? ⋒ ? ≘ ? )" "rtmap_sor ( ? ⋓ ? ≘ ? )"
-            "rtmap_at ( @❪?,?❫ ≘ ? )" "rtmap_istot ( 𝐓❪?❫ )" "rtmap_after ( ? ⊚ ? ≘ ? )" "rtmap_coafter ( ? ~⊚ ? ≘ ? )"
-            "rtmap_basic ( 𝐁❨?,?❩ )" "rtmap_basic_after"
-          * ]
           [ "nstream ( ⫯? ) ( ↑? )" "nstream_eq" "" ""
-            "" "" "nstream_isid" "nstream_id ( 𝐈𝐝 )" ""
+            "" "" "nstream_isid" "nstream_id ( 𝐢 )" ""
             "" "" "" ""
             "" "" "" "nstream_sor"
             "" "nstream_istot ( ?@❨?❩ )" "nstream_after ( ? ∘ ? )" "nstream_coafter ( ? ~∘ ? )"
             "nstream_basic" ""
           * ]
+*)
 (*
           [ "trace ( ∥?∥ )" "trace_at ( @❪?,?❫ ≘ ? )" "trace_after ( ? ⊚ ? ≘ ? )" "trace_isid ( 𝐈❪?❫ )" "trace_isun ( 𝐔❪?❫ )"
             "trace_sle ( ? ⊆ ? )" "trace_sor ( ? ⋓ ? ≘ ? )" "trace_snot ( ∁ ? )" * ]
 *)
-          [ "mr2 ( ◊ ) ( ❨?,?❩;? )" "mr2_append ( ? @@? )" "mr2_at ( @❪?,?❫ ≘ ? )" "mr2_plus ( ? + ? )" "mr2_minus ( ? ▭ ? ≘ ? )" * ]
         }
       ]
     }
@@ -90,8 +116,14 @@ table {
   ]
   class "yellow"
   [ { "extensions to the library" * } {
+      [ { "streams" * } {
+          [ "stream_tls ( ⫰*{?}[?]? )" "stream_tls_eq" * ]
+          [ "stream_hdtl ( ⫰{?}? )" * ]
+          [ "stream_eq ( ? ≗{?} ? )" "stream_eq_eq" * ]
+          [ "stream ( ? ⨮{?} ? )" * ]
+        }
+      ]
       [ { "" * } {
-          [ "stream ( ? ⨮{?} ? )" "stream_eq ( ? ≗{?} ? )" "stream_hdtl ( ⫰{?}? )" "stream_tls ( ⫰*{?}[?]? )" * ]
           [ "list ( Ⓔ{?} ) ( ? ⨮{?} ? )" "list_eq" "list_length ( |?| )" * ]
           [ "bool ( Ⓕ ) ( Ⓣ )" "bool_or" "bool_and" * ]
           [ "ltc" "ltc_ctc" * ]

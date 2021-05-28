@@ -30,7 +30,7 @@ lemma cpx_subst (G) (L) (U1) (i):
   elim (lt_or_eq_or_gt i j) #Hij
   [ /3 width=4 by lifts_lref_ge_minus, cpx_refl, ex2_2_intro/
   | elim (lifts_total V (𝐔❨↑i❩)) #U2 #HU2
-    elim (lifts_split_trans … HU2 (𝐔❨i❩) (𝐁❨i,1❩)) [2: @(after_basic_rc i 0) ]
+    elim (lifts_split_trans … HU2 (𝐔❨i❩) (𝐛❨i,1❩)) [2: @(after_basic_rc i 0) ]
     /3 width=7 by cpx_delta_drops, ex2_2_intro/
   | /3 width=4 by lifts_lref_lt, cpx_refl, ex2_2_intro/
   ]

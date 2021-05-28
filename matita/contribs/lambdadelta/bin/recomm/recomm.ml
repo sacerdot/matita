@@ -19,7 +19,7 @@ let chdir path =
   Sys.chdir path
 
 let start_substs () =
-  subst := Some (open_out "subst.txt")
+  subst := Some (open_out "subst_cn.txt")
 
 let write_substs lint = function
   | None     -> ()

@@ -17,7 +17,7 @@ include "ground/arith/pnat_iter.ma".
 (* ADDITION FOR POSITIVE INTEGERS *******************************************)
 
 definition pplus: pnat → pnat → pnat ≝
-           λp,q. psucc^q p.
+           λp,q. (psucc^q) p.
 
 interpretation
   "plus (positive integers)"

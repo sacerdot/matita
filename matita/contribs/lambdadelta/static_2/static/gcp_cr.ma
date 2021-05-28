@@ -104,7 +104,7 @@ lemma acr_gcr: ∀RR,RS,RP. gcp RR RS RP → gcr RR RS RP RP →
   letin s ≝ 0 (* one sort must exist *)
   lapply (cp1 … H1RP G L s) #HK
   lapply (s2 … IHB G L (Ⓔ) … HK) // #HB
-  lapply (H (𝐈𝐝) L (⋆s) T ? ? ?) -H
+  lapply (H (𝐢) L (⋆s) T ? ? ?) -H
   /3 width=6 by s1, cp3, drops_refl, lifts_refl/
 | #G #L #Vs #HVs #T #H1T #H2T #f #L0 #V0 #X #HL0 #H #HB
   elim (lifts_inv_applv1 … H) -H #V0s #T0 #HV0s #HT0 #H destruct

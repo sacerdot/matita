@@ -15,5 +15,5 @@
 (* GROUND NOTATION **********************************************************)
 
 notation "𝟘𝟙"
-  non associative with precedence 55
+  non associative with precedence 75
   for @{ 'ZeroOne }.

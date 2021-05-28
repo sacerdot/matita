@@ -37,18 +37,21 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma list_eq_refl (A): reflexive … (list_eq A).
+lemma list_eq_refl (A):
+      reflexive … (list_eq A).
 #A #l elim l -l /2 width=1 by conj/
 qed.
 
 (* Main constructions *******************************************************)
 
-theorem eq_list_eq (A,l1,l2): l1 = l2 → l1 ≗{A} l2.
+theorem eq_list_eq (A) (l1) (l2):
+        l1 = l2 → l1 ≗{A} l2.
 // qed.
 
 (* Main inversions **********************************************************)
 
-theorem list_eq_inv_eq (A,l1,l2): l1 ≗{A} l2 → l1 = l2.
+theorem list_eq_inv_eq (A) (l1) (l2):
+        l1 ≗{A} l2 → l1 = l2.
 #A #l1 elim l1 -l1 [| #a1 #l1 #IH ] *
 [ //
 | #a2 #l2 #H elim H

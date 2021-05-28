@@ -217,7 +217,7 @@ fact drops_fwd_drop2_aux: ∀b,f2,X,Y. ⇩*[b,f2] X ≘ Y → ∀I,K. Y = K.ⓘ[
 | #f2 #I #L1 #L2 #_ #IHL #J #K #H elim (IHL … H) -IHL
   /3 width=7 by after_next, ex3_2_intro, drops_drop/
 | #f2 #I1 #I2 #L1 #L2 #HL #_ #_ #J #K #H destruct
-  lapply (after_isid_dx 𝐈𝐝 … f2) /3 width=9 by after_push, ex3_2_intro, drops_drop/
+  lapply (after_isid_dx 𝐢 … f2) /3 width=9 by after_push, ex3_2_intro, drops_drop/
 ]
 qed-.
 

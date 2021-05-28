@@ -70,11 +70,19 @@ let rec write_fst och = function
   | _ :: tl                                  -> write_fst och tl
 
 and write_snd och tl s = function
+  | "axiom" :: n :: _
   | "definition" :: n :: _
+  | "corec" :: "definition" :: n :: _
+  | "rec" :: "definition" :: n :: _
   | "fact" :: n :: _
+  | "corec" :: "fact" :: n :: _
   | "lemma" :: n :: _
+  | "corec" :: "lemma" :: n :: _
+  | "theorem" :: n :: _
+  | "corec" :: "theorem" :: n :: _
   | "inductive" :: n :: _
-  | "theorem" :: n :: _     ->
+  | "coinductive" :: n :: _
+  | "|" :: n :: _                     ->
     let ss = EL.split_on_char ' ' s in
     List.iter (write_subst och n) (List.tl ss);
     write_fst och tl

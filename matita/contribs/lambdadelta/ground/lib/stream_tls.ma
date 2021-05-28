@@ -46,9 +46,3 @@ qed.
 lemma stream_tls_swap (A) (n) (t):
       (⫰*[n]⫰t) = ⫰*{A}[↑n]t.
 // qed.
-
-lemma stream_tls_eq_repl (A) (n):
-      stream_eq_repl A (λt1,t2. ⫰*[n] t1 ≗ ⫰*[n] t2).
-#A #n @(nat_ind_succ … n) -n //
-#n #IH * #n1 #t1 * #n2 #t2 #H elim (stream_eq_inv_cons … H) /2 width=7 by/
-qed.

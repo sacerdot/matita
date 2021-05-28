@@ -14,6 +14,6 @@
 
 (* GROUND NOTATION **********************************************************)
 
-notation "hvbox( ↑ term 70 T )"
-  non associative with precedence 70
+notation "hvbox( ↑ term 75 T )"
+  non associative with precedence 75
   for @{ 'UpArrow $T }.

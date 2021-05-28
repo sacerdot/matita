@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/relations/ist_2.ma".
+include "ground/notation/relations/predicate_t_2.ma".
 include "ground/counters/rtc.ma".
 
 (* T-TRANSITION COUNTERS ****************************************************)
@@ -21,8 +21,8 @@ definition rtc_ist: relation2 nat rtc ≝
            λts,c. 〈𝟎,𝟎,𝟎,ts〉 = c.
 
 interpretation
-  "t-transition counters (rtc)"
-  'IsT ts c = (rtc_ist ts c).
+  "construction (t-transition counters)"
+  'PredicateT ts c = (rtc_ist ts c).
 
 (* Basic constructions ******************************************************)
 

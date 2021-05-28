@@ -1,0 +1,90 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "ground/notation/functions/upspoon_1.ma".
+include "ground/lib/stream.ma".
+include "ground/arith/pnat.ma".
+
+(* RELOCATION P-STREAM ******************************************************)
+
+definition gr_map: Type[0] ≝ stream pnat.
+
+definition gr_push: gr_map → gr_map ≝ λf. 𝟏⨮f.
+
+interpretation "push (pstream)" 'UpSpoon f = (gr_push f).
+
+definition gr_next: gr_map → gr_map.
+* #p #f @(↑p⨮f)
+defined.
+
+interpretation "next (pstream)" 'UpArrow f = (gr_next f).
+
+(* Basic properties *********************************************************)
+
+lemma gr_push_unfold: ∀f. 𝟏⨮f = ⫯f.
+// qed.
+
+lemma gr_next_unfold: ∀f,p. (↑p)⨮f = ↑(p⨮f).
+// qed.
+
+(* Basic inversion lemmas ***************************************************)
+
+lemma eq_inv_gr_push_bi: injective ? ? gr_push.
+#f1 #f2 <gr_push_unfold <gr_push_unfold #H destruct //
+qed-.
+
+lemma eq_inv_gr_push_next: ∀f1,f2. ⫯f1 = ↑f2 → ⊥.
+#f1 * #p2 #f2 <gr_push_unfold <gr_next_unfold #H destruct
+qed-.
+
+lemma eq_inv_gr_next_push: ∀f1,f2. ↑f1 = ⫯f2 → ⊥.
+* #p1 #f1 #f2 <gr_next_unfold <gr_push_unfold #H destruct
+qed-.
+
+lemma eq_inv_gr_next_bi: injective ? ? gr_next.
+* #p1 #f1 * #p2 #f2 <gr_next_unfold <gr_next_unfold #H destruct //
+qed-.
+
+lemma push_inv_seq_sn: ∀f,g,p. p⨮g = ⫯f → ∧∧ 𝟏 = p & g = f.
+#f #g #p <gr_push_unfold #H destruct /2 width=1 by conj/
+qed-.
+
+lemma push_inv_seq_dx: ∀f,g,p. ⫯f = p⨮g → ∧∧ 𝟏 = p & g = f.
+#f #g #p <gr_push_unfold #H destruct /2 width=1 by conj/
+qed-.
+
+lemma next_inv_seq_sn: ∀f,g,p. p⨮g = ↑f → ∃∃q. q⨮g = f & ↑q = p.
+* #q #f #g #p <gr_next_unfold #H destruct /2 width=3 by ex2_intro/
+qed-.
+
+lemma next_inv_seq_dx: ∀f,g,p. ↑f = p⨮g → ∃∃q. q⨮g = f & ↑q = p.
+* #q #f #g #p <gr_next_unfold #H destruct /2 width=3 by ex2_intro/
+qed-.
+
+lemma case_prop (Q:predicate gr_map):
+      (∀f. Q (⫯f)) → (∀f. Q (↑f)) → ∀f. Q f.
+#Q #H1 #H2 * * //
+qed-.
+
+lemma case_type0 (Q:gr_map→Type[0]):
+      (∀f. Q (⫯f)) → (∀f. Q (↑f)) → ∀f. Q f.
+#Q #H1 #H2 * * //
+qed-.
+
+lemma iota_push: ∀Q,a,b,f. a f = case_type0 Q a b (⫯f).
+// qed.
+
+lemma iota_next: ∀Q,a,b,f. b f = case_type0 Q a b (↑f).
+#Q #a #b * //
+qed.

@@ -87,7 +87,7 @@ lemma lt_plus_SO_to_le: ∀x,y. x < y + (𝟏) → x ≤ y.
 
 (* Iterators ****************************************************************)
 
-lemma iter_SO: ∀B:Type[0]. ∀f:B→B. ∀b,l. f^(l+𝟏) b = f (f^l b).
+lemma iter_SO: ∀B:Type[0]. ∀f:B→B. ∀b,l. (f^(l+𝟏)) b = f ((f^l) b).
 #B #f #b #l
 <niter_succ //
 qed.

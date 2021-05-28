@@ -30,6 +30,7 @@ interpretation
 
 (* Constructions with land **************************************************)
 
-lemma commutative_and: ∀A,B. A ∧ B → B ∧ A.
+lemma commutative_and (A) (B):
+      A ∧ B → B ∧ A.
 #A #B * /2 width=1 by conj/
 qed-.

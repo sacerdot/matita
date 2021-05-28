@@ -20,6 +20,8 @@ let step k st outs ins =
   | "nsucc" :: tl -> k T.OK ("nsucc" :: outs) tl
   | "ntri" :: tl -> k T.OK ("ntri" :: outs) tl
   | "niter" :: tl -> k T.OK ("niter" :: outs) tl
+  | "plt" :: tl -> k T.OK ("plt" :: outs) tl
+  | "ple" :: tl -> k T.OK ("ple" :: outs) tl
   | _ -> k T.OO outs ins
 
 let main =

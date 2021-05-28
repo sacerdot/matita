@@ -10,6 +10,7 @@
 
   let heads = [|
     "Advanced";
+    "Alternative";
     "Basic";
     "Constructions";
     "Forward";

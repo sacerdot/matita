@@ -18,7 +18,7 @@ include "ground/arith/nat_succ_iter.ma".
 
 (*** plus *)
 definition nplus: nat → nat → nat ≝
-           λm,n. nsucc^n m.
+           λm,n. (nsucc^n) m.
 
 interpretation
   "plus (non-negative integers)"
@@ -57,7 +57,7 @@ lemma nplus_succ_sn (m) (n): ↑(m+n) = ↑m + n.
 #m #n @(niter_appl … nsucc)
 qed.
 
-(*** plus_O_n.con *)
+(*** plus_O_n *)
 lemma nplus_zero_sn (m): m = 𝟎 + m.
 #m @(nat_ind_succ … m) -m //
 qed.

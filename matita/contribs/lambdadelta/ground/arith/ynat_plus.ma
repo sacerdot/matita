@@ -19,7 +19,7 @@ include "ground/arith/ynat_succ.ma".
 (* ADDITION FOR NON-NEGATIVE INTEGERS WITH INFINITY *************************)
 
 definition yplus_aux (x) (n): ynat ≝
-           ysucc^n x.
+           (ysucc^n) x.
 
 (*** yplus *)
 definition yplus (x): ynat → ynat ≝
@@ -32,7 +32,7 @@ interpretation
 (* Basic constructions ******************************************************)
 
 lemma yplus_inj_dx (x) (n):
-      ysucc^n x = x + yinj_nat n.
+      (ysucc^n) x = x + yinj_nat n.
 #x @(ynat_bind_nat_inj (yplus_aux x))
 qed.
 

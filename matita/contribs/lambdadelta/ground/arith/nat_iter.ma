@@ -21,7 +21,7 @@ include "ground/arith/nat.ma".
 definition niter (n:nat) (A:Type[0]) (f:A→A) (a:A) ≝
 match n with
 [ nzero  ⇒ a
-| ninj p ⇒ f^{A}p a
+| ninj p ⇒ (f^{A}p) a
 ]
 .
 

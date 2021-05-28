@@ -5,3 +5,4 @@ land
 lsub
 compose, function composition
 ctc, contextual transitive closure
+stream_eq

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/relations/ism_2.ma".
+include "ground/notation/relations/predicate_m_2.ma".
 include "ground/counters/rtc.ma".
 
 (* T-BOUND RT-TRANSITION COUNTERS *******************************************)
@@ -21,8 +21,8 @@ definition rtc_ism: relation2 nat rtc ≝ λts,c.
            ∃∃ri,rs. 〈ri,rs,𝟎,ts〉 = c.
 
 interpretation
-  "t-bound rt-transition counters (rtc)"
-  'IsM ts c = (rtc_ism ts c).
+  "construction (t-bound rt-transition counters)"
+  'PredicateM ts c = (rtc_ism ts c).
 
 (* Basic constructions ******************************************************)
 

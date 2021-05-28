@@ -18,6 +18,7 @@ let step k st outs ins =
   | "inversion" :: tl -> k T.OK ("inversions" :: outs) tl
   | "constructions" :: tl -> k T.OK ("constructions" :: outs) tl
   | "properties" :: tl -> k T.OK ("constructions" :: outs) tl
+  | "alternative" :: "definition" :: tl -> k T.OK ("definition" :: "alternative" :: outs) tl
   | _ -> k T.KO outs ins
 
 let main =

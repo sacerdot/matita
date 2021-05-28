@@ -19,7 +19,7 @@ include "ground/arith/ynat_pred.ma".
 
 (*** yminus_sn *)
 definition ylminus (x) (n): ynat ≝
-           ypred^n x.
+           (ypred^n) x.
 
 interpretation
   "left minus (non-negative integers with infinity)"

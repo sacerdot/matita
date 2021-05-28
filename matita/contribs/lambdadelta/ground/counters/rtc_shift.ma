@@ -25,12 +25,13 @@ match c with
 ].
 
 interpretation
-  "shift (rtc)"
+  "shift (rt-transition counters)"
   'UpDownArrowStar c = (rtc_shift c).
 
 (* Basic constructions ******************************************************)
 
-lemma rtc_shift_rew (ri) (rs) (ti) (ts):
+(*** rtc_shift_rew *)
+lemma rtc_shift_unfold (ri) (rs) (ti) (ts):
       〈ri ∨ rs, 𝟎, ti ∨ ts, 𝟎〉 = ↕*〈ri,rs,ti,ts〉.
 //
 qed.
@@ -44,6 +45,6 @@ lemma rtc_shift_inv_dx (ri) (rs) (ti) (ts) (c):
       〈ri,rs,ti,ts〉 = ↕*c →
       ∃∃ri0,rs0,ti0,ts0.
       (ri0∨rs0) = ri & 𝟎 = rs & (ti0∨ts0) = ti & 𝟎 = ts & 〈ri0,rs0,ti0,ts0〉 = c.
-#ri #rs #ti #ts * #ri0 #rs0 #ti0 #ts0 <rtc_shift_rew #H destruct
+#ri #rs #ti #ts * #ri0 #rs0 #ti0 #ts0 <rtc_shift_unfold #H destruct
 /2 width=7 by ex5_4_intro/
 qed-.

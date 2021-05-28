@@ -14,6 +14,6 @@
 
 (* GROUND NOTATION **********************************************************)
 
-notation "hvbox( ↑*[ term 46 n ] break term 70 T )"
-  non associative with precedence 70
+notation "hvbox( ↑*[ term 46 n ] break term 75 T )"
+  non associative with precedence 75
   for @{ 'UpArrowStar $n $T }.

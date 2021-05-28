@@ -31,8 +31,7 @@ interpretation
   "cons (lists)"
   'OPlusRight A hd tl = (list_cons A hd tl).
 
-rec definition list_all A (R:predicate A) (l:list A) on l ≝
-match l with
+rec definition list_all A (R:predicate A) (l:list A) on l ≝ match l with
 [ list_nil        ⇒ ⊤
 | list_cons hd tl ⇒ ∧∧ R hd & list_all A R tl
 ].

@@ -21,6 +21,6 @@ include "ground/counters/rtc_max.ma".
 
 lemma rtc_max_shift (c1) (c2): ((↕*c1) ∨ (↕*c2)) = ↕*(c1∨c2).
 * #ri1 #rs1 #ti1 #ts1 * #ri2 #rs2 #ti2 #ts2
-<rtc_shift_rew <rtc_shift_rew <rtc_shift_rew <rtc_max_rew
+<rtc_shift_unfold <rtc_shift_unfold <rtc_shift_unfold <rtc_max_unfold
 <nmax_assoc <nmax_assoc <nmax_assoc <nmax_assoc //
 qed.

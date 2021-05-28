@@ -4,6 +4,7 @@ module R = RecommPcsAnd
 let step k st outs ins =
   if st <> T.OO then k st outs ins else
   match ins with
+  | "stream_eq" :: tl -> k T.OK ("stream_eq" :: outs) tl
   | "ctc" :: tl -> k T.OK ("ctc" :: outs) tl
   | "contextual" :: "transitive" :: "closure" :: tl -> k T.OK ("ctc" :: outs) tl
   | "compose" :: tl -> k T.OK ("compose" :: outs) tl
