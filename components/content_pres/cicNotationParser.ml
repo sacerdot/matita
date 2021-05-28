@@ -616,7 +616,8 @@ EXTEND
   ];
   arg: [
     [ LPAREN; names = LIST1 IDENT SEP SYMBOL ",";
-      SYMBOL ":"; ty = term; RPAREN ->
+      typ = OPT [ SYMBOL ":"; typ = term -> typ] ; RPAREN -> (* FG: now type is optional *)
+        let ty = match typ with Some ty -> ty | None -> Ast.Implicit `JustOne in
         List.map (fun n -> Ast.Ident (n, None)) names, Some ty
     | name = IDENT -> [Ast.Ident (name, None)], None
     | blob = UNPARSED_META ->
