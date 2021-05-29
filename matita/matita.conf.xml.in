@@ -15,6 +15,8 @@
     <!-- Debug only. Stay away. -->
     <!-- <key name="environment_trust">true</key> -->
     <key name="basedir">$(user.home)/.matita</key>
+    <!-- remove the old objects before putting the new ones -->
+    <key name="remove_old_objects">false</key>
     <!-- Where support files are installed -->
     <key name="rt_base_dir">@RT_BASE_DIR@</key>
     <!-- Metadata owner. It will be used to create user-specific tables

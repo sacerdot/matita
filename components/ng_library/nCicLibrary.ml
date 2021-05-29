@@ -260,9 +260,10 @@ module Serializer(D: sig type dumpable_s = private #dumpable_status end) =
    let ch = open_out (ng_path_of_baseuri baseuri) in
    Marshal.to_channel ch (magic,(status#dump.dependencies,status#dump.objs)) [];
    close_out ch;
-(*
+
+   if Helm_registry.get_bool "matita.remove_old_objects" then
    remove_objects ~baseuri; (* FG: we remove the old objects before putting the new ones*)
-*)
+
    List.iter
     (function 
      | `Obj (uri,obj) ->
