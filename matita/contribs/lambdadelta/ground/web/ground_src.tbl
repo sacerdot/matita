@@ -27,6 +27,7 @@ table {
           [ "fr2_append ( ?@@? )" * ]
           [ "fr2_plus ( ?+? )" * ]
           [ "fr2_map ( ◊ ) ( ❨?,?❩;? )" * ]
+        }
       ]
       [ { "generic relocation" * } {
           [ "gr_sor ( ? ⋓ ? ≘ ? )" "gr_sor_eq" "gr_sor_tls" "gr_sor_isi" "gr_sor_fcla" "gr_sor_isf" "gr_sor_coafter_ist_isf" "gr_sor_sle" "gr_sor_sor" "gr_sor_sor_sle" * ]
@@ -52,6 +53,7 @@ table {
           [ "gr_tl ( ⫱? )" "gr_tl_eq" "gr_tl_eq_eq" * ]
           [ "gr_eq ( ? ≡ ? )" * ]
           [ "gr_map ( ⫯? ) ( ↑? )" * ]
+        }
       ]
 (*
       [ { "" * } {
@@ -62,13 +64,12 @@ table {
             "" "nstream_istot ( ?@❨?❩ )" "nstream_after ( ? ∘ ? )" "nstream_coafter ( ? ~∘ ? )"
             "nstream_basic" ""
           * ]
-*)
-(*
           [ "trace ( ∥?∥ )" "trace_at ( @❪?,?❫ ≘ ? )" "trace_after ( ? ⊚ ? ≘ ? )" "trace_isid ( 𝐈❪?❫ )" "trace_isun ( 𝐔❪?❫ )"
-            "trace_sle ( ? ⊆ ? )" "trace_sor ( ? ⋓ ? ≘ ? )" "trace_snot ( ∁ ? )" * ]
-*)
+            "trace_sle ( ? ⊆ ? )" "trace_sor ( ? ⋓ ? ≘ ? )" "trace_snot ( ∁ ? )"
+          * ]
         }
       ]
+*)
     }
   ]
   class "grass"
