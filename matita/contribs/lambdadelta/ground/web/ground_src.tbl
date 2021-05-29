@@ -34,7 +34,7 @@ table {
           [ "gr_sdj ( ? ∥ ? )" "gr_sdj_eq" "gr_sdj_isi" * ]
           [ "gr_sle ( ? ⊆ ? )" "gr_sle_eq" "gr_sle_pushs" "gr_sle_tls" "gr_sle_isi" "gr_sle_isd" "gr_sle_sle" * ]
           [ "gr_coafter ( ? ~⊚ ? ≘ ? )" "gr_coafter_eq" "gr_coafter_uni_pushs" "gr_coafter_pat_tls" "gr_coafter_nat_tls" "gr_coafter_nat_tls_pushs" "gr_coafter_isi" "gr_coafter_isu" "gr_coafter_ist_isi" "gr_coafter_ist_isf" "gr_coafter_coafter" "gr_coafter_coafter_ist" * ]
-          [ "gr_after ( ? ⊚ ? ≘ ? )" "gr_after_eq" "gr_after_uni" "gr_after_basic" "gr_after_pat" "gr_after_pat_tls" "gr_after_pat_uni" "gr_after_nat_uni" "gr_after_isi" "gr_after_isu" "gr_after_ist" "gr_after_ist_isi" "gr_after_after" "gr_after_after_ist" * ]
+          [ "gr_after ( ? ⊚ ? ≘ ? )" "gr_after_eq" "gr_after_uni" "gr_after_basic" "gr_after_pat" "gr_after_pat_tls" "gr_after_pat_uni_tls" "gr_after_nat_uni_tls" "gr_after_isi" "gr_after_isu" "gr_after_ist" "gr_after_ist_isi" "gr_after_after" "gr_after_after_ist" * ]
           [ "gr_isd ( 𝛀❪?❫ )" "gr_isd_eq" "gr_isd_tl" "gr_isd_nexts" "gr_isd_tls" * ]
           [ "gr_ist ( 𝐓❪?❫ )" "gr_ist_tls" "gr_ist_isi" "gr_ist_ist" * ]
           [ "gr_isf ( 𝐅❪?❫ )" "gr_isf_eq" "gr_isf_tl" "gr_isf_pushs" "fr_isf_tls" "gr_ifs_uni" "gr_isf_isu" * ]

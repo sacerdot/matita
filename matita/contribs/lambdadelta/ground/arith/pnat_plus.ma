@@ -25,7 +25,7 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma pplus_one_dx (p): ↑p = p + 𝟏.
+lemma pplus_unit_dx (p): ↑p = p + 𝟏.
 // qed.
 
 lemma pplus_succ_dx (p) (q): ↑(p+q) = p + ↑q.
@@ -37,7 +37,7 @@ lemma pplus_succ_sn (p) (q): ↑(p+q) = ↑p + q.
 #p #q @(piter_appl … psucc)
 qed.
 
-lemma pplus_one_sn (p): ↑p = 𝟏 + p.
+lemma pplus_unit_sn (p): ↑p = 𝟏 + p.
 #p elim p -p //
 qed.
 
@@ -54,7 +54,7 @@ qed.
 
 lemma eq_inv_unit_pplus (p) (q): 𝟏 = p + q → ⊥.
 #p #q elim q -q
-[ <pplus_one_dx #H destruct
+[ <pplus_unit_dx #H destruct
 | #q #_ <pplus_succ_dx #H destruct
 ]
 qed-.

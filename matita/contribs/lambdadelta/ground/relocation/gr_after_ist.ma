@@ -45,7 +45,7 @@ lemma gr_after_des_ist_sn:
 qed-.
 
 (*** after_at1_fwd *)
-lemma gr_after_pat_sn_des:
+lemma gr_after_des_ist_pat:
       ∀f1,i1,i2. @❪i1, f1❫ ≘ i2 → ∀f2. 𝐓❪f2❫ → ∀f. f2 ⊚ f1 ≘ f →
       ∃∃i. @❪i2, f2❫ ≘ i & @❪i1, f❫ ≘ i.
 #f1 #i1 #i2 #Hf1 #f2 #Hf2 #f #Hf elim (Hf2 i2) -Hf2

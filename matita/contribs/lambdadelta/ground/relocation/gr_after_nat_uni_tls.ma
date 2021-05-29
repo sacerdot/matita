@@ -22,7 +22,7 @@ include "ground/relocation/gr_after_isi.ma".
 (* Properties with gr_nat and uni *)
 
 (*** after_uni_dx *)
-lemma gr_after_uni_dx (l2) (l1):
+lemma gr_after_nat_uni (l2) (l1):
       ∀f2. @↑❪l1, f2❫ ≘ l2 →
       ∀f. f2 ⊚ 𝐮❨l1❩ ≘ f → 𝐮❨l2❩ ⊚ ⫱*[l2] f2 ≘ f.
 #l2 @(nat_ind_succ … l2) -l2
@@ -43,7 +43,7 @@ lemma gr_after_uni_dx (l2) (l1):
 qed.
 
 (*** after_uni_sn *)
-lemma gr_after_uni_sn (l2) (l1):
+lemma gr_nat_after_uni_tls (l2) (l1):
       ∀f2. @↑❪l1, f2❫ ≘ l2 →
       ∀f. 𝐮❨l2❩ ⊚ ⫱*[l2] f2 ≘ f → f2 ⊚ 𝐮❨l1❩ ≘ f.
 #l2 @(nat_ind_succ … l2) -l2

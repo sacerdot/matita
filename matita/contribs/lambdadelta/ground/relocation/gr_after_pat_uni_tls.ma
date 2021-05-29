@@ -20,10 +20,10 @@ include "ground/relocation/gr_after_isi.ma".
 
 (* RELATIONAL COMPOSITION FOR GENERIC RELOCATION MAPS ***********************************************************)
 
-(* Properties with pat and uni *******************************************************)
+(* Properties with pat and uni and tls *******************************************************)
 
 (*** after_uni_succ_dx *)
-lemma gr_after_uni_dx (i2) (i1):
+lemma gr_after_pat_uni (i2) (i1):
       ∀f2. @❪i1, f2❫ ≘ i2 →
       ∀f. f2 ⊚ 𝐮❨i1❩ ≘ f → 𝐮❨i2❩ ⊚ ⫱*[i2] f2 ≘ f.
 #i2 elim i2 -i2
@@ -45,7 +45,7 @@ lemma gr_after_uni_dx (i2) (i1):
 qed.
 
 (*** after_uni_succ_sn *)
-lemma gr_after_uni_sn (i2) (i1):
+lemma gr_pat_after_uni_tls (i2) (i1):
       ∀f2. @❪i1, f2❫ ≘ i2 →
       ∀f. 𝐮❨i2❩ ⊚ ⫱*[i2] f2 ≘ f → f2 ⊚ 𝐮❨i1❩ ≘ f.
 #i2 elim i2 -i2
@@ -66,14 +66,14 @@ qed-.
 (* Advanced properties with uni *)
 
 (*** after_uni_one_dx *)
-lemma gr_after_uni_one_dx:
+lemma gr_after_push_unit:
       ∀f2,f. ⫯f2 ⊚ 𝐮❨𝟏❩ ≘ f → 𝐮❨𝟏❩ ⊚ f2 ≘ f.
 #f2 #f #H
-@(gr_after_uni_dx … (⫯f2))
+@(gr_after_pat_uni … (⫯f2))
 /2 width=3 by gr_pat_refl/
 qed.
 
 (*** after_uni_one_sn *)
-lemma gr_after_uni_one_sn:
+lemma gr_after_unit_sn:
       ∀f1,f. 𝐮❨𝟏❩ ⊚ f1 ≘ f → ⫯f1 ⊚ 𝐮❨𝟏❩ ≘ f.
-/3 width=3 by gr_after_uni_sn, gr_pat_refl/ qed-.
+/3 width=3 by gr_pat_after_uni_tls, gr_pat_refl/ qed-.

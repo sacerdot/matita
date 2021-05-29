@@ -33,7 +33,7 @@ lemma rtc_ism_plus_zero_dx (n) (c1) (c2): 𝐌❪n,c1❫ → 𝐌❪𝟎,c2❫ �
 /2 width=1 by rtc_ism_plus/ qed.
 
 lemma rtc_ism_succ (n) (c): 𝐌❪n,c❫ → 𝐌❪↑n,c+𝟘𝟙❫.
-#n #c #H >nplus_one_dx
+#n #c #H >nplus_unit_dx
 /2 width=1 by rtc_ism_plus/
 qed.
 

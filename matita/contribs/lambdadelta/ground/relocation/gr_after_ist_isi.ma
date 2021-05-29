@@ -20,7 +20,7 @@ include "ground/relocation/gr_after_ist.ma".
 (* Forward lemmas on istot and isid **************************************************)
 
 (*** after_fwd_isid_sn *)
-lemma gr_after_des_isi_sn:
+lemma gr_after_des_ist_eq_sn:
       ∀f2,f1,f. 𝐓❪f❫ → f2 ⊚ f1 ≘ f → f1 ≡ f → 𝐈❪f2❫.
 #f2 #f1 #f #H #Hf elim (gr_after_inv_ist … Hf H) -H
 #Hf2 #Hf1 #H @gr_isi_pat_total // -Hf2
@@ -31,10 +31,10 @@ lemma gr_after_des_isi_sn:
 qed-.
 
 (*** after_fwd_isid_dx *)
-lemma gr_after_des_isi_dx:
+lemma gr_after_des_ist_eq_dx:
       ∀f2,f1,f.  𝐓❪f❫ → f2 ⊚ f1 ≘ f → f2 ≡ f → 𝐈❪f1❫.
 #f2 #f1 #f #H #Hf elim (gr_after_inv_ist … Hf H) -H
 #Hf2 #Hf1 #H2 @gr_isi_pat_total // -Hf1
-#i1 #i2 #Hi12 elim (gr_after_pat_sn_des … Hi12 … Hf) -f1
+#i1 #i2 #Hi12 elim (gr_after_des_ist_pat … Hi12 … Hf) -f1
 /3 width=8 by gr_pat_inj, gr_pat_eq_repl_back/
 qed-.

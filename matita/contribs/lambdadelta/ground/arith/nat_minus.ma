@@ -32,7 +32,7 @@ lemma nminus_zero_dx (m): m = m - 𝟎.
 // qed.
 
 (*** minus_SO_dx *)
-lemma nminus_one_dx (m): ↓m = m - 𝟏 .
+lemma nminus_unit_dx (m): ↓m = m - 𝟏 .
 // qed.
 
 (*** eq_minus_S_pred *)

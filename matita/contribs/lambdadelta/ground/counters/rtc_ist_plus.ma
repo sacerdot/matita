@@ -33,7 +33,7 @@ lemma rtc_ist_plus_zero_dx (n) (c1) (c2): 𝐓❪n,c1❫ → 𝐓❪𝟎,c2❫ �
 /2 width=1 by rtc_ist_plus/ qed.
 
 lemma rtc_ist_succ (n) (c): 𝐓❪n,c❫ → 𝐓❪↑n,c+𝟘𝟙❫.
-#n #c #H >nplus_one_dx
+#n #c #H >nplus_unit_dx
 /2 width=1 by rtc_ist_plus/
 qed.
 
@@ -54,7 +54,7 @@ lemma rtc_ist_inv_plus_zero_dx (n) (c1) (c2): 𝐓❪n,c1 + c2❫ → 𝐓❪�
 elim (rtc_ist_inv_plus … H) -H #n1 #n2 #Hn1 #Hn2 #H destruct //
 qed-.
 
-lemma rtc_ist_inv_plus_one_dx:
+lemma rtc_ist_inv_plus_unit_dx:
       ∀n,c1,c2. 𝐓❪n,c1 + c2❫ → 𝐓❪𝟏,c2❫ →
       ∃∃m. 𝐓❪m,c1❫ & n = ↑m.
 #n #c1 #c2 #H #H2 destruct

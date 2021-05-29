@@ -47,7 +47,7 @@ lemma yplus_zero_dx (x): x = x + 𝟎.
 (* Constructions with ysucc *************************************************)
 
 (*** yplus_SO2 *)
-lemma yplus_one_dx (x): ↑x = x + 𝟏.
+lemma yplus_unit_dx (x): ↑x = x + 𝟏.
 // qed.
 
 (*** yplus_S2 yplus_succ2 *)

@@ -42,7 +42,7 @@ lemma ylminus_succ_dx (x:ynat) (n): ↓(x-n) = x - ↑n.
 qed.
 
 (*** yminus_SO2 *)
-lemma ylminus_one_dx (x): ↓x = x - (𝟏).
+lemma ylminus_unit_dx (x): ↓x = x - (𝟏).
 // qed.
 
 (*** yminus_Y_inj *)

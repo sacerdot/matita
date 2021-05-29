@@ -44,7 +44,7 @@ lemma npred_zero: 𝟎 = ↓𝟎.
 lemma npred_inj (p): ↓p = ↓(ninj p).
 // qed.
 
-lemma npred_one: 𝟎 = ↓𝟏.
+lemma npred_unit: 𝟎 = ↓𝟏.
 // qed.
 
 lemma npred_psucc (p): ninj p = ↓↑p.
@@ -54,7 +54,7 @@ lemma npred_psucc (p): ninj p = ↓↑p.
 
 lemma npred_pnat_inv_refl (p): ninj p = ↓p → ⊥.
 *
-[ <npred_one #H destruct
+[ <npred_unit #H destruct
 | #p /3 width=2 by psucc_inv_refl, eq_inv_ninj_bi/
 ]
 qed-.

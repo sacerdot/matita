@@ -31,7 +31,7 @@ lemma nplus_zero_dx (m): m = m + 𝟎.
 // qed.
 
 (*** plus_SO_dx *)
-lemma nplus_one_dx (n): ↑n = n + 𝟏.
+lemma nplus_unit_dx (n): ↑n = n + 𝟏.
 // qed.
 
 (*** plus_n_Sm *)
@@ -76,7 +76,7 @@ qed.
 (* Helper constructions *****************************************************)
 
 (*** plus_SO_sn *)
-lemma nplus_one_sn (n): ↑n = 𝟏 + n.
+lemma nplus_unit_sn (n): ↑n = 𝟏 + n.
 #n <nplus_comm // qed.
 
 lemma nplus_succ_shift (m) (n): ↑m + n = m + ↑n.
