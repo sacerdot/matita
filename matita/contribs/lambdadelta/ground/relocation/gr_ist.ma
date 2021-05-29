@@ -15,7 +15,7 @@
 include "ground/notation/relations/predicate_t_1.ma".
 include "ground/relocation/gr_pat.ma".
 
-(* TOTALITY CONDITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* TOTALITY CONDITION FOR GENERIC RELOCATION MAPS ***************************)
 
 (*** istot *)
 definition gr_ist: predicate gr_map ≝
@@ -25,7 +25,7 @@ interpretation
   "totality condition (generic relocation maps)"
   'PredicateT f = (gr_ist f).
 
-(* Basic inversion lemmas ***************************************************)
+(* Basic inversions *********************************************************)
 
 (*** istot_inv_push *)
 lemma gr_ist_inv_push (g): 𝐓❪g❫ → ∀f. ⫯f = g → 𝐓❪f❫.
@@ -39,7 +39,7 @@ lemma gr_ist_inv_next (g): 𝐓❪g❫ → ∀f. ↑f = g → 𝐓❪f❫.
 #j #Hg elim (gr_pat_inv_next … Hg … H) -Hg -H /2 width=2 by ex_intro/
 qed-.
 
-(* Properties on tl *********************************************************)
+(* Constructions with gr_tl *************************************************)
 
 (*** istot_tl *)
 lemma gr_ist_tl (f): 𝐓❪f❫ → 𝐓❪⫱f❫.

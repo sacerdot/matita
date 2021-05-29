@@ -18,13 +18,13 @@ include "ground/relocation/gr_ist_tls.ma".
 include "ground/relocation/gr_coafter_nat_tls.ma".
 include "ground/relocation/gr_coafter_isi.ma".
 
-(* RELATIONAL CO-COMPOSITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL CO-COMPOSITION FOR GENERIC RELOCATION MAPS ********************)
 
 (*** H_coafter_isfin2_fwd *)
 definition H_gr_coafter_des_ist_isf: predicate gr_map ≝
            λf1. ∀f2. 𝐅❪f2❫ → 𝐓❪f1❫ → ∀f. f1 ~⊚ f2 ≘ f →  𝐅❪f❫.
 
-(* Forward lemmas with ist and isf *)
+(* Destructions with gr_ist and gr_isf **************************************)
 
 (*** coafter_isfin2_fwd_O_aux *)
 fact gr_coafter_des_ist_isf_unit_aux:
@@ -51,7 +51,7 @@ fact gr_coafter_des_ist_isf_aux:
 elim (gr_pat_inv_unit_succ … H1f1) -H1f1 [ |*: // ] #g1 #Hg1 #H1
 elim (gr_coafter_inv_next_sn … Hf … H1) -Hf #g #Hg #H0
 lapply (IH … Hg1 … Hg) -i2 -Hg
-/2 width=4 by gr_ist_inv_next, gr_isf_push/ (**) (* full auto fails *)
+/2 width=4 by gr_ist_inv_next, gr_isf_push/ (* * full auto fails *)
 qed-.
 
 (*** coafter_isfin2_fwd *)

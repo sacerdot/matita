@@ -15,9 +15,9 @@
 include "ground/relocation/gr_sle_sle.ma".
 include "ground/relocation/gr_sor.ma".
 
-(* RELATIONAL UNION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL UNION FOR GENERIC RELOCATION MAPS *****************************)
 
-(* Inversion lemmas with inclusion ******************************************)
+(* Inversions with gr_sle ***************************************************)
 
 (*** sor_inv_sle_sn *)
 corec lemma gr_sor_inv_sle_sn:
@@ -49,7 +49,7 @@ lemma gr_sor_inv_sle_dx_trans:
 axiom gr_sor_inv_sle_bi:
       ∀f1,f2,f. f1 ⋓ f2 ≘ f → ∀g. f1 ⊆ g → f2 ⊆ g → f ⊆ g.
 
-(* Properties with inclusion ************************************************)
+(* Constructions with gr_sle ************************************************)
 
 (*** sor_sle_dx *)
 corec lemma gr_sor_sle_dx:

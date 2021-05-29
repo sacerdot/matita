@@ -15,9 +15,9 @@
 include "ground/relocation/gr_fcla_uni.ma".
 include "ground/relocation/gr_isf.ma".
 
-(* FINITE COLENGTH CONDITION FOR GENERIC RELOCATION MAPS *)
+(* FINITE COLENGTH CONDITION FOR GENERIC RELOCATION MAPS ********************)
 
-(* Properties with gr_uni ***************************)
+(* Constructions with gr_uni ************************************************)
 
 (*** isfin_uni *)
 lemma gr_isf_uni (n): 𝐅❪𝐮❨n❩❫.

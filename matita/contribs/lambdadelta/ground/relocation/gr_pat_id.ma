@@ -15,15 +15,15 @@
 include "ground/relocation/gr_id_eq.ma".
 include "ground/relocation/gr_pat_eq.ma".
 
-(* POSITIVE APPLICATION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* POSITIVE APPLICATION FOR GENERIC RELOCATION MAPS *************************)
 
-(* Properties on id ************************************************)
+(* Constructions with gr_id *************************************************)
 
 (*** id_at *)
 lemma gr_pat_id (i): @❪i,𝐢❫ ≘ i.
 /2 width=1 by gr_pat_eq, gr_eq_refl/ qed.
 
-(* Inversions with id *)
+(* Inversions with gr_id ****************************************************)
 
 (*** id_inv_at *)
 lemma gr_pat_inv_id (f):

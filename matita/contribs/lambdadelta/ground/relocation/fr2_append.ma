@@ -15,7 +15,7 @@
 include "ground/notation/functions/append_2.ma".
 include "ground/relocation/fr2_map.ma".
 
-(* APPEND FOR FINITE RELOCATION MAPS WITH PAIRS *******************************************)
+(* CONCATENATION FOR FINITE RELOCATION MAPS WITH PAIRS **********************)
 
 (* Note: this is compose *)
 (*** fr2_append *)
@@ -28,7 +28,7 @@ interpretation
   "append (finite relocation maps with pairs)" 
   'Append f1 f2 = (fr2_append f1 f2).
 
-(* Basic properties *********************************************************)
+(* Basic constructions ******************************************************)
 
 (*** mr2_append_nil *)
 lemma fr2_append_nil (f2):

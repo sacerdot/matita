@@ -16,9 +16,9 @@ include "ground/arith/nat_le_pred.ma".
 include "ground/relocation/gr_basic.ma".
 include "ground/relocation/gr_after_uni.ma".
 
-(* RELATIONAL COMPOSITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL COMPOSITION FOR GENERIC RELOCATION MAPS ***********************)
 
-(* Properties with gr_basic **********************************************)
+(* Constructions with gr_basic **********************************************)
 
 (*** after_basic_rc *)
 lemma after_basic_rc (d2) (d1):

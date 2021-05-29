@@ -15,9 +15,9 @@
 include "ground/relocation/gr_isi_eq.ma".
 include "ground/relocation/gr_fcla.ma".
 
-(* FINITE COLENGTH ASSIGNMENT FOR GENERIC RELOCATION MAPS  ***********************************************************)
+(* FINITE COLENGTH ASSIGNMENT FOR GENERIC RELOCATION MAPS *******************)
 
-(* Properties with gr_eq *********************************************************)
+(* Constructions with gr_eq *************************************************)
 
 (*** fcla_eq_repl_back *)
 lemma gr_fcla_eq_repl_back (n):

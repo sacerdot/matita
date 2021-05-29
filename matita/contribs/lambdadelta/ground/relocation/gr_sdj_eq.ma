@@ -15,9 +15,9 @@
 include "ground/relocation/gr_tl_eq.ma".
 include "ground/relocation/gr_sdj.ma".
 
-(* DISJOINTNESS FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* DISJOINTNESS FOR GENERIC RELOCATION MAPS *********************************)
 
-(* Properties with gr_eq *********************************************************)
+(* Constructions with gr_eq *************************************************)
 
 (*** sdj_eq_repl_back1 *)
 corec lemma gr_sdj_eq_repl_back_sn:

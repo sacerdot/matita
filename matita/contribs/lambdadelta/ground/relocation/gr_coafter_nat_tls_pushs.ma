@@ -17,9 +17,9 @@ include "ground/relocation/gr_tls.ma".
 include "ground/relocation/gr_nat.ma".
 include "ground/relocation/gr_coafter.ma".
 
-(* RELATIONAL CO-COMPOSITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL CO-COMPOSITION FOR GENERIC RELOCATION MAPS ********************)
 
-(* Forward lemmas with nat and iterated tail and pushs ************************************************)
+(* Destructions with gr_nat and gr_tls and gr_pushs *************************)
 
 (*** coafter_fwd_pushs *)
 lemma gr_coafter_des_pushs_dx (n) (m):

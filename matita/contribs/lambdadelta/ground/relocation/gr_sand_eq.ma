@@ -15,9 +15,9 @@
 include "ground/relocation/gr_tl_eq.ma".
 include "ground/relocation/gr_sand.ma".
 
-(* RELATIONAL INTERSECTION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL INTERSECTION FOR GENERIC RELOCATION MAPS **********************)
 
-(* Properties with gr_eq *)
+(* Constructions with gr_eq *************************************************)
 
 (*** sand_eq_repl_back1 *)
 corec lemma gr_sand_eq_repl_back_sn:

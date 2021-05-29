@@ -15,9 +15,9 @@
 include "ground/relocation/gr_tls.ma".
 include "ground/relocation/gr_sle.ma".
 
-(* INCLUSION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* INCLUSION FOR GENERIC RELOCATION MAPS ************************************)
 
-(* Properties with iterated tail ********************************************)
+(* Constructions with gr_tls ************************************************)
 
 (*** sle_tls *)
 lemma gr_sle_tls:

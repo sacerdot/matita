@@ -15,15 +15,15 @@
 include "ground/relocation/gr_id.ma".
 include "ground/relocation/gr_isi_eq.ma".
 
-(* IDENTITY CONDITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* IDENTITY CONDITION FOR GENERIC RELOCATION MAPS ***************************)
 
-(* Properties with gr_id *********************************************************)
+(* Constructions with gr_id *************************************************)
 
 (*** id_isid *)
 lemma gr_isi_id: 𝐈❪𝐢❫.
 /2 width=1 by gr_eq_push_isi/ qed.
 
-(* Alternative definition with gr_id and gr_eq *******************************************)
+(* Alternative definition with gr_id and gr_eq ******************************)
 
 (*** eq_id_isid *)
 lemma gr_eq_id_isi (f): 𝐢 ≡ f → 𝐈❪f❫.

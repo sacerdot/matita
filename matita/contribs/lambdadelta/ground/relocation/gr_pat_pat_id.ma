@@ -15,16 +15,16 @@
 include "ground/relocation/gr_pat_id.ma".
 include "ground/relocation/gr_pat_pat.ma".
 
-(* POSITIVE APPLICATION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* POSITIVE APPLICATION FOR GENERIC RELOCATION MAPS *************************)
 
-(* Advanced Forward lemmas on id ********************************************)
+(* Advanced destructions with gr_id *****************************************)
 
 (*** at_id_fwd *)
 lemma gr_pat_id_des (i1) (i2):
       @❪i1,𝐢❫ ≘ i2 → i1 = i2.
 /2 width=4 by gr_pat_mono/ qed-.
 
-(* Main properties on id ****************************************************)
+(* Main constructions with gr_id ********************************************)
 
 (*** at_div_id_dx *)
 theorem gr_pat_div_id_dx (f):

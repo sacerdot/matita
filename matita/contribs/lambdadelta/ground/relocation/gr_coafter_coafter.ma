@@ -14,9 +14,9 @@
 
 include "ground/relocation/gr_coafter_eq.ma".
 
-(* RELATIONAL CO-COMPOSITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL CO-COMPOSITION FOR GENERIC RELOCATION MAPS ********************)
 
-(* Main inversion lemmas ****************************************************)
+(* Main inversions **********************************************************)
 
 (*** coafter_mono *)
 corec theorem gr_coafter_mono:

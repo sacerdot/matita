@@ -19,7 +19,7 @@ include "ground/arith/nat_minus.ma".
 include "ground/arith/nat_lt.ma".
 include "ground/relocation/fr2_map.ma".
 
-(* RELATIONAL SUBTRACTION FOR FINITE RELOCATION MAPS WITH PAIRS *******************************************)
+(* RELATIONAL SUBTRACTION FOR FINITE RELOCATION MAPS WITH PAIRS *************)
 
 (*** minuss *)
 inductive fr2_minus: nat → relation fr2_map ≝
@@ -38,7 +38,7 @@ interpretation
   "minus (finite relocation maps with pairs)"
   'RMinus f1 i f2 = (fr2_minus i f1 f2).
 
-(* Basic inversion lemmas ***************************************************)
+(* Basic inversions *********************************************************)
 
 (*** minuss_inv_nil1 *)
 lemma fr2_minus_inv_nil_sn (f2) (i):

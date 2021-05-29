@@ -16,12 +16,18 @@ let step k st outs ins =
   | "nmax" :: tl -> k T.OK ("nmax" :: outs) tl
   | "nminus" :: tl -> k T.OK ("nminus" :: outs) tl
   | "nplus" :: tl -> k T.OK ("nplus" :: outs) tl
+  | "nrplus" :: tl -> k T.OK ("nrplus" :: outs) tl
+  | "rplus" :: tl -> k T.OK ("nrplus" :: outs) tl
   | "npred" :: tl -> k T.OK ("npred" :: outs) tl
   | "nsucc" :: tl -> k T.OK ("nsucc" :: outs) tl
+  | "npsucc" :: tl -> k T.OK ("npsucc" :: outs) tl
   | "ntri" :: tl -> k T.OK ("ntri" :: outs) tl
   | "niter" :: tl -> k T.OK ("niter" :: outs) tl
   | "plt" :: tl -> k T.OK ("plt" :: outs) tl
   | "ple" :: tl -> k T.OK ("ple" :: outs) tl
+  | "pplus" :: tl -> k T.OK ("pplus" :: outs) tl
+  | "ppred" :: tl -> k T.OK ("ppred" :: outs) tl
+  | "psucc" :: tl -> k T.OK ("psucc" :: outs) tl
   | _ -> k T.OO outs ins
 
 let main =

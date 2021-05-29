@@ -17,7 +17,7 @@ include "ground/xoa/ex_3_2.ma".
 include "ground/arith/pnat.ma".
 include "ground/relocation/gr_tl.ma".
 
-(* POSITIVE APPLICATION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* POSITIVE APPLICATION FOR GENERIC RELOCATION MAPS *************************)
 
 (*** at *)
 coinductive gr_pat: relation3 gr_map pnat pnat ≝
@@ -42,7 +42,7 @@ definition H_gr_pat_div: relation4 gr_map gr_map gr_map gr_map ≝
            ∀jf,jg,j. @❪jf,f2❫ ≘ j → @❪jg,g2❫ ≘ j →
            ∃∃j0. @❪j0,f1❫ ≘ jf & @❪j0,g1❫ ≘ jg.
 
-(* Basic inversion lemmas ***************************************************)
+(* Basic inversions *********************************************************)
 
 (*** at_inv_ppx *)
 lemma gr_pat_inv_unit_push (f) (i1) (i2):
@@ -75,7 +75,7 @@ lemma gr_pat_inv_next (f) (i1) (i2):
 ]
 qed-.
 
-(* Advanced inversion lemmas ************************************************)
+(* Advanced inversions ******************************************************)
 
 (*** at_inv_ppn *)
 lemma gr_pat_inv_unit_push_succ (f) (i1) (i2):

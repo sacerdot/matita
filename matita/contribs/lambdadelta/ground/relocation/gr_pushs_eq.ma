@@ -15,9 +15,9 @@
 include "ground/relocation/gr_eq.ma".
 include "ground/relocation/gr_pushs.ma".
 
-(* ITERATED PUSH FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* ITERATED PUSH FOR GENERIC RELOCATION MAPS ********************************)
 
-(* Properties with gr_eq *)
+(* Constructions with gr_eq *************************************************)
 
 (*** pushs_eq_repl *)
 lemma gr_pushs_eq_repl (n):

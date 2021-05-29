@@ -15,9 +15,9 @@
 include "ground/relocation/gr_sle.ma".
 include "ground/relocation/gr_sor.ma".
 
-(* RELATIONAL UNION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL UNION FOR GENERIC RELOCATION MAPS *****************************)
 
-(* Main inversion lemmas with inclusion ****************************************************)
+(* Main inversions with gr_sle **********************************************)
 
 (*** monotonic_sle_sor *)
 axiom gr_sor_monotonic_sle:

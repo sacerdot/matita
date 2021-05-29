@@ -16,9 +16,9 @@ include "ground/arith/nat_pred_succ.ma".
 include "ground/relocation/gr_tl_eq.ma".
 include "ground/relocation/gr_uni.ma".
 
-(* UNIFORM ELEMENTS FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* UNIFORM ELEMENTS FOR GENERIC RELOCATION MAPS *****************************)
 
-(* Inversion lemmas with gr_eq ***************************************************)
+(* Inversions with gr_eq ****************************************************)
 
 (*** uni_inv_push_dx *)
 lemma gr_eq_inv_uni_push (n) (g):  𝐮❨n❩ ≡ ⫯g → ∧∧ 𝟎 = n & 𝐢 ≡ g.
@@ -44,7 +44,7 @@ qed-.
 lemma gr_eq_inv_next_uni (n) (g): ↑g ≡ 𝐮❨n❩ → ∧∧ 𝐮❨↓n❩ ≡ g & ↑↓n = n.
 /3 width=1 by gr_eq_inv_uni_next, gr_eq_sym/ qed-.
 
-(* Inversion lemmas with id and gr_eq *)
+(* Inversions with gr_id and gr_eq ******************************************)
 
 (*** uni_inv_id_dx *)
 lemma gr_eq_inv_uni_id (n): 𝐮❨n❩ ≡ 𝐢 → 𝟎 = n.

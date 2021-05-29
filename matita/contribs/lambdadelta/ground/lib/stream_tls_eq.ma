@@ -17,7 +17,7 @@ include "ground/lib/stream_tls.ma".
 
 (* ITERATED TAIL FOR STREAMS ************************************************)
 
-(* Properties with stream_eq *)
+(* Constructions with stream_eq *********************************************)
 
 lemma stream_tls_eq_repl (A) (n):
       stream_eq_repl A (λt1,t2. ⫰*[n] t1 ≗ ⫰*[n] t2).

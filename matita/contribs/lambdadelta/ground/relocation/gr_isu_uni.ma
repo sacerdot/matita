@@ -15,9 +15,9 @@
 include "ground/relocation/gr_isi_uni.ma".
 include "ground/relocation/gr_isu.ma".
 
-(* UNIFORMITY CONDITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* UNIFORMITY CONDITION FOR GENERIC RELOCATION MAPS *************************)
 
-(* Properties with gr_uni **************************************)
+(* Constructions with gr_uni ************************************************)
 
 (*** isuni_uni *)
 lemma gr_isu_uni (n): 𝐔❪𝐮❨n❩❫.
@@ -40,7 +40,7 @@ lemma gr_isu_eq_repl_fwd:
       gr_eq_repl_fwd … gr_isu.
 /3 width=3 by gr_isu_eq_repl_back, gr_eq_repl_sym/ qed-.
 
-(* Inversion lemmas with gr_uni ********************************)
+(* Inversions with gr_uni ***************************************************)
 
 (*** uni_isuni *)
 lemma gr_isu_inv_uni (f): 𝐔❪f❫ → ∃n. 𝐮❨n❩ ≡ f.

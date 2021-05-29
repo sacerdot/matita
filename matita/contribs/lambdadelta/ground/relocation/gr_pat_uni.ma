@@ -16,9 +16,9 @@ include "ground/arith/nat_rplus_succ.ma".
 include "ground/relocation/gr_uni.ma".
 include "ground/relocation/gr_pat_pat_id.ma".
 
-(* POSITIVE APPLICATION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* POSITIVE APPLICATION FOR GENERIC RELOCATION MAPS *************************)
 
-(* Properties with uniform relocations **************************************)
+(* Constructions with gr_uni ************************************************)
 
 (*** at_uni *)
 lemma gr_pat_uni (n) (i):
@@ -27,7 +27,7 @@ lemma gr_pat_uni (n) (i):
 /2 width=5 by gr_pat_next/
 qed.
 
-(* Inversion lemmas with uniform relocations ********************************)
+(* Inversions with gr_uni ***************************************************)
 
 (*** at_inv_uni *)
 lemma gr_pat_inv_uni (n) (i) (j):

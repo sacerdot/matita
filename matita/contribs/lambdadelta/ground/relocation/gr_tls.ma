@@ -16,7 +16,7 @@ include "ground/notation/functions/droppreds_2.ma".
 include "ground/lib/stream_tls.ma".
 include "ground/relocation/gr_tl.ma".
 
-(* ITERATED TAIL FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* ITERATED TAIL FOR GENERIC RELOCATION MAPS ********************************)
 
 (*** tls *)
 definition gr_tls (n) (f:gr_map) ≝ ⫰*[n]f.
@@ -25,7 +25,7 @@ interpretation
   "iterated tail (generic relocation maps)"
   'DropPreds n f = (gr_tls n f).
 
-(* Basic properties (specific) *********************************************************)
+(* Basic constructions (specific) *******************************************)
 
 (*** tls_O *)
 lemma gr_tls_zero (f): f = ⫱*[𝟎] f.

@@ -14,9 +14,9 @@
 
 include "ground/relocation/gr_after_eq.ma".
 
-(* RELATIONAL COMPOSITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL COMPOSITION FOR GENERIC RELOCATION MAPS ***********************)
 
-(* Main properties **********************************************************)
+(* Main constructions *******************************************************)
 
 (*** after_trans1 *)
 corec theorem gr_after_trans_sn:
@@ -70,7 +70,7 @@ corec theorem gr_after_trans_dx:
 ]
 qed-.
 
-(* Main inversion lemmas ****************************************************)
+(* Main inversions **********************************************************)
 
 (*** after_mono *)
 corec theorem gr_after_mono:

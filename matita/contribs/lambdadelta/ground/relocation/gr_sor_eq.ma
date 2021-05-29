@@ -15,9 +15,9 @@
 include "ground/relocation/gr_tl_eq.ma".
 include "ground/relocation/gr_sor.ma".
 
-(* RELATIONAL UNION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL UNION FOR GENERIC RELOCATION MAPS *****************************)
 
-(* Properties with gr_eq *********************************************************)
+(* Constructions with gr_eq *************************************************)
 
 (*** sor_eq_repl_back1 *)
 corec lemma gr_sor_eq_repl_back_sn:

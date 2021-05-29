@@ -15,9 +15,9 @@
 include "ground/relocation/gr_tl_eq.ma".
 include "ground/relocation/gr_coafter.ma".
 
-(* RELATIONAL CO-COMPOSITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL CO-COMPOSITION FOR GENERIC RELOCATION MAPS ********************)
 
-(* Properties with gr_eq *)
+(* Constructions with gr_eq *************************************************)
 
 (*** coafter_eq_repl_back2 *)
 corec lemma gr_coafter_eq_repl_back_sn:

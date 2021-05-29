@@ -15,9 +15,9 @@
 include "ground/relocation/gr_tl_eq.ma".
 include "ground/relocation/gr_id.ma".
 
-(* IDENTITY ELEMENT FOR GENERIC RELOCATION MAPS  ******************************************************)
+(* IDENTITY ELEMENT FOR GENERIC RELOCATION MAPS *****************************)
 
-(* Properties with gr_eq *)
+(* Constructions with gr_eq *************************************************)
 
 corec lemma gr_id_eq (f): ⫯f ≡ f → 𝐢 ≡ f.
 cases gr_id_unfold #Hf
@@ -27,7 +27,7 @@ cases H in Hf; -H #Hf
 /3 width=5 by gr_eq_inv_push_bi/
 qed.
 
-(* Inversions with gr_eq *)
+(* Inversions with gr_eq ****************************************************)
 
 (* Note: this has the same proof of the previous *)
 corec lemma gr_id_inv_eq (f): 𝐢 ≡ f → ⫯f ≡ f.

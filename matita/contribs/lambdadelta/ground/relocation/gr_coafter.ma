@@ -16,7 +16,7 @@ include "ground/notation/relations/rcoafter_3.ma".
 include "ground/xoa/ex_3_2.ma".
 include "ground/relocation/gr_tl.ma".
 
-(* RELATIONAL CO-COMPOSITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL CO-COMPOSITION FOR GENERIC RELOCATION MAPS ********************)
 
 (*** coafter *)
 coinductive gr_coafter: relation3 gr_map gr_map gr_map ≝
@@ -35,7 +35,7 @@ interpretation
   "relational co-composition (generic relocation maps)"
   'RCoAfter f1 f2 f = (gr_coafter f1 f2 f).
 
-(* Basic inversion lemmas ***************************************************)
+(* Basic inversions *********************************************************)
 
 (*** coafter_inv_ppx *)
 lemma gr_coafter_inv_push_bi:
@@ -82,7 +82,7 @@ lemma gr_coafter_inv_next_sn:
 ]
 qed-.
 
-(* Advanced inversion lemmas ************************************************)
+(* Advanced inversions ******************************************************)
 
 (*** coafter_inv_ppp *)
 lemma gr_coafter_inv_push_bi_push:
@@ -213,7 +213,7 @@ elim (gr_map_split_tl g2) #H2
 ]
 qed-.
 
-(* Inversion lemmas with tail ***********************************************)
+(* Inversions with gr_tl ****************************************************)
 
 (*** coafter_inv_tl1 *)
 lemma gr_coafter_inv_tl_dx:
@@ -222,7 +222,7 @@ lemma gr_coafter_inv_tl_dx:
 #g2 #g1 #g
 elim (gr_map_split_tl g1) #H1 #H2
 [ /3 width=7 by gr_coafter_refl, ex2_intro/
-| @(ex2_intro … (↑g)) /2 width=7 by gr_coafter_push/ (**) (* full auto fails *)
+| @(ex2_intro … (↑g)) /2 width=7 by gr_coafter_push/ (* * full auto fails *)
 ]
 qed-.
 
@@ -233,6 +233,6 @@ lemma gr_coafter_inv_tl:
 #g2 #g1 #g
 elim (gr_map_split_tl g) #H1 #H2
 [ /3 width=7 by gr_coafter_refl, ex2_intro/
-| @(ex2_intro … (↑g1)) /2 width=7 by gr_coafter_push/ (**) (* full auto fails *)
+| @(ex2_intro … (↑g1)) /2 width=7 by gr_coafter_push/ (* * full auto fails *)
 ]
 qed-.

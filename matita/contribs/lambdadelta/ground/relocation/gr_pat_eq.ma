@@ -15,9 +15,9 @@
 include "ground/relocation/gr_tl_eq.ma".
 include "ground/relocation/gr_pat_lt.ma".
 
-(* POSITIVE APPLICATION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* POSITIVE APPLICATION FOR GENERIC RELOCATION MAPS *************************)
 
-(* Properties with gr_eq *)
+(* Constructions with gr_eq *************************************************)
 
 (*** at_eq_repl_back *)
 corec lemma gr_pat_eq_repl_back (i1) (i2):
@@ -45,7 +45,7 @@ lemma gr_pat_eq (f): ⫯f ≡ f → ∀i. @❪i,f❫ ≘ i.
 ]
 qed.
 
-(* Inversions with gr_eq *)
+(* Inversions with gr_eq ****************************************************)
 
 corec lemma gr_pat_inv_eq (f):
             (∀i. @❪i,f❫ ≘ i) → ⫯f ≡ f.

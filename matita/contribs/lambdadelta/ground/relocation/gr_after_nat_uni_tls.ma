@@ -17,9 +17,9 @@ include "ground/relocation/gr_nat.ma".
 include "ground/relocation/gr_isi_uni.ma".
 include "ground/relocation/gr_after_isi.ma".
 
-(* RELATIONAL COMPOSITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL COMPOSITION FOR GENERIC RELOCATION MAPS ***********************)
 
-(* Properties with gr_nat and uni *)
+(* Constructions with gr_nat and gr_uni *************************************)
 
 (*** after_uni_dx *)
 lemma gr_after_nat_uni (l2) (l1):

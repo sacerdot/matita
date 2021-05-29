@@ -36,7 +36,7 @@ interpretation
   "next (generic relocation maps)"
   'UpArrow f = (gr_next f).
 
-(* Basic properties (specific) **********************************************)
+(* Basic constructions (specific) *******************************************)
 
 (*** push_rew *)
 lemma gr_push_unfold (f): Ⓕ⨮f = ⫯f.
@@ -46,7 +46,7 @@ lemma gr_push_unfold (f): Ⓕ⨮f = ⫯f.
 lemma gr_next_unfold (f): Ⓣ⨮f = ↑f.
 // qed.
 
-(* Basic inversion lemmas ***************************************************)
+(* Basic inversions *********************************************************)
 
 (*** injective_push *)
 lemma eq_inv_gr_push_bi: injective ? ? gr_push.

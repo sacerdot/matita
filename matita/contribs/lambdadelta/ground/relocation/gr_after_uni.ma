@@ -13,13 +13,13 @@
 (**************************************************************************)
 
 include "ground/arith/nat_plus.ma".
-(**) (* it should not depend on gr_isi *)
+(* * it should not depend on gr_isi *)
 include "ground/relocation/gr_isi_uni.ma".
 include "ground/relocation/gr_after_isi.ma".
 
-(* RELATIONAL COMPOSITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL COMPOSITION FOR GENERIC RELOCATION MAPS ***********************)
 
-(* Properties on uni ********************************************************)
+(* Constructions with gr_uni ************************************************)
 
 (*** after_uni *)
 lemma gr_after_uni (h1) (h2): 𝐮❨h1❩ ⊚ 𝐮❨h2❩ ≘ 𝐮❨h2+h1❩.

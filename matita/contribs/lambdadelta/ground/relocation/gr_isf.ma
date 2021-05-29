@@ -15,7 +15,7 @@
 include "ground/notation/relations/predicate_f_1.ma".
 include "ground/relocation/gr_fcla.ma".
 
-(* FINITE COLENGTH CONDITION FOR GENERIC RELOCATION MAPS *)
+(* FINITE COLENGTH CONDITION FOR GENERIC RELOCATION MAPS ********************)
 
 (*** isfin *)
 definition gr_isf: predicate gr_map ≝
@@ -25,7 +25,7 @@ interpretation
   "finite colength condition (generic relocation maps)"
   'PredicateF f = (gr_isf f).
 
-(* Basic eliminators ********************************************************)
+(* Basic eliminations *******************************************************)
 
 (*** isfin_ind *)
 lemma gr_isf_ind (Q:predicate …):
@@ -37,7 +37,7 @@ lemma gr_isf_ind (Q:predicate …):
 #n #H elim H -f -n /3 width=2 by ex_intro/
 qed-.
 
-(* Basic inversion lemmas ***************************************************)
+(* Basic inversions *********************************************************)
 
 (*** isfin_inv_push *)
 lemma gr_isf_inv_push (g): 𝐅❪g❫ → ∀f. ⫯f = g → 𝐅❪f❫.
@@ -50,7 +50,7 @@ lemma gr_isf_inv_next (g): 𝐅❪g❫ → ∀f. ↑f = g → 𝐅❪f❫.
 /2 width=2 by ex_intro/
 qed-.
 
-(* Basic properties *********************************************************)
+(* Basic constructions ******************************************************)
 
 (*** isfin_isid *)
 lemma gr_isf_isi (f): 𝐈❪f❫ → 𝐅❪f❫.

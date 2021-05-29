@@ -15,9 +15,9 @@
 include "ground/relocation/gr_tls.ma".
 include "ground/relocation/gr_sor.ma".
 
-(* RELATIONAL UNION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL UNION FOR GENERIC RELOCATION MAPS *****************************)
 
-(* Properties with iterated tail ********************************************)
+(* Constructions with gr_tls ************************************************)
 
 (*** sor_tls *)
 lemma gr_sor_tls:

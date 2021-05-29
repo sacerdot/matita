@@ -15,7 +15,7 @@
 include "ground/notation/relations/parallel_2.ma".
 include "ground/relocation/gr_tl.ma".
 
-(* DISJOINTNESS FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* DISJOINTNESS FOR GENERIC RELOCATION MAPS *********************************)
 
 (*** sdj *)
 coinductive gr_sdj: relation gr_map ≝
@@ -34,7 +34,7 @@ interpretation
   "disjointness (generic relocation maps)"
   'Parallel f1 f2 = (gr_sdj f1 f2).
 
-(* Basic properties *********************************************************)
+(* Basic constructions ******************************************************)
 
 (*** sdj_sym *)
 corec lemma gr_sdj_sym:
@@ -48,7 +48,7 @@ corec lemma gr_sdj_sym:
 /2 width=1 by/
 qed-.
 
-(* Basic inversion lemmas ***************************************************)
+(* Basic inversions *********************************************************)
 
 (*** sdj_inv_pp *)
 lemma gr_sdj_inv_push_bi:
@@ -97,7 +97,7 @@ lemma gr_sdj_inv_next_bi:
 ]
 qed-.
 
-(* Advanced inversion lemmas ************************************************)
+(* Advanced inversions ******************************************************)
 
 (*** sdj_inv_nx *)
 lemma gr_sdj_inv_next_sn:

@@ -15,9 +15,9 @@
 include "ground/relocation/gr_ist_isi.ma".
 include "ground/relocation/gr_after_ist.ma".
 
-(* RELATIONAL COMPOSITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL COMPOSITION FOR GENERIC RELOCATION MAPS ***********************)
 
-(* Forward lemmas on istot and isid **************************************************)
+(* Destructions with gr_ist and gr_isi **************************************)
 
 (*** after_fwd_isid_sn *)
 lemma gr_after_des_ist_eq_sn:

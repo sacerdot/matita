@@ -14,7 +14,7 @@
 
 include "ground/relocation/gr_tl.ma".
 
-(* INCLUSION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* INCLUSION FOR GENERIC RELOCATION MAPS ************************************)
 
 (*** sle *)
 coinductive gr_sle: relation gr_map ≝
@@ -33,7 +33,7 @@ interpretation
   "inclusion (generic relocation maps)"
   'subseteq f1 f2 = (gr_sle f1 f2).
 
-(* Basic properties *********************************************************)
+(* Basic constructions ******************************************************)
 
 (*** sle_refl *)
 corec lemma gr_sle_refl:
@@ -42,7 +42,7 @@ corec lemma gr_sle_refl:
 [ @(gr_sle_push … H H) | @(gr_sle_next … H H) ] -H //
 qed.
 
-(* Basic inversion lemmas ***************************************************)
+(* Basic inversions *********************************************************)
 
 (*** sle_inv_xp *)
 lemma gr_sle_inv_push_dx:
@@ -76,7 +76,7 @@ lemma gr_sle_inv_push_next:
 ]
 qed-.
 
-(* Advanced inversion lemmas ************************************************)
+(* Advanced inversions ******************************************************)
 
 (*** sle_inv_pp *)
 lemma gr_sle_inv_push_bi:
@@ -120,7 +120,7 @@ elim (gr_map_split_tl g1) #H1 #H #f2 #H2
 /3 width=3 by ex2_intro, or_introl, or_intror/
 qed-.
 
-(* Properties with tail *****************************************************)
+(* Constructions with gr_tl *************************************************)
 
 (*** sle_px_tl *)
 lemma gr_sle_push_sn_tl:
@@ -145,7 +145,7 @@ lemma gr_sle_tl:
 ]
 qed.
 
-(* Inversion lemmas with tail ***********************************************)
+(* Inversions with gr_tl ****************************************************)
 
 (*** sle_inv_tl_sn *)
 lemma gr_sle_inv_tl_sn:

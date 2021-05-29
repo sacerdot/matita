@@ -14,9 +14,9 @@
 
 include "ground/relocation/gr_fcla.ma".
 
-(* FINITE COLENGTH ASSIGNMENT FOR GENERIC RELOCATION MAPS  ***********************************************************)
+(* FINITE COLENGTH ASSIGNMENT FOR GENERIC RELOCATION MAPS *******************)
 
-(* Main forward lemmas ******************************************************)
+(* Main destructions ********************************************************)
 
 (*** fcla_mono *)
 theorem gr_fcla_mono (f):

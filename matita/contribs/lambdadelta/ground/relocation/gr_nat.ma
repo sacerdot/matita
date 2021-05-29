@@ -16,7 +16,7 @@ include "ground/notation/relations/ratsucc_3.ma".
 include "ground/arith/nat_pred_succ.ma".
 include "ground/relocation/gr_pat.ma".
 
-(* NON-NEGATIVE APPLICATION FOR GENERIC RELOCATION MAPS *****************************)
+(* NON-NEGATIVE APPLICATION FOR GENERIC RELOCATION MAPS *********************)
 
 definition gr_nat: relation3 gr_map nat nat ≝
            λf,l1,l2. @❪↑l1,f❫ ≘ ↑l2.
@@ -25,7 +25,7 @@ interpretation
   "relational non-negative application (generic relocation maps)"
   'RAtSucc l1 f l2 = (gr_nat f l1 l2).
 
-(* Basic properties *********************************************************)
+(* Basic constructions ******************************************************)
 
 lemma gr_nat_refl (f) (g) (k1) (k2):
       (⫯f) = g → 𝟎 = k1 → 𝟎 = k2 → @↑❪k1,g❫ ≘ k2.
@@ -52,7 +52,7 @@ lemma gr_nat_pred_bi (f) (i1) (i2):
 //
 qed.
 
-(* Basic inversion lemmas ***************************************************)
+(* Basic inversions *********************************************************)
 
 (*** gr_nat_inv_ppx *)
 lemma gr_nat_inv_zero_push (f) (l1) (l2):
@@ -82,7 +82,7 @@ elim (gr_pat_inv_next … H) -H [|*: // ] #k2
 @(ex2_intro … (↓k2)) //
 qed-.
 
-(* Advanced inversion lemmas ************************************************)
+(* Advanced inversions ******************************************************)
 
 (*** gr_nat_inv_ppn *)
 lemma gr_nat_inv_zero_push_succ (f) (l1) (l2):

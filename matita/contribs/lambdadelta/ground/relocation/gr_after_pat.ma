@@ -15,9 +15,9 @@
 include "ground/relocation/gr_pat_pat.ma".
 include "ground/relocation/gr_after.ma".
 
-(* RELATIONAL COMPOSITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL COMPOSITION FOR GENERIC RELOCATION MAPS ***********************)
 
-(* Forward lemmas on pat *****************************************************)
+(* Destructions with gr_pat *************************************************)
 
 (*** after_at_fwd *)
 lemma gr_after_pat_des (i) (i1):

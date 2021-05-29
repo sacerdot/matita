@@ -15,7 +15,7 @@
 include "ground/arith/nat_minus_plus.ma".
 include "ground/relocation/fr2_map.ma".
 
-(* ADDITION FOR FINITE RELOCATION MAPS WITH PAIRS ******************************)
+(* ADDITION FOR FINITE RELOCATION MAPS WITH PAIRS ***************************)
 
 (* Note: this is pushs *)
 (*** pluss *)
@@ -28,14 +28,14 @@ interpretation
   "plus (finite relocation maps with pairs)"
   'plus f n = (fr2_plus f n).
 
-(* Basic properties *********************************************************)
+(* Basic constructions ******************************************************)
 
 (*** pluss_SO2 *)
 lemma fr2_plus_cons_unit (d) (h) (f):
       ((❨d,h❩;f)+𝟏) = ❨↑d,h❩;f+𝟏.
 normalize // qed.
 
-(* Basic inversion lemmas ***************************************************)
+(* Basic inversions *********************************************************)
 
 (*** pluss_inv_nil2 *)
 lemma fr2_plus_inv_nil_dx (n) (f):

@@ -15,9 +15,9 @@
 include "ground/relocation/gr_pushs.ma".
 include "ground/relocation/gr_sle.ma".
 
-(* INCLUSION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* INCLUSION FOR GENERIC RELOCATION MAPS ************************************)
 
-(* Properties with iterated push ********************************************)
+(* Constructions with gr_pushs **********************************************)
 
 (*** sle_pushs *)
 lemma gr_sle_pushs:

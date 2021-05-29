@@ -14,13 +14,13 @@
 
 include "ground/relocation/gr_tls.ma".
 include "ground/relocation/gr_pat.ma".
-(**) (* it should not depend on gr_isi *)
+(* * it should not depend on gr_isi *)
 include "ground/relocation/gr_isi_uni.ma".
 include "ground/relocation/gr_after_isi.ma".
 
-(* RELATIONAL COMPOSITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL COMPOSITION FOR GENERIC RELOCATION MAPS ***********************)
 
-(* Properties with pat and uni and tls *******************************************************)
+(* Constructions with gr_pat and gr_uni and gr_tls **************************)
 
 (*** after_uni_succ_dx *)
 lemma gr_after_pat_uni (i2) (i1):
@@ -63,7 +63,7 @@ lemma gr_pat_after_uni_tls (i2) (i1):
 ]
 qed-.
 
-(* Advanced properties with uni *)
+(* Advanced constructions with gr_uni ***************************************)
 
 (*** after_uni_one_dx *)
 lemma gr_after_push_unit:

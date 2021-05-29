@@ -16,7 +16,7 @@ include "ground/notation/functions/element_b_2.ma".
 include "ground/relocation/gr_pushs.ma".
 include "ground/relocation/gr_uni.ma".
 
-(* BASIC ELEMENTS FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* BASIC ELEMENTS FOR GENERIC RELOCATION MAPS *******************************)
 
 definition basic (d) (h): gr_map ≝ ⫯*[d] 𝐮❨h❩.
 
@@ -24,7 +24,7 @@ interpretation
   "basic elements (generic relocation maps)"
   'ElementB d h = (basic d h).
 
-(* Basic properties *********************************************************)
+(* Basic constructions ******************************************************)
 
 (*** at_basic_succ_sn *)
 lemma gr_basic_succ_sn (d) (h): ⫯𝐛❨d,h❩ = 𝐛❨↑d,h❩.

@@ -15,9 +15,9 @@
 include "ground/relocation/gr_tl.ma".
 include "ground/relocation/gr_isi.ma".
 
-(* IDENTITY CONDITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* IDENTITY CONDITION FOR GENERIC RELOCATION MAPS ***************************)
 
-(* Properties with tail *****************************************************)
+(* Constructions with gr_tl *************************************************)
 
 (*** isid_tl *)
 lemma gr_isi_tl (f): 𝐈❪f❫ → 𝐈❪⫱f❫.

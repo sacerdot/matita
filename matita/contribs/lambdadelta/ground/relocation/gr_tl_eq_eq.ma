@@ -14,9 +14,9 @@
 
 include "ground/relocation/gr_tl_eq.ma".
 
-(* TAIL FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* TAIL FOR GENERIC RELOCATION MAPS *****************************************)
 
-(* Main properties with gr_eq **********************************************************)
+(* Main constructions with gr_eq ********************************************)
 
 (*** eq_trans *)
 corec theorem gr_eq_trans: Transitive … gr_eq.

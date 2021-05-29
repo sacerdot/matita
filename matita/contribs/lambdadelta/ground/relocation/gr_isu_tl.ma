@@ -15,9 +15,9 @@
 include "ground/relocation/gr_tl.ma".
 include "ground/relocation/gr_isu.ma".
 
-(* UNIFORMITY CONDITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* UNIFORMITY CONDITION FOR GENERIC RELOCATION MAPS *************************)
 
-(* Properties with tail *****************************************************)
+(* Constructions with gr_tl *************************************************)
 
 lemma gr_isu_tl (f): 𝐔❪f❫ → 𝐔❪⫱f❫.
 #f cases (gr_map_split_tl f) * #H
@@ -26,7 +26,7 @@ lemma gr_isu_tl (f): 𝐔❪f❫ → 𝐔❪⫱f❫.
 ]
 qed.
 
-(* Advanced inversion lemmas ***************************************************)
+(* Advanced inversions ******************************************************)
 
 (*** isuni_split *)
 lemma gr_isu_split (g): 𝐔❪g❫ → ∨∨ (∃∃f. 𝐈❪f❫ & ⫯f = g) | (∃∃f.𝐔❪f❫ & ↑f = g).

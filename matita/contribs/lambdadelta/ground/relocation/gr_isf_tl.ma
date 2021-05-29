@@ -15,9 +15,9 @@
 include "ground/relocation/gr_tl.ma".
 include "ground/relocation/gr_isf.ma".
 
-(* FINITE COLENGTH CONDITION FOR GENERIC RELOCATION MAPS *)
+(* FINITE COLENGTH CONDITION FOR GENERIC RELOCATION MAPS ********************)
 
-(* Properties with tail *****************************************************)
+(* Constructions with gr_tl *************************************************)
 
 (*** isfin_tl *)
 lemma gr_isf_tl (f): 𝐅❪f❫ → 𝐅❪⫱f❫.
@@ -25,7 +25,7 @@ lemma gr_isf_tl (f): 𝐅❪f❫ → 𝐅❪⫱f❫.
 /3 width=3 by gr_isf_inv_push, gr_isf_inv_next/
 qed.
 
-(* Inversion lemmas with tail ***********************************************)
+(* Inversions with gr_tl ****************************************************)
 
 (*** isfin_inv_tl *)
 lemma gr_isf_inv_tl (g): 𝐅❪⫱g❫ → 𝐅❪g❫.

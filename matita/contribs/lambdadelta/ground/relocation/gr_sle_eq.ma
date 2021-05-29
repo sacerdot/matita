@@ -13,12 +13,12 @@
 (**************************************************************************)
 
 include "ground/relocation/gr_sle.ma".
-(**) (* this should go first *)
+(* * this should go first *)
 include "ground/relocation/gr_tl_eq.ma".
 
-(* INCLUSION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* INCLUSION FOR GENERIC RELOCATION MAPS ************************************)
 
-(* Properties with gr_eq *********************************************************)
+(* Constructions with gr_eq *************************************************)
 
 (*** sle_eq_repl_back1 *)
 corec lemma gr_sle_eq_repl_back_sn:

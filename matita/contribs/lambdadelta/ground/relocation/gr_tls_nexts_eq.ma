@@ -15,9 +15,9 @@
 include "ground/relocation/gr_nexts.ma".
 include "ground/relocation/gr_tls_eq.ma".
 
-(* ITERATED TAIL FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* ITERATED TAIL FOR GENERIC RELOCATION MAPS ********************************)
 
-(* Inversion lemmas with gr_nexts and gr_eq *****************************************************)
+(* Inversions with gr_nexts and gr_eq ***************************************)
 
 (*** eq_inv_nexts_sn *)
 lemma gr_eq_inv_nexts_sn (n):

@@ -17,7 +17,7 @@ include "ground/xoa/or_3.ma".
 include "ground/xoa/ex_3_2.ma".
 include "ground/relocation/gr_tl.ma".
 
-(* RELATIONAL UNION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL UNION FOR GENERIC RELOCATION MAPS *****************************)
 
 (*** sor *)
 coinductive gr_sor: relation3 gr_map gr_map gr_map ≝
@@ -39,7 +39,7 @@ interpretation
   "relational union (generic relocation maps)"
   'RUnion f1 f2 f = (gr_sor f1 f2 f).
 
-(* Basic properties *********************************************************)
+(* Basic constructions ******************************************************)
 
 (*** sor_idem *)
 corec lemma gr_sor_idem:
@@ -58,7 +58,7 @@ corec lemma gr_sor_comm:
 [ @gr_sor_push_bi | @gr_sor_push_next | @gr_sor_next_push | @gr_sor_next_bi ] /2 width=7 by/
 qed-.
 
-(* Basic inversion lemmas ***************************************************)
+(* Basic inversions *********************************************************)
 
 (*** sor_inv_ppx *)
 lemma gr_sor_inv_push_bi:
@@ -112,7 +112,7 @@ try elim (eq_inv_gr_push_next … Hx2) try elim (eq_inv_gr_next_push … Hx2)
 /2 width=3 by ex2_intro/
 qed-.
 
-(* Advanced inversion lemmas ************************************************)
+(* Advanced inversions ******************************************************)
 
 (*** sor_inv_ppn *)
 lemma gr_sor_inv_push_bi_next:
@@ -277,7 +277,7 @@ elim (gr_map_split_tl g1) #H1
 ]
 qed-.
 
-(* Properties with tail *****************************************************)
+(* Constructions with gr_tl *************************************************)
 
 (*** sor_tl *)
 lemma gr_sor_tl:
@@ -323,7 +323,7 @@ lemma gr_sor_next_sn_tl:
 /3 width=5 by ex3_2_intro/
 qed-.
 
-(* Inversion lemmas with tail ***********************************************)
+(* Inversions with gr_tl ****************************************************)
 
 (*** sor_inv_tl_sn *)
 lemma gr_sor_inv_tl_sn:

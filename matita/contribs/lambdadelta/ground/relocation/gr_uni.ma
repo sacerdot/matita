@@ -16,7 +16,7 @@ include "ground/notation/functions/element_u_1.ma".
 include "ground/relocation/gr_nexts.ma".
 include "ground/relocation/gr_id.ma".
 
-(* UNIFORM ELEMENTS FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* UNIFORM ELEMENTS FOR GENERIC RELOCATION MAPS *****************************)
 
 (*** uni *)
 definition gr_uni (n) ≝ ↑*[n] 𝐢.
@@ -25,7 +25,7 @@ interpretation
   "uniform elements (generic relocation maps)"
   'ElementU n = (gr_uni n).
 
-(* Basic properties *********************************************************)
+(* Basic constructions ******************************************************)
 
 (*** uni_zero *)
 lemma gr_uni_zero: 𝐢 = 𝐮❨𝟎❩.

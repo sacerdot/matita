@@ -15,9 +15,9 @@
 include "ground/relocation/gr_fcla_eq.ma".
 include "ground/relocation/gr_isf.ma".
 
-(* FINITE COLENGTH CONDITION FOR GENERIC RELOCATION MAPS *)
+(* FINITE COLENGTH CONDITION FOR GENERIC RELOCATION MAPS ********************)
 
-(* Properties with gr_eq *)
+(* Constructions with gr_eq *************************************************)
 
 (*** isfin_eq_repl_back *)
 lemma gr_isf_eq_repl_back:

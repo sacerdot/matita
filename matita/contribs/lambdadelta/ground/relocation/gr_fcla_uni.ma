@@ -15,9 +15,9 @@
 include "ground/relocation/gr_isi_uni.ma".
 include "ground/relocation/gr_fcla.ma".
 
-(* FINITE COLENGTH ASSIGNMENT FOR GENERIC RELOCATION MAPS  ***********************************************************)
+(* FINITE COLENGTH ASSIGNMENT FOR GENERIC RELOCATION MAPS *******************)
 
-(* Properties with gr_uni ***************************)
+(* Constructions with gr_uni ************************************************)
 
 (*** fcla_uni *)
 lemma gr_fcla_uni (n): 𝐂❪𝐮❨n❩❫ ≘ n.

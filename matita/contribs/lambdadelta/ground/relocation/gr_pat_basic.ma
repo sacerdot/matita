@@ -14,9 +14,9 @@
 
 include "ground/relocation/gr_nat_basic.ma".
 
-(* POSITIVE APPLICATION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* POSITIVE APPLICATION FOR GENERIC RELOCATION MAPS *************************)
 
-(* Properties with gr_basic **********************************************)
+(* Constructions with gr_basic **********************************************)
 
 (*** at_basic_lt *)
 lemma gr_pat_basic_lt (m) (n) (i):
@@ -32,7 +32,7 @@ lemma gr_pat_basic_ge (m) (n) (i):
 /3 width=1 by gr_nat_basic_ge, nlt_inv_succ_dx/
 qed.
 
-(* Inversion lemmas with gr_basic ****************************************)
+(* Inversions with gr_basic *************************************************)
 
 (*** at_basic_inv_lt *)
 lemma gr_pat_basic_inv_lt (m) (n) (i) (j):

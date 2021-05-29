@@ -15,9 +15,9 @@
 include "ground/relocation/gr_tl.ma".
 include "ground/relocation/gr_isd.ma".
 
-(* DIVERGENCE CONDITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* DIVERGENCE CONDITION FOR GENERIC RELOCATION MAPS *************************)
 
-(* Properties with tail *****************************************************)
+(* Constructions with gr_tl *************************************************)
 
 (*** isdiv_tl *)
 lemma gr_isd_tl (f): 𝛀❪f❫ → 𝛀❪⫱f❫.

@@ -15,7 +15,7 @@
 include "ground/notation/relations/rintersection_3.ma".
 include "ground/relocation/gr_tl.ma".
 
-(* RELATIONAL INTERSECTION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL INTERSECTION FOR GENERIC RELOCATION MAPS **********************)
 
 (*** sand *)
 coinductive gr_sand: relation3 gr_map gr_map gr_map ≝
@@ -37,7 +37,7 @@ interpretation
   "relational intersection (generic relocation maps)"
   'RIntersection f1 f2 f = (gr_sand f1 f2 f).
 
-(* Basic properties *********************************************************)
+(* Basic constructions ******************************************************)
 
 (*** sand_refl *)
 corec lemma gr_sand_idem:
@@ -60,7 +60,7 @@ corec lemma gr_sand_comm:
 ] /2 width=7 by/
 qed-.
 
-(* Basic inversion lemmas ***************************************************)
+(* Basic inversions *********************************************************)
 
 (*** sand_inv_ppx *)
 lemma gr_sand_inv_push_bi:

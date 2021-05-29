@@ -17,9 +17,9 @@ include "ground/relocation/gr_pat_lt.ma".
 include "ground/relocation/gr_pat_pat.ma".
 include "ground/relocation/gr_ist.ma".
 
-(* TOTALITY CONDITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* TOTALITY CONDITION FOR GENERIC RELOCATION MAPS ***************************)
 
-(* Advanced properties on at ************************************************)
+(* Advanced constructions with gr_pat ***************************************)
 
 (*** at_dec *)
 lemma gr_pat_dec (f) (i1) (i2): 𝐓❪f❫ → Decidable (@❪i1,f❫ ≘ i2).
@@ -41,7 +41,7 @@ lapply (dec_plt (λi1.@❪i1,f❫ ≘ i2) … (↑i2)) [| * ]
 ]
 qed-.
 
-(* Main forward lemmas on at ************************************************)
+(* Main destructions with gr_pat ********************************************)
 
 (*** at_ext *)
 corec theorem gr_eq_ext_pat (f1) (f2): 𝐓❪f1❫ → 𝐓❪f2❫ →

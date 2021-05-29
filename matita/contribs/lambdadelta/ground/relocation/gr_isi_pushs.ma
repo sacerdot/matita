@@ -15,16 +15,16 @@
 include "ground/relocation/gr_pushs.ma".
 include "ground/relocation/gr_isi.ma".
 
-(* IDENTITY CONDITION FOR GENERIC RELOCATION MAPS  ******************************************************)
+(* IDENTITY CONDITION FOR GENERIC RELOCATION MAPS ***************************)
 
-(* Properties with gr_pushs *)
+(* Constructions with gr_pushs **********************************************)
 
 (*** isid_pushs *)
 lemma gr_isi_pushs (n) (f): 𝐈❪f❫ → 𝐈❪⫯*[n]f❫.
 #n @(nat_ind_succ … n) -n /3 width=3 by gr_isi_push/
 qed.
 
-(* Inversion lemmas with iterated push **************************************)
+(* Inversions with gr_pushs *************************************************)
 
 (*** isid_inv_pushs *)
 lemma gr_isi_inv_pushs (n) (g): 𝐈❪⫯*[n]g❫ → 𝐈❪g❫.

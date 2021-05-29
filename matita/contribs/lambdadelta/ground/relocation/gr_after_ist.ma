@@ -16,9 +16,9 @@ include "ground/relocation/gr_pat_lt.ma".
 include "ground/relocation/gr_ist.ma".
 include "ground/relocation/gr_after_pat.ma".
 
-(* RELATIONAL COMPOSITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL COMPOSITION FOR GENERIC RELOCATION MAPS ***********************)
 
-(* Forward lemmas on istot **************************************************)
+(* Destructions with gr_ist *************************************************)
 
 (*** after_istot_fwd *)
 lemma gr_after_ist_des:
@@ -52,7 +52,7 @@ lemma gr_after_des_ist_pat:
 /3 width=8 by gr_after_des_pat, ex2_intro/
 qed-.
 
-(* Inversions with gr_ist *)
+(* Inversions with gr_ist ***************************************************)
 
 (*** after_inv_istot *)
 lemma gr_after_inv_ist:

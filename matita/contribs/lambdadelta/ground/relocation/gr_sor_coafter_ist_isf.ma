@@ -17,9 +17,9 @@ include "ground/relocation/gr_coafter_isi.ma".
 include "ground/relocation/gr_coafter_ist_isi.ma".
 include "ground/relocation/gr_sor_isi.ma".
 
-(* RELATIONAL UNION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL UNION FOR GENERIC RELOCATION MAPS *****************************)
 
-(* Properties with coafter and ist and isf ****************************************************)
+(* Constructions with gr_coafter and gr_ist and gr_isf **********************)
 
 (*** coafter_sor *)
 lemma gr_sor_coafter_dx_tans:

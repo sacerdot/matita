@@ -15,7 +15,7 @@
 include "ground/notation/relations/predicate_omega_1.ma".
 include "ground/relocation/gr_map.ma".
 
-(* DIVERGENCE CONDITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* DIVERGENCE CONDITION FOR GENERIC RELOCATION MAPS *************************)
 
 (*** isdiv *)
 coinductive gr_isd: predicate gr_map ≝
@@ -28,7 +28,7 @@ interpretation
   "divergence condition (generic relocation maps)"
   'PredicateOmega f = (gr_isd f).
 
-(* Basic inversion lemmas ***************************************************)
+(* Basic inversions *********************************************************)
 
 (*** isdiv_inv_gen *)
 lemma gr_isd_inv_gen (g): 𝛀❪g❫ → ∃∃f. 𝛀❪f❫ & ↑f = g.
@@ -36,7 +36,7 @@ lemma gr_isd_inv_gen (g): 𝛀❪g❫ → ∃∃f. 𝛀❪f❫ & ↑f = g.
 #f #g #Hf * /2 width=3 by ex2_intro/
 qed-.
 
-(* Advanced inversion lemmas ************************************************)
+(* Advanced inversions ******************************************************)
 
 (*** isdiv_inv_next *)
 lemma gr_isd_inv_next (g): 𝛀❪g❫ → ∀f. ↑f = g → 𝛀❪f❫.

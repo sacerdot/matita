@@ -15,9 +15,9 @@
 include "ground/relocation/gr_eq.ma".
 include "ground/relocation/gr_nexts.ma".
 
-(* ITERATED NEXT FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* ITERATED NEXT FOR GENERIC RELOCATION MAPS ********************************)
 
-(* Properties with gr_eq ******************************************************)
+(* Constructions with gr_eq *************************************************)
 
 (*** nexts_eq_repl *)
 lemma gr_nexts_eq_repl (n):

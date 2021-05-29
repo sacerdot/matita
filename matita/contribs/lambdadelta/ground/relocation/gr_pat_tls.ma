@@ -16,9 +16,9 @@ include "ground/arith/pnat_plus.ma".
 include "ground/relocation/gr_tls.ma".
 include "ground/relocation/gr_pat_eq.ma".
 
-(* POSITIVE APPLICATION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* POSITIVE APPLICATION FOR GENERIC RELOCATION MAPS *************************)
 
-(* Properties on tls ********************************************************)
+(* Constructions with gr_tls ************************************************)
 
 (* Note: this requires ↑ on first n *)
 (*** at_pxx_tls *)
@@ -42,7 +42,7 @@ lemma gr_pat_tls (n2) (f): ⫯⫱*[↑n2]f ≡ ⫱*[n2]f → ∃i1. @❪i1,f❫ 
 ]
 qed-.
 
-(* Inversion lemmas with tls ************************************************)
+(* Inversions with gr_tls ***************************************************)
 
 (* Note: this does not require ↑ on second and third p *)
 (*** at_inv_nxx *)

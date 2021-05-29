@@ -15,9 +15,9 @@
 include "ground/relocation/gr_pushs.ma".
 include "ground/relocation/gr_tls.ma".
 
-(* ITERATED TAIL FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* ITERATED TAIL FOR GENERIC RELOCATION MAPS ********************************)
 
-(* Properties with pushs ****************************************************)
+(* Constructions with gr_pushs **********************************************)
 
 (*** tls_pushs *)
 lemma gr_tls_pushs (n) (f): f = ⫱*[n] ⫯*[n] f.

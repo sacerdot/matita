@@ -15,7 +15,7 @@
 include "ground/notation/functions/element_i_0.ma".
 include "ground/relocation/gr_map.ma".
 
-(* IDENTITY ELEMENT FOR GENERIC RELOCATION MAPS  ******************************************************)
+(* IDENTITY ELEMENT FOR GENERIC RELOCATION MAPS *****************************)
 
 (*** id *)
 corec definition gr_id: gr_map ≝ ⫯gr_id.
@@ -24,7 +24,7 @@ interpretation
   "identity element (generic relocation streams)"
   'ElementI = (gr_id).
 
-(* Basic properties (specific) *********************************************************)
+(* Basic constructions (specific) *******************************************)
 
 (*** id_rew *)
 lemma gr_id_unfold: ⫯𝐢 = 𝐢.

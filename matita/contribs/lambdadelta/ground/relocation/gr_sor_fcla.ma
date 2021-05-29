@@ -19,9 +19,9 @@ include "ground/arith/nat_le_max.ma".
 include "ground/relocation/gr_fcla_eq.ma".
 include "ground/relocation/gr_sor_isi.ma".
 
-(* RELATIONAL UNION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL UNION FOR GENERIC RELOCATION MAPS *****************************)
 
-(* Properties with finite colength assignment *******************************)
+(* Constructions with gr_fcla ***********************************************)
 
 (*** sor_fcla_ex *)
 lemma gr_sor_fcla_bi:
@@ -29,7 +29,7 @@ lemma gr_sor_fcla_bi:
       ∃∃f,n. f1 ⋓ f2 ≘ f & 𝐂❪f❫ ≘ n & (n1 ∨ n2) ≤ n & n ≤ n1 + n2.
 #f1 #n1 #Hf1 elim Hf1 -f1 -n1 /3 width=6 by gr_sor_isi_sn, ex4_2_intro/
 #f1 #n1 #Hf1 #IH #f2 #n2 * -f2 -n2 /3 width=6 by gr_fcla_push, gr_fcla_next, ex4_2_intro, gr_sor_isi_dx/
-#f2 #n2 #Hf2 elim (IH … Hf2) -IH -Hf2 -Hf1 [2,4: #f #n <nplus_succ_dx ] (**) (* full auto fails *)
+#f2 #n2 #Hf2 elim (IH … Hf2) -IH -Hf2 -Hf1 [2,4: #f #n <nplus_succ_dx ] (* * full auto fails *)
 [ /3 width=7 by gr_fcla_next, gr_sor_push_next, nle_max_sn_succ_dx, nle_succ_bi, ex4_2_intro/
 | /4 width=7 by gr_fcla_next, gr_sor_next_bi, nle_succ_dx, nle_succ_bi, ex4_2_intro/
 | /3 width=7 by gr_fcla_push, gr_sor_push_bi, ex4_2_intro/
@@ -37,7 +37,7 @@ lemma gr_sor_fcla_bi:
 ]
 qed-.
 
-(* Forward lemmas with finite colength **************************************)
+(* Destructions with gr_fcla ************************************************)
 
 (*** sor_fcla *)
 lemma gr_sor_inv_fcla_bi:
@@ -47,7 +47,7 @@ lemma gr_sor_inv_fcla_bi:
 /4 width=6 by gr_sor_mono, gr_fcla_eq_repl_back, ex3_intro/
 qed-.
 
-(* Forward lemmas with finite colength **************************************)
+(* Destructions with gr_fcla ************************************************)
 
 (*** sor_fwd_fcla_sn_ex *)
 lemma gr_sor_des_fcla_sn:

@@ -15,9 +15,9 @@
 include "ground/relocation/gr_isi.ma".
 include "ground/relocation/gr_sdj.ma".
 
-(* DISJOINTNESS FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* DISJOINTNESS FOR GENERIC RELOCATION MAPS *********************************)
 
-(* Properties with isid *****************************************************)
+(* Constructions with gr_isi ************************************************)
 
 (*** sdj_isid_dx *)
 corec lemma gr_sdj_isi_dx:
@@ -35,7 +35,7 @@ corec lemma gr_sdj_isi_sn:
 /3 width=5 by gr_sdj_push_next, gr_sdj_push_bi/
 qed.
 
-(* Inversion lemmas with isid ***********************************************)
+(* Inversions with gr_isi ***************************************************)
 
 (*** sdj_inv_refl *)
 corec lemma gr_sdj_inv_refl:

@@ -15,9 +15,9 @@
 include "ground/relocation/gr_eq.ma".
 include "ground/relocation/gr_tl.ma".
 
-(* TAIL FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* TAIL FOR GENERIC RELOCATION MAPS *****************************************)
 
-(* Properties with gr_eq *)
+(* Constructions with gr_eq *************************************************)
 
 (*** eq_refl *)
 corec lemma gr_eq_refl: reflexive … gr_eq.
@@ -31,7 +31,7 @@ lemma gr_tl_eq_repl:
 #f1 #f2 * -f1 -f2 //
 qed.
 
-(* Inversion lemmas with gr_eq ***************************************************)
+(* Inversions with gr_eq ****************************************************)
 
 (*** eq_inv_gen *)
 lemma gr_eq_inv_gen (g1) (g2):
@@ -42,7 +42,7 @@ lemma gr_eq_inv_gen (g1) (g2):
 /3 width=1 by and3_intro, or_introl, or_intror/
 qed-.
 
-(* Advanced Inversion lemmas with gr_eq *)
+(* Advanced inversions with gr_eq *******************************************)
 
 (*** gr_eq_inv_px *)
 lemma gr_eq_inv_push_sn (g1) (g2):

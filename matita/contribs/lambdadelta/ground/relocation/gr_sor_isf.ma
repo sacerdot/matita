@@ -15,9 +15,9 @@
 include "ground/relocation/gr_isf_eq.ma".
 include "ground/relocation/gr_sor_fcla.ma".
 
-(* RELATIONAL UNION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL UNION FOR GENERIC RELOCATION MAPS *****************************)
 
-(* Properties with test for finite colength *********************************)
+(* Constructions with gr_isf ************************************************)
 
 (*** sor_isfin_ex *)
 lemma gr_sor_isf_bi:
@@ -26,7 +26,7 @@ lemma gr_sor_isf_bi:
 /3 width=4 by ex2_intro, ex_intro/
 qed-.
 
-(* Forward lemmas with test for finite colength *****************************)
+(* Destructions with gr_isf *************************************************)
 
 (*** sor_fwd_isfin_sn *)
 lemma gr_sor_des_isf_sn:
@@ -42,7 +42,7 @@ lemma gr_sor_des_isf_dx:
 elim (gr_sor_des_fcla_dx … Hf … H) -f -f1 /2 width=2 by ex_intro/
 qed-.
 
-(* Inversion lemmas with test for finite colength ***************************)
+(* Inversions with gr_isf ***************************************************)
 
 (*** sor_isfin *)
 lemma gr_sor_inv_isf_bi:

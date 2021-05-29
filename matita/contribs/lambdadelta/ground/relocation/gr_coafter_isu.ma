@@ -16,9 +16,9 @@ include "ground/relocation/gr_isi_pushs.ma".
 include "ground/relocation/gr_isu_uni.ma".
 include "ground/relocation/gr_coafter_uni_pushs.ma".
 
-(* RELATIONAL CO-COMPOSITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL CO-COMPOSITION FOR GENERIC RELOCATION MAPS ********************)
 
-(* Properties with test for uniform relocations and isi *****************************)
+(* Constructions with gr_isu and gr_isi *************************************)
 
 (*** coafter_isuni_isid *)
 lemma gr_coafter_isu_isi:

@@ -15,9 +15,9 @@
 include "ground/relocation/gr_tls.ma".
 include "ground/relocation/gr_ist.ma".
 
-(* TOTALITY CONDITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* TOTALITY CONDITION FOR GENERIC RELOCATION MAPS ***************************)
 
-(* Properties on tls ********************************************************)
+(* Constructions with gr_tls ************************************************)
 
 (*** istot_tls *)
 lemma gr_ist_tls (n) (f): 𝐓❪f❫ → 𝐓❪⫱*[n]f❫.

@@ -16,7 +16,7 @@ include "ground/notation/functions/uparrowstar_2.ma".
 include "ground/arith/nat_succ_iter.ma".
 include "ground/relocation/gr_map.ma".
 
-(* ITERATED NEXT FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* ITERATED NEXT FOR GENERIC RELOCATION MAPS ********************************)
 
 (*** nexts *)
 definition gr_nexts (f:gr_map) (n:nat) ≝
@@ -26,7 +26,7 @@ interpretation
   "iterated next (generic relocation maps)"
   'UpArrowStar n f = (gr_nexts f n).
 
-(* Basic properties *********************************************************)
+(* Basic constructions ******************************************************)
 
 (*** nexts_O *)
 lemma gr_nexts_zero:

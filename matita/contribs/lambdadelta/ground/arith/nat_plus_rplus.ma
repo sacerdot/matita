@@ -17,7 +17,7 @@ include "ground/arith/nat_plus.ma".
 
 (* ADDITION FOR NON-NEGATIVE INTEGERS ***************************************)
 
-(* Constructions with rplus *************************************************)
+(* Constructions with nrplus ************************************************)
 
 lemma nrplus_inj_sn (p) (n):
       ninj (p + n) = ninj p + n.
@@ -25,7 +25,7 @@ lemma nrplus_inj_sn (p) (n):
 #n #IH <nplus_succ_dx <IH //
 qed.
 
-(* Constructions with rplus and npsucc **************************************)
+(* Constructions with nrplus and npsucc *************************************)
 
 lemma nrplus_npsucc_sn (m) (n):
       npsucc (m + n) = npsucc m + n.

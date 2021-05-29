@@ -17,7 +17,7 @@ include "ground/arith/nat_plus.ma".
 include "ground/arith/nat_lt.ma".
 include "ground/relocation/fr2_map.ma".
 
-(* NON-NEGATIVE APPLICATION FOR FINITE RELOCATION MAPS WITH PAIRS *******************************************)
+(* NON-NEGATIVE APPLICATION FOR FINITE RELOCATION MAPS WITH PAIRS ***********)
 
 (*** at *)
 inductive fr2_nat: fr2_map → relation nat ≝
@@ -36,7 +36,7 @@ interpretation
   "non-negative relational application (finite relocation maps with pairs)"
   'RAt l1 f l2 = (fr2_nat f l1 l2).
 
-(* Basic inversion lemmas ***************************************************)
+(* Basic inversions *********************************************************)
 
 (*** at_inv_nil *)
 lemma fr2_nat_inv_nil (l1) (l2):

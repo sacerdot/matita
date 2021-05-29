@@ -16,9 +16,9 @@ include "ground/relocation/gr_isi_eq.ma".
 include "ground/relocation/gr_sor_eq.ma".
 include "ground/relocation/gr_sor_sor.ma".
 
-(* RELATIONAL UNION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL UNION FOR GENERIC RELOCATION MAPS *****************************)
 
-(* Properties with test for identity *****************************************)
+(* Constructions with gr_isi ************************************************)
 
 (*** sor_isid_sn *)
 corec lemma gr_sor_isi_sn:
@@ -42,7 +42,7 @@ lemma gr_sor_isi_bi_isi:
 /4 width=3 by gr_sor_eq_repl_back_dx, gr_sor_eq_repl_back_sn, gr_isi_inv_eq_repl/ qed.
 
 
-(* Forward lemmas with test for identity **********************************)
+(* Destructions with gr_isi *************************************************)
 
 (*** sor_fwd_isid1 *)
 corec lemma gr_sor_des_isi_sn:
@@ -62,7 +62,7 @@ corec lemma gr_sor_des_isi_dx:
 cases (gr_isi_inv_next … Hg … H)
 qed-.
 
-(* Inversion lemmas with test for identity **********************************)
+(* Inversions with gr_isi ***************************************************)
 
 (*** sor_isid_inv_sn *)
 lemma gr_sor_inv_isi_sn:

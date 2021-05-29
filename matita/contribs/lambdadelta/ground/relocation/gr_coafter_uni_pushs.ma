@@ -14,12 +14,12 @@
 
 include "ground/relocation/gr_pushs.ma".
 include "ground/relocation/gr_uni.ma".
-(**) (* it should not depend on gr_isi *)
+(* * it should not depend on gr_isi *)
 include "ground/relocation/gr_coafter_isi.ma".
 
-(* RELATIONAL CO-COMPOSITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL CO-COMPOSITION FOR GENERIC RELOCATION MAPS ********************)
 
-(* Properties with uniform relocations and pushs **************************************)
+(* Constructions with gr_uni and gr_pushs ***********************************)
 
 (*** coafter_uni_sn *)
 lemma gr_coafter_uni_sn_pushs (n):

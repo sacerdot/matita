@@ -11,6 +11,7 @@ let step k st outs ins =
   | "LEFT" :: "SUBTRACTION" :: tl -> k T.OK ("SUBTRACTION" :: "LEFT" :: outs) tl
   | "SUBTRACTION" :: tl -> k T.OK ("SUBTRACTION" :: outs) tl
   | "ADDITION" :: tl -> k T.OK ("ADDITION" :: outs) tl
+  | "RIGHT" :: "ADDITION" :: tl -> k T.OK ("ADDITION" :: "RIGHT" :: outs) tl
   | "PREDECESSOR" :: tl -> k T.OK ("PREDECESSOR" :: outs) tl
   | "SUCCESSOR" :: tl -> k T.OK ("SUCCESSOR" :: outs) tl
   | "NAT-INJECTION" :: tl -> k T.OK ("NAT-INJECTION" :: outs) tl

@@ -17,14 +17,14 @@ include "ground/relocation/gr_pat_tls.ma".
 include "ground/relocation/gr_ist_tls.ma".
 include "ground/relocation/gr_after_pat_tls.ma".
 
-(* RELATIONAL COMPOSITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL COMPOSITION FOR GENERIC RELOCATION MAPS ***********************)
 
 (*** H_after_inj *)
 definition H_gr_after_inj: predicate gr_map ≝
            λf1. 𝐓❪f1❫ →
            ∀f,f21,f22. f1 ⊚ f21 ≘ f → f1 ⊚ f22 ≘ f → f21 ≡ f22.
 
-(* Main forward lemmas on istot **************************************************)
+(* Main destructions with gr_ist ********************************************)
 
 (*** after_inj_O_aux *)
 corec fact gr_after_inj_unit_aux:

@@ -15,9 +15,9 @@
 include "ground/relocation/gr_basic.ma".
 include "ground/relocation/gr_nat_uni.ma".
 
-(* NON-NEGATIVE APPLICATION FOR GENERIC RELOCATION MAPS *****************************)
+(* NON-NEGATIVE APPLICATION FOR GENERIC RELOCATION MAPS *********************)
 
-(* Properties with gr_basic **********************************************)
+(* Constructions with gr_basic **********************************************)
 
 lemma gr_nat_basic_lt (m) (n) (l):
       l < m → @↑❪l, 𝐛❨m,n❩❫ ≘ l.
@@ -40,7 +40,7 @@ elim (nle_inv_succ_sn … H) -H #Hml #H >H -H
 /3 width=7 by gr_nat_push/
 qed.
 
-(* Inversion lemmas with gr_basic ****************************************)
+(* Inversions with gr_basic *************************************************)
 
 lemma gr_nat_basic_inv_lt (m) (n) (l) (k):
       l < m → @↑❪l, 𝐛❨m,n❩❫ ≘ k → l = k.

@@ -14,9 +14,9 @@
 
 include "ground/relocation/gr_sle.ma".
 
-(* INCLUSION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* INCLUSION FOR GENERIC RELOCATION MAPS ************************************)
 
-(* Main properties **********************************************************)
+(* Main constructions *******************************************************)
 
 (*** sle_trans *)
 corec theorem gr_sle_trans:

@@ -15,9 +15,9 @@
 include "ground/relocation/gr_isi.ma".
 include "ground/relocation/gr_sle.ma".
 
-(* INCLUSION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* INCLUSION FOR GENERIC RELOCATION MAPS ************************************)
 
-(* Properties with isid *****************************************************)
+(* Constructions with gr_isi ************************************************)
 
 (*** sle_isid_sn *)
 corec lemma gr_sle_isi_sn:
@@ -27,7 +27,7 @@ corec lemma gr_sle_isi_sn:
 /3 width=5 by gr_sle_weak, gr_sle_push/
 qed.
 
-(* Inversion lemmas with isid ***********************************************)
+(* Inversions with gr_isi ***************************************************)
 
 (*** sle_inv_isid_dx *)
 corec lemma gr_sle_inv_isi_dx:

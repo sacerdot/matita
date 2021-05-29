@@ -16,7 +16,7 @@ include "ground/notation/relations/rafter_3.ma".
 include "ground/xoa/ex_3_2.ma". 
 include "ground/relocation/gr_tl.ma".
 
-(* RELATIONAL COMPOSITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL COMPOSITION FOR GENERIC RELOCATION MAPS ***********************)
 
 (*** after *)
 coinductive gr_after: relation3 gr_map gr_map gr_map ≝
@@ -35,7 +35,7 @@ interpretation
   "relational composition (generic relocation maps)"
   'RAfter f1 f2 f = (gr_after f1 f2 f).
 
-(* Basic inversion lemmas ***************************************************)
+(* Basic inversions *********************************************************)
 
 (*** after_inv_ppx *)
 lemma gr_after_inv_push_bi:
@@ -82,7 +82,7 @@ lemma gr_after_inv_next_sn:
 ]
 qed-.
 
-(* Advanced inversion lemmas ************************************************)
+(* Advanced inversions ******************************************************)
 
 (*** after_inv_ppp *)
 lemma gr_after_inv_push_bi_push:

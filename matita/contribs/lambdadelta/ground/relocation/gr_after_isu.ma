@@ -15,9 +15,9 @@
 include "ground/relocation/gr_isu_uni.ma".
 include "ground/relocation/gr_after_uni.ma".
 
-(* RELATIONAL COMPOSITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL COMPOSITION FOR GENERIC RELOCATION MAPS ***********************)
 
-(* Properties on isuni ******************************************************)
+(* Constructions with gr_isu ************************************************)
 
 (*** after_isid_isuni *)
 lemma gr_after_isu_isi_next:

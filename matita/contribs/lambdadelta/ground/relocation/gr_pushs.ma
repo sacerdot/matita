@@ -16,7 +16,7 @@ include "ground/notation/functions/upspoonstar_2.ma".
 include "ground/arith/nat_succ_iter.ma".
 include "ground/relocation/gr_map.ma".
 
-(* ITERATED PUSH FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* ITERATED PUSH FOR GENERIC RELOCATION MAPS ********************************)
 
 (*** pushs *)
 definition gr_pushs (f:gr_map) (n:nat) ≝
@@ -26,7 +26,7 @@ interpretation
   "iterated push (generic relocation maps)"
   'UpSpoonStar n f = (gr_pushs f n).
 
-(* Basic properties *********************************************************)
+(* Basic constructions ******************************************************)
 
 (*** pushs_O *)
 lemma gr_pushs_zero:

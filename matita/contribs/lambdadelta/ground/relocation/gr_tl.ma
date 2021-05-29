@@ -16,7 +16,7 @@ include "ground/notation/functions/droppred_1.ma".
 include "ground/lib/stream_hdtl.ma".
 include "ground/relocation/gr_map.ma".
 
-(* TAIL FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* TAIL FOR GENERIC RELOCATION MAPS *****************************************)
 
 (*** tl *)
 definition gr_tl (f): gr_map ≝ ⫰f.
@@ -25,7 +25,7 @@ interpretation
   "tail (generic relocation maps)"
   'DropPred f = (gr_tl f).
 
-(* Basic properties *********************************************************)
+(* Basic constructions ******************************************************)
 
 (*** tl_push_rew *)
 lemma gr_tl_push (f): f = ⫱⫯f.
@@ -35,7 +35,7 @@ lemma gr_tl_push (f): f = ⫱⫯f.
 lemma gr_tl_next (f): f = ⫱↑f.
 // qed.
 
-(* Basic eliminators ********************************************************)
+(* Basic eliminations *******************************************************)
 
 (*** pn_split gr_map_split *)
 lemma gr_map_split_tl (f): ∨∨ ⫯⫱f = f | ↑⫱f = f.

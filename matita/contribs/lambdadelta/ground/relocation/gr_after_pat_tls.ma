@@ -16,9 +16,9 @@ include "ground/relocation/gr_tls.ma".
 include "ground/relocation/gr_pat.ma".
 include "ground/relocation/gr_after.ma".
 
-(* RELATIONAL COMPOSITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL COMPOSITION FOR GENERIC RELOCATION MAPS ***********************)
 
-(* Properties on pat and tls ********************************************************)
+(* Constructions with gr_pat and gr_tls *************************************)
 
 (* Note: this requires ↑ on first n *)
 (*** after_tls *)

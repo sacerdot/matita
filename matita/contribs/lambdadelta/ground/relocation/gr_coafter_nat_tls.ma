@@ -16,9 +16,9 @@ include "ground/relocation/gr_tls.ma".
 include "ground/relocation/gr_nat.ma".
 include "ground/relocation/gr_coafter.ma".
 
-(* RELATIONAL CO-COMPOSITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL CO-COMPOSITION FOR GENERIC RELOCATION MAPS ********************)
 
-(* Properties with nat and iterated tail ********************************************)
+(* Constructions with gr_nat and gr_tls *************************************)
 
 (*** coafter_tls *)
 lemma gr_coafter_tls_bi_tls (n2) (n1):

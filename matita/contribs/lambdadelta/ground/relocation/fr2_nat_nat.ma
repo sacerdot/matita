@@ -14,9 +14,9 @@
 
 include "ground/relocation/fr2_nat.ma".
 
-(* NON-NEGATIVE APPLICATION FOR FINITE RELOCATION MAPS WITH PAIRS *******************************************)
+(* NON-NEGATIVE APPLICATION FOR FINITE RELOCATION MAPS WITH PAIRS ***********)
 
-(* Main properties **********************************************************)
+(* Main constructions *******************************************************)
 
 (*** at_mono *)
 theorem fr2_nat_mono (f) (l):

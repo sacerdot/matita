@@ -15,9 +15,9 @@
 include "ground/relocation/gr_isi_pat.ma".
 include "ground/relocation/gr_ist.ma".
 
-(* TOTALITY CONDITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* TOTALITY CONDITION FOR GENERIC RELOCATION MAPS ***************************)
 
-(* Advanced properties on isid **********************************************)
+(* Advanced constructions with gr_isi ***************************************)
 
 (*** isid_at_total *)
 lemma gr_isi_pat_total: ∀f. 𝐓❪f❫ → (∀i1,i2. @❪i1,f❫ ≘ i2 → i1 = i2) → 𝐈❪f❫.

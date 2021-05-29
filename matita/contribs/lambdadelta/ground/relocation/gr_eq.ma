@@ -45,7 +45,7 @@ definition gr_eq_repl_back (R:predicate …) ≝
 definition gr_eq_repl_fwd (R:predicate …) ≝
            ∀f1. R f1 → ∀f2. f2 ≡ f1 → R f2.
 
-(* Basic properties *********************************************************)
+(* Basic constructions ******************************************************)
 
 (*** eq_sym *)
 corec lemma gr_eq_sym: symmetric … gr_eq.
@@ -59,7 +59,7 @@ lemma gr_eq_repl_sym (R):
       gr_eq_repl_back R → gr_eq_repl_fwd R.
 /3 width=3 by gr_eq_sym/ qed-.
 
-(* Alternative definition with stream_eq (specific) ***************************************************)
+(* Alternative definition with stream_eq (specific) *************************)
 
 alias symbol "subseteq" (instance 1) = "relation inclusion".
 

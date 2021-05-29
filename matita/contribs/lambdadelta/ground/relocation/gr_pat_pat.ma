@@ -15,9 +15,9 @@
 include "ground/arith/pnat_lt_pred.ma".
 include "ground/relocation/gr_pat.ma".
 
-(* POSITIVE APPLICATION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* POSITIVE APPLICATION FOR GENERIC RELOCATION MAPS *************************)
 
-(* Main properties **********************************************************)
+(* Main constructions *******************************************************)
 
 (*** at_monotonic *)
 theorem gr_pat_monotonic:

@@ -16,14 +16,14 @@ include "ground/relocation/gr_pat_tls.ma".
 include "ground/relocation/gr_ist_tls.ma".
 include "ground/relocation/gr_coafter_nat_tls.ma".
 
-(* RELATIONAL CO-COMPOSITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL CO-COMPOSITION FOR GENERIC RELOCATION MAPS ********************)
 
 (*** H_coafter_inj *)
 definition H_gr_coafter_inj: predicate gr_map ≝
            λf1. 𝐓❪f1❫ →
            ∀f,f21,f22. f1 ~⊚ f21 ≘ f → f1 ~⊚ f22 ≘ f → f21 ≡ f22.
 
-(* Main Forward lemmas with istot ************************************************)
+(* Main destructions with gr_ist ********************************************)
 
 (*** coafter_inj_O_aux *)
 corec fact gr_coafter_inj_unit_aux:

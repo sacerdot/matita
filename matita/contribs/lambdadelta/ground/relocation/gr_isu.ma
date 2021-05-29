@@ -15,7 +15,7 @@
 include "ground/notation/relations/predicate_u_1.ma".
 include "ground/relocation/gr_isi.ma".
 
-(* UNIFORMITY CONDITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* UNIFORMITY CONDITION FOR GENERIC RELOCATION MAPS *************************)
 
 (*** isuni *)
 inductive gr_isu: predicate gr_map ≝
@@ -29,7 +29,7 @@ interpretation
   "uniformity condition (generic relocation maps)"
   'PredicateU f = (gr_isu f).
 
-(* Basic inversion lemmas ***************************************************)
+(* Basic inversions *********************************************************)
 
 (*** isuni_inv_push *)
 lemma gr_isu_inv_push (g): 𝐔❪g❫ → ∀f. ⫯f = g → 𝐈❪f❫.
@@ -49,7 +49,7 @@ lemma gr_isu_inv_next (g): 𝐔❪g❫ → ∀f. ↑f = g → 𝐔❪f❫.
 ]
 qed-.
 
-(* Basic forward lemmas *****************************************************)
+(* Basic destructions *******************************************************)
 
 (*** isuni_fwd_push *)
 lemma gr_isu_fwd_push (g): 𝐔❪g❫ → ∀f. ⫯f = g → 𝐔❪f❫.

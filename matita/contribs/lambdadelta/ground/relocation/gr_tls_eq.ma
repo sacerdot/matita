@@ -15,9 +15,9 @@
 include "ground/relocation/gr_tl_eq.ma".
 include "ground/relocation/gr_tls.ma".
 
-(* ITERATED TAIL FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* ITERATED TAIL FOR GENERIC RELOCATION MAPS ********************************)
 
-(* Properties with gr_eq ******************************************************)
+(* Constructions with gr_eq *************************************************)
 
 (*** tls_eq_repl *)
 lemma gr_tls_eq_repl (n):

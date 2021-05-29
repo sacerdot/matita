@@ -16,9 +16,9 @@ include "ground/arith/pnat_pred.ma".
 include "ground/arith/pnat_lt.ma".
 include "ground/relocation/gr_pat.ma".
 
-(* POSITIVE APPLICATION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* POSITIVE APPLICATION FOR GENERIC RELOCATION MAPS *************************)
 
-(* Forward lemmas with plt and ple *****************************************************)
+(* Destructions with plt and ple ********************************************)
 
 (*** at_increasing *)
 lemma gr_pat_increasing (i2) (i1) (f):
@@ -47,7 +47,7 @@ lemma gr_pat_des_id (f) (i): @❪i,f❫ ≘ i → ⫯⫱f = f.
 #H elim (plt_ge_false … H) -H //
 qed-.
 
-(* Properties with ple *********************************************************)
+(* Constructions with ple ***************************************************)
 
 (*** at_le_ex *)
 lemma gr_pat_le_ex (j2) (i2) (f):

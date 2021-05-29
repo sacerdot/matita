@@ -16,7 +16,7 @@ include "ground/notation/relations/rfun_c_2.ma".
 include "ground/arith/nat_succ.ma".
 include "ground/relocation/gr_isi.ma".
 
-(* FINITE COLENGTH ASSIGNMENT FOR GENERIC RELOCATION MAPS  ***********************************************************)
+(* FINITE COLENGTH ASSIGNMENT FOR GENERIC RELOCATION MAPS *******************)
 
 (*** fcla *)
 inductive gr_fcla: relation2 gr_map nat ≝
@@ -32,7 +32,7 @@ interpretation
   "finite colength assignment (generic relocation maps)"
   'RFunC f n = (gr_fcla f n).
 
-(* Basic inversion lemmas ***************************************************)
+(* Basic inversions *********************************************************)
 
 (*** fcla_inv_px *)
 lemma gr_fcla_inv_push (g) (m): 𝐂❪g❫ ≘ m → ∀f. ⫯f = g → 𝐂❪f❫ ≘ m.
@@ -54,7 +54,7 @@ lemma gr_fcla_inv_next (g) (m): 𝐂❪g❫ ≘ m → ∀f. ↑f = g → ∃∃n
 ]
 qed-.
 
-(* Advanced inversion lemmas ************************************************)
+(* Advanced inversions ******************************************************)
 
 (*** cla_inv_nn *)
 lemma gr_cla_inv_next_succ (g) (m): 𝐂❪g❫ ≘ m → ∀f,n. ↑f = g → ↑n = m → 𝐂❪f❫ ≘ n.

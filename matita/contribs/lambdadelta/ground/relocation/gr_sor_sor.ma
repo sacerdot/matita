@@ -15,9 +15,9 @@
 include "ground/relocation/gr_eq.ma".
 include "ground/relocation/gr_sor.ma".
 
-(* RELATIONAL UNION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL UNION FOR GENERIC RELOCATION MAPS *****************************)
 
-(* Main inversion lemmas ****************************************************)
+(* Main inversions **********************************************************)
 
 (*** sor_mono *)
 corec theorem gr_sor_mono:
@@ -32,7 +32,7 @@ corec theorem gr_sor_mono:
 /3 width=5 by gr_eq_push, gr_eq_next/
 qed-.
 
-(* Main properties **********************************************************)
+(* Main constructions *******************************************************)
 
 (*** sor_assoc_dx *)
 axiom gr_sor_assoc_dx:

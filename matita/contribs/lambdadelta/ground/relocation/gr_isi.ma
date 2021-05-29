@@ -15,7 +15,7 @@
 include "ground/notation/relations/predicate_i_1.ma".
 include "ground/relocation/gr_map.ma".
 
-(* IDENTITY CONDITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* IDENTITY CONDITION FOR GENERIC RELOCATION MAPS ***************************)
 
 (*** isid *)
 coinductive gr_isi: predicate gr_map ≝
@@ -28,7 +28,7 @@ interpretation
   "identity condition (generic relocation maps)"
   'PredicateI f = (gr_isi f).
 
-(* Basic inversion lemmas ***************************************************)
+(* Basic inversions *********************************************************)
 
 (*** isid_inv_gen *)
 lemma gr_isi_inv_gen (g): 𝐈❪g❫ → ∃∃f. 𝐈❪f❫ & ⫯f = g.
@@ -36,7 +36,7 @@ lemma gr_isi_inv_gen (g): 𝐈❪g❫ → ∃∃f. 𝐈❪f❫ & ⫯f = g.
 #f #g #Hf /2 width=3 by ex2_intro/
 qed-.
 
-(* Advanced inversion lemmas ************************************************)
+(* Advanced inversions ******************************************************)
 
 (*** isid_inv_push *)
 lemma gr_isi_inv_push (g): 𝐈❪g❫ → ∀f. ⫯f = g → 𝐈❪f❫.

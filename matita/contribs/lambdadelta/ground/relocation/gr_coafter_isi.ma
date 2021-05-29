@@ -15,9 +15,9 @@
 include "ground/relocation/gr_isi_id.ma".
 include "ground/relocation/gr_coafter_coafter.ma".
 
-(* RELATIONAL CO-COMPOSITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL CO-COMPOSITION FOR GENERIC RELOCATION MAPS ********************)
 
-(* Properties with test for identity ****************************************)
+(* Constructions with gr_isi ************************************************)
 
 (*** coafter_isid_sn *)
 corec lemma gr_coafter_isi_sn:
@@ -37,7 +37,7 @@ cases (gr_map_split_tl f1) #H1
 ]
 qed.
 
-(* Inversion lemmas with test for identity **********************************)
+(* Inversions with gr_isi ***************************************************)
 
 (*** coafter_isid_inv_sn *)
 lemma gr_coafter_isi_inv_sn:

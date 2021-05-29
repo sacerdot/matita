@@ -15,9 +15,9 @@
 include "ground/relocation/gr_isi.ma".
 include "ground/relocation/gr_after_after.ma".
 
-(* RELATIONAL COMPOSITION FOR GENERIC RELOCATION MAPS ***********************************************************)
+(* RELATIONAL COMPOSITION FOR GENERIC RELOCATION MAPS ***********************)
 
-(* Properties on isid *******************************************************)
+(* Constructions with gr_isi ************************************************)
 
 (*** after_isid_sn *)
 corec lemma gr_after_isi_sn:
@@ -37,7 +37,7 @@ corec lemma gr_after_isi_dx:
 ]
 qed.
 
-(* Destructions on isid *************************************************)
+(* Destructions with gr_isi *************************************************)
 
 (*** after_isid_inv_sn *)
 lemma gr_after_isi_inv_sn:
