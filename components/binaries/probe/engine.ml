@@ -19,47 +19,38 @@ module B  = Librarian
 module H  = HExtlib
 
 module M = MacLexer
-
-let unsupported protocol =
-   failwith (P.sprintf "probe: unsupported protocol: %s" protocol)
-
-let missing path =
-   failwith (P.sprintf "probe: missing path: %s" path)
-
-let unrooted path roots =
-   failwith (P.sprintf "probe: missing root: %s (found roots: %u)" path (L.length roots))
+module X = Error
 
 let out_int i = P.printf "%u\n" i
 
 let out_length uris = out_int (US.cardinal uris)
 
 let out_uris uris =
-   let map uri = P.printf "%S\n" (U.string_of_uri uri) in
-   US.iter map uris
+  let map uri = P.printf "%S\n" (U.string_of_uri uri) in
+  US.iter map uris
 
 let is_registry str =
-   F.check_suffix str ".conf.xml"
+  F.check_suffix str ".conf.xml"
 
 let get_uri str =
   let str = H.normalize_path str in
   let dir, file =
-      if H.is_regular str && F.check_suffix str ".ma"
-      then F.dirname str, F.chop_extension (F.basename str)
-      else if H.is_dir str then str, ""
-      else missing str
-   in
-   let rec aux bdir file = match B.find_roots_in_dir bdir with
-      | [root] ->
-         let buri = L.assoc "baseuri" (B.load_root_file root) in
-	 F.concat bdir file, F.concat buri file
-      | roots  ->
-         if bdir = F.current_dir_name || bdir = F.dir_sep then unrooted dir roots else
-	 aux (F.dirname bdir) (F.concat (F.basename bdir) file)
-   in
-   aux dir file
+    if H.is_regular str && F.check_suffix str ".ma"
+    then F.dirname str, F.chop_extension (F.basename str)
+    else if H.is_dir str then str, ""
+    else X.missing str
+  in
+  let rec aux bdir file = match B.find_roots_in_dir bdir with
+  | [root] ->
+    let buri = L.assoc "baseuri" (B.load_root_file root) in
+    F.concat bdir file, F.concat buri file
+  | roots  ->
+    if bdir = F.current_dir_name || bdir = F.dir_sep then X.unrooted dir roots else
+    aux (F.dirname bdir) (F.concat (F.basename bdir) file)
+  in
+  aux dir file
 
 let mac fname =
-   let ich = open_in fname in
-   let lexbuf = Lexing.from_channel ich in
-   M.token lexbuf; close_in ich
-
+  let ich = open_in fname in
+  let lexbuf = Lexing.from_channel ich in
+  M.token lexbuf; close_in ich

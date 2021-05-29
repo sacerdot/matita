@@ -21,6 +21,7 @@ module H  = HExtlib
 
 module O = Options
 module E = Engine
+module X = Error
 
 let chop_extension file =
   try F.chop_extension file
@@ -88,8 +89,8 @@ let from_uri base devel uri =
     let file = mk_file path in
     if Y.file_exists (F.concat base file) then
       scan_entry (is_script devel) base devel file
-    else E.missing path
-  else E.unsupported protocol
+    else X.missing path
+  else X.unsupported protocol
 
 let from_string base devel s =
   from_uri base devel (U.uri_of_string s)

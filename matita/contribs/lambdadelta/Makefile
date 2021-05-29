@@ -186,7 +186,7 @@ define SUMMARY_TEMPLATE
   $$(SUM_$(1)): S2 = $$(word 2, $$(C0))
   $$(SUM_$(1)): S3 = $$(word 3, $$(C0))
   $$(SUM_$(1)): S4 = $$(word 4, $$(C0))
-  $$(SUM_$(1)): S5 = $$(shell printf "%.1f" `echo "scale=2;$$(S4)/$$(S2)"|bc`)
+  $$(SUM_$(1)): S5 = $$(shell printf "%.1f" `echo "scale=2;if($$(S2)!=0)$$(S4)/$$(S2) else 0"|bc`)
   $$(SUM_$(1)): C1 = $$(word 5, $$(C0))
   $$(SUM_$(1)): C2 = $$(word 7, $$(C0))
   $$(SUM_$(1)): C3 = $$(shell echo "$$(C1)+$$(C2)"|bc)

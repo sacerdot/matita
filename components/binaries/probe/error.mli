@@ -9,14 +9,12 @@
      \ /   This software is distributed as is, NO WARRANTY.
       V_______________________________________________________________ *)
 
-val out_int: int -> unit
+exception Error of string
 
-val out_length: NUri.UriSet.t -> unit
+val unsupported: string -> 'a
 
-val out_uris: NUri.UriSet.t -> unit
+val missing: string -> 'a
 
-val mac: string -> unit
+val unrooted: string -> 'b list -> 'a
 
-val is_registry: string -> bool
-
-val get_uri: string -> string * string
+val malformed: unit -> 'a

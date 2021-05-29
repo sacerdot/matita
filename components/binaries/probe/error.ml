@@ -9,14 +9,22 @@
      \ /   This software is distributed as is, NO WARRANTY.
       V_______________________________________________________________ *)
 
-val out_int: int -> unit
+module L = List
+module P = Printf
 
-val out_length: NUri.UriSet.t -> unit
+exception Error of string
 
-val out_uris: NUri.UriSet.t -> unit
+let error s =
+  raise (Error s)
 
-val mac: string -> unit
+let unsupported protocol =
+  error (P.sprintf "unsupported protocol: %s" protocol)
 
-val is_registry: string -> bool
+let missing path =
+  error (P.sprintf "missing path: %s" path)
 
-val get_uri: string -> string * string
+let unrooted path roots =
+  error (P.sprintf "missing root: %s (found roots: %u)" path (L.length roots))
+
+let malformed () =
+  error "malformed term"

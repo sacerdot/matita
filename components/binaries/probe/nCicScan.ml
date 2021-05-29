@@ -19,6 +19,7 @@ module P  = NCicPp
 module E  = NCicEnvironment
 
 module O  = Options
+module X  = Error
 
 type status = {
 (* current complexity *)
@@ -28,9 +29,6 @@ type status = {
 }
 
 let status = new P.status
-
-let malformed () =
-  failwith "probe: malformed term"
 
 let add_name str =
   let u = U.uri_of_string str in
@@ -86,7 +84,7 @@ let rec scan_term st = function
   | (_, C.Sort _)                :: tl -> scan_term (inc st) tl
   | (c, C.Rel i)                 :: tl -> scan_term (scan_lref st c i) tl
   | (_, C.Const p)               :: tl -> scan_term (scan_gref st p) tl
-  | (_, C.Appl [])               :: tl -> malformed ()
+  | (_, C.Appl [])               :: tl -> X.malformed ()
   | (c, C.Appl ts)               :: tl ->
     scan_term (add st (pred (L.length ts))) (set_list c ts tl)
   | (c, C.Match (_, t0, t1, ts)) :: tl ->
