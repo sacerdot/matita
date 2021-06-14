@@ -2,7 +2,7 @@ module A = Arg
 module F = Filename
 module L = List
 
-module O  = Options 
+module O  = Options
 module TP = TextParser
 module TL = TextLexer
 module TU = TextUnparser
@@ -48,30 +48,33 @@ let process_directive och bname (name, table, css, uri, ext) =
 
 let process_file fname =
    let bname = F.chop_extension (F.basename fname) in
-   let ich = open_in fname in
-   let lexbuf = Lexing.from_channel ich in
-   let ns, ds = TP.script TL.token lexbuf in
-   close_in ich; includes := bname :: !includes;
-   let ns = ("", "http://www.w3.org/1999/xhtml") :: ns in
-   let och = XU.open_out bname ns in 
-   L.iter (process_directive och bname) ds;
-   XU.close_out och
+   if List.mem bname !includes then ()
+   else begin
+      let ich = open_in fname in
+      let lexbuf = Lexing.from_channel ich in
+      let ns, ds = TP.script TL.token lexbuf in
+      close_in ich; includes := bname :: !includes;
+      let ns = ("", "http://www.w3.org/1999/xhtml") :: ns in
+      let och = XU.open_out bname ns in
+      L.iter (process_directive och bname) ds;
+      XU.close_out och
+   end
 
 let main () =
    A.parse [
       "-L", A.Set O.debug_lexer, help_L;
-      "-O", A.String ((:=) O.output_dir), help_O; 
+      "-O", A.String ((:=) O.output_dir), help_O;
       "-X", A.Unit O.clear, help_X;
       "-b", A.String ((:=) O.baseuri), help_b;
-      "-d0", A.Set O.d0, help_d0;  
-      "-d1", A.Set O.d1, help_d1;  
-      "-d2", A.Set O.d2, help_d2;  
-      "-e1", A.Set O.e1, help_e1;  
-      "-e2", A.Set O.e2, help_e2;  
-      "-p0", A.Set O.p0, help_p0;  
-      "-p1", A.Set O.p1, help_p1;  
-      "-p2", A.Set O.p2, help_p2;  
+      "-d0", A.Set O.d0, help_d0;
+      "-d1", A.Set O.d1, help_d1;
+      "-d2", A.Set O.d2, help_d2;
+      "-e1", A.Set O.e1, help_e1;
+      "-e2", A.Set O.e2, help_e2;
+      "-p0", A.Set O.p0, help_p0;
+      "-p1", A.Set O.p1, help_p1;
+      "-p2", A.Set O.p2, help_p2;
    ] process_file help;
-   XU.write_hook hook !includes !tables 
+   XU.write_hook hook !includes !tables
 
 let _ = main ()

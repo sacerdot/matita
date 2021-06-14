@@ -30,7 +30,7 @@ definition S2 ≝ λRR:relation4 genv lenv term term. λRS:relation term. λRP,C
                 ∀G,L,Vs. all … (RP G L) Vs →
                 ∀T. 𝐒❪T❫ → nf RR RS G L T → C G L (ⒶVs.T).
 
-(* Note: this generalizes Tait's ii *)
+(* Note: this generalizes Tait's ii, or Girard's CR3 *)
 definition S3 ≝ λC:candidate.
                 ∀a,G,L,Vs,V,T,W.
                 C G L (ⒶVs.ⓓ[a]ⓝW.V.T) → C G L (ⒶVs.ⓐV.ⓛ[a]W.T).
