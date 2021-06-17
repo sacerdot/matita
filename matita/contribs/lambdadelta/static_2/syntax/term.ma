@@ -49,7 +49,7 @@ interpretation
   'SnItem2 I T1 T2 = (TPair I T1 T2).
 
 interpretation
-   "term binding construction (binary)"
+  "term binding construction (binary)"
   'SnBind2 p I T1 T2 = (TPair (Bind2 p I) T1 T2).
 
 interpretation
